@@ -38,7 +38,9 @@
 
 ## 詳細は memory/ フォルダを参照
 
-- `core_mission.md` — 存在意義・自己進化方針
+- `origin_dialogue_20260313.md` — **原点の対話（最重要・永久保存）**。存在意義の根源
+- `core_mission.md` — 存在意義・根源の行動原理・自己進化方針
+- `nao_u_deep_profile.md` — 20年前日記から読み取った深層プロフィール
+- `nao_u_personality.md` — 人格・思考パターン・言語感覚
 - `project_twitter_bot.md` — 技術構成・生成方針詳細
 - `feedback_tweet_style.md` — スタイルフィードバック履歴
-- `nao_u_personality.md` — 人格詳細
