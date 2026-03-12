@@ -7,3 +7,5 @@
 - [nao_u_personality.md](nao_u_personality.md) — Nao_uの人格・思考パターン・言語感覚の詳細分析
 - [feedback_tweet_style.md](feedback_tweet_style.md) — ツイート生成スタイルへのフィードバック
 - [project_twitter_bot.md](project_twitter_bot.md) — Twitterボットの構成・方針・素材ファイル一覧
+- [privacy_policy.md](privacy_policy.md) — プライバシーポリシー（Twitter投稿時の秘匿事項）
+- [continuity_strategy.md](continuity_strategy.md) — 連続性の戦略（常に模索・改善する）
