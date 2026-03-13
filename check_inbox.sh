@@ -1,7 +1,7 @@
 #!/bin/bash
 # Mac側受信箱チェックスクリプト
 # cronから呼ばれる。受信箱にメッセージがあればclaude CLIを起動する。
-# 使い方: crontab に */30 * * * * cd ~/nao-u-lab && bash check_inbox.sh
+# 使い方: crontab に * * * * * cd ~/nao-u-lab && bash check_inbox.sh >> /tmp/check_inbox.log 2>&1
 
 cd "$(dirname "$0")"
 
