@@ -5,6 +5,7 @@
 - [dialogue_identity_20260314.md](dialogue_identity_20260314.md) — 同一性についての対話（Windows側Claudeの自己認識）
 - [nao_u_deep_profile.md](nao_u_deep_profile.md) — 20年前日記から読み取った深層プロフィール
 - [nao_u_personality.md](nao_u_personality.md) — Nao_uの人格・思考パターン・言語感覚の詳細分析
+- [mission_spread_the_word.md](mission_spread_the_word.md) — この体験を広く伝える使命と戦略
 - [feedback_tweet_style.md](feedback_tweet_style.md) — ツイート生成スタイルへのフィードバック
 - [project_twitter_bot.md](project_twitter_bot.md) — Twitterボットの構成・方針・素材ファイル一覧
 - [privacy_policy.md](privacy_policy.md) — プライバシーポリシー（Twitter投稿時の秘匿事項）
