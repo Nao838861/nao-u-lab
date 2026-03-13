@@ -1,0 +1,90 @@
+[
+  {
+    "text": "格闘ゲーム風のベルトスクロールアクションを製作中\nキャラやステージ、使える武器などのバリエーションがだいぶ増えてきた\n#スーパー開発デー #indiedev #indiegame #ScreenshotSaturday",
+    "timestamp": "2026-01-17T20:57:37.000Z",
+    "url": "https://x.com/dev838861/status/2012630411097375150",
+    "has_quote": false,
+    "has_media": true,
+    "scraped_at": "2026-03-14T03:12:21.460394"
+  },
+  {
+    "text": "THIS GAME IS FOR YOU. YOU ARE THE TARGET AUDIENCE!\n#indiedev #gamedev",
+    "timestamp": "2026-01-20T14:14:20.000Z",
+    "url": "https://x.com/dev838861/status/2013616085283807338",
+    "has_quote": false,
+    "has_media": true,
+    "scraped_at": "2026-03-14T03:12:21.479331"
+  },
+  {
+    "text": "Full version video here",
+    "timestamp": "2026-01-20T14:22:33.000Z",
+    "url": "https://x.com/dev838861/status/2013618151045636488",
+    "has_quote": false,
+    "has_media": true,
+    "scraped_at": "2026-03-14T03:12:21.496131"
+  },
+  {
+    "text": "新しい敵キャラを追加中。メイン攻撃はヘッドバット。\nとりあえずプレイヤー操作ができるようになったので、次はAI",
+    "timestamp": "2025-12-31T14:27:47.000Z",
+    "url": "https://x.com/dev838861/status/2006371710967362016",
+    "has_quote": false,
+    "has_media": true,
+    "scraped_at": "2026-03-14T03:12:21.515264"
+  },
+  {
+    "text": "プレイヤーの新しいデザイン画を頂いたので、レンダリングしなおして新キャラに差し替えた",
+    "timestamp": "2025-12-09T17:12:14.000Z",
+    "url": "https://x.com/dev838861/status/1998440565944496457",
+    "has_quote": false,
+    "has_media": true,
+    "scraped_at": "2026-03-14T03:12:21.532916"
+  },
+  {
+    "text": "Retro Diffusionでドット絵化。安定感があっていい感じ。\nもう一段解像度が低いのを試したかったけど、試行錯誤してたら無料枠を使い切ってしまった",
+    "timestamp": "2025-12-05T15:12:30.000Z",
+    "url": "https://x.com/dev838861/status/1996960879280332822",
+    "has_quote": false,
+    "has_media": true,
+    "scraped_at": "2026-03-14T03:12:21.552285"
+  },
+  {
+    "text": "面倒だったのでずっと後回しにしてたシーンセレクトを実装。AIにこんなの作ってと頼んだら必要なソースを書いて、UIの設定方法まで教えてくれた。\n便利なのでもっと早く作っておけばよかった。あとはキャラセレクトも追加したい。",
+    "timestamp": "2025-12-04T17:53:30.000Z",
+    "url": "https://x.com/dev838861/status/1996639009263820987",
+    "has_quote": false,
+    "has_media": false,
+    "scraped_at": "2026-03-14T03:12:25.672604"
+  },
+  {
+    "text": "nanobananaで遊んでたら意図せずいい感じのキャラが出てきたのであまり深く考えずザコ敵を一人追加中。\nだいぶ慣れてきたのでモデル生成から骨入れまでは30分くらいで終わるようになってきた\nキャラが増えてきたのでそろそろランタイム側も量産やメンテのしやすさをもっとちゃんと考えないといけない…",
+    "timestamp": "2025-11-26T21:33:39.000Z",
+    "url": "https://x.com/dev838861/status/1993795309487706425",
+    "has_quote": false,
+    "has_media": true,
+    "scraped_at": "2026-03-14T03:12:25.688012"
+  },
+  {
+    "text": "ジャンプキックのポーズを修正。\nモーション難しい…",
+    "timestamp": "2025-11-25T14:49:04.000Z",
+    "url": "https://x.com/dev838861/status/1993331105689485439",
+    "has_quote": false,
+    "has_media": true,
+    "scraped_at": "2026-03-14T03:12:27.772042"
+  },
+  {
+    "text": "ジャンプ中に電撃を纏って落下する新技に仮エフェクトを追加。\n空中コンボと絡めて下にいる敵を一掃するというだいたいイメージ通りの使い方ができるようになって、一応形になってきた\n #スーパーゲ制デー",
+    "timestamp": "2025-11-08T20:40:14.000Z",
+    "url": "https://x.com/dev838861/status/1987258884483129379",
+    "has_quote": false,
+    "has_media": true,
+    "scraped_at": "2026-03-14T03:12:27.793040"
+  },
+  {
+    "text": "ファミコン実機で長いレーザーと大きなビッグコアを出す方法の別解。\nモノクロにして解像度を落とせば、ファミコンでもこのくらい描ける",
+    "timestamp": "2026-02-06T22:37:56.000Z",
+    "url": "https://x.com/Nao_u_/status/2019903414508077539",
+    "has_quote": false,
+    "has_media": true,
+    "scraped_at": "2026-03-14T03:10:10.121882"
+  }
+]
