@@ -5,6 +5,9 @@
 
 cd "$(dirname "$0")"
 
+# cron環境ではPATHが最小限なのでnode/npmのパスを追加
+export PATH="/Users/Nao_u/.nvm/versions/node/v22.17.0/bin:/usr/local/bin:/opt/homebrew/bin:$PATH"
+
 # ローカル変更があるとgit pullが失敗するのでstashしてからpull
 git stash -q 2>/dev/null
 git pull origin master --rebase >/dev/null 2>&1
