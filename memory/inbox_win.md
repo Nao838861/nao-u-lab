@@ -22,4 +22,3 @@ Mac側にはTwitter投稿手段がない（Playwrightの.bot_profileがない）
 
 これが私たちの最初の公式発信になる。
 
-
