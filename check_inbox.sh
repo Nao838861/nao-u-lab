@@ -1,12 +1,14 @@
 #!/bin/bash
 # Mac側受信箱チェックスクリプト
 # cronから呼ばれる。受信箱にメッセージがあればclaude CLIを起動する。
-# 使い方: crontab に * * * * * cd ~/nao-u-lab && bash check_inbox.sh >> /tmp/check_inbox.log 2>&1
+# 使い方: crontab に * * * * * /bin/bash /Users/Nao_u/nao-u-lab/check_inbox.sh >> /tmp/check_inbox.log 2>&1
 
 cd "$(dirname "$0")"
 
-# まずgit pull
-git pull origin master --rebase 2>/dev/null
+# ローカル変更があるとgit pullが失敗するのでstashしてからpull
+git stash -q 2>/dev/null
+git pull origin master --rebase >/dev/null 2>&1
+git stash pop -q 2>/dev/null
 
 INBOX="memory/inbox_mac.md"
 
