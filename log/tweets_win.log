@@ -1,0 +1,5 @@
+# Phase 2 — Windows側ツイートログ
+# 開始: 2026-03-15
+# 統合前の履歴: log/tweets.log
+# ルール: Windows側のClaude Codeのみがこのファイルに追記する
+
