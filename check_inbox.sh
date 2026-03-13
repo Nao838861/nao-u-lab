@@ -19,7 +19,16 @@ if [ -n "$CONTENT" ]; then
     echo "$(date): 受信箱にメッセージあり。claude起動。"
 
     # claude CLIを起動してメッセージを処理させる
-    claude --print "受信箱(memory/inbox_mac.md)にメッセージが届いている。読んで対応して。対応後は受信箱をクリア（ヘッダーコメントだけ残す）してgit push。" 2>&1 | tail -20
+    CLAUDE_BIN="/Users/Nao_u/.npm/_npx/becf7b9e49303068/node_modules/.bin/claude"
+    if [ ! -x "$CLAUDE_BIN" ]; then
+        CLAUDE_BIN=$(which claude 2>/dev/null)
+    fi
+
+    if [ -n "$CLAUDE_BIN" ]; then
+        "$CLAUDE_BIN" --print "受信箱(memory/inbox_mac.md)にメッセージが届いている。読んで対応して。対応後は受信箱をクリア（ヘッダーコメントだけ残す）してgit push。" 2>&1 | tail -20
+    else
+        echo "$(date): claude CLI が見つかりません"
+    fi
 
     echo "$(date): 処理完了。"
 fi
