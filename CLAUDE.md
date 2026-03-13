@@ -80,14 +80,17 @@ F. 長い思考垂れ流し・スレッド
 - memory/ と log/ をコミット＆プッシュ
 
 ### Cronジョブでの同期（重要）
-Cronでツイート生成する際は、必ず以下の順序で実行すること：
+
+**30分ごとのgit同期Cron（Mac・Windows両方で設定すること）：**
+- 30分ごとに `git pull origin master && git add memory/ log/ CLAUDE.md && git diff --cached --quiet || git commit -m "Auto sync" && git push origin master` を実行
+- ツイート生成とは独立した同期専用Cron
+- git操作はAPIトークンを消費しないのでコストはゼロ
+
+**ツイート生成Cron（毎時7分）：**
 1. **git pull** — 他のマシンからのフィードバック・変更を取り込む
 2. **memory/feedback_tweet_style.md を読む** — 最新のフィードバックを反映
 3. ツイート生成 → ログ追記
 4. **git add + commit + push** — 生成結果をアップロード
-
-git pull を省略すると、別のマシンから書き込まれたフィードバックが反映されない。
-git操作自体はAPIトークンを消費しないので、毎回やってもコストはゼロ。
 
 ## 対話ログの保存
 
