@@ -37,7 +37,7 @@ def reply_to_latest(text, dry_run=False):
         context = p.chromium.launch_persistent_context(
             user_data_dir=str(BOT_PROFILE),
             channel="msedge",
-            headless=True,
+            headless=False,
             viewport={"width": 1280, "height": 900},
             locale="ja-JP",
             args=["--disable-blink-features=AutomationControlled"],
@@ -156,7 +156,7 @@ def post_tweet(text, dry_run=False):
         context = p.chromium.launch_persistent_context(
             user_data_dir=str(BOT_PROFILE),
             channel="msedge",
-            headless=True,
+            headless=False,
             viewport={"width": 1280, "height": 900},
             locale="ja-JP",
             args=["--disable-blink-features=AutomationControlled"],
