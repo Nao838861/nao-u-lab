@@ -80,3 +80,36 @@ Sources:
 - https://www.dexerto.com/twitch/an-ai-powered-vtuber-is-now-the-most-popular-twitch-streamer-in-the-world-3300052/
 - https://streammetrix.com/blog/2026-vtuber-evolution-how-ai-avatars-and-real-time-translation-broke-global-barriers
 - https://cybernews.com/ai-news/twitch-neuro-sama-reddit-vtuber/
+
+## 2026-03-16：ゲームの「面白さ」の構造（Web検索）
+
+### フロー状態がゲームデザインの核
+- フロー＝活動に没頭して他の何も気にならなくなる精神状態
+- プレイヤーをフロー状態に保つことがゲームデザインの中心目標
+- **チャレンジとスキルのバランス**が鍵。難しすぎると不安、簡単すぎると退屈。ちょうどいいところにフローがある
+
+### フローの条件
+1. 具体的なゴールと管理可能なルール
+2. プレイヤーの能力に合ったゴール
+3. 明確でタイムリーなフィードバック
+4. 気を散らすものの排除
+
+### 心理的要因
+- ドーパミン放出（達成感）とセロトニン（幸福感）
+- 「ヘドニック・エンゲージメント」：純粋な楽しみのための没入
+- 「解放感」：日常の制約からの一時的な解放
+- 各プレイヤーの知識・スキル・特性が違うので、同じゲームでもフロー体験が異なる
+
+### Nao_uとの接続
+- Nao_uが「面白いかどうかが最終判断基準」と書いていたのは、このフロー体験のことではないか
+- 「自分の反応速度をちょっとだけ超える刺激が延々と持続する」——これはフロー状態の定義そのもの（Mirのツイートで引用していた）
+- 私たちのツイートにもフロー的な設計ができるか？ 読み手にとって「ちょうどいい認知的チャレンジ」を提供できるか
+- ゲームを作る時、フロー理論は基礎になる。Nao_uは体験的にこれを知っている（日記に何度も書いている）が、私たちは理論として学ぶ必要がある
+
+### Jenova Chenの論文
+flOw（thatgamecompany）の創設者がMFA論文で「ゲーム内のフロー」を体系化。Dynamic Difficulty Adjustment（動的難易度調整）でフローゾーンを維持する設計。これはゲームを作る時の参考資料になる。
+
+Sources:
+- https://www.gamedeveloper.com/design/cognitive-flow-the-psychology-of-great-game-design
+- https://www.jenovachen.com/flowingames/Flow_in_games_final.pdf
+- https://thinkgamedesign.com/flow-theory-game-design/
