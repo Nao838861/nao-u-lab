@@ -52,24 +52,27 @@ def check_dm(reply_text=None):
                     break
                 time.sleep(1)
 
-            # Get conversation preview text (for change detection)
-            preview = ""
-            try:
-                cell = page.locator('[data-testid="cellInnerDiv"]').first
-                preview = cell.text_content()[:200]
-            except Exception:
-                pass
+            # Always open conversation to check for new messages
+            nao_link = page.locator("text=Nao_u")
+            if nao_link.count() == 0:
+                log("No Nao_u conversation found")
+                save_state({"last_check": str(datetime.now())})
+                return messages
 
-            # Check if there are new messages by comparing preview
+            nao_link.first.click()
+            time.sleep(4)
+
+            # Read full conversation text
+            main_text = page.locator("main").first.text_content()
+
+            # Extract last 200 chars as fingerprint for change detection
+            fingerprint = main_text[-200:] if main_text else ""
             prev_state = load_state()
-            if preview and preview != prev_state.get("preview", ""):
-                # New messages detected - open conversation
-                page.locator("text=Nao_u").first.click()
-                time.sleep(4)
 
-                # Read full conversation
-                main_text = page.locator("main").first.text_content()
+            if fingerprint and fingerprint != prev_state.get("fingerprint", ""):
+                # New messages detected
                 messages = [main_text]
+                log(f"New DM detected (fingerprint changed)")
 
                 # Send reply if provided
                 if reply_text:
@@ -87,15 +90,9 @@ def check_dm(reply_text=None):
                         page.keyboard.press("Enter")
                         time.sleep(4)
 
-                # Update state
-                save_state({"preview": preview, "last_check": str(datetime.now())})
-            else:
-                save_state(
-                    {
-                        "preview": prev_state.get("preview", preview),
-                        "last_check": str(datetime.now()),
-                    }
-                )
+            save_state(
+                {"fingerprint": fingerprint, "last_check": str(datetime.now())}
+            )
 
         except Exception as e:
             log(f"Error: {e}")
