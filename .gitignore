@@ -3,3 +3,8 @@ __pycache__/
 .env
 .claude/
 venv/
+x_session/
+x_cookies.json
+x_notifications_latest.txt
+x_notifications_screenshot.png
+node_modules/
