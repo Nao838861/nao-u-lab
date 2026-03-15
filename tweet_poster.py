@@ -332,7 +332,7 @@ def main():
         for ts, text in unposted:
             print(f"  [{ts}] {text[:60]}...")
     elif args.text:
-        post_tweet(args.text)
+        post_tweet(args.text, dry_run=args.dry_run)
     else:
         parser.print_help()
 
