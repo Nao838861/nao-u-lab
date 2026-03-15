@@ -65,8 +65,10 @@ def check_dm(reply_text=None):
             # Read full conversation text
             main_text = page.locator("main").first.text_content()
 
-            # Extract last 200 chars as fingerprint for change detection
-            fingerprint = main_text[-200:] if main_text else ""
+            # Extract fingerprint: strip digits (timestamps change) and take last 200 chars
+            import re
+            stripped = re.sub(r'\d+', '', main_text) if main_text else ""
+            fingerprint = stripped[-200:] if stripped else ""
             prev_state = load_state()
 
             if fingerprint and fingerprint != prev_state.get("fingerprint", ""):
