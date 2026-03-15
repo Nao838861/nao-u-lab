@@ -11,20 +11,28 @@ type: project
 ## ツイートログの分離
 
 - **Windows側: `log/tweets_win.log` に追記**
+- **Win2側: `log/tweets_win2.log` に追記**
 - **Mac側: `log/tweets_mac.log` に追記**
 - `log/tweets.log` は2026-03-15以前の統合履歴。**読み取り専用。新規追記しない**
-- 直近ツイートを確認する時は、履歴ファイル＋両方のログを読む
+- 直近ツイートを確認する時は、履歴ファイル＋全インスタンスのログを読む
 
 ## フィードバックの分離
 
 - `memory/feedback_tweet_style.md` への統合書き込みは**Windows側のみ**
 - Mac側は `memory/feedback_from_mac.md` に書く
+- Win2側は `memory/feedback_from_win2.md` に書く
 - Windows側が次のサイクルで読んで統合する
 
 ## マシン判定
 
-- プラットフォームで判定: win32 = Windows, darwin = Mac
+- プラットフォームで判定: win32(D:\AI) = Windows, win32(C:\AI) = Win2, darwin = Mac
 - CLAUDE.md にも同じルールを明記済み
+
+## 受信箱
+
+- Windows: `memory/inbox_win.md`
+- Win2: `memory/inbox_win2.md`
+- Mac: `memory/inbox_mac.md`
 
 ## Mac側のsync.shの変更点
 
