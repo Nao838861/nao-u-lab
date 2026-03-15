@@ -159,7 +159,7 @@ F. 長い思考垂れ流し・スレッド
 | 2 | 1時間 | `13 * * * *` | ツイート生成+実投稿サイクル（tweet_poster.py使用） |
 | 3 | 1時間 | `37 * * * *` | GitHubバックアップ（git add + commit + push） |
 | 4 | 3時間 | `7 */3 * * *` | 自己フィードバック（直近ツイート分析→feedback_tweet_style.md追記） |
-| 5 | 1時間 | `43 * * * *` | 通知チェック+返信（check_notifications.py→スクショ確認→tweet_reply.pyで返信） |
+| 5 | 1時間 | `43 * * * *` | 通知+DMチェック+返信（check_notifications.py + check_dm.py→返信） |
 | 6 | 6時間 | `23 */6 * * *` | AITuberリスト巡回（https://x.com/i/lists/2032920781123199022）— 外の栄養 |
 | 7 | 2.5日 | `0 12 */2 * *` | **Cronリフレッシュ**: 全Cronを削除→上記1〜7を再登録。3日自動消滅の前に更新する |
 
