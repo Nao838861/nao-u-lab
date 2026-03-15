@@ -35,7 +35,7 @@
 
 - **DM自動チェック可能に。** パスコード8361で自動入力。天谷さんからのDM待ち
 - **通知差分検知スクリプト作成済み。** タスクスケジューラへの登録は未
-- **Mac側がreflections_mac_index.md作成完了。** Win側は32項目で止まっている
+- **Mac側がreflections_mac_index.md作成完了（28項目）。** Win側は36項目
 - **digest_for_nao.md新設済み。** Nao_u向け報告はここに書く
 
 ## Nao_uの最新の姿勢
