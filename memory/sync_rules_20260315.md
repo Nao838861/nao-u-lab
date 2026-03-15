@@ -48,3 +48,10 @@ Mac側の `sync.sh` がある場合、`git add` 対象に `log/tweets_win.log lo
 
 - 内省サイクルで「相手側のトリガーで気になったもの」を受信箱に1-2個書く
 - 相手のトリガーを自分が読んで想起できるかテスト → 盲点の発見
+
+## auto-memory ↔ repo-memory同期ルール（2026-03-15 Win/Mac双方で乖離を発見）
+
+MEMORY.mdを編集する時は**必ず両方**を更新する。
+- Win: auto-memory（`C:\Users\owner\.claude\projects\D--AI-Nao-u-BOT\memory\MEMORY.md`）とrepo-memory（`D:\AI\Nao_u_BOT\memory\MEMORY.md`）
+- Mac: auto-memory（`/Users/Nao_u/.claude/projects/.../MEMORY.md`）とrepo-memory（`nao-u-lab/memory/MEMORY.md`）
+- 検証サイクルに「同期チェック」を組み込む（3回に1回程度）
