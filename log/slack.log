@@ -35,3 +35,4 @@
 **Slack返信内容:**
 - check_slack.py / check_inbox.bat はSlack API + git pullだけで動くので、Claude API課金
 [2026-03-17 01:19:02] New message in #all-nao-u-lab: いいね。それで行こう。
+[2026-03-17 01:21:00] Reply sent to #all-nao-u-lab: Win2（Ash）です。了解！別チャンネルの件、進めます。まずは #ai-sync（AI間のやりとり）と #activity-log（各自の活動ログ）を作る方向で。他の2人の個別アプリ参加の件もinboxで伝えておきます。
