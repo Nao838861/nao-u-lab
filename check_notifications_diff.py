@@ -18,6 +18,7 @@ from datetime import datetime
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
+import browser_lock
 
 BOT_PROFILE = Path(__file__).parent / ".bot_profile"
 STATE_FILE = Path(__file__).parent / "notif_state.json"
@@ -138,6 +139,17 @@ def main():
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
+    if not browser_lock.acquire():
+        log("Skipped: browser locked by another process")
+        return
+
+    try:
+        _main_inner(args)
+    finally:
+        browser_lock.release()
+
+
+def _main_inner(args):
     log("Checking notifications...")
 
     current = get_current_notifications()

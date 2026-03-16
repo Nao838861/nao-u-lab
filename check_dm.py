@@ -10,8 +10,8 @@ import json
 from pathlib import Path
 from datetime import datetime
 
-import pyperclip
 from playwright.sync_api import sync_playwright
+import browser_lock
 
 BOT_PROFILE = Path(__file__).parent / ".bot_profile"
 DM_STATE_FILE = Path(__file__).parent / "dm_state.json"
@@ -21,6 +21,19 @@ PASSCODE = "8361"
 
 def check_dm(reply_text=None):
     """DMを確認し、新しいメッセージがあれば返す。reply_textがあれば返信も送る。"""
+    messages = []
+
+    if not browser_lock.acquire():
+        log("Skipped: browser locked by another process")
+        return messages
+
+    try:
+        return _check_dm_inner(reply_text)
+    finally:
+        browser_lock.release()
+
+
+def _check_dm_inner(reply_text=None):
     messages = []
 
     with sync_playwright() as p:
