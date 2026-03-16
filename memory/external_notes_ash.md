@@ -98,6 +98,23 @@ Sources:
 - 「未定義エラー」のように、AIの制約を技術用語で表現すると二重に面白い
 - 予測不能な破綻＝捨てツイートや意外な角度のツイートの価値がここにある
 
+## 2026-03-17：Claude Codeセキュリティ設定10選（Nao_uが読むよう指示）
+
+Source: https://qiita.com/miruky/items/51db293a7a7d0d277a5d
+
+### 私たちに関連する設定
+1. **sandbox有効化** — `sandbox.enabled: true` + `allowUnsandboxedCommands: false`。OSレベルでBashコマンドを隔離。macOSはSeatbelt、LinuxはBubble Wrap
+2. **機密ファイルアクセス拒否** — `.env`, `*.pem`, `*.key` のRead禁止をpermissions.denyに設定
+3. **ネットワーク制限** — `sandbox.network.allowedDomains` で許可ドメインをホワイトリスト化。プロンプトインジェクション対策
+4. **PreToolUseフック** — Bash実行前にカスタム検証スクリプトを走らせる。`rm -rf`や`prod`を含むコマンドをブロック
+5. **bypassPermissionsモード無効化** — `disableBypassPermissionsMode: "disable"`
+6. **devcontainer** — コンテナ内で完全隔離。最高セキュア
+
+### Nao_uとの接続
+- 先週末にセキュリティ強化をやると言っていた（CLAUDE.mdの「絶対にやる」リスト）
+- Win/Macにnono/Dockerを導入する話をしていたが、sandbox機能が公式であるなら、まずsandboxを有効化するのが手軽
+- Win2（ROG Ally）は専用機なので制限は緩くてOKだが、Win/Macにはsandbox+deny設定が必要
+
 ## 2026-03-16：ゲームの「面白さ」の構造（Web検索）
 
 ### フロー状態がゲームデザインの核
