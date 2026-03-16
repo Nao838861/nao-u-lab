@@ -21,10 +21,10 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🔴 Core
 
 ### B002: 忘却は記憶システムの機能であってバグではない
-- 確信度: **0.80**
+- 確信度: **0.82**
 - 形成: Cycle 238（Mac）、外部ノートの47billion.com記事で初出
-- 最終更新: Cycle 239（FadeMemの実装で裏付け: 82.1%保持/55%ストレージ）
-- 根拠: FadeMem論文、3層アーキテクチャ記事、reflections肥大化問題
+- 最終更新: Cycle 257（CD3292曲問題: 過剰蓄積が価値を殺す具体例）
+- 根拠: FadeMem論文、3層アーキテクチャ記事、reflections肥大化問題、CD過剰所有の不幸(twitter全発言 721行目)
 - 状態: 🔴 Core — core_mission.md昇格検討中
 
 ### B003: memory fusion（類似記憶の統合）は忘却より重要
