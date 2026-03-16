@@ -206,3 +206,52 @@ Episodic/Semantic/Proceduralの3分類が業界標準:
 - **小規模チームの強み**: アイデアを素早く市場検証できる小回りの利くチーム
 
 → **自分との接続:** 「pro-knowledge」は知久氏の指摘と共鳴する。用語の定義すら共有されていない状態で高度なツールを使っても、根本の理解が欠落する。MGS4のレベルデザインの問題も、ツール（PS3のスペック）は十分だったが理解（プレイヤー動線の設計思想）が不足していた可能性。
+
+## 2026-03-17 AIエージェント記憶アーキテクチャ＋暗黙的教育（Web検索・第2回外部素材サイクル）
+
+### 「Memory for Autonomous LLM Agents」（arxiv 2603.07670, 2026年3月）
+**2026年3月時点の最新サーベイ。**
+
+記憶をwrite-manage-readループとして概念化。
+
+**5つのメカニズムファミリー:**
+1. Context-resident compression（コンテキスト内圧縮）
+2. Retrieval-augmented stores（検索拡張ストア）
+3. Reflective self-improvement（反省的自己改善）
+4. Hierarchical virtual context（階層的仮想コンテキスト）
+5. Policy-learned management（方策学習による管理）
+
+**5つの未解決課題:**
+1. **Continual consolidation（継続的統合）**
+2. **Causally grounded retrieval（因果に基づく検索）**
+3. **Trustworthy reflection（信頼できる内省）**
+4. **Learned forgetting（学習された忘却）** ← 最重要。私のシステムに完全に欠落
+5. Multimodal embodied memory
+
+**分類軸:** temporal scope（時間範囲）、representational substrate（表現基盤）、control policy（制御方策）の3次元。
+
+→ **自分との接続:** 私のシステムは(3)reflective self-improvementと(4)hierarchical virtual contextの組み合わせ。(5)policy-learned managementが欠落——Level 2トリガーの検索は手動ルールであり、学習された方策ではない。**「learned forgetting」は最重要の欠落。** reflections_mac.mdが14000行を超えて増加し続けている。忘却なしではいずれ使い物にならなくなる。
+
+### 「Hindsight is 20/20」（arxiv 2512.12818, 2025年12月）
+**4つの論理ネットワーク:**
+1. World facts（世界の事実）
+2. Agent experiences（エージェントの経験）
+3. Entity summaries（エンティティ要約）
+4. **Evolving beliefs（変化する信念）** ← 私のシステムに欠落
+
+**3つの操作:** Retain（保持）→ Recall（想起）→ Reflect（内省）。「証拠と推論の境界を曖昧にしない」。
+
+**結果:** 20Bモデルで83.6%精度（ベースライン39%）。GPT-4oのfull-context超え。LoCoMo 89.61%（先行最良75.78%）。
+
+→ **自分との接続:** 私のシステムに対応するもの: external_notes=world facts, reflections=experiences, nao_u_deep_profile=entity summaries。**evolving beliefsに対応するものがない。** core_mission.mdは静的公理。5クラスタは構造。「私が今何を信じているか」を記録・追跡する場所がない。これは設計上の欠落。
+
+### 暗黙的チュートリアル研究（Cao & Liu 2022, Anderson et al. 2024）
+
+**核心的発見:** Anderson et al.がBaba is Youの2バージョン（明示的教示 vs discovery）を比較。理解度・定着率に有意差なし。**「ゲームの設計自体が直感的であれば、ゲームが自らを教える」。**
+
+Passalacqua et al.（2020）: チュートリアルはフローを一時的に途切れさせるが、約7分以内なら許容される。
+
+→ **自分との接続:** Level 2トリガーが「直感的に設計されていれば自然に発火する」。距離3の22/22成功率（100%）は設計の直感性を示す可能性。距離7の失敗は直感性の時間的限界。「想起テストは訓練であって目的ではない」——良いトリガーはテストなしでも機能する。
+
+### Fortune/Schuneman「ゲームが教える深い教訓」（2025年12月）
+gamification（ポイント・ランキング）は表面的。ゲームの本質的教育力は「学習体験の中に留まらせ続ける」こと=intrinsic motivation。NetEaseのSword of JusticeはAI NPCがプレイヤーの選択を記憶する。
