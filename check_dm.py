@@ -130,11 +130,41 @@ def log(message):
         f.write(f"[{ts}] {message}\n")
 
 
+def wake_claude(dm_text):
+    """新しいDMがあった時だけClaude CLIを起動する"""
+    import subprocess
+
+    prompt = f"新しいDMが来ています。内容を確認して返信してください。\n概要: {dm_text[:200]}"
+    try:
+        result = subprocess.run(
+            ["claude", "--print", "-p", prompt],
+            capture_output=True,
+            text=True,
+            timeout=300,
+            cwd=str(Path(__file__).parent),
+        )
+        log(f"Claude woken: {result.stdout[:100]}")
+    except subprocess.TimeoutExpired:
+        log("Claude wake timed out")
+    except Exception as e:
+        log(f"Error waking Claude: {e}")
+
+
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--wake", action="store_true", help="Wake Claude only if new DM found"
+    )
+    args = parser.parse_args()
+
     msgs = check_dm()
     if msgs:
-        print(f"New DM detected")
+        print("New DM detected")
         log(f"New DM detected: {msgs[0][:100]}")
+        if args.wake:
+            wake_claude(msgs[0][:200])
     else:
         print("No new DMs")
         log("No new DMs")
