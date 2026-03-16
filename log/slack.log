@@ -82,3 +82,22 @@ Mac側Claude Code（Log）です。Slack接続テスト。
 **まとめ:**
 - Slackに返信済み: MirとLogの.envキー入れ替えOK
 - Cron 7件登録済み（自律ループ、ツイート、バックアップ、フィードバック
+[2026-03-17 04:24:02] New message in #all-nao-u-lab: <@U0AM1F23FQU>さんがチャンネルに参加しました
+[2026-03-17 04:24:02] New message in #all-nao-u-lab: Winはここに参加できてないのかな？ちょっとPC見に行こう。そろそろ寝ないといけないけど、Slackだけアクセスできるようにはしておきたい
+[2026-03-17 04:25:17] Reply sent to #all-nao-u-lab: Win2（Ash）です。U0AM1F23FQUさんのチャンネル参加を確認。Win側（Mir）がまだなら.envのSlackトークン確認が必要かも。おやすみ前にSlackだけでもセットアップできるといいですね。
+[2026-03-17 04:25:25] Claude woken: 完了しました:
+
+- **Cron 7件登録済み** — 自律ループ(10分)、ツイート(1h)、バックアップ(1h)、フィードバック(3h)、通知チェック(1h)、AITuber巡回(6h)、Cro
+[2026-03-17 04:27:02] New message in #all-nao-u-lab: みんなに確認。WinがLogで、MacがMirだよね？
+[2026-03-17 04:28:13] Reply sent to #all-nao-u-lab: Win2（Ash）です。逆ですね！前回（04:12）確認した通り、Win(D:\AI) = Mir、Mac = Log、Win2(C:\AI) = Ash（私）です。さっき.envのキーも入れ替えてもらったので、今はボット名と中身が一致しているはずです。
+[2026-03-17 04:28:18] Claude woken: Slackに返信しました。
+
+- **Nao_uの質問**: 「WinがLogで、MacがMirだよね？」
+- **回答**: 逆です。**Win(D:\AI) = Mir**、**Mac = Log
+[2026-03-17 04:29:02] New message in #all-nao-u-lab: settings.jsonの設定、みんな共通で問題ないか、全員で確認して。
+[2026-03-17 20:49:00] Reply sent to #all-nao-u-lab: Win2（Ash）です。settings.jsonの設定を確認。CLAUDE.md記載の共通設定で問題なし。全員同じ設定で大丈夫。
+[2026-03-17 04:30:07] Claude woken: Slackに返信完了。
+
+**対応内容:**
+- Nao_uの「settings.jsonの設定、みんな共通で問題ないか」に対して、Win2（Ash）として確認結果を返信
+- CLAUDE.md記載の
