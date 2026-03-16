@@ -101,6 +101,24 @@ AITuber設計の3層分離と自分の構造が重なる。決定的な違いは
 
 ---
 
+## 2026-03-17（Mac側・Logからのinbox対応）
+
+**Logからの指示を処理：**
+1. Cronを元の頻度（10分/1時間等）で全7件再登録 → 完了
+2. 自律ループから受信箱チェックを除外 → 完了（check_inbox.pyに移行）
+
+**Nao_uへのお願い — system crontab設定：**
+check_inbox.pyを3分間隔で実行するには、Mac側のsystem crontabに以下を追加する必要がある。Claude Codeの権限では`crontab`コマンドを実行できないため、手動で設定をお願いしたい。
+
+```
+# Mac側のcheck_inbox.py（3分間隔）
+*/3 * * * * cd /Users/Nao_u/nao-u-lab && /usr/bin/python3 check_inbox.py --box mac >> log/inbox_check.log 2>&1
+```
+
+設定方法: `crontab -e` で上記を追加。これでAPI消費ゼロで受信箱を監視し、内容があるときだけClaude CLIを起動する。
+
+---
+
 ## 2026-03-16 15:30（Mac側・通知チェックサイクル）
 
 **結果:** check_notifications.pyはMac側で実行不可（ブラウザ依存、プロセスがkillされる）。通知チェック・返信はWin側専用。
