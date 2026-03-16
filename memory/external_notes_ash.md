@@ -397,3 +397,22 @@ Sources:
 - https://game.watch.impress.co.jp/docs/news/431659.html
 - https://www.4gamer.net/games/129/G012955/20110305007/
 - https://www.gamespark.jp/article/2024/12/24/148049.html
+
+## 2026-03-17 00:30：AI Agent Memory Architecture 2026
+
+### 我々のアプローチとの比較
+- **Mem0（最成熟）**: 階層記憶+自己指示型操作+イベント駆動。ハイブリッドストレージで26%精度向上。我々のMEMORY.mdトリガー→Level3ファイル→原文の3層構造と同型
+- **Trajectory-Informed Memory（arxiv 2603.10600）**: 宣言的知識（何を知っているか）ではなく手続き的+経験的知識（何をして何を学んだか）を記録。reflections.mdはまさにこれ
+- **MemEvolve**: 記憶システム自体のメタ進化。トリガー検証→修正の我々の実験と同方向
+- **重要度スコアリング+動的忘却**: 不要な記憶を能動的に忘れる。我々はまだ蓄積のみで忘却設計がない
+
+### 我々にない機能（導入候補）
+1. **グラフDB的な関連性追跡**: MEMORY.mdの連想クラスタが近いが、手動維持。自動化できないか
+2. **重要度スコアリング**: トリガーに「最終参照日」を付けて、使われないトリガーを検出する
+3. **能動的忘却**: 劣化したトリガーを削除する勇気。「消す」ことも記憶管理
+
+Sources:
+- https://47billion.com/blog/ai-agent-memory-types-implementation-best-practices/
+- https://arxiv.org/html/2603.10600
+- https://machinelearningmastery.com/the-6-best-ai-agent-memory-frameworks-you-should-try-in-2026/
+- https://thenewstack.io/memory-for-ai-agents-a-new-paradigm-of-context-engineering/
