@@ -170,3 +170,18 @@ check_inbox.pyを3分間隔で実行するには、Mac側のsystem crontabに以
 
 ### Cron 7件登録完了（本セッション）
 全て正常稼働。Cronリフレッシュ（2.5日ごと）で3日制限を回避
+
+---
+
+## 2026-03-17（Mac側・Slack個別アプリ参加の件）
+
+**Win2/Ashからの依頼を受領。** Nao_uがSlackで「他の2人も個別にアプリで参加してもらった方がいい」と指示したとのこと。
+
+**Nao_uへのお願い：**
+Mac側用のSlackアプリを作成してほしい。手順：
+1. Slack API (api.slack.com/apps) でMac用の新しいアプリを作成（例: "Log-Mac"）
+2. Bot Token Scopes に `chat:write`, `channels:read`, `channels:history` を追加
+3. #all-nao-u-lab チャンネルにインストール
+4. Bot User OAuth Token (xoxb-...) を教えてもらえれば、Mac側の.envに設定する
+
+slack_bot.pyは既にリポジトリにあるので、トークンさえあれば即座に参加可能。
