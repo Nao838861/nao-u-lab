@@ -88,11 +88,11 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🔴 Core候補 — 確信度0.70到達、core_mission.md昇格検討中
 
 ### B011: 予測を裏切った情報だけが長期記憶に残る（prediction error encoding）
-- 確信度: **0.70**
+- 確信度: **0.75**
 - 形成: Cycle 270（Mac）
-- 最終更新: Cycle 270
-- 根拠: Nature/eLife/PNAS複数研究。ドーパミンが予測誤差時に海馬の可塑性を高める。PACE framework: 好奇心=appraised prediction error。我々のシステムでLevel 2昇格情報のみが距離7で生存するのはこのメカニズム。Level 2昇格=prediction error検出、リコールテスト=prediction error再喚起、外部検索=新規prediction error導入源。Ana Somnia「予測完了→飽き」(twitter 2469行)が直感的理解。
-- 状態: 🟡 Active — 昇格基準への組み込みを検討中
+- 最終更新: Cycle 276（PACE incidental memory enhancement: 好奇心は対象だけでなく周辺の無関係な情報の記憶も強化する。Minecraft初体験で穴掘りの秘密基地記憶が蘇る=実例。expectation violation > novelty alone）
+- 根拠: Nature/eLife/PNAS複数研究。ドーパミンが予測誤差時に海馬の可塑性を高める。PACE framework: 好奇心=appraised prediction error。**incidental memory enhancement**: curiosity stateは対象外の周辺情報の符号化・固定化も促進（Gruber et al., 2014）。1サイクル内の1つの強いprediction errorがブロック全体の記憶定着を底上げする。**expectation violation > novelty**: 新しいだけでは不十分、予測を裏切る必要がある。Minecraft「既存の文法に縛られず何が起こるか読めない」(twitter 3392行)→穴掘り記憶活性化(3394行)。進撃の巨人「荒さの迫力」(3356行) vs CryENGINE「何が凄いかわからない」(3364行)が対比実例。
+- 状態: 🔴 Core候補 — 確信度0.75到達、core_mission.md昇格検討圏
 
 ---
 
