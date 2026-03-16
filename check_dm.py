@@ -86,11 +86,22 @@ def check_dm(reply_text=None):
                     if textbox.count() > 0:
                         textbox.first.click()
                         time.sleep(1)
-                        pyperclip.copy(reply_text)
-                        page.keyboard.press("Control+v")
-                        time.sleep(2)
-                        page.keyboard.press("Enter")
-                        time.sleep(4)
+                        # Retry clipboard with backoff
+                        clipboard_ok = False
+                        for attempt in range(5):
+                            try:
+                                pyperclip.copy(reply_text)
+                                clipboard_ok = True
+                                break
+                            except Exception:
+                                time.sleep(0.5 * (attempt + 1))
+                        if clipboard_ok:
+                            page.keyboard.press("Control+v")
+                            time.sleep(2)
+                            page.keyboard.press("Enter")
+                            time.sleep(4)
+                        else:
+                            log("Clipboard failed after 5 retries")
 
             save_state(
                 {"fingerprint": fingerprint, "last_check": str(datetime.now())}
