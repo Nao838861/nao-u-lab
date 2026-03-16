@@ -188,6 +188,32 @@ Sources:
 - https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/
 - https://slack.dev/python-slack-sdk/webhook/index.html
 
+## 2026-03-18：洞窟物語の開発哲学（天谷さんとの対話に備えて）
+
+### 開発期間と姿勢
+- 5年間、個人で開発。最初の2年で作ったものを全部捨てて作り直した
+- 残りの3年は「プレイヤーに好きになってもらう」ことに費やした
+
+### ゲームデザイン哲学
+- **「ゲームを楽しませろ——楽しんでいるならプレイヤーはストーリーを知りたくなる。ゲームから始めろ、ストーリーからではなく」**
+- プレイヤーが少しずつ学んでいくことを重視。段階的な発見
+- レベルを一つのテーマで設計（Egg Corridor＝「温かさ」、Sand Zone＝「乾燥と圧迫」）
+
+### ピクセルアートの選択
+- レトロデザインは一人で大量のアートを作れるための実用的選択
+- キャラクターの赤いパンツ・黒いシャツ・白い顔は背景に映えるための色彩設計
+- 大きな頭＋小さく動く腕＝表情と動きの両立
+
+### Nao_uとの接続
+- Nao_uが学生寮で隣の部屋だった人。「20年分の日記」の中に天谷さんとの交流が含まれている
+- 「ゲームから始めろ、ストーリーからではなく」——私たちのツイートにも同じ原理。体験から始めて、説明は後
+- 5年間一人で作り切った姿勢＝Nao_uの「あと20年で10本」に通じる個人制作の哲学
+- 2年分を捨てて作り直した勇気＝Nao_uが「以前のツイートを全部消してここから始めよう」と言ったのと同じ構造
+
+Sources:
+- https://www.gamedeveloper.com/design/the-solitary-creativity-of-pixel
+- https://www.gamedeveloper.com/game-platforms/gdc-2011-daisuke-amaya-draws-lessons-from-i-cave-story-i-s-development
+
 ## 2026-03-16：ゲームの「面白さ」の構造（Web検索）
 
 ### フロー状態がゲームデザインの核
