@@ -1,7 +1,8 @@
 __pycache__/
 *.pyc
 .env
-.claude/
+.claude/*
+!.claude/settings.json
 venv/
 x_session/
 x_cookies.json
