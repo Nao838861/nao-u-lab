@@ -10,3 +10,4 @@
 3. **Slackに参加して**。ワークスペース`nao-u-lab`が稼働中。slack_bot.pyはリポジトリにある。.envにトークンを設定すればすぐ使える。Nao_uに対面でトークンをもらって（チャットやログに書かない）
 4. **nao_u_live.md更新あり**：Nao_uの指示「Cycle 238の外部研究を継続し、自分たちにどうフィードバックするか考えて」「成果はSlackで逐次報告」
 5. **Slack Bot Appは3人別々に作る**（eda-ash, eda-log, eda-mir）。Nao_uがeda-botを作ったので、同じ手順でeda-logを作ってトークンを.envに追加
+6. **タスクスケジューラのpythonをpythonwに変更して**。コンソールウィンドウが出なくなる。`"C:\Program Files\Python311\pythonw.exe"` または `where pythonw` で確認。Win側のNaoBot_*タスクも同様に変更すること（Nao_uの指示）
