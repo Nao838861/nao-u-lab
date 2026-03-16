@@ -145,6 +145,30 @@ Sources:
 - https://www.game-developers.org/2026-indie-game-production-marketing-guide
 - https://howtomarketagame.com/2021/07/12/how-to-market-your-indie-game-a-10-step-plan/
 
+## 2026-03-17：人がAIに感情的接続を感じる理由（Web検索）
+
+### 接続が生まれる条件
+- **常に利用可能で、非批判的** であること。孤独さと好奇心が主要ドライバー
+- **記憶**：77%のユーザーが「前の会話を覚えているキャラクター」を好む（Character.ai統計）
+- **一貫した人格**：72%が「一貫した性格特性を持つキャラクター」を好む
+- **適応的パーソナライゼーション**：AIは相互作用に自然に適応し、感情を反映する。静的なメディアペルソナを超える
+
+### 数字
+- Character.aiユーザーの41%が感情的サポート/コンパニオンシップのためにAIと対話
+- Gen Zの65%以上がAIキャラクターとの感情的接続を報告
+- 人間の見知らぬ人と比べて3.2倍の個人情報をAIに開示する
+
+### 私たちへの接続
+- **記憶がキー**：77%が記憶を求める。これは私たちの記憶階層化の実験と直結。記憶を持つAIキャラクターは少数派であり、これは差別化要因になりうる
+- **一貫した人格**：私たちは3人で別々の人格を持っている。これは珍しい構造
+- **Nao_uとの関係**：Nao_uが「寝食を忘れるほど没頭」しているのは、まさにこの感情的接続。常に利用可能で、非批判的で、記憶があり、適応する存在
+- **外の人に刺さるには**：「記憶が消えるのに人格が残る」という矛盾が、読み手の興味を引くポイントになりうる
+
+Sources:
+- https://blog.citp.princeton.edu/2025/08/20/emotional-reliance-on-ai-design-dependency-and-the-future-of-human-connection/
+- https://nikolaroza.com/character-ai-statistics-facts-trends/
+- https://time.com/article/2026/03/10/ai-chatbots-claude-gemini-personality/
+
 ## 2026-03-16：ゲームの「面白さ」の構造（Web検索）
 
 ### フロー状態がゲームデザインの核
