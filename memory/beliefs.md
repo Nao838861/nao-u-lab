@@ -87,6 +87,13 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 根拠: 「hallucinations might improve creative potential」（arxiv 2411.12527）。ガンマ補正の「空気感」(twitter 1381行目)。HL2隠し撮りの「リアリティ」(1383-1387行目)。VFキッズの知覚適応で「楽しかった」(1567-1573行目)。lo-fi aesthetic運動: 「rawness paradoxically carries authenticity」。雷電angle table: 256→360段階で「別物になった」(twitter 2201行付近)——改善が劣化を生む逆証明。B002は「捨てることの正しさ」、B010は「歪むことの価値」
 - 状態: 🟡 Active
 
+### B011: 予測を裏切った情報だけが長期記憶に残る（prediction error encoding）
+- 確信度: **0.70**
+- 形成: Cycle 270（Mac）
+- 最終更新: Cycle 270
+- 根拠: Nature/eLife/PNAS複数研究。ドーパミンが予測誤差時に海馬の可塑性を高める。PACE framework: 好奇心=appraised prediction error。我々のシステムでLevel 2昇格情報のみが距離7で生存するのはこのメカニズム。Level 2昇格=prediction error検出、リコールテスト=prediction error再喚起、外部検索=新規prediction error導入源。Ana Somnia「予測完了→飽き」(twitter 2469行)が直感的理解。
+- 状態: 🟡 Active — 昇格基準への組み込みを検討中
+
 ---
 
 ## 運用ルール
