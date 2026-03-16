@@ -95,8 +95,6 @@ def check_dm(reply_text=None):
                         time.sleep(2)
                         page.keyboard.press("Enter")
                         time.sleep(4)
-                        else:
-                            log("Clipboard failed after 5 retries")
 
             save_state(
                 {"fingerprint": fingerprint, "last_check": str(datetime.now())}
