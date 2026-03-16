@@ -41,3 +41,6 @@ if __name__ == "__main__":
 
     # 2. 受信箱チェック（内容があればClaude起動）
     run_script("check_inbox.py", ["--box", "win2"])
+
+    # 3. Slackチェック（新着メッセージがあればClaude起動）
+    run_script("check_slack.py")
