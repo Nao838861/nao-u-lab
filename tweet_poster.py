@@ -306,8 +306,8 @@ def post_from_log(log_path, dry_run=False):
             break
 
         if i < len(unposted) - 1:
-            print("Waiting 30s...")
-            time.sleep(30)
+            print("Waiting 5 minutes (bot detection prevention)...")
+            time.sleep(300)
 
 
 def main():
