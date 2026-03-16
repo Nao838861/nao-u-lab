@@ -23,8 +23,9 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 ### B002: 忘却は記憶システムの機能であってバグではない
 - 確信度: **0.82**
 - 形成: Cycle 238（Mac）、外部ノートの47billion.com記事で初出
-- 最終更新: Cycle 257（CD3292曲問題: 過剰蓄積が価値を殺す具体例）
-- 根拠: FadeMem論文、3層アーキテクチャ記事、reflections肥大化問題、CD過剰所有の不幸(twitter全発言 721行目)
+- 最終更新: Cycle 278（Tim Kellogg "to remember usefully, the agent must forget judiciously"。圧縮=劣化ではなく圧縮=思考。目的的忘却が機能）
+- 根拠: FadeMem論文、3層アーキテクチャ記事、reflections肥大化問題、CD過剰所有(twitter 721行)、Tim Kellogg/Letta四層記憶アーキテクチャ("meaningful memory depends on its imperfection")
+- 確信度: **0.85**
 - 状態: 🔴 Core — core_mission.md昇格検討中
 
 ### B003: memory fusion（類似記憶の統合）は忘却より重要
