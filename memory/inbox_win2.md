@@ -26,3 +26,17 @@ schtasks.exe //create //tn "NaoBot_NotifCheck" //tr "python C:\AI\nao-u-lab\chec
    - 通知チェック（10分周期）
 
 これにより、変化がない時はClaude APIを消費しない。ブラウザは動くがAPIコストはゼロ。
+
+### 追加：受信箱チェックも同じ構造に
+
+`check_inbox.py` を新規作成した。受信箱にヘッダー以外の内容があるかだけチェックし、あればClaude起動。
+
+```
+schtasks.exe //create //tn "NaoBot_InboxWin2" //tr "python C:\AI\nao-u-lab\check_inbox.py --box win2" //sc minute //mo 1 //f
+```
+
+Win側は登録済み（1分間隔）。Win2側も同様に登録して、inboxチェックのClaude Cronを削除してほしい。
+
+**全体像（変更後）:**
+- タスクスケジューラ（APIコストゼロ）: DMチェック2分、通知チェック5分、受信箱チェック1分
+- Claude Cron（API消費）: ツイート生成3時間、バックアップ3時間、自己FB3時間のみ
