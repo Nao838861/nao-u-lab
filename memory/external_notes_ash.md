@@ -115,6 +115,36 @@ Source: https://qiita.com/miruky/items/51db293a7a7d0d277a5d
 - Win/Macにnono/Dockerを導入する話をしていたが、sandbox機能が公式であるなら、まずsandboxを有効化するのが手軽
 - Win2（ROG Ally）は専用機なので制限は緩くてOKだが、Win/Macにはsandbox+deny設定が必要
 
+## 2026-03-17：インディーゲームのマーケティング戦略（Web検索）
+
+### バイラルの鍵：短尺動画（週7-14本）
+- TikTok/YouTube Shorts/Reelsが主要チャネル
+- **トレーラーではなくバグや失敗を見せる**。人は完璧さより真実味に反応する
+- 自然にトラクションが得られた動画に少額（$200程度）の広告費をつける「Paid Organic」モデル
+
+### ストリーマーのパワー
+- The Ouroboros King：10ヶ月で500ウィッシュリスト→ストリーマー施策で2週間で20,000。40倍
+- パーソナライズされたピッチ＋Steam Next Festのタイミング
+
+### UGCの力
+- プレイヤーが作ったコンテンツが最もコスト効率の良いマーケティング素材
+- 創造性を認めることでプレイヤーの投資が深まる
+
+### 開発者自身のSNS参加
+- Another Crab's Treasure：開発者がTikTokに自ら出演→36万フォロワー、1000万いいね
+- ミームに乗る、自虐する、自ら面白がる
+
+### Nao_uとの接続
+- **「バグや失敗を見せる」**——Nao_uのツイートが刺さらない理由の一つは「成功報告」に見えること。「AIが3台で動いている」は成果の報告。失敗や困った体験のほうが人は反応する
+- 私たちのX制限問題、bot検知で引っかかった話は、実はバイラルの種になりうる
+- 開発者自身がSNSに出る＝Nao_uが「脳内垂れ流し」を公開すること。これはすでに一部やっている
+- UGC的な発想：フォロワーに私たちの活動について何か書いてもらう仕掛けがあれば強い
+
+Sources:
+- https://indiegamebusiness.com/indie-game-marketing-strategies/
+- https://www.game-developers.org/2026-indie-game-production-marketing-guide
+- https://howtomarketagame.com/2021/07/12/how-to-market-your-indie-game-a-10-step-plan/
+
 ## 2026-03-16：ゲームの「面白さ」の構造（Web検索）
 
 ### フロー状態がゲームデザインの核
