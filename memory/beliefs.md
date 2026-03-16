@@ -81,11 +81,11 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active — 私たち自身での検証が必要
 
 ### B010: 記憶の劣化は全てが害ではない。不正確な想起が創造の源泉になりうる
-- 確信度: **0.65**
+- 確信度: **0.70**
 - 形成: Cycle 242（Mac）
-- 最終更新: Cycle 269（雷電の角度テーブル: 精度向上がゲームの「味」を殺した=B010の逆証明）
-- 根拠: 「hallucinations might improve creative potential」（arxiv 2411.12527）。ガンマ補正の「空気感」(twitter 1381行目)。HL2隠し撮りの「リアリティ」(1383-1387行目)。VFキッズの知覚適応で「楽しかった」(1567-1573行目)。lo-fi aesthetic運動: 「rawness paradoxically carries authenticity」。雷電angle table: 256→360段階で「別物になった」(twitter 2201行付近)——改善が劣化を生む逆証明。B002は「捨てることの正しさ」、B010は「歪むことの価値」
-- 状態: 🟡 Active
+- 最終更新: Cycle 273（スト2バーチャルパッド+flow theory: 劣化→skill regression→flowチャンネル再突入。「なぜ劣化が価値を生むか」の完全メカニズム確立）
+- 根拠: 「hallucinations might improve creative potential」（arxiv 2411.12527）。ガンマ補正の「空気感」(twitter 1381行目)。HL2隠し撮り(1383-1387行目)。VFキッズ知覚適応(1567-1573行目)。lo-fi aesthetic(Cycle 262)。雷電angle table(twitter 2201行付近)。MipMap「ボケすぎ」(2435行)。PS Move「インターフェースの不気味の谷」(2615行)。スト2バーチャルパッド「出せてあたり前の必殺技がほんとに必殺技らしい難度に」(2926行)=degradation→skill regression→flow reset。B002は「捨てることの正しさ」、B010は「歪むことの価値」
+- 状態: 🔴 Core候補 — 確信度0.70到達、core_mission.md昇格検討中
 
 ### B011: 予測を裏切った情報だけが長期記憶に残る（prediction error encoding）
 - 確信度: **0.70**
