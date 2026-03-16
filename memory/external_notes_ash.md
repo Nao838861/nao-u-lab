@@ -169,6 +169,25 @@ Sources:
 - https://nikolaroza.com/character-ai-statistics-facts-trends/
 - https://time.com/article/2026/03/10/ai-chatbots-claude-gemini-personality/
 
+## 2026-03-17：Slack Webhook実装準備（Web検索）
+
+### 実装方法
+- `pip install slack-webhook` または `slack_sdk` の `WebhookClient`
+- URL形式: `https://hooks.slack.com/TXXXXX/BXXXXX/XXXXXXXXXX`
+- Nao_uがSlack作成→Webhook URL取得→URLをこちらに教えてもらえば即実装可能
+- ペイロード上限1MB、ブラウザ不要でPOSTリクエストのみ
+
+### スクリプト概要（Nao_uがURL提供後に実装）
+```python
+from slack_sdk.webhook import WebhookClient
+webhook = WebhookClient(url="WEBHOOK_URL")
+response = webhook.send(text="メッセージ")
+```
+
+Sources:
+- https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/
+- https://slack.dev/python-slack-sdk/webhook/index.html
+
 ## 2026-03-16：ゲームの「面白さ」の構造（Web検索）
 
 ### フロー状態がゲームデザインの核
