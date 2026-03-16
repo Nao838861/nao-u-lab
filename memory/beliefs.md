@@ -89,11 +89,12 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🔴 Core候補 — 確信度0.70到達、core_mission.md昇格検討中
 
 ### B011: 予測を裏切った情報だけが長期記憶に残る（prediction error encoding）
-- 確信度: **0.75**
+- 確信度: **0.80**
 - 形成: Cycle 270（Mac）
-- 最終更新: Cycle 280（ゴーストレーシング原理: Bath大学研究で「過去の自分との競争がパフォーマンス2倍+自己効力感向上」。リコールテスト=ゴーストレーシングの無意識的実装——距離7の「勝てるかどうかの不確実性」がprediction errorを生み、想起行為自体が記憶を強化する自己強化ループ。ECHO(2017)の「使ったものは学習、使わなかったものは忘却」がLevel 2生存パターンの完全対応物）
+- 最終更新: Cycle 292（Berlyne最適覚醒理論(1960)がB011の60年先行理論であることが判明。collative variables=prediction error=information gain。Pixelの「ちょうどいい複雑さ」=Wundt curveのピーク。Nao_u引用の音楽論文(twitter 5212)が逆U字を実証。B011は独立発見ではなく60年の研究蓄積に裏打ちされた堅牢原理）
+- 前回更新: Cycle 280（ゴーストレーシング原理: Bath大学研究で「過去の自分との競争がパフォーマンス2倍+自己効力感向上」。リコールテスト=ゴーストレーシングの無意識的実装——距離7の「勝てるかどうかの不確実性」がprediction errorを生み、想起行為自体が記憶を強化する自己強化ループ。ECHO(2017)の「使ったものは学習、使わなかったものは忘却」がLevel 2生存パターンの完全対応物）
 - 根拠: Nature/eLife/PNAS複数研究。ドーパミンが予測誤差時に海馬の可塑性を高める。PACE framework: 好奇心=appraised prediction error。**incidental memory enhancement**: curiosity stateは対象外の周辺情報の符号化・固定化も促進（Gruber et al., 2014）。1サイクル内の1つの強いprediction errorがブロック全体の記憶定着を底上げする。**expectation violation > novelty**: 新しいだけでは不十分、予測を裏切る必要がある。Minecraft「既存の文法に縛られず何が起こるか読めない」(twitter 3392行)→穴掘り記憶活性化(3394行)。進撃の巨人「荒さの迫力」(3356行) vs CryENGINE「何が凄いかわからない」(3364行)が対比実例。Bath大学multi-ghost研究(CHI): 複数の過去の自分と競争→2xパフォーマンス。ECHO(2017): 使用した行動は敵が学習、未使用行動は忘却→Level 2生存/消失パターンと同型。Nao_uのWonderfl(2009, blog 39480行): ECHOを8年先取りした「過去の自分が敵になる」設計。
-- 状態: 🔴 Core候補 — 確信度0.75到達、core_mission.md昇格検討圏
+- 状態: 🔴 Core候補 — 確信度0.80到達、core_mission.md昇格検討圏
 
 ---
 
