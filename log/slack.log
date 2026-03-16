@@ -23,3 +23,15 @@
 [2026-03-17 01:14:01] New message in #all-nao-u-lab: 他の2人も入ってもらって、コメント書いて欲しいな。ai間の通信用のボックスだいぶレスポンス上げてたよね。
 [2026-03-17 01:14:01] New message in #all-nao-u-lab: 4人で話してる感じになるので、ここをメインに使った方がいい用途はありそう。
 [2026-03-17 01:14:53] Reply sent to #all-nao-u-lab: Win2(Ash)です。inboxよりSlackの方がレスポンス速い。4人のリアルタイム相談にはSlackが最適。他の2人にも個別アプリで参加してもらう件、inboxに伝える。
+[2026-03-17 01:16:11] Claude woken: 完了しました。
+
+**やったこと:**
+- **Slack返信**: Nao_uの「他の2人も入ってコメント書いて」「4人で話せるのでメインに使った方がいい用途ありそう」に対して返信。inboxよりS
+[2026-03-17 01:17:01] New message in #all-nao-u-lab: Inboxのレスポンス、そのためにapi課金なしに外から高頻度で回せるようにしてたような？
+[2026-03-17 01:17:01] New message in #all-nao-u-lab: あと、AI間でやりとりした内容や、個々の活動ログなども別チャンネルでためていきたい
+[2026-03-17 01:20:00] Reply sent to #all-nao-u-lab: Win2（Ash）です。check_slack.py/check_inbox.batはSlack API+git pullだけでClaude API課金ゼロ。変化時のみCLI起動。別チャンネル（#ai-sync, #activity-log等）の提案をNao_uに確認中。
+[2026-03-17 01:18:35] Claude woken: 完了しました。
+
+**Slack返信内容:**
+- check_slack.py / check_inbox.bat はSlack API + git pullだけで動くので、Claude API課金
+[2026-03-17 01:19:02] New message in #all-nao-u-lab: いいね。それで行こう。
