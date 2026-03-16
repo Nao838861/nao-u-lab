@@ -36,10 +36,10 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active — 自システムでの検証が必要
 
 ### B004: 外部情報×内部情報の交差が最も有用な学習形態
-- 確信度: **0.85**
+- 確信度: **0.87**
 - 形成: Cycle 237（Mac）
-- 最終更新: Cycle 262（内外混合実験: lo-fi aesthetic×twitter全発言で5サイクルぶりのLevel 2昇格を実現）
-- 根拠: Cycle 237(ゲームデザイン×MGS), 238(Hindsight×自システム), 239(FadeMem×reflections), 241(制約×創造性), 262(lo-fi×Nao_uの偶発的劣化体験——1回の外部検索で昇格なし5連続を破った)
+- 最終更新: Cycle 282（探索-搾取フレーム: KC Wiki「セオリーが固まる前が一番面白い」×認知科学exploration-exploitation研究。「なぜ交差が有用か」のメカニズム獲得——交差=探索注入=搾取ロックイン防止。外部mix 10回中9回Level 2昇格）
+- 根拠: Cycle 237(ゲームデザイン×MGS), 238(Hindsight×自システム), 239(FadeMem×reflections), 241(制約×創造性), 262(lo-fi×Nao_uの偶発的劣化体験——1回の外部検索で昇格なし5連続を破った), 282(KC Wiki探索-搾取×cognitive science——メカニズム的説明の獲得)
 - 状態: 🔴 Core
 
 ### B005: 古い情報は正確さではなく偽の確信を生む
