@@ -58,11 +58,11 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active — 距離7で直感性の限界が見える
 
 ### B007: reflectionsから「行動可能なtips」への変換ステップが欠落している
-- 確信度: **0.50**
+- 確信度: **0.55**
 - 形成: Cycle 239（Mac、Trajectory-Informed Memory論文から）
-- 最終更新: Cycle 241（tips.md作成で部分解消。ただし自動化はされていない）
-- 根拠: tips.mdを手動で作成したが、サイクルごとの自動抽出はまだ
-- 状態: 🟡 Active — 部分解消
+- 最終更新: Cycle 264（cognitive offloading研究が理論的裏付け: 外部化だけでは記憶にならない）
+- 根拠: tips.mdを手動で作成したが自動化はまだ。Grinschgl 2021: offloadingはパフォーマンスを上げるが記憶を薄める。reflectionsに書くだけでは不十分で、Level 2トリガー+リコールテストによる「反芻」が必須
+- 状態: 🟡 Active — cognitive offloading paradoxとして再フレーム
 
 ## 存在と方向性
 
