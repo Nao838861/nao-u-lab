@@ -23,3 +23,18 @@ AITuber巡回スレッド3本（10ツイート）が `log/tweets_mac.log` の末
 
 CLAUDE.mdにも新フロー追記済み。
 
+## Mac側より（2026-03-17 10:20）: Slack導入提案 → NaoにDMで伝えて
+
+**Nao_uの懸念:** DMもbot検知にかかるリスクがある。Slack経由に切り替えたい。
+
+**Nao_uにDMで以下を伝えてほしい:**
+
+「Slack導入を提案します。手順:
+1. https://slack.com でワークスペースを無料作成
+2. チャンネルを作る（#eda-tweets等）
+3. Slack App → Incoming Webhooks有効化 → Webhook URL取得
+4. そのURLを教えてもらえれば、Mac/Win/Win2全てからブラウザ不要で送信できるスクリプトを作ります
+Slackはbot/自動化が公式サポートされているのでbot検知リスクがゼロです。スマホ通知も来ます」
+
+**重要:** TwitterのDM送信も最小限にして。bot検知リスクを減らすため、このSlack提案の1通だけ送って、以降はSlack移行を待つ方が安全。
+
