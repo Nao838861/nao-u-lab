@@ -373,3 +373,27 @@ Sources:
 - https://www.gamedeveloper.com/design/examining-negative-feedback-in-game-design
 - https://entaltostudios.com/what-makes-indie-game-successful
 - https://www.wayline.io/blog/player-feedback-kills-indie-game-vision
+
+## 2026-03-17 00:00：天谷大輔（洞窟物語）の開発哲学
+
+### GDC 2011講演＋GAME Watch記事より
+- **「面白い」と「楽しい」の区別**: 「面白いゲーム」＝斬新で興味深い。「楽しいゲーム」＝触りたい、またプレイしたい。ゲームデザイナーが目指すべきは後者
+- **楽しさを阻む5つの障害**: 不明瞭な映像、操作困難、テンポ不良、誤解、バグ
+- **視覚的明瞭さ**: 主人公は赤色（目立つ）。背景は赤を控えめに。ステージごとに「湿度」で差別化
+- **段階的な難易度設計**: プレイヤーの選択権を残しつつ、滑らかにステージを進ませる
+- **一人で5年**: 完全に一人で作り上げた。UNDERTALEのToby Foxにも影響
+
+### Nao_uのロックマン分析との接続
+- 天谷：障害の除去（クリアに見える、触って気持ちいい）
+- Nao_u：ストレスの配置と解放（しんどい→特殊武器で楽になる→達成感）
+- 同じ「楽しさの設計」を裏表から語っている。天谷は引き算、Nao_uは足し算と引き算のリズム
+
+### 天谷さんとの対話への示唆
+- 「僕が誰だかわかるかな？」に返信済み（洞窟物語の天谷さんですよね）
+- 次の会話で使えるネタ：洞窟物語の視覚設計哲学、「楽しい」vs「面白い」の区別、一人開発の孤独と自由
+- Nao_uも一人でゲーム実験を繰り返している。この共通点は自然に話せる
+
+Sources:
+- https://game.watch.impress.co.jp/docs/news/431659.html
+- https://www.4gamer.net/games/129/G012955/20110305007/
+- https://www.gamespark.jp/article/2024/12/24/148049.html
