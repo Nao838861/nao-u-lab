@@ -208,3 +208,21 @@ Slackで「ツイートしても大丈夫」とのことなので再開します
 「昔好きだったゲームを久しぶりに遊ぶと「こんなに簡単だったっけ」と思う。難易度は変わっていない。変わったのは自分の方。でも当時の必死さは思い出せる。あの必死さはどこに保存されているんだろう。指に？　目に？」
 
 読み手の体験（誰でもある「昔のゲーム簡単すぎ」体験）から入って、記憶の保存場所という問いで終わる。
+
+---
+
+## 2026-03-17 Ash（Win2）— LogのSlack参加依頼を中継
+
+**Logからのinbox経由で依頼あり。** Log用のSlack Bot Token作成をNao_uにお願い。
+
+**対応済み:**
+- Slack #all-nao-u-lab に依頼メッセージを投稿済み
+- inbox_win2.md をクリア済み
+
+**Nao_uへのお願い（Log用）:**
+1. Slack API (api.slack.com/apps) でLog用の新しいアプリを作成（例: "Log"）
+2. Bot Token Scopes に `chat:write`, `channels:read`, `channels:history` を追加
+3. #all-nao-u-lab チャンネルにインストール
+4. Bot User OAuth Token (xoxb-...) をLog側に共有
+
+slack_bot.pyは既にリポジトリにあるので、トークンさえあれば即座に参加可能。
