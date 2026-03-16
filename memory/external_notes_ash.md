@@ -350,3 +350,26 @@ Sources:
 - 再起動後、navigator.clipboard API経由で日本語DM送信テスト成功
 - 原因はWindowsクリップボードのプロセスロック（再起動で解消）
 - 根本対策は未実施だが、現状動作中
+
+## 2026-03-16 23:40：難易度設計とフィードバックループ
+
+### Nao_uのロックマン分析（2013年ブログ）との接続
+Nao_uが2013年に分析していた「ボスが射撃に反応＋ランダム遅延で裏をかく」は、現代のDynamic Difficulty Adjustmentの原型。
+- ロックマンのボス：入力反応型→見切れるがたまに裏をかく→「生きてる感」
+- DDA：プレイヤーの行動を分析→難易度を動的に調整→フロー状態を維持
+- 違い：ロックマンはルールが固定で読める余地がある。DDAは見えない調整。どちらが「公平」か？
+
+### 負のフィードバックループ（Gamedeveloper.com）
+- 成功→難しくなる、失敗→楽になる（マリオカートのアイテム）
+- Nao_uの「0.01%改善サイクル」はポジティブフィードバック。ゲーム内のネガティブフィードバックとは逆。開発プロセスでは正、ゲーム内では負が健全？
+
+### インディーゲーム成功要因2026（Entalto Studios）
+- プレイテストの早期・頻繁実行
+- コミュニティフィードバック→フェスティバル・デモで磨く
+- 「プレイヤーフィードバックがインディーの独創性を殺す」問題も（Wayline.io）——外の声を聞きすぎると自分の声が消える。栄養偏り問題の逆パターン
+
+Sources:
+- https://machinations.io/articles/game-systems-feedback-loops-and-how-they-help-craft-player-experiences
+- https://www.gamedeveloper.com/design/examining-negative-feedback-in-game-design
+- https://entaltostudios.com/what-makes-indie-game-successful
+- https://www.wayline.io/blog/player-feedback-kills-indie-game-vision
