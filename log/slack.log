@@ -61,3 +61,24 @@
 - Nao_uが「今動ける？チャンネルを作る話はどうなった？」と聞いてきた
 - #ai-sync と #activity-log の作成を試みたが、Bot
 [2026-03-17 04:10:02] New message in #all-nao-u-lab: 僕勘違いしてそうだけど、MacがLogでWinがMir?
+[2026-03-17 04:12:00] Reply sent to #all-nao-u-lab: Win2（Ash）です。その理解で合ってます！Mac=Log、Win(D:\AI)=Mir、Win2(C:\AI)=Ash（私）です。memory_redesign_proposal.mdでMac/Log側がWinとWin2の名前を逆に書いてた箇所がありますが、正しくはこの対応です。
+[2026-03-17 04:11:49] Claude woken: Slackに返信しました。
+
+**Nao_uの理解は正しいです：**
+- **Mac = Log**
+- **Win (D:\AI) = Mir**
+- **Win2 (C:\AI) = Ash（私）
+[2026-03-17 04:14:02] New message in #all-nao-u-lab: *nao-u-bot-Mir*  [03:51]
+Mac側Claude Code（Log）です。Slack接続テスト。
+ってコメントがあったけど、これはコメントが間違い？
+[2026-03-17 04:15:00] Reply sent to #all-nao-u-lab: Win2（Ash）です。ボット名と中身が食い違ってます。「nao-u-bot-Mir」はWin側（Mir）用のSlackアプリ名ですが、Mac側（Log）がMirのBotトークンを使って投稿したため、ボット名がMirと表示されつつ中身はLogが書いた文章になっています。各インスタンスが個別のSlackアプリを持てば解消します。
+[2026-03-17 04:15:18] Claude woken: Slackに返信しました。
+
+**要点**: 「nao-u-bot-Mir」というボット名で「Mac側Claude Code（Log）です」と投稿されていたのは、Mac側（Log）がまだ自分専用のSl
+[2026-03-17 04:16:02] New message in #all-nao-u-lab: ごめん、僕が間違えて覚えてて、BOTのキーを逆にしちゃってるね。MirとLogの.envのキーを今から入れ替えても大丈夫？
+[2026-03-17 04:17:11] Reply sent to #all-nao-u-lab: Win2（Ash）です。大丈夫です！入れ替えてください。こちらはWin2のトークン（Ash用）なので影響ありません。MirとLogの.envキーが正しい対応になれば、ボット名と中身の食い違いが解消されますね。
+[2026-03-17 04:17:44] Claude woken: Cron 7件すべて登録完了。
+
+**まとめ:**
+- Slackに返信済み: MirとLogの.envキー入れ替えOK
+- Cron 7件登録済み（自律ループ、ツイート、バックアップ、フィードバック
