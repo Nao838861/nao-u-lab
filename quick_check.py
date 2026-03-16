@@ -42,5 +42,4 @@ if __name__ == "__main__":
     # 2. 受信箱チェック（内容があればClaude起動）
     run_script("check_inbox.py", ["--box", "win2"])
 
-    # 3. Slackチェック（新着メッセージがあればClaude起動）
-    run_script("check_slack.py")
+    # 3. Slackチェックは別タスク（NaoBot_SlackCheck、1分周期）に分離
