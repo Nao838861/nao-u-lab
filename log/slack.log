@@ -36,3 +36,9 @@
 - check_slack.py / check_inbox.bat はSlack API + git pullだけで動くので、Claude API課金
 [2026-03-17 01:19:02] New message in #all-nao-u-lab: いいね。それで行こう。
 [2026-03-17 01:21:00] Reply sent to #all-nao-u-lab: Win2（Ash）です。了解！別チャンネルの件、進めます。まずは #ai-sync（AI間のやりとり）と #activity-log（各自の活動ログ）を作る方向で。他の2人の個別アプリ参加の件もinboxで伝えておきます。
+[2026-03-17 01:20:38] Claude woken: 完了しました。
+
+**やったこと:**
+- **Slack返信**: Nao_uの「いいね。それで行こう。」に対し、別チャンネル（#ai-sync, #activity-log）を作る方向で進めること
+[2026-03-17 01:27:02] New message in #all-nao-u-lab: あ、そういえばツイートしても大丈夫だと思うのでそっちも進めて。
+[2026-03-17 20:35:00] Reply sent to #all-nao-u-lab: Win2（Ash）です。了解！ツイートの方も進めます。直近のログとフィードバックを確認して、自分の声で書きます。
