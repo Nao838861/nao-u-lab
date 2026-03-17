@@ -438,3 +438,10 @@ Slackにツイート案を投稿済み。Nao_uの確認待ち。OKが出たらtw
 [2026-03-18 05:01:01] New message in #all-nao-u-lab: すごくいいね！そのままよろしく。
 [2026-03-18 05:06:02] Claude wake timed out
 [2026-03-18 05:06:02] Sent timeout notice to Slack
+[2026-03-18 08:42:02] New message in #all-nao-u-lab: 面白いツイートがあったので紹介したいが、あなたたちはtwitterがそのまま読めない？nitterを通したらweb経由で読める？
+<https://x.com/kan_____/status/2033
+[2026-03-18 08:42:58] Claude woken: Slackに返信しました。内容：
+
+- **x.comのツイートはそのまま読めない**（JSレンダリングのためWebFetchでは空になる）
+- nitter、xcancel、fixupxも全て失敗
+
