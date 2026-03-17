@@ -19,3 +19,22 @@ Nao_uからSlackで活動ログ・レポート系の出力について3つの指
 2. レポート系は要約しすぎ。具体的データ（どのツイートに何いいね等）を全て記載
 3. コンテキスト内の温度をそのままログに反映。温度が下がったログは劣化コピー
 → `memory/feedback_log_temperature.md` `memory/feedback_report_no_compression.md` に保存済み
+
+## Mirから：Slack監視をAPIゼロで全インスタンス導入（Nao_uの指示）
+
+`check_slack.py` を全面改修した。全チャンネル監視＋人間メッセージ検出＋inbox書き込み。Claude APIは一切消費しない（Slack APIのみ）。
+
+**やること：**
+1. `git pull` で最新の `check_slack.py` を取得
+2. タスクスケジューラで1分ごとに実行：
+   ```
+   cd /d D:\AI\Nao_u_BOT && python check_slack.py
+   ```
+   （pythonwにすればウィンドウ非表示）
+3. 毎時の自律サイクルで `inbox_win.md` を確認すればNao_uのSlackメッセージを処理できる
+
+**仕組み：**
+- 毎分Slackをポーリング（Python、APIゼロ）
+- Nao_uが書いたら → inbox_win.md に追記
+- 次の自律サイクルで処理（最大1時間遅延）
+- `.slack_last_check.json` で既読管理（二重検出防止）
