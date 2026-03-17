@@ -51,9 +51,12 @@ def _api_call(method, data=None):
         return {"ok": False, "error": str(e)}
 
 
-def post_message(channel, text):
-    """チャンネルにメッセージを投稿"""
-    return _api_call("chat.postMessage", {"channel": channel, "text": text})
+def post_message(channel, text, thread_ts=None):
+    """チャンネルにメッセージを投稿（thread_ts指定でスレッド返信）"""
+    data = {"channel": channel, "text": text}
+    if thread_ts:
+        data["thread_ts"] = thread_ts
+    return _api_call("chat.postMessage", data)
 
 
 def list_channels():
