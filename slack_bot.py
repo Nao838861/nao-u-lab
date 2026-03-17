@@ -90,7 +90,8 @@ def _resolve_channel(name):
 
 
 if __name__ == "__main__":
-    import sys
+    import sys, io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
     # 認証テスト
     result = auth_test()
