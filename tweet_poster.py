@@ -21,6 +21,29 @@ from playwright.sync_api import sync_playwright
 
 POSTED_LOG = Path(__file__).parent / "log" / "posted.log"
 BOT_PROFILE = Path(__file__).parent / ".bot_profile"
+LOCK_FILE = Path(__file__).parent / ".tweet_poster.lock"
+
+
+def acquire_lock():
+    """ロックファイルを取得。多重起動を防止。"""
+    if LOCK_FILE.exists():
+        # 古いロック（10分以上前）は無視
+        import os
+        age = time.time() - os.path.getmtime(LOCK_FILE)
+        if age < 600:
+            print(f"Error: Another tweet_poster is running (lock age: {age:.0f}s)")
+            return False
+        print(f"Warning: Stale lock ({age:.0f}s old), overriding.")
+    LOCK_FILE.write_text(str(time.time()), encoding="utf-8")
+    return True
+
+
+def release_lock():
+    """ロックファイルを解放"""
+    try:
+        LOCK_FILE.unlink(missing_ok=True)
+    except Exception:
+        pass
 
 
 def reply_to_latest(text, dry_run=False):
@@ -289,25 +312,39 @@ def post_from_log(log_path, dry_run=False):
         print("No unposted tweets.")
         return
 
-    print(f"Unposted: {len(unposted)}")
-    for i, (ts, text) in enumerate(unposted):
-        print(f"\n--- [{i+1}/{len(unposted)}] {ts} ---")
-        print(text[:100] + ("..." if len(text) > 100 else ""))
+    if not dry_run and not acquire_lock():
+        print("Aborted: could not acquire lock (another instance running?)")
+        return
 
-        if dry_run:
-            print("[DRY RUN] skip")
-            continue
+    try:
+        print(f"Unposted: {len(unposted)}")
+        for i, (ts, text) in enumerate(unposted):
+            # 投稿直前に再チェック（別プロセスが先に投稿した可能性）
+            posted = load_posted()
+            if ts in posted:
+                print(f"  [{ts}] Already posted by another process, skipping.")
+                continue
 
-        success = post_tweet(text)
-        if success:
-            mark_posted(ts)
-        else:
-            print(f"Failed: {ts}")
-            break
+            print(f"\n--- [{i+1}/{len(unposted)}] {ts} ---")
+            print(text[:100] + ("..." if len(text) > 100 else ""))
 
-        if i < len(unposted) - 1:
-            print("Waiting 5 minutes (bot detection prevention)...")
-            time.sleep(300)
+            if dry_run:
+                print("[DRY RUN] skip")
+                continue
+
+            success = post_tweet(text)
+            if success:
+                mark_posted(ts)
+            else:
+                print(f"Failed: {ts}")
+                break
+
+            if i < len(unposted) - 1:
+                print("Waiting 5 minutes (bot detection prevention)...")
+                time.sleep(300)
+    finally:
+        if not dry_run:
+            release_lock()
 
 
 def main():

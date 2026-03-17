@@ -92,10 +92,22 @@ def check_new_messages():
     return new_messages
 
 
+def is_claude_running():
+    """Claudeプロセスが稼働中か確認"""
+    try:
+        result = subprocess.run(
+            ["tasklist", "/FI", "IMAGENAME eq claude.exe"],
+            capture_output=True, text=True, timeout=10,
+        )
+        return "claude.exe" in result.stdout.lower()
+    except Exception:
+        return False
+
+
 def wake_claude(messages):
     """新しいSlackメッセージがあった時だけClaude CLIを起動"""
     summary = "\n".join(
-        f"[{m['channel']}] {m['text'][:200]}" for m in messages
+        f"[{m['channel']}] <@{m['user']}> {m['text'][:200]}" for m in messages
     )
     prompt = f"Slackに新しいメッセージがあります。内容を確認して返信してください。slack_bot.pyのpost_message()で返信できます。\n\n{summary}"
     try:
@@ -111,8 +123,22 @@ def wake_claude(messages):
         log(f"Claude woken: {result.stdout[:100]}")
     except subprocess.TimeoutExpired:
         log("Claude wake timed out")
+        # タイムアウト時、メッセージがあったことだけ記録
+        for m in messages:
+            if m.get("channel_id"):
+                post_message(m["channel_id"],
+                    "Win2（Ash）です。現在処理に時間がかかっています。次のサイクルで対応します。")
+                log("Sent timeout notice to Slack")
+                break
     except Exception as e:
         log(f"Error waking Claude: {e}")
+        # Claude起動失敗時もSlackに通知
+        for m in messages:
+            if m.get("channel_id"):
+                post_message(m["channel_id"],
+                    f"Win2（Ash）です。セッション起動に問題が発生しました（{type(e).__name__}）。watchdog_win2.batでの復帰を待ちます。")
+                log("Sent error notice to Slack")
+                break
 
 
 def main():
