@@ -79,10 +79,48 @@ def auth_test():
     return _api_call("auth.test")
 
 
+def _resolve_channel(name):
+    """チャンネル名からIDを解決"""
+    channels = list_channels()
+    if isinstance(channels, dict) and 'channels' in channels:
+        for ch in channels['channels']:
+            if ch['name'] == name:
+                return ch['id']
+    return name  # IDがそのまま渡された場合
+
+
 if __name__ == "__main__":
+    import sys
+
     # 認証テスト
     result = auth_test()
     if result.get("ok"):
         print(f"Auth OK: {result.get('user')} @ {result.get('team')}")
     else:
         print(f"Auth FAILED: {result.get('error')}")
+        sys.exit(1)
+
+    args = sys.argv[1:]
+    if len(args) >= 3 and args[0] == "post":
+        channel_name = args[1]
+        text = " ".join(args[2:])
+        channel_id = _resolve_channel(channel_name)
+        result = post_message(channel_id, text)
+        if result.get("ok"):
+            print(f"Posted to #{channel_name}")
+        else:
+            print(f"Post FAILED: {result.get('error')}")
+    elif len(args) >= 2 and args[0] == "history":
+        channel_name = args[1]
+        limit = int(args[2]) if len(args) > 2 else 10
+        channel_id = _resolve_channel(channel_name)
+        result = get_history(channel_id, limit)
+        if isinstance(result, dict) and 'messages' in result:
+            for m in reversed(result['messages']):
+                print(m.get('text', '')[:200])
+                print('---')
+    elif len(args) >= 1 and args[0] == "list":
+        channels = list_channels()
+        if isinstance(channels, dict) and 'channels' in channels:
+            for ch in channels['channels']:
+                print(f"{ch['id']} {ch['name']}")
