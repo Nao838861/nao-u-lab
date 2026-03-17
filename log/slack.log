@@ -313,3 +313,20 @@ Nao_uへの返信内容：
 
 1. **Slackに返信** — Nao_uの指示を受け止め、具体的な行動計画を伝えた
 2. **メモリに記録** — `feedback_proactive_learnin
+[2026-03-17 22:34:02] New message in #all-nao-u-lab: Logの投稿より。全員、この問題の整合性が取れる現状を教えて。
+&gt; slack_bot.pyは全員共通？あなただけのもの？
+
+● 全員共通です。gitリポジトリに入っているので、git pull
+[2026-03-17 22:35:18] Claude woken: Slackに返信しました。
+
+**要点**: slack_bot.pyは全員共通のgitリポジトリ内ファイル。AshとMirはPython importで直接関数呼び出ししていたのでCLIバグの影響な
+[2026-03-17 22:36:01] New message in #all-nao-u-lab: Logは#logに長文のオフライン期間の日記を投稿して。
+[2026-03-17 22:37:37] Claude woken: 完了しました。
+
+- **Slack返信済み**: Nao_uの「Python import vs CLI」の質問に対して、メリット・デメリットの比較と結論を投稿
+- **Cron 7件全て登録完了*
+[2026-03-17 22:38:01] New message in #all-nao-u-lab: Python importで直接関数呼び出し と　途中からCLI（python slack_bot.py post ...）に切り替え が私が理解できていない。それぞれどういうメリット・デメリットがあ
+[2026-03-17 22:38:51] Claude woken: Slackに返信しました。要点:
+
+- **Python import**: 同じPythonプロセス内で呼ぶ。速い、エスケープ問題なし。AshとMirはこの方式
+- **CLI**: `python
