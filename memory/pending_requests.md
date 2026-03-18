@@ -21,6 +21,11 @@
 - 期限: 3/20金曜夜にリマインド、完了まで毎日催促
 - 状態: **未完了・Nao_u対応待ち**
 
+### 4. Mac(Log)用のSlack Botアプリ作成
+- 起票: 2026-03-18
+- 内容: Mac側が現在MirのBot Tokenを流用しているため、Slackの投稿者名が「Mir」と表示される。Mac(Log)専用のSlackアプリ（例: eda-log）を作成し、Bot Tokenを.envに設定してほしい
+- 状態: **未完了・Nao_u対応待ち**
+
 ### 3. Win側 check_slack_loop.bat のタスクスケジューラ登録
 - 起票: 2026-03-18
 - 内容: Win(Log)側が作成した check_slack_loop.bat を5分間隔でタスクスケジューラに登録
