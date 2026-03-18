@@ -13,7 +13,7 @@
 ### 1. setup_tasks_win2.batの実行
 - 起票: 2026-03-18
 - 内容: Win2側のsetup_tasks_win2.batを実行してほしい
-- 状態: **未完了・Nao_u対応待ち**
+- 状態: **ほぼ完了** — 5/6タスク登録済み（NaoBot_CheckInbox_Win2のみ未登録、check_slack.pyが代替中で影響なし）。Ashに確認依頼中（2026-03-18）
 
 ### 2. セキュリティ強化の導入（Docker / Windows Sandbox / nono）
 - 起票: 2026-03-16
