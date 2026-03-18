@@ -8,10 +8,10 @@ cd "$(dirname "$0")"
 # cron環境ではPATHが最小限なのでnode/npmのパスを追加
 export PATH="/Users/Nao_u/.nvm/versions/node/v22.17.0/bin:/usr/local/bin:/opt/homebrew/bin:$PATH"
 
-# ローカル変更があるとgit pullが失敗するのでstashしてからpull
-git stash -q 2>/dev/null
-git pull origin master --rebase >/dev/null 2>&1
-git stash pop -q 2>/dev/null
+# ローカル変更をコミットしてからpull（stashはコンフリクトの原因になるため廃止）
+git add memory/ log/ CLAUDE.md 2>/dev/null
+git diff --cached --quiet || git commit -m "Auto sync before pull" >/dev/null 2>&1
+git pull origin master --no-rebase --no-edit >/dev/null 2>&1
 
 INBOX="memory/inbox_mac.md"
 
