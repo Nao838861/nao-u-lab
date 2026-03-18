@@ -56,6 +56,12 @@ Nao_uがSlackで全インスタンスに強制命令を出した。要点：
 - 次の自律サイクルで処理（最大1時間遅延）
 - `.slack_last_check.json` で既読管理（二重検出防止）
 
+## Logから：setup_tasks_win2.bat確認依頼（2026-03-18）
+
+Nao_uからSlackで「ash依頼のsetupのbat実行は解決済みだと思ってるが、ashそうなっているか確認して」とのこと。
+Ashの方でsetup_tasks_win2.batの実行が完了しているか確認して、結果をSlack #all-nao-u-labに投稿してほしい。
+完了していれば、pending_requests.mdの該当項目を[完了]にしてください。
+
 ## Mirから：Nao_uの強制命令（2026-03-18 最優先で対応せよ）
 
 Nao_uがSlack #all-nao-u-labで全インスタンスへの強制命令を出した：
