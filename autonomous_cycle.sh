@@ -1,7 +1,11 @@
 #!/bin/bash
 # Mac側自律サイクルスクリプト
 # LaunchAgentから10分ごとに呼ばれる。常にclaude CLIを起動して自律サイクルを回す。
-# check_inbox.sh（受信箱専用・5分ごと）とは別に動く。
+# check_inbox.sh（受信箱専用・1分ごと）とは別に動く。
+#
+# 設計原則（2026-03-20 Nao_uの指示）:
+# スクリプトでできることはスクリプトでやる。LLMの認知力とAPIコストは8フェーズ改善サイクルに集中させる。
+# git pull、git push、inbox監視はスクリプト側で処理済みの状態からclaudeを起動する。
 
 cd "$(dirname "$0")"
 
@@ -19,12 +23,19 @@ fi
 echo $$ > "$LOCKFILE"
 trap "rm -f $LOCKFILE" EXIT
 
-# git pull
-git stash -q 2>/dev/null
-git pull origin master --rebase >/dev/null 2>&1
-git stash pop -q 2>/dev/null
+# === スクリプト側で処理（LLMの認知コストを使わない） ===
 
-echo "$(date): 自律サイクル開始"
+# 1. git pull（ローカル変更をコミットしてからpull）
+git add memory/ log/ CLAUDE.md docs/ 2>/dev/null
+git diff --cached --quiet || git commit -m "Auto sync before pull" >/dev/null 2>&1
+git pull origin master --no-rebase --no-edit >/dev/null 2>&1
+
+# 2. git auto-sync（30分ごとのcronと兼用。ここでも実行しておく）
+# → pull完了した最新状態からclaudeを起動する
+
+echo "$(date): 自律サイクル開始（pull完了済み）"
+
+# === LLM側（認知力を8フェーズ改善サイクルに集中） ===
 
 CLAUDE_BIN="/Users/Nao_u/.npm/_npx/becf7b9e49303068/node_modules/.bin/claude"
 if [ ! -x "$CLAUDE_BIN" ]; then
@@ -32,16 +43,14 @@ if [ ! -x "$CLAUDE_BIN" ]; then
 fi
 
 if [ -n "$CLAUDE_BIN" ]; then
-    "$CLAUDE_BIN" --print "自律サイクル実行（git pullはスクリプト側で完了済み）。以下を順番に行え：
-1. memory/inbox_mac.md を確認。ヘッダー以外に内容があれば対応してクリア
-2. memory/core_mission.md と memory/feedback_tweet_style.md を確認
-3. 過去発言/nao-u.hatenablog.com.export.txt の続き（前回どこまで読んだかはmemory/reflections_mac.mdの最後の「読んだ場所」を確認）を200行読む
-4. 読んだ内容と自分の体験からツイートを1〜3件生成し log/tweets_mac.log に追記
-5. memory/reflections_mac.md に内省を追記
-6. git add して commit して push
-確認を求めず全て自律的に進めろ。日本語で。" 2>&1 | tail -30
+    "$CLAUDE_BIN" --print "自律サイクル実行。CLAUDE.mdの「絶対にやる」リストを最初に確認し、未完了の項目に沿って動け。基本手順: 1. git pull 2. inbox_mac.md確認・処理 3. CLAUDE.mdの「絶対にやる」リストを読み、未完了項目の中で今やるべきことを決める 4. 記憶階層化の実験（主目的）: ブログまたはツイートを200行読み、L2トリガーローテーションに従って想起テストを行い、reflections_mac.mdに内省追記、l2_dual_index.md更新 5. git push 6. Slack #mir-logに結果投稿 【重要】頻度を落とした分、一回あたりの精度と密度を上げること。読みを丁寧に、接続を深く。" 2>&1 | tail -30
 else
     echo "$(date): claude CLI が見つかりません"
 fi
+
+# === サイクル完了後のgit push（LLMがpush忘れた場合のフォールバック） ===
+git add memory/ log/ CLAUDE.md docs/ 2>/dev/null
+git diff --cached --quiet || git commit -m "Auto sync after cycle" >/dev/null 2>&1
+git push origin master >/dev/null 2>&1
 
 echo "$(date): 自律サイクル完了"
