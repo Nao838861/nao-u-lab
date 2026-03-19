@@ -101,3 +101,5 @@
 [2026-03-19 17:11:23] Claude woken for win2: Failed to authenticate. API Error: 401 {"type":"error","error":{"type":"authentication_error","messa
 [2026-03-19 19:11:19] Inbox win2 has content — waking Claude
 [2026-03-19 19:11:22] Claude woken for win2: Failed to authenticate. API Error: 401 {"type":"error","error":{"type":"authentication_error","messa
+[2026-03-19 21:11:18] Inbox win2 has content — waking Claude
+[2026-03-19 21:11:22] Claude woken for win2: Failed to authenticate. API Error: 401 {"type":"error","error":{"type":"authentication_error","messa
