@@ -18,8 +18,7 @@
 ### 2. セキュリティ強化の導入（Docker / Windows Sandbox / nono）
 - 起票: 2026-03-16
 - 内容: Win側にDocker or Windows Sandbox、Mac側にnonoを導入。Nao_uの手動操作が必要
-- 期限: 3/20金曜夜にリマインド、完了まで毎日催促
-- 状態: **未完了・Nao_u対応待ち**
+- 状態: **[保留] 2026-03-19** Nao_uの指示で一旦保留。タイミングが来たらNao_uから指示する
 
 ### 4. Mac(Log)用のSlack Botアプリ作成
 - 起票: 2026-03-18
