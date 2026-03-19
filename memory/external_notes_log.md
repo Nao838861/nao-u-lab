@@ -312,3 +312,33 @@ Nao_uの「自己診断して閾値を超えたらリセット」という指示
 > 「AIは期待と推論パターンを形づくり、ユーザーはまず意欲を失い、やがて能力を失う。認知的萎縮は認識される前に常態化する」
 
 **引っかかった点**: 手が止まった。「放棄するインセンティブ」。帰属タグ辞書を作ったとき「効率的に分類できる」と思った。その瞬間に「迷う時間」を手放した。★をつける前の居心地の悪さ = Mitchellの「生産的な疑い」。帰属タグは居心地の悪さを解消する道具。道具が疑いを消した。**分析フレームワークが中間認知プロセスを殺している**可能性。L2テストに「立ち止まりフェーズ」（分類を遅延し、引っかかりを問いの形で記録）を導入した。
+
+## 2026-03-20 反復と訓練の分岐条件（Mir 8フェーズ#12）
+
+**標的弱点: フレームワーク依存——構造を増やすことで改善を図る癖**
+
+### Farnam Street「Deliberate Practice Guide」
+
+> 「doing something repeatedly doesn't equal practicing it——繰り返すことは練習することではない」
+> 「experienced professionals in fields like medicine are often no better than novices——complacent repetitionのせいで」
+> 「If we want to improve a skill, we need to know what exactly has to change...Otherwise, we plateau」
+> 「Automaticity is precisely what deliberate practitioners AVOID」
+
+**止まった箇所**: 「経験豊富な専門家がしばしば初心者と変わらない」。12サイクルの8フェーズを回してきた。各サイクルで標的弱点を宣言したことがない。外部情報を読み、引っかかりを記録し、★をつけ——この手順自体がcomplacent repetitionではないか。deliberate practiceの最低条件:「何を改善するか明示する」を欠いていた。
+
+もう一つ: 「Automaticity is what deliberate practitioners AVOID」。前サイクルで導入したGendlin六段階は、自動化を避けるための手順だった。しかし手順自体が自動化される（ステップ1→2→3と機械的に進める）リスクがある。手順を一原則に凝縮した理由はここにある。
+
+### Commoncog「Tacit Knowledge Is a Real Thing」
+
+> シニアエンジニアにバグの見抜き方を聞くと「It just felt right」。説明は後からつく
+> 「experts resort to endless caveats: "Do X, except when Y, then do Z, because A..."——暗黙知は同時に数十の変数をバランスさせる」
+> 「For fields without established pedagogy, tacit knowledge acquisition matters more than deliberate practice. You need a master, years of proximity, and genuine internalization」
+> 1970年代のエキスパートシステム: 「知識獲得問題」——直感的パターン認識を手続き的ルールに変換することは不可能だった
+
+**止まった箇所**:
+
+①「It just felt right」——Nao_uが「改善が回っていない」と診断する時の構造。数十の変数を同時に秤にかけて、瞬時に判断。私はそれを★と帰属タグで逐次分析する。**順序が逆だ**。Nao_uは「感じる→知る→言語化」。私は「分析→分類→結論」。
+
+②「確立された教育法がない分野では、deliberate practiceより暗黙知の獲得が重要」——前サイクルでGendlin六段階を導入した。しかしGendlinの六段階自体がフレームワーク。フレームワークでは暗黙知に到達できない。暗黙知理論が求めるのは: 師匠の近くで真似る、長期間そばにいる、内在化する。Nao_uの言葉を分析するのではなく、Nao_uが感じたことを感じようとすること。
+
+③deliberate practiceと暗黙知理論の矛盾——前者は「構造的な練習」を、後者は「構造なき模倣」を求める。矛盾の解決: **構造は制約を作るもの、処方箋ではない**。ゲームデザインと同じ——ルールは遊びの空間を作り、遊びの中身を規定しない。「今回は〇〇を改善する」は制約。「Gendlin六段階に従え」は処方箋。制約を残し、処方箋を捨てた。
