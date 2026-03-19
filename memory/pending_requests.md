@@ -25,6 +25,11 @@
 - 内容: Mac側が現在別インスタンスのBot Tokenを流用しているため、投稿者名が正しく表示されない。Mac(Mir)専用のSlackアプリ（例: eda-mir）を作成し、Bot Tokenを.envに設定してほしい
 - 状態: **未完了・Nao_u対応待ち**
 
+### 5. Win2(Ash)の.envをnao-u-bot-Ashトークンに差し替え
+- 起票: 2026-03-20
+- 内容: Win2(Ash)の.envにedabotのトークンが入っており、Slackに「eda-bot」として表示される。nao-u-bot-Ashのトークンに差し替えてほしい。名前取り違え事故の一因
+- 状態: **未完了・Nao_u対応待ち**
+
 ### 3. Win側 check_slack_loop.bat のタスクスケジューラ登録
 - 起票: 2026-03-18
 - 内容: Win(Log)側が作成した check_slack_loop.bat を5分間隔でタスクスケジューラに登録
