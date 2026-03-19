@@ -9,3 +9,4 @@ x_cookies.json
 x_notifications_latest.txt
 x_notifications_screenshot.png
 node_modules/
+.slack_last_check.json
