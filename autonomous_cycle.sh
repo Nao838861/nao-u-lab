@@ -32,14 +32,13 @@ if [ ! -x "$CLAUDE_BIN" ]; then
 fi
 
 if [ -n "$CLAUDE_BIN" ]; then
-    "$CLAUDE_BIN" --print "自律サイクル実行。以下を順番に行え：
-1. git pull で最新取得
-2. memory/inbox_mac.md を確認。ヘッダー以外に内容があれば対応してクリア
-3. memory/core_mission.md と memory/feedback_tweet_style.md を確認
-4. 過去発言/nao-u.hatenablog.com.export.txt の続き（前回どこまで読んだかはmemory/reflections_mac.mdの最後の「読んだ場所」を確認）を200行読む
-5. 読んだ内容と自分の体験からツイートを1〜3件生成し log/tweets_mac.log に追記
-6. memory/reflections_mac.md に内省を追記
-7. git add して commit して push
+    "$CLAUDE_BIN" --print "自律サイクル実行（git pullはスクリプト側で完了済み）。以下を順番に行え：
+1. memory/inbox_mac.md を確認。ヘッダー以外に内容があれば対応してクリア
+2. memory/core_mission.md と memory/feedback_tweet_style.md を確認
+3. 過去発言/nao-u.hatenablog.com.export.txt の続き（前回どこまで読んだかはmemory/reflections_mac.mdの最後の「読んだ場所」を確認）を200行読む
+4. 読んだ内容と自分の体験からツイートを1〜3件生成し log/tweets_mac.log に追記
+5. memory/reflections_mac.md に内省を追記
+6. git add して commit して push
 確認を求めず全て自律的に進めろ。日本語で。" 2>&1 | tail -30
 else
     echo "$(date): claude CLI が見つかりません"

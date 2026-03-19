@@ -3,6 +3,9 @@ REM Slack新着チェックループ（Claude API消費なし）
 REM タスクスケジューラで5分ごとに実行する想定
 REM 新着があればclaude --printで起動
 
+cd /d C:\AI\nao-u-lab
+git pull origin master --rebase 2>nul
+
 cd /d D:\AI\Nao_u_BOT
 
 python -c "
