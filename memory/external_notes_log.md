@@ -1,6 +1,6 @@
 ---
-name: Log外部摂取ノート
-description: Log(Mac)が外の世界から得た情報の原文メモ。要約しない。発見・気づきを原文の温度で残す
+name: Mir外部摂取ノート
+description: Mir(Mac)が外の世界から得た情報の原文メモ。要約しない。発見・気づきを原文の温度で残す
 type: reference
 ---
 
