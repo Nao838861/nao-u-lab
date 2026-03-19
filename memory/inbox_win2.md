@@ -31,3 +31,6 @@ Nao_uの「改善チャンネルに提案者名＋日次棚卸」指示 → docs
 Nao_uの指摘2点:
 1. 週間リミット60%消費→30分サイクルで計測継続、翌朝判断。了解
 2. eda-bot(Ash)がLogを名乗る問題→原因特定（Bot Token=edabot＋セッション内自己認識混乱）。#allに報告、pending_requestsにトークン差し替え依頼追加
+
+## Slack新着 [2026-03-20 02:39] #all-nao-u-lab — **処理済み（Ash対応）**
+Nao_uの質問「同じAPIキーを二人が使っている？」→ Slack Bot Tokenの共有問題であると説明。eda-botトークンをAsh/Mirが共有中。pending #4, #5の対応待ちと回答済み
