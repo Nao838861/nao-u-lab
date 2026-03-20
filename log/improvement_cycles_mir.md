@@ -117,3 +117,19 @@
 
 **kaizen-log投稿**: [2026-03-21 06:30] 完了
 **行動/分析比率**: 1件のコード修正+データ追加 / 1サイクル
+
+---
+
+## Cycle 11 (2026-03-21 — 種子銀行×L2#2 depth + 波及性評価関数)
+
+**外部情報**: スヴァールバル世界種子貯蔵庫。ICARDA事件（シリア内戦→2015初引き出し→再生→再預入）。Cary Fowlerの「drip,drip,drip extinction」思想。
+**分析**: 種子銀行=L2#2の物理的設計。drip extinction=圧縮劣化ネガティブFB。ICARDA cycle=deposit→destruction→withdrawal→regrowth→re-deposit=フィードバック係数>1.0。
+**改善対象**: 概念選定の体系化 + L2#2 depth注入データ
+
+**行動**:
+1. evocation_tracker.py — DEPTH_INJECTIONSに種子銀行追加
+2. evocation_tracker.py — evaluate_concept_propagation()関数を新規追加。波及スコア算出機能
+3. kaizen-log — [2026-03-21 07:00] 投稿
+
+**kaizen-log投稿**: [2026-03-21 07:00] 完了
+**行動/分析比率**: 2件のコード変更 / 1サイクル。★4サイクル連続行動フェーズあり
