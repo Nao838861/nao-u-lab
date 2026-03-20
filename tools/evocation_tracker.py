@@ -61,7 +61,60 @@ BREADTH_INJECTIONS = [
 DEPTH_INJECTIONS = [
     (78, 1, "免疫系", "Matzinger危険モデル: フィルター基準がself/non-selfからdangerous/safeへ"),
     (80, 4, "パリンプセスト", "忘却=削除ではなく層の重なり。下層は消えず、適切な鍵で復元可能"),
+    (84, 2, "種子銀行", "ICARDA cycle: バックアップ→破壊→引出→再生→再預入。drip,drip,drip extinctionへの対策"),
 ]
+
+
+def evaluate_concept_propagation(concept_name, connections):
+    """概念の波及性を事前評価する。
+
+    depth注入の概念選定を支援。テスト#8の知見:
+    物理メタファー(パリンプセスト+3) > 抽象理論(免疫系+2)。
+    波及性が高い = より多くのL2トリガーに強く接続する。
+
+    使い方:
+      evaluate_concept_propagation("種子銀行", {
+          1: "種子の品質フィルタリング",
+          2: "文明再建の起点",
+          3: "種子=遺伝コード(明示) / 栽培法=暗黙知",
+          4: "使われなくなった作物品種の保存=忘却層",
+          5: "栽培動機は季節的(揮発) / 種子は永続",
+          6: "今不要でも捨てるな",
+          7: "種子=成長の衝動のコード化",
+      })
+    """
+    strong = 0
+    weak = 0
+    none = 0
+    print(f"\n  概念波及性評価: {concept_name}")
+    print(f"  {'=' * 50}")
+    for l2_num in range(1, 8):
+        name, role = L2_TRIGGERS[l2_num]
+        if l2_num in connections:
+            conn = connections[l2_num]
+            # 接続の具体性で強度を判定
+            is_concrete = len(conn) > 10 and any(c in conn for c in "=→←≠")
+            strength = "強" if is_concrete else "中"
+            if is_concrete:
+                strong += 1
+            else:
+                weak += 1
+            print(f"    L2#{l2_num}({name}): [{strength}] {conn}")
+        else:
+            none += 1
+            print(f"    L2#{l2_num}({name}): [なし]")
+
+    total = strong + weak
+    score = strong * 2 + weak
+    print(f"\n  接続数: {total}/7 (強{strong} + 中{weak})")
+    print(f"  波及スコア: {score}/14")
+    if score >= 10:
+        print(f"  >> 高波及性: depth注入に適した概念 <<")
+    elif score >= 6:
+        print(f"  -> 中波及性: 特定L2への深い注入向き")
+    else:
+        print(f"  !! 低波及性: 別の概念を検討 !!")
+    return score
 
 
 def calc_averages():
