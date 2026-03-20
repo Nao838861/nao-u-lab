@@ -46,6 +46,22 @@ THEORY_CONNECTIONS = {
     7: ("自己決定理論", "Deci & Ryan 1985/2000", 66),
 }
 
+# Breadth期: 外部概念×全トリガー汎化テスト（Cycles #71-#76）
+BREADTH_INJECTIONS = [
+    (71, "金継ぎ", "破壊→美", {1: "強", 2: "強", 3: "非常に強い", 4: "強", 5: "強", 6: "強", 7: "強"}),
+    (72, "発酵", "culture=培養+文化", {1: "強", 2: "強", 3: "強", 4: "強", 5: "強", 6: "非常に強い", 7: "強"}),
+    (73, "航海術", "etak=参照枠反転", {1: "強", 2: "非常に強い", 3: "非常に強い", 4: "強", 5: "強", 6: "強", 7: "強"}),
+    (74, "盆栽", "jin=死を生に組み込む", {1: "強", 2: "強", 3: "強", 4: "非常に強い", 5: "強", 6: "強", 7: "強"}),
+    (75, "ジャズ即興", "揮発性=美的エネルギー", {1: "強", 2: "強", 3: "強", 4: "強", 5: "非常に強い", 6: "強", 7: "強"}),
+    (76, "洞窟壁画", "手形=不在の記録", {1: "強", 2: "強", 3: "強", 4: "強", 5: "強", 6: "強", 7: "非常に強い"}),
+]
+
+# Depth期: 特定L2への深い理論注入（Cycle #78〜）
+DEPTH_INJECTIONS = [
+    (78, 1, "免疫系", "Matzinger危険モデル: フィルター基準がself/non-selfからdangerous/safeへ"),
+    (80, 4, "パリンプセスト", "忘却=削除ではなく層の重なり。下層は消えず、適切な鍵で復元可能"),
+]
+
 
 def calc_averages():
     """各テストの平均スコアを計算"""
@@ -287,6 +303,19 @@ def main():
     print_disparity_analysis()
     print_bowtie_health()
     print_cross_connections()
+
+    # Depth注入の効果追跡
+    print("─" * 40)
+    print("Depth注入 追跡（テスト#8で効果測定予定）")
+    print("─" * 40)
+    latest = TEST_RESULTS[-1]
+    for cycle, l2_num, concept, thesis in DEPTH_INJECTIONS:
+        name, role = L2_TRIGGERS[l2_num]
+        baseline = latest[2][l2_num]
+        print(f"  Cycle #{cycle}: L2#{l2_num}({name}) ← {concept}")
+        print(f"    {thesis}")
+        print(f"    テスト#7時点ベースライン: {baseline}")
+        print()
 
     # 3周目の脅威→機能マッピング
     print("─" * 40)
