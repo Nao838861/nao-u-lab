@@ -34,6 +34,8 @@ INTERACTIONS = [
     (7, 6, "作る衝動がアクセスを維持", 35, "→"),
     (6, 3, "物+行間を保存しないと機能しない", 35, "×"),
     (7, 2, "制約変遷=文明発展のミニチュア", 36, "×"),
+    (1, 7, "何を作るべきかがL2#7を発火/再定義する", 38, "↔"),
+    (3, 1, "行間の暗黙的導線がL2#1の成否を決める", 38, "→"),
     # 偽のL2シリーズ（外部要因としてのAI）
     # 偽のL2#1: AIが発見を代行→快楽消失 (Cycle 33)
     # 偽のL2#4: そもそも覚えなかった (Cycle 30)
@@ -105,8 +107,8 @@ def print_matrix():
         if to is None:
             continue  # 外部要因はスキップ
         matrix[(frm, to)] = (desc, cycle, kind)
-        if kind == "×":
-            matrix[(to, frm)] = (desc, cycle, "×")
+        if kind in ("×", "↔"):
+            matrix[(to, frm)] = (desc, cycle, kind)
 
     # ヘッダー
     print(f"{'→影響先':>12}", end="")
