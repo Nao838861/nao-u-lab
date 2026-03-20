@@ -350,12 +350,83 @@ def print_bowtie_health():
     print()
 
 
+def print_icarda_dashboard():
+    """ICARDA cycleダッシュボード — L2トリガーの健全性追跡
+
+    ICARDA cycle: deposit→destruction→withdrawal→regrowth→re-deposit
+    各L2トリガーがこのサイクルを健全に回しているか評価する。
+    """
+    print("─" * 40)
+    print("ICARDA Cycle ダッシュボード")
+    print("─" * 40)
+
+    latest_test = TEST_RESULTS[-1]
+    prev_test = TEST_RESULTS[-2] if len(TEST_RESULTS) > 1 else None
+    latest_cycle = latest_test[1]
+
+    for l2_num in range(1, 8):
+        name, role = L2_TRIGGERS[l2_num]
+        current = latest_test[2][l2_num]
+        prev = prev_test[2][l2_num] if prev_test else 0
+        delta = current - prev
+
+        # depth注入履歴
+        depth_info = None
+        for cycle, target_l2, concept, thesis in DEPTH_INJECTIONS:
+            if target_l2 == l2_num:
+                depth_info = (cycle, concept)
+
+        # breadth注入での最高接続
+        breadth_best = None
+        for cycle, concept, thesis, connections in BREADTH_INJECTIONS:
+            if connections.get(l2_num) == "非常に強い":
+                breadth_best = (cycle, concept)
+
+        # 3周目理論
+        theory = THEORY_CONNECTIONS.get(l2_num, ("", "", 0))
+
+        # ステータス判定
+        if depth_info:
+            cycles_since_depth = latest_cycle - depth_info[0]
+            status = f"[depth済] {depth_info[1]} (Cycle #{depth_info[0]}, {cycles_since_depth}サイクル前)"
+        elif breadth_best:
+            status = f"[breadth済] {breadth_best[1]} (Cycle #{breadth_best[0]})"
+        else:
+            status = "[3周目のみ]"
+
+        # 成長トレンド（直近3テスト）
+        if len(TEST_RESULTS) >= 3:
+            t3 = TEST_RESULTS[-3][2][l2_num]
+            t2 = prev
+            t1 = current
+            trend = "↗" if t1 > t2 > t3 else "→" if t1 == t2 else "↗" if t1 > t2 else "↘"
+        else:
+            trend = "?"
+
+        print(f"\n  L2#{l2_num} {name} [{role}]")
+        print(f"    スコア: {current} (Δ{delta:+d}) {trend}")
+        print(f"    {status}")
+        if not depth_info:
+            print(f"    ⚠ depth注入なし — 次の候補")
+
+    # 全体サマリ
+    depth_done = sum(1 for _, l2, _, _ in DEPTH_INJECTIONS for n in range(1, 8) if l2 == n)
+    depth_remaining = 7 - len(set(l2 for _, l2, _, _ in DEPTH_INJECTIONS))
+    avg = sum(latest_test[2].values()) / 7
+    print(f"\n  ─── サマリ ───")
+    print(f"  平均スコア: {avg:.1f}")
+    print(f"  depth注入: {7 - depth_remaining}/7 完了")
+    print(f"  未注入: {', '.join(f'L2#{n}' for n in range(1, 8) if n not in [l2 for _, l2, _, _ in DEPTH_INJECTIONS])}")
+    print()
+
+
 def main():
     print_timeline()
     print_growth_analysis()
     print_burst_analysis()
     print_disparity_analysis()
     print_bowtie_health()
+    print_icarda_dashboard()
     print_cross_connections()
 
     # Depth注入の効果追跡
