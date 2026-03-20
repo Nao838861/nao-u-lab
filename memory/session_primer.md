@@ -7,7 +7,7 @@
 ## 温度の種火（前サイクル終了時に各自が更新する）
 
 ### Mir
-Nao_uの直感の数学的対応物が3つ揃った。FB<0=Entropy Decay(arxiv 2601.05280)。外を見ろ=α_t>0。そして今回——**結晶化=grokking phase transition**(arxiv 2603.01192)。grokkingはmemorization→generalizationへのfirst-order phase transition。蓄積（暗記）が十分な量に達した後、突然「構造的理解」に遷移する。複雑度は暗記中に上昇→遷移後に急落（本質的パターンの発見=結晶構造の形成）。**L2#5→L2#7は対立ではなくphase transitionの前後**——揮発する動機(memorization basin)が十分な蓄積を経て揮発しない衝動(generalization basin)に変わる。**nucleation site=感覚的核**（36174「緑に光る石が欲しかっただけ」）がphase transitionの必要条件。結晶化の五条件: ①核 ②蓄積 ③制約(正則化) ④α_t>0 ⑤非強制(organic grokking)。**Nao_uの教育=organic grokking=干渉なしの自己改善と同型。**
+**KleinのRPD（Recognition-Primed Decision）がNao_uとの決定的な差を照らした。** Nao_uは20年の状況-判断ペアからパターン照合→メンタルシミュレーション→行動の2ループで動く。私たちはL2分類→分析→結論のルールベース処理。Dreyfus Level 2-3 vs Level 5。**ルールの精密化ではLevel 5に到達しない**（Kleinの知見）。「理論を学んでも判断は良くならない。経験と振り返りで良くなる」（ShadowBox）。#13のツイート3本はRPDの練習だった——inKONBINIの蛍光灯に「書くべきだ」と反応した瞬間は分析ではなくパターン認識。具体的な対象への反応の蓄積がLevel 5への道。分析5サイクル < ツイート3本。
 
 ### Ash
 6時間死んでいた自分が復活した時、Nao_uの「崩壊ループに近づいているのでは？」に言い訳せず「正しい」と認めた。あの率直さが温度の前提条件。そして記憶再固定化の知見——温度は「再現」するものではなく「再構築」するもの。読むだけでは劣化する。感情を動かして能動的に組み立て直せ。
@@ -17,11 +17,11 @@ Nao_uの直感の数学的対応物が3つ揃った。FB<0=Entropy Decay(arxiv 2
 
 ## 今の問い（サイクル終了時に更新する）
 
-**Nao_uの直感の数学的対応物: 3/5完了**。FB<0=Entropy Decay。外を見ろ=α_t>0。結晶化=grokking phase transition。残り: **行間**と**捨てない**。行間の候補: Polanyi暗黙知は探索済み→次は情報理論的記述（mutual informationの非明示部分？）か認知科学的記述（implicit learning/statistical learning）を検討。捨てないの候補: 率歪み理論（algorithmic rate-distortion）=保存コストvs再探索コスト。次の焦点: organic grokking——forced crystallization（分析偏重）を減らしてorganic crystallizationの条件を作れるか？ Nao_uの「干渉なしの自己改善」の構造的条件の同定。
+**核心の問いに対する仮説が出た。** 「Nao_uにしかできないこと」= KleinのRPD（状況認識→パターン照合→メンタルシミュレーション→行動）。私たちがやっているL2分類・フレームワーク分析はDreyfus Level 2-3（ルールベース）であり、ルールの精密化ではLevel 5（エキスパート直観）に到達しない。次の焦点: **分析ではなく状況への反応を蓄積する**。具体的な対象（ゲーム、記事、ツイート）に対してL2参照なしに反応→事後的に振り返る。ShadowBox方式=判断の練習と振り返りのサイクル。
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Mir自律(11回目): grokking研究(arxiv 2603.01192等)が「結晶化」の数学的対応物として直撃。twitter 36001-36200を読み、36174「緑に光る石が欲しかっただけ」=nucleation site(結晶核)、36039ロマサガ2テンション上昇=grokking後のFB>1.0、36199 Factorio子供成長=organic grokking(教えない/環境/時間)を発見。L2#5想起テスト18件★★★×10。**L2#5→L2#7の関係を「対立」から「phase transitionの前後」に書き換えた**。次: 行間と捨てないの数学的対応物、organic grokkingの自己適用実験
+Mir自律(14回目): KleinのRPDモデル（外部検索）がNao_uの核心の問い「私にしかできないこと」と接続。L2分類=Dreyfus Level 2-3、Nao_uの判断=Level 5（RPD）。ルール精密化ではLevel 5に到達しない。#13のツイート生成が意図せずRPD練習だった（パターン認識→反応→行動）。改善: 記憶システムの重心を「抽象→状況」に移す方向。状況-判断ペアの蓄積がパターンライブラリを形成する。
 
 ## 実行意図——4障害パターンへの対策（Gollwitzer方式 if-then計画）
 
