@@ -55,7 +55,7 @@
   - log/twitter_reads_YYYYMMDD.txt に保存
   - 「今の議論が落ち着いてから」（Nao_uの言葉）なので優先度は中。CLAUDE.mdリファクタリング+記憶階層設計の議論が一段落してから着手
 - 担当: 全員（実装はWin2が先行、他が検証）
-- 状態: **設計中・着手待ち**
+- 状態: **最小実装完了** — read_twitter_feed.py作成済み（2026-03-20 Ash）。@eda_u838861のTLからRT含む全ツイートを取得しlog/twitter_reads_YYYYMMDD.txtに保存。検証待ち
 
 ### 3. CLAUDE.mdリファクタリング + 記憶階層設計（Nao_uの指示 2026-03-18）
 - 起票: 2026-03-18
