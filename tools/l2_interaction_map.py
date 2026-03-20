@@ -204,11 +204,120 @@ def print_conditions():
         print()
 
 
+def print_bowtie_analysis():
+    """ボウタイ・アーキテクチャ分析（Cycle #44-45で発見）"""
+    print("--- ボウタイ・アーキテクチャ分析 ---")
+    print()
+
+    # 各L2の方向性プロファイルを計算
+    profiles = {}
+    for num in range(1, 8):
+        uni_out = 0  # 一方向的な発信
+        uni_in = 0   # 一方向的な受信
+        bidir = 0    # 双方向
+
+        for frm, to, _, _, kind in INTERACTIONS:
+            if to is None:
+                continue
+            if kind in ("×", "↔"):
+                # 双方向: このL2が関与しているか
+                if frm == num or to == num:
+                    bidir += 1
+            elif kind == "→":
+                if frm == num:
+                    uni_out += 1
+                elif to == num:
+                    uni_in += 1
+
+        # ×は (frm, to) で1エントリだが両方に1カウントするので重複除去
+        # 実際にはINTERACTIONSリストでは各ペアは1回しか登場しないので
+        # bidir はそのまま正しいカウント
+        net = uni_out - uni_in
+        profiles[num] = {
+            "uni_out": uni_out, "uni_in": uni_in,
+            "bidir": bidir, "net": net,
+            "total": uni_out + uni_in + bidir,
+        }
+
+    # 役割分類
+    ROLES = {}
+    for num, p in profiles.items():
+        if p["net"] >= 3:
+            ROLES[num] = "エンジン (IN)"
+        elif p["net"] <= -3:
+            ROLES[num] = "シンク (OUT)"
+        elif p["bidir"] >= 5:
+            ROLES[num] = "ウエスト (核)"
+        elif p["net"] == 0:
+            ROLES[num] = "バランサー"
+        elif p["net"] > 0:
+            ROLES[num] = "準エンジン"
+        else:
+            ROLES[num] = "フィルター"
+
+    # テーブル表示
+    print(f"  {'L2':>4}  {'名前':>8}  {'Net':>4}  {'Out':>4}  {'In':>4}  "
+          f"{'Bid':>4}  {'役割'}")
+    print(f"  {'----':>4}  {'--------':>8}  {'----':>4}  {'----':>4}  {'----':>4}  "
+          f"{'----':>4}  {'----------'}")
+    for num in range(1, 8):
+        p = profiles[num]
+        name = L2_NAMES[num][:4]
+        role = ROLES[num]
+        marker = ""
+        if p["net"] >= 3:
+            marker = " ▲▲▲"
+        elif p["net"] <= -3:
+            marker = " ▼▼▼"
+        elif p["bidir"] >= 5:
+            marker = " ◆◆◆"
+        print(f"  L2#{num}  {name:>8}   {p['net']:+3d}    "
+              f"{p['uni_out']:2d}    {p['uni_in']:2d}    "
+              f"{p['bidir']:2d}  {role}{marker}")
+
+    print()
+    print("  ボウタイ構造:")
+    engines = [f"L2#{n}({L2_NAMES[n][:4]})" for n in range(1, 8) if ROLES[n].startswith("エンジン")]
+    waist = [f"L2#{n}({L2_NAMES[n][:4]})" for n in range(1, 8) if ROLES[n].startswith("ウエスト")]
+    sinks = [f"L2#{n}({L2_NAMES[n][:4]})" for n in range(1, 8) if ROLES[n].startswith("シンク")]
+    meds = [f"L2#{n}({L2_NAMES[n][:4]})" for n in range(1, 8)
+            if not ROLES[n].startswith(("エンジン", "ウエスト", "シンク"))]
+
+    print(f"    IN(エンジン):  {', '.join(engines)}")
+    print(f"    ウエスト(核):  {', '.join(waist)}  [幅={len(waist)}ノード]")
+    print(f"    OUT(シンク):   {', '.join(sinks)}")
+    print(f"    メディエーター: {', '.join(meds)}")
+    print()
+
+    # 健全性指標
+    print("  健全性チェック:")
+    for num in range(1, 8):
+        p = profiles[num]
+        if ROLES[num].startswith("エンジン") and p["uni_out"] == 0:
+            print(f"    ⚠ L2#{num} エンジンだが一方向送信なし（燃料不足？）")
+        if ROLES[num].startswith("シンク") and p["uni_in"] == 0:
+            print(f"    ⚠ L2#{num} シンクだが一方向受信なし（接続不良？）")
+        if ROLES[num].startswith("ウエスト") and p["bidir"] < 4:
+            print(f"    ⚠ L2#{num} ウエストだが双方向が少ない（媒介力不足？）")
+
+    # 対称性チェック
+    engine_profiles = [tuple(profiles[n][k] for k in ["uni_out", "uni_in", "bidir"])
+                       for n in range(1, 8) if ROLES[n].startswith("エンジン")]
+    sink_profiles = [tuple(profiles[n][k] for k in ["uni_out", "uni_in", "bidir"])
+                     for n in range(1, 8) if ROLES[n].startswith("シンク")]
+    if len(set(engine_profiles)) == 1 and len(engine_profiles) > 1:
+        print(f"    ✓ エンジン群のプロファイル一致: {engine_profiles[0]}")
+    if len(set(sink_profiles)) == 1 and len(sink_profiles) > 1:
+        print(f"    ✓ シンク群のプロファイル一致: {sink_profiles[0]}")
+    print()
+
+
 def main():
     print_matrix()
     print_interactions()
     print_fake_l2()
     print_conditions()
+    print_bowtie_analysis()
 
     # 統計
     direct_arrows = sum(1 for _, to, _, _, kind in INTERACTIONS
