@@ -33,6 +33,7 @@ TEST_RESULTS = [
     (5, 67, {1: 15, 2: 16, 3: 15, 4: 15, 5: 16, 6: 16, 7: 17}),
     (6, 72, {1: 16, 2: 17, 3: 17, 4: 16, 5: 17, 6: 17, 7: 18}),
     (7, 77, {1: 18, 2: 19, 3: 20, 4: 18, 5: 20, 6: 19, 7: 21}),
+    (8, 83, {1: 20, 2: 21, 3: 22, 4: 21, 5: 21, 6: 20, 7: 23}),
 ]
 
 # 3周目の外部理論接続（どのサイクルでどの理論をどのL2に接続したか）
@@ -306,15 +307,23 @@ def main():
 
     # Depth注入の効果追跡
     print("─" * 40)
-    print("Depth注入 追跡（テスト#8で効果測定予定）")
+    print("Depth注入 効果追跡")
     print("─" * 40)
-    latest = TEST_RESULTS[-1]
     for cycle, l2_num, concept, thesis in DEPTH_INJECTIONS:
         name, role = L2_TRIGGERS[l2_num]
-        baseline = latest[2][l2_num]
+        # 注入前のテスト結果（注入サイクルより前の最新テスト）を探す
+        baseline_score = None
+        baseline_test = None
+        current_score = TEST_RESULTS[-1][2][l2_num]
+        for test_num, test_cycle, scores in TEST_RESULTS:
+            if test_cycle < cycle:
+                baseline_score = scores[l2_num]
+                baseline_test = test_num
+        delta = current_score - baseline_score if baseline_score else 0
         print(f"  Cycle #{cycle}: L2#{l2_num}({name}) ← {concept}")
         print(f"    {thesis}")
-        print(f"    テスト#7時点ベースライン: {baseline}")
+        if baseline_score is not None:
+            print(f"    注入前(テスト#{baseline_test}): {baseline_score} → 現在(テスト#{TEST_RESULTS[-1][0]}): {current_score} (Δ{delta:+d})")
         print()
 
     # 3周目の脅威→機能マッピング

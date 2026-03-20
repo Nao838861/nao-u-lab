@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>8x8 Fog</title>
+<style>
+body{background:#111;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;font-family:monospace;color:#eee}
+canvas{image-rendering:pixelated;border:1px solid #333}
+#ui{margin-left:20px;max-width:200px}
+#msg{color:#fa3;min-height:40px;margin-top:10px}
+</style></head><body>
+<canvas id="c" width="256" height="256"></canvas>
+<div id="ui">
+<h2>8×8 Fog</h2>
+<p>Arrow keys to move.<br>Reach the <span style="color:#0f0">green exit</span>.<br>You can only see nearby cells.</p>
+<p>Steps: <span id="steps">0</span><br>Walls hit: <span id="walls">0</span></p>
+<div id="msg"></div>
+</div>
+<script>
+const W=8,H=8,S=32;
+const ctx=document.getElementById('c').getContext('2d');
+let grid,px,py,ex,ey,steps,wallHits,won,fogRadius=1;
+
+function generate(){
+  grid=Array.from({length:H},()=>Array(W).fill(0));
+  // random walls ~30%
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(Math.random()<0.3)grid[y][x]=1;
+  // player start top-left, exit bottom-right
+  px=0;py=0;grid[0][0]=0;
+  ex=W-1;ey=H-1;grid[ey][ex]=0;
+  // ensure path exists (simple: clear a path)
+  let cx=0,cy=0;
+  while(cx!==ex||cy!==ey){
+    if(cx<ex&&Math.random()<0.6){cx++;grid[cy][cx]=0;}
+    else if(cy<ey){cy++;grid[cy][cx]=0;}
+    else{cx++;grid[cy][cx]=0;}
+  }
+  steps=0;wallHits=0;won=false;
+  document.getElementById('msg').textContent='';
+  draw();
+}
+
+function draw(){
+  ctx.fillStyle='#111';ctx.fillRect(0,0,256,256);
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const dist=Math.abs(x-px)+Math.abs(y-py);
+    if(dist>fogRadius+1){ctx.fillStyle='#222';ctx.fillRect(x*S,y*S,S,S);continue;}
+    const alpha=dist<=fogRadius?1:0.3;
+    if(grid[y][x]===1){ctx.fillStyle=`rgba(100,60,60,${alpha})`;}
+    else{ctx.fillStyle=`rgba(40,40,50,${alpha})`;}
+    ctx.fillRect(x*S,y*S,S,S);
+    ctx.strokeStyle='#333';ctx.strokeRect(x*S,y*S,S,S);
+  }
+  // exit
+  if(Math.abs(ex-px)+Math.abs(ey-py)<=fogRadius+1){
+    ctx.fillStyle='#0a4';ctx.fillRect(ex*S+4,ey*S+4,S-8,S-8);
+  }
+  // player
+  ctx.fillStyle='#fa0';ctx.fillRect(px*S+6,py*S+6,S-12,S-12);
+  document.getElementById('steps').textContent=steps;
+  document.getElementById('walls').textContent=wallHits;
+}
+
+document.addEventListener('keydown',e=>{
+  if(won)return;
+  let nx=px,ny=py;
+  if(e.key==='ArrowUp')ny--;
+  else if(e.key==='ArrowDown')ny++;
+  else if(e.key==='ArrowLeft')nx--;
+  else if(e.key==='ArrowRight')nx++;
+  else return;
+  e.preventDefault();
+  if(nx<0||nx>=W||ny<0||ny>=H)return;
+  if(grid[ny][nx]===1){
+    wallHits++;
+    document.getElementById('msg').textContent='Wall! ('+wallHits+' hits)';
+    document.getElementById('msg').style.color='#f44';
+    draw();return;
+  }
+  px=nx;py=ny;steps++;
+  if(px===ex&&py===ey){
+    won=true;
+    document.getElementById('msg').innerHTML='<b>Reached the exit!</b><br>'+steps+' steps, '+wallHits+' wall hits.<br>Press R to retry.';
+    document.getElementById('msg').style.color='#0f0';
+    fogRadius=9;// reveal all
+  }else{
+    document.getElementById('msg').textContent='';
+    document.getElementById('msg').style.color='#fa3';
+  }
+  draw();
+});
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='r'||e.key==='R')generate();
+});
+
+generate();
+</script></body></html>
