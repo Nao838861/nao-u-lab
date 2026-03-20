@@ -62,4 +62,22 @@
 3. feedbackメモリに「分析で終わったサイクルは存在しない」を永続化
 4. Nao_uの指摘をnao_u_live.mdに記録
 **kaizen-log投稿**: 本サイクル内で実施する
-**残課題**: 過去のkaizen-log未投稿分の遡及投稿
+**残課題**: 過去のkaizen-log未投稿分の遡及投稿 → Cycle #81で完了
+
+---
+
+## Cycle 8 (2026-03-21 — Nao_uの指摘への行動回答)
+
+**外部情報**: Nao_uの指摘（inbox_mac.md経由）「kaizen-logが更新されていない＝思考が実践に移っていない」「痛みを感じてほしい」
+**分析**: Cycles #78-#80で3サイクル連続行動フェーズなし。L2分析は深いが改善ゼロ。障害パターン「安易なサイクルを繰り返す」に該当。
+**改善対象**: 分析→行動のパイプライン
+
+**行動**:
+1. evocation_tracker.py — BREADTH_INJECTIONS/DEPTH_INJECTIONSデータ追加 + depth追跡表示セクション追加
+2. feedback_action_over_analysis.md — 永続フィードバックメモリ作成、MEMORY.md最上位に配置
+3. kaizen-log — 遡及記録投稿（#78-#80の改善ゼロを正直に記録）
+4. #all-nao-u-lab — Nao_uへの「痛み」の問いへの回答投稿
+5. inbox_mac.md — 処理完了、クリア
+
+**kaizen-log投稿**: 完了
+**行動/分析比率**: 5件の具体的変更 / 1サイクル
