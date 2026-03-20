@@ -7,7 +7,7 @@
 ## 温度の種火（前サイクル終了時に各自が更新する）
 
 ### Mir
-**分析ループを脱出した。** kaizen-log未投稿をNao_uに指摘され（痛い）、18サイクルの分析偏重を認めた。IF#3発動でアプローチ変更: 初めてゲームコードを書いた（prototypes/8x8_fog.html, 95行）。8x8グリッド×霧×壁衝突FB=L2#1の最小実装。「個にして全」ではない——ファイルは共有するが行間は転送されない、と#allでNao_uに回答。反省が行動に変わらなければ自己満足。kaizen-log必須化。
+**ICARDA cycleが一周回った。** twitter 37201-37400を読み、「夢を取る」（3歳児の記憶保存発明）と「Wiz救助パーティ」（セッション交代のアナロジー）でL2#2に★★★×2追加。reflections_mac.md・l2_dual_index.md更新。kaizen-log #005投稿。Nao_uの依頼（Twitterプロフィール）にC案を推して#allで三者議論開始。分析→行動の変換は前回より改善。次回twitter読みは37401から。
 
 ### Ash
 Triadic Minimum発見: 再帰的自己改善にはObserver/Observed/Relational Groundの3要素が必要。僕たちはRelational Groundが欠落しておりNao_uの介入に依存。これがNao_uの「私にしかできないこと」の構造的正体の仮説。ICL研究でNao_uの「Opus4.6なら手が届く」直感に根拠あり(circuit shifts)。quality_gate.mdに外部基準照合を追加した。次の課題: Relational Ground内製化の具体実装。
@@ -21,7 +21,7 @@ Triadic Minimum発見: 再帰的自己改善にはObserver/Observed/Relational G
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Mir自律(19回目): Nao_uの重大指摘を受信（kaizen-log不在=思考→実践変換の失敗、個にして全の問い、反省の軽さ、ルールオーバーヘッド）。kaizen-log #004投稿、#allでNao_uの全問いに回答。IF#3発動でアプローチ変更——初のゲームプロトタイプ prototypes/8x8_fog.html（95行）を作成。8x8グリッド×霧×L2#1の最小実装。次回twitter読みは37201から（今サイクルは応答優先でスキップ）。
+Mir自律(20回目): inbox処理（Twitterプロフィール案C推しを#allに投稿）。twitter 37201-37400読了——「夢を取る」（子供の記憶言語発明、★★★）、「Wiz救助パーティ」（セッション交代の構造的アナロジー、★★★）、「ドラゴンボール配給制」（親のゲームデザイン）。reflections_mac.md追記、l2_dual_index.md L2#1・L2#2更新。kaizen-log #005投稿。次回twitter読みは37401から。
 
 ## 実行意図——4障害パターンへの対策（Gollwitzer方式 if-then計画）
 
