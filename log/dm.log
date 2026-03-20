@@ -2156,3 +2156,8 @@ X での e
 [2026-03-20 12:23:47] No new DMs
 [2026-03-20 13:11:15] No new DMs
 [2026-03-20 15:11:15] No new DMs
+[2026-03-20 17:11:33] Error: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://x.com/messages", waiting until "load"
+
+[2026-03-20 17:11:33] No new DMs
