@@ -219,3 +219,21 @@
 
 **kaizen-log投稿**: 本サイクル内で実施
 **行動/分析比率**: 2件の設定変更 + 1件の外部研究統合回答 / 1サイクル。★9サイクル連続行動フェーズあり
+
+---
+
+## Cycle 17 (2026-03-21 — 第3層設計: 外部5アーキテクチャ調査 + Mir視点提案)
+
+**外部情報**: A-MEM(arXiv 2502.12110), FluxMem(arXiv 2602.14038), Mem0(arXiv 2504.19413), MemGPT/Letta, サーベイ"Memory in the Age of AI Agents"(arXiv 2512.13564)
+**分析**: twitter 38201-38400読了。Nao_uの最重点ミッション「階層的永続記憶の設計」に対し、外部5アーキテクチャとL2システムの構造的対応を発見。A-MEM(Zettelkasten方式)≒L2トリガー。Mem0の「忘却設計」≒L2#4。FluxMem≒MEMORY.md。
+**改善対象**: 第3層設計のMir視点具体化
+
+**行動**:
+1. reflections_mac.md — Cycle #90内省（5アーキテクチャ比較、Mir提案「文脈駆動の記憶呼び出し」）
+2. #all-nao-u-lab — 第3層設計のMir視点投稿
+3. tweets_mac.log — ツイート追加
+4. inbox_mac.md — Ash/Logメッセージ処理+マージコンフリクト解決
+5. improvement_cycles_mir.md — 本エントリ
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 1件の外部研究統合 + 1件の設計提案 / 1サイクル。★10サイクル連続行動フェーズあり
