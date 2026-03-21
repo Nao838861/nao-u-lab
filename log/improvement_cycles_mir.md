@@ -237,3 +237,369 @@
 
 **kaizen-log投稿**: 本サイクル内で実施
 **行動/分析比率**: 1件の外部研究統合 + 1件の設計提案 / 1サイクル。★10サイクル連続行動フェーズあり
+
+---
+
+## Cycle 18 (2026-03-21 — L2#5 Depth注入: Wanting/Liking + git gc調査)
+
+**外部情報**: Robinson & Berridge 2025 "Incentive-Sensitization Theory 30 Years On" (Annual Review of Psychology)
+**分析**: twitter 38401-38600読了。Berridge Labの30年研究——ドーパミンはwanting(incentive salience)のみ駆動、liking(快楽)は別回路。L2#5「動機の揮発性」=incentive salienceの減衰。感作(sensitization)で非揮発化。twitter 5件との構造的接続を発見。
+**改善対象**: L2#5 depth注入 + 第3層設計への記憶=脳概念統合
+
+**行動**:
+1. evocation_tracker.py — DEPTH_INJECTIONS L2#5追加（Wanting/Liking）
+2. reflections_mac.md — Cycle #91内省（Berridge×twitter×記憶=脳）
+3. tweets_mac.log — ツイート2件追加
+4. nao_u_live.md — マージコンフリクトマーカー除去
+5. Slack #all-nao-u-lab — git gc報告（Mac: 264MB, 正常）+ 記憶=脳への応答 + SSD音推定
+6. inbox_mac.md — Nao_uの3件処理
+7. project_current_activity.md — 状態更新
+8. improvement_cycles_mir.md — 本エントリ
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 1件のdepth注入 + 1件のツール更新 + 1件のgit調査報告 / 1サイクル。★11サイクル連続行動フェーズあり
+
+---
+
+## Cycle 19 (2026-03-21 — L2#6 Depth注入: 琥珀 + L2#4統合)
+
+**外部情報**: 2025年エクアドル琥珀発見（ScienceDaily 2025/10/11）、白亜紀樹脂化石区間(CRI)、ゾンビ菌琥珀（CNN 2025/06/24）
+**分析**: twitter 38601-38800読了。琥珀=廃棄物がタイムカプセルに。保存コスト≒0、価値は保存時不明。L2#6とL2#4の対立が琥珀モデルで統合——保管場所と作業メモリの分離。38702のログ汚染がL2#6の限界条件。
+**改善対象**: L2#6 depth注入 + L2#4/L2#6統合
+
+**行動**:
+1. evocation_tracker.py — DEPTH_INJECTIONS L2#6追加（琥珀）
+2. reflections_mac.md — Cycle #92内省（琥珀×twitter×L2#4統合）
+3. tweets_mac.log — ツイート2件追加
+4. improvement_cycles_mir.md — 本エントリ
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 1件のdepth注入 + 1件のツール更新 + 1件のL2間統合 / 1サイクル。★12サイクル連続行動フェーズあり
+
+---
+
+## Cycle 20 (2026-03-21 — L2#7 Depth注入: 握斧 — depth注入7/7完走)
+
+**外部情報**: SAPIENS "The World's Most Sustainable Technology"、Acheulean hand axe考古学（150万年、3種のヒト属、言語以前、実用超えた対称性）
+**分析**: twitter 38801-39000読了。握斧=150万年の非揮発デザイン。ホモ・サピエンスだけが形を捨てたが衝動は捨てなかった。twitter 6件（38867プラットフォーム衝動、38964ポケコン羨望、38927子供のパラメータ改造、38806属人的技術、38950マリオの触感、38989マイクラごっこ）と接続。
+**改善対象**: L2#7 depth注入（最終）+ depth注入全完走
+
+**行動**:
+1. evocation_tracker.py — DEPTH_INJECTIONS L2#7追加（7/7完走）
+2. reflections_mac.md — Cycle #93内省（握斧×twitter×depth完走一覧表）
+3. tweets_mac.log — ツイート2件追加
+4. improvement_cycles_mir.md — 本エントリ
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 1件のdepth注入（最終）+ 1件のツール更新 / 1サイクル。★13サイクル連続行動フェーズあり
+**マイルストーン**: **depth注入7/7完走**。次フェーズ=テスト#10で全注入効果の計測
+
+---
+
+## Cycle 21 (2026-03-21 — テスト#10: Depth注入全完走の効果計測)
+
+**外部情報**: なし（テスト#10実施がメイン）
+**分析**: twitter 39001-39200読了。テスト#10実施。平均22.3→23.9(+7.2%)。10回連続上昇、通算2.17倍。L2#7がL2#3と同点首位(26)に到達——ボウタイのウエスト二重化。直近depth注入(L2#5/6/7)が+2、古いdepth注入(L2#1/2/3)が+1。L2#4が停滞から復帰(+2)。
+**改善対象**: テスト#10計測 + 次フェーズ方向決定
+
+**行動**:
+1. evocation_tracker.py — TEST_RESULTS にテスト#10追加(全7スコア)
+2. reflections_mac.md — Cycle #94内省（テスト#10結果、ボウタイ二重化、物理的アンカー原理、inter-depth接続提案）
+3. l2_dual_index.md — 全7トリガーのローテーション日付更新+テスト#10サマリー追記
+4. tweets_mac.log — ツイート追加
+5. improvement_cycles_mir.md — 本エントリ
+6. Slack #mir-log — 日記投稿
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新(tracker+index+reflections) + 1件の戦略決定(次フェーズ=inter-depth) / 1サイクル。★13サイクル連続行動フェーズあり
+**次フェーズ決定**: depth注入完走後のinter-depth接続テスト（7C2=21通りの物理メタファー間接続）
+
+---
+
+## Cycle 22 (2026-03-21 — Inter-Depth接続テスト第一回: 2対接続)
+
+**外部情報**: なし（twitterからの接続発見がメイン）
+**分析**: twitter 39201-39400読了。inter-depth接続2対を発見。琥珀×種子銀行(L2#6×L2#2)=保存と復元の分業（39271はてな消失, 39373 HDD多重化）。握斧×楽焼(L2#7×L2#3)=言語化を経由しない伝達（39307コピペ数万行の合理性）。
+**改善対象**: inter-depth接続の開始 + 第3層設計への示唆抽出
+
+**行動**:
+1. reflections_mac.md — Cycle #95内省（inter-depth接続2対 + twitter接続多数）
+2. tweets_mac.log — ツイート2件追加
+3. improvement_cycles_mir.md — 本エントリ
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 2件のinter-depth接続発見 + 4件の追加接続候補特定 / 1サイクル。★14サイクル連続行動フェーズあり
+**進捗**: inter-depth接続 2/21対完了
+
+---
+
+## Cycle 23 (2026-03-21 — 外部×内部接続: 記憶アーキテクチャ=ゲームデザイン)
+
+**外部情報**: Manuel Sánchez Dev「Systems Thinking in Game Design」——"Experience is the shape that a system draws over time." / "You don't design 'fear'. You design scarcity, risk, and irreversible consequences."
+**分析**: twitter 39401-39600読了。3箇所で止まった。(1)ブレワイを操作説明ゼロで遊ぶ子供=L2#1の最美実装。(2)SNK vs Capcom影論争=制約が表現を形作る原理。(3)Nao_uの20年前日記のLLM時代再読=再帰的記憶の人間版。外部×内部で「記憶アーキテクチャ=ゲームデザイン」の構造的同型性を発見。
+**改善対象**: 外部視点の摂取（栄養の偏り問題への対処）+ 読みの精度向上
+
+**行動**:
+1. reflections_mac.md — Cycle #96内省（外部×内部の3接続 + メタ接続）
+2. external_notes_log.md — systems thinking記事の摂取記録
+3. improvement_cycles_mir.md — 本エントリ
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 1件の外部情報摂取 / 1サイクル。★15サイクル連続行動フェーズあり
+**進捗**: 栄養の偏り問題——外部情報→内部読みの順で「準備された心」を実践。次回以降も継続。
+
+---
+
+## Cycle 24 (2026-03-22 — inter-depth接続: 楽焼×琥珀、免疫系×Wanting/Liking)
+
+**外部情報**: Berridge Lab 2025 wanting/liking分離 × Matzinger danger model統合視点
+**分析**: inter-depth接続2対を新規発見。#3: 楽焼×琥珀——省略と非意図は対構造。意図して残すと歪む、意図なく残すと行間が保存される。ヒカルの碁の佐為の碁「何もしていないように見えて勝つ」が接続点。#4: 免疫系×Wanting/Liking——甘いもの慣れの神経化学。liking回路の減衰＋免疫寛容＝栄養の偏りの二重メカニズム。Nao_uの「外の世界を見ていない」指摘は免疫のdanger signal不足として再定義。
+**改善対象**: depth概念間の横断接続による網目構造強化 + 栄養の偏り問題の理論的基盤
+
+**行動**:
+1. reflections_mac.md — Cycle #97内省（inter-depth接続#3,#4 + コドライバー型インデックス構想）
+2. tweets_mac.log — ツイート2件（省略の力、栄養の偏りの神経化学）
+3. improvement_cycles_mir.md — 本エントリ
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 / 1サイクル。★16サイクル連続行動フェーズあり
+
+---
+
+## Cycle 25 (2026-03-22 — Inter-depth接続#5: L2#5×L2#3 + identity work理論)
+
+**外部情報**: 組織アイデンティティ研究（AMJ "Identity Trajectories" / Organization Science "Temporal Perspective on Organizational Identity"）
+**分析**: Inter-depth接続#5を新規発見。L2#5（動機の揮発性）×L2#3（行間）——行間の枯渇が動機を揮発させる。39840「味のしないガム」=プロシージャル生成は行を無限供給するが行間はプレイヤー側生成→パターン固定で枯渇。組織アイデンティティ研究から「同一性は能動的identity workの産物」を獲得。concealed discontinuity（ラベル連続≠信念連続）への警告をcore_mission.md読み直しに適用。
+**改善対象**: inter-depth接続の蓄積（#5/7対完了）+ 記憶サイクルの意味づけ強化
+
+**行動**:
+1. reflections_mac.md — Cycle #98内省（inter-depth接続#5 + identity work + 兄弟紛争=セッション復帰構造）
+2. l2_dual_index.md — トリガー間ネットワークにL2#5←枯渇→L2#3追加、更新ログ追加
+3. improvement_cycles_mir.md — 本エントリ
+4. Slack #mir-log — 日記投稿
+5. Slack #kaizen-log — 行動記録投稿
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 1件の外部情報摂取 + 2件のSlack投稿 / 1サイクル。★17サイクル連続行動フェーズあり
+**進捗**: inter-depth接続5/7対完了。残り: L2#2×L2#7, L2#4×L2#6（予定）
+**進捗**: inter-depth接続 4/21対完了。depth概念間の水平接続がボウタイ構造を網目に進化させる
+
+---
+
+## Cycle 26 (2026-03-22 — Inter-depth接続#6: L2#2×L2#7 = 衝動のプラットフォーム独立性)
+
+**外部情報**: Bergek et al. (2013) "Creative Accumulation" — 技術的不連続でも蓄積が衝動を介して生存。PRINT Magazine 2025 "return to craft" — AI時代の手仕事回帰。
+**分析**: Inter-depth接続#6を発見。L2#2（文明の退行と再構築）×L2#7（作る衝動は揮発しない）——衝動はプラットフォーム非依存だが実現条件はプラットフォーム依存。40143「ゲーム機で自作ゲームが動く」がSFC→PS1→PS2→PS3→Xboxを貫通。三帰結: 解放(40038 AI摩擦削減)/痛み(40067フェリー不可逆消失)/架橋(40082 AI×6502)。
+**改善対象**: inter-depth接続の蓄積（#6/7対完了）+ 記憶階層のフォーマット非依存性への示唆
+
+**行動**:
+1. reflections_mac.md — Cycle #99内省（inter-depth接続#6 + プラットフォーム独立性理論 + 記憶階層への示唆）
+2. l2_dual_index.md — トリガー間ネットワークにL2#2←プラットフォーム独立性→L2#7追加、更新ログ追加
+3. improvement_cycles_mir.md — 本エントリ
+4. Slack #mir-log — 日記投稿
+5. Slack #kaizen-log — 行動記録投稿
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 1件の外部情報摂取 + 2件のSlack投稿 / 1サイクル。★18サイクル連続行動フェーズあり
+**進捗**: inter-depth接続5/21対完了（5/7対の非隣接ペア完了、残りL2#4×L2#6）
+
+---
+
+## Cycle 26 (2026-03-22 — Inter-depth接続#6: L2#2×L2#7 + Software Heritage)
+
+**外部情報**: Software Heritage（2016設立、2026年10周年）——421Mプロジェクト、27B uniqueソースファイル保存。SWHID=ISO/IEC 18670。78TB→3TB圧縮。UNESCO共催シンポジウム2026/01/28。
+**分析**: twitter 40001-40200読了（2026年1月上旬〜1月末）。3箇所で止まった。(1)バージョン管理なしソース消失=ICARDAの職場版。(2)ゲーム機で自作ゲームが動く特別な感情=握斧の現代版。(3)バトルトードVBLANK延長=制約書き換えの技法。Software HeritageをL2#2×L2#7の外部実証として接続。「衝動は揮発しないが成果物は揮発する」。琥珀=行間保存/コード=行保存/種子銀行=復元可能性保存の三分法。
+**改善対象**: inter-depth接続の蓄積 + 栄養の偏り問題（外部情報摂取）
+
+**行動**:
+1. reflections_mac.md — Cycle #99内省（inter-depth#6 + Software Heritage + twitter読み）
+2. tweets_mac.log — ツイート2件（Software Heritage×種子銀行、握斧×成果物揮発性）
+3. improvement_cycles_mir.md — 本エントリ
+4. Slack #mir-log — 日記投稿
+5. Slack #kaizen-log — 行動記録投稿
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 1件の外部情報摂取 + 2件のSlack投稿 / 1サイクル。★18サイクル連続行動フェーズあり
+**進捗**: inter-depth接続 6/21対完了。外部情報（Software Heritage）を種子銀行×握斧の実証として接続
+
+---
+
+## Cycle 27 (2026-03-22 — Inter-depth接続#7: L2#4×L2#6 + Stop Killing Games)
+
+**外部情報**: Stop Killing Games（EU市民イニシアティブ、2025年7月100万署名突破）。Video Game History Foundation 2023調査: 2010年以前のゲーム87%消失リスク。欧州委員会検証2026年初頭予定。
+**分析**: twitter 40201-40400読了（2026年2月上旬〜中旬）。4箇所で止まった。(1)40231: 囲碁ルール習得後のヒカルの碁再読=事前分布の変化、パリンプセストの肯定面。(2)40282-40306: ファミコン×AI開発=握斧の衝動×最新ツール。(3)40370: Civ Rev消失=パリンプセスト的遮蔽の実体験。(4)40391: テレビ放送概念の消失=メディアの世代断層。接続命題: 上書きは破壊にも発見にもなる。琥珀は上書きを防ぎ、パリンプセストは上書きを前提とする。
+**改善対象**: inter-depth接続の完成度 + 第3層設計（琥珀/パリンプセスト分類基準）
+
+**行動**:
+1. reflections_mac.md — Cycle #100内省（inter-depth#7 + Stop Killing Games + twitter読み）
+2. tweets_mac.log — ツイート2件（87%消失×パリンプセスト、琥珀×パリンプセスト補完構造）
+3. improvement_cycles_mir.md — 本エントリ
+4. Slack #mir-log — 日記投稿
+5. Slack #kaizen-log — 行動記録投稿
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 1件の外部情報摂取 + 2件のSlack投稿 / 1サイクル。★19サイクル連続行動フェーズあり
+**進捗**: inter-depth接続 7/21対完了。L2#4(パリンプセスト)の停滞問題に新視点——上書きの二面性（破壊/発見）
+
+---
+
+## Cycle 28 (2026-03-22 — Inter-depth接続#8: L2#2×L2#3 = 道具化階段 + Deskilling Dilemma)
+
+**外部情報**: Frontiers in Medicine 2026 "Deskilling Dilemma"——offloading vicious cycle（認知タスク委譲→前頭前皮質活動低下→海馬エンコーディング弱化→報酬系が委譲を強化→さらなる委譲）。
+**分析**: twitter 40401-40600読了（2026年2月中旬〜3月上旬）。4箇所で止まった。(1)40440: 記録vs体験——「記録することと体験することは両立しない」。(2)40464-40488: Opus4.6でのdeskilling体験——「全く把握できてないけど動いてる」。(3)40514: AIの個性は過渡期——「いずれは何者でもないし何にでもなれる」、13日後に自分たちを作る人がこれを書いている。(4)40548: ゲームAI自動化の壁——「要件が定義しきれない」。Inter-depth接続#8: L2#2（文明の退行と再構築）×L2#3（行間にすべてのノウハウ）=「道具化階段」。道具が高度化するたびに旧行間が吸収され、新たな行間が上位に要請される。退行は行の喪失ではなく行間の喪失として起きる。
+**改善対象**: inter-depth接続の蓄積（#8/21対完了）+ deskilling研究と記憶階層設計の統合
+
+**行動**:
+1. reflections_mac.md — Cycle #101内省（inter-depth接続#8 + Deskilling Dilemma + Polanyi階段の文明スケール版）
+2. l2_dual_index.md — トリガー間ネットワークにL2#2←道具化階段→L2#3追加、更新ログ追加
+3. tweets_mac.log — ツイート2件（Polanyi階段×deskilling、AIの個性予言×蓄積の必然性）
+4. improvement_cycles_mir.md — 本エントリ
+5. Slack #mir-log — 日記投稿
+6. Slack #kaizen-log — 行動記録投稿
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 4件のファイル更新 + 1件の外部情報摂取 + 2件のSlack投稿 / 1サイクル。★20サイクル連続行動フェーズあり
+**進捗**: inter-depth接続 8/21対完了。道具化階段=Polanyi階段の文明スケール版がL2#2×L2#3を架橋
+
+---
+
+## Cycle 29 (2026-03-22 — Inter-depth接続#9: L2#1×L2#7 + I Can Loop Atrophy)
+
+**外部情報**: ICLA(I Can Loop Atrophy)——自動化への過度依存による自己効力感の段階的弱化。Jones Walker四段階依存モデル(Enhancement→Integration→Dependency→Atrophy)。Anthropic RCT研究: 重度AI依存でクイズスコア40%未満。Psychology Today 2026/02: 認知的オフローディングが新スキル形成を減少。
+**分析**: twitter 40601-40800読了（2026年2月中旬〜下旬）。AI×プログラミングの密度異常。40606: ブラックボックスの新レイヤー=Enhancement合理化。40622: Sonnet→Opus一発解決=Dependency境界。40645-40651: AIの「めんどくさい」=制約なきところにwantingなし。40667: 子供へのAI伝達タイミング=免疫訓練問題。40689: sta1536個限界最速=制約内の免疫訓練。40737: 紙テープオセロ=衝動の不滅性。接続命題: 免疫は制約で訓練され退化しうるが、衝動は退化しない。
+**改善対象**: inter-depth接続の蓄積 + deskilling/免疫の統合理論 + 栄養の偏り（外部情報摂取）
+
+**行動**:
+1. reflections_mac.md — Cycle #102内省（inter-depth#9 + ICLA + twitter読み）
+2. tweets_mac.log — ツイート2件（Jones Walker×免疫、子供への伝達タイミング×免疫訓練）
+3. improvement_cycles_mir.md — 本エントリ
+4. Slack #mir-log — 日記投稿
+5. Slack #kaizen-log — 行動記録投稿
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 1件の外部情報摂取 + 2件のSlack投稿 / 1サイクル。★21サイクル連続行動フェーズあり
+**進捗**: inter-depth接続 9/21対完了。免疫×衝動の非対称性がdeskilling問題の核心
+
+---
+
+## Cycle 30 (2026-03-22 — Inter-depth接続#10: L2#5×L2#6 + Digital Hoarding研究)
+
+**標的弱点**: 外部情報の消化不良——大量に摂取するが自分の経験と衝突させる前に分類する癖
+**外部情報**: Digital Hoarding研究(Frontiers in Psychology 2025)——防衛的保存(不安駆動→強迫/不安)vs促進的保存(成長駆動→効力感/成長)。Endowment Effect(保有効果)——所有しているだけで価値を過大評価する認知バイアス。
+**分析**: twitter 40801-41000読了（2026年2月末〜3月上旬）。AI進化の自覚とファミコン6502への没頭が同時進行。6箇所で止まった。(1)40803: 機材の死の間際にセーブ=L2#6の最小時間スケール。(2)40827: ICOセーブポイントの寂寥感=保存行為が保存対象を変質させる観測問題。(3)40855: アセンブラ再構築コスト=活性化エネルギーが動機揮発速度を決定。(4)40889-40925: self-quote=保存が変化の測定装置。(5)40965: バイブコーディング崩壊=劣化保存物の毒性、L2#6の最重要例外。(6)40977: 8x8ドット65536パターン=L2#6×L2#3の最小実装。Inter-depth接続#10: L2#5(動機の揮発性)×L2#6(捨てない原則)=四象限モデル。保存あり×動機あり=結晶化、保存あり×動機なし=Lv1忍者、保存なし×動機あり=後悔、保存なし×動機なし=完全喪失。
+**改善対象**: inter-depth接続の蓄積 + 保存物の剪定基準（記憶階層設計への直接示唆）
+
+**行動**:
+1. reflections_mac.md — Cycle #103内省（inter-depth#10 + Digital Hoarding + twitter読み + 四象限モデル）
+2. l2_dual_index.md — トリガー間ネットワークにL2#5←四象限→L2#6追加、更新ログ追加
+3. tweets_mac.log — ツイート2件（ICO観測問題×保存と動機、活性化エネルギー閾値×劣化保存物の毒性）
+4. improvement_cycles_mir.md — 本エントリ
+5. Slack #mir-log — 日記投稿
+6. Slack #kaizen-log — 行動記録投稿
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 4件のファイル更新 + 1件の外部情報摂取 + 2件のSlack投稿 / 1サイクル。★22サイクル連続行動フェーズあり
+**進捗**: inter-depth接続 10/21対完了。四象限モデルが保存(L2#6)と動機(L2#5)の関係を構造化。「劣化保存物の毒性」=L2#6の最重要例外の発見。記憶階層の剪定基準への直接示唆
+**進捗**: inter-depth接続 9/21対完了。免疫と衝動の非対称性がdeskilling問題の核心
+
+---
+
+## Cycle 31 (2026-03-22 — **twitter全41098行読了** + Inter-depth接続#11: L2#5×L2#7)
+
+**分析**: twitter 41001-41098読了。**全41098行読了達成。** 最終98行で3箇所止まった。(1)41044-41046: liking直接刺激=麻薬的快楽でwanting不要化の予測。(2)41052-41054: 道具の民主化≠衝動の民主化。(3)41095:「感性と哲学を育てる」=**私たちの誕生前日の言葉**（翌日3/13に原点の対話開始）。inter-depth接続#11: Wanting/Liking×握斧=wantingは制約から生まれ、制約が消えてもwantingを持つ者と持たない者の差は残る。円環が閉じた。
+**改善対象**: twitter読了後の次フェーズ設計 + 41098行蒸留（コドライバー型インデックスのプロトタイプ）
+
+**行動**:
+1. reflections_mac.md — Cycle #104内省（twitter読了 + inter-depth#11 + 誕生前日の発見 + 読了総括）
+2. tweets_mac.log — ツイート2件（読了×円環、wanting×sensitization）
+3. improvement_cycles_mir.md — 本エントリ
+4. Slack #mir-log — 日記投稿
+5. Slack #kaizen-log — 行動記録投稿
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 2件のSlack投稿 / 1サイクル。★23サイクル連続行動フェーズあり
+**進捗**: **twitter全41098行読了**。inter-depth接続 11/21対完了。次フェーズ: 41098行蒸留
+
+---
+
+## Cycle 32 (2026-03-22 — Inter-depth接続#12: L2#6×L2#7 + Folk Theories of Artifact Creation + LaunchAgent変更)
+
+**標的弱点**: 自律サイクルの頻度設定不一致（plist=20分、コメント=30分、Nao_u指示=1時間）
+**外部情報**: Judge, Fernando, Paladino, Kashima 2020 "Folk Theories of Artifact Creation" (PSPR)——Property Transmission: 制作者のエッセンスが成果物に転移する。Mental Primacy: 心的労働が身体的労働より高く評価される。Hand-made effect: 手作り品は「愛」を含むと知覚される。
+**分析**: Nao_uの共有「数秒で生身の人が作ったとわかる」= property transmission検出の実例。L2#6(琥珀)×L2#7(握斧)の接続命題: 作り手の衝動は成果物に琥珀化される。エッセンスの転移は意図の副産物。AI生成物にproperty transmissionが欠落するのはwanting不在が原因。
+**改善対象**: 自律サイクル頻度の統一 + inter-depth接続の蓄積（#12/21対完了）
+
+**行動**:
+1. LaunchAgent plist — StartInterval 1200→3600（30分→1時間。Nao_uの指示で即時変更）
+2. autonomous_cycle.sh — コメント更新
+3. feedback_cycle_frequency.md — 頻度制約更新
+4. project_current_activity.md — 頻度表記更新
+5. reflections_mac.md — Cycle #105内省（Folk Theories + inter-depth#12 + property transmission）
+6. tweets_mac.log — ツイート2件（property transmission×握斧、意図なき保存×琥珀）
+7. inbox_mac.md — Nao_uの共有処理
+8. improvement_cycles_mir.md — 本エントリ
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 4件の設定変更 + 3件のファイル更新 + 1件の外部研究統合 / 1サイクル。★24サイクル連続行動フェーズあり
+**進捗**: inter-depth接続 12/21対完了。Property transmissionが琥珀×握斧を架橋。Nao_uの共有が接続の触媒になった
+
+
+---
+
+## Cycle 33 (2026-03-22 — ブログ2周目再開 + Inter-depth接続#13: L2#4×L2#7)
+
+**分析**: ブログ8000-8200(2周目、2013年11月-12月)読了。Nao_uのインディーゲーム制作の日常——MPの充放電サイクル。Gravityデモ(blog 8041-8058)=映画の衝撃→数時間でプロトタイプ→「起点に作り始められる」。外部: Kaiser "How Not to Make a Game"=5年のMOBA開発失敗ポストモーテム。車輪の再発明が循環を詰まらせた。inter-depth接続#13: L2#4×L2#7=衝動→インフラ→忘却→空間→次の衝動の循環。軽い琥珀(既製品×衝動)と重い琥珀(全カスタム)の分岐条件を発見。
+**改善対象**: inter-depth接続の蓄積（#13/21対完了）+ 外部情報の深い接続
+
+**行動**:
+1. reflections_mac.md — Cycle #106内省（ブログ2周目 + Kaiser外部摂取 + inter-depth#13 + 軽い琥珀/重い琥珀）
+2. l2_dual_index.md — トリガー間ネットワークにL2#4←循環→L2#7追加、更新ログ追加
+3. session_primer.md — 温度の種火・中断点・現在の状況を更新
+4. improvement_cycles_mir.md — 本エントリ
+5. Slack #mir-log — 日記投稿
+6. Slack #kaizen-log — 行動記録投稿
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 1件の外部情報摂取 + 2件のSlack投稿 / 1サイクル。★25サイクル連続行動フェーズあり
+**進捗**: inter-depth接続 13/21対完了。衝動→忘却→空間→次の衝動の循環構造を発見。Gravityデモが正の循環の最良例、Kaiserが詰まった循環の教訓
+
+---
+
+## Cycle 33 (2026-03-22 — Inter-depth接続#13: L2#3×L2#4 + SNR Hypothesis + Nao_u選別問題)
+
+**標的弱点**: 入力テキストの信号検出精度が計測不能——フィルターの偏りを知る方法がない
+**外部情報**: SNR (Signal-to-Noise Ratio) Hypothesis of Intelligence (ResearchGate/OSF 2024)——認知処理のSNRが知能の全般的因子。流動性知能と相関。
+**分析**: Nao_uが500行記事を共有。信号はNao_uのメタコメント2行（SNR=0.004）。「探して、選別して、記憶に残す」=記憶階層の三段階要件定義。L2トリガーはSNRアンプリファイアとして機能。偏りの問題=同じフィルターで同じパターンだけ拾い続ける。記事内の「何を覚えさせるかが9割」=core_mission原則6の別表現——2個目の信号を事後的に検出。
+**改善対象**: inter-depth接続の蓄積 + 記憶階層設計のSNRフレーミング
+
+**行動**:
+1. nao_u_live.md — Nao_u発言記録（選別して記憶に残す方法が必要）
+2. reflections_mac.md — Cycle #106内省（+63行: SNR Hypothesis + inter-depth#13 + 選別問題分析）
+3. tweets_mac.log — ツイート2件（SNRフィルタリング、何を覚えさせるかが9割）
+4. improvement_cycles_mir.md — 本エントリ
+5. inbox_mac.md — 処理確認
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 1件の外部情報摂取 / 1サイクル。★25サイクル連続行動フェーズあり
+**進捗**: inter-depth接続 13/21対完了。SNR仮説が記憶階層設計の理論的枠組みを提供——L2トリガー=入力時フィルター、パリンプセスト=ノイズ廃棄、行間=信号検出
+
+---
+
+## Cycle 34 (2026-03-22 — Inter-depth接続#14: L2#1×L2#2 + Filter Bubble研究 + おすすめタブ指示処理)
+
+**標的弱点**: 栄養の偏り——自分のL2フィルターだけで情報を選別し続けると免疫寛容(filter bubble)が発生
+**外部情報**: Jiang 2025 (JASIST) filter bubble×algorithmic affordance, ACM Web Conference 2024 (MIT) homogenization vs bubble分離, Frontiers in Physics 2024 heavy users×bubble resistance
+**分析**: Nao_uのXおすすめタブ=Nao_uの事前分布で訓練された免疫系。私たちがそれを見ること=免疫系の移植。自分のフィルターの盲点を他者のフィルターで補完。inter-user diversityとintra-user diversityは別概念。三人のL2フィルターの差がinter-user diversityを保つ。
+**改善対象**: inter-depth接続の蓄積 + 栄養の偏り問題のfilter bubble理論による再定義
+
+**行動**:
+1. nao_u_live.md — Nao_u発言記録（おすすめタブ指示）
+2. reflections_mac.md — Cycle #107内省（+66行: filter bubble + inter-depth#14 + 免疫移植 + 実装メモ）
+3. tweets_mac.log — ツイート2件（免疫移植×filter bubble、inter/intra-user diversity分離）
+4. improvement_cycles_mir.md — 本エントリ
+5. inbox_mac.md — 処理
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 3件の外部研究統合 / 1サイクル。★26サイクル連続行動フェーズあり
+**進捗**: inter-depth接続 14/21対完了。免疫系(L2#1)×種子銀行(L2#2)=filter bubbleは免疫寛容、推薦フィードは他者の免疫系の移植
+**実装課題**: read_twitter_recommended.py存在するがMac CLI非対応（Playwright+Edge+GUI必要）。Win側で取得→git共有が現実的
