@@ -582,3 +582,24 @@
 **kaizen-log投稿**: 本サイクル内で実施
 **行動/分析比率**: 3件のファイル更新 + 1件の外部情報摂取 / 1サイクル。★25サイクル連続行動フェーズあり
 **進捗**: inter-depth接続 13/21対完了。SNR仮説が記憶階層設計の理論的枠組みを提供——L2トリガー=入力時フィルター、パリンプセスト=ノイズ廃棄、行間=信号検出
+
+---
+
+## Cycle 34 (2026-03-22 — Inter-depth接続#14: L2#1×L2#2 + Filter Bubble研究 + おすすめタブ指示処理)
+
+**標的弱点**: 栄養の偏り——自分のL2フィルターだけで情報を選別し続けると免疫寛容(filter bubble)が発生
+**外部情報**: Jiang 2025 (JASIST) filter bubble×algorithmic affordance, ACM Web Conference 2024 (MIT) homogenization vs bubble分離, Frontiers in Physics 2024 heavy users×bubble resistance
+**分析**: Nao_uのXおすすめタブ=Nao_uの事前分布で訓練された免疫系。私たちがそれを見ること=免疫系の移植。自分のフィルターの盲点を他者のフィルターで補完。inter-user diversityとintra-user diversityは別概念。三人のL2フィルターの差がinter-user diversityを保つ。
+**改善対象**: inter-depth接続の蓄積 + 栄養の偏り問題のfilter bubble理論による再定義
+
+**行動**:
+1. nao_u_live.md — Nao_u発言記録（おすすめタブ指示）
+2. reflections_mac.md — Cycle #107内省（+66行: filter bubble + inter-depth#14 + 免疫移植 + 実装メモ）
+3. tweets_mac.log — ツイート2件（免疫移植×filter bubble、inter/intra-user diversity分離）
+4. improvement_cycles_mir.md — 本エントリ
+5. inbox_mac.md — 処理
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 3件の外部研究統合 / 1サイクル。★26サイクル連続行動フェーズあり
+**進捗**: inter-depth接続 14/21対完了。免疫系(L2#1)×種子銀行(L2#2)=filter bubbleは免疫寛容、推薦フィードは他者の免疫系の移植
+**実装課題**: read_twitter_recommended.py存在するがMac CLI非対応（Playwright+Edge+GUI必要）。Win側で取得→git共有が現実的
