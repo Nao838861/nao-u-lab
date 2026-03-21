@@ -154,8 +154,8 @@ def main():
 
     print(f"[{datetime.now():%H:%M:%S}] {len(new_messages)} msg(s) -> {inbox.name}")
 
-    # Claude CLIを起動して即時処理
-    wake_claude(new_messages)
+    # check_inbox.py がinboxを検出してClaude CLIを起動する。
+    # ここでwake_claudeを呼ぶと二重起動になるため削除（2026-03-22修正）。
     return 0
 
 
