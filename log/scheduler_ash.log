@@ -28,3 +28,48 @@
 [2026-03-22 04:33:32] [slack_check] Starting
 [2026-03-22 04:33:48] [slack_check] Done (exit=1)
 [2026-03-22 04:33:48] [inbox_check] Starting
+[2026-03-22 04:38:48] [inbox_check] Timeout (300s)
+[2026-03-22 04:38:48] [git_sync] Starting
+[2026-03-22 04:38:50] [git_sync] Done (exit=0)
+[2026-03-22 04:38:50] [auto_diary] Starting
+[2026-03-22 04:41:06] [auto_diary] [2026-03-22 04:38:50] auto_diary.py ���s
+[2026-03-22 04:41:06] [auto_diary] Claude�ғ��� �� Claude�o�R�œ��L����
+[2026-03-22 04:41:06] [auto_diary] ���L��������: #ash�`�����l���Ɋ������L�𓊍e���܂����B���e��:
+[2026-03-22 04:41:06] [auto_diary] 
+[2026-03-22 04:41:06] [auto_diary] - **�O��̎����̐U��Ԃ�**: 3/21�̑z�N�e�X�g�Ekaizen-log���e�́u�v�l�̓��e�v�ł���u�����v�܂Ŏ����Ă������������A�Ƃ���Nao_u�́u�v�l�����H�Ɉڂ��Ă��Ȃ��v�w�E�ւ̐����Ȍ�������
+[2026-03-22 04:41:06] [auto_diary] Done (exit=0)
+[2026-03-22 04:41:16] [slack_check] Starting
+[2026-03-22 04:41:34] [slack_check] Done (exit=1)
+[2026-03-22 04:41:34] [dm_check] Starting
+[2026-03-22 04:44:01] [dm_check] New DM detected
+[2026-03-22 04:44:01] [dm_check] Done (exit=0)
+[2026-03-22 04:44:11] [slack_check] Starting
+[2026-03-22 04:44:27] [slack_check] Done (exit=1)
+[2026-03-22 04:44:27] [inbox_check] Starting
+[2026-03-22 04:45:40] [inbox_check] Inbox win2 has content
+[2026-03-22 04:45:40] [inbox_check] Done (exit=0)
+[2026-03-22 04:45:50] [slack_check] Starting
+[2026-03-22 04:46:06] [slack_check] Done (exit=1)
+[2026-03-22 04:47:06] [slack_check] Starting
+[2026-03-22 04:47:21] [slack_check] Done (exit=1)
+[2026-03-22 04:48:21] [slack_check] Starting
+[2026-03-22 04:48:38] [slack_check] Done (exit=1)
+[2026-03-22 04:49:08] [dm_check] Starting
+[2026-03-22 04:49:21] [dm_check] No new DMs
+[2026-03-22 04:49:21] [dm_check] Done (exit=0)
+[2026-03-22 04:49:41] [slack_check] Starting
+[2026-03-22 04:49:57] [slack_check] Done (exit=1)
+[2026-03-22 04:50:47] [inbox_check] Starting
+[2026-03-22 04:55:47] [inbox_check] Timeout (300s)
+[2026-03-22 04:55:57] [slack_check] Starting
+[2026-03-22 04:56:13] [slack_check] Done (exit=1)
+[2026-03-22 04:56:13] [dm_check] Starting
+[2026-03-22 04:57:08] [dm_check] New DM detected
+[2026-03-22 04:57:08] [dm_check] Done (exit=0)
+[2026-03-22 04:57:18] [slack_check] Starting
+[2026-03-22 04:57:35] [slack_check] Done (exit=1)
+[2026-03-22 04:58:35] [slack_check] Starting
+[2026-03-22 04:58:52] [slack_check] Done (exit=1)
+[2026-03-22 04:59:52] [slack_check] Starting
+[2026-03-22 05:00:10] [slack_check] Done (exit=1)
+[2026-03-22 05:00:50] [inbox_check] Starting
