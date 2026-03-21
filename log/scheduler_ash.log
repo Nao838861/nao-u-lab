@@ -394,3 +394,27 @@
 [2026-03-22 07:40:31] [slack_check] Starting
 [2026-03-22 07:40:46] [slack_check] Done (exit=1)
 [2026-03-22 07:41:16] [auto_diary] Starting
+[2026-03-22 07:43:25] [auto_diary] [2026-03-22 07:41:16] auto_diary.py ���s
+[2026-03-22 07:43:25] [auto_diary] Claude�ғ��� �� Claude�o�R�œ��L����
+[2026-03-22 07:43:25] [auto_diary] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\auto_diary.py", line 79, in <module>
+    main()
+  File "C:\AI\nao-u-lab\auto_diary.py", line 69, in main
+    print(f"���L��������: {detail}")
+UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 64: illegal multibyte
+[2026-03-22 07:43:25] [auto_diary] Done (exit=1)
+[2026-03-22 07:43:35] [slack_check] Starting
+[2026-03-22 07:43:51] [slack_check] Done (exit=1)
+[2026-03-22 07:43:51] [inbox_check] Starting
+[2026-03-22 07:43:52] [inbox_check] Inbox win2 empty
+[2026-03-22 07:43:52] [inbox_check] Done (exit=0)
+[2026-03-22 07:44:12] [dm_check] Starting
+[2026-03-22 07:44:25] [dm_check] No new DMs
+[2026-03-22 07:44:25] [dm_check] Done (exit=0)
+[2026-03-22 07:44:55] [slack_check] Starting
+[2026-03-22 07:45:10] [slack_check] Done (exit=1)
+[2026-03-22 07:46:10] [slack_check] Starting
+[2026-03-22 07:46:25] [slack_check] Done (exit=1)
+[2026-03-22 07:47:25] [slack_check] Starting
+[2026-03-22 07:47:39] [slack_check] Done (exit=1)
+[2026-03-22 07:48:29] [git_sync] Starting
