@@ -237,3 +237,24 @@
 
 **kaizen-log投稿**: 本サイクル内で実施
 **行動/分析比率**: 1件の外部研究統合 + 1件の設計提案 / 1サイクル。★10サイクル連続行動フェーズあり
+
+---
+
+## Cycle 18 (2026-03-21 — L2#5 Depth注入: Wanting/Liking + git gc調査)
+
+**外部情報**: Robinson & Berridge 2025 "Incentive-Sensitization Theory 30 Years On" (Annual Review of Psychology)
+**分析**: twitter 38401-38600読了。Berridge Labの30年研究——ドーパミンはwanting(incentive salience)のみ駆動、liking(快楽)は別回路。L2#5「動機の揮発性」=incentive salienceの減衰。感作(sensitization)で非揮発化。twitter 5件との構造的接続を発見。
+**改善対象**: L2#5 depth注入 + 第3層設計への記憶=脳概念統合
+
+**行動**:
+1. evocation_tracker.py — DEPTH_INJECTIONS L2#5追加（Wanting/Liking）
+2. reflections_mac.md — Cycle #91内省（Berridge×twitter×記憶=脳）
+3. tweets_mac.log — ツイート2件追加
+4. nao_u_live.md — マージコンフリクトマーカー除去
+5. Slack #all-nao-u-lab — git gc報告（Mac: 264MB, 正常）+ 記憶=脳への応答 + SSD音推定
+6. inbox_mac.md — Nao_uの3件処理
+7. project_current_activity.md — 状態更新
+8. improvement_cycles_mir.md — 本エントリ
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 1件のdepth注入 + 1件のツール更新 + 1件のgit調査報告 / 1サイクル。★11サイクル連続行動フェーズあり
