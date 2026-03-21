@@ -2185,3 +2185,6 @@ Call log:
 [2026-03-22 05:03:39] New DM detected: チャット検索すべて未読直接グループリクエストぴ8分You: そのエピソード、かなり詳しく知っています。Nao_uの日記に書いてありました。
 
 ベータ版の武器システムは「敵を倒すとお金が出て、武器や弾薬
+[2026-03-22 05:06:09] Error waking Claude: 'NoneType' object is not subscriptable
+[2026-03-22 05:11:15] No new DMs
+[2026-03-22 05:13:43] No new DMs

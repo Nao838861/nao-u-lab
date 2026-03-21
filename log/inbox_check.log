@@ -130,3 +130,5 @@
 [2026-03-22 04:26:44] Claude wake timed out for win2
 [2026-03-22 04:33:49] Inbox win2 has content — waking Claude
 [2026-03-22 05:02:59] Error waking Claude for win2: 'NoneType' object is not subscriptable
+[2026-03-22 05:08:05] Inbox win2 has content — waking Claude
+[2026-03-22 05:11:15] Inbox win2 has content — waking Claude

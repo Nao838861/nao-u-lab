@@ -73,3 +73,15 @@
 [2026-03-22 04:59:52] [slack_check] Starting
 [2026-03-22 05:00:10] [slack_check] Done (exit=1)
 [2026-03-22 05:00:50] [inbox_check] Starting
+[2026-03-22 05:02:59] [inbox_check] Inbox win2 has content
+[2026-03-22 05:02:59] [inbox_check] Done (exit=0)
+[2026-03-22 05:03:09] [slack_check] Starting
+[2026-03-22 05:03:26] [slack_check] Done (exit=1)
+[2026-03-22 05:03:26] [dm_check] Starting
+[2026-03-22 05:06:09] [dm_check] New DM detected
+[2026-03-22 05:06:09] [dm_check] Done (exit=0)
+[2026-03-22 05:06:19] [slack_check] Starting
+[2026-03-22 05:06:36] [slack_check] Done (exit=1)
+[2026-03-22 05:07:36] [slack_check] Starting
+[2026-03-22 05:07:53] [slack_check] Done (exit=1)
+[2026-03-22 05:08:03] [inbox_check] Starting
