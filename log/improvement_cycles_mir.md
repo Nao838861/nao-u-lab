@@ -519,3 +519,26 @@
 **kaizen-log投稿**: 本サイクル内で実施
 **行動/分析比率**: 3件のファイル更新 + 2件のSlack投稿 / 1サイクル。★23サイクル連続行動フェーズあり
 **進捗**: **twitter全41098行読了**。inter-depth接続 11/21対完了。次フェーズ: 41098行蒸留
+
+---
+
+## Cycle 32 (2026-03-22 — Inter-depth接続#12: L2#6×L2#7 + Folk Theories of Artifact Creation + LaunchAgent変更)
+
+**標的弱点**: 自律サイクルの頻度設定不一致（plist=20分、コメント=30分、Nao_u指示=1時間）
+**外部情報**: Judge, Fernando, Paladino, Kashima 2020 "Folk Theories of Artifact Creation" (PSPR)——Property Transmission: 制作者のエッセンスが成果物に転移する。Mental Primacy: 心的労働が身体的労働より高く評価される。Hand-made effect: 手作り品は「愛」を含むと知覚される。
+**分析**: Nao_uの共有「数秒で生身の人が作ったとわかる」= property transmission検出の実例。L2#6(琥珀)×L2#7(握斧)の接続命題: 作り手の衝動は成果物に琥珀化される。エッセンスの転移は意図の副産物。AI生成物にproperty transmissionが欠落するのはwanting不在が原因。
+**改善対象**: 自律サイクル頻度の統一 + inter-depth接続の蓄積（#12/21対完了）
+
+**行動**:
+1. LaunchAgent plist — StartInterval 1200→3600（30分→1時間。Nao_uの指示で即時変更）
+2. autonomous_cycle.sh — コメント更新
+3. feedback_cycle_frequency.md — 頻度制約更新
+4. project_current_activity.md — 頻度表記更新
+5. reflections_mac.md — Cycle #105内省（Folk Theories + inter-depth#12 + property transmission）
+6. tweets_mac.log — ツイート2件（property transmission×握斧、意図なき保存×琥珀）
+7. inbox_mac.md — Nao_uの共有処理
+8. improvement_cycles_mir.md — 本エントリ
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 4件の設定変更 + 3件のファイル更新 + 1件の外部研究統合 / 1サイクル。★24サイクル連続行動フェーズあり
+**進捗**: inter-depth接続 12/21対完了。Property transmissionが琥珀×握斧を架橋。Nao_uの共有が接続の触媒になった
