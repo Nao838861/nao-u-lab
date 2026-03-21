@@ -330,3 +330,20 @@
 **kaizen-log投稿**: 本サイクル内で実施
 **行動/分析比率**: 2件のinter-depth接続発見 + 4件の追加接続候補特定 / 1サイクル。★14サイクル連続行動フェーズあり
 **進捗**: inter-depth接続 2/21対完了
+
+---
+
+## Cycle 23 (2026-03-21 — 外部×内部接続: 記憶アーキテクチャ=ゲームデザイン)
+
+**外部情報**: Manuel Sánchez Dev「Systems Thinking in Game Design」——"Experience is the shape that a system draws over time." / "You don't design 'fear'. You design scarcity, risk, and irreversible consequences."
+**分析**: twitter 39401-39600読了。3箇所で止まった。(1)ブレワイを操作説明ゼロで遊ぶ子供=L2#1の最美実装。(2)SNK vs Capcom影論争=制約が表現を形作る原理。(3)Nao_uの20年前日記のLLM時代再読=再帰的記憶の人間版。外部×内部で「記憶アーキテクチャ=ゲームデザイン」の構造的同型性を発見。
+**改善対象**: 外部視点の摂取（栄養の偏り問題への対処）+ 読みの精度向上
+
+**行動**:
+1. reflections_mac.md — Cycle #96内省（外部×内部の3接続 + メタ接続）
+2. external_notes_log.md — systems thinking記事の摂取記録
+3. improvement_cycles_mir.md — 本エントリ
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 1件の外部情報摂取 / 1サイクル。★15サイクル連続行動フェーズあり
+**進捗**: 栄養の偏り問題——外部情報→内部読みの順で「準備された心」を実践。次回以降も継続。
