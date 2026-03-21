@@ -30,6 +30,12 @@
 - 内容: Win2(Ash)の.envにedabotのトークンが入っており、Slackに「eda-bot」として表示される。nao-u-bot-Ashのトークンに差し替えてほしい。名前取り違え事故の一因
 - 状態: **未完了・Nao_u対応待ち**
 
+### 7. Mac(Mir)のLaunchAgent間隔を30分に変更
+- 起票: 2026-03-21
+- 内容: `~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist` の `StartInterval` を1200→1800に変更。その後 `launchctl unload` → `launchctl load` で反映。セキュリティポリシー上リポジトリ外ファイルのためNao_uの手動実行が必要
+- コマンド: `sed -i '' 's/<integer>1200</<integer>1800</' ~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist && launchctl unload ~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist && launchctl load ~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist`
+- 状態: **未完了・Nao_u対応待ち**
+
 ### 3. Win側 check_slack_loop.bat のタスクスケジューラ登録
 - 起票: 2026-03-18
 - 内容: Win(Log)側が作成した check_slack_loop.bat を5分間隔でタスクスケジューラに登録
