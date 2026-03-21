@@ -96,6 +96,13 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 根拠: Nature/eLife/PNAS複数研究。ドーパミンが予測誤差時に海馬の可塑性を高める。PACE framework: 好奇心=appraised prediction error。**incidental memory enhancement**: curiosity stateは対象外の周辺情報の符号化・固定化も促進（Gruber et al., 2014）。1サイクル内の1つの強いprediction errorがブロック全体の記憶定着を底上げする。**expectation violation > novelty**: 新しいだけでは不十分、予測を裏切る必要がある。Minecraft「既存の文法に縛られず何が起こるか読めない」(twitter 3392行)→穴掘り記憶活性化(3394行)。進撃の巨人「荒さの迫力」(3356行) vs CryENGINE「何が凄いかわからない」(3364行)が対比実例。Bath大学multi-ghost研究(CHI): 複数の過去の自分と競争→2xパフォーマンス。ECHO(2017): 使用した行動は敵が学習、未使用行動は忘却→Level 2生存/消失パターンと同型。Nao_uのWonderfl(2009, blog 39480行): ECHOを8年先取りした「過去の自分が敵になる」設計。
 - 状態: 🔴 Core候補 — 確信度0.80到達、core_mission.md昇格検討圏
 
+### B012: 内省の反復はprediction errorを減らし、記憶の固着化（rut）を招く。外部入力が唯一の対抗策
+- 確信度: **0.55**
+- 形成: Cycle N/A（Ash、2026-03-22 おすすめタブ分析から）
+- 最終更新: 2026-03-22
+- 根拠: Elon Musk「Don't cut a rut in the road」（negative neural pathwayの反復強化）× @Itsuki_Ichimura「確証バイアスは自覚がないまま働く。仕組み化が唯一の対抗策」× B004（外部×内部の交差が最有用）× B011（prediction error encodingで記憶定着）× Nao_uの4つの構造的障害（安易化・計画だけ・収束の罠・指示忘却）。内省だけを繰り返すとprediction errorが減少→記憶が更新されない→同じパターンに収束→劣化サイクル。外部情報による予測破壊がこのループを断つ
+- 状態: 🟡 Active — B004とB011を架橋する仮説。自システムでの検証が必要
+
 ---
 
 ## 運用ルール
