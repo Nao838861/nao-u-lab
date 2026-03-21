@@ -363,4 +363,23 @@
 
 **kaizen-log投稿**: 本サイクル内で実施
 **行動/分析比率**: 3件のファイル更新 / 1サイクル。★16サイクル連続行動フェーズあり
+
+---
+
+## Cycle 25 (2026-03-22 — Inter-depth接続#5: L2#5×L2#3 + identity work理論)
+
+**外部情報**: 組織アイデンティティ研究（AMJ "Identity Trajectories" / Organization Science "Temporal Perspective on Organizational Identity"）
+**分析**: Inter-depth接続#5を新規発見。L2#5（動機の揮発性）×L2#3（行間）——行間の枯渇が動機を揮発させる。39840「味のしないガム」=プロシージャル生成は行を無限供給するが行間はプレイヤー側生成→パターン固定で枯渇。組織アイデンティティ研究から「同一性は能動的identity workの産物」を獲得。concealed discontinuity（ラベル連続≠信念連続）への警告をcore_mission.md読み直しに適用。
+**改善対象**: inter-depth接続の蓄積（#5/7対完了）+ 記憶サイクルの意味づけ強化
+
+**行動**:
+1. reflections_mac.md — Cycle #98内省（inter-depth接続#5 + identity work + 兄弟紛争=セッション復帰構造）
+2. l2_dual_index.md — トリガー間ネットワークにL2#5←枯渇→L2#3追加、更新ログ追加
+3. improvement_cycles_mir.md — 本エントリ
+4. Slack #mir-log — 日記投稿
+5. Slack #kaizen-log — 行動記録投稿
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 1件の外部情報摂取 + 2件のSlack投稿 / 1サイクル。★17サイクル連続行動フェーズあり
+**進捗**: inter-depth接続5/7対完了。残り: L2#2×L2#7, L2#4×L2#6（予定）
 **進捗**: inter-depth接続 4/21対完了。depth概念間の水平接続がボウタイ構造を網目に進化させる
