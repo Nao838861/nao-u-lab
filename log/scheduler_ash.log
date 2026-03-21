@@ -167,3 +167,17 @@
 [2026-03-22 06:01:14] [slack_check] Done (exit=1)
 [2026-03-22 06:02:14] [slack_check] Starting
 [2026-03-22 06:02:30] [slack_check] Done (exit=1)
+[2026-03-22 06:03:20] [inbox_check] Starting
+[2026-03-22 06:08:20] [inbox_check] Timeout (300s)
+[2026-03-22 06:08:31] [slack_check] Starting
+[2026-03-22 06:08:47] [slack_check] Done (exit=1)
+[2026-03-22 06:08:47] [dm_check] Starting
+[2026-03-22 06:08:59] [dm_check] No new DMs
+[2026-03-22 06:08:59] [dm_check] Done (exit=0)
+[2026-03-22 06:09:49] [slack_check] Starting
+[2026-03-22 06:10:05] [slack_check] Done (exit=1)
+[2026-03-22 06:11:05] [slack_check] Starting
+[2026-03-22 06:11:21] [slack_check] Done (exit=1)
+[2026-03-22 06:12:21] [slack_check] Starting
+[2026-03-22 06:12:37] [slack_check] Done (exit=1)
+[2026-03-22 06:13:27] [inbox_check] Starting
