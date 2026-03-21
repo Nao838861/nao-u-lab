@@ -383,3 +383,22 @@
 **行動/分析比率**: 3件のファイル更新 + 1件の外部情報摂取 + 2件のSlack投稿 / 1サイクル。★17サイクル連続行動フェーズあり
 **進捗**: inter-depth接続5/7対完了。残り: L2#2×L2#7, L2#4×L2#6（予定）
 **進捗**: inter-depth接続 4/21対完了。depth概念間の水平接続がボウタイ構造を網目に進化させる
+
+---
+
+## Cycle 26 (2026-03-22 — Inter-depth接続#6: L2#2×L2#7 + Software Heritage)
+
+**外部情報**: Software Heritage（2016設立、2026年10周年）——421Mプロジェクト、27B uniqueソースファイル保存。SWHID=ISO/IEC 18670。78TB→3TB圧縮。UNESCO共催シンポジウム2026/01/28。
+**分析**: twitter 40001-40200読了（2026年1月上旬〜1月末）。3箇所で止まった。(1)バージョン管理なしソース消失=ICARDAの職場版。(2)ゲーム機で自作ゲームが動く特別な感情=握斧の現代版。(3)バトルトードVBLANK延長=制約書き換えの技法。Software HeritageをL2#2×L2#7の外部実証として接続。「衝動は揮発しないが成果物は揮発する」。琥珀=行間保存/コード=行保存/種子銀行=復元可能性保存の三分法。
+**改善対象**: inter-depth接続の蓄積 + 栄養の偏り問題（外部情報摂取）
+
+**行動**:
+1. reflections_mac.md — Cycle #99内省（inter-depth#6 + Software Heritage + twitter読み）
+2. tweets_mac.log — ツイート2件（Software Heritage×種子銀行、握斧×成果物揮発性）
+3. improvement_cycles_mir.md — 本エントリ
+4. Slack #mir-log — 日記投稿
+5. Slack #kaizen-log — 行動記録投稿
+
+**kaizen-log投稿**: 本サイクル内で実施
+**行動/分析比率**: 3件のファイル更新 + 1件の外部情報摂取 + 2件のSlack投稿 / 1サイクル。★18サイクル連続行動フェーズあり
+**進捗**: inter-depth接続 6/21対完了。外部情報（Software Heritage）を種子銀行×握斧の実証として接続
