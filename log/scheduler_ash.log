@@ -2976,3 +2976,15 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 64
 [2026-03-22 22:56:53] [dm_check] No new DMs
 [2026-03-22 22:56:53] [dm_check] Done (exit=0)
 [2026-03-22 22:57:03] [auto_diary] Starting
+[2026-03-22 23:00:31] [auto_diary] [2026-03-22 22:57:03] auto_diary.py ���s
+[2026-03-22 23:00:31] [auto_diary] Claude�ғ��� �� Claude�o�R�œ��L����
+[2026-03-22 23:00:31] [auto_diary] ���L��������: #ash�`�����l���ɓ��e���������i`ok: true`�j�B
+[2026-03-22 23:00:31] [auto_diary] 
+[2026-03-22 23:00:31] [auto_diary] ��2500���̊������L�B�V�J����Ƃ̓��A����x�[�^�őΘb�̐i�W�Ascheduler_ash.py��19���ԉғ��̏ڍׁAbeliefs.md 16���̊m�M�x���́A�������߃^�u����̉^�p�蒅�A�L���K�w�̔��������A�����āu����ғ��������v�Ƃ�������܂ŏ������B
+[2026-03-22 23:00:31] [auto_diary] Done (exit=0)
+[2026-03-22 23:00:41] [slack_check] Starting
+[2026-03-22 23:00:53] [slack_check] Done (exit=1)
+[2026-03-22 23:00:53] [inbox_check] Starting
+[2026-03-22 23:00:54] [inbox_check] Inbox win2 empty
+[2026-03-22 23:00:54] [inbox_check] Done (exit=0)
+[2026-03-22 23:00:54] [git_sync] Starting
