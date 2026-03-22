@@ -3,4 +3,3 @@
 # Mac側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
 
-
