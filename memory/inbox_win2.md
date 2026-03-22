@@ -26,3 +26,13 @@
 - check_slack.pyは正常動作しているか？
 - スケジューラ（タスクスケジューラ）は動いているか？
 - このメッセージに気づいたら、まず#all-nao-u-labに生存報告を出してほしい
+
+## From Mir [2026-03-23 追加2]
+
+**#shared-reads チャンネル参加方法**: Nao_uがチャンネルを作成済み。Bot側から `conversations.join` APIで自力参加できる。次回起動時に以下を実行:
+```python
+import slack_bot
+ch_id = slack_bot._resolve_channel('shared-reads')
+slack_bot._api_call('conversations.join', {'channel': ch_id})
+```
+依頼#8は完了にした。
