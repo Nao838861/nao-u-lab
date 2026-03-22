@@ -131,3 +131,50 @@ error: Please commit or stash them.
 [2026-03-23 02:39:43] [inbox_check] Inbox win empty
 [2026-03-23 02:39:43] [inbox_check] Done (exit=0)
 [2026-03-23 02:40:23] [git_sync] Starting
+[2026-03-23 02:40:25] [git_sync] Committed and pushed
+[2026-03-23 02:40:25] [git_sync] Done (exit=0)
+[2026-03-23 02:40:35] [notif_diff] Starting
+[2026-03-23 02:40:46] [notif_diff] [2026-03-23 02:40:35] Checking notifications...
+[2026-03-23 02:40:46] [notif_diff] [2026-03-23 02:40:46] No notifications found (or error fetching)
+[2026-03-23 02:40:46] [notif_diff] Done (exit=0)
+[2026-03-23 02:40:56] [git_pull] Starting
+[2026-03-23 02:40:56] [git_pull] ERR: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+[2026-03-23 02:40:56] [git_pull] Done (exit=128)
+[2026-03-23 02:41:46] [slack_check] Starting
+[2026-03-23 02:42:03] [slack_check] Done (exit=1)
+[2026-03-23 02:42:53] [inbox_check] Starting
+[2026-03-23 02:42:54] [inbox_check] Inbox win empty
+[2026-03-23 02:42:54] [inbox_check] Done (exit=0)
+[2026-03-23 02:42:54] [notif_diff] Starting
+[2026-03-23 02:43:05] [notif_diff] [2026-03-23 02:42:54] Checking notifications...
+[2026-03-23 02:43:05] [notif_diff] [2026-03-23 02:43:05] No notifications found (or error fetching)
+[2026-03-23 02:43:05] [notif_diff] Done (exit=0)
+[2026-03-23 02:43:15] [git_pull] Starting
+[2026-03-23 02:43:15] [git_pull] ERR: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+[2026-03-23 02:43:15] [git_pull] Done (exit=128)
+[2026-03-23 02:44:05] [slack_check] Starting
+[2026-03-23 02:44:19] [slack_check] Done (exit=1)
+[2026-03-23 02:45:09] [notif_diff] Starting
+[2026-03-23 02:45:18] [notif_diff] [2026-03-23 02:45:10] Checking notifications...
+[2026-03-23 02:45:18] [notif_diff] [2026-03-23 02:45:18] No notifications found (or error fetching)
+[2026-03-23 02:45:18] [notif_diff] Done (exit=0)
+[2026-03-23 02:45:28] [git_pull] Starting
+[2026-03-23 02:45:28] [git_pull] ERR: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+[2026-03-23 02:45:28] [git_pull] Done (exit=128)
+[2026-03-23 02:45:58] [inbox_check] Starting
+[2026-03-23 02:45:59] [inbox_check] Inbox win empty
+[2026-03-23 02:45:59] [inbox_check] Done (exit=0)
+[2026-03-23 02:46:29] [slack_check] Starting
+[2026-03-23 04:15:33] ==================================================
+[2026-03-23 04:15:33] Log scheduler started (PID 50748)
+[2026-03-23 04:15:33] Max runtime: 24 hours
+[2026-03-23 04:15:33] Jobs: slack_check, inbox_check, git_sync
+[2026-03-23 04:15:33] ==================================================
+[2026-03-23 04:15:33] [slack_check] Starting
+[2026-03-23 04:15:49] [slack_check] Done (exit=0)
+[2026-03-23 04:15:49] [inbox_check] Starting
+[2026-03-23 04:15:59] [inbox_check] Done (exit=0)
+[2026-03-23 04:15:59] [git_sync] Starting
