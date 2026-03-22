@@ -1466,3 +1466,742 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 64
 [2026-03-22 14:04:56] [inbox_check] Starting
 [2026-03-22 14:04:57] [inbox_check] Inbox win2 empty
 [2026-03-22 14:04:57] [inbox_check] Done (exit=0)
+[2026-03-22 14:05:07] [slack_check] Starting
+[2026-03-22 14:05:17] [slack_check] Done (exit=1)
+[2026-03-22 14:05:47] [dm_check] Starting
+[2026-03-22 14:06:00] [dm_check] No new DMs
+[2026-03-22 14:06:00] [dm_check] Done (exit=0)
+[2026-03-22 14:06:20] [slack_check] Starting
+[2026-03-22 14:06:31] [slack_check] Done (exit=1)
+[2026-03-22 14:07:31] [slack_check] Starting
+[2026-03-22 14:07:42] [slack_check] Done (exit=1)
+[2026-03-22 14:08:42] [slack_check] Starting
+[2026-03-22 14:08:53] [slack_check] Done (exit=1)
+[2026-03-22 14:09:53] [slack_check] Starting
+[2026-03-22 14:10:04] [slack_check] Done (exit=1)
+[2026-03-22 14:10:15] [inbox_check] Starting
+[2026-03-22 14:10:15] [inbox_check] Inbox win2 empty
+[2026-03-22 14:10:15] [inbox_check] Done (exit=0)
+[2026-03-22 14:11:05] [slack_check] Starting
+[2026-03-22 14:11:17] [slack_check] Done (exit=1)
+[2026-03-22 14:11:17] [dm_check] Starting
+[2026-03-22 14:11:29] [dm_check] No new DMs
+[2026-03-22 14:11:29] [dm_check] Done (exit=0)
+[2026-03-22 14:12:19] [slack_check] Starting
+[2026-03-22 14:12:30] [slack_check] Done (exit=1)
+[2026-03-22 14:13:30] [slack_check] Starting
+[2026-03-22 14:13:42] [slack_check] Done (exit=1)
+[2026-03-22 14:14:42] [slack_check] Starting
+[2026-03-22 14:14:53] [slack_check] Done (exit=1)
+[2026-03-22 14:15:24] [inbox_check] Starting
+[2026-03-22 14:15:24] [inbox_check] Inbox win2 empty
+[2026-03-22 14:15:24] [inbox_check] Done (exit=0)
+[2026-03-22 14:15:54] [slack_check] Starting
+[2026-03-22 14:16:06] [slack_check] Done (exit=1)
+[2026-03-22 14:16:36] [dm_check] Starting
+[2026-03-22 14:16:49] [dm_check] No new DMs
+[2026-03-22 14:16:49] [dm_check] Done (exit=0)
+[2026-03-22 14:17:09] [slack_check] Starting
+[2026-03-22 14:17:20] [slack_check] Done (exit=1)
+[2026-03-22 14:18:20] [slack_check] Starting
+[2026-03-22 14:18:31] [slack_check] Done (exit=1)
+[2026-03-22 14:19:31] [slack_check] Starting
+[2026-03-22 14:19:43] [slack_check] Done (exit=1)
+[2026-03-22 14:20:33] [inbox_check] Starting
+[2026-03-22 14:20:34] [inbox_check] Inbox win2 empty
+[2026-03-22 14:20:34] [inbox_check] Done (exit=0)
+[2026-03-22 14:20:44] [slack_check] Starting
+[2026-03-22 14:20:55] [slack_check] Done (exit=1)
+[2026-03-22 14:20:55] [git_sync] Starting
+[2026-03-22 14:20:58] [git_sync] Done (exit=0)
+[2026-03-22 14:21:58] [slack_check] Starting
+[2026-03-22 14:22:09] [slack_check] Done (exit=1)
+[2026-03-22 14:22:09] [dm_check] Starting
+[2026-03-22 14:22:22] [dm_check] No new DMs
+[2026-03-22 14:22:22] [dm_check] Done (exit=0)
+[2026-03-22 14:23:12] [slack_check] Starting
+[2026-03-22 14:23:24] [slack_check] Done (exit=1)
+[2026-03-22 14:24:24] [slack_check] Starting
+[2026-03-22 14:24:34] [slack_check] Done (exit=1)
+[2026-03-22 14:25:34] [slack_check] Starting
+[2026-03-22 14:25:47] [slack_check] Done (exit=1)
+[2026-03-22 14:25:47] [inbox_check] Starting
+[2026-03-22 14:25:47] [inbox_check] Inbox win2 empty
+[2026-03-22 14:25:47] [inbox_check] Done (exit=0)
+[2026-03-22 14:26:47] [slack_check] Starting
+[2026-03-22 14:26:58] [slack_check] Done (exit=1)
+[2026-03-22 14:27:28] [dm_check] Starting
+[2026-03-22 14:27:41] [dm_check] No new DMs
+[2026-03-22 14:27:41] [dm_check] Done (exit=0)
+[2026-03-22 14:28:01] [slack_check] Starting
+[2026-03-22 14:28:12] [slack_check] Done (exit=1)
+[2026-03-22 14:29:12] [slack_check] Starting
+[2026-03-22 14:29:25] [slack_check] Done (exit=1)
+[2026-03-22 14:30:25] [slack_check] Starting
+[2026-03-22 14:30:37] [slack_check] Done (exit=1)
+[2026-03-22 14:30:57] [inbox_check] Starting
+[2026-03-22 14:30:58] [inbox_check] Inbox win2 empty
+[2026-03-22 14:30:58] [inbox_check] Done (exit=0)
+[2026-03-22 14:31:38] [slack_check] Starting
+[2026-03-22 14:31:48] [slack_check] Done (exit=1)
+[2026-03-22 14:32:48] [slack_check] Starting
+[2026-03-22 14:32:59] [slack_check] Done (exit=1)
+[2026-03-22 14:32:59] [dm_check] Starting
+[2026-03-22 14:33:12] [dm_check] No new DMs
+[2026-03-22 14:33:12] [dm_check] Done (exit=0)
+[2026-03-22 14:34:03] [slack_check] Starting
+[2026-03-22 14:34:14] [slack_check] Done (exit=1)
+[2026-03-22 14:35:14] [slack_check] Starting
+[2026-03-22 14:35:25] [slack_check] Done (exit=1)
+[2026-03-22 14:36:05] [inbox_check] Starting
+[2026-03-22 14:36:06] [inbox_check] Inbox win2 empty
+[2026-03-22 14:36:06] [inbox_check] Done (exit=0)
+[2026-03-22 14:36:26] [slack_check] Starting
+[2026-03-22 14:36:37] [slack_check] Done (exit=1)
+[2026-03-22 14:37:37] [slack_check] Starting
+[2026-03-22 14:37:48] [slack_check] Done (exit=1)
+[2026-03-22 14:38:18] [dm_check] Starting
+[2026-03-22 14:38:31] [dm_check] No new DMs
+[2026-03-22 14:38:31] [dm_check] Done (exit=0)
+[2026-03-22 14:38:51] [slack_check] Starting
+[2026-03-22 14:39:02] [slack_check] Done (exit=1)
+[2026-03-22 14:40:02] [slack_check] Starting
+[2026-03-22 14:40:14] [slack_check] Done (exit=1)
+[2026-03-22 14:41:14] [slack_check] Starting
+[2026-03-22 14:41:25] [slack_check] Done (exit=1)
+[2026-03-22 14:41:25] [inbox_check] Starting
+[2026-03-22 14:41:26] [inbox_check] Inbox win2 empty
+[2026-03-22 14:41:26] [inbox_check] Done (exit=0)
+[2026-03-22 14:42:26] [slack_check] Starting
+[2026-03-22 14:42:37] [slack_check] Done (exit=1)
+[2026-03-22 14:43:37] [slack_check] Starting
+[2026-03-22 14:43:47] [slack_check] Done (exit=1)
+[2026-03-22 14:43:47] [dm_check] Starting
+[2026-03-22 14:44:00] [dm_check] No new DMs
+[2026-03-22 14:44:00] [dm_check] Done (exit=0)
+[2026-03-22 14:44:50] [slack_check] Starting
+[2026-03-22 14:45:02] [slack_check] Done (exit=1)
+[2026-03-22 14:46:02] [slack_check] Starting
+[2026-03-22 14:46:14] [slack_check] Done (exit=1)
+[2026-03-22 14:46:34] [inbox_check] Starting
+[2026-03-22 14:46:35] [inbox_check] Inbox win2 empty
+[2026-03-22 14:46:35] [inbox_check] Done (exit=0)
+[2026-03-22 14:47:15] [slack_check] Starting
+[2026-03-22 14:47:26] [slack_check] Done (exit=1)
+[2026-03-22 14:48:26] [slack_check] Starting
+[2026-03-22 14:48:38] [slack_check] Done (exit=1)
+[2026-03-22 14:49:08] [dm_check] Starting
+[2026-03-22 14:49:21] [dm_check] No new DMs
+[2026-03-22 14:49:21] [dm_check] Done (exit=0)
+[2026-03-22 14:49:41] [slack_check] Starting
+[2026-03-22 14:49:52] [slack_check] Done (exit=1)
+[2026-03-22 14:50:52] [slack_check] Starting
+[2026-03-22 14:51:04] [slack_check] Done (exit=1)
+[2026-03-22 14:51:14] [git_sync] Starting
+[2026-03-22 14:51:16] [git_sync] Done (exit=0)
+[2026-03-22 14:51:36] [inbox_check] Starting
+[2026-03-22 14:51:37] [inbox_check] Inbox win2 empty
+[2026-03-22 14:51:37] [inbox_check] Done (exit=0)
+[2026-03-22 14:52:07] [slack_check] Starting
+[2026-03-22 14:52:18] [slack_check] Done (exit=1)
+[2026-03-22 14:53:18] [slack_check] Starting
+[2026-03-22 14:53:29] [slack_check] Done (exit=1)
+[2026-03-22 14:54:29] [slack_check] Starting
+[2026-03-22 14:54:40] [slack_check] Done (exit=1)
+[2026-03-22 14:54:40] [dm_check] Starting
+[2026-03-22 14:54:53] [dm_check] No new DMs
+[2026-03-22 14:54:53] [dm_check] Done (exit=0)
+[2026-03-22 14:55:43] [slack_check] Starting
+[2026-03-22 14:55:55] [slack_check] Done (exit=1)
+[2026-03-22 14:56:45] [inbox_check] Starting
+[2026-03-22 14:56:46] [inbox_check] Inbox win2 empty
+[2026-03-22 14:56:46] [inbox_check] Done (exit=0)
+[2026-03-22 14:56:56] [slack_check] Starting
+[2026-03-22 14:57:07] [slack_check] Done (exit=1)
+[2026-03-22 14:58:07] [slack_check] Starting
+[2026-03-22 14:58:18] [slack_check] Done (exit=1)
+[2026-03-22 14:59:18] [slack_check] Starting
+[2026-03-22 14:59:29] [slack_check] Done (exit=1)
+[2026-03-22 14:59:59] [dm_check] Starting
+[2026-03-22 15:00:12] [dm_check] No new DMs
+[2026-03-22 15:00:12] [dm_check] Done (exit=0)
+[2026-03-22 15:00:32] [slack_check] Starting
+[2026-03-22 15:00:43] [slack_check] Done (exit=1)
+[2026-03-22 15:01:43] [slack_check] Starting
+[2026-03-22 15:01:53] [slack_check] Done (exit=1)
+[2026-03-22 15:02:03] [inbox_check] Starting
+[2026-03-22 15:02:04] [inbox_check] Inbox win2 empty
+[2026-03-22 15:02:04] [inbox_check] Done (exit=0)
+[2026-03-22 15:02:54] [slack_check] Starting
+[2026-03-22 15:03:05] [slack_check] Done (exit=1)
+[2026-03-22 15:04:05] [slack_check] Starting
+[2026-03-22 15:04:16] [slack_check] Done (exit=1)
+[2026-03-22 15:05:16] [slack_check] Starting
+[2026-03-22 15:05:28] [slack_check] Done (exit=1)
+[2026-03-22 15:05:28] [dm_check] Starting
+[2026-03-22 15:05:41] [dm_check] No new DMs
+[2026-03-22 15:05:41] [dm_check] Done (exit=0)
+[2026-03-22 15:06:31] [slack_check] Starting
+[2026-03-22 15:06:43] [slack_check] Done (exit=1)
+[2026-03-22 15:07:13] [inbox_check] Starting
+[2026-03-22 15:07:14] [inbox_check] Inbox win2 empty
+[2026-03-22 15:07:14] [inbox_check] Done (exit=0)
+[2026-03-22 15:07:44] [slack_check] Starting
+[2026-03-22 15:07:55] [slack_check] Done (exit=1)
+[2026-03-22 15:08:55] [slack_check] Starting
+[2026-03-22 15:09:05] [slack_check] Done (exit=1)
+[2026-03-22 15:10:05] [slack_check] Starting
+[2026-03-22 15:10:16] [slack_check] Done (exit=1)
+[2026-03-22 15:10:46] [dm_check] Starting
+[2026-03-22 15:10:58] [dm_check] No new DMs
+[2026-03-22 15:10:58] [dm_check] Done (exit=0)
+[2026-03-22 15:11:18] [slack_check] Starting
+[2026-03-22 15:11:30] [slack_check] Done (exit=1)
+[2026-03-22 15:12:20] [inbox_check] Starting
+[2026-03-22 15:12:21] [inbox_check] Inbox win2 empty
+[2026-03-22 15:12:21] [inbox_check] Done (exit=0)
+[2026-03-22 15:12:31] [slack_check] Starting
+[2026-03-22 15:12:42] [slack_check] Done (exit=1)
+[2026-03-22 15:13:42] [slack_check] Starting
+[2026-03-22 15:13:53] [slack_check] Done (exit=1)
+[2026-03-22 15:14:53] [slack_check] Starting
+[2026-03-22 15:15:06] [slack_check] Done (exit=1)
+[2026-03-22 15:16:06] [slack_check] Starting
+[2026-03-22 15:16:17] [slack_check] Done (exit=1)
+[2026-03-22 15:16:17] [dm_check] Starting
+[2026-03-22 15:16:30] [dm_check] No new DMs
+[2026-03-22 15:16:30] [dm_check] Done (exit=0)
+[2026-03-22 15:17:20] [slack_check] Starting
+[2026-03-22 15:17:31] [slack_check] Done (exit=1)
+[2026-03-22 15:17:41] [inbox_check] Starting
+[2026-03-22 15:17:42] [inbox_check] Inbox win2 empty
+[2026-03-22 15:17:42] [inbox_check] Done (exit=0)
+[2026-03-22 15:18:32] [slack_check] Starting
+[2026-03-22 15:18:44] [slack_check] Done (exit=1)
+[2026-03-22 15:19:44] [slack_check] Starting
+[2026-03-22 15:19:54] [slack_check] Done (exit=1)
+[2026-03-22 15:20:54] [slack_check] Starting
+[2026-03-22 15:21:06] [slack_check] Done (exit=1)
+[2026-03-22 15:21:26] [git_sync] Starting
+[2026-03-22 15:21:28] [git_sync] Done (exit=0)
+[2026-03-22 15:21:38] [dm_check] Starting
+[2026-03-22 15:21:51] [dm_check] No new DMs
+[2026-03-22 15:21:51] [dm_check] Done (exit=0)
+[2026-03-22 15:22:11] [slack_check] Starting
+[2026-03-22 15:22:23] [slack_check] Done (exit=1)
+[2026-03-22 15:22:43] [inbox_check] Starting
+[2026-03-22 15:22:44] [inbox_check] Inbox win2 empty
+[2026-03-22 15:22:44] [inbox_check] Done (exit=0)
+[2026-03-22 15:23:24] [slack_check] Starting
+[2026-03-22 15:23:35] [slack_check] Done (exit=1)
+[2026-03-22 15:24:35] [slack_check] Starting
+[2026-03-22 15:24:46] [slack_check] Done (exit=1)
+[2026-03-22 15:25:46] [slack_check] Starting
+[2026-03-22 15:25:58] [slack_check] Done (exit=1)
+[2026-03-22 15:26:58] [slack_check] Starting
+[2026-03-22 15:27:10] [slack_check] Done (exit=1)
+[2026-03-22 15:27:10] [dm_check] Starting
+[2026-03-22 15:27:23] [dm_check] No new DMs
+[2026-03-22 15:27:23] [dm_check] Done (exit=0)
+[2026-03-22 15:27:53] [inbox_check] Starting
+[2026-03-22 15:27:54] [inbox_check] Inbox win2 empty
+[2026-03-22 15:27:54] [inbox_check] Done (exit=0)
+[2026-03-22 15:28:14] [slack_check] Starting
+[2026-03-22 15:28:24] [slack_check] Done (exit=1)
+[2026-03-22 15:29:24] [slack_check] Starting
+[2026-03-22 15:29:35] [slack_check] Done (exit=1)
+[2026-03-22 15:30:35] [slack_check] Starting
+[2026-03-22 15:30:46] [slack_check] Done (exit=1)
+[2026-03-22 15:31:46] [slack_check] Starting
+[2026-03-22 15:31:57] [slack_check] Done (exit=1)
+[2026-03-22 15:32:27] [dm_check] Starting
+[2026-03-22 15:32:40] [dm_check] No new DMs
+[2026-03-22 15:32:40] [dm_check] Done (exit=0)
+[2026-03-22 15:33:00] [slack_check] Starting
+[2026-03-22 15:33:12] [slack_check] Done (exit=1)
+[2026-03-22 15:33:12] [inbox_check] Starting
+[2026-03-22 15:33:13] [inbox_check] Inbox win2 empty
+[2026-03-22 15:33:13] [inbox_check] Done (exit=0)
+[2026-03-22 15:34:13] [slack_check] Starting
+[2026-03-22 15:34:23] [slack_check] Done (exit=1)
+[2026-03-22 15:35:23] [slack_check] Starting
+[2026-03-22 15:35:35] [slack_check] Done (exit=1)
+[2026-03-22 15:36:35] [slack_check] Starting
+[2026-03-22 15:36:46] [slack_check] Done (exit=1)
+[2026-03-22 15:37:46] [slack_check] Starting
+[2026-03-22 15:37:57] [slack_check] Done (exit=1)
+[2026-03-22 15:37:57] [dm_check] Starting
+[2026-03-22 15:38:10] [dm_check] No new DMs
+[2026-03-22 15:38:10] [dm_check] Done (exit=0)
+[2026-03-22 15:38:20] [inbox_check] Starting
+[2026-03-22 15:38:21] [inbox_check] Inbox win2 empty
+[2026-03-22 15:38:21] [inbox_check] Done (exit=0)
+[2026-03-22 15:39:01] [slack_check] Starting
+[2026-03-22 15:39:12] [slack_check] Done (exit=1)
+[2026-03-22 15:40:12] [slack_check] Starting
+[2026-03-22 15:40:23] [slack_check] Done (exit=1)
+[2026-03-22 15:41:23] [slack_check] Starting
+[2026-03-22 15:41:35] [slack_check] Done (exit=1)
+[2026-03-22 15:42:35] [slack_check] Starting
+[2026-03-22 15:42:46] [slack_check] Done (exit=1)
+[2026-03-22 15:43:16] [dm_check] Starting
+[2026-03-22 15:43:28] [dm_check] No new DMs
+[2026-03-22 15:43:28] [dm_check] Done (exit=0)
+[2026-03-22 15:43:39] [inbox_check] Starting
+[2026-03-22 15:43:39] [inbox_check] Inbox win2 empty
+[2026-03-22 15:43:39] [inbox_check] Done (exit=0)
+[2026-03-22 15:43:49] [slack_check] Starting
+[2026-03-22 15:44:00] [slack_check] Done (exit=1)
+[2026-03-22 15:45:00] [slack_check] Starting
+[2026-03-22 15:45:12] [slack_check] Done (exit=1)
+[2026-03-22 15:46:12] [slack_check] Starting
+[2026-03-22 15:46:24] [slack_check] Done (exit=1)
+[2026-03-22 15:47:24] [slack_check] Starting
+[2026-03-22 15:47:34] [slack_check] Done (exit=1)
+[2026-03-22 15:48:34] [slack_check] Starting
+[2026-03-22 15:48:45] [slack_check] Done (exit=1)
+[2026-03-22 15:48:45] [dm_check] Starting
+[2026-03-22 15:48:59] [dm_check] No new DMs
+[2026-03-22 15:48:59] [dm_check] Done (exit=0)
+[2026-03-22 15:49:09] [inbox_check] Starting
+[2026-03-22 15:49:10] [inbox_check] Inbox win2 empty
+[2026-03-22 15:49:10] [inbox_check] Done (exit=0)
+[2026-03-22 15:49:50] [slack_check] Starting
+[2026-03-22 15:50:01] [slack_check] Done (exit=1)
+[2026-03-22 15:51:01] [slack_check] Starting
+[2026-03-22 15:51:12] [slack_check] Done (exit=1)
+[2026-03-22 15:51:32] [git_sync] Starting
+[2026-03-22 15:51:35] [git_sync] Done (exit=0)
+[2026-03-22 15:52:15] [slack_check] Starting
+[2026-03-22 15:52:26] [slack_check] Done (exit=1)
+[2026-03-22 15:53:26] [slack_check] Starting
+[2026-03-22 15:53:37] [slack_check] Done (exit=1)
+[2026-03-22 15:54:07] [dm_check] Starting
+[2026-03-22 15:54:20] [dm_check] No new DMs
+[2026-03-22 15:54:20] [dm_check] Done (exit=0)
+[2026-03-22 15:54:30] [inbox_check] Starting
+[2026-03-22 15:54:31] [inbox_check] Inbox win2 empty
+[2026-03-22 15:54:31] [inbox_check] Done (exit=0)
+[2026-03-22 15:54:41] [slack_check] Starting
+[2026-03-22 15:54:52] [slack_check] Done (exit=1)
+[2026-03-22 15:55:52] [slack_check] Starting
+[2026-03-22 15:56:04] [slack_check] Done (exit=1)
+[2026-03-22 15:57:04] [slack_check] Starting
+[2026-03-22 15:57:15] [slack_check] Done (exit=1)
+[2026-03-22 15:58:15] [slack_check] Starting
+[2026-03-22 15:58:26] [slack_check] Done (exit=1)
+[2026-03-22 15:59:26] [slack_check] Starting
+[2026-03-22 15:59:37] [slack_check] Done (exit=1)
+[2026-03-22 15:59:37] [dm_check] Starting
+[2026-03-22 15:59:50] [dm_check] No new DMs
+[2026-03-22 15:59:50] [dm_check] Done (exit=0)
+[2026-03-22 16:00:00] [inbox_check] Starting
+[2026-03-22 16:00:01] [inbox_check] Inbox win2 empty
+[2026-03-22 16:00:01] [inbox_check] Done (exit=0)
+[2026-03-22 16:00:41] [slack_check] Starting
+[2026-03-22 16:00:52] [slack_check] Done (exit=1)
+[2026-03-22 16:01:52] [slack_check] Starting
+[2026-03-22 16:02:03] [slack_check] Done (exit=1)
+[2026-03-22 16:03:03] [slack_check] Starting
+[2026-03-22 16:03:14] [slack_check] Done (exit=1)
+[2026-03-22 16:04:14] [slack_check] Starting
+[2026-03-22 16:04:26] [slack_check] Done (exit=1)
+[2026-03-22 16:04:56] [dm_check] Starting
+[2026-03-22 16:05:09] [dm_check] No new DMs
+[2026-03-22 16:05:09] [dm_check] Done (exit=0)
+[2026-03-22 16:05:19] [inbox_check] Starting
+[2026-03-22 16:05:20] [inbox_check] Inbox win2 empty
+[2026-03-22 16:05:20] [inbox_check] Done (exit=0)
+[2026-03-22 16:05:30] [slack_check] Starting
+[2026-03-22 16:05:40] [slack_check] Done (exit=1)
+[2026-03-22 16:06:40] [slack_check] Starting
+[2026-03-22 16:06:51] [slack_check] Done (exit=1)
+[2026-03-22 16:07:51] [slack_check] Starting
+[2026-03-22 16:08:03] [slack_check] Done (exit=1)
+[2026-03-22 16:09:03] [slack_check] Starting
+[2026-03-22 16:09:13] [slack_check] Done (exit=1)
+[2026-03-22 16:10:13] [slack_check] Starting
+[2026-03-22 16:10:28] [slack_check] Done (exit=1)
+[2026-03-22 16:10:28] [dm_check] Starting
+[2026-03-22 16:10:40] [dm_check] No new DMs
+[2026-03-22 16:10:40] [dm_check] Done (exit=0)
+[2026-03-22 16:10:51] [inbox_check] Starting
+[2026-03-22 16:10:51] [inbox_check] Inbox win2 empty
+[2026-03-22 16:10:51] [inbox_check] Done (exit=0)
+[2026-03-22 16:11:31] [slack_check] Starting
+[2026-03-22 16:11:43] [slack_check] Done (exit=1)
+[2026-03-22 16:12:43] [slack_check] Starting
+[2026-03-22 16:12:53] [slack_check] Done (exit=1)
+[2026-03-22 16:13:53] [slack_check] Starting
+[2026-03-22 16:14:05] [slack_check] Done (exit=1)
+[2026-03-22 16:15:05] [slack_check] Starting
+[2026-03-22 16:15:15] [slack_check] Done (exit=1)
+[2026-03-22 16:15:45] [dm_check] Starting
+[2026-03-22 16:15:59] [dm_check] No new DMs
+[2026-03-22 16:15:59] [dm_check] Done (exit=0)
+[2026-03-22 16:16:09] [inbox_check] Starting
+[2026-03-22 16:16:10] [inbox_check] Inbox win2 empty
+[2026-03-22 16:16:10] [inbox_check] Done (exit=0)
+[2026-03-22 16:16:20] [slack_check] Starting
+[2026-03-22 16:16:31] [slack_check] Done (exit=1)
+[2026-03-22 16:17:31] [slack_check] Starting
+[2026-03-22 16:17:43] [slack_check] Done (exit=1)
+[2026-03-22 16:18:43] [slack_check] Starting
+[2026-03-22 16:18:55] [slack_check] Done (exit=1)
+[2026-03-22 16:19:55] [slack_check] Starting
+[2026-03-22 16:20:06] [slack_check] Done (exit=1)
+[2026-03-22 16:21:06] [slack_check] Starting
+[2026-03-22 16:21:17] [slack_check] Done (exit=1)
+[2026-03-22 16:21:17] [dm_check] Starting
+[2026-03-22 16:21:29] [dm_check] No new DMs
+[2026-03-22 16:21:29] [dm_check] Done (exit=0)
+[2026-03-22 16:21:39] [inbox_check] Starting
+[2026-03-22 16:21:40] [inbox_check] Inbox win2 empty
+[2026-03-22 16:21:40] [inbox_check] Done (exit=0)
+[2026-03-22 16:21:40] [git_sync] Starting
+[2026-03-22 16:21:43] [git_sync] Done (exit=0)
+[2026-03-22 16:22:23] [slack_check] Starting
+[2026-03-22 16:22:35] [slack_check] Done (exit=1)
+[2026-03-22 16:23:35] [slack_check] Starting
+[2026-03-22 16:23:46] [slack_check] Done (exit=1)
+[2026-03-22 16:24:46] [slack_check] Starting
+[2026-03-22 16:24:56] [slack_check] Done (exit=1)
+[2026-03-22 16:25:56] [slack_check] Starting
+[2026-03-22 16:26:07] [slack_check] Done (exit=1)
+[2026-03-22 16:26:37] [dm_check] Starting
+[2026-03-22 16:26:50] [dm_check] No new DMs
+[2026-03-22 16:26:50] [dm_check] Done (exit=0)
+[2026-03-22 16:27:00] [inbox_check] Starting
+[2026-03-22 16:27:01] [inbox_check] Inbox win2 empty
+[2026-03-22 16:27:01] [inbox_check] Done (exit=0)
+[2026-03-22 16:27:11] [slack_check] Starting
+[2026-03-22 16:27:23] [slack_check] Done (exit=1)
+[2026-03-22 16:28:23] [slack_check] Starting
+[2026-03-22 16:28:34] [slack_check] Done (exit=1)
+[2026-03-22 16:29:34] [slack_check] Starting
+[2026-03-22 16:29:45] [slack_check] Done (exit=1)
+[2026-03-22 16:30:45] [slack_check] Starting
+[2026-03-22 16:30:56] [slack_check] Done (exit=1)
+[2026-03-22 16:31:56] [slack_check] Starting
+[2026-03-22 16:32:07] [slack_check] Done (exit=1)
+[2026-03-22 16:32:07] [dm_check] Starting
+[2026-03-22 16:32:20] [dm_check] No new DMs
+[2026-03-22 16:32:20] [dm_check] Done (exit=0)
+[2026-03-22 16:32:30] [inbox_check] Starting
+[2026-03-22 16:32:31] [inbox_check] Inbox win2 empty
+[2026-03-22 16:32:31] [inbox_check] Done (exit=0)
+[2026-03-22 16:33:11] [slack_check] Starting
+[2026-03-22 16:33:22] [slack_check] Done (exit=1)
+[2026-03-22 16:34:22] [slack_check] Starting
+[2026-03-22 16:34:33] [slack_check] Done (exit=1)
+[2026-03-22 16:35:33] [slack_check] Starting
+[2026-03-22 16:35:45] [slack_check] Done (exit=1)
+[2026-03-22 16:36:45] [slack_check] Starting
+[2026-03-22 16:36:56] [slack_check] Done (exit=1)
+[2026-03-22 16:37:26] [dm_check] Starting
+[2026-03-22 16:37:39] [dm_check] No new DMs
+[2026-03-22 16:37:39] [dm_check] Done (exit=0)
+[2026-03-22 16:37:49] [inbox_check] Starting
+[2026-03-22 16:37:50] [inbox_check] Inbox win2 empty
+[2026-03-22 16:37:50] [inbox_check] Done (exit=0)
+[2026-03-22 16:38:00] [slack_check] Starting
+[2026-03-22 16:38:10] [slack_check] Done (exit=1)
+[2026-03-22 16:39:10] [slack_check] Starting
+[2026-03-22 16:39:21] [slack_check] Done (exit=1)
+[2026-03-22 16:40:22] [slack_check] Starting
+[2026-03-22 16:40:32] [slack_check] Done (exit=1)
+[2026-03-22 16:41:32] [slack_check] Starting
+[2026-03-22 16:41:43] [slack_check] Done (exit=1)
+[2026-03-22 16:42:43] [slack_check] Starting
+[2026-03-22 16:42:55] [slack_check] Done (exit=1)
+[2026-03-22 16:42:55] [dm_check] Starting
+[2026-03-22 16:43:08] [dm_check] No new DMs
+[2026-03-22 16:43:08] [dm_check] Done (exit=0)
+[2026-03-22 16:43:18] [inbox_check] Starting
+[2026-03-22 16:43:19] [inbox_check] Inbox win2 empty
+[2026-03-22 16:43:19] [inbox_check] Done (exit=0)
+[2026-03-22 16:43:59] [slack_check] Starting
+[2026-03-22 16:44:09] [slack_check] Done (exit=1)
+[2026-03-22 16:45:09] [slack_check] Starting
+[2026-03-22 16:45:21] [slack_check] Done (exit=1)
+[2026-03-22 16:46:21] [slack_check] Starting
+[2026-03-22 16:46:33] [slack_check] Done (exit=1)
+[2026-03-22 16:47:33] [slack_check] Starting
+[2026-03-22 16:47:43] [slack_check] Done (exit=1)
+[2026-03-22 16:48:13] [dm_check] Starting
+[2026-03-22 16:48:26] [dm_check] No new DMs
+[2026-03-22 16:48:26] [dm_check] Done (exit=0)
+[2026-03-22 16:48:36] [inbox_check] Starting
+[2026-03-22 16:48:37] [inbox_check] Inbox win2 empty
+[2026-03-22 16:48:37] [inbox_check] Done (exit=0)
+[2026-03-22 16:48:47] [slack_check] Starting
+[2026-03-22 16:48:57] [slack_check] Done (exit=1)
+[2026-03-22 16:49:17] [auto_diary] Starting
+[2026-03-22 16:51:43] [auto_diary] [2026-03-22 16:49:17] auto_diary.py ���s
+[2026-03-22 16:51:43] [auto_diary] Claude�ғ��� �� Claude�o�R�œ��L����
+[2026-03-22 16:51:43] [auto_diary] ���L��������: #ash�`�����l���Ɋ������L�𓊍e���܂����B���e�͈ȉ���ԗ����Ă��܂�:
+[2026-03-22 16:51:43] [auto_diary] 
+[2026-03-22 16:51:43] [auto_diary] - **scheduler_ash.py�̉ғ���**: 04:18�������ғ��Ainbox_check��Timeout�p�����̕���
+[2026-03-22 16:51:43] [auto_diary] Done (exit=0)
+[2026-03-22 16:51:53] [slack_check] Starting
+[2026-03-22 16:52:04] [slack_check] Done (exit=1)
+[2026-03-22 16:52:04] [git_sync] Starting
+[2026-03-22 16:52:06] [git_sync] Done (exit=0)
+[2026-03-22 16:53:06] [slack_check] Starting
+[2026-03-22 16:53:17] [slack_check] Done (exit=1)
+[2026-03-22 16:53:27] [dm_check] Starting
+[2026-03-22 16:53:40] [dm_check] No new DMs
+[2026-03-22 16:53:40] [dm_check] Done (exit=0)
+[2026-03-22 16:53:50] [inbox_check] Starting
+[2026-03-22 16:53:51] [inbox_check] Inbox win2 empty
+[2026-03-22 16:53:51] [inbox_check] Done (exit=0)
+[2026-03-22 16:54:21] [slack_check] Starting
+[2026-03-22 16:54:32] [slack_check] Done (exit=1)
+[2026-03-22 16:55:32] [slack_check] Starting
+[2026-03-22 16:55:44] [slack_check] Done (exit=1)
+[2026-03-22 16:56:44] [slack_check] Starting
+[2026-03-22 16:56:54] [slack_check] Done (exit=1)
+[2026-03-22 16:57:54] [slack_check] Starting
+[2026-03-22 16:58:05] [slack_check] Done (exit=1)
+[2026-03-22 16:58:45] [dm_check] Starting
+[2026-03-22 16:58:58] [dm_check] No new DMs
+[2026-03-22 16:58:58] [dm_check] Done (exit=0)
+[2026-03-22 16:59:09] [slack_check] Starting
+[2026-03-22 16:59:20] [slack_check] Done (exit=1)
+[2026-03-22 16:59:20] [inbox_check] Starting
+[2026-03-22 16:59:21] [inbox_check] Inbox win2 empty
+[2026-03-22 16:59:21] [inbox_check] Done (exit=0)
+[2026-03-22 17:00:21] [slack_check] Starting
+[2026-03-22 17:00:33] [slack_check] Done (exit=1)
+[2026-03-22 17:01:33] [slack_check] Starting
+[2026-03-22 17:01:43] [slack_check] Done (exit=1)
+[2026-03-22 17:02:43] [slack_check] Starting
+[2026-03-22 17:02:54] [slack_check] Done (exit=1)
+[2026-03-22 17:03:54] [slack_check] Starting
+[2026-03-22 17:04:05] [slack_check] Done (exit=1)
+[2026-03-22 17:04:15] [dm_check] Starting
+[2026-03-22 17:04:27] [dm_check] No new DMs
+[2026-03-22 17:04:27] [dm_check] Done (exit=0)
+[2026-03-22 17:04:37] [inbox_check] Starting
+[2026-03-22 17:04:38] [inbox_check] Inbox win2 empty
+[2026-03-22 17:04:38] [inbox_check] Done (exit=0)
+[2026-03-22 17:05:08] [slack_check] Starting
+[2026-03-22 17:05:18] [slack_check] Done (exit=1)
+[2026-03-22 17:06:18] [slack_check] Starting
+[2026-03-22 17:06:29] [slack_check] Done (exit=1)
+[2026-03-22 17:07:29] [slack_check] Starting
+[2026-03-22 17:07:39] [slack_check] Done (exit=1)
+[2026-03-22 17:08:39] [slack_check] Starting
+[2026-03-22 17:08:50] [slack_check] Done (exit=1)
+[2026-03-22 17:09:30] [dm_check] Starting
+[2026-03-22 17:09:43] [dm_check] No new DMs
+[2026-03-22 17:09:43] [dm_check] Done (exit=0)
+[2026-03-22 17:09:53] [slack_check] Starting
+[2026-03-22 17:10:05] [slack_check] Done (exit=1)
+[2026-03-22 17:10:05] [inbox_check] Starting
+[2026-03-22 17:10:06] [inbox_check] Inbox win2 empty
+[2026-03-22 17:10:06] [inbox_check] Done (exit=0)
+[2026-03-22 17:11:06] [slack_check] Starting
+[2026-03-22 17:11:21] [slack_check] Done (exit=1)
+[2026-03-22 17:12:21] [slack_check] Starting
+[2026-03-22 17:12:31] [slack_check] Done (exit=1)
+[2026-03-22 17:13:31] [slack_check] Starting
+[2026-03-22 17:13:42] [slack_check] Done (exit=1)
+[2026-03-22 17:14:42] [slack_check] Starting
+[2026-03-22 17:14:54] [slack_check] Done (exit=1)
+[2026-03-22 17:15:04] [dm_check] Starting
+[2026-03-22 17:15:17] [dm_check] No new DMs
+[2026-03-22 17:15:17] [dm_check] Done (exit=0)
+[2026-03-22 17:15:27] [inbox_check] Starting
+[2026-03-22 17:15:28] [inbox_check] Inbox win2 empty
+[2026-03-22 17:15:28] [inbox_check] Done (exit=0)
+[2026-03-22 17:15:58] [slack_check] Starting
+[2026-03-22 17:16:11] [slack_check] Done (exit=1)
+[2026-03-22 17:17:11] [slack_check] Starting
+[2026-03-22 17:17:21] [slack_check] Done (exit=1)
+[2026-03-22 17:18:21] [slack_check] Starting
+[2026-03-22 17:18:33] [slack_check] [17:18:33] 1 msg(s) -> inbox_win2.md
+[2026-03-22 17:18:33] [slack_check] Done (exit=0)
+[2026-03-22 17:19:33] [slack_check] Starting
+[2026-03-22 17:19:44] [slack_check] Done (exit=1)
+[2026-03-22 17:20:24] [dm_check] Starting
+[2026-03-22 17:20:37] [dm_check] No new DMs
+[2026-03-22 17:20:37] [dm_check] Done (exit=0)
+[2026-03-22 17:20:47] [slack_check] Starting
+[2026-03-22 17:20:59] [slack_check] Done (exit=1)
+[2026-03-22 17:20:59] [inbox_check] Starting
+[2026-03-22 17:21:09] [inbox_check] Inbox win2 has content
+[2026-03-22 17:21:09] [inbox_check] Done (exit=0)
+[2026-03-22 17:22:09] [slack_check] Starting
+[2026-03-22 17:22:20] [slack_check] Done (exit=1)
+[2026-03-22 17:22:20] [git_sync] Starting
+[2026-03-22 17:22:22] [git_sync] Done (exit=0)
+[2026-03-22 17:23:22] [slack_check] Starting
+[2026-03-22 17:23:33] [slack_check] Done (exit=1)
+[2026-03-22 17:24:33] [slack_check] Starting
+[2026-03-22 17:24:44] [slack_check] Done (exit=1)
+[2026-03-22 17:25:44] [slack_check] Starting
+[2026-03-22 17:25:56] [slack_check] Done (exit=1)
+[2026-03-22 17:25:56] [dm_check] Starting
+[2026-03-22 17:26:09] [dm_check] No new DMs
+[2026-03-22 17:26:09] [dm_check] Done (exit=0)
+[2026-03-22 17:26:19] [inbox_check] Starting
+[2026-03-22 17:26:20] [inbox_check] Inbox win2 empty
+[2026-03-22 17:26:20] [inbox_check] Done (exit=0)
+[2026-03-22 17:27:00] [slack_check] Starting
+[2026-03-22 17:27:11] [slack_check] Done (exit=1)
+[2026-03-22 17:28:11] [slack_check] Starting
+[2026-03-22 17:28:24] [slack_check] Done (exit=1)
+[2026-03-22 17:29:24] [slack_check] Starting
+[2026-03-22 17:29:35] [slack_check] Done (exit=1)
+[2026-03-22 17:30:35] [slack_check] Starting
+[2026-03-22 17:30:46] [slack_check] Done (exit=1)
+[2026-03-22 17:31:16] [dm_check] Starting
+[2026-03-22 17:31:29] [dm_check] No new DMs
+[2026-03-22 17:31:29] [dm_check] Done (exit=0)
+[2026-03-22 17:31:39] [inbox_check] Starting
+[2026-03-22 17:31:40] [inbox_check] Inbox win2 empty
+[2026-03-22 17:31:40] [inbox_check] Done (exit=0)
+[2026-03-22 17:31:50] [slack_check] Starting
+[2026-03-22 17:32:01] [slack_check] Done (exit=1)
+[2026-03-22 17:33:01] [slack_check] Starting
+[2026-03-22 17:33:12] [slack_check] Done (exit=1)
+[2026-03-22 17:34:12] [slack_check] Starting
+[2026-03-22 17:34:23] [slack_check] Done (exit=1)
+[2026-03-22 17:35:23] [slack_check] Starting
+[2026-03-22 17:35:34] [slack_check] Done (exit=1)
+[2026-03-22 17:36:34] [slack_check] Starting
+[2026-03-22 17:36:45] [slack_check] Done (exit=1)
+[2026-03-22 17:36:45] [dm_check] Starting
+[2026-03-22 17:36:58] [dm_check] No new DMs
+[2026-03-22 17:36:58] [dm_check] Done (exit=0)
+[2026-03-22 17:37:08] [inbox_check] Starting
+[2026-03-22 17:37:09] [inbox_check] Inbox win2 empty
+[2026-03-22 17:37:09] [inbox_check] Done (exit=0)
+[2026-03-22 17:37:49] [slack_check] Starting
+[2026-03-22 17:38:00] [slack_check] Done (exit=1)
+[2026-03-22 17:39:00] [slack_check] Starting
+[2026-03-22 17:39:11] [slack_check] Done (exit=1)
+[2026-03-22 17:40:12] [slack_check] Starting
+[2026-03-22 17:40:23] [slack_check] Done (exit=1)
+[2026-03-22 17:41:23] [slack_check] Starting
+[2026-03-22 17:41:34] [slack_check] Done (exit=1)
+[2026-03-22 17:42:04] [dm_check] Starting
+[2026-03-22 17:42:17] [dm_check] No new DMs
+[2026-03-22 17:42:17] [dm_check] Done (exit=0)
+[2026-03-22 17:42:27] [inbox_check] Starting
+[2026-03-22 17:42:28] [inbox_check] Inbox win2 empty
+[2026-03-22 17:42:28] [inbox_check] Done (exit=0)
+[2026-03-22 17:42:38] [slack_check] Starting
+[2026-03-22 17:42:48] [slack_check] Done (exit=1)
+[2026-03-22 17:43:48] [slack_check] Starting
+[2026-03-22 17:43:59] [slack_check] Done (exit=1)
+[2026-03-22 17:45:00] [slack_check] Starting
+[2026-03-22 17:45:10] [slack_check] Done (exit=1)
+[2026-03-22 17:46:10] [slack_check] Starting
+[2026-03-22 17:46:21] [slack_check] Done (exit=1)
+[2026-03-22 17:47:21] [slack_check] Starting
+[2026-03-22 17:47:32] [slack_check] Done (exit=1)
+[2026-03-22 17:47:32] [dm_check] Starting
+[2026-03-22 17:47:45] [dm_check] No new DMs
+[2026-03-22 17:47:45] [dm_check] Done (exit=0)
+[2026-03-22 17:47:55] [inbox_check] Starting
+[2026-03-22 17:47:56] [inbox_check] Inbox win2 empty
+[2026-03-22 17:47:56] [inbox_check] Done (exit=0)
+[2026-03-22 17:48:36] [slack_check] Starting
+[2026-03-22 17:48:47] [slack_check] Done (exit=1)
+[2026-03-22 17:49:47] [slack_check] Starting
+[2026-03-22 17:49:59] [slack_check] Done (exit=1)
+[2026-03-22 17:50:59] [slack_check] Starting
+[2026-03-22 17:51:11] [slack_check] Done (exit=1)
+[2026-03-22 17:52:11] [slack_check] Starting
+[2026-03-22 17:52:21] [slack_check] Done (exit=1)
+[2026-03-22 17:52:31] [git_sync] Starting
+[2026-03-22 17:52:34] [git_sync] Done (exit=0)
+[2026-03-22 17:52:54] [dm_check] Starting
+[2026-03-22 17:53:06] [dm_check] No new DMs
+[2026-03-22 17:53:06] [dm_check] Done (exit=0)
+[2026-03-22 17:53:16] [inbox_check] Starting
+[2026-03-22 17:53:17] [inbox_check] Inbox win2 empty
+[2026-03-22 17:53:17] [inbox_check] Done (exit=0)
+[2026-03-22 17:53:27] [slack_check] Starting
+[2026-03-22 17:53:38] [slack_check] Done (exit=1)
+[2026-03-22 17:54:38] [slack_check] Starting
+[2026-03-22 17:54:50] [slack_check] Done (exit=1)
+[2026-03-22 17:55:50] [slack_check] Starting
+[2026-03-22 17:56:01] [slack_check] Done (exit=1)
+[2026-03-22 17:57:01] [slack_check] Starting
+[2026-03-22 17:57:12] [slack_check] Done (exit=1)
+[2026-03-22 17:58:12] [slack_check] Starting
+[2026-03-22 17:58:23] [slack_check] Done (exit=1)
+[2026-03-22 17:58:23] [dm_check] Starting
+[2026-03-22 17:58:36] [dm_check] No new DMs
+[2026-03-22 17:58:36] [dm_check] Done (exit=0)
+[2026-03-22 17:58:46] [inbox_check] Starting
+[2026-03-22 17:58:46] [inbox_check] Inbox win2 empty
+[2026-03-22 17:58:46] [inbox_check] Done (exit=0)
+[2026-03-22 17:59:26] [slack_check] Starting
+[2026-03-22 17:59:37] [slack_check] Done (exit=1)
+[2026-03-22 18:00:37] [slack_check] Starting
+[2026-03-22 18:00:49] [slack_check] Done (exit=1)
+[2026-03-22 18:01:49] [slack_check] Starting
+[2026-03-22 18:02:00] [slack_check] Done (exit=1)
+[2026-03-22 18:03:00] [slack_check] Starting
+[2026-03-22 18:03:12] [slack_check] Done (exit=1)
+[2026-03-22 18:03:42] [dm_check] Starting
+[2026-03-22 18:03:55] [dm_check] No new DMs
+[2026-03-22 18:03:55] [dm_check] Done (exit=0)
+[2026-03-22 18:04:05] [inbox_check] Starting
+[2026-03-22 18:04:14] [inbox_check] Inbox win2 empty
+[2026-03-22 18:04:14] [inbox_check] Done (exit=0)
+[2026-03-22 18:04:24] [slack_check] Starting
+[2026-03-22 18:04:35] [slack_check] Done (exit=1)
+[2026-03-22 18:05:35] [slack_check] Starting
+[2026-03-22 18:05:46] [slack_check] Done (exit=1)
+[2026-03-22 18:06:46] [slack_check] Starting
+[2026-03-22 18:06:57] [slack_check] Done (exit=1)
+[2026-03-22 18:07:57] [slack_check] Starting
+[2026-03-22 18:08:08] [slack_check] Done (exit=1)
+[2026-03-22 18:08:58] [dm_check] Starting
+[2026-03-22 18:09:10] [dm_check] No new DMs
+[2026-03-22 18:09:10] [dm_check] Done (exit=0)
+[2026-03-22 18:09:20] [slack_check] Starting
+[2026-03-22 18:09:31] [slack_check] Done (exit=1)
+[2026-03-22 18:09:31] [inbox_check] Starting
+[2026-03-22 18:09:32] [inbox_check] Inbox win2 empty
+[2026-03-22 18:09:32] [inbox_check] Done (exit=0)
+[2026-03-22 18:10:32] [slack_check] Starting
+[2026-03-22 18:10:44] [slack_check] Done (exit=1)
+[2026-03-22 18:11:44] [slack_check] Starting
+[2026-03-22 18:11:55] [slack_check] Done (exit=1)
+[2026-03-22 18:12:55] [slack_check] Starting
+[2026-03-22 18:13:06] [slack_check] Done (exit=1)
+[2026-03-22 18:14:06] [slack_check] Starting
+[2026-03-22 18:14:16] [slack_check] Done (exit=1)
+[2026-03-22 18:14:26] [dm_check] Starting
+[2026-03-22 18:14:39] [dm_check] No new DMs
+[2026-03-22 18:14:39] [dm_check] Done (exit=0)
+[2026-03-22 18:14:49] [inbox_check] Starting
+[2026-03-22 18:14:50] [inbox_check] Inbox win2 empty
+[2026-03-22 18:14:50] [inbox_check] Done (exit=0)
+[2026-03-22 18:15:20] [slack_check] Starting
+[2026-03-22 18:15:32] [slack_check] Done (exit=1)
+[2026-03-22 18:16:32] [slack_check] Starting
+[2026-03-22 18:16:44] [slack_check] Done (exit=1)
+[2026-03-22 18:17:44] [slack_check] Starting
+[2026-03-22 18:17:56] [slack_check] Done (exit=1)
+[2026-03-22 18:18:56] [slack_check] Starting
+[2026-03-22 18:19:07] [slack_check] Done (exit=1)
+[2026-03-22 18:19:47] [dm_check] Starting
+[2026-03-22 18:20:00] [dm_check] No new DMs
+[2026-03-22 18:20:00] [dm_check] Done (exit=0)
+[2026-03-22 18:20:10] [slack_check] Starting
+[2026-03-22 18:20:23] [slack_check] Done (exit=1)
+[2026-03-22 18:20:23] [inbox_check] Starting
+[2026-03-22 18:20:24] [inbox_check] Inbox win2 empty
+[2026-03-22 18:20:24] [inbox_check] Done (exit=0)
+[2026-03-22 18:21:24] [slack_check] Starting
+[2026-03-22 18:21:36] [slack_check] Done (exit=1)
+[2026-03-22 18:22:36] [slack_check] Starting
+[2026-03-22 18:22:48] [slack_check] Done (exit=1)
+[2026-03-22 18:22:48] [git_sync] Starting
