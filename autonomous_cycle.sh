@@ -30,6 +30,15 @@ git add memory/ log/ CLAUDE.md docs/ 2>/dev/null
 git diff --cached --quiet || git commit -m "Auto sync before pull" >/dev/null 2>&1
 git pull origin master --no-rebase --no-edit >/dev/null 2>&1
 
+# 2. おすすめ欄チェック（6時間ごと、Mir=hour%6==0）
+# 3人で2時間ずつずらす: Mir=0,6,12,18時 / Log=2,8,14,20時 / Ash=4,10,16,22時
+CURRENT_HOUR=$(date +%H)
+if [ $(( 10#$CURRENT_HOUR % 6 )) -eq 0 ]; then
+    echo "$(date): おすすめ欄チェック開始（6時間ごと）"
+    python3 read_twitter_recommended.py --count 50 2>&1 | tail -5
+    echo "$(date): おすすめ欄チェック完了"
+fi
+
 # 2. git auto-sync（30分ごとのcronと兼用。ここでも実行しておく）
 # → pull完了した最新状態からclaudeを起動する
 
