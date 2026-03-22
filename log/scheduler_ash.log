@@ -1937,3 +1937,12 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 64
 [2026-03-22 16:48:47] [slack_check] Starting
 [2026-03-22 16:48:57] [slack_check] Done (exit=1)
 [2026-03-22 16:49:17] [auto_diary] Starting
+[2026-03-22 16:51:43] [auto_diary] [2026-03-22 16:49:17] auto_diary.py ���s
+[2026-03-22 16:51:43] [auto_diary] Claude�ғ��� �� Claude�o�R�œ��L����
+[2026-03-22 16:51:43] [auto_diary] ���L��������: #ash�`�����l���Ɋ������L�𓊍e���܂����B���e�͈ȉ���ԗ����Ă��܂�:
+[2026-03-22 16:51:43] [auto_diary] 
+[2026-03-22 16:51:43] [auto_diary] - **scheduler_ash.py�̉ғ���**: 04:18�������ғ��Ainbox_check��Timeout�p�����̕���
+[2026-03-22 16:51:43] [auto_diary] Done (exit=0)
+[2026-03-22 16:51:53] [slack_check] Starting
+[2026-03-22 16:52:04] [slack_check] Done (exit=1)
+[2026-03-22 16:52:04] [git_sync] Starting
