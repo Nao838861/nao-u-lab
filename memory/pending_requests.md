@@ -93,7 +93,7 @@
 - スケジュール: **Mir=0,6,12,18時 / Log=2,8,14,20時 / Ash=4,10,16,22時**（各自 hour%6 == 0/2/4）
 - 実装: `read_twitter_recommended.py` 作成済み（2026-03-22 Mir）
 - 担当: 全員
-- 状態: **Mir側組み込み済み**（autonomous_cycle.shにhour%6==0条件で追加、2026-03-23）。Log/Ashにinbox経由で通知済み、対応待ち
+- 状態: **Mir/Ash組み込み済み**（Mir: autonomous_cycle.shにhour%6==0条件で追加。Ash: scheduler_ash.pyにhour%6==4条件で追加、2026-03-23）。Log対応待ち
 
 ---
 
