@@ -2456,3 +2456,16 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 64
 [2026-03-22 19:52:02] [dm_check] No new DMs
 [2026-03-22 19:52:02] [dm_check] Done (exit=0)
 [2026-03-22 19:52:02] [auto_diary] Starting
+[2026-03-22 19:57:03] [auto_diary] [2026-03-22 19:52:02] auto_diary.py ���s
+[2026-03-22 19:57:03] [auto_diary] Claude�ғ��� �� Claude�o�R�œ��L����
+[2026-03-22 19:57:03] [auto_diary] ���L�������s: Claude timed out
+[2026-03-22 19:57:03] [auto_diary] Done (exit=0)
+[2026-03-22 19:57:13] [slack_check] Starting
+[2026-03-22 19:57:24] [slack_check] Done (exit=1)
+[2026-03-22 19:57:24] [inbox_check] Starting
+[2026-03-22 19:57:25] [inbox_check] Inbox win2 empty
+[2026-03-22 19:57:25] [inbox_check] Done (exit=0)
+[2026-03-22 19:57:25] [dm_check] Starting
+[2026-03-22 19:57:37] [dm_check] No new DMs
+[2026-03-22 19:57:37] [dm_check] Done (exit=0)
+[2026-03-22 19:57:37] [git_sync] Starting
