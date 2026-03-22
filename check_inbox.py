@@ -95,7 +95,7 @@ def wake_claude(box_name, inbox_path):
             timeout=300,
             cwd=str(REPO_DIR),
         )
-        log(f"Claude woken for {box_name}: {result.stdout[:100]}")
+        log(f"Claude woken for {box_name}: {(result.stdout or '')[:100]}")
     except subprocess.TimeoutExpired:
         # タイムアウト時はinboxに内容を戻す（次回リトライ可能にする）
         log(f"Claude wake timed out for {box_name} — restoring inbox")
