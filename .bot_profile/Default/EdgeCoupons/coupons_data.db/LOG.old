@@ -1,0 +1,15 @@
+2026/03/23-02:43:03.327 f968 Reusing MANIFEST D:\AI\Nao_u_BOT\.bot_profile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/03/23-02:43:03.328 f968 Recovering log #29
+2026/03/23-02:43:03.328 f968 Reusing old log D:\AI\Nao_u_BOT\.bot_profile\Default\EdgeCoupons/coupons_data.db/000029.log 
+2026/03/23-02:43:03.388 98f4 Level-0 table #33: started
+2026/03/23-02:43:03.392 98f4 Level-0 table #33: 681712 bytes OK
+2026/03/23-02:43:03.395 98f4 Delete type=0 #29
+2026/03/23-02:43:03.395 98f4 Compacting 4@0 + 1@1 files
+2026/03/23-02:43:03.399 98f4 Generated table #34@0: 3 keys, 681712 bytes
+2026/03/23-02:43:03.399 98f4 Compacted 4@0 + 1@1 files => 681712 bytes
+2026/03/23-02:43:03.402 98f4 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/03/23-02:43:03.402 98f4 Delete type=2 #21
+2026/03/23-02:43:03.402 98f4 Delete type=2 #24
+2026/03/23-02:43:03.402 98f4 Delete type=2 #27
+2026/03/23-02:43:03.402 98f4 Delete type=2 #30
+2026/03/23-02:43:03.402 98f4 Delete type=2 #33
