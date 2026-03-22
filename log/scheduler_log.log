@@ -1,0 +1,18 @@
+[2026-03-23 02:01:21] ==================================================
+[2026-03-23 02:01:21] Log scheduler started (PID 36948)
+[2026-03-23 02:01:21] Max runtime: 24 hours
+[2026-03-23 02:01:21] Jobs: git_pull, slack_check, inbox_check, notif_diff, git_sync
+[2026-03-23 02:01:21] ==================================================
+[2026-03-23 02:01:21] [git_pull] Starting
+[2026-03-23 02:01:21] [git_pull] ERR: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+[2026-03-23 02:01:21] [git_pull] Done (exit=128)
+[2026-03-23 02:01:21] [slack_check] Starting
+[2026-03-23 02:03:21] [slack_check] Timeout (120s)
+[2026-03-23 02:03:21] [inbox_check] Starting
+[2026-03-23 02:08:21] [inbox_check] Timeout (300s)
+[2026-03-23 02:08:21] [notif_diff] Starting
+[2026-03-23 02:08:35] [notif_diff] [2026-03-23 02:08:21] Checking notifications...
+[2026-03-23 02:08:35] [notif_diff] [2026-03-23 02:08:35] No new notifications (15 total, all seen)
+[2026-03-23 02:08:35] [notif_diff] Done (exit=0)
+[2026-03-23 02:08:35] [git_sync] Starting

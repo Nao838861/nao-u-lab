@@ -166,3 +166,9 @@
 [2026-03-22 05:55:05] Inbox win has content — waking Claude
 [2026-03-22 06:00:05] Claude wake timed out for win
 [2026-03-22 06:01:02] Inbox win has content — waking Claude
+[2026-03-22 06:06:02] Claude wake timed out for win
+[2026-03-22 06:07:02] Inbox win has content — waking Claude
+[2026-03-22 06:07:21] Error waking Claude for win: 'NoneType' object is not subscriptable
+[2026-03-22 06:10:02] Inbox win has content — waking Claude
+[2026-03-22 06:11:47] Error waking Claude for win: 'NoneType' object is not subscriptable
+[2026-03-23 02:03:22] Inbox win has content — waking Claude
