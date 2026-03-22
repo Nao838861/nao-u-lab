@@ -1,0 +1,6 @@
+2026/03/23-02:45:14.866 2e6c Reusing MANIFEST D:\AI\Nao_u_BOT\.bot_profile\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/03/23-02:45:14.867 2e6c Recovering log #32
+2026/03/23-02:45:14.867 2e6c Reusing old log D:\AI\Nao_u_BOT\.bot_profile\Default\EdgeCoupons/coupons_data.db/000032.log 
+2026/03/23-02:45:14.945 101a8 Level-0 table #37: started
+2026/03/23-02:45:14.949 101a8 Level-0 table #37: 681712 bytes OK
+2026/03/23-02:45:14.951 101a8 Delete type=0 #32
