@@ -26,6 +26,10 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 REPO_DIR = Path(__file__).parent
+sys.path.insert(0, str(REPO_DIR))
+
+SLACK_CHANNEL_ALL = "C0ALWBRNJ66"  # #all-nao-u-lab
+_auth_alert_sent = False
 PID_FILE = REPO_DIR / ".scheduler_log.lock"
 LOG_FILE = REPO_DIR / "log" / "scheduler_log.log"
 MAX_RUNTIME = timedelta(hours=24)
@@ -94,14 +98,46 @@ def stop_existing():
         cleanup_pid()
 
 
+def notify_auth_failure(operation, stderr):
+    """Notify Nao_u via Slack when GitHub auth fails (once per session)."""
+    global _auth_alert_sent
+    if _auth_alert_sent:
+        return
+    try:
+        from slack_bot import post_message
+        post_message(
+            SLACK_CHANNEL_ALL,
+            f"[Log] GitHub authentication expired. git {operation} failed.\n"
+            f"Please sign in on the Win PC to restore access.\n"
+            f"```{stderr[:200]}```"
+        )
+        _auth_alert_sent = True
+        log("[git_sync] Slack alert sent for auth failure")
+    except Exception as e:
+        log(f"[git_sync] Failed to send Slack alert: {e}")
+
+
+def is_auth_error(stderr):
+    """Check if git stderr indicates an authentication failure."""
+    indicators = ["authentication", "could not read Username",
+                  "fatal: unable to access", "403", "401",
+                  "credential", "logon failed"]
+    lower = stderr.lower()
+    return any(ind.lower() in lower for ind in indicators)
+
+
 def git_sync():
     """Pull, add changes, commit+push if dirty."""
     try:
-        subprocess.run(
+        result = subprocess.run(
             ["git", "pull", "origin", "master", "--rebase"],
             capture_output=True, text=True, timeout=30,
             cwd=str(REPO_DIR),
         )
+        if result.returncode != 0 and is_auth_error(result.stderr):
+            log(f"[git_sync] Auth error on pull: {result.stderr[:100]}")
+            notify_auth_failure("pull", result.stderr)
+            return
     except Exception:
         pass
 
@@ -122,11 +158,15 @@ def git_sync():
                 capture_output=True, text=True, timeout=30,
                 cwd=str(REPO_DIR),
             )
-            subprocess.run(
+            push_result = subprocess.run(
                 ["git", "push", "origin", "master"],
                 capture_output=True, text=True, timeout=60,
                 cwd=str(REPO_DIR),
             )
+            if push_result.returncode != 0 and is_auth_error(push_result.stderr):
+                log(f"[git_sync] Auth error on push: {push_result.stderr[:100]}")
+                notify_auth_failure("push", push_result.stderr)
+                return
             log("[git_sync] Committed and pushed")
         else:
             log("[git_sync] No changes")
