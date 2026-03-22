@@ -40,3 +40,94 @@ error: Please commit or stash them.
 [2026-03-23 02:10:12] [notif_diff] [2026-03-23 02:10:12] No new notifications (15 total, all seen)
 [2026-03-23 02:10:12] [notif_diff] Done (exit=0)
 [2026-03-23 02:10:12] [git_sync] Starting
+[2026-03-23 02:20:14] [git_pull] Starting
+[2026-03-23 02:20:14] [git_pull] ERR: error: Pulling is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+fatal: E
+[2026-03-23 02:20:14] [git_pull] Done (exit=128)
+[2026-03-23 02:20:34] [slack_check] Starting
+[2026-03-23 02:20:50] [slack_check] Done (exit=1)
+[2026-03-23 02:21:00] [notif_diff] Starting
+[2026-03-23 02:21:11] [notif_diff] [2026-03-23 02:21:00] Checking notifications...
+[2026-03-23 02:21:11] [notif_diff] [2026-03-23 02:21:11] No notifications found (or error fetching)
+[2026-03-23 02:21:11] [notif_diff] Done (exit=0)
+[2026-03-23 02:22:21] [git_pull] Starting
+[2026-03-23 02:22:21] [git_pull] ERR: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+[2026-03-23 02:22:21] [git_pull] Done (exit=128)
+[2026-03-23 02:22:21] [inbox_check] Starting
+[2026-03-23 02:27:21] [inbox_check] Timeout (300s)
+[2026-03-23 02:27:21] [notif_diff] Starting
+[2026-03-23 02:27:30] [notif_diff] [2026-03-23 02:27:22] Checking notifications...
+[2026-03-23 02:27:30] [notif_diff] [2026-03-23 02:27:30] No notifications found (or error fetching)
+[2026-03-23 02:27:30] [notif_diff] Done (exit=0)
+[2026-03-23 02:27:40] [git_pull] Starting
+[2026-03-23 02:27:41] [git_pull] ERR: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+[2026-03-23 02:27:41] [git_pull] Done (exit=128)
+[2026-03-23 02:27:41] [slack_check] Starting
+[2026-03-23 02:27:53] [slack_check] Done (exit=1)
+[2026-03-23 02:29:33] [notif_diff] Starting
+[2026-03-23 02:29:42] [notif_diff] [2026-03-23 02:29:33] Checking notifications...
+[2026-03-23 02:29:42] [notif_diff] [2026-03-23 02:29:42] No notifications found (or error fetching)
+[2026-03-23 02:29:42] [notif_diff] Done (exit=0)
+[2026-03-23 02:29:52] [git_pull] Starting
+[2026-03-23 02:29:52] [git_pull] ERR: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+[2026-03-23 02:29:52] [git_pull] Done (exit=128)
+[2026-03-23 02:30:02] [slack_check] Starting
+[2026-03-23 02:30:14] [slack_check] Done (exit=1)
+[2026-03-23 02:30:24] [inbox_check] Starting
+[2026-03-23 02:30:25] [inbox_check] Inbox win empty
+[2026-03-23 02:30:25] [inbox_check] Done (exit=0)
+[2026-03-23 02:31:45] [notif_diff] Starting
+[2026-03-23 02:31:54] [notif_diff] [2026-03-23 02:31:45] Checking notifications...
+[2026-03-23 02:31:54] [notif_diff] [2026-03-23 02:31:54] No notifications found (or error fetching)
+[2026-03-23 02:31:54] [notif_diff] Done (exit=0)
+[2026-03-23 02:32:04] [git_pull] Starting
+[2026-03-23 02:32:04] [git_pull] ERR: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+[2026-03-23 02:32:04] [git_pull] Done (exit=128)
+[2026-03-23 02:32:24] [slack_check] Starting
+[2026-03-23 02:32:36] [slack_check] Done (exit=1)
+[2026-03-23 02:33:26] [inbox_check] Starting
+[2026-03-23 02:33:27] [inbox_check] Inbox win empty
+[2026-03-23 02:33:27] [inbox_check] Done (exit=0)
+[2026-03-23 02:33:57] [notif_diff] Starting
+[2026-03-23 02:34:06] [notif_diff] [2026-03-23 02:33:57] Checking notifications...
+[2026-03-23 02:34:06] [notif_diff] [2026-03-23 02:34:06] No notifications found (or error fetching)
+[2026-03-23 02:34:06] [notif_diff] Done (exit=0)
+[2026-03-23 02:34:16] [git_pull] Starting
+[2026-03-23 02:34:16] [git_pull] ERR: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+[2026-03-23 02:34:16] [git_pull] Done (exit=128)
+[2026-03-23 02:34:46] [slack_check] Starting
+[2026-03-23 02:34:59] [slack_check] Done (exit=1)
+[2026-03-23 02:36:09] [notif_diff] Starting
+[2026-03-23 02:36:18] [notif_diff] [2026-03-23 02:36:09] Checking notifications...
+[2026-03-23 02:36:18] [notif_diff] [2026-03-23 02:36:18] No notifications found (or error fetching)
+[2026-03-23 02:36:18] [notif_diff] Done (exit=0)
+[2026-03-23 02:36:28] [git_pull] Starting
+[2026-03-23 02:36:28] [git_pull] ERR: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+[2026-03-23 02:36:28] [git_pull] Done (exit=128)
+[2026-03-23 02:36:28] [inbox_check] Starting
+[2026-03-23 02:36:29] [inbox_check] Inbox win empty
+[2026-03-23 02:36:29] [inbox_check] Done (exit=0)
+[2026-03-23 02:37:09] [slack_check] Starting
+[2026-03-23 02:37:22] [slack_check] Done (exit=1)
+[2026-03-23 02:38:22] [notif_diff] Starting
+[2026-03-23 02:38:30] [notif_diff] [2026-03-23 02:38:22] Checking notifications...
+[2026-03-23 02:38:30] [notif_diff] [2026-03-23 02:38:30] No notifications found (or error fetching)
+[2026-03-23 02:38:30] [notif_diff] Done (exit=0)
+[2026-03-23 02:38:40] [git_pull] Starting
+[2026-03-23 02:38:40] [git_pull] ERR: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+[2026-03-23 02:38:40] [git_pull] Done (exit=128)
+[2026-03-23 02:39:30] [slack_check] Starting
+[2026-03-23 02:39:43] [slack_check] Done (exit=1)
+[2026-03-23 02:39:43] [inbox_check] Starting
+[2026-03-23 02:39:43] [inbox_check] Inbox win empty
+[2026-03-23 02:39:43] [inbox_check] Done (exit=0)
+[2026-03-23 02:40:23] [git_sync] Starting
