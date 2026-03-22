@@ -1,0 +1,42 @@
+[2026-03-23 02:01:21] ==================================================
+[2026-03-23 02:01:21] Log scheduler started (PID 36948)
+[2026-03-23 02:01:21] Max runtime: 24 hours
+[2026-03-23 02:01:21] Jobs: git_pull, slack_check, inbox_check, notif_diff, git_sync
+[2026-03-23 02:01:21] ==================================================
+[2026-03-23 02:01:21] [git_pull] Starting
+[2026-03-23 02:01:21] [git_pull] ERR: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+[2026-03-23 02:01:21] [git_pull] Done (exit=128)
+[2026-03-23 02:01:21] [slack_check] Starting
+[2026-03-23 02:03:21] [slack_check] Timeout (120s)
+[2026-03-23 02:03:21] [inbox_check] Starting
+[2026-03-23 02:08:21] [inbox_check] Timeout (300s)
+[2026-03-23 02:08:21] [notif_diff] Starting
+[2026-03-23 02:08:35] [notif_diff] [2026-03-23 02:08:21] Checking notifications...
+[2026-03-23 02:08:35] [notif_diff] [2026-03-23 02:08:35] No new notifications (15 total, all seen)
+[2026-03-23 02:08:35] [notif_diff] Done (exit=0)
+[2026-03-23 02:08:35] [git_sync] Starting
+[2026-03-23 02:09:06] [git_sync] Committed and pushed
+[2026-03-23 02:09:06] [git_sync] Done (exit=0)
+[2026-03-23 02:09:06] --once mode: all jobs executed. Exiting.
+[2026-03-23 02:09:06] Scheduler stopped.
+[2026-03-23 02:09:59] ==================================================
+[2026-03-23 02:09:59] Log scheduler started (PID 71564)
+[2026-03-23 02:09:59] Max runtime: 24 hours
+[2026-03-23 02:09:59] Jobs: git_pull, slack_check, inbox_check, notif_diff, git_sync
+[2026-03-23 02:09:59] ==================================================
+[2026-03-23 02:09:59] [git_pull] Starting
+[2026-03-23 02:09:59] [git_pull] ERR: error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+[2026-03-23 02:09:59] [git_pull] Done (exit=128)
+[2026-03-23 02:09:59] [slack_check] Starting
+[2026-03-23 02:09:59] [slack_check] [02:09:59] Skipped: check_slack already running
+[2026-03-23 02:09:59] [slack_check] Done (exit=0)
+[2026-03-23 02:09:59] [inbox_check] Starting
+[2026-03-23 02:09:59] [inbox_check] Skipped: check_inbox_win already running
+[2026-03-23 02:09:59] [inbox_check] Done (exit=0)
+[2026-03-23 02:09:59] [notif_diff] Starting
+[2026-03-23 02:10:12] [notif_diff] [2026-03-23 02:09:59] Checking notifications...
+[2026-03-23 02:10:12] [notif_diff] [2026-03-23 02:10:12] No new notifications (15 total, all seen)
+[2026-03-23 02:10:12] [notif_diff] Done (exit=0)
+[2026-03-23 02:10:12] [git_sync] Starting
