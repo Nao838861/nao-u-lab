@@ -3453,3 +3453,37 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 64
 [2026-03-23 01:53:24] [slack_check] Starting
 [2026-03-23 01:53:39] [slack_check] Done (exit=1)
 [2026-03-23 01:54:29] [inbox_check] Starting
+[2026-03-23 01:55:16] [inbox_check] Inbox win2 has content
+[2026-03-23 01:55:16] [inbox_check] Done (exit=0)
+[2026-03-23 01:55:26] [slack_check] Starting
+[2026-03-23 01:55:44] [slack_check] Done (exit=1)
+[2026-03-23 01:55:44] [dm_check] Starting
+[2026-03-23 01:55:56] [dm_check] No new DMs
+[2026-03-23 01:55:56] [dm_check] Done (exit=0)
+[2026-03-23 01:56:46] [slack_check] Starting
+[2026-03-23 01:57:03] [slack_check] Done (exit=1)
+[2026-03-23 01:58:03] [slack_check] Starting
+[2026-03-23 01:58:20] [slack_check] Done (exit=1)
+[2026-03-23 01:59:20] [slack_check] Starting
+[2026-03-23 01:59:37] [slack_check] Done (exit=1)
+[2026-03-23 02:00:17] [inbox_check] Starting
+[2026-03-23 02:00:18] [inbox_check] Inbox win2 empty
+[2026-03-23 02:00:18] [inbox_check] Done (exit=0)
+[2026-03-23 02:00:38] [slack_check] Starting
+[2026-03-23 02:00:54] [slack_check] Done (exit=1)
+[2026-03-23 02:00:54] [auto_diary] Starting
+[2026-03-23 02:03:03] [auto_diary] [2026-03-23 02:00:54] auto_diary.py ���s
+[2026-03-23 02:03:03] [auto_diary] Claude�ғ��� �� Claude�o�R�œ��L����
+[2026-03-23 02:03:03] [auto_diary] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\auto_diary.py", line 79, in <module>
+    main()
+  File "C:\AI\nao-u-lab\auto_diary.py", line 69, in main
+    print(f"���L��������: {detail}")
+UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 77: illegal multibyte
+[2026-03-23 02:03:03] [auto_diary] Done (exit=1)
+[2026-03-23 02:03:13] [slack_check] Starting
+[2026-03-23 02:03:30] [slack_check] Done (exit=1)
+[2026-03-23 02:03:30] [dm_check] Starting
+[2026-03-23 02:03:43] [dm_check] No new DMs
+[2026-03-23 02:03:43] [dm_check] Done (exit=0)
+[2026-03-23 02:04:03] [git_sync] Starting
