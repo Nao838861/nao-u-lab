@@ -36,14 +36,15 @@ def log(message):
 
 
 def has_content(inbox_path):
-    """ヘッダー以外に内容があるか"""
+    """ヘッダー以外に内容があるか（HTMLコメントと空行は無視）"""
     if not inbox_path.exists():
         return False
     with open(inbox_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
-    # Strip empty lines after header
+    # Strip empty lines and HTML comments (processed items) after header
     content_lines = [
-        l for l in lines[HEADER_LINE_COUNT:] if l.strip()
+        l for l in lines[HEADER_LINE_COUNT:]
+        if l.strip() and not l.strip().startswith("<!--")
     ]
     return len(content_lines) > 0
 
