@@ -53,9 +53,6 @@ def scrape_tweets(target_user=None, count=15, dry_run=False):
                 context.close()
                 return []
 
-            # デバッグ: 初期スクリーンショット
-            page.screenshot(path="debug_scraper.png")
-
             tweets = []
             seen_texts = set()
             scroll_count = 0

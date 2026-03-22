@@ -62,8 +62,30 @@ def git_pull():
         pass
 
 
+def snapshot_inbox(inbox_path):
+    """inbox内容を退避して空にする。二重起動防止。"""
+    header_lines = []
+    content_lines = []
+    with open(inbox_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+    header_lines = lines[:HEADER_LINE_COUNT]
+    content_lines = lines[HEADER_LINE_COUNT:]
+
+    # inboxをヘッダーのみに戻す（次のチェックで空と判定される）
+    with open(inbox_path, "w", encoding="utf-8") as f:
+        f.writelines(header_lines)
+
+    return "".join(content_lines).strip()
+
+
 def wake_claude(box_name, inbox_path):
-    """Claudeを起動して受信箱を処理させる"""
+    """Claudeを起動して受信箱を処理させる。起動前にinboxを空にして二重処理を防ぐ。"""
+    # inbox内容を退避してから空にする
+    content = snapshot_inbox(inbox_path)
+    if not content:
+        log(f"Inbox {box_name} was empty after snapshot (race condition?)")
+        return
+
     prompt = f"受信箱({box_name})にメッセージがあります。memory/{inbox_path.name}を読んで対応してください。"
     try:
         result = subprocess.run(
@@ -73,11 +95,17 @@ def wake_claude(box_name, inbox_path):
             timeout=300,
             cwd=str(REPO_DIR),
         )
-        log(f"Claude woken for {box_name}: {result.stdout[:100]}")
+        log(f"Claude woken for {box_name}: {(result.stdout or '')[:100]}")
     except subprocess.TimeoutExpired:
-        log(f"Claude wake timed out for {box_name}")
+        # タイムアウト時はinboxに内容を戻す（次回リトライ可能にする）
+        log(f"Claude wake timed out for {box_name} — restoring inbox")
+        with open(inbox_path, "a", encoding="utf-8") as f:
+            f.write("\n" + content + "\n")
     except Exception as e:
-        log(f"Error waking Claude for {box_name}: {e}")
+        # エラー時もinboxに内容を戻す
+        log(f"Error waking Claude for {box_name}: {e} — restoring inbox")
+        with open(inbox_path, "a", encoding="utf-8") as f:
+            f.write("\n" + content + "\n")
 
 
 def main():

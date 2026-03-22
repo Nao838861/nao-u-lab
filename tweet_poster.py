@@ -99,7 +99,6 @@ def reply_to_latest(text, dry_run=False):
 
             # A reply dialog should now be open
             print("Looking for reply textbox in dialog...")
-            page.screenshot(path="debug_reply_dialog.png")
 
             textbox = None
             for selector in ['[data-testid="tweetTextarea_0"]', '[role="textbox"]']:
@@ -150,7 +149,6 @@ def reply_to_latest(text, dry_run=False):
                 return False
 
             time.sleep(8)
-            page.screenshot(path="debug_after_reply.png")
             print(f"DONE reply: {text[:80]}...")
             return True
 
@@ -228,10 +226,6 @@ def post_tweet(text, dry_run=False):
                 page.keyboard.type(text, delay=10)
             time.sleep(2)
 
-            # Verify text was entered
-            page.screenshot(path="debug_before_post.png")
-            print("  Screenshot saved: debug_before_post.png")
-
             # Find and click post button
             print("Looking for post button...")
             posted = False
@@ -258,11 +252,6 @@ def post_tweet(text, dry_run=False):
             print("Waiting for post to complete...")
             time.sleep(8)
 
-            # Verify by checking profile
-            page.goto("https://x.com/eda_u838861", timeout=20000)
-            time.sleep(5)
-            page.screenshot(path="debug_after_post.png")
-            print("  Screenshot saved: debug_after_post.png")
             print(f"DONE: {text[:80]}...")
             return True
 
