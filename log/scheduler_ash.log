@@ -3602,3 +3602,18 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 77
 [2026-03-23 02:57:21] [slack_check] Starting
 [2026-03-23 02:57:38] [slack_check] Done (exit=1)
 [2026-03-23 02:57:38] [inbox_check] Starting
+[2026-03-23 02:57:39] [inbox_check] Inbox win2 empty
+[2026-03-23 02:57:39] [inbox_check] Done (exit=0)
+[2026-03-23 02:58:39] [slack_check] Starting
+[2026-03-23 02:58:56] [slack_check] Done (exit=1)
+[2026-03-23 02:59:56] [slack_check] Starting
+[2026-03-23 03:00:12] [slack_check] Done (exit=1)
+[2026-03-23 03:01:12] [slack_check] Starting
+[2026-03-23 03:01:29] [slack_check] [03:01:29] 1 msg(s) -> inbox_win2.md
+[2026-03-23 03:01:29] [slack_check] Done (exit=0)
+[2026-03-23 03:02:19] [dm_check] Starting
+[2026-03-23 03:04:49] [dm_check] New DM detected
+[2026-03-23 03:04:49] [dm_check] Done (exit=0)
+[2026-03-23 03:04:59] [slack_check] Starting
+[2026-03-23 03:05:16] [slack_check] Done (exit=1)
+[2026-03-23 03:05:16] [inbox_check] Starting
