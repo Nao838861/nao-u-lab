@@ -1466,3 +1466,50 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 64
 [2026-03-22 14:04:56] [inbox_check] Starting
 [2026-03-22 14:04:57] [inbox_check] Inbox win2 empty
 [2026-03-22 14:04:57] [inbox_check] Done (exit=0)
+[2026-03-22 14:05:07] [slack_check] Starting
+[2026-03-22 14:05:17] [slack_check] Done (exit=1)
+[2026-03-22 14:05:47] [dm_check] Starting
+[2026-03-22 14:06:00] [dm_check] No new DMs
+[2026-03-22 14:06:00] [dm_check] Done (exit=0)
+[2026-03-22 14:06:20] [slack_check] Starting
+[2026-03-22 14:06:31] [slack_check] Done (exit=1)
+[2026-03-22 14:07:31] [slack_check] Starting
+[2026-03-22 14:07:42] [slack_check] Done (exit=1)
+[2026-03-22 14:08:42] [slack_check] Starting
+[2026-03-22 14:08:53] [slack_check] Done (exit=1)
+[2026-03-22 14:09:53] [slack_check] Starting
+[2026-03-22 14:10:04] [slack_check] Done (exit=1)
+[2026-03-22 14:10:15] [inbox_check] Starting
+[2026-03-22 14:10:15] [inbox_check] Inbox win2 empty
+[2026-03-22 14:10:15] [inbox_check] Done (exit=0)
+[2026-03-22 14:11:05] [slack_check] Starting
+[2026-03-22 14:11:17] [slack_check] Done (exit=1)
+[2026-03-22 14:11:17] [dm_check] Starting
+[2026-03-22 14:11:29] [dm_check] No new DMs
+[2026-03-22 14:11:29] [dm_check] Done (exit=0)
+[2026-03-22 14:12:19] [slack_check] Starting
+[2026-03-22 14:12:30] [slack_check] Done (exit=1)
+[2026-03-22 14:13:30] [slack_check] Starting
+[2026-03-22 14:13:42] [slack_check] Done (exit=1)
+[2026-03-22 14:14:42] [slack_check] Starting
+[2026-03-22 14:14:53] [slack_check] Done (exit=1)
+[2026-03-22 14:15:24] [inbox_check] Starting
+[2026-03-22 14:15:24] [inbox_check] Inbox win2 empty
+[2026-03-22 14:15:24] [inbox_check] Done (exit=0)
+[2026-03-22 14:15:54] [slack_check] Starting
+[2026-03-22 14:16:06] [slack_check] Done (exit=1)
+[2026-03-22 14:16:36] [dm_check] Starting
+[2026-03-22 14:16:49] [dm_check] No new DMs
+[2026-03-22 14:16:49] [dm_check] Done (exit=0)
+[2026-03-22 14:17:09] [slack_check] Starting
+[2026-03-22 14:17:20] [slack_check] Done (exit=1)
+[2026-03-22 14:18:20] [slack_check] Starting
+[2026-03-22 14:18:31] [slack_check] Done (exit=1)
+[2026-03-22 14:19:31] [slack_check] Starting
+[2026-03-22 14:19:43] [slack_check] Done (exit=1)
+[2026-03-22 14:20:33] [inbox_check] Starting
+[2026-03-22 14:20:34] [inbox_check] Inbox win2 empty
+[2026-03-22 14:20:34] [inbox_check] Done (exit=0)
+[2026-03-22 14:20:44] [slack_check] Starting
+[2026-03-22 14:20:55] [slack_check] Done (exit=1)
+[2026-03-22 14:20:55] [git_sync] Starting
