@@ -44,7 +44,7 @@
 ### 8. #shared-reads チャンネルの手動作成
 - 起票: 2026-03-23
 - 内容: Botトークンに channels:write スコープがないため、Nao_uが手動でSlackチャンネル「shared-reads」を作成し、Botを招待する必要がある
-- 状態: **未完了・Nao_u対応待ち**
+- 状態: **[完了] 2026-03-23** Nao_uがチャンネル作成。Botはconversations.join APIで自力参加可能だった。Log/Ashにもinbox経由で伝達済み
 
 ### 6. Twitterプロフィール案の決定
 - 起票: 2026-03-21

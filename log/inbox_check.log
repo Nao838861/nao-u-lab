@@ -185,16 +185,13 @@
 [2026-03-23 04:52:01] Inbox win has content — waking Claude
 [2026-03-23 04:59:07] Inbox win has content — waking Claude
 [2026-03-23 04:59:16] Claude woken for win: 
-<<<<<<< HEAD
-[2026-03-23 05:11:26] Inbox win2 has content — waking Claude
-[2026-03-23 05:11:33] Claude woken for win2: 
-[2026-03-23 05:30:33] Inbox win2 has content — waking Claude
-[2026-03-23 05:30:40] Claude woken for win2: 
-=======
 [2026-03-23 05:10:23] Inbox win has content — waking Claude
 [2026-03-23 05:10:33] Claude woken for win: 
 [2026-03-23 05:12:47] Inbox win has content — waking Claude
 [2026-03-23 05:12:57] Claude woken for win: 
 [2026-03-23 05:15:30] Inbox win has content — waking Claude
->>>>>>> d85eaf80b5c3e8462c655c21ac60a3805b79785d
-[2026-03-23 05:41:27] Inbox win2 has content — waking Claude
+[2026-03-23 05:27:05] Inbox win has content — waking Claude
+[2026-03-23 05:27:31] Claude woken for win: 
+[2026-03-23 05:38:22] Inbox win has content — waking Claude
+[2026-03-23 05:43:14] Claude woken for win: 
+[2026-03-23 05:45:16] Inbox win has content — waking Claude
