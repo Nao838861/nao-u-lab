@@ -81,17 +81,11 @@ def delete_latest_tweet():
             page.mouse.wheel(0, 800)
             time.sleep(2)
 
-            page.screenshot(path="debug_before_delete.png")
-            print("Screenshot saved: debug_before_delete.png")
-
             # Find the first tweet's caret/more button
             tweet = page.locator('[data-testid="tweet"]').first
             caret = tweet.locator('[data-testid="caret"]')
             caret.click()
             time.sleep(2)
-
-            page.screenshot(path="debug_delete_menu.png")
-            print("Screenshot saved: debug_delete_menu.png")
 
             # Click delete option
             delete_item = page.locator('[data-testid="Dropdown"] [role="menuitem"]').first
@@ -108,7 +102,6 @@ def delete_latest_tweet():
                     confirm.click()
                     print("Deleted!")
                     time.sleep(3)
-                    page.screenshot(path="debug_after_delete.png")
                 else:
                     page.screenshot(path="debug_no_confirm.png")
                     print("Confirm button not found")
