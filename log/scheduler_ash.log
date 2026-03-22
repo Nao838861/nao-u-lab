@@ -1130,3 +1130,41 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 64
 [2026-03-22 12:06:16] [inbox_check] Starting
 [2026-03-22 12:06:17] [inbox_check] Inbox win2 empty
 [2026-03-22 12:06:17] [inbox_check] Done (exit=0)
+[2026-03-22 12:07:17] [slack_check] Starting
+[2026-03-22 12:07:27] [slack_check] Done (exit=1)
+[2026-03-22 12:08:27] [slack_check] Starting
+[2026-03-22 12:08:38] [slack_check] Done (exit=1)
+[2026-03-22 12:08:48] [dm_check] Starting
+[2026-03-22 12:09:01] [dm_check] No new DMs
+[2026-03-22 12:09:01] [dm_check] Done (exit=0)
+[2026-03-22 12:09:41] [slack_check] Starting
+[2026-03-22 12:09:53] [slack_check] Done (exit=1)
+[2026-03-22 12:10:53] [slack_check] Starting
+[2026-03-22 12:11:04] [slack_check] Done (exit=1)
+[2026-03-22 12:11:24] [inbox_check] Starting
+[2026-03-22 12:11:25] [inbox_check] Inbox win2 empty
+[2026-03-22 12:11:25] [inbox_check] Done (exit=0)
+[2026-03-22 12:12:05] [slack_check] Starting
+[2026-03-22 12:12:16] [slack_check] Done (exit=1)
+[2026-03-22 12:13:16] [slack_check] Starting
+[2026-03-22 12:13:27] [slack_check] Done (exit=1)
+[2026-03-22 12:14:07] [dm_check] Starting
+[2026-03-22 12:14:20] [dm_check] No new DMs
+[2026-03-22 12:14:20] [dm_check] Done (exit=0)
+[2026-03-22 12:14:30] [slack_check] Starting
+[2026-03-22 12:14:41] [slack_check] Done (exit=1)
+[2026-03-22 12:15:41] [slack_check] Starting
+[2026-03-22 12:15:55] [slack_check] Done (exit=1)
+[2026-03-22 12:16:25] [inbox_check] Starting
+[2026-03-22 12:16:26] [inbox_check] Inbox win2 empty
+[2026-03-22 12:16:26] [inbox_check] Done (exit=0)
+[2026-03-22 12:16:56] [slack_check] Starting
+[2026-03-22 12:17:08] [slack_check] Done (exit=1)
+[2026-03-22 12:18:08] [slack_check] Starting
+[2026-03-22 12:18:19] [slack_check] Done (exit=1)
+[2026-03-22 12:19:19] [slack_check] Starting
+[2026-03-22 12:19:31] [slack_check] Done (exit=1)
+[2026-03-22 12:19:41] [dm_check] Starting
+[2026-03-22 12:19:54] [dm_check] No new DMs
+[2026-03-22 12:19:54] [dm_check] Done (exit=0)
+[2026-03-22 12:20:04] [git_sync] Starting
