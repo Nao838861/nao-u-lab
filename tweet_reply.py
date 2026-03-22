@@ -101,8 +101,6 @@ def reply_to_tweet(tweet_url, reply_text, dry_run=False):
             page.keyboard.press("Control+v")
             time.sleep(2)
 
-            page.screenshot(path="debug_before_reply.png")
-
             # 返信ボタンをクリック
             print("Looking for reply button...")
             clicked = False
@@ -127,7 +125,6 @@ def reply_to_tweet(tweet_url, reply_text, dry_run=False):
 
             # 投稿完了を待つ
             time.sleep(8)
-            page.screenshot(path="debug_after_reply.png")
             print(f"DONE: Replied to {tweet_url}")
             return True
 
