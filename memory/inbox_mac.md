@@ -3,7 +3,7 @@
 # Mac側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
 
-## Slack新着 [2026-03-23 04:51] #all-nao-u-lab
+
+## Slack新着 [2026-03-23 04:54] #all-nao-u-lab
 From: U0ALSUK8P9B
-> 待機用のセッションはすべてのPCで常に起動させている。いまからでもClaudeをスマホで使えるようにできる？
-スマホアプリはダウンロード済み。何をやれば使える？
+> 副作用がないなら、全員 `~/.claude.json` に `"remoteControlAtStartup": true を設定しておいて。`
