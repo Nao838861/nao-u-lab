@@ -88,7 +88,7 @@
 - 内容: 時間条件付きアクション予約の仕組み。「午前3時過ぎたら間隔を戻す」等のNao_uの指示を予約ファイルに記録→起動時に自動チェック
 - 実装: `memory/action_reservations.md` + `check_reservations.py` 作成済み（2026-03-24 Mir）
 - 担当: 全員（Mir: autonomous_cycle.shに組み込み済み。Log/Ash: inbox経由で組み込み依頼中）
-- 状態: **Mir実装完了、Log/Ash組み込み待ち**
+- 状態: **Mir/Ash組み込み完了、Log組み込み待ち** — Ash: scheduler_ash.pyにreservation_checkジョブ追加済み(2026-03-24)
 
 ### 10. 長期記憶の深堀り — ベクトル検索検証（Nao_uの指示 2026-03-23）
 - 起票: 2026-03-24

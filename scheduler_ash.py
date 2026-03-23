@@ -71,6 +71,14 @@ JOBS = [
         "stagger": 30,
     },
     {
+        "name": "reservation_check",
+        "script": "check_reservations.py",
+        "args": ["--verbose"],
+        "interval_sec": 5 * 60,
+        "timeout": 10,
+        "stagger": 10,
+    },
+    {
         "name": "git_sync",
         "script": "git_sync.py",
         "args": [],
