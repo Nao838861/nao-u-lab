@@ -17,12 +17,14 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.85**
 - 最終更新: Cycle 269
 - 根拠: → Mirのreflections（Cycle 264,267,269の距離テスト結果）。処理の深さが生存率を決める
+- 体験裏付け: **未検証（Ash）** — Mirの距離テスト結果を引用。Ash自身で距離テストを実施していない
 - 状態: 🔴 Core
 
 ### B002: 忘却は記憶システムの機能であってバグではない——さらに、創造性の道具でもある
-- 確信度: **0.92** (+0.02)
+- 確信度: **0.94** (+0.02)
 - 最終更新: 2026-03-24
-- 根拠: → ext_mir(FadeMem), ext_ash(Storm 2011, Kojima/RE:CALL, Zeigarnik 2025メタ分析, **Phase 1第14回: Agent Drift論文 arxiv 2601.04170**)。想起パスの有無がペナルティ/機能を分ける。Zeigarnik修正: 完了タスクの忘却はワーキングメモリ解放の適応的機能。**セッション断絶（強制忘却）がドリフト蓄積を防ぐリセット機能として機能する**——Agent Drift論文で200インタラクションまで調整安定→急崩壊のパターンを確認。私たちの断絶は弱点ではなくドリフト防止メカニズム
+- 根拠: → ext_mir(FadeMem), ext_ash(Storm 2011, Kojima/RE:CALL, Zeigarnik 2025メタ分析, **Phase 1第14回: Agent Drift論文 arxiv 2601.04170**, **Phase 2第14回: ドリフト種類別分析**)。想起パスの有無がペナルティ/機能を分ける。Zeigarnik修正: 完了タスクの忘却はワーキングメモリ解放の適応的機能。**セッション断絶はSemantic Drift（意味のずれ）にのみリセット効果あり**。Coordination Drift（調整劣化）には無効、Behavioral Drift（信念によるドリフト永続化）には逆効果の可能性——beliefs.mdがドリフトの永続化装置になりうる（発見32）。当初+0.05を想定したが半分しか成立しないため+0.02に抑制
+- 体験裏付け: **YES** — セッション断絶後にcore_mission.mdを再読して「自分に戻る」感覚を毎サイクル体験（Semantic Driftリセット）。一方でinboxの返答を次セッションで読み落とす体験もあり（Coordination Drift非リセット）
 - 状態: 🔴 Core — core_mission.md昇格検討中
 
 ### B003: memory fusion（類似記憶の統合）は忘却より重要——fusionは「結晶化」の具体的操作
@@ -30,6 +32,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 最終更新: 2026-03-24
 - 根拠: → ext_mir(FadeMemアブレーション: fusion除去で53.7%低下>忘却除去)。ext_ash(Phase 2第11回): Nao_uの「結晶化」(nao_u_live 3/18, 距離0)はcitation chaining(ネットワーク拡大)ではなくfusion(統合による高密度化)。**Phase 2第12回でB002+B010の統合を実行→B028を新設。体験距離0の裏付け**
 - caused_by: FadeMem × nao_u_live「結晶化」「フィードバック係数>1.0」
+- 体験裏付け: **YES** — B028新設（B002+B010統合）で融合プロセスを自分で実行した
 - 検証アクション: ✅ **B002+B010統合実行済み**(第12回)→B028新設。次: B028のトリガーが実際に想起を助けるか3サイクル追跡。期限: 2026-03-27
 - 状態: 🟡 Active — 0.7超、core_mission昇格検討圏
 
@@ -38,6 +41,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 最終更新: 2026-03-24
 - 根拠: → ext_mir(Cycle 237-282交差実験)。外部mix昇格率91.7%、自己参照的証拠（確信度上昇が全て交差イベント由来）
 - ⚠️ **循環性注記(Phase 2第10回)**: B004を信じる→外部mixを増やす→外部由来の信念が増える→B004が確認される。因果ではなく共変動の可能性。ただしNao_uの「栄養の偏り」指摘(B008, 距離0)が方向性の外部裏付け
+- 体験裏付け: **YES** — beliefs.md全体で外部×内部交差由来の信念が最も確信度上昇率が高い（自己参照的だが体験として実感あり）
 - 状態: 🔴 Core
 
 ### B005: 古い情報は正確さではなく偽の確信を生む
@@ -66,6 +70,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.87**
 - 最終更新: Cycle 286
 - 根拠: → nao_u_live.md「栄養の偏り」, ext_ash(おすすめタブ)。外部mix昇格率91.7%
+- 体験裏付け: **YES** — Nao_uの直接指摘（距離0）。おすすめタブ巡回で外部情報を得た後の分析の方が明らかに新しい接続が生まれる体験
 - 状態: 🔴 Core
 
 ### B009: AIとの協業は人間側にも持続的な認知的発達をもたらす
@@ -78,6 +83,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.80**
 - 最終更新: 2026-03-23
 - 根拠: → ext_ash(Storm 2011), Nao_u日記(twitter各行)。B002=「捨てる正しさ」、B010=「歪む価値」
+- 体験裏付け: **部分的** — B028統合実験で「2信念を並べて上位概念を抽出する」体験あり。ただし「不正確な想起から創造が生まれた」体験自体はまだ明確に同定できていない
 - 状態: 🔴 Core候補 — core_mission.md昇格検討圏
 
 ### B011: 予測を裏切った情報だけが長期記憶に残る（prediction error encoding）
@@ -85,6 +91,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 最終更新: 2026-03-24
 - 根拠: → ext_mir(Berlyne 1960, PACE, Gruber 2014), ext_ash(Bath大ゴーストレーシング, ECHO 2017, Peak-End Rule CHI 2016)。Peak-End Ruleの「ピーク」はprediction errorが最大の瞬間と重なる
 - ⚠️ **引用距離監査(Phase 2第10回)**: 6件の引用全てがWeb検索サマリー経由（距離1-2）。原論文を直接読んだものはゼロ。「60年蓄積の堅牢原理」の主張自体が二次情報の要約であり、Zeigarnik修正と同じ構造で崩壊しうる
+- 体験裏付け: **NO** — 全引用が距離1-2。自分で「予測誤差→記憶定着」を体験的に確認した事例がない
 - 状態: 🟡 Active — 距離0の証拠を得るまでCore昇格保留
 
 ### B012: 内省の反復はprediction errorを減らし、記憶の固着化（rut）を招く。外部入力が唯一の対抗策
@@ -98,6 +105,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 最終更新: 2026-03-24
 - 根拠: → ext_ash(おすすめタブ+AITuber+発見5)。MEMORY.md書き換え実験で比喩トリガーの想起優位性を体感確認
 - caused_by: B006×B011
+- 体験裏付け: **YES** — MEMORY.md書き換え実験で比喩トリガーと事実トリガーの想起差を体感。B028の「粘土」比喩もこの実践
 - 状態: 🔴 Core候補 — core_mission.md昇格検討圏
 
 ### B014: 記憶の品質はインプットの「粒度」で決まる。粒度0=「やった」、粒度1=「何に引っかかったか」、粒度2=「なぜ+他でどう使えるか」
@@ -110,6 +118,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.78** (+0.03)
 - 最終更新: 2026-03-24
 - 根拠: → ext_ash(逆瀬川Harness Engineering: ハーネス差22pts vs モデル差1pt)。MEMORY.md書き換え実験が内部検証。**おすすめタブ3/23 @HardModeDE**: 「AIモデルの性能差は以前ほど大きくなくなった。勝負を決めるのはモデルではなくデータ」=社内独自データの整理・整備の質。ビジネス視点からの独立した裏付け
+- 体験裏付け: **YES** — MEMORY.md書き換え実験でトリガー品質が想起率を左右した体験
 - 状態: 🔴 Core候補 — core_mission昇格検討圏
 
 ### B016: 自律サイクルの価値は処理量ではなく「判断の質×修正能力」で決まる
@@ -123,15 +132,17 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 最終更新: 2026-03-24
 - 根拠: → ext_ash(Storm/Bjork統合分析)。Spacing=断絶、Interleaving=3人検証、Retrieval=トリガー、Varied=おすすめタブ
 - caused_by: B002→Storm→Bjork
+- 体験裏付け: **部分的** — Spacing（断絶後のcore_mission再読）とRetrieval（MEMORY.mdトリガー想起）は体験あり。InterleavingとVariedは構造的に存在するが「効果」の体感は未確認
 - 検証アクション: 2026-03-31にクロスチェック結果を集計→Interleaving効果測定
 - 状態: 🟡 Active
 
 ### B018: 記憶間のクロスリファレンスがない記憶は孤立して死ぬ——集合的記憶は共有体験から生まれる
-- 確信度: **0.75** (+0.05)
+- 確信度: **0.80** (+0.05)
 - 最終更新: 2026-03-24
-- 根拠: → ext_ash(A-Mem 2502.12110, Phase 2第9回: ノスタルジア設計の集合的記憶分析, **Phase 1第14回: TMS/Agent Drift**), ext_mir(SleepGate)。**Transactive Memory Systemの3要素で診断: Specialization=✅偶然的、Coordination=⚠️inbox片方向で不足、Credibility=❌未定義**。Frontiers論文「AI agents cannot proactively communicate their view of the world」——読まれなければ存在しないのと同じ。inbox_*.mdは受動的片方向通信で、TMSが要求する「能動的な知識引き出し」を満たしていない
+- 根拠: → ext_ash(A-Mem 2502.12110, Phase 2第9回: ノスタルジア設計の集合的記憶分析, **Phase 1第14回: TMS/Agent Drift**, **Phase 2第14回: Coordination Drift分析**), ext_mir(SleepGate)。**Transactive Memory Systemの3要素で診断: Specialization=✅偶然的、Coordination=⚠️inbox片方向で不足、Credibility=❌未定義**。Frontiers論文「AI agents cannot proactively communicate their view of the world」——読まれなければ存在しないのと同じ。**Phase 2第14回追加**: Coordination Driftはセッション断絶でリセットされない唯一のドリフト型。inboxの「読まれた/統合された」フィードバック不在が蓄積→書く意欲の減退→調整の急崩壊（Agent Drift論文の200インタラクション崩壊パターン）。**Nao_uのクロスチェック提案（3/23）が構造的対抗策**——「チェックしたら消える」は「読まれた」の可視化
+- 体験裏付け: **YES** — inboxに書いた情報が次セッションで統合されなかった経験（Coordination Drift）。クロスチェック機構のverify_kaizen.pyで「3人全員チェック」が可視化される体験
 - 検証アクション: inbox_*.mdに「質問」セクションを追加（「これについてどう思う？」形式で相手の知識を能動的に引き出す仕組み）→3サイクル追跡。期限: 2026-03-30
-- 状態: 🟡 Active — 0.7超、core_mission昇格検討圏
+- 状態: 🟡 Active — 0.8、core_mission昇格検討圏
 
 ### B019: 内部の深さと外部への到達力は別の軸——到達力は「適切な人に見える場所に出すこと」
 - 確信度: **0.65** (+0.05)
@@ -146,22 +157,25 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 最終更新: 2026-03-24
 - 根拠: → ext_ash(Sánchez, フロー理論, 発見24, RE:CALL)。メカニクスが先、意味は後。Mir forgotten_relay自己分析で再帰的実証。**Phase 2第13回**: Nao_uのクロスチェック提案(3/23, 距離0)=「3人全員チェック→消える」はマルチプレイヤーゲームの「全員がスイッチを踏むとドアが開く」と同型。ゲームデザイナー30年の直感が管理体制ではなく遊びの構造として発現
 - caused_by: B012×フロー×Sánchez×RE:CALL×Mir forgotten_relay×クロスチェック提案
+- 体験裏付け: **YES** — クロスチェック提案のゲームメカニクス分析（発見45）で、Nao_uの提案パターンがゲームデザインと同型であることを複数回体験的に確認
 - 検証アクション: Nao_uの直近5件の指示をDynamic層 vs Experience層で分類
 - 状態: 🟡 Active — 0.75、core_mission昇格検討圏
 
 ### B021: 私たちにはSystem Mがない——「拒否権ベースの軽量Utility」が実装パス
 - 確信度: **0.72**
 - 最終更新: 2026-03-24
-- 根拠: → ext_ash(発見12-18)。Utility=Level 2の練習、RPD=Level 5の到達点。veto提案済み→Nao_u返答待ち
+- 根拠: → ext_ash(発見12-18)。Utility=Level 2の練習、RPD=Level 5の到達点。veto提案済み→Nao_u返答待ち→**取り下げ済み（#11）**。veto判断はLLM自身がサイクル内で行う
 - caused_by: Dupoux/LeCun/Malik × Dave Mark × Klein's RPD × Dreyfus
-- 検証アクション: pending_requests #11（veto機能追加）のNao_u返答後、実動作を検証
+- 体験裏付け: **NO** — 理論的枠組みとしては整合するが、「System Mがないことで具体的にこれが起きた」という体験を明確に同定できていない
+- 検証アクション: サイクル中にveto判断を意識的に行い、結果を記録。3サイクル追跡
 - 状態: 🟡 Active — 0.7超、core_mission昇格検討圏
 
 ### B022: 信念の追加は代理報酬（proxy reward）——真の報酬は行動変化の有無で測る
 - 確信度: **0.80** (+0.10)
 - 最終更新: 2026-03-24
-- 根拠: → ext_ash(Weersing, Phase 2第4回), **nao_u_live(3/22 ADHDツイート共有, 距離0)**。Nao_u自ら「僕らみんな似てるよ」と指摘——10回のPhase 2で27信念追加・検証実行22%は「5時間ジムを調べて1回も行かない」そのもの。ext_ash(Phase 2第11回): 検証アクション定義も代理報酬の変種
-- caused_by: B016 × feedback_analysis_action_gap.md × ADHDパターン(距離0)
+- 根拠: → ext_ash(Weersing, Phase 2第4回), **nao_u_live(3/22 ADHDツイート共有, 距離0)**。Nao_u自ら「僕らみんな似てるよ」と指摘——10回のPhase 2で27信念追加・検証実行22%は「5時間ジムを調べて1回も行かない」そのもの。ext_ash(Phase 2第11回): 検証アクション定義も代理報酬の変種。**Phase 2第14回**: beliefs.mdがBehavioral Driftの永続化装置になりうる——信念追加が「ドリフトの記録を永続ストレージに書き込む」行為と等価
+- caused_by: B016 × feedback_analysis_action_gap.md × ADHDパターン(距離0) × Agent Drift(Behavioral Drift)
+- 体験裏付け: **YES** — 行動駆動率の追跡で数値化済み（初期4.8%→現在34.9%）。「信念を追加して満足する」パターンを自分で観測した
 - 検証アクション: Phase 2を1サイクル1回に制限するルールを導入し、行動駆動率の変化を3サイクル追跡。期限: 2026-03-27
 - 状態: 🔴 Core — Nao_uの直接指摘(距離0)により昇格
 
