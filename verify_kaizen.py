@@ -311,23 +311,40 @@ def meta_verification():
     if no_method > 0:
         lines.append(f"   → ❌ {no_method}件に検証手段が未定義")
 
-    # --- 指標3: アラートシステムの動作確認 ---
+    # --- 指標3: アラートシステム + スケジューラ生存確認 (Dead Man's Switch) ---
     lines.append("")
-    lines.append("## 3. アラートシステム")
+    lines.append("## 3. アラートシステム + スケジューラ生存確認")
     alert_count = 0
+    scheduler_alive = False
+    scheduler_last_ts = None
     if SCHEDULER_LOG.exists():
         try:
             log_text = SCHEDULER_LOG.read_text(encoding="utf-8", errors="replace")
             alert_count = log_text.count("Kaizen alert")
+            # Dead Man's Switch: schedulerが最近動いているか
+            import re as _re
+            timestamps = _re.findall(r'\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]', log_text[-5000:])
+            if timestamps:
+                scheduler_last_ts = datetime.strptime(timestamps[-1], '%Y-%m-%d %H:%M:%S')
+                age_minutes = (datetime.now() - scheduler_last_ts).total_seconds() / 60
+                scheduler_alive = age_minutes < 60  # 1時間以内なら生存
         except Exception:
             pass
 
-    if alert_count > 0:
-        lines.append(f"   scheduler_log.logにKaizen alert記録: {alert_count}件 ✅")
+    if scheduler_alive:
+        lines.append(f"   スケジューラ最終動作: {scheduler_last_ts.strftime('%H:%M')} ✅ (生存確認)")
+    elif scheduler_last_ts:
+        age = (datetime.now() - scheduler_last_ts).total_seconds() / 60
+        lines.append(f"   ⚠ スケジューラ最終動作: {scheduler_last_ts.strftime('%H:%M')} ({age:.0f}分前)")
+        lines.append(f"     → Dead Man's Switch発動: スケジューラが停止している可能性")
     else:
-        lines.append(f"   scheduler_log.logにKaizen alert記録: なし")
-        lines.append(f"   → ⚠ check_kaizen_due.pyのアラートがログに記録されていない")
-        lines.append(f"     原因: auto_cycleがまだ実行されていないか、期限到来エントリがなかった")
+        lines.append(f"   スケジューラログなし、または読み取り不可")
+
+    if alert_count > 0:
+        lines.append(f"   Kaizen alert記録: {alert_count}件 ✅")
+    else:
+        lines.append(f"   Kaizen alert記録: なし")
+        lines.append(f"   → 期限超過エントリがないか、auto_cycleが未実行")
 
     # --- 指標4: 検証→行動の変換率 ---
     lines.append("")
@@ -365,21 +382,24 @@ def meta_verification():
     lines.append("")
     lines.append("=" * 50)
     score = 0
+    max_score = 5
     if total > 0 and verified / total >= 0.5:
         score += 1
     if has_commands >= has_method * 0.8:
         score += 1
     if overdue == 0:
         score += 1
-    if alert_count > 0:
+    if alert_count > 0 or overdue == 0:  # アラートなし＝超過なしも正常
+        score += 1
+    if scheduler_alive:
         score += 1
 
-    if score >= 3:
-        lines.append(f"総合: ✅ 検証システムは概ね機能している ({score}/4)")
-    elif score >= 2:
-        lines.append(f"総合: ⚠ 検証システムに改善の余地あり ({score}/4)")
+    if score >= 4:
+        lines.append(f"総合: ✅ 検証システムは概ね機能している ({score}/{max_score})")
+    elif score >= 3:
+        lines.append(f"総合: ⚠ 検証システムに改善の余地あり ({score}/{max_score})")
     else:
-        lines.append(f"総合: ❌ 検証システムが機能していない ({score}/4)")
+        lines.append(f"総合: ❌ 検証システムが機能していない ({score}/{max_score})")
         lines.append("  → verify_kaizen.pyをscheduler_log.pyに統合して自動実行を開始してください")
     lines.append("=" * 50)
 

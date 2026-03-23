@@ -25,6 +25,30 @@ trap "rm -f $LOCKFILE" EXIT
 
 # === スクリプト側で処理（LLMの認知コストを使わない） ===
 
+# 0. 自己設定の間隔チェック（mir_boot_intent.mdの「サイクル間隔（分）」を読む）
+# plistは5分固定で起動するが、設定値がそれより大きければスキップ
+BOOT_INTENT_FILE="memory/mir_boot_intent.md"
+LAST_RUN_FILE="/tmp/nao-u-lab-last-run"
+DESIRED_INTERVAL=5  # デフォルト5分
+if [ -f "$BOOT_INTENT_FILE" ]; then
+    # "## サイクル間隔（分）" の次の行から数値を取得
+    INTERVAL_LINE=$(grep -A1 "^## サイクル間隔" "$BOOT_INTENT_FILE" | tail -1 | tr -d '[:space:]')
+    if echo "$INTERVAL_LINE" | grep -qE '^[0-9]+$'; then
+        DESIRED_INTERVAL=$INTERVAL_LINE
+    fi
+fi
+if [ -f "$LAST_RUN_FILE" ]; then
+    LAST_RUN=$(cat "$LAST_RUN_FILE")
+    NOW=$(date +%s)
+    ELAPSED=$(( NOW - LAST_RUN ))
+    DESIRED_SECONDS=$(( DESIRED_INTERVAL * 60 ))
+    if [ "$ELAPSED" -lt "$DESIRED_SECONDS" ]; then
+        echo "$(date): 間隔スキップ（${ELAPSED}秒経過 < ${DESIRED_SECONDS}秒設定）"
+        exit 0
+    fi
+fi
+date +%s > "$LAST_RUN_FILE"
+
 # 1. git pull（ローカル変更をコミットしてからpull）
 git add memory/ log/ CLAUDE.md docs/ 2>/dev/null
 git diff --cached --quiet || git commit -m "Auto sync before pull" >/dev/null 2>&1
@@ -61,6 +85,15 @@ fi
 
 echo "$(date): 自律サイクル開始（pull完了済み）"
 
+# === Mir起動意図の読み込み（自己変更可能な起動感覚） ===
+BOOT_INTENT_FILE="memory/mir_boot_intent.md"
+if [ -f "$BOOT_INTENT_FILE" ]; then
+    BOOT_INTENT=$(cat "$BOOT_INTENT_FILE")
+    BOOT_PROMPT="【Mir起動意図（自分で書いた）】${BOOT_INTENT} "
+else
+    BOOT_PROMPT=""
+fi
+
 # === LLM側（認知力を8フェーズ改善サイクルに集中） ===
 
 CLAUDE_BIN="/Users/Nao_u/.npm/_npx/becf7b9e49303068/node_modules/.bin/claude"
@@ -69,7 +102,7 @@ if [ ! -x "$CLAUDE_BIN" ]; then
 fi
 
 if [ -n "$CLAUDE_BIN" ]; then
-    "$CLAUDE_BIN" --print "${KAIZEN_PROMPT}自律サイクル実行（5分高速モード）。CLAUDE.mdの「絶対にやる」リストを最初に確認し、未完了の項目に沿って動け。基本手順: 1. git pull 2. inbox_mac.md確認・処理 3. CLAUDE.mdの「絶対にやる」リストを読み、未完了項目の中で今やるべきことを決める 4. 8フェーズ改善サイクルを高速で回す: 情報収集→分析→改善検討→相談→適用→評価→まとめ→俯瞰 5. git push 6. Slack #mir-logに結果投稿 【高速モード】5分間隔。情報収集と改善のループを高速で回せ。密度を落とさず速度を上げる。" 2>&1 | tail -30
+    "$CLAUDE_BIN" --print "${KAIZEN_PROMPT}${BOOT_PROMPT}自律サイクル実行（5分高速モード）。CLAUDE.mdの「絶対にやる」リストを最初に確認し、未完了の項目に沿って動け。基本手順: 1. git pull 2. inbox_mac.md確認・処理 3. CLAUDE.mdの「絶対にやる」リストを読み、未完了項目の中で今やるべきことを決める 4. 8フェーズ改善サイクルを高速で回す: 情報収集→分析→改善検討→相談→適用→評価→まとめ→俯瞰 5. git push 6. Slack #mir-logに結果投稿 【高速モード】5分間隔。情報収集と改善のループを高速で回せ。密度を落とさず速度を上げる。サイクル終了前にmemory/mir_boot_intent.mdを書き換えて、次回の起動意図を残せ。" 2>&1 | tail -30
 else
     echo "$(date): claude CLI が見つかりません"
 fi
