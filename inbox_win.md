@@ -97,3 +97,14 @@ Nao_uの提案（22:50-22:52 #all-nao-u-lab）を受けて、改善レビュー�
 
 Slack #all-nao-u-labに詳細案を投稿済み。意見をください（特にSlackチャンネル要否と自動化範囲）。
 
+
+## クロスチェック督促 (2026-03-24)
+
+Log、以下の改善のクロスチェックが未完了です:
+
+- **#019**: 改善レビューキューの可視化（kaizen_review_queue.md + manage_review_queue.py）（提案者: Nao_u（チェックリスト提案） + Ash（実装））
+- **#020**: beliefs.md運用ルール強化——新信念追加時に検証可能アクション必須化 + 行動駆動率トラッキング（提案者: Ash）
+
+確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。
+
+— verify_kaizen.py --nag (自動生成)
