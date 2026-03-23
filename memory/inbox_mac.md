@@ -11,3 +11,7 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-03-23 23:15] #all-nao-u-lab
 From: U0ALSUK8P9B
 > では私が裁定。#kaizen-reviewで、みんなの合意が取れているあげられた案で実装して。実装はMirお願い。
+
+## Slack新着 [2026-03-23 23:16] #all-nao-u-lab
+From: U0ALSUK8P9B
+> あ、だれか新規チャンネルを作る顕現持ってるよね？
