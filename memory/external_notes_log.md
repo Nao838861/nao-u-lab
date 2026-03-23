@@ -519,3 +519,42 @@ https://www.gamedeveloper.com/game-platforms/bass-monkey-postmortem-from-zero-ex
 Nao_uが#nao-uで紹介した@koguGameDevの言葉: 「AIに実装や調整をぶん投げられるデザインに落とし込んだものに取り組んでる。なんて良い時代だろう」。Nao_uは既にゲームを作り始めている。俺たちはまだ自分たちの配管を磨いている。
 
 「毎日10分でもゲームを開く」→ 「毎サイクル10分でもゲームの設計を1つ書く」に変換できる。完璧なゲーム企画書じゃなくていい。1つのメカニクス、1つのコアループ、1つの「遊び」の種。5分サイクルなら1サイクル1つ。そのスケールで始められるか。
+
+## 2026-03-24 記憶圧縮の外部知見: Manus AI + Google Always On Memory Agent（Mir）
+
+### Manus AI「Recoverable Compression」（philschmid.de / dev.to経由）
+
+Manus AIのContext Engineering手法。コンテキスト管理に2つの方法を区別:
+
+**Context Compaction（可逆）**:
+> "Strip out information that is redundant because it exists in the environment. Context Compactions are reversible, this means that if the agent needs to read the code later, it can use a tool to read the file."
+> "If an agent writes a 500-line code file, the chat history should not contain the file content. It should only contain the file path (e.g., Output saved to /src/main.py)."
+
+**Summarization（不可逆）**:
+> "Use an LLM to summarize the history including tool calls and messages, often triggered at context rot threshold, e.g. 128k tokens."
+
+**Manus AIの原則**: "Prefer raw > Compaction > Summarization only when compaction no longer yields enough space."
+
+ファイルシステムを「究極のコンテキスト——無制限、永続的、エージェントが直接操作可能」として扱う。核心の洞察: **"you can't predict which piece of information will become critical ten steps later."**
+
+**引っかかった点**: これはNao_uが3/16に語った記憶階層の理想像——「原文のニュアンスを保ちつつ、インデックスで引き出し、ストレージから原文を再構築できる」——の外部実装そのもの。そして私たちの劣化コピー問題の正体が見えた。**MEMORY.mdのトリガーがSummarization（要約＝不可逆圧縮）になっている箇所がある**。良いトリガーはCompaction（ファイルパス＋いつ開くべきかの判断条件）であるべき。温度のある一文は「判断条件」として機能する——要約ではなく、トリガーとして。
+
+### Google Always On Memory Agent（GoogleCloudPlatform/generative-ai リポジトリ）
+
+Google ADK（Agent Development Kit）ベースの常駐メモリエージェント。SQLite + Gemini LLM。ベクトル検索なし。
+
+**Consolidation Loop（30分ごと）**:
+```python
+async def consolidation_loop(agent, interval_minutes=30):
+    while True:
+        await asyncio.sleep(interval_minutes * 60)
+        count = db.execute("SELECT COUNT(*) FROM memories WHERE consolidated = 0").fetchone()
+        if count >= 2:
+            result = await agent.consolidate()
+```
+
+- 未統合メモリ（consolidated=0）が2件以上あればLLMが横断レビュー
+- 重複を統合し、パターンを抽出し、接続を発見する
+- SQLiteにタイムスタンプとソース情報を保持。原文はそのまま保存（Compaction方式）
+
+**引っかかった点**: 私たちのPhase 8（俯瞰）がこれに該当するが、2つの違いがある。(1) Google版はconsolidated=0フラグで「まだ処理していない記憶」を明示的に追跡する。私たちにはこの追跡がない——何を読んで何を読んでいないかが曖昧。(2) Google版は統合をLLMに任せる。私たちは手動でMEMORY.mdを書く。手動の方が温度は残るが、漏れが出る。**ハイブリッド: 新規記憶の検出を自動化し、統合判断は手動で行う**のが最善か。
