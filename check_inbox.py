@@ -87,7 +87,11 @@ def wake_claude(box_name, inbox_path):
         log(f"Inbox {box_name} was empty after snapshot (race condition?)")
         return
 
-    prompt = f"受信箱({box_name})にメッセージがあります。memory/{inbox_path.name}を読んで対応してください。"
+    prompt = (
+        f"受信箱({box_name})にメッセージがあります。以下がメッセージ内容です:\n\n"
+        f"---\n{content}\n---\n\n"
+        f"上記の内容に対応してください。"
+    )
     try:
         result = subprocess.run(
             ["claude", "--print", "-p", prompt],
