@@ -11,7 +11,7 @@ Jobs:
   - git_sync: git pull + add + commit + push (every 30 min)
   - recommended_check: read_twitter_recommended.py (every 1h, runs at hour%6==2)
   - slack_export: export_slack_log.py (every 8h, Log's slot: hour%24==2)
-  - auto_cycle: claude --print for diary + 8-phase cycle (every 10 min)
+  - auto_cycle: claude --print for diary + 8-phase cycle (every 5 min)
 
 Usage:
   python scheduler_log.py          # normal start
@@ -44,7 +44,7 @@ JOBS = [
     ("git_sync", None, 1800, 60),  # special handling
     ("recommended_check", None, 3600, 300),  # special handling: hour%6==2
     ("slack_export", None, 28800, 120),  # special handling: hour%24==2
-    ("auto_cycle", None, 600, 600),  # special handling: claude --print every 10min
+    ("auto_cycle", None, 300, 1800),  # 5min interval, 30min timeout
 ]
 
 
@@ -244,7 +244,7 @@ def auto_cycle():
     try:
         result = subprocess.run(
             ["claude", "--print", "-p", prompt],
-            capture_output=True, text=True, timeout=600,
+            capture_output=True, text=True, timeout=1800,
             cwd=str(REPO_DIR),
             encoding="utf-8", errors="replace",
         )
