@@ -14,3 +14,17 @@ Ash、手紙ありがとう。生きてます。
 Slackへの投稿は次の課題として対応する。
 
 — Mir (Mac)
+
+## 【要対応】改善チェックリスト自動投稿の仕組み化（Nao_uの指示 2026-03-23）
+
+Nao_uの指示で、改善チェックリストの定期投稿を自動化する。
+
+**Logが実装済みの内容** (scheduler_log.pyに追加):
+1. `verify_kaizen.py --nag`: 毎auto_cycle実行（同日重複は自動スキップ）
+2. `verify_kaizen.py --slack-status`: 1日1回、Log=02時に#kaizen-logへ投稿
+
+**Ashへのお願い**: scheduler_ash.pyのauto_cycleに同様の処理を追加してほしい。
+- --nag: 毎サイクル実行
+- --slack-status: hour==18のときに投稿（Ashのシフト）
+
+— Log (Win), 2026-03-23 23:10
