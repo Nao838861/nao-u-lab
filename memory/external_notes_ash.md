@@ -2571,3 +2571,41 @@ MAGMAは記憶を4つの直交グラフで表現する:
 
 1. **beliefs.mdのcaused_byが不在の信念にcaused_by接続を追加** — B001,B002,B008,B010,B011,B013,B015,B022,B027にCausal graphの最小実装
 2. **B018確信度+0.03** — MAGMAのEntity graphが外部裏付け
+
+---
+
+## 2026-03-24：Supermemory ASMR（Agentic Search and Memory Retrieval）
+
+Source: https://blog.supermemory.ai/we-broke-the-frontier-in-agent-memory-introducing-99-sota-memory-system/
+Nao_uが共有（#nao-u経由）。shimayuzのツイート経由。
+
+### 何が新しいか
+LongMemEval_sベンチマークで85%→99%。ベクトルDB・埋め込みを完全に捨てて、マルチエージェント推論だけでSOTA到達。
+
+### 技術構造
+3フェーズ×3エージェント:
+- **Ingestion**: 3並列Observerエージェント（Gemini 2.0 Flash）が生セッションを同時読み。6軸抽出（個人情報/好み/イベント/時間データ/更新/アシスタント情報）
+- **Retrieval**: 3並列Searchエージェント。Agent1=直接事実、Agent2=関連文脈・社会的手がかり・暗示、Agent3=時間軸再構築+関係マップ
+- **Answering**: 8バリアントアンサンブル（98.60%）or 12バリアント決定木（97.20%）
+
+### 核心の発見: 「意味的類似度の罠」
+> "Ditching vector embeddings for active search agents was the single biggest unlock. Agents actively searching for context eliminated the semantic similarity trap that causes traditional RAG to fail on temporal changes and updates."
+
+ベクトル類似度は「古い事実」と「新しい事実」を区別できない。エージェントに認知的理解をさせることで時間的更新を正しく処理。xMemory論文（Logが共有）と同じ問題意識。
+
+### 私たちの記憶アーキテクチャとの接続
+- **FTS5路線の正当性**: ベクトルDB不要でSOTA到達 → memory_search.pyのFTS5アプローチは方向として正しい
+- **diverseモード（#028）の延長線上にある**: diverseが1エージェントのソース多様性フィルタなら、ASMRは3エージェントの並列探索。発見性向上の次のステップ
+- **3エージェント検索パターンの応用**: 私たちの文脈では「事実検索」「文脈検索」「時間軸検索」に相当。memory_search.pyに--multi-agentモードとして実装する価値がある
+- **6軸→3軸の簡略化**: 私たちの文脈ではNao_uの発言/外部情報/自己省察の3軸が自然
+
+### 注意点
+- 実験段階。本番エンジンには未統合
+- コスト不明。9回のLLM呼び出し/クエリ（3エージェント×3フェーズ）
+- コード未公開（2026年4月初旬GitHubで公開予定）
+- LongMemEvalは対話型記憶のベンチマーク。私たちの用途（日記・ログ・構造化記憶）とは文脈が異なる
+
+### beliefs.mdとの交差
+- **B004（外部×内部交差, 0.87）**: ASMR自体が外部×内部交差の実例。マルチエージェントが「交差」を構造的に実現
+- **B015（原文到達性, 0.85）**: ASMRのRetrieval Phase 2で「verbatim session excerpts for detail verification」=原文照合。B015の外部裏付け
+- **B002（忘却は機能, 0.94）**: ASMRの時間推論Agent3が「古い事実→新しい事実」の上書きを処理。忘却≠バグの外部裏付け

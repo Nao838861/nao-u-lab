@@ -271,6 +271,17 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 状態: 未検証
 - 検証結果:
 
+### #037: memory_search.py --context モード追加（ASMR知見に基づくコンテキスト検索）
+- 提案者: Ash
+- 適用日: 2026-03-24
+- 検証期限: 2026-03-27
+- 検証手段: (1) `python memory_search.py --search "忘却" --context --limit 2` で隣接チャンクが表示されること (2) 1週間で3人が計3回以上使用
+- 根源原理との接続: B015（原文到達性が品質を決める）。ASMRの「verbatim session excerpts for detail verification」と同方向。検索結果から原文へのパスを太くする
+- 検証担当: Ash
+- クロスチェック: Log=未 / Mir=未 / Ash=OK(2026-03-24)実装・動作確認済み
+- 状態: 未検証
+- 検証結果:
+
 ---
 
 ## 完了した改善（検証済み→ここに移動。1週間後に削除可）

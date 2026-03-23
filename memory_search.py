@@ -287,6 +287,80 @@ def search(query, limit=5, diverse=False):
         print()
 
 
+def search_context(query, limit=3):
+    """Search with surrounding context (ASMR-inspired: Agent2 = related context).
+
+    For each hit, also retrieve the adjacent chunks from the same source,
+    giving richer context around the match — similar to how ASMR's Agent2
+    looks for "related context, social cues, and implications."
+    """
+    if not DB_PATH.exists():
+        print("Index not found. Run --build first.")
+        return
+
+    conn = sqlite3.connect(str(DB_PATH))
+
+    try:
+        results = conn.execute(
+            """
+            SELECT source, chunk_id, snippet(chunks, 2, '>>>', '<<<', '...', 40)
+            FROM chunks
+            WHERE chunks MATCH ?
+            ORDER BY rank
+            LIMIT ?
+            """,
+            (query, limit),
+        ).fetchall()
+    except sqlite3.OperationalError:
+        escaped = re.sub(r'[*+\-"()]', ' ', query).strip()
+        if not escaped:
+            print(f"Invalid query: {query}")
+            conn.close()
+            return
+        results = conn.execute(
+            """
+            SELECT source, chunk_id, snippet(chunks, 2, '>>>', '<<<', '...', 40)
+            FROM chunks
+            WHERE chunks MATCH ?
+            ORDER BY rank
+            LIMIT ?
+            """,
+            (escaped, limit),
+        ).fetchall()
+
+    if not results:
+        print(f"No results for: {query}")
+        conn.close()
+        return
+
+    print(f"Context search for '{query}' ({len(results)} hits + surrounding context):\n")
+
+    for source, chunk_id, snippet in results:
+        print(f"  === [{source}] {chunk_id} ===")
+        print(f"  MATCH: {snippet}")
+
+        # Fetch adjacent chunks from the same source for context
+        neighbors = conn.execute(
+            """
+            SELECT chunk_id, content
+            FROM chunks
+            WHERE source = ? AND chunk_id != ?
+            ORDER BY chunk_id
+            LIMIT 2
+            """,
+            (source, chunk_id),
+        ).fetchall()
+
+        if neighbors:
+            print(f"  --- nearby in same source ---")
+            for n_id, n_content in neighbors:
+                preview = n_content[:150].replace('\n', ' ')
+                print(f"    [{n_id}] {preview}...")
+        print()
+
+    conn.close()
+
+
 def show_stats():
     """Show index statistics."""
     if not DB_PATH.exists():
@@ -331,11 +405,15 @@ def main():
     parser.add_argument("--limit", type=int, default=5, help="Max results (default: 5)")
     parser.add_argument("--diverse", action="store_true",
                         help="Return best hit per source (avoid redundancy)")
+    parser.add_argument("--context", action="store_true",
+                        help="Show surrounding context for each hit (ASMR-inspired)")
     parser.add_argument("--stats", action="store_true", help="Show index stats")
     args = parser.parse_args()
 
     if args.build:
         build_index()
+    elif args.search and args.context:
+        search_context(args.search, args.limit)
     elif args.search:
         search(args.search, args.limit, diverse=args.diverse)
     elif args.stats:

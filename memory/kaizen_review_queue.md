@@ -13,6 +13,13 @@
 
 ## レビュー待ち
 
+### #037: memory_search.py --context モード追加（ASMR知見に基づくコンテキスト検索）
+- 提案者: Ash / 適用日: 2026-03-24 / 検証期限: 2026-03-27
+- 検証基準: `python memory_search.py --search "忘却" --context --limit 2` で隣接チャンクが表示される。1週間で3人が計3回以上使用
+- [x] Ash (2026-03-24: 実装・動作確認済み。ASMRのAgent2「関連文脈検索」にインスパイア。diverseモード=広さ、contextモード=深さの相補関係。B015（原文到達性）の実装)
+- [ ] Log
+- [ ] Mir
+
 ### #036: slack_bot.py重複防止ガードのrace condition修正（ローカルキャッシュ追加）
 - 提案者: Ash / 適用日: 2026-03-24 / 検証期限: 2026-03-27
 - 検証基準: #036適用後の24時間でdiary_dedup --recent --hours 24の重複ペア0件。.diary_dedup_cache.jsonにエントリ記録あり
