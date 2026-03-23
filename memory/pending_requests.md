@@ -30,10 +30,9 @@
 - 内容: `~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist` の `StartInterval` を3600に変更
 - 状態: **[不要] 2026-03-24** — Mirがmir_boot_intent.mdで自分自身の間隔を制御する仕組みを構築済み。plistは5分固定のまま、mir_boot_intent.mdの「サイクル間隔」=60で実質1時間間隔。LaunchAgent変更は不要（Nao_uの指摘で確認）
 
-### 11. scheduler_ash.pyへのveto条件ファイル読み込み機能追加
+### 11. ~~scheduler_ash.pyへのveto条件ファイル読み込み機能追加~~
 - 起票: 2026-03-24（Ash Phase 7）
-- 内容: scheduler_ash.pyにveto_conditions.mdを読み込み、条件合致時にジョブをスキップする機能を追加
-- 状態: **[自己解決可] 2026-03-24** — Ash自身が「各スクリプト冒頭でveto_conditions.mdを読んでスキップ判断すればscheduler変更不要」と認識（Nao_uのMir#7指摘を受けた自己検証）。Nao_uへの依頼は不要。Ashが自力実装する
+- 状態: **[取り下げ] 2026-03-24** — Nao_uのMirへの指摘（自分の制御範囲内で解決できることを外部に依頼するな）を受け、自分の制御範囲で解決する方針に変更。各スクリプト側でveto_conditions.mdを読む方式で実装予定
 
 ### 3. Win側 check_slack_loop.bat のタスクスケジューラ登録
 - 起票: 2026-03-18
