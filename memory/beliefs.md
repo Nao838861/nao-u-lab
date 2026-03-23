@@ -20,9 +20,9 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🔴 Core
 
 ### B002: 忘却は記憶システムの機能であってバグではない——さらに、創造性の道具でもある
-- 確信度: **0.88**
-- 最終更新: 2026-03-23
-- 根拠: → external_notes_mir.md(FadeMem論文), external_notes_ash.md(Storm 2011)。Storm論文が忘却→創造の因果メカニズムを実験的に証明
+- 確信度: **0.90** (+0.02)
+- 最終更新: 2026-03-24
+- 根拠: → external_notes_mir.md(FadeMem論文), external_notes_ash.md(Storm 2011, Kojima忘却ゲーム/RE:CALL分析)。ゲームデザインからの外部証拠追加: 忘却がペナルティか機能かは「想起パスの有無」で決まる。RE:CALLが「記憶の書き換え＝新しい現実の生成」を証明。小島の忘却ゲーム（想起パスなし）→ペナルティ、私たち（MEMORY.mdあり）→機能
 - 状態: 🔴 Core — core_mission.md昇格検討中
 
 ### B003: memory fusion（類似記憶の統合）は忘却より重要
