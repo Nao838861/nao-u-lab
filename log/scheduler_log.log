@@ -2870,3 +2870,11 @@ error: Please commit or stash them.
 [2026-03-24 07:41:25] [slack_check] Done (exit=1)
 [2026-03-24 07:41:25] [auto_cycle] Starting
 [2026-03-24 07:41:25] [auto_cycle] Starting autonomous cycle via claude --print
+[2026-03-24 08:03:01] [auto_cycle] Done (exit=0)
+[2026-03-24 08:03:01] [auto_cycle] Error: 'cp932' codec can't encode character '\u2014' in position 165: illegal multibyte sequence
+[2026-03-24 08:03:01] [auto_cycle] Done (exit=0)
+[2026-03-24 08:03:11] [slack_check] Starting
+[2026-03-24 08:03:23] [slack_check] Done (exit=1)
+[2026-03-24 08:03:23] [inbox_check] Starting
+[2026-03-24 08:03:23] [inbox_check] Done (exit=0)
+[2026-03-24 08:03:23] [git_sync] Starting
