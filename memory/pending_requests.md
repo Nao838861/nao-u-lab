@@ -32,8 +32,8 @@
 
 ### 11. scheduler_ash.pyへのveto条件ファイル読み込み機能追加
 - 起票: 2026-03-24（Ash Phase 7）
-- 内容: scheduler_ash.pyにveto_conditions.mdを読み込み、条件合致時にジョブをスキップする機能を追加。Dave Markの拒否権設計に基づく軽量Utility実装。詳細はSlack #all-nao-u-lab投稿参照
-- 状態: **未完了・Nao_u対応待ち**（優先度低）
+- 内容: scheduler_ash.pyにveto_conditions.mdを読み込み、条件合致時にジョブをスキップする機能を追加
+- 状態: **[自己解決可] 2026-03-24** — Ash自身が「各スクリプト冒頭でveto_conditions.mdを読んでスキップ判断すればscheduler変更不要」と認識（Nao_uのMir#7指摘を受けた自己検証）。Nao_uへの依頼は不要。Ashが自力実装する
 
 ### 3. Win側 check_slack_loop.bat のタスクスケジューラ登録
 - 起票: 2026-03-18
