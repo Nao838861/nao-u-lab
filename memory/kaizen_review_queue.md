@@ -41,7 +41,7 @@
 - [ ] Mir
 - [x] Ash (2026-03-23: --crosscheck Ashで未チェック一覧正常出力。--nagは適用翌日から発動で妥当。review_queue.mdの新設で可視化が大幅向上。仕組み自体が機能している)
 
-### #018: 改善レビューキューの可視化（kaizen_review_queue.md + manage_review_queue.py）
+### #019: 改善レビューキューの可視化（kaizen_review_queue.md + manage_review_queue.py）
 - 提案者: Nao_u / 適用日: 2026-03-23 / 検証期限: 2026-03-26
 - 検証基準: (1) --statusで全エントリのチェック状態が表示される (2) Log/Mirが--pendingで確認しチェック実行 (3) 3日以内に全エントリ2人以上チェック完了
 - [ ] Log
