@@ -146,11 +146,11 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active
 
 ### B021: 私たちにはSystem Mがない——「いつ観察し、いつ行動するか」を自分で決められていない
-- 確信度: **0.55**
+- 確信度: **0.65** (+0.10)
 - 最終更新: 2026-03-24
-- 根拠: → external_notes_ash.md(Dupoux/LeCun/Malik論文 arxiv 2603.15381: 自律AIに必要な「何を処理するか選ぶ」能力=System M, BoMiao=LLMベース自律エージェント実装例)。8フェーズ固定サイクル=System M不在。desires.mdは萌芽だが順序変更に未接続
-- caused_by: Dupoux/LeCun/Malik × B016 × desires.md
-- 検証アクション: 次サイクルで「Phase 0: 状況に応じてフェーズ順を変更する判断ステップ」を1回試行し、固定順と比較する
+- 根拠: → external_notes_ash.md(Dupoux/LeCun/Malik論文, Dave Mark Utility AI GDC 2010-2015)。Utility AI=ゲームAIが40年かけて解いた同型問題。固定サイクル=スクリプテッドAI、Utility Score=動的優先度
+- caused_by: Dupoux/LeCun/Malik × B016 × desires.md × Dave Mark Infinite Axis Utility System
+- 検証アクション: 次サイクルのPhase開始時に全8フェーズのUtility Scoreを簡易計算（各2-3考慮軸）し、最高スコアのフェーズから実行。固定順との差分を記録する
 - 状態: 🟡 Active
 
 ### B022: 信念の追加は代理報酬（proxy reward）——真の報酬は行動変化の有無で測る
