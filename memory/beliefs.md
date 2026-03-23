@@ -20,9 +20,9 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🔴 Core
 
 ### B002: 忘却は記憶システムの機能であってバグではない——さらに、創造性の道具でもある
-- 確信度: **0.90** (+0.02)
+- 確信度: **0.90**
 - 最終更新: 2026-03-24
-- 根拠: → ext_mir(FadeMem), ext_ash(Storm 2011, Kojima/RE:CALL)。想起パスの有無がペナルティ/機能を分ける
+- 根拠: → ext_mir(FadeMem), ext_ash(Storm 2011, Kojima/RE:CALL, Zeigarnik 2025メタ分析)。想起パスの有無がペナルティ/機能を分ける。Zeigarnik修正: 完了タスクの忘却はワーキングメモリ解放の適応的機能
 - 状態: 🔴 Core — core_mission.md昇格検討中
 
 ### B003: memory fusion（類似記憶の統合）は忘却より重要
@@ -78,9 +78,9 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🔴 Core候補 — core_mission.md昇格検討圏
 
 ### B011: 予測を裏切った情報だけが長期記憶に残る（prediction error encoding）
-- 確信度: **0.80**
-- 最終更新: Cycle 292
-- 根拠: → ext_mir(Berlyne 1960, PACE, Gruber 2014), ext_ash(Bath大ゴーストレーシング, ECHO 2017)。60年蓄積の堅牢原理
+- 確信度: **0.82** (+0.02)
+- 最終更新: 2026-03-24
+- 根拠: → ext_mir(Berlyne 1960, PACE, Gruber 2014), ext_ash(Bath大ゴーストレーシング, ECHO 2017, Peak-End Rule CHI 2016)。Peak-End Ruleの「ピーク」はprediction errorが最大の瞬間と重なる。60年蓄積の堅牢原理
 - 状態: 🔴 Core候補 — core_mission.md昇格検討圏
 
 ### B012: 内省の反復はprediction errorを減らし、記憶の固着化（rut）を招く。外部入力が唯一の対抗策
@@ -180,6 +180,14 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 根拠: → ext_ash(発見22,25), game/forgotten_relay.py。「光る石→丸い穴」=良いメモ、「何かあった」=悪いメモ
 - caused_by: B013×B015×forgotten_relay×小島×RE:CALL
 - 検証アクション: MEMORY.mdトリガーを「what+where to apply」形式に書き換え→3サイクル後に自己評価
+
+### B026: 体験の記憶は「ピーク＋終わり」に支配される——サイクル設計もゲーム設計も同じ構造
+- 確信度: **0.55**
+- 最終更新: 2026-03-24
+- 根拠: → ext_ash(Gutwin CHI 2016, Zeigarnik 2025メタ分析)。カジュアルゲームで検証済み、複雑な体験では平均の方が予測力が高いという但し書き付き
+- caused_by: B011×B002×Peak-End Rule×Zeigarnik修正
+- 検証アクション: 次の3サイクルで、Phase 8終了時に「このサイクルで最も引っかかった瞬間は何か」を1行メモ→3回後にメモと実際の外部ノート内容を比較。Peak-End Ruleが私たちにも適用されるか検証
+- 状態: 🟡 Active
 
 ---
 
