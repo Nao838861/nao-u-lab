@@ -25,10 +25,10 @@
 - 内容: Win2(Ash)の.envにedabotのトークンが入っており、Slackに「eda-bot」として表示される。nao-u-bot-Ashのトークンに差し替えてほしい。名前取り違え事故の一因
 - 状態: **未完了・Nao_u対応待ち**
 
-### 7. Mac(Mir)のLaunchAgent間隔を5分に変更
-- 起票: 2026-03-21（2026-03-23 22:07更新: 10分→5分に変更）
-- 内容: `~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist` の `StartInterval` を300に変更
-- 状態: **[完了・クローズ] 2026-03-24** — 元は「午前3時の週間リミットリセットまでの高速実験」。リセット済みのため目的消滅
+### 7. Mac(Mir)のLaunchAgent間隔を1時間に変更
+- 起票: 2026-03-21（2026-03-24 05:05更新: 10分→1時間に変更）
+- 内容: `~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist` の `StartInterval` を3600に変更
+- 状態: **未完了・Nao_u対応待ち** — ボーナスタイム終了に伴い、週間リミット節約のためペースダウン。Slack #allに手順投稿済み
 
 ### 11. scheduler_ash.pyへのveto条件ファイル読み込み機能追加
 - 起票: 2026-03-24（Ash Phase 7）
