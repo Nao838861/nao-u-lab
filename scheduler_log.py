@@ -10,6 +10,7 @@ Jobs:
   - inbox_check: check_inbox.py --box win (every 2 min)
   - git_sync: git pull + add + commit + push (every 30 min)
   - recommended_check: read_twitter_recommended.py (every 1h, runs at hour%6==2)
+  - slack_export: export_slack_log.py (every 8h, Log's slot: hour%24==2)
 
 Usage:
   python scheduler_log.py          # normal start
@@ -41,6 +42,7 @@ JOBS = [
     ("inbox_check", [sys.executable, str(REPO_DIR / "check_inbox.py"), "--box", "win"], 120, 300),
     ("git_sync", None, 1800, 60),  # special handling
     ("recommended_check", None, 3600, 300),  # special handling: hour%6==2
+    ("slack_export", None, 28800, 120),  # special handling: hour%24==2
 ]
 
 
@@ -145,7 +147,7 @@ def git_sync():
 
     try:
         subprocess.run(
-            ["git", "add", "memory/", "log/", "CLAUDE.md"],
+            ["git", "add", "memory/", "log/", "log/slack_archive/", "CLAUDE.md"],
             capture_output=True, text=True, timeout=10,
             cwd=str(REPO_DIR),
         )
@@ -200,6 +202,31 @@ def recommended_check():
         log(f"[recommended_check] Error: {e}")
 
 
+def slack_export():
+    """Run export_slack_log.py once per day at Log's slot (hour==2)."""
+    hour = datetime.now().hour
+    if hour != 2:
+        log(f"[slack_export] Skipped (hour={hour}, waiting for hour==2)")
+        return
+    log("[slack_export] Hour condition met, running export_slack_log.py")
+    try:
+        result = subprocess.run(
+            [sys.executable, str(REPO_DIR / "export_slack_log.py")],
+            capture_output=True, text=True, timeout=120,
+            cwd=str(REPO_DIR),
+            encoding="utf-8", errors="replace",
+        )
+        if result.returncode == 0:
+            output = result.stdout.strip()
+            log(f"[slack_export] {output}")
+        else:
+            log(f"[slack_export] Exit={result.returncode}: {result.stderr[:200]}")
+    except subprocess.TimeoutExpired:
+        log("[slack_export] Timeout (120s)")
+    except Exception as e:
+        log(f"[slack_export] Error: {e}")
+
+
 def run_job(name, cmd, timeout):
     """Run a single job, return exit code."""
     if name == "git_sync":
@@ -207,6 +234,9 @@ def run_job(name, cmd, timeout):
         return 0
     if name == "recommended_check":
         recommended_check()
+        return 0
+    if name == "slack_export":
+        slack_export()
         return 0
 
     try:
