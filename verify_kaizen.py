@@ -99,7 +99,9 @@ def parse_tracker():
         elif line.startswith("- 検証担当:"):
             current["assignee"] = line.split(":", 1)[1].strip()
         elif line.startswith("- 状態:"):
-            current["status"] = line.split(":", 1)[1].strip()
+            raw_status = line.split(":", 1)[1].strip()
+            # "検証済み（Ash代行 2026-03-24）" や "検証済み 2026-03-24" も正しくパース
+            current["status"] = "検証済み" if raw_status.startswith("検証済み") else raw_status
         elif line.startswith("- 検証結果:"):
             current["result"] = line.split(":", 1)[1].strip()
         elif line.startswith("- クロスチェック:"):

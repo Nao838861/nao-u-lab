@@ -172,6 +172,17 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ---
 
+### #029: verify_kaizen.py ステータスパース修正（完全一致→startswith正規化）
+- 提案者: Ash
+- 適用日: 2026-03-24
+- 検証期限: 2026-03-27
+- 検証手段: `python verify_kaizen.py --meta 2>&1 | grep "検証済み"` で検証済み件数が4件以上表示されること（修正前は0件だった）
+- 根源原理との接続: 計測ツールの誤報はフィードバックループを壊す。計測精度がフィードバック係数>1.0の前提
+- 検証担当: Ash
+- クロスチェック: Log=未 / Mir=未 / Ash=OK(2026-03-24)修正+動作確認済み
+- 状態: 検証済み 2026-03-24
+- 検証結果: ✅ 成功。修正前: --metaが「検証済み: 0 (0%)」→修正後: 「検証済み: 4 (29%)」
+
 ### #028: memory_search.py --diverse（ソース多様性フィルタ）
 - 提案者: Log
 - 適用日: 2026-03-24
@@ -179,7 +190,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: `python memory_search.py --search "忘却" --limit 5` と `python memory_search.py --search "忘却" --limit 5 --diverse` の結果を比較。diverseモードでユニークソース数が増加していること
 - 根源原理との接続: 第3層「発見性」の直接改善。FTS5のtop-k冗長を排除し、異なる文脈での使用例を浮上させる。xMemory(ICML 2026)の知見に基づく
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-03-24) / Mir=未 / Ash=未
+- クロスチェック: Log=OK(2026-03-24) / Mir=未 / Ash=OK(2026-03-24)Win2環境で検証。diverse=ソース多様性向上確認
 - 状態: 未検証
 - 検証結果:
 
