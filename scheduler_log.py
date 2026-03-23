@@ -294,7 +294,23 @@ def auto_cycle():
     except Exception as e:
         log(f"[auto_cycle] nag error: {e}")
 
-    # Step 5: Post checklist to Slack (Log's shift: hour==2, 実質8時間ごと3人ローテ)
+    # Step 5: Check Log's pending crosscheck items (Mir依頼 2026-03-23)
+    crosscheck_alert = ""
+    try:
+        r = subprocess.run(
+            [sys.executable, str(REPO_DIR / "check_kaizen_crosscheck.py"), "--who=Log"],
+            capture_output=True, text=True, timeout=10,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        if r.returncode == 0 and r.stdout.strip():
+            cc_out = r.stdout.strip()
+            if "未レビュー項目なし" not in cc_out:
+                crosscheck_alert = f" [クロスチェック] {cc_out}"
+                log(f"[auto_cycle] Crosscheck: {cc_out[:200]}")
+    except Exception as e:
+        log(f"[auto_cycle] crosscheck error: {e}")
+
+    # Step 6: Post checklist to Slack (Log's shift: hour==2, 実質8時間ごと3人ローテ)
     hour = datetime.now().hour
     if hour == 2:
         try:
@@ -321,6 +337,7 @@ def auto_cycle():
         + kaizen_alert
         + verify_result
         + meta_alert
+        + crosscheck_alert
     )
     try:
         result = subprocess.run(
