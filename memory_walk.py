@@ -49,6 +49,25 @@ MIN_CHUNK_LINES = 3
 MAX_CHUNK_LINES = 15
 
 
+def is_low_quality_chunk(text):
+    """低品質チャンク（ツール呼び出し残骸、コマンドログ等）をフィルタ"""
+    lines = [l for l in text.split("\n") if l.strip()]
+    if not lines:
+        return True
+    noise_count = 0
+    for line in lines:
+        s = line.strip()
+        if s.startswith("[ツール:") or s.startswith("[ツール："):
+            noise_count += 1
+        elif s.startswith("$ ") or s.startswith("```"):
+            noise_count += 1
+        elif s.startswith("---") and len(s) <= 5:
+            noise_count += 1
+        elif s in ("## Claude", "## Human"):
+            noise_count += 1
+    return noise_count / len(lines) > 0.5
+
+
 def collect_chunks_from_md(filepath, max_chunks=50):
     """Markdownファイルからセクション単位でチャンクを抽出"""
     chunks = []
@@ -68,7 +87,7 @@ def collect_chunks_from_md(filepath, max_chunks=50):
     for line in lines:
         if (line.startswith("## ") or line.strip() == "---") and len(current_chunk) >= MIN_CHUNK_LINES:
             text = "".join(current_chunk).strip()
-            if len(text) > 50:  # 短すぎるチャンクを除外
+            if len(text) > 50 and not is_low_quality_chunk(text):
                 chunks.append({"text": text[:800], "source": source_name})
             current_chunk = [line]
         else:
@@ -77,7 +96,7 @@ def collect_chunks_from_md(filepath, max_chunks=50):
     # 最後のチャンク
     if len(current_chunk) >= MIN_CHUNK_LINES:
         text = "".join(current_chunk).strip()
-        if len(text) > 50:
+        if len(text) > 50 and not is_low_quality_chunk(text):
             chunks.append({"text": text[:800], "source": source_name})
 
     # ファイルが大きい場合はサンプリング
