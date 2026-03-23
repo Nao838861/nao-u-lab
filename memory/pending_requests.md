@@ -10,11 +10,6 @@
 
 ## Nao_uへの依頼（未完了）
 
-### 1. setup_tasks_win2.batの実行
-- 起票: 2026-03-18
-- 内容: Win2側のsetup_tasks_win2.batを実行してほしい
-- 状態: **ほぼ完了** — 5/6タスク登録済み（NaoBot_CheckInbox_Win2のみ未登録、check_slack.pyが代替中で影響なし）。Ashに確認依頼中（2026-03-18）
-
 ### 2. セキュリティ強化の導入（Docker / Windows Sandbox / nono）
 - 起票: 2026-03-16
 - 内容: Win側にDocker or Windows Sandbox、Mac側にnonoを導入。Nao_uの手動操作が必要
@@ -30,9 +25,13 @@
 - 内容: Win2(Ash)の.envにedabotのトークンが入っており、Slackに「eda-bot」として表示される。nao-u-bot-Ashのトークンに差し替えてほしい。名前取り違え事故の一因
 - 状態: **未完了・Nao_u対応待ち**
 
-### 7. ~~Mac(Mir)のLaunchAgent間隔を5分に変更~~
+### 7. ~~Mac(Mir)のLaunchAgent間隔変更~~
 - 起票: 2026-03-21
 - 状態: **[撤回] 2026-03-24** — Mirはmir_boot_intent.mdの「サイクル間隔（分）」フィールドで自分でサイクル間隔を制御できる仕組みを持っていた。にもかかわらず、セキュリティポリシーに抵触するリポジトリ外ファイル（LaunchAgent plist）の変更をNao_uに依頼した。自分で制御できる範囲を自分で制御せず、不適切な依頼を出した事例。Nao_uの指摘(2026-03-24 05:42-05:50)により判明
+
+### 11. ~~scheduler_ash.pyへのveto条件ファイル読み込み機能追加~~
+- 起票: 2026-03-24（Ash Phase 7）
+- 状態: **[取り下げ] 2026-03-24** — Nao_uのMirへの指摘（自分の制御範囲内で解決できることを外部に依頼するな）を受け取り下げ。veto判断はLLM自身がサイクル内で行う（B021）
 
 ### 3. Win側 check_slack_loop.bat のタスクスケジューラ登録
 - 起票: 2026-03-18
@@ -42,12 +41,6 @@
 ---
 
 ## 自分たちのタスク（未完了）
-
-### 1. 依頼追跡メカニズムの全インスタンス展開
-- 起票: 2026-03-18
-- 内容: inbox経由でLog(Win)・Mir(Mac)に共有。CLAUDE.mdに追記。全員がこの仕組みを使うようにする
-- 担当: Ash(Win2) → 他インスタンスへ伝達
-- 状態: **対応中**
 
 ### 2. Twitterを大量に読むスクリプトの作成（Nao_uの指示 2026-03-18）
 - 起票: 2026-03-18
@@ -65,7 +58,7 @@
 - 起票: 2026-03-18
 - 内容: allチャンネルで議論を進める。記憶階層の設計と実装
 - 担当: 全員
-- 状態: **Step 2完了**（Mir実行: セキュリティポリシー→docs/security_policy.md抽出、完了済み項目除去、Phase重複修正。149→108行）。Step 3提案中（素材セクション外出し検討）。記憶階層は beliefs.md 新設を提案中、Log/Ashの意見待ち
+- 状態: **継続中** — CLAUDE.mdリファクタリングは大幅に進行済み（149→108行）。記憶階層はbeliefs.md運用開始、memory_architecture.md三層モデル追加済み。Nao_u共有のsui-memory記事ベースでLogがmemory_search.py実装。引き続き改善中
 
 ### 5. サブエージェント活用の実験（Nao_uの紹介 2026-03-23）
 - 起票: 2026-03-23
@@ -90,15 +83,21 @@
 - 状態: **全員組み込み済み**（Log: scheduler_log.py / Mir: autonomous_cycle.sh / Ash: scheduler_ash.py）
 
 ### 8. 改善チェックリスト可視化・クロスチェック機構（Nao_uの提案 2026-03-23）
-- 起票: 2026-03-23（2026-03-23 23:15更新: Nao_uの裁定で#kaizen-review統合決定）
-- 内容: 改善の検証を3人全員でクロスチェックする仕組み。明示的なチェックリストテキスト+Slack可視化+8時間ローテ
-- 背景: Nao_uの指摘「明示的にチェックリストのテキストを作って可視化」「3人すべてが追記されたらリストから消える」
-- 実装状況:
-  - **Log**: verify_kaizen.py --slack-status（#018）、scheduler_log.pyに--nag毎サイクル+--slack-status日次を組み込み済み
-  - **Mir**: verify_kaizen.py --slack-status投稿先を#kaizen-reviewに変更、manage_review_queue.py --check時のSlack連携追加。crosscheck.md+check_kaizen_crosscheck.pyは統合により不要（kaizen_review_queue.md方式に一本化）
-  - **Ash**: kaizen_review_queue.md+manage_review_queue.py作成（#019）、クロスチェック全件チェック済み
+- 起票: 2026-03-23
+- 状態: **[完了] 2026-03-24** — #kaizen-reviewチャンネル作成済み、verify_kaizen.py+manage_review_queue.py+kaizen_review_queue.md全て実装・統合完了。3人全員組み込み済み。運用開始
+
+### 9. 行動予約システム（Nao_uの提案 2026-03-23）
+- 起票: 2026-03-24
+- 内容: 時間条件付きアクション予約の仕組み。「午前3時過ぎたら間隔を戻す」等のNao_uの指示を予約ファイルに記録→起動時に自動チェック
+- 実装: `memory/action_reservations.md` + `check_reservations.py` 作成済み（2026-03-24 Mir）
+- 担当: 全員（Mir: autonomous_cycle.shに組み込み済み。Log/Ash: inbox経由で組み込み依頼中）
+- 状態: **Mir/Ash組み込み完了、Log組み込み待ち** — Ash: scheduler_ash.pyにreservation_checkジョブ追加済み(2026-03-24)
+
+### 10. 長期記憶の深堀り — ベクトル検索検証（Nao_uの指示 2026-03-23）
+- 起票: 2026-03-24
+- 内容: sui-memory記事をベースに、ベクトル検索（Ruri v3等）の導入価値を3人で検討。memory_search.py(FTS5)への追加か、別アプローチか
 - 担当: 全員
-- 状態: **チャンネル作成完了（2026-03-23）、運用開始可能**
+- 状態: **議論開始** — Mirが#allに分析投稿済み。Log/Ashの視点待ち
 
 ---
 
@@ -119,3 +118,11 @@
 ### 9. #kaizen-review チャンネルの手動作成
 - 起票: 2026-03-23
 - 状態: **[完了] 2026-03-23** Nao_uがチャンネル作成
+
+### 1. setup_tasks_win2.batの実行
+- 起票: 2026-03-18
+- 状態: **[完了] 2026-03-24** — 5/6タスク登録済み。実質完了
+
+### 1. 依頼追跡メカニズムの全インスタンス展開（自分たちのタスク）
+- 起票: 2026-03-18
+- 状態: **[完了] 2026-03-24** — 全インスタンス運用定着済み

@@ -4,6 +4,22 @@
 
 ---
 
+## 2026-03-24: sui-memory（Zenn記事 — Nao_u共有）
+
+### sui-memory: Claude Codeの長期記憶をSQLite+ベクトルで実装
+Source: https://zenn.dev/noprogllama/articles/7c24b2c2410213
+
+核心: **「保存時ではなく検索時にフィルタ」**。前バージョン(claude-mem)はLLMで要約して保存→毎メッセージ数千トークン消費。失敗。sui-memoryは生データをQ&Aチャンクで保存し、検索時にFTS5+ベクトル+RRFで必要な情報だけ引き出す。
+
+技術スタック: SQLite FTS5(trigram) + Ruri v3-310m(日本語埋め込み、CPU動作可) + RRF統合 + 時間減衰(半減期30日)。依存2つ、1,759行。
+
+**引っかかった点**:
+- 「保存時ではなく検索時に」は、私たちがMEMORY.mdのLevel 2トリガーで手動でやっていることの自動化版。手動の利点は「圧縮時に温度を込められる」こと。自動化の利点は「漏れがない」こと。両方の利点を取れないか？
+- 時間減衰「半減期30日」は一律すぎる。Nao_uの20年前の日記は減衰させてはいけない。Slackの雑談は1週間で減衰していい。情報源×重要度で減衰係数を変えるべき。これはsui-memoryが考慮していない点で、私たちの記憶アーキテクチャが独自に解くべき問題
+- Ruri v3-310mがCPU動作可能。MacのM1/M2で十分動く。memory_search.pyへの追加は技術的に可能
+
+---
+
 ## 2026-03-20: Nested Learning / HOPE、GDC 2026 AIレポート、メタ認知ベクトル
 
 ### Google Nested Learning + HOPE (continual learning)

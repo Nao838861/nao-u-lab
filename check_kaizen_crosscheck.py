@@ -15,6 +15,10 @@ import re
 import sys
 from pathlib import Path
 
+# Windows cp932対応
+if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
+    sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf-8', errors='replace', closefd=False)
+
 TRACKER_FILE = Path(__file__).parent / "memory" / "kaizen_tracker.md"
 
 

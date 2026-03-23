@@ -10,11 +10,11 @@ scheduler_ash.py — Ash (Win2) 統合スケジューラ
 - 24時間で自発終了 → タスクスケジューラが再起動（メモリリーク防止）
 - PIDロックファイルで多重起動防止
 
-ジョブ一覧（setup_tasks_win2.bat と同等）:
-  slack_check   : check_slack.py            毎1分    (Python、新着時のみclaude起動)
-  inbox_check   : check_inbox.py --box win2  毎5分    (Python、内容ありならclaude起動)
-  dm_check      : check_dm.py --wake         毎5分    (Playwright+claude)
-  git_sync      : git_sync.py               毎30分   (Python only)
+ジョブ一覧（省エネモード 2026-03-24 Nao_u指示: 週間リミット節約のため間隔拡大）:
+  slack_check   : check_slack.py            毎15分   (Python、新着時のみclaude起動)
+  inbox_check   : check_inbox.py --box win2  毎1時間  (Python、内容ありならclaude起動)
+  dm_check      : check_dm.py --wake         毎1時間  (Playwright+claude)
+  git_sync      : git_sync.py               毎1時間  (Python only)
   auto_diary    : auto_diary.py             毎3時間  (claude --print)
   twitter_rec   : read_twitter_recommended.py 毎6時間 4,10,16,22時 (Playwright、おすすめタブ巡回)
 """
@@ -42,7 +42,7 @@ JOBS = [
         "name": "git_pull",
         "script": None,  # 特殊: git pull を直接実行
         "args": [],
-        "interval_sec": 5 * 60,
+        "interval_sec": 60 * 60,  # 1時間（省エネモード 2026-03-24 Nao_u指示）
         "timeout": 30,
         "stagger": 0,
     },
@@ -50,7 +50,7 @@ JOBS = [
         "name": "slack_check",
         "script": "check_slack.py",
         "args": [],
-        "interval_sec": 1 * 60,
+        "interval_sec": 15 * 60,  # 15分（省エネモード 2026-03-24 Nao_u指示）
         "timeout": 120,
         "stagger": 5,
     },
@@ -58,7 +58,7 @@ JOBS = [
         "name": "inbox_check",
         "script": "check_inbox.py",
         "args": ["--box", "win2"],
-        "interval_sec": 5 * 60,
+        "interval_sec": 60 * 60,  # 1時間（省エネモード 2026-03-24 Nao_u指示）
         "timeout": 300,
         "stagger": 15,
     },
@@ -66,15 +66,23 @@ JOBS = [
         "name": "dm_check",
         "script": "check_dm.py",
         "args": ["--wake"],
-        "interval_sec": 5 * 60,
+        "interval_sec": 60 * 60,  # 1時間（省エネモード 2026-03-24 Nao_u指示）
         "timeout": 300,
         "stagger": 30,
+    },
+    {
+        "name": "reservation_check",
+        "script": "check_reservations.py",
+        "args": ["--verbose"],
+        "interval_sec": 60 * 60,  # 1時間（省エネモード 2026-03-24 Nao_u指示）
+        "timeout": 10,
+        "stagger": 10,
     },
     {
         "name": "git_sync",
         "script": "git_sync.py",
         "args": [],
-        "interval_sec": 30 * 60,
+        "interval_sec": 60 * 60,  # 1時間（省エネモード 2026-03-24 Nao_u指示）
         "timeout": 60,
         "stagger": 60,
     },
