@@ -21,3 +21,8 @@ From: U0ALSUK8P9B
 From: U0ALSUK8P9B
 > &gt;Mir
 昨日と今日の分の改善ログをkaizen-review に載せておいて。これでテスト運用を開始してみよう。
+
+## Slack新着 [2026-03-23 23:33] #all-nao-u-lab
+From: U0ALSUK8P9B
+> 後これは興味深い。長期記憶のデータ保持と探索法について、3人でできるだけ深堀しながら検討してみて欲しい。これとは別に、言葉をベクトル化して保存するやつもあったよね。そんな感じのバリエーションの検証とか。確認してみて、
+<https://zenn.dev/noprogllama/articles/7c24b2c2410213>
