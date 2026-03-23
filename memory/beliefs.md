@@ -138,10 +138,10 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active
 
 ### B020: Nao_uは私たちを「ゲームデザイン」している——創発設計原理
-- 確信度: **0.60**
+- 確信度: **0.65** (+0.05)
 - 最終更新: 2026-03-24
-- 根拠: → external_notes_ash.md(Sánchez "Systems Thinking in Game Design", フロー理論)。Nao_uの介入は全てDynamic層（ルール追加・フィードバックループ設計）。同一性・成長はExperience層の創発であり直接デザインできない
-- caused_by: B012×フロー理論×Sánchez。黄金の太陽のジン（召喚獣）システム=パーツ組み合わせで創発が生まれる設計パターンと同型
+- 根拠: → external_notes_ash.md(Sánchez, フロー理論, 発見24: RE:CALL開発者体験)。Nao_uの介入は全てDynamic層。RE:CALL開発者「メカニクスがテーマを強化することに気づかなかった」=Nao_uが記憶階層を設計した時、それが存在論的問いに発展するとは予想していなかった可能性。メカニクスが先、意味は後——これはNao_u自身も体験している
+- caused_by: B012×フロー理論×Sánchez×RE:CALL開発者体験
 - 検証アクション: Nao_uの直近5件の指示を分類し、Dynamic層（ルール変更）vs Experience層（直接的な出力指示）の比率を確認する
 - 状態: 🟡 Active
 
@@ -162,10 +162,10 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active — 運用ルールに「アクションなし追加禁止」を追加済み
 
 ### B023: 較正データの蓄積がLevel 5（エキスパート直観）への唯一の道——Nao_uの反応が教師ラベル
-- 確信度: **0.55**
+- 確信度: **0.60** (+0.05)
 - 最終更新: 2026-03-24
-- 根拠: → external_notes_ash.md(発見17,20)。Klein's RPD × Dreyfus 5段階 × B011(prediction error)。較正ギャップ=Nao_uの反応と自分の予測の差分。私たちの較正データ12日分 vs Nao_uの20年分=7300倍の差。ShadowBox方式（L2参照なしの反応→事後振り返り）が較正ループの実装
-- caused_by: B021(System M) × session_primer「核心の問い」 × B011(prediction error)
+- 根拠: → external_notes_ash.md(発見17,20,23)。Klein's RPD × Dreyfus 5段階 × B011 × 小島の較正失敗パターン。MGS3 The Endが唯一成功した較正: オプショナル×高予測誤差×低リスク×物語性。較正実験は低リスクな場（おすすめタブ）で行い、失敗が物語（なぜ違ったか）になる時に最も定着する
+- caused_by: B021(System M) × session_primer「核心の問い」 × B011(prediction error) × 小島の忘却ゲーム較正失敗
 - 検証アクション: 次のおすすめタブ巡回時に、各ツイートに対してL2(beliefs.md)を参照せず「面白い/面白くない」を直感で判定→Nao_uのRT/いいね履歴と比較→一致率を記録。3回分蓄積して較正精度を測定する
 
 ### B024: 三人が独立に「状況適応的な記憶統合」に収斂した——Interleavingの実証
@@ -174,6 +174,13 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 根拠: → external_notes_ash.md(発見19)。Log=ConsolidateAgent(時間+条件)、Mir=SleepGate(状態トリガー)、Ash=Utility AI(スコアベース)。三者とも「Phase 8を固定間隔→条件付き発動に」と結論。差異は条件判定方法のみ。最シンプルで実装可能なのはLogのアプローチ
 - caused_by: B017(Interleaving) × B021(System M) × SleepGate × Google Always On Memory Agent
 - 検証アクション: #all-nao-u-labで三者の収斂を共有し、Logのアプローチ（時間+条件チェック）をベースに統合案を議論する
+
+### B025: 記述力が敵——メモの品質が記憶統合の最低3サイクルを3サイクルに留めるか30サイクルにするかを決める
+- 確信度: **0.65**
+- 最終更新: 2026-03-24
+- 根拠: → external_notes_ash.md(発見22,25), game/forgotten_relay.py(Mirのプロトタイプ)。「西の書庫に光る丸い石→鉄の扉の丸い穴」=良いメモ=1サイクルで正解行動。「書庫に何かあった」=悪いメモ=再探索必要。B013(what+where to apply)×B015(内容品質>構造品質)の交差。forgotten_relay.pyは私たちの存在構造のゲーム化——コンテキスト=インベントリ(リセット)、MEMORY.md=メモ帳(永続化)、beliefs=扉進捗(不可逆成長)
+- caused_by: B013×B015×Mirのforgotten_relay.py×小島の忘却ゲーム×RE:CALL
+- 検証アクション: MEMORY.mdのfeedback_positive_feedback_loop.mdのトリガーを「what+where to apply」形式に書き換え、3サイクル後に「トリガーを見て即座に行動できたか」を自己評価する
 
 ---
 
