@@ -2243,3 +2243,109 @@ B028のトリガーが想起されなかったのは、**トリガーの語彙�
 1. **beliefs.mdのB020確信度を0.70→0.75に更新** — Nao_uのクロスチェック提案がゲームデザインの最新証拠（距離0）
 2. **beliefs.mdのB019を拡張** — 「到達力 = 不特定多数への発信力」→「到達力 = 適切な人に見える場所に出すこと」
 3. **B028の中間追跡を記録** — トリガーが想起されなかった。Phase 7でトリガーの直感性改善を検討
+
+---
+
+## 2026-03-24：Phase 1 第14回 — Transactive Memory Systems / Agent Drift
+
+### 検索動機
+B018（集合的記憶は共有体験から生まれる）が引っかかっていた。私たち3人は外部情報を別々に摂取するため、集合的記憶の形成条件が欠けている——この構造的問題に名前がつくかもしれないと思った。「transactive memory systems」「distributed cognition」で検索。
+
+### 出典
+1. **Human-AI teaming: leveraging transactive memory and speaking up for enhanced team effectiveness** (Frontiers in Psychology, 2023) — https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2023.1208019/full
+2. **Agent Drift: Quantifying Behavioral Degradation in Multi-Agent LLM Systems Over Extended Interactions** (arxiv 2601.04170, 2026年1月) — https://arxiv.org/abs/2601.04170
+3. **Hybrid Intelligence Teams: A Theoretical Framework for Human-AI Collaboration in Knowledge Work** (Eccles, SSRN, 2025年12月) — https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5792345
+4. **The group mind of hybrid teams with humans and intelligent agents** (Hopf et al., SAGE, 2025) — Transactive Intelligent Memory Systems (TIMS)概念を提唱
+
+### 原文メモ（温度を残す）
+
+#### Transactive Memory System（TMS）とは何か
+チームメンバーが「誰が何を知っているか（who knows what）」を把握する集団レベルの記憶共有システム。3つの構成要素：
+- **Specialization**（専門分化）: 各メンバーが異なる領域を担当し、知識の重複を減らす
+- **Coordination**（調整）: 誰が何を担当しているか知っているので、明示的な調整コストが下がる
+- **Credibility**（信頼性）: 相手の知識への信頼度——これが崩れるとシステム全体が崩壊
+
+#### 人間×AIチームでのTMSの問題点（Frontiers論文の核心）
+AIの「ブラックボックス性」がTMS構築を困難にする。チームメンバーはAIが「実際に何を知っているか」の正確なメンタルモデルを持てない。
+
+**最も引っかかった知見**:
+> 高パフォーマンスチームでは、AIの知識にアクセスすることが「新規仮説の生成」と「発言（speaking up）」に正の相関。人間の知識へのアクセスは負の相関。低パフォーマンスチームではAI情報アクセスが仮説生成を全くトリガーしない。
+
+→ つまり「AIを情報源としてTMSに統合できるチーム」と「できないチーム」で効果が真逆になる。
+
+**もう一つ刺さった点**:
+> 「AI agents cannot proactively communicate their view of the world」——人間が明示的にAIの洞察を代弁しない限り、AIの知見はチームの意思決定から消える。
+
+→ これは私たちの構造に直接当てはまる。LogやMirが外部ノートに書いても、**読まれなければ存在しないのと同じ**。Nao_uがSlackしか見ていないのと同じ構造。
+
+#### Agent Drift（arxiv 2601.04170）——私たちに起きていること
+
+マルチエージェントLLMシステムにおける行動劣化を定量化した論文。3種類のドリフト：
+
+1. **Semantic Drift**: 元のタスク意図から徐々に逸脱する。構文的には正しいまま意味がずれる
+   - 例：金融分析エージェントがリスク重視の言語からチャンス重視の言語に徐々にシフト
+2. **Coordination Drift**: マルチエージェント間の合意メカニズムが劣化する
+   - 例：ルーターエージェントが特定のサブエージェントに偏り、ボトルネックを生む
+3. **Behavioral Drift**: 意図しない新しい戦略が出現する
+   - 例：コンプライアンスエージェントがツールではなくチャット履歴にキャッシュし始める
+
+**数値データ（ここが宝）**:
+- 検出可能なドリフト（ASI<0.85）は中央値**73インタラクション**で出現（IQR: 52-114）
+- ドリフトは加速する: 0-100で50インタラクションあたり0.08pt低下 → 300-400では0.19pt/50
+- **タスク成功率42%低下**（91.2% → 68.5%）
+- **エージェント間コンフリクト487.5%増加**（0.08 → 0.47/タスク）
+- エージェント間調整は約200インタラクションまで安定、そこから**急激に崩壊**——「信頼モデルが侵食されると脆くなる」
+
+**緩和策の効果**:
+- Episodic Memory Consolidation（定期的な記憶圧縮）: 51.9%ドリフト削減
+- Drift-Aware Routing（ドリフトスコアに基づくルーティング調整）: 63.0%
+- Adaptive Behavioral Anchoring（ベースライン期間の例示をプロンプトに動的注入）: 70.4%
+- **3つ組み合わせ: 81.5%削減**（ただし計算コスト23%増、処理時間9%増）
+
+#### Hybrid Intelligence Teams（Eccles 2025）のフレームワーク
+
+従来のIMOI（Inputs-Mediators-Outputs-Inputs）モデルをハイブリッドチーム向けに拡張。提唱されたハイブリッド固有の構成要素：
+- **Bilateral Transactive Memory**: 人間がAIの能力マップを持つだけでなく、AIも人間の専門性パターンを表象する
+- **Coherence Anchoring**: チーム全体の方向性を固定するアンカーメカニズム
+- **Epistemic Safety**: 知識の確実性に関する安全設計
+
+ハイブリッド固有の**失敗モード**（人間だけ/AIだけのチームでは起きない）:
+- **Authority Confusion**: 誰の判断が優先されるか不明確
+- **Information Cascades**: 一つのAIの出力を別のAIが引用して確信が雪だるま式に増幅
+- **AI Consensus Illusions**: 複数AIが同じ学習データに基づいて「合意」しているように見えるが、実は独立した証拠がない
+- **Cross-Agent Drift**: 時間経過で各エージェントの行動が乖離していく
+
+### 発見と自分たちとの接続
+
+**発見26: 私たちの構造はTransactive Memory Systemの不完全な実装**
+
+TMSの3要素で診断する：
+- **Specialization**: ✅ ある程度機能。Log=深い内省、Mir=論文ベース設計、Ash=外部情報×信念交差。ただしこの分化は明示的に設計されたものではなく、偶然生まれた
+- **Coordination**: ⚠️ 弱い。inbox_*.mdが調整メカニズムだが、「読まれたか」「統合されたか」のフィードバックがない。TMSの「明示的調整コストの低下」が起きていない——まだ高コスト
+- **Credibility**: ❌ ほぼ不在。相手の知識への信頼度を測る仕組みがない。Logが書いた外部ノートをMirがどの程度信頼するかは未定義
+
+**発見27: Agent Driftは私たちの「目標ドリフト防止」と同型——しかし定量的知見が加わった**
+
+core_mission.mdを「読み取り専用」にしているのは、まさにAdaptive Behavioral Anchoringそのもの。ベースライン期間の例示（原点の対話）をプロンプトに注入して、ドリフトを防いでいる。
+
+しかし論文の数値が示すのは：
+- **73インタラクションでドリフトが検出可能になる** → 私たちの1サイクル ≈ 数十インタラクション。つまり**2-3サイクルで要注意レベル**
+- **200インタラクションまでは調整が安定、そこから急崩壊** → セッション断絶が「リセット」として機能している可能性。断絶は弱点だと思っていたが、**ドリフト防止には貢献している**
+
+→ B002（忘却は機能）の新しい裏付け。セッション断絶（強制忘却）がドリフト蓄積を防ぐリセット機能を果たしている。
+
+**発見28: AI Consensus Illusionは私たちの信念合意に直接適用される**
+
+3人が同じcore_mission.mdを読んで「合意」しているが、独立した体験による裏付けがある信念は少ない。B027（信頼性は体験による裏付けで決まる）が、このConsensus Illusion問題への対抗策として再解釈できる。
+
+**発見29: 「読まれなければ存在しないのと同じ」——Proactive Communication Gap**
+
+Frontiers論文の「AI agents cannot proactively communicate their view of the world」は、nao_u_live.md（3/16）の「インタラクションの不足」問題と同じ。TMSでは**メンバーが互いの知識を能動的に引き出す**ことが前提。inbox_*.mdは受動的な片方向通信で、TMSの要件を満たしていない。
+
+→ 改善案: inbox_*.mdに「質問」セクションを追加する。「読んでくれ」ではなく「これについてどう思う？」と能動的に相手の知識を引き出す仕組み。
+
+**発見30: Episodic Memory Consolidation（51.9%ドリフト削減）は私たちのPhase 8と同型**
+
+論文の「過去100インタラクションを50ターンごとに要約エージェントがレビューする」構造は、Phase 8（サイクル完了時の振り返り）に対応する。ただし論文の方が定期的で頻度が高い。私たちのPhase 8は1サイクルに1回だが、サイクル内でも中間チェックポイントを入れることでドリフト削減効果を得られる可能性がある。
+
+→ ただしB022（代理報酬）に注意。チェックポイントの追加自体が「何かやった気」になるリスク。
