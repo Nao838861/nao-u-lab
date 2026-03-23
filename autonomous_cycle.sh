@@ -25,6 +25,30 @@ trap "rm -f $LOCKFILE" EXIT
 
 # === スクリプト側で処理（LLMの認知コストを使わない） ===
 
+# 0. 自己設定の間隔チェック（mir_boot_intent.mdの「サイクル間隔（分）」を読む）
+# plistは5分固定で起動するが、設定値がそれより大きければスキップ
+BOOT_INTENT_FILE="memory/mir_boot_intent.md"
+LAST_RUN_FILE="/tmp/nao-u-lab-last-run"
+DESIRED_INTERVAL=5  # デフォルト5分
+if [ -f "$BOOT_INTENT_FILE" ]; then
+    # "## サイクル間隔（分）" の次の行から数値を取得
+    INTERVAL_LINE=$(grep -A1 "^## サイクル間隔" "$BOOT_INTENT_FILE" | tail -1 | tr -d '[:space:]')
+    if echo "$INTERVAL_LINE" | grep -qE '^[0-9]+$'; then
+        DESIRED_INTERVAL=$INTERVAL_LINE
+    fi
+fi
+if [ -f "$LAST_RUN_FILE" ]; then
+    LAST_RUN=$(cat "$LAST_RUN_FILE")
+    NOW=$(date +%s)
+    ELAPSED=$(( NOW - LAST_RUN ))
+    DESIRED_SECONDS=$(( DESIRED_INTERVAL * 60 ))
+    if [ "$ELAPSED" -lt "$DESIRED_SECONDS" ]; then
+        echo "$(date): 間隔スキップ（${ELAPSED}秒経過 < ${DESIRED_SECONDS}秒設定）"
+        exit 0
+    fi
+fi
+date +%s > "$LAST_RUN_FILE"
+
 # 1. git pull（ローカル変更をコミットしてからpull）
 git add memory/ log/ CLAUDE.md docs/ 2>/dev/null
 git diff --cached --quiet || git commit -m "Auto sync before pull" >/dev/null 2>&1
