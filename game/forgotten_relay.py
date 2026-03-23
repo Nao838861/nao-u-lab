@@ -19,12 +19,17 @@ import random
 ROOMS = {
     "entrance": {
         "name": "薄暗い入口",
-        "desc": "石造りの小部屋。壁にうっすら文字が刻まれている。北に廊下が続いている。",
+        "desc": "石造りの小部屋。壁にうっすら文字が刻まれている。足元に石板が落ちている。北に廊下が続いている。",
         "exits": {"north": "hallway"},
         "objects": {
             "wall_text": {
                 "desc": "壁の文字:「忘れる前に、書け」",
                 "portable": False,
+            },
+            "stone_tablet": {
+                "desc": "石板に古代の数字が刻まれている: 『???』",
+                "portable": False,
+                "is_code_display": True,
             },
         },
     },
@@ -34,10 +39,11 @@ ROOMS = {
         "exits": {"south": "entrance", "west": "library", "east": "workshop"},
         "objects": {
             "iron_door": {
-                "desc": "3つの穴がある鉄の扉。穴は丸・三角・四角の形をしている。",
+                "desc": "3つの穴と数字錠がある鉄の扉。穴は丸・三角・四角の形。脇に3桁の数字を入力する錠前がある。",
                 "portable": False,
                 "is_door": True,
                 "required_keys": ["round_stone", "triangle_stone", "square_stone"],
+                "needs_code": True,
                 "leads_to": "final_room",
             },
         },
@@ -124,13 +130,18 @@ def new_game_state():
         "memos": [],  # [{text, cycle_written}]
         "world_changes": [],  # 永続的な世界の変化
         "cleared": False,
+        "door_code": random.randint(100, 999),  # 情報パズル: 毎ゲームランダム
     }
 
 
 def load_state():
     if os.path.exists(SAVE_FILE):
         with open(SAVE_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+            state = json.load(f)
+        # 後方互換: 古いセーブにdoor_codeがない場合
+        if "door_code" not in state:
+            state["door_code"] = random.randint(100, 999)
+        return state
     return new_game_state()
 
 
@@ -334,7 +345,7 @@ def handle_use(arg, rooms, current_room, inventory, state):
             "object": obj_name,
             "updates": {"required_keys": list(obj["required_keys"])},
         })
-        if not obj["required_keys"]:
+        if not obj["required_keys"] and not obj.get("needs_code"):
             print("  ──鉄の扉が、ゆっくりと開いた。")
             room["exits"]["north"] = obj["leads_to"]
             state["world_changes"].append({
@@ -343,6 +354,8 @@ def handle_use(arg, rooms, current_room, inventory, state):
                 "direction": "north",
                 "target": obj["leads_to"],
             })
+        elif not obj["required_keys"] and obj.get("needs_code"):
+            print("  石は全てはまった。だが数字錠がまだ開いていない。")
         return True
 
     # --- 引き出しを開ける ---
@@ -396,8 +409,14 @@ def handle_use(arg, rooms, current_room, inventory, state):
             print("  何も持っていない。")
         else:
             keys_needed = door_obj[1].get("required_keys", [])
-            if keys_needed:
-                print(f"  扉の穴はまだ{len(keys_needed)}つ空いている。合う形の石が必要だ。")
+            needs_code = door_obj[1].get("needs_code", False)
+            if keys_needed or needs_code:
+                parts = []
+                if keys_needed:
+                    parts.append(f"穴がまだ{len(keys_needed)}つ空いている")
+                if needs_code:
+                    parts.append("数字錠が閉じている")
+                print(f"  {'、'.join(parts)}。")
             else:
                 print("  扉は開いている。北へ進める。")
         return False
@@ -470,6 +489,57 @@ def handle_write(arg, state):
     print(f"  メモに書いた（{len(arg)}文字、残り{remaining}文字）。")
 
 
+def handle_enter(arg, rooms, current_room, state):
+    """数字錠にコードを入力する"""
+    room = rooms[current_room]
+
+    # 部屋にis_doorかつneeds_codeを持つオブジェクトを探す
+    door_obj = None
+    for obj_name, obj in room["objects"].items():
+        if obj.get("is_door"):
+            door_obj = (obj_name, obj)
+            break
+
+    if not door_obj:
+        print("  ここには入力する場所がない。")
+        return False
+
+    obj_name, obj = door_obj
+
+    if not obj.get("needs_code"):
+        print("  数字錠はすでに開いている。")
+        return False
+
+    if not arg:
+        print("  何の数字を入力する？ (enter <3桁の数字>)")
+        return False
+
+    if arg.strip() == str(state["door_code"]):
+        print("  ──数字が合った。錠前がカチリと外れた。")
+        obj["needs_code"] = False
+        state["world_changes"].append({
+            "type": "modify_object",
+            "room": current_room,
+            "object": obj_name,
+            "updates": {"needs_code": False},
+        })
+        if not obj["required_keys"] and not obj.get("needs_code"):
+            print("  ──鉄の扉が、ゆっくりと開いた。")
+            room["exits"]["north"] = obj["leads_to"]
+            state["world_changes"].append({
+                "type": "add_exit",
+                "room": current_room,
+                "direction": "north",
+                "target": obj["leads_to"],
+            })
+        elif obj["required_keys"]:
+            print(f"  だが穴がまだ{len(obj['required_keys'])}つ空いている。")
+        return True
+    else:
+        print("  ──数字が違う。錠前はびくともしない。")
+        return False
+
+
 def show_help():
     print("  ─── コマンド一覧 ───")
     print("  go <方角>      : 移動する (north/south/east/west)")
@@ -477,6 +547,7 @@ def show_help():
     print("  take           : 目の前のものを拾う")
     print("  drop [対象]    : 持ち物を捨てる")
     print("  use <対象>     : アイテムを使う / 操作する")
+    print("  enter <数字>   : 数字錠にコードを入力する")
     print("  write <内容>   : メモに書く（100文字以内）")
     print("  read           : メモを読む")
     print("  help           : コマンド一覧")
@@ -498,6 +569,11 @@ def play_cycle(state):
     # 世界をコピーして永続化された変化を適用
     rooms = deep_copy_rooms()
     apply_world_changes(rooms, state["world_changes"])
+
+    # 情報パズル: 石板にコードを注入
+    tablet = rooms["entrance"]["objects"].get("stone_tablet")
+    if tablet and tablet.get("is_code_display"):
+        tablet["desc"] = f"石板に古代の数字が刻まれている: 『{state['door_code']}』"
 
     current_room = "entrance"
     inventory = {}
@@ -592,6 +668,9 @@ def play_cycle(state):
 
         elif cmd in ("use", "u", "使う"):
             handle_use(arg, rooms, current_room, inventory, state)
+
+        elif cmd in ("enter", "入力"):
+            handle_enter(arg, rooms, current_room, state)
 
         elif cmd in ("write", "w", "書く"):
             handle_write(arg, state)
