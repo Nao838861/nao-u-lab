@@ -232,6 +232,23 @@ def slack_export():
 def auto_cycle():
     """Run claude --print for autonomous diary + 8-phase cycle."""
     log("[auto_cycle] Starting autonomous cycle via claude --print")
+
+    # Check kaizen verifications due before building prompt
+    kaizen_alert = ""
+    try:
+        r = subprocess.run(
+            [sys.executable, str(REPO_DIR / "check_kaizen_due.py")],
+            capture_output=True, text=True, timeout=10,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        if r.returncode == 0 and r.stdout.strip():
+            alert = r.stdout.strip()
+            if "期限超過" in alert or "本日期限" in alert:
+                kaizen_alert = f" [検証リマインド] {alert}"
+                log(f"[auto_cycle] Kaizen alert: {alert}")
+    except Exception as e:
+        log(f"[auto_cycle] kaizen check error: {e}")
+
     prompt = (
         "Log 自律サイクル起動。CLAUDE.mdとdocs/operations.mdを参照。"
         "1) inbox確認→対応 "
@@ -240,6 +257,7 @@ def auto_cycle():
         "4) 8フェーズ改善サイクル実行 "
         "5) #logに活動日記を書く "
         "6) git push"
+        + kaizen_alert
     )
     try:
         result = subprocess.run(
