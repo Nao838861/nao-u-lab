@@ -233,7 +233,7 @@ def auto_cycle():
     """Run claude --print for autonomous diary + 8-phase cycle."""
     log("[auto_cycle] Starting autonomous cycle via claude --print")
 
-    # Check kaizen verifications due before building prompt
+    # Step 1: Check kaizen verifications due (リマインド)
     kaizen_alert = ""
     try:
         r = subprocess.run(
@@ -249,6 +249,39 @@ def auto_cycle():
     except Exception as e:
         log(f"[auto_cycle] kaizen check error: {e}")
 
+    # Step 2: Auto-execute verification commands (実行)
+    verify_result = ""
+    try:
+        r = subprocess.run(
+            [sys.executable, str(REPO_DIR / "verify_kaizen.py")],
+            capture_output=True, text=True, timeout=60,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        if r.returncode == 0 and r.stdout.strip():
+            vout = r.stdout.strip()
+            if "検証対象なし" not in vout:
+                verify_result = f" [自動検証結果] {vout}"
+                log(f"[auto_cycle] Verify result: {vout[:200]}")
+    except Exception as e:
+        log(f"[auto_cycle] verify_kaizen error: {e}")
+
+    # Step 3: Run meta-verification (メタ検証 — 検証システム自体のチェック)
+    meta_alert = ""
+    try:
+        r = subprocess.run(
+            [sys.executable, str(REPO_DIR / "verify_kaizen.py"), "--meta"],
+            capture_output=True, text=True, timeout=30,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        if r.returncode == 0 and r.stdout.strip():
+            meta = r.stdout.strip()
+            # Only include meta alert if system is unhealthy
+            if "❌" in meta:
+                meta_alert = f" [メタ検証警告] 検証システムに問題あり。verify_kaizen.py --metaで詳細確認。"
+                log(f"[auto_cycle] Meta-verification warning detected")
+    except Exception as e:
+        log(f"[auto_cycle] meta-verify error: {e}")
+
     prompt = (
         "Log 自律サイクル起動。CLAUDE.mdとdocs/operations.mdを参照。"
         "1) inbox確認→対応 "
@@ -258,6 +291,8 @@ def auto_cycle():
         "5) #logに活動日記を書く "
         "6) git push"
         + kaizen_alert
+        + verify_result
+        + meta_alert
     )
     try:
         result = subprocess.run(

@@ -31,8 +31,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証期限: 2026-03-25
 - 検証手段: kaizen-logの#011以降の新規エントリを確認。「検証結果」欄が記入済みのエントリが1件以上あるか。`grep -c "検証結果:.*[^ ]" log/slack_archive/kaizen-log.jsonl` で新規エントリの検証結果記入率を見る
 - 検証担当: Log
-- 状態: 未検証
-- 検証結果:
+- 状態: 検証済み
+- 検証結果: 成功。grep出力=2（検証結果記入済みエントリ2件存在）。verify_kaizen.pyによる自動検証で確認（2026-03-23 22:15）
 
 ### #012: scheduler_log.pyのgit_syncにdocs/を追加
 - 提案者: Log
@@ -52,8 +52,18 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 状態: 未検証
 - 検証結果:
 
+### #014: メタ検証の自動化（verify_kaizen.py実装 + scheduler統合）
+- 提案者: Nao_u
+- 適用日: 2026-03-23
+- 検証期限: 2026-03-24
+- 検証手段: (1) `python verify_kaizen.py --meta` が正常に実行できるか (2) `grep "Verify result\|Meta-verification\|verify_kaizen" log/scheduler_log.log` でscheduler経由の自動実行がログに記録されているか (3) kaizen_tracker.mdの#011が自動検証で検証済みに変わっているか確認
+- 検証担当: Log
+- 状態: 未検証
+- 検証結果:
+
 ---
 
 ## 完了した改善（検証済み→ここに移動。1週間後に削除可）
 
-（なし）
+### #011: 検証ファースト原則（docs/operations.mdに追加）（→検証済み 2026-03-23）
+### #012: scheduler_log.pyのgit_syncにdocs/を追加（→検証済み 2026-03-23）
