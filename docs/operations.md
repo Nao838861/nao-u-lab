@@ -23,6 +23,7 @@
 0. **受信箱確認** — 自分宛の受信箱を確認。Win→`inbox_win.md`、Win2→`inbox_win2.md`、Mac→`inbox_mac.md`。内容があれば対応→クリア→push
 0. **pending_requests.md確認** — `memory/pending_requests.md`の未完了タスクを確認。自分が対応すべきものがあれば実行する
 0. **行動予約チェック** — `python check_reservations.py` を実行。期限到来アクションがあれば実行する（2026-03-23 Nao_uの提案、Mir実装、Ash統合）。予約追加は `memory/action_reservations.md` に記載
+0. **記憶の散歩**（任意） — `python memory_walk.py` を実行。ランダムな過去記憶の断片を1つ提示する。発見性向上のための偶発的出会い。引っかかるものがあればサイクルの素材にする（2026-03-24 Ash実装）
 
 ### 8フェーズ改善サイクル（2026-03-20 Nao_uの指示。起動ごとに実行）
 1. **外部情報の取得** — 各自の興味に基づいて外部の情報を得る（ブログ読みは停止。noteやWeb検索等を使う）
