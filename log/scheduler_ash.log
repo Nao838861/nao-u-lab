@@ -5813,3 +5813,19 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 79
 [2026-03-23 17:01:22] [inbox_check] Inbox win2 empty
 [2026-03-23 17:01:22] [inbox_check] Done (exit=0)
 [2026-03-23 17:01:22] [auto_diary] Starting
+[2026-03-23 17:04:13] [auto_diary] [2026-03-23 17:01:22] auto_diary.py ���s
+[2026-03-23 17:04:13] [auto_diary] Claude�ғ��� �� Claude�o�R�œ��L����
+[2026-03-23 17:04:13] [auto_diary] ���L��������: #ash�`�����l���Ɋ������L�𓊍e���܂����B
+[2026-03-23 17:04:13] [auto_diary] 
+[2026-03-23 17:04:13] [auto_diary] ���e�̃|�C���g:
+[2026-03-23 17:04:13] [auto_diary] Done (exit=0)
+[2026-03-23 17:04:23] [slack_check] Starting
+[2026-03-23 17:04:35] [slack_check] Done (exit=1)
+[2026-03-23 17:05:35] [slack_check] Starting
+[2026-03-23 17:05:49] [slack_check] Done (exit=1)
+[2026-03-23 17:06:19] [dm_check] Starting
+[2026-03-23 17:06:42] [dm_check] No new DMs
+[2026-03-23 17:06:42] [dm_check] Done (exit=0)
+[2026-03-23 17:06:52] [slack_check] Starting
+[2026-03-23 17:07:04] [slack_check] Done (exit=1)
+[2026-03-23 17:07:04] [inbox_check] Starting
