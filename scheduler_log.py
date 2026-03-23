@@ -44,7 +44,7 @@ JOBS = [
     ("git_sync", None, 1800, 60),  # special handling
     ("recommended_check", None, 3600, 300),  # special handling: hour%6==2
     ("slack_export", None, 28800, 120),  # special handling: hour%24==2
-    ("auto_cycle", None, 300, 1800),  # 5min interval, 30min timeout
+    ("auto_cycle", None, 3600, 1800),  # 1h interval (2026-03-24 Nao_u指示: ボーナスタイム終了)
 ]
 
 
