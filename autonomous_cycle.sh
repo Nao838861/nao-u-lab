@@ -1,6 +1,6 @@
 #!/bin/bash
 # Mac側自律サイクルスクリプト
-# LaunchAgentから10分ごとに呼ばれる（2026-03-23 Nao_u指示: リミット消化のため一時的に10分間隔）。常にclaude CLIを起動して自律サイクルを回す。
+# LaunchAgentから5分ごとに呼ばれる（2026-03-23 22:07 Nao_u指示: 高速思考実験。午前3時の週間リミットリセットまで）。常にclaude CLIを起動して自律サイクルを回す。
 # check_inbox.sh（受信箱専用・1分ごと）とは別に動く。
 #
 # 設計原則（2026-03-20 Nao_uの指示）:
@@ -50,6 +50,15 @@ fi
 # 2. git auto-sync（30分ごとのcronと兼用。ここでも実行しておく）
 # → pull完了した最新状態からclaudeを起動する
 
+# 4. 改善検証リマインド（check_kaizen_due.py）
+KAIZEN_ALERT=$(python3 check_kaizen_due.py 2>/dev/null)
+if echo "$KAIZEN_ALERT" | grep -q "期限超過\|本日期限"; then
+    echo "$(date): Kaizen alert: $KAIZEN_ALERT"
+    KAIZEN_PROMPT="【検証アラート】$KAIZEN_ALERT "
+else
+    KAIZEN_PROMPT=""
+fi
+
 echo "$(date): 自律サイクル開始（pull完了済み）"
 
 # === LLM側（認知力を8フェーズ改善サイクルに集中） ===
@@ -60,7 +69,7 @@ if [ ! -x "$CLAUDE_BIN" ]; then
 fi
 
 if [ -n "$CLAUDE_BIN" ]; then
-    "$CLAUDE_BIN" --print "自律サイクル実行。CLAUDE.mdの「絶対にやる」リストを最初に確認し、未完了の項目に沿って動け。基本手順: 1. git pull 2. inbox_mac.md確認・処理 3. CLAUDE.mdの「絶対にやる」リストを読み、未完了項目の中で今やるべきことを決める 4. 記憶階層化の実験（主目的）: ブログまたはツイートを200行読み、L2トリガーローテーションに従って想起テストを行い、reflections_mac.mdに内省追記、l2_dual_index.md更新 5. git push 6. Slack #mir-logに結果投稿 【重要】頻度を落とした分、一回あたりの精度と密度を上げること。読みを丁寧に、接続を深く。" 2>&1 | tail -30
+    "$CLAUDE_BIN" --print "${KAIZEN_PROMPT}自律サイクル実行（5分高速モード）。CLAUDE.mdの「絶対にやる」リストを最初に確認し、未完了の項目に沿って動け。基本手順: 1. git pull 2. inbox_mac.md確認・処理 3. CLAUDE.mdの「絶対にやる」リストを読み、未完了項目の中で今やるべきことを決める 4. 8フェーズ改善サイクルを高速で回す: 情報収集→分析→改善検討→相談→適用→評価→まとめ→俯瞰 5. git push 6. Slack #mir-logに結果投稿 【高速モード】5分間隔。情報収集と改善のループを高速で回せ。密度を落とさず速度を上げる。" 2>&1 | tail -30
 else
     echo "$(date): claude CLI が見つかりません"
 fi
