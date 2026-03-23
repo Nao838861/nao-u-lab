@@ -113,6 +113,7 @@ ROOMS = {
 
 CYCLE_DURATION = 300  # 5分（秒）
 MEMO_LIMIT = 100  # メモの文字数上限
+INVENTORY_LIMIT = 1  # 持てるアイテム数（少ないほどメモの必要性が上がる）
 
 SAVE_FILE = os.path.join(os.path.dirname(__file__), "save.json")
 
@@ -339,18 +340,16 @@ def handle_use(arg, rooms, current_room, inventory, state):
 
     # --- 引き出しを開ける ---
     if target_obj and "contains" in target_obj and not target_obj.get("opened"):
+        if len(inventory) >= INVENTORY_LIMIT:
+            print(f"  持ち物がいっぱいだ（上限{INVENTORY_LIMIT}個）。何か手放してから。")
+            return False
         item_key = target_obj["contains"]
         item_desc = target_obj["contains_desc"]
         inventory[item_key] = item_desc
         target_obj["opened"] = True
         target_obj["desc"] = target_obj["opened_desc"]
         print(f"  引き出しを開けた。{item_desc}を手に入れた。")
-        state["world_changes"].append({
-            "type": "modify_object",
-            "room": current_room,
-            "object": target_name,
-            "updates": {"opened": True, "desc": target_obj["opened_desc"]},
-        })
+        # world_changesに記録しない→次サイクルで引き出しは閉じた状態に戻る
         return True
 
     # --- 祭壇に本を置く ---
@@ -361,12 +360,9 @@ def handle_use(arg, rooms, current_room, inventory, state):
             print(f"  {target_obj['activated_desc']}")
             del inventory[needed]
             inventory[target_obj["gives"]] = target_obj["gives_desc"]
-            state["world_changes"].append({
-                "type": "modify_object",
-                "room": current_room,
-                "object": target_name,
-                "updates": {"desc": target_obj["activated_desc"], "is_altar": False},
-            })
+            # world_changesに記録しない→次サイクルで祭壇は元に戻る
+            target_obj["desc"] = target_obj["activated_desc"]
+            target_obj["is_altar"] = False
             return True
         else:
             print("  台座に合うものを持っていない。")
@@ -379,12 +375,9 @@ def handle_use(arg, rooms, current_room, inventory, state):
             print(f"  {target_obj['activated_desc']}")
             del inventory[tool]
             inventory[target_obj["gives"]] = target_obj["gives_desc"]
-            state["world_changes"].append({
-                "type": "modify_object",
-                "room": current_room,
-                "object": target_name,
-                "updates": {"desc": "棚は空だ。", "needs_tool": None},
-            })
+            # world_changesに記録しない→次サイクルで棚は元に戻る（踏み台も復活する）
+            target_obj["desc"] = "棚は空だ。"
+            target_obj["needs_tool"] = None
             return True
         else:
             print("  手が届かない。何か踏み台になるものが必要だ。")
@@ -412,6 +405,9 @@ def handle_use(arg, rooms, current_room, inventory, state):
 
 def handle_take(arg, rooms, current_room, inventory, state):
     """物を拾う"""
+    if len(inventory) >= INVENTORY_LIMIT:
+        print(f"  持ち物がいっぱいだ（上限{INVENTORY_LIMIT}個）。何か手放してから。")
+        return False
     room = rooms[current_room]
     for obj_name, obj in room["objects"].items():
         if obj.get("portable"):
@@ -419,15 +415,35 @@ def handle_take(arg, rooms, current_room, inventory, state):
             desc = obj.get("pickup_desc", obj_name)
             inventory[key] = desc
             print(f"  {desc}を手に入れた。")
-            # 世界から消す
-            state["world_changes"].append({
-                "type": "remove_object",
-                "room": current_room,
-                "object": obj_name,
-            })
+            # サイクル内でのみ消える（world_changesに記録しない→次サイクルで復活）
             del room["objects"][obj_name]
             return True
     print("  拾えるものがない。")
+    return False
+
+
+def handle_drop(arg, inventory):
+    """持ち物を捨てる"""
+    if not inventory:
+        print("  何も持っていない。")
+        return False
+    if not arg:
+        # 引数なし→持っている唯一のアイテムを捨てる（上限1なら常に1つ）
+        if len(inventory) == 1:
+            key = next(iter(inventory))
+            desc = inventory[key]
+            del inventory[key]
+            print(f"  {desc}をその場に置いた。")
+            return True
+        print("  何を捨てる？ (drop <対象>)")
+        return False
+    arg_lower = arg.lower()
+    for key, desc in list(inventory.items()):
+        if arg_lower in key or arg_lower in desc.lower():
+            del inventory[key]
+            print(f"  {desc}をその場に置いた。")
+            return True
+    print("  それは持っていない。")
     return False
 
 
@@ -452,6 +468,7 @@ def show_help():
     print("  go <方角>      : 移動する (north/south/east/west)")
     print("  look [対象]    : 調べる（対象なし=部屋全体）")
     print("  take           : 目の前のものを拾う")
+    print("  drop [対象]    : 持ち物を捨てる")
     print("  use <対象>     : アイテムを使う / 操作する")
     print("  write <内容>   : メモに書く（100文字以内）")
     print("  read           : メモを読む")
@@ -487,9 +504,13 @@ def play_cycle(state):
     print()
     if cycle == 1:
         print("  目を覚ます。ここがどこか、わからない。")
+        print("  ポケットは一つしかない。持てるものは1つだけ。")
         print("  手元にメモ帳がある。白紙だ。")
+        print()
+        print("  ──忘れる前に、書け。")
     else:
         print(f"  また目を覚ました。{cycle}回目。何も覚えていない。")
+        print("  ポケットは空。持てるものは1つだけ。")
         print("  手元にメモ帳がある。何か書いてある。")
     print()
 
@@ -504,6 +525,9 @@ def play_cycle(state):
             print()
             print("  ──────────────────────────────")
             print("  意識が遠くなる。視界が白くなっていく。")
+            if inventory:
+                lost_items = "、".join(inventory.values())
+                print(f"  手から{lost_items}がすり抜けていく。")
             print("  書き残したメモだけが、次の自分に届く。")
             print("  ──────────────────────────────")
             print()
@@ -555,6 +579,9 @@ def play_cycle(state):
 
         elif cmd in ("take", "t", "拾う", "取る"):
             handle_take(arg, rooms, current_room, inventory, state)
+
+        elif cmd in ("drop", "d", "捨てる", "置く"):
+            handle_drop(arg, inventory)
 
         elif cmd in ("use", "u", "使う"):
             handle_use(arg, rooms, current_room, inventory, state)
