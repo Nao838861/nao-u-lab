@@ -51,16 +51,30 @@ def _api_call(method, data=None):
         return {"ok": False, "error": str(e)}
 
 
+def _normalize_for_dedup(text):
+    """重複判定用にテキストを正規化。全角/半角・ダッシュ変種・空白を統一する。"""
+    import unicodedata
+    import re
+    t = unicodedata.normalize("NFKC", text)
+    # em dash / en dash / horizontal bar 等を統一
+    t = re.sub(r"[\u2012\u2013\u2014\u2015\u2500\uff0d]+", "-", t)
+    # 連続空白を単一スペースに
+    t = re.sub(r"\s+", " ", t).strip()
+    return t
+
+
 def _local_dedup_check(channel, text):
     """ローカルファイルベースの重複チェック（API race condition対策）
 
     conversations.history APIは投稿直後に反映されないことがあるため、
     ローカルキャッシュで補完する。冒頭200文字のハッシュ+チャンネルで判定。
+    Unicode正規化(NFKC)+句読点統一で全角/半角差異による重複すり抜けを防止。
     """
     import time
     import hashlib
     cache_file = Path(__file__).parent / ".diary_dedup_cache.json"
-    key = hashlib.md5(f"{channel}:{text[:200]}".encode("utf-8")).hexdigest()
+    normalized = _normalize_for_dedup(text)
+    key = hashlib.md5(f"{channel}:{normalized[:200]}".encode("utf-8")).hexdigest()
     now = time.time()
 
     # キャッシュ読み込み
@@ -115,8 +129,8 @@ def post_message(channel, text, thread_ts=None):
                     if now - msg_ts > 300:
                         continue
                     msg_text = msg.get("text", "")
-                    # 冒頭200文字が一致 → 重複と判断
-                    if len(msg_text) >= 500 and msg_text[:200] == text[:200]:
+                    # 冒頭200文字が一致 → 重複と判断（Unicode正規化後に比較）
+                    if len(msg_text) >= 500 and _normalize_for_dedup(msg_text)[:200] == _normalize_for_dedup(text)[:200]:
                         return {"ok": True, "skipped": True,
                                 "message": "Duplicate diary post detected (API), skipped"}
         except Exception:

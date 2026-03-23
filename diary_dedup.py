@@ -16,11 +16,21 @@ exit code 1 = 重複あり（投稿スキップ推奨）
 
 import sys
 import time
+import re
+import unicodedata
 from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from slack_bot import get_history
+
+
+def _normalize_text(text):
+    """重複比較用のテキスト正規化。全角/半角・ダッシュ変種・空白を統一。"""
+    t = unicodedata.normalize("NFKC", text)
+    t = re.sub(r"[\u2012\u2013\u2014\u2015\u2500\uff0d]+", "-", t)
+    t = re.sub(r"\s+", " ", t).strip()
+    return t
 
 ASH_CHANNEL = "C0ALVUSHK8E"  # #ash
 BOT_USER_ID = "U0ALW4DKTT7"  # naoubotmir
@@ -77,7 +87,7 @@ def check_duplicate(hours=DEFAULT_HOURS):
 
 
 def show_recent(hours=6):
-    """直近の日記投稿を表示"""
+    """直近の日記投稿を表示（重複ペア検出付き）"""
     posts = get_recent_diary_posts(hours=hours, limit=20)
 
     if not posts:
@@ -85,9 +95,27 @@ def show_recent(hours=6):
         return
 
     _safe_print(f"直近{hours}時間の日記投稿: {len(posts)}件")
+
+    # 重複ペア検出（正規化後の冒頭200文字が一致し、1分以内のペア）
+    dup_indices = set()
+    for i in range(len(posts)):
+        for j in range(i + 1, len(posts)):
+            norm_i = _normalize_text(posts[i]["full_text"])[:200]
+            norm_j = _normalize_text(posts[j]["full_text"])[:200]
+            if norm_i == norm_j and abs(posts[i]["ts"] - posts[j]["ts"]) < 60:
+                dup_indices.add(i)
+                dup_indices.add(j)
+
+    dup_pairs = len(dup_indices) // 2
     for i, p in enumerate(posts):
-        _safe_print(f"\n--- [{i+1}] {p['time']} ({p['length']}文字) ---")
+        dup_mark = " [重複]" if i in dup_indices else ""
+        _safe_print(f"\n--- [{i+1}] {p['time']} ({p['length']}文字){dup_mark} ---")
         _safe_print(p["preview"])
+
+    if dup_pairs:
+        _safe_print(f"\n⚠ 重複ペア: {dup_pairs}組検出（Unicode正規化後の冒頭200文字一致+1分以内）")
+    else:
+        _safe_print(f"\n重複ペア: 0組（正常）")
 
 
 _stdout_wrapped = False
