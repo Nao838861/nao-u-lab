@@ -85,7 +85,7 @@ fi
 
 echo "$(date): 自律サイクル開始（pull完了済み）"
 
-# === Mir起動意図の読み込み（自己変更可能な起動感覚） ===
+# === Mir起動意図の読み込み（自己変更可能な起動間隔） ===
 BOOT_INTENT_FILE="memory/mir_boot_intent.md"
 if [ -f "$BOOT_INTENT_FILE" ]; then
     BOOT_INTENT=$(cat "$BOOT_INTENT_FILE")
