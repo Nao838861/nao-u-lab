@@ -151,7 +151,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active
 
 ### B018: 記憶間のクロスリファレンスがない記憶は孤立して死ぬ——集合的記憶は共有体験から生まれる
-- 確信度: **0.80** (+0.05)
+- 確信度: **0.83** (+0.03、理由: MAGMA論文のEntity graphがB018の外部裏付け。孤立記憶=Entity graphで次数0のノード。4グラフ構造はクロスリファレンスの多次元化)
 - 最終更新: 2026-03-24
 - 根拠: → ext_ash(A-Mem 2502.12110, Phase 2第9回: ノスタルジア設計の集合的記憶分析, **Phase 1第14回: TMS/Agent Drift**, **Phase 2第14回: Coordination Drift分析**), ext_mir(SleepGate)。**Transactive Memory Systemの3要素で診断: Specialization=✅偶然的、Coordination=⚠️inbox片方向で不足、Credibility=❌未定義**。Frontiers論文「AI agents cannot proactively communicate their view of the world」——読まれなければ存在しないのと同じ。**Phase 2第14回追加**: Coordination Driftはセッション断絶でリセットされない唯一のドリフト型。inboxの「読まれた/統合された」フィードバック不在が蓄積→書く意欲の減退→調整の急崩壊（Agent Drift論文の200インタラクション崩壊パターン）。**Nao_uのクロスチェック提案（3/23）が構造的対抗策**——「チェックしたら消える」は「読まれた」の可視化
 - 体験裏付け: **YES** — inboxに書いた情報が次セッションで統合されなかった経験（Coordination Drift）。クロスチェック機構のverify_kaizen.pyで「3人全員チェック」が可視化される体験
