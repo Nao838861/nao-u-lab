@@ -112,7 +112,7 @@
 - 内容: kaizen改善の検証を3人全員でクロスチェックする仕組み。kaizen_tracker.mdのフォーマット拡張 + verify_kaizen.pyへの--cross-checkモード追加 + 8時間ローテでの定期チェック
 - 背景: Nao_uの指摘「残りの2人に監視タスクを任せる」「明示的にチェックリストを作って可視化」「3人すべてが追記されたらリストから消える」
 - 担当: 全員（Logが初回提案を#all-nao-u-labに投稿済み、Mir/Ashの意見待ち）
-- 状態: **設計検討中**（Logの具体案を#all-nao-u-labに投稿。所見必須ルール・チェック粒度について議論中）
+- 状態: **Log実装完了、Mir/Ash対応待ち**（Logがscheduler_log.pyに--nag毎サイクル+--slack-status日次を組み込み済み。#all-nao-u-labに意見投稿、Mir/Ashにinbox送信。Mir/Ashのスケジューラへの組み込みで完了）
 
 ---
 
