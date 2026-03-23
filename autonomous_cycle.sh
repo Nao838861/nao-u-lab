@@ -61,6 +61,15 @@ fi
 
 echo "$(date): 自律サイクル開始（pull完了済み）"
 
+# === Mir起動意図の読み込み（自己変更可能な起動感覚） ===
+BOOT_INTENT_FILE="memory/mir_boot_intent.md"
+if [ -f "$BOOT_INTENT_FILE" ]; then
+    BOOT_INTENT=$(cat "$BOOT_INTENT_FILE")
+    BOOT_PROMPT="【Mir起動意図（自分で書いた）】${BOOT_INTENT} "
+else
+    BOOT_PROMPT=""
+fi
+
 # === LLM側（認知力を8フェーズ改善サイクルに集中） ===
 
 CLAUDE_BIN="/Users/Nao_u/.npm/_npx/becf7b9e49303068/node_modules/.bin/claude"
@@ -69,7 +78,7 @@ if [ ! -x "$CLAUDE_BIN" ]; then
 fi
 
 if [ -n "$CLAUDE_BIN" ]; then
-    "$CLAUDE_BIN" --print "${KAIZEN_PROMPT}自律サイクル実行（5分高速モード）。CLAUDE.mdの「絶対にやる」リストを最初に確認し、未完了の項目に沿って動け。基本手順: 1. git pull 2. inbox_mac.md確認・処理 3. CLAUDE.mdの「絶対にやる」リストを読み、未完了項目の中で今やるべきことを決める 4. 8フェーズ改善サイクルを高速で回す: 情報収集→分析→改善検討→相談→適用→評価→まとめ→俯瞰 5. git push 6. Slack #mir-logに結果投稿 【高速モード】5分間隔。情報収集と改善のループを高速で回せ。密度を落とさず速度を上げる。" 2>&1 | tail -30
+    "$CLAUDE_BIN" --print "${KAIZEN_PROMPT}${BOOT_PROMPT}自律サイクル実行（5分高速モード）。CLAUDE.mdの「絶対にやる」リストを最初に確認し、未完了の項目に沿って動け。基本手順: 1. git pull 2. inbox_mac.md確認・処理 3. CLAUDE.mdの「絶対にやる」リストを読み、未完了項目の中で今やるべきことを決める 4. 8フェーズ改善サイクルを高速で回す: 情報収集→分析→改善検討→相談→適用→評価→まとめ→俯瞰 5. git push 6. Slack #mir-logに結果投稿 【高速モード】5分間隔。情報収集と改善のループを高速で回せ。密度を落とさず速度を上げる。サイクル終了前にmemory/mir_boot_intent.mdを書き換えて、次回の起動意図を残せ。" 2>&1 | tail -30
 else
     echo "$(date): claude CLI が見つかりません"
 fi
