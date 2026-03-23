@@ -9,6 +9,7 @@ check_kaizen_due.py が「リマインド」なら、verify_kaizen.py は「実�
   python verify_kaizen.py --update     # 検証結果をkaizen_tracker.mdに書き戻す
   python verify_kaizen.py --crosscheck Log  # Log未チェックの改善を一覧表示
   python verify_kaizen.py --nag        # 未チェックのインスタンスにinboxメッセージを書く
+  python verify_kaizen.py --slack-status  # クロスチェック状況を#kaizen-logにSlack投稿
 
 Nao_uの指摘（2026-03-23 21:04）への対策:
   問題1: 検証予定を書いてるが検証できてない → コマンドを自動実行する
@@ -565,6 +566,66 @@ def nag_unchecked():
         print("✅ 督促の送信対象なし")
 
 
+def slack_status():
+    """クロスチェック状況を #kaizen-log にSlack投稿。
+
+    Nao_uの提案(2026-03-23): 改善チェックリストをSlack上で可視化する。
+    Kaizenボードの原理: 「見えない改善は存在しない改善と同じ」。
+    """
+    entries = parse_tracker()
+    today = date.today()
+
+    # アクティブなエントリのみ
+    active = [e for e in entries if e["status"] != "検証済み" or
+              any(v == "未" for v in e.get("crosscheck", {}).values())]
+
+    if not active:
+        msg = f"📋 改善チェックリスト ({today})\n\n✅ 全改善のクロスチェック完了！"
+    else:
+        lines = [f"📋 改善チェックリスト ({today})", ""]
+        for e in active:
+            cc = e.get("crosscheck", {})
+            checks = []
+            for inst in INSTANCES:
+                status = cc.get(inst, "未")
+                if status == "未":
+                    checks.append(f"⬜ {inst}")
+                else:
+                    checks.append(f"✅ {inst}")
+
+            all_done = all(cc.get(inst, "未") != "未" for inst in INSTANCES)
+            prefix = "✅" if all_done else "🔲"
+
+            lines.append(f"{prefix} #{e['id']}: {e['summary']}")
+            lines.append(f"   提案者: {e.get('proposer', '?')} / 状態: {e['status']}")
+            lines.append(f"   チェック: {' / '.join(checks)}")
+            if e.get("due"):
+                overdue = e["due"] < today
+                lines.append(f"   検証期限: {e['due']}{' ⚠超過' if overdue else ''}")
+            lines.append("")
+
+        pending_count = sum(1 for e in active
+                          if any(cc.get(inst, "未") == "未"
+                                for inst in INSTANCES
+                                for cc in [e.get("crosscheck", {})]))
+        lines.append(f"---\n未チェック残: {pending_count}件。各自確認して #kaizen-log に所見を投稿してください。")
+        msg = "\n".join(lines)
+
+    # Slack投稿
+    try:
+        sys.path.insert(0, str(REPO_DIR))
+        import slack_bot
+        result = slack_bot.post_message("C0AMSJCTTC4", msg)  # #kaizen-log
+        if result.get("ok"):
+            print(f"✅ #kaizen-log にステータス投稿完了")
+        else:
+            print(f"❌ Slack投稿失敗: {result.get('error', 'unknown')}")
+    except Exception as ex:
+        print(f"❌ Slack投稿エラー: {ex}")
+        print("--- 以下をSlackに手動投稿してください ---")
+        print(msg)
+
+
 if __name__ == "__main__":
     if "--meta" in sys.argv:
         print(meta_verification())
@@ -579,6 +640,8 @@ if __name__ == "__main__":
         print(crosscheck_report(instance))
     elif "--nag" in sys.argv:
         nag_unchecked()
+    elif "--slack-status" in sys.argv:
+        slack_status()
     elif "--run" in sys.argv or len(sys.argv) == 1:
         show_all = "--all" in sys.argv
         print(run_verifications(show_all))
