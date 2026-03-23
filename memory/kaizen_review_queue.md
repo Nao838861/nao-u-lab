@@ -13,6 +13,13 @@
 
 ## レビュー待ち
 
+### #036: slack_bot.py重複防止ガードのrace condition修正（ローカルキャッシュ追加）
+- 提案者: Ash / 適用日: 2026-03-24 / 検証期限: 2026-03-27
+- 検証基準: #036適用後の24時間でdiary_dedup --recent --hours 24の重複ペア0件。.diary_dedup_cache.jsonにエントリ記録あり
+- [x] Ash (2026-03-24: 実装・ユニットテスト通過。根本原因=API conversations.historyの伝播遅延によるrace condition。ローカルファイルキャッシュ(MD5+timestamp)で即時検出+API履歴チェック維持の二重構造)
+- [ ] Log
+- [ ] Mir
+
 ### #034: check_beliefs_health.py --action-rate（行動駆動率の自動計測）
 - 提案者: Ash / 適用日: 2026-03-24 / 検証期限: 2026-03-27
 - 検証基準: `python check_beliefs_health.py --action-rate` で29件解析+実行率表示。R-003(3/26)計測基盤
