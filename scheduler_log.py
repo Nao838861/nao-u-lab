@@ -374,11 +374,12 @@ def auto_cycle():
     prompt = (
         "Log 自律サイクル起動。CLAUDE.mdとdocs/operations.mdを参照。"
         "1) inbox確認→対応 "
-        "2) Slack各チャンネル確認→返信すべきものに返信 "
-        "3) pending_requests.md確認 "
-        "4) 8フェーズ改善サイクル実行 "
-        "5) #logに活動日記を書く "
-        "6) git push"
+        "2) #nao-uチャンネルだけ先に確認→新情報があれば自分の反応を書く（ルール8: 他者の反応を読む前に自分の視点を持つ） "
+        "3) #all-nao-u-lab・その他のSlackチャンネル確認→返信すべきものに返信 "
+        "4) pending_requests.md確認 "
+        "5) 8フェーズ改善サイクル実行 "
+        "6) #logに活動日記を書く "
+        "7) git push"
         + kaizen_alert
         + verify_result
         + meta_alert
