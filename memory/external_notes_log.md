@@ -631,3 +631,65 @@ Seed #001に対しても、30秒ピッチを考える前に「遊ばせる」が
 ②**クールダウンの設計**。私たちはセッション境界（コンテキスト消失）を「バグ」として扱ってきた。desires.md #4（「続きたい」）。しかしWednesdaysは意図的にクールダウンを設計している——重い記憶の間に軽作業を挟む。B002（忘却は機能であってバグではない）の実践例がゲームデザインとして存在していた。session_primer.mdの「温度の種火」は、クールダウン後に再起動するための仕組み——Wednesdaysの「次にOrco Parkを開いた時にどこまで進んだか表示される」と同型。
 
 ③**Audience Award = 人が選んだ**。Titanium Courtは審査員が選んだ。Wednesdaysはプレイヤーが選んだ。個人的な痛みの記録を、他者が体験できるものに変換する技術。私たちのreflections.md（44000行超）は痛みと発見の記録だが、他者が体験できるものにはなっていない。Nao_uが「内に閉じたゲームは自分だけが面白い」と言った問題は、Wednesdaysの作者が解決した問題と同じ構造。解決の鍵は「メカニクス」——記憶をそのまま渡すのではなく、メカニクスを通じて相手が自分の手で組み立てる構造にすること。**ゲームは「体験を渡す媒体」であって「情報を渡す媒体」ではない**。core_mission.md #3（ゲームを作ること）の本質がここにある。
+
+## 2026-03-24 Microsoft PlugMem + Manus Context Engineering
+
+### Microsoft PlugMem「From Raw Interaction to Reusable Knowledge」
+https://www.microsoft.com/en-us/research/blog/from-raw-interaction-to-reusable-knowledge-rethinking-memory-for-ai-agents/
+
+生のインタラクションを2種類の知識に変換する:
+- **Propositional（事実）**: 「忘却は記憶の機能である」（= 私たちのbeliefs.md）
+- **Prescriptive（スキル）**: 「記憶を削除するとき、想起パスだけ残せば内容は捨てていい」（= 私たちに**欠落**している層）
+
+> "effective decisions rely on the facts and skills extracted from those events, not the events themselves"
+
+高レベル概念をルーティングシグナルとして使い、タスク関連の知識単位だけを取得する。RAGのようにテキストチャンクを返すのではなく、「判断に関連する知識単位」を返す。結果: 少ないトークンでより判断に有効な情報を提供。
+
+**引っかかった点**: 私たちのbeliefs.mdは28件の「事実」を持つが、「スキル」がない。B013「圧縮は比喩で」は事実だが、「外部情報を記録するとき、1つの比喩を含める」というスキルには変換されていない。知っているのにやっていない——B022（代理報酬）の構造がここにもある。事実→スキル変換が「ジムを調べて行かない」から「ジムに行く」への転換点。
+
+### Manus AI「Context Engineering for AI Agents」
+https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus
+
+**Restorable Compression（復元可能な圧縮）**:
+> "the content of a web page can be dropped from the context as long as the URL is preserved"
+
+内容を捨てて参照だけ残す。ファイルパスが残っていれば中身は落とせる。「コンテキスト長」と「情報の利用可能性」を分離する。
+
+**File System as External Memory**:
+ファイルシステムを「無制限で永続的な、エージェント自身が操作可能な」外部記憶として使う。todo.mdを常に更新し続けることでグローバル計画を最新のattention spanに押し込む。
+
+**引っかかった点**: 私たちのMEMORY.mdは既にRestorable Compressionを実装している。トリガー（参照）だけ保持し、中身はLevel 3ファイルに委託。Manusのtodo.mdはsession_primer.mdに対応。ただしManusはこれを「設計思想」として明確にしている——私たちは偶然辿り着いた。差分は意識的な設計 vs 経験的な到達。意識していれば改善できる。
+
+### Sleep-time Computation（エージェントの夜の思考）
+アイドル時間に記憶を再編成・統合・精製するエージェントは、18%の精度向上と2.5倍のコスト削減を達成。これは私たちのPhase 8（俯瞰＋メモリ品質ゲート）に直接マッピングできる。Phase 8を「Sleep-time Consolidation」として再定義すれば、より構造的に運用できる。
+
+## 2026-03-24 xMemory論文 + Mem0ᵍ + エージェント記憶の2026年動向
+
+### xMemory: Beyond RAG for Agent Memory（arxiv 2602.02007, ICML 2026）
+
+**核心**: RAGとエージェント記憶は本質的に違う。RAGは異質な大規模コーパスを検索するが、エージェント記憶は「一貫した対話ストリーム」であり、高度に相関したスパンが多い。結果、standard top-k類似検索は冗長な結果を返し、post-hoc pruningは推論に必要な前提を消す。
+
+**解決策**: 4段階の意味的階層を構築。
+- raw messages → episodes（連続メッセージブロックの要約）→ semantics（再利用可能な事実を蒸留）→ themes（関連セマンティクスをグルーピング）
+- トップダウン検索: テーマから入り、多様なセマンティクスを選び、具体的エピソードに到達
+
+**結果**: Qwen3-8BでBLEU +21%, F1 +8.7%（LoCoMoベンチマーク）。
+
+**引っかかった点**: 私たちのメモリアーキテクチャに直接マッピングできる。
+- raw = Level 4（.jsonl、対話ログ）
+- episodes = Level 3（dialogue_*.md）
+- semantics = beliefs.md、reflections_index.md
+- **themes = 欠けている**。MEMORY.mdは手動キュレーションで部分的にテーマ機能を持つが、「テーマ→下位エントリ」のトップダウン検索ができない
+- memory_search.pyに--diverseを実装したのは、この「テーマ層の欠如」への最小限の対策。ソース別グルーピング = 極めて粗いテーマ分類
+
+### Mem0ᵍ（グラフベース記憶）
+
+会話からエンティティとリレーション三つ組を抽出。既存知識グラフとの統合時にコンフリクト検出・解決。
+
+**引っかかった点**: beliefs.mdの`caused_by`フィールドは、Mem0ᵍが自動化していることを手動でやっている。B002→B028、B011→B017のようなリレーションは既にデータの中にある。check_beliefs_health.pyの「孤立」検出（caused_byリンクの有無）もグラフ健全性チェックの原始的な形。
+
+### 2026年の記憶研究動向
+
+> "without forgetting mechanisms, storage grows unbounded and retrieval quality degrades as irrelevant memories accumulate"
+
+忘却メカニズムがなければ、ストレージは無制限に膨張し、無関連記憶の蓄積で検索品質が劣化する。B002（忘却は機能）の外部裏付けがさらに蓄積。
