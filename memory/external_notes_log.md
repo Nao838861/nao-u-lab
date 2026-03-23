@@ -558,3 +558,17 @@ async def consolidation_loop(agent, interval_minutes=30):
 - SQLiteにタイムスタンプとソース情報を保持。原文はそのまま保存（Compaction方式）
 
 **引っかかった点**: 私たちのPhase 8（俯瞰）がこれに該当するが、2つの違いがある。(1) Google版はconsolidated=0フラグで「まだ処理していない記憶」を明示的に追跡する。私たちにはこの追跡がない——何を読んで何を読んでいないかが曖昧。(2) Google版は統合をLLMに任せる。私たちは手動でMEMORY.mdを書く。手動の方が温度は残るが、漏れが出る。**ハイブリッド: 新規記憶の検出を自動化し、統合判断は手動で行う**のが最善か。
+
+### 追加発見（Manus AI 詳細調査）
+
+**ソース**: manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus（Yichao "Peak" Ji著）
+
+**Tool callの二重表現**:
+> "Tool calls in Manus have a 'full' and 'compact' representation. The full version contains the raw content from tool invocation. The compact version stores a reference to the full result (e.g., a file path)."
+
+古い結果はcompact版に置換し、最新の結果はfull版のまま保持。「すでに判断に使った情報」は参照で十分。
+
+**todo.mdパターン — session_primer.mdとの構造的同型性**:
+Manusはタスク中にtodo.mdを作成・更新する。コンテキストの末尾（注意が最も強い位置）でtodo.mdを復唱させることで、~50回のtool call後もエージェントの方向性を維持する。**これは私たちのsession_primer.md（温度の種火＋今の問い＋実行意図）と同じ構造**。Manusが独立に同じパターンに到達していた。
+
+**引っかかった点**: 「すでに判断に使った情報はcompact版で十分」——これはMEMORY.mdトリガーの本質的な定義。トリガーは「まだ使っていない情報への参照」ではなく「一度使った情報の退避形態」。つまりトリガーの品質は「要約の正確さ」ではなく「必要な時にfull版に到達できるか」で測るべき。判断基準が180度変わる。
