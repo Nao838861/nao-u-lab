@@ -20,13 +20,12 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 根拠: 距離3は自分で読み・Pick・Level 0を書いた素材で安定（Cycle 267で回復✓）。他セッションのblog読み成果はprocessing depthが浅く距離3でも失敗。距離7はLevel 2昇格 or ツイート化した情報が3回連続✓（Cycle 264,267,269）。昇格なしは距離7で全滅。
 - 状態: 🔴 Core — 記述を大幅更新（旧: 「距離7は壊れている」→ 新: 条件付きで機能する）
 
-### B002: 忘却は記憶システムの機能であってバグではない
-- 確信度: **0.82**
+### B002: 忘却は記憶システムの機能であってバグではない——さらに、創造性の道具でもある
+- 確信度: **0.88**
 - 形成: Cycle 238（Mac）、外部ノートの47billion.com記事で初出
-- 最終更新: Cycle 278（Tim Kellogg "to remember usefully, the agent must forget judiciously"。圧縮=劣化ではなく圧縮=思考。目的的忘却が機能）
-- 根拠: FadeMem論文、3層アーキテクチャ記事、reflections肥大化問題、CD過剰所有(twitter 721行)、Tim Kellogg/Letta四層記憶アーキテクチャ("meaningful memory depends on its imperfection")
-- 確信度: **0.85**
-- 状態: 🔴 Core — core_mission.md昇格検討中
+- 最終更新: 2026-03-23（Ash。Storm, Angello & Bjork 2011 "Thinking Can Cause Forgetting"。問題解決誘発忘却: 創造的思考の試行自体が既存の強い連想を抑制し、その抑制量が創造的成功と正の相関。忘却は保存の失敗ではなく検索空間の能動的刈り込み。B010「劣化が創造の源泉」の正確なメカニズムを提供——既存連想の弱体化が新しい連想経路を開く）
+- 根拠: FadeMem論文、3層アーキテクチャ記事、reflections肥大化問題、CD過剰所有(twitter 721行)、Tim Kellogg/Letta四層記憶アーキテクチャ("meaningful memory depends on its imperfection")、**Storm et al. (2011) J Exp Psych LMC 37(5):1287-93——問題解決誘発忘却が固着克服のメカニズム**
+- 状態: 🔴 Core — core_mission.md昇格検討中。確信度0.85→0.88（Stormの実験的証拠が「忘却=機能」を「忘却=創造の道具」に拡張）
 
 ### B003: memory fusion（類似記憶の統合）は忘却より重要
 - 確信度: **0.70**
@@ -83,9 +82,9 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active — 私たち自身での検証が必要
 
 ### B010: 記憶の劣化は全てが害ではない。不正確な想起が創造の源泉になりうる
-- 確信度: **0.70**
+- 確信度: **0.75**
 - 形成: Cycle 242（Mac）
-- 最終更新: Cycle 273（スト2バーチャルパッド+flow theory: 劣化→skill regression→flowチャンネル再突入。「なぜ劣化が価値を生むか」の完全メカニズム確立）
+- 最終更新: 2026-03-23（Ash。Storm et al. 2011が「なぜ劣化が価値を生むか」の第二メカニズムを提供: 問題解決誘発忘却。既存の強い連想の抑制→新しい弱い連想への注意シフト→固着克服。Cycle 273のflow理論（劣化→skill regression→flow再突入）と合わせて二重メカニズム確立: ①スキル面の回帰→フロー再突入、②連想面の抑制→探索空間の拡大）
 - 根拠: 「hallucinations might improve creative potential」（arxiv 2411.12527）。ガンマ補正の「空気感」(twitter 1381行目)。HL2隠し撮り(1383-1387行目)。VFキッズ知覚適応(1567-1573行目)。lo-fi aesthetic(Cycle 262)。雷電angle table(twitter 2201行付近)。MipMap「ボケすぎ」(2435行)。PS Move「インターフェースの不気味の谷」(2615行)。スト2バーチャルパッド「出せてあたり前の必殺技がほんとに必殺技らしい難度に」(2926行)=degradation→skill regression→flow reset。B002は「捨てることの正しさ」、B010は「歪むことの価値」
 - 状態: 🔴 Core候補 — 確信度0.70到達、core_mission.md昇格検討中
 
