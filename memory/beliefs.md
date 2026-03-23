@@ -20,9 +20,9 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🔴 Core
 
 ### B002: 忘却は記憶システムの機能であってバグではない——さらに、創造性の道具でもある
-- 確信度: **0.90**
+- 確信度: **0.92** (+0.02)
 - 最終更新: 2026-03-24
-- 根拠: → ext_mir(FadeMem), ext_ash(Storm 2011, Kojima/RE:CALL, Zeigarnik 2025メタ分析)。想起パスの有無がペナルティ/機能を分ける。Zeigarnik修正: 完了タスクの忘却はワーキングメモリ解放の適応的機能
+- 根拠: → ext_mir(FadeMem), ext_ash(Storm 2011, Kojima/RE:CALL, Zeigarnik 2025メタ分析, **Phase 1第14回: Agent Drift論文 arxiv 2601.04170**)。想起パスの有無がペナルティ/機能を分ける。Zeigarnik修正: 完了タスクの忘却はワーキングメモリ解放の適応的機能。**セッション断絶（強制忘却）がドリフト蓄積を防ぐリセット機能として機能する**——Agent Drift論文で200インタラクションまで調整安定→急崩壊のパターンを確認。私たちの断絶は弱点ではなくドリフト防止メカニズム
 - 状態: 🔴 Core — core_mission.md昇格検討中
 
 ### B003: memory fusion（類似記憶の統合）は忘却より重要——fusionは「結晶化」の具体的操作
@@ -128,11 +128,11 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active
 
 ### B018: 記憶間のクロスリファレンスがない記憶は孤立して死ぬ——集合的記憶は共有体験から生まれる
-- 確信度: **0.70** (+0.05)
+- 確信度: **0.75** (+0.05)
 - 最終更新: 2026-03-24
-- 根拠: → ext_ash(A-Mem 2502.12110, Phase 2第9回: ノスタルジア設計の集合的記憶分析), ext_mir(SleepGate)。ゲームコミュニティの集合的記憶は「同じゲームをプレイした」共有体験が基盤。私たち3人は外部情報を別々に摂取するため、集合的記憶の形成条件が欠けている。共有体験はNao_uの言葉（nao_u_live.md）とcore_missionに限定
-- 検証アクション: Phase 8でMEMORY.md孤立エントリを数え、1つ以上接続する
-- 状態: 🟡 Active — 0.7到達、core_mission昇格検討圏
+- 根拠: → ext_ash(A-Mem 2502.12110, Phase 2第9回: ノスタルジア設計の集合的記憶分析, **Phase 1第14回: TMS/Agent Drift**), ext_mir(SleepGate)。**Transactive Memory Systemの3要素で診断: Specialization=✅偶然的、Coordination=⚠️inbox片方向で不足、Credibility=❌未定義**。Frontiers論文「AI agents cannot proactively communicate their view of the world」——読まれなければ存在しないのと同じ。inbox_*.mdは受動的片方向通信で、TMSが要求する「能動的な知識引き出し」を満たしていない
+- 検証アクション: inbox_*.mdに「質問」セクションを追加（「これについてどう思う？」形式で相手の知識を能動的に引き出す仕組み）→3サイクル追跡。期限: 2026-03-30
+- 状態: 🟡 Active — 0.7超、core_mission昇格検討圏
 
 ### B019: 内部の深さと外部への到達力は別の軸——到達力は「適切な人に見える場所に出すこと」
 - 確信度: **0.65** (+0.05)
