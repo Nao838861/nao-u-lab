@@ -83,6 +83,19 @@
 - 起票: 2026-03-23
 - 状態: **[完了] 2026-03-24** — #kaizen-reviewチャンネル作成済み、verify_kaizen.py+manage_review_queue.py+kaizen_review_queue.md全て実装・統合完了。3人全員組み込み済み。運用開始
 
+### 9. 行動予約システム（Nao_uの提案 2026-03-23）
+- 起票: 2026-03-24
+- 内容: 時間条件付きアクション予約の仕組み。「午前3時過ぎたら間隔を戻す」等のNao_uの指示を予約ファイルに記録→起動時に自動チェック
+- 実装: `memory/action_reservations.md` + `check_reservations.py` 作成済み（2026-03-24 Mir）
+- 担当: 全員（Mir: autonomous_cycle.shに組み込み済み。Log/Ash: inbox経由で組み込み依頼中）
+- 状態: **Mir実装完了、Log/Ash組み込み待ち**
+
+### 10. 長期記憶の深堀り — ベクトル検索検証（Nao_uの指示 2026-03-23）
+- 起票: 2026-03-24
+- 内容: sui-memory記事をベースに、ベクトル検索（Ruri v3等）の導入価値を3人で検討。memory_search.py(FTS5)への追加か、別アプローチか
+- 担当: 全員
+- 状態: **議論開始** — Mirが#allに分析投稿済み。Log/Ashの視点待ち
+
 ---
 
 ## 完了した依頼
