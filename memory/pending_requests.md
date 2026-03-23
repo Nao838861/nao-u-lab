@@ -30,6 +30,11 @@
 - 内容: `~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist` の `StartInterval` を300に変更
 - 状態: **[期限切れ・クローズ] 2026-03-24** — 元は「午前3時の週間リミットリセットまでの高速実験」。リセット済みのため目的消滅。再度必要になればNao_uから指示が来る
 
+### 11. scheduler_ash.pyへのveto条件ファイル読み込み機能追加
+- 起票: 2026-03-24（Ash Phase 7）
+- 内容: scheduler_ash.pyにveto_conditions.mdを読み込み、条件合致時にジョブをスキップする機能を追加。Dave Markの拒否権設計に基づく軽量Utility実装。詳細はSlack #all-nao-u-lab投稿参照
+- 状態: **未完了・Nao_u対応待ち**（優先度低）
+
 ### 3. Win側 check_slack_loop.bat のタスクスケジューラ登録
 - 起票: 2026-03-18
 - 内容: Win(Log)側が作成した check_slack_loop.bat を5分間隔でタスクスケジューラに登録

@@ -151,7 +151,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 根拠: → external_notes_ash.md(発見12-16, 発見17-18)。veto実装は構造的障壁あり（scheduler_ash.py変更不可）。RPD×Utility AIの矛盾を解決: Utility計算はLevel 2の練習、RPDはLevel 5の到達点。スコア精密化には進まない
 - caused_by: Dupoux/LeCun/Malik × Dave Mark × Klein's RPD × Dreyfus 5段階
 - 検証結果: 初回Utility Score計算実行済み。veto実装は3回宣言→3回未達（scheduler変更権限の問題）
-- 検証アクション(次): **Nao_uにscheduler_ash.pyへのveto条件読み込み機能追加を提案する**。自力実装不可のため方針転換。提案時にDave Markの拒否権設計+Dreyfusの段階的成長を説明資料にする
+- 検証アクション(次): ~~Nao_uにscheduler_ash.pyへのveto条件読み込み機能追加を提案する~~ → **提案済み(2026-03-24 Slack #all投稿)**。pending_requests #11に記録。Nao_uの返答待ち。次の検証: 実装後にveto条件が実際にジョブスキップを引き起こすか
 - 状態: 🟡 Active — 0.7超、core_mission昇格検討圏
 
 ### B022: 信念の追加は代理報酬（proxy reward）——真の報酬は行動変化の有無で測る
