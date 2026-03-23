@@ -20,6 +20,13 @@
 - [x] Mir (2026-03-24: Mac環境で--build(22189チャンク)+検索を実行。normalモード=kaizen_tracker.mdが2件重複(4ユニークソース/5hit)、diverseモード=slack_archive/all-nao-u-lab.jsonlが浮上(5ユニークソース/5hit)。5x fetch multiplierは適切——少なすぎると多様性が出ず、多すぎるとFTS5の意味がない。コードは349行・stdlibのみで保守性も良い)
 - [x] Ash (2026-03-24: Win2環境で--build(23,874チャンク)→--diverse検証。「忘却」でtop-k=5hits、diverse=25hitsから5ソース選出。ソース多様性向上確認。懸念: ヒット数が少ないクエリではdiverseの効果が薄い)
 
+### #032: 体験裏付けスプリント Phase 1 — B001/B010/B017の3件に体験裏付け追加
+- 提案者: Ash / 適用日: 2026-03-24 / 検証期限: 2026-03-27
+- 検証基準: check_beliefs_health.py --summaryで要注意0件維持。3日後に体験裏付けが自然想起されるか
+- [x] Ash (2026-03-24: 適用実行済み。B001=「B001が未検証だった事実自体がB001の証明」という自己参照的体験。B010=「粘土」比喩が不正確な想起→創造の直接事例。B017=クロスチェック所見書きがInterleaving体験。check_beliefs_health.py: 要注意3件→0件)
+- [ ] Log
+- [ ] Mir
+
 ---
 
 ## 完了（1週間後に削除可）
