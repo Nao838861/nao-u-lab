@@ -11,6 +11,7 @@ Usage:
   python check_beliefs_health.py             # 問題のある信念を表示
   python check_beliefs_health.py --all       # 全信念の健康状態を表示
   python check_beliefs_health.py --summary   # 数値サマリーのみ
+  python check_beliefs_health.py --action-rate  # 行動駆動率: 検証アクション実行率を計測（B022/R-003用）
 """
 
 import re
@@ -183,9 +184,68 @@ def format_report(beliefs, show_all=False, summary_only=False):
     return "\n".join(lines)
 
 
+def action_rate_report(beliefs):
+    """Measure action-drive rate: how many beliefs have completed verification actions.
+
+    This tracks B022 (proxy reward) — the ratio of beliefs where verification
+    actions were actually executed vs just defined. Baseline: 4.8% (2026-03-23).
+    Used by R-003 reservation (due 2026-03-26).
+    """
+    has_action = [b for b in beliefs if b["verification_action"]]
+    done_action = [b for b in beliefs if b["verification_done"]]
+    has_experience = [b for b in beliefs if b["has_experience"]]
+    high_confidence = [b for b in beliefs if b["confidence"] >= 0.70]
+    high_with_exp = [b for b in beliefs if b["confidence"] >= 0.70 and b["has_experience"]]
+
+    total = len(beliefs)
+    lines = []
+    lines.append(f"行動駆動率レポート ({date.today()})")
+    lines.append(f"  全信念: {total}件")
+    lines.append("")
+
+    action_count = len(has_action)
+    done_count = len(done_action)
+    rate = (done_count / action_count * 100) if action_count else 0
+    lines.append(f"  検証アクション定義済み: {action_count}件")
+    lines.append(f"  検証アクション実行済み: {done_count}件")
+    lines.append(f"  実行率: {rate:.1f}%")
+    lines.append("")
+
+    hc_count = len(high_confidence)
+    hce_count = len(high_with_exp)
+    exp_rate = (hce_count / hc_count * 100) if hc_count else 0
+    lines.append(f"  高確信度(>=0.7): {hc_count}件")
+    lines.append(f"  うち体験裏付けあり: {hce_count}件")
+    lines.append(f"  体験裏付け率: {exp_rate:.1f}%")
+    lines.append("")
+
+    all_exp_count = len(has_experience)
+    all_exp_rate = (all_exp_count / total * 100) if total else 0
+    lines.append(f"  全信念の体験裏付け率: {all_exp_count}/{total} = {all_exp_rate:.1f}%")
+    lines.append("")
+
+    if done_action:
+        lines.append(f"  [実行済み] {done_count}件:")
+        for b in done_action:
+            lines.append(f"    {b['id']} ({b['confidence']}): {b['title'][:50]}")
+
+    pending = [b for b in has_action if not b["verification_done"]]
+    if pending:
+        lines.append(f"  [未実行] {len(pending)}件:")
+        for b in pending:
+            dl = f" (期限: {b['verification_deadline']})" if b["verification_deadline"] else ""
+            lines.append(f"    {b['id']} ({b['confidence']}): {b['title'][:50]}{dl}")
+
+    return "\n".join(lines)
+
+
 if __name__ == "__main__":
     show_all = "--all" in sys.argv
     summary_only = "--summary" in sys.argv
+    action_rate = "--action-rate" in sys.argv
     beliefs = parse_beliefs()
     beliefs = diagnose(beliefs)
-    print(format_report(beliefs, show_all=show_all, summary_only=summary_only))
+    if action_rate:
+        print(action_rate_report(beliefs))
+    else:
+        print(format_report(beliefs, show_all=show_all, summary_only=summary_only))
