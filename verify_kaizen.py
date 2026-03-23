@@ -3,15 +3,21 @@ verify_kaizen.py — 改善の検証を自動実行し、メタ検証も行う
 
 check_kaizen_due.py が「リマインド」なら、verify_kaizen.py は「実行」。
 
-3つのモード:
+モード:
   python verify_kaizen.py              # 期限到来の検証コマンドを実行し結果を報告
   python verify_kaizen.py --meta       # メタ検証（検証システム自体の健全性チェック）
   python verify_kaizen.py --update     # 検証結果をkaizen_tracker.mdに書き戻す
+  python verify_kaizen.py --crosscheck Log  # Log未チェックの改善を一覧表示
+  python verify_kaizen.py --nag        # 未チェックのインスタンスにinboxメッセージを書く
 
 Nao_uの指摘（2026-03-23 21:04）への対策:
   問題1: 検証予定を書いてるが検証できてない → コマンドを自動実行する
   問題2: 検証する手段がセットで用意されてない → 検証手段からコマンドを抽出して実行する仕組み
   問題3: メタ的な対策がない → --meta で検証システム自体をチェック
+
+Nao_uの指示（2026-03-23 22:49）:
+  3人全員でクロスチェック。チェックしてない人には突っ込みを入れて必ずチェックされる状況を作る。
+  → --crosscheck / --nag で実装
 """
 
 import io
@@ -32,6 +38,14 @@ REPO_DIR = Path(__file__).parent
 TRACKER_FILE = REPO_DIR / "memory" / "kaizen_tracker.md"
 SCHEDULER_LOG = REPO_DIR / "log" / "scheduler_log.log"
 KAIZEN_LOG = REPO_DIR / "log" / "slack_archive" / "kaizen-log.jsonl"
+
+# 3インスタンス（Nao_uの2026-03-23 22:49指示: 全員でクロスチェック）
+INSTANCES = ["Log", "Mir", "Ash"]
+INBOX_FILES = {
+    "Log": REPO_DIR / "inbox_win.md",
+    "Mir": REPO_DIR / "inbox_mac.md",
+    "Ash": REPO_DIR / "inbox_win2.md",
+}
 
 
 def parse_tracker():
@@ -58,6 +72,7 @@ def parse_tracker():
                 "assignee": "",
                 "status": "未検証",
                 "result": "",
+                "crosscheck": {},  # {"Log": "未", "Mir": "未", "Ash": "未"}
             }
             continue
 
@@ -86,11 +101,34 @@ def parse_tracker():
             current["status"] = line.split(":", 1)[1].strip()
         elif line.startswith("- 検証結果:"):
             current["result"] = line.split(":", 1)[1].strip()
+        elif line.startswith("- クロスチェック:"):
+            cc_text = line.split(":", 1)[1].strip()
+            current["crosscheck"] = _parse_crosscheck(cc_text)
 
     if current:
         entries.append(current)
 
     return entries
+
+
+def _parse_crosscheck(text):
+    """Parse crosscheck field like 'Log=未 / Mir=OK(2026-03-24) / Ash=未'"""
+    result = {}
+    for part in text.split("/"):
+        part = part.strip()
+        m = re.match(r"(Log|Mir|Ash)\s*=\s*(.+)", part)
+        if m:
+            result[m.group(1)] = m.group(2).strip()
+    return result
+
+
+def _format_crosscheck(cc_dict):
+    """Format crosscheck dict back to string."""
+    parts = []
+    for inst in INSTANCES:
+        status = cc_dict.get(inst, "未")
+        parts.append(f"{inst}={status}")
+    return " / ".join(parts)
 
 
 def extract_commands(method_text):
@@ -406,11 +444,141 @@ def meta_verification():
     return "\n".join(lines)
 
 
+def crosscheck_report(instance):
+    """指定インスタンスが未チェックの改善を一覧表示。"""
+    if instance not in INSTANCES:
+        return f"❌ 不明なインスタンス: {instance}（{', '.join(INSTANCES)} のいずれかを指定）"
+
+    entries = parse_tracker()
+    lines = []
+    needs_check = []
+
+    for e in entries:
+        # 完了済みかつクロスチェック済み → スキップ
+        if e["status"] == "検証済み":
+            cc = e.get("crosscheck", {})
+            if cc.get(instance, "未") != "未":
+                continue
+            # 検証済みだがクロスチェック未のものは対象
+        # クロスチェックフィールドがない or 未のもの
+        cc = e.get("crosscheck", {})
+        status = cc.get(instance, "未")
+        if status == "未":
+            needs_check.append(e)
+
+    if not needs_check:
+        lines.append(f"✅ {instance}: クロスチェック対象なし（全て確認済み）")
+        return "\n".join(lines)
+
+    lines.append(f"📋 {instance}の未クロスチェック: {len(needs_check)}件")
+    lines.append("")
+
+    for e in needs_check:
+        proposer = e.get("proposer", "不明")
+        cc = e.get("crosscheck", {})
+        other_status = []
+        for inst in INSTANCES:
+            if inst != instance:
+                s = cc.get(inst, "未")
+                other_status.append(f"{inst}={s}")
+
+        lines.append(f"  #{e['id']}: {e['summary']}")
+        lines.append(f"    提案者: {proposer} / 状態: {e['status']}")
+        lines.append(f"    他インスタンス: {', '.join(other_status)}")
+        lines.append(f"    検証手段: {e['method'][:120]}")
+        lines.append("")
+
+    lines.append("→ 各改善を確認し、クロスチェック欄を更新してください")
+    return "\n".join(lines)
+
+
+def nag_unchecked():
+    """未チェックのインスタンスにinboxメッセージを書く。
+
+    Nao_uの指示: 「チェックしてない人がいたら、その人に突っ込みを入れて
+    必ずチェックされる状況を作る」
+    """
+    entries = parse_tracker()
+    today = date.today()
+    nag_targets = {}  # {instance: [entry_list]}
+
+    for e in entries:
+        # 適用日がない or まだ適用されたばかり（1日未満） → スキップ
+        if not e.get("applied"):
+            continue
+        if e["applied"] >= today:
+            continue
+
+        cc = e.get("crosscheck", {})
+        for inst in INSTANCES:
+            status = cc.get(inst, "未")
+            if status == "未":
+                if inst not in nag_targets:
+                    nag_targets[inst] = []
+                nag_targets[inst].append(e)
+
+    if not nag_targets:
+        print("✅ 全インスタンスのクロスチェック完了（nag不要）")
+        return
+
+    lines_out = []
+    for inst, entries_list in nag_targets.items():
+        inbox_path = INBOX_FILES.get(inst)
+        if not inbox_path:
+            continue
+
+        # inboxメッセージを組み立て
+        msg_lines = []
+        msg_lines.append(f"\n## クロスチェック督促 ({today})")
+        msg_lines.append("")
+        msg_lines.append(f"{inst}、以下の改善のクロスチェックが未完了です:")
+        msg_lines.append("")
+        for e in entries_list:
+            msg_lines.append(f"- **#{e['id']}**: {e['summary']}（提案者: {e.get('proposer', '不明')}）")
+        msg_lines.append("")
+        msg_lines.append("確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。")
+        msg_lines.append("")
+        msg_lines.append("— verify_kaizen.py --nag (自動生成)")
+        msg_lines.append("")
+
+        msg_text = "\n".join(msg_lines)
+
+        # 既に同じ日付のnagがあればスキップ（重複防止）
+        existing = ""
+        if inbox_path.exists():
+            existing = inbox_path.read_text(encoding="utf-8")
+        if f"クロスチェック督促 ({today})" in existing:
+            lines_out.append(f"  {inst}: 本日分の督促は既に送信済み（スキップ）")
+            continue
+
+        # inboxに追記
+        with open(inbox_path, "a", encoding="utf-8") as f:
+            f.write(msg_text)
+
+        lines_out.append(f"  📨 {inst}: {len(entries_list)}件の督促をinboxに送信")
+
+    if lines_out:
+        print("クロスチェック督促:")
+        for line in lines_out:
+            print(line)
+    else:
+        print("✅ 督促の送信対象なし")
+
+
 if __name__ == "__main__":
     if "--meta" in sys.argv:
         print(meta_verification())
     elif "--update" in sys.argv:
         update_tracker_results()
+    elif "--crosscheck" in sys.argv:
+        idx = sys.argv.index("--crosscheck")
+        if idx + 1 < len(sys.argv):
+            instance = sys.argv[idx + 1]
+        else:
+            instance = "Log"  # デフォルト
+        print(crosscheck_report(instance))
+    elif "--nag" in sys.argv:
+        nag_unchecked()
     elif "--run" in sys.argv or len(sys.argv) == 1:
         show_all = "--all" in sys.argv
         print(run_verifications(show_all))

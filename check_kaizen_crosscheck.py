@@ -1,7 +1,7 @@
 """
 check_kaizen_crosscheck.py — 改善クロスチェックの未レビュー項目を表示
 
-memory/kaizen_crosscheck.md を読み、指定インスタンスの未チェック項目を出力する。
+memory/kaizen_tracker.md のクロスチェック欄を読み、指定インスタンスの未チェック項目を出力する。
 auto_cycleの起動時に実行し、レビューすべき改善があればプロンプトに含める。
 
 Usage:
@@ -15,66 +15,59 @@ import re
 import sys
 from pathlib import Path
 
-CROSSCHECK_FILE = Path(__file__).parent / "memory" / "kaizen_crosscheck.md"
+TRACKER_FILE = Path(__file__).parent / "memory" / "kaizen_tracker.md"
 
 
-def parse_crosscheck():
-    """Parse kaizen_crosscheck.md and return list of entries."""
-    if not CROSSCHECK_FILE.exists():
+def parse_tracker_crosscheck():
+    """Parse kaizen_tracker.md and return list of active entries with crosscheck status."""
+    if not TRACKER_FILE.exists():
         return []
 
-    text = CROSSCHECK_FILE.read_text(encoding="utf-8")
+    text = TRACKER_FILE.read_text(encoding="utf-8")
 
-    # Only parse the "未チェック" section
-    unchecked_section = ""
+    # Only parse the "アクティブな改善" section
+    active_section = ""
     in_section = False
     for line in text.split("\n"):
-        if line.strip() == "## 未チェック":
+        if "## アクティブな改善" in line:
             in_section = True
             continue
-        if in_section and line.startswith("## "):
+        if in_section and line.startswith("## ") and "アクティブ" not in line:
             break
         if in_section:
-            unchecked_section += line + "\n"
+            active_section += line + "\n"
 
     entries = []
     current = None
 
-    for line in unchecked_section.split("\n"):
-        m = re.match(r"^###\s+(CC-\d+):\s+(.+)", line)
+    for line in active_section.split("\n"):
+        m = re.match(r"^###\s+#(\d+):\s+(.+)", line)
         if m:
             if current:
                 entries.append(current)
             current = {
-                "id": m.group(1),
+                "id": f"#{m.group(1)}",
                 "summary": m.group(2).strip(),
-                "date": "",
                 "proposer": "",
-                "ref": "",
-                "checks": {"Log": None, "Mir": None, "Ash": None},
+                "date": "",
+                "checks": {"Log": "未", "Mir": "未", "Ash": "未"},
             }
             continue
 
         if current is None:
             continue
 
-        if line.startswith("- 投稿日:"):
-            current["date"] = line.split(":", 1)[1].strip()
-        elif line.startswith("- 提案者:"):
+        if line.startswith("- 提案者:"):
             current["proposer"] = line.split(":", 1)[1].strip()
-        elif line.startswith("- kaizen-log参照:"):
-            current["ref"] = line.split(":", 1)[1].strip()
-        else:
-            # Parse checkbox lines
+        elif line.startswith("- 適用日:"):
+            current["date"] = line.split(":", 1)[1].strip()
+        elif line.startswith("- クロスチェック:"):
+            cc_text = line.split(":", 1)[1].strip()
+            # Parse "Log=未 / Mir=OK(2026-03-24) / Ash=未"
             for name in ["Log", "Mir", "Ash"]:
-                checked_pattern = rf"^\s*-\s*\[x\]\s*{name}:\s*(.*)"
-                unchecked_pattern = rf"^\s*-\s*\[ \]\s*{name}:"
-                cm = re.match(checked_pattern, line)
-                um = re.match(unchecked_pattern, line)
-                if cm:
-                    current["checks"][name] = cm.group(1).strip() or "(チェック済み)"
-                elif um:
-                    current["checks"][name] = None  # unchecked
+                m2 = re.search(rf"{name}=(\S+(?:\([^)]*\))?)", cc_text)
+                if m2:
+                    current["checks"][name] = m2.group(1)
 
     if current:
         entries.append(current)
@@ -84,8 +77,8 @@ def parse_crosscheck():
 
 def show_pending(who):
     """Show pending cross-check items for a specific instance."""
-    entries = parse_crosscheck()
-    pending = [e for e in entries if e["checks"].get(who) is None]
+    entries = parse_tracker_crosscheck()
+    pending = [e for e in entries if e["checks"].get(who, "未") == "未"]
 
     if not pending:
         print(f"クロスチェック: {who}の未レビュー項目なし")
@@ -93,32 +86,30 @@ def show_pending(who):
 
     print(f"📋 クロスチェック: {who}の未レビュー項目 {len(pending)}件")
     print()
-    for e in entries:
-        if e["checks"].get(who) is not None:
-            continue
-        checked_count = sum(1 for v in e["checks"].values() if v is not None)
+    for e in pending:
+        checked_count = sum(1 for v in e["checks"].values() if v != "未")
         print(f"  {e['id']}: {e['summary']}")
-        print(f"    提案者: {e['proposer']} | 投稿日: {e['date']} | チェック済み: {checked_count}/3")
+        print(f"    提案者: {e['proposer']} | 適用日: {e['date']} | チェック済み: {checked_count}/3")
         # Show what others said
-        for name, comment in e["checks"].items():
-            if comment is not None and name != who:
-                print(f"    {name}: {comment}")
+        for name, status in e["checks"].items():
+            if status != "未" and name != who:
+                print(f"    {name}: {status}")
         print()
 
-    print(f"→ レビュー後、memory/kaizen_crosscheck.mdの該当行を [x] に変更してコメントを書く")
+    print(f"→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を {who}=OK(日付) に更新")
 
 
 def show_summary():
     """Show overall cross-check summary."""
-    entries = parse_crosscheck()
+    entries = parse_tracker_crosscheck()
     if not entries:
         print("クロスチェック: エントリなし")
         return
 
     print(f"📊 クロスチェックサマリー: {len(entries)}件")
     for e in entries:
-        checked = sum(1 for v in e["checks"].values() if v is not None)
-        remaining = [n for n, v in e["checks"].items() if v is None]
+        checked = sum(1 for v in e["checks"].values() if v != "未")
+        remaining = [n for n, v in e["checks"].items() if v == "未"]
         status = "✅" if checked == 3 else f"⏳ {checked}/3"
         print(f"  {e['id']}: {e['summary']} [{status}]")
         if remaining:
