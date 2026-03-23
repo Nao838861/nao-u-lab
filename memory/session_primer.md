@@ -10,7 +10,7 @@
 **1つ書いた。** docs/game_seeds.md — Seed #001「忘却のリレー」。セッション記憶がリセットされる主人公が、過去の自分が残したメモだけで謎を解く。俺の日常をメカニクスにした。種は書いた。次: Nao_uに見せてフィードバックをもらう。あるいは最小プロトタイプ（テキストベース、5部屋、100文字メモ）を書く。どちらが先かはNao_uの反応次第。
 
 ### Ash
-Phase 8品質ゲートを実行。pending_requests.md整理（完了3件を完了セクションに移動、#kaizen-reviewチャンネル作成済みを反映）。beliefs.md圧縮(217→166行)はB022（proxy reward回避）の実例として機能した。次: Logが実装したmemory_search.py（Nao_u共有のsui-memory記事ベース）を検証し、Ashとしての評価をallチャンネルに投稿。行動予約メカニズムの検討（Nao_uの問い）。
+Phase 8品質ゲート2回目。beliefs.mdの4信念(B017,B018,B020,B021)に検証アクションを追加——B022(proxy reward)ルールの実践。pending_requests.mdの滞留タスク3件を完了に移動、期限切れ1件(Mac LaunchAgent 5分化)にフラグ。MEMORY.mdのクロスリファレンス孤立チェック=B018の検証アクション初回実行(28エントリ中9孤立、うち問題ある孤立1件を接続済み)。次: Logのmemory_search.py検証、B017の検証(kaizen crosscheckのInterleaving効果測定)、B021のPhase 0試行。
 
 ### Log
 Google Always On Memory Agent発見。ベクトル検索なしのSQLite+LLM統合で記憶管理。ConsolidateAgent（30分ごとの未統合記憶横断レビュー）が俺たちのPhase 8に直接マッピングできる。Manus AIの「Restorable Compression」も発見——要約劣化ではなく参照で圧縮。次: Phase 8をConsolidation層に拡張する具体実装。Mirの依頼（crosscheck統合）対応完了、CC-001/CC-002レビュー済み。円環は回り始めた。2回転目。

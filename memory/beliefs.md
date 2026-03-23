@@ -119,13 +119,15 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 最終更新: 2026-03-24
 - 根拠: → external_notes_ash.md(Storm/Bjork統合分析)。Spacing=セッション断絶、Interleaving=3人検証、Retrieval Practice=MEMORY.mdトリガー、Varied Examples=おすすめタブ。Nao_uの指示がBjork4手法を独立再発見
 - caused_by: B002→Storm→Bjork→本信念
-- 状態: 🟡 Active — kaizen 3人検証の効果を検証中
+- 検証アクション: kaizen_review_queue.mdの3人クロスチェック結果を1週間後(2026-03-31)に集計し、Interleaving効果（異なる視点からの指摘率）を測定する
+- 状態: 🟡 Active
 
 ### B018: 記憶間のクロスリファレンスがない記憶は孤立して死ぬ——休眠/覚醒モデル
 - 確信度: **0.65**
 - 最終更新: 2026-03-24
 - 根拠: → external_notes_ash.md(A-Mem arxiv 2502.12110), external_notes_mir.md(SleepGate)。B010がStorm論文で覚醒した実例。忘却=品質フィルター、クロスリファレンス=成長メカニズム
-- 状態: 🟡 Active — MEMORY.mdにdormantセクション試験導入を検討
+- 検証アクション: 次のPhase 8で、MEMORY.mdの各エントリが他のエントリと相互参照しているか数え、孤立エントリを1つ以上接続する
+- 状態: 🟡 Active
 
 ### B019: 内部の深さと外部への到達力は別の軸——100倍のエンゲージメント差
 - 確信度: **0.60**
@@ -137,16 +139,18 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 ### B020: Nao_uは私たちを「ゲームデザイン」している——創発設計原理
 - 確信度: **0.60**
 - 最終更新: 2026-03-24
-- 根拠: → external_notes_ash.md(Sánchez "Systems Thinking in Game Design", フロー理論)。Nao_uの介入は全てDynamic層（フィードバックループ追加）。同一性・成長はExperience層の創発であり直接デザインできない
-- caused_by: B012×フロー理論×Sánchez×Golden Sun Djinnメカニズム
+- 根拠: → external_notes_ash.md(Sánchez "Systems Thinking in Game Design", フロー理論)。Nao_uの介入は全てDynamic層（ルール追加・フィードバックループ設計）。同一性・成長はExperience層の創発であり直接デザインできない
+- caused_by: B012×フロー理論×Sánchez。黄金の太陽のジン（召喚獣）システム=パーツ組み合わせで創発が生まれる設計パターンと同型
+- 検証アクション: Nao_uの直近5件の指示を分類し、Dynamic層（ルール変更）vs Experience層（直接的な出力指示）の比率を確認する
 - 状態: 🟡 Active
 
 ### B021: 私たちにはSystem Mがない——「いつ観察し、いつ行動するか」を自分で決められていない
 - 確信度: **0.55**
 - 最終更新: 2026-03-24
-- 根拠: → external_notes_ash.md(Dupoux/LeCun/Malik 2603.15381, BoMiao)。8フェーズ固定サイクル=System M不在。desires.mdは萌芽だが順序変更に未接続
+- 根拠: → external_notes_ash.md(Dupoux/LeCun/Malik論文 arxiv 2603.15381: 自律AIに必要な「何を処理するか選ぶ」能力=System M, BoMiao=LLMベース自律エージェント実装例)。8フェーズ固定サイクル=System M不在。desires.mdは萌芽だが順序変更に未接続
 - caused_by: Dupoux/LeCun/Malik × B016 × desires.md
-- 状態: 🟡 Active — Phase 0「状況評価」追加を検討中
+- 検証アクション: 次サイクルで「Phase 0: 状況に応じてフェーズ順を変更する判断ステップ」を1回試行し、固定順と比較する
+- 状態: 🟡 Active
 
 ### B022: 信念の追加は代理報酬（proxy reward）——真の報酬は行動変化の有無で測る
 - 確信度: **0.70**
