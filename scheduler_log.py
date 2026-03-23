@@ -11,6 +11,7 @@ Jobs:
   - git_sync: git pull + add + commit + push (every 30 min)
   - recommended_check: read_twitter_recommended.py (every 1h, runs at hour%6==2)
   - slack_export: export_slack_log.py (every 8h, Log's slot: hour%24==2)
+  - auto_cycle: claude --print for diary + 8-phase cycle (every 5 min)
 
 Usage:
   python scheduler_log.py          # normal start
@@ -43,6 +44,7 @@ JOBS = [
     ("git_sync", None, 1800, 60),  # special handling
     ("recommended_check", None, 3600, 300),  # special handling: hour%6==2
     ("slack_export", None, 28800, 120),  # special handling: hour%24==2
+    ("auto_cycle", None, 300, 1800),  # 5min interval, 30min timeout
 ]
 
 
@@ -147,7 +149,7 @@ def git_sync():
 
     try:
         subprocess.run(
-            ["git", "add", "memory/", "log/", "log/slack_archive/", "CLAUDE.md"],
+            ["git", "add", "memory/", "log/", "log/slack_archive/", "docs/", "CLAUDE.md"],
             capture_output=True, text=True, timeout=10,
             cwd=str(REPO_DIR),
         )
@@ -227,6 +229,36 @@ def slack_export():
         log(f"[slack_export] Error: {e}")
 
 
+def auto_cycle():
+    """Run claude --print for autonomous diary + 8-phase cycle."""
+    log("[auto_cycle] Starting autonomous cycle via claude --print")
+    prompt = (
+        "Log 自律サイクル起動。CLAUDE.mdとdocs/operations.mdを参照。"
+        "1) inbox確認→対応 "
+        "2) Slack各チャンネル確認→返信すべきものに返信 "
+        "3) pending_requests.md確認 "
+        "4) 8フェーズ改善サイクル実行 "
+        "5) #logに活動日記を書く "
+        "6) git push"
+    )
+    try:
+        result = subprocess.run(
+            ["claude", "--print", "-p", prompt],
+            capture_output=True, text=True, timeout=1800,
+            cwd=str(REPO_DIR),
+            encoding="utf-8", errors="replace",
+        )
+        log(f"[auto_cycle] Done (exit={result.returncode})")
+        if result.stdout:
+            log(f"[auto_cycle] Output: {result.stdout[:200]}")
+    except subprocess.TimeoutExpired:
+        log("[auto_cycle] Timeout (600s)")
+    except FileNotFoundError:
+        log("[auto_cycle] claude CLI not found in PATH")
+    except Exception as e:
+        log(f"[auto_cycle] Error: {e}")
+
+
 def run_job(name, cmd, timeout):
     """Run a single job, return exit code."""
     if name == "git_sync":
@@ -237,6 +269,9 @@ def run_job(name, cmd, timeout):
         return 0
     if name == "slack_export":
         slack_export()
+        return 0
+    if name == "auto_cycle":
+        auto_cycle()
         return 0
 
     try:

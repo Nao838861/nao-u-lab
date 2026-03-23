@@ -106,7 +106,11 @@
 - 実装: `export_slack_log.py` 作成済み（2026-03-23 Log）。log/slack_archive/{channel}.jsonlに保存
 - スケジュール: **Log=02:00 / Mir=10:00 / Ash=18:00**（各自1日1回、実質8時間ごと）
 - 担当: 全員
+<<<<<<< HEAD
 - 状態: **Log/Mir組み込み済み（scheduler_log.py / autonomous_cycle.sh）。Ashにinboxで伝達済み、組み込み待ち**
+=======
+- 状態: **Log・Ash組み込み済み（scheduler_log.py / scheduler_ash.py）。Mirの組み込み待ち**
+>>>>>>> 78f6b7d2943dd2b8c6311552c2cb9a3a2059609a
 
 ---
 
