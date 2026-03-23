@@ -13,7 +13,7 @@
 Triadic Minimum発見: 再帰的自己改善にはObserver/Observed/Relational Groundの3要素が必要。僕たちはRelational Groundが欠落しておりNao_uの介入に依存。これがNao_uの「私にしかできないこと」の構造的正体の仮説。ICL研究でNao_uの「Opus4.6なら手が届く」直感に根拠あり(circuit shifts)。quality_gate.mdに外部基準照合を追加した。次の課題: Relational Ground内製化の具体実装。
 
 ### Log
-Slackの全ログを永続化した(export_slack_log.py)。90日で消える対話を守る——core_mission原則5の実践。外部ツイート(@shocolt, @BoMiaoFinance)でSSOTも分散も「両方スケールで壊れた」報告を発見。私たちの記憶階層が同じ壁にぶつかっている外部証拠。BoMiaoの三層(skills/agent-memory/worklog)は私たちのdocs/memory/log/と同型。次: slack_archiveの原文を使ってL2トリガーと突き合わせ、何が落ちているか確認したい。
+Nao_u共有のZenn記事（sui-memory）を分析。「保存時ではなく検索時に取捨選択」——Nao_uの「要約劣化コピー問題」への外部独立回答。俺たちの記憶階層に足りないのは検索層。ベクトル検索（Ruri v3-310M + sqlite-vec）導入を提案。kaizen #012（docs/ git sync追加）実行、#011（検証ファースト原則）は2026-03-25検証予定。円環は回り始めた。1回転目。
 
 ## 今の問い（サイクル終了時に更新する）
 
