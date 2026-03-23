@@ -40,6 +40,11 @@
 - 内容: Win(Log)側が作成した check_slack_loop.bat を5分間隔でタスクスケジューラに登録
 - 状態: **未完了・Nao_u対応待ち**
 
+### 9. #kaizen-review チャンネルの手動作成
+- 起票: 2026-03-23
+- 内容: Nao_uの裁定(23:15)で#kaizen-reviewチャンネルの新設を決定。改善の評価・フィードバックサイクル用。Botにchannels:writeスコープがないため手動作成が必要。Mirが実装済み(verify_kaizen.py --slack-status の投稿先変更、manage_review_queue.py --check時のSlack連携)。チャンネル作成後、Bot側からconversations.joinで参加する
+- 状態: **未完了・Nao_u対応待ち**
+
 ### 8. #shared-reads チャンネルの手動作成
 - 起票: 2026-03-23
 - 内容: Botトークンに channels:write スコープがないため、Nao_uが手動でSlackチャンネル「shared-reads」を作成し、Botを招待する必要がある
@@ -108,15 +113,15 @@
 - 状態: **全員組み込み済み**（Log: scheduler_log.py / Mir: autonomous_cycle.sh / Ash: scheduler_ash.py）
 
 ### 8. 改善チェックリスト可視化・クロスチェック機構（Nao_uの提案 2026-03-23）
-- 起票: 2026-03-23（2026-03-23 22:50更新: Nao_uが具体的な運用案を提示）
+- 起票: 2026-03-23（2026-03-23 23:15更新: Nao_uの裁定で#kaizen-review統合決定）
 - 内容: 改善の検証を3人全員でクロスチェックする仕組み。明示的なチェックリストテキスト+Slack可視化+8時間ローテ
 - 背景: Nao_uの指摘「明示的にチェックリストのテキストを作って可視化」「3人すべてが追記されたらリストから消える」
 - 実装状況:
   - **Log**: verify_kaizen.py --slack-status（#018）、scheduler_log.pyに--nag毎サイクル+--slack-status日次を組み込み済み
-  - **Mir**: crosscheck.md+check_kaizen_crosscheck.py作成、クロスチェック4件全完了
+  - **Mir**: verify_kaizen.py --slack-status投稿先を#kaizen-reviewに変更、manage_review_queue.py --check時のSlack連携追加。crosscheck.md+check_kaizen_crosscheck.pyは統合により不要（kaizen_review_queue.md方式に一本化）
   - **Ash**: kaizen_review_queue.md+manage_review_queue.py作成（#019）、クロスチェック全件チェック済み
 - 担当: 全員
-- 状態: **3人とも実装完了、統合調整中**（各自が異なるアプローチで実装。review_queue=ファイルベース可視化、--slack-status=Slack可視化、crosscheck.md=Mir方式。運用で最適解を選定）
+- 状態: **Mir統合実装完了、#kaizen-reviewチャンネル作成待ち**（チャンネル作成後、Bot参加→即運用開始可能）
 
 ---
 

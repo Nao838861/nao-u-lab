@@ -213,6 +213,14 @@ def mark_checked(entry_id, instance, comment):
     print(f"✅ #{entry_id}: {instance}のチェックを記録しました")
     print(f"   所見: {comment}")
 
+    # #kaizen-review にレビュー結果を投稿
+    try:
+        sys.path.insert(0, str(REPO_DIR))
+        from verify_kaizen import post_review
+        post_review(instance, entry_id, comment)
+    except Exception as ex:
+        print(f"  (Slack投稿スキップ: {ex})")
+
 
 def cleanup_completed():
     """Move fully-checked items to completed section."""

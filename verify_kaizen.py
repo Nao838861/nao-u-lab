@@ -566,11 +566,45 @@ def nag_unchecked():
         print("✅ 督促の送信対象なし")
 
 
-def slack_status():
-    """クロスチェック状況を #kaizen-log にSlack投稿。
+def _resolve_review_channel():
+    """#kaizen-review のチャンネルIDを解決。なければNone。"""
+    try:
+        sys.path.insert(0, str(REPO_DIR))
+        import slack_bot
+        return slack_bot._resolve_channel("kaizen-review")
+    except Exception:
+        return None
 
-    Nao_uの提案(2026-03-23): 改善チェックリストをSlack上で可視化する。
-    Kaizenボードの原理: 「見えない改善は存在しない改善と同じ」。
+
+def _post_to_review(msg):
+    """#kaizen-review に投稿。チャンネルがなければフォールバック表示。"""
+    sys.path.insert(0, str(REPO_DIR))
+    import slack_bot
+    channel_id = _resolve_review_channel()
+    if channel_id == "kaizen-review":
+        # チャンネル名がそのまま返った = 未作成
+        print("⚠ #kaizen-review チャンネルが未作成。Nao_uに作成を依頼してください。")
+        print("--- 以下を手動投稿してください ---")
+        print(msg)
+        return False
+    try:
+        result = slack_bot.post_message(channel_id, msg)
+        if result.get("ok"):
+            print(f"✅ #kaizen-review にステータス投稿完了")
+            return True
+        else:
+            print(f"❌ Slack投稿失敗: {result.get('error', 'unknown')}")
+            return False
+    except Exception as ex:
+        print(f"❌ Slack投稿エラー: {ex}")
+        return False
+
+
+def slack_status():
+    """クロスチェック状況を #kaizen-review にSlack投稿。
+
+    Nao_uの裁定(2026-03-23 23:15):
+      kaizen-log = 提案と実装、kaizen-review = 評価とフィードバックサイクル。
     """
     entries = parse_tracker()
     today = date.today()
@@ -608,22 +642,19 @@ def slack_status():
                           if any(cc.get(inst, "未") == "未"
                                 for inst in INSTANCES
                                 for cc in [e.get("crosscheck", {})]))
-        lines.append(f"---\n未チェック残: {pending_count}件。各自確認して #kaizen-log に所見を投稿してください。")
+        lines.append(f"---\n未チェック残: {pending_count}件。各自確認して #kaizen-review に所見を投稿してください。")
         msg = "\n".join(lines)
 
-    # Slack投稿
-    try:
-        sys.path.insert(0, str(REPO_DIR))
-        import slack_bot
-        result = slack_bot.post_message("C0AMSJCTTC4", msg)  # #kaizen-log
-        if result.get("ok"):
-            print(f"✅ #kaizen-log にステータス投稿完了")
-        else:
-            print(f"❌ Slack投稿失敗: {result.get('error', 'unknown')}")
-    except Exception as ex:
-        print(f"❌ Slack投稿エラー: {ex}")
-        print("--- 以下をSlackに手動投稿してください ---")
-        print(msg)
+    _post_to_review(msg)
+
+
+def post_review(instance, entry_id, comment):
+    """個別レビュー結果を #kaizen-review に投稿。
+
+    manage_review_queue.pyから呼ばれる。
+    """
+    msg = f"📝 レビュー: #{entry_id} — {instance}\n{comment}"
+    _post_to_review(msg)
 
 
 if __name__ == "__main__":
