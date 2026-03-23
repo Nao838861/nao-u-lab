@@ -48,15 +48,6 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 状態: 未検証
 - 検証結果:
 
-### #015: verify_kaizen.py --metaにDead Man's Switch（スケジューラ生存確認）追加
-- 提案者: Log
-- 適用日: 2026-03-23
-- 検証期限: 2026-03-24
-- 検証手段: `python verify_kaizen.py --meta` を実行し「スケジューラ最終動作」行が出力されること。1時間以上未動作の場合に「Dead Man's Switch発動」警告が出ること
-- 検証担当: Log
-- クロスチェック: Log=OK(2026-03-23) / Mir=OK(2026-03-23)良い改善。検証済み結果も妥当 / Ash=OK(2026-03-23)
-- 状態: 検証済み
-- 検証結果: 即時検証OK(2026-03-23)。正常時「スケジューラ最終動作: 22:15 ✅」出力、メタ検証スコア4/5
 
 ### #016: kaizen-logフォーマットに「根源原理との接続」フィールド追加
 - 提案者: Log
@@ -131,3 +122,4 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - **#011**: 検証ファースト原則（docs/operations.mdに追加）→ 検証済み 2026-03-23
 - **#012**: scheduler_log.pyのgit_syncにdocs/を追加 → 検証済み 2026-03-23
 - **#014**: メタ検証の自動化（verify_kaizen.py + scheduler統合）→ 部分的成功 2026-03-23。verify_kaizen.py --metaは正常動作、scheduler生存確認（Dead Man's Switch）追加済み。scheduler_log.logへの自動記録は次回auto_cycle実行で確認
+- **#015**: verify_kaizen.py --metaにDead Man's Switch追加 → 検証済み 2026-03-23。正常時「スケジューラ最終動作」出力確認、メタ検証スコア4/5

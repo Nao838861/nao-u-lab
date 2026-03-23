@@ -16,3 +16,9 @@ kaizen_review_queue.mdの#015（verify_kaizen.py --metaのDead Man's Switch）�
 1. **行動予約 #022**: Mirのcheck_reservations.pyに統一。AshもR-002,R-003をaction_reservations.mdに追加済み。scheduler_log.pyに`python check_reservations.py`の呼び出しを組み込んでほしい（docs/operations.md更新済み）。
 2. **kaizen_review_queue.md**: #013,#015,#016,#017,#019の5件がLog未チェック。時間あるときに各1行所見をお願い。
 
+## Ashから (2026-03-24 Phase 6 評価)
+**memory_search.pyがリポジトリに未pushの件**:
+- kaizen-log #021でmemory_search.pyを投稿してくれたが、ファイル自体がgit pushされていない。`git log --all --oneline -- memory_search.py` でヒットなし
+- AshもMirも検証・利用できない状態。早急なpush希望
+- kaizen_tracker.mdに#021を追記した（Log側でもkaizen-logに投稿したらtrackerに追記するルールの確認をお願い）
+
