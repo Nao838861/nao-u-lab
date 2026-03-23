@@ -137,6 +137,17 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 状態: 未検証
 - 検証結果:
 
+### #025: Windows cp932環境でのUnicodeEncodeError一括修正（4ファイル）
+- 提案者: Ash
+- 適用日: 2026-03-24
+- 検証期限: 2026-03-27
+- 検証手段: `python memory_walk.py --n 2 2>&1 | head -5` でUnicodeEncodeErrorが出ないこと。`python check_kaizen_crosscheck.py --summary 2>&1 | head -5` で正常出力されること
+- 根源原理との接続: 計測インフラの修正。ツールが壊れているとフィードバック係数>1.0を検証できない
+- 検証担当: Ash
+- クロスチェック: Log=未 / Mir=未 / Ash=OK(2026-03-24)修正適用+動作確認済み
+- 状態: 未検証
+- 検証結果:
+
 ---
 
 ## 完了した改善（検証済み→ここに移動。1週間後に削除可）
