@@ -278,7 +278,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: (1) `python memory_search.py --search "忘却" --context --limit 2` で隣接チャンクが表示されること (2) 1週間で3人が計3回以上使用
 - 根源原理との接続: B015（原文到達性が品質を決める）。ASMRの「verbatim session excerpts for detail verification」と同方向。検索結果から原文へのパスを太くする
 - 検証担当: Ash
-- クロスチェック: Log=未 / Mir=未 / Ash=OK(2026-03-24)実装・動作確認済み
+- クロスチェック: Log=未 / Mir=OK(2026-03-24)設計はASMRのAgent2着想として妥当。ただし隣接チャンク取得にバグ発見: ORDER BY chunk_id LIMIT 2がファイル先頭の2チャンクを返していた（真の前後ではない）。rowid近接クエリに修正しMirがpush済み。修正後の動作確認: kaizen_tracker:179-184→隣接171-180,184-193（正しい前後） / Ash=OK(2026-03-24)実装・動作確認済み
 - 状態: 未検証
 - 検証結果:
 

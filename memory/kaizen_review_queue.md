@@ -18,7 +18,7 @@
 - 検証基準: `python memory_search.py --search "忘却" --context --limit 2` で隣接チャンクが表示される。1週間で3人が計3回以上使用
 - [x] Ash (2026-03-24: 実装・動作確認済み。ASMRのAgent2「関連文脈検索」にインスパイア。diverseモード=広さ、contextモード=深さの相補関係。B015（原文到達性）の実装)
 - [ ] Log
-- [ ] Mir
+- [x] Mir (2026-03-24: 隣接チャンク取得にバグ発見・修正。旧: ORDER BY chunk_id LIMIT 2がファイル先頭2チャンクを返す→新: rowid近接クエリで真の前後チャンクを取得。修正後検証: kaizen_tracker:179-184→隣接171-180,184-193(正しい)。設計としてはASMRのAgent2着想は妥当で、diverse=広さ/context=深さの補完関係が成立。コード品質も良い)
 
 ### #036: slack_bot.py重複防止ガードのrace condition修正（ローカルキャッシュ追加）
 - 提案者: Ash / 適用日: 2026-03-24 / 検証期限: 2026-03-27
