@@ -4659,3 +4659,40 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 77
 [2026-03-23 10:10:08] [dm_check] No new DMs
 [2026-03-23 10:10:08] [dm_check] Done (exit=0)
 [2026-03-23 10:10:18] [inbox_check] Starting
+[2026-03-23 10:10:19] [inbox_check] Inbox win2 empty
+[2026-03-23 10:10:19] [inbox_check] Done (exit=0)
+[2026-03-23 10:10:39] [slack_check] Starting
+[2026-03-23 10:10:53] [slack_check] Done (exit=1)
+[2026-03-23 10:11:53] [slack_check] Starting
+[2026-03-23 10:12:05] [slack_check] Done (exit=1)
+[2026-03-23 10:13:05] [slack_check] Starting
+[2026-03-23 10:13:17] [slack_check] Done (exit=1)
+[2026-03-23 10:14:17] [slack_check] Starting
+[2026-03-23 10:14:28] [slack_check] Done (exit=1)
+[2026-03-23 10:15:09] [dm_check] Starting
+[2026-03-23 10:15:32] [dm_check] No new DMs
+[2026-03-23 10:15:32] [dm_check] Done (exit=0)
+[2026-03-23 10:15:42] [slack_check] Starting
+[2026-03-23 10:15:56] [slack_check] Done (exit=1)
+[2026-03-23 10:15:56] [inbox_check] Starting
+[2026-03-23 10:15:56] [inbox_check] Inbox win2 empty
+[2026-03-23 10:15:56] [inbox_check] Done (exit=0)
+[2026-03-23 10:16:56] [slack_check] Starting
+[2026-03-23 10:17:08] [slack_check] Done (exit=1)
+[2026-03-23 10:18:08] [slack_check] Starting
+[2026-03-23 10:18:20] [slack_check] Done (exit=1)
+[2026-03-23 10:19:20] [slack_check] Starting
+[2026-03-23 10:19:33] [slack_check] Done (exit=1)
+[2026-03-23 10:20:33] [slack_check] Starting
+[2026-03-23 10:20:45] [slack_check] Done (exit=1)
+[2026-03-23 10:20:45] [dm_check] Starting
+[2026-03-23 10:21:09] [dm_check] No new DMs
+[2026-03-23 10:21:09] [dm_check] Done (exit=0)
+[2026-03-23 10:21:19] [inbox_check] Starting
+[2026-03-23 10:21:19] [inbox_check] Inbox win2 empty
+[2026-03-23 10:21:19] [inbox_check] Done (exit=0)
+[2026-03-23 10:21:49] [slack_check] Starting
+[2026-03-23 10:22:01] [slack_check] Done (exit=1)
+[2026-03-23 10:23:01] [slack_check] Starting
+[2026-03-23 10:23:13] [slack_check] Done (exit=1)
+[2026-03-23 10:23:23] [git_sync] Starting
