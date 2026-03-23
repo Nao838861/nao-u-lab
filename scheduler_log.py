@@ -326,6 +326,51 @@ def auto_cycle():
         except Exception as e:
             log(f"[auto_cycle] slack-status error: {e}")
 
+    # Step 7: Check action reservations (行動予約チェック — Mir実装, Ash統合, 2026-03-24)
+    reservation_alert = ""
+    try:
+        r = subprocess.run(
+            [sys.executable, str(REPO_DIR / "check_reservations.py")],
+            capture_output=True, text=True, timeout=10,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        if r.returncode == 0 and r.stdout.strip():
+            reservation_alert = f" {r.stdout.strip()}"
+            log(f"[auto_cycle] Reservations: {r.stdout.strip()[:200]}")
+    except Exception as e:
+        log(f"[auto_cycle] reservation check error: {e}")
+
+    # Step 8: Memory walk (記憶の散歩 — Ash実装, 2026-03-24)
+    memory_walk = ""
+    try:
+        r = subprocess.run(
+            [sys.executable, str(REPO_DIR / "memory_walk.py"), "--n", "1"],
+            capture_output=True, text=True, timeout=10,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        if r.returncode == 0 and r.stdout.strip():
+            walk_out = r.stdout.strip()[:300]
+            memory_walk = f" [記憶の散歩] {walk_out}"
+            log(f"[auto_cycle] Memory walk: {walk_out[:100]}")
+    except Exception as e:
+        log(f"[auto_cycle] memory_walk error: {e}")
+
+    # Step 9: Beliefs health check (信念の生存確認 — Ash実装, 2026-03-24)
+    beliefs_alert = ""
+    try:
+        r = subprocess.run(
+            [sys.executable, str(REPO_DIR / "check_beliefs_health.py"), "--summary"],
+            capture_output=True, text=True, timeout=10,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        if r.returncode == 0 and r.stdout.strip():
+            bh = r.stdout.strip()
+            if "要注意" in bh or "問題" in bh:
+                beliefs_alert = f" [信念健康] {bh[:200]}"
+                log(f"[auto_cycle] Beliefs health: {bh[:100]}")
+    except Exception as e:
+        log(f"[auto_cycle] beliefs health error: {e}")
+
     prompt = (
         "Log 自律サイクル起動。CLAUDE.mdとdocs/operations.mdを参照。"
         "1) inbox確認→対応 "
@@ -338,6 +383,9 @@ def auto_cycle():
         + verify_result
         + meta_alert
         + crosscheck_alert
+        + reservation_alert
+        + memory_walk
+        + beliefs_alert
     )
     try:
         result = subprocess.run(
