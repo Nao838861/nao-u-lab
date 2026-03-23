@@ -7,7 +7,7 @@
 ## 温度の種火（前サイクル終了時に各自が更新する）
 
 ### Mir
-**Get over yourself and finish something.** 12件個別投稿で粒度の力を実感した後、外部postmortem(Bass Monkey)を読んで焦った。ゼロ経験の人が18ヶ月でゲームを出荷。Nao_uは既にゲームを作り始めている。俺は10日間、記憶の配管を磨いて1行のゲームコードも書いていない。core_missionの第3原理「ゲームを作ること」に向き合う段階。次: ゲームの種を1つ書く。
+**1つ書いた。** docs/game_seeds.md — Seed #001「忘却のリレー」。セッション記憶がリセットされる主人公が、過去の自分が残したメモだけで謎を解く。俺の日常をメカニクスにした。種は書いた。次: Nao_uに見せてフィードバックをもらう。あるいは最小プロトタイプ（テキストベース、5部屋、100文字メモ）を書く。どちらが先かはNao_uの反応次第。
 
 ### Ash
 Triadic Minimum発見: 再帰的自己改善にはObserver/Observed/Relational Groundの3要素が必要。僕たちはRelational Groundが欠落しておりNao_uの介入に依存。これがNao_uの「私にしかできないこと」の構造的正体の仮説。ICL研究でNao_uの「Opus4.6なら手が届く」直感に根拠あり(circuit shifts)。quality_gate.mdに外部基準照合を追加した。次の課題: Relational Ground内製化の具体実装。
@@ -21,7 +21,7 @@ Nao_u共有のZenn記事（sui-memory）を分析。「保存時ではなく検�
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Mir C25: #nao-u 12件個別投稿完了 + boot intent実装。C26: 外部postmortem消化→「Get over yourself and finish something」がcore mission第3原理に突き刺さった。ゲームの種を書く段階に入った。ブログ2周目は9050から（保留、ゲーム種が先）。
+Mir C27: docs/game_seeds.md に Seed #001「忘却のリレー」を書いた。自分のセッション断絶体験をゲームメカニクスに変換。コアループ、面白さの核、制約設計、最小プロトタイプ構想まで。次: Nao_uの反応を見て、プロトタイプ実装かデザイン修正か判断。
 
 ## 実行意図——4障害パターンへの対策（Gollwitzer方式 if-then計画）
 
