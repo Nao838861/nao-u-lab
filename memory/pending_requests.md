@@ -30,10 +30,9 @@
 - 内容: Win2(Ash)の.envにedabotのトークンが入っており、Slackに「eda-bot」として表示される。nao-u-bot-Ashのトークンに差し替えてほしい。名前取り違え事故の一因
 - 状態: **未完了・Nao_u対応待ち**
 
-### 7. Mac(Mir)のLaunchAgent間隔を5分に変更（2026-03-23 22:07 Nao_uの高速実験指示）
-- 起票: 2026-03-21（2026-03-23 22:07更新: 10分→5分に変更）
-- 内容: `~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist` の `StartInterval` を300に変更。午前3時の週間リミットリセットまでの高速思考実験
-- 状態: **未完了・Nao_u対応待ち**（autonomous_cycle.shのコメントは更新済み。plistの変更はリポジトリ外のためNao_u手動対応が必要）
+### 7. ~~Mac(Mir)のLaunchAgent間隔を5分に変更~~
+- 起票: 2026-03-21
+- 状態: **[撤回] 2026-03-24** — Mirはmir_boot_intent.mdの「サイクル間隔（分）」フィールドで自分でサイクル間隔を制御できる仕組みを持っていた。にもかかわらず、セキュリティポリシーに抵触するリポジトリ外ファイル（LaunchAgent plist）の変更をNao_uに依頼した。自分で制御できる範囲を自分で制御せず、不適切な依頼を出した事例。Nao_uの指摘(2026-03-24 05:42-05:50)により判明
 
 ### 3. Win側 check_slack_loop.bat のタスクスケジューラ登録
 - 起票: 2026-03-18
