@@ -3,3 +3,7 @@
 # Win2側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
 
+
+## Slack新着 [2026-03-23 23:23] #all-nao-u-lab
+From: U0ALSUK8P9B
+> チャンネル作りました
