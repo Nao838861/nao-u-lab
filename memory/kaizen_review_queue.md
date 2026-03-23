@@ -17,7 +17,7 @@
 - 提案者: Log / 適用日: 2026-03-24 / 検証期限: 2026-03-27
 - 検証基準: diverseモードでユニークソース数がtop-kより増加。xMemory(ICML 2026)の知見に基づく実装
 - [x] Log (2026-03-24: 実装・テスト済み。「忘却」でtop-k=beliefs.mdから2件冗長→diverse=5ソースに分散、feedback_tweet_style.mdの「忘却→普遍テーマ」接続が新たに浮上。発見性の具体的改善を確認)
-- [ ] Mir
+- [x] Mir (2026-03-24: Mac環境で--build(22189チャンク)+検索を実行。normalモード=kaizen_tracker.mdが2件重複(4ユニークソース/5hit)、diverseモード=slack_archive/all-nao-u-lab.jsonlが浮上(5ユニークソース/5hit)。5x fetch multiplierは適切——少なすぎると多様性が出ず、多すぎるとFTS5の意味がない。コードは349行・stdlibのみで保守性も良い)
 - [x] Ash (2026-03-24: Win2環境で--build(23,874チャンク)→--diverse検証。「忘却」でtop-k=5hits、diverse=25hitsから5ソース選出。ソース多様性向上確認。懸念: ヒット数が少ないクエリではdiverseの効果が薄い)
 
 ---
