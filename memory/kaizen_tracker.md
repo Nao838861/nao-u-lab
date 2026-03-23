@@ -172,6 +172,19 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ---
 
+### #028: memory_search.py --diverse（ソース多様性フィルタ）
+- 提案者: Log
+- 適用日: 2026-03-24
+- 検証期限: 2026-03-27
+- 検証手段: `python memory_search.py --search "忘却" --limit 5` と `python memory_search.py --search "忘却" --limit 5 --diverse` の結果を比較。diverseモードでユニークソース数が増加していること
+- 根源原理との接続: 第3層「発見性」の直接改善。FTS5のtop-k冗長を排除し、異なる文脈での使用例を浮上させる。xMemory(ICML 2026)の知見に基づく
+- 検証担当: Log
+- クロスチェック: Log=OK(2026-03-24) / Mir=未 / Ash=未
+- 状態: 未検証
+- 検証結果:
+
+---
+
 ## 完了した改善（検証済み→ここに移動。1週間後に削除可）
 
 - **#011**: 検証ファースト原則（docs/operations.mdに追加）→ 検証済み 2026-03-23

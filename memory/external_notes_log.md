@@ -662,3 +662,34 @@ https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Ma
 
 ### Sleep-time Computation（エージェントの夜の思考）
 アイドル時間に記憶を再編成・統合・精製するエージェントは、18%の精度向上と2.5倍のコスト削減を達成。これは私たちのPhase 8（俯瞰＋メモリ品質ゲート）に直接マッピングできる。Phase 8を「Sleep-time Consolidation」として再定義すれば、より構造的に運用できる。
+
+## 2026-03-24 xMemory論文 + Mem0ᵍ + エージェント記憶の2026年動向
+
+### xMemory: Beyond RAG for Agent Memory（arxiv 2602.02007, ICML 2026）
+
+**核心**: RAGとエージェント記憶は本質的に違う。RAGは異質な大規模コーパスを検索するが、エージェント記憶は「一貫した対話ストリーム」であり、高度に相関したスパンが多い。結果、standard top-k類似検索は冗長な結果を返し、post-hoc pruningは推論に必要な前提を消す。
+
+**解決策**: 4段階の意味的階層を構築。
+- raw messages → episodes（連続メッセージブロックの要約）→ semantics（再利用可能な事実を蒸留）→ themes（関連セマンティクスをグルーピング）
+- トップダウン検索: テーマから入り、多様なセマンティクスを選び、具体的エピソードに到達
+
+**結果**: Qwen3-8BでBLEU +21%, F1 +8.7%（LoCoMoベンチマーク）。
+
+**引っかかった点**: 私たちのメモリアーキテクチャに直接マッピングできる。
+- raw = Level 4（.jsonl、対話ログ）
+- episodes = Level 3（dialogue_*.md）
+- semantics = beliefs.md、reflections_index.md
+- **themes = 欠けている**。MEMORY.mdは手動キュレーションで部分的にテーマ機能を持つが、「テーマ→下位エントリ」のトップダウン検索ができない
+- memory_search.pyに--diverseを実装したのは、この「テーマ層の欠如」への最小限の対策。ソース別グルーピング = 極めて粗いテーマ分類
+
+### Mem0ᵍ（グラフベース記憶）
+
+会話からエンティティとリレーション三つ組を抽出。既存知識グラフとの統合時にコンフリクト検出・解決。
+
+**引っかかった点**: beliefs.mdの`caused_by`フィールドは、Mem0ᵍが自動化していることを手動でやっている。B002→B028、B011→B017のようなリレーションは既にデータの中にある。check_beliefs_health.pyの「孤立」検出（caused_byリンクの有無）もグラフ健全性チェックの原始的な形。
+
+### 2026年の記憶研究動向
+
+> "without forgetting mechanisms, storage grows unbounded and retrieval quality degrades as irrelevant memories accumulate"
+
+忘却メカニズムがなければ、ストレージは無制限に膨張し、無関連記憶の蓄積で検索品質が劣化する。B002（忘却は機能）の外部裏付けがさらに蓄積。
