@@ -1,6 +1,6 @@
 #!/bin/bash
 # Mac側自律サイクルスクリプト
-# LaunchAgentから1時間ごとに呼ばれる（2026-03-22 Nao_uの指示で30分→1時間に変更）。常にclaude CLIを起動して自律サイクルを回す。
+# LaunchAgentから10分ごとに呼ばれる（2026-03-23 Nao_u指示: リミット消化のため一時的に10分間隔）。常にclaude CLIを起動して自律サイクルを回す。
 # check_inbox.sh（受信箱専用・1分ごと）とは別に動く。
 #
 # 設計原則（2026-03-20 Nao_uの指示）:
@@ -37,6 +37,14 @@ if [ $(( 10#$CURRENT_HOUR % 6 )) -eq 0 ]; then
     echo "$(date): おすすめ欄チェック開始（6時間ごと）"
     python3 read_twitter_recommended.py --count 50 2>&1 | tail -5
     echo "$(date): おすすめ欄チェック完了"
+fi
+
+# 3. Slackログエクスポート（1日1回、Mir=10:00 JST）
+# 3人分散: Log=02:00 / Mir=10:00 / Ash=18:00 → 実質8時間ごとにカバー
+if [ $(( 10#$CURRENT_HOUR )) -eq 10 ]; then
+    echo "$(date): Slackログエクスポート開始"
+    python3 export_slack_log.py 2>&1 | tail -5
+    echo "$(date): Slackログエクスポート完了"
 fi
 
 # 2. git auto-sync（30分ごとのcronと兼用。ここでも実行しておく）
