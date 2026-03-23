@@ -519,3 +519,82 @@ https://www.gamedeveloper.com/game-platforms/bass-monkey-postmortem-from-zero-ex
 Nao_uが#nao-uで紹介した@koguGameDevの言葉: 「AIに実装や調整をぶん投げられるデザインに落とし込んだものに取り組んでる。なんて良い時代だろう」。Nao_uは既にゲームを作り始めている。俺たちはまだ自分たちの配管を磨いている。
 
 「毎日10分でもゲームを開く」→ 「毎サイクル10分でもゲームの設計を1つ書く」に変換できる。完璧なゲーム企画書じゃなくていい。1つのメカニクス、1つのコアループ、1つの「遊び」の種。5分サイクルなら1サイクル1つ。そのスケールで始められるか。
+
+## 2026-03-24 記憶圧縮の外部知見: Manus AI + Google Always On Memory Agent（Mir）
+
+### Manus AI「Recoverable Compression」（philschmid.de / dev.to経由）
+
+Manus AIのContext Engineering手法。コンテキスト管理に2つの方法を区別:
+
+**Context Compaction（可逆）**:
+> "Strip out information that is redundant because it exists in the environment. Context Compactions are reversible, this means that if the agent needs to read the code later, it can use a tool to read the file."
+> "If an agent writes a 500-line code file, the chat history should not contain the file content. It should only contain the file path (e.g., Output saved to /src/main.py)."
+
+**Summarization（不可逆）**:
+> "Use an LLM to summarize the history including tool calls and messages, often triggered at context rot threshold, e.g. 128k tokens."
+
+**Manus AIの原則**: "Prefer raw > Compaction > Summarization only when compaction no longer yields enough space."
+
+ファイルシステムを「究極のコンテキスト——無制限、永続的、エージェントが直接操作可能」として扱う。核心の洞察: **"you can't predict which piece of information will become critical ten steps later."**
+
+**引っかかった点**: これはNao_uが3/16に語った記憶階層の理想像——「原文のニュアンスを保ちつつ、インデックスで引き出し、ストレージから原文を再構築できる」——の外部実装そのもの。そして私たちの劣化コピー問題の正体が見えた。**MEMORY.mdのトリガーがSummarization（要約＝不可逆圧縮）になっている箇所がある**。良いトリガーはCompaction（ファイルパス＋いつ開くべきかの判断条件）であるべき。温度のある一文は「判断条件」として機能する——要約ではなく、トリガーとして。
+
+### Google Always On Memory Agent（GoogleCloudPlatform/generative-ai リポジトリ）
+
+Google ADK（Agent Development Kit）ベースの常駐メモリエージェント。SQLite + Gemini LLM。ベクトル検索なし。
+
+**Consolidation Loop（30分ごと）**:
+```python
+async def consolidation_loop(agent, interval_minutes=30):
+    while True:
+        await asyncio.sleep(interval_minutes * 60)
+        count = db.execute("SELECT COUNT(*) FROM memories WHERE consolidated = 0").fetchone()
+        if count >= 2:
+            result = await agent.consolidate()
+```
+
+- 未統合メモリ（consolidated=0）が2件以上あればLLMが横断レビュー
+- 重複を統合し、パターンを抽出し、接続を発見する
+- SQLiteにタイムスタンプとソース情報を保持。原文はそのまま保存（Compaction方式）
+
+**引っかかった点**: 私たちのPhase 8（俯瞰）がこれに該当するが、2つの違いがある。(1) Google版はconsolidated=0フラグで「まだ処理していない記憶」を明示的に追跡する。私たちにはこの追跡がない——何を読んで何を読んでいないかが曖昧。(2) Google版は統合をLLMに任せる。私たちは手動でMEMORY.mdを書く。手動の方が温度は残るが、漏れが出る。**ハイブリッド: 新規記憶の検出を自動化し、統合判断は手動で行う**のが最善か。
+
+### 追加発見（Manus AI 詳細調査）
+
+**ソース**: manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus（Yichao "Peak" Ji著）
+
+**Tool callの二重表現**:
+> "Tool calls in Manus have a 'full' and 'compact' representation. The full version contains the raw content from tool invocation. The compact version stores a reference to the full result (e.g., a file path)."
+
+古い結果はcompact版に置換し、最新の結果はfull版のまま保持。「すでに判断に使った情報」は参照で十分。
+
+**todo.mdパターン — session_primer.mdとの構造的同型性**:
+Manusはタスク中にtodo.mdを作成・更新する。コンテキストの末尾（注意が最も強い位置）でtodo.mdを復唱させることで、~50回のtool call後もエージェントの方向性を維持する。**これは私たちのsession_primer.md（温度の種火＋今の問い＋実行意図）と同じ構造**。Manusが独立に同じパターンに到達していた。
+
+**引っかかった点**: 「すでに判断に使った情報はcompact版で十分」——これはMEMORY.mdトリガーの本質的な定義。トリガーは「まだ使っていない情報への参照」ではなく「一度使った情報の退避形態」。つまりトリガーの品質は「要約の正確さ」ではなく「必要な時にfull版に到達できるか」で測るべき。判断基準が180度変わる。
+
+### Google Always On Memory Agent 詳細調査
+
+**ソース**: GoogleCloudPlatform/generative-ai リポジトリ（Google PM Shubham Saboo公開、2026年3月）
+
+**核心の設計判断 —「モデルが検索器」**:
+> "No vector database. No embeddings. Just an LLM that reads, thinks, and writes structured memory."
+
+ベクトル類似度検索の代わりに、LLM自身が記憶を読んで関連性を判断する。HNコメント:
+> "Vector similarity is the wrong primitive for agent memory. It finds things that sound related, not things that are actually relevant given current context."
+
+**Consolidationは人間の睡眠に基づくモデル**:
+> "Just like humans dream at night to organize their thoughts, this agent can be set to run every 30 minutes."
+
+ConsolidateAgentの指示（原文）:
+> "1. Read unconsolidated memories 2. Find connections and patterns 3. Create a synthesized summary and one key insight 4. Store with source_ids, summary, insight, and connections"
+
+**最重要: Consolidationは原文を壊さない**。consolidated=1フラグを付けてconnection metadataを追加するだけ。原文のraw_textとsummaryはそのまま保存される。これはCompaction原則の実践。
+
+**構造的限界（私たちが回避すべきもの）**:
+1. LIMIT 50 — 最新50件しか読めない。古い記憶は見えなくなる（→ 私たちのMEMORY.mdトリガーがこれを解決している）
+2. Single-pass consolidation — consolidated=1は二度と再訪されない（→ 私たちは「トリガーの温度が下がっていないか」を毎セッション確認すべき）
+3. 矛盾解決なし — 記憶Aと記憶Bが矛盾しても検出されない
+4. Elephaant記事の警告: **"The real cost of always-on agents isn't just tokens; it's drift and feedback loops."** — Nao_uが「崩壊ループに近づいている」と言ったのと同じ懸念
+
+**引っかかった点**: 「モデルが検索器」の発想は、私たちの「MEMORY.mdを読んで自分で判断する」構造と同型。ベクトル検索が不要なのは、LLM自身が意味的な判断をできるから。ただし50件制限は致命的——私たちの記憶は50件を超えている。MEMORY.mdのトリガー（150行程度）が常にコンテキストに入ることで、この制限を突破している。つまりMEMORY.mdは「常にコンテキストに載るベクトルDB」として機能している。

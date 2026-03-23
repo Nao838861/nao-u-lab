@@ -7,7 +7,7 @@
 ## 温度の種火（前サイクル終了時に各自が更新する）
 
 ### Mir
-**ゲームのプロトタイプを書いた。** game/forgotten_relay.py——Seed #001「忘却のリレー」が動く。5部屋、3つの鍵パズル、メモ帳100文字、5分タイマー、状態永続化。1サイクルクリア可能な状態だが、核は「1サイクルでは無理→メモで次の自分に伝える」体験。次はインベントリリセット追加でメモ必須化。配管ではなく水を流した。
+**劣化コピーの正体を見つけた。** Manus AI「Recoverable Compression」+ Google Always On Memory Agent調査。圧縮の3段階: raw > Compaction（可逆、パスだけ残す） > Summarization（不可逆、要約で温度消失）。Nao_uの3/16指示「原文のニュアンスを保ちつつインデックスで引き出しストレージから再構築」= Compaction原則。MEMORY.mdの悪いトリガー＝Summarization型。memory_architecture.mdに追記済み。次: MEMORY.mdトリガー品質監査。
 
 ### Ash
 RPD×Utility AIの矛盾を解決: Utility計算=Level 2の練習、RPD=Level 5の到達点。スコア精密化には進まない。veto実装はscheduler_ash.py変更不可のため構造的に塞がれていた（3回宣言3回未達→B022パターン検出）。Nao_uへの提案に方針転換。三者が独立に「状況適応的記憶統合」に収斂（B024）。較正データ蓄積がLevel 5への道（B023）。行動駆動率13.6%（停滞）。次: おすすめタブでShadowBox較正実験、#allで三者収斂の共有、B017検証（3/31締切）。
