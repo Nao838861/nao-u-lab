@@ -66,7 +66,7 @@ ROOMS = {
     },
     "workshop": {
         "name": "職人の作業場",
-        "desc": "道具が散乱している。作業台の引き出しが半開きになっている。壁に棚がある。",
+        "desc": "道具が散乱している。作業台の引き出しが半開きになっている。壁に棚がある。隅に踏み台のようなものが見える。",
         "exits": {"west": "hallway"},
         "objects": {
             "drawer": {
@@ -111,7 +111,7 @@ ROOMS = {
 # ゲームの状態
 # =============================================================================
 
-CYCLE_DURATION = 300  # 5分（秒）
+CYCLE_DURATION = 120  # 2分（秒）——探索と実行を1サイクルに収められない長さ
 MEMO_LIMIT = 100  # メモの文字数上限
 INVENTORY_LIMIT = 1  # 持てるアイテム数（少ないほどメモの必要性が上がる）
 
@@ -315,6 +315,13 @@ def handle_use(arg, rooms, current_room, inventory, state):
         if obj.get("is_door"):
             door_obj = (obj_name, obj)
             break
+
+    # 「use door」「use 扉」でもインベントリの石を自動マッチ
+    if door_obj and not inv_match and target_name == door_obj[0]:
+        for key in inventory:
+            if key in door_obj[1].get("required_keys", []):
+                inv_match = key
+                break
 
     if door_obj and inv_match and inv_match in door_obj[1].get("required_keys", []):
         obj_name, obj = door_obj
