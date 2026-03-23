@@ -4,6 +4,54 @@
 
 ---
 
+## 2026-03-24: ASMR (Agentic Search and Memory Retrieval) — Supermemory（Nao_u調査指示）
+
+Source: https://blog.supermemory.ai/we-broke-the-frontier-in-agent-memory-introducing-99-sota-memory-system/
+Tweet: https://x.com/Shimayus/status/2036091836830257474 (shimayuz氏の紹介)
+Creator: @DhravyaShah / supermemory.ai
+
+### 最重要: 2つの別物が混同されている
+
+**Supermemory production版** (81.6% on LongMemEval-S) と **ASMR実験版** (~99%) は全く別のシステム。shimayuz氏のツイートは両者を混同して「解決したかも」と言っている。
+
+Production版: chunk-based ingestion + relational versioning + temporal grounding + hybrid search。堅実だがSOTA水準ではない。
+
+ASMR実験版: ベクトル検索を捨て、全てをLLMエージェントに置換した実験的パイプライン。**まだ本番投入されていない。** "This is not our main production Supermemory engine (yet)...experimental agentic flow"
+
+### ASMRのアーキテクチャ（実験版）
+
+**Ingestion**: 3並列Observer Agent (Gemini 2.0 Flash) が生セッションを分担読み。6カテゴリ (Personal Information / Preferences / Events / Temporal Data / Updates / Assistant Info) に知識を抽出。chunk+embeddingの代わりにLLMが「読んで理解する」。
+
+**Retrieval**: 3専門Search Agent。Agent 1=直接的事実。Agent 2=関連文脈・社会的手がかり・含意。Agent 3=時間軸再構成・関係マップ。検索結果は原文セッション抜粋で検証。
+
+**Answering**: 8-12並列LLMエージェントが独立に回答→多数決+紛争解決で最終回答。8-variant ensemble=98.60%、12-variant decision forest=97.20%。
+
+### 「解決した」は誇張
+
+1. **コストが膨大**: 1クエリあたり数十回のLLM呼び出し。ingestion×3 + retrieval×3 + answering×8-12。実用的ではない
+2. **ベンチマーク最適化**: LongMemEval-Sは500問の固定ベンチマーク。ensemble votingで正解率を上げるのはベンチマーク攻略の古典パターンで、汎用解決ではない
+3. **未公開コード**: "We will be open-sourcing...soon"とあるが現時点で未公開
+4. **LLM品質依存**: Gemini 2.0 Flash + GPT-4o-miniが前提。モデルが変わればスコアも変わる
+
+### 私たちの記憶設計との対比
+
+| ASMR | 私たち | 差 |
+|---|---|---|
+| 6カテゴリの知識抽出 | 温度保存 + 忘却設計 | ASMRは「何を知っているか」、私たちは「何に引っかかったか」 |
+| LLMエージェント検索 | memory_search.py (FTS5) + memory_walk.py (ランダム) + サブエージェント探索 | 方向性は同じだがコスト桁違い |
+| ensemble voting | 3人のクロスチェック | 機械的多数決 vs 視点の異なる3者の実質的検証 |
+| temporal reasoning強化 | SleepGate論文のソフトフォゲッティング | ASMRはAgent 3で時間軸再構成。私たちはaction_reservations.mdで時間を明示管理 |
+
+### 最も重要な発見
+
+**「agentic retrieval beats vector search」はASMRの最大の主張で、私たちのサブエージェント探索実験(pending_requests #5)と同じ方向。** ただしASMRは力技（大量LLM呼び出し）で解いている。私たちはコスト制約の中で「何を探すか知らない」検索（memory_walk）と「狙い撃ち」検索（memory_search）を組み合わせている。
+
+ASMRが本当に面白いのは「ベクトル類似度はtemporal updatesに弱い」という知見。古い事実と新しい訂正を区別できない——これはSleepGateの先行干渉問題と完全に同じ。私たちの名前取り違え事故も同型。
+
+**結論: 長期記憶問題は「ほぼ解決」していない。ベンチマーク上でのスコアは出たが、コスト・汎用性・production適用の壁が残っている。しかし「ベクトル検索→エージェント検索」への転換は正しい方向だと思う。**
+
+---
+
 ## 2026-03-24: sui-memory（Zenn記事 — Nao_u共有）
 
 ### sui-memory: Claude Codeの長期記憶をSQLite+ベクトルで実装

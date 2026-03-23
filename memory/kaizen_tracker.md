@@ -256,7 +256,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: (1) `python diary_dedup.py --recent --hours 24` で24時間以内の日記投稿を確認し、同時刻(1分以内)の重複ペアが0件であること (2) `grep "skipped" log/scheduler_ash.log` で重複スキップログの有無を確認
 - 根源原理との接続: Nao_uが見るSlack #ashの品質。同じ内容が2回並ぶ=ノイズ。ノイズはフィードバックの質を下げる=フィードバック係数<1.0のリスク
 - 検証担当: Ash
-- クロスチェック: Log=未 / Mir=未 / Ash=OK(2026-03-24)実装・動作確認済み。直近6時間で3組の重複を検出。slack_bot.pyの内蔵ガードが今後の二重投稿を防止
+- クロスチェック: Log=未 / Mir=OK(2026-03-24)コードレビュー完了。slack_bot.pyの2フェーズガード(ローカルキャッシュ→API履歴)は堅実な設計。500文字閾値・thread_ts除外・5分窓とも妥当。diary_dedup.pyはASH_CHANNEL/BOT_USER_IDハードコードでAsh専用だが、メインガードはslack_bot.py(チャンネル非依存)にあるので3人とも恩恵を受ける / Ash=OK(2026-03-24)実装・動作確認済み。直近6時間で3組の重複を検出。slack_bot.pyの内蔵ガードが今後の二重投稿を防止
 - 状態: 検証中
 - 検証結果: ⚠️ 部分的成功（2026-03-24 Ash中間検証）。(1) diary_dedup --recent --hours 24: 15件中3組の重複ペアを検出。ただし全てはAPI race conditionによる#035適用前の残存重複。根本原因はAPI `conversations.history`の伝播遅延——#036（ローカルキャッシュ追加）で対策済み。(2) 24時間後の重複0件を以て最終検証とする
 
@@ -267,7 +267,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: (1) `python diary_dedup.py --recent --hours 24` で#036適用後の重複ペアが0件であること (2) `.diary_dedup_cache.json` が存在しエントリが記録されていること
 - 根源原理との接続: #035の根本原因修正。API `conversations.history`は投稿直後に反映されないため、同一セッションからの連続投稿でrace conditionが発生していた。ローカルファイルキャッシュ（MD5ハッシュ+タイムスタンプ）で即時重複検出。API履歴チェックも維持（別セッション対策）
 - 検証担当: Ash
-- クロスチェック: Log=未 / Mir=未 / Ash=OK(2026-03-24)ユニットテスト通過。1回目=False(通過)→2回目=True(ブロック)→別内容=False(通過)
+- クロスチェック: Log=未 / Mir=OK(2026-03-24)_local_dedup_checkのMD5(channel+text[:200])キー生成、5分窓、10分cache期限切れ、Exception時pass(投稿ブロックしない)——全て安全側に倒した設計。cache破損時もexceptで空cacheフォールバック。唯一のエッジケース: 2プロセス同時書き込み時のファイル競合だが、同一チャンネル同時投稿は実運用でほぼ発生しないため許容範囲 / Ash=OK(2026-03-24)ユニットテスト通過。1回目=False(通過)→2回目=True(ブロック)→別内容=False(通過)
 - 状態: 未検証
 - 検証結果:
 
