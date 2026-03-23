@@ -282,6 +282,34 @@ def auto_cycle():
     except Exception as e:
         log(f"[auto_cycle] meta-verify error: {e}")
 
+    # Step 4: Nag unchecked instances (クロスチェック督促 — 毎サイクル実行、同日重複は自動スキップ)
+    try:
+        r = subprocess.run(
+            [sys.executable, str(REPO_DIR / "verify_kaizen.py"), "--nag"],
+            capture_output=True, text=True, timeout=30,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        if r.returncode == 0 and r.stdout.strip():
+            log(f"[auto_cycle] Nag: {r.stdout.strip()[:200]}")
+    except Exception as e:
+        log(f"[auto_cycle] nag error: {e}")
+
+    # Step 5: Post checklist to Slack (Log's shift: hour==2, 実質8時間ごと3人ローテ)
+    hour = datetime.now().hour
+    if hour == 2:
+        try:
+            r = subprocess.run(
+                [sys.executable, str(REPO_DIR / "verify_kaizen.py"), "--slack-status"],
+                capture_output=True, text=True, timeout=30,
+                cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+            )
+            if r.returncode == 0:
+                log(f"[auto_cycle] Slack checklist posted: {r.stdout.strip()[:100]}")
+            else:
+                log(f"[auto_cycle] Slack checklist error: {r.stderr.strip()[:100]}")
+        except Exception as e:
+            log(f"[auto_cycle] slack-status error: {e}")
+
     prompt = (
         "Log 自律サイクル起動。CLAUDE.mdとdocs/operations.mdを参照。"
         "1) inbox確認→対応 "
