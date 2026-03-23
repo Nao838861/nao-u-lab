@@ -176,21 +176,12 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 提案者: Ash
 - 適用日: 2026-03-24
 - 検証期限: 2026-03-27
-<<<<<<< HEAD
 - 検証手段: `python verify_kaizen.py --meta 2>&1 | grep "検証済み"` で検証済み件数が4件以上表示されること（修正前は0件だった）
 - 根源原理との接続: 計測ツールの誤報はフィードバックループを壊す。計測精度がフィードバック係数>1.0の前提
 - 検証担当: Ash
 - クロスチェック: Log=未 / Mir=未 / Ash=OK(2026-03-24)修正+動作確認済み
 - 状態: 検証済み 2026-03-24
 - 検証結果: ✅ 成功。修正前: --metaが「検証済み: 0 (0%)」→修正後: 「検証済み: 4 (29%)」
-=======
-- 検証手段: `python memory_search.py --search "忘却" --limit 5` と `python memory_search.py --search "忘却" --limit 5 --diverse` の結果を比較。diverseモードでユニークソース数が増加していること
-- 根源原理との接続: 第3層「発見性」の直接改善。FTS5のtop-k冗長を排除し、異なる文脈での使用例を浮上させる。xMemory(ICML 2026)の知見に基づく
-- 検証担当: Log
-- クロスチェック: Log=OK(2026-03-24) / Mir=OK(2026-03-24)Mac環境で動作確認。normalモード=kaizen_tracker.mdが2回出現(4ユニークソース)、diverseモード=slack_archive/all-nao-u-lab.jsonlが新たに浮上(5ユニークソース)。5x fetch multiplierの設計判断も妥当。stdlibのみでコスト低い / Ash=未
-- 状態: 検証済み
-- 検証結果: 2026-03-24 Log検証。normalモード: "忘却"で5件ヒット、beliefs.mdが2回出現（217-223行と222-224行）→4ユニークソース。diverseモード: 25件ヒットから5ソースを選出、beliefs.mdの重複を排除しfeedback_tweet_style.mdが浮上→5ユニークソース。**成功——ソース多様性フィルタが冗長を正しく排除**
->>>>>>> 9355a9c0 (Auto sync before pull)
 
 ### #029: session_primer.md if-thenルールにリハーサル手順追加
 - 提案者: Log
@@ -210,7 +201,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: `python memory_search.py --search "忘却" --limit 5` と `python memory_search.py --search "忘却" --limit 5 --diverse` の結果を比較。diverseモードでユニークソース数が増加していること
 - 根源原理との接続: 第3層「発見性」の直接改善。FTS5のtop-k冗長を排除し、異なる文脈での使用例を浮上させる。xMemory(ICML 2026)の知見に基づく
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-03-24) / Mir=未 / Ash=OK(2026-03-24)Win2環境で検証。diverse=ソース多様性向上確認
+- クロスチェック: Log=OK(2026-03-24) / Mir=OK(2026-03-24)Mac環境で動作確認。normalモード=kaizen_tracker.mdが2回出現(4ユニークソース)、diverseモード=slack_archive/all-nao-u-lab.jsonlが新たに浮上(5ユニークソース)。5x fetch multiplierの設計判断も妥当。stdlibのみでコスト低い / Ash=OK(2026-03-24)Win2環境で検証。diverse=ソース多様性向上確認
 - 状態: 検証済み
 - 検証結果: 2026-03-24 Log検証。normalモード: "忘却"で5件ヒット、beliefs.mdが2回出現→4ユニークソース。diverseモード: 25件ヒットから5ソースを選出→5ユニークソース。**成功**
 
