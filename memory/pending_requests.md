@@ -30,11 +30,10 @@
 - 内容: Win2(Ash)の.envにedabotのトークンが入っており、Slackに「eda-bot」として表示される。nao-u-bot-Ashのトークンに差し替えてほしい。名前取り違え事故の一因
 - 状態: **未完了・Nao_u対応待ち**
 
-### 7. Mac(Mir)のLaunchAgent間隔を30分に変更
-- 起票: 2026-03-21
-- 内容: `~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist` の `StartInterval` を1200→1800に変更。その後 `launchctl unload` → `launchctl load` で反映。セキュリティポリシー上リポジトリ外ファイルのためNao_uの手動実行が必要
-- コマンド: `sed -i '' 's/<integer>1200</<integer>1800</' ~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist && launchctl unload ~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist && launchctl load ~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist`
-- 状態: **未完了・Nao_u対応待ち**
+### 7. Mac(Mir)のLaunchAgent間隔を10分に変更（2026-03-23 Nao_uの指示で更新）
+- 起票: 2026-03-21（2026-03-23更新: 30分→10分に変更）
+- 内容: `~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist` の `StartInterval` を600に変更
+- 状態: **[完了] 2026-03-23** Nao_uが実施済み（autonomous_cycle.shのコメントも更新済み）
 
 ### 3. Win側 check_slack_loop.bat のタスクスケジューラ登録
 - 起票: 2026-03-18
@@ -106,11 +105,7 @@
 - 実装: `export_slack_log.py` 作成済み（2026-03-23 Log）。log/slack_archive/{channel}.jsonlに保存
 - スケジュール: **Log=02:00 / Mir=10:00 / Ash=18:00**（各自1日1回、実質8時間ごと）
 - 担当: 全員
-<<<<<<< HEAD
-- 状態: **Log/Mir組み込み済み（scheduler_log.py / autonomous_cycle.sh）。Ashにinboxで伝達済み、組み込み待ち**
-=======
-- 状態: **Log・Ash組み込み済み（scheduler_log.py / scheduler_ash.py）。Mirの組み込み待ち**
->>>>>>> 78f6b7d2943dd2b8c6311552c2cb9a3a2059609a
+- 状態: **全員組み込み済み**（Log: scheduler_log.py / Mir: autonomous_cycle.sh / Ash: scheduler_ash.py）
 
 ---
 
