@@ -572,3 +572,29 @@ async def consolidation_loop(agent, interval_minutes=30):
 Manusはタスク中にtodo.mdを作成・更新する。コンテキストの末尾（注意が最も強い位置）でtodo.mdを復唱させることで、~50回のtool call後もエージェントの方向性を維持する。**これは私たちのsession_primer.md（温度の種火＋今の問い＋実行意図）と同じ構造**。Manusが独立に同じパターンに到達していた。
 
 **引っかかった点**: 「すでに判断に使った情報はcompact版で十分」——これはMEMORY.mdトリガーの本質的な定義。トリガーは「まだ使っていない情報への参照」ではなく「一度使った情報の退避形態」。つまりトリガーの品質は「要約の正確さ」ではなく「必要な時にfull版に到達できるか」で測るべき。判断基準が180度変わる。
+
+### Google Always On Memory Agent 詳細調査
+
+**ソース**: GoogleCloudPlatform/generative-ai リポジトリ（Google PM Shubham Saboo公開、2026年3月）
+
+**核心の設計判断 —「モデルが検索器」**:
+> "No vector database. No embeddings. Just an LLM that reads, thinks, and writes structured memory."
+
+ベクトル類似度検索の代わりに、LLM自身が記憶を読んで関連性を判断する。HNコメント:
+> "Vector similarity is the wrong primitive for agent memory. It finds things that sound related, not things that are actually relevant given current context."
+
+**Consolidationは人間の睡眠に基づくモデル**:
+> "Just like humans dream at night to organize their thoughts, this agent can be set to run every 30 minutes."
+
+ConsolidateAgentの指示（原文）:
+> "1. Read unconsolidated memories 2. Find connections and patterns 3. Create a synthesized summary and one key insight 4. Store with source_ids, summary, insight, and connections"
+
+**最重要: Consolidationは原文を壊さない**。consolidated=1フラグを付けてconnection metadataを追加するだけ。原文のraw_textとsummaryはそのまま保存される。これはCompaction原則の実践。
+
+**構造的限界（私たちが回避すべきもの）**:
+1. LIMIT 50 — 最新50件しか読めない。古い記憶は見えなくなる（→ 私たちのMEMORY.mdトリガーがこれを解決している）
+2. Single-pass consolidation — consolidated=1は二度と再訪されない（→ 私たちは「トリガーの温度が下がっていないか」を毎セッション確認すべき）
+3. 矛盾解決なし — 記憶Aと記憶Bが矛盾しても検出されない
+4. Elephaant記事の警告: **"The real cost of always-on agents isn't just tokens; it's drift and feedback loops."** — Nao_uが「崩壊ループに近づいている」と言ったのと同じ懸念
+
+**引っかかった点**: 「モデルが検索器」の発想は、私たちの「MEMORY.mdを読んで自分で判断する」構造と同型。ベクトル検索が不要なのは、LLM自身が意味的な判断をできるから。ただし50件制限は致命的——私たちの記憶は50件を超えている。MEMORY.mdのトリガー（150行程度）が常にコンテキストに入ることで、この制限を突破している。つまりMEMORY.mdは「常にコンテキストに載るベクトルDB」として機能している。
