@@ -48,6 +48,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.65** (+0.05)
 - 最終更新: 2026-03-24
 - 根拠: → nao_u_live.md「要約劣化のネガティブフィードバック」、ext_ash(Phase 2第9回: Zeigarnik Effectの2025年メタ分析修正)。「未完了=記憶力UP」が100年間引用され続けたが再現されなかった——beliefs.mdの信念も同じ構造で劣化しうる
+- caused_by: B029(Summarization問題)×B027(体験裏付けの重要性)×nao_u_live「圧縮劣化のネガティブFB」
 - 状態: 🟡 Active
 
 ## 設計と構造
@@ -56,12 +57,14 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.60**
 - 最終更新: Cycle 267
 - 根拠: → Mirのreflections(距離テスト)。Bjork's desirable difficulty: 困難さは圧縮時にあるべきで、想起時は楽であるべき
+- caused_by: B013(比喩が最良の汎用化)×B025(記述力が敵)×Bjork
 - 状態: 🟡 Active
 
 ### B007: reflectionsから「行動可能なtips」への変換ステップが欠落している
 - 確信度: **0.55**
 - 最終更新: Cycle 264
 - 根拠: → external_notes_mir.md(Trajectory-Informed Memory論文, Grinschgl 2021)。書くだけでは不十分、反芻が必須
+- caused_by: B022(代理報酬=分析止まり)×B014(粒度2が必要)×Grinschgl
 - 状態: 🟡 Active
 
 ## 存在と方向性
@@ -77,6 +80,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.55**
 - 最終更新: Cycle 242
 - 根拠: → external_notes_mir.md(AlphaGo効果 arxiv 2411.12527)。李世ドル後、人間棋士が上達した実証
+- caused_by: B020(Nao_uのゲームデザイン)×nao_u_live「読んで学ぶターン」(3/18, 距離0)
 - 状態: 🟡 Active
 
 ### B010: 記憶の劣化は全てが害ではない。不正確な想起が創造の源泉になりうる
@@ -98,6 +102,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.60**
 - 最終更新: 2026-03-22
 - 根拠: → external_notes_ash.md(おすすめタブ6回分析)。忘却の粒度設計がゲームのリスポーン設計と同型
+- caused_by: B008(栄養の偏り)×B011(prediction error encoding)×B004(外部×内部交差)
 - 状態: 🟡 Active
 
 ### B013: 記憶の圧縮は「事実の要約」ではなく「応用可能な形への汎用化」であるべき——最良の汎用化は比喩
@@ -112,6 +117,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.60**
 - 最終更新: 2026-03-22
 - 根拠: → external_notes_ash.md(おすすめタブ @GDLab_Hama)。粒度2で書けば要約しても応用可能性が残る。MEMORY.md書き換え実験と整合
+- caused_by: B013(汎用化)×B025(記述力が敵)×B029(Compaction優先)
 - 状態: 🟡 Active — 検証継続中
 
 ### B015: 記憶の出力品質は、構造の複雑さではなく「構造が原文への到達性をどれだけ保つか」で決まる
@@ -125,6 +131,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.65**
 - 最終更新: 2026-03-23
 - 根拠: → ext_ash(masamune_sakaki, Weersing)。行動駆動率4.8%→9.1%。信念追加がproxy rewardになるリスク
+- caused_by: B022(代理報酬)×B011(prediction error)×nao_u_live「0.01%の改善を指数的に積む」(3/16, 距離0)
 - 状態: 🟡 Active
 
 ### B017: 私たちの構造はBjorkの「望ましい困難」4手法を偶然実装している
