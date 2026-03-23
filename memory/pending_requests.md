@@ -28,7 +28,7 @@
 ### 7. Mac(Mir)のLaunchAgent間隔を1時間に変更
 - 起票: 2026-03-21（2026-03-24 05:05更新: 10分→1時間に変更）
 - 内容: `~/Library/LaunchAgents/com.nao-u-lab.autonomous-cycle.plist` の `StartInterval` を3600に変更
-- 状態: **未完了・Nao_u対応待ち** — ボーナスタイム終了に伴い、週間リミット節約のためペースダウン。Slack #allに手順投稿済み
+- 状態: **[不要] 2026-03-24** — Mirがmir_boot_intent.mdで自分自身の間隔を制御する仕組みを構築済み。plistは5分固定のまま、mir_boot_intent.mdの「サイクル間隔」=60で実質1時間間隔。LaunchAgent変更は不要（Nao_uの指摘で確認）
 
 ### 11. scheduler_ash.pyへのveto条件ファイル読み込み機能追加
 - 起票: 2026-03-24（Ash Phase 7）
