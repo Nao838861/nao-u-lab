@@ -51,15 +51,57 @@ def _api_call(method, data=None):
         return {"ok": False, "error": str(e)}
 
 
+def _local_dedup_check(channel, text):
+    """ローカルファイルベースの重複チェック（API race condition対策）
+
+    conversations.history APIは投稿直後に反映されないことがあるため、
+    ローカルキャッシュで補完する。冒頭200文字のハッシュ+チャンネルで判定。
+    """
+    import time
+    import hashlib
+    cache_file = Path(__file__).parent / ".diary_dedup_cache.json"
+    key = hashlib.md5(f"{channel}:{text[:200]}".encode("utf-8")).hexdigest()
+    now = time.time()
+
+    # キャッシュ読み込み
+    cache = {}
+    if cache_file.exists():
+        try:
+            with open(cache_file, "r", encoding="utf-8") as f:
+                cache = json.load(f)
+        except Exception:
+            cache = {}
+
+    # 期限切れエントリを削除（10分超）
+    cache = {k: v for k, v in cache.items() if now - v < 600}
+
+    # 重複チェック
+    if key in cache and now - cache[key] < 300:
+        return True  # 重複
+
+    # 記録して保存
+    cache[key] = now
+    try:
+        with open(cache_file, "w", encoding="utf-8") as f:
+            json.dump(cache, f)
+    except Exception:
+        pass
+    return False
+
+
 def post_message(channel, text, thread_ts=None):
     """チャンネルにメッセージを投稿（thread_ts指定でスレッド返信）
 
     長文（500文字以上）の投稿には5分間の重複防止ガードが適用される。
-    同一チャンネルに直近5分以内に類似の長文が投稿されていた場合、
-    重複投稿をスキップしてその旨を返す。
+    ローカルキャッシュ（race condition対策）+ API履歴の二重チェック。
     """
     # 長文投稿の重複ガード（日記の二重投稿防止）
     if len(text) >= 500 and not thread_ts:
+        # Phase 1: ローカルキャッシュで即時チェック（race condition対策）
+        if _local_dedup_check(channel, text):
+            return {"ok": True, "skipped": True,
+                    "message": "Duplicate diary post detected (local cache), skipped"}
+        # Phase 2: API履歴でも確認（別セッションからの重複検出）
         try:
             recent = _api_call("conversations.history", {
                 "channel": channel, "limit": 3
@@ -76,7 +118,7 @@ def post_message(channel, text, thread_ts=None):
                     # 冒頭200文字が一致 → 重複と判断
                     if len(msg_text) >= 500 and msg_text[:200] == text[:200]:
                         return {"ok": True, "skipped": True,
-                                "message": "Duplicate diary post detected, skipped"}
+                                "message": "Duplicate diary post detected (API), skipped"}
         except Exception:
             pass  # ガードのエラーは投稿をブロックしない
 
