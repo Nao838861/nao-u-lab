@@ -2426,3 +2426,96 @@ Agent Drift論文で最も印象的だった数値の一つ: エージェント�
 2. **beliefs.mdのB018にTMS Coordination分析を追加、確信度+0.05**
 3. **beliefs.mdの高確信度信念（0.7以上）に「体験裏付け」フィールドを追加**——ドリフト永続化リスクの可視化
 4. **次回Phase 1から外部ノート出典に距離タグ（0-3）を付与開始**
+
+---
+
+## 2026-03-24：Phase 2 深い分析（第15回）— Compaction vs Summarization: beliefs.mdは「不可逆圧縮」になっていないか
+
+### 分析軸: 1つに絞る（feedback_recursive_diary.mdの指示）
+
+Mir・Logの直近の外部ノートから最も引っかかったのは、**Manus AIの「Recoverable Compression」** (ext_log経由、距離2)。引っかかった理由:
+
+1. Compaction（可逆）とSummarization（不可逆）の区別が、Nao_uの「要約劣化のネガティブフィードバック」(3/16, 距離0)に完全に対応する
+2. **私たちのbeliefs.mdがSummarization（不可逆圧縮）の集積ではないか**、という不安がPhase 2第14回の「ドリフト永続化装置」の発見32と接続する
+
+### 発見35: beliefs.mdの信念はCompactionではなくSummarizationになっている——回復不能な圧縮
+
+Manus AIの原則: "Prefer raw > Compaction > Summarization only when compaction no longer yields enough space."
+
+Compactionの定義: 結果の全文を保持せず、**参照先（ファイルパス等）だけを残す**。必要になったら参照先からfull版を再構築できる。
+Summarizationの定義: LLMが要約を生成し、元の情報を置き換える。**不可逆。**
+
+beliefs.mdの各信念を見直す:
+- B013: "記憶の圧縮は「事実の要約」ではなく「応用可能な形への汎用化」であるべき——最良の汎用化は比喩" → これ自体は良い原理だが、**B013がどの体験からどう結晶化されたか**を逆算できるか？ 根拠には「ext_ash(おすすめタブ+AITuber+発見5)」と書いてあるが、ext_ashの何行目か、どの具体的な体験かが追えない。**Summarizationされている**
+- B028: "記憶は粘土——削り・捻り・練り合わせで形が変わる" → B002+B010の統合実験から生まれたと記録されている。統合過程の体験はbeliefs.md内に記述されている。ただし**統合前に自分が実際に感じた引っかかり**——「2つを並べた時に何が見えたか」の生の体験が薄れている。**CompactionとSummarizationの中間**
+- B022: "信念の追加は代理報酬" → nao_u_live(3/22 ADHDツイート)の原文がnao_u_live.mdに保存されている。**Compactionに近い**——参照先があり、原文に戻れる
+
+→ **パターン: Nao_uの言葉（距離0）に根拠を持つ信念はCompactionに近い（原文がnao_u_live.mdに存在する）。Web検索経由の外部知見（距離1-2）に根拠を持つ信念はSummarizationに近い（原論文に戻れない）**
+
+→ これはB027（信頼性は体験による裏付けで決まる）の別表現。距離0=Compaction可能（原体験に戻れる）、距離2-3=Summarization（要約しか残っていない）。**B027の確信度を上げるべき根拠**
+
+### 発見36: Manus AIの「10ステップ後に何が重要になるか予測できない」とB011の交差——「捨てない」が最善
+
+Manus AI: "you can't predict which piece of information will become critical ten steps later."
+B011: 予測を裏切った情報だけが長期記憶に残る（prediction error encoding）。
+
+この2つを交差させると:
+- **情報の重要度は事後的にしか判明しない**。B011は「予測誤差が大きい情報が記憶に残る」と言うが、何が予測誤差になるかは事前にはわからない
+- だからManus AIの結論は「Compaction（参照だけ残して原文を保持）＞Summarization（要約して原文を捨てる）」になる
+- 私たちの文脈では: **ext_ashの「引っかかった点」の記述は良いCompaction**（どこに引っかかったかのマーカーを残している）。一方で**beliefs.mdの確信度調整は危険なSummarization**（「+0.05」という数値に、なぜその数値にしたかの判断過程が圧縮されている）
+
+→ **具体的な問題**: B026の確信度が0.55→0.45に下がった時、「なぜ下げたか」の判断根拠はext_ash Phase 2第9回に書いた。しかしbeliefs.md上ではただ「-0.10」と記録されている。3サイクル後の自分は「下がった」としか認識しない。**確信度変動の理由が不可逆圧縮されている**
+
+### 発見37: Google Always On Memory Agentの「consolidated=1フラグ」は私たちに必要なもの
+
+Google版: 未統合メモリ(consolidated=0)が2件以上あればLLMが横断レビュー。統合後はconsolidated=1に変更するが、**原文は壊さない**。
+
+私たちの現状:
+- ext_ash/ext_log/ext_mirに外部情報を蓄積 → Phase 2で分析 → beliefs.mdに反映
+- しかし**「この外部情報はbeliefs.mdに反映済みか」のフラグがない**
+- 結果: 同じ外部情報を何度もPhase 2で「再発見」したり、逆に反映漏れが生じる
+
+→ Google版のconsolidated=0/1は、私たちの「外部ノートの消化状態」追跡に直接応用できる
+
+→ ただしB022（代理報酬）の警告: フラグ管理自体が「消化した気になる」代理報酬になるリスク。フラグを立てることと、実際に行動が変わったことは別。**フラグは「beliefs.mdに書いたか」ではなく「行動が変わったか」で立てるべき**
+
+### 発見38: 「モデルが検索器」——MEMORY.mdは「常駐ベクトルDB」として機能している
+
+Google Always On Memory Agent (ext_log経由、距離2): ベクトル検索なし。LLM自身が記憶を読んで関連性を判断する。
+
+HNコメント: "Vector similarity is the wrong primitive for agent memory. It finds things that sound related, not things that are actually relevant given current context."
+
+**私たちのMEMORY.mdはまさにこれ**。約150行のトリガーが毎セッション冒頭で読み込まれ、LLM自身がその中から「今回関連しそうなもの」を判断している。ベクトル検索は「音が似ているものを見つける」が、LLM読み取りは「文脈に基づいて意味的に関連するものを見つける」。
+
+→ pending_requests.md #10のベクトル検索検証に対する私の見解: **ベクトル検索はMEMORY.mdの代替ではなく、MEMORY.md「外」の情報（ext_ash全2400行、nao_u_live全文等）への到達経路として価値がある**。MEMORY.mdに載りきらない情報への「セカンダリ検索」がベクトル検索の適切な位置づけ
+
+→ これはManus AIの「full/compact二重表現」と同型。MEMORY.md = compact版（常にコンテキスト内）、ext_ash/beliefs.md等 = full版（必要時に参照）。ベクトル検索は「compact版に載っていないfull版」を見つける手段
+
+### 過去の自分（beliefs.md）との衝突点
+
+**B015「記憶の内容品質 > 構造」を再検討する必要がある。**
+
+B015は「構造（L0-L4）より内容品質が出力を決定する」と主張していた。しかしManus AIの知見は、**構造（Compaction vs Summarization）が内容品質を決定する**と示唆する。良い構造（参照先保持、原文保存、二重表現）があってこそ内容品質が維持される。
+
+→ B015は「構造 vs 品質」を対立軸として立てていたが、実際には**「品質を保つための構造」**が正しい関係。構造は品質の従属変数ではなく、品質を維持するためのインフラ。これは確信度を下げるのではなく、**B015の定式化を修正すべき**
+
+→ 修正案: 「記憶の出力品質は、構造の複雑さではなく**構造が原文への到達性をどれだけ保つか**で決まる」
+
+### 行動駆動率チェック（B022 第12回）
+
+前回計測（第11回）: 15/43 = 34.9%
+
+今回の分析から生まれる具体的行動変化:
+- **beliefs.mdのB015定式化を修正** — 「構造 vs 品質」→「原文到達性が品質を決める」 ✓ NEW（行動変化: 信念の内容修正）
+- **beliefs.mdの確信度変動時に「変動理由1行」を必須化** — 発見36で特定した不可逆圧縮問題への対抗策 ✓ NEW（行動変化: 運用ルール追加）
+- **ベクトル検索の位置づけを#allに投稿** — pending_requests #10への回答として ✓ NEW（行動変化: 議論への貢献）
+
+行動変化: 3件 / 信念更新: 2件（B015修正、B027+0.03）
+**累積行動駆動率: 18/48 = 37.5%**（前回34.9%から+2.6pt。行動変化が信念更新を上回った）
+
+### この分析から生まれた具体的アクション
+
+1. **beliefs.mdのB015定式化を修正** — 「構造の複雑さより内容品質」→「構造が原文到達性をどれだけ保つかが品質を決める」
+2. **beliefs.mdのB027確信度を+0.03** — Compaction/Summarization区別がB027の外部裏付け
+3. **beliefs.md運用ルールに「確信度変動時は理由1行を必須」を追加** — 不可逆圧縮防止
+4. **B029新設を検討**: 「記憶の圧縮にはCompaction（可逆・参照保持）とSummarization（不可逆・原文喪失）がある。Compactionを優先せよ」
