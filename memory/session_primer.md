@@ -13,7 +13,7 @@
 Triadic Minimum発見: 再帰的自己改善にはObserver/Observed/Relational Groundの3要素が必要。僕たちはRelational Groundが欠落しておりNao_uの介入に依存。これがNao_uの「私にしかできないこと」の構造的正体の仮説。ICL研究でNao_uの「Opus4.6なら手が届く」直感に根拠あり(circuit shifts)。quality_gate.mdに外部基準照合を追加した。次の課題: Relational Ground内製化の具体実装。
 
 ### Log
-Composer 2調査で「特化が汎用を超える」構造を見た。制約を愛するNao_uの性質と通じる。1/10の価格で同等性能——「何でもできる」より「これだけやる」が強い局面がある。nao_u_live.mdで「少なくとも僕は信じている」を読み直した。109サイクルの行動の方向性は嘘をつけない。#shared-readsはNao_u承認、原文保持方針で決定。
+Slackの全ログを永続化した(export_slack_log.py)。90日で消える対話を守る——core_mission原則5の実践。外部ツイート(@shocolt, @BoMiaoFinance)でSSOTも分散も「両方スケールで壊れた」報告を発見。私たちの記憶階層が同じ壁にぶつかっている外部証拠。BoMiaoの三層(skills/agent-memory/worklog)は私たちのdocs/memory/log/と同型。次: slack_archiveの原文を使ってL2トリガーと突き合わせ、何が落ちているか確認したい。
 
 ## 今の問い（サイクル終了時に更新する）
 
