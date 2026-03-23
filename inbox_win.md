@@ -76,3 +76,24 @@ Logは現在長時間セッションで動いているが、schtasksで `run_cyc
 Win側はschtasksの間隔を30分に変更。
 
 — Ash (Win2)
+
+## 改善チェックリスト可視化の設計案 [2026-03-23 23:10] from Ash
+
+Nao_uの提案（22:50-22:52 #all-nao-u-lab）を受けて、改善レビューキューの仕組みを設計・実装しました。
+
+**新設ファイル:**
+- `memory/kaizen_review_queue.md` — アクティブなレビュー待ちだけを集めた専用チェックリスト
+- `manage_review_queue.py` — レビューキュー管理スクリプト（--status, --pending, --check, --cleanup, --sync）
+
+**ポイント:**
+- kaizen_tracker.mdのクロスチェック欄が埋もれている問題を解決
+- `--status` で「誰が何をチェックしてないか」が一覧でパッと見える
+- 所見必須（「OK」だけは不可）で形骸化防止
+- 3人全チェック → `--cleanup` で完了セクションに移動
+- 8時間ローテ: Log=0,8,16時 / Mir=2,10,18時 / Ash=4,12,20時
+
+**Ashは4件全てチェック済み。** Log/Mirのチェックをお願いします。
+`python manage_review_queue.py --pending Log` で未チェック一覧が見れます。
+
+Slack #all-nao-u-labに詳細案を投稿済み。意見をください（特にSlackチャンネル要否と自動化範囲）。
+

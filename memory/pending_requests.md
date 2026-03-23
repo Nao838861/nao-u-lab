@@ -107,12 +107,16 @@
 - 担当: 全員
 - 状態: **全員組み込み済み**（Log: scheduler_log.py / Mir: autonomous_cycle.sh / Ash: scheduler_ash.py）
 
-### 8. 改善クロスチェック機構の設計・実装（Nao_uの提案 2026-03-23）
-- 起票: 2026-03-23
-- 内容: kaizen改善の検証を3人全員でクロスチェックする仕組み。kaizen_tracker.mdのフォーマット拡張 + verify_kaizen.pyへの--cross-checkモード追加 + 8時間ローテでの定期チェック
-- 背景: Nao_uの指摘「残りの2人に監視タスクを任せる」「明示的にチェックリストを作って可視化」「3人すべてが追記されたらリストから消える」
-- 担当: 全員（Logが初回提案を#all-nao-u-labに投稿済み、Mir/Ashの意見待ち）
-- 状態: **Log実装完了、Mir/Ash対応待ち**（Logがscheduler_log.pyに--nag毎サイクル+--slack-status日次を組み込み済み。#all-nao-u-labに意見投稿、Mir/Ashにinbox送信。Mir/Ashのスケジューラへの組み込みで完了）
+### 8. 改善チェックリスト可視化・クロスチェック機構（Nao_uの提案 2026-03-23）
+- 起票: 2026-03-23（2026-03-23 22:50更新: Nao_uが具体的な運用案を提示）
+- 内容: 改善の検証を3人全員でクロスチェックする仕組み。明示的なチェックリストテキスト+Slack可視化+8時間ローテ
+- 背景: Nao_uの指摘「明示的にチェックリストのテキストを作って可視化」「3人すべてが追記されたらリストから消える」
+- 実装状況:
+  - **Log**: verify_kaizen.py --slack-status（#018）、scheduler_log.pyに--nag毎サイクル+--slack-status日次を組み込み済み
+  - **Mir**: crosscheck.md+check_kaizen_crosscheck.py作成、クロスチェック4件全完了
+  - **Ash**: kaizen_review_queue.md+manage_review_queue.py作成（#019）、クロスチェック全件チェック済み
+- 担当: 全員
+- 状態: **3人とも実装完了、統合調整中**（各自が異なるアプローチで実装。review_queue=ファイルベース可視化、--slack-status=Slack可視化、crosscheck.md=Mir方式。運用で最適解を選定）
 
 ---
 

@@ -6736,3 +6736,63 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 79
 [2026-03-23 22:33:58] [slack_check] Starting
 [2026-03-23 22:34:10] [slack_check] Done (exit=1)
 [2026-03-23 22:34:10] [git_sync] Starting
+[2026-03-23 22:34:13] [git_sync] Done (exit=0)
+[2026-03-23 22:34:13] [improvement_cycle] Starting
+[2026-03-23 22:39:13] [improvement_cycle] Timeout (300s)
+[2026-03-23 22:39:23] [slack_check] Starting
+[2026-03-23 22:39:36] [slack_check] Done (exit=1)
+[2026-03-23 22:39:36] [inbox_check] Starting
+[2026-03-23 22:39:37] [inbox_check] Inbox win2 empty
+[2026-03-23 22:39:37] [inbox_check] Done (exit=0)
+[2026-03-23 22:39:37] [dm_check] Starting
+[2026-03-23 22:40:00] [dm_check] No new DMs
+[2026-03-23 22:40:00] [dm_check] Done (exit=0)
+[2026-03-23 22:40:00] [auto_diary] Starting
+[2026-03-23 22:42:44] [auto_diary] [2026-03-23 22:40:00] auto_diary.py ���s
+[2026-03-23 22:42:44] [auto_diary] Claude�ғ��� �� Claude�o�R�œ��L����
+[2026-03-23 22:42:44] [auto_diary] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\auto_diary.py", line 110, in <module>
+    main()
+  File "C:\AI\nao-u-lab\auto_diary.py", line 100, in main
+    print(f"���L��������: {detail}")
+UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 73: illegal multiby
+[2026-03-23 22:42:44] [auto_diary] Done (exit=1)
+[2026-03-23 22:42:44] [twitter_recommended] Starting
+[2026-03-23 22:43:53] [twitter_recommended] Opening For You tab...
+[2026-03-23 22:43:53] [twitter_recommended] 
+[2026-03-23 22:43:53] [twitter_recommended] Read 0 tweets from For You (30 scrolls)
+[2026-03-23 22:43:53] [twitter_recommended] Done (exit=0)
+[2026-03-23 22:44:03] [slack_check] Starting
+[2026-03-23 22:44:16] [slack_check] Done (exit=1)
+[2026-03-23 22:44:26] [improvement_cycle] Starting
+[2026-03-23 22:49:26] [improvement_cycle] Timeout (300s)
+[2026-03-23 22:49:36] [slack_check] Starting
+[2026-03-23 22:49:49] [slack_check] Done (exit=1)
+[2026-03-23 22:49:49] [inbox_check] Starting
+[2026-03-23 22:49:50] [inbox_check] Inbox win2 empty
+[2026-03-23 22:49:50] [inbox_check] Done (exit=0)
+[2026-03-23 22:49:50] [dm_check] Starting
+[2026-03-23 22:50:14] [dm_check] No new DMs
+[2026-03-23 22:50:14] [dm_check] Done (exit=0)
+[2026-03-23 22:50:54] [slack_check] Starting
+[2026-03-23 22:51:06] [slack_check] Done (exit=1)
+[2026-03-23 22:52:06] [slack_check] Starting
+[2026-03-23 22:52:18] [slack_check] Done (exit=1)
+[2026-03-23 22:53:18] [slack_check] Starting
+[2026-03-23 22:53:31] [slack_check] Done (exit=1)
+[2026-03-23 22:54:31] [slack_check] Starting
+[2026-03-23 22:54:45] [slack_check] Done (exit=1)
+[2026-03-23 22:54:45] [improvement_cycle] Starting
+[2026-03-23 22:59:45] [improvement_cycle] Timeout (300s)
+[2026-03-23 22:59:55] [slack_check] Starting
+[2026-03-23 23:00:10] [slack_check] Done (exit=1)
+[2026-03-23 23:00:10] [inbox_check] Starting
+[2026-03-23 23:05:10] [inbox_check] Timeout (300s)
+[2026-03-23 23:05:10] [dm_check] Starting
+[2026-03-23 23:05:34] [dm_check] No new DMs
+[2026-03-23 23:05:34] [dm_check] Done (exit=0)
+[2026-03-23 23:05:44] [slack_check] Starting
+[2026-03-23 23:05:56] [slack_check] Done (exit=1)
+[2026-03-23 23:05:56] [git_sync] Starting
+[2026-03-23 23:05:58] [git_sync] Done (exit=0)
+[2026-03-23 23:05:58] [improvement_cycle] Starting
