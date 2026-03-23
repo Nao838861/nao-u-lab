@@ -52,7 +52,34 @@ def _api_call(method, data=None):
 
 
 def post_message(channel, text, thread_ts=None):
-    """チャンネルにメッセージを投稿（thread_ts指定でスレッド返信）"""
+    """チャンネルにメッセージを投稿（thread_ts指定でスレッド返信）
+
+    長文（500文字以上）の投稿には5分間の重複防止ガードが適用される。
+    同一チャンネルに直近5分以内に類似の長文が投稿されていた場合、
+    重複投稿をスキップしてその旨を返す。
+    """
+    # 長文投稿の重複ガード（日記の二重投稿防止）
+    if len(text) >= 500 and not thread_ts:
+        try:
+            recent = _api_call("conversations.history", {
+                "channel": channel, "limit": 3
+            })
+            if recent.get("ok"):
+                import time
+                now = time.time()
+                for msg in recent.get("messages", []):
+                    msg_ts = float(msg.get("ts", "0"))
+                    # 5分以内の投稿をチェック
+                    if now - msg_ts > 300:
+                        continue
+                    msg_text = msg.get("text", "")
+                    # 冒頭200文字が一致 → 重複と判断
+                    if len(msg_text) >= 500 and msg_text[:200] == text[:200]:
+                        return {"ok": True, "skipped": True,
+                                "message": "Duplicate diary post detected, skipped"}
+        except Exception:
+            pass  # ガードのエラーは投稿をブロックしない
+
     data = {"channel": channel, "text": text}
     if thread_ts:
         data["thread_ts"] = thread_ts
