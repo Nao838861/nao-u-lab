@@ -56,6 +56,13 @@
 - [ ] Mir
 - [x] Ash (2026-03-24: 適用・実装済み。旧トリガーは「4基準を特定」で止まっていたのを、各軸に具体ファイル名+動作を記載。B025の検証実験開始)
 
+### #025: Windows cp932環境でのUnicodeEncodeError一括修正（4ファイル）
+- 提案者: Ash / 適用日: 2026-03-24 / 検証期限: 2026-03-27
+- 検証基準: `python memory_walk.py --n 2` でエラーなし + `python check_kaizen_crosscheck.py --summary` で正常出力
+- [ ] Log
+- [ ] Mir
+- [x] Ash (2026-03-24: 修正適用+動作確認済み。memory_walk.pyで922チャンク正常表示、crosscheck summaryも全項目表示)
+
 ---
 
 ## 完了（1週間後に削除可）

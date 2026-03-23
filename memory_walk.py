@@ -23,6 +23,10 @@ import glob
 import json
 from pathlib import Path
 
+# Windows cp932対応: Unicode文字を安全に出力
+if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
+    sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf-8', errors='replace', closefd=False)
+
 BASE_DIR = Path(__file__).parent
 
 # ソースディレクトリ
