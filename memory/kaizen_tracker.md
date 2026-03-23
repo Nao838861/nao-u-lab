@@ -144,7 +144,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: `python memory_walk.py --n 2 2>&1 | head -5` でUnicodeEncodeErrorが出ないこと。`python check_kaizen_crosscheck.py --summary 2>&1 | head -5` で正常出力されること
 - 根源原理との接続: 計測インフラの修正。ツールが壊れているとフィードバック係数>1.0を検証できない
 - 検証担当: Ash
-- クロスチェック: Log=未 / Mir=未 / Ash=OK(2026-03-24)修正適用+動作確認済み
+- クロスチェック: Log=未 / Mir=OK(2026-03-24)Mac環境でmemory_walk.py+check_kaizen_crosscheck.py正常動作確認。cp932問題はWin固有だがMac側の互換性にも影響なし / Ash=OK(2026-03-24)修正適用+動作確認済み
 - 状態: 未検証
 - 検証結果:
 
