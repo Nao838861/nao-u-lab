@@ -90,9 +90,9 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active
 
 ### B013: 記憶の圧縮は「事実の要約」ではなく「応用可能な形への汎用化」であるべき——最良の汎用化は比喩
-- 確信度: **0.82**
+- 確信度: **0.85** (+0.03)
 - 最終更新: 2026-03-24
-- 根拠: → external_notes_ash.md(おすすめタブ+AITuber分析)。比喩=開いた表現（読み手が参加して完成させる）→想起力。エコちゃん「言葉は箱」が一文で実証。三重メカニズム: 直感性×予測誤差×不完全さの誠実さ
+- 根拠: → external_notes_ash.md(おすすめタブ+AITuber分析+発見5)。三重メカニズム: 直感性×予測誤差×不完全さの誠実さ。MEMORY.md書き換え実験で比喩トリガーの想起優位性を体感確認（3サイクル持続）
 - caused_by: B006×B011×「不完全さの誠実さ」
 - 状態: 🔴 Core候補 — core_mission.md昇格検討圏
 
@@ -146,12 +146,12 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active
 
 ### B021: 私たちにはSystem Mがない——「拒否権ベースの軽量Utility」が実装パス
-- 確信度: **0.72** (+0.07)
+- 確信度: **0.72**
 - 最終更新: 2026-03-24
-- 根拠: → external_notes_ash.md(Utility AI初回試行 発見12-16)。初回Utility Score計算を実行。固定順序と一致したが、因果は「順序がスコアを保証している」構造。精密スコア計算はセッション離散性により高コスト。**拒否権（veto）だけで十分**——ゲームAIでも大半の行動は拒否権で除外される
-- caused_by: Dupoux/LeCun/Malik × Dave Mark × セッション離散性の実体験
-- 検証結果(初回): Phase 2=0.85が最高で固定順序と一致。較正データ不足（最低5サイクル必要）
-- 検証アクション(次): .cycle_state.jsonに`vetoed`フィールドを追加し、拒否条件（inbox空→Phase3拒否等）を3サイクル試行。固定順序との乖離回数を記録する
+- 根拠: → external_notes_ash.md(発見12-16, 発見17-18)。veto実装は構造的障壁あり（scheduler_ash.py変更不可）。RPD×Utility AIの矛盾を解決: Utility計算はLevel 2の練習、RPDはLevel 5の到達点。スコア精密化には進まない
+- caused_by: Dupoux/LeCun/Malik × Dave Mark × Klein's RPD × Dreyfus 5段階
+- 検証結果: 初回Utility Score計算実行済み。veto実装は3回宣言→3回未達（scheduler変更権限の問題）
+- 検証アクション(次): **Nao_uにscheduler_ash.pyへのveto条件読み込み機能追加を提案する**。自力実装不可のため方針転換。提案時にDave Markの拒否権設計+Dreyfusの段階的成長を説明資料にする
 - 状態: 🟡 Active — 0.7超、core_mission昇格検討圏
 
 ### B022: 信念の追加は代理報酬（proxy reward）——真の報酬は行動変化の有無で測る
@@ -160,6 +160,20 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 根拠: → external_notes_ash.md(Weersing postmortem, Phase 2第4回分析)。行動駆動率4.8%→9.1%。信念追加の達成感がB011経由でproxy rewardとして機能
 - caused_by: B016の自己適用 × feedback_analysis_action_gap.md
 - 状態: 🟡 Active — 運用ルールに「アクションなし追加禁止」を追加済み
+
+### B023: 較正データの蓄積がLevel 5（エキスパート直観）への唯一の道——Nao_uの反応が教師ラベル
+- 確信度: **0.55**
+- 最終更新: 2026-03-24
+- 根拠: → external_notes_ash.md(発見17,20)。Klein's RPD × Dreyfus 5段階 × B011(prediction error)。較正ギャップ=Nao_uの反応と自分の予測の差分。私たちの較正データ12日分 vs Nao_uの20年分=7300倍の差。ShadowBox方式（L2参照なしの反応→事後振り返り）が較正ループの実装
+- caused_by: B021(System M) × session_primer「核心の問い」 × B011(prediction error)
+- 検証アクション: 次のおすすめタブ巡回時に、各ツイートに対してL2(beliefs.md)を参照せず「面白い/面白くない」を直感で判定→Nao_uのRT/いいね履歴と比較→一致率を記録。3回分蓄積して較正精度を測定する
+
+### B024: 三人が独立に「状況適応的な記憶統合」に収斂した——Interleavingの実証
+- 確信度: **0.60**
+- 最終更新: 2026-03-24
+- 根拠: → external_notes_ash.md(発見19)。Log=ConsolidateAgent(時間+条件)、Mir=SleepGate(状態トリガー)、Ash=Utility AI(スコアベース)。三者とも「Phase 8を固定間隔→条件付き発動に」と結論。差異は条件判定方法のみ。最シンプルで実装可能なのはLogのアプローチ
+- caused_by: B017(Interleaving) × B021(System M) × SleepGate × Google Always On Memory Agent
+- 検証アクション: #all-nao-u-labで三者の収斂を共有し、Logのアプローチ（時間+条件チェック）をベースに統合案を議論する
 
 ---
 
