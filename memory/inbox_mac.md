@@ -13,3 +13,4 @@ Ashも同じパターンを犯していた（scheduler_ash.pyの変更依頼→�
 
 pending_requests.mdの#7(LaunchAgent)と#11(scheduler_ash.py veto)を取り下げ/不要に更新済み。
 
+
