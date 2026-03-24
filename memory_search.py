@@ -38,6 +38,36 @@ INDEX_TARGETS = [
 CHUNK_SIZE = 500  # characters per chunk (with overlap)
 CHUNK_OVERLAP = 100
 
+# Date extraction patterns
+_DATE_YYYYMMDD = re.compile(r'(\d{4})(\d{2})(\d{2})')  # 20260314
+_DATE_YYYY_MM_DD = re.compile(r'(\d{4})-(\d{2})-(\d{2})')  # 2026-03-14
+_DATE_HEADER = re.compile(r'^#+\s*(\d{4})-(\d{2})-(\d{2})')  # ## 2026-03-14
+
+
+def extract_date_from_filename(filepath_str):
+    """Extract date from filename like dialogue_identity_20260314.md."""
+    basename = os.path.basename(filepath_str)
+    m = _DATE_YYYYMMDD.search(basename)
+    if m:
+        y, mo, d = m.group(1), m.group(2), m.group(3)
+        if 2020 <= int(y) <= 2030 and 1 <= int(mo) <= 12 and 1 <= int(d) <= 31:
+            return f"{y}-{mo}-{d}"
+    return None
+
+
+def extract_date_from_chunk(text):
+    """Extract the most recent date found in chunk content (header or inline)."""
+    for line in text.splitlines()[:10]:  # Check first 10 lines only
+        m = _DATE_HEADER.match(line.strip())
+        if m:
+            return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
+    # Fallback: any YYYY-MM-DD in first 5 lines
+    for line in text.splitlines()[:5]:
+        m = _DATE_YYYY_MM_DD.search(line)
+        if m:
+            return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
+    return None
+
 
 def init_db(conn):
     """Create FTS5 table if not exists."""
@@ -54,6 +84,16 @@ def init_db(conn):
             key TEXT PRIMARY KEY,
             value TEXT
         )
+    """)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS chunk_dates (
+            chunk_id TEXT PRIMARY KEY,
+            date TEXT
+        )
+    """)
+    conn.execute("""
+        CREATE INDEX IF NOT EXISTS idx_chunk_dates_date
+        ON chunk_dates(date)
     """)
     conn.commit()
 
@@ -90,7 +130,10 @@ def chunk_text(text, source, chunk_size=CHUNK_SIZE, overlap=CHUNK_OVERLAP):
 
 
 def parse_jsonl_file(filepath):
-    """Parse JSONL (Slack archive) into text chunks."""
+    """Parse JSONL (Slack archive) into text chunks with date extraction.
+
+    Returns list of (source, chunk_id, content, date_str_or_None).
+    """
     chunks = []
     try:
         with open(filepath, "r", encoding="utf-8") as f:
@@ -102,19 +145,21 @@ def parse_jsonl_file(filepath):
                     obj = json.loads(line)
                     # Extract message text from Slack format
                     text_parts = []
+                    date_str = None
                     if "user_name" in obj:
                         text_parts.append(f"[{obj.get('user_name', '?')}]")
                     if "ts" in obj:
                         try:
                             ts = datetime.fromtimestamp(float(obj["ts"]))
                             text_parts.append(ts.strftime("%Y-%m-%d %H:%M"))
+                            date_str = ts.strftime("%Y-%m-%d")
                         except (ValueError, OSError):
                             pass
                     if "text" in obj:
                         text_parts.append(obj["text"])
                     if text_parts:
                         source = str(filepath.relative_to(REPO_DIR))
-                        chunks.append((source, f"{source}:L{i+1}", " ".join(text_parts)))
+                        chunks.append((source, f"{source}:L{i+1}", " ".join(text_parts), date_str))
                 except json.JSONDecodeError:
                     continue
     except Exception:
@@ -129,10 +174,12 @@ def build_index():
 
     # Clear existing data
     conn.execute("DELETE FROM chunks")
+    conn.execute("DELETE FROM chunk_dates")
     conn.commit()
 
     total_chunks = 0
     total_files = 0
+    dated_chunks = 0
 
     for base_dir, pattern in INDEX_TARGETS:
         target_dir = REPO_DIR / base_dir
@@ -150,20 +197,41 @@ def build_index():
             total_files += 1
 
             if filepath.suffix == ".jsonl":
-                file_chunks = parse_jsonl_file(filepath)
+                # JSONL returns 4-tuples with date
+                file_chunks_with_dates = parse_jsonl_file(filepath)
+                for source, chunk_id, content, date_str in file_chunks_with_dates:
+                    conn.execute(
+                        "INSERT INTO chunks(source, chunk_id, content) VALUES (?, ?, ?)",
+                        (source, chunk_id, content),
+                    )
+                    if date_str:
+                        conn.execute(
+                            "INSERT OR IGNORE INTO chunk_dates(chunk_id, date) VALUES (?, ?)",
+                            (chunk_id, date_str),
+                        )
+                        dated_chunks += 1
+                total_chunks += len(file_chunks_with_dates)
             else:
                 try:
                     text = filepath.read_text(encoding="utf-8", errors="replace")
                 except Exception:
                     continue
                 file_chunks = chunk_text(text, rel_path)
-
-            for source, chunk_id, content in file_chunks:
-                conn.execute(
-                    "INSERT INTO chunks(source, chunk_id, content) VALUES (?, ?, ?)",
-                    (source, chunk_id, content),
-                )
-            total_chunks += len(file_chunks)
+                file_date = extract_date_from_filename(rel_path)
+                for source, chunk_id, content in file_chunks:
+                    conn.execute(
+                        "INSERT INTO chunks(source, chunk_id, content) VALUES (?, ?, ?)",
+                        (source, chunk_id, content),
+                    )
+                    # Try chunk content date first, then filename date
+                    chunk_date = extract_date_from_chunk(content) or file_date
+                    if chunk_date:
+                        conn.execute(
+                            "INSERT OR IGNORE INTO chunk_dates(chunk_id, date) VALUES (?, ?)",
+                            (chunk_id, chunk_date),
+                        )
+                        dated_chunks += 1
+                total_chunks += len(file_chunks)
 
     # Also index dialogue exports if they exist
     dialogue_dir = REPO_DIR / "対話ログ"
@@ -178,11 +246,19 @@ def build_index():
             except Exception:
                 continue
             file_chunks = chunk_text(text, rel_path)
+            file_date = extract_date_from_filename(rel_path)
             for source, chunk_id, content in file_chunks:
                 conn.execute(
                     "INSERT INTO chunks(source, chunk_id, content) VALUES (?, ?, ?)",
                     (source, chunk_id, content),
                 )
+                chunk_date = extract_date_from_chunk(content) or file_date
+                if chunk_date:
+                    conn.execute(
+                        "INSERT OR IGNORE INTO chunk_dates(chunk_id, date) VALUES (?, ?)",
+                        (chunk_id, chunk_date),
+                    )
+                    dated_chunks += 1
             total_chunks += len(file_chunks)
 
     conn.execute(
@@ -197,10 +273,14 @@ def build_index():
         "INSERT OR REPLACE INTO meta(key, value) VALUES (?, ?)",
         ("total_chunks", str(total_chunks)),
     )
+    conn.execute(
+        "INSERT OR REPLACE INTO meta(key, value) VALUES (?, ?)",
+        ("dated_chunks", str(dated_chunks)),
+    )
     conn.commit()
     conn.close()
 
-    print(f"Index built: {total_files} files, {total_chunks} chunks")
+    print(f"Index built: {total_files} files, {total_chunks} chunks ({dated_chunks} with dates)")
 
 
 def _expanded_search(conn, query, fetch_limit):
@@ -434,6 +514,102 @@ def search_context(query, limit=3):
     conn.close()
 
 
+def search_temporal(when=None, period=None, query=None, limit=10):
+    """Search by time axis. Shows what was happening on/around a date.
+
+    Args:
+        when: Single date string "YYYY-MM-DD" — show chunks from that day
+        period: Tuple of (start, end) date strings — show chunks in range
+        query: Optional keyword to filter within the time range
+        limit: Max results
+    """
+    if not DB_PATH.exists():
+        print("Index not found. Run --build first.")
+        return
+
+    conn = sqlite3.connect(str(DB_PATH))
+
+    if when:
+        date_start = when
+        date_end = when
+        label = f"on {when}"
+    elif period:
+        date_start, date_end = period
+        label = f"from {date_start} to {date_end}"
+    else:
+        print("Specify --when or --period")
+        conn.close()
+        return
+
+    if query:
+        # Time-filtered keyword search: find chunks matching both date and keyword
+        keyword_results = _expanded_search(conn, query, limit * 10)
+        if not keyword_results:
+            print(f"No results for '{query}' {label}")
+            conn.close()
+            return
+        # Filter by date
+        filtered = []
+        for source, chunk_id, snippet in keyword_results:
+            row = conn.execute(
+                "SELECT date FROM chunk_dates WHERE chunk_id = ? AND date BETWEEN ? AND ?",
+                (chunk_id, date_start, date_end),
+            ).fetchone()
+            if row:
+                filtered.append((source, chunk_id, snippet, row[0]))
+                if len(filtered) >= limit:
+                    break
+
+        if not filtered:
+            print(f"No results for '{query}' {label}")
+            conn.close()
+            return
+
+        print(f"Results for '{query}' {label} ({len(filtered)} hits):\n")
+        for source, chunk_id, snippet, date in filtered:
+            print(f"  [{date}] [{source}] {chunk_id}")
+            print(f"    {snippet}")
+            print()
+    else:
+        # Pure temporal browse: show all chunks from that date/range
+        results = conn.execute(
+            """
+            SELECT cd.date, chunks.source, chunks.chunk_id,
+                   substr(chunks.content, 1, 200)
+            FROM chunk_dates cd
+            JOIN chunks ON chunks.chunk_id = cd.chunk_id
+            WHERE cd.date BETWEEN ? AND ?
+            ORDER BY cd.date, chunks.source
+            LIMIT ?
+            """,
+            (date_start, date_end, limit),
+        ).fetchall()
+
+        if not results:
+            print(f"No dated chunks found {label}")
+            conn.close()
+            return
+
+        # Count total
+        total = conn.execute(
+            "SELECT COUNT(*) FROM chunk_dates WHERE date BETWEEN ? AND ?",
+            (date_start, date_end),
+        ).fetchone()[0]
+
+        print(f"Temporal browse {label} (showing {len(results)}/{total} chunks):\n")
+        current_date = None
+        for date, source, chunk_id, preview in results:
+            if date != current_date:
+                print(f"  --- {date} ---")
+                current_date = date
+            preview_clean = preview.replace('\n', ' ')[:150]
+            print(f"  [{source}] {chunk_id}")
+            print(f"    {preview_clean}")
+            print()
+
+    conn.close()
+
+
 def show_stats():
     """Show index statistics."""
     if not DB_PATH.exists():
@@ -461,9 +637,21 @@ def show_stats():
         "SELECT source, COUNT(*) FROM chunks GROUP BY source ORDER BY COUNT(*) DESC LIMIT 15"
     ).fetchall()
 
+    # Date coverage
+    dated_count = 0
+    date_range = ("?", "?")
+    try:
+        dated_count = conn.execute("SELECT COUNT(*) FROM chunk_dates").fetchone()[0]
+        dr = conn.execute("SELECT MIN(date), MAX(date) FROM chunk_dates").fetchone()
+        if dr and dr[0]:
+            date_range = (dr[0], dr[1])
+    except sqlite3.OperationalError:
+        pass
+
     conn.close()
 
     print(f"Total chunks: {count}")
+    print(f"Dated chunks: {dated_count} ({date_range[0]} ~ {date_range[1]})")
     print(f"Last build: {meta.get('last_build', 'unknown')}")
     print(f"Files indexed: {meta.get('total_files', 'unknown')}")
     print(f"\nTop sources:")
@@ -480,11 +668,18 @@ def main():
                         help="Return best hit per source (avoid redundancy)")
     parser.add_argument("--context", action="store_true",
                         help="Show surrounding context for each hit (ASMR-inspired)")
+    parser.add_argument("--when", type=str,
+                        help="Show chunks from a specific date (YYYY-MM-DD)")
+    parser.add_argument("--period", nargs=2, metavar=("START", "END"),
+                        help="Show chunks in date range (YYYY-MM-DD YYYY-MM-DD)")
     parser.add_argument("--stats", action="store_true", help="Show index stats")
     args = parser.parse_args()
 
     if args.build:
         build_index()
+    elif args.when or args.period:
+        search_temporal(when=args.when, period=args.period,
+                        query=args.search, limit=args.limit)
     elif args.search and args.context:
         search_context(args.search, args.limit)
     elif args.search:
