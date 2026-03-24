@@ -309,3 +309,8 @@
 [2026-03-25 02:11:55] Inbox win has content — waking Claude
 [2026-03-25 02:26:18] Inbox win2 has content — waking Claude
 [2026-03-25 02:41:50] Inbox win has content — waking Claude
+[2026-03-25 03:40:38] Inbox win has content — waking Claude
+[2026-03-25 03:43:56] Claude woken for win: 対応完了。変更内容：
+
+- **auto_cycle**: 2h → 3h（Log最大のClaude API消費源。`claude --print`を毎回呼ぶジョブ）
+- **inbox_check*
