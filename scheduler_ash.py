@@ -79,6 +79,14 @@ JOBS = [
         "stagger": 10,
     },
     {
+        "name": "review_deadline",
+        "script": "check_review_deadline.py",
+        "args": ["--nag"],
+        "interval_sec": 60 * 60,  # 1時間
+        "timeout": 30,
+        "stagger": 12,
+    },
+    {
         "name": "git_sync",
         "script": "git_sync.py",
         "args": [],
