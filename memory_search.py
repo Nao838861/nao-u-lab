@@ -203,6 +203,107 @@ def build_index():
     print(f"Index built: {total_files} files, {total_chunks} chunks")
 
 
+def _expanded_search(conn, query, fetch_limit):
+    """Search FTS5 with query expansion for Japanese multi-word queries.
+
+    FTS5's unicode61 tokenizer doesn't handle Japanese morphemes well.
+    Multi-word queries like "記憶 薄まり" fail because spaces are treated
+    as FTS5 operators. This function:
+    1. Tries the original query first
+    2. If it fails or returns 0 results, splits into individual keywords
+    3. Searches each keyword separately
+    4. Merges results, ranking by number of keyword matches per chunk
+    """
+    # Step 1: Try original query
+    try:
+        results = conn.execute(
+            """
+            SELECT source, chunk_id, snippet(chunks, 2, '>>>', '<<<', '...', 40)
+            FROM chunks
+            WHERE chunks MATCH ?
+            ORDER BY rank
+            LIMIT ?
+            """,
+            (query, fetch_limit),
+        ).fetchall()
+        if results:
+            return results
+    except sqlite3.OperationalError:
+        pass
+
+    # Step 2: Escape special characters and try again
+    escaped = re.sub(r'[*+\-"()]', ' ', query).strip()
+    if escaped and escaped != query:
+        try:
+            results = conn.execute(
+                """
+                SELECT source, chunk_id, snippet(chunks, 2, '>>>', '<<<', '...', 40)
+                FROM chunks
+                WHERE chunks MATCH ?
+                ORDER BY rank
+                LIMIT ?
+                """,
+                (escaped, fetch_limit),
+            ).fetchall()
+            if results:
+                return results
+        except sqlite3.OperationalError:
+            pass
+
+    # Step 3: Query expansion — split into individual keywords and merge
+    keywords = re.split(r'\s+', re.sub(r'[*+\-"()（）]', ' ', query).strip())
+    keywords = [k for k in keywords if len(k) >= 1]
+
+    if len(keywords) <= 1:
+        return []
+
+    # Search each keyword separately
+    chunk_scores = {}  # (source, chunk_id) -> {score, keywords_matched, snippet}
+    for kw in keywords:
+        try:
+            kw_results = conn.execute(
+                """
+                SELECT source, chunk_id, snippet(chunks, 2, '>>>', '<<<', '...', 40), rank
+                FROM chunks
+                WHERE chunks MATCH ?
+                ORDER BY rank
+                LIMIT ?
+                """,
+                (kw, fetch_limit * 2),
+            ).fetchall()
+        except sqlite3.OperationalError:
+            continue
+
+        for source, chunk_id, snippet, rank in kw_results:
+            key = (source, chunk_id)
+            if key not in chunk_scores:
+                chunk_scores[key] = {
+                    'source': source,
+                    'chunk_id': chunk_id,
+                    'snippet': snippet,
+                    'keywords_matched': 0,
+                    'best_rank': rank,
+                }
+            chunk_scores[key]['keywords_matched'] += 1
+            if rank < chunk_scores[key]['best_rank']:
+                chunk_scores[key]['best_rank'] = rank
+                chunk_scores[key]['snippet'] = snippet
+
+    if not chunk_scores:
+        return []
+
+    # Sort by: keywords matched (desc), then rank (asc)
+    sorted_chunks = sorted(
+        chunk_scores.values(),
+        key=lambda x: (-x['keywords_matched'], x['best_rank']),
+    )
+
+    return [
+        (c['source'], c['chunk_id'], c['snippet'])
+        for c in sorted_chunks[:fetch_limit]
+    ]
+
+
 def search(query, limit=5, diverse=False):
     """Search the FTS5 index.
 
@@ -228,36 +329,11 @@ def search(query, limit=5, diverse=False):
     # When diverse, fetch more candidates then deduplicate by source
     fetch_limit = limit * 5 if diverse else limit
 
-    # FTS5 search
-    try:
-        results = conn.execute(
-            """
-            SELECT source, chunk_id, snippet(chunks, 2, '>>>', '<<<', '...', 40)
-            FROM chunks
-            WHERE chunks MATCH ?
-            ORDER BY rank
-            LIMIT ?
-            """,
-            (query, fetch_limit),
-        ).fetchall()
-    except sqlite3.OperationalError as e:
-        # Fallback: escape special FTS5 characters
-        escaped = re.sub(r'[*+\-"()]', ' ', query).strip()
-        if escaped:
-            results = conn.execute(
-                """
-                SELECT source, chunk_id, snippet(chunks, 2, '>>>', '<<<', '...', 40)
-                FROM chunks
-                WHERE chunks MATCH ?
-                ORDER BY rank
-                LIMIT ?
-                """,
-                (escaped, fetch_limit),
-            ).fetchall()
-        else:
-            print(f"Search error: {e}")
-            conn.close()
-            return
+    # FTS5 search with query expansion for Japanese multi-word queries
+    # Problem: FTS5 unicode61 tokenizer doesn't handle Japanese morphemes,
+    # so "記憶 薄まり" fails. Solution: split into individual keywords,
+    # search each, merge results ranked by keyword match count.
+    results = _expanded_search(conn, query, fetch_limit)
 
     conn.close()
 
