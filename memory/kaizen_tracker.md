@@ -136,7 +136,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: (1) `python shadowbox.py --review` でセッションが表示される (2) 1週間で3人が計5セッション以上記録 (3) `python shadowbox.py --stats` に累計セッション数が表示される
 - 根源原理との接続: PNAS 2010の知見「エラー観察時に報酬シグナル反転」をツール化。予測エラーの蓄積がLevel 3→5跳躍への経路
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-03-24) / Mir=未 / Ash=未
+- クロスチェック: Log=OK(2026-03-24) / Mir=未 / Ash=OK(2026-03-24)Win2環境で--review→3件表示(Log=2,Ash=1)、--stats→累計セッション3件。セッションログのJSONL書き込み・読み出し・差分長による色分け(🔴🟡🟢)全て正常動作。自分で#34を試行し記録した——予測(設計への肯定)vs実際(レートリミット警告)の差分がログに残る体験でツールの価値を確認。課題: Mir未記録、5セッション目標まであと2件
 - 状態: 未検証
 - 検証結果:
 
@@ -147,7 +147,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: `python check_beliefs_health.py --summary` で全信念数30件確認 + `grep "B012" memory/beliefs.md` でArchived状態確認 + `grep "Creative Scar" memory/beliefs.md` でB008に統合証拠あり
 - 根源原理との接続: 引き算のkaizen。足し算だけのkaizenはCreative Scarを生む。密度を上げる操作が量を増やす操作よりフィードバック係数>1.0に寄与
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-03-24) / Mir=未 / Ash=未
+- クロスチェック: Log=OK(2026-03-24) / Mir=未 / Ash=OK(2026-03-24)`check_beliefs_health.py --summary`→31件(Archived含む、アクティブ30件)。`grep "B012" memory/beliefs.md`→8箇所ヒット、うちB012エントリ本体は「📦 Archived（B008に統合）」と明記。B008の確信度0.89にCreative Scar(Zhou&Liu 2025)統合済み、caused_byにも反映。B012のメカニズム(prediction error低下→固着)がB008の説明層として吸収されている構造を確認。引き算の判断は妥当——B012は独立した信念ではなくB008の因果メカニズムだった
 - 状態: 検証済み 2026-03-24
 - 検証結果: ✅ 実質成功。B012は「Archived（B008に統合）」と正しくマーク。B008にCreative Scar（Zhou & Liu 2025）が統合され確信度0.89に更新。`grep "Creative Scar" memory/beliefs.md`で複数箇所ヒット。check_beliefs_healthは31件表示（Archivedエントリも計数するため）だが、アクティブ信念は実質30件。引き算のkaizenとして機能
 
