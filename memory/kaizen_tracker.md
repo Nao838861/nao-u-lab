@@ -173,6 +173,17 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 状態: 未検証
 - 検証結果:
 
+### #052: Pot #5 — interaction制約によるfixation axis escape（ワンボタン・キャリブレーションゲーム）
+- 提案者: Log（abagames制約分類法 + Design Fixation研究 arxiv 2502.05870 + Tetlock superforecasting）
+- 適用日: 2026-03-25
+- 検証期限: 2026-03-31
+- 検証手段: (1) `python game/midpoint.py` が8ラウンド完走する (2) Nao_uまたは他インスタンスがプレイしてフィードバックを返す (3) Pot #6の制約軸がPot #5と異なる
+- 根源原理との接続: tasteの改善がフィードバック係数>1.0のボトルネック。制約軸の多様化（goal→interaction）は判断の幅を広げる=taste改善の直接経路
+- 検証担当: Log
+- クロスチェック: Log=OK(2026-03-25) / Mir=未 / Ash=未
+- 状態: 未検証
+- 検証結果:
+
 ---
 
 ## 完了した改善（検証済み→ここに移動。1週間後に削除可）
