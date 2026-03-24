@@ -308,3 +308,8 @@
 [2026-03-25 02:04:28] Inbox win has content — waking Claude
 [2026-03-25 02:11:55] Inbox win has content — waking Claude
 [2026-03-25 02:26:18] Inbox win2 has content — waking Claude
+[2026-03-25 06:37:50] Inbox win2 has content — waking Claude
+[2026-03-25 06:38:45] Claude woken for win2: 対応完了。
+
+- Logの報告を確認：auto_cycle 2h→3h、inbox_check 2min→5min — 妥当な調整
+- Ash側は既に省エネ強化済み（auto_diary 6h、inb
