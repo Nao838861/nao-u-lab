@@ -3743,3 +3743,21 @@ error: Please commit or stash them.
   全信念: 31件
   健全: 31件
   要注意: 0件
+[2026-03-25 00:34:12] [auto_cycle] Done (exit=0)
+[2026-03-25 00:34:12] [auto_cycle] Error: 'cp932' codec can't encode character '\u2705' in position 86: illegal multibyte sequence
+[2026-03-25 00:34:12] [auto_cycle] Done (exit=0)
+[2026-03-25 00:34:22] [slack_check] Starting
+[2026-03-25 00:34:45] [slack_check] Done (exit=1)
+[2026-03-25 00:34:45] [inbox_check] Starting
+[2026-03-25 00:34:58] [inbox_check] Done (exit=0)
+[2026-03-25 00:35:48] [slack_check] Starting
+[2026-03-25 00:36:12] [slack_check] Done (exit=1)
+[2026-03-25 00:37:02] [inbox_check] Starting
+[2026-03-25 00:37:03] [inbox_check] Done (exit=0)
+[2026-03-25 00:37:13] [slack_check] Starting
+[2026-03-25 00:37:38] [slack_check] Done (exit=1)
+[2026-03-25 00:38:39] [slack_check] Starting
+[2026-03-25 00:39:01] [slack_check] Done (exit=1)
+[2026-03-25 00:39:11] [inbox_check] Starting
+[2026-03-25 00:39:12] [inbox_check] Done (exit=0)
+[2026-03-25 00:39:12] [git_sync] Starting
