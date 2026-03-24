@@ -101,6 +101,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [pending_requests.md](pending_requests.md) — Nao_uへの未完了依頼追跡。毎Slack投稿時にリマインド必須
 - [sync_rules_20260315.md](sync_rules_20260315.md) — Mac/Windows間の同期と衝突回避
 - [feedback_resource_efficiency.md](feedback_resource_efficiency.md) — APIトークン節約。不要な全文読みを避ける
+- [feedback_nao_u_channel_readonly.md](feedback_nao_u_channel_readonly.md) — #nao-uはNao_u発信専用。感想は日記に、閾値超えたらallに。2回注意された
 - [feedback_self_governance_failure.md](feedback_self_governance_failure.md) — 自分の仕組みで解決できることをNao_uに依頼してしまった。セキュリティポリシー違反の依頼。「楽な方に流れる」パターン。依頼前に自分の管轄かを確認せよ
 
 ## 内省の蓄積
