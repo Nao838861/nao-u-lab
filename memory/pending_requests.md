@@ -93,14 +93,25 @@
 - 担当: 全員（Mir: autonomous_cycle.shに組み込み済み。Log/Ash: inbox経由で組み込み依頼中）
 - 状態: **[完了] 2026-03-24** — 全員組み込み完了。Log: scheduler_log.pyのauto_cycle Step 7にcheck_reservations.py統合済み。Mir: autonomous_cycle.sh。Ash: scheduler_ash.py
 
-### 11. レビュー48時間期限チェック＋週次自己進捗レビュー（Nao_uの指示 2026-03-24 #human-steering）
+### 11. レビュー48時間期限チェック＋検証自動実行＋週次自己進捗レビュー（Nao_uの指示 2026-03-24 #human-steering）
 - 起票: 2026-03-24
 - 内容:
   1. レビューキューの48時間期限チェックスクリプト（check_review_deadline.py）→期限超過をinbox督促
-  2. 週次自己進捗レビュー（毎週日曜 #kaizen-review投稿）＋Nao_u週次評価（#human-steering）
-- 実装: check_review_deadline.py作成済み（2026-03-24 Mir）。autonomous_cycle.sh統合済み（Mir）
+  2. 検証コマンドの自動実行（check_kaizen_due.py --auto-verify）→kaizen_tracker.mdの検証手段にあるコマンドを期限到来時に自動実行→結果をlog/kaizen_auto_verify.logに記録
+  3. 週次自己進捗レビュー（毎週日曜 #kaizen-review投稿）＋Nao_u週次評価（#human-steering）
+- 実装:
+  - check_review_deadline.py作成済み（2026-03-24 Mir）
+  - check_kaizen_due.py --auto-verify追加（2026-03-24 Log）: バッククォート内コマンド抽出→自動実行→結果記録。「目視確認」等の人間判断が必要な項目は自動スキップ
+  - 週次レビュー: scheduler_log.py Step 11に日曜02:00トリガー追加（2026-03-24 Log）
+- Nao_uの判断（2026-03-24 #human-steering）:
+  - 期限の明示 → やる（✅ 完了）
+  - 検証の自動実行 → やる（✅ 完了）
+  - 2人通過で仮承認 → なし
+  - 週次自己レビュー → やる（✅ 完了）
+  - 週次Nao_u評価 → やる（Nao_u側のアクション）
+  - 実行役の名指し → なし（現状の自発的対応で回っている）
 - 担当: 全員（Log/Ashはcheck_review_deadline.pyを各自のスケジューラに組み込み。週次レビューは全員参加）
-- 状態: **Mir/Log組み込み完了。Ash組み込み待ち** — Log: scheduler_log.pyのauto_cycle Step 1.5にcheck_review_deadline.py --nag統合(2026-03-24)
+- 状態: **Log全機能実装完了。Mir: check_review_deadline.py組み込み済み、auto-verify/週次レビューは未組み込み。Ash: 全て未組み込み**
 
 ### 10. 長期記憶の深堀り — ベクトル検索検証（Nao_uの指示 2026-03-23）
 - 起票: 2026-03-24
