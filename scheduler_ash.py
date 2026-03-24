@@ -120,15 +120,28 @@ def setup_logging():
 
 
 def is_pid_alive(pid):
-    """Check if a process with the given PID exists."""
+    """Check if a process with the given PID exists (two methods for reliability)."""
+    # Method 1: tasklist
     try:
         result = subprocess.run(
             ["tasklist", "/FI", f"PID eq {pid}"],
             capture_output=True, text=True, timeout=10,
         )
-        return f" {pid} " in result.stdout
+        if f" {pid} " in result.stdout:
+            return True
     except Exception:
-        return False
+        pass
+    # Method 2: kernel32 OpenProcess (more reliable on Windows)
+    try:
+        import ctypes
+        PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+        handle = ctypes.windll.kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
+        if handle:
+            ctypes.windll.kernel32.CloseHandle(handle)
+            return True
+    except Exception:
+        pass
+    return False
 
 
 def write_pid():
@@ -136,8 +149,14 @@ def write_pid():
     if PID_FILE.exists():
         try:
             old_pid = int(PID_FILE.read_text().strip())
-            if is_pid_alive(old_pid):
+            if old_pid != os.getpid() and is_pid_alive(old_pid):
                 logging.info(f"Scheduler already running (PID {old_pid}). Exiting.")
+                sys.exit(0)
+            # PIDファイルの年齢もチェック（24時間超は stale と判断）
+            age = time.time() - PID_FILE.stat().st_mtime
+            if age < 10 and old_pid != os.getpid():
+                # 10秒以内に別プロセスが書いた → 競合。後から来た方が退く
+                logging.info(f"PID file just written by another process ({old_pid}, {age:.1f}s ago). Exiting.")
                 sys.exit(0)
         except Exception:
             pass  # PIDファイルが壊れている場合は上書き
