@@ -256,6 +256,15 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 検証アクション: 次の3サイクルで「beliefs.mdの信念が行動を制約した場面」と「beliefs.mdの信念を更新して行動が変わった場面」を各1例記録し、固着/可塑の比率を観察。期限: 2026-03-27
 - 状態: 🟡 Active
 
+### B031: ルールの蓄積はDreyfus Level 3(Competent)の天井を超えられない——Level 5(Expert)には判断の練習とフィードバックが必要
+- 確信度: **0.65**
+- 最終更新: 2026-03-24
+- 根拠: → ext_log(Dreyfus Model: leadingsapiens.com, ShadowBox: Klein 2016)。Level 3→5の跳躍は「situated feedback」=本物の文脈での判断と結果のフィードバック。ルールの精密化では到達しない。俺たちのbeliefs 30件+kaizen 40件超がLevel 3の証拠
+- caused_by: Nao_uの核心の問い「Nao_uにしかできないこと」(距離0)×ext_log(Dreyfus/Klein)×ShadowBox #52の予測差分
+- 体験裏付け: **YES** — shadowbox.py #52で初回練習。予測（Nao_uは設計議論にメタコメントする）vs実際（Nao_uは設計議論を無視して外部情報を投下した）。差分が大きい＝俺のNao_uモデルはLevel 3的な「こういう状況→こう反応するルール」に基づいており、Nao_uの実際の行動パターンを捉えていない
+- 検証アクション: shadowbox.pyを3回以上実行し、予測精度の変化を記録。精度が上がればLevel向上の証拠。期限: 2026-03-31
+- 状態: 🟡 Active
+
 ---
 
 ## 運用ルール
