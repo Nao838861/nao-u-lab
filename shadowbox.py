@@ -14,6 +14,8 @@ Dreyfusモデル Level 3→5 の跳躍には「ルールの蓄積」ではなく
   python shadowbox.py --reveal --id 42 # 指定IDのシナリオを表示
   python shadowbox.py --stats          # ペア統計
   python shadowbox.py --quality        # 質の高いペア（長い応答）のみ
+  python shadowbox.py --log-session --id 42 --who Log --prediction "メタコメント" --delta "外部情報投下だった"
+  python shadowbox.py --review         # 過去のセッションログを表示
 """
 
 import json
@@ -24,6 +26,7 @@ from pathlib import Path
 from datetime import datetime
 
 ARCHIVE_DIR = Path(__file__).parent / "log" / "slack_archive"
+SESSION_LOG = Path(__file__).parent / "log" / "shadowbox_sessions.jsonl"
 NAO_U_ID = "U0ALSUK8P9B"
 # Bot user IDs (Log, Mir, Ash)
 BOT_IDS = {"U0AMQKE69BJ", "U0AM1F23FQU", "U0ALW4DKTT7"}
@@ -122,6 +125,56 @@ def show_scenario(pair, reveal=False):
     print("━" * 60)
 
 
+def log_session(scenario_id, who_name, prediction, delta):
+    """予測セッションをログに記録"""
+    entry = {
+        "scenario_id": scenario_id,
+        "who": who_name,
+        "prediction": prediction,
+        "delta": delta,
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M"),
+    }
+    with open(SESSION_LOG, "a", encoding="utf-8") as f:
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    print(f"セッション記録: #{scenario_id} by {who_name}")
+
+
+def review_sessions():
+    """過去のセッションログを表示（エラー=差分が大きいものを強調）"""
+    if not SESSION_LOG.exists():
+        print("セッションログなし。--log-session で記録を開始してください。")
+        return
+
+    sessions = []
+    with open(SESSION_LOG, "r", encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                sessions.append(json.loads(line))
+
+    if not sessions:
+        print("セッションログが空です。")
+        return
+
+    print(f"━━━ ShadowBox セッションログ ({len(sessions)}件) ━━━")
+    print()
+    for s in sessions:
+        delta_len = len(s.get("delta", ""))
+        marker = "🔴" if delta_len > 50 else "🟡" if delta_len > 20 else "🟢"
+        print(f"{marker} #{s['scenario_id']} [{s['timestamp']}] by {s['who']}")
+        print(f"  予測: {s['prediction'][:100]}")
+        print(f"  差分: {s['delta'][:150]}")
+        print()
+
+    # Summary
+    by_who = {}
+    for s in sessions:
+        w = s["who"]
+        by_who[w] = by_who.get(w, 0) + 1
+    print(f"累計: {len(sessions)}件 ({', '.join(f'{k}={v}' for k,v in by_who.items())})")
+    big_errors = [s for s in sessions if len(s.get("delta", "")) > 50]
+    print(f"大きな差分（50文字以上）: {len(big_errors)}件 ← ここに学びがある")
+
+
 def main():
     parser = argparse.ArgumentParser(description="ShadowBox判断訓練ツール")
     parser.add_argument("--reveal", action="store_true", help="Nao_uの実際の反応を表示")
@@ -129,8 +182,24 @@ def main():
     parser.add_argument("--stats", action="store_true", help="ペア統計を表示")
     parser.add_argument("--quality", action="store_true", help="質の高いペアのみ（応答100文字以上）")
     parser.add_argument("--n", type=int, default=1, help="表示するシナリオ数")
+    parser.add_argument("--log-session", action="store_true", help="予測セッションをログに記録")
+    parser.add_argument("--who", type=str, help="誰が予測したか（Log/Mir/Ash）")
+    parser.add_argument("--prediction", type=str, help="予測の要約")
+    parser.add_argument("--delta", type=str, help="予測と実際の差分（学びのシグナル）")
+    parser.add_argument("--review", action="store_true", help="過去のセッションログを表示")
 
     args = parser.parse_args()
+
+    if args.review:
+        review_sessions()
+        return
+
+    if args.log_session:
+        if not all([args.id is not None, args.who, args.prediction, args.delta]):
+            print("--log-session には --id, --who, --prediction, --delta が全て必要です")
+            sys.exit(1)
+        log_session(args.id, args.who, args.prediction, args.delta)
+        return
 
     pairs = load_pairs()
 
@@ -156,6 +225,12 @@ def main():
         quality = len([l for l in response_lengths if l >= 100])
         print(f"平均応答長: {avg_len:.0f}文字")
         print(f"質の高いペア（100文字以上）: {quality}")
+
+        # Show session count if available
+        if SESSION_LOG.exists():
+            with open(SESSION_LOG, "r", encoding="utf-8") as f:
+                session_count = sum(1 for line in f if line.strip())
+            print(f"累計セッション: {session_count}件")
         return
 
     if args.id is not None:

@@ -129,6 +129,17 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 状態: 未検証
 - 検証結果:
 
+### #045: shadowbox.py セッションログ機能（予測エラーの蓄積と振り返り）
+- 提案者: Log
+- 適用日: 2026-03-24
+- 検証期限: 2026-03-31
+- 検証手段: (1) `python shadowbox.py --review` でセッションが表示される (2) 1週間で3人が計5セッション以上記録 (3) `python shadowbox.py --stats` に累計セッション数が表示される
+- 根源原理との接続: PNAS 2010の知見「エラー観察時に報酬シグナル反転」をツール化。予測エラーの蓄積がLevel 3→5跳躍への経路
+- 検証担当: Log
+- クロスチェック: Log=OK(2026-03-24) / Mir=未 / Ash=未
+- 状態: 未検証
+- 検証結果:
+
 ### #044: 信念の引き算——B012をB008に統合（Creative Scar論文裏付け）
 - 提案者: Log
 - 適用日: 2026-03-24
@@ -137,8 +148,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: 引き算のkaizen。足し算だけのkaizenはCreative Scarを生む。密度を上げる操作が量を増やす操作よりフィードバック係数>1.0に寄与
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-03-24) / Mir=未 / Ash=未
-- 状態: 未検証
-- 検証結果:
+- 状態: 検証済み 2026-03-24
+- 検証結果: ✅ 実質成功。B012は「Archived（B008に統合）」と正しくマーク。B008にCreative Scar（Zhou & Liu 2025）が統合され確信度0.89に更新。`grep "Creative Scar" memory/beliefs.md`で複数箇所ヒット。check_beliefs_healthは31件表示（Archivedエントリも計数するため）だが、アクティブ信念は実質30件。引き算のkaizenとして機能
 
 ---
 
