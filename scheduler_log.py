@@ -7,11 +7,11 @@ Launched from claude_log.bat, stops when Claude Code exits.
 
 Jobs:
   - slack_check: check_slack.py (every 1 min)
-  - inbox_check: check_inbox.py --box win (every 2 min)
+  - inbox_check: check_inbox.py --box win (every 5 min)
   - git_sync: git pull + add + commit + push (every 30 min)
   - recommended_check: read_twitter_recommended.py (every 1h, runs at hour%6==2)
   - slack_export: export_slack_log.py (every 8h, Log's slot: hour%24==2)
-  - auto_cycle: claude --print for diary + 8-phase cycle (every 1h, 2026-03-24 Nao_u指示)
+  - auto_cycle: claude --print for diary + 8-phase cycle (every 3h, 2026-03-25 Nao_u指示: 頻度削減)
 
 Usage:
   python scheduler_log.py          # normal start
@@ -45,11 +45,11 @@ MAX_RUNTIME = timedelta(hours=24)
 # Job definitions: (name, command, interval_seconds, timeout_seconds)
 JOBS = [
     ("slack_check", [sys.executable, str(REPO_DIR / "check_slack.py")], 60, 120),
-    ("inbox_check", [sys.executable, str(REPO_DIR / "check_inbox.py"), "--box", "win"], 120, 300),
+    ("inbox_check", [sys.executable, str(REPO_DIR / "check_inbox.py"), "--box", "win"], 300, 300),  # 5min (2026-03-25: 2min→5minに拡大。週間制限節約)
     ("git_sync", None, 1800, 60),  # special handling
     ("recommended_check", None, 3600, 300),  # special handling: hour%6==2
     ("slack_export", None, 28800, 120),  # special handling: hour%24==2
-    ("auto_cycle", None, 7200, 1800),  # 2h interval (2026-03-25 Nao_u指示: 週間制限節約のため頻度削減)
+    ("auto_cycle", None, 10800, 1800),  # 3h interval (2026-03-25 Nao_u指示: 週間制限節約のため頻度削減。1h→2h→3h)
 ]
 
 
