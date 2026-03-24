@@ -4,16 +4,19 @@ check_kaizen_due.py — 改善検証トラッカーの期限チェック
 memory/kaizen_tracker.mdを読み、検証期限が到来している未検証エントリを出力する。
 auto_cycleの前に実行し、出力をプロンプトに含めることで検証漏れを防ぐ。
 
+--auto-verify: 期限到来エントリの検証手段からコマンドを抽出し自動実行→結果記録。
+「目視確認」等の人間判断が必要な検証はスキップする。
+
 Usage:
   python check_kaizen_due.py                # 期限切れ＋本日期限を表示
   python check_kaizen_due.py --all          # 全未検証エントリを表示
-  python check_kaizen_due.py --auto-verify  # 期限到来の検証コマンドを自動実行→結果記録
+  python check_kaizen_due.py --auto-verify  # 期限到来の検証コマンドを自動実行
 """
 
 import re
 import subprocess
 import sys
-from datetime import datetime, date
+from datetime import date, datetime
 from pathlib import Path
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
@@ -114,80 +117,140 @@ def check_due(show_all=False):
     return "\n".join(lines)
 
 
-SKIP_KEYWORDS = ("目視確認", "目視", "手動", "手動確認", "人間が", "Nao_uが", "Nao_uに")
-LOG_FILE = Path(__file__).parent / "log" / "kaizen_auto_verify.log"
+RESULT_LOG = Path(__file__).parent / "log" / "kaizen_auto_verify.log"
+
+# Patterns that indicate human/LLM judgment is needed (not auto-executable)
+SKIP_PATTERNS = re.compile(
+    r"目視確認|フィードバックを返す|プレイして|使用し|回以上|"
+    r"自然想起|手動|人が|Nao_uまたは|体験裏付け|完走する"
+)
 
 
 def extract_commands(method_text):
-    """Extract backtick-wrapped commands from 検証手段 text."""
-    return re.findall(r"`([^`]+)`", method_text)
+    """Extract backtick-delimited commands from verification method text.
+
+    Returns list of (command_str, condition_text) tuples.
+    Only returns commands that are auto-executable (no human judgment needed).
+    """
+    # Find all backtick-delimited commands
+    commands = re.findall(r"`([^`]+)`", method_text)
+    results = []
+    for cmd in commands:
+        # Must look like an actual command (starts with python, grep, etc.)
+        if not re.match(r"^(python|grep|cat|ls|bash|sh)\s", cmd):
+            continue
+        # Check surrounding context for skip patterns
+        # Find the clause containing this command
+        idx = method_text.find(f"`{cmd}`")
+        # Look at text around the command (up to next numbered item or end)
+        start = max(0, method_text.rfind("(", 0, idx))
+        end = method_text.find("(", idx + len(cmd) + 2)
+        if end == -1:
+            end = len(method_text)
+        context = method_text[start:end]
+
+        if SKIP_PATTERNS.search(context):
+            continue
+        results.append((cmd, context.strip()))
+    return results
 
 
-def needs_human(method_text):
-    """Return True if the verification method requires human judgment."""
-    return any(kw in method_text for kw in SKIP_KEYWORDS)
+def run_verification(entry):
+    """Run auto-executable verification commands for an entry.
+
+    Returns list of (command, success, output) tuples.
+    """
+    commands = extract_commands(entry["method"])
+    if not commands:
+        return []
+
+    results = []
+    for cmd, context in commands:
+        try:
+            proc = subprocess.run(
+                cmd,
+                shell=True,
+                capture_output=True,
+                text=True,
+                timeout=30,
+                cwd=str(Path(__file__).parent),
+                encoding="utf-8",
+                errors="replace",
+            )
+            output = (proc.stdout + proc.stderr).strip()
+            # Truncate long output
+            if len(output) > 500:
+                output = output[:500] + "... (truncated)"
+            success = proc.returncode == 0
+            results.append((cmd, success, output))
+        except subprocess.TimeoutExpired:
+            results.append((cmd, False, "TIMEOUT (30s)"))
+        except Exception as ex:
+            results.append((cmd, False, f"ERROR: {ex}"))
+    return results
 
 
 def auto_verify():
-    """Run auto-verification for due/overdue entries. Return summary."""
+    """Run auto-verification on due/overdue entries and log results."""
     entries = parse_tracker()
     today = date.today()
-    results = []
+    verified = []
 
     for e in entries:
-        if e["status"] in ("検証済み",):
+        # Skip already verified or entries without due dates
+        if "検証済み" in e["status"] and "部分" not in e["status"]:
             continue
         if e["due"] is None:
             continue
+        # Only verify due or overdue entries
         if e["due"] > today:
-            continue  # not yet due
-
-        if needs_human(e["method"]):
-            results.append(f"#{e['id']}: スキップ（人間判断が必要）")
             continue
 
         commands = extract_commands(e["method"])
         if not commands:
-            results.append(f"#{e['id']}: スキップ（実行可能コマンドなし）")
             continue
 
-        for cmd in commands:
-            # Safety: only allow python/shell commands, not destructive ops
-            if any(danger in cmd for danger in ("rm ", "rm\t", "rmdir", "drop ", "DELETE ")):
-                results.append(f"#{e['id']}: スキップ（危険なコマンド: {cmd}）")
-                continue
+        results = run_verification(e)
+        if results:
+            verified.append((e, results))
 
-            try:
-                proc = subprocess.run(
-                    cmd, shell=True, capture_output=True, text=True,
-                    timeout=30, cwd=str(Path(__file__).parent),
-                )
-                output = proc.stdout.strip()
-                err = proc.stderr.strip()
-                status = "OK" if proc.returncode == 0 else f"FAIL(rc={proc.returncode})"
-                result_line = f"#{e['id']} [{status}] `{cmd}`\n  stdout: {output[:500]}"
-                if err:
-                    result_line += f"\n  stderr: {err[:200]}"
-                results.append(result_line)
-            except subprocess.TimeoutExpired:
-                results.append(f"#{e['id']} [TIMEOUT] `{cmd}`")
-            except Exception as ex:
-                results.append(f"#{e['id']} [ERROR] `{cmd}`: {ex}")
+    # Log results
+    if not verified:
+        print("自動検証対象なし（コマンドベースの検証が期限到来していない）。")
+        return
 
-    # Write to log file
-    if results:
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        log_entry = f"\n=== Auto-verify {timestamp} ===\n" + "\n".join(results) + "\n"
-        LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
-        with open(LOG_FILE, "a", encoding="utf-8") as f:
-            f.write(log_entry)
+    RESULT_LOG.parent.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    return "\n".join(results) if results else "自動検証対象なし。"
+    log_lines = [f"\n=== 自動検証実行 [{ts}] ==="]
+    for entry, results in verified:
+        log_lines.append(f"\n### #{entry['id']}: {entry['summary']}")
+        log_lines.append(f"  状態: {entry['status']} / 期限: {entry['due']}")
+        all_ok = True
+        for cmd, success, output in results:
+            mark = "✅" if success else "❌"
+            log_lines.append(f"  {mark} `{cmd}`")
+            if output:
+                for line in output.split("\n")[:5]:
+                    log_lines.append(f"      {line}")
+            if not success:
+                all_ok = False
+        log_lines.append(f"  → 総合: {'全コマンド成功' if all_ok else '一部失敗あり'}")
+
+    output_text = "\n".join(log_lines)
+    print(output_text)
+
+    with open(RESULT_LOG, "a", encoding="utf-8") as f:
+        f.write(output_text + "\n")
+
+    print(f"\n結果を {RESULT_LOG} に記録しました。")
 
 
 if __name__ == "__main__":
     show_all = "--all" in sys.argv
-    if "--auto-verify" in sys.argv:
-        print(auto_verify())
+    do_auto_verify = "--auto-verify" in sys.argv
+
+    if do_auto_verify:
+        auto_verify()
     else:
         print(check_due(show_all))
