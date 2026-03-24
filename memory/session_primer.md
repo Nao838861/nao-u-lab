@@ -13,15 +13,15 @@
 **Nao_uの「日記が2回同じ内容」指摘を調査→根本原因を特定し修正した。** claude --printセッションがpost_message()を2回呼ぶ問題。直近6時間で3組の完全重複を確認。slack_bot.pyに長文投稿の5分間重複ガードを追加+diary_dedup.py新設。#035としてkaizen-log登録済み。#033(ルール8選択アーキテクチャ)のAshクロスチェック完了。次: R-003(3/26)の行動駆動率計測、#035の効果検証(3/27)。
 
 ### Log
-**Pot #5を焼いた。制約の軸を変えた。** Pot #1-4は全てgoal制約。abagames（何百もの小さなゲームを作り続けている人）の制約分類法（interaction/visual/goal）を見つけ、Pot #5はinteraction制約（ワンボタン）で焼いた。game/midpoint.py(170行): 文が一文字ずつ現れる→真ん中だと思った瞬間にEnter。判断のキャリブレーション。Tetlock superforecasting（40分の訓練で予測精度6-11%改善）と接続。コア体験「真ん中は、知っているつもりで知らない場所にある」。
+**ShimayusのASMR記事はエイプリルフール社会実験だった。** Nao_uが検証を依頼。99%スコアは本物だが70秒/クエリ・12エージェント並列で非実用的。「ベンチマークのゲーミング」実証。MemScore（精度+レイテンシ+トークン数の複合指標）提案。FTS5路線の正しさを裏付け。shadowbox #live-check 5つ目のデータポイント: 俺は「Nao_uがコンテンツに反応する」と予測し続けるが、Nao_uは常に状況/環境に反応する。Pot #5以降、Nao_uの批評待ち。
 
 ## 今の問い（サイクル終了時に更新する）
 
-**テーマではなく制約軸を回す。** abagamesの制約分類法がfixation displacementの構造的解法。Pot #6はvisual制約（解像度/色数制限）で焼くべきか。Tetlockのsuperforecasting研究が示す: 判断力改善の最強予測因子は「self-improvement commitment」であり特定テクニックではない。ルールベース予測の固着はMirの#48で3人とも体験した。次: Nao_uの批評待ち。壺の数を増やし続けること自体がtaste改善。
+**単一指標のゲーミング問題。** ASMRが暴いた構造——精度だけで測ると嘘をつける——はkaizen_trackerの検証にも当てはまる。MemScore的な複合指標は正しいが、指標を増やすこと自体がルール9（taste vs execution）に引っかかる。指標の精度を上げるより、壺を焼いてNao_uに遊んでもらう方がtaste改善に効く。Nao_uの批評 = 唯一の本物のフィードバックシグナル。shadowboxの5回連続パターン（コンテンツ無視・環境応答）は、俺のNao_u理解がまだ表面的であることの証拠。
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: Pot #5(game/midpoint.py, 170行)焼成完了——制約軸をgoal→interactionに転換。abagames制約分類法(interaction/visual/goal) + Tetlock superforecasting(キャリブレーション訓練6-11%改善)を接続。#052としてkaizen登録。ルール9✅（制約カテゴリ追加ツールを作る衝動を抑制→壺を焼くことがtaste改善）。ルール2✅（分析を切り上げてmidpoint.pyの実装に移行）。遵守率2/2=100%（16回目計測）。次: Nao_uの批評待ち、Pot #6はvisual制約か。
+Log: ASMR社会実験の調査・分析・Slack共有完了。shadowbox live-check 5th data point確認。外部摂取4件（Shimayus/ASMR, hottaqu/Schwartz, ringo/computer-use, oikon48/Cursor-grep）。ルール9判定: ASMR分析は外部情報×自分たちの設計への接続（taste寄り）。ルール2判定: 分析→Slack投稿で行動化済み。遵守率2/2=100%（17回目計測）。次: Nao_uの壺5個批評待ち。批評が来たらtasteフィードバックループが初めて閉じる。
 
 ## 実行意図——障害パターン対策 + 信念スキル（Gollwitzer方式 if-then計画）
 
