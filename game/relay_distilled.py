@@ -45,6 +45,7 @@ def main():
         print(f"\n  ── サイクル {cycle} ──")
         if cycle == 1:
             print("  目を覚ます。石の部屋。出口に数字錠。")
+            print("  （? でコマンド一覧）")
         else:
             print(f"  {cycle}回目の目覚め。何も覚えていない。")
 
@@ -114,9 +115,15 @@ def main():
                     return
                 print("  違う。錠はびくともしない。")
             elif cmd in ("h", "help", "?"):
-                print("  write/read/look/enter <3桁>/quit")
+                print("  look   … 部屋を見回す")
+                print("  write <内容> … メモに書く（記憶を失っても残る）")
+                print("  read   … メモを読む")
+                print("  enter <3桁> … 数字錠を試す（例: enter 123）")
+                print("  quit   … やめる")
             elif cmd in ("q", "quit"):
                 return
+            elif raw.isdigit() and len(raw) == 3:
+                print(f"  → enter {raw} と入力してください")
             else:
                 print("  ? (h でヘルプ)")
 
