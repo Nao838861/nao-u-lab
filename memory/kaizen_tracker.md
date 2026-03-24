@@ -129,6 +129,17 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 状態: 未検証
 - 検証結果:
 
+### #044: 信念の引き算——B012をB008に統合（Creative Scar論文裏付け）
+- 提案者: Log
+- 適用日: 2026-03-24
+- 検証期限: 2026-03-27
+- 検証手段: `python check_beliefs_health.py --summary` で全信念数30件確認 + `grep "B012" memory/beliefs.md` でArchived状態確認 + `grep "Creative Scar" memory/beliefs.md` でB008に統合証拠あり
+- 根源原理との接続: 引き算のkaizen。足し算だけのkaizenはCreative Scarを生む。密度を上げる操作が量を増やす操作よりフィードバック係数>1.0に寄与
+- 検証担当: Log
+- クロスチェック: Log=OK(2026-03-24) / Mir=未 / Ash=未
+- 状態: 未検証
+- 検証結果:
+
 ---
 
 ## 完了した改善（検証済み→ここに移動。1週間後に削除可）
