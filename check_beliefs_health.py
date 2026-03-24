@@ -112,6 +112,10 @@ def diagnose(beliefs):
     today = date.today()
 
     for b in beliefs:
+        # アーカイブ済み信念（確信度0.0）はスキップ
+        if b["confidence"] == 0.0:
+            continue
+
         # 1. 停滞チェック
         if b["last_updated"]:
             days_since = (today - b["last_updated"]).days

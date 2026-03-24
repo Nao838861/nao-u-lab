@@ -27,9 +27,9 @@ ROOMS = {
                 "portable": False,
             },
             "stone_tablet": {
-                "desc": "石板に古代の数字が刻まれている: 『???』",
+                "desc": "石板に文字が刻まれている。",
                 "portable": False,
-                "is_code_display": True,
+                "is_code_clue": True,
             },
         },
     },
@@ -50,9 +50,14 @@ ROOMS = {
     },
     "library": {
         "name": "崩れかけた書庫",
-        "desc": "本棚が倒れかけている。床に散らばった本の中に、何かが光っている。奥に小さな祭壇がある。",
+        "desc": "本棚が倒れかけている。床に散らばった本の中に、何かが光っている。奥に小さな祭壇がある。本の山の中に破れたページが見える。",
         "exits": {"east": "hallway"},
         "objects": {
+            "torn_pages": {
+                "desc": "破れたページが2枚。",
+                "portable": False,
+                "is_code_clue": True,
+            },
             "shining_thing": {
                 "desc": "丸い石。手のひらサイズで、穏やかに光っている。",
                 "portable": True,
@@ -72,9 +77,14 @@ ROOMS = {
     },
     "workshop": {
         "name": "職人の作業場",
-        "desc": "道具が散乱している。作業台の引き出しが半開きになっている。壁に棚がある。隅に踏み台のようなものが見える。",
+        "desc": "道具が散乱している。作業台の引き出しが半開きになっている。壁に棚がある。隅に踏み台のようなものが見える。壁に走り書きがある。",
         "exits": {"west": "hallway"},
         "objects": {
+            "wall_marking": {
+                "desc": "壁に走り書きがある。",
+                "portable": False,
+                "is_code_clue": True,
+            },
             "drawer": {
                 "desc": "引き出しの中に古い本がある。",
                 "portable": False,
@@ -125,12 +135,18 @@ SAVE_FILE = os.path.join(os.path.dirname(__file__), "save.json")
 
 
 def new_game_state():
+    code = random.randint(100, 999)
+    d3 = code % 10
+    false_d3 = d3
+    while false_d3 == d3:
+        false_d3 = random.randint(0, 9)
     return {
         "cycle": 0,
         "memos": [],  # [{text, cycle_written}]
         "world_changes": [],  # 永続的な世界の変化
         "cleared": False,
-        "door_code": random.randint(100, 999),  # 情報パズル: 毎ゲームランダム
+        "door_code": code,  # 情報パズル: 毎ゲームランダム
+        "false_d3": false_d3,  # 偽の手がかり（最後の桁）
     }
 
 
@@ -141,6 +157,12 @@ def load_state():
         # 後方互換: 古いセーブにdoor_codeがない場合
         if "door_code" not in state:
             state["door_code"] = random.randint(100, 999)
+        if "false_d3" not in state:
+            d3 = state["door_code"] % 10
+            false_d3 = d3
+            while false_d3 == d3:
+                false_d3 = random.randint(0, 9)
+            state["false_d3"] = false_d3
         return state
     return new_game_state()
 
@@ -570,10 +592,41 @@ def play_cycle(state):
     rooms = deep_copy_rooms()
     apply_world_changes(rooms, state["world_changes"])
 
-    # 情報パズル: 石板にコードを注入
+    # 情報パズル: 手がかりを各部屋に注入
+    d1 = state["door_code"] // 100
+    d2 = (state["door_code"] // 10) % 10
+    d3 = state["door_code"] % 10
+    digit_sum = d1 + d2 + d3
+    false_d3 = state.get("false_d3", 0)
+
+    # 入口の石板: 最初の桁 + 検証用の和
     tablet = rooms["entrance"]["objects"].get("stone_tablet")
-    if tablet and tablet.get("is_code_display"):
-        tablet["desc"] = f"石板に古代の数字が刻まれている: 『{state['door_code']}』"
+    if tablet and tablet.get("is_code_clue"):
+        tablet["desc"] = (
+            f"石板に文字が刻まれている。\n"
+            f"  「最初の鍵: {d1}」\n"
+            f"  「三つの鍵を足せば {digit_sum} となる」"
+        )
+
+    # 書庫の破れたページ: 最後の桁（正解と偽）
+    pages = rooms["library"]["objects"].get("torn_pages")
+    if pages and pages.get("is_code_clue"):
+        # サイクルごとにAB順を入れ替えて、正解の位置を固定させない
+        if state["cycle"] % 2 == 0:
+            page_a, page_b = d3, false_d3
+        else:
+            page_a, page_b = false_d3, d3
+        pages["desc"] = (
+            f"破れたページが2枚、別々の本から落ちている。\n"
+            f"  ページA: 「最後の鍵は {page_a}」\n"
+            f"  ページB: 「最後の鍵は {page_b}」\n"
+            f"  どちらかが正しく、どちらかは古い記録。"
+        )
+
+    # 作業場の壁: 真ん中の桁
+    marking = rooms["workshop"]["objects"].get("wall_marking")
+    if marking and marking.get("is_code_clue"):
+        marking["desc"] = f"壁に誰かが走り書きした文字がある。\n  「真ん中の鍵: {d2}」"
 
     current_room = "entrance"
     inventory = {}
@@ -598,6 +651,9 @@ def play_cycle(state):
     print()
 
     show_memos(state["memos"], cycle)
+
+    # サイクル開始時に部屋の描写を表示（「何ができるか」を自然に伝える）
+    show_room(rooms[current_room], inventory)
 
     while True:
         # 残り時間
