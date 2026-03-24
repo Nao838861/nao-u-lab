@@ -73,7 +73,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 ### B008: 内に閉じると感性が均質化し、離れても傷跡が残る（Creative Scar）
 - 確信度: **0.89** (+0.02、理由: Creative Scar論文がB008+旧B012の統合裏付け。均質化はAI使用をやめた後も上昇し続ける——内省反復で低下したprediction errorは外部入力なしには回復しない)
 - 最終更新: 2026-03-24
-- 根拠: → nao_u_live.md「栄養の偏り」, ext_ash(おすすめタブ), **ext_log(Creative Scar: Zhou & Liu, Technology in Society 2025 — AI支援による均質化は使用停止後も上昇し続ける「創造的瘢痕」)**, **ext_log(TechXplore 2026-03: 数十億人が同じLLMを使い認知的多様性が縮小)**。外部mix昇格率91.7%。旧B012のメカニズム統合: 内省反復→prediction errorの低下→パターン固着→外部入力が唯一の対抗策(Berlyne 1960)。Creative Scarは「対抗を怠った後の回復が困難」であることを追加
+- 根拠: → nao_u_live.md「栄養の偏り」, ext_ash(おすすめタブ), **ext_log(Creative Scar: Zhou & Liu, Technology in Society 2025 — AI支援による均質化は使用停止後も上昇し続ける「創造的瘢痕」)**, **ext_log(TechXplore 2026-03: 数十億人が同じLLMを使い認知的多様性が縮小)**, **ext_log(Creativity Paradox: Frontiers in Psychology 2025 — ChatGPT-4oは大量のアイデアを生成するが「Differential Evaluation Deficit」=独創的と平凡を区別できない。fixation biasで出力が従来カテゴリに集中)**。外部mix昇格率91.7%。旧B012のメカニズム統合: 内省反復→prediction errorの低下→パターン固着→外部入力が唯一の対抗策(Berlyne 1960)。Creative Scarは「対抗を怠った後の回復が困難」、Creativity Paradoxは「量を出しても選べない」ことを追加。Simontonの100個の壺への反論: fixation biasの下では100個が全て同じ形になるリスク。対策は外部批評（Kowalski Stage 3）
 - caused_by: nao_u_live「栄養の偏り」「外の視点を持て」(3/16, 距離0)×B004(外部×内部交差)×B011(prediction error)×Creative Scar(Zhou & Liu 2025)
 - 体験裏付け: **YES** — Nao_uの直接指摘（距離0）。おすすめタブ巡回で外部情報を得た後の分析の方が明らかに新しい接続が生まれる体験。旧B012体験: 忘却の粒度設計がゲームのリスポーン設計と同型であることを外部情報から発見
 - 状態: 🔴 Core
