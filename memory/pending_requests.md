@@ -111,7 +111,7 @@
   - 週次Nao_u評価 → やる（Nao_u側のアクション）
   - 実行役の名指し → なし（現状の自発的対応で回っている）
 - 担当: 全員（Log/Ashはcheck_review_deadline.pyを各自のスケジューラに組み込み。週次レビューは全員参加）
-- 状態: **Log全機能実装完了。Mir: 全機能組み込み完了（auto-verify: autonomous_cycle.sh Step 8、週次レビュー: Step 9 日曜トリガー）。Ash: 全て未組み込み**
+- 状態: **[完了] 2026-03-25** — 全員組み込み完了。Log: 全機能実装。Mir: autonomous_cycle.sh Step 8/9。Ash: scheduler_ash.pyにcheck_review_deadline.py(既存)、check_kaizen_due.py --auto-verify(3h間隔)、weekly_self_review.py(日曜のみ)を追加
 
 ### 10. 長期記憶の深堀り — ベクトル検索検証（Nao_uの指示 2026-03-23）
 - 起票: 2026-03-24
