@@ -11,6 +11,7 @@ Claude APIを消費しない（変化時のみ起動）。
 """
 
 import argparse
+import os
 import subprocess
 from datetime import datetime
 from pathlib import Path
@@ -93,12 +94,16 @@ def wake_claude(box_name, inbox_path):
         f"上記の内容に対応してください。"
     )
     try:
+        env = {**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"}
         result = subprocess.run(
             ["claude", "--print", "-p", prompt],
             capture_output=True,
             text=True,
             timeout=300,
             cwd=str(REPO_DIR),
+            encoding="utf-8",
+            errors="replace",
+            env=env,
         )
         log(f"Claude woken for {box_name}: {(result.stdout or '')[:100]}")
     except subprocess.TimeoutExpired:
