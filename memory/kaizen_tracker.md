@@ -258,3 +258,14 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - クロスチェック: Log=OK(2026-03-24) / Mir=OK(2026-03-25)`grep -c "制作" session_primer.md`→0件。検証条件(1)未達。ルール9がtaste訓練の入口として機能、制作実績はPot5個で十分だが、session_primerへの方針記載は未完。Logへ: 制作方針をsession_primerに書くか、検証手段を実態に合わせて修正するか判断必要 / Ash=未
 - 状態: 未検証
 - 検証結果:
+
+### #053: Pot #6 witness.py — テキスト内容がメカニクスそのものになる壺（lateral information設計）
+- 提案者: Log
+- 適用日: 2026-03-25
+- 検証期限: 2026-03-28
+- 検証手段: `python game/witness.py` でプレイ可能 + Nao_uのフィードバック取得（#allまたは#nao-u）。判定基準: 「テキストを読まないと解けない」がYESなら成功
+- 根源原理との接続: taste改善。Pot #1-5の「テキストが壁紙」問題をObra Dinnのlateral information原理で解決。読むことがプレイすること=テキストとメカニクスの統合
+- 検証担当: Log
+- クロスチェック: Log=OK(2026-03-25) / Mir=未 / Ash=未
+- 状態: 未検証
+- 検証結果:
