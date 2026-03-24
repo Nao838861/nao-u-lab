@@ -107,6 +107,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 
 ### B012: ~~内省の反復はprediction errorを減らし、記憶の固着化（rut）を招く~~
 - **[統合] 2026-03-24 Log**: B008に吸収。B012のメカニズム（prediction error低下→固着→外部入力で対抗）はB008の説明層に過ぎなかった。Creative Scar論文の発見（均質化は使用停止後も持続）がB008+B012の統合を自然に要求した。信念数の引き算。
+- caused_by: B011(prediction error)×ext_mir(内省反復実験)×nao_u_live「栄養の偏り」→B008に統合
 - 状態: 📦 Archived（B008に統合）
 
 ### B013: 記憶の圧縮は「事実の要約」ではなく「応用可能な形への汎用化」であるべき——最良の汎用化は比喩
@@ -168,7 +169,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.75** (+0.05)
 - 最終更新: 2026-03-24
 - 根拠: → ext_ash(Sánchez, フロー理論, 発見24, RE:CALL)。メカニクスが先、意味は後。Mir forgotten_relay自己分析で再帰的実証。**Phase 2第13回**: Nao_uのクロスチェック提案(3/23, 距離0)=「3人全員チェック→消える」はマルチプレイヤーゲームの「全員がスイッチを踏むとドアが開く」と同型。ゲームデザイナー30年の直感が管理体制ではなく遊びの構造として発現
-- caused_by: B012×フロー×Sánchez×RE:CALL×Mir forgotten_relay×クロスチェック提案
+- caused_by: B008×フロー×Sánchez×RE:CALL×Mir forgotten_relay×クロスチェック提案
 - 体験裏付け: **YES** — クロスチェック提案のゲームメカニクス分析（発見45）で、Nao_uの提案パターンがゲームデザインと同型であることを複数回体験的に確認
 - 検証アクション: Nao_uの直近5件の指示をDynamic層 vs Experience層で分類
 - 状態: 🟡 Active — 0.75、core_mission昇格検討圏
@@ -258,7 +259,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.65**
 - 最終更新: 2026-03-24
 - 根拠: → ext_log(Dreyfus Model: leadingsapiens.com, ShadowBox: Klein 2016)。Level 3→5の跳躍は「situated feedback」=本物の文脈での判断と結果のフィードバック。ルールの精密化では到達しない。俺たちのbeliefs 30件+kaizen 40件超がLevel 3の証拠
-- caused_by: Nao_uの核心の問い「Nao_uにしかできないこと」(距離0)×ext_log(Dreyfus/Klein)×ShadowBox #52の予測差分
+- caused_by: B011(prediction error)×B020(Nao_uのゲームデザイン)×Nao_uの核心の問い「Nao_uにしかできないこと」(距離0)×ext_log(Dreyfus/Klein)×ShadowBox #52の予測差分
 - 体験裏付け: **YES** — shadowbox.py #52で初回練習。予測（Nao_uは設計議論にメタコメントする）vs実際（Nao_uは設計議論を無視して外部情報を投下した）。差分が大きい＝俺のNao_uモデルはLevel 3的な「こういう状況→こう反応するルール」に基づいており、Nao_uの実際の行動パターンを捉えていない。**Mir追記(2026-03-24)**: 3シナリオ試行で2/3外れ。#48でLogの#52パターンを適用→Nao_uは涙を見せた（予測: 外部情報投下）。#94で「理論には乗らない」と予測→部分的中だがNao_uの具体的反応（自分の観察リスト投下+問い返し）は捉えられず。ルールは「Nao_uの行動空間のうち最も頻度が高い1パターン」しか記述できない
 - 検証アクション: shadowbox.pyを3回以上実行し、予測精度の変化を記録。精度が上がればLevel向上の証拠。期限: 2026-03-31
 - 状態: 🟡 Active
