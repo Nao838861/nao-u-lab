@@ -1,5 +1,5 @@
 """
-Pot #5: Midpoint — 真ん中はどこだ
+Pot #5: Midpoint -- 真ん中はどこだ
 
 ワンボタンゲーム。文が一文字ずつ現れる。
 ちょうど真ん中だと思った瞬間にEnterを押す。
@@ -39,7 +39,7 @@ def clear_input_buffer():
 def show_intro():
     print()
     print("=" * 50)
-    print("  Midpoint — 真ん中はどこだ")
+    print("  Midpoint -- 真ん中はどこだ")
     print("=" * 50)
     print()
     print("  文が一文字ずつ現れます。")
@@ -146,10 +146,10 @@ def show_results(drifts):
     for i, d in enumerate(drifts):
         bar_len = int(abs(d) / 2)
         if d < 0:
-            bar = " " * (25 - bar_len) + "◀" * bar_len + "│"
+            bar = " " * (25 - bar_len) + "<" * bar_len + "|"
             print(f"  {i+1:2d}. {bar} {d:+5.0f}%")
         else:
-            bar = "│" + "▶" * bar_len
+            bar = "|" + ">" * bar_len
             print(f"  {i+1:2d}. {' ' * 25}{bar} {d:+5.0f}%")
 
     print()
@@ -160,7 +160,7 @@ def show_results(drifts):
     # パターン分析
     if abs(avg) < 3:
         print("  あなたの判断は安定している。")
-        print("  でも——安定は正確とは限らない。")
+        print("  でも、安定は正確とは限らない。")
     elif avg < 0:
         bias = abs(avg)
         print(f"  あなたは平均 {bias:.0f}% 早い。")

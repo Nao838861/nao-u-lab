@@ -13,6 +13,7 @@ Log作。2026-03-24。
 """
 
 import random
+import os
 import sys
 
 # --- 部屋の要素定義 ---
@@ -31,13 +32,18 @@ SLOTS = {
 SLOT_NAMES = list(SLOTS.keys())
 
 
+def clear_screen():
+    """画面をクリアする"""
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
 def describe_room(state: dict) -> str:
-    """部屋の状態を文章で描写する"""
+    """部屋の状態を文章で描写する。カテゴリ名を明示する。"""
     lines = []
-    lines.append(f"  {state['壁']}の部屋。{state['照明']}が灯っている。")
-    lines.append(f"  机の上には{state['机の上']}。{state['椅子']}がある。")
-    lines.append(f"  足元は{state['床']}。")
-    lines.append(f"  {state['音']}が聞こえる。{state['匂い']}。")
+    lines.append(f"  【壁】{state['壁']}の部屋。【照明】{state['照明']}が灯っている。")
+    lines.append(f"  【机の上】{state['机の上']}。【椅子】{state['椅子']}がある。")
+    lines.append(f"  【床】{state['床']}。")
+    lines.append(f"  【音】{state['音']}が聞こえる。【匂い】{state['匂い']}。")
     return "\n".join(lines)
 
 
@@ -61,7 +67,7 @@ def play():
     print()
     print("=" * 50)
     print("  The Changing Room")
-    print("  ——部屋の中で、何が変わった？")
+    print("  --部屋の中で、何が変わった？")
     print("=" * 50)
     print()
     print("ルール:")
@@ -76,7 +82,7 @@ def play():
     score = 0
     total = 10
 
-    print("——最初の部屋——")
+    print("--最初の部屋--")
     print(describe_room(state))
     print()
     input("（覚えたらEnterで次へ）")
@@ -84,7 +90,7 @@ def play():
     for round_num in range(1, total + 1):
         new_state, changed_slot, old_val, new_val = change_one(state)
 
-        print()
+        clear_screen()
         print(f"--- ラウンド {round_num}/{total} ---")
         print(describe_room(new_state))
         print()
@@ -104,6 +110,9 @@ def play():
         print(f"  現在のスコア: {score}/{round_num}")
 
         state = new_state
+
+        if round_num < total:
+            input("（Enterで次へ）")
 
     print()
     print("=" * 50)
