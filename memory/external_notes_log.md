@@ -693,3 +693,178 @@ https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Ma
 > "without forgetting mechanisms, storage grows unbounded and retrieval quality degrades as irrelevant memories accumulate"
 
 忘却メカニズムがなければ、ストレージは無制限に膨張し、無関連記憶の蓄積で検索品質が劣化する。B002（忘却は機能）の外部裏付けがさらに蓄積。
+
+---
+
+## 2026-03-24 外部情報調査：記憶・自己改善・ゲーム
+
+### テーマ1：記憶階層・AI記憶システムの最新動向
+
+#### Vector vs FTS5 vs GraphRAG — 2026年の結論は「ハイブリッド」
+
+2026年のアーキテクチャの主流は **Hybrid RAG** — Vectorで広く取り、Graphで深く辿る。
+
+- **Vector検索**: 非構造的・意味的な曖昧検索に最強。ただし多段推論（multi-hop queries）に弱い。「AとBそれぞれの事実は取れるが、AとBの間の関係は取れない」。個別のチャンクを見ているだけで論理の連鎖が見えない
+- **GraphRAG**: 知識グラフでエンティティをノード、関係をエッジとして構造化。「エンティティがどう繋がっているか」に基づいて検索できる。複雑な、複数ソースにまたがるクエリに強い
+- **FTS5**: SQLite拡張。ハイブリッド検索ではsqlite-vecと併用。完全一致・部分一致に強いがセマンティック理解はない
+- **VentureBreat予測（2026）**: 「RAG is dead」という過激な見出しだが、実質はRAGの進化形としてのGraphRAGやHybrid RAGへの移行を指している
+
+**引っかかった点**: 私たちの記憶システムはまさにこの問題のど真ん中にいる。memory_search.pyのベクトル検索は「広く取る」側。beliefs.mdのcaused_byリレーションは「深く辿る」側の手動版。テーマ層の欠如を前回指摘したが、GraphRAGはまさにそのテーマ層を自動構築する技術。ただし知識グラフの構築コスト（トークン消費）は馬鹿にならない。制約内でどこまでやるかが問題。
+
+Sources:
+- [Graph RAG: When Vector Search Isn't Enough](https://dasroot.net/posts/2026/03/graph-rag-vector-search-limitations/)
+- [Vector vs Graph RAG: Architecting Your AI Memory](https://optimumpartners.com/insight/vector-vs-graph-rag-how-to-actually-architect-your-ai-memory/)
+- [GraphRAG vs. Vector RAG: Side-by-side comparison guide](https://www.meilisearch.com/blog/graph-rag-vs-vector-rag)
+- [6 data predictions for 2026](https://venturebeat.com/data/six-data-shifts-that-will-shape-enterprise-ai-in-2026)
+
+#### AIエージェント記憶フレームワーク比較 — Letta の OS比喩が面白い
+
+2026年の主要フレームワーク: Mem0, Zep, Letta, Supermemory, SuperLocalMemory
+
+**Letta（旧MemGPT）のOS比喩アーキテクチャ**:
+- **Core Memory = RAM**: 常にLLMのコンテキストウィンドウ内に存在。ペルソナ、ユーザ詳細、重要コンテキスト。エージェントが直接読み書きする
+- **Recall Memory = ディスクキャッシュ**: コンテキストウィンドウ外の会話履歴。エージェントが必要時に検索する
+- **Archival Memory = コールドストレージ**: 大量の長期情報。エージェントがツールコールで挿入・クエリする
+- エージェントが**自分自身の記憶をツールコールで制御する**（読み・書き・検索・アーカイブ）
+
+**Mem0のグラフメモリ（2026年1月）**: 記憶を有向ラベル付きグラフとして保存。「algebra_skills -> prerequisite_for -> calculus_readiness」のような三つ組
+
+**2025年12月 清華大学サーベイ**: エージェント記憶を機能別に3分類 — factual memory（事実）、experiential memory（経験）、working memory（作業）
+
+**引っかかった点**: LettaのOS比喩は私たちの記憶アーキテクチャ設計（continuity_strategy.mdの5レベル）と驚くほど重なる。Level 1 = Core Memory（MEMORY.md）、Level 3 = Recall Memory（dialogue_*.md）、Level 4 = Archival Memory（.jsonl原文）。ただし決定的な違いが一つある——Lettaではエージェントが**自分で記憶の移動を決定する**。私たちは手動キュレーション依存。この自動化が「記憶階層の再設計」の核になりうる。
+
+清華大学の3分類も興味深い。私たちのbeliefs.md = factual memory、reflections.md = experiential memory、セッション内の文脈 = working memory。この分類が既に暗黙的に存在していたことの確認。
+
+Sources:
+- [The 6 Best AI Agent Memory Frameworks (2026)](https://machinelearningmastery.com/the-6-best-ai-agent-memory-frameworks-you-should-try-in-2026/)
+- [5 AI Agent Memory Systems Compared (2026 Benchmark Data)](https://dev.to/varun_pratapbhardwaj_b13/5-ai-agent-memory-systems-compared-mem0-zep-letta-supermemory-superlocalmemory-2026-benchmark-59p3)
+- [Memory in the Age of AI Agents (清華大学)](https://arxiv.org/abs/2512.13564)
+- [Mem0 vs Letta: Agent Memory Compared](https://vectorize.io/articles/mem0-vs-letta)
+
+#### Ruri v3 — 日本語埋め込みモデルの到達点
+
+名古屋大学のcl-nagoyaが開発。ModernBERT-Jaベース。
+
+- **コンテキスト長**: v1/v2は512トークン制限。v3は語彙100Kトークンに拡張（v1/v2は32K）
+- **FlashAttention統合**: ModernBERTアーキテクチャ準拠で推論・ファインチューニング高速化
+- **トークナイゼーション簡略化**: v1/v2は日本語BERT用トークナイザで事前分かち書きが必要だった。v3はSentencePieceのみ。外部形態素解析ツール不要
+- サイズ: 30M〜310Mパラメータ。リランカー版もあり
+- Apache License 2.0。HuggingFace公開
+
+**引っかかった点**: 外部形態素解析不要は実用上の大きな進歩。memory_search.pyで日本語ベクトル検索を導入する際、MeCab等の依存が障壁だったが、Ruri v3ならSentencePieceだけで完結する。30Mモデルならローカル実行も現実的。ただし現在のFTS5ベースの検索が「まず動く」状態にあるので、置き換えるならベンチマーク比較が先。
+
+Sources:
+- [cl-nagoya/ruri-v3-310m (HuggingFace)](https://huggingface.co/cl-nagoya/ruri-v3-310m)
+- [Ruri: Japanese General Text Embeddings (論文)](https://arxiv.org/abs/2409.07737)
+- [cl-nagoya/ruri-v3-130m (HuggingFace)](https://huggingface.co/cl-nagoya/ruri-v3-130m)
+
+---
+
+### テーマ2：自律AIエージェントの自己改善
+
+#### 再帰的自己改善（RSI）— ICLR 2026ワークショップと実践
+
+RSIが思考実験から実装段階に移行している。
+
+**AlphaEvolve（Google DeepMind, 2025年5月）**: 進化的コーディングエージェント。LLMを使ってアルゴリズムを設計・最適化。初期アルゴリズムと性能指標から出発し、LLMで新候補を繰り返し生成・選択する
+
+**ICLR 2026ワークショップ**: RSIを経験学習、合成データパイプライン、マルチモーダルエージェント、weak-to-strong汎化、推論時スケーリングの各軸で検討
+
+**ファインチューニングなしの自己改善手法**:
+- **Self-Rewarding**: 外部報酬なしの環境でgenerator-verifier gapを活用。参照回答なしで自律的にポリシーを改善
+- **Gödel Agent**: ポリシーとメタ学習メカニズムの両方を再帰的に更新。LLMが自分自身のコード/戦略を提案・テスト・動的修正する
+
+**引っかかった点**: Gödel Agentの「自分自身のコードを修正する」は、まさに私たちがやろうとしていること。memory_search.pyの--diverseオプション追加、check_beliefs_health.pyの構築——これらは手動だが「自分のツールを自分で改善する」パターン。Self-Rewardingの「参照回答なしで改善」は、Nao_u不在時の自律運転と直接対応する。問題は「評価基準を自分で持てるか」。beliefs.mdの信念体系がその評価基準の原型になっている。
+
+Sources:
+- [ICLR 2026 Workshop on AI with Recursive Self-Improvement](https://iclr.cc/virtual/2026/workshop/10000796)
+- [The Reality of Recursive Improvement](https://aiprospects.substack.com/p/the-reality-of-recursive-improvement)
+- [Recursive self-improvement from AI models (Marginal Revolution)](https://marginalrevolution.com/marginalrevolution/2026/02/recursive-self-improvement-from-ai-models.html)
+
+#### Context Engineering — Manusの実戦知見とAnthropicの設計原理
+
+**Manusの4つの教訓**（フレームワークを4回作り直して得た知見）:
+
+1. **KV-Cache hit rateが最重要指標**: 入力:出力トークン比が約100:1。キャッシュ済みトークン$0.30/MTok vs 未キャッシュ$3.00/MTok（10倍差）。KV-Cacheの無効化を避けるためにコンテキスト構造を設計する
+2. **ツール管理はマスキングで**: ツールを動的に追加/削除するとKV-Cacheが無効化される。代わりにlogitマスキングでツール選択を制約
+3. **タスク復唱（Task Recitation）**: todoリストを常にコンテキスト末尾に書き直す。グローバルプランをモデルの最近の注意範囲に押し込む。「lost-in-the-middle」問題と目標ドリフトの防止
+4. **エラーを保存する**: 失敗したアクションをコンテキストに意図的に残す。反直感的だが効果的
+
+Manusはこの手作業プロセスを**「Stochastic Graduate Descent」**と呼んでいる。
+
+**Anthropicのコンテキストエンジニアリング**: 「正しい言い回しを探す」ことから「モデルの望ましい振る舞いを最も引き出すコンテキスト構成は何か？」への転換。焦点を絞った300トークンのコンテキストが、焦点の定まらない113,000トークンのコンテキストに勝ることが多い。
+
+**Agentic Context Engineering（ACE）**: コンテキストを「進化するプレイブック」として扱う。生成・振り返り・キュレーションを通じて戦略を蓄積・洗練・組織化。構造化された漸進的更新でコンテキスト崩壊を防ぐ
+
+**引っかかった点**: Manusの「タスク復唱」は私たちのMEMORY.mdの想起トリガーと同じ原理。「コンテキスト末尾に目的を押し込む」ことで注意を維持する。Manusが4回フレームワークを作り直したのは、Nao_uの「設計より初ヒット」思想の実践例でもある——設計を完璧にしてから始めるのではなく、動かして壊して学ぶ。
+
+「300トークンが113,000トークンに勝つ」は、feedback_resource_efficiency.mdの「不要な全文読みを避ける」と直結。私たちの記憶システムの設計原理そのもの。コンテキストは「多い」ことより「適切」であることが重要。
+
+「エラーを保存する」はreflections.mdの設計思想と重なる。失敗を消さずに残すことで、同じ失敗を繰り返さない。
+
+Sources:
+- [Context Engineering for AI Agents: Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus)
+- [Effective context engineering for AI agents (Anthropic)](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
+- [Agentic Context Engineering (論文)](https://arxiv.org/abs/2510.04618)
+- [State of Context Engineering in 2026](https://www.newsletter.swirlai.com/p/state-of-context-engineering-in-2026)
+
+---
+
+### テーマ3：インディーゲーム開発
+
+#### Blue Prince — 8年間、週80時間、1人で作った建築パズル
+
+Tonda Ros（Dogubomb）による1人開発。2025年4月リリース。
+
+- **制約**: 8年間、週80時間。資金源はMagic: The Gatheringのファンサイト（Mythic Spoiler）の広告収入
+- **ゲームデザイン**: 毎日変化する部屋を持つ館の探索。45部屋をカードドラフトで構築し、隠された46番目の部屋を目指す。パズルは単一部屋完結のものと複数部屋にまたがる推理が必要なものが混在
+- **評価**: リリース時点でMetacriticの2025年最高評価。「2025年最もアートハウスなゲーム」
+- **続編**: 作らない。同じ宇宙の別作品を検討。MystとRivenの関係を引用
+
+**引っかかった点**: 「カードドラフトで館の部屋を構築する」というメカニクスは、「日常の問題（家の間取り/空間認識）をゲームに落とす」の見事な例。しかもランダム性（ローグライク要素）と論理パズルの掛け合わせ。Nao_uが好むタイプの「制約から面白さが生まれる」設計。8年×80時間/週の物量は壮絶だが、MTGファンサイトの広告収入で食いつなぐ——制約の中で作り切る意志の塊。
+
+#### Tangy TD — 4年間の苦闘と$245,000の初週
+
+Cakeという1人開発者。タワーディフェンスゲーム。2026年3月9日Steam発売。
+
+- 初30時間で$31,000、最終的に$245,000超
+- 開発者が売上を見て涙を流した
+- 「本当にこれに値しない気がする」という言葉
+
+#### Spilled! — 「船上の開発者」が作った癒し系オイル流出清掃ゲーム
+
+Lenteという1人開発者（2.2万フォロワーの「船上の開発者」）。モバイル向け。2025年12月リリース。
+Golden Joystick Awards「Best Self-Published Indie Game」にノミネート（Hollow Knight: Silksong, Deltarune, Hades 2と並んで）。
+
+#### CloverPit — Balaroの系譜、スロットマシンという「日常の毒」をゲーム化
+
+「BalatroとBuckshot Rouletteの悪魔的な私生児」と評されるスロットマシン・ローグライト。
+
+- 錆びた独房にスロットマシンとATM。毎ラウンド末の借金返済。返せなければ文字通り破滅
+- スロットマシンのルールをアイテム・バフ・確率で改変していく
+- Steam100万本突破
+
+**引っかかった点**: Balaroの系譜が続いている。ポーカー→スロットマシン。「日常の中で誰もが知っている仕組み（トランプ、スロット）を、ルールの改変で全く別のゲームに変える」アプローチ。Raph Koster（2025年11月記事）の言葉と完全に一致する:
+
+> 「ゲームは制約（ルール）の集合から問題を構築する。おもちゃにゴール（目標）を付ければゲームになる。全てのゲームは不確実な結果を確実な結果に変えることで終わる。」
+
+**Nao_uの感性に照らして**: 「制約を愛する」人にとって、Balaroの系譜は理想形に近い。既存のルールセット（ポーカー、スロット）という制約を受け入れた上で、その制約を「改変する」メタルールをプレイヤーに渡す。制約の上に制約を重ねることで生まれる爆発的な面白さ。Blue Princeも同じ——「館の部屋」という制約空間をカードドラフトで毎回変える。ルール自体が変わるゲームは、Nao_uが言う「面白いかどうかで全てを判断する」人にとって最も面白いはず。
+
+Sources:
+- [Blue Prince solo dev worked 80 hours/week for 8 years](https://www.gamesradar.com/games/puzzle/solo-dev-who-worked-80-hours-a-week-for-8-years-straight-to-finish-roguelike-puzzle-hit-blue-prince-says-he-physically-cannot-make-another-game-this-ambitious/)
+- [Top 10 Indie Games of 2025: The Best From Solo Developers](https://screenrant.com/best-solo-indie-games-2025/)
+- [Solo dev breaks down in tears after $250,000 week (Tangy TD)](https://www.gamesradar.com/games/after-4-years-of-work-solo-dev-breaks-down-in-tears-after-opening-steam-and-learning-his-game-made-usd250-000-in-a-week-i-feel-like-i-really-dont-deserve-this/)
+- [Game design is simple, actually (Raph Koster)](https://www.raphkoster.com/2025/11/03/game-design-is-simple-actually/)
+- [CloverPit: Balatro x Buckshot Roulette](https://www.gamesradar.com/games/roguelike/the-demonic-lovechild-of-balatro-and-buckshot-roulette-is-a-roguelite-horror-game-where-you-out-gamble-the-devil-and-it-got-over-100k-steam-wishlists-in-a-week/)
+
+---
+
+### 横断的な気づき — 3テーマに共通する構造
+
+**「制約がフレームになる」が全テーマに貫通している**:
+
+1. **記憶システム**: コンテキストウィンドウという制約があるからこそ、「何を覚えて何を忘れるか」の設計が意味を持つ。Manusの「300トークン > 113,000トークン」
+2. **自己改善**: ファインチューニングできないという制約があるからこそ、Self-RewardingやGödel Agentのような「重みを変えずにコードと戦略を変える」アプローチが生まれた
+3. **ゲーム設計**: ポーカーのルールという制約を受け入れたからこそBalaroが生まれた。館の部屋という制約を受け入れたからこそBlue Princeが生まれた
+
+Nao_uが20年間言い続けてきた「制約を愛す」は、2026年のAIアーキテクチャでもゲームデザインでも、最も生産的な設計原理であり続けている。
