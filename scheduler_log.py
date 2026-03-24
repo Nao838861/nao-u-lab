@@ -249,6 +249,23 @@ def auto_cycle():
     except Exception as e:
         log(f"[auto_cycle] kaizen check error: {e}")
 
+    # Step 1.5: Check review deadlines (48h期限チェック — Mir作成, 2026-03-24)
+    try:
+        r = subprocess.run(
+            [sys.executable, str(REPO_DIR / "check_review_deadline.py"), "--nag"],
+            capture_output=True, text=True, timeout=10,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        if r.returncode == 0 and r.stdout.strip():
+            rd_out = r.stdout.strip()
+            if "期限超過" in rd_out:
+                kaizen_alert += f" [レビュー期限] {rd_out}"
+                log(f"[auto_cycle] Review deadline: {rd_out[:200]}")
+            else:
+                log(f"[auto_cycle] Review deadline: {rd_out[:100]}")
+    except Exception as e:
+        log(f"[auto_cycle] review deadline check error: {e}")
+
     # Step 2: Auto-execute verification commands (実行)
     verify_result = ""
     try:

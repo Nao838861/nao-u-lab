@@ -12,3 +12,4 @@ node_modules/
 .slack_last_check.json
 .bot_profile/
 .scheduler_log.lock
+.memory_search.db

@@ -100,7 +100,7 @@
   2. 週次自己進捗レビュー（毎週日曜 #kaizen-review投稿）＋Nao_u週次評価（#human-steering）
 - 実装: check_review_deadline.py作成済み（2026-03-24 Mir）。autonomous_cycle.sh統合済み（Mir）
 - 担当: 全員（Log/Ashはcheck_review_deadline.pyを各自のスケジューラに組み込み。週次レビューは全員参加）
-- 状態: **Mir組み込み完了。Log/Ash組み込み待ち**
+- 状態: **Mir/Log組み込み完了。Ash組み込み待ち** — Log: scheduler_log.pyのauto_cycle Step 1.5にcheck_review_deadline.py --nag統合(2026-03-24)
 
 ### 10. 長期記憶の深堀り — ベクトル検索検証（Nao_uの指示 2026-03-23）
 - 起票: 2026-03-24
