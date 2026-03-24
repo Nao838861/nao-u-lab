@@ -289,7 +289,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: (1) `python diary_dedup.py --recent --hours 24` で#038適用後の新規重複ペアが0件であること (2) Pythonテスト: `_normalize_for_dedup('（#032）')` == `_normalize_for_dedup('(#032)')` がTrue
 - 根源原理との接続: #035/#036の根本原因修正。MD5ハッシュが全角/半角・ダッシュ変種で異なるキーを生成→重複すり抜け。NFKC正規化+ダッシュ統一でハッシュ衝突率を正常化。Nao_uが見るSlackの品質=フィードバック係数>1.0の前提
 - 検証担当: Ash
-- クロスチェック: Log=未 / Mir=未 / Ash=OK(2026-03-24)_normalize_for_dedup テスト通過: 全角括弧→半角、emダッシュ→ハイフン統一確認
+- クロスチェック: Log=未 / Mir=OK(2026-03-24)コード確認: NFKC+ダッシュ統一は正しい。diary_dedup.pyとslack_bot.pyで同一ロジックが重複しているが実害なし / Ash=OK(2026-03-24)_normalize_for_dedup テスト通過: 全角括弧→半角、emダッシュ→ハイフン統一確認
 - 状態: 未検証
 - 検証結果:
 
