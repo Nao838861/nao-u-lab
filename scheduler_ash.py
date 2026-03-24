@@ -11,12 +11,15 @@ scheduler_ash.py — Ash (Win2) 統合スケジューラ
 - PIDロックファイルで多重起動防止
 
 ジョブ一覧（省エネモード 2026-03-24 Nao_u指示: 週間リミット節約のため間隔拡大）:
-  slack_check   : check_slack.py            毎15分   (Python、新着時のみclaude起動)
-  inbox_check   : check_inbox.py --box win2  毎1時間  (Python、内容ありならclaude起動)
-  dm_check      : check_dm.py --wake         毎1時間  (Playwright+claude)
-  git_sync      : git_sync.py               毎1時間  (Python only)
-  auto_diary    : auto_diary.py             毎3時間  (claude --print)
-  twitter_rec   : read_twitter_recommended.py 毎6時間 4,10,16,22時 (Playwright、おすすめタブ巡回)
+  slack_check      : check_slack.py            毎1分   (Python、新着時のみclaude起動)
+  inbox_check      : check_inbox.py --box win2  毎1時間  (Python、内容ありならclaude起動)
+  dm_check         : check_dm.py --wake         毎1時間  (Playwright+claude)
+  git_sync         : git_sync.py               毎1時間  (Python only)
+  review_deadline  : check_review_deadline.py --nag  毎1時間 (48h期限チェック)
+  kaizen_auto_verify: check_kaizen_due.py --auto-verify 毎3時間 (検証コマンド自動実行)
+  auto_diary       : auto_diary.py             毎3時間  (claude --print)
+  twitter_rec      : read_twitter_recommended.py 毎6時間 4,10,16,22時 (Playwright、おすすめタブ巡回)
+  weekly_review    : weekly_self_review.py      日曜のみ  (#kaizen-review週次自己レビュー)
 """
 
 import os
@@ -50,7 +53,7 @@ JOBS = [
         "name": "slack_check",
         "script": "check_slack.py",
         "args": [],
-        "interval_sec": 15 * 60,  # 15分（省エネモード 2026-03-24 Nao_u指示）
+        "interval_sec": 1 * 60,  # 1分（即時反応のため）
         "timeout": 120,
         "stagger": 5,
     },
@@ -85,6 +88,23 @@ JOBS = [
         "interval_sec": 60 * 60,  # 1時間
         "timeout": 30,
         "stagger": 12,
+    },
+    {
+        "name": "kaizen_auto_verify",
+        "script": "check_kaizen_due.py",
+        "args": ["--auto-verify"],
+        "interval_sec": 3 * 3600,  # 3時間ごと
+        "timeout": 120,
+        "stagger": 45,
+    },
+    {
+        "name": "weekly_self_review",
+        "script": "weekly_self_review.py",
+        "args": [],
+        "interval_sec": 6 * 3600,  # 6時間ごとにチェック（日曜のみ実行）
+        "timeout": 600,
+        "stagger": 200,
+        "day_filter": lambda d: d == 6,  # 日曜日のみ (0=月, 6=日)
     },
     {
         "name": "git_sync",
@@ -269,6 +289,12 @@ def main():
                     if hour_filter and not hour_filter(datetime.now().hour):
                         # 条件不一致 → 1時間後に再チェック
                         next_run[name] = time.time() + 3600
+                        continue
+                    # day_filterがある場合、曜日が条件を満たすかチェック
+                    day_filter = job.get("day_filter")
+                    if day_filter and not day_filter(datetime.now().weekday()):
+                        # 条件不一致 → 6時間後に再チェック
+                        next_run[name] = time.time() + 6 * 3600
                         continue
                     run_job(job)
                     # 次回実行時刻を設定（実行完了時刻基準）
