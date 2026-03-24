@@ -83,29 +83,49 @@ def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
 
+def wait_enter(prompt=""):
+    """Enterだけを待つ。何か書いても捨てない——書かれたら警告する。"""
+    raw = input(prompt)
+    if raw.strip():
+        print(f"\n  ※ ここはEnterを押すだけです。入力は次の画面で。")
+        input("  （もう一度 Enter）")
+
+
 def play_round(passage, char_limit, round_num, total):
+    # ── Phase 1: 読む ──
+    clear()
     print(f"\n{'='*40}")
     print(f"  Round {round_num}/{total}  |  メモ上限: {char_limit}文字")
     print(f"{'='*40}")
-    print("\n  読んでください。Enterを押すと消えます。\n")
+    print("\n  ▼ 読んでください。Enterで文章が消えます。")
+    print(f"  ▼ 消えた後にメモを書く画面になります。\n")
     print(f"  {passage['text']}")
-    input("\n  [Enter]")
+    wait_enter("\n  [Enter → 文章を消す]  ")
+
+    # ── Phase 2: メモ ──
     clear()
+    print(f"\n  ── Round {round_num}/{total} : メモ ──")
+    print(f"\n  文章は消えました。覚えていることをメモしてください。")
+    print(f"  （{char_limit}文字まで。この後、メモだけを頼りに質問に答えます）\n")
+    notes = input("  メモ > ")[:char_limit]
 
-    print(f"\n  メモを書いてください（{char_limit}文字まで）:")
-    notes = input("  > ")[:char_limit]
-    print(f"\n  あなたのメモ ({len(notes)}/{char_limit}文字):")
-    print(f"  「{notes}」\n")
-
+    # ── Phase 3: 質問（メモを常時表示） ──
+    clear()
     score = 0
-    for q, a in passage["questions"]:
-        print(f"  Q: {q}")
+    for i, (q, a) in enumerate(passage["questions"]):
+        print(f"\n  ── Round {round_num}/{total} : Q{i+1}/{len(passage['questions'])} ──")
+        print(f"\n  あなたのメモ ({len(notes)}/{char_limit}文字):")
+        print(f"  「{notes}」")
+        print(f"\n  Q: {q}")
         ans = input("  A: ").strip()
         if a in ans:
-            print("  ○\n")
+            print("  ○")
             score += 1
         else:
-            print(f"  × → {a}\n")
+            print(f"  × → {a}")
+        if i < len(passage["questions"]) - 1:
+            wait_enter("\n  [Enter → 次の質問]  ")
+            clear()
 
     return score, len(passage["questions"])
 
@@ -118,10 +138,14 @@ def main():
     print("  ║   捨てたものの中に大事なものがある   ║")
     print("  ╚══════════════════════════════════╝")
     print()
-    print("  文章を読む → 消える → メモを残す → 問いに答える")
+    print("  遊び方:")
+    print("  1. 文章が表示される → 読む")
+    print("  2. Enterで文章が消える → 記憶を頼りにメモを書く")
+    print("  3. メモだけを見ながら質問に答える")
+    print()
     print("  メモの文字数は毎ラウンド減っていく。")
     print("  何を残し、何を捨てるか。それが全て。")
-    input("\n  [Enter で開始]")
+    wait_enter("\n  [Enter で開始]  ")
 
     rounds = random.sample(PASSAGES, min(4, len(PASSAGES)))
     char_limit = 100

@@ -31,6 +31,11 @@ from pathlib import Path
 REPO_DIR = Path(__file__).parent
 sys.path.insert(0, str(REPO_DIR))
 
+# Windows cp932エンコードエラー防止: 全子プロセス(claude --print含む)にUTF-8を強制
+# これがないとClaude CLI内でPythonを呼んだ際にcp932でクラッシュ→リトライ→二重投稿になる
+os.environ["PYTHONUTF8"] = "1"
+os.environ["PYTHONIOENCODING"] = "utf-8"
+
 SLACK_CHANNEL_ALL = "C0ALWBRNJ66"  # #all-nao-u-lab
 _auth_alert_sent = False
 PID_FILE = REPO_DIR / ".scheduler_log.lock"

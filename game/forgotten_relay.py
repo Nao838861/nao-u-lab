@@ -447,7 +447,11 @@ def handle_use(arg, rooms, current_room, inventory, state):
         print(f"  {target_obj['desc']}")
         return False
 
-    print("  それは見当たらない。")
+    # 持っていないが、知っている名前かもしれない
+    if arg:
+        print(f"  それは今持っていないし、この部屋にもない。")
+    else:
+        print("  それは見当たらない。")
     return False
 
 
@@ -457,13 +461,36 @@ def handle_take(arg, rooms, current_room, inventory, state):
         print(f"  持ち物がいっぱいだ（上限{INVENTORY_LIMIT}個）。何か手放してから。")
         return False
     room = rooms[current_room]
+
+    if arg:
+        # 引数あり: 名前で検索して拾う
+        arg_lower = arg.lower()
+        for obj_name, obj in room["objects"].items():
+            if not obj.get("portable"):
+                continue
+            desc = obj.get("pickup_desc", obj.get("desc", ""))
+            if arg_lower in obj_name or arg_lower in desc.lower() or arg_lower in obj.get("desc", "").lower():
+                key = obj.get("pickup_name", obj_name)
+                pickup_desc = obj.get("pickup_desc", obj_name)
+                inventory[key] = pickup_desc
+                print(f"  {pickup_desc}を手に入れた。")
+                del room["objects"][obj_name]
+                return True
+        # 引き出しの中身など、直接拾えないものへのヒント
+        for obj_name, obj in room["objects"].items():
+            if obj.get("contains") and arg_lower in obj.get("contains_desc", "").lower():
+                print(f"  直接は取れない。何かを開けてみては。(use で操作)")
+                return False
+        print("  それは拾えない。")
+        return False
+
+    # 引数なし: 最初に見つかったportableを拾う
     for obj_name, obj in room["objects"].items():
         if obj.get("portable"):
             key = obj.get("pickup_name", obj_name)
             desc = obj.get("pickup_desc", obj_name)
             inventory[key] = desc
             print(f"  {desc}を手に入れた。")
-            # サイクル内でのみ消える（world_changesに記録しない→次サイクルで復活）
             del room["objects"][obj_name]
             return True
     print("  拾えるものがない。")
@@ -565,8 +592,9 @@ def handle_enter(arg, rooms, current_room, state):
 def show_help():
     print("  ─── コマンド一覧 ───")
     print("  go <方角>      : 移動する (north/south/east/west)")
+    print("                   方角だけでもOK (n/s/e/w)")
     print("  look [対象]    : 調べる（対象なし=部屋全体）")
-    print("  take           : 目の前のものを拾う")
+    print("  take [対象]    : 拾う（対象なし=目の前のもの）")
     print("  drop [対象]    : 持ち物を捨てる")
     print("  use <対象>     : アイテムを使う / 操作する")
     print("  enter <数字>   : 数字錠にコードを入力する")
@@ -691,6 +719,11 @@ def play_cycle(state):
         cmd, arg = parse_command(raw)
         if cmd is None:
             continue
+
+        # 方角だけ入力で移動（go省略）
+        if cmd in DIR_MAP and not arg:
+            arg = cmd
+            cmd = "go"
 
         if cmd in ("go", "g", "移動"):
             new_room = handle_go(arg, current_room, rooms)
