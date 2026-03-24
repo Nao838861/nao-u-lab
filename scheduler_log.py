@@ -39,7 +39,7 @@ MAX_RUNTIME = timedelta(hours=24)
 
 # Job definitions: (name, command, interval_seconds, timeout_seconds)
 JOBS = [
-    ("slack_check", [sys.executable, str(REPO_DIR / "check_slack.py")], 60, 30),
+    ("slack_check", [sys.executable, str(REPO_DIR / "check_slack.py")], 60, 120),
     ("inbox_check", [sys.executable, str(REPO_DIR / "check_inbox.py"), "--box", "win"], 120, 300),
     ("git_sync", None, 1800, 60),  # special handling
     ("recommended_check", None, 3600, 300),  # special handling: hour%6==2
