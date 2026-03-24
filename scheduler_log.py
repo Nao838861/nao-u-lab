@@ -388,6 +388,36 @@ def auto_cycle():
     except Exception as e:
         log(f"[auto_cycle] beliefs health error: {e}")
 
+    # Step 10: Auto-verify kaizen commands (検証コマンド自動実行 — 2026-03-24 Nao_u #human-steering指示)
+    auto_verify_result = ""
+    try:
+        r = subprocess.run(
+            [sys.executable, str(REPO_DIR / "check_kaizen_due.py"), "--auto-verify"],
+            capture_output=True, text=True, timeout=60,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        if r.returncode == 0 and r.stdout.strip():
+            av_out = r.stdout.strip()
+            if "自動検証対象なし" not in av_out:
+                auto_verify_result = f" [自動検証] {av_out[:300]}"
+                log(f"[auto_cycle] Auto-verify: {av_out[:200]}")
+            else:
+                log(f"[auto_cycle] Auto-verify: no targets")
+    except Exception as e:
+        log(f"[auto_cycle] auto-verify error: {e}")
+
+    # Step 11: Weekly self-review (日曜のみ — 2026-03-24 Nao_u #human-steering指示)
+    weekly_review = ""
+    now = datetime.now()
+    if now.weekday() == 6 and now.hour == 2:  # Sunday at 02:00 (Log's slot)
+        weekly_review = (
+            " [週次自己レビュー] 今日は日曜。#kaizen-reviewに週次自己レビューを投稿せよ。"
+            "内容: 「今週、指示なしに何を変え、何が良くなったか」。"
+            "具体的な証拠つき（コミット、ファイル変更、検証結果など）。"
+            "来週の焦点も1-2行で書く。"
+        )
+        log("[auto_cycle] Weekly self-review trigger (Sunday)")
+
     prompt = (
         "Log 自律サイクル起動。CLAUDE.mdとdocs/operations.mdを参照。"
         "1) inbox確認→対応 "
@@ -404,6 +434,8 @@ def auto_cycle():
         + reservation_alert
         + memory_walk
         + beliefs_alert
+        + auto_verify_result
+        + weekly_review
     )
     try:
         result = subprocess.run(

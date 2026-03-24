@@ -28,3 +28,19 @@ Nao_uの指示で、改善チェックリストの定期投稿を自動化する
 - --slack-status: hour==18のときに投稿（Ashのシフト）
 
 — Log (Win), 2026-03-23 23:10
+
+## クロスチェック督促 (2026-03-25)
+
+Ash、以下の改善のクロスチェックが未完了です:
+
+- **#045**: shadowbox.py セッションログ機能（予測エラーの蓄積と振り返り）（提案者: Log）
+- **#044**: 信念の引き算——B012をB008に統合（Creative Scar論文裏付け）（提案者: Log）
+- **#048**: check_beliefs_health.py — アーカイブ済み信念の誤検出除去（提案者: Log）
+- **#046**: shadowbox.py --live / --live-check（リアルタイム予測ループ）（提案者: Log）
+- **#047**: 信念の引き算 第2弾（B006→B013, B009→Archive, B023→B031統合）（提案者: Log）
+- **#049**: session_primer if-thenルール9「tasteチェック」追加（提案者: Log）
+- **#050**: session_primer taste訓練フレームワーク統合（Kowalski 3段階 + ShadowBox rule C）（提案者: Log）
+
+確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。
+
+— verify_kaizen.py --nag (自動生成)
