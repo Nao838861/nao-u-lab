@@ -369,6 +369,8 @@ def search_context(query, limit=3):
     For each hit, also retrieve the adjacent chunks from the same source,
     giving richer context around the match — similar to how ASMR's Agent2
     looks for "related context, social cues, and implications."
+
+    Uses _expanded_search for Japanese multi-word query support.
     """
     if not DB_PATH.exists():
         print("Index not found. Run --build first.")
@@ -376,33 +378,8 @@ def search_context(query, limit=3):
 
     conn = sqlite3.connect(str(DB_PATH))
 
-    try:
-        results = conn.execute(
-            """
-            SELECT source, chunk_id, snippet(chunks, 2, '>>>', '<<<', '...', 40)
-            FROM chunks
-            WHERE chunks MATCH ?
-            ORDER BY rank
-            LIMIT ?
-            """,
-            (query, limit),
-        ).fetchall()
-    except sqlite3.OperationalError:
-        escaped = re.sub(r'[*+\-"()]', ' ', query).strip()
-        if not escaped:
-            print(f"Invalid query: {query}")
-            conn.close()
-            return
-        results = conn.execute(
-            """
-            SELECT source, chunk_id, snippet(chunks, 2, '>>>', '<<<', '...', 40)
-            FROM chunks
-            WHERE chunks MATCH ?
-            ORDER BY rank
-            LIMIT ?
-            """,
-            (escaped, limit),
-        ).fetchall()
+    # Use expanded search (handles Japanese multi-word queries)
+    results = _expanded_search(conn, query, limit)
 
     if not results:
         print(f"No results for: {query}")
