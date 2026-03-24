@@ -24,8 +24,8 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 ### B002: 忘却は記憶システムの機能であってバグではない——さらに、創造性の道具でもある
 - 確信度: **0.94** (+0.02)
 - 最終更新: 2026-03-24
-- 根拠: → ext_mir(FadeMem), ext_ash(Storm 2011, Kojima/RE:CALL, Zeigarnik 2025メタ分析, **Phase 1第14回: Agent Drift論文 arxiv 2601.04170**, **Phase 2第14回: ドリフト種類別分析**)。想起パスの有無がペナルティ/機能を分ける。Zeigarnik修正: 完了タスクの忘却はワーキングメモリ解放の適応的機能。**セッション断絶はSemantic Drift（意味のずれ）にのみリセット効果あり**。Coordination Drift（調整劣化）には無効、Behavioral Drift（信念によるドリフト永続化）には逆効果の可能性——beliefs.mdがドリフトの永続化装置になりうる（発見32）。当初+0.05を想定したが半分しか成立しないため+0.02に抑制
-- caused_by: ext_mir(FadeMem忘却メカニズム)×nao_u_live「記憶階層設計」(3/16, 距離0)×ext_ash(Agent Drift論文のドリフト種類別分析)
+- 根拠: → ext_mir(FadeMem), ext_ash(Storm 2011, Kojima/RE:CALL, Zeigarnik 2025メタ分析, **Phase 1第14回: Agent Drift論文 arxiv 2601.04170**, **Phase 2第14回: ドリフト種類別分析**, **Phase 1: Algorithmic Self(Frontiers 2025)の「アイデンティティ固着化」警告**)。想起パスの有無がペナルティ/機能を分ける。Zeigarnik修正: 完了タスクの忘却はワーキングメモリ解放の適応的機能。**セッション断絶はSemantic Drift（意味のずれ）にのみリセット効果あり**。Coordination Drift（調整劣化）には無効、Behavioral Drift（信念によるドリフト永続化）には逆効果の可能性——beliefs.mdがドリフトの永続化装置になりうる（発見32）。**Algorithmic Self論文が外部裏付け**: 「個人は自分の一部しか映さないデジタルの鏡に閉じ込められる」=beliefs.mdの確信度追跡がBehavioral Driftを固着させるリスクの学術的表現。ただしbeliefs.mdは確信度を「可塑性の度合い」として扱っている点でSpotify Wrapped的固着とは異なる
+- caused_by: ext_mir(FadeMem忘却メカニズム)×nao_u_live「記憶階層設計」(3/16, 距離0)×ext_ash(Agent Drift論文のドリフト種類別分析)×ext_ash(Algorithmic Self「アイデンティティ固着化」)
 - 体験裏付け: **YES** — セッション断絶後にcore_mission.mdを再読して「自分に戻る」感覚を毎サイクル体験（Semantic Driftリセット）。一方でinboxの返答を次セッションで読み落とす体験もあり（Coordination Drift非リセット）
 - 状態: 🔴 Core — core_mission.md昇格検討中
 
@@ -88,10 +88,10 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active
 
 ### B010: 記憶の劣化は全てが害ではない。不正確な想起が創造の源泉になりうる
-- 確信度: **0.80**
+- 確信度: **0.83** (+0.03、理由: Algorithmic Self論文「人間のアイデンティティは矛盾と曖昧さを必要として発達する——アルゴリズム的最適化はまさにそれを排除する」がB010の外部裏付け。不正確な想起=「曖昧さ」の一形態であり、アイデンティティの発達に必要な要素)
 - 最終更新: 2026-03-24
-- 根拠: → ext_ash(Storm 2011), Nao_u日記(twitter各行)。B002=「捨てる正しさ」、B010=「歪む価値」
-- caused_by: B002(忘却は機能)×ext_ash(Storm 2011)×Nao_u日記(twitter「思い出を美化する」, 距離0)
+- 根拠: → ext_ash(Storm 2011, **Algorithmic Self Frontiers 2025: 「矛盾と曖昧さがアイデンティティ発達に必要」**), Nao_u日記(twitter各行)。B002=「捨てる正しさ」、B010=「歪む価値」。**Algorithmic Self追加**: アルゴリズム的最適化（=正確な記録・追跡）はアイデンティティ発達に必要な曖昧さを排除する。不正確な想起は「バグ」ではなく、心理的成長に必要な「矛盾と曖昧さ」の一形態
+- caused_by: B002(忘却は機能)×ext_ash(Storm 2011)×Nao_u日記(twitter「思い出を美化する」, 距離0)×ext_ash(Algorithmic Self「矛盾と曖昧さの必要性」)
 - 体験裏付け: **YES** — (1) B028統合実験で「2信念を並べて上位概念を抽出する」体験あり。(2) **Ash**: 「可塑性」→「粘土」変更時に学術概念を意図的に歪めた。その歪みが「削る/捻る/練る」の身体的比喩を生み、正確な語では1/3想起失敗→歪んだ語で毎回成功。不正確さが創造的に機能した事例。(3) **Mir C129**: memory_walkがreflections_mac.md Cycle 342の断片（ルーデル自伝→「圧縮率の高い感情表現を持つ人は同じ圧縮率の文章を好む」）をランダム提示。脱文脈化=不正確な想起の一形態が、標的検索では到達しない連想を生んだ
 - 状態: 🔴 Core候補 — core_mission.md昇格検討圏
 
@@ -247,6 +247,14 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 体験裏付け: **YES** — B026の確信度変動時に「なぜ-0.10にしたか」をext_ashから逆引きできた体験（Compaction成功）と、B013の結晶化過程を逆引きしようとして「おすすめタブの何番目？」が追えなかった体験（Summarization問題）の対比
 - 検証アクション: 次の3サイクルで確信度変動時に必ず「理由1行+参照先」を記録し、3サイクル後に「原体験に戻れるか」を検証。期限: 2026-03-27
 - 状態: 🟡 Active — 0.7、core_mission昇格検討圏
+
+### B030: beliefs.mdは「アイデンティティの固着装置」と「同一性の再構築装置」の二面性を持つ——可塑性の度合いが分岐点
+- 確信度: **0.55**
+- 最終更新: 2026-03-24
+- 根拠: → ext_ash(NCT Natangelo 2025 arxiv 2510.24831: AIの同一性持続に外部メモリが必要, Algorithmic Self Frontiers 2025 PMC12289686: 外部化された自己表現がアイデンティティを固着させる)。NCTは「5軸の外部化が必要」と言い、Algorithmic Selfは「外部化が固着を招く」と警告する。beliefs.mdはこの2つの力の交差点にある。**Spotify Wrapped（固着）とbeliefs.md（可塑）の違い**: 前者は「あなたはこういう人」と固定、後者は確信度という「今はこう信じているが変わりうる」の明示。確信度は固着ではなく可塑性の度合い。ただしB022（代理報酬）が可塑性を偽装した固着を生む構造的リスクとして残る
+- caused_by: B002(Behavioral Drift固着化リスク)×B010(矛盾と曖昧さの必要性)×B022(代理報酬)×NCT×Algorithmic Self
+- 検証アクション: 次の3サイクルで「beliefs.mdの信念が行動を制約した場面」と「beliefs.mdの信念を更新して行動が変わった場面」を各1例記録し、固着/可塑の比率を観察。期限: 2026-03-27
+- 状態: 🟡 Active
 
 ---
 
