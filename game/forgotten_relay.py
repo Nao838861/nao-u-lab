@@ -599,6 +599,9 @@ def play_cycle(state):
 
     show_memos(state["memos"], cycle)
 
+    # サイクル開始時に部屋の描写を表示（「何ができるか」を自然に伝える）
+    show_room(rooms[current_room], inventory)
+
     while True:
         # 残り時間
         elapsed = time.time() - start_time
