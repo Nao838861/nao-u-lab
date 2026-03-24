@@ -17,7 +17,7 @@ scheduler_ash.py — Ash (Win2) 統合スケジューラ
   git_sync         : git_sync.py               毎1時間  (Python only)
   review_deadline  : check_review_deadline.py --nag  毎1時間 (48h期限チェック)
   kaizen_auto_verify: check_kaizen_due.py --auto-verify 毎3時間 (検証コマンド自動実行)
-  auto_diary       : auto_diary.py             毎3時間  (claude --print)
+  auto_diary       : auto_diary.py             毎6時間  (claude --print, 省エネ強化 2026-03-25)
   twitter_rec      : read_twitter_recommended.py 毎6時間 4,10,16,22時 (Playwright、おすすめタブ巡回)
   weekly_review    : weekly_self_review.py      日曜のみ  (#kaizen-review週次自己レビュー)
 """
@@ -118,7 +118,7 @@ JOBS = [
         "name": "auto_diary",
         "script": "auto_diary.py",
         "args": [],
-        "interval_sec": 3 * 3600,
+        "interval_sec": 6 * 3600,  # 6時間（省エネ強化 2026-03-25 Nao_u指示: 週間リミット節約）
         "timeout": 600,
         "stagger": 120,
     },
