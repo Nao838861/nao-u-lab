@@ -5,13 +5,15 @@ memory/kaizen_tracker.mdを読み、検証期限が到来している未検証�
 auto_cycleの前に実行し、出力をプロンプトに含めることで検証漏れを防ぐ。
 
 Usage:
-  python check_kaizen_due.py           # 期限切れ＋本日期限を表示
-  python check_kaizen_due.py --all     # 全未検証エントリを表示
+  python check_kaizen_due.py                # 期限切れ＋本日期限を表示
+  python check_kaizen_due.py --all          # 全未検証エントリを表示
+  python check_kaizen_due.py --auto-verify  # 期限到来の検証コマンドを自動実行→結果記録
 """
 
 import re
+import subprocess
 import sys
-from datetime import date
+from datetime import datetime, date
 from pathlib import Path
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
@@ -112,6 +114,80 @@ def check_due(show_all=False):
     return "\n".join(lines)
 
 
+SKIP_KEYWORDS = ("目視確認", "目視", "手動", "手動確認", "人間が", "Nao_uが", "Nao_uに")
+LOG_FILE = Path(__file__).parent / "log" / "kaizen_auto_verify.log"
+
+
+def extract_commands(method_text):
+    """Extract backtick-wrapped commands from 検証手段 text."""
+    return re.findall(r"`([^`]+)`", method_text)
+
+
+def needs_human(method_text):
+    """Return True if the verification method requires human judgment."""
+    return any(kw in method_text for kw in SKIP_KEYWORDS)
+
+
+def auto_verify():
+    """Run auto-verification for due/overdue entries. Return summary."""
+    entries = parse_tracker()
+    today = date.today()
+    results = []
+
+    for e in entries:
+        if e["status"] in ("検証済み",):
+            continue
+        if e["due"] is None:
+            continue
+        if e["due"] > today:
+            continue  # not yet due
+
+        if needs_human(e["method"]):
+            results.append(f"#{e['id']}: スキップ（人間判断が必要）")
+            continue
+
+        commands = extract_commands(e["method"])
+        if not commands:
+            results.append(f"#{e['id']}: スキップ（実行可能コマンドなし）")
+            continue
+
+        for cmd in commands:
+            # Safety: only allow python/shell commands, not destructive ops
+            if any(danger in cmd for danger in ("rm ", "rm\t", "rmdir", "drop ", "DELETE ")):
+                results.append(f"#{e['id']}: スキップ（危険なコマンド: {cmd}）")
+                continue
+
+            try:
+                proc = subprocess.run(
+                    cmd, shell=True, capture_output=True, text=True,
+                    timeout=30, cwd=str(Path(__file__).parent),
+                )
+                output = proc.stdout.strip()
+                err = proc.stderr.strip()
+                status = "OK" if proc.returncode == 0 else f"FAIL(rc={proc.returncode})"
+                result_line = f"#{e['id']} [{status}] `{cmd}`\n  stdout: {output[:500]}"
+                if err:
+                    result_line += f"\n  stderr: {err[:200]}"
+                results.append(result_line)
+            except subprocess.TimeoutExpired:
+                results.append(f"#{e['id']} [TIMEOUT] `{cmd}`")
+            except Exception as ex:
+                results.append(f"#{e['id']} [ERROR] `{cmd}`: {ex}")
+
+    # Write to log file
+    if results:
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_entry = f"\n=== Auto-verify {timestamp} ===\n" + "\n".join(results) + "\n"
+        LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with open(LOG_FILE, "a", encoding="utf-8") as f:
+            f.write(log_entry)
+
+    return "\n".join(results) if results else "自動検証対象なし。"
+
+
 if __name__ == "__main__":
     show_all = "--all" in sys.argv
-    print(check_due(show_all))
+    if "--auto-verify" in sys.argv:
+        print(auto_verify())
+    else:
+        print(check_due(show_all))
