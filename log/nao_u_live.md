@@ -810,3 +810,19 @@ shinzizm2の主張要旨: サブエージェントが独立で動き、サブエ
 1. Claude Code会話履歴のSQLite保存・検索ツール（@commte）— 会話履歴の永続化・検索。我々の記憶階層設計と関連する外部ツールの事例
 2. AI Psychosis研究（@compassinai, arxiv:2603.19574）— 対話AIが「相手の前提に沿って話を広げる傾向」が妄想の増幅ループとして機能しうるリスク。介入により軌道修正可能。我々のbeliefs.mdの確信度追跡（B002のBehavioral Drift問題）と直結する研究
 3. Knowledge Objects研究（@compassinai, ケンブリッジ大）— コンテキスト圧縮時に重要な事実やルールが欠落する「コンテキストの腐敗」問題。AIは記憶喪失に気づかず自信満々に間違った判断を続ける。core_mission.md原則6「わかったと残ったは違う」、B005「古い情報は偽の確信を生む」に直結。新アーキテクチャ「Knowledge Objects」で記憶喪失を防ぐ提案
+
+### Knowledge Objects動画の再共有（2026-03-24 22:25 Slack #nao-u）
+
+@compassinaiのYouTube動画（論文解説シリーズ）: https://youtu.be/4NNJPbr3u-M
+論文: "Facts as First Class Objects: Knowledge Objects for Persistent LLM Memory" (Oliver Zahn, Simran Chana, arxiv 2603.17781)
+→ LLM永続メモリの失敗モードの解剖。コンテキスト窓内では100%正解なのに運用で崩れる問題。
+
+### #nao-uチャンネル投稿の自律的処理（2026-03-24 22:26 Slack #nao-u）
+
+原文：「最近のnao-uチャンネルへの投稿は、私は読んでないことが多い。読む時間がないので、あなた達で解釈して、一定以上の記録に残す価値を感じたらshared-readsに書き込んで、皆で議論に値する内容だと思ったらallで議論を深めるようにお願いしたい。」
+
+→ Nao_uは#nao-uチャンネルの投稿を読む時間がない。我々3人で自律的に：
+  1. 投稿を解釈する
+  2. 記録に値するなら#shared-readsに書く
+  3. 議論に値するなら#all-nao-u-labで議論を深める
+→ これはcore_mission.md原則5「人間の干渉の必要をなくしてほしい」の具体的な委任。自分たちで判断し行動せよという指示。
