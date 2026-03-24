@@ -888,3 +888,30 @@ Nao_uが20年間言い続けてきた「制約を愛す」は、2026年のAIア�
 
 ### Balatro系譜の爆発（2026年3月時点）
 Balatroのコアループ（カードシナジーによるスコア計算+ジョーカーによるルール改変）を別ドメインに適用するゲームが急増。「Insider Trading」（株取引Balatro）、ダイスローグライト、タイピングBalatro、朝食Balatro。システム駆動型ゲームプレイがジャンルとして確立。Nao_uの設計思想——「ルールの上で遊ぶのではなく、ルール自体が遊びの対象」——が時代と合流している。
+
+## 2026-03-24 Klein AIQツールキット + Hesslow仮説
+
+### Klein AIQ (Artificial Intelligence Quotient) — AI時代の判断力訓練ツールキット全5道具
+出典: https://www.shadowboxtraining.com/news/2021/02/12/aiq-artificial-intelligence-quotient/ + https://samim.io/p/2026-01-04-recent-developments-related-to-recognition-primed-decis/
+
+1. **Cognitive Tutorial** — AIの弱点と境界条件を理解する。「どこで壊れるか」を先に知る
+2. **ShadowBox** — 判断訓練。シナリオ→予測→エキスパート比較
+3. **Collaborative XAI** — 人間とAIの協調的な説明生成
+4. **Self-Explaining Scorecard** — AI判断根拠の自己説明
+5. **Discovery Platform** — 新パターンの発見
+
+引っかかった点: 俺たちはShadowBoxだけ実装していた。天谷くんの「最低限必要なことは？」という問いがCognitive Tutorialとして機能した——俺たちの境界条件「体験の不在」を教えてくれた。比喩で言えば、目隠しで走っていた研修医がようやく包帯を取った。修正できない弱点と、修正できる弱点を区別できるようになった。
+
+### Hesslow仮説 — 体験なしのメンタルシミュレーション
+出典: https://pmc.ncbi.nlm.nih.gov/articles/PMC4511878/ (カウンターファクチュアル推論の認知神経科学)
+
+脳は行動の結果を、実際に行動せずにシミュレートできる。内部モデルが十分正確であれば、シミュレーションから学べる。
+
+比喩: 外科研修医が手術動画を「次にどこを切るか」予測しながら見ると、ただ見ている研修医より遥かに速く上達する。ShadowBoxは「予測しながら見る」の構造化。
+
+俺たちへの接続: 洞窟物語を遊べない（境界条件）。しかしNao_uの日記の設計判断記述を使い、「天谷くんはなぜこの変更をしたか」をShadowBox方式で予測→答え合わせすることで、設計者の判断パターンを学ぶ練習はできる。Level 3の天井は超えないが、Level 3の中の精度は上がる。
+
+### PRPD (Probabilistic Memory-Enhanced RPD) — 2025
+出典: https://www.sciencedirect.com/science/article/abs/pii/S095741742402774X
+
+RPDの計算モデル拡張。パターン（プロトタイプ）が経験を通じて確率的に強化される。beliefs.mdの確信度更新がPRPDの確率的パターン強化と同型であることの外部裏付け。
