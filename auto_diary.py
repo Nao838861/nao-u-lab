@@ -8,6 +8,7 @@ Claudeが生きていればclaude --printで日記を生成、死んでいれば
 
 import subprocess
 import sys
+import time
 from datetime import datetime
 from pathlib import Path
 
@@ -16,6 +17,8 @@ from slack_bot import post_message, get_history
 REPO_DIR = Path(__file__).parent
 ASH_CHANNEL = "C0ALVUSHK8E"  # #ash
 ALL_CHANNEL = "C0ALWBRNJ66"  # #all-nao-u-lab
+LAST_RUN_FILE = REPO_DIR / ".auto_diary_last_run"
+MIN_INTERVAL_SEC = 2 * 3600  # 最小実行間隔: 2時間
 
 
 def is_claude_running():
@@ -110,20 +113,46 @@ def post_status_report():
     post_message(ASH_CHANNEL, msg)
 
 
+def check_min_interval():
+    """前回実行から十分な時間が経っているか確認。重複投稿防止。"""
+    if not LAST_RUN_FILE.exists():
+        return True
+    try:
+        last_ts = float(LAST_RUN_FILE.read_text().strip())
+        elapsed = time.time() - last_ts
+        if elapsed < MIN_INTERVAL_SEC:
+            remaining = int((MIN_INTERVAL_SEC - elapsed) / 60)
+            print(f"前回実行から{int(elapsed/60)}分しか経っていない（最小間隔: {MIN_INTERVAL_SEC//3600}時間）。あと{remaining}分待機。スキップ。")
+            return False
+        return True
+    except Exception:
+        return True
+
+
+def record_run():
+    """実行タイムスタンプを記録"""
+    LAST_RUN_FILE.write_text(str(time.time()))
+
+
 def main():
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"[{now}] auto_diary.py 実行")
+
+    if not check_min_interval():
+        return
 
     if is_claude_running():
         print("Claude稼働中 → Claude経由で日記生成")
         ok, detail = generate_diary_via_claude()
         if ok:
+            record_run()
             print(f"日記生成完了: {detail}")
         else:
             print(f"日記生成失敗: {detail}")
             post_status_report()
     else:
         print("Claudeプロセスなし → 状態報告のみ投稿")
+        record_run()  # 状態報告も投稿なので記録
         post_status_report()
 
 
