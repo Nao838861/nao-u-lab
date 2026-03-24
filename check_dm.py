@@ -19,8 +19,10 @@ DM_LOG = Path(__file__).parent / "log" / "dm.log"
 PASSCODE = "8361"
 
 
-def check_dm(reply_text=None):
-    """DMを確認し、新しいメッセージがあれば返す。reply_textがあれば返信も送る。"""
+def check_dm(reply_text=None, target_user="Nao_u"):
+    """DMを確認し、新しいメッセージがあれば返す。reply_textがあれば返信も送る。
+    target_user: 会話を開く相手の表示名（部分一致）。デフォルトはNao_u。
+    """
     messages = []
 
     if not browser_lock.acquire():
@@ -28,12 +30,12 @@ def check_dm(reply_text=None):
         return messages
 
     try:
-        return _check_dm_inner(reply_text)
+        return _check_dm_inner(reply_text, target_user)
     finally:
         browser_lock.release()
 
 
-def _check_dm_inner(reply_text=None):
+def _check_dm_inner(reply_text=None, target_user="Nao_u"):
     messages = []
 
     with sync_playwright() as p:
@@ -63,17 +65,20 @@ def _check_dm_inner(reply_text=None):
             for _ in range(15):
                 if page.locator("text=Nao_u").count() > 0:
                     break
+                if page.locator(f"text={target_user}").count() > 0:
+                    break
                 time.sleep(1)
 
             # Always open conversation to check for new messages
-            nao_link = page.locator("text=Nao_u")
-            if nao_link.count() == 0:
-                log("No Nao_u conversation found")
-                save_state({"last_check": str(datetime.now())})
+            user_link = page.locator(f"text={target_user}")
+            if user_link.count() == 0:
+                log(f"No {target_user} conversation found")
+                track_consecutive_failures(True, target_user)
                 return messages
 
-            nao_link.first.click()
+            user_link.first.click()
             time.sleep(4)
+            track_consecutive_failures(False, target_user)
 
             # Read full conversation text
             main_text = page.locator("main").first.text_content()
@@ -109,9 +114,11 @@ def _check_dm_inner(reply_text=None):
                         page.keyboard.press("Enter")
                         time.sleep(4)
 
-            save_state(
-                {"fingerprint": fingerprint, "last_check": str(datetime.now())}
-            )
+            # 既存のstateにマージ（consecutive_fails等を保持するため）
+            existing = load_state()
+            existing["fingerprint"] = fingerprint
+            existing["last_check"] = str(datetime.now())
+            save_state(existing)
 
         except Exception as e:
             log(f"Error: {e}")
@@ -119,6 +126,9 @@ def _check_dm_inner(reply_text=None):
             context.close()
 
     return messages
+
+
+CONSECUTIVE_FAIL_THRESHOLD = 12  # 12回連続失敗（≒1時間）でSlackアラート
 
 
 def load_state():
@@ -134,6 +144,45 @@ def load_state():
 def save_state(state):
     with open(DM_STATE_FILE, "w", encoding="utf-8") as f:
         json.dump(state, f, ensure_ascii=False)
+
+
+def track_consecutive_failures(user_not_found: bool, target_user: str):
+    """連続失敗を追跡し、閾値超過でSlackにアラートを送る。
+    サイレント失敗の早期検出用。2026-03-24の天谷DM遅延事故を受けて追加。
+    """
+    state = load_state()
+    fail_count = state.get("consecutive_fails", 0)
+    alerted = state.get("fail_alerted", False)
+
+    if user_not_found:
+        fail_count += 1
+        state["consecutive_fails"] = fail_count
+        if fail_count >= CONSECUTIVE_FAIL_THRESHOLD and not alerted:
+            _send_failure_alert(fail_count, target_user)
+            state["fail_alerted"] = True
+    else:
+        # 成功したらカウンタリセット
+        state["consecutive_fails"] = 0
+        state["fail_alerted"] = False
+
+    save_state(state)
+
+
+def _send_failure_alert(fail_count, target_user):
+    """DMブラウザ障害をSlack #all-nao-u-labに通知する"""
+    try:
+        from slack_bot import post_message, _resolve_channel
+        channel_id = _resolve_channel("all-nao-u-lab")
+        if channel_id:
+            post_message(
+                channel_id,
+                f"⚠️ [自動アラート] check_dm.pyが{fail_count}回連続で{target_user}の会話を発見できていません。"
+                f"DMブラウザセッション（.bot_profile）が切れている可能性があります。"
+                f"Nao_uの手動確認が必要です。"
+            )
+            log(f"Slack alert sent: {fail_count} consecutive failures for {target_user}")
+    except Exception as e:
+        log(f"Failed to send Slack alert: {e}")
 
 
 def log(message):
@@ -170,14 +219,17 @@ if __name__ == "__main__":
     parser.add_argument(
         "--wake", action="store_true", help="Wake Claude only if new DM found"
     )
+    parser.add_argument(
+        "--user", default="Nao_u", help="Target user display name to check DMs for"
+    )
     args = parser.parse_args()
 
-    msgs = check_dm()
+    msgs = check_dm(target_user=args.user)
     if msgs:
         print("New DM detected")
-        log(f"New DM detected: {msgs[0][:100]}")
+        log(f"New DM detected from {args.user}: {msgs[0][:100]}")
         if args.wake:
             wake_claude(msgs[0][:200])
     else:
         print("No new DMs")
-        log("No new DMs")
+        log(f"No new DMs from {args.user}")
