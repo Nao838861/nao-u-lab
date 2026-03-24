@@ -45,6 +45,7 @@ def main():
         print(f"\n  ── サイクル {cycle} ──")
         if cycle == 1:
             print("  目を覚ます。石の部屋。出口に数字錠。")
+            print("  手元にメモ帳がある。write で書けば次の目覚めに残る。")
             print("  （? でコマンド一覧）")
         else:
             print(f"  {cycle}回目の目覚め。何も覚えていない。")
@@ -87,6 +88,11 @@ def main():
             parts = raw.split(None, 1)
             cmd, arg = parts[0].lower(), (parts[1] if len(parts) > 1 else "")
 
+            # 3桁の数字を直接入力 → enter として扱う
+            if cmd.isdigit() and len(cmd) == 3 and not arg:
+                arg = cmd
+                cmd = "enter"
+
             if cmd in ("w", "write", "書く"):
                 if not arg:
                     print(f"  write <内容> ({MEMO_MAX}文字以内)")
@@ -115,17 +121,16 @@ def main():
                     return
                 print("  違う。錠はびくともしない。")
             elif cmd in ("h", "help", "?"):
-                print("  look   … 部屋を見回す")
-                print("  write <内容> … メモに書く（記憶を失っても残る）")
-                print("  read   … メモを読む")
-                print("  enter <3桁> … 数字錠を試す（例: enter 123）")
-                print("  quit   … やめる")
+                print("  コマンド:")
+                print("    <3桁の数字>  錠に入力する（例: 123）")
+                print("    write <内容>  メモに書く（記憶を失っても残る）")
+                print("    read          メモを読む")
+                print("    look          部屋を見回す")
+                print("    quit          やめる")
             elif cmd in ("q", "quit"):
                 return
-            elif raw.isdigit() and len(raw) == 3:
-                print(f"  → enter {raw} と入力してください")
             else:
-                print("  ? (h でヘルプ)")
+                print("  ? でコマンド一覧")
 
 
 if __name__ == "__main__":
