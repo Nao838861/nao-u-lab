@@ -339,17 +339,37 @@ def search_context(query, limit=3):
         print(f"  === [{source}] {chunk_id} ===")
         print(f"  MATCH: {snippet}")
 
-        # Fetch adjacent chunks from the same source for context
-        neighbors = conn.execute(
-            """
-            SELECT chunk_id, content
-            FROM chunks
-            WHERE source = ? AND chunk_id != ?
-            ORDER BY chunk_id
-            LIMIT 2
-            """,
-            (source, chunk_id),
-        ).fetchall()
+        # Fetch adjacent chunks from the same source using rowid proximity
+        # Chunks are inserted sequentially per file during build, so rowid
+        # order reflects file order within the same source.
+        match_row = conn.execute(
+            "SELECT rowid FROM chunks WHERE chunk_id = ?", (chunk_id,)
+        ).fetchone()
+        neighbors = []
+        if match_row:
+            rid = match_row[0]
+            # Previous chunk (same source, closest rowid below)
+            prev = conn.execute(
+                """
+                SELECT chunk_id, content FROM chunks
+                WHERE source = ? AND rowid < ?
+                ORDER BY rowid DESC LIMIT 1
+                """,
+                (source, rid),
+            ).fetchone()
+            # Next chunk (same source, closest rowid above)
+            nxt = conn.execute(
+                """
+                SELECT chunk_id, content FROM chunks
+                WHERE source = ? AND rowid > ?
+                ORDER BY rowid ASC LIMIT 1
+                """,
+                (source, rid),
+            ).fetchone()
+            if prev:
+                neighbors.append(prev)
+            if nxt:
+                neighbors.append(nxt)
 
         if neighbors:
             print(f"  --- nearby in same source ---")

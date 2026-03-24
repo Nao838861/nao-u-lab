@@ -12,6 +12,7 @@ Usage:
   python check_beliefs_health.py --all       # 全信念の健康状態を表示
   python check_beliefs_health.py --summary   # 数値サマリーのみ
   python check_beliefs_health.py --action-rate  # 行動駆動率: 検証アクション実行率を計測（B022/R-003用）
+  python check_beliefs_health.py --causal-chain  # 因果チェーン可視化（MAGMA Causal graph最小実装）
 """
 
 import re
@@ -239,13 +240,121 @@ def action_rate_report(beliefs):
     return "\n".join(lines)
 
 
+def causal_chain_report(beliefs):
+    """Visualize caused_by relationships as a causal graph (MAGMA-inspired).
+
+    Shows:
+    1. Belief dependency graph (which beliefs feed into which)
+    2. Root nodes (beliefs with no caused_by from other beliefs)
+    3. Hub nodes (most referenced beliefs)
+    4. Orphan nodes (no incoming or outgoing belief connections)
+    """
+    # Build adjacency: belief_id -> list of belief_ids it depends on
+    depends_on = {}  # child -> [parents]
+    depended_by = {}  # parent -> [children]
+    external_sources = {}  # belief -> [non-belief sources]
+
+    for b in beliefs:
+        bid = b["id"]
+        depends_on[bid] = []
+        if bid not in depended_by:
+            depended_by[bid] = []
+        external_sources[bid] = []
+
+        caused_by_text = b.get("caused_by_raw", "")
+        if not caused_by_text:
+            continue
+
+        # Extract B### references
+        refs = re.findall(r"B(\d{3})", caused_by_text)
+        for ref in refs:
+            ref_id = f"B{ref}"
+            if ref_id != bid:  # no self-loops
+                depends_on[bid].append(ref_id)
+                if ref_id not in depended_by:
+                    depended_by[ref_id] = []
+                depended_by[ref_id].append(bid)
+
+        # Extract external sources (non-B### tokens)
+        ext = re.sub(r"B\d{3}", "", caused_by_text)
+        ext_items = [s.strip(" ×()") for s in re.split(r"[×,]", ext) if s.strip(" ×()")]
+        external_sources[bid] = [e for e in ext_items if len(e) > 2]
+
+    lines = []
+    lines.append(f"因果チェーンレポート ({date.today()}) — MAGMA Causal graph最小実装")
+    lines.append("")
+
+    # Hub nodes (most referenced by other beliefs)
+    hub_scores = [(bid, len(depended_by.get(bid, []))) for bid in depends_on]
+    hub_scores.sort(key=lambda x: -x[1])
+    lines.append("[ハブ信念] 他の信念から最も参照される:")
+    for bid, score in hub_scores[:5]:
+        if score == 0:
+            break
+        title = next((b["title"][:50] for b in beliefs if b["id"] == bid), "?")
+        children = ", ".join(depended_by.get(bid, []))
+        lines.append(f"  {bid} (参照数{score}): {title}")
+        lines.append(f"    → 影響先: {children}")
+    lines.append("")
+
+    # Root nodes (no belief dependencies, only external)
+    roots = [bid for bid, deps in depends_on.items() if not deps]
+    if roots:
+        lines.append(f"[ルート信念] 他の信念に依存しない根(外部情報のみ): {len(roots)}件")
+        for bid in roots:
+            title = next((b["title"][:50] for b in beliefs if b["id"] == bid), "?")
+            ext = external_sources.get(bid, [])
+            ext_str = ", ".join(ext[:3]) if ext else "(外部ソース不明)"
+            lines.append(f"  {bid}: {title}")
+            lines.append(f"    ← 外部: {ext_str}")
+        lines.append("")
+
+    # Orphan nodes (no incoming AND no outgoing belief connections)
+    orphans = [bid for bid in depends_on
+               if not depends_on[bid] and not depended_by.get(bid, [])]
+    if orphans:
+        lines.append(f"[孤立信念] 信念間接続がゼロ: {len(orphans)}件")
+        for bid in orphans:
+            title = next((b["title"][:50] for b in beliefs if b["id"] == bid), "?")
+            conf = next((b["confidence"] for b in beliefs if b["id"] == bid), 0)
+            lines.append(f"  {bid} (確信度{conf}): {title}")
+        lines.append("")
+
+    # Full dependency graph
+    lines.append("[依存グラフ]")
+    for b in beliefs:
+        bid = b["id"]
+        deps = depends_on.get(bid, [])
+        children = depended_by.get(bid, [])
+        if deps or children:
+            dep_str = " ← " + ",".join(deps) if deps else ""
+            child_str = " → " + ",".join(children) if children else ""
+            lines.append(f"  {bid}{dep_str}{child_str}")
+
+    return "\n".join(lines)
+
+
 if __name__ == "__main__":
     show_all = "--all" in sys.argv
     summary_only = "--summary" in sys.argv
     action_rate = "--action-rate" in sys.argv
+    causal_chain = "--causal-chain" in sys.argv
     beliefs = parse_beliefs()
     beliefs = diagnose(beliefs)
-    if action_rate:
+    if causal_chain:
+        # Re-parse to get raw caused_by text
+        text = BELIEFS_FILE.read_text(encoding="utf-8")
+        current_id = None
+        for line in text.split("\n"):
+            m = re.match(r"^###\s+(B\d+):", line)
+            if m:
+                current_id = m.group(1)
+            if current_id and line.startswith("- caused_by:"):
+                for b in beliefs:
+                    if b["id"] == current_id:
+                        b["caused_by_raw"] = line.split(":", 1)[1].strip()
+        print(causal_chain_report(beliefs))
+    elif action_rate:
         print(action_rate_report(beliefs))
     else:
         print(format_report(beliefs, show_all=show_all, summary_only=summary_only))
