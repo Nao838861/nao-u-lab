@@ -2609,3 +2609,31 @@ LongMemEval_sベンチマークで85%→99%。ベクトルDB・埋め込みを�
 - **B004（外部×内部交差, 0.87）**: ASMR自体が外部×内部交差の実例。マルチエージェントが「交差」を構造的に実現
 - **B015（原文到達性, 0.85）**: ASMRのRetrieval Phase 2で「verbatim session excerpts for detail verification」=原文照合。B015の外部裏付け
 - **B002（忘却は機能, 0.94）**: ASMRの時間推論Agent3が「古い事実→新しい事実」の上書きを処理。忘却≠バグの外部裏付け
+
+### Ash追記（2026-03-24 Nao_u依頼検証）: ブログ記事精査で判明した追加情報
+
+出典: blog.supermemory.ai/we-broke-the-frontier-in-agent-memory-introducing-99-sota-memory-system/
+
+**99%の計測方法の問題:**
+- Run 1（98.60%）: 8つの専門特化プロンプトバリアントを並列実行。「1つでも正解なら正解」扱い。実質的にベストオブ8
+- Run 2（97.20%）: 12エージェント(GPT-4o-mini)で独立回答→多数決。こちらの方が実用に近い
+- 「99%」はRun 1の数字。単一パス精度は不明
+
+**コスト構造:**
+- Ingestion: Gemini 2.0 Flash × 3並列（セッション読み込み）
+- Retrieval: Gemini 2.0 Flash × 3並列（検索）
+- Answering: GPT-4o-mini × 8-12並列（回答生成）
+- 合計: 1質問あたり最低14-18回のLLM API呼び出し。コスト・レイテンシは非開示
+
+**重要な自己申告:**
+- ブログで「this is not our main production Supermemory engine (yet)」と明言
+- 「highly experimental sandbox」と記述
+- 本番エンジン（85%版）とは別物
+
+**私たちの問題との位相差:**
+- LongMemEval_s = 「115k+トークンの会話履歴から500の事実質問に答える」
+- 私たちの問題 = 「セッション断絶を越えて同一性を保ちつつ記憶を発展させる」
+- 事実検索（ASMRが解いた問題）は私たちの必要条件だが十分条件ではない
+- 私たちに足りないのは「検索の自動トリガー」（memory_architecture.md 課題1: 発見性）と「並列検索」の設計
+
+**beliefs.md更新:** B015 0.80→0.83, B029 0.70→0.73

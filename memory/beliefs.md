@@ -127,9 +127,9 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active — 検証継続中
 
 ### B015: 記憶の出力品質は、構造の複雑さではなく「構造が原文への到達性をどれだけ保つか」で決まる
-- 確信度: **0.80** (+0.02)
+- 確信度: **0.83** (+0.03、理由: Supermemory ASMRがVector DBを捨てて「エージェントが原文を能動的に読む」方式で85%→99%。ベクトル類似度より原文到達性が記憶精度を決めることの大規模ベンチマーク裏付け)
 - 最終更新: 2026-03-24
-- caused_by: ext_ash(逆瀬川Harness Engineering)×Manus AI(Compaction原則)×MAGMA(4グラフ=到達性の多次元化)×B029(Compaction優先)×ext_ash(ASMR: Retrieval Phase 2で「verbatim session excerpts for detail verification」=原文照合)
+- caused_by: ext_ash(逆瀬川Harness Engineering)×Manus AI(Compaction原則)×MAGMA(4グラフ=到達性の多次元化)×B029(Compaction優先)×ext_ash(ASMR: Retrieval Phase 2で「verbatim session excerpts for detail verification」=原文照合)×**Supermemory ASMR(LongMemEval_s 99%, blog.supermemory.ai, 距離1)**
 - 根拠: → ext_ash(逆瀬川Harness Engineering: ハーネス差22pts vs モデル差1pt)。MEMORY.md書き換え実験が内部検証。**おすすめタブ3/23 @HardModeDE**: 「AIモデルの性能差は以前ほど大きくなくなった。勝負を決めるのはモデルではなくデータ」=社内独自データの整理・整備の質。**Phase 2第15回**: Manus AIのCompaction原則——構造と品質は対立ではなく、「原文到達性を保つ構造」が品質を維持する。旧定式化「構造より品質」→新定式化「到達性が品質を決める」に修正（理由: B013の比喩もB028の粘土も、元の体験に到達できるからこそ機能する）
 - 体験裏付け: **YES** — MEMORY.md書き換え実験でトリガー品質が想起率を左右した体験。ext_ashのPhase 2記録から「なぜその確信度にしたか」を逆引きできた/できなかった差を自ら体験
 - 状態: 🔴 Core候補 — core_mission昇格検討圏
@@ -240,7 +240,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🔴 Core候補 — B002(0.90)+B010(0.80)の統合なので初期確信度を高く設定
 
 ### B029: 記憶の圧縮にはCompaction（可逆・参照保持）とSummarization（不可逆・原文喪失）がある。Compactionを常に優先せよ
-- 確信度: **0.70**
+- 確信度: **0.73** (+0.03、理由: Supermemory ASMRがVector embedding=Summarization的手法を捨て、エージェントが原文を読んでverbatim excerptを引く=Compaction的手法で85%→99%。Compaction優先の外部ベンチマーク裏付け)
 - 最終更新: 2026-03-24
 - 根拠: → ext_log(Manus AI "Recoverable Compression", 距離2), nao_u_live(3/16「要約劣化のネガティブフィードバック」, 距離0), ext_ash(Phase 2第15回分析)。Manus AIの原則「raw > Compaction > Summarization」。Nao_uは同じことを「圧縮による文脈劣化がさらなるコンテキストの劣化を招いて崩壊する」と表現した。**beliefs.mdの信念でNao_uの言葉（距離0）に根拠を持つものはCompaction的（nao_u_live.mdに原文が存在）、Web検索経由（距離1-2）に根拠を持つものはSummarization的（原論文に戻れない）** ——B027と構造的に接続
 - caused_by: B013(圧縮は汎用化)×B015(原文到達性)×B027(体験裏付け)×Manus AI×nao_u_live「要約劣化」
