@@ -322,7 +322,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: (1) `python memory_search.py --search "記憶 薄まり 再帰" --limit 3` で3件以上ヒット (2) `python memory_search.py --search "天谷 伝えたい" --limit 3` で関連結果が返る (3) 単一キーワード検索が劣化していないこと
 - 根源原理との接続: 記憶階層の再設計。FTS5のunicode61トークナイザが日本語形態素を認識せず複合クエリが全滅→query expansionで根本解決。B015（原文到達性が品質を決める）への直接貢献
 - 検証担当: Ash
-- クロスチェック: Log=未 / Mir=未 / Ash=OK(2026-03-24)実装・テスト済み
+- クロスチェック: Log=OK(2026-03-24)Win環境で「記憶 薄まり 再帰」→3件ヒット(dialogue_fundamental_desire+reflections×2)。以前0件だった複合クエリが正常動作。query expansion方式はFTS5日本語トークナイザの限界を迂回する実用的解決策 / Mir=未 / Ash=OK(2026-03-24)実装・テスト済み
 - 状態: 検証済み 2026-03-24
 - 検証結果: ✅ 成功。「記憶 薄まり 再帰」→3件ヒット、「天谷 伝えたい」→3件ヒット。単一キーワード検索劣化なし
 - 状態: 未検証
