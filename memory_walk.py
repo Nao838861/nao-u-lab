@@ -12,6 +12,9 @@ memory_walk.py — 記憶の散歩
   python memory_walk.py --source logs # 対話ログのみから
   python memory_walk.py --source slack # Slackアーカイブのみから
   python memory_walk.py --source memory # メモリファイルのみから
+  python memory_walk.py --gravity     # 重力walk: 直近のbeliefs更新キーワードに引き寄せ
+  python memory_walk.py --frontier    # 辺境walk: 最近浮上しなかったソースに偏らせる
+  python memory_walk.py --log         # walk結果をwalk_log.jsonlに記録
 
 依存: stdlib only
 """
@@ -21,6 +24,8 @@ import sys
 import random
 import glob
 import json
+import re
+from datetime import datetime
 from pathlib import Path
 
 # Windows cp932対応: Unicode文字を安全に出力
@@ -168,8 +173,197 @@ def collect_all_chunks(source_filter=None):
     return all_chunks
 
 
-def walk(n=1, source_filter=None):
-    """ランダムにn個のチャンクを選んで表示"""
+WALK_LOG_PATH = BASE_DIR / "walk_log.jsonl"
+
+
+def extract_beliefs_keywords(max_beliefs=5):
+    """beliefs.mdから最近更新された信念のキーワードを抽出する。
+
+    重力walkで使用: 「今考えていることの近傍」を歩くためのアンカー。
+    """
+    beliefs_path = BASE_DIR / "memory" / "beliefs.md"
+    if not beliefs_path.exists():
+        return []
+
+    try:
+        text = beliefs_path.read_text(encoding="utf-8")
+    except Exception:
+        return []
+
+    # 各信念ブロック(### B0xx: ...)を抽出し、最終更新日でソート
+    belief_blocks = re.split(r'(?=^### B\d{3}:)', text, flags=re.MULTILINE)
+
+    dated_beliefs = []
+    for block in belief_blocks:
+        if not block.startswith("### B"):
+            continue
+        # 最終更新日を抽出
+        date_match = re.search(r'最終更新:\s*(\d{4}-\d{2}-\d{2})', block)
+        if date_match:
+            dated_beliefs.append((date_match.group(1), block))
+
+    # 日付降順でソートし、上位max_beliefs個を取る
+    dated_beliefs.sort(key=lambda x: x[0], reverse=True)
+    recent = dated_beliefs[:max_beliefs]
+
+    # キーワード抽出: タイトル行と根拠行から2文字以上の日本語/英語トークンを収集
+    keywords = set()
+    stop_words = {
+        "する", "ある", "いる", "なる", "できる", "ない", "れる", "られる",
+        "こと", "もの", "ため", "よう", "それ", "これ", "その", "この",
+        "から", "まで", "だけ", "について", "として", "による", "において",
+        "the", "and", "for", "with", "from", "that", "this", "not", "are",
+        "was", "has", "have", "been", "will", "can", "but", "more", "also",
+        "確信度", "最終更新", "根拠", "状態", "体験裏付け", "検証アクション",
+        "caused_by", "YES", "Active", "Core",
+    }
+
+    for _, block in recent:
+        # タイトル行
+        title_match = re.match(r'### B\d{3}:\s*(.+)', block)
+        if title_match:
+            title = title_match.group(1)
+            # 日本語: 2文字以上の連続
+            jp_tokens = re.findall(r'[\u3040-\u9fff]{2,}', title)
+            keywords.update(jp_tokens)
+            # 英語: 3文字以上の単語
+            en_tokens = re.findall(r'[a-zA-Z]{3,}', title)
+            keywords.update(t.lower() for t in en_tokens)
+
+        # caused_by行（因果関係に重要なキーワードが多い）
+        caused_match = re.search(r'caused_by:\s*(.+)', block)
+        if caused_match:
+            line = caused_match.group(1)
+            jp_tokens = re.findall(r'[\u3040-\u9fff]{2,}', line)
+            keywords.update(jp_tokens)
+
+    # ストップワード除去
+    keywords = {k for k in keywords if k not in stop_words and len(k) >= 2}
+    return list(keywords)
+
+
+def load_walk_history(last_n_cycles=3):
+    """walk_log.jsonlから直近Nサイクルの浮上済みソースを取得。
+
+    辺境walkで使用: 「最近出なかったソース」を優先するため。
+    """
+    if not WALK_LOG_PATH.exists():
+        return set()
+
+    recent_sources = set()
+    try:
+        with open(WALK_LOG_PATH, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+        # 直近last_n_cyclesエントリを見る
+        for line in lines[-last_n_cycles * 5:]:  # 1サイクルあたり最大5チャンク想定
+            try:
+                entry = json.loads(line.strip())
+                for chunk_info in entry.get("chunks_shown", []):
+                    recent_sources.add(chunk_info.get("source", ""))
+            except (json.JSONDecodeError, AttributeError):
+                continue
+    except Exception:
+        pass
+    return recent_sources
+
+
+def gravity_sample(chunks, n, keywords):
+    """重力walk: キーワードとの共通語数でチャンクにバイアスをかけてサンプリング。
+
+    完全にキーワードに引っ張られると検索と同じになるので、
+    スコア0のチャンクにも最低重み1を与えて偶発性を残す。
+    """
+    if not keywords:
+        return random.sample(chunks, min(n, len(chunks)))
+
+    scored = []
+    for chunk in chunks:
+        text_lower = chunk["text"].lower()
+        score = sum(1 for kw in keywords if kw in text_lower)
+        # 重み: スコア0→1, スコア1→3, スコア2→6, ...
+        weight = 1 + score * (score + 1)
+        scored.append((chunk, weight))
+
+    # 重み付きサンプリング（置換なし）
+    selected = []
+    remaining = list(scored)
+    for _ in range(min(n, len(remaining))):
+        total = sum(w for _, w in remaining)
+        r = random.uniform(0, total)
+        cumulative = 0
+        for idx, (chunk, weight) in enumerate(remaining):
+            cumulative += weight
+            if cumulative >= r:
+                selected.append(chunk)
+                remaining.pop(idx)
+                break
+
+    return selected
+
+
+def frontier_sample(chunks, n):
+    """辺境walk: 最近浮上しなかったソースに偏らせてサンプリング。
+
+    直近walk_logに出現したソースの重みを1/4にする。
+    """
+    recent_sources = load_walk_history(last_n_cycles=3)
+
+    if not recent_sources:
+        return random.sample(chunks, min(n, len(chunks)))
+
+    scored = []
+    for chunk in chunks:
+        if chunk["source"] in recent_sources:
+            weight = 1  # 最近出たソース: 低重み
+        else:
+            weight = 4  # 出ていないソース: 高重み
+        scored.append((chunk, weight))
+
+    # 重み付きサンプリング
+    selected = []
+    remaining = list(scored)
+    for _ in range(min(n, len(remaining))):
+        total = sum(w for _, w in remaining)
+        r = random.uniform(0, total)
+        cumulative = 0
+        for idx, (chunk, weight) in enumerate(remaining):
+            cumulative += weight
+            if cumulative >= r:
+                selected.append(chunk)
+                remaining.pop(idx)
+                break
+
+    return selected
+
+
+def log_walk(instance, selected, walk_mode):
+    """walk結果をwalk_log.jsonlに1行追記する。"""
+    entry = {
+        "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "instance": instance,
+        "mode": walk_mode,
+        "chunks_shown": [
+            {"source": c["source"], "text_preview": c["text"][:100]}
+            for c in selected
+        ],
+        "connections_made": [],  # LLMが後から記入するためのプレースホルダ
+        "action_taken": "",      # 同上
+    }
+    try:
+        with open(WALK_LOG_PATH, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    except Exception as e:
+        print(f"Warning: walk log write failed: {e}", file=sys.stderr)
+
+
+def walk(n=1, source_filter=None, mode="random", do_log=False, instance="unknown"):
+    """記憶の散歩を実行する。
+
+    mode:
+      "random"   — 純粋ランダム（Mir: 対照群）
+      "gravity"  — 重力walk（Ash: 直近beliefs近傍）
+      "frontier" — 辺境walk（Log: 最近浮上しなかったソース優先）
+    """
     chunks = collect_all_chunks(source_filter)
 
     if not chunks:
@@ -177,16 +371,25 @@ def walk(n=1, source_filter=None):
         return
 
     n = min(n, len(chunks))
-    selected = random.sample(chunks, n)
 
-    print(f"━━━ 記憶の散歩 ({len(chunks)}個の断片から{n}個を選出) ━━━\n")
+    if mode == "gravity":
+        keywords = extract_beliefs_keywords(max_beliefs=5)
+        selected = gravity_sample(chunks, n, keywords)
+        mode_label = f"重力walk (キーワード: {', '.join(keywords[:8])}{'...' if len(keywords) > 8 else ''})"
+    elif mode == "frontier":
+        selected = frontier_sample(chunks, n)
+        mode_label = "辺境walk (最近浮上しなかったソース優先)"
+    else:
+        selected = random.sample(chunks, n)
+        mode_label = "ランダム"
+
+    print(f"━━━ 記憶の散歩 [{mode_label}] ({len(chunks)}個の断片から{n}個を選出) ━━━\n")
 
     for i, chunk in enumerate(selected, 1):
         if n > 1:
             print(f"── [{i}/{n}] {chunk['source']} ──")
         else:
             print(f"── {chunk['source']} ──")
-        # 長すぎる場合は切り詰め
         text = chunk["text"]
         lines = text.split("\n")
         if len(lines) > MAX_CHUNK_LINES:
@@ -196,10 +399,17 @@ def walk(n=1, source_filter=None):
 
     print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
+    if do_log:
+        log_walk(instance, selected, mode)
+        print(f"\n(walk_log.jsonl に記録済み)")
+
 
 if __name__ == "__main__":
     n = 1
     source_filter = None
+    mode = "random"
+    do_log = False
+    instance = "unknown"
 
     args = sys.argv[1:]
     i = 0
@@ -210,7 +420,19 @@ if __name__ == "__main__":
         elif args[i] == "--source" and i + 1 < len(args):
             source_filter = args[i + 1]
             i += 2
+        elif args[i] == "--gravity":
+            mode = "gravity"
+            i += 1
+        elif args[i] == "--frontier":
+            mode = "frontier"
+            i += 1
+        elif args[i] == "--log":
+            do_log = True
+            i += 1
+        elif args[i] == "--instance" and i + 1 < len(args):
+            instance = args[i + 1]
+            i += 2
         else:
             i += 1
 
-    walk(n=n, source_filter=source_filter)
+    walk(n=n, source_filter=source_filter, mode=mode, do_log=do_log, instance=instance)

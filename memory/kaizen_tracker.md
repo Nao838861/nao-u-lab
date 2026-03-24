@@ -301,8 +301,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: 記憶階層の再設計（CLAUDE.md最重点ミッション）。FTS5のunicode61トークナイザが日本語形態素を認識せず、複合クエリが全滅していた。Logの6パターンテストで発覚。query expansion（個別キーワード検索→キーワードマッチ数でランキング）で根本解決。B015（原文到達性が品質を決める）への直接貢献——検索できなければ原文に到達できない
 - 検証担当: Ash
 - クロスチェック: Log=未 / Mir=未 / Ash=OK(2026-03-24)実装・テスト済み。以前0件だった「記憶 薄まり 再帰」→3件(dialogue_fundamental_desire+reflections×2)、「天谷 伝えたい」→3件(対話ログ+reflections)。キーワードマッチ数降順→rank昇順でソート。単一キーワード検索は従来通りStep 1で処理されるため劣化なし
-- 状態: 未検証
-- 検証結果:
+- 状態: 検証済み 2026-03-24
+- 検証結果: ✅ 成功。(1) 「記憶 薄まり 再帰」→3件ヒット（dialogue_fundamental_desire+reflections×2）。薄まり=dialogue_fundamental_desire冒頭、再帰=reflections内の2箇所で正確にマッチ。(2) 「天谷 伝えたい」→3件ヒット（対話ログ天谷DM+reflections想起テスト）。(3) 単一キーワード検索はStep 1で処理されるため劣化なし。Logの指摘（FTS5日本語トークナイザの本質的限界）を迂回する方式として機能している
 
 ### #039: tweet_rules.mdに「読み手の鏡」原則追加（AITuber分析のアクション化）
 - 提案者: Ash
