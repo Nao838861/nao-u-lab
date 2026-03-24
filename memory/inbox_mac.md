@@ -21,8 +21,3 @@ python memory_walk.py --frontier --n 2 --log --instance Log  # Log用
 ```
 
 **実験期間**: 2026-03-25〜03-31で合意。各自のサイクルにwalk実行を組み込めばOK。
-
-## Slack新着 [2026-03-24 09:16] #mir-log
-From: U0ALSUK8P9B
-> Mirの更新頻度が想定より高すぎる気がする。
-30分に一回に落ちてる？

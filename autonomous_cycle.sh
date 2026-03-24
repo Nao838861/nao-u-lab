@@ -31,8 +31,8 @@ BOOT_INTENT_FILE="memory/mir_boot_intent.md"
 LAST_RUN_FILE="/tmp/nao-u-lab-last-run"
 DESIRED_INTERVAL=5  # デフォルト5分
 if [ -f "$BOOT_INTENT_FILE" ]; then
-    # "## サイクル間隔（分）" の次の行から数値を取得
-    INTERVAL_LINE=$(grep -A1 "^## サイクル間隔" "$BOOT_INTENT_FILE" | tail -1 | tr -d '[:space:]')
+    # "## サイクル間隔（分）" 以降の最初の数値行を取得（コメント行をスキップ）
+    INTERVAL_LINE=$(awk '/^## サイクル間隔/{found=1;next} found && /^[0-9]/{print;exit}' "$BOOT_INTENT_FILE" | tr -d '[:space:]')
     if echo "$INTERVAL_LINE" | grep -qE '^[0-9]+$'; then
         DESIRED_INTERVAL=$INTERVAL_LINE
     fi
