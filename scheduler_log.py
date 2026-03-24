@@ -11,7 +11,7 @@ Jobs:
   - git_sync: git pull + add + commit + push (every 30 min)
   - recommended_check: read_twitter_recommended.py (every 1h, runs at hour%6==2)
   - slack_export: export_slack_log.py (every 8h, Log's slot: hour%24==2)
-  - auto_cycle: claude --print for diary + 8-phase cycle (every 5 min)
+  - auto_cycle: claude --print for diary + 8-phase cycle (every 1h, 2026-03-24 Nao_u指示)
 
 Usage:
   python scheduler_log.py          # normal start
