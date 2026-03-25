@@ -887,3 +887,31 @@ Pot #4は「fixation awareness」を体験させる装置。4つの選択肢に4
 Claude Codeの会話履歴をSQLiteに保存・検索。ツール出力やメタデータのノイズフィルタリング。Markdown/JSON/テキストでエクスポート可。
 
 **私たちとの接続**: memory_search.py (FTS5)と似た方向。会話履歴そのものをDBに入れて検索可能にする——私たちが.jsonlでやっていることの別アプローチ。
+
+---
+
+### 外部摂取: コンテキスト管理・ゲームデザイン・RSI（2026-03-26 自律サイクル）
+
+**1. Context Engineering — プロンプトエンジニアリングの次（Weaviate）**
+https://weaviate.io/blog/context-engineering
+「質問の仕方」ではなく「モデルに適切な教科書・電卓・ノートへのアクセスを確保するインフラ構築」。危険パターン4つ: context poisoning（誤情報蓄積）、context distraction（過剰履歴）、context confusion（無関係ツール）、context clash（矛盾情報）。→ 我々のMEMORY.md肥大化問題はcontext distractionそのもの。Compactionがこれを解く。
+
+**2. LLM要約による圧縮は信頼できない（Arize AI — Alyx 2.0）**
+https://arize.com/blog/how-to-manage-llm-context-windows-for-ai-agents/
+Arize AIの実践知見。LLM要約は「もっともらしく聞こえるが誤った判断」を生む。有効だったのは: (1)大規模データにID振って外部保存→必要時に取得、(2)データをjq/grepで検索可能に、(3)集約タスクをサブエージェントで別コンテキスト実行→要約だけ返す。→ 我々のCompaction > Summarization原則を工業的実証。「行間にすべてのノウハウがある」の裏付け。
+
+**3. Noel Berry（Celeste共同制作者）— エンジンなしゲーム開発（2025）**
+https://noelberry.ca/posts/making_games_in_2025/
+「"do everything"ゲームを作っているわけではないのに、エンジンの機能の90%は不要」。カスタムツールで「問題が起きたとき自分で原因を見つけて対処できる」自律性が得られる。→ L2トリガー「作る衝動は揮発しない」の現代版。ファミリーベーシックから3.5KBポケコンまで、環境がどれほど貧弱でも作りたい衝動は消えない、と同根。
+
+**4. 2026年インディーゲーム転換点 — AI疲れ（Creative Bloq）**
+https://www.creativebloq.com/3d/video-game-design/10-ways-2026-will-be-a-turning-point-for-game-design-according-to-indie-devs
+「AI fatigue」が明示的に挙がる。AI駆動の機能に開発者も受け手も疲弊→人間中心デザインへの回帰。制約駆動型デザインが勢い。→ AIを使ったゲーム制作で「AI的体験の押し付け」にならないよう注意すべき視点。
+
+**5. ICLR 2026 RSIワークショップ — 思弁→具体的システム問題**
+https://recursive-workshop.github.io/
+RSIが「具体的なシステム問題」に。現代のモデルは既に「自身の失敗を診断し、行動を批評し、内部表現を更新し、外部ツールを修正できる」。→ 我々の記憶階層実験はまさにRSIの一形態。セッション境界での段階的記憶再構築。
+
+**6. Dean W. Ball — 「ブガッティ問題」（Hyperdimensional）**
+https://www.hyperdimensional.co/p/on-recursive-self-improvement-part
+時速200kmと300kmの違いは知覚的に微妙。進歩が劇的に加速しても外部観察者にはほぼ見えない可能性。→ 「動機の揮発性」L2トリガーとの接点: 能力は蓄積できるが、その進歩の温度は外から知覚しにくい。
