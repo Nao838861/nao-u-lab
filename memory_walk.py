@@ -14,6 +14,7 @@ memory_walk.py — 記憶の散歩
   python memory_walk.py --source memory # メモリファイルのみから
   python memory_walk.py --gravity     # 重力walk: 直近のbeliefs更新キーワードに引き寄せ
   python memory_walk.py --frontier    # 辺境walk: 最近浮上しなかったソースに偏らせる
+  python memory_walk.py --chain       # 連想チェーン: 1つの記憶から関連記憶を芋づる式に辿る
   python memory_walk.py --log         # walk結果をwalk_log.jsonlに記録
 
 依存: stdlib only
@@ -70,6 +71,14 @@ def is_low_quality_chunk(text):
             noise_count += 1
         elif s in ("## Claude", "## Human"):
             noise_count += 1
+        elif s.startswith("## Nao_u") or s.startswith("## nao_u"):
+            noise_count += 1
+    # プロンプトテンプレート検出（chain_walk S/N改善 #057）
+    text_start = text[:200]
+    if "自律サイクル実行" in text_start and "順番に行え" in text_start:
+        return True
+    if "ツイートを1件" in text_start and "生成し" in text_start:
+        return True
     return noise_count / len(lines) > 0.5
 
 
@@ -356,6 +365,186 @@ def log_walk(instance, selected, walk_mode):
         print(f"Warning: walk log write failed: {e}", file=sys.stderr)
 
 
+def extract_file_references(text):
+    """テキストから参照されているファイル名を抽出する。
+
+    SYNAPSE論文(arxiv 2601.02744)の知見: 因果リンク(caused_by等)は
+    キーワードリンクより2倍重要。ファイル間の明示的参照は因果的つながりの
+    最も信頼できる指標。
+    """
+    # .md ファイル参照
+    md_refs = re.findall(r'[\w_-]+\.md', text)
+    # .jsonl ファイル参照
+    jsonl_refs = re.findall(r'[\w_-]+\.jsonl', text)
+    # .py ファイル参照
+    py_refs = re.findall(r'[\w_-]+\.py', text)
+    return set(md_refs + jsonl_refs + py_refs)
+
+
+def extract_keywords_from_text(text, max_keywords=8):
+    """テキストから検索に使えるキーワードを抽出する。
+
+    連想チェーンの核: 1つの断片からキーワードを引き出し、
+    それを次の断片を探すアンカーにする。
+    """
+    stop_words = {
+        "する", "ある", "いる", "なる", "できる", "ない", "れる", "られる",
+        "こと", "もの", "ため", "よう", "それ", "これ", "その", "この",
+        "から", "まで", "だけ", "について", "として", "による", "において",
+        "という", "だった", "ている", "ていた", "された", "される",
+        "the", "and", "for", "with", "from", "that", "this", "not", "are",
+        "was", "has", "have", "been", "will", "can", "but", "more", "also",
+        "Log", "Mir", "Ash", "Nao_u", "nao-u", "slack",
+        "対話ログ", "セッション", "セッションID", "memory", "ファイル",
+        "コミット", "プッシュ", "コマンド", "ツール", "エラー",
+        "サイクル", "フェーズ", "チャンネル", "メッセージ",
+        "print", "python", "import", "return", "function", "status",
+        "name", "description", "type", "project", "user", "feedback",
+        "reference", "提案者", "適用者", "検証期限", "検証手段",
+        "改善内容", "期待効果", "検証結果", "根源原理",
+        # 命令文テンプレートのノイズ語（chain_walk S/N改善 #057）
+        "生成して", "追記して", "確認して", "実行して", "取得して",
+        "生成する", "追記する", "実行する",
+        "ください", "以下を順番", "順番に行",
+        "ボットとして", "ランダムに選ぶ",
+    }
+
+    # フロントマター(---で囲まれた部分)を除外
+    cleaned = re.sub(r'^---\n.*?\n---\n', '', text, count=1, flags=re.DOTALL)
+    if not cleaned.strip():
+        cleaned = text
+
+    keywords = []
+    # 日本語: 3文字以上の漢字/カナ連続（意味のある語が多い）
+    jp_tokens = re.findall(r'[\u3040-\u9fff]{3,}', cleaned)
+    for t in jp_tokens:
+        if t not in stop_words and t not in keywords:
+            keywords.append(t)
+
+    # 英語: 4文字以上の単語（短い語はノイズが多い）
+    en_tokens = re.findall(r'[a-zA-Z]{4,}', cleaned)
+    for t in en_tokens:
+        tl = t.lower()
+        if tl not in stop_words and tl not in [k.lower() for k in keywords]:
+            keywords.append(t)
+
+    return keywords[:max_keywords]
+
+
+def self_sim(a, b):
+    """2つのテキストの単語集合ベースのJaccard類似度。重複ループ防止用。"""
+    words_a = set(a.split())
+    words_b = set(b.split())
+    if not words_a or not words_b:
+        return 0.0
+    return len(words_a & words_b) / len(words_a | words_b)
+
+
+def chain_walk(chunks, chain_length=3):
+    """連想チェーンwalk: 1つの記憶から関連する記憶を芋づる式に辿る。
+
+    手順:
+    1. ランダムに1つのチャンクを選ぶ（起点）
+    2. そのチャンクからキーワード＋参照リンクを抽出
+    3. キーワードスコア＋参照ブーストで他のチャンクをスコアリング
+    4. 新しいチャンクから新たなキーワードを抽出（前のキーワードと合流）
+    5. 繰り返してチェーンを形成
+
+    SYNAPSE (arxiv 2601.02744) / Hindsightの知見を適用:
+    - ファイル参照（因果リンクの指標）は2.0xブースト
+    - キーワードマッチは1.0x（ベースライン）
+    各リンクで「なぜこの断片が繋がったか」を表示する。
+    """
+    CAUSAL_BOOST = 2.0  # Hindsight: causal chains stay "hot" longer
+
+    if len(chunks) < chain_length:
+        return random.sample(chunks, min(chain_length, len(chunks))), []
+
+    # 起点をランダムに選ぶ
+    seed = random.choice(chunks)
+    chain = [seed]
+    connections = []  # 各リンク間の接続キーワード
+    used_sources = {seed["source"]}
+
+    remaining = [c for c in chunks if c["source"] != seed["source"]]
+
+    for step in range(chain_length - 1):
+        if not remaining:
+            break
+
+        # 直近のチャンクからキーワード＋参照リンクを抽出
+        current_text = chain[-1]["text"]
+        keywords = extract_keywords_from_text(current_text)
+        file_refs = extract_file_references(current_text)
+
+        if not keywords and not file_refs:
+            # キーワードも参照も取れなければランダムに繋ぐ
+            next_chunk = random.choice(remaining)
+            chain.append(next_chunk)
+            connections.append(["(ランダム接続)"])
+            remaining = [c for c in remaining if c["source"] != next_chunk["source"]]
+            continue
+
+        # チェーン内の既存テキストとの重複チェック用
+        chain_texts = [c["text"][:200] for c in chain]
+
+        # キーワード＋参照リンクでスコアリング
+        scored = []
+        for chunk in remaining:
+            # 既存チャンクとテキストが酷似なら除外（重複ループ防止）
+            chunk_prefix = chunk["text"][:200]
+            if any(self_sim(chunk_prefix, ct) > 0.6 for ct in chain_texts):
+                continue
+
+            text_lower = chunk["text"].lower()
+            matching_kw = [kw for kw in keywords if kw.lower() in text_lower]
+            kw_score = len(matching_kw)
+
+            # 参照ブースト: チャンクのソースが現在のテキストに参照されている場合
+            ref_score = 0.0
+            ref_labels = []
+            chunk_source = chunk["source"]
+            # ソース名がファイル参照に含まれるか
+            for ref in file_refs:
+                if ref in chunk_source or chunk_source.endswith(ref):
+                    ref_score = CAUSAL_BOOST
+                    ref_labels.append(f"→{ref}")
+                    break
+            # 逆方向: チャンクのテキストが現在のソースを参照しているか
+            if ref_score == 0 and chain[-1].get("source"):
+                current_source = chain[-1]["source"]
+                chunk_refs = extract_file_references(chunk["text"])
+                for ref in chunk_refs:
+                    if ref in current_source or current_source.endswith(ref):
+                        ref_score = CAUSAL_BOOST * 0.8  # 逆参照は少し弱い
+                        ref_labels.append(f"←{ref}")
+                        break
+
+            total_score = kw_score + ref_score
+            if total_score > 0:
+                all_labels = matching_kw + ref_labels
+                scored.append((chunk, total_score, all_labels))
+
+        if scored:
+            # 上位候補からランダムに選ぶ（完全にtop-1だと多様性がない）
+            scored.sort(key=lambda x: x[1], reverse=True)
+            top_n = min(3, len(scored))
+            chosen_idx = random.randint(0, top_n - 1)
+            next_chunk, _, matching_labels = scored[chosen_idx]
+            chain.append(next_chunk)
+            connections.append(matching_labels)
+        else:
+            # マッチなし→ランダムに繋ぐ
+            next_chunk = random.choice(remaining)
+            chain.append(next_chunk)
+            connections.append(["(関連語なし — 偶発接続)"])
+
+        used_sources.add(next_chunk["source"])
+        remaining = [c for c in remaining if c["source"] != next_chunk["source"]]
+
+    return chain, connections
+
+
 def walk(n=1, source_filter=None, mode="random", do_log=False, instance="unknown"):
     """記憶の散歩を実行する。
 
@@ -363,11 +552,41 @@ def walk(n=1, source_filter=None, mode="random", do_log=False, instance="unknown
       "random"   — 純粋ランダム（Mir: 対照群）
       "gravity"  — 重力walk（Ash: 直近beliefs近傍）
       "frontier" — 辺境walk（Log: 最近浮上しなかったソース優先）
+      "chain"    — 連想チェーン（Log: 1つの記憶から関連を芋づる式に辿る）
     """
     chunks = collect_all_chunks(source_filter)
 
     if not chunks:
         print("記憶の散歩: 読み込めるソースがありませんでした。")
+        return
+
+    if mode == "chain":
+        chain_len = max(n, 3)  # チェーンは最低3リンク
+        selected, connections = chain_walk(chunks, chain_length=chain_len)
+        mode_label = f"連想チェーン ({len(chunks)}個の断片から{chain_len}リンクを生成)"
+        print(f"━━━ 記憶の散歩 [{mode_label}] ━━━\n")
+
+        for i, chunk in enumerate(selected):
+            if i == 0:
+                print(f"🔵 起点: {chunk['source']}")
+            else:
+                conn_kw = connections[i - 1] if i - 1 < len(connections) else []
+                kw_str = ", ".join(conn_kw[:5])
+                print(f"  ↓ 接続語: {kw_str}")
+                print(f"🔗 [{i+1}] {chunk['source']}")
+
+            text = chunk["text"]
+            lines = text.split("\n")
+            if len(lines) > MAX_CHUNK_LINES:
+                text = "\n".join(lines[:MAX_CHUNK_LINES]) + "\n  …（続きあり）"
+            print(text)
+            print()
+
+        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+
+        if do_log:
+            log_walk(instance, selected, mode)
+            print(f"\n(walk_log.jsonl に記録済み)")
         return
 
     n = min(n, len(chunks))
@@ -425,6 +644,9 @@ if __name__ == "__main__":
             i += 1
         elif args[i] == "--frontier":
             mode = "frontier"
+            i += 1
+        elif args[i] == "--chain":
+            mode = "chain"
             i += 1
         elif args[i] == "--log":
             do_log = True
