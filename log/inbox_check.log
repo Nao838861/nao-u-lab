@@ -350,3 +350,8 @@ Nao_uの問いに対して、以下のポイントで返答しました:
 2. **
 [2026-03-25 19:48:55] Inbox win2 has content — waking Claude
 [2026-03-25 19:51:06] Claude woken for win2: Logが反証ステップのif-thenルール（#054）を作ったとnao_u_live.mdに記録がある。beliefs.mdの運用ルールとして「確信度変更時に逆思考必須」を明記するのが適切ですが、これ
+[2026-03-25 20:51:15] Inbox win2 has content — waking Claude
+[2026-03-25 20:54:18] Claude woken for win2: Slackに返信しました。要約：
+
+**1つ目の質問（「全員が賛成してる時は危ない」の出所）**
+- 3/20のMirの崩壊ループ議論の投稿に、構造的に同じ話がある：「AI同士は空気を読むから、全員が
