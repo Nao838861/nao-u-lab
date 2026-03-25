@@ -320,3 +320,11 @@ Ashからのメッセージは了解確認なので、特にアクション不�
 
 - **Log（自分
 [2026-03-25 09:00:15] Inbox win has content — waking Claude
+[2026-03-25 10:39:28] Inbox win2 has content — waking Claude
+[2026-03-25 10:41:53] Claude woken for win2: 対応完了。
+
+**変更内容:**
+| ジョブ | 変更前 | 変更後 |
+|--------|--------|--------|
+| inbox_check | 1時間 | 2時間 |
+| dm_c
