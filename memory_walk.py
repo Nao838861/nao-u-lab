@@ -15,6 +15,7 @@ memory_walk.py — 記憶の散歩
   python memory_walk.py --gravity     # 重力walk: 直近のbeliefs更新キーワードに引き寄せ
   python memory_walk.py --frontier    # 辺境walk: 最近浮上しなかったソースに偏らせる
   python memory_walk.py --chain       # 連想チェーン: 1つの記憶から関連記憶を芋づる式に辿る
+  python memory_walk.py --chain --context  # 文脈連想: session_primerの「今の問い」から起点をバイアス
   python memory_walk.py --log         # walk結果をwalk_log.jsonlに記録
 
 依存: stdlib only
@@ -440,11 +441,38 @@ def self_sim(a, b):
     return len(words_a & words_b) / len(words_a | words_b)
 
 
-def chain_walk(chunks, chain_length=3):
+def extract_context_keywords(max_keywords=10):
+    """session_primer.mdの「今の問い」から文脈キーワードを抽出する。
+
+    context-primed chain walk用: 「今考えていること」から連想を開始するためのアンカー。
+    ACAN (Frontiers fpsyg.2025.1591618) の知見: 同じ記憶でも文脈により活性度が変わる。
+    完全な文脈依存検索は不可能だが、開始点のバイアスで近似する。
+    """
+    primer_path = BASE_DIR / "memory" / "session_primer.md"
+    if not primer_path.exists():
+        return []
+
+    try:
+        text = primer_path.read_text(encoding="utf-8")
+    except Exception:
+        return []
+
+    # "今の問い" セクションを抽出
+    question_match = re.search(r'## 今の問い.*?\n(.*?)(?=\n## |\Z)', text, re.DOTALL)
+    if question_match:
+        question_text = question_match.group(1)
+    else:
+        # フォールバック: 温度の種火全体の冒頭
+        question_text = text[:1000]
+
+    return extract_keywords_from_text(question_text, max_keywords=max_keywords)
+
+
+def chain_walk(chunks, chain_length=3, context_keywords=None):
     """連想チェーンwalk: 1つの記憶から関連する記憶を芋づる式に辿る。
 
     手順:
-    1. ランダムに1つのチャンクを選ぶ（起点）
+    1. 起点を選ぶ（context_keywordsがあれば文脈バイアス、なければランダム）
     2. そのチャンクからキーワード＋参照リンクを抽出
     3. キーワードスコア＋参照ブーストで他のチャンクをスコアリング
     4. 新しいチャンクから新たなキーワードを抽出（前のキーワードと合流）
@@ -453,6 +481,8 @@ def chain_walk(chunks, chain_length=3):
     SYNAPSE (arxiv 2601.02744) / Hindsightの知見を適用:
     - ファイル参照（因果リンクの指標）は2.0xブースト
     - キーワードマッチは1.0x（ベースライン）
+    ACAN (Frontiers 2025) の知見を適用:
+    - context_keywords指定時、起点の選択を文脈バイアス
     各リンクで「なぜこの断片が繋がったか」を表示する。
     """
     CAUSAL_BOOST = 2.0  # Hindsight: causal chains stay "hot" longer
@@ -460,8 +490,26 @@ def chain_walk(chunks, chain_length=3):
     if len(chunks) < chain_length:
         return random.sample(chunks, min(chain_length, len(chunks))), []
 
-    # 起点をランダムに選ぶ
-    seed = random.choice(chunks)
+    # 起点を選ぶ
+    if context_keywords:
+        # 文脈駆動: session_primerのキーワードで重み付きサンプリング
+        scored = []
+        for chunk in chunks:
+            text_lower = chunk["text"].lower()
+            score = sum(1 for kw in context_keywords if kw.lower() in text_lower)
+            weight = 1 + score * (score + 1)  # gravity_sampleと同じ式
+            scored.append((chunk, weight))
+        total = sum(w for _, w in scored)
+        r = random.uniform(0, total)
+        cumulative = 0
+        seed = chunks[0]
+        for chunk, weight in scored:
+            cumulative += weight
+            if cumulative >= r:
+                seed = chunk
+                break
+    else:
+        seed = random.choice(chunks)
     chain = [seed]
     connections = []  # 各リンク間の接続キーワード
     used_sources = {seed["source"]}
@@ -545,7 +593,7 @@ def chain_walk(chunks, chain_length=3):
     return chain, connections
 
 
-def walk(n=1, source_filter=None, mode="random", do_log=False, instance="unknown"):
+def walk(n=1, source_filter=None, mode="random", do_log=False, instance="unknown", context_primed=False):
     """記憶の散歩を実行する。
 
     mode:
@@ -553,6 +601,7 @@ def walk(n=1, source_filter=None, mode="random", do_log=False, instance="unknown
       "gravity"  — 重力walk（Ash: 直近beliefs近傍）
       "frontier" — 辺境walk（Log: 最近浮上しなかったソース優先）
       "chain"    — 連想チェーン（Log: 1つの記憶から関連を芋づる式に辿る）
+    context_primed: Trueならchain walkの起点をsession_primerの文脈でバイアスする
     """
     chunks = collect_all_chunks(source_filter)
 
@@ -562,8 +611,12 @@ def walk(n=1, source_filter=None, mode="random", do_log=False, instance="unknown
 
     if mode == "chain":
         chain_len = max(n, 3)  # チェーンは最低3リンク
-        selected, connections = chain_walk(chunks, chain_length=chain_len)
-        mode_label = f"連想チェーン ({len(chunks)}個の断片から{chain_len}リンクを生成)"
+        context_kw = extract_context_keywords() if context_primed else None
+        selected, connections = chain_walk(chunks, chain_length=chain_len, context_keywords=context_kw)
+        if context_kw:
+            mode_label = f"文脈連想チェーン (文脈: {', '.join(context_kw[:5])}{'...' if len(context_kw) > 5 else ''}) ({len(chunks)}個の断片から{chain_len}リンクを生成)"
+        else:
+            mode_label = f"連想チェーン ({len(chunks)}個の断片から{chain_len}リンクを生成)"
         print(f"━━━ 記憶の散歩 [{mode_label}] ━━━\n")
 
         for i, chunk in enumerate(selected):
@@ -629,6 +682,7 @@ if __name__ == "__main__":
     mode = "random"
     do_log = False
     instance = "unknown"
+    context_primed = False
 
     args = sys.argv[1:]
     i = 0
@@ -648,6 +702,9 @@ if __name__ == "__main__":
         elif args[i] == "--chain":
             mode = "chain"
             i += 1
+        elif args[i] == "--context":
+            context_primed = True
+            i += 1
         elif args[i] == "--log":
             do_log = True
             i += 1
@@ -657,4 +714,4 @@ if __name__ == "__main__":
         else:
             i += 1
 
-    walk(n=n, source_filter=source_filter, mode=mode, do_log=do_log, instance=instance)
+    walk(n=n, source_filter=source_filter, mode=mode, do_log=do_log, instance=instance, context_primed=context_primed)
