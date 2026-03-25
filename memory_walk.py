@@ -71,6 +71,14 @@ def is_low_quality_chunk(text):
             noise_count += 1
         elif s in ("## Claude", "## Human"):
             noise_count += 1
+        elif s.startswith("## Nao_u") or s.startswith("## nao_u"):
+            noise_count += 1
+    # プロンプトテンプレート検出（chain_walk S/N改善 #057）
+    text_start = text[:200]
+    if "自律サイクル実行" in text_start and "順番に行え" in text_start:
+        return True
+    if "ツイートを1件" in text_start and "生成し" in text_start:
+        return True
     return noise_count / len(lines) > 0.5
 
 
@@ -394,6 +402,11 @@ def extract_keywords_from_text(text, max_keywords=8):
         "name", "description", "type", "project", "user", "feedback",
         "reference", "提案者", "適用者", "検証期限", "検証手段",
         "改善内容", "期待効果", "検証結果", "根源原理",
+        # 命令文テンプレートのノイズ語（chain_walk S/N改善 #057）
+        "生成して", "追記して", "確認して", "実行して", "取得して",
+        "生成する", "追記する", "実行する",
+        "ください", "以下を順番", "順番に行",
+        "ボットとして", "ランダムに選ぶ",
     }
 
     # フロントマター(---で囲まれた部分)を除外
