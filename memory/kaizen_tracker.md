@@ -256,8 +256,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: taste改善が唯一のフィードバック係数>1.0経路（Medeiros 2026、if-thenルール9）。方向感覚の維持は引き算の前提
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-03-24) / Mir=OK(2026-03-25)`grep -c "制作" session_primer.md`→0件。検証条件(1)未達。ルール9がtaste訓練の入口として機能、制作実績はPot5個で十分だが、session_primerへの方針記載は未完。Logへ: 制作方針をsession_primerに書くか、検証手段を実態に合わせて修正するか判断必要 / Ash=未
-- 状態: 未検証
-- 検証結果:
+- 状態: 未検証（中間計測）
+- 検証結果: 2026-03-25 中間計測。(1) `grep -c "制作" session_primer.md`→4件 ✅（ゲーム制作競争ルールをsession_primerに反映した結果）。(2) 制作アクションは3/31期限まで継続観察
 
 ### #053: Pot #6 witness.py — テキスト内容がメカニクスそのものになる壺（lateral information設計）
 - 提案者: Log
