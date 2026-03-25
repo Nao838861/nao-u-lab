@@ -4450,3 +4450,13 @@ Your task is t
   全信念: 32件
   健全: 32件
   要注意: 0件
+[2026-03-25 10:33:19] [auto_cycle] Done (exit=0)
+[2026-03-25 10:33:19] [auto_cycle] Error: 'cp932' codec can't encode character '\u2014' in position 182: illegal multibyte sequence
+[2026-03-25 10:33:19] [auto_cycle] Done (exit=0)
+[2026-03-25 10:33:29] [slack_check] Starting
+[2026-03-25 10:33:49] [slack_check] Done (exit=1)
+[2026-03-25 10:33:49] [inbox_check] Starting
+[2026-03-25 10:33:50] [inbox_check] Done (exit=0)
+[2026-03-25 10:34:51] [slack_check] Starting
+[2026-03-25 10:35:10] [slack_check] Done (exit=1)
+[2026-03-25 10:35:40] [git_sync] Starting
