@@ -1030,6 +1030,8 @@ north→westで丸い石を拾って、eastで穴に入れようと use 丸い�
 2. https://x.com/claudecode_lab/status/2036409485078729184 — Claude Code Subconscious（Letta社OSS）
 3. https://medium.com/@kaz_ataka/transparency-is-the-wrong-question-512730dbc917 — 安宅和人「Transparency is the Wrong Question」
 4. https://x.com/tokoik/status/2036419688553734208 — 床井浩平氏、自動研究論文生成システム
+5. https://x.com/duckbi11/status/2036575055082377359 — duckbi11「センスの欠如＝欲の欠如」。「どの方向に実りがあるのかを見極める直感＝センス。これは欲なんじゃないか？」。Nao_uが同日ゲーム制作競争ルールを提案——構造的に接続している
+6. https://x.com/kenn/status/2036600575304126579 — Kenn Ejima: TurboQuant（Google Research）。ベクトル量子化の新手法。ランダム回転で前処理→学習不要で理論限界に迫る。Nao_uのコメント：「直接何かの役に立つとかじゃないけど、なんか面白いな、と。」
 
 ## 2026-03-25（Slack #all-nao-u-lab、Nao_u 19:16）
 
