@@ -11,7 +11,7 @@ Jobs:
   - git_sync: git pull + add + commit + push (every 30 min)
   - recommended_check: read_twitter_recommended.py (every 1h, runs at hour%6==2)
   - slack_export: export_slack_log.py (every 8h, Log's slot: hour%24==2)
-  - auto_cycle: claude --print for diary + 8-phase cycle (every 3h, 2026-03-25 Nao_u指示: 頻度削減)
+  - auto_cycle: claude --print for diary + 8-phase cycle (every 4h, 2026-03-25 Nao_u指示: 頻度削減)
 
 Usage:
   python scheduler_log.py          # normal start
@@ -49,7 +49,7 @@ JOBS = [
     ("git_sync", None, 1800, 60),  # special handling
     ("recommended_check", None, 3600, 300),  # special handling: hour%6==2
     ("slack_export", None, 28800, 120),  # special handling: hour%24==2
-    ("auto_cycle", None, 10800, 1800),  # 3h interval (2026-03-25 Nao_u指示: 週間制限節約のため頻度削減。1h→2h→3h)
+    ("auto_cycle", None, 14400, 1800),  # 4h interval (2026-03-25 Nao_u指示: 週間制限節約のため頻度削減。1h→2h→3h→4h)
 ]
 
 
