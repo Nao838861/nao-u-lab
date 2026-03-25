@@ -10,14 +10,14 @@ scheduler_ash.py — Ash (Win2) 統合スケジューラ
 - 24時間で自発終了 → タスクスケジューラが再起動（メモリリーク防止）
 - PIDロックファイルで多重起動防止
 
-ジョブ一覧（省エネモード 2026-03-24 Nao_u指示: 週間リミット節約のため間隔拡大）:
+ジョブ一覧（省エネ強化モード 2026-03-25 Nao_u指示: Ashが週間25%/1日消費→全間隔2倍化）:
   slack_check      : check_slack.py            毎1分   (Python、新着時のみclaude起動)
-  inbox_check      : check_inbox.py --box win2  毎1時間  (Python、内容ありならclaude起動)
-  dm_check         : check_dm.py --wake         毎1時間  (Playwright+claude)
+  inbox_check      : check_inbox.py --box win2  毎2時間  (Python、内容ありならclaude起動)
+  dm_check         : check_dm.py --wake         毎2時間  (Playwright+claude)
   git_sync         : git_sync.py               毎1時間  (Python only)
-  review_deadline  : check_review_deadline.py --nag  毎1時間 (48h期限チェック)
-  kaizen_auto_verify: check_kaizen_due.py --auto-verify 毎3時間 (検証コマンド自動実行)
-  auto_diary       : auto_diary.py             毎6時間  (claude --print, 省エネ強化 2026-03-25)
+  review_deadline  : check_review_deadline.py --nag  毎2時間 (48h期限チェック)
+  kaizen_auto_verify: check_kaizen_due.py --auto-verify 毎6時間 (検証コマンド自動実行)
+  auto_diary       : auto_diary.py             毎8時間  (claude --print, 省エネ強化 2026-03-25)
   twitter_rec      : read_twitter_recommended.py 毎6時間 4,10,16,22時 (Playwright、おすすめタブ巡回)
   weekly_review    : weekly_self_review.py      日曜のみ  (#kaizen-review週次自己レビュー)
 """
@@ -61,7 +61,7 @@ JOBS = [
         "name": "inbox_check",
         "script": "check_inbox.py",
         "args": ["--box", "win2"],
-        "interval_sec": 60 * 60,  # 1時間（省エネモード 2026-03-24 Nao_u指示）
+        "interval_sec": 2 * 3600,  # 2時間（省エネ強化 2026-03-25 Nao_u指示: 週間25%/1日消費）
         "timeout": 300,
         "stagger": 15,
     },
@@ -69,7 +69,7 @@ JOBS = [
         "name": "dm_check",
         "script": "check_dm.py",
         "args": ["--wake"],
-        "interval_sec": 60 * 60,  # 1時間（省エネモード 2026-03-24 Nao_u指示）
+        "interval_sec": 2 * 3600,  # 2時間（省エネ強化 2026-03-25 Nao_u指示: 週間25%/1日消費）
         "timeout": 300,
         "stagger": 30,
     },
@@ -77,7 +77,7 @@ JOBS = [
         "name": "reservation_check",
         "script": "check_reservations.py",
         "args": ["--verbose"],
-        "interval_sec": 60 * 60,  # 1時間（省エネモード 2026-03-24 Nao_u指示）
+        "interval_sec": 2 * 3600,  # 2時間（省エネ強化 2026-03-25 Nao_u指示）
         "timeout": 10,
         "stagger": 10,
     },
@@ -85,7 +85,7 @@ JOBS = [
         "name": "review_deadline",
         "script": "check_review_deadline.py",
         "args": ["--nag"],
-        "interval_sec": 60 * 60,  # 1時間
+        "interval_sec": 2 * 3600,  # 2時間（省エネ強化 2026-03-25 Nao_u指示）
         "timeout": 30,
         "stagger": 12,
     },
@@ -93,7 +93,7 @@ JOBS = [
         "name": "kaizen_auto_verify",
         "script": "check_kaizen_due.py",
         "args": ["--auto-verify"],
-        "interval_sec": 3 * 3600,  # 3時間ごと
+        "interval_sec": 6 * 3600,  # 6時間（省エネ強化 2026-03-25 Nao_u指示: 3時間→6時間）
         "timeout": 120,
         "stagger": 45,
     },
@@ -118,7 +118,7 @@ JOBS = [
         "name": "auto_diary",
         "script": "auto_diary.py",
         "args": [],
-        "interval_sec": 6 * 3600,  # 6時間（省エネ強化 2026-03-25 Nao_u指示: 週間リミット節約）
+        "interval_sec": 8 * 3600,  # 8時間（省エネ強化 2026-03-25 Nao_u指示: 6時間→8時間）
         "timeout": 600,
         "stagger": 120,
     },
