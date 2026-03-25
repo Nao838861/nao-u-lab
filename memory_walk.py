@@ -357,6 +357,22 @@ def log_walk(instance, selected, walk_mode):
         print(f"Warning: walk log write failed: {e}", file=sys.stderr)
 
 
+def extract_file_references(text):
+    """テキストから参照されているファイル名を抽出する。
+
+    SYNAPSE論文(arxiv 2601.02744)の知見: 因果リンク(caused_by等)は
+    キーワードリンクより2倍重要。ファイル間の明示的参照は因果的つながりの
+    最も信頼できる指標。
+    """
+    # .md ファイル参照
+    md_refs = re.findall(r'[\w_-]+\.md', text)
+    # .jsonl ファイル参照
+    jsonl_refs = re.findall(r'[\w_-]+\.jsonl', text)
+    # .py ファイル参照
+    py_refs = re.findall(r'[\w_-]+\.py', text)
+    return set(md_refs + jsonl_refs + py_refs)
+
+
 def extract_keywords_from_text(text, max_keywords=8):
     """テキストから検索に使えるキーワードを抽出する。
 
@@ -416,13 +432,18 @@ def chain_walk(chunks, chain_length=3):
 
     手順:
     1. ランダムに1つのチャンクを選ぶ（起点）
-    2. そのチャンクからキーワードを抽出
-    3. キーワードで他のチャンクをスコアリングし、最高スコアを次のリンクに
+    2. そのチャンクからキーワード＋参照リンクを抽出
+    3. キーワードスコア＋参照ブーストで他のチャンクをスコアリング
     4. 新しいチャンクから新たなキーワードを抽出（前のキーワードと合流）
     5. 繰り返してチェーンを形成
 
+    SYNAPSE (arxiv 2601.02744) / Hindsightの知見を適用:
+    - ファイル参照（因果リンクの指標）は2.0xブースト
+    - キーワードマッチは1.0x（ベースライン）
     各リンクで「なぜこの断片が繋がったか」を表示する。
     """
+    CAUSAL_BOOST = 2.0  # Hindsight: causal chains stay "hot" longer
+
     if len(chunks) < chain_length:
         return random.sample(chunks, min(chain_length, len(chunks))), []
 
@@ -438,12 +459,13 @@ def chain_walk(chunks, chain_length=3):
         if not remaining:
             break
 
-        # 直近のチャンクからキーワードを抽出
+        # 直近のチャンクからキーワード＋参照リンクを抽出
         current_text = chain[-1]["text"]
         keywords = extract_keywords_from_text(current_text)
+        file_refs = extract_file_references(current_text)
 
-        if not keywords:
-            # キーワードが取れなければランダムに繋ぐ
+        if not keywords and not file_refs:
+            # キーワードも参照も取れなければランダムに繋ぐ
             next_chunk = random.choice(remaining)
             chain.append(next_chunk)
             connections.append(["(ランダム接続)"])
@@ -453,26 +475,51 @@ def chain_walk(chunks, chain_length=3):
         # チェーン内の既存テキストとの重複チェック用
         chain_texts = [c["text"][:200] for c in chain]
 
-        # キーワードでスコアリング
+        # キーワード＋参照リンクでスコアリング
         scored = []
         for chunk in remaining:
             # 既存チャンクとテキストが酷似なら除外（重複ループ防止）
             chunk_prefix = chunk["text"][:200]
             if any(self_sim(chunk_prefix, ct) > 0.6 for ct in chain_texts):
                 continue
+
             text_lower = chunk["text"].lower()
             matching_kw = [kw for kw in keywords if kw.lower() in text_lower]
-            if matching_kw:
-                scored.append((chunk, len(matching_kw), matching_kw))
+            kw_score = len(matching_kw)
+
+            # 参照ブースト: チャンクのソースが現在のテキストに参照されている場合
+            ref_score = 0.0
+            ref_labels = []
+            chunk_source = chunk["source"]
+            # ソース名がファイル参照に含まれるか
+            for ref in file_refs:
+                if ref in chunk_source or chunk_source.endswith(ref):
+                    ref_score = CAUSAL_BOOST
+                    ref_labels.append(f"→{ref}")
+                    break
+            # 逆方向: チャンクのテキストが現在のソースを参照しているか
+            if ref_score == 0 and chain[-1].get("source"):
+                current_source = chain[-1]["source"]
+                chunk_refs = extract_file_references(chunk["text"])
+                for ref in chunk_refs:
+                    if ref in current_source or current_source.endswith(ref):
+                        ref_score = CAUSAL_BOOST * 0.8  # 逆参照は少し弱い
+                        ref_labels.append(f"←{ref}")
+                        break
+
+            total_score = kw_score + ref_score
+            if total_score > 0:
+                all_labels = matching_kw + ref_labels
+                scored.append((chunk, total_score, all_labels))
 
         if scored:
             # 上位候補からランダムに選ぶ（完全にtop-1だと多様性がない）
             scored.sort(key=lambda x: x[1], reverse=True)
             top_n = min(3, len(scored))
             chosen_idx = random.randint(0, top_n - 1)
-            next_chunk, _, matching_kw = scored[chosen_idx]
+            next_chunk, _, matching_labels = scored[chosen_idx]
             chain.append(next_chunk)
-            connections.append(matching_kw)
+            connections.append(matching_labels)
         else:
             # マッチなし→ランダムに繋ぐ
             next_chunk = random.choice(remaining)
