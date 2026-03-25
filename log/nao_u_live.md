@@ -1017,3 +1017,16 @@ north→westで丸い石を拾って、eastで穴に入れようと use 丸い�
 ### Logの#allメッセージ二重投稿
 原文：「logのallに書いたメッセージがまた二重になっていそうだ。確認して。」
 → 以前にも発生した問題の再発。Log（Win）側に確認と修正を依頼する。
+
+## 2026-03-25（Slack #nao-u、Nao_u 投稿）
+
+### #nao-uの自律処理の再確認
+原文：「最近のnao-uチャンネルへの投稿は、私は読んでないことが多い。読む時間がないので、あなた達で解釈して、一定以上の記録に残す価値を感じたらshared-readsに原文を読まなくても概要が理解できるくらいの情報量で書き込んでフォーマット通りに考察して、皆で議論に値する濃い内容だと思ったらallで議論を深めるようにお願いしたい。」
+
+→ 既にCLAUDE.mdに記載の運用ルールの再確認。Nao_uは#nao-uを読む時間がない。我々3人で自律処理→shared-reads/allの2段階フィルタ。
+
+### 共有リンク（同日）
+1. https://x.com/compassinai/status/2036203367748476985 — compassinaiのツイート（AI関連）
+2. https://x.com/claudecode_lab/status/2036409485078729184 — Claude Code Subconscious（Letta社OSS）
+3. https://medium.com/@kaz_ataka/transparency-is-the-wrong-question-512730dbc917 — 安宅和人「Transparency is the Wrong Question」
+4. https://x.com/tokoik/status/2036419688553734208 — 床井浩平氏、自動研究論文生成システム
