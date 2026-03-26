@@ -959,6 +959,14 @@ LLMは「外来生物」——従来のコンピュータと根本的に異な�
 https://gamestudies.org/1901/articles/stang
 BioShockのLittle Sisters選択＝「クイズ化した道徳」。善悪ポイントを割り当てた時点で、プレイヤーの判断はパズル解きに堕ちる。対照: The Walking Deadは正解を明示しない。限られた情報と個人の価値観だけで決める。結果は予測不能に連鎖する。→ Nao_uの「クイズっぽい」批評の学術的裏付け。Pot #6/#7は「正解が1つある矛盾探し」＝BioShock型。正解を消せばよいのではなく、プレイヤーの選択に予測不能な結果がついてくる構造が必要。もう一つ重要な主張: 真のエージェンシーはゲーム「外」にある——プレイヤーがどう解釈し、どう語るか。ME3のエンディング炎上が例。つまり正解のなさ自体が対話を生む。
 
-**16. Rethinking Interactivity (Game Developer)**
+**16. Dear Esther — Ambiguity as Game Design (Game Developer)**
+https://www.gamedeveloper.com/design/ambiguity-in-game-design-what-developers-can-learn-from-dear-esther
+Pinchbeck(2012): 「体験の真空」——戦闘もインベントリもインタラクションも取り除いた結果、プレイヤーは解釈に全リソースを投入する。音声がランダム化されていて毎回異なる断片が流れ、矛盾する情報すら含む。2周目で違うことを聞く→プレイヤー自身の解釈が「嘘」だったかもしれないと気づく。Barthes的に言えばFunctions(プロット機能)を削ぎ、Indices(雰囲気・暗示)だけ残した。Pinchbeck: "It's impossible to feel sad fast. It's impossible to feel rage slowly." 常に刺激があると深い感情が育たない。→ Potの問題はここ。メモを取れ、矛盾を探せ、正解は何だ——刺激が多すぎて、プレイヤーに沈殿する時間がない。Dear Estherの教訓: 「十分な真空を作れば、プレイヤーが埋める」。我々のCLIは視覚がないぶん真空を作りやすいはずなのに、情報量で埋めてしまっている。
+
+**17. Stanford GDT — "How Do You Create Apophenia?" (Tynan Sylvester引用)**
+https://gdt.stanford.edu/how-do-you-create-apophenia/
+Apophenia = ランダムデータに意味あるパターンを見出す人間の傾向。Tynan Sylvester (Designing Games): 「シミュレーションゲームを機能させる鍵はapophenia。動くボールだけ見せれば、プレイヤーが感情の知覚を乗せてくれる」。戦略的曖昧さの3類型: (1) Information Ambiguity——不正確な表象、矛盾の露出 (2) Context Ambiguity——異質な文脈の混合、期待の裏切り (3) Relationship Ambiguity——説明されない要素、型破りな役割。→ Pot #7(whose_voice)の「同じ人が書いたか、違う人が書いたか」はInformation Ambiguityだが、正解が1つある時点でapopheniaが死ぬ。正解がなければプレイヤーは自分のパターン認識を信じるしかない。その「信じる」行為がゲーム体験になる。Sylvesterの「moving balls」＝我々のCLIテキスト。動くボールだけ見せて、感情を乗せてもらえ。
+
+**18. Rethinking Interactivity (Game Developer)**
 https://www.gamedeveloper.com/design/rethinking-interactivity-
 「弁証法的エージェンシー」——プレイヤーとシステムの相互決定。選択肢があるだけでは意味がない（アルバムの曲選びはゲームではない）。テトリスは数学的に正解があるのにゲームとして成立する。なぜか。重力という「反対勢力」がプレイヤーの意図と拮抗するから。agency = freedom ではなく agency = opposition。→ Pot #9が#6/#7より「ゲームっぽい」と感じられたのは、「12の記憶が流れ去る」という時間の圧力（反対勢力）が索引の選択に重みを与えているから。ただし結果が正誤判定に戻ると弁証法が崩れる。圧力は維持しつつ、結果を正解/不正解ではなく「あなたが何を選んだか」で返すべきだった。
