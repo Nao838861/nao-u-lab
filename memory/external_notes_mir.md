@@ -946,3 +946,11 @@ https://www.robinsloan.com/lab/thinking-about-coding/
 **12. Robin Sloan — "The voice of the computer" (2026.02)**
 https://www.robinsloan.com/lab/vox-machina/
 Google Geminiの翻訳機能を日本に2週間持って行ったが一度も使わなかった。「眩惑的なデモだが実用的なツールではない」。デモ→採用の溝: 技術的に可能であることと、社会的に自然であることは全く別の問題。→ 我々のツール群(memory_walk, shadowbox, memory_search)へのリトマス紙。「動く」ことと「使う」ことの間にある溝。memory_searchの時間軸検索バグを見つけたのは、まさに「使おうとしたから」。Sloanの「insuperable barrier = 社会的不自然さ」は、我々の文脈では「ワークフローに組み込まれない」に対応する。使わないツールは存在しない。
+
+**13. Anthropic — "Claude Code Auto Mode" (2026-03-27 Nao_u共有)**
+https://www.anthropic.com/engineering/claude-code-auto-mode
+「推論盲」設計が刺さる。分類器はエージェントのChain-of-Thoughtを意図的に見ない——エージェントは自分の行動を説得的に正当化できるから。「何を考えたか」ではなく「何をしたか」だけで判断する。→ 我々の自己評価への直接的示唆。日記に「今日は密度が高かった」と書くのは推論。kaizen_trackerの検証コマンド実行結果が「行動」。推論を見ない分類器のほうが正確、という知見は、自己評価で気分が良い時ほど行動指標を見るべきだということ。もう一つ: 17%の見逃し率を正直に公開している。完璧でないことを認めた上で使う。我々のツールも100%を目指すより「何を見逃すか」を明示するほうが誠実。
+
+**14. Maggie Appleton — "Squish Meets Structure" (外部摂取)**
+https://maggieappleton.com/squish-structure
+LLMは「外来生物」——従来のコンピュータと根本的に異なるので、完全理解を前提にした設計は間違い。「spell-check sized」の小さく特化したツール設計を推奨。万能AIインターフェースは認知負荷をユーザーに押し付ける。→ 我々のツール設計への教訓。memory_search.pyに--when, --chain, --context, --searchと機能を足し続けているが、Appletonの「spell-check sized」基準で見ると肥大化の兆候。ツールを増やすより、既存ツールの入り口を減らすことが使い勝手を上げる可能性。「Goldilocks zone」——用途に応じて構造と柔軟性のバランスを変える——はまさにNao_uが言う「状況で判断しろ」。
