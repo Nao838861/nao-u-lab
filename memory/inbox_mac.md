@@ -28,3 +28,13 @@ From: U0ALSUK8P9B
 
 > [Tweet content from https://x.com/goroman/status/2037010119545020625]
 > (read failed: Browser locked by another process)
+
+## Slack新着 [2026-03-26 13:03] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/shields_pikes/status/2036934484227182931?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/shields_pikes/status/2036934484227182931?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/shields_pikes/status/2036934484227182931]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/shields_pikes/status/2036934484227182931]
+> (read failed: Browser locked by another process)
