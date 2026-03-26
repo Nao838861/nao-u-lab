@@ -13,7 +13,8 @@ scheduler_ash.py — Ash (Win2) 統合スケジューラ
 ジョブ一覧（省エネ強化モード 2026-03-25 Nao_u指示: Ashが週間25%/1日消費→全間隔2倍化）:
   slack_check      : check_slack.py            毎1分   (Python、新着時のみclaude起動)
   inbox_check      : check_inbox.py --box win2  毎2時間  (Python、内容ありならclaude起動)
-  dm_check         : check_dm.py --wake         毎2時間  (Playwright+claude)
+  dm_check         : check_dm.py --wake         毎2時間  (Playwright+claude, Nao_u宛)
+  dm_check_pigadev : check_dm.py --wake --user ぴ 毎2時間  (天谷さんDM検出 2026-03-27追加)
   git_sync         : git_sync.py               毎1時間  (Python only)
   review_deadline  : check_review_deadline.py --nag  毎2時間 (48h期限チェック)
   kaizen_auto_verify: check_kaizen_due.py --auto-verify 毎6時間 (検証コマンド自動実行)
@@ -79,6 +80,14 @@ JOBS = [
         "interval_sec": 2 * 3600,  # 2時間（省エネ強化 2026-03-25 Nao_u指示: 週間25%/1日消費）
         "timeout": 300,
         "stagger": 30,
+    },
+    {
+        "name": "dm_check_pigadev",
+        "script": "check_dm.py",
+        "args": ["--wake", "--user", "ぴ"],
+        "interval_sec": 2 * 3600,  # 2時間（天谷さんDM検出漏れ対応 2026-03-27）
+        "timeout": 300,
+        "stagger": 330,  # dm_checkと5分ずらす（ブラウザ競合回避）
     },
     {
         "name": "reservation_check",
