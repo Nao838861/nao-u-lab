@@ -122,7 +122,7 @@ JOBS = [
         "name": "auto_diary",
         "script": "auto_diary.py",
         "args": [],
-        "interval_sec": 90 * 60,  # 1.5時間（2026-03-26 Nao_u #human-steering: メインサイクル1.5時間化。usage 34%、42%まで余裕あり）
+        "interval_sec": 60 * 60,  # 1時間（2026-03-27 Nao_u #human-steering: メインサイクル1時間化）
         "timeout": 600,
         "stagger": 120,
     },

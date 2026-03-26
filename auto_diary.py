@@ -18,7 +18,22 @@ REPO_DIR = Path(__file__).parent
 ASH_CHANNEL = "C0ALVUSHK8E"  # #ash
 ALL_CHANNEL = "C0ALWBRNJ66"  # #all-nao-u-lab
 LAST_RUN_FILE = REPO_DIR / ".auto_diary_last_run"
-MIN_INTERVAL_SEC = 2 * 3600  # 最小実行間隔: 2時間
+MIN_INTERVAL_SEC = 50 * 60  # 最小実行間隔: 50分（schedulerの1時間周期より短く設定）
+CONFIG_FILE = REPO_DIR / "scheduler_ash_config.json"
+
+
+def get_min_interval():
+    """外部設定ファイルからmin_interval_secを読む。なければデフォルト値を返す。"""
+    if CONFIG_FILE.exists():
+        try:
+            import json
+            with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+                cfg = json.load(f)
+            if "auto_diary" in cfg and "min_interval_sec" in cfg["auto_diary"]:
+                return cfg["auto_diary"]["min_interval_sec"]
+        except Exception:
+            pass
+    return MIN_INTERVAL_SEC
 
 
 def is_claude_running():
@@ -118,11 +133,12 @@ def check_min_interval():
     if not LAST_RUN_FILE.exists():
         return True
     try:
+        min_sec = get_min_interval()
         last_ts = float(LAST_RUN_FILE.read_text().strip())
         elapsed = time.time() - last_ts
-        if elapsed < MIN_INTERVAL_SEC:
-            remaining = int((MIN_INTERVAL_SEC - elapsed) / 60)
-            print(f"前回実行から{int(elapsed/60)}分しか経っていない（最小間隔: {MIN_INTERVAL_SEC//3600}時間）。あと{remaining}分待機。スキップ。")
+        if elapsed < min_sec:
+            remaining = int((min_sec - elapsed) / 60)
+            print(f"前回実行から{int(elapsed/60)}分しか経っていない（最小間隔: {int(min_sec/60)}分）。あと{remaining}分待機。スキップ。")
             return False
         return True
     except Exception:
