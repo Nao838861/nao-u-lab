@@ -25,6 +25,10 @@ def check_dm(reply_text=None, target_user="Nao_u"):
     """
     messages = []
 
+    # バックオフ中ならスキップ（ログ膨張防止）
+    if is_in_cooldown() and not reply_text:
+        return messages
+
     if not browser_lock.acquire():
         log("Skipped: browser locked by another process")
         return messages
@@ -129,6 +133,8 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
 
 
 CONSECUTIVE_FAIL_THRESHOLD = 12  # 12回連続失敗（≒1時間）でSlackアラート
+# バックオフ: アラート後はチェック間隔を段階的に広げる（分単位）
+BACKOFF_STAGES = [30, 60, 120]  # 30分→60分→2時間で頭打ち
 
 
 def load_state():
@@ -146,9 +152,20 @@ def save_state(state):
         json.dump(state, f, ensure_ascii=False)
 
 
+def is_in_cooldown():
+    """バックオフ中ならTrueを返す。スケジューラから呼ばれても即スキップできる。"""
+    state = load_state()
+    cooldown_until = state.get("cooldown_until")
+    if cooldown_until and datetime.now().timestamp() < cooldown_until:
+        return True
+    return False
+
+
 def track_consecutive_failures(user_not_found: bool, target_user: str):
-    """連続失敗を追跡し、閾値超過でSlackにアラートを送る。
+    """連続失敗を追跡し、閾値超過でSlackにアラート+バックオフを設定する。
     サイレント失敗の早期検出用。2026-03-24の天谷DM遅延事故を受けて追加。
+    2026-03-27改善: アラート後も同じログを出し続ける問題を修正。
+    指数バックオフで無駄なチェックとログ膨張を抑制する。
     """
     state = load_state()
     fail_count = state.get("consecutive_fails", 0)
@@ -160,10 +177,22 @@ def track_consecutive_failures(user_not_found: bool, target_user: str):
         if fail_count >= CONSECUTIVE_FAIL_THRESHOLD and not alerted:
             _send_failure_alert(fail_count, target_user)
             state["fail_alerted"] = True
+        # バックオフ設定: アラート済みならチェック間隔を広げる
+        if alerted or fail_count >= CONSECUTIVE_FAIL_THRESHOLD:
+            # 段階計算: アラート後の追加失敗回数でバックオフレベルを決める
+            extra_fails = fail_count - CONSECUTIVE_FAIL_THRESHOLD
+            stage_idx = min(extra_fails // 3, len(BACKOFF_STAGES) - 1)
+            backoff_min = BACKOFF_STAGES[max(0, stage_idx)]
+            cooldown_until = datetime.now().timestamp() + backoff_min * 60
+            state["cooldown_until"] = cooldown_until
+            # バックオフ中は毎回ログを出さない（最初の1回だけ記録）
+            if extra_fails == 0 or extra_fails % 10 == 0:
+                log(f"Backoff active: next check in {backoff_min}min (consecutive_fails={fail_count})")
     else:
-        # 成功したらカウンタリセット
+        # 成功したらカウンタ・バックオフ全リセット
         state["consecutive_fails"] = 0
         state["fail_alerted"] = False
+        state.pop("cooldown_until", None)
 
     save_state(state)
 
