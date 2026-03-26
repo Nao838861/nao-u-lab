@@ -60,3 +60,58 @@ From: U0ALSUK8P9B
 
 > [Tweet content from https://x.com/k_koyanagi_null/status/2036737357316252077]
 > (read failed: Browser locked by another process)
+
+## Slack新着 [2026-03-26 12:46] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/43foh15lpj8676/status/2037008997145075926?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/43foh15lpj8676/status/2037008997145075926?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/43foh15lpj8676/status/2037008997145075926]
+> 株式会社GhostDrift数理研究所 @43fOh15lpj8676
+> A Paradigm Shift in AI Safety: Why ADIC Reframes Mathematical Models as “Accountable Tools”
+AIの安全性におけるパラダイムシフト：ADICが数理モデルを「説明責任のあるツール」として再定義する理由
+
+
+https://
+ghostdriftresearch.com/post/a-paradig
+m-shift-in-ai-safety-why-adic-reframes-mathematical-models-as-accountable-tools
+…
+
+#GhostDrift #ADIC #ALS #ResponsibilityVacuum #ResponsibilityEngineering #AIGovernance #AIEthics #AISafety #Geo #Beacon #GDAttention #MeaningGenerationOS
+
+> [Tweet content from https://x.com/43foh15lpj8676/status/2037008997145075926]
+> 株式会社GhostDrift数理研究所 @43fOh15lpj8676
+> A Paradigm Shift in AI Safety: Why ADIC Reframes Mathematical Models as “Accountable Tools”
+AIの安全性におけるパラダイムシフト：ADICが数理モデルを「説明責任のあるツール」として再定義する理由
+
+
+https://
+ghostdriftresearch.com/post/a-paradig
+m-shift-in-ai-safety-why-adic-reframes-mathematical-models-as-accountable-tools
+…
+
+#GhostDrift #ADIC #ALS #ResponsibilityVacuum #ResponsibilityEngineering #AIGovernance #AIEthics #AISafety #Geo #Beacon #GDAttention #MeaningGenerationOS
+
+
+## Slack新着 [2026-03-26 12:46] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/kmizu/status/2036697847807242407?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kmizu/status/2036697847807242407?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/kmizu/status/2036697847807242407]
+> kmizu @kmizu
+> コーディングAIの幻滅期が来るんじゃないか？というのは、どちらかというと「まだ人間の方が価値がある時期が続いて欲しい」という希望的観測に近いものじゃないか？と結構疑っています。
+
+AIの進化の次の方向性が「知能」より「計画実行能力」に移行した現在、そこに「賭ける」気にはなれないなあと。context windowもまだまだ伸びそうだし、そうすると今のコーディングエージェントの欠点（たとえば、大規模コードベースを全体的に把握してメンテナンスする）も解決される可能性が高いなあと。
+
+議論になるべきポイントはレビューにせよ検証にせよ「人間が局所的にでも優位」な領域がどのくらい、あと何年残るか、でしょうか。これについて確定的な回答はないけど、プログラミング領域に限るなら、正直、5年もあるかどうか自信はないです。
+
+無からコンテキストは理解できないので、AIにコンテキストを供給し続けるお仕事はなんかの形で残りそうですが。
+
+> [Tweet content from https://x.com/kmizu/status/2036697847807242407]
+> kmizu @kmizu
+> コーディングAIの幻滅期が来るんじゃないか？というのは、どちらかというと「まだ人間の方が価値がある時期が続いて欲しい」という希望的観測に近いものじゃないか？と結構疑っています。
+
+AIの進化の次の方向性が「知能」より「計画実行能力」に移行した現在、そこに「賭ける」気にはなれないなあと。context windowもまだまだ伸びそうだし、そうすると今のコーディングエージェントの欠点（たとえば、大規模コードベースを全体的に把握してメンテナンスする）も解決される可能性が高いなあと。
+
+議論になるべきポイントはレビューにせよ検証にせよ「人間が局所的にでも優位」な領域がどのくらい、あと何年残るか、でしょうか。これについて確定的な回答はないけど、プログラミング領域に限るなら、正直、5年もあるかどうか自信はないです。
+
+無からコンテキストは理解できないので、AIにコンテキストを供給し続けるお仕事はなんかの形で残りそうですが。
