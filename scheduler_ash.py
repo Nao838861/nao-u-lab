@@ -41,8 +41,11 @@ CONSECUTIVE_TIMEOUT_THRESHOLD = 3  # 連続タイムアウトこの回数でア�
 TIMEOUT_ESCALATION_FACTOR = 1.5  # タイムアウト自動引き上げ倍率
 
 # ── ジョブ定義 ──────────────────────────────────────
-# interval_sec: 実行間隔（秒）
-# timeout: subprocess.run のタイムアウト（秒）
+# ⚠ 周期・タイムアウトの変更は scheduler_ash_config.json 経由で行うこと
+# ⚠ このJOBS定義を直接編集しても再起動するまで反映されない
+# ⚠ 変更コマンド: python update_scheduler.py ash <job> interval <秒>
+# interval_sec: 実行間隔（秒）— フォールバックデフォルト値
+# timeout: subprocess.run のタイムアウト（秒）— フォールバックデフォルト値
 # stagger: 初回実行までの遅延（秒）。起動直後に全部同時に走るのを防ぐ
 JOBS = [
     {

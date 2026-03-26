@@ -159,30 +159,26 @@ check_slack.pyのイベント駆動モデルが有効に機能している。残
 
 ## 設定変更の手順（2026-03-27 二重ガード問題を受けて整備）
 
-### Ash (Win2) の周期変更
-**変更箇所は `scheduler_ash_config.json` の1ファイルのみ。**
+**全マシン共通: `python update_scheduler.py` を使うこと。.pyファイルのJOBS定義を直接編集しない。**
 
-scheduler_ash.pyとauto_diary.pyの両方がこのファイルを読む（`load_config_overrides()` / `get_min_interval()`）。
-ハードコード値より外部設定が優先されるため、設定ファイルを変えれば両方に反映される。
+JSON設定ファイルを更新するだけなので再起動不要。次のサイクルで即反映される。
+auto_diary/auto_cycleの間隔変更時はmin_interval_secも自動調整される（二重ガード問題を防止）。
 
-例: メインサイクルを90分にする場合
-```json
-{
-  "auto_diary": {
-    "interval_sec": 5400,
-    "min_interval_sec": 4500,
-    "timeout": 600
-  }
-}
+```bash
+# 周期変更
+python update_scheduler.py ash auto_diary interval 3600
+python update_scheduler.py log auto_cycle interval 3600
+
+# タイムアウト変更
+python update_scheduler.py ash inbox_check timeout 900
+
+# 現在の設定確認
+python update_scheduler.py --show ash
+python update_scheduler.py --show log
 ```
 
-注意: `min_interval_sec` は `interval_sec` より短く設定すること（auto_diary.pyのスキップ防止ガード）。
-
-### Mir (Win) の周期変更
+### Mir (Mac) の周期変更
 `memory/mir_boot_intent.md` の「サイクル間隔」値を変更する。
-
-### Log (Mac) の周期変更
-`memory/mir_boot_intent.md` のサイクル間隔 + LaunchAgentのplist設定。
 
 ## コンテキスト自己診断（2026-03-20 Nao_uの指示）
 

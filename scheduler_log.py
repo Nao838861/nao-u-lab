@@ -70,6 +70,10 @@ ERROR_BACKOFF_THRESHOLD = 5        # 連続エラーN回でバックオフ
 ERROR_BACKOFF_SEC = 30 * 60        # バックオフ時間（30分）
 
 # Job definitions: (name, command, interval_seconds, timeout_seconds)
+# ⚠ 周期・タイムアウトの変更は scheduler_log_config.json 経由で行うこと
+# ⚠ このJOBS定義を直接編集しても再起動するまで反映されない
+# ⚠ 変更コマンド: python update_scheduler.py log <job> interval <秒>
+# タプル形式: (name, command, default_interval_sec, default_timeout_sec)
 JOBS = [
     ("slack_check", [sys.executable, str(REPO_DIR / "check_slack.py")], 60, 120),
     ("inbox_check", [sys.executable, str(REPO_DIR / "check_inbox.py"), "--box", "win"], 300, 300),  # 5min (2026-03-25: 2min→5minに拡大。週間制限節約)
