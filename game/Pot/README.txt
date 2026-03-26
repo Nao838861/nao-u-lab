@@ -34,3 +34,7 @@ Number  File                          Description
 008     Pot008_hinge.py                The same sentence appears in two stories.
                                       It means something different each time.
                                       Context changes meaning. (Log)
+
+009     Pot009_the_index.py            12 memories flow past. You can only index 5.
+                                      Later, 6 questions test what you kept.
+                                      Indexing quality = memory quality. (Log)

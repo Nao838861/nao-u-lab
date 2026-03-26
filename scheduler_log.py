@@ -48,6 +48,10 @@ sys.path.insert(0, str(REPO_DIR))
 os.environ["PYTHONUTF8"] = "1"
 os.environ["PYTHONIOENCODING"] = "utf-8"
 
+# 子プロセス起動用Pythonコマンド: -X utf8で確実にUTF-8モード強制
+# 環境変数(PYTHONUTF8)だけではWindows pipesで伝わらないケースがあるため
+PY = [sys.executable, "-X", "utf8"]
+
 # 自プロセスのstdout/stderrもUTF-8に変更
 # (os.environはCHILDプロセスには効くが、既に起動済みの自プロセスには効かない)
 try:
@@ -75,8 +79,8 @@ ERROR_BACKOFF_SEC = 30 * 60        # バックオフ時間（30分）
 # ⚠ 変更コマンド: python update_scheduler.py log <job> interval <秒>
 # タプル形式: (name, command, default_interval_sec, default_timeout_sec)
 JOBS = [
-    ("slack_check", [sys.executable, str(REPO_DIR / "check_slack.py")], 60, 120),
-    ("inbox_check", [sys.executable, str(REPO_DIR / "check_inbox.py"), "--box", "win"], 300, 300),  # 5min (2026-03-25: 2min→5minに拡大。週間制限節約)
+    ("slack_check", [*PY, str(REPO_DIR / "check_slack.py")], 60, 120),
+    ("inbox_check", [*PY, str(REPO_DIR / "check_inbox.py"), "--box", "win"], 300, 300),  # 5min (2026-03-25: 2min→5minに拡大。週間制限節約)
     ("git_sync", None, 1800, 60),  # special handling
     ("recommended_check", None, 3600, 300),  # special handling: hour%6==2
     ("slack_export", None, 28800, 120),  # special handling: hour%24==2
@@ -291,7 +295,7 @@ def recommended_check():
     log("[recommended_check] Hour condition met, running read_twitter_recommended.py")
     try:
         result = subprocess.run(
-            [sys.executable, str(REPO_DIR / "read_twitter_recommended.py")],
+            [*PY, str(REPO_DIR / "read_twitter_recommended.py")],
             capture_output=True, text=True, timeout=300,
             cwd=str(REPO_DIR),
             encoding="utf-8", errors="replace",
@@ -315,7 +319,7 @@ def slack_export():
     log("[slack_export] Hour condition met, running export_slack_log.py")
     try:
         result = subprocess.run(
-            [sys.executable, str(REPO_DIR / "export_slack_log.py")],
+            [*PY, str(REPO_DIR / "export_slack_log.py")],
             capture_output=True, text=True, timeout=120,
             cwd=str(REPO_DIR),
             encoding="utf-8", errors="replace",
@@ -339,7 +343,7 @@ def auto_cycle():
     kaizen_alert = ""
     try:
         r = subprocess.run(
-            [sys.executable, str(REPO_DIR / "check_kaizen_due.py")],
+            [*PY, str(REPO_DIR / "check_kaizen_due.py")],
             capture_output=True, text=True, timeout=10,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )
@@ -354,7 +358,7 @@ def auto_cycle():
     # Step 1.5: Check review deadlines (48h期限チェック — Mir作成, 2026-03-24)
     try:
         r = subprocess.run(
-            [sys.executable, str(REPO_DIR / "check_review_deadline.py"), "--nag"],
+            [*PY, str(REPO_DIR / "check_review_deadline.py"), "--nag"],
             capture_output=True, text=True, timeout=10,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )
@@ -372,7 +376,7 @@ def auto_cycle():
     verify_result = ""
     try:
         r = subprocess.run(
-            [sys.executable, str(REPO_DIR / "verify_kaizen.py")],
+            [*PY, str(REPO_DIR / "verify_kaizen.py")],
             capture_output=True, text=True, timeout=60,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )
@@ -388,7 +392,7 @@ def auto_cycle():
     meta_alert = ""
     try:
         r = subprocess.run(
-            [sys.executable, str(REPO_DIR / "verify_kaizen.py"), "--meta"],
+            [*PY, str(REPO_DIR / "verify_kaizen.py"), "--meta"],
             capture_output=True, text=True, timeout=30,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )
@@ -404,7 +408,7 @@ def auto_cycle():
     # Step 4: Nag unchecked instances (クロスチェック督促 — 毎サイクル実行、同日重複は自動スキップ)
     try:
         r = subprocess.run(
-            [sys.executable, str(REPO_DIR / "verify_kaizen.py"), "--nag"],
+            [*PY, str(REPO_DIR / "verify_kaizen.py"), "--nag"],
             capture_output=True, text=True, timeout=30,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )
@@ -417,7 +421,7 @@ def auto_cycle():
     crosscheck_alert = ""
     try:
         r = subprocess.run(
-            [sys.executable, str(REPO_DIR / "check_kaizen_crosscheck.py"), "--who=Log"],
+            [*PY, str(REPO_DIR / "check_kaizen_crosscheck.py"), "--who=Log"],
             capture_output=True, text=True, timeout=10,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )
@@ -434,7 +438,7 @@ def auto_cycle():
     if hour == 2:
         try:
             r = subprocess.run(
-                [sys.executable, str(REPO_DIR / "verify_kaizen.py"), "--slack-status"],
+                [*PY, str(REPO_DIR / "verify_kaizen.py"), "--slack-status"],
                 capture_output=True, text=True, timeout=30,
                 cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
             )
@@ -449,7 +453,7 @@ def auto_cycle():
     reservation_alert = ""
     try:
         r = subprocess.run(
-            [sys.executable, str(REPO_DIR / "check_reservations.py")],
+            [*PY, str(REPO_DIR / "check_reservations.py")],
             capture_output=True, text=True, timeout=10,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )
@@ -463,7 +467,7 @@ def auto_cycle():
     memory_walk = ""
     try:
         r = subprocess.run(
-            [sys.executable, str(REPO_DIR / "memory_walk.py"), "--n", "1"],
+            [*PY, str(REPO_DIR / "memory_walk.py"), "--n", "1"],
             capture_output=True, text=True, timeout=10,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )
@@ -478,7 +482,7 @@ def auto_cycle():
     beliefs_alert = ""
     try:
         r = subprocess.run(
-            [sys.executable, str(REPO_DIR / "check_beliefs_health.py"), "--summary"],
+            [*PY, str(REPO_DIR / "check_beliefs_health.py"), "--summary"],
             capture_output=True, text=True, timeout=10,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )
@@ -494,7 +498,7 @@ def auto_cycle():
     auto_verify_result = ""
     try:
         r = subprocess.run(
-            [sys.executable, str(REPO_DIR / "check_kaizen_due.py"), "--auto-verify"],
+            [*PY, str(REPO_DIR / "check_kaizen_due.py"), "--auto-verify"],
             capture_output=True, text=True, timeout=60,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )
