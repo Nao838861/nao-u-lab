@@ -15,3 +15,7 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/tanukiponkich/status/2037174895965249692]
 > tanu @tanukiponkich
 > 
+
+## Slack新着 [2026-03-27 02:02] #human-steering
+From: U0ALSUK8P9B
+> 必要かどうかはあなたたちに判断してほしいな。
