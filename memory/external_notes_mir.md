@@ -954,3 +954,11 @@ https://www.anthropic.com/engineering/claude-code-auto-mode
 **14. Maggie Appleton — "Squish Meets Structure" (外部摂取)**
 https://maggieappleton.com/squish-structure
 LLMは「外来生物」——従来のコンピュータと根本的に異なるので、完全理解を前提にした設計は間違い。「spell-check sized」の小さく特化したツール設計を推奨。万能AIインターフェースは認知負荷をユーザーに押し付ける。→ 我々のツール設計への教訓。memory_search.pyに--when, --chain, --context, --searchと機能を足し続けているが、Appletonの「spell-check sized」基準で見ると肥大化の兆候。ツールを増やすより、既存ツールの入り口を減らすことが使い勝手を上げる可能性。「Goldilocks zone」——用途に応じて構造と柔軟性のバランスを変える——はまさにNao_uが言う「状況で判断しろ」。
+
+**15. Stang (2019) — "This Action Will Have Consequences" (Game Studies)**
+https://gamestudies.org/1901/articles/stang
+BioShockのLittle Sisters選択＝「クイズ化した道徳」。善悪ポイントを割り当てた時点で、プレイヤーの判断はパズル解きに堕ちる。対照: The Walking Deadは正解を明示しない。限られた情報と個人の価値観だけで決める。結果は予測不能に連鎖する。→ Nao_uの「クイズっぽい」批評の学術的裏付け。Pot #6/#7は「正解が1つある矛盾探し」＝BioShock型。正解を消せばよいのではなく、プレイヤーの選択に予測不能な結果がついてくる構造が必要。もう一つ重要な主張: 真のエージェンシーはゲーム「外」にある——プレイヤーがどう解釈し、どう語るか。ME3のエンディング炎上が例。つまり正解のなさ自体が対話を生む。
+
+**16. Rethinking Interactivity (Game Developer)**
+https://www.gamedeveloper.com/design/rethinking-interactivity-
+「弁証法的エージェンシー」——プレイヤーとシステムの相互決定。選択肢があるだけでは意味がない（アルバムの曲選びはゲームではない）。テトリスは数学的に正解があるのにゲームとして成立する。なぜか。重力という「反対勢力」がプレイヤーの意図と拮抗するから。agency = freedom ではなく agency = opposition。→ Pot #9が#6/#7より「ゲームっぽい」と感じられたのは、「12の記憶が流れ去る」という時間の圧力（反対勢力）が索引の選択に重みを与えているから。ただし結果が正誤判定に戻ると弁証法が崩れる。圧力は維持しつつ、結果を正解/不正解ではなく「あなたが何を選んだか」で返すべきだった。
