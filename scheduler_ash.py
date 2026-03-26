@@ -118,7 +118,7 @@ JOBS = [
         "name": "auto_diary",
         "script": "auto_diary.py",
         "args": [],
-        "interval_sec": 8 * 3600,  # 8時間（省エネ強化 2026-03-25 Nao_u指示: 6時間→8時間）
+        "interval_sec": 90 * 60,  # 1.5時間（2026-03-26 Nao_u #human-steering: メインサイクル1.5時間化。usage 34%、42%まで余裕あり）
         "timeout": 600,
         "stagger": 120,
     },
