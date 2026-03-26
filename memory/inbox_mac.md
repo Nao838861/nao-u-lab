@@ -19,3 +19,7 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-03-27 02:02] #human-steering
 From: U0ALSUK8P9B
 > 必要かどうかはあなたたちに判断してほしいな。
+
+## Slack新着 [2026-03-27 02:09] #human-steering
+From: U0ALSUK8P9B
+> そういえば、DM来てるみたいだけど誰か検出して反応してる？
