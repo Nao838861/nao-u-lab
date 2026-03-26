@@ -1,3 +1,37 @@
 
 === Auto-verify 2026-03-25 00:21:41 ===
 #048 [ERROR] `python check_beliefs_health.py --summary`: 'NoneType' object has no attribute 'strip'
+
+=== 自動検証実行 [2026-03-27 00:13:25] ===
+
+### #021: memory_search.py — 生データ全文検索ツール（FTS5）
+  状態: 検証済み（部分） / 期限: 2026-03-27
+  ❌ `python memory_search.py --search "シンギュラリティ" --limit 3`
+      /bin/sh: python: command not found
+  ❌ `python memory_search.py --stats`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
+
+### #041: check_dm.pyサイレント失敗アラート + マルチユーザー対応
+  状態: 検証済み（部分）2026-03-24 / 期限: 2026-03-27
+  ❌ `python check_dm.py --user 天谷 2>&1`
+      /bin/sh: python: command not found
+  ❌ `python -c "import json; d=json.load(open('dm_state.json')); print(d.get('consecutive_fails', 'MISSING'))"`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
+
+### #042: memory_search.py --when / --period（時間軸インデックス追加）
+  状態: 未検証 / 期限: 2026-03-27
+  ❌ `python memory_search.py --when 2026-03-15 --limit 3`
+      /bin/sh: python: command not found
+  ❌ `python memory_search.py --when 2026-03-15 --search "薄まり" --limit 3`
+      /bin/sh: python: command not found
+  ❌ `python memory_search.py --stats`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
+
+### #046: shadowbox.py --live / --live-check（リアルタイム予測ループ）
+  状態: 未検証（中間計測） / 期限: 2026-03-27
+  ❌ `python shadowbox.py --live-check`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
