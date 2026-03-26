@@ -8,6 +8,30 @@ cd "$(dirname "$0")"
 # cron環境ではPATHが最小限なのでnode/npmのパスを追加
 export PATH="/Users/Nao_u/.nvm/versions/node/v22.17.0/bin:/usr/local/bin:/opt/homebrew/bin:$PATH"
 
+# ロックファイルで二重起動を防止（check_slack.pyからの即時起動と共有）
+LOCKFILE="/tmp/nao-u-lab-claude.lock"
+
+# ロックの取得を試みる（mkdirはアトミック）
+if ! mkdir "$LOCKFILE" 2>/dev/null; then
+    # ロックが古い場合（10分超）は強制解除
+    if [ -f "$LOCKFILE/pid" ]; then
+        LOCK_AGE=$(( $(date +%s) - $(stat -f %m "$LOCKFILE/pid" 2>/dev/null || echo 0) ))
+        if [ "$LOCK_AGE" -gt 600 ]; then
+            echo "$(date): Stale lock detected (${LOCK_AGE}s). Removing."
+            rm -rf "$LOCKFILE"
+            mkdir "$LOCKFILE" 2>/dev/null || { echo "$(date): Still locked. Skipping."; exit 0; }
+        else
+            echo "$(date): Another instance running (${LOCK_AGE}s). Skipping."
+            exit 0
+        fi
+    else
+        rm -rf "$LOCKFILE"
+        mkdir "$LOCKFILE" 2>/dev/null || exit 0
+    fi
+fi
+echo $$ > "$LOCKFILE/pid"
+trap 'rm -rf "$LOCKFILE"' EXIT
+
 # ローカル変更をコミットしてからpull（stashはコンフリクトの原因になるため廃止）
 git add memory/ log/ CLAUDE.md 2>/dev/null
 git diff --cached --quiet || git commit -m "Auto sync before pull" >/dev/null 2>&1

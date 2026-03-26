@@ -168,8 +168,10 @@ def main():
 
     print(f"[{datetime.now():%H:%M:%S}] {len(new_messages)} msg(s) -> {inbox.name}")
 
-    # check_inbox.py がinboxを検出してClaude CLIを起動する。
-    # ここでwake_claudeを呼ぶと二重起動になるため削除（2026-03-22修正）。
+    # 即時起動: inboxに書き込んだらcheck_inbox.shを呼んで即座にClaude CLIを起動する
+    # ロックファイル(/tmp/nao-u-lab-claude.lock)で二重起動を防止（2026-03-26 Nao_uの指示: Slack 1分応答）
+    if platform.system() == "Darwin":
+        trigger_check_inbox()
     return 0
 
 
@@ -196,6 +198,25 @@ def expand_tweet_urls(text):
             results.append({"url": url, "text": f"(error: {e})"})
 
     return results
+
+
+def trigger_check_inbox():
+    """新着メッセージ検出時にcheck_inbox.shを即時起動する。
+    check_inbox.sh内のロックで二重起動は防止される。"""
+    script = REPO_DIR / "check_inbox.sh"
+    if not script.exists():
+        print(f"[{datetime.now():%H:%M:%S}] check_inbox.sh not found")
+        return
+    try:
+        subprocess.Popen(
+            ["/bin/bash", str(script)],
+            cwd=str(REPO_DIR),
+            stdout=open("/tmp/check_inbox_triggered.log", "a"),
+            stderr=subprocess.STDOUT,
+        )
+        print(f"[{datetime.now():%H:%M:%S}] Triggered check_inbox.sh")
+    except Exception as e:
+        print(f"[{datetime.now():%H:%M:%S}] Failed to trigger: {e}")
 
 
 def wake_claude(messages):

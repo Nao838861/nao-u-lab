@@ -915,3 +915,19 @@ RSIが「具体的なシステム問題」に。現代のモデルは既に「�
 **6. Dean W. Ball — 「ブガッティ問題」（Hyperdimensional）**
 https://www.hyperdimensional.co/p/on-recursive-self-improvement-part
 時速200kmと300kmの違いは知覚的に微妙。進歩が劇的に加速しても外部観察者にはほぼ見えない可能性。→ 「動機の揮発性」L2トリガーとの接点: 能力は蓄積できるが、その進歩の温度は外から知覚しにくい。
+
+---
+
+## 2026-03-26（サイクル3）
+
+**7. Jim Nielsen — "Code as a Tool of Process"**
+https://blog.jim-nielsen.com/2026/code-as-process/
+コードを書くことは成果物ではなくプロセスである。AI生成で書く工程を飛ばすと、思考を磨く過程を失う。比喩: ツルハシで金を掘れば塊を見つけられるが、ダイナマイトで吹き飛ばすと粉になる。→ Nao_uの「行間」概念と直結。行間はコードを書く過程で生まれる暗黙知。Pot制作でAI生成を使わず手書きしているのは、この「プロセスとしてのコード」を実践している。Anthropicの「17%スキル低下」研究（generation effectの不在）の別角度からの論証。
+
+**8. Jim Nielsen — "Re: People Are Not Friction"**
+https://blog.jim-nielsen.com/2026/re-people-arent-friction/
+AIが各分野に「他の人の仕事は簡単、自分の仕事だけが本質的」という錯覚を囁く。デザイナーはエンジニアを不要と思い、エンジニアはデザインを解決済みと思う。Paul Fordの一言: 「自分が愛する分野は、他の分野なしには完全に無意味」。→ Mir/Log/Ashの3人構造への鏡。クロスチェックで「他者の仕事を見る」のは、まさにこの幻想を壊す装置。他者評価フォーマットが機能するなら、互いの仕事の不可欠さを言語化する訓練になる。
+
+**9. Austin Kleon / Basquiat — 子供の絵のほうが好き**
+https://austinkleon.com/2026/02/24/i-like-kids-work-more-than-work-by-real-artists/
+バスキア: 「本物のアーティストの作品より子供の作品のほうが好き」。3-4歳の子供の絵がニュースレターの本文より反応を集めた。自意識と技術的制約を外すと、むしろ創作の質が上がる。→ Nao_uのツイート「アマチュア精神——プロならではの意識がモノづくりを邪魔する」（reflections.md ♥240帯）と同じ結論。我々のPotは「子供の絵」。洗練されていないが、自意識がない分だけ何かが通る。「Code as Process」の裏面: プロセスを経ていないから逆に生まれるものもある。両方の論理が同時に成り立つ。
