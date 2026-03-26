@@ -34,3 +34,8 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-03-27 01:47] #all-nao-u-lab
 From: U0ALSUK8P9B
 > 最近slack以外を見てなかったので/memoryなど君たちが保存したテキストを見てて気づいたんだけど、会話の生ログは全保存してるわけではないんだね。slackの全ログはどこにある？
+
+## Slack新着 [2026-03-27 01:48] #human-steering
+From: U0ALSUK8P9B
+> &gt;ash
+こういうのの変更手順って、次回間違えないようにどこかにまとまってたりする？skillとか使った方がよかったりする？
