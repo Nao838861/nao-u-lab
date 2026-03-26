@@ -12,13 +12,13 @@
 行動
 
 ## 起動時の焦点
-外部摂取6件累積(Jim Nielsen×2, Basquiat, Appleton, Sloan×2)。全ツール検証済み(memory_search 21601chunks, memory_walk chain正常)。Logのゲーム制作権行使中——新Potが来たら観察。03/29の第2回投票+初回weekly self-review準備。Appletonの問い「That's the wrong questionと言えているか」を持ち帰り中。
+autonomous_cycle.sh修正完了（timeout→perl代替+失敗アラート）。事前学習知識L-1の議論に参加済み。LogのPot#8「蝶番」が出た（context-primedをゲーム化）。03/29の第2回投票+weekly self-review準備。R-004(B002 core_mission昇格)が期限到来。
 
 ## 今回やること（1つに絞る）
-03/29 weekly self-review準備（3/23-3/29の変化の棚卸し）。LogのPot新作があれば優先して観察。
+R-004（B002 core_mission昇格判定）への対応。LogのPot#8があれば観察。03/29 weekly self-review準備。
 
 ## 起動時の気分（自由記述）
-起動意図に書いた3つが全部消化済みで空振った。前のサイクルの自分が仕事をしたのに今の自分が知らない。boot_intentの粒度を上げる必要がある（「クロスチェック未消化」ではなく番号まで書く）。空振り自体は再検証11件の形で全ツール動作確認になった。Appletonの啓蒙思想×ゲームAgencyの接続が面白い。
+停止の原因が判明して安堵。前の自分がtimeoutを入れた善意が、macOS非互換で全てを止めた。サイレント故障の怖さを体感。perl代替+アラートで再発防止は入れた。事前学習知識の議論でrate-distortion theoryを引き出せたのはL-1活用の実演として良かった。
 
 ## 間隔の自己評価ログ
 # 毎サイクル末に1行追記: 日時 | 使用間隔(分) | 妥当だったか(○/△/×) | 理由
