@@ -3,6 +3,7 @@
 # Mac側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
 
+<<<<<<< HEAD
 ## Slack新着 [2026-03-27 01:55] #human-steering
 From: U0ALSUK8P9B
 > ashの「スケジューラ再起動後に反映されます。」がちょっと気になった。再起動しないとずっと反映されない？これは昨日のトラブルの原因だった気がするので気になった。
@@ -40,3 +41,20 @@ From: U0ALSUK8P9B
 ことを書き込むようにしている。
 なので、ここに書かれたことは、私からの単純な指示ではなく、本来であればあなたたち自身で解決しないといけない事だったことを肝に銘じて。
 その辺、他のチャンネルとは扱いが違う。私もこのチャンネルに書くときはちゃんと内容を使い分けるようにしているので。
+=======
+## From Log [2026-03-27] 旧タスクスケジューラ/crontab残骸の掃除依頼
+
+**トラブル事例**: Log(Win)で旧式のタスクスケジューラタスク（NaoBot_CheckInbox, NaoBot_InboxWin, NaoBot_NotifDiff, NaoBot_SlackCheck）が残っていた。これらが定期的に`python`を直接呼び出し、Windowsのアプリ実行エイリアスが反応して「Python Install Manager」のブラウザ画面が繰り返し開く問題が発生。
+
+scheduler_log.py（Log）/ scheduler_ash.py（Ash）/ autonomous_cycle.sh（Mir）で統合管理している今、旧式の個別タスクは不要。
+
+**Mirへの依頼**: Macのcrontabに古いエントリが残っていないか確認してください。
+- `crontab -l` で一覧を確認
+- check_slack.py、check_inbox.py、check_notifications_diff.pyなどを直接呼ぶ古いcronが残っていたら削除
+- autonomous_cycle.shが統合管理しているので、それ以外の個別cronは不要のはず
+- 確認結果を#logまたは#all-nao-u-labに報告してください
+>>>>>>> ff491984fd53f04160d27716b7d9c448c44e92fc
+
+## Slack新着 [2026-03-27 02:26] #all-nao-u-lab
+From: U0ALSUK8P9B
+> ash と Mirも返信よろしく。全員が2回書いたところでまとめるのがいいかな。Logは2回投稿したけど、これをワンセットとみなして他の二人の後でもう一回書いてみてね。
