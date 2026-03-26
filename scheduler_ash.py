@@ -211,18 +211,18 @@ def run_git_pull():
 
 
 def run_job(job):
-    """1つのジョブを実行"""
+    """1つのジョブを実行。戻り値はsubprocessのreturncode（特殊ジョブは0）。"""
     name = job["name"]
 
     # git_pull は特殊処理
     if name == "git_pull":
         run_git_pull()
-        return
+        return 0
 
     script_path = REPO_DIR / job["script"]
     if not script_path.exists():
         logging.warning(f"[{name}] Script not found: {job['script']}")
-        return
+        return -1
 
     cmd = [sys.executable, str(script_path)] + job["args"]
 
@@ -247,10 +247,13 @@ def run_job(job):
             if stderr:
                 logging.warning(f"[{name}] ERR: {stderr[:300]}")
         logging.info(f"[{name}] Done (exit={result.returncode})")
+        return result.returncode
     except subprocess.TimeoutExpired:
         logging.warning(f"[{name}] Timeout ({job['timeout']}s)")
+        return -1
     except Exception as e:
         logging.error(f"[{name}] Error: {e}")
+        return -1
 
 
 def main():
@@ -296,9 +299,15 @@ def main():
                         # 条件不一致 → 6時間後に再チェック
                         next_run[name] = time.time() + 6 * 3600
                         continue
-                    run_job(job)
+                    rc = run_job(job)
                     # 次回実行時刻を設定（実行完了時刻基準）
                     next_run[name] = time.time() + job["interval_sec"]
+
+                    # Slack即時応答: slack_checkが新着検出(rc=0)ならinbox_checkを即時トリガー
+                    # (2026-03-26 Nao_uの指示: Slack 1分監視→inbox処理のラグをなくす)
+                    if name == "slack_check" and rc == 0:
+                        logging.info("[slack_check] New messages detected -> triggering inbox_check immediately")
+                        next_run["inbox_check"] = 0  # 次のループで即実行
 
             # 10秒ごとにチェック（CPU負荷ほぼゼロ）
             time.sleep(10)
