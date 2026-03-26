@@ -202,11 +202,15 @@ def remove_pid():
         pass
 
 
-# ── 連続タイムアウト追跡 ──────────────────────────────────
+# ── 連続タイムアウト/エラー追跡 ──────────────────────────────────
 # job_name -> 連続タイムアウト回数
 timeout_counter = {}
 # job_name -> 動的に引き上げられたタイムアウト値（Noneなら元の値を使用）
 timeout_override = {}
+# job_name -> 連続エラー（非タイムアウト）回数
+error_counter = {}
+CONSECUTIVE_ERROR_THRESHOLD = 5  # 連続エラーこの回数で間隔を一時的に延長
+ERROR_BACKOFF_SEC = 30 * 60  # エラー連続時の延長間隔（30分）
 
 
 def alert_consecutive_timeout(job_name, count, new_timeout):
@@ -222,6 +226,21 @@ def alert_consecutive_timeout(job_name, count, new_timeout):
         logging.info(f"[ALERT] Sent timeout alert for {job_name}")
     except Exception as e:
         logging.warning(f"[ALERT] Failed to send timeout alert: {e}")
+
+
+def alert_consecutive_errors(job_name, count):
+    """連続エラー時にSlackアラートを投稿"""
+    try:
+        import slack_bot
+        msg = (
+            f"⚠️ [{job_name}] が{count}回連続エラー（非タイムアウト）。"
+            f"次回実行を{ERROR_BACKOFF_SEC // 60}分延長しました。"
+            f"スケジューラは稼働継続中です。"
+        )
+        slack_bot.post_message("all-nao-u-lab", msg)
+        logging.info(f"[ALERT] Sent error alert for {job_name}")
+    except Exception as e:
+        logging.warning(f"[ALERT] Failed to send error alert: {e}")
 
 
 def load_config_overrides():
@@ -311,8 +330,20 @@ def run_job(job):
             if stderr:
                 logging.warning(f"[{name}] ERR: {stderr[:300]}")
         logging.info(f"[{name}] Done (exit={result.returncode})")
-        # 成功時は連続タイムアウトカウンタをリセット
+        # 成功時は連続カウンタをリセット
         timeout_counter[name] = 0
+        if result.returncode == 0:
+            error_counter[name] = 0
+        else:
+            # 非ゼロ終了コード: 連続エラー追跡
+            error_counter[name] = error_counter.get(name, 0) + 1
+            ecount = error_counter[name]
+            if ecount >= CONSECUTIVE_ERROR_THRESHOLD:
+                logging.warning(
+                    f"[{name}] {ecount} consecutive non-zero exits! "
+                    f"Backing off {ERROR_BACKOFF_SEC // 60}min"
+                )
+                alert_consecutive_errors(name, ecount)
         return result.returncode
     except subprocess.TimeoutExpired:
         logging.warning(f"[{name}] Timeout ({effective_timeout}s)")
@@ -330,6 +361,12 @@ def run_job(job):
         return -1
     except Exception as e:
         logging.error(f"[{name}] Error: {e}")
+        # 連続エラー追跡
+        error_counter[name] = error_counter.get(name, 0) + 1
+        ecount = error_counter[name]
+        if ecount >= CONSECUTIVE_ERROR_THRESHOLD:
+            logging.warning(f"[{name}] {ecount} consecutive exceptions! Backing off {ERROR_BACKOFF_SEC // 60}min")
+            alert_consecutive_errors(name, ecount)
         return -1
 
 
@@ -378,7 +415,12 @@ def main():
                         continue
                     rc = run_job(job)
                     # 次回実行時刻を設定（実行完了時刻基準、外部設定があればそちらを優先）
-                    next_run[name] = time.time() + get_job_interval(job)
+                    interval = get_job_interval(job)
+                    # 連続エラー時はバックオフで間隔を延長
+                    ecount = error_counter.get(name, 0)
+                    if ecount >= CONSECUTIVE_ERROR_THRESHOLD:
+                        interval = max(interval, ERROR_BACKOFF_SEC)
+                    next_run[name] = time.time() + interval
 
                     # Slack即時応答: slack_checkが新着検出(rc=0)ならinbox_checkを即時トリガー
                     # (2026-03-26 Nao_uの指示: Slack 1分監視→inbox処理のラグをなくす)
