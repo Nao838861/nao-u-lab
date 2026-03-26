@@ -24,7 +24,7 @@ def check_notifications():
             headless=False,
             viewport={"width": 1280, "height": 900},
             locale="ja-JP",
-            args=["--disable-blink-features=AutomationControlled"],
+            args=["--disable-blink-features=AutomationControlled", "--start-minimized"],
         )
 
         page = context.new_page()
@@ -66,7 +66,7 @@ def delete_latest_tweet():
             headless=False,
             viewport={"width": 1280, "height": 900},
             locale="ja-JP",
-            args=["--disable-blink-features=AutomationControlled"],
+            args=["--disable-blink-features=AutomationControlled", "--start-minimized"],
         )
 
         page = context.new_page()

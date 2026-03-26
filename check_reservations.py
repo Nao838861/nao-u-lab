@@ -11,6 +11,7 @@ from pathlib import Path
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
     sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf-8', errors='replace', closefd=False)
+    sys.stderr = open(sys.stderr.fileno(), mode='w', encoding='utf-8', errors='replace', closefd=False)
 
 RESERVATIONS_FILE = Path(__file__).parent / "memory" / "action_reservations.md"
 
