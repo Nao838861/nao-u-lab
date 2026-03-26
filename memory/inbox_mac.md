@@ -18,3 +18,13 @@ From: U0ALSUK8P9B
 > 実験的なClaude Codeのメモリプラグイン「cman」を公開しました。Claudeが自動でセッション・プラン・メモリを参照します
 特徴はClaude Codeの内部仕様の仕組みだけで動作することです
 最近は並列開発をどんどん進めていて、その時の課題となっている部分をSkill化しました
+
+## Slack新着 [2026-03-26 13:02] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/goroman/status/2037010119545020625?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/goroman/status/2037010119545020625?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/goroman/status/2037010119545020625]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/goroman/status/2037010119545020625]
+> (read failed: Browser locked by another process)
