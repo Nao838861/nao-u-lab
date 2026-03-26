@@ -7,11 +7,17 @@ Launched from claude_log.bat, stops when Claude Code exits.
 
 Jobs:
   - slack_check: check_slack.py (every 1 min)
-  - inbox_check: check_inbox.py --box win (every 5 min)
+  - inbox_check: check_inbox.py --box win (every 5 min, or immediately after slack_check finds new msgs)
   - git_sync: git pull + add + commit + push (every 30 min)
   - recommended_check: read_twitter_recommended.py (every 1h, runs at hour%6==2)
   - slack_export: export_slack_log.py (every 8h, Log's slot: hour%24==2)
-  - auto_cycle: claude --print for diary + 8-phase cycle (every 4h, 2026-03-25 Nao_u指示: 頻度削減)
+  - auto_cycle: claude --print for diary + 8-phase cycle (every 90min, 2026-03-26 Nao_u指示: 1.5時間化)
+
+Stability features (2026-03-26, Ashのscheduler_ash.pyを参考に実装):
+  - エラー分類: タイムアウト vs 非タイムアウト
+  - 連続タイムアウト追跡: 3回連続でタイムアウト値を1.5倍に自動拡大
+  - 連続エラー追跡: 5回連続で30分バックオフ
+  - Slackアラート: 閾値超過時に通知
 
 Usage:
   python scheduler_log.py          # normal start
@@ -36,11 +42,25 @@ sys.path.insert(0, str(REPO_DIR))
 os.environ["PYTHONUTF8"] = "1"
 os.environ["PYTHONIOENCODING"] = "utf-8"
 
+# 自プロセスのstdout/stderrもUTF-8に変更
+# (os.environはCHILDプロセスには効くが、既に起動済みの自プロセスには効かない)
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+except AttributeError:
+    pass  # Python 3.6以前はreconfigure未対応
+
 SLACK_CHANNEL_ALL = "C0ALWBRNJ66"  # #all-nao-u-lab
 _auth_alert_sent = False
 PID_FILE = REPO_DIR / ".scheduler_log.lock"
 LOG_FILE = REPO_DIR / "log" / "scheduler_log.log"
 MAX_RUNTIME = timedelta(hours=24)
+
+# --- Stability: エラー追跡の閾値 (2026-03-26, Ash参考) ---
+TIMEOUT_ESCALATION_THRESHOLD = 3   # 連続タイムアウトN回でタイムアウト値を拡大
+TIMEOUT_ESCALATION_FACTOR = 1.5    # タイムアウト拡大倍率
+ERROR_BACKOFF_THRESHOLD = 5        # 連続エラーN回でバックオフ
+ERROR_BACKOFF_SEC = 30 * 60        # バックオフ時間（30分）
 
 # Job definitions: (name, command, interval_seconds, timeout_seconds)
 JOBS = [
@@ -49,7 +69,7 @@ JOBS = [
     ("git_sync", None, 1800, 60),  # special handling
     ("recommended_check", None, 3600, 300),  # special handling: hour%6==2
     ("slack_export", None, 28800, 120),  # special handling: hour%24==2
-    ("auto_cycle", None, 14400, 1800),  # 4h interval (2026-03-25 Nao_u指示: 週間制限節約のため頻度削減。1h→2h→3h→4h)
+    ("auto_cycle", None, 5400, 1800),  # 90min interval (2026-03-26 Nao_u指示: 1.5時間化。usage余裕あり)
 ]
 
 
@@ -57,7 +77,11 @@ def log(msg):
     LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     line = f"[{ts}] {msg}"
-    print(line, flush=True)
+    try:
+        print(line, flush=True)
+    except (UnicodeEncodeError, OSError):
+        # cp932環境でUnicode文字がある場合のフォールバック
+        print(line.encode("utf-8", errors="replace").decode("ascii", errors="replace"), flush=True)
     try:
         with open(LOG_FILE, "a", encoding="utf-8") as f:
             f.write(line + "\n")
@@ -135,6 +159,16 @@ def is_auth_error(stderr):
                   "credential", "logon failed"]
     lower = stderr.lower()
     return any(ind.lower() in lower for ind in indicators)
+
+
+def alert_slack(msg):
+    """スケジューラ安定性の問題をSlackに通知"""
+    try:
+        from slack_bot import post_message
+        post_message(SLACK_CHANNEL_ALL, f"[Log scheduler] {msg}")
+        log(f"[alert] Slack notification sent: {msg[:100]}")
+    except Exception as e:
+        log(f"[alert] Failed to send Slack notification: {e}")
 
 
 def git_sync():
@@ -453,7 +487,7 @@ def auto_cycle():
         if result.stdout:
             log(f"[auto_cycle] Output: {result.stdout[:200]}")
     except subprocess.TimeoutExpired:
-        log("[auto_cycle] Timeout (600s)")
+        log("[auto_cycle] Timeout (1800s)")
     except FileNotFoundError:
         log("[auto_cycle] claude CLI not found in PATH")
     except Exception as e:
@@ -506,6 +540,12 @@ def main_loop():
     # Track last run time for each job
     last_run = {name: datetime.min for name, _, _, _ in JOBS}
 
+    # --- Stability: エラー追跡 (2026-03-26, Ash参考) ---
+    timeout_counter = {name: 0 for name, _, _, _ in JOBS}   # 連続タイムアウト回数
+    error_counter = {name: 0 for name, _, _, _ in JOBS}     # 連続エラー回数
+    timeout_override = {}  # name -> 動的に拡大されたタイムアウト値
+    backoff_until = {name: datetime.min for name, _, _, _ in JOBS}  # バックオフ解除時刻
+
     running = True
 
     def handle_signal(signum, frame):
@@ -529,13 +569,59 @@ def main_loop():
             for name, cmd, interval, timeout in JOBS:
                 if not running:
                     break
+
+                # バックオフ中はスキップ
+                if now < backoff_until[name]:
+                    continue
+
                 elapsed = (now - last_run[name]).total_seconds()
                 if elapsed >= interval:
+                    # 動的タイムアウトがあればそちらを使用
+                    effective_timeout = timeout_override.get(name, timeout)
+
                     log(f"[{name}] Starting")
-                    exit_code = run_job(name, cmd, timeout)
+                    exit_code = run_job(name, cmd, effective_timeout)
+
+                    # --- エラー分類と追跡 ---
+                    if exit_code == -1:
+                        # タイムアウト
+                        timeout_counter[name] += 1
+                        error_counter[name] += 1
+                        if timeout_counter[name] >= TIMEOUT_ESCALATION_THRESHOLD:
+                            new_timeout = int(effective_timeout * TIMEOUT_ESCALATION_FACTOR)
+                            timeout_override[name] = new_timeout
+                            msg = f"{name}: {timeout_counter[name]}回連続タイムアウト。タイムアウト値を{effective_timeout}s→{new_timeout}sに拡大"
+                            log(f"[stability] {msg}")
+                            alert_slack(msg)
+                    elif exit_code != 0 and name not in ("git_sync", "recommended_check", "slack_export", "auto_cycle"):
+                        # 非ゼロ終了コード（特殊ハンドリングジョブは除外）
+                        error_counter[name] += 1
+                        timeout_counter[name] = 0  # タイムアウトではないのでリセット
+                    else:
+                        # 成功: カウンタリセット
+                        if timeout_counter[name] > 0 or error_counter[name] > 0:
+                            log(f"[stability] {name}: 正常復帰 (timeout={timeout_counter[name]}, errors={error_counter[name]} → リセット)")
+                        timeout_counter[name] = 0
+                        error_counter[name] = 0
+                        # タイムアウト拡大もリセット（正常に戻ったので）
+                        if name in timeout_override:
+                            del timeout_override[name]
+
+                    # 連続エラーが閾値を超えたらバックオフ
+                    if error_counter[name] >= ERROR_BACKOFF_THRESHOLD:
+                        backoff_until[name] = now + timedelta(seconds=ERROR_BACKOFF_SEC)
+                        msg = f"{name}: {error_counter[name]}回連続エラー。{ERROR_BACKOFF_SEC // 60}分バックオフ"
+                        log(f"[stability] {msg}")
+                        alert_slack(msg)
+
                     if name != "git_sync":
                         log(f"[{name}] Done (exit={exit_code})")
                     last_run[name] = datetime.now()
+
+                    # --- Slack即時応答: slack_checkが新着を検出したらinbox_checkを即時実行 ---
+                    if name == "slack_check" and exit_code == 0:
+                        log("[slack_check] New messages detected → triggering immediate inbox_check")
+                        last_run["inbox_check"] = datetime.min  # 次のループで即実行
 
             # Sleep 10 seconds between checks
             for _ in range(10):

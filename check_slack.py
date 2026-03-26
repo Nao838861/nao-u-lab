@@ -168,10 +168,14 @@ def main():
 
     print(f"[{datetime.now():%H:%M:%S}] {len(new_messages)} msg(s) -> {inbox.name}")
 
-    # 即時起動: inboxに書き込んだらcheck_inbox.shを呼んで即座にClaude CLIを起動する
-    # ロックファイル(/tmp/nao-u-lab-claude.lock)で二重起動を防止（2026-03-26 Nao_uの指示: Slack 1分応答）
+    # 即時起動: inboxに書き込んだらcheck_inboxを呼んで即座にClaude CLIを起動する
+    # Mac: check_inbox.sh経由（ロックファイルで二重起動防止）
+    # Win: check_inbox.py直接起動（scheduler_log.pyからも即時トリガーされるが、standalone実行時のため）
+    # (2026-03-26 Nao_uの指示: Slack 1分応答)
     if platform.system() == "Darwin":
         trigger_check_inbox()
+    elif platform.system() == "Windows":
+        trigger_check_inbox_win()
     return 0
 
 
@@ -217,6 +221,25 @@ def trigger_check_inbox():
         print(f"[{datetime.now():%H:%M:%S}] Triggered check_inbox.sh")
     except Exception as e:
         print(f"[{datetime.now():%H:%M:%S}] Failed to trigger: {e}")
+
+
+def trigger_check_inbox_win():
+    """Win側: 新着メッセージ検出時にcheck_inbox.pyを即時起動する。
+    check_inbox.py内のクールダウン機構で過剰起動は防止される。"""
+    inbox_box = "win"
+    repo_str = str(REPO_DIR).lower()
+    if "c:\\ai" in repo_str or "c:/ai" in repo_str:
+        inbox_box = "win2"
+    try:
+        subprocess.Popen(
+            [sys.executable, str(REPO_DIR / "check_inbox.py"), "--box", inbox_box],
+            cwd=str(REPO_DIR),
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        print(f"[{datetime.now():%H:%M:%S}] Triggered check_inbox.py --box {inbox_box}")
+    except Exception as e:
+        print(f"[{datetime.now():%H:%M:%S}] Failed to trigger check_inbox.py: {e}")
 
 
 def wake_claude(messages):
