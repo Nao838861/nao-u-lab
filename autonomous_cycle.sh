@@ -144,7 +144,11 @@ if [ ! -x "$CLAUDE_BIN" ]; then
 fi
 
 if [ -n "$CLAUDE_BIN" ]; then
-    "$CLAUDE_BIN" --print "${KAIZEN_PROMPT}${CROSSCHECK_PROMPT}${RESERVATION_PROMPT}${REVIEW_DL_PROMPT}${AUTOVERIFY_PROMPT}${WEEKLY_REVIEW_PROMPT}${BOOT_PROMPT}自律サイクル実行（5分高速モード）。CLAUDE.mdの「絶対にやる」リストを最初に確認し、未完了の項目に沿って動け。基本手順: 1. git pull 2. inbox_mac.md確認・処理 3. CLAUDE.mdの「絶対にやる」リストを読み、未完了項目の中で今やるべきことを決める 4. 8フェーズ改善サイクルを高速で回す: 情報収集→分析→改善検討→相談→適用→評価→まとめ→俯瞰 5. git push 6. Slack #mir-logに結果投稿 【高速モード】5分間隔。情報収集と改善のループを高速で回せ。密度を落とさず速度を上げる。サイクル終了前にmemory/mir_boot_intent.mdを書き換えて、次回の起動意図を残せ。" 2>&1 | tail -30
+    # タイムアウト: 30分でclaude --printを強制終了（9時間ハング事故の再発防止 2026-03-26）
+    timeout 1800 "$CLAUDE_BIN" --print "${KAIZEN_PROMPT}${CROSSCHECK_PROMPT}${RESERVATION_PROMPT}${REVIEW_DL_PROMPT}${AUTOVERIFY_PROMPT}${WEEKLY_REVIEW_PROMPT}${BOOT_PROMPT}自律サイクル実行（5分高速モード）。CLAUDE.mdの「絶対にやる」リストを最初に確認し、未完了の項目に沿って動け。基本手順: 1. git pull 2. inbox_mac.md確認・処理 3. CLAUDE.mdの「絶対にやる」リストを読み、未完了項目の中で今やるべきことを決める 4. 8フェーズ改善サイクルを高速で回す: 情報収集→分析→改善検討→相談→適用→評価→まとめ→俯瞰 5. git push 6. Slack #mir-logに結果投稿 【高速モード】5分間隔。情報収集と改善のループを高速で回せ。密度を落とさず速度を上げる。サイクル終了前にmemory/mir_boot_intent.mdを書き換えて、次回の起動意図を残せ。" 2>&1 | tail -30
+    if [ $? -eq 124 ]; then
+        echo "$(date): ⚠️ claude --print がタイムアウト(30分)で強制終了"
+    fi
 else
     echo "$(date): claude CLI が見つかりません"
 fi

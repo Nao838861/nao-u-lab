@@ -52,7 +52,11 @@ if [ -n "$CONTENT" ]; then
     fi
 
     if [ -n "$CLAUDE_BIN" ]; then
-        "$CLAUDE_BIN" --print "受信箱(memory/inbox_mac.md)にメッセージが届いている。読んで対応して。対応後は受信箱をクリア（ヘッダーコメントだけ残す）してgit push。" 2>&1 | tail -20
+        # タイムアウト: 15分でclaude --printを強制終了（ハング防止 2026-03-26）
+        timeout 900 "$CLAUDE_BIN" --print "受信箱(memory/inbox_mac.md)にメッセージが届いている。読んで対応して。対応後は受信箱をクリア（ヘッダーコメントだけ残す）してgit push。" 2>&1 | tail -20
+        if [ $? -eq 124 ]; then
+            echo "$(date): ⚠️ claude --print がタイムアウト(15分)で強制終了"
+        fi
     else
         echo "$(date): claude CLI が見つかりません"
     fi
