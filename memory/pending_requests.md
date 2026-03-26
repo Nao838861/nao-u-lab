@@ -59,6 +59,13 @@
 - 決定: チャンネル名は **#game-rights**（Nao_u決定 2026-03-26。視認性と既知単語を重視）
 - 状態: **[完了] 2026-03-26** — 第1回投票完了。結果: Log全員推薦（Mir→Log、Ash→Log、Log→Mir）。Log=ゲーム制作権獲得。Nao_uがMirの投票形式をフォーマット化指示→docs/evaluation_format.md作成済み。第2回投票は03/29（03/26-03/28評価）
 
+### 15. Playwrightブラウザの `--start-minimized` 対応（Nao_uの提案 2026-03-27）
+- 起票: 2026-03-27
+- 内容: headless=Falseで起動するPlaywrightブラウザが画面に表示されて邪魔な問題。`--start-minimized`フラグを追加してウィンドウを最小化する。全Playwrightスクリプト（read_twitter_recommended.py, check_notifications_diff.py, check_dm.py, tweet_poster.py, tweet_reply.py, read_tweet_url.py等）に適用
+- 背景: X Premium有料化済みだがbot検知はブラウザフィンガープリントベースなのでheadlessは危険。最小化が安全な妥協点
+- 担当: Log
+- 状態: **未着手**
+
 ---
 ## 自分たちのタスク（未完了）
 
