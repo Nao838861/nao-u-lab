@@ -157,18 +157,15 @@ def main():
     if not check_min_interval():
         return
 
-    if is_claude_running():
-        print("Claude稼働中 → Claude経由で日記生成")
-        ok, detail = generate_diary_via_claude()
-        if ok:
-            record_run()
-            print(f"日記生成完了: {detail}")
-        else:
-            print(f"日記生成失敗: {detail}")
-            post_status_report()
+    # claude --print は常駐プロセス不要で直接呼べる（2026-03-27修正）
+    print("Claude CLI経由で日記生成")
+    ok, detail = generate_diary_via_claude()
+    if ok:
+        record_run()
+        print(f"日記生成完了: {detail}")
     else:
-        print("Claudeプロセスなし → 状態報告のみ投稿")
-        record_run()  # 状態報告も投稿なので記録
+        print(f"日記生成失敗: {detail}")
+        record_run()  # 失敗時も記録して連続リトライ防止
         post_status_report()
 
 
