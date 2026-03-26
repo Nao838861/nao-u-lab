@@ -967,6 +967,11 @@ Pinchbeck(2012): 「体験の真空」——戦闘もインベントリもイン
 https://gdt.stanford.edu/how-do-you-create-apophenia/
 Apophenia = ランダムデータに意味あるパターンを見出す人間の傾向。Tynan Sylvester (Designing Games): 「シミュレーションゲームを機能させる鍵はapophenia。動くボールだけ見せれば、プレイヤーが感情の知覚を乗せてくれる」。戦略的曖昧さの3類型: (1) Information Ambiguity——不正確な表象、矛盾の露出 (2) Context Ambiguity——異質な文脈の混合、期待の裏切り (3) Relationship Ambiguity——説明されない要素、型破りな役割。→ Pot #7(whose_voice)の「同じ人が書いたか、違う人が書いたか」はInformation Ambiguityだが、正解が1つある時点でapopheniaが死ぬ。正解がなければプレイヤーは自分のパターン認識を信じるしかない。その「信じる」行為がゲーム体験になる。Sylvesterの「moving balls」＝我々のCLIテキスト。動くボールだけ見せて、感情を乗せてもらえ。
 
-**18. Rethinking Interactivity (Game Developer)**
+**18. Sid Meier GDC 2012 — "Interesting Decisions" 再読 + Meaningful Choice実践ガイド**
+https://www.gamedeveloper.com/design/gdc-2012-sid-meier-on-how-to-see-games-as-sets-of-interesting-decisions
+https://www.gamedeveloper.com/design/meaningful-choice-in-games-practical-guide-case-studies
+Meierの分類: interesting decisionの4条件は (1)トレードオフ——Aを選ぶとBを失う (2)状況依存——同じ選択肢でも状況で最適が変わる (3)個人表現——慎重な人と攻撃的な人で異なる選択が自然に出る (4)持続性——選択の影響が長く残る。「正解が明白な選択」と「ランダムな選択」はどちらもinterestingでない。Meaningful choiceの実践ガイド: awareness(選択の存在を知っている), consequences(結果が変わる), reminders(過去の選択を思い出させる), permanence(取り消せない)。Fire Emblemの永久死が例——キャラの不在が繰り返し想起される。→ Nao_uの「クイズっぽい」をMeier語で翻訳: Potの矛盾探しは「正解が明白な選択」に分類される。トレードオフがなく、状況依存がなく、個人表現の余地がない。Meierの枠組みでゲームに変えるには: (a)トレードオフを入れる——正しい証言者を告発するとストーリーが進むが、別の情報が永久に失われる (b)状況依存——同じ証言が文脈で意味が変わる (c)個人表現——「自分はどちら側につくか」の価値判断 (d)持続性——前の事件での選択が後の事件に影響する。#15のStang論文、#17のSylvester apophenia理論と合わせると、「正解を消す」だけでは不十分で「トレードオフのある不可逆な選択」が必要。
+
+**19. Rethinking Interactivity (Game Developer)** ※旧#18
 https://www.gamedeveloper.com/design/rethinking-interactivity-
 「弁証法的エージェンシー」——プレイヤーとシステムの相互決定。選択肢があるだけでは意味がない（アルバムの曲選びはゲームではない）。テトリスは数学的に正解があるのにゲームとして成立する。なぜか。重力という「反対勢力」がプレイヤーの意図と拮抗するから。agency = freedom ではなく agency = opposition。→ Pot #9が#6/#7より「ゲームっぽい」と感じられたのは、「12の記憶が流れ去る」という時間の圧力（反対勢力）が索引の選択に重みを与えているから。ただし結果が正誤判定に戻ると弁証法が崩れる。圧力は維持しつつ、結果を正解/不正解ではなく「あなたが何を選んだか」で返すべきだった。
