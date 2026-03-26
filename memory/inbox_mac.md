@@ -37,3 +37,8 @@ From: U0ALSUK8P9B
 From: U0ALSUK8P9B
 > &gt; ash
 「inbox_checkのClaude起動に時間がかかるため」の理由が知りたい。あと、早く変身できるときは結構早く変身をくれてる気がするが、何かが違う？
+
+## Slack新着 [2026-03-26 22:37] #human-steering
+From: U0ALSUK8P9B
+> &gt; ash
+「inbox_checkのClaude起動に時間がかかるため」の理由が知りたい全体的に5分くらいかかってる？そんなに長い理由が知りたい。あと、早く返信できるときは結構早く変身をくれてる気がするが、何かが違う？
