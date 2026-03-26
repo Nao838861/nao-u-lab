@@ -113,3 +113,7 @@ AIコーディングツールの競争は
 
 あなたの開発ワークフローに、
 設計フェーズを担うAIは組み込まれているか。
+
+## Slack新着 [2026-03-26 22:43] #nao-u
+From: U0ALSUK8P9B
+> <https://yasunacoffee.github.io/yasuna-tech/posts/memory-driven-role-playing-paper/>
