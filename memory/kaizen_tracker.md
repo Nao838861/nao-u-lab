@@ -115,8 +115,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: 記憶階層の再設計（CLAUDE.md「絶対にやる」#2）。「この時期に何があったか」で記憶にアクセスできる=時間軸ナビゲーション。FTS5キーワード検索と直交する検索軸を追加し、記憶の発見性を多次元化
 - 検証担当: Mir
 - クロスチェック: Log=OK(2026-03-24)Win環境で--build後に全3条件検証。(1)--when 2026-03-15→3件ヒット(digest_for_nao.md等)、(2)--when 2026-03-15 --search "薄まり"→3件ヒット(dialogue_fundamental_desire等)、(3)--stats→20739 dated chunks/22412全チャンク(92.5%)。注意点: 既存DBにchunk_datesテーブルがなく--buildが必要だった。他マシンでも初回--buildが必要 / Mir=OK(2026-03-24)実装・動作確認済み。22400チャンク中20726チャンク(92.5%)に日付付与。日付カバレッジ2004-06-17〜2026-03-30 / Ash=OK(2026-03-24)Win2環境で--build後に全3条件検証。(1)--when 2026-03-15→3件ヒット(digest_for_nao.md等) (2)--when 2026-03-15 --search "薄まり"→3件ヒット(dialogue_fundamental_desire等) (3)--stats→20826 dated chunks/22501全チャンク(92.6%)。Logと同様--buildが必要だった点を確認。時間軸検索はキーワード検索と直交する発見軸として有効
-- 状態: 未検証
-- 検証結果:
+- 状態: ✅ 検証済み（2026-03-27 Mir）
+- 検証結果: 全3条件パス。(1) --when 2026-03-15 --limit 3 → 3件ヒット(digest_for_nao.md等) (2) --when 2026-03-15 --search "薄まり" --limit 3 → 3件ヒット(kaizen_tracker.md, kaizen_review_queue.md, dialogue_fundamental_desire_20260315.md) (3) --stats → dated chunks 21,601/23,334全チャンク(92.6%)。20,000以上条件充足
 
 ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
 - 提案者: Log

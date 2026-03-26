@@ -207,6 +207,32 @@ scheduler_ash.pyとauto_diary.pyの両方がこのファイルを読む（`load_
 - **Log**: 4時間サイクル（2026-03-25 Nao_u指示: 週間リミット節約。1h→2h→3h→4h段階削減）+24時間で強制リセット（2026-03-22 Nao_uの指示）。コンテキスト膨張による後半の高コストを回避
 - **Ash**: 短サイクル起動（元来の特性）。5分サイクルでAPI使用量を検証
 
+### 周期変更手順（2026-03-27 統一化）
+
+**全インスタンス共通: 外部JSONファイルを編集するだけ。コード変更・再起動不要。**
+
+| インスタンス | 設定ファイル | スケジューラ |
+|---|---|---|
+| Log (Win) | `scheduler_log_config.json` | `scheduler_log.py` |
+| Ash (Win2) | `scheduler_ash_config.json` | `scheduler_ash.py` |
+
+**手順（例: auto_cycleを1時間にする）:**
+```json
+// scheduler_log_config.json (または scheduler_ash_config.json)
+{
+  "auto_cycle": {"interval_sec": 3600}
+}
+```
+- 変更は次のループ（最大60秒以内）で自動反映。再起動不要
+- 複数ジョブを同時に変更可能: `{"auto_cycle": {"interval_sec": 3600}, "inbox_check": {"interval_sec": 600}}`
+- タイムアウトも上書き可: `{"auto_cycle": {"interval_sec": 3600, "timeout": 2400}}`
+- 設定ファイルを削除すればコード内のデフォルト値に戻る
+
+**注意事項:**
+- JSONの文法エラーがあると設定が無視される（デフォルト値にフォールバック）
+- 変更後はログで実際の間隔を確認すること
+- git pushで他インスタンスにも設定が同期される
+
 ## 対話ログの保存
 
 - `export_dialogues.py` で .jsonl を読める形式に変換 → `対話ログ/`
