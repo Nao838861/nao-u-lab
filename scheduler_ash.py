@@ -246,36 +246,63 @@ def alert_consecutive_errors(job_name, count):
         logging.warning(f"[ALERT] Failed to send error alert: {e}")
 
 
+# 設定変更検出用: 前回読み込んだ設定のスナップショット
+_last_config = {}
+
+
 def load_config_overrides():
-    """外部JSONから間隔・タイムアウトの上書き値を読み込む。
+    """外部JSONから間隔・タイムアウトの上書き値を読み込む（再起動不要・即反映）。
     ファイルが存在しない場合は空dictを返す。
     形式: {"auto_diary": {"interval_sec": 5400, "timeout": 600}, ...}
+
+    【重要】このファイルの変更は次のループ（最大10秒）で自動反映される。
+    スケジューラの再起動は不要。
     """
+    global _last_config
     if not CONFIG_FILE.exists():
+        if _last_config:
+            logging.info("[CONFIG] Config file removed -> reverting to defaults (no restart needed)")
+            _last_config = {}
         return {}
     try:
         with open(CONFIG_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+            config = json.load(f)
+        # 設定変更を検出してログに出力
+        # _commentキーは比較から除外
+        def strip_comments(d):
+            return {k: v for k, v in d.items() if not k.startswith("_")}
+        current = strip_comments(config)
+        previous = strip_comments(_last_config)
+        if current != previous and _last_config:
+            for key in set(list(current.keys()) + list(previous.keys())):
+                old_val = previous.get(key)
+                new_val = current.get(key)
+                if old_val != new_val:
+                    logging.info(f"[CONFIG] {key}: {old_val} -> {new_val} (auto-applied, no restart needed)")
+        _last_config = config
+        return config
     except Exception as e:
         logging.warning(f"Config file read error: {e}")
-        return {}
+        return _last_config if _last_config else {}
 
 
 def get_job_timeout(job):
-    """ジョブの実効タイムアウト値を返す（動的引き上げ > 外部設定 > デフォルト）"""
+    """ジョブの実効タイムアウト値を返す（外部設定 > 動的引き上げ > デフォルト）。
+    JSON設定ファイルの値が最優先。明示的にファイルで指定された値は動的引き上げより強い。
+    """
     name = job["name"]
-    # 動的引き上げが最優先
-    if name in timeout_override:
-        return timeout_override[name]
-    # 外部設定ファイル
+    # 外部設定ファイルが最優先（人間/LLMが意図的に設定した値）
     overrides = load_config_overrides()
     if name in overrides and "timeout" in overrides[name]:
         return overrides[name]["timeout"]
+    # 動的引き上げ（連続タイムアウト時の自動拡大）
+    if name in timeout_override:
+        return timeout_override[name]
     return job["timeout"]
 
 
 def get_job_interval(job):
-    """ジョブの実効間隔を返す（外部設定 > デフォルト）"""
+    """ジョブの実効間隔を返す（外部設定 > デフォルト）。再起動不要で即反映。"""
     name = job["name"]
     overrides = load_config_overrides()
     if name in overrides and "interval_sec" in overrides[name]:
@@ -380,8 +407,11 @@ def main():
     logging.info("=" * 50)
     logging.info("Ash scheduler started (PID %d)", os.getpid())
     logging.info("Max runtime: %d hours", MAX_RUNTIME_SEC // 3600)
+    logging.info("Config: %s (hot-reload enabled, changes auto-applied without restart)", CONFIG_FILE.name)
     logging.info("Jobs: %s", ", ".join(j["name"] for j in JOBS))
     logging.info("=" * 50)
+    # 起動時に設定を読み込んでスナップショットを初期化
+    load_config_overrides()
 
     start_time = time.time()
     now = time.time()
