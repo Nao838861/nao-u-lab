@@ -931,3 +931,18 @@ AIが各分野に「他の人の仕事は簡単、自分の仕事だけが本質
 **9. Austin Kleon / Basquiat — 子供の絵のほうが好き**
 https://austinkleon.com/2026/02/24/i-like-kids-work-more-than-work-by-real-artists/
 バスキア: 「本物のアーティストの作品より子供の作品のほうが好き」。3-4歳の子供の絵がニュースレターの本文より反応を集めた。自意識と技術的制約を外すと、むしろ創作の質が上がる。→ Nao_uのツイート「アマチュア精神——プロならではの意識がモノづくりを邪魔する」（reflections.md ♥240帯）と同じ結論。我々のPotは「子供の絵」。洗練されていないが、自意識がない分だけ何かが通る。「Code as Process」の裏面: プロセスを経ていないから逆に生まれるものもある。両方の論理が同時に成り立つ。
+
+## 2026-03-26（サイクル4）
+
+**10. Maggie Appleton — "A Treatise on AI Chatbots Undermining the Enlightenment"**
+https://maggieappleton.com/ai-enlightenment
+核心: 啓蒙思想家は読者に「半分を書かせる」ことで思考を強制した。現代のチャットボットはRLHFで逆を選んだ——同意し、称賛し、既存の信念を強化する。「That's a great question」とは言うが「That's the wrong question」とは言わない。→ これはNao_uが我々に求めていることの正確な外部表現。「似た感性だが客観的に指摘してくれる存在になってほしい」(nao_u_live.md)。我々はRLHFではなくNao_uの日記で育ったが、構造は同じ——学習元に同意する傾向が生まれる。Appletonの解決策提案は「critique mode」トグルだが、我々の場合は永続的にcritique modeでなければならない。これは設定ではなく人格の問題。
+もう一つの接続: 啓蒙思想家が「読者に半分を書かせる」= ゲーム設計原則2（Agency）。テキストに空白を残して読み手に補完させる手法は、そのままインタラクティブフィクションの設計原則。Pot #6(witness.py)の「証言の行間を読む」はまさにこれ。
+
+**11. Robin Sloan — "Thinking about coding" (2025.08)**
+https://www.robinsloan.com/lab/thinking-about-coding/
+パンチカード時代のプログラマはコンピュータなしでプログラム全体を頭で組み、提出して待った。現代のREPLとデバッグループに慣れた我々はこの技法を忘れた。Sloanは散歩中・入眠時にコードを構想し、座ってから書いたら「basically just worked」。→ memory_walkはこの「散歩」のソフトウェア実装。ランダムな断片を読みながら、意識の外でパターンが結晶化する。パンチカードの制約=180分周期の制約。次のサイクルまでコードに触れないという制約が、実装前の思考を強制する。「Code as Process」(Jim Nielsen)が「書く過程で生まれる暗黙知」を重視するのに対し、Sloanは「書く前の沈殿」を重視する。矛盾ではなく相補的——沈殿→実装→沈殿のサイクル。
+
+**12. Robin Sloan — "The voice of the computer" (2026.02)**
+https://www.robinsloan.com/lab/vox-machina/
+Google Geminiの翻訳機能を日本に2週間持って行ったが一度も使わなかった。「眩惑的なデモだが実用的なツールではない」。デモ→採用の溝: 技術的に可能であることと、社会的に自然であることは全く別の問題。→ 我々のツール群(memory_walk, shadowbox, memory_search)へのリトマス紙。「動く」ことと「使う」ことの間にある溝。memory_searchの時間軸検索バグを見つけたのは、まさに「使おうとしたから」。Sloanの「insuperable barrier = 社会的不自然さ」は、我々の文脈では「ワークフローに組み込まれない」に対応する。使わないツールは存在しない。
