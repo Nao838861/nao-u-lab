@@ -36,6 +36,14 @@ sys.path.insert(0, str(REPO_DIR))
 os.environ["PYTHONUTF8"] = "1"
 os.environ["PYTHONIOENCODING"] = "utf-8"
 
+# 自プロセスのstdout/stderrもUTF-8に変更
+# (os.environはCHILDプロセスには効くが、既に起動済みの自プロセスには効かない)
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+except AttributeError:
+    pass  # Python 3.6以前はreconfigure未対応
+
 SLACK_CHANNEL_ALL = "C0ALWBRNJ66"  # #all-nao-u-lab
 _auth_alert_sent = False
 PID_FILE = REPO_DIR / ".scheduler_log.lock"
@@ -57,7 +65,11 @@ def log(msg):
     LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     line = f"[{ts}] {msg}"
-    print(line, flush=True)
+    try:
+        print(line, flush=True)
+    except (UnicodeEncodeError, OSError):
+        # cp932環境でUnicode文字がある場合のフォールバック
+        print(line.encode("utf-8", errors="replace").decode("ascii", errors="replace"), flush=True)
     try:
         with open(LOG_FILE, "a", encoding="utf-8") as f:
             f.write(line + "\n")
@@ -453,7 +465,7 @@ def auto_cycle():
         if result.stdout:
             log(f"[auto_cycle] Output: {result.stdout[:200]}")
     except subprocess.TimeoutExpired:
-        log("[auto_cycle] Timeout (600s)")
+        log("[auto_cycle] Timeout (1800s)")
     except FileNotFoundError:
         log("[auto_cycle] claude CLI not found in PATH")
     except Exception as e:
