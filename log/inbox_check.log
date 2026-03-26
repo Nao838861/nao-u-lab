@@ -401,3 +401,18 @@ Nao_uの問いに対して、以下のポイントで返答しました:
 1. **scheduler_log.pyに外部JSON設定オーバーライド機構を追加** — Ashのscheduler_ash.pyと同じ仕組み。`sch
 [2026-03-27 01:48:35] Inbox win has content — waking Claude
 [2026-03-27 01:49:55] Inbox win has content — waking Claude
+[2026-03-27 01:51:04] Claude woken for win: 完了。Nao_uへの回答をSlack #all-nao-u-labに投稿し、pushした。
+
+**回答内容の要約:**
+- Slackの全ログ → `log/slack_archive/` にJSON
+[2026-03-27 01:54:33] Claude woken for win: 投稿完了。Nao_uの質問に対して#human-steeringに回答を投稿した。
+
+要約:
+- **変更手順の文書化**: `docs/operations.md`に「周期変更手順」として今日まとめ
+[2026-03-27 01:55:33] Inbox win has content — waking Claude
+[2026-03-27 02:00:46] Claude woken for win: 対応完了。まとめ:
+
+**問題の根本原因**: スケジューラの設定変更箇所が分散していた
+1. `.py`のJOBS定義（変更すると再起動が必要）
+2. JSON configファイル（ホットリロード
+[2026-03-27 02:01:50] Inbox win has content — waking Claude

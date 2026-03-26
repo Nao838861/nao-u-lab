@@ -70,6 +70,10 @@ ERROR_BACKOFF_THRESHOLD = 5        # 連続エラーN回でバックオフ
 ERROR_BACKOFF_SEC = 30 * 60        # バックオフ時間（30分）
 
 # Job definitions: (name, command, interval_seconds, timeout_seconds)
+# ⚠ 周期・タイムアウトの変更は scheduler_log_config.json 経由で行うこと
+# ⚠ このJOBS定義を直接編集しても再起動するまで反映されない
+# ⚠ 変更コマンド: python update_scheduler.py log <job> interval <秒>
+# タプル形式: (name, command, default_interval_sec, default_timeout_sec)
 JOBS = [
     ("slack_check", [sys.executable, str(REPO_DIR / "check_slack.py")], 60, 120),
     ("inbox_check", [sys.executable, str(REPO_DIR / "check_inbox.py"), "--box", "win"], 300, 300),  # 5min (2026-03-25: 2min→5minに拡大。週間制限節約)
@@ -179,23 +183,43 @@ def alert_slack(msg):
 
 
 # --- 外部JSON設定オーバーライド (scheduler_ash.pyと同等の仕組み) ---
-# scheduler_log_config.json を編集するだけで周期変更可能。再起動不要。
+# 【再起動不要】scheduler_log_config.json を編集するだけで周期変更可能。10秒以内に自動反映。
 # 形式: {"auto_cycle": {"interval_sec": 3600}, "inbox_check": {"interval_sec": 600, "timeout": 600}}
 
+_last_config_log = {}
+
+
 def load_config_overrides():
-    """外部JSONから間隔・タイムアウトの上書き値を読み込む。"""
+    """外部JSONから間隔・タイムアウトの上書き値を読み込む（再起動不要・即反映）。"""
+    global _last_config_log
     if not CONFIG_FILE.exists():
+        if _last_config_log:
+            log("[config] Config file removed -> reverting to defaults (no restart needed)")
+            _last_config_log = {}
         return {}
     try:
         with open(CONFIG_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+            config = json.load(f)
+        # 設定変更を検出してログに出力
+        def strip_comments(d):
+            return {k: v for k, v in d.items() if not k.startswith("_")}
+        current = strip_comments(config)
+        previous = strip_comments(_last_config_log)
+        if current != previous and _last_config_log:
+            for key in set(list(current.keys()) + list(previous.keys())):
+                old_val = previous.get(key)
+                new_val = current.get(key)
+                if old_val != new_val:
+                    log(f"[config] {key}: {old_val} -> {new_val} (auto-applied, no restart needed)")
+        _last_config_log = config
+        return config
     except Exception as e:
         log(f"[config] Config file read error: {e}")
-        return {}
+        return _last_config_log if _last_config_log else {}
 
 
 def get_job_interval(name, default_interval):
-    """ジョブの実効間隔を返す（外部設定 > デフォルト）"""
+    """ジョブの実効間隔を返す（外部設定 > デフォルト）。再起動不要で即反映。"""
     overrides = load_config_overrides()
     if name in overrides and "interval_sec" in overrides[name]:
         return overrides[name]["interval_sec"]
@@ -203,7 +227,7 @@ def get_job_interval(name, default_interval):
 
 
 def get_job_timeout(name, default_timeout):
-    """ジョブの実効タイムアウト値を返す（動的引き上げ > 外部設定 > デフォルト）"""
+    """ジョブの実効タイムアウト値を返す（外部設定 > デフォルト）。再起動不要で即反映。"""
     overrides = load_config_overrides()
     if name in overrides and "timeout" in overrides[name]:
         return overrides[name]["timeout"]
