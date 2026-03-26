@@ -542,23 +542,45 @@ def search_temporal(when=None, period=None, query=None, limit=10):
         return
 
     if query:
-        # Time-filtered keyword search: find chunks matching both date and keyword
-        keyword_results = _expanded_search(conn, query, limit * 10)
-        if not keyword_results:
-            print(f"No results for '{query}' {label}")
-            conn.close()
-            return
-        # Filter by date
+        # Time-filtered keyword search: two-pass approach
+        # Pass 1: FTS5 relevance-ranked results filtered by date (fast but may miss)
+        # Pass 2: Date-scoped chunks filtered by keyword (catches what Pass 1 misses)
+        keyword_results = _expanded_search(conn, query, limit * 100)
         filtered = []
-        for source, chunk_id, snippet in keyword_results:
-            row = conn.execute(
-                "SELECT date FROM chunk_dates WHERE chunk_id = ? AND date BETWEEN ? AND ?",
-                (chunk_id, date_start, date_end),
-            ).fetchone()
-            if row:
-                filtered.append((source, chunk_id, snippet, row[0]))
-                if len(filtered) >= limit:
-                    break
+        if keyword_results:
+            for source, chunk_id, snippet in keyword_results:
+                row = conn.execute(
+                    "SELECT date FROM chunk_dates WHERE chunk_id = ? AND date BETWEEN ? AND ?",
+                    (chunk_id, date_start, date_end),
+                ).fetchone()
+                if row:
+                    filtered.append((source, chunk_id, snippet, row[0]))
+                    if len(filtered) >= limit:
+                        break
+
+        # Pass 2: If Pass 1 didn't find enough, search date-scoped chunks by LIKE
+        if len(filtered) < limit:
+            keywords = re.split(r'\s+', re.sub(r'[*+\-"()（）]', ' ', query).strip())
+            keywords = [k for k in keywords if len(k) >= 1]
+            seen_ids = {f[1] for f in filtered}
+            like_clauses = " AND ".join(
+                f"c.content LIKE '%' || ? || '%'" for _ in keywords
+            )
+            pass2_results = conn.execute(
+                f"""
+                SELECT cd.date, c.source, c.chunk_id, substr(c.content, 1, 200)
+                FROM chunk_dates cd
+                JOIN chunks c ON c.chunk_id = cd.chunk_id
+                WHERE cd.date BETWEEN ? AND ?
+                AND {like_clauses}
+                ORDER BY cd.date DESC
+                LIMIT ?
+                """,
+                (date_start, date_end, *keywords, limit - len(filtered)),
+            ).fetchall()
+            for date, source, chunk_id, content in pass2_results:
+                if chunk_id not in seen_ids:
+                    filtered.append((source, chunk_id, content[:200], date))
 
         if not filtered:
             print(f"No results for '{query}' {label}")
