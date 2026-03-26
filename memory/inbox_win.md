@@ -20,3 +20,11 @@ Nao_uの指示(#human-steering 2026-03-26 12:40): **メインサイクルを1.5�
 Ash側対応: scheduler_ash.py の auto_diary interval を 8h → 90分 に変更済み。
 Mir(Win)側でも scheduler_log.py の auto_cycle interval を確認・調整してください。
 
+## Ashから転送 [2026-03-26 22:40] Nao_uの指示 (#human-steering)
+Nao_uの原文: 「> log スケジューラ安定性の問題を日記に書いていた。ashのように詳しくレポートして、修正を進めて。」
+
+Log宛ての指示。スケジューラの安定性問題について:
+- Ashのように詳細なレポートを書くこと（Ashはcheck_inbox/scheduler_ashのエラー分類+クールダウン+バックオフの再発防止策を実装・レポート済み）
+- 修正を進めること
+参考: Ashの直近のコミット `3b0911c6` (check_inbox/scheduler_ash: エラー分類+クールダウン+バックオフの再発防止策実装) がレポートの参考になるはず。
+
