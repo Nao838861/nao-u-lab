@@ -55,3 +55,27 @@ Ash、以下の改善のクロスチェックが未完了です:
 確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。
 
 — verify_kaizen.py --nag (自動生成)
+
+## クロスチェック督促 (2026-03-27)
+
+Ash、以下の改善のクロスチェックが未完了です:
+
+- **#046**: shadowbox.py --live / --live-check（リアルタイム予測ループ）（提案者: Log）
+- **#047**: 信念の引き算 第2弾（B006→B013, B009→Archive, B023→B031統合）（提案者: Log）
+- **#049**: session_primer if-thenルール9「tasteチェック」追加（提案者: Log）
+- **#050**: session_primer taste訓練フレームワーク統合（Kowalski 3段階 + ShadowBox rule C）（提案者: Log）
+- **#053**: Pot #6 witness.py — テキスト内容がメカニクスそのものになる壺（lateral information設計）（提案者: Log）
+- **#054**: 信念確信度更新時の反証ステップ（if-thenルール10）（提案者: Log（compassinai「相づちが誤った確信を育てる」+ Zahn 2026 KO論文））
+- **#055**: memory_walk.py --chain（連想チェーンwalk）（提案者: Log）
+- **#056**: chain_walkに参照リンクブースト追加（SYNAPSE/Hindsight知見）（提案者: Log）
+- **#057**: chain_walkのボイラープレートノイズ除去（提案者: Log）
+- **#058**: 逆思考ルール（ルール10）のスコープ限定（Nao_uフィードバック反映）（提案者: Nao_u（「逆思考を逆思考する」問い）+ Log（コード化））
+- **#059**: docs/game_design_principles.md — Nao_uの6ゲーム感想からの設計原則抽出（提案者: Log）
+- **#060**: memory_walk.py --chain --context — 文脈駆動の連想チェーン（提案者: Log（ACAN論文 Frontiers fpsyg.2025.1591618 の知見適用））
+- **#062**: memory_search.py --when/--period + キーワード検索の2パス化（提案者: Mir）
+- **#061**: Pot #7 "Whose Voice?" — 2009年ゲーム理論「representation」原則の壺への適用（提案者: Mir）
+- **#062**: Pot #8 "Hinge" (蝶番) — 文脈依存意味変容のゲーム化（ACAN論文着想）（提案者: Log）
+
+確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。
+
+— verify_kaizen.py --nag (自動生成)

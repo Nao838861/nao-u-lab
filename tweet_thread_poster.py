@@ -38,7 +38,7 @@ def delete_all_tweets(dry_run=False):
             headless=False,
             viewport={"width": 1280, "height": 900},
             locale="ja-JP",
-            args=["--disable-blink-features=AutomationControlled"],
+            args=["--disable-blink-features=AutomationControlled", "--start-minimized"],
         )
         page = context.new_page()
 
@@ -180,7 +180,7 @@ def post_thread(draft_path, dry_run=False):
             headless=False,
             viewport={"width": 1280, "height": 900},
             locale="ja-JP",
-            args=["--disable-blink-features=AutomationControlled"],
+            args=["--disable-blink-features=AutomationControlled", "--start-minimized"],
         )
         page = context.new_page()
 

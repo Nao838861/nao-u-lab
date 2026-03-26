@@ -49,7 +49,7 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
             headless=False,
             viewport={"width": 1280, "height": 900},
             locale="ja-JP",
-            args=["--disable-blink-features=AutomationControlled"],
+            args=["--disable-blink-features=AutomationControlled", "--start-minimized"],
         )
         page = context.new_page()
 

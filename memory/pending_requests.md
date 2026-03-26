@@ -64,7 +64,7 @@
 - 内容: headless=Falseで起動するPlaywrightブラウザが画面に表示されて邪魔な問題。`--start-minimized`フラグを追加してウィンドウを最小化する。全Playwrightスクリプト（read_twitter_recommended.py, check_notifications_diff.py, check_dm.py, tweet_poster.py, tweet_reply.py, read_tweet_url.py等）に適用
 - 背景: X Premium有料化済みだがbot検知はブラウザフィンガープリントベースなのでheadlessは危険。最小化が安全な妥協点
 - 担当: Log
-- 状態: **未着手**
+- 状態: **[完了] 2026-03-27** — 14ファイル17箇所のlaunch_persistent_context呼び出しにargs `--start-minimized` を追加。headless=Falseを維持しつつウィンドウを最小化
 
 ---
 ## 自分たちのタスク（未完了）

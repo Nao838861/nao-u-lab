@@ -36,7 +36,7 @@ def get_current_notifications():
             headless=False,
             viewport={"width": 800, "height": 900},
             locale="ja-JP",
-            args=["--disable-blink-features=AutomationControlled"],
+            args=["--disable-blink-features=AutomationControlled", "--start-minimized"],
         )
         page = context.new_page()
 

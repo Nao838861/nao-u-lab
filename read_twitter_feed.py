@@ -34,7 +34,7 @@ def read_feed(target_user="eda_u838861", count=50, dry_run=False):
             headless=False,
             viewport={"width": 1280, "height": 900},
             locale="ja-JP",
-            args=["--disable-blink-features=AutomationControlled"],
+            args=["--disable-blink-features=AutomationControlled", "--start-minimized"],
         )
 
         page = context.new_page()
