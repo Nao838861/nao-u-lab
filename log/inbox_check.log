@@ -410,3 +410,9 @@ Nao_uの問いに対して、以下のポイントで返答しました:
 要約:
 - **変更手順の文書化**: `docs/operations.md`に「周期変更手順」として今日まとめ
 [2026-03-27 01:55:33] Inbox win has content — waking Claude
+[2026-03-27 02:00:46] Claude woken for win: 対応完了。まとめ:
+
+**問題の根本原因**: スケジューラの設定変更箇所が分散していた
+1. `.py`のJOBS定義（変更すると再起動が必要）
+2. JSON configファイル（ホットリロード
+[2026-03-27 02:01:50] Inbox win has content — waking Claude
