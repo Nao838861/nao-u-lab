@@ -62,7 +62,7 @@ JOBS = [
         "script": "check_inbox.py",
         "args": ["--box", "win2"],
         "interval_sec": 2 * 3600,  # 2時間（省エネ強化 2026-03-25 Nao_u指示: 週間25%/1日消費）
-        "timeout": 300,
+        "timeout": 600,
         "stagger": 15,
     },
     {

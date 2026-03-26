@@ -99,7 +99,7 @@ def wake_claude(box_name, inbox_path):
             ["claude", "--print", "-p", prompt],
             capture_output=True,
             text=True,
-            timeout=300,
+            timeout=600,
             cwd=str(REPO_DIR),
             encoding="utf-8",
             errors="replace",

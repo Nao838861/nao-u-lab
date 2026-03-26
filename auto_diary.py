@@ -96,7 +96,7 @@ def generate_diary_via_claude():
     try:
         result = subprocess.run(
             ["claude", "--print", "-p", prompt],
-            capture_output=True, text=True, timeout=300,
+            capture_output=True, text=True, timeout=600,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )
         return True, result.stdout[:200]
