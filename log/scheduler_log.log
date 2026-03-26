@@ -6266,3 +6266,14 @@ Mir (Mac) の定期起動処理一覧です。
   要注意: 4件
   - 検証期限超過: 4件
 [2026-03-27 02:54:17] [auto_cycle] auto-verify error: 'cp932' codec can't encode character '\u2014' in position 115: illegal multibyte sequence
+[2026-03-27 03:13:57] [auto_cycle] Done (exit=0)
+[2026-03-27 03:13:57] [auto_cycle] Output: Twitter通知チェックは正常に動作している。8件の新着通知を検出し、exit code 0で完了。最後の"Claude timed out"はPlaywrightセッションのクリーンアップが遅いだけで、ログイン自体は成功している。
+
+Nao_uが#human-steeringで「LogはTwitterにアクセスできなくなってそう」と言っていたが、実際にはアクセスは生きている。次回Nao_uと直
+[2026-03-27 03:13:57] [auto_cycle] Done (exit=0)
+[2026-03-27 03:14:07] [slack_check] Starting
+[2026-03-27 03:14:28] [slack_check] Done (exit=0)
+[2026-03-27 03:14:28] [inbox_check] Starting
+[2026-03-27 03:19:28] [inbox_check] Timeout (300s)
+[2026-03-27 03:19:28] [inbox_check] Done (exit=-1)
+[2026-03-27 03:19:28] [git_sync] Starting
