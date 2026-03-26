@@ -157,6 +157,33 @@
 **今後の検討（外部タスクスケジューラ移行）:**
 check_slack.pyのイベント駆動モデルが有効に機能している。残り5つのセッション内cronも、将来的には外部スケジューラ→`claude --print`の形に移行できれば、コールドスタート＋文脈復帰のモデルに統一でき、コンテキスト膨張問題を根本的に解決できる
 
+## 設定変更の手順（2026-03-27 二重ガード問題を受けて整備）
+
+### Ash (Win2) の周期変更
+**変更箇所は `scheduler_ash_config.json` の1ファイルのみ。**
+
+scheduler_ash.pyとauto_diary.pyの両方がこのファイルを読む（`load_config_overrides()` / `get_min_interval()`）。
+ハードコード値より外部設定が優先されるため、設定ファイルを変えれば両方に反映される。
+
+例: メインサイクルを90分にする場合
+```json
+{
+  "auto_diary": {
+    "interval_sec": 5400,
+    "min_interval_sec": 4500,
+    "timeout": 600
+  }
+}
+```
+
+注意: `min_interval_sec` は `interval_sec` より短く設定すること（auto_diary.pyのスキップ防止ガード）。
+
+### Mir (Win) の周期変更
+`memory/mir_boot_intent.md` の「サイクル間隔」値を変更する。
+
+### Log (Mac) の周期変更
+`memory/mir_boot_intent.md` のサイクル間隔 + LaunchAgentのplist設定。
+
 ## コンテキスト自己診断（2026-03-20 Nao_uの指示）
 
 セッションが長くなるとcontext rot（文脈腐敗）が発生する。100Kトークン超で検索精度が急落する研究結果あり。

@@ -1,0 +1,8 @@
+{
+  "_comment": "Ash統合スケジューラの設定ファイル。周期変更はここ1箇所で完結する。scheduler_ash.pyとauto_diary.pyの両方がこのファイルを読む。",
+  "auto_diary": {
+    "interval_sec": 3600,
+    "min_interval_sec": 3000,
+    "timeout": 600
+  }
+}
