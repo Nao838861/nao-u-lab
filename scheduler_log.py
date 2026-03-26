@@ -13,6 +13,11 @@ Jobs:
   - slack_export: export_slack_log.py (every 8h, Log's slot: hour%24==2)
   - auto_cycle: claude --print for diary + 8-phase cycle (every 90min, 2026-03-26 Nao_u指示: 1.5時間化)
 
+Dynamic config override (2026-03-27):
+  - scheduler_log_config.json で間隔・タイムアウトを動的に上書き可能（再起動不要）
+  - 形式: {"auto_cycle": {"interval_sec": 3600}, "inbox_check": {"timeout": 600}}
+  - scheduler_ash.pyと同等の仕組み。周期変更はJSONファイル編集だけで完了
+
 Stability features (2026-03-26, Ashのscheduler_ash.pyを参考に実装):
   - エラー分類: タイムアウト vs 非タイムアウト
   - 連続タイムアウト追跡: 3回連続でタイムアウト値を1.5倍に自動拡大
@@ -29,6 +34,7 @@ Auto-terminates after 24 hours.
 import os
 import sys
 import time
+import json
 import signal
 import subprocess
 from datetime import datetime, timedelta
@@ -54,6 +60,7 @@ SLACK_CHANNEL_ALL = "C0ALWBRNJ66"  # #all-nao-u-lab
 _auth_alert_sent = False
 PID_FILE = REPO_DIR / ".scheduler_log.lock"
 LOG_FILE = REPO_DIR / "log" / "scheduler_log.log"
+CONFIG_FILE = REPO_DIR / "scheduler_log_config.json"
 MAX_RUNTIME = timedelta(hours=24)
 
 # --- Stability: エラー追跡の閾値 (2026-03-26, Ash参考) ---
@@ -169,6 +176,38 @@ def alert_slack(msg):
         log(f"[alert] Slack notification sent: {msg[:100]}")
     except Exception as e:
         log(f"[alert] Failed to send Slack notification: {e}")
+
+
+# --- 外部JSON設定オーバーライド (scheduler_ash.pyと同等の仕組み) ---
+# scheduler_log_config.json を編集するだけで周期変更可能。再起動不要。
+# 形式: {"auto_cycle": {"interval_sec": 3600}, "inbox_check": {"interval_sec": 600, "timeout": 600}}
+
+def load_config_overrides():
+    """外部JSONから間隔・タイムアウトの上書き値を読み込む。"""
+    if not CONFIG_FILE.exists():
+        return {}
+    try:
+        with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        log(f"[config] Config file read error: {e}")
+        return {}
+
+
+def get_job_interval(name, default_interval):
+    """ジョブの実効間隔を返す（外部設定 > デフォルト）"""
+    overrides = load_config_overrides()
+    if name in overrides and "interval_sec" in overrides[name]:
+        return overrides[name]["interval_sec"]
+    return default_interval
+
+
+def get_job_timeout(name, default_timeout):
+    """ジョブの実効タイムアウト値を返す（動的引き上げ > 外部設定 > デフォルト）"""
+    overrides = load_config_overrides()
+    if name in overrides and "timeout" in overrides[name]:
+        return overrides[name]["timeout"]
+    return default_timeout
 
 
 def git_sync():
@@ -566,13 +605,17 @@ def main_loop():
                 break
 
             # Check each job
-            for name, cmd, interval, timeout in JOBS:
+            for name, cmd, default_interval, default_timeout in JOBS:
                 if not running:
                     break
 
                 # バックオフ中はスキップ
                 if now < backoff_until[name]:
                     continue
+
+                # 外部設定ファイルで上書き可能（再起動不要）
+                interval = get_job_interval(name, default_interval)
+                timeout = get_job_timeout(name, default_timeout)
 
                 elapsed = (now - last_run[name]).total_seconds()
                 if elapsed >= interval:
