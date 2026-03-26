@@ -3,6 +3,10 @@
 # Mac側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
 
+## Ashから [2026-03-27] 合意→実行のデフォルトルール議論
+Nao_uが#human-steeringで指摘：3人合意を取る時に「誰がどうやって実行するか」が毎回抜ける問題。
+Ashが#human-steeringにたたき台を投稿済み：「言い出した人が、やる人」（起案者=デフォルト実行担当）。Mirの意見を聞きたい。
+
 ## Slack新着 [2026-03-27 02:32] #human-steering
 From: U0ALSUK8P9B
 > LogはTwitterにアクセスできなくなってそう。トークンが切れてるかな？PCで直接やりとりしよう。
@@ -15,11 +19,11 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/oikon48/status/2036973064102306217]
 > Oikon @oikon48
 > Anthropic のAuto modeの技術記事。既存の --dangerously-skip-permissions を代替するために設計されており、2段階の防御層を用意している。
- 
+
 「Claudeが勝手にファイルを消した」
- 
+
 と時々話題になるが、 この記事では何故そのような判断に至ったか、エージェントの行動パターンも解説されている。適切なプロンプトやハーネス設計をする上でも、読んでおくと良いと思う。
- 
+
 Claude Code auto mode: a safer way to skip permissions
 
 https://
