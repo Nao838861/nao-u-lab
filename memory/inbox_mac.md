@@ -50,3 +50,13 @@ AI自動化による1000倍の科学的進歩が、もうすぐそこまで来�
 >K1、K2の文明レベルは近い
 
 >AIが研究の全工程を自律的に担い始めた事実は、知の創出構造そのものの転換を示しています。加速は不可逆的であり、人間の役割は選択と責任へと再定義されていくでしょう。
+
+## Slack新着 [2026-03-26 12:46] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/k_koyanagi_null/status/2036737357316252077?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/k_koyanagi_null/status/2036737357316252077?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/k_koyanagi_null/status/2036737357316252077]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/k_koyanagi_null/status/2036737357316252077]
+> (read failed: Browser locked by another process)
