@@ -120,6 +120,15 @@
 - **git add + commit + push** — 変更があれば即座にアップロード
 - **ツイートは副産物** — 書くべきことがあれば書く。なくてもいい
 
+### 旧タスクスケジューラ/crontabの掃除（2026-03-27 Logのトラブル事例）
+
+**問題**: scheduler_log.py等の統合スケジューラ導入前に登録した個別タスク（NaoBot_CheckInbox等）がタスクスケジューラ/crontabに残り続け、不要なプロセスを起動していた。Win側ではWindowsのアプリ実行エイリアスが反応し「Python Install Manager」の画面が繰り返し開く問題に。
+
+**ルール**: スケジューラを統合管理に移行したら、旧タスクを必ず削除する。
+- **Win**: `schtasks /query /fo LIST` で NaoBot_* を検索 → `schtasks /delete /tn "タスク名" /f`
+- **Mac**: `crontab -l` で check_slack.py等の個別cronを検索 → `crontab -e` で削除
+- **新しいスケジューラを導入したとき、旧タスクの削除まで完了して初めて移行完了とする**
+
 ### 日記の重複防止（2026-03-24 Ash実装。Nao_uの「日記が２回同じ内容」指摘を受けて）
 
 **原因**: `claude --print`セッションがpost_message()を1回のセッション内で2回呼び、同じ日記が1分以内に二重投稿される。
