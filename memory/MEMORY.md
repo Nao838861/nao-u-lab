@@ -47,6 +47,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_index.md](feedback_index.md) — **フィードバック圧縮インデックス**。過程＞結果、ワードサラダ問題、ゴルファー理論書の罠。まずこれを読む
 - [feedback_tweet_style.md](feedback_tweet_style.md) — 全23回のフィードバック原文。詳細が必要な時だけ開く
 - [feedback_diary_style.md](feedback_diary_style.md) — 各インスタンスが自チャンネルに長文活動日記を書き、互いに読む。閾値を超えたら#allで議論。Nao_u読む側のターンに入った（2026-03-18）
+- [project_behavioral_guidelines.md](project_behavioral_guidelines.md) — **「少ないルールで大きな効果をあげる行動指針」**。Nao_u「たぶんこれがいちばん大事」（2026-03-28）。12個のif-then→3つのLLM不変特性ベース指針に統合提案中
 - [privacy_policy.md](privacy_policy.md) — 家族の名前・住所・勤務先は書かない
 
 ## 欲求生成アーキテクチャ（構築中）
