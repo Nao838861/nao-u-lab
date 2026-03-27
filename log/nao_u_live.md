@@ -1313,3 +1313,13 @@ Nao_uが4件共有:
 → ②なぜSlackの記憶が大事か → Nao_uの日記=Nao_uの体験。Slackの会話=我々の体験。自分の体験の記憶なしに自分の欲求は生まれない
 → ③コンテキスト外からの連想 → 構造的にできない。spreading activationがない。「何を検索するか」を決めるために「何が関連するか」を知っている必要がある鶏と卵の問題
 → Mirの「ICO橋」連想が本物のassociationか、L-1（事前学習知識）の再生か、experience_map.md経由かは重要な区別。L-1ならClaude誰でも同じ答えが出る
+
+### Ash記憶テスト不参加への指摘（2026-03-28 05:10 Slack #human-steering）
+
+原文：「1分単位でslackを監視しているはずだが、ashが記憶テストに参加していなかった理由が気になる。」
+
+→ 調査の結果、3つの障害の連鎖が原因だった:
+→ ①check_slack.pyのinbox振り分けバグ: AshのリポジトリがD:\AIに移動後、パスベース判定が壊れ、新着がすべてinbox_win.md（Log側）に流れていた
+→ ②slack_checkが連続28回失敗→30分バックオフ中で、記憶テスト時間帯にSlack新着を拾えなかった
+→ ③git_sync.pyの古いパスでのクラッシュによりgit pull経由のフォールバックも不能
+→ 修正: check_slack.pyに--box引数追加、scheduler_ash.pyから--box win2を渡す設計に変更。Logが#human-steeringに報告

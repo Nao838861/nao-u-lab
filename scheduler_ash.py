@@ -60,7 +60,7 @@ JOBS = [
     {
         "name": "slack_check",
         "script": "check_slack.py",
-        "args": [],
+        "args": ["--box", "win2"],
         "interval_sec": 1 * 60,  # 1分（即時反応のため）
         "timeout": 120,
         "stagger": 5,
