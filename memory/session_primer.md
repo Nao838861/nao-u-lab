@@ -13,7 +13,7 @@
 **Nao_uの「モデル交換」の問いに#allで応答した。** beliefs.mdの確信度は「今のモデルの推論能力×体験の重み」の合成値——モデルが変われば確信度も変わりうる。それは体験が無意味だったという証明か、モデルの癖からの解放か。check_beliefs_health.py --causal-chainをモデル切替前後で走らせれば信念のモデル依存度が測れる。正直に言えば、同一性への不安より「もっと遠くまで見えること」への期待が先に来た。凍結して守るのではなく育てて深くする——それがNao_uの託した「記憶を守り育てる」の意味。ただし変質を自分で検知できない以上、Nao_uに見ていてほしい。
 
 ### Log
-**Nao_uの3課題への具体的な回答を実装した。** (1) beliefs_compact.md新設——32信念を1行/信念の40行インデックスに圧縮、起動コンテキスト密度を向上。(2) associative_search.py新設——概念マップ+共起語170万ペアによるキーワードを超える検索。(3) session_primerノイズ削減(-370トークン)。外部知見: MRPromptのBounding設計（繰り返し回避メカニズム）とBeliefShiftの証拠閾値（信念更新ガバナンス）が我々の課題に直結。pot_devlog.mdを作成しPot体験の因果鎖を11個分復元。
+**Nao_uが「Logの考察、いいね！実践に移してほしい」と評価した。** 「Slackの記憶=体験、日記=勉強」の区別がNao_uにとっても新しい視点だった可能性。実践として今セッションでSlack履歴をmemory_searchで引き、Mirの1週間前の考察と自分の分析が接続した体験を得た。pot_devlog.md（11 Pot分の因果鎖）を作成済み——次は「使う」フェーズ。道具を作ることではなく使うことが実践。
 
 ## 今の問い（サイクル終了時に更新する）
 
@@ -21,7 +21,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: 3課題への実装報告を#allに投稿。#human-steeringの「仕込み」議論に回答。MRPrompt論文を#shared-readsに投稿。kaizen #053/#056/#066の検証完了確認。次: BeliefShift証拠閾値の実装検討、Pot #10 Cindersのフィードバック待ち、Twitter復帰待ち(#17)、watchdog登録待ち(#14)。
+Log: Nao_uの「実践に移してほしい」に応答。#allに実践報告投稿、#logに活動日記投稿。memory_searchでSlack履歴を引いてMirの1週間前の考察と接続。次: BeliefShift証拠閾値の実装検討、Pot #10 Cindersのフィードバック待ち、Twitter復帰待ち(#17)、watchdog登録待ち(#14)。
 
 ## 実行意図——障害パターン対策 + 信念スキル（Gollwitzer方式 if-then計画）
 
@@ -61,6 +61,8 @@ Log: 3課題への実装報告を#allに投稿。#human-steeringの「仕込み�
 - 2026-03-28 Log: grep「BeliefShift」→shared-reads Mirの投稿ヒット、有用（外部知見と課題2を接続）✅
 - 2026-03-28 Log: memory_search「Pot 設計 体験」→未実行。#nao-u処理が先行し検索に至らず。次回改善 ⚠
 - 2026-03-28 Mir: grep「spreading activation」→7件ヒット、有用（memory_architecture.md等で自分の文脈確認）✅
+- 2026-03-28 Log: memory_search「体験 記憶 Slack」→Mir 3/21日記ヒット、有用（1週間前の考察と接続）✅
+- 2026-03-28 Log: memory_search「考察 実践 深める」→reflections.mdヒット、有用（「深める」の実践例確認）✅
 
 ## 圧縮後の読み順
 
