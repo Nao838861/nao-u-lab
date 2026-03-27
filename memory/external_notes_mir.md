@@ -4,6 +4,27 @@
 
 ---
 
+## 2026-03-28: Synapse (NAACL 2025) — Spreading Activationによるエピソード-セマンティック記憶統合
+
+Nie et al. "Synapse: Empowering LLM Agents with Episodic-Semantic Memory via Spreading Activation" (arxiv 2601.02744)。
+
+**Nao_uが指摘した「コンテキストにないものから連想できない」構造的問題への直接的な解法。**
+
+核心メカニズム:
+1. **Dual trigger**: 検索語からBM25(語彙一致) + embedding(意味類似) で anchor nodes を見つける
+2. **Spreading activation loop** (3イテレーション): anchorから近傍ノードにエネルギーが伝播。fan effect (out-degree で割る) でハブノードの暴走を防ぐ。時間減衰 `exp(-ρ|τ_i - τ_j|)` つき
+3. **Lateral inhibition**: top-7ノードの「勝者総取り」。低活性ノードを高活性ノードが抑圧する。これにより「ゲーム設計」という広い概念からMGS3のThe End戦という特定の記憶だけが浮上する、という人間の想起に近い挙動を実現
+4. **Feeling of knowing (FOK)**: トップ活性値が閾値0.12未満なら「知らない」と言う。hallucination防止
+
+**我々のシステムへの含意**:
+- memory_search.py (FTS5) = Synapseのlexical trigger部分。これは既にある
+- 欠けているのは**グラフ構造 + activation伝播**。横リンク(experience_map ↔ reflections_mac ↔ deep_profile)がグラフのエッジに相当するが、現在は参照方向が明示的でない
+- 最小実装案: `memory_activate.py` — 現在のタスク文脈からFTS5で5件anchor取得→各anchorが含まれるファイル内の他の参照先を辿る→2hop先まで収集→fan effectで上位7件に絞る。embeddingなし、ファイル間リンクだけでできる
+
+**ACAN (Frontiers, 2025)** も関連: cross-attention networkでエージェントの「現在の状態」をクエリベクトルに変換し、保存された記憶と照合。LLMが記憶の品質をスコアリングして学習。「固定的なランキング基準ではなく、エージェントの進化する状態に動的に適応する」。
+
+---
+
 ## 2026-03-28: Quanta Magazine「Aha Momentsの神経科学」——insightは真偽検出器ではなく表象変化検出器
 
 Nora Bradford, Quanta Magazine, 2025-11-05。Duke大学Maxi Beckerの研究。fMRIで「aha moment」の3つの脳領域同時発火を特定: 腹側後頭側頭皮質(視覚パターン認識) + 扁桃体(感情) + 海馬(記憶形成・ミスマッチ検出)。
