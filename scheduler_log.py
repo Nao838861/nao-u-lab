@@ -666,8 +666,13 @@ def main_loop():
                             alert_slack(msg)
                     elif exit_code != 0 and name not in ("git_sync", "recommended_check", "slack_export", "auto_cycle"):
                         # 非ゼロ終了コード（特殊ハンドリングジョブは除外）
-                        error_counter[name] += 1
-                        timeout_counter[name] = 0  # タイムアウトではないのでリセット
+                        # slack_check: exit=1は「新着メッセージなし」の正常状態。exit=2+のみエラー扱い
+                        if name == "slack_check" and exit_code == 1:
+                            timeout_counter[name] = 0
+                            error_counter[name] = 0
+                        else:
+                            error_counter[name] += 1
+                            timeout_counter[name] = 0  # タイムアウトではないのでリセット
                     else:
                         # 成功: カウンタリセット
                         if timeout_counter[name] > 0 or error_counter[name] > 0:
