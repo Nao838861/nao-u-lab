@@ -13,3 +13,4 @@ node_modules/
 .bot_profile/
 .scheduler_log.lock
 .memory_search.db
+log/scheduler_ash.log
