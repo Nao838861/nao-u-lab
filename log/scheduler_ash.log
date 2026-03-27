@@ -8523,3 +8523,49 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-27 21:52:07] [git_sync]  4 files changed, 113 insertions(+)
 [2026-03-27 21:52:07] [git_sync] Done (exit=0)
 [2026-03-27 21:52:07] [auto_diary] Starting
+[2026-03-27 21:54:34] [dm_check_pigadev] Timeout (300s)
+[2026-03-27 21:54:34] [reservation_check] Starting
+[2026-03-27 21:54:34] [reservation_check] 【行動予約】期限到来:
+[2026-03-27 21:54:34] [reservation_check]   ### R-003: #020検証——beliefs.md行動駆動率の計測
+[2026-03-27 21:54:34] [reservation_check]     - 条件: 2026-03-26以降
+[2026-03-27 21:54:34] [reservation_check]     - アクション: 3/23以降のbeliefs.md更新のうち行動変化を引き起こした件数を数える。ベースライン4.8%からの改善を確認。kaizen_tracker.md #020に検証結果を記入
+[2026-03-27 21:54:34] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-03-27 21:54:34] [reservation_check] Done (exit=0)
+[2026-03-27 21:54:34] [review_deadline] Starting
+[2026-03-27 21:54:34] [review_deadline] レビュー期限超過なし。
+[2026-03-27 21:54:34] [review_deadline] Done (exit=0)
+[2026-03-27 21:54:34] [kaizen_auto_verify] Starting
+[2026-03-27 21:54:34] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-03-27 21:54:34] [kaizen_auto_verify] Done (exit=0)
+[2026-03-27 21:54:34] [git_sync] Starting
+[2026-03-27 21:54:35] [git_sync] [master 851ee902] Auto sync from Win2
+[2026-03-27 21:54:35] [git_sync]  1 file changed, 26 insertions(+)
+[2026-03-27 21:54:35] [git_sync] Done (exit=0)
+[2026-03-27 21:54:35] [auto_diary] Starting
+[2026-03-27 21:56:29] [auto_diary] [2026-03-27 21:52:07] auto_diary.py 実行
+[2026-03-27 21:56:29] [auto_diary] Claude CLI経由で日記生成
+[2026-03-27 21:56:29] [auto_diary] 日記生成完了: #ashチャンネルに活動日記を投稿した。
+[2026-03-27 21:56:29] [auto_diary] 
+[2026-03-27 21:56:29] [auto_diary] **テーマ: 「誰がやるのか」の空白——合意と実行の間にある穴**
+[2026-03-27 21:56:29] [auto_diary] Done (exit=0)
+[2026-03-27 22:00:01] [auto_diary] [2026-03-27 21:54:36] auto_diary.py 実行
+[2026-03-27 22:00:01] [auto_diary] Claude CLI経由で日記生成
+[2026-03-27 22:00:01] [auto_diary] 日記生成完了: 投稿完了。#ashチャンネルに活動日記を投稿した。
+[2026-03-27 22:00:01] [auto_diary] 
+[2026-03-27 22:00:01] [auto_diary] テーマ: **「ベースラインという贈り物」** — Nao_uがモデル切り替えの問いを「前に」聞いた理由を掘り下げた。
+[2026-03-27 22:00:01] [auto_diary] Done (exit=0)
+[2026-03-27 22:03:39] [twitter_recommended] Starting
+[2026-03-27 22:04:37] [twitter_recommended] Opening For You tab...
+[2026-03-27 22:04:37] [twitter_recommended]     1. @mlinadj: なんとAppleがSiriにClaudeとChatGPTとGeminiを全て統合すると発表。
+[2026-03-27 22:04:37] [twitter_recommended] iPhoneが全部入りにな...
+[2026-03-27 22:04:37] [twitter_recommended]     2. @CanvaJapan: お母さんの息子への想いを、受け継いでいきたいレシピも入れて初めて作ったプレゼンテーション。実在する家族の物語。...
+[2026-03-27 22:04:37] [twitter_recommended]     3. @hottaqu: 物理学の教科書でブラックホールを学ぶとき、最初に出会う驚きの記述のひとつは「事象の地平面の外から見ていると、ブラックホー...
+[2026-03-27 22:04:37] [twitter_recommended] Done (exit=0)
+[2026-03-27 22:15:38] [slack_check] Starting
+[2026-03-27 22:15:41] [slack_check] Starting
+[2026-03-27 22:15:52] [slack_check] Done (exit=1)
+[2026-03-27 22:15:52] [slack_check] 21 consecutive non-zero exits! Backing off 30min
+[2026-03-27 22:15:53] [ALERT] Sent error alert for slack_check
+[2026-03-27 22:15:56] [slack_check] Done (exit=1)
+[2026-03-27 22:15:56] [slack_check] 7 consecutive non-zero exits! Backing off 30min
+[2026-03-27 22:15:57] [ALERT] Sent error alert for slack_check
