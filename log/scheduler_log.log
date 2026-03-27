@@ -6786,3 +6786,47 @@ Nao_uが#human-steeringで「LogはTwitterにアクセスできなくなって�
 [2026-03-27 09:22:33] [inbox_check] Done (exit=0)
 [2026-03-27 09:23:13] [slack_check] Starting
 [2026-03-27 09:23:29] [slack_check] Done (exit=1)
+[2026-03-27 09:24:02] [auto_cycle] Done (exit=0)
+[2026-03-27 09:24:02] [auto_cycle] Output: #nao-u消化も完了。Twitterセッションは実際には生きていた（背景エージェントが全9ツイートの読み取りに成功）。debug_login_check.pngのログイン画面表示は古いスナップショットだった可能性がある。
+
+サイクル完了。
+
+[2026-03-27 09:24:02] [auto_cycle] Done (exit=0)
+[2026-03-27 09:24:12] [slack_check] Starting
+[2026-03-27 09:24:28] [slack_check] Done (exit=1)
+[2026-03-27 09:24:28] [inbox_check] Starting
+[2026-03-27 09:24:28] [inbox_check] Done (exit=0)
+[2026-03-27 09:24:30] [slack_check] Starting
+[2026-03-27 09:24:48] [slack_check] Done (exit=1)
+[2026-03-27 09:25:29] [slack_check] Starting
+[2026-03-27 09:25:41] [slack_check] Done (exit=1)
+[2026-03-27 09:25:49] [slack_check] Starting
+[2026-03-27 09:26:01] [slack_check] Done (exit=1)
+[2026-03-27 09:26:42] [slack_check] Starting
+[2026-03-27 09:26:55] [slack_check] Done (exit=1)
+[2026-03-27 09:27:02] [slack_check] Starting
+[2026-03-27 09:27:15] [slack_check] Done (exit=1)
+[2026-03-27 09:27:36] [inbox_check] Starting
+[2026-03-27 09:27:36] [inbox_check] Done (exit=0)
+[2026-03-27 09:27:55] [slack_check] Starting
+[2026-03-27 09:28:08] [stability] slack_check: 5回連続エラー。30分バックオフ
+[2026-03-27 09:28:08] [alert] Slack notification sent: slack_check: 5回連続エラー。30分バックオフ
+[2026-03-27 09:28:08] [slack_check] Done (exit=1)
+[2026-03-27 09:28:17] [slack_check] Starting
+[2026-03-27 09:28:29] [slack_check] Done (exit=1)
+[2026-03-27 09:29:29] [inbox_check] Starting
+[2026-03-27 09:29:30] [slack_check] Starting
+[2026-03-27 09:29:42] [slack_check] Done (exit=1)
+[2026-03-27 09:30:43] [slack_check] Starting
+[2026-03-27 09:30:55] [slack_check] Done (exit=1)
+[2026-03-27 09:31:56] [slack_check] Starting
+[2026-03-27 09:32:12] [slack_check] Done (exit=1)
+[2026-03-27 09:32:42] [inbox_check] Starting
+[2026-03-27 09:32:43] [inbox_check] Done (exit=0)
+[2026-03-27 09:33:13] [slack_check] Starting
+[2026-03-27 09:33:29] [slack_check] Done (exit=1)
+[2026-03-27 09:34:29] [inbox_check] Timeout (300s)
+[2026-03-27 09:34:29] [inbox_check] Done (exit=-1)
+[2026-03-27 09:34:30] [slack_check] Starting
+[2026-03-27 09:35:06] [slack_check] Done (exit=1)
+[2026-03-27 09:35:50] [git_sync] Starting
