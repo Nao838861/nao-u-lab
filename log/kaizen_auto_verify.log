@@ -137,3 +137,11 @@
   ❌ `python game/Pot/Pot006_witness.py`
       /bin/sh: python: command not found
   → 総合: 一部失敗あり
+
+=== 自動検証実行 [2026-03-28 03:11:42] ===
+
+### #053: Pot #6 witness.py — テキスト内容がメカニクスそのものになる壺（lateral information設計）
+  状態: 部分検証済み（Nao_uフィードバック待ち） / 期限: 2026-03-28
+  ❌ `python game/Pot/Pot006_witness.py`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
