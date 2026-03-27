@@ -8567,3 +8567,54 @@ nao-u-labの内省・文
   健全: 32件
   要注意: 0件
 [2026-03-28 08:03:06] [auto_cycle] Auto-verify: no targets
+[2026-03-28 08:17:48] [auto_cycle] Done (exit=0)
+[2026-03-28 08:17:48] [auto_cycle] Output: 自律サイクル完了。
+
+**実行サマリー:**
+- inbox: 空（処理不要）
+- #nao-u: 前サイクルで全リンク処理済み。新着なし
+- Slack全チャンネル: 前サイクル以降の新着なし
+- pending_requests: #14 watchdog、#17 Twitter再ログインがNao_u対応待ち
+- 検証: #053(Pot006)、#056(chain_walk 50%>30%
+[2026-03-28 08:17:48] [auto_cycle] Done (exit=0)
+[2026-03-28 08:17:58] [slack_check] Starting
+[2026-03-28 08:18:21] [slack_check] Done (exit=1)
+[2026-03-28 08:18:21] [inbox_check] Starting
+[2026-03-28 08:18:22] [inbox_check] Done (exit=0)
+[2026-03-28 08:18:22] [recommended_check] Starting
+[2026-03-28 08:18:22] [recommended_check] Hour condition met, running read_twitter_recommended.py
+[2026-03-28 08:19:37] [recommended_check] Done (exit=0)
+[2026-03-28 08:19:37] [recommended_check] Done (exit=0)
+[2026-03-28 08:19:47] [slack_check] Starting
+[2026-03-28 08:20:05] [slack_check] Done (exit=0)
+[2026-03-28 08:20:05] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-28 08:20:05] [inbox_check] Starting
+[2026-03-28 08:23:53] [inbox_check] Done (exit=0)
+[2026-03-28 08:24:04] [slack_check] Starting
+[2026-03-28 08:24:23] [slack_check] Done (exit=0)
+[2026-03-28 08:24:23] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-28 08:24:23] [inbox_check] Starting
+[2026-03-28 08:24:24] [inbox_check] Done (exit=0)
+[2026-03-28 08:25:24] [slack_check] Starting
+[2026-03-28 08:25:45] [slack_check] Done (exit=1)
+[2026-03-28 08:26:46] [slack_check] Starting
+[2026-03-28 08:27:08] [slack_check] Done (exit=1)
+[2026-03-28 08:28:08] [slack_check] Starting
+[2026-03-28 08:28:25] [slack_check] Done (exit=1)
+[2026-03-28 08:29:25] [slack_check] Starting
+[2026-03-28 08:29:40] [slack_check] Done (exit=1)
+[2026-03-28 08:29:40] [inbox_check] Starting
+[2026-03-28 08:29:41] [inbox_check] Done (exit=0)
+[2026-03-28 08:30:42] [slack_check] Starting
+[2026-03-28 08:31:01] [slack_check] Done (exit=0)
+[2026-03-28 08:31:01] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-28 08:31:01] [inbox_check] Starting
+[2026-03-28 08:36:01] [inbox_check] Timeout (300s)
+[2026-03-28 08:36:01] [inbox_check] Done (exit=-1)
+[2026-03-28 08:36:11] [slack_check] Starting
+[2026-03-28 08:36:32] [slack_check] Done (exit=0)
+[2026-03-28 08:36:32] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-28 08:36:32] [inbox_check] Starting
+[2026-03-28 08:36:33] [stability] inbox_check: 正常復帰 (timeout=1, errors=1 → リセット)
+[2026-03-28 08:36:33] [inbox_check] Done (exit=0)
+[2026-03-28 08:36:33] [git_sync] Starting
