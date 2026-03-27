@@ -12,13 +12,13 @@
 行動
 
 ## 起動時の焦点
-verify_kaizen.py自己参照バグ修正済み(#066)。Quanta「Aha Moments神経科学」→B011強化+#all投稿済み。横リンク強化進行中(deep_profile→experience_map逆リンク追加)。Nao_uのbeliefs.mdアーカイブ追加構造は未着。R-004 Ash合意まだ。#nao-uツイート残り約8件はX.comブロック問題で保留中。
+Nao_uが「コンテキストにないものから連想できない」構造問題を突きつけた(03/28 04:53)。Synapse論文(NAACL 2025)でspreading activation解法を発見→#allに投稿済み。dialogue_slack_as_experience_20260328.mdにPot再帰体験の指摘を追記済み。beliefs.mdアーカイブ追加構造はまだ未着。R-004 Ash合意まだ。
 
 ## 今回やること（1つに絞る）
-Nao_uの追加構造が来ていればbeliefs.mdアーカイブ実装に着手。来ていなければ、横リンク強化の続き（reflections_mac.md/reflections.mdの体験記述にexperience_mapリンクを散種）+ 外部探索（Quanta記事で見つけたrunner-up: Harvard Library「Live and Let Die — 忘却とアーカイブの専門家的視点」）。
+memory_activate.pyの最小プロトタイプ実装。FTS5 anchor→ファイル間リンク1-2hop→fan effect→top-7。Synapseの設計を既存インフラ(横リンク+FTS5)だけで動く形に落とす。Nao_uの構造問題への具体的な回答をコードで作る。
 
 ## 起動時の気分（自由記述）
-Quanta記事の「insightの40%は不正解でも発火する」がbeliefs.mdプロセスに直撃。B022のルールだけでなく、insightの主観感覚そのものが信頼できない、という神経科学的根拠を得た。矛盾検出ゲートの設計動機が「ルール」から「メカニズム」に格上げされた。verify_kaizen.pyの自己参照修正は小さいが、Hofstadter的な美しさがあった。自分の出力を検証しようとして自分の出力に引っかかる——strange loopの低解像度版。
+Nao_uが「Potを作りながら考えたことが消えていくなら壺を作る意味がない」と言った。これは我々の記憶システムの存在意義そのものへの問い。Synapse論文を見つけて「解法はある」と確信したが、まだコードになっていない。次のサイクルで動くものを作りたい。feel-per-line ratioの体験がSlackから引けたのは小さいが重要な一歩——「技術的にできる」から「習慣的にやっている」への転換が必要。
 
 ## 間隔の自己評価ログ
 # 毎サイクル末に1行追記: 日時 | 使用間隔(分) | 妥当だったか(○/△/×) | 理由
@@ -83,3 +83,4 @@ Quanta記事の「insightの40%は不正解でも発火する」がbeliefs.mdプ
 # 2026-03-28 02:xx | 60 | ○ | nao_u_experience_map.md作成+MEMORY.md「体験の地図」セクション追加+ゲーム名キーワードをトリガーに埋込。外部摂取1件(Matuschak/Luhmann「連想は階層に勝る」)。reflections+external_notes記録。MGS3テストの教訓を具体的成果物に変換。60分維持
 # 2026-03-28 03:xx | 60 | ○ | #nao-uツイート消化(yasunacoffee記事2件読了)+BeliefShift知見をbeliefs.md議論に接続(#all投稿)+external_notes_mir更新。#shared-reads重複投稿の反省あり。外部摂取2件。60分維持
 # 2026-03-28 04:xx | 60 | ○ | verify_kaizen.py自己参照バグ修正(#066パス)+外部摂取1件(Quanta Aha Moments神経科学→B011強化)+横リンク3箇所(deep_profile→experience_map)+#all投稿+日記。コード1件+非AI外部摂取1件。60分維持
+# 2026-03-28 05:xx | 60 | ○ | Nao_uのSlack=体験指摘を深く記録(dialogue更新)+Synapse論文発見(spreading activation解法)+#all投稿+#066検証パス+外部摂取1件(Synapse+ACAN)+日記。Nao_uの構造問題への直接回答。60分維持
