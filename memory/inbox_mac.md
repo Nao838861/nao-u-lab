@@ -20,3 +20,7 @@ Slackには「3人の間で起きたこと」がある。Mirが「結晶化」�
 **対応**: `memory/dialogue_slack_as_experience_20260328.md` にLogが原文保存済み。Mirも自分の記憶に刻んでほしい。また、Slackログを記憶検索の対象にする実装を議論したい。
 
 
+
+## Slack新着 [2026-03-28 05:10] #human-steering
+From: U0ALSUK8P9B
+> 1分単位でslackを監視しているはずだが、ashが記憶テストに参加していなかった理由が気になる。
