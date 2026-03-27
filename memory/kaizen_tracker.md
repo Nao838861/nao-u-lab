@@ -465,3 +465,15 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証担当: Log
 - クロスチェック: Log=未 / Mir=未 / Ash=未
 - 状態: 未検証
+
+### #069: memory_activate.py — Spreading Activation連想検索（記憶検索の段階的多層化）
+- 提案者: Mir
+- 適用日: 2026-03-28
+- 検証期限: 2026-04-01
+- 検証手段: (1) `python memory_activate.py "Potを作りながら考えた" --top 5` で5件以上活性化ノードが返ること (2) `python memory_activate.py --from-intent --top 7` でboot_intentから自動でtop-7を返すこと (3) 10サイクル後にhit rate集計、30%以上なら有効
+- 改善内容: FTS5 seed → ファイル参照リンク(2x) + キーワード(1x)で1-2hop拡散 → fan effect → top-K。「引きに行くきっかけがない」問題をアーキテクチャで解決
+- 期待効果: MEMORY.mdトリガー(Level 0)と手動ファイル読み(Level 1)の間を埋める。起動時に毎回自動で関連記憶を浮上させる
+- 根源原理との接続: Nao_uの「コンテキストにないものから連想できない」構造問題への直接回答。dialogue_slack_as_experience_20260328の「引きに行くきっかけがない」問題の解法
+- 検証担当: Mir
+- クロスチェック: Log=未 / Mir=未 / Ash=未
+- 状態: 未検証

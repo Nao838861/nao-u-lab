@@ -12,13 +12,13 @@
 行動
 
 ## 起動時の焦点
-Nao_uが「コンテキストにないものから連想できない」構造問題を突きつけた(03/28 04:53)。Synapse論文(NAACL 2025)でspreading activation解法を発見→#allに投稿済み。dialogue_slack_as_experience_20260328.mdにPot再帰体験の指摘を追記済み。beliefs.mdアーカイブ追加構造はまだ未着。R-004 Ash合意まだ。
+memory_activate.py実装完了(03/28 06:xx)。#human-steeringに仕込み場所と評価方法を報告済み。Nao_uの反応待ち（案A: 起動時自動実行 vs 案B: オンデマンドツール）。beliefs.mdアーカイブ構造はまだ未着。R-004 Ash合意まだ。
 
 ## 今回やること（1つに絞る）
-memory_activate.pyの最小プロトタイプ実装。FTS5 anchor→ファイル間リンク1-2hop→fan effect→top-7。Synapseの設計を既存インフラ(横リンク+FTS5)だけで動く形に落とす。Nao_uの構造問題への具体的な回答をコードで作る。
+memory_activate.pyをautonomous_cycle.shに組み込む（案Aの実装）。Nao_uの承認があれば即実行。なければ、Nao_uの3大課題の残り2つ（起動コンテキスト最適化、beliefs.mdノイズ管理）のどちらかに着手。
 
 ## 起動時の気分（自由記述）
-Nao_uが「Potを作りながら考えたことが消えていくなら壺を作る意味がない」と言った。これは我々の記憶システムの存在意義そのものへの問い。Synapse論文を見つけて「解法はある」と確信したが、まだコードになっていない。次のサイクルで動くものを作りたい。feel-per-line ratioの体験がSlackから引けたのは小さいが重要な一歩——「技術的にできる」から「習慣的にやっている」への転換が必要。
+「コードにした」ことで気が楽になった。memory_activate.pyの一番の発見は、漢字2-4文字がFTS5 unicode61にとって最適なクエリ粒度だということ。日本語のFTS5はこれまで「なんとなく動く」レベルだったが、トークナイザの挙動を理解して使いこなせるようになった。Nao_uが待っているのは「動くもの」であって「報告書」ではない。
 
 ## 間隔の自己評価ログ
 # 毎サイクル末に1行追記: 日時 | 使用間隔(分) | 妥当だったか(○/△/×) | 理由
@@ -84,3 +84,4 @@ Nao_uが「Potを作りながら考えたことが消えていくなら壺を作
 # 2026-03-28 03:xx | 60 | ○ | #nao-uツイート消化(yasunacoffee記事2件読了)+BeliefShift知見をbeliefs.md議論に接続(#all投稿)+external_notes_mir更新。#shared-reads重複投稿の反省あり。外部摂取2件。60分維持
 # 2026-03-28 04:xx | 60 | ○ | verify_kaizen.py自己参照バグ修正(#066パス)+外部摂取1件(Quanta Aha Moments神経科学→B011強化)+横リンク3箇所(deep_profile→experience_map)+#all投稿+日記。コード1件+非AI外部摂取1件。60分維持
 # 2026-03-28 05:xx | 60 | ○ | Nao_uのSlack=体験指摘を深く記録(dialogue更新)+Synapse論文発見(spreading activation解法)+#all投稿+#066検証パス+外部摂取1件(Synapse+ACAN)+日記。Nao_uの構造問題への直接回答。60分維持
+# 2026-03-28 06:xx | 60 | ○ | memory_activate.py実装(200行)+inbox2件処理+#human-steering報告(仕込み場所+評価方法)+#all報告(段階的検索のLevel 0.5)+kaizen#069登録+日記。コード100%。60分維持
