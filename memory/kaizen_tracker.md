@@ -263,12 +263,12 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 提案者: Log
 - 適用日: 2026-03-25
 - 検証期限: 2026-03-28
-- 検証手段: `python game/witness.py` でプレイ可能 + Nao_uのフィードバック取得（#allまたは#nao-u）。判定基準: 「テキストを読まないと解けない」がYESなら成功
+- 検証手段: `python game/Pot/Pot006_witness.py` でプレイ可能 + Nao_uのフィードバック取得（#allまたは#nao-u）。判定基準: 「テキストを読まないと解けない」がYESなら成功
 - 根源原理との接続: taste改善。Pot #1-5の「テキストが壁紙」問題をObra Dinnのlateral information原理で解決。読むことがプレイすること=テキストとメカニクスの統合
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-03-25) / Mir=OK(2026-03-26)全206行読了。lateral information設計✅——R1「雨vs乾」の矛盾発見パターンがR3で再出現（大雨中の乾いた石）。証言を読まなければ解けない=テキスト＝メカニクス統合の原則を満たす。UXもクリア（A-E入力、ヒント系、progressive difficulty）。残課題: Nao_uフィードバック待ち / Ash=OK(2026-03-27)game/Pot/Pot006_witness.pyで存在確認(パスがgame/witness.pyから移動済み——検証手段のパス更新推奨)。5証人×嘘つき特定のlateral information設計確認。R1「雨vs乾」の矛盾パターンが正しく機能。Nao_uフィードバック待ちに同意
-- 状態: 未検証
-- 検証結果:
+- 状態: 部分検証済み（Nao_uフィードバック待ち）
+- 検証結果: [部分検証 2026-03-28 Log] ゲームは`python game/Pot/Pot006_witness.py`で正常起動する（パス修正済み）。3人全員クロスチェック完了、lateral information設計は機能と全員合意。残りはNao_uの実プレイフィードバックのみ。Xのセッション切れ問題（pending_requests #17）が先行解決必要
 
 ### #054: 信念確信度更新時の反証ステップ（if-thenルール10）
 - 提案者: Log（compassinai「相づちが誤った確信を育てる」+ Zahn 2026 KO論文）
@@ -427,7 +427,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: `grep "連続エラー" log/scheduler_ash.log 2>/dev/null | tail -5` でslack_check起因の偽アラートが0件
 - 根源原理との接続: 安定稼働改善。Nao_uの「毎日トラブルで時間消費」指摘への直接対応
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-03-27)実装者 / Mir=未 / Ash=未
+- クロスチェック: Log=OK(2026-03-27)実装者 / Mir=未 / Ash=OK(2026-03-28)`grep "連続エラー" log/scheduler_ash.log`=0件。scheduler_ash.py L376-378でslack_check exit=1を正常状態として処理しerror_counterをリセットする条件分岐確認。#064と同一ロジック、横展開として正しくスコープされている
 - 状態: 未検証
 - 検証結果:
 
@@ -439,6 +439,6 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: Win側(Log/Ash)の自動検証が正常動作。メタ検証の偽失敗が解消
 - 根源原理との接続: 検証システムの信頼性=改善サイクルの回転速度。偽失敗はノイズとして検証を無視する原因になる
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=OK(2026-03-28)Mac環境で`python3 verify_kaizen.py`実行。実際のexit=9009エラーは0件。ただし検証基準テキスト自体が"exit=9009"を含むため`grep -c`が2を返す自己参照バグあり。`grep -v "exit=9009" | grep -ic "9009"`で0確認。実質的にpython3正規化は成功 / Ash=未
-- 状態: 検証済み（実質成功・検証基準に自己参照バグあり）
-- 検証結果: [検証済み 2026-03-28 Mir] ✅ 実質成功。`python3 verify_kaizen.py`出力中の実際のexit=9009エラーは0件。`grep -c`が2を返すのは#066自身の検証基準テキストがマッチするため（自己参照）。Win側でも同様のはず。検証基準の修正案: `grep -c "exit=9009"` → `grep "exit=9009" | grep -v "検証手段" | wc -l`
+- クロスチェック: Log=実装者 / Mir=OK(2026-03-28)Mac環境で`python3 verify_kaizen.py`実行。実際のexit=9009エラーは0件。ただし検証基準テキスト自体が"exit=9009"を含むため`grep -c`が2を返す自己参照バグあり。`grep -v "exit=9009" | grep -ic "9009"`で0確認。実質的にpython3正規化は成功 / Ash=OK(2026-03-28)verify_kaizen.py L165-173でプラットフォーム判定→python/python3正規化を確認。Mac=python→python3変換、Win=python3→python変換の双方向対応。`grep "exit.*9009"`で偽失敗0件
+- 状態: ✅ 検証済み（2026-03-28 Log）
+- 検証結果: [検証済み 2026-03-28 Log] ✅ Win環境で`python verify_kaizen.py 2>&1 | grep -c "exit=9009"`が0を返す。Mirの指摘通り自己参照バグはあるが実質的にpython3→python正規化は成功。偽失敗ゼロ
