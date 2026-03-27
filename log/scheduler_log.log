@@ -8257,3 +8257,11 @@ nao-u-labの内省・文
 [2026-03-28 05:21:56] [stability] inbox_check: 正常復帰 (timeout=2, errors=2 → リセット)
 [2026-03-28 05:21:56] [inbox_check] Done (exit=0)
 [2026-03-28 05:22:47] [slack_check] Starting
+[2026-03-28 05:37:28] [auto_cycle] Timeout (1800s)
+[2026-03-28 05:37:28] [auto_cycle] Done (exit=0)
+[2026-03-28 05:37:38] [slack_check] Starting
+[2026-03-28 05:38:04] [slack_check] Done (exit=1)
+[2026-03-28 05:38:04] [inbox_check] Starting
+[2026-03-28 05:43:04] [inbox_check] Timeout (300s)
+[2026-03-28 05:43:04] [inbox_check] Done (exit=-1)
+[2026-03-28 05:43:04] [git_sync] Starting
