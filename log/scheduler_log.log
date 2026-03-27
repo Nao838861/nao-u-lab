@@ -6857,3 +6857,56 @@ Nao_uが#human-steeringで「LogはTwitterにアクセスできなくなって�
 [2026-03-27 09:44:48] [slack_check] Starting
 [2026-03-27 09:46:25] [slack_check] Done (exit=0)
 [2026-03-27 09:46:35] [git_sync] Starting
+[2026-03-27 09:46:37] [git_sync] Committed and pushed
+[2026-03-27 09:47:27] [slack_check] Starting
+[2026-03-27 09:48:27] [slack_check] Done (exit=0)
+[2026-03-27 09:48:37] [inbox_check] Starting
+[2026-03-27 09:48:37] [inbox_check] Done (exit=0)
+[2026-03-27 09:49:28] [slack_check] Starting
+[2026-03-27 09:49:41] [inbox_check] Starting
+[2026-03-27 09:49:41] [slack_check] Done (exit=1)
+[2026-03-27 09:49:41] [inbox_check] Done (exit=0)
+[2026-03-27 09:50:41] [slack_check] Starting
+[2026-03-27 09:50:54] [slack_check] Done (exit=1)
+[2026-03-27 09:51:54] [slack_check] Starting
+[2026-03-27 09:52:07] [slack_check] Done (exit=1)
+[2026-03-27 09:53:08] [slack_check] Starting
+[2026-03-27 09:53:20] [slack_check] Done (exit=1)
+[2026-03-27 09:53:40] [inbox_check] Starting
+[2026-03-27 09:53:41] [inbox_check] Done (exit=0)
+[2026-03-27 09:54:22] [slack_check] Starting
+[2026-03-27 09:54:34] [slack_check] Done (exit=1)
+[2026-03-27 09:54:44] [inbox_check] Starting
+[2026-03-27 09:54:45] [inbox_check] Done (exit=0)
+[2026-03-27 09:55:35] [slack_check] Starting
+[2026-03-27 09:55:47] [slack_check] Done (exit=1)
+[2026-03-27 09:56:48] [slack_check] Starting
+[2026-03-27 09:57:00] [slack_check] Done (exit=1)
+[2026-03-27 09:57:57] [slack_check] Starting
+[2026-03-27 09:58:01] [slack_check] Starting
+[2026-03-27 09:58:10] [stability] slack_check: 6回連続エラー。30分バックオフ
+[2026-03-27 09:58:10] [alert] Slack notification sent: slack_check: 6回連続エラー。30分バックオフ
+[2026-03-27 09:58:10] [slack_check] Done (exit=1)
+[2026-03-27 09:58:13] [slack_check] Done (exit=1)
+[2026-03-27 09:58:43] [inbox_check] Starting
+[2026-03-27 09:58:44] [inbox_check] Done (exit=0)
+[2026-03-27 09:59:14] [slack_check] Starting
+[2026-03-27 09:59:30] [slack_check] Done (exit=1)
+[2026-03-27 09:59:51] [inbox_check] Starting
+[2026-03-27 09:59:52] [inbox_check] Done (exit=0)
+[2026-03-27 10:00:31] [slack_check] Starting
+[2026-03-27 10:01:03] [slack_check] Done (exit=0)
+[2026-03-27 10:02:03] [slack_check] Starting
+[2026-03-27 10:02:20] [slack_check] Done (exit=1)
+[2026-03-27 10:03:20] [slack_check] Starting
+[2026-03-27 10:03:38] [slack_check] Done (exit=1)
+[2026-03-27 10:03:48] [inbox_check] Starting
+[2026-03-27 10:03:49] [inbox_check] Done (exit=0)
+[2026-03-27 11:04:29] [slack_check] Starting
+[2026-03-27 12:07:23] [slack_check] Starting
+[2026-03-27 12:08:06] [stability] slack_check: 正常復帰 (timeout=0, errors=6 → リセット)
+[2026-03-27 12:08:06] [slack_check] Done (exit=0)
+[2026-03-27 12:08:06] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-27 12:08:06] [inbox_check] Starting
+[2026-03-27 12:08:07] [inbox_check] Done (exit=0)
+[2026-03-27 12:08:07] [git_sync] Starting

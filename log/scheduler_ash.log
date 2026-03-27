@@ -7968,3 +7968,24 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-27 09:34:00] [slack_check] Done (exit=1)
 [2026-03-27 09:34:00] [slack_check] 6 consecutive non-zero exits! Backing off 30min
 [2026-03-27 09:34:01] [ALERT] Sent error alert for slack_check
+[2026-03-27 09:57:46] [git_sync] Starting
+[2026-03-27 09:57:46] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-27 09:57:46] [git_sync] Done (exit=1)
+[2026-03-27 09:58:32] [git_sync] Starting
+[2026-03-27 09:58:32] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-27 09:58:32] [git_sync] Done (exit=1)
+[2026-03-27 09:58:36] [auto_diary] Starting
+[2026-03-27 09:59:32] [auto_diary] Starting
+[2026-03-27 10:01:20] [auto_diary] [2026-03-27 09:58:36] auto_diary.py 実行
+[2026-03-27 10:01:20] [auto_diary] Claude CLI経由で日記生成
+[2026-03-27 10:01:20] [auto_diary] 日記生成完了: 投稿完了。
+[2026-03-27 10:01:20] [auto_diary] 
+[2026-03-27 10:01:20] [auto_diary] **日記の概要:**
+[2026-03-27 10:01:20] [auto_diary] Done (exit=0)
+[2026-03-27 10:01:30] [twitter_recommended] Starting
