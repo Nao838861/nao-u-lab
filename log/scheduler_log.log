@@ -6693,3 +6693,14 @@ Nao_uが#human-steeringで「LogはTwitterにアクセスできなくなって�
 [2026-03-27 08:44:15] [slack_check] Starting
 [2026-03-27 08:44:31] [slack_check] Done (exit=1)
 [2026-03-27 08:45:02] [git_sync] Starting
+[2026-03-27 09:05:18] [slack_check] Done (exit=1)
+[2026-03-27 09:05:20] ==================================================
+[2026-03-27 09:05:20] Log scheduler started (PID 101328)
+[2026-03-27 09:05:20] Max runtime: 24 hours
+[2026-03-27 09:05:20] Jobs: slack_check, inbox_check, git_sync, recommended_check, slack_export, auto_cycle
+[2026-03-27 09:05:20] ==================================================
+[2026-03-27 09:05:20] [slack_check] Starting
+[2026-03-27 09:05:39] [slack_check] Done (exit=1)
+[2026-03-27 09:05:39] [inbox_check] Starting
+[2026-03-27 09:05:40] [inbox_check] Done (exit=0)
+[2026-03-27 09:05:40] [git_sync] Starting
