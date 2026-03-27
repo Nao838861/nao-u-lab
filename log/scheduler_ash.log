@@ -8831,3 +8831,13 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-28 05:15:43] [slack_check] Done (exit=0)
 [2026-03-28 05:15:43] [slack_check] New messages detected -> triggering inbox_check immediately
 [2026-03-28 05:15:43] [inbox_check] Starting
+[2026-03-28 05:20:08] [inbox_check] Inbox win2 has content
+[2026-03-28 05:20:08] [inbox_check] Done (exit=0)
+[2026-03-28 05:20:18] [slack_check] Starting
+[2026-03-28 05:20:46] [slack_check] Done (exit=1)
+[2026-03-28 05:21:45] [inbox_check] Inbox win2 has content
+[2026-03-28 05:21:45] [inbox_check] Done (exit=0)
+[2026-03-28 05:21:46] [slack_check] Starting
+[2026-03-28 05:21:55] [slack_check] Starting
+[2026-03-28 05:22:09] [slack_check] Done (exit=1)
+[2026-03-28 05:22:18] [slack_check] Done (exit=1)
