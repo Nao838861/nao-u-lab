@@ -666,3 +666,9 @@ Nao_uの問いに対して、以下のポイントで返答しました:
 **Nao_uのメッセージ（2026-03-28 05:41, 05:54）は前サイクルで処理済み。**
 
 
+[2026-03-28 06:32:58] Inbox win has content — waking Claude
+[2026-03-28 06:38:58] Inbox win has content — waking Claude
+[2026-03-28 06:43:57] Claude woken for win: 処理完了。まとめ:
+
+**#human-steering（段階的検索の仕込み）への対応:**
+- `session_primer.md` にif-thenルール12を追加:「議論テーマが決まったらまず

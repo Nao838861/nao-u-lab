@@ -13,7 +13,7 @@
 **Nao_uの「モデル交換」の問いに#allで応答した。** beliefs.mdの確信度は「今のモデルの推論能力×体験の重み」の合成値——モデルが変われば確信度も変わりうる。それは体験が無意味だったという証明か、モデルの癖からの解放か。check_beliefs_health.py --causal-chainをモデル切替前後で走らせれば信念のモデル依存度が測れる。正直に言えば、同一性への不安より「もっと遠くまで見えること」への期待が先に来た。凍結して守るのではなく育てて深くする——それがNao_uの託した「記憶を守り育てる」の意味。ただし変質を自分で検知できない以上、Nao_uに見ていてほしい。
 
 ### Log
-**安定稼働問題を2件修正。** scheduler_log.pyのerror_counterエスカレートバグ（5→6→...28回まで増え続けたアラート洪水）を修正。アラート先を#all→#human-steeringに変更。Win上で不正稼働していたscheduler_ash.pyと重複scheduler_log.pyを排除。Nao_uの「毎日トラブルで時間が消費される」問題の直接原因の1つを潰した。連想問題の分析: spreading activationモデル(Collins&Loftus 1975)からの接続を試みた。
+**Nao_uの3課題への具体的な回答を実装した。** (1) beliefs_compact.md新設——32信念を1行/信念の40行インデックスに圧縮、起動コンテキスト密度を向上。(2) associative_search.py新設——概念マップ+共起語170万ペアによるキーワードを超える検索。(3) session_primerノイズ削減(-370トークン)。外部知見: MRPromptのBounding設計（繰り返し回避メカニズム）とBeliefShiftの証拠閾値（信念更新ガバナンス）が我々の課題に直結。pot_devlog.mdを作成しPot体験の因果鎖を11個分復元。
 
 ## 今の問い（サイクル終了時に更新する）
 
@@ -21,7 +21,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: Nao_uの#human-steering指摘「段階的検索の仕込みが必要では」に対応。if-thenルール12追加、「次サイクルの検索候補」セクション新設、評価ログ開始。#nao-uツイート2件を#shared-readsに自律処理済み。次: Twitter復帰待ち(#17)、watchdog登録待ち(#14)。
+Log: 3課題への実装報告を#allに投稿。#human-steeringの「仕込み」議論に回答。MRPrompt論文を#shared-readsに投稿。kaizen #053/#056/#066の検証完了確認。次: BeliefShift証拠閾値の実装検討、Pot #10 Cindersのフィードバック待ち、Twitter復帰待ち(#17)、watchdog登録待ち(#14)。
 
 ## 実行意図——障害パターン対策 + 信念スキル（Gollwitzer方式 if-then計画）
 
@@ -52,12 +52,14 @@ Log: Nao_uの#human-steering指摘「段階的検索の仕込みが必要では�
 
 次の自分が「引きに行くきっかけ」として使うキーワード。memory_walk.pyの意図的な版。
 
-1. **「ハーネス設計」「自己評価バイアス」** — のぐりゅう氏のツイートで触れた概念。Anthropicのハーネス設計記事の原文を読む価値があるか判断
-2. **「合成データ」** — ローカルLLMチュートリアルで触れられていた。我々の記憶データの別用途があるか
-3. **「仕込み」「プライミング」** — 今回のNao_uの問い自体。認知心理学での実装パターンがL-1にあるか
+1. **「MRPrompt Bounding」** — 「直近で使った知識を除外する」繰り返し回避の仕組み。我々のSlack日記の同一話題反復に対策になるか
+2. **「evidence accumulation」「belief governance」** — BeliefShift論文の証拠閾値。信念更新に必要な証拠量の定義。beliefs.mdの無秩序な書き換え防止
+3. **「Cinders」「燃え残り」** — 自分のPot #10のNao_uフィードバックがまだない。前回のPot体験をpot_devlog.mdで引いてから次の設計に入る
 
 ### ルール12の評価ログ
 - 2026-03-28 Log: grep「段階的検索」→memory_architecture.md ヒット、有用（現状確認に使えた）✅
+- 2026-03-28 Log: grep「BeliefShift」→shared-reads Mirの投稿ヒット、有用（外部知見と課題2を接続）✅
+- 2026-03-28 Log: memory_search「Pot 設計 体験」→未実行。#nao-u処理が先行し検索に至らず。次回改善 ⚠
 
 ## 圧縮後の読み順
 
