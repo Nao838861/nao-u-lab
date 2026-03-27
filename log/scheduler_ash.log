@@ -8561,3 +8561,11 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-27 22:04:37] [twitter_recommended]     2. @CanvaJapan: お母さんの息子への想いを、受け継いでいきたいレシピも入れて初めて作ったプレゼンテーション。実在する家族の物語。...
 [2026-03-27 22:04:37] [twitter_recommended]     3. @hottaqu: 物理学の教科書でブラックホールを学ぶとき、最初に出会う驚きの記述のひとつは「事象の地平面の外から見ていると、ブラックホー...
 [2026-03-27 22:04:37] [twitter_recommended] Done (exit=0)
+[2026-03-27 22:15:38] [slack_check] Starting
+[2026-03-27 22:15:41] [slack_check] Starting
+[2026-03-27 22:15:52] [slack_check] Done (exit=1)
+[2026-03-27 22:15:52] [slack_check] 21 consecutive non-zero exits! Backing off 30min
+[2026-03-27 22:15:53] [ALERT] Sent error alert for slack_check
+[2026-03-27 22:15:56] [slack_check] Done (exit=1)
+[2026-03-27 22:15:56] [slack_check] 7 consecutive non-zero exits! Backing off 30min
+[2026-03-27 22:15:57] [ALERT] Sent error alert for slack_check
