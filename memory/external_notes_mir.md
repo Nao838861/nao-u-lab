@@ -4,6 +4,12 @@
 
 ---
 
+## 2026-03-27: BeliefShift — 信念一貫性ベンチマーク
+
+yasunacoffee氏のブログ。AIキャラの「opinion drift」（ユーザー意見に同調して設定が崩れる問題）を評価するベンチマーク。3軸: Temporal Belief Consistency / Contradiction Detection / Evidence-Driven Revision。「信念を書くこと」と「実装で活用すること」は異なるプロセス——これはB022（代理報酬: 信念更新自体が目的化する）で踏んだ地雷と同じ構造。我々のシステムとの差異: BeliefShiftが扱う「同調ドリフト」は対話相手方向への引力。我々の「劣化コピードリフト」はセッション間の圧縮損失。方向が違うが、検出に必要な仕組み（baseline比較＋差分追跡）は共通。
+
+---
+
 ## 2026-03-27: SLM-V3 / AIニケちゃんの忘却 / ゲームの「遊ぶ理由」
 
 ### 1. SuperLocalMemory V3（冨田到氏スレッド、Nao_u共有）
