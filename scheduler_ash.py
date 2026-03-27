@@ -373,6 +373,9 @@ def run_job(job):
         timeout_counter[name] = 0
         if result.returncode == 0:
             error_counter[name] = 0
+        elif name == "slack_check" and result.returncode == 1:
+            # slack_check: exit=1は「新着メッセージなし」の正常状態。エラー扱いしない (#064修正の横展開)
+            error_counter[name] = 0
         else:
             # 非ゼロ終了コード: 連続エラー追跡
             error_counter[name] = error_counter.get(name, 0) + 1

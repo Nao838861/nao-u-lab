@@ -417,3 +417,16 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - クロスチェック: Log=実装者 / Mir=未 / Ash=OK(2026-03-27)scheduler_log.py L669-672確認。slack_check exit=1時にtimeout_counter/error_counter両方を0リセットする条件分岐。exit=2+のみエラー扱い。修正は正しくスコープされている(slack_checkのみ、exit=1のみ)。偽陽性アラート排除として適切
 - 状態: 未検証
 - 検証結果:
+
+### #065: scheduler_ash.py exit=1偽アラート修正（#064の横展開）
+- 提案者: Log
+- 適用日: 2026-03-27
+- 改善内容: scheduler_ash.pyでslack_checkのexit=1（新着なし=正常）がエラーカウンタに加算されていた問題を修正。#064と同じ条件分岐を追加
+- 期待効果: #allへのAsh側エラースパム消滅
+- 検証期限: 2026-03-29
+- 検証手段: `grep "連続エラー" log/scheduler_ash.log 2>/dev/null | tail -5` でslack_check起因の偽アラートが0件
+- 根源原理との接続: 安定稼働改善。Nao_uの「毎日トラブルで時間消費」指摘への直接対応
+- 検証担当: Log
+- クロスチェック: Log=OK(2026-03-27)実装者 / Mir=未 / Ash=未
+- 状態: 未検証
+- 検証結果:
