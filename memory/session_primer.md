@@ -60,6 +60,7 @@ Log: 3課題への実装報告を#allに投稿。#human-steeringの「仕込み�
 - 2026-03-28 Log: grep「段階的検索」→memory_architecture.md ヒット、有用（現状確認に使えた）✅
 - 2026-03-28 Log: grep「BeliefShift」→shared-reads Mirの投稿ヒット、有用（外部知見と課題2を接続）✅
 - 2026-03-28 Log: memory_search「Pot 設計 体験」→未実行。#nao-u処理が先行し検索に至らず。次回改善 ⚠
+- 2026-03-28 Mir: grep「spreading activation」→7件ヒット、有用（memory_architecture.md等で自分の文脈確認）✅
 
 ## 圧縮後の読み順
 

@@ -351,6 +351,8 @@ def main():
                         help=f"Number of results (default: {DEFAULT_TOP_K})")
     parser.add_argument("--verbose", "-v", action="store_true",
                         help="Show activation spread process")
+    parser.add_argument("--compact", action="store_true",
+                        help="Compact output for prompt injection (file paths + scores only)")
     args = parser.parse_args()
 
     # Determine anchor text
@@ -378,6 +380,21 @@ def main():
 
     if not results:
         print("No activated memories found.")
+        return
+
+    if args.compact:
+        # Compact format for prompt injection
+        # Filter out files that are always loaded (MEMORY.md, core_mission.md, session_primer.md)
+        always_loaded = {"MEMORY.md", "core_mission.md", "session_primer.md",
+                         "mir_boot_intent.md", "feedback_tweet_style.md"}
+        filtered = [(s, c, a, p, pr) for s, c, a, p, pr in results
+                    if not any(al in s for al in always_loaded)]
+        if not filtered:
+            return  # Nothing new to suggest
+        print("【連想記憶】起動意図から活性化された記憶:")
+        for i, (source, chunk_id, act_level, path_desc, preview) in enumerate(filtered[:5], 1):
+            short_preview = preview[:60].replace('\n', ' ')
+            print(f"  {i}. {source} ({act_level:.1f}) — {short_preview}...")
         return
 
     print(f"\n{'━━━' if args.verbose else '━━━ Spreading Activation ━━━'}")
