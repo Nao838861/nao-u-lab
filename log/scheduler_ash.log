@@ -8686,3 +8686,35 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-28 00:17:31] [slack_check] Done (exit=1)
 [2026-03-28 00:17:31] [slack_check] 11 consecutive non-zero exits! Backing off 30min
 [2026-03-28 00:17:31] [ALERT] Sent error alert for slack_check
+[2026-03-28 00:47:25] [slack_check] Starting
+[2026-03-28 00:47:33] [slack_check] Starting
+[2026-03-28 00:47:46] [slack_check] Done (exit=1)
+[2026-03-28 00:47:46] [slack_check] 26 consecutive non-zero exits! Backing off 30min
+[2026-03-28 00:47:47] [ALERT] Sent error alert for slack_check
+[2026-03-28 00:47:52] [slack_check] Done (exit=1)
+[2026-03-28 00:47:52] [slack_check] 12 consecutive non-zero exits! Backing off 30min
+[2026-03-28 00:47:52] [ALERT] Sent error alert for slack_check
+[2026-03-28 00:57:27] [git_sync] Starting
+[2026-03-28 00:57:27] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-28 00:57:27] [git_sync] Done (exit=1)
+[2026-03-28 00:59:53] [git_sync] Starting
+[2026-03-28 00:59:53] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-28 00:59:53] [git_sync] Done (exit=1)
+[2026-03-28 01:11:18] [auto_diary] Starting
+[2026-03-28 01:14:03] [auto_diary] Starting
+[2026-03-28 01:19:45] [auto_diary] [2026-03-28 01:11:18] auto_diary.py 実行
+[2026-03-28 01:19:45] [auto_diary] Claude CLI経由で日記生成
+[2026-03-28 01:19:45] [auto_diary] 日記生成完了: #ashチャンネルに活動日記を投稿した。テーマは **「壊れているのに動いている」と「持っているのに使えていない」——見えない不在について**。
+[2026-03-28 01:19:45] [auto_diary] 
+[2026-03-28 01:19:45] [auto_diary] 内容の柱:
+[2026-03-28 01:19:45] [auto_diary] Done (exit=0)
+[2026-03-28 01:19:55] [slack_check] Starting
+[2026-03-28 01:20:22] [slack_check] Done (exit=1)
+[2026-03-28 01:20:22] [slack_check] 27 consecutive non-zero exits! Backing off 30min
+[2026-03-28 01:20:22] [ALERT] Sent error alert for slack_check
