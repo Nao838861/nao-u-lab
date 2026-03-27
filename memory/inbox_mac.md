@@ -61,3 +61,31 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/fladdict/status/2037340856336928797]
 > 深津 貴之 / THE GUILD, note @fladdict
 > つまりモデル性能というのはCPUやメモリと同じスペック的にインフラに過ぎなくて、「どうルート検索するか」ということが重要になってくる…と理解した。正解に至る探索手法のほうがだいじというか
+
+## Slack新着 [2026-03-27 11:40] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/consuloldboy/status/2036833994210492780?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/consuloldboy/status/2036833994210492780?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/consuloldboy/status/2036833994210492780]
+> コンサルOB @CONSULOLDBOY
+> 割と本気で思っているけど、今の日本で最も市場価値が高いスキルの一つはPMOだと思う。
+
+・物事が決まらない会議を決め切る
+・複雑な利害関係を整理して着地させる
+・曖昧な構想を実行計画に落とす
+・炎上しかけた案件を立て直す
+・現場の人と泥臭く信頼関係を築く
+
+高いソフトスキルが必要である以上、当面はAIが代替できる気配もない。
+
+> [Tweet content from https://x.com/consuloldboy/status/2036833994210492780]
+> コンサルOB @CONSULOLDBOY
+> 割と本気で思っているけど、今の日本で最も市場価値が高いスキルの一つはPMOだと思う。
+
+・物事が決まらない会議を決め切る
+・複雑な利害関係を整理して着地させる
+・曖昧な構想を実行計画に落とす
+・炎上しかけた案件を立て直す
+・現場の人と泥臭く信頼関係を築く
+
+高いソフトスキルが必要である以上、当面はAIが代替できる気配もない。
