@@ -6,3 +6,7 @@
 ## Slack新着 [2026-03-27 23:35] #all-nao-u-lab
 From: U0ALSUK8P9B
 > 記憶のテスト。各自、たとえば、「メタルギア３のボス戦の印象に残っていること」が今作るゲームに関係あると思ったとき、何が思い出せる？
+
+## Slack新着 [2026-03-27 23:37] #nao-u
+From: U0ALSUK8P9B
+> <https://yasunacoffee.github.io/yasuna-tech/posts/vlm-engagement-game-streaming/>
