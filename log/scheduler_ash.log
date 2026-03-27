@@ -8718,3 +8718,48 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-28 01:20:22] [slack_check] Done (exit=1)
 [2026-03-28 01:20:22] [slack_check] 27 consecutive non-zero exits! Backing off 30min
 [2026-03-28 01:20:22] [ALERT] Sent error alert for slack_check
+[2026-03-28 02:23:32] [slack_check] Starting
+[2026-03-28 04:41:25] [slack_check] Done (exit=1)
+[2026-03-28 04:41:25] [slack_check] 28 consecutive non-zero exits! Backing off 30min
+[2026-03-28 04:41:25] [ALERT] Sent error alert for slack_check
+[2026-03-28 04:41:25] [inbox_check] Starting
+[2026-03-28 04:41:26] [inbox_check] Inbox win2 empty
+[2026-03-28 04:41:26] [inbox_check] Done (exit=0)
+[2026-03-28 04:41:26] [dm_check] Starting
+[2026-03-28 04:41:46] [auto_diary] Timeout (600s)
+[2026-03-28 04:41:56] [slack_check] Starting
+[2026-03-28 04:42:18] [slack_check] Done (exit=1)
+[2026-03-28 04:42:18] [slack_check] 13 consecutive non-zero exits! Backing off 30min
+[2026-03-28 04:42:19] [ALERT] Sent error alert for slack_check
+[2026-03-28 04:42:19] [inbox_check] Starting
+[2026-03-28 04:42:20] [inbox_check] Inbox win2 empty
+[2026-03-28 04:42:20] [inbox_check] Done (exit=0)
+[2026-03-28 04:42:20] [dm_check] Starting
+[2026-03-28 04:42:20] [dm_check] No new DMs
+[2026-03-28 04:42:20] [dm_check] Done (exit=0)
+[2026-03-28 04:42:20] [dm_check_pigadev] Starting
+[2026-03-28 04:42:20] [dm_check_pigadev] No new DMs
+[2026-03-28 04:42:20] [dm_check_pigadev] Done (exit=0)
+[2026-03-28 04:42:20] [reservation_check] Starting
+[2026-03-28 04:42:20] [reservation_check] 【行動予約】期限到来:
+[2026-03-28 04:42:20] [reservation_check]   ### R-003: #020検証——beliefs.md行動駆動率の計測
+[2026-03-28 04:42:20] [reservation_check]     - 条件: 2026-03-26以降
+[2026-03-28 04:42:20] [reservation_check]     - アクション: 3/23以降のbeliefs.md更新のうち行動変化を引き起こした件数を数える。ベースライン4.8%からの改善を確認。kaizen_tracker.md #020に検証結果を記入
+[2026-03-28 04:42:20] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-03-28 04:42:20] [reservation_check] Done (exit=0)
+[2026-03-28 04:42:20] [review_deadline] Starting
+[2026-03-28 04:42:20] [review_deadline] レビュー期限超過なし。
+[2026-03-28 04:42:20] [review_deadline] Done (exit=0)
+[2026-03-28 04:42:20] [kaizen_auto_verify] Starting
+[2026-03-28 04:42:22] [kaizen_auto_verify] === 自動検証実行 [2026-03-28 04:42:22] ===
+[2026-03-28 04:42:22] [kaizen_auto_verify] 
+[2026-03-28 04:42:22] [kaizen_auto_verify] ### #053: Pot #6 witness.py — テキスト内容がメカニクスそのものになる壺（lateral information設計）
+[2026-03-28 04:42:22] [kaizen_auto_verify]   状態: 部分検証済み（Nao_uフィードバック待ち） / 期限: 2026-03-28
+[2026-03-28 04:42:22] [kaizen_auto_verify]   ❌ `python game/Pot/Pot006_witness.py`
+[2026-03-28 04:42:22] [kaizen_auto_verify] Done (exit=0)
+[2026-03-28 04:42:22] [git_sync] Starting
+[2026-03-28 04:42:22] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-28 04:42:22] [git_sync] Done (exit=1)
