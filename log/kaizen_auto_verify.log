@@ -105,3 +105,25 @@
   ✅ `python shadowbox.py --live-check`
       未解決のlive予測なし（解決済み: 1件）
   → 総合: 全コマンド成功
+
+=== 自動検証実行 [2026-03-28 00:03:20] ===
+
+### #053: Pot #6 witness.py — テキスト内容がメカニクスそのものになる壺（lateral information設計）
+  状態: 未検証 / 期限: 2026-03-28
+  ❌ `python game/witness.py`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
+
+### #066: verify_kaizen.py python3→python プラットフォーム正規化
+  状態: 未検証 / 期限: 2026-03-28
+  ❌ `python verify_kaizen.py 2>&1 | grep -c "exit=9009"`
+      0
+  → 総合: 一部失敗あり
+
+=== 自動検証実行 [2026-03-28 00:40:33] ===
+
+### #053: Pot #6 witness.py — テキスト内容がメカニクスそのものになる壺（lateral information設計）
+  状態: 未検証 / 期限: 2026-03-28
+  ❌ `python game/witness.py`
+      python: can't open file 'D:\\AI\\Nao_u_BOT\\game\\witness.py': [Errno 2] No such file or directory
+  → 総合: 一部失敗あり

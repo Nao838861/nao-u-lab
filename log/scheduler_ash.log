@@ -8677,3 +8677,12 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-28 00:01:08] [auto_diary] Starting
 [2026-03-28 00:03:56] [auto_diary] Starting
 [2026-03-28 00:11:08] [auto_diary] Timeout (600s)
+[2026-03-28 00:13:56] [auto_diary] Timeout (600s)
+[2026-03-28 00:16:59] [slack_check] Starting
+[2026-03-28 00:17:06] [slack_check] Starting
+[2026-03-28 00:17:23] [slack_check] Done (exit=1)
+[2026-03-28 00:17:23] [slack_check] 25 consecutive non-zero exits! Backing off 30min
+[2026-03-28 00:17:24] [ALERT] Sent error alert for slack_check
+[2026-03-28 00:17:31] [slack_check] Done (exit=1)
+[2026-03-28 00:17:31] [slack_check] 11 consecutive non-zero exits! Backing off 30min
+[2026-03-28 00:17:31] [ALERT] Sent error alert for slack_check
