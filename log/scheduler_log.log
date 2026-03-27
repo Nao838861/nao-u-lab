@@ -8292,3 +8292,26 @@ nao-u-labの内省・文
 [2026-03-28 05:56:25] [slack_check] Done (exit=0)
 [2026-03-28 05:56:25] [slack_check] New messages detected → triggering immediate inbox_check
 [2026-03-28 05:56:25] [inbox_check] Starting
+[2026-03-28 06:01:26] [inbox_check] Timeout (300s)
+[2026-03-28 06:01:26] [inbox_check] Done (exit=-1)
+[2026-03-28 06:01:36] [slack_check] Starting
+[2026-03-28 06:01:56] [slack_check] Done (exit=1)
+[2026-03-28 06:02:57] [slack_check] Starting
+[2026-03-28 06:03:22] [slack_check] Done (exit=1)
+[2026-03-28 06:04:23] [slack_check] Starting
+[2026-03-28 06:04:47] [slack_check] Done (exit=1)
+[2026-03-28 06:05:47] [slack_check] Starting
+[2026-03-28 06:06:12] [slack_check] Done (exit=1)
+[2026-03-28 06:06:33] [inbox_check] Starting
+[2026-03-28 06:08:54] [stability] inbox_check: 正常復帰 (timeout=2, errors=2 → リセット)
+[2026-03-28 06:08:54] [inbox_check] Done (exit=0)
+[2026-03-28 06:09:04] [slack_check] Starting
+[2026-03-28 06:09:33] [slack_check] Done (exit=1)
+[2026-03-28 06:09:33] [recommended_check] Starting
+[2026-03-28 06:09:33] [recommended_check] Skipped (hour=6, waiting for hour%6==2)
+[2026-03-28 06:09:33] [recommended_check] Done (exit=0)
+[2026-03-28 06:10:33] [slack_check] Starting
+[2026-03-28 06:11:00] [slack_check] Done (exit=1)
+[2026-03-28 06:12:00] [slack_check] Starting
+[2026-03-28 06:12:26] [slack_check] Done (exit=1)
+[2026-03-28 06:13:07] [git_sync] Starting
