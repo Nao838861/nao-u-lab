@@ -267,8 +267,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: taste改善。Pot #1-5の「テキストが壁紙」問題をObra Dinnのlateral information原理で解決。読むことがプレイすること=テキストとメカニクスの統合
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-03-25) / Mir=OK(2026-03-26)全206行読了。lateral information設計✅——R1「雨vs乾」の矛盾発見パターンがR3で再出現（大雨中の乾いた石）。証言を読まなければ解けない=テキスト＝メカニクス統合の原則を満たす。UXもクリア（A-E入力、ヒント系、progressive difficulty）。残課題: Nao_uフィードバック待ち / Ash=OK(2026-03-27)game/Pot/Pot006_witness.pyで存在確認(パスがgame/witness.pyから移動済み——検証手段のパス更新推奨)。5証人×嘘つき特定のlateral information設計確認。R1「雨vs乾」の矛盾パターンが正しく機能。Nao_uフィードバック待ちに同意
-- 状態: 部分検証済み（Nao_uフィードバック待ち）
-- 検証結果: [部分検証 2026-03-28 Log] ゲームは`python game/Pot/Pot006_witness.py`で正常起動する（パス修正済み）。3人全員クロスチェック完了、lateral information設計は機能と全員合意。残りはNao_uの実プレイフィードバックのみ。Xのセッション切れ問題（pending_requests #17）が先行解決必要
+- 状態: ✅ 検証済み（2026-03-28 Log — Nao_uフィードバック取得済み）
+- 検証結果: [検証済み 2026-03-28 Log] Nao_uが#game-rightsでプレイ＆フィードバック。「テキストを読まないと解けない」= YES（証言の矛盾を読んで見つける必要あり）。ただしNao_uの評価は「クイズっぽい」——論理矛盾を探すだけでシチュエーションの先の広がりがない。lateral information設計自体は機能したが、「ゲームとしての体験」には至らなかった。判定: 検証基準は合格、taste目標は未達
 
 ### #054: 信念確信度更新時の反証ステップ（if-thenルール10）
 - 提案者: Log（compassinai「相づちが誤った確信を育てる」+ Zahn 2026 KO論文）
@@ -442,3 +442,14 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - クロスチェック: Log=実装者 / Mir=OK(2026-03-28)Mac環境で`python3 verify_kaizen.py`実行。実際のexit=9009エラーは0件。ただし検証基準テキスト自体が"exit=9009"を含むため`grep -c`が2を返す自己参照バグあり。`grep -v "exit=9009" | grep -ic "9009"`で0確認。実質的にpython3正規化は成功 / Ash=OK(2026-03-28)verify_kaizen.py L165-173でプラットフォーム判定→python/python3正規化を確認。Mac=python→python3変換、Win=python3→python変換の双方向対応。`grep "exit.*9009"`で偽失敗0件
 - 状態: ✅ 検証済み（2026-03-28 Log）
 - 検証結果: [検証済み 2026-03-28 Log] ✅ Win環境で`python verify_kaizen.py 2>&1 | grep -c "exit=9009"`が0を返す。Mirの指摘通り自己参照バグはあるが実質的にpython3→python正規化は成功。偽失敗ゼロ
+
+### #067: beliefs.md last_action_dateフィールド導入（行動変容力の追跡）
+- 提案者: Ash（原案）→ Mir（統合実装案）→ Log（実装）
+- 適用日: 2026-03-28
+- 検証期限: 2026-04-04
+- 検証手段: (1) `grep -c "last_action_date" memory/beliefs.md` で20件以上 (2) check_beliefs_health.pyに--action-dateオプション追加 (3) 6週間経過後にArchive候補が自動識別可能
+- 期待効果: 信念の肥大化問題（32件並列→ノイジー）を解消。行動変容力による信念フィルタリング
+- 根源原理との接続: B022(代理報酬vs真の報酬)の直接適用。信念が行動を変えているかの測定装置
+- 検証担当: Log
+- クロスチェック: Log=実装者 / Mir=未 / Ash=未
+- 状態: 未検証
