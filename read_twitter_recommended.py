@@ -142,12 +142,23 @@ def _read_inner(count, dry_run):
                     scroll_count += 1
 
             print(f"\nRead {len(tweets)} tweets from For You ({scroll_count} scrolls)")
+            if tweets:
+                try:
+                    from twitter_error_tracker import track_success
+                    track_success("read_twitter_recommended")
+                except Exception:
+                    pass
             return tweets
 
         except Exception as e:
             print(f"Error: {e}")
             try:
                 page.screenshot(path="debug_recommended_error.png")
+            except Exception:
+                pass
+            try:
+                from twitter_error_tracker import track_failure
+                track_failure("read_twitter_recommended", str(e)[:200])
             except Exception:
                 pass
             return []

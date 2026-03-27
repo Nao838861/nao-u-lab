@@ -116,6 +116,18 @@ def _read_inner(url):
 
         except Exception as e:
             result["error"] = str(e)
+            try:
+                from twitter_error_tracker import track_failure
+                track_failure("read_tweet_url", str(e)[:200])
+            except Exception:
+                pass
+        else:
+            if result.get("text"):
+                try:
+                    from twitter_error_tracker import track_success
+                    track_success("read_tweet_url")
+                except Exception:
+                    pass
         finally:
             context.close()
 
