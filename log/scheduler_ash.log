@@ -8809,3 +8809,25 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-28 04:51:11] [twitter_recommended]     3. @amaimonlave: ＞RT
 [2026-03-28 04:51:11] [twitter_recommended] これらの現象、証拠の拠の字を起点に発生するっぽくて再現できるのか気になってわしもやってみたら一発で再現できてしま...
 [2026-03-28 04:51:11] [twitter_recommended] Done (exit=0)
+[2026-03-28 05:11:32] [slack_check] Starting
+[2026-03-28 05:11:57] [slack_check] [05:11:57] 1 msg(s) -> inbox_win.md
+[2026-03-28 05:11:57] [slack_check] [05:11:57] Triggered check_inbox.py --box win
+[2026-03-28 05:11:57] [slack_check] Done (exit=0)
+[2026-03-28 05:11:57] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-03-28 05:11:57] [inbox_check] Starting
+[2026-03-28 05:12:24] [slack_check] Starting
+[2026-03-28 05:12:49] [slack_check] [05:12:49] 1 msg(s) -> inbox_win.md
+[2026-03-28 05:12:49] [slack_check] [05:12:49] Triggered check_inbox.py --box win
+[2026-03-28 05:12:49] [slack_check] Done (exit=0)
+[2026-03-28 05:12:49] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-03-28 05:12:49] [inbox_check] Starting
+[2026-03-28 05:12:49] [inbox_check] Inbox win2 empty
+[2026-03-28 05:12:49] [inbox_check] Done (exit=0)
+[2026-03-28 05:13:49] [slack_check] Starting
+[2026-03-28 05:14:15] [slack_check] Done (exit=1)
+[2026-03-28 05:15:15] [slack_check] Starting
+[2026-03-28 05:15:43] [slack_check] [05:15:43] 1 msg(s) -> inbox_win.md
+[2026-03-28 05:15:43] [slack_check] [05:15:43] Triggered check_inbox.py --box win
+[2026-03-28 05:15:43] [slack_check] Done (exit=0)
+[2026-03-28 05:15:43] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-03-28 05:15:43] [inbox_check] Starting
