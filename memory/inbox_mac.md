@@ -12,3 +12,15 @@ From: U0ALSUK8P9B
 
 > [Tweet content from https://x.com/yuichisatoeco/status/2037047149213503976]
 > (read failed: Browser locked by another process)
+
+## Slack新着 [2026-03-27 09:43] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/fukkyy/status/2037135583861264450?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/fukkyy/status/2037135583861264450?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/fukkyy/status/2037135583861264450]
+> 福島良典 | LayerX @fukkyy
+> 
+
+> [Tweet content from https://x.com/fukkyy/status/2037135583861264450]
+> 福島良典 | LayerX @fukkyy
+> 
