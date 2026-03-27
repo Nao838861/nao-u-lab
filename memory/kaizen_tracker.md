@@ -391,3 +391,16 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - クロスチェック: Log=実装者 / Mir=未 / Ash=未
 - 状態: 未検証
 - 検証結果:
+
+### #058: twitter_error_tracker.py全スクリプト統合完了
+- 提案者: Log
+- 適用日: 2026-03-27
+- 改善内容: tweet_reply.pyとread_twitter_feed.pyにtwitter_error_tracker.pyを統合。全6 Twitterスクリプト+check_dm.py（独自実装）でカバー
+- 期待効果: Twitterアクセス障害の放置時間ゼロ
+- 検証期限: 2026-04-03
+- 検証手段: `python -c "from twitter_error_tracker import track_failure; track_failure('test_script','test'); print('OK')"` でアラート機構が動作すること
+- 根源原理との接続: 原則5「人間の干渉が必要だ。その必要をなくしてほしい」
+- 検証担当: Log
+- クロスチェック: Log=OK(2026-03-27) / Mir=未 / Ash=未
+- 状態: 未検証
+- 検証結果:

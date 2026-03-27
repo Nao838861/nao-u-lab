@@ -126,12 +126,22 @@ def reply_to_tweet(tweet_url, reply_text, dry_run=False):
             # 投稿完了を待つ
             time.sleep(8)
             print(f"DONE: Replied to {tweet_url}")
+            try:
+                from twitter_error_tracker import track_success
+                track_success("tweet_reply")
+            except Exception:
+                pass
             return True
 
         except Exception as e:
             print(f"Error: {e}")
             try:
                 page.screenshot(path="debug_reply_error.png")
+            except Exception:
+                pass
+            try:
+                from twitter_error_tracker import track_failure
+                track_failure("tweet_reply", str(e))
             except Exception:
                 pass
             return False

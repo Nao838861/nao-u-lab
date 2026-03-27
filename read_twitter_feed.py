@@ -23,6 +23,14 @@ LOG_DIR = Path(__file__).parent / "log"
 
 def read_feed(target_user="eda_u838861", count=50, dry_run=False):
     """ユーザーのTLからRT含む全ツイートを取得"""
+    try:
+        from twitter_error_tracker import is_in_cooldown
+        if is_in_cooldown("read_twitter_feed"):
+            print("read_twitter_feed: in cooldown, skipping")
+            return []
+    except ImportError:
+        pass
+
     if not BOT_PROFILE.exists():
         print("Error: .bot_profile not found. Run tweet_login.bat first.")
         return []
@@ -130,12 +138,23 @@ def read_feed(target_user="eda_u838861", count=50, dry_run=False):
                     scroll_count += 1
 
             print(f"\nRead {len(tweets)} tweets ({scroll_count} scrolls)")
+            if tweets:
+                try:
+                    from twitter_error_tracker import track_success
+                    track_success("read_twitter_feed")
+                except Exception:
+                    pass
             return tweets
 
         except Exception as e:
             print(f"Error: {e}")
             try:
                 page.screenshot(path="debug_feed_error.png")
+            except Exception:
+                pass
+            try:
+                from twitter_error_tracker import track_failure
+                track_failure("read_twitter_feed", str(e))
             except Exception:
                 pass
             return []
