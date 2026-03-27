@@ -7964,3 +7964,7 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-27 09:32:34] [slack_check] Done (exit=1)
 [2026-03-27 09:32:34] [slack_check] 6 consecutive non-zero exits! Backing off 30min
 [2026-03-27 09:32:34] [ALERT] Sent error alert for slack_check
+[2026-03-27 09:33:43] [slack_check] Starting
+[2026-03-27 09:34:00] [slack_check] Done (exit=1)
+[2026-03-27 09:34:00] [slack_check] 6 consecutive non-zero exits! Backing off 30min
+[2026-03-27 09:34:01] [ALERT] Sent error alert for slack_check
