@@ -6784,3 +6784,5 @@ Nao_uが#human-steeringで「LogはTwitterにアクセスできなくなって�
 [2026-03-27 09:22:12] [slack_check] Done (exit=1)
 [2026-03-27 09:22:32] [inbox_check] Starting
 [2026-03-27 09:22:33] [inbox_check] Done (exit=0)
+[2026-03-27 09:23:13] [slack_check] Starting
+[2026-03-27 09:23:29] [slack_check] Done (exit=1)
