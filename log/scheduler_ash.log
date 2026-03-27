@@ -8105,3 +8105,7 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
     os.chdir(REPO)
 FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
 [2026-03-27 13:18:37] [git_sync] Done (exit=1)
+[2026-03-27 13:39:00] [slack_check] Starting
+[2026-03-27 13:39:14] [slack_check] Done (exit=1)
+[2026-03-27 13:39:14] [slack_check] 10 consecutive non-zero exits! Backing off 30min
+[2026-03-27 13:39:14] [ALERT] Sent error alert for slack_check
