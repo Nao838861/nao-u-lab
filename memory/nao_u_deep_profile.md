@@ -35,3 +35,5 @@ type: user
 ## ICOの体験記が象徴するもの
 - 日記の中で最も長く感情的な記述がICOのプレイ体験。ゲームが単なる娯楽でなく、深い感情体験・人生の一部になりうることの証左
 - 「たぶん、この場面を一生忘れることはないだろう」— ゲームへの本質的な敬意と愛情の源泉
+- → 各ゲーム体験の日記上の位置・原文への経路は [nao_u_experience_map.md](nao_u_experience_map.md) を参照
+- → GOD HANDのレビュー怒り・QTE設計ミスの再帰的反省は [reflections_mac.md](reflections_mac.md) に分析あり

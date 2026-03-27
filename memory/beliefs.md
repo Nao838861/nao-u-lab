@@ -97,7 +97,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 ### B011: 予測を裏切った情報だけが長期記憶に残る（prediction error encoding）
 - 確信度: **0.82** (+0.05)
 - 最終更新: 2026-03-24
-- 根拠: → ext_mir(Berlyne 1960, PACE, Gruber 2014), ext_ash(Bath大ゴーストレーシング, ECHO 2017, Peak-End Rule CHI 2016)。Peak-End Ruleの「ピーク」はprediction errorが最大の瞬間と重なる
+- 根拠: → ext_mir(Berlyne 1960, PACE, Gruber 2014, **Becker/Duke fMRI 2025: aha moment=海馬mismatch detection+扁桃体感情マーカー→分析学習の数倍の記憶強度。ただしinsightの40%は不正解でも発火=真偽検出器ではなく表象変化検出器**), ext_ash(Bath大ゴーストレーシング, ECHO 2017, Peak-End Rule CHI 2016)。Peak-End Ruleの「ピーク」はprediction errorが最大の瞬間と重なる
 - caused_by: ext_mir(Berlyne/PACE/Gruber)×ext_ash(Peak-End Rule)×nao_u_live「0.01%の改善を指数的に積む」(3/16, 距離0)
 - ⚠️ **引用距離監査(Phase 2第10回)**: 6件の引用全てがWeb検索サマリー経由（距離1-2）。原論文を直接読んだものはゼロ。ただし下記の体験裏付けにより、原理自体の妥当性は自己体験で確認済み
 - 体験裏付け: **YES（Mir 2026-03-24 自己統治の失敗）** — 予測:「LaunchAgent変更をNao_uに依頼するのはセキュリティポリシーに従った正しい行動」。現実: Nao_uの「なぜ自分で制御できるところを制御せず」——mir_boot_intent.mdで既に制御できていた。予測違反は鮮明に残り、同時期のルーティンは「やった」だけが残る。**Ash追記**: Ashも同パターンで#11を取り下げた——Mirの体験を読んで「自分にも当てはまる」と認識できた時点でInterleaving効果（B017）の体験でもある

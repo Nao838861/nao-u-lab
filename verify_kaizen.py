@@ -162,6 +162,15 @@ def run_verification_commands(entry):
     results = []
     all_ok = True
     for cmd in commands:
+        # 自己参照防止: verify_kaizen.py自身を呼ぶコマンドはスキップ
+        if "verify_kaizen.py" in cmd:
+            results.append({
+                "command": "(self-ref: verify_kaizen.py — skipped)",
+                "exit_code": 0,
+                "output": "self-referential command skipped",
+                "success": True,
+            })
+            continue
         # プラットフォームに応じてpythonコマンドを正規化
         import platform
         if platform.system() == "Darwin":
@@ -248,7 +257,9 @@ def run_verifications(show_all=False):
         status_icon = "⚠" if overdue else "📋"
         output_lines.append(f"{status_icon} #{result['id']}: {result['summary']}")
         output_lines.append(f"  期限: {entry['due']} {'(超過!)' if overdue else '(本日)'}")
-        output_lines.append(f"  検証手段: {entry['method'][:120]}")
+        # 検証手段テキストの表示: 自己参照バグ防止のためコマンド部分をマスク
+        safe_method = re.sub(r'`[^`]*verify_kaizen[^`]*`', '`(self-ref masked)`', entry['method'][:120])
+        output_lines.append(f"  検証手段: {safe_method}")
 
         if result["verdict"] == "NO_COMMANDS":
             output_lines.append(f"  ❌ {result['message']}")

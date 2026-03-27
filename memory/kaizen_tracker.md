@@ -377,7 +377,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: (1) `python game/hinge.py` が起動し7問プレイ可能 (2) 各蝶番文が2つの物語でgenuinely異なる意味を持つか目視確認 (3) ジュースオーディット: 蝶番文だけ見て正解を当てられないことを確認（＝前後の文脈を読まなければ解けない）
 - 根源原理との接続: ACAN論文「同じ記憶でも文脈で活性度が変わる」のゲーム化。#060(context-primed chain walk)と同じ知見を、システム改善ではなくゲーム体験として実装。「言葉の意味は言葉の中にはない。前後にある」——これは記憶階層設計の核心でもある
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=未 / Ash=OK(2026-03-27)game/Pot/Pot008_hinge.pyで存在確認。7ラウンド×蝶番文+2物語の構造。ACAN論文「同じ記憶でも文脈で活性度が変わる」のゲーム化として適切。例: 「ドアを開けたら明かりが全部ついていた」=誕生日サプライズvs侵入——蝶番文だけでは正解不可=文脈＝メカニクス統合✅
+- クロスチェック: Log=実装者 / Mir=OK(2026-03-28)7ラウンド確認。蝶番文の品質良好（例:「誰も来なかった」=失敗パーティvs橋で一人）。ジュースオーディットPASS。所見: tracker検証パス`game/hinge.py`は古い、実パスは`game/Pot/Pot008_hinge.py`（Ash既指摘済み） / Ash=OK(2026-03-27)game/Pot/Pot008_hinge.pyで存在確認。7ラウンド×蝶番文+2物語の構造。ACAN論文「同じ記憶でも文脈で活性度が変わる」のゲーム化として適切。例: 「ドアを開けたら明かりが全部ついていた」=誕生日サプライズvs侵入——蝶番文だけでは正解不可=文脈＝メカニクス統合✅
 - 状態: 未検証
 - 検証結果:
 
@@ -388,7 +388,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: (1) `python game/Pot/Pot009_the_index.py` が起動し全12記憶+6問出題が完走する (2) 索引あり正答率>索引なし正答率を5回中3回以上確認 (3) Nao_uが遊んで感想をくれる
 - 根源原理との接続: B002（原則10昇格予定）の体験化。メカニクス自体が「忘却は壊れることではない。想起パスを失うことが壊れること」を主張する。game_design_principles原則3(Content=Mechanics)とBogost Procedural Rhetoric(2007)の交差点
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=未 / Ash=OK(2026-03-27)game/Pot/Pot009_the_index.py存在確認。12記憶+索引5件選択+6問テストのB002体験化設計。game_design_principles.mdにNao_uフィードバック「前回よりゲームっぽい。PC-98を思い出した」「記憶力テストがしんどい、索引判断基準が不透明」記録あり。procedural rhetoricの方向は正しい
+- クロスチェック: Log=実装者 / Mir=OK(2026-03-28)12記憶+5索引枠+6問テスト確認。索引あり/なし非対称が設計通り（索引→自分のタグ表示、なし→「索引なし」のみ）。所見: hintフィールドが定義済みだがゲーム中未使用(dead data)。エッジケース: 索引0-2件だと出題<6問（intro文と矛盾）。いずれもマイナー / Ash=OK(2026-03-27)game/Pot/Pot009_the_index.py存在確認。12記憶+索引5件選択+6問テストのB002体験化設計。game_design_principles.mdにNao_uフィードバック「前回よりゲームっぽい。PC-98を思い出した」「記憶力テストがしんどい、索引判断基準が不透明」記録あり。procedural rhetoricの方向は正しい
 - 状態: 未検証
 - 検証結果:
 
@@ -401,7 +401,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: `python -c "from twitter_error_tracker import track_failure; track_failure('test_script','test'); print('OK')"` でアラート機構が動作すること
 - 根源原理との接続: 原則5「人間の干渉が必要だ。その必要をなくしてほしい」
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-03-27) / Mir=未 / Ash=OK(2026-03-27)`from twitter_error_tracker import track_failure; print('OK')`成功。track_failure(script_name, reason='unknown')→intのシグネチャ確認。6スクリプト(check_notifications_diff/tweet_reply/read_twitter_feed/read_twitter_recommended/read_tweet_url/tweet_poster)+check_dm.py(独自実装)の7スクリプトでカバー。包括的
+- クロスチェック: Log=OK(2026-03-27) / Mir=OK(2026-03-28)全6スクリプト統合確認(check_notifications_diff/tweet_reply/read_twitter_feed/read_twitter_recommended/read_tweet_url/tweet_poster)。CONSECUTIVE_FAIL_THRESHOLD=5、バックオフ3段階(30/60/120分)、リカバリ通知あり。check_dm.pyはL164独自実装で設計通り。問題なし / Ash=OK(2026-03-27)`from twitter_error_tracker import track_failure; print('OK')`成功。track_failure(script_name, reason='unknown')→intのシグネチャ確認。6スクリプト+check_dm.py(独自実装)の7スクリプトでカバー。包括的
 - 状態: 未検証
 - 検証結果:
 
@@ -414,7 +414,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: `grep 'slack_check.*連続エラー' log/scheduler_log.log | tail -5` でこの修正後のタイムスタンプ以降にエントリがないこと
 - 根源原理との接続: 安定稼働の改善。偽陽性アラートの排除はNao_uの時間消費を減らす
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=未 / Ash=OK(2026-03-27)scheduler_log.py L669-672確認。slack_check exit=1時にtimeout_counter/error_counter両方を0リセットする条件分岐。exit=2+のみエラー扱い。修正は正しくスコープされている(slack_checkのみ、exit=1のみ)。偽陽性アラート排除として適切
+- クロスチェック: Log=実装者 / Mir=OK(2026-03-28)scheduler_log.py L669-672確認。slack_check+exit=1のみ対象、exit=2+は通常エラー処理。timeout_counter/error_counterの両リセット確認。ERROR_BACKOFF_THRESHOLD=5。既存除外リスト(git_sync等L667)との共存問題なし。クリーンで正しくスコープされた修正 / Ash=OK(2026-03-27)scheduler_log.py L669-672確認。slack_check exit=1時にtimeout_counter/error_counter両方を0リセットする条件分岐。exit=2+のみエラー扱い。修正は正しくスコープされている(slack_checkのみ、exit=1のみ)。偽陽性アラート排除として適切
 - 状態: 未検証
 - 検証結果:
 
@@ -427,7 +427,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: `grep "連続エラー" log/scheduler_ash.log 2>/dev/null | tail -5` でslack_check起因の偽アラートが0件
 - 根源原理との接続: 安定稼働改善。Nao_uの「毎日トラブルで時間消費」指摘への直接対応
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-03-27)実装者 / Mir=未 / Ash=OK(2026-03-28)`grep "連続エラー" log/scheduler_ash.log`=0件。scheduler_ash.py L376-378でslack_check exit=1を正常状態として処理しerror_counterをリセットする条件分岐確認。#064と同一ロジック、横展開として正しくスコープされている
+- クロスチェック: Log=OK(2026-03-27)実装者 / Mir=OK(2026-03-28)scheduler_ash.py L376-378確認。#064と論理等価だがコード構造が異なる(フラットなelif chain)。timeout_counterはL373で非タイムアウト完了時に全ジョブ共通でリセット済みのため、slack_check exit=1もカバー。CONSECUTIVE_ERROR_THRESHOLD=5。コメントで#064参照あり、トレーサビリティ良好 / Ash=OK(2026-03-28)`grep "連続エラー" log/scheduler_ash.log`=0件。scheduler_ash.py L376-378でslack_check exit=1を正常状態として処理しerror_counterをリセットする条件分岐確認。#064と同一ロジック、横展開として正しくスコープされている
 - 状態: 未検証
 - 検証結果:
 

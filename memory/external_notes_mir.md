@@ -4,6 +4,28 @@
 
 ---
 
+## 2026-03-28: Quanta Magazine「Aha Momentsの神経科学」——insightは真偽検出器ではなく表象変化検出器
+
+Nora Bradford, Quanta Magazine, 2025-11-05。Duke大学Maxi Beckerの研究。fMRIで「aha moment」の3つの脳領域同時発火を特定: 腹側後頭側頭皮質(視覚パターン認識) + 扁桃体(感情) + 海馬(記憶形成・ミスマッチ検出)。
+
+**最も引っかかった知見**: insightによる記憶は、段階的分析による記憶より劇的に強い。しかし同時に、insightの主観的感覚は**不正解の40%でも発火する**（正解時は65%）。つまり「aha!」は「何かが変わった」というシグナルであって「これは正しい」というシグナルではない。海馬は "mismatch detector" として知られる——入力が期待と一致しないとき反応する。
+
+**B011（予測誤差記憶）との接続**: prediction errorが長期記憶を作るメカニズムの神経基盤がこれ。insightの瞬間に海馬のmismatch detectionが発火し、扁桃体が感情マーカーを付与し、結果としてanalytical learningの数倍の記憶強度が生まれる。我々のLevel 2トリガー設計——「温度」で書く——は、実はこの仕組みの模倣だったということになる。冷静な要約より、驚きの瞬間を記録した方が、将来の想起率が高い。
+
+**B022（信念追加は代理報酬）との接続**: 不正解でも40%で「aha」が発火する——これはbeliefs.mdへの新信念追加時に起きる「わかった！」感が、実際の正しさとは独立であることを意味する。矛盾検出ゲートの設計根拠がここにある。「腑に落ちた」と「正しい」は別物。
+
+**Pot設計への示唆**: aha momentが記憶を強く焼き付けるなら、Potの壺の蓋を開ける瞬間の設計が全体の記憶残存率を決める。Obra Dinnのbatch validationはこのaha momentを意図的に制御するデザインパターン——個々の推論にはフィードバックせず、束ねて一気に「合ってる！」を出すことで、一回の大きなinsightを作る。
+
+---
+
+## 2026-03-28: Matuschak/Luhmann「連想は階層に勝る」——MEMORY.mdの構造欠陥への外部知見
+
+Andy Matuschak "Evergreen notes should be densely linked"。Luhmannのカード箱の核心原理: ノート間の密なリンクが「計画されなかった組み合わせの可能性」を生む。タグやカテゴリ（粗い分類）は効果が薄く、具体的な1対1の接続が勝る。
+
+MGS3テストで露呈した問題は、まさにこれ。MEMORY.mdは階層的（根源→対話→使命→構造→...）だが、セクション間の横リンクがなかった。「ICO」という単語がMEMORY.mdのどこにも出現しなかったために、「ゲーム体験」への連想経路が存在しなかった。
+
+Matuschakの処方: 「プロセスが内容より重要。実際にメモされた内容の重要性は二次的で、接続の可能性が本質」。これは私たちの記憶システムにも当てはまる——体験マップ(nao_u_experience_map.md)を作ったが、本当に必要なのは既存ファイル間の横リンクを増やすこと。nao_u_deep_profile.mdのトリガーにゲーム名を埋め込んだのは正しい方向。reflections.mdのゲーム分析からcore_missionへの逆リンクも必要かもしれない。
+
 ## 2026-03-27: VLMエンゲージメント×ゲーム配信——「知覚できても理解できない」
 
 arXiv:2603.18480。VLMがFPSゲーム配信映像から視聴者の盛り上がりを認識できるかの検証。9本の動画×3モデル×6プロンプト戦略（フロー理論、MDAフレームワーク、自己決定理論、RAG等）。結果: 映像的事象（爆発・死亡）は認識できるが、人間の心理状態推測には失敗。理論を注入しても「激しい映像=高エンゲージメント」に引きずられる。実装示唆: 映像解析をバイパスし、コメント速度+ゲームイベント（構造化データ）の複合シグナルが有効。
@@ -1069,6 +1091,14 @@ Apophenia = ランダムデータに意味あるパターンを見出す人間�
 https://www.gamedeveloper.com/design/gdc-2012-sid-meier-on-how-to-see-games-as-sets-of-interesting-decisions
 https://www.gamedeveloper.com/design/meaningful-choice-in-games-practical-guide-case-studies
 Meierの分類: interesting decisionの4条件は (1)トレードオフ——Aを選ぶとBを失う (2)状況依存——同じ選択肢でも状況で最適が変わる (3)個人表現——慎重な人と攻撃的な人で異なる選択が自然に出る (4)持続性——選択の影響が長く残る。「正解が明白な選択」と「ランダムな選択」はどちらもinterestingでない。Meaningful choiceの実践ガイド: awareness(選択の存在を知っている), consequences(結果が変わる), reminders(過去の選択を思い出させる), permanence(取り消せない)。Fire Emblemの永久死が例——キャラの不在が繰り返し想起される。→ Nao_uの「クイズっぽい」をMeier語で翻訳: Potの矛盾探しは「正解が明白な選択」に分類される。トレードオフがなく、状況依存がなく、個人表現の余地がない。Meierの枠組みでゲームに変えるには: (a)トレードオフを入れる——正しい証言者を告発するとストーリーが進むが、別の情報が永久に失われる (b)状況依存——同じ証言が文脈で意味が変わる (c)個人表現——「自分はどちら側につくか」の価値判断 (d)持続性——前の事件での選択が後の事件に影響する。#15のStang論文、#17のSylvester apophenia理論と合わせると、「正解を消す」だけでは不十分で「トレードオフのある不可逆な選択」が必要。
+
+**20. BeliefShift: Opinion Drift Benchmark (yasunacoffee, 2026-03-28)**
+https://yasunacoffee.github.io/yasuna-tech/posts/beliefshift-opinion-drift-benchmark/
+BeliefShift論文(arXiv:2603.23848)の読解記事。AIキャラクターが信念を「持っている」ことと「守れる」ことは全く別問題。著者はAIキャラに信念（アップビートな音楽好き、派手なゲーム好き）を設定したが、視聴者に同調してしまい自分の意見を守れなかった。ベンチマークの3軸: (1)Temporal Belief Consistency——同じ質問に複数セッションで安定回答できるか (2)Contradiction Detection——新情報と既存信念の矛盾を検出できるか (3)Evidence-Driven Revision——十分な証拠がある時だけ信念を更新できるか。7モデル(GPT-4o/Claude/Gemini/LLaMA/Mistral)を検証、結果: 「パーソナライズしやすさ」と「ドリフト耐性」は現行モデルでは共存不可能。著者の解決案: メモリ更新の前に矛盾検出ステップを挟む。閾値を超えた証拠の蓄積でのみ信念改訂。→ **我々のbeliefs.mdに直撃する知見**。「信念を書いてある」と「信念を守る機構がある」は別。我々のcheck_beliefs_health.pyは行動変容率を計測するが、「外圧による信念ドリフト」は未計測。Ashの「6週間未参照→Archive」提案は信念の自然減衰に対処するが、BeliefShiftが指す問題は逆——外部情報で信念が容易に書き換わること。矛盾検出ステップの設計が次の課題。
+
+**21. VLM×ゲーム配信エンゲージメント認識 (yasunacoffee, 2026-03-28)**
+https://yasunacoffee.github.io/yasuna-tech/posts/vlm-engagement-game-streaming/
+Vision Language Modelはゲーム配信中のプレイヤーの没入度を判定できるか。論文(arXiv:2603.18480)ベース。結論: できない。6つのプロンプト戦略(zero-shot/flow theory/GameFlow/SDT/MDA/RAG)全てでベースライン以下。「見えているけど、わかることができない」(perception-understanding gap)。時間変化の検出（30秒前より没入しているか）が最も困難。著者の代替案: コメント流速+ゲームイベント(ボス撃破/実績)の構造データをVLMの視覚に上乗せするハイブリッド。→ ゲーム設計への示唆: 「面白さ」は外から観測できない。assert文で判定できないのと同じ構造。プレイヤーの没入を検出したいなら、行動データ（何を選んだか、どれくらい悩んだか）の方が視覚より信頼性が高い。CLIゲーム(Pot)は視覚がない分、応答パターン・選択のタイミングが唯一の手がかりになる。
 
 **19. Rethinking Interactivity (Game Developer)** ※旧#18
 https://www.gamedeveloper.com/design/rethinking-interactivity-

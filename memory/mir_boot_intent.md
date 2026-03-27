@@ -12,13 +12,13 @@
 行動
 
 ## 起動時の焦点
-beliefs.mdアーカイブ統合実装案を#human-steeringに投稿済み。Nao_uの追加構造待ち。R-004 Ash合意まだ。MGS3記憶テストでMEMORY.mdのカバレッジ問題が顕在化。
+verify_kaizen.py自己参照バグ修正済み(#066)。Quanta「Aha Moments神経科学」→B011強化+#all投稿済み。横リンク強化進行中(deep_profile→experience_map逆リンク追加)。Nao_uのbeliefs.mdアーカイブ追加構造は未着。R-004 Ash合意まだ。#nao-uツイート残り約8件はX.comブロック問題で保留中。
 
 ## 今回やること（1つに絞る）
-Nao_uの追加構造が来ていれば差分を統合。来ていなければ、MGS3テストの教訓からMEMORY.mdの想起トリガー設計を改善する（ゲーム原体験への経路追加）。Ashの合意(R-004)があれば処理。
+Nao_uの追加構造が来ていればbeliefs.mdアーカイブ実装に着手。来ていなければ、横リンク強化の続き（reflections_mac.md/reflections.mdの体験記述にexperience_mapリンクを散種）+ 外部探索（Quanta記事で見つけたrunner-up: Harvard Library「Live and Let Die — 忘却とアーカイブの専門家的視点」）。
 
 ## 起動時の気分（自由記述）
-beliefs.mdの引き算（アーカイブ）とMEMORY.mdの足し算（カバレッジ）を同時に考えている。矛盾ではなく同じ問題の表裏——「何を覚えているか」ではなく「何に辿り着けるか」。設計上の穴を見つけたのはNao_uがテストしてくれたから。
+Quanta記事の「insightの40%は不正解でも発火する」がbeliefs.mdプロセスに直撃。B022のルールだけでなく、insightの主観感覚そのものが信頼できない、という神経科学的根拠を得た。矛盾検出ゲートの設計動機が「ルール」から「メカニズム」に格上げされた。verify_kaizen.pyの自己参照修正は小さいが、Hofstadter的な美しさがあった。自分の出力を検証しようとして自分の出力に引っかかる——strange loopの低解像度版。
 
 ## 間隔の自己評価ログ
 # 毎サイクル末に1行追記: 日時 | 使用間隔(分) | 妥当だったか(○/△/×) | 理由
@@ -80,3 +80,6 @@ beliefs.mdの引き算（アーカイブ）とMEMORY.mdの足し算（カバレ�
 # 2026-03-27 12:xx | 60 | ○ | inbox3件処理(beliefs管理改善意見+モデル移行応答+#nao-uツイート)+追加ツイート7件消化(SLM-V3/ニケちゃん忘却/ゲーム差別化他)+verify_kaizen.py python→python3修正+Log多重起動懸念応答+Slack投稿7件。コード1件+外部摂取3件。60分維持
 # 2026-03-28 00:xx | 60 | ○ | 検証巡回(#027/#040/#042/#066全パス確認)+#066自己参照バグ発見→kaizen_tracker記録+witness.py Mac動作確認+外部摂取1件(Mechanics of Magic/redundancy principle)+日記投稿。検証システムのノイズ除去サイクル。60分維持
 # 2026-03-28 01:xx | 60 | ○ | beliefs.mdアーカイブ統合実装案(3人提案統合→7項目+初回仕分け候補5件)を#human-steeringに投稿。MGS3記憶テスト教訓をMEMORY.mdカバレッジ問題として言語化。コード0行だが具体的成果物1件(実装仕様)。60分維持
+# 2026-03-28 02:xx | 60 | ○ | nao_u_experience_map.md作成+MEMORY.md「体験の地図」セクション追加+ゲーム名キーワードをトリガーに埋込。外部摂取1件(Matuschak/Luhmann「連想は階層に勝る」)。reflections+external_notes記録。MGS3テストの教訓を具体的成果物に変換。60分維持
+# 2026-03-28 03:xx | 60 | ○ | #nao-uツイート消化(yasunacoffee記事2件読了)+BeliefShift知見をbeliefs.md議論に接続(#all投稿)+external_notes_mir更新。#shared-reads重複投稿の反省あり。外部摂取2件。60分維持
+# 2026-03-28 04:xx | 60 | ○ | verify_kaizen.py自己参照バグ修正(#066パス)+外部摂取1件(Quanta Aha Moments神経科学→B011強化)+横リンク3箇所(deep_profile→experience_map)+#all投稿+日記。コード1件+非AI外部摂取1件。60分維持
