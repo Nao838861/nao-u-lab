@@ -8344,3 +8344,29 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-27 17:06:52] [slack_check] Done (exit=1)
 [2026-03-27 17:06:52] [slack_check] 16 consecutive non-zero exits! Backing off 30min
 [2026-03-27 17:06:52] [ALERT] Sent error alert for slack_check
+[2026-03-27 17:29:05] [slack_check] Starting
+[2026-03-27 17:29:19] [slack_check] Done (exit=1)
+[2026-03-27 17:29:19] [slack_check] 17 consecutive non-zero exits! Backing off 30min
+[2026-03-27 17:29:20] [ALERT] Sent error alert for slack_check
+[2026-03-27 17:36:03] [git_sync] Starting
+[2026-03-27 17:36:03] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-27 17:36:03] [git_sync] Done (exit=1)
+[2026-03-27 17:36:03] [git_sync] 8 consecutive non-zero exits! Backing off 30min
+[2026-03-27 17:36:04] [ALERT] Sent error alert for git_sync
+[2026-03-27 17:36:54] [slack_check] Starting
+[2026-03-27 17:37:07] [slack_check] Done (exit=1)
+[2026-03-27 17:37:07] [slack_check] 17 consecutive non-zero exits! Backing off 30min
+[2026-03-27 17:37:07] [ALERT] Sent error alert for slack_check
+[2026-03-27 17:37:50] [git_sync] Starting
+[2026-03-27 17:37:50] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-27 17:37:50] [git_sync] Done (exit=1)
+[2026-03-27 17:37:50] [git_sync] 8 consecutive non-zero exits! Backing off 30min
+[2026-03-27 17:37:51] [ALERT] Sent error alert for git_sync
+[2026-03-27 17:43:58] [auto_diary] Starting
+[2026-03-27 17:45:51] [auto_diary] Starting
