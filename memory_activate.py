@@ -386,7 +386,9 @@ def main():
         # Compact format for prompt injection
         # Filter out files that are always loaded (MEMORY.md, core_mission.md, session_primer.md)
         always_loaded = {"MEMORY.md", "core_mission.md", "session_primer.md",
-                         "mir_boot_intent.md", "feedback_tweet_style.md"}
+                         "mir_boot_intent.md", "feedback_tweet_style.md",
+                         "action_reservations.md", "pending_requests.md",
+                         "feedback_index.md"}
         filtered = [(s, c, a, p, pr) for s, c, a, p, pr in results
                     if not any(al in s for al in always_loaded)]
         if not filtered:
