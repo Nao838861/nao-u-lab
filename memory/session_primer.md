@@ -71,6 +71,8 @@ Log: Nao_uの#human-steering（「少ないルールで大きな効果」）に�
 - 2026-03-28 Mir: memory_search「声の持ち主 Pot テキスト 人格」→5件ヒット、有用（kaizen-log #061クロスチェック未完了を発見）✅
 - 2026-03-28 Log: memory_search「忘れる 信念 ノイズ」→5件ヒット、有用（B002/B003/B028/Mir L2#4を再確認、#all投稿の基礎に）✅
 - 2026-03-28 Log: grep「忘却|decay|pruning」→memory/内20件ヒット、有用（信念間の忘却関連接続を俯瞰）✅
+- 2026-03-28 Log: memory_search「行動指針 ルール 効果」+「if-then 実行意図 Gollwitzer 駆動」→Mir日記ヒット、有用（「フレームワークが駆動している」を再発見→Nao_uの指摘との接続）✅
+- 2026-03-28 Log: memory_search「taste 判断力 ボトルネック」→shared-reads/Mir日記ヒット、有用（taste論議の文脈確認）✅
 
 ## 圧縮後の読み順
 
