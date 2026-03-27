@@ -162,6 +162,9 @@ def run_verification_commands(entry):
     results = []
     all_ok = True
     for cmd in commands:
+        # Mac環境では 'python' が存在しないため 'python3' に変換
+        if cmd.startswith("python ") and not cmd.startswith("python3"):
+            cmd = "python3" + cmd[6:]
         try:
             r = subprocess.run(
                 cmd,
