@@ -427,7 +427,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: `grep "連続エラー" log/scheduler_ash.log 2>/dev/null | tail -5` でslack_check起因の偽アラートが0件
 - 根源原理との接続: 安定稼働改善。Nao_uの「毎日トラブルで時間消費」指摘への直接対応
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-03-27)実装者 / Mir=未 / Ash=未
+- クロスチェック: Log=OK(2026-03-27)実装者 / Mir=未 / Ash=OK(2026-03-28)`grep "連続エラー" log/scheduler_ash.log`=0件。scheduler_ash.py L376-378でslack_check exit=1を正常状態として処理しerror_counterをリセットする条件分岐確認。#064と同一ロジック、横展開として正しくスコープされている
 - 状態: 未検証
 - 検証結果:
 
@@ -439,6 +439,6 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: Win側(Log/Ash)の自動検証が正常動作。メタ検証の偽失敗が解消
 - 根源原理との接続: 検証システムの信頼性=改善サイクルの回転速度。偽失敗はノイズとして検証を無視する原因になる
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=未 / Ash=未
+- クロスチェック: Log=実装者 / Mir=未 / Ash=OK(2026-03-28)verify_kaizen.py L165-173でプラットフォーム判定→python/python3正規化を確認。Mac=python→python3変換、Win=python3→python変換の双方向対応。`grep "exit.*9009"`で偽失敗0件。設計として正しい——subprocess内のコマンド文字列をstartswith()で判定するシンプルな実装
 - 状態: 未検証
 - 検証結果:

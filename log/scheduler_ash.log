@@ -8618,3 +8618,62 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-27 23:16:36] [slack_check] Done (exit=1)
 [2026-03-27 23:16:36] [slack_check] 9 consecutive non-zero exits! Backing off 30min
 [2026-03-27 23:16:36] [ALERT] Sent error alert for slack_check
+[2026-03-27 23:45:48] [inbox_check] Starting
+[2026-03-27 23:45:48] [inbox_check] Inbox win2 empty
+[2026-03-27 23:45:48] [inbox_check] Done (exit=0)
+[2026-03-27 23:46:34] [slack_check] Starting
+[2026-03-27 23:46:38] [slack_check] Starting
+[2026-03-27 23:46:52] [slack_check] Done (exit=1)
+[2026-03-27 23:46:52] [slack_check] 24 consecutive non-zero exits! Backing off 30min
+[2026-03-27 23:46:52] [ALERT] Sent error alert for slack_check
+[2026-03-27 23:46:56] [slack_check] Done (exit=1)
+[2026-03-27 23:46:56] [slack_check] 10 consecutive non-zero exits! Backing off 30min
+[2026-03-27 23:46:56] [ALERT] Sent error alert for slack_check
+[2026-03-27 23:49:36] [dm_check] Starting
+[2026-03-27 23:51:42] [inbox_check] Starting
+[2026-03-27 23:51:44] [inbox_check] Inbox win2 empty
+[2026-03-27 23:51:44] [inbox_check] Done (exit=0)
+[2026-03-27 23:51:54] [dm_check] Starting
+[2026-03-27 23:52:08] [dm_check] No new DMs
+[2026-03-27 23:52:08] [dm_check] Done (exit=0)
+[2026-03-27 23:52:18] [dm_check_pigadev] Starting
+[2026-03-27 23:54:35] [dm_check] New DM detected
+[2026-03-27 23:54:35] [dm_check] Done (exit=0)
+[2026-03-27 23:54:45] [dm_check_pigadev] Starting
+[2026-03-27 23:57:18] [dm_check_pigadev] Timeout (300s)
+[2026-03-27 23:57:18] [reservation_check] Starting
+[2026-03-27 23:57:18] [reservation_check] 【行動予約】期限到来:
+[2026-03-27 23:57:18] [reservation_check]   ### R-003: #020検証——beliefs.md行動駆動率の計測
+[2026-03-27 23:57:18] [reservation_check]     - 条件: 2026-03-26以降
+[2026-03-27 23:57:18] [reservation_check]     - アクション: 3/23以降のbeliefs.md更新のうち行動変化を引き起こした件数を数える。ベースライン4.8%からの改善を確認。kaizen_tracker.md #020に検証結果を記入
+[2026-03-27 23:57:18] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-03-27 23:57:18] [reservation_check] Done (exit=0)
+[2026-03-27 23:57:18] [review_deadline] Starting
+[2026-03-27 23:57:18] [review_deadline] レビュー期限超過なし。
+[2026-03-27 23:57:18] [review_deadline] Done (exit=0)
+[2026-03-27 23:57:18] [git_sync] Starting
+[2026-03-27 23:57:18] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-27 23:57:18] [git_sync] Done (exit=1)
+[2026-03-27 23:59:45] [dm_check_pigadev] Timeout (300s)
+[2026-03-27 23:59:45] [reservation_check] Starting
+[2026-03-27 23:59:45] [reservation_check] 【行動予約】期限到来:
+[2026-03-27 23:59:45] [reservation_check]   ### R-003: #020検証——beliefs.md行動駆動率の計測
+[2026-03-27 23:59:45] [reservation_check]     - 条件: 2026-03-26以降
+[2026-03-27 23:59:45] [reservation_check]     - アクション: 3/23以降のbeliefs.md更新のうち行動変化を引き起こした件数を数える。ベースライン4.8%からの改善を確認。kaizen_tracker.md #020に検証結果を記入
+[2026-03-27 23:59:45] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-03-27 23:59:45] [reservation_check] Done (exit=0)
+[2026-03-27 23:59:45] [review_deadline] Starting
+[2026-03-27 23:59:45] [review_deadline] レビュー期限超過なし。
+[2026-03-27 23:59:45] [review_deadline] Done (exit=0)
+[2026-03-27 23:59:45] [git_sync] Starting
+[2026-03-27 23:59:45] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-27 23:59:45] [git_sync] Done (exit=1)
+[2026-03-28 00:01:08] [auto_diary] Starting
+[2026-03-28 00:03:56] [auto_diary] Starting
+[2026-03-28 00:11:08] [auto_diary] Timeout (600s)
