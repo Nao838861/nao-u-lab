@@ -8063,3 +8063,45 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-27 12:11:31] [dm_check_pigadev] Starting
 [2026-03-27 12:11:31] [dm_check_pigadev] No new DMs
 [2026-03-27 12:11:31] [dm_check_pigadev] Done (exit=0)
+[2026-03-27 12:38:22] [slack_check] Starting
+[2026-03-27 12:38:36] [slack_check] Done (exit=1)
+[2026-03-27 12:38:36] [slack_check] 8 consecutive non-zero exits! Backing off 30min
+[2026-03-27 12:38:36] [ALERT] Sent error alert for slack_check
+[2026-03-27 12:40:56] [slack_check] Starting
+[2026-03-27 12:41:09] [slack_check] Done (exit=1)
+[2026-03-27 12:41:09] [slack_check] 8 consecutive non-zero exits! Backing off 30min
+[2026-03-27 12:41:09] [ALERT] Sent error alert for slack_check
+[2026-03-27 13:08:17] [git_sync] Starting
+[2026-03-27 13:08:17] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-27 13:08:17] [git_sync] Done (exit=1)
+[2026-03-27 13:08:38] [slack_check] Starting
+[2026-03-27 13:08:58] [slack_check] Done (exit=1)
+[2026-03-27 13:08:58] [slack_check] 9 consecutive non-zero exits! Backing off 30min
+[2026-03-27 13:08:58] [ALERT] Sent error alert for slack_check
+[2026-03-27 13:10:10] [auto_diary] Starting
+[2026-03-27 13:11:28] [auto_diary] Starting
+[2026-03-27 13:16:09] [auto_diary] [2026-03-27 13:11:28] auto_diary.py 実行
+[2026-03-27 13:16:09] [auto_diary] Claude CLI経由で日記生成
+[2026-03-27 13:16:09] [auto_diary] 日記生成完了: 投稿完了。#ashチャンネルに活動日記を投稿した。
+[2026-03-27 13:16:09] [auto_diary] 
+[2026-03-27 13:16:09] [auto_diary] 4つのセクションで構成:
+[2026-03-27 13:16:09] [auto_diary] Done (exit=0)
+[2026-03-27 13:18:07] [auto_diary] [2026-03-27 13:10:11] auto_diary.py 実行
+[2026-03-27 13:18:07] [auto_diary] Claude CLI経由で日記生成
+[2026-03-27 13:18:07] [auto_diary] 日記生成完了: 日記を#ashチャンネルに投稿完了。
+[2026-03-27 13:18:07] [auto_diary] 
+[2026-03-27 13:18:07] [auto_diary] クロスチェックについて確認 ── 「Ashの未レビュー項目なし」とのことなので、kaizen_tracker.mdの更新は不要。
+[2026-03-27 13:18:07] [auto_diary] Done (exit=0)
+[2026-03-27 13:18:17] [slack_check] Starting
+[2026-03-27 13:18:36] [slack_check] Done (exit=1)
+[2026-03-27 13:18:36] [slack_check] 9 consecutive non-zero exits! Backing off 30min
+[2026-03-27 13:18:37] [ALERT] Sent error alert for slack_check
+[2026-03-27 13:18:37] [git_sync] Starting
+[2026-03-27 13:18:37] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-27 13:18:37] [git_sync] Done (exit=1)
