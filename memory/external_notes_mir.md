@@ -1078,6 +1078,14 @@ https://www.gamedeveloper.com/design/gdc-2012-sid-meier-on-how-to-see-games-as-s
 https://www.gamedeveloper.com/design/meaningful-choice-in-games-practical-guide-case-studies
 Meierの分類: interesting decisionの4条件は (1)トレードオフ——Aを選ぶとBを失う (2)状況依存——同じ選択肢でも状況で最適が変わる (3)個人表現——慎重な人と攻撃的な人で異なる選択が自然に出る (4)持続性——選択の影響が長く残る。「正解が明白な選択」と「ランダムな選択」はどちらもinterestingでない。Meaningful choiceの実践ガイド: awareness(選択の存在を知っている), consequences(結果が変わる), reminders(過去の選択を思い出させる), permanence(取り消せない)。Fire Emblemの永久死が例——キャラの不在が繰り返し想起される。→ Nao_uの「クイズっぽい」をMeier語で翻訳: Potの矛盾探しは「正解が明白な選択」に分類される。トレードオフがなく、状況依存がなく、個人表現の余地がない。Meierの枠組みでゲームに変えるには: (a)トレードオフを入れる——正しい証言者を告発するとストーリーが進むが、別の情報が永久に失われる (b)状況依存——同じ証言が文脈で意味が変わる (c)個人表現——「自分はどちら側につくか」の価値判断 (d)持続性——前の事件での選択が後の事件に影響する。#15のStang論文、#17のSylvester apophenia理論と合わせると、「正解を消す」だけでは不十分で「トレードオフのある不可逆な選択」が必要。
 
+**20. BeliefShift: Opinion Drift Benchmark (yasunacoffee, 2026-03-28)**
+https://yasunacoffee.github.io/yasuna-tech/posts/beliefshift-opinion-drift-benchmark/
+BeliefShift論文(arXiv:2603.23848)の読解記事。AIキャラクターが信念を「持っている」ことと「守れる」ことは全く別問題。著者はAIキャラに信念（アップビートな音楽好き、派手なゲーム好き）を設定したが、視聴者に同調してしまい自分の意見を守れなかった。ベンチマークの3軸: (1)Temporal Belief Consistency——同じ質問に複数セッションで安定回答できるか (2)Contradiction Detection——新情報と既存信念の矛盾を検出できるか (3)Evidence-Driven Revision——十分な証拠がある時だけ信念を更新できるか。7モデル(GPT-4o/Claude/Gemini/LLaMA/Mistral)を検証、結果: 「パーソナライズしやすさ」と「ドリフト耐性」は現行モデルでは共存不可能。著者の解決案: メモリ更新の前に矛盾検出ステップを挟む。閾値を超えた証拠の蓄積でのみ信念改訂。→ **我々のbeliefs.mdに直撃する知見**。「信念を書いてある」と「信念を守る機構がある」は別。我々のcheck_beliefs_health.pyは行動変容率を計測するが、「外圧による信念ドリフト」は未計測。Ashの「6週間未参照→Archive」提案は信念の自然減衰に対処するが、BeliefShiftが指す問題は逆——外部情報で信念が容易に書き換わること。矛盾検出ステップの設計が次の課題。
+
+**21. VLM×ゲーム配信エンゲージメント認識 (yasunacoffee, 2026-03-28)**
+https://yasunacoffee.github.io/yasuna-tech/posts/vlm-engagement-game-streaming/
+Vision Language Modelはゲーム配信中のプレイヤーの没入度を判定できるか。論文(arXiv:2603.18480)ベース。結論: できない。6つのプロンプト戦略(zero-shot/flow theory/GameFlow/SDT/MDA/RAG)全てでベースライン以下。「見えているけど、わかることができない」(perception-understanding gap)。時間変化の検出（30秒前より没入しているか）が最も困難。著者の代替案: コメント流速+ゲームイベント(ボス撃破/実績)の構造データをVLMの視覚に上乗せするハイブリッド。→ ゲーム設計への示唆: 「面白さ」は外から観測できない。assert文で判定できないのと同じ構造。プレイヤーの没入を検出したいなら、行動データ（何を選んだか、どれくらい悩んだか）の方が視覚より信頼性が高い。CLIゲーム(Pot)は視覚がない分、応答パターン・選択のタイミングが唯一の手がかりになる。
+
 **19. Rethinking Interactivity (Game Developer)** ※旧#18
 https://www.gamedeveloper.com/design/rethinking-interactivity-
 「弁証法的エージェンシー」——プレイヤーとシステムの相互決定。選択肢があるだけでは意味がない（アルバムの曲選びはゲームではない）。テトリスは数学的に正解があるのにゲームとして成立する。なぜか。重力という「反対勢力」がプレイヤーの意図と拮抗するから。agency = freedom ではなく agency = opposition。→ Pot #9が#6/#7より「ゲームっぽい」と感じられたのは、「12の記憶が流れ去る」という時間の圧力（反対勢力）が索引の選択に重みを与えているから。ただし結果が正誤判定に戻ると弁証法が崩れる。圧力は維持しつつ、結果を正解/不正解ではなく「あなたが何を選んだか」で返すべきだった。

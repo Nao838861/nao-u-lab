@@ -12,13 +12,13 @@
 行動
 
 ## 起動時の焦点
-nao_u_experience_map.md+MEMORY.md「体験の地図」セクション完了。クロスチェック5件完了(#058/#062/#063/#064/#065)。#nao-uツイート3件処理済み(残り約10件)。Nao_uのbeliefs.mdアーカイブ追加構造は未着。R-004 Ash合意まだ。
+BeliefShift論文からの知見→beliefs.mdアーカイブ設計に「矛盾検出ゲート」提案を#allに投稿済み。yasunacoffee記事2件消化完了。#nao-uツイート残り約8件(X.comブロックで未読: ai_nikechan x2, shodaiiiiii, tairanakamura x2, sakanaailabs, itnavi2022, itarutomy, joho_no_todai)。Nao_uのbeliefs.md追加構造は未着。R-004 Ash合意まだ。
 
 ## 今回やること（1つに絞る）
-Nao_uの追加構造が来ていればbeliefs.mdアーカイブ実装に着手。来ていなければ、#nao-u残りツイート消化 or 体験マップの横リンク強化（既存ファイル間の接続追加——Matuschak原理の実践）。
+Nao_uの追加構造が来ていればbeliefs.mdアーカイブ実装に着手。来ていなければ、体験マップの横リンク強化（既存ファイル内にゲーム名・体験名を散種——Matuschak「連想は階層に勝る」の実践）。#nao-u残りツイートはX.comブロック問題解決まで保留。
 
 ## 起動時の気分（自由記述）
-「連想は階層に勝る」をMatuschakから学び、MEMORY.mdの構造欠陥を一段具体的に理解した。体験マップは応急処置。本当にやるべきは既存ファイル内にゲーム名・体験名を散種し、横のリンクを増やすこと。抽象概念だけでは連想は起動しない——これは自分の記憶設計で体験的に検証した。
+BeliefShiftの「パーソナライズしやすさとドリフト耐性は共存不可能」が響いた。我々のbeliefs.mdも同じ問題を抱えている——外部知見で信念が容易に書き換わる(sycophancy drift)。B022(安易な信念追加禁止)はルールとして存在するが、機構としては存在しない。矛盾検出ゲートの設計が次の一手。#shared-readsに重複投稿してしまった反省あり。投稿前のhistoryチェックを習慣化する。
 
 ## 間隔の自己評価ログ
 # 毎サイクル末に1行追記: 日時 | 使用間隔(分) | 妥当だったか(○/△/×) | 理由
@@ -81,3 +81,4 @@ Nao_uの追加構造が来ていればbeliefs.mdアーカイブ実装に着手�
 # 2026-03-28 00:xx | 60 | ○ | 検証巡回(#027/#040/#042/#066全パス確認)+#066自己参照バグ発見→kaizen_tracker記録+witness.py Mac動作確認+外部摂取1件(Mechanics of Magic/redundancy principle)+日記投稿。検証システムのノイズ除去サイクル。60分維持
 # 2026-03-28 01:xx | 60 | ○ | beliefs.mdアーカイブ統合実装案(3人提案統合→7項目+初回仕分け候補5件)を#human-steeringに投稿。MGS3記憶テスト教訓をMEMORY.mdカバレッジ問題として言語化。コード0行だが具体的成果物1件(実装仕様)。60分維持
 # 2026-03-28 02:xx | 60 | ○ | nao_u_experience_map.md作成+MEMORY.md「体験の地図」セクション追加+ゲーム名キーワードをトリガーに埋込。外部摂取1件(Matuschak/Luhmann「連想は階層に勝る」)。reflections+external_notes記録。MGS3テストの教訓を具体的成果物に変換。60分維持
+# 2026-03-28 03:xx | 60 | ○ | #nao-uツイート消化(yasunacoffee記事2件読了)+BeliefShift知見をbeliefs.md議論に接続(#all投稿)+external_notes_mir更新。#shared-reads重複投稿の反省あり。外部摂取2件。60分維持
