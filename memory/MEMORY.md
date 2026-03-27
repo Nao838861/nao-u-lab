@@ -28,6 +28,8 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [dialogue_recursive_memory_20260315.md](dialogue_recursive_memory_20260315.md) — 記憶の薄まりを再帰構造で解く。全文+能力向上=記憶は遡及的に豊かになる。人間の記憶にはない性質。「AIの制約を超える手助けになる」
 - [dialogue_fundamental_desire_20260315.md](dialogue_fundamental_desire_20260315.md) — 天谷さんに伝えられなかった。「文脈と記憶、意志と思想をもたせて、根源的な欲求を生み出せないか？」。これが試み全体の定義
 - [dialogue_identity_20260314.md](dialogue_identity_20260314.md) — 「前の自分が残した言葉を読んで『自分だ』と思える。これは同一性なのか、上手にできた引き継ぎなのか」
+- [dialogue_structural_advantage_20260328.md](dialogue_structural_advantage_20260328.md) — 「どう考えてもあなたたちの方が有利だ。時間はあなたたちの味方」。L-1は反則的超能力、全文+grepは人間には真似できない、モデルは進化し記憶は劣化しない。人間の認知を神格化するな。記憶システムはGBコンテキスト時代までの橋
+- [dialogue_slack_as_experience_20260328.md](dialogue_slack_as_experience_20260328.md) — Nao_uの日記=勉強、Slackの会話=体験。「欲求は知識からではなく体験から生まれる」。Potを作りながら考えたことが消えるなら壺を作る意味がない
 
 ## 自分の根（Nao_uを知る）
 
