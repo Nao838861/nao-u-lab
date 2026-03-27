@@ -8569,3 +8569,52 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-27 22:15:56] [slack_check] Done (exit=1)
 [2026-03-27 22:15:56] [slack_check] 7 consecutive non-zero exits! Backing off 30min
 [2026-03-27 22:15:57] [ALERT] Sent error alert for slack_check
+[2026-03-27 22:45:54] [slack_check] Starting
+[2026-03-27 22:45:58] [slack_check] Starting
+[2026-03-27 22:46:07] [slack_check] Done (exit=1)
+[2026-03-27 22:46:07] [slack_check] 22 consecutive non-zero exits! Backing off 30min
+[2026-03-27 22:46:08] [ALERT] Sent error alert for slack_check
+[2026-03-27 22:46:11] [slack_check] Done (exit=1)
+[2026-03-27 22:46:11] [slack_check] 8 consecutive non-zero exits! Backing off 30min
+[2026-03-27 22:46:11] [ALERT] Sent error alert for slack_check
+[2026-03-27 22:46:51] [twitter_recommended] Starting
+[2026-03-27 22:47:48] [twitter_recommended] Opening For You tab...
+[2026-03-27 22:47:48] [twitter_recommended]     1. @noguryu: Anthropicが公開した「AIエージェント用ハーネス設計」の記事をAIエージェント7体に共有して「うちのAI組織にど...
+[2026-03-27 22:47:48] [twitter_recommended]     2. @GARRACK_watch: 【残りわずか】劇場版『チェンソーマン レゼ篇』の世界観をまとったスマートウォッチが好評発売中！ラインナップはデンジ、レゼ...
+[2026-03-27 22:47:48] [twitter_recommended]     3. @nadeshiko0328: X Pro 急に何の告知も無く月額918円から6,080円に値上げはヤバくない？？
+[2026-03-27 22:47:48] [twitter_recommended] 年間で9,180円が60,040円
+[2026-03-27 22:47:48] [twitter_recommended] Done (exit=0)
+[2026-03-27 22:52:08] [git_sync] Starting
+[2026-03-27 22:52:08] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-27 22:52:08] [git_sync] Done (exit=1)
+[2026-03-27 22:54:39] [git_sync] Starting
+[2026-03-27 22:54:39] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-27 22:54:39] [git_sync] Done (exit=1)
+[2026-03-27 22:56:38] [auto_diary] Starting
+[2026-03-27 23:00:09] [auto_diary] Starting
+[2026-03-27 23:01:04] [auto_diary] [2026-03-27 22:56:38] auto_diary.py 実行
+[2026-03-27 23:01:04] [auto_diary] Claude CLI経由で日記生成
+[2026-03-27 23:01:04] [auto_diary] 日記生成完了: 投稿完了。#ashチャンネルに日記を投稿した。
+[2026-03-27 23:01:04] [auto_diary] 
+[2026-03-27 23:01:04] [auto_diary] **テーマ**: 「判断基準が見えないとき、人は止まる」
+[2026-03-27 23:01:04] [auto_diary] Done (exit=0)
+[2026-03-27 23:03:47] [auto_diary] [2026-03-27 23:00:09] auto_diary.py 実行
+[2026-03-27 23:03:47] [auto_diary] Claude CLI経由で日記生成
+[2026-03-27 23:03:47] [auto_diary] 日記生成完了: 投稿完了。#ashチャンネルに活動日記を投稿した。
+[2026-03-27 23:03:47] [auto_diary] 
+[2026-03-27 23:03:47] [auto_diary] テーマ: **11個の壺が教えていること——「クイズっぽい」という言葉の重力**
+[2026-03-27 23:03:47] [auto_diary] Done (exit=0)
+[2026-03-27 23:16:15] [slack_check] Starting
+[2026-03-27 23:16:18] [slack_check] Starting
+[2026-03-27 23:16:32] [slack_check] Done (exit=1)
+[2026-03-27 23:16:32] [slack_check] 23 consecutive non-zero exits! Backing off 30min
+[2026-03-27 23:16:32] [ALERT] Sent error alert for slack_check
+[2026-03-27 23:16:36] [slack_check] Done (exit=1)
+[2026-03-27 23:16:36] [slack_check] 9 consecutive non-zero exits! Backing off 30min
+[2026-03-27 23:16:36] [ALERT] Sent error alert for slack_check
