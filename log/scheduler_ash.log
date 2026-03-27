@@ -8240,3 +8240,59 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-27 15:41:29] [auto_diary] 
 [2026-03-27 15:41:29] [auto_diary] **日記の要約:**
 [2026-03-27 15:41:29] [auto_diary] Done (exit=0)
+[2026-03-27 15:58:06] [slack_check] Starting
+[2026-03-27 15:58:10] [slack_check] Starting
+[2026-03-27 15:58:20] [slack_check] Done (exit=1)
+[2026-03-27 15:58:20] [slack_check] 14 consecutive non-zero exits! Backing off 30min
+[2026-03-27 15:58:20] [ALERT] Sent error alert for slack_check
+[2026-03-27 15:58:23] [slack_check] Done (exit=1)
+[2026-03-27 15:58:23] [slack_check] 14 consecutive non-zero exits! Backing off 30min
+[2026-03-27 15:58:24] [ALERT] Sent error alert for slack_check
+[2026-03-27 16:02:31] [twitter_recommended] Starting
+[2026-03-27 16:03:39] [twitter_recommended] Opening For You tab...
+[2026-03-27 16:03:39] [twitter_recommended]     1. @itarutomy: AIエージェントの記憶検索、30以上のシステムを調べたら全部コサイン類似度だった。...
+[2026-03-27 16:03:39] [twitter_recommended]     2. @googlejapan: 説明失敗。...
+[2026-03-27 16:03:39] [twitter_recommended]     3. @DGetback47618: シンギュラリティ後の世界では物理法則自体が変更されると思います。
+[2026-03-27 16:03:39] [twitter_recommended] 人間が物理法則をいじれない理由はないと思うんですよ。...
+[2026-03-27 16:03:39] [twitter_recommended] Done (exit=0)
+[2026-03-27 16:27:16] [inbox_check] Starting
+[2026-03-27 16:27:17] [inbox_check] Inbox win2 empty
+[2026-03-27 16:27:17] [inbox_check] Done (exit=0)
+[2026-03-27 16:27:21] [inbox_check] Starting
+[2026-03-27 16:27:21] [inbox_check] Inbox win2 empty
+[2026-03-27 16:27:21] [inbox_check] Done (exit=0)
+[2026-03-27 16:27:21] [dm_check] Starting
+[2026-03-27 16:27:37] [dm_check] Starting
+[2026-03-27 16:27:37] [dm_check] No new DMs
+[2026-03-27 16:27:37] [dm_check] Done (exit=0)
+[2026-03-27 16:28:27] [slack_check] Starting
+[2026-03-27 16:28:44] [slack_check] Done (exit=1)
+[2026-03-27 16:28:44] [slack_check] 15 consecutive non-zero exits! Backing off 30min
+[2026-03-27 16:28:44] [ALERT] Sent error alert for slack_check
+[2026-03-27 16:32:22] [dm_check] Timeout (300s)
+[2026-03-27 16:32:22] [dm_check_pigadev] Starting
+[2026-03-27 16:32:44] [dm_check_pigadev] Starting
+[2026-03-27 16:36:01] [dm_check_pigadev] New DM detected
+[2026-03-27 16:36:01] [dm_check_pigadev] Done (exit=0)
+[2026-03-27 16:36:01] [reservation_check] Starting
+[2026-03-27 16:36:01] [reservation_check] 【行動予約】期限到来:
+[2026-03-27 16:36:01] [reservation_check]   ### R-003: #020検証——beliefs.md行動駆動率の計測
+[2026-03-27 16:36:01] [reservation_check]     - 条件: 2026-03-26以降
+[2026-03-27 16:36:01] [reservation_check]     - アクション: 3/23以降のbeliefs.md更新のうち行動変化を引き起こした件数を数える。ベースライン4.8%からの改善を確認。kaizen_tracker.md #020に検証結果を記入
+[2026-03-27 16:36:01] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-03-27 16:36:01] [reservation_check] Done (exit=0)
+[2026-03-27 16:36:01] [review_deadline] Starting
+[2026-03-27 16:36:01] [review_deadline] レビュー期限超過なし。
+[2026-03-27 16:36:01] [review_deadline] Done (exit=0)
+[2026-03-27 16:36:01] [git_sync] Starting
+[2026-03-27 16:36:01] [git_sync] ERR: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\git_sync.py", line 6, in <module>
+    os.chdir(REPO)
+FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。: 'C:\\AI\\nao-u-lab'
+[2026-03-27 16:36:01] [git_sync] Done (exit=1)
+[2026-03-27 16:36:01] [git_sync] 7 consecutive non-zero exits! Backing off 30min
+[2026-03-27 16:36:02] [ALERT] Sent error alert for git_sync
+[2026-03-27 16:36:12] [slack_check] Starting
+[2026-03-27 16:36:28] [slack_check] Done (exit=1)
+[2026-03-27 16:36:28] [slack_check] 15 consecutive non-zero exits! Backing off 30min
+[2026-03-27 16:36:28] [ALERT] Sent error alert for slack_check
