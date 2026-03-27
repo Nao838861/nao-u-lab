@@ -193,6 +193,11 @@ def post_tweet(text, dry_run=False):
 
             if "login" in page.url:
                 print("Error: Not logged in. Run tweet_login.bat first.")
+                try:
+                    from twitter_error_tracker import track_failure
+                    track_failure("tweet_poster", "login page detected")
+                except Exception:
+                    pass
                 return False
 
             # Find tweet textbox
@@ -253,12 +258,22 @@ def post_tweet(text, dry_run=False):
             time.sleep(8)
 
             print(f"DONE: {text[:80]}...")
+            try:
+                from twitter_error_tracker import track_success
+                track_success("tweet_poster")
+            except Exception:
+                pass
             return True
 
         except Exception as e:
             print(f"Error: {e}")
             try:
                 page.screenshot(path="debug_screenshot.png")
+            except Exception:
+                pass
+            try:
+                from twitter_error_tracker import track_failure
+                track_failure("tweet_poster", str(e)[:200])
             except Exception:
                 pass
             return False

@@ -7957,3 +7957,6 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-27 09:03:40] [slack_check] 5 consecutive non-zero exits! Backing off 30min
 [2026-03-27 09:03:40] [ALERT] Sent error alert for slack_check
 [2026-03-27 09:03:40] [dm_check_pigadev] Starting
+[2026-03-27 09:07:27] [dm_check_pigadev] Timeout (300s)
+[2026-03-27 09:08:02] [dm_check_pigadev] New DM detected
+[2026-03-27 09:08:02] [dm_check_pigadev] Done (exit=0)

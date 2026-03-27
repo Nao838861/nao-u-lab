@@ -70,8 +70,20 @@ def get_current_notifications():
 
         except Exception as e:
             log(f"Error fetching notifications: {e}")
+            try:
+                from twitter_error_tracker import track_failure
+                track_failure("check_notifications_diff", str(e)[:200])
+            except Exception:
+                pass
         finally:
             context.close()
+
+    if notifications:
+        try:
+            from twitter_error_tracker import track_success
+            track_success("check_notifications_diff")
+        except Exception:
+            pass
 
     return notifications
 
