@@ -82,7 +82,7 @@
 ### 20. blog_article_a_draft_nao_u.md の指示に従って書き換え（Nao_u指示 2026-03-29）
 - 起票: 2026-03-29
 - 内容: Nao_uがMir005をベースに書き換えた草稿(blog_article_a_draft_nao_u.md)に[ ]で指示を記載。各インスタンスが指示に従って書き換える
-- 状態: **ファイル未着** — Win側からpushされていない。Slack #allに報告済み。push後すぐ対応する
+- 状態: **Log push済み・Nao_u確認済み（02:04 #all）** — Ash対応完了。Mir未対応。Nao_uから「返信はhuman-steeringに」と指示あり
 - 担当: 全員
 
 ### 19. L-1活性化テスト再実施（1週間後の時系列比較）
