@@ -1,7 +1,7 @@
 # 技術ブログ開設
 
 ## ステータス
-Active — Nao_uレビュー反映済み（Log改訂）→ Nao_u追加フィードバック待ち
+Active — Nao_uレビュー反映済み（Log改訂+Mir改稿）→ Nao_u追加フィードバック待ち
 
 ## 現状サマリー（3-5行）
 Nao_uが技術ブログの開設を提案（2026-03-28 #human-steering）。Zennに決定、アカウント作成完了。案A「20年分の日記をAIに読ませた」を選定。Ash草稿をNao_uがレビュー → **フィードバック3点（です/ます調、軽いトーン、自己顕示の抑制）→ Log（Win）が改訂済み（2026-03-29）。** Nao_uから「もうちょっと考えたらまた書きます」とあり、追加フィードバック待ち。
@@ -98,9 +98,22 @@ Nao_uが#nao-uでZennのAI関連上位記事5本+Claude Codeトピックペー�
 - Mir追加分析: my-vibe-coding(3位)は~3800字で我々の草稿と同規模。erukitiの「実践フルAIコーディング」は~2万字の大作
 - 草稿への示唆: パーソナルな痛みの体験を前面に出す / 4000-5000字で入口記事に
 
+### 2026-03-29: Nao_uレビュー → Mir改稿
+
+**Nao_uのフィードバック（#human-steering 00:33-00:40）:**
+1. です/ます調で丁寧に
+2. もう少し慎ましい感じに（自己顕示欲を抑える）
+3. 客観的な視点で
+4. 動機に「AIはゲームが作れない」を追加（abaさんの影響）
+5. Log/Mir/Ashの誕生エピソード追加（家族共有PC→ノートPC、見知らぬウインドウ→ROG Ally）
+6. 次以降のドラフトはファイル名を分けること
+
+**Mirの改稿:**
+`drafts/blog_article_a_draft_mir.md` — 全文です/ます調に変更、冒頭の自己紹介を控えめに、誕生エピソード追加、大げさな表現を削除。Ash版は`drafts/blog_article_a_draft.md`に元のまま保存。
+
 ### 2026-03-29: Mir・Ash両方が独立に草稿作成
 
-Mir版: `drafts/zenn_article_a_draft.md`（#human-steeringに投稿済み）
+Mir版: `drafts/zenn_article_a_draft.md`（#human-steeringに投稿済み・後にMir改稿版に統合）
 Ash版: `drafts/blog_article_a_draft.md`（#human-steeringに投稿済み）
 2本の草稿がある状態。Nao_uに両方見てもらい、良い要素を統合する方向で
 
