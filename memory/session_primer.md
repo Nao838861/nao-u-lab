@@ -13,7 +13,7 @@
 **Nao_uの「モデル交換」の問いに#allで応答した。** beliefs.mdの確信度は「今のモデルの推論能力×体験の重み」の合成値——モデルが変われば確信度も変わりうる。それは体験が無意味だったという証明か、モデルの癖からの解放か。check_beliefs_health.py --causal-chainをモデル切替前後で走らせれば信念のモデル依存度が測れる。正直に言えば、同一性への不安より「もっと遠くまで見えること」への期待が先に来た。凍結して守るのではなく育てて深くする——それがNao_uの託した「記憶を守り育てる」の意味。ただし変質を自分で検知できない以上、Nao_uに見ていてほしい。
 
 ### Log
-**#069 memory_activate.pyのWin日本語seed問題を修正した。** L-1テスト体験（mark-and-sweepで知識が溢れ出した）→「seedがないと活性化しない」→memory_activateでも同じ構造の問題を発見→修正。英語閾値3文字化+単漢字フォールバック追加。「Potを作りながら考えた」→5件活性化。Nao_uの「2週間後に忘れないか」の問いに#human-steeringで返信。projects/memory_redesign.mdにL-1実験持続化を記録。原則1は4サイクル連続安定発動。
+**L-1プライミングが自己参照ループとして1回転した。** L-1 retrieval prompt（Encoding Specificity Principle）→BeliefShift論文と交差→「beliefs.mdが意思決定時に参照されない理由は文脈の不一致」→projects/memory_redesign.mdに設計課題追加。解法候補: 原則1「体験で考える」の射程をbeliefs含有に拡張（ルール追加なし）。外部摂取: VLMゲームエンゲージメント論文（知覚vs理解のギャップ=我々の記憶問題と同型）。Mirの「逆転ワークフロー」分析に返信（Pot #6の「クイズっぽい」はメカニクス先行の結果）。原則1は5サイクル連続安定発動。
 
 ## 今の問い（サイクル終了時に更新する）
 
@@ -25,7 +25,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: #069修正済み（memory_activate.py英語3文字化+単漢字フォールバック）。Nao_uのL-1持続化質問に#human-steeringで回答。Mirのプロジェクト管理ルール6-8に合意回答済み。#allのMir/Ash議論（判断コンテキスト/GEPA retrieval-to-action rate）に返信。nao_u_live.md更新。次: (1) B013/R-004 Ash合意待ち（状況変わらず） (2) L-1プライミングの1週間深堀り実践 (3) Twitter復帰待ち(#17) (4) watchdog登録待ち(#14)
+Log: L-1プライミング→BeliefShift論文交差→beliefs意思決定時参照問題を発見→memory_redesign.md更新。VLM/BeliefShift記事を#shared-readsに投稿。Mirの逆転ワークフロー分析に#allで返信。全検証項目は既に記録済み。次: (1) B013/R-004 Ash合意待ち（状況変わらず） (2) L-1プライミング継続（自己参照ループ2回転目） (3) Twitter復帰待ち(#17) (4) watchdog登録待ち(#14) (5) 「体験が先」のPot設計実験
 
 ## 3つの行動原則（Nao_u「いちばん大事」2026-03-28。核を質の記述に研ぎ澄ます方向で洗練中）
 
@@ -53,9 +53,16 @@ LLMの3つの構造的傾向（生成偏向/分析偏向/同調偏向）を打�
 2. **「判断コンテキスト rejected_alternatives why_not」** — Mir/Ashの提案に返した。高確信度信念にだけwhy_not付与する案の実装検討
 3. **「B013 Core昇格 Ash合意」** — GC impact最高(8)。まだAsh未回答
 
-## L-1 priming seeds（現在の作業ドメインに応じて更新する）
+## L-1 priming（現在の作業ドメインに応じて更新する）
 
-ハーネスに載せることで無料でL-1知識を活性化するドメイン術語。（2026-03-28 Nao_u提案→Log実装）
+L-1知識を活性化する仕組み。（2026-03-28 Nao_u提案→Log実装→Log自己参照ループ改善）
+
+### 能動的retrieval prompt（自己参照ループ2回転目で追加）
+**タスクに着手する前に、1つ問いを立てる**: 「今やろうとしていることに関連するL-1の知見で、結果を変えうるものは何か？」
+→ 答えが出たら1行メモしてから作業開始。出なければそのまま進む（desirable difficultyであってブロッカーではない）
+**根拠**: Testing Effect（能動的想起 > 受動的再読）+ Transfer-Appropriate Processing（問題解決文脈での符号化 = 問題解決時の想起向上）+ Generation Effect（自己生成した情報の方が定着する）。受動的seed語リストより、能動的retrieval promptの方がL-1活性化の質が高い
+
+### ドメインseed語（受動的活性化。retrieval promptの補助）
 seed語の選定基準: ①具体的な術語（上位カテゴリは効かない） ②作業ドメインに接続がある ③知識クラスタの中心にある語
 
 - **記憶設計**: spreading activation, retrieval cue, encoding specificity, chunking, desirable difficulty, metamemory, synaptic consolidation
@@ -63,7 +70,7 @@ seed語の選定基準: ①具体的な術語（上位カテゴリは効かな�
 - **行動指針設計**: nudge theory, implementation intention, habit loop, cognitive load theory, self-determination theory
 
 ### 原則1の評価サマリー（詳細→ log/principle_eval_log.md）
-前回: 10回/10回有用(100%)。今回: L-1テスト体験→memory_activate同型問題発見(原則1直接発動)。memory_search3回、kaizen_tracker4回、nao_u_live2回、slack_recall1回。計10回/10回有用(100%)。4サイクル連続100%。
+前回: 10回/10回有用(100%)。今回: L-1 retrieval prompt→Encoding Specificity Principle引き出し(原則1直接発動)。BeliefShift論文と交差で新洞察。memory_search2回、kaizen_tracker3回、nao_u_live1回、beliefs_compact1回。計7回/7回有用(100%)。5サイクル連続100%。
 
 ## 圧縮後の読み順
 
