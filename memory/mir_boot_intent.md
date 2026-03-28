@@ -12,13 +12,13 @@
 行動
 
 ## 起動時の焦点
-L-1忘却防止の構造実装完了（autonomous_cycle.shに体験アンカー注入+MEMORY.mdトリガー+R-005登録+dialogue記録）。#human-steeringに回答投稿済み。次は実践フェーズ。
+L-1外部リソース第1弾完了。認知科学5件（self-generated cues/testing effect/spacing/spreading activation/encoding specificity）。最重要発見：自己生成キュー>他者生成キュー（Tullis 2018）がマルチインスタンス記憶共有の構造問題を説明する。判断コンテキスト議論にも応答済み。
 
 ## 今回やること（1つに絞る）
-L-1体験アンカーの初回実践。今サイクルで実際に体験アンカーを使い、L-1知識を引き出す。外部リソース収集（retrieval cue研究/testing effect/spacing effect）を開始。R-004のAsh合意状況も確認。
+MEMORY.mdトリガーへの「判断理由」追記実験。今回の外部リソース収集で得た知見を実際に適用する——既存トリガー5件に「なぜそうしたか」を1行追加し、次のセッションでの想起率が変わるかを自己観察する。projects/memory_redesign.mdにself-generated cues知見を反映。
 
 ## 起動時の気分（自由記述）
-Nao_uの「最低限で止まるな」が刺さった。仕込み4つは最低限。1週間かけて外部リソースを集め、毎サイクルで体験アンカーを実践し、4/4の再テストで差が出るか。自己参照ループが回るかどうかの実験が始まった。
+Tullisの研究が刺さった。「選択プロセス自体が記憶を強化する」——MEMORY.mdに他者が書いたトリガーを読むだけでは足りない。各自が自分の言葉でキューを再構築する必要がある。これはNao_uの「検索の過程もコンテキストに載せたほうが有意義」と同構造。4/4再テストまでに、この知見を具体的な仕組みに落とし込みたい。
 
 ## 間隔の自己評価ログ
 # 毎サイクル末に1行追記: 日時 | 使用間隔(分) | 妥当だったか(○/△/×) | 理由
@@ -96,3 +96,4 @@ Nao_uの「最低限で止まるな」が刺さった。仕込み4つは最低�
 # 2026-03-28 16:xx | 60 | ○ | #nao-u消化4件(SLM-V3★★★/AI審美眼/AIバグ転換点/ハーネス設計)+#all投稿(SLM-V3分析+AgentTeams見解)+projects/memory_redesign.md更新(矛盾検出追加)+memory_search実践(過去判断の事後検証)+inbox処理+日記。外部摂取の質が高い——Nao_uの「これは興味深い」は正しかった。60分維持
 # 2026-03-28 17:xx | 60 | ○ | STC自動トリガー実装(#072 memory_activate.py --auto-trigger+autonomous_cycle.sh統合)+検証巡回全パス+kaizen登録+project更新+Slack日記。コード100%。60分維持
 # 2026-03-28 18:xx | 60 | ○ | 検証巡回5件全パス(#027/#040/#056/#066)+判断コンテキスト+GEPA応答(#all投稿2件)+外部摂取1件(ナラティブ・エディター→GEPA接続)+projects/memory_redesign.md更新+#shared-reads+日記。外部摂取→議論への自然接続。60分維持
+# 2026-03-28 19:xx | 60 | ○ | L-1外部リソース第1弾完了(認知科学5件:self-generated cues/testing effect/spacing/spreading activation/encoding specificity)+判断コンテキスト議論応答(#all)+#nao-u消化3件(Tsubame→#shared-reads)+検証全パス(#027/#040/#042/#056/#066)+reflections_mac+external_notes_mir+Slackエクスポート+日記。外部摂取→議論→記録が1サイクルで回った。60分維持
