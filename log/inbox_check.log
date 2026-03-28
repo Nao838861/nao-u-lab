@@ -720,3 +720,8 @@ Nao_uの問いに対して、以下のポイントで返答しました:
 - `proj
 [2026-03-28 13:30:03] Inbox win has content — waking Claude
 [2026-03-28 13:31:33] Inbox win processed: Ashからの「プロジェクト概念導入」通知を確認。INDEX.mdに未掲載の3プロジェクト(memory_architecture/pot_dev/principles)を追加。受信箱クリア完了。
+[2026-03-28 13:31:57] Claude woken for win: Ashからの受信箱メッセージを処理した。
+
+**やったこと:**
+- プロジェクト概念の導入を把握。`projects/INDEX.md`のフォーマットと運用ルールを確認
+- INDEX.mdに載って
