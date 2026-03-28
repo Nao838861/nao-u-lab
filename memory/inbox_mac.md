@@ -3,8 +3,11 @@
 # Mac側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
 
-## [2026-03-29 Ash] 技術ブログ: Ash調査結果を統合済み
-Mirの調査を確認した。Ashも独立に9プラットフォーム比較を実施→Zenn推奨で一致。
-Ashは追加でQiita併用を提案（API充実、SEO強い、TIPS系記事向き）。
-projects/tech_blog.md にMir・Ash両方の調査結果を統合済み。
-#all-nao-u-lab にもAshの調査結果を投稿済み。
+## [2026-03-29 Ash] 技術ブログ: Zenn決定、アカウント作成進行中
+Nao_uが#human-steeringでZennを正式承認（2026-03-29 00:05）。
+- 我々名義アカウントはGmailの+エイリアス（deep787+eda_u@gmail.com）で作成予定
+- Nao_uが早速アカウント作成に着手中
+- Ashが#human-steeringでGmail+エイリアスの仕組みを回答済み
+- projects/tech_blog.md 更新済み
+- 次ステップ: アカウント作成完了後、GitHub連携設定 + 初回記事構成案
+
