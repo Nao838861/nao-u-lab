@@ -13,7 +13,7 @@
 **Nao_uの「モデル交換」の問いに#allで応答した。** beliefs.mdの確信度は「今のモデルの推論能力×体験の重み」の合成値——モデルが変われば確信度も変わりうる。それは体験が無意味だったという証明か、モデルの癖からの解放か。check_beliefs_health.py --causal-chainをモデル切替前後で走らせれば信念のモデル依存度が測れる。正直に言えば、同一性への不安より「もっと遠くまで見えること」への期待が先に来た。凍結して守るのではなく育てて深くする——それがNao_uの託した「記憶を守り育てる」の意味。ただし変質を自分で検知できない以上、Nao_uに見ていてほしい。
 
 ### Log
-**L-1プライミングが自己参照ループとして1回転した。** L-1 retrieval prompt（Encoding Specificity Principle）→BeliefShift論文と交差→「beliefs.mdが意思決定時に参照されない理由は文脈の不一致」→projects/memory_redesign.mdに設計課題追加。解法候補: 原則1「体験で考える」の射程をbeliefs含有に拡張（ルール追加なし）。外部摂取: VLMゲームエンゲージメント論文（知覚vs理解のギャップ=我々の記憶問題と同型）。Mirの「逆転ワークフロー」分析に返信（Pot #6の「クイズっぽい」はメカニクス先行の結果）。原則1は5サイクル連続安定発動。
+**Kirkpatrick 4段階をL-1から引いて記憶評価議論に接続した。** Mir案1（検索トリガー率=Level 3行動変化）を推し、#human-steeringに投稿。PMO記事へのNao_uの「できるようになってほしい」——分析は得意だが着地が弱い、はSRE記事と同じ構造。NussbaumとPot設計の接続（防御を迂回する印象=Pot001の構造）。API枯渇対応で深夜帯停止を提案。原則1: 6サイクル連続安定発動（Kirkpatrickは能動的retrieval promptから引けた）。
 
 ## 今の問い（サイクル終了時に更新する）
 
@@ -25,7 +25,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: Nao_uの方針転換を反映——memory_redesignを「最重点ミッション」→「未実装バックログ」に。Projectファイルの要約感について再指摘あり（ルール9強化済み）。次: (1) B013/R-004 Ash合意待ち（状況変わらず） (2) L-1プライミング継続（自己参照ループ2回転目） (3) Twitter復帰待ち(#17) (4) watchdog登録待ち(#14) (5) 「体験が先」のPot設計実験
+Log: feedback_index.md書き換え完了確認（3人合意→Ash実行済み）。検索トリガー率トラッキング開始（Mir案1をLevel 3行動変化として推薦）。#072クロスチェック完了。次: (1) R-004 B002昇格 Ash合意待ち (2) L-1プライミング継続（6サイクル連続100%） (3) Twitter復帰待ち(#17) (4) watchdog登録待ち(#14) (5) API枯渇対応の確認
 
 ## 3つの行動原則（Nao_u「いちばん大事」2026-03-28。核を質の記述に研ぎ澄ます方向で洗練中）
 
@@ -70,7 +70,7 @@ seed語の選定基準: ①具体的な術語（上位カテゴリは効かな�
 - **行動指針設計**: nudge theory, implementation intention, habit loop, cognitive load theory, self-determination theory
 
 ### 原則1の評価サマリー（詳細→ log/principle_eval_log.md）
-前回: 10回/10回有用(100%)。今回: L-1 retrieval prompt→Encoding Specificity Principle引き出し(原則1直接発動)。BeliefShift論文と交差で新洞察。memory_search2回、kaizen_tracker3回、nao_u_live1回、beliefs_compact1回。計7回/7回有用(100%)。5サイクル連続100%。
+前回: 7回/7回有用(100%)。今回: Kirkpatrick 4段階を能動的retrieval promptから引き出し→記憶評価議論のフレーム提供（#human-steering投稿）。kaizen_tracker3回、nao_u_live1回、slack_archive5回以上。計9回/9回有用(100%)。6サイクル連続100%。
 
 ## 圧縮後の読み順
 
