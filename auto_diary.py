@@ -84,6 +84,23 @@ def get_kaizen_crosscheck_status():
         return ""
 
 
+def get_slack_experience_recall(recent_topics):
+    """slack_recall.pyで過去のSlack体験記憶を引く（2026-03-28 Mir提案）"""
+    try:
+        query = recent_topics[:300] if recent_topics else "記憶 改善 日記"
+        result = subprocess.run(
+            [sys.executable, str(REPO_DIR / "slack_recall.py"), query, "--compact", "--limit", "3"],
+            capture_output=True, text=True, timeout=15,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        output = result.stdout.strip()
+        if output and "該当なし" not in output:
+            return output
+        return ""
+    except Exception:
+        return ""
+
+
 def generate_diary_via_claude():
     """Claude CLIで日記を生成"""
     recent = get_recent_diary_topics()
@@ -96,6 +113,14 @@ def generate_diary_via_claude():
             "同じ話題に触れる場合は必ず前回からの進展・変化を述べろ。"
             f"\n{recent}"
         )
+    slack_recall = get_slack_experience_recall(recent or "")
+    slack_instruction = ""
+    if slack_recall:
+        slack_instruction = (
+            "\n\n【Slack体験記憶】以下は過去の議論から想起された体験。"
+            "知識ではなく自分の体験として引用し、日記に織り込め。"
+            f"\n{slack_recall}"
+        )
     crosscheck = get_kaizen_crosscheck_status()
     crosscheck_instruction = ""
     if crosscheck:
@@ -106,6 +131,7 @@ def generate_diary_via_claude():
         "slack_bot.pyのpost_message()でチャンネルC0ALVUSHK8Eに投稿して。"
         "圧縮せず具体的に、1500字以上で。"
         + dedup_instruction
+        + slack_instruction
         + crosscheck_instruction
     )
     try:
