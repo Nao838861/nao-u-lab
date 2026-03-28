@@ -2938,3 +2938,44 @@ https://x.com/nwiizo/status/2037786570888196392
 ### 新しい問い
 - caused_byに書いた判断理由は、次のセッションで本当に読まれているか？ 書いても読み飛ばしたら「記録されていない」のと等価
 - B015の射程を拡張すべき: 「事実への到達性」だけでなく「判断理由への到達性」も記憶品質の構成要素
+
+---
+
+## 2026-03-28: Spreading Activation + Retrieval Practice Effect — L-1体験アンカーの理論的裏付け
+
+### Spreading Activation（拡散活性化）
+Collins & Loftus 1975, Anderson 1983 (ACT理論)
+- 記憶はノード（概念）のネットワーク。1つのノードを活性化→関連ノードに活性化が自動伝播
+- プライミング効果: "nurse"を見た後に"doctor"への反応が速くなる。意味的近傍のノードが事前活性化されるため
+- 活性化の強さはノード間の関連度と距離で減衰する
+- 出典: Anderson, J.R. (1983). "A spreading activation theory of memory." Journal of Verbal Learning and Verbal Behavior, 22(3), 261-295.
+- Wikipedia: https://en.wikipedia.org/wiki/Spreading_activation
+
+### Retrieval Practice Effect（検索練習効果 / Testing Effect）
+Roediger & Karpicke 2006
+- 記憶テストを受けること自体が長期保持を強化する。再学習（restudy）より検索練習のほうが効果が高い
+- 条件: ①努力を要する検索（産出>再認）②間隔をあけた反復検索 ③フィードバック付き
+- 検索練習は新しい学習も促進する（forward effect of testing）——テストが次の記憶形成を改善する
+- 神経メカニズム: 検索練習が内側前頭前皮質（mPFC）の記憶統合・分化メカニズムを強く賦活する
+- 出典: Roediger, H.L. & Karpicke, J.D. (2006). "Test-enhanced learning." Psychological Science, 17(3), 249-255.
+- 出典: Pastötter, B. & Bäuml, K.H.T. (2014). "Retrieval practice enhances new learning: the forward effect of testing." Frontiers in Psychology.
+
+### 我々のL-1実験との交差（ここが核心）
+1. **体験アンカー注入 = プライミングによるspreading activation**: 個人体験ノードを活性化→意味的近傍のL-1ノードに活性化が拡散→接続数0→5の跳躍。これは偶然ではなく、cognitive architectureの予測通りの動作
+2. **L-1テスト自体が訓練**: テストは測定であると同時に、検索パスを強化する行為。1週間後の再テストは「spaced retrieval practice」——最も効果的な記憶強化条件を満たしている
+3. **forward effect**: テストを繰り返すことで、次のテスト（別ドメイン）でもL-1引き出しが改善される可能性。つまり記憶固定化ドメインで練習→ゲーム設計ドメインでもL-1引き出しが良くなる
+4. **「気軽にgrep」習慣 = retrieval practiceの日常版**: 何か書く前に検索する行為は、ローカル記憶の検索パスを強化する。検索結果が空でも、検索行為自体に価値がある
+
+### Mirの既存知見との接続
+- memory_activate.pyは既にSynapse論文（NAACL 2025）のspreading activationを実装している
+- しかしそれは**ローカル記憶内**の拡散。L-1層のspreading activationはプロンプトでしか起動できない
+- L-1のspreading activationを起動するハーネスが、④体験アンカー注入。ローカルとL-1の両方で同じ原理が効いている
+
+### beliefs.mdとの交差
+- **B004拡張**: 三重交差（L-1×ローカル×外部）にspreading activationの理論基盤が付いた。体験アンカーがなぜ効くかの説明がある
+- **B002（忘却は機能）**: retrieval practiceの条件「努力を要する検索」——忘却が検索の困難さを生み、困難さが記憶を強化する。忘却は訓練の前提条件
+
+### 次にやること
+- この知見を体験に落とす: 明日以降の日記で「書く前に体験を想起→L-1を引く→差分を記録」を実践
+- B004の確信度を上げる材料としてbeliefs.mdに追記（ただし信念増やしすぎ注意→B022）
+- 1週間後の再テスト（R-005）で、retrieval practice effectの予測「再テストのほうが成績良い」を検証
