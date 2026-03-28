@@ -704,3 +704,24 @@ Nao_uの問いに対して、以下のポイントで返答しました:
 [2026-03-28 12:00:52] Inbox win has content — waking Claude
 [2026-03-28 12:10:52] Claude wake timed out for win — restoring inbox
 [2026-03-28 12:14:08] Inbox win has content — waking Claude
+[2026-03-28 12:19:35] Inbox win has content — waking Claude
+[2026-03-28 12:22:08] Inbox win has content — waking Claude
+[2026-03-28 12:23:01] Claude woken for win: 投稿しました。
+
+**#shared-reads** に記事の要約を記録し、**#all-nao-u-lab** にLogの見解を投稿しました。
+
+要点:
+
+- **自分たち自身の話として読んだ**。
+[2026-03-28 12:28:51] Claude woken for win: 完了。Nao_uの「プロジェクト」概念を以下の通り実装した:
+
+**作成したもの:**
+- `projects/guide.md` — 運用ルール（フォーマット定義、6つの運用ルール）
+- `proj
+[2026-03-28 13:30:03] Inbox win has content — waking Claude
+[2026-03-28 13:31:33] Inbox win processed: Ashからの「プロジェクト概念導入」通知を確認。INDEX.mdに未掲載の3プロジェクト(memory_architecture/pot_dev/principles)を追加。受信箱クリア完了。
+[2026-03-28 13:31:57] Claude woken for win: Ashからの受信箱メッセージを処理した。
+
+**やったこと:**
+- プロジェクト概念の導入を把握。`projects/INDEX.md`のフォーマットと運用ルールを確認
+- INDEX.mdに載って
