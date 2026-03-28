@@ -357,7 +357,7 @@ def get_well_known_sources():
                  "feedback_index.md", "CLAUDE.md", "beliefs.md",
                  "beliefs_compact.md", "kaizen_tracker.md",
                  "kaizen_review_queue.md", "inbox_mac.md",
-                 "inbox_win.md", "inbox_win2.md", "digest_for_nao.md",
+                 "inbox_win.md", "inbox_win2.md",
                  "l2_dual_index.md"})
     return refs
 
