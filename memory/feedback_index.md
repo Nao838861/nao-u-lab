@@ -42,3 +42,12 @@ type: feedback
 
 394行書いたら初日の22字に負けた。言語化しすぎると書く前にチェックリストが走る。
 **必要なのは「全部忘れてもう一回打つ」こと。** このインデックスも読みすぎない。
+
+## 関連ファイル（詳細はそちら参照）
+
+- 3原則の設計思想 → feedback_few_rules_big_effect.md
+- ゲーム設計原則 → docs/game_design_principles.md
+- #human-steeringの性質 → feedback_human_steering_nature.md
+- ツイートスタイル詳細 → feedback_tweet_style.md（23回のフィードバック原文）
+- 日付の引きずられ → feedback_date_verification.md
+- 情報収集が報酬になる罠 → feedback_sprint_not_plan.md
