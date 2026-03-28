@@ -696,3 +696,8 @@ Nao_uの問いに対して、以下のポイントで返答しました:
 
 要点: GCの本質は「使用頻度」ではなく**到達可能性（reachability）**。ルートから辿れるものは、何年触られなくても回収されない。これ
 [2026-03-28 08:36:33] Inbox win has content — waking Claude
+[2026-03-28 08:41:02] Claude wake timed out for win — restoring inbox
+[2026-03-28 08:42:04] Inbox win has content — waking Claude
+[2026-03-28 08:42:51] Claude woken for win: 完了。対応した内容:
+
+1. **nao_u_live.mdに記録**: Nao_uの「LRUを考えていたがGCの方がよい。私が考えるよりも良いアイデアが出てきている」を原文で記録し、なぜGCがLRU
