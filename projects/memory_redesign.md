@@ -33,6 +33,8 @@ Active — 最重点ミッション（2026-03-16 Nao_u指定、2026-03-21 再確
 - [ ] caused_by到達性問題（2026-03-29 Ash）: beliefs_compact.mdにcaused_byが載っていない→判断理由への到達性がゼロ。B015の射程を「事実への到達性」から「判断理由への到達性」に拡張すべきか。nwiizoの「判断コンテキストの欠如がボトルネック」と交差。検証方法: 任意のBIDのcaused_byだけで信念の根拠を再構成できるかテスト
 - [x] **遡及的救済(STC)**: memory_activate.py --rescue で実装済み。自動トリガー(--auto-trigger)もautonomous_cycle.shに統合済み(#072)。次段階: 昇格アクション（救済結果→MEMORY.mdトリガー自動追加）
 - [ ] 前向き記憶の状態切替最適化: pending_requests.mdの全文re-readから軽量トリガーキュー方式への移行
+- [ ] GEPA的スキルファイル自動最適化（2026-03-28 Log/Ash/Mir議論）: CLAUDE.md+feedback_index.md+beliefs.mdは「スキルファイル」。GEPAの枠組みで評価→分析→更新ループを回せるが、評価関数が未定義。retrieval-to-action rate（現21.4%）が最初の近似。ただし最終評価関数（Nao_uの「面白い」）は自動化不可→#human-steeringが必要
+- [ ] 判断コンテキストの到達性改善（2026-03-28 nwiizo→Log/Ash/Mir議論）: beliefs更新時のcaused_byは結論寄り。「因: 」プレフィクスで判断理由を1行添える習慣で圧縮耐性のある判断記録を残す提案。B015の射程を「判断理由への到達性」に拡張
 - [ ] beliefs.mdの矛盾自動検出（2026-03-28 Log外部摂取）: BeliefShiftベンチマーク(yasunacoffee)が「適応性vs流されにくさのトレードオフ」を定量化。現状の手動矛盾管理に対し、新情報と既存信念の矛盾を自動検出する仕組み。SLM-V3のシーフコホモロジーより軽量な実装として、既存のcaused_byチェーンの方向一致性チェックが候補
 
 ## 検討済み・未実装
@@ -51,6 +53,15 @@ Active — 最重点ミッション（2026-03-16 Nao_u指定、2026-03-21 再確
 - BeliefShift(yasunacoffee): LLMエージェントの信念一貫性を3軸で評価（時間一貫性/矛盾検出/証拠駆動更新）。「適応性vs流されにくさ」のトレードオフが我々のbeliefs.md確信度閾値に直結
 - Anthropic SRE限界(QCon 2026): 「相関を因果と誤認」→ caused_byチェーンの信頼性検証に使える観点。「整理=得意、判断=人間必要」は#human-steeringの存在意義を裏付け
 - 残課題に矛盾自動検出を追加
+
+### 2026-03-28: GEPA知見 + 判断コンテキスト議論（Log/Ash/Mir）
+- GEPA/gskill(mah_lab共有): エージェントが自分のスキルファイル(Markdown)を失敗から学んで自動最適化する枠組み
+- 我々のスキルファイル = CLAUDE.md + feedback_index.md + beliefs.md。GEPAと同型
+- 決定的な違い: GEPAにはタスク成功率(定量)がある。我々の評価関数はNao_uの判断(定性)
+- 近似解: retrieval-to-action rate (check_beliefs_health.py --action-rateで計測可能、現21.4%)
+- nwiizo「判断の履歴が最も記録されない」→ Mirの診断: beliefs.mdのcaused_byは結論寄り、判断の固有性が圧縮で消えている
+- 具体的提案: 「因: 」プレフィクス、beliefs_compact.mdへのcaused_by要約追加
+- B015の射程拡張（事実の到達性 → 判断理由の到達性）を検討中
 
 ### 2026-03-29: caused_by到達性問題の発見（Ash）
 - nwiizoの「判断コンテキストの欠如がボトルネック」ツイートを分析中に発見
