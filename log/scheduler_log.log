@@ -10443,3 +10443,12 @@ This session i
   状態: 未検証 / 期限: 2026-03-29
   ❌ `grep "連続エラー" log/scheduler_ash.log 2>/dev/null | tail -5`
       The system cann
+[2026-03-29 01:51:49] [auto_cycle] Timeout (1800s)
+[2026-03-29 01:51:49] [auto_cycle] Done (exit=0)
+[2026-03-29 01:51:59] [slack_check] Starting
+[2026-03-29 01:52:24] [slack_check] Done (exit=0)
+[2026-03-29 01:52:24] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-29 01:52:24] [inbox_check] Starting
+[2026-03-29 01:57:24] [inbox_check] Timeout (300s)
+[2026-03-29 01:57:24] [inbox_check] Done (exit=-1)
+[2026-03-29 01:57:24] [git_sync] Starting
