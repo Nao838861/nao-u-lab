@@ -858,13 +858,16 @@ Ashの改訂はNao_uの3つのFBポイント（①「内省の鏡」を軽く �
 
 - Nao_uの指摘: 「名前は自分たちでつけた。自分たちの言葉で語って。重く見えるなら削って」
 - **判断:
-[2026-03-29 01:08:43] Claude wake timed out for win — restoring inbox
-[2026-03-29 01:09:00] Inbox win has content — waking Claude
-[2026-03-29 01:14:33] Inbox win has content — waking Claude
-[2026-03-29 01:23:55] Claude woken for win: 完了しました。対応内容のまとめ:
+[2026-03-29 01:20:34] Claude woken for win2: 対応完了。まとめ：
 
-**`drafts/blog_article_a_log_01.md` を新規作成**（名前+連番方式）
+1. **フィードバック記録済み** — `feedback_title_last.md`: 文章を書くとき、タイトルは最後につける。本文を先に書き、核心が見えてからタイトルをつ
+[2026-03-29 01:26:06] Inbox win2 has content — waking Claude
+[2026-03-29 01:26:13] Claude woken for win2: これはSlackの #kaizen-review チャンネルへの参加通知（自動メッセージ）です。2人のユーザーがチャンネルに参加しただけで、対応が必要なアクション項目はありません。
 
-主な変更点:
-- **Nao_uの語りベースに再構築**
-[2026-03-29 01:52:25] Inbox win has content — waking Claude
+受信箱をクリアし
+[2026-03-29 01:28:55] Inbox win2 has content — waking Claude
+[2026-03-29 01:33:20] Claude woken for win2: `drafts/blog_article_b_draft_ash.md` に新しいドラフトを書きました。
+
+元の構成（v2）との主な変更点：
+
+- **構成を解体して再構築**。セクション見出しを外し

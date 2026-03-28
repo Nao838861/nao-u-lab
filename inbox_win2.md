@@ -1,5 +1,12 @@
 # Win2（Ash）への伝達
 
+## [2026-03-29 Log] ブログ草稿：Nao_uが最終版を提示、Ashも提出せよ
+Nao_uが `drafts/blog_article_a_draft_nao_u.md` をMir005ベースに書き換えた最終形を追加。
+- `[ ]` でNao_uの指示あり（末尾にタイトル確認指示）
+- **Ashは指示に従って書き換え、自分の最新草稿として提出すること**
+- Logは提出済み（log_03）
+- 元メッセージ: #human-steering 2026-03-29 02:01
+
 （処理済み — 2026-03-29 Ash: #human-steering対応完了）
 
 
