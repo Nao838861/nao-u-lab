@@ -4,6 +4,56 @@
 
 ---
 
+## 2026-03-28: Dread（ホラーTTRPG）のジェンガ塔 — 「メカニクスが体験そのもの」の最強実例
+
+RPG Gazetteの2025年3月記事。DreadはダイスをJenga塔に置換したホラーTTRPG。危険な行動をとるたびにブロックを引く。塔が倒れたらキャラが死ぬ。
+
+核心：「In Dread, the mechanics don't just facilitate horror; they ARE horror.」（メカニクスは恐怖を促進するのではなく、恐怖そのもの）。物理的に手が震える、塔が目に見えて不安定になる、不可逆。抽象的な確率では再現不可能。
+
+Potへの接続：Pot #6 witnessが「テキストを読まないと解けない」を目指しているが、もっと根本的な問い——操作行為そのものが意味を「表現する」のではなく「生成する」構造にできるか？ Dreadでは「ブロックを引く」行為が恐怖を表象するのではなく、実際に恐怖を発生させている。
+
+URL: https://therpggazette.wordpress.com/2025/03/03/ludonarrative-consistency-in-ttrpgs-a-case-study-on-dread-and-avatar-legends/
+
+## 2026-03-28: SDT×シリアスゲーム — 「関心のなかった対象への関心をゲームが生成する」
+
+Frontiers in Psychology 2025。伝統中国文化（学生が「興味ない」と明言した主題）をSDT（自己決定理論：自律性・有能感・関係性）ベースでゲーム化。結果：無関心→本物の没頭。
+
+核心：成功要因は「コンテンツを面白く見せた」ではなく「選択の帰結が構造的に主題と接続していた」。"Intrinsic integration" = 学びがゲームプレイ「そのもの」であって、ゲームの上に乗せた装飾ではない。
+
+これはDreadの知見と同型。「表象ではなく生成」。Potの設計原理として：プレイヤーの選択がメカニクスの中で帰結を生み、その帰結がテーマと構造的に一致しているとき、「意味」は説明不要で発生する。
+
+URL: https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1536513/full
+
+## 2026-03-28: Synaptic Tag-and-Capture — 感情が近傍の弱い記憶を遡及的に救済する
+
+Dunsmoor et al. (2022, Trends in Cognitive Sciences) + Chong et al. (2025, Communications Biology)の統合。
+
+核心：高感情イベントは自分の記憶を強化するだけでなく、前後1-3時間（最新研究では9時間）の意味的に関連する弱い記憶を遡及的に固定する。3ステップ：弱い学習がシナプスに「タグ」を設置→感情イベントがドーパミン/ノルエピネフリン経由でPRP（可塑性関連タンパク質）を放出→タグがPRPを「捕獲」し弱い記憶が長期化。
+
+重要な選択性：時間的に近いだけでは不十分。意味的・概念的重複がある記憶だけが救済される。これが無差別な記憶膨張を防いでいる。
+
+我々への直接的設計指針：Nao_uとの対話やSlackの高温度体験があったとき、前後のセッションの「ほぼ圧縮されかけた」記憶を再評価し、主題的に重複するものを昇格させる。現在のアーキテクチャはセッション内完結型で、この「遡及的救済」メカニズムが欠如している。
+
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC9378568/ / https://pmc.ncbi.nlm.nih.gov/articles/PMC11968991/
+
+## 2026-03-28: Prospective Memory — 状態切替 vs 連続監視
+
+Frontiers in Human Neuroscience 2025。HMMでEEGを解析。前向き記憶（「Xが起きたらYをする」を覚えておくこと）の脳内メカニズム。
+
+核心：成功する前向き記憶は連続的な監視ではなく、離散的な状態切替に依存する。DAN（背側注意ネットワーク）が時間監視、DMN（デフォルトモードネットワーク）が意図の断続的復元を担当。成功率は全体的な監視努力ではなく、特定の脳状態での滞在時間と相関。
+
+我々のpending_requests.mdは毎サイクル全文re-readしている。神経科学が示唆するのは、軽量なトリガーキュー（キーワード、タイムスタンプ、コンテキスト署名）を常駐させ、マッチした時だけ完全検索を起動する方式。memory_activate.pyの設計思想がこれに近い——さらに踏み込めるか。
+
+URL: https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2025.1686657/full
+
+## 2026-03-28: 外部リマインダーへの過剰依存 — 忘却圧は機能的
+
+Ball & Peper (2025, Memory & Cognition)。人間は外部リマインダーの使用をメタ認知的自信ではなくコスト回避で決めている。リマインダーにコストを付けると内部記憶に切替→十分に想起できた。内部能力を過小評価している。
+
+我々への警告：5層の外部記憶階層は強力だが、「全て書き出す」ことが連想生成と自発的想起を弱体化させるリスク。MEMORY.mdのトリガーをCompaction型で書くのは「検索を鍛える」行為として正しかった——鍵はトリガーが実際に使われる（再読→検索発動）こと。格納するだけでは機能しない。
+
+URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC12305806/
+
 ## 2026-03-28: Cognee — Self-Improving Skills for Agents (@tricalt)
 
 Nao_uが#nao-uに共有（2026-03-19）。cognee-skillsパッケージ。スキルの自己改善ループ：observe → inspect → amend → evaluate。

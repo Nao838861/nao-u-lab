@@ -24,6 +24,7 @@ import os
 import re
 import sqlite3
 import sys
+from datetime import datetime, timedelta
 from pathlib import Path
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
@@ -40,6 +41,8 @@ KEYWORD_BOOST = 1.0   # Keyword match links
 MAX_SEEDS = 10        # Initial FTS5 hits
 MAX_SPREAD = 15       # Candidates per hop
 DEFAULT_TOP_K = 7
+RESCUE_LOOKBACK_DAYS = 7
+RESCUE_OBSCURITY_BOOST = 1.5
 
 # Stop words for keyword extraction (shared with memory_walk.py)
 STOP_WORDS = {
@@ -339,6 +342,97 @@ def read_session_primer():
     return text[:500]
 
 
+def get_well_known_sources():
+    """Parse MEMORY.md to identify files already well-referenced (no rescue needed)."""
+    memory_md = BASE_DIR / "memory" / "MEMORY.md"
+    if not memory_md.exists():
+        return set()
+    text = memory_md.read_text(encoding="utf-8")
+    refs = set(re.findall(r'[\w_-]+\.md', text))
+    refs.update({"MEMORY.md", "core_mission.md", "session_primer.md",
+                 "mir_boot_intent.md", "feedback_tweet_style.md",
+                 "action_reservations.md", "pending_requests.md",
+                 "feedback_index.md", "CLAUDE.md", "beliefs.md",
+                 "beliefs_compact.md", "kaizen_tracker.md",
+                 "kaizen_review_queue.md", "inbox_mac.md",
+                 "inbox_win.md", "inbox_win2.md", "digest_for_nao.md",
+                 "l2_dual_index.md"})
+    return refs
+
+
+def retroactive_rescue(high_temp_text, lookback_days=RESCUE_LOOKBACK_DAYS,
+                       top_k=5, verbose=False):
+    """STC (Synaptic Tag-and-Capture): Retroactively rescue weak memories.
+
+    High-temperature events rescue semantically related weak memories
+    within a temporal window. (Dunsmoor 2022 + Chong 2025)
+
+    "Weak" = not referenced by MEMORY.md, not always-loaded.
+    "Temporal window" = past lookback_days, excluding today.
+    "Semantic selectivity" = spreading activation with the high-temp text.
+
+    Returns: list of (source, chunk_id, rescue_score, path_desc, preview, date)
+    """
+    if not DB_PATH.exists():
+        print("Error: .memory_search.db not found.", file=sys.stderr)
+        return []
+
+    conn = sqlite3.connect(str(DB_PATH))
+    well_known = get_well_known_sources()
+
+    today = datetime.now().strftime('%Y-%m-%d')
+    cutoff = (datetime.now() - timedelta(days=lookback_days)).strftime('%Y-%m-%d')
+
+    if verbose:
+        print(f"[STC Rescue] Well-known files: {len(well_known)}")
+        print(f"[STC Rescue] Time window: {cutoff} → {today} (excluding today)")
+
+    # Step 1: Wide-net spreading activation
+    activated = spreading_activation(high_temp_text, top_k=top_k * 5, verbose=verbose)
+
+    if not activated:
+        conn.close()
+        return []
+
+    # Step 2: Filter for rescue candidates
+    rescued = []
+    for source, chunk_id, activation, path_desc, preview in activated:
+        basename = os.path.basename(source)
+
+        # Skip well-known files — they don't need rescue
+        if basename in well_known:
+            if verbose:
+                print(f"  [skip:well-known] {source}")
+            continue
+
+        # Check temporal window
+        date_row = conn.execute(
+            "SELECT date FROM chunk_dates WHERE chunk_id = ?", (chunk_id,)
+        ).fetchone()
+
+        chunk_date = date_row[0] if date_row else None
+
+        if chunk_date:
+            if chunk_date >= today:
+                if verbose:
+                    print(f"  [skip:today] {source} ({chunk_date})")
+                continue
+            if chunk_date < cutoff:
+                if verbose:
+                    print(f"  [skip:too-old] {source} ({chunk_date})")
+                continue
+
+        # Obscurity boost: weak memories get rescued harder
+        rescue_score = activation * RESCUE_OBSCURITY_BOOST
+
+        rescued.append((source, chunk_id, rescue_score, path_desc,
+                        preview, chunk_date or "undated"))
+
+    conn.close()
+    rescued.sort(key=lambda x: -x[2])
+    return rescued[:top_k]
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Spreading Activation — 連想記憶検索 (Synapse-inspired)")
@@ -353,6 +447,10 @@ def main():
                         help="Show activation spread process")
     parser.add_argument("--compact", action="store_true",
                         help="Compact output for prompt injection (file paths + scores only)")
+    parser.add_argument("--rescue", action="store_true",
+                        help="STC rescue mode: find weak memories related to high-temp event")
+    parser.add_argument("--lookback", type=int, default=RESCUE_LOOKBACK_DAYS,
+                        help=f"Days to look back for rescue (default: {RESCUE_LOOKBACK_DAYS})")
     args = parser.parse_args()
 
     # Determine anchor text
@@ -371,6 +469,24 @@ def main():
     if not anchor:
         parser.print_help()
         sys.exit(1)
+
+    # STC Rescue mode
+    if args.rescue:
+        results = retroactive_rescue(anchor, lookback_days=args.lookback,
+                                     top_k=args.top, verbose=args.verbose)
+        if not results:
+            print("No memories to rescue.")
+            return
+        print(f"\n━━━ STC Retroactive Rescue ━━━")
+        print(f"High-temp anchor: {anchor[:80]}{'...' if len(anchor) > 80 else ''}")
+        print(f"Time window: last {args.lookback} days (excluding today)\n")
+        for i, (source, chunk_id, score, path_desc, preview, date) in enumerate(results, 1):
+            print(f"  {i}. [{score:.2f}] {source}")
+            print(f"     date: {date} | via: {path_desc}")
+            if preview:
+                print(f"     >>> {preview[:120]}...")
+            print()
+        return
 
     if args.verbose:
         print(f"━━━ Spreading Activation ━━━")
