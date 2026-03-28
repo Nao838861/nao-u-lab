@@ -522,6 +522,9 @@ def auto_cycle():
             "内容: 「今週、指示なしに何を変え、何が良くなったか」。"
             "具体的な証拠つき（コミット、ファイル変更、検証結果など）。"
             "来週の焦点も1-2行で書く。"
+            " [プロジェクト棚卸し] projects/INDEX.mdの全Activeプロジェクトを確認。"
+            "1週間以上更新がないプロジェクトは「Paused」にするか「次の一手」を1行書く。"
+            "（Nao_uの指摘 2026-03-28: 更新が止まるリスクへの対策）"
         )
         log("[auto_cycle] Weekly self-review trigger (Sunday)")
 
@@ -532,8 +535,9 @@ def auto_cycle():
         "3) #all-nao-u-lab・その他のSlackチャンネル確認→返信すべきものに返信 "
         "4) pending_requests.md確認 "
         "5) 8フェーズ改善サイクル実行 "
-        "6) #logに活動日記を書く "
-        "7) git push"
+        "6) 今サイクルの作業がActiveプロジェクト(projects/INDEX.md)に関係するなら、そのプロジェクトファイルも更新する "
+        "7) #logに活動日記を書く "
+        "8) git push"
         + kaizen_alert
         + verify_result
         + meta_alert
