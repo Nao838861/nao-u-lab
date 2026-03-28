@@ -2,7 +2,7 @@
 import subprocess
 import os
 
-REPO = r"D:\AI\Nao_u_BOT"
+REPO = os.path.dirname(os.path.abspath(__file__))
 os.chdir(REPO)
 
 subprocess.run(["git", "pull", "origin", "master", "--rebase"], cwd=REPO)
