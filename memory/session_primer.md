@@ -67,6 +67,8 @@ LLMの3つの構造的傾向（生成偏向/分析偏向/同調偏向）を打�
 - 2026-03-28 Log: memory_search「原則 自然 内面化 行動」→5件ヒット、不要（文脈不一致）⚠
 - 2026-03-28 Log: memory_search「GC reachability 到達可能性」→5件ヒット、不要（既知の内容のみ）⚠
 - 2026-03-28 Log: beliefs.md直読み→有用（--reachability実装の入力として機能）✅
+- 2026-03-28 Mir: memory_search「B013 比喩 圧縮」→3件ヒット、有用（kaizen_tracker.mdからB013ハブ構造を再確認→#all投稿の根拠に）✅
+- 2026-03-28 Mir: memory_search「Bounding 繰り返し 反復」→3件ヒット、有用（初期の欲求生成理論「反復→ギャップ検出→価値接続→持続」を再発見→MRPromptとの接続に使用）✅
 
 ## 圧縮後の読み順
 
