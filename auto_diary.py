@@ -130,6 +130,7 @@ def generate_diary_via_claude():
         "直近の活動を振り返って#ashチャンネルに投稿する長文の活動日記を書いて。"
         "slack_bot.pyのpost_message()でチャンネルC0ALVUSHK8Eに投稿して。"
         "圧縮せず具体的に、1500字以上で。"
+        "今サイクルの作業がActiveプロジェクト(projects/INDEX.md)に関係するなら、そのプロジェクトファイルも更新すること。"
         + dedup_instruction
         + slack_instruction
         + crosscheck_instruction
