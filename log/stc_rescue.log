@@ -42,3 +42,7 @@
   [1.30] log/slack_archive/shared-reads.jsonl (2026-03-25) via seed(投稿 実験 肯定的 成果 原文)
   [1.21] docs/evaluation_format.md (undated) via seed(投稿 実験 肯定的 成果 原文)
   [1.13] memory/external_notes_ash.md (undated) via seed(投稿 実験 肯定的 成果 原文)
+
+[2026-03-28 21:59] trigger=nao-u:2026-03-27 anchor=ごめん、誤解を招く書き方になってたけどさっきのコメントに書いた上の記事って、AIニケちゃんではなく一つ上のPMOの話の方
+  [1.46] log/slack_archive/all-nao-u-lab.jsonl (2026-03-23) via seed(誤解 記事 コメント PMO)
+  [0.75] log/digest_for_nao.md (undated) via kw(完了)
