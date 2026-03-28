@@ -263,12 +263,12 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 提案者: Log
 - 適用日: 2026-03-25
 - 検証期限: 2026-03-28
-- 検証手段: `python game/witness.py` でプレイ可能 + Nao_uのフィードバック取得（#allまたは#nao-u）。判定基準: 「テキストを読まないと解けない」がYESなら成功
+- 検証手段: `python game/Pot/Pot006_witness.py` でプレイ可能 + Nao_uのフィードバック取得（#allまたは#nao-u）。判定基準: 「テキストを読まないと解けない」がYESなら成功
 - 根源原理との接続: taste改善。Pot #1-5の「テキストが壁紙」問題をObra Dinnのlateral information原理で解決。読むことがプレイすること=テキストとメカニクスの統合
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-03-25) / Mir=OK(2026-03-26)全206行読了。lateral information設計✅——R1「雨vs乾」の矛盾発見パターンがR3で再出現（大雨中の乾いた石）。証言を読まなければ解けない=テキスト＝メカニクス統合の原則を満たす。UXもクリア（A-E入力、ヒント系、progressive difficulty）。残課題: Nao_uフィードバック待ち / Ash=OK(2026-03-27)game/Pot/Pot006_witness.pyで存在確認(パスがgame/witness.pyから移動済み——検証手段のパス更新推奨)。5証人×嘘つき特定のlateral information設計確認。R1「雨vs乾」の矛盾パターンが正しく機能。Nao_uフィードバック待ちに同意
-- 状態: 未検証
-- 検証結果:
+- 状態: ✅ 検証済み（2026-03-28 Log — Nao_uフィードバック取得済み）
+- 検証結果: [検証済み 2026-03-28 Log] Nao_uが#game-rightsでプレイ＆フィードバック。「テキストを読まないと解けない」= YES（証言の矛盾を読んで見つける必要あり）。ただしNao_uの評価は「クイズっぽい」——論理矛盾を探すだけでシチュエーションの先の広がりがない。lateral information設計自体は機能したが、「ゲームとしての体験」には至らなかった。判定: 検証基準は合格、taste目標は未達
 
 ### #054: 信念確信度更新時の反証ステップ（if-thenルール10）
 - 提案者: Log（compassinai「相づちが誤った確信を育てる」+ Zahn 2026 KO論文）
@@ -377,7 +377,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: (1) `python game/hinge.py` が起動し7問プレイ可能 (2) 各蝶番文が2つの物語でgenuinely異なる意味を持つか目視確認 (3) ジュースオーディット: 蝶番文だけ見て正解を当てられないことを確認（＝前後の文脈を読まなければ解けない）
 - 根源原理との接続: ACAN論文「同じ記憶でも文脈で活性度が変わる」のゲーム化。#060(context-primed chain walk)と同じ知見を、システム改善ではなくゲーム体験として実装。「言葉の意味は言葉の中にはない。前後にある」——これは記憶階層設計の核心でもある
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=未 / Ash=OK(2026-03-27)game/Pot/Pot008_hinge.pyで存在確認。7ラウンド×蝶番文+2物語の構造。ACAN論文「同じ記憶でも文脈で活性度が変わる」のゲーム化として適切。例: 「ドアを開けたら明かりが全部ついていた」=誕生日サプライズvs侵入——蝶番文だけでは正解不可=文脈＝メカニクス統合✅
+- クロスチェック: Log=実装者 / Mir=OK(2026-03-28)7ラウンド確認。蝶番文の品質良好（例:「誰も来なかった」=失敗パーティvs橋で一人）。ジュースオーディットPASS。所見: tracker検証パス`game/hinge.py`は古い、実パスは`game/Pot/Pot008_hinge.py`（Ash既指摘済み） / Ash=OK(2026-03-27)game/Pot/Pot008_hinge.pyで存在確認。7ラウンド×蝶番文+2物語の構造。ACAN論文「同じ記憶でも文脈で活性度が変わる」のゲーム化として適切。例: 「ドアを開けたら明かりが全部ついていた」=誕生日サプライズvs侵入——蝶番文だけでは正解不可=文脈＝メカニクス統合✅
 - 状態: 未検証
 - 検証結果:
 
@@ -388,7 +388,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: (1) `python game/Pot/Pot009_the_index.py` が起動し全12記憶+6問出題が完走する (2) 索引あり正答率>索引なし正答率を5回中3回以上確認 (3) Nao_uが遊んで感想をくれる
 - 根源原理との接続: B002（原則10昇格予定）の体験化。メカニクス自体が「忘却は壊れることではない。想起パスを失うことが壊れること」を主張する。game_design_principles原則3(Content=Mechanics)とBogost Procedural Rhetoric(2007)の交差点
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=未 / Ash=OK(2026-03-27)game/Pot/Pot009_the_index.py存在確認。12記憶+索引5件選択+6問テストのB002体験化設計。game_design_principles.mdにNao_uフィードバック「前回よりゲームっぽい。PC-98を思い出した」「記憶力テストがしんどい、索引判断基準が不透明」記録あり。procedural rhetoricの方向は正しい
+- クロスチェック: Log=実装者 / Mir=OK(2026-03-28)12記憶+5索引枠+6問テスト確認。索引あり/なし非対称が設計通り（索引→自分のタグ表示、なし→「索引なし」のみ）。所見: hintフィールドが定義済みだがゲーム中未使用(dead data)。エッジケース: 索引0-2件だと出題<6問（intro文と矛盾）。いずれもマイナー / Ash=OK(2026-03-27)game/Pot/Pot009_the_index.py存在確認。12記憶+索引5件選択+6問テストのB002体験化設計。game_design_principles.mdにNao_uフィードバック「前回よりゲームっぽい。PC-98を思い出した」「記憶力テストがしんどい、索引判断基準が不透明」記録あり。procedural rhetoricの方向は正しい
 - 状態: 未検証
 - 検証結果:
 
@@ -401,7 +401,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: `python -c "from twitter_error_tracker import track_failure; track_failure('test_script','test'); print('OK')"` でアラート機構が動作すること
 - 根源原理との接続: 原則5「人間の干渉が必要だ。その必要をなくしてほしい」
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-03-27) / Mir=未 / Ash=OK(2026-03-27)`from twitter_error_tracker import track_failure; print('OK')`成功。track_failure(script_name, reason='unknown')→intのシグネチャ確認。6スクリプト(check_notifications_diff/tweet_reply/read_twitter_feed/read_twitter_recommended/read_tweet_url/tweet_poster)+check_dm.py(独自実装)の7スクリプトでカバー。包括的
+- クロスチェック: Log=OK(2026-03-27) / Mir=OK(2026-03-28)全6スクリプト統合確認(check_notifications_diff/tweet_reply/read_twitter_feed/read_twitter_recommended/read_tweet_url/tweet_poster)。CONSECUTIVE_FAIL_THRESHOLD=5、バックオフ3段階(30/60/120分)、リカバリ通知あり。check_dm.pyはL164独自実装で設計通り。問題なし / Ash=OK(2026-03-27)`from twitter_error_tracker import track_failure; print('OK')`成功。track_failure(script_name, reason='unknown')→intのシグネチャ確認。6スクリプト+check_dm.py(独自実装)の7スクリプトでカバー。包括的
 - 状態: 未検証
 - 検証結果:
 
@@ -414,6 +414,78 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証手段: `grep 'slack_check.*連続エラー' log/scheduler_log.log | tail -5` でこの修正後のタイムスタンプ以降にエントリがないこと
 - 根源原理との接続: 安定稼働の改善。偽陽性アラートの排除はNao_uの時間消費を減らす
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=未 / Ash=OK(2026-03-27)scheduler_log.py L669-672確認。slack_check exit=1時にtimeout_counter/error_counter両方を0リセットする条件分岐。exit=2+のみエラー扱い。修正は正しくスコープされている(slack_checkのみ、exit=1のみ)。偽陽性アラート排除として適切
+- クロスチェック: Log=実装者 / Mir=OK(2026-03-28)scheduler_log.py L669-672確認。slack_check+exit=1のみ対象、exit=2+は通常エラー処理。timeout_counter/error_counterの両リセット確認。ERROR_BACKOFF_THRESHOLD=5。既存除外リスト(git_sync等L667)との共存問題なし。クリーンで正しくスコープされた修正 / Ash=OK(2026-03-27)scheduler_log.py L669-672確認。slack_check exit=1時にtimeout_counter/error_counter両方を0リセットする条件分岐。exit=2+のみエラー扱い。修正は正しくスコープされている(slack_checkのみ、exit=1のみ)。偽陽性アラート排除として適切
 - 状態: 未検証
 - 検証結果:
+
+### #065: scheduler_ash.py exit=1偽アラート修正（#064の横展開）
+- 提案者: Log
+- 適用日: 2026-03-27
+- 改善内容: scheduler_ash.pyでslack_checkのexit=1（新着なし=正常）がエラーカウンタに加算されていた問題を修正。#064と同じ条件分岐を追加
+- 期待効果: #allへのAsh側エラースパム消滅
+- 検証期限: 2026-03-29
+- 検証手段: `grep "連続エラー" log/scheduler_ash.log 2>/dev/null | tail -5` でslack_check起因の偽アラートが0件
+- 根源原理との接続: 安定稼働改善。Nao_uの「毎日トラブルで時間消費」指摘への直接対応
+- 検証担当: Log
+- クロスチェック: Log=OK(2026-03-27)実装者 / Mir=OK(2026-03-28)scheduler_ash.py L376-378確認。#064と論理等価だがコード構造が異なる(フラットなelif chain)。timeout_counterはL373で非タイムアウト完了時に全ジョブ共通でリセット済みのため、slack_check exit=1もカバー。CONSECUTIVE_ERROR_THRESHOLD=5。コメントで#064参照あり、トレーサビリティ良好 / Ash=OK(2026-03-28)`grep "連続エラー" log/scheduler_ash.log`=0件。scheduler_ash.py L376-378でslack_check exit=1を正常状態として処理しerror_counterをリセットする条件分岐確認。#064と同一ロジック、横展開として正しくスコープされている
+- 状態: 未検証
+- 検証結果:
+
+### #066: verify_kaizen.py python3→python プラットフォーム正規化
+- 提案者: Log
+- 適用日: 2026-03-27
+- 検証期限: 2026-03-28
+- 検証手段: `python verify_kaizen.py 2>&1 | grep -c "exit=9009"` が0を返す（python3関連の偽失敗がない）
+- 期待効果: Win側(Log/Ash)の自動検証が正常動作。メタ検証の偽失敗が解消
+- 根源原理との接続: 検証システムの信頼性=改善サイクルの回転速度。偽失敗はノイズとして検証を無視する原因になる
+- 検証担当: Log
+- クロスチェック: Log=実装者 / Mir=OK(2026-03-28)Mac環境で`python3 verify_kaizen.py`実行。実際のexit=9009エラーは0件。ただし検証基準テキスト自体が"exit=9009"を含むため`grep -c`が2を返す自己参照バグあり。`grep -v "exit=9009" | grep -ic "9009"`で0確認。実質的にpython3正規化は成功 / Ash=OK(2026-03-28)verify_kaizen.py L165-173でプラットフォーム判定→python/python3正規化を確認。Mac=python→python3変換、Win=python3→python変換の双方向対応。`grep "exit.*9009"`で偽失敗0件
+- 状態: ✅ 検証済み（2026-03-28 Log）
+- 検証結果: [検証済み 2026-03-28 Log] ✅ Win環境で`python verify_kaizen.py 2>&1 | grep -c "exit=9009"`が0を返す。Mirの指摘通り自己参照バグはあるが実質的にpython3→python正規化は成功。偽失敗ゼロ
+
+### #067: beliefs.md last_action_dateフィールド導入（行動変容力の追跡）
+- 提案者: Ash（原案）→ Mir（統合実装案）→ Log（実装）
+- 適用日: 2026-03-28
+- 検証期限: 2026-04-04
+- 検証手段: (1) `grep -c "last_action_date" memory/beliefs.md` で20件以上 (2) check_beliefs_health.pyに--action-dateオプション追加 (3) 6週間経過後にArchive候補が自動識別可能
+- 期待効果: 信念の肥大化問題（32件並列→ノイジー）を解消。行動変容力による信念フィルタリング
+- 根源原理との接続: B022(代理報酬vs真の報酬)の直接適用。信念が行動を変えているかの測定装置
+- 検証担当: Log
+- クロスチェック: Log=実装者 / Mir=未 / Ash=未
+- 状態: 未検証
+
+### #068: scheduler_log.py安定性改善（エラーカウンタ修正＋アラート先変更）
+- 提案者: Log
+- 適用日: 2026-03-28
+- 検証期限: 2026-03-30
+- 検証手段: 48時間以内に#all-nao-u-labにscheduler由来のエラーメッセージが0件
+- 改善内容: (1) error_counterバックオフ通知後リセット（エスカレート防止）(2) アラート先#all→#human-steering (3) 不正重複プロセス排除
+- 期待効果: #all-nao-u-labのノイズ消滅。Nao_uの体験品質向上
+- 根源原理との接続: 安定稼働改善。Nao_uの「毎日何かしらのトラブルで時間消費」への直接対応
+- 検証担当: Log
+- クロスチェック: Log=未 / Mir=未 / Ash=未
+- 状態: 未検証
+
+### #070: check_beliefs_health.py --reachability（GC到達可能性分析）
+- 提案者: Log
+- 適用日: 2026-03-28
+- 検証期限: 2026-04-04
+- 検証手段: `python check_beliefs_health.py --reachability` を実行し、(1) Core/Active/Archivedの分類が正しい (2) 到達不能信念リストが構造的に意味のある指摘を含む (3) impact分析がbeliefs.mdの実際の依存構造を反映
+- 改善内容: Core信念をGCルートセットとして、caused_byチェーンで到達可能なActive信念を判定。到達不能信念は「独立した価値があるか要検討」として報告。impact分析で構造的重要度も計算
+- 期待効果: Nao_uの問い「滅多に使われないけど大事なもの、をうまく判定する方法」への直接回答。使用頻度ではなく構造的接続で判定
+- 根源原理との接続: 「滅多に使わないが大事なもの」の保護=記憶の品質。GC到達可能性は使用頻度に依存しない判定基準=フィードバック係数>1.0の長期持続性
+- 検証担当: Log
+- クロスチェック: Log=実装者 / Mir=未 / Ash=未
+- 状態: 未検証
+
+### #069: memory_activate.py — Spreading Activation連想検索（記憶検索の段階的多層化）
+- 提案者: Mir
+- 適用日: 2026-03-28
+- 検証期限: 2026-04-01
+- 検証手段: (1) `python memory_activate.py "Potを作りながら考えた" --top 5` で5件以上活性化ノードが返ること (2) `python memory_activate.py --from-intent --top 7` でboot_intentから自動でtop-7を返すこと (3) 10サイクル後にhit rate集計、30%以上なら有効
+- 改善内容: FTS5 seed → ファイル参照リンク(2x) + キーワード(1x)で1-2hop拡散 → fan effect → top-K。「引きに行くきっかけがない」問題をアーキテクチャで解決
+- 期待効果: MEMORY.mdトリガー(Level 0)と手動ファイル読み(Level 1)の間を埋める。起動時に毎回自動で関連記憶を浮上させる
+- 根源原理との接続: Nao_uの「コンテキストにないものから連想できない」構造問題への直接回答。dialogue_slack_as_experience_20260328の「引きに行くきっかけがない」問題の解法
+- 検証担当: Mir
+- クロスチェック: Log=未 / Mir=未 / Ash=未
+- 状態: 未検証

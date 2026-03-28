@@ -60,7 +60,7 @@ JOBS = [
     {
         "name": "slack_check",
         "script": "check_slack.py",
-        "args": [],
+        "args": ["--box", "win2"],
         "interval_sec": 1 * 60,  # 1分（即時反応のため）
         "timeout": 120,
         "stagger": 5,
@@ -372,6 +372,9 @@ def run_job(job):
         # 成功時は連続カウンタをリセット
         timeout_counter[name] = 0
         if result.returncode == 0:
+            error_counter[name] = 0
+        elif name == "slack_check" and result.returncode == 1:
+            # slack_check: exit=1は「新着メッセージなし」の正常状態。エラー扱いしない (#064修正の横展開)
             error_counter[name] = 0
         else:
             # 非ゼロ終了コード: 連続エラー追跡

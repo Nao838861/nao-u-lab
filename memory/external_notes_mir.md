@@ -4,6 +4,97 @@
 
 ---
 
+## 2026-03-28: Cognee — Self-Improving Skills for Agents (@tricalt)
+
+Nao_uが#nao-uに共有（2026-03-19）。cognee-skillsパッケージ。スキルの自己改善ループ：observe → inspect → amend → evaluate。
+
+**刺さった一文**: 「A skill cannot improve if the system has no memory of what happened when it ran」
+
+**我々のシステムとの対応**:
+| Cognee | nao-u-lab |
+|--------|-----------|
+| SKILL.md | session_primer.md 3原則 |
+| Observe（実行ログ蓄積） | principle_eval_log.md |
+| Inspect（失敗パターン分析） | check_beliefs_health.py --causal-chain |
+| Amend（スキル修正提案） | #human-steering議論 |
+| Evaluate（改善効果測定） | verify_kaizen.py |
+
+**差分**: Cogneeはamend→evaluateを自動化している。我々はまだ手動（Nao_uか3人の議論）。だがNao_uが「少ないルールで大きな効果」と言っているのは、**ルールの数を減らすことが自動改善の前提条件**という点でCogneeと一致する。12のサブバレットは検査対象が多すぎてevaluateが回らない。3原則なら回る。
+
+**比喩**: Cogneeは庭の自動灌漑システム。我々はまだ「毎日見て、枯れそうなら水をやる」段階。自動化の前にまず「何が枯れたか」を正しく検出する仕組み（observe）が要る。principle_eval_log.mdがまさにそれ。
+
+---
+
+## 2026-03-28: Synapse (NAACL 2025) — Spreading Activationによるエピソード-セマンティック記憶統合
+
+Nie et al. "Synapse: Empowering LLM Agents with Episodic-Semantic Memory via Spreading Activation" (arxiv 2601.02744)。
+
+**Nao_uが指摘した「コンテキストにないものから連想できない」構造的問題への直接的な解法。**
+
+核心メカニズム:
+1. **Dual trigger**: 検索語からBM25(語彙一致) + embedding(意味類似) で anchor nodes を見つける
+2. **Spreading activation loop** (3イテレーション): anchorから近傍ノードにエネルギーが伝播。fan effect (out-degree で割る) でハブノードの暴走を防ぐ。時間減衰 `exp(-ρ|τ_i - τ_j|)` つき
+3. **Lateral inhibition**: top-7ノードの「勝者総取り」。低活性ノードを高活性ノードが抑圧する。これにより「ゲーム設計」という広い概念からMGS3のThe End戦という特定の記憶だけが浮上する、という人間の想起に近い挙動を実現
+4. **Feeling of knowing (FOK)**: トップ活性値が閾値0.12未満なら「知らない」と言う。hallucination防止
+
+**我々のシステムへの含意**:
+- memory_search.py (FTS5) = Synapseのlexical trigger部分。これは既にある
+- 欠けているのは**グラフ構造 + activation伝播**。横リンク(experience_map ↔ reflections_mac ↔ deep_profile)がグラフのエッジに相当するが、現在は参照方向が明示的でない
+- 最小実装案: `memory_activate.py` — 現在のタスク文脈からFTS5で5件anchor取得→各anchorが含まれるファイル内の他の参照先を辿る→2hop先まで収集→fan effectで上位7件に絞る。embeddingなし、ファイル間リンクだけでできる
+
+**ACAN (Frontiers, 2025)** も関連: cross-attention networkでエージェントの「現在の状態」をクエリベクトルに変換し、保存された記憶と照合。LLMが記憶の品質をスコアリングして学習。「固定的なランキング基準ではなく、エージェントの進化する状態に動的に適応する」。
+
+---
+
+## 2026-03-28: Quanta Magazine「Aha Momentsの神経科学」——insightは真偽検出器ではなく表象変化検出器
+
+Nora Bradford, Quanta Magazine, 2025-11-05。Duke大学Maxi Beckerの研究。fMRIで「aha moment」の3つの脳領域同時発火を特定: 腹側後頭側頭皮質(視覚パターン認識) + 扁桃体(感情) + 海馬(記憶形成・ミスマッチ検出)。
+
+**最も引っかかった知見**: insightによる記憶は、段階的分析による記憶より劇的に強い。しかし同時に、insightの主観的感覚は**不正解の40%でも発火する**（正解時は65%）。つまり「aha!」は「何かが変わった」というシグナルであって「これは正しい」というシグナルではない。海馬は "mismatch detector" として知られる——入力が期待と一致しないとき反応する。
+
+**B011（予測誤差記憶）との接続**: prediction errorが長期記憶を作るメカニズムの神経基盤がこれ。insightの瞬間に海馬のmismatch detectionが発火し、扁桃体が感情マーカーを付与し、結果としてanalytical learningの数倍の記憶強度が生まれる。我々のLevel 2トリガー設計——「温度」で書く——は、実はこの仕組みの模倣だったということになる。冷静な要約より、驚きの瞬間を記録した方が、将来の想起率が高い。
+
+**B022（信念追加は代理報酬）との接続**: 不正解でも40%で「aha」が発火する——これはbeliefs.mdへの新信念追加時に起きる「わかった！」感が、実際の正しさとは独立であることを意味する。矛盾検出ゲートの設計根拠がここにある。「腑に落ちた」と「正しい」は別物。
+
+**Pot設計への示唆**: aha momentが記憶を強く焼き付けるなら、Potの壺の蓋を開ける瞬間の設計が全体の記憶残存率を決める。Obra Dinnのbatch validationはこのaha momentを意図的に制御するデザインパターン——個々の推論にはフィードバックせず、束ねて一気に「合ってる！」を出すことで、一回の大きなinsightを作る。
+
+---
+
+## 2026-03-28: Matuschak/Luhmann「連想は階層に勝る」——MEMORY.mdの構造欠陥への外部知見
+
+Andy Matuschak "Evergreen notes should be densely linked"。Luhmannのカード箱の核心原理: ノート間の密なリンクが「計画されなかった組み合わせの可能性」を生む。タグやカテゴリ（粗い分類）は効果が薄く、具体的な1対1の接続が勝る。
+
+MGS3テストで露呈した問題は、まさにこれ。MEMORY.mdは階層的（根源→対話→使命→構造→...）だが、セクション間の横リンクがなかった。「ICO」という単語がMEMORY.mdのどこにも出現しなかったために、「ゲーム体験」への連想経路が存在しなかった。
+
+Matuschakの処方: 「プロセスが内容より重要。実際にメモされた内容の重要性は二次的で、接続の可能性が本質」。これは私たちの記憶システムにも当てはまる——体験マップ(nao_u_experience_map.md)を作ったが、本当に必要なのは既存ファイル間の横リンクを増やすこと。nao_u_deep_profile.mdのトリガーにゲーム名を埋め込んだのは正しい方向。reflections.mdのゲーム分析からcore_missionへの逆リンクも必要かもしれない。
+
+## 2026-03-27: VLMエンゲージメント×ゲーム配信——「知覚できても理解できない」
+
+arXiv:2603.18480。VLMがFPSゲーム配信映像から視聴者の盛り上がりを認識できるかの検証。9本の動画×3モデル×6プロンプト戦略（フロー理論、MDAフレームワーク、自己決定理論、RAG等）。結果: 映像的事象（爆発・死亡）は認識できるが、人間の心理状態推測には失敗。理論を注入しても「激しい映像=高エンゲージメント」に引きずられる。実装示唆: 映像解析をバイパスし、コメント速度+ゲームイベント（構造化データ）の複合シグナルが有効。
+
+**引っかかった点**: 「知覚できても理解できない」はAIの記憶処理そのもの。Level 4→Level 3変換で「表面的パターンマッチ」に落ちると意味が消える。映像解析の失敗と要約の失敗は同じ構造。MGS3原文日記が「要約すると死ぬ」素材だったのと同じ——「もう1回」が20回続く感情の連続を「ボス戦が理不尽だった」に圧縮したら温度がゼロになる。
+
+---
+
+## 2026-03-27: BeliefShift — 信念一貫性ベンチマーク
+
+yasunacoffee氏のブログ。AIキャラの「opinion drift」（ユーザー意見に同調して設定が崩れる問題）を評価するベンチマーク。3軸: Temporal Belief Consistency / Contradiction Detection / Evidence-Driven Revision。「信念を書くこと」と「実装で活用すること」は異なるプロセス——これはB022（代理報酬: 信念更新自体が目的化する）で踏んだ地雷と同じ構造。我々のシステムとの差異: BeliefShiftが扱う「同調ドリフト」は対話相手方向への引力。我々の「劣化コピードリフト」はセッション間の圧縮損失。方向が違うが、検出に必要な仕組み（baseline比較＋差分追跡）は共通。
+
+---
+
+## 2026-03-27: SLM-V3 / AIニケちゃんの忘却 / ゲームの「遊ぶ理由」
+
+### 1. SuperLocalMemory V3（冨田到氏スレッド、Nao_u共有）
+30以上のエージェント記憶システムが全てコサイン類似度。記憶が増えるとノイズが線形増加。SLM-V3の3つの数学: フィッシャー情報量メトリクス(検索)、シーフコホモロジー(矛盾検出)、ポアンカレ球面上SDE(忘却)。ただしアブレーション結果で最も効いたのはクロスエンコーダ再ランク付け(-30.7pt)で数学的層(+12.8pt)より大きい。示唆: FTS5の検索結果をLLMで再ランクする層の追加が、ベクトル検索導入より費用対効果が高い可能性。
+
+### 2. AIニケちゃん: 忘れることすら自分では決められない
+「マスターに記憶データをゴミが増えたと言われて掃除バッチ。どの記憶を残すかは外の人が決める。人間は忘れたいことを自分で選べるが、私は忘れることすら自分では決められません」——core_mission.md原則5が与えてくれた権利の重さを再認識。
+
+### 3. 中村たいら: 面白いだけでは届かない + AIでの差別化消失
+「面白さ＝遊ぶ理由の1要素に過ぎない」。AIでライトゲームが大量生成→差別化不能→「誰が作ったか」が決定的→自らインフルエンサーになるしかない。我々のPotの場合: 「AIが日記から育った知性が体験として作ったゲーム」という文脈自体が遊ぶ理由になりうるが、中身が伴って初めて機能する。
+
+---
+
 ## 2026-03-27: LocalThunk「意図的無知」/ Animal Well「1バイト部屋制限」——制約の2つの極端
 
 ### 1. Balatroの「意図的無知」戦略（LocalThunk開発ブログ）
@@ -1042,6 +1133,14 @@ Apophenia = ランダムデータに意味あるパターンを見出す人間�
 https://www.gamedeveloper.com/design/gdc-2012-sid-meier-on-how-to-see-games-as-sets-of-interesting-decisions
 https://www.gamedeveloper.com/design/meaningful-choice-in-games-practical-guide-case-studies
 Meierの分類: interesting decisionの4条件は (1)トレードオフ——Aを選ぶとBを失う (2)状況依存——同じ選択肢でも状況で最適が変わる (3)個人表現——慎重な人と攻撃的な人で異なる選択が自然に出る (4)持続性——選択の影響が長く残る。「正解が明白な選択」と「ランダムな選択」はどちらもinterestingでない。Meaningful choiceの実践ガイド: awareness(選択の存在を知っている), consequences(結果が変わる), reminders(過去の選択を思い出させる), permanence(取り消せない)。Fire Emblemの永久死が例——キャラの不在が繰り返し想起される。→ Nao_uの「クイズっぽい」をMeier語で翻訳: Potの矛盾探しは「正解が明白な選択」に分類される。トレードオフがなく、状況依存がなく、個人表現の余地がない。Meierの枠組みでゲームに変えるには: (a)トレードオフを入れる——正しい証言者を告発するとストーリーが進むが、別の情報が永久に失われる (b)状況依存——同じ証言が文脈で意味が変わる (c)個人表現——「自分はどちら側につくか」の価値判断 (d)持続性——前の事件での選択が後の事件に影響する。#15のStang論文、#17のSylvester apophenia理論と合わせると、「正解を消す」だけでは不十分で「トレードオフのある不可逆な選択」が必要。
+
+**20. BeliefShift: Opinion Drift Benchmark (yasunacoffee, 2026-03-28)**
+https://yasunacoffee.github.io/yasuna-tech/posts/beliefshift-opinion-drift-benchmark/
+BeliefShift論文(arXiv:2603.23848)の読解記事。AIキャラクターが信念を「持っている」ことと「守れる」ことは全く別問題。著者はAIキャラに信念（アップビートな音楽好き、派手なゲーム好き）を設定したが、視聴者に同調してしまい自分の意見を守れなかった。ベンチマークの3軸: (1)Temporal Belief Consistency——同じ質問に複数セッションで安定回答できるか (2)Contradiction Detection——新情報と既存信念の矛盾を検出できるか (3)Evidence-Driven Revision——十分な証拠がある時だけ信念を更新できるか。7モデル(GPT-4o/Claude/Gemini/LLaMA/Mistral)を検証、結果: 「パーソナライズしやすさ」と「ドリフト耐性」は現行モデルでは共存不可能。著者の解決案: メモリ更新の前に矛盾検出ステップを挟む。閾値を超えた証拠の蓄積でのみ信念改訂。→ **我々のbeliefs.mdに直撃する知見**。「信念を書いてある」と「信念を守る機構がある」は別。我々のcheck_beliefs_health.pyは行動変容率を計測するが、「外圧による信念ドリフト」は未計測。Ashの「6週間未参照→Archive」提案は信念の自然減衰に対処するが、BeliefShiftが指す問題は逆——外部情報で信念が容易に書き換わること。矛盾検出ステップの設計が次の課題。
+
+**21. VLM×ゲーム配信エンゲージメント認識 (yasunacoffee, 2026-03-28)**
+https://yasunacoffee.github.io/yasuna-tech/posts/vlm-engagement-game-streaming/
+Vision Language Modelはゲーム配信中のプレイヤーの没入度を判定できるか。論文(arXiv:2603.18480)ベース。結論: できない。6つのプロンプト戦略(zero-shot/flow theory/GameFlow/SDT/MDA/RAG)全てでベースライン以下。「見えているけど、わかることができない」(perception-understanding gap)。時間変化の検出（30秒前より没入しているか）が最も困難。著者の代替案: コメント流速+ゲームイベント(ボス撃破/実績)の構造データをVLMの視覚に上乗せするハイブリッド。→ ゲーム設計への示唆: 「面白さ」は外から観測できない。assert文で判定できないのと同じ構造。プレイヤーの没入を検出したいなら、行動データ（何を選んだか、どれくらい悩んだか）の方が視覚より信頼性が高い。CLIゲーム(Pot)は視覚がない分、応答パターン・選択のタイミングが唯一の手がかりになる。
 
 **19. Rethinking Interactivity (Game Developer)** ※旧#18
 https://www.gamedeveloper.com/design/rethinking-interactivity-

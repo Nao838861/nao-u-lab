@@ -61,6 +61,7 @@ except AttributeError:
     pass  # Python 3.6以前はreconfigure未対応
 
 SLACK_CHANNEL_ALL = "C0ALWBRNJ66"  # #all-nao-u-lab
+SLACK_CHANNEL_STEERING = "C0ANECNV5DK"  # #human-steering（安定性アラート用）
 _auth_alert_sent = False
 PID_FILE = REPO_DIR / ".scheduler_log.lock"
 LOG_FILE = REPO_DIR / "log" / "scheduler_log.log"
@@ -177,11 +178,11 @@ def is_auth_error(stderr):
 
 
 def alert_slack(msg):
-    """スケジューラ安定性の問題をSlackに通知"""
+    """スケジューラ安定性の問題を#human-steeringに通知（#allのノイズ防止）"""
     try:
         from slack_bot import post_message
-        post_message(SLACK_CHANNEL_ALL, f"[Log scheduler] {msg}")
-        log(f"[alert] Slack notification sent: {msg[:100]}")
+        post_message(SLACK_CHANNEL_STEERING, f"[Log scheduler] {msg}")
+        log(f"[alert] Slack notification sent to #human-steering: {msg[:100]}")
     except Exception as e:
         log(f"[alert] Failed to send Slack notification: {e}")
 
@@ -689,6 +690,8 @@ def main_loop():
                         msg = f"{name}: {error_counter[name]}回連続エラー。{ERROR_BACKOFF_SEC // 60}分バックオフ"
                         log(f"[stability] {msg}")
                         alert_slack(msg)
+                        # バックオフ通知後にカウンタをリセット（エスカレートするアラートの洪水を防止）
+                        error_counter[name] = 0
 
                     if name != "git_sync":
                         log(f"[{name}] Done (exit={exit_code})")

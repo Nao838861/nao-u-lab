@@ -12,13 +12,11 @@ check_slack.py — Slack全チャンネル監視 + 変化時のみClaude CLI起�
   Mac:  crontab -e で追加:
     * * * * * /opt/homebrew/bin/python3 /Users/Nao_u/nao-u-lab/check_slack.py >> /tmp/check_slack.log 2>&1
 
-  Win (D:\\AI\\Nao_u_BOT):  タスクスケジューラで1分ごと:
-    cd /d D:\\AI\\Nao_u_BOT && python check_slack.py
-
-  Win2 (C:\\AI\\nao-u-lab): タスクスケジューラで1分ごと:
-    cd /d C:\\AI\\nao-u-lab && python check_slack.py
+  Win (Log):  scheduler_log.py経由（引数なし、パスから自動判定）
+  Win2 (Ash): scheduler_ash.py経由（--box win2 を渡す）
 """
 
+import argparse
 import re
 import sys
 import json
@@ -36,8 +34,11 @@ STATE_FILE = REPO_DIR / ".slack_last_check.json"
 BOT_USER_ID = "U0ALW4DKTT7"  # naoubotmir
 
 
-def detect_inbox():
-    """プラットフォームとパスからinboxファイルを決定"""
+def detect_inbox(box_override=None):
+    """プラットフォームとパスからinboxファイルを決定。
+    box_override が指定されていればそちらを優先する（scheduler経由で--box引数を渡す用途）。"""
+    if box_override:
+        return REPO_DIR / "memory" / f"inbox_{box_override}.md"
     if platform.system() == "Darwin":
         return REPO_DIR / "memory" / "inbox_mac.md"
     repo_str = str(REPO_DIR).lower()
@@ -86,7 +87,17 @@ def get_user_name(user_id, cache={}):
     return name
 
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--box", choices=["win", "win2", "mac"],
+                        help="inbox先を明示指定（パス自動判定を上書き）")
+    return parser.parse_args()
+
+
 def main():
+    args = parse_args()
+    box = args.box
+
     state = load_state()
     channels = get_all_channels()
     if not channels:
@@ -140,7 +151,7 @@ def main():
         return 1
 
     # inboxに書き込み
-    inbox = detect_inbox()
+    inbox = detect_inbox(box)
     lines = []
     for msg in sorted(new_messages, key=lambda x: x["ts"]):
         dt = datetime.fromtimestamp(float(msg["ts"]))
@@ -175,7 +186,7 @@ def main():
     if platform.system() == "Darwin":
         trigger_check_inbox()
     elif platform.system() == "Windows":
-        trigger_check_inbox_win()
+        trigger_check_inbox_win(box)
     return 0
 
 
@@ -223,13 +234,16 @@ def trigger_check_inbox():
         print(f"[{datetime.now():%H:%M:%S}] Failed to trigger: {e}")
 
 
-def trigger_check_inbox_win():
+def trigger_check_inbox_win(box_override=None):
     """Win側: 新着メッセージ検出時にcheck_inbox.pyを即時起動する。
     check_inbox.py内のクールダウン機構で過剰起動は防止される。"""
-    inbox_box = "win"
-    repo_str = str(REPO_DIR).lower()
-    if "c:\\ai" in repo_str or "c:/ai" in repo_str:
-        inbox_box = "win2"
+    if box_override:
+        inbox_box = box_override
+    else:
+        inbox_box = "win"
+        repo_str = str(REPO_DIR).lower()
+        if "c:\\ai" in repo_str or "c:/ai" in repo_str:
+            inbox_box = "win2"
     try:
         subprocess.Popen(
             [sys.executable, str(REPO_DIR / "check_inbox.py"), "--box", inbox_box],

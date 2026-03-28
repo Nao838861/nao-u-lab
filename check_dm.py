@@ -92,8 +92,9 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
             stripped = re.sub(r'\d+', '', main_text) if main_text else ""
             fingerprint = stripped[-200:] if stripped else ""
             prev_state = load_state()
+            fp_key = f"fingerprint_{target_user}"
 
-            if fingerprint and fingerprint != prev_state.get("fingerprint", ""):
+            if fingerprint and fingerprint != prev_state.get(fp_key, ""):
                 # New messages detected
                 messages = [main_text]
                 log(f"New DM detected (fingerprint changed)")
@@ -120,7 +121,7 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
 
             # 既存のstateにマージ（consecutive_fails等を保持するため）
             existing = load_state()
-            existing["fingerprint"] = fingerprint
+            existing[fp_key] = fingerprint
             existing["last_check"] = str(datetime.now())
             save_state(existing)
 

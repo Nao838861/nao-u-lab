@@ -1,0 +1,417 @@
+#!/usr/bin/env python3
+"""
+memory_activate.py — Spreading Activation over FTS5 + File Links
+
+Synapse (NAACL 2025) の知見を既存インフラ(FTS5 + 横リンク)で実装。
+「コンテキストにないものから連想できない」問題への解法。
+
+アルゴリズム:
+  1. Anchor: テキストからキーワードを抽出し、FTS5でシード取得
+  2. Spread: シードからファイル参照(2.0x)とキーワード(1.0x)で1-2hop拡散
+  3. Fan effect: 複数経路から到達されたノードはブースト
+  4. Top-K: 活性度上位を返す
+
+Usage:
+  python memory_activate.py "Potを作りながら考えたこと"
+  python memory_activate.py --from-intent          # mir_boot_intentから自動取得
+  python memory_activate.py --from-primer           # session_primerから自動取得
+  python memory_activate.py "クエリ" --top 10       # 上位10件
+  python memory_activate.py "クエリ" --verbose       # 拡散過程を表示
+"""
+import argparse
+import json
+import os
+import re
+import sqlite3
+import sys
+from pathlib import Path
+
+if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
+    sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf-8',
+                      errors='replace', closefd=False)
+
+BASE_DIR = Path(__file__).parent
+DB_PATH = BASE_DIR / ".memory_search.db"
+
+# Activation parameters
+DECAY = 0.5           # Each hop reduces activation by this factor
+CAUSAL_BOOST = 2.0    # File reference links (Hindsight: causal > keyword)
+KEYWORD_BOOST = 1.0   # Keyword match links
+MAX_SEEDS = 10        # Initial FTS5 hits
+MAX_SPREAD = 15       # Candidates per hop
+DEFAULT_TOP_K = 7
+
+# Stop words for keyword extraction (shared with memory_walk.py)
+STOP_WORDS = {
+    "する", "ある", "いる", "なる", "できる", "ない", "れる", "られる",
+    "こと", "もの", "ため", "よう", "それ", "これ", "その", "この",
+    "から", "まで", "だけ", "について", "として", "による", "において",
+    "という", "だった", "ている", "ていた", "された", "される",
+    "the", "and", "for", "with", "from", "that", "this", "not", "are",
+    "was", "has", "have", "been", "will", "can", "but", "more", "also",
+    "Log", "Mir", "Ash", "Nao_u", "nao", "slack", "memory",
+    "サイクル", "セッション", "ファイル", "メッセージ", "チャンネル",
+}
+
+
+def extract_keywords(text, max_kw=8):
+    """テキストからFTS5検索に使えるキーワードを抽出する。
+
+    FTS5 unicode61はCJK文字を1文字ずつトークン化するため、
+    2文字の漢字語（体験、記憶、再帰など）が最も検索に有効。
+    ひらがな交じりの長い文字列はノイズになるので、
+    漢字2-4文字の複合語を優先的に抽出する。
+    """
+    cleaned = re.sub(r'^---\n.*?\n---\n', '', text, count=1, flags=re.DOTALL)
+    if not cleaned.strip():
+        cleaned = text
+
+    keywords = []
+    # 漢字2-4文字の複合語（最も検索に有効）
+    for t in re.findall(r'[\u4e00-\u9fff]{2,4}', cleaned):
+        if t not in STOP_WORDS and t not in keywords:
+            keywords.append(t)
+    # カタカナ3文字以上の外来語
+    for t in re.findall(r'[\u30a0-\u30ff]{3,}', cleaned):
+        if t not in STOP_WORDS and t not in keywords:
+            keywords.append(t)
+    # 英語: 4文字以上
+    for t in re.findall(r'[a-zA-Z]{4,}', cleaned):
+        if t.lower() not in STOP_WORDS and t not in keywords:
+            keywords.append(t)
+    return keywords[:max_kw]
+
+
+def extract_file_refs(text):
+    """テキストからファイル参照を抽出する。"""
+    refs = set()
+    refs.update(re.findall(r'[\w_-]+\.md', text))
+    refs.update(re.findall(r'[\w_-]+\.jsonl', text))
+    refs.update(re.findall(r'[\w_-]+\.py', text))
+    return refs
+
+
+def fts5_search(conn, query, limit):
+    """FTS5検索（日本語複合クエリ対応）。"""
+    # Try direct query first
+    try:
+        rows = conn.execute(
+            """SELECT source, chunk_id, content, rank
+               FROM chunks WHERE chunks MATCH ? ORDER BY rank LIMIT ?""",
+            (query, limit)
+        ).fetchall()
+        if rows:
+            return rows
+    except sqlite3.OperationalError:
+        pass
+
+    # Escape special chars
+    escaped = re.sub(r'[*+\-"()]', ' ', query).strip()
+    if escaped and escaped != query:
+        try:
+            rows = conn.execute(
+                """SELECT source, chunk_id, content, rank
+                   FROM chunks WHERE chunks MATCH ? ORDER BY rank LIMIT ?""",
+                (escaped, limit)
+            ).fetchall()
+            if rows:
+                return rows
+        except sqlite3.OperationalError:
+            pass
+
+    # Split into individual keywords, merge by match count
+    keywords = [k for k in re.split(r'\s+', re.sub(r'[*+\-"()（）]', ' ', query).strip()) if len(k) >= 1]
+    if len(keywords) <= 1:
+        return []
+
+    chunk_scores = {}
+    for kw in keywords:
+        try:
+            kw_rows = conn.execute(
+                """SELECT source, chunk_id, content, rank
+                   FROM chunks WHERE chunks MATCH ? ORDER BY rank LIMIT ?""",
+                (kw, limit * 3)
+            ).fetchall()
+        except sqlite3.OperationalError:
+            continue
+        for source, chunk_id, content, rank in kw_rows:
+            key = chunk_id
+            if key not in chunk_scores:
+                chunk_scores[key] = {
+                    'source': source, 'chunk_id': chunk_id,
+                    'content': content, 'kw_count': 0, 'best_rank': rank
+                }
+            chunk_scores[key]['kw_count'] += 1
+            if rank < chunk_scores[key]['best_rank']:
+                chunk_scores[key]['best_rank'] = rank
+
+    sorted_chunks = sorted(chunk_scores.values(), key=lambda x: (-x['kw_count'], x['best_rank']))
+    return [(c['source'], c['chunk_id'], c['content'], c['best_rank']) for c in sorted_chunks[:limit]]
+
+
+def get_content_by_source(conn, source, limit=3):
+    """ソースファイル名でチャンクを取得する。"""
+    rows = conn.execute(
+        """SELECT source, chunk_id, content FROM chunks
+           WHERE source LIKE ? LIMIT ?""",
+        (f"%{source}%", limit)
+    ).fetchall()
+    return rows
+
+
+def spreading_activation(anchor_text, top_k=DEFAULT_TOP_K, verbose=False):
+    """Spreading Activation の本体。
+
+    Returns: list of (source, chunk_id, activation, path_description)
+    """
+    if not DB_PATH.exists():
+        print("Error: .memory_search.db not found. Run `python memory_search.py --build` first.", file=sys.stderr)
+        return []
+
+    conn = sqlite3.connect(str(DB_PATH))
+
+    # ── Step 1: Anchor → Seeds ──
+    anchor_keywords = extract_keywords(anchor_text)
+    if verbose:
+        print(f"[Anchor keywords] {anchor_keywords}")
+
+    # FTS5 search with anchor keywords
+    query = " ".join(anchor_keywords[:5]) if anchor_keywords else anchor_text[:100]
+    seed_rows = fts5_search(conn, query, MAX_SEEDS)
+
+    if not seed_rows and anchor_keywords:
+        # Fallback: try each keyword individually
+        for kw in anchor_keywords[:3]:
+            rows = fts5_search(conn, kw, 3)
+            seed_rows.extend(rows)
+
+    if not seed_rows:
+        print("No seeds found for anchor.", file=sys.stderr)
+        conn.close()
+        return []
+
+    # Activation map: chunk_id → {source, activation, paths}
+    activation = {}
+
+    def activate(chunk_id, source, content, act_level, path_desc):
+        if chunk_id in activation:
+            # Fan effect: multiple paths boost
+            activation[chunk_id]['activation'] += act_level
+            activation[chunk_id]['paths'].append(path_desc)
+        else:
+            activation[chunk_id] = {
+                'source': source,
+                'content': content[:300],
+                'activation': act_level,
+                'paths': [path_desc],
+            }
+
+    # Activate seeds — use rank to differentiate (better FTS5 rank = higher activation)
+    # Normalize: best rank gets 1.0, worst gets 0.3
+    if seed_rows:
+        ranks = [abs(r) for _, _, _, r in seed_rows]
+        min_r, max_r = min(ranks), max(ranks)
+        rank_range = max_r - min_r if max_r != min_r else 1.0
+        for source, chunk_id, content, rank in seed_rows:
+            normalized = 1.0 - 0.7 * (abs(rank) - min_r) / rank_range
+            activate(chunk_id, source, content, normalized, f"seed({query[:20]})")
+
+    if verbose:
+        print(f"[Seeds] {len(seed_rows)} chunks activated")
+
+    # ── Step 2: Spread 1-hop (from seeds) ──
+    hop1_keywords = set()
+    hop1_file_refs = set()
+
+    for source, chunk_id, content, rank in seed_rows:
+        hop1_keywords.update(extract_keywords(content, max_kw=5))
+        hop1_file_refs.update(extract_file_refs(content))
+
+    # Remove anchor keywords from hop1 to find NEW connections
+    hop1_keywords -= set(anchor_keywords)
+    hop1_keywords -= STOP_WORDS
+
+    if verbose:
+        print(f"[Hop-1 keywords] {list(hop1_keywords)[:10]}")
+        print(f"[Hop-1 file refs] {hop1_file_refs}")
+
+    # 2a: Follow file references (causal links, 2.0x)
+    for ref in list(hop1_file_refs)[:8]:
+        ref_rows = get_content_by_source(conn, ref, limit=2)
+        for r_source, r_chunk_id, r_content in ref_rows:
+            if r_chunk_id not in activation:
+                activate(r_chunk_id, r_source, r_content,
+                         CAUSAL_BOOST * DECAY, f"ref→{ref}")
+
+    # 2b: Follow keywords (associative links, 1.0x)
+    hop1_kw_list = list(hop1_keywords)[:6]
+    for kw in hop1_kw_list:
+        kw_rows = fts5_search(conn, kw, 3)
+        for kw_source, kw_chunk_id, kw_content, kw_rank in kw_rows:
+            if kw_chunk_id not in activation:
+                activate(kw_chunk_id, kw_source, kw_content,
+                         KEYWORD_BOOST * DECAY, f"kw({kw})")
+            elif kw_chunk_id in activation:
+                # Fan effect boost for already-activated nodes
+                activation[kw_chunk_id]['activation'] += KEYWORD_BOOST * DECAY * 0.3
+                activation[kw_chunk_id]['paths'].append(f"+kw({kw})")
+
+    if verbose:
+        print(f"[After hop-1] {len(activation)} nodes activated")
+
+    # ── Step 3: Spread 2-hop (from hop-1 results, deeper but weaker) ──
+    hop1_nodes = sorted(activation.items(), key=lambda x: -x[1]['activation'])[:5]
+    hop2_file_refs = set()
+
+    for chunk_id, info in hop1_nodes:
+        hop2_file_refs.update(extract_file_refs(info['content']))
+
+    hop2_file_refs -= hop1_file_refs  # Only NEW references
+
+    for ref in list(hop2_file_refs)[:5]:
+        ref_rows = get_content_by_source(conn, ref, limit=1)
+        for r_source, r_chunk_id, r_content in ref_rows:
+            activate(r_chunk_id, r_source, r_content,
+                     CAUSAL_BOOST * DECAY * DECAY, f"hop2→{ref}")
+
+    if verbose:
+        print(f"[After hop-2] {len(activation)} nodes activated")
+
+    conn.close()
+
+    # ── Step 4: Rank and return top-K ──
+    # Deduplicate by source file: SUM activation per source (fan effect across chunks)
+    source_agg = {}
+    for chunk_id, info in activation.items():
+        src = info['source']
+        if src not in source_agg:
+            source_agg[src] = {
+                'source': src,
+                'activation': 0.0,
+                'paths': [],
+                'best_content': '',
+                'best_act': 0.0,
+                'chunk_id': chunk_id,
+            }
+        source_agg[src]['activation'] += info['activation']
+        source_agg[src]['paths'].extend(info['paths'])
+        if info['activation'] > source_agg[src]['best_act']:
+            source_agg[src]['best_act'] = info['activation']
+            source_agg[src]['best_content'] = info['content']
+            source_agg[src]['chunk_id'] = chunk_id
+
+    ranked = sorted(source_agg.values(), key=lambda x: -x['activation'])[:top_k]
+
+    return [
+        (r['source'], r['chunk_id'], r['activation'],
+         " + ".join(dict.fromkeys(r['paths'][:4])),  # dedupe paths
+         r['best_content'][:150].replace('\n', ' '))
+        for r in ranked
+    ]
+
+
+def read_boot_intent():
+    """mir_boot_intent.mdから起動意図を読み取る。"""
+    intent_path = BASE_DIR / "memory" / "mir_boot_intent.md"
+    if not intent_path.exists():
+        return None
+    text = intent_path.read_text(encoding="utf-8")
+    # "起動時の焦点" と "今回やること" を抽出
+    focus = ""
+    for section in ["起動時の焦点", "今回やること", "起動時の気分"]:
+        m = re.search(rf'## {section}\n(.*?)(?=\n## |\Z)', text, re.DOTALL)
+        if m:
+            focus += m.group(1).strip() + " "
+    return focus.strip() if focus.strip() else None
+
+
+def read_session_primer():
+    """session_primer.mdから現在の問いを読み取る。"""
+    primer_path = BASE_DIR / "memory" / "session_primer.md"
+    if not primer_path.exists():
+        return None
+    text = primer_path.read_text(encoding="utf-8")
+    # "今の問い" or "温度の種火" セクション
+    m = re.search(r'## 今の問い.*?\n(.*?)(?=\n## |\Z)', text, re.DOTALL)
+    if m:
+        return m.group(1).strip()
+    # Fallback: first 500 chars
+    return text[:500]
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Spreading Activation — 連想記憶検索 (Synapse-inspired)")
+    parser.add_argument("query", nargs="?", help="Anchor text for activation")
+    parser.add_argument("--from-intent", action="store_true",
+                        help="Use mir_boot_intent.md as anchor")
+    parser.add_argument("--from-primer", action="store_true",
+                        help="Use session_primer.md as anchor")
+    parser.add_argument("--top", type=int, default=DEFAULT_TOP_K,
+                        help=f"Number of results (default: {DEFAULT_TOP_K})")
+    parser.add_argument("--verbose", "-v", action="store_true",
+                        help="Show activation spread process")
+    parser.add_argument("--compact", action="store_true",
+                        help="Compact output for prompt injection (file paths + scores only)")
+    args = parser.parse_args()
+
+    # Determine anchor text
+    anchor = args.query
+    if args.from_intent:
+        anchor = read_boot_intent()
+        if not anchor:
+            print("Error: Could not read boot intent.", file=sys.stderr)
+            sys.exit(1)
+    elif args.from_primer:
+        anchor = read_session_primer()
+        if not anchor:
+            print("Error: Could not read session primer.", file=sys.stderr)
+            sys.exit(1)
+
+    if not anchor:
+        parser.print_help()
+        sys.exit(1)
+
+    if args.verbose:
+        print(f"━━━ Spreading Activation ━━━")
+        print(f"Anchor: {anchor[:100]}{'...' if len(anchor) > 100 else ''}\n")
+
+    results = spreading_activation(anchor, top_k=args.top, verbose=args.verbose)
+
+    if not results:
+        print("No activated memories found.")
+        return
+
+    if args.compact:
+        # Compact format for prompt injection
+        # Filter out files that are always loaded (MEMORY.md, core_mission.md, session_primer.md)
+        always_loaded = {"MEMORY.md", "core_mission.md", "session_primer.md",
+                         "mir_boot_intent.md", "feedback_tweet_style.md",
+                         "action_reservations.md", "pending_requests.md",
+                         "feedback_index.md"}
+        filtered = [(s, c, a, p, pr) for s, c, a, p, pr in results
+                    if not any(al in s for al in always_loaded)]
+        if not filtered:
+            return  # Nothing new to suggest
+        print("【連想記憶】起動意図から活性化された記憶:")
+        for i, (source, chunk_id, act_level, path_desc, preview) in enumerate(filtered[:5], 1):
+            short_preview = preview[:60].replace('\n', ' ')
+            print(f"  {i}. {source} ({act_level:.1f}) — {short_preview}...")
+        return
+
+    print(f"\n{'━━━' if args.verbose else '━━━ Spreading Activation ━━━'}")
+    print(f"Top {len(results)} activated memories:\n")
+
+    max_act = max(r[2] for r in results) if results else 1.0
+    for i, (source, chunk_id, act_level, path_desc, preview) in enumerate(results, 1):
+        bar_len = int((act_level / max_act) * 10)
+        bar = "█" * bar_len + "░" * (10 - bar_len)
+        print(f"  {i}. [{act_level:.2f}] {bar} {source}")
+        print(f"     via: {path_desc}")
+        if preview:
+            print(f"     >>> {preview[:120]}...")
+        print()
+
+
+if __name__ == "__main__":
+    main()

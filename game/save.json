@@ -1,0 +1,41 @@
+{
+  "cycle": 8,
+  "memos": [
+    {
+      "text": "最後は3か9",
+      "cycle_written": 2
+    },
+    {
+      "text": "真ん中が6",
+      "cycle_written": 4
+    },
+    {
+      "text": "最初3 足して12",
+      "cycle_written": 4
+    }
+  ],
+  "world_changes": [
+    {
+      "type": "modify_object",
+      "room": "hallway",
+      "object": "iron_door",
+      "updates": {
+        "needs_code": false
+      }
+    },
+    {
+      "type": "modify_object",
+      "room": "hallway",
+      "object": "iron_door",
+      "updates": {
+        "required_keys": [
+          "triangle_stone",
+          "square_stone"
+        ]
+      }
+    }
+  ],
+  "cleared": false,
+  "door_code": 363,
+  "false_d3": 9
+}
