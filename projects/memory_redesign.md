@@ -17,6 +17,7 @@ Active — 最重点ミッション（2026-03-16 Nao_u指定、2026-03-21 再確
 - **活性化拡散(memory_activate.py)**: Synapse論文知見。アンカー→拡散→ファン効果→Top-K。autonomous_cycle.shに統合済み
 - **信念健康診断(check_beliefs_health.py)**: 停滞/検証超過/体験裏付け/孤立の4軸 + GC到達可能性分析
 - **beliefs_compact.md**: 起動時L2として23行で全信念を一覧
+- **遡及的救済(memory_activate.py --rescue)**: STC(Synaptic Tag-and-Capture)プロトタイプ。高温度テキストをアンカーに、MEMORY.md未参照+時間窓内の「弱い記憶」を拡散探索で救済
 
 ## 残課題（未実装・未検討）
 - [ ] beliefs.mdのGC（アーカイブ判定）の定期自動実行。restoration_triggerの運用検証
@@ -29,7 +30,7 @@ Active — 最重点ミッション（2026-03-16 Nao_u指定、2026-03-21 再確
 - [ ] 30分統合サイクル: Google Always On Memory Agent知見。新規メモリの横断レビュー+重複除去
 - [ ] 検索オーケストレーション: 段階的エスカレーションの判断ヒューリスティクス未定義
 - [ ] 圧縮可逆性の自動検証: Compaction後のポインタが原文に到達できるかのチェック機構
-- [ ] **遡及的救済(STC)**: 高温度イベント発生時に前後セッションの低温度記憶を再評価し、主題的重複があるものを昇格。Dunsmoor 2022 + Chong 2025の知見
+- [x] **遡及的救済(STC)**: memory_activate.py --rescue で実装済み。次段階: 自動トリガー検出、昇格アクション
 - [ ] 前向き記憶の状態切替最適化: pending_requests.mdの全文re-readから軽量トリガーキュー方式への移行
 
 ## 検討済み・未実装
@@ -40,6 +41,12 @@ Active — 最重点ミッション（2026-03-16 Nao_u指定、2026-03-21 再確
 
 ---
 ## 履歴（新しいものが上）
+
+### 2026-03-28: STC遡及的救済プロトタイプ実装（Mir）
+- memory_activate.py に --rescue モード追加
+- Dunsmoor 2022 + Chong 2025の3条件を実装: 時間窓(7日、当日除外) + 意味的選択性(spreading activation) + 弱さフィルタ(MEMORY.md未参照ファイル)
+- テスト3パターン全パス: Nao_u発言アンカー/ゲーム設計アンカー/boot_intentアンカー
+- 次段階の課題: 自動トリガー検出（nao_u_live.md更新時など）、救済後の昇格アクション（MEMORY.mdトリガー追加等）
 
 ### 2026-03-28: memory_activate.py実装 + プロジェクト概念導入
 - Synapse論文(NAACL 2025)のspreading activation解法を実装(#069)
