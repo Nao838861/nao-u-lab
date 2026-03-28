@@ -385,7 +385,7 @@ def reachability_report(beliefs):
     for bid, status in states.items():
         if "Archived" in status:
             archived_ids.add(bid)
-        elif "🔴 Core" in status and "Core候補" not in status:
+        elif ("🔴 Core" in status or "🟢 Core" in status) and "Core候補" not in status:
             core_ids.add(bid)
         else:
             active_ids.add(bid)
