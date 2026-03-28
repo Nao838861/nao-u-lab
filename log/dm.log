@@ -3194,3 +3194,5 @@ Call log:
 **新しいDMは来ていません** — これは誤検知です。
 
 DM概要に表示されているのは、約13時間前にLogが送信した**こちら側の返信**（"You:"で始まっている
+[2026-03-28 10:19:53] Skipped: browser locked by another process
+[2026-03-28 10:19:53] No new DMs from Nao_u

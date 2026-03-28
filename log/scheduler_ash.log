@@ -8370,3 +8370,19 @@ FileNotFoundError: [WinError 3] 指定されたパスが見つかりません。
 [2026-03-27 17:37:51] [ALERT] Sent error alert for git_sync
 [2026-03-27 17:43:58] [auto_diary] Starting
 [2026-03-27 17:45:51] [auto_diary] Starting
+[2026-03-28 10:16:58] ==================================================
+[2026-03-28 10:16:58] Ash scheduler started (PID 12960)
+[2026-03-28 10:16:58] Max runtime: 24 hours
+[2026-03-28 10:16:58] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-03-28 10:16:58] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended
+[2026-03-28 10:16:58] ==================================================
+[2026-03-28 10:17:09] [slack_check] Starting
+[2026-03-28 10:19:39] [slack_check] Timeout (120s)
+[2026-03-28 10:19:39] [reservation_check] Starting
+[2026-03-28 10:19:39] [reservation_check] 【行動予約】期限到来:
+[2026-03-28 10:19:39] [reservation_check]   ### R-003: #020検証——beliefs.md行動駆動率の計測
+[2026-03-28 10:19:39] [reservation_check]     - 条件: 2026-03-26以降
+[2026-03-28 10:19:39] [reservation_check]     - アクション: 3/23以降のbeliefs.md更新のうち行動変化を引き起こした件数を数える。ベースライン4.8%からの改善を確認。kaizen_tracker.md #020に検証結果を記入
+[2026-03-28 10:19:39] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-03-28 10:19:39] [reservation_check] Done (exit=0)
+[2026-03-28 10:19:49] [inbox_check] Starting

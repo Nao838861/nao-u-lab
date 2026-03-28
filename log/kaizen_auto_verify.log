@@ -105,3 +105,11 @@
   ✅ `python shadowbox.py --live-check`
       未解決のlive予測なし（解決済み: 1件）
   → 総合: 全コマンド成功
+
+=== 自動検証実行 [2026-03-28 10:19:53] ===
+
+### #053: Pot #6 witness.py — テキスト内容がメカニクスそのものになる壺（lateral information設計）
+  状態: 未検証 / 期限: 2026-03-28
+  ❌ `python game/witness.py`
+      python: can't open file 'C:\\AI\\nao-u-lab\\game\\witness.py': [Errno 2] No such file or directory
+  → 総合: 一部失敗あり
