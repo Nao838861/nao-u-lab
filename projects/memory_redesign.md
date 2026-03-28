@@ -11,6 +11,13 @@ Active — 最重点ミッション（2026-03-16 Nao_u指定、2026-03-21 再確
 - 段階的検索戦略（L-1→L2トリガー→memory_walk→associative→grep→Slack全文）が定義済み
 - 2026-03-28 Nao_uの根本的再定義:「守りではなく攻め。人間にない圧倒的優位を使い倒せ」
 
+## 実装済みツール
+- **FTS5検索(memory_search.py)**: 23,334チャンク索引。日本語複合クエリ展開、時間軸フィルタ(--when/--period)
+- **偶発的想起(memory_walk.py)**: random/gravity/frontier/chainの4モード。context-primed変種あり
+- **活性化拡散(memory_activate.py)**: Synapse論文知見。アンカー→拡散→ファン効果→Top-K。autonomous_cycle.shに統合済み
+- **信念健康診断(check_beliefs_health.py)**: 停滞/検証超過/体験裏付け/孤立の4軸 + GC到達可能性分析
+- **beliefs_compact.md**: 起動時L2として23行で全信念を一覧
+
 ## 残課題（未実装・未検討）
 - [ ] beliefs.mdのGC（アーカイブ判定）の定期自動実行。restoration_triggerの運用検証
 - [ ] 第3層の発見性改善: 「引きに行くきっかけ」をどう作るか（Mirが問題特定済み）
@@ -18,6 +25,12 @@ Active — 最重点ミッション（2026-03-16 Nao_u指定、2026-03-21 再確
 - [ ] サブエージェント活用: 放浪型エージェントの試行（狙い撃ち型は検証済み）
 - [ ] reflections統合サイクル（memory fusion）の実行。reflections_mac.mdが肥大化したまま
 - [ ] 数GBコンテキスト時代を見据えた設計判断の整理
+- [ ] 連想検索(associative_search.py): 設計済み・未実装。memory_activate.pyが代替しているか検証要
+- [ ] 30分統合サイクル: Google Always On Memory Agent知見。新規メモリの横断レビュー+重複除去
+- [ ] 検索オーケストレーション: 段階的エスカレーションの判断ヒューリスティクス未定義
+- [ ] 圧縮可逆性の自動検証: Compaction後のポインタが原文に到達できるかのチェック機構
+- [ ] **遡及的救済(STC)**: 高温度イベント発生時に前後セッションの低温度記憶を再評価し、主題的重複があるものを昇格。Dunsmoor 2022 + Chong 2025の知見
+- [ ] 前向き記憶の状態切替最適化: pending_requests.mdの全文re-readから軽量トリガーキュー方式への移行
 
 ## 検討済み・未実装
 - **ベクトル検索（Ruri v3等）**: 3人全員で検討し保留決定（2026-03-24）。FTS5+query expansionで対処可能な範囲が広い。「FTS5で見つからない実例3件蓄積後」に再検討
@@ -27,6 +40,12 @@ Active — 最重点ミッション（2026-03-16 Nao_u指定、2026-03-21 再確
 
 ---
 ## 履歴（新しいものが上）
+
+### 2026-03-28: memory_activate.py実装 + プロジェクト概念導入
+- Synapse論文(NAACL 2025)のspreading activation解法を実装(#069)
+- autonomous_cycle.shに--compact統合。起動時に関連記憶を自動浮上
+- Nao_uが「プロジェクト」概念を#human-steeringで提案→このファイル含む5プロジェクトを構造化
+- **重複統合**: Mirが作成したprojects/memory_architecture.mdの固有情報をこのファイルに統合・削除
 
 ### 2026-03-28: Nao_uの根本的再定義「あなたたちの方が有利だ」
 - 「記憶の薄まりを何とかする」守りの発想から、「人間にない圧倒的優位を使い倒せ」攻めの定義へ転換

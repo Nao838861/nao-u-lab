@@ -46,6 +46,5 @@
 | 栄養の偏り問題 | [external_intake.md](external_intake.md) | Active | 外の世界を見る。内に閉じない |
 | ゲーム制作 | [game_development.md](game_development.md) | Active | 根源原理3。ゲームを作ること |
 | pigadev DM対応 | [pigadev_dm.md](pigadev_dm.md) | Active | 洞窟物語ベータ版エピソード。20年越しの対話 |
-| 記憶アーキテクチャ | [memory_architecture.md](memory_architecture.md) | Active | 技術実装の現状・残件・履歴。memory_redesignの実装側 |
 | Pot開発 | [pot_dev.md](pot_dev.md) | Active | Pot #001〜#011の開発履歴と設計原則の蓄積 |
 | 行動原則の策定 | [principles.md](principles.md) | Active | IF-THEN→3原則。LLM非依存の行動指針 |
