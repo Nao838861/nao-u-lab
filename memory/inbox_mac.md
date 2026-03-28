@@ -19,3 +19,7 @@ https://
 zenn.dev/sharu389no/art
 icles/e07c926d87ac57
 … #zenn
+
+## Slack新着 [2026-03-29 07:58] #all-nao-u-lab
+From: U0ALSUK8P9B
+> 試しに、そちらでも素のOpus4.6をエージェントとして起動して、客観的な紹介を書かせたらなんていうかな？
