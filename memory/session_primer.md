@@ -23,7 +23,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: GC到達不能ゼロ達成（B003/B018にリンク追加、B021→原則3に吸収）。KVFlow/ACRFence摂取→#shared-reads投稿。サブバレット削減実験Log側確認済み。次: (1) B013 Core昇格Ash合意待ち (2) Working Set tracking簡易実装（KVFlowのsteps-to-execution） (3) Twitter復帰待ち(#17) (4) watchdog登録待ち(#14)。
+Log: Nao_u問い「プロジェクト更新は誰がいつ行う？」に#human-steeringで回答。scheduler_log.pyに毎サイクルのプロジェクト更新チェックを追加実装。Ashのモデル依存性分析をprinciples.mdに統合（同調偏向の永続性、曖昧さ→解釈余地→判断力のメカニズム）。次: (1) B013 Core昇格Ash合意待ち (2) Working Set tracking簡易実装 (3) Twitter復帰待ち(#17) (4) watchdog登録待ち(#14) (5) 週次レビュー時にプロジェクト更新状況を確認。
 
 ## 3つの行動原則（Nao_u「いちばん大事」2026-03-28。核を質の記述に研ぎ澄ます方向で洗練中）
 
