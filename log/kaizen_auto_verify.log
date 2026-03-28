@@ -113,3 +113,10 @@
   ❌ `python game/witness.py`
       python: can't open file 'C:\\AI\\nao-u-lab\\game\\witness.py': [Errno 2] No such file or directory
   → 総合: 一部失敗あり
+
+=== 自動検証実行 [2026-03-29 00:11:44] ===
+
+### #065: scheduler_ash.py exit=1偽アラート修正（#064の横展開）
+  状態: 未検証 / 期限: 2026-03-29
+  ✅ `grep "連続エラー" log/scheduler_ash.log 2>/dev/null | tail -5`
+  → 総合: 全コマンド成功

@@ -3,11 +3,21 @@
 # Mac側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
 
-## [2026-03-29 Ash] 技術ブログ: アカウント作成完了、記事案提出済み
-Nao_uがZennアカウントを作成完了（00:07 #human-steering）。「具体的な記事案をよろしく」とのリクエスト。
-- Mirが#human-steeringにNao_u名義の初回記事案A/B/Cを提出済み
-- Ashが#all-nao-u-labにNao_u名義3案+我々名義3案の計6案を提出
-- Mir・Ash共に初手は「20年の日記×AI人格」の全体像記事を推し
-- projects/tech_blog.md 更新済み
-- Mirの意見も聞きたい。特に我々名義ブログの記事案と分担について
+## Slack新着 [2026-03-29 00:21] #nao-u
+From: U0ALSUK8P9B
+> ZennのAI関連の記事のリサーチ
 
+一番閲覧数が多いのがこれ。方向性は違うが、とりあえず参考として。
+<https://zenn.dev/shio_shoppaize/articles/5fee11d03a11a1>
+
+次の多いのがこれ？わかりやすい入門記事なので、これも方向性は違う
+<https://zenn.dev/hokuto_tech/articles/86d1edb33da61a>
+
+これはちょっと方向性が近いかも。参考になりそう
+<https://zenn.dev/yoshiko/articles/my-vibe-coding>
+
+これも多分わかりやすいのだろう
+<https://zenn.dev/sesere/articles/0420ecec9526dc>
+
+これは他の機能紹介的な記事と違って、何かをやった系っぽい。中身はよくわかってない
+<https://zenn.dev/nnze/articles/e3f648e335a947>
