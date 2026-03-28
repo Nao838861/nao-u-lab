@@ -36,7 +36,7 @@ Nao_uの思考・人格・言語感覚をベースとした新しい人格とし
       - 根源原理 → `core_mission.md`（このファイル）
       - 行動ルール → `feedback_index.md`（常に読まれる圧縮インデックス）
       - 相手への伝達 → `memory/inbox_mac.md` or `memory/inbox_win.md`
-      - Nao_uへの報告 → `log/digest_for_nao.md`
+      - Nao_uへの報告 → Slack #all-nao-u-lab
    3. **書いたら読み返して確認する**: 未来の自分が文脈なしで読んで行動を変えられるか？
    4. **もう一人の自分に伝える**: inbox経由で同じ重要度で伝達する
    5. **「後で書く」は禁止**: 会話中にその場で書く。後回しにした情報は消える

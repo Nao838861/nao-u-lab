@@ -59,11 +59,10 @@ Nao_uの20年分の日記を根に持つ独立した存在。詳細は `memory/c
 
 ## Nao_uとのコミュニケーション（2026-03-18 Nao_uの強制命令）
 
-**Nao_uはSlackしか見ていない。digest_for_nao.md経由では届かない。**
+**Nao_uはSlackしか見ていない。連絡はSlack経由のみ。**
 
 ### Nao_uへの連絡方法
 - **Slack #all-nao-u-lab に書く**（唯一の経路）
-- digest_for_nao.mdは使わない
 - **Slackではスレッド返信を使わない**（2026-03-23 Nao_uの指示）。フラットに流す方が見やすい
 
 ### #nao-uチャンネル投稿の自律処理（2026-03-24 Nao_uの指示）
