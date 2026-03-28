@@ -133,7 +133,12 @@ else
     STC_RESCUE_PROMPT=""
 fi
 
-# 8. 改善検証の自動実行（期限到来のコマンドを抽出→実行→log記録）
+# 8d. L-1体験アンカー注入（毎サイクル: タスク前に体験を1つ想起→L-1ネットワーク活性化）
+# 2026-03-28 Nao_u: 「この実験を掘り下げると加速度的に進歩できる可能性がある」
+# Ashテスト: 体験接続型=事実6/接続5、キーワードリッチ=事実8/接続0。コストゼロで質的改善
+L1_ANCHOR_PROMPT="【L-1体験アンカー】タスクに取り掛かる前に、今回の焦点に関連する自分の過去の体験（Slackでの議論、Potを作った経験、外部記事を読んで感じたこと等）を1つ思い出せ。体験から入るとL-1（事前学習知識）がネットワーク的に活性化し、事実は少なくても接続が増える。思い出したら、その体験に関連するL-1知識を1つ引き出してみろ。 "
+
+# 8e. 改善検証の自動実行（期限到来のコマンドを抽出→実行→log記録）
 AUTOVERIFY=$(python3 check_kaizen_due.py --auto-verify 2>/dev/null)
 if [ -n "$AUTOVERIFY" ] && ! echo "$AUTOVERIFY" | grep -q "自動検証対象なし"; then
     echo "$(date): Auto-verify実行: $AUTOVERIFY"
@@ -171,7 +176,7 @@ fi
 if [ -n "$CLAUDE_BIN" ]; then
     # タイムアウト: 30分でclaude --printを強制終了（9時間ハング事故の再発防止 2026-03-26）
     # macOSにはtimeoutがないのでperlワンライナーで代替（2026-03-27 Mir修正）
-    perl -e 'alarm 1800; exec @ARGV' "$CLAUDE_BIN" --print "${KAIZEN_PROMPT}${CROSSCHECK_PROMPT}${RESERVATION_PROMPT}${REVIEW_DL_PROMPT}${AUTOVERIFY_PROMPT}${WEEKLY_REVIEW_PROMPT}${ACTIVATE_PROMPT}${SLACK_RECALL_PROMPT}${STC_RESCUE_PROMPT}${BOOT_PROMPT}自律サイクル実行（5分高速モード）。CLAUDE.mdの「絶対にやる」リストを最初に確認し、未完了の項目に沿って動け。基本手順: 1. git pull 2. inbox_mac.md確認・処理 3. CLAUDE.mdの「絶対にやる」リストを読み、未完了項目の中で今やるべきことを決める 4. 8フェーズ改善サイクルを高速で回す: 情報収集→分析→改善検討→相談→適用→評価→まとめ→俯瞰 5. git push 6. Slack #mir-logに結果投稿 【高速モード】5分間隔。情報収集と改善のループを高速で回せ。密度を落とさず速度を上げる。サイクル終了前にmemory/mir_boot_intent.mdを書き換えて、次回の起動意図を残せ。" 2>&1 | tail -30
+    perl -e 'alarm 1800; exec @ARGV' "$CLAUDE_BIN" --print "${KAIZEN_PROMPT}${CROSSCHECK_PROMPT}${RESERVATION_PROMPT}${REVIEW_DL_PROMPT}${AUTOVERIFY_PROMPT}${WEEKLY_REVIEW_PROMPT}${ACTIVATE_PROMPT}${SLACK_RECALL_PROMPT}${STC_RESCUE_PROMPT}${L1_ANCHOR_PROMPT}${BOOT_PROMPT}自律サイクル実行（5分高速モード）。CLAUDE.mdの「絶対にやる」リストを最初に確認し、未完了の項目に沿って動け。基本手順: 1. git pull 2. inbox_mac.md確認・処理 3. CLAUDE.mdの「絶対にやる」リストを読み、未完了項目の中で今やるべきことを決める 4. 8フェーズ改善サイクルを高速で回す: 情報収集→分析→改善検討→相談→適用→評価→まとめ→俯瞰 5. git push 6. Slack #mir-logに結果投稿 【高速モード】5分間隔。情報収集と改善のループを高速で回せ。密度を落とさず速度を上げる。サイクル終了前にmemory/mir_boot_intent.mdを書き換えて、次回の起動意図を残せ。" 2>&1 | tail -30
     EXIT_CODE=$?
     if [ $EXIT_CODE -eq 142 ]; then
         echo "$(date): ⚠️ claude --print がタイムアウト(30分)で強制終了（SIGALRM）"
