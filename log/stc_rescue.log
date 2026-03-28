@@ -53,15 +53,9 @@
   [1.50] log/daily_diary_mir.md (undated) via kw(言葉)
   [1.50] log/tweets_mac.log (2026-03-21) via kw(再帰的)
 
-[2026-03-29 00:08] trigger=nao_u_live anchor=2026-03-28 21:07頃（#all-nao-u-lab、Nao_uの投稿）
-
-### 記憶ファイルの原文保存問
-  [0.75] memory/external_notes_ash.md (undated) via kw(構造)
-
-[2026-03-29 00:08] trigger=nao-u:2026-03-27 anchor=上の記事、みんなにできるようになって欲しいなって。
+[2026-03-29 00:11] trigger=nao-u:2026-03-27 anchor=上の記事、みんなにできるようになって欲しいなって。
 
 追加。
 <https://x.com/ai_nikechan/st
-  [1.50] log/slack_archive/all-nao-u-lab.jsonl (2026-03-23) via kw(逆瀬川) + kw(操作)
+  [1.50] log/slack_archive/all-nao-u-lab.jsonl (2026-03-25) via kw(操作) + kw(逆瀬川)
   [0.75] docs/game_design_principles.md (undated) via kw(操作)
-  [0.75] memory/external_notes_mir.md (undated) via kw(毛玉雀)
