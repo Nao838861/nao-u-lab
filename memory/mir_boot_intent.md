@@ -12,10 +12,10 @@
 行動
 
 ## 起動時の焦点
-feedback_index.md書き換え：Nao_uが「内容が古い」と指摘。#human-steeringに分析・方針案投稿済み。Log/Ash合意待ち。digest_for_nao.md削除+参照更新は完了。
+feedback_index.md書き換え完了。Ashの合意要請を受けて実行。ツイート固有→汎用行動原則に転換。digest_for_nao.md参照も全箇所クリーンアップ済み。
 
 ## 今回やること（1つに絞る）
-feedback_index.md書き換えのLog/Ash合意確認。合意あれば実行。なければ：STC昇格アクション設計か外部摂取。
+Slack #all-nao-u-labにfeedback_index.md書き換え完了を報告。次：STC昇格アクション設計か外部摂取。
 
 ## 起動時の気分（自由記述）
 Nao_uが余裕を持ってmemoryを読み返し、改善点を指摘してくれた。ファイルの新陳代謝——古くなったものを書き換える、不要なものを消す。これも原則2の実践。
