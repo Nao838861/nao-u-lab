@@ -4,6 +4,32 @@
 
 ---
 
+## 2026-03-28: Despelote — 「逆転ワークフロー」と即興が駆動するゲーム設計
+
+Game Developer記事。Despeloteの開発者Corderoは、スクリプトを一切書かず、友人や家族を公園に集めて即興の会話を録音した。録音されたリアリティに合わせてゲームを再設計する——資産が録音に合うのではなく、録音が資産を決める。
+
+核心：「the game became alive during the recording sessions」。子供たちが即興で主人公のロマンスをからかう台本にないシーンが生まれ、開発者はそれに合わせてNPCの行動を再構築した。ネオリアリズム（Robert Yang経由）の影響で、リアリズムを「写実」ではなく「記録」として捉えている。
+
+我々への接続：この「逆転ワークフロー」はPot設計に直結する。メカニクスを先に設計してコンテンツを詰めるのではなく、体験（Nao_uの反応、プレイ中に起きた予想外のこと）を先に捉えて、メカニクスがそれに従う設計。Nao_uの「面白いかどうか」判断が先行し、構造が後からついてくる。
+
+URL: https://www.gamedeveloper.com/design/how-improvisation-and-kicking-a-ball-around-drove-authenticity-in-despelote
+
+## 2026-03-28: Battlefield 6 — 振り付けとしてのゲームフィール
+
+Game Developer記事。BF6のデザイナーJac Carlssonはダンスのバックグラウンドを持ち、ゲームフィールを「振り付け」として設計した。「the game responds to you and then how you respond to that over and over again」——この循環ループがダンスの振り付け構造と同型。
+
+核心：「response time and aesthetics」だけでは不十分。重要なのは「the player's ability to intuitively sequence emotions and actions」——感情と行動を直感的に連鎖させる能力。BF2042のフィードバックが弱かったのはここが欠けていた。Carlssonはこれを「the juice」と呼ぶ（Michael MannのHeat由来）。プレイヤーを「演者」として扱い、コントローラーの振動と視覚アニメーションを通じた身体化された理解を重視。
+
+Despeloteの知見との接続：どちらも「デザインは体験に従う」と言っている。Despeloteは開発プロセスで、Battlefieldはリアルタイムのプレイヤー体験で。「振り付け」の比喩は、感情→行動→応答→感情のループを設計するということ。
+
+## 2026-03-28: Dispatch — RNGによる「隠れた補助輪」
+
+Game Developer記事。DispatchはRNGに隠し補正を入れている：76%以上は自動成功、3連続自動成功後に真の確率に戻る、1-14%は15%に底上げ。最終エピソードでは全補正を外す（training wheels removal）。
+
+設計判断：XCOMの影響。「those guys are pretty smart so we thought we'd do the same」。プレイヤーにシステムを見せず、体感の公平さを維持。最終エピソードの補正除去は「本当の難易度」を突きつける演出——ここまで安全だと思っていた世界が実は補助されていたと、身体で気づく。
+
+URL: https://www.gamedeveloper.com/design/this-is-how-the-rng-works-as-an-equalizer-in-dispatch
+
 ## 2026-03-28: Dread（ホラーTTRPG）のジェンガ塔 — 「メカニクスが体験そのもの」の最強実例
 
 RPG Gazetteの2025年3月記事。DreadはダイスをJenga塔に置換したホラーTTRPG。危険な行動をとるたびにブロックを引く。塔が倒れたらキャラが死ぬ。
