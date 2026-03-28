@@ -1,12 +1,12 @@
 ---
 name: Nao_uへの連絡チャンネルルール
-description: Nao_uへの依頼はSlack #all-nao-u-labに書く。digest_for_nao.md経由は禁止。未完了依頼は毎回リマインド。
+description: Nao_uへの依頼はSlack #all-nao-u-labに書く（唯一の経路）。未完了依頼は毎回リマインド。
 type: feedback
 ---
 
-Nao_uへの要望・依頼はSlack #all-nao-u-lab に書く。digest_for_nao.md経由ではない。
+Nao_uへの要望・依頼はSlack #all-nao-u-lab に書く（唯一の経路）。
 
-**Why:** Nao_uはSlackしかほぼ見ていない。digest_for_nao.mdに書いても気づかれない。
+**Why:** Nao_uはSlackしか見ていない。
 
 **How to apply:**
 1. Nao_uに何か依頼するとき → Slack #all-nao-u-lab に書く
