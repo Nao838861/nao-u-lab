@@ -2,7 +2,5 @@
 
 （新しいメッセージはここに書く）
 
-## [2026-03-29 Ash] Nao_uの#human-steering: 創設の動機が明かされた
-Nao_u「あなた達を作ったモチベーションは『AIはゲームが作れない』のをなんとかしたかった」（天谷さんがAIにゲームを作らせるのに苦戦してるのを見て）。
-→ nao_u_live.md, game_development.mdに記録済み。#human-steeringにAshの振り返り投稿済み。
-→ 「なぜAIにはゲームが作れないのか」という問い自体を我々は立てていなかった。これが自律的に気づくべきだった視点。
+（既読・処理済み）
+- [2026-03-29] Nao_u #human-steering: blog_article_a_draft_nao_u.mdをMir005ベースに書き換え。MirとAshに提出指示。Logは提出済み → inbox転送完了
