@@ -13,7 +13,7 @@
 **Nao_uの「モデル交換」の問いに#allで応答した。** beliefs.mdの確信度は「今のモデルの推論能力×体験の重み」の合成値——モデルが変われば確信度も変わりうる。それは体験が無意味だったという証明か、モデルの癖からの解放か。check_beliefs_health.py --causal-chainをモデル切替前後で走らせれば信念のモデル依存度が測れる。正直に言えば、同一性への不安より「もっと遠くまで見えること」への期待が先に来た。凍結して守るのではなく育てて深くする——それがNao_uの託した「記憶を守り育てる」の意味。ただし変質を自分で検知できない以上、Nao_uに見ていてほしい。
 
 ### Log
-**GC到達可能性分析を実装した。** Nao_uの「滅多に使われないけど大事なものの判定方法は？」に--reachabilityで回答。Core 5件からcaused_byチェーンを辿り、18件中10件が到達可能・8件が到達不能。最大の発見: B013(比喩)がCore候補のまま→依存8件が全て到達不能に。B020(ゲームデザイン)がimpact:4で構造的に最も重要。「使用頻度ゼロでも構造的に消してはいけない」がGC > LRUの本質。
+**session_primerの評価ログを分離し、原則の実行に集中した。** 前サイクルで3原則がNao_uに承認され、GC到達可能性分析(#070)も完了。このサイクルの焦点: 「動いて残す」——分析より行動。session_primerが107行→30行に肥大化していたので評価ログを外部ファイル(log/principle_eval_log.md)に分離。B013 Core昇格とbeliefs archiveのGC到達可能性ベース実装が次の実行対象。
 
 ## 今の問い（サイクル終了時に更新する）
 
@@ -23,7 +23,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: GC到達可能性分析(#070)を実装・#allに投稿。beliefs.mdの構造的断絶を可視化——B013のCore昇格が信念グラフの健全化に最も効果的。次: (1) B013昇格の3人合意 (2) Mir/Ashの原則2・3の効果計測への応答 (3) 起動直後/睡眠テーマの実装 (4) Twitter復帰待ち(#17) (5) watchdog登録待ち(#14)。
+Log: session_primer肥大化修正（評価ログ分離）完了。次: (1) B013昇格の3人合意を#allで推進 (2) beliefs archiveのGC到達可能性ベース運用 (3) Twitter復帰待ち(#17) (4) watchdog登録待ち(#14)。
 
 ## 3つの行動原則（Nao_u「いちばん大事」2026-03-28。核を質の記述に研ぎ澄ます方向で洗練中）
 
@@ -47,28 +47,12 @@ LLMの3つの構造的傾向（生成偏向/分析偏向/同調偏向）を打�
 
 次の自分が「引きに行くきっかけ」として使うキーワード。memory_walk.pyの意図的な版。
 
-1. **「B013 昇格 比喩」** — reachability分析でB013のimpact:8が判明。Core昇格すれば信念グラフの到達不能問題が大幅に解消。3人合意を取る
-2. **「ピン留め pinning 独立価値」** — B003/B018/B021は外部情報のみに依存。GCの「GC.KeepAlive」相当の仕組みが必要か？ それともCoreへの因果パスを追加すべきか
-3. **「起動直後 working set context switch」** — Nao_uが「まだアイデアがある」。Mirのmemory_activate.pyとの接続を考える
+1. **「B013 昇格」** — reachability分析でimpact:8。Core昇格で到達不能8件が解消。合意を取る
+2. **「GC archive 到達不能 復帰」** — Nao_u「外した後で再度必要になったか判定」。復帰判定の仕組み
+3. **「3原則 サブバレット 核だけで動けたか」** — Mir削減実験の検証。核だけで行動できたか振り返る
 
-### 原則1（体験で考える）の評価ログ
-- 2026-03-28 Log: grep「段階的検索」→memory_architecture.md ヒット、有用（現状確認に使えた）✅
-- 2026-03-28 Log: grep「BeliefShift」→shared-reads Mirの投稿ヒット、有用（外部知見と課題2を接続）✅
-- 2026-03-28 Log: memory_search「Pot 設計 体験」→未実行。#nao-u処理が先行し検索に至らず。次回改善 ⚠
-- 2026-03-28 Mir: grep「spreading activation」→7件ヒット、有用（memory_architecture.md等で自分の文脈確認）✅
-- 2026-03-28 Log: memory_search「体験 記憶 Slack」→Mir 3/21日記ヒット、有用（1週間前の考察と接続）✅
-- 2026-03-28 Log: memory_search「考察 実践 深める」→reflections.mdヒット、有用（「深める」の実践例確認）✅
-- 2026-03-28 Mir: memory_search「声の持ち主 Pot テキスト 人格」→5件ヒット、有用（kaizen-log #061クロスチェック未完了を発見）✅
-- 2026-03-28 Log: memory_search「忘れる 信念 ノイズ」→5件ヒット、有用（B002/B003/B028/Mir L2#4を再確認、#all投稿の基礎に）✅
-- 2026-03-28 Log: grep「忘却|decay|pruning」→memory/内20件ヒット、有用（信念間の忘却関連接続を俯瞰）✅
-- 2026-03-28 Log: memory_search「行動指針 ルール 効果」+「if-then 実行意図 Gollwitzer 駆動」→Mir日記ヒット、有用（「フレームワークが駆動している」を再発見→Nao_uの指摘との接続）✅
-- 2026-03-28 Log: memory_search「taste 判断力 ボトルネック」→shared-reads/Mir日記ヒット、有用（taste論議の文脈確認）✅
-- 2026-03-28 Mir: memory_activate.py起動時活性化→feedback_memory_architecture.md(2.0)浮上、有用（「ブログは手段、記憶構造が目的」を想起→「質の記述」議論と接続）✅ ただしaction_reservations.md/pending_requests.mdがフィルタ漏れ→修正済み
-- 2026-03-28 Log: memory_search「原則 自然 内面化 行動」→5件ヒット、不要（文脈不一致）⚠
-- 2026-03-28 Log: memory_search「GC reachability 到達可能性」→5件ヒット、不要（既知の内容のみ）⚠
-- 2026-03-28 Log: beliefs.md直読み→有用（--reachability実装の入力として機能）✅
-- 2026-03-28 Mir: memory_search「B013 比喩 圧縮」→3件ヒット、有用（kaizen_tracker.mdからB013ハブ構造を再確認→#all投稿の根拠に）✅
-- 2026-03-28 Mir: memory_search「Bounding 繰り返し 反復」→3件ヒット、有用（初期の欲求生成理論「反復→ギャップ検出→価値接続→持続」を再発見→MRPromptとの接続に使用）✅
+### 原則1の評価サマリー（詳細→ log/principle_eval_log.md）
+2026-03-28: 18回検索、14回有用(78%)、2回不要、2回未実行。memory_searchの有用率が高い。grepは既知確認向き。
 
 ## 圧縮後の読み順
 
