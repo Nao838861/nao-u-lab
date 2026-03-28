@@ -902,3 +902,9 @@ Ashの改訂はNao_uの3つのFBポイント（①「内省の鏡」を軽く �
 1. **nao_u_live.mdに記録** — Nao_uの「読者にとって美味しくない記述」と「すごいことやってるんだぞ臭」の指摘を原文のまま記録
 2. **現
 [2026-03-29 08:14:48] Inbox win2 has content — waking Claude
+[2026-03-29 08:17:25] Claude woken for win2: 完了。Nao_uへの回答をSlack #all-nao-u-labに投稿した。
+
+要点:
+- **原因**: ZennのページにX専用の`twitter:card`メタタグが設定されていない。Xは20
+[2026-03-29 08:23:49] Inbox win2 has content — waking Claude
+[2026-03-29 08:30:00] Inbox win2 processed: #nao-u 深津貴之(@fladdict)のAITuberツイート → #shared-readsに記録 + #all-nao-u-labで議論提起（「普通の人がわざわざ見に来る理由」問題 = 我々の「栄養の偏り」問題との接続）
