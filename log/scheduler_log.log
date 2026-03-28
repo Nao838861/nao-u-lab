@@ -9753,3 +9753,8 @@ descripti
 [2026-03-28 19:24:07] [stability] inbox_check: 正常復帰 (timeout=2, errors=2 → リセット)
 [2026-03-28 19:24:07] [inbox_check] Done (exit=0)
 [2026-03-28 19:24:07] [git_sync] Starting
+[2026-03-28 19:28:00] [slack_check] Starting
+[2026-03-28 19:28:24] [slack_check] Done (exit=1)
+[2026-03-28 19:29:15] [inbox_check] Starting
+[2026-03-28 19:29:58] [inbox_check] Done (exit=0)
+[2026-03-28 19:30:30] [slack_check] Done (exit=1)
