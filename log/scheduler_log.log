@@ -10352,15 +10352,8 @@ Cycle 15 (3/19): ブログL40600-40799。伝染病シミュレーション
 [2026-03-29 00:51:42] [inbox_check] Starting
 [2026-03-29 00:51:43] [inbox_check] Done (exit=0)
 [2026-03-29 00:52:23] [git_sync] Starting
-[2026-03-29 00:58:09] [inbox_check] Timeout (300s)
-[2026-03-29 00:58:09] [inbox_check] Done (exit=-1)
-[2026-03-29 00:58:19] [slack_check] Starting
-[2026-03-29 00:58:42] [slack_check] Done (exit=0)
-[2026-03-29 00:58:42] [slack_check] New messages detected → triggering immediate inbox_check
-[2026-03-29 00:58:42] [inbox_check] Starting
-[2026-03-29 00:58:42] [stability] inbox_check: 正常復帰 (timeout=1, errors=1 → リセット)
-[2026-03-29 00:58:42] [inbox_check] Done (exit=0)
-[2026-03-29 00:59:43] [slack_check] Starting
-[2026-03-29 01:00:09] [slack_check] Done (exit=1)
-[2026-03-29 01:01:09] [slack_check] Starting
-[2026-03-29 01:01:31] [slack_check] Done (exit=1)
+[2026-03-29 00:52:24] [git_sync] Committed and pushed
+[2026-03-29 00:52:44] [slack_check] Starting
+[2026-03-29 00:53:09] [slack_check] Done (exit=0)
+[2026-03-29 00:53:09] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-29 00:53:09] [inbox_check] Starting
