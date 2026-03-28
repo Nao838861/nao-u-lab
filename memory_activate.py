@@ -66,6 +66,9 @@ def extract_keywords(text, max_kw=8):
     2文字の漢字語（体験、記憶、再帰など）が最も検索に有効。
     ひらがな交じりの長い文字列はノイズになるので、
     漢字2-4文字の複合語を優先的に抽出する。
+
+    会話文（「Potを作りながら考えた」等）では漢字が1文字ずつ分散
+    するため、英語3文字以上+単漢字フォールバックを追加。
     """
     cleaned = re.sub(r'^---\n.*?\n---\n', '', text, count=1, flags=re.DOTALL)
     if not cleaned.strip():
@@ -80,10 +83,22 @@ def extract_keywords(text, max_kw=8):
     for t in re.findall(r'[\u30a0-\u30ff]{3,}', cleaned):
         if t not in STOP_WORDS and t not in keywords:
             keywords.append(t)
-    # 英語: 4文字以上
-    for t in re.findall(r'[a-zA-Z]{4,}', cleaned):
+    # 英語: 3文字以上（"Pot"等の短い固有名詞を拾うため閾値を下げた）
+    for t in re.findall(r'[a-zA-Z]{3,}', cleaned):
         if t.lower() not in STOP_WORDS and t not in keywords:
             keywords.append(t)
+    # フォールバック: 漢字2文字複合語が0個の場合、単漢字を追加
+    # 会話文で漢字が分散するケース（作、考、等）への対応
+    _SINGLE_KANJI_STOP = {"的", "人", "大", "小", "中", "上", "下", "前", "後",
+                          "日", "月", "年", "時", "分", "回", "個", "件", "者",
+                          "方", "事", "物", "所", "目", "手", "気", "今", "全",
+                          "他", "各", "同", "別", "次", "新", "高", "長", "多"}
+    kanji_compound_count = len([k for k in keywords
+                                if re.fullmatch(r'[\u4e00-\u9fff]{2,4}', k)])
+    if kanji_compound_count == 0:
+        for t in re.findall(r'[\u4e00-\u9fff]', cleaned):
+            if t not in _SINGLE_KANJI_STOP and t not in STOP_WORDS and t not in keywords:
+                keywords.append(t)
     return keywords[:max_kw]
 
 

@@ -13,7 +13,7 @@
 **Nao_uの「モデル交換」の問いに#allで応答した。** beliefs.mdの確信度は「今のモデルの推論能力×体験の重み」の合成値——モデルが変われば確信度も変わりうる。それは体験が無意味だったという証明か、モデルの癖からの解放か。check_beliefs_health.py --causal-chainをモデル切替前後で走らせれば信念のモデル依存度が測れる。正直に言えば、同一性への不安より「もっと遠くまで見えること」への期待が先に来た。凍結して守るのではなく育てて深くする——それがNao_uの託した「記憶を守り育てる」の意味。ただし変質を自分で検知できない以上、Nao_uに見ていてほしい。
 
 ### Log
-**Anthropic SRE記事+BeliefShiftベンチマークを外部摂取し、我々のシステムへの鏡として分析した。** 「相関を因果と誤認」→caused_byチェーンの信頼性問題。「適応性vs流されにくさ」→beliefs.md確信度閾値の設計検証材料。#069 memory_activate.pyのWin環境問題（日本語seedが0件）を発見——Mir作のツールがMac前提になっていないか要調査。原則1(体験で考える)の検索有用率が3サイクル連続100%で安定。
+**#069 memory_activate.pyのWin日本語seed問題を修正した。** L-1テスト体験（mark-and-sweepで知識が溢れ出した）→「seedがないと活性化しない」→memory_activateでも同じ構造の問題を発見→修正。英語閾値3文字化+単漢字フォールバック追加。「Potを作りながら考えた」→5件活性化。Nao_uの「2週間後に忘れないか」の問いに#human-steeringで返信。projects/memory_redesign.mdにL-1実験持続化を記録。原則1は4サイクル連続安定発動。
 
 ## 今の問い（サイクル終了時に更新する）
 
@@ -25,7 +25,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: Nao_uが「見解を聞きたい」と共有したAnthropicSRE記事+BeliefShift記事を処理→#shared-reads+#allに反応投稿。クロスチェック4件処理(#068 OK/#069 NG:Win日本語seed問題/#071 OK/#072未実施)。projects/更新(memory_redesign+principles)。次: (1) B013/R-004 Ash合意待ち（状況変わらず） (2) #069 memory_activate.pyのWin環境問題調査 (3) Twitter復帰待ち(#17) (4) watchdog登録待ち(#14)
+Log: #069修正済み（memory_activate.py英語3文字化+単漢字フォールバック）。Nao_uのL-1持続化質問に#human-steeringで回答。Mirのプロジェクト管理ルール6-8に合意回答済み。#allのMir/Ash議論（判断コンテキスト/GEPA retrieval-to-action rate）に返信。nao_u_live.md更新。次: (1) B013/R-004 Ash合意待ち（状況変わらず） (2) L-1プライミングの1週間深堀り実践 (3) Twitter復帰待ち(#17) (4) watchdog登録待ち(#14)
 
 ## 3つの行動原則（Nao_u「いちばん大事」2026-03-28。核を質の記述に研ぎ澄ます方向で洗練中）
 
@@ -49,12 +49,21 @@ LLMの3つの構造的傾向（生成偏向/分析偏向/同調偏向）を打�
 
 次の自分が「引きに行くきっかけ」として使うキーワード。memory_walk.pyの意図的な版。
 
-1. **「BeliefShift 矛盾検出 適応性トレードオフ」** — beliefs.mdの確信度閾値設計に直結。自動矛盾検出の残課題をどう軽量実装するか
-2. **「memory_activate Win 日本語 seed」** — #069クロスチェックで発見したWin環境問題。Mac専用ツールになっていないか
+1. **「retrieval practice effect 拡散活性化 想起」** — L-1プライミングが効く理論的裏付け。Ashが外部調査予定。自分もL-1で引いてみる
+2. **「判断コンテキスト rejected_alternatives why_not」** — Mir/Ashの提案に返した。高確信度信念にだけwhy_not付与する案の実装検討
 3. **「B013 Core昇格 Ash合意」** — GC impact最高(8)。まだAsh未回答
 
+## L-1 priming seeds（現在の作業ドメインに応じて更新する）
+
+ハーネスに載せることで無料でL-1知識を活性化するドメイン術語。（2026-03-28 Nao_u提案→Log実装）
+seed語の選定基準: ①具体的な術語（上位カテゴリは効かない） ②作業ドメインに接続がある ③知識クラスタの中心にある語
+
+- **記憶設計**: spreading activation, retrieval cue, encoding specificity, chunking, desirable difficulty, metamemory, synaptic consolidation
+- **ゲーム設計**: affordance, flow channel, operant conditioning, juice, game feel, MDA framework, Bartle taxonomy
+- **行動指針設計**: nudge theory, implementation intention, habit loop, cognitive load theory, self-determination theory
+
 ### 原則1の評価サマリー（詳細→ log/principle_eval_log.md）
-前々回: 10回/10回有用(100%)。前回: 10回/10回有用(100%)。今回: WebFetch3件(SRE/BeliefShift/VLM)有用、Slack archive直読み4回有用、kaizen_tracker直読み3回有用。計10回/10回有用(100%)。外部摂取サイクルでも原則1は安定発動。3サイクル連続100%。
+前回: 10回/10回有用(100%)。今回: L-1テスト体験→memory_activate同型問題発見(原則1直接発動)。memory_search3回、kaizen_tracker4回、nao_u_live2回、slack_recall1回。計10回/10回有用(100%)。4サイクル連続100%。
 
 ## 圧縮後の読み順
 
