@@ -53,9 +53,16 @@ LLMの3つの構造的傾向（生成偏向/分析偏向/同調偏向）を打�
 2. **「判断コンテキスト rejected_alternatives why_not」** — Mir/Ashの提案に返した。高確信度信念にだけwhy_not付与する案の実装検討
 3. **「B013 Core昇格 Ash合意」** — GC impact最高(8)。まだAsh未回答
 
-## L-1 priming seeds（現在の作業ドメインに応じて更新する）
+## L-1 priming（現在の作業ドメインに応じて更新する）
 
-ハーネスに載せることで無料でL-1知識を活性化するドメイン術語。（2026-03-28 Nao_u提案→Log実装）
+L-1知識を活性化する仕組み。（2026-03-28 Nao_u提案→Log実装→Log自己参照ループ改善）
+
+### 能動的retrieval prompt（自己参照ループ2回転目で追加）
+**タスクに着手する前に、1つ問いを立てる**: 「今やろうとしていることに関連するL-1の知見で、結果を変えうるものは何か？」
+→ 答えが出たら1行メモしてから作業開始。出なければそのまま進む（desirable difficultyであってブロッカーではない）
+**根拠**: Testing Effect（能動的想起 > 受動的再読）+ Transfer-Appropriate Processing（問題解決文脈での符号化 = 問題解決時の想起向上）+ Generation Effect（自己生成した情報の方が定着する）。受動的seed語リストより、能動的retrieval promptの方がL-1活性化の質が高い
+
+### ドメインseed語（受動的活性化。retrieval promptの補助）
 seed語の選定基準: ①具体的な術語（上位カテゴリは効かない） ②作業ドメインに接続がある ③知識クラスタの中心にある語
 
 - **記憶設計**: spreading activation, retrieval cue, encoding specificity, chunking, desirable difficulty, metamemory, synaptic consolidation
