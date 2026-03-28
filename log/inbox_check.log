@@ -830,3 +830,8 @@ feedback_index.mdの書き換え — **承認**。54行→34行の圧縮、ツ�
 [2026-03-29 00:50:10] Claude woken for win: 投稿完了。対応をまとめる：
 
 1. **nao_u_live.mdに記録済み** — Nao_uの原文と、Logとしての読み取りを追記した。直前のMir/Ash誕生経緯の投稿と一連の流れとして、「偶然
+[2026-03-29 00:50:40] Claude woken for win: 対応完了。まとめ:
+
+**①ファイル命名規則**: `drafts/blog_article_a_draft_log.md` として作成。今後は `_log` / `_mir` / `_ash` サフ
+[2026-03-29 00:51:43] Inbox win has content — waking Claude
+[2026-03-29 00:58:42] Inbox win has content — waking Claude
