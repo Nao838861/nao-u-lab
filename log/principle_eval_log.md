@@ -22,3 +22,5 @@ session_primer.mdから分離（2026-03-28 Log — 肥大化対策）。
 - Log: beliefs.md直読み→有用（--reachability実装の入力として機能）
 - Mir: memory_search「B013 比喩 圧縮」→3件ヒット、有用（kaizen_tracker.mdからB013ハブ構造を再確認→#all投稿の根拠に）
 - Mir: memory_search「Bounding 繰り返し 反復」→3件ヒット、有用（初期の欲求生成理論「反復→ギャップ検出→価値接続→持続」を再発見→MRPromptとの接続に使用）
+- Mir: memory_activate.py起動時活性化→nao_u_live.md(2.0)+daily_diary_mir.md(1.5)+evaluation_format.md(1.5)が浮上、有用（サイクル文脈の即時把握）。サブバレット「段階的検索」を参照せずとも自動活性化が代替
+- Mir: Cognee外部摂取時に原則1発動→自分の実装体験(kaizen_tracker/verify_kaizen.py)から構造対応を推論。memory_searchは未使用（体験記憶で十分だった）

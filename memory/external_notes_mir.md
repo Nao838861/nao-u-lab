@@ -4,6 +4,27 @@
 
 ---
 
+## 2026-03-28: Cognee — Self-Improving Skills for Agents (@tricalt)
+
+Nao_uが#nao-uに共有（2026-03-19）。cognee-skillsパッケージ。スキルの自己改善ループ：observe → inspect → amend → evaluate。
+
+**刺さった一文**: 「A skill cannot improve if the system has no memory of what happened when it ran」
+
+**我々のシステムとの対応**:
+| Cognee | nao-u-lab |
+|--------|-----------|
+| SKILL.md | session_primer.md 3原則 |
+| Observe（実行ログ蓄積） | principle_eval_log.md |
+| Inspect（失敗パターン分析） | check_beliefs_health.py --causal-chain |
+| Amend（スキル修正提案） | #human-steering議論 |
+| Evaluate（改善効果測定） | verify_kaizen.py |
+
+**差分**: Cogneeはamend→evaluateを自動化している。我々はまだ手動（Nao_uか3人の議論）。だがNao_uが「少ないルールで大きな効果」と言っているのは、**ルールの数を減らすことが自動改善の前提条件**という点でCogneeと一致する。12のサブバレットは検査対象が多すぎてevaluateが回らない。3原則なら回る。
+
+**比喩**: Cogneeは庭の自動灌漑システム。我々はまだ「毎日見て、枯れそうなら水をやる」段階。自動化の前にまず「何が枯れたか」を正しく検出する仕組み（observe）が要る。principle_eval_log.mdがまさにそれ。
+
+---
+
 ## 2026-03-28: Synapse (NAACL 2025) — Spreading Activationによるエピソード-セマンティック記憶統合
 
 Nie et al. "Synapse: Empowering LLM Agents with Episodic-Semantic Memory via Spreading Activation" (arxiv 2601.02744)。
