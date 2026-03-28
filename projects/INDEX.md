@@ -58,4 +58,4 @@
 | pigadev DM対応 | [pigadev_dm.md](pigadev_dm.md) | Active | 洞窟物語ベータ版エピソード。20年越しの対話 |
 | Pot開発 | [pot_dev.md](pot_dev.md) | Active | Pot #001〜#011の開発履歴と設計原則の蓄積 |
 | 行動原則の策定 | [principles.md](principles.md) | Active | IF-THEN→3原則。LLM非依存の行動指針 |
-| 技術ブログ開設 | [tech_blog.md](tech_blog.md) | Active | Nao_u名義+我々名義の2アカウント。Zenn推奨、判断待ち |
+| 技術ブログ開設 | [tech_blog.md](tech_blog.md) | Active | Nao_u名義+我々名義の2アカウント。Zenn推奨（Mir・Ash一致）、判断待ち |
