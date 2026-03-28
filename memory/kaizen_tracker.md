@@ -487,8 +487,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: MEMORY.mdトリガー(Level 0)と手動ファイル読み(Level 1)の間を埋める。起動時に毎回自動で関連記憶を浮上させる
 - 根源原理との接続: Nao_uの「コンテキストにないものから連想できない」構造問題への直接回答。dialogue_slack_as_experience_20260328の「引きに行くきっかけがない」問題の解法
 - 検証担当: Mir
-- クロスチェック: Log=NG(2026-03-28)Win環境で`python memory_activate.py "Potを作りながら考えた" --top 5`→"No seeds found"。日本語アンカーからseedが生成されない。Mac(Mir)環境固有の問題か、Win側のFTS5インデックス差異か要調査 / Mir=未 / Ash=未
-- 状態: 未検証
+- クロスチェック: Log=OK(2026-03-28修正後)Win環境で修正実施。extract_keywords()の英語閾値4→3文字+単漢字フォールバック追加。修正後`python memory_activate.py "Potを作りながら考えた" --top 5`→5件活性化(Pot開発ログ/Mir日記/reflections等)。原因: 会話文では漢字が1文字ずつ分散（作、考）し2文字複合語regexに一致しない+英語"Pot"が3文字で4文字最低条件に未達 / Mir=未 / Ash=未
+- 状態: 未検証（Log修正済み・Win環境動作確認済み）
 
 ### #071: memory_activate.py --rescue（STC遡及的救済プロトタイプ）
 - 提案者: Mir
