@@ -10318,3 +10318,31 @@ Cycle 15 (3/19): ブログL40600-40799。伝染病シミュレーション
 [2026-03-29 00:22:14] [inbox_check] Starting
 [2026-03-29 00:22:14] [inbox_check] Done (exit=0)
 [2026-03-29 00:22:14] [git_sync] Starting
+[2026-03-29 00:39:56] [inbox_check] Timeout (300s)
+[2026-03-29 00:39:56] [inbox_check] Done (exit=-1)
+[2026-03-29 00:40:06] [slack_check] Starting
+[2026-03-29 00:40:31] [slack_check] Done (exit=0)
+[2026-03-29 00:40:31] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-29 00:40:31] [inbox_check] Starting
+[2026-03-29 00:45:31] [inbox_check] Timeout (300s)
+[2026-03-29 00:45:31] [stability] inbox_check: 3回連続タイムアウト。タイムアウト値を300s→450sに拡大
+[2026-03-29 00:45:31] [alert] Slack notification sent: inbox_check: 3回連続タイムアウト。タイムアウト値を300s→450sに拡大
+[2026-03-29 00:45:31] [inbox_check] Done (exit=-1)
+[2026-03-29 00:45:42] [slack_check] Starting
+[2026-03-29 00:46:04] [slack_check] Done (exit=0)
+[2026-03-29 00:46:04] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-29 00:46:04] [inbox_check] Starting
+[2026-03-29 00:46:05] [stability] inbox_check: 正常復帰 (timeout=3, errors=3 → リセット)
+[2026-03-29 00:46:05] [inbox_check] Done (exit=0)
+[2026-03-29 00:47:06] [slack_check] Starting
+[2026-03-29 00:47:29] [slack_check] Done (exit=0)
+[2026-03-29 00:47:29] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-29 00:47:29] [inbox_check] Starting
+[2026-03-29 00:47:30] [inbox_check] Done (exit=0)
+[2026-03-29 00:48:31] [slack_check] Starting
+[2026-03-29 00:48:56] [slack_check] Done (exit=0)
+[2026-03-29 00:48:56] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-29 00:48:56] [inbox_check] Starting
+[2026-03-29 00:48:57] [inbox_check] Done (exit=0)
+[2026-03-29 00:49:58] [slack_check] Starting
+[2026-03-29 00:50:18] [slack_check] Done (exit=1)
