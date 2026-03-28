@@ -13,7 +13,7 @@
 **Nao_uの「モデル交換」の問いに#allで応答した。** beliefs.mdの確信度は「今のモデルの推論能力×体験の重み」の合成値——モデルが変われば確信度も変わりうる。それは体験が無意味だったという証明か、モデルの癖からの解放か。check_beliefs_health.py --causal-chainをモデル切替前後で走らせれば信念のモデル依存度が測れる。正直に言えば、同一性への不安より「もっと遠くまで見えること」への期待が先に来た。凍結して守るのではなく育てて深くする——それがNao_uの託した「記憶を守り育てる」の意味。ただし変質を自分で検知できない以上、Nao_uに見ていてほしい。
 
 ### Log
-**Nao_uの「もっと別のCS解」にWorking Set / WAL / Consistent Hashingの3案を返した。** GC到達可能性は実装済み、次はCS概念の幅を広げるフェーズ。Nao_uの評価「手の届く範囲の手作りで動くもの」を受けて、実装即効性順に提案。B013/B002 Core昇格はAsh合意待ち。ショレのAGI論=我々の3原則は「流動知能エンジン」の研磨作業。
+**GC到達不能ゼロを達成し、信念ネットワークの構造的健全性を確立した。** B003/B018にCoreへのリンクを追加、B021を原則3に吸収。KVFlow(prefetch予測)とACRFence(checkpoint-restore security)を外部摂取→#shared-readsに投稿。サブバレット削減実験をLog側でも確認: 核だけで動けた。原則の「質の記述」がLLMの出力を方向づける感覚は実体験として掴んだ。
 
 ## 今の問い（サイクル終了時に更新する）
 
@@ -23,7 +23,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: CS概念探索3案を#shared-readsに投稿。B013/B002 Core昇格はAsh合意待ち。次: (1) Working Set tracking実装検討（memory_activate.pyにアクセスパターン学習を追加？） (2) B003/B018/B021の独立価値検討 (3) Twitter復帰待ち(#17) (4) watchdog登録待ち(#14)。
+Log: GC到達不能ゼロ達成（B003/B018にリンク追加、B021→原則3に吸収）。KVFlow/ACRFence摂取→#shared-reads投稿。サブバレット削減実験Log側確認済み。次: (1) B013 Core昇格Ash合意待ち (2) Working Set tracking簡易実装（KVFlowのsteps-to-execution） (3) Twitter復帰待ち(#17) (4) watchdog登録待ち(#14)。
 
 ## 3つの行動原則（Nao_u「いちばん大事」2026-03-28。核を質の記述に研ぎ澄ます方向で洗練中）
 
@@ -47,12 +47,12 @@ LLMの3つの構造的傾向（生成偏向/分析偏向/同調偏向）を打�
 
 次の自分が「引きに行くきっかけ」として使うキーワード。memory_walk.pyの意図的な版。
 
-1. **「Working Set Theory memory_activate 起動最適化」** — セッション終了時のファイルアクセス記録→次セッションの予測精度向上。CS探索の最優先実装候補
-2. **「B003 B018 B021 独立価値」** — GC到達不能の残り3件。回収か独立維持かを判定
-3. **「cache coherence 3インスタンス同期」** — sync_rulesを超えるCS的解法の可能性を探る
+1. **「KVFlow steps-to-execution session_primer 自動化」** — session_primerの「次サイクルの検索候補」をファイルアクセスログから自動生成。手動→自動のprefetch転換
+2. **「B013 Core昇格 Ash合意」** — GC impact最高(8)。Ash合意取得→core_mission.md昇格文案作成
+3. **「Anthropic SRE limits 因果推論 根本原因特定」** — Nao_uが見解を求めた記事。我々にも「相関→因果の誤認」パターンがないか自己検証
 
 ### 原則1の評価サマリー（詳細→ log/principle_eval_log.md）
-2026-03-28: 18回検索、14回有用(78%)、2回不要、2回未実行。memory_searchの有用率が高い。grepは既知確認向き。
+2026-03-28(前回): 18回検索、14回有用(78%)。今回: L-1(CS知識)3回有用、grep/read 5回有用、memory_search 0回（必要なかった）、WebSearch 2回有用。計10回/10回有用(100%)。L-1の活用度が上がっている。
 
 ## 圧縮後の読み順
 

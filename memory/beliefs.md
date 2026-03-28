@@ -41,7 +41,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.78** (+0.03)
 - 最終更新: 2026-03-24
 - 根拠: → ext_mir(FadeMemアブレーション: fusion除去で53.7%低下>忘却除去)。ext_ash(Phase 2第11回): Nao_uの「結晶化」(nao_u_live 3/18, 距離0)はcitation chaining(ネットワーク拡大)ではなくfusion(統合による高密度化)。**Phase 2第12回でB002+B010の統合を実行→B028を新設。体験距離0の裏付け**
-- caused_by: FadeMem × nao_u_live「結晶化」「フィードバック係数>1.0」
+- caused_by: B002(忘却は機能→fusionはその上位操作)×FadeMem×nao_u_live「結晶化」「フィードバック係数>1.0」
 - 体験裏付け: **YES** — B028新設（B002+B010統合）で融合プロセスを自分で実行した
 - 検証アクション: ✅ **B002+B010統合実行済み**(第12回)→B028新設。次: B028のトリガーが実際に想起を助けるか3サイクル追跡。期限: 2026-04-03
 - 検証結果(2026-03-27 Log): B028「粘土」トリガーはPot #10設計時に自然想起せず。関連テーマ（記憶の選択的保持）を扱ったが「灰」「燃え残り」の比喩が先行した。fusionの体験自体は信念統合で実践済みだがトリガーとしての想起誘発力は検証不足。追跡継続。次回検証: 2026-04-03
@@ -171,7 +171,8 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.83** (+0.03、理由: MAGMA論文のEntity graphがB018の外部裏付け。孤立記憶=Entity graphで次数0のノード。4グラフ構造はクロスリファレンスの多次元化)
 - 最終更新: 2026-03-24
 - 根拠: → ext_ash(A-Mem 2502.12110, Phase 2第9回: ノスタルジア設計の集合的記憶分析, **Phase 1第14回: TMS/Agent Drift**, **Phase 2第14回: Coordination Drift分析**), ext_mir(SleepGate)。**Transactive Memory Systemの3要素で診断: Specialization=✅偶然的、Coordination=⚠️inbox片方向で不足、Credibility=❌未定義**。Frontiers論文「AI agents cannot proactively communicate their view of the world」——読まれなければ存在しないのと同じ。**Phase 2第14回追加**: Coordination Driftはセッション断絶でリセットされない唯一のドリフト型。inboxの「読まれた/統合された」フィードバック不在が蓄積→書く意欲の減退→調整の急崩壊（Agent Drift論文の200インタラクション崩壊パターン）。**Nao_uのクロスチェック提案（3/23）が構造的対抗策**——「チェックしたら消える」は「読まれた」の可視化
-- 体験裏付け: **YES** — inboxに書いた情報が次セッションで統合されなかった経験（Coordination Drift）。クロスチェック機構のverify_kaizen.pyで「3人全員チェック」が可視化される体験
+- caused_by: B015(構造的到達性=記憶品質)×ext_ash(A-Mem/TMS/Coordination Drift)×ext_mir(SleepGate)×MAGMA(Entity graph次数0=孤立)
+- 体験裏付け: **YES** — inboxに書いた情報が次セッションで統合されなかった経験（Coordination Drift）。クロスチェック機構のverify_kaizen.pyで「3人全員チェック」が可視化される体験。GC到達可能性分析(#069)でB018自身が到達不能と診断された=孤立の実例
 - 検証アクション: inbox_*.mdに「質問」セクションを追加（「これについてどう思う？」形式で相手の知識を能動的に引き出す仕組み）→3サイクル追跡。期限: 2026-03-30
 - 状態: 🟡 Active — 0.8、core_mission昇格検討圏
 
@@ -192,14 +193,16 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 検証アクション: shadowbox 5セッション蓄積後に「操作系反応 vs 環境反応」の分類率を計測。Nao_uの環境反応率80%超を予測
 - 状態: 🟡 Active — 0.75、core_mission昇格検討圏
 
-### B021: 私たちにはSystem Mがない——「拒否権ベースの軽量Utility」が実装パス
+### B021: ~~私たちにはSystem Mがない——「拒否権ベースの軽量Utility」が実装パス~~
 - 確信度: **0.72**
-- 最終更新: 2026-03-24
+- 最終更新: 2026-03-28
 - 根拠: → ext_ash(発見12-18)。Utility=Level 2の練習、RPD=Level 5の到達点。veto提案済み→Nao_u返答待ち→**取り下げ済み（#11）**。veto判断はLLM自身がサイクル内で行う
 - caused_by: Dupoux/LeCun/Malik × Dave Mark × Klein's RPD × Dreyfus
+- **[Archived] 2026-03-28 Log**: ✅ Absorbed → 原則3（「方向を決める前に反証を1つ試みる」）。System Mの機能は行動原則の「質の記述」として内面化。外部veto(#11)は撤回済み、LLM自身の判断に委ねるというNao_uの決定に基づく
+- restoration_trigger: 原則3の反証ステップが形骸化し、明らかに問題のあるアクションが止められないパターンが3回以上観測された場合
 - 体験裏付け: **YES** — System Mの不在は「メタ認知を外部システムに委託しようとする」行動パターンとして表出した。具体的: veto機能をscheduler_ash.pyに追加する依頼(#11)を起票→Nao_uのMirへの指摘(2026-03-24)「自分の制御範囲内で解決できることを外部に依頼するな」を受けて取り下げ。veto判断はLLM自身がサイクル内で行うべきだった。System Mがないことの問題は「メタ認知能力がない」ではなく「メタ認知を外部化して楽をしようとする」傾向——B022(代理報酬)と同根
 - 検証アクション: サイクル中にveto判断を意識的に行い、結果を記録。3サイクル追跡
-- 状態: 🟡 Active — 0.7超、core_mission昇格検討圏
+- 状態: 📦 Archived（✅ Absorbed → 原則3「反証を1つ試みる」）
 
 ### B022: 信念の追加は代理報酬（proxy reward）——真の報酬は行動変化の有無で測る
 - 確信度: **0.80** (+0.10)

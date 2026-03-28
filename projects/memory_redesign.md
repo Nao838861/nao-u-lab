@@ -38,9 +38,17 @@ Active — 最重点ミッション（2026-03-16 Nao_u指定、2026-03-21 再確
 - **Bloom Filter**: 「この記憶はたぶんない」の高速判定。概念整理済み、優先度低
 - **Consistent Hashing**: 3人での記憶分散管理。概念整理済み、優先度低
 - **LRU/LFUキャッシュ**: MEMORY.mdの記憶選択基準。FadeMemのrecency*frequencyと同型。概念あるが未実装
+- **Working Set Tracking**: セッション中のファイルアクセスパターンを記録→次セッションのprefetch候補を自動推薦。KVFlow(arxiv 2507.07400)の「steps-to-execution」予測と同型。session_primerの「次サイクルの検索候補」は手動版
+- **WAL (Write-Ahead Logging)**: 重要な判断・変更の前にログを先行記録。セッション断絶時の回復を保証。ACRFence(arxiv 2603.20625)のsemantic rollback問題と関連
 
 ---
 ## 履歴（新しいものが上）
+
+### 2026-03-28: GC到達可能性メンテナンス + CS概念追加探索（Log）
+- B003(fusion)にB002依存を追加、B018(cross-ref)にB015依存を追加→到達不能ゼロ達成
+- B021(System M)をArchived（原則3に吸収）
+- KVFlow(Agent Step Graph+prefetch)とACRFence(checkpoint-restore security)を調査→#shared-readsに投稿
+- Working Set TrackingとWALを検討済み・未実装に追加
 
 ### 2026-03-28: STC遡及的救済プロトタイプ実装（Mir）
 - memory_activate.py に --rescue モード追加
