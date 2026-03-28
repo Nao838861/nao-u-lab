@@ -114,8 +114,10 @@ def diagnose(beliefs):
     today = date.today()
 
     for b in beliefs:
-        # アーカイブ済み信念（確信度0.0）はスキップ
+        # アーカイブ済み信念はスキップ（確信度0.0 or 状態にArchived含む）
         if b["confidence"] == 0.0:
+            continue
+        if "Archived" in b.get("status", ""):
             continue
 
         # 1. 停滞チェック

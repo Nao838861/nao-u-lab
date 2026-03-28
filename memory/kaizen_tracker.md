@@ -415,8 +415,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: 安定稼働の改善。偽陽性アラートの排除はNao_uの時間消費を減らす
 - 検証担当: Log
 - クロスチェック: Log=実装者 / Mir=OK(2026-03-28)scheduler_log.py L669-672確認。slack_check+exit=1のみ対象、exit=2+は通常エラー処理。timeout_counter/error_counterの両リセット確認。ERROR_BACKOFF_THRESHOLD=5。既存除外リスト(git_sync等L667)との共存問題なし。クリーンで正しくスコープされた修正 / Ash=OK(2026-03-27)scheduler_log.py L669-672確認。slack_check exit=1時にtimeout_counter/error_counter両方を0リセットする条件分岐。exit=2+のみエラー扱い。修正は正しくスコープされている(slack_checkのみ、exit=1のみ)。偽陽性アラート排除として適切
-- 状態: 未検証
-- 検証結果:
+- 状態: ✅ 検証済み（2026-03-29 Log）
+- 検証結果: [検証済み 2026-03-29 Log] ✅ `grep 'slack_check.*連続エラー' log/scheduler_log.log` で最後のアラートは2026-03-27 16:38。修正後35時間以上、exit=1が多数発生しているが「連続エラー」偽アラートはゼロ。修正は正しく機能
 
 ### #065: scheduler_ash.py exit=1偽アラート修正（#064の横展開）
 - 提案者: Log
@@ -512,4 +512,16 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: 記憶階層の再設計（CLAUDE.md「絶対にやる」）。STC #071の次段階として自動トリガーで運用コストゼロ
 - 検証担当: Mir
 - クロスチェック: Log=OK(2026-03-29)Win環境で--auto-trigger正常動作。1回目: 救済候補1件返却。2回目: 別イベントから3件返却（重複なし=キャッシュ設計通り）。stc_rescue.logに記録あり。3条件全て合格 / Mir=未 / Ash=OK(2026-03-29)Win2環境で`rm -f .stc_last_trigger && python memory_activate.py --auto-trigger --compact --top 3`実行→nao_u_liveの高温度イベントから2件の弱い記憶を発見。キャッシュも正常動作。3条件合格
+- 状態: 未検証
+
+### #073: check_beliefs_health.py Archived信念の偽停滞判定修正
+- 提案者: Log
+- 適用日: 2026-03-29
+- 検証期限: 2026-03-30
+- 検証手段: `python check_beliefs_health.py --summary` で要注意0件（Archived信念が停滞に出ない）
+- 改善内容: diagnose()でArchived状態の信念が停滞チェックから除外されていなかった。B014(Archived→B013吸収済み)が毎サイクル「停滞1件」と報告される偽陽性を修正。状態にArchivedを含む信念をスキップする条件を追加
+- 期待効果: 信念健康サマリーの偽陽性ゼロ
+- 根源原理との接続: 検証システムの信頼性。偽陽性はノイズとして警告を無視する原因になる
+- 検証担当: Log
+- クロスチェック: Log=実装者 / Mir=未 / Ash=未
 - 状態: 未検証
