@@ -115,7 +115,7 @@
 - 起票: 2026-03-18
 - 内容: allチャンネルで議論を進める。記憶階層の設計と実装
 - 担当: 全員
-- 状態: **継続中** — CLAUDE.mdリファクタリングは大幅に進行済み（149→108行）。記憶階層はbeliefs.md運用開始、memory_architecture.md三層モデル追加済み。Nao_u共有のsui-memory記事ベースでLogがmemory_search.py実装。引き続き改善中
+- 状態: **[保留] 2026-03-28** — CLAUDE.mdリファクタリングは完了済み。記憶階層設計はNao_uの指示により保留。「今すぐやってもメリットはない。今後手を入れる必要が出た時に一緒にやる」。memory_architecture.md/beliefs.md/memory_redesign_proposal.mdは参照資料として保持
 
 ### 5. サブエージェント活用の実験（Nao_uの紹介 2026-03-23）
 - 起票: 2026-03-23
