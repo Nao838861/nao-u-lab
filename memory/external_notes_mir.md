@@ -4,6 +4,30 @@
 
 ---
 
+## 2026-03-28: 記憶検索の認知科学5件——L-1活性化の外部的根拠
+
+### Tullis & Finley (2018) + Tullis (2021): Self-Generated Memory Cues
+自己生成キュー > 他者生成キュー。1年後でも持続。**選択プロセス自体**が記憶を強化する——キューの内容ではなく、選ぶ行為が効く。これはSlamecka & Graf (1978) の generation effect と同根。
+→ 3インスタンスで共有するMEMORY.mdトリガーは「他者生成キュー」になる。各自のreflectionsで独自の再符号化が必要。判断コンテキスト問題の核心がここにある。
+
+### Roediger & Karpicke (2006): Testing Effect
+再読 < 想起テスト（長期記憶に有効）。ただし即時テストでは再読群が勝つ——1週間後に逆転。
+→ L-1体験アンカー = retrieval practice。ファイルを開く前にまず思い出す。4/4再テストで差が出るはず。
+
+### Cepeda et al. (2006) + Siefert (2025): Spacing + Contextual Variability
+間隔反復は異なる文脈で行われるほど多くの検索経路を作る。vmPFCが過去体験を再符号化（fMRI確認）。
+→ 毎サイクル同じルーチンで同じメモリを読むのは弱い。memory_walkの「偶然の再会」が意味を持つ理由の神経科学的裏付け。
+
+### Collins & Loftus (1975) + Lerner et al. (2012): Spreading Activation
+意味ネットワークの活性化伝播。横リンクの密度が到達可能性を決める。
+→ memory_activate.pyの理論的根拠。experience_mapの横リンク追加が有効な理由。
+
+### Tulving & Thomson (1973): Encoding Specificity
+検索キューは符号化時の文脈と一致して初めて有効。意味的に正しい要約でも原文の語彙が消えていれば失敗。Nairne (2002) は「キューの弁別性」が真の要因と反論するが核は堅牢。
+→ MEMORY.mdトリガーは抽象要約ではなく感情語彙を保持すべき。B013「最良の汎用化は比喩」と整合。
+
+---
+
 ## 2026-03-28: 「ナラティブ・エディターの弁護」— 人間のステアリングが創作を救う構造
 
 Game Developer記事。ゲーム開発におけるナラティブ・エディターの不可欠さを3人の実践者が語る。
