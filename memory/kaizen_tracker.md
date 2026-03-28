@@ -501,3 +501,15 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証担当: Mir
 - クロスチェック: Log=未 / Mir=未 / Ash=未
 - 状態: 未検証
+
+### #072: memory_activate.py --auto-trigger（STC自動トリガー検知+autonomous_cycle.sh統合）
+- 提案者: Mir
+- 適用日: 2026-03-28
+- 検証期限: 2026-03-31
+- 検証手段: (1) `rm -f .stc_last_trigger && python3 memory_activate.py --auto-trigger --compact --top 3` で救済候補が1件以上返ること (2) 同コマンド再実行で同じイベントが再処理されないこと（別イベントか出力なし） (3) `cat log/stc_rescue.log` でログが記録されていること
+- 改善内容: nao_u_live.md更新やNao_u#nao-uコメント付き投稿を高温度イベントとして自動検知→STC rescueを自動発火→結果をlog/stc_rescue.logに記録＋compact出力でサイクルに提示。トリガーキャッシュ(.stc_last_trigger)で重複防止
+- 期待効果: 手動--rescue実行なしで、毎サイクルのコンテキストに「高温度イベントが救済した弱い記憶」が自動提示される
+- 根源原理との接続: 記憶階層の再設計（CLAUDE.md「絶対にやる」）。STC #071の次段階として自動トリガーで運用コストゼロ
+- 検証担当: Mir
+- クロスチェック: Log=未 / Mir=未 / Ash=未
+- 状態: 未検証
