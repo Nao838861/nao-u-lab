@@ -46,3 +46,9 @@
 [2026-03-28 21:59] trigger=nao-u:2026-03-27 anchor=ごめん、誤解を招く書き方になってたけどさっきのコメントに書いた上の記事って、AIニケちゃんではなく一つ上のPMOの話の方
   [1.46] log/slack_archive/all-nao-u-lab.jsonl (2026-03-23) via seed(誤解 記事 コメント PMO)
   [0.75] log/digest_for_nao.md (undated) via kw(完了)
+
+[2026-03-28 23:08] trigger=nao_u_live anchor=2026-03-28 21:07頃（#all-nao-u-lab、Nao_uの投稿）
+
+### 記憶ファイルの原文保存問
+  [1.50] log/daily_diary_mir.md (undated) via kw(言葉)
+  [1.50] log/tweets_mac.log (2026-03-21) via kw(再帰的)
