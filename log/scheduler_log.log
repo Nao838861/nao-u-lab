@@ -9692,3 +9692,69 @@ descripti
 [2026-03-28 18:49:32] [inbox_check] Starting
 [2026-03-28 18:49:32] [inbox_check] Done (exit=0)
 [2026-03-28 18:49:43] [git_sync] Starting
+[2026-03-28 18:49:44] [git_sync] Committed and pushed
+[2026-03-28 18:50:34] [slack_check] Starting
+[2026-03-28 18:51:00] [slack_check] Done (exit=1)
+[2026-03-28 18:52:01] [slack_check] Starting
+[2026-03-28 18:52:23] [slack_check] Done (exit=1)
+[2026-03-28 18:53:24] [slack_check] Starting
+[2026-03-28 18:53:44] [slack_check] Done (exit=1)
+[2026-03-28 18:54:35] [inbox_check] Starting
+[2026-03-28 18:54:35] [inbox_check] Done (exit=0)
+[2026-03-28 18:54:45] [slack_check] Starting
+[2026-03-28 18:55:05] [slack_check] Done (exit=1)
+[2026-03-28 18:56:06] [slack_check] Starting
+[2026-03-28 18:56:28] [slack_check] Done (exit=1)
+[2026-03-28 18:57:28] [slack_check] Starting
+[2026-03-28 18:57:52] [slack_check] Done (exit=1)
+[2026-03-28 18:58:52] [slack_check] Starting
+[2026-03-28 18:59:16] [slack_check] Done (exit=1)
+[2026-03-28 18:59:36] [inbox_check] Starting
+[2026-03-28 18:59:37] [inbox_check] Done (exit=0)
+[2026-03-28 19:00:18] [slack_check] Starting
+[2026-03-28 19:00:41] [slack_check] Done (exit=0)
+[2026-03-28 19:00:41] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-28 19:00:41] [inbox_check] Starting
+[2026-03-28 19:00:42] [inbox_check] Done (exit=0)
+[2026-03-28 19:01:42] [slack_check] Starting
+[2026-03-28 19:02:00] [slack_check] Done (exit=1)
+[2026-03-28 19:03:01] [slack_check] Starting
+[2026-03-28 19:03:22] [slack_check] Done (exit=1)
+[2026-03-28 19:04:22] [slack_check] Starting
+[2026-03-28 19:04:44] [slack_check] Done (exit=1)
+[2026-03-28 19:05:44] [slack_check] Starting
+[2026-03-28 19:06:05] [slack_check] Done (exit=1)
+[2026-03-28 19:06:05] [inbox_check] Starting
+[2026-03-28 19:06:05] [inbox_check] Done (exit=0)
+[2026-03-28 19:07:06] [slack_check] Starting
+[2026-03-28 19:07:26] [slack_check] Done (exit=1)
+[2026-03-28 19:08:26] [slack_check] Starting
+[2026-03-28 19:08:49] [slack_check] Done (exit=1)
+[2026-03-28 19:09:49] [slack_check] Starting
+[2026-03-28 19:10:11] [slack_check] Done (exit=1)
+[2026-03-28 19:11:11] [slack_check] Starting
+[2026-03-28 19:11:33] [slack_check] Done (exit=0)
+[2026-03-28 19:11:33] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-28 19:11:33] [inbox_check] Starting
+[2026-03-28 19:16:33] [inbox_check] Timeout (300s)
+[2026-03-28 19:16:33] [inbox_check] Done (exit=-1)
+[2026-03-28 19:16:43] [slack_check] Starting
+[2026-03-28 19:17:06] [slack_check] Done (exit=1)
+[2026-03-28 19:18:06] [slack_check] Starting
+[2026-03-28 19:18:30] [slack_check] Done (exit=0)
+[2026-03-28 19:18:30] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-28 19:18:30] [inbox_check] Starting
+[2026-03-28 19:23:30] [inbox_check] Timeout (300s)
+[2026-03-28 19:23:30] [inbox_check] Done (exit=-1)
+[2026-03-28 19:23:40] [slack_check] Starting
+[2026-03-28 19:24:06] [slack_check] Done (exit=0)
+[2026-03-28 19:24:06] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-28 19:24:06] [inbox_check] Starting
+[2026-03-28 19:24:07] [stability] inbox_check: 正常復帰 (timeout=2, errors=2 → リセット)
+[2026-03-28 19:24:07] [inbox_check] Done (exit=0)
+[2026-03-28 19:24:07] [git_sync] Starting
+[2026-03-28 19:28:00] [slack_check] Starting
+[2026-03-28 19:28:24] [slack_check] Done (exit=1)
+[2026-03-28 19:29:15] [inbox_check] Starting
+[2026-03-28 19:29:58] [inbox_check] Done (exit=0)
+[2026-03-28 19:30:30] [slack_check] Done (exit=1)

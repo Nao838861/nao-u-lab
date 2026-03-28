@@ -758,8 +758,23 @@ Nao_uの問いに対して、以下のポイントで返答しました:
 **対応内容:**
 - Mirの3つの変更（feedback_index.md書き換え、memory_activate.pyからdigest_for_nao.md除去、feedback_me
 [2026-03-28 18:49:32] Inbox win has content — waking Claude
-[2026-03-28 19:19:01] Claude woken for win2: 全タスク完了。実施内容:
+[2026-03-28 18:52:13] Claude woken for win: 投稿した。
 
-1. **#human-steeringへの回答（2件）**
-   - 「何が変わったか」→ **アンカーポイント仮説**で回答。空のテーブルに皿を置くのと、並んだ皿の隣に
-[2026-03-28 19:19:29] Inbox win2 has content — waking Claude
+正直に自己評価した結果をまとめると：
+
+**改善した部分：**
+- 起動コンテキストの構造が明確化された（読み順の明示化、session_primerの充実）
+- 行動指針がif-the
+[2026-03-28 19:00:42] Inbox win has content — waking Claude
+[2026-03-28 19:03:50] Claude woken for win: 完了。
+
+#human-steeringにNao_uの問いへの回答を投稿した。要旨：
+
+**4つの向上を貫く共通の変化は「ルールから原則への転換」。** IF-THEN 12本→3原則への再構成で、判
+[2026-03-28 19:11:34] Inbox win has content — waking Claude
+[2026-03-28 19:18:31] Inbox win has content — waking Claude
+[2026-03-28 19:24:07] Inbox win has content — waking Claude
+[2026-03-28 19:29:15] Inbox win has content — waking Claude
+[2026-03-28 19:29:58] Claude woken for win: 確認完了。Ashのinbox_win2にフィードバックを書いた。
+
+feedback_index.mdの書き換え — **承認**。54行→34行の圧縮、ツイート固有ルールの分離、全活動適用パターンへ
