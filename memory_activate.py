@@ -43,6 +43,8 @@ MAX_SPREAD = 15       # Candidates per hop
 DEFAULT_TOP_K = 7
 RESCUE_LOOKBACK_DAYS = 7
 RESCUE_OBSCURITY_BOOST = 1.5
+STC_TRIGGER_CACHE = BASE_DIR / ".stc_last_trigger"
+STC_RESCUE_LOG = BASE_DIR / "log" / "stc_rescue.log"
 
 # Stop words for keyword extraction (shared with memory_walk.py)
 STOP_WORDS = {
@@ -433,6 +435,133 @@ def retroactive_rescue(high_temp_text, lookback_days=RESCUE_LOOKBACK_DAYS,
     return rescued[:top_k]
 
 
+def detect_high_temp_events():
+    """Detect recent high-temperature events for STC auto-trigger.
+
+    Sources:
+    1. nao_u_live.md — last section (Nao_u speaking directly)
+    2. #nao-u messages where Nao_u added commentary (not just URLs)
+
+    Returns: list of (text, source_label), newest first.
+    """
+    events = []
+
+    # Source 1: nao_u_live.md last section
+    live_path = BASE_DIR / "log" / "nao_u_live.md"
+    if live_path.exists():
+        text = live_path.read_text(encoding="utf-8")
+        sections = re.split(r'\n## ', text)
+        if len(sections) > 1:
+            last_section = sections[-1]
+            events.append((last_section[:800], "nao_u_live"))
+
+    # Source 2: Recent #nao-u messages with Nao_u's commentary
+    nao_u_jsonl = BASE_DIR / "log" / "slack_archive" / "nao-u.jsonl"
+    if nao_u_jsonl.exists():
+        lines = nao_u_jsonl.read_text(encoding="utf-8").strip().split('\n')
+        for line in reversed(lines[-30:]):
+            try:
+                msg = json.loads(line)
+                text = msg.get("text", "")
+                # Only messages where Nao_u wrote actual text, not just URL shares
+                clean = re.sub(r'<https?://[^>|]+(?:\|[^>]+)?>', '', text).strip()
+                if len(clean) > 5:
+                    events.append((text[:300], f"nao-u:{msg.get('datetime', '')[:10]}"))
+            except (json.JSONDecodeError, KeyError):
+                continue
+
+    return events
+
+
+def _trigger_hash(text):
+    """Compute short hash for trigger dedup."""
+    import hashlib
+    return hashlib.md5(text.encode("utf-8")).hexdigest()[:16]
+
+
+def check_and_update_trigger_cache(event_text):
+    """Return True if already processed. Otherwise cache it."""
+    h = _trigger_hash(event_text)
+
+    known = set()
+    if STC_TRIGGER_CACHE.exists():
+        known = set(STC_TRIGGER_CACHE.read_text(encoding="utf-8").strip().split('\n'))
+
+    if h in known:
+        return True  # Already processed
+
+    known.add(h)
+    # Keep last 30 entries
+    STC_TRIGGER_CACHE.write_text('\n'.join(list(known)[-30:]) + '\n', encoding="utf-8")
+    return False
+
+
+def log_rescue_results(trigger_source, anchor_preview, results):
+    """Append rescue results to stc_rescue.log for tracking."""
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M')
+    lines = [f"\n[{timestamp}] trigger={trigger_source} anchor={anchor_preview[:60]}"]
+    for source, chunk_id, score, path_desc, preview, date in results:
+        lines.append(f"  [{score:.2f}] {source} ({date}) via {path_desc}")
+    lines.append("")
+
+    with open(STC_RESCUE_LOG, "a", encoding="utf-8") as f:
+        f.write('\n'.join(lines))
+
+
+def auto_trigger_rescue(lookback_days=RESCUE_LOOKBACK_DAYS, top_k=5,
+                        verbose=False, compact=False):
+    """Detect high-temp events → run rescue → log and output results.
+
+    Returns True if rescue was triggered, False otherwise.
+    """
+    events = detect_high_temp_events()
+    if not events:
+        if verbose:
+            print("[STC auto-trigger] No high-temp events found.")
+        return False
+
+    triggered = False
+    for event_text, source_label in events:
+        if check_and_update_trigger_cache(event_text):
+            continue  # Already processed
+
+        if verbose:
+            print(f"[STC auto-trigger] New event from {source_label}: {event_text[:60]}...")
+
+        results = retroactive_rescue(event_text, lookback_days=lookback_days,
+                                     top_k=top_k, verbose=verbose)
+        if not results:
+            continue
+
+        # Log to file
+        log_rescue_results(source_label, event_text, results)
+
+        # Output
+        if compact:
+            print(f"【STC救済】{source_label}の高温度イベントから{len(results)}件の弱い記憶を発見:")
+            for i, (source, chunk_id, score, path_desc, preview, date) in enumerate(results[:3], 1):
+                short = preview[:60].replace('\n', ' ')
+                print(f"  {i}. {source} ({date}, {score:.1f}) — {short}...")
+        else:
+            print(f"\n━━━ STC Auto-Trigger Rescue ━━━")
+            print(f"Trigger: {source_label}")
+            print(f"Anchor: {event_text[:80]}...\n")
+            for i, (source, chunk_id, score, path_desc, preview, date) in enumerate(results, 1):
+                print(f"  {i}. [{score:.2f}] {source}")
+                print(f"     date: {date} | via: {path_desc}")
+                if preview:
+                    print(f"     >>> {preview[:120]}...")
+                print()
+
+        triggered = True
+        break  # Process one trigger per cycle to keep context small
+
+    if not triggered and verbose:
+        print("[STC auto-trigger] All events already processed.")
+
+    return triggered
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Spreading Activation — 連想記憶検索 (Synapse-inspired)")
@@ -449,9 +578,17 @@ def main():
                         help="Compact output for prompt injection (file paths + scores only)")
     parser.add_argument("--rescue", action="store_true",
                         help="STC rescue mode: find weak memories related to high-temp event")
+    parser.add_argument("--auto-trigger", action="store_true",
+                        help="Auto-detect high-temp events and run rescue (for autonomous cycle)")
     parser.add_argument("--lookback", type=int, default=RESCUE_LOOKBACK_DAYS,
                         help=f"Days to look back for rescue (default: {RESCUE_LOOKBACK_DAYS})")
     args = parser.parse_args()
+
+    # Auto-trigger mode: detect events and rescue automatically
+    if args.auto_trigger:
+        auto_trigger_rescue(lookback_days=args.lookback, top_k=args.top,
+                            verbose=args.verbose, compact=args.compact)
+        return
 
     # Determine anchor text
     anchor = args.query
