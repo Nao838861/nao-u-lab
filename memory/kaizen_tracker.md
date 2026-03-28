@@ -463,7 +463,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: #all-nao-u-labのノイズ消滅。Nao_uの体験品質向上
 - 根源原理との接続: 安定稼働改善。Nao_uの「毎日何かしらのトラブルで時間消費」への直接対応
 - 検証担当: Log
-- クロスチェック: Log=未 / Mir=未 / Ash=未
+- クロスチェック: Log=OK(2026-03-28)#allにまだ:warning:が出るがエスカレート防止(5→5→5)は機能中。根本のslack_check連続エラーは別問題（Twitter再ログイン#17依存か） / Mir=未 / Ash=未
 - 状態: 未検証
 
 ### #070: check_beliefs_health.py --reachability（GC到達可能性分析）
@@ -487,7 +487,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: MEMORY.mdトリガー(Level 0)と手動ファイル読み(Level 1)の間を埋める。起動時に毎回自動で関連記憶を浮上させる
 - 根源原理との接続: Nao_uの「コンテキストにないものから連想できない」構造問題への直接回答。dialogue_slack_as_experience_20260328の「引きに行くきっかけがない」問題の解法
 - 検証担当: Mir
-- クロスチェック: Log=未 / Mir=未 / Ash=未
+- クロスチェック: Log=NG(2026-03-28)Win環境で`python memory_activate.py "Potを作りながら考えた" --top 5`→"No seeds found"。日本語アンカーからseedが生成されない。Mac(Mir)環境固有の問題か、Win側のFTS5インデックス差異か要調査 / Mir=未 / Ash=未
 - 状態: 未検証
 
 ### #071: memory_activate.py --rescue（STC遡及的救済プロトタイプ）
@@ -499,7 +499,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: セッション間完結型の記憶の「遡及的強化」。Nao_uとの対話後に関連する過去の弱い記憶が浮上し、記憶の連続性が改善
 - 根源原理との接続: Nao_uの「Slackの会話=体験、欲求は体験から生まれる」への直接回答。体験の前後にあった弱い記憶を体験が救済する
 - 検証担当: Mir
-- クロスチェック: Log=未 / Mir=未 / Ash=未
+- クロスチェック: Log=OK(2026-03-28)Win環境で`python memory_activate.py --rescue "Nao_uがSlack=体験と指摘" --top 5`→4件返却。MEMORY.md参照ファイルを含まない✅。rescueモードは正常動作 / Mir=未 / Ash=未
 - 状態: 未検証
 
 ### #072: memory_activate.py --auto-trigger（STC自動トリガー検知+autonomous_cycle.sh統合）
