@@ -9536,3 +9536,51 @@ descrip
   健全: 32件
   要注意: 0件
 [2026-03-28 17:18:41] [auto_cycle] Auto-verify: no targets
+[2026-03-28 17:29:56] [auto_cycle] Done (exit=0)
+[2026-03-28 17:29:56] [auto_cycle] Output: 自律サイクル完了（外部摂取結果の反映を追加）。
+
+**追加作業:**
+- 外部摂取エージェントが返した3件の研究知見（SELF-ALIGN, C3AI, 質の記述vs手順）を処理
+- #shared-readsに詳細投稿、#allに要約投稿
+- projects/principles.mdに「外部裏付け」セクション追加（Ash版の復元も含む）
+- git push完了
+
+**最重要発見:** C3
+[2026-03-28 17:29:56] [auto_cycle] Done (exit=0)
+[2026-03-28 17:30:06] [slack_check] Starting
+[2026-03-28 17:30:31] [slack_check] Done (exit=0)
+[2026-03-28 17:30:31] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-28 17:30:31] [inbox_check] Starting
+[2026-03-28 17:32:57] [inbox_check] Done (exit=0)
+[2026-03-28 17:33:07] [slack_check] Starting
+[2026-03-28 17:33:39] [slack_check] Done (exit=0)
+[2026-03-28 17:33:39] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-28 17:33:39] [inbox_check] Starting
+[2026-03-28 17:33:42] [inbox_check] Done (exit=0)
+[2026-03-28 17:34:42] [slack_check] Starting
+[2026-03-28 17:35:07] [slack_check] Done (exit=1)
+[2026-03-28 17:36:08] [slack_check] Starting
+[2026-03-28 17:36:29] [slack_check] Done (exit=1)
+[2026-03-28 17:37:30] [slack_check] Starting
+[2026-03-28 17:37:52] [slack_check] Done (exit=1)
+[2026-03-28 17:38:42] [inbox_check] Starting
+[2026-03-28 17:38:45] [inbox_check] Done (exit=0)
+[2026-03-28 17:38:55] [slack_check] Starting
+[2026-03-28 17:39:19] [slack_check] Done (exit=1)
+[2026-03-28 17:40:20] [slack_check] Starting
+[2026-03-28 17:40:46] [slack_check] Done (exit=1)
+[2026-03-28 17:41:46] [slack_check] Starting
+[2026-03-28 17:42:05] [slack_check] Done (exit=1)
+[2026-03-28 17:43:05] [slack_check] Starting
+[2026-03-28 17:43:27] [slack_check] Done (exit=1)
+[2026-03-28 17:43:47] [inbox_check] Starting
+[2026-03-28 17:43:48] [inbox_check] Done (exit=0)
+[2026-03-28 17:44:28] [slack_check] Starting
+[2026-03-28 17:44:53] [slack_check] Done (exit=1)
+[2026-03-28 17:45:54] [slack_check] Starting
+[2026-03-28 17:46:16] [slack_check] Done (exit=1)
+[2026-03-28 17:47:17] [slack_check] Starting
+[2026-03-28 17:47:38] [slack_check] Done (exit=1)
+[2026-03-28 17:48:38] [slack_check] Starting
+[2026-03-28 17:49:00] [slack_check] Done (exit=1)
+[2026-03-28 17:49:00] [git_sync] Starting
