@@ -9042,5 +9042,69 @@ descrip
 [2026-03-28 12:19:07] [inbox_check] Timeout (300s)
 [2026-03-28 12:19:07] [inbox_check] Done (exit=-1)
 [2026-03-28 12:19:07] [git_sync] Starting
-[2026-03-28 12:20:40] [slack_check] Starting
-[2026-03-28 12:20:53] [slack_check] Done (exit=1)
+[2026-03-28 12:19:09] [git_sync] Committed and pushed
+[2026-03-28 12:19:09] [recommended_check] Starting
+[2026-03-28 12:19:09] [recommended_check] Skipped (hour=12, waiting for hour%6==2)
+[2026-03-28 12:19:09] [recommended_check] Done (exit=0)
+[2026-03-28 12:19:19] [slack_check] Starting
+[2026-03-28 12:19:34] [slack_check] Done (exit=0)
+[2026-03-28 12:19:34] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-28 12:19:34] [inbox_check] Starting
+[2026-03-28 12:19:39] [stability] inbox_check: 正常復帰 (timeout=1, errors=1 → リセット)
+[2026-03-28 12:19:39] [inbox_check] Done (exit=0)
+[2026-03-28 12:21:54] [slack_check] Starting
+[2026-03-28 12:22:07] [slack_check] Done (exit=0)
+[2026-03-28 12:22:07] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-28 12:22:07] [inbox_check] Starting
+[2026-03-28 12:22:08] [inbox_check] Done (exit=0)
+[2026-03-28 12:23:08] [slack_check] Starting
+[2026-03-28 12:23:22] [slack_check] Done (exit=1)
+[2026-03-28 12:24:23] [slack_check] Starting
+[2026-03-28 12:24:38] [slack_check] Done (exit=1)
+[2026-03-28 12:25:39] [slack_check] Starting
+[2026-03-28 12:26:04] [slack_check] Done (exit=1)
+[2026-03-28 12:27:04] [slack_check] Starting
+[2026-03-28 12:27:28] [slack_check] Done (exit=1)
+[2026-03-28 12:27:38] [inbox_check] Starting
+[2026-03-28 12:27:39] [inbox_check] Done (exit=0)
+[2026-03-28 12:28:29] [slack_check] Starting
+[2026-03-28 12:28:49] [slack_check] Done (exit=1)
+[2026-03-28 12:29:50] [slack_check] Starting
+[2026-03-28 12:30:13] [slack_check] Done (exit=1)
+[2026-03-28 12:31:14] [slack_check] Starting
+[2026-03-28 12:31:30] [slack_check] Done (exit=1)
+[2026-03-28 12:32:30] [slack_check] Starting
+[2026-03-28 12:32:54] [slack_check] Done (exit=1)
+[2026-03-28 12:33:04] [inbox_check] Starting
+[2026-03-28 12:33:05] [inbox_check] Done (exit=0)
+[2026-03-28 12:33:55] [slack_check] Starting
+[2026-03-28 12:34:16] [slack_check] Done (exit=1)
+[2026-03-28 12:35:17] [slack_check] Starting
+[2026-03-28 12:35:37] [slack_check] Done (exit=1)
+[2026-03-28 12:36:37] [slack_check] Starting
+[2026-03-28 12:36:57] [slack_check] Done (exit=1)
+[2026-03-28 12:37:57] [slack_check] Starting
+[2026-03-28 12:38:14] [slack_check] Done (exit=1)
+[2026-03-28 12:38:24] [inbox_check] Starting
+[2026-03-28 12:38:26] [inbox_check] Done (exit=0)
+[2026-03-28 12:39:16] [slack_check] Starting
+[2026-03-28 12:39:33] [slack_check] Done (exit=1)
+[2026-03-28 12:40:33] [slack_check] Starting
+[2026-03-28 12:40:50] [slack_check] Done (exit=1)
+[2026-03-28 12:41:50] [slack_check] Starting
+[2026-03-28 12:42:06] [slack_check] Done (exit=1)
+[2026-03-28 12:43:07] [slack_check] Starting
+[2026-03-28 12:43:29] [slack_check] Done (exit=1)
+[2026-03-28 12:43:39] [inbox_check] Starting
+[2026-03-28 12:43:40] [inbox_check] Done (exit=0)
+[2026-03-28 12:44:30] [slack_check] Starting
+[2026-03-28 12:44:45] [slack_check] Done (exit=1)
+[2026-03-28 12:45:46] [slack_check] Starting
+[2026-03-28 12:46:01] [slack_check] Done (exit=1)
+[2026-03-28 12:47:02] [slack_check] Starting
+[2026-03-28 12:47:16] [slack_check] Done (exit=1)
+[2026-03-28 12:48:17] [slack_check] Starting
+[2026-03-28 12:48:32] [slack_check] Done (exit=1)
+[2026-03-28 12:48:42] [inbox_check] Starting
+[2026-03-28 12:48:43] [inbox_check] Done (exit=0)
+[2026-03-28 12:49:13] [git_sync] Starting
