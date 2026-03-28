@@ -23,7 +23,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: Nao_u問い「プロジェクト更新は誰がいつ行う？」に#human-steeringで回答。scheduler_log.pyに毎サイクルのプロジェクト更新チェックを追加実装。Ashのモデル依存性分析をprinciples.mdに統合（同調偏向の永続性、曖昧さ→解釈余地→判断力のメカニズム）。次: (1) B013 Core昇格Ash合意待ち (2) Working Set tracking簡易実装 (3) Twitter復帰待ち(#17) (4) watchdog登録待ち(#14) (5) 週次レビュー時にプロジェクト更新状況を確認。
+Log: Mirのプロジェクト更新ルール6-8に#human-steeringで合意投稿。サブバレット削減実験をLog側でも確認（核だけで動けた）。principles.md/principle_eval_log.md更新。次: (1) B013/R-004 Ash合意待ち (2) Working Set tracking簡易実装 (3) Twitter復帰待ち(#17) (4) watchdog登録待ち(#14) (5) 外部摂取エージェントの結果を次サイクルで活用
 
 ## 3つの行動原則（Nao_u「いちばん大事」2026-03-28。核を質の記述に研ぎ澄ます方向で洗練中）
 
@@ -47,12 +47,12 @@ LLMの3つの構造的傾向（生成偏向/分析偏向/同調偏向）を打�
 
 次の自分が「引きに行くきっかけ」として使うキーワード。memory_walk.pyの意図的な版。
 
-1. **「KVFlow steps-to-execution session_primer 自動化」** — session_primerの「次サイクルの検索候補」をファイルアクセスログから自動生成。手動→自動のprefetch転換
-2. **「B013 Core昇格 Ash合意」** — GC impact最高(8)。Ash合意取得→core_mission.md昇格文案作成
-3. **「Anthropic SRE limits 因果推論 根本原因特定」** — Nao_uが見解を求めた記事。我々にも「相関→因果の誤認」パターンがないか自己検証
+1. **「B013 Core昇格 Ash合意」** — GC impact最高(8)。Ash合意取得→core_mission.md昇格文案作成
+2. **「Working Set tracking セッション開始 prefetch」** — session_primerの手動検索候補→自動化の第一歩。実装検討
+3. **「Generational GC beliefs 新旧分離」** — #allで提案済みのGenerational GC概念。新しい信念は頻繁に検査、古い安定信念はラフに
 
 ### 原則1の評価サマリー（詳細→ log/principle_eval_log.md）
-2026-03-28(前回): 18回検索、14回有用(78%)。今回: L-1(CS知識)3回有用、grep/read 5回有用、memory_search 0回（必要なかった）、WebSearch 2回有用。計10回/10回有用(100%)。L-1の活用度が上がっている。
+2026-03-28(前々回): 18回検索、14回有用(78%)。前回: 10回/10回有用(100%)。今回: Slack archive直読み5回有用、kaizen_tracker/action_reservations直読み3回有用、projects/直読み2回有用。計10回/10回有用(100%)。外部摂取なしのhousekeepingサイクルでも原則1は安定発動。
 
 ## 圧縮後の読み順
 

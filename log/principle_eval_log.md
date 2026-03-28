@@ -24,3 +24,8 @@ session_primer.mdから分離（2026-03-28 Log — 肥大化対策）。
 - Mir: memory_search「Bounding 繰り返し 反復」→3件ヒット、有用（初期の欲求生成理論「反復→ギャップ検出→価値接続→持続」を再発見→MRPromptとの接続に使用）
 - Mir: memory_activate.py起動時活性化→nao_u_live.md(2.0)+daily_diary_mir.md(1.5)+evaluation_format.md(1.5)が浮上、有用（サイクル文脈の即時把握）。サブバレット「段階的検索」を参照せずとも自動活性化が代替
 - Mir: Cognee外部摂取時に原則1発動→自分の実装体験(kaizen_tracker/verify_kaizen.py)から構造対応を推論。memory_searchは未使用（体験記憶で十分だった）
+- Log: Slack archive直読み(#nao-u/#human-steering/#all) 5回有用（全チャンネル状況把握、返信要否判断）
+- Log: kaizen_tracker.md直読み→有用（#053/#056/#066の検証状態が全て完了済みと確認、不要な再検証を回避）
+- Log: action_reservations.md直読み→有用（R-004のAsh合意待ち状態を確認）
+- Log: projects/principles.md + memory_redesign.md直読み→有用（プロジェクト更新の要否判定に使用）
+- Log: L-1(CS知識)→未使用（今サイクルは外部摂取なし、housekeeping中心）
