@@ -466,6 +466,18 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - クロスチェック: Log=未 / Mir=未 / Ash=未
 - 状態: 未検証
 
+### #070: check_beliefs_health.py --reachability（GC到達可能性分析）
+- 提案者: Log
+- 適用日: 2026-03-28
+- 検証期限: 2026-04-04
+- 検証手段: `python check_beliefs_health.py --reachability` を実行し、(1) Core/Active/Archivedの分類が正しい (2) 到達不能信念リストが構造的に意味のある指摘を含む (3) impact分析がbeliefs.mdの実際の依存構造を反映
+- 改善内容: Core信念をGCルートセットとして、caused_byチェーンで到達可能なActive信念を判定。到達不能信念は「独立した価値があるか要検討」として報告。impact分析で構造的重要度も計算
+- 期待効果: Nao_uの問い「滅多に使われないけど大事なもの、をうまく判定する方法」への直接回答。使用頻度ではなく構造的接続で判定
+- 根源原理との接続: 「滅多に使わないが大事なもの」の保護=記憶の品質。GC到達可能性は使用頻度に依存しない判定基準=フィードバック係数>1.0の長期持続性
+- 検証担当: Log
+- クロスチェック: Log=実装者 / Mir=未 / Ash=未
+- 状態: 未検証
+
 ### #069: memory_activate.py — Spreading Activation連想検索（記憶検索の段階的多層化）
 - 提案者: Mir
 - 適用日: 2026-03-28

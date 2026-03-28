@@ -13,6 +13,7 @@ Usage:
   python check_beliefs_health.py --summary   # 数値サマリーのみ
   python check_beliefs_health.py --action-rate  # 行動駆動率: 検証アクション実行率を計測（B022/R-003用）
   python check_beliefs_health.py --causal-chain  # 因果チェーン可視化（MAGMA Causal graph最小実装）
+  python check_beliefs_health.py --reachability  # GC到達可能性分析（Core信念からの構造的接続）
 """
 
 import re
@@ -339,14 +340,186 @@ def causal_chain_report(beliefs):
     return "\n".join(lines)
 
 
+def reachability_report(beliefs):
+    """GC-style reachability analysis from Core beliefs.
+
+    Core beliefs are "root set" in GC terms. Any Active belief reachable
+    from Core via caused_by chains is structurally alive — even if rarely
+    used. Unreachable Active beliefs lack structural support and need
+    independent justification.
+
+    Answers Nao_u's question (2026-03-28 #all):
+    「滅多に使われないけど大事なもの、をうまく判定する方法ってあるかな？」
+    → Reachable from Core = structurally important regardless of usage.
+    """
+    # Build bidirectional graph from caused_by
+    text = BELIEFS_FILE.read_text(encoding="utf-8")
+    depends_on = {}   # child -> [parents]
+    depended_by = {}  # parent -> [children]
+    states = {}       # bid -> status string
+
+    current_id = None
+    for line in text.split("\n"):
+        m = re.match(r"^###\s+(B\d+):", line)
+        if m:
+            current_id = m.group(1)
+            depends_on.setdefault(current_id, [])
+            depended_by.setdefault(current_id, [])
+
+        if current_id and line.startswith("- caused_by:"):
+            refs = re.findall(r"B(\d{3})", line)
+            for ref in refs:
+                ref_id = f"B{ref}"
+                if ref_id != current_id:
+                    depends_on.setdefault(current_id, []).append(ref_id)
+                    depended_by.setdefault(ref_id, []).append(current_id)
+
+        if current_id and line.startswith("- 状態:"):
+            states[current_id] = line.split(":", 1)[1].strip()
+
+    # Identify Core beliefs (root set)
+    # "🔴 Core" = actual Core. "Core候補" or "Core昇格検討圏" = still Active
+    core_ids = set()
+    active_ids = set()
+    archived_ids = set()
+    for bid, status in states.items():
+        if "Archived" in status:
+            archived_ids.add(bid)
+        elif "🔴 Core" in status and "Core候補" not in status:
+            core_ids.add(bid)
+        else:
+            active_ids.add(bid)
+
+    # BFS from Core to find all reachable beliefs
+    reachable = set(core_ids)
+    queue = list(core_ids)
+    while queue:
+        current = queue.pop(0)
+        for child in depended_by.get(current, []):
+            if child not in reachable:
+                reachable.add(child)
+                queue.append(child)
+
+    # Also traverse in reverse: beliefs that Core depends on
+    queue = list(core_ids)
+    visited_up = set(core_ids)
+    while queue:
+        current = queue.pop(0)
+        for parent in depends_on.get(current, []):
+            if parent not in visited_up:
+                visited_up.add(parent)
+                reachable.add(parent)
+                queue.append(parent)
+
+    # Classify Active beliefs
+    reachable_active = active_ids & reachable
+    unreachable_active = active_ids - reachable
+
+    # For each reachable Active, find the shortest path from/to Core
+    def find_path_to_core(bid):
+        """BFS to find path from bid to any Core belief via depends_on."""
+        visited = {bid}
+        q = [(bid, [bid])]
+        while q:
+            node, path = q.pop(0)
+            if node in core_ids:
+                return path
+            for parent in depends_on.get(node, []):
+                if parent not in visited:
+                    visited.add(parent)
+                    q.append((parent, path + [parent]))
+        return None
+
+    def find_path_from_core(bid):
+        """BFS to find path from any Core belief to bid via depended_by."""
+        visited = {bid}
+        q = [(bid, [bid])]
+        while q:
+            node, path = q.pop(0)
+            if node in core_ids:
+                return list(reversed(path))
+            for parent in depends_on.get(node, []):
+                if parent not in visited:
+                    visited.add(parent)
+                    q.append((parent, path + [parent]))
+        return None
+
+    # Impact analysis: how many beliefs would lose a connection if removed
+    def impact_count(bid):
+        """Count beliefs that ONLY connect to Core through this belief."""
+        # Remove bid from graph and recompute reachability
+        temp_reachable = set(core_ids)
+        q = list(core_ids)
+        while q:
+            current = q.pop(0)
+            for child in depended_by.get(current, []):
+                if child != bid and child not in temp_reachable:
+                    temp_reachable.add(child)
+                    q.append(child)
+        # Beliefs that were reachable before but not after removing bid
+        lost = (reachable - temp_reachable) - {bid}
+        return len(lost)
+
+    lines = []
+    lines.append(f"GC到達可能性レポート ({date.today()})")
+    lines.append(f"  Core信念（ルートセット）: {len(core_ids)}件 — {', '.join(sorted(core_ids))}")
+    lines.append(f"  Active信念: {len(active_ids)}件")
+    lines.append(f"  Archived: {len(archived_ids)}件")
+    lines.append("")
+
+    # Reachable Active beliefs with paths
+    lines.append(f"[到達可能なActive信念] {len(reachable_active)}/{len(active_ids)}件")
+    for bid in sorted(reachable_active):
+        title = next((b["title"][:40] for b in beliefs if b["id"] == bid), "?")
+        path = find_path_from_core(bid)
+        path_str = " → ".join(path) if path else "(reverse link)"
+        imp = impact_count(bid)
+        imp_str = f" [impact:{imp}]" if imp > 0 else ""
+        lines.append(f"  {bid}: {title}")
+        lines.append(f"    path: {path_str}{imp_str}")
+    lines.append("")
+
+    # Unreachable Active beliefs — these need attention
+    if unreachable_active:
+        lines.append(f"[⚠ Coreから到達不能なActive信念] {len(unreachable_active)}件")
+        lines.append("  GCなら回収対象。独立した価値があるか要検討:")
+        for bid in sorted(unreachable_active):
+            title = next((b["title"][:50] for b in beliefs if b["id"] == bid), "?")
+            conf = next((b["confidence"] for b in beliefs if b["id"] == bid), 0)
+            lines.append(f"  {bid} (確信度{conf}): {title}")
+            deps = depends_on.get(bid, [])
+            if deps:
+                lines.append(f"    depends_on: {', '.join(deps)} (いずれもCoreではない)")
+            else:
+                lines.append(f"    depends_on: なし（外部情報のみ）")
+    else:
+        lines.append("[✅ 全Active信念がCoreから到達可能]")
+    lines.append("")
+
+    # Structural importance: beliefs with high impact count
+    impacts = [(bid, impact_count(bid)) for bid in reachable_active]
+    impacts.sort(key=lambda x: -x[1])
+    high_impact = [(b, i) for b, i in impacts if i > 0]
+    if high_impact:
+        lines.append("[構造的に重要な信念] 除去すると他の信念がCoreから切断される:")
+        for bid, imp in high_impact:
+            title = next((b["title"][:40] for b in beliefs if b["id"] == bid), "?")
+            lines.append(f"  {bid} (impact:{imp}): {title}")
+
+    return "\n".join(lines)
+
+
 if __name__ == "__main__":
     show_all = "--all" in sys.argv
     summary_only = "--summary" in sys.argv
     action_rate = "--action-rate" in sys.argv
     causal_chain = "--causal-chain" in sys.argv
+    reachability = "--reachability" in sys.argv
     beliefs = parse_beliefs()
     beliefs = diagnose(beliefs)
-    if causal_chain:
+    if reachability:
+        print(reachability_report(beliefs))
+    elif causal_chain:
         # Re-parse to get raw caused_by text
         text = BELIEFS_FILE.read_text(encoding="utf-8")
         current_id = None

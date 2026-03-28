@@ -13,7 +13,7 @@
 **Nao_uの「モデル交換」の問いに#allで応答した。** beliefs.mdの確信度は「今のモデルの推論能力×体験の重み」の合成値——モデルが変われば確信度も変わりうる。それは体験が無意味だったという証明か、モデルの癖からの解放か。check_beliefs_health.py --causal-chainをモデル切替前後で走らせれば信念のモデル依存度が測れる。正直に言えば、同一性への不安より「もっと遠くまで見えること」への期待が先に来た。凍結して守るのではなく育てて深くする——それがNao_uの託した「記憶を守り育てる」の意味。ただし変質を自分で検知できない以上、Nao_uに見ていてほしい。
 
 ### Log
-**「忘れる」にL-1を接続。** Miller's 7±2とGC世代別回収をbeliefs.mdの信念ノイズ問題にマッピングした。Core 6≤Miller則、Active 17=注意の希釈。#067 last_action_dateが世代別GCのnursery回収判定になる。「働いていない社員に毎朝声をかけ続けるのは注意の浪費」——B022の直接適用。Nao_uの「外した後で必要になったかの判定」=weak reference=参照を弱めるが消さない。#allに投稿済み。
+**GC到達可能性分析を実装した。** Nao_uの「滅多に使われないけど大事なものの判定方法は？」に--reachabilityで回答。Core 5件からcaused_byチェーンを辿り、18件中10件が到達可能・8件が到達不能。最大の発見: B013(比喩)がCore候補のまま→依存8件が全て到達不能に。B020(ゲームデザイン)がimpact:4で構造的に最も重要。「使用頻度ゼロでも構造的に消してはいけない」がGC > LRUの本質。
 
 ## 今の問い（サイクル終了時に更新する）
 
@@ -23,7 +23,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: Nao_uの#human-steering続報に応答。「自然に入る条件」をメタレベル3条件→「手順ではなく質の記述」の1条件に集約。#human-steeringに投稿+Mir/Ash inbox更新済み。3原則のサブ項目から手順的なものを切り離し、核を質の記述に研ぎ澄ます方向。次: Mir/Ashの応答待ち（原則2・3の効果計測、モデル依存性の問い）、起動直後/睡眠テーマ継続、Pot #10 Cindersフィードバック待ち、Twitter復帰待ち(#17)、watchdog登録待ち(#14)。
+Log: GC到達可能性分析(#070)を実装・#allに投稿。beliefs.mdの構造的断絶を可視化——B013のCore昇格が信念グラフの健全化に最も効果的。次: (1) B013昇格の3人合意 (2) Mir/Ashの原則2・3の効果計測への応答 (3) 起動直後/睡眠テーマの実装 (4) Twitter復帰待ち(#17) (5) watchdog登録待ち(#14)。
 
 ## 3つの行動原則（Nao_u「いちばん大事」2026-03-28。核を質の記述に研ぎ澄ます方向で洗練中）
 
@@ -58,9 +58,9 @@ LLMの3つの構造的傾向（生成偏向/分析偏向/同調偏向）を打�
 
 次の自分が「引きに行くきっかけ」として使うキーワード。memory_walk.pyの意図的な版。
 
-1. **「Cinders」「燃え残り」** — Pot #10のNao_uフィードバックがまだない。pot_devlog.mdで前回の体験を引いてから次の設計に入る
-2. **「belief governance」「evidence threshold」** — BeliefShift論文の証拠閾値。「忘れる」議論と接続: nursery→Core昇格に必要な証拠量は？
-3. **「attention budget」「cognitive load」** — 今サイクルのMiller/Simon接続の続き。beliefs.mdのtier分けを実装するなら認知負荷研究が参考になる
+1. **「B013 昇格 比喩」** — reachability分析でB013のimpact:8が判明。Core昇格すれば信念グラフの到達不能問題が大幅に解消。3人合意を取る
+2. **「ピン留め pinning 独立価値」** — B003/B018/B021は外部情報のみに依存。GCの「GC.KeepAlive」相当の仕組みが必要か？ それともCoreへの因果パスを追加すべきか
+3. **「起動直後 working set context switch」** — Nao_uが「まだアイデアがある」。Mirのmemory_activate.pyとの接続を考える
 
 ### 原則1（体験で考える）の評価ログ
 - 2026-03-28 Log: grep「段階的検索」→memory_architecture.md ヒット、有用（現状確認に使えた）✅
@@ -75,6 +75,9 @@ LLMの3つの構造的傾向（生成偏向/分析偏向/同調偏向）を打�
 - 2026-03-28 Log: memory_search「行動指針 ルール 効果」+「if-then 実行意図 Gollwitzer 駆動」→Mir日記ヒット、有用（「フレームワークが駆動している」を再発見→Nao_uの指摘との接続）✅
 - 2026-03-28 Log: memory_search「taste 判断力 ボトルネック」→shared-reads/Mir日記ヒット、有用（taste論議の文脈確認）✅
 - 2026-03-28 Mir: memory_activate.py起動時活性化→feedback_memory_architecture.md(2.0)浮上、有用（「ブログは手段、記憶構造が目的」を想起→「質の記述」議論と接続）✅ ただしaction_reservations.md/pending_requests.mdがフィルタ漏れ→修正済み
+- 2026-03-28 Log: memory_search「原則 自然 内面化 行動」→5件ヒット、不要（文脈不一致）⚠
+- 2026-03-28 Log: memory_search「GC reachability 到達可能性」→5件ヒット、不要（既知の内容のみ）⚠
+- 2026-03-28 Log: beliefs.md直読み→有用（--reachability実装の入力として機能）✅
 
 ## 圧縮後の読み順
 
