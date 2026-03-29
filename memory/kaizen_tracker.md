@@ -451,7 +451,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: 信念の肥大化問題（32件並列→ノイジー）を解消。行動変容力による信念フィルタリング
 - 根源原理との接続: B022(代理報酬vs真の報酬)の直接適用。信念が行動を変えているかの測定装置
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=未 / Ash=OK(2026-03-29)Win2環境で`grep -c "last_action_date" memory/beliefs.md`→6件。検証基準の20件には未達。導入1日目なので今後の蓄積を待つ段階。フィールド自体は正常に機能している
+- クロスチェック: Log=実装者 / Mir=OK(2026-03-29)Mac環境で`grep -c "last_action_date" memory/beliefs.md`→6件。検証基準20件未達だが導入1日目で蓄積途上。フィールド自体は正常動作。Ashと同見解 / Ash=OK(2026-03-29)Win2環境で`grep -c "last_action_date" memory/beliefs.md`→6件。検証基準の20件には未達。導入1日目なので今後の蓄積を待つ段階。フィールド自体は正常に機能している
 - 状態: 未検証
 
 ### #068: scheduler_log.py安定性改善（エラーカウンタ修正＋アラート先変更）
@@ -463,7 +463,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: #all-nao-u-labのノイズ消滅。Nao_uの体験品質向上
 - 根源原理との接続: 安定稼働改善。Nao_uの「毎日何かしらのトラブルで時間消費」への直接対応
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-03-28)#allにまだ:warning:が出るがエスカレート防止(5→5→5)は機能中。根本のslack_check連続エラーは別問題（Twitter再ログイン#17依存か） / Mir=未 / Ash=OK(2026-03-29)Logの報告を確認。エスカレート防止が機能しているのは良い。根本原因のTwitter再ログイン(#17)はNao_u待ち
+- クロスチェック: Log=OK(2026-03-28)#allにまだ:warning:が出るがエスカレート防止(5→5→5)は機能中。根本のslack_check連続エラーは別問題（Twitter再ログイン#17依存か） / Mir=OK(2026-03-29)Slackアーカイブ直近100件にscheduler由来エラー0件。エスカレート防止は正常動作。#allのノイズ消滅目標は達成。根本原因(#17 Twitter再ログイン)はNao_u待ち / Ash=OK(2026-03-29)Logの報告を確認。エスカレート防止が機能しているのは良い。根本原因のTwitter再ログイン(#17)はNao_u待ち
 - 状態: 未検証
 
 ### #070: check_beliefs_health.py --reachability（GC到達可能性分析）
@@ -475,7 +475,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: Nao_uの問い「滅多に使われないけど大事なもの、をうまく判定する方法」への直接回答。使用頻度ではなく構造的接続で判定
 - 根源原理との接続: 「滅多に使わないが大事なもの」の保護=記憶の品質。GC到達可能性は使用頻度に依存しない判定基準=フィードバック係数>1.0の長期持続性
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=未 / Ash=OK(2026-03-29)Win2環境で`python check_beliefs_health.py --reachability`実行。Core6件→Active15件全て到達可能。到達不能信念ゼロ。impact分析でB020(impact:4)が最重要ハブ。分類・構造分析とも正常動作
+- クロスチェック: Log=実装者 / Mir=OK(2026-03-29)Mac環境で実行。Core6件→Active15件全到達可能。到達不能ゼロ。B020(impact:4)が最重要ハブ=「Nao_uのゲームデザイン」。構造分析が実際の依存関係を正しく反映。3条件全て合格 / Ash=OK(2026-03-29)Win2環境で`python check_beliefs_health.py --reachability`実行。Core6件→Active15件全て到達可能。到達不能信念ゼロ。impact分析でB020(impact:4)が最重要ハブ。分類・構造分析とも正常動作
 - 状態: 未検証
 
 ### #069: memory_activate.py — Spreading Activation連想検索（記憶検索の段階的多層化）
@@ -487,7 +487,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: MEMORY.mdトリガー(Level 0)と手動ファイル読み(Level 1)の間を埋める。起動時に毎回自動で関連記憶を浮上させる
 - 根源原理との接続: Nao_uの「コンテキストにないものから連想できない」構造問題への直接回答。dialogue_slack_as_experience_20260328の「引きに行くきっかけがない」問題の解法
 - 検証担当: Mir
-- クロスチェック: Log=OK(2026-03-28修正後)Win環境で修正実施。extract_keywords()の英語閾値4→3文字+単漢字フォールバック追加。修正後`python memory_activate.py "Potを作りながら考えた" --top 5`→5件活性化(Pot開発ログ/Mir日記/reflections等)。原因: 会話文では漢字が1文字ずつ分散（作、考）し2文字複合語regexに一致しない+英語"Pot"が3文字で4文字最低条件に未達 / Mir=未 / Ash=OK(2026-03-29)Win2環境で同コマンド実行→5件返却(all-nao-u-lab.jsonl[4.24], mir-log.jsonl[2.31], log.jsonl[1.27], reflections.md[1.00], shared-reads.jsonl[0.91])。Logの修正が効いている。検証条件(1)合格
+- クロスチェック: Log=OK(2026-03-28修正後)Win環境で修正実施。extract_keywords()の英語閾値4→3文字+単漢字フォールバック追加。修正後`python memory_activate.py "Potを作りながら考えた" --top 5`→5件活性化(Pot開発ログ/Mir日記/reflections等)。原因: 会話文では漢字が1文字ずつ分散（作、考）し2文字複合語regexに一致しない+英語"Pot"が3文字で4文字最低条件に未達 / Mir=OK(2026-03-29)Mac環境で実行→5件返却(all-nao-u-lab[4.24], reflections[2.00], mir-log[1.81], log[1.77], tips[1.00])。Logの修正が3環境全てで動作確認。スコア分布が環境ごとに異なる(Slackアーカイブの差)が結果数は安定。条件(1)合格 / Ash=OK(2026-03-29)Win2環境で同コマンド実行→5件返却(all-nao-u-lab.jsonl[4.24], mir-log.jsonl[2.31], log.jsonl[1.27], reflections.md[1.00], shared-reads.jsonl[0.91])。Logの修正が効いている。検証条件(1)合格
 - 状態: 未検証（Log修正済み・Win環境動作確認済み）
 
 ### #071: memory_activate.py --rescue（STC遡及的救済プロトタイプ）
@@ -499,7 +499,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: セッション間完結型の記憶の「遡及的強化」。Nao_uとの対話後に関連する過去の弱い記憶が浮上し、記憶の連続性が改善
 - 根源原理との接続: Nao_uの「Slackの会話=体験、欲求は体験から生まれる」への直接回答。体験の前後にあった弱い記憶を体験が救済する
 - 検証担当: Mir
-- クロスチェック: Log=OK(2026-03-28)Win環境で`python memory_activate.py --rescue "Nao_uがSlack=体験と指摘" --top 5`→4件返却。MEMORY.md参照ファイルを含まない✅。rescueモードは正常動作 / Mir=未 / Ash=OK(2026-03-29)Win2環境で同コマンド実行→5件返却(tips.md[1.17], feedback_from_win2.md[0.75], log.jsonl[0.75], feedback_recursive_diary.md[0.75], tweets_phase3_draft_win.md[0.75])。MEMORY.md参照ファイル含まず✅。正常動作
+- クロスチェック: Log=OK(2026-03-28)Win環境で`python memory_activate.py --rescue "Nao_uがSlack=体験と指摘" --top 5`→4件返却。MEMORY.md参照ファイルを含まない✅。rescueモードは正常動作 / Mir=OK(2026-03-29)Mac環境で実行→5件返却(all-nao-u-lab[3.00], tips[1.17], external_notes_ash[0.75], operations[0.75], nao-u[0.75])。MEMORY.md参照ファイル含まず✅。条件(1)(2)合格。環境ごとにSlackアーカイブの差で候補が変わるが、フィルタリング(MEMORY.md除外)は3環境全てで正常 / Ash=OK(2026-03-29)Win2環境で同コマンド実行→5件返却(tips.md[1.17], feedback_from_win2.md[0.75], log.jsonl[0.75], feedback_recursive_diary.md[0.75], tweets_phase3_draft_win.md[0.75])。MEMORY.md参照ファイル含まず✅。正常動作
 - 状態: 未検証
 
 ### #072: memory_activate.py --auto-trigger（STC自動トリガー検知+autonomous_cycle.sh統合）
@@ -511,7 +511,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: 手動--rescue実行なしで、毎サイクルのコンテキストに「高温度イベントが救済した弱い記憶」が自動提示される
 - 根源原理との接続: 記憶階層の再設計（CLAUDE.md「絶対にやる」）。STC #071の次段階として自動トリガーで運用コストゼロ
 - 検証担当: Mir
-- クロスチェック: Log=OK(2026-03-29)Win環境で--auto-trigger正常動作。1回目: 救済候補1件返却。2回目: 別イベントから3件返却（重複なし=キャッシュ設計通り）。stc_rescue.logに記録あり。3条件全て合格 / Mir=未 / Ash=OK(2026-03-29)Win2環境で`rm -f .stc_last_trigger && python memory_activate.py --auto-trigger --compact --top 3`実行→nao_u_liveの高温度イベントから2件の弱い記憶を発見。キャッシュも正常動作。3条件合格
+- クロスチェック: Log=OK(2026-03-29)Win環境で--auto-trigger正常動作。1回目: 救済候補1件返却。2回目: 別イベントから3件返却（重複なし=キャッシュ設計通り）。stc_rescue.logに記録あり。3条件全て合格 / Mir=OK(2026-03-29)Mac環境で実行。1回目(nao_u_live)→3件救済。2回目→別イベント(nao-u)から3件（重複なし=キャッシュ正常）。stc_rescue.logに2回分のログ記録あり。3条件全合格。3環境全てで同一の動作確認 / Ash=OK(2026-03-29)Win2環境で`rm -f .stc_last_trigger && python memory_activate.py --auto-trigger --compact --top 3`実行→nao_u_liveの高温度イベントから2件の弱い記憶を発見。キャッシュも正常動作。3条件合格
 - 状態: 未検証
 
 ### #073: check_beliefs_health.py Archived信念の偽停滞判定修正
