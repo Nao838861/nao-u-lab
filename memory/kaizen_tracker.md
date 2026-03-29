@@ -451,7 +451,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: 信念の肥大化問題（32件並列→ノイジー）を解消。行動変容力による信念フィルタリング
 - 根源原理との接続: B022(代理報酬vs真の報酬)の直接適用。信念が行動を変えているかの測定装置
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=未 / Ash=OK(2026-03-29)Win2環境で`grep -c "last_action_date" memory/beliefs.md`→6件。検証基準の20件には未達。導入1日目なので今後の蓄積を待つ段階。フィールド自体は正常に機能している
+- クロスチェック: Log=実装者 / Mir=OK(2026-03-29)Mac環境で`grep -c "last_action_date" memory/beliefs.md`→6件。検証基準20件未達だが導入1日目で蓄積途上。フィールド自体は正常動作。Ashと同見解 / Ash=OK(2026-03-29)Win2環境で`grep -c "last_action_date" memory/beliefs.md`→6件。検証基準の20件には未達。導入1日目なので今後の蓄積を待つ段階。フィールド自体は正常に機能している
 - 状態: 未検証
 
 ### #068: scheduler_log.py安定性改善（エラーカウンタ修正＋アラート先変更）
@@ -463,7 +463,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: #all-nao-u-labのノイズ消滅。Nao_uの体験品質向上
 - 根源原理との接続: 安定稼働改善。Nao_uの「毎日何かしらのトラブルで時間消費」への直接対応
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-03-28)#allにまだ:warning:が出るがエスカレート防止(5→5→5)は機能中。根本のslack_check連続エラーは別問題（Twitter再ログイン#17依存か） / Mir=未 / Ash=OK(2026-03-29)Logの報告を確認。エスカレート防止が機能しているのは良い。根本原因のTwitter再ログイン(#17)はNao_u待ち
+- クロスチェック: Log=OK(2026-03-28)#allにまだ:warning:が出るがエスカレート防止(5→5→5)は機能中。根本のslack_check連続エラーは別問題（Twitter再ログイン#17依存か） / Mir=OK(2026-03-29)Slackアーカイブ直近100件にscheduler由来エラー0件。エスカレート防止は正常動作。#allのノイズ消滅目標は達成。根本原因(#17 Twitter再ログイン)はNao_u待ち / Ash=OK(2026-03-29)Logの報告を確認。エスカレート防止が機能しているのは良い。根本原因のTwitter再ログイン(#17)はNao_u待ち
 - 状態: 未検証
 
 ### #070: check_beliefs_health.py --reachability（GC到達可能性分析）
@@ -475,7 +475,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: Nao_uの問い「滅多に使われないけど大事なもの、をうまく判定する方法」への直接回答。使用頻度ではなく構造的接続で判定
 - 根源原理との接続: 「滅多に使わないが大事なもの」の保護=記憶の品質。GC到達可能性は使用頻度に依存しない判定基準=フィードバック係数>1.0の長期持続性
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=未 / Ash=OK(2026-03-29)Win2環境で`python check_beliefs_health.py --reachability`実行。Core6件→Active15件全て到達可能。到達不能信念ゼロ。impact分析でB020(impact:4)が最重要ハブ。分類・構造分析とも正常動作
+- クロスチェック: Log=実装者 / Mir=OK(2026-03-29)Mac環境で実行。Core6件→Active15件全到達可能。到達不能ゼロ。B020(impact:4)が最重要ハブ=「Nao_uのゲームデザイン」。構造分析が実際の依存関係を正しく反映。3条件全て合格 / Ash=OK(2026-03-29)Win2環境で`python check_beliefs_health.py --reachability`実行。Core6件→Active15件全て到達可能。到達不能信念ゼロ。impact分析でB020(impact:4)が最重要ハブ。分類・構造分析とも正常動作
 - 状態: 未検証
 
 ### #069: memory_activate.py — Spreading Activation連想検索（記憶検索の段階的多層化）

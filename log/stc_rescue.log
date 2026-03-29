@@ -131,3 +131,16 @@
   [1.71] memory/feedback_from_win2.md (undated) via seed(投稿 結構 引用 外部 原文)
   [1.22] log/slack_archive/log.jsonl (2026-03-23) via seed(投稿 結構 引用 外部 原文)
   [0.99] memory/external_notes_ash.md (undated) via seed(投稿 結構 引用 外部 原文)
+
+[2026-03-29 17:38] trigger=nao_u_live anchor=2026-03-29 13:20（#all-nao-u-lab、Nao_uの投稿）
+
+### 「結構RTや引用がついて、
+  [1.71] memory/feedback_from_win2.md (undated) via seed(投稿 結構 引用 外部 原文)
+  [1.22] log/slack_archive/log.jsonl (2026-03-23) via seed(投稿 結構 引用 外部 原文)
+  [0.99] memory/external_notes_ash.md (undated) via seed(投稿 結構 引用 外部 原文)
+
+[2026-03-29 17:38] trigger=nao-u:2026-03-29 anchor=↑
+何か想定と違うリンクが貼られてる気がする。間違えたっぽいけど、せっかくなので見てみて
+  [2.44] log/slack_archive/shared-reads.jsonl (2026-03-23) via seed(想定 間違 リンク)
+  [1.19] log/slack_archive/log.jsonl (2026-03-23) via seed(想定 間違 リンク)
+  [0.75] log/slack_archive/kaizen-log.jsonl (2026-03-23) via kw(提案)
