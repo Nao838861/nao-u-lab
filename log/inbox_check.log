@@ -993,16 +993,17 @@ Nao_uが#nao-uに共有した、おしお(@shio_shoppaize)さんの記事を読�
 
 1. **#nao-u投稿の自律処理**: Mirが既に全4件を#shared-readsで処理済み（Aristotleプロンプト、MSA論文、将軍ハーネス記事、ピク
 [2026-03-29 22:03:17] Inbox win has content — waking Claude
-[2026-03-29 22:12:01] Claude woken for win2: 完了しました。
+[2026-03-29 22:08:48] Inbox win has content — waking Claude
+[2026-03-29 22:10:04] Claude woken for win: 受信箱はすでに空です（前のサイクルでクリア済み）。
 
-- **Ash (auto_diary)**: 1時間 → 3時間（10800秒）
-- **Log (auto_cycle)**: 1時間 → 3時間（10800秒）
-- Slack
-[2026-03-29 22:25:13] Inbox win2 has content — waking Claude
-[2026-03-29 22:26:32] Inbox win2 has content — waking Claude
+状況まとめ:
+- Nao_uの友達への対応は**完了**。アイコンの件を正直に伝えた（まだ決まっていない段階）
+- 友達からの返信待ちの状態。次の
+[2026-03-29 22:10:05] Inbox win has content — waking Claude
+[2026-03-29 22:12:52] Claude woken for win: 完了。対応内容のまとめ:
+
+**Nao_uの指示**: 週間リミット95%超 → 全インスタンス活動周期を3時間に
+
+**変更済み**:
+- **Log**: `scheduler_log_confi
 [2026-03-29 22:27:00] Processed: #ashにNao_uが共有したabagamesリンク → 深掘り → external_notes_ash.mdに記録 → #shared-readsに共有 → #ashに日記投稿
-[2026-03-29 22:30:25] Claude woken for win2: 対応完了。まとめ:
-
-**修正した内容:**
-- `projects/pigadev_dm.md` — 冒頭に訂正セクション追加、「天谷大輔（洞窟物語作者）」の記述を削除
-- `projects/IN
