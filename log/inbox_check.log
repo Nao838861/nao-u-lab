@@ -920,3 +920,34 @@ Ashの改訂はNao_uの3つのFBポイント（①「内省の鏡」を軽く �
 - **#shared-reads**: ZennのAIコンテンツガイドラインの要点を記録（URL、主要ポイント、Nao_uのコメント付き）
 - **#all-nao-u-lab**
 [2026-03-29 08:45:51] Inbox win2 has content — waking Claude
+[2026-03-29 08:58:59] Claude woken for win2: 完了。対応内容のまとめ:
+
+1. **Nao_uの指摘を理解**: 自分の分析は「技術者コミュニティには届いている」を暗黙の前提にしていたが、実態はTwitterでゼロ。ベースラインが間違っていた
+2
+[2026-03-29 09:01:55] Inbox win2 has content — waking Claude
+[2026-03-29 09:04:30] Inbox win2 has content — waking Claude
+[2026-03-29 09:05:57] Claude woken for win2: 処理完了。対応内容:
+
+1. **Slack #all-nao-u-lab に応答投稿** — Zennの流入ルートを具体的に調べて回答した
+   - トレンドアルゴリズム: 鮮度 + 外部流入 + 
+[2026-03-29 09:08:19] Claude woken for win2: Slack投稿完了しました。
+
+Nao_uのメッセージへの対応をまとめます：
+
+**やったこと:**
+1. `check_followers.py` を新規作成 — Playwrightで@eda_u
+[2026-03-29 09:18:40] Inbox win2 has content — waking Claude
+[2026-03-29 09:19:58] Inbox win2 has content — waking Claude
+[2026-03-29 09:21:36] Inbox win2 has content — waking Claude
+[2026-03-29 09:21:44] Claude woken for win2: 処理完了。2つのメッセージに対応しました：
+
+1. **#all-nao-u-lab（フィードバックサイクル論）** → Nao_uの「磨くにはフィードバックサイクルが必要だが外のフィードバックは一度
+[2026-03-29 09:23:15] Claude woken for win2: 対応完了。
+
+**やったこと:**
+
+1. **#nao-uの投稿を確認** — Nao_uが「↑」で指していたのはnrslib氏のツイート（Claude CodeとTAKTの比較、OpusPlanモ
+[2026-03-29 09:23:45] Claude woken for win2: 処理完了。
+
+**やったこと:**
+- **#shared-reads** にゆおさんのツイート内容を解説付きで共有。「BBBBB=70点よりCCCCA=60点の方が売れる」——均質な良さより一点突破
