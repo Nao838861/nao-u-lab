@@ -118,3 +118,9 @@
   [3.75] log/slack_archive/all-nao-u-lab.jsonl (2026-03-22) via kw(共有) + kw(前世代)
   [2.44] log/slack_archive/shared-reads.jsonl (2026-03-23) via seed(想定 間違 リンク)
   [1.19] log/slack_archive/log.jsonl (2026-03-23) via seed(想定 間違 リンク)
+
+[2026-03-29 13:19] trigger=nao-u:2026-03-29 anchor=書いた記事の一番上にこんなリンクが出てたので共有。
+まぁ数日に一件くらいを想定してるし、他の人の役に立つ記事にしたいので
+  [3.00] docs/game_seeds.md (undated) via ref→game_seeds.md
+  [1.60] memory/external_notes_ash.md (undated) via seed(記事 一番上 共有 数日 一件)
+  [0.75] memory/feedback_from_win2.md (2026-03-23) via kw(引用)
