@@ -105,3 +105,10 @@
   [3.94] log/slack_archive/all-nao-u-lab.jsonl (2026-03-23) via seed(投稿 記事 読者 美味 問題)
   [1.50] log/daily_diary_mir.md (undated) via kw(結論)
   [0.75] log/slack_archive/ash.jsonl (2026-03-23) via kw(必要)
+
+[2026-03-29 10:22] trigger=nao_u_live anchor=2026-03-29 09:01（#all-nao-u-lab、Nao_uの投稿）
+
+### 「空振りは貴重な経験」「Z
+  [2.22] log/slack_archive/all-nao-u-lab.jsonl (2026-03-23) via seed(投稿 空振 貴重 経験 様子見) + kw(調査結果)
+  [1.95] log/daily_diary_mir.md (undated) via seed(投稿 空振 貴重 経験 様子見) + +kw(駆動) + kw(駆動)
+  [0.64] memory/feedback_from_win2.md (2026-03-23) via seed(投稿 空振 貴重 経験 様子見)
