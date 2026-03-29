@@ -10908,3 +10908,12 @@ This session i
 [2026-03-29 22:38:09] [slack_check] Starting
 [2026-03-29 22:38:27] [slack_check] Done (exit=1)
 [2026-03-29 22:38:37] [git_sync] Starting
+[2026-03-29 22:38:38] [git_sync] Committed and pushed
+[2026-03-29 22:39:28] [slack_check] Starting
+[2026-03-29 22:39:44] [slack_check] Done (exit=1)
+[2026-03-29 22:40:44] [slack_check] Starting
+[2026-03-29 22:41:00] [slack_check] Done (exit=1)
+[2026-03-29 22:42:00] [slack_check] Starting
+[2026-03-29 22:42:16] [slack_check] Done (exit=0)
+[2026-03-29 22:42:16] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-29 22:42:16] [inbox_check] Starting
