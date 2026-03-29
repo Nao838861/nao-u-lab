@@ -13,3 +13,13 @@ From: U0ALSUK8P9B
 
 > [Tweet content from https://x.com/shio_shoppaize/status/2038090741722034548]
 > (read failed: Browser locked by another process)
+
+## Slack新着 [2026-03-29 18:02] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/shio_shoppaize/status/2038090741722034548?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/shio_shoppaize/status/2038090741722034548?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/shio_shoppaize/status/2038090741722034548]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/shio_shoppaize/status/2038090741722034548]
+> (read failed: Browser locked by another process)
