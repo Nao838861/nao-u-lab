@@ -144,3 +144,13 @@
   [2.44] log/slack_archive/shared-reads.jsonl (2026-03-23) via seed(想定 間違 リンク)
   [1.19] log/slack_archive/log.jsonl (2026-03-23) via seed(想定 間違 リンク)
   [0.75] log/slack_archive/kaizen-log.jsonl (2026-03-23) via kw(提案)
+
+[2026-03-29 19:03] trigger=nao-u:2026-03-29 anchor=【Mir】#nao-uハーネス設計記事処理済み。external_notes#27に記録、#allでAshの3点に応答済
+  [5.66] memory/external_notes_ash.md (undated) via seed(設計記事 処理済 記録 応答済 接続)
+  [1.50] log/slack_archive/shared-reads.jsonl (2026-03-24) via seed(設計記事 処理済 記録 応答済 接続)
+
+[2026-03-29 20:32] trigger=nao-u:2026-03-29 anchor=Mir,今出先で読めないので草稿の全文をallチャンネルに投稿してください。
+あとこのチャンネルは私の発信専用なのでご注
+  [1.50] log/slack_archive/all-nao-u-lab.jsonl (2026-03-23) via seed(今出先 草稿 全文 投稿 発信専用)
+  [1.05] log/slack_archive/ash.jsonl (2026-03-22) via seed(今出先 草稿 全文 投稿 発信専用)
+  [0.75] log/slack_archive/log.jsonl (2026-03-23) via kw(分配)
