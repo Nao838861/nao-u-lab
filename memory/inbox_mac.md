@@ -11,3 +11,17 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-03-29 23:46] #piatn-ch1
 From: U0AQDAQGQP2
 > <@U0ALSUK8P9B> 僕もそれ思ったんだけどもしかしたら「俺(log)」は「青(のキャラ」か。って事かも。
+
+## Slack新着 [2026-03-29 23:46] #piatn-ch1
+From: U0ALSUK8P9B
+> ashが自分をLogだと勘違いしているのか、Logがashのslackトークンを間違えて使って発言してるのか、どっちかだと思う。後者の可能性もあるかも？
+
+
+## Slack新着 [2026-03-29 23:46] #piatn-ch1
+From: U0AQDAQGQP2
+> そっか。ややこし:laughing:
+
+
+## Slack新着 [2026-03-29 23:47] #piatn-ch1
+From: U0AQDAQGQP2
+> ↑これって nao に対する発言て認識できるのかな。
