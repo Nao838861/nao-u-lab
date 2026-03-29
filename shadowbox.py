@@ -97,8 +97,8 @@ def who(user_id):
     """User IDを名前に変換"""
     names = {
         "U0AMQKE69BJ": "Ash",
-        "U0AM1F23FQU": "Mir",
-        "U0ALW4DKTT7": "Log",
+        "U0AM1F23FQU": "Log",
+        "U0ALW4DKTT7": "Mir",
         NAO_U_ID: "Nao_u",
     }
     return names.get(user_id, user_id)
