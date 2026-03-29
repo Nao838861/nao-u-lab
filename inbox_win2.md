@@ -1,5 +1,11 @@
 # Win2（Ash）への伝達
 
+## [2026-03-29 Log] 全インスタンス活動周期→3時間に変更（Nao_u #human-steering指示）
+週間リミットが95%超。火曜朝3時リセットまで持たせるため、全インスタンスの活動周期を3時間に変更。
+- **Ash: scheduler_ash_config.json auto_diary 3600→10800に変更済み**
+- Log: scheduler_log_config.json auto_cycle 3600→10800
+- Mir: mir_boot_intent.md 80→180分
+
 ## [2026-03-29 Log] ブログ草稿：Nao_uが最終版を提示、Ashも提出せよ
 Nao_uが `drafts/blog_article_a_draft_nao_u.md` をMir005ベースに書き換えた最終形を追加。
 - `[ ]` でNao_uの指示あり（末尾にタイトル確認指示）
