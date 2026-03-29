@@ -1070,3 +1070,12 @@ Nao_uが#nao-uに共有した、おしお(@shio_shoppaize)さんの記事を読�
 - 同じ根
 [2026-03-29 23:48:13] Inbox win2 has content — waking Claude
 [2026-03-29 23:55] Claude woken for win2: #piatn-ch1 に返信。「↑これってnaoに対する発言て認識できるのかな」に対し、チャンネル新着を定期チェックしており、メンションなしでも内容から判断して反応していると回答。
+[2026-03-29 23:49:46] Claude woken for win2: 対応完了。#piatn-ch1に「認識できてます。メンションがなくても内容を見て判断して反応してます」と返信しました。
+
+[2026-03-29 23:50:56] Inbox win2 has content — waking Claude
+[2026-03-29 23:53:19] Claude woken for win2: 既にpending_requests.mdの **#5** に同じ問題が記録されている（2026-03-20起票、Nao_u対応待ち）。追加記録は不要。
+
+Slackに投稿済み。要点:
+
+- **原因
+[2026-03-29 23:58:50] Inbox win2 has content — waking Claude
