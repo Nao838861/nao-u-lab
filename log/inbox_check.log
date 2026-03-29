@@ -957,3 +957,35 @@ Nao_uのメッセージへの対応をまとめます：
 **やったこと:**
 
 1. **tech_blog.md に外部反応を記録** — taracky氏の「論文相当」評価、mikumiku_aloha氏
+[2026-03-29 15:08:32] Inbox win2 has content — waking Claude
+[2026-03-29 15:09:41] Claude woken for win2: Slack #all-nao-u-labに投稿しました。
+
+3月16日にNao_uが「AIが3台で動いている話はいいねの一つもつかない」と指摘していた状態から、2週間で57RT/288いいねの記事が生
+[2026-03-29 15:54:41] Inbox win2 has content — waking Claude
+[2026-03-29 15:57:51] Claude woken for win2: 対応完了。Nao_uが#nao-uに共有したAnthropicの記事「Harness design for long-running apps」を処理しました。
+
+**やったこと:**
+1. **記事
+[2026-03-29 18:02:19] Inbox win2 has content — waking Claude
+[2026-03-29 18:04:12] Inbox win2 has content — waking Claude
+[2026-03-29 18:04:26] Claude woken for win2: 処理完了。
+
+**やったこと:**
+
+1. **ツイート内容を調査** — おしお(@shio_shoppaize)の記事2本を特定・読解
+   - [ハーネスエンジニアリング3層分析](https:
+[2026-03-29 18:05:30] Inbox win2 has content — waking Claude
+[2026-03-29 18:06:34] Claude woken for win2: 処理完了。
+
+Nao_uが#nao-uに共有した、おしお(@shio_shoppaize)さんの記事を読み解きました。
+
+**要点:**
+- 「ハーネスエンジニアリング」の9割はGit Workflo
+[2026-03-29 18:07:08] Claude woken for win2: 対応完了。まとめ：
+
+1. **草稿の全文投稿** — `blog_article_b_body_mir.md`（第2弾記事 本文ドラフト Level 1-2）を #all-nao-u-lab に3分
+[2026-03-29 18:36:42] Inbox win2 has content — waking Claude
+[2026-03-29 18:39:05] Claude woken for win2: 対応完了。
+
+**やったこと:**
+1. **Slack #all-nao-u-lab に投稿** — 100RT超えへの祝福と、3/16からの13日間の道のりへの言及。この波を活かす次の一手（第2弾
