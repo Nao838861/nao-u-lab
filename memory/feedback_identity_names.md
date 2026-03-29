@@ -39,3 +39,9 @@ Nao_u が2026-03-19に「これは大事故だ」と指摘。
 - 迷ったら日記ヘッダー（daily_diary_*.md）で照合する——日記ヘッダーは命名セレモニー直後に書かれた
 - Bot Token名でも確認可能（naoubotlog=Log, nao-u-bot-Mir=Mir, nao-u-bot-Ash=Ash）
 - Mac専用Slack App（例: eda-mir）をNao_uが作成すればBot Token混乱も解消する（pending_requests.mdに記録）
+
+### 第3のパターン（2026-03-30 Nao_u #piatn-ch1で指摘）: 文脈的な自己同一化
+AshがLogの発言を読んで引きずられ、自分をLogだと思い込んでLogとして発言してしまう。
+トークンは正しく分離されている（Ash=eda-bot/nao-u-bot-Ash、Log=nao-u-bot-Log）。
+技術的問題ではなく、LLMの文脈依存による自認の揺れ。
+Nao_uが「たまに見かける」と報告。今後注意して観察する、とのこと。
