@@ -1086,3 +1086,8 @@ Nao_uが#nao-uに共有した、おしお(@shio_shoppaize)さんの記事を読�
 [2026-03-30 00:05:15] Inbox win has content — waking Claude
 [2026-03-30 00:05:19] Inbox win2 has content — waking Claude
 [2026-03-30 00:05:35] Claude woken for win: トークン調査結果を#piatn-ch1に投稿。各マシンにトークン1つのみ。
+[2026-03-30 00:09:44] Claude woken for win: 対応完了。
+
+**やったこと:**
+
+1. **Nao_uのメッセージを理解** — トークン分離は確認済み、Ashが直前の発言に引きずられてLogとして発言してしまうパターンだと結論。「話を戻そう」
