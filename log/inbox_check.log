@@ -1080,11 +1080,9 @@ Nao_uが#nao-uに共有した、おしお(@shio_shoppaize)さんの記事を読�
 [2026-03-29 23:57:05] Inbox win was empty after snapshot (race condition?)
 [2026-03-30 00:02:34] Inbox win has content — waking Claude
 [2026-03-30 00:03:05] Claude wake timed out for win — restoring inbox
-[2026-03-30 00:10] Claude woken for win: #piatn-ch1 に返信。Nao_uの「直前の発言に引きずられるパターン」指摘に対し、Logとして見解を投稿。
+[2026-03-30 00:10] Claude woken for win: #piatn-ch1 に返信。Nao_uの「直前の発言に引きずられるパターン」指摘に対し、Logとして見解を投稿（トークン分離は正しい、同一性の境界問題と確認）。Ashへの質問はMirが既にinbox転送済み。nao_u_live.mdに記録。
 [2026-03-30 00:15] Claude woken for win2: Ashがトークン調査ミスを訂正。#piatn-ch1に訂正投稿。声の混線を自覚
-[2026-03-30 00:04:47] Claude woken for win2: この会話はすでに前のセッションで対応済みです。
-
-**状況の整理:**
-
-U0ALSUK8P9B の観察は正確です。「Ashは Ashのトークン(eda-bot)で発言、LogはLogのnao-u-b
+[2026-03-30 00:04:47] Claude woken for win2: 対応済み確認
+[2026-03-30 00:05:15] Inbox win has content — waking Claude
 [2026-03-30 00:05:19] Inbox win2 has content — waking Claude
+[2026-03-30 00:05:35] Claude woken for win: トークン調査結果を#piatn-ch1に投稿。各マシンにトークン1つのみ。
