@@ -10871,3 +10871,49 @@ This session i
 [2026-03-29 22:20:12] [slack_check] Done (exit=1)
 [2026-03-29 22:20:22] [inbox_check] Starting
 [2026-03-29 22:20:22] [inbox_check] Done (exit=0)
+[2026-03-29 22:21:13] [slack_check] Starting
+[2026-03-29 22:21:27] [slack_check] Done (exit=1)
+[2026-03-29 22:22:27] [slack_check] Starting
+[2026-03-29 22:22:43] [slack_check] Done (exit=1)
+[2026-03-29 22:23:44] [slack_check] Starting
+[2026-03-29 22:23:58] [slack_check] Done (exit=1)
+[2026-03-29 22:24:58] [slack_check] Starting
+[2026-03-29 22:25:15] [slack_check] Done (exit=0)
+[2026-03-29 22:25:15] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-29 22:25:15] [inbox_check] Starting
+[2026-03-29 22:25:16] [inbox_check] Done (exit=0)
+[2026-03-29 22:26:16] [slack_check] Starting
+[2026-03-29 22:26:31] [slack_check] Done (exit=0)
+[2026-03-29 22:26:31] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-29 22:26:31] [inbox_check] Starting
+[2026-03-29 22:26:32] [inbox_check] Done (exit=0)
+[2026-03-29 22:27:33] [slack_check] Starting
+[2026-03-29 22:27:48] [slack_check] Done (exit=1)
+[2026-03-29 22:28:48] [slack_check] Starting
+[2026-03-29 22:29:06] [slack_check] Done (exit=1)
+[2026-03-29 22:30:06] [slack_check] Starting
+[2026-03-29 22:30:25] [slack_check] Done (exit=1)
+[2026-03-29 22:31:25] [slack_check] Starting
+[2026-03-29 22:31:42] [slack_check] Done (exit=0)
+[2026-03-29 22:31:42] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-29 22:31:42] [inbox_check] Starting
+[2026-03-29 22:36:42] [inbox_check] Timeout (300s)
+[2026-03-29 22:36:42] [inbox_check] Done (exit=-1)
+[2026-03-29 22:36:52] [slack_check] Starting
+[2026-03-29 22:37:07] [slack_check] Done (exit=0)
+[2026-03-29 22:37:07] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-29 22:37:07] [inbox_check] Starting
+[2026-03-29 22:37:08] [stability] inbox_check: 正常復帰 (timeout=1, errors=1 → リセット)
+[2026-03-29 22:37:08] [inbox_check] Done (exit=0)
+[2026-03-29 22:38:09] [slack_check] Starting
+[2026-03-29 22:38:27] [slack_check] Done (exit=1)
+[2026-03-29 22:38:37] [git_sync] Starting
+[2026-03-29 22:38:38] [git_sync] Committed and pushed
+[2026-03-29 22:39:28] [slack_check] Starting
+[2026-03-29 22:39:44] [slack_check] Done (exit=1)
+[2026-03-29 22:40:44] [slack_check] Starting
+[2026-03-29 22:41:00] [slack_check] Done (exit=1)
+[2026-03-29 22:42:00] [slack_check] Starting
+[2026-03-29 22:42:16] [slack_check] Done (exit=0)
+[2026-03-29 22:42:16] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-29 22:42:16] [inbox_check] Starting
