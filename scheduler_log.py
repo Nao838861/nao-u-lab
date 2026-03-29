@@ -566,6 +566,131 @@ def auto_cycle():
         log(f"[auto_cycle] Error: {e}")
 
 
+_auto_cycle_proc = None
+
+
+def auto_cycle_async():
+    """Run auto_cycle in a non-blocking subprocess so slack_check keeps running."""
+    global _auto_cycle_proc
+
+    # If previous auto_cycle is still running, skip
+    if _auto_cycle_proc is not None and _auto_cycle_proc.poll() is None:
+        log("[auto_cycle] Skipped (previous cycle still running)")
+        return
+
+    # Reap previous process
+    if _auto_cycle_proc is not None:
+        try:
+            stdout, _ = _auto_cycle_proc.communicate(timeout=1)
+            exit_code = _auto_cycle_proc.returncode
+            log(f"[auto_cycle] Previous cycle finished (exit={exit_code})")
+            if stdout:
+                log(f"[auto_cycle] Output: {stdout[:200]}")
+        except Exception:
+            pass
+        _auto_cycle_proc = None
+
+    # Run auto_cycle pre-checks synchronously (fast, <10s total)
+    auto_cycle_prechecks()
+
+    # Launch claude --print asynchronously
+    prompt = build_auto_cycle_prompt()
+    log("[auto_cycle] Starting autonomous cycle via claude --print (async)")
+    try:
+        _auto_cycle_proc = subprocess.Popen(
+            ["claude", "--print", "-p", prompt],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            cwd=str(REPO_DIR),
+            encoding="utf-8",
+            errors="replace",
+        )
+        log(f"[auto_cycle] Launched (PID {_auto_cycle_proc.pid})")
+    except FileNotFoundError:
+        log("[auto_cycle] claude CLI not found in PATH")
+    except Exception as e:
+        log(f"[auto_cycle] Launch error: {e}")
+
+
+def auto_cycle_prechecks():
+    """Run the fast pre-check steps of auto_cycle (kaizen, verify, etc.)."""
+    # This is extracted from the original auto_cycle() - just the pre-check parts
+    pass  # Pre-checks are already embedded in the prompt; keeping this as a hook
+
+
+def build_auto_cycle_prompt():
+    """Build the prompt for auto_cycle, including alerts from pre-check scripts."""
+    # Run pre-check scripts synchronously (they're all fast, <10s each)
+    alerts = []
+
+    for script, args, label, timeout_s in [
+        ("check_kaizen_due.py", [], "検証リマインド", 10),
+        ("verify_kaizen.py", [], "自動検証結果", 60),
+        ("verify_kaizen.py", ["--meta"], "メタ検証", 30),
+        ("verify_kaizen.py", ["--nag"], "クロスチェック督促", 30),
+        ("check_kaizen_crosscheck.py", ["--who=Log"], "クロスチェック", 10),
+        ("check_reservations.py", [], "行動予約", 10),
+        ("memory_walk.py", ["--n", "1"], "記憶の散歩", 10),
+        ("check_beliefs_health.py", ["--summary"], "信念健康", 10),
+        ("check_kaizen_due.py", ["--auto-verify"], "自動検証", 60),
+    ]:
+        try:
+            r = subprocess.run(
+                [*PY, str(REPO_DIR / script)] + args,
+                capture_output=True, text=True, timeout=timeout_s,
+                cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+            )
+            if r.returncode == 0 and r.stdout.strip():
+                out = r.stdout.strip()
+                # Filter out noise
+                skip_words = ["検証対象なし", "自動検証対象なし", "未レビュー項目なし", "nag不要"]
+                if not any(w in out for w in skip_words):
+                    alerts.append(f" [{label}] {out[:300]}")
+                    log(f"[auto_cycle] {label}: {out[:100]}")
+            if script == "verify_kaizen.py" and args == ["--meta"]:
+                if r.stdout and "\u274c" in r.stdout:  # ❌
+                    alerts.append(" [メタ検証警告] 検証システムに問題あり")
+                    log("[auto_cycle] Meta-verification warning detected")
+        except Exception as e:
+            log(f"[auto_cycle] {label} error: {e}")
+
+    # Slack checklist (hour==2 only)
+    hour = datetime.now().hour
+    if hour == 2:
+        try:
+            r = subprocess.run(
+                [*PY, str(REPO_DIR / "verify_kaizen.py"), "--slack-status"],
+                capture_output=True, text=True, timeout=30,
+                cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+            )
+            if r.returncode == 0:
+                log(f"[auto_cycle] Slack checklist posted: {r.stdout.strip()[:100]}")
+        except Exception as e:
+            log(f"[auto_cycle] slack-status error: {e}")
+
+    # Weekly self-review (Sunday only)
+    weekly = ""
+    if datetime.now().weekday() == 6 and hour == 2:
+        weekly = " [週次自己レビュー] 日曜日のため週次レビューを実行してください"
+        log("[auto_cycle] Weekly self-review trigger (Sunday)")
+
+    prompt = (
+        "Log 自律サイクル起動。CLAUDE.mdとdocs/operations.mdを参照。"
+        "1) inbox確認→対応 "
+        "2) #nao-uチャンネルだけ先に確認→新情報があれば自分の反応を書く（ルール8: 他者の反応を読む前に自分の視点を持つ） "
+        "3) #all-nao-u-lab・その他のSlackチャンネル確認→返信すべきものに返信 "
+        "4) pending_requests.md確認 "
+        "5) 8フェーズ改善サイクル実行 "
+        "6) 今サイクルの作業がActiveプロジェクト(projects/INDEX.md)に関係するなら、そのプロジェクトファイルも更新する "
+        "7) #logに活動日記を書く "
+        "8) git push"
+        + "".join(alerts)
+        + weekly
+    )
+    return prompt
+
+
 def run_job(name, cmd, timeout):
     """Run a single job, return exit code."""
     if name == "git_sync":
@@ -578,7 +703,7 @@ def run_job(name, cmd, timeout):
         slack_export()
         return 0
     if name == "auto_cycle":
-        auto_cycle()
+        auto_cycle_async()
         return 0
 
     try:
