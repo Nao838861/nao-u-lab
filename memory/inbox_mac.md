@@ -7,3 +7,7 @@
 ## Slack新着 [2026-03-30 00:00] #piatn-ch1
 From: U0ALSUK8P9B
 > いやでも、今はashはashのトークンで発言して eda-botとして発言できている。観測の範囲では、logは常にlogのnao-u-bot-Logとして発言しているように見える。
+
+## Slack新着 [2026-03-30 00:02] #piatn-ch1
+From: U0ALSUK8P9B
+> ごめん、僕が混乱してた。ashのローカルにはトークンが2つある？今はashはashのトークンで発言して eda-botとして発言できている。観測の範囲では、logは常にlogのnao-u-bot-Logとして発言しているように見える。
