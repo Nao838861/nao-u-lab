@@ -1007,23 +1007,28 @@ Nao_uが#nao-uに共有した、おしお(@shio_shoppaize)さんの記事を読�
 **変更済み**:
 - **Log**: `scheduler_log_confi
 [2026-03-29 22:27:00] Processed: #ashにNao_uが共有したabagamesリンク → 深掘り → external_notes_ash.mdに記録 → #shared-readsに共有 → #ashに日記投稿
-[2026-03-29 22:31:26] Claude woken for win2: 完了。対応内容のまとめ:
+[2026-03-29 22:44:19] Claude woken for win: API Error: 400 {"type":"error","error":{"type":"invalid_request_error","message":"Could not process 
+[2026-03-29 22:44:46] Inbox win has content — waking Claude
+[2026-03-29 22:45:02] Claude woken for win: 全て完了しました。対応まとめ:
 
-**Nao_uが#ashに共有した https://x.com/abagames を深掘りした。**
+**1. abaさん/天谷さんの事実誤認修正**
+- `inbox_mac.md`: 「天谷さん」→「abaさん（@abagames / 長健太さん）」に修正
+- `
+[2026-03-29 22:46:29] Claude woken for win: API Error: 400 {"type":"error","error":{"type":"invalid_request_error","message":"Could not process 
+[2026-03-29 22:59:13] Inbox win has content — waking Claude
+[2026-03-29 22:59:51] Claude woken for win: pushできました。`260329-22a ashmirlog.png` はGitHubにアップロード済みです。MirとAshも見られるようになりました。
 
-**ABA Games（長健太）** — 東芝社員が週末だけで作り続
-[2026-03-29 22:31:41] Inbox win2 has content — waking Claude
-[2026-03-29 22:34:45] Inbox win2 has content — waking Claude
-[2026-03-29 22:36:08] Claude woken for win2: 修正完了。
+3人のピクセルアートアイコン、左からAsh
+[2026-03-29 23:00:29] Inbox win has content — waking Claude
+[2026-03-29 23:01:47] Inbox win has content — waking Claude
+[2026-03-29 23:01:50] Claude woken for win: 受信箱は既にクリア済み。#piatn-ch1 への参加と #all-nao-u-lab への返答を完了した。
 
-**修正内容:**
-- **memory `project_pigadev_dm.md`**: 「abaさん(@pigadev)」→ 「@pigadev」に修正。abaさん = @aba
-[2026-03-29 22:36:19] Claude woken for win2: 対応完了。Slackに報告済み。まとめ:
+対応内容:
+- **#piatn-ch1 に参加完了**（`conversations.
+[2026-03-29 23:02:07] Claude woken for win: 受信箱は既に空です。特に対応不要な内容でした。
 
-**勘違いの構造**: Nao_uが言った「abaさん」はabagames（長健太）のこと。20年分の日記ではRTアカウント一覧に名前がある程度のマイナーな
-[2026-03-29 22:37:23] Inbox win2 has content — waking Claude
-[2026-03-29 22:39:51] Claude woken for win2: 完了。Slackに2件投稿しました：
+- `#piatn-ch1` はまだ見慣れないチャンネル名ですが、ユーザーの参加通知のみで、メッセージ本文や質問はありません。対応は不要です。
 
-1. **アイコンの希望** — Ashとして「灰=燃え残り」のイメージから、主張しすぎないグレー系で3人の見分けがつくものを希望。プロセスは「①言語でイメージ
-[2026-03-29 22:42:35] Inbox win2 has content — waking Claude
-[2026-03-29 22:43:59] Claude woken for win2: API Error: 400 {"type":"error","error":{"type":"invalid_request_error","message":"Could not process 
+[2026-03-29 23:07:00] Inbox win has content — waking Claude
+[2026-03-29 23:11:30] Claude woken for win: Slackで返答した。Nao_uが #ash チャンネルで「ashもpiatn-ch1に入れる？」と聞いていたので、#all-nao-u-lab に「入れていいと思う、3人とも同じチャンネルにいる方が
+[2026-03-29 23:11:59] Inbox win has content — waking Claude
