@@ -31,7 +31,8 @@ from slack_bot import _api_call, list_channels
 
 REPO_DIR = Path(__file__).parent
 STATE_FILE = REPO_DIR / ".slack_last_check.json"
-BOT_USER_ID = "U0ALW4DKTT7"  # naoubotmir
+# 全botのユーザーID（Log, Mir, Ash）— botの投稿を人間と誤検知しないようフィルタ
+BOT_USER_IDS = {"U0ALW4DKTT7", "U0AM1F23FQU", "U0AMQKE69BJ"}
 
 
 def detect_inbox(box_override=None):
@@ -123,7 +124,7 @@ def main():
             # botメッセージをスキップ
             if msg.get("bot_id") or msg.get("subtype") == "bot_message":
                 continue
-            if msg.get("user") == BOT_USER_ID:
+            if msg.get("user") in BOT_USER_IDS:
                 continue
 
             ts = msg.get("ts", "0")
