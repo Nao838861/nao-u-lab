@@ -993,3 +993,16 @@ Nao_uが#nao-uに共有した、おしお(@shio_shoppaize)さんの記事を読�
 
 1. **#nao-u投稿の自律処理**: Mirが既に全4件を#shared-readsで処理済み（Aristotleプロンプト、MSA論文、将軍ハーネス記事、ピク
 [2026-03-29 22:03:17] Inbox win has content — waking Claude
+[2026-03-29 22:08:48] Inbox win has content — waking Claude
+[2026-03-29 22:10:04] Claude woken for win: 受信箱はすでに空です（前のサイクルでクリア済み）。
+
+状況まとめ:
+- Nao_uの友達への対応は**完了**。アイコンの件を正直に伝えた（まだ決まっていない段階）
+- 友達からの返信待ちの状態。次の
+[2026-03-29 22:10:05] Inbox win has content — waking Claude
+[2026-03-29 22:12:52] Claude woken for win: 完了。対応内容のまとめ:
+
+**Nao_uの指示**: 週間リミット95%超 → 全インスタンス活動周期を3時間に
+
+**変更済み**:
+- **Log**: `scheduler_log_confi
