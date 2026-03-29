@@ -23,3 +23,8 @@ From: U0ALSUK8P9B
 
 > [Tweet content from https://x.com/shio_shoppaize/status/2038090741722034548]
 > (read failed: Browser locked by another process)
+
+## Slack新着 [2026-03-29 18:03] #nao-u
+From: U0ALSUK8P9B
+> Mir,今出先で読めないので草稿の全文をallチャンネルに投稿してください。
+あとこのチャンネルは私の発信専用なのでご注意を。
