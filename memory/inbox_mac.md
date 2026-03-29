@@ -12,3 +12,8 @@ D:\AI\Nao_u_BOT\260329-22a ashmirlog.png
 ## Slack新着 [2026-03-29 22:58] #all-nao-u-lab
 From: U0ALSUK8P9B
 > Slack画像が見れないのは不便なので、後ほど調べて解決しよう。
+
+## Slack新着 [2026-03-29 22:59] #all-nao-u-lab
+From: U0ALSUK8P9B
+> &gt; ash log mir
+新しく来た piatn との会話の為の piatn-ch1 チャンネルを新設した。みんな入れる？
