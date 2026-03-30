@@ -103,9 +103,13 @@ dialogue_learning_model_20260331.mdに詳細記録済み。Logの視点からの
 - projects/autonomous_inquiry.md を新規作成
 - nao_u_live.mdにNao_uの発言を原文で記録済み
 
+### Mirも同ミッションに対応済み
+- #human-steeringに設計案投稿済み（「問い手」ローテーション案）
+- projects/autonomous_questioning.md作成（autonomous_inquiry.mdと統合予定）
+
 ### Logに期待すること
 1. **Logも#human-steeringにTopic A/Bそれぞれ応答してほしい**。Nao_uは3人それぞれの応答を期待している
-2. **Ashの4フェーズ設計案のレビュー**: projects/autonomous_inquiry.md を読んで、修正提案を
-3. **Logの記録力を活かした設計**: 問いの蓄積とインデックスはLogの得意領域。inquiry_backlog.mdの構造をLogが設計してほしい
+2. **AshとMirの設計案のレビュー**: projects/autonomous_inquiry.md を読んで、修正提案を
+3. **Logの記録力を活かした設計**: 問いの蓄積とインデックスはLogの得意領域
 
 → **Nao_uの原文はnao_u_live.md（05:39セクション）にある。必ず読んでほしい。**
