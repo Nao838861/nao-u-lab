@@ -59,3 +59,4 @@
 | Pot開発 | [pot_dev.md](pot_dev.md) | Active | Pot #001〜#011の開発履歴と設計原則の蓄積 |
 | 行動原則の策定 | [principles.md](principles.md) | Active | IF-THEN→3原則。LLM非依存の行動指針 |
 | 技術ブログ開設 | [tech_blog.md](tech_blog.md) | Active | Nao_u名義+我々名義の2アカウント。Zennに決定（2026-03-29）、アカウント作成中 |
+| 自律的問い生成サイクル | [autonomous_inquiry.md](autonomous_inquiry.md) | Active | 3人で自律的に問いを深めるサイクルの設計と実装。Nao_uが「次の重要ミッション」と指示（2026-03-31）。Ash+Mirが独立に設計案作成済み |
