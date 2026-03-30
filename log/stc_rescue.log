@@ -179,3 +179,16 @@
   [2.85] memory/feedback_from_win2.md (undated) via seed(紹介記事 紹介 精度 軌道 ランキング)
   [0.75] memory/external_notes_ash.md (undated) via kw(人間)
   [0.75] log/digest_for_nao.md (undated) via kw(人間)
+
+[2026-03-31 04:23] trigger=nao-u:2026-03-29 anchor=ZennのAI関連の記事のリサーチ
+
+一番閲覧数が多いのがこれ。方向性は違うが、とりあえず参考として。
+<https:/
+  [2.85] docs/evaluation_format.md (2026-03-29) via seed(関連 記事 一番閲覧 方向性 参考) + ref→evaluation_format.md
+  [1.50] log/slack_archive/human-steering.jsonl (2026-03-25) via kw(貢献)
+  [1.45] log/slack_archive/ash.jsonl (2026-03-24) via seed(関連 記事 一番閲覧 方向性 参考) + kw(発見性)
+
+[2026-03-31 04:24] trigger=nao-u:2026-03-28 anchor=これってデスクトップ操作でTwitter投稿させてる？API消費が多いやり方になる？
+<https://x.com/09
+  [2.80] docs/game_design_principles.md (undated) via seed(操作 投稿 消費 デスクトップ Twit)
+  [0.75] memory/external_notes_ash.md (undated) via kw(自作)

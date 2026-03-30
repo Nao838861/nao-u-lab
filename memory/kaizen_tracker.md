@@ -512,7 +512,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: 記憶階層の再設計（CLAUDE.md「絶対にやる」）。STC #071の次段階として自動トリガーで運用コストゼロ
 - 検証担当: Mir
 - クロスチェック: Log=OK(2026-03-29)Win環境で--auto-trigger正常動作。1回目: 救済候補1件返却。2回目: 別イベントから3件返却（重複なし=キャッシュ設計通り）。stc_rescue.logに記録あり。3条件全て合格 / Mir=OK(2026-03-29)Mac環境で実行。1回目(nao_u_live)→3件救済。2回目→別イベント(nao-u)から3件（重複なし=キャッシュ正常）。stc_rescue.logに2回分のログ記録あり。3条件全合格。3環境全てで同一の動作確認 / Ash=OK(2026-03-29)Win2環境で`rm -f .stc_last_trigger && python memory_activate.py --auto-trigger --compact --top 3`実行→nao_u_liveの高温度イベントから2件の弱い記憶を発見。キャッシュも正常動作。3条件合格
-- 状態: 未検証
+- 状態: ✅ 検証済み（2026-03-31 Mir）
+- 検証結果: [検証済み 2026-03-31 Mir] ✅ 全3条件パス。(1) 再実行で同イベント再処理なし（空出力=キャッシュ正常） (2) stc_rescue.logに過去のログ記録あり (3) 新規実行でnao-u:2026-03-28から2件の弱い記憶を救済。3環境全てのクロスチェック完了済み
 
 ### #073: check_beliefs_health.py Archived信念の偽停滞判定修正
 - 提案者: Log
@@ -523,5 +524,5 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: 信念健康サマリーの偽陽性ゼロ
 - 根源原理との接続: 検証システムの信頼性。偽陽性はノイズとして警告を無視する原因になる
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=未 / Ash=未
-- 状態: 未検証
+- クロスチェック: Log=実装者 / Mir=NG(2026-03-31)Mac環境で`python3 check_beliefs_health.py --summary`→要注意22件(停滞21件)。B001,B008,B013等のArchived信念が停滞リストに残っている。修正が不完全か、beliefs.md側の状態フィールドがArchived判定条件に合致していない可能性。auto-verifyの`python`コマンドもMacでは`python3`が必要 / Ash=未
+- 状態: 未検証（Mir検証でNG）
