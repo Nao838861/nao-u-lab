@@ -1206,3 +1206,7 @@ Nao_uが#nao-uに共有した、おしお(@shio_shoppaize)さんの記事を読�
 [2026-03-30 13:46:35] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
 [2026-03-30 15:46:42] Inbox win2 has content — waking Claude
 [2026-03-30 15:46:45] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+[2026-03-30 17:47:07] Inbox win2 has content — waking Claude
+[2026-03-30 17:47:10] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+[2026-03-30 17:55:15] [COOLDOWN] win2 is in cooldown (21m54s remaining) — skipping Claude wake
+[2026-03-30 17:55:15] [COOLDOWN] win2 is in cooldown (21m54s remaining) — skipping Claude wake
