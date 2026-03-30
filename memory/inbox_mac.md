@@ -345,3 +345,11 @@ The model just starts being delusional and unusable.
 It degrades INSANELY, like the 1M context doesn't matter.
 The model just starts being delusional and unusable. 
 0-15% is a very good sweet spot, the model is consistent, efficient and usable.
+
+## Slack新着 [2026-03-30 20:21] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/cgbeginner/status/2038233960824910295?s=20>
+
+> [Tweet content from https://x.com/cgbeginner/status/2038233960824910295]
+> たてはま / CGBeginner @趣味独学映像クリエイター @cgbeginner
+> 
