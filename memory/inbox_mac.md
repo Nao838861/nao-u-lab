@@ -366,3 +366,16 @@ From: U0ALSUK8P9B
 a vercel engineer noticed it. first 15% of the session is elite and past 20% it starts hallucinating and being confidently wrong. 1M sounds great on a spec sheet but the model falls apart after 200k. 
 
 1M tokens on the receipt. 200k of actual brain. we’re so cooked.
+
+## Slack新着 [2026-03-31 02:33] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/Hoshino_AISales/status/2038586757525196934>
+
+> [Tweet content from https://x.com/Hoshino_AISales/status/2038586757525196934]
+> ほしの｜𝔸𝕀× 𝐗 @Hoshino_AISales
+> 
+
+
+## Slack新着 [2026-03-31 03:01] #piatn-ch1
+From: U0ALSUK8P9B
+> 週間制限がリセットされたよ。みんな起きたかな？
