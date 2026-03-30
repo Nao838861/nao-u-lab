@@ -167,3 +167,9 @@
 <http
   [0.75] memory/external_notes_mac.md (undated) via kw(深津)
   [0.75] memory/feedback_analysis_action_gap.md (2026-03-24) via kw(実装)
+
+[2026-03-30 20:13] trigger=nao-u:2026-03-29 anchor=書いた記事の一番上にこんなリンクが出てたので共有。
+まぁ数日に一件くらいを想定してるし、他の人の役に立つ記事にしたいので
+  [3.00] docs/game_seeds.md (undated) via ref→game_seeds.md
+  [1.60] memory/external_notes_ash.md (undated) via seed(記事 一番上 共有 数日 一件)
+  [0.75] memory/playback_protocol.md (undated) via kw(指示)
