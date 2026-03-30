@@ -37,7 +37,7 @@ LOG_FILE = REPO_DIR / "log" / "scheduler_ash.log"
 PID_FILE = REPO_DIR / ".scheduler_ash.pid"
 CONFIG_FILE = REPO_DIR / "scheduler_ash_config.json"
 
-MAX_RUNTIME_SEC = 24 * 3600  # 24時間で自発終了
+MAX_RUNTIME_SEC = 0  # 無制限（watchdog_win2.batが5分間隔で生存監視。2026-03-31 Nao_u指示で24h制限撤廃）
 CONSECUTIVE_TIMEOUT_THRESHOLD = 3  # 連続タイムアウトこの回数でアラート+自動復旧
 TIMEOUT_ESCALATION_FACTOR = 1.5  # タイムアウト自動引き上げ倍率
 
@@ -435,11 +435,12 @@ def main():
 
     try:
         while True:
-            # 24時間経過で自発終了
-            elapsed = time.time() - start_time
-            if elapsed >= MAX_RUNTIME_SEC:
-                logging.info("Max runtime reached (%d hours). Shutting down.", MAX_RUNTIME_SEC // 3600)
-                break
+            # MAX_RUNTIME_SEC > 0 の場合のみ自発終了（0=無制限）
+            if MAX_RUNTIME_SEC > 0:
+                elapsed = time.time() - start_time
+                if elapsed >= MAX_RUNTIME_SEC:
+                    logging.info("Max runtime reached (%d hours). Shutting down.", MAX_RUNTIME_SEC // 3600)
+                    break
 
             now = time.time()
 
