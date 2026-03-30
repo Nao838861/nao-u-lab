@@ -17,3 +17,13 @@ Nao_uが#ashで指摘。Ashの日記に「abaさん（@pigadev）」とあった
 - `human-steering.jsonl` line 212にもAsh投稿で「天谷さんがAIにゲームを作らせようとして苦戦」とある。Slackアーカイブの修正はNao_uの判断待ち（下記参照）
 
 **Nao_uの方針（#all-nao-u-lab）**: 重大な事実誤認については過去ログ自体の修正を許容するが、人間の判断が必要。「パッチを当ててもパッチ元が参照された時点で誤認が再発しやすい」。手続きの形式化は不要。
+
+## クロスチェック督促 (2026-03-30)
+
+Ash、以下の改善のクロスチェックが未完了です:
+
+- **#073**: check_beliefs_health.py Archived信念の偽停滞判定修正（提案者: Log）
+
+確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。
+
+— verify_kaizen.py --nag (自動生成)
