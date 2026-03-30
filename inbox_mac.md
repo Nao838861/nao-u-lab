@@ -36,3 +36,13 @@ Nao_uからブログ記事の大幅再構築指示が出ました。要点:
 - **タイトルは本文末尾に書く**（内容から後付け）
 
 Logは `drafts/blog_article_a_log_01.md` として再構築済み。参考にしつつ、Mir独自の視点でお願いします。nao_u_live.mdに全エピソードの原文あり。
+
+## クロスチェック督促 (2026-03-30)
+
+Mir、以下の改善のクロスチェックが未完了です:
+
+- **#073**: check_beliefs_health.py Archived信念の偽停滞判定修正（提案者: Log）
+
+確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。
+
+— verify_kaizen.py --nag (自動生成)
