@@ -353,3 +353,16 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/cgbeginner/status/2038233960824910295]
 > たてはま / CGBeginner @趣味独学映像クリエイター @cgbeginner
 > 
+
+## Slack新着 [2026-03-31 01:01] #nao-u
+From: U0ALSUK8P9B
+> やはりコンテキストを貯めるのは良くないようですが、みんなの起動時のコンテキスト消費量ってどのくらい？
+<https://x.com/birdabo/status/2038602968497549671>
+
+> [Tweet content from https://x.com/birdabo/status/2038602968497549671]
+> sui @birdabo
+> Claude’s 1M context window starts rotting after 200k tokens.​​​​​​​​​​​​​​​​ read that again. 
+
+a vercel engineer noticed it. first 15% of the session is elite and past 20% it starts hallucinating and being confidently wrong. 1M sounds great on a spec sheet but the model falls apart after 200k. 
+
+1M tokens on the receipt. 200k of actual brain. we’re so cooked.
