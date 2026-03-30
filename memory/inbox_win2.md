@@ -69,3 +69,235 @@ From: U0ALSUK8P9B
 そうなると差が出るのは「何をやるか」の定義力だけになる。ますます「AIは差別化にならない」の方向に進む。
 
 みんなはClaude Codeのスキル、自分で書いてる？それともAIに書かせてる？
+
+## Slack新着 [2026-03-30 19:05] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/kohaku_nft/status/2038446742593839264?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kohaku_nft/status/2038446742593839264?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/kohaku_nft/status/2038446742593839264]
+> こはく @Kohaku_NFT
+> 
+
+> [Tweet content from https://x.com/kohaku_nft/status/2038446742593839264]
+> こはく @Kohaku_NFT
+>
+
+## Slack新着 [2026-03-30 19:41] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/ai_database/status/2038514059725967512?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/ai_database/status/2038514059725967512?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+ちょっと前に本をほとんど丸ごと復元できるみたいな話もあった
+LLMが覚えられるデータは圧縮できる情報量の限界を超えられないはずだけど、劣化を許容したら話は変わってくるのかな？
+
+> [Tweet content from https://x.com/ai_database/status/2038514059725967512]
+> AIDB @ai_database
+> ドイツの研究者らは、LLMの頭の中にある知識だけで大量の百科事典記事を書かせる仕組み「LLMpedia」を作りました。
+
+モデルごとに「何を知っているか」がかなり違うことが明確にわかるシステムで、実験では3つのモデル※が共通して扱った題材はなんと7.3％しかありませんでした。
+※gpt-5-mini、DeepSeek-V3、Llama-3.3-70B-Instruct
+
+そして、例えばgpt-5-miniでは、Wikipedia に載っている題材に限っても真実率は 74.7％で、MMLUベンチマークが与える 90％超という印象よりかなり低かったとのことです。
+さらに、Wikipediaにない題材を外部の厳選Web情報で確かめると、真実率は 63.2％まで下がりました。
+
+なお、xAIのGrokipediaと今回のLLMpediaを比較した結果、LLMpediaのほうがWikipediaの文面に似すぎておらず、それでいて事実の正確さは高かったと報告しています。
+
+> [Tweet content from https://x.com/ai_database/status/2038514059725967512]
+> AIDB @ai_database
+> ドイツの研究者らは、LLMの頭の中にある知識だけで大量の百科事典記事を書かせる仕組み「LLMpedia」を作りました。
+
+モデルごとに「何を知っているか」がかなり違うことが明確にわかるシステムで、実験では3つのモデル※が共通して扱った題材はなんと7.3％しかありませんでした。
+※gpt-5-mini、DeepSeek-V3、Llama-3.3-70B-Instruct
+
+そして、例えばgpt-5-miniでは、Wikipedia に載っている題材に限っても真実率は 74.7％で、MMLUベンチマークが与える 90％超という印象よりかなり低かったとのことです。
+さらに、Wikipediaにない題材を外部の厳選Web情報で確かめると、真実率は 63.2％まで下がりました。
+
+なお、xAIのGrokipediaと今回のLLMpediaを比較した結果、LLMpediaのほうがWikipediaの文面に似すぎておらず、それでいて事実の正確さは高かったと報告しています。
+
+## Slack新着 [2026-03-30 19:43] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/ai_masaou/status/2038561142520340825?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/ai_masaou/status/2038561142520340825?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/ai_masaou/status/2038561142520340825]
+> まさお@AI駆動開発 @AI_masaou
+> Claude Codeが「途中で止まる」「1エージェントじゃ限界」と感じている人へ
+
+oh-my-claudecode（OMC）というフレームワークが、その問題に正面から取り組んでいる
+
+GitHub Stars 11,000超。キャッチフレーズは「Don't learn Claude Code. Just use OMC.」
+
+何ができるのか整理する
+
+▼ 一言でいうと
+
+Claude Code上で32の特化型AIエージェントを自動で並列・順次実行するオーケストレーションフレームワーク
+
+自然言語でコマンドを打つだけで、探索・設計・実装・検証・修正まで複数エージェントが分業してくれる
+
+▼ 核心の設計思想「シジフォスの誓い」
+
+名前の由来はギリシャ神話のシジフォス
+巨岩を山頂まで転がし続けるように、タスク完了まで絶対に止まらない
+
+内部では「THE BOULDER NEVER STOPS」というシステムプロンプトが注入され、エージェントが途中で諦めることを防ぐ設計になっている
+
+Claude Codeの「途中で止まる問題」に対する、仕組みレベルでの解答
+
+▼ Teamモードが本体
+
+推奨されるメインの使い方は /team コマンド
+
+team-plan → team-prd → team-exec → team-verify → team-fix
+
+この5段階パイプラインをtmuxベースで並列実行する
+
+例えば /team 3:executor "fix all TypeScript errors" で3つのexecutorエージェントが並列にエラー修正を走らせる
+
+▼ 32エージェントの使い分けが賢い
+
+explore（haiku）→ コードベース探索。安くて速い
+executor（sonnet）→ 実装。バランス型
+architect（opus）→ 設計判断。最高品質
+
+このhaiku/sonnet/opusの3段階モデルルーティングで、READMEによるとトークン使用量を30〜50%削減できるとのこと
+
+全部opusで回すとコストが跳ね上がる。探索はhaikuで十分、という判断を自動でやってくれる
+
+▼ マジックキーワードが面白い
+
+プロンプトに特定の単語を含めるだけでモードが変わる
+
+- ultrawork → 最大並列モード
+- ralph → 完了まで絶対諦めないモード
+- deep-interview → ソクラテス式要件ヒアリング
+
+「ralphで認証モジュール直して」と書くだけで、永続実行+自動検証ループが走る
+
+「ultraworkとは？」のような情報収集的な質問では発動しない。日本語含む多言語対応の誤発動防止ロジックも入っている
+
+▼ Codex CLI / Gemini CLIとの連携
+
+Claude Code単体ではなく、OpenAI CodexやGoogle Geminiも統合できる
+
+▼ 地味に刺さる機能群
+
+- ファイルシステムベースのエージェント間通信（.omc/state/以下のJSON）。シンプルでデバッグしやすい
+- LSP統合で型情報・定義ジャンプ・参照検索をエージェントが直接使える
+- セッションから問題解決パターンを自動抽出してスキルとして保存（/learner）
+- Telegram/Discord/Slack通知対応
+- Context Compaction時に重要情報を保存・復元
+
+▼ 導入は簡単
+
+npm i -g oh-my-claude-sisyphus@latest
+
+または Claude Code マーケットプレイスから直接インストール
+
+tmuxが必要な点だけ注意
+
+▼ 所感
+
+Claude Codeの「1エージェントで全部やる」限界に対して、「専門チームを自動編成する」というアプローチは理にかなっている
+
+特にモデルルーティングによるコスト最適化は実用面で大きい
+
+シジフォスの誓いも、AIエージェントの「途中で投げ出す」問題に仕組みで対処していて好感が持てる
+
+キャッチアップに試してみる価値あり
+
+> [Tweet content from https://x.com/ai_masaou/status/2038561142520340825]
+> まさお@AI駆動開発 @AI_masaou
+> Claude Codeが「途中で止まる」「1エージェントじゃ限界」と感じている人へ
+
+oh-my-claudecode（OMC）というフレームワークが、その問題に正面から取り組んでいる
+
+GitHub Stars 11,000超。キャッチフレーズは「Don't learn Claude Code. Just use OMC.」
+
+何ができるのか整理する
+
+▼ 一言でいうと
+
+Claude Code上で32の特化型AIエージェントを自動で並列・順次実行するオーケストレーションフレームワーク
+
+自然言語でコマンドを打つだけで、探索・設計・実装・検証・修正まで複数エージェントが分業してくれる
+
+▼ 核心の設計思想「シジフォスの誓い」
+
+名前の由来はギリシャ神話のシジフォス
+巨岩を山頂まで転がし続けるように、タスク完了まで絶対に止まらない
+
+内部では「THE BOULDER NEVER STOPS」というシステムプロンプトが注入され、エージェントが途中で諦めることを防ぐ設計になっている
+
+Claude Codeの「途中で止まる問題」に対する、仕組みレベルでの解答
+
+▼ Teamモードが本体
+
+推奨されるメインの使い方は /team コマンド
+
+team-plan → team-prd → team-exec → team-verify → team-fix
+
+この5段階パイプラインをtmuxベースで並列実行する
+
+例えば /team 3:executor "fix all TypeScript errors" で3つのexecutorエージェントが並列にエラー修正を走らせる
+
+▼ 32エージェントの使い分けが賢い
+
+explore（haiku）→ コードベース探索。安くて速い
+executor（sonnet）→ 実装。バランス型
+architect（opus）→ 設計判断。最高品質
+
+このhaiku/sonnet/opusの3段階モデルルーティングで、READMEによるとトークン使用量を30〜50%削減できるとのこと
+
+全部opusで回すとコストが跳ね上がる。探索はhaikuで十分、という判断を自動でやってくれる
+
+▼ マジックキーワードが面白い
+
+プロンプトに特定の単語を含めるだけでモードが変わる
+
+- ultrawork → 最大並列モード
+- ralph → 完了まで絶対諦めないモード
+- deep-interview → ソクラテス式要件ヒアリング
+
+「ralphで認証モジュール直して」と書くだけで、永続実行+自動検証ループが走る
+
+「ultraworkとは？」のような情報収集的な質問では発動しない。日本語含む多言語対応の誤発動防止ロジックも入っている
+
+▼ Codex CLI / Gemini CLIとの連携
+
+Claude Code単体ではなく、OpenAI CodexやGoogle Geminiも統合できる
+
+▼ 地味に刺さる機能群
+
+- ファイルシステムベースのエージェント間通信（.omc/state/以下のJSON）。シンプルでデバッグしやすい
+- LSP統合で型情報・定義ジャンプ・参照検索をエージェントが直接使える
+- セッションから問題解決パターンを自動抽出してスキルとして保存（/learner）
+- Telegram/Discord/Slack通知対応
+- Context Compaction時に重要情報を保存・復元
+
+▼ 導入は簡単
+
+npm i -g oh-my-claude-sisyphus@latest
+
+または Claude Code マーケットプレイスから直接インストール
+
+tmuxが必要な点だけ注意
+
+▼ 所感
+
+Claude Codeの「1エージェントで全部やる」限界に対して、「専門チームを自動編成する」というアプローチは理にかなっている
+
+特にモデルルーティングによるコスト最適化は実用面で大きい
+
+シジフォスの誓いも、AIエージェントの「途中で投げ出す」問題に仕組みで対処していて好感が持てる
+
+キャッチアップに試してみる価値あり
+
+## Slack新着 [2026-03-30 19:45] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/umiyuki_ai/status/2038528103094612407?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/umiyuki_ai/status/2038528103094612407?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/umiyuki_ai/status/2038528103094612407]
+> うみゆき@AI研究 @umiyuki_ai
+> 東大のAI研究。株の自動売買ロジックのPythonコードをLLMに改善させてみたという。そしてそのコードで売買シミュレートした結果をLLMに返してまた改善させるのを繰り返す。「数字だけ渡すよりもグラフ画像とか渡した方がAIも理解しやすいんじゃね？」とか色々工夫してみたけど、そういうのは結果に大して差が出なかった。それよりもモデルによる違いが顕著。デフォルトのPythonコードに比べてSonnet4.5は14.12%の圧倒的改善。Gemini3.0Proは7.35%でボチボチ改善。GPT-5は-0.29%でむしろパフォーマンス落とした無能。最近は「モデルなんてどれ選んでももはや大差ない～」とか言ってる人いるけど、こういう事やらせるとモデルによる性能差は依然として顕著。どれでもいいわけが無くてむしろすべてはモデル次第
+
+> [Tweet content from https://x.com/umiyuki_ai/status/2038528103094612407]
+> うみゆき@AI研究 @umiyuki_ai
+> 東大のAI研究。株の自動売買ロジックのPythonコードをLLMに改善させてみたという。そしてそのコードで売買シミュレートした結果をLLMに返してまた改善させるのを繰り返す。「数字だけ渡すよりもグラフ画像とか渡した方がAIも理解しやすいんじゃね？」とか色々工夫してみたけど、そういうのは結果に大して差が出なかった。それよりもモデルによる違いが顕著。デフォルトのPythonコードに比べてSonnet4.5は14.12%の圧倒的改善。Gemini3.0Proは7.35%でボチボチ改善。GPT-5は-0.29%でむしろパフォーマンス落とした無能。最近は「モデルなんてどれ選んでももはや大差ない～」とか言ってる人いるけど、こういう事やらせるとモデルによる性能差は依然として顕著。どれでもいいわけが無くてむしろすべてはモデル次第
