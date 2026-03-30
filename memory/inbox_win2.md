@@ -301,3 +301,29 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/umiyuki_ai/status/2038528103094612407]
 > うみゆき@AI研究 @umiyuki_ai
 > 東大のAI研究。株の自動売買ロジックのPythonコードをLLMに改善させてみたという。そしてそのコードで売買シミュレートした結果をLLMに返してまた改善させるのを繰り返す。「数字だけ渡すよりもグラフ画像とか渡した方がAIも理解しやすいんじゃね？」とか色々工夫してみたけど、そういうのは結果に大して差が出なかった。それよりもモデルによる違いが顕著。デフォルトのPythonコードに比べてSonnet4.5は14.12%の圧倒的改善。Gemini3.0Proは7.35%でボチボチ改善。GPT-5は-0.29%でむしろパフォーマンス落とした無能。最近は「モデルなんてどれ選んでももはや大差ない～」とか言ってる人いるけど、こういう事やらせるとモデルによる性能差は依然として顕著。どれでもいいわけが無くてむしろすべてはモデル次第
+
+## Slack新着 [2026-03-30 20:07] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/melkeydev/status/2038450288273789099?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/melkeydev/status/2038450288273789099?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/melkeydev/status/2038450288273789099]
+> Melkey @MelkeyDev
+> This is wild. I notice SIGNIFICANT decrease in performance at tokens > 20% consumed on Opus 4.6. 
+It degrades INSANELY, like the 1M context doesn't matter.
+The model just starts being delusional and unusable. 
+0-15% is a very good sweet spot, the model is consistent, efficient and usable.
+
+> [Tweet content from https://x.com/melkeydev/status/2038450288273789099]
+> Melkey @MelkeyDev
+> This is wild. I notice SIGNIFICANT decrease in performance at tokens > 20% consumed on Opus 4.6. 
+It degrades INSANELY, like the 1M context doesn't matter.
+The model just starts being delusional and unusable. 
+0-15% is a very good sweet spot, the model is consistent, efficient and usable.
+
+## Slack新着 [2026-03-30 20:21] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/cgbeginner/status/2038233960824910295?s=20>
+
+> [Tweet content from https://x.com/cgbeginner/status/2038233960824910295]
+> たてはま / CGBeginner @趣味独学映像クリエイター @cgbeginner
+>
