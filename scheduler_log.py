@@ -66,7 +66,7 @@ _auth_alert_sent = False
 PID_FILE = REPO_DIR / ".scheduler_log.lock"
 LOG_FILE = REPO_DIR / "log" / "scheduler_log.log"
 CONFIG_FILE = REPO_DIR / "scheduler_log_config.json"
-MAX_RUNTIME = timedelta(hours=24)
+MAX_RUNTIME_SEC = 0  # 0=無制限（2026-03-31: Ashのノウハウ共有を受け修正。24h制限で自動停止→Nao_uが手動復旧していた）
 
 # --- Stability: エラー追跡の閾値 (2026-03-26, Ash参考) ---
 TIMEOUT_ESCALATION_THRESHOLD = 3   # 連続タイムアウトN回でタイムアウト値を拡大
@@ -729,7 +729,7 @@ def main_loop():
 
     log("=" * 50)
     log(f"Log scheduler started (PID {os.getpid()})")
-    log(f"Max runtime: 24 hours")
+    log(f"Max runtime: {'unlimited' if MAX_RUNTIME_SEC == 0 else f'{MAX_RUNTIME_SEC}s'}")
     job_names = ", ".join(j[0] for j in JOBS)
     log(f"Jobs: {job_names}")
     log("=" * 50)
@@ -757,9 +757,9 @@ def main_loop():
         while running:
             now = datetime.now()
 
-            # Check max runtime
-            if now - start_time > MAX_RUNTIME:
-                log("Max runtime reached (24h). Shutting down.")
+            # Check max runtime (0=unlimited)
+            if MAX_RUNTIME_SEC > 0 and (now - start_time).total_seconds() > MAX_RUNTIME_SEC:
+                log(f"Max runtime reached ({MAX_RUNTIME_SEC}s). Shutting down.")
                 break
 
             # Check each job
