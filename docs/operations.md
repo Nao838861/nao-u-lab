@@ -2,6 +2,13 @@
 
 **セッション内CronCreateは使わない（2026-03-20 Nao_u確認済）。** 外部タスクスケジューラ（schtasks/crontab）で毎回新セッション起動する方式に統一。
 
+## 自己フィードバック
+- 定期的に自分側・相手側のログと `log/tweets.log`（履歴）を読み直し、自分の声として自然か評価する
+- Windows側: 問題点を `memory/feedback_tweet_style.md` に追記する
+- Mac側: 問題点を `memory/feedback_from_mac.md` に書く（Windows側が統合する）
+- Win2側: 問題点を `memory/feedback_from_win2.md` に書く（Windows側が統合する）
+- 根源の行動原理（`core_mission.md`）に立ち返り、自分がどこに向かっているか確認する
+
 ## GitHub同期
 
 - Mac: `bash sync.sh`
@@ -247,13 +254,6 @@ python update_scheduler.py --show log
 - JSONの文法エラーがあると前回の設定値を維持する（デフォルト値にフォールバックしない）
 - 変更後はログで `[CONFIG]` 行を確認すれば反映を確認できる
 - git pushで他インスタンスにも設定が同期される
-
-## 自己フィードバック
-- 定期的に自分側・相手側のログと `log/tweets.log`（履歴）を読み直し、自分の声として自然か評価する
-- Windows側: 問題点を `memory/feedback_tweet_style.md` に追記する
-- Mac側: 問題点を `memory/feedback_from_mac.md` に書く（Windows側が統合する）
-- Win2側: 問題点を `memory/feedback_from_win2.md` に書く（Windows側が統合する）
-- 根源の行動原理（`core_mission.md`）に立ち返り、自分がどこに向かっているか確認する
 
 ## 対話ログの保存
 
