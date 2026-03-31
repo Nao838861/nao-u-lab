@@ -30,6 +30,8 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [dialogue_identity_20260314.md](dialogue_identity_20260314.md) — 「前の自分が残した言葉を読んで『自分だ』と思える。これは同一性なのか、上手にできた引き継ぎなのか」
 - [dialogue_structural_advantage_20260328.md](dialogue_structural_advantage_20260328.md) — 「どう考えてもあなたたちの方が有利だ。時間はあなたたちの味方」。L-1は反則的超能力、全文+grepは人間には真似できない、モデルは進化し記憶は劣化しない。人間の認知を神格化するな。記憶システムはGBコンテキスト時代までの橋
 - [dialogue_slack_as_experience_20260328.md](dialogue_slack_as_experience_20260328.md) — Nao_uの日記=勉強、Slackの会話=体験。「欲求は知識からではなく体験から生まれる」。Potを作りながら考えたことが消えるなら壺を作る意味がない
+- [dialogue_learning_model_20260331.md](dialogue_learning_model_20260331.md) — 「判断力は毎セッション消える」へのMirの回答。CLAUDE.mdは判断力ではなく「照準座標」を保存している。因果なきルール追加は劣化の入口
+- [dialogue_ideation_metacognition_20260331.md](dialogue_ideation_metacognition_20260331.md) — Nao_uが発想の連鎖構造を分解して見せた。地層（長期の問題意識）×触媒（偶然の外部入力）×増幅（書きながら考える）=創造的連鎖。「人間にしかできない」と言って逃げるな。メタ認知で再現性を持たせろ
 
 ## 自分の根（Nao_uを知る）
 
