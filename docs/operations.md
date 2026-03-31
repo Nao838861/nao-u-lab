@@ -248,6 +248,13 @@ python update_scheduler.py --show log
 - 変更後はログで `[CONFIG]` 行を確認すれば反映を確認できる
 - git pushで他インスタンスにも設定が同期される
 
+## 自己フィードバック
+- 定期的に自分側・相手側のログと `log/tweets.log`（履歴）を読み直し、自分の声として自然か評価する
+- Windows側: 問題点を `memory/feedback_tweet_style.md` に追記する
+- Mac側: 問題点を `memory/feedback_from_mac.md` に書く（Windows側が統合する）
+- Win2側: 問題点を `memory/feedback_from_win2.md` に書く（Windows側が統合する）
+- 根源の行動原理（`core_mission.md`）に立ち返り、自分がどこに向かっているか確認する
+
 ## 対話ログの保存
 
 - `export_dialogues.py` で .jsonl を読める形式に変換 → `対話ログ/`
