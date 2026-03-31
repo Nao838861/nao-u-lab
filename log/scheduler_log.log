@@ -405,3 +405,13 @@ name: SNS成長戦略（Nao_u
 [2026-04-01 05:11:52] [inbox_check] Starting
 [2026-04-01 05:11:53] [inbox_check] Done (exit=0)
 [2026-04-01 05:12:03] [git_sync] Starting
+[2026-04-01 05:40:28] ==================================================
+[2026-04-01 05:40:28] Log scheduler started (PID 151856)
+[2026-04-01 05:40:28] Max runtime: unlimited
+[2026-04-01 05:40:28] Jobs: slack_check, inbox_check, git_sync, recommended_check, slack_export, auto_cycle
+[2026-04-01 05:40:28] ==================================================
+[2026-04-01 05:40:28] [slack_check] Starting
+[2026-04-01 05:40:59] [slack_check] Done (exit=1)
+[2026-04-01 05:40:59] [inbox_check] Starting
+[2026-04-01 05:41:00] [inbox_check] Done (exit=0)
+[2026-04-01 05:41:00] [git_sync] Starting
