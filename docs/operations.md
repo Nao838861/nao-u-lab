@@ -1,5 +1,7 @@
 # 運用手順
 
+**セッション内CronCreateは使わない（2026-03-20 Nao_u確認済）。** 外部タスクスケジューラ（schtasks/crontab）で毎回新セッション起動する方式に統一。
+
 ## GitHub同期
 
 - Mac: `bash sync.sh`
