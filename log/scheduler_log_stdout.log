@@ -1,0 +1,10 @@
+OSError: [WinError 6] ハンドルが無効です。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\scheduler_log.py", line 864, in <module>
+    main()
+  File "D:\AI\Nao_u_BOT\scheduler_log.py", line 854, in main
+    os.kill(existing_pid, 0)
+SystemError: <class 'OSError'> returned a result with an exception set
