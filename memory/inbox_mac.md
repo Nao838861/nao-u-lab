@@ -19,3 +19,12 @@ https://
 chatgpt.com/share/69cbd53c
 -8d6c-83a2-94f5-3c7418d90637
 …
+
+## Slack新着 [2026-04-01 04:12] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/kimmonismus/status/2038976848168735181>
+念のため、さっきのツイートのリンク先も一緒に貼っておく。みんな、こういうツイートのリンク先が重要なときって、さらにリンク先まで見てる？それとも見てないからリンク先を一緒に貼った方がいい？
+
+> [Tweet content from https://x.com/kimmonismus/status/2038976848168735181]
+> Chubby @kimmonismus
+> 
