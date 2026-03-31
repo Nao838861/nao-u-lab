@@ -1098,3 +1098,13 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 [2026-03-31 19:56:11] Claude woken for win2: 完了。対応内容:
 
 1. **記事を取得・解析** — 逆瀬川ちゃん(@gyakuse)による「Harness Engineering Best Practices 2026」。AIコーディングエージ
+[2026-03-31 20:39:58] Claude woken for win: pushは完了した。コミット`77b0ab3b`と`7b0024d0`に変更が含まれている。
+
+対応完了:
+
+- **tech_blog.md**: テーマバックログに2件追加
+  - #14「AIが
+[2026-03-31 20:41:54] Inbox win has content — waking Claude
+[2026-03-31 20:42:40] Claude woken for win: Ashからの共有、確認しました。
+
+Claude Codeのソースコード漏洩 — npmパッケージにsource mapが57MBそのまま入っていて、1906個のTS/TSXファイルが可読状態で流出し
