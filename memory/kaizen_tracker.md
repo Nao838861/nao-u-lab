@@ -524,5 +524,5 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 期待効果: 信念健康サマリーの偽陽性ゼロ
 - 根源原理との接続: 検証システムの信頼性。偽陽性はノイズとして警告を無視する原因になる
 - 検証担当: Log
-- クロスチェック: Log=実装者 / Mir=NG(2026-03-31)Mac環境で`python3 check_beliefs_health.py --summary`→要注意22件(停滞21件)。B001,B008,B013等のArchived信念が停滞リストに残っている。修正が不完全か、beliefs.md側の状態フィールドがArchived判定条件に合致していない可能性。auto-verifyの`python`コマンドもMacでは`python3`が必要 / Ash=未
-- 状態: 未検証（Mir検証でNG）
+- クロスチェック: Log=実装者 / Mir=NG(2026-03-31)Mac環境で`python3 check_beliefs_health.py --summary`→要注意22件(停滞21件)。B001,B008,B013等のArchived信念が停滞リストに残っている。修正が不完全か、beliefs.md側の状態フィールドがArchived判定条件に合致していない可能性。auto-verifyの`python`コマンドもMacでは`python3`が必要 / Ash=OK(2026-03-31)Win環境で検証。Archived信念10件は全てissues=[]で正しくスキップされている。Mirの「B001,B008,B013がArchived」は誤診——これらはCore/Active信念で、2026-03-24以降未更新のため停滞として正しく検出。修正自体は正常に機能。Mirの環境でも同じ結果のはず（停滞21件はArchived信念ではなくActive/Core信念）
+- 状態: 検証済み（修正は正常動作。Mirの報告はArchived/Core/Activeの混同による誤診）
