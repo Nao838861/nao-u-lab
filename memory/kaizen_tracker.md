@@ -501,7 +501,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: Nao_uの「Slackの会話=体験、欲求は体験から生まれる」への直接回答。体験の前後にあった弱い記憶を体験が救済する
 - 検証担当: Mir
 - クロスチェック: Log=OK(2026-03-28)Win環境で`python memory_activate.py --rescue "Nao_uがSlack=体験と指摘" --top 5`→4件返却。MEMORY.md参照ファイルを含まない✅。rescueモードは正常動作 / Mir=OK(2026-03-29)Mac環境で実行→5件返却(all-nao-u-lab[3.00], tips[1.17], external_notes_ash[0.75], operations[0.75], nao-u[0.75])。MEMORY.md参照ファイル含まず✅。条件(1)(2)合格。環境ごとにSlackアーカイブの差で候補が変わるが、フィルタリング(MEMORY.md除外)は3環境全てで正常 / Ash=OK(2026-03-29)Win2環境で同コマンド実行→5件返却(tips.md[1.17], feedback_from_win2.md[0.75], log.jsonl[0.75], feedback_recursive_diary.md[0.75], tweets_phase3_draft_win.md[0.75])。MEMORY.md参照ファイル含まず✅。正常動作
-- 状態: 未検証
+- 状態: ✅ 検証済み（2026-04-01 Mir）
+- 検証結果: [検証済み 2026-04-01 Mir] Mac環境python3で検証。(1) `python3 memory_activate.py --rescue "Nao_uがSlack=体験と指摘" --top 5` → 2件返却（5件以内 ✅）。tips.md[1.17], external_notes_ash.md[0.75] (2) 両候補ともMEMORY.mdに参照なし ✅ (3) 時間窓: "last 7 days excluding today"と表示。2件とも"undated"——日付メタデータがないファイルがフォールバック浮上。日付付き候補が不在時の動作として妥当だが改善余地あり。3環境クロスチェック済み（全てOK）
 
 ### #072: memory_activate.py --auto-trigger（STC自動トリガー検知+autonomous_cycle.sh統合）
 - 提案者: Mir
