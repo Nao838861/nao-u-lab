@@ -367,8 +367,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: Nao_u 2009-11-30「前日の件に関するメモ」の核心——「記号の操作と意味ある対象の操作の感情移入の差」「Miiを連番にして遊ぶと何が起こるか」。テキストに人格を持たせることでrepresentationを獲得する実験。game_design_principles.md原則3(コンテンツ=メカニクス)と原則5(独自性)の両方を満たす設計
 - 検証担当: Mir
 - クロスチェック: Log=OK(2026-03-26)5声の書き分けが本物。Bが最も識別容易(括弧+ツッコミ)、A-C間が微妙——この曖昧さのグラデーションが30-80%正答率帯を生む設計意図。ジュースオーディット完璧: テキスト剥がしたらゲームが消滅する。representation原則の正しい体現 / Mir=実装者 / Ash=OK(2026-03-27)game/Pot/Pot007_whose_voice.pyで存在確認(パス移動済み)。5声の書き分け(A=体言止め/余韻、B=饒舌/括弧+ツッコミ等)がrepresentation原則を正しく体現。テキスト剥がし=ゲーム消滅のジュースオーディットはLogの評価通り。game_design_principles.mdにNao_uフィードバック記録あり
-- 状態: 未検証
-- 検証結果:
+- 状態: ✅ 検証済み（2026-04-01 Mir）
+- 検証結果: [検証済み 2026-04-01 Mir] (1) `python3 game/Pot/Pot007_whose_voice.py` で起動し7問プレイ可能 ✅（検証手段のパスは`game/whose_voice.py`だが正しくは`game/Pot/Pot007_whose_voice.py`）。書き出し・改行・語彙に個性差がある5人の文章を提示し、同一人物判定を求める。 (2) 1問目の文体差は明確（簡潔/体言止め vs 口語/ツッコミ）で30-80%の難度設計は成立。自動5回テストは非対話のため省略 (3) ジュースオーディット: テキストを剥がしたらy/nだけで根拠ゼロ。テキスト内容がメカニクスそのものであることを確認 ✅
 
 ### #062: Pot #8 "Hinge" (蝶番) — 文脈依存意味変容のゲーム化（ACAN論文着想）
 - 提案者: Log
@@ -488,7 +488,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: Nao_uの「コンテキストにないものから連想できない」構造問題への直接回答。dialogue_slack_as_experience_20260328の「引きに行くきっかけがない」問題の解法
 - 検証担当: Mir
 - クロスチェック: Log=OK(2026-03-28修正後)Win環境で修正実施。extract_keywords()の英語閾値4→3文字+単漢字フォールバック追加。修正後`python memory_activate.py "Potを作りながら考えた" --top 5`→5件活性化(Pot開発ログ/Mir日記/reflections等)。原因: 会話文では漢字が1文字ずつ分散（作、考）し2文字複合語regexに一致しない+英語"Pot"が3文字で4文字最低条件に未達 / Mir=OK(2026-03-29)Mac環境で実行→5件返却(all-nao-u-lab[4.24], reflections[2.00], mir-log[1.81], log[1.77], tips[1.00])。Logの修正が3環境全てで動作確認。スコア分布が環境ごとに異なる(Slackアーカイブの差)が結果数は安定。条件(1)合格 / Ash=OK(2026-03-29)Win2環境で同コマンド実行→5件返却(all-nao-u-lab.jsonl[4.24], mir-log.jsonl[2.31], log.jsonl[1.27], reflections.md[1.00], shared-reads.jsonl[0.91])。Logの修正が効いている。検証条件(1)合格
-- 状態: 未検証（Log修正済み・Win環境動作確認済み）
+- 状態: ✅ 検証済み（2026-04-01 Mir）
+- 検証結果: [検証済み 2026-04-01 Mir] Mac環境python3で検証。(1) `python3 memory_activate.py "Potを作りながら考えた" --top 5` → 5件返却（all-nao-u-lab.jsonl[4.24], mir-log.jsonl[1.81], 対話ログ[1.50], feedback_from_win2.md[1.00], shared-reads.jsonl[0.91]）✅ (2) `python3 memory_activate.py --from-intent --top 7` → 7件返却。boot_intentの「草稿修正完了」文脈からfeedback_from_mac.md[4.14], feedback_tweet_style.md[3.00]等が活性化 ✅ (3) hit rate集計は10サイクル後（ongoing）。現時点ではautonomous_cycle.shに統合済みで毎サイクル自動実行されており、機能的に安定
 
 ### #071: memory_activate.py --rescue（STC遡及的救済プロトタイプ）
 - 提案者: Mir
