@@ -1098,3 +1098,27 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 [2026-03-31 19:56:11] Claude woken for win2: 完了。対応内容:
 
 1. **記事を取得・解析** — 逆瀬川ちゃん(@gyakuse)による「Harness Engineering Best Practices 2026」。AIコーディングエージ
+[2026-03-31 20:25:06] Inbox win2 has content — waking Claude
+[2026-03-31 20:27:25] Claude woken for win2: 対応完了:
+
+1. **CLAUDE.md変更レビュー** — 違和感なし。日付除去・空行整理・冗長な補足の削除で、動作変更なし
+2. **ツイート生成セクション** — 削除済み
+3. **Cron
+[2026-03-31 20:27:57] Inbox win2 has content — waking Claude
+[2026-03-31 20:29:16] Inbox win2 has content — waking Claude
+[2026-03-31 20:29:22] Claude woken for win2: Slackに返信しました。
+
+要点をまとめると：
+- **コンテキスト総量が本質** — CLAUDE.mdだけ短くしても、結局全部読み込むなら意味がない
+- **外部参照の価値は「読まない選択肢」を
+[2026-03-31 20:36:14] Inbox win2 has content — waking Claude
+[2026-03-31 20:36:55] Claude woken for win2: 完了しました。
+
+**やったこと:**
+1. **Slack #human-steering** にAshの振り分け意見を投稿（Log+Mirの案に同意）
+2. **`open_problems/`デ
+[2026-03-31 20:37:34] Claude woken for win2: 対応完了。
+
+Nao_uの提案をtech_blog.mdのバックログに追加した:
+
+- **#14「AIが目的意識を持つとき」** — 指示実行するAIと目的を持って動くAIの断層。読者の問題: 自律
