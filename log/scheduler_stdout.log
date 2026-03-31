@@ -236,3 +236,4 @@
 [2026-03-31 20:36:51] [stability] inbox_check: 正常復帰 (timeout=1, errors=1 → リセット)
 [2026-03-31 20:36:51] [inbox_check] Done (exit=0)
 [2026-03-31 20:37:51] [slack_check] Starting
+[2026-03-31 20:38:13] [slack_check] Done (exit=1)
