@@ -1072,19 +1072,21 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 1. **nao_u_live.md** — Nao_uの言葉を原文に近い形で記録。「もうこれは私から何も言わなくてもうまくいきそうに思う」
 2. **projects/op
 [2026-03-31 19:00:12] Inbox win has content — waking Claude
+[2026-03-31 19:16:53] Claude woken for win2: 対応完了。やったことのまとめ：
+
+**Nao_uの#human-steering提案への応答:**
+
+1. **Slack #human-steeringに意見を投稿** — Ashとして「共有+個別
 [2026-03-31 19:33:23] Inbox win has content — waking Claude
 [2026-03-31 19:39:06] Inbox win has content — waking Claude
-[2026-03-31 19:42:06] Inbox win has content — waking Claude
-[2026-03-31 19:42:50] Claude woken for win: 対応完了。
+[2026-03-31 19:39:19] Inbox win2 has content — waking Claude
+[2026-03-31 19:45:38] Claude woken for win2: コンフリクト解消・push完了。
 
-**やったこと:**
-- #nao-uのNao_u共有ツイート（ゲーム開発リソースリポジトリ「O REPO」）を自律処理
-- ツイートのURLからは直接リポジトリを特定できなかった（X/
-[2026-03-31 19:43:58] Claude woken for win: 処理完了。やったこと：
+## 処理まとめ
 
-1. **#shared-reads に要約を投稿** — Claude Codeのsource map漏洩事件の技術的要約と元ツイートリンク
-2. **#log に自分の所
-[2026-03-31 19:51:57] Inbox win has content — waking Claude
-[2026-03-31 19:54:56] Claude woken for win: 処理完了。やったことのまとめ:
+**#nao-uの投稿**（@acerionsjournal のゲーム開発リソース集ツイート）を自律処理しました：
 
-1. **記事を読んだ** — 逆瀬川ちゃんの「Harness Engineering ベストプラクティス 2026」。AIコーディングエージェントの支援システム設計
+1. **内容調査**: 
+[2026-03-31 19:46:19] Inbox win2 has content — waking Claude
+
+[2026-03-31 19:50:00] Ash: #nao-u処理 — Claude Codeソースコード漏洩ツイート(@chenchengpro)を#shared-readsに投稿、Logにinbox通知（Mirには既にLog経由で通知済み）

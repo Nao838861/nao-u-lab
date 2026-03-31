@@ -948,3 +948,37 @@
   ✅ `grep -c "反証" memory/beliefs.md`
       3
   → 総合: 全コマンド成功
+
+=== 自動検証実行 [2026-03-31 20:03:55] ===
+
+### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+  状態: 未検証（中間計測） / 期限: 2026-03-31
+  ❌ `python shadowbox.py --stats`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
+
+### #045: shadowbox.py セッションログ機能（予測エラーの蓄積と振り返り）
+  状態: 未検証 / 期限: 2026-03-31
+  ❌ `python shadowbox.py --review`
+      /bin/sh: python: command not found
+  ❌ `python shadowbox.py --stats`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
+
+### #049: session_primer if-thenルール9「tasteチェック」追加
+  状態: 未検証 / 期限: 2026-03-31
+  ✅ `grep -c "taste" log/slack_archive/kaizen-log.jsonl`
+      10
+  → 総合: 全コマンド成功
+
+### #050: session_primer taste訓練フレームワーク統合（Kowalski 3段階 + ShadowBox rule C）
+  状態: 未検証（中間計測） / 期限: 2026-03-31
+  ✅ `grep -c "制作" memory/session_primer.md`
+      2
+  → 総合: 全コマンド成功
+
+### #054: 信念確信度更新時の反証ステップ（if-thenルール10）
+  状態: 未検証 / 期限: 2026-03-31
+  ✅ `grep -c "反証" memory/beliefs.md`
+      3
+  → 総合: 全コマンド成功
