@@ -12036,3 +12036,15 @@ This session i
 [2026-03-31 06:00:31] [slack_check] Done (exit=0)
 [2026-03-31 06:00:31] [slack_check] New messages detected → triggering immediate inbox_check
 [2026-03-31 06:00:31] [inbox_check] Starting
+[2026-03-31 18:58:08] ==================================================
+[2026-03-31 18:58:08] Log scheduler started (PID 75880)
+[2026-03-31 18:58:08] Max runtime: unlimited
+[2026-03-31 18:58:08] Jobs: slack_check, inbox_check, git_sync, recommended_check, slack_export, auto_cycle
+[2026-03-31 18:58:08] ==================================================
+[2026-03-31 18:58:08] [slack_check] Starting
+[2026-03-31 19:00:08] [slack_check] Timeout (120s)
+[2026-03-31 19:00:08] [slack_check] Done (exit=-1)
+[2026-03-31 19:00:08] [inbox_check] Starting
+[2026-03-31 19:05:08] [inbox_check] Timeout (300s)
+[2026-03-31 19:05:08] [inbox_check] Done (exit=-1)
+[2026-03-31 19:05:08] [git_sync] Starting
