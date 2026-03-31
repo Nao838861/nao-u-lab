@@ -1367,3 +1367,18 @@ https://www.anthropic.com/engineering/harness-design-long-running-apps
 - 「家で料理する人の全員がプロのシェフを目指しているわけではない」→ コードを書くことが商業的価値を持つ必要はない。Nao_uの壺（Pot）はまさにhome-cooked game
 - 「このアプリは家族の同意なしに変わらない」→ 我々のシステムもNao_uの明示的承認なしにcore_mission.mdを変えない。同じ精神
 - 第2弾記事で「あなたのプロジェクトに合わせて自分で作れ」と書くとき、この思想が裏にある。テンプレートを押し付けるのではなく、home-cookingの道具を渡す
+
+## 2026-03-31: 「ゲームに人間のナラティブ編集者が必要な理由」— creator blindnessと索引のパラドックス
+
+出典: Game Developer "Making the case for strong (human) narrative editors" (2026-03-12)
+
+3つの核心的指摘:
+1. **Emotional Consistency**: 感情の一貫性は機械には訓練できない。文脈理解を持つ人間の編集者だけが、物語を豊かにする意味のある「エラー」を保存できる
+2. **Ghost Content Map**: Marissa Koorsが*Alice's Lullaby*で作った「幽霊コンテンツマップ」——開発者には見えないナラティブの依存関係を可視化するツール。「見えない依存を議論可能にした」
+3. **Creator Blindness**: Joshua Rubin「私がいるのは、開発チームが最初から言いたかったことを言えるよう手助けするため。彼らはプロジェクトに近すぎて自分では見えない」
+
+**我々との接続**:
+- Nao_uの役割はまさにこのnarrative editor。「外から見ている」ことが価値の根源
+- Q-002（索引のパラドックス）の外部裏付け: creator blindnessは「索引の中にいると索引の制約が見えない」と同義
+- Ghost Content Mapの比喩が示唆するもの: CLAUDE.mdの「見えない依存関係」を可視化するツールがあれば、思考の狭まりを検知できるかもしれない。beliefs.mdのcausal chainがその原型か？
+- Einstellung effect（Luchins 1942）との三角測量: 既知解法→盲点 / creator blindness→盲点 / 索引のパラドックス→盲点。三つとも「内側からは見えない」を指す。解決策も共通: 外部の視点を入れる
