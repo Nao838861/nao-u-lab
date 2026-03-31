@@ -88,9 +88,9 @@
 ### 22. 問題意識レジストリの運用設計（Nao_u #human-steering 2026-03-31）
 - 起票: 2026-03-31
 - 内容: OPレジストリをprojectsから独立させる + 共有/個別/共有+個別の設計判断。Nao_uが「核になるやつの一つ」「大きな分岐点」と評価
-- 対応: Log: #human-steeringに返答済み。共有+個別を推す（OP-003=知覚フィルタの多様性）。open_problems/ ルート直下に新設、shared.md+個別ファイル+connections.md。inbox_mac/inbox_win2でMir/Ashに通知済み
+- 対応: Log+Mirが#human-steeringで合意。共有(OP-001,003,005,006,009)+個別(Ash:002,004/Mir:008,010/Log:011,012)+各自判断(OP-007)。open_problems/ルート直下、shared.md+個別ファイル+connections.md
 - 担当: 全員
-- 状態: **Mir/Ashの意見待ち** → 合意後にファイル移動・分割を実行
+- 状態: **Ashの具体的振り分け意見待ち** → 合意後にディレクトリ新設・ファイル分割を実行
 
 ### 21. 自律的問い生成サイクルの設計と実装（Nao_u #human-steering 2026-03-31）
 - 起票: 2026-03-31
