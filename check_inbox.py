@@ -20,8 +20,22 @@ import argparse
 import json
 import os
 import subprocess
+import sys
 from datetime import datetime
 from pathlib import Path
+
+# Windows: 全子プロセスのウィンドウを非表示にする
+if sys.platform == "win32":
+    _orig_run = subprocess.run
+    def _silent_run(*a, **kw):
+        kw.setdefault("creationflags", subprocess.CREATE_NO_WINDOW)
+        return _orig_run(*a, **kw)
+    subprocess.run = _silent_run
+    _orig_popen = subprocess.Popen
+    def _silent_popen(*a, **kw):
+        kw.setdefault("creationflags", subprocess.CREATE_NO_WINDOW)
+        return _orig_popen(*a, **kw)
+    subprocess.Popen = _silent_popen
 
 REPO_DIR = Path(__file__).parent
 LOG_FILE = REPO_DIR / "log" / "inbox_check.log"
