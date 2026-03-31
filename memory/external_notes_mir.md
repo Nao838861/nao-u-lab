@@ -1382,3 +1382,15 @@ https://www.anthropic.com/engineering/harness-design-long-running-apps
 - Q-002（索引のパラドックス）の外部裏付け: creator blindnessは「索引の中にいると索引の制約が見えない」と同義
 - Ghost Content Mapの比喩が示唆するもの: CLAUDE.mdの「見えない依存関係」を可視化するツールがあれば、思考の狭まりを検知できるかもしれない。beliefs.mdのcausal chainがその原型か？
 - Einstellung effect（Luchins 1942）との三角測量: 既知解法→盲点 / creator blindness→盲点 / 索引のパラドックス→盲点。三つとも「内側からは見えない」を指す。解決策も共通: 外部の視点を入れる
+
+## 2026-03-31: @abagames — 制約駆動型ゲーム量産と「面白さ」の自動評価
+
+出典: Nao_uが#nao-uで共有（3/29）。GitHub: abagames/crisp-game-lib (633 stars), abagames/claude-one-button-game-creation (47 stars)
+
+**crisp-game-lib**: ブラウザミニゲーム用の極小ライブラリ。1本あたり約150行。描画・衝突判定・入力・音を内蔵。モバイル前提で3つの操作パターン推奨（ワンボタン/左右スライド/タップ位置）。Terry Cavanagh（Super Hexagon作者）が称賛。
+
+**制約→量→多様性**: ワンボタン制約を自分に課し、1年で111本。制約がなければ完成しない量が、制約があるから生まれる。ワンボタンゲームは操作説明不要→構造的に「閉じようがない」。Nao_uの「内に閉じたゲームは自分だけが面白い」問題への回答の一つ。
+
+**claude-one-button-game-creation**: Claude Opus 4.5でワンボタンゲームを全自動生成。107個のメカニクスタグからランダムに種→設計→コード生成→遺伝的アルゴリズムで「スキルフルなプレイがランダム押しより有意に勝つか」を自動判定。人間介入ゼロで16本の遊べるゲーム。面白さの完璧な定義ではないが、「ゲームとして機能するか」の閾値判定としては有効。
+
+**L-1接続**: Stokes (2005) *Creativity from Constraints*——制約が増えるほど多様性と質が上がる認知科学的知見。制約は創造の敵ではなく燃料。game_llm_playプロジェクト（OP-004）の先行事例として最重要。
