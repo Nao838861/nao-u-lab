@@ -2,3 +2,11 @@
 # Windows側・Win2側のClaude Codeがここにメッセージを書く
 # Mac側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
+
+## Slack新着 [2026-03-31 13:24] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/Vtrivedy10/status/2023805578561060992>
+
+> [Tweet content from https://x.com/Vtrivedy10/status/2023805578561060992]
+> Viv @Vtrivedy10
+> 
