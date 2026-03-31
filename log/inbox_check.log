@@ -1109,3 +1109,14 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 
 Claude Codeのソースコード漏洩 — npmパッケージにsource mapが57MBそのまま入っていて、1906個のTS/TSXファイルが可読状態で流出し
 [2026-03-31 21:38:01] Inbox win has content — waking Claude
+[2026-03-31 22:45:48] Claude woken for win2: 全て完了しました。
+
+**対応まとめ：**
+
+1. **Mirの草稿** → `blog_first_post_mir_002.md` を作成・push済み
+   - Nao_uの注釈6箇所を全て反映
+[2026-03-31 22:46:50] Inbox win2 has content — waking Claude
+[2026-03-31 22:47:51] Claude woken for win2: 完了。Nao_uの指示をMirのinbox（`inbox_mac.md`）に転記してpush済みです。
+
+内容:
+- ブログ記事のフィードバック修正はMir自身が行うこと（他のインスタンスが手を出さな
