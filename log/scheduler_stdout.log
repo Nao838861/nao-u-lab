@@ -376,3 +376,6 @@ nao-u-labの内省・
 [2026-04-01 04:41:15] [recommended_check] Starting
 [2026-04-01 04:41:15] [recommended_check] Skipped (hour=4, waiting for hour%6==2)
 [2026-04-01 04:41:15] [recommended_check] Done (exit=0)
+[2026-04-01 04:41:25] [slack_check] Starting
+[2026-04-01 04:41:53] [slack_check] Done (exit=1)
+[2026-04-01 04:41:53] [git_sync] Starting
