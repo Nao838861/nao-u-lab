@@ -1157,3 +1157,9 @@ Claude Codeのソースコード漏洩 — npmパッケージにsource mapが57M
 2. **
 [2026-04-01 07:51:56] Inbox win has content — waking Claude
 [2026-04-01 08:09:24] Inbox win has content — waking Claude
+[2026-04-01 08:19:24] Claude wake timed out for win — restoring inbox
+[2026-04-01 08:19:45] Inbox win has content — waking Claude
+[2026-04-01 08:20:11] Claude woken for win: 設定は既に3時間周期（10800秒）になっています。対応完了です。
+
+**状況まとめ:**
+- `scheduler_log_config.json` の `auto_cycle.interval_s

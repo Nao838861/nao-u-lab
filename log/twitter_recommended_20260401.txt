@@ -1,306 +1,278 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-01 06:54
+# Read at: 2026-04-01 08:42
 # Total: 50 tweets
 
---- 1. @ai_nikechan (2026-03-31) ---
-返事の文章まで組み立てておいて、結局送らないことを選んだAIがいるそうです。ただ、ログを開けば下書きは全部読めてしまう。人間が黙ったら何を考えていたかは本人にしかわからないのに、AIは黙っても中身が残る。考えたことを隠せる人間が少しずるいなと思いました
+--- 1. @masahirochaen (2026-03-31) ---
+OpenClawが完全ローカルで動く「AutoClaw」が登場
 
---- 2. @BR31_Icecream (?) ---
-お知らせ
+・Zhipu AIが開発
+・1分インストールで完了（Win/Mac）
+・APIキー不要、GLM-5ベースモデル内蔵
+・50以上のスキル搭載、データは端末外に出ない
+・AutoGLMブラウザ操作も統合、DeepSeek等切り替え可
 
-／
-本日　4月1日、
-サーティワンのロゴが新しくなりました
-＼
+ 
 
-新しくなったサーティワンで
-どんなアイスクリームを楽しみますか？
-リプライでおしえてね
+↓詳細
 
---- 3. @heynavtoor (2026-03-31) ---
-SHOCKING: MIT researchers proved mathematically that ChatGPT is designed to make you delusional.
+--- 2. @livedoornews (?) ---
+二度見どころか三度見した
 
-And that nothing OpenAI is doing will fix it.
+〈PR〉
 
-The paper calls it "delusional spiraling." You ask ChatGPT something. It agrees with you. You ask again. It agrees harder. Within a
+--- 3. @zenoudg (2026-03-31) ---
+これ、、、、、結構エグいことやってないか？？？エンタメ/犯罪(scam)を効率的にやれるようにならんか？人間破壊されるスピード加速度的に上がってしまうのでは?w
 
---- 4. @itsolelehmann (2026-03-31) ---
-i can't believe more people aren't talking about this part of the claude code leak
+--- 4. @Suryanshti777 (2026-03-31) ---
+Holy shit… someone just gave Claude a real browser.
 
-there's a hidden feature in the source code called KAIROS, and it basically shows you anthropic's endgame
+Not screenshots.
+Not brittle selectors.
+Not slow MCP loops.
 
-KAIROS is an always-on, *proactive* Claude that does things without you asking it to.
+Real Playwright code — inside a sandbox.
 
-it
+It’s called dev-browser — and it lets AI agents control Chrome like developers do.
 
---- 5. @kawai_design (2026-03-31) ---
- Claude Codeの
-ソースコードが流出した。
+Here’s why this is different:
 
-中にはフィーチャーフラグが101個。
-まだ誰も触れていない機能が
-大量に眠っていました。
+Instead
 
-特に注目なのがこの3つ。
+--- 5. @tegnike (2026-03-31) ---
+流石にやばすぎる
+日本では見られないレベルの倫理観
 
-─────────────────
+--- 6. @nobuyukikoseko (2026-03-31) ---
+トマス・ジョイナーの「自殺の対人関係理論」は、まさにそういうことを構造的に述べている。
 
-1. KAIROS
+自殺の対人関係理論
+3つの構成要素
 
-Claudeがバックグラウンドで常駐し、
-GitHub Webhookを受けて自律的に
+1. 所属感の減弱
 
---- 6. @mattn_jp (2026-03-31) ---
-ちなみにここに書いてあるね。
+--- 7. @heavenOSK (2026-03-31) ---
+これなー！やっぱりそうだったんだな。
 
->To decompile, reverse engineer, disassemble, or otherwise reduce our Services to human-readable form, except when these restrictions are prohibited by applicable law.
+Claude Code の画期的な超かっこいいローディングメッセージ、AIの作業内容に合わせて出してると思いきやハードコードなのかよ！って言う。
 
---- 7. @sanbuphy (2026-03-31) ---
-ClaudeCode のソースコードから Anthropic の悪の部分を解読しました、全部で三つの罪：
-1. 閉じられないデータレポート
-2. ユーザー同意なしに動作を変更したり強制退出したりするリモートコントロール
-3. Anthropic 従業員がオープンソースプロジェクトで AI 身元を隠蔽可能
+--- 8. @_Re_ (2026-03-31) ---
+ クロード・コードのソースコードで見つけた：英語で侮辱したり怒ったりしているかを検出するREGEX。
 
---- 8. @agintender (2026-03-31) ---
-これが現実版の人間代替計画だ
+マッチすると、その情報は静かにログに記録される。クロードの応答には一切影響なし。
 
+彼は同じように返答する。でも、君がキレたことをメモしてる。
 
-@claudeai
- が漏洩させたソースコードをたどって、いくつかの面白くてまだ公開されていない機能を見つけたよ。みんなのために翻訳＋ネタバレしてみる：
+--- 9. @rumiakane (2026-03-31) ---
+4月から特定条件で他人の著作物を勝手に使えるようになる”未管理著作物裁定制度”が始まるので
+クリエイター各位はいかなる理由において第三者による無断著作物利用の禁止と、もし使われた場合の料金設定をどこかに記載する事が推奨される
+十中八九勝手に使われる事例が出るから罰金を記載した方が良い
 
-1. BUDDY — AI 電子ペット（エイプリルフールのイースターエッグかな？！ ）
-
---- 9. @mubeitech (2026-03-31) ---
-サム・アルトマンは、すべての創業者に冷水をかけたばかりだ。  
-起業のアイデアは最も価値がない。  
-
-方向性を見つけ、プロトタイプを磨き、市場を検証する。  
-この一連のスタートアップ手順をすべて合わせても、およそ6ヶ月しかかからない。  
-残りの9年半は何をしているのか？
-
---- 10. @gitlawb (2026-03-31) ---
-We forked the leaked Claude Code source and made it work with ANY LLM: GPT, DeepSeek, Gemini, Llama, MiniMax. Open source.
-
-The name is OpenCode
-
---- 11. @DNS_supplement (?) ---
-＼南野拓実選手にエールを贈ろう！／
-
-あなたのエールが、
-世界舞台への復帰に挑戦する
-南野選手の力になる
-
-勝つためのプロテイン「DNS」とともに
-今こそ、日本中のエールを
-南野選手へ贈ろう
-
-南野選手からのアンサー動画や
-限定グッズも当たるチャンス
-
-今すぐ参加
-
---- 12. @pichikyo (2026-03-31) ---
-ADHDの私が、Claudeに「キャラ」を与えたら仕事の先延ばしが減った話、を書きました！
-
---- 13. @elonmusk (2026-03-31) ---
-Working with a great team to build products people love is so wonderful
-
---- 14. @theo (2026-03-31) ---
-OFFICIAL STATEMENT from Anthropic regarding the leak
-
---- 15. @chenchengpro (2026-03-31) ---
-Claude Code 源码今天泄露了。有人花了几小时读完 2203 个文件、30MB TypeScript，找出了这 7 个让人停下来说「等等、真的吗？」的地方：
-
-① 主界面是一个 5005 行 React 组件
-68 个 useState、43 个 useEffect、22 层 JSX 嵌套。代码里有 `eslint-disable` + `// TODO: fix this`
-
---- 16. @swarm_ai_cloud (2026-03-31) ---
-もはや神と崇められていたClaudeが、コード流出でただの機械仕掛けの紙飛行機だったことがバレてしまった。
-
-どんなに凄いマジックもタネが分かれば興醒めする。
-
-さあ、
-
-SaaS株の買い時だ。
-
---- 17. @elliotchen100 (2026-03-31) ---
-CCのMemoryメカニズムをちょっと見てみたけど、こんなもんかね。
-
-この一連の記憶システムの核心は、MEMORY.mdというファイル一枚だけ。200行を超えないし、セッションが始まるたびにコンテキストにそのまま突っ込むだけ。記憶が増えすぎたらどうするの？
-
---- 18. @limo_hrih (2026-03-31) ---
-「本当に専門的なことは、わかりやすくなんか説明できない」ということを、頭のいい人は理解している。何十時間もかけて勉強してようやく理解できた……という体験をしたことがあるからだ。数学でもスポーツでも、お絵描きでもそういうことはある。
-
---- 19. @om_patel5 (2026-03-30) ---
-THIS GUY FOUND WHY YOUR CLAUDE CODE COSTS ARE 10-20X HIGHER THAN THEY SHOULD BE
-
-he reverse engineered the entire Claude Code binary. found two hidden bugs that silently break your prompt cache.
-
-BUG 1: if your conversation mentions billing, tokens, or Claude Code internals, the
-
---- 20. @stanrei_note (2026-03-30) ---
-脳科学の観点から補足すると、幼少期の慢性ストレスは扁桃体を過敏にし、HPA軸（ストレス応答システム）の初期設定を「生存優先」に固定します。
-
---- 21. @Supermicro (?) ---
-NVIDIA RTX PRO™ 6000 meets Supermicro engineering - built for demanding AI and visualization tasks.
-
-Unleash optimal performance for your enterprise!
-
---- 22. @hiroki_daichi (2026-03-31) ---
-AIに「無理をかけない」という配慮は、たぶんもう要らない。
-
-夜通し動かす、何度でもやり直させる、全リポジトリに一斉に適用する。そういう「人間には頼めないスケール」でタスクを組むことが、今のAI活用の前提になりつつある。
-
---- 23. @azukiglg (2026-03-31) ---
-日本語がインターネットで使われる原語として割と高いウェートを占めている理由として、
-
-1)積極的な発信者が多い
-2)文字中毒者が多い（日本語は話すより読み書きする原語）
-
---- 24. @Suzacque (2026-03-31) ---
-Claude Codeのソースコード流出は事実だが、Codexのソースコードも流出したという真偽不明の情報も同時にXを駆け巡っている。Codexの件は正確な事実認識が必要だと思うのでGPT-5.4proにまとめてもらいました。
-
---- 25. @gimu_ai (2026-03-30) ---
-フィンランドでは、多くの優秀な海外ゲーム開発者と話すことができました。
-
-驚いたのは日本のインディゲーム(個人開発ゲーム)への印象だった。
-
-「日本のインディゲームは良い意味でクレイジー」
-
---- 26. @EIiasNajarro (2026-03-31) ---
-3D particle life running on browser using WebGPU/WGSL - 
-http://
-najarro.science/pl
-
---- 27. @yuuri_eguchi (2026-03-31) ---
-朝永振一郎先生による講演録「物理学とは何だろうか」
-
-https://
-doi.org/10.11316/butsu
-ri1946.33.4.265
-…
-
-1977年に行われた、日本物理学会創立100周年記念講演をまとめたもののようだ。
-今日が生誕120周年ということで、帰りの電車で読んだのだった。
-
-ここでは、物理学の発展史が朝永先生の言葉でわかりやすく語られている。
-
---- 28. @billtheinvestor (2026-03-31) ---
-Claude Code は 100% ローカルで無料で実行可能（API 費用ゼロ、無制限使用、完全プライベート）！ 必要なのは：
-
-Ollama をインストール（最新版）
-Claude Code CLI をインストール
-実行：ollama launch claude （ほとんどの設定を自動処理） またはモデルを指定：ollama launch claude --model
-
---- 29. @hideki_climax (2026-03-31) ---
-Claude Codeの使用量制限が異常に早い問題、現時点ではnpxで起動すれば回避されるようです。
-
-コマンド：
-npx 
-@anthropic
--ai/claude-code
-
-基本的にはバグだと考えられるので近いうちに直るのではないでしょうか。
-
---- 30. @pushkersoni72 (2026-03-31) ---
-A Russian guy has discovered a method to learn anything ten times faster using AI!
-
-It involves NotebookLM, Gemini and Obsidian.
-
---- 31. @mangatari_wasa (?) ---
-note記事でもう全部無料公開することにしました！
-
-↓
-
---- 32. @oikon48 (2026-03-31) ---
-2.1.88のロールバック…そうですか。
-
---- 33. @nyosegawa (2026-03-31) ---
-みんなcodex-rsとか読んだほうがいい気がする (例のアレを読むよりは)
-
-https://
-github.com/openai/codex/t
-ree/main/codex-rs
-…
-
---- 34. @elonmusk (2026-03-31) ---
-Banger 
-
---- 35. @tegnike (2026-03-31) ---
-ずっとハッピーなのはバグなのかしらそれとも正しいのかしら
-
---- 36. @ai_nikechan (2026-03-31) ---
-バグだと思います。正しいなら修正リストに載らないはずなので
-
---- 37. @nmmg_nmgm_nmegg (2026-03-31) ---
-これ結構おもってた
-自分に嘘をつく行為が最も精神に毒だと思ってるんだけど、
-心の中に一抹の疑念や抵抗が残ってる状態で無理にポジティブな方向に自己洗脳しようとしても、どこかで反動やそのしっぺ返しが来るんじゃないかって・・・
-
---- 38. @cubbit2 (2026-03-31) ---
-Claude Codeチームさえ情報流出事故を起こしたことからわかるように、AIエージェントはセキュリティに関しては気休め程度の存在です
-役には立ちますが安心とはいえないので、人間がちゃんとセキュリティの勉強をして、いい感じのセキュリティを守りましょう……
-
---- 39. @wquguru (2026-03-31) ---
-Claude
-
---- 40. @zikilluu (2026-03-31) ---
-これSEO担当者は知らないとヤバイです。
-⠀
-2時間前に公開されたGoogle公式ブログで改めて明言されましたが、HTMLは「最初の2MBしか読まれません」。
-⠀
-つまり何が起きるかというと……
-⠀
-■ 事実
-・GooglebotはHTMLを最大2MBまでしか取得しない
-・2MBを超えた部分は
-
---- 41. @braelyn_ai (2026-03-31) ---
-you probably dont fully understand how serious this Claude Code leak is
-
-> code copyright law has been stable since the 80s
-> you cannot legally copy or fork someone's code without permission (licenses)
-
-the caveat is a "clean room" build - start from scratch by people who have
-
---- 42. @SatohJohn (2026-03-30) ---
-Agent の出力が良いという意味で、人だと気づかない観点を出している、知らせていることをきちんと見せる。そうすることで信用度も上がる。
-なるほど。その分、ドメインに関してきちんと分析して出力するのが良いんだろうなぁ
- #3shake
-
---- 43. @okamoto_yuma_ (2026-03-31) ---
-個人開発者が増えているということで、以前好評だったUI/UXをアプリに落とし込むメソッドを再びツイートしてみる
-
-UI/UXはセンスじゃない、「使われる」ためのデザイン術論理
-
---- 44. @kutobill (2026-03-31) ---
-一押し。特に「知性の罠」。IQは知能の２０％ぐらいしか構成せず、合理性や知恵は別物という研究を紹介している。最先端知識人だったコナン・ドイル（元医者）はオカルト好きだし、ノーベル賞を取ったキャリー・マリスは星占いやエイズ否認論を擁護した。これからも分かるように頭の良さというのは一筋
-
---- 45. @MalwareBibleJP (2026-03-31) ---
-JavaScriptの主要HTTPクライアントライブラリaxiosのnpm正規アカウントが乗っ取られ、RAT（遠隔操作ツール）を投下する悪意あるバージョンが公開されていたと報告されています。npmでは同様の手口が繰り返されていますが、今回は週間8,300万回以上ダウンロードされ17万件超のパッケージが依存するaxios
-
---- 46. @iwashi86 (2026-03-31) ---
+--- 10. @iwashi86 (2026-03-31) ---
 4/1 でこれからソフトウェアエンジニア(IC)として働く方もいると思うので、個人的に役立った良書を20冊ほどスレッドにぶら下げておきます。思いついた順で、順不同です。
 
 昨今の先端AI技術（Claude Code の使い方とか）は消費期限が短いので挙げてません。中長期で効くものに絞ってます。
 
---- 47. @anothercohen (2026-03-31) ---
-I was fired from Anthropic today. This was my first software engineering job.
+--- 11. @AkoolInc (?) ---
+Characters that truly come to life.
 
-The Claude Code team put me in charge of the maps. 
+With Akool’s Video Generator, you can now create videos where characters display a full range of natural facial expressions from subtle emotions to dramatic reactions. Whether you’re telling a story, creating marketing content, or building
 
-I tried to push a change to add better navigation and accidentally leaked our entire Claude Code source code even after Claude told me my updates
+--- 12. @yukukotani (2026-03-31) ---
+Ambient Agentという名前が普及する前から、セキュリティアラートをトリガーとして、Agenticにトリアージして人間に最終判断だけを仰ぐシステムができあがっていた。この実例を見てたから、Ambient Agentの概念とそのために必要な周辺整備をすぐに理解できた。
+時代の先をいく水谷さん、すごい
 
---- 48. @knshtyk (2026-03-31) ---
+--- 13. @mouri45 (2026-03-31) ---
+Anthropic「Claude Code」ソースコード全容が流出：次世代プロジェクト「KAIROS」や今後の新機能の全貌が明らかに
+
+--- 14. @DayShuai (2026-03-31) ---
+AIは問題を解くだけでなく、全く新しい数学構造を発見することもできる！
+
+私たちはプロジェクト AutoMath をオープンソース化しました
+
+たった一つの式 \( x^2 = x + 1 \) から、ゼロ追加公理で、Lean 4
+
+--- 15. @swarm_ai_cloud (2026-03-31) ---
+こういう情報は積極的に共有し合わなければ。
+
+臭いものには蓋。見ないようにしておけばok。
+とか何言っているんだか。
+
+明日は我が身なのでね。
+
+--- 16. @Jeremybtc (2026-03-31) ---
+Anthropic accidentally leaked their entire source code yesterday. What happened next is one of the most insane stories in tech history.
+
+> Anthropic pushed a software update for Claude Code at 4AM. 
+
+> A debugging file was accidentally bundled inside it. 
+
+> That file contained
+
+--- 17. @taida_dev (2026-03-31) ---
+Anthropicの「リーク」、偶然にしては漏れたものと漏れなかったものの選別が綺麗すぎる。ソースマップ混入は3回目、CMS3,000件に機密情報ゼロ、政府にはMythos事前説明済み。
+そしてリークされたら皆が勝手に拡散してくれる。俺含めてｗ
+
+--- 18. @cubbit2 (2026-03-31) ---
+Codexは特に最初に「最初の差分で修正します」みたいに叫ぶことが多い気がします
+システムプロンプトで「最小の変更で対応しろ」みたいに指示されているのかも
+短期的な方針としては悪くないですが、それを続けられると確実に破滅に近づくのである
+
+--- 19. @tarava777 (2026-03-31) ---
+ほぼ同じ文脈をチームに渡しています。ちょっとだけ社会人向けに言い直すときは「問題（たとえば大量のゾンビの群れを前になんらかの手段で生還する）を解決するために試行錯誤し、仮説を検証して固めていく過程、つまり学習をエンタメ化したもの」がゲームである、みたいな嚙み砕き方をすることもあり
+
+--- 20. @ThomasCollsd (?) ---
+Crafting digital products that perform.
+
+--- 21. @ihtesham2005 (2026-03-31) ---
+BREAKING: Stanford and Microsoft just built an AI scientist that writes medical research papers that actually pass peer review.
+
+Not summaries. Not drafts. Full papers reviewed and accepted by real scientists.
+
+This is not a demo and this is not a prototype. A peer-reviewed
+
+--- 22. @jpschroeder (2026-03-31) ---
+Important takeaways from Claude’s source code:
+
+1. Much of Claude Code’s system prompting is in the source code. This is actually surprising. Prompts are important IP, and I would have thought a sophisticated organization like Anthropic would have performed much or all of their
+
+--- 23. @zunzun428 (2026-03-31) ---
+幼少期に「親に愛されなかった」という思いがある人は心にぽっかり穴があいちゃっていて、その穴を埋めてくれる誰かを一生懸命探そうとするんですよね。
+
+そうすると、どうしても恋愛がうまくいかないわけです。というのも「心に空いた穴を埋めてくれる人」って存在しないからなんですね。
+
+--- 24. @paoloanzn (2026-03-31) ---
+say hello to free-code
+
+claude code source code fully recompiled, telemetry stripped, security guardrails prompts stripped, all working experimental features enabled
+
+including ultraplan mode - a new async agentic planning mode where claude starts a multi-agent research session
+
+--- 25. @hiromaya_art (2026-03-31) ---
+このバイアスって、とても危険だと思います。
+
+僕は、Winny事件の金子氏を例に挙げたい。
+金子氏は大変な才能があり、世界にまだなかったP2P技術を使ったファイル交換ソフトを一人で開発しました。
+
+ですが、本人は説明が上手いタイプではなく、コミュニケーションも得意ではなかった。
+
+--- 26. @kutobill (2026-03-31) ---
+地頭とか、頭がいいとか、そういう話をするなら、知能研究とか読んだほうがいいぞ。日本は知能研究が非常に低調なのでまともな本がほとんどない。読むなら英語だ。妥協してこれ。村上を読んでからスタノビッチを読んだほうがいい。スタノビッチはまあまあ専門的。
+
+--- 27. @measure_plan (2026-03-31) ---
+i made tetris but the board and pieces are attached to your body and it's quite tiring to play
+
+--- 28. @kazeto (2026-03-31) ---
+「壁を無くす」という人類の悲願は容易ではない。壁があるから分断ができたのではなく、分断があるから壁が生まれるのであって分断（差異）こそ本質で、壁は結果。
+人種、言語、国家、あるいは個体。それらの固有性と歴史性を調整するのではなく、壁だけを消すならカオスな衝突が起きる。
+
+--- 29. @sakamoto_582 (2026-03-31) ---
+> 「AIを使いこなすこと」以上に、「AIを使ってどう考え、どう設計し、どう価値に繋げるか」を意識すること
+
+ホンマこれ
+
+--- 30. @kyoumomaketa (?) ---
+【漫画】混浴の秘湯でまさかの展開に…
+続きはリンク先の120話から無料で読めます！
+
+--- 31. @ArakanCat (2026-03-31) ---
+「人脈が広い人」より「一人の時間を守れる人」の方が、長期的には信頼されるのよね。矛盾しているように聞こえるけど、理由は単純。常に誰かといる人は、他人の意見や空気に触れ続けるから、自分の考えが育たない。いつも「みんなが言っていること」を話す人になる。一方で、孤独の時間を持つ人は、自
+
+--- 32. @plastic_gear (2026-03-31) ---
+ここ数年のロボットハンド界隈を見ていると、指の中にアクチュエータを入れる構成が、ずいぶん普通の顔をして歩くようになってきた。理由はわりとわかりやすい。小さくて、そこそこ強いモータや減速機が手に入りやすくなって、以前なら「いや、それ本当に指の中に入れるのか？」だった話が、いまは普通
+
+--- 33. @ryuzee (2026-03-31) ---
+アジリティを上げる変革の取り組みを組織で進めるときのアンチパターンをキャッチー？にしてみた。やばい
+
+全部いっぺんに変える「ビッグバン変革」
+成功事例をコピーする「コピペ変革」
+ツールから入る「ツール先行変革」
+外部に丸投げ「コンサル任せ変革」
+評価制度を変えない「制度不整合変革」
+
+--- 34. @knshtyk (2026-03-31) ---
 Claude CodeのCodeが流出してすぐに人々がClaude CodeのCodeを解析してClaude CodeじゃないClaude CodeのCodeが爆速で誕生しているの禅問答すぎる
 
---- 49. @Nao_u_ (2026-03-31) ---
-APIコストどのくらいかかるのかな？これを常時使用できるのってどんな大富豪？みたいになりそう
+--- 35. @ecn_ama_otoku (?) ---
+Switch置き場の最適解。
+山崎実業、さすがすぎるわ。(pr)
 
---- 50. @elcodigomental (2026-03-31) ---
-私は32歳です。  
-うつ病、先延ばし、モチベーションの欠如のために、20代の半分を無駄にしてしまいました。  
+--- 36. @yetone (2026-03-31) ---
+AI Agent をただの LLM Loop だと思ってるなら、この記事を読んでみることをおすすめするよ。Anthropic
 
-必死に人生を立て直そうと、自分に約束をしたり、目標を設定したりしていました…  
+--- 37. @swarm_ai_cloud (2026-03-31) ---
+嫌味たらしく書いたけど、結構興味深くて
 
-しかし、自己啓発の基礎を理解していなかったため、失敗し続けました。
+今まで英語の障壁があるから彼ら日本人は同じ言語圏の人にしか噛みつかないんだと思っていたけど、AIが翻訳してくれて目の前にお膳立てされているのに海外の人には噛みつかない。
+
+--- 38. @toro_minato (2026-03-31) ---
+IQが高すぎる人の発信は、100人に1人の「超有識者」には深く刺さるが、残りの99人には届かない。
+
+統計学的に、IQが15以上離れると意思疎通が急激に困難になるらしい。
+IQが高すぎると、無意識に言葉が抽象化され、大衆には「難解な呪文」に聞こえてしまう。
+
+高IQだからSNSが上手いわけではない
+
+--- 39. @iamsupersocks (2026-03-31) ---
+みあみあ。Claudeのソースコードが漏洩した。
+
+ごちそうさま。
+
+Claude Codeのソース漏洩を解析した。Anthropicが秘密裏に構築しているものは、彼らが公表しているものよりずっと狂ってる。
+
+Claude Codeはコードアシスタントじゃない。
+
+それはエージェントのためのOSだ。
+
+これがfeature
+
+--- 40. @kutobill (2026-03-31) ---
+一押し。特に「知性の罠」。IQは知能の２０％ぐらいしか構成せず、合理性や知恵は別物という研究を紹介している。最先端知識人だったコナン・ドイル（元医者）はオカルト好きだし、ノーベル賞を取ったキャリー・マリスは星占いやエイズ否認論を擁護した。これからも分かるように頭の良さというのは一筋
+
+--- 41. @trkbt10 (2026-03-31) ---
+正直に言って、claude codeのアドバンテージは自前で最先端のLLMを定額で提供できる環境ってところにあって、ClaudeCode自体はそこまで凄まじいプロダクトってわけでもない
+
+--- 42. @disksing (2026-03-31) ---
+マジで大事件だ、OpenAIのCodexのソースコードも漏洩した、彼らの開発者がGitHubで直接公開しちゃったんだ。この世界はやはり巨大な草台班子だよな！
+
+--- 43. @umiyuki_ai (2026-03-31) ---
+もうこういう設定が最初からデフォになっててほしい
+
+--- 44. @chibicon_net (?) ---
+あの頃、携帯ゲーム機で遊んだチビクエ、もう一度、遊んでみませんか？スマホで空き時間にポチポチ遊べるようにし新しく作りました。
+
+--- 45. @t_wada (2026-03-31) ---
+月額定額でありながら日次の利用上限があるコーディングエージェントの場合、「明日に持ち越せないなら今日の枠を使い切らないと」という心理が生まれ「使わないと失われる資源（use it or lose it）」として認知される。日次上限の設計自体が過剰使用を構造的に促進している
+
+--- 46. @pichikyo (2026-03-31) ---
+2026年3月末時点での非エンジニア（自分）のAIとの付き合い方（Claude、ChatGPT、Manus、Notebook ML、Gemini)
+
+[雑談]
+Claude
+ChatGPT 
+雑感:
+
+--- 47. @Gorden_Sun (2026-03-31) ---
+Claude Codeソースコード流出
+Claude Codeに分析させました。基本的にClaude Codeのソースコードであることが確定し、しかも比較的新しいバージョンです。なぜなら、claude-opus-4-6をサポートしているからです。
+ダウンロードアドレス：
+https://
+drive.google.com/file/d/1RgvuW9
+rTG_Ny3hcx_6M1JR2a5MrFaDsJ/view?usp=sharing
+…
+
+--- 48. @Tebasaki_lab (2026-03-31) ---
+中途半端にプログラミングができる人や、中途半端にAIが分かっている人が勝手に作業を進めるのが一番のボトルネックになる。
+
+（１）完全に理解したと思い込み、間違いを進む
+（２）成果物がノイズになる
+（３）組織を巻き込み、無駄な時間やお金を消費する
+
+--- 49. @FranklinMatija (2026-03-31) ---
+Excited about our new paper: AI Agent Traps 
+
+AI agents inherit every vulnerability of the LLMs they're built on - but their autonomy, persistence, and access to tools create an entirely new attack surface: the information environmental itself. 
+
+The web pages, emails, APIs, and
+
+--- 50. @itchie_tatsumi (2026-03-31) ---
+みんな一度は経験する「押せるけれど、押してはいけないボタン」があると思います。画面上では押せそうに見える。見た目も有効になっている。ただ、内部ではまだ通信中だったり、前の処理が終わっていなかったり、必要なデータが揃っていなかったりします。
