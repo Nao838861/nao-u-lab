@@ -23,13 +23,13 @@ tasklist /FI "PID eq %PID%" 2>nul | find "%PID%" >nul
 if errorlevel 1 goto :start_scheduler
 
 REM プロセスは生きている
-echo %date% %time%: scheduler_log.py稼働中 (PID %PID%)。
+echo %date% %time%: scheduler_log.py稼働中 (PID %PID%) >> log\watchdog_log.log
 goto :eof
 
 :start_scheduler
-echo %date% %time%: scheduler_log.pyが停止中。再起動します。
+echo %date% %time%: scheduler_log.pyが停止中。再起動します。 >> log\watchdog_log.log
 REM PIDファイルを掃除
 if exist ".scheduler_log.lock" del ".scheduler_log.lock"
-REM 非表示ウィンドウで起動（既存のrun_scheduler_log.vbsを利用）
-start "" /b wscript //nologo run_scheduler_log.vbs
-echo %date% %time%: スケジューラ再起動完了。
+REM Pythonで直接デタッチ起動（VBS経由は起動失敗する問題があったため変更 2026-03-31）
+python -c "import subprocess; subprocess.Popen(['python','scheduler_log.py'],creationflags=0x00000008|0x00000200,stdout=open('log/scheduler_stdout.log','w'),stderr=subprocess.STDOUT)"
+echo %date% %time%: スケジューラ再起動完了。 >> log\watchdog_log.log
