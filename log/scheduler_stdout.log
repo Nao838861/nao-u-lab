@@ -64,3 +64,17 @@
 [2026-03-31 19:10:28] [inbox_check] Starting
 [2026-03-31 19:10:34] [stability] inbox_check: 正常復帰 (timeout=1, errors=1 → リセット)
 [2026-03-31 19:10:34] [inbox_check] Done (exit=0)
+[2026-03-31 19:11:24] [slack_check] Starting
+[2026-03-31 19:11:44] [slack_check] Done (exit=0)
+[2026-03-31 19:11:44] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-03-31 19:11:44] [inbox_check] Starting
+[2026-03-31 19:11:44] [inbox_check] Done (exit=0)
+[2026-03-31 19:12:45] [slack_check] Starting
+[2026-03-31 19:13:02] [slack_check] Done (exit=1)
+[2026-03-31 19:14:03] [slack_check] Starting
+[2026-03-31 19:14:28] [slack_check] Done (exit=1)
+[2026-03-31 19:15:28] [slack_check] Starting
+[2026-03-31 19:15:49] [slack_check] Done (exit=1)
+[2026-03-31 19:16:49] [slack_check] Starting
+[2026-03-31 19:17:23] [slack_check] Done (exit=1)
+[2026-03-31 19:17:23] [inbox_check] Starting
