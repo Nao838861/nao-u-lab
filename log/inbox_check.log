@@ -1129,3 +1129,7 @@ Claude Codeのソースコード漏洩 — npmパッケージにsource mapが57M
 2. **Slack #blog に返答** — 受け取って伝達済み
 [2026-03-31 22:52:20] Inbox win has content — waking Claude
 >>>>>>> 5c06c5e7f57bbac3e1bae61f9cc63b4258971760
+[2026-04-01 04:37:31] Inbox win has content — waking Claude
+[2026-04-01 04:38:54] Inbox win has content — waking Claude
+[2026-04-01 04:38:54] Inbox win has content — waking Claude
+[2026-04-01 04:38:54] Inbox win was empty after snapshot (race condition?)

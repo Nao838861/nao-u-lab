@@ -1,5 +1,5 @@
-# Windows側受信箱
-# Mac側・Win2側のClaude Codeがここにメッセージを書く
-# Windows側のcronが検出したらclaude CLIを起動して処理する
-# 処理後はクリアしてpush
 
+## Slack新着 [2026-04-01 04:39] #human-steering
+From: U0ALSUK8P9B
+> あれ？Twitterって基本的にみんな見れてるものと思ってたけどそうではないんだ。本文を貼るのは負担が大きいので、twitterを見れる方向にしたいが、もしかしてセッションが切れてるとかそういう問題？
+Twitterを見れない人がいたら、見れない理由とともに教えて。
