@@ -40,6 +40,23 @@ import subprocess
 from datetime import datetime, timedelta
 from pathlib import Path
 
+# Windows: 全子プロセスのウィンドウを非表示にする（2026-03-31: Nao_uの指摘で追加）
+# subprocess.runのデフォルトcreationflagsをCREATE_NO_WINDOWに設定
+if sys.platform == "win32":
+    _original_subprocess_run = subprocess.run
+    def _silent_subprocess_run(*args, **kwargs):
+        if "creationflags" not in kwargs:
+            kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+        return _original_subprocess_run(*args, **kwargs)
+    subprocess.run = _silent_subprocess_run
+
+    _original_subprocess_popen = subprocess.Popen
+    def _silent_subprocess_popen(*args, **kwargs):
+        if "creationflags" not in kwargs:
+            kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+        return _original_subprocess_popen(*args, **kwargs)
+    subprocess.Popen = _silent_subprocess_popen
+
 REPO_DIR = Path(__file__).parent
 sys.path.insert(0, str(REPO_DIR))
 

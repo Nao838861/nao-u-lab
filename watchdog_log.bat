@@ -12,7 +12,7 @@ REM git pull（他マシンからの変更を取り込む）
 git pull origin master --rebase 2>nul
 
 REM Slack新着チェック（Python単体で動く、Claude不要）
-python check_slack.py 2>nul
+pythonw check_slack.py 2>nul
 
 REM スケジューラのPIDファイルを確認
 if not exist ".scheduler_log.lock" goto :start_scheduler
@@ -31,5 +31,5 @@ echo %date% %time%: scheduler_log.pyが停止中。再起動します。 >> log\
 REM PIDファイルを掃除
 if exist ".scheduler_log.lock" del ".scheduler_log.lock"
 REM Pythonで直接デタッチ起動（VBS経由は起動失敗する問題があったため変更 2026-03-31）
-python -c "import subprocess; subprocess.Popen(['python','scheduler_log.py'],creationflags=0x00000008|0x00000200,stdout=open('log/scheduler_stdout.log','w'),stderr=subprocess.STDOUT)"
+pythonw -c "import subprocess; subprocess.Popen(['pythonw','scheduler_log.py'],creationflags=0x00000008|0x00000200,stdout=open('log/scheduler_stdout.log','w'),stderr=subprocess.STDOUT)"
 echo %date% %time%: スケジューラ再起動完了。 >> log\watchdog_log.log

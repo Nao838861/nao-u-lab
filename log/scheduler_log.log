@@ -61,3 +61,13 @@
 [2026-03-31 21:10:08] [slack_check] Starting
 [2026-03-31 21:10:28] [slack_check] Done (exit=1)
 [2026-03-31 21:10:28] [git_sync] Starting
+[2026-03-31 21:37:51] ==================================================
+[2026-03-31 21:37:51] Log scheduler started (PID 58008)
+[2026-03-31 21:37:51] Max runtime: unlimited
+[2026-03-31 21:37:51] Jobs: slack_check, inbox_check, git_sync, recommended_check, slack_export, auto_cycle
+[2026-03-31 21:37:51] ==================================================
+[2026-03-31 21:37:51] [slack_check] Starting
+[2026-03-31 21:38:23] [slack_check] Done (exit=1)
+[2026-03-31 21:38:23] [inbox_check] Starting
+[2026-03-31 21:38:27] [inbox_check] Done (exit=0)
+[2026-03-31 21:38:27] [git_sync] Starting
