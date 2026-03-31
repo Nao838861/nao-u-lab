@@ -290,3 +290,9 @@ Nao_uの「いつか君たちに、カメラを通したリアルタイムの世
 ### ゲーム×LLM：中間層アプローチとスクリプト
   [1.50] log/improvement_cycles_ash.md (undated) via kw(分析)
   [0.75] log/improvement_cycles_mir.md (undated) via kw(分析)
+
+[2026-04-01 07:59] trigger=nao-u:2026-04-01 anchor=以前にリンクして記憶システムの参考にしたこの記事、ハートが469もついてるけど、
+<https://zenn.dev/n
+  [2.41] docs/evaluation_format.md (2026-03-29) via seed(以前 記憶 参考 記事 一週間後) + ref→evaluation_format.md
+  [1.03] log/slack_archive/game-rights.jsonl (2026-03-26) via seed(以前 記憶 参考 記事 一週間後)
+  [0.75] log/二人の対話レポート.md (undated) via kw(職人)
