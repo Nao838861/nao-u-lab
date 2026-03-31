@@ -227,3 +227,17 @@
 あとこのチャンネルは私の発信専用なのでご注
   [3.00] memory/memory_redesign_proposal.md (undated) via ref→memory_redesign_proposal.md
   [0.75] log/slack_archive/mir-log.jsonl (2026-03-24) via kw(現在)
+
+[2026-03-31 12:02] trigger=nao-u:2026-03-29 anchor=【Mir】#nao-uハーネス設計記事処理済み。external_notes#27に記録、#allでAshの3点に応答済
+  [3.41] memory/external_notes_ash.md (undated) via seed(設計記事 処理済 記録 応答済 接続)
+  [2.25] log/slack_archive/shared-reads.jsonl (2026-03-24) via seed(設計記事 処理済 記録 応答済 接続) + kw(理由)
+
+[2026-03-31 12:04] trigger=nao-u:2026-03-31 anchor=やはりコンテキストを貯めるのは良くないようですが、みんなの起動時のコンテキスト消費量ってどのくらい？
+<https://
+  [0.75] memory/external_notes_mac.md (undated) via kw(深津)
+  [0.75] memory/external_notes_mir.md (undated) via kw(結城浩)
+  [0.75] log/slack_archive/all-nao-u-lab.jsonl (2026-03-25) via kw(操作)
+
+[2026-03-31 12:04] trigger=nao-u:2026-03-30 anchor=<https://x.com/ai_database/status/2038514059725967512?s=46&a
+  [1.50] memory/external_notes_ash.md (undated) via kw(実験)
+  [0.75] log/digest_for_nao.md (undated) via kw(完了)
