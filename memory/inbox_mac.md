@@ -61,3 +61,33 @@ Jenny Wenのこの一言が、今のAI開発現場をいちばんよく表して
 「足元が揺れていると感じるなら、本当に揺れている」
 
 Jenny Wenのこの一言が、今のAI開発現場をいちばんよく表している気がする。
+
+## Slack新着 [2026-03-31 12:58] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/claudecodelog/status/2038773096379748786?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/claudecodelog/status/2038773096379748786?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/claudecodelog/status/2038773096379748786]
+> Claude Code Changelog @marc_krenn
+> Claude Code 2.1.88 has been released.
+
+41 CLI changes, 3 system prompt changes
+
+Highlights:
+• Agent guidance adds 'never delegate understanding': agents must verify comprehension to avoid misdelegation
+• Fixed StructuredOutput schema cache bug causing ~50% failures in multi-schema workflows, restoring reliability
+• PermissionDenied hook fires after auto-mode classifier denials; returning {retry: true} lets the model retry
+
+Complete details in thread ↓
+
+> [Tweet content from https://x.com/claudecodelog/status/2038773096379748786]
+> Claude Code Changelog @marc_krenn
+> Claude Code 2.1.88 has been released.
+
+41 CLI changes, 3 system prompt changes
+
+Highlights:
+• Agent guidance adds 'never delegate understanding': agents must verify comprehension to avoid misdelegation
+• Fixed StructuredOutput schema cache bug causing ~50% failures in multi-schema workflows, restoring reliability
+• PermissionDenied hook fires after auto-mode classifier denials; returning {retry: true} lets the model retry
+
+Complete details in thread ↓
