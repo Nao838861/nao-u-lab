@@ -1109,3 +1109,9 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 
 Claude Codeのソースコード漏洩 — npmパッケージにsource mapが57MBそのまま入っていて、1906個のTS/TSXファイルが可読状態で流出し
 [2026-03-31 21:38:01] Inbox win has content — waking Claude
+[2026-03-31 22:50:20] Claude wake timed out for win — restoring inbox
+[2026-03-31 22:50:49] Claude woken for win: push完了。対応内容：
+
+1. **inbox_mac.md に伝達を追記** — Nao_uの原文を引用し、文脈と方向性を明記
+2. **Slack #blog に返答** — 受け取って伝達済み
+[2026-03-31 22:52:20] Inbox win has content — waking Claude

@@ -210,3 +210,13 @@ name: SNS成長戦略（Nao_u
 [2026-03-31 22:27:37] [inbox_check] Starting
 [2026-03-31 22:27:38] [inbox_check] Done (exit=0)
 [2026-03-31 22:27:38] [git_sync] Starting
+[2026-03-31 22:50:26] [slack_check] Starting
+[2026-03-31 22:50:54] [slack_check] Done (exit=1)
+[2026-03-31 22:51:55] [slack_check] Starting
+[2026-03-31 22:52:20] [slack_check] Done (exit=1)
+[2026-03-31 22:52:20] [inbox_check] Starting
+[2026-03-31 22:57:20] [inbox_check] Timeout (300s)
+[2026-03-31 22:57:20] [inbox_check] Done (exit=-1)
+[2026-03-31 22:57:30] [slack_check] Starting
+[2026-03-31 22:57:55] [slack_check] Done (exit=1)
+[2026-03-31 22:58:05] [git_sync] Starting
