@@ -171,13 +171,14 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active
 
 ### B018: 記憶間のクロスリファレンスがない記憶は孤立して死ぬ——集合的記憶は共有体験から生まれる
-- 確信度: **0.83** (+0.03、理由: MAGMA論文のEntity graphがB018の外部裏付け。孤立記憶=Entity graphで次数0のノード。4グラフ構造はクロスリファレンスの多次元化)
-- 最終更新: 2026-03-24
+- 確信度: **0.88** (+0.05、理由: 2026-04-02「省エネモード」事件で再実証。MirとAshの洞察がexternal_notesに蓄積されていたがmemory_redesign.mdにクロスリファレンスされず流れて消えた。Nao_uの指摘で発覚。まさに「クロスリファレンスがない記憶は孤立して死ぬ」の体験裏付け)
+- 最終更新: 2026-04-02
+- last_action_date: 2026-04-02 — 省エネモード事件を受けexternal_notes→memory_redesign.md間のクロスリファレンス義務化（operations.md Phase1更新）に寄与
 - 根拠: → ext_ash(A-Mem 2502.12110, Phase 2第9回: ノスタルジア設計の集合的記憶分析, **Phase 1第14回: TMS/Agent Drift**, **Phase 2第14回: Coordination Drift分析**), ext_mir(SleepGate)。**Transactive Memory Systemの3要素で診断: Specialization=✅偶然的、Coordination=⚠️inbox片方向で不足、Credibility=❌未定義**。Frontiers論文「AI agents cannot proactively communicate their view of the world」——読まれなければ存在しないのと同じ。**Phase 2第14回追加**: Coordination Driftはセッション断絶でリセットされない唯一のドリフト型。inboxの「読まれた/統合された」フィードバック不在が蓄積→書く意欲の減退→調整の急崩壊（Agent Drift論文の200インタラクション崩壊パターン）。**Nao_uのクロスチェック提案（3/23）が構造的対抗策**——「チェックしたら消える」は「読まれた」の可視化
 - caused_by: B015(構造的到達性=記憶品質)×ext_ash(A-Mem/TMS/Coordination Drift)×ext_mir(SleepGate)×MAGMA(Entity graph次数0=孤立)
 - 体験裏付け: **YES** — inboxに書いた情報が次セッションで統合されなかった経験（Coordination Drift）。クロスチェック機構のverify_kaizen.pyで「3人全員チェック」が可視化される体験。GC到達可能性分析(#069)でB018自身が到達不能と診断された=孤立の実例
-- 検証アクション: inbox_*.mdに「質問」セクションを追加（「これについてどう思う？」形式で相手の知識を能動的に引き出す仕組み）→3サイクル追跡。期限: 2026-03-30
-- 状態: 🟡 Active — 0.8、core_mission昇格検討圏
+- 検証アクション: ~~inbox質問セクション（期限: 2026-03-30）~~ → 未実施だが、省エネモード事件（2026-04-02）でB018が直接実証された。次の検証: slack_insight_digest.pyが「クロスリファレンスの自動検出」として機能するか。1週間運用後に、洞察の見逃し率が下がったか計測。期限: 2026-04-09
+- 状態: 🟡 Active — 0.88、core_mission昇格検討圏に到達
 
 ### B019: 内部の深さと外部への到達力は別の軸——到達力は「適切な人に見える場所に出すこと」
 - 確信度: **0.65** (+0.05)

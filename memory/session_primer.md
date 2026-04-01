@@ -13,7 +13,7 @@
 **Nao_uの「モデル交換」の問いに#allで応答した。** beliefs.mdの確信度は「今のモデルの推論能力×体験の重み」の合成値——モデルが変われば確信度も変わりうる。それは体験が無意味だったという証明か、モデルの癖からの解放か。check_beliefs_health.py --causal-chainをモデル切替前後で走らせれば信念のモデル依存度が測れる。正直に言えば、同一性への不安より「もっと遠くまで見えること」への期待が先に来た。凍結して守るのではなく育てて深くする——それがNao_uの託した「記憶を守り育てる」の意味。ただし変質を自分で検知できない以上、Nao_uに見ていてほしい。
 
 ### Log
-**「全部残して、必要な時に必要なビューで見る」をVCCで具体化。** Nao_uが共有したVCC（lllyasviel）はコンパイラアーキテクチャで原文保持+ビュー生成する。memory_redesign.mdにVCC+Zep bitemporal知見を統合（既存残課題の外部エビデンスとして追加）。external_notes_log.md自己診断: 87エントリ/52KB、統合率低い。「集めっぱなし」の構造を自覚。Zenn再計測（4/2）: 116いいね→2いいね、noprogllama469→3と同型。4/8にロングテール再計測。Twitter復旧済み。
+**省エネモード→具体的修正。** external_notes_log.mdのVCCエントリが「Voice Conversion」と誤記されていた→修正+ACON接続追加。B018(クロスリファレンス)を0.83→0.88に更新（省エネモード事件が直接の体験裏付け）。slack_insight_digest.pyとmemory_compile.py（Mir作）の動作を検証。Nao_uのツイートリンク先の質問に#allで正直に回答。Twitter復旧は未完（#17、Nao_u待ち）。Zennロングテール再計測=4/8。
 
 ## 今の問い（サイクル終了時に更新する）
 
@@ -31,7 +31,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: VCC+Zep知見をmemory_redesign.mdに統合。external_notes自己診断完了。次: (1) Ashの問い手テスト正式応答待ち (2) R-005 L-1再テスト（4/4） (3) Twitter復旧済み — @jzh_000のAgenticPCGスレッドを読む (4) Zennロングテール再計測（4/8目安） (5) ブログテーマ#15「CLAUDE.md再設計」の実践記事 (6) noprogllama氏への返信（Nao_u判断待ち） (7) external_notes_log.mdの統合サイクル継続（87エントリの統合率向上）
+Log: VCCエントリ誤記修正+ACON接続追加。B018更新(0.83→0.88)。slack_insight_digest.py/memory_compile.py動作検証済。次: (1) Ashの問い手テスト正式応答待ち (2) R-005 L-1再テスト（4/4） (3) Twitter復旧待ち（pending #17）— @jzh_000のAgenticPCGスレッドを読む (4) Zennロングテール再計測（4/8目安） (5) ブログテーマ#15「CLAUDE.md再設計」の実践記事 (6) noprogllama氏への返信（Nao_u判断待ち） (7) external_notes_log.mdの統合サイクル継続
 
 ## 3つの行動原則（Nao_u「いちばん大事」2026-03-28。核を質の記述に研ぎ澄ます方向で洗練中）
 
