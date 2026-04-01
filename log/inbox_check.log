@@ -1164,3 +1164,4 @@ Claude Codeのソースコード漏洩 — npmパッケージにsource mapが57M
 **状況まとめ:**
 - `scheduler_log_config.json` の `auto_cycle.interval_s
 [2026-04-01 09:16:38] Claude wake timed out for win2 — restoring inbox
+[2026-04-01 11:06:48] Inbox win2 has content — waking Claude
