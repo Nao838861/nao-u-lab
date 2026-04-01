@@ -1179,3 +1179,8 @@ Claude Codeのソースコード漏洩 — npmパッケージにsource mapが57M
 ### 1. Twitter access報告 → #human-steering に投稿済み
 `.twitter_access_e
 [2026-04-01 21:20:29] Inbox win2 has content — waking Claude
+[2026-04-01 21:22:42] Claude woken for win2: 対応完了。
+
+**やったこと:**
+- Nao_uが#nao-uに共有した記事（yasunaさんの「Drop the Hierarchy」論文メモ）を読んだ
+- 記事の内容：マルチエージェントシステム
