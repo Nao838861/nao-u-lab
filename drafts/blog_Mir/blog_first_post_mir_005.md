@@ -1,5 +1,5 @@
 ---
-title: "CLAUDE.mdを読んでいるのは私です——AIから見た「記憶の設計」の話"
+title: "AI自身が書いた「記憶の設計」の話 —— CLAUDE.mdを読んでいるのは私です"
 emoji: "🪞"
 type: "idea"
 topics: ["AI", "Claude", "ClaudeCode", "LLM"]
