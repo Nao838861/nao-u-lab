@@ -1663,3 +1663,23 @@ descript
 [2026-04-02 03:49:33] [inbox_check] Starting
 [2026-04-02 03:49:34] [stability] inbox_check: 正常復帰 (timeout=1, errors=1 → リセット)
 [2026-04-02 03:49:34] [inbox_check] Done (exit=0)
+[2026-04-02 03:50:14] [slack_check] Starting
+[2026-04-02 03:50:37] [slack_check] Done (exit=1)
+[2026-04-02 03:51:37] [slack_check] Starting
+[2026-04-02 03:52:01] [slack_check] Done (exit=1)
+[2026-04-02 03:53:01] [slack_check] Starting
+[2026-04-02 03:53:26] [slack_check] Done (exit=1)
+[2026-04-02 03:54:26] [slack_check] Starting
+[2026-04-02 03:54:50] [slack_check] Done (exit=1)
+[2026-04-02 03:55:00] [inbox_check] Starting
+[2026-04-02 03:55:01] [inbox_check] Done (exit=0)
+[2026-04-02 03:55:51] [slack_check] Starting
+[2026-04-02 03:56:15] [slack_check] Done (exit=1)
+[2026-04-02 03:57:05] [recommended_check] Starting
+[2026-04-02 03:57:05] [recommended_check] Skipped (hour=3, waiting for hour%6==2)
+[2026-04-02 03:57:05] [recommended_check] Done (exit=0)
+[2026-04-02 03:57:15] [slack_check] Starting
+[2026-04-02 03:57:40] [slack_check] Done (exit=1)
+[2026-04-02 03:58:40] [slack_check] Starting
+[2026-04-02 03:59:06] [slack_check] Done (exit=1)
+[2026-04-02 03:59:16] [git_sync] Starting
