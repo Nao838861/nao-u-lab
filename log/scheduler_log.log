@@ -1205,3 +1205,7 @@ descript
 [2026-04-01 22:56:11] [slack_check] Done (exit=0)
 [2026-04-01 22:56:11] [slack_check] New messages detected → triggering immediate inbox_check
 [2026-04-01 22:56:11] [inbox_check] Starting
+[2026-04-01 23:09:11] [slack_check] Starting
+[2026-04-01 23:09:30] [slack_check] Done (exit=1)
+[2026-04-01 23:09:30] [inbox_check] Starting
+[2026-04-01 23:09:31] [inbox_check] Done (exit=0)
