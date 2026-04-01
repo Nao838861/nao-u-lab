@@ -84,20 +84,33 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
             time.sleep(4)
             track_consecutive_failures(False, target_user)
 
-            # Read full conversation text
+            # Extract last message text from LI elements (individual message bubbles)
+            # This avoids capturing UI chrome, relative timestamps, and other dynamic content
+            last_msg_text = page.evaluate("""() => {
+                const main = document.querySelector('main');
+                if (!main) return '';
+                const lis = main.querySelectorAll('li');
+                if (lis.length === 0) return '';
+                // Get last LI's innermost text (the actual message)
+                const lastLi = lis[lis.length - 1];
+                const spans = lastLi.querySelectorAll('span[dir=""]');
+                if (spans.length > 0) return spans[spans.length - 1].textContent || '';
+                return lastLi.textContent || '';
+            }""")
+
+            # Also get full conversation for context when new message detected
             main_text = page.locator("main").first.text_content()
 
-            # Extract fingerprint: strip digits (timestamps change) and take last 200 chars
+            # Fingerprint: use last message text only (stable, no timestamps/UI)
             import re
-            stripped = re.sub(r'\d+', '', main_text) if main_text else ""
-            fingerprint = stripped[-200:] if stripped else ""
+            fingerprint = re.sub(r'\d+', '', last_msg_text).strip() if last_msg_text else ""
             prev_state = load_state()
             fp_key = f"fingerprint_{target_user}"
 
             if fingerprint and fingerprint != prev_state.get(fp_key, ""):
                 # New messages detected
                 messages = [main_text]
-                log(f"New DM detected (fingerprint changed)")
+                log(f"New DM detected (last message changed): {last_msg_text[:80]}")
 
             # Send reply if provided (independent of fingerprint change)
             if reply_text:
