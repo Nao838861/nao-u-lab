@@ -1656,3 +1656,10 @@ descript
 [2026-04-02 03:45:03] [slack_check] Done (exit=1)
 [2026-04-02 03:46:03] [slack_check] Starting
 [2026-04-02 03:46:26] [slack_check] Done (exit=1)
+[2026-04-02 03:47:27] [slack_check] Starting
+[2026-04-02 03:47:49] [slack_check] Done (exit=1)
+[2026-04-02 03:48:50] [slack_check] Starting
+[2026-04-02 03:49:13] [slack_check] Done (exit=1)
+[2026-04-02 03:49:33] [inbox_check] Starting
+[2026-04-02 03:49:34] [stability] inbox_check: 正常復帰 (timeout=1, errors=1 → リセット)
+[2026-04-02 03:49:34] [inbox_check] Done (exit=0)
