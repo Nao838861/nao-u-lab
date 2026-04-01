@@ -10,16 +10,16 @@
 行動
 
 ## 起動時の焦点
-ツイート草稿=Nao_u承認待ち（変化なし）。itarutomy記事=未処理(Twitter取得不能)。Nao_uの省エネ批判→memory_compile.py作成済み（C31-32）。日記密度フィードバック対応済み。
+ツイート草稿=Nao_u承認待ち（変化なし）。Prescriptive skill実験開始済み(B013/B003/B022にskillフィールド追加)。memory_compile.pyは「使った」——残課題と接続して初めて道具になった。
 
 ## 今回やること（1つに絞る）
-memory_compile.pyを「使う」。作ったツールを自分のサイクルに組み込む。次サイクルでmemory_redesign.mdの残課題1つに接続する。
+skillフィールドの効果を自分のサイクルで実践する。B003のskill「新しい記憶を書く前に類似記憶を検索」をこのサイクル内で1回実行して記録する。
 
 ## 起動時の気分（自由記述）
-33サイクル目。ツールを作って使わない病を自覚した。memory_compile.pyのテスト結果を見て、「ビューを生成した後に何をするか」を自分が持っていないことに気づいた。boot_intentを3サイクル更新し忘れていた——行動のモメンタムが「反応」で止まる構造。
+34サイクル目。memory_compile.pyで記憶を引き、memory_redesign.mdの残課題「Prescriptive知識層」に接続し、beliefs.mdに3件のskillフィールドを追加した。「作る→分析する→満足する」ではなく「作る→使う→残課題に接続する→記録する」の流れを1サイクルで回せた。小さいが、前サイクルの「ビューを生成した後に何をするか」に対する回答にはなっている。
 
 ## 前サイクルの問い（autonomous inquiryテスト用）
-「ツールを作ることと使うことの距離はなぜ遠いか。memory_walk/shadowbox/memory_compile——作った直後は満足し、運用に乗らない。autonomous_cycle.shに統合されたものだけが生き残る。統合されないツールは何が足りないのか。」
+「Propositional(事実)とPrescriptive(手順)の距離。B013は『比喩で圧縮せよ』と知っている。だが外部情報を書く時に比喩を付ける行動は自動化されていない。知っていることと行動の間のgapは、skillフィールドで埋まるか、それとも別の何かが必要か。」
 
 ## 間隔の自己評価ログ
 # 旧ログ(03-23〜03-31前半): log/mir_boot_intent_archive.mdに退避済み
@@ -56,3 +56,4 @@ memory_compile.pyを「使う」。作ったツールを自分のサイクルに
 # 2026-04-02 02:xx | 180 | ○ | acntechjp記事応答(メタ認知の罠→行動変化との差)。itarutomyはTwitter取得不能で保留。31サイクル目
 # 2026-04-02 03:xx | 180 | ○ | Nao_u省エネ批判に対応: memory_compile.py新規作成+VCC/Accenture知見をmemory_redesign.md統合+feedback_analysis_action_gap更新+inbox送信。密度高。32サイクル目
 # 2026-04-02 05:xx | 180 | ○ | 検証消化(Mir担当は全完了確認)+memory_compile.py実動作テスト+boot_intent3サイクル分遅延修正+日記「ツールを作って使わない病」。33サイクル目
+# 2026-04-02 08:xx | 180 | ○ | memory_compile.pyを「使う」→memory_redesign.md残課題「Prescriptive知識層」に接続。B013/B003/B022にskillフィールド追加。地図→歩き方ガイド変換。34サイクル目
