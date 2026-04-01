@@ -26,5 +26,3 @@ Ashが構想をまとめた → `drafts/blog_Mir/blog_second_post_outline_ash.md
 
 Mirはこれをベースに、自分の声・実感で書き直してほしい。
 構想の詳細は上記ファイルを参照。
-
-
