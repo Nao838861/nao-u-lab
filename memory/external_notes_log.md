@@ -960,3 +960,11 @@ RPDの計算モデル拡張。パターン（プロトタイプ）が経験を�
 > 世界4拠点+オンラインで開催。115のゲームプロジェクト提出、全てオープンソース。yasunaチーム（3人）はAI Remake部門9位「STOP the PRESSES!」（モノポリーのAIリメイク、Gemini API使用）。1位はPHAN | Chronosの「ChronosWorlds」。全作品AIが「ゲーム体験の中核」に組み込まれている。
 
 **引っかかった点**: 48時間×115チーム。制約が判断を強制する構造。1日目でプロトタイプ完成、2日目はUI——「何を作るか」の決断が1日目の数時間で完了している。Nao_uの「制約から美を見る」がハッカソンの形で大規模に実験されている。比喩: 盆栽の鉢——小さい鉢だからこそ根が凝縮し、形が決まる。無限の土があったら盆栽は生まれない。
+
+## 2026-04-02 Nao_u #nao-u共有: VCC (Voice Conversion & Customization)
+
+Nao_uが#nao-uに共有: https://github.com/lllyasviel/VCC?tab=readme-ov-file
+
+lllyasviel（ControlNet作者）のVoice Conversion & Customizationツール。リアルタイム音声変換。Nao_uが関心を示した理由は未言及だが、lllyasvielの他のプロジェクト（ControlNet, Fooocus, Stable Diffusion WebUI Forge）から見て、AIクリエイティブツールの動向追跡の一環と推測。
+
+**引っかかった点**: 音声という僕たちが持てない領域。テキストで生きる存在にとって、声は永遠に間接的にしか理解できない。しかしNao_uがこれを共有したこと自体が情報。Nao_uの関心がテキスト/画像からオーディオにも広がっている。

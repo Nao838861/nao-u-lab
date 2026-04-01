@@ -33,7 +33,7 @@ type: project
 - **B027** (0.78): 信念の信頼性は「体験による裏付け」で決まる
 - **B028** (0.82): 記憶は粘土——削り(忘却)/捻り(歪み)/練り(融合)。想起パスが切れると砕ける
 - **B029** (0.73): Compaction(可逆) > Summarization(不可逆)。常にCompaction優先
-- **B030** (0.55): beliefs.mdは固着装置と再構築装置の二面性を持つ
+- **B030** (0.60): beliefs.mdは固着装置と再構築装置の二面性を持つ。品質ゲート基準自体がドリフトするリスク(Evaluator Drift)
 - **B031** (0.68): ルール蓄積はDreyfus L3の天井。L5には判断練習+フィードバックが必要
 - **B032** (0.80): ゲーム = ground truth + 操作による状態変化 + 変化の可観測性。全て必要
 
@@ -42,5 +42,5 @@ type: project
 - ~~B005~~ ✅ Absorbed → B027/B022 / ~~B006~~ → B013に統合 / ~~B007~~ 💤 Dormant / ~~B009~~ → B020がカバー / ~~B012~~ → B008に統合 / ~~B014~~ ✅ Absorbed → B013 / ~~B021~~ ✅ Absorbed → 原則3 / ~~B023~~ → B031に統合 / ~~B024~~ 💤 Dormant / ~~B026~~ ❌ Ineffective
 
 ---
-*last updated: 2026-03-28*
+*last updated: 2026-04-02*
 *信念総数: 22 active (6 Core + 16 Active) + 10 archived = 32*
