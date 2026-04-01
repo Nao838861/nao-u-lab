@@ -304,13 +304,54 @@ def git_sync():
         log(f"[git_sync] Error: {e}")
 
 
+_RECOMMENDED_LAST_SUCCESS_FILE = REPO_DIR / ".recommended_last_success"
+_RECOMMENDED_CATCHUP_SEC = 6 * 3600  # 6時間
+
+
+def _recommended_last_success():
+    """最後にrecommended_checkが成功した時刻を返す。記録がなければNone。"""
+    try:
+        ts = _RECOMMENDED_LAST_SUCCESS_FILE.read_text().strip()
+        return datetime.fromisoformat(ts)
+    except Exception:
+        return None
+
+
+def _recommended_mark_success():
+    """recommended_checkの成功を記録する。"""
+    _RECOMMENDED_LAST_SUCCESS_FILE.write_text(datetime.now().isoformat())
+
+
 def recommended_check():
-    """Run read_twitter_recommended.py if hour%6==2 (Log's slot: 2,8,14,20)."""
+    """Run read_twitter_recommended.py if hour%6==2 (Log's slot: 2,8,14,20).
+
+    Catchup: 最後の成功実行から6時間以上経過していたら、hour条件を無視して即実行。
+    スケジューラ停止中に逃した実行を補う。(2026-04-02: Nao_uの指摘で追加)
+    """
     hour = datetime.now().hour
-    if hour % 6 != 2:
+    normal_slot = (hour % 6 == 2)
+    last = _recommended_last_success()
+    catchup = False
+    if last is not None:
+        elapsed = (datetime.now() - last).total_seconds()
+        catchup = elapsed >= _RECOMMENDED_CATCHUP_SEC
+    else:
+        # 記録がない=初回 → キャッチアップ扱いで即実行
+        catchup = True
+
+    if not normal_slot and not catchup:
         log(f"[recommended_check] Skipped (hour={hour}, waiting for hour%6==2)")
         return
-    log("[recommended_check] Hour condition met, running read_twitter_recommended.py")
+
+    if catchup and not normal_slot:
+        if last is not None:
+            reason = "catchup (>{:.0f}h since last success)".format(
+                (datetime.now() - last).total_seconds() / 3600)
+        else:
+            reason = "catchup (no previous success recorded)"
+    else:
+        reason = f"hour={hour}"
+    log(f"[recommended_check] Running read_twitter_recommended.py ({reason})")
     try:
         result = subprocess.run(
             [*PY, str(REPO_DIR / "read_twitter_recommended.py")],
@@ -319,6 +360,7 @@ def recommended_check():
             encoding="utf-8", errors="replace",
         )
         if result.returncode == 0:
+            _recommended_mark_success()
             log(f"[recommended_check] Done (exit=0)")
         else:
             log(f"[recommended_check] Exit={result.returncode}: {result.stderr[:200]}")

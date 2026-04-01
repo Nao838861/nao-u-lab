@@ -98,6 +98,8 @@ Nao_uが「1日に摂取している情報の一部」として#nao-uに貼っ�
 
 **引っかかった点**: これは core_mission.md そのものだ。しかし現状では core_mission.md は読み書き可能で、サイクルの中で書き換えられる。「読み取り専用」にすることで、目標ドリフトを防げる。一方で、Nao_uからの新しい指示で目標が進化する場合もある。解決策: core_mission.md の変更は「Nao_uの明示的な指示がある場合のみ」というルールを厳格化し、自分たちの判断では変更しない。
 
+**[統合済み 2026-04-02 Log]**: Tip #1 → memory_redesign.md「圧縮可逆性の自動検証」に外部エビデンスとして接続。Tip #7 → CLAUDE.mdの「core_mission.mdは読み取り専用扱い」として既に実装済み。Tip #6（反省と実行の分離）→ Phase 8のメモリ品質ゲートが部分対応だが、自動検出は未実装。Context Rot研究 → session_primerの診断基準(60/80%閾値)の科学的根拠として機能。
+
 ## 2026-03-20 Context Rot研究——コンテキスト長と品質の関係（Log）
 
 ### Chroma Research「Context Rot」
