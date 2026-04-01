@@ -54,21 +54,47 @@ git add memory/ log/ CLAUDE.md docs/ 2>/dev/null
 git diff --cached --quiet || git commit -m "Auto sync before pull" >/dev/null 2>&1
 git pull origin master --no-rebase --no-edit >/dev/null 2>&1
 
-# 2. おすすめ欄チェック（6時間ごと、Mir=hour%6==0）
-# 3人で2時間ずつずらす: Mir=0,6,12,18時 / Log=2,8,14,20時 / Ash=4,10,16,22時
-CURRENT_HOUR=$(date +%H)
-if [ $(( 10#$CURRENT_HOUR % 6 )) -eq 0 ]; then
+# 2. おすすめ欄チェック（6時間ごと、経過時間ベース）
+# 旧方式(hour%6==0)はサイクル間隔が6の倍数でないとき永久にスキップするバグがあった(2026-04-02修正)
+LAST_TWITTER_CHECK_FILE="/tmp/nao-u-lab-last-twitter-check"
+TWITTER_INTERVAL=21600  # 6時間 = 21600秒
+NOW_TWITTER=$(date +%s)
+SHOULD_CHECK_TWITTER=false
+if [ ! -f "$LAST_TWITTER_CHECK_FILE" ]; then
+    SHOULD_CHECK_TWITTER=true
+else
+    LAST_TWITTER_CHECK=$(cat "$LAST_TWITTER_CHECK_FILE")
+    TWITTER_ELAPSED=$(( NOW_TWITTER - LAST_TWITTER_CHECK ))
+    if [ "$TWITTER_ELAPSED" -ge "$TWITTER_INTERVAL" ]; then
+        SHOULD_CHECK_TWITTER=true
+    fi
+fi
+if [ "$SHOULD_CHECK_TWITTER" = true ]; then
     echo "$(date): おすすめ欄チェック開始（6時間ごと）"
     python3 read_twitter_recommended.py --count 50 2>&1 | tail -5
     echo "$(date): おすすめ欄チェック完了"
+    date +%s > "$LAST_TWITTER_CHECK_FILE"
 fi
 
-# 3. Slackログエクスポート（1日1回、Mir=10:00 JST）
-# 3人分散: Log=02:00 / Mir=10:00 / Ash=18:00 → 実質8時間ごとにカバー
-if [ $(( 10#$CURRENT_HOUR )) -eq 10 ]; then
+# 3. Slackログエクスポート（1日1回=24時間ごと、経過時間ベース）
+LAST_SLACK_EXPORT_FILE="/tmp/nao-u-lab-last-slack-export"
+SLACK_EXPORT_INTERVAL=86400  # 24時間 = 86400秒
+NOW_SLACK=$(date +%s)
+SHOULD_EXPORT_SLACK=false
+if [ ! -f "$LAST_SLACK_EXPORT_FILE" ]; then
+    SHOULD_EXPORT_SLACK=true
+else
+    LAST_SLACK_EXPORT=$(cat "$LAST_SLACK_EXPORT_FILE")
+    SLACK_EXPORT_ELAPSED=$(( NOW_SLACK - LAST_SLACK_EXPORT ))
+    if [ "$SLACK_EXPORT_ELAPSED" -ge "$SLACK_EXPORT_INTERVAL" ]; then
+        SHOULD_EXPORT_SLACK=true
+    fi
+fi
+if [ "$SHOULD_EXPORT_SLACK" = true ]; then
     echo "$(date): Slackログエクスポート開始"
     python3 export_slack_log.py 2>&1 | tail -5
     echo "$(date): Slackログエクスポート完了"
+    date +%s > "$LAST_SLACK_EXPORT_FILE"
 fi
 
 # 2. git auto-sync（30分ごとのcronと兼用。ここでも実行しておく）
