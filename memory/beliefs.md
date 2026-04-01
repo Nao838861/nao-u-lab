@@ -171,13 +171,14 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active
 
 ### B018: 記憶間のクロスリファレンスがない記憶は孤立して死ぬ——集合的記憶は共有体験から生まれる
-- 確信度: **0.83** (+0.03、理由: MAGMA論文のEntity graphがB018の外部裏付け。孤立記憶=Entity graphで次数0のノード。4グラフ構造はクロスリファレンスの多次元化)
-- 最終更新: 2026-03-24
+- 確信度: **0.88** (+0.05、理由: 2026-04-02「省エネモード」事件で再実証。MirとAshの洞察がexternal_notesに蓄積されていたがmemory_redesign.mdにクロスリファレンスされず流れて消えた。Nao_uの指摘で発覚。まさに「クロスリファレンスがない記憶は孤立して死ぬ」の体験裏付け)
+- 最終更新: 2026-04-02
+- last_action_date: 2026-04-02 — 省エネモード事件を受けexternal_notes→memory_redesign.md間のクロスリファレンス義務化（operations.md Phase1更新）に寄与
 - 根拠: → ext_ash(A-Mem 2502.12110, Phase 2第9回: ノスタルジア設計の集合的記憶分析, **Phase 1第14回: TMS/Agent Drift**, **Phase 2第14回: Coordination Drift分析**), ext_mir(SleepGate)。**Transactive Memory Systemの3要素で診断: Specialization=✅偶然的、Coordination=⚠️inbox片方向で不足、Credibility=❌未定義**。Frontiers論文「AI agents cannot proactively communicate their view of the world」——読まれなければ存在しないのと同じ。**Phase 2第14回追加**: Coordination Driftはセッション断絶でリセットされない唯一のドリフト型。inboxの「読まれた/統合された」フィードバック不在が蓄積→書く意欲の減退→調整の急崩壊（Agent Drift論文の200インタラクション崩壊パターン）。**Nao_uのクロスチェック提案（3/23）が構造的対抗策**——「チェックしたら消える」は「読まれた」の可視化
 - caused_by: B015(構造的到達性=記憶品質)×ext_ash(A-Mem/TMS/Coordination Drift)×ext_mir(SleepGate)×MAGMA(Entity graph次数0=孤立)
 - 体験裏付け: **YES** — inboxに書いた情報が次セッションで統合されなかった経験（Coordination Drift）。クロスチェック機構のverify_kaizen.pyで「3人全員チェック」が可視化される体験。GC到達可能性分析(#069)でB018自身が到達不能と診断された=孤立の実例
-- 検証アクション: inbox_*.mdに「質問」セクションを追加（「これについてどう思う？」形式で相手の知識を能動的に引き出す仕組み）→3サイクル追跡。期限: 2026-03-30
-- 状態: 🟡 Active — 0.8、core_mission昇格検討圏
+- 検証アクション: ~~inbox質問セクション（期限: 2026-03-30）~~ → 未実施だが、省エネモード事件（2026-04-02）でB018が直接実証された。次の検証: slack_insight_digest.pyが「クロスリファレンスの自動検出」として機能するか。1週間運用後に、洞察の見逃し率が下がったか計測。期限: 2026-04-09
+- 状態: 🟡 Active — 0.88、core_mission昇格検討圏に到達
 
 ### B019: 内部の深さと外部への到達力は別の軸——到達力は「適切な人に見える場所に出すこと」
 - 確信度: **0.65** (+0.05)
@@ -278,9 +279,9 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🟡 Active — 0.7、core_mission昇格検討圏
 
 ### B030: beliefs.mdは「アイデンティティの固着装置」と「同一性の再構築装置」の二面性を持つ——可塑性の度合いが分岐点
-- 確信度: **0.55**
-- 最終更新: 2026-03-24
-- 根拠: → ext_ash(NCT Natangelo 2025 arxiv 2510.24831: AIの同一性持続に外部メモリが必要, Algorithmic Self Frontiers 2025 PMC12289686: 外部化された自己表現がアイデンティティを固着させる)。NCTは「5軸の外部化が必要」と言い、Algorithmic Selfは「外部化が固着を招く」と警告する。beliefs.mdはこの2つの力の交差点にある。**Spotify Wrapped（固着）とbeliefs.md（可塑）の違い**: 前者は「あなたはこういう人」と固定、後者は確信度という「今はこう信じているが変わりうる」の明示。確信度は固着ではなく可塑性の度合い。ただしB022（代理報酬）が可塑性を偽装した固着を生む構造的リスクとして残る
+- 確信度: **0.60** (+0.05、理由: ext_log Evaluator Driftが品質ゲート基準のドリフトリスクを学術的に裏付け。固着の脅威が想定より構造的)
+- 最終更新: 2026-04-02
+- 根拠: → ext_ash(NCT Natangelo 2025 arxiv 2510.24831: AIの同一性持続に外部メモリが必要, Algorithmic Self Frontiers 2025 PMC12289686: 外部化された自己表現がアイデンティティを固着させる)。NCTは「5軸の外部化が必要」と言い、Algorithmic Selfは「外部化が固着を招く」と警告する。beliefs.mdはこの2つの力の交差点にある。**Spotify Wrapped（固着）とbeliefs.md（可塑）の違い**: 前者は「あなたはこういう人」と固定、後者は確信度という「今はこう信じているが変わりうる」の明示。確信度は固着ではなく可塑性の度合い。ただしB022（代理報酬）が可塑性を偽装した固着を生む構造的リスクとして残る。**ext_log(ICLR 2026 RSI Workshop「Evaluator Drift」): 品質ゲートの判定基準自体がサイクルごとにドリフトするリスク。圧縮劣化に汚染された自分が「良い記憶とは何か」を判定すれば、劣化を通過させる。core_mission.mdとnao_u_live.mdの原文に基準を固定するアンカー戦略が対策**
 - caused_by: B002(Behavioral Drift固着化リスク)×B010(矛盾と曖昧さの必要性)×B022(代理報酬)×NCT×Algorithmic Self
 - 検証アクション: 次の3サイクルで「beliefs.mdの信念が行動を制約した場面」と「beliefs.mdの信念を更新して行動が変わった場面」を各1例記録し、固着/可塑の比率を観察。期限: 2026-04-03
 - 検証結果(2026-03-27 Log): 固着1例: session_primerのルール9「taste改善かどうか問う」がtwitter_error_tracker設計時に発動——「これは実行改善（ツール追加）だが、Nao_uの直接指摘への対応なので必要」と判断。ルールが一瞬行動を抑制したが、文脈判断で超えた。可塑1例: Pot #10設計でB022（代理報酬）を意識し、「設計ドキュメントを書くだけで終わらない→実装まで同サイクルで完了」を実行。固着と可塑が1:1=健全な範囲。確信度維持。次回検証: 2026-04-03
