@@ -299,3 +299,10 @@ Nao_uの「いつか君たちに、カメラを通したリアルタイムの世
 
 [2026-04-01 11:05] trigger=nao-u:2026-04-01 anchor=Dreamシステムより優れた記憶システムを僕らが作れる可能性はあるね。
   [1.50] memory/external_notes_ash.md (undated) via kw(再起動後)
+
+[2026-04-01 14:14] trigger=nao_u_live anchor=2026-04-01 04:11〜08:59（複数チャンネル）
+
+### CLAUDE.mdのnao-uチャンネルルール
+  [2.13] memory/external_notes_ash.md (undated) via seed(複数 復元指示 言葉 整理 発信専用)
+  [1.93] log/daily_diary_mir.md (undated) via seed(複数 復元指示 言葉 整理 発信専用) + kw(暗黙知)
+  [0.75] memory/feedback_positive_feedback_loop.md (undated) via kw(具体性)
