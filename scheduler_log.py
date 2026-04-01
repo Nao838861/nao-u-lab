@@ -651,6 +651,7 @@ def build_auto_cycle_prompt():
         ("memory_walk.py", ["--n", "1"], "記憶の散歩", 10),
         ("check_beliefs_health.py", ["--summary"], "信念健康", 10),
         ("check_kaizen_due.py", ["--auto-verify"], "自動検証", 60),
+        ("slack_insight_digest.py", ["--compact", "--hours", "72"], "他インスタンス洞察", 15),
     ]:
         try:
             r = subprocess.run(
@@ -700,6 +701,7 @@ def build_auto_cycle_prompt():
         "4) pending_requests.md確認 "
         "5) 8フェーズ改善サイクル実行 "
         "6) 今サイクルの作業がActiveプロジェクト(projects/INDEX.md)に関係するなら、そのプロジェクトファイルも更新する "
+        "6.5) [他インスタンス洞察]が含まれていたら → 該当するプロジェクトファイルを開き、具体的な考察と次の一手を追記する。流して終わりにしない "
         "7) #logに活動日記を書く "
         "8) git push"
         + "".join(alerts)
