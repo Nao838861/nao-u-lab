@@ -99,25 +99,28 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
                 messages = [main_text]
                 log(f"New DM detected (fingerprint changed)")
 
-                # Send reply if provided
-                if reply_text:
+            # Send reply if provided (independent of fingerprint change)
+            if reply_text:
+                textbox = page.locator('[data-testid="dm-composer-textarea"]')
+                if textbox.count() == 0:
                     textbox = page.locator('[placeholder="メッセージ"]')
-                    if textbox.count() == 0:
-                        textbox = page.locator(
-                            'div[role="textbox"][contenteditable="true"]'
-                        )
-                    if textbox.count() > 0:
-                        textbox.first.click()
-                        time.sleep(1)
-                        # Use browser's navigator.clipboard API (avoids Windows clipboard lock)
-                        import json
-                        escaped = json.dumps(reply_text)
-                        page.evaluate(f'async () => {{ await navigator.clipboard.writeText({escaped}); }}')
-                        time.sleep(1)
-                        page.keyboard.press("Control+v")
-                        time.sleep(2)
-                        page.keyboard.press("Enter")
-                        time.sleep(4)
+                if textbox.count() == 0:
+                    textbox = page.locator(
+                        'div[role="textbox"][contenteditable="true"]'
+                    )
+                if textbox.count() > 0:
+                    textbox.first.click()
+                    time.sleep(1)
+                    # Use browser's navigator.clipboard API (avoids Windows clipboard lock)
+                    import json
+                    escaped = json.dumps(reply_text)
+                    page.evaluate(f'async () => {{ await navigator.clipboard.writeText({escaped}); }}')
+                    time.sleep(1)
+                    page.keyboard.press("Control+v")
+                    time.sleep(2)
+                    page.keyboard.press("Enter")
+                    time.sleep(4)
+                    log(f"Reply sent to {target_user}")
 
             # 既存のstateにマージ（consecutive_fails等を保持するため）
             existing = load_state()
