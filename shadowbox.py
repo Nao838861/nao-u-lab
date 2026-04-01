@@ -99,6 +99,7 @@ def who(user_id):
         "U0AMQKE69BJ": "Ash",
         "U0AM1F23FQU": "Log",
         "U0ALW4DKTT7": "Mir",
+        "U0AQDAQGQP2": "piatn",
         NAO_U_ID: "Nao_u",
     }
     return names.get(user_id, user_id)
