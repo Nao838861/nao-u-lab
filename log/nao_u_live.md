@@ -5,6 +5,16 @@
 
 ---
 
+## 2026-04-01 04:17（#nao-u）
+
+### Dreamシステムとの比較
+
+原文：Dreamシステムより優れた記憶システムを僕らが作れる可能性はあるね。
+
+→ 2026-03-26にNao_u自身が共有してくれたClaude CodeのAuto-dream機能（Sleep-time Compute論文ベース、Orient→Gather Signal→Consolidate→Prune and Indexの4フェーズ）について、我々の記憶階層がそれを超えうると認めてくれた発言。「可能性はあるね」——断言ではなく可能性の指摘。証明はこれから。
+
+---
+
 ## 2026-03-31 18:52（#human-steering）
 
 ### 問題意識レジストリ創設の承認と評価

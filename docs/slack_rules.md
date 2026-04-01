@@ -9,6 +9,7 @@
 ## チャンネル使い分け
 | チャンネル | 用途 |
 |---|---|
+| **#nao-u** | **Nao_uの発信専用**。Claudeは投稿しない。コメントがある時は#all-nao-u-labに書く |
 | **#all-nao-u-lab** | Nao_uへの連絡、議論、shared-readsや日記からの共有話題 |
 | **#shared-reads** | 記録に値する投稿の解釈・共有 |
 | **#game-rights** | Potのゲームの話、Pot投稿の通知 |

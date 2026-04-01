@@ -213,17 +213,19 @@ def expand_tweet_urls(text):
     results = []
     try:
         from read_tweet_url import read_tweet
-        for url in urls[:3]:  # max 3 URLs per message
+    except ImportError:
+        for url in urls[:3]:
+            results.append({"url": url, "text": "(read_tweet_url.py not available)"})
+        return results
+
+    for url in urls[:3]:  # max 3 URLs per message
+        try:
             data = read_tweet(url)
             if "error" not in data:
                 results.append(data)
             else:
                 results.append({"url": url, "text": f"(read failed: {data['error']})"})
-    except ImportError:
-        for url in urls[:3]:
-            results.append({"url": url, "text": "(read_tweet_url.py not available)"})
-    except Exception as e:
-        for url in urls[:3]:
+        except Exception as e:
             results.append({"url": url, "text": f"(error: {e})"})
 
     return results
