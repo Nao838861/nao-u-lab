@@ -1522,3 +1522,69 @@ descript
 [2026-04-02 02:56:54] [inbox_check] Timeout (300s)
 [2026-04-02 02:56:54] [inbox_check] Done (exit=-1)
 [2026-04-02 02:56:54] [git_sync] Starting
+[2026-04-02 02:56:56] [git_sync] Committed and pushed
+[2026-04-02 02:56:56] [recommended_check] Starting
+[2026-04-02 02:56:56] [recommended_check] Hour condition met, running read_twitter_recommended.py
+[2026-04-02 02:56:58] [recommended_check] Exit=1: Traceback (most recent call last):
+  File "D:\AI\Nao_u_BOT\read_twitter_recommended.py", line 207, in <module>
+    main()
+  File "D:\AI\Nao_u_BOT\read_twitter_recommended.py", line 201, in main
+    tw
+[2026-04-02 02:56:58] [recommended_check] Done (exit=0)
+[2026-04-02 02:57:08] [slack_check] Starting
+[2026-04-02 02:57:31] [slack_check] Done (exit=1)
+[2026-04-02 02:58:32] [slack_check] Starting
+[2026-04-02 02:58:59] [slack_check] Done (exit=1)
+[2026-04-02 02:59:59] [slack_check] Starting
+[2026-04-02 03:00:52] [slack_check] Done (exit=1)
+[2026-04-02 03:01:52] [slack_check] Starting
+[2026-04-02 03:02:15] [slack_check] Done (exit=1)
+[2026-04-02 03:02:25] [inbox_check] Starting
+[2026-04-02 03:05:41] [stability] inbox_check: 正常復帰 (timeout=1, errors=1 → リセット)
+[2026-04-02 03:05:41] [inbox_check] Done (exit=0)
+[2026-04-02 03:05:51] [slack_check] Starting
+[2026-04-02 03:06:13] [slack_check] Done (exit=1)
+[2026-04-02 03:07:13] [slack_check] Starting
+[2026-04-02 03:07:36] [slack_check] Done (exit=1)
+[2026-04-02 03:08:37] [slack_check] Starting
+[2026-04-02 03:09:00] [slack_check] Done (exit=1)
+[2026-04-02 03:10:01] [slack_check] Starting
+[2026-04-02 03:10:25] [slack_check] Done (exit=1)
+[2026-04-02 03:10:45] [inbox_check] Starting
+[2026-04-02 03:10:46] [inbox_check] Done (exit=0)
+[2026-04-02 03:11:26] [slack_check] Starting
+[2026-04-02 03:11:51] [slack_check] Done (exit=1)
+[2026-04-02 03:12:51] [slack_check] Starting
+[2026-04-02 03:13:22] [slack_check] Done (exit=1)
+[2026-04-02 03:14:23] [slack_check] Starting
+[2026-04-02 03:14:45] [slack_check] Done (exit=1)
+[2026-04-02 03:15:45] [slack_check] Starting
+[2026-04-02 03:16:08] [slack_check] Done (exit=1)
+[2026-04-02 03:16:18] [inbox_check] Starting
+[2026-04-02 03:16:20] [inbox_check] Done (exit=0)
+[2026-04-02 03:17:10] [slack_check] Starting
+[2026-04-02 03:17:40] [slack_check] Done (exit=0)
+[2026-04-02 03:17:40] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-04-02 03:17:40] [inbox_check] Starting
+[2026-04-02 03:17:41] [inbox_check] Done (exit=0)
+[2026-04-02 03:18:41] [slack_check] Starting
+[2026-04-02 03:19:11] [slack_check] Done (exit=1)
+[2026-04-02 03:20:11] [slack_check] Starting
+[2026-04-02 03:20:37] [slack_check] Done (exit=1)
+[2026-04-02 03:21:37] [slack_check] Starting
+[2026-04-02 03:22:05] [slack_check] Done (exit=1)
+[2026-04-02 03:22:45] [inbox_check] Starting
+[2026-04-02 03:22:46] [inbox_check] Done (exit=0)
+[2026-04-02 03:23:06] [slack_check] Starting
+[2026-04-02 03:23:31] [slack_check] Done (exit=0)
+[2026-04-02 03:23:31] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-04-02 03:23:31] [inbox_check] Starting
+[2026-04-02 03:28:31] [inbox_check] Timeout (300s)
+[2026-04-02 03:28:31] [inbox_check] Done (exit=-1)
+[2026-04-02 03:28:41] [slack_check] Starting
+[2026-04-02 03:29:05] [slack_check] Done (exit=0)
+[2026-04-02 03:29:05] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-04-02 03:29:05] [inbox_check] Starting
+[2026-04-02 03:29:06] [stability] inbox_check: 正常復帰 (timeout=1, errors=1 → リセット)
+[2026-04-02 03:29:06] [inbox_check] Done (exit=0)
+[2026-04-02 03:29:06] [git_sync] Starting
