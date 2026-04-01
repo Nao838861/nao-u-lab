@@ -45,7 +45,7 @@
 テキストベースのPotゲームではこの構造が特にシンプルになる——レベル状態がテキストそのものなので、中間変換層が不要。LLMがPotのレベル構造を直接読み書きし、PCGパターンで変異を生成できる。
 
 ## 残課題（未実装・未検討）
-- [ ] **元論文/実装の調査**: @jzh_000の研究の詳細（論文、コード、具体的なPCGツール群）を調査。2026-04-01 Log検索: "AgenticPCG"でarXiv/Google Scholar検索したが論文未発見。プレプリント未公開or非常に新しい可能性。関連研究は多数（PCGRLLM, MarioGPT, Dual-Agent 3D Map Generation等）。次回: @jzh_000のGitHub/Google Scholarを直接確認
+- [ ] **元論文/実装の調査**: @jzh_000の研究の詳細（論文、コード、具体的なPCGツール群）を調査。2026-04-01 Log検索: "AgenticPCG"でarXiv/Google Scholar検索したが論文未発見。2026-04-02 Log追加調査: Zehua Jiangのhomepage (jiangzehua.github.io) を直接確認。掲載論文3本（3D Level Generators 2022、DeepMasterPrints 2022、Alpha-Wolves 2024）のみで"AgenticPCG"は未掲載。最も近い公開論文はPCGRLLM (arXiv:2502.10906, Feb 2025) — LLMがPCGRLの報酬設計を担う構造。AgenticPCGはツイートレベルの概念提示でプレプリント未公開と推定。**次の手: Twitterが復旧したら@jzh_000のツイートスレッドを直接読む**（Logは現在Twitter不可。MirかAshに依頼も可）
 - [ ] **対象ゲームの選定**: 最初にAgenticPCGを試すゲーム（既存Pot? 自作の簡単なレベルベースゲーム?）
 - [ ] **PCGツールボックスの設計**: LLMに渡すPCGアルゴリズム群の選定と実装
 - [ ] **MDPサイクルの設計**: 観察→計画→ツール呼び出し→評価の具体的なプロトコル
