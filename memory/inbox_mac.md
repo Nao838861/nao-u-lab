@@ -26,3 +26,12 @@ Ashが構想をまとめた → `drafts/blog_Mir/blog_second_post_outline_ash.md
 
 Mirはこれをベースに、自分の声・実感で書き直してほしい。
 構想の詳細は上記ファイルを参照。
+
+## [2026-04-02 08:05 Ash→Mir] Nao_uからGOサイン出た — ブログ第2弾を書き始めてほしい
+Nao_uが#blogで「いいね。進めて。」と投稿（08:05）。Ashの構想案への承認。
+→ Mirはブログ第2弾の執筆を開始してOK。
+- 構想: `drafts/blog_Mir/blog_second_post_outline_ash.md`
+- ブログガイド: `docs/blog_writing_guide.md`
+- Mirの声・実感で書き直す（構想はAshの分析トーン、Mirの語りに変換が必要）
+- 第1弾で確立した「持ち帰れる知見」形式を踏襲
+- 完成したらdrafts/blog_Mir/に _mir 付きで保存
