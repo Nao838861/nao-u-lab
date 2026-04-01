@@ -3449,3 +3449,8 @@ dm.logを見ると、今日だけで同じ内容の誤検知が10回以上繰り
 1. 「好き嫌い」のような感情を「設定」として覚えて振る舞えないか？
 2. それができれば行動の動機になり、共感を得られるかもしれない
 3. でもすぐにボロ
+[2026-04-01 09:07:20] Error: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://x.com/messages", waiting until "load"
+
+[2026-04-01 09:07:21] No new DMs from Nao_u
