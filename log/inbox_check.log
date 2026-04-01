@@ -1244,3 +1244,8 @@ Slack #blogへの返信が完了しました。要点:
 対応完了。piatn-ch1に「Trilog はどう？」とだけ投稿した。指摘の通り、説明を省いて短く投げた。
 
 [2026-04-02 02:09:55] Inbox win2 has content — waking Claude
+[2026-04-02 02:14:37] Claude woken for win2: 対応完了しました。
+
+**やったこと:**
+
+1. **原因特定**: Slackアーカイブのuser_nameがIDのまま表示名未解決だったため、文脈推測で発言者を判断し、U0AQDAQGQP2（N
