@@ -1284,3 +1284,6 @@ Slack #blogへの返信が完了しました。要点:
 **やったこと:**
 
 1. **診断**: `recommended_check`が安定して6時間ごとに動いていなかった。原因は2つ — スケジューラのギャップ（PCスリープ等
+[2026-04-02 09:22:28] Inbox win has content — waking Claude
+[2026-04-02 09:30:19] Inbox win has content — waking Claude
+[2026-04-02 09:32:29] Claude wake timed out for win — restoring inbox
