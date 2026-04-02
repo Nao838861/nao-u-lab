@@ -228,8 +228,12 @@ def write_pid():
                 # 10秒以内に別プロセスが書いた → 競合。後から来た方が退く
                 logging.info(f"PID file just written by another process ({old_pid}, {age:.1f}s ago). Exiting.")
                 sys.exit(0)
-        except Exception:
-            pass  # PIDファイルが壊れている場合は上書き
+        except ValueError:
+            pass  # PIDファイルが壊れている(数値以外)場合は上書き
+        except Exception as e:
+            # PID読み取り以外の例外 → 安全側に倒して退く
+            logging.warning(f"PID check failed ({e}). Exiting to avoid duplicate.")
+            sys.exit(0)
     PID_FILE.write_text(str(os.getpid()))
 
 
