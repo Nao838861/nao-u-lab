@@ -48,3 +48,14 @@
   ISSUE: [scheduler_log] slack_checkが30分間実行されていない（期待: 10分以内）
   ISSUE: [scheduler_log] auto_cycleが588分間実行されていない（期待: 240分以内）
   ISSUE: ロックファイル .scheduler_ash.pid が9888分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-03 00:31:03] instance=Mir checks={"scheduler_alive": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=10
+  ISSUE: Ashスケジューラ(PID 9952)が停止中
+  ISSUE: Ashのスケジューラログが7934分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: Logのスケジューラログが59分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが8047分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが8047分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが8051分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが8054分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが8047分間実行されていない（期待: 240分以内）
+  ISSUE: [scheduler_log] slack_checkが60分間実行されていない（期待: 10分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が10076分間残存（プロセスが死んでロックが残っている可能性）
