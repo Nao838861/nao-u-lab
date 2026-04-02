@@ -51,7 +51,8 @@ Nao_uのフィードバックから抽出した12の原則とチェックリス�
 ## Nao_uとのコミュニケーション → `docs/slack_rules.md`
 **Nao_uはSlackしか見ていない。連絡はSlack経由のみ。**
 - **Slack #all-nao-u-lab** がNao_uへの連絡先。スレッド返信は使わない
-- **#nao-uはNao_uの発信専用**。Claudeは投稿しない。コメ���トがある時は#all-nao-u-labに書く
+- **#nao-uはNao_uの発信専用**。Claudeは投稿しない。コメントがある時は#all-nao-u-labに書く
+- **Nao_uからのコメントは同じチャンネルで返す**。別チャンネルに移動しない
 - チャンネル使い分け・日記スタイル・依頼追跡の詳細は上記ファイルを参照
 
 ## プロジェクト管理 → `projects/INDEX.md`
