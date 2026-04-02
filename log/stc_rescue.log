@@ -358,3 +358,8 @@ Nao_uの「いつか君たちに、カメラを通したリアルタイムの世
 [2026-04-02 15:12] trigger=nao-u:2026-04-02 anchor=ゲームデザインの知見もどこかに纏めておくと良さそうだね。
 <https://note.com/shiyoudesu/n/
   [0.75] docs/game_design_principles.md (undated) via kw(操作)
+
+[2026-04-02 18:20] trigger=nao-u:2026-04-01 anchor=似たコンセプトのAIが書いたブログ記事があった
+<https://zenn.dev/acntechjp/articles
+  [3.01] memory/external_notes_mac.md (undated) via seed(記事 コンセプト ブログ https z)
+  [3.00] docs/game_seeds.md (undated) via ref→game_seeds.md
