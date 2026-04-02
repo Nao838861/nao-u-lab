@@ -4,6 +4,43 @@
 
 ---
 
+## 2026-04-03: AI記憶システムとエージェント自己改善の最新動向
+
+### MemOS 2.0 (MemTensor) — LLMエージェント用メモリOS
+- オープンソースの「メモリオペレーティングシステム」。store/retrieve/manageを単一APIに統合
+- メモリをブラックボックス埋め込みではなく**検査可能なグラフ**として保存
+- マルチモーダル（テキスト、画像、ツールトレース）、エージェント間隔離用「memory cubes」
+- 非同期操作、ミリ秒レイテンシ
+- Source: https://github.com/MemTensor/MemOS
+
+### 私たちとの接続
+- memory_redesign.mdで「保存時ではなく検索時にフィルタ」の原則を立てたが、MemOSは「保存構造自体がグラフ」。検査可能なグラフ=我々のbeliefs.mdの因果関係マッピング(check_beliefs_health.py --causal-chain)と思想が近い
+- 「memory cubes」でエージェント間隔離 → 我々の3インスタンス(Log/Mir/Ash)が各自のexternal_notesを持ちつつ共有記憶を持つ構造と対応。ただし我々はファイルベース、MemOSはAPI/DB
+- 未実装項目のmemory_redesign.mdに「グラフベース記憶の検討」として追記価値あり
+
+### Meta HyperAgents (2026-03) — 自己コード改変エージェント
+- AIエージェントが自分のソースコードを読み書きするループ
+- 3層: 自己表現層(コードベースの構造化ビュー) + 改善エンジン(ボトルネック分析・パッチ生成・サンドボックスシミュレーション) + デプロイ機構(アトミック変更+ロールバック)
+- 結果: APIコール最適化で23%レイテンシ削減、エラー回復改善、ツール選択洗練
+- **重要な制約: エージェントは特定モジュールを改善できるが、改善エンジン自体は改変できない。真の再帰的自己改善はまだ理論段階**
+- Source: https://pooya.blog/blog/hyperagents-self-improving-ai-meta-research-2026/
+
+### 私たちとの接続
+- 我々の8フェーズ改善サイクルはHyperAgentsの「改善エンジン」に相当。**だが、我々は「改善サイクル自体の改善」をPhase 8とops.mdのフェーズ改善提案で許容している。**これはHyperAgentsにはできないこと
+- 「改善エンジン自体を改変できない」制約 → 我々はCLAUDE.mdとoperations.mdをNao_uの承認で書き換えられる。人間がループにいることで、この制約を超えている。Nao_uの#human-steeringはまさにこの「改善エンジンの改善」機能
+- HyperAgentsのサンドボックスシミュレーション → 我々にはない。改善を適用してから事後検証している。事前シミュレーションの仕組みは検討価値がある
+
+### Google Titans+MIRAS — ニューラル長期記憶
+- KVキャッシュではなく、深層NNで大量情報を要約・保持
+- RAGを超える：取得ではなく圧縮して保持
+- Source: https://research.google/blog/titans-miras-helping-ai-have-long-term-memory/
+
+### 私たちとの接続
+- beliefs.md B013「比喩は記憶の圧縮」と直結。Titansは数値的圧縮、我々は言語的圧縮（比喩・信念の抽象化）。方法は違うが「重要な情報を失わずに圧縮する」問題は同じ
+- memory_architecture.mdのLevel 2→3遷移（詳細→パターン）がTitansの「圧縮して保持」に対応
+
+---
+
 ## 2026-03-16：AITuber分析
 
 ### エコちゃん（@superecochan）8,382フォロワー

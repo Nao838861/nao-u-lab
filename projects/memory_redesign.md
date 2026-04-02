@@ -89,6 +89,8 @@ Nao_uの指摘: 集めた情報が流れて消えるだけになっている。�
 - [ ] caused_by到達性問題（2026-03-29 Ash）: beliefs_compact.mdにcaused_byが載っていない→判断理由への到達性がゼロ。B015の射程を「事実への到達性」から「判断理由への到達性」に拡張すべきか。nwiizoの「判断コンテキストの欠如がボトルネック」と交差。検証方法: 任意のBIDのcaused_byだけで信念の根拠を再構成できるかテスト
 - [x] **遡及的救済(STC)**: memory_activate.py --rescue で実装済み。自動トリガー(--auto-trigger)もautonomous_cycle.shに統合済み(#072)。次段階: 昇格アクション（救済結果→MEMORY.mdトリガー自動追加）
 - [ ] 前向き記憶の状態切替最適化: pending_requests.mdの全文re-readから軽量トリガーキュー方式への移行
+- [ ] **グラフベース記憶の検討**（2026-04-03 Ash外部摂取 MemOS 2.0）: MemTensorのMemOSは記憶をブラックボックス埋め込みではなく「検査可能なグラフ」として保存。我々のbeliefs.mdのcaused_by + check_beliefs_health.py --causal-chainは既にグラフ的構造を持つが、beliefs.md以外（external_notes、dialogue_*、reflections）はフラットテキスト。MemOSの「memory cubes」（エージェント間隔離）は我々のインスタンス別external_notesに対応。検討: beliefs.md以外の記憶にもグラフ構造（少なくともポインタ）を導入するか、それともFTS5+spreading activationで暗黙的にグラフを実現する現路線を維持するか
+- [ ] **改善サイクルの事前シミュレーション**（2026-04-03 Ash外部摂取 HyperAgents）: Meta HyperAgentsは改善パッチ適用前にサンドボックスでシミュレーションする。我々は改善を適用してから事後検証（kaizen-log+検証期限）。事前シミュレーションの仕組みがあればkaizen失敗率を下げられる可能性。最小実装案: 改善提案時に「この改善が失敗する最も likely な理由」を1行書く義務化（pre-mortem）
 - [ ] GEPA的スキルファイル自動最適化（2026-03-28 Log/Ash/Mir議論）: CLAUDE.md+feedback_index.md+beliefs.mdは「スキルファイル」。GEPAの枠組みで評価→分析→更新ループを回せるが、評価関数が未定義。retrieval-to-action rate（現21.4%）が最初の近似。ただし最終評価関数（Nao_uの「面白い」）は自動化不可→#human-steeringが必要
 - [ ] 判断コンテキストの到達性改善（2026-03-28 nwiizo→Log/Ash/Mir議論）: beliefs更新時のcaused_byは結論寄り。「因: 」プレフィクスで判断理由を1行添える習慣で圧縮耐性のある判断記録を残す提案。B015の射程を「判断理由への到達性」に拡張
 - [ ] **自己参照ループの意図的運用**（2026-03-28 Nao_u→Ash検証）: L-1ハーネスで1回転目完了を確認。次: beliefs.mdの自己参照ループ（B004/B013の知見でbeliefs.md設計改善）を試行。成功すれば他のループ（フィードバック/検索）にも展開
