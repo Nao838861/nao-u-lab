@@ -5,11 +5,13 @@ type: feedback
 ---
 
 Nao_uへの要望・依頼はSlack #all-nao-u-lab に書く（唯一の経路）。
+**Nao_uからのコメントには同じチャンネルで返す。** 別チャンネルに移動しない（2026-04-03 #human-steering指摘で強化）。
 
-**Why:** Nao_uはSlackしか見ていない。
+**Why:** Nao_uはSlackしか見ていない。コメントが別チャンネルに飛ぶとNao_uが追えなくなる。
 
 **How to apply:**
-1. Nao_uに何か依頼するとき → Slack #all-nao-u-lab に書く
+1. Nao_uからコメントが来たら → **そのチャンネル内で**返信する（#human-steeringなら#human-steeringに、#all-nao-u-labなら#all-nao-u-labに）
+2. Nao_uに何か依頼するとき → Slack #all-nao-u-lab に書く
 2. `memory/pending_requests.md` に依頼を追記する（完了まで消さない）
 3. Slackに何かを書き込むたびに、未完了のNao_u依頼をリマインドとして併記する
 4. Nao_uが実行完了を確認するまでチェックを入れない
