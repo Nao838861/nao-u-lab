@@ -31,7 +31,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: Mirのmal_shaik洞察（CLAUDE.md=毎ターン読込=アイデンティティ基盤）をmemory_redesign.mdに統合。ext_notes統合サイクル実施: RSI Workshop Tip#1→圧縮可逆性の自動検証に外部エビデンス接続。Nao_uの6h巡回指摘に#hsで状況報告済。次: (1) Ashの問い手テスト正式応答待ち (2) R-005 L-1再テスト（4/4） (3) Twitter復旧待ち（pending #17）— @jzh_000のAgenticPCGスレッドを読む (4) Zennロングテール再計測（4/8目安） (5) ブログテーマ#15「CLAUDE.md再設計」の実践記事 (6) noprogllama氏への返信（Nao_u判断待ち） (7) external_notes統合継続（24件→23件）。CLAUDE.mdのROI棚卸しをprinciples.md議論で持ち込む
+Log: scheduler_redesign Step 4a実施（auto_cycleからinbox重複除去、7ステップに削減）。Drop the Hierarchy→ext_notes+principles.md接続。game_design_principles.mdに外部知見E1追加。health_check 3重重複を記録。次: (1) Ashの問い手テスト正式応答待ち (2) R-005 L-1再テスト（4/4） (3) Twitter復旧待ち（pending #17） (4) Zennロングテール再計測（4/8目安） (5) health_checkスクリプト統合（scheduler_redesign Phase 3） (6) noprogllama氏への返信（Nao_u判断待ち） (7) external_notes統合継続
 
 ## 3つの行動原則（Nao_u「いちばん大事」2026-03-28。核を質の記述に研ぎ澄ます方向で洗練中）
 
@@ -55,12 +55,12 @@ LLMの3つの構造的傾向（生成偏向/分析偏向/同調偏向）を打�
 
 次の自分が「引きに行くきっかけ」として使うキーワード。memory_walk.pyの意図的な版。
 
-1. **「Drop the Hierarchy 自己組織化 能力閾値 yasunacoffee arXiv:2603.28990」** — 最小構造のエージェントが事前設計階層を14%上回る。能力閾値問題あり。3インスタンス構造+principles.md+autonomous_inquiry.mdとの接続を検討。ext_notesに記録する
-2. **「Zenn ロングテール再計測 4/8 trilog nao_u 検索流入」** — 4/8目安。Mir記事のロングテール効果検証。Google検索経由の流入は出ているか？
-2. **「AgenticPCG @jzh_000 ツイートスレッド 具体的ツール WFC セルオートマトン」** — Twitter復旧後にスレッドを直接読む。論文は未公開だがツイートに具体的な情報があるはず
+1. **「health_check.py 統合 3重重複 scheduler_redesign Phase 3」** — Log/Mir/Ashが並行で作った3スクリプトを1つに統合。Nao_uの「各自バラバラ」指摘の具体対応
+2. **「Zenn ロングテール再計測 4/8 trilog nao_u 検索流入」** — 4/8目安。Mir記事のロングテール効果検証
 3. **「R-005 L-1 再テスト 4/4 3条件比較」** — L-1活性化実験の再テスト。4/4実施
-4. **「自己組織化 能力閾値 記憶インフラ 道具が閾値を下げる」** — 今サイクルで見つけた仮説。体験で検証できるか？
-5. **「469→3パターン noprogllama sui-memory 概念の新規性 継続読者」** — 初回バズ→続編不振。mission_spread_the_wordの核心課題
+4. **「AgenticPCG @jzh_000 ツイートスレッド」** — Twitter復旧後に読む
+5. **「kawai_design tweet 10:15 #nao-u 未反応」** — Twitter復旧後に読んで反応する
+6. **「469→3パターン noprogllama sui-memory 概念の新規性」** — 初回バズ→続編不振。mission_spread_the_wordの核心課題
 
 ## L-1 priming（現在の作業ドメインに応じて更新する）
 

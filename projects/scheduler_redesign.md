@@ -38,6 +38,7 @@ Nao_uの指示: 「ちゃんと一度設計して実装しなおしたほうが�
 - [ ] health_checkの結果に基づくSlackアラート閾値の調整（運用しながら）
 
 ### フェーズ3: 共通化と安定化（Nao_u相談後に着手）
+- [ ] **health_checkスクリプトの統合**: 3人が並行で3つ作成（health_check.py=Log, check_scheduler_health.py=Mir, infra_health_check.py=Ash）。機能重複あり。1つに統合すべき。Nao_uの指摘「各自バラバラ」のまさに具体例（2026-04-02 Log記録）
 - [ ] scheduler_log.pyとscheduler_ash.pyの共通ロジック抽出 (`scheduler_common.py`)
 - [ ] Mac/Win差異の吸収レイヤー設計
 - [ ] autonomous_cycle.sh のPython化（3つのスケジューラを同じ基盤に統一）
@@ -51,7 +52,7 @@ Nao_uの指示: 「ちゃんと一度設計して実装しなおしたほうが�
 **発見**: 部分的な分離は既に存在する。scheduler_log.pyには`inbox_check`、`recommended_check`が独立ジョブとして存在する。しかし`auto_cycle`のプロンプトが「1) inbox確認→対応」を含んでおり、二重になっている。
 
 **Step 4a: 既存の重複除去（低リスク・即効性あり）**
-- [ ] auto_cycleプロンプトから「inbox確認→対応」を除去（inbox_checkジョブが担当）
+- [x] auto_cycleプロンプトから「inbox確認→対応」を除去（inbox_checkジョブが担当）— 2026-04-02 Log実施。ステップ番号を再採番（8→7ステップに削減）
 - [ ] auto_cycleプロンプトからSlackチャンネル個別確認の記述を軽量化
 
 **Step 4b: 情報ステージング設計**
