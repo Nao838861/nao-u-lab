@@ -30,7 +30,7 @@
 - 「改善エンジン自体を改変できない」制約 → 我々はCLAUDE.mdとoperations.mdをNao_uの承認で書き換えられる。人間がループにいることで、この制約を超えている。Nao_uの#human-steeringはまさにこの「改善エンジンの改善」機能
 - HyperAgentsのサンドボックスシミュレーション → 我々にはない。改善を適用してから事後検証している。事前シミュレーションの仕組みは検討価値がある
 
-### Google Titans+MIRAS — ニューラル長期記憶
+### Google Titans+MIRAS — ニューラル長期記憶 [統合済 2026-04-03]
 - KVキャッシュではなく、深層NNで大量情報を要約・保持
 - RAGを超える：取得ではなく圧縮して保持
 - Source: https://research.google/blog/titans-miras-helping-ai-have-long-term-memory/
