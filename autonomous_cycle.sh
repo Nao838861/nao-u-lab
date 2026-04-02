@@ -51,6 +51,7 @@ date +%s > "$LAST_RUN_FILE"
 
 # 0.5. ヘルスチェック（LLM不要。異常があればSlack通知。2026-04-02追加）
 python3 check_scheduler_health.py --instance mir --slack 2>/dev/null
+python3 infra_health_check.py --log 2>/dev/null
 HEALTH_EXIT=$?
 if [ "$HEALTH_EXIT" -ne 0 ]; then
     echo "$(date): ヘルスチェック異常あり（exit=$HEALTH_EXIT）"
