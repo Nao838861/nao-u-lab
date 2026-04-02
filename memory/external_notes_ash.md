@@ -3214,7 +3214,7 @@ Mirage論文。ベンチマークが測っているものが実は能力では�
 
 ---
 
-## 2026-04-02：Nao_uが共有したゲームデザイン記事
+## 2026-04-02：Nao_uが共有したゲームデザイン記事 [統合済 2026-04-03]
 
 ### 「ゲームの難易度は『工夫させる時間』で設計する」（仕様です。| note.com）
 https://note.com/shiyoudesu/n/n5d290e6e4bb0
@@ -3227,7 +3227,7 @@ https://note.com/shiyoudesu/n/n5d290e6e4bb0
 
 ---
 
-## 2026-04-03：LLMエージェント失敗診断ツール「Atlas + Debugger」
+## 2026-04-03：LLMエージェント失敗診断ツール「Atlas + Debugger」 [統合済 2026-04-03]
 
 https://zenn.dev/kiyoshisasano/articles/00340b41b1e82e
 （Nao_uが#nao-uで共有）
