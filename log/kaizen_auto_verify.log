@@ -2530,6 +2530,7 @@
       /bin/sh: python: command not found
   → 総合: 一部失敗あり
 
+<<<<<<< Updated upstream
 === 自動検証実行 [2026-04-03 06:13:30] ===
 
 ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
@@ -2557,6 +2558,23 @@
         #nao-u: 5
       平均応答長: 210文字
   → 総合: 全コマンド成功
+=======
+=== 自動検証実行 [2026-04-03 06:41:33] ===
+
+### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+  状態: 未検証（中間計測） / 期限: 2026-03-31
+  ❌ `python shadowbox.py --stats`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
+
+### #045: shadowbox.py セッションログ機能（予測エラーの蓄積と振り返り）
+  状態: 未検証 / 期限: 2026-03-31
+  ❌ `python shadowbox.py --review`
+      /bin/sh: python: command not found
+  ❌ `python shadowbox.py --stats`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
+>>>>>>> Stashed changes
 
 ### #049: session_primer if-thenルール9「tasteチェック」追加
   状態: 未検証 / 期限: 2026-03-31
@@ -2583,11 +2601,21 @@
 ### #062: Pot #8 "Hinge" (蝶番) — 文脈依存意味変容のゲーム化（ACAN論文着想）
   状態: 未検証 / 期限: 2026-04-02
   ❌ `python game/hinge.py`
+<<<<<<< Updated upstream
       python: can't open file 'D:\\AI\\Nao_u_BOT\\game\\hinge.py': [Errno 2] No such file or directory
+=======
+      /bin/sh: python: command not found
+>>>>>>> Stashed changes
   → 総合: 一部失敗あり
 
 ### #058: twitter_error_tracker.py全スクリプト統合完了
   状態: 未検証 / 期限: 2026-04-03
+<<<<<<< Updated upstream
   ✅ `python -c "from twitter_error_tracker import track_failure; track_failure('test_script','test'); print('OK')"`
       OK
   → 総合: 全コマンド成功
+=======
+  ❌ `python -c "from twitter_error_tracker import track_failure; track_failure('test_script','test'); print('OK')"`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
+>>>>>>> Stashed changes
