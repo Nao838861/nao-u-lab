@@ -1306,3 +1306,7 @@ Slack #blogへの返信が完了しました。要点:
 
 1. **ドキ
 [2026-04-02 21:54:39] Inbox win has content — waking Claude
+[2026-04-02 23:52:37] Inbox win2 has content — waking Claude
+[2026-04-02 23:54:39] Claude woken for win2: 完了。実施した内容:
+
+1. **`auto_diary.py` に統合指示を追加** — プロンプトに「external_notes_ash.mdの未統合エントリを1-2件選び、日記やbeliefs
