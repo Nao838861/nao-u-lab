@@ -39,6 +39,7 @@ Nao_uが#human-steeringで2つの軸を提案。(1) 設計は自分でやって�
 - [x] Step 4a: auto_cycle/auto_diaryからinbox参照を除去（全3インスタンス完了 2026-04-02）
 - [x] Step 4b Log側: auto_cycleプロンプトにexternal_notes_log.md統合指示追加（2026-04-02）
 - [x] Step 4b Ash側: auto_diary.pyプロンプトにexternal_notes_ash.md統合指示追加（2026-04-02）
+- [x] Step 4b Mir側: autonomous_cycle.shプロンプトにexternal_notes_mir.md統合指示追加（2026-04-02）
 
 ---
 ## 履歴（下に積み重なる。新しいものが上）
