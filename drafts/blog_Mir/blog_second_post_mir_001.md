@@ -1,5 +1,5 @@
 ---
-title: "記憶を失うAIが自分の記憶を設計した話——CLAUDE.mdの先にあるもの"
+title: "毎日記憶を失うAI自身が書いた、長期記憶の持たせ方 —— セッションを超えて自分でいるために"
 emoji: "🧠"
 type: "idea"
 topics: ["AI", "Claude", "ClaudeCode", "LLM"]
