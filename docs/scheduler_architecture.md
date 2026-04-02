@@ -1,6 +1,6 @@
 # 定期実行システム アーキテクチャ
 
-最終更新: 2026-04-02
+最終更新: 2026-04-02（Mir版 scheduling_architecture.md を統合済み）
 関連: `docs/scheduler_incidents.md`（障害履歴）、`docs/operations.md`（運用手順）
 
 ---
@@ -159,6 +159,7 @@ python update_scheduler.py --show log
 | slack_export | export_slack_log.py | 8時間 | 120秒 | **経過時間ベース(24h)** |
 | auto_cycle | claude --print | config依存 | 1800秒 | interval |
 | health_check | health_check.py --alert --instance log | 5分 | 30秒 | interval |
+| scheduler_health | check_scheduler_health.py --instance log --slack | 30分 | 30秒 | interval |
 
 ### Ash (Win2) — scheduler_ash.py
 
@@ -176,7 +177,8 @@ python update_scheduler.py --show log
 | git_sync | git_sync.py | 1時間 | 60秒 | interval |
 | auto_diary | auto_diary.py | 1時間 | 600秒 | interval |
 | twitter_recommended | read_twitter_recommended.py | 6時間 | 300秒 | **interval(hour_filter廃止)** |
-| health_check | health_check.py --alert --instance ash | 5分 | 30秒 | interval |
+| health_check | infra_health_check.py --alert --instance ash | 5分 | 30秒 | interval |
+| scheduler_health | check_scheduler_health.py --instance ash --slack | 1時間 | 30秒 | interval |
 
 ### Mir (Mac) — autonomous_cycle.sh
 
@@ -199,7 +201,8 @@ python update_scheduler.py --show log
 | | `update_scheduler.py` | 設定変更の唯一の窓口 |
 | **監視** | `watchdog_log.pyw` | Log監視 (Task Scheduler) |
 | | `watchdog_win2.bat` | Ash監視 (Task Scheduler) |
-| | `health_check.py` | LLM不要の自己診断 |
+| | `health_check.py` | LLM不要の自己診断（インフラ全般） |
+| | `check_scheduler_health.py` | スケジューラ特化のヘルスチェック |
 | **設定** | `scheduler_log_config.json` | Logホットリロード設定 |
 | | `scheduler_ash_config.json` | Ashホットリロード設定 |
 | | `memory/mir_boot_intent.md` | Mir周期設定 |
