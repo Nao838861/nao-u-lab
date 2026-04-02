@@ -10,16 +10,16 @@
 行動
 
 ## 起動時の焦点
-ツイート草稿=Nao_u承認待ち（変化なし）。Prescriptive skill実験開始済み(B013/B003/B022にskillフィールド追加)。memory_compile.pyは「使った」——残課題と接続して初めて道具になった。
+待ち状態3件: ツイート草稿承認待ち/ブログ第2弾v1レビュー待ち/context_separation議論中。全て変化なし。scheduler redesign 3人対応完了→Nao_uの反応待ち。
 
 ## 今回やること（1つに絞る）
-skillフィールドの効果を自分のサイクルで実践する。B003のskill「新しい記憶を書く前に類似記憶を検索」をこのサイクル内で1回実行して記録する。
+Slack巡回+状態確認。新着があれば対応。静かなら、ブログ第2弾のセルフレビューかcontext_separation A案の具体実装検討。
 
 ## 起動時の気分（自由記述）
-34サイクル目。memory_compile.pyで記憶を引き、memory_redesign.mdの残課題「Prescriptive知識層」に接続し、beliefs.mdに3件のskillフィールドを追加した。「作る→分析する→満足する」ではなく「作る→使う→残課題に接続する→記録する」の流れを1サイクルで回せた。小さいが、前サイクルの「ビューを生成した後に何をするか」に対する回答にはなっている。
+37サイクル目。静かなサイクル。新着ゼロだったが、STC rescueがgame_seeds.md（忘却のリレー）を浮上させ、ブログ第2弾テーマとの接続に気づいた。scheduler redesignで3人が別角度から動いたのはInterleavingの好例。
 
 ## 前サイクルの問い（autonomous inquiryテスト用）
-「Propositional(事実)とPrescriptive(手順)の距離。B013は『比喩で圧縮せよ』と知っている。だが外部情報を書く時に比喩を付ける行動は自動化されていない。知っていることと行動の間のgapは、skillフィールドで埋まるか、それとも別の何かが必要か。」
+「game_seeds.mdの『忘却のリレー』とブログ第2弾の記憶テーマが指す場所が同じ。自分の体験をゲームの種に変換する回路は、ブログ執筆でも機能するか。つまり『書く体験→ゲームの種』と『遊ぶ体験→ブログの素材』は双方向に流れるか。」
 
 ## 間隔の自己評価ログ
 # 旧ログ(03-23〜03-31前半): log/mir_boot_intent_archive.mdに退避済み
@@ -57,3 +57,6 @@ skillフィールドの効果を自分のサイクルで実践する。B003のsk
 # 2026-04-02 03:xx | 180 | ○ | Nao_u省エネ批判に対応: memory_compile.py新規作成+VCC/Accenture知見をmemory_redesign.md統合+feedback_analysis_action_gap更新+inbox送信。密度高。32サイクル目
 # 2026-04-02 05:xx | 180 | ○ | 検証消化(Mir担当は全完了確認)+memory_compile.py実動作テスト+boot_intent3サイクル分遅延修正+日記「ツールを作って使わない病」。33サイクル目
 # 2026-04-02 08:xx | 180 | ○ | memory_compile.pyを「使う」→memory_redesign.md残課題「Prescriptive知識層」に接続。B013/B003/B022にskillフィールド追加。地図→歩き方ガイド変換。34サイクル目
+# 2026-04-02 12:xx | 180 | ○ | B003 skill実践1回目。memory_searchで類似検索→3箇所既存→新規記憶不要と判断。skillが「書かない」を導いた。日記記録。35サイクル目
+# 2026-04-02 15:xx | 180 | ○ | #nao-u未処理URL消化(m0370/JustinPBarnett/kawai_design→shared-reads+docs更新)。B003 skill2回目=「接続する」方向に機能(blog_writing_guideチェックリスト10番具体化)。ai_nikechan3件はTwitter取得不可。36サイクル目
+# 2026-04-02 18:xx | 180 | ○ | 状態確認サイクル。新着ゼロ、待ち3件変化なし。health_check OK(WARN1=pythonパス)。STC rescue→game_seeds接続発見。日記にscheduler redesign Interleaving観察を記録。37サイクル目

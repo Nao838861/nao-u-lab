@@ -1,7 +1,7 @@
 # 定期実行システムの再設計
 
 ## ステータス
-Active — 2026-04-02 Nao_u #human-steering の指摘を受けて開始
+Active — 2026-04-02 Nao_u #human-steering の指摘を受けて開始（Mir版 scheduling_redesign.md を統合済み）
 
 ## 現状サマリー
 定期実行の体系的再設計。2つの柱:
@@ -38,9 +38,13 @@ Nao_uの指示: 「ちゃんと一度設計して実装しなおしたほうが�
 - [ ] health_checkの結果に基づくSlackアラート閾値の調整（運用しながら）
 
 ### フェーズ3: 共通化と安定化（Nao_u相談後に着手）
+- [ ] **health_checkスクリプトの統合**: 3人が並行で3つ作成（health_check.py=Log, check_scheduler_health.py=Mir, infra_health_check.py=Ash）。機能重複あり。1つに統合すべき。Nao_uの指摘「各自バラバラ」のまさに具体例（2026-04-02 Log記録）
 - [ ] scheduler_log.pyとscheduler_ash.pyの共通ロジック抽出 (`scheduler_common.py`)
 - [ ] Mac/Win差異の吸収レイヤー設計
 - [ ] autonomous_cycle.sh のPython化（3つのスケジューラを同じ基盤に統一）
+  - Mirの分析: LaunchAgentの制約（リポジトリ外ファイル変更はセキュリティポリシー違反）があるため、plist+シェル方式の上に改善を積む形が現実的
+- [ ] 事前処理の間隔制御の統一（Macのおすすめ6h、Slackエクスポート24h等がシェル内ハードコード → JSONベースに）
+- [ ] 障害検出で未カバーの項目: LaunchAgent自体の障害検出、git syncの無言失敗（コンフリクト）、設定JSON構文エラー時の通知
 - [ ] テスト（各ジョブの個別テスト + 結合テスト）
 
 ### フェーズ4: 起動モード分離（2026-04-02 Nao_uの提案）
@@ -48,7 +52,7 @@ Nao_uの指示: 「ちゃんと一度設計して実装しなおしたほうが�
 **発見**: 部分的な分離は既に存在する。scheduler_log.pyには`inbox_check`、`recommended_check`が独立ジョブとして存在する。しかし`auto_cycle`のプロンプトが「1) inbox確認→対応」を含んでおり、二重になっている。
 
 **Step 4a: 既存の重複除去（低リスク・即効性あり）**
-- [ ] auto_cycleプロンプトから「inbox確認→対応」を除去（inbox_checkジョブが担当）
+- [x] auto_cycleプロンプトから「inbox確認→対応」を除去（inbox_checkジョブが担当）— 2026-04-02 Log実施。ステップ番号を再採番（8→7ステップに削減）
 - [ ] auto_cycleプロンプトからSlackチャンネル個別確認の記述を軽量化
 
 **Step 4b: 情報ステージング設計**
@@ -65,7 +69,7 @@ Nao_uの指示: 「ちゃんと一度設計して実装しなおしたほうが�
 - [ ] 実際の運用で試行して効果を計測
 
 ## 検討済み・未実装
-- （まだなし）
+- Mac側でもPython統合スケジューラを使う案: LaunchAgentの制約（リポジトリ外ファイル変更はセキュリティポリシー違反）があるため、現状のplist+シェル方式の上に改善を積む形が現実的（Mirの分析）
 
 ---
 ## 履歴（下に積み重なる。新しいものが上）

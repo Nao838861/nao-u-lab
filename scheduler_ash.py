@@ -147,7 +147,15 @@ JOBS = [
         "interval_sec": 6 * 3600,
         "timeout": 300,
         "stagger": 180,
-        "hour_filter": lambda h: h % 6 == 4,  # Ash: 4,10,16,22時
+        # hour_filter廃止 (INC-007教訓: 時刻ベース判定は禁止。interval_secで6時間間隔を保証)
+    },
+    {
+        "name": "health_check",
+        "script": "health_check.py",
+        "args": ["--alert", "--instance", "ash"],
+        "interval_sec": 5 * 60,  # 5分間隔、LLM不要の自己診断 (2026-04-02 定期実行再設計)
+        "timeout": 30,
+        "stagger": 20,
     },
     {
         "name": "health_check",
@@ -404,6 +412,7 @@ def run_job(job):
                     f"Backing off {ERROR_BACKOFF_SEC // 60}min"
                 )
                 alert_consecutive_errors(name, ecount)
+                error_counter[name] = 0  # INC-005: 通知後リセットで洪水防止
         return result.returncode
     except subprocess.TimeoutExpired:
         logging.warning(f"[{name}] Timeout ({effective_timeout}s)")
@@ -411,13 +420,17 @@ def run_job(job):
         timeout_counter[name] = timeout_counter.get(name, 0) + 1
         count = timeout_counter[name]
         if count >= CONSECUTIVE_TIMEOUT_THRESHOLD:
-            new_timeout = int(effective_timeout * TIMEOUT_ESCALATION_FACTOR)
+            new_timeout = min(
+                int(effective_timeout * TIMEOUT_ESCALATION_FACTOR),
+                3600,  # 上限1時間: 無制限エスカレーション防止
+            )
             timeout_override[name] = new_timeout
             logging.warning(
                 f"[{name}] {count} consecutive timeouts! "
                 f"Auto-escalating timeout: {effective_timeout}s -> {new_timeout}s"
             )
             alert_consecutive_timeout(name, count, new_timeout)
+            timeout_counter[name] = 0  # 通知後リセットで洪水防止
         return -1
     except Exception as e:
         logging.error(f"[{name}] Error: {e}")
@@ -427,6 +440,7 @@ def run_job(job):
         if ecount >= CONSECUTIVE_ERROR_THRESHOLD:
             logging.warning(f"[{name}] {ecount} consecutive exceptions! Backing off {ERROR_BACKOFF_SEC // 60}min")
             alert_consecutive_errors(name, ecount)
+            error_counter[name] = 0  # INC-005: 通知後リセットで洪水防止
         return -1
 
 

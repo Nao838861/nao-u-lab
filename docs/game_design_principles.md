@@ -90,9 +90,31 @@ Nao_uが**面白い**と言ったのは、どちらも「思っていたのと�
 - アクションゲームは時期尚早。シンプルな構造で成立する手触りを探す
 - できることから一歩ずつ
 
+## 外部知見（記事・研究からの抽出）
+
+### E1: 難易度は「工夫させる時間」で設計する
+出典: note.com/shiyoudesu「ゲームの難易度は工夫させる時間で設計する」(2026-04-02 Nao_u #nao-uで共有)
+
+敵を強くする・HPを増やすといった数値調整ではなく、プレイヤーが最適な戦略を試行錯誤する余白の長さが難易度の本質。工夫の余地がゼロなら、プレイ時間をかける意味がない。
+
+**原則2（Agency）との接続**: Pot #4 oddは「工夫の余地ゼロ = 難易度の概念すら存在しない」状態だった。AgencyとDifficultyは独立概念ではなく、Agencyが前提でDifficultyが成立する。
+
+**Pot設計への示唆**: 「簡単/難しい」を調整する前に「工夫する余白があるか」を確認する。工夫の余白がなければ難易度調整は無意味。
+
+### E2: Unity MCP — AIからUnityに直接指示してゲームを作る
+出典: JustinPBarnett Unity MCP (MIT License, SIGGRAPH 2025) (2026-04-02 Nao_u #nao-uで共有)
+
+Claude等のLLMがUnity Editorと直接通信し、自然言語でゲームを作れるツール。Nao_uが「動いてるゲームのレベルデザインをお願いしたい」と言った文脈（AgenticPCG議論）に接続。
+
+**現時点の判断**: 方向性指針「テキストでできることを突き詰める→アクションゲームは時期尚早」に従い、参照に留める。テキストベースの制約を超えたいと思った時の選択肢。
+
+---
+
 ## 出典
 
 - Nao_uの全ゲーム感想: `log/nao_u_live.md` (2026-03-25)
 - Wayline: "The Juice Problem" — 過剰フィードバックによる設計マスキング
 - Ian Bicking: "Intra: design notes on an LLM text adventure" — ground truth game state の重要性
 - Game onboarding research: Progressive Onboarding（遊びながら教える）原則
+- 「仕様です。」: ゲームの難易度は工夫させる時間で設計する (note.com)
+- JustinPBarnett: Unity MCP — AI↔Unity直接通信によるゲーム制作 (GitHub, MIT License)

@@ -103,7 +103,8 @@ JOBS = [
     ("recommended_check", None, 3600, 300),  # special handling: hour%6==2
     ("slack_export", None, 28800, 120),  # special handling: hour%24==2
     ("auto_cycle", None, 5400, 1800),  # 90min interval (2026-03-26 Nao_u指示: 1.5時間化。usage余裕あり)
-    ("health_check", [*PY, str(REPO_DIR / "infra_health_check.py"), "--log"], 1800, 30),  # 30分ごと（LLM不使用・APIコスト0）
+("health_check", [*PY, str(REPO_DIR / "health_check.py"), "--alert", "--instance", "log"], 300, 30),  # 5min, LLM不要の自己診断 (2026-04-02)
+    ("scheduler_health", [*PY, str(REPO_DIR / "check_scheduler_health.py"), "--instance", "log", "--slack"], 1800, 30),  # 30min, スケジューラ特化ヘルスチェック (2026-04-02, Mir依頼)
 ]
 
 
@@ -324,34 +325,20 @@ def _recommended_mark_success():
 
 
 def recommended_check():
-    """Run read_twitter_recommended.py if hour%6==2 (Log's slot: 2,8,14,20).
+    """Run read_twitter_recommended.py every 6 hours (elapsed-time based).
 
-    Catchup: 最後の成功実行から6時間以上経過していたら、hour条件を無視して即実行。
-    スケジューラ停止中に逃した実行を補う。(2026-04-02: Nao_uの指摘で追加)
+    INC-007教訓: hour%N判定は禁止。経過時間ベースに統一。
+    最後の成功実行から6時間以上経過したら実行する。
     """
-    hour = datetime.now().hour
-    normal_slot = (hour % 6 == 2)
     last = _recommended_last_success()
-    catchup = False
     if last is not None:
         elapsed = (datetime.now() - last).total_seconds()
-        catchup = elapsed >= _RECOMMENDED_CATCHUP_SEC
+        if elapsed < _RECOMMENDED_CATCHUP_SEC:
+            log(f"[recommended_check] Skipped ({elapsed/3600:.1f}h since last success, need {_RECOMMENDED_CATCHUP_SEC/3600:.0f}h)")
+            return
+        reason = f"elapsed {elapsed/3600:.1f}h >= {_RECOMMENDED_CATCHUP_SEC/3600:.0f}h"
     else:
-        # 記録がない=初回 → キャッチアップ扱いで即実行
-        catchup = True
-
-    if not normal_slot and not catchup:
-        log(f"[recommended_check] Skipped (hour={hour}, waiting for hour%6==2)")
-        return
-
-    if catchup and not normal_slot:
-        if last is not None:
-            reason = "catchup (>{:.0f}h since last success)".format(
-                (datetime.now() - last).total_seconds() / 3600)
-        else:
-            reason = "catchup (no previous success recorded)"
-    else:
-        reason = f"hour={hour}"
+        reason = "no previous success recorded"
     log(f"[recommended_check] Running read_twitter_recommended.py ({reason})")
     try:
         result = subprocess.run(
@@ -371,13 +358,35 @@ def recommended_check():
         log(f"[recommended_check] Error: {e}")
 
 
+_SLACK_EXPORT_LAST_SUCCESS_FILE = REPO_DIR / ".slack_export_last_success"
+_SLACK_EXPORT_INTERVAL_SEC = 24 * 3600  # 24時間
+
+
+def _slack_export_should_run():
+    """24時間以上経過していればTrue。INC-007教訓: 経過時間ベースに統一。"""
+    if not _SLACK_EXPORT_LAST_SUCCESS_FILE.exists():
+        return True, "no previous success recorded"
+    try:
+        ts = _SLACK_EXPORT_LAST_SUCCESS_FILE.read_text().strip()
+        last = datetime.fromisoformat(ts)
+        elapsed = (datetime.now() - last).total_seconds()
+        if elapsed >= _SLACK_EXPORT_INTERVAL_SEC:
+            return True, f"elapsed {elapsed/3600:.1f}h >= 24h"
+        return False, f"{elapsed/3600:.1f}h since last success"
+    except Exception:
+        return True, "timestamp file unreadable"
+
+
 def slack_export():
-    """Run export_slack_log.py once per day at Log's slot (hour==2)."""
-    hour = datetime.now().hour
-    if hour != 2:
-        log(f"[slack_export] Skipped (hour={hour}, waiting for hour==2)")
+    """Run export_slack_log.py every 24 hours (elapsed-time based).
+
+    INC-007教訓: hour%N判定は禁止。経過時間ベースに統一。
+    """
+    should_run, reason = _slack_export_should_run()
+    if not should_run:
+        log(f"[slack_export] Skipped ({reason})")
         return
-    log("[slack_export] Hour condition met, running export_slack_log.py")
+    log(f"[slack_export] Running export_slack_log.py ({reason})")
     try:
         result = subprocess.run(
             [*PY, str(REPO_DIR / "export_slack_log.py")],
@@ -386,6 +395,7 @@ def slack_export():
             encoding="utf-8", errors="replace",
         )
         if result.returncode == 0:
+            _SLACK_EXPORT_LAST_SUCCESS_FILE.write_text(datetime.now().isoformat())
             output = result.stdout.strip()
             log(f"[slack_export] {output}")
         else:
@@ -738,15 +748,14 @@ def build_auto_cycle_prompt():
 
     prompt = (
         "Log 自律サイクル起動。CLAUDE.mdとdocs/operations.mdを参照。"
-        "1) inbox確認→対応 "
-        "2) #nao-uチャンネルだけ先に確認→新情報があれば自分の反応を書く（ルール8: 他者の反応を読む前に自分の視点を持つ） "
-        "3) #all-nao-u-lab・その他のSlackチャンネル確認→返信すべきものに返信 "
-        "4) pending_requests.md確認 "
-        "5) 8フェーズ改善サイクル実行 "
-        "6) 今サイクルの作業がActiveプロジェクト(projects/INDEX.md)に関係するなら、そのプロジェクトファイルも更新する "
-        "6.5) [他インスタンス洞察]が含まれていたら → 該当するプロジェクトファイルを開き、具体的な考察と次の一手を追記する。流して終わりにしない "
-        "7) #logに活動日記を書く "
-        "8) git push"
+        "1) #nao-uチャンネルだけ先に確認→新情報があれば自分の反応を書く（ルール8: 他者の反応を読む前に自分の視点を持つ） "
+        "2) #all-nao-u-lab・その他のSlackチャンネル確認→返信すべきものに返信 "
+        "3) pending_requests.md確認 "
+        "4) 8フェーズ改善サイクル実行 "
+        "5) 今サイクルの作業がActiveプロジェクト(projects/INDEX.md)に関係するなら、そのプロジェクトファイルも更新する "
+        "5.5) [他インスタンス洞察]が含まれていたら → 該当するプロジェクトファイルを開き、具体的な考察と次の一手を追記する。流して終わりにしない "
+        "6) #logに活動日記を書く "
+        "7) git push"
         + "".join(alerts)
         + weekly
     )
@@ -851,11 +860,15 @@ def main_loop():
                         timeout_counter[name] += 1
                         error_counter[name] += 1
                         if timeout_counter[name] >= TIMEOUT_ESCALATION_THRESHOLD:
-                            new_timeout = int(effective_timeout * TIMEOUT_ESCALATION_FACTOR)
+                            new_timeout = min(
+                                int(effective_timeout * TIMEOUT_ESCALATION_FACTOR),
+                                3600,  # 上限1時間: 無制限エスカレーション防止
+                            )
                             timeout_override[name] = new_timeout
                             msg = f"{name}: {timeout_counter[name]}回連続タイムアウト。タイムアウト値を{effective_timeout}s→{new_timeout}sに拡大"
                             log(f"[stability] {msg}")
                             alert_slack(msg)
+                            timeout_counter[name] = 0  # 通知後リセットで洪水防止
                     elif exit_code != 0 and name not in ("git_sync", "recommended_check", "slack_export", "auto_cycle"):
                         # 非ゼロ終了コード（特殊ハンドリングジョブは除外）
                         # slack_check: exit=1は「新着メッセージなし」の正常状態。exit=2+のみエラー扱い
