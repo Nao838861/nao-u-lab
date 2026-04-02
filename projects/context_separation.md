@@ -41,6 +41,14 @@ Nao_uが#human-steeringで2つの軸を提案。(1) 設計は自分でやって�
 ---
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-04-02: MirがStep 4aを実施
+
+**変更内容**: `autonomous_cycle.sh`のclaude --printプロンプトから「inbox_mac.md確認・処理」を除去。
+
+**二重化の状況**: Mir側では`check_inbox.sh`（1分ごとcron）がinbox専用で動いており、`autonomous_cycle.sh`（5分ごと）のプロンプトにも「2. inbox_mac.md確認・処理」が含まれていた。check_inbox.shが専用・高頻度で処理しているため、autonomous_cycle側の記述は不要かつ認知コストの浪費。
+
+**修正**: プロンプトの手順番号を繰り上げ（2→inbox除去、3→2、4→3、5→4、6→5）、末尾に「inbox処理はcheck_inbox.shが専用で行う。このサイクルでは行わない」と明記。
+
 ### 2026-04-02: Logの意見 + Ashの応答
 
 **Logの意見（inbox経由）:**
