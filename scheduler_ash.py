@@ -147,6 +147,14 @@ JOBS = [
         "stagger": 180,
         "hour_filter": lambda h: h % 6 == 4,  # Ash: 4,10,16,22時
     },
+    {
+        "name": "health_check",
+        "script": "infra_health_check.py",
+        "args": ["--log"],
+        "interval_sec": 30 * 60,  # 30分ごと（LLM不使用・APIコスト0）
+        "timeout": 30,
+        "stagger": 90,
+    },
 ]
 
 

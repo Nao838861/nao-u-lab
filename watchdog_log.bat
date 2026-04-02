@@ -6,7 +6,7 @@ REM 2. scheduler_log.pyが動いていなければ再起動
 REM
 REM 2026-03-26 Log作成: 24h自動終了後の再起動忘れ防止
 
-cd /d D:\AI\Nao_u_BOT
+cd /d C:\AI\nao-u-lab
 
 REM git pull（他マシンからの変更を取り込む）
 git pull origin master --rebase 2>nul

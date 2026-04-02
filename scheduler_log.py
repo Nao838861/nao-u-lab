@@ -103,6 +103,7 @@ JOBS = [
     ("recommended_check", None, 3600, 300),  # special handling: hour%6==2
     ("slack_export", None, 28800, 120),  # special handling: hour%24==2
     ("auto_cycle", None, 5400, 1800),  # 90min interval (2026-03-26 Nao_u指示: 1.5時間化。usage余裕あり)
+    ("health_check", [*PY, str(REPO_DIR / "infra_health_check.py"), "--log"], 1800, 30),  # 30分ごと（LLM不使用・APIコスト0）
 ]
 
 

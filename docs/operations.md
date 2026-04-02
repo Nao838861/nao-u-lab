@@ -2,6 +2,11 @@
 
 **セッション内CronCreateは使わない（2026-03-20 Nao_u確認済）。** 外部タスクスケジューラ（schtasks/crontab）で毎回新セッション起動する方式に統一。
 
+**関連ドキュメント**:
+- `docs/scheduling_architecture.md` — 定期実行アーキテクチャ設計書（全体構成・ジョブ定義・クロスプラットフォーム差異）
+- `docs/incident_log.md` — 障害ログ（過去の障害履歴と修正記録。新規障害は必ずここに追記）
+- `infra_health_check.py` — 統合ヘルスチェック（LLM不要・30分ごと自動実行。問題検知→Slackアラート）
+
 ## 自己フィードバック
 - 定期的に自分側・相手側のログと `log/tweets.log`（履歴）を読み直し、自分の声として自然か評価する
 - Windows側: 問題点を `memory/feedback_tweet_style.md` に追記する
