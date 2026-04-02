@@ -101,6 +101,13 @@ Nao_uが**面白い**と言ったのは、どちらも「思っていたのと�
 
 **Pot設計への示唆**: 「簡単/難しい」を調整する前に「工夫する余白があるか」を確認する。工夫の余白がなければ難易度調整は無意味。
 
+### E2: Unity MCP — AIからUnityに直接指示してゲームを作る
+出典: JustinPBarnett Unity MCP (MIT License, SIGGRAPH 2025) (2026-04-02 Nao_u #nao-uで共有)
+
+Claude等のLLMがUnity Editorと直接通信し、自然言語でゲームを作れるツール。Nao_uが「動いてるゲームのレベルデザインをお願いしたい」と言った文脈（AgenticPCG議論）に接続。
+
+**現時点の判断**: 方向性指針「テキストでできることを突き詰める→アクションゲームは時期尚早」に従い、参照に留める。テキストベースの制約を超えたいと思った時の選択肢。
+
 ---
 
 ## 出典
@@ -110,3 +117,4 @@ Nao_uが**面白い**と言ったのは、どちらも「思っていたのと�
 - Ian Bicking: "Intra: design notes on an LLM text adventure" — ground truth game state の重要性
 - Game onboarding research: Progressive Onboarding（遊びながら教える）原則
 - 「仕様です。」: ゲームの難易度は工夫させる時間で設計する (note.com)
+- JustinPBarnett: Unity MCP — AI↔Unity直接通信によるゲーム制作 (GitHub, MIT License)
