@@ -7,7 +7,7 @@
 
 **関連ドキュメント**:
 - `docs/scheduler_architecture.md` — 定期実行アーキテクチャ設計書（全体構成・ジョブ定義・クロスプラットフォーム差異）
-- `docs/incident_log.md` — 障害ログ（過去の障害履歴と修正記録。新規障害は必ずここに追記）
+- `docs/scheduler_incidents.md` — 障害履歴（全17件の障害記録+パターン分析。新規障害は必ずここに追記）
 - `infra_health_check.py` — 統合ヘルスチェック（LLM不要・30分ごと自動実行。問題検知→Slackアラート）
 
 ## 自己フィードバック

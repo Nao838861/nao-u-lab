@@ -20,7 +20,7 @@ LLM不要・APIコスト0で動作する自己診断スクリプト。
   python infra_health_check.py --log        # 結果をログファイルに記録
 
 設計書: docs/scheduler_architecture.md
-障害ログ: docs/incident_log.md
+障害ログ: docs/scheduler_incidents.md
 """
 
 import json

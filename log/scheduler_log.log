@@ -2177,3 +2177,43 @@ descript
 [2026-04-02 09:34:00] [slack_check] Starting
 [2026-04-02 09:34:18] [slack_check] Done (exit=1)
 [2026-04-02 09:34:28] [git_sync] Starting
+[2026-04-02 09:50:08] [inbox_check] Timeout (300s)
+[2026-04-02 09:50:08] [inbox_check] Done (exit=-1)
+[2026-04-02 09:50:18] [slack_check] Starting
+[2026-04-02 09:50:37] [slack_check] Done (exit=1)
+[2026-04-02 09:51:38] [slack_check] Starting
+[2026-04-02 09:51:59] [slack_check] Done (exit=1)
+[2026-04-02 09:52:59] [slack_check] Starting
+[2026-04-02 09:53:21] [slack_check] Done (exit=1)
+[2026-04-02 09:54:21] [slack_check] Starting
+[2026-04-02 09:54:44] [slack_check] Done (exit=1)
+[2026-04-02 09:55:14] [inbox_check] Starting
+[2026-04-02 10:00:14] [inbox_check] Timeout (300s)
+[2026-04-02 10:00:14] [stability] inbox_check: 3回連続タイムアウト。タイムアウト値を300s→450sに拡大
+[2026-04-02 10:00:15] [alert] Slack notification sent to #human-steering: inbox_check: 3回連続タイムアウト。タイムアウト値を300s→450sに拡大
+[2026-04-02 10:00:15] [inbox_check] Done (exit=-1)
+[2026-04-02 10:00:25] [slack_check] Starting
+[2026-04-02 10:00:44] [slack_check] Done (exit=1)
+[2026-04-02 10:01:45] [slack_check] Starting
+[2026-04-02 10:02:02] [slack_check] Done (exit=1)
+[2026-04-02 10:03:03] [slack_check] Starting
+[2026-04-02 10:03:19] [slack_check] Done (exit=1)
+[2026-04-02 10:04:19] [slack_check] Starting
+[2026-04-02 10:04:38] [slack_check] Done (exit=1)
+[2026-04-02 10:04:48] [git_sync] Starting
+[2026-04-02 10:04:49] [git_sync] Committed and pushed
+[2026-04-02 10:05:20] [inbox_check] Starting
+[2026-04-02 10:05:21] [stability] inbox_check: 正常復帰 (timeout=3, errors=3 → リセット)
+[2026-04-02 10:05:21] [inbox_check] Done (exit=0)
+[2026-04-02 10:05:41] [slack_check] Starting
+[2026-04-02 10:06:01] [slack_check] Done (exit=1)
+[2026-04-02 10:07:01] [slack_check] Starting
+[2026-04-02 10:07:17] [slack_check] Done (exit=1)
+[2026-04-02 10:08:17] [slack_check] Starting
+[2026-04-02 10:08:36] [slack_check] Done (exit=1)
+[2026-04-02 10:09:36] [slack_check] Starting
+[2026-04-02 10:09:56] [slack_check] Done (exit=1)
+[2026-04-02 10:10:26] [inbox_check] Starting
+[2026-04-02 10:10:27] [inbox_check] Done (exit=0)
+[2026-04-02 10:10:57] [slack_check] Starting
+[2026-04-02 10:11:14] [slack_check] Done (exit=1)
