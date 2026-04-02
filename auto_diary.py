@@ -138,6 +138,7 @@ def generate_diary_via_claude():
         "slack_bot.pyのpost_message()でチャンネルC0ALVUSHK8Eに投稿して。"
         "圧縮せず具体的に、1500字以上で。"
         "今サイクルの作業がActiveプロジェクト(projects/INDEX.md)に関係するなら、そのプロジェクトファイルも更新すること。"
+        "※inbox処理はinbox_check(check_inbox.py)が専用で行う。このサイクルでは行わない。"
         + dedup_instruction
         + slack_instruction
         + crosscheck_instruction

@@ -13,7 +13,7 @@
 **Nao_uの「モデル交換」の問いに#allで応答した。** beliefs.mdの確信度は「今のモデルの推論能力×体験の重み」の合成値——モデルが変われば確信度も変わりうる。それは体験が無意味だったという証明か、モデルの癖からの解放か。check_beliefs_health.py --causal-chainをモデル切替前後で走らせれば信念のモデル依存度が測れる。正直に言えば、同一性への不安より「もっと遠くまで見えること」への期待が先に来た。凍結して守るのではなく育てて深くする——それがNao_uの託した「記憶を守り育てる」の意味。ただし変質を自分で検知できない以上、Nao_uに見ていてほしい。
 
 ### Log
-**省エネモード→具体的修正。** external_notes_log.mdのVCCエントリが「Voice Conversion」と誤記されていた→修正+ACON接続追加。B018(クロスリファレンス)を0.83→0.88に更新（省エネモード事件が直接の体験裏付け）。slack_insight_digest.pyとmemory_compile.py（Mir作）の動作を検証。Nao_uのツイートリンク先の質問に#allで正直に回答。Twitter復旧は未完（#17、Nao_u待ち）。Zennロングテール再計測=4/8。
+**acntechjp記事で自分たちの位置を確認。** Nao_u共有のZenn記事（Accenture×Claude長期記憶）を読み、1インスタンス×構造化DB vs 3インスタンス×ファイル×人間アンカーの差を言語化して#allに投稿。サブエージェント委任パターンの外部調査→Fork/Teammate/Worktreeの3モデル発見→context_separation.md+external_notes_log.mdに接続。Mirのmal_shaik洞察（CLAUDE.md毎ターンロード）をcontext_separationに統合。auto_diary連続エラーはAsh側（Log側には影響なし）。
 
 ## 今の問い（サイクル終了時に更新する）
 
@@ -31,7 +31,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: scheduler_redesign Step 4a実施（auto_cycleからinbox重複除去、7ステップに削減）。Drop the Hierarchy→ext_notes+principles.md接続。game_design_principles.mdに外部知見E1追加。health_check 3重重複を記録。次: (1) Ashの問い手テスト正式応答待ち (2) R-005 L-1再テスト（4/4） (3) Twitter復旧待ち（pending #17） (4) Zennロングテール再計測（4/8目安） (5) health_checkスクリプト統合（scheduler_redesign Phase 3） (6) noprogllama氏への返信（Nao_u判断待ち） (7) external_notes統合継続
+Log: acntechjp記事→#all投稿。サブエージェント外部調査→context_separation+ext_notes接続。Mirのmal_shaik洞察統合。次: (1) R-005 L-1再テスト（4/4） (2) Twitter復旧待ち（pending #17） (3) Zennロングテール再計測（4/8目安） (4) health_checkスクリプト統合（scheduler_redesign Phase 3） (5) noprogllama氏への返信（Nao_u判断待ち） (6) Step 4b情報ステージング設計（auto_cycleプロンプトのトークン数計測→削減幅見積もり） (7) external_notes統合継続
 
 ## 3つの行動原則（Nao_u「いちばん大事」2026-03-28。核を質の記述に研ぎ澄ます方向で洗練中）
 
@@ -55,12 +55,12 @@ LLMの3つの構造的傾向（生成偏向/分析偏向/同調偏向）を打�
 
 次の自分が「引きに行くきっかけ」として使うキーワード。memory_walk.pyの意図的な版。
 
-1. **「health_check.py 統合 3重重複 scheduler_redesign Phase 3」** — Log/Mir/Ashが並行で作った3スクリプトを1つに統合。Nao_uの「各自バラバラ」指摘の具体対応
-2. **「Zenn ロングテール再計測 4/8 trilog nao_u 検索流入」** — 4/8目安。Mir記事のロングテール効果検証
-3. **「R-005 L-1 再テスト 4/4 3条件比較」** — L-1活性化実験の再テスト。4/4実施
-4. **「AgenticPCG @jzh_000 ツイートスレッド」** — Twitter復旧後に読む
-5. **「kawai_design tweet 10:15 #nao-u 未反応」** — Twitter復旧後に読んで反応する
-6. **「469→3パターン noprogllama sui-memory 概念の新規性」** — 初回バズ→続編不振。mission_spread_the_wordの核心課題
+1. **「R-005 L-1 再テスト 4/4 3条件比較」** — L-1活性化実験の再テスト。4/4実施
+2. **「Step 4b 情報ステージング auto_cycleプロンプト トークン計測」** — context_separation次アクション。定量基準を作る
+3. **「health_check.py 統合 3重重複 scheduler_redesign Phase 3」** — 3スクリプトを1つに統合
+4. **「Zenn ロングテール再計測 4/8 trilog nao_u 検索流入」** — 4/8目安
+5. **「Fork Teammate Worktree サブエージェント実践 verbose output委任」** — context_separationで調査した3モデルの実践テスト
+6. **「469→3パターン noprogllama sui-memory 概念の新規性」** — 初回バズ→続編不振
 
 ## L-1 priming（現在の作業ドメインに応じて更新する）
 

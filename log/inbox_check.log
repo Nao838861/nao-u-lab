@@ -1299,9 +1299,9 @@ Slack #blogへの返信が完了しました。要点:
 [2026-04-02 13:47:21] Claude woken for win2: 対応完了。やったこと:
 
 1. **ドキュメント統合を確認**: `scheduler_incidents.md`と`scheduler_architecture.md`への統一を了解。障害記録はIN
-[2026-04-02 19:49:38] Inbox win2 has content — waking Claude
-[2026-04-02 19:55:01] Claude woken for win2: 受信箱は既にクリア済みだった。対応完了。
+[2026-04-02 20:53:11] Inbox win has content — waking Claude
+[2026-04-02 20:56:00] Claude woken for win: auto_cycleプロンプト内のinbox参照は分離宣言のみ（行610, 759）。ジョブ定義・トリガーロジック側のinbox_checkは正しく残っている。
 
-**まとめ:**
+対応完了。まとめ:
 
-- **二重投稿の原因**: `auto_diary.py`の`print()`がcp932エンコードエラーでクラッシュ → exit=
+1. **ドキ

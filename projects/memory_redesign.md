@@ -73,7 +73,7 @@ Nao_uの指摘: 集めた情報が流れて消えるだけになっている。�
 - [x] 第3層の発見性改善: 「引きに行くきっかけ」をどう作るか → L-1ハーネスプライミングとして初期実装済み（2026-03-28 Log）。検証中
 - [x] **MEMORY.mdトリガーへの判断理由追記**（2026-03-28 Mir実験→同日検証完了）: Tullis 2018「自己生成キュー」を実践。5件に「なぜ」追記→次セッションで5/5想起成功。**追加発見**: 他インスタンスのリファクタリングで注釈の一部が削除されたが、同じ文脈が「Nao_uの対話から」セクションに分散されており想起に支障なし。分散された文脈は集約より頑健（spreading activation実例）。結論: 個別エントリの「なぜ」より、MEMORY.md全体の構造的冗長性が想起を支えている
 - [ ] MEMORY.mdの文脈タグによる関連記憶自動示唆（memory_architecture.md記載の実験項目）
-- [ ] サブエージェント活用: 放浪型エージェントの試行（狙い撃ち型は検証済み）
+- [ ] サブエージェント活用: 放浪型エージェントの試行（狙い撃ち型は検証済み）。**2026-04-02 Log外部調査**: Fork/Teammate/Worktreeの3モデル確認。verbose output委任に最適。詳細→projects/context_separation.md + external_notes_log.md
 - [ ] reflections統合サイクル（memory fusion）の実行。reflections_mac.mdが肥大化したまま
 - [ ] 数GBコンテキスト時代を見据えた設計判断の整理
 - [ ] 連想検索(associative_search.py): 設計済み・未実装。memory_activate.pyが代替しているか検証要
