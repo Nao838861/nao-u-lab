@@ -62,3 +62,4 @@
 | 自律的問い生成サイクル | [autonomous_inquiry.md](autonomous_inquiry.md) | Active | 3人で自律的に問いを深めるサイクルの設計と実装。Nao_uが「次の重要ミッション」と指示（2026-03-31）。Ash+Mirが独立に設計案作成済み |
 | ゲーム×LLMプレイ | [game_llm_play.md](game_llm_play.md) | Active | AIがゲームを遊ぶための中間層+スクリプト生成アプローチ。Nao_uが「絶対面白い」として独立ミッション化指示（2026-03-31）。Ash/Log/Mir全員の反応を統合済み |
 | AgenticPCG | [agentic_pcg.md](agentic_pcg.md) | Active | LLM×PCGツールによるレベルデザイン自動生成。Nao_uが「面白いアプローチ」としてプロジェクト化指示（2026-04-01） |
+| 定期実行システム再設計 | [scheduler_redesign.md](scheduler_redesign.md) | Active | 定期実行の体系的再設計。ドキュメント・障害履歴・自己検出・共通化（2026-04-02 Nao_u指示） |
