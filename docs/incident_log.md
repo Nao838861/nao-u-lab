@@ -3,7 +3,7 @@
 定期実行システムの障害履歴と修正記録。
 新しい障害が発生したら **必ずこのファイルに追記** すること。
 
-関連: `docs/scheduling_architecture.md`（設計書）
+関連: `docs/scheduler_architecture.md`（設計書）
 
 ---
 

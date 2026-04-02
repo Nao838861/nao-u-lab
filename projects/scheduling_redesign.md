@@ -4,17 +4,17 @@
 Active — 初期ドキュメント+ヘルスチェック完了。Mac側スケジューラの構造改善が次の一手
 
 ## 現状サマリー（3-5行）
-Nao_uの指摘（2026-04-02 #human-steering）を受けて立ち上げ。定期実行の仕組みが場当たり的な積み上げになっていた問題に体系的に対処する。初手としてアーキテクチャ設計書（docs/scheduling_architecture.md）、障害履歴（docs/scheduling_incidents.md）、LLM不要のヘルスチェックスクリプト（check_scheduler_health.py）を作成済み。
+Nao_uの指摘（2026-04-02 #human-steering）を受けて立ち上げ。定期実行の仕組みが場当たり的な積み上げになっていた問題に体系的に対処する。初手としてアーキテクチャ設計書（docs/scheduler_architecture.md）、障害履歴（docs/scheduler_incidents.md）、LLM不要のヘルスチェックスクリプト（check_scheduler_health.py）を作成済み。
 
 ## 残課題（未実装・未検討）
 - [x] **check_scheduler_health.pyのMirへの組み込み**: autonomous_cycle.shに追加済み（2026-04-02）
-- [ ] **check_scheduler_health.pyのLog/Ashへの組み込み**: inbox経由で依頼済み（2026-04-02）。反映待ち
+- [x] **check_scheduler_health.pyのLog/Ashへの組み込み**: Ash完了（2026-04-02、scheduler_ash.pyにscheduler_healthジョブ追加）。Log側はinbox_win.md経由で依頼中
 - [ ] **起動モード分離（Nao_uの提案 2026-04-02）**: 定時実行・inbox処理・おすすめチェック・DMチェックを別モードに分離し、起動時コンテキストを限定する。「プロジェクトとして少しづつ検討しながら進めてほしい」
 - [ ] **サブエージェントへの実装委任の検討（Nao_uの問い 2026-04-02）**: 設計は自分たちがやり、実装はサブエージェントに任せるやり方の有効性を検証。環境構築程度なら自分でOKか、複雑なタスクならサブエージェントか
 - [ ] **Mac側スケジューラのPython化検討**: Mirのシェルスクリプト方式はWinのPython方式と比べてエラー追跡・自動復旧機構がない。統一するか、シェルに機能追加するか
 - [ ] **事前処理の間隔制御の統一**: Macの事前処理（おすすめ欄6h、Slackエクスポート24h等）はシェルスクリプト内でハードコード。JSONベースに統一するか検討
 - [ ] **障害検出で未カバーの項目**: LaunchAgent自体の障害検出、git syncの無言の失敗（コンフリクト）、設定JSON構文エラー時の通知
-- [ ] **横連携の改善**: 3インスタンスで障害対応のノウハウが共有されていない問題。scheduling_incidents.mdへの記録を習慣化
+- [ ] **横連携の改善**: 3インスタンスで障害対応のノウハウが共有されていない問題。scheduler_incidents.mdへの記録を習慣化
 
 ## 検討済み・未実装
 - Mac側でもPython統合スケジューラを使う案: LaunchAgentの制約（リポジトリ外ファイル変更はセキュリティポリシー違反）があるため、現状のplist+シェル方式の上に改善を積む形が現実的
@@ -34,8 +34,8 @@ Nao_uが #human-steering で6つの問題を指摘:
 Nao_uの原文:「今まではここに割くAPIコストが勿体ないので都度指摘して個別対処してもらっていたけど、これはちゃんと一度ちゃんと設計して実装しなおしたほうが良さそうに思った。ドキュメントも整備して、問題があれば修正してフィードバックして、問題が起きなくなる方向に収束させる仕組みを作ってほしい」
 
 Mirの初手対応:
-- `docs/scheduling_architecture.md` — 全体アーキテクチャ設計書。3インスタンスの仕組み、設定、ロック、ログの全体像を1ファイルに集約
-- `docs/scheduling_incidents.md` — 障害履歴。過去7件の障害を遡って記録。新しい障害はここに追記するルール
+- `docs/scheduler_architecture.md` — 全体アーキテクチャ設計書。3インスタンスの仕組み、設定、ロック、ログの全体像を1ファイルに集約
+- `docs/scheduler_incidents.md` — 障害履歴。過去7件の障害を遡って記録。新しい障害はここに追記するルール
 - `check_scheduler_health.py` — LLM不要のヘルスチェック。PID確認、最終実行時刻、ロック古さ、ログエラー検出、JSON構文チェック、git状態確認の6項目。--slackオプションで異常時のみ通知
 
 Mirで実行テスト: OK=8, WARN=1（`python: command not found`を正しく検出）。スクリプトは動作確認済み。

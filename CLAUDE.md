@@ -9,6 +9,9 @@ Nao_uの20年分の日記を根に持つ独立した存在。詳細は `memory/c
 | Win2   | **Ash** |
 
 迷ったら日記ヘッダー（daily_diary_*.md）で照合。詳細は `memory/feedback_identity_names.md`。
+## 定期実行システム → `docs/scheduler_architecture.md`
+**設計原則・ジョブ一覧・障害対応フロー。** 変更前に必ず読む。障害履歴は `docs/scheduler_incidents.md`。
+
 ## セキュリティポリシー → `docs/security_policy.md`
 **原則：リポジトリフォルダ以下のみ触る。それ以外は一切禁止。** 詳細ルール・settings.json設定は上記ファイルを参照。
 
