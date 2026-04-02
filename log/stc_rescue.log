@@ -372,3 +372,7 @@ Nao_uの「いつか君たちに、カメラを通したリアルタイムの世
 [2026-04-03 00:31] trigger=nao-u:2026-04-01 anchor=<https://x.com/jzh_000/status/2039086919238185307>
 このアプローチ面白
   [1.50] log/daily_diary_mir.md (undated) via kw(言葉)
+
+[2026-04-03 03:35] trigger=nao-u:2026-04-01 anchor=以前にリンクして記憶システムの参考にしたこの記事、ハートが469もついてるけど、
+<https://zenn.dev/n
+  [2.41] docs/evaluation_format.md (2026-03-29) via seed(以前 記憶 参考 記事 一週間後) + ref→evaluation_format.md
