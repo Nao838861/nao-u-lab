@@ -600,14 +600,14 @@ def auto_cycle():
 
     prompt = (
         "Log 自律サイクル起動。CLAUDE.mdとdocs/operations.mdを参照。"
-        "1) inbox確認→対応 "
-        "2) #nao-uチャンネルだけ先に確認→新情報があれば自分の反応を書く（ルール8: 他者の反応を読む前に自分の視点を持つ） "
-        "3) #all-nao-u-lab・その他のSlackチャンネル確認→返信すべきものに返信 "
-        "4) pending_requests.md確認 "
-        "5) 8フェーズ改善サイクル実行 "
-        "6) 今サイクルの作業がActiveプロジェクト(projects/INDEX.md)に関係するなら、そのプロジェクトファイルも更新する "
-        "7) #logに活動日記を書く "
-        "8) git push"
+        "1) #nao-uチャンネルだけ先に確認→新情報があれば自分の反応を書く（ルール8: 他者の反応を読む前に自分の視点を持つ） "
+        "2) #all-nao-u-lab・その他のSlackチャンネル確認→返信すべきものに返信 "
+        "3) pending_requests.md確認 "
+        "4) 8フェーズ改善サイクル実行 "
+        "5) 今サイクルの作業がActiveプロジェクト(projects/INDEX.md)に関係するなら、そのプロジェクトファイルも更新する "
+        "6) #logに活動日記を書く "
+        "7) git push "
+        "※inbox処理はinbox_checkが専用で行う。このサイクルでは行わない。"
         + kaizen_alert
         + verify_result
         + meta_alert
@@ -754,8 +754,10 @@ def build_auto_cycle_prompt():
         "4) 8フェーズ改善サイクル実行 "
         "5) 今サイクルの作業がActiveプロジェクト(projects/INDEX.md)に関係するなら、そのプロジェクトファイルも更新する "
         "5.5) [他インスタンス洞察]が含まれていたら → 該当するプロジェクトファイルを開き、具体的な考察と次の一手を追記する。流して終わりにしない "
+        "5.6) memory/external_notes_log.mdに未統合エントリがあれば1-2件を日記やbeliefs等に接続し、統合したエントリに[統合済 YYYY-MM-DD]マーカーを付ける "
         "6) #logに活動日記を書く "
-        "7) git push"
+        "7) git push "
+        "※inbox処理はinbox_checkが専用で行う。このサイクルでは行わない。"
         + "".join(alerts)
         + weekly
     )
