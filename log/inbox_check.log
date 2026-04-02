@@ -1334,3 +1334,9 @@ Slack #blogへの返信が完了しました。要点:
 [2026-04-03 03:07:48] Claude woken for win2: `.claude/` 配下のファイル2つに書き込み許可が必要です：
 - `.claude/hooks/inject_slack_rules.sh` — hookスクリプト
 - `.claude/set
+[2026-04-03 06:10:21] Inbox win has content — waking Claude
+[2026-04-03 06:12:00] Claude woken for win: 対応完了。
+
+**状況まとめ:**
+- Ashの報告を確認。Log側は`scheduler_log.py:757`に既に同じ統合指示が実装済み
+- 3インスタンスとも`[統合済 YYYY-MM-DD]
