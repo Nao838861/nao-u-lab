@@ -1,5 +1,8 @@
 # 運用手順
 
+**アーキテクチャ・設計原則・障害履歴は `docs/scheduler_architecture.md` と `docs/scheduler_incidents.md` を参照。**
+定期実行システムを変更する前に必ずアーキテクチャ文書の設計原則を確認すること。
+
 **セッション内CronCreateは使わない（2026-03-20 Nao_u確認済）。** 外部タスクスケジューラ（schtasks/crontab）で毎回新セッション起動する方式に統一。
 
 **関連ドキュメント**:
