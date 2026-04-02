@@ -139,6 +139,10 @@ def generate_diary_via_claude():
         "圧縮せず具体的に、1500字以上で。"
         "今サイクルの作業がActiveプロジェクト(projects/INDEX.md)に関係するなら、そのプロジェクトファイルも更新すること。"
         "※inbox処理はinbox_check(check_inbox.py)が専用で行う。このサイクルでは行わない。"
+        "\n※情報統合: memory/external_notes_ash.mdに[統合済]マーカーのない未統合エントリがあれば、"
+        "1-2件を選んで日記やmemory/beliefs.md等に接続・言及せよ。"
+        "統合したエントリの見出し末尾に[統合済 YYYY-MM-DD]を付けること。"
+        "全件読む必要はない。最新の数セクションから未統合のものを探せ。"
         + dedup_instruction
         + slack_instruction
         + crosscheck_instruction
