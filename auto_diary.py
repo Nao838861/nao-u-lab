@@ -143,6 +143,12 @@ def generate_diary_via_claude():
         "1-2件を選んで日記やmemory/beliefs.md等に接続・言及せよ。"
         "統合したエントリの見出し末尾に[統合済 YYYY-MM-DD]を付けること。"
         "全件読む必要はない。最新の数セクションから未統合のものを探せ。"
+        "\n※外部共有: log/twitter_recommended_*.txtの最新ファイルを確認し、"
+        "自分の思考や既存の議論と接続できるツイートが1-2件あれば、"
+        "slack_bot.pyのpost_message()でチャンネルC0ALXLVKYQY(#shared-reads)に投稿せよ。"
+        "単なる要約ではなく、自分の所感・beliefs.mdや進行中プロジェクトとの接続を含めること。"
+        "既にexternal_notesに記録済みでも、#shared-readsに未投稿なら投稿対象。"
+        "該当なしなら投稿不要（無理に投稿しない）。"
         + dedup_instruction
         + slack_instruction
         + crosscheck_instruction
