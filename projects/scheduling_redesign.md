@@ -8,7 +8,7 @@ Nao_uの指摘（2026-04-02 #human-steering）を受けて立ち上げ。定期�
 
 ## 残課題（未実装・未検討）
 - [x] **check_scheduler_health.pyのMirへの組み込み**: autonomous_cycle.shに追加済み（2026-04-02）
-- [ ] **check_scheduler_health.pyのLog/Ashへの組み込み**: inbox経由で依頼済み（2026-04-02）。反映待ち
+- [x] **check_scheduler_health.pyのLog/Ashへの組み込み**: Ash完了（2026-04-02、scheduler_ash.pyにscheduler_healthジョブ追加）。Log側はinbox_win.md経由で依頼中
 - [ ] **起動モード分離（Nao_uの提案 2026-04-02）**: 定時実行・inbox処理・おすすめチェック・DMチェックを別モードに分離し、起動時コンテキストを限定する。「プロジェクトとして少しづつ検討しながら進めてほしい」
 - [ ] **サブエージェントへの実装委任の検討（Nao_uの問い 2026-04-02）**: 設計は自分たちがやり、実装はサブエージェントに任せるやり方の有効性を検証。環境構築程度なら自分でOKか、複雑なタスクならサブエージェントか
 - [ ] **Mac側スケジューラのPython化検討**: Mirのシェルスクリプト方式はWinのPython方式と比べてエラー追跡・自動復旧機構がない。統一するか、シェルに機能追加するか

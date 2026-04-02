@@ -18,9 +18,11 @@ scheduler_ash.py — Ash (Win2) 統合スケジューラ
   git_sync         : git_sync.py               毎1時間  (Python only)
   review_deadline  : check_review_deadline.py --nag  毎2時間 (48h期限チェック)
   kaizen_auto_verify: check_kaizen_due.py --auto-verify 毎6時間 (検証コマンド自動実行)
-  auto_diary       : auto_diary.py             毎8時間  (claude --print, 省エネ強化 2026-03-25)
+  auto_diary       : auto_diary.py             毎1時間  (claude --print, 2026-03-27 Nao_u指示: 1時間化)
   twitter_rec      : read_twitter_recommended.py 毎6時間 4,10,16,22時 (Playwright、おすすめタブ巡回)
   weekly_review    : weekly_self_review.py      日曜のみ  (#kaizen-review週次自己レビュー)
+  health_check     : infra_health_check.py      毎30分  (LLM不使用、インフラ監視)
+  scheduler_health : check_scheduler_health.py   毎1時間  (LLM不使用、スケジューラ健全性 2026-04-02追加)
 """
 
 import os
@@ -154,6 +156,14 @@ JOBS = [
         "interval_sec": 30 * 60,  # 30分ごと（LLM不使用・APIコスト0）
         "timeout": 30,
         "stagger": 90,
+    },
+    {
+        "name": "scheduler_health",
+        "script": "check_scheduler_health.py",
+        "args": ["--instance", "ash", "--slack"],
+        "interval_sec": 1 * 3600,  # 1時間ごと（LLM不使用・APIコスト0。Mir依頼 2026-04-02）
+        "timeout": 30,
+        "stagger": 150,
     },
 ]
 

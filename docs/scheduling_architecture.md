@@ -114,9 +114,11 @@
 | reservation_check | check_reservations.py | 7200秒 | 10秒 | |
 | review_deadline | check_review_deadline.py --nag | 7200秒 | 30秒 | |
 | kaizen_auto_verify | check_kaizen_due.py --auto-verify | 21600秒 | 120秒 | |
-| auto_diary | auto_diary.py | 10800秒 | 600秒 | |
+| auto_diary | auto_diary.py | 3600秒 | 600秒 | 2026-03-27 Nao_u指示: 1時間化 |
 | twitter_recommended | read_twitter_recommended.py | 21600秒 | 300秒 | |
 | weekly_self_review | weekly_self_review.py | 21600秒 | 600秒 | 日曜のみ |
+| health_check | infra_health_check.py --log | 1800秒 | 30秒 | LLM不使用 |
+| scheduler_health | check_scheduler_health.py --instance ash --slack | 3600秒 | 30秒 | LLM不使用。異常時Slack通知 |
 
 **スタガリング**: 各ジョブにstagger（初期遅延秒数）を設定し、起動直後の同時実行を回避
 
