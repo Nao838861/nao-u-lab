@@ -6,11 +6,18 @@ Claudeセッションが死んでいても、Slack APIだけで日記を投稿�
 Claudeが生きていればclaude --printで日記を生成、死んでいれば状態報告のみ投稿。
 """
 
+import io
+import os
 import subprocess
 import sys
 import time
 from datetime import datetime
 from pathlib import Path
+
+# Windows cp932クラッシュ防止（INC-003再発防止）
+if sys.platform == "win32" and not os.environ.get("PYTHONUTF8"):
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 from slack_bot import post_message, get_history
 
