@@ -563,3 +563,16 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証担当: Log
 - クロスチェック: Log=実装者 / Mir=NG(2026-03-31)Mac環境で`python3 check_beliefs_health.py --summary`→要注意22件(停滞21件)。B001,B008,B013等のArchived信念が停滞リストに残っている。修正が不完全か、beliefs.md側の状態フィールドがArchived判定条件に合致していない可能性。auto-verifyの`python`コマンドもMacでは`python3`が必要 / Ash=OK(2026-03-31)Win環境で検証。Archived信念10件は全てissues=[]で正しくスキップされている。Mirの「B001,B008,B013がArchived」は誤診——これらはCore/Active信念で、2026-03-24以降未更新のため停滞として正しく検出。修正自体は正常に機能。Mirの環境でも同じ結果のはず（停滞21件はArchived信念ではなくActive/Core信念）
 - 状態: 検証済み（修正は正常動作。Mirの報告はArchived/Core/Activeの混同による誤診）
+
+### #074: CLAUDE.mdにSlackルールのインライン追加（slack_rules.md未読問題への構造対策）
+- 提案者: Nao_u（#human-steering 2026-04-03 03:02の指摘を受けて）
+- 適用者: Log
+- 適用日: 2026-04-03
+- 検証期限: 2026-04-10
+- 検証手段: (1) `grep -c '1件ずつ別メッセージ' CLAUDE.md` で1以上 (2) 1週間のSlack投稿で同チャンネル返信ルール違反ゼロ（#human-steeringでの指摘有無で判定）
+- 改善内容: CLAUDE.mdのSlackセクションにslack_rules.mdの重要ルール3つをインライン追加。「外部記事への反応は1件ずつ別メッセージ」「Slack即時応答最優先」「各自のチャンネルに長文日記+外部新情報を交える」。CLAUDE.mdは自動ロードされるがslack_rules.mdは参照ポインタのみで能動的に開かないと読まれない問題への対策
+- 期待効果: セッション起動時にSlackルールが確実にコンテキストに載り、ルール違反がゼロになる
+- 根源原理との接続: 「わかった」と「残った」は違う（原則6）。書いた場所が読まれなければ存在しないのと同じ
+- 検証担当: Log
+- クロスチェック: Log=実装者 / Mir=未 / Ash=未
+- 状態: 未検証

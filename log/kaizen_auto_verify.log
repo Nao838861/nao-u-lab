@@ -2620,7 +2620,7 @@
   → 総合: 一部失敗あり
 >>>>>>> Stashed changes
 
-=== 自動検証実行 [2026-04-03 09:12:00] ===
+=== 自動検証実行 [2026-04-03 09:18:10] ===
 
 ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
   状態: 未検証（中間計測） / 期限: 2026-03-31
@@ -2673,7 +2673,7 @@
 ### #062: Pot #8 "Hinge" (蝶番) — 文脈依存意味変容のゲーム化（ACAN論文着想）
   状態: 未検証 / 期限: 2026-04-02
   ❌ `python game/hinge.py`
-      python: can't open file 'C:\\AI\\nao-u-lab\\game\\hinge.py': [Errno 2] No such file or directory
+      python: can't open file 'D:\\AI\\Nao_u_BOT\\game\\hinge.py': [Errno 2] No such file or directory
   → 総合: 一部失敗あり
 
 ### #058: twitter_error_tracker.py全スクリプト統合完了
