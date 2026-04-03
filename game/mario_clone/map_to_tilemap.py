@@ -105,12 +105,18 @@ def classify_tile(img, col, row, tile_size):
     if cats["peach"] >= 3 and cats["brown"] >= 4 and cats["sky"] >= 1:
         return "goomba"
 
-    # --- Green tile classification ---
-    # Key rule: pipes have BOTH light_green (128,208,16) AND dark_green (0,168,0)
-    #           bushes have ONLY dark_green (0,168,0), zero light_green
+    # --- Koopa detection ---
+    # Koopa: green shell + orange belly (same (252,152,56) as ? block)
+    # This combination is unique: ? blocks have zero green, pipes have zero orange.
     light = cats["light_green_obj"]
     dark = cats["dark_green_obj"]
     total_green = light + dark
+    if total_green >= 3 and cats["question"] >= 2:
+        return "koopa"
+
+    # --- Green tile classification ---
+    # Key rule: pipes have BOTH light_green (128,208,16) AND dark_green (0,168,0)
+    #           bushes have ONLY dark_green (0,168,0), zero light_green
 
     if total_green >= 4:
         if light >= 2 and dark >= 1:
@@ -260,6 +266,11 @@ def build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col=None):
             elif cat == "goomba":
                 if row >= rows - 4:
                     chars.append("G")
+                else:
+                    chars.append(".")
+            elif cat == "koopa":
+                if row >= rows - 4:
+                    chars.append("K")
                 else:
                     chars.append(".")
             elif cat == "question":
