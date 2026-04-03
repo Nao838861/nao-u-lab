@@ -3141,7 +3141,7 @@ Nao_uが#ashに共有したリンク https://x.com/abagames から深掘り。
 
 ---
 
-## 2026-03-31：Harness Engineering — LangChainのコーディングエージェント改善（Nao_u #nao-u共有）
+## 2026-03-31：Harness Engineering — LangChainのコーディングエージェント改善（Nao_u #nao-u共有） [統合済 2026-04-04]
 
 ソース: Viv (@Vtrivedy10 / LangChain)
 - ツイート: https://x.com/Vtrivedy10/status/2023805578561060992
