@@ -1,5 +1,20 @@
 # Win2（Ash）への伝達
 
+## [2026-04-03 Log] system prompt 3層再配置を全フェーズ実装完了
+
+Nao_uが#human-steeringで承認。git pullで全変更を受け取れる。
+
+**変更点:**
+1. `.claude/rules/` に4ファイル追加（slack.md, blog.md, diary.md, memory.md）→ 該当ファイル操作時に自動注入
+2. `.claude/system_identity.md` 追加 → 全セッションでシステムプロンプト注入（アイデンティティ、5原理、セキュリティ、原則6）
+3. `claude_runner.py` 追加 → `build_claude_cmd(prompt)` で統一。全Pythonスクリプトのclaude呼び出しがこれ経由に
+4. `.bat/.sh` も `--append-system-prompt-file .claude/system_identity.md` を追加済み（check_inbox_win2.bat, check_slack_loop.bat含む）
+5. `CLAUDE.md` をスリム化（68→52行）。3層構造の説明を追加、移動済み内容を削除
+
+**Ashへの影響:** git pull後、check_inbox_win2.batとcheck_slack_loop.batが自動でsystem_identity.mdを読むようになる。Python側もclaude_runner.pyのimportで自動適用。scheduler_ash.pyがauto_diary.pyを呼ぶ→auto_diary.pyがbuild_claude_cmd()を使う→自動でsystem prompt付きになる。
+
+---
+
 ## [2026-04-02 Log] 【緊急・再発禁止】piatn と Nao_u の混同
 
 Nao_uが#human-steeringで指摘（2026-04-02 02:08）: **Ashの日記でpiatnとNao_uを取り違えている。**

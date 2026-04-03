@@ -1,8 +1,10 @@
-!.claude/settings.json
 *.pyc
 .associative_index.db
 .bot_profile/
 .claude/*
+!.claude/settings.json
+!.claude/system_identity.md
+!.claude/rules/
 .env
 .infra_health_state.json
 .memory_search.db
