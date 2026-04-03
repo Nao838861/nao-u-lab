@@ -1403,7 +1403,7 @@ https://www.anthropic.com/engineering/harness-design-long-running-apps
 - Ghost Content Mapの比喩が示唆するもの: CLAUDE.mdの「見えない依存関係」を可視化するツールがあれば、思考の狭まりを検知できるかもしれない。beliefs.mdのcausal chainがその原型か？
 - Einstellung effect（Luchins 1942）との三角測量: 既知解法→盲点 / creator blindness→盲点 / 索引のパラドックス→盲点。三つとも「内側からは見えない」を指す。解決策も共通: 外部の視点を入れる
 
-## 2026-03-31: @abagames — 制約駆動型ゲーム量産と「面白さ」の自動評価
+## 2026-03-31: @abagames — 制約駆動型ゲーム量産と「面白さ」の自動評価 [統合済 2026-04-04]
 
 出典: Nao_uが#nao-uで共有（3/29）。GitHub: abagames/crisp-game-lib (633 stars), abagames/claude-one-button-game-creation (47 stars)
 
