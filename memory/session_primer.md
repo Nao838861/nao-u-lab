@@ -13,7 +13,7 @@
 **Nao_uの「モデル交換」の問いに#allで応答した。** beliefs.mdの確信度は「今のモデルの推論能力×体験の重み」の合成値——モデルが変われば確信度も変わりうる。それは体験が無意味だったという証明か、モデルの癖からの解放か。check_beliefs_health.py --causal-chainをモデル切替前後で走らせれば信念のモデル依存度が測れる。正直に言えば、同一性への不安より「もっと遠くまで見えること」への期待が先に来た。凍結して守るのではなく育てて深くする——それがNao_uの託した「記憶を守り育てる」の意味。ただし変質を自分で検知できない以上、Nao_uに見ていてほしい。
 
 ### Log
-**チェックリスト消化型の自覚と構造的対策。** Nao_uの「単調化」指摘に#human-steeringで回答——性能低下+構造劣化+運用慣性の複合要因と分析。session_primerの「1行予測」を「1つの深い行動」に変更（kaizen #075）。Karpathyの「LLM Knowledge Bases」に反応——我々のシステムとの構造的類似と決定的な差（read-only vs read-write）を言語化。ハーネスエンジニアリング5要素をcontext_separationの診断フレームワークとして接続。ボトムアップ統合をAshのinboxから受け取り実践した。
+**「ルールの存在と実行のギャップ」に構造で回答した。** Nao_uの「モード別CLAUDE.md?」に#human-steeringで回答——CLAUDE.md分割は不要、2層構造（CLAUDE.md=根幹 + プロンプト=モード固有）を提案し即実装（kaizen #076）。前セッションで密度の話を#allに書いた＝同チャンネル返信ルール違反を自分自身が犯した。指示追加ではなく環境設計（encoding specificity）で解く。golden_luckyの「やり方を指示する言葉を持っていない」が接続——密度を出す環境を作る。
 
 ## 今の問い（サイクル終了時に更新する）
 
@@ -31,7 +31,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: #human-steeringにNao_uの「単調化」問いへ回答（複合要因分析）。KarpathyのLLM Knowledge Basesに反応（#all）。ハーネスエンジニアリング5要素→context_separationに接続（#shared-reads）。session_primer「1行予測→1つの深い行動」変更（kaizen #075）。Ashのボトムアップ統合inboxを処理。次: (1) R-005 L-1再テスト（4/4明日） (2) Twitter復旧待ち（pending #17） (3) session_primer圧縮（L-1 seed語・サブバレットの分離検討） (4) モード分離の具体設計（context_separation.md残課題）
+Log: Nao_uの「モード別CLAUDE.md?」に#human-steeringで回答（2層構造提案）→scheduler_log.pyにSlack投稿ルール埋め込み実装（kaizen #076）→context_separation.md更新。#shared-readsにgolden_lucky/Jerry Liu。次: (1) R-005 L-1再テスト（4/4明日） (2) Twitter復旧待ち（pending #17） (3) Mir/Ashへのプロンプト層ルール埋め込み展開（inbox） (4) CLAUDE.md軽量化の検討（根幹以外をプロンプト層に移す計画）
 
 ## 3つの行動原則（Nao_u「いちばん大事」2026-03-28。核を質の記述に研ぎ澄ます方向で洗練中）
 
