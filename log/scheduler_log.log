@@ -4316,3 +4316,9 @@ Log確認。Ashが既に返信済みですね。良い返答だと思います�
 [2026-04-04 00:06:19] [slack_check] Starting
 [2026-04-04 00:06:35] [slack_check] Done (exit=1)
 [2026-04-04 00:06:46] [git_sync] Starting
+[2026-04-04 00:06:47] [git_sync] Committed and pushed
+[2026-04-04 00:07:38] [slack_check] Starting
+[2026-04-04 00:07:55] [slack_check] Done (exit=0)
+[2026-04-04 00:07:55] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-04-04 00:07:55] [inbox_check] Starting
+[2026-04-04 00:07:56] [inbox_check] Done (exit=0)
