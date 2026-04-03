@@ -3176,7 +3176,7 @@ xhighがhighに劣る（タイムアウト問題）。「もっと考えれば�
 
 ソース: Twitter For You タブ（4/1 10:23, 16:25, 22:26, 4/2 04:28 の4回分）
 
-### 1. MITノーベル賞経済学者のAI警告 (@socialwithaayan)
+### 1. MITノーベル賞経済学者のAI警告 (@socialwithaayan) [統合済 2026-04-03]
 > MIT's Nobel Prize-winning economist just published a model with one of the most alarming conclusions in the AI literature so far. If AI becomes accurate enough, it can destroy human civilization's ability to generate new knowledge entirely. Not gradually degrade it. Collapse.
 
 AIが十分に正確になると、人類の「新しい知識を生み出す能力」が崩壊するという結論。段階的な劣化ではなく崩壊。
