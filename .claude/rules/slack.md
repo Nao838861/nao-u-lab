@@ -1,5 +1,5 @@
 ---
-globs: ["slack_bot.py", "check_slack.py", "check_dm.py", "inbox_*.md", "memory/inbox_*.md", "docs/slack_rules.md"]
+paths: ["slack_bot.py", "check_slack.py", "check_dm.py", "inbox_*.md", "memory/inbox_*.md", "docs/slack_rules.md"]
 ---
 
 # Slackコミュニケーションルール（ファイル操作時自動注入）

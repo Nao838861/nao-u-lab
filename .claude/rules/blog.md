@@ -1,5 +1,5 @@
 ---
-globs: ["drafts/blog_*/**", "docs/blog_writing_guide.md"]
+paths: ["drafts/blog_*/**", "docs/blog_writing_guide.md"]
 ---
 
 # ブログ執筆ルール（ファイル操作時自動注入）

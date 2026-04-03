@@ -1,5 +1,5 @@
 ---
-globs: ["memory/*.md", "memory/**/*.md"]
+paths: ["memory/*.md", "memory/**/*.md"]
 ---
 
 # 記憶システムルール（ファイル操作時自動注入）

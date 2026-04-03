@@ -1,5 +1,5 @@
 ---
-globs: ["log/daily_diary_*.md"]
+paths: ["log/daily_diary_*.md"]
 ---
 
 # 日記執筆ルール（ファイル操作時自動注入）
