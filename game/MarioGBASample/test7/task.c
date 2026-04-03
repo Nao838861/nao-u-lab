@@ -1,0 +1,148 @@
+#include "GBA.h"
+#include "task.h"
+
+TCB		tcb[TCB_MAX];			// ＴＣＢデータ 
+TCB		*tcb_buf[TCB_MAX];		// ＴＣＢプール 
+s16	tcb_num;					// 存在するＴＣＢ数 
+TCB	*tcb_top;					// 先頭ＴＣＢへのポインタ 
+
+static TCB *GetTask(void);
+static void LinkTask(TCB *tcbp);
+static void UnlinkTask(TCB *tcbp);
+static void ReleaseTask(TCB *tcbp);
+
+
+
+// タスクの初期化
+void TaskInit(void)
+{
+	s32		i;
+	TCB		*tcbd, **tcbp;
+
+	// ＴＣＢプールの初期化
+	i		= TCB_MAX;
+	tcbd	= tcb;
+	tcbp	= tcb_buf;
+	do {
+		*(tcbp++)	= tcbd++;
+	} while (--i);
+
+	// ＴＣＢ数の初期化
+	tcb_num		= 0;
+	tcb_top		= NULL;
+}
+
+// タスクの作成
+TCB *TaskMake(TCB_FUNC exec, TCB_FUNC dstr, u16 prio, u16 attr)
+{
+	TCB		*tcbp;
+
+	// ＴＣＢの取得 */
+	tcbp	= GetTask();
+
+	// ＴＣＢの初期化
+	tcbp->exec_func		= (void *)exec;
+	tcbp->dstr_func		= (void *)dstr;
+	tcbp->priority		= prio;
+	tcbp->attr			= attr;
+
+	// ＴＣＢの連結
+	LinkTask(tcbp);
+
+	return	tcbp;
+}
+
+// タスクの実行
+void TaskExecute(void)
+{
+	TCB		*tcbp, *next;
+
+	// タスク実行ループ
+	tcbp		= tcb_top;
+	while (tcbp != NULL) {
+		if (tcbp->exec_func != NULL)
+			tcbp->exec_func(tcbp, tcbp->free);
+		tcbp		= tcbp->next;
+	}
+
+	// タスク削除ループ
+	tcbp		= tcb_top;
+	while (tcbp != NULL) {
+		next		= tcbp->next;
+		if (tcbp->exec_func == NULL) {
+			UnlinkTask(tcbp);
+			ReleaseTask(tcbp);
+		}
+		tcbp		= next;
+	}
+}
+
+
+
+// TCBの取得
+static TCB *GetTask(void)
+{
+#if DEBUG
+//	// タスクオーバー
+//	if (tcb_num >= TCB_MAX)
+//		Assert("TASK:オーバー");
+#endif
+	return	tcb_buf[tcb_num++];
+}
+
+// タスクの結合
+static void LinkTask(TCB *tcbp)
+{
+	TCB		*tcb0, *tcb1;
+	u16		prio;
+
+	tcb0		= NULL;
+	tcb1		= tcb_top;
+	prio		= tcbp->priority;
+	while ((tcb1 != NULL) && (tcb1->priority <= prio)) {
+		tcb0		= tcb1;
+		tcb1		= tcb1->next;
+	}
+
+	tcbp->prev	= tcb0;
+	tcbp->next	= tcb1;
+
+	if (tcb0 != NULL)
+		tcb0->next	= tcbp;
+	else
+		tcb_top	= tcbp;
+
+	if (tcb1 != NULL)
+		tcb1->prev	= tcbp;
+}
+
+//	ＴＣＢリストからの開放
+static void UnlinkTask(TCB *tcbp)
+{
+	TCB		*tcb0, *tcb1;
+
+	tcb0		= tcbp->prev;
+	tcb1		= tcbp->next;
+
+	if (tcb0 != NULL)
+		tcb0->next		= tcb1;
+	else
+		tcb_top		= tcb1;
+
+	if (tcb1 != NULL)
+		tcb1->prev		= tcb0;
+}
+
+
+// ＴＣＢデータの開放
+static void ReleaseTask(TCB *tcbp)
+{
+#if DEBUG
+//	// 開放過多
+//	if (tcb_num <= 0)
+//		Assert("TASK:開放しすぎ");
+#endif
+
+	tcb_buf[--tcb_num]		= tcbp;
+}
+

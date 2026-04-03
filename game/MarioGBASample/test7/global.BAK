@@ -1,0 +1,9 @@
+extern int	Key_on;
+extern int	Key_trg;
+extern int	Key_old;
+
+extern int scr_x;
+extern int scr_y;
+
+#define ONE	16
+

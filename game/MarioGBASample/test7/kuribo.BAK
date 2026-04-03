@@ -1,0 +1,110 @@
+#include "GBA.h"
+#include "Sprite.h"
+
+#include "task.h"
+#include "global.h"
+
+#include "Kuribo.h"
+#include "SpriteSys.h"
+#include "BgSys.h"
+
+void KuriboTaskWalk( TCB *pTcb, u8 *ptr );
+void KuriboTaskInit( TCB *pTcb, u8 *ptr );
+
+void KuriboTaskInit( TCB *pTcb, u8 *ptr )
+{
+	KURIBO_FREE	*pFree = (KURIBO_FREE	*)ptr;
+	
+	// スプライトの初期化
+	SetSpriteSize(&pFree->OAM,SP_SIZE_16,SP_SQUARE,SP_COLOR_256);
+	ChangeSprite(&pFree->OAM,0x0e*8);
+
+	// メインの処理に移行
+	pTcb->exec_func = KuriboTaskWalk;
+	(*pTcb->exec_func)(pTcb, ptr);
+}
+
+void KuriboTaskWalk( TCB *pTcb, u8 *ptr )
+{
+	KURIBO_FREE	*pFree = (KURIBO_FREE	*)ptr;
+	
+	// クリボーの処理
+	pFree->cnt++;
+	// カウンタが進むと自殺
+	if( pFree->cnt > 60*30 ) pTcb->exec_func = NULL;
+	// アニメーション
+	if( pFree->cnt & 0x08 )	SetSpriteFlip(&pFree->OAM, 0);
+	else					SetSpriteFlip(&pFree->OAM, SP_HORIZONTAL_FLIP);
+
+	// 移動
+	pFree->x += pFree->spd_x;
+	pFree->y += pFree->spd_y;
+	
+	if( pFree->on_gnd == 0 ) {
+		// 空を飛んでいる
+		pFree->spd_y += 78;
+		// 落下速度制限
+		if( pFree->spd_y > 5*ONE ) pFree->spd_y = 5*ONE;
+	}
+	{
+		// 地面に立っているならここで地面が見つからなかったときに落下状態にする
+		if( pFree->on_gnd )	pFree->fall = 1;
+		else				pFree->fall = 0;
+		pFree->on_gnd = 0;
+		// 足元のキャラ番号を取り出す
+		int pl, i;
+		for( i=0; i<2; i++ ) {
+			pl = (i?12:3);
+			// 足元が空でなければ地面についていることにする
+			if( getTile(pFree->x+pl*ONE, pFree->y+15*ONE) != 0 ) pFree->on_gnd = 1;
+		}
+		
+		// 地面に立っていて、ここで地面が見つからなかったなら落下状態にする
+		if( pFree->fall && !pFree->on_gnd )	pFree->fall = 1;
+		else								pFree->fall = 0;
+	}
+	// 地面補正
+	if( pFree->on_gnd ) {
+		pFree->y = ((pFree->y / ONE)&0xfffffff0) * ONE + ONE;
+		pFree->spd_y = 0;
+	}
+	// 壁判定
+	{
+		// 足元のキャラ番号を取り出す
+		int pl;
+		pl = (pFree->spd_x<1?0:15);
+		// 壁に当たっているなら位置を補正
+		if( getTile(pFree->x+pl*ONE, pFree->y+12*ONE) != 0 ) {
+			if( pFree->spd_x <= 0 )	pFree->x += 0xf00 - (pFree->x &0x0eff);
+			else					pFree->x -= (pFree->x &0x0eff) - ONE;
+			
+			// 速度反転
+			pFree->spd_x *= -1;
+		}
+	}
+	
+	// スプライト位置設定
+	MoveSprite(&pFree->OAM,(pFree->x-scr_x)>>8, ((pFree->y-scr_y)>>8));
+
+	// OAMバッファに追加
+	AddOAMBuff( &pFree->OAM );
+}
+
+
+// クリボーセット
+void KuriboSet(int x, int y, int sx )
+{
+	KURIBO_FREE	*pFree;
+	TCB *pTcb;
+	// タスクの作成
+	pTcb = TaskMake( KuriboTaskInit, NULL, 0x3000, 0x0000 );
+	pFree = (KURIBO_FREE*)pTcb->free;
+	pFree->x = x & 0xfffff000;
+	pFree->y = y & 0xfffff000;
+	pFree->spd_x = sx;
+	pFree->spd_y = 0;
+	pFree->cnt = 0;
+	pFree->on_gnd = 0;
+	pFree->fall = 0;
+}
+

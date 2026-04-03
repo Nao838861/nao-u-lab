@@ -1,0 +1,286 @@
+#include "GBA.h"
+#include "BG.h"
+#include "Sprite.h"
+
+#include "task.h"
+#include "global.h"
+
+#include "bgsys.h"
+#include "SpriteSys.h"
+#include "MoveBlock.h"
+#include "mario.h"
+
+void MarioTaskMain( TCB *pTcb, u8 *ptr );
+
+
+void MarioTaskInit( TCB *pTcb, u8 *ptr )
+{
+	MARIO_FREE *pFree = (MARIO_FREE *)pTcb->free;
+
+	// スプライトの形状設定
+	SetSpriteSize(&pFree->OAM,SP_SIZE_16,SP_SQUARE,SP_COLOR_256);
+	
+	pFree->x = 80<<8;
+	pFree->y = 200<<8;
+	pFree->spd_x = 0; 
+	pFree->spd_y = 0;
+	pFree->state = 0;
+	pFree->ptn = 0;
+	pFree->cnt = 0;
+	pFree->flip = 0;
+	pFree->stop = 0;
+	pFree->dash = 0;
+	pFree->on_gnd = 0;
+	pFree->hit_wall = 0;
+	pFree->fall = 0;
+
+	// メインの処理に移行
+	pTcb->exec_func = MarioTaskMain;
+}
+
+void MarioTaskMain( TCB *pTcb, u8 *ptr )
+{
+	MARIO_FREE *pFree = (MARIO_FREE *)pTcb->free;
+
+	// 縦方向スクロール
+	if( Key_on & KEY_UP)	scr_y-=2*ONE;
+	if( Key_on & KEY_DOWN)	scr_y+=2*ONE;
+	if( scr_y < 0 ) scr_y = 0;
+	if( scr_y > (256-176)*ONE ) scr_y = (256-176)*ONE;
+	
+#define SPD_PL		(12)
+#define SPD_PL2		(17)
+#define SPD_PL3		(17)
+#define SPD_MAX		(256+128)//(320)
+#define SPD_MAX2	(256+256+128)//(512)
+#define HIJMP_SPD	(490)
+
+	pFree->stop = 0;
+	
+	if( !pFree->on_gnd ) {
+		int pl;
+		if( pFree->dash )	{ pl = SPD_PL2; }
+		else					{ pl = SPD_PL; }
+		// 空を飛んでいる
+		if( pFree->spd_y < -128 ) {
+			if( !(*KEYS & KEY_A) ) pFree->spd_y -= 48;
+		}
+		pFree->spd_y += 78;
+		// 落下速度制限
+		if( pFree->spd_y > 5*ONE ) pFree->spd_y = 5*ONE;
+		
+		if(!(*KEYS & KEY_LEFT)) {
+			if( pFree->spd_x > 128 ) pFree->stop = 1;
+			pFree->spd_x -= pl;
+		}
+		else if(!(*KEYS & KEY_RIGHT)) {
+			if( pFree->spd_x < -128 ) pFree->stop = 1;
+			pFree->spd_x += pl;
+		}
+	}
+	else {
+		int pl;
+		if( !(*KEYS & KEY_B) )	{ pFree->dash = 1;	pl = SPD_PL2; }
+		else					{ pFree->dash = 0;	pl = SPD_PL; }
+		
+		// 地面にいる
+		if(!(*KEYS & KEY_LEFT)) {
+			if( pFree->spd_x > 128 ) {
+				pFree->stop = 1;
+				pFree->spd_x -= pl;
+				if( pFree->spd_x < 128 ) pFree->spd_x = 0;
+			}
+			pFree->spd_x -= pl;
+		}
+		else if(!(*KEYS & KEY_RIGHT)) {
+			if( pFree->spd_x < -128 ) {
+				pFree->stop = 1;
+				pFree->spd_x += pl;
+				if( pFree->spd_x > -128 ) pFree->spd_x = 0;
+			}
+			pFree->spd_x += pl;
+		}
+		else {
+			// 減速
+		//	if( spd_x > 0 ) spd_x -= 2;
+		//	else			spd_x += 2;
+			pFree->spd_x *= 250;
+			pFree->spd_x /= ONE;
+			int anm_spd = (pFree->spd_x<0?pFree->spd_x*-1:pFree->spd_x);
+			if( anm_spd < 180 ) pFree->spd_x = 0;
+		}
+
+		if( Key_trg & KEY_A ) {
+			pFree->spd_y = -4*ONE;
+			
+			// MAXダッシュ中のジャンプはちょっと高い
+			if( pFree->spd_x >= HIJMP_SPD || pFree->spd_x <= -HIJMP_SPD ) {
+				pFree->spd_y -= 112;
+			}
+			
+			// ブレーキ中にジャンプしたなら向きを反対に
+			if( pFree->stop == 1 ) {
+				if( pFree->spd_x > 0 ) pFree->flip = SP_HORIZONTAL_FLIP;
+				else 						pFree->flip = 0;
+			}
+		}
+	}
+	// 速度制限
+	if( pFree->dash ) {
+		if( pFree->spd_x > SPD_MAX2 ) pFree->spd_x = SPD_MAX2;
+		if( pFree->spd_x < -SPD_MAX2 ) pFree->spd_x = -SPD_MAX2;
+	}
+	else {
+		if( pFree->spd_x > SPD_MAX ) pFree->spd_x = SPD_MAX;
+		if( pFree->spd_x < -SPD_MAX ) pFree->spd_x = -SPD_MAX;
+	}
+	
+	// 位置に速度を加算
+	pFree->x += pFree->spd_x;
+	pFree->y += pFree->spd_y;
+	
+	// 左壁補正
+	if( pFree->x < scr_x ) {
+		pFree->x = scr_x;
+		// ためしに速度を減衰してみる（必要ない？）
+		pFree->spd_x /= 2;
+	}
+
+	// 上昇中なら
+	if( !pFree->on_gnd && pFree->spd_y < 0 ) {
+		pFree->fall = 0;
+		// 頭上のキャラ番号を取り出す
+		int pl, i;
+		// 足元が空でなければ地面についていることにする
+		for( i=0; i<2; i++ ) {
+//			if( i == 0 ) pl = (pFree->flip?5:9);
+//			else		 pl = (pFree->flip?6:8);
+			if( i == 0 ) pl = (pFree->flip?5:9);
+//										   7:8
+			else		 pl = (pFree->flip?7:9);
+//										   8:7
+			if( getTile(pFree->x+pl*ONE, pFree->y) != 0 ) {
+				pFree->spd_y = 0;
+				// ブロックを突付く処理
+				BlockHit(pFree->x+pl*ONE, pFree->y, BLKHIT_TYPE_SMALL);
+				break;
+			}
+		}
+		
+		// 頭をぶつけなかったなら
+		if( pFree->spd_y != 0 ) {
+			// 壁判定
+			// 頭横のキャラ番号を取り出す
+			int pl, hit = 0;
+			for( i=0; i<2; i++ ) {
+				pl = (i?3:12);
+				// 壁に当たっているなら位置を補正
+				if( getTile(pFree->x+pl*ONE, pFree->y+8*ONE) != 0 ) {
+					if( i == 0 ) hit |= 0x01;
+					else		 hit |= 0x02;
+				}
+				if( hit && hit != 0x03 ) {
+					if( hit & 0x02 )	pFree->x += 0x1000 - (pFree->x &0x0fff);// - ONE*2;
+					else				pFree->x -= (pFree->x &0x0fff) - ONE*2;
+				}
+			}
+		}
+	}
+	else {
+		// 下降中、もしくは地面に立っているなら
+		
+		// 地面に立っているならここで地面が見つからなかったときに落下状態にする
+		if( pFree->on_gnd )	pFree->fall = 1;
+		else				pFree->fall = 0;
+		pFree->on_gnd = 0;
+		// 足元のキャラ番号を取り出す
+		int pl, i;
+		for( i=0; i<2; i++ ) {
+			pl = (i?12:3);
+			// 足元が空でなければ地面についていることにする
+			if( getTile(pFree->x+pl*ONE, pFree->y+15*ONE) != 0 ) pFree->on_gnd = 1;
+		}
+		
+		// 地面に立っていて、ここで地面が見つからなかったなら落下状態にする
+		if( pFree->fall && !pFree->on_gnd )	pFree->fall = 1;
+		else											pFree->fall = 0;
+	}
+	// 地面補正
+	if( pFree->on_gnd ) {
+		pFree->y = ((pFree->y / ONE)&0xfffffff0) * ONE + ONE;
+		pFree->spd_y = 0;
+	}
+	// 壁判定
+	{
+		// 足元のキャラ番号を取り出す
+		int pl;
+		pl = (pFree->spd_x<1?0:15);
+		// 壁に当たっているなら位置を補正
+		if( getTile(pFree->x+pl*ONE, pFree->y+12*ONE) != 0 ) {
+			if( pFree->spd_x <= 0 )	pFree->x += 0xf00 - (pFree->x &0x0eff);
+			else					pFree->x -= (pFree->x &0x0eff) - ONE;
+			
+			// ためしに速度を減衰してみる（必要ない？）
+			pFree->spd_x /= 2;
+		}
+	}
+
+	
+	// アニメパターンを進める
+	{
+		int anm_spd = (pFree->spd_x<0?pFree->spd_x*-1:pFree->spd_x);
+		
+		if( !pFree->fall && !pFree->on_gnd ) {
+			pFree->ptn = 5;
+		}
+		else if( anm_spd < 10 ) {
+			pFree->ptn = 0;
+		}
+		else if( pFree->stop == 1 ) {
+			pFree->ptn = 4;
+			if( pFree->spd_x < 0 ) pFree->flip = SP_HORIZONTAL_FLIP;
+			else 						pFree->flip = 0;
+		}
+	
+		else {
+
+			if( pFree->spd_x < 0 ) pFree->flip = SP_HORIZONTAL_FLIP;
+			else 						pFree->flip = 0;
+
+			if( pFree->ptn == 0 ) pFree->ptn = 1;
+			if( anm_spd < 160 ) anm_spd = 160;
+			pFree->cnt += anm_spd;
+			if( pFree->cnt >= SPD_MAX2*2 ) {
+				pFree->cnt = 0;
+				pFree->ptn++;
+				if( pFree->ptn > 3 ) pFree->ptn = 1;
+			}
+		}
+	}
+
+	// 縦スクロール処理
+	if( pFree->y < scr_y+60*ONE ) {
+		scr_y = pFree->y - 60*ONE;
+		if( scr_y <= 0 ) scr_y = 0;
+	}
+	if( pFree->y > scr_y+80*ONE ) {
+		scr_y = pFree->y - 80*ONE;
+		if( scr_y > (256-176-8)*ONE ) {
+			scr_y = (256-176-8)*ONE;
+		}
+	}
+	// 横スクロール処理
+	if( pFree->x - scr_x-80*ONE > 0 ) scr_x += pFree->x - scr_x-80*ONE;
+	if( scr_x < 0 ) scr_x = 0;
+	scr_x &= 0xffffff00;
+
+
+	MoveSprite(&pFree->OAM, (pFree->x-scr_x)>>8,(pFree->y-scr_y)>>8);
+	// アニメパターン格納
+	ChangeSprite(&pFree->OAM, pFree->ptn*4);
+	// フリップの有無
+	SetSpriteFlip(&pFree->OAM, pFree->flip);
+
+	// OAMバッファに追加
+	AddOAMBuff( &pFree->OAM );
+}

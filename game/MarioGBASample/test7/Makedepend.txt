@@ -1,0 +1,11 @@
+main.o: main.c GBA.h BG.h Sprite.h task.h global.h data/mario.h bgsys.h \
+  SpriteSys.h MoveBlock.h mario.h
+task.o: task.c GBA.h task.h
+bgsys.o: bgsys.c GBA.h BG.h data/bg.h global.h bgsys.h
+SpriteSys.o: SpriteSys.c GBA.h Sprite.h global.h
+MoveBlock.o: MoveBlock.c GBA.h BG.h Sprite.h task.h global.h bgsys.h \
+  MoveBlock.h SpriteSys.h
+mario.o: mario.c GBA.h BG.h Sprite.h task.h global.h bgsys.h SpriteSys.h \
+  MoveBlock.h mario.h
+bg.o: data/bg.c
+mario.o: data/mario.c
