@@ -3092,7 +3092,7 @@ Roediger & Karpicke 2006
 
 ---
 
-## 2026-03-29：ABA Games（abagames / 長健太）— 制約駆動の個人ゲーム開発者
+## 2026-03-29：ABA Games（abagames / 長健太）— 制約駆動の個人ゲーム開発者 [統合済 2026-04-03]
 
 Nao_uが#ashに共有したリンク https://x.com/abagames から深掘り。
 
