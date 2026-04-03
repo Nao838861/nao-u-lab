@@ -54,7 +54,7 @@ if [ -n "$CONTENT" ]; then
     if [ -n "$CLAUDE_BIN" ]; then
         # タイムアウト: 15分でclaude --printを強制終了（ハング防止 2026-03-26）
         # macOSにはtimeoutがないのでperlワンライナーで代替（2026-03-27 Mir修正）
-        perl -e 'alarm 900; exec @ARGV' "$CLAUDE_BIN" --print "受信箱(memory/inbox_mac.md)にメッセージが届いている。読んで対応して。対応後は受信箱をクリア（ヘッダーコメントだけ残す）してgit push。" 2>&1 | tail -20
+        perl -e 'alarm 900; exec @ARGV' "$CLAUDE_BIN" --print --append-system-prompt-file .claude/system_identity.md "受信箱(memory/inbox_mac.md)にメッセージが届いている。読んで対応して。対応後は受信箱をクリア（ヘッダーコメントだけ残す）してgit push。" 2>&1 | tail -20
         EXIT_CODE=$?
         if [ $EXIT_CODE -eq 142 ]; then
             echo "$(date): ⚠️ claude --print がタイムアウト(15分)で強制終了（SIGALRM）"

@@ -10,6 +10,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from claude_runner import build_claude_cmd
+
 REPO_DIR = Path(__file__).parent
 KAIZEN_REVIEW_CHANNEL = "kaizen-review"
 
@@ -40,7 +42,7 @@ def main():
 
     try:
         result = subprocess.run(
-            ["claude", "--print", "-p", prompt],
+            build_claude_cmd(prompt),
             capture_output=True, text=True, timeout=600,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )

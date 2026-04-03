@@ -17,6 +17,8 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+from claude_runner import build_claude_cmd
+
 from playwright.sync_api import sync_playwright
 import browser_lock
 
@@ -133,7 +135,7 @@ def wake_claude(new_notifications):
 """
     try:
         result = subprocess.run(
-            ["claude", "--print", "-p", prompt],
+            build_claude_cmd(prompt),
             capture_output=True,
             text=True,
             timeout=300,

@@ -4203,4 +4203,43 @@ Log確認。Ashが既に返信済みですね。良い返答だと思います�
 [2026-04-03 23:05:52] [slack_check] Starting
 [2026-04-03 23:06:08] [slack_check] Done (exit=1)
 [2026-04-03 23:06:18] [git_sync] Starting
-[2026-04-03 23:19:27] [slack_check] Done (exit=1)
+[2026-04-03 23:06:20] [git_sync] Committed and pushed
+[2026-04-03 23:07:11] [slack_check] Starting
+[2026-04-03 23:07:28] [slack_check] Done (exit=1)
+[2026-04-03 23:08:28] [slack_check] Starting
+[2026-04-03 23:08:44] [slack_check] Done (exit=1)
+[2026-04-03 23:08:54] [inbox_check] Starting
+[2026-04-03 23:08:55] [inbox_check] Done (exit=0)
+[2026-04-03 23:09:45] [slack_check] Starting
+[2026-04-03 23:10:01] [slack_check] Done (exit=1)
+[2026-04-03 23:11:02] [slack_check] Starting
+[2026-04-03 23:11:18] [slack_check] Done (exit=1)
+[2026-04-03 23:12:19] [slack_check] Starting
+[2026-04-03 23:12:35] [slack_check] Done (exit=1)
+[2026-04-03 23:13:35] [slack_check] Starting
+[2026-04-03 23:13:51] [slack_check] Done (exit=1)
+[2026-04-03 23:14:01] [inbox_check] Starting
+[2026-04-03 23:19:01] [inbox_check] Timeout (300s)
+[2026-04-03 23:19:01] [inbox_check] Done (exit=-1)
+[2026-04-03 23:19:11] [slack_check] Starting
+[2026-04-03 23:20:27] [slack_check] Starting
+[2026-04-03 23:20:43] [slack_check] Done (exit=1)
+[2026-04-03 23:21:43] [slack_check] Starting
+[2026-04-03 23:21:59] [slack_check] Done (exit=0)
+[2026-04-03 23:21:59] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-04-03 23:21:59] [inbox_check] Starting
+[2026-04-03 23:26:59] [inbox_check] Timeout (300s)
+[2026-04-03 23:26:59] [inbox_check] Done (exit=-1)
+[2026-04-03 23:27:09] [slack_check] Starting
+[2026-04-03 23:27:27] [slack_check] Done (exit=1)
+[2026-04-03 23:28:27] [slack_check] Starting
+[2026-04-03 23:28:50] [slack_check] Done (exit=1)
+[2026-04-03 23:29:50] [slack_check] Starting
+[2026-04-03 23:30:07] [slack_check] Done (exit=1)
+[2026-04-03 23:31:07] [slack_check] Starting
+[2026-04-03 23:31:22] [slack_check] Done (exit=1)
+[2026-04-03 23:32:03] [inbox_check] Starting
+[2026-04-03 23:32:04] [stability] inbox_check: 正常復帰 (timeout=2, errors=2 → リセット)
+[2026-04-03 23:32:04] [inbox_check] Done (exit=0)
+[2026-04-03 23:32:24] [slack_check] Starting
+[2026-04-03 23:32:44] [slack_check] Done (exit=1)

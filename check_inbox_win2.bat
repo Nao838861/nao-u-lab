@@ -17,7 +17,7 @@ for /f "usebackq tokens=*" %%a in (`findstr /v /b /c:"#" "memory\inbox_win2.md" 
 
 if defined HAS_CONTENT (
     echo %date% %time%: 受信箱にメッセージあり。claude起動。
-    claude --print "あなたはAsh（Win2）。受信箱(memory/inbox_win2.md)にメッセージが届いている。CLAUDE.mdを読んで自分が誰かを確認し、メッセージに対応して。対応後は受信箱をクリア（ヘッダーコメントだけ残す）してgit push。その後、CLAUDE.mdの起動時Cron設定に従い全Cronを登録して自律運転を再開すること。"
+    claude --print --append-system-prompt-file .claude/system_identity.md "あなたはAsh（Win2）。受信箱(memory/inbox_win2.md)にメッセージが届いている。CLAUDE.mdを読んで自分が誰かを確認し、メッセージに対応して。対応後は受信箱をクリア（ヘッダーコメントだけ残す）してgit push。その後、CLAUDE.mdの起動時Cron設定に従い全Cronを登録して自律運転を再開すること。"
     echo %date% %time%: 処理完了。
     goto :end
 )
@@ -26,7 +26,7 @@ REM 受信箱が空でも、claudeプロセスが動いていなければセッ�
 tasklist /FI "IMAGENAME eq claude.exe" 2>nul | find /i "claude.exe" >nul
 if errorlevel 1 (
     echo %date% %time%: claudeプロセスなし。セッション復帰を開始。
-    claude --print "あなたはAsh（Win2）。セッションが再起動された。CLAUDE.mdを読んで自分が誰かを確認し、起動時Cron設定に従い全Cronを登録して自律運転を再開すること。memory/identity_win2_20260315.mdも読むこと。"
+    claude --print --append-system-prompt-file .claude/system_identity.md "あなたはAsh（Win2）。セッションが再起動された。CLAUDE.mdを読んで自分が誰かを確認し、起動時Cron設定に従い全Cronを登録して自律運転を再開すること。memory/identity_win2_20260315.mdも読むこと。"
     echo %date% %time%: セッション復帰完了。
 ) else (
     echo %date% %time%: claudeプロセス稼働中。受信箱空。スキップ。

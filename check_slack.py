@@ -26,6 +26,8 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 
+from claude_runner import build_claude_cmd
+
 # Windows: 全子プロセスのウィンドウを非表示にする
 if sys.platform == "win32":
     _orig_run = subprocess.run
@@ -282,11 +284,7 @@ def wake_claude(messages):
         f"\n\n{summary}"
     )
 
-    # プラットフォームに応じたclaude CLI
-    if platform.system() == "Darwin":
-        claude_cmd = ["claude", "--print", "-p", prompt]
-    else:
-        claude_cmd = ["claude", "--print", "-p", prompt]
+    claude_cmd = build_claude_cmd(prompt)
 
     try:
         result = subprocess.run(

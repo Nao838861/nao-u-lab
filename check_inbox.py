@@ -24,6 +24,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from claude_runner import build_claude_cmd
+
 # Windows: 全子プロセスのウィンドウを非表示にする
 if sys.platform == "win32":
     _orig_run = subprocess.run
@@ -227,7 +229,7 @@ def wake_claude(box_name, inbox_path):
     try:
         env = {**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"}
         result = subprocess.run(
-            ["claude", "--print", "-p", prompt],
+            build_claude_cmd(prompt),
             capture_output=True,
             text=True,
             timeout=600,

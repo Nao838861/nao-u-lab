@@ -19,6 +19,7 @@ if sys.platform == "win32" and not os.environ.get("PYTHONUTF8"):
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
+from claude_runner import build_claude_cmd
 from slack_bot import post_message, get_history
 
 REPO_DIR = Path(__file__).parent
@@ -162,7 +163,7 @@ def generate_diary_via_claude():
     )
     try:
         result = subprocess.run(
-            ["claude", "--print", "-p", prompt],
+            build_claude_cmd(prompt),
             capture_output=True, text=True, timeout=600,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )

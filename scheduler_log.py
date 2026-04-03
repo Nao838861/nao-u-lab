@@ -40,6 +40,8 @@ import subprocess
 from datetime import datetime, timedelta
 from pathlib import Path
 
+from claude_runner import build_claude_cmd
+
 # Windows: 全子プロセスのウィンドウを非表示にする（2026-03-31: Nao_uの指摘で追加）
 # subprocess.runのデフォルトcreationflagsをCREATE_NO_WINDOWに設定
 if sys.platform == "win32":
@@ -620,7 +622,7 @@ def auto_cycle():
     )
     try:
         result = subprocess.run(
-            ["claude", "--print", "-p", prompt],
+            build_claude_cmd(prompt),
             capture_output=True, text=True, timeout=1800,
             cwd=str(REPO_DIR),
             encoding="utf-8", errors="replace",
@@ -668,7 +670,7 @@ def auto_cycle_async():
     log("[auto_cycle] Starting autonomous cycle via claude --print (async)")
     try:
         _auto_cycle_proc = subprocess.Popen(
-            ["claude", "--print", "-p", prompt],
+            build_claude_cmd(prompt),
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,

@@ -47,5 +47,5 @@ if r.get('ok') and r.get('messages'):
 
 if %ERRORLEVEL% EQU 1 (
     echo New Slack message detected, waking Claude...
-    claude --print "Slackに新着メッセージがあります。確認して返信してください。" --allowedTools Bash,Read,Edit,Write,Glob,Grep
+    claude --print --append-system-prompt-file .claude/system_identity.md "Slackに新着メッセージがあります。確認して返信してください。" --allowedTools Bash,Read,Edit,Write,Glob,Grep
 )

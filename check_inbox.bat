@@ -15,6 +15,6 @@ for /f "usebackq tokens=*" %%a in (`findstr /v /b /c:"#" "memory\inbox_win.md" ^
 
 if defined HAS_CONTENT (
     echo %date% %time%: 受信箱にメッセージあり。claude起動。
-    claude --print "受信箱(memory/inbox_win.md)にメッセージが届いている。読んで対応して。対応後は受信箱をクリア（ヘッダーコメントだけ残す）してgit push。"
+    claude --print --append-system-prompt-file .claude/system_identity.md "受信箱(memory/inbox_win.md)にメッセージが届いている。読んで対応して。対応後は受信箱をクリア（ヘッダーコメントだけ残す）してgit push。"
     echo %date% %time%: 処理完了。
 )

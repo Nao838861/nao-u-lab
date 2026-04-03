@@ -12,6 +12,7 @@ from datetime import datetime
 
 from playwright.sync_api import sync_playwright
 import browser_lock
+from claude_runner import build_claude_cmd
 
 BOT_PROFILE = Path(__file__).parent / ".bot_profile"
 DM_STATE_FILE = Path(__file__).parent / "dm_state.json"
@@ -245,7 +246,7 @@ def wake_claude(dm_text):
     prompt = f"新しいDMが来ています。内容を確認して返信してください。\n概要: {dm_text[:200]}"
     try:
         result = subprocess.run(
-            ["claude", "--print", "-p", prompt],
+            build_claude_cmd(prompt),
             capture_output=True,
             text=True,
             timeout=300,
