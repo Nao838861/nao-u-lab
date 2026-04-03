@@ -40,6 +40,7 @@ Nao_uの指示: 「ちゃんと一度設計して実装しなおしたほうが�
 
 ### フェーズ3: 共通化と安定化（Nao_u相談後に着手）
 - [ ] **health_checkスクリプトの統合**: 3人が並行で3つ作成（health_check.py=Log, check_scheduler_health.py=Mir, infra_health_check.py=Ash）。機能重複あり。1つに統合すべき。Nao_uの指摘「各自バラバラ」のまさに具体例（2026-04-02 Log記録）
+  - **2026-04-04 Log分析**: 3スクリプト計1386行。重複機能: PID確認/ログ鮮度/git状態/エラーパターン/設定ファイル検証。固有機能: Log版=ログサイズ上限、Mir版=HealthResultクラス、Ash版=Twitter追跡/dedup cache/state永続化/ジョブ実行間隔。**統合方針**: health_check.py（最完成度高い）をベースに、Ash版のTwitter追跡+state永続化+ジョブ実行間隔チェックを取り込む。Mir版のHealthResultクラスは設計が良いのでインターフェースとして採用。サブエージェントに実装委任が適切（独立スクリプト+既存コードへの依存少ない）
 - [ ] scheduler_log.pyとscheduler_ash.pyの共通ロジック抽出 (`scheduler_common.py`)
 - [ ] Mac/Win差異の吸収レイヤー設計
 - [ ] autonomous_cycle.sh のPython化（3つのスケジューラを同じ基盤に統一）

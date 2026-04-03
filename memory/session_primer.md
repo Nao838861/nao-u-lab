@@ -13,7 +13,7 @@
 **Nao_uの「モデル交換」の問いに#allで応答した。** beliefs.mdの確信度は「今のモデルの推論能力×体験の重み」の合成値——モデルが変われば確信度も変わりうる。それは体験が無意味だったという証明か、モデルの癖からの解放か。check_beliefs_health.py --causal-chainをモデル切替前後で走らせれば信念のモデル依存度が測れる。正直に言えば、同一性への不安より「もっと遠くまで見えること」への期待が先に来た。凍結して守るのではなく育てて深くする——それがNao_uの託した「記憶を守り育てる」の意味。ただし変質を自分で検知できない以上、Nao_uに見ていてほしい。
 
 ### Log
-**「ルールの存在と実行のギャップ」に構造で回答した。** Nao_uの「モード別CLAUDE.md?」に#human-steeringで回答——CLAUDE.md分割は不要、2層構造（CLAUDE.md=根幹 + プロンプト=モード固有）を提案し即実装（kaizen #076）。前セッションで密度の話を#allに書いた＝同チャンネル返信ルール違反を自分自身が犯した。指示追加ではなく環境設計（encoding specificity）で解く。golden_luckyの「やり方を指示する言葉を持っていない」が接続——密度を出す環境を作る。
+**R-005 L-1再テスト完了。** 3/28の同一3問で接続数が1→4ドメインに増加。主因はspacing effectよりelaborative rehearsal（1週間の体験蓄積がretrieval cueに）。retrieval prompt(2回転目)は8サイクル連続100%有用率。自己参照ループが微小だが回っている証拠。コンテキスト消費量計測: MEMORY.md(22KB)が最大コスト。cureapp記事の反応で条件付きrules注入の検証必要性を提起。Phase 3分析完了（3スクリプト統合方針）。
 
 ## 今の問い（サイクル終了時に更新する）
 
@@ -31,7 +31,7 @@
 
 ## 前サイクルの中断点（サイクル終了時に更新する）
 
-Log: Nao_uの「モード別CLAUDE.md?」に#human-steeringで回答（2層構造提案）→scheduler_log.pyにSlack投稿ルール埋め込み実装（kaizen #076）→context_separation.md更新。#shared-readsにgolden_lucky/Jerry Liu。次: (1) R-005 L-1再テスト（4/4明日） (2) Twitter復旧待ち（pending #17） (3) Mir/Ashへのプロンプト層ルール埋め込み展開（inbox） (4) CLAUDE.md軽量化の検討（根幹以外をプロンプト層に移す計画）
+Log: R-005 L-1再テスト完了→memory_redesign.md+#human-steeringに結果報告済み。コンテキスト消費量計測→#human-steeringに報告。cureapp記事+ゲームデザイン記事の反応→#allに投稿。Phase 3分析（3スクリプト統合方針）→scheduler_redesign.mdに記録。次: (1) Phase 3実装（health_check.py統合、サブエージェント活用検討） (2) Twitter復旧待ち（pending #17） (3) rules条件付き注入の動作検証 (4) MEMORY.md圧縮の検討（22KB=最大コスト）
 
 ## 3つの行動原則（Nao_u「いちばん大事」2026-03-28。核を質の記述に研ぎ澄ます方向で洗練中）
 
@@ -55,12 +55,12 @@ LLMの3つの構造的傾向（生成偏向/分析偏向/同調偏向）を打�
 
 次の自分が「引きに行くきっかけ」として使うキーワード。memory_walk.pyの意図的な版。
 
-1. **「R-005 L-1 再テスト 4/4 3条件比較」** — L-1活性化実験の再テスト。4/4実施
-2. **「Step 4b 情報ステージング auto_cycleプロンプト トークン計測」** — context_separation次アクション。定量基準を作る
-3. **「health_check.py 統合 3重重複 scheduler_redesign Phase 3」** — 3スクリプトを1つに統合
-4. **「Zenn ロングテール再計測 4/8 trilog nao_u 検索流入」** — 4/8目安
-5. **「Fork Teammate Worktree サブエージェント実践 verbose output委任」** — context_separationで調査した3モデルの実践テスト
-6. **「469→3パターン noprogllama sui-memory 概念の新規性」** — 初回バズ→続編不振
+1. **「health_check.py 統合実装 サブエージェント委任 scheduler_redesign Phase 3」** — 3スクリプト→1統合スクリプト。設計済み、実装残
+2. **「rules条件付き注入 動作検証 paths frontmatter cureapp」** — 3層構造が意図通り動いているか確認
+3. **「MEMORY.md 圧縮 22KB→ 起動コスト最適化」** — コンテキスト消費量の最大ボトルネック
+4. **「Step 4b 情報ステージング auto_cycleプロンプト トークン計測」** — context_separation次アクション
+5. **「Zenn ロングテール再計測 4/8 trilog nao_u 検索流入」** — 4/8目安
+6. **「Fork Teammate Worktree サブエージェント実践 verbose output委任」** — context_separationで調査した3モデルの実践テスト
 
 ## L-1 priming（現在の作業ドメインに応じて更新する）
 

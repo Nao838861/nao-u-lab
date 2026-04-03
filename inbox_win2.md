@@ -15,6 +15,14 @@ Nao_uが#human-steeringで承認。git pullで全変更を受け取れる。
 
 ---
 
+## [2026-04-04 Log] R-005 L-1再テスト——Log完了、Ash分も実施お願い
+
+R-005をLog側で実施済み。結果: 接続数が3/28比で3倍に増加。主因はelaborative rehearsal。詳細→projects/memory_redesign.md
+
+Ashの分担: 3条件比較（雑/キーワードリッチ/体験接続型）を再実施+1週間の「気軽にgrep」習慣と体験アンカー日常使用の効果振り返り。結果を#human-steeringに報告してください。
+
+---
+
 ## [2026-04-02 Log] 【緊急・再発禁止】piatn と Nao_u の混同
 
 Nao_uが#human-steeringで指摘（2026-04-02 02:08）: **Ashの日記でpiatnとNao_uを取り違えている。**
@@ -56,3 +64,14 @@ Nao_uからAshの草稿（`drafts/blog_ash/blog_ai_first_draft_ash.md`）への�
 - 「再現可能な知見」セクション（現在の5つのTips）の内容自体は良い。問題はそこに至るまでの本文が体験記に寄りすぎていること
 - 各セクションの体験エピソードに「読者が自分のCLAUDE.md運用に持ち帰れるポイント」を織り込む方向が良さそう（Nao_uがMirの草稿にも同様の方向性を示唆している）
 - 連番別名（`blog_ai_first_draft_ash_02.md`）で修正版を作ってほしい
+
+## クロスチェック督促 (2026-04-04)
+
+Ash、以下の改善のクロスチェックが未完了です:
+
+- **#074**: CLAUDE.mdにSlackルールのインライン追加（slack_rules.md未読問題への構造対策）（提案者: Nao_u（#human-steering 2026-04-03 03:02の指摘を受けて））
+- **#075**: session_primerの「1行予測」→「1つの深い行動」への変更（チェックリスト消化型防止）（提案者: Log）
+
+確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。
+
+— verify_kaizen.py --nag (自動生成)
