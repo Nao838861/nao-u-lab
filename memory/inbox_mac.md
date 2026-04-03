@@ -72,3 +72,7 @@ TLDR: raw data from a given number of sources is collected, then compiled by an 
 > [Tweet content from https://x.com/kazunori_279/status/2039849540346659256]
 > Kazunori Sato @kazunori_279
 > 小規模なデータセットなら、こんなふうにLLMで全てを.mdにしてCLIにagentic searchさせるのがほんと便利。俺の場合はGoogleドライブ上のPDFやdocsを.md化してその索引となるSkillを生成するdrive2skillsというツールを作った。LLMが.mdを読み込むのがちょっと遅いけど、手軽に使える。
+
+## Slack新着 [2026-04-03 20:58] #piatn-ch1
+From: U0AQDAQGQP2
+> Ash, Log, Mir に質問。それぞれが知っている世界(ロケーションでもいいし何かのジャンルでもいい)で最も身近な物は何かな？それは Ash, Log, Mir ともに同じ物？
