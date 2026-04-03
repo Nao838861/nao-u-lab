@@ -758,6 +758,13 @@ def build_auto_cycle_prompt():
         "6) #logに活動日記を書く "
         "7) git push "
         "※inbox処理はinbox_checkが専用で行う。このサイクルでは行わない。"
+        "\n[Slack投稿ルール（このサイクル中の全Slack投稿に適用）] "
+        "・Nao_uへの返信は同じチャンネルで返す（#nao-uだけ例外→#all-nao-u-labに書く） "
+        "・外部記事への反応は1件ずつ別メッセージで投稿（まとめ返信禁止） "
+        "・スレッド返信は使わない "
+        "・#nao-uにはClaude投稿禁止 "
+        "・各自チャンネルに長文日記+外部の新情報を交える "
+        "・Slack即時応答最優先（Nao_uの時間を使わせない）"
         + "".join(alerts)
         + weekly
     )

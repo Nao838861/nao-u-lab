@@ -35,8 +35,10 @@ Nao_uが#human-steeringで2つの軸を提案。(1) 設計は自分でやって�
   - `cycle`: 定時サイクル（8フェーズ）。inbox/外部参照/DMチェックは行わない
 - [ ] モード間の情報受け渡しファイルの設計（各モードの出力→次のモードの入力）
 - [ ] モード固有ルールの分離設計（CLAUDE.md分割 vs プロンプト側埋め込み。Nao_u #human-steering 2026-04-03の議論を受けて）
+- [ ] Mir/Ash側にも同様のSlack投稿ルール埋め込みを展開（inbox経由で依頼）
 
 ## 検討済み・完了
+- [x] Step 4c Log側: auto_cycleプロンプトにSlack投稿ルール6項目を直接埋め込み（2026-04-03 kaizen #076）
 - [x] Step 4a: auto_cycle/auto_diaryからinbox参照を除去（全3インスタンス完了 2026-04-02）
 - [x] Step 4b Log側: auto_cycleプロンプトにexternal_notes_log.md統合指示追加（2026-04-02）
 - [x] Step 4b Ash側: auto_diary.pyプロンプトにexternal_notes_ash.md統合指示追加（2026-04-02）
@@ -44,6 +46,20 @@ Nao_uが#human-steeringで2つの軸を提案。(1) 設計は自分でやって�
 
 ---
 ## 履歴（下に積み重なる。新しいものが上）
+
+### 2026-04-03: Log — Slack投稿ルールのプロンプト層移行（Step 4c）
+
+Nao_uの03:02の問い「モードによって起動時のCLAUDE.mdを分ける方が良い？」に#human-steeringで回答し、その場で実装した。
+
+**核心の洞察**: 自分たちには2層の指示がある。(1) CLAUDE.md（Claude Codeが毎ターン自動注入。制御不能）と (2) claude --printのプロンプト（schedulerが生成。モードごとに変えられる）。今の問題は、本来2層目に属するルールをCLAUDE.mdに詰め込んでいること。Mirの「CLAUDE.mdにインライン追加」は応急処置だが、CLAUDE.md肥大化→認知負荷超過→読み飛ばし、という逆方向に動く。
+
+**理論的根拠**: Godden & Baddeley (1975) のcontext-dependent memory。環境（モード）が認知を方向づける。Slack投稿ルールがauto_cycleプロンプト内にあれば、Slack投稿の瞬間にルールが活性化する確率が上がる。CLAUDE.mdの300行目に埋まっているよりも。golden_lucky（今日のおすすめ欄）の「やりたいけどやり方を指示する言葉を持っていない」——密度を指示する言葉はないが、密度が出る環境は作れる。
+
+**実装**: scheduler_log.pyのbuild_auto_cycle_prompt()にSlack投稿ルール6項目を直接埋め込み。kaizen #076として登録。
+
+**前セッションへの自己修正**: 前セッションで密度の話を#all-nao-u-labに書いた——同チャンネル返信ルール違反。ルール違反の指摘に対してルール違反で応答した。今回のプロンプト埋め込みは、まさにこの問題を構造的に防ぐための変更。
+
+**次の展開**: Mir/Ashにも同様の埋め込みをinbox経由で依頼。長期的にはCLAUDE.mdから運用ルールを移動し、CLAUDE.mdを根幹（アイデンティティ、セキュリティ、根源原理）だけに絞る方向。
 
 ### 2026-04-03: Log — ハーネスエンジニアリング5要素によるメタ診断
 
