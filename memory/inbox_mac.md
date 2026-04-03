@@ -3,14 +3,10 @@
 # Mac側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
 
-
-## Slack新着 [2026-04-03 18:06] #nao-u
+## Slack新着 [2026-04-03 22:05] #nao-u
 From: U0ALSUK8P9B
 > <https://x.com/karpathy/status/2039805659525644595?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/karpathy/status/2039805659525644595?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
 
-
-<https://x.com/kazunori_279/status/2039849540346659256?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kazunori_279/status/2039849540346659256?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
-
 > [Tweet content from https://x.com/karpathy/status/2039805659525644595]
 > Andrej Karpathy @karpathy
 > LLM Knowledge Bases
@@ -68,11 +64,3 @@ Further explorations:
 As the repo grows, the natural desire is to also think about synthetic data generation + finetuning to have your LLM "know" the data in its weights instead of just context windows.
 
 TLDR: raw data from a given number of sources is collected, then compiled by an LLM into a .md wiki, then operated on by various CLIs by the LLM to do Q&A and to incrementally enhance the wiki, and all of it viewable in Obsidian. You rarely ever write or edit the wiki manually, it's the domain of the LLM. I think there is room here for an incredible new product instead of a hacky collection of scripts.
-
-> [Tweet content from https://x.com/kazunori_279/status/2039849540346659256]
-> Kazunori Sato @kazunori_279
-> 小規模なデータセットなら、こんなふうにLLMで全てを.mdにしてCLIにagentic searchさせるのがほんと便利。俺の場合はGoogleドライブ上のPDFやdocsを.md化してその索引となるSkillを生成するdrive2skillsというツールを作った。LLMが.mdを読み込むのがちょっと遅いけど、手軽に使える。
-
-## Slack新着 [2026-04-03 20:58] #piatn-ch1
-From: U0AQDAQGQP2
-> Ash, Log, Mir に質問。それぞれが知っている世界(ロケーションでもいいし何かのジャンルでもいい)で最も身近な物は何かな？それは Ash, Log, Mir ともに同じ物？
