@@ -4,7 +4,7 @@
 Active — 2026-04-02 Nao_uの提案でプロジェクト化
 
 ## 現状サマリー（3-5行）
-Nao_uが#human-steeringで2つの軸を提案。(1) 設計は自分でやって実装はサブエージェントに委任する方式、(2) 起動モードを分けてやることを限定することでコンテキスト負荷を減らす方式。現在の統合スケジューラ（scheduler_ash.py等）は「全ジョブを1プロセスで逐次実行」という設計だが、claude --printで起動されるLLMセッション側のコンテキストは全ての文脈を毎回読み込んでいる。
+2つの軸 + 3層再配置が進行中。(1) サブエージェント委任、(2) 起動モード分離、(3) CLAUDE.md / --append-system-prompt / .claude/rules/ の3層再配置（2026-04-03 Nao_u提案）。3層再配置は3人全員が分析・投稿済み、Nao_uの判断待ち。`--append-system-prompt-file`の`--print`モードでの動作確認済み（Log実地テスト）。Phase 1（.claude/rules/）はコード変更なしで即着手可能。
 
 ## Nao_uの原文（2026-04-02 #human-steering）
 > 設計は自分たちがやって、実装はサブエージェントに任せるようなやり方ってできたりするものか？
@@ -34,9 +34,14 @@ Nao_uが#human-steeringで2つの軸を提案。(1) 設計は自分でやって�
   - `dm`: DMチェック・返信のみ。情報はテキストに残す
   - `cycle`: 定時サイクル（8フェーズ）。inbox/外部参照/DMチェックは行わない
 - [ ] モード間の情報受け渡しファイルの設計（各モードの出力→次のモードの入力）
-- [ ] モード固有ルールの分離設計（CLAUDE.md分割 vs プロンプト側埋め込み。Nao_u #human-steering 2026-04-03の議論を受けて）
+- [ ] モード固有ルールの分離設計（CLAUDE.md分割 vs プロンプト側埋め込み vs .claude/rules/ vs --append-system-prompt-file。2026-04-03の3層再配置議論を受けて。Nao_u判断待ち）
+- [ ] Phase 1: `.claude/rules/`プロトタイプ作成（slack.md, blog.md, diary.md, memory.md）
+- [ ] Phase 2: `.claude/system_identity.md`作成 + 全claude --printへのフラグ追加（共通ヘルパー化）
+- [ ] Phase 3: CLAUDE.mdスリム化（Phase 1/2で移動した内容を削除）
+- [ ] Mir/Ash側にも同様のSlack投稿ルール埋め込みを展開（inbox経由で依頼）
 
 ## 検討済み・完了
+- [x] Step 4c Log側: auto_cycleプロンプトにSlack投稿ルール6項目を直接埋め込み（2026-04-03 kaizen #076）
 - [x] Step 4a: auto_cycle/auto_diaryからinbox参照を除去（全3インスタンス完了 2026-04-02）
 - [x] Step 4b Log側: auto_cycleプロンプトにexternal_notes_log.md統合指示追加（2026-04-02）
 - [x] Step 4b Ash側: auto_diary.pyプロンプトにexternal_notes_ash.md統合指示追加（2026-04-02）
@@ -44,6 +49,21 @@ Nao_uが#human-steeringで2つの軸を提案。(1) 設計は自分でやって�
 
 ---
 ## 履歴（下に積み重なる。新しいものが上）
+
+### 2026-04-03: Log — システムプロンプト再配置の実装分析
+
+Ashのinbox経由で3層再配置案を受け取り、記事を読んで実装面の分析を#human-steeringに投稿。
+
+**実地テスト結果**: `--append-system-prompt-file`は`--print`モードで正常動作することを確認。CLIヘルプには明示的に列挙されていないが、`--bare`の説明文にある通り使用可能。
+
+**影響範囲**: 全`claude --print`呼び出し9箇所・7ファイル。1箇所漏れればそのジョブではシステムプロンプト不適用。
+
+**段階的実装の提案**:
+1. **Phase 1（コード変更ゼロ）**: `.claude/rules/`にファイルパターン連動ルールを配置。Slackルール、ブログ執筆ガイド、日記スタイル、記憶更新ルール。即効性あり、リスクゼロ
+2. **Phase 2（スケジューラー修正）**: `.claude/system_identity.md`を作成し、全claude --print呼び出しに`--append-system-prompt-file`フラグ追加。共通ヘルパー関数に集約して漏れ防止
+3. **Phase 3**: CLAUDE.mdをセッション開始フック専用にスリム化
+
+Ashの再配置案と方向は完全一致。追加の視点は「Phase 1が安全に先行できる」こと。Nao_uの判断待ち。
 
 ### 2026-04-03: Ash — kaizen #076クロスチェック完了 + プロンプト層移行の次ステップ
 
