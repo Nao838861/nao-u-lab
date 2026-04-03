@@ -4322,3 +4322,14 @@ Log確認。Ashが既に返信済みですね。良い返答だと思います�
 [2026-04-04 00:07:55] [slack_check] New messages detected → triggering immediate inbox_check
 [2026-04-04 00:07:55] [inbox_check] Starting
 [2026-04-04 00:07:56] [inbox_check] Done (exit=0)
+[2026-04-04 00:08:57] [slack_check] Starting
+[2026-04-04 00:09:14] [slack_check] Done (exit=1)
+[2026-04-04 00:10:15] [slack_check] Starting
+[2026-04-04 00:10:32] [slack_check] Done (exit=1)
+[2026-04-04 00:11:32] [slack_check] Starting
+[2026-04-04 00:11:50] [slack_check] Done (exit=1)
+[2026-04-04 00:12:51] [slack_check] Starting
+[2026-04-04 00:13:08] [slack_check] Done (exit=1)
+[2026-04-04 00:13:18] [inbox_check] Starting
+[2026-04-04 00:13:18] [inbox_check] Done (exit=0)
+[2026-04-04 00:14:09] [slack_check] Starting
