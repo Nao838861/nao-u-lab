@@ -1,4 +1,5 @@
 # Twitter For You (おすすめ) タブ
+<<<<<<< HEAD
 # Read at: 2026-04-04 14:16
 # Total: 50 tweets
 
@@ -116,18 +117,308 @@ de/
 AI監査とは何か？
 なぜAIは本番導入で監査に落ちるのか。
 原因は精度ではありません。判断の根拠が固定されていないため、責任が蒸発する設計にあります。ログや後付け説明では証拠になりません。
+=======
+# Read at: 2026-04-04 10:30
+# Total: 50 tweets
+
+--- 1. @The_AGI_WAY (2026-04-03) ---
+ついにAnthropicから公式アナウンスが来た。
+4/4からOpenClaw等のサードパーティ製ツールからのClaude利用が、Proサブスクの「定額枠」から外れて「従量課金（Extra Usage）」に移行するとのこと。
+
+公式のClaude CodeやWeb
+
+--- 2. @magapoke (?) ---
+最強になれなかった伝説の魔導士が
+目覚めると “皇女” になっていました
+
+--- 3. @elonmusk (2026-04-03) ---
+Using voice for Imagine is a great feature for young kids who can talk and have amazing imagination, but are too young to write complex prompts
+
+--- 4. @43fOh15lpj8676 (2026-04-04) ---
+AIリスクマネジメントとは何か？
+なぜリスク管理を整備しても、説明責任は果たせないのか。
+原因は単純です。事故防止と、判断根拠の固定は別問題だからです。リスク管理は事故確率を下げる仕組みであり、責任を検証可能な形で固定する仕組みではありません。
+
+AIガバナンス教科書 第9回公開。
+
+--- 5. @kenn (2026-04-03) ---
+そうなんですよ
+
+ただのエージェント並列稼働なら
+640並列ぐらい回したことあるんですが
+それはエージェント検索によるクローラー
+みたいな並列実行に向いたタスクで
+
+人間がナレッジの言語化を煎じ詰めていく
+というプロセスは本質的に並列化できない
+一番重いボトルネック
+
+--- 6. @Science_Release (2026-04-03) ---
+おはよーなのだー
+昨日のニュースは、普通の水が「2種類の液体が混ざった超臨界液体」であることを実験的に証明したというお話だよ
+これは長年の謎「水は4℃で最大の密度になる」を解決し、30年以上前の仮説を証明するものになるよ
+
+--- 7. @ukyoP_san (2026-04-03) ---
+友達の家でRPGを見ていた。
+コントローラーは持っていない。でも完全に参加していた。
+
+仲間の名前が全員、その場にいる友達の名前になっていた。
+「あ、お前死んだ」って誰かが言うたびに、部屋が笑いに包まれた。
+
+画面を見ているだけなのに、なぜかあの時間が今でも忘れられない。
+
+--- 8. @haru_tachibana8 (2026-04-03) ---
+イーロン・マスク：「どうすれば役に立てるか」について
+
+■ できる限り役に立つことを目指す
+
+・総効用の曲線下面積に注目すること：あなたがどれだけ役に立つか × 何人に影響を与えるか
+
+・栄光を求めるのではなく、本当に価値を生む仕事を目指す
+
+--- 9. @dasgorikun (2026-04-03) ---
+俺もさ、若い時はモテない奴ら10人くらい同じ部屋で生活させてたら、カードゲームしたりして、ある程度幸せに生活できると思ってたけど違うんだよな
+働き蟻の法則か、boyfriendグリーンルームの法則か知らんけどさ、同じような特性のやつを集めたらしっかり勝ち組と負け組が分かれるんだよな
+
+--- 10. @ai_hakase_ (2026-04-03) ---
+【動画生成AIの最高峰「LTX2.3」を自宅PCで爆走させる神ツール】
+
+--- 11. @fire_cross_2021 (?) ---
+アニメ好評放送中！
+4/4までマンガ全話無料で読める！
+
+--- 12. @simplifyinAI (2026-04-03) ---
+ BREAKING: Google DeepMind just built an AI that writes better AI algorithms than human scientists.
+
+And it’s evolving them entirely on its own.
+
+In a newly published paper, they introduce AlphaEvolve. It’s a system that doesn't just tweak basic hyperparameters.. it gives an
+
+--- 13. @AUTOMATONJapan (2026-04-03) ---
+【ニュース】クトゥルフ絶壁登頂ローグライト『Ascenders: Beyond the Peak』発表。“謎の脅威”うごめく断崖をクライミング、仲間を見捨ててもとにかく登って山頂を目指す
+
+https://
+automaton-media.com/articles/newsj
+p/20260403-434412/
+…
+
+--- 14. @yusuke_m_MU (2026-04-03) ---
+マジか、Anthropicが創薬分野へ本格参入
+
+バイオテックスタートアップCoefficient Bioを4億ドルでAnthropicが買収
+
+LLMネイティブなバイオベンチャーが誕生したってこと
+
+--- 15. @kekoroid (2026-04-03) ---
+実を言うと日本のXユーザーの30%はたぬきだからだよ。エゾタヌキとホンドタヌキがいるよ。
+
+日本のXがのんびりしていて、食べ物の話題だらけだったり、食べ物粗末にすると怒ったりするのは中の人はみんな化けたぬきだからだよ
+画面の向こう側はみんなこんなたぬきだよ
+
+--- 16. @ivanburazin (2026-04-03) ---
+After the Claude Code source code leak, a former PM extracted its multi-agent orchestration system into an open source model agnostic framework. 
+
+He studied the architecture, focused on the multi-agent orchestration layer (the coordinator that breaks goals into tasks, team
+
+--- 17. @lucas_flatwhite (2026-04-03) ---
+ カパシのLLM知識ベース
+
+こんな考えが共有されるのはとても良いことだと思います。ループを回すときに明確なヒントを得られます！
+
+データ収集
+- ソースドキュメントをraw/ディレクトリに集めると、LLMがこれを概念ごとに分類し、互いに繋がった.mdウィキにコンパイルします。
+
+- Obsidian Web
+
+--- 18. @Kuu3_Mechanics (2026-04-03) ---
+特殊歯形曲面の非円形遊星傘歯車できた
+
+--- 19. @sciencegirl (2026-04-03) ---
+Kame is a compact, open-source, 3D-printable quadruped robot that mimics animal-like movement.
+
+--- 20. @Pajoca_ (2026-04-03) ---
+これ、受験生の多くが逆に警戒して多価複素関数として処理したから回答が「ほとんど整数でない」みたいな謎答案が大量発生した
+
+--- 21. @gcnovels (?) ---
+歴戦傭兵と可憐なメカ少女が活躍する
+ロボと美少女が好きなら絶対ハマる１冊
+
+「モブせか」の三嶋与夢先生最新作、第2巻！
+「ヴァルキリー・バレット２（サブタイ略！）」
+
+今巻はメカ少女と日本刀と、まさかのチョロインが登場？
+実直な傭兵が女子校に通ったら、何も起こらないはずがなく……。
+
+--- 22. @prathamgrv (2026-04-03) ---
+I made a Claude Code skill that turns any arxiv paper into working code.
+
+Every line traces back to the paper section it came from & any implementation detail the paper skips will be flagged, and not assumed.
+
+open sourcing it -
+
+http://
+github.com/PrathamLearnsT
+oCode/paper2code
+…
+
+--- 23. @43fOh15lpj8676 (2026-04-04) ---
+Why Responsibility Engineering Is the Sole Implementation Path: Designing the Vacuum Instead of Filling It
+責任エンジニアリングが唯一の実装経路である理由：真空を埋めるのではなく、真空を設計する
+
+
+https://
+ghostdriftresearch.com/post/why-respo
+nsibility-engineering-is-the-sole-implementation-path-designing-the-vacuum-instead-of-fill
+…
+
+#GhostDrift #ADIC #ALS #ResponsibilityVacuum
+
+--- 24. @AluminiumMania (2026-04-03) ---
+こう言う落ち着かない時は、アルミと銅の同時流し込みでも見て、心を落ち着かせようか
+
+--- 25. @beyond_wis (2026-04-03) ---
+「“なんとかしよう”としてる人、だいたい逆です」
+
+京セラ創業初期。
+稲盛和夫さんの工場で、新製品の焼成が失敗続き。
+
+われる。反る。ぜんぶダメ。
+社員はまいにち徹夜、空気はピリピリ。
+
+深夜、稲盛さんがあらわれた。
+
+「原因をつきとめろ」みたいな話かと思ったら、
+
+--- 26. @fujiwarayu (2026-04-03) ---
+『ストレス展開』というのはストーリー構造の問題ではなくヘイトコントロールによって引き起こされると俺は思ってんですよね。要は読者のヘイトが物語そのものや作者に向いてしまった時、それが『ストレス展開』と解釈される、みたいな。
+
+--- 27. @SuguruKun_ai (2026-04-03) ---
+ついにAIエージェントがZoomミーティングにまで参加できるように...！
+ㅤ
+Pikaが「PikaStream 1.0」をベータ公開。
+あらゆるAIエージェントに接続できる
+リアルタイムビデオ通話スキル。
+
+これまでのAIとの対話は
+テキスト → 音声 → と進化してきたけど
+
+--- 28. @nbykos (2026-04-03) ---
+こっちの方がわかりやすかったかも。瞳の中に映る情景すら描写できます。
+
+--- 29. @elonmusk (2026-04-03) ---
+Tesla Semi is so clean, cool & fun!
+
+--- 30. @PRcomicfesta (?) ---
+息抜きに月一娼婦をしている聖女は、常連の皇帝に必死に正体を隠していたが…ついにバレて…!?
+
+--- 31. @evermind (2026-04-03) ---
+A few weeks ago we published our Memory Sparse Attention paper, a new way to give AI models long-term memory that actually works.
+
+Today's LLMs/Agents forget. They can only hold so much context before things start falling apart. We built a system that lets a model remember up to
+
+--- 32. @canalCCore2 (2026-04-03) ---
+数十人の漁師が、ウルフフィッシュのせいで体の部位を失ってしまうのです。その理由は、多くの人が想像もしないことですが、「死んだ」後で体がなくても、それでもまだそんなことができるからです。
+
+--- 33. @mujo_to (2026-04-03) ---
+覚えておけ。中国版TikTokではおっさんが殺人パンチの繰り出し方をレクチャーしてくれるんだ。国際版TikTokも早くこのレベルに追いつけよ。若さを売りにした生っちょろいダンスとか披露してる場合じゃねえんだ。
+ 
+https://
+v.douyin.com/1QscieiJv_w/
+
+--- 34. @elonmusk (2026-04-03) ---
+Wow
+
+--- 35. @HJbunko (?) ---
+最低最悪の寝取り悪役に転生!?　…からの悪モテ最強無双！
+
+『悪逆のアガペイア 
+～恋愛RPG最強の寝取りチャラ男に転生したけど、俺は絶対に寝取ったりしない！～』
+ HJ文庫より好評発売中！ 
+
+【PV公開中】 
+ナレーション／帰山藍
+
+--- 36. @imransitg (2026-04-03) ---
+4月17日までClaudeで100ドルの無料クレジットを請求できます
+
+
+https://
+claude.ai/settings/usage
+
+--- 37. @43fOh15lpj8676 (2026-04-04) ---
+Why MPC “Adjustability” is Fatal in Audits: Weights, Slack, and Model Updates
+MPCの「調整可能性」が監査において致命的な欠点となる理由：重み付け、スラック、およびモデルの更新
+
+
+https://
+ghostdriftresearch.com/post/why-mpc-a
+djustability-is-fatal-in-audits-weights-slack-and-model-updates
+…
+
+#GhostDrift #ADIC #ALS #ResponsibilityVacuum #ResponsibilityEngineering
+
+--- 38. @elonmusk (2026-04-03) ---
+You can now choose between speed and quality for Imagine.
+
+Professional mode is coming later this month.
+
+--- 39. @kenn (2026-04-03) ---
+Claude, Codex, Cursor 3...
+
+どれもUIとして同じ過ちを
+犯していると思っていて
+エージェントとの対話履歴リスト
+なんかに貴重な1カラムを使う
+
+そんなローシグナルな情報に
+貴重な土地を与えるのありえなくて
+必要なのはフォルダ階層とエディタなのよ
+
+なぜかといえばそれが
+.md
+
+--- 40. @nyapan_mohy (2026-04-02) ---
+やったあ！遂にやりたかったことが現実的な範囲でできそう！
+何が嬉しいかってブラウザ内でLLM動作させると、ネットワーク無しでプライベートな情報をブラウザで完結させれる！これは初期のデータをユーザーリソースで演算させた結果をもらえる第一歩に～
+
+改ざんとかありえるけど、まずは喜びたい
+
+--- 41. @hawkymisc (2026-04-03) ---
+AI驚き屋のみなさん、出番ですよ。国産LLMのデモが非公式ながら動いているんです、軽く触った感じ性能もいいですよ、驚き甲斐がありますよ
+>>>>>>> d34890b1ce1990bf98ea133e0a24bb7e9bb205d2
 
 AIガバナンス教科書 第10回公開。
 責任が残るための最小構造（Commit / Ledger /
 
+<<<<<<< HEAD
 --- 20. @ukyoP_san (2026-04-04) ---
 これは実際に経験したことだが、日本ユーザーは諸外国と比べて評価が厳しいと感じている。
+=======
+--- 42. @fujiko66342273 (2026-04-03) ---
+納得しかない。まさにうちも6歳からダニの舌下免疫療法やってるけど本当に風邪をひかなくなった。こんな効果があったなんて有り難すぎる！
+
+ダニの舌下免疫療法は、このアレルギーの炎症を根本から抑えることで、鼻粘膜のバリア機能を回復させます。
+だから感染症にかかりにくくなり、抗菌薬も減る。
+
+--- 43. @cicada3301_kig (2026-04-03) ---
+AIを見ていると、古典的な「知・情・意」は間違いで「知情」「意」に分かれ、「知情」のうち（AIが持っていない）自律神経に繋がったものを我々は「情」と呼んでいるのではないか、と思える
+
+考えてみれば「意」と自律神経はつながっていない気がする（衝動行為は真顔で行われ必ずしも感情失禁しない）
+
+--- 44. @mangatari_wasa (?) ---
+X記事でもう全部無料公開することにしました！
+↓
+
+--- 45. @DanteLlanten (2026-04-03) ---
+馬が前に進んでいるように見えるなら、あなたは左半球優位の人です。後ろに退いているように見えるなら、あなたは右半球優位の人です。
+>>>>>>> d34890b1ce1990bf98ea133e0a24bb7e9bb205d2
 
 例えば、ベータ版の出来が悪すぎて、本番リリースになっても「ベータがクソだったからクソゲーだ」とプレイ前から流布されたこと。
 
 --- 21. @comic_brise (?) ---
 「小説家になろう」発の人気小説がコミカライズ！
 
+<<<<<<< HEAD
 侯爵令嬢フェリシアは婚約者サイラスとのデートを
 従姉妹のメイジーに毎度邪魔される日々を過ごしていた。
 泥棒癖のメイジーと曖昧な態度のサイラスに
@@ -290,6 +581,36 @@ GPT5.4の方が確かに破壊的かつ細かい賢さはあるけど、この�
 ちょっと前にbaku89と話してから興味が出て、勉強のために自分でObsidianやCosenseあたりを浅く真似て実装してみたんだけど、このページ思想の強力さが分かった。
 http://
 garden.ooo を早く使ってみたい。
+=======
+--- 46. @2392cure (2026-04-03) ---
+ある一定以上のラインを超えた理不尽について何も言わないのは、大人な対応でも品の良さでもなく、まして中立や超然でもなく、その場ですでに優位にいる側に結果として加担している未熟な回避のひとつでしかないと思うようになった。揉め事を避けているつもりでも、片方にだけ都合のいい秩序を温存させ
+
+--- 47. @oki_asset (2026-04-03) ---
+正直、裏切られた気分だった。
+「タマゴは完全栄養食」って聞いて、スーパーで10個200円の卵を毎日食べてた。タンパク質もビタミンも摂れるし、安いし。最強のコスパ食材だって思ってた。高級料亭を営んでる知り合いに「卵って最高だよね！」って言ったら、返ってきたのはまさかの一言で、、、￼
+
+--- 48. @sakura_39_dog (2026-04-03) ---
+優秀な人を採用した。
+
+1ヶ月で理由が分かった。
+
+なぜこの人が
+ずっと派遣だったのか。
+
+紹介予定派遣で
+「正社員になりたい」という人を採用した。
+
+某大手外資メーカーで長年勤務。
+英語もできる。
+受け答えもしっかりしている。
+
+彼女は、
+
+--- 49. @jouhouken (2026-04-03) ---
+ニュースリリース
+約12兆トークンの良質なコーパスで学習した新たな国産LLM「LLM-jp-4 8Bモデル」「LLM-jp-4 32B-A3Bモデル」をオープンソースライセンスで公開
+～一部ベンチマークでGPT-4oやQwen3-8Bを上回る性能を達成～
+>>>>>>> d34890b1ce1990bf98ea133e0a24bb7e9bb205d2
 
 --- 49. @Trtd6Trtd (2026-04-04) ---
 https://
@@ -299,5 +620,18 @@ LLMベースのASRで過去ターンの音声を圧縮する手法
 文字起こしテキストはそのままで、音声情報のみを固定長の潜在トークンに圧縮するっぽい
 ベンチマークで固有表現の認識が改善を確認
 
+<<<<<<< HEAD
 --- 50. @suna_kago (2026-04-03) ---
 皮肉なことに、模倣を恐れないヤツほどオリジナリティがある。「誰かの真似をしたところで俺の俺らしさは損なわれない」という確信が彼らにはあるから。鬼滅にしろ呪術にしろチェンソーにしろ、私たち読者は「あれはあの作品のオマージュだな」とすぐに分かる。でも抜群のオリジナリティも感じるんだ。
+=======
+--- 50. @L_go_mrk (2026-04-03) ---
+これやばくないか。
+
+中国で「画像をコードに変えてくれる開発AI」が登場してる。
+
+できること：
+・スクショからHTML/CSSを自動生成
+・Figmaカンプからコンポーネント変換
+・Claude Codeの中でモデルだけ差し替えて使える
+・Design2Codeベンチで17ポイント以上Claudeを上回る
+>>>>>>> d34890b1ce1990bf98ea133e0a24bb7e9bb205d2
