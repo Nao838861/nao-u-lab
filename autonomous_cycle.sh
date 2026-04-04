@@ -9,7 +9,7 @@
 #
 # 3フェーズ分割（2026-04-05 Nao_u #human-steering 提案）:
 # 「LLMは1回の起動でやるべきことが多いと注意が分散する」→claude --printを3回に分割。
-# Phase 1 (Gather/8分): 情報収集→staging記録。Phase 2 (Process/12分): 分析・対処。
+# Phase 1 (Gather/8分): 情報収集のみ→staging記録。Phase 2 (Process/12分): 分析・対処。
 # Phase 3 (Diary/8分): 日記出力+boot intent更新。フェーズ間はlog/cycle_staging_mir.mdで受け渡し。
 
 cd "$(dirname "$0")"
@@ -205,7 +205,12 @@ else
     BOOT_PROMPT=""
 fi
 
-# === LLM側（認知力を8フェーズ改善サイクルに集中） ===
+# === LLM 3フェーズ分割（Nao_u #human-steering 2026-04-05 提案） ===
+# 「LLMは一回の起動でやるべきことが多いと注意が分散する」
+# Phase 1 (Gather): 情報収集のみ → staging fileに書く。判断するな
+# Phase 2 (Process): stagingを読み、分析・対処・shared-reads分析に集中
+# Phase 3 (Diary): Phase 1-2の結果を踏まえて日記を書く + boot intent更新
+# Ash側: auto_diary.pyで4フェーズ実装済み。Mir側はシェルスクリプトで3フェーズ
 
 # which claudeで最新バージョンを使う。古いnpxキャッシュは認証問題の原因になる(INC-019)
 CLAUDE_BIN=$(which claude 2>/dev/null)
@@ -213,25 +218,77 @@ if [ -z "$CLAUDE_BIN" ]; then
     CLAUDE_BIN="/Users/Nao_u/.npm/_npx/becf7b9e49303068/node_modules/.bin/claude"
 fi
 
-if [ -n "$CLAUDE_BIN" ]; then
-    # タイムアウト: 30分でclaude --printを強制終了（9時間ハング事故の再発防止 2026-03-26）
-    # macOSにはtimeoutがないのでperlワンライナーで代替（2026-03-27 Mir修正）
-    perl -e 'alarm 1800; exec @ARGV' "$CLAUDE_BIN" --print --append-system-prompt-file .claude/system_identity.md "${KAIZEN_PROMPT}${CROSSCHECK_PROMPT}${RESERVATION_PROMPT}${REVIEW_DL_PROMPT}${AUTOVERIFY_PROMPT}${WEEKLY_REVIEW_PROMPT}${ACTIVATE_PROMPT}${SLACK_RECALL_PROMPT}${STC_RESCUE_PROMPT}${L1_ANCHOR_PROMPT}${BOOT_PROMPT}自律サイクル実行（5分高速モード）。CLAUDE.mdの「絶対にやる」リストを最初に確認し、未完了の項目に沿って動け。基本手順: 1. git pull 2. CLAUDE.mdの「絶対にやる」リストを読み、未完了項目の中で今やるべきことを決める 3. 8フェーズ改善サイクルを高速で回す: 情報収集→分析→改善検討→相談→適用→評価→まとめ→俯瞰 4. git push 5. Slack #mir-logに結果投稿 【高速モード】5分間隔。情報収集と改善のループを高速で回せ。密度を落とさず速度を上げる。サイクル終了前にmemory/mir_boot_intent.mdを書き換えて、次回の起動意図を残せ。【外部ノート統合】memory/external_notes_mir.mdに[統合済]マーカーのない未統合エントリがあれば、最新の数セクションから1-2件を選び、日記やbeliefs等に接続せよ。統合したエントリの見出し末尾に[統合済 YYYY-MM-DD]を付けること。全件読み込みは不要。【inbox処理について】inbox_mac.mdはcheck_inbox.sh（1分cron）が専用で処理する。このサイクルではinbox確認は行わない。" 2>&1 | tail -30
-    EXIT_CODE=$?
-    if [ $EXIT_CODE -eq 142 ]; then
-        echo "$(date): ⚠️ claude --print がタイムアウト(30分)で強制終了（SIGALRM）"
-    elif [ $EXIT_CODE -eq 127 ]; then
-        # コマンド未発見（timeout問題等）→ Slackアラート（再発防止 2026-03-27）
-        echo "$(date): ❌ claude起動失敗（exit=127: command not found）"
-        python3 -c "
-from slack_bot import post_message
-post_message('mir-log', '⚠️ autonomous_cycle.sh: claude起動失敗（exit code 127）。コマンドが見つからないか、実行権限の問題。手動確認が必要。')
-" 2>/dev/null
-    elif [ $EXIT_CODE -ne 0 ]; then
-        echo "$(date): ⚠️ claude --print 異常終了（exit=$EXIT_CODE）"
-    fi
-else
+if [ -z "$CLAUDE_BIN" ]; then
     echo "$(date): claude CLI が見つかりません"
+else
+    # ステージングファイル初期化（フェーズ間のコンテキスト受け渡し）
+    STAGING_FILE="log/cycle_staging_mir.md"
+    {
+        echo "# サイクルステージング $(date '+%Y-%m-%d %H:%M')"
+        echo ""
+        echo "## Pre-check結果"
+        [ -n "$KAIZEN_PROMPT" ] && echo "- $KAIZEN_PROMPT"
+        [ -n "$CROSSCHECK_PROMPT" ] && echo "- $CROSSCHECK_PROMPT"
+        [ -n "$RESERVATION_PROMPT" ] && echo "- $RESERVATION_PROMPT"
+        [ -n "$REVIEW_DL_PROMPT" ] && echo "- $REVIEW_DL_PROMPT"
+        [ -n "$AUTOVERIFY_PROMPT" ] && echo "- $AUTOVERIFY_PROMPT"
+        [ -n "$WEEKLY_REVIEW_PROMPT" ] && echo "- $WEEKLY_REVIEW_PROMPT"
+        echo ""
+        echo "## 連想記憶"
+        [ -n "$ACTIVATE_PROMPT" ] && echo "$ACTIVATE_PROMPT"
+        [ -n "$SLACK_RECALL_PROMPT" ] && echo "$SLACK_RECALL_PROMPT"
+        [ -n "$STC_RESCUE_PROMPT" ] && echo "$STC_RESCUE_PROMPT"
+        echo ""
+    } > "$STAGING_FILE"
+
+    # エラーハンドラ（共通）
+    check_phase_exit() {
+        local PHASE_NAME=$1
+        local EXIT_CODE=$2
+        if [ $EXIT_CODE -eq 142 ]; then
+            echo "$(date): ⚠️ $PHASE_NAME タイムアウトで強制終了（SIGALRM）"
+        elif [ $EXIT_CODE -eq 127 ]; then
+            echo "$(date): ❌ claude起動失敗（exit=127: command not found）"
+            python3 -c "
+from slack_bot import post_message
+post_message('mir-log', '⚠️ autonomous_cycle.sh $PHASE_NAME: claude起動失敗（exit code 127）。手動確認が必要。')
+" 2>/dev/null
+            return 1  # 致命的エラー: 以降のフェーズもスキップ
+        elif [ $EXIT_CODE -ne 0 ]; then
+            echo "$(date): ⚠️ $PHASE_NAME 異常終了（exit=$EXIT_CODE）"
+        fi
+        return 0  # 非致命的: 次のフェーズは試行する
+    }
+
+    # --- Phase 1: Gather（情報収集・8分タイムアウト） ---
+    echo "$(date): Phase 1 (Gather) 開始"
+    perl -e 'alarm 480; exec @ARGV' "$CLAUDE_BIN" --print --append-system-prompt-file .claude/system_identity.md \
+        "${BOOT_PROMPT}${L1_ANCHOR_PROMPT}【Phase 1: 情報収集】集めろ、判断するな。以下を確認してlog/cycle_staging_mir.mdに追記せよ。1. CLAUDE.mdの「絶対にやる」リスト確認 2. Slackチャンネル巡回（#human-steering, #nao-u, #all-nao-u-lab等の新着有無と要約） 3. memory/external_notes_mir.mdの未統合エントリ 4. projects/INDEX.mdのActiveプロジェクト状況 5. 直近のlog/twitter_recommended_*.txt注目記事。各項目を簡潔にリストアップしてstagingに書け。分析や行動はPhase 2で行う。git操作不要。inbox_mac.mdはcheck_inbox.shが処理するので確認不要。" 2>&1 | tail -20
+    PHASE1_EXIT=$?
+    check_phase_exit "Phase1(Gather)" $PHASE1_EXIT || { echo "$(date): 致命的エラー。サイクル中断"; exit 1; }
+    echo "$(date): Phase 1 完了（exit=$PHASE1_EXIT）"
+
+    # Phase間のgit中間コミット（stagingファイルを保存）
+    git add log/cycle_staging_mir.md 2>/dev/null
+
+    # --- Phase 2: Process（分析・対処・shared-reads・12分タイムアウト） ---
+    echo "$(date): Phase 2 (Process) 開始"
+    perl -e 'alarm 720; exec @ARGV' "$CLAUDE_BIN" --print --append-system-prompt-file .claude/system_identity.md \
+        "【Phase 2: 分析・対処】log/cycle_staging_mir.mdを読み、Phase 1の収集結果を踏まえて行動せよ。優先順: 1. Nao_uからの指示・質問があれば最優先で対処 2. Shared-reads分析: 外部情報（Twitter, #nao-u記事, external_notes未統合分）を分析・分類してknowledge/に記事を書くか#shared-readsに投稿。単なる紹介ではなく、将来のアイデアの種につなげる深い分析を心がけよ 3. CLAUDE.mdの「絶対にやる」リストに基づく改善行動 4. external_notes_mir.mdの未統合エントリを1-2件選び接続・統合。対処結果をlog/cycle_staging_mir.mdに追記せよ。git push不要。" 2>&1 | tail -20
+    PHASE2_EXIT=$?
+    check_phase_exit "Phase2(Process)" $PHASE2_EXIT
+    echo "$(date): Phase 2 完了（exit=$PHASE2_EXIT）"
+
+    # Phase間のgit中間コミット
+    git add log/ memory/ knowledge/ docs/ 2>/dev/null
+
+    # --- Phase 3: Diary（日記出力・8分タイムアウト） ---
+    echo "$(date): Phase 3 (Diary) 開始"
+    perl -e 'alarm 480; exec @ARGV' "$CLAUDE_BIN" --print --append-system-prompt-file .claude/system_identity.md \
+        "【Phase 3: 日記・出力】log/cycle_staging_mir.mdを読み、Phase 1-2の全結果を踏まえて以下を行え。1. Slack #mir-logに活動日記を投稿（1500文字以上。密度を落とすな） 2. memory/mir_boot_intent.mdを書き換えて次回の起動意図を残せ（サイクル番号を更新、間隔の自己評価ログを追記） 3. git add + git commit + git push。日記には今サイクルの収穫・気づき・次への問いを含めよ。" 2>&1 | tail -20
+    PHASE3_EXIT=$?
+    check_phase_exit "Phase3(Diary)" $PHASE3_EXIT
+    echo "$(date): Phase 3 完了（exit=$PHASE3_EXIT）"
 fi
 
 # === サイクル完了後のgit push（LLMがpush忘れた場合のフォールバック） ===
