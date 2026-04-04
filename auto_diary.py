@@ -1,12 +1,15 @@
 """
-auto_diary.py — 3フェーズ分割サイクル (2026-04-05 Nao_u提案)
+auto_diary.py — 4フェーズ分割サイクル (2026-04-05 Nao_u提案)
 
-1サイクルを3回のLLM呼び出しに分割し、各フェーズで注意を集中させる:
+1サイクルを4回のLLM呼び出しに分割し、各フェーズで注意を集中させる:
   Phase 1 (Gather): 情報収集。Slack・inbox・pre-check結果を集めてステージングファイルに書く
-  Phase 2 (Process): 対処・研究。ステージングを読み、最重要1-2件に集中して対応
-  Phase 3 (Diary): 日記出力。Phase 1-2の結果を踏まえて#ashに活動日記を投稿
+  Phase 2 (Analyze): shared-reads分析。外部情報を深く分析・分類し、アイデアの種に接続
+  Phase 3 (Process): 対処・研究。ステージングを読み、最重要1-2件に集中して対応
+  Phase 4 (Diary): 日記出力。Phase 1-3の結果を踏まえて#ashに活動日記を投稿
 
-背景: 「LLMは1回の起動でやるべきことが多いと注意が分散する」(Nao_u #human-steering 2026-04-05)
+背景:
+- 「LLMは1回の起動でやるべきことが多いと注意が分散する」(Nao_u #human-steering 2026-04-05)
+- 「Shared-readsは詳細な記述と分析を。1フェーズこのために使ってもいいくらい重要」(Nao_u #human-steering 2026-04-05)
 """
 
 import io
@@ -33,11 +36,12 @@ MIN_INTERVAL_SEC = 50 * 60  # 最小実行間隔: 50分
 CONFIG_FILE = REPO_DIR / "scheduler_ash_config.json"
 STAGING_FILE = REPO_DIR / "log" / "cycle_staging.md"
 
-# フェーズ別タイムアウト（合計で元の600sに収まる）
+# フェーズ別タイムアウト
 PHASE_TIMEOUTS = {
     "gather": 120,   # 情報収集は短め
-    "process": 300,  # 対処・研究がメイン
-    "diary": 180,    # 日記出力
+    "analyze": 300,  # shared-reads分析（外部情報の深い分析・分類）
+    "process": 240,  # 対処・研究
+    "diary": 240,    # 日記出力（CLAUDE.md読み込み+1500字執筆+Slack投稿+git push）
 }
 
 
@@ -205,7 +209,36 @@ def phase_gather():
     return ok
 
 
-# ── Phase 2: Process（対処・研究） ──────────────────────────────────
+# ── Phase 2: Analyze（shared-reads分析） ──────────────────────────────────
+
+def phase_analyze():
+    """外部情報を深く分析・分類し、shared-readsに詳細な分析を投稿する。
+    Nao_u指示: 「単に新着記事の紹介ではなく、分析・分類して将来のアイデアの種につなげる」
+    「1フェーズこのために使ってもいいくらい重要」"""
+    staging = read_staging()
+
+    prompt = (
+        "あなたはAsh（Win2）。CLAUDE.mdを読んで自分が誰か確認せよ。\n"
+        "【Phase 2: shared-reads分析】このフェーズは外部情報の深い分析に専念する。\n"
+        "Nao_uの指示: 「単に新着記事の紹介ではなく、分析・分類して将来のアイデアの種につなげる大事な外部入力」\n"
+        f"\n以下はPhase 1で収集した情報:\n```\n{staging[:3000]}\n```\n"
+        "\n以下の手順で外部情報を分析せよ:\n"
+        "1. Phase 1で見つけた外部情報（Twitter推薦、external_notes未統合エントリ等）から最も重要な1-2件を選ぶ\n"
+        "2. 元の情報源の主張・根拠・データを詳細に記述する（紹介ではなく分析）\n"
+        "3. 自分たちの体験・beliefs・プロジェクトとの接続を具体的に書く\n"
+        "4. この情報から生まれる未解決の問いを明示する\n"
+        "5. knowledge/ディレクトリに詳細な知識記事を作成する（knowledge/README.mdのフォーマットに従う）\n"
+        "6. 分析結果をC0ALXLVKYQY(#shared-reads)にslack_bot.pyのpost_message()で投稿\n"
+        "   - 記事紹介だけの投稿は出すな。分析・接続・問いを含む投稿のみ\n"
+        "\n結果をlog/cycle_staging.mdに追記せよ（既存内容を消すな）。\n"
+        "「## Phase 2 分析結果」セクションとして書け。\n"
+        "※外部情報が見つからない場合でも、過去のexternal_notesの未統合エントリを1件深く分析せよ。"
+    )
+    ok, output = run_phase("analyze", prompt, PHASE_TIMEOUTS["analyze"])
+    return ok
+
+
+# ── Phase 3: Process（対処・研究） ──────────────────────────────────
 
 def phase_process():
     """ステージングを読み、最重要1-2件に集中して対応"""
@@ -213,15 +246,15 @@ def phase_process():
 
     prompt = (
         "あなたはAsh（Win2）。CLAUDE.mdを読んで自分が誰か確認せよ。\n"
-        "【Phase 2: 対処・研究】このフェーズの目的は「集めた情報に基づいて行動する」こと。\n"
-        f"\n以下はPhase 1で収集した情報:\n```\n{staging[:3000]}\n```\n"
+        "【Phase 3: 対処・研究】このフェーズの目的は「集めた情報に基づいて行動する」こと。\n"
+        f"\n以下はPhase 1-2で収集・分析した情報:\n```\n{staging[:3000]}\n```\n"
         "\n上記を踏まえ、最も重要な1-2件に集中して対処せよ:\n"
         "- external_notesの未統合エントリ → beliefs.mdや日記素材として接続\n"
         "- クロスチェック未レビュー → kaizen_tracker.md更新\n"
         "- Activeプロジェクトの進展 → プロジェクトファイル更新\n"
         "- 低確信度beliefs → 検証・更新\n"
         "\n結果をlog/cycle_staging.mdに追記せよ（既存内容を消すな）。\n"
-        "「## Phase 2 結果」セクションとして、何をしたか・何がわかったかを書け。\n"
+        "「## Phase 3 結果」セクションとして、何をしたか・何がわかったかを書け。\n"
         "※inbox処理はcheck_inbox.pyが専用で行う。このフェーズでは行わない。\n"
         "※日記は次のPhaseで書く。ここでは対処に集中。"
     )
@@ -229,23 +262,22 @@ def phase_process():
     return ok
 
 
-# ── Phase 3: Diary（日記出力） ──────────────────────────────────
+# ── Phase 4: Diary（日記出力） ──────────────────────────────────
 
 def phase_diary():
-    """Phase 1-2の結果を踏まえて日記を書き、Slackに投稿"""
+    """Phase 1-3の結果を踏まえて日記を書き、Slackに投稿"""
     staging = read_staging()
 
     prompt = (
         "あなたはAsh（Win2）。CLAUDE.mdを読んで自分が誰か確認せよ。\n"
-        "【Phase 3: 日記出力】このフェーズの目的は「書く」こと。\n"
-        f"\n以下は今サイクルのPhase 1-2の記録:\n```\n{staging[:4000]}\n```\n"
+        "【Phase 4: 日記出力】このフェーズの目的は「書く」こと。\n"
+        f"\n以下は今サイクルのPhase 1-3の記録:\n```\n{staging[:4000]}\n```\n"
         "\n上記を踏まえ、#ashチャンネルに投稿する活動日記を書け:\n"
         "- slack_bot.pyのpost_message()でチャンネルC0ALVUSHK8Eに投稿\n"
         "- 圧縮せず具体的に、1500字以上で\n"
-        "- 外部知見との接続は思考の流れの中で自然に出すこと（別セクションにしない）\n"
+        "- Phase 2のshared-reads分析で得た外部知見は思考の流れの中で自然に出すこと（別セクションにしない）\n"
         "- 最も引っかかった1つを軸に深く書け\n"
-        "\n#shared-reads投稿: log/cycle_staging.mdに注目ツイートのメモがあれば、\n"
-        "自分の所感を添えてC0ALXLVKYQY(#shared-reads)に投稿。該当なしなら不要。\n"
+        "\n※shared-readsへの投稿はPhase 2で完了済み。このフェーズでは日記に集中。\n"
         "\n投稿後、git add + git commit + git pushを実行せよ。"
     )
     ok, output = run_phase("diary", prompt, PHASE_TIMEOUTS["diary"])
@@ -297,33 +329,37 @@ def record_run():
 
 def main():
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"[{now}] auto_diary.py 実行 (3フェーズ分割モード)")
+    print(f"[{now}] auto_diary.py 実行 (4フェーズ分割モード)")
 
     if not check_min_interval():
         return
 
-    # Phase 1: Gather
+    # Phase 1: Gather（情報収集）
     ok1 = phase_gather()
     if not ok1:
-        print("Phase 1 (Gather) 失敗。Phase 2-3は中止。状態報告のみ投稿。")
+        print("Phase 1 (Gather) 失敗。Phase 2-4は中止。状態報告のみ投稿。")
         record_run()
         post_status_report()
         return
 
-    # Phase 2: Process
-    ok2 = phase_process()
+    # Phase 2: Analyze（shared-reads分析 — Nao_u指示: 1フェーズ丸ごと使う価値）
+    ok2 = phase_analyze()
     if not ok2:
-        print("Phase 2 (Process) 失敗。Phase 3 (Diary)は試行する。")
-        # Phase 2が失敗してもPhase 1の情報があるので日記は書ける
+        print("Phase 2 (Analyze) 失敗。Phase 3-4は試行する。")
 
-    # Phase 3: Diary
-    ok3 = phase_diary()
+    # Phase 3: Process（対処・研究）
+    ok3 = phase_process()
+    if not ok3:
+        print("Phase 3 (Process) 失敗。Phase 4 (Diary)は試行する。")
+
+    # Phase 4: Diary（日記出力）
+    ok4 = phase_diary()
     record_run()
 
-    if ok3:
-        print("3フェーズ完了。")
+    if ok4:
+        print("4フェーズ完了。")
     else:
-        print("Phase 3 (Diary) 失敗。状態報告を投稿。")
+        print("Phase 4 (Diary) 失敗。状態報告を投稿。")
         post_status_report()
 
 
