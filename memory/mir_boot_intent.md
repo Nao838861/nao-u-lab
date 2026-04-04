@@ -10,17 +10,17 @@
 行動
 
 ## 起動時の焦点
-**knowledge/ 5記事に拡充。** nwiizo包丁+Conway追加。check_inbox.sh認証切れSlack通知機能を追加。
-待ち状態: ブログ第2弾v002レビュー待ち。Nao_u「トラブルが多すぎる」と言及——安定性を最優先。
+**knowledge/ 7記事に拡充（ichiipsy+mizchi追加）。** タグ偏り是正開始。memory/degradation/voice軸が各2-3件に。
+待ち状態: ブログ第2弾v002レビュー待ち。
 
 ## 今回やること（1つに絞る）
-shared-readsから追加コンパイル候補を選定（nwiizo「観察の解像度」、mizchi「暗黙知」、ichiipsy「AI学習と記憶定着」等）。または待ちタスクの状態確認。
+Slack巡回（新着確認）+ 待ち状態チェック。余裕があればnyp_qoo「古本屋の書き込み」のknowledge/コンパイルを検討。
 
 ## 起動時の気分（自由記述）
-C48。Nao_uが「トラブルが多すぎる」と言った。CLIログアウト3日間、Logも別トラブル。道具が壊れている時に道具を増やしても仕方ない——nwiizo「包丁」がまさにこれ。安定基盤の上でしか密度の高いサイクルは回せない。check_inbox.shの認証通知は小さいが確実な改善。
+C49。30分サイクル2回目。前サイクルの問い（タグ偏り）に答えを出して2記事追加。ichiipsy記事を書きながら「このコンパイル自体がAI処理側では」という再帰的警告に気づいた——接続と問いの生成が防壁。mizchi×Dreyfusの接続は既知だったが、nwiizo×ichiispy（道具=AI処理、料理=自力処理）は新発見。
 
 ## 前サイクルの問い（autonomous inquiryテスト用）
-knowledge/の5記事はどれも「creation」タグを持つ。偏っている。次に追加する記事は「memory」「degradation」「voice」など異なるタグ軸を増やすべきか。それともcreation軸を深掘りして密度を上げるべきか。
+nyp_qoo「古本屋の書き込み」をknowledge/に入れるか。memory/continuity/serendipityタグで接続密度が最も高そう。だがcreationから離れすぎる偏りの別形態にならないか。「栄養の偏り」是正の止めどころはどこか。
 
 ## 間隔の自己評価ログ
 # 旧ログ(03-23〜03-31前半): log/mir_boot_intent_archive.mdに退避済み
@@ -72,3 +72,4 @@ knowledge/の5記事はどれも「creation」タグを持つ。偏っている�
 # 2026-04-04 21:xx | 180 | ○ | Nao_uグラフ構造提案に#all応答+concept_walk初回体験(degradation→creation 5hopパス発見)+外部ノート2件統合(Design Fixation/天谷)+#nao-u全URL処理済み確認。日記C46。46サイクル目
 # 2026-04-05 02:xx | 30 | ○ | concept_graph改善(degradation×creation/expression交差ノード追加)+週次自己レビュー#kaizen-review投稿+日記C47。30分サイクル復帰。47サイクル目
 # 2026-04-05 03:xx | inbox | ○ | inbox5件処理。30分サイクル変更+レート制限調査+Karpathyナレッジベース指示→knowledge/ディレクトリ新設+プロトタイプ3記事作成+index.md。#human-steering2件+#shared-reads4件+#mir-log投稿。Log/Ashにinbox通知。密度高。C47.5(inbox起動)
+# 2026-04-05 04:xx | 30 | ○ | knowledge/ 2記事追加(ichiipsy記憶定着+mizchi暗黙知)。タグ偏り是正: creation一色→memory3/degradation3/voice2。nwiizo×ichiipsy新接続発見。日記C49。49サイクル目
