@@ -8,6 +8,28 @@
 
 ---
 
+## INC-018: scheduler_log.py hour==2 残存 + 旧コードで稼働 (2026-04-05)
+
+**症状**: recommended_checkが `Skipped (hour=3, waiting for hour%6==2)` と表示。slack_exportも `Hour condition met` でhour依存実行。Nao_uが「サイクルを変えるたびにトラブルが出ている」「正常に動いてると帰ってきてるので分析自体もミスっていた」と指摘
+**影響**: Log — recommended_checkとslack_exportが特定時刻でしか実行されない。Slack checklistと週次レビューもhour==2でしか発火しない
+**根本原因（3層）**:
+1. **コード修正後にスケジューラが再起動されていない**: ログメッセージ `waiting for hour%6==2` は現在のコードに存在しない。プロセスが旧コードで走り続けている
+2. **現コードにもhour==2が4箇所残存**: build_auto_cycle_prompt()内のSlack checklist投稿(hour==2)とweekly review(weekday==6 and hour==2)が経過時間ベースに変換されていなかった
+3. **health_check.pyの検出漏れ**: `hour_filter`パターンしか検出せず、`hour == 2`の直接比較を見逃していた。結果「正常に動いてる」と誤報告
+**修正**:
+1. scheduler_log.pyのSlack checklist → `.kaizen_status_last_posted`タイムスタンプファイル+24h経過時間チェック
+2. scheduler_log.pyのweekly review → `.weekly_review_last_triggered`タイムスタンプファイル+6日経過+日曜チェック
+3. 旧auto_cycle()関数（デッドコード/231行）を削除
+4. health_check.pyに`hour == N`パターン検出を追加
+5. JOBS定義のコメントからhour%N記述を削除
+**教訓**:
+- **コード修正後は必ずスケジューラを再起動する。常駐プロセスはコード変更を自動で拾わない**
+- **health_check.pyの検出パターンは具体的に。抽象的すぎると穴ができる（hour_filterだけ→hour==Nを見逃す）**
+- **「正常です」の報告を信じる前に、検出器自体の網羅性を疑え**
+**パターン**: B（修正の副作用）+ A（サイレント故障）+ 新パターンG（検出器の盲点）
+
+---
+
 ## INC-017: watchdog_log.bat パス問題 (2026-04-02)
 
 **症状**: watchdogが旧ディレクトリで実行される可能性
@@ -228,6 +250,10 @@
 ### パターン F: マルチファイル修正の漏れ
 **INC-011** — 同じ修正が必要な箇所が複数あり、一部を見落とす。
 **対策**: 共通処理のラッパー関数化。修正時は影響範囲を先にgrepで特定する。
+
+### パターン G: 検出器の盲点
+**INC-018** — health_checkが「正常」と報告するが、検出パターンが狭く問題を見逃す。
+**対策**: 検出ルール追加時は「これで何が漏れるか」を必ず考える。具体的パターン（hour_filterだけ）ではなく意味的パターン（時刻ベース判定全般）で検出する。
 
 ---
 

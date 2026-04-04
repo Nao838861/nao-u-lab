@@ -116,6 +116,8 @@ if datetime.now().hour % 6 == 2:  # INC-007で禁止
 |---------|------|------------|
 | `.recommended_last_success` | Twitter推奨チェック成功時刻 | Log |
 | `.slack_export_last_success` | Slackエクスポート成功時刻 | Log |
+| `.kaizen_status_last_posted` | Slack checklist投稿時刻 | Log |
+| `.weekly_review_last_triggered` | 週次レビュー実行時刻 | Log |
 | `/tmp/nao-u-lab-last-twitter-check` | Twitter推奨チェック | Mir |
 | `/tmp/nao-u-lab-last-slack-export` | Slackエクスポート | Mir |
 

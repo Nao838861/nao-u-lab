@@ -392,7 +392,8 @@ def check_design_principles():
             continue
         try:
             content = fpath.read_text(encoding="utf-8", errors="replace")
-            # hour%N パターン検出（コメント行を除外）
+            # hour%N / hour==N パターン検出（コメント行・文字列を除外）
+            # INC-007: hour%N禁止、INC-018: hour==N も禁止（経過時間ベースに統一）
             import re
             for i, line in enumerate(content.split("\n"), 1):
                 stripped = line.strip()
@@ -404,6 +405,14 @@ def check_design_principles():
                         "status": "warning",
                         "message": f"{fpath.name}:{i}: hour%N パターン残存 (INC-007禁止)",
                     })
+                # hour == N / now.hour == N の直接比較を検出（コメント内の言及は除外済み）
+                if re.search(r'\.?hour\s*==\s*\d+', stripped):
+                    # ログメッセージ内の文字列は除外（f"...hour=={n}..."等）
+                    if not re.search(r'["\'].*hour\s*==', stripped):
+                        results.append({
+                            "status": "warning",
+                            "message": f"{fpath.name}:{i}: hour==N パターン残存 (INC-018: 経過時間ベースに統一)",
+                        })
         except Exception as e:
             results.append({
                 "status": "warning",

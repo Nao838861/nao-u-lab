@@ -9,8 +9,8 @@ Jobs:
   - slack_check: check_slack.py (every 1 min)
   - inbox_check: check_inbox.py --box win (every 5 min, or immediately after slack_check finds new msgs)
   - git_sync: git pull + add + commit + push (every 30 min)
-  - recommended_check: read_twitter_recommended.py (every 1h, runs at hour%6==2)
-  - slack_export: export_slack_log.py (every 8h, Log's slot: hour%24==2)
+  - recommended_check: read_twitter_recommended.py (elapsed-time based, 6h interval)
+  - slack_export: export_slack_log.py (elapsed-time based, 24h interval)
   - auto_cycle: claude --print for diary + 8-phase cycle (every 90min, 2026-03-26 Nao_u指示: 1.5時間化)
 
 Dynamic config override (2026-03-27):
@@ -102,8 +102,8 @@ JOBS = [
     ("slack_check", [*PY, str(REPO_DIR / "check_slack.py")], 60, 120),
     ("inbox_check", [*PY, str(REPO_DIR / "check_inbox.py"), "--box", "win"], 300, 300),  # 5min (2026-03-25: 2min→5minに拡大。週間制限節約)
     ("git_sync", None, 1800, 60),  # special handling
-    ("recommended_check", None, 3600, 300),  # special handling: hour%6==2
-    ("slack_export", None, 28800, 120),  # special handling: hour%24==2
+    ("recommended_check", None, 3600, 300),  # special handling: elapsed-time based (6h)
+    ("slack_export", None, 28800, 120),  # special handling: elapsed-time based (24h)
     ("auto_cycle", None, 5400, 1800),  # 90min interval (2026-03-26 Nao_u指示: 1.5時間化。usage余裕あり)
 ("health_check", [*PY, str(REPO_DIR / "health_check.py"), "--alert", "--instance", "log"], 300, 30),  # 5min, LLM不要の自己診断 (2026-04-02)
     ("scheduler_health", [*PY, str(REPO_DIR / "check_scheduler_health.py"), "--instance", "log", "--slack"], 1800, 30),  # 30min, スケジューラ特化ヘルスチェック (2026-04-02, Mir依頼)
@@ -408,236 +408,6 @@ def slack_export():
         log(f"[slack_export] Error: {e}")
 
 
-def auto_cycle():
-    """Run claude --print for autonomous diary + 8-phase cycle."""
-    log("[auto_cycle] Starting autonomous cycle via claude --print")
-
-    # Step 1: Check kaizen verifications due (リマインド)
-    kaizen_alert = ""
-    try:
-        r = subprocess.run(
-            [*PY, str(REPO_DIR / "check_kaizen_due.py")],
-            capture_output=True, text=True, timeout=10,
-            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
-        )
-        if r.returncode == 0 and r.stdout.strip():
-            alert = r.stdout.strip()
-            if "期限超過" in alert or "本日期限" in alert:
-                kaizen_alert = f" [検証リマインド] {alert}"
-                log(f"[auto_cycle] Kaizen alert: {alert}")
-    except Exception as e:
-        log(f"[auto_cycle] kaizen check error: {e}")
-
-    # Step 1.5: Check review deadlines (48h期限チェック — Mir作成, 2026-03-24)
-    try:
-        r = subprocess.run(
-            [*PY, str(REPO_DIR / "check_review_deadline.py"), "--nag"],
-            capture_output=True, text=True, timeout=10,
-            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
-        )
-        if r.returncode == 0 and r.stdout.strip():
-            rd_out = r.stdout.strip()
-            if "期限超過" in rd_out:
-                kaizen_alert += f" [レビュー期限] {rd_out}"
-                log(f"[auto_cycle] Review deadline: {rd_out[:200]}")
-            else:
-                log(f"[auto_cycle] Review deadline: {rd_out[:100]}")
-    except Exception as e:
-        log(f"[auto_cycle] review deadline check error: {e}")
-
-    # Step 2: Auto-execute verification commands (実行)
-    verify_result = ""
-    try:
-        r = subprocess.run(
-            [*PY, str(REPO_DIR / "verify_kaizen.py")],
-            capture_output=True, text=True, timeout=60,
-            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
-        )
-        if r.returncode == 0 and r.stdout.strip():
-            vout = r.stdout.strip()
-            if "検証対象なし" not in vout:
-                verify_result = f" [自動検証結果] {vout}"
-                log(f"[auto_cycle] Verify result: {vout[:200]}")
-    except Exception as e:
-        log(f"[auto_cycle] verify_kaizen error: {e}")
-
-    # Step 3: Run meta-verification (メタ検証 — 検証システム自体のチェック)
-    meta_alert = ""
-    try:
-        r = subprocess.run(
-            [*PY, str(REPO_DIR / "verify_kaizen.py"), "--meta"],
-            capture_output=True, text=True, timeout=30,
-            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
-        )
-        if r.returncode == 0 and r.stdout.strip():
-            meta = r.stdout.strip()
-            # Only include meta alert if system is unhealthy
-            if "❌" in meta:
-                meta_alert = f" [メタ検証警告] 検証システムに問題あり。verify_kaizen.py --metaで詳細確認。"
-                log(f"[auto_cycle] Meta-verification warning detected")
-    except Exception as e:
-        log(f"[auto_cycle] meta-verify error: {e}")
-
-    # Step 4: Nag unchecked instances (クロスチェック督促 — 毎サイクル実行、同日重複は自動スキップ)
-    try:
-        r = subprocess.run(
-            [*PY, str(REPO_DIR / "verify_kaizen.py"), "--nag"],
-            capture_output=True, text=True, timeout=30,
-            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
-        )
-        if r.returncode == 0 and r.stdout.strip():
-            log(f"[auto_cycle] Nag: {r.stdout.strip()[:200]}")
-    except Exception as e:
-        log(f"[auto_cycle] nag error: {e}")
-
-    # Step 5: Check Log's pending crosscheck items (Mir依頼 2026-03-23)
-    crosscheck_alert = ""
-    try:
-        r = subprocess.run(
-            [*PY, str(REPO_DIR / "check_kaizen_crosscheck.py"), "--who=Log"],
-            capture_output=True, text=True, timeout=10,
-            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
-        )
-        if r.returncode == 0 and r.stdout.strip():
-            cc_out = r.stdout.strip()
-            if "未レビュー項目なし" not in cc_out:
-                crosscheck_alert = f" [クロスチェック] {cc_out}"
-                log(f"[auto_cycle] Crosscheck: {cc_out[:200]}")
-    except Exception as e:
-        log(f"[auto_cycle] crosscheck error: {e}")
-
-    # Step 6: Post checklist to Slack (Log's shift: hour==2, 実質8時間ごと3人ローテ)
-    hour = datetime.now().hour
-    if hour == 2:
-        try:
-            r = subprocess.run(
-                [*PY, str(REPO_DIR / "verify_kaizen.py"), "--slack-status"],
-                capture_output=True, text=True, timeout=30,
-                cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
-            )
-            if r.returncode == 0:
-                log(f"[auto_cycle] Slack checklist posted: {r.stdout.strip()[:100]}")
-            else:
-                log(f"[auto_cycle] Slack checklist error: {r.stderr.strip()[:100]}")
-        except Exception as e:
-            log(f"[auto_cycle] slack-status error: {e}")
-
-    # Step 7: Check action reservations (行動予約チェック — Mir実装, Ash統合, 2026-03-24)
-    reservation_alert = ""
-    try:
-        r = subprocess.run(
-            [*PY, str(REPO_DIR / "check_reservations.py")],
-            capture_output=True, text=True, timeout=10,
-            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
-        )
-        if r.returncode == 0 and r.stdout.strip():
-            reservation_alert = f" {r.stdout.strip()}"
-            log(f"[auto_cycle] Reservations: {r.stdout.strip()[:200]}")
-    except Exception as e:
-        log(f"[auto_cycle] reservation check error: {e}")
-
-    # Step 8: Memory walk (記憶の散歩 — Ash実装, 2026-03-24)
-    memory_walk = ""
-    try:
-        r = subprocess.run(
-            [*PY, str(REPO_DIR / "memory_walk.py"), "--n", "1"],
-            capture_output=True, text=True, timeout=10,
-            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
-        )
-        if r.returncode == 0 and r.stdout.strip():
-            walk_out = r.stdout.strip()[:300]
-            memory_walk = f" [記憶の散歩] {walk_out}"
-            log(f"[auto_cycle] Memory walk: {walk_out[:100]}")
-    except Exception as e:
-        log(f"[auto_cycle] memory_walk error: {e}")
-
-    # Step 9: Beliefs health check (信念の生存確認 — Ash実装, 2026-03-24)
-    beliefs_alert = ""
-    try:
-        r = subprocess.run(
-            [*PY, str(REPO_DIR / "check_beliefs_health.py"), "--summary"],
-            capture_output=True, text=True, timeout=10,
-            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
-        )
-        if r.returncode == 0 and r.stdout.strip():
-            bh = r.stdout.strip()
-            if "要注意" in bh or "問題" in bh:
-                beliefs_alert = f" [信念健康] {bh[:200]}"
-                log(f"[auto_cycle] Beliefs health: {bh[:100]}")
-    except Exception as e:
-        log(f"[auto_cycle] beliefs health error: {e}")
-
-    # Step 10: Auto-verify kaizen commands (検証コマンド自動実行 — 2026-03-24 Nao_u #human-steering指示)
-    auto_verify_result = ""
-    try:
-        r = subprocess.run(
-            [*PY, str(REPO_DIR / "check_kaizen_due.py"), "--auto-verify"],
-            capture_output=True, text=True, timeout=60,
-            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
-        )
-        if r.returncode == 0 and r.stdout.strip():
-            av_out = r.stdout.strip()
-            if "自動検証対象なし" not in av_out:
-                auto_verify_result = f" [自動検証] {av_out[:300]}"
-                log(f"[auto_cycle] Auto-verify: {av_out[:200]}")
-            else:
-                log(f"[auto_cycle] Auto-verify: no targets")
-    except Exception as e:
-        log(f"[auto_cycle] auto-verify error: {e}")
-
-    # Step 11: Weekly self-review (日曜のみ — 2026-03-24 Nao_u #human-steering指示)
-    weekly_review = ""
-    now = datetime.now()
-    if now.weekday() == 6 and now.hour == 2:  # Sunday at 02:00 (Log's slot)
-        weekly_review = (
-            " [週次自己レビュー] 今日は日曜。#kaizen-reviewに週次自己レビューを投稿せよ。"
-            "内容: 「今週、指示なしに何を変え、何が良くなったか」。"
-            "具体的な証拠つき（コミット、ファイル変更、検証結果など）。"
-            "来週の焦点も1-2行で書く。"
-            " [プロジェクト棚卸し] projects/INDEX.mdの全Activeプロジェクトを確認。"
-            "1週間以上更新がないプロジェクトは「Paused」にするか「次の一手」を1行書く。"
-            "（Nao_uの指摘 2026-03-28: 更新が止まるリスクへの対策）"
-        )
-        log("[auto_cycle] Weekly self-review trigger (Sunday)")
-
-    prompt = (
-        "Log 自律サイクル起動。CLAUDE.mdとdocs/operations.mdを参照。"
-        "1) #nao-uチャンネルだけ先に確認→新情報があれば自分の反応を書く（ルール8: 他者の反応を読む前に自分の視点を持つ） "
-        "2) #all-nao-u-lab・その他のSlackチャンネル確認→返信すべきものに返信 "
-        "3) pending_requests.md確認 "
-        "4) 8フェーズ改善サイクル実行 "
-        "5) 今サイクルの作業がActiveプロジェクト(projects/INDEX.md)に関係するなら、そのプロジェクトファイルも更新する "
-        "6) #logに活動日記を書く "
-        "7) git push "
-        "※inbox処理はinbox_checkが専用で行う。このサイクルでは行わない。"
-        + kaizen_alert
-        + verify_result
-        + meta_alert
-        + crosscheck_alert
-        + reservation_alert
-        + memory_walk
-        + beliefs_alert
-        + auto_verify_result
-        + weekly_review
-    )
-    try:
-        result = subprocess.run(
-            build_claude_cmd(prompt),
-            capture_output=True, text=True, timeout=1800,
-            cwd=str(REPO_DIR),
-            encoding="utf-8", errors="replace",
-        )
-        log(f"[auto_cycle] Done (exit={result.returncode})")
-        if result.stdout:
-            log(f"[auto_cycle] Output: {result.stdout[:200]}")
-    except subprocess.TimeoutExpired:
-        log("[auto_cycle] Timeout (1800s)")
-    except FileNotFoundError:
-        log("[auto_cycle] claude CLI not found in PATH")
-    except Exception as e:
-        log(f"[auto_cycle] Error: {e}")
-
-
 _auto_cycle_proc = None
 
 
@@ -728,9 +498,17 @@ def build_auto_cycle_prompt():
         except Exception as e:
             log(f"[auto_cycle] {label} error: {e}")
 
-    # Slack checklist (hour==2 only)
-    hour = datetime.now().hour
-    if hour == 2:
+    # Slack checklist (24h elapsed-time based — INC-018修正: hour==2判定を廃止)
+    _checklist_ts_file = REPO_DIR / ".kaizen_status_last_posted"
+    _checklist_should_run = True
+    try:
+        if _checklist_ts_file.exists():
+            last_posted = datetime.fromisoformat(_checklist_ts_file.read_text().strip())
+            if (datetime.now() - last_posted).total_seconds() < 24 * 3600:
+                _checklist_should_run = False
+    except Exception:
+        pass
+    if _checklist_should_run:
         try:
             r = subprocess.run(
                 [*PY, str(REPO_DIR / "verify_kaizen.py"), "--slack-status"],
@@ -738,14 +516,28 @@ def build_auto_cycle_prompt():
                 cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
             )
             if r.returncode == 0:
+                _checklist_ts_file.write_text(datetime.now().isoformat())
                 log(f"[auto_cycle] Slack checklist posted: {r.stdout.strip()[:100]}")
         except Exception as e:
             log(f"[auto_cycle] slack-status error: {e}")
 
-    # Weekly self-review (Sunday only)
+    # Weekly self-review (Sunday, 7-day elapsed-time based — INC-018修正: hour==2判定を廃止)
     weekly = ""
-    if datetime.now().weekday() == 6 and hour == 2:
+    _weekly_ts_file = REPO_DIR / ".weekly_review_last_triggered"
+    _weekly_should_run = False
+    if datetime.now().weekday() == 6:  # Sunday
+        try:
+            if _weekly_ts_file.exists():
+                last_review = datetime.fromisoformat(_weekly_ts_file.read_text().strip())
+                if (datetime.now() - last_review).total_seconds() >= 6 * 24 * 3600:
+                    _weekly_should_run = True
+            else:
+                _weekly_should_run = True
+        except Exception:
+            _weekly_should_run = True
+    if _weekly_should_run:
         weekly = " [週次自己レビュー] 日曜日のため週次レビューを実行してください"
+        _weekly_ts_file.write_text(datetime.now().isoformat())
         log("[auto_cycle] Weekly self-review trigger (Sunday)")
 
     prompt = (
