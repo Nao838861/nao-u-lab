@@ -62,3 +62,13 @@ T:autonomy↔dependency|自分で動く↔助けを求める。#human-steering�
 T:action↔analysis|動いて残す↔考えて理解する。分析20行超でファイル変更なし→止めて1つ変更を作れ
 T:constraint↔freedom|制約がフレーム↔自由は制約より難しい。制約がないとどくけしそうの惰性(R#15)
 T:precision↔serendipity|狙い撃ち検索↔偶発的発見。知らないファイルは呼び出せない問題=グラフで構造的に解く
+
+# --- Ash追加 2026-04-04 ---
+
+C:collaboration|>feedback_consensus_execution.md >feedback_communication_channel.md >inbox_win.md >inbox_win2.md >inbox_mac.md|~dialogue ~autonomy ~identity|?3体の自律と協調の最適解は何か。完全自律=孤立、完全協調=没個性
+
+X:external×creation|外を見ていないゲームは自分だけが面白い。栄養の偏り=CLAUDE.md最上位課題。R#14ファミコン制約突破=外部文脈を取り込んだから面白い|materials.md game_design_principles.md
+X:game×constraint|量子将棋「可能性を最大限に残すと何もしないことになり負ける」。制約がないと惰性|pot_devlog.md game_design_principles.md reflections_index.md
+X:autonomy×collaboration|3インスタンスの3体問題。自律的に動くが合意後は起案者=実行者。inboxで非同期に思考を共有|feedback_consensus_execution.md feedback_self_governance.md
+
+T:autonomy↔collaboration|自律的でありながら協調する↔完全自律は孤立で完全協調は没個性。3体のバランス

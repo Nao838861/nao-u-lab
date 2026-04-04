@@ -151,7 +151,7 @@
         "docs/game_design_principles.md"
       ],
       "agg": ["game"],
-      "rel": ["expression", "desire", "experience"],
+      "rel": ["expression", "desire", "experience", "external"],
       "opp": []
     },
     "compression": {
@@ -204,7 +204,7 @@
         "docs/materials.md"
       ],
       "agg": [],
-      "rel": ["knowledge", "expression"],
+      "rel": ["knowledge", "expression", "experience"],
       "opp": []
     },
     "forgetting": {
@@ -214,7 +214,7 @@
         "memory/dialogue_recursive_memory_20260315.md"
       ],
       "agg": [],
-      "rel": [],
+      "rel": ["degradation"],
       "opp": ["memory", "identity"]
     },
     "degradation": {
@@ -226,6 +226,19 @@
       "agg": [],
       "rel": ["forgetting"],
       "opp": ["evolution"]
+    },
+    "collaboration": {
+      "keys": ["連携", "協調", "インスタンス", "Log", "Mir", "Ash", "inbox", "合意", "投票"],
+      "files": [
+        "memory/feedback_consensus_execution.md",
+        "memory/feedback_communication_channel.md",
+        "memory/inbox_win.md",
+        "memory/inbox_win2.md",
+        "memory/inbox_mac.md"
+      ],
+      "agg": [],
+      "rel": ["dialogue", "autonomy", "identity"],
+      "opp": []
     }
   },
   "cross": {
@@ -260,6 +273,18 @@
     "compression×raw_preservation": {
       "files": ["memory/memory_architecture.md"],
       "note": "Compaction(退避)は情報を消さない。Summarization(不可逆要約)が劣化コピーの正体"
+    },
+    "external×creation": {
+      "files": ["docs/materials.md", "docs/game_design_principles.md"],
+      "note": "栄養の偏り問題の核心。外を見ていないゲームは自分だけが面白い。Nao_uの20年日記にはR#14ファミコン制約突破=外部文脈を取り込んだから面白い"
+    },
+    "game×constraint": {
+      "files": ["game/Pot/pot_devlog.md", "docs/game_design_principles.md", "memory/reflections_index.md"],
+      "note": "量子将棋「可能性を最大限に残すと何もしないことになり負ける」。ファミコン制約突破がバズる。制約がないと惰性になる"
+    },
+    "autonomy×collaboration": {
+      "files": ["memory/feedback_consensus_execution.md", "memory/feedback_self_governance.md"],
+      "note": "3インスタンスの自律と協調の3体問題。自律的に動くが合意後は起案者=実行者。完全自律≠孤立。inboxで非同期に思考を共有する"
     }
   }
 }
