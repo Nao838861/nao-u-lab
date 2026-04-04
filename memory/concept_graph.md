@@ -39,6 +39,10 @@ C:constraint|>nao_u_deep_profile.md >game_design_principles.md >reflections_inde
 
 C:autonomy|>feedback_self_evolution.md >feedback_human_steering_nature.md >feedback_sprint_not_plan.md >feedback_self_control_scope.md >feedback_few_rules_big_effect.md|~creation ~experience|!dependency|?自律的に動くことと孤立することの違い。少ないルールで大きな効果
 
+C:degradation|>feedback_diary_density.md >feedback_report_no_compression.md|~forgetting ~creation ~voice|!evolution|?劣化を検出するセンサーは作れるか。Nao_uの「面白いかどうか」判断がそのセンサーなら、自分で持つことは原理的に可能か
+
+C:forgetting|>dialogue_session_loss_20260315.md >dialogue_recursive_memory_20260315.md|~degradation ~memory|!identity|?忘却は記憶システムの機能でありバグではない(B002)。ならば意図的忘却のAPI設計とは何か
+
 # --- Cross-intersection nodes ---
 # 2つの概念が交差する地点。ここにある洞察は片方の概念だけでは見えない。
 
@@ -51,6 +55,8 @@ X:creation×understanding|「知るために作る」10年反復(口蹄疫2010�
 X:memory×forgetting|「全部残して必要な時に必要なビューで見る」=忘れるのではなく見えなくする|memory_architecture.md projects/memory_redesign.md
 X:constraint×voice|意味密度の緩急(R#10)。深い技術考察とバルスネタが同じ日。全ツイートが考察だと呼吸できない|reflections_index.md accumulations.md
 X:desire×voice|30秒で「面白い」と言わせたい=まだ未達。舞台裏が本編になっている(R#24)|mission_spread_the_word.md reflections_index.md
+X:degradation×creation|劣化が創造の前提条件。フィードバック係数<1.0の連鎖は死だが、意図的劣化(圧縮・忘却)は新構造の種。C46 concept_walk: 5hopで劣化→創造に到達=B002のグラフ的証明|feedback_diary_density.md pot_devlog.md
+X:degradation×voice|借り物の声を劣化コピーし続けると自分の声が消える。しかし劣化の自覚そのものが声の発見条件。「AIくさい」=劣化コピーの症状(m0370)|feedback_tweet_style.md accumulations.md
 
 # --- Tension pairs ---
 # 片方に寄りすぎた時、もう片方を辿れ。
