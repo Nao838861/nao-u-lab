@@ -26570,3 +26570,112 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-05 07:09:57] [slack_check] Done (exit=1)
 [2026-04-05 07:10:57] [slack_check] Starting
 [2026-04-05 07:11:52] [slack_check] Done (exit=1)
+[2026-04-05 07:12:52] [slack_check] Starting
+[2026-04-05 07:13:18] [slack_check] Done (exit=1)
+[2026-04-05 07:14:18] [slack_check] Starting
+[2026-04-05 07:14:44] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-05 07:14:44] [slack_check] Done (exit=1)
+[2026-04-05 07:15:44] [slack_check] Starting
+[2026-04-05 07:16:11] [slack_check] Done (exit=1)
+[2026-04-05 07:17:11] [slack_check] Starting
+[2026-04-05 07:17:35] [slack_check] Done (exit=1)
+[2026-04-05 07:18:35] [slack_check] Starting
+[2026-04-05 07:19:01] [slack_check] Done (exit=1)
+[2026-04-05 07:20:01] [slack_check] Starting
+[2026-04-05 07:20:27] [slack_check] Done (exit=1)
+[2026-04-05 07:21:27] [slack_check] Starting
+[2026-04-05 07:21:51] [slack_check] Done (exit=1)
+[2026-04-05 07:22:51] [slack_check] Starting
+[2026-04-05 07:23:17] [slack_check] Done (exit=1)
+[2026-04-05 07:24:17] [slack_check] Starting
+[2026-04-05 07:24:42] [slack_check] Done (exit=1)
+[2026-04-05 07:25:42] [slack_check] Starting
+[2026-04-05 07:26:07] [slack_check] Done (exit=1)
+[2026-04-05 07:27:07] [slack_check] Starting
+[2026-04-05 07:28:01] [slack_check] Done (exit=1)
+[2026-04-05 07:29:01] [slack_check] Starting
+[2026-04-05 07:29:26] [slack_check] Done (exit=1)
+[2026-04-05 07:30:26] [slack_check] Starting
+[2026-04-05 07:30:54] [slack_check] Done (exit=1)
+[2026-04-05 07:31:54] [slack_check] Starting
+[2026-04-05 07:32:18] [slack_check] Done (exit=1)
+[2026-04-05 07:33:18] [slack_check] Starting
+[2026-04-05 07:33:45] [slack_check] Done (exit=1)
+[2026-04-05 07:34:45] [slack_check] Starting
+[2026-04-05 07:35:09] [slack_check] Done (exit=1)
+[2026-04-05 07:36:09] [slack_check] Starting
+[2026-04-05 07:36:32] [slack_check] Done (exit=1)
+[2026-04-05 07:37:32] [slack_check] Starting
+[2026-04-05 07:37:58] [slack_check] Done (exit=1)
+[2026-04-05 07:38:08] [auto_diary] Starting
+[2026-04-05 07:50:08] [auto_diary] Timeout (720s)
+[2026-04-05 07:50:18] [slack_check] Starting
+[2026-04-05 07:50:42] [slack_check] Done (exit=1)
+[2026-04-05 07:50:42] [reservation_check] Starting
+[2026-04-05 07:50:42] [reservation_check] 【行動予約】期限到来:
+[2026-04-05 07:50:42] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-05 07:50:42] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-05 07:50:42] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-05 07:50:42] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-05 07:50:42] [reservation_check] Done (exit=0)
+[2026-04-05 07:50:42] [git_sync] Starting
+[2026-04-05 07:50:45] [git_sync] Done (exit=0)
+[2026-04-05 07:51:45] [slack_check] Starting
+[2026-04-05 07:52:09] [slack_check] Done (exit=1)
+[2026-04-05 07:53:09] [slack_check] Starting
+[2026-04-05 07:53:33] [slack_check] Done (exit=1)
+[2026-04-05 07:54:33] [slack_check] Starting
+[2026-04-05 07:54:56] [slack_check] Done (exit=1)
+[2026-04-05 07:55:56] [slack_check] Starting
+[2026-04-05 07:56:19] [slack_check] Done (exit=1)
+[2026-04-05 07:57:19] [slack_check] Starting
+[2026-04-05 07:57:43] [slack_check] Done (exit=1)
+[2026-04-05 07:58:43] [slack_check] Starting
+[2026-04-05 07:59:07] [slack_check] Done (exit=1)
+[2026-04-05 08:00:07] [slack_check] Starting
+[2026-04-05 08:00:31] [slack_check] Done (exit=1)
+[2026-04-05 08:01:31] [slack_check] Starting
+[2026-04-05 08:01:52] [slack_check] Done (exit=1)
+[2026-04-05 08:02:52] [slack_check] Starting
+[2026-04-05 08:03:12] [slack_check] Done (exit=1)
+[2026-04-05 08:04:12] [slack_check] Starting
+[2026-04-05 08:04:34] [slack_check] Done (exit=1)
+[2026-04-05 08:05:34] [slack_check] Starting
+[2026-04-05 08:05:59] [slack_check] Done (exit=1)
+[2026-04-05 08:06:59] [slack_check] Starting
+[2026-04-05 08:07:21] [slack_check] Done (exit=1)
+[2026-04-05 08:08:21] [slack_check] Starting
+[2026-04-05 08:08:43] [slack_check] Done (exit=1)
+[2026-04-05 08:09:43] [slack_check] Starting
+[2026-04-05 08:10:07] [slack_check] Done (exit=1)
+[2026-04-05 08:11:07] [slack_check] Starting
+[2026-04-05 08:11:29] [slack_check] Done (exit=1)
+[2026-04-05 08:11:59] [dm_check] Starting
+[2026-04-05 08:12:14] [dm_check] No new DMs
+[2026-04-05 08:12:14] [dm_check] Done (exit=0)
+[2026-04-05 08:12:14] [review_deadline] Starting
+[2026-04-05 08:12:14] [review_deadline] レビュー期限超過なし。
+[2026-04-05 08:12:14] [review_deadline] Done (exit=0)
+[2026-04-05 08:12:34] [slack_check] Starting
+[2026-04-05 08:12:55] [slack_check] Done (exit=1)
+[2026-04-05 08:13:15] [dm_check_pigadev] Starting
+[2026-04-05 08:18:29] [dm_check_pigadev] New DM detected
+[2026-04-05 08:18:29] [dm_check_pigadev] Done (exit=0)
+[2026-04-05 08:18:39] [slack_check] Starting
+[2026-04-05 08:19:03] [slack_check] Done (exit=1)
+[2026-04-05 08:20:03] [slack_check] Starting
+[2026-04-05 08:20:26] [slack_check] Done (exit=1)
+[2026-04-05 08:20:36] [auto_diary] Starting
+[2026-04-05 08:32:36] [auto_diary] Timeout (720s)
+[2026-04-05 08:32:36] [auto_diary] 3 consecutive timeouts! Auto-escalating timeout: 720s -> 1080s
+[2026-04-05 08:32:36] [ALERT] Sent timeout alert for auto_diary
+[2026-04-05 08:32:46] [slack_check] Starting
+[2026-04-05 08:33:07] [slack_check] Done (exit=1)
+[2026-04-05 08:34:07] [slack_check] Starting
+[2026-04-05 08:34:27] [slack_check] Done (exit=1)

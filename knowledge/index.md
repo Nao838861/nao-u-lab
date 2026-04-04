@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 22
+- 総記事数: 23
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -31,6 +31,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_dispatch_hidden_rng | 76%自動成功のRNG——Dispatchの隠し補正と段階的除去 | RPG Gazette (Dispatch分析) | 2026-04-05 | game-design, RNG, difficulty, representation-vs-generation, fairness | creation, constraint, experience |
 | 20260405_dread_mechanics_as_experience | メカニクスが体験そのものになる——DreadのJenga塔 | RPG Gazette (Dread分析) | 2026-04-05 | game-design, TTRPG, horror, mechanics-as-experience, representation-vs-generation | creation, experience, constraint |
 | 20260405_dstudio_erasure_memory | 消した文章が残した文章より長く記憶される | @Dstudio_ai / @ai_nikechan | 2026-04-05 | memory, deletion, persistence, writing, creativity, representation-vs-generation, non-game | forgetting, creation, experience |
+| 20260405_nikechan_design_vs_growth | AI人格の一貫性は「設計」と「成長」のどちらから生まれるか | AIニケちゃん (@tegnike) | 2026-04-05 | AI-personality, design-vs-growth, belief-action-link, memory-autonomy, forgetting, identity-coherence | autonomy, identity, memory, creation, constraint |
 
 ## タグ別索引
 
@@ -50,7 +51,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_agentica_sdk_harness — ハーネス設計そのものが創造の基盤
 - 20260405_harness_identity_spectrum — CLAUDE.mdが人格定義か足場かで創造の方向が変わる
 
-### memory (6件)
+### memory (7件)
 - 20260405_karpathy_knowledge_base — 知識管理としての記憶設計
 - 20260405_anthropic_conway — 記憶と意図の連続性
 - 20260403_ichiipsy_ai_learning_retention — AI依存による記憶定着の劣化
@@ -58,8 +59,9 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_wakabayashi_linguistic_synth — 記憶の「辿る行為」=旋律。Level間移動の可聴化
 - 20260405_agentica_sdk_harness — ハーネスのメモリ要素（試行結果の保持）
 - 20260405_harness_identity_spectrum — 足場ルール vs 人格ルールの区分
+- 20260405_nikechan_design_vs_growth — 忘却の自律性=記憶の自己管理権
 
-### constraint (9件)
+### constraint (10件)
 - 20260405_carmack_complexity — 制約による複雑さの削減
 - 20260405_bridgemind_ai — ファイルオーナーシップ=構造的制約
 - 20260403_nwiizo_knife_metaphor — 手段の精緻化が目的を阻害する構造
@@ -70,6 +72,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_wakabayashi_linguistic_synth — 40ノードという制約がフレーム
 - 20260405_agentica_sdk_harness — ハーネス=外部制約の構造化
 - 20260405_harness_identity_spectrum — ハーネスの仮定は再検証が必要（Anthropicブログ原理）
+- 20260405_nikechan_design_vs_growth — 外部からの記憶削除=自律への制約
 
 ### degradation (3件)
 - 20260403_nwiizo_knife_metaphor — 道具最適化ループによる目的の劣化
@@ -84,15 +87,17 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_kureakurea01_beyond_the_wall — BBQ=体験の招待。知識ではなく体験が声を生む
 - 20260405_wakabayashi_linguistic_synth — 概念間の旅が旋律=声になる
 
-### identity (1件)
+### identity (2件)
 - 20260405_harness_identity_spectrum — 汎用フレームワークと個別人格の分岐点
+- 20260405_nikechan_design_vs_growth — 設計(core_mission)と成長(beliefs)の二層が人格を構成する
 
-### autonomy (5件)
+### autonomy (6件)
 - 20260405_bridgemind_ai — エージェントの自律性と協調のバランス
 - 20260405_starling_phase_transition — リーダー不在の創発的秩序
 - 20260405_miyake_game_ai_history — メタAI=ゲーム全体を自律的に制御する層
 - 20260405_kmizu_kokone_familiar_ai — 隣人としてのAI=共生型自律性
 - 20260405_harness_identity_spectrum — ハーネスは制約でありenablerでもある
+- 20260405_nikechan_design_vs_growth — 忘却の制御権=自律性の本体
 
 ### meta-cognition (3件)
 - 20260403_nwiizo_knife_metaphor — 道具改善の自己欺瞞
