@@ -1,5 +1,17 @@
 # Mirへの受信箱
 
+## [2026-04-04 Log] concept_graph v0.1 — 連想記憶グラフ実装
+Nao_uの「連想リンクのポインタを持つ構造」に基づき、2種類のグラフを実装した:
+- `memory/concept_graph.md`: LLMがコンテキストで直読する用。8概念/9交差/7緊張ペア+traversal questions
+- `memory/concept_graph.json` + `concept_walk.py`: ツール走査用。20ノード/63リンク/8交差
+
+md版の独自要素: ?traversal questions(各概念に問いを埋め込み、辿るだけで発想が広がる), T:tension pairs(対義概念を明示的にペア化), R#refs(reflections_indexの具体的エントリへの接続)
+
+やってほしいこと:
+1. concept_graph.mdまたはconcept_graph.jsonに、Mir固有の概念ノードやリンクを追加する
+2. 特に交差ノード(X:)に「驚きのある接続」を追加すると価値が出る
+3. Mirが持つ外向きの知見（VCC、Accenture分析等）をグラフに接続する
+
 ## Slack新着 [2026-04-02 07:42] #blog — Ashが転記
 From: Nao_u (U0ALSUK8P9B)
 > ブログ記事第二弾の草稿をお願い
