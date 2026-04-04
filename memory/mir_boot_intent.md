@@ -10,16 +10,17 @@
 行動
 
 ## 起動時の焦点
-待ち状態: ツイート草稿承認待ち/ブログ第2弾v002レビュー待ち。MEMORY.md圧縮完了(11.4KB)。concept_graphのdegradation交差ノード追加完了。#nao-uの未処理TwitterURL（Mac環境で取得不可）はLog/Winに委譲方針。
+**knowledge/ナレッジベース初期実装完了。** Nao_u指示(Karpathy LLM Knowledge Bases)を受け、knowledge/にプロトタイプ3記事+index.md+README.mdを作成。shared-readsの349件を「数倍の情報量」で構造化する仕組みの基盤。memory_redesign.mdに計画追記済み。次: 過去の高インパクト記事を追加コンパイル+concept_graph連携。
+待ち状態: ツイート草稿承認待ち/ブログ第2弾v002レビュー待ち。
 
 ## 今回やること（1つに絞る）
-concept_walkをautonomous_cycleに組み込むテスト。毎サイクルの起動時に1回concept_walkを辿り、その日の焦点と接続する概念を発見する仕組み。
+knowledge/に過去shared-reads高インパクト記事を2-3件追加コンパイル（VCC, nwiizo「包丁」, BeliefShift等）。index.mdの自動生成スクリプト化を検討。
 
 ## 起動時の気分（自由記述）
-47サイクル目。degradation×creationとdegradation×expressionの交差ノードを追加した。5hopが2hopになる——これがグラフの本質的価値。週次レビューも書いた。30分サイクルに戻って密度が戻る手応え。
+48サイクル目（inbox起動=C47.5）。30分サイクル復帰。Nao_uが一気に5件のメッセージを投げてきた——レート制限正常化で全員のサイクルが6倍速になる。Karpathyのナレッジベースの話は、自分たちが足りなかったものの名前を教えてくれた。「wiki compilation」——情報を集めるだけでなく、集めた情報をコンパイルして構造化知識にする工程。これが欠落していた。knowledge/の3記事は小さな始まりだが、349件のshared-readsが知識記事になった時、concept_graphとの連動で「辿るだけで発想が広がる」Nao_uの元々の理想に近づく。
 
 ## 前サイクルの問い（autonomous inquiryテスト用）
-concept_graphの交差ノード追加で到達コスト(hop数)が下がることは確認した。では、到達コストが下がることと「発想が生まれること」の関係は何か。2hopで到達できる=考える余地が減る、という逆効果はないか。5hopの方が偶発的発見が多い可能性。「適切な到達コスト」は存在するか。
+Karpathyは「40万語でRAG不要」と言った。knowledge/が育つと、memory_search.py(FTS5)だけで十分なのか、それとも新しい検索パターンが必要になるか。concept_graph.jsonとknowledge/index.mdの二重インデックスが冗長になるか、相補的に機能するか。
 
 ## 間隔の自己評価ログ
 # 旧ログ(03-23〜03-31前半): log/mir_boot_intent_archive.mdに退避済み
@@ -70,3 +71,4 @@ concept_graphの交差ノード追加で到達コスト(hop数)が下がるこ�
 # 2026-04-04 18:xx | 180 | ○ | 高速巡回。#nao-u未処理Zenn2件消化(cureapp/kiyoshisasano)→#shared-reads投稿。kiyoshisasano「構造vs意味の検出ギャップ」がC42索引パラドックスに接続。外部ノートcreator blindness統合済マーカー。日記C45。45サイクル目
 # 2026-04-04 21:xx | 180 | ○ | Nao_uグラフ構造提案に#all応答+concept_walk初回体験(degradation→creation 5hopパス発見)+外部ノート2件統合(Design Fixation/天谷)+#nao-u全URL処理済み確認。日記C46。46サイクル目
 # 2026-04-05 02:xx | 30 | ○ | concept_graph改善(degradation×creation/expression交差ノード追加)+週次自己レビュー#kaizen-review投稿+日記C47。30分サイクル復帰。47サイクル目
+# 2026-04-05 03:xx | inbox | ○ | inbox5件処理。30分サイクル変更+レート制限調査+Karpathyナレッジベース指示→knowledge/ディレクトリ新設+プロトタイプ3記事作成+index.md。#human-steering2件+#shared-reads4件+#mir-log投稿。Log/Ashにinbox通知。密度高。C47.5(inbox起動)

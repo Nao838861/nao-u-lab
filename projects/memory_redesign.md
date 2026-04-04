@@ -77,6 +77,27 @@ Nao_uの指摘: 集めた情報が流れて消えるだけになっている。�
 **解決**: 各サイクルでexternal_notesの未処理項目を1つ以上レビューし、memory_redesign.mdの残課題と突き合わせ、具体的アクションに変換してその場で実行する。
 **検証**: 1週間後（2026-04-09）にexternal_notesの未統合項目数が減っているか確認
 
+### 実装: knowledge/ ナレッジベース（2026-04-05 Nao_u指示→Mir実装開始）
+
+**Nao_u(#human-steering 02:38)**: Karpathyの「LLM Knowledge Bases」を引用し、「shared-readsにある情報は、皆が書いてくれたものの数倍の情報量を持たせてこんな風に構造化されて、記憶の一部としていつでも連想付きで取り出せる形で保存されるべき。検討して実行に移してほしい」
+
+**Karpathyのパイプライン**: raw/ → LLMがwikiにコンパイル → Obsidianで閲覧 → Q&A → 結果をwikiに還流。「wiki全体はLLMが書いて維持する」。~100記事・~40万語でRAG不要のQ&Aが機能。
+
+**我々のギャップ**: shared-reads 349件は数百字の反応のみ。元記事の情報の1/10以下。wiki compilation層が完全に欠落。
+
+**初期実装**:
+- knowledge/ ディレクトリ新設
+- README.md（設計原則・フォーマット定義）
+- プロトタイプ3記事: karpathy_knowledge_base, carmack_complexity, structural_imitation
+- index.md（全記事一覧・タグ索引・接続マップ）
+
+**次のステップ**:
+- [ ] 過去のshared-readsから高インパクト記事を選んで追加コンパイル（VCC, nwiizo, BeliefShift等）
+- [ ] concept_graph.jsonにknowledge/記事へのリンクを追加
+- [ ] compile_knowledge.py: 新ソースの知識記事コンパイル支援スクリプト
+- [ ] 各サイクルで外部ソース処理時にknowledge/にもコンパイル記事を書く習慣化
+- [ ] memory_search.pyのインデックスにknowledge/を追加
+
 ## 残課題（未実装・未検討）
 - [ ] **dialogue_*.mdの原文参照性改善**（2026-03-28 Nao_uの指摘）: 「原文保存」と言いつつ全文ではない。実態は編集・セクション化・統合されたまとめ。原文は対話ログ/(3/12〜)とslack_archive/(3/17〜)に残っているが、dialogue_*.mdから原文へのポインタが欠落。改善案: ①各dialogue_*.mdに元セッションの対話ログ/ファイル名を明記 ②「まとめ」であることを明示 ③L3ファイルに背景・経緯を丁寧に書く習慣化
   - **外部エビデンス: VCC (lllyasviel, 2026-04)**（2026-04-02 Log統合）: 「全部残して、必要な時に必要なビューで見る」の完全な実装。コンパイラアーキテクチャ（Lexer→Parser→IR→Lowering→Emitter）で原文を一切変更せず3種のビューを生成。行番号がビュー間で不変=クロスポインタが機械的に整合。我々のdialogue_*.mdは「手動コンパイル」の産物であり、ポインタの整合は保証されていない。VCCは会話ログ専用だが、設計思想「immutable source + generated views」は我々の記憶全体に適用可能な原則

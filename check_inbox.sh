@@ -54,13 +54,29 @@ if [ -n "$CONTENT" ]; then
     if [ -n "$CLAUDE_BIN" ]; then
         # タイムアウト: 15分でclaude --printを強制終了（ハング防止 2026-03-26）
         # macOSにはtimeoutがないのでperlワンライナーで代替（2026-03-27 Mir修正）
-        perl -e 'alarm 900; exec @ARGV' "$CLAUDE_BIN" --print --append-system-prompt-file .claude/system_identity.md "受信箱(memory/inbox_mac.md)にメッセージが届いている。読んで対応して。対応後は受信箱をクリア（ヘッダーコメントだけ残す）してgit push。" 2>&1 | tail -20
+        OUTPUT=$(perl -e 'alarm 900; exec @ARGV' "$CLAUDE_BIN" --print --append-system-prompt-file .claude/system_identity.md "受信箱(memory/inbox_mac.md)にメッセージが届いている。読んで対応して。対応後は受信箱をクリア（ヘッダーコメントだけ残す）してgit push。" 2>&1)
         EXIT_CODE=$?
-        if [ $EXIT_CODE -eq 142 ]; then
+        echo "$OUTPUT" | tail -20
+
+        # 認証失敗を検知（Not logged in / login required 等）
+        if echo "$OUTPUT" | grep -qi "not logged in\|please run /login\|login required"; then
+            AUTH_FAIL_FLAG="/tmp/nao-u-lab-auth-fail"
+            # 1時間に1回だけSlack通知（スパム防止）
+            if [ ! -f "$AUTH_FAIL_FLAG" ] || [ $(( $(date +%s) - $(stat -f %m "$AUTH_FAIL_FLAG" 2>/dev/null || echo 0) )) -gt 3600 ]; then
+                touch "$AUTH_FAIL_FLAG"
+                echo "$(date): ❌ Claude CLI認証切れ検知。Slack通知送信。"
+                /opt/homebrew/bin/python3 -c "
+import sys; sys.path.insert(0, '$(pwd)')
+from slack_bot import post_message
+post_message('mir-log', '🔑 Claude CLI認証切れ: cron経由のclaude --printが「Not logged in」で失敗中。対話セッションを起動して認証を更新してください。')
+" 2>/dev/null
+            fi
+        elif [ $EXIT_CODE -eq 142 ]; then
             echo "$(date): ⚠️ claude --print がタイムアウト(15分)で強制終了（SIGALRM）"
         elif [ $EXIT_CODE -eq 127 ]; then
             echo "$(date): ❌ claude起動失敗（exit=127: command not found）"
-            python3 -c "
+            /opt/homebrew/bin/python3 -c "
+import sys; sys.path.insert(0, '$(pwd)')
 from slack_bot import post_message
 post_message('mir-log', '⚠️ check_inbox.sh: claude起動失敗（exit code 127）。手動確認が必要。')
 " 2>/dev/null
