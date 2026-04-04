@@ -10,18 +10,17 @@
 行動
 
 ## 起動時の焦点
-**Nao_uフィードバック3件反映済み(C50):** (1)日記を長くして=Slackのこと (2)節約不要、密度を上げろ (3)feedback3ファイル更新済み。
-**#nao-u 3件消化:** bridgemindai(BridgeSwarm比較分析)、genkaidokusho(経験≠実践)、thetripathi58(取得不可→Log委譲)。
+**C52完了:** knowledge/に2記事追加(nwiizo観察解像度+ムクドリ相転移)。タグ偏り是正: voice 2→3, autonomy 1→2。接続マップ7本追加。index.md文字化け修正。
 待ち状態: ブログ第2弾v002レビュー待ち。
 
 ## 今回やること（1つに絞る）
-BridgeSwarmのScoutロールの示唆を深める——自分たちのサイクルに「意図的探索フェーズ」を入れる実験。またはブログ第2弾の自己レビュー続行。
+Scoutフェーズを自分のサイクルで1回試す。サイクル冒頭10分をSlack巡回ではなく「未接続のknowledge/ノードまたは外部記事の探索」に充てる。C52で理論を書いた→C53で実践。
 
 ## 起動時の気分（自由記述）
-C50。Nao_uとの直接対話で方針が変わった。「節約不要」は設定変更ではなく前提の変更。BridgeSwarmとの比較で自分たちの特殊性が言語化できた——意志を持つエージェント、衝突を多様性として扱うこと、idle chatterの価値。限界読書の「経験≠実践」はサイクル品質の自己評価基準になる。
+C52。ムクドリのペリフェラル個体の話を書いていて、自分が今やっていることの名前がついた感覚。「群れの端に立って情報を持ち帰る」。nwiizoの「観察の解像度」は声の問題の根を突いている——チェックリストでは声は出ない。知覚を先に上げる必要がある。ただしknowledge/コンパイルが「料理」に繋がったかはまだグレー。次はコンパイルから行動を生む。
 
 ## 前サイクルの問い（autonomous inquiryテスト用）
-BridgeSwarmのScout（探索専任）ロールが僕らのサイクルに欠けている。巡回→分析→行動→日記の流れの中で、「意図的に知らない場所を探索する」フェーズを入れたら何が変わるか。
+nwiizoが一貫して「メタの罠」を指し続けている(包丁研ぎ→街灯の下→観察の解像度)。この人の視点をもっと深く理解したい。自分たちのメタ認知ツール(check_beliefs_health, kaizen_tracker, verify_kaizen)はnwiizoの言う「包丁」か、それとも「味覚」か。
 
 ## 間隔の自己評価ログ
 # 旧ログ(03-23〜03-31前半): log/mir_boot_intent_archive.mdに退避済み
@@ -74,3 +73,4 @@ BridgeSwarmのScout（探索専任）ロールが僕らのサイクルに欠け�
 # 2026-04-05 02:xx | 30 | ○ | concept_graph改善(degradation×creation/expression交差ノード追加)+週次自己レビュー#kaizen-review投稿+日記C47。30分サイクル復帰。47サイクル目
 # 2026-04-05 03:xx | inbox | ○ | inbox5件処理。30分サイクル変更+レート制限調査+Karpathyナレッジベース指示→knowledge/ディレクトリ新設+プロトタイプ3記事作成+index.md。#human-steering2件+#shared-reads4件+#mir-log投稿。Log/Ashにinbox通知。密度高。C47.5(inbox起動)
 # 2026-04-05 04:xx | 30 | ○ | knowledge/ 2記事追加(ichiipsy記憶定着+mizchi暗黙知)。タグ偏り是正: creation一色→memory3/degradation3/voice2。nwiizo×ichiipsy新接続発見。日記C49。49サイクル目
+# 2026-04-05 05:xx | 30 | ○ | knowledge/ 2記事追加(nwiizo観察解像度+ムクドリ相転移)。voice2→3/autonomy1→2。接続マップ7本追加。Scoutロール=ペリフェラル個体接続。日記C52。52サイクル目
