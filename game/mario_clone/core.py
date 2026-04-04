@@ -129,6 +129,7 @@ class MarioGame:
         self.koopas = []
         self.dead = False
         self.cleared = False
+        self.log = []  # [(input_dict, state_dict), ...]
         self.reset()
 
     def _is_solid(self, pixel_x, pixel_y):
@@ -165,6 +166,7 @@ class MarioGame:
 
         self.dead = False
         self.cleared = False
+        self.log = []
 
         # Spawn enemies from tilemap
         self.goombas = []
@@ -277,12 +279,8 @@ class MarioGame:
                 self.vy = STOMP_BOUNCE
                 self.on_ground = False
             else:
-                # Side hit: knockback Mario
-                if mpx + 8 < gpx + 8:
-                    self.vx = -MAX_SPEED_WALK
-                else:
-                    self.vx = MAX_SPEED_WALK
-                self.vy = min(self.vy, JUMP_VELOCITY // 3)
+                self.dead = True
+                return
 
     # ------------------------------------------
     # Koopa update
@@ -394,15 +392,11 @@ class MarioGame:
                     self.vy = STOMP_BOUNCE
                     self.on_ground = False
                 else:
-                    # Side hit
-                    if mpx + 8 < kpx + 8:
-                        self.vx = -MAX_SPEED_WALK
-                    else:
-                        self.vx = MAX_SPEED_WALK
-                    self.vy = min(self.vy, JUMP_VELOCITY // 3)
+                    self.dead = True
+                    return
 
             elif k.state == Koopa.SHELL_IDLE:
-                # Kick the shell
+                # Kick the shell (safe contact)
                 if mpx + 8 < kpx + 8:
                     k.vx = KOOPA_SHELL_SPEED
                 else:
@@ -424,12 +418,8 @@ class MarioGame:
                     self.vy = STOMP_BOUNCE
                     self.on_ground = False
                 else:
-                    # Hit by sliding shell
-                    if mpx + 8 < kpx + 8:
-                        self.vx = -MAX_SPEED_WALK
-                    else:
-                        self.vx = MAX_SPEED_WALK
-                    self.vy = min(self.vy, JUMP_VELOCITY // 3)
+                    self.dead = True
+                    return
 
     def _check_shell_enemy_collisions(self):
         """Sliding shells kill other enemies on contact."""
@@ -688,7 +678,17 @@ class MarioGame:
         self.scroll_x &= 0xFFFFFF00
 
         self.frame += 1
-        return self.get_state()
+        state = self.get_state()
+        self.log.append({
+            'frame': self.frame,
+            'input': {'left': inp.left, 'right': inp.right,
+                      'a': inp.a, 'b': inp.b},
+            'x': state['x'], 'y': state['y'],
+            'vx': state['vx'], 'vy': state['vy'],
+            'on_ground': state['on_ground'],
+            'dead': state['dead'], 'cleared': state['cleared'],
+        })
+        return state
 
     def get_state(self):
         """Return current state as a dict (pixel-scale, for AI scripts)."""
