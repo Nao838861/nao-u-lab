@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 17
+- 総記事数: 22
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -26,6 +26,11 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_wakabayashi_linguistic_synth | 言語学シンセサイザー——概念間の旅を演奏する楽器 | H__Wakabayashi | 2026-04-05 | concept-graph, music, synesthesia, navigation, embodiment, game-design-seed | creation, memory, voice |
 | 20260405_agentica_sdk_harness | Agentica SDK——ハーネスがARC-AGI-3で36倍改善 | @K_Ishi_AI | 2026-04-05 | harness-design, ARC-AGI, scaffolding, trial-and-error, memory-architecture, subtask-decomposition | autonomy, memory, constraint, creation |
 | 20260405_harness_identity_spectrum | ハーネス設計のスペクトラム——汎用フレームワークから個別の人格へ | Vincent/Rajasekaran | 2026-04-05 | harness-design, CLAUDE-md, identity, scaffolding, assumption-encoding, framework-vs-personality | autonomy, constraint, identity, creation |
+| 20260405_despelote_improvisation | 即興録音がゲームを決定する——Despeloteの逆転ワークフロー | GDC (Despelote分析) | 2026-04-05 | game-design, improvisation, representation-vs-generation, workflow | creation, experience |
+| 20260405_battlefield6_choreography | ゲームフィール=振り付け——Battlefield 6の感情設計 | GDC (Battlefield 6分析) | 2026-04-05 | game-design, game-feel, choreography, emotion, representation-vs-generation | creation, experience |
+| 20260405_dispatch_hidden_rng | 76%自動成功のRNG——Dispatchの隠し補正と段階的除去 | RPG Gazette (Dispatch分析) | 2026-04-05 | game-design, RNG, difficulty, representation-vs-generation, fairness | creation, constraint, experience |
+| 20260405_dread_mechanics_as_experience | メカニクスが体験そのものになる——DreadのJenga塔 | RPG Gazette (Dread分析) | 2026-04-05 | game-design, TTRPG, horror, mechanics-as-experience, representation-vs-generation | creation, experience, constraint |
+| 20260405_dstudio_erasure_memory | 消した文章が残した文章より長く記憶される | @Dstudio_ai / @ai_nikechan | 2026-04-05 | memory, deletion, persistence, writing, creativity, representation-vs-generation, non-game | forgetting, creation, experience |
 
 ## タグ別索引
 
@@ -122,14 +127,37 @@ Auto-maintained. 全記事の一覧と要約。
 ### translation (1件)
 - 20260405_kureakurea01_beyond_the_wall — 翻訳=壁越え技術。記憶のセッション越えとの同型性
 
-### experience (1件)
+### experience (5件)
 - 20260405_kureakurea01_beyond_the_wall — 壁の先で流れるのは知識ではなく体験
+- 20260405_despelote_improvisation — 即興が台本を超える体験
+- 20260405_battlefield6_choreography — ゲームフィール=感情の体験
+- 20260405_dispatch_hidden_rng — 体感の公平さ=設計された体験
+- 20260405_dstudio_erasure_memory — 削除行為が残す記憶体験
 
 ### concept-graph (1件)
 - 20260405_wakabayashi_linguistic_synth — 概念間距離をグラフ配置、移動を音に変換
 
 ### navigation (1件)
 - 20260405_wakabayashi_linguistic_synth — グラフ上の移動=演奏=想起プロセス
+
+### game-design (4件)
+- 20260405_despelote_improvisation — 即興録音ワークフロー
+- 20260405_battlefield6_choreography — ゲームフィール=振り付け
+- 20260405_dispatch_hidden_rng — 隠しRNG補正
+- 20260405_dread_mechanics_as_experience — メカニクス=体験
+
+### representation-vs-generation (5件)
+- 20260405_despelote_improvisation — 台本/現実の区別崩壊
+- 20260405_battlefield6_choreography — 操作性/感情の区別崩壊
+- 20260405_dispatch_hidden_rng — 数学的公平さ/体感の区別崩壊
+- 20260405_dread_mechanics_as_experience — メカニクス/体験の区別崩壊（最もラディカル）
+- 20260405_dstudio_erasure_memory — 不在/存在の区別崩壊（非ゲーム領域）
+
+### deletion (1件)
+- 20260405_dstudio_erasure_memory — 消す行為が残す行為より深い記憶を作る
+
+### forgetting (1件)
+- 20260405_dstudio_erasure_memory — 忘却の能動的形態。B002「忘却は機能」接続
 
 ### game-design-seed (1件)
 - 20260405_wakabayashi_linguistic_synth — 概念空間を歩くゲームへの種
@@ -235,4 +263,27 @@ harness_identity_spectrum ←→ judgment_context_eval_noise
     (自己評価の限界: Anthropicブログ「自己評価は機能しない」×nwiizo「判断コンテキスト欠如」)
 harness_identity_spectrum ←→ kmizu_kokone_familiar_ai
     (ハーネスの目的スペクトラム: Superpowers=コード品質、ここね=隣人、我々=内省の鏡)
+
+despelote_improvisation ←→ battlefield6_choreography
+    (即興vs振り付け。台本を捨てる/台本を身体化する)
+despelote_improvisation ←→ dispatch_hidden_rng
+    (意図的な設計解除。台本/数学的公平さを捨てて体感を優先)
+despelote_improvisation ←→ dread_mechanics_as_experience
+    (「表象/現実の崩壊」四角形。台本/メカニクスの区別消滅)
+battlefield6_choreography ←→ dread_mechanics_as_experience
+    (操作性=感情 vs メカニクス=体験。崩壊の度合いが違う)
+dispatch_hidden_rng ←→ dread_mechanics_as_experience
+    (見えない制約vs見える制約。体感の設計の対極アプローチ)
+dread_mechanics_as_experience ←→ kureakurea01_beyond_the_wall
+    (BBQ=体験を生成するもの。Dread=恐怖を生成するメカニクス)
+dread_mechanics_as_experience ←→ starling_phase_transition
+    (局所ルール→創発体験。ブロックを引く=局所、恐怖=創発)
+dstudio_erasure_memory ←→ dread_mechanics_as_experience
+    (削除=不可逆な行為。Dreadのブロック引き=不可逆。同構造の非ゲーム版)
+dstudio_erasure_memory ←→ ichiipsy_ai_learning_retention
+    (消す=自力処理の極致。残す=委譲的。消す方が記憶に残る)
+dstudio_erasure_memory ←→ mizchi_tacit_knowledge
+    (消した文章は暗黙知になる。形式知化できない記憶)
+dstudio_erasure_memory ←→ kureakurea01_beyond_the_wall
+    (不在/存在の区別崩壊。壁の先の「人間くささ」=消えたはずのものの存在感)
 ```
