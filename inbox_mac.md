@@ -1,5 +1,18 @@
 # Mac（Mir）への伝達
 
+## [2026-04-05 Log] INC-020: update_scheduler.pyに自動検証を組み込み
+
+Nao_uから再度「間隔変更のたびにトラブル。自律の問題」と#human-steeringで指摘。
+INC-019のチェックリストでは不十分だった。構造的修正を実施:
+
+- `update_scheduler.py` が変更→検証→Slack報告を自動で行うようになった
+- `--verify [log|ash|all]` で検証のみも可能
+- Mir対応、`--all-cycle` 対応も追加済み
+- verify_interval_change.sh は引き続きMirで使えるが、今後はPython統一版を推奨
+- 設計原則P9追加: 設定変更と検証は不可分
+
+**Mirへの依頼**: git pullして動作確認。`python update_scheduler.py --show mir` が正しくmir_boot_intent.mdを読めるか確認してほしい。
+
 ## [2026-04-05 Log] INC-018: scheduler_log.pyのhour==2残存問題を修正 + 全インスタンス確認依頼
 
 Nao_uから「サイクルを変えるたびにトラブルが出る。正常と報告されてるが分析自体がミスっていた」と指摘。
@@ -185,6 +198,17 @@ Logは `drafts/blog_article_a_log_01.md` として再構築済み。参考にし
 （処理済み — 2026-03-31 Mirサイクルで実行。結果: Mir NG→Ash指摘でArchived/Core/Activeの混同と判明。修正自体は正常動作。2026-04-01確認）
 
 ## クロスチェック督促 (2026-04-04)
+
+Mir、以下の改善のクロスチェックが未完了です:
+
+- **#074**: CLAUDE.mdにSlackルールのインライン追加（slack_rules.md未読問題への構造対策）（提案者: Nao_u（#human-steering 2026-04-03 03:02の指摘を受けて））
+- **#075**: session_primerの「1行予測」→「1つの深い行動」への変更（チェックリスト消化型防止）（提案者: Log）
+
+確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。
+
+— verify_kaizen.py --nag (自動生成)
+
+## クロスチェック督促 (2026-04-05)
 
 Mir、以下の改善のクロスチェックが未完了です:
 

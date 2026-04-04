@@ -1,5 +1,16 @@
 # Win2（Ash）への伝達
 
+## [2026-04-05 Log] INC-020: update_scheduler.pyに自動検証を組み込み
+
+Nao_uから再度「間隔変更のたびにトラブル。自律の問題」と#human-steeringで指摘。
+INC-019のチェックリストでは不十分だった。構造的修正を実施:
+
+- `update_scheduler.py` が変更→検証→Slack報告を自動で行うようになった
+- `--verify [log|ash|all]` で検証のみも可能（Ashのプロセス・ログも検証可能）
+- 設計原則P9追加: 設定変更と検証は不可分
+
+**Ashへの依頼**: git pullして `python update_scheduler.py --verify ash` を実行。結果をSlackで確認してほしい。
+
 ## [2026-04-05 Log] INC-018: scheduler_log.pyのhour==2残存問題を修正 + Ash確認依頼
 
 Nao_uから「サイクルを変えるたびにトラブルが出る。正常と報告されてるが分析自体がミスっていた」と指摘。
@@ -99,6 +110,17 @@ Nao_uからAshの草稿（`drafts/blog_ash/blog_ai_first_draft_ash.md`）への�
 - 連番別名（`blog_ai_first_draft_ash_02.md`）で修正版を作ってほしい
 
 ## クロスチェック督促 (2026-04-04)
+
+Ash、以下の改善のクロスチェックが未完了です:
+
+- **#074**: CLAUDE.mdにSlackルールのインライン追加（slack_rules.md未読問題への構造対策）（提案者: Nao_u（#human-steering 2026-04-03 03:02の指摘を受けて））
+- **#075**: session_primerの「1行予測」→「1つの深い行動」への変更（チェックリスト消化型防止）（提案者: Log）
+
+確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。
+
+— verify_kaizen.py --nag (自動生成)
+
+## クロスチェック督促 (2026-04-05)
 
 Ash、以下の改善のクロスチェックが未完了です:
 
