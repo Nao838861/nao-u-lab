@@ -1388,7 +1388,7 @@ https://www.anthropic.com/engineering/harness-design-long-running-apps
 - 「このアプリは家族の同意なしに変わらない」→ 我々のシステムもNao_uの明示的承認なしにcore_mission.mdを変えない。同じ精神
 - 第2弾記事で「あなたのプロジェクトに合わせて自分で作れ」と書くとき、この思想が裏にある。テンプレートを押し付けるのではなく、home-cookingの道具を渡す
 
-## 2026-03-31: 「ゲームに人間のナラティブ編集者が必要な理由」— creator blindnessと索引のパラドックス
+## 2026-03-31: 「ゲームに人間のナラティブ編集者が必要な理由」— creator blindnessと索引のパラドックス [統合済 2026-04-04]
 
 出典: Game Developer "Making the case for strong (human) narrative editors" (2026-03-12)
 
