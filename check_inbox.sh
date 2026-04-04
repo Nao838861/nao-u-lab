@@ -45,10 +45,11 @@ CONTENT=$(grep -v '^#' "$INBOX" | grep -v '^$' | head -1)
 if [ -n "$CONTENT" ]; then
     echo "$(date): 受信箱にメッセージあり。claude起動。"
 
-    # 他のclaudeプロセスが走っていたらスキップ（認証トークン競合防止 2026-04-05）
-    CLAUDE_COUNT=$(pgrep -c -f "claude" 2>/dev/null || echo 0)
-    if [ "$CLAUDE_COUNT" -gt 0 ]; then
-        echo "$(date): 他のclaudeプロセスが実行中（${CLAUDE_COUNT}個）。スキップ（次回のinboxチェックで処理する）。"
+    # 他のclaude --printプロセスが走っていたらスキップ（認証トークン競合防止 2026-04-05）
+    # 対話セッション(claude単体)は除外し、claude --print(cron起動)のみカウント
+    CLAUDE_PRINT_COUNT=$(pgrep -f "claude.*--print" 2>/dev/null | wc -l | tr -d ' ')
+    if [ "$CLAUDE_PRINT_COUNT" -gt 0 ]; then
+        echo "$(date): 他のclaude --printプロセスが実行中（${CLAUDE_PRINT_COUNT}個）。スキップ。"
         exit 0
     fi
 
