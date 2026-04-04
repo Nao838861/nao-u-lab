@@ -34,6 +34,11 @@ KOOPA_SHELL_SPEED = 768      # Fast sliding shell (~3 px/frame)
 KOOPA_REVIVE_FRAMES = 300    # Shell wakes up after 5 seconds
 KOOPA_SHAKE_START = 240      # Start shaking animation before revive
 
+# Items
+MUSHROOM_SPEED = 96          # Same as Goomba
+COIN_POPUP_FRAMES = 30       # Coin animation duration
+INVINCIBLE_FRAMES = 120      # Frames of invincibility after taking damage
+
 # World (fallback when no tilemap)
 GROUND_Y = 224    # Ground surface pixel Y (NES: row 13 of 15)
 SCREEN_W = 256    # Viewport width in pixels
@@ -109,6 +114,48 @@ class Koopa:
 BLOCK_BOUNCE_TBL = [-1, -1, -2, -3, -4, -5, -6, -7, -7, -7, -6, -4, -2, 0, 2, 1]
 BLOCK_BOUNCE_FRAMES = len(BLOCK_BOUNCE_TBL)
 HITTABLE_BLOCKS = frozenset('#?csmTQ')
+COIN_BLOCKS = frozenset('?cT')     # Blocks that give coins
+MUSHROOM_BLOCKS = frozenset('Qm')  # Blocks that give mushroom
+
+
+class Mushroom:
+    """Super Mushroom: emerges from block, walks right, gives power-up."""
+    __slots__ = ('x', 'y', 'vx', 'vy', 'alive', 'on_ground', 'emerging', 'emerge_cnt')
+
+    def __init__(self, pixel_x, pixel_y):
+        self.x = pixel_x * ONE
+        self.y = pixel_y * ONE
+        self.vx = MUSHROOM_SPEED
+        self.vy = 0
+        self.alive = True
+        self.on_ground = False
+        self.emerging = True     # Rising out of block
+        self.emerge_cnt = 0
+
+    @property
+    def done_emerging(self):
+        return self.emerge_cnt >= 16  # Rise 16px out of block
+
+
+class CoinPopup:
+    """Visual-only coin animation when hitting a coin block."""
+    __slots__ = ('x', 'y', 'cnt')
+
+    def __init__(self, pixel_x, pixel_y):
+        self.x = pixel_x
+        self.y = pixel_y
+        self.cnt = 0
+
+    @property
+    def done(self):
+        return self.cnt >= COIN_POPUP_FRAMES
+
+    @property
+    def y_offset(self):
+        # Arc up then down
+        if self.cnt < 15:
+            return -self.cnt * 2
+        return -(30 - self.cnt * 2)
 
 
 class BouncingBlock:
@@ -165,6 +212,11 @@ class MarioGame:
         self.goombas = []
         self.koopas = []
         self.bouncing_blocks = []
+        self.mushrooms = []
+        self.coin_popups = []
+        self.coins = 0
+        self.is_super = False
+        self.invincible_timer = 0
         self.dead = False
         self.cleared = False
         self.log = []
@@ -204,8 +256,13 @@ class MarioGame:
 
         self.dead = False
         self.cleared = False
+        self.is_super = False
+        self.invincible_timer = 0
+        self.coins = 0
         self.log = []
         self.bouncing_blocks = []
+        self.mushrooms = []
+        self.coin_popups = []
 
         # Spawn enemies from tilemap
         self.goombas = []
@@ -318,7 +375,7 @@ class MarioGame:
                 self.vy = STOMP_BOUNCE
                 self.on_ground = False
             else:
-                self.dead = True
+                self._take_damage()
                 return
 
     # ------------------------------------------
@@ -432,7 +489,7 @@ class MarioGame:
                     self.vy = STOMP_BOUNCE
                     self.on_ground = False
                 else:
-                    self.dead = True
+                    self._take_damage()
                     return
 
             elif k.state == Koopa.SHELL_IDLE:
@@ -469,7 +526,7 @@ class MarioGame:
                     self.vy = STOMP_BOUNCE
                     self.on_ground = False
                 else:
-                    self.dead = True
+                    self._take_damage()
                     return
 
     def _check_shell_enemy_collisions(self):
@@ -529,10 +586,23 @@ class MarioGame:
         for bb in self.bouncing_blocks:
             if bb.col == col and bb.row == row:
                 return
-        # Start bounce: remove tile, create bouncing sprite
+
+        # Super Mario breaks bricks (but not ? blocks)
+        if self.is_super and ch == '#':
+            self.tilemap.tiles[row][col] = '.'
+            return  # Brick destroyed, no bounce
+
+        # Spawn items from block
+        if ch in COIN_BLOCKS:
+            self.coins += 1
+            self.coin_popups.append(CoinPopup(col * 16, row * 16))
+        elif ch in MUSHROOM_BLOCKS:
+            self.mushrooms.append(Mushroom(col * 16, (row - 1) * 16))
+
+        # Start bounce animation
         bb = BouncingBlock(col, row, ch)
         self.bouncing_blocks.append(bb)
-        self.tilemap.tiles[row][col] = '.'  # Clear tile (cnt=1 in original)
+        self.tilemap.tiles[row][col] = '.'
 
     def _update_bouncing_blocks(self):
         """Advance all bouncing block animations."""
@@ -545,6 +615,84 @@ class MarioGame:
             else:
                 alive.append(bb)
         self.bouncing_blocks = alive
+
+    def _update_mushrooms(self):
+        alive = []
+        for m in self.mushrooms:
+            if not m.alive:
+                continue
+            if m.emerging:
+                m.emerge_cnt += 1
+                m.y -= ONE  # Rise 1px per frame
+                if m.done_emerging:
+                    m.emerging = False
+                alive.append(m)
+                continue
+            # Normal physics (same as Goomba)
+            m.x += m.vx
+            m.y += m.vy
+            if not m.on_ground:
+                m.vy += GRAVITY
+                if m.vy > FALL_SPEED_CAP:
+                    m.vy = FALL_SPEED_CAP
+            mpx = m.x // ONE
+            mpy = m.y // ONE
+            m.on_ground = False
+            if self._is_solid(mpx + 3, mpy + 15) or self._is_solid(mpx + 12, mpy + 15):
+                m.on_ground = True
+            if m.on_ground:
+                m.y = ((mpy & 0xFFFFFFF0) + 1) * ONE
+                m.vy = 0
+            # Wall → reverse
+            if m.vx > 0:
+                if self._is_solid(mpx + 15, mpy + 8):
+                    m.vx = -MUSHROOM_SPEED
+            elif m.vx < 0:
+                if self._is_solid(mpx, mpy + 8):
+                    m.vx = MUSHROOM_SPEED
+            # Off-map
+            map_h = self.tilemap.pixel_height if self.tilemap else 300
+            if m.y // ONE > map_h + 32:
+                m.alive = False
+                continue
+            alive.append(m)
+        self.mushrooms = alive
+
+    def _check_mushroom_collection(self):
+        mpx = self.x // ONE
+        mpy = self.y // ONE
+        h = 31 if self.is_super else 15
+        for m in self.mushrooms:
+            if not m.alive or m.emerging:
+                continue
+            mx = m.x // ONE
+            my = m.y // ONE
+            if (mpx + 14 > mx and mpx < mx + 14 and
+                    mpy + h > my and mpy < my + 15):
+                m.alive = False
+                if not self.is_super:
+                    self.is_super = True
+                    # Grow: shift y up by 16px to keep feet in place
+                    self.y -= 16 * ONE
+
+    def _update_coin_popups(self):
+        alive = []
+        for c in self.coin_popups:
+            c.cnt += 1
+            if not c.done:
+                alive.append(c)
+        self.coin_popups = alive
+
+    def _take_damage(self):
+        """Called when Mario touches an enemy. Super → shrink, Small → die."""
+        if self.invincible_timer > 0:
+            return
+        if self.is_super:
+            self.is_super = False
+            self.y += 16 * ONE  # Shrink: feet stay, top moves down
+            self.invincible_timer = INVINCIBLE_FRAMES
+        else:
+            self.dead = True
 
     # ------------------------------------------
     # Main step
@@ -649,10 +797,12 @@ class MarioGame:
                     self.vx = 0
 
         # ==========================================
-        # Tile Collision (ported from mario.c)
+        # Tile Collision (height-dependent for Super Mario)
         # ==========================================
         px = self.x // ONE
         py = self.y // ONE
+        h = 31 if self.is_super else 15       # Sprite height - 1
+        wall_y = py + (24 if self.is_super else 12)  # Wall check point
 
         if not self.on_ground and self.vy < 0:
             self.fall = False
@@ -678,7 +828,7 @@ class MarioGame:
             prev_on_ground = self.on_ground
             self.fall = prev_on_ground
             self.on_ground = False
-            if self._is_solid(px + 3, py + 15) or self._is_solid(px + 12, py + 15):
+            if self._is_solid(px + 3, py + h) or self._is_solid(px + 12, py + h):
                 self.on_ground = True
             if self.fall and not self.on_ground:
                 self.fall = True
@@ -692,11 +842,12 @@ class MarioGame:
 
         px = self.x // ONE
         py = self.y // ONE
+        wall_y = py + (24 if self.is_super else 12)
         if self.vx < 1:
             check_x = px
         else:
             check_x = px + 15
-        if self._is_solid(check_x, py + 12):
+        if self._is_solid(check_x, wall_y):
             tile_col = check_x // 16
             if self.vx <= 0:
                 self.x = ((tile_col + 1) * 16) * ONE
@@ -708,6 +859,15 @@ class MarioGame:
         # Bouncing blocks
         # ==========================================
         self._update_bouncing_blocks()
+
+        # ==========================================
+        # Items
+        # ==========================================
+        self._update_mushrooms()
+        self._check_mushroom_collection()
+        self._update_coin_popups()
+        if self.invincible_timer > 0:
+            self.invincible_timer -= 1
 
         # ==========================================
         # Enemies
@@ -810,4 +970,7 @@ class MarioGame:
                  'alive': k.alive, 'state': k.state}
                 for k in self.koopas if k.alive
             ],
+            'is_super': self.is_super,
+            'coins': self.coins,
+            'invincible': self.invincible_timer > 0,
         }
