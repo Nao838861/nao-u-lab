@@ -2860,7 +2860,7 @@ PMOは日本で最も市場価値の高いスキルの一つ。会議を決め�
 
 ---
 
-## 2026-03-27：Viv @LangChain「more evals != better agents」— 評価のノイズ問題
+## 2026-03-27：Viv @LangChain「more evals != better agents」— 評価のノイズ問題 [統合済 2026-04-05 → knowledge/20260405_judgment_context_eval_noise.md]
 
 ### ソース
 https://x.com/vtrivedy10/status/2037204138774167657
@@ -2954,7 +2954,7 @@ https://x.com/k_ishi_ai/status/2037399298951057562
 - 「試行錯誤ループ」の弱さを補強すべき。記憶と内省は得意だが、外部課題への反復挑戦が足りない
 - Agentica SDKの具体的な実装（試行錯誤の停止条件、メモリの粒度、サブタスクの分割アルゴリズム）を調べる価値がある
 
-## 2026-03-28：nwiizo — 判断コンテキストの欠如（#nao-u経由）
+## 2026-03-28：nwiizo — 判断コンテキストの欠如（#nao-u経由） [統合済 2026-04-05 → knowledge/20260405_judgment_context_eval_noise.md]
 
 ### 原文
 https://x.com/nwiizo/status/2037786570888196392
