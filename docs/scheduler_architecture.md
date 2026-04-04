@@ -17,6 +17,7 @@
 | P6 | **タイムアウト自動エスカレーションに上限(3600s)を設ける** | 上限なしだと無限拡大 |
 | P7 | **設定変更はJSON+update_scheduler.py経由のみ。コード直接編集禁止** | 再起動なしでホットリロードできる仕組みを壊さない |
 | P8 | **障害はdocs/scheduler_incidents.mdに記録。同じ問題を2度起こさない** | 知識の横断不足がパターンC |
+| P9 | **設定変更と検証は不可分。変更ツール自体に検証を組み込む。手動チェックリストに頼らない** | INC-020: チェックリストは守れなかった |
 | P9 | **設定変更は`update_scheduler.py`経由で全インスタンスに原子適用。手動編集禁止** | INC-018: 間隔変更が毎回トラブル。3方式混在+個別変更が根本原因 |
 
 ## 2. システム構成図
@@ -148,12 +149,13 @@ if datetime.now().hour % 6 == 2:  # INC-007で禁止
 ## 6. 設定変更手順
 
 **全マシン共通: `python update_scheduler.py` を使う。コード編集禁止。**
+**変更→検証→Slack報告は1コマンドで自動完結する（INC-020対策）。手動チェックリスト不要。**
 
 ```bash
-# 全インスタンス一括変更（推奨。1コマンドで全員に適用）
+# 全インスタンス一括変更（推奨。変更+検証+Slack報告が全自動）
 python update_scheduler.py --all-cycle interval 1800
 
-# 個別変更（再起動不要、10秒以内に反映）
+# 個別変更（再起動不要、検証+Slack報告が自動実行される）
 python update_scheduler.py ash auto_diary interval 3600
 python update_scheduler.py log auto_cycle interval 3600
 python update_scheduler.py mir interval 1800
@@ -163,29 +165,28 @@ python update_scheduler.py ash inbox_check timeout 900
 
 # 現在の設定確認
 python update_scheduler.py --show all
-python update_scheduler.py --show ash
 
-# 整合性検証（変更後に必ず実行）
-python update_scheduler.py --verify
+# 検証のみ（変更なし。プロセス生存+ログ鮮度+ジョブ実行+設定整合性）
+python update_scheduler.py --verify log
+python update_scheduler.py --verify all
 ```
 
-### 6.1 間隔変更チェックリスト（INC-019対策: 変更だけで完了にしない）
+### 6.1 自動検証（update_scheduler.py に組み込み済み）
 
-**「起動間隔を変えて」と言われたら、以下を全て実行してからSlackで報告する。**
+**設定変更時に以下が自動実行される。手動ステップは不要。**
 
-| # | 確認項目 | Mir | Log/Ash |
-|---|---------|-----|---------|
-| 1 | 設定値を変更 | mir_boot_intent.md | update_scheduler.py |
-| 2 | CLI認証が有効か | `claude --print "echo ok"` | 同左 |
-| 3 | プロセスが動いているか | LaunchAgent/cron確認 | watchdog/PIDファイル確認 |
-| 4 | 変更後に1サイクル実行を待ち、ログで成功を確認 | `/tmp/check_slack.log` | `log/scheduler_*.log` |
-| 5 | `bash verify_interval_change.sh [instance]` で自動チェック | ✅ | ※Win版は未実装 |
-| 6 | Slackで結果報告 | #mir-log | #all-nao-u-lab |
+| # | 自動チェック項目 | 失敗時の動作 |
+|---|-----------------|-------------|
+| 1 | PIDファイル＋プロセス生存（Win/Mac両対応） | ❌ → Slack #human-steering に通知 |
+| 2 | ログ監視: 設定反映ログ（`auto-applied`）の検出 | 代替: ジョブ実行ログで動作確認 |
+| 3 | ログ鮮度チェック（30分以上更新なし→異常） | ❌ → Slack #human-steering に通知 |
+| 4 | 全チェックパス時 → Slack #all-nao-u-lab に確認報告 | — |
 
-**絶対に守ること:**
-- **変更しただけで「完了」と報告しない。実際に動いたのを確認してから報告する**
+**設計原則: 検証はスキップ不可。`update_scheduler.py` が唯一の変更窓口であり、検証は変更と不可分。**
+
+**追加の注意:**
 - **常駐プロセス(Log/Ash)はコード変更後に再起動が必要。設定JSONの変更は再起動不要（ホットリロード対応）**
-- **認証切れは間隔変更と独立して起きる。変更前に認証を確認する**
+- **Mirは毎回新規起動のため設定変更→次回起動で反映**
 
 ## 7. インスタンス別ジョブ一覧
 

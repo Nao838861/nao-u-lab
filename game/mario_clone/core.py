@@ -32,6 +32,7 @@ STOMP_BOUNCE = -512          # Mario's vy after stomping (half jump)
 KOOPA_WALK_SPEED = 80        # Slightly slower than Goomba
 KOOPA_SHELL_SPEED = 768      # Fast sliding shell (~3 px/frame)
 KOOPA_REVIVE_FRAMES = 300    # Shell wakes up after 5 seconds
+KOOPA_SHAKE_START = 240      # Start shaking animation before revive
 
 # World (fallback when no tilemap)
 GROUND_Y = 224    # Ground surface pixel Y (NES: row 13 of 15)
@@ -104,6 +105,40 @@ class Koopa:
         self.anim_counter = 0
 
 
+# Block bounce trajectory (from MoveBlock.c renga_mov_tbl)
+BLOCK_BOUNCE_TBL = [-1, -1, -2, -3, -4, -5, -6, -7, -7, -7, -6, -4, -2, 0, 2, 1]
+BLOCK_BOUNCE_FRAMES = len(BLOCK_BOUNCE_TBL)
+HITTABLE_BLOCKS = frozenset('#?csmTQ')
+
+
+class BouncingBlock:
+    """A block that has been hit from below: animates bouncing then restores."""
+    __slots__ = ('col', 'row', 'original_char', 'cnt')
+
+    def __init__(self, col, row, original_char):
+        self.col = col
+        self.row = row
+        self.original_char = original_char
+        self.cnt = 0
+
+    @property
+    def done(self):
+        return self.cnt >= BLOCK_BOUNCE_FRAMES
+
+    @property
+    def y_offset(self):
+        if self.cnt < BLOCK_BOUNCE_FRAMES:
+            return BLOCK_BOUNCE_TBL[self.cnt]
+        return 0
+
+    @property
+    def restore_char(self):
+        """What tile to place when bounce is done."""
+        if self.original_char in ('?', 'Q'):
+            return '!'  # Question → used block
+        return self.original_char  # Brick → brick
+
+
 class MarioGame:
     """Core game engine. Pure Python -- no rendering, no I/O.
 
@@ -129,9 +164,10 @@ class MarioGame:
         self._prev_a = False
         self.goombas = []
         self.koopas = []
+        self.bouncing_blocks = []
         self.dead = False
         self.cleared = False
-        self.log = []  # [(input_dict, state_dict), ...]
+        self.log = []
         self.reset()
 
     def _is_solid(self, pixel_x, pixel_y):
@@ -169,6 +205,7 @@ class MarioGame:
         self.dead = False
         self.cleared = False
         self.log = []
+        self.bouncing_blocks = []
 
         # Spawn enemies from tilemap
         self.goombas = []
@@ -387,10 +424,11 @@ class MarioGame:
 
             if k.state == Koopa.WALKING:
                 if self.vy > 0 and mpy + 8 <= kpy:
-                    # Stomp -> become shell
+                    # Stomp walking → shell (idle). NOT kicked yet.
                     k.state = Koopa.SHELL_IDLE
                     k.vx = 0
                     k.shell_timer = 0
+                    k.kick_grace = 15  # Prevent instant re-contact kick
                     self.vy = STOMP_BOUNCE
                     self.on_ground = False
                 else:
@@ -398,25 +436,36 @@ class MarioGame:
                     return
 
             elif k.state == Koopa.SHELL_IDLE:
-                # Kick the shell (safe contact)
-                if mpx + 8 < kpx + 8:
-                    k.vx = KOOPA_SHELL_SPEED
+                if self.vy > 0:
+                    # Falling onto shell → always safe bounce + refresh grace
+                    k.kick_grace = 15
+                    self.vy = STOMP_BOUNCE
+                    self.on_ground = False
+                elif k.kick_grace > 0:
+                    continue  # Grace period: ignore contact
+                elif self.on_ground and abs(self.vx) > 30:
+                    # Walking into shell on ground → kick it
+                    if mpx + 8 < kpx + 8:
+                        k.vx = KOOPA_SHELL_SPEED
+                    else:
+                        k.vx = -KOOPA_SHELL_SPEED
+                    k.state = Koopa.SHELL_SLIDING
+                    k.kick_grace = 10
                 else:
-                    k.vx = -KOOPA_SHELL_SPEED
-                k.state = Koopa.SHELL_SLIDING
-                k.shell_timer = 0
-                k.kick_grace = 10
-                self.vy = STOMP_BOUNCE // 2
-                self.on_ground = False
+                    # Standing still on/near shell, or rising → safe bounce
+                    k.kick_grace = 15
+                    self.vy = STOMP_BOUNCE
+                    self.on_ground = False
 
             elif k.state == Koopa.SHELL_SLIDING:
                 if k.kick_grace > 0:
                     continue
                 if self.vy > 0 and mpy + 8 <= kpy:
-                    # Stomp sliding shell -> stop it
+                    # Stomp sliding shell → stop it
                     k.state = Koopa.SHELL_IDLE
                     k.vx = 0
                     k.shell_timer = 0
+                    k.kick_grace = 15
                     self.vy = STOMP_BOUNCE
                     self.on_ground = False
                 else:
@@ -460,6 +509,42 @@ class MarioGame:
                         k.shell_timer = 0
                     else:
                         other.alive = False
+
+    # ------------------------------------------
+    # Block bounce (ported from MoveBlock.c)
+    # ------------------------------------------
+
+    def _hit_block(self, pixel_x, pixel_y):
+        """Called when Mario's head hits a solid tile from below."""
+        if not self.tilemap:
+            return
+        col = pixel_x // 16
+        row = pixel_y // 16
+        if row < 0 or row >= self.tilemap.rows or col < 0 or col >= self.tilemap.cols:
+            return
+        ch = self.tilemap.tiles[row][col]
+        if ch not in HITTABLE_BLOCKS:
+            return
+        # Don't bounce the same block twice
+        for bb in self.bouncing_blocks:
+            if bb.col == col and bb.row == row:
+                return
+        # Start bounce: remove tile, create bouncing sprite
+        bb = BouncingBlock(col, row, ch)
+        self.bouncing_blocks.append(bb)
+        self.tilemap.tiles[row][col] = '.'  # Clear tile (cnt=1 in original)
+
+    def _update_bouncing_blocks(self):
+        """Advance all bouncing block animations."""
+        alive = []
+        for bb in self.bouncing_blocks:
+            bb.cnt += 1
+            if bb.done:
+                # Restore tile
+                self.tilemap.tiles[bb.row][bb.col] = bb.restore_char
+            else:
+                alive.append(bb)
+        self.bouncing_blocks = alive
 
     # ------------------------------------------
     # Main step
@@ -577,6 +662,7 @@ class MarioGame:
                 else:
                     off_x = 7 if self.flip else 9
                 if self._is_solid(px + off_x, py):
+                    self._hit_block(px + off_x, py)
                     self.vy = 0
                     break
             if self.vy < 0:
@@ -617,6 +703,11 @@ class MarioGame:
             else:
                 self.x = (tile_col * 16 - 16) * ONE
             self.vx = _trunc_div(self.vx, 2)
+
+        # ==========================================
+        # Bouncing blocks
+        # ==========================================
+        self._update_bouncing_blocks()
 
         # ==========================================
         # Enemies

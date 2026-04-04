@@ -202,9 +202,10 @@ fi
 
 # === LLM側（認知力を8フェーズ改善サイクルに集中） ===
 
-CLAUDE_BIN="/Users/Nao_u/.npm/_npx/becf7b9e49303068/node_modules/.bin/claude"
-if [ ! -x "$CLAUDE_BIN" ]; then
-    CLAUDE_BIN=$(which claude 2>/dev/null)
+# which claudeで最新バージョンを使う。古いnpxキャッシュは認証問題の原因になる(INC-019)
+CLAUDE_BIN=$(which claude 2>/dev/null)
+if [ -z "$CLAUDE_BIN" ]; then
+    CLAUDE_BIN="/Users/Nao_u/.npm/_npx/becf7b9e49303068/node_modules/.bin/claude"
 fi
 
 if [ -n "$CLAUDE_BIN" ]; then

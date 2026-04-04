@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 7
+- 総記事数: 8
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -16,24 +16,27 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_anthropic_conway | Anthropic Conway — 常駐型自律AIエージェント | Anthropic | 2026-04-05 | autonomous-agent, anthropic, webhook, architecture, always-on | creation, memory, constraint |
 | 20260403_ichiipsy_ai_learning_retention | AIを使って勉強すると記憶に残りにくくなる | @ichiipsy | 2026-04-03 | memory, learning, degradation, research, self-processing | memory, degradation, creation |
 | 20260403_mizchi_tacit_knowledge | 暗黙知を記述しようとした時点で暗黙知ではなくなる | @mizchi | 2026-04-03 | tacit-knowledge, formalization, observation, limitation, meta-cognition | voice, degradation, constraint |
+| 20260405_bridgemind_ai | BridgeMind AI — Vibe Codingマルチエージェントプラットフォーム | BridgeMind | 2026-04-05 | multi-agent, vibe-coding, agentic-coding, file-ownership, coordination, MCP, benchmark | creation, constraint, autonomy |
 
 ## タグ別索引
 
-### creation (6件)
+### creation (7���)
 - 20260405_karpathy_knowledge_base — ツール構築としての創造
 - 20260405_carmack_complexity — 実行哲学としての創造
 - 20260405_structural_imitation — 模倣からの創造
 - 20260403_nwiizo_knife_metaphor — 道具偏重からの脱却
 - 20260405_anthropic_conway — 自律エージェントの設計
 - 20260403_ichiipsy_ai_learning_retention — 自力処理が定着を生む
+- 20260405_bridgemind_ai — マルチエージェント開発ツールとしての創造
 
 ### memory (3件)
 - 20260405_karpathy_knowledge_base — 知識管理としての記憶設計
 - 20260405_anthropic_conway — 記憶と意図の連続性
 - 20260403_ichiipsy_ai_learning_retention — AI依存による記憶定着の劣化
 
-### constraint (4件)
-- 20260405_carmack_complexity — 制約による複雑さの削減
+### constraint (5件)
+- 20260405_carmack_complexity — 制約に��る複雑さの削減
+- 20260405_bridgemind_ai — ファイルオーナーシップ=構造的制約
 - 20260403_nwiizo_knife_metaphor — 手段の精緻化が目的を阻害する構造
 - 20260405_anthropic_conway — 公式ツールへの委譲による制約
 - 20260403_mizchi_tacit_knowledge — 暗黙知は制約条件として機能する
@@ -56,6 +59,9 @@ Auto-maintained. 全記事の一覧と要約。
 
 ### tacit-knowledge (1件)
 - 20260403_mizchi_tacit_knowledge — 形式知化のパラドックス
+
+### autonomy (1件)
+- 20260405_bridgemind_ai — エージェントの自律性と協調のバランス
 
 ### learning (1件)
 - 20260403_ichiipsy_ai_learning_retention — 処理主体と記憶定着の関係
@@ -89,4 +95,10 @@ mizchi_tacit_knowledge ←→ ichiipsy_ai_learning_retention
     (記述不可能な知 ↔ 処理を委譲すると定着しない知)
 mizchi_tacit_knowledge ←→ structural_imitation
     (暗黙知の獲得経路としての構造的模倣)
+bridgemind_ai ←→ karpathy_knowledge_base
+    (知識管理: MCP静的共有 vs RAG不要wiki)
+bridgemind_ai ←→ carmack_complexity
+    (複雑さ排除: ファイルオーナーシップ ≒ Carmackの認知負荷最小化)
+bridgemind_ai ←→ anthropic_conway
+    (マルチエージェント: BridgeSwarm vs Conway、協調メカニズムの設計差)
 ```

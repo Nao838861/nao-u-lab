@@ -238,7 +238,7 @@ class MarioRenderer:
         # Sky
         surf.fill(SKY_COLOR)
 
-        # Tiles
+        # Tiles (static)
         if game.tilemap:
             self._draw_tilemap(surf, game.tilemap, scroll_px)
         else:
@@ -246,6 +246,17 @@ class MarioRenderer:
                              (0, GROUND_Y, SCREEN_W, 2))
             pygame.draw.rect(surf, GROUND_COLOR_FALLBACK,
                              (0, GROUND_Y + 2, SCREEN_W, SCREEN_H - GROUND_Y - 2))
+
+        # Bouncing blocks (sprites replacing temporarily deleted tiles)
+        for bb in game.bouncing_blocks:
+            bsx = bb.col * 16 - scroll_px
+            bsy = bb.row * 16 + bb.y_offset
+            if -16 <= bsx <= SCREEN_W:
+                # Use the original block's tile sprite
+                ch = bb.original_char
+                tile_surf = self.tile_sprites.get(ch)
+                if tile_surf:
+                    surf.blit(tile_surf, (bsx, bsy))
 
         # Goombas
         for g in game.goombas:
@@ -264,7 +275,7 @@ class MarioRenderer:
                     surf.blit(self.goomba_walk_flip, (gsx, gsy))
 
         # Koopas
-        from core import Koopa
+        from core import Koopa, KOOPA_SHAKE_START
         for k in game.koopas:
             if not k.alive:
                 continue
@@ -278,7 +289,11 @@ class MarioRenderer:
                 else:
                     surf.blit(self.koopa_walk_flip, (ksx, ksy))
             else:
-                surf.blit(self.koopa_shell, (ksx, ksy))
+                # Shell: shake before revive
+                shake = 0
+                if k.state == Koopa.SHELL_IDLE and k.shell_timer >= KOOPA_SHAKE_START:
+                    shake = 1 if (k.shell_timer // 4) % 2 == 0 else -1
+                surf.blit(self.koopa_shell, (ksx + shake, ksy))
 
         # Mario (skip if off-screen from pit death)
         mario_sx = game.x // ONE - scroll_px
