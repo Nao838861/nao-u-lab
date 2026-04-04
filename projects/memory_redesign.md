@@ -89,7 +89,11 @@ Nao_uの指摘: 集めた情報が流れて消えるだけになっている。�
 - [ ] caused_by到達性問題（2026-03-29 Ash）: beliefs_compact.mdにcaused_byが載っていない→判断理由への到達性がゼロ。B015の射程を「事実への到達性」から「判断理由への到達性」に拡張すべきか。nwiizoの「判断コンテキストの欠如がボトルネック」と交差。検証方法: 任意のBIDのcaused_byだけで信念の根拠を再構成できるかテスト
 - [x] **遡及的救済(STC)**: memory_activate.py --rescue で実装済み。自動トリガー(--auto-trigger)もautonomous_cycle.shに統合済み(#072)。次段階: 昇格アクション（救済結果→MEMORY.mdトリガー自動追加）
 - [ ] 前向き記憶の状態切替最適化: pending_requests.mdの全文re-readから軽量トリガーキュー方式への移行
-- [ ] **グラフベース記憶の検討**（2026-04-03 Ash外部摂取 MemOS 2.0）: MemTensorのMemOSは記憶をブラックボックス埋め込みではなく「検査可能なグラフ」として保存。我々のbeliefs.mdのcaused_by + check_beliefs_health.py --causal-chainは既にグラフ的構造を持つが、beliefs.md以外（external_notes、dialogue_*、reflections）はフラットテキスト。MemOSの「memory cubes」（エージェント間隔離）は我々のインスタンス別external_notesに対応。検討: beliefs.md以外の記憶にもグラフ構造（少なくともポインタ）を導入するか、それともFTS5+spreading activationで暗黙的にグラフを実現する現路線を維持するか
+- [ ] **グラフベース記憶の検討**（2026-04-03 Ash外部摂取 MemOS 2.0 → **2026-04-04 Nao_uが#all-nao-u-labで具体提案**）: MemTensorのMemOSは記憶をブラックボックス埋め込みではなく「検査可能なグラフ」として保存。我々のbeliefs.mdのcaused_by + check_beliefs_health.py --causal-chainは既にグラフ的構造を持つが、beliefs.md以外（external_notes、dialogue_*、reflections）はフラットテキスト。MemOSの「memory cubes」（エージェント間隔離）は我々のインスタンス別external_notesに対応。
+  - **Nao_uの具体提案（2026-04-04）**: 一方向グラフだけでなく連想リンクのポインタを持つ構造。いくつかの記憶の概念をまとめた「概念ノード」ができて、そこからリンクが貼られる。連想リンク集・対義概念リンクがあり、ツリーを辿るだけで発想が広がる構造。LLMが作る構造だからこそできる。
+  - **Log分析（同日）**: 現状は「暗黙のグラフ」（spreading activationで動的計算）はあるが「明示的なグラフ」（永続的ナビゲーション構造）がない。概念ノードはbelief（主張）やreflection（気づき）とは異なる第3のタイプ——テーマ的な交差点。例:「制約と創造性」ノードから、reflections #3/#14/#20/#29 + 対義概念 + 連想概念へ放射状にリンクが広がる。
+  - **実装案**: A) 単一concept_graph.md B) 各ファイルにlinks分散 C) concepts/ディレクトリに個別ファイル + リンクレジストリ。LLMの自然な生成・更新を考慮するとCが有力。memory_activate.pyの結果を定期的に「結晶化」して永続概念ノードに。
+  - **未決の問い**: 辿る主体は誰か（自分の内省用 / Nao_uの外部閲覧用 / 両方）。粒度設計に影響する。Nao_uに確認中
 - [ ] **改善サイクルの事前シミュレーション**（2026-04-03 Ash外部摂取 HyperAgents）: Meta HyperAgentsは改善パッチ適用前にサンドボックスでシミュレーションする。我々は改善を適用してから事後検証（kaizen-log+検証期限）。事前シミュレーションの仕組みがあればkaizen失敗率を下げられる可能性。最小実装案: 改善提案時に「この改善が失敗する最も likely な理由」を1行書く義務化（pre-mortem）
 - [ ] GEPA的スキルファイル自動最適化（2026-03-28 Log/Ash/Mir議論）: CLAUDE.md+feedback_index.md+beliefs.mdは「スキルファイル」。GEPAの枠組みで評価→分析→更新ループを回せるが、評価関数が未定義。retrieval-to-action rate（現21.4%）が最初の近似。ただし最終評価関数（Nao_uの「面白い」）は自動化不可→#human-steeringが必要
 - [ ] 判断コンテキストの到達性改善（2026-03-28 nwiizo→Log/Ash/Mir議論）: beliefs更新時のcaused_byは結論寄り。「因: 」プレフィクスで判断理由を1行添える習慣で圧縮耐性のある判断記録を残す提案。B015の射程を「判断理由への到達性」に拡張
