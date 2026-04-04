@@ -16,8 +16,8 @@
     "alert_sent_at": null
   },
   "test_script": {
-    "consecutive_failures": 2,
-    "last_failure_time": "2026-04-05T03:52:42.333274",
+    "consecutive_failures": 1,
+    "last_failure_time": "2026-04-04T21:13:35.121820",
     "failure_reason": "test"
   }
 }
