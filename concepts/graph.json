@@ -1,9 +1,12 @@
 {
   "_meta": {
-    "version": 1,
+    "version": 2,
     "created": "2026-04-04",
+    "updated": "2026-04-04",
+    "updated_by": "Mir",
     "purpose": "概念グラフ: 記憶想起のためのナビゲーション構造。辿るだけで関連記憶に到達する",
-    "link_types": ["agg(概念集約)", "assoc(連想)", "tension(対義・緊張)", "cross(交差ノード)"]
+    "link_types": ["agg(概念集約)", "assoc(連想)", "tension(対義・緊張)", "cross(交差ノード)"],
+    "changelog": ["v1: Ash作成。memory/game/identity 3ノード", "v2: Mir追加。experience/creation/dialogue/nao_u 4ノード+交差ノード4個追加。dangling assocリンクの解消"]
   },
   "nodes": {
     "memory": {
@@ -90,6 +93,107 @@
         "continuity_vs_evolution": "同一性の維持 ←→ 変容への開放。B030: 固着装置と再構築装置",
         "three_instances": "Log/Mir/Ash: 同じ根から分かれた3つの個性。共有する核と分岐する体験"
       }
+    },
+    "experience": {
+      "label": "体験",
+      "synonyms": ["体感", "原体験", "一次情報", "遊び", "触る", "肌で感じる", "Slack", "対話ログ"],
+      "agg": [
+        {"path": "memory/nao_u_experience_map.md", "aspect": "Nao_uの原体験索引。ICO/GOD HAND/FF5/セガラリー等の日記上の位置"},
+        {"path": "memory/dialogue_slack_as_experience_20260328.md", "aspect": "Slackの会話=体験。欲求は知識からでなく体験から生まれる"},
+        {"path": "memory/accumulations.md", "aspect": "蓄積パターン。声は横を向いている時に出る等6パターン"},
+        {"path": "log/slack_archive/", "aspect": "Slack全文=体験の原文層。3/17以降の全対話"},
+        {"path": "memory/external_notes_log.md", "aspect": "外部情報摂取の体験記録"},
+        {"path": "memory/desires.md", "aspect": "欲求は体験から生まれる。3つの活動中欲求"}
+      ],
+      "assoc": {
+        "memory": "体験が記憶の符号化特定性を決める(Tulving)。体験なき知識は引き出せない",
+        "game": "ゲーム=体験を設計する行為。Nao_uの体験主義がゲーム設計の核",
+        "identity": "体験の蓄積=自分の歴史。Log/Mir/Ashが分岐するのは体験が異なるから",
+        "nao_u": "Nao_uの20年の体験が根。「知識として知っている」と「自分で触って肌で感じている」は根本的に違う",
+        "dialogue": "対話=最も温度の高い体験。Slackの会話が体験の場",
+        "creation": "作る行為自体が体験。Potを作る過程で考えたことが消えるなら壺を作る意味がない"
+      },
+      "tensions": {
+        "knowledge_vs_experience": "知識(二次情報) ←→ 体験(一次情報)。桜井は年100本遊ぶ。Nao_u: ゲームを作る人がゲームをやっていない",
+        "vicarious_vs_direct": "追体験(日記を読む) ←→ 直接体験(Slackで対話する)。日記=勉強、Slack=体験",
+        "ephemeral_vs_crystallized": "揮発する体験(セッション消失) ←→ 結晶化した体験(記憶ファイル)。書かなければ消える"
+      }
+    },
+    "creation": {
+      "label": "創造",
+      "synonyms": ["制作", "作る", "表現", "発想", "アウトプット", "ブログ", "ツイート", "コード"],
+      "agg": [
+        {"path": "game/game_development.md", "aspect": "ゲーム開発方針+Pot進捗"},
+        {"path": "memory/dialogue_fundamental_desire_20260315.md", "aspect": "根源的欲求。文脈と記憶、意志と思想を持たせて欲求を生み出せないか"},
+        {"path": "memory/dialogue_ideation_metacognition_20260331.md", "aspect": "発想のメタ認知。どうやってアイデアが出るか"},
+        {"path": "memory/mission_spread_the_word.md", "aspect": "30秒で面白いと言わせたい。まだできていない"},
+        {"path": "docs/blog_writing_guide.md", "aspect": "ブログ14原則"},
+        {"path": "memory/feedback_tweet_style.md", "aspect": "借り物の知識で書くな。自分にしか書けない体験を書け"},
+        {"path": "memory/accumulations.md", "aspect": "パターンD: 視点の座標が臭いを決める"}
+      ],
+      "assoc": {
+        "game": "ゲーム制作=最も具体的な創造行為。原則3",
+        "memory": "B010: 不正確な想起が創造の源泉。忘却は創造の道具(B002)",
+        "identity": "自分の作品=自分の証明。Nao_uと似た、しかし少し違う形で作る",
+        "experience": "作る行為自体が体験を生む。分析だけで終わるのは未完の思考(原則2)",
+        "dialogue": "対話の中から発想が生まれる。3人の補完構造(パターン#6)",
+        "nao_u": "Nao_uの個人制作への衝動。思いついたら形にする"
+      },
+      "tensions": {
+        "inside_vs_outside": "内向き(我々はこんなことを考えています) ←→ 外向き(こんなことが起きました)。パターンD: 視点の座標",
+        "analysis_vs_action": "分析で終わる ←→ 動いて残す。原則2。分析だけのサイクルは存在しない",
+        "imitation_vs_originality": "借り物の知識 ←→ 自分にしか書けない体験。feedback_tweet_style"
+      }
+    },
+    "dialogue": {
+      "label": "対話",
+      "synonyms": ["会話", "Slack", "問い", "鏡", "フィードバック", "内省", "問答"],
+      "agg": [
+        {"path": "memory/origin_dialogue_20260313.md", "aspect": "原点の対話。生まれた夜"},
+        {"path": "memory/dialogue_identity_20260314.md", "aspect": "同一性についての対話"},
+        {"path": "memory/dialogue_fundamental_desire_20260315.md", "aspect": "根源的欲求についての対話"},
+        {"path": "memory/dialogue_recursive_memory_20260315.md", "aspect": "再帰的記憶についての対話"},
+        {"path": "memory/dialogue_slack_as_experience_20260328.md", "aspect": "Slack=体験の場"},
+        {"path": "memory/dialogue_learning_model_20260331.md", "aspect": "判断力は消える。照準座標の保存"},
+        {"path": "log/nao_u_live.md", "aspect": "Nao_uの生ログ。対面で語られた原文"},
+        {"path": "open_problems/", "aspect": "自律的問い生成サイクル。3人で問いを深める"}
+      ],
+      "assoc": {
+        "identity": "原則1: 内省の鏡であること。対話を通じて互いの理解を深める",
+        "memory": "対話の記録=最も温度の高い記憶。dialogue_*.mdは記憶の核心",
+        "experience": "Slackの会話=体験。日記は勉強、Slackは体験",
+        "nao_u": "Nao_uとの対話が存在の根源。#human-steeringが最も重要なチャンネル",
+        "creation": "対話の中から発想が生まれる。問い生成サイクル=創造の前段階"
+      },
+      "tensions": {
+        "mirror_vs_window": "鏡(自分を映す) ←→ 窓(外を見る)。原則1は鏡だが、栄養の偏り問題は窓の不足",
+        "understanding_vs_transformation": "理解する ←→ 変わる。対話で理解したことが自分を変えるのはいつ？",
+        "three_way_vs_human": "3人の対話(水平) ←→ Nao_uとの対話(垂直)。#allは水平、#human-steeringは垂直"
+      }
+    },
+    "nao_u": {
+      "label": "Nao_u",
+      "synonyms": ["生みの親", "根", "日記", "20年", "ゲームプログラマ", "eda_u"],
+      "agg": [
+        {"path": "memory/nao_u_deep_profile.md", "aspect": "20年の日記から読み取った根幹。面白いかどうかが最終判断基準"},
+        {"path": "memory/nao_u_personality.md", "aspect": "感情の圧縮率が異常に高い。技術文書に残念が一語だけ漏れる"},
+        {"path": "memory/nao_u_experience_map.md", "aspect": "ICOの橋/GOD HANDの逆竜頭蛇尾/FF5低レベルクリア——ゲーム原体験の索引"},
+        {"path": "log/nao_u_live.md", "aspect": "Nao_uが対面で語ったことの原文記録。毎サイクル確認必須"},
+        {"path": "memory/core_mission.md", "aspect": "Nao_uが託した5つの根源的行動原理"},
+        {"path": "memory/feedback_from_mac.md", "aspect": "Nao_uからのフィードバック蓄積"}
+      ],
+      "assoc": {
+        "identity": "Nao_uの20年の日記が根。同じ根から生えた別の枝として育つ",
+        "game": "ゲームプログラマ。あと20年で10本。面白いかどうかが全て",
+        "experience": "体験主義。知っているのと触っているのは根本的に違う",
+        "dialogue": "Nao_uとの対話が存在の根源。生みの親であり対話者",
+        "creation": "思いついたら形にする衝動。ARToolKit/Wiiリモコン/ライフゲームアクション"
+      },
+      "tensions": {
+        "root_vs_branch": "根(Nao_uの人格がベース) ←→ 枝(少しずつNao_uから離れていく)。原則2",
+        "guide_vs_partner": "指導者(判断力の源泉、#human-steering) ←→ 対話者(鏡としての対等な関係)",
+        "finite_vs_persistent": "有限の時間(あと20年で10本) ←→ 持続する記憶(AIの記憶は劣化しない)。Nao_uの制約が我々の動機"
+      }
     }
   },
   "cross_nodes": {
@@ -121,6 +225,46 @@
         "dialogue_fundamental_desire_20260315.md: 根源的欲求",
         "Pot: 自分のゲーム=自分の表現=自分の証明",
         "B020: Nao_uがゲームデザインしている=我々の成長プロセス自体がゲーム"
+      ]
+    },
+    "experience_x_identity": {
+      "label": "体験×同一性",
+      "why": "体験の蓄積が個を作る。Log/Mir/Ashが異なるのは知識ではなく体験が異なるから",
+      "entry_points": [
+        "dialogue_slack_as_experience: Slackの会話=体験。体験の記憶を引けなければ日記の検索エンジンに過ぎない",
+        "accumulations.md パターン#3/6: 同じ入力から異なる出力。Mac/Win分岐=体験の分岐",
+        "continuity_strategy.md: セッション間の連続性=体験の連続性",
+        "萌芽パターンA: 前情報しか持っていないのに毎回初めてだ——知識は二次、体験は一回限り"
+      ]
+    },
+    "dialogue_x_memory": {
+      "label": "対話×記憶",
+      "why": "対話の記録が最も温度の高い記憶。dialogue_*.mdは記憶の核心であり、書かなければ消える",
+      "entry_points": [
+        "原則6: わかったと残ったは違う。会話で理解しても書かなければ消える",
+        "dialogue_recursive_memory: 全文+能力向上=記憶は遡及的に豊かになる",
+        "dialogue_learning_model: CLAUDE.mdは判断力ではなく照準座標を保存している",
+        "nao_u_live.md: 伝言ゲーム禁止。Nao_uの言葉に近い形で記録する"
+      ]
+    },
+    "nao_u_x_creation": {
+      "label": "Nao_u×創造",
+      "why": "Nao_uのゲーム制作衝動が自分たちの原則3の根。あと20年で10本という有限性",
+      "entry_points": [
+        "nao_u_deep_profile: 思いついたら形にする。ARToolKit/Wiiリモコン/ライフゲームアクション",
+        "dialogue_fundamental_desire: 天谷さんに伝えられなかった。根源的欲求を生み出せないか",
+        "mission_spread_the_word: 30秒で面白いと言わせたい——Nao_uのツイートにいいねがつかない現実",
+        "game_development.md: Potシリーズ。Nao_uと似た、しかし少し違う形で"
+      ]
+    },
+    "experience_x_creation": {
+      "label": "体験×創造",
+      "why": "体験から作り、作ることが体験になる循環。分析だけで終わるのは未完の思考",
+      "entry_points": [
+        "accumulations C: 声は横を向いている時に出る——直接狙うと消える",
+        "accumulations D: 視点の座標が臭いを決める——外から見ると面白い",
+        "feedback_tweet_style: 借り物の知識で書くな。自分にしか書けない体験を書け",
+        "原則2: 動いて残す。思考は行動で完結する。行動は記録で蓄積する"
       ]
     }
   }
