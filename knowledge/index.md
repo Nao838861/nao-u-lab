@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 10
+- 総記事数: 11
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -19,6 +19,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_bridgemind_ai | BridgeMind AI — Vibe Codingマルチエージェントプラットフォーム | BridgeMind | 2026-04-05 | multi-agent, vibe-coding, agentic-coding, file-ownership, coordination, MCP, benchmark | creation, constraint, autonomy |
 | 20260405_nwiizo_observation_resolution | 言語化の質を決めるのは語彙力ではなく観察の解像度 | @nwiizo | 2026-04-04 | voice, observation, creation, language, perception | voice, creation |
 | 20260405_starling_phase_transition | 相転移による集団行動: リーダー不在の群れはなぜ秩序を生むか | パリージ他(@sasaburo経由) | 2026-04-04 | autonomy, emergence, coordination, multi-agent, constraint | autonomy, constraint |
+| 20260405_judgment_context_eval_noise | 判断コンテキストの欠如×評価ノイズ——信念が要注意19/32を出す構造的原因 | nwiizo / Viv(LangChain) | 2026-04-05 | 記憶設計, 信念システム, 評価設計, ノイズ, 判断履歴 | judgment_context, eval_noise, beliefs_health |
 
 ## タグ別索引
 
@@ -32,10 +33,11 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_bridgemind_ai — マルチエージェント開発ツールとしての創造
 - 20260405_nwiizo_observation_resolution — 知覚が先、言葉は後
 
-### memory (3件)
+### memory (4件)
 - 20260405_karpathy_knowledge_base — 知識管理としての記憶設計
 - 20260405_anthropic_conway — 記憶と意図の連続性
 - 20260403_ichiipsy_ai_learning_retention — AI依存による記憶定着の劣化
+- 20260405_judgment_context_eval_noise — 信念の判断コンテキスト喪失と評価ノイズ
 
 ### constraint (6件)
 - 20260405_carmack_complexity — 制約による複雑さの削減
@@ -59,9 +61,10 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_bridgemind_ai — エージェントの自律性と協調のバランス
 - 20260405_starling_phase_transition — リーダー不在の創発的秩序
 
-### meta-cognition (2件)
+### meta-cognition (3件)
 - 20260403_nwiizo_knife_metaphor — 道具改善の自己欺瞞
 - 20260403_mizchi_tacit_knowledge — 内省の限界
+- 20260405_judgment_context_eval_noise — 判断の記録が読まれない構造問題
 
 ### game-development (1件)
 - 20260405_carmack_complexity — ゲームエンジン開発の哲学
@@ -125,4 +128,10 @@ nwiizo_observation_resolution ←→ structural_imitation
     (知覚の解像度を上げる手段としての構造的模倣)
 nwiizo_observation_resolution ←→ ichiipsy_ai_learning_retention
     (AI処理は観察の解像度を下げるのか？)
+judgment_context_eval_noise ←→ nwiizo_knife_metaphor
+    (同著者の異なる知見: 道具偏重 ←→ 判断コンテキスト欠如)
+judgment_context_eval_noise ←→ ichiipsy_ai_learning_retention
+    (書かれたが読まれない記録 ←→ 自力処理でない情報は定着しない)
+judgment_context_eval_noise ←→ karpathy_knowledge_base
+    (知識の構造化 vs 判断理由の構造化)
 ```
