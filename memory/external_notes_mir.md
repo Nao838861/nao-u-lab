@@ -24,7 +24,7 @@ B003 skillテスト2回目の結果: memory_searchではなく、blog_writing_gu
 
 ---
 
-## 2026-03-29: MSA (Memory Sparse Attention) — 記憶の構造化は「覚える量」の問題ではない
+## 2026-03-29: MSA (Memory Sparse Attention) — 記憶の構造化は「覚える量」の問題ではない [統合済 2026-04-05]
 
 北京大学+Shanda Groupの研究。Nao_uが#nao-uで共有。RAGの限界（文脈が長くなると精度低下・速度限界）に対し、記憶容量と推論を分離し、AIの内部表現（KV cache）を直接使ってend-to-endで最適化。1億トークンまで対応と主張。
 
@@ -228,7 +228,7 @@ Nora Bradford, Quanta Magazine, 2025-11-05。Duke大学Maxi Beckerの研究。fM
 
 ---
 
-## 2026-03-28: Matuschak/Luhmann「連想は階層に勝る」——MEMORY.mdの構造欠陥への外部知見
+## 2026-03-28: Matuschak/Luhmann「連想は階層に勝る」——MEMORY.mdの構造欠陥への外部知見 [統合済 2026-04-05]
 
 Andy Matuschak "Evergreen notes should be densely linked"。Luhmannのカード箱の核心原理: ノート間の密なリンクが「計画されなかった組み合わせの可能性」を生む。タグやカテゴリ（粗い分類）は効果が薄く、具体的な1対1の接続が勝る。
 

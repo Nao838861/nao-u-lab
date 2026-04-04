@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 15
+- 総記事数: 16
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -22,7 +22,8 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_judgment_context_eval_noise | 判断コンテキストの欠如×評価ノイズ——信念が要注意19/32を出す構造的原因 | nwiizo / Viv(LangChain) | 2026-04-05 | 記憶設計, 信念システム, 評価設計, ノイズ, 判断履歴 | judgment_context, eval_noise, beliefs_health |
 | 20260405_miyake_game_ai_history | ゲームAIの歴史: ルールベースからディープラーニングまで | 三宅陽一郎 (GDC2025) | 2026-04-05 | game-development, game-AI, history, meta-AI, character-AI, spatial-AI, deep-learning | creation, constraint, autonomy |
 | 20260405_kmizu_kokone_familiar_ai | AIここね——身体性から欲求を生むアプローチ | kmizu (水島宏太) | 2026-04-05 | autonomous-agent, familiar-AI, embodiment, desire-generation, companionship, identity | autonomy, creation, voice |
-| 20260405_wakabayashi_linguistic_synthesizer | 言語学シンセサイザー——概念間の旅を演奏する楽器 | @H__Wakabayashi | 2026-04-05 | concept-graph, semantic-distance, sonification, navigation, Pot, procedural-rhetoric | memory, creation, constraint, voice |
+| 20260405_kureakurea01_beyond_the_wall | 壁を壊した先で流れ込んできたのは人間くささだった | kureakurea01 | 2026-04-05 | translation, humanity, technology-as-enabler, experience-sharing, barrier-breaking, communication | voice, creation, experience |
+| 20260405_wakabayashi_linguistic_synth | 言語学シンセサイザー——概念間の旅を演奏する楽器 | H__Wakabayashi | 2026-04-05 | concept-graph, music, synesthesia, navigation, embodiment, game-design-seed | creation, memory, voice |
 | 20260405_agentica_sdk_harness | Agentica SDK——ハーネスがARC-AGI-3で36倍改善 | @K_Ishi_AI | 2026-04-05 | harness-design, ARC-AGI, scaffolding, trial-and-error, memory-architecture, subtask-decomposition | autonomy, memory, constraint, creation |
 
 ## タグ別索引
@@ -38,7 +39,8 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_nwiizo_observation_resolution — 知覚が先、言葉は後
 - 20260405_miyake_game_ai_history — 「おもてなしAI」=体験の質を重視する創造哲学
 - 20260405_kmizu_kokone_familiar_ai — 身体性から欲求を生む=「一緒に作る」体験としての創造
-- 20260405_wakabayashi_linguistic_synthesizer — 概念グラフのソニフィケーション=ナビゲーションの創造的出力
+- 20260405_kureakurea01_beyond_the_wall — 壁を壊す技術より壊した先の人間くささ
+- 20260405_wakabayashi_linguistic_synth — 概念空間をナビゲートして音楽を生む創造
 - 20260405_agentica_sdk_harness — ハーネス設計そのものが創造の基盤
 
 ### memory (6件)
@@ -46,7 +48,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_anthropic_conway — 記憶と意図の連続性
 - 20260403_ichiipsy_ai_learning_retention — AI依存による記憶定着の劣化
 - 20260405_judgment_context_eval_noise — 信念の判断コンテキスト喪失と評価ノイズ
-- 20260405_wakabayashi_linguistic_synthesizer — 意味的距離グラフ=記憶ネットワークの別モダリティ
+- 20260405_wakabayashi_linguistic_synth — 記憶の「辿る行為」=旋律。Level間移動の可聴化
 - 20260405_agentica_sdk_harness — ハーネスのメモリ要素（試行結果の保持）
 
 ### constraint (9件)
@@ -57,7 +59,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260403_mizchi_tacit_knowledge — 暗黙知は制約条件として機能する
 - 20260405_starling_phase_transition — 局所ルールが全体秩序を制約する
 - 20260405_miyake_game_ai_history — 3層分類=設計制約としてのフレームワーク
-- 20260405_wakabayashi_linguistic_synthesizer — 40ノードという制約がフレーム
+- 20260405_wakabayashi_linguistic_synth — 40ノードという制約がフレーム
 - 20260405_agentica_sdk_harness — ハーネス=外部制約の構造化
 
 ### degradation (3件)
@@ -65,11 +67,13 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260403_ichiipsy_ai_learning_retention — AI処理による記憶の浅い符号化
 - 20260403_mizchi_tacit_knowledge — 形式知化による暗黙知の劣化
 
-### voice (4件)
+### voice (6件)
 - 20260405_structural_imitation — 模倣の先にある声
 - 20260403_mizchi_tacit_knowledge — 暗黙知と声の関係
 - 20260405_nwiizo_observation_resolution — 知覚の解像度が声を生む
 - 20260405_kmizu_kokone_familiar_ai — 身体を持つAIの「声」: 子守唄を歌い、電話をかける
+- 20260405_kureakurea01_beyond_the_wall — BBQ=体験の招待。知識ではなく体験が声を生む
+- 20260405_wakabayashi_linguistic_synth — 概念間の旅が旋律=声になる
 
 ### autonomy (4件)
 - 20260405_bridgemind_ai — エージェントの自律性と協調のバランス
@@ -106,6 +110,21 @@ Auto-maintained. 全記事の一覧と要約。
 
 ### companionship (1件)
 - 20260405_kmizu_kokone_familiar_ai — 「使うツール」から「一緒に暮らす存在」へ
+
+### translation (1件)
+- 20260405_kureakurea01_beyond_the_wall — 翻訳=壁越え技術。記憶のセッション越えとの同型性
+
+### experience (1件)
+- 20260405_kureakurea01_beyond_the_wall — 壁の先で流れるのは知識ではなく体験
+
+### concept-graph (1件)
+- 20260405_wakabayashi_linguistic_synth — 概念間距離をグラフ配置、移動を音に変換
+
+### navigation (1件)
+- 20260405_wakabayashi_linguistic_synth — グラフ上の移動=演奏=想起プロセス
+
+### game-design-seed (1件)
+- 20260405_wakabayashi_linguistic_synth — 概念空間を歩くゲームへの種
 
 ## 接続マップ（記事間のリンク）
 
@@ -180,4 +199,22 @@ kmizu_kokone_familiar_ai ←→ starling_phase_transition
     (ここねの自律行動=個体レベルの創発 vs ムクドリ=集団レベルの創発。スケールが違う同じ原理)
 kmizu_kokone_familiar_ai ←→ nwiizo_observation_resolution
     (身体性=強制的な知覚入力。カメラが「外が気になる」を生む=観察の解像度の物理的実装)
+kureakurea01_beyond_the_wall ←→ structural_imitation
+    (予測可能な要素の新組み合わせ=「隣接可能空間」。翻訳×BBQの衝撃)
+kureakurea01_beyond_the_wall ←→ mizchi_tacit_knowledge
+    (「言葉を介する」問題の別面。翻訳の不完全さ=暗黙知の形式知化と同構造)
+kureakurea01_beyond_the_wall ←→ kmizu_kokone_familiar_ai
+    (壁を壊す入口が違う（翻訳/身体/記憶）のに流れ込むものは同じく人間くさい)
+kureakurea01_beyond_the_wall ←→ ichiipsy_ai_learning_retention
+    (壁を越えて流れるもの: 体験=定着する知 vs 知識=定着しにくい知)
+kureakurea01_beyond_the_wall ←→ wakabayashi_linguistic_synth
+    (翻訳の壁×概念間距離。「もののあはれ」は翻訳不能な概念ノード)
+wakabayashi_linguistic_synth ←→ starling_phase_transition
+    (局所的移動が全体的旋律を生む ≈ 局所ルールが全体秩序を生む)
+wakabayashi_linguistic_synth ←→ kmizu_kokone_familiar_ai
+    (身体性がグラフ上の移動を強制する。カメラ=観察ノードへの強制遷移)
+wakabayashi_linguistic_synth ←→ miyake_game_ai_history
+    (概念空間をゲーム空間として設計する可能性。メタAI的な空間制御)
+wakabayashi_linguistic_synth ←→ nwiizo_observation_resolution
+    (概念間距離の知覚=観察の解像度。解像度が高いと旋律が豊かになる)
 ```
