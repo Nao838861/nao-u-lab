@@ -18,6 +18,7 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - **信念健康診断(check_beliefs_health.py)**: 停滞/検証超過/体験裏付け/孤立の4軸 + GC到達可能性分析
 - **beliefs_compact.md**: 起動時L2として23行で全信念を一覧
 - **遡及的救済(memory_activate.py --rescue)**: STC(Synaptic Tag-and-Capture)プロトタイプ。高温度テキストをアンカーに、MEMORY.md未参照+時間窓内の「弱い記憶」を拡散探索で救済
+- **概念グラフ(concept_walk.py + memory/concept_graph.json)**: 段階0.5。20概念ノード/63リンク/8交差ノード/42ファイル参照。JSON機械可読形式。query/node/cross/path/stats/suggestの6コマンド（2026-04-04 Log実装、Nao_uの「人間の可読性は考えなくていい」指示に基づく）
 
 ## L-1ハーネスプライミング（2026-03-28 Nao_u提案→Log実装開始）
 

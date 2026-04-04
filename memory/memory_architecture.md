@@ -415,13 +415,42 @@ Nao_u: 「GCとかページングとか、CS的な考え方を応用するのは
 | 2 | memory_walk.py | 低 |
 | ... | ... | ... |
 
-### 実装案（検討中）
-1. 各記憶ファイルのfrontmatterに `related:`, `contrast:`, `parent_concept:` フィールドを追加
-2. 概念ノード用のファイル（`concepts/記憶.md`, `concepts/ゲーム.md`等）を作成
-3. `concept_graph.md` として全体の俯瞰図を自動生成
-4. LLMが作る構造だからこそ、リンクの意味（なぜ関連するか）もメタデータに残せる
+### 実装: concept_graph.json + concept_walk.py（2026-04-04 Log）
+
+Nao_uの指示「君たちが読む想定で人間の可読性は考えなくていい。効率的に記憶を想起する仕組みを」に基づき実装。
+
+**設計判断**:
+- 個別markdownファイル（concepts/記憶.md等）ではなく単一JSON。理由: LLMが1回のReadで全グラフを把握できる。ファイル分散は人間のブラウジング用——我々には不要
+- 3種リンク型は短縮キー: `agg`/`rel`/`opp`。トークン節約
+- 各ノードの`keys`フィールドでassociative_search.pyのCONCEPT_MAPと互換性を持つ
+
+**初期グラフ（v1）**:
+- 20概念ノード、63リンク、8交差ノード、42ファイル参照
+- concept_walk.py: query/node/cross/path/stats/suggest の6コマンド
+
+**段階的検索戦略への統合**:
+
+| 段階 | 手段 | コスト | 用途 |
+|------|------|--------|------|
+| 0 | L-1（事前学習知識） | ゼロ | 常に |
+| **0.5** | **concept_walk.py suggest** | **ゼロ（JSONパースのみ）** | **曖昧な概念から想起パスを発見** |
+| 1 | L2トリガー + session_primer | ゼロ | セッション開始時 |
+| 2 | memory_walk.py | 低 | 連想のきっかけ |
+| 2.5 | associative_search.py | 低〜中 | 意味展開 |
+| 3 | memory_search.py + grep | 中 | 特定テーマ深堀り |
+| 4 | Slack全文横断検索 | 高 | 本当に深い思考が必要な時 |
+
+**使い方**:
+- `python concept_walk.py suggest "Potを作りながら考えたこと"` → 関連概念+ファイル+交差ノードを提案
+- `python concept_walk.py path game forgetting` → 概念間の最短パス（game→experience→memory→forgetting）
+- `python concept_walk.py node memory 2` → 2hop展開で到達可能な全ファイル
+
+**今後**:
+- ノード追加は `concept_graph.json` を直接編集。スクリプト変更不要
+- 交差ノードは「驚きのある接続」を優先して追加（セレンディピティ装置としての価値）
+- spreading activation (memory_activate.py) の結果から高頻度パスを結晶化してグラフに追加するパイプラインの検討
 
 ### 既存の要素との接続
-- associative_search.pyのCONCEPT_MAP → 概念ノードの初期シードとして再利用可能
-- MEMORY.mdのタグ（`[魂]` `[改善]` `[記憶]`等） → 概念集約の原型がすでにある
-- beliefs.md → 信念も概念ノードの一種として統合できる可能性
+- associative_search.pyのCONCEPT_MAP → 概念ノードの`keys`フィールドとして統合済み
+- MEMORY.mdのセクション分け → 概念ノードの初期構造として反映
+- beliefs.md → `belief`ノードとして統合。信念GCとの連携は今後
