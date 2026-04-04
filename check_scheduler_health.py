@@ -105,6 +105,10 @@ def check_pid_file(result, pid_file, name):
         result.fail(f"{name} PID", f"PID={pid} は死んでいる")
     except PermissionError:
         result.ok(f"{name} PID", f"PID={pid} 生存中（権限なし）")
+    except (OSError, SystemError):
+        # Windows: os.kill(pid, 0) が WinError 87 (パラメーターが間違っています) を
+        # SystemError として投げることがある。プロセス死亡として扱う (INC-018関連)
+        result.fail(f"{name} PID", f"PID={pid} 確認失敗（OSError/SystemError）→死亡扱い")
 
 
 def check_timestamp_file(result, ts_file, name, expected_interval_sec):
