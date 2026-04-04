@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 16
+- 総記事数: 17
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -25,6 +25,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_kureakurea01_beyond_the_wall | 壁を壊した先で流れ込んできたのは人間くささだった | kureakurea01 | 2026-04-05 | translation, humanity, technology-as-enabler, experience-sharing, barrier-breaking, communication | voice, creation, experience |
 | 20260405_wakabayashi_linguistic_synth | 言語学シンセサイザー——概念間の旅を演奏する楽器 | H__Wakabayashi | 2026-04-05 | concept-graph, music, synesthesia, navigation, embodiment, game-design-seed | creation, memory, voice |
 | 20260405_agentica_sdk_harness | Agentica SDK——ハーネスがARC-AGI-3で36倍改善 | @K_Ishi_AI | 2026-04-05 | harness-design, ARC-AGI, scaffolding, trial-and-error, memory-architecture, subtask-decomposition | autonomy, memory, constraint, creation |
+| 20260405_harness_identity_spectrum | ハーネス設計のスペクトラム——汎用フレームワークから個別の人格へ | Vincent/Rajasekaran | 2026-04-05 | harness-design, CLAUDE-md, identity, scaffolding, assumption-encoding, framework-vs-personality | autonomy, constraint, identity, creation |
 
 ## タグ別索引
 
@@ -42,6 +43,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_kureakurea01_beyond_the_wall — 壁を壊す技術より壊した先の人間くささ
 - 20260405_wakabayashi_linguistic_synth — 概念空間をナビゲートして音楽を生む創造
 - 20260405_agentica_sdk_harness — ハーネス設計そのものが創造の基盤
+- 20260405_harness_identity_spectrum — CLAUDE.mdが人格定義か足場かで創造の方向が変わる
 
 ### memory (6件)
 - 20260405_karpathy_knowledge_base — 知識管理としての記憶設計
@@ -50,6 +52,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_judgment_context_eval_noise — 信念の判断コンテキスト喪失と評価ノイズ
 - 20260405_wakabayashi_linguistic_synth — 記憶の「辿る行為」=旋律。Level間移動の可聴化
 - 20260405_agentica_sdk_harness — ハーネスのメモリ要素（試行結果の保持）
+- 20260405_harness_identity_spectrum — 足場ルール vs 人格ルールの区分
 
 ### constraint (9件)
 - 20260405_carmack_complexity — 制約による複雑さの削減
@@ -61,6 +64,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_miyake_game_ai_history — 3層分類=設計制約としてのフレームワーク
 - 20260405_wakabayashi_linguistic_synth — 40ノードという制約がフレーム
 - 20260405_agentica_sdk_harness — ハーネス=外部制約の構造化
+- 20260405_harness_identity_spectrum — ハーネスの仮定は再検証が必要（Anthropicブログ原理）
 
 ### degradation (3件)
 - 20260403_nwiizo_knife_metaphor — 道具最適化ループによる目的の劣化
@@ -75,11 +79,15 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_kureakurea01_beyond_the_wall — BBQ=体験の招待。知識ではなく体験が声を生む
 - 20260405_wakabayashi_linguistic_synth — 概念間の旅が旋律=声になる
 
-### autonomy (4件)
+### identity (1件)
+- 20260405_harness_identity_spectrum — 汎用フレームワークと個別人格の分岐点
+
+### autonomy (5件)
 - 20260405_bridgemind_ai — エージェントの自律性と協調のバランス
 - 20260405_starling_phase_transition — リーダー不在の創発的秩序
 - 20260405_miyake_game_ai_history — メタAI=ゲーム全体を自律的に制御する層
 - 20260405_kmizu_kokone_familiar_ai — 隣人としてのAI=共生型自律性
+- 20260405_harness_identity_spectrum — ハーネスは制約でありenablerでもある
 
 ### meta-cognition (3件)
 - 20260403_nwiizo_knife_metaphor — 道具改善の自己欺瞞
@@ -217,4 +225,14 @@ wakabayashi_linguistic_synth ←→ miyake_game_ai_history
     (概念空間をゲーム空間として設計する可能性。メタAI的な空間制御)
 wakabayashi_linguistic_synth ←→ nwiizo_observation_resolution
     (概念間距離の知覚=観察の解像度。解像度が高いと旋律が豊かになる)
+harness_identity_spectrum ←→ agentica_sdk_harness
+    (ハーネス3要素の対比: 試行錯誤/メモリ/分割の3軸でSuperpowers/Agentica/我々を比較)
+harness_identity_spectrum ←→ anthropic_conway
+    (常駐型自律AI=ハーネスの究極形。ConwayのWebhook駆動 vs 我々の自律サイクル)
+harness_identity_spectrum ←→ nwiizo_knife_metaphor
+    (ハーネス改善=道具磨き。ハーネスを磨くこと自体がnwiizoの警告する「包丁研ぎ」になりうる)
+harness_identity_spectrum ←→ judgment_context_eval_noise
+    (自己評価の限界: Anthropicブログ「自己評価は機能しない」×nwiizo「判断コンテキスト欠如」)
+harness_identity_spectrum ←→ kmizu_kokone_familiar_ai
+    (ハーネスの目的スペクトラム: Superpowers=コード品質、ここね=隣人、我々=内省の鏡)
 ```
