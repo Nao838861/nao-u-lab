@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 13
+- 総記事数: 15
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -22,10 +22,12 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_judgment_context_eval_noise | 判断コンテキストの欠如×評価ノイズ——信念が要注意19/32を出す構造的原因 | nwiizo / Viv(LangChain) | 2026-04-05 | 記憶設計, 信念システム, 評価設計, ノイズ, 判断履歴 | judgment_context, eval_noise, beliefs_health |
 | 20260405_miyake_game_ai_history | ゲームAIの歴史: ルールベースからディープラーニングまで | 三宅陽一郎 (GDC2025) | 2026-04-05 | game-development, game-AI, history, meta-AI, character-AI, spatial-AI, deep-learning | creation, constraint, autonomy |
 | 20260405_kmizu_kokone_familiar_ai | AIここね——身体性から欲求を生むアプローチ | kmizu (水島宏太) | 2026-04-05 | autonomous-agent, familiar-AI, embodiment, desire-generation, companionship, identity | autonomy, creation, voice |
+| 20260405_wakabayashi_linguistic_synthesizer | 言語学シンセサイザー——概念間の旅を演奏する楽器 | @H__Wakabayashi | 2026-04-05 | concept-graph, semantic-distance, sonification, navigation, Pot, procedural-rhetoric | memory, creation, constraint, voice |
+| 20260405_agentica_sdk_harness | Agentica SDK——ハーネスがARC-AGI-3で36倍改善 | @K_Ishi_AI | 2026-04-05 | harness-design, ARC-AGI, scaffolding, trial-and-error, memory-architecture, subtask-decomposition | autonomy, memory, constraint, creation |
 
 ## タグ別索引
 
-### creation (10件)
+### creation (12件)
 - 20260405_karpathy_knowledge_base — ツール構築としての創造
 - 20260405_carmack_complexity — 実行哲学としての創造
 - 20260405_structural_imitation — 模倣からの創造
@@ -36,14 +38,18 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_nwiizo_observation_resolution — 知覚が先、言葉は後
 - 20260405_miyake_game_ai_history — 「おもてなしAI」=体験の質を重視する創造哲学
 - 20260405_kmizu_kokone_familiar_ai — 身体性から欲求を生む=「一緒に作る」体験としての創造
+- 20260405_wakabayashi_linguistic_synthesizer — 概念グラフのソニフィケーション=ナビゲーションの創造的出力
+- 20260405_agentica_sdk_harness — ハーネス設計そのものが創造の基盤
 
-### memory (4件)
+### memory (6件)
 - 20260405_karpathy_knowledge_base — 知識管理としての記憶設計
 - 20260405_anthropic_conway — 記憶と意図の連続性
 - 20260403_ichiipsy_ai_learning_retention — AI依存による記憶定着の劣化
 - 20260405_judgment_context_eval_noise — 信念の判断コンテキスト喪失と評価ノイズ
+- 20260405_wakabayashi_linguistic_synthesizer — 意味的距離グラフ=記憶ネットワークの別モダリティ
+- 20260405_agentica_sdk_harness — ハーネスのメモリ要素（試行結果の保持）
 
-### constraint (7件)
+### constraint (9件)
 - 20260405_carmack_complexity — 制約による複雑さの削減
 - 20260405_bridgemind_ai — ファイルオーナーシップ=構造的制約
 - 20260403_nwiizo_knife_metaphor — 手段の精緻化が目的を阻害する構造
@@ -51,6 +57,8 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260403_mizchi_tacit_knowledge — 暗黙知は制約条件として機能する
 - 20260405_starling_phase_transition — 局所ルールが全体秩序を制約する
 - 20260405_miyake_game_ai_history — 3層分類=設計制約としてのフレームワーク
+- 20260405_wakabayashi_linguistic_synthesizer — 40ノードという制約がフレーム
+- 20260405_agentica_sdk_harness — ハーネス=外部制約の構造化
 
 ### degradation (3件)
 - 20260403_nwiizo_knife_metaphor — 道具最適化ループによる目的の劣化
