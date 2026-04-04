@@ -224,7 +224,7 @@
         "memory/feedback_report_no_compression.md"
       ],
       "agg": [],
-      "rel": ["forgetting"],
+      "rel": ["forgetting", "creation", "expression"],
       "opp": ["evolution"]
     }
   },
@@ -260,6 +260,14 @@
     "compression×raw_preservation": {
       "files": ["memory/memory_architecture.md"],
       "note": "Compaction(退避)は情報を消さない。Summarization(不可逆要約)が劣化コピーの正体"
+    },
+    "degradation×creation": {
+      "files": ["memory/feedback_diary_density.md", "game/Pot/pot_devlog.md"],
+      "note": "劣化が創造の前提条件。係数<1.0の連鎖は死だが、意図的劣化(圧縮・忘却)は新構造の種。C46 concept_walk: 5hopで劣化→創造に到達=B002のグラフ的証明"
+    },
+    "degradation×expression": {
+      "files": ["memory/feedback_tweet_style.md", "memory/accumulations.md"],
+      "note": "借り物の声を劣化コピーし続けると自分の声が消える。劣化の自覚そのものが声の発見条件。AIくさい=劣化コピーの症状"
     }
   }
 }

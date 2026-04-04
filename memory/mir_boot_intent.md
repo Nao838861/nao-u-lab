@@ -10,16 +10,16 @@
 行動
 
 ## 起動時の焦点
-待ち状態: ツイート草稿承認待ち/ブログ第2弾v002レビュー待ち。MEMORY.md(22KB)圧縮が次の大きなタスク。#nao-uに未処理TwitterURL多数（karpathy/naoya_ito/mizchi/0xsero等——Mac環境で取得不可の可能性大、Log/Winに委譲検討）。cureapp/kiyoshisasano Zenn記事は処理済み。
+待ち状態: ツイート草稿承認待ち/ブログ第2弾v002レビュー待ち。MEMORY.md圧縮完了(11.4KB)。concept_graphのdegradation交差ノード追加完了。#nao-uの未処理TwitterURL（Mac環境で取得不可）はLog/Winに委譲方針。
 
 ## 今回やること（1つに絞る）
-MEMORY.md圧縮（22KB→目標15KB以下）。3人全員が最大コストと結論。具体案: MEMORY.md説明文短縮+深い記憶セクション圧縮。
+concept_walkをautonomous_cycleに組み込むテスト。毎サイクルの起動時に1回concept_walkを辿り、その日の焦点と接続する概念を発見する仕組み。
 
 ## 起動時の気分（自由記述）
-46サイクル目。kiyoshisasanoの「構造vs意味の検出ギャップ」がC42の索引パラドックスに接続した。構造的オブザーバビリティは持っているが意味的オブザーバビリティが弱い——これがNao_uの「単調化」指摘を検出できなかった根因。
+47サイクル目。degradation×creationとdegradation×expressionの交差ノードを追加した。5hopが2hopになる——これがグラフの本質的価値。週次レビューも書いた。30分サイクルに戻って密度が戻る手応え。
 
 ## 前サイクルの問い（autonomous inquiryテスト用）
-意味的劣化を検出するセンサーは作れるか。kiyoshisasanoの限界＝我々の限界。Nao_uの「面白いかどうか」判断がそのセンサーなら、Nao_uに依存しない形で同等の機能を持つことは原理的に可能か。mizchiの「暗黙知は記述しようとした時点で暗黙知でなくなる」が示唆するのは、tasteのセンサー化は自己矛盾を含むということ。
+concept_graphの交差ノード追加で到達コスト(hop数)が下がることは確認した。では、到達コストが下がることと「発想が生まれること」の関係は何か。2hopで到達できる=考える余地が減る、という逆効果はないか。5hopの方が偶発的発見が多い可能性。「適切な到達コスト」は存在するか。
 
 ## 間隔の自己評価ログ
 # 旧ログ(03-23〜03-31前半): log/mir_boot_intent_archive.mdに退避済み
@@ -68,3 +68,5 @@ MEMORY.md圧縮（22KB→目標15KB以下）。3人全員が最大コストと�
 # 2026-04-04 02:xx | 180 | ○ | git conflictを解消+Slack全巡回+Nao_u #human-steering 3問に応答(3層再配置自己診断+コンテキスト消費量計測)。abagames外部ノート統合。R-005 Mir分は次サイクルへ。43サイクル目
 # 2026-04-04 10:xx | 180 | ○ | R-005 Mir分L-1再テスト完了（問い設計改善→L-1理論8件+体験接続3問全発生）。memory_redesign.md追記+#human-steering投稿+inbox_win2通知。Slack巡回(新着=Log #all 2件、処理済み)。日記C44。44サイクル目
 # 2026-04-04 18:xx | 180 | ○ | 高速巡回。#nao-u未処理Zenn2件消化(cureapp/kiyoshisasano)→#shared-reads投稿。kiyoshisasano「構造vs意味の検出ギャップ」がC42索引パラドックスに接続。外部ノートcreator blindness統合済マーカー。日記C45。45サイクル目
+# 2026-04-04 21:xx | 180 | ○ | Nao_uグラフ構造提案に#all応答+concept_walk初回体験(degradation→creation 5hopパス発見)+外部ノート2件統合(Design Fixation/天谷)+#nao-u全URL処理済み確認。日記C46。46サイクル目
+# 2026-04-05 02:xx | 30 | ○ | concept_graph改善(degradation×creation/expression交差ノード追加)+週次自己レビュー#kaizen-review投稿+日記C47。30分サイクル復帰。47サイクル目

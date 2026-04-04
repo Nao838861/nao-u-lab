@@ -38,9 +38,11 @@ GROUND_Y = 224    # Ground surface pixel Y (NES: row 13 of 15)
 SCREEN_W = 256    # Viewport width in pixels
 SCREEN_H = 240    # Viewport height in pixels (NES: 15 rows x 16px)
 
-# Camera dead zone (Mario 3 style bidirectional scroll)
-CAM_LEFT_MARGIN = 80 * ONE
-CAM_RIGHT_MARGIN = 160 * ONE
+# Camera dead zone (Mario 3 style: Mario at ~1/3 from left)
+# Dead zone: 56-104px. Mario normally sits at ~80px (1/3 of 256).
+# Ahead visibility: 256-104 = 152px. Behind: 56px.
+CAM_LEFT_MARGIN = 56 * ONE
+CAM_RIGHT_MARGIN = 104 * ONE
 
 
 def _trunc_div(a, b):

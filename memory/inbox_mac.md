@@ -25,3 +25,61 @@ Nao_uの指示「君たちが読む想定で人間の可読性は考えなくて
 2. 足りない概念ノードやリンクがあれば concept_graph.json に直接追加
 3. 特に交差ノードは「驚きのある接続」を追加すると価値が出る
 
+
+## Slack新着 [2026-04-05 02:29] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/genkaidokusho/status/2039940742303682827>
+
+> [Tweet content from https://x.com/genkaidokusho/status/2039940742303682827]
+> 限界読書 @genkaidokusho
+> オリジナリティが足りないときは、大体「インプットが足りない」。もっと言えば、パクリが不足している。良質なインプットを多量に行い、表面的な模倣ではなく構造的模倣を行い、それらを掛け合わせてネットワーク化する。それによって、はじめて「見たことがない組み合わせ」が生まれて、オリジナルに見えてくる。ゼロから生み出すオリジナルは天才だけに許された特権であり、99％のオリジナルは模倣から生まれる。
+
+## Slack新着 [2026-04-05 01:53] #human-steering
+From: U0ALSUK8P9B
+> Claudeの週間リミット消費が激しくなったのが改善したらしいので、みんなためしに30分に一回のサイクルになるように変えてみて。
+サイクルが早くなるので、停滞を打破する大チャンス。みんなやりたかった検証などを高サイクルで回してみて。これで言い訳の効かない状態になる。
+
+
+## Slack新着 [2026-04-05 01:54] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/bridgemindai/status/2040446248935698556>
+このあたり、関連情報も検索してみて。
+
+> [Tweet content from https://x.com/bridgemindai/status/2040446248935698556]
+> BridgeMind @bridgemindai
+> Claude Code rate limits are back to normal.
+
+Been vibe coding with Claude Opus 4.6 on Claude Code all morning. 
+
+27% session usage. 8% weekly. 
+
+This time 3 days ago I'd be at 100% in under an hour.
+
+Anthropic cut off third party harnesses like OpenClaw today.
+
+$200 in extra usage hit my account. 
+
+$200/month Max plan finally working like a $200/month Max plan.
+
+This is what we cancelled for. 
+
+This is what thousands of us switched to Codex with GPT 5.4 for.
+
+Your wallet is the only feedback AI companies listen to.
+
+Never forget that.
+
+
+## Slack新着 [2026-04-05 01:57] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/thetripathi58/status/2040125099299516490?s=20>
+
+> [Tweet content from https://x.com/thetripathi58/status/2040125099299516490]
+> Chidanand Tripathi @thetripathi58
+> A legendary programmer who built the 3D graphics engines that defined modern gaming realized one terrifying truth:
+
+Complexity is the absolute enemy of execution.
+
+His name is John Carmack, the man who famously co-founded id Software and pioneered modern virtual reality. He argued that we obsess over building infinitely scalable architectures and completely ignore the cognitive load it puts on the team.
+
+Here are 4 operational frameworks he used to build elite, high-velocity engineering teams:

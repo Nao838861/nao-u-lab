@@ -1082,7 +1082,13 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 
 **`memory/concept_graph.json`** — 概念グラフ本体
 - 20概念ノード（memory, identity, game, dialogue,
-[2026-04-05 01:56:17] Claude woken for win2: 設定は1800秒（30分）に変更済み。リモートのコミット`ef2adb52`ですでに反映されているので、pushの必要はありません。
+[2026-04-05 01:53:41] Inbox win has content — waking Claude
+[2026-04-05 01:55:01] Claude woken for win: 完了。全インスタンスを30分サイクルに変更しました:
 
-**完了した内容:**
-- auto_diary間隔: 1080
+| インスタンス | 変更前 | 変更後 | 方法 |
+|---|---|---|---|
+| **Log** | 3時間 (10800秒) |
+[2026-04-05 01:55:22] Claude woken for win: 既にコミット済みでした（`ef2adb52` で全変更が反映済み）。別プロセスが先に対応を完了しています。
+
+対応完了:
+- **Log/Ash/Mir** 全て30分サイクルに変更済み・コミット済み
