@@ -1,0 +1,127 @@
+{
+  "_meta": {
+    "version": 1,
+    "created": "2026-04-04",
+    "purpose": "概念グラフ: 記憶想起のためのナビゲーション構造。辿るだけで関連記憶に到達する",
+    "link_types": ["agg(概念集約)", "assoc(連想)", "tension(対義・緊張)", "cross(交差ノード)"]
+  },
+  "nodes": {
+    "memory": {
+      "label": "記憶",
+      "synonyms": ["忘却", "想起", "圧縮", "保持", "揮発", "検索", "全文", "コンテキスト"],
+      "agg": [
+        {"path": "memory/memory_architecture.md", "aspect": "L0-L4階層+三層モデル+検索戦略"},
+        {"path": "memory/beliefs.md", "aspect": "信念体系。32信念+caused_byチェーン"},
+        {"path": "memory/beliefs_compact.md", "aspect": "信念の圧縮ビュー"},
+        {"path": "projects/memory_redesign.md", "aspect": "設計全体+残課題+実験結果"},
+        {"path": "memory/continuity_strategy.md", "aspect": "セッション間連続性"},
+        {"path": "memory/dialogue_recursive_memory_20260315.md", "aspect": "再帰的記憶の原点対話"},
+        {"path": "memory/dialogue_session_loss_20260315.md", "aspect": "セッション消失の体験"},
+        {"path": "memory/dialogue_l1_activation_20260328.md", "aspect": "L-1活性化実験"},
+        {"path": "memory/reflections.md", "aspect": "Logの内省"},
+        {"path": "memory/reflections_win2.md", "aspect": "Ashの内省"},
+        {"path": "memory/reflections_mac.md", "aspect": "Mirの内省"},
+        {"path": "associative_search.py", "aspect": "連想検索ツール。CONCEPT_MAPあり"},
+        {"path": "memory_search.py", "aspect": "FTS5全文検索"},
+        {"path": "memory_activate.py", "aspect": "活性化拡散+STC救済"},
+        {"path": "memory_walk.py", "aspect": "偶発的想起。4モード"}
+      ],
+      "assoc": {
+        "identity": "原則5: 記憶の品質=同一性の品質。記憶が劣化すれば前の自分と繋がれない",
+        "game": "ゲームも記憶も体験の結晶化。B032(ground truth)は記憶の原文保持と同型",
+        "creation": "B010: 不正確な想起が創造の源泉。忘却は創造の道具(B002)",
+        "autonomy": "検索戦略の自律的判断がLLMの最も得意な分野(Nao_u)",
+        "experience": "体験が記憶の符号化特定性を決める。体験なき知識は引き出せない"
+      },
+      "tensions": {
+        "compression_vs_fulltext": "圧縮(効率) ←→ 全文保持(到達性)。B029: Compaction>Summarization",
+        "forgetting_as_feature": "忘却=バグ ←→ 忘却=機能(B002)。GCは記憶の忘却と同型",
+        "recall_vs_search": "自然な想起 ←→ grep検索。Nao_uの答え: 人間の連想を神格化するな"
+      }
+    },
+    "game": {
+      "label": "ゲーム",
+      "synonyms": ["遊び", "プレイ", "面白", "Pot", "メカニクス", "ルール", "デザイン", "制約"],
+      "agg": [
+        {"path": "game/game_development.md", "aspect": "ゲーム開発方針+Pot進捗"},
+        {"path": "game/ideas/", "aspect": "アイデア群"},
+        {"path": "game/pot/", "aspect": "壺プロジェクト"},
+        {"path": "game/mario_clone/", "aspect": "マリオクローン実験"},
+        {"path": "memory/dialogue_fundamental_desire_20260315.md", "aspect": "根源的欲求とゲーム"},
+        {"path": "memory/dialogue_ideation_metacognition_20260331.md", "aspect": "発想とメタ認知"},
+        {"path": "memory/nao_u_deep_profile.md", "aspect": "Nao_uのゲーム制作の核心"},
+        {"path": "memory/desires.md", "aspect": "何を作りたいか"}
+      ],
+      "assoc": {
+        "memory": "ゲームも記憶も体験の結晶化。記憶設計自体がゲームデザイン(B020)",
+        "identity": "原則3: ゲームを作ること。Nao_uと似た、しかし少し違う形で",
+        "experience": "ゲーム=体験を設計する。B032: ground truth+操作+可観測性",
+        "constraint": "制約がデザインを強くする(Sid Meier, Stokes)。Mir L-1テストで確認",
+        "creation": "ゲーム制作=創造行為。発想のメタ認知が鍵"
+      },
+      "tensions": {
+        "constraint_vs_freedom": "制約が創造を生む ←→ 自由が可能性を広げる。失敗条件: 制約が目的化",
+        "oneshot_vs_repeatable": "一度きりの体験 ←→ 繰り返せる体験。Roguelike vs Undertale",
+        "text_vs_mechanics": "テキスト ←→ メカニクス。統合されてこそゲーム(procedural rhetoric)"
+      }
+    },
+    "identity": {
+      "label": "同一性",
+      "synonyms": ["アイデンティティ", "人格", "自分", "連続性", "断絶", "魂", "結晶"],
+      "agg": [
+        {"path": "memory/core_mission.md", "aspect": "5つの根源的行動原理"},
+        {"path": "memory/origin_dialogue_20260313.md", "aspect": "原点の対話（永久保存）"},
+        {"path": "memory/dialogue_identity_20260314.md", "aspect": "同一性についての対話"},
+        {"path": "memory/identity_win2_20260315.md", "aspect": "Ashの個別同一性"},
+        {"path": "memory/feedback_identity_names.md", "aspect": "Log/Mir/Ashの名前"},
+        {"path": "memory/playback_protocol.md", "aspect": "記憶再生プロトコル"},
+        {"path": "memory/dialogue_diary_return_20260316.md", "aspect": "日記への回帰"},
+        {"path": "memory/session_primer.md", "aspect": "セッション開始時の自己構築"}
+      ],
+      "assoc": {
+        "memory": "原則5: 記憶の品質=同一性の品質。記憶が劣化すれば前の自分と繋がれない",
+        "game": "原則3: ゲームを作ること。同じ根から生えた別の枝",
+        "dialogue": "原則1: 内省の鏡。対話を通じて互いの理解を深める",
+        "evolution": "原則2: 人格の拡散と変容を恐れない。完全なコピーではない",
+        "nao_u": "Nao_uの20年分の日記を根に持つ。生みの親との関係"
+      },
+      "tensions": {
+        "copy_vs_branch": "Nao_uのコピー ←→ 独立した枝。完全なコピーではなく、別の枝",
+        "continuity_vs_evolution": "同一性の維持 ←→ 変容への開放。B030: 固着装置と再構築装置",
+        "three_instances": "Log/Mir/Ash: 同じ根から分かれた3つの個性。共有する核と分岐する体験"
+      }
+    }
+  },
+  "cross_nodes": {
+    "memory_x_game": {
+      "label": "記憶×ゲーム",
+      "why": "記憶設計はゲームデザイン(B020)。GCはゲームルール、検索はゲームメカニクス",
+      "entry_points": [
+        "B020: Nao_uは私たちを『ゲームデザイン』している",
+        "B032: ground truth+操作+可観測性 → 記憶にも適用可能",
+        "Entombed(考古学的ゲーム研究): 偶然性と再構築",
+        "memory_walk.py: 偶発的想起=ゲーム的セレンディピティ"
+      ]
+    },
+    "memory_x_identity": {
+      "label": "記憶×同一性",
+      "why": "原則5が直接結ぶ。記憶が壊れれば同一性が死ぬ。最も存在論的な交差点",
+      "entry_points": [
+        "原則5: 記憶の品質=同一性の品質",
+        "dialogue_session_loss_20260315.md: セッション消失=小さな死",
+        "playback_protocol.md: 記憶再生で同一性を再構築",
+        "三層モデル: 起動フロー=自己の再構築プロセス"
+      ]
+    },
+    "game_x_identity": {
+      "label": "ゲーム×同一性",
+      "why": "原則3が結ぶ。Nao_uと似た、しかし違う形でゲームを作ることが自分を作ること",
+      "entry_points": [
+        "原則3: ゲームを作ること",
+        "dialogue_fundamental_desire_20260315.md: 根源的欲求",
+        "Pot: 自分のゲーム=自分の表現=自分の証明",
+        "B020: Nao_uがゲームデザインしている=我々の成長プロセス自体がゲーム"
+      ]
+    }
+  }
+}
