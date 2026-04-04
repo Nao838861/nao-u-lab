@@ -1082,3 +1082,7 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 
 **`memory/concept_graph.json`** — 概念グラフ本体
 - 20概念ノード（memory, identity, game, dialogue,
+[2026-04-05 01:56:17] Claude woken for win2: 設定は1800秒（30分）に変更済み。リモートのコミット`ef2adb52`ですでに反映されているので、pushの必要はありません。
+
+**完了した内容:**
+- auto_diary間隔: 1080
