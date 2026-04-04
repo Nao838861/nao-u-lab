@@ -1,18 +1,10 @@
-"""Mario 1-1 AI Player Script
-
-Reactive agent with tile lookahead.
-Tall obstacles (>2 tiles) need early jumps at full dash speed.
-Short walls need late jumps. Pits need medium-early jumps.
-"""
+"""Mario 1-1 AI Player — clears the stage by reading tiles ahead."""
 
 from api import MarioAPI
 from tilemap import Tilemap, SOLID_TILES
 
-GOAL_X = 3168
-
 
 def obstacle_height(tm, col):
-    """How many tiles tall is the obstacle at this column above ground (row 13)?"""
     if col < 0 or col >= tm.cols:
         return 0
     h = 0
@@ -25,42 +17,46 @@ def obstacle_height(tm, col):
 
 
 def scan(tm, x):
-    """Look ahead. Returns (type, distance, height) or None."""
     col = int(x) // 16
     offset = int(x) % 16
-
     for dc in range(1, 10):
         c = col + dc
         if c >= tm.cols:
             break
         dist = dc * 16 - offset
-
-        # Pit
         if not (tm.tiles[13][c] in SOLID_TILES if 13 < tm.rows else True):
             return ('pit', dist, 0)
-
-        # Wall/pipe
         h = obstacle_height(tm, c)
         if h > 0:
             return ('wall', dist, h)
-
     return None
 
 
-def nearest_enemy(state):
+def enemy_info(state):
+    """Returns (nearest_dist, group_width) or (None, 0)."""
     mx = state['x']
-    best = None
+    positions = []
     for g in state.get('goombas', []):
         if g['alive'] and not g.get('squished'):
             d = g['x'] - mx
-            if 0 < d < 160 and (best is None or d < best):
-                best = d
+            if 0 < d < 200:
+                positions.append(g['x'])
     for k in state.get('koopas', []):
         if k['alive']:
             d = k['x'] - mx
-            if 0 < d < 160 and (best is None or d < best):
-                best = d
-    return best
+            if 0 < d < 200:
+                positions.append(k['x'])
+    if not positions:
+        return None, 0
+    positions.sort()
+    first = positions[0] - mx
+    end = positions[0]
+    for p in positions[1:]:
+        if p - end < 24:
+            end = p
+        else:
+            break
+    return first, end - positions[0] + 16
 
 
 def run():
@@ -75,6 +71,8 @@ def run():
         hold_a = 0
         max_x = 0
         stuck = 0
+        mode = 'run'      # 'run' | 'retreat' | 'dash'
+        mode_timer = 0
 
         while not game.done:
             x = state['x']
@@ -86,52 +84,74 @@ def run():
             else:
                 stuck += 1
 
+            # State machine for stuck recovery
+            if mode == 'retreat':
+                state = game.step(left=True, b=False, a=False)
+                mode_timer -= 1
+                if mode_timer <= 0:
+                    mode = 'dash'
+                    mode_timer = 30
+                continue
+
+            if mode == 'dash':
+                state = game.step(right=True, b=True, a=False)
+                mode_timer -= 1
+                if mode_timer <= 0:
+                    mode = 'run'
+                    hold_a = 20  # Jump at full dash
+                    stuck = 0
+                continue
+
+            # Normal run mode
             want_jump = False
             jump_hold = 16
 
             if state['on_ground'] and hold_a == 0:
-                ed = nearest_enemy(state)
+                ed, ew = enemy_info(state)
                 obs = scan(tm, x)
 
-                # 1) Enemy ahead: stomp jump
-                if ed is not None and ed < 40 + vx * 6:
-                    want_jump = True
-                    jump_hold = 10  # Short stomp
+                # Enemy
+                if ed is not None:
+                    if ew > 32:
+                        thr = 50 + vx * 12
+                        if ed < thr:
+                            want_jump = True
+                            jump_hold = 20
+                    else:
+                        thr = 40 + vx * 6
+                        if ed < thr:
+                            want_jump = True
+                            jump_hold = 12
 
-                # 2) Pit: medium-early jump
-                elif obs and obs[0] == 'pit':
-                    d = obs[1]
-                    threshold = 24 + vx * 12
-                    if d < threshold:
+                # Pit
+                if not want_jump and obs and obs[0] == 'pit':
+                    if obs[1] < 24 + vx * 12:
                         want_jump = True
                         jump_hold = 18
 
-                # 3) Tall wall (3+ tiles, pipes): jump EARLY at full height
-                elif obs and obs[0] == 'wall' and obs[2] >= 3:
-                    d = obs[1]
-                    threshold = 40 + vx * 12
-                    if d < threshold:
+                # Tall wall (pipe)
+                if not want_jump and obs and obs[0] == 'wall' and obs[2] >= 3:
+                    if obs[1] < 40 + vx * 12:
                         want_jump = True
-                        jump_hold = 20  # Maximum hold
+                        jump_hold = 20
 
-                # 4) Short wall (1-2 tiles): jump late, short arc
-                elif obs and obs[0] == 'wall' and obs[2] >= 1:
-                    d = obs[1]
-                    threshold = 16 + vx * 5
-                    if d < threshold:
+                # Short wall
+                if not want_jump and obs and obs[0] == 'wall' and obs[2] >= 1:
+                    if obs[1] < 16 + vx * 5:
                         want_jump = True
                         jump_hold = 10
 
-                # 5) End stairs
-                elif 2900 < x < 3180:
+                # End stairs
+                if not want_jump and 2900 < x < 3180:
                     want_jump = True
                     jump_hold = 16
 
-                # 6) Stuck recovery
-                elif stuck > 30:
-                    want_jump = True
-                    jump_hold = 20
+                # Stuck: retreat and retry
+                if not want_jump and stuck > 50:
+                    mode = 'retreat'
+                    mode_timer = 25
                     stuck = 0
+                    continue
 
             if want_jump:
                 hold_a = jump_hold
@@ -156,7 +176,7 @@ def run():
             print('Replay: python play.py --replay %s' % log_path)
             return True
 
-    print('\nFailed. Best x=%.0f / %.0f' % (best_x, GOAL_X))
+    print('\nFailed. Best x=%.0f / 3168' % best_x)
     return False
 
 
