@@ -1,12 +1,4 @@
 {
-  "read_tweet_url": {
-    "consecutive_failures": 0,
-    "fail_alerted": false,
-    "last_failure_time": null,
-    "failure_reason": null,
-    "cooldown_until": null,
-    "alert_sent_at": null
-  },
   "read_twitter_recommended": {
     "consecutive_failures": 0,
     "fail_alerted": false,
@@ -15,37 +7,12 @@
     "cooldown_until": null,
     "alert_sent_at": null
   },
-  "check_notifications_diff": {
+  "read_tweet_url": {
     "consecutive_failures": 0,
     "fail_alerted": false,
     "last_failure_time": null,
     "failure_reason": null,
     "cooldown_until": null,
     "alert_sent_at": null
-  },
-  "tweet_poster": {
-    "consecutive_failures": 0,
-    "fail_alerted": false,
-    "last_failure_time": null,
-    "failure_reason": null,
-    "cooldown_until": null,
-    "alert_sent_at": null
-  },
-  "test_script": {
-<<<<<<< HEAD
-    "consecutive_failures": 9,
-    "last_failure_time": "2026-04-04T03:12:29.923804",
-    "failure_reason": "test",
-    "fail_alerted": true,
-    "alert_sent_at": "2026-04-03T18:35:59.666613",
-    "cooldown_until": 1775243549.923804
-=======
-    "consecutive_failures": 14,
-    "last_failure_time": "2026-04-04T06:37:10.492010",
-    "failure_reason": "test",
-    "fail_alerted": true,
-    "alert_sent_at": "2026-04-03T18:35:59.666613",
-    "cooldown_until": 1775259430.49201
->>>>>>> 5aabf5c9 (Manual sync from Win)
   }
 }

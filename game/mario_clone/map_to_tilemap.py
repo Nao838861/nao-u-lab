@@ -100,9 +100,15 @@ def classify_tile(img, col, row, tile_size):
         return "sky"
 
     # --- Goomba/sprite detection ---
-    if cats["brown"] >= 3 and cats["sky"] >= 3 and cats["peach"] >= 2:
+    # Goomba = brown body + peach feet. Background is sky OR bush green.
+    # When Goomba overlaps a bush, sky=0 but dark_green_obj fills the role.
+    # Distinguish from castle/ground (brown+peach but no background gap):
+    #   Goomba: brown ~96, peach ~44 (peach < brown)
+    #   Castle window: brown ~72, peach ~88 (peach > brown)
+    bg = cats["sky"] + cats["dark_green_obj"]
+    if cats["brown"] >= 3 and bg >= 3 and cats["peach"] >= 2 and cats["peach"] <= cats["brown"]:
         return "goomba"
-    if cats["peach"] >= 3 and cats["brown"] >= 4 and cats["sky"] >= 1:
+    if cats["peach"] >= 2 and cats["brown"] >= 3 and bg >= 1 and cats["peach"] <= cats["brown"]:
         return "goomba"
 
     # --- Koopa detection ---
