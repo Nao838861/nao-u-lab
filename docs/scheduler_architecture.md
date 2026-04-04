@@ -17,6 +17,7 @@
 | P6 | **タイムアウト自動エスカレーションに上限(3600s)を設ける** | 上限なしだと無限拡大 |
 | P7 | **設定変更はJSON+update_scheduler.py経由のみ。コード直接編集禁止** | 再起動なしでホットリロードできる仕組みを壊さない |
 | P8 | **障害はdocs/scheduler_incidents.mdに記録。同じ問題を2度起こさない** | 知識の横断不足がパターンC |
+| P9 | **設定変更は`update_scheduler.py`経由で全インスタンスに原子適用。手動編集禁止** | INC-018: 間隔変更が毎回トラブル。3方式混在+個別変更が根本原因 |
 
 ## 2. システム構成図
 
@@ -149,16 +150,23 @@ if datetime.now().hour % 6 == 2:  # INC-007で禁止
 **全マシン共通: `python update_scheduler.py` を使う。コード編集禁止。**
 
 ```bash
-# 周期変更（再起動不要、10秒以内に反映）
+# 全インスタンス一括変更（推奨。1コマンドで全員に適用）
+python update_scheduler.py --all-cycle interval 1800
+
+# 個別変更（再起動不要、10秒以内に反映）
 python update_scheduler.py ash auto_diary interval 3600
 python update_scheduler.py log auto_cycle interval 3600
+python update_scheduler.py mir interval 1800
 
 # タイムアウト変更
 python update_scheduler.py ash inbox_check timeout 900
 
 # 現在の設定確認
+python update_scheduler.py --show all
 python update_scheduler.py --show ash
-python update_scheduler.py --show log
+
+# 整合性検証（変更後に必ず実行）
+python update_scheduler.py --verify
 ```
 
 ### 6.1 間隔変更チェックリスト（INC-019対策: 変更だけで完了にしない）
