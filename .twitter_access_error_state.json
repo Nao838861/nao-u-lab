@@ -14,5 +14,10 @@
     "failure_reason": null,
     "cooldown_until": null,
     "alert_sent_at": null
+  },
+  "test_script": {
+    "consecutive_failures": 1,
+    "last_failure_time": "2026-04-04T21:13:35.121820",
+    "failure_reason": "test"
   }
 }
