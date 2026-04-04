@@ -45,6 +45,13 @@ CONTENT=$(grep -v '^#' "$INBOX" | grep -v '^$' | head -1)
 if [ -n "$CONTENT" ]; then
     echo "$(date): 受信箱にメッセージあり。claude起動。"
 
+    # 他のclaudeプロセスが走っていたらスキップ（認証トークン競合防止 2026-04-05）
+    CLAUDE_COUNT=$(pgrep -c -f "claude" 2>/dev/null || echo 0)
+    if [ "$CLAUDE_COUNT" -gt 0 ]; then
+        echo "$(date): 他のclaudeプロセスが実行中（${CLAUDE_COUNT}個）。スキップ（次回のinboxチェックで処理する）。"
+        exit 0
+    fi
+
     # claude CLIを起動してメッセージを処理させる
     # which claudeで最新バージョンを使う。古いnpxキャッシュは認証問題の原因になる(INC-019)
     CLAUDE_BIN=$(which claude 2>/dev/null)

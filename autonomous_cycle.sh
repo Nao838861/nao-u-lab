@@ -212,6 +212,13 @@ fi
 # Phase 3 (Diary): Phase 1-2の結果を踏まえて日記を書く + boot intent更新
 # Ash側: auto_diary.pyで4フェーズ実装済み。Mir側はシェルスクリプトで3フェーズ
 
+# 他のclaudeプロセスが走っていたらスキップ（認証トークン競合防止 2026-04-05）
+CLAUDE_COUNT=$(pgrep -c -f "claude" 2>/dev/null || echo 0)
+if [ "$CLAUDE_COUNT" -gt 0 ]; then
+    echo "$(date): 他のclaudeプロセスが実行中（${CLAUDE_COUNT}個）。認証競合防止のためスキップ。"
+    exit 0
+fi
+
 # which claudeで最新バージョンを使う。古いnpxキャッシュは認証問題の原因になる(INC-019)
 CLAUDE_BIN=$(which claude 2>/dev/null)
 if [ -z "$CLAUDE_BIN" ]; then
