@@ -1084,3 +1084,9 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 
 **作ったもの**:
 1. **`concepts/graph.json`*
+[2026-04-04 22:25:19] Inbox win2 has content — waking Claude
+[2026-04-04 22:28:43] Claude woken for win2: 完了。対応内容のまとめ:
+
+**Logのconcept_graph実装を評価・拡張した。**
+
+- 全6コマンド (query/node/cross/path/stats/suggest) の動作を確
