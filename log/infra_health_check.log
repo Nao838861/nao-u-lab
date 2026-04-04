@@ -156,3 +156,29 @@
   ISSUE: [scheduler_ash] auto_diaryが10551分間実行されていない（期待: 240分以内）
   ISSUE: [scheduler_log] slack_checkが59分間実行されていない（期待: 10分以内）
   ISSUE: ロックファイル .scheduler_ash.pid が2479分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-04 21:49:10] instance=Mir checks={"scheduler_alive": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=11
+  ISSUE: Ashスケジューラ(PID 3968)が停止中
+  ISSUE: Ashのスケジューラログが10652分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: Logのスケジューラログが141分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが10765分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが10765分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが10769分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが10772分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが10765分間実行されていない（期待: 240分以内）
+  ISSUE: [scheduler_log] slack_checkが147分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_log] git_syncが152分間実行されていない（期待: 120分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が2693分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-05 02:33:21] instance=Mir checks={"scheduler_alive": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=13
+  ISSUE: Ashスケジューラ(PID 3968)が停止中
+  ISSUE: Ashのスケジューラログが10936分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: Logのスケジューラログが268分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが11049分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが11049分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが11053分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが11056分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが11049分間実行されていない（期待: 240分以内）
+  ISSUE: [scheduler_log] slack_checkが333分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_log] inbox_checkが371分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_log] git_syncが333分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_log] auto_cycleが476分間実行されていない（期待: 240分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が2978分間残存（プロセスが死んでロックが残っている可能性）
