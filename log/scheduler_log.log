@@ -7652,3 +7652,21 @@ name: 合意→実行のデフォルトル
 [2026-04-05 03:52:45] [health_check] Starting
 [2026-04-05 03:52:46] [health_check] Done (exit=0)
 [2026-04-05 03:52:46] [scheduler_health] Starting
+[2026-04-05 04:49:10] ==================================================
+[2026-04-05 04:49:10] Log scheduler started (PID 48464)
+[2026-04-05 04:49:10] Max runtime: unlimited
+[2026-04-05 04:49:10] Code hash: d7a0285cc15e383b73a96d53eba4dc15
+[2026-04-05 04:49:10] Jobs: slack_check, inbox_check, git_sync, recommended_check, slack_export, auto_cycle, health_check, scheduler_health
+[2026-04-05 04:49:10] ==================================================
+[2026-04-05 04:49:10] [slack_check] Starting
+[2026-04-05 04:51:48] ==================================================
+[2026-04-05 04:51:48] Log scheduler started (PID 99364)
+[2026-04-05 04:51:48] Max runtime: unlimited
+[2026-04-05 04:51:48] Code hash: d7a0285cc15e383b73a96d53eba4dc15
+[2026-04-05 04:51:48] Jobs: slack_check, inbox_check, git_sync, recommended_check, slack_export, auto_cycle, health_check, scheduler_health
+[2026-04-05 04:51:48] ==================================================
+[2026-04-05 04:51:48] [slack_check] Starting
+[2026-04-05 04:52:11] [slack_check] Done (exit=1)
+[2026-04-05 04:52:11] [inbox_check] Starting
+[2026-04-05 04:52:12] [inbox_check] Done (exit=0)
+[2026-04-05 04:52:12] [git_sync] Starting
