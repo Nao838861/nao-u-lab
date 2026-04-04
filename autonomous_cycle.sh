@@ -4,8 +4,13 @@
 # check_inbox.sh（受信箱専用・1分ごと）とは別に動く。
 #
 # 設計原則（2026-03-20 Nao_uの指示）:
-# スクリプトでできることはスクリプトでやる。LLMの認知力とAPIコストは8フェーズ改善サイクルに集中させる。
+# スクリプトでできることはスクリプトでやる。LLMの認知力とAPIコストは改善サイクルに集中させる。
 # git pull、git push、inbox監視はスクリプト側で処理済みの状態からclaudeを起動する。
+#
+# 3フェーズ分割（2026-04-05 Nao_u #human-steering 提案）:
+# 「LLMは1回の起動でやるべきことが多いと注意が分散する」→claude --printを3回に分割。
+# Phase 1 (Gather/8分): 情報収集→staging記録。Phase 2 (Process/12分): 分析・対処。
+# Phase 3 (Diary/8分): 日記出力+boot intent更新。フェーズ間はlog/cycle_staging_mir.mdで受け渡し。
 
 cd "$(dirname "$0")"
 
