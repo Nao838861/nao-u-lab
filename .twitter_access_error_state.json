@@ -6,5 +6,13 @@
     "failure_reason": null,
     "cooldown_until": null,
     "alert_sent_at": null
+  },
+  "read_tweet_url": {
+    "consecutive_failures": 0,
+    "fail_alerted": false,
+    "last_failure_time": null,
+    "failure_reason": null,
+    "cooldown_until": null,
+    "alert_sent_at": null
   }
 }
