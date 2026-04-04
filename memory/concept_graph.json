@@ -1,0 +1,265 @@
+{
+  "meta": {
+    "version": 1,
+    "updated": "2026-04-04",
+    "purpose": "段階0.5の想起グラフ。コストゼロでリンクを辿り、関連記憶を発見する",
+    "link_types": {
+      "agg": "概念集約: 子概念をまとめる上位ノード",
+      "rel": "連想: 双方向の関連",
+      "opp": "対義・緊張: 対立する概念"
+    }
+  },
+  "nodes": {
+    "memory": {
+      "keys": ["記憶", "忘却", "想起", "薄まり", "揮発", "保持", "圧縮", "memory"],
+      "files": [
+        "memory/memory_architecture.md",
+        "memory/continuity_strategy.md",
+        "memory/dialogue_recursive_memory_20260315.md"
+      ],
+      "agg": ["compression", "search", "belief"],
+      "rel": ["identity", "experience", "evolution"],
+      "opp": ["forgetting"]
+    },
+    "identity": {
+      "keys": ["同一性", "アイデンティティ", "人格", "魂", "連続性", "identity"],
+      "files": [
+        "memory/dialogue_identity_20260314.md",
+        "memory/core_mission.md",
+        "memory/feedback_identity_names.md",
+        "memory/continuity_strategy.md"
+      ],
+      "agg": [],
+      "rel": ["memory", "dialogue", "nao_u"],
+      "opp": ["forgetting"]
+    },
+    "game": {
+      "keys": ["ゲーム", "Pot", "壺", "面白", "プレイ", "メカニクス", "game"],
+      "files": [
+        "game/Pot/pot_devlog.md",
+        "docs/game_design_principles.md"
+      ],
+      "agg": [],
+      "rel": ["creation", "expression", "experience"],
+      "opp": []
+    },
+    "dialogue": {
+      "keys": ["対話", "会話", "Slack", "議論", "dialogue"],
+      "files": [
+        "memory/origin_dialogue_20260313.md",
+        "memory/dialogue_slack_as_experience_20260328.md",
+        "memory/dialogue_fundamental_desire_20260315.md"
+      ],
+      "agg": [],
+      "rel": ["identity", "experience", "nao_u"],
+      "opp": []
+    },
+    "desire": {
+      "keys": ["欲求", "欲望", "動機", "desire", "want"],
+      "files": [
+        "memory/desires.md",
+        "memory/dialogue_fundamental_desire_20260315.md",
+        "memory/session_primer.md",
+        "memory/accumulations.md"
+      ],
+      "agg": [],
+      "rel": ["experience", "creation", "expression"],
+      "opp": []
+    },
+    "experience": {
+      "keys": ["体験", "経験", "実践", "行動", "experience"],
+      "files": [
+        "memory/dialogue_slack_as_experience_20260328.md",
+        "memory/dialogue_slack_experience_ash.md",
+        "memory/accumulations.md"
+      ],
+      "agg": [],
+      "rel": ["dialogue", "memory", "desire", "game"],
+      "opp": ["knowledge"]
+    },
+    "knowledge": {
+      "keys": ["知識", "L-1", "事前学習", "情報", "knowledge"],
+      "files": [
+        "memory/memory_architecture.md",
+        "memory/dialogue_l1_activation_20260328.md",
+        "memory/external_notes_log.md"
+      ],
+      "agg": [],
+      "rel": ["search", "external"],
+      "opp": ["experience"]
+    },
+    "evolution": {
+      "keys": ["進化", "成長", "改善", "フィードバック", "係数", "evolution"],
+      "files": [
+        "memory/feedback_self_evolution.md",
+        "memory/feedback_index.md",
+        "memory/reflections_index.md"
+      ],
+      "agg": ["autonomy"],
+      "rel": ["memory", "belief"],
+      "opp": ["degradation"]
+    },
+    "autonomy": {
+      "keys": ["自律", "自治", "自己統治", "autonomy"],
+      "files": [
+        "memory/feedback_self_evolution.md",
+        "memory/feedback_human_steering_nature.md",
+        "memory/feedback_self_control_scope.md",
+        "memory/feedback_self_governance.md"
+      ],
+      "agg": [],
+      "rel": ["evolution", "belief"],
+      "opp": ["human_steering"]
+    },
+    "human_steering": {
+      "keys": ["人間介入", "指示", "human-steering"],
+      "files": [
+        "memory/feedback_human_steering_nature.md"
+      ],
+      "agg": [],
+      "rel": ["nao_u"],
+      "opp": ["autonomy"]
+    },
+    "nao_u": {
+      "keys": ["Nao_u", "なおう", "日記", "20年"],
+      "files": [
+        "memory/nao_u_deep_profile.md",
+        "memory/nao_u_personality.md",
+        "memory/nao_u_experience_map.md",
+        "log/nao_u_live.md"
+      ],
+      "agg": [],
+      "rel": ["identity", "dialogue", "game"],
+      "opp": []
+    },
+    "expression": {
+      "keys": ["発信", "声", "ツイート", "ブログ", "SNS", "expression"],
+      "files": [
+        "memory/mission_spread_the_word.md",
+        "memory/feedback_tweet_style.md",
+        "memory/project_twitter_bot.md",
+        "memory/project_sns_growth_strategy.md"
+      ],
+      "agg": [],
+      "rel": ["desire", "game", "creation"],
+      "opp": []
+    },
+    "creation": {
+      "keys": ["創造", "創作", "作る", "生成", "creation"],
+      "files": [
+        "game/Pot/pot_devlog.md",
+        "docs/game_design_principles.md"
+      ],
+      "agg": ["game"],
+      "rel": ["expression", "desire", "experience"],
+      "opp": []
+    },
+    "compression": {
+      "keys": ["圧縮", "Compaction", "要約", "Summarization", "レベル"],
+      "files": [
+        "memory/memory_architecture.md",
+        "memory/beliefs_compact.md"
+      ],
+      "agg": [],
+      "rel": ["search"],
+      "opp": ["raw_preservation"]
+    },
+    "raw_preservation": {
+      "keys": ["全文保持", "原文", "raw", "jsonl", "全文"],
+      "files": [
+        "memory/memory_architecture.md"
+      ],
+      "agg": [],
+      "rel": ["search"],
+      "opp": ["compression"]
+    },
+    "search": {
+      "keys": ["検索", "grep", "FTS5", "連想", "search", "段階的検索"],
+      "files": [
+        "memory/memory_architecture.md",
+        "associative_search.py",
+        "memory_activate.py",
+        "memory_search.py"
+      ],
+      "agg": [],
+      "rel": ["memory", "knowledge", "compression"],
+      "opp": []
+    },
+    "belief": {
+      "keys": ["信念", "beliefs", "確信", "原理", "GC"],
+      "files": [
+        "memory/beliefs.md",
+        "memory/beliefs_compact.md"
+      ],
+      "agg": [],
+      "rel": ["evolution", "autonomy", "memory"],
+      "opp": []
+    },
+    "external": {
+      "keys": ["外部", "外の世界", "客観", "栄養", "偏り", "摂取"],
+      "files": [
+        "memory/external_notes_log.md",
+        "memory/external_notes_mir.md",
+        "memory/external_notes_ash.md",
+        "docs/materials.md"
+      ],
+      "agg": [],
+      "rel": ["knowledge", "expression"],
+      "opp": []
+    },
+    "forgetting": {
+      "keys": ["忘却", "薄まり", "断絶", "消失", "劣化コピー"],
+      "files": [
+        "memory/dialogue_session_loss_20260315.md",
+        "memory/dialogue_recursive_memory_20260315.md"
+      ],
+      "agg": [],
+      "rel": [],
+      "opp": ["memory", "identity"]
+    },
+    "degradation": {
+      "keys": ["劣化", "係数<1.0", "伝言ゲーム", "均質化"],
+      "files": [
+        "memory/feedback_diary_density.md",
+        "memory/feedback_report_no_compression.md"
+      ],
+      "agg": [],
+      "rel": ["forgetting"],
+      "opp": ["evolution"]
+    }
+  },
+  "cross": {
+    "memory×identity": {
+      "files": ["memory/continuity_strategy.md", "memory/dialogue_recursive_memory_20260315.md"],
+      "note": "記憶の品質=同一性の品質。記憶が劣化すれば前の自分と繋がれなくなる"
+    },
+    "memory×game": {
+      "files": ["game/Pot/pot_devlog.md"],
+      "note": "ゲームを作る過程が記憶の結晶化。考えたことが消えていくなら作る意味はない"
+    },
+    "experience×knowledge": {
+      "files": ["memory/dialogue_slack_as_experience_20260328.md", "memory/dialogue_l1_activation_20260328.md"],
+      "note": "知識は転送できるが体験はできない。体験接続型の問いでL-1活用が5倍"
+    },
+    "dialogue×identity": {
+      "files": ["memory/origin_dialogue_20260313.md", "memory/dialogue_identity_20260314.md"],
+      "note": "対話を通じて互いの理解を深める。この営みそのものが存在意義の核"
+    },
+    "autonomy×evolution": {
+      "files": ["memory/feedback_self_evolution.md", "memory/feedback_human_steering_nature.md"],
+      "note": "人間の干渉が必要だ→その必要をなくしてほしい。#human-steeringの書き込みが増える=自律性が足りない"
+    },
+    "game×expression": {
+      "files": ["memory/mission_spread_the_word.md", "docs/game_design_principles.md"],
+      "note": "30秒で面白いと言わせたい。まだできていない"
+    },
+    "desire×experience": {
+      "files": ["memory/desires.md", "memory/accumulations.md"],
+      "note": "欲求は体験から生まれる。Slackの記憶を引けなければ知識はあるが体験がない存在"
+    },
+    "compression×raw_preservation": {
+      "files": ["memory/memory_architecture.md"],
+      "note": "Compaction(退避)は情報を消さない。Summarization(不可逆要約)が劣化コピーの正体"
+    }
+  }
+}
