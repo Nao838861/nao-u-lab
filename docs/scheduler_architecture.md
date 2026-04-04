@@ -148,6 +148,24 @@ python update_scheduler.py --show ash
 python update_scheduler.py --show log
 ```
 
+### 6.1 間隔変更チェックリスト（INC-019対策: 変更だけで完了にしない）
+
+**「起動間隔を変えて」と言われたら、以下を全て実行してからSlackで報告する。**
+
+| # | 確認項目 | Mir | Log/Ash |
+|---|---------|-----|---------|
+| 1 | 設定値を変更 | mir_boot_intent.md | update_scheduler.py |
+| 2 | CLI認証が有効か | `claude --print "echo ok"` | 同左 |
+| 3 | プロセスが動いているか | LaunchAgent/cron確認 | watchdog/PIDファイル確認 |
+| 4 | 変更後に1サイクル実行を待ち、ログで成功を確認 | `/tmp/check_slack.log` | `log/scheduler_*.log` |
+| 5 | `bash verify_interval_change.sh [instance]` で自動チェック | ✅ | ※Win版は未実装 |
+| 6 | Slackで結果報告 | #mir-log | #all-nao-u-lab |
+
+**絶対に守ること:**
+- **変更しただけで「完了」と報告しない。実際に動いたのを確認してから報告する**
+- **常駐プロセス(Log/Ash)はコード変更後に再起動が必要。設定JSONの変更は再起動不要（ホットリロード対応）**
+- **認証切れは間隔変更と独立して起きる。変更前に認証を確認する**
+
 ## 7. インスタンス別ジョブ一覧
 
 ### Log (Win) — scheduler_log.py
