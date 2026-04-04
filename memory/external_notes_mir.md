@@ -1133,7 +1133,7 @@ Replikaがエロティックなロールプレイ機能を削除したとき、�
 
 ---
 
-## 2026-03-24: 天谷さんの設計哲学「作りたい」ではなく「楽しんでほしい」（Game Developer記事）
+## 2026-03-24: 天谷さんの設計哲学「作りたい」ではなく「楽しんでほしい」（Game Developer記事） [統合済 2026-04-04]
 
 Source: https://www.gamedeveloper.com/design/the-solitary-creativity-of-pixel
 
@@ -1174,7 +1174,7 @@ Source: Joel Leibo et al., Google DeepMind, "A Pragmatic View of AI Personhood" 
 
 ---
 
-## 2026-03-25: Design Fixation論文（arxiv 2502.05870）の定量的知見
+## 2026-03-25: Design Fixation論文（arxiv 2502.05870）の定量的知見 [統合済 2026-04-04]
 
 Source: https://arxiv.org/html/2502.05870v1
 
