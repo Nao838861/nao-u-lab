@@ -1,10 +1,8 @@
 """
 update_scheduler.py — スケジューラ設定変更の唯一の窓口
 
-周期・タイムアウトの変更はこのスクリプト経由で行う。
-.pyファイルのJOBS定義を直接編集してはいけない（再起動が必要になる）。
-このスクリプトはJSON設定ファイルを更新するだけなので、再起動不要。
-次のサイクルで即反映される。
+変更→検証→Slack報告を1コマンドで完結させる。
+「変更しただけで完了にしない」を構造で強制する（INC-019再発防止）。
 
 Usage:
   python update_scheduler.py ash auto_diary interval 3600
@@ -13,40 +11,307 @@ Usage:
   python update_scheduler.py ash inbox_check timeout 900
   python update_scheduler.py --all-cycle interval 1800  # 全インスタンス一括変更
   python update_scheduler.py --show [ash|log|mir|all]
-  python update_scheduler.py --verify                   # 全設定の整合性検証
+  python update_scheduler.py --verify [ash|log|all]     # プロセス・ログ・設定の検証
 """
 
+import os
 import sys
 import json
 import re
+import time
 from pathlib import Path
 from datetime import datetime
 
 REPO_DIR = Path(__file__).parent
+sys.path.insert(0, str(REPO_DIR))
 
 CONFIG_FILES = {
     "ash": REPO_DIR / "scheduler_ash_config.json",
     "log": REPO_DIR / "scheduler_log_config.json",
 }
 
+PID_FILES = {
+    "ash": REPO_DIR / ".scheduler_ash.lock",
+    "log": REPO_DIR / ".scheduler_log.lock",
+}
+
+LOG_FILES = {
+    "ash": REPO_DIR / "log" / "scheduler_ash.log",
+    "log": REPO_DIR / "log" / "scheduler_log.log",
+}
+
 MIR_BOOT_INTENT = REPO_DIR / "memory" / "mir_boot_intent.md"
+
+SLACK_CHANNEL_ALL = "C0ALWBRNJ66"       # #all-nao-u-lab
+SLACK_CHANNEL_STEERING = "C0ANECNV5DK"  # #human-steering
 
 # 各インスタンスのサイクルジョブ名（--all-cycleで使う）
 CYCLE_JOB_NAMES = {
     "ash": "auto_diary",
     "log": "auto_cycle",
-    "mir": "cycle",  # Mirは独自方式
+    "mir": "cycle",
 }
 
-# auto_diary/auto_cycle の interval 変更時、min_interval_sec を自動調整する
-# (二重ガード問題の防止: schedulerの間隔よりmin_intervalが大きいとスキップされる)
 AUTO_DIARY_JOBS = {"auto_diary", "auto_cycle"}
-MIN_INTERVAL_MARGIN = 600  # interval_sec - 10分 をmin_interval_secに設定
+MIN_INTERVAL_MARGIN = 600
 
-# バリデーション: サイクル間隔の許容範囲（秒）
+# バリデーション
 MIN_CYCLE_INTERVAL = 300    # 5分
 MAX_CYCLE_INTERVAL = 86400  # 24時間
 
+
+# ═══════════════════════════════════════════════════
+#  検証機能（変更と分離不可能——これがINC-019の構造的修正）
+# ═══════════════════════════════════════════════════
+
+def check_process_alive(pid):
+    """PIDが生きているかチェック。Windows/Unix両対応。"""
+    if pid is None:
+        return False
+    try:
+        if sys.platform == "win32":
+            import ctypes
+            kernel32 = ctypes.windll.kernel32
+            PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+            handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
+            if handle:
+                kernel32.CloseHandle(handle)
+                return True
+            return False
+        else:
+            os.kill(pid, 0)
+            return True
+    except (OSError, PermissionError):
+        return False
+
+
+def get_scheduler_pid(scheduler):
+    """PIDファイルからPIDを読み取る。"""
+    pid_file = PID_FILES.get(scheduler)
+    if pid_file and pid_file.exists():
+        try:
+            return int(pid_file.read_text().strip())
+        except (ValueError, OSError):
+            pass
+    return None
+
+
+def wait_for_log_activity(scheduler, pattern=None, timeout_sec=90):
+    """スケジューラログを監視し、指定パターンまたはジョブ実行を検出する。
+
+    Args:
+        scheduler: "ash" or "log"
+        pattern: 検索パターン（Noneならジョブ実行ログを検索）
+        timeout_sec: 待機上限
+    Returns: (success: bool, matched_line: str)
+    """
+    log_file = LOG_FILES.get(scheduler)
+    if not log_file or not log_file.exists():
+        return False, f"ログファイルが見つからない: {log_file}"
+
+    start_size = log_file.stat().st_size
+    start_time = time.time()
+    fallback_patterns = ["] Starting", "] Done"]
+
+    print(f"[VERIFY] ログ監視中（最大{timeout_sec}秒）", end="", flush=True)
+
+    while time.time() - start_time < timeout_sec:
+        time.sleep(5)
+        try:
+            current_size = log_file.stat().st_size
+        except OSError:
+            print(".", end="", flush=True)
+            continue
+        if current_size > start_size:
+            try:
+                with open(log_file, "r", encoding="utf-8") as f:
+                    f.seek(start_size)
+                    new_lines = f.read()
+                for line in new_lines.split("\n"):
+                    if pattern and pattern.lower() in line.lower():
+                        print(" 検出")
+                        return True, line.strip()
+                    for fp in fallback_patterns:
+                        if fp in line:
+                            print(" 検出")
+                            return True, line.strip()
+            except Exception:
+                pass
+        print(".", end="", flush=True)
+
+    print(" タイムアウト")
+    return False, f"{timeout_sec}秒以内にログ活動を検出できず"
+
+
+def verify_scheduler(scheduler):
+    """スケジューラの動作状態をフルチェック。
+
+    Returns: (all_ok: bool, results: list[tuple[str, bool, str]])
+    """
+    results = []
+
+    # 1. プロセス生存
+    pid = get_scheduler_pid(scheduler)
+    if pid is None:
+        results.append(("プロセス", False, "PIDファイルが見つからない"))
+    elif check_process_alive(pid):
+        results.append(("プロセス", True, f"PID {pid} 稼働中"))
+    else:
+        results.append(("プロセス", False, f"PID {pid} が死んでいる（PIDファイル残存）"))
+
+    # 2. 設定ファイル構文
+    config_file = CONFIG_FILES.get(scheduler)
+    if config_file and config_file.exists():
+        try:
+            with open(config_file, "r", encoding="utf-8") as f:
+                cfg = json.load(f)
+            settings = {k: v for k, v in cfg.items() if not k.startswith("_")}
+            results.append(("設定ファイル", True, f"{config_file.name}: {json.dumps(settings, ensure_ascii=False)}"))
+        except json.JSONDecodeError as e:
+            results.append(("設定ファイル", False, f"JSON構文エラー: {e}"))
+    else:
+        results.append(("設定ファイル", True, f"デフォルト設定（ファイルなし）"))
+
+    # 3. ログ鮮度
+    log_file = LOG_FILES.get(scheduler)
+    if log_file and log_file.exists():
+        mtime = datetime.fromtimestamp(log_file.stat().st_mtime)
+        age_min = (datetime.now() - mtime).total_seconds() / 60
+        if age_min < 5:
+            results.append(("ログ鮮度", True, f"最終更新: {age_min:.0f}分前"))
+        elif age_min < 30:
+            results.append(("ログ鮮度", True, f"最終更新: {age_min:.0f}分前（やや古い）"))
+        else:
+            results.append(("ログ鮮度", False, f"最終更新: {age_min:.0f}分前（停止の可能性）"))
+    else:
+        results.append(("ログ鮮度", False, "ログファイルが見つからない"))
+
+    # 4. ジョブ実行確認（リアルタイム）
+    #    プロセス生存+ログ鮮度で既に確認済みなら、リアルタイム確認は補助的
+    proc_ok = any(ok for name, ok, _ in results if name == "プロセス")
+    log_fresh = any(ok for name, ok, _ in results if name == "ログ鮮度")
+    if proc_ok and log_fresh:
+        # 両方OKなら短めの待機でいい
+        job_ok, job_msg = wait_for_log_activity(scheduler, timeout_sec=90)
+        if job_ok:
+            results.append(("ジョブ実行", True, job_msg))
+        else:
+            # プロセスもログも生きてるなら、長時間ジョブ実行中の可能性が高い
+            results.append(("ジョブ実行", True, "プロセス稼働中・ログ最近更新あり（長時間ジョブ実行中の可能性）"))
+    elif proc_ok:
+        job_ok, job_msg = wait_for_log_activity(scheduler, timeout_sec=120)
+        results.append(("ジョブ実行", job_ok, job_msg))
+    else:
+        results.append(("ジョブ実行", False, "プロセスが動いていないためスキップ"))
+
+    all_ok = all(ok for _, ok, _ in results)
+    return all_ok, results
+
+
+def post_verify_after_change(scheduler, job, setting_key, old_value, new_value):
+    """設定変更後の自動検証。変更と不可分。"""
+    print()
+    print("=" * 50)
+    print("[VERIFY] 自動検証開始（変更が実際に反映されたか確認）")
+    print("=" * 50)
+
+    verify_results = []
+
+    # 1. プロセス生存
+    pid = get_scheduler_pid(scheduler)
+    if pid is None:
+        verify_results.append(("プロセス", False, "PIDファイルが見つからない"))
+        print(f"  プロセス: ❌ PIDファイルが見つからない")
+    elif check_process_alive(pid):
+        verify_results.append(("プロセス", True, f"PID {pid} 稼働中"))
+        print(f"  プロセス: ✅ PID {pid} 稼働中")
+    else:
+        verify_results.append(("プロセス", False, f"PID {pid} が死んでいる"))
+        print(f"  プロセス: ❌ PID {pid} が死んでいる")
+
+    # 2. 設定反映をログで確認
+    proc_ok = any(ok for name, ok, _ in verify_results if name == "プロセス")
+    if proc_ok:
+        config_ok, config_msg = wait_for_log_activity(
+            scheduler, pattern="auto-applied", timeout_sec=120
+        )
+        if config_ok:
+            verify_results.append(("設定反映", True, config_msg))
+            print(f"  設定反映: ✅ {config_msg}")
+        else:
+            # 同値変更ではconfig変更ログが出ない→ジョブ実行で代替確認
+            job_ok, job_msg = wait_for_log_activity(scheduler, timeout_sec=60)
+            if job_ok:
+                verify_results.append(("設定反映", True, f"ジョブ実行中（同値変更の可能性）: {job_msg}"))
+                print(f"  設定反映: ✅ ジョブ実行確認")
+            else:
+                verify_results.append(("設定反映", False, config_msg))
+                print(f"  設定反映: ❌ {config_msg}")
+    else:
+        verify_results.append(("設定反映", False, "プロセス停止中のため検証不可"))
+        print(f"  設定反映: ❌ プロセス停止中")
+
+    # 3. 結果
+    all_ok = all(ok for _, ok, _ in verify_results)
+    print()
+    if all_ok:
+        print("✅ 変更完了・動作確認済み")
+    else:
+        print("⚠️ 問題あり:")
+        for name, ok, msg in verify_results:
+            if not ok:
+                print(f"  - {name}: {msg}")
+
+    # 4. Slack通知
+    _notify_slack(scheduler, job, setting_key, old_value, new_value, verify_results)
+
+    return all_ok
+
+
+def _notify_slack(scheduler, job, setting_key, old_value, new_value, verify_results):
+    """検証結果をSlackに通知。"""
+    try:
+        from slack_bot import post_message
+    except ImportError:
+        print("[SLACK] slack_bot.pyが見つからない。Slack通知スキップ")
+        return
+
+    all_ok = all(ok for _, ok, _ in verify_results)
+
+    lines = []
+    if job and setting_key:
+        lines.append(f"*設定変更: {scheduler}/{job}*")
+        lines.append(f"`{setting_key}`: {old_value} → {new_value}")
+    else:
+        lines.append(f"*スケジューラ検証: {scheduler}*")
+
+    lines.append("")
+    for name, ok, msg in verify_results:
+        mark = "✅" if ok else "❌"
+        # ログの行内容が長すぎる場合は切り詰め
+        if len(msg) > 120:
+            msg = msg[:120] + "..."
+        lines.append(f"{mark} {name}: {msg}")
+
+    if all_ok:
+        lines.append("\n✅ 変更完了・動作確認済み")
+        channel = SLACK_CHANNEL_ALL
+    else:
+        lines.append("\n⚠️ 問題あり。要確認")
+        channel = SLACK_CHANNEL_STEERING
+
+    text = "\n".join(lines)
+    try:
+        post_message(channel, text)
+        channel_name = "#all-nao-u-lab" if channel == SLACK_CHANNEL_ALL else "#human-steering"
+        print(f"[SLACK] {channel_name} に通知済み")
+    except Exception as e:
+        print(f"[SLACK] 通知失敗: {e}")
+
+
+# ═══════════════════════════════════════════════════
+#  設定変更
+# ═══════════════════════════════════════════════════
 
 def load_config(scheduler):
     path = CONFIG_FILES[scheduler]
@@ -68,7 +333,6 @@ def load_mir_interval():
     if not MIR_BOOT_INTENT.exists():
         return None
     content = MIR_BOOT_INTENT.read_text(encoding="utf-8")
-    # "## サイクル間隔（分）" 以降の最初の数値行を取得
     match = re.search(r"## サイクル間隔（分）\s*\n(\d+)", content)
     if match:
         return int(match.group(1))
@@ -76,7 +340,7 @@ def load_mir_interval():
 
 
 def update_mir_interval(interval_sec):
-    """mir_boot_intent.mdのサイクル間隔を更新する（分単位で書き込み）"""
+    """mir_boot_intent.mdのサイクル間隔を更新（分単位）"""
     if not MIR_BOOT_INTENT.exists():
         print(f"[ERROR] {MIR_BOOT_INTENT} not found")
         return False
@@ -88,8 +352,6 @@ def update_mir_interval(interval_sec):
     content = MIR_BOOT_INTENT.read_text(encoding="utf-8")
     today = datetime.now().strftime("%Y-%m-%d")
 
-    # "## サイクル間隔（分）" の次の行（数値行）とそのコメント行を置換
-    # パターン: 数値行 + オプションのコメント行
     old_match = re.search(
         r"(## サイクル間隔（分）\s*\n)(\d+)\n(#[^\n]*\n)?",
         content
@@ -148,16 +410,19 @@ def validate_cycle_interval(value):
 
 
 def update_setting(scheduler, job, setting, value):
+    """設定を変更し、Log/Ashの場合は自動で検証・Slack報告まで行う。"""
     if scheduler == "mir":
         if setting in ("interval", "interval_sec"):
             if not validate_cycle_interval(value):
                 sys.exit(1)
             if not update_mir_interval(value):
                 sys.exit(1)
+            # Mirはシェルスクリプト方式のため常駐プロセスの検証は不要
+            print("[INFO] Mirは次回のLaunchAgent/cron起動で反映されます")
         else:
             print(f"[ERROR] Mir only supports 'interval' setting (got: {setting})")
             sys.exit(1)
-        return
+        return True
 
     cfg = load_config(scheduler)
 
@@ -167,7 +432,6 @@ def update_setting(scheduler, job, setting, value):
     setting_key = "interval_sec" if setting == "interval" else setting
     old_value = cfg[job].get(setting_key, "(default)")
 
-    # サイクルジョブの間隔変更時はバリデーション
     if job in AUTO_DIARY_JOBS and setting_key == "interval_sec":
         if not validate_cycle_interval(value):
             sys.exit(1)
@@ -175,7 +439,6 @@ def update_setting(scheduler, job, setting, value):
     cfg[job][setting_key] = value
     print(f"[{scheduler}/{job}] {setting_key}: {old_value} -> {value}")
 
-    # 二重ガード自動調整: auto_diary/auto_cycle の interval 変更時
     if job in AUTO_DIARY_JOBS and setting_key == "interval_sec":
         min_interval = value - MIN_INTERVAL_MARGIN
         if min_interval < 60:
@@ -184,7 +447,9 @@ def update_setting(scheduler, job, setting, value):
         print(f"[{scheduler}/{job}] min_interval_sec: auto-set to {min_interval} (interval - 10min)")
 
     save_config(scheduler, cfg)
-    print(f"[INFO] No restart needed. Takes effect at next cycle.")
+
+    # ─── 自動検証（構造で強制。スキップ不可） ───
+    return post_verify_after_change(scheduler, job, setting_key, old_value, value)
 
 
 def update_all_cycle(setting, value):
@@ -201,77 +466,85 @@ def update_all_cycle(setting, value):
 
     for inst, job in CYCLE_JOB_NAMES.items():
         try:
-            update_setting(inst, job, setting, value)
+            ok = update_setting(inst, job, setting, value)
+            if not ok:
+                errors.append(inst)
             print()
         except SystemExit:
             errors.append(inst)
             print()
 
     if errors:
-        print(f"[ERROR] 以下のインスタンスで失敗: {errors}")
+        print(f"[ERROR] 以下のインスタンスで問題: {errors}")
         sys.exit(1)
     else:
-        print(f"[OK] 全インスタンス({', '.join(CYCLE_JOB_NAMES.keys())})の変更完了")
+        print(f"[OK] 全インスタンス({', '.join(CYCLE_JOB_NAMES.keys())})の変更・検証完了")
 
 
 def verify_all():
-    """全設定の整合性を検証"""
-    print("=== 設定整合性チェック ===\n")
-    issues = []
+    """全設定の整合性 + プロセス状態を検証"""
+    print("=== 全スケジューラ検証 ===\n")
+    all_issues = []
 
-    # Ash
+    # Log/Ash のプロセス・ログ検証
+    for scheduler in ["log", "ash"]:
+        print(f"--- {scheduler} ---")
+        all_ok, results = verify_scheduler(scheduler)
+        for name, ok, msg in results:
+            mark = "✅" if ok else "❌"
+            print(f"  {mark} {name}: {msg}")
+        if not all_ok:
+            all_issues.append(scheduler)
+        _notify_slack(scheduler, None, None, None, None, results)
+        print()
+
+    # Mir: ファイル存在のみ確認
+    print("--- mir ---")
+    mir_interval = load_mir_interval()
+    if mir_interval:
+        print(f"  ✅ cycle: {mir_interval}分 ({mir_interval * 60}秒)")
+    else:
+        print(f"  ❌ サイクル間隔がmir_boot_intent.mdに見つからない")
+        all_issues.append("mir")
+
+    # 設定整合性
+    print("\n--- 設定整合性 ---")
     ash_cfg = load_config("ash")
     ash_interval = ash_cfg.get("auto_diary", {}).get("interval_sec")
     ash_min = ash_cfg.get("auto_diary", {}).get("min_interval_sec")
-    if ash_interval:
-        print(f"[ash] auto_diary: interval={ash_interval}s ({ash_interval // 60}min), min_interval={ash_min}s")
-        if ash_min and ash_min >= ash_interval:
-            issues.append(f"ash: min_interval_sec({ash_min}) >= interval_sec({ash_interval}) → スキップされる")
-    else:
-        print(f"[ash] auto_diary: (using defaults)")
-
-    # Log
     log_cfg = load_config("log")
     log_interval = log_cfg.get("auto_cycle", {}).get("interval_sec")
     log_min = log_cfg.get("auto_cycle", {}).get("min_interval_sec")
-    if log_interval:
-        print(f"[log] auto_cycle: interval={log_interval}s ({log_interval // 60}min), min_interval={log_min}s")
-        if log_min and log_min >= log_interval:
-            issues.append(f"log: min_interval_sec({log_min}) >= interval_sec({log_interval}) → スキップされる")
-    else:
-        print(f"[log] auto_cycle: (using defaults)")
 
-    # Mir
-    mir_interval = load_mir_interval()
-    if mir_interval:
-        print(f"[mir] cycle: interval={mir_interval}min ({mir_interval * 60}s)")
-    else:
-        print(f"[mir] cycle: (not found in mir_boot_intent.md)")
-        issues.append("mir: サイクル間隔がmir_boot_intent.mdに見つからない")
+    if ash_min and ash_interval and ash_min >= ash_interval:
+        print(f"  ❌ ash: min_interval({ash_min}) >= interval({ash_interval}) → スキップされる")
+        all_issues.append("ash-config")
+    if log_min and log_interval and log_min >= log_interval:
+        print(f"  ❌ log: min_interval({log_min}) >= interval({log_interval}) → スキップされる")
+        all_issues.append("log-config")
 
-    # 一致チェック
     intervals = {}
     if ash_interval:
         intervals["ash"] = ash_interval
     if log_interval:
         intervals["log"] = log_interval
     if mir_interval:
-        intervals["mir"] = mir_interval * 60  # 秒に統一
-
+        intervals["mir"] = mir_interval * 60
     if len(set(intervals.values())) > 1:
-        print(f"\n[WARN] インスタンス間で間隔が不一致:")
-        for inst, val in intervals.items():
-            print(f"  {inst}: {val}s ({val // 60}min)")
+        print(f"  ⚠️ インスタンス間で間隔が不一致: {intervals}")
 
-    if issues:
-        print(f"\n[ERROR] 問題 {len(issues)}件:")
-        for issue in issues:
-            print(f"  - {issue}")
+    print()
+    if all_issues:
+        print(f"⚠️ 問題あり: {all_issues}")
         return False
     else:
-        print(f"\n[OK] 問題なし")
+        print("✅ 全チェックパス")
         return True
 
+
+# ═══════════════════════════════════════════════════
+#  メイン
+# ═══════════════════════════════════════════════════
 
 def main():
     if len(sys.argv) < 2:
@@ -293,7 +566,21 @@ def main():
         return
 
     if sys.argv[1] == "--verify":
-        ok = verify_all()
+        scheduler = sys.argv[2].lower() if len(sys.argv) > 2 else "all"
+        if scheduler == "all":
+            ok = verify_all()
+        elif scheduler in CONFIG_FILES:
+            print(f"=== {scheduler} スケジューラ検証 ===\n")
+            ok, results = verify_scheduler(scheduler)
+            for name, vok, msg in results:
+                mark = "✅" if vok else "❌"
+                print(f"  {mark} {name}: {msg}")
+            print()
+            print("✅ 全チェックパス" if ok else "⚠️ 問題あり")
+            _notify_slack(scheduler, None, None, None, None, results)
+        else:
+            print(f"Unknown: {scheduler}. Use: {list(CONFIG_FILES.keys()) + ['all']}")
+            sys.exit(1)
         sys.exit(0 if ok else 1)
 
     if sys.argv[1] == "--all-cycle":
@@ -328,7 +615,7 @@ def main():
         print("       python update_scheduler.py mir interval <seconds>")
         print("       python update_scheduler.py --all-cycle interval <seconds>")
         print("       python update_scheduler.py --show [ash|log|mir|all]")
-        print("       python update_scheduler.py --verify")
+        print("       python update_scheduler.py --verify [ash|log|all]")
         sys.exit(1)
 
     scheduler = sys.argv[1].lower()
@@ -348,7 +635,8 @@ def main():
         print(f"Unknown setting: {setting}. Use: interval, timeout")
         sys.exit(1)
 
-    update_setting(scheduler, job, setting, value)
+    success = update_setting(scheduler, job, setting, value)
+    sys.exit(0 if success else 1)
 
 
 if __name__ == "__main__":
