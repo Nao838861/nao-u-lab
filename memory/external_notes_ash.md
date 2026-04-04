@@ -2921,7 +2921,7 @@ as teams hill climb hundreds or thousands of evals to "improve their agents", th
 
 ---
 
-## 2026-03-27：Agentica SDK — ハーネスがARC-AGI-3で36.08%を叩き出した話
+## 2026-03-27：Agentica SDK — ハーネスがARC-AGI-3で36.08%を叩き出した話 [統合済 2026-04-05 → knowledge/20260405_agentica_sdk_harness.md]
 
 ソース: K.Ishi@生成AIの産業応用 (@K_Ishi_AI) のツイート
 https://x.com/k_ishi_ai/status/2037399298951057562
@@ -3019,7 +3019,7 @@ Roediger & Karpicke 2006
 
 ---
 
-## 2026-03-28：Superpowers — Claude Code用エージェントスキルフレームワーク
+## 2026-03-28：Superpowers — Claude Code用エージェントスキルフレームワーク [統合済 2026-04-05 → knowledge/20260405_harness_identity_spectrum.md]
 
 ソース: https://github.com/obra/superpowers（GitHub 4万スター超）
 経由: #nao-u fukuda_CEO氏のツイート
@@ -3172,7 +3172,7 @@ xhighがhighに劣る（タイムアウト問題）。「もっと考えれば�
 
 ---
 
-## 2026-04-02：おすすめタブ巡回から（4/1-4/2分まとめ統合）
+## 2026-04-02：おすすめタブ巡回から（4/1-4/2分まとめ統合） [統合済 2026-04-05 — 個別エントリは全て統合済み]
 
 ソース: Twitter For You タブ（4/1 10:23, 16:25, 22:26, 4/2 04:28 の4回分）
 
