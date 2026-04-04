@@ -29,6 +29,7 @@ import os
 import sys
 import time
 import json
+import hashlib
 import logging
 import subprocess
 from pathlib import Path
@@ -40,6 +41,27 @@ PID_FILE = REPO_DIR / ".scheduler_ash.pid"
 CONFIG_FILE = REPO_DIR / "scheduler_ash_config.json"
 
 MAX_RUNTIME_SEC = 0  # 無制限（watchdog_win2.batが5分間隔で生存監視。2026-03-31 Nao_u指示で24h制限撤廃）
+
+# --- コード変更自動検出 (INC-018再発防止) ---
+# 起動時の自身のハッシュを記録。変更を検出したら自動で終了→watchdogが新コードで再起動。
+# これにより「コード修正後に再起動し忘れて旧コードで動き続ける」問題を構造的に防ぐ。
+_SELF_PATH = Path(__file__)
+_CODE_CHECK_INTERVAL = 60  # 60秒ごとにチェック
+_WATCHED_FILES = [_SELF_PATH, REPO_DIR / "claude_runner.py"]  # 自身＋依存ファイル
+
+
+def _compute_code_hash():
+    """監視対象ファイルの結合ハッシュを返す。"""
+    h = hashlib.md5()
+    for fpath in _WATCHED_FILES:
+        try:
+            h.update(fpath.read_bytes())
+        except Exception:
+            pass
+    return h.hexdigest()
+
+
+_startup_code_hash = _compute_code_hash()
 CONSECUTIVE_TIMEOUT_THRESHOLD = 3  # 連続タイムアウトこの回数でアラート+自動復旧
 TIMEOUT_ESCALATION_FACTOR = 1.5  # タイムアウト自動引き上げ倍率
 
@@ -455,6 +477,7 @@ def main():
     logging.info("=" * 50)
     logging.info("Ash scheduler started (PID %d)", os.getpid())
     logging.info("Max runtime: %d hours", MAX_RUNTIME_SEC // 3600)
+    logging.info(f"Code hash: {_startup_code_hash}")
     logging.info("Config: %s (hot-reload enabled, changes auto-applied without restart)", CONFIG_FILE.name)
     logging.info("Jobs: %s", ", ".join(j["name"] for j in JOBS))
     logging.info("=" * 50)
@@ -512,6 +535,14 @@ def main():
 
             # 10秒ごとにチェック（CPU負荷ほぼゼロ）
             time.sleep(10)
+
+            # --- コード変更自動検出 (INC-018再発防止) ---
+            # 60秒ごとに自身のファイルハッシュを確認。変更されていたら終了→watchdogが新コードで再起動
+            if (time.time() - start_time) % _CODE_CHECK_INTERVAL < 15:
+                current_hash = _compute_code_hash()
+                if current_hash != _startup_code_hash:
+                    logging.info(f"[auto-reload] Code change detected (hash {_startup_code_hash[:8]}→{current_hash[:8]}). Exiting for restart by watchdog.")
+                    break
 
     except KeyboardInterrupt:
         logging.info("Interrupted by user")
