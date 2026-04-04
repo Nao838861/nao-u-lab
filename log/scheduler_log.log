@@ -7588,3 +7588,6 @@ des
 [2026-04-05 03:47:15] [slack_check] Done (exit=0)
 [2026-04-05 03:47:15] [slack_check] New messages detected → triggering immediate inbox_check
 [2026-04-05 03:47:15] [inbox_check] Starting
+[2026-04-05 03:52:15] [inbox_check] Timeout (300s)
+[2026-04-05 03:52:15] [inbox_check] Done (exit=-1)
+[2026-04-05 03:52:15] [git_sync] Starting
