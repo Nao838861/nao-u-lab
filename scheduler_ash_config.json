@@ -3,6 +3,6 @@
   "auto_diary": {
     "interval_sec": 1800,
     "min_interval_sec": 1200,
-    "timeout": 600
+    "timeout": 720
   }
 }

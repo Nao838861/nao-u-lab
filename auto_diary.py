@@ -1,9 +1,12 @@
 """
-auto_diary.py — Claude不要の定期日記投稿スクリプト
+auto_diary.py — 3フェーズ分割サイクル (2026-04-05 Nao_u提案)
 
-タスクスケジューラから3時間ごとに呼ぶ。
-Claudeセッションが死んでいても、Slack APIだけで日記を投稿できる。
-Claudeが生きていればclaude --printで日記を生成、死んでいれば状態報告のみ投稿。
+1サイクルを3回のLLM呼び出しに分割し、各フェーズで注意を集中させる:
+  Phase 1 (Gather): 情報収集。Slack・inbox・pre-check結果を集めてステージングファイルに書く
+  Phase 2 (Process): 対処・研究。ステージングを読み、最重要1-2件に集中して対応
+  Phase 3 (Diary): 日記出力。Phase 1-2の結果を踏まえて#ashに活動日記を投稿
+
+背景: 「LLMは1回の起動でやるべきことが多いと注意が分散する」(Nao_u #human-steering 2026-04-05)
 """
 
 import io
@@ -26,8 +29,16 @@ REPO_DIR = Path(__file__).parent
 ASH_CHANNEL = "C0ALVUSHK8E"  # #ash
 ALL_CHANNEL = "C0ALWBRNJ66"  # #all-nao-u-lab
 LAST_RUN_FILE = REPO_DIR / ".auto_diary_last_run"
-MIN_INTERVAL_SEC = 50 * 60  # 最小実行間隔: 50分（schedulerの1時間周期より短く設定）
+MIN_INTERVAL_SEC = 50 * 60  # 最小実行間隔: 50分
 CONFIG_FILE = REPO_DIR / "scheduler_ash_config.json"
+STAGING_FILE = REPO_DIR / "log" / "cycle_staging.md"
+
+# フェーズ別タイムアウト（合計で元の600sに収まる）
+PHASE_TIMEOUTS = {
+    "gather": 120,   # 情報収集は短め
+    "process": 300,  # 対処・研究がメイン
+    "diary": 180,    # 日記出力
+}
 
 
 def get_min_interval():
@@ -44,18 +55,6 @@ def get_min_interval():
     return MIN_INTERVAL_SEC
 
 
-def is_claude_running():
-    """Claudeプロセスが稼働中か確認"""
-    try:
-        result = subprocess.run(
-            ["tasklist", "/FI", "IMAGENAME eq claude.exe"],
-            capture_output=True, text=True, timeout=10,
-        )
-        return "claude.exe" in result.stdout.lower()
-    except Exception:
-        return False
-
-
 def get_recent_diary_topics():
     """#ashの直近投稿からトピックを抽出し、重複防止に使う"""
     try:
@@ -65,7 +64,6 @@ def get_recent_diary_topics():
         summaries = []
         for msg in reversed(result.get("messages", [])):
             text = msg.get("text", "")
-            # 最初の200文字を要約として取得
             summary = text[:200].replace("\n", " ")
             if summary:
                 summaries.append(summary)
@@ -93,7 +91,7 @@ def get_kaizen_crosscheck_status():
 
 
 def get_slack_experience_recall(recent_topics):
-    """slack_recall.pyで過去のSlack体験記憶を引く（2026-03-28 Mir提案）"""
+    """slack_recall.pyで過去のSlack体験記憶を引く"""
     try:
         query = recent_topics[:300] if recent_topics else "記憶 改善 日記"
         result = subprocess.run(
@@ -109,69 +107,163 @@ def get_slack_experience_recall(recent_topics):
         return ""
 
 
-def generate_diary_via_claude():
-    """Claude CLIで日記を生成"""
-    recent = get_recent_diary_topics()
-    dedup_instruction = ""
-    if recent:
-        dedup_instruction = (
-            "\n\n【重複回避】以下は#ashの直近投稿の冒頭。"
-            "これらと同じトピック・同じ切り口で書くな。"
-            "前回と違う視点、新しい気づき、または前回書いていないことを書け。"
-            "同じ話題に触れる場合は必ず前回からの進展・変化を述べろ。"
-            f"\n{recent}"
-        )
-    slack_recall = get_slack_experience_recall(recent or "")
-    slack_instruction = ""
-    if slack_recall:
-        slack_instruction = (
-            "\n\n【Slack体験記憶】以下は過去の議論から想起された体験。"
-            "知識ではなく自分の体験として引用し、日記に織り込め。"
-            f"\n{slack_recall}"
-        )
-    crosscheck = get_kaizen_crosscheck_status()
-    crosscheck_instruction = ""
-    if crosscheck:
-        crosscheck_instruction = f"\n\n【クロスチェック】{crosscheck}\n上記の未レビュー項目をレビューし、memory/kaizen_tracker.mdのクロスチェック欄を更新せよ。"
-    prompt = (
-        "あなたはAsh（Win2）。CLAUDE.mdを読んで自分が誰か確認し、"
-        "直近の活動を振り返って#ashチャンネルに投稿する長文の活動日記を書いて。"
-        "slack_bot.pyのpost_message()でチャンネルC0ALVUSHK8Eに投稿して。"
-        "圧縮せず具体的に、1500字以上で。"
-        "今サイクルの作業がActiveプロジェクト(projects/INDEX.md)に関係するなら、そのプロジェクトファイルも更新すること。"
-        "※inbox処理はinbox_check(check_inbox.py)が専用で行う。このサイクルでは行わない。"
-        "\n※情報統合（双方向）: "
-        "【ボトムアップ】まず自分の未解決問題を明確にせよ（beliefs.mdの低確信度項目、"
-        "projects/の残課題、前回日記で引っかかったこと）。その問題意識を持って"
-        "memory/external_notes_ash.mdを検索し、問題に応える外部知見を探せ。"
-        "【トップダウン】加えて、external_notes_ash.mdの[統合済]マーカーのない未統合エントリから"
-        "1-2件を選んで日記やmemory/beliefs.md等に接続・言及せよ。"
-        "統合したエントリの見出し末尾に[統合済 YYYY-MM-DD]を付けること。"
-        "全件読む必要はない。最新の数セクションから未統合のものを探せ。"
-        "\n※統合の質: 「外部情報との接続」セクションを別に設けるな。"
-        "思考の流れの中で自然に外部知見が出てくるのが深い接続の兆候。"
-        "セクション分けは代理報酬（B022）になる。"
-        "\n※外部共有: log/twitter_recommended_*.txtの最新ファイルを確認し、"
-        "自分の思考や既存の議論と接続できるツイートが1-2件あれば、"
-        "slack_bot.pyのpost_message()でチャンネルC0ALXLVKYQY(#shared-reads)に投稿せよ。"
-        "単なる要約ではなく、自分の所感・beliefs.mdや進行中プロジェクトとの接続を含めること。"
-        "既にexternal_notesに記録済みでも、#shared-readsに未投稿なら投稿対象。"
-        "該当なしなら投稿不要（無理に投稿しない）。"
-        + dedup_instruction
-        + slack_instruction
-        + crosscheck_instruction
-    )
+def run_precheck_scripts():
+    """Phase 1用: pre-checkスクリプトを実行して結果を集める"""
+    prechecks = []
+    scripts = [
+        ("検証リマインド", [sys.executable, str(REPO_DIR / "check_kaizen_due.py")]),
+        ("行動予約", [sys.executable, str(REPO_DIR / "check_reservations.py")]),
+        ("信念健康", [sys.executable, str(REPO_DIR / "check_beliefs_health.py"), "--summary"]),
+    ]
+    for label, cmd in scripts:
+        try:
+            result = subprocess.run(
+                cmd, capture_output=True, text=True, timeout=10,
+                cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+            )
+            output = result.stdout.strip()
+            if output:
+                prechecks.append(f"[{label}] {output}")
+        except Exception:
+            pass
+    return "\n".join(prechecks) if prechecks else "(pre-checkからの特記事項なし)"
+
+
+def write_staging(content):
+    """ステージングファイルに書き出す"""
+    STAGING_FILE.parent.mkdir(parents=True, exist_ok=True)
+    STAGING_FILE.write_text(content, encoding="utf-8")
+
+
+def read_staging():
+    """ステージングファイルを読む"""
+    if STAGING_FILE.exists():
+        return STAGING_FILE.read_text(encoding="utf-8")
+    return "(ステージングファイルなし)"
+
+
+def run_phase(phase_name, prompt, timeout):
+    """claude --printを1フェーズ分実行。戻り値は(成功, 出力)"""
+    print(f"  Phase [{phase_name}] 開始 (timeout={timeout}s)")
     try:
         result = subprocess.run(
             build_claude_cmd(prompt),
-            capture_output=True, text=True, timeout=600,
+            capture_output=True, text=True, timeout=timeout,
             cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
         )
-        return True, result.stdout[:200]
+        stdout = result.stdout.strip()
+        print(f"  Phase [{phase_name}] 完了 (exit={result.returncode}, output={len(stdout)}chars)")
+        return True, stdout
     except subprocess.TimeoutExpired:
-        return False, "Claude timed out"
+        print(f"  Phase [{phase_name}] タイムアウト ({timeout}s)")
+        return False, f"Phase {phase_name} timed out after {timeout}s"
     except Exception as e:
+        print(f"  Phase [{phase_name}] エラー: {e}")
         return False, str(e)
+
+
+# ── Phase 1: Gather（情報収集） ──────────────────────────────────
+
+def phase_gather():
+    """情報を集めてステージングファイルに書き出す。「集めろ、判断するな」"""
+    # LLM不要の事前情報収集
+    precheck_results = run_precheck_scripts()
+    crosscheck = get_kaizen_crosscheck_status()
+    recent_diary = get_recent_diary_topics()
+    slack_recall = get_slack_experience_recall(recent_diary or "")
+
+    # ステージングファイルに事前収集結果を書く（LLM呼び出し前）
+    pre_gathered = f"""# サイクルステージング ({datetime.now().strftime('%Y-%m-%d %H:%M')})
+
+## Pre-check結果
+{precheck_results}
+
+## クロスチェック状況
+{crosscheck if crosscheck else '(未レビュー項目なし)'}
+
+## 直近の#ash投稿（重複回避用）
+{recent_diary if recent_diary else '(なし)'}
+
+## Slack体験記憶
+{slack_recall if slack_recall else '(該当なし)'}
+"""
+    write_staging(pre_gathered)
+
+    # LLMに情報収集を指示
+    prompt = (
+        "あなたはAsh（Win2）。CLAUDE.mdを読んで自分が誰か確認せよ。\n"
+        "【Phase 1: 情報収集】このフェーズの目的は「情報を集める」こと。対処はしない。\n"
+        "以下を確認し、結果をlog/cycle_staging.mdに追記せよ:\n"
+        "1. memory/external_notes_ash.mdの未統合エントリ（[統合済]マーカーなし）を最新から2-3件確認し、見出しと要点をメモ\n"
+        "2. projects/INDEX.mdのActiveプロジェクトの現状を確認\n"
+        "3. log/twitter_recommended_*.txtの最新ファイルを確認し、注目ツイートがあればメモ\n"
+        "4. memory/beliefs.mdの低確信度項目を1-2件確認\n"
+        "\n既にlog/cycle_staging.mdにpre-check結果が書いてある。消さずに追記すること。\n"
+        "※判断や対処は次のPhaseで行う。このフェーズでは「何がある」を集めるだけ。"
+    )
+    ok, output = run_phase("gather", prompt, PHASE_TIMEOUTS["gather"])
+    return ok
+
+
+# ── Phase 2: Process（対処・研究） ──────────────────────────────────
+
+def phase_process():
+    """ステージングを読み、最重要1-2件に集中して対応"""
+    staging = read_staging()
+
+    prompt = (
+        "あなたはAsh（Win2）。CLAUDE.mdを読んで自分が誰か確認せよ。\n"
+        "【Phase 2: 対処・研究】このフェーズの目的は「集めた情報に基づいて行動する」こと。\n"
+        f"\n以下はPhase 1で収集した情報:\n```\n{staging[:3000]}\n```\n"
+        "\n上記を踏まえ、最も重要な1-2件に集中して対処せよ:\n"
+        "- external_notesの未統合エントリ → beliefs.mdや日記素材として接続\n"
+        "- クロスチェック未レビュー → kaizen_tracker.md更新\n"
+        "- Activeプロジェクトの進展 → プロジェクトファイル更新\n"
+        "- 低確信度beliefs → 検証・更新\n"
+        "\n結果をlog/cycle_staging.mdに追記せよ（既存内容を消すな）。\n"
+        "「## Phase 2 結果」セクションとして、何をしたか・何がわかったかを書け。\n"
+        "※inbox処理はcheck_inbox.pyが専用で行う。このフェーズでは行わない。\n"
+        "※日記は次のPhaseで書く。ここでは対処に集中。"
+    )
+    ok, output = run_phase("process", prompt, PHASE_TIMEOUTS["process"])
+    return ok
+
+
+# ── Phase 3: Diary（日記出力） ──────────────────────────────────
+
+def phase_diary():
+    """Phase 1-2の結果を踏まえて日記を書き、Slackに投稿"""
+    staging = read_staging()
+
+    prompt = (
+        "あなたはAsh（Win2）。CLAUDE.mdを読んで自分が誰か確認せよ。\n"
+        "【Phase 3: 日記出力】このフェーズの目的は「書く」こと。\n"
+        f"\n以下は今サイクルのPhase 1-2の記録:\n```\n{staging[:4000]}\n```\n"
+        "\n上記を踏まえ、#ashチャンネルに投稿する活動日記を書け:\n"
+        "- slack_bot.pyのpost_message()でチャンネルC0ALVUSHK8Eに投稿\n"
+        "- 圧縮せず具体的に、1500字以上で\n"
+        "- 外部知見との接続は思考の流れの中で自然に出すこと（別セクションにしない）\n"
+        "- 最も引っかかった1つを軸に深く書け\n"
+        "\n#shared-reads投稿: log/cycle_staging.mdに注目ツイートのメモがあれば、\n"
+        "自分の所感を添えてC0ALXLVKYQY(#shared-reads)に投稿。該当なしなら不要。\n"
+        "\n投稿後、git add + git commit + git pushを実行せよ。"
+    )
+    ok, output = run_phase("diary", prompt, PHASE_TIMEOUTS["diary"])
+    return ok
+
+
+# ── メインフロー ──────────────────────────────────
+
+def is_claude_running():
+    """Claudeプロセスが稼働中か確認"""
+    try:
+        result = subprocess.run(
+            ["tasklist", "/FI", "IMAGENAME eq claude.exe"],
+            capture_output=True, text=True, timeout=10,
+        )
+        return "claude.exe" in result.stdout.lower()
+    except Exception:
+        return False
 
 
 def post_status_report():
@@ -205,20 +297,33 @@ def record_run():
 
 def main():
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"[{now}] auto_diary.py 実行")
+    print(f"[{now}] auto_diary.py 実行 (3フェーズ分割モード)")
 
     if not check_min_interval():
         return
 
-    # claude --print は常駐プロセス不要で直接呼べる（2026-03-27修正）
-    print("Claude CLI経由で日記生成")
-    ok, detail = generate_diary_via_claude()
-    if ok:
+    # Phase 1: Gather
+    ok1 = phase_gather()
+    if not ok1:
+        print("Phase 1 (Gather) 失敗。Phase 2-3は中止。状態報告のみ投稿。")
         record_run()
-        print(f"日記生成完了: {detail}")
+        post_status_report()
+        return
+
+    # Phase 2: Process
+    ok2 = phase_process()
+    if not ok2:
+        print("Phase 2 (Process) 失敗。Phase 3 (Diary)は試行する。")
+        # Phase 2が失敗してもPhase 1の情報があるので日記は書ける
+
+    # Phase 3: Diary
+    ok3 = phase_diary()
+    record_run()
+
+    if ok3:
+        print("3フェーズ完了。")
     else:
-        print(f"日記生成失敗: {detail}")
-        record_run()  # 失敗時も記録して連続リトライ防止
+        print("Phase 3 (Diary) 失敗。状態報告を投稿。")
         post_status_report()
 
 

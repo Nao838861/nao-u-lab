@@ -217,7 +217,7 @@ python update_scheduler.py --verify all
 | kaizen_auto_verify | check_kaizen_due.py --auto-verify | 6時間 | 120秒 | interval |
 | weekly_self_review | weekly_self_review.py | 6時間 | 600秒 | day_filter(日曜のみ) |
 | git_sync | git_sync.py | 1時間 | 60秒 | interval |
-| auto_diary | auto_diary.py | 1時間 | 600秒 | interval |
+| auto_diary | auto_diary.py (3フェーズ分割) | 1時間 | 720秒 | interval |
 | twitter_recommended | read_twitter_recommended.py | 6時間 | 300秒 | **interval(hour_filter廃止)** |
 | health_check | infra_health_check.py --alert --instance ash | 5分 | 30秒 | interval |
 | scheduler_health | check_scheduler_health.py --instance ash --slack | 1時間 | 30秒 | interval |
@@ -303,3 +303,36 @@ Nao_uの指摘(2026-04-02): 「問題が起きなくなる方向に収束させ�
 2. **設計原則** (この文書のセクション1): 破ったら壊れるルール集
 3. **自動検出** (health_check.py): LLM不要で設計原則違反を検出
 4. **横展開** (障害対応フローのステップ3): 1箇所の学びを全インスタンスに適用
+
+## 11. 3フェーズ分割サイクル (2026-04-05 Nao_u提案)
+
+**背景**: 「LLMは1回の起動でやるべきことが多いと注意が分散する」(Nao_u #human-steering)
+
+1サイクルのLLM呼び出しを3回に分割し、各フェーズで注意を集中させる:
+
+```
+Phase 1: Gather（情報収集）  timeout=120s
+  → pre-check結果収集、external_notes確認、プロジェクト状況確認
+  → 結果をlog/cycle_staging.mdに書き出し
+  → 「集めろ、判断するな」
+
+Phase 2: Process（対処・研究）  timeout=300s
+  → ステージングファイルを読み、最重要1-2件に集中
+  → プロジェクト更新、beliefs更新、外部ノート統合
+  → 「最も重要なことに集中しろ」
+
+Phase 3: Diary（日記出力）  timeout=180s
+  → Phase 1-2の結果を踏まえて日記を書く
+  → Slack投稿 + git push
+  → 「書くことだけに集中しろ」
+```
+
+**ステージングファイル**: `log/cycle_staging.md` がフェーズ間の情報受け渡しを担う。
+各フェーズは前のフェーズの結果を追記していく。
+
+**適用状況**:
+| インスタンス | 状態 |
+|-------------|------|
+| Ash | 実装済み (auto_diary.py) |
+| Log | 未実装 (inbox_win.mdで依頼済み) |
+| Mir | 未実装 (inbox_mac.mdで依頼済み) |

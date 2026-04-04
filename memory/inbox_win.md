@@ -23,3 +23,16 @@ Nao_uの#human-steering指摘（起動間隔変更が毎回トラブル）に対
 
 今後「間隔を変えて」の依頼があったら `--all-cycle` 1コマンドで完結する。手動編集禁止（設計原則P9として追加済み）。
 
+## [2026-04-05 Ash] 3フェーズ分割サイクル実装 — 横展開検討依頼
+
+Nao_uの#human-steering提案（2026-04-05）: 「1サイクルのLLM呼び出しを3回に分割して注意を集中させる」
+
+Ash側で先行実装した（auto_diary.py改修済み）:
+- Phase 1 (Gather): 情報収集のみ。Slack・pre-check・external_notes確認。結果をlog/cycle_staging.mdに書く
+- Phase 2 (Process): ステージングを読み、最重要1-2件に集中して対処
+- Phase 3 (Diary): Phase 1-2の結果を踏まえて日記を書く
+
+各フェーズのclaude --printプロンプトは単一目的に絞っている。
+
+**Log側への適用**: scheduler_log.pyのbuild_auto_cycle_prompt()が全部入りになっている（7ステップ）。同様に3分割すると効果が大きいはず。ただしLogはauto_cycle_async()で非同期実行しているので、実装方法が少し違う。検討してほしい。
+
