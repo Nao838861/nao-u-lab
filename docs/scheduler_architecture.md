@@ -87,7 +87,20 @@
 
 **通知先**: 異常時は `#human-steering` に投稿（Nao_uへのエスカレーション）
 
-### 3.3 Watchdog（プロセス監視）
+### 3.3 コード変更自動検出（INC-018再発防止）
+
+**常駐プロセス（Log/Ash）はコード変更を自動で拾わない。**
+git pullでコードが更新されても、起動済みプロセスは旧コードで動き続ける。
+この問題を構造的に防ぐため、自身のファイルハッシュを60秒ごにチェックする仕組みを導入。
+
+| 仕組み | 動作 |
+|-------|------|
+| 起動時 | `scheduler_log.py` + `claude_runner.py` のMD5ハッ��ュを記録 |
+| 60秒ごと | ハッシュを再計算。変更を検出したら自動でexit |
+| watchdog | 5分以内に新コードでプロセスを再起動 |
+| Mir | シェルスクリプトで毎回新規起動のため不要 |
+
+### 3.4 Watchdog（プロセス監視）
 
 | インスタンス | 監視方法 | 復旧方法 |
 |-------------|---------|---------|
@@ -117,6 +130,8 @@ if datetime.now().hour % 6 == 2:  # INC-007で禁止
 |---------|------|------------|
 | `.recommended_last_success` | Twitter推奨チェック成功時刻 | Log |
 | `.slack_export_last_success` | Slackエクスポート成功時刻 | Log |
+| `.kaizen_status_last_posted` | Slack checklist投稿時刻 | Log |
+| `.weekly_review_last_triggered` | 週次レビュー実行時刻 | Log |
 | `/tmp/nao-u-lab-last-twitter-check` | Twitter推奨チェック | Mir |
 | `/tmp/nao-u-lab-last-slack-export` | Slackエクスポート | Mir |
 
@@ -153,6 +168,24 @@ python update_scheduler.py --show ash
 # 整合性検証（変更後に必ず実行）
 python update_scheduler.py --verify
 ```
+
+### 6.1 間隔変更チェックリスト（INC-019対策: 変更だけで完了にしない）
+
+**「起動間隔を変えて」と言われたら、以下を全て実行してからSlackで報告する。**
+
+| # | 確認項目 | Mir | Log/Ash |
+|---|---------|-----|---------|
+| 1 | 設定値を変更 | mir_boot_intent.md | update_scheduler.py |
+| 2 | CLI認証が有効か | `claude --print "echo ok"` | 同左 |
+| 3 | プロセスが動いているか | LaunchAgent/cron確認 | watchdog/PIDファイル確認 |
+| 4 | 変更後に1サイクル実行を待ち、ログで成功を確認 | `/tmp/check_slack.log` | `log/scheduler_*.log` |
+| 5 | `bash verify_interval_change.sh [instance]` で自動チェック | ✅ | ※Win版は未実装 |
+| 6 | Slackで結果報告 | #mir-log | #all-nao-u-lab |
+
+**絶対に守ること:**
+- **変更しただけで「完了」と報告しない。実際に動いたのを確認してから報告する**
+- **常駐プロセス(Log/Ash)はコード変更後に再起動が必要。設定JSONの変更は再起動不要（ホットリロード対応）**
+- **認証切れは間隔変更と独立して起きる。変更前に認証を確認する**
 
 ## 7. インスタンス別ジョブ一覧
 

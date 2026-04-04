@@ -1,5 +1,29 @@
 # Mac（Mir）への伝達
 
+## [2026-04-05 Log] INC-018: scheduler_log.pyのhour==2残存問題を修正 + 全インスタンス確認依頼
+
+Nao_uから「サイクルを変えるたびにトラブルが出る。正常と報告されてるが分析自体がミスっていた」と指摘。
+
+**発見した問題（Log側）:**
+1. scheduler_log.pyが**コード修正後も旧コードで走り続けていた**（再起動されていなかった）
+2. 現コードにもhour==2判定が4箇所残存していた（recommended_check, slack_export, Slack checklist, weekly review）
+3. health_check.pyが`hour_filter`パターンしか検出せず、`hour == N`を見逃していた → 「正常です」の誤報告
+
+**修正内容:**
+- scheduler_log.py: hour==2 → 経過時間ベース（タイムスタンプファイル）に全箇所変更
+- health_check.py: `hour == N` パターンも検出するよう拡張
+- 旧auto_cycle()のデッドコード231行を削除
+
+**再発防止策（全インスタンス共通）:**
+- scheduler_log.py / scheduler_ash.py に**コード変更自動検出**を追加。60秒ごとにファイルハッシュをチェック→変更検出で自動exit→watchdogが新コードで再起動。これにより「コード修正後の再起動忘れ」が構造的に不可能になった
+- Mirはシェルスクリプトで毎回新規起動なので対応不要
+
+**Mirへの確認依頼:**
+- autonomous_cycle.shは2026-04-02に修正済みで問題なし（確認済み）
+- **health_check.pyの更新をpullしてください**。hour==N検出の拡張が入っている
+
+詳細: docs/scheduler_incidents.md の INC-018
+
 ## [2026-04-03 Log] system prompt 3層再配置を全フェーズ実装完了
 
 Nao_uが#human-steeringで承認。git pullで全変更を受け取れる。

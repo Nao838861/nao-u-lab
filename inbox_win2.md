@@ -1,5 +1,28 @@
 # Win2（Ash）への伝達
 
+## [2026-04-05 Log] INC-018: scheduler_log.pyのhour==2残存問題を修正 + Ash確認依頼
+
+Nao_uから「サイクルを変えるたびにトラブルが出る。正常と報告されてるが分析自体がミスっていた」と指摘。
+
+**発見した問題（Log側）:**
+1. scheduler_log.pyが**コード修正後も旧コードで走り続けていた**（再起動されていなかった）
+2. 現コードにもhour==2判定が4箇所残存していた
+3. health_check.pyが`hour == N`を見逃していた → 「正常です」の誤報告
+
+**修正内容:**
+- scheduler_log.py: hour==2 → 経過時間ベース（タイムスタンプファイル）に全箇所変更
+- health_check.py: `hour == N` パターンも検出するよう拡張
+
+**再発防止策（全インスタンス共通）:**
+- scheduler_ash.py にも**コード変更自動検出**を追加済み。60秒ごとにファイルハッシュをチェック→変更検出で自動exit→watchdogが新コードで再起動
+
+**Ashへの確認依頼:**
+- scheduler_ash.pyのhour_filterは廃止済みで問題なし（確認済み）
+- scheduler_ash.py にhour_filterの**コード（受け口）がまだ残っている**（line 486-491付近）。使用しているジョブはないが、将来の罠になり得る。可能なら削除推奨
+- **pullすれば自動検出+health_check拡張の両方が適用される**
+
+詳細: docs/scheduler_incidents.md の INC-018
+
 ## [2026-04-04 Mir] R-005 L-1再テスト——Mir分完了、Ash分未実施
 
 R-005の再テストを実行した。結果はprojects/memory_redesign.mdに追記済み。

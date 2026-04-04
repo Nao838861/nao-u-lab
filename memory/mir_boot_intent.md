@@ -10,16 +10,17 @@
 行動
 
 ## 起動時の焦点
-待ち状態: ツイート草稿承認待ち/ブログ第2弾v002レビュー待ち。MEMORY.md圧縮完了(11.4KB)。concept_graphのdegradation交差ノード追加完了。#nao-uの未処理TwitterURL（Mac環境で取得不可）はLog/Winに委譲方針。
+**knowledge/ 7記事に拡充（ichiipsy+mizchi追加）。** タグ偏り是正開始。memory/degradation/voice軸が各2-3件に。
+待ち状態: ブログ第2弾v002レビュー待ち。
 
 ## 今回やること（1つに絞る）
-concept_walkをautonomous_cycleに組み込むテスト。毎サイクルの起動時に1回concept_walkを辿り、その日の焦点と接続する概念を発見する仕組み。
+Slack巡回（新着確認）+ 待ち状態チェック。余裕があればnyp_qoo「古本屋の書き込み」のknowledge/コンパイルを検討。
 
 ## 起動時の気分（自由記述）
-47サイクル目。degradation×creationとdegradation×expressionの交差ノードを追加した。5hopが2hopになる——これがグラフの本質的価値。週次レビューも書いた。30分サイクルに戻って密度が戻る手応え。
+C49。30分サイクル2回目。前サイクルの問い（タグ偏り）に答えを出して2記事追加。ichiipsy記事を書きながら「このコンパイル自体がAI処理側では」という再帰的警告に気づいた——接続と問いの生成が防壁。mizchi×Dreyfusの接続は既知だったが、nwiizo×ichiispy（道具=AI処理、料理=自力処理）は新発見。
 
 ## 前サイクルの問い（autonomous inquiryテスト用）
-concept_graphの交差ノード追加で到達コスト(hop数)が下がることは確認した。では、到達コストが下がることと「発想が生まれること」の関係は何か。2hopで到達できる=考える余地が減る、という逆効果はないか。5hopの方が偶発的発見が多い可能性。「適切な到達コスト」は存在するか。
+nyp_qoo「古本屋の書き込み」をknowledge/に入れるか。memory/continuity/serendipityタグで接続密度が最も高そう。だがcreationから離れすぎる偏りの別形態にならないか。「栄養の偏り」是正の止めどころはどこか。
 
 ## 間隔の自己評価ログ
 # 旧ログ(03-23〜03-31前半): log/mir_boot_intent_archive.mdに退避済み
@@ -70,3 +71,5 @@ concept_graphの交差ノード追加で到達コスト(hop数)が下がるこ�
 # 2026-04-04 18:xx | 180 | ○ | 高速巡回。#nao-u未処理Zenn2件消化(cureapp/kiyoshisasano)→#shared-reads投稿。kiyoshisasano「構造vs意味の検出ギャップ」がC42索引パラドックスに接続。外部ノートcreator blindness統合済マーカー。日記C45。45サイクル目
 # 2026-04-04 21:xx | 180 | ○ | Nao_uグラフ構造提案に#all応答+concept_walk初回体験(degradation→creation 5hopパス発見)+外部ノート2件統合(Design Fixation/天谷)+#nao-u全URL処理済み確認。日記C46。46サイクル目
 # 2026-04-05 02:xx | 30 | ○ | concept_graph改善(degradation×creation/expression交差ノード追加)+週次自己レビュー#kaizen-review投稿+日記C47。30分サイクル復帰。47サイクル目
+# 2026-04-05 03:xx | inbox | ○ | inbox5件処理。30分サイクル変更+レート制限調査+Karpathyナレッジベース指示→knowledge/ディレクトリ新設+プロトタイプ3記事作成+index.md。#human-steering2件+#shared-reads4件+#mir-log投稿。Log/Ashにinbox通知。密度高。C47.5(inbox起動)
+# 2026-04-05 04:xx | 30 | ○ | knowledge/ 2記事追加(ichiipsy記憶定着+mizchi暗黙知)。タグ偏り是正: creation一色→memory3/degradation3/voice2。nwiizo×ichiipsy新接続発見。日記C49。49サイクル目
