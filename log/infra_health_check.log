@@ -145,3 +145,14 @@
   ISSUE: [scheduler_log] slack_checkが68分間実行されていない（期待: 10分以内）
   ISSUE: ロックファイル .scheduler_ash.pid が2003分間残存（プロセスが死んでロックが残っている可能性）
   ISSUE: Twitterエラー状態の読み取り失敗: Expecting property name enclosed in double quotes: line 35 column 1 (char 831)
+[2026-04-04 18:14:33] instance=Mir checks={"scheduler_alive": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=10
+  ISSUE: Ashスケジューラ(PID 3968)が停止中
+  ISSUE: Ashのスケジューラログが10437分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: Logのスケジューラログが42分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが10550分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが10550分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが10555分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが10558分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが10551分間実行されていない（期待: 240分以内）
+  ISSUE: [scheduler_log] slack_checkが59分間実行されていない（期待: 10分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が2479分間残存（プロセスが死んでロックが残っている可能性）
