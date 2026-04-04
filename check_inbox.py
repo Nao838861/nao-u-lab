@@ -222,9 +222,14 @@ def wake_claude(box_name, inbox_path):
         return
 
     prompt = (
-        f"受信箱({box_name})にメッセージがあります。以下がメッセージ内容です:\n\n"
+        f"【Slackレスポンスモード】速さと判断を重視。1回の起動で対処を完結させよ。\n"
+        f"受信箱({box_name})にメッセージがあります:\n\n"
         f"---\n{content}\n---\n\n"
-        f"上記の内容に対応してください。"
+        f"■ このモードのルール:\n"
+        f"- メッセージを読み、判断し、対処し、返信する。それだけに集中\n"
+        f"- 情報収集フェーズや日記は不要。定期サイクル(auto_diary.py)がやる\n"
+        f"- 必要ならファイル更新・git pushまで完結させる\n"
+        f"- 対処不要と判断したら、その旨だけ残して終了してよい\n"
     )
     try:
         env = {**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"}
@@ -232,7 +237,7 @@ def wake_claude(box_name, inbox_path):
             build_claude_cmd(prompt),
             capture_output=True,
             text=True,
-            timeout=600,
+            timeout=300,  # Slackレスポンスモード: 速さ重視（定期サイクルは別途auto_diary.pyが担当）
             cwd=str(REPO_DIR),
             encoding="utf-8",
             errors="replace",
