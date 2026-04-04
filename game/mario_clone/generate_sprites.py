@@ -45,6 +45,7 @@ O_SKIN = (255, 144, 57)
 O_BRK  = (206, 77, 8)
 O_BRKL = (254, 190, 181)
 O_GMB  = (255, 154, 57)
+O_SKIN2 = (255, 154, 57)   # Big Mario uses this skin tone
 O_OUTL = (0, 0, 10)
 
 
@@ -176,10 +177,11 @@ def rewrite_face_jump(out, ox):
 
 def recolor_body(rgb):
     """Map original body colors to new palette."""
-    if rgb == O_BG:   return BG
+    if rgb == O_BG:    return BG
     if rgb == O_RED:   return VEST
     if rgb == O_HAIR:  return HAIR
     if rgb == O_SKIN:  return SKIN
+    if rgb == O_SKIN2: return SKIN  # Big Mario skin tone
     return BG
 
 
@@ -303,12 +305,83 @@ def draw_slime(out, ox, oy, squished=False):
         out.putpixel((ox + x, oy + 13), OUTLINE)
 
 
+def transform_big_player(src, out):
+    """Transform all 6 big player frames (16x32 at rows 1-2)."""
+    for fi in range(6):
+        ox = fi * 16
+
+        # Recolor all 32 rows
+        for y in range(16, 48):
+            for x in range(16):
+                rgb = src.getpixel((ox + x, y))
+                out.putpixel((ox + x, y), recolor_body(rgb))
+
+        # Hat: RED in top rows (y=16-19) → HAT
+        for y in range(16, 20):
+            for x in range(16):
+                if out.getpixel((ox + x, y)) == VEST:
+                    out.putpixel((ox + x, y), HAT)
+        # Highlight top 2 rows
+        for y in [16, 17]:
+            for x in range(16):
+                if out.getpixel((ox + x, y)) == HAT:
+                    out.putpixel((ox + x, y), HAT_HI)
+
+        # Pants: VEST below y=36 → PANTS
+        for y in range(36, 48):
+            for x in range(16):
+                if out.getpixel((ox + x, y)) == VEST:
+                    out.putpixel((ox + x, y), PANTS)
+
+        # Shoes: HAIR at bottom rows → SHOE
+        for y in range(44, 48):
+            for x in range(16):
+                if out.getpixel((ox + x, y)) == HAIR:
+                    out.putpixel((ox + x, y), SHOE)
+
+        # Face rewrite for big Mario (y=20-26, similar to small)
+        # Remove mustache (HAIR pixels in face zone → SKIN)
+        for y in range(20, 27):
+            for x in range(16):
+                px = out.getpixel((ox + x, y))
+                if px == HAIR:
+                    # Keep hair at far left and far right of head
+                    # Center face zone (cols 3-13): mustache → skin
+                    if 3 <= x <= 13:
+                        out.putpixel((ox + x, y), SKIN)
+
+        # Re-add hair at proper locations (back of head)
+        for y in range(23, 27):
+            for x in range(16):
+                if out.getpixel((ox + x, y)) == SKIN:
+                    # Right side hair (cols 10+)
+                    if x >= 11:
+                        out.putpixel((ox + x, y), HAIR)
+
+        # Eyes (2x2 + pupil) at y=21-22
+        out.putpixel((ox + 4, 21), EYE_W)
+        out.putpixel((ox + 5, 21), EYE_W)
+        out.putpixel((ox + 4, 22), EYE_W)
+        out.putpixel((ox + 5, 22), EYE_P)
+        out.putpixel((ox + 8, 21), EYE_W)
+        out.putpixel((ox + 9, 21), EYE_W)
+        out.putpixel((ox + 8, 22), EYE_W)
+        out.putpixel((ox + 9, 22), EYE_P)
+
+        # Cheeks
+        out.putpixel((ox + 3, 23), CHEEK)
+        out.putpixel((ox + 10, 23), CHEEK)
+
+
 def main():
     src = Image.open('assets/mario_original.bmp').convert('RGB')
     out = Image.new('RGB', (128, 64), BG)
 
-    # Player frames
+    # Small player frames (row 0, cols 0-5)
     transform_player(src, out)
+
+    # Big player frames (rows 1-2, cols 0-5, 16x32 each)
+    transform_big_player(src, out)
 
     # Blocks (row 0, cols 6-7)
     for col in [6, 7]:

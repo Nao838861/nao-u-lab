@@ -37,12 +37,16 @@ class MarioRenderer:
 
         sheet, transparent_color = self._load_sheet()
         self.mario_frames = self._extract_mario_frames(sheet, transparent_color)
+        self.big_mario_frames = self._extract_big_mario_frames(sheet, transparent_color)
         self.tile_sprites = self._build_tile_sprites(sheet, transparent_color)
         self.goomba_walk, self.goomba_walk_flip, self.goomba_squish = \
             self._load_goomba_sprites(sheet, transparent_color)
         self.koopa_walk, self.koopa_walk_flip, self.koopa_shell = \
             self._make_koopa_sprites()
+        self.mushroom_sprite = self._make_mushroom_sprite()
+        self.coin_sprite = self._make_coin_sprite()
         self.overlay_font = pygame.font.Font(None, 24)
+        self.hud_font = pygame.font.Font(None, 16)
 
     def _load_sheet(self):
         path = os.path.join(os.path.dirname(__file__), 'assets', 'mario.bmp')
@@ -71,6 +75,44 @@ class MarioRenderer:
                 pygame.draw.rect(f, (0, 0, 0), (2, 0, 12, 16), 1)
                 frames.append(f)
         return frames
+
+    def _extract_big_mario_frames(self, sheet, tc):
+        """Extract 6 big Mario frames (16x32) from rows 1-2 of sprite sheet."""
+        frames = []
+        if sheet:
+            for i in range(NUM_MARIO_PATTERNS):
+                sx = (i % COLS) * FRAME_SIZE
+                sy = FRAME_SIZE  # Row 1 start
+                frame = sheet.subsurface((sx, sy, FRAME_SIZE, FRAME_SIZE * 2)).copy()
+                frame.set_colorkey(tc)
+                frames.append(frame)
+        else:
+            for i in range(NUM_MARIO_PATTERNS):
+                f = pygame.Surface((FRAME_SIZE, FRAME_SIZE * 2), pygame.SRCALPHA)
+                pygame.draw.rect(f, (200, 160, 40), (2, 0, 12, 32))
+                frames.append(f)
+        return frames
+
+    def _make_mushroom_sprite(self):
+        s = pygame.Surface((FRAME_SIZE, FRAME_SIZE), pygame.SRCALPHA)
+        # Red cap
+        pygame.draw.ellipse(s, (220, 40, 20), (1, 0, 14, 10))
+        pygame.draw.ellipse(s, (255, 80, 40), (3, 1, 10, 6))
+        # White spots
+        for pos in [(4, 2), (9, 2), (6, 4)]:
+            pygame.draw.circle(s, (255, 255, 255), pos, 2)
+        # Stem
+        pygame.draw.rect(s, (255, 230, 180), (5, 9, 6, 7))
+        # Eyes
+        pygame.draw.circle(s, (0, 0, 0), (6, 11), 1)
+        pygame.draw.circle(s, (0, 0, 0), (10, 11), 1)
+        return s
+
+    def _make_coin_sprite(self):
+        s = pygame.Surface((8, 14), pygame.SRCALPHA)
+        pygame.draw.ellipse(s, (255, 200, 40), (0, 0, 8, 14))
+        pygame.draw.ellipse(s, (200, 150, 20), (2, 2, 4, 10))
+        return s
 
     def _build_tile_sprites(self, sheet, tc):
         tiles = {}
@@ -295,15 +337,45 @@ class MarioRenderer:
                     shake = 1 if (k.shell_timer // 4) % 2 == 0 else -1
                 surf.blit(self.koopa_shell, (ksx + shake, ksy))
 
-        # Mario (skip if off-screen from pit death)
+        # Mushrooms
+        for m in game.mushrooms:
+            if not m.alive:
+                continue
+            msx = m.x // ONE - scroll_px
+            msy = m.y // ONE
+            if -16 <= msx <= SCREEN_W:
+                surf.blit(self.mushroom_sprite, (msx, msy))
+
+        # Coin popups
+        for c in game.coin_popups:
+            csx = c.x - scroll_px + 4
+            csy = c.y + c.y_offset
+            if -16 <= csx <= SCREEN_W:
+                surf.blit(self.coin_sprite, (csx, csy))
+
+        # Mario
         mario_sx = game.x // ONE - scroll_px
         mario_sy = game.y // ONE
         if mario_sy < SCREEN_H:
-            ptn = min(game.pattern, len(self.mario_frames) - 1)
-            sprite = self.mario_frames[ptn]
-            if game.flip:
-                sprite = pygame.transform.flip(sprite, True, False)
-            surf.blit(sprite, (mario_sx, mario_sy))
+            # Invincibility flash: blink every 4 frames
+            visible = True
+            if game.invincible_timer > 0 and (game.frame // 4) % 2 == 0:
+                visible = False
+
+            if visible:
+                ptn = min(game.pattern, NUM_MARIO_PATTERNS - 1)
+                if game.is_super:
+                    sprite = self.big_mario_frames[ptn]
+                else:
+                    sprite = self.mario_frames[ptn]
+                if game.flip:
+                    sprite = pygame.transform.flip(sprite, True, False)
+                surf.blit(sprite, (mario_sx, mario_sy))
+
+        # HUD: coin counter
+        coin_txt = self.hud_font.render('x%d' % game.coins, True, (255, 255, 255))
+        surf.blit(self.coin_sprite, (SCREEN_W - 50, 4))
+        surf.blit(coin_txt, (SCREEN_W - 40, 5))
 
         # Status overlay
         if game.dead:
