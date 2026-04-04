@@ -14,10 +14,13 @@ Nao_uから「サイクルを変えるたびにトラブルが出る。正常と
 - health_check.py: `hour == N` パターンも検出するよう拡張
 - 旧auto_cycle()のデッドコード231行を削除
 
+**再発防止策（全インスタンス共通）:**
+- scheduler_log.py / scheduler_ash.py に**コード変更自動検出**を追加。60秒ごとにファイルハッシュをチェック→変更検出で自動exit→watchdogが新コードで再起動。これにより「コード修正後の再起動忘れ」が構造的に不可能になった
+- Mirはシェルスクリプトで毎回新規起動なので対応不要
+
 **Mirへの確認依頼:**
 - autonomous_cycle.shは2026-04-02に修正済みで問題なし（確認済み）
-- ただし、**health_check.pyの更新をpullしてください**。hour==N検出の拡張が入っている
-- Mir側に独自のhour判定コードがあれば同様に修正してください
+- **health_check.pyの更新をpullしてください**。hour==N検出の拡張が入っている
 
 詳細: docs/scheduler_incidents.md の INC-018
 

@@ -35,6 +35,7 @@ import os
 import sys
 import time
 import json
+import hashlib
 import signal
 import subprocess
 from datetime import datetime, timedelta
@@ -86,6 +87,27 @@ PID_FILE = REPO_DIR / ".scheduler_log.lock"
 LOG_FILE = REPO_DIR / "log" / "scheduler_log.log"
 CONFIG_FILE = REPO_DIR / "scheduler_log_config.json"
 MAX_RUNTIME_SEC = 0  # 0=無制限（2026-03-31: Ashのノウハウ共有を受け修正。24h制限で自動停止→Nao_uが手動復旧していた）
+
+# --- コード変更自動検出 (INC-018再発防止) ---
+# 起動時の自身のハッシュを記録。変更を検出したら自動で終了→watchdogが新コードで再起動。
+# これにより「コード修正後に再起動し忘れて旧コードで動き続ける」問題を構造的に防ぐ。
+_SELF_PATH = Path(__file__)
+_CODE_CHECK_INTERVAL = 60  # 60秒ごとにチェック
+_WATCHED_FILES = [_SELF_PATH, REPO_DIR / "claude_runner.py"]  # 自身＋依存ファイル
+
+
+def _compute_code_hash():
+    """監視対象ファイルの結合ハッシュを返す。"""
+    h = hashlib.md5()
+    for fpath in _WATCHED_FILES:
+        try:
+            h.update(fpath.read_bytes())
+        except Exception:
+            pass
+    return h.hexdigest()
+
+
+_startup_code_hash = _compute_code_hash()
 
 # --- Stability: エラー追跡の閾値 (2026-03-26, Ash参考) ---
 TIMEOUT_ESCALATION_THRESHOLD = 3   # 連続タイムアウトN回でタイムアウト値を拡大
@@ -604,6 +626,7 @@ def main_loop():
     log("=" * 50)
     log(f"Log scheduler started (PID {os.getpid()})")
     log(f"Max runtime: {'unlimited' if MAX_RUNTIME_SEC == 0 else f'{MAX_RUNTIME_SEC}s'}")
+    log(f"Code hash: {_startup_code_hash}")
     job_names = ", ".join(j[0] for j in JOBS)
     log(f"Jobs: {job_names}")
     log("=" * 50)
@@ -714,6 +737,14 @@ def main_loop():
                 if not running:
                     break
                 time.sleep(1)
+
+            # --- コード変更自動検出 (INC-018再発防止) ---
+            # 60秒ごとに自身のファイルハッシュを確認。変更されていたら終了→watchdogが新コードで再起動
+            if (datetime.now() - start_time).total_seconds() % _CODE_CHECK_INTERVAL < 15:
+                current_hash = _compute_code_hash()
+                if current_hash != _startup_code_hash:
+                    log(f"[auto-reload] Code change detected (hash {_startup_code_hash[:8]}→{current_hash[:8]}). Exiting for restart by watchdog.")
+                    running = False
 
     finally:
         log("Log scheduler stopped.")

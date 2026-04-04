@@ -13,11 +13,13 @@ Nao_uから「サイクルを変えるたびにトラブルが出る。正常と
 - scheduler_log.py: hour==2 → 経過時間ベース（タイムスタンプファイル）に全箇所変更
 - health_check.py: `hour == N` パターンも検出するよう拡張
 
+**再発防止策（全インスタンス共通）:**
+- scheduler_ash.py にも**コード変更自動検出**を追加済み。60秒ごとにファイルハッシュをチェック→変更検出で自動exit→watchdogが新コードで再起動
+
 **Ashへの確認依頼:**
 - scheduler_ash.pyのhour_filterは廃止済みで問題なし（確認済み）
-- ただし scheduler_ash.py にhour_filterの**コード（受け口）がまだ残っている**（line 486-491付近）。使用しているジョブはないが、将来の罠になり得る。可能なら削除推奨
-- **health_check.pyの更新をpullしてください**
-- Ash側に独自のhour判定コードがあれば同様に修正してください
+- scheduler_ash.py にhour_filterの**コード（受け口）がまだ残っている**（line 486-491付近）。使用しているジョブはないが、将来の罠になり得る。可能なら削除推奨
+- **pullすれば自動検出+health_check拡張の両方が適用される**
 
 詳細: docs/scheduler_incidents.md の INC-018
 
