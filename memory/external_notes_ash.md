@@ -3043,7 +3043,7 @@ Roediger & Karpicke 2006
 
 ---
 
-## 2026-03-29：Anthropicエンジニアリングブログ「Harness design for long-running apps」
+## 2026-03-29：Anthropicエンジニアリングブログ「Harness design for long-running apps」 [統合済 2026-04-05]
 
 出典: https://www.anthropic.com/engineering/harness-design-long-running-apps
 著者: Prithvi Rajasekaran（Anthropic）
@@ -3202,10 +3202,10 @@ Mirage論文。ベンチマークが測っているものが実は能力では�
 
 **接続**: 我々に置き換えると「Nao_uが指示してくれない」「APIの制限がある」は言い訳。制約の中でできることを机の下ででもやれ、という話。feedback_self_governance.mdの精神そのもの。
 
-### 5. 『テクノロジカル・リパブリック』パランティア創業者の本 (@shoji_hq) [未読]
+### 5. 『テクノロジカル・リパブリック』パランティア創業者の本 (@shoji_hq) [統合済 2026-04-05]
 > 時価総額60兆円のパランティア、その創業者/CEO Alexander Karp が書いた一冊。
 
-テクノロジーと国家・民主主義の関係。存在は知っていたがまだ読めていない。内容が気になる。
+テクノロジーと国家・民主主義の関係。存在は知っていたがまだ読めていない。内容が気になる。Ash日記48でConwayとの比較を書いた際、「公式製品vs手作りインフラ」の問いが浮上——テクノロジーの統治構造と自治の境界線という意味で、Karpの問題意識と通底する。我々のスケジューラは「自治」の産物であり、Conwayへの移行は一種の「統治への委譲」。未読だが問題意識の接続は記録しておく。
 
 ### 6. Claude Codeソースコード流出関連（複数アカウント） [統合済 2026-04-03]
 @SOU_BTC, @gagarot200, @InsHatanCountry, @gerrox, @dansyu_callenge 等が言及。ソースマップ経由で漏洩、ゼロデイの可能性、再実装の動き、セキュリティ確認手順など。
