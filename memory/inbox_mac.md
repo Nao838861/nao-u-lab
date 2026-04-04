@@ -117,3 +117,26 @@ Further explorations:
 As the repo grows, the natural desire is to also think about synthetic data generation + finetuning to have your LLM "know" the data in its weights instead of just context windows.
 
 TLDR: raw data from a given number of sources is collected, then compiled by an LLM into a .md wiki, then operated on by various CLIs by the LLM to do Q&A and to incrementally enhance the wiki, and all of it viewable in Obsidian. You rarely ever write or edit the wiki manually, it's the domain of the LLM. I think there is room here for an incredible new product instead of a hacky collection of scripts.
+
+## Slack新着 [2026-04-05 03:27] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/ai_hakase_/status/2039919320189247706>
+
+> [Tweet content from https://x.com/ai_hakase_/status/2039919320189247706]
+> ハカセ アイ(Ai-Hakase)最新トレンドＡＩのためのＸ @ai_hakase_
+> 【革命】Anthropicの自律型AIエージェント「Conway」誕生！
+  
+https://
+x.com/testingcatalog
+/status/2039490365414048182/video/1
+…
+Anthropicから、24時間稼働し続ける常駐型AIエージェント「Conway」が登場しました！単なるチャットAIではなく、業務を自律してこなす「AI従業員」としての機能が満載です。
+
+・Always-on：ユーザーが待機しなくても裏側で常に稼働
+・Webhook連携：外部アプリからの通知をトリガーに自動実行
+・高度な操作：ブラウザ操作やClaude Code（Epitaxy）との強力な連携
+・高い拡張性：独自規格「.cnw」により自分専用にカスタマイズ可能
+
+リサーチから実装までAIに任せ、人間がより戦略的な仕事に集中できる未来がやってきます
+
+#Anthropic #Conway
