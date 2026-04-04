@@ -6787,3 +6787,66 @@ des
 [2026-04-04 21:00:41] [slack_check] Timeout (120s)
 [2026-04-04 21:00:41] [slack_check] Done (exit=-1)
 [2026-04-04 21:00:41] [git_sync] Starting
+[2026-04-04 21:00:42] [git_sync] Committed and pushed
+[2026-04-04 21:00:42] [recommended_check] Starting
+[2026-04-04 21:00:42] [recommended_check] Running read_twitter_recommended.py (catchup (>7h since last success))
+[2026-04-04 21:01:59] [recommended_check] Done (exit=0)
+[2026-04-04 21:01:59] [recommended_check] Done (exit=0)
+[2026-04-04 21:02:09] [slack_check] Starting
+[2026-04-04 21:02:28] [slack_check] Done (exit=1)
+[2026-04-04 21:02:28] [inbox_check] Starting
+[2026-04-04 21:02:29] [stability] inbox_check: 正常復帰 (timeout=1, errors=1 → リセット)
+[2026-04-04 21:02:29] [inbox_check] Done (exit=0)
+[2026-04-04 21:03:30] [slack_check] Starting
+[2026-04-04 21:03:48] [slack_check] Done (exit=1)
+[2026-04-04 21:04:48] [slack_check] Starting
+[2026-04-04 21:05:05] [slack_check] Done (exit=1)
+[2026-04-04 21:06:06] [slack_check] Starting
+[2026-04-04 21:06:25] [slack_check] Done (exit=1)
+[2026-04-04 21:07:25] [slack_check] Starting
+[2026-04-04 21:07:44] [slack_check] Done (exit=1)
+[2026-04-04 21:07:54] [inbox_check] Starting
+[2026-04-04 21:07:55] [inbox_check] Done (exit=0)
+[2026-04-04 21:08:45] [slack_check] Starting
+[2026-04-04 21:09:05] [slack_check] Done (exit=1)
+[2026-04-04 21:10:05] [slack_check] Starting
+[2026-04-04 21:10:24] [slack_check] Done (exit=1)
+[2026-04-04 21:11:25] [slack_check] Starting
+[2026-04-04 21:11:44] [slack_check] Done (exit=1)
+[2026-04-04 21:12:44] [slack_check] Starting
+[2026-04-04 21:13:02] [slack_check] Done (exit=1)
+[2026-04-04 21:13:12] [inbox_check] Starting
+[2026-04-04 21:13:13] [inbox_check] Done (exit=0)
+[2026-04-04 21:14:04] [slack_check] Starting
+[2026-04-04 21:14:23] [slack_check] Done (exit=1)
+[2026-04-04 21:15:23] [slack_check] Starting
+[2026-04-04 21:15:41] [slack_check] Done (exit=1)
+[2026-04-04 21:16:42] [slack_check] Starting
+[2026-04-04 21:17:01] [slack_check] Done (exit=1)
+[2026-04-04 21:18:02] [slack_check] Starting
+[2026-04-04 21:18:20] [slack_check] Done (exit=1)
+[2026-04-04 21:18:30] [inbox_check] Starting
+[2026-04-04 21:18:31] [inbox_check] Done (exit=0)
+[2026-04-04 21:19:22] [slack_check] Starting
+[2026-04-04 21:19:40] [slack_check] Done (exit=1)
+[2026-04-04 21:20:41] [slack_check] Starting
+[2026-04-04 21:20:59] [slack_check] Done (exit=1)
+[2026-04-04 21:21:59] [slack_check] Starting
+[2026-04-04 21:22:17] [slack_check] Done (exit=1)
+[2026-04-04 21:23:18] [slack_check] Starting
+[2026-04-04 21:23:37] [slack_check] Done (exit=1)
+[2026-04-04 21:23:47] [inbox_check] Starting
+[2026-04-04 21:24:16] [inbox_check] Done (exit=0)
+[2026-04-04 21:24:47] [slack_check] Starting
+[2026-04-04 21:25:06] [slack_check] Done (exit=1)
+[2026-04-04 21:26:06] [slack_check] Starting
+[2026-04-04 21:26:25] [slack_check] Done (exit=1)
+[2026-04-04 21:27:25] [slack_check] Starting
+[2026-04-04 21:27:46] [slack_check] Done (exit=1)
+[2026-04-04 21:28:46] [slack_check] Starting
+[2026-04-04 21:29:04] [slack_check] Done (exit=1)
+[2026-04-04 21:29:25] [inbox_check] Starting
+[2026-04-04 21:29:25] [inbox_check] Done (exit=0)
+[2026-04-04 21:30:06] [slack_check] Starting
+[2026-04-04 21:30:23] [slack_check] Done (exit=1)
+[2026-04-04 21:30:43] [git_sync] Starting
