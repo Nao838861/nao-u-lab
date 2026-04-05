@@ -128,7 +128,9 @@ JOBS = [
     ("slack_export", None, 28800, 120),  # special handling: elapsed-time based (24h)
     ("auto_cycle", None, 5400, 1800),  # 90min interval (2026-03-26 Nao_u指示: 1.5時間化。usage余裕あり)
 ("health_check", [*PY, str(REPO_DIR / "health_check.py"), "--alert", "--instance", "log"], 300, 30),  # 5min, LLM不要の自己診断 (2026-04-02)
-    ("scheduler_health", [*PY, str(REPO_DIR / "check_scheduler_health.py"), "--instance", "log", "--slack"], 1800, 30),  # 30min, スケジューラ特化ヘルスチェック (2026-04-02, Mir依頼)
+    # scheduler_healthは無効化 (2026-04-05): check_scheduler_health.pyがWindowsでos.kill→SystemError→
+    # スケジューラ本体ごとクラッシュする問題が解決できず。health_check.pyで代替。
+    # ("scheduler_health", [*PY, str(REPO_DIR / "check_scheduler_health.py"), "--instance", "log"], 1800, 30),
 ]
 
 

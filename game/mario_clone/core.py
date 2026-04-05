@@ -355,6 +355,7 @@ class MarioGame:
     def _check_goomba_collisions(self):
         mpx = self.x // ONE
         mpy = self.y // ONE
+        mh = 31 if self.is_super else 15  # Mario sprite height - 1
 
         for g in self.goombas:
             if not g.alive or g.squish_timer > 0 or not g.active:
@@ -363,13 +364,12 @@ class MarioGame:
             gpx = g.x // ONE
             gpy = g.y // ONE
 
-            # Bounding box overlap (slightly narrowed for fairness)
             if not (mpx + 13 > gpx + 2 and mpx + 2 < gpx + 13 and
-                    mpy + 15 > gpy and mpy < gpy + 15):
+                    mpy + mh > gpy and mpy < gpy + 15):
                 continue
 
-            # Stomp: Mario falling and body mostly above Goomba
-            if self.vy > 0 and mpy + 8 <= gpy:
+            # Stomp: Mario's feet near Goomba's top
+            if self.vy > 0 and mpy + mh - 7 <= gpy:
                 g.squish_timer = GOOMBA_SQUISH_FRAMES
                 g.vx = 0
                 self.vy = STOMP_BOUNCE
@@ -468,6 +468,7 @@ class MarioGame:
     def _check_koopa_collisions(self):
         mpx = self.x // ONE
         mpy = self.y // ONE
+        mh = 31 if self.is_super else 15
 
         for k in self.koopas:
             if not k.alive or not k.active:
@@ -476,11 +477,11 @@ class MarioGame:
             kpy = k.y // ONE
 
             if not (mpx + 13 > kpx + 2 and mpx + 2 < kpx + 13 and
-                    mpy + 15 > kpy and mpy < kpy + 15):
+                    mpy + mh > kpy and mpy < kpy + 15):
                 continue
 
             if k.state == Koopa.WALKING:
-                if self.vy > 0 and mpy + 8 <= kpy:
+                if self.vy > 0 and mpy + mh - 7 <= kpy:
                     # Stomp walking → shell (idle). NOT kicked yet.
                     k.state = Koopa.SHELL_IDLE
                     k.vx = 0
@@ -517,7 +518,7 @@ class MarioGame:
             elif k.state == Koopa.SHELL_SLIDING:
                 if k.kick_grace > 0:
                     continue
-                if self.vy > 0 and mpy + 8 <= kpy:
+                if self.vy > 0 and mpy + mh - 7 <= kpy:
                     # Stomp sliding shell → stop it
                     k.state = Koopa.SHELL_IDLE
                     k.vx = 0
