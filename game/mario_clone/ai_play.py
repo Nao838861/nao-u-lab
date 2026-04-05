@@ -214,8 +214,8 @@ def decide_action(state, tm, params, game):
     block = scan_hittable_blocks_above(tm, x, state['y'])
     if block:
         dist, bc, br, bch = block
-        # Only hit if we're roughly underneath (within 8px)
-        if abs(dist) < 12:
+        # Jump when close enough to be underneath
+        if abs(dist) < 16 + vx * 2:
             return 15, False  # Jump to hit the block
 
     # 3) Terrain obstacles
@@ -380,8 +380,9 @@ def run(level_path='assets/level_1_1.txt', max_cycles=50, checkpoint_interval=10
                 continue
 
             # Decision
+            go_left = False
             if hold_a == 0:
-                jump_hold = decide_jump(state, tm, params)
+                jump_hold, go_left = decide_action(state, tm, params, game._game)
                 if jump_hold > 0:
                     hold_a = jump_hold
                 elif state['on_ground'] and stuck > params['stuck_threshold']:
@@ -394,7 +395,10 @@ def run(level_path='assets/level_1_1.txt', max_cycles=50, checkpoint_interval=10
             if hold_a > 0:
                 hold_a -= 1
 
-            state = game.step(right=True, b=True, a=pressing_a)
+            if go_left:
+                state = game.step(left=True, b=False, a=pressing_a)
+            else:
+                state = game.step(right=True, b=True, a=pressing_a)
 
         # --- Cycle complete ---
         result = 'cleared' if state['cleared'] else 'dead' if state['dead'] else 'timeout'
