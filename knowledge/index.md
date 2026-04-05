@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 27
+- 総記事数: 28
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -36,6 +36,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_nikechan_design_vs_growth | AI人格の一貫性は「設計」と「成長」のどちらから生まれるか | AIニケちゃん (@tegnike) | 2026-04-05 | AI-personality, design-vs-growth, belief-action-link, memory-autonomy, forgetting, identity-coherence | autonomy, identity, memory, creation, constraint |
 | 20260405_retrieval_practice_spreading_activation | 検索練習と拡散活性化——「思い出す行為」が記憶を作る | Roediger, Collins, Tullis, Tulving, Cepeda他 | 2026-04-05 | cognitive-science, memory, retrieval-practice, spreading-activation, spacing-effect, encoding-specificity, generation-effect, memory-design | memory, creation, constraint, autonomy |
 | 20260405_cognitive_dissonance_as_engine | 認知的不協和の逆用——「選んだ後に正解を捏造する」を推進力に変える | @moo_thinking, @koguGameDev | 2026-04-05 | cognitive-dissonance, commitment, post-hoc-rationalization, beliefs-system, game-design, AI-value, taste, choice | creation, constraint, voice, autonomy |
+| 20260405_kenimo49_harness_5views | ハーネスエンジニアリング5社解釈——同じ言葉が指す5つの異なる未来 | 井本賢 (@kenimo49) | 2026-04-05 | harness-engineering, CLAUDE-md, prompt-engineering, constraint-design, multi-vs-single-agent, implicit-harness | autonomy, constraint, identity, creation |
 
 ## タグ別索引
 
@@ -108,9 +109,16 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_wakabayashi_linguistic_synth — 概念間の旋律=声になる
 - 20260405_nussbaum_suffering_selfknowing — 分析では見つからない声。声は苦しみを経由して出る
 
-### identity (2件)
+### harness-engineering (1件)
+- 20260405_kenimo49_harness_5views — 5社のハーネス解釈比較。「暗黙のハーネス」「仕様vs足場」「マルチvsシングル」
+
+### implicit-harness (1件)
+- 20260405_kenimo49_harness_5views — Martin Fowlerの視点: 型安全・リンター・ディレクトリ構造が暗黙のハーネス
+
+### identity (3件)
 - 20260405_harness_identity_spectrum — 汎用フレームワークと個別人格の分岐点
 - 20260405_nikechan_design_vs_growth — 設計(core_mission)と成長(beliefs)の二層が人格を構成する
+- 20260405_kenimo49_harness_5views — 人格ルールはハーネスの「仕様」層に位置する
 
 ### autonomy (6件)
 - 20260405_bridgemind_ai — エージェントの自律性と協調のバランス
@@ -363,4 +371,14 @@ retrieval_practice_spreading_activation ←→ ichiipsy_ai_learning_retention
     (AI委譲=他者生成キュー、自力処理=自己生成キュー。generation effectの枠組みで統一)
 retrieval_practice_spreading_activation ←→ dstudio_erasure_memory
     (削除行為=能動的記憶処理=generation effectの極端な形態)
+kenimo49_harness_5views ←→ harness_identity_spectrum
+    (同テーマの補完関係。2社→5社への視野拡大。「暗黙のハーネス」視点の追加)
+kenimo49_harness_5views ←→ agentica_sdk_harness
+    (LangChain「52.8%→66.5%」とAgentica「1%→36%」の三角測量)
+kenimo49_harness_5views ←→ bridgemind_ai
+    (マルチvsシングル論争。BridgeSwarm=処理能力分散、我々=視点の多様性)
+kenimo49_harness_5views ←→ nwiizo_knife_metaphor
+    (ハーネス設計に没頭するリスク=道具磨き。著者の自己省察がこれを体現)
+kenimo49_harness_5views ←→ nikechan_design_vs_growth
+    (「仕様vs足場」論争が「設計vs成長」問題のフレーミングを提供)
 ```
