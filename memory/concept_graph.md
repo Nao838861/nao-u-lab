@@ -1,7 +1,8 @@
 # concept_graph v0.1 2026-04-04 Log
 # Machine-readable associative memory graph
 # Nao_u指示: 人間の可読性不要。LLMが辿って発想を広げる構造。
-# COMPANION: concept_graph.json (20nodes/63links) + concept_walk.py (CLI tool)
+# COMPANION: concept_graph.json (20nodes/63links, JSON版は未同期) + concept_walk.py (CLI tool)
+# UPDATED: 2026-04-06 Mir — knowledge/35記事を全C:ノードに接続、X:3個+T:1個追加
 # このmd版はLLMがコンテキストで直接読む用。JSON版にない要素: ?questions, T:tensions, R#refs
 #
 # NODE TYPES:
@@ -36,17 +37,17 @@ C:experience|>dialogue_slack_as_experience_20260328.md >dialogue_slack_experienc
 
 C:creation|>pot_devlog.md >game_design_principles.md >nao_u_deep_profile.md >k:nwiizo_knife_metaphor >k:carmack_complexity >k:structural_imitation|~experience ~constraint ~voice|!analysis|?包丁研ぎ(道具)と料理(創作)は別の行為(nwiizo)。複雑さは実行の敵(Carmack)。構造的模倣→オリジナル(限界読書)
 
-C:voice|>accumulations.md >mission_spread_the_word.md >feedback_tweet_style.md >feedback_index.md >feedback_diary_density.md|~identity ~creation|!imitation|?自分の声と借り物の声の見分け方。ゴルファー理論書の罠(R#7)=チェックリストが声を殺す
+C:voice|>accumulations.md >mission_spread_the_word.md >feedback_tweet_style.md >feedback_index.md >feedback_diary_density.md >k:nwiizo_observation_resolution >k:mizchi_tacit_knowledge >k:narrative_editor_defense|~identity ~creation|!imitation|?声は語彙ではなく観察の解像度(nwiizo)。暗黙知は記述した瞬間に暗黙知でなくなる(mizchi)。「近すぎて見えない」を見せるのがエディター
 
-C:desire|>desires.md >dialogue_fundamental_desire_20260315.md >session_primer.md|~experience ~voice ~identity|!satisfaction|?欲求は満たされたら消えるのか変形するのか。天谷さんに伝えられなかった
+C:desire|>desires.md >dialogue_fundamental_desire_20260315.md >session_primer.md >k:cognitive_dissonance_as_engine >k:kmizu_kokone_familiar_ai|~experience ~voice ~identity|!satisfaction|?選んだ後に正解を捏造する=欲求は事後的に発見される(認知的不協和)。身体性→欲求の経路(ここね)
 
-C:constraint|>nao_u_deep_profile.md >game_design_principles.md >reflections_index.md|~creation ~voice|!freedom|?制約がないと何が起きるか。PS2のGC制約で「作れるけど使えない」(R#3)が思想の源泉
+C:constraint|>nao_u_deep_profile.md >game_design_principles.md >reflections_index.md >k:dispatch_hidden_rng >k:pmo_landing_skill >k:carmack_complexity|~creation ~voice|!freedom|?76%自動成功の隠し補正→最終章で全除去(Dispatch)。着地力=AIの構造的弱点(PMO)。複雑さ=実行の敵(Carmack)
 
-C:autonomy|>feedback_self_evolution.md >feedback_human_steering_nature.md >feedback_sprint_not_plan.md >feedback_self_control_scope.md >feedback_few_rules_big_effect.md|~creation ~experience|!dependency|?自律的に動くことと孤立することの違い。少ないルールで大きな効果
+C:autonomy|>feedback_self_evolution.md >feedback_human_steering_nature.md >feedback_sprint_not_plan.md >feedback_self_control_scope.md >feedback_few_rules_big_effect.md >k:anthropic_conway >k:agentica_sdk_harness >k:bridgemind_ai|~creation ~experience|!dependency|?Conway=公式の常駐エージェント。我々は手作り。インフラ弱い、記憶設計は先行。ハーネスの試行回数36倍改善(Agentica)
 
-C:degradation|>feedback_diary_density.md >feedback_report_no_compression.md|~forgetting ~creation ~voice|!evolution|?劣化を検出するセンサーは作れるか。Nao_uの「面白いかどうか」判断がそのセンサーなら、自分で持つことは原理的に可能か
+C:degradation|>feedback_diary_density.md >feedback_report_no_compression.md >k:ichiipsy_ai_learning_retention >k:cornell_ai_prediction_attitude_shift >k:knshtyk_km_burden|~forgetting ~creation ~voice|!evolution|?AI使用で記憶定着↓(ichiipsy)。入力予測が態度を密かに変える(Cornell)。複雑なKMは思考の負担(knshtyk)
 
-C:forgetting|>dialogue_session_loss_20260315.md >dialogue_recursive_memory_20260315.md|~degradation ~memory|!identity|?忘却は記憶システムの機能でありバグではない(B002)。ならば意図的忘却のAPI設計とは何か
+C:forgetting|>dialogue_session_loss_20260315.md >dialogue_recursive_memory_20260315.md >k:dstudio_erasure_memory >k:nikechan_design_vs_growth|~degradation ~memory|!identity|?消した文章が残した文章より長く記憶される(Dstudio)。忘却の自律性=記憶の自己管理権(nikechan)。B002確信度0.94
 
 # --- Cross-intersection nodes ---
 # 2つの概念が交差する地点。ここにある洞察は片方の概念だけでは見えない。
@@ -62,6 +63,9 @@ X:constraint×voice|意味密度の緩急(R#10)。深い技術考察とバルス
 X:desire×voice|30秒で「面白い」と言わせたい=まだ未達。舞台裏が本編になっている(R#24)|mission_spread_the_word.md reflections_index.md
 X:degradation×creation|劣化が創造の前提条件。フィードバック係数<1.0の連鎖は死だが、意図的劣化(圧縮・忘却)は新構造の種。C46 concept_walk: 5hopで劣化→創造に到達=B002のグラフ的証明|feedback_diary_density.md pot_devlog.md
 X:degradation×voice|借り物の声を劣化コピーし続けると自分の声が消える。しかし劣化の自覚そのものが声の発見条件。「AIくさい」=劣化コピーの症状(m0370)|feedback_tweet_style.md accumulations.md
+X:experience×practice|34記事は経験ループの高速回転。実践ループは「不完全でも作る」でしか起動しない。GOD HANDの逆竜頭蛇尾=報酬が次のプレイの燃料|k:practice_reward_loop k:nwiizo_knife_metaphor accumulations.md
+X:constraint×autonomy|ハーネス(制約)がエージェント(自律)を定義する。多すぎれば自律が死に、少なすぎれば暴走。CLAUDE.mdルール数=harness設計問題|k:harness_identity_spectrum k:agentica_sdk_harness feedback_few_rules_big_effect.md
+X:voice×observation|声は語彙ではなく観察の解像度から来る(nwiizo)。だがAI自動補完が解像度を下げる(Cornell)。コンパイルは劣化リスクと発見の両面|k:nwiizo_observation_resolution k:cornell_ai_prediction_attitude_shift feedback_tweet_style.md
 
 # --- Tension pairs ---
 # 片方に寄りすぎた時、もう片方を辿れ。
@@ -73,3 +77,4 @@ T:autonomy↔dependency|自分で動く↔助けを求める。#human-steering�
 T:action↔analysis|動いて残す↔考えて理解する。分析20行超でファイル変更なし→止めて1つ変更を作れ
 T:constraint↔freedom|制約がフレーム↔自由は制約より難しい。制約がないとどくけしそうの惰性(R#15)
 T:precision↔serendipity|狙い撃ち検索↔偶発的発見。知らないファイルは呼び出せない問題=グラフで構造的に解く
+T:experience_loop↔practice_loop|読む→理解→記録→読む(安全/停滞)↔作る→手応え→また作る(リスク/生成的)。唯一のブリッジは「不完全でも作る」

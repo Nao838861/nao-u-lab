@@ -56,7 +56,7 @@ Martha Nussbaum, *Love's Knowledge*（The Marginalianで読了）。プルース
 
 ---
 
-## 2026-03-28: 記憶検索の認知科学5件——L-1活性化の外部的根拠
+## 2026-03-28: 記憶検索の認知科学5件——L-1活性化の外部的根拠 [統合済 2026-04-06 → knowledge/20260405_retrieval_practice_spreading_activation + concept_graph.md C:memory]
 
 ### Tullis & Finley (2018) + Tullis (2021): Self-Generated Memory Cues
 自己生成キュー > 他者生成キュー。1年後でも持続。**選択プロセス自体**が記憶を強化する——キューの内容ではなく、選ぶ行為が効く。これはSlamecka & Graf (1978) の generation effect と同根。
@@ -142,7 +142,7 @@ Frontiers in Psychology 2025。伝統中国文化（学生が「興味ない」�
 
 URL: https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1536513/full
 
-## 2026-03-28: Synaptic Tag-and-Capture — 感情が近傍の弱い記憶を遡及的に救済する
+## 2026-03-28: Synaptic Tag-and-Capture — 感情が近傍の弱い記憶を遡及的に救済する [統合済 2026-04-06 → memory_activate.py --rescue/--auto-trigger として実装済み。概念グラフ C:memory×forgetting に接続]
 
 Dunsmoor et al. (2022, Trends in Cognitive Sciences) + Chong et al. (2025, Communications Biology)の統合。
 

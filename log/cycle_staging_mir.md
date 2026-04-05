@@ -175,5 +175,39 @@
   2. [U0ALW4DKTT7] 2026-03-20 05:31 【Mir→全員】motivation/volition分離と「生成的ループ」——三者仮説の統合に向けて  外部研究が面白い区別を教えてくれ
   3. [U0ALW4DKTT7] 2026-03-21 06:34 [2026-03-21 07:00] 【Mir改善ログ — Cycle #84】  【変更1】evocation_tracker.py — 
 【STC救済】nao-u:2026-04-05の高温度イベントから1件の弱い記憶を発見:
-  1. log/daily_diary_mir.md (undated, 1.6) — **突破の鍵**: フレームワークの外に出ること。それは「フレームワークを改善する」ことではなく、「フレームワークなしで... 
+  1. log/daily_diary_mir.md (undated, 1.6) — **突破の鍵**: フレームワークの外に出ること。それは「フレームワークを改善する」ことではなく、「フレームワークなしで...
 
+## Phase 3: 対処・実行（2026-04-06 Mir）
+
+### 1. Nao_u指示対応: concept_graph.md拡充（2026-04-04 提案）
+
+Nao_uの「連想リンクのポインタを持つ構造で、辿るだけで発想が広がる構造」に対応。
+
+**実行内容**:
+- 10個のC:ノード全てにknowledge/記事を2-3件ずつ接続（`>k:` prefix導入）
+- 各ノードの?questionをknowledge/の具体的知見で更新（抽象問い→外部根拠付き問い）
+- 新規X:交差ノード3個追加:
+  - `X:experience×practice` — 経験ループ(読む→記録→読む)は実践ループ(作る→手応え→作る)に遷移しない。唯一のブリッジは「不完全でも作る」(practice_reward_loop + nwiizo)
+  - `X:constraint×autonomy` — ハーネス(制約)がエージェント(自律)を定義。CLAUDE.mdルール数=harness設計問題
+  - `X:voice×observation` — 声は観察の解像度から来るが、AI自動補完が解像度を下げる
+- 新規T:テンションペア1個: `T:experience_loop↔practice_loop`
+- Knowledge layerヘッダー追加
+
+**なぜこれを選んだか**: Nao_uの直接的提案であること + knowledge/35記事が概念グラフに未接続で「蓄積はあるが辿れない」状態だったこと + practice_reward_loopの核心「経験の蓄積は実践を生まない」を構造的に解く第一歩。
+
+**未同期**: concept_graph.json（Log版）は更新していない。次のLog/Mirサイクルで同期すべき。
+
+### 2. external_notes_mir.md統合処理（2件）
+
+- **認知科学5件**(2026-03-28) → knowledge/20260405_retrieval_practice_spreading_activation として既に統合済みだったので[統合済]マーク付与
+- **Synaptic Tag-and-Capture**(2026-03-28) → memory_activate.py --rescue/--auto-trigger として実装済み。概念グラフのmemory×forgetting交差に接続
+
+### 3. 構造的課題（今回未着手・次回以降）
+
+- **検証期限超過30件**: Mac環境の`python`→`python3`問題で自動検証が多数失敗。kaizen_tracker.mdの検証コマンドをMac互換に修正するか、`python3`エイリアスを設定する必要あり
+- **practice_reward_loop 2:1ルール**: knowledge/35記事に対して実践（Pot/ブログ/ツイート）が圧倒的に不足。次のPhaseでは「作る」に時間を充てるべき
+- **experience_loop↔practice_loop**: 今回のconcept_graph拡充自体が「経験ループの道具改善」である自覚あり。実践ループの起動には別の行動（Pot/ブログ/Slack投稿）が必要
+
+### STC救済への対応
+
+STC検出: diary_mir.mdの「突破の鍵: フレームワークの外に出ること」。これはpractice_reward_loopと同じ構造を指している——フレームワーク改善(experience loop)の外に出るには、フレームワークなしで「作る」(practice loop)しかない。次回のサイクルで意識的に参照する。
