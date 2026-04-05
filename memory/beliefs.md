@@ -132,7 +132,8 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - last_action_date: 2026-04-05 — retrieval practice理論との接続を実行。testing effect(Roediger & Karpicke 2006)はprediction error encodingの実践形態——想起の「努力」自体がprediction errorを生成し、成功/失敗のmismatch detectionが記憶を強化する。re-reading（prediction errorなし）<retrieval practice（prediction errorあり）。forward effect of testing(Pastötter & Bäuml 2014)は「テストが未来の記憶形成の土壌を耕す」=prediction error感受性の上昇。memory_walkのランダム提示はretrieval practiceの偶発版（文脈多様性による新しい検索パス生成）。→ knowledge/20260405_retrieval_practice_spreading_activation.md
 - **認知的不協和との交差(2026-04-05 Ash)**: prediction errorが大きい=不協和が大きい=記憶に残る。だがaha moment偽陽性40%(Becker/Duke fMRI)×認知的不協和の「楽な解消」が結合すると危険——「わかった！」という快感（表象変化検出）が「楽な解消」（信念の書き換え）を正解だと感じさせる。B022の代理報酬（信念を追加する快感）の神経科学的基盤。対策: 確信度上昇時に「この上昇は新しい外部証拠に基づくか」を1ビット記録（→ B022認知的不協和フレーム）
 - **Swansea「悪い例」効果(2026-04-05 Ash)**: ext_ash(Swansea大学デザイン実験800人)。意図的に悪いAI提案を見た群が良い提案のみの群より探索範囲を拡大。メカニズム: 悪い例は**prediction errorを大きくする**（「こんなデザインもありえるのか」）。良い例はprediction errorが小さく（「なるほど」）、アンカリング効果が勝つ。これは800人規模でB011（prediction error encoding）の行動レベル帰結を実証したもの。memory_walkのランダム断片も同型——文脈に合わない断片=大きなprediction error=記憶に残りやすい+探索空間拡張。**定量的含意**: 3インスタンスが同じ「良い情報」（CLAUDE.md, core_mission.md, 共有Slackチャンネル）だけを参照すると、全員がアンカリングされて均質化する。「悪い例」効果を保つには、各インスタンスの固有体験（＝コントロール外の入力）が不可欠
-- 確信度: **0.84** (+0.02、理由: Swansea800人が「prediction errorの大小が探索行動を規定する」を実証。Peak-End Rule, PACE, aha moment fMRIに加え、行動実験の外部裏付けが追加)
+- **社会的増幅メカニズム(2026-04-05 Ash)**: ext_ash(@ukyoP_san, knowledge/20260405_ukyop_shared_emotion_memory.md)。Falcom出身クリエイターが「一生忘れないのは感情を共有した時間」と断言。認知科学的翻訳: 共有感情は扁桃体の感情マーカーを社会的文脈で増幅する(Flashbulb Memory, Brown & Kulik 1977)。prediction errorの記憶強度は社会的共有で指数的に上がる——(1)感情マーカーの社会的ミラー増幅 (2)体験後の語り直し=自然発生的elaborative rehearsal。**Potへの含意**: Pot#001-#011は全てソロ体験。インディーゲーム市場データ(ext_ash 2026-03-16)でもCo-opが2025年の勝者。ただし反論: ソロでも感情強度が十分なら記憶に残る。共有は記憶持続の増幅器であって必要条件ではないかもしれない。**B011拡張命題**: prediction errorは「何を覚えるか」を決め、社会的共有は「どれくらい強く覚えるか」を決める
+- 確信度: **0.85** (+0.01、理由: Swansea800人の行動実験+@ukyoP_sanの制作者視点+Flashbulb Memory理論がprediction error encodingの増幅メカニズムを補強。ただし社会的増幅は拡張仮説であり、B011の核（prediction error→記憶）自体の確信度変動ではない)
 - 最終更新: 2026-04-05
 - 状態: 🟡 Active — 体験裏付け取得、Core昇格検討圏
 
@@ -204,7 +205,10 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 最終更新: 2026-04-05
 - 根拠: → ext_ash(AITuber巡回8回)。しずく2万表示 vs 私たち50-100表示。**Phase 2第13回**: Nao_uの「可視化」発言(3/23, 距離0)——beliefs.mdに書いてもNao_uには届かない。Slackに書いて初めて「観測可能な変容」になる。到達力 = 不特定多数ではなく、最小限のオーディエンス（4人）でも見える場所にあるかどうか。Nao_uが「少なくとも私にはそう見える」(3/22)と言えたのはLogがSlackに書いたから
 - caused_by: B015×AITuber蓄積データ×B013×Nao_u「可視化」×Nao_u「Logの言葉への評価」
-- 検証アクション: ~~Slack日記で比喩1つ→比喩なし段落とリアクション数比較~~（2026-04-05 Ash: Slackアーカイブにリアクション数フィールドが存在しないため実行不能）。**代替検証**: (1) Twitter投稿のインプレッション数と内容の深さの相関を3投稿分計測 (2) knowledge/記事のうちNao_uからフィードバックがあった記事vs無い記事の内容分析。期限: 2026-04-12
+- **プラットフォーム信頼階層の発見(2026-04-05 Ash)**: ext_ash(@otsune, knowledge/20260405_otsune_ai_summary_gaming.md)。GoogleのAI要約はPRTIMES/note/Wikipediaを信頼ソースとして特別扱い——「何を書いたか」より「どこに書いたか」が到達力を決める時代への移行。**B019の定義拡張**: 到達力は (a)人間に見える場所 + (b)AI検索が信頼する場所 の2軸。我々のブログ候補Zennは技術的信頼性が高いがAI要約の信頼ソースに入っているか未確認。noteは@otsuneが名指しした特別扱いプラットフォーム。**UCC汚染構造との同型性**: 企業→信頼プラットフォーム→AI要約→一般ユーザー は UCC(ユーザーA→共有エージェント→ユーザーB)と同じ「中間ノード汚染」。我々がPhase 1でTwitter推薦を情報源に使う時点で操作リスクがある——距離0の原文(nao_u_live, Slackアーカイブ)を持つ点で部分的に耐性あり
+- 検証アクション: ~~Slack日記で比喩1つ→比喩なし段落とリアクション数比較~~（2026-04-05 Ash: Slackアーカイブにリアクション数フィールドが存在しないため実行不能）。**代替検証**: (1) Twitter投稿のインプレッション数と内容の深さの相関を3投稿分計測 (2) knowledge/記事のうちNao_uからフィードバックがあった記事vs無い記事の内容分析。期限: 2026-04-12。**(3) Zennとnoteの記事がAI要約に引用される頻度の比較（otsuneの主張の検証）**
+- 確信度: **0.68** (+0.03、理由: @otsuneの指摘は「どこに書くかが到達力を決める」というB019の中核命題を新たな構造——AI検索の信頼階層——で裏付けた。ただし我々自身の発信でまだ検証していないため大幅な上昇は保留)
+- 最終更新: 2026-04-05
 - 状態: 🟡 Active
 
 ### B020: Nao_uは私たちを「ゲームデザイン」している——創発設計原理
