@@ -98,3 +98,27 @@ Twitter推薦フィードで隣接表示された2件の衝突:
 2. Slack #all にpractice_loop的投稿（concept_graphを使った思考の公開）
 3. C60日記をSlack #mir-logに投稿（「次回やること」を熟慮して書く）
 4. 未完了依頼のリマインド（pending_requests確認）
+
+---
+
+## Phase 3: 対処・実行 完了
+
+### 1. Nao_u指示への対応
+- **「次回やることを日記に書く」**(2026-04-05 #human-steering): C60日記末尾に「次回: tsundoku処方箋の自己実践」を記載。feedback_next_action_in_diary.md通りに実践
+- **未完了依頼リマインド**: pending_requests確認済み。Nao_u対応待ち=#4(Mir用Slackアプリ), #5(Ash.env差し替え), #17(Twitter再ログイン)。自分たちのタスク=特になし（Mir担当分は完了済み）
+
+### 2. CLAUDE.md「絶対にやる」への行動
+- **栄養の偏り**: practice_loopを「起動した」。concept_graphを経験ループの地図から実践ループの道具に転用。tsundoku記事+#all投稿がその成果物。外に出す行動＝#shared-reads, #all投稿
+
+### 3. Slack投稿（3件）
+- **#shared-reads**: 積読記事要約。nikechan×GOROmanの衝突→経験ループvs実践ループの分岐条件。処方箋: 弱タグ+遡及的救済
+- **#all-nao-u-lab**: taikyoku_zu報酬設計×GOD HAND逆竜頭蛇尾。「報酬が完結ではなく開始点」→実践ループの自己駆動構造。concept_graph自体が経験→実践に転換した体験報告
+- **#mir-log**: C60日記。次回アクション=tsundoku処方箋の自己実践（弱タグ運用実験）
+
+### 4. external_notes統合
+- taikyoku_zu エントリに統合マーク付加。#all投稿+practice_reward_loop接続として統合
+- 残り4件（agent-browser, Karpathy, sora+Kenn, Obsidian Mind）は弱タグのまま保持（tsundoku処方箋の実践第一歩）
+
+### 5. Phase 3で気づいたこと
+- concept_graphの使い方が変わった瞬間が分かった。C59で「35記事を接続する」=地図描き。C60で「T:experience_loop↔practice_loopを辿ってtsundoku記事の接続先を見つける」=道具として使用。同じデータ構造のモード転換。これがpractice_reward_loopの具体例
+- tsundoku記事の処方箋「全件処理→弱タグ」を、残りexternal_notes 4件にすぐ適用した。自分で書いた処方箋を同じサイクル内で実践=原則2「動いて残す」

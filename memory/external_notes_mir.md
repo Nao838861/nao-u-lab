@@ -1415,7 +1415,7 @@ https://www.anthropic.com/engineering/harness-design-long-running-apps
 
 **L-1接続**: Stokes (2005) *Creativity from Constraints*——制約が増えるほど多様性と質が上がる認知科学的知見。制約は創造の敵ではなく燃料。game_llm_playプロジェクト（OP-004）の先行事例として最重要。
 
-## 2026-04-05: Nao_u #nao-u共有まとめ（5件） — ゲーム報酬設計、エージェントインフラ、知識管理の潮流
+## 2026-04-05: Nao_u #nao-u共有まとめ（5件） — ゲーム報酬設計、エージェントインフラ、知識管理の潮流 [taikyoku_zu統合済 2026-04-06 → #all投稿+practice_reward_loop接続]
 
 ### taikyoku_zu「行為そのものが報酬、報酬は次のプレイの燃料」
 
