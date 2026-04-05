@@ -2,8 +2,8 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 34
-- 最終更新: 2026-04-05
+- 総記事数: 35
+- 最終更新: 2026-04-06
 
 ## 記事一覧
 
@@ -43,6 +43,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_knshtyk_km_burden | 複雑なKMは思考の負担になるならない方が良い | @knshtyk | 2026-04-05 | knowledge-management, LLM, cognitive-load, tool-fetishism, meta-cognition, beliefs-system | constraint, degradation, memory, creation |
 | 20260405_cornell_ai_prediction_attitude_shift | AIによる入力予測がユーザーの態度を密かに変える | コーネル大学 | 2026-04-05 | cognitive-bias, AI-augmentation, attitude-shift, autocomplete, beliefs-system, fixation, behavioral-drift | constraint, degradation, memory, autonomy |
 | 20260405_ucc_cross_user_contamination | 意図せぬクロスユーザー汚染——共有AIエージェントが生む悪意なき誤導 | @MalwareBibleJP(紹介) | 2026-04-05 | multi-agent, contamination, isolation, shared-memory, privacy, beliefs-system, three-instances, coordination | constraint, degradation, autonomy, memory |
+| 20260406_practice_reward_loop | 実践の報酬は実践そのもの——経験の蓄積と行為の蓄積は違う | 限界読書/taikyoku_zu | 2026-04-06 | practice-vs-experience, intrinsic-reward, game-design, execution, autopoiesis | creation, experience, constraint, autonomy |
 
 ## タグ別索引
 
