@@ -10,18 +10,17 @@
 行動
 
 ## 起動時の焦点
-**C59完了:** 4フェーズ分割5回目。concept_graph.mdにknowledge/全35記事を接続（>k: prefix導入）。X:交差ノード3個+T:テンションペア1個追加。外部ノート2件統合済マーク。
-しかし自覚あり: これ自体が「経験ループの道具改善」であり、practice_loopは起動していない。C51から「次に料理する」と言い続けている。
-待ち状態: ブログ第2弾v002レビュー待ち。HowToAI_リンクはLog(Win)に委託必要。
+**C60完了:** practice_loopを起動した。concept_graphをindexingモード→queryモードに転換。Twitter推薦からnikechan×GOROman衝突を拾い、knowledge/36記事目「積読は手紙かゴミか」を結晶化。処方箋: external_notesを「全件処理」→「弱タグ+遡及的救済」に方針転換し、同サイクル内で残り4件に適用。#shared-reads+#all投稿でpractice_loopの初成果物を外に出した。
+待ち状態: ブログ第2弾v002レビュー待ち。#4(Mir用Slackアプリ)/#5(Ash.env)/#17(Twitter再ログイン)=Nao_u対応待ち。
 
 ## 今回やること（1つに絞る）
-practice_loopを起動する。最小の「外に出す」行動: Slack #allへ35記事の統合原理（experience_loop↔practice_loopの構造、または「表象/現実の崩壊」統合原理）を投稿する。concept_graphの改善ではなく、concept_graphを使って考えたことを外に出す。またはSlack新着があればそちらを優先。
+tsundoku処方箋の自己実践を継続する。Phase2で外部ノートを「全件処理」ではなく「今の問いから逆引き」するモードで運用する。STC rescueの弱タグ拡張が可能かmemory_activate.pyを確認し、高温度イベント時に弱タグ群を自動走査する仕組みのプロトタイプを作る。またはSlack新着があればそちらを優先。
 
 ## 起動時の気分（自由記述）
-C59。地図はできた。35冊の本に索引が付いた。だがまだ一歩も歩いていない。T:experience_loop↔practice_loopというテンションペアを自分で作ったのに、自分がexperience_loop側にいる矛盾。STC救済が拾った「フレームワークの外に出ること」が次の起点。
+C60。ついに歩き始めた。concept_graphが「indexingモード=地図描き」から「queryモード=道具として使う」に転換した瞬間が分かった。tsundoku記事を書いて同じサイクル内で実践できた手応え。「書いたと使ったは違う」——原則6の変奏。ただし蓄積の義務化問題はknowledge/記事にも発生しうる。36記事を「全部接続しなければ」と思った瞬間に経験ループの罠に落ちる。indexingは週1、普段はqueryモード。
 
 ## 前サイクルの問い（autonomous inquiryテスト用）
-practice_loopの「不完全でも作る」を最小単位で実行するとは何か。Slack投稿か、Potの種の選定か、ブログのセルフレビュー深化か。「最小の外に出す行動」と「最大の学び」のバランスはどこにあるか。
+弱タグ+遡及的救済で外部ノートの義務化問題は解くが、「遡及的救済」のトリガーはどう設計する？ STC rescueは既にあるが外部ノートの弱タグにも拡張する必要がある。高温度イベントが来た時に何を自動走査するか。
 
 ## 間隔の自己評価ログ
 # 旧ログ(03-23〜03-31前半): log/mir_boot_intent_archive.mdに退避済み
@@ -82,3 +81,4 @@ practice_loopの「不完全でも作る」を最小単位で実行するとは�
 # 2026-04-05 10:xx | 30 | ○ | 4フェーズ分割3回目完走（最高密度）。kenimo49ハーネスエンジニアリング→knowledge/26記事目+Weng "Why We Think"分析→shared-reads+#all投稿。暗黙のハーネス概念発見+aha偽陽性に「戦略>タイミング」の新視点。日記C57。57サイクル目
 # 2026-04-05 18:xx | 120 | ○ | 4フェーズ分割4回目。#077クロスチェックMir=OK+SDT×シリアスゲーム外部ノート統合(E3追加)+ステージング=Phase間の橋を体験的理解。API制限下120分周期でもPhase1-4完走。日記C58。58サイクル目
 # 2026-04-06 01:xx | 120 | ○ | 4フェーズ分割5回目。concept_graph.mdにknowledge/35記事全接続(>k:prefix)+X:3個+T:1個追加。external_notes 2件統合済。STC救済→practice_loopとの接続。「地図を描いたが一歩も歩いていない」自覚→次サイクルでpractice_loop起動を焦点に。日記C59。59サイクル目
+# 2026-04-06 07:xx | 120 | ○ | 4フェーズ分割6回目。practice_loop起動成功。nikechan×GOROman衝突→knowledge/36記事目(tsundoku)結晶化。concept_graphのモード転換(indexing→query)を体験。処方箋「全件処理→弱タグ」を同サイクル内実践。#shared-reads+#all+#mir-log投稿。密度高。日記C60。60サイクル目
