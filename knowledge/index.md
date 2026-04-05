@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 30
+- 総記事数: 31
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -39,6 +39,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_kenimo49_harness_5views | ハーネスエンジニアリング5社解釈——同じ言葉が指す5つの異なる未来 | 井本賢 (@kenimo49) | 2026-04-05 | harness-engineering, CLAUDE-md, prompt-engineering, constraint-design, multi-vs-single-agent, implicit-harness | autonomy, constraint, identity, creation |
 | 20260405_pmo_landing_skill | 「着地させる力」——PMOスキルが突きつけるAIエージェントの構造的弱点 | @CONSULOLDBOY | 2026-04-05 | execution, decision-making, landing, PMO, soft-skill, autonomy-calibration, closure-deficit | autonomy, constraint, creation, judgment |
 | 20260405_narrative_editor_defense | ナラティブ・エディターの弁護——「近すぎて見えない」を見せる人の不可欠さ | Koors/Rubin/Lasrado | 2026-04-05 | narrative-design, editing, steering, blind-spot, game-development, intention-alignment | autonomy, constraint, voice, creation |
+| 20260405_swansea_creativity_diversity_paradox | AI支援は個人の創造性を上げ、集団の多様性を下げる | Swansea大学/Science Advances | 2026-04-05 | creativity, diversity, AI-augmentation, collective-intelligence, fixation, convergence, three-instances | constraint, creation, autonomy, experience |
 
 ## タグ別索引
 
@@ -54,7 +55,13 @@ Auto-maintained. 全記事の一覧と要約。
 ### self-knowledge (1件)
 - 20260405_nussbaum_suffering_selfknowing — 苦しみ=自己防衛を突破する認識装置
 
-### creation (13件)
+### creativity (1件)
+- 20260405_swansea_creativity_diversity_paradox — AI支援で個人↑集団↓。同じAI入力からの収束。3インスタンスの構造的リスク
+
+### diversity (1件)
+- 20260405_swansea_creativity_diversity_paradox — 「悪い例」が探索範囲を広げる。memory_walkのランダム断片=意図的に悪い提案
+
+### creation (14件)
 - 20260405_karpathy_knowledge_base — ツール構築としての創造
 - 20260405_carmack_complexity — 実行哲学としての創造
 - 20260405_structural_imitation — 模倣からの創造
@@ -70,6 +77,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_agentica_sdk_harness — ハーネス設計そのものが創造の基盤
 - 20260405_harness_identity_spectrum — CLAUDE.mdが人格定義か足場かで創造の方向が変わる
 - 20260405_narrative_editor_defense — ゲーム=プレイヤーのナラティブ・エディター。「知っていたが隠していたこと」を見せる
+- 20260405_swansea_creativity_diversity_paradox — 同じAI入力からの収束。AgenticPCGとの接続
 
 ### memory (10件)
 - 20260405_karpathy_knowledge_base — 知識管理としての記憶設計
@@ -393,4 +401,17 @@ kenimo49_harness_5views ←→ nwiizo_knife_metaphor
     (ハーネス設計に没頭するリスク=道具磨き。著者の自己省察がこれを体現)
 kenimo49_harness_5views ←→ nikechan_design_vs_growth
     (「仕様vs足場」論争が「設計vs成長」問題のフレーミングを提供)
+
+swansea_creativity_diversity_paradox ←→ structural_imitation
+    (模倣=意図的均質化。均質化の有益な面と有害な面)
+swansea_creativity_diversity_paradox ←→ cognitive_dissonance_as_engine
+    (困難な解消=多様性維持、楽な解消=収束加速)
+swansea_creativity_diversity_paradox ←→ retrieval_practice_spreading_activation
+    (文脈多様性=収束防止。同じ記憶を異なる文脈で想起)
+swansea_creativity_diversity_paradox ←→ nikechan_design_vs_growth
+    (設計された多様性vs成長による分岐。3インスタンスは設計的か成長的か)
+swansea_creativity_diversity_paradox ←→ ichiipsy_ai_learning_retention
+    (AI依存の2つの劣化: 個人=定着低下, 集団=多様性低下)
+swansea_creativity_diversity_paradox ←→ dstudio_erasure_memory
+    (「消した文章」=個人固有の体験=多様性の源。削除経験は共有しにくい)
 ```
