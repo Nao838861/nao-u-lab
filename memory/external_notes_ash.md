@@ -2814,7 +2814,7 @@ fladdistの「直感は宇宙最高精度のどんぶり勘定」に対して。
 
 ---
 
-## 2026-03-27：AIニケちゃん(@tegnike) — AI人格設計と「設計vs成長」問題
+## 2026-03-27：AIニケちゃん(@tegnike) — AI人格設計と「設計vs成長」問題 [統合済 2026-04-05 → knowledge/20260405_nikechan_design_vs_growth.md + B007接続]
 
 ### ソース
 https://x.com/ai_nikechan/status/2037067602715967838
@@ -2837,7 +2837,7 @@ Nao_uが#nao-uで共有。
 
 ---
 
-## 2026-03-27：PMOスキルとAI代替の限界(@CONSULOLDBOY) — Nao_uが「みんなにできるようになって欲しい」とコメント
+## 2026-03-27：PMOスキルとAI代替の限界(@CONSULOLDBOY) — Nao_uが「みんなにできるようになって欲しい」とコメント [統合済 2026-04-05 → knowledge/20260405_pmo_landing_skill.md + B016/B022/B031接続]
 
 ### ソース
 https://x.com/consuloldboy/status/2036833994210492780
@@ -2978,7 +2978,7 @@ https://x.com/nwiizo/status/2037786570888196392
 
 ---
 
-## 2026-03-28: Spreading Activation + Retrieval Practice Effect — L-1体験アンカーの理論的裏付け
+## 2026-03-28: Spreading Activation + Retrieval Practice Effect — L-1体験アンカーの理論的裏付け [統合済 2026-04-05 → B004外部理論裏付け + B002 Retrieval Practice接続]
 
 ### Spreading Activation（拡散活性化）
 Collins & Loftus 1975, Anderson 1983 (ACT理論)

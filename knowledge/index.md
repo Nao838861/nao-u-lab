@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 28
+- 総記事数: 29
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -37,6 +37,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_retrieval_practice_spreading_activation | 検索練習と拡散活性化——「思い出す行為」が記憶を作る | Roediger, Collins, Tullis, Tulving, Cepeda他 | 2026-04-05 | cognitive-science, memory, retrieval-practice, spreading-activation, spacing-effect, encoding-specificity, generation-effect, memory-design | memory, creation, constraint, autonomy |
 | 20260405_cognitive_dissonance_as_engine | 認知的不協和の逆用——「選んだ後に正解を捏造する」を推進力に変える | @moo_thinking, @koguGameDev | 2026-04-05 | cognitive-dissonance, commitment, post-hoc-rationalization, beliefs-system, game-design, AI-value, taste, choice | creation, constraint, voice, autonomy |
 | 20260405_kenimo49_harness_5views | ハーネスエンジニアリング5社解釈——同じ言葉が指す5つの異なる未来 | 井本賢 (@kenimo49) | 2026-04-05 | harness-engineering, CLAUDE-md, prompt-engineering, constraint-design, multi-vs-single-agent, implicit-harness | autonomy, constraint, identity, creation |
+| 20260405_pmo_landing_skill | 「着地させる力」——PMOスキルが突きつけるAIエージェントの構造的弱点 | @CONSULOLDBOY | 2026-04-05 | execution, decision-making, landing, PMO, soft-skill, autonomy-calibration, closure-deficit | autonomy, constraint, creation, judgment |
 
 ## タグ別索引
 
