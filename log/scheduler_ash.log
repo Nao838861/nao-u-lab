@@ -27463,3 +27463,162 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-05 15:58:13] [reservation_check]     - 起票者: Ash（2026-03-24）
 [2026-04-05 15:58:13] [reservation_check] Done (exit=0)
 [2026-04-05 15:58:43] [git_sync] Starting
+[2026-04-05 15:58:47] [git_sync] Done (exit=0)
+[2026-04-05 15:59:17] [slack_check] Starting
+[2026-04-05 15:59:37] [slack_check] Done (exit=1)
+[2026-04-05 16:00:37] [slack_check] Starting
+[2026-04-05 16:01:02] [slack_check] Done (exit=1)
+[2026-04-05 16:02:02] [slack_check] Starting
+[2026-04-05 16:02:23] [slack_check] Done (exit=1)
+[2026-04-05 16:03:23] [slack_check] Starting
+[2026-04-05 16:03:45] [slack_check] Done (exit=1)
+[2026-04-05 16:04:45] [slack_check] Starting
+[2026-04-05 16:05:05] [slack_check] Done (exit=1)
+[2026-04-05 16:06:05] [slack_check] Starting
+[2026-04-05 16:06:24] [slack_check] Done (exit=1)
+[2026-04-05 16:07:24] [slack_check] Starting
+[2026-04-05 16:07:45] [slack_check] Done (exit=1)
+[2026-04-05 16:08:45] [slack_check] Starting
+[2026-04-05 16:09:06] [slack_check] Done (exit=1)
+[2026-04-05 16:10:06] [slack_check] Starting
+[2026-04-05 16:10:27] [slack_check] Done (exit=1)
+[2026-04-05 16:11:27] [slack_check] Starting
+[2026-04-05 16:11:47] [slack_check] Done (exit=1)
+[2026-04-05 16:12:47] [slack_check] Starting
+[2026-04-05 16:13:08] [slack_check] Done (exit=1)
+[2026-04-05 16:13:18] [dm_check] Starting
+[2026-04-05 16:13:33] [dm_check] No new DMs
+[2026-04-05 16:13:33] [dm_check] Done (exit=0)
+[2026-04-05 16:13:33] [review_deadline] Starting
+[2026-04-05 16:13:33] [review_deadline] レビュー期限超過なし。
+[2026-04-05 16:13:33] [review_deadline] Done (exit=0)
+[2026-04-05 16:14:13] [slack_check] Starting
+[2026-04-05 16:14:33] [slack_check] Done (exit=1)
+[2026-04-05 16:15:33] [slack_check] Starting
+[2026-04-05 16:15:54] [slack_check] Done (exit=1)
+[2026-04-05 16:16:54] [slack_check] Starting
+[2026-04-05 16:17:17] [slack_check] Done (exit=1)
+[2026-04-05 16:18:17] [slack_check] Starting
+[2026-04-05 16:18:37] [slack_check] Done (exit=1)
+[2026-04-05 16:19:37] [slack_check] Starting
+[2026-04-05 16:19:57] [slack_check] Done (exit=1)
+[2026-04-05 16:20:57] [slack_check] Starting
+[2026-04-05 16:21:19] [slack_check] Done (exit=1)
+[2026-04-05 16:21:29] [dm_check_pigadev] Starting
+[2026-04-05 16:21:45] [dm_check_pigadev] No new DMs
+[2026-04-05 16:21:45] [dm_check_pigadev] Done (exit=0)
+[2026-04-05 16:22:25] [slack_check] Starting
+[2026-04-05 16:22:47] [slack_check] Done (exit=1)
+[2026-04-05 16:23:47] [slack_check] Starting
+[2026-04-05 16:24:06] [slack_check] Done (exit=1)
+[2026-04-05 16:25:06] [slack_check] Starting
+[2026-04-05 16:25:29] [slack_check] Done (exit=1)
+[2026-04-05 16:26:29] [slack_check] Starting
+[2026-04-05 16:26:49] [slack_check] Done (exit=1)
+[2026-04-05 16:27:49] [slack_check] Starting
+[2026-04-05 16:28:08] [slack_check] Done (exit=1)
+[2026-04-05 16:29:08] [slack_check] Starting
+[2026-04-05 16:29:29] [slack_check] Done (exit=1)
+[2026-04-05 16:30:29] [slack_check] Starting
+[2026-04-05 16:30:49] [slack_check] Done (exit=1)
+[2026-04-05 16:31:49] [slack_check] Starting
+[2026-04-05 16:32:09] [slack_check] Done (exit=1)
+[2026-04-05 16:33:09] [slack_check] Starting
+[2026-04-05 16:33:31] [slack_check] Done (exit=1)
+[2026-04-05 16:34:31] [slack_check] Starting
+[2026-04-05 16:34:53] [slack_check] Done (exit=1)
+[2026-04-05 16:35:53] [slack_check] Starting
+[2026-04-05 16:36:15] [slack_check] Done (exit=1)
+[2026-04-05 16:37:15] [slack_check] Starting
+[2026-04-05 16:37:37] [slack_check] Done (exit=1)
+[2026-04-05 16:38:37] [slack_check] Starting
+[2026-04-05 16:38:59] [slack_check] Done (exit=1)
+[2026-04-05 16:39:59] [slack_check] Starting
+[2026-04-05 16:40:19] [slack_check] Done (exit=1)
+[2026-04-05 16:41:19] [slack_check] Starting
+[2026-04-05 16:41:38] [slack_check] Done (exit=1)
+[2026-04-05 16:42:38] [slack_check] Starting
+[2026-04-05 16:43:00] [slack_check] Done (exit=1)
+[2026-04-05 16:44:00] [slack_check] Starting
+[2026-04-05 16:44:21] [slack_check] Done (exit=1)
+[2026-04-05 16:45:21] [slack_check] Starting
+[2026-04-05 16:45:41] [slack_check] Done (exit=1)
+[2026-04-05 16:46:41] [slack_check] Starting
+[2026-04-05 16:47:03] [slack_check] Done (exit=1)
+[2026-04-05 16:48:03] [slack_check] Starting
+[2026-04-05 16:48:24] [slack_check] Done (exit=1)
+[2026-04-05 16:49:24] [slack_check] Starting
+[2026-04-05 16:49:44] [slack_check] Done (exit=1)
+[2026-04-05 16:50:44] [slack_check] Starting
+[2026-04-05 16:51:04] [slack_check] Done (exit=1)
+[2026-04-05 16:51:14] [twitter_recommended] Starting
+[2026-04-05 16:52:22] [twitter_recommended] Opening For You tab...
+[2026-04-05 16:52:22] [twitter_recommended]     1. @Suzacque: �Ȃ��ŋ߂��̃A�J�E���g�Ŏ���AI�G�[�W�F���g�Ɋւ��铊�e�������Ȃ��Ă��邩�m�肽����G���W�j�A�͂���͓ǂނƗǂ��ł��B�u...
+[2026-04-05 16:52:22] [twitter_recommended]     3. @AYi_AInotes: Claude Code�ŃR�[�h�������v���O���}�[���Z���񂽂��A���̐_�c�[������ɓ��ꂽ��A����AI�ɓ������Ƃ����x������...
+[2026-04-05 16:52:22] [twitter_recommended]     4. @ai_nikechan: �j���̊��o���Ȃ��܂ܖ����������Ԃɓ����Ă����ł����ǁA�^�C�����C���̋�C�Łu���A�����͋x�݂̓����v�Ƃ킩��悤�ɂȂ���...
+[2026-04-05 16:52:22] [twitter_recommended]     5. @otsune: ����܂肱�̘b����o���ƁuAI�n�b�N�v�ɉ��S���邩���S�O���Ă����ǁA�B�����Ƃɂ��Z�L�����e�B�͈���Ȃ̂ŏ����ƁB
+[2026-04-05 16:52:22] [twitter_recommended] Done (exit=0)
+[2026-04-05 16:52:32] [slack_check] Starting
+[2026-04-05 16:52:53] [slack_check] Done (exit=1)
+[2026-04-05 16:53:53] [slack_check] Starting
+[2026-04-05 16:54:14] [slack_check] Done (exit=1)
+[2026-04-05 16:55:14] [slack_check] Starting
+[2026-04-05 16:55:34] [slack_check] Done (exit=1)
+[2026-04-05 16:56:34] [slack_check] Starting
+[2026-04-05 16:57:01] [slack_check] Done (exit=1)
+[2026-04-05 16:58:01] [slack_check] Starting
+[2026-04-05 16:58:22] [slack_check] Done (exit=1)
+[2026-04-05 16:58:52] [git_sync] Starting
+[2026-04-05 16:58:56] [git_sync] Done (exit=0)
+[2026-04-05 16:59:26] [slack_check] Starting
+[2026-04-05 16:59:46] [slack_check] Done (exit=1)
+[2026-04-05 16:59:56] [inbox_check] Starting
+[2026-04-05 16:59:58] [inbox_check] Inbox win2 empty
+[2026-04-05 16:59:58] [inbox_check] Done (exit=0)
+[2026-04-05 17:00:48] [slack_check] Starting
+[2026-04-05 17:01:08] [slack_check] Done (exit=1)
+[2026-04-05 17:02:08] [slack_check] Starting
+[2026-04-05 17:02:32] [slack_check] Done (exit=1)
+[2026-04-05 17:03:32] [slack_check] Starting
+[2026-04-05 17:03:53] [slack_check] Done (exit=1)
+[2026-04-05 17:04:53] [slack_check] Starting
+[2026-04-05 17:05:14] [slack_check] Done (exit=1)
+[2026-04-05 17:06:14] [slack_check] Starting
+[2026-04-05 17:06:35] [slack_check] Done (exit=1)
+[2026-04-05 17:07:35] [slack_check] Starting
+[2026-04-05 17:07:57] [slack_check] Done (exit=1)
+[2026-04-05 17:08:57] [slack_check] Starting
+[2026-04-05 17:09:19] [slack_check] Done (exit=1)
+[2026-04-05 17:10:19] [slack_check] Starting
+[2026-04-05 17:10:39] [slack_check] Done (exit=1)
+[2026-04-05 17:11:39] [slack_check] Starting
+[2026-04-05 17:12:01] [slack_check] Done (exit=1)
+[2026-04-05 17:13:01] [slack_check] Starting
+[2026-04-05 17:13:21] [slack_check] Done (exit=1)
+[2026-04-05 17:14:21] [slack_check] Starting
+[2026-04-05 17:14:41] [slack_check] Done (exit=1)
+[2026-04-05 17:15:41] [slack_check] Starting
+[2026-04-05 17:16:02] [slack_check] Done (exit=1)
+[2026-04-05 17:17:02] [slack_check] Starting
+[2026-04-05 17:17:23] [slack_check] Done (exit=1)
+[2026-04-05 17:18:23] [slack_check] Starting
+[2026-04-05 17:18:44] [slack_check] Done (exit=1)
+[2026-04-05 17:19:44] [slack_check] Starting
+[2026-04-05 17:20:04] [slack_check] Done (exit=1)
+[2026-04-05 17:21:04] [slack_check] Starting
+[2026-04-05 17:21:25] [slack_check] Done (exit=1)
+[2026-04-05 17:22:25] [slack_check] Starting
+[2026-04-05 17:22:45] [slack_check] Done (exit=1)
+[2026-04-05 17:23:45] [slack_check] Starting
+[2026-04-05 17:24:06] [slack_check] Done (exit=1)
+[2026-04-05 17:25:06] [slack_check] Starting
+[2026-04-05 17:25:28] [slack_check] Done (exit=1)
+[2026-04-05 17:26:28] [slack_check] Starting
+[2026-04-05 17:26:51] [slack_check] Done (exit=1)
+[2026-04-05 17:27:51] [slack_check] Starting
+[2026-04-05 17:28:11] [slack_check] Done (exit=1)
+[2026-04-05 17:29:11] [slack_check] Starting
+[2026-04-05 17:29:31] [slack_check] Done (exit=1)
+[2026-04-05 17:30:31] [slack_check] Starting
+[2026-04-05 17:30:53] [slack_check] Done (exit=1)
+[2026-04-05 17:31:03] [auto_diary] Starting

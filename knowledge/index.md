@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 31
+- 総記事数: 33
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -40,6 +40,8 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_pmo_landing_skill | 「着地させる力」——PMOスキルが突きつけるAIエージェントの構造的弱点 | @CONSULOLDBOY | 2026-04-05 | execution, decision-making, landing, PMO, soft-skill, autonomy-calibration, closure-deficit | autonomy, constraint, creation, judgment |
 | 20260405_narrative_editor_defense | ナラティブ・エディターの弁護——「近すぎて見えない」を見せる人の不可欠さ | Koors/Rubin/Lasrado | 2026-04-05 | narrative-design, editing, steering, blind-spot, game-development, intention-alignment | autonomy, constraint, voice, creation |
 | 20260405_swansea_creativity_diversity_paradox | AI支援は個人の創造性を上げ、集団の多様性を下げる | Swansea大学/Science Advances | 2026-04-05 | creativity, diversity, AI-augmentation, collective-intelligence, fixation, convergence, three-instances | constraint, creation, autonomy, experience |
+| 20260405_knshtyk_km_burden | 複雑なKMは思考の負担になるならない方が良い | @knshtyk | 2026-04-05 | knowledge-management, LLM, cognitive-load, tool-fetishism, meta-cognition, beliefs-system | constraint, degradation, memory, creation |
+| 20260405_cornell_ai_prediction_attitude_shift | AIによる入力予測がユーザーの態度を密かに変える | コーネル大学 | 2026-04-05 | cognitive-bias, AI-augmentation, attitude-shift, autocomplete, beliefs-system, fixation, behavioral-drift | constraint, degradation, memory, autonomy |
 
 ## タグ別索引
 
