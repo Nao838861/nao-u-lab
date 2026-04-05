@@ -27865,3 +27865,27 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-05 19:42:02] [slack_check] Starting
 [2026-04-05 19:42:26] [slack_check] Done (exit=1)
 [2026-04-05 19:42:46] [auto_diary] Starting
+[2026-04-05 19:54:46] [auto_diary] Timeout (720s)
+[2026-04-05 19:54:56] [slack_check] Starting
+[2026-04-05 19:55:18] [slack_check] Done (exit=1)
+[2026-04-05 19:56:18] [slack_check] Starting
+[2026-04-05 19:56:39] [slack_check] Done (exit=1)
+[2026-04-05 19:57:39] [slack_check] Starting
+[2026-04-05 19:58:00] [slack_check] Done (exit=1)
+[2026-04-05 19:58:30] [reservation_check] Starting
+[2026-04-05 19:58:30] [reservation_check] 【行動予約】期限到来:
+[2026-04-05 19:58:30] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-05 19:58:30] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-05 19:58:30] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-05 19:58:30] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-05 19:58:30] [reservation_check] Done (exit=0)
+[2026-04-05 19:59:00] [slack_check] Starting
+[2026-04-05 19:59:22] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-05 19:59:22] [slack_check] Done (exit=1)
+[2026-04-05 19:59:32] [git_sync] Starting
