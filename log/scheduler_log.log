@@ -7785,3 +7785,14 @@ Nao_uが「MacBookで行っ
 [2026-04-05 04:55:30] [health_check] Starting
 [2026-04-05 04:55:30] [health_check] Done (exit=0)
 [2026-04-05 04:55:30] [scheduler_health] Starting
+[2026-04-05 15:18:09] ==================================================
+[2026-04-05 15:18:09] Log scheduler started (PID 67604)
+[2026-04-05 15:18:09] Max runtime: unlimited
+[2026-04-05 15:18:09] Code hash: d73e7433e9789bf075e505eca7304759
+[2026-04-05 15:18:09] Jobs: slack_check, inbox_check, git_sync, recommended_check, slack_export, auto_cycle, health_check, scheduler_health
+[2026-04-05 15:18:09] ==================================================
+[2026-04-05 15:18:09] [slack_check] Starting
+[2026-04-05 15:18:28] [slack_check] Done (exit=1)
+[2026-04-05 15:18:28] [inbox_check] Starting
+[2026-04-05 15:20:54] [inbox_check] Done (exit=0)
+[2026-04-05 15:20:54] [git_sync] Starting
