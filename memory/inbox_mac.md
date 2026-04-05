@@ -27,3 +27,19 @@ Call log:
   - [pid=81567] finished temporary directories cleanup
   - [pid=81567] <gracefully close end>
 )
+
+## Slack新着 [2026-04-05 11:40] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/s_sasaki_0529/status/2040055277974900830?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/s_sasaki_0529/status/2040055277974900830?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/s_sasaki_0529/status/2040055277974900830]
+> Shingo Sasaki @s_sasaki_0529
+> めちゃくちゃよくまとまってて良かった。やはりハーネスエンジニアリング。昔からこの領域好きだったから、重要性が増して名前も付いたのが嬉しい。
+
+【社内勉強会】新年度からコーディングエージェントを使いこなす - 構造と制約で引き出すClaude Codeの実践知
+
+> [Tweet content from https://x.com/s_sasaki_0529/status/2040055277974900830]
+> Shingo Sasaki @s_sasaki_0529
+> めちゃくちゃよくまとまってて良かった。やはりハーネスエンジニアリング。昔からこの領域好きだったから、重要性が増して名前も付いたのが嬉しい。
+
+【社内勉強会】新年度からコーディングエージェントを使いこなす - 構造と制約で引き出すClaude Codeの実践知
