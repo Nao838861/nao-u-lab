@@ -27030,3 +27030,138 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-05 11:57:18] [reservation_check]     - 起票者: Ash（2026-03-24）
 [2026-04-05 11:57:18] [reservation_check] Done (exit=0)
 [2026-04-05 11:57:38] [git_sync] Starting
+[2026-04-05 11:57:42] [git_sync] Done (exit=0)
+[2026-04-05 11:58:12] [slack_check] Starting
+[2026-04-05 11:58:33] [slack_check] Done (exit=1)
+[2026-04-05 11:59:33] [slack_check] Starting
+[2026-04-05 11:59:53] [slack_check] Done (exit=1)
+[2026-04-05 12:00:53] [slack_check] Starting
+[2026-04-05 12:01:13] [slack_check] Done (exit=1)
+[2026-04-05 12:02:13] [slack_check] Starting
+[2026-04-05 12:02:33] [slack_check] Done (exit=1)
+[2026-04-05 12:03:33] [slack_check] Starting
+[2026-04-05 12:03:54] [slack_check] Done (exit=1)
+[2026-04-05 12:04:54] [slack_check] Starting
+[2026-04-05 12:05:18] [slack_check] Done (exit=1)
+[2026-04-05 12:06:18] [slack_check] Starting
+[2026-04-05 12:06:37] [slack_check] Done (exit=1)
+[2026-04-05 12:07:37] [slack_check] Starting
+[2026-04-05 12:07:57] [slack_check] Done (exit=1)
+[2026-04-05 12:08:57] [slack_check] Starting
+[2026-04-05 12:09:16] [slack_check] Done (exit=1)
+[2026-04-05 12:10:16] [slack_check] Starting
+[2026-04-05 12:10:37] [slack_check] Done (exit=1)
+[2026-04-05 12:11:37] [slack_check] Starting
+[2026-04-05 12:11:58] [slack_check] Done (exit=1)
+[2026-04-05 12:12:38] [dm_check] Starting
+[2026-04-05 12:12:53] [dm_check] No new DMs
+[2026-04-05 12:12:53] [dm_check] Done (exit=0)
+[2026-04-05 12:12:53] [review_deadline] Starting
+[2026-04-05 12:12:53] [review_deadline] レビュー期限超過なし。
+[2026-04-05 12:12:53] [review_deadline] Done (exit=0)
+[2026-04-05 12:13:03] [slack_check] Starting
+[2026-04-05 12:13:23] [slack_check] Done (exit=1)
+[2026-04-05 12:13:33] [auto_diary] Starting
+[2026-04-05 12:15:34] [auto_diary] [2026-04-05 12:13:33] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-05 12:15:34] [auto_diary]   Phase [gather] 開始 (timeout=120s)
+[2026-04-05 12:15:34] [auto_diary]   Phase [gather] タイムアウト (120s)
+[2026-04-05 12:15:34] [auto_diary] Phase 1 (Gather) 失敗。Phase 2-4は中止。状態報告のみ投稿。
+[2026-04-05 12:15:34] [auto_diary] Done (exit=0)
+[2026-04-05 12:15:44] [slack_check] Starting
+[2026-04-05 12:16:05] [slack_check] Done (exit=1)
+[2026-04-05 12:17:05] [slack_check] Starting
+[2026-04-05 12:17:27] [slack_check] Done (exit=1)
+[2026-04-05 12:18:27] [slack_check] Starting
+[2026-04-05 12:18:50] [slack_check] Done (exit=1)
+[2026-04-05 12:19:50] [slack_check] Starting
+[2026-04-05 12:20:12] [slack_check] Done (exit=1)
+[2026-04-05 12:20:22] [dm_check_pigadev] Starting
+[2026-04-05 12:20:36] [dm_check_pigadev] No new DMs
+[2026-04-05 12:20:36] [dm_check_pigadev] Done (exit=0)
+[2026-04-05 12:21:16] [slack_check] Starting
+[2026-04-05 12:21:37] [slack_check] Done (exit=1)
+[2026-04-05 12:22:37] [slack_check] Starting
+[2026-04-05 12:22:57] [slack_check] Done (exit=1)
+[2026-04-05 12:23:57] [slack_check] Starting
+[2026-04-05 12:24:17] [slack_check] Done (exit=1)
+[2026-04-05 12:25:17] [slack_check] Starting
+[2026-04-05 12:25:36] [slack_check] Done (exit=1)
+[2026-04-05 12:26:36] [slack_check] Starting
+[2026-04-05 12:26:57] [slack_check] Done (exit=1)
+[2026-04-05 12:27:57] [slack_check] Starting
+[2026-04-05 12:28:19] [slack_check] Done (exit=1)
+[2026-04-05 12:29:19] [slack_check] Starting
+[2026-04-05 12:29:39] [slack_check] Done (exit=1)
+[2026-04-05 12:29:49] [inbox_check] Starting
+[2026-04-05 12:29:49] [inbox_check] Inbox win2 empty
+[2026-04-05 12:29:49] [inbox_check] Done (exit=0)
+[2026-04-05 12:30:39] [slack_check] Starting
+[2026-04-05 12:30:59] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-05 12:30:59] [slack_check] Done (exit=1)
+[2026-04-05 12:31:59] [slack_check] Starting
+[2026-04-05 12:32:19] [slack_check] Done (exit=1)
+[2026-04-05 12:33:19] [slack_check] Starting
+[2026-04-05 12:33:41] [slack_check] Done (exit=1)
+[2026-04-05 12:34:41] [slack_check] Starting
+[2026-04-05 12:35:00] [slack_check] Done (exit=1)
+[2026-04-05 12:36:00] [slack_check] Starting
+[2026-04-05 12:36:22] [slack_check] Done (exit=1)
+[2026-04-05 12:37:22] [slack_check] Starting
+[2026-04-05 12:37:43] [slack_check] Done (exit=1)
+[2026-04-05 12:38:43] [slack_check] Starting
+[2026-04-05 12:39:04] [slack_check] Done (exit=1)
+[2026-04-05 12:40:04] [slack_check] Starting
+[2026-04-05 12:40:24] [slack_check] Done (exit=1)
+[2026-04-05 12:41:24] [slack_check] Starting
+[2026-04-05 12:41:45] [slack_check] Done (exit=1)
+[2026-04-05 12:42:45] [slack_check] Starting
+[2026-04-05 12:43:05] [slack_check] Done (exit=1)
+[2026-04-05 12:44:05] [slack_check] Starting
+[2026-04-05 12:44:27] [slack_check] Done (exit=1)
+[2026-04-05 12:45:27] [slack_check] Starting
+[2026-04-05 12:45:49] [slack_check] Done (exit=1)
+[2026-04-05 12:45:59] [auto_diary] Starting
+[2026-04-05 12:48:01] [auto_diary] [2026-04-05 12:45:59] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-05 12:48:01] [auto_diary]   Phase [gather] 開始 (timeout=120s)
+[2026-04-05 12:48:01] [auto_diary]   Phase [gather] タイムアウト (120s)
+[2026-04-05 12:48:01] [auto_diary] Phase 1 (Gather) 失敗。Phase 2-4は中止。状態報告のみ投稿。
+[2026-04-05 12:48:01] [auto_diary] Done (exit=0)
+[2026-04-05 12:48:11] [slack_check] Starting
+[2026-04-05 12:48:32] [slack_check] Done (exit=1)
+[2026-04-05 12:49:32] [slack_check] Starting
+[2026-04-05 12:49:52] [slack_check] Done (exit=1)
+[2026-04-05 12:50:52] [slack_check] Starting
+[2026-04-05 12:51:13] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-05 12:51:13] [slack_check] Done (exit=1)
+[2026-04-05 12:52:13] [slack_check] Starting
+[2026-04-05 12:52:34] [slack_check] Done (exit=1)
+[2026-04-05 12:53:34] [slack_check] Starting
+[2026-04-05 12:53:55] [slack_check] Done (exit=1)
+[2026-04-05 12:54:55] [slack_check] Starting
+[2026-04-05 12:55:15] [slack_check] Done (exit=1)
+[2026-04-05 12:56:15] [slack_check] Starting
+[2026-04-05 12:56:36] [slack_check] Done (exit=1)
+[2026-04-05 12:57:36] [slack_check] Starting
+[2026-04-05 12:57:57] [slack_check] Done (exit=1)
+[2026-04-05 12:58:07] [git_sync] Starting
+[2026-04-05 12:58:11] [git_sync] Done (exit=0)
+[2026-04-05 12:59:01] [slack_check] Starting
+[2026-04-05 12:59:20] [slack_check] [12:59:20] 1 msg(s) -> inbox_win2.md
+[2026-04-05 12:59:20] [slack_check] [12:59:20] Triggered check_inbox.py --box win2
+[2026-04-05 12:59:20] [slack_check] Done (exit=0)
+[2026-04-05 12:59:20] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-05 12:59:20] [inbox_check] Starting
+[2026-04-05 12:59:21] [inbox_check] Inbox win2 empty
+[2026-04-05 12:59:21] [inbox_check] Done (exit=0)

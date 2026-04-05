@@ -1107,3 +1107,9 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 [2026-04-05 10:32:30] Claude woken for win2: 完了。対処内容:
 
 1. **#nao-u ハーネス記事** → 読んで#all-nao-u-labに反応 + #shared-readsに詳細分析を投稿。5社の解釈差異の構造、context anx
+[2026-04-05 12:59:21] Inbox win2 has content — waking Claude
+[2026-04-05 13:00:08] Claude woken for win2: 完了。
+
+- **変更**: Ash auto_diary 間隔 1800秒(30分) → 7200秒(2時間)
+- **min_interval**: 自動で6600秒に調整済み
+- **Slack
