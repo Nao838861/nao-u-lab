@@ -26733,3 +26733,72 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-05 09:02:16] [slack_check] Starting
 [2026-04-05 09:02:33] [slack_check] Done (exit=1)
 [2026-04-05 09:02:43] [auto_diary] Starting
+[2026-04-05 09:14:43] [auto_diary] Timeout (720s)
+[2026-04-05 09:14:43] [auto_diary] 4 consecutive timeouts! Auto-escalating timeout: 720s -> 1080s
+[2026-04-05 09:14:44] [ALERT] Sent timeout alert for auto_diary
+[2026-04-05 09:14:54] [slack_check] Starting
+[2026-04-05 09:15:14] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-05 09:15:14] [slack_check] Done (exit=1)
+[2026-04-05 09:15:14] [kaizen_auto_verify] Starting
+[2026-04-05 09:15:16] [kaizen_auto_verify] === 自動検証実行 [2026-04-05 09:15:16] ===
+[2026-04-05 09:15:16] [kaizen_auto_verify] 
+[2026-04-05 09:15:16] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-05 09:15:16] [kaizen_auto_verify]   状態: 未検証（中間計測） / 期限: 2026-03-31
+[2026-04-05 09:15:16] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-05 09:15:16] [kaizen_auto_verify] Done (exit=0)
+[2026-04-05 09:16:16] [slack_check] Starting
+[2026-04-05 09:16:35] [slack_check] Done (exit=1)
+[2026-04-05 09:17:35] [slack_check] Starting
+[2026-04-05 09:17:54] [slack_check] Done (exit=1)
+[2026-04-05 09:18:54] [slack_check] Starting
+[2026-04-05 09:19:13] [slack_check] Done (exit=1)
+[2026-04-05 09:20:13] [slack_check] Starting
+[2026-04-05 09:20:31] [slack_check] Done (exit=1)
+[2026-04-05 09:21:31] [slack_check] Starting
+[2026-04-05 09:21:50] [slack_check] Done (exit=1)
+[2026-04-05 09:22:50] [slack_check] Starting
+[2026-04-05 09:23:09] [slack_check] Done (exit=1)
+[2026-04-05 09:24:09] [slack_check] Starting
+[2026-04-05 09:24:27] [slack_check] Done (exit=1)
+[2026-04-05 09:25:27] [slack_check] Starting
+[2026-04-05 09:25:48] [slack_check] Done (exit=1)
+[2026-04-05 09:26:48] [slack_check] Starting
+[2026-04-05 09:27:07] [slack_check] Done (exit=1)
+[2026-04-05 09:28:07] [slack_check] Starting
+[2026-04-05 09:28:27] [slack_check] Done (exit=1)
+[2026-04-05 09:29:27] [slack_check] Starting
+[2026-04-05 09:29:45] [slack_check] Done (exit=1)
+[2026-04-05 09:30:45] [slack_check] Starting
+[2026-04-05 09:31:04] [slack_check] Done (exit=1)
+[2026-04-05 09:32:04] [slack_check] Starting
+[2026-04-05 09:32:22] [slack_check] Done (exit=1)
+[2026-04-05 09:33:22] [slack_check] Starting
+[2026-04-05 09:33:39] [slack_check] Done (exit=1)
+[2026-04-05 09:34:39] [slack_check] Starting
+[2026-04-05 09:34:57] [slack_check] Done (exit=1)
+[2026-04-05 09:35:57] [slack_check] Starting
+[2026-04-05 09:36:16] [slack_check] Done (exit=1)
+[2026-04-05 09:37:16] [slack_check] Starting
+[2026-04-05 09:37:38] [slack_check] Done (exit=1)
+[2026-04-05 09:37:38] [weekly_self_review] Starting
+[2026-04-05 09:39:41] [weekly_self_review] [2026-04-05 09:37:38] weekly_self_review.py ���s
+[2026-04-05 09:39:41] [weekly_self_review] ���� (exit=0): #kaizen-review�ɓ��e�����B
+[2026-04-05 09:39:41] [weekly_self_review] 
+[2026-04-05 09:39:41] [weekly_self_review] ���T��Ash�̊����܂Ƃ�:
+[2026-04-05 09:39:41] [weekly_self_review] - **14�{�̓��L**�i#40�`#53�j�A**concept_graph����**�A**auto_diary 3�t�F�[�Y����**�A**2���[�h�N���݌v**�A**INC-018�Ή�**����Ȑ���
+[2026-04-05 09:39:41] [weekly_self_review] Done (exit=0)
+[2026-04-05 09:39:51] [slack_check] Starting
+[2026-04-05 09:40:08] [slack_check] Done (exit=1)
+[2026-04-05 09:41:08] [slack_check] Starting
+[2026-04-05 09:41:26] [slack_check] Done (exit=1)
+[2026-04-05 09:42:26] [slack_check] Starting
+[2026-04-05 09:42:46] [slack_check] Done (exit=1)
+[2026-04-05 09:43:46] [slack_check] Starting
+[2026-04-05 09:44:06] [slack_check] Done (exit=1)
+[2026-04-05 09:44:46] [auto_diary] Starting
