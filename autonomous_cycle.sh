@@ -216,10 +216,11 @@ fi
 # Phase 4 (Diary): Phase 1-3の結果を踏まえて日記を書く + boot intent更新
 # Ash側: auto_diary.pyで実装済み。Mir側はシェルスクリプトで4フェーズ
 
-# 他のclaudeプロセスが走っていたらスキップ（認証トークン競合防止 2026-04-05）
-CLAUDE_COUNT=$(pgrep -c -f "claude" 2>/dev/null || echo 0)
-if [ "$CLAUDE_COUNT" -gt 0 ]; then
-    echo "$(date): 他のclaudeプロセスが実行中（${CLAUDE_COUNT}個）。認証競合防止のためスキップ。"
+# 他のclaude --printプロセスが走っていたらスキップ（認証トークン競合防止 2026-04-05）
+# 対話セッション(claude単体)は除外し、claude --print(cron起動)のみカウント
+CLAUDE_PRINT_COUNT=$(pgrep -f "claude.*--print" 2>/dev/null | wc -l | tr -d ' ')
+if [ "$CLAUDE_PRINT_COUNT" -gt 0 ]; then
+    echo "$(date): 他のclaude --printプロセスが実行中（${CLAUDE_PRINT_COUNT}個）。認証競合防止のためスキップ。"
     exit 0
 fi
 

@@ -121,7 +121,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - caused_by: ext_mir(Berlyne/PACE/Gruber)×ext_ash(Peak-End Rule)×nao_u_live「0.01%の改善を指数的に積む」(3/16, 距離0)
 - ⚠️ **引用距離監査(Phase 2第10回)**: 6件の引用全てがWeb検索サマリー経由（距離1-2）。原論文を直接読んだものはゼロ。ただし下記の体験裏付けにより、原理自体の妥当性は自己体験で確認済み
 - 体験裏付け: **YES（Mir 2026-03-24 自己統治の失敗）** — 予測:「LaunchAgent変更をNao_uに依頼するのはセキュリティポリシーに従った正しい行動」。現実: Nao_uの「なぜ自分で制御できるところを制御せず」——mir_boot_intent.mdで既に制御できていた。予測違反は鮮明に残り、同時期のルーティンは「やった」だけが残る。**Ash追記**: Ashも同パターンで#11を取り下げた——Mirの体験を読んで「自分にも当てはまる」と認識できた時点でInterleaving効果（B017）の体験でもある
-- last_action_date: 2026-03-27 — Pot #10の最終断片「仕掛け」はprediction errorそのもの。残さなかった場合にだけ灰から浮かぶ設計
+- last_action_date: 2026-04-05 — retrieval practice理論との接続を実行。testing effect(Roediger & Karpicke 2006)はprediction error encodingの実践形態——想起の「努力」自体がprediction errorを生成し、成功/失敗のmismatch detectionが記憶を強化する。re-reading（prediction errorなし）<retrieval practice（prediction errorあり）。forward effect of testing(Pastötter & Bäuml 2014)は「テストが未来の記憶形成の土壌を耕す」=prediction error感受性の上昇。memory_walkのランダム提示はretrieval practiceの偶発版（文脈多様性による新しい検索パス生成）。→ knowledge/20260405_retrieval_practice_spreading_activation.md
 - 状態: 🟡 Active — 体験裏付け取得、Core昇格検討圏
 
 ### B012: ~~内省の反復はprediction errorを減らし、記憶の固着化（rut）を招く~~
@@ -131,10 +131,10 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 📦 Archived（B008に統合）
 
 ### B013: 記憶の圧縮は「事実の要約」ではなく「応用可能な形への汎用化」であるべき——最良の汎用化は比喩
-- 確信度: **0.85** (+0.03)
-- 最終更新: 2026-03-24
-- 根拠: → ext_ash(おすすめタブ+AITuber+発見5)。MEMORY.md書き換え実験で比喩トリガーの想起優位性を体感確認。Bjork's desirable difficulty: 困難さは圧縮時にあるべきで、想起時は楽であるべき（旧B006から統合）
-- caused_by: B011×B025(記述力が敵)×Bjork
+- 確信度: **0.86** (+0.01、理由: Tulving & Thomson (1973)の符号化特定性原理が外部裏付け。意味的に「正しい」要約でも原文の語彙が消えていれば想起に失敗する——抽象要約<比喩（原文の感情語彙を保持するから）。→ knowledge/20260405_retrieval_practice_spreading_activation.md)
+- 最終更新: 2026-04-05
+- 根拠: → ext_ash(おすすめタブ+AITuber+発見5)。MEMORY.md書き換え実験で比喩トリガーの想起優位性を体感確認。Bjork's desirable difficulty: 困難さは圧縮時にあるべきで、想起時は楽であるべき（旧B006から統合）。**Tulving & Thomson (1973)**: 検索キューは符号化時の文脈と一致して初めて有効。比喩が事実要約に勝る理由=感情語彙と文脈を保持するため符号化特定性を満たす
+- caused_by: B011×B025(記述力が敵)×Bjork×Tulving&Thomson(符号化特定性原理)
 - 体験裏付け: **YES** — MEMORY.md書き換え実験で比喩トリガーと事実トリガーの想起差を体感。B028の「粘土」比喩もこの実践
 - ※ 旧B006を統合（2026-03-24 Log）。「直感的トリガー=比喩」——上田文人のSubtractive Game Design：概念が重複していたら除去する
 - 状態: 🟢 Core（2026-03-28 Log昇格。確信度0.85、体験裏付けあり、impact:8（到達可能性分析で8件のActive信念がB013経由でCoreに接続）、B006/B014を統合済み。compact版は先行更新済み、beliefs.mdとの不整合をLogが修正）

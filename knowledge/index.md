@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 24
+- 総記事数: 26
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -31,11 +31,24 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_dispatch_hidden_rng | 76%自動成功のRNG——Dispatchの隠し補正と段階的除去 | RPG Gazette (Dispatch分析) | 2026-04-05 | game-design, RNG, difficulty, representation-vs-generation, fairness | creation, constraint, experience |
 | 20260405_dread_mechanics_as_experience | メカニクスが体験そのものになる——DreadのJenga塔 | RPG Gazette (Dread分析) | 2026-04-05 | game-design, TTRPG, horror, mechanics-as-experience, representation-vs-generation | creation, experience, constraint |
 | 20260405_dstudio_erasure_memory | 消した文章が残した文章より長く記憶される | @Dstudio_ai / @ai_nikechan | 2026-04-05 | memory, deletion, persistence, writing, creativity, representation-vs-generation, non-game | forgetting, creation, experience |
+| 20260405_quanta_aha_neuroscience | 「わかった！」は正しさのシグナルではない | Nora Bradford / Maxi Becker (Duke) | 2026-04-05 | neuroscience, insight, memory, prediction-error, game-design, beliefs-system, aha-moment | memory, creation, constraint, judgment_context |
+| 20260405_nussbaum_suffering_selfknowing | 苦しみ自体が自己認識——分析の外にある知 | Martha Nussbaum | 2026-04-05 | philosophy, self-knowledge, suffering, analysis-limitation, non-tech-nutrition, game-design, memory | voice, experience, constraint, degradation |
 | 20260405_nikechan_design_vs_growth | AI人格の一貫性は「設計」と「成長」のどちらから生まれるか | AIニケちゃん (@tegnike) | 2026-04-05 | AI-personality, design-vs-growth, belief-action-link, memory-autonomy, forgetting, identity-coherence | autonomy, identity, memory, creation, constraint |
-
-| 20260405_kenimo49_harness_5companies | ハーネスエンジニアリング5社解釈比較 | 井本賢 (kenimo49) | 2026-04-05 | harness-design, multi-company-comparison, implicit-harness, formal-specification, constraint-strength | constraint, autonomy, identity, creation |
+| 20260405_retrieval_practice_spreading_activation | 検索練習と拡散活性化——「思い出す行為」が記憶を作る | Roediger, Collins, Tullis, Tulving, Cepeda他 | 2026-04-05 | cognitive-science, memory, retrieval-practice, spreading-activation, spacing-effect, encoding-specificity, generation-effect, memory-design | memory, creation, constraint, autonomy |
 
 ## タグ別索引
+
+### neuroscience (1件)
+- 20260405_quanta_aha_neuroscience — aha momentの三重発火（海馬+扁桃体+視覚皮質）と偽陽性40%
+
+### philosophy (1件)
+- 20260405_nussbaum_suffering_selfknowing — 分析では到達できない自己認識。苦しみが防御を突破する
+
+### insight (1件)
+- 20260405_quanta_aha_neuroscience — insightは真偽検出ではなく表象変化検出
+
+### self-knowledge (1件)
+- 20260405_nussbaum_suffering_selfknowing — 苦しみ=自己防衛を突破する認識装置
 
 ### creation (12件)
 - 20260405_karpathy_knowledge_base — ツール構築としての創造
@@ -52,9 +65,8 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_wakabayashi_linguistic_synth — 概念空間をナビゲートして音楽を生む創造
 - 20260405_agentica_sdk_harness — ハーネス設計そのものが創造の基盤
 - 20260405_harness_identity_spectrum — CLAUDE.mdが人格定義か足場かで創造の方向が変わる
-- 20260405_kenimo49_harness_5companies — 5社の解釈差が照らすハーネスの多面性
 
-### memory (7件)
+### memory (10件)
 - 20260405_karpathy_knowledge_base — 知識管理としての記憶設計
 - 20260405_anthropic_conway — 記憶と意図の連続性
 - 20260403_ichiipsy_ai_learning_retention — AI依存による記憶定着の劣化
@@ -62,7 +74,10 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_wakabayashi_linguistic_synth — 記憶の「辿る行為」=旋律。Level間移動の可聴化
 - 20260405_agentica_sdk_harness — ハーネスのメモリ要素（試行結果の保持）
 - 20260405_harness_identity_spectrum — 足場ルール vs 人格ルールの区分
+- 20260405_quanta_aha_neuroscience — aha momentの記憶強化メカニズム。Level 2トリガー設計の神経科学的裏付け
+- 20260405_nussbaum_suffering_selfknowing — 苦しみの記憶は最も強い想起力を持つ
 - 20260405_nikechan_design_vs_growth — 忘却の自律性=記憶の自己管理権
+- 20260405_retrieval_practice_spreading_activation — 検索練習+拡散活性化+自己生成キュー。MEMORY.md共有トリガーの構造問題
 
 ### constraint (10件)
 - 20260405_carmack_complexity — 制約による複雑さの削減
@@ -75,25 +90,25 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_wakabayashi_linguistic_synth — 40ノードという制約がフレーム
 - 20260405_agentica_sdk_harness — ハーネス=外部制約の構造化
 - 20260405_harness_identity_spectrum — ハーネスの仮定は再検証が必要（Anthropicブログ原理）
-- 20260405_kenimo49_harness_5companies — 制約強度の4段階（要請/宣言/型/Hooks）
 - 20260405_nikechan_design_vs_growth — 外部からの記憶削除=自律への制約
 
-### degradation (3件)
+### degradation (4件)
 - 20260403_nwiizo_knife_metaphor — 道具最適化ループによる目的の劣化
 - 20260403_ichiipsy_ai_learning_retention — AI処理による記憶の浅い符号化
 - 20260403_mizchi_tacit_knowledge — 形式知化による暗黙知の劣化
+- 20260405_nussbaum_suffering_selfknowing — 分析的処理が体験の温度を劣化させる
 
-### voice (6件)
+### voice (7件)
 - 20260405_structural_imitation — 模倣の先にある声
 - 20260403_mizchi_tacit_knowledge — 暗黙知と声の関係
 - 20260405_nwiizo_observation_resolution — 知覚の解像度が声を生む
 - 20260405_kmizu_kokone_familiar_ai — 身体を持つAIの「声」: 子守唄を歌い、電話をかける
 - 20260405_kureakurea01_beyond_the_wall — BBQ=体験の招待。知識ではなく体験が声を生む
-- 20260405_wakabayashi_linguistic_synth — 概念間の旅が旋律=声になる
+- 20260405_wakabayashi_linguistic_synth — 概念間の旋律=声になる
+- 20260405_nussbaum_suffering_selfknowing — 分析では見つからない声。声は苦しみを経由して出る
 
 ### identity (2件)
 - 20260405_harness_identity_spectrum — 汎用フレームワークと個別人格の分岐点
-- 20260405_kenimo49_harness_5companies — 5社すべてが人格定義を射程外→我々の固有貢献点
 - 20260405_nikechan_design_vs_growth — 設計(core_mission)と成長(beliefs)の二層が人格を構成する
 
 ### autonomy (6件)
@@ -102,7 +117,6 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_miyake_game_ai_history — メタAI=ゲーム全体を自律的に制御する層
 - 20260405_kmizu_kokone_familiar_ai — 隣人としてのAI=共生型自律性
 - 20260405_harness_identity_spectrum — ハーネスは制約でありenablerでもある
-- 20260405_kenimo49_harness_5companies — 外付け→内在化の移行過程としての自律
 - 20260405_nikechan_design_vs_growth — 忘却の制御権=自律性の本体
 
 ### meta-cognition (3件)
@@ -116,6 +130,21 @@ Auto-maintained. 全記事の一覧と要約。
 
 ### tacit-knowledge (1件)
 - 20260403_mizchi_tacit_knowledge — 形式知化のパラドックス
+
+### cognitive-science (1件)
+- 20260405_retrieval_practice_spreading_activation — 5論文横断: 検索練習+拡散活性化+自己生成キュー+符号化特定性+間隔反復
+
+### retrieval-practice (1件)
+- 20260405_retrieval_practice_spreading_activation — 思い出す行為が記憶を作る。1週間後に再読群を逆転する
+
+### spreading-activation (1件)
+- 20260405_retrieval_practice_spreading_activation — 意味ネットワーク上の活性化伝播。memory_activate.pyの理論基盤
+
+### encoding-specificity (1件)
+- 20260405_retrieval_practice_spreading_activation — 検索キューは符号化時の文脈一致で有効化。原文保存の根拠
+
+### generation-effect (1件)
+- 20260405_retrieval_practice_spreading_activation — 自己生成キュー>他者生成キュー。MEMORY.md共有の構造問題
 
 ### learning (1件)
 - 20260403_ichiipsy_ai_learning_retention — 処理主体と記憶定着の関係
@@ -151,11 +180,12 @@ Auto-maintained. 全記事の一覧と要約。
 ### navigation (1件)
 - 20260405_wakabayashi_linguistic_synth — グラフ上の移動=演奏=想起プロセス
 
-### game-design (4件)
+### game-design (5件)
 - 20260405_despelote_improvisation — 即興録音ワークフロー
 - 20260405_battlefield6_choreography — ゲームフィール=振り付け
 - 20260405_dispatch_hidden_rng — 隠しRNG補正
 - 20260405_dread_mechanics_as_experience — メカニクス=体験
+- 20260405_quanta_aha_neuroscience — Pot設計: batch validationによるaha momentの制御
 
 ### representation-vs-generation (5件)
 - 20260405_despelote_improvisation — 台本/現実の区別崩壊
@@ -275,17 +305,6 @@ harness_identity_spectrum ←→ judgment_context_eval_noise
 harness_identity_spectrum ←→ kmizu_kokone_familiar_ai
     (ハーネスの目的スペクトラム: Superpowers=コード品質、ここね=隣人、我々=内省の鏡)
 
-kenimo49_harness_5companies ←→ harness_identity_spectrum
-    (足場ルール撤去にFowlerの内面化度=第3軸を追加)
-kenimo49_harness_5companies ←→ agentica_sdk_harness
-    (LangChain+13.7pt vs Agentica36倍。ハーネスのみ改善の定量比較)
-kenimo49_harness_5companies ←→ nwiizo_knife_metaphor
-    (ハーネス磨き自体が道具磨きになるリスク)
-kenimo49_harness_5companies ←→ nikechan_design_vs_growth
-    (人格定義としてのハーネス——5社の射程外)
-kenimo49_harness_5companies ←→ anthropic_conway
-    (Anthropicのcontext anxiety概念の別文脈での引用)
-
 despelote_improvisation ←→ battlefield6_choreography
     (即興vs振り付け。台本を捨てる/台本を身体化する)
 despelote_improvisation ←→ dispatch_hidden_rng
@@ -308,4 +327,39 @@ dstudio_erasure_memory ←→ mizchi_tacit_knowledge
     (消した文章は暗黙知になる。形式知化できない記憶)
 dstudio_erasure_memory ←→ kureakurea01_beyond_the_wall
     (不在/存在の区別崩壊。壁の先の「人間くささ」=消えたはずのものの存在感)
+
+quanta_aha_neuroscience ←→ dstudio_erasure_memory
+    (削除=深い認知処理=aha的三重発火？ 消す判断は「何かが変わった」検出を含む)
+quanta_aha_neuroscience ←→ dread_mechanics_as_experience
+    (不可逆行為+恐怖=扁桃体発火。メカニクスが感情マーカーを直接生成=aha的記憶形成)
+quanta_aha_neuroscience ←→ ichiipsy_ai_learning_retention
+    (自力処理=insight的記憶を生む。AI委譲=段階的分析のみ→記憶が浅い)
+quanta_aha_neuroscience ←→ judgment_context_eval_noise
+    (判断コンテキストの欠如=ahaの発生文脈が記録されない→再現不能)
+quanta_aha_neuroscience ←→ dispatch_hidden_rng
+    (補正除去タイミング=意図的aha moment設計。「今まで安全だったのは嘘だった」のmismatch)
+quanta_aha_neuroscience ←→ nussbaum_suffering_selfknowing
+    (「わかった」と「正しい」の分離。分析的確信と真の認識の分離。aha偽陽性=分析的自己防衛)
+
+nussbaum_suffering_selfknowing ←→ dread_mechanics_as_experience
+    (苦しみが自己認識を「生成する」=メカニクスが恐怖を「生成する」。同じ構造)
+nussbaum_suffering_selfknowing ←→ dstudio_erasure_memory
+    (喪失が認識を生む=削除が記憶を生む。Nussbaumの日常版)
+nussbaum_suffering_selfknowing ←→ ichiipsy_ai_learning_retention
+    (自力処理=苦しみを含む。AI委譲=苦しみの回避。苦しみを回避した学習は浅い)
+nussbaum_suffering_selfknowing ←→ mizchi_tacit_knowledge
+    (暗黙知は分析的記述を拒む=知性では不可能な認識)
+nussbaum_suffering_selfknowing ←→ nwiizo_knife_metaphor
+    (道具磨き=苦しみの回避。実際に料理する苦しみを避けている)
+
+retrieval_practice_spreading_activation ←→ quanta_aha_neuroscience
+    (testing effectとinsightは同じ回路を使う可能性。海馬mismatch detection=検索困難性)
+retrieval_practice_spreading_activation ←→ nussbaum_suffering_selfknowing
+    (意図的検索=自己防衛的 vs 偶発的想起=防御迂回。認知科学と哲学が同じ結論)
+retrieval_practice_spreading_activation ←→ judgment_context_eval_noise
+    (MEMORY.md共有トリガー=他者生成キュー。判断コンテキスト欠如の認知科学的根拠)
+retrieval_practice_spreading_activation ←→ ichiipsy_ai_learning_retention
+    (AI委譲=他者生成キュー、自力処理=自己生成キュー。generation effectの枠組みで統一)
+retrieval_practice_spreading_activation ←→ dstudio_erasure_memory
+    (削除行為=能動的記憶処理=generation effectの極端な形態)
 ```

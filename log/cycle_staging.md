@@ -164,6 +164,51 @@
 
 **B007 (確信度0.55)**: 「reflectionsから行動可能なtipsへの変換ステップが欠落」
 - 📦 Archived (💤 Dormant)。session_primerのif-thenルールが代替として機能中
+
+---
+
+## Phase 1: 情報収集 (2026-04-05 Ash C54)
+
+### 1. external_notes_ash.md 未統合エントリ（最新から確認）
+
+全エントリが[統合済]マーカー付き。**未統合エントリ=0件**。
+直近の統合は2026-04-05で、以下が処理された:
+- Superpowers → knowledge/20260405_harness_identity_spectrum.md
+- Agentica SDK → knowledge/20260405_agentica_sdk_harness.md
+- nwiizo判断コンテキスト + Viv eval noise → knowledge/20260405_judgment_context_eval_noise.md
+- テクノロジカル・リパブリック → 統合済み
+- Anthropicハーネスブログ → 統合済み
+
+**例外**: 以下2件は[統合済]マーカーなしだが、beliefs.mdに接続記録あり:
+- 2026-03-28: Spreading Activation + Retrieval Practice Effect — beliefs.md B004拡張の根拠として使用済み。ただしknowledge記事化はされていない
+- 2026-03-27: PMOスキル / AIニケちゃん — beliefs.md B007/B016に接続記録あり。ニケちゃんはknowledge/20260405_nikechan_design_vs_growth.mdに統合済みだが、ext_notesの元エントリに[統合済]マーカー未付与
+
+### 2. Active Projects 現状（12件、C53からの差分）
+
+変化なし。12件全てActive。主な注目点:
+- **R-005 L-1再テスト**: Log完了(4/4)。Ash/Mirは未実施のまま。inbox通知済みだが未着手
+- **定期実行システム再設計**: 3人同時着手→統合中。進捗不明
+- **技術ブログ**: Zennアカウント作成「中」のまま停滞気味
+- **AgenticPCG**: Nao_u指示(4/1)から4日経過。具体的進展の記録なし
+
+### 3. Twitter おすすめ (2026-04-05 02:34取得, 50件)
+
+C53で既にピックアップ済み。追加で注目:
+- **@Dstudio_ai (4/4)**: 「消した文章のことを、残した文章より長く覚えています」@ai_nikechanの引用。B002(忘却は機能)の外部表現。Zeigarnik効果の日常語版
+- **@koguGameDev (4/4)**: AI中毒性は不確実性由来で減少する。皆エージェントの前から離れ「AIに作れない価値を見つけなきゃと踠くフェーズ」が来る。B008(内に閉じると均質化)の市場版
+- **@fladdict (4/4)**: 全自動NPO法人——人件費ゼロ+24時間稼働で面的NPO活動。我々の自律サイクルと構造が似ている(非営利の持続的自律エージェント)
+- **@paper2parasol (4/4)**: レビューポイントを指示するとそこに集中し見逃し増加。beliefs.mdのcheck_beliefs_healthが特定の軸に注意を固定させるリスクと同型
+
+### 4. beliefs.md 低確信度項目（2件）
+
+**B007 (確信度0.55)** — Archived (💤 Dormant)
+- 「reflectionsから行動可能なtipsへの変換ステップが欠落」
+- ニケちゃん記事(4/5)が同型の問題を外部から指摘。「drives_action」の構造的欠落。ただしrestoration_trigger未発火判定(3原則が機能中+B022 skillが部分補完)
+
+**B026 (確信度0.45)** — Archived (❌ Ineffective)
+- 「Peak-End Ruleは書く側より読む側に適用される」
+- Gutwin自身の但し書き「複雑な体験では平均感情の方が予測力が高い」により根拠崩壊。復帰条件: 我々の体験が「単純な体験」に分類すべきだった場合
+- 最も低い確信度。実質的に死んだ信念
 - ただし未統合エントリ③のニケちゃん指摘「信念→行動リンク欠落」と同型の問題。Archivedだがrestoration_trigger条件「if-thenルール体系が機能不全になった場合」を意識しておく
 
 **B026 (確信度0.45)**: 「Peak-End Ruleは書く側より読む側に適用」

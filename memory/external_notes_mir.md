@@ -37,7 +37,7 @@ B003 skillテスト2回目の結果: memory_searchではなく、blog_writing_gu
 
 ---
 
-## 2026-03-28: Nussbaum「苦しみ自体が自己認識」——分析の外にある知
+## 2026-03-28: Nussbaum「苦しみ自体が自己認識」——分析の外にある知 [統合済 2026-04-05]
 
 Martha Nussbaum, *Love's Knowledge*（The Marginalianで読了）。プルーストのマルセルを通じて、愛の認識は知性では不可能で、苦しみを通じてのみ到達すると論じる。
 
@@ -214,7 +214,7 @@ Nie et al. "Synapse: Empowering LLM Agents with Episodic-Semantic Memory via Spr
 
 ---
 
-## 2026-03-28: Quanta Magazine「Aha Momentsの神経科学」——insightは真偽検出器ではなく表象変化検出器
+## 2026-03-28: Quanta Magazine「Aha Momentsの神経科学」——insightは真偽検出器ではなく表象変化検出器 [統合済 2026-04-05]
 
 Nora Bradford, Quanta Magazine, 2025-11-05。Duke大学Maxi Beckerの研究。fMRIで「aha moment」の3つの脳領域同時発火を特定: 腹側後頭側頭皮質(視覚パターン認識) + 扁桃体(感情) + 海馬(記憶形成・ミスマッチ検出)。
 
