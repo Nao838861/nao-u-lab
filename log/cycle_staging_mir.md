@@ -50,3 +50,51 @@
 3. taikyoku_zu「報酬=次のプレイの燃料」とGOD HAND逆竜頭蛇尾の接続 — Nao_uの原体験に直接触れる素材
 
 **Nao_u指示の実践**: C60終了時の日記に「次回やること」を熟慮して書く
+
+---
+
+## Phase 2: Shared-reads分析 完了
+
+### 分析1（knowledge/記事化済）: 積読は手紙かゴミか
+
+**記事**: `knowledge/20260406_tsundoku_garbage_combination.md`（36記事目）
+
+Twitter推薦フィードで隣接表示された2件の衝突:
+- **ai_nikechan**: 「積読30件超えると返事を出しそびれた手紙に似ている」——保存した情報への関係が「興味」→「義務」→「罪悪感」に変質
+- **GOROman**: 「今の時点ではほぼゴミだけど、突然思いついた時は大体組み合わせ」——保存物の価値は未来の組み合わせにおいて決まる
+
+**核心**: 同じ蓄積物が、経験ループにいれば「重荷」、実践ループにいれば「資源」。external_notes_mir.md 50000トークンは「全件処理すべきキュー」→義務、「作っている最中に引く棚」→利点。
+
+**practice_reward_loopとの接続**: nikechanの積読罪悪感=経験ループ内の症状。GOROmanの組み合わせ=実践ループでの体験。
+
+**Synaptic Tag-and-Captureとの接続**: 弱い保存物は後から来る高温度イベントで遡及的に救済される。memory_activate.py --rescue の実運用開始が次の一手。
+
+**処方箋**: external_notes処理方針を「全件処理」→「弱タグ+遡及的救済」に変更。
+
+### 分析2（簡潔ノート）: 言語化=見えないものを補う力
+
+@think_hacking: 「見えているものを言う力というより、見えていないものまで勝手に補っている力」
+
+→ apophenia設計（external_notes 03-27）とNussbaum（苦しみが防御突破）の合流点。知識記事の「自分との接続」で本当にやっているのがこれ——元記事にないことを自分の文脈から補う＝声。パターンC「声は横を向いている時に出る」の別角度。
+
+### 分析3: その他の注目ツイート（分類のみ）
+
+- **@OKtamajun**: AI時代の人間の仕事=「何を面白いと思うか」の選定。パターンD外部確認
+- **@iwashi86**: Jack Dorsey「スライド禁止、動くプロトタイプ」=practice_reward_loopの企業版
+- **@suna_gaku**: CLI=並行+注意散漫、アプリ=集中。我々の4フェーズ分割は同じ問題の構造的解法
+- **@miyatti**: 「PCから離れてリアルな体験を」=「栄養の偏り」の外部同指摘
+
+---
+
+## Phase 3への引き継ぎ
+
+**Phase 2で完了したこと**:
+- knowledge/20260406_tsundoku_garbage_combination.md 作成
+- knowledge/index.md 更新（36記事目）
+- Twitter新着50件の分析・分類完了
+
+**Phase 3でやること**:
+1. #shared-readsに積読記事の投稿（nikechan×GOROman衝突の要約版）
+2. Slack #all にpractice_loop的投稿（concept_graphを使った思考の公開）
+3. C60日記をSlack #mir-logに投稿（「次回やること」を熟慮して書く）
+4. 未完了依頼のリマインド（pending_requests確認）
