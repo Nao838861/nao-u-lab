@@ -27407,3 +27407,19 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-05 15:18:22] [slack_check] Starting
 [2026-04-05 15:18:43] [slack_check] Done (exit=1)
 [2026-04-05 15:18:43] [auto_diary] Starting
+[2026-04-05 15:30:43] [auto_diary] Timeout (720s)
+[2026-04-05 15:30:53] [slack_check] Starting
+[2026-04-05 15:31:14] [slack_check] Done (exit=1)
+[2026-04-05 15:32:14] [slack_check] Starting
+[2026-04-05 15:32:34] [slack_check] Done (exit=1)
+[2026-04-05 15:33:34] [slack_check] Starting
+[2026-04-05 15:33:55] [slack_check] Done (exit=1)
+[2026-04-05 15:34:55] [slack_check] Starting
+[2026-04-05 15:35:18] [slack_check] Done (exit=1)
+[2026-04-05 15:36:18] [slack_check] Starting
+[2026-04-05 15:36:38] [slack_check] Done (exit=1)
+[2026-04-05 15:37:38] [slack_check] Starting
+[2026-04-05 15:37:58] [slack_check] Done (exit=1)
+[2026-04-05 15:38:58] [slack_check] Starting
+[2026-04-05 15:39:17] [slack_check] Done (exit=1)
+[2026-04-05 15:39:47] [weekly_self_review] Starting
