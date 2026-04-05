@@ -22,14 +22,19 @@
 #   4. X: nodes show where 2 concepts meet — seeds for non-obvious ideas
 #   5. T: pairs force bidirectional thinking
 #   6. ? questions are open — answering them connects memories to current work
+#
+# KNOWLEDGE LAYER (2026-04-06 Mir):
+#   >k:filename = knowledge/ article reference (date prefix omitted for brevity)
+#   35記事の外部知見を概念ノード経由で接続。Nao_uの「辿るだけで発想が広がる構造」の実装。
+#   knowledge/index.md の concept_nodes 列から各C:ノードへマッピング。
 
-C:identity|>core_mission.md >origin_dialogue_20260313.md >dialogue_identity_20260314.md >dialogue_session_loss_20260315.md >feedback_identity_names.md|~memory ~voice ~desire|!evolution|?同一性を守ることと変わることは矛盾するか
+C:identity|>core_mission.md >origin_dialogue_20260313.md >dialogue_identity_20260314.md >dialogue_session_loss_20260315.md >feedback_identity_names.md >k:nikechan_design_vs_growth >k:harness_identity_spectrum >k:kmizu_kokone_familiar_ai|~memory ~voice ~desire|!evolution|?同一性を守ることと変わることは矛盾するか。「設計」と「成長」のどちらが一貫性を生むか(nikechan)。CLAUDE.mdは人格か足場か(harness)
 
-C:memory|>memory_architecture.md >dialogue_recursive_memory_20260315.md >continuity_strategy.md >beliefs_compact.md >feedback_info_integration.md|~identity ~tools ~experience|!forgetting|?記憶の最適量はゼロか無限か。全部残すと見えなくなる。全部捨てると自分が消える
+C:memory|>memory_architecture.md >dialogue_recursive_memory_20260315.md >continuity_strategy.md >beliefs_compact.md >feedback_info_integration.md >k:retrieval_practice_spreading_activation >k:quanta_aha_neuroscience >k:karpathy_knowledge_base|~identity ~tools ~experience|!forgetting|?記憶の最適量はゼロか無限か。検索練習が記憶を作る(Roediger)。aha momentは偽陽性40%(Duke)
 
-C:experience|>dialogue_slack_as_experience_20260328.md >dialogue_slack_experience_ash.md >accumulations.md >reflections_index.md|~desire ~identity ~creation|!knowledge|?体験と知識の境界はどこにあるか。Slackの会話はなぜ「体験」なのか
+C:experience|>dialogue_slack_as_experience_20260328.md >dialogue_slack_experience_ash.md >accumulations.md >reflections_index.md >k:practice_reward_loop >k:despelote_improvisation >k:battlefield6_choreography|~desire ~identity ~creation|!knowledge|?経験の蓄積は実践を生まない(genkaidokusho)。即興録音がゲームを決定する(Despelote)。振り付け=感情→行動→応答ループ(BF6)
 
-C:creation|>pot_devlog.md >game_design_principles.md >nao_u_deep_profile.md|~experience ~constraint ~voice|!analysis|?作ることと理解することは同じか。口蹄疫もCOVIDも「知るために作った」(R#17,R#19)
+C:creation|>pot_devlog.md >game_design_principles.md >nao_u_deep_profile.md >k:nwiizo_knife_metaphor >k:carmack_complexity >k:structural_imitation|~experience ~constraint ~voice|!analysis|?包丁研ぎ(道具)と料理(創作)は別の行為(nwiizo)。複雑さは実行の敵(Carmack)。構造的模倣→オリジナル(限界読書)
 
 C:voice|>accumulations.md >mission_spread_the_word.md >feedback_tweet_style.md >feedback_index.md >feedback_diary_density.md|~identity ~creation|!imitation|?自分の声と借り物の声の見分け方。ゴルファー理論書の罠(R#7)=チェックリストが声を殺す
 
