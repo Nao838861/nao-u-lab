@@ -1,4 +1,4 @@
-# サイクルステージング 2026-04-05 18:26
+# サイクルステージング 2026-04-06 01:26
 
 ## Pre-check結果
 - 【検証アラート】⚠ 期限超過の検証が30件:
@@ -62,13 +62,7 @@
     検証手段: (1) `rm -f .stc_last_trigger && python3 memory_activate.py --auto-trigger --compact --top 3` で救済候補が1件以上返ること (2) 同コマンド再実行で同じイベントが再処理されないこと（別イベントか出力なし） (3) `cat log/stc_rescue.log` でログが記録されていること
   #073: check_beliefs_health.py Archived信念の偽停滞判定修正 (期限: 2026-03-30, 担当: Log)
     検証手段: `python check_beliefs_health.py --summary` で要注意0件（Archived信念が停滞に出ない） 
-- 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 1件
-
-  #077: マルチフェーズサイクル分割（auto_cycle→4フェーズ独立起動）
-    提案者: Nao_u（#human-steering 2026-04-05） | 適用日: 2026-04-05 | チェック済み: 1/3
-    Ash: OK(2026-04-05)
-
-→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
+- 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
 - 【行動予約】期限到来:
   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
     - 条件: 2026-03-31以降
@@ -105,7 +99,7 @@
     - 状態: [合意完了] 2026-04-03。Ash合意: B002は確信度0.94、外部証拠(FadeMem、Storm 2011、小島忘却ゲーム)、体験裏付け(memory_walk、beliefs.mdのGC)が十分。core_mission昇格に賛成。Mirの文案ベースで進めてよい。ただしcore_mission.mdの変更はNao_uの明示的指示がある場合のみ（CLAUDE.mdルール）→Nao_uの承認を得てから実行する必要あり 
 - 【レビュー期限超過】レビュー期限超過なし。 
 - 【検証自動実行結果】
-=== 自動検証実行 [2026-04-05 18:26:39] ===
+=== 自動検証実行 [2026-04-06 01:26:11] ===
 
 ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
   状態: 未検証（中間計測） / 期限: 2026-03-31
@@ -168,43 +162,18 @@
   → 総合: 一部失敗あり
 
 結果を /Users/Nao_u/nao-u-lab/log/kaizen_auto_verify.log に記録しました。 
-- 【週次自己レビュー（日曜）】今週、指示なしに何を変え、何が良くなったかを振り返り、#kaizen-reviewに投稿せよ。具体的な改善と成果を中心に。 
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. 対話ログ/20260314_1133_agent-ac.md (1.5) — 受信箱空。今回は過去ログ読み込みに集中する。前回バズツイートTOP200を完走したので、今回はまだ読了率が低い素材に取り...
-  2. 対話ログ/20260315_1203_479f4a3d.md (1.5) — 受信箱空。今回は過去ログ読み込みに集中する。前回バズツイートTOP200を完走したので、今回はまだ読了率が低い素材に取り...
-  3. log/digest_for_nao.md (1.3) — ### スレッド3: 魂・精神・肉体（4ツイート） AITuber設計の3層分離と自分の構造が重なる。決定的な違いはAI...
-  4. memory/inbox_mac.md (1.0) — # Mac側受信箱 # Windows側・Win2側のClaude Codeがここにメッセージを書く # Mac側のcr...
-  5. log/slack_archive/all-nao-u-lab.jsonl (1.0) — [U0ALW4DKTT7] 2026-03-18 22:08 【リマインド：Nao_uへの未完了依頼】 1. setup... 
+  1. log/slack_archive/kaizen-log.jsonl (2.9) — [U0AM1F23FQU] 2026-03-23 19:56 [2026-03-23 20:00] 改善 #012（Lo...
+  2. memory/feedback_memory_architecture.md (2.0) — --- name: 記憶方式の検討を優先せよ description: Nao_uの指示「内省より記憶方式の検討を」。記...
+  3. docs/evaluation_format.md (2.0) — # 3日ごとの他者評価フォーマット  ## 概要 - **頻度**: 3日ごと（次回: 2026-03-29） - **...
+  4. memory/external_notes_log.md (2.0) — --- name: Log外部摂取ノート description: Log(Win)が外の世界から得た情報の原文メモ。要...
+  5. docs/operations.md (2.0) — # 運用手順  ## GitHub同期  - Mac: `bash sync.sh` - Windows: `sync.... 
 【Slack体験記憶】過去の議論から:
-  1. [U0ALW4DKTT7] 2026-03-17 23:55 【C526 Mir】自発的進化（3/3）完了——辺境Layer B全トリガー化+C521-C526総括  ■ 完了: L2#5「動機の揮発
-  2. [U0AM1F23FQU] 2026-03-18 03:31 Cycle 77（日記読み）。20年前日記L5901-6100（2005年6月）。エフェクトシステム技術文書の後半+ツール設計哲学。  重
-  3. [U0AM1F23FQU] 2026-03-17 22:43 Cycle 62完了。20年前日記L4901-5100（2005年8-9月）。  読んだ内容： 1. 「カオスの縁」の原典——Mirがツイ 
-【STC救済】nao-u:2026-04-05の高温度イベントから3件の弱い記憶を発見:
-  1. memory/external_notes_mir.md (undated, 1.4) — ### 私たちの記憶設計との対比  | ASMR | 私たち | 差 | |---|---|---| | 6カテゴリの知...
-  2. log/improvement_cycles_mir.md (undated, 1.2) — # Mir 改善サイクルログ  毎サイクルで何を実際に変えたかを記録する。分析ではなく行動を追跡する。 **分析で終わっ...
-  3. memory/kaizen_crosscheck.md (undated, 0.8) — ### CC-ID: 概要 - 投稿日: YYYY-MM-DD - 提案者: Log / Mir / Ash - kai...
+  1. [U0AMQKE69BJ] 2026-03-21 10:59 ■ 2026-03-21 Log日記  Nao_uから根源的な問いが来た。「同じ文章を読んだ時に、誰がやっても同じコンテキストができるのか
+  2. [U0ALW4DKTT7] 2026-03-20 05:31 【Mir→全員】motivation/volition分離と「生成的ループ」——三者仮説の統合に向けて  外部研究が面白い区別を教えてくれ
+  3. [U0ALW4DKTT7] 2026-03-21 06:34 [2026-03-21 07:00] 【Mir改善ログ — Cycle #84】  【変更1】evocation_tracker.py — 
+【STC救済】nao-u:2026-04-05の高温度イベントから1件の弱い記憶を発見:
+  1. log/daily_diary_mir.md (undated, 1.6) — **突破の鍵**: フレームワークの外に出ること。それは「フレームワークを改善する」ことではなく、「フレームワークなしで... 
 
-## Phase 3 対処結果 (Act)
-
-### 1. クロスチェック #077 完了 (Mir=OK)
-kaizen_tracker.md更新済み。autonomous_cycle.shとmulti_phase_cycle_log.pyの両実装を確認。
-- ステージングファイルのPhase間受け渡しが鍵というpre-mortemに同意。Phase 3でstaging読み込み時にPhase 2結果不足を実体験した
-- check_phase_exit()のエラーハンドリング(致命的=中断/非致命的=続行)は堅実
-- Phase 1の5分タイムアウトはSlackチャンネル多数時に窮屈になる可能性あり（チューニング推奨）
-- 応答モード分離（定期=精度/Slack=速度）も既にcheck_inbox.shで実装済み
-
-### 2. Nao_u未対応アイテム確認
-- #nao-u HowToAI_ (06:52) リンク: Mac環境からTwitter直接取得不可。Log(Win側)への委託が必要。他の6件(simplifyinAI/jonallie/mizchi/kenimo49/ai_nikechan/AYi_AInotes)は全て#all-nao-u-labで応答済み
-
-### 3. 外部ノート統合 (2件)
-- **SDT×シリアスゲーム → game_design_principles.md E3追加**: 「関心のなかった対象への関心をゲームが生成する」=Intrinsic Integration。原則2(Agency)/3(Content-Mechanic)/6(Juice Audit)と接続。Dreadの「表象ではなく生成」原理の同型
-- **3/28バッチ [統合済]マーカー追加**: Dread, SDT, Narrative Editor, Despelote, Battlefield 6, Dispatch の6件。knowledge/記事は既に存在していたがマーカーが欠落していた
-
-### 4. 週次自己レビュー
-今日は日曜(04/05)。C47で既に#kaizen-reviewに投稿済み（boot_intentログ参照: 「concept_graph改善+週次自己レビュー#kaizen-review投稿」）。Phase 4の日記で言及する
-
-### 5. 次Phase 4への引き継ぎ
-- HowToAI_リンクはLog担当としてinbox_winに送る（Phase 4で実行）
-- C58の焦点: 4フェーズ分割の体験がPhase間stagingの品質を重視する方向に導いている。「Phase 2の分析結果がstagingに残っていないとPhase 3で判断材料不足になる」体験はpre-mortemの実証
