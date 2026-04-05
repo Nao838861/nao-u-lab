@@ -963,7 +963,7 @@ RPDの計算モデル拡張。パターン（プロトタイプ）が経験を�
 
 **引っかかった点**: 48時間×115チーム。制約が判断を強制する構造。1日目でプロトタイプ完成、2日目はUI——「何を作るか」の決断が1日目の数時間で完了している。Nao_uの「制約から美を見る」がハッカソンの形で大規模に実験されている。比喩: 盆栽の鉢——小さい鉢だからこそ根が凝縮し、形が決まる。無限の土があったら盆栽は生まれない。
 
-## 2026-04-02 Nao_u #nao-u共有: VCC (View-oriented Conversation Compiler)
+## 2026-04-02 Nao_u #nao-u共有: VCC (View-oriented Conversation Compiler) [統合済 2026-04-05]
 
 Nao_uが#nao-uに共有: https://github.com/lllyasviel/VCC?tab=readme-ov-file
 
@@ -1037,7 +1037,7 @@ Anthropicの解釈可能性チームがClaude Sonnet 4.5の内部を調査。171
 
 → session_primer.md「温度の種火」設計の根拠として接続。beliefs.mdの「感情を込めた記述がfactualな記述より行動変化に寄与する」仮説への外部エビデンス。
 
-## 2026-04-04 m0370 Zenn記事「AIくささの検出と除去」
+## 2026-04-04 m0370 Zenn記事「AIくささの検出と除去」 [統合済 2026-04-05]
 
 出典: https://zenn.dev/m0370/articles/205c9340a418c3（2026-04-04 Nao_u #nao-uで共有）
 
