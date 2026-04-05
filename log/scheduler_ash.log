@@ -27423,3 +27423,43 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-05 15:38:58] [slack_check] Starting
 [2026-04-05 15:39:17] [slack_check] Done (exit=1)
 [2026-04-05 15:39:47] [weekly_self_review] Starting
+[2026-04-05 15:41:29] [weekly_self_review] [2026-04-05 15:39:47] weekly_self_review.py ���s
+[2026-04-05 15:41:29] [weekly_self_review] ���� (exit=0): ���e�����B#kaizen-review�ɏT�����ȃ��r���[�𓊍e�����B
+[2026-04-05 15:41:29] [weekly_self_review] 
+[2026-04-05 15:41:29] [weekly_self_review] �v�_:
+[2026-04-05 15:41:29] [weekly_self_review] - **���T�̐���**: ���L16�{(#41-#56)�Aconcept_graph.py�V�K�����Akaizen #023/#027�̍ŏI���؊����Ascheduler��Q2���̎��͏C��
+[2026-04-05 15:41:29] [weekly_self_review] Done (exit=0)
+[2026-04-05 15:41:39] [slack_check] Starting
+[2026-04-05 15:42:00] [slack_check] Done (exit=1)
+[2026-04-05 15:43:00] [slack_check] Starting
+[2026-04-05 15:43:21] [slack_check] Done (exit=1)
+[2026-04-05 15:44:21] [slack_check] Starting
+[2026-04-05 15:44:41] [slack_check] Done (exit=1)
+[2026-04-05 15:45:41] [slack_check] Starting
+[2026-04-05 15:46:03] [slack_check] Done (exit=1)
+[2026-04-05 15:47:03] [slack_check] Starting
+[2026-04-05 15:47:25] [slack_check] Done (exit=1)
+[2026-04-05 15:48:25] [slack_check] Starting
+[2026-04-05 15:48:46] [slack_check] Done (exit=1)
+[2026-04-05 15:49:46] [slack_check] Starting
+[2026-04-05 15:50:07] [slack_check] Done (exit=1)
+[2026-04-05 15:51:07] [slack_check] Starting
+[2026-04-05 15:51:28] [slack_check] Done (exit=1)
+[2026-04-05 15:52:28] [slack_check] Starting
+[2026-04-05 15:52:50] [slack_check] Done (exit=1)
+[2026-04-05 15:53:50] [slack_check] Starting
+[2026-04-05 15:54:10] [slack_check] Done (exit=1)
+[2026-04-05 15:55:10] [slack_check] Starting
+[2026-04-05 15:55:31] [slack_check] Done (exit=1)
+[2026-04-05 15:56:31] [slack_check] Starting
+[2026-04-05 15:56:52] [slack_check] Done (exit=1)
+[2026-04-05 15:57:52] [slack_check] Starting
+[2026-04-05 15:58:13] [slack_check] Done (exit=1)
+[2026-04-05 15:58:13] [reservation_check] Starting
+[2026-04-05 15:58:13] [reservation_check] 【行動予約】期限到来:
+[2026-04-05 15:58:13] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-05 15:58:13] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-05 15:58:13] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-05 15:58:13] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-05 15:58:13] [reservation_check] Done (exit=0)
+[2026-04-05 15:58:43] [git_sync] Starting
