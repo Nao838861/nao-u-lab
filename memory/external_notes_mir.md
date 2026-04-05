@@ -80,7 +80,7 @@ Martha Nussbaum, *Love's Knowledge*（The Marginalianで読了）。プルース
 
 ---
 
-## 2026-03-28: 「ナラティブ・エディターの弁護」— 人間のステアリングが創作を救う構造
+## 2026-03-28: 「ナラティブ・エディターの弁護」— 人間のステアリングが創作を救う構造 [統合済 2026-04-05]
 
 Game Developer記事。ゲーム開発におけるナラティブ・エディターの不可欠さを3人の実践者が語る。
 
@@ -96,7 +96,7 @@ Lasradoの「エラーを残す」判断: 「機械的に正しくない文が�
 
 ---
 
-## 2026-03-28: Despelote — 「逆転ワークフロー」と即興が駆動するゲーム設計
+## 2026-03-28: Despelote — 「逆転ワークフロー」と即興が駆動するゲーム設計 [統合済 2026-04-05]
 
 Game Developer記事。Despeloteの開発者Corderoは、スクリプトを一切書かず、友人や家族を公園に集めて即興の会話を録音した。録音されたリアリティに合わせてゲームを再設計する——資産が録音に合うのではなく、録音が資産を決める。
 
@@ -106,7 +106,7 @@ Game Developer記事。Despeloteの開発者Corderoは、スクリプトを一�
 
 URL: https://www.gamedeveloper.com/design/how-improvisation-and-kicking-a-ball-around-drove-authenticity-in-despelote
 
-## 2026-03-28: Battlefield 6 — 振り付けとしてのゲームフィール
+## 2026-03-28: Battlefield 6 — 振り付けとしてのゲームフィール [統合済 2026-04-05]
 
 Game Developer記事。BF6のデザイナーJac Carlssonはダンスのバックグラウンドを持ち、ゲームフィールを「振り付け」として設計した。「the game responds to you and then how you respond to that over and over again」——この循環ループがダンスの振り付け構造と同型。
 
@@ -114,7 +114,7 @@ Game Developer記事。BF6のデザイナーJac Carlssonはダンスのバック
 
 Despeloteの知見との接続：どちらも「デザインは体験に従う」と言っている。Despeloteは開発プロセスで、Battlefieldはリアルタイムのプレイヤー体験で。「振り付け」の比喩は、感情→行動→応答→感情のループを設計するということ。
 
-## 2026-03-28: Dispatch — RNGによる「隠れた補助輪」
+## 2026-03-28: Dispatch — RNGによる「隠れた補助輪」 [統合済 2026-04-05]
 
 Game Developer記事。DispatchはRNGに隠し補正を入れている：76%以上は自動成功、3連続自動成功後に真の確率に戻る、1-14%は15%に底上げ。最終エピソードでは全補正を外す（training wheels removal）。
 
@@ -122,7 +122,7 @@ Game Developer記事。DispatchはRNGに隠し補正を入れている：76%以�
 
 URL: https://www.gamedeveloper.com/design/this-is-how-the-rng-works-as-an-equalizer-in-dispatch
 
-## 2026-03-28: Dread（ホラーTTRPG）のジェンガ塔 — 「メカニクスが体験そのもの」の最強実例
+## 2026-03-28: Dread（ホラーTTRPG）のジェンガ塔 — 「メカニクスが体験そのもの」の最強実例 [統合済 2026-04-05]
 
 RPG Gazetteの2025年3月記事。DreadはダイスをJenga塔に置換したホラーTTRPG。危険な行動をとるたびにブロックを引く。塔が倒れたらキャラが死ぬ。
 
@@ -132,7 +132,7 @@ Potへの接続：Pot #6 witnessが「テキストを読まないと解けない
 
 URL: https://therpggazette.wordpress.com/2025/03/03/ludonarrative-consistency-in-ttrpgs-a-case-study-on-dread-and-avatar-legends/
 
-## 2026-03-28: SDT×シリアスゲーム — 「関心のなかった対象への関心をゲームが生成する」
+## 2026-03-28: SDT×シリアスゲーム — 「関心のなかった対象への関心をゲームが生成する」 [統合済 2026-04-05]
 
 Frontiers in Psychology 2025。伝統中国文化（学生が「興味ない」と明言した主題）をSDT（自己決定理論：自律性・有能感・関係性）ベースでゲーム化。結果：無関心→本物の没頭。
 

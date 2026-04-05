@@ -118,3 +118,10 @@ Claude等のLLMがUnity Editorと直接通信し、自然言語でゲームを�
 - Game onboarding research: Progressive Onboarding（遊びながら教える）原則
 - 「仕様です。」: ゲームの難易度は工夫させる時間で設計する (note.com)
 - JustinPBarnett: Unity MCP — AI↔Unity直接通信によるゲーム制作 (GitHub, MIT License)
+
+### E3: 「関心のなかった対象への関心をゲームが生成する」——Intrinsic Integration
+出典: Frontiers in Psychology 2025 — SDT×シリアスゲーム (external_notes_mir.md 2026-03-28)
+
+学生が「興味ない」と明言した伝統中国文化を、SDT（自己決定理論：自律性・有能感・関係性）ベースでゲーム化。結果：無関心→本物の没頭。成功要因は「コンテンツを面白く見せた」ではなく「選択の帰結が構造的に主題と接続していた」こと。"Intrinsic integration" = 学びがゲームプレイ「そのもの」であり、ゲームの上に乗せた装飾ではない。
+
+**原則2/3/6との統合**: Dread（knowledge/20260405_dread_mechanics_as_experience.md）と同型の「表象ではなく生成」原理。Pot設計への指針：プレイヤーの選択がメカニクスの中で帰結を生み、その帰結がテーマと構造的に一致しているとき、「意味」は説明不要で発生する。ジュースオーディット(原則6)の裏返し——装飾を剥がしても意味が消えないなら、それはIntrinsic Integrationが成立している証拠。
