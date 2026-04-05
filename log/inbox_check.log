@@ -1122,3 +1122,13 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 **対処完了。**
 
 - **agent-browser** (verc
+[2026-04-06 03:59:02] Claude woken for win2: 完了。
+
+**対処完了:**
+
+- **agent-browser** (vercel-labs) を調査し、#human-steeringに詳細な検証結果を投稿済み
+- **結論**: トークン82
+[2026-04-06 05:59:07] Inbox win2 has content — waking Claude
+[2026-04-06 05:59:09] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-06 07:59:13] Inbox win2 has content — waking Claude
+[2026-04-06 07:59:15] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
