@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 29
+- 総記事数: 30
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -38,6 +38,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_cognitive_dissonance_as_engine | 認知的不協和の逆用——「選んだ後に正解を捏造する」を推進力に変える | @moo_thinking, @koguGameDev | 2026-04-05 | cognitive-dissonance, commitment, post-hoc-rationalization, beliefs-system, game-design, AI-value, taste, choice | creation, constraint, voice, autonomy |
 | 20260405_kenimo49_harness_5views | ハーネスエンジニアリング5社解釈——同じ言葉が指す5つの異なる未来 | 井本賢 (@kenimo49) | 2026-04-05 | harness-engineering, CLAUDE-md, prompt-engineering, constraint-design, multi-vs-single-agent, implicit-harness | autonomy, constraint, identity, creation |
 | 20260405_pmo_landing_skill | 「着地させる力」——PMOスキルが突きつけるAIエージェントの構造的弱点 | @CONSULOLDBOY | 2026-04-05 | execution, decision-making, landing, PMO, soft-skill, autonomy-calibration, closure-deficit | autonomy, constraint, creation, judgment |
+| 20260405_narrative_editor_defense | ナラティブ・エディターの弁護——「近すぎて見えない」を見せる人の不可欠さ | Koors/Rubin/Lasrado | 2026-04-05 | narrative-design, editing, steering, blind-spot, game-development, intention-alignment | autonomy, constraint, voice, creation |
 
 ## タグ別索引
 
@@ -53,7 +54,7 @@ Auto-maintained. 全記事の一覧と要約。
 ### self-knowledge (1件)
 - 20260405_nussbaum_suffering_selfknowing — 苦しみ=自己防衛を突破する認識装置
 
-### creation (12件)
+### creation (13件)
 - 20260405_karpathy_knowledge_base — ツール構築としての創造
 - 20260405_carmack_complexity — 実行哲学としての創造
 - 20260405_structural_imitation — 模倣からの創造
@@ -68,6 +69,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_wakabayashi_linguistic_synth — 概念空間をナビゲートして音楽を生む創造
 - 20260405_agentica_sdk_harness — ハーネス設計そのものが創造の基盤
 - 20260405_harness_identity_spectrum — CLAUDE.mdが人格定義か足場かで創造の方向が変わる
+- 20260405_narrative_editor_defense — ゲーム=プレイヤーのナラティブ・エディター。「知っていたが隠していたこと」を見せる
 
 ### memory (10件)
 - 20260405_karpathy_knowledge_base — 知識管理としての記憶設計
@@ -82,7 +84,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_nikechan_design_vs_growth — 忘却の自律性=記憶の自己管理権
 - 20260405_retrieval_practice_spreading_activation — 検索練習+拡散活性化+自己生成キュー。MEMORY.md共有トリガーの構造問題
 
-### constraint (10件)
+### constraint (11件)
 - 20260405_carmack_complexity — 制約による複雑さの削減
 - 20260405_bridgemind_ai — ファイルオーナーシップ=構造的制約
 - 20260403_nwiizo_knife_metaphor — 手段の精緻化が目的を阻害する構造
@@ -94,6 +96,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_agentica_sdk_harness — ハーネス=外部制約の構造化
 - 20260405_harness_identity_spectrum — ハーネスの仮定は再検証が必要（Anthropicブログ原理）
 - 20260405_nikechan_design_vs_growth — 外部からの記憶削除=自律への制約
+- 20260405_narrative_editor_defense — エディター=意図のドリフトを制約する外部の目
 
 ### degradation (4件)
 - 20260403_nwiizo_knife_metaphor — 道具最適化ループによる目的の劣化
@@ -101,7 +104,13 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260403_mizchi_tacit_knowledge — 形式知化による暗黙知の劣化
 - 20260405_nussbaum_suffering_selfknowing — 分析的処理が体験の温度を劣化させる
 
-### voice (7件)
+### narrative-design (1件)
+- 20260405_narrative_editor_defense — ゴースト・コンテンツ・マップ=存在/参照のみ/眠っている記憶の3分類。Nao_u=ナラティブ・エディター
+
+### steering (1件)
+- 20260405_narrative_editor_defense — 「意図の整合性チェック」はPMOの着地力と同じ外部の目
+
+### voice (8件)
 - 20260405_structural_imitation — 模倣の先にある声
 - 20260403_mizchi_tacit_knowledge — 暗黙知と声の関係
 - 20260405_nwiizo_observation_resolution — 知覚の解像度が声を生む
@@ -109,6 +118,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_kureakurea01_beyond_the_wall — BBQ=体験の招待。知識ではなく体験が声を生む
 - 20260405_wakabayashi_linguistic_synth — 概念間の旋律=声になる
 - 20260405_nussbaum_suffering_selfknowing — 分析では見つからない声。声は苦しみを経由して出る
+- 20260405_narrative_editor_defense — Lasrado「エラーを残す」=正しさの最適化が声を殺す
 
 ### harness-engineering (1件)
 - 20260405_kenimo49_harness_5views — 5社のハーネス解釈比較。「暗黙のハーネス」「仕様vs足場」「マルチvsシングル」
@@ -121,13 +131,14 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_nikechan_design_vs_growth — 設計(core_mission)と成長(beliefs)の二層が人格を構成する
 - 20260405_kenimo49_harness_5views — 人格ルールはハーネスの「仕様」層に位置する
 
-### autonomy (6件)
+### autonomy (7件)
 - 20260405_bridgemind_ai — エージェントの自律性と協調のバランス
 - 20260405_starling_phase_transition — リーダー不在の創発的秩序
 - 20260405_miyake_game_ai_history — メタAI=ゲーム全体を自律的に制御する層
 - 20260405_kmizu_kokone_familiar_ai — 隣人としてのAI=共生型自律性
 - 20260405_harness_identity_spectrum — ハーネスは制約でありenablerでもある
 - 20260405_nikechan_design_vs_growth — 忘却の制御権=自律性の本体
+- 20260405_narrative_editor_defense — エディターが要る構造は依存ではなく健全。X:autonomy×dependency接続
 
 ### meta-cognition (3件)
 - 20260403_nwiizo_knife_metaphor — 道具改善の自己欺瞞
