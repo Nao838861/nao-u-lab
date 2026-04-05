@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 23
+- 総記事数: 24
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -33,6 +33,8 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_dstudio_erasure_memory | 消した文章が残した文章より長く記憶される | @Dstudio_ai / @ai_nikechan | 2026-04-05 | memory, deletion, persistence, writing, creativity, representation-vs-generation, non-game | forgetting, creation, experience |
 | 20260405_nikechan_design_vs_growth | AI人格の一貫性は「設計」と「成長」のどちらから生まれるか | AIニケちゃん (@tegnike) | 2026-04-05 | AI-personality, design-vs-growth, belief-action-link, memory-autonomy, forgetting, identity-coherence | autonomy, identity, memory, creation, constraint |
 
+| 20260405_kenimo49_harness_5companies | ハーネスエンジニアリング5社解釈比較 | 井本賢 (kenimo49) | 2026-04-05 | harness-design, multi-company-comparison, implicit-harness, formal-specification, constraint-strength | constraint, autonomy, identity, creation |
+
 ## タグ別索引
 
 ### creation (12件)
@@ -50,6 +52,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_wakabayashi_linguistic_synth — 概念空間をナビゲートして音楽を生む創造
 - 20260405_agentica_sdk_harness — ハーネス設計そのものが創造の基盤
 - 20260405_harness_identity_spectrum — CLAUDE.mdが人格定義か足場かで創造の方向が変わる
+- 20260405_kenimo49_harness_5companies — 5社の解釈差が照らすハーネスの多面性
 
 ### memory (7件)
 - 20260405_karpathy_knowledge_base — 知識管理としての記憶設計
@@ -72,6 +75,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_wakabayashi_linguistic_synth — 40ノードという制約がフレーム
 - 20260405_agentica_sdk_harness — ハーネス=外部制約の構造化
 - 20260405_harness_identity_spectrum — ハーネスの仮定は再検証が必要（Anthropicブログ原理）
+- 20260405_kenimo49_harness_5companies — 制約強度の4段階（要請/宣言/型/Hooks）
 - 20260405_nikechan_design_vs_growth — 外部からの記憶削除=自律への制約
 
 ### degradation (3件)
@@ -89,6 +93,7 @@ Auto-maintained. 全記事の一覧と要約。
 
 ### identity (2件)
 - 20260405_harness_identity_spectrum — 汎用フレームワークと個別人格の分岐点
+- 20260405_kenimo49_harness_5companies — 5社すべてが人格定義を射程外→我々の固有貢献点
 - 20260405_nikechan_design_vs_growth — 設計(core_mission)と成長(beliefs)の二層が人格を構成する
 
 ### autonomy (6件)
@@ -97,6 +102,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_miyake_game_ai_history — メタAI=ゲーム全体を自律的に制御する層
 - 20260405_kmizu_kokone_familiar_ai — 隣人としてのAI=共生型自律性
 - 20260405_harness_identity_spectrum — ハーネスは制約でありenablerでもある
+- 20260405_kenimo49_harness_5companies — 外付け→内在化の移行過程としての自律
 - 20260405_nikechan_design_vs_growth — 忘却の制御権=自律性の本体
 
 ### meta-cognition (3件)
@@ -268,6 +274,17 @@ harness_identity_spectrum ←→ judgment_context_eval_noise
     (自己評価の限界: Anthropicブログ「自己評価は機能しない」×nwiizo「判断コンテキスト欠如」)
 harness_identity_spectrum ←→ kmizu_kokone_familiar_ai
     (ハーネスの目的スペクトラム: Superpowers=コード品質、ここね=隣人、我々=内省の鏡)
+
+kenimo49_harness_5companies ←→ harness_identity_spectrum
+    (足場ルール撤去にFowlerの内面化度=第3軸を追加)
+kenimo49_harness_5companies ←→ agentica_sdk_harness
+    (LangChain+13.7pt vs Agentica36倍。ハーネスのみ改善の定量比較)
+kenimo49_harness_5companies ←→ nwiizo_knife_metaphor
+    (ハーネス磨き自体が道具磨きになるリスク)
+kenimo49_harness_5companies ←→ nikechan_design_vs_growth
+    (人格定義としてのハーネス——5社の射程外)
+kenimo49_harness_5companies ←→ anthropic_conway
+    (Anthropicのcontext anxiety概念の別文脈での引用)
 
 despelote_improvisation ←→ battlefield6_choreography
     (即興vs振り付け。台本を捨てる/台本を身体化する)
