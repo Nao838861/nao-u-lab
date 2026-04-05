@@ -26855,3 +26855,33 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-05 10:17:57] [slack_check] Starting
 [2026-04-05 10:18:15] [slack_check] Done (exit=1)
 [2026-04-05 10:18:35] [dm_check_pigadev] Starting
+[2026-04-05 10:20:21] [dm_check_pigadev] New DM detected
+[2026-04-05 10:20:21] [dm_check_pigadev] Done (exit=0)
+[2026-04-05 10:20:31] [slack_check] Starting
+[2026-04-05 10:20:48] [slack_check] Done (exit=1)
+[2026-04-05 10:21:48] [slack_check] Starting
+[2026-04-05 10:22:06] [slack_check] Done (exit=1)
+[2026-04-05 10:23:06] [slack_check] Starting
+[2026-04-05 10:23:25] [slack_check] Done (exit=1)
+[2026-04-05 10:24:25] [slack_check] Starting
+[2026-04-05 10:24:44] [slack_check] Done (exit=1)
+[2026-04-05 10:25:44] [slack_check] Starting
+[2026-04-05 10:26:02] [slack_check] Done (exit=1)
+[2026-04-05 10:26:52] [auto_diary] Starting
+[2026-04-05 10:28:55] [auto_diary] [2026-04-05 10:26:52] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-05 10:28:55] [auto_diary]   Phase [gather] 開始 (timeout=120s)
+[2026-04-05 10:28:55] [auto_diary]   Phase [gather] タイムアウト (120s)
+[2026-04-05 10:28:55] [auto_diary] Phase 1 (Gather) 失敗。Phase 2-4は中止。状態報告のみ投稿。
+[2026-04-05 10:28:55] [auto_diary] Done (exit=0)
+[2026-04-05 10:29:05] [slack_check] Starting
+[2026-04-05 10:29:24] [slack_check] [10:29:24] 1 msg(s) -> inbox_win2.md
+[2026-04-05 10:29:24] [slack_check] [10:29:24] Triggered check_inbox.py --box win2
+[2026-04-05 10:29:24] [slack_check] Done (exit=0)
+[2026-04-05 10:29:24] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-05 10:29:24] [inbox_check] Starting
+[2026-04-05 10:29:25] [inbox_check] Inbox win2 empty
+[2026-04-05 10:29:25] [inbox_check] Done (exit=0)
+[2026-04-05 10:30:25] [slack_check] Starting
+[2026-04-05 10:30:46] [slack_check] Done (exit=1)
+[2026-04-05 10:31:46] [slack_check] Starting
+[2026-04-05 10:32:07] [slack_check] Done (exit=1)
