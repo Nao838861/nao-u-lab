@@ -436,7 +436,12 @@ _auto_cycle_proc = None
 
 
 def auto_cycle_async():
-    """Run auto_cycle in a non-blocking subprocess so slack_check keeps running."""
+    """Run auto_cycle as multi-phase cycle in a non-blocking subprocess.
+
+    2026-04-05: Nao_uの提案でマルチフェーズ分割に移行。
+    multi_phase_cycle_log.pyが4フェーズを順次実行する。
+    scheduler側はこのスクリプトを非同期で起動し、slack_checkを継続する。
+    """
     global _auto_cycle_proc
 
     # If previous auto_cycle is still running, skip
@@ -456,15 +461,13 @@ def auto_cycle_async():
             pass
         _auto_cycle_proc = None
 
-    # Run auto_cycle pre-checks synchronously (fast, <10s total)
-    auto_cycle_prechecks()
-
-    # Launch claude --print asynchronously
-    prompt = build_auto_cycle_prompt()
-    log("[auto_cycle] Starting autonomous cycle via claude --print (async)")
+    # Launch multi-phase cycle script asynchronously
+    # Pre-checks, staging, and 4 phases are all handled by the script
+    multi_phase_script = str(REPO_DIR / "multi_phase_cycle_log.py")
+    log("[auto_cycle] Starting multi-phase cycle (async)")
     try:
         _auto_cycle_proc = subprocess.Popen(
-            build_claude_cmd(prompt),
+            [*PY, multi_phase_script],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -472,9 +475,9 @@ def auto_cycle_async():
             encoding="utf-8",
             errors="replace",
         )
-        log(f"[auto_cycle] Launched (PID {_auto_cycle_proc.pid})")
+        log(f"[auto_cycle] Launched multi_phase_cycle_log.py (PID {_auto_cycle_proc.pid})")
     except FileNotFoundError:
-        log("[auto_cycle] claude CLI not found in PATH")
+        log("[auto_cycle] Python or multi_phase_cycle_log.py not found")
     except Exception as e:
         log(f"[auto_cycle] Launch error: {e}")
 
