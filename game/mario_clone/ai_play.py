@@ -60,6 +60,41 @@ def scan_ground_ahead(tm, x, y):
     return results
 
 
+def scan_hittable_blocks_above(tm, x, y):
+    """Find ? and Q blocks within jump reach above and slightly ahead.
+
+    Returns (distance_px, col, row, char) of the nearest hittable block,
+    or None if no block is reachable.
+    """
+    col = int(x) // 16
+    mario_row = int(y) // 16
+    offset = int(x) % 16
+
+    # Check columns from current to 3 ahead (can jump slightly forward)
+    for dc in range(-1, 4):
+        c = col + dc
+        if c < 0 or c >= tm.cols:
+            continue
+        # Check rows above Mario (reachable by jump: ~3-4 rows up)
+        for row in range(mario_row - 4, mario_row):
+            if row < 0 or row >= tm.rows:
+                continue
+            ch = tm.tiles[row][c]
+            if ch in ('?', 'Q', 'c', 'm', 'T'):
+                dist = dc * 16 - offset + 8  # Aim for center of block
+                return (dist, c, row, ch)
+    return None
+
+
+def find_nearest_mushroom(state):
+    """Find nearest mushroom item. Returns (dx, dy) or None."""
+    mx = state['x']
+    my = state['y']
+    # mushrooms aren't in state dict yet, so we check via game internals
+    # This function is called with access to game object
+    return None  # Placeholder — will use game object directly
+
+
 def get_enemies_ahead(state):
     """Get sorted list of (distance, width_hint) for enemy groups ahead."""
     mx = state['x']
@@ -133,49 +168,77 @@ DEFAULT_PARAMS = {
 }
 
 
-def decide_jump(state, tm, params):
-    """Decide whether to jump and for how long. Returns jump_hold or 0."""
+def decide_action(state, tm, params, game):
+    """Decide jump and direction. Returns (jump_hold, go_left).
+
+    go_left: True to temporarily move left (e.g. chase mushroom behind).
+    jump_hold: >0 means start jumping with that many A-hold frames.
+    """
     if not state['on_ground']:
-        return 0
+        return 0, False
 
     x = state['x']
     vx = abs(state['vx'])
     p = params
 
-    # 1) Enemies
+    # 0) Chase mushroom if one is alive and close
+    for m in game.mushrooms:
+        if not m.alive or m.emerging:
+            continue
+        dx = m.x / ONE - x
+        if abs(dx) < 80:
+            # Mushroom nearby — move toward it
+            if dx < -8:
+                return 0, True  # Go left toward mushroom
+            # If mushroom is above, jump
+            dy = m.y / ONE - state['y']
+            if dy < -8 and abs(dx) < 24:
+                return 10, False
+            # Otherwise just keep going right (default), mushroom is ahead
+            break
+
+    # 1) Enemies — highest priority for safety
     groups = get_enemies_ahead(state)
     if groups:
         dist, width = groups[0]
         if width > p['enemy_group_width_thr']:
             thr = p['enemy_react_base'] + 15 + vx * p['enemy_react_vx_mult']
             if dist < thr:
-                return p['enemy_group_jump_hold']
+                return p['enemy_group_jump_hold'], False
         else:
             thr = p['enemy_react_base'] + vx * p['enemy_react_vx_mult']
             if dist < thr:
-                return p['enemy_jump_hold']
+                return p['enemy_jump_hold'], False
 
-    # 2) Terrain
+    # 2) Hittable blocks above — jump to collect coins/mushrooms
+    block = scan_hittable_blocks_above(tm, x, state['y'])
+    if block:
+        dist, bc, br, bch = block
+        # Only hit if we're roughly underneath (within 8px)
+        if abs(dist) < 12:
+            return 15, False  # Jump to hit the block
+
+    # 3) Terrain obstacles
     obstacles = scan_ground_ahead(tm, x, state['y'])
     for dist, otype, height in obstacles:
         if otype == 'pit':
             thr = p['pit_react_base'] + vx * p['pit_react_vx_mult']
             if dist < thr:
-                return p['pit_jump_hold']
-            break  # Only react to nearest pit
+                return p['pit_jump_hold'], False
+            break
 
         if otype == 'wall':
             if height >= p['tall_wall_height_thr']:
                 thr = p['tall_wall_react_base'] + vx * p['tall_wall_react_vx_mult']
                 if dist < thr:
-                    return p['tall_wall_jump_hold']
+                    return p['tall_wall_jump_hold'], False
             else:
                 thr = p['short_wall_react_base'] + vx * p['short_wall_react_vx_mult']
                 if dist < thr:
-                    return p['short_wall_jump_hold']
-            break  # Only react to nearest wall
+                    return p['short_wall_jump_hold'], False
+            break
 
-    return 0
+    return 0, False
 
 
 # ===================================================================
