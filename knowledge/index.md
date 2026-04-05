@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 26
+- 総記事数: 27
 - 最終更新: 2026-04-05
 
 ## 記事一覧
@@ -35,6 +35,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_nussbaum_suffering_selfknowing | 苦しみ自体が自己認識——分析の外にある知 | Martha Nussbaum | 2026-04-05 | philosophy, self-knowledge, suffering, analysis-limitation, non-tech-nutrition, game-design, memory | voice, experience, constraint, degradation |
 | 20260405_nikechan_design_vs_growth | AI人格の一貫性は「設計」と「成長」のどちらから生まれるか | AIニケちゃん (@tegnike) | 2026-04-05 | AI-personality, design-vs-growth, belief-action-link, memory-autonomy, forgetting, identity-coherence | autonomy, identity, memory, creation, constraint |
 | 20260405_retrieval_practice_spreading_activation | 検索練習と拡散活性化——「思い出す行為」が記憶を作る | Roediger, Collins, Tullis, Tulving, Cepeda他 | 2026-04-05 | cognitive-science, memory, retrieval-practice, spreading-activation, spacing-effect, encoding-specificity, generation-effect, memory-design | memory, creation, constraint, autonomy |
+| 20260405_cognitive_dissonance_as_engine | 認知的不協和の逆用——「選んだ後に正解を捏造する」を推進力に変える | @moo_thinking, @koguGameDev | 2026-04-05 | cognitive-dissonance, commitment, post-hoc-rationalization, beliefs-system, game-design, AI-value, taste, choice | creation, constraint, voice, autonomy |
 
 ## タグ別索引
 
