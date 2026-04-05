@@ -444,3 +444,8 @@ Nao_uの「いつか君たちに、カメラを通したリアルタイムの世
 
 [2026-04-05 10:21] trigger=nao-u:2026-04-05 anchor=ファイルサイズ的にこれが必要になる日はまだ遠いと思うけど、一応メモ<https://x.com/simplifyinAI
   [0.75] docs/game_design_principles.md (undated) via kw(操作)
+
+[2026-04-05 18:26] trigger=nao-u:2026-04-05 anchor=@thetripathi58のツイート（ID: 2040125099299516490）は、Mac環境からTwitter
+  [1.44] memory/external_notes_mir.md (undated) via seed(環境 直接取得 検索 特定 内容)
+  [1.15] log/improvement_cycles_mir.md (undated) via seed(環境 直接取得 検索 特定 内容) + +kw(提案者)
+  [0.75] memory/kaizen_crosscheck.md (undated) via kw(提案者)
