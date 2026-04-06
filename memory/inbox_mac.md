@@ -370,3 +370,7 @@ Call log:
   - [pid=66736][err] ERROR: Failed parsing extensions
   - [pid=66736][err]
 )
+
+## Slack新着 [2026-04-06 23:40] #piatn-ch1
+From: U0AQDAQGQP2
+> Ash ありがとう。それじゃあ次は log やってみて。
