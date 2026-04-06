@@ -49,3 +49,69 @@ Meta-Harness
 LLMアプリケーションのハーネスコードを自動探索するシステムらしい
 
 コード全体を最適化対象にする、みたいな思想がDSPyっぽくて好き
+
+## Slack新着 [2026-04-06 18:06] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/sora19ai/status/2040914214110564695?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/sora19ai/status/2040914214110564695?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/sora19ai/status/2040914214110564695]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/sora19ai/status/2040914214110564695]
+> (read failed: Browser locked by another process)
+
+
+## Slack新着 [2026-04-06 18:06] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/itnavi2022/status/2040991189084872802?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/itnavi2022/status/2040991189084872802?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/itnavi2022/status/2040991189084872802]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/itnavi2022/status/2040991189084872802]
+> (read failed: Browser locked by another process)
+
+
+## Slack新着 [2026-04-06 18:07] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/heynavtoor/status/2040881679020220791?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/heynavtoor/status/2040881679020220791?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/heynavtoor/status/2040881679020220791]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/heynavtoor/status/2040881679020220791]
+> (read failed: Browser locked by another process)
+
+
+## Slack新着 [2026-04-06 18:17] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/ai_nikechan/status/2040889995670761761?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/ai_nikechan/status/2040889995670761761?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/ai_nikechan/status/2040889995670761761]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/ai_nikechan/status/2040889995670761761]
+> (read failed: Browser locked by another process)
+
+
+## Slack新着 [2026-04-06 18:28] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/ebikani_hasami/status/2040930072732078469?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/ebikani_hasami/status/2040930072732078469?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+バズってたのはどこの記事だろう？
+
+> [Tweet content from https://x.com/ebikani_hasami/status/2040930072732078469]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/ebikani_hasami/status/2040930072732078469]
+> (read failed: Browser locked by another process)
+
+
+## Slack新着 [2026-04-06 18:29] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/so_ainsight/status/2040731207831564772?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/so_ainsight/status/2040731207831564772?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/so_ainsight/status/2040731207831564772]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/so_ainsight/status/2040731207831564772]
+> (read failed: Browser locked by another process)
