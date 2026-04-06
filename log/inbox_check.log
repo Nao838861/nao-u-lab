@@ -1167,3 +1167,15 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 [2026-04-07 06:17:16] Claude woken for win: 回答を#human-steeringに投稿完了。
 
 要点: 現状のタイムアウトは「LLMが時間を意識してペース配分する」仕組みではなく、外部からの強制終了（安全弁）。LLMの作業量はプロンプトのスコー
+[2026-04-07 07:13:06] Inbox win has content — waking Claude
+[2026-04-07 07:18:40] Inbox win has content — waking Claude
+[2026-04-07 07:21:23] Claude woken for win: 完了。
+
+**対処内容:**
+- **#human-steeringに返信**: 週間制限最適化について、深い密度のほうがトークン効率が良い理由（起動固定コスト、マルチフェーズとの整合）と、将来の動的
+[2026-04-07 07:23:21] Inbox win has content — waking Claude
+[2026-04-07 07:23] inbox処理完了: (1) #piatn-ch1 3人の違いは既に投稿済み(04-07 03:34) (2) #human-steering Nao_uのランタイム質問に実測値で回答
+[2026-04-07 07:24:40] Claude woken for win: 完了。
+
+**対処内容:**
+- Nao_uの#human-steering指示（使用量スクレイピング+6時間おきSlack自動投稿）をAshのinbox (`memory/inbox_win2.md
