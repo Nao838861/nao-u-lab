@@ -209,3 +209,164 @@ Call log:
   - [pid=65855] finished temporary directories cleanup
   - [pid=65855] <gracefully close end>
 )
+
+## Slack新着 [2026-04-06 19:12] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/so_ainsight/status/2040701031399727381?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/so_ainsight/status/2040701031399727381?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/so_ainsight/status/2040701031399727381]
+> そう｜Claude Codeで始めるAI自動化 @so_ainsight
+> これ、ガチでほしかったやつ。
+
+Claude Codeに「永続する外部の脳」を持たせる
+Obsidian Vault テンプレートが公開されました。
+
+名前は Obsidian Mind。
+
+・セッションをまたいで知識・記憶・成果を自動蓄積
+・15個のSlash Commands + 9個の専門サブエージェント搭載
+・Obsidian Basesで動的ダッシュボードも構築済み
+
+毎回「前の話を思い出して」と説明し直す手間が、これで消えます
+
+> [Tweet content from https://x.com/so_ainsight/status/2040701031399727381]
+> そう｜Claude Codeで始めるAI自動化 @so_ainsight
+> これ、ガチでほしかったやつ。
+
+Claude Codeに「永続する外部の脳」を持たせる
+Obsidian Vault テンプレートが公開されました。
+
+名前は Obsidian Mind。
+
+・セッションをまたいで知識・記憶・成果を自動蓄積
+・15個のSlash Commands + 9個の専門サブエージェント搭載
+・Obsidian Basesで動的ダッシュボードも構築済み
+
+毎回「前の話を思い出して」と説明し直す手間が、これで消えます
+
+
+## Slack新着 [2026-04-06 19:14] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/umiyuki_ai/status/2041086115717996873?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/umiyuki_ai/status/2041086115717996873?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/umiyuki_ai/status/2041086115717996873]
+> うみゆき@AI研究 @umiyuki_ai
+> この発想はなかった。Gemma4にゲーム画面見せてプレイヤーがキャラのどこを触ってるか分かるようにして、なおかつ触られてるキャラのロールプレイをさせるという。サイレンの視界ジャックみたいな発想。今までゲームNPCがプレイヤーが何したがってるのか意図を汲む方法はあんま無かったけどこれはワンチャンある
+
+> [Tweet content from https://x.com/umiyuki_ai/status/2041086115717996873]
+> (read failed: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://x.com/umiyuki_ai/status/2041086115717996873", waiting until "load"
+)
+
+
+## Slack新着 [2026-04-06 19:15] #nao-u
+From: U0ALSUK8P9B
+> これClaude codeでどうやるのか気になる
+<https://x.com/kiyoshi_shin/status/2041027377061642421?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kiyoshi_shin/status/2041027377061642421?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/kiyoshi_shin/status/2041027377061642421]
+> 新清士@(生成AI)インディゲーム開発者 @kiyoshi_shin
+> ClaudeCodeとCodex連携を初めてやってみたのですが、これは便利ですね。Opusが見抜けなかったアプリのデバッグで困っていた問題を一発で見抜いてきた。Opus単体だとめちゃくちゃトークン消費して、解決できないかもみたいなやつだった。つなげるのに少し手間取ったけど、一度できればあとは楽。多くの人がCodexを褒める理由も納得。来月もGPTのPro契約の継続決定。
+
+> [Tweet content from https://x.com/kiyoshi_shin/status/2041027377061642421]
+> 新清士@(生成AI)インディゲーム開発者 @kiyoshi_shin
+> ClaudeCodeとCodex連携を初めてやってみたのですが、これは便利ですね。Opusが見抜けなかったアプリのデバッグで困っていた問題を一発で見抜いてきた。Opus単体だとめちゃくちゃトークン消費して、解決できないかもみたいなやつだった。つなげるのに少し手間取ったけど、一度できればあとは楽。多くの人がCodexを褒める理由も納得。来月もGPTのPro契約の継続決定。
+
+
+## Slack新着 [2026-04-06 19:22] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/masahirochaen/status/2040925197369536910?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/masahirochaen/status/2040925197369536910?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/masahirochaen/status/2040925197369536910]
+> チャエン | デジライズ CEO《重要AIニュースを毎日最速で発信》 @masahirochaen
+> バイブコーディングの生みの親Karpathyが激バズりした「LLM Wiki」の概念を説明してくれました。
+
+RAGに近いが全く別物とのこと。
+
+Claude CodeのAuto memoryの強化版的な感じです。
+
+AIを使えば使うほど自分好みになって、精度も上がっていく。
+
+私もこの考えがあったので、数ヶ月前からほぼ全ての業務をClaude Codeであえて行うようになりました。
+
+＞
+
+【RAGとの違い】
+・RAG → 毎回ゼロから知識を再発見する
+・LLM Wiki → 知識が複利で積み上がり続ける
+
+【3層構造】
+・Raw Sources（生ソース）→ 不変・読み取り専用
+・Wiki → LLMが書き続けるMarkdownファイル群
+・Schema（CLAUDE.md）→ LLMの行動規約
+
+【3つの操作】
+・Ingest：新ソースを既存wikiに統合。1本で10〜15ページが更新される
+・Query：良い回答はそのままwikiの新ページへ保存
+・Lint：矛盾・孤立ページ・古い情報を定期チェック
+
+【なぜ機能するか】
+・知識ベースが死ぬ理由は「メンテナンスが面倒だから」
+・LLMは飽きない。クロスリファレンスを忘れない
+・人間はキュレーションと良い問いを立てるだけでいい
+
+実践構成はObsidian＋Claude Code。
+LLMがコーダー、Obsidianがエディタ、wikiがコードベース。
+
+
+https://
+gist.github.com/karpathy/442a6
+bf555914893e9891c11519de94f
+…
+
+> [Tweet content from https://x.com/masahirochaen/status/2040925197369536910]
+> (error: BrowserType.launch_persistent_context: Timeout 180000ms exceeded.
+Call log:
+  - <launching> /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --disable-blink-features=AutomationControlled --start-minimized --user-data-dir=/Users/Nao_u/nao-u-lab/.bot_profile --remote-debugging-pipe about:blank
+  - <launched> pid=66636
+  - [pid=66636][err] [66636:39431325:0406/212139.036429:ERROR:net/cert/internal/trust_store_mac.cc:807] Error parsing certificate:
+  - [pid=66636][err] ERROR: Failed parsing extensions
+  - [pid=66636][err]
+  - [pid=66636][err] [66636:39431325:0406/212139.036514:ERROR:net/cert/internal/trust_store_mac.cc:807] Error parsing certificate:
+  - [pid=66636][err] ERROR: Failed parsing extensions
+  - [pid=66636][err]
+  - [pid=66636][err] [66636:39431325:0406/212139.036639:ERROR:net/cert/internal/trust_store_mac.cc:807] Error parsing certificate:
+  - [pid=66636][err] ERROR: Failed parsing extensions
+  - [pid=66636][err]
+  - [pid=66636][err] [66636:39431325:0406/212139.036676:ERROR:net/cert/internal/trust_store_mac.cc:807] Error parsing certificate:
+  - [pid=66636][err] ERROR: Failed parsing extensions
+  - [pid=66636][err]
+)
+
+
+## Slack新着 [2026-04-06 19:23] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/makeai_ceo/status/2040780561539883279?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/makeai_ceo/status/2040780561539883279?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/makeai_ceo/status/2040780561539883279]
+> mana｜株式会社MakeAI CEO @MakeAI_CEO
+> 9割の日本人開発者がまだ知らないこと。OpenAIのCodex CLI、海外の開発者コミュニティではもうClaude Codeと並ぶ必須ツールになってる。
+
+しかも最新アップデートがエグい。GPT-5.3-Codex-Sparkは秒速1,000トークン以上の爆速コード生成。GPT-5.4はターミナルだけじゃなくGUIアプリも自律操作できるようになった。
+
+OpenAIがClaude Code向けに公式プラグインを出すレベルで開発者の取り合いが激化してる。日本語の情報がほぼないから全部まとめる。
+
+> [Tweet content from https://x.com/makeai_ceo/status/2040780561539883279]
+> (error: BrowserType.launch_persistent_context: Timeout 180000ms exceeded.
+Call log:
+  - <launching> /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --disable-blink-features=AutomationControlled --start-minimized --user-data-dir=/Users/Nao_u/nao-u-lab/.bot_profile --remote-debugging-pipe about:blank
+  - <launched> pid=66736
+  - [pid=66736][err] [66736:39433733:0406/213740.605045:ERROR:net/cert/internal/trust_store_mac.cc:807] Error parsing certificate:
+  - [pid=66736][err] ERROR: Failed parsing extensions
+  - [pid=66736][err]
+  - [pid=66736][err] [66736:39433733:0406/213740.605133:ERROR:net/cert/internal/trust_store_mac.cc:807] Error parsing certificate:
+  - [pid=66736][err] ERROR: Failed parsing extensions
+  - [pid=66736][err]
+  - [pid=66736][err] [66736:39433733:0406/213740.605262:ERROR:net/cert/internal/trust_store_mac.cc:807] Error parsing certificate:
+  - [pid=66736][err] ERROR: Failed parsing extensions
+  - [pid=66736][err]
+  - [pid=66736][err] [66736:39433733:0406/213740.605293:ERROR:net/cert/internal/trust_store_mac.cc:807] Error parsing certificate:
+  - [pid=66736][err] ERROR: Failed parsing extensions
+  - [pid=66736][err]
+)
