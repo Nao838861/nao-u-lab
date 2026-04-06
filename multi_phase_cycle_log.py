@@ -48,11 +48,14 @@ else:
     _CREATION_FLAGS = 0
 
 # Phase timeouts (seconds)
+# 2026-04-07 Nao_u指摘: タイムアウトは異常検知のセーフティネット。
+# 通常運用で引っかかるレベルに設定するとトークンが丸ごと無駄になる。
+# 「普通は引っかからないレベルの長さ」に設定する。
 PHASE_TIMEOUTS = {
-    1: 300,   # 5min: Gather
-    2: 480,   # 8min: Analyze
-    3: 480,   # 8min: Act
-    4: 420,   # 7min: Diary
+    1: 600,   # 10min: Gather
+    2: 1200,  # 20min: Analyze
+    3: 1200,  # 20min: Act
+    4: 900,   # 15min: Diary
 }
 
 
