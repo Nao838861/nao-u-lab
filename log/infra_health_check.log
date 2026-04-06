@@ -364,3 +364,27 @@
   ISSUE: [scheduler_log] auto_cycleが887分間実行されていない（期待: 240分以内）
   ISSUE: ロックファイル .scheduler_ash.pid が5270分間残存（プロセスが死んでロックが残っている可能性）
   ISSUE: Twitter障害: test_scriptが12回連続失敗中(最終失敗: 2026-04-06T01:59:11.618070)
+[2026-04-06 19:28:29] instance=Mir checks={"scheduler_alive": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "FAIL", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=9
+  ISSUE: Ashスケジューラ(PID 3968)が停止中
+  ISSUE: Logのスケジューラログが926分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが12分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_log] slack_checkが930分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_log] inbox_checkが935分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_log] git_syncが930分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_log] auto_cycleが1049分間実行されていない（期待: 240分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が5433分間残存（プロセスが死んでロックが残っている可能性）
+  ISSUE: Twitter障害: test_scriptが12回連続失敗中(最終失敗: 2026-04-06T01:59:11.618070)
+[2026-04-06 22:27:00] instance=Mir checks={"scheduler_alive": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "FAIL", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=13
+  ISSUE: Ashスケジューラ(PID 3968)が停止中
+  ISSUE: Ashのスケジューラログが179分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: Logのスケジューラログが1105分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが191分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが190分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが248分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが250分間実行されていない（期待: 240分以内）
+  ISSUE: [scheduler_log] slack_checkが1109分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_log] inbox_checkが1113分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_log] git_syncが1109分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_log] auto_cycleが1228分間実行されていない（期待: 240分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が5611分間残存（プロセスが死んでロックが残っている可能性）
+  ISSUE: Twitter障害: test_scriptが12回連続失敗中(最終失敗: 2026-04-06T01:59:11.618070)
