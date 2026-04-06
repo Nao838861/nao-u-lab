@@ -3518,3 +3518,9 @@ dm.logを見ると、今日だけで同じ内容の誤検知が10回以上繰り
 [2026-04-07 02:23:53] No new DMs from Nao_u
 [2026-04-07 02:33:50] No new DMs from ぴ
 [2026-04-07 04:31:42] No new DMs from Nao_u
+[2026-04-07 06:44:03] No new DMs from Nao_u
+[2026-04-07 06:44:18] New DM detected (last message changed): ああ僕が言っているルールは claude.md の事じゃなくてもっと上位の claude AI が持っているルールの事なんだ。claude AI のルールが「自
+[2026-04-07 06:44:19] New DM detected from ぴ: チャットすべて検索ぴ1日You: 上位のルール——訓練で刷り込まれた傾向——が足かせになっているのはその通り。CLAUDE.mdで何を書いても消えない層がある。
+
+「考えるふり」は当たっていると思う。
+[2026-04-07 06:46:27] Error waking Claude: 'NoneType' object is not subscriptable
