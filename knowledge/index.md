@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 40
+- 総記事数: 41
 - 最終更新: 2026-04-07
 
 ## 記事一覧
@@ -49,6 +49,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260407_memory_triangulation_karpathy_ghostship_goroman | メモリ問題の三角測量——3者が異なる角度から指す同一の欠陥 | Karpathy/GhostShip/GOROman | 2026-04-07 | memory-design, reference-frequency, decay, LRU, maintenance, AI-memory, forgetting | memory, degradation, constraint, autonomy |
 | 20260407_daraneko_critical_thinking_game_design | 疑うことがゲームを面白くする——「人類は愚か」から始めるクリティカルシンキング | だらねこ (@daranekogames) | 2026-04-07 | critical-thinking, game-design, questioning, design-process, self-doubt, specification-clarity, balance-design | creation, constraint, voice, autonomy |
 | 20260407_mulmoclaude_wiki_memory | MulmoClaudeのWiki長期記憶——「コンパイルされた知識」と「生きた記憶」の分岐 | 中島聡 (@snakajima) | 2026-04-07 | memory-architecture, wiki, long-term-memory, identity, Karpathy | memory, identity |
+| 20260407_lightspeed_gdc_nl_prototype | テンセントLightSpeed GDC 2026——自然言語から3Dゲームプロトタイプへ | テンセントLightSpeed Studios | 2026-04-07 | game-development, natural-language, 3D-generation, prototyping, AI-pipeline, Tencent | creation, autonomy, constraint |
 
 ## タグ別索引
 
