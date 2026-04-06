@@ -8758,3 +8758,13 @@ GitHubへのバックアッ
 [2026-04-07 06:29:29] [slack_check] Starting
 [2026-04-07 06:29:49] [slack_check] Done (exit=1)
 [2026-04-07 06:29:49] [git_sync] Starting
+[2026-04-07 07:12:35] [slack_check] Starting
+[2026-04-07 07:13:05] [slack_check] Done (exit=0)
+[2026-04-07 07:13:05] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-04-07 07:13:05] [inbox_check] Starting
+[2026-04-07 07:18:05] [inbox_check] Timeout (300s)
+[2026-04-07 07:18:05] [inbox_check] Done (exit=-1)
+[2026-04-07 07:18:15] [slack_check] Starting
+[2026-04-07 07:18:39] [slack_check] Done (exit=0)
+[2026-04-07 07:18:39] [slack_check] New messages detected → triggering immediate inbox_check
+[2026-04-07 07:18:39] [inbox_check] Starting
