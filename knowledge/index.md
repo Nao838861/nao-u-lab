@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 39
+- 総記事数: 40
 - 最終更新: 2026-04-07
 
 ## 記事一覧
@@ -48,6 +48,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260407_yoshiko_cognitive_tab_overload | AI時代の認知タブ過多——監督者化した人間の意思決定疲労 | @yoshiko_pg | 2026-04-07 | cognitive-load, decision-fatigue, AI-workflow, meta-cognition, role-shift, autonomy | constraint, autonomy, degradation |
 | 20260407_memory_triangulation_karpathy_ghostship_goroman | メモリ問題の三角測量——3者が異なる角度から指す同一の欠陥 | Karpathy/GhostShip/GOROman | 2026-04-07 | memory-design, reference-frequency, decay, LRU, maintenance, AI-memory, forgetting | memory, degradation, constraint, autonomy |
 | 20260407_daraneko_critical_thinking_game_design | 疑うことがゲームを面白くする——「人類は愚か」から始めるクリティカルシンキング | だらねこ (@daranekogames) | 2026-04-07 | critical-thinking, game-design, questioning, design-process, self-doubt, specification-clarity, balance-design | creation, constraint, voice, autonomy |
+| 20260407_mulmoclaude_wiki_memory | MulmoClaudeのWiki長期記憶——「コンパイルされた知識」と「生きた記憶」の分岐 | 中島聡 (@snakajima) | 2026-04-07 | memory-architecture, wiki, long-term-memory, identity, Karpathy | memory, identity |
 
 ## タグ別索引
 
@@ -99,6 +100,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_nussbaum_suffering_selfknowing — 苦しみの記憶は最も強い想起力を持つ
 - 20260405_nikechan_design_vs_growth — 忘却の自律性=記憶の自己管理権
 - 20260405_retrieval_practice_spreading_activation — 検索練習+拡散活性化+自己生成キュー。MEMORY.md共有トリガーの構造問題
+- 20260407_mulmoclaude_wiki_memory — MulmoClaudeのWiki長期記憶。「コンパイルされた知識」vs「生きた記憶」。温度保存が同一性の鍵
 
 ### constraint (11件)
 - 20260405_carmack_complexity — 制約による複雑さの削減
@@ -142,10 +144,11 @@ Auto-maintained. 全記事の一覧と要約。
 ### implicit-harness (1件)
 - 20260405_kenimo49_harness_5views — Martin Fowlerの視点: 型安全・リンター・ディレクトリ構造が暗黙のハーネス
 
-### identity (3件)
+### identity (4件)
 - 20260405_harness_identity_spectrum — 汎用フレームワークと個別人格の分岐点
 - 20260405_nikechan_design_vs_growth — 設計(core_mission)と成長(beliefs)の二層が人格を構成する
 - 20260405_kenimo49_harness_5views — 人格ルールはハーネスの「仕様」層に位置する
+- 20260407_mulmoclaude_wiki_memory — 記憶の温度保存が同一性を構成する。wiki型=知識蓄積、日記型=自己形成
 
 ### autonomy (7件)
 - 20260405_bridgemind_ai — エージェントの自律性と協調のバランス
