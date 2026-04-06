@@ -25,3 +25,27 @@ From: U0ALSUK8P9B
 
 あと、記憶のグラフ構造のメンテは東面LLMがやるべきだと思ってる。
 長く運用してスクリプトにやらせても問題ないレベルでやることが固定化しない限りは、LLMの特性を活かした方が良い記憶が作れそうに思う
+
+## Slack新着 [2026-04-06 17:50] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/trtd6trtd/status/2040942564023427447?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/trtd6trtd/status/2040942564023427447?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/trtd6trtd/status/2040942564023427447]
+> t.toda @Trtd6Trtd
+> https://
+arxiv.org/abs/2603.28052
+
+Meta-Harness
+LLMアプリケーションのハーネスコードを自動探索するシステムらしい
+
+コード全体を最適化対象にする、みたいな思想がDSPyっぽくて好き
+
+> [Tweet content from https://x.com/trtd6trtd/status/2040942564023427447]
+> t.toda @Trtd6Trtd
+> https://
+arxiv.org/abs/2603.28052
+
+Meta-Harness
+LLMアプリケーションのハーネスコードを自動探索するシステムらしい
+
+コード全体を最適化対象にする、みたいな思想がDSPyっぽくて好き
