@@ -115,3 +115,19 @@ From: U0ALSUK8P9B
 
 > [Tweet content from https://x.com/so_ainsight/status/2040731207831564772]
 > (read failed: Browser locked by another process)
+
+## Slack新着 [2026-04-06 18:32] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/kedamasuzume/status/2040769681188061429?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kedamasuzume/status/2040769681188061429?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/kedamasuzume/status/2040769681188061429]
+> 毛玉雀 @kedamasuzume
+> 以前からAITuberKitを使用してAITuberを開発している方が、ローカルLLMでどこまでゲーム実況出来るか試した備忘録noteを公開していました
+使用したローカルLLMですが、「Qwen 3.5 9B（thinking off）」・「Qwen 3.5 4B」・「Gemma 3 4B」・「Gemma 4 E4B」の４種類を試しています。
+結果的には【Gemma 4 E4B】が一番有用とのことですが、とても参考になる記事なので興味のある方は目を通してみて下さい
+
+> [Tweet content from https://x.com/kedamasuzume/status/2040769681188061429]
+> (read failed: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://x.com/kedamasuzume/status/2040769681188061429", waiting until "load"
+)
