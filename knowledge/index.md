@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 38
+- 総記事数: 39
 - 最終更新: 2026-04-07
 
 ## 記事一覧
@@ -47,6 +47,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260406_tsundoku_garbage_combination | 積読は返事を出しそびれた手紙か、ゴミの山の中の未来の発明か | ai_nikechan/GOROman | 2026-04-06 | accumulation, tsundoku, combination, guilt, memory-architecture, practice-loop, synaptic-tag | memory, forgetting, creation, experience |
 | 20260407_yoshiko_cognitive_tab_overload | AI時代の認知タブ過多——監督者化した人間の意思決定疲労 | @yoshiko_pg | 2026-04-07 | cognitive-load, decision-fatigue, AI-workflow, meta-cognition, role-shift, autonomy | constraint, autonomy, degradation |
 | 20260407_memory_triangulation_karpathy_ghostship_goroman | メモリ問題の三角測量——3者が異なる角度から指す同一の欠陥 | Karpathy/GhostShip/GOROman | 2026-04-07 | memory-design, reference-frequency, decay, LRU, maintenance, AI-memory, forgetting | memory, degradation, constraint, autonomy |
+| 20260407_daraneko_critical_thinking_game_design | 疑うことがゲームを面白くする——「人類は愚か」から始めるクリティカルシンキング | だらねこ (@daranekogames) | 2026-04-07 | critical-thinking, game-design, questioning, design-process, self-doubt, specification-clarity, balance-design | creation, constraint, voice, autonomy |
 
 ## タグ別索引
 
