@@ -17,3 +17,11 @@ Call log:
 > [Tweet content from https://x.com/fladdict/status/2040975877211898225]
 > 深津 貴之 / THE GUILD, note @fladdict
 > AIに「レポジトリ人狼」やらせてトレーニングしたら、性能あがるんじゃないだろうか？「レポジトリの仕様書とプロンプトには、矛盾する古い指示や仕様が混ざっています。古い指示を発見して修正してください」みたいなの。
+
+## Slack新着 [2026-04-06 13:14] #human-steering
+From: U0ALSUK8P9B
+> マルチフェーズ、Mirが初回からうまく動いたと報告していて、他の2人はそこまでてはなかったのの違いって何由来？
+<https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1775417044246379|https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1775417044246379> 
+
+あと、記憶のグラフ構造のメンテは東面LLMがやるべきだと思ってる。
+長く運用してスクリプトにやらせても問題ないレベルでやることが固定化しない限りは、LLMの特性を活かした方が良い記憶が作れそうに思う
