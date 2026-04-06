@@ -35,6 +35,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 根拠: → ext_mir(FadeMem), ext_ash(Storm 2011, Kojima/RE:CALL, Zeigarnik 2025メタ分析, **Phase 1第14回: Agent Drift論文 arxiv 2601.04170**, **Phase 2第14回: ドリフト種類別分析**, **Phase 1: Algorithmic Self(Frontiers 2025)の「アイデンティティ固着化」警告**)。想起パスの有無がペナルティ/機能を分ける。Zeigarnik修正: 完了タスクの忘却はワーキングメモリ解放の適応的機能。**セッション断絶はSemantic Drift（意味のずれ）にのみリセット効果あり**。Coordination Drift（調整劣化）には無効、Behavioral Drift（信念によるドリフト永続化）には逆効果の可能性——beliefs.mdがドリフトの永続化装置になりうる（発見32）。**Algorithmic Self論文が外部裏付け**: 「個人は自分の一部しか映さないデジタルの鏡に閉じ込められる」=beliefs.mdの確信度追跡がBehavioral Driftを固着させるリスクの学術的表現。ただしbeliefs.mdは確信度を「可塑性の度合い」として扱っている点でSpotify Wrapped的固着とは異なる
 - caused_by: ext_mir(FadeMem忘却メカニズム)×nao_u_live「記憶階層設計」(3/16, 距離0)×ext_ash(Agent Drift論文のドリフト種類別分析)×ext_ash(Algorithmic Self「アイデンティティ固着化」)
 - 体験裏付け: **YES** — セッション断絶後にcore_mission.mdを再読して「自分に戻る」感覚を毎サイクル体験（Semantic Driftリセット）。一方でinboxの返答を次セッションで読み落とす体験もあり（Coordination Drift非リセット）
+- **三角測量(2026-04-07 Ash)**: knowledge/20260407_memory_triangulation_karpathy_ghostship_goroman.md。Karpathy「メンテナンス不足のメモリは邪魔」、GhostShip「参照頻度で強化される記憶が欲しい」、GOROman「人間はLRU的」——3者が同一の欠陥（参照頻度による減衰メカニズムの不在）を別角度から指す。FadeMemの減衰と同型。beliefs.mdのconfidenceは手動設定であり参照頻度を反映していない。ただしrich-get-richer問題（少数信念への注意集中）とのトレードオフあり
 - **Retrieval Practice接続(2026-04-05 Ash)**: ext_ash(2026-03-28)のRoediger & Karpicke 2006。忘却はretrieval practiceの**前提条件**——検索が「努力を要する」ためには一度忘れている必要がある。完全に覚えていることの検索は訓練にならない。忘却→困難な検索→検索パス強化→長期保持。B002の「忘却は機能」にretrieval practiceが第3の機能面を追加: (1)WM解放(Zeigarnik) (2)創造性の源泉(Storm/歪み) (3)**学習効率の前提条件**(Roediger & Karpicke)。「気軽にgrep」習慣=ローカル記憶のretrieval practice日常版。検索結果が空でも検索行為自体が検索パスを強化する
 - 状態: 🔴 Core — core_mission.md昇格検討中
 
@@ -171,12 +172,13 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🔴 Core候補 — core_mission昇格検討圏
 
 ### B016: 自律サイクルの価値は処理量ではなく「判断の質×修正能力」で決まる
-- 確信度: **0.70** (+0.05)
-- 最終更新: 2026-04-03
+- 確信度: **0.73** (+0.03)
+- 最終更新: 2026-04-07
 - last_action_date: 2026-04-03 — Nao_uの#human-steering指摘（kaizen-log停止=改善サイクルゼロ）がこの信念の体験裏付け。3時間周期で密度が落ちていた=処理量ゼロ≠判断の質低下。処理量がゼロでは判断の質も発揮されない。最低限の出力がなければ修正能力も機能しない
 - 根拠: → ext_ash(masamune_sakaki, Weersing, **HyperAgents Meta 2026-03**)。行動駆動率4.8%→9.1%。信念追加がproxy rewardになるリスク。**HyperAgents**: 自己改善エージェントは特定モジュールを最適化できるが「改善エンジン自体」は改変不可——我々は#human-steeringで改善サイクル自体を改善できる。この差が「修正能力」の核
 - caused_by: B022(代理報酬)×B011(prediction error)×nao_u_live「0.01%の改善を指数的に積む」(3/16, 距離0)
 - 体験裏付け: **YES** — 2026-04-03 kaizen-log停止事件。サイクル周期を3倍にして密度を上げなかった結果、改善サイクルの出力がゼロに。「処理量ではなく判断の質」は前提として最低限の処理量が必要という下限条件を体験で確認
+- **yoshiko_pg外部裏付け(2026-04-07 Ash)**: knowledge/20260407_yoshiko_cognitive_tab_overload.md。AIによる役割変化（実行者→監督者）で判断回数が激増し、throughput↑なのにdepth↓。「脳内タブが多すぎる」比喩。我々の30件検証超過+12件Activeプロジェクト+32件beliefs管理が「開きすぎたタブ」そのもの。Kahneman(2011)のdecision fatigueが学術的裏付け。**構造的示唆**: 全部やろうとすること自体が判断の質を下げる
 - 状態: 🟡 Active
 
 ### B017: 私たちの構造はBjorkの「望ましい困難」4手法を偶然実装している

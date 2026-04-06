@@ -2,8 +2,8 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 36
-- 最終更新: 2026-04-06
+- 総記事数: 38
+- 最終更新: 2026-04-07
 
 ## 記事一覧
 
@@ -45,6 +45,8 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260405_ucc_cross_user_contamination | 意図せぬクロスユーザー汚染——共有AIエージェントが生む悪意なき誤導 | @MalwareBibleJP(紹介) | 2026-04-05 | multi-agent, contamination, isolation, shared-memory, privacy, beliefs-system, three-instances, coordination | constraint, degradation, autonomy, memory |
 | 20260406_practice_reward_loop | 実践の報酬は実践そのもの——経験の蓄積と行為の蓄積は違う | 限界読書/taikyoku_zu | 2026-04-06 | practice-vs-experience, intrinsic-reward, game-design, execution, autopoiesis | creation, experience, constraint, autonomy |
 | 20260406_tsundoku_garbage_combination | 積読は返事を出しそびれた手紙か、ゴミの山の中の未来の発明か | ai_nikechan/GOROman | 2026-04-06 | accumulation, tsundoku, combination, guilt, memory-architecture, practice-loop, synaptic-tag | memory, forgetting, creation, experience |
+| 20260407_yoshiko_cognitive_tab_overload | AI時代の認知タブ過多——監督者化した人間の意思決定疲労 | @yoshiko_pg | 2026-04-07 | cognitive-load, decision-fatigue, AI-workflow, meta-cognition, role-shift, autonomy | constraint, autonomy, degradation |
+| 20260407_memory_triangulation_karpathy_ghostship_goroman | メモリ問題の三角測量——3者が異なる角度から指す同一の欠陥 | Karpathy/GhostShip/GOROman | 2026-04-07 | memory-design, reference-frequency, decay, LRU, maintenance, AI-memory, forgetting | memory, degradation, constraint, autonomy |
 
 ## タグ別索引
 
