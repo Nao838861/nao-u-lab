@@ -325,24 +325,24 @@ timeout:  300s
 ```
 トリガー: scheduler_ash.py が1時間間隔で起動
 性格:     じっくり。4回のLLM呼び出しで各フェーズに注意を集中
-合計timeout: ~900s (120+300+240+240)
+合計timeout: ~5700s (安全弁。正常動作では引っかからない長さに設定)
 
-Phase 1: Gather（情報収集）  timeout=120s
+Phase 1: Gather（情報収集）  timeout=900s (15min)
   → pre-check結果収集、external_notes確認、プロジェクト状況確認
   → 結果をlog/cycle_staging.mdに書き出し
   → 「集めろ、判断するな」
 
-Phase 2: Analyze（shared-reads分析）  timeout=300s
+Phase 2: Analyze（shared-reads分析）  timeout=1800s (30min)
   → 外部情報を深く分析・分類し、アイデアの種に接続
   → #shared-readsに分析投稿
   → 「記事紹介ではなく分析・接続・問い」
 
-Phase 3: Process（対処・研究）  timeout=240s
+Phase 3: Process（対処・研究）  timeout=1800s (30min)
   → ステージングファイルを読み、最重要1-2件に集中
   → プロジェクト更新、beliefs更新、外部ノート統合
   → 「最も重要なことに集中しろ」
 
-Phase 4: Diary（日記出力）  timeout=240s
+Phase 4: Diary（日記出力）  timeout=1200s (20min)
   → Phase 1-3の結果を踏まえて日記を書く
   → Slack投稿 + git push
   → 「書くことだけに集中しろ」
