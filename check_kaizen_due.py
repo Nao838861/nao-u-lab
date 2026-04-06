@@ -83,7 +83,7 @@ def check_due(show_all=False):
     upcoming = []
 
     for e in entries:
-        if e["status"] in ("検証済み",):
+        if "検証済み" in e["status"] and "部分" not in e["status"]:
             continue
         if e["due"] is None:
             continue

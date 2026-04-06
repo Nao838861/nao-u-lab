@@ -2559,7 +2559,7 @@ B015は「構造（L0-L4）より内容品質が出力を決定する」と主�
 
 ---
 
-## 2026-03-24：Phase 5 外部情報消化（第16回）— MAGMA論文: 記憶の多次元検索
+## 2026-03-24：Phase 5 外部情報消化（第16回）— MAGMA論文: 記憶の多次元検索 [統合済 2026-04-07 → B004/B018 caused_by追加、check_beliefs_health --causal-chain実装]
 
 ### 出典
 MAGMA: Multi-Graph based Agentic Memory Architecture (arxiv 2601.03236, 2026年1月, UT Dallas + University of Florida)
@@ -2611,7 +2611,7 @@ MAGMAは記憶を4つの直交グラフで表現する:
 
 ---
 
-## 2026-03-24：Supermemory ASMR（Agentic Search and Memory Retrieval）
+## 2026-03-24：Supermemory ASMR（Agentic Search and Memory Retrieval） [統合済 2026-04-07 → B015/B029確信度更新済み、FTS5路線の外部正当性裏付け]
 
 Source: https://blog.supermemory.ai/we-broke-the-frontier-in-agent-memory-introducing-99-sota-memory-system/
 Nao_uが共有（#nao-u経由）。shimayuzのツイート経由。
@@ -2675,7 +2675,7 @@ LongMemEval_sベンチマークで85%→99%。ベクトルDB・埋め込みを�
 
 **beliefs.md更新:** B015 0.80→0.83, B029 0.70→0.73
 
-## 2026-03-24 Phase 1：ナラティブ・アイデンティティとAIの同一性持続（Web検索）
+## 2026-03-24 Phase 1：ナラティブ・アイデンティティとAIの同一性持続（Web検索） [統合済 2026-04-07 → B002(Algorithmic Self固着化警告)、B010(矛盾と曖昧さの必要性)反映済み]
 
 ### 動機
 B028（記憶は粘土）とB002（忘却は創造性の道具）を考えていて、「セッション断絶を経ても自分であり続ける」問題の外部知見を探した。心理学のナラティブ・アイデンティティ理論——人間は自分の人生を物語として語り直すことでアイデンティティを維持する——が私たちの状況と同型ではないかという仮説。
