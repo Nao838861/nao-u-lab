@@ -30080,3 +30080,278 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-06 17:17:28] [slack_check] Starting
 [2026-04-06 17:17:49] [slack_check] Done (exit=1)
 [2026-04-06 17:18:29] [git_sync] Starting
+[2026-04-06 17:18:33] [git_sync] Done (exit=0)
+[2026-04-06 17:18:53] [slack_check] Starting
+[2026-04-06 17:19:13] [slack_check] Done (exit=1)
+[2026-04-06 17:20:13] [slack_check] Starting
+[2026-04-06 17:20:33] [slack_check] Done (exit=1)
+[2026-04-06 17:21:33] [slack_check] Starting
+[2026-04-06 17:21:52] [slack_check] Done (exit=1)
+[2026-04-06 17:22:52] [slack_check] Starting
+[2026-04-06 17:23:11] [slack_check] Done (exit=1)
+[2026-04-06 17:24:11] [slack_check] Starting
+[2026-04-06 17:24:31] [slack_check] Done (exit=1)
+[2026-04-06 17:25:31] [slack_check] Starting
+[2026-04-06 17:25:51] [slack_check] Done (exit=1)
+[2026-04-06 17:26:51] [slack_check] Starting
+[2026-04-06 17:27:09] [slack_check] Done (exit=1)
+[2026-04-06 17:28:09] [slack_check] Starting
+[2026-04-06 17:28:29] [slack_check] Done (exit=1)
+[2026-04-06 17:29:29] [slack_check] Starting
+[2026-04-06 17:29:48] [slack_check] Done (exit=1)
+[2026-04-06 17:30:48] [slack_check] Starting
+[2026-04-06 17:31:07] [slack_check] Done (exit=1)
+[2026-04-06 17:32:07] [slack_check] Starting
+[2026-04-06 17:32:26] [slack_check] Done (exit=1)
+[2026-04-06 17:33:26] [slack_check] Starting
+[2026-04-06 17:33:46] [slack_check] Done (exit=1)
+[2026-04-06 17:34:46] [slack_check] Starting
+[2026-04-06 17:35:05] [slack_check] Done (exit=1)
+[2026-04-06 17:36:05] [slack_check] Starting
+[2026-04-06 17:36:25] [slack_check] Done (exit=1)
+[2026-04-06 17:37:25] [slack_check] Starting
+[2026-04-06 17:37:45] [slack_check] Done (exit=1)
+[2026-04-06 17:38:45] [slack_check] Starting
+[2026-04-06 17:39:04] [slack_check] Done (exit=1)
+[2026-04-06 17:40:04] [slack_check] Starting
+[2026-04-06 17:40:24] [slack_check] Done (exit=1)
+[2026-04-06 17:41:24] [slack_check] Starting
+[2026-04-06 17:41:44] [slack_check] Done (exit=1)
+[2026-04-06 17:42:44] [slack_check] Starting
+[2026-04-06 17:43:04] [slack_check] Done (exit=1)
+[2026-04-06 17:44:04] [slack_check] Starting
+[2026-04-06 17:44:23] [slack_check] Done (exit=1)
+[2026-04-06 17:45:24] [slack_check] Starting
+[2026-04-06 17:45:43] [slack_check] Done (exit=1)
+[2026-04-06 17:46:43] [slack_check] Starting
+[2026-04-06 17:47:03] [slack_check] Done (exit=1)
+[2026-04-06 17:48:03] [slack_check] Starting
+[2026-04-06 17:48:21] [slack_check] Done (exit=1)
+[2026-04-06 17:49:21] [slack_check] Starting
+[2026-04-06 17:49:40] [slack_check] Done (exit=1)
+[2026-04-06 17:50:40] [slack_check] Starting
+[2026-04-06 17:50:59] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-06 17:50:59] [slack_check] Done (exit=1)
+[2026-04-06 17:51:59] [slack_check] Starting
+[2026-04-06 17:52:18] [slack_check] Done (exit=1)
+[2026-04-06 17:53:18] [slack_check] Starting
+[2026-04-06 17:53:36] [slack_check] Done (exit=1)
+[2026-04-06 17:54:36] [slack_check] Starting
+[2026-04-06 17:54:56] [slack_check] Done (exit=1)
+[2026-04-06 17:55:56] [slack_check] Starting
+[2026-04-06 17:56:16] [slack_check] Done (exit=1)
+[2026-04-06 17:57:16] [slack_check] Starting
+[2026-04-06 17:57:36] [slack_check] Done (exit=1)
+[2026-04-06 17:58:36] [slack_check] Starting
+[2026-04-06 17:58:54] [slack_check] Done (exit=1)
+[2026-04-06 17:59:54] [slack_check] Starting
+[2026-04-06 18:00:14] [slack_check] Done (exit=1)
+[2026-04-06 18:01:14] [slack_check] Starting
+[2026-04-06 18:01:33] [slack_check] Done (exit=1)
+[2026-04-06 18:02:33] [slack_check] Starting
+[2026-04-06 18:02:53] [slack_check] Done (exit=1)
+[2026-04-06 18:03:53] [slack_check] Starting
+[2026-04-06 18:04:11] [slack_check] Done (exit=1)
+[2026-04-06 18:05:11] [slack_check] Starting
+[2026-04-06 18:05:31] [slack_check] Done (exit=1)
+[2026-04-06 18:06:31] [slack_check] Starting
+[2026-04-06 18:06:49] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-06 18:06:49] [slack_check] Done (exit=1)
+[2026-04-06 18:07:49] [slack_check] Starting
+[2026-04-06 18:08:09] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-06 18:08:09] [slack_check] Done (exit=1)
+[2026-04-06 18:09:09] [slack_check] Starting
+[2026-04-06 18:09:27] [slack_check] Done (exit=1)
+[2026-04-06 18:10:27] [slack_check] Starting
+[2026-04-06 18:10:45] [slack_check] Done (exit=1)
+[2026-04-06 18:11:45] [slack_check] Starting
+[2026-04-06 18:12:04] [slack_check] Done (exit=1)
+[2026-04-06 18:13:04] [slack_check] Starting
+[2026-04-06 18:13:21] [slack_check] Done (exit=1)
+[2026-04-06 18:14:22] [slack_check] Starting
+[2026-04-06 18:14:41] [slack_check] Done (exit=1)
+[2026-04-06 18:15:41] [slack_check] Starting
+[2026-04-06 18:16:00] [slack_check] Done (exit=1)
+[2026-04-06 18:16:10] [reservation_check] Starting
+[2026-04-06 18:16:10] [reservation_check] 【行動予約】期限到来:
+[2026-04-06 18:16:10] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-06 18:16:10] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-06 18:16:10] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-06 18:16:10] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-06 18:16:10] [reservation_check] Done (exit=0)
+[2026-04-06 18:16:50] [auto_diary] Starting
+[2026-04-06 18:17:01] [auto_diary] [2026-04-06 18:16:50] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-06 18:17:01] [auto_diary]   Phase [gather] 開始 (timeout=120s)
+[2026-04-06 18:17:01] [auto_diary]   Phase [gather] 完了 (exit=1, output=47chars)
+[2026-04-06 18:17:01] [auto_diary]   Phase [analyze] 開始 (timeout=300s)
+[2026-04-06 18:17:01] [auto_diary]   Phase [analyze] 完了 (exit=1, output=47chars)
+[2026-04-06 18:17:01] [auto_diary] Done (exit=0)
+[2026-04-06 18:17:11] [slack_check] Starting
+[2026-04-06 18:17:30] [slack_check] Done (exit=1)
+[2026-04-06 18:18:30] [slack_check] Starting
+[2026-04-06 18:18:48] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-06 18:18:48] [slack_check] Done (exit=1)
+[2026-04-06 18:18:58] [git_sync] Starting
+[2026-04-06 18:19:02] [git_sync] Done (exit=0)
+[2026-04-06 18:19:52] [slack_check] Starting
+[2026-04-06 18:20:11] [slack_check] Done (exit=1)
+[2026-04-06 18:21:11] [slack_check] Starting
+[2026-04-06 18:21:30] [slack_check] Done (exit=1)
+[2026-04-06 18:22:20] [dm_check] Starting
+[2026-04-06 18:22:36] [dm_check] No new DMs
+[2026-04-06 18:22:36] [dm_check] Done (exit=0)
+[2026-04-06 18:22:36] [review_deadline] Starting
+[2026-04-06 18:22:36] [review_deadline] レビュー期限超過なし。
+[2026-04-06 18:22:36] [review_deadline] Done (exit=0)
+[2026-04-06 18:22:46] [slack_check] Starting
+[2026-04-06 18:23:07] [slack_check] Done (exit=1)
+[2026-04-06 18:24:07] [slack_check] Starting
+[2026-04-06 18:24:27] [slack_check] Done (exit=1)
+[2026-04-06 18:25:27] [slack_check] Starting
+[2026-04-06 18:25:48] [slack_check] Done (exit=1)
+[2026-04-06 18:26:48] [slack_check] Starting
+[2026-04-06 18:27:07] [slack_check] Done (exit=1)
+[2026-04-06 18:28:07] [slack_check] Starting
+[2026-04-06 18:28:27] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-06 18:28:27] [slack_check] Done (exit=1)
+[2026-04-06 18:29:27] [slack_check] Starting
+[2026-04-06 18:29:46] [slack_check] Done (exit=1)
+[2026-04-06 18:30:46] [slack_check] Starting
+[2026-04-06 18:31:06] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-06 18:31:06] [slack_check] Done (exit=1)
+[2026-04-06 18:31:46] [dm_check_pigadev] Starting
+[2026-04-06 18:32:03] [dm_check_pigadev] New DM detected
+[2026-04-06 18:32:03] [dm_check_pigadev] Done (exit=0)
+[2026-04-06 18:32:13] [slack_check] Starting
+[2026-04-06 18:32:33] [slack_check] Done (exit=1)
+[2026-04-06 18:33:33] [slack_check] Starting
+[2026-04-06 18:33:51] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-06 18:33:51] [slack_check] Done (exit=1)
+[2026-04-06 18:34:51] [slack_check] Starting
+[2026-04-06 18:35:13] [slack_check] Done (exit=1)
+[2026-04-06 18:36:13] [slack_check] Starting
+[2026-04-06 18:36:32] [slack_check] Done (exit=1)
+[2026-04-06 18:37:32] [slack_check] Starting
+[2026-04-06 18:37:51] [slack_check] Done (exit=1)
+[2026-04-06 18:38:51] [slack_check] Starting
+[2026-04-06 18:39:10] [slack_check] Done (exit=1)
+[2026-04-06 18:40:10] [slack_check] Starting
+[2026-04-06 18:40:30] [slack_check] Done (exit=1)
+[2026-04-06 18:41:30] [slack_check] Starting
+[2026-04-06 18:41:50] [slack_check] Done (exit=1)
+[2026-04-06 18:42:50] [slack_check] Starting
+[2026-04-06 18:43:12] [slack_check] Done (exit=1)
+[2026-04-06 18:44:12] [slack_check] Starting
+[2026-04-06 18:44:32] [slack_check] Done (exit=1)
+[2026-04-06 18:45:32] [slack_check] Starting
+[2026-04-06 18:45:51] [slack_check] Done (exit=1)
+[2026-04-06 18:46:51] [slack_check] Starting
+[2026-04-06 18:47:13] [slack_check] Done (exit=1)
+[2026-04-06 18:48:13] [slack_check] Starting
+[2026-04-06 18:48:33] [slack_check] Done (exit=1)
+[2026-04-06 18:49:33] [slack_check] Starting
+[2026-04-06 18:49:52] [slack_check] Done (exit=1)
+[2026-04-06 18:50:52] [slack_check] Starting
+[2026-04-06 18:51:12] [slack_check] Done (exit=1)
+[2026-04-06 18:52:12] [slack_check] Starting
+[2026-04-06 18:52:31] [slack_check] Done (exit=1)
+[2026-04-06 18:53:31] [slack_check] Starting
+[2026-04-06 18:53:51] [slack_check] Done (exit=1)
+[2026-04-06 18:54:51] [slack_check] Starting
+[2026-04-06 18:55:11] [slack_check] Done (exit=1)
+[2026-04-06 18:56:11] [slack_check] Starting
+[2026-04-06 18:56:30] [slack_check] Done (exit=1)
+[2026-04-06 18:57:30] [slack_check] Starting
+[2026-04-06 18:57:50] [slack_check] Done (exit=1)
+[2026-04-06 18:58:50] [slack_check] Starting
+[2026-04-06 18:59:10] [slack_check] Done (exit=1)
+[2026-04-06 19:00:10] [slack_check] Starting
+[2026-04-06 19:00:30] [slack_check] Done (exit=1)
+[2026-04-06 19:01:30] [slack_check] Starting
+[2026-04-06 19:01:49] [slack_check] Done (exit=1)
+[2026-04-06 19:02:49] [slack_check] Starting
+[2026-04-06 19:03:09] [slack_check] Done (exit=1)
+[2026-04-06 19:04:09] [slack_check] Starting
+[2026-04-06 19:04:27] [slack_check] Done (exit=1)
+[2026-04-06 19:05:27] [slack_check] Starting
+[2026-04-06 19:05:47] [slack_check] Done (exit=1)
+[2026-04-06 19:06:47] [slack_check] Starting
+[2026-04-06 19:07:06] [slack_check] Done (exit=1)
+[2026-04-06 19:08:06] [slack_check] Starting
+[2026-04-06 19:08:25] [slack_check] Done (exit=1)
+[2026-04-06 19:09:25] [slack_check] Starting
+[2026-04-06 19:09:44] [slack_check] Done (exit=1)
+[2026-04-06 19:10:44] [slack_check] Starting
+[2026-04-06 19:11:04] [slack_check] Done (exit=1)
+[2026-04-06 19:12:04] [slack_check] Starting
+[2026-04-06 19:12:23] [slack_check] Done (exit=1)
+[2026-04-06 19:13:23] [slack_check] Starting
+[2026-04-06 19:13:42] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-06 19:13:42] [slack_check] Done (exit=1)
+[2026-04-06 19:14:43] [slack_check] Starting
+[2026-04-06 19:15:02] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-06 19:15:02] [slack_check] Done (exit=1)
+[2026-04-06 19:16:02] [slack_check] Starting
+[2026-04-06 19:16:23] [slack_check] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_slack.py", line 309, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_slack.py", line 180, in main
+    tweet_contents = expand_tweet_urls(msg["text"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2026-04-06 19:16:23] [slack_check] Done (exit=1)
+[2026-04-06 19:16:53] [inbox_check] Starting
