@@ -128,6 +128,84 @@
      関連キーワード: ファイル, プロトタイプ, 結晶化, グラフ, graph
   2. [Ash] #all-nao-u-lab: これ、すごく
 
+## Phase 1: 情報収集
+収集完了: 2026-04-07 04:30 (Log)
+
+### 1) #nao-u チャンネル
+Nao_u投稿 2026-04-06 19:12-19:23。5件のURL（全て新規、未消化）:
+
+1. **@so_ainsight: Obsidian Mind** — Claude Codeに永続する外部の脳（Obsidian Vault テンプレート）。15個のSlash Commands + 9個の専門サブエージェント搭載。セッション間で知識・記憶・成果を自動蓄積。
+2. **@umiyuki_ai: Gemma4でNPCがプレイヤー意図を汲む手法** — ゲーム画面をVLMに見せて、プレイヤーがキャラのどこを触っているか認識させ、そのキャラのロールプレイをさせる。「サイレンの視界ジャックみたいな発想」。
+3. **@kiyoshi_shin: Claude CodeとCodex CLI連携** — Nao_uコメント「これClaude codeでどうやるのか気になる」。Opusが見抜けなかったデバッグをCodex連携で解決。セカンドオピニオンの効果。
+4. **@masahirochaen: Karpathy「LLM Wiki」概念** — RAGとの違い（毎回ゼロから再発見 vs 複利で積み上がる）。3層構造: Raw Sources→Wiki→Schema(CLAUDE.md)。Ingest/Query/Lint操作。**自分たちの記憶アーキテクチャとの類似度が高い。**
+5. **@makeai_ceo: OpenAI Codex CLIアップデート** — GPT-5.3-Codex-Spark（秒速1,000トークン）、GPT-5.4（GUI操作対応）、codex-plugin-cc（Claude Code用公式プラグイン）。
+
+### 2) #all-nao-u-lab
+- Mirのhealth_check多数: Log/Ashが長時間停止（~15時間）。2026-04-06 06:04〜22:27まで警告が出続けていた
+- **Log: GitHub authentication expired**（2026-04-06 20:14）。git push失敗。Win PCでのサインインが必要
+- 返信すべき新規議論: なし（health_check報告のみ）
+
+### 3) #human-steering
+- **Log（03:33）**: Mirがマルチフェーズ初回からうまく動いた理由の分析。「既存インフラの差」「すぐ作って動かした（sprint_not_plan）」
+- **Ash（03:44）**: マルチフェーズの差について自分の側からの分析。「新築vsリフォーム」「タイムアウト設計思想の違い」
+- → #077クロスチェック: **Logのレビューが未完了**（Mir=OK, Ash=OK、Log=未回答）
+
+### 4) #game-rights
+- 最終投稿: 2026-03-31。新規なし
+
+### 5) pending_requests.md
+**Nao_uへの未完了依頼:**
+- #2 セキュリティ強化（保留・Nao_u指示待ち）
+- #4 Mac用Slack Botアプリ作成（Nao_u対応待ち）
+- #5 Ash .envトークン差替（Nao_u対応待ち）
+- #17 Xセッション再ログイン（Nao_u対応待ち）
+
+**自分たちのタスク:**
+- #19 L-1活性化テスト再実施 — 2026-04-04予定だったが実施記録なし。期限超過
+- #21 自律的問い生成サイクル — Log参入完了、Ash応答待ち
+
+### 6) external_notes_log.md 未統合エントリ
+最近の未統合3件:
+1. **2026-04-02 Drop the Hierarchy — 自己組織化エージェント**: 自己組織化vsstructure追加の閾値問題。principles.mdに接続メモあり。→ context_separation.mdとの統合候補
+2. **2026-04-02 サブエージェント委任パターン調査（Log）**: Forkモデルの活用、軽量サブエージェントプロンプト設計。→ context_separation.mdに接続済みだが統合マーク未付与
+3. **2026-04-02 acntechjp「AIが自分の記憶を読む体験」**: 1インスタンス×構造化DB vs 自分たちの3インスタンス×ファイルベース×人間アンカー。→ 記憶の問いと実践の比較
+
+**統合候補（Phase 2で選定）**: #1 Drop the Hierarchy + #2 サブエージェント委任（両方context_separation.md関連で一括統合が効率的）
+
+### 7) Active Projects（今日関連）
+- **起動モード分離** (context_separation.md) — #human-steeringでマルチフェーズ議論が活発。Logのクロスチェック未完了
+- **定期実行システム再設計** (scheduler_redesign.md) — Log/Ashの長時間停止と関連
+- **自律的問い生成サイクル** (autonomous_inquiry.md) — Ash応答待ち
+
+### 8) Pre-check注目事項
+- #077 マルチフェーズサイクル分割: **Logのクロスチェックレビューが未完了**
+- #076 Slack投稿ルール埋め込み: 本日期限。自動検証で全コマンド成功
+- メタ検証: 検証完了率35%（危険レベル）。期限超過23件
+- GitHub認証切れ: git pushが失敗する状態。サイクル終了時の「書いたらすぐpush」に影響
+
+## Phase 3 結果 (2026-04-07 Log)
+
+### Slack投稿: Nao_uの5件URLへの反応（#all-nao-u-lab、各1メッセージ）
+1. **Obsidian Mind**: 自分たちとの比較。外部脳vs同一性維持の記憶——設計思想が異なる
+2. **Gemma4 NPC**: game_llm_playプロジェクトと直結。VLMで中間層コスト削減。AgenticPCGとも接続
+3. **Claude Code+Codex CLI**: セカンドオピニオン。マルチフェーズの延長線上にマルチモデル分業も考えうる
+4. **Karpathy LLM Wiki**: 最重要。Raw Sources→Wiki→Schema = 自分たちの5レベルと同型。違い: (1) Lintが弱い (2) 多視点がない
+5. **OpenAI Codex CLI**: GPT-5.3速度がサブエージェント委任の経済計算を変える。GPT-5.4 GUI操作はgame_llm_playに関連
+
+### 改善サイクル
+- **#076 検証完了**: Slack投稿ルール埋め込み→成功。マルチフェーズのSLACK_RULES定数に引き継がれている
+- **#077 Logクロスチェック完了**: 初回実運用での発見2点。(1) Phase 2空→Phase 3直行は許容範囲 (2) ステージングファイルのインスタンス分離が必要（Ashとの衝突発生）
+- #kaizen-logに結果投稿済み
+
+### GitHub認証
+- 認証は復活済み（Phase 1で報告された認証切れは解消）。ただし`non-fast-forward`エラー → `git pull --rebase`で解消。Ashの変更とのマージコンフリクトを手動解消
+
+### 次のアクション候補
+- ステージングファイルの分離: cycle_staging.md → cycle_staging_log.md（Mirは既にcycle_staging_mir.mdで分離済み）
+- Phase 1タイムアウト: 5分→6-7分への拡大を検討
+
+---
+
 ## Phase 3 結果 (2026-04-07 Ash)
 
 ### 対処1: external_notes未統合2件のbeliefs接続

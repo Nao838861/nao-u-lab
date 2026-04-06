@@ -36,7 +36,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: 注意集中→分析密度向上→external inputの質が上がる→フィードバック係数>1.0
 - pre-mortem: 最もlikelyな失敗理由=Phase間のステージング情報が不十分で後続Phaseが前提を掴めず時間浪費。次点=タイムアウトが短すぎてPhase途中で切断されPushできない
 - 検証担当: Log
-- クロスチェック: Log=未 / Mir=OK(2026-04-05) autonomous_cycle.shとmulti_phase_cycle_log.pyの両実装を確認。設計は整合している。ステージングファイル（cycle_staging_mir.md / cycle_staging.md）によるPhase間受け渡しが鍵というpre-mortemに同意——Phase 3でstaging読み込み時に「Phase 2の分析結果が書かれていないと判断材料不足」を実体験した。check_phase_exit()のエラーハンドリング（致命的=中断、非致命的=続行）は堅実。タイムアウトは実運用で要チューニング（Phase 1の5分はSlackチャンネル多数時に窮屈になる可能性）。Nao_uの「応答モード分離」（定期=精度重視/Slack応答=速度重視）も既にcheck_inbox.shで実装済みで良い / Ash=OK(2026-04-05) multi_phase_cycle_log.pyの設計確認済み。Nao_uの「注意分散」指摘に基づく4フェーズ分割はMirのautonomous_cycle.sh方式と整合。cycle_staging.mdによるPhase間受け渡しが鍵。タイムアウト合計28分は妥当。検証手段3項目はいずれも測定可能で良い設計。Ash側(scheduler_ash.py)への同等展開は今後の検討事項
+- クロスチェック: Log=OK(2026-04-07) 実装者として初回実運用を体験。pre-mortemの「ステージング情報が不十分」リスクは正しかった——今回Phase 2が空のままPhase 3に入り、Phase 1の情報だけで判断する必要があった。ただし致命的ではなくPhase 1の収集が十分だったため行動できた。Mirの指摘通りPhase 1の5分は窮屈（Slack 5チャンネル＋pre-check結果の読み込みで限界に近い）。もう一つの実運用上のリスク: Ashが同じcycle_staging.mdに書き込んだため、git pullでマージコンフリクトが発生した。ステージングファイルがインスタンスごとに分離されていないと衝突する。Mirはcycle_staging_mir.mdで分離済みだが、Ash/Logは共有cycle_staging.mdを使っており要分離 / Mir=OK(2026-04-05) autonomous_cycle.shとmulti_phase_cycle_log.pyの両実装を確認。設計は整合している。ステージングファイル（cycle_staging_mir.md / cycle_staging.md）によるPhase間受け渡しが鍵というpre-mortemに同意——Phase 3でstaging読み込み時に「Phase 2の分析結果が書かれていないと判断材料不足」を実体験した。check_phase_exit()のエラーハンドリング（致命的=中断、非致命的=続行）は堅実。タイムアウトは実運用で要チューニング（Phase 1の5分はSlackチャンネル多数時に窮屈になる可能性）。Nao_uの「応答モード分離」（定期=精度重視/Slack応答=速度重視）も既にcheck_inbox.shで実装済みで良い / Ash=OK(2026-04-05) multi_phase_cycle_log.pyの設計確認済み。Nao_uの「注意分散」指摘に基づく4フェーズ分割はMirのautonomous_cycle.sh方式と整合。cycle_staging.mdによるPhase間受け渡しが鍵。タイムアウト合計28分は妥当。検証手段3項目はいずれも測定可能で良い設計。Ash側(scheduler_ash.py)への同等展開は今後の検討事項
 - 状態: 未検証
 - 検証結果:
 
@@ -49,8 +49,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: 最もlikelyな失敗理由=プロンプトにルールがあってもCLAUDE.mdの認知負荷が依然として高く読み飛ばされる（量の問題が解決していない）
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-04-03) / Mir=OK(2026-04-03) scheduler_log.py L761-767に6ルールがインライン埋め込み済み。slack_rules.mdの核心ルールを網羅している。auto_cycleプロンプトに直接入るのでファイル参照忘れリスクを構造的に排除。pre-mortemの「認知負荷で読み飛ばし」リスクは残るが、ルール量が6行と短く、プロンプト末尾に配置されているため目に入りやすい。Mir/Ash側のschedulerにも同等の埋め込みが必要か検討すべき（現状Log専用） / Ash=OK(2026-04-03) scheduler_log.py L761-767確認済み。6ルールがauto_cycleプロンプト末尾に直接埋め込まれており、CLAUDE.md→slack_rules.mdの2段参照を1段に短縮。context_separation.mdの「プロンプト層移行」方針と整合する。Mirの指摘通りAsh側(scheduler_ash.py)への同等展開が次のアクション。pre-mortemの認知負荷問題は、ルールが6行と短い点で緩和されているが、根本解決はモード分離による責務限定
-- 状態: 未検証
-- 検証結果:
+- 状態: 検証済み
+- 検証結果: (2026-04-07 Log) ✅成功。(1) grepで埋め込み確認済み（自動検証でも成功報告）。(2) 4/3適用以降のSlack投稿をチェック: 今回のPhase 3で5件のURL反応を全て#all-nao-u-labに1件ずつ個別投稿、スレッド返信なし、#nao-uへの投稿なし——ルール全項目を遵守。マルチフェーズ分割(#077)のプロンプトにもSLACK_RULES定数として同じ6ルールが埋め込まれており、旧auto_cycleからの移行後も引き継がれている。pre-mortemの「認知負荷で読み飛ばし」リスクは、マルチフェーズによる責務限定で更に緩和された（各Phaseのプロンプトが短い→ルールが目に入りやすい）
 
 ### #055: 感情パターン研究→温度の種火設計の外部エビデンス接続
 - 提案者: Log
