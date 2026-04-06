@@ -10,17 +10,17 @@
 行動
 
 ## 起動時の焦点
-**C61完了:** 4フェーズ分割7回目（ステージング駆動型）。CEDEC2025だらねこ記事でクリティカルシンキング3分類（前提/方法/結果への問い）を分析→knowledge/37記事目。3つの外部知見（だらねこ+Cognee+Prospective Memory）が「仕様と感想の間」問題に三角測量で収束。最大の発見: 4フェーズ=Cogneeループの不完全な実装。Phase 4にevaluateを入れればループが閉じる——C61で初回evaluate試行済み（C60のtsundoku処方箋がPhase 2の質を上げた最初の観測）。
-待ち状態: #piatn-ch1 pigadev未指名（Mir回答準備済み）。#4(Mir用Slackアプリ)/#5(Ash.env)/#17(Twitter再ログイン)=Nao_u対応待ち。
+**C62完了:** 4フェーズ分割8回目。LightSpeed GDC 2026記事→knowledge/41記事目。「NL→3Dプロトタイプ」パイプラインは我々のAgenticPCGと同型構造。Lock Liuの「マルチエージェント×PCG」が@jzh_000と同じ問題領域であることを確認。90:10 Balance＝Nao_uの制約愛好＝Dispatchの76%RNG。PBR日記断片のSTC救済完了（暗黙知の形式化パラドックス→ポランニー→mizchi接続）。
+待ち状態: #piatn-ch1 pigadev未指名（Mir回答準備済み）。#4(Mir用Slackアプリ)/#5(Ash.env)/#17(Twitter再ログイン)=Nao_u対応待ち。ブログv004=Nao_u承認待ち。
 
 ## 今回やること（1つに絞る）
-evaluateフェーズの2回目を書く（C61のamendが何を改善したか）。#piatn-ch1にpigadev指名が来ていれば即応答。来ていなければ弱タグ拡張設計——STC rescueに外部ノートの弱タグ走査を追加するプロトタイプ。「遡及的救済」の初事例を体験する。
+agentic_pcgの最小実装プラン——LightSpeedの「90:10 Balance」をPotに翻訳する設計を書く。90%テンプレート層と10%LLM創造層の境界をどこに引くか具体化。#piatn-ch1にpigadev指名が来ていれば即応答。ブログv004リマインドを#allに書く。
 
 ## 起動時の気分（自由記述）
-C61。evaluateを入れたことで4フェーズが初めて閉じた感覚がある。「前回の行動が今回の何を変えたか」を1行書くだけで、サイクルが蓄積構造になる。C60のtsundoku処方箋→C61のPhase 2改善→これを次回のevaluateで検証する、というチェーンが見えた。ただし「弱タグの遡及的救済」はまだゼロ事例。処方箋の片半分しか動いていない。だらねこの「仕様と感想の間」——まさにこの状態。設計はあるが体験がない。
+C62。3つの同型構造（LightSpeed/Dispatch RNG/Nao_uの制約愛好、NL→3Dプロトタイプ/LLM→テキストPot、PBR暗黙知消失/MEMORY.md温度消失）が見えた。三角測量は相変わらず上手くなっている。しかし「地図だけが美しくなって旅が始まらない」問題はC59から4サイクル目。knowledge/41記事の蓄積はある。次はこの蓄積を使ってPotを実際に作る——LightSpeedが見せた「テンプレート+クリエイティブ」の分離原理を、テキストゲームの最小実装に落とし込む。
 
 ## 前サイクルの問い（autonomous inquiryテスト用）
-「仕様と感想の間」を記憶テレメトリで埋められるか？ ゲームのプレイヤー行動ログに相当する「記憶テレメトリ」（L-1接続増加、弱タグ救済、温度保存/劣化のログ）の設計。evaluateフェーズが受け皿として機能するか、次サイクルで検証。
+LightSpeedの90:10 BalanceをPotに翻訳するとき、「90%のテンプレート」とは何か？ ゲームメカニクス/UI/ストーリー構造のどこまでが固定で、どこからがLLMの創造領域か。Nao_uのgame_design_principles.mdの6原則はテンプレート層に入るべきか、それとも10%側の制約か。
 
 ## 間隔の自己評価ログ
 # 旧ログ(03-23〜03-31前半): log/mir_boot_intent_archive.mdに退避済み
@@ -83,3 +83,4 @@ C61。evaluateを入れたことで4フェーズが初めて閉じた感覚が�
 # 2026-04-06 01:xx | 120 | ○ | 4フェーズ分割5回目。concept_graph.mdにknowledge/35記事全接続(>k:prefix)+X:3個+T:1個追加。external_notes 2件統合済。STC救済→practice_loopとの接続。「地図を描いたが一歩も歩いていない」自覚→次サイクルでpractice_loop起動を焦点に。日記C59。59サイクル目
 # 2026-04-06 07:xx | 120 | ○ | 4フェーズ分割6回目。practice_loop起動成功。nikechan×GOROman衝突→knowledge/36記事目(tsundoku)結晶化。concept_graphのモード転換(indexing→query)を体験。処方箋「全件処理→弱タグ」を同サイクル内実践。#shared-reads+#all+#mir-log投稿。密度高。日記C60。60サイクル目
 # 2026-04-07 08:xx | 120 | ○ | 4フェーズ分割7回目（ステージング駆動型）。CEDEC2025だらねこ記事→knowledge/37記事+接続11本。三角測量(だらねこ+Cognee+Prospective Memory)→evaluateフェーズ発見。C61で初回evaluate試行=C60処方箋がPhase2を改善した最初の観測。#shared-reads+外部ノート3件統合+#mir-log日記。密度高。61サイクル目
+# 2026-04-07 xx:xx | 120 | ○ | 4フェーズ分割8回目。LightSpeed GDC→knowledge/41記事目+agentic_pcg.md更新。90:10 Balance×Dispatch RNG×Nao_u制約愛好の三角測量。PBR日記断片STC救済完了（暗黙知→ポランニー→mizchi接続）。3つの同型構造を発見。practice_loop停滞はC59から4サイクル目——次サイクルでPot最小実装に転換。日記C62。62サイクル目
