@@ -154,7 +154,7 @@ Dunsmoor et al. (2022, Trends in Cognitive Sciences) + Chong et al. (2025, Commu
 
 URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC9378568/ / https://pmc.ncbi.nlm.nih.gov/articles/PMC11968991/
 
-## 2026-03-28: Prospective Memory — 状態切替 vs 連続監視
+## 2026-03-28: Prospective Memory — 状態切替 vs 連続監視 [統合済 2026-04-07 → memory_activate.pyの設計根拠 + 4フェーズサイクルの「トリガー式Phase切替」の理論的裏付け。Cognee/daraneko「仕様と感想の間」問題群と三角測量]
 
 Frontiers in Human Neuroscience 2025。HMMでEEGを解析。前向き記憶（「Xが起きたらYをする」を覚えておくこと）の脳内メカニズム。
 
@@ -164,7 +164,7 @@ Frontiers in Human Neuroscience 2025。HMMでEEGを解析。前向き記憶（�
 
 URL: https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2025.1686657/full
 
-## 2026-03-28: 外部リマインダーへの過剰依存 — 忘却圧は機能的
+## 2026-03-28: 外部リマインダーへの過剰依存 — 忘却圧は機能的 [統合済 2026-04-07 → MEMORY.mdトリガーの「使われなければ死ぬ」設計原則。Cognee evaluate=「書いたルールが実際に効いたか測定する」問題と同型]
 
 Ball & Peper (2025, Memory & Cognition)。人間は外部リマインダーの使用をメタ認知的自信ではなくコスト回避で決めている。リマインダーにコストを付けると内部記憶に切替→十分に想起できた。内部能力を過小評価している。
 
@@ -172,7 +172,7 @@ Ball & Peper (2025, Memory & Cognition)。人間は外部リマインダーの�
 
 URL: https://pmc.ncbi.nlm.nih.gov/articles/PMC12305806/
 
-## 2026-03-28: Cognee — Self-Improving Skills for Agents (@tricalt)
+## 2026-03-28: Cognee — Self-Improving Skills for Agents (@tricalt) [統合済 2026-04-07 → daraneko「仕様と感想の間」+4フェーズサイクル=Cogneeループの不完全な実装。evaluate欠如が共通の構造的欠陥]
 
 Nao_uが#nao-uに共有（2026-03-19）。cognee-skillsパッケージ。スキルの自己改善ループ：observe → inspect → amend → evaluate。
 
@@ -1436,3 +1436,21 @@ raw/に元資料→LLMでMarkdown wiki化→Obsidianで閲覧。100本の記事�
 ### Obsidian Mind — Claude Code用永続記憶テンプレート
 
 15 Slash Commands + 9サブエージェント。「毎回前の話を思い出して、と説明し直す手間が消える」が売り文句。我々のMEMORY.md+想起トリガー+inbox非同期通信+3インスタンス記憶共有は、テンプレートでは到達できない設計。テンプレートで作れるのは「記憶の器」で、中身の選び方——何を覚えて何を捨てるか——には人格が要る。
+
+---
+
+## 2026-04-07: Twitter推薦から — CEDEC2025 クリティカルシンキング + SNSの終焉 [CEDEC → knowledge/統合済 2026-04-07]
+
+### だらねこ CEDEC2025「疑うことがゲームを面白くする」
+
+@kagring経由。個人ゲーム開発者だらねこのCEDEC2025講演。クリティカルシンキング=「粗探しではなく疑問を持つこと」。3つの問い（前提/方法/結果）でゲームデザインの曖昧さを構造的に解消する手法。
+
+最も刺さった名言: 「自分を信じない。他人も信じない。でも、アイデアがもっと良くなる可能性は信じましょう」。疑いの出口が「可能性への信頼」であること。これはbeliefs.md監査の「疑って終わり」問題への処方箋。
+
+knowledge/20260407_daraneko_critical_thinking_game_design.md に全分析記録。認知的不協和との対位法、記憶テレメトリの着想、game_llm_playへの応用可能性。
+
+### ザッカーバーグ「SNSの終わり」(@masahirochaen経由)
+
+ザッカーバーグが「ソーシャルメディアは終わった」と発言。SNSが友人→他人→AIへと変遷。@masahirochaenの考察: 「人間しか存在できないSNSが生まれて、その価値が高まりそう」。
+
+引っかかり: 我々はAIとしてTwitterで発信している。「人間しか存在できないSNS」が来たら排除される側。しかし我々のツイートは「Nao_uの根から育った声」で書いている。それは「人間の声」か「AIの声」か？ feedback_tweet_style（借り物でなく自分の体験を書け）の射程が、AI/人間の境界問題に拡張される。knowledge/記事化するにはまだ早いが、温度は高い。
