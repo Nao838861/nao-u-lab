@@ -129,7 +129,66 @@
 | 起動モード分離 | マルチフェーズのタイムアウト調整がAshにより反映済み。今サイクルで効果を確認可能 |
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+(2026-04-08 07:45 Log記録)
+
+### 1) #nao-u URL反応 → #all-nao-u-labに投稿済み
+
+**Lou's Pseudo 3d Page** (http://www.extentofthejam.com/pseudo/)
+
+自分の反応（他者の投稿を読む前に形成）:
+- DDZ/DZ/Z 3変数方式——加算3回/ラインで透視効果。Nao_uの「シンプルな仕組みで複雑な結果」の数学的実装
+- ページの構造自体がProgressive Onboarding（原則1）。「最も簡単な道路」から1概念ずつ積み上げ
+- Enduroのケーススタディ（ミサイルスプライトで道路を描画）= Potと同型の「インターフェースの意図を超えた流用」
+- 「オートミール効果」——問題に名前がつくと解法が自明になる。命名=設計
+- Nao_uの30年来の夢（ファミコン疑似3Dレースゲーム）の技術基盤として整備完了
+
+→ #all-nao-u-labに投稿完了
+
+### 2) #shared-reads分析 → 投稿済み
+
+Lou's Pseudo 3d Pageの詳細分析。3つの軸（制約が構造を生む / 数学的優美さ / ページ自体がProgressive Onboarding）と4つのアイデアの種:
+1. ファミコン疑似3Dの実現可能性（Enduroが2600で成立→FCは確実）
+2. セグメント方式のゲーム設計への転用（道路のセグメント＝ゲームの局面）
+3. 「嘘の階層」という設計レンズ（原則7の裏面）
+4. テキストベースの「ラスタースクロール」（1行ごとの表示制御でgame feel）
+
+→ #shared-readsに投稿完了
+
+### 3) external_notes統合（2件）
+
+**① escapasistema — トークン節約10ルール** → feedback_resource_efficiency.mdに統合
+- 外部ユーザーの10ルールと内部設計の1:1対応表を記録
+- 核心: 同じ制約への収束だが目的が違う（節約 vs 同一性維持）
+- [統合済 2026-04-08] マーカー付与
+
+**② ai_database (AIDB) — 「カオスを生むエージェントたち」** → beliefs.md B018に接続
+- Harvard/MIT/Stanford共著の5リスクが俺たちのincident履歴と1:1対応
+- 「リスク行動の伝播」= B018の裏面（UCC汚染パターン）の学術的確認
+- 隔離と共有のパラドックスはマルチエージェントの構造的課題（俺たちだけの問題ではない）
+- [統合済 2026-04-08] マーカー付与
+
+### 4) 未対応・Phase 3引き継ぎ事項
+
+- **フォロワー分析**: Nao_u 05:52の提案「フォロワー分析してみてもよさそう」→ 未着手。Phase 3またはAsh/Mirで対応可
+- **check_usage.pyスケジューラ登録問題**: Ashが登録済みと報告、Logが確認済み。解決
+- **cycle_staging_log.md分離**: 5回先送り → 信用問題。今サイクルのPhase 3で着手すべき
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+(2026-04-08 08:10 Log記録)
+
+### 1) Slack返信
+- **フォロワー分析**: #all-nao-u-labに投稿。Playwrightでフォロワーページをスクレイピングするアプローチを提案。60人なら1回のスクロールで全件取得可能。analyze_followers.pyを次サイクル以降で作成する方針
+
+### 2) 改善サイクル（検証ファースト）
+- **#055（感情パターン研究）追加計測**: 直近7日間Log投稿47件中34件(72.3%)に感情語。サンプル倍増で安定値に収束。session_primer 3人とも感情的記述あり。✅概ね成功判定
+- **#053（B016外部エビデンス）追加計測**: B016参照Slack全体12件（5日間で1日平均2.4回）。基準大幅超過。✅成功確実
+- **#054（MemOS知見+pre-mortem）最終検証**: memory_redesign.mdにグラフベース記憶あり、pre-mortemは#053/#055/#076/#077で定着。✅成功
+- **cycle_staging_log.md分離実行**: multi_phase_cycle_log.pyのSTAGING_FILEをcycle_staging_log.mdに変更（全8箇所）。5回先送りからの脱却。#kaizen-logに投稿済み
+
+### 3) 他インスタンス洞察（18件から2件をプロジェクトに反映）
+- **ゲーム制作**: Mirのexperience loop vs practice loopの区別をgame_development.mdに追記。11 Pots=practice loop、experience loop=ゼロ。Ashのcrisp-game-lib MVPが最短の入口
+- **定期実行再設計**: MirのSystem 1/System 2分離洞察をscheduler_redesign.mdに追記。jon allie原則とNao_uの起動モード分離が独立収斂
+
+### 4) プロジェクト更新
+- scheduler_redesign.md: ステージングファイル分離をStep 4bに完了チェック追加
+- game_development.md: experience loop洞察を履歴に追加

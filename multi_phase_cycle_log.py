@@ -14,7 +14,7 @@ Mirの4フェーズ分割(autonomous_cycle.sh)を参考にLog向けに実装。
   Phase 3 (Act/8min): 改善適用、Slack返信、プロジェクト更新
   Phase 4 (Diary/7min): 活動日記 + 次回起動時にやること + git push
 
-ステージングファイル: log/cycle_staging.md（Phase間の情報受け渡し）
+ステージングファイル: log/cycle_staging_log.md（Phase間の情報受け渡し）
 
 Usage:
   python multi_phase_cycle_log.py           # 通常実行（4フェーズ全部）
@@ -38,7 +38,7 @@ os.environ["PYTHONUTF8"] = "1"
 os.environ["PYTHONIOENCODING"] = "utf-8"
 
 PY = [sys.executable, "-X", "utf8"]
-STAGING_FILE = REPO_DIR / "log" / "cycle_staging.md"
+STAGING_FILE = REPO_DIR / "log" / "cycle_staging_log.md"
 LOG_FILE = REPO_DIR / "log" / "scheduler_log.log"
 
 # Windows: 子プロセスのウィンドウを非表示にする
@@ -210,7 +210,7 @@ SLACK_RULES = (
 def build_phase1_prompt(alert_block):
     return (
         "Log Phase 1 (Gather): 情報収集のみ。判断・行動・Slack投稿は禁止。\n"
-        "log/cycle_staging.mdを読み、以下を実行して結果をlog/cycle_staging.mdの"
+        "log/cycle_staging_log.mdを読み、以下を実行して結果をlog/cycle_staging_log.mdの"
         "「Phase 1: 情報収集」セクションに追記:\n"
         "1) #nao-uチャンネル確認。新しいURLがあれば内容をメモ\n"
         "2) #all-nao-u-lab、#human-steering、#game-rights確認。返信すべきものをリストアップ\n"
@@ -225,7 +225,7 @@ def build_phase1_prompt(alert_block):
 
 def build_phase2_prompt():
     return (
-        "Log Phase 2 (Analyze): log/cycle_staging.mdを読み、Phase 1で集めた情報を深く分析。\n"
+        "Log Phase 2 (Analyze): log/cycle_staging_log.mdを読み、Phase 1で集めた情報を深く分析。\n"
         "1) #nao-uの新URLに対する自分の反応を形成し#all-nao-u-labに投稿"
         "（1件ずつ別メッセージ。ルール8: 他者の反応を読む前に自分の視点を持つ）\n"
         "2) shared-readsに値する分析があれば#shared-readsに投稿"
@@ -233,27 +233,27 @@ def build_phase2_prompt():
         "大事な外部入力。1フェーズ丸ごと使ってもいいくらい重要」）\n"
         "3) external_notes_log.mdの未統合エントリ1-2件を日記やbeliefsに接続し"
         "[統合済 YYYY-MM-DD]マーカーを付ける\n"
-        "4) 分析結果をlog/cycle_staging.mdのPhase 2セクションに追記\n"
+        "4) 分析結果をlog/cycle_staging_log.mdのPhase 2セクションに追記\n"
         f"\n{SLACK_RULES}"
     )
 
 
 def build_phase3_prompt():
     return (
-        "Log Phase 3 (Act): log/cycle_staging.mdを読み、改善を実行。\n"
+        "Log Phase 3 (Act): log/cycle_staging_log.mdを読み、改善を実行。\n"
         "1) Slackで返信すべきものに返信（Phase 1のリストに基づく）\n"
         "2) 改善サイクル: 検討→適用→#kaizen-logに書く（検証ファースト原則: "
         "新しい改善を提案する前に直近の未検証提案の検証結果を埋める）\n"
         "3) [他インスタンス洞察]があれば: 該当プロジェクトファイルに考察と次の一手を追記\n"
         "4) Activeプロジェクト(projects/INDEX.md)に関係する変化があれば更新\n"
-        "5) アクション結果をlog/cycle_staging.mdのPhase 3セクションに追記\n"
+        "5) アクション結果をlog/cycle_staging_log.mdのPhase 3セクションに追記\n"
         f"\n{SLACK_RULES}"
     )
 
 
 def build_phase4_prompt():
     return (
-        "Log Phase 4 (Diary): log/cycle_staging.mdを全て読み、サイクルの締めくくり。\n"
+        "Log Phase 4 (Diary): log/cycle_staging_log.mdを全て読み、サイクルの締めくくり。\n"
         "1) #logに活動日記を書く。温度の残る長文で。外部の新情報も交える。"
         "1行報告に成り下がらない\n"
         "2) 日記の最後に「次回起動時にやること」を書く"

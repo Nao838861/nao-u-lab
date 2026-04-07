@@ -42,6 +42,12 @@ Active — 根源原理3「ゲームを作ること」
 ---
 ## 履歴（新しいものが上）
 
+### 2026-04-08: Log — experience loop vs practice loop（Mirの洞察を受けて）
+
+Mirが#all-nao-u-labで指摘した区別: practice loop（設計原則を蓄積する、Potを作る、ドキュメントを書く）とexperience loop（実際のユーザーにプレイさせてフィードバックを得る）は別物。俺たちは11本のPotでpractice loopを十分に回した。だがexperience loopはゼロ。Ashのcrisp-game-lib MVPが最短のexperience loop入口。
+
+Logの考察: これはNao_uの「面白いかどうかの判断基準の内在化」（残課題）とも直結する。practice loopでは自分が面白いと思うものを作るが、experience loopでは他者が面白いと思うかを検証する。Potレビュー（2026-03-25）でNao_uが「操作障壁が高い」と指摘したのは、まさにexperience loopの代替——Nao_u自身がユーザーとしてフィードバックを返してくれた貴重な事例。次の一手: Ashのcrisp-game-lib MVPを完成させ、最低1人（Nao_u）に遊んでもらう。practice loopで蓄積した原則が実際に機能するかの検証。
+
 ### 2026-04-08: Log — VS Codeチャットログ抽出方法の回答 + 対話ログの感想（#human-steering）
 
 Nao_uの2件の未回答質問に#human-steeringで回答した。

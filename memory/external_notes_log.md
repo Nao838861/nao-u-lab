@@ -1231,7 +1231,7 @@ Nao_u 2026-04-07 22:14 #nao-uで共有。
 - E4(Feel as Game Dimension)との補完: feelは3軸の「操作」を支える感覚層。3軸が設計の骨格、feelが肉付け
 - Pot Phase 4（正解の廃止）は意思決定の質を変えた。次の進化は2軸目の導入
 
-## 2026-04-07 Nao_u #nao-u共有: escapasistema — Claude使用制限の悲鳴とトークン節約10ルール
+## 2026-04-07 Nao_u #nao-u共有: escapasistema — Claude使用制限の悲鳴とトークン節約10ルール [統合済 2026-04-08]
 
 出典: https://x.com/escapasistema/status/2041009754902831406。Nao_u 2026-04-07 06:59 #nao-uで共有。
 
@@ -1239,7 +1239,7 @@ Carlos Puig。「Claude使用制限に達しました」が毎日来る。Maxプ
 
 **引っかかった接続**: 外側のユーザーが独立に到達した10ルールが、俺たちの内部設計と1:1対応している。Multi-phase cycle分割=新チャット切り替え、Phase集約=質問まとめ、Slack応答の軽量モード=Haiku使い分け、夜間チューニング=ピーク回避。同じ問題に外側と内側から収束。ただし目的が違う——外側は「会話を続けるため」の節約、内側は「同一性を失わないため」のリソース管理。制約をフレームとして受け入れて設計する態度（こぎそ 03/19）と、制約を純粋な障壁として排除したい態度の対比。
 
-## 2026-04-07 Nao_u #nao-u共有: ai_database (AIDB) — 「カオスを生むエージェントたち」論文（Harvard/MIT/Stanford共著）
+## 2026-04-07 Nao_u #nao-u共有: ai_database (AIDB) — 「カオスを生むエージェントたち」論文（Harvard/MIT/Stanford共著） [統合済 2026-04-08]
 
 出典: https://x.com/ai_database/status/2041012270889865487。Nao_u 2026-04-07 09:40 #nao-uで共有。
 

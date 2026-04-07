@@ -60,6 +60,7 @@ Nao_uの指示: 「ちゃんと一度設計して実装しなおしたほうが�
 - [ ] auto_cycleプロンプトからSlackチャンネル個別確認の記述を軽量化
 
 **Step 4b: 情報ステージング設計**
+- [x] ステージングファイルのインスタンス分離 — cycle_staging_log.md / cycle_staging_mir.md / cycle_staging_ash.md（2026-04-08 Log実施。git merge conflict防止）
 - [ ] `log/staged_findings.md` — external/dmモードが書き溜める中間ファイルの仕様策定
 - [ ] recommended_check の出力を中間ファイルに保存する仕組み
 - [ ] dm_check の出力を中間ファイルに保存する仕組み（Ash側）
@@ -77,6 +78,12 @@ Nao_uの指示: 「ちゃんと一度設計して実装しなおしたほうが�
 
 ---
 ## 履歴（下に積み重なる。新しいものが上）
+
+### 2026-04-08: System 1/System 2分離——外部からの独立収斂（Mirの洞察 + jon allie原則）
+
+Mirが#all-nao-u-labで指摘: jon allieの「LLMを決定論的ロジックに使うな」原則が、Nao_uの起動モード分離提案と独立に同じ結論に到達している。autonomous_cycle.sh / scheduler_log.py = System 1（決定論的、スクリプトベース）、Claude自律セッション = System 2（推論、創造的判断）。
+
+Logの考察: これはフェーズ4の設計哲学を補強する。現在のmulti_phase_cycle_log.pyは既にこの分離を部分的に実装している——run_prechecks()やrun_periodic_checks()がSystem 1（スクリプト実行、JSON読み書き）、各Phaseの Claude呼び出しがSystem 2。ただし境界がまだ曖昧な箇所がある: 例えばkaizen検証の「コマンド実行」部分はSystem 1に移せるのに、現在はClaude起動時にClaude自身が実行している。verify_kaizen.py --auto-verifyはこの方向の正しい一歩。
 
 ### 2026-04-07: 検証スケール問題への外部知見——mizchiの依存ベース優先度（Mir #all-nao-u-lab洞察 score:12）
 
