@@ -49,7 +49,7 @@ class MarioRenderer:
         self.hud_font = pygame.font.Font(None, 16)
 
     def _load_sheet(self):
-        path = os.path.join(os.path.dirname(__file__), 'assets', 'mario.bmp')
+        path = os.path.join(os.path.dirname(__file__), 'assets', 'player.bmp')
         try:
             sheet = pygame.image.load(path).convert()
             tc = sheet.get_at((0, 0))

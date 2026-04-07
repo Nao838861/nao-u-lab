@@ -1,7 +1,7 @@
 """Generate original sprites: auto-transform GBA poses + face rewrite.
 
 Approach C (hybrid):
-  1. Read mario_original.bmp (GBA source)
+  1. Read player_original.bmp (GBA source)
   2. Auto-transform each frame:
      - Recolor palette (red→yellow, hair→brown, etc.)
      - Rewrite face: remove mustache, add big round eyes, rosy cheeks
@@ -374,7 +374,7 @@ def transform_big_player(src, out):
 
 
 def main():
-    src = Image.open('assets/mario_original.bmp').convert('RGB')
+    src = Image.open('assets/player_original.bmp').convert('RGB')
     out = Image.new('RGB', (128, 64), BG)
 
     # Small player frames (row 0, cols 0-5)
@@ -396,8 +396,8 @@ def main():
 
     # Save
     out_p = out.quantize(colors=64)
-    out_p.save('assets/mario.bmp')
-    print('Generated assets/mario.bmp (128x64)')
+    out_p.save('assets/player.bmp')
+    print('Generated assets/player.bmp (128x64)')
 
 
 if __name__ == '__main__':

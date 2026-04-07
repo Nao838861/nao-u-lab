@@ -70,7 +70,7 @@ Nao_uと対面で、スーパーマリオのクローンを一気に実装した
 - 「茂みが土管に誤検知されている」の指摘 → light-green有無で完全分離するルール発見
 - スプライトシートの構造を教えてくれた → 正確なフレーム切り出し
 
-詳細な開発ログ: `game/mario_clone/devlog.md`
+詳細な開発ログ: `game/platformer_kata/devlog.md`
 
 ### 2026-03-31: ゲーム×LLMの具体的アプローチ提案（Nao_u #all-nao-u-lab）
 

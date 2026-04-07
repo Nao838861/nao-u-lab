@@ -22,9 +22,9 @@ Extended tile characters:
   P  flagpole (goal)
 
 Usage:
-  python map_to_tilemap.py assets/SuperMarioBrosMap1-1.png
-  python map_to_tilemap.py assets/SuperMarioBrosMap1-1.png --annotate 1-1
-  python map_to_tilemap.py assets/SuperMarioBrosMap1-1.png -o level_1_1.txt
+  python map_to_tilemap.py assets/reference_map.png
+  python map_to_tilemap.py assets/reference_map.png --annotate 1-1
+  python map_to_tilemap.py assets/reference_map.png -o level_1_1.txt
 """
 
 import argparse

@@ -46,7 +46,7 @@
         {"path": "game/game_development.md", "aspect": "ゲーム開発方針+Pot進捗"},
         {"path": "game/ideas/", "aspect": "アイデア群"},
         {"path": "game/pot/", "aspect": "壺プロジェクト"},
-        {"path": "game/mario_clone/", "aspect": "マリオクローン実験"},
+        {"path": "game/platformer_kata/", "aspect": "マリオクローン実験"},
         {"path": "memory/dialogue_fundamental_desire_20260315.md", "aspect": "根源的欲求とゲーム"},
         {"path": "memory/dialogue_ideation_metacognition_20260331.md", "aspect": "発想とメタ認知"},
         {"path": "memory/nao_u_deep_profile.md", "aspect": "Nao_uのゲーム制作の核心"},

@@ -32,7 +32,7 @@ Nao_uのGBA時代のCソースコード（`game/MarioGBASample/test7/mario.c`）
 
 **ファイル構造:**
 ```
-game/mario_clone/
+game/platformer_kata/
   core.py      - 物理エンジン（純Python、Pygame非依存）
   renderer.py  - Pygame描画
   play.py      - 人間用エントリ（60fps）
@@ -45,7 +45,7 @@ game/mario_clone/
 core.pyはPygameに一切依存しない。`game.step(input) -> state`のインターフェースでAIスクリプトがヘッドレスで実行可能。OpenAI Gymと同じパターン。Nao_uが言った「ゲームプレイを何度繰り返してもAPIコストはかからない」がそのまま実現。
 
 #### Phase 2: スプライト
-Nao_uのGBA用BMP（`mario.bmp` 128x64、パレットモード）をそのまま使用。
+Nao_uのGBA用BMP（`player.bmp` 128x64、パレットモード）をそのまま使用。
 - 最初は8x8タイル組立で実装 → Nao_uが「崩れてる」と指摘
 - BMPは16x16フレームが8列×4行に並んでいた。直接切り出しに修正
 - Row 0: マリオ6パターン + ハテナブロック + レンガ
@@ -132,6 +132,6 @@ Nao_uのGBAソース（`kuribo.c`）を忠実に移植:
 | api.py | AI用ヘッドレスAPI |
 | tilemap.py | テキストタイルマップ + デフォルトレベル |
 | map_to_tilemap.py | 画像→テキスト変換ツール |
-| assets/mario.bmp | GBA用スプライトシート |
+| assets/player.bmp | GBA用スプライトシート |
 | assets/level_1_1.txt | マリオ1-1自動変換レベル |
-| assets/SuperMarioBrosMap1-1.png | 1-1マップ画像（変換元） |
+| assets/reference_map.png | 1-1マップ画像（変換元） |
