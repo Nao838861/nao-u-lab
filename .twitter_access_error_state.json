@@ -16,11 +16,11 @@
     "alert_sent_at": null
   },
   "test_script": {
-    "consecutive_failures": 14,
-    "last_failure_time": "2026-04-07T04:26:45.521208",
+    "consecutive_failures": 15,
+    "last_failure_time": "2026-04-07T09:16:49.241393",
     "failure_reason": "test",
     "fail_alerted": true,
     "alert_sent_at": "2026-04-05T04:55:27.284142",
-    "cooldown_until": 1775510805.521208
+    "cooldown_until": 1775528209.241393
   }
 }

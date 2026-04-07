@@ -4822,21 +4822,33 @@
       
   → 総合: 全コマンド成功
 
-=== 自動検証実行 [2026-04-07 08:58:07] ===
+=== 自動検証実行 [2026-04-07 09:16:49] ===
 
 ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
   状態: 未検証（中間計測） / 期限: 2026-03-31
-  ❌ `python shadowbox.py --stats`
-      /bin/sh: python: command not found
-  → 総合: 一部失敗あり
+  ✅ `python shadowbox.py --stats`
+      総ペア数: 211
+      チャンネル別:
+        #all-nao-u-lab: 206
+        #nao-u: 5
+      平均応答長: 209文字
+  → 総合: 全コマンド成功
 
 ### #045: shadowbox.py セッションログ機能（予測エラーの蓄積と振り返り）
   状態: 未検証 / 期限: 2026-03-31
-  ❌ `python shadowbox.py --review`
-      /bin/sh: python: command not found
-  ❌ `python shadowbox.py --stats`
-      /bin/sh: python: command not found
-  → 総合: 一部失敗あり
+  ✅ `python shadowbox.py --review`
+      ━━━ ShadowBox セッションログ (4件) ━━━
+      
+      🟡 #52 [2026-03-24 14:25] by Log
+        予測: メタコメント。方向性を承認するか感想を一言
+        差分: 設計議論を完全無視して外部情報を投下。Nao_uは会話に反応するのではなく自分の興味を投下する側
+  ✅ `python shadowbox.py --stats`
+      総ペア数: 211
+      チャンネル別:
+        #all-nao-u-lab: 206
+        #nao-u: 5
+      平均応答長: 209文字
+  → 総合: 全コマンド成功
 
 ### #049: session_primer if-thenルール9「tasteチェック」追加
   状態: 未検証 / 期限: 2026-03-31
@@ -4863,14 +4875,14 @@
 ### #062: Pot #8 "Hinge" (蝶番) — 文脈依存意味変容のゲーム化（ACAN論文着想）
   状態: 未検証 / 期限: 2026-04-02
   ❌ `python game/hinge.py`
-      /bin/sh: python: command not found
+      python: can't open file 'C:\\AI\\nao-u-lab\\game\\hinge.py': [Errno 2] No such file or directory
   → 総合: 一部失敗あり
 
 ### #058: twitter_error_tracker.py全スクリプト統合完了
   状態: 未検証 / 期限: 2026-04-03
-  ❌ `python -c "from twitter_error_tracker import track_failure; track_failure('test_script','test'); print('OK')"`
-      /bin/sh: python: command not found
-  → 総合: 一部失敗あり
+  ✅ `python -c "from twitter_error_tracker import track_failure; track_failure('test_script','test'); print('OK')"`
+      OK
+  → 総合: 全コマンド成功
 
 ### #067: beliefs.md last_action_dateフィールド導入（行動変容力の追跡）
   状態: 未検証 / 期限: 2026-04-04
@@ -4880,6 +4892,10 @@
 
 ### #070: check_beliefs_health.py --reachability（GC到達可能性分析）
   状態: 未検証 / 期限: 2026-04-04
-  ❌ `python check_beliefs_health.py --reachability`
-      /bin/sh: python: command not found
-  → 総合: 一部失敗あり
+  ✅ `python check_beliefs_health.py --reachability`
+      GC到達可能性レポート (2026-04-07)
+        Core信念（ルートセット）: 6件 — B001, B002, B004, B008, B013, B022
+        Active信念: 15件
+        Archived: 10件
+      
+  → 総合: 全コマンド成功
