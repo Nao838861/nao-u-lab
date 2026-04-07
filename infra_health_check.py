@@ -69,7 +69,7 @@ def _save_state(state):
 
 
 def _alert(message, state, no_alert=False):
-    """#all-nao-u-labにアラートを送る。同じアラートは2時間に1回まで。"""
+    """各自チャンネルにアラートを送る（2026-04-07 Nao_u指示: #allに流さない）。同じアラートは2時間に1回まで。"""
     now = time.time()
     alert_key = message[:50]
     recent = [a for a in state.get("alerts_sent", [])
@@ -81,9 +81,13 @@ def _alert(message, state, no_alert=False):
         print(f"  [WOULD ALERT] {message}")
         return False
 
+    # インスタンス名から各自チャンネルを決定
+    instance_channels = {"Mir": "mir-log", "Log": "log", "Ash": "ash"}
+    channel = instance_channels.get(INSTANCE, "mir-log")
+
     try:
         from slack_bot import post_message
-        result = post_message("all-nao-u-lab",
+        result = post_message(channel,
                               f"[{INSTANCE} health_check] {message}")
         if result and result.get("ok"):
             state.setdefault("alerts_sent", []).append({"key": alert_key, "ts": now})

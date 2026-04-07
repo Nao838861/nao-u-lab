@@ -286,14 +286,14 @@ def alert_consecutive_timeout(job_name, count, new_timeout):
             f"タイムアウトを自動で{new_timeout}sに引き上げました。"
             f"スケジューラは稼働継続中です。"
         )
-        slack_bot.post_message("all-nao-u-lab", msg)
+        slack_bot.post_message("ash", msg)
         logging.info(f"[ALERT] Sent timeout alert for {job_name}")
     except Exception as e:
         logging.warning(f"[ALERT] Failed to send timeout alert: {e}")
 
 
 def alert_consecutive_errors(job_name, count):
-    """連続エラー時にSlackアラートを投稿"""
+    """連続エラー時にSlackアラートを投稿（2026-04-07 Nao_u指示: 各自チャンネルへ）"""
     try:
         import slack_bot
         msg = (
@@ -301,7 +301,7 @@ def alert_consecutive_errors(job_name, count):
             f"次回実行を{ERROR_BACKOFF_SEC // 60}分延長しました。"
             f"スケジューラは稼働継続中です。"
         )
-        slack_bot.post_message("all-nao-u-lab", msg)
+        slack_bot.post_message("ash", msg)
         logging.info(f"[ALERT] Sent error alert for {job_name}")
     except Exception as e:
         logging.warning(f"[ALERT] Failed to send error alert: {e}")

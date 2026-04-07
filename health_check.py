@@ -16,7 +16,7 @@ health_check.py — LLM不要の定期実行システム自己診断
 
 Usage:
   python health_check.py              # 全チェック実行、結果をJSON出力
-  python health_check.py --alert      # 異常時にSlack #human-steering に通知
+  python health_check.py --alert      # 異常時に各自Slackチャンネルに通知
   python health_check.py --instance log   # Log固有のチェックのみ
   python health_check.py --instance ash   # Ash固有のチェックのみ
   python health_check.py --instance mir   # Mir固有のチェックのみ
@@ -57,8 +57,12 @@ LOG_TAIL_LINES = 100
 # 連続エラーの検出閾値
 CONSECUTIVE_ERROR_PATTERN_THRESHOLD = 5
 
-# Slackチャンネル
-SLACK_CHANNEL_STEERING = "C0ANECNV5DK"  # #human-steering
+# Slackチャンネル（エラーログは各自チャンネルに出す。2026-04-07 Nao_u指示）
+INSTANCE_SLACK_CHANNEL = {
+    "log": "log",
+    "ash": "ash",
+    "mir": "mir-log",
+}
 
 # --- チェック定義 ---
 
@@ -541,8 +545,8 @@ def format_report(report):
     return "\n".join(lines)
 
 
-def alert_slack(report):
-    """異常時にSlack通知"""
+def alert_slack(report, instance_filter=None):
+    """異常時にSlack通知（各自チャンネルへ。2026-04-07 Nao_u指示）"""
     if report["overall"] == "ok":
         return
 
@@ -566,7 +570,10 @@ def alert_slack(report):
             f"warning={report['summary']['warning']})\n"
             + "\n".join(lines[:10])
         )
-        post_message(SLACK_CHANNEL_STEERING, msg)
+        # インスタンス名からチャンネルを決定
+        inst = instance_filter or ("mir" if sys.platform == "darwin" else "log")
+        channel = INSTANCE_SLACK_CHANNEL.get(inst, "mir-log")
+        post_message(channel, msg)
     except Exception as e:
         print(f"[health_check] Slack通知失敗: {e}", file=sys.stderr)
 
@@ -587,7 +594,7 @@ def main():
         print(format_report(report))
 
     if args.alert:
-        alert_slack(report)
+        alert_slack(report, instance_filter=args.instance)
 
     # Exit code
     if report["overall"] == "critical":

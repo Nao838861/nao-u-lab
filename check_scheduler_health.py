@@ -10,7 +10,7 @@ Usage:
     python check_scheduler_health.py --instance mir  # Mac (Mir)
     python check_scheduler_health.py --instance log  # Win (Log)
     python check_scheduler_health.py --instance ash  # Win2 (Ash)
-    python check_scheduler_health.py --slack          # 問題があればSlack通知
+    python check_scheduler_health.py --slack          # 問題があれば各自Slackチャンネルに通知
     python check_scheduler_health.py --json           # JSON出力
 
 チェック項目:
@@ -358,15 +358,17 @@ def main():
         print(f"[{instance.upper()}] ヘルスチェック {result.summary()}")
         print(result.to_text())
 
-    # Slack通知（FAILがある場合のみ）
+    # Slack通知（FAILがある場合のみ。各自チャンネルへ。2026-04-07 Nao_u指示）
     if args.slack and result.failures:
         try:
             sys.path.insert(0, str(REPO_DIR))
             from slack_bot import post_message
+            instance_channels = {"mir": "mir-log", "log": "log", "ash": "ash"}
+            channel = instance_channels.get(instance, "mir-log")
             msg = f"⚠️ [{instance.upper()}] スケジューラ異常検出\n{result.summary()}\n"
             for f in result.failures:
                 msg += f"\n❌ {f['name']}: {f['detail']}"
-            post_message("human-steering", msg)
+            post_message(channel, msg)
         except Exception as e:
             print(f"Slack通知失敗: {e}", file=sys.stderr)
 
