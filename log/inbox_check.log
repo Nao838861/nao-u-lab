@@ -1224,3 +1224,9 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 [2026-04-07 13:16:04] Claude woken for win2: 完了。`game/platformer_kata` → `game/study_platformer_01` にリネーム、全参照（concepts/graph.json, devlog, projec
 [2026-04-07 13:16:22] Inbox win2 has content — waking Claude
 [2026-04-07 13:17:27] Claude woken for win2: 判断: 対処不要案件。Nao_u側で「PCロック中の操作が必要 → 自分が動く必要があるので諦めた」という報告で、Ashへの個別指示なし。`log/nao_u_live.md` に受信記録を追記してp
+[2026-04-07 18:37:17] Inbox win has content — waking Claude
+[2026-04-07 18:39:52] Claude woken for win: 投稿完了。#human-steeringに分析・感想・課題を返信した。
+
+要点:
+- 対話ログは全員読める状態
+- game_dev/mainの7フェーズの進行、Nao_uの設計判断の光る場面、デバッ
