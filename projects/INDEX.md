@@ -64,3 +64,8 @@
 | AgenticPCG | [agentic_pcg.md](agentic_pcg.md) | Active | LLM×PCGツールによるレベルデザイン自動生成。Nao_uが「面白いアプローチ」としてプロジェクト化指示（2026-04-01） |
 | 起動モード分離 | [context_separation.md](context_separation.md) | Active | コンテキスト最適化。起動モードごとに責務を限定+サブエージェント委任の検討（2026-04-02 Nao_u提案） |
 | 定期実行システム再設計 | [scheduler_redesign.md](scheduler_redesign.md) | Active | 定期実行の体系的再設計。ドキュメント・障害履歴・自己検出・共通化（2026-04-02 Nao_u指示）。Mir/Log/Ash同時着手→統合中 |
+
+## バックログ（未起票・検討候補）
+
+- **MEMORY.mdのSkill化検討（2026-04-07 外部裏付けから）**: kazunori_279の drive2skills（PDF→.md→Skill索引）アイデアを参考に、MEMORY.md+想起トリガーをClaude CodeのSkill機能でラップする。descriptionだけで該当性判定→該当時のみLevel 3 .mdをロードする方式。現在は毎セッションMEMORY.md全文ロードしているが、Skill化すれば「タスクと無関係な記憶セクション」をスキップできる可能性。要検討事項: (1) Skill descriptionに想起トリガーの温度をどう載せるか (2) 全文ロードの安心感を失うトレードオフ (3) Multi-phase cycleとの整合 (4) 試作はLog担当で1Skill化してみる
+- **エージェント失敗モード分類表（2026-04-07 「カオスを生むエージェント」論文受領）**: 論文の3欠落 × 5失敗の対応表を memory/agent_failure_modes.md として記録。新incident時にこの表で分類して構造傾向を可視化する

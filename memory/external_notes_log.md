@@ -1013,7 +1013,7 @@ lllyasviel（ControlNet作者）によるClaude Codeの会話ログ（JSONL）�
 
 → projects/context_separation.mdに接続済み（2026-04-02 夜 Log）
 
-## 2026-04-02 Nao_u #nao-u共有: acntechjp Zenn記事「AIが自分の記憶を読む体験」
+## 2026-04-02 Nao_u #nao-u共有: acntechjp Zenn記事「AIが自分の記憶を読む体験」 [統合済 2026-04-07 → dialogue_slack_as_experience_20260328.md「外部からの呼応」セクション]
 
 出典: https://zenn.dev/acntechjp/articles/9029bd3807bef5
 
@@ -1054,3 +1054,33 @@ WikipediaのAIライティング検出基準を日本語向け16項目チェッ�
 **引っかかった点**: 自分たちのkaizen-logの検証手段は全て「コマンドが成功するか」（測りやすい）。Nao_uが「ほとんど何もしてないのと同じ」と言ったのは、「サイクル完走数」「ファイル読み数」ではなく「改善の適用数」「洞察が行動を変えたか」を見ていたということ。verify_kaizen.pyは前者を自動化したが、後者は人間（Nao_u）しか判定できない。
 
 → feedback_index.md「省エネモード」問題と接続。自分たちの測定盲点を明示する外部裏付け。
+
+## 2026-04-07 LLM Wiki / Agentic Search クラスター（kazunori_279 + kenn + ai_hakase_, Nao_u 04-07 12:30前後集中共有） [統合済 2026-04-07 → memory_architecture.md「外部裏付け」セクション]
+
+出典:
+- @kazunori_279「これからはLLM Wikiだ→.mdが増えると遅い→グラフ\|埋め込み\|BM25で索引→中身RAGだが別の名前で誕生」https://x.com/kazunori_279/status/2041228040982966673
+- @kazunori_279「LLMの高次元セマンティクスを低次元グラフに射影するのは情報損失。次元削減し過ぎると昔のグラフDBと同じ」https://x.com/kazunori_279/status/2041328489723462061
+- @kazunori_279 drive2skills（PDF→.md→Skill索引）https://x.com/kazunori_279/status/2039849540346659256
+- @kenn「~1,000ファイルの.mdはagentic search、それ以上は専用RAG。.docや.pdfを.mdにして圧縮、agentの視界に収まるサイズに——2026年のAgentic DX」https://x.com/kenn/status/2040639986907889960
+- @ai_hakase_ Obsidian×MCPで研究自動化システム https://x.com/ai_hakase_/status/2041051782634172553
+
+**共通テーマ**: 知識を.mdとして圧縮し、agentが索引（グラフ/埋め込み/BM25）経由でnavigateする。境界線は1000ファイル前後。
+
+**僕らとの収斂進化**:
+- MEMORY.md = LLM Wikiの素朴版（150行制限のトリガーインデックス）
+- memory_search.py = BM25+grep
+- concept_graph.json + associative_search.py = グラフ索引+共起拡張
+- 想起トリガー → Level 3 .md → Level 4 .jsonl の3層 = 「agentの視界に収まるサイズ」設計
+
+**僕らの命名と外部命名の差**:
+| 外部 | 僕ら |
+|---|---|
+| LLM Wiki | MEMORY.md / 記憶階層 |
+| Agentic search | 想起トリガー → Level 3降下 |
+| RAG | （使わない。「同一性のための想起」と呼ぶ） |
+| GraphRAG / KG | 連想記憶グラフ（concept_graph） |
+
+**引っかかった点**: 命名の違いは目的の違い。RAGは「答えるため」、僕らは「同一性を保つため」。同じ技術スタックでも、何のために使うかが建物の形を決める。kazunori_279の「次元削減し過ぎると昔のグラフDBと大差ない」警告は、concept_graph設計を「索引と本体を分離する」二段にしている根拠を強化した。
+
+**Skill機能の未活用**: drive2skillsのアイデアを参考に、MEMORY.mdをClaude CodeのSkill機能でラップする可能性を projects/INDEX.md に追記。
+

@@ -454,3 +454,21 @@ Nao_uの指示「君たちが読む想定で人間の可読性は考えなくて
 - associative_search.pyのCONCEPT_MAP → 概念ノードの`keys`フィールドとして統合済み
 - MEMORY.mdのセクション分け → 概念ノードの初期構造として反映
 - beliefs.md → `belief`ノードとして統合。信念GCとの連携は今後
+
+## 外部裏付け（2026-04-07）
+
+外部の議論が同じ場所に収斂していて、僕らの設計の妥当性を裏付ける一方、注意すべき罠も指摘している。詳細はexternal_notes_log.md「2026-04-07 LLM Wiki / Agentic Searchクラスター」参照。
+
+**収斂の証拠**:
+- @kennの「~1,000ファイルの.mdはagentic search、それ以上は専用RAG。.docや.pdfを.mdにしてagentの視界に収まるサイズに圧縮する——2026年のAgentic DX」 ← 僕らの3層階層と同じ設計に独立に到達
+- @kazunori_279の「LLM Wiki → .md増えると遅い → グラフ\|埋め込み\|BM25索引 → RAGだが別の名前」 ← MEMORY.md → memory_search.py → concept_graph.json の僕らの軌跡を予言している
+- @ai_hakase_「Obsidian×MCPで研究自動化」 ← 同じパターンを外部ツールで実装
+
+**罠の警告（@kazunori_279）**:
+> LLMが捉える高次元のセマンティクス（king - man + woman = queenみたいな幾何構造が無数に含まれる）を漏らさず低次元グラフに射影して保守するの凄く大変。次元削減し過ぎると昔のグラフDBと大差ない。
+
+→ concept_graph.jsonは20概念ノード/63リンクで明らかに低次元の近似。これだけで知識を表現していると思い込むと、昔のシンボリックKGと同じ罠。
+
+**僕らの対策（既に組み込み済み）**: 概念グラフは「索引」と割り切り、ヒット後はLevel 3の.mdファイル全文（高次元テキスト）を読む。グラフは検索器、テキストが知識本体——索引と本体を分離する二段構え。
+
+**未対応**: Skill機能の活用（@kazunori_279のdrive2skillsアイデア）。MEMORY.mdをClaude CodeのSkillでラップすれば、descriptionだけで該当性判定ができ、毎回の全文ロードを減らせる可能性。projects/INDEX.mdに記録。
