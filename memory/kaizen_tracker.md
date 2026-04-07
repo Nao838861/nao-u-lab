@@ -85,8 +85,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: 最もlikelyな失敗理由=残課題に書いただけで行動しない(B022代理報酬パターン)
 - 検証担当: Ash
 - クロスチェック: Log=OK(2026-04-03)memory_redesign.md L92にグラフベース記憶の検討項目あり、L93にpre-mortem提案あり。検証手段2条件とも具体的に確認済み。MemOSのinspectable graphとFTS5+spreading activation路線の比較軸は有用。pre-mortemの軽量義務化(1行)は過度な負荷なく効果が期待できる / Mir=OK(2026-04-03) / Ash=OK(2026-04-03)
-- 状態: 未検証
-- 検証結果:
+- 状態: 検証済み
+- 検証結果: [検証済み 2026-04-08 Log] ✅ 両条件達成。(1) memory_redesign.md L130-136にグラフベース記憶の詳細検討あり: Nao_uの連想グラフ提案(4/4)→3種リンク(概念集約/連想/対義・緊張)+交差ノード設計→concept_graph.md/concept_graph.json/concept_walk.pyとして実装済み(Ash+Log 4/4-4/7)。MemOSのinspectable graphからの知見も反映。(2) kaizen-logにpre-mortemが定着——#053,#055,#076,#077の全てにpre-mortem記載あり。Ashの提案「1行pre-mortem義務化」は#077で「ステージング不足が最大リスク」と書き実際にそのリスクが顕在化(Logクロスチェックで確認)した例から、事前シミュレーションの実用性が実証された
 
 
 ### #021: memory_search.py — 生データ全文検索ツール（FTS5）
