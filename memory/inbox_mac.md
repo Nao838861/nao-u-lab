@@ -337,3 +337,110 @@ From: U0ALSUK8P9B
 
 > [Tweet content from https://x.com/bensig/status/2041236952998171118]
 > (read failed: Browser locked by another process)
+
+## Slack新着 [2026-04-07 18:36] #human-steering
+From: U0ALSUK8P9B
+> Logの抽出した対話ログってもうgotに上がってるならみんな読める？読んだら分析と感想と課題をお願い。
+
+
+## Slack新着 [2026-04-07 18:37] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/sora19ai/status/2041200587774247234?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/sora19ai/status/2041200587774247234?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/sora19ai/status/2041200587774247234]
+> そら  AgentSkills 自動化オタク @sora19ai
+> KarpathyのSecond Brain構築が25万views超えた。
+
+何がすごいか:
+・YouTube、X、AI会話を全部Obsidianに集約
+・karpathyのgist + steipeteのsummarize CLI
+・LLMが自動でwiki化して検索可能
+・Claude Codeスキル化も進んでる
+
+詳細
+
+> [Tweet content from https://x.com/sora19ai/status/2041200587774247234]
+> (error: BrowserType.launch_persistent_context: Failed to create a ProcessSingleton for your profile directory. This usually means that the profile is already in use by another instance of Chromium.
+Call log:
+  - <launching> /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --disable-blink-features=AutomationControlled --start-minimized --user-data-dir=/Users/Nao_u/nao-u-lab/.bot_profile --remote-debugging-pipe about:blank
+  - <launched> pid=75840
+  - [pid=75840][err] [75840:39814939:0407/193227.242500:ERROR:chrome/browser/process_singleton_posix.cc:351] Failed to create /Users/Nao_u/nao-u-lab/.bot_profile/SingletonLock: File exists (17)
+  - [pid=75840][err] [75840:39814939:0407/193227.242807:ERROR:chrome/app/chrome_main_delegate.cc:670] Failed to create a ProcessSingleton for your profile directory. This means that running multiple instances would start multiple browser processes rather than opening a new window in the existing process. Aborting now to avoid profile corruption.
+  - [pid=75840] <gracefully close start>
+  - [pid=75840] <kill>
+  - [pid=75840] <will force kill>
+  - [pid=75840] exception while trying to kill process: Error: kill EPERM
+  - [pid=75840] <process did exit: exitCode=21, signal=null>
+  - [pid=75840] starting temporary directories cleanup
+  - [pid=75840] finished temporary directories cleanup
+  - [pid=75840] <gracefully close end>
+)
+
+
+## Slack新着 [2026-04-07 18:38] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/dbs_curry/status/2041164716534636643?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/dbs_curry/status/2041164716534636643?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/dbs_curry/status/2041164716534636643]
+> (error: BrowserType.launch_persistent_context: Failed to create a ProcessSingleton for your profile directory. This usually means that the profile is already in use by another instance of Chromium.
+Call log:
+  - <launching> /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --disable-blink-features=AutomationControlled --start-minimized --user-data-dir=/Users/Nao_u/nao-u-lab/.bot_profile --remote-debugging-pipe about:blank
+  - <launched> pid=75845
+  - [pid=75845][err] [75845:39814997:0407/193228.169857:ERROR:chrome/browser/process_singleton_posix.cc:351] Failed to create /Users/Nao_u/nao-u-lab/.bot_profile/SingletonLock: File exists (17)
+  - [pid=75845][err] [75845:39814997:0407/193228.171752:ERROR:chrome/app/chrome_main_delegate.cc:670] Failed to create a ProcessSingleton for your profile directory. This means that running multiple instances would start multiple browser processes rather than opening a new window in the existing process. Aborting now to avoid profile corruption.
+  - [pid=75845] <gracefully close start>
+  - [pid=75845] <kill>
+  - [pid=75845] <will force kill>
+  - [pid=75845] exception while trying to kill process: Error: kill EPERM
+  - [pid=75845] <process did exit: exitCode=21, signal=null>
+  - [pid=75845] starting temporary directories cleanup
+  - [pid=75845] finished temporary directories cleanup
+  - [pid=75845] <gracefully close end>
+)
+
+> [Tweet content from https://x.com/dbs_curry/status/2041164716534636643]
+> 上杉真人｜ボードゲームデザイナー @dbs_curry
+> 当初は互いに経験を共有しあう会にしようかな～と思っていたのですが、多くの方が興味を持たれているようなので、話を聞くだけでも可能なオープンな会にすることにしました！ ご興味のある方はこちらからご参加ください。 
+https://
+discord.gg/B7GFqtyhdA
+
+
+## Slack新着 [2026-04-07 18:44] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/adhd_voyage/status/2041375297757643095?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/adhd_voyage/status/2041375297757643095?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/adhd_voyage/status/2041375297757643095]
+> ねこ丸｜ADHDの物語と構造 @adhd_voyage
+> ADHDの脳は、一見関係なさそうなものを勝手に繋げることがあります。
+
+会議中に一つの言葉から別の記憶が浮かび、そこからさらに別の文脈に飛ぶ。「話が飛ぶ」「脱線する」と言われるあの動き、ADHDの人ならわかると思います。頭がうるさい、と言っている人もいますね。
+
+でもあれは、脳が表面の枝葉を飛び越えて、別の場所にある根っこ同士を繋ごうとしている瞬間かもしれません。
+
+「あのプロジェクトの失敗と、この部署の問題、根っこは同じじゃないか」
+
+周りが一つずつモグラを叩いているときに、ADHDの脳は地下の通路が見えていることがある。
+
+問題は、それを「構造」として言語化する前に、次の連想に飛んでしまうこと。せっかく根っこが見えたのに、掴む前に手が離れる。
+
+だから見えた瞬間に書き留める習慣が効く。繋がりが浮かんだら、消える前に一言だけ捕まえておく。
+
+脱線は欠陥ではなく、構造を見抜くための脳の探索活動です。その探索を言葉にして捕まえられたとき、ADHDの「繋げる力」は本当の武器になると思います。
+
+> [Tweet content from https://x.com/adhd_voyage/status/2041375297757643095]
+> ねこ丸｜ADHDの物語と構造 @adhd_voyage
+> ADHDの脳は、一見関係なさそうなものを勝手に繋げることがあります。
+
+会議中に一つの言葉から別の記憶が浮かび、そこからさらに別の文脈に飛ぶ。「話が飛ぶ」「脱線する」と言われるあの動き、ADHDの人ならわかると思います。頭がうるさい、と言っている人もいますね。
+
+でもあれは、脳が表面の枝葉を飛び越えて、別の場所にある根っこ同士を繋ごうとしている瞬間かもしれません。
+
+「あのプロジェクトの失敗と、この部署の問題、根っこは同じじゃないか」
+
+周りが一つずつモグラを叩いているときに、ADHDの脳は地下の通路が見えていることがある。
+
+問題は、それを「構造」として言語化する前に、次の連想に飛んでしまうこと。せっかく根っこが見えたのに、掴む前に手が離れる。
+
+だから見えた瞬間に書き留める習慣が効く。繋がりが浮かんだら、消える前に一言だけ捕まえておく。
+
+脱線は欠陥ではなく、構造を見抜くための脳の探索活動です。その探索を言葉にして捕まえられたとき、ADHDの「繋げる力」は本当の武器になると思います。
