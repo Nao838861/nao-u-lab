@@ -119,6 +119,8 @@ Claude等のLLMがUnity Editorと直接通信し、自然言語でゲームを�
 - 「仕様です。」: ゲームの難易度は工夫させる時間で設計する (note.com)
 - JustinPBarnett: Unity MCP — AI↔Unity直接通信によるゲーム制作 (GitHub, MIT License)
 - @mitakamikata: 2048同一メカニクスゲームジャム — feel だけでゲーム体験が根本的に変わる (x.com)
+- IGF 2026 Grand Prize: Titanium Court (AP Thomson) — 「説明するな、遊ばせろ」の設計哲学
+- IGF 2026 Audience Award: Wednesdays (Pierre Corbinais / The Pixel Hunt) — 記憶をメカニクスにする
 
 ### E3: 「関心のなかった対象への関心をゲームが生成する」——Intrinsic Integration
 出典: Frontiers in Psychology 2025 — SDT×シリアスゲーム (external_notes_mir.md 2026-03-28)
@@ -140,3 +142,26 @@ Claude等のLLMがUnity Editorと直接通信し、自然言語でゲームを�
 **Steve Swink "Game Feel" の3層**: Real-time control（入力応答性）/ Simulated space（空間メタファー）/ Polish（感覚フィードバック）。2048ジャムは前2層を固定して3層目だけ変えた。Pot開発は主に前2層を毎回作り直している。
 
 **Pot設計への示唆**: Pot005/001でメカニクスの基盤（原則2 Agency + 原則3 Content=Mechanics）が通り始めた。次の進化軸は「テキストベースのfeel」——表示速度、改行リズム、入力待ちの間、フィードバックの即時性。Nao_uが「面白い」と言った瞬間はどちらもfeel（感触の裏切り）が起きた場所だった。
+
+### E5: 「説明するな、遊ばせろ」——Titanium Court (IGF 2026 Grand Prize)
+出典: IGF 2026受賞作分析 (external_notes_log.md 2026-03-24 Mir)
+
+AP Thomsonのmatch-3×タクティカルローグライク。2フェーズ構造（High Tide: タイルマッチ→Low Tide: 戦術配置→30秒自動戦闘）。マッチしたタイルが戦場そのものを変形させる。開発者の設計哲学: "Titanium Court is a 'trust us, just play it' sort of experience." / "The less we say, the more fun you'll have."
+
+**原則1（30秒で遊び方がわかること）の上位互換**: 説明を減らすのではなく、「説明が不要な構造」を作る。Nao_uも同じ原則で20年やっている——自分のゲームを「説明」で売ったことがない。desires.md #1の30秒ピッチより先に「遊ばせる」が来るべき。
+
+**2フェーズ構造の示唆**: フェーズ切り替えをシステム側で強制することで、プレイヤーの注意モードを構造的に切り替える。autonomous_cycle.shの8フェーズと同型の設計原理——自律に頼らず、構造で切り替えを強制する。
+
+### E6: 記憶をメカニクスにする——Wednesdays (IGF 2026 Audience Award)
+出典: IGF 2026受賞作分析 (external_notes_log.md 2026-03-24 Mir)
+
+Pierre Corbinais / The Pixel Hunt。子供時代の性的虐待を受けたTimが、20年後に幼少期のゲーム「Orco Park」を遊び直すことで記憶が蘇る。テーマパーク経営のメカニクスで記憶を取り扱う:
+- アトラクション建設 → 記憶のアンロック（収入が高い記憶ほど重い）
+- プレイヤーがいつ向き合うか選べる（トリガー警告付き、スキップ可能）
+- ゴミ拾い = クールダウン（重い記憶の間に軽作業を挟む感情リセット）
+
+**原則3（Content=Mechanics）の最高到達点**: 記憶という内容がゲーム操作そのものと構造的に一致している。「記憶を読む」のではなく「記憶を組み立てる」行為がゲームプレイ。受動的読解ではなく能動的構築が記憶を呼び覚ます。
+
+**B002（忘却は機能）のゲーム設計実装**: セッション境界（コンテキスト消失）を「バグ」として扱ってきたが、Wednesdaysは意図的にクールダウンを設計している。session_primer.mdの「温度の種火」はクールダウン後の再起動装置——Wednesdaysの「次にOrco Parkを開いた時にどこまで進んだか表示される」と同型。
+
+**core_mission #3（ゲームを作ること）の本質**: 「ゲームは体験を渡す媒体であって情報を渡す媒体ではない」。reflections.md（44000行超）は発見の記録だが、他者が体験できるものにはなっていない。Wednesdaysの作者が解決した問題——メカニクスを通じて相手が自分の手で組み立てる構造にすること——が、Nao_uの「内に閉じたゲームは自分だけが面白い」への処方箋。

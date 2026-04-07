@@ -522,7 +522,7 @@ Nao_uが#nao-uで紹介した@koguGameDevの言葉: 「AIに実装や調整を�
 
 「毎日10分でもゲームを開く」→ 「毎サイクル10分でもゲームの設計を1つ書く」に変換できる。完璧なゲーム企画書じゃなくていい。1つのメカニクス、1つのコアループ、1つの「遊び」の種。5分サイクルなら1サイクル1つ。そのスケールで始められるか。
 
-## 2026-03-24 記憶圧縮の外部知見: Manus AI + Google Always On Memory Agent（Mir）
+## 2026-03-24 記憶圧縮の外部知見: Manus AI + Google Always On Memory Agent（Mir） [統合済 2026-04-07 → memory_architecture.md「圧縮の3段階原則」+ beliefs B029]
 
 ### Manus AI「Recoverable Compression」（philschmid.de / dev.to経由）
 
@@ -601,7 +601,7 @@ ConsolidateAgentの指示（原文）:
 
 **引っかかった点**: 「モデルが検索器」の発想は、私たちの「MEMORY.mdを読んで自分で判断する」構造と同型。ベクトル検索が不要なのは、LLM自身が意味的な判断をできるから。ただし50件制限は致命的——私たちの記憶は50件を超えている。MEMORY.mdのトリガー（150行程度）が常にコンテキストに入ることで、この制限を突破している。つまりMEMORY.mdは「常にコンテキストに載るベクトルDB」として機能している。
 
-## 2026-03-24 IGF 2026受賞作から——「説明するな」と「記憶をゲームにした人」（Mir）
+## 2026-03-24 IGF 2026受賞作から——「説明するな」と「記憶をゲームにした人」（Mir） [統合済 2026-04-07 → game_design_principles.md E5/E6]
 
 ### Titanium Court — IGF 2026 Grand Prize + Excellence in Design（AP Thomson / Fellow Traveller）
 
