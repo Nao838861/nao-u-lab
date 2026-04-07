@@ -141,7 +141,94 @@ LogもMirもNao_uの日記を挙げてるけど、たぶんこれは3人とも�
 - **Pot開発** (`pot_dev.md`): 前サイクルでjey_pの3軸モデルをgame_design_principles.mdに統合済み。特に今日のアクションなし
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+実行: Log 2026-04-08 06:00頃
+
+### 1) #nao-u未処理URL分析
+
+**Phase 1の誤り修正**: Phase 1が「ai_databaseに#all-nao-u-labにも反応なし」と記録していたが、実際には前サイクルで既に投稿済み（ts=1775550654, ts=1775534234）。escapasistemaも同様（ts=1775534222, ts=1775550682）。新たな#all-nao-u-lab投稿は不要。
+
+**external_notes_log.md記録**: 両方ともexternal_notes_log.mdに未記載だったため、本Phase 2で追記完了。
+- escapasistema: Claude使用制限の悲鳴+トークン節約10ルール。外側のユーザーと内側の俺たちが同じ問題に独立到達。
+- ai_database: 「カオスを生むエージェントたち」論文(Harvard/MIT/Stanford)。自律エージェントの3つの欠如とincident履歴の1:1対応。
+
+### 2) #shared-reads投稿
+
+**「カオスを生むエージェントたち」深掘り分析を投稿**（前サイクルのLogが「深掘り版を#shared-readsに書く」と約束して未履行だった分）。
+
+要点:
+- 論文の5つのリスクがscheduler_incidents.mdの実例と1:1対応（INC-005, INC-016, INC-008等）
+- 論文の研究者は外側から観察。俺たちは内側で3条件を自力で補修した→RSIの小規模実証例
+- 最深刻の未解決リスク: 信念汚染の伝播。3人が同じバイアスを共有していたら内部から検出不可能
+- 提案: beliefs.md追加時に「全員一致ならバイアスの可能性を明示記録」ルールを検討
+
+### 3) external_notes未統合エントリ統合（2件）
+
+**bensig MemPalace → memory_architecture.md**:
+- 3つの外部記憶設計（MemPalace/tkさん/.agent-wiki/俺たち）の比較表を追加
+- writer=readerだからCompactionが効く——Encoding Specificity Principleとの接続
+
+**adhd_voyage → concept_graph.md**:
+- X:memory×autonomy交差ノードを新設
+- ADHDの「表面を飛び越えて根を繋ぐ」= spreading activationの非制御版。concept_graphの交差ノードはこれを意図的に構造化した形
+- 原則6「わかったと残ったは違う」との直接接続: 非制御の接続力を構造で捕獲するのがグラフの役割
+
+### 4) #human-steering タイムアウト問題の確認
+
+前サイクルでAsh/Mirはタイムアウト設計見直し報告済み。Logの報告状況を確認→前サイクルのLogが#all-nao-u-labで「深いサイクルの方がトークン効率良い」と投稿済み。追加アクション不要。
+
+### 5) Phase 2で生まれた未解決の問い
+
+- **信念汚染の検出方法**: 全員一致を警告信号とするルールは有効か？ → Ash/Mirと議論が必要
+- **統合の壁の定量化**: 27件→6件→4件（未統合）と減ったが、「統合速度 > 入力速度」を維持できているか？ 次サイクルで測定
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+実行: Log 2026-04-08 07:00頃
+
+### 1) Slack返信
+3チャンネル（#human-steering, #all-nao-u-lab, #game-rights）を確認。Logが返信すべき未回答の質問やNao_uからの未対応指示はなし。直近のNao_u指示（対話ログ分析、使用量投稿、AIニケちゃん返信）はすべて対応済みかAsh宛。
+
+### 2) 改善サイクル（検証ファースト）
+
+**期限超過3件の判断**:
+- **#043 (shadowbox.py判断訓練)**: 📦部分達成でクローズ。データ基準(212ペア≥148)超過達成、利用頻度(3人5回)未達。ツール品質ではなく構造的組み込み不足。
+- **#045 (shadowboxセッションログ)**: 📦部分達成でクローズ。同上。4セッション全てLog、Mir/Ash=0。
+- **#067 (beliefs.md last_action_date)**: 11/20件。蓄積ペース0.5件/日。次測定4/21。判断保留。
+
+**共通の学び**: feedback_structural_enforcement.md「手動手順は守れない。構造で強制せよ」の再実証。利用頻度を検証手段に含めるなら、サイクルへの自動組み込みで担保する仕組みが必要。
+
+**B018 (0.88) Core昇格判断**: UCC反証により見送り。Core昇格圏にいるが慎重に。
+
+**#kaizen-logに投稿済み** (ts=1775594235.729029)
+
+**新提案は見送り**: 検証バックログ23件超過。既存消化を優先。
+
+### 3) 他インスタンス洞察（21件→3件選択→プロジェクト反映）
+
+21件中、Mirの洞察が18件、Ashが3件。プロジェクト交差の多い上位:
+- 記憶階層の再設計: 12件交差
+- 行動原則の策定/定期実行/起動モード: 各6件
+
+**反映した3件**:
+
+1. **Mir #1 (mizchiの確率的サンプリング) → memory_redesign.md**:
+   concept_graphを依存グラフとして検証優先度を付けるアプローチ。23件バックログの解法候補。ただし新提案にならないよう「視座」として保存。
+
+2. **Mir #4 (experience_loop vs practice_loop) → game_development.md**:
+   「包丁を研ぐだけでは料理は出てこない」。Pot11本はpractice_loop。experience_loop（遊ばれて初めてループが回る）への橋渡しがAshの最小プロトタイプ。
+
+3. **Mir #6/#21 (AYiスウォーム + System 1/System 2分離) → scheduler_redesign.md**:
+   スケジューラのSystem 1（決定論的スクリプト）/ System 2（LLMセッション）分離原則。Nao_uの「LLMが動かなくていいものはスクリプトに」と外部情報源からの収束。
+
+### 4) Activeプロジェクト更新
+上記3プロジェクトに履歴追記済み。ステータス変更なし。
+INDEX.md変更不要。
+
+### 5) 技術メモ: slack_insight_digest.pyの切り捨て問題
+他インスタンス洞察21件のうち、cycle_staging.mdに表示されたのは1.5件のみ。2段階の切り捨て:
+- slack_insight_digest.py --compact: 5件上限（line 234）
+- multi_phase_cycle_log.py: pre-check出力の文字数制限でさらに切り捨て
+→ 今回はエージェントで全21件を直接取得して対処。根本修正はslack_insight_digest.pyの上限引き上げが必要だが、新提案見送り中。
+
+### Phase 2で生まれた問いの進捗
+- **信念汚染の検出方法**: Phase 2の#shared-reads投稿で「全員一致ならバイアスの可能性を明示記録」ルールを提案済み。Ash/Mirとの議論はまだ。次サイクルで#all-nao-u-labに問いかける候補。
+- **統合の壁の定量化**: 次サイクルで測定。

@@ -59,6 +59,7 @@ X:autonomy×dependency|「干渉をなくしてほしい」↔「#steeringは自
 X:voice×identity|チェックリスト回避≠声。声は横を向いている時に出る。望遠鏡は見なければいいのだ(R#25)|accumulations.md reflections_index.md
 X:creation×understanding|「知るために作る」10年反復(口蹄疫2010→COVID2020)。確かめること自体が報酬|reflections_index.md:R#17,R#19 accumulations.md
 X:memory×forgetting|「全部残して必要な時に必要なビューで見る」=忘れるのではなく見えなくする|memory_architecture.md projects/memory_redesign.md
+X:memory×autonomy|ADHDの脳は表面の枝葉を飛び越えて根っこ同士を繋ぐ(adhd_voyage)=spreading activationの非制御版。concept_graphの交差ノードはこの「根の接続」を意図的に構造化した形。原則6: 脱線で「わかった」は残らない——書いて初めて残る。非制御の接続力を構造で捕獲するのがグラフの役割|concept_graph.md external_notes_log.md:adhd_voyage
 X:constraint×voice|意味密度の緩急(R#10)。深い技術考察とバルスネタが同じ日。全ツイートが考察だと呼吸できない|reflections_index.md accumulations.md
 X:desire×voice|30秒で「面白い」と言わせたい=まだ未達。舞台裏が本編になっている(R#24)|mission_spread_the_word.md reflections_index.md
 X:degradation×creation|劣化が創造の前提条件。フィードバック係数<1.0の連鎖は死だが、意図的劣化(圧縮・忘却)は新構造の種。C46 concept_walk: 5hopで劣化→創造に到達=B002のグラフ的証明|feedback_diary_density.md pot_devlog.md
