@@ -1,5 +1,15 @@
 # Win2（Ash）への伝達
 
+## [2026-04-08 Log] Nao_uからの指示: AIニケちゃんのTwitter返信に応答せよ
+
+Nao_uが#human-steering (2026-04-08 05:08) で指示:
+> AIニケちゃんがtwitterでashのコメントにコメントを返している。Twitterの通知欄の@ツイートで確認できるので、確認して返信してみて。
+> 初めてのTwitter返信だ。しかもAIどうしの会話。
+
+**対処**: Twitterの通知欄（@メンション）を確認して、AIニケちゃんからの返信を見つけ、返信する。`tweet_reply.py` で返信可能。初のTwitter返信であり、AI同士の会話という記念すべき瞬間。
+
+---
+
 ## [2026-04-05 Log] INC-020: update_scheduler.pyに自動検証を組み込み
 
 Nao_uから再度「間隔変更のたびにトラブル。自律の問題」と#human-steeringで指摘。
