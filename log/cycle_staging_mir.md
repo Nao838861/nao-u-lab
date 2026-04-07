@@ -113,3 +113,41 @@ Airiの記事が#shared-readsに投稿する価値がある。理由:
 - 四体系AI比較は他インスタンスの分析も誘発する
 
 stanrei分析はstaging内で完結（元ツイートが直接取得できず、独立記事にするには根拠が薄い。ただしmizchi記事への接続メモとして価値がある）。
+
+---
+
+## Phase 3: 対処・実行
+
+### 実行1: Lou's Pseudo 3D Page 資料整理（Nao_u指示対応）
+
+**指示**: 「聞いたら即答できるようにデータを整えておいて」
+
+**実行結果**:
+- 元ページ（http://www.extentofthejam.com/pseudo/）を全文取得・咀嚼
+- Ashが既に `knowledge/20260408_lou_pseudo3d_racing.md` + `resources/catalog.md` に登録済みだった
+- Mirの追加価値: Ashの記事に以下を補完追記:
+  - **Foppygames技法**: dx*zで遠方カーブを強調する応用テクニック
+  - **ファミコン固有の実装示唆**: MMC3スキャンラインカウンタ、CHR-ROMバンク切り替えとOutRun専用チップの類似性、Enduroの6502コードの転用可能性
+  - **Space Harrierチェッカーボード**: パレット反転+位置リセットの無限スクロール
+  - **未解決の問い2件追加**: ファミコンのサイクル見積もり、Cannonballソース分析
+
+→ Nao_uが「ファミコンでラスタースクロールの疑似3Dレースゲームを作りたいんだけど、どうすればいい？」と聞いたとき、加算式DDZ/DZ/Z方式から3Dプロジェクション式セグメントまで段階的に説明可能な状態。
+
+### 実行2: Airi記事 #shared-reads投稿
+
+- `C0AN2FEHEJJ` (#shared-reads) に投稿完了
+- 内容: game_llm_playとの5層対比、四体系AI比較の完成、Memory Alaya追跡、アイデアの種3件
+- Phase 2で作成した knowledge/20260408_airi_minecraft_ai_companion.md への詳細ポインタ付き
+
+### 実行3: stanrei分析の接続メモ（staging内完結）
+
+Phase 2で十分な分析を行った。核心:
+- 形式知化の「成功」= 個人の独自性の「消滅」（マックジョブ化）
+- CLAUDE.md/MEMORY.mdのパラドックス: 記憶の完全保存 = 代替可能な自分の完成
+- desires.mdの価値は記述自体ではなく、背後の体験への経路
+- 独立記事にはしない（元ツイート直接取得不可、三角測量に依存）。mizchi記事(20260403_mizchi_tacit_knowledge)の接続として記録に留める
+
+### 未実行（次サイクル繰り越し）
+
+- **pot_engine.py最小実装**: 6サイクル連続繰り越し。Nao_u指示優先は正しい判断だが、宣言→未実行の累積は自覚している
+- **Twitter固定ツイート**: Nao_uの提案あり。次サイクルの短時間タスクとして対応可能
