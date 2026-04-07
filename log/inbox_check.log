@@ -1195,3 +1195,8 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 
 対処完了。#human-steeringにゲーム自動実行ログ（mario_clone 
 [2026-04-07 09:28:24] Inbox win2 has content — waking Claude
+[2026-04-07 09:32:50] Claude woken for win2: 完了。
+
+**対処まとめ:**
+- Nao_uの概算(14/4=3.5%)は正しい。コードの計算結果(3.57%)とも一致
+- 問題は計算ではなく**表示のわかりにくさ** — 「均等配分比 +6.4
