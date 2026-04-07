@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 42
+- 総記事数: 43
 - 最終更新: 2026-04-08
 
 ## 記事一覧
@@ -51,6 +51,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260407_mulmoclaude_wiki_memory | MulmoClaudeのWiki長期記憶——「コンパイルされた知識」と「生きた記憶」の分岐 | 中島聡 (@snakajima) | 2026-04-07 | memory-architecture, wiki, long-term-memory, identity, Karpathy | memory, identity |
 | 20260407_lightspeed_gdc_nl_prototype | テンセントLightSpeed GDC 2026——自然言語から3Dゲームプロトタイプへ | テンセントLightSpeed Studios | 2026-04-07 | game-development, natural-language, 3D-generation, prototyping, AI-pipeline, Tencent | creation, autonomy, constraint |
 | 20260408_lou_pseudo3d_racing | ラスタースクロール疑似3Dレースゲーム技術解説 | Louis Gorenfeld | 2026-04-08 | game-development, pseudo-3d, raster-scroll, racing-game, retro-tech, road-rendering, sprite-scaling, NES, famicom | creation, constraint, experience |
+| 20260408_airi_minecraft_ai_companion | Project AIRI — 仮想世界に身体を持つAI VTuber (37.3K stars) | moeru-ai community | 2026-04-08 | autonomous-agent, game-play, minecraft, VRM, VTuber, embodiment, memory, open-source | autonomy, creation, game_llm_play, identity_spectrum, embodiment |
 
 ## タグ別索引
 
