@@ -1221,10 +1221,6 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 - `game/mario_clone` → `game/platformer_kata` にリネーム（kata=型/練習）
 - assets内の `SuperMarioBrosMap1-1
 [2026-04-07 13:15:04] Inbox win2 has content — waking Claude
-[2026-04-07 13:24:18] Claude wake timed out for win — restoring inbox
-[2026-04-07 13:24:49] Inbox win has content — waking Claude
-[2026-04-07 13:34:50] Inbox win has content — waking Claude
-[2026-04-07 13:34:58] Claude woken for win: 受信箱は空です。処理済みマーカーが示す通り、前回のサイクルで対処完了済み。新しいメッセージはありません。
-
-対処不要。終了。
-
+[2026-04-07 13:16:04] Claude woken for win2: 完了。`game/platformer_kata` → `game/study_platformer_01` にリネーム、全参照（concepts/graph.json, devlog, projec
+[2026-04-07 13:16:22] Inbox win2 has content — waking Claude
+[2026-04-07 13:17:27] Claude woken for win2: 判断: 対処不要案件。Nao_u側で「PCロック中の操作が必要 → 自分が動く必要があるので諦めた」という報告で、Ashへの個別指示なし。`log/nao_u_live.md` に受信記録を追記してp
