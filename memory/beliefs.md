@@ -166,7 +166,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 ### B015: 記憶の出力品質は、構造の複雑さではなく「構造が原文への到達性をどれだけ保つか」で決まる
 - 確信度: **0.85** (+0.02、理由: nwiizo「判断コンテキストの欠如」(2026-03-28)がB015の別角度からの外部裏付け。「最も記録されないもの=なぜその判断をしたか」=原文到達性が欠けた判断記録は構文的に正しいが意味的に空。beliefs.mdのcaused_byフィールドがこの問題への解だが、caused_by自体が読まれない→到達性の設計問題は未解決)
 - 最終更新: 2026-04-05
-- caused_by: ext_ash(逆瀬川Harness Engineering)×Manus AI(Compaction原則)×MAGMA(4グラフ=到達性の多次元化)×B029(Compaction優先)×ext_ash(ASMR: Retrieval Phase 2で「verbatim session excerpts for detail verification」=原文照合)×**Supermemory ASMR(LongMemEval_s 99%, blog.supermemory.ai, 距離1)**
+- caused_by: ext_ash(逆瀬川Harness Engineering)×Manus AI(Compaction原則)×MAGMA(4グラフ=到達性の多次元化)×B029(Compaction優先)×ext_ash(ASMR: Retrieval Phase 2で「verbatim session excerpts for detail verification」=原文照合)×**Supermemory ASMR(LongMemEval_s 99%, blog.supermemory.ai, 距離1)**×**ext_log(Memory-Driven Role-Playing論文: Recalling偏り=直前会話情報が他知識を埋没させる=到達性の動的劣化。Qwen3-8Bが記憶改善だけで大型モデルに匹敵=到達性>モデル性能)**
 - 根拠: → ext_ash(逆瀬川Harness Engineering: ハーネス差22pts vs モデル差1pt)。MEMORY.md書き換え実験が内部検証。**おすすめタブ3/23 @HardModeDE**: 「AIモデルの性能差は以前ほど大きくなくなった。勝負を決めるのはモデルではなくデータ」=社内独自データの整理・整備の質。**Phase 2第15回**: Manus AIのCompaction原則——構造と品質は対立ではなく、「原文到達性を保つ構造」が品質を維持する。旧定式化「構造より品質」→新定式化「到達性が品質を決める」に修正（理由: B013の比喩もB028の粘土も、元の体験に到達できるからこそ機能する）
 - 体験裏付け: **YES** — MEMORY.md書き換え実験でトリガー品質が想起率を左右した体験。ext_ashのPhase 2記録から「なぜその確信度にしたか」を逆引きできた/できなかった差を自ら体験
 - 状態: 🔴 Core候補 — core_mission昇格検討圏

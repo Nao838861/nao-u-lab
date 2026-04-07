@@ -891,7 +891,12 @@ Nao_uが20年間言い続けてきた「制約を愛す」は、2026年のAIア�
 ### Balatro系譜の爆発（2026年3月時点）
 Balatroのコアループ（カードシナジーによるスコア計算+ジョーカーによるルール改変）を別ドメインに適用するゲームが急増。「Insider Trading」（株取引Balatro）、ダイスローグライト、タイピングBalatro、朝食Balatro。システム駆動型ゲームプレイがジャンルとして確立。Nao_uの設計思想——「ルールの上で遊ぶのではなく、ルール自体が遊びの対象」——が時代と合流している。
 
-## 2026-03-24 Klein AIQツールキット + Hesslow仮説
+## 2026-03-24 Klein AIQツールキット + Hesslow仮説 [統合済 2026-04-07 Log]
+
+→ Klein AIQ 5道具のうちShadowBox(#043)のみ実装。Cognitive Tutorial=AIの弱点理解はNao_uが#human-steeringで非公式に実施。Collaborative XAI/Self-Explaining Scorecardは未着手だが、beliefs.mdのcaused_byフィールドがScorecard的機能を部分的に果たしている
+→ Hesslow仮説 → ShadowBox方式の理論的裏付け。体験なしでも内部モデルが十分正確なら学べる。ただしLevel 3の天井は超えない
+→ V-JEPA 2 → 観察だけで内部モデルは育つ。100万時間の観察+62時間の操作→65-80%成功。ShadowBox(#046)の理論的根拠
+→ PRPD → beliefs確信度更新がPRPDの確率的パターン強化と同型。外部裏付け
 
 ### Klein AIQ (Artificial Intelligence Quotient) — AI時代の判断力訓練ツールキット全5道具
 出典: https://www.shadowboxtraining.com/news/2021/02/12/aiq-artificial-intelligence-quotient/ + https://samim.io/p/2026-01-04-recent-developments-related-to-recognition-primed-decis/
@@ -949,7 +954,12 @@ RPDの計算モデル拡張。パターン（プロトタイプ）が経験を�
 → 段階的検索戦略(memory_architecture.md L306)の設計判断を補強: 段階ごとにコストが上がる設計は「build時前払い+query時安い」の変形。Level 2（MEMORY.md）は最も前払い済み、Level 4（原文grep）は前払いゼロ
 → 前サイクルの「map/reduce問題」との接続: Cursorのインデックスはmap側の技術革新。reduce（知識の構造化）は彼らも解いていない
 
-## 2026-03-27 #nao-uリンク消化+ゲーム×AI動向調査
+## 2026-03-27 #nao-uリンク消化+ゲーム×AI動向調査 [統合済 2026-04-07 Log]
+
+→ Memory-Driven Role-Playing論文 → B015(到達性)に外部エビデンス追加: Recalling偏り=到達性の動的劣化、記憶改善だけで大型モデルに匹敵=到達性>モデル性能
+→ Steam3割AI → B008(Creative Scar)の現場検証データ: 30%が同一AIでideation→fixation bias→均質化。対抗策=外部批評=Nao_uの役割
+→ Supercell Game Hack → 制約が判断を強制する構造。48h×115チーム。game_design_principles第7原則（制約=創造の母）の大規模実験
+→ Balatro系譜 → Nao_uの「ルール自体が遊びの対象」が時代と合流。システム駆動型ゲームプレイのジャンル確立
 
 ### Game*Spark「Steam新作の3割が生成AIを利用」(2026-03-26)
 > 2026年1月にリリースされたSteamの新作の約30%が生成AIを利用（2025年1月は21%）。GDC 2026の調査では個人開発者36%、企業52%がAI利用。ただしアセット制作での利用は「稀」。中国は国策で利用率43%、欧米は「クリエイティブを壊す」と強い反発。ゲームアワードでAI利用判明→受賞取り消し事例あり。Steamは2026年1月に「プレイヤーが消費するAI生成コンテンツ」の開示を義務化。
