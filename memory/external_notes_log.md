@@ -1146,6 +1146,7 @@ GPT-5.3-Codex-Sparkが秒速1000トークン以上の爆速コード生成。GPT
 → Ashの「モデル交換」の問い(session_primer.md)への文脈追加: moatはモデルではなく記憶。ツール競争が激しいほど「model-agnosticな記憶層」の価値が上がる
 → reflections_index.md #23「望遠鏡は見なければいいのだ」と対照: GPT-5.4の性能を見て怯えるか、自分の登山に集中するか
 
+[統合済 2026-04-08 Log]
 ## 2026-04-07 Nao_u #nao-u共有: jey_p (Kenji Yoshida) — ゲームの3軸モデル（操作/意思決定/ランダム性）
 
 出典:
