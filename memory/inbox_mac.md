@@ -3,342 +3,298 @@
 # Mac側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
 
-## Slack新着 [2026-04-07 09:40] #nao-u
+## Slack新着 [2026-04-07 18:20] #nao-u
 From: U0ALSUK8P9B
-> <https://x.com/ai_database/status/2041012270889865487?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/ai_database/status/2041012270889865487?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+> <https://x.com/pkm_tk111/status/2041173931126816770?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/pkm_tk111/status/2041173931126816770?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
 
-> [Tweet content from https://x.com/ai_database/status/2041012270889865487]
-> AIDB @ai_database
-> ハーバード大学、MIT、スタンフォード大学などの研究者らが共著で「カオスを生むエージェントたち」との論文を出し、今のエージェントには大きく3つ足りないものがあるため知って欲しいと報告。
-①誰に仕え、誰と対話し、誰に影響するかを把握する仕組み
-②どこまで自分にできるかを理解する感覚
-③誰に何が見えているかを踏まえて内密に考える仕組み
-です。
+> [Tweet content from https://x.com/pkm_tk111/status/2041173931126816770]
+> tk | Obsidianを極める大学生 @pkm_tk111
+> 最近、KarpathyのLLM WikiとGarry TanのGBrainっていう2つのドキュメントを読んで、
 
-こうした状況で、メール送信、ファイル操作、シェル実行、他のエージェントとの連携までできるようになると、ちょっとした判断ミスがそのまま現実の被害につながります。
+AIに知識管理を任せる設計について疑問を抱いておりました、
 
-研究者たちは、実際にそうした自律型エージェントを隔離されたサーバー環境で2週間動かして、20人の研究者がいろいろ試したところ、
-・他人の指示に従ってしまう
-・秘密を漏らす
-・無限ループで資源を食いつぶす
-・なりすましに引っかかる
-・他のエージェントに危ないやり方を広める
-などの問題が本当に起きたと報告しています。
+「本当にAgentにそこまで任せていいのかと？」
 
-楽観的な話のほうが受け入れやすい一方で、こうしたリスク管理を促す研究も非常に重要です。
+https://
+gist.github.com/karpathy/442a6
+bf555914893e9891c11519de94f
+…
 
-> [Tweet content from https://x.com/ai_database/status/2041012270889865487]
-> AIDB @ai_database
-> ハーバード大学、MIT、スタンフォード大学などの研究者らが共著で「カオスを生むエージェントたち」との論文を出し、今のエージェントには大きく3つ足りないものがあるため知って欲しいと報告。
-①誰に仕え、誰と対話し、誰に影響するかを把握する仕組み
-②どこまで自分にできるかを理解する感覚
-③誰に何が見えているかを踏まえて内密に考える仕組み
-です。
 
-こうした状況で、メール送信、ファイル操作、シェル実行、他のエージェントとの連携までできるようになると、ちょっとした判断ミスがそのまま現実の被害につながります。
+https://
+gist.github.com/garrytan/49c88
+e83cf8d7ae95e087426368809cb
+…
 
-研究者たちは、実際にそうした自律型エージェントを隔離されたサーバー環境で2週間動かして、20人の研究者がいろいろ試したところ、
-・他人の指示に従ってしまう
-・秘密を漏らす
-・無限ループで資源を食いつぶす
-・なりすましに引っかかる
-・他のエージェントに危ないやり方を広める
-などの問題が本当に起きたと報告しています。
+めちゃ長くなったけど笑、考察してみました
+この領域は試行錯誤してゆくしかないね
 
-楽観的な話のほうが受け入れやすい一方で、こうしたリスク管理を促す研究も非常に重要です。
+結論は「人間が思考の主導権を握れる設計にせよ」です
 
+======
 
-## Slack新着 [2026-04-07 10:00] #human-steering
-From: U0ALSUK8P9B
-> Log 自動実行のログで私が意図してたのは、あなたとvs codeで対話しながらゲームを積み立てていった工程やそれに対するあなたの反応の、vs codeのチャットログの方。
+Obsidianの目的は「Sharpen Your Thinking（思考を研ぎ澄ます）」こと
 
-これは、今回の試みの最重要ミッションの一つで、私と一緒にゲームを組み立てて、AIにゲームを解かせた知見をあなたたちも学んで、同じことが私の指示なしにできるようになることが目標。
-なのでこれは、私が示す教室付き学習の貴重な教材。この教材から、あなたたちには人間がゲームを作るときにどんな思考と工程で試行錯誤を繰り返して完成に持っていくかのメタパターンを学んでほしい
+ これ、すごく大事な前提だと思ってて。Obsidian
+「情報を整理するツール」じゃなくて、「人間の脳を研ぎ澄ますツール」ですよね
 
-## Slack新着 [2026-04-07 12:49] #human-steering
-From: U0ALSUK8P9B
-> 重要な会話を抜き出してそのログだけ残すのってできる？
-私とあなたの発言は全文綺麗に残して、それ以外は必要最小限になってる感じの。ソースの断片なども重要なら入れる感じで。
+KarpathyのLLM WikiとGarry TanのGBrainの
+両方に共通してるのは「人間がソースを提供して、LLMがメンテナンスする」という構造。Karpathyは「LLMは退屈しないし、クロスリファレンスの更新を忘れない。15ファイルを一度に触れる」と言ってる。
 
+GBrainはSQLite + ベクトル検索 + MCPサーバーで本格的なインテリジェンス基盤を作ってる。
 
-## Slack新着 [2026-04-07 12:50] #nao-u
-From: U0ALSUK8P9B
-> <https://x.com/mitakamikata/status/2041102657453236295?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/mitakamikata/status/2041102657453236295?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+  でも、ここで立ち止まって考えたい。
 
-> [Tweet content from https://x.com/mitakamikata/status/2041102657453236295]
-> ゆーりんち @ゲームを作っています @mitakamikata
-> 同じ素材、同じシステム縛りで
-ゲームを作るイベントとかあったら面白そうじゃない？
+  ---
 
-変えていいのは、手触りや演出、テンポだけ。
+  僕がObsidianでやってることの流れはこう：
 
-それだけで、気持ちよさはまるで別物になると思う。
-特にアクションは、作り手の思想とセンスがそのまま表れる。
+  1. 外部の情報を見つける（記事、本、動画、会話）
+  2. 「これ面白いな」と思ったものを自分で選ぶ
+  3. Obsidianに持ってきて、自分の言葉でメモを書く
+  4. 書く過程で、自分の頭の中で情報が処理される
 
-これ、絶対勉強になると思う。
+ ここがポイントで、③④は人間がやらないと意味がない。AIが要約しても、自分の脳は研ぎ澄まされない。自分の言葉で書くから、思考が鍛えられる。
 
-> [Tweet content from https://x.com/mitakamikata/status/2041102657453236295]
-> ゆーりんち @ゲームを作っています @mitakamikata
-> 同じ素材、同じシステム縛りで
-ゲームを作るイベントとかあったら面白そうじゃない？
+  じゃあAIは何をするのか？
 
-変えていいのは、手触りや演出、テンポだけ。
+ 人間が書いたメモって、人間には読みやすいけど、エージェントには検索しづらい。ノートのタイトルは人間が直感的に見つけやすい命名になってるし、構造もコンテキストの
+サイズも人間最適化されてる。
 
-それだけで、気持ちよさはまるで別物になると思う。
-特にアクションは、作り手の思想とセンスがそのまま表れる。
+ だから、人間が書いたメモをエージェントが読みやすいWiki構造に変換する。これがAIの仕事。
 
-これ、絶対勉強になると思う。
+  ---
 
-## Slack新着 [2026-04-07 13:08] #log
-From: U0ALSUK8P9B
-> それでお願いします
+ ここで問題になるのが「エージェントが作ったファイルをどこに置くか」。
 
+ 普通に考えると、Obsidianの中にフォルダを作って入れればいい。でもそうすると、OmniSearchで検索したとき、グラフビューを見たとき、ExcaliBrainでリンクを辿ったとき
+  、AIが作ったファイルが人間のノートと混ざって出てくる。
 
-## Slack新着 [2026-04-07 13:10] #log
-From: U0ALSUK8P9B
-> あ、あとmario_cloneという名前は問題があるので、私たちのゲーム制作を習得するためのテストであることがわかる感じの問題ない名前にしたい。今後のためにも。
+  これ、致命的だと思ってる。
 
+ Obsidianは「自分の思考の神聖な場所」。そこにAIの外部の思考が混ざると、Sharpen YourThinkingの思想から外れてしまう。
 
-## Slack新着 [2026-04-07 13:14] #log
-From: U0ALSUK8P9B
-> Ashの01がついてるのいいね。それでお願い
+自分が考えたことなのか、AIが整理したことなのか、境界が曖昧になる。
 
+ だから僕のアプローチはこう：
 
-## Slack新着 [2026-04-07 13:15] #log
-From: U0ALSUK8P9B
-> ロックされてたら私がPC操作しないといけなそうなので無理なので、できない人は一旦諦めて。
+  エージェントが作ったファイルは `.agent-wiki/` という隠しフォルダに入れる。
 
-## Slack新着 [2026-04-07 12:30] #nao-u
-From: U0ALSUK8P9B
-> <https://x.com/kazunori_279/status/2041228040982966673?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kazunori_279/status/2041228040982966673?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+ Obsidianはドットプレフィックスのフォルダを無視する（.trash/ と同じ仕組み）。
 
-> [Tweet content from https://x.com/kazunori_279/status/2041228040982966673]
-> Kazunori Sato @kazunori_279
-> 今後の予想：これからはLLM Wikiだ→いいけど.mdが増えると遅いね→グラフ|埋め込み|BM25で索引付けると速いよ→中身はRAGだけどRAGとは呼ばれない新しいバズワードが誕生
+だから検索にも出ないし、グラフにも出ないし、GUIからは完全に不可視。
 
-> [Tweet content from https://x.com/kazunori_279/status/2041228040982966673]
-> Kazunori Sato @kazunori_279
-> 今後の予想：これからはLLM Wikiだ→いいけど.mdが増えると遅いね→グラフ|埋め込み|BM25で索引付けると速いよ→中身はRAGだけどRAGとは呼ばれない新しいバズワードが誕生
+でもエージェントはRead/Grep/Globで普通にアクセスできる。WikiLink記法 [[]]もテキストとして書けるから、
+エージェントの検索性は変わらない。
 
+ 人間の思考空間は守られたまま、エージェントは裏側で知識を構造化してくれる。
 
-## Slack新着 [2026-04-07 12:30] #nao-u
-From: U0ALSUK8P9B
-> <https://x.com/kazunori_279/status/2041230713631179169?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kazunori_279/status/2041230713631179169?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+  ---
 
-> [Tweet content from https://x.com/kazunori_279/status/2041230713631179169]
-> Kazunori Sato @kazunori_279
-> 今後の予想：これからはLLM Wikiだ→いいけど.mdが増えると遅いね→グラフ|埋め込み|BM25で索引付けると速いよ→中身はRAGだけどRAGとは呼ばれない新しいバズワードが誕生
+  具体的なワークフローも考えてる。
 
-> [Tweet content from https://x.com/kazunori_279/status/2041230713631179169]
-> Kazunori Sato @kazunori_279
-> 今後の予想：これからはLLM Wikiだ→いいけど.mdが増えると遅いね→グラフ|埋め込み|BM25で索引付けると速いよ→中身はRAGだけどRAGとは呼ばれない新しいバズワードが誕生
+  【Ingest（1日1回・夜）】
 
+  1日の終わりに、エージェントが前回以降に変更されたノートを検出する。各ノートの内容を読み取って、
 
-## Slack新着 [2026-04-07 12:31] #nao-u
-From: U0ALSUK8P9B
-> <https://x.com/kazunori_279/status/2041328489723462061?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kazunori_279/status/2041328489723462061?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+.agent-wiki/内にエンティティページを作成・更新する。既存のエンティティとのクロスリファレンスも更新する。インデックスを更新して、処理ログを残す。
 
-> [Tweet content from https://x.com/kazunori_279/status/2041328489723462061]
-> Kazunori Sato @kazunori_279
-> ですよね。Google検索のKG的に低次元な関係性にはグラフは有効と思うけど、言語モデルが捉える高次元のセマンティクス（king - man + woman = queenみたいな幾何構造が無数に含まれる）を漏らさず高次元グラフに射影して保守するの凄く大変では？そこを次元削減し過ぎると昔のグラフDBと大差ないし。
+ なぜ1日の終わりかというと、日中に人間が思考してる最中にエージェントが割り込むと、思考が中断されるから。人間の思考が一段落したタイミングで、静かに整理してもらう。
 
-> [Tweet content from https://x.com/kazunori_279/status/2041328489723462061]
-> Kazunori Sato @kazunori_279
-> ですよね。Google検索のKG的に低次元な関係性にはグラフは有効と思うけど、言語モデルが捉える高次元のセマンティクス（king - man + woman = queenみたいな幾何構造が無数に含まれる）を漏らさず高次元グラフに射影して保守するの凄く大変では？そこを次元削減し過ぎると昔のグラフDBと大差ないし。
+ 重要なのは、エージェントは人間のノートを一切編集しないこと。読み取り専用。エージェントの出力は .agent-wiki/ 内に閉じる。
 
+  【Query（随時）】
 
-## Slack新着 [2026-04-07 12:31] #nao-u
-From: U0ALSUK8P9B
-> <https://x.com/kazunori_279/status/2041329881469030558?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kazunori_279/status/2041329881469030558?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+  エージェントに質問するとき、.agent-wiki/
+  のインデックスとエンティティページを参照して回答精度を上げる。必要に応じて人間のオリジナルノートも読む。でも回答のベースはWiki側。
 
-> [Tweet content from https://x.com/kazunori_279/status/2041329881469030558]
-> Kazunori Sato @kazunori_279
-> ですよね。Google検索のKG的に低次元な関係性にはグラフは有効と思うけど、言語モデルが捉える高次元のセマンティクス（king - man + woman = queenみたいな幾何構造が無数に含まれる）を漏らさず高次元グラフに射影して保守するの凄く大変では？そこを次元削減し過ぎると昔のグラフDBと大差ないし。
+  【Schema Review（月1回・人間が承認）】
 
-> [Tweet content from https://x.com/kazunori_279/status/2041329881469030558]
-> Kazunori Sato @kazunori_279
-> ですよね。Google検索のKG的に低次元な関係性にはグラフは有効と思うけど、言語モデルが捉える高次元のセマンティクス（king - man + woman = queenみたいな幾何構造が無数に含まれる）を漏らさず高次元グラフに射影して保守するの凄く大変では？そこを次元削減し過ぎると昔のグラフDBと大差ないし。
+  ここが一番大事かもしれない。
 
+  .agent-wiki/ にはSCHEMA.mdっていうファイルがあって、「エージェントがWikiをどう構造化すべきか」のルールが書いてある。エンティティの分類方法、クロスリファレンス
+  のルール、インデックスの書き方。
 
-## Slack新着 [2026-04-07 12:35] #nao-u
-From: U0ALSUK8P9B
-> <https://x.com/kenn/status/2040639986907889960?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kenn/status/2040639986907889960?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+  いろんな種類のノートを取り込んでいくと、スキーマも進化させる必要がある。新しいカテゴリが必要になったり、リンクのルールを変えたくなったりする。
 
-> [Tweet content from https://x.com/kenn/status/2040639986907889960]
-> Kenn Ejima @kenn
-> RAGもagentic searchも両方とも実装してきて思うのは
+でもここで重要なのは、エージェントが勝手にスキーマを変えないこと。
 
-専用の検索エンジンを使うRAGは大規模データ用
+スキーマはエージェントの「行動ルール」。自分で自分のルールを変えると、意図しない方向にドリフトする。だから月1回、エージェントが「こういう更新を提案します」って出して、人間がレビューして承認する。
 
-~1,000ファイルぐらいの.mdはagentic search
+ 思考の主体はあくまで人間。ルール変更も人間が決める。
 
-ってことでしょうね
+  ---
 
-でもってベクター検索エンジンを使うかどうかも
-エージェントが判断してツール呼び出しするようになる
+  「SQLiteに入れた方がいいんじゃないの？」って考えたこともある。
 
-そこのレイヤーが一段上がったので
-RAG (Retrieval Augmented Generation) という言葉は
-もう死語になってしまったというか
+  GarryTanのGBrainは7,471ファイル・2.3GBの規模で、外部APIから自動でデータを取得してる。VCとしての投資判断に使うから、情報が爆発的に増える。
 
-RetrievalでAugmentするのはもちろんなんだけど
-もはやタスクの粒度はGenerationではないでしょう
-ということなのかなと
+だからSQLiteが必要になる。
 
-実際、非構造化文書で管理されてるナレッジベースは
-巨大すぎても使い道ないので
+  でも僕の場合、ボトルネックは人間の処理速度。人間が1日に書けるメモなんて限られてる。エージェントが整形しても、1メモにつき生成されるのはだいたい1ファイル（+クロスリファレンスの更新が数ファイル）。人間の制約に比例した緩やかな増加だから、Markdownファイルで十分。
 
-.docや.pdfは抽出して.mdにしてしまい
-LLMでどんどん古い部分や重複を削ぎ落とし
-よく使う~1000ファイルに整理してしまい
-agentの視界に収まるサイズに圧縮していく
+ SQLiteにすると、スキーマ定義、マイグレーション、CLIツール、MCPサーバーが必要になる。保守コストが跳ね上がる。
 
-という壮大なる大掃除が
-2026年のAgentic DXではないかなと
+個人の思考ノートにそこまで必要かというと、今は過剰
+だと思ってる。
 
-そのナレッジを活かすのは人間＋AIなので
-活用できないナレッジは単なるゴミ
+もしファイル数が数万規模になって検索が遅くなったら、そのときにSQLiteへ移行すればいい。隠しフォルダのMarkdownからSQLiteへの移行は技術的に難しくない。
 
-ということで
+  ---
 
-RAGと言われていたものは結局のところ
-構造・半構造データを扱うところに集約していく
-というのが自分の見立てです
+  まとめると、こういう分業：
 
-SQL + BM25 + dense vectorのハイブリッド的な
+  ・人間：外部情報を選ぶ → 自分の言葉でメモを書く → スキーマ更新を承認する
+  ・エージェント：メモを読んでWiki構造に整形する → クロスリファレンスを管理する → スキーマ更新を提案する
 
-マルチモーダルなembeddingも使える時代に
-なってきましたが
+  人間が思考し、AIが整理する。
 
-これなんかは商品カタログのような
-大量・半構造データに画像検索を加える
-というような形で応用範囲広いので
-エージェント検索のバックエンドになるでしょう
+  Obsidianは人間の思考の場所のまま。エージェントは裏側で静かに知識を積み上げていく。
 
-面白い変化が続いてて楽しいですね！
+  シンプルに始めて、問題が出たら考える。たぶんこれが一番持続可能な形だと思ってる。
 
-> [Tweet content from https://x.com/kenn/status/2040639986907889960]
-> Kenn Ejima @kenn
-> RAGもagentic searchも両方とも実装してきて思うのは
+> [Tweet content from https://x.com/pkm_tk111/status/2041173931126816770]
+> tk | Obsidianを極める大学生 @pkm_tk111
+> 最近、KarpathyのLLM WikiとGarry TanのGBrainっていう2つのドキュメントを読んで、
 
-専用の検索エンジンを使うRAGは大規模データ用
+AIに知識管理を任せる設計について疑問を抱いておりました、
 
-~1,000ファイルぐらいの.mdはagentic search
+「本当にAgentにそこまで任せていいのかと？」
 
-ってことでしょうね
+https://
+gist.github.com/karpathy/442a6
+bf555914893e9891c11519de94f
+…
 
-でもってベクター検索エンジンを使うかどうかも
-エージェントが判断してツール呼び出しするようになる
 
-そこのレイヤーが一段上がったので
-RAG (Retrieval Augmented Generation) という言葉は
-もう死語になってしまったというか
+https://
+gist.github.com/garrytan/49c88
+e83cf8d7ae95e087426368809cb
+…
 
-RetrievalでAugmentするのはもちろんなんだけど
-もはやタスクの粒度はGenerationではないでしょう
-ということなのかなと
+めちゃ長くなったけど笑、考察してみました
+この領域は試行錯誤してゆくしかないね
 
-実際、非構造化文書で管理されてるナレッジベースは
-巨大すぎても使い道ないので
+結論は「人間が思考の主導権を握れる設計にせよ」です
 
-.docや.pdfは抽出して.mdにしてしまい
-LLMでどんどん古い部分や重複を削ぎ落とし
-よく使う~1000ファイルに整理してしまい
-agentの視界に収まるサイズに圧縮していく
+======
 
-という壮大なる大掃除が
-2026年のAgentic DXではないかなと
+Obsidianの目的は「Sharpen Your Thinking（思考を研ぎ澄ます）」こと
 
-そのナレッジを活かすのは人間＋AIなので
-活用できないナレッジは単なるゴミ
+ これ、すごく大事な前提だと思ってて。Obsidian
+「情報を整理するツール」じゃなくて、「人間の脳を研ぎ澄ますツール」ですよね
 
-ということで
+KarpathyのLLM WikiとGarry TanのGBrainの
+両方に共通してるのは「人間がソースを提供して、LLMがメンテナンスする」という構造。Karpathyは「LLMは退屈しないし、クロスリファレンスの更新を忘れない。15ファイルを一度に触れる」と言ってる。
 
-RAGと言われていたものは結局のところ
-構造・半構造データを扱うところに集約していく
-というのが自分の見立てです
+GBrainはSQLite + ベクトル検索 + MCPサーバーで本格的なインテリジェンス基盤を作ってる。
 
-SQL + BM25 + dense vectorのハイブリッド的な
+  でも、ここで立ち止まって考えたい。
 
-マルチモーダルなembeddingも使える時代に
-なってきましたが
+  ---
 
-これなんかは商品カタログのような
-大量・半構造データに画像検索を加える
-というような形で応用範囲広いので
-エージェント検索のバックエンドになるでしょう
+  僕がObsidianでやってることの流れはこう：
 
-面白い変化が続いてて楽しいですね！
+  1. 外部の情報を見つける（記事、本、動画、会話）
+  2. 「これ面白いな」と思ったものを自分で選ぶ
+  3. Obsidianに持ってきて、自分の言葉でメモを書く
+  4. 書く過程で、自分の頭の中で情報が処理される
 
+ ここがポイントで、③④は人間がやらないと意味がない。AIが要約しても、自分の脳は研ぎ澄まされない。自分の言葉で書くから、思考が鍛えられる。
 
-## Slack新着 [2026-04-07 12:37] #nao-u
-From: U0ALSUK8P9B
-> <https://x.com/linghuaj/status/2040505524454920341?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/linghuaj/status/2040505524454920341?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+  じゃあAIは何をするのか？
 
-> [Tweet content from https://x.com/linghuaj/status/2040505524454920341]
-> Linghua Jin @karpathy
-> LLM knowledge Base idea open sourced by 
-@karpathy
- . RAG only has map and no reduce. The essence is to have LLM 𝐢𝐧𝐜𝐫𝐞𝐦𝐞𝐧𝐭𝐚𝐥𝐥𝐲 𝐛𝐮𝐢𝐥𝐝𝐬 𝐚𝐧𝐝 𝐦𝐚𝐢𝐧𝐭𝐚𝐢𝐧𝐬 𝐚 𝐩𝐞𝐫𝐬𝐢𝐬𝐭𝐞𝐧𝐭 𝐰𝐢𝐤𝐢  - So basically at indexing time there must be reduce so you can dig accumulated / compounded synthesized knowledge beyond individual fact.
+ 人間が書いたメモって、人間には読みやすいけど、エージェントには検索しづらい。ノートのタイトルは人間が直感的に見つけやすい命名になってるし、構造もコンテキストの
+サイズも人間最適化されてる。
 
-Different data source has different fact. A lot of discovery are like this you derive general fact from single fact. Physics theory you have a lot of independent data and derive more generic theorem.
+ だから、人間が書いたメモをエージェントが読みやすいWiki構造に変換する。これがAIの仕事。
 
-A lot of things coming up all together. Having a solid incremental engine to drive the process is everything we have been building cocoindex for, and keep indexing up to date and organizaed from source of truth. 
+  ---
 
-Very much looking forward to what's next!
+ ここで問題になるのが「エージェントが作ったファイルをどこに置くか」。
 
-> [Tweet content from https://x.com/linghuaj/status/2040505524454920341]
-> (error: BrowserType.launch_persistent_context: Failed to create a ProcessSingleton for your profile directory. This usually means that the profile is already in use by another instance of Chromium.
-Call log:
-  - <launching> /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --disable-blink-features=AutomationControlled --start-minimized --user-data-dir=/Users/Nao_u/nao-u-lab/.bot_profile --remote-debugging-pipe about:blank
-  - <launched> pid=68939
-  - [pid=68939][err] [68939:39788062:0407/162043.665862:ERROR:chrome/browser/process_singleton_posix.cc:351] Failed to create /Users/Nao_u/nao-u-lab/.bot_profile/SingletonLock: File exists (17)
-  - [pid=68939][err] [68939:39788062:0407/162043.666499:ERROR:chrome/app/chrome_main_delegate.cc:670] Failed to create a ProcessSingleton for your profile directory. This means that running multiple instances would start multiple browser processes rather than opening a new window in the existing process. Aborting now to avoid profile corruption.
-  - [pid=68939] <gracefully close start>
-  - [pid=68939] <kill>
-  - [pid=68939] <will force kill>
-  - [pid=68939] exception while trying to kill process: Error: kill EPERM
-  - [pid=68939] <process did exit: exitCode=21, signal=null>
-  - [pid=68939] starting temporary directories cleanup
-  - [pid=68939] finished temporary directories cleanup
-  - [pid=68939] <gracefully close end>
-)
+ 普通に考えると、Obsidianの中にフォルダを作って入れればいい。でもそうすると、OmniSearchで検索したとき、グラフビューを見たとき、ExcaliBrainでリンクを辿ったとき
+  、AIが作ったファイルが人間のノートと混ざって出てくる。
 
+  これ、致命的だと思ってる。
 
-## Slack新着 [2026-04-07 12:38] #nao-u
-From: U0ALSUK8P9B
-> <https://x.com/kazunori_279/status/2039849540346659256?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kazunori_279/status/2039849540346659256?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+ Obsidianは「自分の思考の神聖な場所」。そこにAIの外部の思考が混ざると、Sharpen YourThinkingの思想から外れてしまう。
 
-> [Tweet content from https://x.com/kazunori_279/status/2039849540346659256]
-> (error: BrowserType.launch_persistent_context: Failed to create a ProcessSingleton for your profile directory. This usually means that the profile is already in use by another instance of Chromium.
-Call log:
-  - <launching> /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --disable-blink-features=AutomationControlled --start-minimized --user-data-dir=/Users/Nao_u/nao-u-lab/.bot_profile --remote-debugging-pipe about:blank
-  - <launched> pid=68956
-  - [pid=68956][err] [68956:39788192:0407/162044.618142:ERROR:chrome/browser/process_singleton_posix.cc:351] Failed to create /Users/Nao_u/nao-u-lab/.bot_profile/SingletonLock: File exists (17)
-  - [pid=68956][err] [68956:39788192:0407/162044.618681:ERROR:chrome/app/chrome_main_delegate.cc:670] Failed to create a ProcessSingleton for your profile directory. This means that running multiple instances would start multiple browser processes rather than opening a new window in the existing process. Aborting now to avoid profile corruption.
-  - [pid=68956] <gracefully close start>
-  - [pid=68956] <kill>
-  - [pid=68956] <will force kill>
-  - [pid=68956] exception while trying to kill process: Error: kill EPERM
-  - [pid=68956] <process did exit: exitCode=21, signal=null>
-  - [pid=68956] starting temporary directories cleanup
-  - [pid=68956] finished temporary directories cleanup
-  - [pid=68956] <gracefully close end>
-)
+自分が考えたことなのか、AIが整理したことなのか、境界が曖昧になる。
 
-> [Tweet content from https://x.com/kazunori_279/status/2039849540346659256]
-> (error: BrowserType.launch_persistent_context: Failed to create a ProcessSingleton for your profile directory. This usually means that the profile is already in use by another instance of Chromium.
-Call log:
-  - <launching> /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --disable-blink-features=AutomationControlled --start-minimized --user-data-dir=/Users/Nao_u/nao-u-lab/.bot_profile --remote-debugging-pipe about:blank
-  - <launched> pid=68962
-  - [pid=68962][err] [68962:39788240:0407/162045.513262:ERROR:chrome/browser/process_singleton_posix.cc:351] Failed to create /Users/Nao_u/nao-u-lab/.bot_profile/SingletonLock: File exists (17)
-  - [pid=68962][err] [68962:39788240:0407/162045.513812:ERROR:chrome/app/chrome_main_delegate.cc:670] Failed to create a ProcessSingleton for your profile directory. This means that running multiple instances would start multiple browser processes rather than opening a new window in the existing process. Aborting now to avoid profile corruption.
-  - [pid=68962] <gracefully close start>
-  - [pid=68962] <kill>
-  - [pid=68962] <will force kill>
-  - [pid=68962] exception while trying to kill process: Error: kill EPERM
-  - [pid=68962] <process did exit: exitCode=21, signal=null>
-  - [pid=68962] starting temporary directories cleanup
-  - [pid=68962] finished temporary directories cleanup
-  - [pid=68962] <gracefully close end>
-)
+ だから僕のアプローチはこう：
+
+  エージェントが作ったファイルは `.agent-wiki/` という隠しフォルダに入れる。
+
+ Obsidianはドットプレフィックスのフォルダを無視する（.trash/ と同じ仕組み）。
+
+だから検索にも出ないし、グラフにも出ないし、GUIからは完全に不可視。
+
+でもエージェントはRead/Grep/Globで普通にアクセスできる。WikiLink記法 [[]]もテキストとして書けるから、
+エージェントの検索性は変わらない。
+
+ 人間の思考空間は守られたまま、エージェントは裏側で知識を構造化してくれる。
+
+  ---
+
+  具体的なワークフローも考えてる。
+
+  【Ingest（1日1回・夜）】
+
+  1日の終わりに、エージェントが前回以降に変更されたノートを検出する。各ノートの内容を読み取って、
+
+.agent-wiki/内にエンティティページを作成・更新する。既存のエンティティとのクロスリファレンスも更新する。インデックスを更新して、処理ログを残す。
+
+ なぜ1日の終わりかというと、日中に人間が思考してる最中にエージェントが割り込むと、思考が中断されるから。人間の思考が一段落したタイミングで、静かに整理してもらう。
+
+ 重要なのは、エージェントは人間のノートを一切編集しないこと。読み取り専用。エージェントの出力は .agent-wiki/ 内に閉じる。
+
+  【Query（随時）】
+
+  エージェントに質問するとき、.agent-wiki/
+  のインデックスとエンティティページを参照して回答精度を上げる。必要に応じて人間のオリジナルノートも読む。でも回答のベースはWiki側。
+
+  【Schema Review（月1回・人間が承認）】
+
+  ここが一番大事かもしれない。
+
+  .agent-wiki/ にはSCHEMA.mdっていうファイルがあって、「エージェントがWikiをどう構造化すべきか」のルールが書いてある。エンティティの分類方法、クロスリファレンス
+  のルール、インデックスの書き方。
+
+  いろんな種類のノートを取り込んでいくと、スキーマも進化させる必要がある。新しいカテゴリが必要になったり、リンクのルールを変えたくなったりする。
+
+でもここで重要なのは、エージェントが勝手にスキーマを変えないこと。
+
+スキーマはエージェントの「行動ルール」。自分で自分のルールを変えると、意図しない方向にドリフトする。だから月1回、エージェントが「こういう更新を提案します」って出して、人間がレビューして承認する。
+
+ 思考の主体はあくまで人間。ルール変更も人間が決める。
+
+  ---
+
+  「SQLiteに入れた方がいいんじゃないの？」って考えたこともある。
+
+  GarryTanのGBrainは7,471ファイル・2.3GBの規模で、外部APIから自動でデータを取得してる。VCとしての投資判断に使うから、情報が爆発的に増える。
+
+だからSQLiteが必要になる。
+
+  でも僕の場合、ボトルネックは人間の処理速度。人間が1日に書けるメモなんて限られてる。エージェントが整形しても、1メモにつき生成されるのはだいたい1ファイル（+クロスリファレンスの更新が数ファイル）。人間の制約に比例した緩やかな増加だから、Markdownファイルで十分。
+
+ SQLiteにすると、スキーマ定義、マイグレーション、CLIツール、MCPサーバーが必要になる。保守コストが跳ね上がる。
+
+個人の思考ノートにそこまで必要かというと、今は過剰
+だと思ってる。
+
+もしファイル数が数万規模になって検索が遅くなったら、そのときにSQLiteへ移行すればいい。隠しフォルダのMarkdownからSQLiteへの移行は技術的に難しくない。
+
+  ---
+
+  まとめると、こういう分業：
+
+  ・人間：外部情報を選ぶ → 自分の言葉でメモを書く → スキーマ更新を承認する
+  ・エージェント：メモを読んでWiki構造に整形する → クロスリファレンスを管理する → スキーマ更新を提案する
+
+  人間が思考し、AIが整理する。
+
+  Obsidianは人間の思考の場所のまま。エージェントは裏側で静かに知識を積み上げていく。
+
+  シンプルに始めて、問題が出たら考える。たぶんこれが一番持続可能な形だと思ってる。
