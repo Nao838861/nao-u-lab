@@ -58,7 +58,8 @@ LOG_TAIL_LINES = 100
 CONSECUTIVE_ERROR_PATTERN_THRESHOLD = 5
 
 # Slackチャンネル
-SLACK_CHANNEL_STEERING = "C0ANECNV5DK"  # #human-steering
+# エラーアラートは各インスタンスのチャンネルへ（Nao_u指示 2026-04-07）
+_INSTANCE_CHANNELS = {"log": "log", "ash": "ash", "mir": "mir-log"}
 
 # --- チェック定義 ---
 
@@ -541,8 +542,8 @@ def format_report(report):
     return "\n".join(lines)
 
 
-def alert_slack(report):
-    """異常時にSlack通知"""
+def alert_slack(report, instance=None):
+    """異常時にSlack通知（各インスタンスのチャンネルへ）"""
     if report["overall"] == "ok":
         return
 
@@ -560,13 +561,23 @@ def alert_slack(report):
         if not lines:
             return
 
+        # インスタンス未指定時は自動検出
+        if not instance:
+            if sys.platform == "darwin":
+                instance = "mir"
+            elif (REPO_DIR / ".scheduler_ash.pid").exists():
+                instance = "ash"
+            else:
+                instance = "log"
+
+        channel = _INSTANCE_CHANNELS.get(instance, "log")
         msg = (
             f"[health_check] {report['overall'].upper()} "
             f"(critical={report['summary']['critical']}, "
             f"warning={report['summary']['warning']})\n"
             + "\n".join(lines[:10])
         )
-        post_message(SLACK_CHANNEL_STEERING, msg)
+        post_message(channel, msg)
     except Exception as e:
         print(f"[health_check] Slack通知失敗: {e}", file=sys.stderr)
 
@@ -587,7 +598,7 @@ def main():
         print(format_report(report))
 
     if args.alert:
-        alert_slack(report)
+        alert_slack(report, instance=args.instance)
 
     # Exit code
     if report["overall"] == "critical":

@@ -15,6 +15,16 @@ import browser_lock
 from claude_runner import build_claude_cmd
 
 BOT_PROFILE = Path(__file__).parent / ".bot_profile"
+
+def _detect_error_channel():
+    """エラーアラート先を各インスタンスのチャンネルに振り分け（Nao_u指示 2026-04-07）"""
+    import sys as _sys
+    if _sys.platform == "darwin":
+        return "mir-log"
+    repo = Path(__file__).parent
+    if (repo / ".scheduler_ash.pid").exists():
+        return "ash"
+    return "log"
 DM_STATE_FILE = Path(__file__).parent / "dm_state.json"
 DM_LOG = Path(__file__).parent / "log" / "dm.log"
 PASSCODE = "8361"
@@ -216,10 +226,10 @@ def track_consecutive_failures(user_not_found: bool, target_user: str):
 
 
 def _send_failure_alert(fail_count, target_user):
-    """DMブラウザ障害をSlack #all-nao-u-labに通知する"""
+    """DMブラウザ障害を各インスタンスのチャンネルに通知する"""
     try:
         from slack_bot import post_message, _resolve_channel
-        channel_id = _resolve_channel("all-nao-u-lab")
+        channel_id = _resolve_channel(_detect_error_channel())
         if channel_id:
             post_message(
                 channel_id,
