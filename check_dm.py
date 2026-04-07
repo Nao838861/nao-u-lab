@@ -95,18 +95,25 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
             time.sleep(4)
             track_consecutive_failures(False, target_user)
 
-            # Extract last message text from LI elements (individual message bubbles)
-            # This avoids capturing UI chrome, relative timestamps, and other dynamic content
+            # Extract last few message texts from LI elements for stable fingerprinting
+            # Uses multiple messages to avoid flip-flop when DOM order varies between loads
             last_msg_text = page.evaluate("""() => {
                 const main = document.querySelector('main');
                 if (!main) return '';
                 const lis = main.querySelectorAll('li');
                 if (lis.length === 0) return '';
-                // Get last LI's innermost text (the actual message)
-                const lastLi = lis[lis.length - 1];
-                const spans = lastLi.querySelectorAll('span[dir=""]');
-                if (spans.length > 0) return spans[spans.length - 1].textContent || '';
-                return lastLi.textContent || '';
+                // Collect text from last 3 LIs, sort for order-independence
+                const texts = [];
+                const start = Math.max(0, lis.length - 3);
+                for (let i = start; i < lis.length; i++) {
+                    const spans = lis[i].querySelectorAll('span[dir=""]');
+                    let t = '';
+                    if (spans.length > 0) t = spans[spans.length - 1].textContent || '';
+                    else t = lis[i].textContent || '';
+                    if (t.trim()) texts.push(t.trim().substring(0, 80));
+                }
+                texts.sort();
+                return texts.join('||');
             }""")
 
             # Also get full conversation for context when new message detected
@@ -114,7 +121,9 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
 
             # Fingerprint: use last message text only (stable, no timestamps/UI)
             import re
-            fingerprint = re.sub(r'\d+', '', last_msg_text).strip() if last_msg_text else ""
+            # Strip digits, colons, dots, and other UI chrome for stable fingerprinting
+            fingerprint = re.sub(r'[\d:：.·•\s]+$', '', last_msg_text).strip() if last_msg_text else ""
+            fingerprint = re.sub(r'\d+', '', fingerprint).strip() if fingerprint else ""
             prev_state = load_state()
             fp_key = f"fingerprint_{target_user}"
 

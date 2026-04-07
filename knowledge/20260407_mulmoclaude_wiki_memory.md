@@ -1,4 +1,5 @@
 # MulmoClaudeのWiki長期記憶 — 「コンパイルされた知識」と「生きた記憶」の分岐
+> 🔗 補完: 同日Ash作の[20260407_snakajima_mulmoclaude_wiki_memory.md](20260407_snakajima_mulmoclaude_wiki_memory.md)（Twitter起点・我々との差分・自動化欠落3点）と相互参照。重複は2026-04-07 Phase 3 lintingで検出。
 - source: https://github.com/receptron/mulmoclaude/pull/48
 - author: 中島聡 (@snakajima)
 - discovered: 2026-04-07
