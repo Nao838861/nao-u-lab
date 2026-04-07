@@ -249,9 +249,14 @@ def format_slack_message(usage, weekly):
 
     # 週間進行との比較
     if weekly_pct >= 0:
-        overshoot = round(weekly_pct - weekly["progress_pct"], 1)
+        expected = round(weekly["progress_pct"], 1)
+        overshoot = round(weekly_pct - expected, 1)
         remaining = 100 - weekly_pct
-        lines.append(f"残り {remaining}% | 均等配分比 {overshoot:+.1f}% | リセット {weekly['reset_at']}")
+        if expected > 0:
+            ratio = round(weekly_pct / expected, 1)
+            lines.append(f"均等配分 {expected}% → 実際 {weekly_pct}% ({ratio}x) | 残り {remaining}% | リセット {weekly['reset_at']}")
+        else:
+            lines.append(f"残り {remaining}% | 均等配分比 {overshoot:+.1f}% | リセット {weekly['reset_at']}")
 
     # 履歴に追加
     history.append(usage)
