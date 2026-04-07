@@ -69,7 +69,7 @@ def _save_state(state):
 
 
 def _alert(message, state, no_alert=False):
-    """#all-nao-u-labにアラートを送る。同じアラートは2時間に1回まで。"""
+    """各インスタンスのチャンネルにアラートを送る。同じアラートは2時間に1回まで。"""
     now = time.time()
     alert_key = message[:50]
     recent = [a for a in state.get("alerts_sent", [])
@@ -83,7 +83,9 @@ def _alert(message, state, no_alert=False):
 
     try:
         from slack_bot import post_message
-        result = post_message("all-nao-u-lab",
+        _instance_channels = {"Log": "log", "Ash": "ash", "Mir": "mir-log"}
+        channel = _instance_channels.get(INSTANCE, "log")
+        result = post_message(channel,
                               f"[{INSTANCE} health_check] {message}")
         if result and result.get("ok"):
             state.setdefault("alerts_sent", []).append({"key": alert_key, "ts": now})

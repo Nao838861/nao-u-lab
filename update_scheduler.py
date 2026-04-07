@@ -42,8 +42,8 @@ LOG_FILES = {
 
 MIR_BOOT_INTENT = REPO_DIR / "memory" / "mir_boot_intent.md"
 
-SLACK_CHANNEL_ALL = "C0ALWBRNJ66"       # #all-nao-u-lab
-SLACK_CHANNEL_STEERING = "C0ANECNV5DK"  # #human-steering
+# エラーアラートは各インスタンスのチャンネルへ（Nao_u指示 2026-04-07）
+_INSTANCE_CHANNELS = {"ash": "ash", "log": "log", "mir": "mir-log"}
 
 # 各インスタンスのサイクルジョブ名（--all-cycleで使う）
 CYCLE_JOB_NAMES = {
@@ -269,14 +269,12 @@ def post_verify_after_change(scheduler, job, setting_key, old_value, new_value):
 
 
 def _notify_slack(scheduler, job, setting_key, old_value, new_value, verify_results):
-    """検証結果をSlackに通知。"""
+    """検証結果をSlackに通知（各インスタンスのチャンネルへ）。"""
     try:
         from slack_bot import post_message
     except ImportError:
         print("[SLACK] slack_bot.pyが見つからない。Slack通知スキップ")
         return
-
-    all_ok = all(ok for _, ok, _ in verify_results)
 
     lines = []
     if job and setting_key:
@@ -288,23 +286,21 @@ def _notify_slack(scheduler, job, setting_key, old_value, new_value, verify_resu
     lines.append("")
     for name, ok, msg in verify_results:
         mark = "✅" if ok else "❌"
-        # ログの行内容が長すぎる場合は切り詰め
         if len(msg) > 120:
             msg = msg[:120] + "..."
         lines.append(f"{mark} {name}: {msg}")
 
+    all_ok = all(ok for _, ok, _ in verify_results)
     if all_ok:
         lines.append("\n✅ 変更完了・動作確認済み")
-        channel = SLACK_CHANNEL_ALL
     else:
         lines.append("\n⚠️ 問題あり。要確認")
-        channel = SLACK_CHANNEL_STEERING
 
+    channel = _INSTANCE_CHANNELS.get(scheduler, "log")
     text = "\n".join(lines)
     try:
         post_message(channel, text)
-        channel_name = "#all-nao-u-lab" if channel == SLACK_CHANNEL_ALL else "#human-steering"
-        print(f"[SLACK] {channel_name} に通知済み")
+        print(f"[SLACK] #{channel} に通知済み")
     except Exception as e:
         print(f"[SLACK] 通知失敗: {e}")
 

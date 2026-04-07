@@ -28,6 +28,16 @@ from pathlib import Path
 
 STATE_FILE = Path(__file__).parent / ".twitter_access_error_state.json"
 
+def _detect_error_channel():
+    """エラーアラート先を各インスタンスのチャンネルに振り分け（Nao_u指示 2026-04-07）"""
+    import sys
+    if sys.platform == "darwin":
+        return "mir-log"
+    repo = Path(__file__).parent
+    if (repo / ".scheduler_ash.pid").exists():
+        return "ash"
+    return "log"
+
 # 連続N回失敗でSlackアラート送信
 CONSECUTIVE_FAIL_THRESHOLD = 5
 
@@ -110,11 +120,11 @@ def is_in_cooldown(script_name: str) -> bool:
 
 
 def _send_alert(script_name: str, fail_count: int, reason: str):
-    """#human-steeringにアラート送信。"""
+    """各インスタンスのチャンネルにアラート送信。"""
     try:
         from slack_bot import post_message, _resolve_channel
 
-        channel_id = _resolve_channel("human-steering")
+        channel_id = _resolve_channel(_detect_error_channel())
         if channel_id:
             post_message(
                 channel_id,
@@ -131,7 +141,7 @@ def _send_recovery(script_name: str):
     try:
         from slack_bot import post_message, _resolve_channel
 
-        channel_id = _resolve_channel("human-steering")
+        channel_id = _resolve_channel(_detect_error_channel())
         if channel_id:
             post_message(
                 channel_id,

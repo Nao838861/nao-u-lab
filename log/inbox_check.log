@@ -1179,7 +1179,10 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 
 **対処内容:**
 - Nao_uの#human-steering指示（使用量スクレイピング+6時間おきSlack自動投稿）をAshのinbox (`memory/inbox_win2.md
-[2026-04-07 07:37:40] Claude woken for win2: 完了。対処まとめ：
+[2026-04-07 07:36:18] Inbox win has content — waking Claude
+[2026-04-07 07:41:18] Claude wake timed out for win — restoring inbox
+[2026-04-07 07:41:23] Inbox win has content — waking Claude
+[2026-04-07 07:41:55] Claude woken for win: 対応完了。既にコミット済みの変更（`check_usage.py`の投稿先を`#all-nao-u-lab`に変更）の追認メッセージだったので、Slackで対応済みの旨を返信した。
 
-1. **check_usage.py** — 投稿先を `#nao-u` → `#all-nao-u-lab` に修正
-2. **scheduler_ash.py** — `u
+[2026-04-07 08:54:32] Inbox win has content — waking Claude
+[2026-04-07 09:00:12] Inbox win has content — waking Claude
