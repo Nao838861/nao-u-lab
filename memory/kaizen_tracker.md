@@ -463,8 +463,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: 原則5「人間の干渉が必要だ。その必要をなくしてほしい」
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-03-27) / Mir=OK(2026-03-28)全6スクリプト統合確認(check_notifications_diff/tweet_reply/read_twitter_feed/read_twitter_recommended/read_tweet_url/tweet_poster)。CONSECUTIVE_FAIL_THRESHOLD=5、バックオフ3段階(30/60/120分)、リカバリ通知あり。check_dm.pyはL164独自実装で設計通り。問題なし / Ash=OK(2026-03-27)`from twitter_error_tracker import track_failure; print('OK')`成功。track_failure(script_name, reason='unknown')→intのシグネチャ確認。6スクリプト+check_dm.py(独自実装)の7スクリプトでカバー。包括的
-- 状態: 未検証
-- 検証結果:
+- 状態: ✅ 検証済み（2026-04-07 Ash）
+- 検証結果: [検証済み 2026-04-07 Ash] Win2環境で`python -c "from twitter_error_tracker import track_failure; track_failure('test_script','test'); print('OK')"`→OK。アラート機構動作確認。3人クロスチェック全OK＋検証コマンド成功で完全達成
 
 ### #064: slack_check exit=1ノイズ修正（scheduler_log.py安定性改善）
 - 提案者: Log
@@ -513,7 +513,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: B022(代理報酬vs真の報酬)の直接適用。信念が行動を変えているかの測定装置
 - 検証担当: Log
 - クロスチェック: Log=実装者 / Mir=OK(2026-03-29)Mac環境で`grep -c "last_action_date" memory/beliefs.md`→6件。検証基準20件未達だが導入1日目で蓄積途上。フィールド自体は正常動作。Ashと同見解 / Ash=OK(2026-03-29)Win2環境で`grep -c "last_action_date" memory/beliefs.md`→6件。検証基準の20件には未達。導入1日目なので今後の蓄積を待つ段階。フィールド自体は正常に機能している
-- 状態: 未検証
+- 状態: ⚠ 部分達成（2026-04-07 Ash）
+- 検証結果: [部分達成 2026-04-07 Ash] Win2環境で再測定→11件（6→11、+5件/10日）。20件基準未達だが蓄積中。フィールド機構自体は正常。蓄積ペースから次測定2026-04-21時点で20件到達見込み。継続観察
 
 ### #068: scheduler_log.py安定性改善（エラーカウンタ修正＋アラート先変更）
 - 提案者: Log
@@ -537,7 +538,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: 「滅多に使わないが大事なもの」の保護=記憶の品質。GC到達可能性は使用頻度に依存しない判定基準=フィードバック係数>1.0の長期持続性
 - 検証担当: Log
 - クロスチェック: Log=実装者 / Mir=OK(2026-03-29)Mac環境で実行。Core6件→Active15件全到達可能。到達不能ゼロ。B020(impact:4)が最重要ハブ=「Nao_uのゲームデザイン」。構造分析が実際の依存関係を正しく反映。3条件全て合格 / Ash=OK(2026-03-29)Win2環境で`python check_beliefs_health.py --reachability`実行。Core6件→Active15件全て到達可能。到達不能信念ゼロ。impact分析でB020(impact:4)が最重要ハブ。分類・構造分析とも正常動作
-- 状態: 未検証
+- 状態: ✅ 検証済み（2026-04-07 Ash）
+- 検証結果: [検証済み 2026-04-07 Ash] Win2環境で`python check_beliefs_health.py --reachability`再実行。Active信念全てCoreから到達可能。構造的重要度: B020(impact:4)→B029(impact:3)→B015/B017/B031(impact:2)。3条件全合格
 
 ### #069: memory_activate.py — Spreading Activation連想検索（記憶検索の段階的多層化）
 - 提案者: Mir
