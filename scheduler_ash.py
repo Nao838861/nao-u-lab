@@ -172,6 +172,14 @@ JOBS = [
         # hour_filter廃止 (INC-007教訓: 時刻ベース判定は禁止。interval_secで6時間間隔を保証)
     },
     {
+        "name": "check_usage",
+        "script": "check_usage.py",
+        "args": [],
+        "interval_sec": 6 * 3600,  # 6時間ごと (Nao_u指示 2026-04-07)
+        "timeout": 180,
+        "stagger": 240,
+    },
+    {
         "name": "health_check",
         "script": "health_check.py",
         "args": ["--alert", "--instance", "ash"],
