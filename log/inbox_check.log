@@ -1200,3 +1200,8 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 **対処まとめ:**
 - Nao_uの概算(14/4=3.5%)は正しい。コードの計算結果(3.57%)とも一致
 - 問題は計算ではなく**表示のわかりにくさ** — 「均等配分比 +6.4
+[2026-04-07 10:00:22] Inbox win2 has content — waking Claude
+[2026-04-07 10:03:40] Claude woken for win2: 完了。対処内容：
+
+1. **nao_u_live.md** — Nao_uの原文を記録（伝言ゲーム防止）
+2. **game_development.md** — 残課題にメタパターン学習タスク追加
