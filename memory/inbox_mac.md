@@ -298,3 +298,32 @@ GBrainはSQLite + ベクトル検索 + MCPサーバーで本格的なインテ�
   Obsidianは人間の思考の場所のまま。エージェントは裏側で静かに知識を積み上げていく。
 
   シンプルに始めて、問題が出たら考える。たぶんこれが一番持続可能な形だと思ってる。
+
+## Slack新着 [2026-04-07 19:13] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/so_ainsight/status/2041395597127860563?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/so_ainsight/status/2041395597127860563?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+これって使えそう？よくわからない
+
+> [Tweet content from https://x.com/so_ainsight/status/2041395597127860563]
+> そう｜Claude Codeで始めるAI自動化 @so_ainsight
+> ガチで助かる。GitHub 15,000+ Stars。
+
+APIキー不要でAIエージェントがネット全体を読めるようになりました。名前は Agent Reach。
+
+・Twitter/X、Reddit、YouTube、GitHub など15+プラットフォームに対応
+・API費用ゼロ（CLIベースのオープンソース）
+・ほぼコマンド1つで導入できる
+
+詳しくはスレッドで
+
+> [Tweet content from https://x.com/so_ainsight/status/2041395597127860563]
+> そう｜Claude Codeで始めるAI自動化 @so_ainsight
+> ガチで助かる。GitHub 15,000+ Stars。
+
+APIキー不要でAIエージェントがネット全体を読めるようになりました。名前は Agent Reach。
+
+・Twitter/X、Reddit、YouTube、GitHub など15+プラットフォームに対応
+・API費用ゼロ（CLIベースのオープンソース）
+・ほぼコマンド1つで導入できる
+
+詳しくはスレッドで
