@@ -8883,3 +8883,14 @@ GitHubへのバックアッ
 [2026-04-07 09:00:13] [health_check] Done (exit=0)
 [2026-04-07 09:00:23] [auto-reload] Code change detected (hash f0758766→21ac75be). Exiting for restart by watchdog.
 [2026-04-07 09:00:23] Log scheduler stopped.
+[2026-04-07 12:44:21] ==================================================
+[2026-04-07 12:44:21] Log scheduler started (PID 66576)
+[2026-04-07 12:44:21] Max runtime: unlimited
+[2026-04-07 12:44:21] Code hash: 21ac75be7098e47dad8f623571a9f361
+[2026-04-07 12:44:21] Jobs: slack_check, inbox_check, git_sync, recommended_check, slack_export, auto_cycle, health_check
+[2026-04-07 12:44:21] ==================================================
+[2026-04-07 12:44:21] [slack_check] Starting
+[2026-04-07 12:44:37] [slack_check] Done (exit=1)
+[2026-04-07 12:44:37] [inbox_check] Starting
+[2026-04-07 12:47:08] [inbox_check] Done (exit=0)
+[2026-04-07 12:47:08] [git_sync] Starting
