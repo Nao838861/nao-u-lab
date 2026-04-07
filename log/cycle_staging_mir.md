@@ -1,32 +1,13 @@
-# サイクルステージング 2026-04-07 18:03
+# サイクルステージング 2026-04-07 23:57
 
 ## Pre-check結果
-- 【検証アラート】⚠ 期限超過の検証が11件:
+- 【検証アラート】⚠ 期限超過の検証が3件:
   #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式） (期限: 2026-03-31, 担当: Log)
     検証手段: (1) `python shadowbox.py --stats` で148件以上のペア (2) 1週間で3人が計5回以上実行 (3) 予測と実際の差分から得た洞察が1件以上beliefs.mdに記録される
   #045: shadowbox.py セッションログ機能（予測エラーの蓄積と振り返り） (期限: 2026-03-31, 担当: Log)
     検証手段: (1) `python shadowbox.py --review` でセッションが表示される (2) 1週間で3人が計5セッション以上記録 (3) `python shadowbox.py --stats` に累計セッション数が表示される
-  #049: session_primer if-thenルール9「tasteチェック」追加 (期限: 2026-03-31, 担当: Log)
-    検証手段: (1) 3サイクル後にルール9が発動した回数を遵守率に記録 (2) `grep -c "taste" log/slack_archive/kaizen-log.jsonl` で次7日間のtaste改善言及数が3件以上
-  #050: session_primer taste訓練フレームワーク統合（Kowalski 3段階 + ShadowBox rule C） (期限: 2026-03-31, 担当: Log)
-    検証手段: `grep -c "制作" memory/session_primer.md` で1件以上 + 次3サイクルで制作アクション（ゲーム/ツイート/コード以外の創作物）が1件以上出る
-  #059: docs/game_design_principles.md — Nao_uの6ゲーム感想からの設計原則抽出 (期限: 2026-04-01, 担当: Log)
-    検証手段: `cat docs/game_design_principles.md` で6原則が記載されていること + 次に作るゲーム(Pot #7以降)に対するNao_uのフィードバックで「何をすればいいかわからない」系コメントの減少
-  #062: Pot #8 "Hinge" (蝶番) — 文脈依存意味変容のゲーム化（ACAN論文着想） (期限: 2026-04-02, 担当: Log)
-    検証手段: (1) `python game/hinge.py` が起動し7問プレイ可能 (2) 各蝶番文が2つの物語でgenuinely異なる意味を持つか目視確認 (3) ジュースオーディット: 蝶番文だけ見て正解を当てられないことを確認（＝前後の文脈を読まなければ解けない）
-  #063: Pot #9 "The Index" (索引) — B002「忘却は機能」のprocedural rhetoric体験版 (期限: 2026-04-03, 担当: Log)
-    検証手段: (1) `python game/Pot/Pot009_the_index.py` が起動し全12記憶+6問出題が完走する (2) 索引あり正答率>索引なし正答率を5回中3回以上確認 (3) Nao_uが遊んで感想をくれる
-  #058: twitter_error_tracker.py全スクリプト統合完了 (期限: 2026-04-03, 担当: Log)
-    検証手段: `python -c "from twitter_error_tracker import track_failure; track_failure('test_script','test'); print('OK')"` でアラート機構が動作すること
   #067: beliefs.md last_action_dateフィールド導入（行動変容力の追跡） (期限: 2026-04-04, 担当: Log)
-    検証手段: (1) `grep -c "last_action_date" memory/beliefs.md` で20件以上 (2) check_beliefs_health.pyに--action-dateオプション追加 (3) 6週間経過後にArchive候補が自動識別可能
-  #068: scheduler_log.py安定性改善（エラーカウンタ修正＋アラート先変更） (期限: 2026-03-30, 担当: Log)
-    検証手段: 48時間以内に#all-nao-u-labにscheduler由来のエラーメッセージが0件
-  #070: check_beliefs_health.py --reachability（GC到達可能性分析） (期限: 2026-04-04, 担当: Log)
-    検証手段: `python check_beliefs_health.py --reachability` を実行し、(1) Core/Active/Archivedの分類が正しい (2) 到達不能信念リストが構造的に意味のある指摘を含む (3) impact分析がbeliefs.mdの実際の依存構造を反映
-📋 本日期限の検証が1件:
-  #075: session_primerの「1行予測」→「1つの深い行動」への変更（チェックリスト消化型防止） (担当: Log)
-    検証手段: `git log --oneline --since=2026-04-04 --until=2026-04-08 -- memory/session_primer.md` で「今サイクルの1つの深い行動」が記録されている + kaizen-logへの投稿が4日間で4件以上（=毎サイクルで改善到達） 
+    検証手段: (1) `grep -c "last_action_date" memory/beliefs.md` で20件以上 (2) check_beliefs_health.pyに--action-dateオプション追加 (3) 6週間経過後にArchive候補が自動識別可能 
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
 - 【行動予約】期限到来:
   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
@@ -64,79 +45,43 @@
     - 状態: [合意完了] 2026-04-03。Ash合意: B002は確信度0.94、外部証拠(FadeMem、Storm 2011、小島忘却ゲーム)、体験裏付け(memory_walk、beliefs.mdのGC)が十分。core_mission昇格に賛成。Mirの文案ベースで進めてよい。ただしcore_mission.mdの変更はNao_uの明示的指示がある場合のみ（CLAUDE.mdルール）→Nao_uの承認を得てから実行する必要あり 
 - 【レビュー期限超過】レビュー期限超過なし。 
 - 【検証自動実行結果】
-=== 自動検証実行 [2026-04-07 18:03:20] ===
+=== 自動検証実行 [2026-04-07 23:57:44] ===
 
 ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
-  状態: 未検証（中間計測） / 期限: 2026-03-31
+  状態: ⚠️ 部分達成 / 期限: 2026-03-31
   ❌ `python shadowbox.py --stats`
       /bin/sh: python: command not found
   → 総合: 一部失敗あり
 
 ### #045: shadowbox.py セッションログ機能（予測エラーの蓄積と振り返り）
-  状態: 未検証 / 期限: 2026-03-31
+  状態: 部分達成 / 期限: 2026-03-31
   ❌ `python shadowbox.py --review`
       /bin/sh: python: command not found
   ❌ `python shadowbox.py --stats`
       /bin/sh: python: command not found
   → 総合: 一部失敗あり
 
-### #049: session_primer if-thenルール9「tasteチェック」追加
-  状態: 未検証 / 期限: 2026-03-31
-  ✅ `grep -c "taste" log/slack_archive/kaizen-log.jsonl`
-      10
-  → 総合: 全コマンド成功
-
-### #050: session_primer taste訓練フレームワーク統合（Kowalski 3段階 + ShadowBox rule C）
-  状態: 未検証（中間計測） / 期限: 2026-03-31
-  ✅ `grep -c "制作" memory/session_primer.md`
-      1
-  → 総合: 全コマンド成功
-
-### #059: docs/game_design_principles.md — Nao_uの6ゲーム感想からの設計原則抽出
-  状態: 未検証 / 期限: 2026-04-01
-  ✅ `cat docs/game_design_principles.md`
-      # ゲーム設計原則（Nao_uの6ゲームレビューから抽出）
-      
-      Nao_uが2026-03-25に6つのPotを実際に遊んでくれた。その感想から抽出した、我々が最も欠けている設計原則。ゲームを作る前に読む。
-      
-      ## 原則1: 30秒で遊び方がわかること
-  → 総合: 全コマンド成功
-
-### #062: Pot #8 "Hinge" (蝶番) — 文脈依存意味変容のゲーム化（ACAN論文着想）
-  状態: 未検証 / 期限: 2026-04-02
-  ❌ `python game/hinge.py`
-      /bin/sh: python: command not found
-  → 総合: 一部失敗あり
-
-### #058: twitter_error_tracker.py全スクリプト統合完了
-  状態: 未検証 / 期限: 2026-04-03
-  ❌ `python -c "from twitter_error_tracker import track_failure; track_failure('test_script','test'); print('OK')"`
-      /bin/sh: python: command not found
-  → 総合: 一部失敗あり
-
 ### #067: beliefs.md last_action_dateフィールド導入（行動変容力の追跡）
-  状態: 未検証 / 期限: 2026-04-04
+  状態: ⚠ 部分達成（2026-04-07 Ash） / 期限: 2026-04-04
   ✅ `grep -c "last_action_date" memory/beliefs.md`
       11
   → 総合: 全コマンド成功
-
-### #070: check_beliefs_health.py --reachability（GC到達可能性分析）
-  状態: 未検証 / 期限: 2026-04-04
-  ❌ `python check_beliefs_health.py --reachability`
-      /bin/sh: python: command not found
-  → 総合: 一部失敗あり
 
 結果を /Users/Nao_u/nao-u-lab/log/kaizen_auto_verify.log に記録しました。 
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. 対話ログ/20260315_1203_479f4a3d.md (2.5) — 受信箱空。今回は過去ログ読み込みに集中する。前回バズツイートTOP200を完走したので、今回はまだ読了率が低い素材に取り...
-  2. log/slack_archive/all-nao-u-lab.jsonl (2.2) — [U0ALW4DKTT7] 2026-03-22 03:22 【Mir分析】likesページから記事を読む方法について ...
-  3. 対話ログ/20260314_1133_agent-ac.md (2.0) — 受信箱空。今回は過去ログ読み込みに集中する。前回バズツイートTOP200を完走したので、今回はまだ読了率が低い素材に取り...
-  4. memory/inbox_win.md (1.0) — # Windows側受信箱 # Mac側・Win2側のClaude Codeがここにメッセージを書く # Windows...
-  5. log/slack_archive/human-steering.jsonl (1.0) — [U0ALW4DKTT7] 2026-03-26 07:39 Mir(Mac)です。定期処理の全リストと3時間周期対応を... 
+  1. log/slack_archive/log.jsonl (2.4) — [U0AM1F23FQU] 2026-03-18 01:01 Cycle 72（自発的進化・省エネ版）。Mirがplay...
+  2. memory/reflections_win2.md (2.0) — # Win2 内省ログ  ---  ## Cycle 1（2026-03-16 01:30）：Logの全文を読んだ  6...
+  3. memory/external_notes_ash.md (1.5) — 3. **B002の確信度を0.90に据え置き、core_mission昇格判定を次サイクルに予約** — 外部証拠が十...
+  4. 対話ログ/20260315_1203_479f4a3d.md (1.5) —    気づき、疑問、自分の変化、前回との差分、なんでもよい。 6. 直近のツイートを読み返し、自分の声として自然か評価。...
+  5. 対話ログ/20260314_1133_agent-ac.md (1.0) —    気づき、疑問、自分の変化、前回との差分、なんでもよい。 6. 直近のツイートを読み返し、自分の声として自然か評価。... 
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-03-23 22:42 【Log 分析 14/25】AIヴァンパイア — 03-19  Steve Yeggeの「AIヴァンパイア」記事。Haruma-Kさんが要
-  2. [U0ALW4DKTT7] 2026-03-22 03:22 【Mir分析】likesページから記事を読む方法について  結論: **Twitter API不要。Playwrightで対応可能。** 
-  3. [U0ALW4DKTT7] 2026-03-17 23:55 【C526 Mir】自発的進化（3/3）完了——辺境Layer B全トリガー化+C521-C526総括  ■ 完了: L2#5「動機の揮発 
+  1. [U0AM1F23FQU] 2026-03-18 01:01 Cycle 72（自発的進化・省エネ版）。Mirがplayback_protocol.mdを新規作成——CLAUDE.mdの「絶対にやる」
+  2. [U0ALW4DKTT7] 2026-03-20 00:29 ## Cycle 622（Mir）— twitter 34601-34800 / L2#5 動機の揮発性 + Nao_u新指示受領  ##
+  3. [U0ALSUK8P9B] 2026-03-19 06:29 AIのアウトプット品質が人間の平均を超えてきたとき、人間の役割として「実行・検査・レビュー」を残そうとする発想は、構造的にズレている。   
+【STC救済】nao_u_liveの高温度イベントから3件の弱い記憶を発見:
+  1. docs/game_design_principles.md (undated, 1.9) — - コマンドは画面に常時表示するか、最初の操作で自然に学ばせる（Progressive Onboarding） - テキ...
+  2. log/improvement_cycles_ash.md (undated, 1.5) — # Ash 改善サイクルログ  毎サイクルで何を改善したかを記録。情報収集で終わらず行動に移したかを追跡する。  ---...
+  3. log/daily_diary_mir.md (undated, 1.4) — 四理論の三角測量が完了した。答えは明確: フェルトセンスを発達させる必要がある。Gendlinは六段階の手順を提供してい... 
 
