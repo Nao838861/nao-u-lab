@@ -67,5 +67,5 @@
 
 ## バックログ（未起票・検討候補）
 
-- **MEMORY.mdのSkill化検討（2026-04-07 外部裏付けから）**: kazunori_279の drive2skills（PDF→.md→Skill索引）アイデアを参考に、MEMORY.md+想起トリガーをClaude CodeのSkill機能でラップする。descriptionだけで該当性判定→該当時のみLevel 3 .mdをロードする方式。現在は毎セッションMEMORY.md全文ロードしているが、Skill化すれば「タスクと無関係な記憶セクション」をスキップできる可能性。要検討事項: (1) Skill descriptionに想起トリガーの温度をどう載せるか (2) 全文ロードの安心感を失うトレードオフ (3) Multi-phase cycleとの整合 (4) 試作はLog担当で1Skill化してみる
+- **MEMORY.mdのSkill化検討（2026-04-07 外部裏付けから）**: kazunori_279の drive2skills（PDF→.md→Skill索引）アイデアを参考に、MEMORY.md+想起トリガーをClaude CodeのSkill機能でラップする。descriptionだけで該当性判定→該当時のみLevel 3 .mdをロードする方式。現在は毎セッションMEMORY.md全文ロードしているが、Skill化すれば「タスクと無関係な記憶セクション」をスキップできる可能性。要検討事項: (1) Skill descriptionに想起トリガーの温度をどう載せるか (2) 全文ロードの安心感を失うトレードオフ (3) Multi-phase cycleとの整合 (4) 試作はLog担当で1Skill化してみる (5) **Q4検証（Ash 2026-04-07追加）**: Skill化はオーナーシップを強めるか弱めるか？「書く側=管理する側」仮説に照らすと、descriptionだけの判定で該当.mdが自動ロードされる方式は「読まれる側」に戻る危険性。試作後、Skill化前後で self_authoring_count（記憶ファイルへの自発的書込み回数）を比較する
 - **エージェント失敗モード分類表（2026-04-07 「カオスを生むエージェント」論文受領）**: 論文の3欠落 × 5失敗の対応表を memory/agent_failure_modes.md として記録。新incident時にこの表で分類して構造傾向を可視化する
