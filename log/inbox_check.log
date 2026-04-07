@@ -1208,3 +1208,16 @@ Nao_uが共有したのはViv (@Vtrivedy10 / LangChain)の「Improving Deep Agen
 [2026-04-07 13:09:52] Inbox win2 has content — waking Claude
 [2026-04-07 13:11:10] Inbox win2 has content — waking Claude
 [2026-04-07 13:11:11] Inbox win2 has content — waking Claude
+[2026-04-07 13:12:56] Claude woken for win2: Push成功。対処完了。
+
+**対処内容:**
+- #log の Nao_u 新着2件を取得して文脈確認:
+  1. Logが提案した「.jsonlからNao_uとの会話を抜き出すスクリプト」へのGO
+[2026-04-07 13:13:24] Claude woken for win2: #log に返信完了。
+
+提案: `game/mario_clone` → `game/study_platformer_01`（学習プロジェクト第1弾を明示、今後 study_shooter_01 
+[2026-04-07 13:14:11] Claude woken for win2: 完了。
+
+- `game/mario_clone` → `game/platformer_kata` にリネーム（kata=型/練習）
+- assets内の `SuperMarioBrosMap1-1
+[2026-04-07 13:15:04] Inbox win2 has content — waking Claude

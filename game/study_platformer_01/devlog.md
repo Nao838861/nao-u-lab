@@ -32,7 +32,7 @@ Nao_uのGBA時代のCソースコード（`game/MarioGBASample/test7/mario.c`）
 
 **ファイル構造:**
 ```
-game/platformer_kata/
+game/study_platformer_01/
   core.py      - 物理エンジン（純Python、Pygame非依存）
   renderer.py  - Pygame描画
   play.py      - 人間用エントリ（60fps）
