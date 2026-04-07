@@ -1,15 +1,10 @@
 {
   "test_script": {
-    "consecutive_failures": 4,
-    "last_failure_time": "2026-04-07T17:06:37.138464",
-    "failure_reason": "test"
-  },
-  "read_twitter_recommended": {
-    "consecutive_failures": 0,
-    "fail_alerted": false,
-    "last_failure_time": null,
-    "failure_reason": null,
-    "cooldown_until": null,
-    "alert_sent_at": null
+    "consecutive_failures": 6,
+    "last_failure_time": "2026-04-07T17:19:58.095180",
+    "failure_reason": "test",
+    "fail_alerted": true,
+    "alert_sent_at": "2026-04-07T17:19:54.722638",
+    "cooldown_until": 1775551798.09518
   }
 }
