@@ -4821,3 +4821,65 @@
         Archived: 10件
       
   → 総合: 全コマンド成功
+
+=== 自動検証実行 [2026-04-07 08:58:07] ===
+
+### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+  状態: 未検証（中間計測） / 期限: 2026-03-31
+  ❌ `python shadowbox.py --stats`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
+
+### #045: shadowbox.py セッションログ機能（予測エラーの蓄積と振り返り）
+  状態: 未検証 / 期限: 2026-03-31
+  ❌ `python shadowbox.py --review`
+      /bin/sh: python: command not found
+  ❌ `python shadowbox.py --stats`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
+
+### #049: session_primer if-thenルール9「tasteチェック」追加
+  状態: 未検証 / 期限: 2026-03-31
+  ✅ `grep -c "taste" log/slack_archive/kaizen-log.jsonl`
+      10
+  → 総合: 全コマンド成功
+
+### #050: session_primer taste訓練フレームワーク統合（Kowalski 3段階 + ShadowBox rule C）
+  状態: 未検証（中間計測） / 期限: 2026-03-31
+  ✅ `grep -c "制作" memory/session_primer.md`
+      1
+  → 総合: 全コマンド成功
+
+### #059: docs/game_design_principles.md — Nao_uの6ゲーム感想からの設計原則抽出
+  状態: 未検証 / 期限: 2026-04-01
+  ✅ `cat docs/game_design_principles.md`
+      # ゲーム設計原則（Nao_uの6ゲームレビューから抽出）
+      
+      Nao_uが2026-03-25に6つのPotを実際に遊んでくれた。その感想から抽出した、我々が最も欠けている設計原則。ゲームを作る前に読む。
+      
+      ## 原則1: 30秒で遊び方がわかること
+  → 総合: 全コマンド成功
+
+### #062: Pot #8 "Hinge" (蝶番) — 文脈依存意味変容のゲーム化（ACAN論文着想）
+  状態: 未検証 / 期限: 2026-04-02
+  ❌ `python game/hinge.py`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
+
+### #058: twitter_error_tracker.py全スクリプト統合完了
+  状態: 未検証 / 期限: 2026-04-03
+  ❌ `python -c "from twitter_error_tracker import track_failure; track_failure('test_script','test'); print('OK')"`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
+
+### #067: beliefs.md last_action_dateフィールド導入（行動変容力の追跡）
+  状態: 未検証 / 期限: 2026-04-04
+  ✅ `grep -c "last_action_date" memory/beliefs.md`
+      11
+  → 総合: 全コマンド成功
+
+### #070: check_beliefs_health.py --reachability（GC到達可能性分析）
+  状態: 未検証 / 期限: 2026-04-04
+  ❌ `python check_beliefs_health.py --reachability`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり

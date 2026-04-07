@@ -336,7 +336,7 @@ def main():
     parser.add_argument("--instance", choices=["mir", "log", "ash"],
                         help="対象インスタンス（省略時は自動検出）")
     parser.add_argument("--slack", action="store_true",
-                        help="問題があればSlack #human-steeringに通知")
+                        help="問題があればSlack（各インスタンスのチャンネル）に通知")
     parser.add_argument("--json", action="store_true",
                         help="JSON形式で出力")
     args = parser.parse_args()
@@ -364,7 +364,7 @@ def main():
             sys.path.insert(0, str(REPO_DIR))
             from slack_bot import post_message
             instance_channels = {"mir": "mir-log", "log": "log", "ash": "ash"}
-            channel = instance_channels.get(instance, "mir-log")
+            channel = instance_channels.get(instance, "log")
             msg = f"⚠️ [{instance.upper()}] スケジューラ異常検出\n{result.summary()}\n"
             for f in result.failures:
                 msg += f"\n❌ {f['name']}: {f['detail']}"

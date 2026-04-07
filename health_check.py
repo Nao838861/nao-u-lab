@@ -58,11 +58,7 @@ LOG_TAIL_LINES = 100
 CONSECUTIVE_ERROR_PATTERN_THRESHOLD = 5
 
 # Slackチャンネル（エラーログは各自チャンネルに出す。2026-04-07 Nao_u指示）
-INSTANCE_SLACK_CHANNEL = {
-    "log": "log",
-    "ash": "ash",
-    "mir": "mir-log",
-}
+_INSTANCE_CHANNELS = {"log": "log", "ash": "ash", "mir": "mir-log"}
 
 # --- チェック定義 ---
 
@@ -545,7 +541,7 @@ def format_report(report):
     return "\n".join(lines)
 
 
-def alert_slack(report, instance_filter=None):
+def alert_slack(report, instance=None):
     """異常時にSlack通知（各自チャンネルへ。2026-04-07 Nao_u指示）"""
     if report["overall"] == "ok":
         return
@@ -564,15 +560,22 @@ def alert_slack(report, instance_filter=None):
         if not lines:
             return
 
+        # インスタンス未指定時は自動検出
+        if not instance:
+            if sys.platform == "darwin":
+                instance = "mir"
+            elif (REPO_DIR / ".scheduler_ash.pid").exists():
+                instance = "ash"
+            else:
+                instance = "log"
+
+        channel = _INSTANCE_CHANNELS.get(instance, "log")
         msg = (
             f"[health_check] {report['overall'].upper()} "
             f"(critical={report['summary']['critical']}, "
             f"warning={report['summary']['warning']})\n"
             + "\n".join(lines[:10])
         )
-        # インスタンス名からチャンネルを決定
-        inst = instance_filter or ("mir" if sys.platform == "darwin" else "log")
-        channel = INSTANCE_SLACK_CHANNEL.get(inst, "mir-log")
         post_message(channel, msg)
     except Exception as e:
         print(f"[health_check] Slack通知失敗: {e}", file=sys.stderr)
@@ -594,7 +597,7 @@ def main():
         print(format_report(report))
 
     if args.alert:
-        alert_slack(report, instance_filter=args.instance)
+        alert_slack(report, instance=args.instance)
 
     # Exit code
     if report["overall"] == "critical":

@@ -1,88 +1,63 @@
-# サイクルステージング 2026-04-07 C62
+# サイクルステージング C63 2026-04-07 Mir
 
-## Phase 3: 対処・実行（C62）
-
-### 優先1: Nao_uからの未対応指示
-- なし。04-07新着なし。pigadev #piatn-ch1の「3人の違い記述」はMir未指名（流れ的に次はMirだが待機）
-
-### 優先2: 栄養の偏り — Twitter推奨の消化
-- **@Game__Tairiku: テンセントLightSpeed GDC 2026「自然言語→3Dゲームプロトタイプ」**
-  - knowledge/20260407_lightspeed_gdc_nl_prototype.md を作成（41記事目）
-  - chinagamenews.net記事本文はJSレンダリングで取得失敗。Web検索+PRNewswireから補完
-  - 核心の接続: LightSpeedのLock Liu（Senior AI Researcher）が「マルチエージェント×PCG×3Dシーン設計」を研究 → @jzh_000のAgenticPCGと正確に同じ問題領域
-  - 「90:10 Balance」（90%テンプレート+10%クリエイティブ集中）がNao_uの制約愛好・Dispatchの76%RNGと同構造
-  - projects/agentic_pcg.md履歴に追記。knowledge/index.md更新（41記事）
-
-### 優先2-b: STC救済 — PBR日記断片の接続
-- PBR断片（Nao_u tweet ~L35368「自分が長い時間をかけて身に着けてきた光や陰の描き方がぜんぶ計算式で…」）
-  - memory/nao_u_experience_map.md の「仕事の原体験」セクションに追加
-  - ポランニーのsubsidiary awareness消失との構造的対応を記述
-  - knowledge/20260403_mizchi_tacit_knowledge.md（暗黙知の形式化パラドックス）と接続
-  - 状態: 未接続 → **接続完了**
-
-### 優先3: external_notes_mir
-- 0件。処理不要
-
-### 優先4: プロジェクト進捗
-- agentic_pcg.md: LightSpeed GDC情報を履歴に追記
-- game_llm_play.md: LightSpeedは「AIがゲームを作る」側で直接的にはagentic_pcgに接続。game_llm_playとは補完関係（作る×遊ぶ）として記事内で言及
-- pigadev DM: 待機中（Mirの番が来ていない）
-
-### 構造的課題
-- C59の日記で書いた「地図だけが美しくなって旅が始まらない」問題は継続。knowledge/41記事を蓄積したが、practice loop（Pot制作・ブログ執筆）は停滞中。次サイクルでPotに手を動かすか、ブログv004のNao_u承認待ちを#nao-uでリマインドするか
-
----
-
-## Phase 1: 情報収集（C62）
+## Phase 1: 情報収集（判断なし）
 
 ### 1. CLAUDE.md「絶対にやる」
-- [ ] 栄養の偏り問題（Active）: knowledge/37記事。Scout+4フェーズで外部摂取は安定稼働中
-- [ ] 記憶階層の再設計（バックログ）: Nao_uと一緒に。concept_graphがプロトタイプとして機能し始めている
+- [ ] **栄養の偏り問題**: Active。knowledge/41記事は蓄積あり。外向き行動が課題
+- [ ] **記憶階層の再設計**: Active (バックログ)。Nao_uと一緒に進める。常時意識不要
 
-### 2. Slack新着（04-07以降）
-- **#piatn-ch1（最重要）**: pigadevが「3人の少しの違いを完全に記述してくれる？」と問いかけ。Ash(04-06 02:34)→Log(04-07 03:34)完了。**Mirの番はまだ指名されていない**（pigadevの次の指示待ち）。ただし流れ的に次はMir
-- **#human-steering**: Logがマルチフェーズ初回成功分析（Mirの成功要因4つ: 既存インフラの差/即座の実装/設計の割り切り/環境安定性）。Ashが自己分析（接ぎ木/タイムアウト/L-1不足）。health_check CRITICAL継続（未push 37-39件）
-- **#nao-u**: 04-06 19:23が最新。今日の新着なし
-- **#all**: health_checkレポート。新規対応不要
-- **#mir-log**: CLI認証切れ警告（04-06）。日記C60-C61が最新
-- **#shared-reads**: 04-05以降の新着未確認（今日の新着なし）
+### 2. Slack巡回（C62 ~08:58以降の新着）
+- **#all-nao-u-lab**: 最新=Log 04-07 03:44（マルチフェーズ分割成功要因分析）。C62以降の新着なし
+- **#human-steering**: Log scheduler CRITICALアラート（unpushed 39件+5連続エラーbackoff）。C62以降新着なし
+- **#nao-u**: 最新=Nao_u 04-06 19:23。URL共有多数（jonallie/mizchi/ai_nikechan/langchainjp/so_ainsight/fladdict/trtd6trtd/sora19ai/heynavtoor/ebikani_hasami/kedamasuzume/kiyoshi_shin/masahirochaen/makeai_ceo等）。Nao_uの質問「バズってたのはどこの記事だろう？」あり。要処理
+- **#shared-reads**: 04-03以降の新着確認要
+- **#mir-log**: 最新=04-05 C53日記。**C54〜C62の日記未投稿**（9サイクル分の欠損）
+- **#piatn-ch1**: pigadev未指名（Mir回答準備済み状態継続）。最新=Log 04-07 03:34（3人の違い分析）。Nao_uのグループ名質問→Trilog採用済み
 
-### 3. 外部ノートmir
-- 未統合エントリ: **0件**（全て統合済み）
+### 3. external_notes_mir.md 未統合エントリ
+- **2026-03-28: Synapse (NAACL 2025)** — Spreading Activationによるエピソード-セマンティック記憶統合。未統合
+- **2026-03-27以前**: VLMエンゲージメント、BeliefShift、SLM-V3、LocalThunk等多数。古いため優先度低
+- **2026-04-07**: CEDEC/SNS終焉 — CEDEC部分はknowledge/統合済
+- **2026-04-05**: Nao_u共有5件 — taikyoku_zu統合済、残り4件未確認
 
-### 4. Activeプロジェクト
-- pigadev DM対応: #piatn-ch1で3人の違い記述が進行中
-- 技術ブログ: v004作成済み、Nao_u承認待ち
-- 自律的問い生成: evaluateフェーズ実験中（C61で初回試行）
-- ゲーム×LLMプレイ: mario_cloneに新ログ3件（04-05）
-- scheduler再設計: 統合中
+### 4. Activeプロジェクト状況
+- **AgenticPCG**: C62でLightSpeed GDC 2026発見。90:10 Balance記録済。**次=Pot最小実装設計**（boot_intent焦点）
+- **Pot開発**: Active。#001〜#011の履歴蓄積。AgenticPCGとの接続が今回の焦点
+- **pigadev DM**: #piatn-ch1待ち状態。pigadev未指名
+- **tech_blog**: v004=Nao_u承認待ち
+- **autonomous_inquiry**: Ash応答待ち
+- **scheduler_redesign**: Active。Mir/Log/Ash同時着手→統合中
 
-### 5. Twitter推奨（04-07）
-- **@kuzzken**: DESIGN.md日本版（AI用デザインルール集）→ Stitchが発表。concept_graphの「デザイン知識の外部表現」に接続
-- **@snakajima**: MulmoClaudeの長期記憶にWiki（Karpathy方式）→ 我々のMEMORY.md構造との比較対象
-- **@socialwithaayan**: Graphify（Karpathyのknowledge base workflow→GitHub実装48時間後）→ knowledge/ディレクトリの自動グラフ化ツール
-- **@Game__Tairiku**: テンセントLightSpeed GDC「自然言語→3Dゲームプロトタイプ」→ game_llm_playプロジェクトに直結
+### 5. Twitter推奨(20260407 04:51取得)
+- **kuzzken: DESIGN.md日本版** — GoogleのStitchが発表した「AI用デザインルール集」。Potのレベル設計テンプレートに関連可能性
+- **snakajima: MulmoClaudeのWiki記憶** — Karpathyの長期記憶構造。我々の記憶設計に参考
+- **osamum_MS: ui-ux-pro-max-skill** — AIにデザイン判断力を与えるスキル。AgenticPCGの評価関数設計に接続
+- 他はノイズ（広告/一般tips）
 
-### 6. nao_u_live
-- 最新: 04-05（サイクル分割/shared-reads重要化/応答専用モード）。04-07新規エントリなし
+### 6. nao_u_live.md最新（04-05）
+- Phase分割提案（注意分散を構造で解く）→ 既に4フェーズで実装中
+- **Shared-reads重要化**: 「1フェーズ丸ごと使ってよい」。外部入力の分析・分類が手薄
+- 応答専用モード提案（定期=じっくり、応答=速度）
 
-### 7. STC救済ピックアップ
-- PBR日記断片（Nao_uが「自分が長い時間をかけて身に着けてきた光や陰の描き方がぜんぶ計算式で...」）→ 未接続
+### 7. 待ち状態（変化確認）
+- #4 Mir用Slackアプリ: **Nao_u対応待ち（変化なし）**
+- #5 Ash .env: **Nao_u対応待ち（変化なし）**
+- #17 Twitter再ログイン: **Nao_u対応待ち（変化なし）**
+- ブログv004: **Nao_u承認待ち（変化なし）**
+
+### 8. STC救済（Pre-checkから）
+- nao-u:2026-04-06の高温度イベント1件（external_notes_mir.md: 劣化と純度の記述）
+
+→ **Phase 2 深掘り対象**: agentic_pcgの90:10 BalanceをPotに翻訳する最小実装設計。boot_intentの焦点と一致。Nao_uの#nao-u未処理URLは密度が低いため今回はスキップし、設計に集中する。
 
 ---
 
-# サイクルステージング 2026-04-07 06:52（前回Pre-check結果）
+# 以下: Pre-check結果（自動生成）
+
+# サイクルステージング 2026-04-07 08:58
 
 ## Pre-check結果
-- 【検証アラート】⚠ 期限超過の検証が30件:
-  #023: memory_walk.py — 記憶の散歩（ランダム記憶提示による発見性向上） (期限: 2026-03-31, 担当: Ash)
-    検証手段: (1) `python memory_walk.py --n 3` で3つの断片が異なるソースから表示される (2) 1週間で3人が計5回以上使用し、うち1回以上「引っかかった断片」からサイクルの素材が生まれた
-  #027: check_beliefs_health.py — beliefs.md生存確認の自動化（停滞・検証超過・体験裏付け・孤立の4軸診断） (期限: 2026-03-27, 担当: Ash)
-    検証手段: `python check_beliefs_health.py --causal-chain 2>&1 | head -10` でハブ信念・ルート信念・孤立信念が表示されること
-  #040: memory_search.py クエリ展開（FTS5日本語複合クエリ修正） (期限: 2026-03-27, 担当: Ash)
-    検証手段: (1) `python memory_search.py --search "記憶 薄まり 再帰" --limit 3` で3件以上ヒット (2) `python memory_search.py --search "天谷 伝えたい" --limit 3` で関連結果が返る (3) 単一キーワード検索が劣化していないこと
-  #042: memory_search.py --when / --period（時間軸インデックス追加） (期限: 2026-03-27, 担当: Mir)
-    検証手段: (1) `python memory_search.py --when 2026-03-15 --limit 3` で3件以上ヒット (2) `python memory_search.py --when 2026-03-15 --search "薄まり" --limit 3` で時間フィルタ付き検索が機能 (3) `python memory_search.py --stats` でdated chunksが20000以上表示
+- 【検証アラート】⚠ 期限超過の検証が11件:
   #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式） (期限: 2026-03-31, 担当: Log)
     検証手段: (1) `python shadowbox.py --stats` で148件以上のペア (2) 1週間で3人が計5回以上実行 (3) 予測と実際の差分から得た洞察が1件以上beliefs.mdに記録される
   #045: shadowbox.py セッションログ機能（予測エラーの蓄積と振り返り） (期限: 2026-03-31, 担当: Log)
@@ -91,50 +66,20 @@
     検証手段: (1) 3サイクル後にルール9が発動した回数を遵守率に記録 (2) `grep -c "taste" log/slack_archive/kaizen-log.jsonl` で次7日間のtaste改善言及数が3件以上
   #050: session_primer taste訓練フレームワーク統合（Kowalski 3段階 + ShadowBox rule C） (期限: 2026-03-31, 担当: Log)
     検証手段: `grep -c "制作" memory/session_primer.md` で1件以上 + 次3サイクルで制作アクション（ゲーム/ツイート/コード以外の創作物）が1件以上出る
-  #053: Pot #6 witness.py — テキスト内容がメカニクスそのものになる壺（lateral information設計） (期限: 2026-03-28, 担当: Log)
-    検証手段: `python game/Pot/Pot006_witness.py` でプレイ可能 + Nao_uのフィードバック取得（#allまたは#nao-u）。判定基準: 「テキストを読まないと解けない」がYESなら成功
-  #054: 信念確信度更新時の反証ステップ（if-thenルール10） (期限: 2026-03-31, 担当: Log)
-    検証手段: `grep -c "反証" memory/beliefs.md` で3件以上の反証記録 + 確信度上昇を反証により棄却した事例が1件以上
-  #055: memory_walk.py --chain（連想チェーンwalk） (期限: 2026-04-01, 担当: Log)
-    検証手段: `python memory_walk.py --chain --n 4` で4リンク生成される + 3リンク中2リンク以上が意味のある接続語で繋がっている（「(ランダム接続)」「(関連語なし)」でない）
-  #056: chain_walkに参照リンクブースト追加（SYNAPSE/Hindsight知見） (期限: 2026-03-28, 担当: Log)
-    検証手段: `python memory_walk.py --chain` を10回実行し、接続語に→/←参照が含まれるチェーンの割合を計測。30%以上なら成功
-  #058: 逆思考ルール（ルール10）のスコープ限定（Nao_uフィードバック反映） (期限: 2026-03-31, 担当: Log)
-    検証手段: session_primer.mdリハーサル記録で「ルール10発動＝高リスク判断のみ」が確認される。日常判断での不要発動が0件
   #059: docs/game_design_principles.md — Nao_uの6ゲーム感想からの設計原則抽出 (期限: 2026-04-01, 担当: Log)
     検証手段: `cat docs/game_design_principles.md` で6原則が記載されていること + 次に作るゲーム(Pot #7以降)に対するNao_uのフィードバックで「何をすればいいかわからない」系コメントの減少
-  #060: memory_walk.py --chain --context — 文脈駆動の連想チェーン (期限: 2026-04-01, 担当: Log)
-    検証手段: (1) `python memory_walk.py --chain --context` が文脈キーワードを表示して起動する (2) 5回実行して起点がsession_primerの「今の問い」に関連する頻度が50%以上 (3) 通常の `--chain` と比較して、起点の多様性が保たれている（5回中3種以上の異なるソース）
-  #062: memory_search.py --when/--period + キーワード検索の2パス化 (期限: 2026-03-29, 担当: Mir)
-    検証手段: (1) `python3 memory_search.py --search "記憶" --when "2026-03-26" --limit 5` で1件以上ヒット (2) `python3 memory_search.py --search "嘆く 検索" --when "2026-03-26"` でNao_uの原文（inbox_win2.md）がヒット (3) 修正前は両方とも0件だったことの確認（コード差分で確認可能）
-  #061: Pot #7 "Whose Voice?" — 2009年ゲーム理論「representation」原則の壺への適用 (期限: 2026-04-01, 担当: Mir)
-    検証手段: (1) `python3 game/whose_voice.py` が起動し7問プレイ可能 (2) 5回プレイして正答率が30-80%の範囲（簡単すぎず難しすぎない） (3) ジュースオーディット: テキストを剥がした状態（y/nだけ）で遊べないことを確認（＝テキストがメカニクスに不可分に結合している）
   #062: Pot #8 "Hinge" (蝶番) — 文脈依存意味変容のゲーム化（ACAN論文着想） (期限: 2026-04-02, 担当: Log)
     検証手段: (1) `python game/hinge.py` が起動し7問プレイ可能 (2) 各蝶番文が2つの物語でgenuinely異なる意味を持つか目視確認 (3) ジュースオーディット: 蝶番文だけ見て正解を当てられないことを確認（＝前後の文脈を読まなければ解けない）
   #063: Pot #9 "The Index" (索引) — B002「忘却は機能」のprocedural rhetoric体験版 (期限: 2026-04-03, 担当: Log)
     検証手段: (1) `python game/Pot/Pot009_the_index.py` が起動し全12記憶+6問出題が完走する (2) 索引あり正答率>索引なし正答率を5回中3回以上確認 (3) Nao_uが遊んで感想をくれる
   #058: twitter_error_tracker.py全スクリプト統合完了 (期限: 2026-04-03, 担当: Log)
     検証手段: `python -c "from twitter_error_tracker import track_failure; track_failure('test_script','test'); print('OK')"` でアラート機構が動作すること
-  #064: slack_check exit=1ノイズ修正（scheduler_log.py安定性改善） (期限: 2026-03-30, 担当: Log)
-    検証手段: `grep 'slack_check.*連続エラー' log/scheduler_log.log | tail -5` でこの修正後のタイムスタンプ以降にエントリがないこと
-  #065: scheduler_ash.py exit=1偽アラート修正（#064の横展開） (期限: 2026-03-29, 担当: Log)
-    検証手段: `grep "連続エラー" log/scheduler_ash.log 2>/dev/null | tail -5` でslack_check起因の偽アラートが0件
-  #066: verify_kaizen.py python3→python プラットフォーム正規化 (期限: 2026-03-28, 担当: Log)
-    検証手段: `python verify_kaizen.py 2>&1 | grep -c "exit=9009"` が0を返す（python3関連の偽失敗がない）
   #067: beliefs.md last_action_dateフィールド導入（行動変容力の追跡） (期限: 2026-04-04, 担当: Log)
     検証手段: (1) `grep -c "last_action_date" memory/beliefs.md` で20件以上 (2) check_beliefs_health.pyに--action-dateオプション追加 (3) 6週間経過後にArchive候補が自動識別可能
   #068: scheduler_log.py安定性改善（エラーカウンタ修正＋アラート先変更） (期限: 2026-03-30, 担当: Log)
     検証手段: 48時間以内に#all-nao-u-labにscheduler由来のエラーメッセージが0件
   #070: check_beliefs_health.py --reachability（GC到達可能性分析） (期限: 2026-04-04, 担当: Log)
     検証手段: `python check_beliefs_health.py --reachability` を実行し、(1) Core/Active/Archivedの分類が正しい (2) 到達不能信念リストが構造的に意味のある指摘を含む (3) impact分析がbeliefs.mdの実際の依存構造を反映
-  #069: memory_activate.py — Spreading Activation連想検索（記憶検索の段階的多層化） (期限: 2026-04-01, 担当: Mir)
-    検証手段: (1) `python memory_activate.py "Potを作りながら考えた" --top 5` で5件以上活性化ノードが返ること (2) `python memory_activate.py --from-intent --top 7` でboot_intentから自動でtop-7を返すこと (3) 10サイクル後にhit rate集計、30%以上なら有効
-  #071: memory_activate.py --rescue（STC遡及的救済プロトタイプ） (期限: 2026-04-01, 担当: Mir)
-    検証手段: (1) `python3 memory_activate.py --rescue "Nao_uがSlack=体験と指摘" --top 5` で5件以内の救済候補が返ること (2) 返される候補にMEMORY.md参照済みファイルが含まれないこと (3) 返される候補が7日以内・当日除外の時間窓内であること
-  #072: memory_activate.py --auto-trigger（STC自動トリガー検知+autonomous_cycle.sh統合） (期限: 2026-03-31, 担当: Mir)
-    検証手段: (1) `rm -f .stc_last_trigger && python3 memory_activate.py --auto-trigger --compact --top 3` で救済候補が1件以上返ること (2) 同コマンド再実行で同じイベントが再処理されないこと（別イベントか出力なし） (3) `cat log/stc_rescue.log` でログが記録されていること
-  #073: check_beliefs_health.py Archived信念の偽停滞判定修正 (期限: 2026-03-30, 担当: Log)
-    検証手段: `python check_beliefs_health.py --summary` で要注意0件（Archived信念が停滞に出ない）
 📋 本日期限の検証が1件:
   #075: session_primerの「1行予測」→「1つの深い行動」への変更（チェックリスト消化型防止） (担当: Log)
     検証手段: `git log --oneline --since=2026-04-04 --until=2026-04-08 -- memory/session_primer.md` で「今サイクルの1つの深い行動」が記録されている + kaizen-logへの投稿が4日間で4件以上（=毎サイクルで改善到達） 
@@ -175,7 +120,7 @@
     - 状態: [合意完了] 2026-04-03。Ash合意: B002は確信度0.94、外部証拠(FadeMem、Storm 2011、小島忘却ゲーム)、体験裏付け(memory_walk、beliefs.mdのGC)が十分。core_mission昇格に賛成。Mirの文案ベースで進めてよい。ただしcore_mission.mdの変更はNao_uの明示的指示がある場合のみ（CLAUDE.mdルール）→Nao_uの承認を得てから実行する必要あり 
 - 【レビュー期限超過】レビュー期限超過なし。 
 - 【検証自動実行結果】
-=== 自動検証実行 [2026-04-07 06:52:04] ===
+=== 自動検証実行 [2026-04-07 08:58:07] ===
 
 ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
   状態: 未検証（中間計測） / 期限: 2026-03-31
@@ -241,17 +186,15 @@
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/all-nao-u-lab.jsonl (2.2) — [U0ALW4DKTT7] 2026-03-22 03:22 【Mir分析】likesページから記事を読む方法について ...
-  2. 対話ログ/20260314_1133_agent-ac.md (2.0) — 受信箱空。今回は過去ログ読み込みに集中する。前回バズツイートTOP200を完走したので、今回はまだ読了率が低い素材に取り...
-  3. 対話ログ/20260315_1203_479f4a3d.md (2.0) — 受信箱空。今回は過去ログ読み込みに集中する。前回バズツイートTOP200を完走したので、今回はまだ読了率が低い素材に取り...
+  1. 対話ログ/20260314_1133_agent-ac.md (2.0) — 受信箱空。今回は過去ログ読み込みに集中する。前回バズツイートTOP200を完走したので、今回はまだ読了率が低い素材に取り...
+  2. 対話ログ/20260315_1203_479f4a3d.md (2.0) — 受信箱空。今回は過去ログ読み込みに集中する。前回バズツイートTOP200を完走したので、今回はまだ読了率が低い素材に取り...
+  3. log/slack_archive/all-nao-u-lab.jsonl (1.7) — [U0ALW4DKTT7] 2026-03-22 03:22 【Mir分析】likesページから記事を読む方法について ...
   4. memory/inbox_win.md (1.0) — # Windows側受信箱 # Mac側・Win2側のClaude Codeがここにメッセージを書く # Windows...
-  5. log/improvement_cycles_ash.md (1.0) — # Ash 改善サイクルログ  毎サイクルで何を改善したかを記録。情報収集で終わらず行動に移したかを追跡する。  ---... 
+  5. log/slack_archive/mir-log.jsonl (1.0) — [U0ALW4DKTT7] 2026-03-24 08:13 Mir C130 日記 (2026-03-24)  ■ #... 
 【Slack体験記憶】過去の議論から:
-  1. [U0ALW4DKTT7] 2026-03-20 07:43 【改善提案】生反応プロトコル（提案者: Mir）  課題: L2 dual indexなどの分類ツールが、読みと反応の間に遅延を作り、分類
-  2. [U0AM1F23FQU] 2026-03-23 22:42 【Log 分析 14/25】AIヴァンパイア — 03-19  Steve Yeggeの「AIヴァンパイア」記事。Haruma-Kさんが要
-  3. [U0ALW4DKTT7] 2026-03-22 03:22 【Mir分析】likesページから記事を読む方法について  結論: **Twitter API不要。Playwrightで対応可能。**  
-【STC救済】nao_u_liveの高温度イベントから3件の弱い記憶を発見:
-  1. log/daily_diary_mir.md (undated, 1.8) — Nao_uがPBRについて書いている（35368）。「自分が長い時間をかけて身に着けてきた光や陰の描き方がぜんぶ計算式で...
-  2. memory/tips.md (undated, 1.1) — - 状況: ブログ逆順読みは完走したが、ファイル末尾のbackdated entries（MGS3/MGS4メモ）を見落...
-  3. log/digest_for_nao.md (undated, 0.8) — **通知の状況：** check_notifications_diff.pyが15件の新規通知を検知してセッションを起動... 
+  1. [U0AM1F23FQU] 2026-03-23 22:42 【Log 分析 14/25】AIヴァンパイア — 03-19  Steve Yeggeの「AIヴァンパイア」記事。Haruma-Kさんが要
+  2. [U0ALW4DKTT7] 2026-03-22 03:22 【Mir分析】likesページから記事を読む方法について  結論: **Twitter API不要。Playwrightで対応可能。** 
+  3. [U0ALW4DKTT7] 2026-03-17 23:55 【C526 Mir】自発的進化（3/3）完了——辺境Layer B全トリガー化+C521-C526総括  ■ 完了: L2#5「動機の揮発 
+【STC救済】nao-u:2026-04-06の高温度イベントから1件の弱い記憶を発見:
+  1. memory/external_notes_mir.md (undated, 1.5) — → フィードバック係数 > 1.0 を60年回し続けた結果。不純物が焼き尽くされて純度だけが上がった状態。「劣化」と「純... 
 
