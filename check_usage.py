@@ -1,7 +1,7 @@
 """
-check_usage.py — Anthropic API使用量をスクレイピングしてSlackに投稿する
+check_usage.py — Claude Pro/Max使用量をスクレイピングしてSlackに投稿する
 
-.bot_profileのブラウザセッションを使ってconsole.anthropic.comから使用量を取得。
+.bot_profileのブラウザセッションを使ってclaude.ai/settings/usageから使用量を取得。
 火曜03:00リセットの週間サイクルに対して、現在の消費ペースを計算する。
 
 使い方:
@@ -11,7 +11,8 @@ check_usage.py — Anthropic API使用量をスクレイピングしてSlackに�
   python check_usage.py --screenshot   # スクリーンショット保存（デバッグ用）
 
 Nao_u指示 (2026-04-07 #human-steering):
-  6時間おきにSlackのnao-uチャンネルに投稿。火曜03:00リセット基準で超過%表示。
+  6時間おきにSlackのall-nao-u-labチャンネルに投稿。火曜03:00リセット基準で超過%表示。
+  APIコスト不要（スクレイピングベース）。
 """
 
 import argparse
@@ -28,8 +29,8 @@ SCREENSHOT_DIR = REPO_DIR / "log"
 USAGE_CACHE = REPO_DIR / ".usage_last.json"
 SLACK_CHANNEL = "all-nao-u-lab"  # Nao_u指示(2026-04-07): allでお願い
 
-# console.anthropic.comの使用量ページ
-USAGE_URL = "https://console.anthropic.com/settings/plans"
+# claude.ai の使用量ページ（Pro/Max プラン）
+USAGE_URL = "https://claude.ai/settings/usage"
 
 
 def calc_weekly_position():
@@ -75,10 +76,10 @@ def scrape_usage(dry_run=False, screenshot=False):
             context = p.chromium.launch_persistent_context(
                 user_data_dir=str(BOT_PROFILE),
                 channel="msedge",
-                headless=True,
+                headless=False,
                 viewport={"width": 1280, "height": 900},
                 locale="ja-JP",
-                args=["--disable-blink-features=AutomationControlled"],
+                args=["--disable-blink-features=AutomationControlled", "--start-minimized"],
             )
 
             page = context.new_page()
@@ -87,8 +88,8 @@ def scrape_usage(dry_run=False, screenshot=False):
             try:
                 print(f"Opening {USAGE_URL}...")
                 page.goto(USAGE_URL, timeout=30000)
-                page.wait_for_load_state("networkidle", timeout=20000)
-                time.sleep(3)  # JS描画待ち
+                page.wait_for_load_state("domcontentloaded", timeout=15000)
+                time.sleep(8)  # JS描画待ち
 
                 if screenshot:
                     ss_path = SCREENSHOT_DIR / "usage_screenshot.png"
@@ -137,66 +138,124 @@ def scrape_usage(dry_run=False, screenshot=False):
 def parse_usage_text(text):
     """ページテキストから使用量データを抽出する
 
-    console.anthropic.comの表示形式に応じて調整が必要。
-    一般的なパターン: "$X.XX / $Y.YY" や "X% of limit" など
+    claude.ai/settings/usage の実際の表示形式（2026-04時点）:
+      「8% 使用済み」（セッション）
+      「9% 使用済み」（週間）
+      「0% 使用済み」（Sonnet）
+    ページ構造が変わった場合は --dry-run --screenshot で確認。
     """
     result = {}
 
-    # パターン1: "$X.XX / $Y.YY" 形式（ドル表記）
-    m = re.search(r'\$(\d+(?:\.\d{2})?)\s*/\s*\$(\d+(?:\.\d{2})?)', text)
-    if m:
-        result["used"] = float(m.group(1))
-        result["limit"] = float(m.group(2))
-        result["unit"] = "USD"
-        result["pct"] = round(result["used"] / result["limit"] * 100, 1) if result["limit"] > 0 else 0
-        return result
+    # 「N% 使用済み」を全て抽出（順番: セッション、週間、Sonnet）
+    pcts = re.findall(r'(\d+)%\s*使用済み', text)
+    if len(pcts) >= 2:
+        result["session_pct"] = int(pcts[0])
+        result["weekly_pct"] = int(pcts[1])
+        result["pct"] = int(pcts[1])  # 週間を主指標にする
+        result["unit"] = "pct"
+    if len(pcts) >= 3:
+        result["sonnet_pct"] = int(pcts[2])
 
-    # パターン2: "X.XX of Y.YY" 形式
-    m = re.search(r'(\d+(?:\.\d+)?)\s*of\s*(\d+(?:\.\d+)?)', text)
+    # セッションリセットまでの時間
+    m = re.search(r'(\d+)時間(\d+)?分?後にリセット', text)
     if m:
-        result["used"] = float(m.group(1))
-        result["limit"] = float(m.group(2))
-        result["unit"] = "unknown"
-        result["pct"] = round(result["used"] / result["limit"] * 100, 1) if result["limit"] > 0 else 0
-        return result
+        h = int(m.group(1))
+        mins = int(m.group(2)) if m.group(2) else 0
+        result["session_reset_min"] = h * 60 + mins
 
-    # パターン3: "X%" 形式
-    m = re.search(r'(\d+(?:\.\d+)?)\s*%', text)
+    # 追加使用量
+    m = re.search(r'\$(\d+\.?\d*)\s*使用', text)
     if m:
-        result["pct"] = float(m.group(1))
-        result["unit"] = "pct_only"
-        return result
+        result["extra_usd"] = float(m.group(1))
 
-    return None
+    m = re.search(r'\$(\d+\.?\d*)\s*現在の残高', text)
+    if m:
+        result["balance_usd"] = float(m.group(1))
+
+    # フォールバック: 英語版 "X% used"
+    if "pct" not in result:
+        m = re.search(r'(\d+(?:\.\d+)?)\s*%\s*used', text)
+        if m:
+            result["pct"] = float(m.group(1))
+            result["unit"] = "pct"
+
+    if "pct" not in result:
+        return None
+
+    return result
+
+
+def load_history():
+    """過去の使用量履歴を読む"""
+    hist_file = REPO_DIR / ".usage_history.json"
+    if hist_file.exists():
+        try:
+            return json.loads(hist_file.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    return []
+
+
+def save_history(history):
+    """使用量履歴を保存（最大28件=7日分）"""
+    hist_file = REPO_DIR / ".usage_history.json"
+    hist_file.write_text(json.dumps(history[-28:], ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def format_slack_message(usage, weekly):
-    """Slack投稿メッセージを組み立てる"""
+    """Slack投稿メッセージを組み立てる（簡潔版）"""
+    now = datetime.now()
+    weekly_pct = usage.get("weekly_pct", usage.get("pct", -1))
+    session_pct = usage.get("session_pct", -1)
+
     lines = []
-    lines.append(f":bar_chart: *API使用量レポート* ({datetime.now().strftime('%m/%d %H:%M')})")
-    lines.append("")
+    lines.append(f"*使用量* ({now:%m/%d %H:%M})")
 
-    if usage.get("unit") == "USD":
-        lines.append(f"使用量: *${usage['used']:.2f}* / ${usage['limit']:.2f} (*{usage['pct']}%*)")
-    elif usage.get("unit") == "pct_only":
-        lines.append(f"使用量: *{usage['pct']}%*")
-    else:
-        lines.append(f"使用量: *{usage.get('used', '?')}* / {usage.get('limit', '?')} (*{usage.get('pct', '?')}%*)")
+    # 現在値
+    parts = []
+    if weekly_pct >= 0:
+        parts.append(f"週間 *{weekly_pct}%*")
+    if session_pct >= 0:
+        parts.append(f"セッション {session_pct}%")
+    lines.append(" | ".join(parts))
 
-    lines.append("")
-    lines.append(f"週進行: {weekly['elapsed_days']}日経過 ({weekly['progress_pct']}%)")
+    # 6時間差分
+    history = load_history()
+    if history:
+        # 直近の記録との差分
+        prev = history[-1]
+        prev_pct = prev.get("weekly_pct", prev.get("pct", -1))
+        prev_time = datetime.fromisoformat(prev["scraped_at"])
+        hours = (now - prev_time).total_seconds() / 3600
 
-    # 超過率計算: 使用%が週進行%をどれだけ上回っているか
-    if usage.get("pct") is not None:
-        overshoot = round(usage["pct"] - weekly["progress_pct"], 1)
-        if overshoot > 0:
-            lines.append(f":warning: ペース超過: *+{overshoot}%* (均等配分比)")
-        elif overshoot < -5:
-            lines.append(f":white_check_mark: 余裕あり: *{overshoot}%* (均等配分比)")
-        else:
-            lines.append(f":ok: ほぼ均等ペース ({overshoot:+.1f}%)")
+        if hours > 0.5 and prev_pct >= 0 and weekly_pct >= 0:
+            delta = weekly_pct - prev_pct
+            rate_per_day = (delta / hours) * 24
 
-    lines.append(f"リセット: {weekly['reset_at']} (残り{weekly['remaining']})")
+            lines.append(f"前回比: +{delta}% / {hours:.1f}h -> 日換算 {rate_per_day:.1f}%/日 (予算14%/日)")
+
+            # 予算比率
+            if rate_per_day > 0:
+                ratio = rate_per_day / 14.3
+                if ratio <= 0.8:
+                    verdict = "余裕"
+                elif ratio <= 1.2:
+                    verdict = "OK"
+                elif ratio <= 1.5:
+                    verdict = "やや超過"
+                else:
+                    verdict = "超過"
+                lines.append(f"ペース: {ratio:.1f}x ({verdict})")
+
+    # 週間進行との比較
+    if weekly_pct >= 0:
+        overshoot = round(weekly_pct - weekly["progress_pct"], 1)
+        remaining = 100 - weekly_pct
+        lines.append(f"残り {remaining}% | 均等配分比 {overshoot:+.1f}% | リセット {weekly['reset_at']}")
+
+    # 履歴に追加
+    history.append(usage)
+    save_history(history)
 
     return "\n".join(lines)
 
@@ -218,7 +277,7 @@ def run_login():
     from playwright.sync_api import sync_playwright
 
     print(f"Profile dir: {BOT_PROFILE}")
-    print("Edge will open. Please log in to console.anthropic.com, then close the browser.")
+    print("Edge will open. Please log in to claude.ai, then close the browser.")
 
     with sync_playwright() as p:
         context = p.chromium.launch_persistent_context(
@@ -230,7 +289,7 @@ def run_login():
             args=["--disable-blink-features=AutomationControlled"],
         )
         page = context.new_page()
-        page.goto("https://console.anthropic.com/login")
+        page.goto("https://claude.ai/login")
         print("Waiting for you to log in and close the browser...")
         try:
             page.wait_for_event("close", timeout=600000)
@@ -242,7 +301,7 @@ def run_login():
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Anthropic API使用量チェック")
+    parser = argparse.ArgumentParser(description="Claude Pro/Max使用量チェック")
     parser.add_argument("--dry-run", action="store_true", help="スクレイピングのみ（投稿しない）")
     parser.add_argument("--login", action="store_true", help="ブラウザを開いてログイン")
     parser.add_argument("--screenshot", action="store_true", help="スクリーンショット保存")
