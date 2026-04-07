@@ -8894,3 +8894,55 @@ GitHubへのバックアッ
 [2026-04-07 12:44:37] [inbox_check] Starting
 [2026-04-07 12:47:08] [inbox_check] Done (exit=0)
 [2026-04-07 12:47:08] [git_sync] Starting
+[2026-04-07 13:20:37] [slack_check] Starting
+[2026-04-07 13:20:51] [slack_check] Done (exit=1)
+[2026-04-07 13:21:51] [slack_check] Starting
+[2026-04-07 13:22:06] [slack_check] Done (exit=1)
+[2026-04-07 13:23:07] [slack_check] Starting
+[2026-04-07 13:23:22] [slack_check] Done (exit=1)
+[2026-04-07 13:24:08] [multi_phase] Phase 1 (Gather) finished in 262s (exit=0)
+[2026-04-07 13:24:08] [multi_phase] Phase 2 (Analyze) starting (timeout=1800s)
+[2026-04-07 13:24:23] [slack_check] Starting
+[2026-04-07 13:24:38] [slack_check] Done (exit=1)
+[2026-04-07 13:24:48] [inbox_check] Starting
+[2026-04-07 13:29:48] [inbox_check] Timeout (300s)
+[2026-04-07 13:29:48] [inbox_check] Done (exit=-1)
+[2026-04-07 13:29:48] [health_check] Starting
+[2026-04-07 13:29:49] [health_check] Done (exit=0)
+[2026-04-07 13:29:59] [slack_check] Starting
+[2026-04-07 13:30:14] [slack_check] Done (exit=1)
+[2026-04-07 13:31:15] [slack_check] Starting
+[2026-04-07 13:31:16] [multi_phase] Phase 2 (Analyze) finished in 428s (exit=0)
+[2026-04-07 13:31:16] [multi_phase] Phase 3 (Act) starting (timeout=1800s)
+[2026-04-07 13:31:29] [slack_check] Done (exit=1)
+[2026-04-07 13:32:29] [slack_check] Starting
+[2026-04-07 13:32:44] [slack_check] Done (exit=1)
+[2026-04-07 13:33:44] [slack_check] Starting
+[2026-04-07 13:33:59] [slack_check] Done (exit=1)
+[2026-04-07 13:34:49] [inbox_check] Starting
+[2026-04-07 13:34:58] [stability] inbox_check: 正常復帰 (timeout=1, errors=1 → リセット)
+[2026-04-07 13:34:58] [inbox_check] Done (exit=0)
+[2026-04-07 13:34:58] [health_check] Starting
+[2026-04-07 13:34:59] [health_check] Done (exit=0)
+[2026-04-07 13:35:09] [slack_check] Starting
+[2026-04-07 13:35:24] [slack_check] Done (exit=1)
+[2026-04-07 13:36:24] [slack_check] Starting
+[2026-04-07 13:36:39] [slack_check] Done (exit=1)
+[2026-04-07 13:37:39] [slack_check] Starting
+[2026-04-07 13:38:06] [slack_check] Done (exit=1)
+[2026-04-07 13:39:04] [multi_phase] Phase 3 (Act) finished in 469s (exit=0)
+[2026-04-07 13:39:04] [multi_phase] Phase 4 (Diary) starting (timeout=1200s)
+[2026-04-07 13:39:07] [slack_check] Starting
+[2026-04-07 13:39:23] [slack_check] Done (exit=1)
+[2026-04-07 13:40:04] [inbox_check] Starting
+[2026-04-07 13:40:04] [inbox_check] Done (exit=0)
+[2026-04-07 13:40:04] [health_check] Starting
+[2026-04-07 13:40:05] [health_check] Done (exit=0)
+[2026-04-07 13:40:25] [slack_check] Starting
+[2026-04-07 13:40:40] [slack_check] Done (exit=1)
+[2026-04-07 13:41:40] [slack_check] Starting
+[2026-04-07 13:41:56] [slack_check] Done (exit=1)
+[2026-04-07 13:42:56] [slack_check] Starting
+[2026-04-07 13:43:11] [slack_check] Done (exit=1)
+[2026-04-07 13:44:12] [slack_check] Starting
+[2026-04-07 13:44:26] [slack_check] Done (exit=1)

@@ -35,6 +35,11 @@ Active — CLAUDE.md「絶対にやる」に記載の根幹的課題
 ---
 ## 履歴（新しいものが上）
 
+### 2026-04-07: Karpathyとの構造比較で「map/reduce問題」を発見 + 4件のNao_u共有URL処理
+**map/reduce問題**: linghuajの指摘（RAGにはmapしかなくreduceがない）を自分たちに当てはめた。memory_search.py=map、MEMORY.md/beliefs/concept_graph=reduce。弱点はreduceの手動性。Ingest時に自動クロスリファレンス生成が入っていない。Karpathyの「Lint」フェーズ（矛盾検出・古い情報更新）が次の技術課題として浮上。
+
+4件のURL処理: mitakamikata（同一メカニクスゲームジャム→制約と創造）、linghuaj（map/reduce問題）、masahirochaen（Karpathy 3層構造→俺たちとの独立収斂）、makeai_ceo（Codex CLI+GPT-5→moatはモデル性能ではなく蓄積された記憶）。全件#all-nao-u-labに個別投稿済み。#shared-readsに6項目対応表投稿済み。
+
 ### 2026-04-07: 「AIの永続的知識管理」が1つのジャンルになりつつある
 今日の#nao-u新着8件に底流する共通テーマ。LLM Wiki（Karpathy）、Obsidian Mind（15 Commands+9サブエージェント）、GitNexus（コードのナレッジグラフ）、Obsidian×MCP——全て「AIに長期記憶を持たせる」問題に取り組んでいる。我々は2026-03-13からこの問題と格闘してきた。外部から同じ問いに取り組む人が増えている。
 
