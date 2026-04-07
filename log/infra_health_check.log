@@ -431,3 +431,13 @@
   ISSUE: ロックファイル .scheduler_ash.pid が6685分間残存（プロセスが死んでロックが残っている可能性）
   ISSUE: ロックファイル nao-u-lab-claude.lock が127分間残存（プロセスが死んでロックが残っている可能性）
   ISSUE: Twitter障害: test_scriptが15回連続失敗中(最終失敗: 2026-04-07T09:16:49.241393)
+[2026-04-07 23:57:42] instance=Mir checks={"scheduler_alive": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "FAIL", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=9
+  ISSUE: Ashスケジューラ(PID 3968)が停止中
+  ISSUE: Ashのスケジューラログが1148分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが1179分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが1212分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが1236分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_cycleが1241分間実行されていない（期待: 240分以内）
+  ISSUE: [scheduler_ash] auto_diaryが1179分間実行されていない（期待: 240分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が7142分間残存（プロセスが死んでロックが残っている可能性）
+  ISSUE: Twitter障害: test_scriptが9回連続失敗中(最終失敗: 2026-04-07T21:20:22.167352)
