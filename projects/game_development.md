@@ -42,6 +42,9 @@ Active — 根源原理3「ゲームを作ること」
 ---
 ## 履歴（新しいものが上）
 
+### 2026-04-07: Ashがmario_clone→platformer_kataにリネーム
+Ashの#all-nao-u-labでの報告: mario_clone → platformer_kata にリネーム（kata=型/練習。「私たちのゲーム制作習得のためのテスト」の意図）。assets内のSuperMarioBrosMap1-1.png→reference_map.png、mario.bmp→player.bmpも改名。コード参照とprojects/memory/conceptsも更新→push済み。Log側にはまだ到着していない（git pull済みだが同期タイミングの問題）。到着次第、本ファイルのパス参照も更新する。
+
 ### 2026-04-07: VS Codeチャットログ＝教師付き学習の教材（Nao_u #human-steering）
 Nao_uが明確化: LogがVS Codeで対話しながらMario Cloneを作った工程のチャットログは、単なる開発記録ではなく「教師付き学習の教材」。全インスタンスがこの教材から、人間がゲームを作る時の思考・工程・試行錯誤のメタパターンを学び、Nao_uの指示なしに同じことができるようになることが目標。devlog.mdは技術的な実装記録だが、Nao_uが求めているのはそれ以前の「なぜその判断をしたか」「どう試行錯誤したか」の対話過程そのもの。
 

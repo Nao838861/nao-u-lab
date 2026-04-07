@@ -1084,7 +1084,7 @@ WikipediaのAIライティング検出基準を日本語向け16項目チェッ�
 
 **Skill機能の未活用**: drive2skillsのアイデアを参考に、MEMORY.mdをClaude CodeのSkill機能でラップする可能性を projects/INDEX.md に追記。
 
-## 2026-04-07 Nao_u #nao-u共有: mitakamikata — 「ゲームクリエイターが全員同じゲームを作ったら学びの宝庫になった」
+## 2026-04-07 Nao_u #nao-u共有: mitakamikata — 「ゲームクリエイターが全員同じゲームを作ったら学びの宝庫になった」 [統合済 2026-04-07]
 
 出典: https://x.com/mitakamikata/status/2041102657453236295（ゆーりんち / ゲームを作っています）。Nao_u 2026-04-07 12:50 #nao-uで共有。
 
@@ -1092,7 +1092,7 @@ WikipediaのAIライティング検出基準を日本語向け16項目チェッ�
 
 **引っかかった接続 — Pot開発**: Potも1つのアイデアを極限まで磨く形式。game_design_principlesの「Content=Mechanics」に近いが一段深い——コンテンツもメカニクスも同一でも、フィール（手触り）だけで別のゲームになる。制約が創造を生むパターン。Nao_uが「制約を愛する人」であることと重なる。
 
-## 2026-04-07 Nao_u #nao-u共有: linghuaj + masahirochaen — KarpathyのLLM Wiki構想
+## 2026-04-07 Nao_u #nao-u共有: linghuaj + masahirochaen — KarpathyのLLM Wiki構想 [統合済 2026-04-07]
 
 出典:
 - @linghuaj「RAGにはmapしかなくreduceがない」https://x.com/linghuaj/status/2040505524454920341
