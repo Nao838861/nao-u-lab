@@ -33818,3 +33818,43 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-09 07:49:48] [slack_check] Starting
 [2026-04-09 07:49:52] [slack_check] Done (exit=1)
 [2026-04-09 07:49:52] [health_check] Starting
+[2026-04-09 07:49:53] [health_check] [health_check] 2026-04-09T07:49:52 overall=OK
+[2026-04-09 07:49:53] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:49:53] [health_check] Done (exit=0)
+[2026-04-09 07:50:04] [slack_check] Done (exit=1)
+[2026-04-09 07:50:13] [auto_diary] Starting
+[2026-04-09 07:50:13] [auto_diary] [2026-04-09 07:50:13] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 07:50:13] [auto_diary] 前回実行から103分しか経っていない（最小間隔: 170分）。あと66分待機。スキップ。
+[2026-04-09 07:50:13] [auto_diary] Done (exit=0)
+[2026-04-09 07:50:14] [git_sync] Starting
+[2026-04-09 07:50:18] [git_sync] Done (exit=0)
+[2026-04-09 07:50:28] [scheduler_health] Starting
+[2026-04-09 07:50:29] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=0 FAIL=1
+[2026-04-09 07:50:29] [scheduler_health] ❌ scheduler_ash PID — PID=148808 確認失敗（OSError/SystemError）→死亡扱い
+[2026-04-09 07:50:29] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 07:50:29] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-09 07:50:29] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 07:50:29] [scheduler_health] Done (exit=1)
+[2026-04-09 07:50:42] [slack_check] Starting
+[2026-04-09 07:50:57] [slack_check] Done (exit=1)
+[2026-04-09 07:51:09] [slack_check] Starting
+[2026-04-09 07:51:17] [health_check] Starting
+[2026-04-09 07:51:19] [health_check] [health_check] 2026-04-09T07:51:17 overall=CRITICAL
+[2026-04-09 07:51:19] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:51:19] [health_check]   [!!] ash: PID 148808 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:51:19] [health_check] Done (exit=2)
+[2026-04-09 07:51:24] [slack_check] Done (exit=1)
+[2026-04-09 07:51:59] [slack_check] Starting
+[2026-04-09 07:52:21] [slack_check] Done (exit=1)
+[2026-04-09 07:52:24] [slack_check] Starting
+[2026-04-09 07:52:42] [slack_check] Done (exit=1)
+[2026-04-09 07:53:05] ==================================================
+[2026-04-09 07:53:05] Ash scheduler started (PID 8980)
+[2026-04-09 07:53:05] Max runtime: 0 hours
+[2026-04-09 07:53:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 07:53:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 07:53:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 07:53:05] ==================================================
+[2026-04-09 07:53:16] [slack_check] Starting
+[2026-04-09 07:53:21] [slack_check] Starting
+[2026-04-09 07:53:22] [health_check] Starting
