@@ -15670,3 +15670,4 @@ L
 [2026-04-09 04:48:13] [slack_check] New messages detected → triggering immediate inbox_check
 [2026-04-09 04:48:13] [inbox_check] Starting
 [2026-04-09 04:48:14] [inbox_check] Done (exit=0)
+[2026-04-09 04:49:14] [slack_check] Starting
