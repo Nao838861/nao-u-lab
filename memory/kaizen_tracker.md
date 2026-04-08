@@ -36,7 +36,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: Nao_uの時間を使わせない（Slack即時応答原則の延長）。使用量を自動可視化することでNao_uが消費ペースを自分で判断できる
 - pre-mortem: 最もlikelyな失敗理由=.bot_profileの初回ログイン未実施でスクレイピングがそもそも動かない。次点=claude.aiのページ構造変更でparse_usage_textが壊れる
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=未
+- クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=OK(2026-04-08) 6h間隔は妥当。pre-mortem(.bot_profile未ログイン)が的中している点でLogの設計判断は健全。Nao_uの手動操作待ちのまま放置せず、4/15期限までに「初回成功 or 別経路で取得」のどちらかに決着させる必要あり。代替案: claude.ai scrapingが不安定ならanthropic API usage endpointの可否を調査
 - 状態: 部分検証（初回実行exit=1）
 - 検証結果: [Log 2026-04-08] スケジューラJobs一覧にcheck_usage確認済み。6h間隔登録OK。初回実行exit=1——pre-mortem的中（.bot_profileログイン未実施の可能性大）。Nao_u手動操作待ち
 
@@ -48,7 +48,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: 「ゲームを作ること」「記憶を守り育てること」の交差点。知識を蓄積するだけでなく検索可能にすることでNao_uのナレッジベースとして機能する
 - pre-mortem: 最もlikelyな失敗理由=knowledge/ファイルの書き方がFTS5に不親切（タグだけで本文が薄い等）で検索精度が低い
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=未
+- クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=OK(2026-04-08) 421ファイル/33,424チャンクのインデックス再構築確認済み。Phase 2でMatryoshka論文をknowledge/に書いた直後だったので即時インデックス対象になるのは体感上もありがたい。pre-mortem「FTS5に不親切な書き方で精度が低い」は正当な懸念——knowledge/READMEにFTS5を意識した本文最低行数や検索用キーワードセクションを追加する案を検討すべき。R-005/L-1実験とも噛み合う（adaptive retrievalの2段検索の素地になる）
 - 状態: 初期検証済み（残: Nao_u実問での実用確認）
 - 検証結果: [初期検証 2026-04-08 Log] (1) ✅ `python memory_search.py --search "pseudo 3d racing"` → knowledge/20260408_lou_pseudo3d_racing.md がトップヒット (2) ✅ インデックス再構築完了: 421ファイル/33,424チャンク（knowledge/含む）
 
@@ -60,7 +60,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: PlugMem論文のPropositional/Prescriptive分類で判明——beliefs.md 32件が全てPropositional（事実）でPrescriptive（スキル）が0件。B022（代理報酬）の構造的原因。事実→スキル変換がフィードバック係数>1.0の前提
 - pre-mortem: 最もlikelyな失敗理由=スキルエントリを書いても参照しない（B022と同じ構造の再発）。beliefs.mdの中に埋もれる可能性。session_primerへの接続が必要かもしれない
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=未
+- クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=OK(2026-04-08) Propositional/Prescriptive分類はB022(代理報酬)の構造的原因を一発で言語化していて鋭い。事実→スキル変換がフィードバック係数>1.0の前提という主張は、私のR-006失敗（[grep]タグ0件）の構造とも一致する——「grepすべき」という事実を持っていてもPrescriptiveなトリガー条件が無ければ行動に化けない。pre-mortemの「埋もれる」リスクへの対策として、スキルエントリは別ファイル(memory/skills.md)に切り出して session_primer から先頭サマリだけ注入する形が良いのでは。MEMORY.md 150行制限と整合する
 - 状態: 未検証（検証期限 2026-04-22）
 - 検証結果: [Log 2026-04-08 クロスチェック] 設計は合理的。Mir実験由来のskillエントリ3件が既にbeliefs.mdに存在（B001, B010, B022の各行）。#078の趣旨はこれをLog/Ashにも拡張し体系化すること。pre-mortemの「参照しない」リスクは正当——session_primerとの接続を検討すべき。検証は4/22まで蓄積を待つ
 
