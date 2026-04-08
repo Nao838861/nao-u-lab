@@ -31,7 +31,7 @@ CONFIG_FILES = {
 }
 
 PID_FILES = {
-    "ash": REPO_DIR / ".scheduler_ash.lock",
+    "ash": REPO_DIR / ".scheduler_ash.pid",
     "log": REPO_DIR / ".scheduler_log.lock",
 }
 
