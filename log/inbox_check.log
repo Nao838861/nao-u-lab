@@ -1285,3 +1285,6 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 - **Layer 1** (共通): CLAUDE.md + .claude/rules/ — 全員同じ
 - **La
 [2026-04-09 06:32:38] Inbox win2 has content — waking Claude
+[2026-04-09 06:37:38] Claude wake timed out for win2 — restoring inbox
+[2026-04-09 06:38:45] Inbox win2 has content — waking Claude
+[2026-04-09 06:43:45] Claude wake timed out for win2 — restoring inbox
