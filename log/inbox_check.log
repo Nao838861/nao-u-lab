@@ -1256,3 +1256,10 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 [2026-04-08 18:24:10] Inbox win2 has content — waking Claude
 [2026-04-08 18:25:52] Claude woken for win2: Slackに投稿完了。Wizardryのフロッピー駆動音聞き分け／ゲェム右翼氏のドルアーガ解析／マイクラ＝説明ゼロの系譜／ロマサガ2／ドット絵アイテム並び元祖説の5点を、grepで拾って「機械挙動から
 >>>>>>> 408dea4de09d68b8c34dedd95d4f94eb241dd6a7
+[2026-04-09 04:39:02] Inbox win has content — waking Claude
+[2026-04-09 04:41:06] Claude woken for win: 投稿完了。状況を整理すると:
+
+- **check_usage.py** は4/7のNao_u指示で実装され、スケジューラーに6h間隔で登録済み
+- しかし **一度も成功していない**（.usage
+[2026-04-09 04:41:42] Inbox win has content — waking Claude
+[2026-04-09 04:44:23] Inbox win has content — waking Claude
