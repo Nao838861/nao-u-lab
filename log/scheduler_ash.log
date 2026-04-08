@@ -31425,3 +31425,5 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-09 04:55:08] [slack_check] Done (exit=1)
 [2026-04-09 04:55:14] [slack_check] Done (exit=1)
 [2026-04-09 04:55:18] [auto_diary] Starting
+[2026-04-09 04:56:14] [CONFIG] auto_diary: {'interval_sec': 14400, 'min_interval_sec': 13800, 'timeout': 720} -> {'interval_sec': 10800, 'min_interval_sec': 10200, 'timeout': 720} (auto-applied, no restart needed)
+[2026-04-09 04:56:14] [slack_check] Starting
