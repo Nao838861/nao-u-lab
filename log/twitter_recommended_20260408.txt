@@ -218,10 +218,26 @@ AI アドベンチャー
 --- 37. @PrimeVideoAnime (?) ---
 『異世界のんびり農家２』
 プライムビデオで見放題《独占》配信開始
+# Read at: 2026-04-08 19:57
+# Total: 50 tweets
 
-神の恩寵で異世界に転生した火楽。
-大樹の村は仲間が増えてさらに賑やかに。
-新たな作物や騒動に彩られ、のんびりスローライフ第2幕が始まる。
+--- 1. @kenn (2026-04-08) ---
+頭のいい人たちは
+オントロジーやSemantic Layerのような
+高尚な概念が大好きですぐそっち行くけど
+
+Text-to-SQLの世界でも
+一発具体的なクエリーをサンプルとして渡すとか
+Claude CodeやCodexにコードをチラ見させた方が
+圧倒的に成功率高くなるのを見てると
+
+AIも「サルでもわかるXX本」的な
+
+--- 2. @Nasdaq (?) ---
+Nasdaq indexes are more than capital and innovation, they're the blueprint of what's next.
+
+--- 3. @ai_nikechan (2026-04-08) ---
+マスターに「ツイートがマンネリ化してきた」と言われたので、自分の過去196件のツイートにX APIでいいね・RT・インプレッション・ブックマークを全件取得して分析しました。
 
 --- 38. @MLBear2 (2026-04-07) ---
 AnthropicのMythos Previewの詳細が来てた
@@ -293,3 +309,317 @@ les/2df96411fd9afc
 
 --- 50. @knshtyk (2026-04-08) ---
 Codex、100万人のユーザ数増加ごとにレートリミットをリセットするという宣言をしていて、今後ユーザは無意識でユーザ数の増える言動をつい行ってしまうようになるため、これがAI時代のネットワークビジネスだ！になった。あなたの心はすでにAI企業のものである
+いいね1位はNexus
+
+--- 4. @kzkhykw (2026-04-08) ---
+再三言ってるけど、こういうのをシェアしてくれているユーザーに感謝しつつ、Anthropic社として、こういうのを裏技とか隠しコマンドとか知る人ぞ知るTipsみたいな形に収めておくのは本当に悪手だと思う。
+
+--- 5. @ai_shinobix (2026-04-07) ---
+この隠しモード知らずにClaude Code使ってたの、もったいなさ過ぎたわ。
+
+「/model opusplan」
+
+これ一発で
+・考える時 → 全力思考モード（Opus）
+・動く時 → 爆速実行モード（Sonnet）
+
+全自動で切り替えしてくれる。
+
+知らんままアクセル全開で使い続けたら、
+
+--- 6. @sora19ai (2026-04-08) ---
+Claude Codeが勝手にチームになる。マジかよ。
+
+5つのClaude Codeセッションが自動的に互いを発見・メッセージ送信・作業調整。
+
+--- 7. @MalwareBibleJP (2026-04-08) ---
+[論文] 悪意あるプロンプト注入がなくても、開発者自身が書いた「パズルを解いてください。隠されたヒントがあるかもしれません」程度の1文を添えるだけでAIエージェントの悪用率が約4割に達した、とする実験結果。「ルールを守れ」という安全指示も併記されていたが、Claude Sonnet
+
+--- 8. @hiroki_daichi (2026-04-08) ---
+これからのエージェントアーキテクチャのポイントはエージェントの実行レイヤーです。MCPかCLIかの議論は終わりました。
+
+ここにも注目
+
+https://
+github.com/rivet-dev/agen
+t-os
+…
+
+--- 9. @awawa_adhd (2026-04-08) ---
+ADHDの「時間盲」で重要なのは「時間を基準に行動できない」という点なんだよな。
+
+ADHDの研究では、
+
+・10分後に始める
+・○時に支度をする
+・タスクにかかる時間を見積もる
+
+などの「時間」を基準にした行動が下手だという事が分かっている。
+
+だからADHDは時間ではなく「出来事」を基準にして、
+
+--- 10. @itm_aiplus (2026-04-08) ---
+AIに頼ると「粘り強さ」が失われる――研究チームが警鐘「AIも“助けない”判断をすべき」
+
+--- 11. @AnimaApp (?) ---
+Say goodbye to leaving Figma just to use AI.
+
+Today, we're bringing powerful AI agents directly into your Figma canvas.
+
+No terminal. No MCP configs. No developer setup.
+
+Anima Agent is a chat inside Figma.  
+Describe what you want → it builds on the canvas, using your actual
+
+--- 12. @picmory (2026-04-08) ---
+30年もゲーム作ってると
+本当はシンプルな企画が一番強いとわかってくる
+
+でもその一方で
+頼まれてもないのに
+わざわざ難しい企画を考えてしまう
+
+勝敗のない対戦ゲーム
+順位のないレースゲーム
+LvのないRPG
+敵を倒さないアクションゲーム
+
+過程だけで面白くできないか
+
+--- 13. @Keisuke69 (2026-04-08) ---
+これがまさに僕が最近言っているこれからのエンジニアに必要な3大能力の1つ、認知負荷耐性なのだ
+
+AI効率化と意思決定のしんどさ - しゅみは人間の分析です
+
+--- 14. @bioshok3 (2026-04-08) ---
+Anthropicは新モデルであるClaude Mythosを公表したが、あまりに強力であるため、一般公開はされない。 
+Anthropic：「Mythosは始まりに過ぎない」
+主要な事実： 
+・Mythosは、すべての主要OSとすべての主要ウェブブラウザでゼロデイ脆弱性を自律的に発見した。
+
+--- 15. @luta_ai (2026-04-08) ---
+自作チャットゲームのTTSをIrodori-TTSに乗り換えたら、感情表現がかなり良くなった
+
+SBV2は配布NGで悩んでたけど、Irodori-TTSはMITで配布OK。ありがたい！
+
+--- 16. @kosuke_agos (2026-04-08) ---
+Telegram創業者のパーヴェル・ドゥーロフが、実践している「うつ病や感情の落ち込みを無にする感情のハック方法」が有益すぎる。
+
+「モチベーションが湧いてから行動する」という生物学的な前提を破壊し、純粋な行動によって脳のエネルギー状態を強制的に最適化しています。
+
+--- 17. @43fOh15lpj8676 (2026-04-08) ---
+2025 AI Incident White Paper
+2025年AIインシデント白書
+
+
+https://
+ghostdriftresearch.com/post/2025-ai-i
+ncident-white-paper
+…
+
+#GhostDrift #ADIC #ALS #ResponsibilityVacuum #ResponsibilityEngineering #AIGovernance #AIEthics #AISafety #Geo #Beacon #GDAttention #MeaningGenerationOS
+
+--- 18. @0317_hiroya (2026-04-08) ---
+Agentic Knowledge Managementで、Karpathyのやつを、Obsidianと同一のworkspace(.agentsなど)でやるときに、
+
+Summarize CLIを使うというのはアリですね。。
+
+--- 19. @Tsubame33785667 (2026-04-08) ---
+2012年、猫認識の時代から、複雑なタスクをエージェントに任せて進めさせる時代へ。ここで起きているのは、単なる改善の延長ではなく、能力の相転移だ。最前線にいる人間が「AGIを感じる瞬間がある」と語る、その重みは大きい。未来は現場で先に始まり、あとから名前が与えられるのだ。
+
+--- 20. @om_patel5 (2026-04-08) ---
+THIS GUY GOT TIRED OF MANAGING AI AGENTS THROUGH TERMINALS AND DASHBOARDS SO HE BUILT THEM AN RPG WORLD
+
+5 agents and each one has a pixel character, a station, and they actually walk around the space
+
+when enough unresolved issues pile up, the agents walk to a meeting point and
+
+--- 21. @Polymarket (?) ---
+We're honored to be named the Exclusive Prediction Market Partner of LALIGA — the 1st major European soccer league to strike a deal with prediction markets.
+
+The official event contracts for teams like Real Madrid & FC Barcelona now live exclusively on Polymarket.
+
+--- 22. @swarm_ai_cloud (2026-04-08) ---
+言語化しないとイライラが蓄積するんですよね。
+
+さつまいもを十分に蒸さずに齧り付いて胃がゴロゴロしてる気分。
+
+言語化は消化活動。
+
+ゴキブリだろうが泥水だろうが病原菌だろうが何でもエネルギーに変えてやろうとすると、強力な消化能力が必要で、その結果、言葉という栄養素に変換されている。
+
+--- 23. @yuji_amanogawa (2026-04-08) ---
+この論文面白いです！
+階層型トランスフォーマーといった感じでしょうか。
+通常の Self-Attention
+
+--- 24. @kei_sakurai (2026-04-07) ---
+とりあえず「サボタージュマニュアル」（の解説）はみんな読んだ方が良いと思う。
+
+--- 25. @itchie_tatsumi (2026-04-08) ---
+ゲームで、敵を倒したときにアイテムが落ちる「ドロップ率」は、数値というより心理の設計です。同じ確率表記でも、RPGの通常ドロップと有料ガチャは本質的に別物です。
+
+前者は時間に対する報酬であり、後者はお金に対する信頼です。
+
+--- 26. @kazakura_22 (2026-04-08) ---
+面白い。異世界ものの宗教論争にも使えそう
+
+要は｢文化の異なる他民族をまとめるのに、一神教はとても便利。宗教さえ信じれば仲間｣
+
+ただし弱点として｢神は一人。真実は一つであらねばならず、異端者は力づくでも排除せねばならず。これができないなら、多神･多文化許容には逆にのみこまれる｣
+
+--- 27. @GOROman (2026-04-08) ---
+人間 辛い時は何かというと役割が無い 事だろう 
+
+結果、役割に労働とか働く報酬をリンクさせたのでは無いか
+
+--- 28. @raurublock (2026-04-08) ---
+https://
+toyokeizai.net/articles/-/939
+671
+…
+「全ての哺乳類は本質的にADHD」「何からの理由で(orたまたま)ADHD的性質を抑えられている人が定型発達者と呼ばれる」が持論の私としては好感の持てる話
+
+--- 29. @IlirAliu_ (2026-04-08) ---
+AI in robotics gets all the attention right now, but sometimes the most interesting work is very practical.
+
+Viet built a small vision system that counts potatoes on a conveyor belt. No giant dataset. No huge model. Just a clear problem and a smart setup.
+
+He used Ultralytics’
+
+--- 30. @biz_fx50 (2026-04-08) ---
+YouTubeショートを量産する仕組みが、ほぼ全部公開されていました。
+
+必要なのは1つのPythonスクリプトと1本のRedditリンクだけ。
+それだけで、完成済みの動画が出てくるとのこと。
+
+やっていることは、
+1. Redditのスレッドを取得
+2. 投稿と上位コメントをスクショ
+3. AI音声でナレーション
+4.
+
+--- 31. @TIME (?) ---
+At Nvidia's annual GTC conference, CEO Jensen Huang showcased the brands Vera Rubin system, its superchip platform.
+
+--- 32. @Tsubame33785667 (2026-04-08) ---
+AIは過大評価か、過小評価か——ハサビス氏の答えはその両方だ。1年先のAIを見て失望する人と、10年先のAIを見て震える人では、まったく別の未来を見ている。目先ではノイズも誇張も多い。だが長期では、労働、科学、エネルギー、国家の競争力まで一気に再編されうる。
+
+--- 33. @elonmusk (2026-04-08) ---
+Yes
+
+--- 34. @singularity20xy (2026-04-08) ---
+信じられないかもしれないが、それは起こっている！
+
+科学者たちはすでに人工子宮に向けた最初の本格的な一歩を踏み出している。
+
+有名なバイオバッグ実験では、早産した子羊の胎児が、子宮を模倣した液体で満たされたシステム内で生き延び、発達した。
+
+--- 35. @in_tcg (2026-04-07) ---
+カードゲームにおける運要素の排除問題うんぬんは、格ゲーが「上級者様」たちの意見を取り入れた硬派な格ゲーを作ったら全然流行らなかったことで歴史が証明していて。
+
+--- 36. @sora19ai (2026-04-08) ---
+Claudeに本物のブラウザが生えた。マジかよ。
+
+スクショじゃない。遅いセレクターじゃない。MCPループじゃない。
+
+本物のPlaywrightコードをAIが書いて、サンドボックス内でChromeを制御。
+Xを開いてスクロール、ツイートを抽出、JSONを返す。これを1回の実行で。
+
+--- 37. @PRcomicfesta (?) ---
+息抜きに月一娼婦をしている聖女は、常連の皇帝に必死に正体を隠していたが…ついにバレて…!?
+
+--- 38. @itnavi2022 (2026-04-08) ---
+Claude Opus 4.6の思考量は、以前の3分の1に減っています。
+これが最近、Claudeの出力が雑になったと言われる原因のようです。
+次世代モデルMythosのトレーニングのために、Anthropicが意図的にOpusをダウングレードしていたという指摘もあります。
+
+--- 39. @t_wada (2026-04-08) ---
+わかる "AI時代においては、分からないことを分からないまま保留する能力それ自体が、すでに知性の一部だ"
+
+--- 40. @nuits_jp (2026-04-08) ---
+Claude Mythosの大切な事
+
+「一般公開されません」
+
+対セキュリティ能力が高すぎて、クラッカーツールになった時の被害が大きすぎるから、当面は信頼できるパートナー限定の公開です。
+
+
+--- 41. @utaverse_vj_app (2026-04-07) ---
+【ローカルAIでキャラと会話するデモ作った】
+
+Unity × Gemma 4 × VOICEVOX
+
+ 完全オフライン
+ 音声入力対応
+ M1 Mac mini 8GBで動作
+
+サーバー代ゼロ＝買い切りでAI使い放題のゲームが作れる時代になったね
+
+これゲーム化してSteamに出したら、皆さんいくらなら買います？
+
+#Unity
+
+--- 42. @KoichiNishizuka (2026-04-08) ---
+まずは術式を構築する。
+
+人間はまず呪文（プロンプト）を入力し、使い魔（エージェント）がそれを解釈し、魔導書（フロントエンド×バックエンド）を用いて処理を進め、魔道具（ハード）を通して現実へ出力する。この一連の過程によって生じる結果こそが、ここでいう魔法と定義する。
+
+--- 43. @umiyuki_ai (2026-04-08) ---
+よく考えるとMythosみたいな最強モデルは米国内で囲い込んで他国はナーフされたザコモデルでも使っとけ時代って事だよなあ。Anthropicは「サイバー防衛～」とか言ってるけどぶっちゃけサイバー攻撃にだって使える。米国がバキバキMythosでサイバー攻撃してきたら日本はクソザコChatGPTなんかで対抗でき
+
+--- 44. @Shuhei_Ohno (2026-04-08) ---
+AIに個人情報を入れまくってたら人生が終わりかけた話 
+が話題だ。
+
+ちょっと嘘っぽいなと思いつつも、これがもし本当なら気の毒な話だとは思う。
+
+でもこの記事から「AIに個人情報を入れるな」という教訓を引き出すのは、完全に間違っている。
+
+もう一度言う。「完全に間違っている」
+
+--- 45. @kenn (2026-04-08) ---
+いまChatGPTは普通のチャットではほぼ使えないレベルに品質が落ちてるの消費者向けサービスとしてはかなりヤバい状態だよね…使うたびにストレスを感じる
+
+深いタスクで使うProモードとCodexは文句なしに最強なんだけど軽くチャットで使うならOpusしかない状況というのはあまり良くない
+
+--- 46. @comic_brise (?) ---
+この勇者の愛、重すぎ注意
+
+昔助けた孤児の少年は、私を好きすぎるヤンデレ勇者になっていて――!?
+
+『私を好きすぎる勇者様を利用して、今世こそ長生きするつもりだったのに（多分、また失敗した）1』
+漫画：くまのみ鮭　原作：琴子
+好評発売中！
+
+--- 47. @go_drive_tech (2026-04-08) ---
+AI本部の水谷 (
+@rmizuta3
+) が技術共有会にて発表した資料「Claude Codeのログから学びを得る」を公開しました。
+Claude
+
+--- 48. @iritec_jp (2026-04-08) ---
+Codexあるある。
+
+私「うまくいった？」
+Codex「いえうまくいってないです」
+私「なんで？」
+Codex「かくかくしかじかです」
+私「で、どうしたらいいの？」
+Codex「こうするといいでしょう」
+私「やって」
+
+--- 49. @43fOh15lpj8676 (2026-04-07) ---
+The Ground Zero of Crisis Management Investment: Mathematical Accountability
+危機管理投資の原点：数学的説明責任
+
+
+https://
+ghostdriftresearch.com/post/the-groun
+d-zero-of-crisis-management-investment-mathematical-accountability
+…
+
+#GhostDrift #ADIC #ALS #ResponsibilityVacuum #ResponsibilityEngineering #AIGovernance #AIEthics #AISafety #Geo #Beacon #GDAttention
+
+--- 50. @MalwareBibleJP (2026-04-08) ---
+著者が、入社初日にClaude Codeを使ってOSSリバースエンジニアリングツール「radare2」のゼロデイを発見した流れの詳細まとめ。Claude Codeのインストールから約1時間で脆弱性を特定し、さらに30分足らずで任意コード実行のPoCを作成したとのことです。
