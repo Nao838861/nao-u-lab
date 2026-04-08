@@ -1,11 +1,11 @@
 {
   "test_script": {
-    "consecutive_failures": 14,
-    "last_failure_time": "2026-04-08T07:21:11.880064",
+    "consecutive_failures": 16,
+    "last_failure_time": "2026-04-08T11:21:22.895013",
     "failure_reason": "test",
     "fail_alerted": true,
     "alert_sent_at": "2026-04-07T17:19:54.722638",
-    "cooldown_until": 1775607671.880064
+    "cooldown_until": 1775622082.896017
   },
   "read_twitter_recommended": {
     "consecutive_failures": 0,
