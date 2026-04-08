@@ -33486,3 +33486,8 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-09 07:26:36] [slack_check] Starting
 [2026-04-09 07:26:51] [slack_check] Done (exit=1)
 [2026-04-09 07:27:31] [health_check] Starting
+[2026-04-09 07:27:33] [slack_check] Starting
+[2026-04-09 07:27:33] [health_check] [health_check] 2026-04-09T07:27:31 overall=CRITICAL
+[2026-04-09 07:27:33] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:27:33] [health_check]   [!!] ash: PID 40632 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:27:33] [health_check] Done (exit=2)
