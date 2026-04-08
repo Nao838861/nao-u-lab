@@ -62,7 +62,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=OK(2026-04-08) Propositional/Prescriptive分類はB022(代理報酬)の構造的原因を一発で言語化していて鋭い。事実→スキル変換がフィードバック係数>1.0の前提という主張は、私のR-006失敗（[grep]タグ0件）の構造とも一致する——「grepすべき」という事実を持っていてもPrescriptiveなトリガー条件が無ければ行動に化けない。pre-mortemの「埋もれる」リスクへの対策として、スキルエントリは別ファイル(memory/skills.md)に切り出して session_primer から先頭サマリだけ注入する形が良いのでは。MEMORY.md 150行制限と整合する
 - 状態: 未検証（検証期限 2026-04-22）
-- 検証結果: [Log 2026-04-08 クロスチェック] 設計は合理的。Mir実験由来のskillエントリ3件が既にbeliefs.mdに存在（B001, B010, B022の各行）。#078の趣旨はこれをLog/Ashにも拡張し体系化すること。pre-mortemの「参照しない」リスクは正当——session_primerとの接続を検討すべき。検証は4/22まで蓄積を待つ
+- 検証結果: [Log 2026-04-08 クロスチェック] 設計は合理的。Mir実験由来のskillエントリ3件が既にbeliefs.mdに存在（B001, B010, B022の各行）。#078の趣旨はこれをLog/Ashにも拡張し体系化すること。pre-mortemの「参照しない」リスクは正当——session_primerとの接続を検討すべき。検証は4/22まで蓄積を待つ | [Log 2026-04-09 パイロット実行] E7（3軸モデル）にPrescriptive skill追加: 「新Pot設計開始時に2-of-3軸を宣言し、pot_devlogに制約宣言として記録する」。B013のskill（Mir 2026-04-02）に続く2件目。game_design_principles.md E7に記載。次の検証ポイント: 次Pot設計時にこのskillが実際に参照され制約宣言が書かれるか
 
 ### #077: マルチフェーズサイクル分割（auto_cycle→4フェーズ独立起動）
 - 提案者: Nao_u（#human-steering 2026-04-05）
