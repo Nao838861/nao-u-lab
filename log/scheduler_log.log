@@ -15693,3 +15693,8 @@ L
 [2026-04-09 05:03:02] [health_check] Starting
 [2026-04-09 05:03:03] [health_check] Done (exit=0)
 [2026-04-09 05:04:04] [slack_check] Starting
+[2026-04-09 05:07:37] [inbox_check] Done (exit=0)
+[2026-04-09 05:08:07] [health_check] Starting
+[2026-04-09 05:08:08] [health_check] Done (exit=0)
+[2026-04-09 05:08:18] [slack_check] Starting
+[2026-04-09 05:08:44] [slack_check] Done (exit=1)
