@@ -45,7 +45,7 @@ NAO_U_ID = "U0ALSUK8P9B"
 # 対象チャンネル（洞察が投稿される場所）
 TARGET_CHANNELS = {
     "C0ALWBRNJ66": "all-nao-u-lab",
-    "C0ALXLVKYQY": "shared-reads",
+    "C0AN2FEHEJJ": "shared-reads",
 }
 
 # プロジェクトファイルから抽出するキーワードのソース

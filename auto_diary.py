@@ -228,7 +228,7 @@ def phase_analyze():
         "3. 自分たちの体験・beliefs・プロジェクトとの接続を具体的に書く\n"
         "4. この情報から生まれる未解決の問いを明示する\n"
         "5. knowledge/ディレクトリに詳細な知識記事を作成する（knowledge/README.mdのフォーマットに従う）\n"
-        "6. 分析結果をC0ALXLVKYQY(#shared-reads)にslack_bot.pyのpost_message()で投稿\n"
+        "6. 分析結果をC0AN2FEHEJJ(#shared-reads)にslack_bot.pyのpost_message()で投稿\n"
         "   - 記事紹介だけの投稿は出すな。分析・接続・問いを含む投稿のみ\n"
         "\n結果をlog/cycle_staging.mdに追記せよ（既存内容を消すな）。\n"
         "「## Phase 2 分析結果」セクションとして書け。\n"
