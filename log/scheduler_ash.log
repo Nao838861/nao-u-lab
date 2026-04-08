@@ -33072,3 +33072,66 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-09 06:56:52] [health_check] Done (exit=2)
 [2026-04-09 06:57:12] [slack_check] Starting
 [2026-04-09 06:57:28] [slack_check] Done (exit=1)
+[2026-04-09 06:57:50] [slack_check] Starting
+[2026-04-09 06:58:05] ==================================================
+[2026-04-09 06:58:05] Ash scheduler started (PID 39396)
+[2026-04-09 06:58:05] Max runtime: 0 hours
+[2026-04-09 06:58:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 06:58:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 06:58:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 06:58:05] ==================================================
+[2026-04-09 06:58:08] [slack_check] Done (exit=1)
+[2026-04-09 06:58:16] [slack_check] Starting
+[2026-04-09 06:58:28] [slack_check] Starting
+[2026-04-09 06:58:33] [slack_check] Done (exit=1)
+[2026-04-09 06:58:33] [reservation_check] Starting
+[2026-04-09 06:58:33] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 06:58:33] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 06:58:33] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 06:58:33] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 06:58:33] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 06:58:33] [reservation_check] Done (exit=0)
+[2026-04-09 06:58:43] [inbox_check] Starting
+[2026-04-09 06:58:44] [slack_check] Done (exit=1)
+[2026-04-09 06:58:44] [inbox_check] Inbox win2 empty
+[2026-04-09 06:58:44] [inbox_check] Done (exit=0)
+[2026-04-09 06:58:44] [dm_check] Starting
+[2026-04-09 06:58:57] [dm_check] No new DMs
+[2026-04-09 06:58:57] [dm_check] Done (exit=0)
+[2026-04-09 06:58:57] [review_deadline] Starting
+[2026-04-09 06:58:57] [review_deadline] レビュー期限超過なし。
+[2026-04-09 06:58:57] [review_deadline] Done (exit=0)
+[2026-04-09 06:59:07] [kaizen_auto_verify] Starting
+[2026-04-09 06:59:08] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 06:59:08] ===
+[2026-04-09 06:59:08] [kaizen_auto_verify] 
+[2026-04-09 06:59:08] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 06:59:08] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 06:59:08] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 06:59:08] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 06:59:08] [git_sync] Starting
+[2026-04-09 06:59:08] [slack_check] Starting
+[2026-04-09 06:59:11] [git_sync] Done (exit=0)
+[2026-04-09 06:59:25] [slack_check] Done (exit=1)
+[2026-04-09 06:59:35] [health_check] Starting
+[2026-04-09 06:59:35] [health_check] [health_check] 2026-04-09T06:59:35 overall=OK
+[2026-04-09 06:59:35] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 06:59:35] [health_check] Done (exit=0)
+[2026-04-09 06:59:41] [slack_check] Starting
+[2026-04-09 06:59:44] [slack_check] Starting
+[2026-04-09 06:59:45] [scheduler_health] Starting
+[2026-04-09 06:59:46] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=0 FAIL=1
+[2026-04-09 06:59:46] [scheduler_health] ❌ scheduler_ash PID — PID=39396 確認失敗（OSError/SystemError）→死亡扱い
+[2026-04-09 06:59:46] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 06:59:46] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-09 06:59:46] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 06:59:46] [scheduler_health] Done (exit=1)
+[2026-04-09 07:00:00] [slack_check] Done (exit=1)
+[2026-04-09 07:00:26] [slack_check] Starting
+[2026-04-09 07:00:41] [slack_check] Done (exit=1)
+[2026-04-09 07:00:41] [dm_check_pigadev] Starting
+[2026-04-09 07:00:54] [dm_check_pigadev] No new DMs
+[2026-04-09 07:00:54] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 07:01:00] [slack_check] Starting
+[2026-04-09 07:01:15] [slack_check] Done (exit=1)
+[2026-04-09 07:01:44] [slack_check] Starting
+[2026-04-09 07:01:55] [health_check] Starting
