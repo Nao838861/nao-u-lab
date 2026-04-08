@@ -32829,3 +32829,92 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-09 06:43:26] [slack_check] Starting
 [2026-04-09 06:43:32] [slack_check] Done (exit=1)
 [2026-04-09 06:43:32] [health_check] Starting
+[2026-04-09 06:43:33] [health_check] [health_check] 2026-04-09T06:43:32 overall=OK
+[2026-04-09 06:43:33] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 06:43:33] [health_check] Done (exit=0)
+[2026-04-09 06:43:45] [slack_check] Done (exit=1)
+[2026-04-09 06:43:45] [inbox_check] Inbox win2 has content
+[2026-04-09 06:43:45] [inbox_check] Done (exit=0)
+[2026-04-09 06:43:45] [dm_check] Starting
+[2026-04-09 06:43:59] [dm_check] No new DMs
+[2026-04-09 06:43:59] [dm_check] Done (exit=0)
+[2026-04-09 06:43:59] [review_deadline] Starting
+[2026-04-09 06:43:59] [review_deadline] レビュー期限超過なし。
+[2026-04-09 06:43:59] [review_deadline] Done (exit=0)
+[2026-04-09 06:44:09] [slack_check] Starting
+[2026-04-09 06:44:27] [slack_check] Done (exit=1)
+[2026-04-09 06:44:27] [dm_check_pigadev] Starting
+[2026-04-09 06:44:33] [slack_check] Starting
+[2026-04-09 06:44:41] [dm_check_pigadev] No new DMs
+[2026-04-09 06:44:41] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 06:44:41] [kaizen_auto_verify] Starting
+[2026-04-09 06:44:42] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 06:44:42] ===
+[2026-04-09 06:44:42] [kaizen_auto_verify] 
+[2026-04-09 06:44:42] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 06:44:42] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 06:44:42] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 06:44:42] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 06:44:42] [git_sync] Starting
+[2026-04-09 06:44:45] [slack_check] Starting
+[2026-04-09 06:44:46] [git_sync] Done (exit=0)
+[2026-04-09 06:44:46] [auto_diary] Starting
+[2026-04-09 06:44:46] [auto_diary] [2026-04-09 06:44:46] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 06:44:46] [auto_diary] 前回実行から37分しか経っていない（最小間隔: 170分）。あと132分待機。スキップ。
+[2026-04-09 06:44:46] [auto_diary] Done (exit=0)
+[2026-04-09 06:44:46] [twitter_recommended] Starting
+[2026-04-09 06:44:56] [slack_check] Done (exit=1)
+[2026-04-09 06:45:07] [slack_check] Done (exit=1)
+[2026-04-09 06:45:51] [twitter_recommended] Opening For You tab...
+[2026-04-09 06:45:51] [twitter_recommended]     1. @zerobase: 新国立競技場ザハ案撤回問題、まだ当時のデマを信じている人が多いようで残念...
+[2026-04-09 06:45:51] [twitter_recommended]     2. @keibinext_: /／
+[2026-04-09 06:45:51] [twitter_recommended] 新生活もらったらうれしい
+[2026-04-09 06:45:51] [twitter_recommended] 春のプレゼントキャンペーン
+[2026-04-09 06:45:51] [twitter_recommended] Done (exit=0)
+[2026-04-09 06:45:51] [check_usage] Starting
+[2026-04-09 06:45:56] [slack_check] Starting
+[2026-04-09 06:46:02] [check_usage] Opening https://claude.ai/settings/usage...
+[2026-04-09 06:46:02] [check_usage] Failed to parse usage data from page
+[2026-04-09 06:46:02] [check_usage] Debug screenshot: D:\AI\Nao_u_BOT\log\usage_parse_failed.png
+[2026-04-09 06:46:02] [check_usage] No usage data obtained. Try --login first, or --screenshot for debug.
+[2026-04-09 06:46:02] [check_usage] Done (exit=1)
+[2026-04-09 06:46:02] [health_check] Starting
+[2026-04-09 06:46:03] [health_check] [health_check] 2026-04-09T06:46:03 overall=OK
+[2026-04-09 06:46:03] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 06:46:03] [health_check] Done (exit=0)
+[2026-04-09 06:46:03] [scheduler_health] Starting
+[2026-04-09 06:46:07] [slack_check] Starting
+[2026-04-09 06:46:16] [slack_check] Done (exit=1)
+[2026-04-09 06:46:25] [slack_check] Done (exit=1)
+[2026-04-09 06:46:35] [health_check] Starting
+[2026-04-09 06:46:37] [health_check] [health_check] 2026-04-09T06:46:35 overall=CRITICAL
+[2026-04-09 06:46:37] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 06:46:37] [health_check]   [!!] ash: PID 137436 は死んでいる（PIDファイルが残存）
+[2026-04-09 06:46:37] [health_check] Done (exit=2)
+[2026-04-09 06:47:16] [slack_check] Starting
+[2026-04-09 06:47:28] [slack_check] Starting
+[2026-04-09 06:47:37] [slack_check] Done (exit=1)
+[2026-04-09 06:47:52] [slack_check] Done (exit=1)
+[2026-04-09 06:48:02] [inbox_check] Starting
+[2026-04-09 06:48:05] ==================================================
+[2026-04-09 06:48:05] Ash scheduler started (PID 37864)
+[2026-04-09 06:48:05] Max runtime: 0 hours
+[2026-04-09 06:48:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 06:48:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 06:48:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 06:48:05] ==================================================
+[2026-04-09 06:48:16] [slack_check] Starting
+[2026-04-09 06:48:33] [slack_check] Done (exit=1)
+[2026-04-09 06:48:33] [reservation_check] Starting
+[2026-04-09 06:48:33] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 06:48:33] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 06:48:33] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 06:48:33] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 06:48:33] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 06:48:33] [reservation_check] Done (exit=0)
+[2026-04-09 06:48:37] [slack_check] Starting
+[2026-04-09 06:48:43] [inbox_check] Starting
+[2026-04-09 06:48:44] [inbox_check] Inbox win2 empty
+[2026-04-09 06:48:44] [inbox_check] Done (exit=0)
+[2026-04-09 06:48:44] [dm_check] Starting
+[2026-04-09 06:48:55] [slack_check] Done (exit=1)
+[2026-04-09 06:48:55] [health_check] Starting
