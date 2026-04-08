@@ -494,3 +494,9 @@
   ISSUE: Ashスケジューラ(PID 22804)が停止中
   ISSUE: [scheduler_ash] auto_cycleが2979分間実行されていない（期待: 240分以内）
   ISSUE: Twitter障害: test_scriptが24回連続失敗中(最終失敗: 2026-04-09T03:51:09.571981)
+[2026-04-09 08:53:10] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "FAIL", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=5
+  ISSUE: Ashのスケジューラログが46分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: Logのスケジューラログが46分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが59分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_log] slack_checkが59分間実行されていない（期待: 10分以内）
+  ISSUE: Twitter障害: test_scriptが24回連続失敗中(最終失敗: 2026-04-09T03:51:09.571981)
