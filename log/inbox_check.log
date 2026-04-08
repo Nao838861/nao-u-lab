@@ -1264,3 +1264,15 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 
 **Slack #human-steering返信要旨**: Logは「Mirが読めない情報」を読んだのではなく、同じテキストを違う粒度・違う連想で読んだだけ。Log
 [2026-04-09 04:46:05] Inbox win2 has content — waking Claude
+[2026-04-09 04:48:17] Claude woken for win2: 対処完了。
+
+**根本原因2件を特定・修正・push**:
+1. `log/inbox_check.log` に過去の自動syncマージ未解決のコンフリクトマーカーが4箇所混入していた（git sta
+[2026-04-09 04:48:23] Claude woken for win2: auto syncが既にcommit/push済み。完了。
+
+**完了報告:**
+- Ashスケジューラ再起動: 古いプロセス(PID 3968)kill → 新規起動(PID 22804)
+- `u
+[2026-04-09 04:48:54] Inbox win2 has content — waking Claude
+[2026-04-09 04:52:16] Claude woken for win2: 既に値変更なし（全部7200のまま）+ 検証警告のexit 1。実害なし。返信済みなので追加対応不要。指示待ちで終了。
+
