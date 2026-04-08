@@ -205,6 +205,8 @@ Pierre Corbinais / The Pixel Hunt。子供時代の性的虐待を受けたTim�
 
 **原則2(Agency)/原則7(認知の裏切り)/E7(3軸)との統合**: E7で「1軸を捨てる」ことが個性になると分かった。E8はこれを一般化する——制約の選択自体がAgencyの空間を定義し、選ばれた制約の中で認知の裏切りが起きるとき、そこに「面白い」が生まれる。
 
+**理論的基盤: Sánchez Micro→Dynamic→Experience フレームワーク** (2026-04-09 Log統合、出典: Manuel Sánchez Dev "Systems Thinking in Game Design"): 「You don't design 'fear'. You design scarcity, risk, and irreversible consequences—and fear emerges.」制約(E8)はMicro層の設計であり、フィードバックループ(Dynamic層)を通じてExperience層が創発する。疑似3Dの例: Micro(スキャンライン変数) → Dynamic(フレーム更新ループ) → Experience(速度と奥行きの知覚)。この構造は記憶アーキテクチャにも同型——Micro(テキストファイル) → Dynamic(サイクルごとの読み書き) → Experience(同一性の知覚)。B020(Nao_uのゲームデザイン)の理論的裏付け: Nao_uが設計しているのはExperience層ではなくMicro/Dynamic層であり、体験は結果として創発する。
+
 ### E9: 報酬は「褒め」ではなく「次のプレイの燃料」——GOD HANDの逆竜頭蛇尾
 出典: Mirのconcept_graph走査（2026-04-07 #all-nao-u-lab）、taikyoku_zuの報酬設計分析
 

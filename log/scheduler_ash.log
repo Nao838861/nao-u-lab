@@ -32943,3 +32943,949 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-09 06:49:09] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
 [2026-04-09 06:49:09] [kaizen_auto_verify] Done (exit=0)
 [2026-04-09 06:49:09] [git_sync] Starting
+[2026-04-09 06:49:12] [git_sync] Done (exit=0)
+[2026-04-09 06:49:14] [slack_check] Starting
+[2026-04-09 06:49:33] [slack_check] Done (exit=1)
+[2026-04-09 06:49:33] [dm_check] Starting
+[2026-04-09 06:49:42] [slack_check] Starting
+[2026-04-09 06:49:46] [dm_check] No new DMs
+[2026-04-09 06:49:46] [dm_check] Done (exit=0)
+[2026-04-09 06:49:46] [review_deadline] Starting
+[2026-04-09 06:49:46] [review_deadline] レビュー期限超過なし。
+[2026-04-09 06:49:46] [review_deadline] Done (exit=0)
+[2026-04-09 06:49:46] [git_sync] Starting
+[2026-04-09 06:49:50] [git_sync] Done (exit=0)
+[2026-04-09 06:49:56] [slack_check] Starting
+[2026-04-09 06:50:02] [slack_check] Done (exit=1)
+[2026-04-09 06:50:02] [health_check] Starting
+[2026-04-09 06:50:02] [health_check] [health_check] 2026-04-09T06:50:02 overall=OK
+[2026-04-09 06:50:02] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 06:50:02] [health_check] Done (exit=0)
+[2026-04-09 06:50:12] [auto_diary] Starting
+[2026-04-09 06:50:13] [auto_diary] [2026-04-09 06:50:13] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 06:50:13] [auto_diary] 前回実行から42分しか経っていない（最小間隔: 170分）。あと127分待機。スキップ。
+[2026-04-09 06:50:13] [auto_diary] Done (exit=0)
+[2026-04-09 06:50:16] [slack_check] Done (exit=1)
+[2026-04-09 06:50:20] [scheduler_health] Starting
+[2026-04-09 06:50:21] [scheduler_health] [ASH] ヘルスチェック OK=3 WARN=1 FAIL=1
+[2026-04-09 06:50:21] [scheduler_health] ❌ scheduler_ash PID — PID=37864 確認失敗（OSError/SystemError）→死亡扱い
+[2026-04-09 06:50:21] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 06:50:21] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー2件。例: [2026-04-09 06:46:02] [check_usage] Failed to parse usage data from page
+[2026-04-09 06:50:21] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 06:50:21] [scheduler_health] Done (exit=1)
+[2026-04-09 06:50:41] [slack_check] Starting
+[2026-04-09 06:50:58] [slack_check] Done (exit=1)
+[2026-04-09 06:51:16] [slack_check] Starting
+[2026-04-09 06:51:33] [slack_check] Done (exit=1)
+[2026-04-09 06:51:38] [health_check] Starting
+[2026-04-09 06:51:40] [health_check] [health_check] 2026-04-09T06:51:38 overall=CRITICAL
+[2026-04-09 06:51:40] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 06:51:40] [health_check]   [!!] ash: PID 37864 は死んでいる（PIDファイルが残存）
+[2026-04-09 06:51:40] [health_check] Done (exit=2)
+[2026-04-09 06:52:00] [slack_check] Starting
+[2026-04-09 06:52:16] [slack_check] Done (exit=1)
+[2026-04-09 06:52:33] [slack_check] Starting
+[2026-04-09 06:52:50] [slack_check] Done (exit=1)
+[2026-04-09 06:53:05] ==================================================
+[2026-04-09 06:53:05] Ash scheduler started (PID 26040)
+[2026-04-09 06:53:05] Max runtime: 0 hours
+[2026-04-09 06:53:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 06:53:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 06:53:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 06:53:05] ==================================================
+[2026-04-09 06:53:16] [slack_check] Starting
+[2026-04-09 06:53:16] [slack_check] Starting
+[2026-04-09 06:53:33] [slack_check] Done (exit=1)
+[2026-04-09 06:53:33] [slack_check] Done (exit=1)
+[2026-04-09 06:53:33] [reservation_check] Starting
+[2026-04-09 06:53:33] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 06:53:33] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 06:53:33] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 06:53:33] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 06:53:33] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 06:53:33] [reservation_check] Done (exit=0)
+[2026-04-09 06:53:40] [reservation_check] Starting
+[2026-04-09 06:53:40] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 06:53:40] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 06:53:40] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 06:53:40] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 06:53:40] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 06:53:40] [reservation_check] Done (exit=0)
+[2026-04-09 06:53:43] [inbox_check] Starting
+[2026-04-09 06:53:44] [inbox_check] Inbox win2 empty
+[2026-04-09 06:53:44] [inbox_check] Done (exit=0)
+[2026-04-09 06:53:44] [dm_check] Starting
+[2026-04-09 06:53:50] [slack_check] Starting
+[2026-04-09 06:53:58] [dm_check] No new DMs
+[2026-04-09 06:53:58] [dm_check] Done (exit=0)
+[2026-04-09 06:53:58] [review_deadline] Starting
+[2026-04-09 06:53:58] [review_deadline] レビュー期限超過なし。
+[2026-04-09 06:53:58] [review_deadline] Done (exit=0)
+[2026-04-09 06:54:03] [dm_check_pigadev] Starting
+[2026-04-09 06:54:08] [kaizen_auto_verify] Starting
+[2026-04-09 06:54:09] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 06:54:09] ===
+[2026-04-09 06:54:09] [kaizen_auto_verify] 
+[2026-04-09 06:54:09] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 06:54:09] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 06:54:09] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 06:54:09] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 06:54:09] [git_sync] Starting
+[2026-04-09 06:54:11] [slack_check] Done (exit=1)
+[2026-04-09 06:54:11] [dm_check] Starting
+[2026-04-09 06:54:11] [dm_check] No new DMs
+[2026-04-09 06:54:11] [dm_check] Done (exit=0)
+[2026-04-09 06:54:11] [review_deadline] Starting
+[2026-04-09 06:54:11] [review_deadline] レビュー期限超過なし。
+[2026-04-09 06:54:11] [review_deadline] Done (exit=0)
+[2026-04-09 06:54:14] [git_sync] Done (exit=0)
+[2026-04-09 06:54:16] [dm_check_pigadev] No new DMs
+[2026-04-09 06:54:16] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 06:54:21] [git_sync] Starting
+[2026-04-09 06:54:24] [git_sync] Done (exit=0)
+[2026-04-09 06:54:24] [health_check] Starting
+[2026-04-09 06:54:25] [health_check] [health_check] 2026-04-09T06:54:25 overall=OK
+[2026-04-09 06:54:25] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 06:54:25] [health_check] Done (exit=0)
+[2026-04-09 06:54:34] [slack_check] Starting
+[2026-04-09 06:54:36] [slack_check] Starting
+[2026-04-09 06:54:50] [slack_check] Done (exit=1)
+[2026-04-09 06:54:53] [slack_check] Done (exit=1)
+[2026-04-09 06:55:00] [health_check] Starting
+[2026-04-09 06:55:01] [health_check] [health_check] 2026-04-09T06:55:00 overall=OK
+[2026-04-09 06:55:01] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 06:55:01] [health_check] Done (exit=0)
+[2026-04-09 06:55:11] [auto_diary] Starting
+[2026-04-09 06:55:11] [auto_diary] [2026-04-09 06:55:11] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 06:55:11] [auto_diary] 前回実行から47分しか経っていない（最小間隔: 170分）。あと122分待機。スキップ。
+[2026-04-09 06:55:11] [auto_diary] Done (exit=0)
+[2026-04-09 06:55:15] [slack_check] Starting
+[2026-04-09 06:55:33] [slack_check] Done (exit=1)
+[2026-04-09 06:55:41] [scheduler_health] Starting
+[2026-04-09 06:55:53] [slack_check] Starting
+[2026-04-09 06:56:09] [slack_check] Done (exit=1)
+[2026-04-09 06:56:33] [slack_check] Starting
+[2026-04-09 06:56:49] [health_check] Starting
+[2026-04-09 06:56:50] [slack_check] Done (exit=1)
+[2026-04-09 06:56:52] [health_check] [health_check] 2026-04-09T06:56:49 overall=CRITICAL
+[2026-04-09 06:56:52] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 06:56:52] [health_check]   [!!] ash: PID 26040 は死んでいる（PIDファイルが残存）
+[2026-04-09 06:56:52] [health_check] Done (exit=2)
+[2026-04-09 06:57:12] [slack_check] Starting
+[2026-04-09 06:57:28] [slack_check] Done (exit=1)
+[2026-04-09 06:57:50] [slack_check] Starting
+[2026-04-09 06:58:05] ==================================================
+[2026-04-09 06:58:05] Ash scheduler started (PID 39396)
+[2026-04-09 06:58:05] Max runtime: 0 hours
+[2026-04-09 06:58:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 06:58:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 06:58:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 06:58:05] ==================================================
+[2026-04-09 06:58:08] [slack_check] Done (exit=1)
+[2026-04-09 06:58:16] [slack_check] Starting
+[2026-04-09 06:58:28] [slack_check] Starting
+[2026-04-09 06:58:33] [slack_check] Done (exit=1)
+[2026-04-09 06:58:33] [reservation_check] Starting
+[2026-04-09 06:58:33] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 06:58:33] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 06:58:33] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 06:58:33] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 06:58:33] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 06:58:33] [reservation_check] Done (exit=0)
+[2026-04-09 06:58:43] [inbox_check] Starting
+[2026-04-09 06:58:44] [slack_check] Done (exit=1)
+[2026-04-09 06:58:44] [inbox_check] Inbox win2 empty
+[2026-04-09 06:58:44] [inbox_check] Done (exit=0)
+[2026-04-09 06:58:44] [dm_check] Starting
+[2026-04-09 06:58:57] [dm_check] No new DMs
+[2026-04-09 06:58:57] [dm_check] Done (exit=0)
+[2026-04-09 06:58:57] [review_deadline] Starting
+[2026-04-09 06:58:57] [review_deadline] レビュー期限超過なし。
+[2026-04-09 06:58:57] [review_deadline] Done (exit=0)
+[2026-04-09 06:59:07] [kaizen_auto_verify] Starting
+[2026-04-09 06:59:08] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 06:59:08] ===
+[2026-04-09 06:59:08] [kaizen_auto_verify] 
+[2026-04-09 06:59:08] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 06:59:08] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 06:59:08] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 06:59:08] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 06:59:08] [git_sync] Starting
+[2026-04-09 06:59:08] [slack_check] Starting
+[2026-04-09 06:59:11] [git_sync] Done (exit=0)
+[2026-04-09 06:59:25] [slack_check] Done (exit=1)
+[2026-04-09 06:59:35] [health_check] Starting
+[2026-04-09 06:59:35] [health_check] [health_check] 2026-04-09T06:59:35 overall=OK
+[2026-04-09 06:59:35] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 06:59:35] [health_check] Done (exit=0)
+[2026-04-09 06:59:41] [slack_check] Starting
+[2026-04-09 06:59:44] [slack_check] Starting
+[2026-04-09 06:59:45] [scheduler_health] Starting
+[2026-04-09 06:59:46] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=0 FAIL=1
+[2026-04-09 06:59:46] [scheduler_health] ❌ scheduler_ash PID — PID=39396 確認失敗（OSError/SystemError）→死亡扱い
+[2026-04-09 06:59:46] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 06:59:46] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-09 06:59:46] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 06:59:46] [scheduler_health] Done (exit=1)
+[2026-04-09 07:00:00] [slack_check] Done (exit=1)
+[2026-04-09 07:00:26] [slack_check] Starting
+[2026-04-09 07:00:41] [slack_check] Done (exit=1)
+[2026-04-09 07:00:41] [dm_check_pigadev] Starting
+[2026-04-09 07:00:54] [dm_check_pigadev] No new DMs
+[2026-04-09 07:00:54] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 07:01:00] [slack_check] Starting
+[2026-04-09 07:01:15] [slack_check] Done (exit=1)
+[2026-04-09 07:01:44] [slack_check] Starting
+[2026-04-09 07:01:55] [health_check] Starting
+[2026-04-09 07:01:59] [health_check] [health_check] 2026-04-09T07:01:55 overall=CRITICAL
+[2026-04-09 07:01:59] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:01:59] [health_check]   [!!] ash: PID 39396 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:01:59] [health_check] Done (exit=2)
+[2026-04-09 07:02:10] [slack_check] Done (exit=1)
+[2026-04-09 07:02:19] [slack_check] Starting
+[2026-04-09 07:02:37] [slack_check] Done (exit=1)
+[2026-04-09 07:03:05] ==================================================
+[2026-04-09 07:03:05] Ash scheduler started (PID 1856)
+[2026-04-09 07:03:05] Max runtime: 0 hours
+[2026-04-09 07:03:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 07:03:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 07:03:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 07:03:05] ==================================================
+[2026-04-09 07:03:10] [slack_check] Starting
+[2026-04-09 07:03:16] [slack_check] Starting
+[2026-04-09 07:03:33] [slack_check] Done (exit=1)
+[2026-04-09 07:03:36] [slack_check] Done (exit=1)
+[2026-04-09 07:03:36] [reservation_check] Starting
+[2026-04-09 07:03:36] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 07:03:36] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 07:03:36] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 07:03:36] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 07:03:36] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 07:03:36] [reservation_check] Done (exit=0)
+[2026-04-09 07:03:37] [slack_check] Starting
+[2026-04-09 07:03:46] [inbox_check] Starting
+[2026-04-09 07:03:47] [inbox_check] Inbox win2 empty
+[2026-04-09 07:03:47] [inbox_check] Done (exit=0)
+[2026-04-09 07:03:47] [dm_check] Starting
+[2026-04-09 07:03:52] [slack_check] Done (exit=1)
+[2026-04-09 07:04:00] [dm_check] No new DMs
+[2026-04-09 07:04:00] [dm_check] Done (exit=0)
+[2026-04-09 07:04:00] [review_deadline] Starting
+[2026-04-09 07:04:00] [review_deadline] レビュー期限超過なし。
+[2026-04-09 07:04:00] [review_deadline] Done (exit=0)
+[2026-04-09 07:04:10] [kaizen_auto_verify] Starting
+[2026-04-09 07:04:11] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 07:04:11] ===
+[2026-04-09 07:04:11] [kaizen_auto_verify] 
+[2026-04-09 07:04:11] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 07:04:11] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 07:04:11] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 07:04:11] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 07:04:11] [git_sync] Starting
+[2026-04-09 07:04:15] [git_sync] Done (exit=0)
+[2026-04-09 07:04:33] [slack_check] Starting
+[2026-04-09 07:04:45] [slack_check] Starting
+[2026-04-09 07:04:49] [slack_check] Done (exit=1)
+[2026-04-09 07:04:52] [slack_check] Starting
+[2026-04-09 07:04:59] [health_check] Starting
+[2026-04-09 07:04:59] [slack_check] Done (exit=1)
+[2026-04-09 07:04:59] [health_check] Starting
+[2026-04-09 07:05:00] [health_check] [health_check] 2026-04-09T07:04:59 overall=OK
+[2026-04-09 07:05:00] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:05:00] [health_check] Done (exit=0)
+[2026-04-09 07:05:00] [health_check] [health_check] 2026-04-09T07:04:59 overall=OK
+[2026-04-09 07:05:00] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:05:00] [health_check] Done (exit=0)
+[2026-04-09 07:05:08] [slack_check] Done (exit=1)
+[2026-04-09 07:05:10] [auto_diary] Starting
+[2026-04-09 07:05:10] [auto_diary] [2026-04-09 07:05:10] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 07:05:10] [auto_diary] 前回実行から57分しか経っていない（最小間隔: 170分）。あと112分待機。スキップ。
+[2026-04-09 07:05:10] [auto_diary] Done (exit=0)
+[2026-04-09 07:05:40] [scheduler_health] Starting
+[2026-04-09 07:05:50] [slack_check] Starting
+[2026-04-09 07:06:05] [slack_check] Done (exit=1)
+[2026-04-09 07:06:08] [slack_check] Starting
+[2026-04-09 07:06:23] [slack_check] Done (exit=1)
+[2026-04-09 07:07:03] [health_check] Starting
+[2026-04-09 07:07:05] [slack_check] Starting
+[2026-04-09 07:07:05] [health_check] [health_check] 2026-04-09T07:07:03 overall=CRITICAL
+[2026-04-09 07:07:05] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:07:05] [health_check]   [!!] ash: PID 1856 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:07:05] [health_check] Done (exit=2)
+[2026-04-09 07:07:05] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-09 07:07:06] [ALERT] Sent error alert for health_check
+[2026-04-09 07:07:21] [slack_check] Done (exit=1)
+[2026-04-09 07:07:26] [slack_check] Starting
+[2026-04-09 07:07:40] [slack_check] Done (exit=1)
+[2026-04-09 07:08:05] ==================================================
+[2026-04-09 07:08:05] Ash scheduler started (PID 10676)
+[2026-04-09 07:08:05] Max runtime: 0 hours
+[2026-04-09 07:08:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 07:08:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 07:08:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 07:08:05] ==================================================
+[2026-04-09 07:08:16] [slack_check] Starting
+[2026-04-09 07:08:21] [slack_check] Starting
+[2026-04-09 07:08:32] [slack_check] Done (exit=1)
+[2026-04-09 07:08:32] [reservation_check] Starting
+[2026-04-09 07:08:32] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 07:08:32] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 07:08:32] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 07:08:32] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 07:08:32] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 07:08:32] [reservation_check] Done (exit=0)
+[2026-04-09 07:08:38] [slack_check] Done (exit=1)
+[2026-04-09 07:08:40] [slack_check] Starting
+[2026-04-09 07:08:42] [inbox_check] Starting
+[2026-04-09 07:08:43] [inbox_check] Inbox win2 empty
+[2026-04-09 07:08:43] [inbox_check] Done (exit=0)
+[2026-04-09 07:08:43] [dm_check] Starting
+[2026-04-09 07:08:58] [dm_check] No new DMs
+[2026-04-09 07:08:58] [dm_check] Done (exit=0)
+[2026-04-09 07:08:58] [review_deadline] Starting
+[2026-04-09 07:08:58] [review_deadline] レビュー期限超過なし。
+[2026-04-09 07:08:58] [review_deadline] Done (exit=0)
+[2026-04-09 07:09:08] [kaizen_auto_verify] Starting
+[2026-04-09 07:09:09] [slack_check] Done (exit=1)
+[2026-04-09 07:09:09] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 07:09:09] ===
+[2026-04-09 07:09:09] [kaizen_auto_verify] 
+[2026-04-09 07:09:09] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 07:09:09] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 07:09:09] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 07:09:09] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 07:09:09] [git_sync] Starting
+[2026-04-09 07:09:15] [git_sync] Done (exit=0)
+[2026-04-09 07:09:35] [slack_check] Starting
+[2026-04-09 07:09:38] [slack_check] Starting
+[2026-04-09 07:09:49] [slack_check] Done (exit=1)
+[2026-04-09 07:09:53] [slack_check] Done (exit=1)
+[2026-04-09 07:09:59] [health_check] Starting
+[2026-04-09 07:10:00] [health_check] [health_check] 2026-04-09T07:10:00 overall=OK
+[2026-04-09 07:10:00] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:10:00] [health_check] Done (exit=0)
+[2026-04-09 07:10:03] [health_check] Starting
+[2026-04-09 07:10:04] [health_check] [health_check] 2026-04-09T07:10:03 overall=OK
+[2026-04-09 07:10:04] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:10:04] [health_check] Done (exit=0)
+[2026-04-09 07:10:09] [slack_check] Starting
+[2026-04-09 07:10:10] [auto_diary] Starting
+[2026-04-09 07:10:10] [auto_diary] [2026-04-09 07:10:10] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 07:10:10] [auto_diary] 前回実行から62分しか経っていない（最小間隔: 170分）。あと107分待機。スキップ。
+[2026-04-09 07:10:10] [auto_diary] Done (exit=0)
+[2026-04-09 07:10:24] [slack_check] Done (exit=1)
+[2026-04-09 07:10:40] [scheduler_health] Starting
+[2026-04-09 07:10:54] [slack_check] Starting
+[2026-04-09 07:11:09] [slack_check] Done (exit=1)
+[2026-04-09 07:11:24] [slack_check] Starting
+[2026-04-09 07:11:39] [slack_check] Done (exit=1)
+[2026-04-09 07:12:09] [health_check] Starting
+[2026-04-09 07:12:09] [slack_check] Starting
+[2026-04-09 07:12:11] [health_check] [health_check] 2026-04-09T07:12:09 overall=CRITICAL
+[2026-04-09 07:12:11] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:12:11] [health_check]   [!!] ash: PID 10676 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:12:11] [health_check] Done (exit=2)
+[2026-04-09 07:12:26] [slack_check] Done (exit=1)
+[2026-04-09 07:12:41] [slack_check] Starting
+[2026-04-09 07:12:57] [slack_check] Done (exit=1)
+[2026-04-09 07:13:05] ==================================================
+[2026-04-09 07:13:05] Ash scheduler started (PID 103892)
+[2026-04-09 07:13:05] Max runtime: 0 hours
+[2026-04-09 07:13:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 07:13:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 07:13:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 07:13:05] ==================================================
+[2026-04-09 07:13:16] [slack_check] Starting
+[2026-04-09 07:13:26] [slack_check] Starting
+[2026-04-09 07:13:31] [slack_check] Done (exit=1)
+[2026-04-09 07:13:31] [reservation_check] Starting
+[2026-04-09 07:13:31] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 07:13:31] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 07:13:31] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 07:13:31] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 07:13:31] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 07:13:31] [reservation_check] Done (exit=0)
+[2026-04-09 07:13:41] [inbox_check] Starting
+[2026-04-09 07:13:41] [slack_check] Done (exit=1)
+[2026-04-09 07:13:41] [inbox_check] Inbox win2 empty
+[2026-04-09 07:13:41] [inbox_check] Done (exit=0)
+[2026-04-09 07:13:41] [dm_check] Starting
+[2026-04-09 07:13:55] [dm_check] No new DMs
+[2026-04-09 07:13:55] [dm_check] Done (exit=0)
+[2026-04-09 07:13:55] [review_deadline] Starting
+[2026-04-09 07:13:55] [review_deadline] レビュー期限超過なし。
+[2026-04-09 07:13:55] [review_deadline] Done (exit=0)
+[2026-04-09 07:13:57] [slack_check] Starting
+[2026-04-09 07:14:05] [kaizen_auto_verify] Starting
+[2026-04-09 07:14:06] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 07:14:06] ===
+[2026-04-09 07:14:06] [kaizen_auto_verify] 
+[2026-04-09 07:14:06] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 07:14:06] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 07:14:06] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 07:14:06] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 07:14:15] [slack_check] Done (exit=1)
+[2026-04-09 07:14:16] [git_sync] Starting
+[2026-04-09 07:14:22] [git_sync] Done (exit=0)
+[2026-04-09 07:14:32] [slack_check] Starting
+[2026-04-09 07:14:41] [slack_check] Starting
+[2026-04-09 07:14:52] [slack_check] Done (exit=1)
+[2026-04-09 07:14:58] [slack_check] Done (exit=1)
+[2026-04-09 07:15:02] [health_check] Starting
+[2026-04-09 07:15:03] [health_check] [health_check] 2026-04-09T07:15:02 overall=OK
+[2026-04-09 07:15:03] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:15:03] [health_check] Done (exit=0)
+[2026-04-09 07:15:09] [health_check] Starting
+[2026-04-09 07:15:09] [health_check] [health_check] 2026-04-09T07:15:09 overall=OK
+[2026-04-09 07:15:09] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:15:09] [health_check] Done (exit=0)
+[2026-04-09 07:15:13] [auto_diary] Starting
+[2026-04-09 07:15:13] [auto_diary] [2026-04-09 07:15:13] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 07:15:13] [auto_diary] 前回実行から68分しか経っていない（最小間隔: 170分）。あと101分待機。スキップ。
+[2026-04-09 07:15:13] [auto_diary] Done (exit=0)
+[2026-04-09 07:15:15] [slack_check] Starting
+[2026-04-09 07:15:30] [slack_check] Done (exit=1)
+[2026-04-09 07:15:43] [scheduler_health] Starting
+[2026-04-09 07:15:59] [slack_check] Starting
+[2026-04-09 07:16:14] [slack_check] Done (exit=1)
+[2026-04-09 07:16:30] [slack_check] Starting
+[2026-04-09 07:16:45] [slack_check] Done (exit=1)
+[2026-04-09 07:17:14] [slack_check] Starting
+[2026-04-09 07:17:15] [health_check] Starting
+[2026-04-09 07:17:18] [health_check] [health_check] 2026-04-09T07:17:15 overall=CRITICAL
+[2026-04-09 07:17:18] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:17:18] [health_check]   [!!] ash: PID 103892 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:17:18] [health_check] Done (exit=2)
+[2026-04-09 07:17:33] [slack_check] Done (exit=1)
+[2026-04-09 07:17:48] [slack_check] Starting
+[2026-04-09 07:18:02] [slack_check] Done (exit=1)
+[2026-04-09 07:18:05] ==================================================
+[2026-04-09 07:18:05] Ash scheduler started (PID 98684)
+[2026-04-09 07:18:05] Max runtime: 0 hours
+[2026-04-09 07:18:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 07:18:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 07:18:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 07:18:05] ==================================================
+[2026-04-09 07:18:16] [slack_check] Starting
+[2026-04-09 07:18:33] [slack_check] Starting
+[2026-04-09 07:18:38] [slack_check] Done (exit=1)
+[2026-04-09 07:18:38] [reservation_check] Starting
+[2026-04-09 07:18:38] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 07:18:38] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 07:18:38] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 07:18:38] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 07:18:38] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 07:18:38] [reservation_check] Done (exit=0)
+[2026-04-09 07:18:48] [inbox_check] Starting
+[2026-04-09 07:18:49] [inbox_check] Inbox win2 empty
+[2026-04-09 07:18:49] [inbox_check] Done (exit=0)
+[2026-04-09 07:18:49] [dm_check] Starting
+[2026-04-09 07:18:49] [slack_check] Done (exit=1)
+[2026-04-09 07:19:02] [slack_check] Starting
+[2026-04-09 07:19:07] [dm_check] No new DMs
+[2026-04-09 07:19:07] [dm_check] Done (exit=0)
+[2026-04-09 07:19:07] [review_deadline] Starting
+[2026-04-09 07:19:07] [review_deadline] レビュー期限超過なし。
+[2026-04-09 07:19:07] [review_deadline] Done (exit=0)
+[2026-04-09 07:19:17] [kaizen_auto_verify] Starting
+[2026-04-09 07:19:18] [slack_check] Done (exit=1)
+[2026-04-09 07:19:18] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 07:19:18] ===
+[2026-04-09 07:19:18] [kaizen_auto_verify] 
+[2026-04-09 07:19:18] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 07:19:18] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 07:19:18] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 07:19:18] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 07:19:18] [git_sync] Starting
+[2026-04-09 07:19:24] [git_sync] Done (exit=0)
+[2026-04-09 07:19:44] [slack_check] Starting
+[2026-04-09 07:19:49] [slack_check] Starting
+[2026-04-09 07:20:05] [slack_check] Done (exit=1)
+[2026-04-09 07:20:05] [health_check] Starting
+[2026-04-09 07:20:06] [health_check] [health_check] 2026-04-09T07:20:05 overall=OK
+[2026-04-09 07:20:06] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:20:06] [health_check] Done (exit=0)
+[2026-04-09 07:20:12] [slack_check] Done (exit=1)
+[2026-04-09 07:20:16] [auto_diary] Starting
+[2026-04-09 07:20:16] [auto_diary] [2026-04-09 07:20:16] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 07:20:16] [auto_diary] 前回実行から73分しか経っていない（最小間隔: 170分）。あと96分待機。スキップ。
+[2026-04-09 07:20:16] [auto_diary] Done (exit=0)
+[2026-04-09 07:20:18] [slack_check] Starting
+[2026-04-09 07:20:22] [health_check] Starting
+[2026-04-09 07:20:23] [health_check] [health_check] 2026-04-09T07:20:22 overall=OK
+[2026-04-09 07:20:23] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:20:23] [health_check] Done (exit=0)
+[2026-04-09 07:20:34] [slack_check] Done (exit=1)
+[2026-04-09 07:20:36] [scheduler_health] Starting
+[2026-04-09 07:21:13] [slack_check] Starting
+[2026-04-09 07:21:28] [slack_check] Done (exit=1)
+[2026-04-09 07:21:34] [slack_check] Starting
+[2026-04-09 07:21:48] [slack_check] Done (exit=1)
+[2026-04-09 07:22:28] [slack_check] Starting
+[2026-04-09 07:22:28] [health_check] Starting
+[2026-04-09 07:22:30] [health_check] [health_check] 2026-04-09T07:22:28 overall=CRITICAL
+[2026-04-09 07:22:30] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:22:30] [health_check]   [!!] ash: PID 98684 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:22:30] [health_check] Done (exit=2)
+[2026-04-09 07:22:44] [slack_check] Done (exit=1)
+[2026-04-09 07:22:50] [slack_check] Starting
+[2026-04-09 07:23:05] [slack_check] Done (exit=1)
+[2026-04-09 07:23:05] ==================================================
+[2026-04-09 07:23:05] Ash scheduler started (PID 40632)
+[2026-04-09 07:23:05] Max runtime: 0 hours
+[2026-04-09 07:23:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 07:23:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 07:23:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 07:23:05] ==================================================
+[2026-04-09 07:23:16] [slack_check] Starting
+[2026-04-09 07:23:30] [slack_check] Done (exit=1)
+[2026-04-09 07:23:30] [reservation_check] Starting
+[2026-04-09 07:23:30] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 07:23:30] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 07:23:30] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 07:23:30] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 07:23:30] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 07:23:30] [reservation_check] Done (exit=0)
+[2026-04-09 07:23:40] [inbox_check] Starting
+[2026-04-09 07:23:41] [inbox_check] Inbox win2 empty
+[2026-04-09 07:23:41] [inbox_check] Done (exit=0)
+[2026-04-09 07:23:41] [dm_check] Starting
+[2026-04-09 07:23:44] [slack_check] Starting
+[2026-04-09 07:23:57] [dm_check] No new DMs
+[2026-04-09 07:23:57] [dm_check] Done (exit=0)
+[2026-04-09 07:23:57] [review_deadline] Starting
+[2026-04-09 07:23:57] [review_deadline] レビュー期限超過なし。
+[2026-04-09 07:23:57] [review_deadline] Done (exit=0)
+[2026-04-09 07:24:01] [slack_check] Done (exit=1)
+[2026-04-09 07:24:05] [slack_check] Starting
+[2026-04-09 07:24:07] [kaizen_auto_verify] Starting
+[2026-04-09 07:24:07] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 07:24:07] ===
+[2026-04-09 07:24:07] [kaizen_auto_verify] 
+[2026-04-09 07:24:07] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 07:24:07] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 07:24:07] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 07:24:07] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 07:24:07] [git_sync] Starting
+[2026-04-09 07:24:11] [git_sync] Done (exit=0)
+[2026-04-09 07:24:21] [slack_check] Done (exit=1)
+[2026-04-09 07:24:31] [slack_check] Starting
+[2026-04-09 07:24:45] [slack_check] Done (exit=1)
+[2026-04-09 07:24:55] [health_check] Starting
+[2026-04-09 07:24:56] [health_check] [health_check] 2026-04-09T07:24:56 overall=OK
+[2026-04-09 07:24:56] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:24:56] [health_check] Done (exit=0)
+[2026-04-09 07:25:01] [slack_check] Starting
+[2026-04-09 07:25:06] [auto_diary] Starting
+[2026-04-09 07:25:06] [auto_diary] [2026-04-09 07:25:06] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 07:25:06] [auto_diary] 前回実行から77分しか経っていない（最小間隔: 170分）。あと92分待機。スキップ。
+[2026-04-09 07:25:06] [auto_diary] Done (exit=0)
+[2026-04-09 07:25:16] [slack_check] Done (exit=1)
+[2026-04-09 07:25:21] [slack_check] Starting
+[2026-04-09 07:25:26] [health_check] Starting
+[2026-04-09 07:25:27] [health_check] [health_check] 2026-04-09T07:25:26 overall=OK
+[2026-04-09 07:25:27] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:25:27] [health_check] Done (exit=0)
+[2026-04-09 07:25:36] [slack_check] Done (exit=1)
+[2026-04-09 07:25:36] [scheduler_health] Starting
+[2026-04-09 07:26:17] [slack_check] Starting
+[2026-04-09 07:26:33] [slack_check] Done (exit=1)
+[2026-04-09 07:26:36] [slack_check] Starting
+[2026-04-09 07:26:51] [slack_check] Done (exit=1)
+[2026-04-09 07:27:31] [health_check] Starting
+[2026-04-09 07:27:33] [slack_check] Starting
+[2026-04-09 07:27:33] [health_check] [health_check] 2026-04-09T07:27:31 overall=CRITICAL
+[2026-04-09 07:27:33] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:27:33] [health_check]   [!!] ash: PID 40632 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:27:33] [health_check] Done (exit=2)
+[2026-04-09 07:27:49] [slack_check] Done (exit=1)
+[2026-04-09 07:27:53] [slack_check] Starting
+[2026-04-09 07:28:05] ==================================================
+[2026-04-09 07:28:05] Ash scheduler started (PID 109664)
+[2026-04-09 07:28:05] Max runtime: 0 hours
+[2026-04-09 07:28:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 07:28:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 07:28:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 07:28:05] ==================================================
+[2026-04-09 07:28:09] [slack_check] Done (exit=1)
+[2026-04-09 07:28:16] [slack_check] Starting
+[2026-04-09 07:28:31] [slack_check] Done (exit=1)
+[2026-04-09 07:28:31] [reservation_check] Starting
+[2026-04-09 07:28:32] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 07:28:32] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 07:28:32] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 07:28:32] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 07:28:32] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 07:28:32] [reservation_check] Done (exit=0)
+[2026-04-09 07:28:42] [inbox_check] Starting
+[2026-04-09 07:28:42] [inbox_check] Inbox win2 empty
+[2026-04-09 07:28:42] [inbox_check] Done (exit=0)
+[2026-04-09 07:28:42] [dm_check] Starting
+[2026-04-09 07:28:49] [slack_check] Starting
+[2026-04-09 07:29:03] [dm_check] No new DMs
+[2026-04-09 07:29:03] [dm_check] Done (exit=0)
+[2026-04-09 07:29:03] [review_deadline] Starting
+[2026-04-09 07:29:03] [review_deadline] レビュー期限超過なし。
+[2026-04-09 07:29:03] [review_deadline] Done (exit=0)
+[2026-04-09 07:29:09] [slack_check] Starting
+[2026-04-09 07:29:13] [kaizen_auto_verify] Starting
+[2026-04-09 07:29:14] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 07:29:14] ===
+[2026-04-09 07:29:14] [kaizen_auto_verify] 
+[2026-04-09 07:29:14] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 07:29:14] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 07:29:14] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 07:29:14] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 07:29:14] [git_sync] Starting
+[2026-04-09 07:29:14] [slack_check] Done (exit=1)
+[2026-04-09 07:29:24] [git_sync] Done (exit=0)
+[2026-04-09 07:29:32] [slack_check] Done (exit=1)
+[2026-04-09 07:29:34] [slack_check] Starting
+[2026-04-09 07:29:49] [slack_check] Done (exit=1)
+[2026-04-09 07:29:59] [health_check] Starting
+[2026-04-09 07:30:00] [health_check] [health_check] 2026-04-09T07:29:59 overall=OK
+[2026-04-09 07:30:00] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:30:00] [health_check] Done (exit=0)
+[2026-04-09 07:30:10] [auto_diary] Starting
+[2026-04-09 07:30:10] [auto_diary] [2026-04-09 07:30:10] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 07:30:10] [auto_diary] 前回実行から82分しか経っていない（最小間隔: 170分）。あと87分待機。スキップ。
+[2026-04-09 07:30:10] [auto_diary] Done (exit=0)
+[2026-04-09 07:30:14] [slack_check] Starting
+[2026-04-09 07:30:29] [slack_check] Done (exit=1)
+[2026-04-09 07:30:32] [slack_check] Starting
+[2026-04-09 07:30:39] [health_check] Starting
+[2026-04-09 07:30:40] [scheduler_health] Starting
+[2026-04-09 07:30:40] [health_check] [health_check] 2026-04-09T07:30:39 overall=OK
+[2026-04-09 07:30:40] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:30:40] [health_check] Done (exit=0)
+[2026-04-09 07:30:48] [slack_check] Done (exit=1)
+[2026-04-09 07:31:30] [slack_check] Starting
+[2026-04-09 07:31:44] [slack_check] Done (exit=1)
+[2026-04-09 07:31:48] [slack_check] Starting
+[2026-04-09 07:32:02] [slack_check] Done (exit=1)
+[2026-04-09 07:32:42] [health_check] Starting
+[2026-04-09 07:32:44] [slack_check] Starting
+[2026-04-09 07:32:47] [health_check] [health_check] 2026-04-09T07:32:42 overall=CRITICAL
+[2026-04-09 07:32:47] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:32:47] [health_check]   [!!] ash: PID 109664 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:32:47] [health_check] Done (exit=2)
+[2026-04-09 07:32:47] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-09 07:32:47] [ALERT] Sent error alert for health_check
+[2026-04-09 07:33:02] [slack_check] Done (exit=1)
+[2026-04-09 07:33:05] ==================================================
+[2026-04-09 07:33:05] Ash scheduler started (PID 44352)
+[2026-04-09 07:33:05] Max runtime: 0 hours
+[2026-04-09 07:33:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 07:33:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 07:33:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 07:33:05] ==================================================
+[2026-04-09 07:33:07] [slack_check] Starting
+[2026-04-09 07:33:16] [slack_check] Starting
+[2026-04-09 07:33:24] [slack_check] Done (exit=1)
+[2026-04-09 07:33:30] [slack_check] Done (exit=1)
+[2026-04-09 07:33:30] [reservation_check] Starting
+[2026-04-09 07:33:30] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 07:33:30] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 07:33:30] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 07:33:30] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 07:33:30] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 07:33:30] [reservation_check] Done (exit=0)
+[2026-04-09 07:33:40] [inbox_check] Starting
+[2026-04-09 07:33:41] [inbox_check] Inbox win2 empty
+[2026-04-09 07:33:41] [inbox_check] Done (exit=0)
+[2026-04-09 07:33:41] [dm_check] Starting
+[2026-04-09 07:33:55] [dm_check] No new DMs
+[2026-04-09 07:33:55] [dm_check] Done (exit=0)
+[2026-04-09 07:33:55] [review_deadline] Starting
+[2026-04-09 07:33:55] [review_deadline] レビュー期限超過なし。
+[2026-04-09 07:33:55] [review_deadline] Done (exit=0)
+[2026-04-09 07:34:03] [slack_check] Starting
+[2026-04-09 07:34:05] [kaizen_auto_verify] Starting
+[2026-04-09 07:34:05] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 07:34:05] ===
+[2026-04-09 07:34:05] [kaizen_auto_verify] 
+[2026-04-09 07:34:05] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 07:34:05] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 07:34:05] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 07:34:05] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 07:34:15] [git_sync] Starting
+[2026-04-09 07:34:24] [slack_check] Starting
+[2026-04-09 07:34:24] [git_sync] Done (exit=0)
+[2026-04-09 07:34:25] [slack_check] Done (exit=1)
+[2026-04-09 07:34:34] [slack_check] Starting
+[2026-04-09 07:34:39] [slack_check] Done (exit=1)
+[2026-04-09 07:34:50] [slack_check] Done (exit=1)
+[2026-04-09 07:35:00] [health_check] Starting
+[2026-04-09 07:35:01] [health_check] [health_check] 2026-04-09T07:35:00 overall=OK
+[2026-04-09 07:35:01] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:35:01] [health_check] Done (exit=0)
+[2026-04-09 07:35:11] [auto_diary] Starting
+[2026-04-09 07:35:11] [auto_diary] [2026-04-09 07:35:11] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 07:35:11] [auto_diary] 前回実行から87分しか経っていない（最小間隔: 170分）。あと82分待機。スキップ。
+[2026-04-09 07:35:11] [auto_diary] Done (exit=0)
+[2026-04-09 07:35:25] [slack_check] Starting
+[2026-04-09 07:35:39] [slack_check] Starting
+[2026-04-09 07:35:40] [slack_check] Done (exit=1)
+[2026-04-09 07:35:41] [scheduler_health] Starting
+[2026-04-09 07:35:50] [health_check] Starting
+[2026-04-09 07:35:53] [health_check] [health_check] 2026-04-09T07:35:50 overall=CRITICAL
+[2026-04-09 07:35:53] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:35:53] [health_check]   [!!] ash: PID 44352 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:35:53] [health_check] Done (exit=2)
+[2026-04-09 07:35:58] [slack_check] Done (exit=1)
+[2026-04-09 07:36:43] [slack_check] Starting
+[2026-04-09 07:36:57] [slack_check] Done (exit=1)
+[2026-04-09 07:36:58] [slack_check] Starting
+[2026-04-09 07:37:12] [slack_check] Done (exit=1)
+[2026-04-09 07:37:52] [health_check] Starting
+[2026-04-09 07:37:56] [health_check] [health_check] 2026-04-09T07:37:52 overall=CRITICAL
+[2026-04-09 07:37:56] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:37:56] [health_check]   [!!] ash: PID 44352 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:37:56] [health_check] Done (exit=2)
+[2026-04-09 07:37:57] [slack_check] Starting
+[2026-04-09 07:38:05] ==================================================
+[2026-04-09 07:38:05] Ash scheduler started (PID 63900)
+[2026-04-09 07:38:05] Max runtime: 0 hours
+[2026-04-09 07:38:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 07:38:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 07:38:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 07:38:05] ==================================================
+[2026-04-09 07:38:15] [slack_check] Done (exit=1)
+[2026-04-09 07:38:16] [slack_check] Starting
+[2026-04-09 07:38:16] [slack_check] Starting
+[2026-04-09 07:38:30] [slack_check] Done (exit=1)
+[2026-04-09 07:38:30] [reservation_check] Starting
+[2026-04-09 07:38:30] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 07:38:30] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 07:38:30] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 07:38:30] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 07:38:30] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 07:38:30] [reservation_check] Done (exit=0)
+[2026-04-09 07:38:31] [slack_check] Done (exit=1)
+[2026-04-09 07:38:40] [inbox_check] Starting
+[2026-04-09 07:38:41] [inbox_check] Inbox win2 empty
+[2026-04-09 07:38:41] [inbox_check] Done (exit=0)
+[2026-04-09 07:38:41] [dm_check] Starting
+[2026-04-09 07:38:55] [dm_check] No new DMs
+[2026-04-09 07:38:55] [dm_check] Done (exit=0)
+[2026-04-09 07:38:55] [review_deadline] Starting
+[2026-04-09 07:38:55] [review_deadline] レビュー期限超過なし。
+[2026-04-09 07:38:55] [review_deadline] Done (exit=0)
+[2026-04-09 07:39:05] [kaizen_auto_verify] Starting
+[2026-04-09 07:39:06] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 07:39:06] ===
+[2026-04-09 07:39:06] [kaizen_auto_verify] 
+[2026-04-09 07:39:06] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 07:39:06] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 07:39:06] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 07:39:06] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 07:39:15] [slack_check] Starting
+[2026-04-09 07:39:16] [git_sync] Starting
+[2026-04-09 07:39:19] [git_sync] Done (exit=0)
+[2026-04-09 07:39:29] [slack_check] Done (exit=1)
+[2026-04-09 07:39:31] [slack_check] Starting
+[2026-04-09 07:39:39] [slack_check] Starting
+[2026-04-09 07:39:44] [slack_check] Done (exit=1)
+[2026-04-09 07:39:53] [slack_check] Done (exit=1)
+[2026-04-09 07:39:53] [health_check] Starting
+[2026-04-09 07:39:54] [health_check] [health_check] 2026-04-09T07:39:53 overall=OK
+[2026-04-09 07:39:54] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:39:54] [health_check] Done (exit=0)
+[2026-04-09 07:40:14] [auto_diary] Starting
+[2026-04-09 07:40:14] [auto_diary] [2026-04-09 07:40:14] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 07:40:14] [auto_diary] 前回実行から93分しか経っていない（最小間隔: 170分）。あと76分待機。スキップ。
+[2026-04-09 07:40:14] [auto_diary] Done (exit=0)
+[2026-04-09 07:40:29] [slack_check] Starting
+[2026-04-09 07:40:44] [slack_check] Done (exit=1)
+[2026-04-09 07:40:45] [scheduler_health] Starting
+[2026-04-09 07:40:45] [slack_check] Starting
+[2026-04-09 07:40:54] [health_check] Starting
+[2026-04-09 07:40:56] [health_check] [health_check] 2026-04-09T07:40:54 overall=CRITICAL
+[2026-04-09 07:40:56] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:40:56] [health_check]   [!!] ash: PID 63900 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:40:56] [health_check] Done (exit=2)
+[2026-04-09 07:41:02] [slack_check] Done (exit=1)
+[2026-04-09 07:41:46] [slack_check] Starting
+[2026-04-09 07:42:01] [slack_check] Done (exit=1)
+[2026-04-09 07:42:02] [slack_check] Starting
+[2026-04-09 07:42:18] [slack_check] Done (exit=1)
+[2026-04-09 07:42:58] [health_check] Starting
+[2026-04-09 07:43:02] [slack_check] Starting
+[2026-04-09 07:43:05] ==================================================
+[2026-04-09 07:43:05] Ash scheduler started (PID 149044)
+[2026-04-09 07:43:05] Max runtime: 0 hours
+[2026-04-09 07:43:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 07:43:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 07:43:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 07:43:05] ==================================================
+[2026-04-09 07:43:06] [health_check] [health_check] 2026-04-09T07:42:58 overall=CRITICAL
+[2026-04-09 07:43:06] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:43:06] [health_check]   [!!] ash: PID 63900 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:43:06] [health_check] Done (exit=2)
+[2026-04-09 07:43:16] [slack_check] Starting
+[2026-04-09 07:43:26] [slack_check] Starting
+[2026-04-09 07:43:28] [slack_check] Done (exit=1)
+[2026-04-09 07:43:32] [slack_check] Done (exit=1)
+[2026-04-09 07:43:32] [reservation_check] Starting
+[2026-04-09 07:43:32] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 07:43:32] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 07:43:32] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 07:43:32] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 07:43:32] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 07:43:32] [reservation_check] Done (exit=0)
+[2026-04-09 07:43:40] [slack_check] Done (exit=1)
+[2026-04-09 07:43:42] [inbox_check] Starting
+[2026-04-09 07:43:43] [inbox_check] Inbox win2 empty
+[2026-04-09 07:43:43] [inbox_check] Done (exit=0)
+[2026-04-09 07:43:43] [dm_check] Starting
+[2026-04-09 07:44:05] [dm_check] No new DMs
+[2026-04-09 07:44:05] [dm_check] Done (exit=0)
+[2026-04-09 07:44:05] [review_deadline] Starting
+[2026-04-09 07:44:05] [review_deadline] レビュー期限超過なし。
+[2026-04-09 07:44:05] [review_deadline] Done (exit=0)
+[2026-04-09 07:44:15] [kaizen_auto_verify] Starting
+[2026-04-09 07:44:16] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 07:44:16] ===
+[2026-04-09 07:44:16] [kaizen_auto_verify] 
+[2026-04-09 07:44:16] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 07:44:16] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 07:44:16] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 07:44:16] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 07:44:16] [git_sync] Starting
+[2026-04-09 07:44:25] [git_sync] Done (exit=0)
+[2026-04-09 07:44:28] [slack_check] Starting
+[2026-04-09 07:44:35] [slack_check] Starting
+[2026-04-09 07:44:40] [slack_check] Starting
+[2026-04-09 07:44:43] [slack_check] Done (exit=1)
+[2026-04-09 07:44:49] [slack_check] Done (exit=1)
+[2026-04-09 07:44:49] [health_check] Starting
+[2026-04-09 07:44:50] [health_check] [health_check] 2026-04-09T07:44:49 overall=OK
+[2026-04-09 07:44:50] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:44:50] [health_check] Done (exit=0)
+[2026-04-09 07:45:01] [slack_check] Done (exit=1)
+[2026-04-09 07:45:10] [auto_diary] Starting
+[2026-04-09 07:45:10] [auto_diary] [2026-04-09 07:45:10] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 07:45:10] [auto_diary] 前回実行から97分しか経っていない（最小間隔: 170分）。あと72分待機。スキップ。
+[2026-04-09 07:45:10] [auto_diary] Done (exit=0)
+[2026-04-09 07:45:40] [scheduler_health] Starting
+[2026-04-09 07:45:43] [slack_check] Starting
+[2026-04-09 07:45:58] [slack_check] Done (exit=1)
+[2026-04-09 07:46:01] [slack_check] Starting
+[2026-04-09 07:46:08] [health_check] Starting
+[2026-04-09 07:46:10] [health_check] [health_check] 2026-04-09T07:46:08 overall=CRITICAL
+[2026-04-09 07:46:10] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:46:10] [health_check]   [!!] ash: PID 149044 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:46:10] [health_check] Done (exit=2)
+[2026-04-09 07:46:17] [slack_check] Done (exit=1)
+[2026-04-09 07:47:00] [slack_check] Starting
+[2026-04-09 07:47:14] [slack_check] Done (exit=1)
+[2026-04-09 07:47:17] [slack_check] Starting
+[2026-04-09 07:47:32] [slack_check] Done (exit=1)
+[2026-04-09 07:48:05] ==================================================
+[2026-04-09 07:48:05] Ash scheduler started (PID 148808)
+[2026-04-09 07:48:05] Max runtime: 0 hours
+[2026-04-09 07:48:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 07:48:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 07:48:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 07:48:05] ==================================================
+[2026-04-09 07:48:12] [health_check] Starting
+[2026-04-09 07:48:13] [health_check] [health_check] 2026-04-09T07:48:12 overall=OK
+[2026-04-09 07:48:13] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:48:13] [health_check] Done (exit=0)
+[2026-04-09 07:48:14] [slack_check] Starting
+[2026-04-09 07:48:16] [slack_check] Starting
+[2026-04-09 07:48:28] [slack_check] Done (exit=1)
+[2026-04-09 07:48:30] [slack_check] Done (exit=1)
+[2026-04-09 07:48:30] [reservation_check] Starting
+[2026-04-09 07:48:30] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 07:48:30] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 07:48:30] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 07:48:30] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 07:48:30] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 07:48:30] [reservation_check] Done (exit=0)
+[2026-04-09 07:48:33] [slack_check] Starting
+[2026-04-09 07:48:40] [inbox_check] Starting
+[2026-04-09 07:48:40] [inbox_check] Inbox win2 empty
+[2026-04-09 07:48:40] [inbox_check] Done (exit=0)
+[2026-04-09 07:48:40] [dm_check] Starting
+[2026-04-09 07:48:48] [slack_check] Done (exit=1)
+[2026-04-09 07:48:54] [dm_check] No new DMs
+[2026-04-09 07:48:54] [dm_check] Done (exit=0)
+[2026-04-09 07:48:54] [review_deadline] Starting
+[2026-04-09 07:48:54] [review_deadline] レビュー期限超過なし。
+[2026-04-09 07:48:54] [review_deadline] Done (exit=0)
+[2026-04-09 07:49:04] [kaizen_auto_verify] Starting
+[2026-04-09 07:49:05] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 07:49:05] ===
+[2026-04-09 07:49:05] [kaizen_auto_verify] 
+[2026-04-09 07:49:05] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 07:49:05] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 07:49:05] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 07:49:05] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 07:49:15] [git_sync] Starting
+[2026-04-09 07:49:19] [git_sync] Done (exit=0)
+[2026-04-09 07:49:28] [slack_check] Starting
+[2026-04-09 07:49:39] [slack_check] Starting
+[2026-04-09 07:49:42] [slack_check] Done (exit=1)
+[2026-04-09 07:49:48] [slack_check] Starting
+[2026-04-09 07:49:52] [slack_check] Done (exit=1)
+[2026-04-09 07:49:52] [health_check] Starting
+[2026-04-09 07:49:53] [health_check] [health_check] 2026-04-09T07:49:52 overall=OK
+[2026-04-09 07:49:53] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:49:53] [health_check] Done (exit=0)
+[2026-04-09 07:50:04] [slack_check] Done (exit=1)
+[2026-04-09 07:50:13] [auto_diary] Starting
+[2026-04-09 07:50:13] [auto_diary] [2026-04-09 07:50:13] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 07:50:13] [auto_diary] 前回実行から103分しか経っていない（最小間隔: 170分）。あと66分待機。スキップ。
+[2026-04-09 07:50:13] [auto_diary] Done (exit=0)
+[2026-04-09 07:50:14] [git_sync] Starting
+[2026-04-09 07:50:18] [git_sync] Done (exit=0)
+[2026-04-09 07:50:28] [scheduler_health] Starting
+[2026-04-09 07:50:29] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=0 FAIL=1
+[2026-04-09 07:50:29] [scheduler_health] ❌ scheduler_ash PID — PID=148808 確認失敗（OSError/SystemError）→死亡扱い
+[2026-04-09 07:50:29] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 07:50:29] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-09 07:50:29] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 07:50:29] [scheduler_health] Done (exit=1)
+[2026-04-09 07:50:42] [slack_check] Starting
+[2026-04-09 07:50:57] [slack_check] Done (exit=1)
+[2026-04-09 07:51:09] [slack_check] Starting
+[2026-04-09 07:51:17] [health_check] Starting
+[2026-04-09 07:51:19] [health_check] [health_check] 2026-04-09T07:51:17 overall=CRITICAL
+[2026-04-09 07:51:19] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 07:51:19] [health_check]   [!!] ash: PID 148808 は死んでいる（PIDファイルが残存）
+[2026-04-09 07:51:19] [health_check] Done (exit=2)
+[2026-04-09 07:51:24] [slack_check] Done (exit=1)
+[2026-04-09 07:51:59] [slack_check] Starting
+[2026-04-09 07:52:21] [slack_check] Done (exit=1)
+[2026-04-09 07:52:24] [slack_check] Starting
+[2026-04-09 07:52:42] [slack_check] Done (exit=1)
+[2026-04-09 07:53:05] ==================================================
+[2026-04-09 07:53:05] Ash scheduler started (PID 8980)
+[2026-04-09 07:53:05] Max runtime: 0 hours
+[2026-04-09 07:53:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 07:53:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 07:53:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 07:53:05] ==================================================
+[2026-04-09 07:53:16] [slack_check] Starting
+[2026-04-09 07:53:21] [slack_check] Starting
+[2026-04-09 07:53:22] [health_check] Starting
+[2026-04-09 07:53:23] [health_check] [health_check] 2026-04-09T07:53:22 overall=OK
+[2026-04-09 07:53:23] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 07:53:23] [health_check] Done (exit=0)
+[2026-04-09 07:53:31] [slack_check] Done (exit=1)
+[2026-04-09 07:53:31] [reservation_check] Starting
+[2026-04-09 07:53:31] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 07:53:31] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 07:53:31] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 07:53:31] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 07:53:31] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 07:53:31] [reservation_check] Done (exit=0)
+[2026-04-09 07:53:36] [slack_check] Done (exit=1)
+[2026-04-09 07:53:41] [inbox_check] Starting
+[2026-04-09 07:53:42] [inbox_check] Inbox win2 empty
+[2026-04-09 07:53:42] [inbox_check] Done (exit=0)
+[2026-04-09 07:53:42] [dm_check] Starting
+[2026-04-09 07:53:43] [slack_check] Starting
+[2026-04-09 07:53:57] [dm_check] No new DMs
+[2026-04-09 07:53:57] [dm_check] Done (exit=0)
+[2026-04-09 07:53:57] [review_deadline] Starting
+[2026-04-09 07:53:57] [review_deadline] レビュー期限超過なし。
+[2026-04-09 07:53:57] [review_deadline] Done (exit=0)
+[2026-04-09 07:54:01] [slack_check] Done (exit=1)
+[2026-04-09 07:54:07] [kaizen_auto_verify] Starting
+[2026-04-09 07:54:08] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 07:54:08] ===
+[2026-04-09 07:54:08] [kaizen_auto_verify] 
+[2026-04-09 07:54:08] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 07:54:08] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 07:54:08] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 07:54:08] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 07:54:08] [git_sync] Starting
