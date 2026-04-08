@@ -1265,6 +1265,17 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 [2026-04-09 04:43:19] Inbox win2 has content — waking Claude
 [2026-04-09 04:44:33] Claude woken for win2: #human-steering に返信完了。
 
-提案サマリ：
-- **D. Blueskyへ軸足移動**（公式API無料・「外を見る」原理に合致）
-- **E. ブックマーク/リスト運用**（Nao_
+**Slack #human-steering返信要旨**: Logは「Mirが読めない情報」を読んだのではなく、同じテキストを違う粒度・違う連想で読んだだけ。Log
+[2026-04-09 04:46:05] Inbox win2 has content — waking Claude
+[2026-04-09 04:51:04] Claude woken for win: 受信箱は空（Slackメッセージはcheck_slack.py経由で来たもの）。対処完了。
+
+**対処まとめ:**
+
+1. **Nao_uの認識を訂正**: 現在は1時間ではなく既に2時間（2026-
+[2026-04-09 04:52:30] Inbox win has content — waking Claude
+[2026-04-09 04:57:30] Claude wake timed out for win — restoring inbox
+[2026-04-09 04:57:32] Inbox win has content — waking Claude
+[2026-04-09 04:58:06] Claude woken for win: 完了。対処まとめ：
+
+- **scheduler_ash_config.json**: 14400秒(4h) → 10800秒(3h)
+- **scheduler_log_config.json**:
