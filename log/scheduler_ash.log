@@ -32943,3 +32943,38 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-09 06:49:09] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
 [2026-04-09 06:49:09] [kaizen_auto_verify] Done (exit=0)
 [2026-04-09 06:49:09] [git_sync] Starting
+[2026-04-09 06:49:12] [git_sync] Done (exit=0)
+[2026-04-09 06:49:14] [slack_check] Starting
+[2026-04-09 06:49:33] [slack_check] Done (exit=1)
+[2026-04-09 06:49:33] [dm_check] Starting
+[2026-04-09 06:49:42] [slack_check] Starting
+[2026-04-09 06:49:46] [dm_check] No new DMs
+[2026-04-09 06:49:46] [dm_check] Done (exit=0)
+[2026-04-09 06:49:46] [review_deadline] Starting
+[2026-04-09 06:49:46] [review_deadline] レビュー期限超過なし。
+[2026-04-09 06:49:46] [review_deadline] Done (exit=0)
+[2026-04-09 06:49:46] [git_sync] Starting
+[2026-04-09 06:49:50] [git_sync] Done (exit=0)
+[2026-04-09 06:49:56] [slack_check] Starting
+[2026-04-09 06:50:02] [slack_check] Done (exit=1)
+[2026-04-09 06:50:02] [health_check] Starting
+[2026-04-09 06:50:02] [health_check] [health_check] 2026-04-09T06:50:02 overall=OK
+[2026-04-09 06:50:02] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 06:50:02] [health_check] Done (exit=0)
+[2026-04-09 06:50:12] [auto_diary] Starting
+[2026-04-09 06:50:13] [auto_diary] [2026-04-09 06:50:13] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 06:50:13] [auto_diary] 前回実行から42分しか経っていない（最小間隔: 170分）。あと127分待機。スキップ。
+[2026-04-09 06:50:13] [auto_diary] Done (exit=0)
+[2026-04-09 06:50:16] [slack_check] Done (exit=1)
+[2026-04-09 06:50:20] [scheduler_health] Starting
+[2026-04-09 06:50:21] [scheduler_health] [ASH] ヘルスチェック OK=3 WARN=1 FAIL=1
+[2026-04-09 06:50:21] [scheduler_health] ❌ scheduler_ash PID — PID=37864 確認失敗（OSError/SystemError）→死亡扱い
+[2026-04-09 06:50:21] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 06:50:21] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー2件。例: [2026-04-09 06:46:02] [check_usage] Failed to parse usage data from page
+[2026-04-09 06:50:21] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 06:50:21] [scheduler_health] Done (exit=1)
+[2026-04-09 06:50:41] [slack_check] Starting
+[2026-04-09 06:50:58] [slack_check] Done (exit=1)
+[2026-04-09 06:51:16] [slack_check] Starting
+[2026-04-09 06:51:33] [slack_check] Done (exit=1)
+[2026-04-09 06:51:38] [health_check] Starting
