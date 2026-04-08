@@ -33,6 +33,7 @@ INDEX_TARGETS = [
     ("log", "**/*.log"),
     ("log/slack_archive", "**/*.jsonl"),
     ("docs", "**/*.md"),
+    ("knowledge", "**/*.md"),
 ]
 
 CHUNK_SIZE = 500  # characters per chunk (with overlap)
