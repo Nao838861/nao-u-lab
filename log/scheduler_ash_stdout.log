@@ -5,3 +5,12 @@
 [2026-04-09 05:48:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
 [2026-04-09 05:48:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
 [2026-04-09 05:48:05] ==================================================
+[2026-04-09 05:48:15] [slack_check] Starting
+[2026-04-09 05:48:37] [slack_check] Done (exit=1)
+[2026-04-09 05:48:37] [reservation_check] Starting
+[2026-04-09 05:48:37] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 05:48:37] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 05:48:37] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 05:48:37] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 05:48:37] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 05:48:37] [reservation_check] Done (exit=0)
