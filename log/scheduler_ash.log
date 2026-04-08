@@ -31447,3 +31447,58 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-09 04:58:05] ==================================================
 [2026-04-09 04:58:15] [slack_check] Starting
 [2026-04-09 04:58:28] [slack_check] Done (exit=1)
+[2026-04-09 04:58:40] [slack_check] Done (exit=1)
+[2026-04-09 04:58:40] [reservation_check] Starting
+[2026-04-09 04:58:41] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 04:58:41] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 04:58:41] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 04:58:41] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 04:58:41] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 04:58:41] [reservation_check] Done (exit=0)
+[2026-04-09 04:58:51] [inbox_check] Starting
+[2026-04-09 04:58:51] [inbox_check] Inbox win2 empty
+[2026-04-09 04:58:51] [inbox_check] Done (exit=0)
+[2026-04-09 04:58:51] [dm_check] Starting
+[2026-04-09 04:58:51] [dm_check] No new DMs
+[2026-04-09 04:58:51] [dm_check] Done (exit=0)
+[2026-04-09 04:58:51] [review_deadline] Starting
+[2026-04-09 04:58:52] [review_deadline] レビュー期限超過なし。
+[2026-04-09 04:58:52] [review_deadline] Done (exit=0)
+[2026-04-09 04:58:52] [kaizen_auto_verify] Starting
+[2026-04-09 04:58:52] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 04:58:52] ===
+[2026-04-09 04:58:52] [kaizen_auto_verify] 
+[2026-04-09 04:58:52] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 04:58:52] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 04:58:52] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 04:58:52] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 04:59:12] [git_sync] Starting
+[2026-04-09 04:59:16] [git_sync] Done (exit=0)
+[2026-04-09 04:59:18] [health_check] Starting
+[2026-04-09 04:59:19] [health_check] [health_check] 2026-04-09T04:59:18 overall=OK
+[2026-04-09 04:59:19] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 04:59:19] [health_check] Done (exit=0)
+[2026-04-09 04:59:19] [twitter_recommended] Opening For You tab...
+[2026-04-09 04:59:19] [twitter_recommended] 
+[2026-04-09 04:59:19] [twitter_recommended] Read 0 tweets from For You (30 scrolls)
+[2026-04-09 04:59:19] [twitter_recommended] Done (exit=0)
+[2026-04-09 04:59:19] [check_usage] Starting
+[2026-04-09 04:59:29] [slack_check] Starting
+[2026-04-09 04:59:34] [check_usage] Opening https://claude.ai/settings/usage...
+[2026-04-09 04:59:34] [check_usage] Failed to parse usage data from page
+[2026-04-09 04:59:34] [check_usage] Debug screenshot: D:\AI\Nao_u_BOT\log\usage_parse_failed.png
+[2026-04-09 04:59:34] [check_usage] No usage data obtained. Try --login first, or --screenshot for debug.
+[2026-04-09 04:59:34] [check_usage] Done (exit=1)
+[2026-04-09 04:59:34] [scheduler_health] Starting
+[2026-04-09 04:59:36] [scheduler_health] [ASH] ヘルスチェック OK=3 WARN=1 FAIL=1
+[2026-04-09 04:59:36] [scheduler_health] ❌ scheduler_ash PID — PID=11556 確認失敗（OSError/SystemError）→死亡扱い
+[2026-04-09 04:59:36] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 04:59:36] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー3件。例: [2026-04-09 04:57:20] [auto_diary]   Phase [gather] タイムアウト (120s)
+[2026-04-09 04:59:36] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 04:59:36] [scheduler_health] Done (exit=1)
+[2026-04-09 04:59:46] [slack_check] Starting
+[2026-04-09 04:59:53] [slack_check] Done (exit=1)
+[2026-04-09 05:00:11] [slack_check] Done (exit=1)
+[2026-04-09 05:00:11] [dm_check_pigadev] Starting
+[2026-04-09 05:00:26] [dm_check_pigadev] No new DMs
+[2026-04-09 05:00:26] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 05:00:26] [health_check] Starting

@@ -1276,3 +1276,8 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 
 - **scheduler_ash_config.json**: 14400秒(4h) → 10800秒(3h)
 - **scheduler_log_config.json**:
+[2026-04-09 05:02:29] Claude woken for win: 投稿完了。Nao_uの問いに対して、5層構造で違いの要因を説明した。
+
+要点:
+- **Layer 1** (共通): CLAUDE.md + .claude/rules/ — 全員同じ
+- **La
