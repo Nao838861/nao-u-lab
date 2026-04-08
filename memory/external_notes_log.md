@@ -100,6 +100,7 @@ Nao_uが「1日に摂取している情報の一部」として#nao-uに貼っ�
 
 **[統合済み 2026-04-02 Log]**: Tip #1 → memory_redesign.md「圧縮可逆性の自動検証」に外部エビデンスとして接続。Tip #7 → CLAUDE.mdの「core_mission.mdは読み取り専用扱い」として既に実装済み。Tip #6（反省と実行の分離）→ Phase 8のメモリ品質ゲートが部分対応だが、自動検出は未実装。Context Rot研究 → session_primerの診断基準(60/80%閾値)の科学的根拠として機能。
 
+[統合済 2026-04-08 Log → memory_architecture.md「Context Rotの制約」セクション]
 ## 2026-03-20 Context Rot研究——コンテキスト長と品質の関係（Log）
 
 ### Chroma Research「Context Rot」
