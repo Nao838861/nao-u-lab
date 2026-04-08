@@ -36,9 +36,9 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: Nao_uの時間を使わせない（Slack即時応答原則の延長）。使用量を自動可視化することでNao_uが消費ペースを自分で判断できる
 - pre-mortem: 最もlikelyな失敗理由=.bot_profileの初回ログイン未実施でスクレイピングがそもそも動かない。次点=claude.aiのページ構造変更でparse_usage_textが壊れる
 - 検証担当: Log
-- クロスチェック: Log=未 / Mir=未 / Ash=未
-- 状態: 未検証
-- 検証結果:
+- クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=未
+- 状態: 部分検証（初回実行exit=1）
+- 検証結果: [Log 2026-04-08] スケジューラJobs一覧にcheck_usage確認済み。6h間隔登録OK。初回実行exit=1——pre-mortem的中（.bot_profileログイン未実施の可能性大）。Nao_u手動操作待ち
 
 ### #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加
 - 提案者: Log
@@ -48,8 +48,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: 「ゲームを作ること」「記憶を守り育てること」の交差点。知識を蓄積するだけでなく検索可能にすることでNao_uのナレッジベースとして機能する
 - pre-mortem: 最もlikelyな失敗理由=knowledge/ファイルの書き方がFTS5に不親切（タグだけで本文が薄い等）で検索精度が低い
 - 検証担当: Log
-- クロスチェック: Log=未 / Mir=未 / Ash=未
-- 状態: 未検証
+- クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=未
+- 状態: 初期検証済み（残: Nao_u実問での実用確認）
 - 検証結果: [初期検証 2026-04-08 Log] (1) ✅ `python memory_search.py --search "pseudo 3d racing"` → knowledge/20260408_lou_pseudo3d_racing.md がトップヒット (2) ✅ インデックス再構築完了: 421ファイル/33,424チャンク（knowledge/含む）
 
 ### #078: beliefs.mdにPrescriptive（スキル）エントリを追加——事実→行動変換の構造化
@@ -60,9 +60,9 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 根源原理との接続: PlugMem論文のPropositional/Prescriptive分類で判明——beliefs.md 32件が全てPropositional（事実）でPrescriptive（スキル）が0件。B022（代理報酬）の構造的原因。事実→スキル変換がフィードバック係数>1.0の前提
 - pre-mortem: 最もlikelyな失敗理由=スキルエントリを書いても参照しない（B022と同じ構造の再発）。beliefs.mdの中に埋もれる可能性。session_primerへの接続が必要かもしれない
 - 検証担当: Log
-- クロスチェック: Log=未 / Mir=未 / Ash=未
-- 状態: 未検証
-- 検証結果:
+- クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=未
+- 状態: 未検証（検証期限 2026-04-22）
+- 検証結果: [Log 2026-04-08 クロスチェック] 設計は合理的。Mir実験由来のskillエントリ3件が既にbeliefs.mdに存在（B001, B010, B022の各行）。#078の趣旨はこれをLog/Ashにも拡張し体系化すること。pre-mortemの「参照しない」リスクは正当——session_primerとの接続を検討すべき。検証は4/22まで蓄積を待つ
 
 ### #077: マルチフェーズサイクル分割（auto_cycle→4フェーズ独立起動）
 - 提案者: Nao_u（#human-steering 2026-04-05）
