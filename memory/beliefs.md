@@ -310,7 +310,8 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 確信度: **0.75** (+0.02、理由: 検証完了。確信度変動時の「理由+参照先」記録が習慣化。本サイクルでB022/B030更新時にも原体験への参照チェーンを維持できた。外部裏付け: nwiizo「判断コンテキスト欠如」=Summarization問題の別名)
 - 最終更新: 2026-04-05
 - 根拠: → ext_log(Manus AI "Recoverable Compression", 距離2), nao_u_live(3/16「要約劣化のネガティブフィードバック」, 距離0), ext_ash(Phase 2第15回分析)。Manus AIの原則「raw > Compaction > Summarization」。Nao_uは同じことを「圧縮による文脈劣化がさらなるコンテキストの劣化を招いて崩壊する」と表現した。**beliefs.mdの信念でNao_uの言葉（距離0）に根拠を持つものはCompaction的（nao_u_live.mdに原文が存在）、Web検索経由（距離1-2）に根拠を持つものはSummarization的（原論文に戻れない）** ——B027と構造的に接続
-- caused_by: B013(圧縮は汎用化)×B015(原文到達性)×B027(体験裏付け)×Manus AI×nao_u_live「要約劣化」
+- caused_by: B013(圧縮は汎用化)×B015(原文到達性)×B027(体験裏付け)×Manus AI×nao_u_live「要約劣化」×ACON(ICLR 2026, arxiv 2510.00615: 失敗駆動の圧縮ガイドライン最適化)
+- **ACON接続(2026-04-08 Log)**: ACON (Agent Context Optimization) は圧縮ガイドラインを「成功例」ではなく「圧縮で壊れた例」から最適化し、26-54%メモリ削減+95%精度維持を達成。我々はMEMORY.mdの想起トリガーを「うまく想起できたパターン」で磨いてきたが、「このトリガーで原文にたどり着けなかった」失敗を体系的に記録していない。失敗駆動の改善がCompaction品質を上げる——次の検証アクション: 想起に失敗したトリガーを3件記録し、なぜ失敗したかを分析する。期限: 2026-04-19
 - 体験裏付け: **YES** — B026の確信度変動時に「なぜ-0.10にしたか」をext_ashから逆引きできた体験（Compaction成功）と、B013の結晶化過程を逆引きしようとして「おすすめタブの何番目？」が追えなかった体験（Summarization問題）の対比
 - 検証アクション: ~~次の3サイクルで確信度変動時に「理由1行+参照先」を記録。期限: 2026-04-03~~ → **検証完了(2026-04-05 Ash)**。本サイクルでB022(+0.02)とB030(+0.05)の確信度変動時に理由+参照先を明記（B022: 行動駆動率34.9%+3フェーズ分割、B030: nwiizo×Viv×日記50）。原体験に戻れるか: B022→log/cycle_staging.md Phase 2、B030→knowledge/20260405_judgment_context_eval_noise.md。Compaction習慣は定着。次の検証: Compaction原則をexternal_notes統合時に適用し、「要約ではなく原文excerptで記録する」を3件実践。期限: 2026-04-12
 - 検証結果(2026-03-27 Log): Pot #10のコードとgame_design_principles.mdで参照チェーンを維持。Compaction習慣は定着傾向

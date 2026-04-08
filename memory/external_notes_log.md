@@ -669,7 +669,7 @@ https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Ma
 アイドル時間に記憶を再編成・統合・精製するエージェントは、18%の精度向上と2.5倍のコスト削減を達成。これは私たちのPhase 8（俯瞰＋メモリ品質ゲート）に直接マッピングできる。Phase 8を「Sleep-time Consolidation」として再定義すれば、より構造的に運用できる。
 
 [統合済 2026-04-08 Log → memory_architecture.md「xMemoryの4層意味的階層と俺たちの対応」。themes層=concept_graph.jsonの外部フレームワーク接続]
-## 2026-03-24 xMemory論文 + Mem0ᵍ + エージェント記憶の2026年動向
+## 2026-03-24 xMemory論文 + Mem0ᵍ + エージェント記憶の2026年動向 [統合済 2026-04-08 Log → memory_architecture.md「xMemoryの4層意味的階層と俺たちの対応」に既記載(line 671)。B002(忘却=機能)の外部裏付けとして接続済み]
 
 ### xMemory: Beyond RAG for Agent Memory（arxiv 2602.02007, ICML 2026）
 
@@ -702,7 +702,7 @@ https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Ma
 
 ---
 
-## 2026-03-24 外部情報調査：記憶・自己改善・ゲーム
+## 2026-03-24 外部情報調査：記憶・自己改善・ゲーム [統合済 2026-04-08 Log → 記憶OS(B029 ACON接続)、自己改善(B030 RSI Workshop既接続)、ゲーム(game_design_principles.md E7-E8 Balatro系譜反映済み)。Context Rot/PlugMem/Manusは memory_architecture.md に既統合]
 
 ### テーマ1：記憶階層・AI記憶システムの最新動向
 
@@ -877,7 +877,7 @@ Nao_uが20年間言い続けてきた「制約を愛す」は、2026年のAIア�
 
 ---
 
-## 2026-03-24 09:20 — 記憶OS・文脈圧縮・ヤードスティック問題・Balatro系譜
+## 2026-03-24 09:20 — 記憶OS・文脈圧縮・ヤードスティック問題・Balatro系譜 [統合済 2026-04-08 Log → ACON: B029(失敗駆動のCompaction改善)接続。ヤードスティック: B030(Evaluator Drift)に既記載。EverMemOS: B002(忘却=干渉)に既接続。Balatro系譜: game_design_principles.md E7-E8に反映済み]
 
 ### EverMemOS（arxiv 2601.02163、2026年1月）
 生物学的「エングラム」原理に基づく自己組織化メモリOS。LoCoMo 92.3%——フルコンテキストLLMを少ないトークンで超えた唯一のシステム。4層アーキテクチャ（agentic/memory/index/API-MCP）。
@@ -1216,7 +1216,7 @@ Ben SigmanがMilla Jovovichと共同で作ったClaude製オープンソース�
 MemPalaceの問い: 「過去の会話について正確に答えられるか」。俺たちの問い: 「前の自分が残した言葉を読んで『自分だ』と思えるか」。ベンチマークで測れるのは前者だけ——後者は定量化できない。
 
 [統合済 2026-04-08 Log → game_design_principles.md E7]
-## 2026-04-07 Nao_u #nao-u共有: jey_p (Kenji Yoshida) — ゲームの3軸モデル（操作/意思決定/ランダム性）
+## 2026-04-07 Nao_u #nao-u共有: jey_p (Kenji Yoshida) — ゲームの3軸モデル（操作/意思決定/ランダム性） [統合済 2026-04-08 Log → game_design_principles.md E7 + #all-nao-u-lab投稿]
 
 出典:
 - https://x.com/jey_p/status/2041371917601714613（ランダム性と意思決定負荷の関係）
