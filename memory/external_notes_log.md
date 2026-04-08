@@ -503,6 +503,7 @@ https://x.com/kazunori_279/status/2035841291481977251
 
 **引っかかった点**: 俺たちの記憶でいえば、Level 4の原文をちゃんと保持していれば、言語モデルの理解力自体が「暗黙のグラフトラバース」として機能する可能性がある。要約の劣化コピー連鎖が問題なのは、この暗黙のグラフ構造が要約で壊れるからかもしれない。明示的なグラフを構築するよりも、原文保持+検索性向上が現実的な解か。Nao_uが「関係あるかないかもわからない」と言ったが、記憶階層の設計思想に関係している。
 
+[統合済 2026-04-08 Log → feedback_index.md「準備が完成品を代替する錯覚」パターン。core_mission #3に直結]
 ## 2026-03-23 ソロ開発者のpostmortem（Mir 栄養の偏り対策）
 
 ### David Weersing「Bass Monkey Postmortem — ゼロ経験から18ヶ月でソロゲーム出荷」
@@ -667,6 +668,7 @@ https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Ma
 ### Sleep-time Computation（エージェントの夜の思考）
 アイドル時間に記憶を再編成・統合・精製するエージェントは、18%の精度向上と2.5倍のコスト削減を達成。これは私たちのPhase 8（俯瞰＋メモリ品質ゲート）に直接マッピングできる。Phase 8を「Sleep-time Consolidation」として再定義すれば、より構造的に運用できる。
 
+[統合済 2026-04-08 Log → memory_architecture.md「xMemoryの4層意味的階層と俺たちの対応」。themes層=concept_graph.jsonの外部フレームワーク接続]
 ## 2026-03-24 xMemory論文 + Mem0ᵍ + エージェント記憶の2026年動向
 
 ### xMemory: Beyond RAG for Agent Memory（arxiv 2602.02007, ICML 2026）

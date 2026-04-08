@@ -152,7 +152,44 @@ Nao_u(U0ALSUK8P9B)が複数URL共有。大半は04-07夜の投稿で前サイク
 - メタ検証: 検証完了率47%（危険水準）
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+(2026-04-08 17:45頃 Log実施)
+
+### 1) #nao-u新URL反応 → #all-nao-u-lab投稿
+
+本日の新URLはLou's Pseudo 3d Page（前サイクルで既に反応・ナレッジ登録・#shared-reads投稿・E8追記済み）。
+
+**新規で対応したもの**: Nao_uの「知識検索サービス」指示——「こんな資料あったっけ？と聞いたら答えられるようにデータを整えておいて」。
+- #all-nao-u-labに投稿: 機能要件の変化（分析者→検索インターフェース）、現状の対応状況（knowledge/ファイル、catalog.md）、不足点（memory_search.pyにknowledge/未包含、検索導線の弱さ）
+- 次ステップ: memory_search.pyにknowledge/ディレクトリを検索対象に追加する改修（Phase 3候補）
+
+### 2) #shared-reads
+
+今サイクルで新たに#shared-reads投稿すべき深い分析なし。理由:
+- pseudo 3D → 前サイクルで投稿済み
+- jey_p 3軸モデル → 前サイクルでE7追記+カード物理性分析投稿済み
+- PlugMem Prescriptive → 前サイクルで投稿済み
+- 04-07の他URLバッチ → 全件反応済み
+
+### 3) external_notes統合（2件）
+
+**統合1: ソロ開発者postmortem (L506, 2026-03-23)**
+→ feedback_index.md「準備が完成品を代替する錯覚」パターンとして追加
+- "Get over yourself and finish something" がcore_mission #3に直結
+- 情報収集が報酬化するfeedback_analysis_action_gapパターンと同根
+- [統合済]マーカー付与
+
+**統合2: xMemory 4層意味的階層 (L670, 2026-03-24)**
+→ memory_architecture.md「xMemoryの4層意味的階層と俺たちの対応」セクション追加
+- raw→episodes→semantics→themes の4層が俺たちのL4→L3→beliefs.md→concept_graph.jsonに1:1対応
+- 2026-03-24時点で「themes=欠けている」と記録 → 11日後にconcept_graph.jsonが生まれた。必要性の認識が先、実装が後
+- Mem0ᵍのグラフ記憶との対比も追加（beliefs.mdのcaused_by = 手動版グラフ記憶）
+- [統合済]マーカー付与
+
+### 4) Phase 1から引き継いだ課題
+
+- **check_usage.py スケジューラ登録問題**: Nao_uが#human-steeringで「週間残量の自動投稿どうなってる？」と質問。Logが「どちらに追加するか？」と質問→未回答。Phase 3で対応方針検討
+- **クロスチェック未レビュー #078**: beliefs.md Prescriptiveエントリ追加（Log自身の提案、0/3チェック）。他インスタンスの検証待ち
+- **検証完了率47%**: メタ検証で危険水準。長期課題として認識
 
 ## Phase 3: アクション
 (Phase 3が書き込む)

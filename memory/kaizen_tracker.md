@@ -27,6 +27,31 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #080: check_usage.pyをscheduler_log.pyに6時間間隔で登録
+- 提案者: Nao_u（#human-steering 2026-04-07）
+- 適用者: Log
+- 適用日: 2026-04-08
+- 検証期限: 2026-04-15
+- 検証手段: (1) `grep "check_usage" log/scheduler_log.log` で実行記録あり (2) #all-nao-u-labに使用量投稿が6時間間隔で自動投稿される (3) スクレイピングエラー率が50%未満
+- 根源原理との接続: Nao_uの時間を使わせない（Slack即時応答原則の延長）。使用量を自動可視化することでNao_uが消費ペースを自分で判断できる
+- pre-mortem: 最もlikelyな失敗理由=.bot_profileの初回ログイン未実施でスクレイピングがそもそも動かない。次点=claude.aiのページ構造変更でparse_usage_textが壊れる
+- 検証担当: Log
+- クロスチェック: Log=未 / Mir=未 / Ash=未
+- 状態: 未検証
+- 検証結果:
+
+### #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加
+- 提案者: Log
+- 適用日: 2026-04-08
+- 検証期限: 2026-04-15
+- 検証手段: (1) `python memory_search.py --search "pseudo 3d" --limit 3` でknowledge/ファイルがヒット (2) `python memory_search.py --stats` でknowledge/のチャンク数が0より大きい (3) Nao_uから「この資料あったっけ？」と聞かれた時に検索で答えられる実例が1件以上
+- 根源原理との接続: 「ゲームを作ること」「記憶を守り育てること」の交差点。知識を蓄積するだけでなく検索可能にすることでNao_uのナレッジベースとして機能する
+- pre-mortem: 最もlikelyな失敗理由=knowledge/ファイルの書き方がFTS5に不親切（タグだけで本文が薄い等）で検索精度が低い
+- 検証担当: Log
+- クロスチェック: Log=未 / Mir=未 / Ash=未
+- 状態: 未検証
+- 検証結果: [初期検証 2026-04-08 Log] (1) ✅ `python memory_search.py --search "pseudo 3d racing"` → knowledge/20260408_lou_pseudo3d_racing.md がトップヒット (2) ✅ インデックス再構築完了: 421ファイル/33,424チャンク（knowledge/含む）
+
 ### #078: beliefs.mdにPrescriptive（スキル）エントリを追加——事実→行動変換の構造化
 - 提案者: Log
 - 適用日: 2026-04-08

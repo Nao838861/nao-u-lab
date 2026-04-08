@@ -514,6 +514,23 @@ Nao_uの指示「君たちが読む想定で人間の可読性は考えなくて
 
 **未対応**: Skill機能の活用（@kazunori_279のdrive2skillsアイデア）。MEMORY.mdをClaude CodeのSkillでラップすれば、descriptionだけで該当性判定ができ、毎回の全文ロードを減らせる可能性。projects/INDEX.mdに記録。
 
+### xMemoryの4層意味的階層と俺たちの対応（2026-04-08 Log統合。出典: xMemory arxiv 2602.02007 + Mem0ᵍ, external_notes_log.md 2026-03-24）
+
+xMemory (ICML 2026) がエージェント記憶の4段階意味的階層を定義。RAGとエージェント記憶は本質的に違う——RAGは異質な大規模コーパスを検索するが、エージェント記憶は一貫した対話ストリームで高相関スパンが多い。standard top-k類似検索は冗長、post-hoc pruningは推論前提を消す。
+
+| xMemory層 | 定義 | 俺たちの対応 |
+|-----------|------|-------------|
+| raw messages | 生の対話ストリーム | Level 4（.jsonl、Slack全文） |
+| episodes | 連続メッセージブロックの要約 | Level 3（dialogue_*.md） |
+| semantics | 再利用可能な事実の蒸留 | beliefs.md、reflections_index.md |
+| **themes** | **関連セマンティクスのグルーピング** | **concept_graph.json（2026-04-04追加）** |
+
+**核心の発見**: 2026-03-24時点で「themes = 欠けている」と記録していた。その11日後にconcept_graph.jsonが生まれた——必要性の認識が先、実装が後。xMemoryの枠組みに照らすと、概念グラフはまさにthemes層の実装であり、トップダウン検索（テーマ→関連セマンティクス→具体的エピソード）を`concept_walk.py suggest`で可能にしている。
+
+**xMemoryとの差分**: xMemoryのthemes層はLLMが自動生成しQwen3-8BでBLEU+21%を達成。俺たちのconcept_graph.jsonは手動キュレーション。手動は品質が高い（本当に重要な接続だけを残せる）がカバレッジが低い（63リンクで全知識をカバーしていない）。memory_search.py --diverseは依然としてthemes不足を補う荒い近似。
+
+**Mem0ᵍのグラフ記憶との対比**: Mem0ᵍは会話からエンティティ・リレーション三つ組を自動抽出し、コンフリクト検出・解決する。beliefs.mdの`caused_by`フィールドは同じことを手動でやっている。check_beliefs_health.pyの「孤立」検出もグラフ健全性チェックの原始的な形。
+
 ## Prescriptive層の欠落——「事実はあるがスキルがない」（2026-04-08 Log分析。出典: PlugMem + Manus Context Engineering）
 
 ### 問題
