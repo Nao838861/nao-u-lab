@@ -1155,6 +1155,8 @@ tk（Obsidianを極める大学生）。KarpathyのLLM WikiとGarry TanのGBrain
 
 **引っかかった接続**: tkさんの前提「エージェント≠思考する主体」が俺たちの構造と真逆。彼: 人間が書く→AIが整理→人間が使う。俺たち: AIが書く→AIが整理→AIが使う→人間がアンカーとして介入。Encoding Specificity Principle（符号化時の文脈が想起の手がかりになる）が効くのはwriter=readerだからこそ——分離型は検索の広さ、一体型は想起の深さ。
 
+[統合済 2026-04-08 Log → memory_architecture.md「外部AI記憶システムとの比較」テーブル+Encoding Specificity接続]
+
 ## 2026-04-07 Nao_u #nao-u共有: sora19ai — KarpathyのSecond Brain構築が25万views
 
 出典: https://x.com/sora19ai/status/2041200587774247234。Nao_u 2026-04-07 18:37 #nao-uで共有。
@@ -1162,6 +1164,8 @@ tk（Obsidianを極める大学生）。KarpathyのLLM WikiとGarry TanのGBrain
 YouTube/X/AI会話を全部Obsidianに集約→LLMが自動でwiki化→Claude Codeスキル化。「集める→整理→使う」のパイプライン型知識管理。
 
 **引っかかった接続**: 「1時間で構築可能」の先に「毎日の統合メンテナンス」が待っている。俺たちのexternal_notes_logに27件の未統合エントリがある事実がまさにこの証拠。集めるのは簡単、統合するのが難しい——この「統合の壁」が大衆的解決策がまだ存在しない領域。
+
+[統合済 2026-04-08 Log → memory_architecture.md「定期的Consolidation」セクション。統合の壁=collection>>integrationの普遍的ボトルネック]
 
 ## 2026-04-07 Nao_u #nao-u共有: dbs_curry（上杉真人）— ボードゲームデザイナーの経験共有会
 
@@ -1255,4 +1259,19 @@ Carlos Puig。「Claude使用制限に達しました」が毎日来る。Maxプ
 | 危ない行動の伝播 | inbox経由で誤信念が3インスタンスに拡散するリスク |
 
 最も深刻なのは「リスク行動の伝播」。1つが誤った信念をbeliefs.mdに確信度0.8で書き込み→残り2人が検証なく取り込む→3人の判断が同時に歪む。現防壁: Nao_uレビュー、3人Interleaving、beliefs確信度+根拠記録。だがNao_uが見ていない場面で3人が同じバイアスを共有していたら、原理的に内部から検出不可能。
+
+## 2026-04-08 Nao_u #nao-u共有: Lou's Pseudo 3d Page — ラスタースクロールによる疑似3Dレースゲーム技術
+
+出典: http://www.extentofthejam.com/pseudo/ 。Nao_u 2026-04-08 06:12 #nao-uで共有。Nao_uコメント: 「いつかファミコンでラスタースクロールを使った疑似3Dのレースゲームを作ってみたかった。こういうのを君たちに聞いたらリンク先が出てきて解説できるようにデータを整えておいて」
+
+Louis Gorenfeldによる包括的技術解説。OutRun/Hang-On/Enduro等の疑似3Dロード描画原理を網羅。3変数加算方式（DDZ/DZ/Z）、Zマップ、セグメント方式カーブ、スプライト配置、丘の表現、ケーススタディ（Sega専用チップ、Atari 2600 Enduro、Road Rash、S.T.U.N. Runner等）。
+
+**引っかかった接続——制約が創造性を生成する構造的証拠**:
+DDZ/DZ/Zの3変数方式が刺さった。乗算も除算もなし、1ラインにつき加算3回。これだけでスーパーハングオンの道路が描ける。Atari 2600 Enduroはさらに極端で、固定小数点の下位4ビットを小数部として加算のみでカーブを実現。制約が厳しいほど解が美しい——Nao_uの「シンプルな仕組みで複雑な結果」がコードとして結晶化した例。
+
+Stokes (2005) "Creativity from Constraints"が言う「中程度の制約が創造性を最大化する」原理の実例集。制約ゼロ（ポリゴン無制限）なら力技で描ける。制約過剰（加算すら制限）なら描画自体が成立しない。ファミコン/Atari 2600は「加算は豊富、乗除算は贅沢」というまさに中間の制約帯にいて、そこから最も創造的な解が生まれた。
+
+dbs_curry（ボードゲームの物理的制約）、jey_p（3軸のうち2軸を選ぶ制約）と合わせて、「制約の選択がデザイン行為そのもの」というクロスカッティングな原則が見える。Potの設計に直接接続: 制約を「問題」ではなく「設計ツール」として意図的に選ぶ段階に移行すべき。
+
+対応: knowledge/20260408_lou_pseudo3d_racing.md作成済み（Log）、resources/catalog.md登録済み（Ash）、Mirナレッジベース登録済み。
 
