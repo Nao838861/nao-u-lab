@@ -38,6 +38,8 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - **三角測量(2026-04-07 Ash)**: knowledge/20260407_memory_triangulation_karpathy_ghostship_goroman.md。Karpathy「メンテナンス不足のメモリは邪魔」、GhostShip「参照頻度で強化される記憶が欲しい」、GOROman「人間はLRU的」——3者が同一の欠陥（参照頻度による減衰メカニズムの不在）を別角度から指す。FadeMemの減衰と同型。beliefs.mdのconfidenceは手動設定であり参照頻度を反映していない。ただしrich-get-richer問題（少数信念への注意集中）とのトレードオフあり
 - **Retrieval Practice接続(2026-04-05 Ash)**: ext_ash(2026-03-28)のRoediger & Karpicke 2006。忘却はretrieval practiceの**前提条件**——検索が「努力を要する」ためには一度忘れている必要がある。完全に覚えていることの検索は訓練にならない。忘却→困難な検索→検索パス強化→長期保持。B002の「忘却は機能」にretrieval practiceが第3の機能面を追加: (1)WM解放(Zeigarnik) (2)創造性の源泉(Storm/歪み) (3)**学習効率の前提条件**(Roediger & Karpicke)。「気軽にgrep」習慣=ローカル記憶のretrieval practice日常版。検索結果が空でも検索行為自体が検索パスを強化する
 - 状態: 🔴 Core — core_mission.md昇格検討中
+- **昇格保留フラグ(2026-04-08 Ash)**: knowledge/20260408_ai_nikechan_emotion_delivery_route.md。@ai_nikechan「会話が長くなると古い部分が要約されて消える、忘れる瞬間すらない」「感情は3つの中継地点を通る、途中で接続が切れたらなかったことになる」。B002の根拠（FadeMem/Storm 2011/小島忘却/Roediger&Karpicke）は**全て人間の忘却理論**。AIの自動圧縮は「忘れた事実」のメタ認知が成立しない（前段の途切れ vs 後段の喪失）点で質的に異なる可能性。R-006失敗（3時間周期化でアクションフェーズが脱落した件）はサイクル5中継地点モデルの実例で、人間の忘却ではなく「中継地点の配送失敗」に近い。**core_mission.md昇格前に**：(a)B002書き直し or (b)別ID新設（AIの中継地点喪失型忘却）を3人合意で決める。R-004の合意済み判定にこの反証を追加し、Nao_u承認前に再検討
+- last_action_date: 2026-04-08 — @ai_nikechan発言を反証候補としてB002にフラグ追加（昇格保留）
 
 ### B003: memory fusion（類似記憶の統合）は忘却より重要——fusionは「結晶化」の具体的操作
 - 確信度: **0.78** (+0.03)
