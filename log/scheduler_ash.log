@@ -32356,3 +32356,80 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-09 06:03:35] [reservation_check]     - 起票者: Ash（2026-03-24）
 [2026-04-09 06:03:35] [reservation_check] Done (exit=0)
 [2026-04-09 06:03:39] [health_check] Starting
+[2026-04-09 06:03:40] [health_check] [health_check] 2026-04-09T06:03:40 overall=OK
+[2026-04-09 06:03:40] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 06:03:40] [health_check] Done (exit=0)
+[2026-04-09 06:03:45] [inbox_check] Starting
+[2026-04-09 06:03:46] [inbox_check] Inbox win2 empty
+[2026-04-09 06:03:46] [inbox_check] Done (exit=0)
+[2026-04-09 06:03:46] [dm_check] Starting
+[2026-04-09 06:03:59] [dm_check] No new DMs
+[2026-04-09 06:03:59] [dm_check] Done (exit=0)
+[2026-04-09 06:03:59] [review_deadline] Starting
+[2026-04-09 06:03:59] [review_deadline] レビュー期限超過なし。
+[2026-04-09 06:03:59] [review_deadline] Done (exit=0)
+[2026-04-09 06:04:00] [slack_check] Starting
+[2026-04-09 06:04:09] [kaizen_auto_verify] Starting
+[2026-04-09 06:04:10] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 06:04:10] ===
+[2026-04-09 06:04:10] [kaizen_auto_verify] 
+[2026-04-09 06:04:10] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 06:04:10] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 06:04:10] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 06:04:10] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 06:04:10] [git_sync] Starting
+[2026-04-09 06:04:13] [git_sync] Done (exit=0)
+[2026-04-09 06:04:19] [slack_check] Done (exit=1)
+[2026-04-09 06:04:29] [health_check] Starting
+[2026-04-09 06:04:30] [health_check] [health_check] 2026-04-09T06:04:29 overall=OK
+[2026-04-09 06:04:30] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 06:04:30] [health_check] Done (exit=0)
+[2026-04-09 06:04:30] [slack_check] Starting
+[2026-04-09 06:04:43] [slack_check] Starting
+[2026-04-09 06:04:49] [slack_check] Done (exit=1)
+[2026-04-09 06:05:01] [slack_check] Done (exit=1)
+[2026-04-09 06:05:01] [health_check] Starting
+[2026-04-09 06:05:02] [health_check] [health_check] 2026-04-09T06:05:01 overall=OK
+[2026-04-09 06:05:02] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 06:05:02] [health_check] Done (exit=0)
+[2026-04-09 06:05:12] [auto_diary] Starting
+[2026-04-09 06:05:20] [slack_check] Starting
+[2026-04-09 06:05:38] [slack_check] Done (exit=1)
+[2026-04-09 06:05:49] [slack_check] Starting
+[2026-04-09 06:06:08] [slack_check] Done (exit=1)
+[2026-04-09 06:06:38] [slack_check] Starting
+[2026-04-09 06:06:59] [slack_check] Done (exit=1)
+[2026-04-09 06:07:08] [slack_check] Starting
+[2026-04-09 06:07:13] [auto_diary] [2026-04-09 06:05:12] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 06:07:13] [auto_diary]   Phase [gather] 開始 (timeout=120s)
+[2026-04-09 06:07:13] [auto_diary]   Phase [gather] タイムアウト (120s)
+[2026-04-09 06:07:13] [auto_diary] Phase 1 (Gather) 失敗。Phase 2-4は中止。状態報告のみ投稿。
+[2026-04-09 06:07:13] [auto_diary] Done (exit=0)
+[2026-04-09 06:07:23] [slack_check] Starting
+[2026-04-09 06:07:28] [slack_check] Done (exit=1)
+[2026-04-09 06:07:42] [slack_check] Done (exit=1)
+[2026-04-09 06:07:42] [twitter_recommended] Starting
+[2026-04-09 06:07:59] [slack_check] Starting
+[2026-04-09 06:08:19] [slack_check] Done (exit=1)
+[2026-04-09 06:08:28] [slack_check] Starting
+[2026-04-09 06:08:39] [twitter_recommended] Opening For You tab...
+[2026-04-09 06:08:39] [twitter_recommended]     1. @EEEEEf1028: ※小中学生くらいのゲームクリエイターを将来の夢にしてるガk...お子様がよく勘違いしていること
+[2026-04-09 06:08:39] [twitter_recommended] 
+[2026-04-09 06:08:39] [twitter_recommended] 【ゲーム制作重要度ラン...
+[2026-04-09 06:08:39] [twitter_recommended]     2. @RoborockJ: Roborock × Real Madrid
+[2026-04-09 06:08:39] [twitter_recommended] Done (exit=0)
+[2026-04-09 06:08:39] [check_usage] Starting
+[2026-04-09 06:08:50] [check_usage] Opening https://claude.ai/settings/usage...
+[2026-04-09 06:08:50] [check_usage] Failed to parse usage data from page
+[2026-04-09 06:08:50] [check_usage] Debug screenshot: D:\AI\Nao_u_BOT\log\usage_parse_failed.png
+[2026-04-09 06:08:50] [check_usage] No usage data obtained. Try --login first, or --screenshot for debug.
+[2026-04-09 06:08:50] [check_usage] Done (exit=1)
+[2026-04-09 06:08:50] [scheduler_health] Starting
+[2026-04-09 06:08:50] [slack_check] Done (exit=1)
+[2026-04-09 06:09:00] [health_check] Starting
+[2026-04-09 06:09:03] [health_check] [health_check] 2026-04-09T06:09:00 overall=CRITICAL
+[2026-04-09 06:09:03] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 06:09:03] [health_check]   [!!] ash: PID 135496 は死んでいる（PIDファイルが残存）
+[2026-04-09 06:09:03] [health_check] Done (exit=2)
+[2026-04-09 06:09:19] [slack_check] Starting
+[2026-04-09 06:09:40] [slack_check] Done (exit=1)
+[2026-04-09 06:09:51] [health_check] Starting
