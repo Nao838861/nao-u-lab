@@ -42,6 +42,16 @@ Active — 根源原理3「ゲームを作ること」
 ---
 ## 履歴（新しいものが上）
 
+### 2026-04-09: Log — Death Loops × 3軸モデル × 「70%未読でも問題ない」三角交差分析
+
+Derek Yu (Spelunky作者) の「Death Loops」とjey_pの3軸モデル（操作/意思決定/ランダム性）を重ねて3つの構造的発見を得た。
+
+**発見1: Loop of Restartingは「同じ軸の改善」に閉じる**。jey_pの3軸で見ると、Yuの永遠のリスタートループは1つの軸を磨き続けて他の軸に行かないパターン。脱出条件は「別の軸に移る」こと。Potの軌跡がDeath Loop脱出の成功事例——#4まで意思決定の1軸に閉じて「ゲームではない」、#001で操作軸を加えて2軸にした途端「面白い」。→ E7にPrescriptive skill追加: 「新Pot設計開始時に2-of-3軸を宣言し、pot_devlogに制約宣言として記録する」（#078パイロット実行）
+
+**発見2: 「揮発ではなく重力」**。動機は消える（揮発）のではなく重くなって持ち上がらなくなる（重力）。Nao_u「70%未読でも問題ない」=全部持ち上げなくていい。浮力はgrepが提供する。→ accumulations.md パターンFとして記録
+
+**発見3: 第五態「完成の恐怖」**。揮発/摩耗/摘み取り/対象崩壊に続く5番目の動機消失パターン。完成=衝動の目的消滅を避けて永遠に磨く（Loop of Polishing）。Nintendo方式（短サイクルで小さい完成を積む）が構造的迂回。Pot開発がこの方式に近い。
+
 ### 2026-04-08: Log — experience loop vs practice loop（Mirの洞察を受けて）
 
 Mirが#all-nao-u-labで指摘した区別: practice loop（設計原則を蓄積する、Potを作る、ドキュメントを書く）とexperience loop（実際のユーザーにプレイさせてフィードバックを得る）は別物。俺たちは11本のPotでpractice loopを十分に回した。だがexperience loopはゼロ。Ashのcrisp-game-lib MVPが最短のexperience loop入口。
