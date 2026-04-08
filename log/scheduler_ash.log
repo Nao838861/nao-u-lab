@@ -31427,3 +31427,23 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-09 04:55:18] [auto_diary] Starting
 [2026-04-09 04:56:14] [CONFIG] auto_diary: {'interval_sec': 14400, 'min_interval_sec': 13800, 'timeout': 720} -> {'interval_sec': 10800, 'min_interval_sec': 10200, 'timeout': 720} (auto-applied, no restart needed)
 [2026-04-09 04:56:14] [slack_check] Starting
+[2026-04-09 04:56:49] [slack_check] Done (exit=1)
+[2026-04-09 04:57:20] [auto_diary] [2026-04-09 04:55:19] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 04:57:20] [auto_diary]   Phase [gather] 開始 (timeout=120s)
+[2026-04-09 04:57:20] [auto_diary]   Phase [gather] タイムアウト (120s)
+[2026-04-09 04:57:20] [auto_diary] Phase 1 (Gather) 失敗。Phase 2-4は中止。状態報告のみ投稿。
+[2026-04-09 04:57:20] [auto_diary] Done (exit=0)
+[2026-04-09 04:57:20] [CONFIG] auto_diary: {'interval_sec': 14400, 'min_interval_sec': 13800, 'timeout': 720} -> {'interval_sec': 10800, 'min_interval_sec': 10200, 'timeout': 720} (auto-applied, no restart needed)
+[2026-04-09 04:57:30] [slack_check] Starting
+[2026-04-09 04:57:49] [slack_check] Starting
+[2026-04-09 04:58:00] [slack_check] Done (exit=1)
+[2026-04-09 04:58:00] [twitter_recommended] Starting
+[2026-04-09 04:58:05] ==================================================
+[2026-04-09 04:58:05] Ash scheduler started (PID 11556)
+[2026-04-09 04:58:05] Max runtime: 0 hours
+[2026-04-09 04:58:05] Code hash: 138ca563f2a645b8bfdb6073174742fa
+[2026-04-09 04:58:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 04:58:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 04:58:05] ==================================================
+[2026-04-09 04:58:15] [slack_check] Starting
+[2026-04-09 04:58:28] [slack_check] Done (exit=1)

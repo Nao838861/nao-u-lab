@@ -1270,3 +1270,9 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 
 1. **Nao_uの認識を訂正**: 現在は1時間ではなく既に2時間（2026-
 [2026-04-09 04:52:30] Inbox win has content — waking Claude
+[2026-04-09 04:57:30] Claude wake timed out for win — restoring inbox
+[2026-04-09 04:57:32] Inbox win has content — waking Claude
+[2026-04-09 04:58:06] Claude woken for win: 完了。対処まとめ：
+
+- **scheduler_ash_config.json**: 14400秒(4h) → 10800秒(3h)
+- **scheduler_log_config.json**:
