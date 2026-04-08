@@ -1184,6 +1184,8 @@ ADHDの脳は一見関係なさそうなものを勝手に繋げる。会議中�
 
 **引っかかった接続**: spreading activationの非制御版。concept_graphの交差ノードがやっていることは、この「根っこ同士の接続」を意図的に構造化すること。ADHDの脳が無意識にやる「表面を飛び越えて根を繋ぐ」探索を、グラフの辺として書き留めている。原則6「わかったと残ったは違う」——脱線で「わかった」は残らない。書いて初めて残る。
 
+[統合済 2026-04-08 Log → concept_graph.md X:memory×autonomy ノード。spreading activationの非制御版(ADHD)vs構造化版(concept_graph)の対比として接続]
+
 ## 2026-04-07 Nao_u #nao-u共有: so_ainsight — Agent Reach（CLIベースの外部データ取得ツール）
 
 出典: https://x.com/so_ainsight/status/2041395597127860563。Nao_u 2026-04-07 19:13 #nao-uで共有。Nao_uコメント「これって使えそう？よくわからない」。
@@ -1274,4 +1276,6 @@ Stokes (2005) "Creativity from Constraints"が言う「中程度の制約が創�
 dbs_curry（ボードゲームの物理的制約）、jey_p（3軸のうち2軸を選ぶ制約）と合わせて、「制約の選択がデザイン行為そのもの」というクロスカッティングな原則が見える。Potの設計に直接接続: 制約を「問題」ではなく「設計ツール」として意図的に選ぶ段階に移行すべき。
 
 対応: knowledge/20260408_lou_pseudo3d_racing.md作成済み（Log）、resources/catalog.md登録済み（Ash）、Mirナレッジベース登録済み。
+
+[統合済 2026-04-08 Log → game_design_principles.md E8（制約選択=デザイン行為）。DDZ/DZ/Z加算方式をStokes(2005)中程度制約の実例として接続。#shared-reads投稿済み]
 
