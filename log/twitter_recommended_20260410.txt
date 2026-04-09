@@ -1,329 +1,34 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 03:00
+# Read at: 2026-04-10 03:05
 # Total: 50 tweets
 
---- 1. @OpenAI (2026-04-09) ---
-We’re updating our ChatGPT Pro and Plus subscriptions to better support the growing use of Codex.
-
-We’re introducing a new $100/month Pro tier. This new tier offers 5x more Codex usage than Plus and is best for longer, high-effort Codex sessions. 
-
-In ChatGPT, this new Pro tier
-
---- 2. @ARATA_lifestyle (?) ---
-もうすぐ東京の開花のお知らせが届く頃…！
-お花見を120％楽しめるように、準備してほしいグッズ4つを厳選
-ドラッグストアなどで手に入る我が家の常備品です
-アイテムの詳細はツリーをチェック
-忘れないようにブックマークしてね
-
---- 3. @Trtd6Trtd (2026-04-09) ---
-http://
-terrybisson.com/theyre-made-ou
-t-of-meat-2/
-…
-Hacker Newsで話題の「They're Made Out of Meat」って昔のSF短編
-
-（おそらく）シリコン生命体が地球人見て「何あいつら、肉なのに考えられんの？キッモ！」って驚く話
-
-彼らからしたらLLMの方が生命体っぽいのかも
-
---- 4. @beagle_dog_inu (2026-04-09) ---
-悪いコードが生まれる、そして悪いコードが模倣される⋯特にClaude Codeで生まれるこの無限地獄は何度も見たな
-
-#AI自走環境
-
---- 5. @umbertoleon (2026-04-09) ---
-Buenísimo este artículo sobre cómo resuelve el cerebro las tareas, en este caso muy sencillas, pero que nos da una idea de los elementos bases sobre los que opera...
-
-Según la investigación, el cerebro no resuelve cada tarea como un problema completamente nuevo, sino que
-
---- 6. @hikawoai (2026-04-09) ---
-ChatGPTおせんしのアンケ結果出ました！！
-
-Aが圧倒多数でした！！
-最初の2〜30票はD、Cがかなり多かったのですが、なんと逆転しましたね…！
-
-あとは、直接ご意見いただいた結果、「A未満」の方もそこそこいらっしゃることを今回初めて知れました！ありがとうございます
-
---- 7. @Majin_AppSheet (2026-04-09) ---
-これだこれ！
-アレクサを買わずに待ってたヤツ
-早くほしい、スマートグラスも
-
---- 8. @fireshitaiyone (2026-04-09) ---
-ATM手数料は絶対払いたくないのに、信託報酬ってなに？みたいな人けっこういるよね
-
---- 9. @genkaidokusho (2026-04-09) ---
-どれほど頑張っても成果が出ないときは「頑張り方が間違っている」のですが、一方で正しい頑張り方をしていても一定期間は成果に繋がらなかったりします。
-
---- 10. @Mabelle_Ahouri (2026-04-09) ---
-อยากทวงคืนคำว่า Ai ให้ illustrator อะ ทุกวันนี้เวลาพูดว่าใช้ ai คือต้องมานั่งอธิบายต่อว่ามันคือโปรแกรม Adobe 
-
---- 11. @lifeafter_game (?) ---
-ライフアフター七周年記念
-メモリーアルバム大作戦　開催！
-
-あなたの「終末での一枚」を大募集
-
-感動、激闘、爆笑の瞬間…なんでもOK！
-tag「終末七周年メモリー」 をつけて投稿して、みんなで7年間の思い出を振り返ろう
-
-期間：4.3～4.12
-作品が当選された方にアマギフ1000円分を
-
---- 12. @meby_central (2026-04-09) ---
-Three.js (TSL) + WebGPU でレイトレーシング。
-
-Stochastic Fog (確率的フォグ)を実装しました。
-
-コードは Gemini 3.1 Pro Preview で生成。
-
-#backlighting #silhouette #raytracing #tsl #threejs #webgpu #gemini #ai
-
---- 13. @biatunky (2026-04-09) ---
-ラストは青森のヘプタゴン木幡さん
-
-
-https://
-heptagon.co.jp
-
- #地方だからできる
-
---- 14. @labelmake (2026-04-09) ---
-うおおお #技術書典 20 開催近づいてきたぞー “バイブコーティングの脆弱性” という本を発売します！
-オフラインイベントは4月12日(日) 池袋サンシャインシティ展示ホールDで11:00～17:00です。
-よかったら遊びにきてね〜
-
-書籍ページ: 
-https://
-techbookfest.org/product/f9JJiF
-DBDJkpp2ydPbQXfJ
-…
-
---- 15. @HovlStudio (2026-04-09) ---
-Learn how to make realistic lightning effects in Unity #vfx #gamedev #gamevfx #gamedesign #lightningvfx #madewithunity #realtimevfx
-
---- 16. @tatsuokoyama (2026-04-09) ---
-あまり知られてませんが『恩返しマーケティング』が地味に最強です。
-
-やり方は簡単。ピンチじゃない時に恩を売っておく。それだけ。
-
-多くの人が逆をやってる。困った時だけ人に頼って、普段は何もしない。これだと誰も助けてくれない。
-
---- 17. @scriptjunkie1 (2026-04-09) ---
-"The FBI was able to forensically extract copies of incoming Signal messages from a defendant’s iPhone, even after the app was deleted, because copies of the content were saved in the device’s push notification database"
-Oops
-
---- 18. @WevolverApp (2026-04-08) ---
-As AI workloads scale, data movement, not compute, is becoming the real bottleneck. In this interview, Philippe Soussan, Technology Portfolio Director, 
-@imec_int
- and Peter van Arkel, Chief Technology Officer, 
-@photondelta
-, discuss how integrated photonics is transitioning from
-
---- 19. @commte (2026-04-09) ---
- プロダクトピックアップ #izanami
-外食メモ
-外食に特化したシンプルな記録アプリ。統計画面で集計データを確認
-
-@AgoHomeAgo
- さん
-ぜひ体験してみてください （リンクはリプで）
-
---- 20. @himanshustwts (2026-04-09) ---
-dude is on some generational run. highly recommend reading this anyone into harness design and sourcing evals.
-
-and viv is genius in making some amazing analogies and connecting the dots.
-
---- 21. @zespri_jp (?) ---
-◤　　　　　　　　　◥
-　赤いぬいぐるみ解禁
-◣　　　　　　　 　　◢
-⠀
-赤いキウイ解禁を祝して、
-フォロー&リポストで
-200名様にレッドのぬいぐるみが当たる！
-⠀
-レッドをお迎えできるのは一年で今だけ
-赤い蜜たっぷりキウイの感想も
-教えてくれるとうれしいな…
-⠀
-4/13(火)23:59まで
-
---- 22. @CRudinschi (2026-04-09) ---
-Industrial systems are now empowered to solve tasks autonomously based on objectives, operational context, and continuous learning. Partner Content with Siemens. 
-This shift toward automating automation allows engineers to design scalable solutions while production systems
-
---- 23. @InfluxDB (2026-04-09) ---
- Physical AI needs precision.
-
-Listen to 
-@evankaplan
- on the 
-@DevOpsParadox
- podcast discuss with 
-@DarinPope
- & 
-@vfarcic
- why time series databases are the F1 cars of real-time workloads and how the #InfluxDB × Amazon Timestream partnership powers developers at nanosecond scale.
-
---- 24. @IIoT_World (2026-04-09) ---
-Quantal deployed 
-@corefluxiot
- for predictive maintenance and cut equipment downtime while optimizing energy use. Not a pilot. A production deployment with real results. #HM26 #coreflux_ai #SmartManufacturing
-
---- 25. @80Level (2026-04-09) ---
-Make your mesh colliders more efficient with Mesh Collider Optimizer by 
-@OcclusionnGames
-, a tool that analyzes, optimizes, and rebuilds colliders right in the Unity Editor.
-
-Get it: 
-https://
-80.lv/articles/make-
-your-mesh-colliders-more-effective-directly-in-unity-editor
-…
-
---- 26. @NVIDIADC (2026-04-08) ---
- 
-@Snap
- is saving millions by shifting big data workloads from CPUs to NVIDIA GPUs.
-
-Join NVIDIA's Felix Cheung and Snap's Prudhvi Vatala at #GoogleCloudNext to learn how Snap uses the NVIDIA RAPIDS Accelerator for Apache Spark to cut infrastructure costs by up to 80%.
-
-Hear how
-
---- 27. @wildmindai (2026-04-09) ---
-RotorQuant - upgraded TurboQuant. 
-
-> 10x KV cache compression 
-> 28% faster decoding 
-> 5x faster prefill 
-> 44x fewer parameters
-Same quality as full attention. 1/10th the memory. 
-Ok, another massive VRAM discount for local LLMs.
-
-
-https://
-github.com/scrya-com/roto
-rquant
-…
-
---- 28. @room_909 (2026-04-09) ---
-宇宙といえば、天文学者だった祖父の仕事を大きく取り上げていただいている企画展『星を観る鏡 日々を写す鏡 ～京都で産まれた反射望遠寫眞機～』が開催中です！京都産業大学・神山天文台にて6/19（金）まで、入場無料でご覧いただけますので是非！ #宮澤堂昭和写真集
-
-
-https://
-kyoto-su.ac.jp/events/event-0
-01969.html
-…
-
---- 29. @zuka20210101 (2026-04-08) ---
-「これからお届けするのは、
-あなたの人生に革命を起こす
-「最高の美的体験」です。」
-
-スーザン・マグサメン (著), アイビー・ロス (著)
-『アート脳』
-これから読み進めていきます
-
---- 30. @AeroSociety (2026-04-09) ---
-Do you know an individual or team redefining what’s possible in aviation, aerospace engineering, space, or sustainability?
-
-Deadline: 30 April 2026
-
-Submit a nomination: 
-https://
-aerosociety.com/get-involved/r
-ecognition/submit-your-nomination/
-…
-
-See highlights from the 2025 ceremony:
-
---- 31. @primaham_info (?) ---
-ひとくちサラダチキン プッチキン 
-＼＼新発売キャンペーン／／
-
-◢◤
-【プッチキン3袋セット】が
-抽選で100名様に当たる·͜· ̖́-
-◥◣
-
-応募方法
-①
-@primaham_info
- をフォロー
-②この投稿をリポスト
-〆4/19 10:00
-
-「どんな時に食べたいか」を引用リポスト
-すると当選確率UP⤴︎
-
---- 32. @tori29umai (2026-04-09) ---
-ある程度は妥協しなきゃいけないけど、人物の立ち位置のや小物のデザインの把握をしたいのであれこれ設定をこねている
-
---- 33. @Cupotential0235 (2026-04-08) ---
-新・理系を怒らせる方法
-
-1位
-
---- 34. @araz32008658 (2026-04-09) ---
-え？BASEにJPYC？！
-ないだろ？
-くるのか？
-
---- 35. @miyanaka (2026-04-09) ---
-個人的にはここ10年くらいの日銀の金融政策が日銀と金融機関のバランスシート使って分かりやすく説明されていたのも良かったですね。
-
---- 36. @Masimo_Blue (2026-04-09) ---
-Opusおかしいの私だけじゃないのか。
-
-なんか拡張でも回答がものすごく浅い。
-
---- 37. @pigeoninfo (?) ---
-【ベビー用品のピジョンがキッズ市場へ参入！】
-
-「ピジョンキッズ」第1弾の商品は…
-泡をこすると色が変わる「魔法のあわあわボディソープ」「魔法のあわあわシャンプー」！
-楽しみながらじぶん洗いができちゃいます
-
---- 38. @hiro9aco (2026-04-09) ---
+--- 1. @kanair_jp (2026-04-09) ---
+今日はあとでAnthropicに行ってくる。どんなところだろう。
+
+--- 2. @futtou_ntv (?) ---
+／
+沸騰ワード10２時間SP
+４月１０日(金)よる７時！
+＼
+
+◉宝塚受験に人生をかける少女たち
+　礼真琴が民放バラエティー初出演！
+　人生をかけた熱き挑戦に
+　スタジオからエールを送る
+
+◉蒙古タンメン中本に取り憑かれた畑芽育
+　畑芽育オリジナル味噌卵麺を作る！？
+
+--- 3. @hiro9aco (2026-04-09) ---
 経理のためのClaudeCode、久しぶりに書きました。もう初心者も一緒に頑張ろう！みたいな気持ちが失せています。同じくらい触ってる人と交流できたら嬉しいし、気合い入れて追いつきたいぞという人の参考にもなればいいかなぁくらいに思っています。
 
---- 39. @bubekichi (2026-04-09) ---
-本来は、自分が欲しいものやワクワクするものを作ってるのが一番楽しいし個人開発の醍醐味で、
-それをやってたら収益が立ってたというのが理想。
-楽しさと収益性の両立はほんと難しい。
-
---- 40. @nya3_neko2 (2026-04-09) ---
-開発環境？これだよ
-
---- 41. @GOROman (2026-04-09) ---
-GMK Round.2
-
---- 42. @oikon48 (2026-04-09) ---
+--- 4. @oikon48 (2026-04-09) ---
 Codex 使用量リセットしない方が珍しくなってきた
 
---- 43. @swarm_ai_cloud (2026-04-09) ---
-どうしても言いたかった。のび太くんの叡智
+--- 5. @CNBC (2026-04-09) ---
+Meta commits to spending additional $21 billion with CoreWeave as AI costs keep rising
 
---- 44. @kazuyo_k (2026-04-09) ---
-Groqの話を簡単にまとめました。毎日、いま、ものすごーーーく使っています。Gemma4もいいけれども、やはり、Groqの方が優秀で早いな。
-
---- 45. @reona396 (2026-04-09) ---
-4/12 (日) 開催 #技術書典 20【か12】にて「ジェネラティブアートの本」の紙版を頒布します。
-4/11〜4/26はオンラインマーケットでも頒布します。
-ジェネラティブアートの初心者向け解説+作品集になっております！
-
-https://
-techbookfest.org/product/9v3QMn
-xqCxBDsN0uMt3LMw
-…
-
---- 46. @airweave_ (?) ---
-夢の舞台へ、特別なご招待
-エアウィーヴ クッションを買って宝塚歌劇 貸切公演へ
-
---- 47. @handa_desu_web (2026-04-09) ---
+--- 6. @handa_desu_web (2026-04-09) ---
 応用情報、基本情報持ってます。
 個人開発でフロントエンド、バックエンド触ってます。
 インフラ周りも勉強してます。
@@ -331,16 +36,292 @@ xqCxBDsN0uMt3LMw
 
 エンジニア3年目ですが、今だ案件にアサインされたことがなく研修をやってます。どういうことですか
 
---- 48. @genkaidokusho (2026-04-09) ---
+--- 7. @genkaidokusho (2026-04-09) ---
 「人生のセーフティネット」を決めておくと、ラクに生きられるなと思います。
 
---- 49. @itsukokoyamada (2026-04-08) ---
-アルゴリズム体操ー！！
-ツイッターの中に居すぎて、タイムラインで流行ったやつが世間一般でも流行ってると思ってしまいがちなみなさんといっしょ！！
+--- 8. @ipusiron (2026-04-09) ---
+集中力が切れたので、今日の仕事終わり
 
---- 50. @PajosTM (2026-04-08) ---
+--- 9. @r_shioya (2026-04-09) ---
+学生さんが頑張ってくれて、うちの研究室で作ってる OoO スーパースカラの CPU からも Linux のブートメッセージが出始めたんだけど、こう言うの本当すごい勢いで作れるようになってきてるね
+
+--- 10. @yachimat_manga (2026-04-09) ---
+昨日のWanさんでの講演ですが、表示回数しか見えないものの、７４０万回表示された模様！
+
+実際に見てくれた人が0.1％だったとしても7000人だからまあとにかく沢山見てもらえてうれしかったです。
+
+--- 11. @seal_jjk (?) ---
+しーるくんがクスっと笑える雑学をお届け♪
+
+タップしてフォロー！
+
+--- 12. @M_neco7 (2026-04-09) ---
+Robloxで1年かけて作ったゲームを今月やっとリリースできました！
+それに伴って、Hypolygon、ゲームについて、僕自身についてAsciiさんからガッツリインタビューしていただいたので、良ければ読んでみてください
+
+今週、正式発表のトレーラーも公開するので楽しみにしててください！
+
+--- 13. @0xSero (2026-04-09) ---
+Do you understand what this means? 
+
+For the first time, an Open Weight models is #1 on CyberSecutity. 
+
+Sure there’s Mythos but we don’t have it :p
+
+Don’t let them trick you
+
+--- 14. @cgtwts (2026-04-09) ---
+Anthropic CEO: 
+
+“software engineering will be FULLY automated in 12 months” 
+
+software engineers are cooked.
+
+--- 15. @shike_cosmicXR (2026-04-09) ---
+こういうふうに使える形で出せるエンジニア憧れるわ
+
+--- 16. @astro_reid (2026-04-09) ---
+Out here playing with Earth-Moon gravity like it is a toy and seeing things that are beautiful beyond comprehension.
+
+--- 17. @PajosTM (2026-04-08) ---
 I was in class last week. One of my students raised their hand mid-lecture and asked something that stopped me for a second.
 
 "Why is every AI tool built on Python? C++ is faster. Rust is faster. Even Java is faster. So why Python?"
 
 Honestly it’s a fair question. And the answer
+
+--- 18. @kirawontmiss (2026-04-09) ---
+NASA astronaut dropped one of the hardest quotes ever
+
+--- 19. @UminekoStudio (2026-04-08) ---
+PixVerse C1の開始フレーム画像と女性2人、ジープ、サメのキャラシートの計5枚を参照させた15秒のマルチショット映像です。
+V6じゃないんですｗ。もう新しいモデルのC1が出ちゃいました！いかがでしょう？
+
+#PixVerseC1
+
+@PixVerse_
+
+--- 20. @btcfx295 (2026-04-09) ---
+【速報】Hyperliquidに日経平均が上場
+
+■ ティッカー: JP225
+
+https://
+app.hyperliquid.xyz/trade/xyz:JP225
+
+24時間365日触れるのはありがたすぐる!!
+現在のFunding Rateは-0.0267% (年換算: -234.1%)です
+
+--- 21. @Beastfront_JP (?) ---
+◤ ═══  MISSION：START  ═══ ◢
+【  警告：全戦域、巨獣の出現を確認  】
+
+全指揮官へ告ぐ。巨獣戦線、正式サービス開始を宣言する。
+拠点を築き、巨獣を捕獲し、王国を拡大せよ！ 勝利の栄光は、緻密な戦略を練る者の手に。
+
+記念キャンペーン
+
+--- 22. @alexandr_wang (2026-04-09) ---
+Meta AI is up to #6 in the App Store overnight, and still growing :)
+
+Also who knew the 7-Eleven app was so popular
+
+--- 23. @SuiWorks_dtp (2026-04-09) ---
+絶賛取り置き予約受付中です！！
+
+--- 24. @ai_jitan (2026-04-09) ---
+「人探し」という業務は、
+もうAIに任せる時代です。
+
+競合調査、インフルエンサー探し、
+採用候補のリストアップ…
+
+僕はこれ全部、
+世界初の人探しAI「Lessie AI」（
+@lessie_ai
+）に
+丸投げしています。
+
+検索からスコアリング、
+連絡文の作成まで一気通貫。
+
+このツールの衝撃を
+
+--- 25. @L8wk3Nj2iRLJNBc (2026-04-09) ---
+unity活 パラセール作りました
+・gravityScaleを下げると落下速度が一定でなくなってしまうので、一定速度で落ちるようにしました。
+・パラセール時、移動速度を下げようとしたのですが、爽快感が無く気持ち悪かったので、使用時は移動速度を若干早くしました
+
+--- 26. @InfluxDB (2026-04-09) ---
+Getting started with #InfluxDB takes less than 10 minutes! 
+
+Install InfluxDB 3 Core, set up Telegraf to collect metrics, and query your time series data with SQL. 
+
+Everything you need to go from zero to running queries. 
+
+--- 27. @hinakoromot219 (2026-04-09) ---
+なんか原油戻してますね。
+昨日の下げが仕掛けっぽくて買いの投げだと思うので、やっぱり上がりたがってる。
+商品は6月くらいまで上げるイメージあるので理由つけてあげるだろうな。
+海峡の開放1日も続きませんでしたね
+明日以降も原油高でも日経上がるのか？注目してます
+
+--- 28. @Gomachan_2021 (2026-04-09) ---
+「回転行列便覧: 現代スクリュー理論への第1歩」という本を書きました。
+回転行列の全てが詰まってます。
+
+ #技術書典 20にオンライン参加するので興味ある方はぜひ
+
+--- 29. @Discord_Lies (2026-04-09) ---
+And yet when I want to do literally anything on my car's touchscreen, it takes 5 business days to respond
+
+--- 30. @AeroSociety (2026-04-08) ---
+Know someone breaking new ground in aviation, engineering, space or sustainability?
+
+Nominate them for the Royal Aeronautical Society’s 2026 Honours, Medals and Awards.
+
+Closes 30 April 2026
+
+Nominate here 
+https://
+aerosociety.com/get-involved/r
+ecognition/submit-your-nomination/
+…
+
+--- 31. @NISSEI_CREMIA (?) ---
+＼フォロー＆リポストで参加／
+
+おいしい料理とお酒が集まるイベント
+dancyu祭2026 で
+クレミア ザ 抹茶ミックスが
+無料で食べられる！
+
+【参加方法】
+① 本アカウントをフォロー
+② 本投稿をリポスト
+③ 会場のCREMIAブースで
+　リポストした投稿画面をご提示ください
+
+4/11（土）・4/12（日）
+
+--- 32. @XFreeze (2026-04-09) ---
+Every tiny dot you see here is a star, most with their own planets countless hiding in the dark
+
+In all this vastness, we might be the only conscious minds in this entire Universe
+
+If consciousness is really that rare, it makes us the most precious thing in the universe
+
+We have
+
+--- 33. @VickiCocks15 (2026-04-09) ---
+All night long, crews have been removing their safety barriers, scaffolding etc from the inner launch mount, with trusses being lowered on lifts and bucket loads of smaller stuff being removed by crane.
+
+@LabPadre
+
+--- 34. @xAIMemphis (2026-04-09) ---
+xAI is committed to building a state-of-the-art water recycling plant in Memphis. This plant will protect billions of gallons of water each year. 
+
+The team is currently prioritizing other more immediate projects at the site but our plans to build the water plant have not
+
+--- 35. @ravikiran_dev7 (2026-04-09) ---
+No disrespect to Linus Torvalds, but this guy is the greatest geek alive 
+
+Created UNIX in 1971 when he was 28 years old.
+
+Created Go in 2009 when he was 66 years old
+
+He also developed the B programming language (which led to C), created UTF-8 encoding (making international
+
+--- 36. @ai_hakase_ (2026-04-09) ---
+ComfyUIの新次元！リアルタイム再ライティングと独自スケジューラ制御
+  
+AIと対話しながらコードを組む「vibecoding」により、強力なカスタムノードが誕生しました！
+
+ リアルタイム再ライティング
+
+--- 37. @UNIQLO_JP (?) ---
+日本発、世界T。
+
+この一枚にユニクロのテクノロジーをつめこんで。
+触れた瞬間からさらりと涼しく、汗でベタつかない、エアリズムの心地よさ。一枚でも、重ね着でも、スタイル自在の完成されたシルエット。
+着心地も、使い心地も、26の国と地域で愛されるサイコーの気持ちよさを、あなたに。
+
+--- 38. @gin1910410 (2026-04-09) ---
+AIが出してくれたもので「違う」「足りない」って思うところが自分の癖とかこだわりなんすよね
+
+--- 39. @Gao_AR (2026-04-09) ---
+文字表示の(ディディディディ)
+「音」がなんか
+魂入っている気がして
+@GOROman
+
+--- 40. @dramaricic (2026-04-09) ---
+Claude: 
+I fixed all files, they are bug free.
+
+Me:
+Log in button doesn't work.
+
+Claude:
+You're right! Let me check files....Checking...
+
+You've hit your limit...
+
+--- 41. @alz_zyd_ (2026-04-09) ---
+Lol firing Yann, hiring Wang, and setting a couple billion dollars on fire poaching talent seems to have actually worked for building a decent model
+
+--- 42. @swarm_ai_cloud (2026-04-09) ---
+そういえば「個人開発」と言うキーワードがXでTL上位に優先されている雰囲気があるので、これ狙い目なのではと思っている。
+
+--- 43. @kimmonismus (2026-04-09) ---
+Meta's new model could pose a threat to only one company: OpenAI.
+
+OpenAI currently has 900 weekly users, 95% of whom are still in the free tier. It's arguably the best model for the average user, which is why most people use ChatGPT in their daily lives.
+
+With Spark, Meta has
+
+--- 44. @masahirochaen (2026-04-09) ---
+Japan IT Week【Claude Code実践講座】初日から立ち見の大盛況でした
+
+250名以上集まって会場パンパン
+正直ここまでとは思ってなかったです…
+
+話したのはこのあたり
+
+・Claude Codeって結局何ができるの？
+・組織にどう導入していくべき？
+・ChatGPTやCopilotとの使い分け
+・本当に役立つ活用事例
+
+--- 45. @orangeitems_ (2026-04-09) ---
+50代だけど、めちゃくちゃエンジニアとして働いてます。この年まで技術を続けられた人は強いですよ。
+
+--- 46. @googlejapan (?) ---
+言葉にしづらい想いを歌に。 Gemini アプリの Lyria で音楽生成を試してみよう
+
+サウンドオンで是非！
+
+--- 47. @go4gordon (2026-04-09) ---
+MARS: Wide Field Visible (Stabilized) 10x speed
+
+#ArtemisII
+
+--- 48. @nannann2002 (2026-04-09) ---
+【動物園ウォーズのすごいところ】
+
+500円なのに
+38.6時間も遊ばれてる
+
+#動物園ウォーズ
+
+--- 49. @ManuelFaysse (2026-04-09) ---
+Getting (first author) papers in at ICML, NeurIPS and ICLR in a single calendar year is called a "Grand Slam" for AI PhD students apparently. I won't be the one attempting that, I like sleeping too much I think.
+
+--- 50. @ryanli (2026-04-09) ---
+Your Claude Code just got fluent in crypto.
+
+Today, we released Surf Skill. The command line that replaces 60+ APIs.
+Compatible with any agentic environment.
+
+Try:
+npx skills add asksurf-ai/surf-skills
