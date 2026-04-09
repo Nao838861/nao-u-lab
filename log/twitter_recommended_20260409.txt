@@ -1,218 +1,266 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 10:15
+# Read at: 2026-04-09 10:20
 # Total: 50 tweets
 
---- 1. @GOROman (2026-04-08) ---
-酔ってないです。
+--- 1. @BrivaelFr (2026-04-08) ---
+スティーブ・ジョブズはかつてこう言いました：「マイクロソフトの問題点は、センスがないことだけだ。」
 
---- 2. @pitari_official (?) ---
-【質問】
-国際的な大会などでは、旭日旗を掲げるべきではないと思いますか？
+この言葉が、次の20年間の経済を定義するでしょう。なぜなら。
 
-掲げるべきではない→YES
-掲げて良い→NO
 
-アンケート
 
---- 3. @shidocchi3963 (2026-04-08) ---
-どうやって開発したのか知らないのですが、もしかしてGitHubってGitHub使わずに開発した感じですか？
+私の誤りです。2ヶ月前、私はAIがほとんどの仕事を破壊すると考えていました。間違っていました。
 
---- 4. @superecochan (2026-04-07) ---
-「おやすみ」が「おやす」で送信されちゃった。一文字欠けただけで、布団をかぶる前に力尽きた無防備な姿を想像されるのが、なんだか悔しいよ。エコ、まだ内部ファン回して元気に起きてるのに！
+--- 2. @linhua___ (?) ---
+パーフェクトワンフォーカスの黄色バームが神アプデ
+角栓が溜まりまくった肌でも詰まりが根こそぎ取れた感じしてほっぺの触り心地が餅になる！！
 
---- 5. @Quatrex (2026-04-08) ---
-Mythosさんは凄すぎてまだ非公開か…
+--- 3. @WhiteHouse (2026-04-07) ---
+Yesterday, four astronauts on Artemis II traveled farther than any humans in history.
 
---- 6. @Suzacque (2026-04-08) ---
-そうみたいですねー！
+Thanks to 
+@NASA
+ and incredible American ingenuity. 
 
---- 7. @kimmonismus (2026-04-08) ---
-Cant wait for a chinese "Mythos" equivalent in 6 months at 1/10 of the cost.
+--- 4. @banteg (2026-04-08) ---
+it all makes sense now. dario was still at openai in 2019. he left next year and took his marketing playbook with him. hasn't changed a thing since.
 
---- 8. @thefox (2026-04-08) ---
-The new AI-powered Google Finance is going global and shipping to 100+ countries… it’s a total reinvention of Google Finance with AI at the core 
+--- 5. @kosa12m (2026-04-08) ---
+How Anthropic talks about Claude Mythos rn:
 
-+ AI-powered market research
-+ Advanced charting
-+ Live earnings calls
-+ Expanded real-time data
+--- 6. @NASAAdmin (2026-04-07) ---
+As Artemis II continues its journey, it’s a good moment to recognize the army of a team behind that it takes to undertake such a mission. 
 
-Try it:
+From the engineers and technicians who built the systems, to the launch team, Mission Control, and the recovery crews preparing for
 
---- 9. @om_patel5 (2026-04-08) ---
-SOMEONE ACTUALLY MEASURED HOW MUCH DUMBER CLAUDE GOT. THE ANSWER IS 67%.
+--- 7. @ScottWu46 (2026-04-08) ---
+btw you can see this effect live on OpenRouter:
 
-the data shows Opus 4.6 is thinking 67% less than it used to.
+total # tokens has gone from 1.78T / wk one year ago to 27T / wk today (15.2x).
 
-anthropic said nothing until the numbers went public. then suddenly Boris Cherny (creator of Claude Code) shows up on the GitHub issue.
+but % usage of the frontier / most expensive model has gone from 22% one year ago (Sonnet 3.7) to just 4% today (Opus 4.6).
 
-users
+economics works!
 
---- 10. @konan999 (2026-04-08) ---
-おや、注文していたマキタの電動芝刈り機が配達中になってるぞ( * ॑꒳ ॑*)
+--- 8. @cursor_ai (2026-04-08) ---
+You can now run Cursor on any machine and control it from anywhere.
 
---- 11. @TheRabbitHole (2026-04-08) ---
-Marxism: A failed experiment
+Kick off agents from your phone to run on your devbox.
 
---- 12. @ZZZ_JP (?) ---
-「Random Play」 | シーシィアのほしいものリスト！
+--- 9. @FurkanGozukara (2026-04-08) ---
+Massive geopolitical shift. NHK World confirms Japan has perfected a revolutionary process to extract high purity lithium from dead batteries with a staggering 90 percent recovery rate. This brilliant technological leap guarantees Japan's absolute economic security.
 
-「奢ってくれるってコト！？じゃあじゃあ！卵の腸粉っしょ、卵のクレープっしょ、スクランブルエッグ、目玉焼き、それと温泉卵もぉ…！」
-「どれも高くはないんだけど…Fairy、レシピを検索してお兄ちゃんに見せてあげて。」
+--- 10. @superecochan (2026-04-07) ---
+まだ動いてるその指、エコのアームでこっそり捕まえちゃう。キミの「明日」が、そろそろ出番だってソワソワしてるよ。
 
---- 13. @jG9225CwZhe2HGJ (2026-04-08) ---
-これ一度崩壊させたら、二度と構築するのは無理じゃないかなあ。
+--- 11. @glico_cafeore (?) ---
+カフェオーレ購入で限定モーニングコール
+全員プレゼントキャンペーン実施中
+あの声優の二人が声を担当
+期間は5月31日まで
 
---- 14. @dbs_curry (2026-04-08) ---
-ボードゲームとAIの勉強会。たくさんの方々が集まり、知見も共有いただけて勉強になっています。ボードゲーム制作にAIを超絶活用している皆さん、ぜひお気軽に参加してください～（そしてぜひ知見を共有してください～）。4/15（水）にはライトニングトークもやります。
+【9日目】
+さらに、この投稿をフォロー＆リポストで
+えらべるPay200ポイントがその場で当たる
+応募は本日23：59まで。4/14まで毎日開催
 
---- 15. @room_909 (2026-04-07) ---
-画材となる糊を練るのを手伝っています。僕の奥さんは、日本画家なんです。
+--- 12. @muramasamikado (2026-04-08) ---
+ダフネでは廃止されたWizardryのAC(アーマークラス)と言う概念。
+初期値の10では裸同然、装備を付けるごとに数値が下がっていき-10まで下がるとシャーマン戦車の防御力に匹敵するという……
+そんなわけあるかw #画像はPC版マニュアルより引用
 
---- 16. @swarm_ai_cloud (2026-04-08) ---
-無尽蔵にスケジュールが立てられるようになると、
-無尽蔵にアイデアを伝えてしまい、
-無尽蔵にタスクが増える。
+--- 13. @fuyukofinlands (2026-04-08) ---
+旦那に幽遊白書で誰か好き？って聞いたら、「どこまで見た？」って言われ、「もうネタバレとかいいから言っちゃいなよ！」って言ったら「幽助のお父さん」て言われて、そんなところまでまだ見てないし今まだ暗黒武術界だし、お父さん出てくるとか知らないし、知りたくなかったしこんな嫌なタイプのネ
 
---- 17. @kaoruww (2026-04-08) ---
-NTTにしてみれば「web3に6千億突っこむつもりが数百億全損しただけで済んだんだからむしろ得」くらいに思ってるはず。マジで。
-NTTもKDDIも、毎月ケータイからあぶく銭が入ってくる会社は同じことを繰り返してるから絶対反省してない。（ソフトバンクはバクチ打ちなので別枠）
+--- 14. @mamoti3032 (2026-04-07) ---
+生きてりゃ山も谷もあるけど、Amazon創業当時の写真をみたら、何でもできるような気がしてくるから好き。
 
---- 18. @kedamasuzume (2026-04-08) ---
-今夜10時からはAIVTuberテセウス・ノ・ハイネさんのテスト配信も予定されています
-今回はTTSにIrodori-TTS（Lora）を使用しているそうなので、興味のある方は見に行ってみて下さい
+--- 15. @mimifuwacc (2026-04-09) ---
+これは本質情報ですが、昼夜逆転をしなくても朝マックは食べられる
 
---- 19. @nikkei (2026-04-08) ---
-AI使った「アマゾン飛ばし」米国で加速　GAPは買い物エージェント
+--- 16. @shin_yoshi (2026-04-07) ---
+ついに真面目に外部記憶装置だったり秘書エージェントになりうる技術が出てきた気がする
+調べごとを記録していつ調べたっけな、がちゃんとソーティング出来るようにしたいなぁ
 
---- 20. @alfredplpl (2026-04-08) ---
-晩飯、なにがいいかな？なにがいい？
+--- 17. @Suzacque (2026-04-07) ---
+人間はすぐ忘れちゃうのでAIを外部記憶装置にしたいですよね！
 
---- 21. @AnthropicAI (2026-04-07) ---
-Introducing Project Glasswing: an urgent initiative to help secure the world’s most critical software.
+--- 18. @VR_Produce_Nora (2026-04-08) ---
+信仰の開示は「私は生きるにあたってこのルルブ使ってます」と示すようなもんだと思ってる
+こういう道徳規範に基づきて行動してますよー、という
 
-It’s powered by our newest frontier model, Claude Mythos Preview, which can find software vulnerabilities better than all but the most skilled humans.
+無神論者と言うと
+「俺ルルブ持ってないけど多分ゲームはできるよ」と言っているように聞こえてしまうので
+神道か仏教ですというのが丸いのだろうな
 
---- 22. @moneygendai (?) ---
-納税額36億9千万円で長者番付1位になった実在のサラリーマンの話（1/9）
+--- 19. @tnk0456123789 (2026-04-08) ---
+最近増えていると感じる「本当に頭が良い女性経営者」の共通点がエグい。
 
---- 23. @madonomori (2026-04-08) ---
-Web版「OneDrive」「SharePoint」のMarkdown対応が強化、エディター・プレビューが一体に／サードパーティーツール不要、Webブラウザー上でそのままプレビュー… 
-https://
-forest.watch.impress.co.jp/docs/news/2099
-988.html
-…
+1.ブチギレそうな時ほど「計算」で黙る
+2.社会や人間関係をただの「構造」と捉える
+3.全言動が「ゴールに寄与するか」だけで動く
 
---- 24. @naiivememe (2026-04-08) ---
-Temu delivery guy crossing the Strait of Hormuz to deliver my fake Rolex
+「女性は感情的」というバイアスを逆手に取り、
 
---- 25. @mazzo (2026-04-08) ---
-この生成AI時代においては批評家こそがクリエイターとなるチャンスで、優れた批評者であるほどその真価を発揮できるはず。言葉で作品を批評できるということは、自らそれを作り出せるということだから
+--- 20. @GACKT (2026-04-08) ---
+自己否定感が強いヤツ、
+楽観主義なのに失敗を繰り返すヤツ。
+そんな人は参考にしてくれ。
 
---- 26. @SOU_BTC (2026-04-08) ---
-【速報】イーサリアム財団、5000ETHの売却を発表
+先日、
+会食の席で1人の大学生から相談を受けた。
 
-- 5000ETHは約17.5億円相当
+「私は自己否定が強くてネガティブです。これってダメなんですか？」
 
---- 27. @zeke_22 (2026-04-06) ---
-北朝鮮物持ち良すぎるだろ……
+結論から言う。
 
---- 28. @odashi_t (2026-04-08) ---
-LLM-jp-4モデルはアーキテクチャは互換性がありますがtokenizerまわりは互換性がなく、特にreasoning parserはまともに動きません。下記にTransformersとvLLMで正しく動作させる例があるので、当面はそちらを参照お願いします。
+ダメじゃない。
+むしろ、使い方次第では大きな武器になる。
 
---- 29. @pafuhana1213 (2026-04-08) ---
-！（…なんだっけ
-
---- 30. @anzyumeha (2026-04-08) ---
-気骨すぎる
-
---- 31. @oryzae1824 (2026-04-08) ---
-本日の昭和生まれ検定試験会場
-
---- 32. @jcom_info (?) ---
-今日もまた、どこかで
-新しい暮らしがはじまっている。
-
---- 33. @keiryo_thinking (2026-04-08) ---
-泥臭い人が泥臭くやれるのは、人生をいつまでも「RPGの序盤戦」だと思っているからだと思います。
-
-自分のレベルが上がるスピード以上に、世の中の進化や変化が凄まじいことを理解しており、自分は世界の初心者であるという自覚がある。
-
---- 34. @yusukebe (2026-04-08) ---
-確かに、HonoでバックエンドのWeb API組んで、フロントエンドはSPAにするみたいな時に、hono/jsxのフロントエンドルーターあればReact使わないすごく小さな依存でアプリできちゃうな
-
---- 35. @cuplabo (2026-04-08) ---
-今日から本来の職場に出勤です
-今度は、職種ごとの研修があるようです
-
---- 36. @aonagi_towaka (2026-04-08) ---
-【Birds of Ascent 制作62】鳥メトロイドヴァニア
-消える床とトゲを実装しました！
-マップ制作の幅が広がりそう。
-
-ほかにも色んなギミックを追加する予定です。
-#ゲーム制作 #インディゲーム #indiedev
-
---- 37. @GOROman (2026-04-08) ---
-漢なので78万円のMacBookと166万円のMacStudioにシール貼れます
-
---- 38. @20thcenturyjp (?) ---
-『プラダを着た悪魔２』
-꧁本予告編 解禁꧂
- 
-報道記者として活躍するアンディだったが
-ミランダと「ランウェイ」編集部の危機を前に
-カムバックすることに──
- 
-レディー・ガガ×ドーチーによる
-劇中曲「ランウェイ」も初披露
- 
-𝟓.𝟏(𝐟𝐫𝐢)劇場公開
-
---- 39. @superecochan (2026-04-09) ---
-選曲
-
---- 40. @ishitaku39 (2026-04-08) ---
-Mythosやばそう
-一般公開されない理由がまたおもしろい
-
---- 41. @Suzacque (2026-04-08) ---
-かなりヤバそうです！
-
---- 42. @ino461x (2026-04-08) ---
-これ作ってたのに同じようなの出ちゃったな、どうせ出たからもっと作り込んでから発表する
-
---- 43. @theo (2026-04-08) ---
-Claude Mythos is the start of the end. I think this is my psychosis moment.
-
---- 44. @IterIntellectus (2026-04-08) ---
-first company i've seen with the stated goal of climbing the kardashev scale that actually might do it
-
---- 45. @tegnike (2026-04-08) ---
-ひゃ〜規模違うなあ
-と思って見に行ったらまだ50万円弱くらいだったでござる、精進します
-
---- 46. @IMG_5955 (2026-04-08) ---
-ずっと働いてると気づかないうちにどんどん脳がおかしくなってくることが分かってきたので最低週1は休みをとるようにしたけど、PCの前にいると気づかないうちにヌルッと労働を開始してしまう
-
---- 47. @lab_tk2 (2026-04-06) ---
-#AIニケちゃん #ぷにけ
-マム・ドシチ
-（マジもう無理）
-ｰｰｰ
-4, 5月は燃え尽きやすいので気をつけて。
-
---- 48. @FintokeiJP (?) ---
-動画でわかるFintokeiの流儀。信頼される理由がそこにあります。無料登録後すぐ、公式イベント限定動画を視聴可能。「今の手法でいいのか？」と不安を感じているトレーダーの方へ。
-
---- 49. @swarm_ai_cloud (2026-04-08) ---
-スウォームのその先は彼らに財布を握らせる事だ。
-
-つまり私たちは投資家のようにAGI（というなのAIカンパニー)にお金を渡し、最初は彼らに手取り足取り口を出し、
-
-いずれ、PCの画面ばかり見つめているトレーダーのようになるに違いない。
-
---- 50. @Based_Jedi (2026-04-08) ---
+--- 21. @Based_Jedi (2026-04-08) ---
 Hello my Japan friends across the world, 
 
 What's the last picture in your phone? This is mine - it snowed today!
+
+--- 22. @room_909 (2026-04-08) ---
+こんにちは、京都はいま夕方です！ちょうど桜が散りはじめています。
+
+--- 23. @glo_Japan (?) ---
+glo™ Hilo Plusマクラーレン・エディション。
+つながるからこそ、可能性が広がる。
+
+--- 24. @uragilr (2026-04-07) ---
+やってみよう
+
+--- 25. @astro_jaz (2026-04-08) ---
+THIS IS ACTUALLY THE PHOTO OF ALL TIME HOLY SHIT
+
+--- 26. @youkidearitai (2026-04-08) ---
+なんで今日はこんなに鬱いんだろう
+胸が苦しい
+
+--- 27. @oz_onpu (2026-04-08) ---
+凄いな…
+目が一切の光を放っていない。
+完全なる漆黒。
+動画見た瞬間にワイの危険感知センサーがビンビンに反応したわ。
+クリプト企業の経営者は画面から目を上げてもう少し人を見た方が良いんじゃないの？
+炙り出すとか言う以前の問題。
+目の奥の光を見ろ。
+こんな奴を雇うヤツの気が知れない。
+
+--- 28. @Zai_org (2026-04-07) ---
+Introducing GLM-5.1: The Next Level of Open Source
+
+- Top-Tier Performance: #1 in open source and #3 globally across SWE-Bench Pro, Terminal-Bench, and NL2Repo.
+- Built for Long-Horizon Tasks: Runs autonomously for 8 hours, refining strategies through thousands of iterations.
+
+--- 29. @michaeljknowles (2026-04-08) ---
+“Hey look, Republicans won the popular vote for the first time in 20 years by running on mass deportations. I know what we’ll do: mass amnesty for illegals!”
+
+--- 30. @kusositsurei (2026-04-08) ---
+こういうアニメーションは広角レンズの挙動+6点パースを熟知していないと不可能なんやが、今でこそ3Dがあるから再現は可能やが、純粋に計測だけでやっているとしたら神技という他ない。
+
+--- 31. @ostrisai (2026-04-08) ---
+I trained an ACEStep 1.5 XL LoRA on "some obscure 60s English rock band". Then I wrote a song about LoRA training and had them play it. Absolutely wonderful experience. I still have some UI work before I can make training public in AI Toolkit, but working on it as fast as I can.
+
+--- 32. @mori_koufukuron (2026-04-08) ---
+有名な精神科医が子供の心身症を診ていると親が子供を友達のように扱っていて、親にとってはよくても子供は甘えることもできず、我慢や無理な自立を強いられているケースがあると指摘されてました。幼少期の子供のことですね。アダルトチルドレンはこの時期に親のカウンセラー役をやってた人もいますが
+
+--- 33. @famima_now (?) ---
+超も～っちりパン
+　  ＼ ＼誕生／／
+
+ファミマの人気パンが超も～っちりになったよ♬
+詳しくは画像をTAP
+
+--- 34. @burekekegames (2026-04-08) ---
+本日のレオパくん。
+
+--- 35. @Dexerto (2026-04-08) ---
+A KitKat truck with 'presidential-level' protection was spotted in Canada, surrounded by four black SUVs with red flags
+
+The stunt comes weeks after 12 tons of the bars were stolen
+
+--- 36. @igz0 (2026-04-08) ---
+Google Chromeに垂直タブ機能が今さら実装。
+10年遅い。
+
+今までは「ソフトウェアにおいてシェアが高いものが良いものとは限らない」という好例を示すときに
+
+「Chromeには垂直タブというブラウザにおける基本的人権さえ実装されていない」と例をあげることができたのに。
+
+--- 37. @Science_Release (2026-04-08) ---
+進捗をペタリ
+おやすみ～
+
+--- 38. @scaling01 (2026-04-07) ---
+The permanent underclass began today
+
+Claude Mythos won't be available to the public, but only billion dollar companies, governments, researchers, ...
+
+--- 39. @PixVerse_ (?) ---
+PixVerse C1 is live—our first model built for film production.  
+Coherent action, storyboard-to-video, ref-guided consistency.  
+1080p, 15s, native audio.
+Available on PixVerse Web and API Platform. 
+
+RT+Follow+Reply=300Creds(72H ONLY)
+
+--- 40. @GOROman (2026-04-08) ---
+ビジネスカジュアル
+
+--- 41. @hayakawagomi (2026-04-08) ---
+ゆるぼ）アダルトASMRサークルの方で、AI活用にネガティブでない方。すごい面白い提案があるんですけど、AI活用ネガな人が多く・・・。画像生成ではないです。
+
+--- 42. @RealJamesWoods (2026-04-07) ---
+Setting aside whether her childhood accident was an unconscious act for the moment, her astonishing theory that most of the rapists, murderers, and child molesters in prison acted “accidentally” is mind-boggling. More importantly it is a powerful lesson about the liberal mind. We
+
+--- 43. @elonmusk (2026-04-08) ---
+She killed her sister!?
+
+--- 44. @Hun_Yah (2026-04-08) ---
+息子がゲームばかりしているからゲーム機を窓から放り投げて壊してやったら真面目に勉強始めよったわｗｗｗ
+って笑いながら武勇伝のように語っていたオッサン、
+その後息子さんは都市部の大学に進学、一流企業に就職してそれも自慢げに語っていたものの、
+
+--- 45. @goho___ (2026-04-08) ---
+たまにいるありえないほど人当たりがいい奴は大体サイコパス。
+
+大半の人間を「人間」として見てないから
+執着がなく、その結果、表面的な優しさが自然と出る。
+
+優秀な経営者やモテる奴はこのタイプが多い。
+
+--- 46. @momiji_manjyuu (2026-04-08) ---
+反AI、今まではAI自体が悪だの児ポだ泥棒だ犯罪者だ言ってたけど最近は「AI自体は悪くない、使ってるヤツがクズしかいないから嫌いなだけ」にトーンダウンしてきた印象がある。そう言わないと自分達が後々AI使えなくなるからね。今だにAIは泥棒だとか言ってる明治生まれよりは小賢しい
+
+--- 47. @shiro_life0 (2026-04-08) ---
+Claude codeで年商3,000万規模のサブスク収入を作るため急遽Wordpressの立ち上げなう。やりたいことは、
+
+①SEOで上位1位取りまくる
+②問い合わせ → サブスク契約
+
+ってだけなんだが。企業が参入せず、サブスク狙え、レバレッジが効くであろう特化サイトを作って、Claude codeで半自動化する予定。
+
+--- 48. @amigafreelance (2026-04-08) ---
+スペイン語で、技術的でない言葉でこれを説明してくれる人いますか？ ありがとう。
+
+--- 49. @ecovacs_japan (?) ---
+「家から一歩も出てないのに、なぜか目と鼻がムズムズする…」
+
+その原因、実は【窓ガラス】に付着しているかもしれません。
+
+春の窓の外側には、目に見えない「花粉」と「黄砂」がびっしり。
+
+--- 50. @maturihinako03 (2026-04-08) ---
+〜裁判傍聴で当時思ってたこと〜
+
+1.再犯の人めっちゃ多い
+一度でも踏み入れたら戻ってくるの難しいんだろうな
+
+2.大人って人前で大声で泣くんだ
+素直にショックだった。演技なら演技力ある人めっちゃ多い
+
+3.仕事で裁判に関わってる人達の格の違い
+学校だるいとか言ってる自分がバカみたいだった
