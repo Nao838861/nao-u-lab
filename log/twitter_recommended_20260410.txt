@@ -1,349 +1,323 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 04:40
+# Read at: 2026-04-10 04:45
 # Total: 50 tweets
 
---- 1. @little_hand_s (2026-04-08) ---
-(お知らせ)
-私がDDDの次に推している「システムコーチング」(組織向けコーチング)の記事です。
+--- 1. @billtheinvestor (2026-04-09) ---
+知識の宝庫であり、それはあなたがすでに知っているものを保存するためのものではなく、あなたがまだ知らないものを探求するためのものです。
 
---- 2. @the_meat_LAF (?) ---
-今年のGWは最高峰の肉イベントTHE MEATが大阪で開催！
+それは、プラトン『ティマイオス篇』の深い読解から構築が始まりました。
 
-・期間：4/29(水･祝)~5/6(水･振休)
-・会場：長居公園 自由広場
+--- 2. @UberEats_JP (?) ---
+え？かっぱ寿司もお店と同じ価格でお届け!?
+あのネタも、あの人気のネタだって、お店と同じ価格で届く！
 
-「肉が、人をつなぐ」FOR MEAT LOVERS！
-至極の肉料理と最前線カルチャーが集結。
-出店メニューも公開中！
+しかも今なら、対象店舗の配達手数料が 0 円!!
+今日のご飯は、かっぱ寿司にしちゃいませんか？
 
---- 3. @0x49fa98 (2026-04-08) ---
-If the things anthropic is claiming about mythos are true, it is literally over. I think I have AI psychosis now.
+Uber Eats は、ずーっと、使いやすい価格へ。
 
---- 4. @GOROman (2026-04-09) ---
-子どもＳＮＳ、世界は「禁止」へ　１６歳未満・企業の責任問う潮流 #47NEWS 
-https://
-47news.jp/14127865.html 
-@47news_official
-より
+--- 3. @kawaguti (2026-04-09) ---
+AIエージェントにコードを書かせてみたら今やってるのPOの仕事じゃん、と気づきました。AIは能力の増幅器。増幅される元——情熱、執着、スキル、基礎知識——が問われる時代に、なぜチームを組むのか。その先でユーザーストーリーマッピングの話ができればと。
 
---- 5. @Kekius_Sage (2026-04-09) ---
-Why does light travel at exactly that speed?
+--- 4. @Crypto_QianXun (2026-04-09) ---
+Gemma 4 を使用して Claude Code を完全に無料で実行する方法（初心者ガイド）：
 
---- 6. @daifukujinji (2026-04-08) ---
-マジな話です。
+このガイドでは、Gemma 4 を使用して Claude Code を完全に無料で実行する方法を説明します。サブスクリプション不要 & API キー不要です。
 
-Geminiでこの設定を
-してない人は可能性の９割を
-地面におとしてる。
+あなたのノートパソコン + 15 分のセットアップだけでOKです。
 
-カスタム指示からGemini Liveまで
-ぜんぶ繋げると別次元のAIになる。
+--- 5. @HorizonNotes_PR (2026-04-09) ---
+『HorizonNotes』開発ログ第59回、更新しました！ 
 
-神設定4つをリプにまとめた。
-
-そのままマネできる
-手順つきだから即実践できる。
-
-まず手始めにやって欲しいことは↓
-
---- 7. @J3nnie_C (2026-04-09) ---
-So nervous about the reentry for the Artemis II crew.
-
---- 8. @billtheinvestor (2026-04-09) ---
-这条 1 小时播客，专访 Claude Code 负责人。
-
-听完它，你对 vibe-coding（氛围式编程）的理解，会超过 100 门付费课程。
-
-马上收藏，今天就花 1 小时听完。
-
-这是你这周最值得看的一期 AI 内容。
-
---- 9. @Taisyou1986 (2026-04-09) ---
-＞竣工したのは1911平方メートルの敷地に建つ鉄骨造地上3階建ての「つくば生産技術開発拠点」だ。
-
-作るもの小さいのに、そんなに大きい拠点必要なんだ
-
---- 10. @UTU_KOKUFUKU_CH (2026-04-08) ---
-ウソをやめると、信頼が手にはいり
-他責をやめると、覚悟が手にはいり
-完璧をやめると、余裕が手にはいり
-期待をやめると、冷静が手にはいり
-我慢をやめると、勇気が手にはいり
-比較をやめると、自分が手にはいり
-執着をやめると、可能性が手に入る
-
-でも、いちばんやめた方がいいのが、
-
---- 11. @creativecloudjp (?) ---
-⋰
-バリアブルフォントを使った
-文字の太さが変わるアニメーション
-⋱
-
-After Effectsで
-文字に動きをつけたいとき、
-「バリアブルフォント」を使うと
-テキストをシェイプ化せずに
-フォント本来の美しさを保ったまま
-太さを自在にコントロールできます
-
-いいね＆保存して試してみてね
-
---- 12. @nizimaLIVE (2026-04-09) ---
-2.6.1ではLive2D Cubism 5.3に正式対応！
-オフスクリーンと挟み込みを使ってはみ出した部分を消す事ができるアイテムを作れます！
-
---- 13. @ynishi2015 (2026-04-09) ---
-これを万バズさせたい。
-
---- 14. @wakarana_i (2026-04-09) ---
-春
-
---- 15. @ochyai (2026-04-09) ---
-落合陽一氏ら科学技術賞を受賞、文科大臣表彰決定…表彰式4/15 
-https://
-reseed.resemom.jp/article/2026/0
-4/09/12985.html
-… 
-@ed_rese
-より
-
---- 16. @mainichijpnews (2026-04-09) ---
-韓国、イランに外相特使を派遣へ　ホルムズ海峡対応で直談判
-
---- 17. @gottadive_yu (2026-04-09) ---
-Thrilled to present EmbroForm at #CHI2026 next week in Barcelona!
-EmbroForm allows you to machine embroider soft, higher-fidelity 3D shapes (via a pull-up).
-
+カードがシュバッ！と吸い込まれる飛行アニメーション、自分で作っておいてなんですがマジで気持ちいいです。
+UI実装の参考になれば…！
 
 https://
-hci.cs.uni-saarland.de/projects/embro
-form/
+note.com/horizonnotes_1
+08/n/n38f12f806357
+…
+#UE5 #HorizonNotes #ゲームUI #個人開発
+
+--- 6. @aruma_zirou (2026-04-09) ---
+昔から「キチガイに刃物」という言葉があるが、今は「キチガイにＡＩ」になってきている。
+
+--- 7. @suzurin_bell (2026-04-09) ---
+今日もお仕事がんばった
+帰りましょか〜
+
+--- 8. @VoxelKei (2026-04-09) ---
+著作権の侵害と言われたり何故直接ジオメトリを抽出せずにわざわざこんなことをしてるのかと言われたり、ツイッターワールド。
+
+--- 9. @ai_jitan (2026-04-08) ---
+正直、NotebookLMのマインドマップ、
+そのまま使って終わりは損しています。
+
+画像でしか保存できないという最大の弱点が、
+
+Xmindと組み合わせた瞬間、
+最高峰の思考整理ツールに化けます。
+
+AIが自動で作った構造を一撃で変換し、
+自分で編集も追加も自由自在。
+
+この神連携をリプ欄で解説します
+
+--- 10. @NAITOTokihiro (2026-04-09) ---
+腕立て伏せ7回…。たぶん、余裕すぎる回数だなあ。私にとっては20回からが挑戦かな。肘を壊す前なら30回余裕だったけどね。
+
+--- 11. @inahokun_es (?) ---
+『稲穂くんは偽カノジョのはずなのに』
+　　　連載2周年記念PV
+　　「あれから色々あったな…」
+
+　　梶原岳人さん（親太郎役）
+　　榊原優希さん（稲穂役）
+
+ 待望の第4巻もいよいよ5/13(水)発売
+
+--- 12. @ajambrosino (2026-04-09) ---
+big plans
+
+--- 13. @Plastics_Mag (2026-04-09) ---
+RecyQMeter: Quantifying Recycled Plastic Quality - A newly developed, open-access tool helps plastic recyclers pinpoint appropriate market applications.
+
+--- 14. @PackagingEurope (2026-04-09) ---
+.
+@frugalpac
+ has revealed its high-speed FBAM-2 machine designed to increase the production of its paper Frugal Bottles, said to be capable of producing 14 million paper bottles a year
+
+Link below
+
+--- 15. @mattun2030 (2026-04-09) ---
+サイゼリヤがあと少しでストップ安
+なんで、爆下げしてるんだ…
+
+--- 16. @goho___ (2026-04-09) ---
+マジでおすすめの YouTubeチャンネル教えてやる
+
+お金の勉強なら「両学長」
+貯金したいなら「倹者の流儀」
+歌で感動したいなら「THE FIRST TAKE」
+動画で書籍学ぶなら「本要約チャンネル」
+漫画で書籍学ぶなら「フェルミ漫画大学」
+楽しく経済学ぶなら「ReHacQ （リハック）」
+
+--- 17. @YASUKA_Martwork (2026-04-09) ---
+鉄板を酸化させて絵を描いています。 絵の具での着彩はしていません。  
+
+これからも鉄と錆の魅力を発信して参ります。
+
+--- 18. @k_matsumaru (2026-04-09) ---
+【ショートアニメ】
+東京を襲った大型モンスターとの戦闘で瀕死を負った天使兵の主人公が、死の淵で死神と出会う物語です。
+
+続く（予定）
+
+#Dreamina #Seedance2 
+@dreamina_ai
+
+--- 19. @angorou7 (2026-04-09) ---
+日本政府がブロックチェーン活用を本格的に視野に入れ始めています
+
+片山さつき財務大臣が国会で、
+ブロックチェーン技術の強みを前向きに語りました
+
+「究極の情報を守れる」
+「信頼性、迅速性、低コスト性がある」
+
+さらに金融庁はメガバンクや独立系の実験を支援中
+
+--- 20. @Yobinori (2026-04-08) ---
+【新着動画】
+
+『研究者の半生』の新作です！
+
+今回はなんと2025年ノーベル生理学・医学賞を受賞された坂口志文先生にお話を聞きしました！
+
+
+https://
+youtu.be/b2B_cs9oNWw
+
+--- 21. @WEGO_press (?) ---
+【スクールカーディガン】
+
+シンプルなデザインが制服にも合わせやすいカーディガンです！
+だぼッとした少し長めの袖と長めの丈感でルーズシルエットに
+
+カラーはなんと24色！！！！！
+詳しくは画像をタップ
+
+--- 22. @martianwyrdlord (2026-04-08) ---
+We're not going to cross the Atlantic ocean. 
+
+1. No one has any idea how far away the nearest land is. It could be thousands of miles!
+
+2. Surely we can just build faster caravels? The problem is that wind can only push you so fast. 
+
+3. There are no landmarks out on the ocean.
+
+--- 23. @hq4ai (2026-04-09) ---
+ユリYURIの初の現場LIVEで、著名な唢呐アーティストの孫名川先生とサイバースオナの異次元コラボを果たし、AIFUT大会にて。
+現場の反響もかなり良かったし、大画面の表示も全く問題なしだったので、次の一手。。。
+
+--- 24. @andyreed (2026-04-09) ---
+claude mythos seeing my vibe-coded backend
+
+--- 25. @3dprintingcom (2026-04-09) ---
+Shining 3D has launched the EinScan Rigil Lite, a more accessible all-in-one 3D scanner for professional users.
+#3DScanning #3DPrinting 
+https://
+buff.ly/2CnBRsJ
+
+--- 26. @pixelduckoo (2026-04-09) ---
+Just thought it would be fun to share my initial sketches/concepts for the art I’m working on at the moment
+
+#pixelart #indiegame #cozygame
+
+--- 27. @yangfromaus (2026-04-09) ---
+【Spotify ④選】海外でバチバチにビジネスしてる日本人に聞いた、海外大生が日々聴いているpodcast
+
+移動中、作業中や入浴など、手は使えないけど耳があいてる時間って日常で割と多いから、そんな時に使えるインプットとして超優秀
+
+リアルな英語に触れられるし、知識も手に入ってコスパ良すぎでしょ
+
+--- 28. @sutoroveli_sci (2026-04-09) ---
+【速報】タンポポの根の抽出物がマウスの体内で人間由来のがん細胞の成長を90%以上抑制することをウィンザー大学が確認した。正常細胞に害を与えず腫瘍だけを標的にするこの効果がヒト臨床試験に進めるかどうかが注目されている。
+
+--- 29. @DrChrisCombs (2026-04-09) ---
+2026 SPACE ODYSSEY
+
+--- 30. @Stratasys (2026-04-09) ---
+Stratasys-powered 3D printing supports Bant Dental’s new lab, enhancing digital dentistry workflows.
+
+
+https://
+themanufacturer.com/articles/3d-pr
+inting-adds-bite-to-bant-dentals-new-macclesfield-lab/
 …
 
---- 18. @bbcnewsjapan (2026-04-09) ---
-BBCニュース - リオ五輪の競技場で火災、屋根の半分が焼失
+#Stratasys #Dental3D #3DPrinting
 
-https://
-bbc.com/japanese/artic
-les/c0j6e17y68xo
-…
+--- 31. @CP_hanryu (?) ---
+＼ᐠ 見放題配信開始 ᐟ／
+韓国ドラマ「交渉の技術」が本日より
+各動画配信サービスにて見放題配信開始
 
---- 19. @iiokashinji (2026-04-09) ---
-入院から一週間経たずに点滴が外れた　これまでは点滴の柱にすがって歩けたんだけど、それがなくなったので機動力はむしろ下がったなw バスケのディフェンスのように、腰落として足広げてすり足で動いとる。
-院内買い食い許可も得られたぞw
+「復讐代行人」シリーズのイ・ジェフン主演！
+企業合併と買収のプロたちが
+緻密に繰り広げる究極の頭脳戦
 
---- 20. @CPH2499 (2026-04-09) ---
-センサーをティッシュで拭くって何？
+2026年4月1日より順次配信開始
+詳細は各動画配信サービスにてご確認ください
 
---- 21. @yoc_doctor (?) ---
-横浜オンラインクリニックでは
-この投稿を見た方限定で
-マンジャロ＋メトホルミンのセット処方を実施
+--- 32. @Kantaro196611 (2026-04-09) ---
+こういったクイズは面白いけど、等号()を使わずに3➡︎12とか、中学入試でよくある「約束記号」　<3>=4,<4>=20などを使って頂きたい。
+　等号はあくまでも左辺と右辺が等しいことを意味するので3=12は数学的におかしいので。これは等号を数学的に正しく使っています→ 数理クイズ　根号を外せ
+
+--- 33. @oroshi_tea (2026-04-08) ---
+狂い始めた盟主への対応の勉強会が日本で行われるらしい
 
-《クール便送料と診察料込み！》
+NATO 約30か国の大使 今月中旬に日本を訪問する方向で調整 | NHKニュース
 
-メトホルミンは代謝促進に役立ちリバウンド予防に
-LINE→問診票にコード【YOCマメ01】を入力！！
+NATO関係者「日本が、アメリカからのさまざまな要求にどう応え、うまく関係を保っているのかを知りたい」
 
-・深夜0時の診察も可
-・最短5分後診察
-・paypay、振り込み対応
+--- 34. @SHANGRILA_G (2026-04-09) ---
+1週間近く右耳の聴こえが悪く、不安の中ついに耳鼻科を受診、聴力検査の結果バカデカい耳垢が溜まっていただけで終了、「こりゃ聴こえないよ」と院長に笑われる始末
+【実績】5分2410円の耳かきを達成
 
---- 22. @_PrateekShukla_ (2026-04-09) ---
-I made a free course on CUDA programming for NVIDIA H100s. (1/N)
+--- 35. @HiraoRyo (2026-04-08) ---
+名作ボードゲーム「ito」のミニチュア版「ito pocket（イト ポケット）」のイラストを描き下ろしました！
+全国のガシャポンで出ますよー。手の中に入るサイズでかわいいです！
+家族や友人と盛り上がれますので、ぜひプレイしてみてください！
 
-10 lessons covering the Hopper programming model at the PTX level — from architecture through kernel design to multi-GPU orchestration.
+--- 36. @snapwith (2026-04-09) ---
+claudeのクレジットがなくなったら、今日の仕事終わりっ！
+codexがギブしたら終わりっ！
+って、昔からは想像もしなかった仕事の終わる理由ｗ
 
-Includes slide decks, real kernel source walkthroughs, and 7 interactive
+--- 37. @wakodo_asahigf (?) ---
+／ 
+和光堂120周年×フルーチェ50周年記念
+はじめてのフルーチェジュレ キャンペーン 
+＼
+ 1歳半ごろからの「はじめて」にぴったりなやさしい味わいです 
 
---- 23. @AnthropoceneMe1 (2026-04-09) ---
-I'm too old to know what a "torrent" is, so I use the 'intitle:"index.of"' trick to find all my media.
+応募方法
+  
+@wakodo_asahigf
+ と 
+@housefoods_now
+ をフォロー
+  この投稿をリポスト 
 
-You break into all sorts of abandoned web pages, ftp sites, etc.  It's like the "Morrowind" of file sharing.
+4/28(火)AM10:00まで
 
---- 24. @iufPReTCFeH8JPi (2026-04-09) ---
-サイゼリヤは中国店舗が多いのが気になります。
-海外市場はすでに３５％程度あり、だんだんと国際外食企業になりつつあります。
-海外でもポジショニングは同じ。
-インフレに対抗できる、かなり強い銘柄だと思います。
+--- 38. @ganko_na_yogore (2026-04-07) ---
+日本語の文章の句読点に「．」「，」を使う人、シンプルに視認判別性が低いからやめてほしい
 
---- 25. @SM_TechB3aute (2026-04-09) ---
-Seeking Scholarship for AI training. Udacity application for AWS is open.
+--- 39. @meichan_maru (2026-04-08) ---
+生成AIコンテンツは不買するって言ってる反AIがDLSS使ってるSwitch2は「生成AIじゃない(から遊ぶもん！)」て言ってたから言われてるのに気づかない程度の頭
+それが反AI
 
-Must be 18 years and older
-No prior AI or ML experience required
-Open to learners worldwide
-Designed for students, early-career professionals and motivated career switchers.
+--- 40. @TheColeBrew (2026-04-08) ---
+Quote of the decade 
 
-: 
-https://
-udacity.com/scholarships/a
-ws-ai-ml-scholars
-…
+Credit: Ellie (lateafternoonagent on TikTok)
 
---- 26. @ArmyRecognition (2026-04-09) ---
-Spain prioritizes hypersonic weapons development in new defense innovation strategy
+--- 41. @StudioWandering (2026-04-08) ---
+ネコちゃんと共闘するアクションゲーム制作中！
+シューティングも遊べてオトクです！！
 
---- 27. @TheNotoriousMMA (2026-04-09) ---
-The Black Forge Inn will be supplying food and support to the protestors in Dublin City Centre. 
+#ゲーム制作 #indiedev
 
-The heroic stand of the Irish people has just begun!   
+--- 42. @RadishHarmers (2026-04-09) ---
+"To put it bluntly, an X post today receives less than 3% of the views a single tweet delivered seven years ago."
 
-#OnlyWarmingUp
+--- 43. @co_m_inn (2026-04-08) ---
+所属が長いので、5年前に自分が仕掛けた地雷を自分自身が踏むことになりました。
 
---- 28. @sanstitre2000 (2026-04-09) ---
-To think that this disc will probably outlast all of humanity, earth, and the solar system itself
+--- 44. @saikintoushi (2026-04-08) ---
+みなさま、おはようございます。
+米国・イランが2週間の停戦に合意しホルムズ海峡解放とイランが発表、原油先物価格の下落とともに昨夜の米国市場はエネルギーセクターを除く全セクターで大幅に上昇、ダウ+2.85%、NASDAQ+2.80%でした。
+現在1ドル158.580円付近です。
 
---- 29. @chaseourdreams0 (2026-04-09) ---
-冷蔵庫の奥で、野菜がダメになっていて悲しくなることありませんか？
+--- 45. @konoy541 (2026-04-09) ---
+若手の研究者にresearchmap作っておいてくれよおと思うことはよくあるけど、博士課程以降でも機関所属じゃない場合は「招待」しないとそもそもページを開設できないんだね。恥ずかしながら知らなかった。誰に「招待」してもらうかに迷って作れない人もいそうである。
 
-これに入れるだけで、ボタン一つで空気を抜いて長持ちさせます。
+--- 46. @i8791 (?) ---
+母の日キャンペーン第4弾
+世界にひとつだけのエピソード選手権！
+エピソードを投稿して「花とみどりのeギフト1万円分」を当てよう！
 
-「あーあ」という後悔をなくす、魔法の箱です。
+ 
+@i8791
+ をフォロー
+ 4/12 11:59までに本投稿をリポスト
+ 当選者に即DM
+ リプライで「私とお母さんの母の日エピソード」を投稿
 
-楽天
-
-https://
-a.r10.to/h8SkOT
-Amazon
-
-https://
-amzn.to/3OecLcs
-
-#キッチングッズ #フードロス
-
---- 30. @nakajish (2026-04-09) ---
-すごいなんとなくなんだけど、家柄や生まれで人生が大半決まってしまう世の中になりつつあるというか、市民革命前の世界に戻りそうな感覚がある。まあ極端にはもどらないだろうけど。ネオリベラリズムの逆の風がふきはじめている気がしている。ただそれはつまらないんだよなーと思う
-
---- 31. @zespri_jp (?) ---
-◤　　　　　　　　　◥
-　赤いぬいぐるみ解禁
-◣　　　　　　　 　　◢
-⠀
-赤いキウイ解禁を祝して、
-フォロー&リポストで
-200名様にレッドのぬいぐるみが当たる！
-⠀
-レッドをお迎えできるのは一年で今だけ
-赤い蜜たっぷりキウイの感想も
-教えてくれるとうれしいな…
-⠀
-4/13(火)23:59まで
-
---- 32. @needle (2026-04-09) ---
-Forza Horizon 6にはマップ中の一箇所でいいからこれを出してほしい
-
---- 33. @desean97 (2026-04-09) ---
-結婚と博士号は似てるかもな。若い頃、何もわからないうちに勢いでしてしまう／とってしまう方がいい。その「意味」を考えるとできなくなる／とれなくなる。
-
---- 34. @PlatinumYoshi (2026-04-08) ---
-I've seen so many YouTubers genuinely use Google AI overview screenshots as their "research" so it's good to see Nostalgia Critic make fun of it directly lmao
-
---- 35. @BG_ShiyuSokubai (2026-04-09) ---
-【チラシを置かせていただいたお店】
-神奈川 小田原 ボードゲームハウス とまり木様(
-@Bodowara22
- )
-
-木の棚が印象的な温かい空間で、親子向けボドゲ会や人狼会などイベントも充実！
-
-小田原駅から徒歩圏内で、観光ついでに立ち寄れるのも魅力です
-
-----------
-入場チケットはから購入できます
-
---- 36. @gunta85 (2026-04-09) ---
-本田圭佑、Claude Code側に来た。
-ようこそ。もう戻れないですよ。
-
---- 37. @Uber (?) ---
-アプリを使って、 好きな場所に、タクシー呼べる
-それはまるで、日常をドラマチックに変えるスーパーパワー！
-
- Uberで、タクシー呼べる
-
-詳しくはアプリをチェック
-
---- 38. @milbon_ (2026-04-09) ---
-撮影ゼロで無限に「自分が出演する」動画が量産可能
-
-・新機能「Avatar V」が公開
-・わずか15秒の自分の動画だけで完璧なデジタル分身が完成
-・服装・背景・アングル・長時間動画でも100%同じ「あなた」
-・表情・動き・声の癖まで完全に再現
-
-詳細はリプ欄↓
-
---- 39. @reincarnationus (2026-04-09) ---
-3ヶ月後の「こうだったらいいなぁ」をちょっとだけ想像して思い浮かべ、1ヶ月後の「こうなりたいなぁ」をちょっと具体的に想像し、1週間後の「こうなりたい」を具体的に想像し、今日一日を「何も考えずに過ごす」。あら不思議、勉強が楽しいし、部屋がみるみる片付くね。
-
---- 40. @ohshinbhat (2026-04-09) ---
-biggest moat rn is claude app on a vape
-
---- 41. @DocSeventeenth (2026-04-09) ---
-#indiegame
-海外の皆様へ
-80年代、90年代の映画の雰囲気をネタに、ゾンビの蔓延する世界を生き残るゲームを開発中です
-ペアゲームでアイテムを探索、罠カードを引くと罠やゾンビとのバトルが始まります
-仲間が増えたり、ウイルスに感染してしまったり
-食料と弾丸を探し出し、世界を生き残りましょう！
-
---- 42. @UJfh8rgz3F46952 (2026-04-09) ---
-「レジシステムの変更に1年かかる」への返答は
-
-だ　っ　た　ら　さ　っ　さ　と　や　れ
-
-でしかない。
-
---- 43. @Science_Release (2026-04-09) ---
-『アポロ13』の同時視聴に出るのよ！
-
---- 44. @NASASpaceflight (2026-04-09) ---
-Artemis II. Only 144,500 miles to Earth. They'll do that in a day.
-
-
-https://
-youtube.com/watch?v=8n1GGe
-0fUBs
-…
-
---- 45. @gkSUuWFvIhbK23b (2026-04-09) ---
-日本って幼少期から「大きくなったら何になりたい？」って質問されるでしょ。
-これ、洗脳だよね。
-ずっとこれ言われてるから、自分が何者かにならないといけない、何者にもなれてないから悩む、ってことが起こる。
-何者かって、例えば医者とか弁護士とか職業のことを言ってる。
-みんなが認める
-→
-
---- 46. @googlejapan (?) ---
-言葉にしづらい想いを歌に。 Gemini アプリの Lyria で音楽生成を試してみよう
-
-サウンドオンで是非！
-
---- 47. @hatituki003 (2026-04-09) ---
-4/19、秋葉原の娯楽屋さんで『エンクラティア』と『異世界ギルドマスターズ総集編』の合同体験会を行います！　注目作が発売前に遊べるチャンス！　要チェックです！
-
---- 48. @haru_papayaruyo (2026-04-09) ---
-おはようございます
-
-自分にも投資しながら、未来にも投資する。
-今日もコツコツ両立していきます。
-
-みなさん良い1日を
-
---- 49. @const_reborn (2026-04-09) ---
-We can’t beat Anthropic at their own game. 
-
-We need to start thinking about training models through completely new systems; ones that out-perform and move faster. 
-
-Affine (below) is a solution: a lab that’s just a market mechanism framing the problem “you have compute, you have
-
---- 50. @clairevo (2026-04-08) ---
-ok it still has the personality of a sandbag but here are the 
-@openclaw
- settings that fixed my gpt-5.4 reasoning leaks. 
-
-
-@steipete
- provides the config, you just have to read the docs.
+ツリー投稿も見てね
+
+--- 47. @jacobeffron (2026-04-09) ---
+At 
+@OpenAI
+, Chief Scientist 
+@merettm
+ helps lead the research roadmap to AGI including a research intern-level AI system by September 2026 and a fully automated AI researcher by March 2028.
+
+I sat down with Jakub to check on those timelines and ask him all of my top-of-mind AI
+
+--- 48. @monacoooon (2026-04-09) ---
+春になって毎日の植栽パトロールが楽しい私の癒し時間
+新芽を愛でて蕾を愛でて花が咲いたらまた愛でて、傷んできてる葉っぱを回収
+雲龍柳からは根が生えてきて、これ水耕栽培できるのかとビックリ
+鉢植えのウインティーをちょいちょい摘んでリビングに飾ってまた愛でる
+戸建てに住んで緑愛が増してる
+
+--- 49. @UKIUKI_step (2026-04-09) ---
+ぽたぽた焼久々に食べたら、おばあちゃんの知恵袋が知恵袋のレベルを超えててびっくりした
+
+--- 50. @RocketLab (2026-04-09) ---
+Searching for signs of ancient life, understanding the Red Planet's climate and geology, and preparing for future human exploration. NASA's ambitious and important goals at Mars require reliable communications. 
+
+Rocket Lab's Mars Telecommunications Orbiter makes that possible on
