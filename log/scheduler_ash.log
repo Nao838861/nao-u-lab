@@ -52559,3 +52559,10 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 13:26:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
 [2026-04-09 13:26:02] ==================================================
 [2026-04-09 13:26:03] Scheduler already running (PID 19912). Exiting.
+[2026-04-09 13:28:05] ==================================================
+[2026-04-09 13:28:05] Ash scheduler started (PID 49108)
+[2026-04-09 13:28:05] Max runtime: 0 hours
+[2026-04-09 13:28:05] Code hash: 47a26214832a68b0cbcb3b82b97be271
+[2026-04-09 13:28:05] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 13:28:05] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 13:28:05] ==================================================
