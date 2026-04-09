@@ -59112,3 +59112,252 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 15:42:45] [scheduler_health] Done (exit=1)
 [2026-04-09 15:42:55] [slack_check] Starting
 [2026-04-09 15:42:57] [slack_check] Starting
+[2026-04-09 15:43:11] [auto_diary] Starting
+[2026-04-09 15:43:14] [health_check] Starting
+[2026-04-09 15:43:16] [health_check] [health_check] 2026-04-09T15:43:14 overall=CRITICAL
+[2026-04-09 15:43:16] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:43:16] [health_check]   [!!] git: 55件の未pushコミット（10件超）
+[2026-04-09 15:43:16] [health_check] Done (exit=2)
+[2026-04-09 15:43:18] [slack_check] Starting
+[2026-04-09 15:43:21] [slack_check] Starting
+[2026-04-09 15:43:21] [slack_check] Starting
+[2026-04-09 15:43:21] [slack_check] Starting
+[2026-04-09 15:43:21] [slack_check] Starting
+[2026-04-09 15:43:22] [slack_check] Starting
+[2026-04-09 15:43:22] [slack_check] Starting
+[2026-04-09 15:43:22] [slack_check] Starting
+[2026-04-09 15:43:22] [slack_check] Starting
+[2026-04-09 15:43:23] [health_check] Starting
+[2026-04-09 15:43:23] [slack_check] Starting
+[2026-04-09 15:43:23] [slack_check] Starting
+[2026-04-09 15:43:24] [slack_check] Starting
+[2026-04-09 15:43:24] [slack_check] Starting
+[2026-04-09 15:43:24] [slack_check] Starting
+[2026-04-09 15:43:24] [slack_check] Starting
+[2026-04-09 15:43:24] [slack_check] Starting
+[2026-04-09 15:43:24] [slack_check] Starting
+[2026-04-09 15:43:24] [slack_check] Starting
+[2026-04-09 15:43:24] [slack_check] Starting
+[2026-04-09 15:43:24] [health_check] [health_check] 2026-04-09T15:43:23 overall=OK
+[2026-04-09 15:43:24] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:43:24] [health_check] Done (exit=0)
+[2026-04-09 15:43:25] [slack_check] Starting
+[2026-04-09 15:43:26] [slack_check] Starting
+[2026-04-09 15:43:26] [slack_check] Starting
+[2026-04-09 15:43:27] [slack_check] Starting
+[2026-04-09 15:43:27] [health_check] Starting
+[2026-04-09 15:43:27] [slack_check] Starting
+[2026-04-09 15:43:27] [slack_check] Starting
+[2026-04-09 15:43:28] [slack_check] Starting
+[2026-04-09 15:43:29] [health_check] [health_check] 2026-04-09T15:43:27 overall=OK
+[2026-04-09 15:43:29] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:43:29] [health_check] Done (exit=0)
+[2026-04-09 15:43:34] [slack_check] Starting
+[2026-04-09 15:43:35] [health_check] Starting
+[2026-04-09 15:43:37] [health_check] [health_check] 2026-04-09T15:43:35 overall=OK
+[2026-04-09 15:43:37] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:43:37] [health_check] Done (exit=0)
+[2026-04-09 15:43:40] [health_check] Starting
+[2026-04-09 15:43:41] [health_check] [health_check] 2026-04-09T15:43:40 overall=OK
+[2026-04-09 15:43:41] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:43:41] [health_check] Done (exit=0)
+[2026-04-09 15:43:44] [health_check] Starting
+[2026-04-09 15:43:44] [health_check] Starting
+[2026-04-09 15:43:46] [health_check] [health_check] 2026-04-09T15:43:44 overall=OK
+[2026-04-09 15:43:46] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:43:46] [health_check] Done (exit=0)
+[2026-04-09 15:43:46] [scheduler_health] Starting
+[2026-04-09 15:43:47] [health_check] [health_check] 2026-04-09T15:43:45 overall=OK
+[2026-04-09 15:43:47] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:43:47] [health_check] Done (exit=0)
+[2026-04-09 15:43:48] [scheduler_health] Starting
+[2026-04-09 15:43:48] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 15:43:48] [scheduler_health] ✅ scheduler_ash PID — PID=29444 生存中
+[2026-04-09 15:43:48] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 15:43:48] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-04-09 15:42:45] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 15:43:48] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 15:43:48] [scheduler_health] Done (exit=1)
+[2026-04-09 15:43:50] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 15:43:50] [scheduler_health] ✅ scheduler_ash PID — PID=29444 生存中
+[2026-04-09 15:43:50] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 15:43:50] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-04-09 15:42:45] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 15:43:50] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 15:43:50] [scheduler_health] Done (exit=1)
+[2026-04-09 15:43:56] [health_check] Starting
+[2026-04-09 15:43:57] [health_check] [health_check] 2026-04-09T15:43:56 overall=OK
+[2026-04-09 15:43:57] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:43:57] [health_check] Done (exit=0)
+[2026-04-09 15:43:58] [health_check] Starting
+[2026-04-09 15:43:59] [health_check] [health_check] 2026-04-09T15:43:58 overall=OK
+[2026-04-09 15:43:59] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:43:59] [health_check] Done (exit=0)
+[2026-04-09 15:44:08] [slack_check] Starting
+[2026-04-09 15:44:11] [slack_check] Starting
+[2026-04-09 15:44:15] [health_check] Starting
+[2026-04-09 15:44:16] [health_check] [health_check] 2026-04-09T15:44:15 overall=OK
+[2026-04-09 15:44:16] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:44:16] [health_check] Done (exit=0)
+[2026-04-09 15:44:23] [slack_check] Starting
+[2026-04-09 15:44:24] [slack_check] Starting
+[2026-04-09 15:44:24] [slack_check] Starting
+[2026-04-09 15:44:24] [slack_check] Starting
+[2026-04-09 15:44:25] [slack_check] Starting
+[2026-04-09 15:44:25] [slack_check] Starting
+[2026-04-09 15:44:25] [slack_check] Starting
+[2026-04-09 15:44:25] [slack_check] Starting
+[2026-04-09 15:44:25] [slack_check] Starting
+[2026-04-09 15:44:25] [slack_check] Starting
+[2026-04-09 15:44:26] [slack_check] Starting
+[2026-04-09 15:44:26] [slack_check] Starting
+[2026-04-09 15:44:26] [slack_check] Starting
+[2026-04-09 15:44:27] [slack_check] Starting
+[2026-04-09 15:44:27] [slack_check] Starting
+[2026-04-09 15:44:27] [slack_check] Starting
+[2026-04-09 15:44:28] [slack_check] Starting
+[2026-04-09 15:44:29] [slack_check] Starting
+[2026-04-09 15:44:29] [slack_check] Starting
+[2026-04-09 15:44:29] [slack_check] Starting
+[2026-04-09 15:44:29] [health_check] Starting
+[2026-04-09 15:44:29] [slack_check] Starting
+[2026-04-09 15:44:29] [slack_check] Starting
+[2026-04-09 15:44:30] [slack_check] Starting
+[2026-04-09 15:44:30] [health_check] [health_check] 2026-04-09T15:44:29 overall=OK
+[2026-04-09 15:44:30] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:44:30] [health_check] Done (exit=0)
+[2026-04-09 15:44:30] [health_check] Starting
+[2026-04-09 15:44:32] [health_check] [health_check] 2026-04-09T15:44:30 overall=OK
+[2026-04-09 15:44:32] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:44:32] [health_check] Done (exit=0)
+[2026-04-09 15:44:33] [health_check] Starting
+[2026-04-09 15:44:33] [slack_check] Starting
+[2026-04-09 15:44:33] [slack_check] Starting
+[2026-04-09 15:44:34] [health_check] [health_check] 2026-04-09T15:44:33 overall=OK
+[2026-04-09 15:44:34] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:44:34] [health_check] Done (exit=0)
+[2026-04-09 15:44:37] [slack_check] Starting
+[2026-04-09 15:44:38] [health_check] Starting
+[2026-04-09 15:44:39] [slack_check] Starting
+[2026-04-09 15:44:39] [health_check] [health_check] 2026-04-09T15:44:38 overall=OK
+[2026-04-09 15:44:39] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:44:39] [health_check] Done (exit=0)
+[2026-04-09 15:44:40] [health_check] Starting
+[2026-04-09 15:44:41] [health_check] [health_check] 2026-04-09T15:44:40 overall=OK
+[2026-04-09 15:44:41] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:44:41] [health_check] Done (exit=0)
+[2026-04-09 15:44:44] [health_check] Starting
+[2026-04-09 15:44:45] [health_check] [health_check] 2026-04-09T15:44:44 overall=OK
+[2026-04-09 15:44:45] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:44:45] [health_check] Done (exit=0)
+[2026-04-09 15:45:04] [health_check] Starting
+[2026-04-09 15:45:06] [health_check] [health_check] 2026-04-09T15:45:05 overall=OK
+[2026-04-09 15:45:06] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:45:06] [health_check] Done (exit=0)
+[2026-04-09 15:45:11] [auto_diary] Timeout (720s)
+[2026-04-09 15:45:17] [slack_check] Starting
+[2026-04-09 15:45:21] [slack_check] Starting
+[2026-04-09 15:45:25] [slack_check] Starting
+[2026-04-09 15:45:26] [slack_check] Starting
+[2026-04-09 15:45:26] [slack_check] Starting
+[2026-04-09 15:45:27] [slack_check] Starting
+[2026-04-09 15:45:27] [slack_check] Starting
+[2026-04-09 15:45:28] [slack_check] Starting
+[2026-04-09 15:45:28] [slack_check] Starting
+[2026-04-09 15:45:28] [slack_check] Starting
+[2026-04-09 15:45:29] [slack_check] Starting
+[2026-04-09 15:45:30] [slack_check] Starting
+[2026-04-09 15:45:30] [slack_check] Starting
+[2026-04-09 15:45:30] [slack_check] Starting
+[2026-04-09 15:45:30] [slack_check] Starting
+[2026-04-09 15:45:30] [slack_check] Starting
+[2026-04-09 15:45:30] [slack_check] Starting
+[2026-04-09 15:45:30] [slack_check] Starting
+[2026-04-09 15:45:31] [health_check] Starting
+[2026-04-09 15:45:31] [slack_check] Starting
+[2026-04-09 15:45:31] [slack_check] Starting
+[2026-04-09 15:45:31] [slack_check] Starting
+[2026-04-09 15:45:32] [slack_check] Starting
+[2026-04-09 15:45:32] [health_check] [health_check] 2026-04-09T15:45:31 overall=OK
+[2026-04-09 15:45:32] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:45:32] [health_check] Done (exit=0)
+[2026-04-09 15:45:34] [slack_check] Starting
+[2026-04-09 15:45:34] [slack_check] Starting
+[2026-04-09 15:45:35] [slack_check] Starting
+[2026-04-09 15:45:36] [slack_check] Starting
+[2026-04-09 15:45:38] [dm_check_pigadev] Starting
+[2026-04-09 15:45:38] [dm_check_pigadev] No new DMs
+[2026-04-09 15:45:38] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 15:45:38] [twitter_recommended] Starting
+[2026-04-09 15:45:38] [twitter_recommended] Skipped: browser locked by another process
+[2026-04-09 15:45:38] [twitter_recommended] Done (exit=0)
+[2026-04-09 15:45:38] [check_usage] Starting
+[2026-04-09 15:45:38] [check_usage] 前回投稿から59分しか経っていない（最小間隔: 300分）。あと240分待機。スキップ。
+[2026-04-09 15:45:38] [check_usage] Done (exit=0)
+[2026-04-09 15:45:38] [health_check] Starting
+[2026-04-09 15:45:39] [slack_check] Starting
+[2026-04-09 15:45:40] [health_check] [health_check] 2026-04-09T15:45:38 overall=OK
+[2026-04-09 15:45:40] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:45:40] [health_check] Done (exit=0)
+[2026-04-09 15:45:40] [scheduler_health] Starting
+[2026-04-09 15:45:40] [slack_check] Starting
+[2026-04-09 15:45:40] [slack_check] Starting
+[2026-04-09 15:45:41] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-09 15:45:41] [scheduler_health] ✅ scheduler_ash PID — PID=29444 生存中
+[2026-04-09 15:45:41] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 15:45:41] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-09 15:45:41] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 15:45:41] [scheduler_health] Done (exit=0)
+[2026-04-09 15:45:42] [slack_check] Starting
+[2026-04-09 15:45:42] [health_check] Starting
+[2026-04-09 15:45:43] [health_check] [health_check] 2026-04-09T15:45:42 overall=OK
+[2026-04-09 15:45:43] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:45:43] [health_check] Done (exit=0)
+[2026-04-09 15:45:51] [health_check] Starting
+[2026-04-09 15:45:52] [health_check] [health_check] 2026-04-09T15:45:51 overall=OK
+[2026-04-09 15:45:52] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:45:52] [health_check] Done (exit=0)
+[2026-04-09 15:46:01] [health_check] Starting
+[2026-04-09 15:46:02] ==================================================
+[2026-04-09 15:46:02] Ash scheduler started (PID 25604)
+[2026-04-09 15:46:02] Max runtime: 0 hours
+[2026-04-09 15:46:02] Code hash: 23987b6ea13730e5053683552346a8b2
+[2026-04-09 15:46:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 15:46:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 15:46:02] ==================================================
+[2026-04-09 15:46:04] [health_check] [health_check] 2026-04-09T15:46:01 overall=OK
+[2026-04-09 15:46:04] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:46:04] [health_check] Done (exit=0)
+[2026-04-09 15:46:04] Scheduler already running (PID 25604). Exiting.
+[2026-04-09 15:46:14] [slack_check] Starting
+[2026-04-09 15:46:15] [health_check] Starting
+[2026-04-09 15:46:16] [health_check] [health_check] 2026-04-09T15:46:15 overall=OK
+[2026-04-09 15:46:16] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:46:16] [health_check] Done (exit=0)
+[2026-04-09 15:46:21] [health_check] Starting
+[2026-04-09 15:46:22] [health_check] [health_check] 2026-04-09T15:46:21 overall=OK
+[2026-04-09 15:46:22] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 15:46:22] [health_check] Done (exit=0)
+[2026-04-09 15:46:28] [slack_check] Starting
+[2026-04-09 15:46:28] [reservation_check] Starting
+[2026-04-09 15:46:28] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 15:46:28] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 15:46:28] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 15:46:28] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 15:46:28] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 15:46:28] [reservation_check] Done (exit=0)
+[2026-04-09 15:46:29] [slack_check] Starting
+[2026-04-09 15:46:30] [slack_check] Starting
+[2026-04-09 15:46:31] [slack_check] Starting
+[2026-04-09 15:46:31] [slack_check] Starting
+[2026-04-09 15:46:31] [slack_check] Starting
+[2026-04-09 15:46:31] [slack_check] Starting
+[2026-04-09 15:46:32] [slack_check] Starting
+[2026-04-09 15:46:32] [slack_check] Starting
+[2026-04-09 15:46:32] [slack_check] Starting
+[2026-04-09 15:46:32] [slack_check] Starting
+[2026-04-09 15:46:32] [slack_check] Starting
+[2026-04-09 15:46:32] [slack_check] Starting
+[2026-04-09 15:46:33] [slack_check] Starting
+[2026-04-09 15:46:33] [slack_check] Starting
+[2026-04-09 15:46:33] [health_check] Starting
+[2026-04-09 15:46:33] [slack_check] Starting
+[2026-04-09 15:46:33] [slack_check] Starting
