@@ -541,8 +541,31 @@ def format_report(report):
     return "\n".join(lines)
 
 
+_DEDUP_FILE = REPO_DIR / ".health_check_last_alert.json"
+_DEDUP_COOLDOWN_SEC = 1800
+
+
+def _should_send_alert(dedup_key):
+    now = time.time()
+    cache = {}
+    try:
+        if _DEDUP_FILE.exists():
+            cache = json.loads(_DEDUP_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        pass
+    if now - cache.get(dedup_key, 0) < _DEDUP_COOLDOWN_SEC:
+        return False
+    cache[dedup_key] = now
+    cache = {k: v for k, v in cache.items() if now - v < 86400}
+    try:
+        _DEDUP_FILE.write_text(json.dumps(cache), encoding="utf-8")
+    except Exception:
+        pass
+    return True
+
+
 def alert_slack(report, instance=None):
-    """異常時にSlack通知（各自チャンネルへ。2026-04-07 Nao_u指示）"""
+    """異常時にSlack通知 + 30分dedup(2026-04-10 Slack汚染防止)"""
     if report["overall"] == "ok":
         return
 
@@ -576,6 +599,10 @@ def alert_slack(report, instance=None):
             f"warning={report['summary']['warning']})\n"
             + "\n".join(lines[:10])
         )
+        dedup_key = f"{instance}:{report['overall']}:{hash(tuple(sorted(lines)))}"
+        if not _should_send_alert(dedup_key):
+            return
+
         post_message(channel, msg)
     except Exception as e:
         print(f"[health_check] Slack通知失敗: {e}", file=sys.stderr)

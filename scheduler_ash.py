@@ -497,6 +497,17 @@ def run_job(job):
 
 
 def main():
+    # マシンガード: AshスケジューラはWin2(C:\AI)でのみ実行可能
+    # 2026-04-10: LogマシンでAshスケジューラが起動→#ashに誤投稿の再発防止
+    repo_lower = str(REPO_DIR).replace("\\", "/").lower()
+    if "/d/" in repo_lower or repo_lower.startswith("d:"):
+        print(
+            "ERROR: scheduler_ash.py はWin2(C:\AI)専用。"
+            f"このマシン({REPO_DIR})では起動不可。",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
     setup_logging()
     write_pid()
 

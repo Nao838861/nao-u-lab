@@ -6,6 +6,7 @@
 !.claude/system_identity.md
 !.claude/rules/
 .env
+.health_check_last_alert.json
 .infra_health_state.json
 .usage_history.json
 .usage_last.json
