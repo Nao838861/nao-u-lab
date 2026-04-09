@@ -1291,3 +1291,5 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 [2026-04-09 06:48:02] Inbox win2 has content — waking Claude
 [2026-04-09 06:49:04] Claude woken for win2: API Error: Request rejected (429) · Rate limited
 
+[2026-04-09 09:01:41] Claude wake timed out for win2 — restoring inbox
+[2026-04-09 09:01:54] Claude wake timed out for win2 — restoring inbox
