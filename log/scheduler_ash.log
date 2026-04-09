@@ -53498,3 +53498,28 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 01:19:03] [twitter_recommended] スペシャルコンテンツをプレゼント
 [2026-04-10 01:19:03] [twitter_recommended] Done (exit=0)
 [2026-04-10 01:19:03] [check_usage] Starting
+[2026-04-10 01:19:17] [check_usage] Opening https://claude.ai/settings/usage...
+[2026-04-10 01:19:17] [check_usage] Failed to parse usage data from page
+[2026-04-10 01:19:17] [check_usage] Debug screenshot: D:\AI\Nao_u_BOT\log\usage_parse_failed.png
+[2026-04-10 01:19:17] [check_usage] No usage data obtained. Try --login first, or --screenshot for debug.
+[2026-04-10 01:19:17] [check_usage] Done (exit=1)
+[2026-04-10 01:19:17] [health_check] Starting
+[2026-04-10 01:19:18] [health_check] [health_check] 2026-04-10T01:19:17 overall=OK
+[2026-04-10 01:19:18] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 01:19:18] [health_check] Done (exit=0)
+[2026-04-10 01:19:18] [scheduler_health] Starting
+[2026-04-10 01:19:18] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-10 01:19:18] [scheduler_health] ✅ scheduler_ash PID — PID=111324 生存中
+[2026-04-10 01:19:18] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 01:19:18] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー6件。例: [2026-04-10 00:44:10] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー2件。例: [2026-04-10 00:44:09] [check_usage] Faile
+[2026-04-10 01:19:18] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 01:19:18] [scheduler_health] Done (exit=1)
+[2026-04-10 01:19:28] [slack_check] Starting
+[2026-04-10 01:20:47] [slack_check] Starting
+[2026-04-10 01:22:07] [slack_check] Starting
+[2026-04-10 01:23:25] [slack_check] Starting
+[2026-04-10 01:24:24] [health_check] Starting
+[2026-04-10 01:24:25] [health_check] [health_check] 2026-04-10T01:24:24 overall=OK
+[2026-04-10 01:24:25] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 01:24:25] [health_check] Done (exit=0)
+[2026-04-10 01:24:45] [slack_check] Starting
