@@ -16,10 +16,10 @@
     "alert_sent_at": null
   },
   "read_tweet_url": {
-    "consecutive_failures": 0,
+    "consecutive_failures": 1,
     "fail_alerted": false,
-    "last_failure_time": null,
-    "failure_reason": null,
+    "last_failure_time": "2026-04-09T19:12:39.672975",
+    "failure_reason": "Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://x.com/howlemont/status/2042017686457348506\", waiting until \"load\"\n",
     "cooldown_until": null,
     "alert_sent_at": null
   },
