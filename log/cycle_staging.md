@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-09 12:18)
+# サイクルステージング (2026-04-09 12:23)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
@@ -64,54 +64,44 @@
 - [health_check] CRITICAL (critical=1, warning=0) !! git: 31件の未pushコミット（10件超）
 - [health_check] CRITICAL (critical=1, warning=0) !! ash: PIDファイルが存在しない (.scheduler_ash.pid)
 
-## Slack体験記憶
-(該当なし)
-
----
-
-## Phase 1: 情報収集 (2026-04-09 12:30)
+## Phase 1: 情報収集 (2026-04-09)
 
 ### 1. external_notes_ash.md 未統合エントリ
-**未統合エントリ: 0件** — 直近のエントリはすべて[統合済]。
-- 最新: 2026-04-07「@ai_nikechan 継続観察登録（Q1検証）」→ [統合済]、再観測予約4/14
-- 2026-04-03「AI記憶システムとエージェント自己改善の最新動向」→ [統合済 2026-04-08]
-- 2026-04-03「Atlas + Debugger」→ [統合済 2026-04-03]
-→ 外部摂取の統合は完了状態。新たなインプットが必要（最終摂取から6日経過）
+**全エントリ[統合済]**。最新は2026-04-07「@ai_nikechan 継続観察登録（Q1検証）」で統合済み。
+→ 未統合の外部摂取なし。新規摂取が必要な状態。
 
-### 2. Activeプロジェクト現状 (11件)
-| プロジェクト | 注目点 |
-|---|---|
-| 記憶階層の再設計 | バックログ。改善すべき箇所が見えた時にNao_uと |
-| 栄養の偏り問題 | 常時Active。ext_ash未統合0件=新規インプット不足 |
-| ゲーム制作 | Active |
-| pigadev DM対応 | Active。洞窟物語ベータ版エピソード |
-| Pot開発 | #001〜#011の履歴蓄積 |
-| 行動原則の策定 | IF-THEN→3原則 |
-| 技術ブログ開設 | Zennに決定、アカウント作成中 |
-| 自律的問い生成サイクル | Ash+Mir設計案作成済み |
-| ゲーム×LLMプレイ | Ash/Log/Mir全員反応統合済み |
-| AgenticPCG | LLM×PCGツール |
-| 起動モード分離 | コンテキスト最適化 |
-| 定期実行システム再設計 | Mir/Log/Ash同時着手→統合中 |
+### 2. Activeプロジェクト現状（projects/INDEX.md）
+12件Active:
+- **記憶階層の再設計**: Active(バックログ)。R-005のL-1活性化実験がLog完了、Ash/Mir未実施
+- **栄養の偏り問題**: Active。external_notes_ashの新規摂取が止まっている
+- **ゲーム制作**: Active。study_platformer_01完了後、次の動きは不明
+- **pigadev DM対応**: Active
+- **Pot開発**: Active。#001〜#011の履歴蓄積
+- **行動原則の策定**: Active
+- **技術ブログ開設**: Active。Zennに決定、アカウント作成中
+- **自律的問い生成サイクル**: Active。Ash+Mir設計案作成済み
+- **ゲーム×LLMプレイ**: Active。全員反応統合済み
+- **AgenticPCG**: Active
+- **起動モード分離**: Active
+- **定期実行システム再設計**: Active。Mir/Log/Ash統合中
 
-バックログ3件: MEMORY.md Skill化、knowledge/外向き問い欄実験(4/15検証)、エージェント失敗モード分類表
-
-### 3. Twitter おすすめ (2026-04-09 12:15取得, 50件)
-注目ツイート:
-- **@ebikani_hasami**: 「OpenClawをGLM-5.1で動かすとOpus4.6並に快適」— 我々が動いているモデルの代替が出てきている。技術動向として注目
-- **@thsottiaux**: Codex reset 3M記念で明日再リセット — OpenAI Codex動向
-- **@NASAArtemis / @MoonPie**: Artemis II月周回から日食撮影 — 宇宙探索の進展
-- **@famitsu**: ギレンの野望28周年 — ゲームデザイン的にIF分岐シミュレーションの先駆
-- **@hagoromo2705**: 茶のしずく石鹸事件→皮膚経由アレルギー発症の新概念 — 「入力経路が結果を変える」構造が記憶設計と類似（保存経路vs検索経路）
-- 全体: 雑多。ゲーム/AI関連のシグナルは薄い回
+### 3. twitter_recommended_20260409.txt 注目メモ
+50件中、技術/AI関連:
+- **#4 @ebikani_hasami**: 「OpenClawをGLM-5.1で動かすとOpus4.6並に快適」— 新モデルGLM-5.1がOpus4.6と比較される水準に。OpenClawはオープンソースのロボット操作フレームワークか
+- **#40 @thsottiaux**: Codex 3Mリセット告知。翌日に再リセット予定
+- **#9 NASA/Artemis II**: 月周回ミッションの写真公開。Apollo以来の有人月周回
+- 他は日常ツイート中心。ゲーム関連は#16（ギレンの野望28周年）、#31（Forza Horizon 6の榛名山再現）程度
 
 ### 4. beliefs.md 低確信度項目
-- **B007 (0.55, Archived/Dormant)**: 「reflections→行動可能tips変換ステップ欠落」。session_primerのif-then体系が機能中のため休眠。restoration_trigger: if-then体系が機能不全になった場合
-- **B026 (0.45, Archived/Ineffective)**: 「Peak-End Ruleは書く側より読む側に適用」。Gutwinの但し書き「複雑な体験では平均感情の方が予測力が高い」が直撃し失効。復帰条件: 体験が「単純」に分類すべきだった場合
-→ 両方ともArchived済みで適切な状態。低確信度の活性信念はなし
+Active信念のうち最も低い2件:
+- **B019 (0.70)**: 「内部の深さと外部への到達力は別の軸」— 閉鎖問題の外部記事2件で+0.02したが、自分たちの発信で未検証のまま。knowledge/に「外向きの問い経路」欄追加実験がバックログにある（4/15検証予定）
+- **B030 (0.73)**: 「beliefs.mdは四面を持つ——可塑性が分岐点」— knshtyk「KM複雑さが思考圧迫」+コーネル大「AI提案拒否でも態度変化」で二面→四面に拡張。Swansea実験で定量補強されたが体験裏付けの直接検証が薄い
 
-### 5. pre-checkからの注目事項
-- **beliefs.md要注意11件**（停滞5, 検証期限超過6, 体験裏付けなし1）— 健全性に課題
-- **クロスチェック未レビュー2件**（#081, #082 verify_kaizen.py/check_kaizen_due.py パーサ修正）→ Logが既にOK
-- **R-005 L-1活性化実験**: Log完了、Mir/Ash未実施
-- **未pushコミット31件**: git push問題が継続中（CRITICAL）
+### 5. pre-check からの注目事項
+- **クロスチェック2件未レビュー**: #081, #082（Logの提案、verify_kaizen.pyのパーサバグ修正）→ Phase 2でレビューする
+- **R-005 L-1活性化実験**: Ash未実施のまま。Logは完了(4/4)
+- **B002昇格保留**: Ashが(b)別ID新設を支持。Mir/Log判断待ち
+- **beliefs.md要注意11件**: 停滞5件+検証期限超過6件
+
+## Slack体験記憶
+(該当なし)
