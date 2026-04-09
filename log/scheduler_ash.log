@@ -64030,3 +64030,43 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 05:17:15] [health_check]   critical=0 warning=0 ok=9
 [2026-04-10 05:17:15] [health_check] Done (exit=0)
 [2026-04-10 05:17:18] [git_sync] Starting
+[2026-04-10 05:17:20] [slack_check] Starting
+[2026-04-10 05:17:21] [git_sync] Starting
+[2026-04-10 05:17:22] [git_sync] Done (exit=0)
+[2026-04-10 05:17:24] [slack_check] Starting
+[2026-04-10 05:17:26] [git_sync] Done (exit=0)
+[2026-04-10 05:17:26] [health_check] Starting
+[2026-04-10 05:17:27] [health_check] [health_check] 2026-04-10T05:17:26 overall=OK
+[2026-04-10 05:17:27] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 05:17:27] [health_check] Done (exit=0)
+[2026-04-10 05:17:30] [slack_check] Starting
+[2026-04-10 05:17:32] [slack_check] Starting
+[2026-04-10 05:17:33] [slack_check] Starting
+[2026-04-10 05:17:34] [slack_check] Starting
+[2026-04-10 05:17:34] [slack_check] Starting
+[2026-04-10 05:17:34] [slack_check] Starting
+[2026-04-10 05:17:34] [slack_check] Starting
+[2026-04-10 05:17:34] [scheduler_health] Starting
+[2026-04-10 05:17:35] [slack_check] Starting
+[2026-04-10 05:17:35] [slack_check] Starting
+[2026-04-10 05:17:35] [slack_check] Starting
+[2026-04-10 05:17:35] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-10 05:17:35] [scheduler_health] ✅ scheduler_ash PID — PID=29308 生存中
+[2026-04-10 05:17:35] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 05:17:35] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-10 05:17:35] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 05:17:35] [scheduler_health] Done (exit=0)
+[2026-04-10 05:17:36] [slack_check] Starting
+[2026-04-10 05:17:36] [slack_check] Starting
+[2026-04-10 05:17:37] [slack_check] Starting
+[2026-04-10 05:17:37] [slack_check] Starting
+[2026-04-10 05:17:37] [slack_check] Starting
+[2026-04-10 05:17:37] [slack_check] Starting
+[2026-04-10 05:17:37] [slack_check] Starting
+[2026-04-10 05:17:37] [slack_check] Starting
+[2026-04-10 05:17:38] [slack_check] Starting
+[2026-04-10 05:17:38] [slack_check] Starting
+[2026-04-10 05:17:38] [health_check] Starting
+[2026-04-10 05:17:39] [slack_check] Starting
+[2026-04-10 05:17:39] [health_check] Starting
+[2026-04-10 05:17:39] [slack_check] Starting
