@@ -67262,3 +67262,93 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 05:54:27] [auto_diary] Done (exit=0)
 [2026-04-10 05:54:35] [slack_check] Starting
 [2026-04-10 05:54:47] [scheduler_health] Starting
+[2026-04-10 05:54:48] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-10 05:54:48] [scheduler_health] ✅ scheduler_ash PID — PID=20504 生存中
+[2026-04-10 05:54:48] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 05:54:48] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-10 05:54:48] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 05:54:48] [scheduler_health] Done (exit=0)
+[2026-04-10 05:55:01] [dm_check] Starting
+[2026-04-10 05:55:15] [dm_check] No new DMs
+[2026-04-10 05:55:15] [dm_check] Done (exit=0)
+[2026-04-10 05:55:15] [review_deadline] Starting
+[2026-04-10 05:55:15] [review_deadline] レビュー期限超過なし。
+[2026-04-10 05:55:15] [review_deadline] Done (exit=0)
+[2026-04-10 05:55:15] [kaizen_auto_verify] Starting
+[2026-04-10 05:55:15] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-10 05:55:15] [kaizen_auto_verify] Done (exit=0)
+[2026-04-10 05:55:15] [git_sync] Starting
+[2026-04-10 05:55:18] [slack_check] Starting
+[2026-04-10 05:55:20] [git_sync] Done (exit=0)
+[2026-04-10 05:55:20] [auto_diary] Starting
+[2026-04-10 05:55:20] [auto_diary] [2026-04-10 05:55:20] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-10 05:55:20] [auto_diary] 前回実行から215分しか経っていない（最小間隔: 230分）。あと14分待機。スキップ。
+[2026-04-10 05:55:20] [auto_diary] Done (exit=0)
+[2026-04-10 05:55:20] [twitter_recommended] Starting
+[2026-04-10 05:55:42] [twitter_recommended] Starting
+[2026-04-10 05:55:43] [twitter_recommended] Skipped: browser locked by another process
+[2026-04-10 05:55:43] [twitter_recommended] Done (exit=0)
+[2026-04-10 05:56:13] [check_usage] Starting
+[2026-04-10 05:56:13] [check_usage] 前回投稿から234分しか経っていない（最小間隔: 300分）。あと65分待機。スキップ。
+[2026-04-10 05:56:13] [check_usage] Done (exit=0)
+[2026-04-10 05:56:32] [twitter_recommended] Opening For You tab...
+[2026-04-10 05:56:32] [twitter_recommended]     1. @J_OKADA_AISTON: 幸運おすそわけ。...
+[2026-04-10 05:56:32] [twitter_recommended]     2. @kedama_tori_ki: ご自愛タイムしよ
+[2026-04-10 05:56:32] [twitter_recommended] 【PR】【明治ブルガリアヨーグルトワンショット】...
+[2026-04-10 05:56:32] [twitter_recommended]     3. @kuu_raira1717: 妹わんこの耳を臭って………
+[2026-04-10 05:56:32] [twitter_recommended] Done (exit=0)
+[2026-04-10 05:56:32] [health_check] Starting
+[2026-04-10 05:56:33] [health_check] [health_check] 2026-04-10T05:56:32 overall=OK
+[2026-04-10 05:56:33] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 05:56:33] [health_check] Done (exit=0)
+[2026-04-10 05:56:33] [infra_health_check] Starting
+[2026-04-10 05:56:34] [infra_health_check] [infra_health] Ash health check at 2026-04-10 05:56:33
+[2026-04-10 05:56:34] [infra_health_check] [infra_health] 1 issues found
+[2026-04-10 05:56:34] [infra_health_check]   ISSUE: Twitter障害: test_scriptが26回連続失敗中(最終失敗: 2026-04-09T09:23:52.955516)
+[2026-04-10 05:56:34] [infra_health_check] Done (exit=1)
+[2026-04-10 05:56:34] [scheduler_health] Starting
+[2026-04-10 05:56:35] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-10 05:56:35] [scheduler_health] ✅ scheduler_ash PID — PID=20504 生存中
+[2026-04-10 05:56:35] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 05:56:35] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-04-10 05:54:48] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-10 05:56:35] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 05:56:35] [scheduler_health] Done (exit=1)
+[2026-04-10 05:56:43] [slack_check] Starting
+[2026-04-10 05:56:45] [slack_check] Starting
+[2026-04-10 05:57:10] [dm_check_pigadev] Starting
+[2026-04-10 05:57:24] [dm_check_pigadev] No new DMs
+[2026-04-10 05:57:24] [dm_check_pigadev] Done (exit=0)
+[2026-04-10 05:57:24] [check_usage] Starting
+[2026-04-10 05:57:24] [check_usage] 前回投稿から235分しか経っていない（最小間隔: 300分）。あと64分待機。スキップ。
+[2026-04-10 05:57:24] [check_usage] Done (exit=0)
+[2026-04-10 05:57:47] [dm_check_pigadev] Starting
+[2026-04-10 05:58:01] [dm_check_pigadev] No new DMs
+[2026-04-10 05:58:01] [dm_check_pigadev] Done (exit=0)
+[2026-04-10 05:58:11] [slack_check] Starting
+[2026-04-10 05:58:14] [slack_check] Starting
+[2026-04-10 05:58:38] [slack_check] [05:58:38] 2 msg(s) -> inbox_win2.md
+[2026-04-10 05:58:38] [slack_check] [05:58:38] Triggered check_inbox.py --box win2
+[2026-04-10 05:58:38] [slack_check] Done (exit=0)
+[2026-04-10 05:58:38] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-10 05:58:38] [inbox_check] Starting
+[2026-04-10 05:58:39] [inbox_check] Inbox win2 empty
+[2026-04-10 05:58:39] [inbox_check] Done (exit=0)
+[2026-04-10 05:58:41] [slack_check] [05:58:41] 2 msg(s) -> inbox_win2.md
+[2026-04-10 05:58:41] [slack_check] [05:58:41] Triggered check_inbox.py --box win2
+[2026-04-10 05:58:41] [slack_check] Done (exit=0)
+[2026-04-10 05:58:41] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-10 05:58:41] [inbox_check] Starting
+[2026-04-10 05:58:41] [inbox_check] Inbox win2 empty
+[2026-04-10 05:58:41] [inbox_check] Done (exit=0)
+[2026-04-10 05:58:49] [health_check] Starting
+[2026-04-10 05:58:50] [health_check] [health_check] 2026-04-10T05:58:49 overall=OK
+[2026-04-10 05:58:50] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 05:58:50] [health_check] Done (exit=0)
+[2026-04-10 05:59:40] [slack_check] Starting
+[2026-04-10 05:59:41] [slack_check] Starting
+[2026-04-10 06:01:09] [slack_check] Starting
+[2026-04-10 06:01:09] [slack_check] Starting
+[2026-04-10 06:01:42] [health_check] Starting
+[2026-04-10 06:01:43] [health_check] [health_check] 2026-04-10T06:01:42 overall=OK
+[2026-04-10 06:01:43] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 06:01:43] [health_check] Done (exit=0)
