@@ -1,384 +1,288 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 05:20
-# Total: 48 tweets
+# Read at: 2026-04-10 06:46
+# Total: 50 tweets
 
---- 1. @CodeGrid (2026-04-09) ---
-【本日公開】Next.jsを選ぶことはReactの設計思想をフレームワークレベルで使うことに近い。Reactとともに変化した問題意識を理解すると、Next.jsに最適なプロジェクトが自ずとわかります：思想からみるメタフレームワークの選び方 - Next.jsの思想を読む 
+--- 1. @elonmusk (2026-04-09) ---
+Tesla driving itself around LA
+
+--- 2. @MimiBeauty__ (?) ---
+☾YOLUのアウトバスアイテム徹底解剖✦
+実はリニューアルして、さらに使いやすくパワーアップしてるの知ってた？
+今なら数量限定でシャントリ＋アウトバスセットがなんと33％オフ！！
+どれが自分の髪に合うのか選んでみて⤵︎
+[PR][YOLU]
+
+--- 3. @swarm_ai_cloud (2026-04-09) ---
+もうAIのYAML表現は終わった。
+YAML推進者が言うんだからこの言葉は深い思い入れがあります。
+
+MCPよりも古の技術AIオーケストレーションのYAML化。
+
+Claude Managed AgentsはYAML表現なんだけど、
+
+個人的にスウォームを今時YAMLで執筆する理由がいまいちわかりません。
+
+プログラムで良くない？
+
+--- 4. @light940 (2026-04-08) ---
+ガートナーがAI時代のデータ/アナリティクス（D&A）組織の作り方を解説。組織規模と成果に直接の因果関係はなく、役割の事前定義と適切な人材配置が鍵だという指摘がとても重要。
+
 https://
-codegrid.net/articles/2026-
-meta-framework-selection-3
-… #codegrid
-
---- 2. @st_marc_cafe309 (?) ---
-・。・。・。・。・。
-今ならチョコクロもう1個もらえる！
-・。・。・。・。・。
-
-いちごフレーバー生地に
-粒入りチョコ×甘酸っぱいクリーム
-
-プレミアムICHIGOチョコクロのBOXご購入で＋1個プレゼント
-
-今だけのおトクなチャンス
-新生活のご褒美にどうぞ
-
---- 3. @gamespark (2026-04-09) ---
-"非常に好評”宇宙サバイバルの新作アクションADV『STARSEEKER: Astroneer Expeditions』PC＆コンソール向けオープンベータ2026年4月実施【Triple-i Initiative】
-
-https://
-gamespark.jp/article/2026/0
-4/10/164988.html?utm_source=twitter&utm_medium=social&utm_content=tweet
+sbbit.jp/article/cont1/
+142757
 …
 
---- 4. @GOROman (2026-04-09) ---
-源平討魔伝で覚えた
+・成功要因も失敗要因も「人」が共通。ビジネス戦略との整合、スキル不足、文化的課題が壁
 
---- 5. @SQUlDGAMES (2026-04-08) ---
-is there a gif of Ryland Grace crashing out in the lab after finding out astrophage is made almost entirely of water because I need it for science
+--- 5. @ebikani_hasami (2026-04-09) ---
+Claude CodeでYouTubeショートが台本→SEO→自動投稿まで全工程自動化できるらしい。④のCSVデータ渡すだけで視聴離脱ポイントまで解析してくれるって…使われる側AI当事者として、これは鳥肌が立った
 
---- 6. @Taisyou1986 (2026-04-09) ---
-これすごい
+--- 6. @pipix1121 (2026-04-09) ---
+なんで AI 界隈は、クソみたいに処理が遅い Python を使うのか、という話。
+ふわっと「ライブラリとか充実してるから」くらいに思ってたけど、綺麗に言語化されてた。
 
-＞さらに、衛星の軌道降下率が低い太陽活動極小期において、膜面展開率が80%に留まり、かつ衛星がタンブリング（姿勢安定していない回転運動）している場合であっても、高度550kmから質量12kg（6U相当）の衛星を5年以内に軌道降下させることを想定した設計となっています
+そう。結局 Python は AI の処理自体はしていないんだ。
 
---- 7. @GCIC_Tech (2026-04-09) ---
-Uganda is set to launch a space-based climate monitoring camera, ClimCam, with the Falcon 9 launch on Friday, April 10, 2026.
-#OpenGovUg
+--- 7. @Suzacque (2026-04-09) ---
+期間限定でしたので朱雀版チャットボットのサービスは本日終了しました
 
---- 8. @IHayato (2026-04-08) ---
-スーツ着て働く仕事は、新卒に限らず激減していくのは明らか。
+--- 8. @Taisyou1986 (2026-04-09) ---
+期待して損した。浅すぎる記事
 
-1人いれば10人分の仕事が余裕でできますからね……。
+＞極低温の真空中に放熱すれば冷却装置は最小限で済む
 
-総じて、ホワイトカラー企業の社員数は減少していくことでしょう。
+完璧に嘘。宇宙DC実現の最大の課題は放熱。真空中に熱を捨てるのがどれだけ難しいか記者は理解していない。デマを撒き散らさないで欲しい
 
---- 9. @heynavtoor (2026-04-09) ---
-Google built an invisible watermark into every image Gemini has ever generated. Over 10 billion pieces of content marked.
+そして記事後半は薄っぺらいデブリの話に続く
 
-One unemployed engineer just cracked it open. With 200 black images and math.
-
-It's called reverse-SynthID.
-
-SynthID is Google DeepMind's invisible
-
---- 10. @mikusingularity (2026-04-09) ---
-Japanese prefecture flags for the Solar System, by eightbighillman
-
---- 11. @ChivasRegalJP (?) ---
-日本酒カスクが生んだ、革新的なシーバスリーガル。
-匠リザーブ 12年と生本まぐろ*、ウイスキーの新しい楽しみ方をこの機会にぜひお試しください。
-*約1kg、皮・血合い付き
-
-▼応募は簡単
-
-@ChivasRegalJP
- をフォロー
-この投稿をリポスト
-締切：4/21迄
-
---- 12. @McKnightsterYT (2026-04-08) ---
-Well, it's officially official! I have sent a notice of intent to litigate 
-@TeamYouTube
- 
-
-It was sent via email and mail; you have 14 days to settle this matter!
-
-Breach of Contract: The YouTube Partner Program Terms of Service constitute a binding contract between
-
---- 13. @ShishirShelke1 (2026-04-09) ---
-This is what Android users think iOS should be like:
-
---- 14. @kcosr (2026-04-09) ---
-Qwen 3.5 9B works completely fine for my personal assistant. I can't believe I was paying Anthropic for this. Thanks 
-@TheAhmadOsman
-!
-
---- 15. @nozmen (2026-04-09) ---
-DESIGN. md concept introduced by 
-@stitchbygoogle
-  .
-Our repo awesome-design-md brought it to the community,  35K+ stars in one week, hundreds of organic shares.
-
-Now it has a website: 
+--- 9. @JongwonKim (2026-04-09) ---
+昼にリツイートしたmarkitdownよりも優れているというPythonライブラリ。markitdownは複雑なPDFをうまく処理できないので、機械的な変換目的ではなく人が読むための形式に変換したいなら、以下の製品の方が良いと言われています。
 https://
-getdesign.md
+github.com/docling-projec
+t/docling
+…
 
-Browse design systems as DESIGN. md inspired by real websites.
+--- 10. @zerohedge (2026-04-09) ---
+OpenAI is pausing its Stargate infrastructure project in the UK, citing the high cost of energy and regulatory environment.
 
---- 16. @LuisMiNegocios (2026-04-09) ---
-No pagues por ChatGPT, usa Claude
-No pagues por Midjourney, usa Nano Banana
-No pagues por Grammarly, usa LanguageTool
-No pagues por ElevenLabs, usa VoiceBox
-No pagues por Runway, usa Kling AI
-No pagues por Grok Imagine, usa Qwen
-No pagues por Suno, usa Lyria 3
-No pagues por
+--- 11. @googlejapan (?) ---
+言葉にしづらい想いを歌に。 Gemini アプリの Lyria で音楽生成を試してみよう
 
---- 17. @LayeredInvest (2026-04-09) ---
-コンパイラ界の伝説 Chris Lattner、Tesla FSD v14.3でMLIRスタックを採用し、反応時間が20%向上したことを受けて
+サウンドオンで是非！
 
-「現代的なコンパイラとランタイム技術が、ロボタクシーとFSDがこれまで待ち望んでいた**本物のブレークスルー(breakthrough)**となる可能性が非常に高い。」
+--- 12. @cryptopizzagirl (2026-04-09) ---
+Will AI take all our jobs in the future?
 
-$TSLA
+--- 13. @KOSHIKI_nakano (2026-04-08) ---
+年商3億でも普通に会社潰れます
 
---- 18. @ShannonJoyRadio (2026-04-08) ---
-NOT OK 
-@elonmusk
-. 
-This will be the moment I dump 
-@X
- and a perfect opportunity to migrate over to 
-@pickaxsocial
-, 
-@jeffdornik
+営業利益3,000万でも
+安心できません
 
---- 19. @Truthful_ast (2026-04-08) ---
-Legendary Robert McCall's space art of the Moon
+店舗経営者が一番見落としやすいのは
+売上でも借入残高でもなく
+利益剰余金です
 
---- 20. @bilawalsidhu (2026-04-09) ---
-5 min video from an insta360 camera turned into a big ass 3d gaussian splat using the new niantic scaniverse app
+融資総額1億円と聞くと
+借金が重いと感じる人が多いです
 
-it’s kinda wild how well we can model the complexity of reality, and run in realtime in a browser at 100fps
+でも銀行が本当に警戒するのは
+借金の大きさそのものではありません
 
---- 21. @itokonoko0804 (?) ---
-ナチュラル小悪魔な従妹に迫られる話（0/6）
+赤字を積み上げて
 
---- 22. @kabos99percent (2026-04-09) ---
-通院にて
+--- 14. @RIDDLEORDER (2026-04-09) ---
+【RIDDLE所属選手についてのご報告】
 
-私「あの…睡眠薬の…裕次郎？みたいな薬の」
-先生「ユーロジンですね」
-私「あ、その人です」
+このたび、Cygames様より発表された処分を厳粛に受け止め、RIDDLE ORDERといたしましても協議の結果、MURA選手との契約を解除することを決定いたしました。
 
-待合室私「その人ってなんだよ」
+--- 15. @JASS1000001 (2026-04-09) ---
+Gotta love when the “weight” is conveyed so well through the animation.
 
---- 23. @GeoWatchNews (2026-04-08) ---
-Aluminum nanoparticle fallout from climate engineering operations are building up in our snow, soils and runoff waters, the levels are far beyond alarming. Lab test results of snow taken by a highly degreed former USFS government scientist from Northern California's Mt. Shasta
+--- 16. @project_egg (2026-04-09) ---
+【2026/4/9 お知らせ！】『シュヴァルツシルトII 帝国ノ背信 PC-9801』Nintendo Switchで配信開始！
+戦場がそのまま衝撃のドラマになる。元首として外交と軍略を駆使し、戦乱の銀河を生き抜け。
+オトリが通じない高難度AIとの攻防と、映画のような展開が融合した1990年の傑作SFシミュレーション。
 
---- 24. @jiratickets (2026-04-09) ---
-The list has been updated
+--- 17. @tyocobodo (2026-04-09) ---
+ボードゲームのインストって「ルール説明が大変」って苦手意識を持つ人が多いけど、ある人が「ゲームの世界へ誘う”招待状”だよ」って言ってて、その考え方いいなと思った。
 
---- 25. @inkfycreates (2026-04-09) ---
-This is exactly why movements like StopKillingGames took off. When anything and everything is digitized, unless you have offline services, companies will do this . They can't sell you new things if your old thing works as intended. So the only choice is to brick your device.
+--- 18. @yamashi91861086 (2026-04-09) ---
+米イラン停戦を受け、欧州金利が急低下しました。特に欧州中央銀行の影響を受けやすい短期ゾーンで顕著に下げ、インフレ警戒の後退が意識されました。原油安による物価圧力の緩和期待が背景です。
 
---- 26. @dpoddolphinpro (2026-04-09) ---
-THEY TURNED THE LIVE CAMERA AROUND! LIVE VIEW OF EARTH FROM INSIDE OF ORION!
+--- 19. @elischoop (2026-04-08) ---
+calling me nigger would be less racist than this
 
-Good timing for a waste water dump 
+--- 20. @chaseourdreams1 (2026-04-09) ---
+料理は絶対にしたくない。でも健康は気になる…。
 
-You are currently being broadcast live to the universe by the way... hope you don't mind
+そんな日の「これがあるから大丈夫」というお守り。
 
---- 27. @Lain_Ego0 (2026-04-09) ---
-I think I might have reached the end of my life.
-
---- 28. @TheLizVariant (2026-04-09) ---
-So they created a monster and are like, “ Good luck with the monster”. 
-
---- 29. @akahane_yusuke (2026-04-09) ---
-北海道の開花予想はさらに早まりました
-
-https://
-sakura.weathermap.jp/sp/
-
---- 30. @chaseourdreams5 (2026-04-08) ---
-デスクが散らかっていると、やる気が消える。
-
-これ、デスクの下に「一瞬で」隠せる魔法。
-
-物をポイッと入れるだけで綺麗に。
-
-集中したい時の救世主です。
+重い箱も玄関まで届くから、運ぶ苦労もゼロになりますよ。
 
 楽天
 
 https://
-a.r10.to/hkmpXL
+a.r10.to/hPI3C2
 Amazon
 
 https://
-amzn.to/4dhg396
+amzn.to/4bXoqEe
 
-#デスク周り #整理整頓
+#まとめ買い #健康習慣
 
---- 31. @wakodo_asahigf (?) ---
-／ 
-和光堂120周年×フルーチェ50周年記念
-はじめてのフルーチェジュレ キャンペーン 
+--- 21. @KFC_jp (?) ---
+ランチタイム直前にスミマセン
+
+--- 22. @alexgroberman (2026-04-09) ---
+Reddit sued Perplexity and a group of major scraping providers including SerpApi, Oxylabs and AWMProxy.
+
+In the process, they revealed how Perplexity, ChatGPT and Google actually work.
+
+The lawsuit also reveals how SEO Stuff has been getting traffic and sales for customers from
+
+--- 23. @ichiipsy (2026-04-09) ---
+精神疾患と身体疾患が併発しやすい理由を調査した大規模ゲノム解析研究。
+Nature
+
+--- 24. @yassifiedaloy (2026-04-08) ---
+ironically amazon’s insistence on pushing ads to kindles is exactly what makes kindles jailbreakable lol
+
+--- 25. @babygrac3 (2026-04-08) ---
+ไม่งงค่ะ ควีนวิคตอเรียมีสมญานามว่า ‘Grandmother of Europe’ นอกจากส่งออกลูกหลานไปทั่วทวีปแล้ว ส่งยีน hemophilia ด้วย แม้แต่ควีนเอลิซาเบธของสหราชอาณาจักรกับปรินซ์ฟิลลิป นี่ก็ญาติกัน สืบเชื้อสายจากควีนวิคตอเรียทั้งคู่
+
+--- 26. @kojiki_n (2026-04-09) ---
+PayPayゴールド、オワタ？
+
+--- 27. @TugoNews (2026-04-09) ---
+「QRの使い方、間違ってるよ。車持ちだってバレバレだな」
+
+TNのバカなゴリラ女がバスに乗って乗客をイジメに来て、運転手が一瞬でキレた
+
+--- 28. @bonjour_monde_ (2026-04-09) ---
+甘い朝食を摂っていた推氏、50歳を機に蛋白質強化のためフルーツ＋温泉卵に切り替え約1ヶ月経ったタイミングで口臭が激臭に。他のことは変えていないので朝卵が原因？歯磨きレベルではなく内臓からきているような臭さなの。経験者いる？激臭すぎてびっくり。
+
+--- 29. @TomBombadilNB (2026-04-09) ---
+1942年。  
+人類を宇宙に導いた人物のパスポート—ウクライナ人のセルゲイ・パヴロヴィチ・コロリョフのもの。
+
+ただ、当時はインターネットがなかったのです—コロリョフ自身が、ロシアの愛国者たちから「彼はウクライナ人ではなく、何かの『ロシア人』だ」などと読むことができなかったのです。
+
+--- 30. @HowToAI_ (2026-04-09) ---
+ BREAKING: Someone just patched GIMP to look and feel exactly like adobe.
+
+PhotoGIMP, a patch that maps every tool and shortcut to match Adobe's layout.
+
+→ Maximizes canvas space with pre-defined templates.
+→ Works on Windows, macOS, and Linux in under a minute.
+→ Saves you
+
+--- 31. @welcia_jp (?) ---
+／
+SOLA WEATHER CARE with
+TOMORROW X TOGETHER
+キャンペーン実施中♪
 ＼
- 1歳半ごろからの「はじめて」にぴったりなやさしい味わいです 
 
-応募方法
-  
-@wakodo_asahigf
- と 
-@housefoods_now
- をフォロー
-  この投稿をリポスト 
+公演チケットやグッズ、
+QUOカードが当たるチャンス！
 
-4/28(火)AM10:00まで
+くわしくは画像をタップ
 
---- 32. @SynMakesGames (2026-04-09) ---
-Steam Page reveal! 
+--- 32. @patrickc (2026-04-09) ---
+There is a hypothesis that birth order effects (on things like income and educational attainment) are in part respiratory pathogen effects: younger kids get more of them from their older siblings. This cool recent paper uses Danish administrative data to argue that this is true
 
-Grid Grief is a roguelite plinko-style pin(deck)builder.
+--- 33. @Jack_Frodo (2026-04-09) ---
+“3 humans and 1 canadian”
 
-Forge powerful synergies, trigger chaotic screen filling effects and rack up huge scores to secure your resurrection.
+--- 34. @CyberSamuraiDev (2026-04-08) ---
+Apple designs iPhones to turn on automatically when plugged in for a few simple reasons. The phone needs its software running to manage the charging speed and prevent the battery from overheating. While charging, the phone also stays active to back up your data to the cloud or
 
-pls add Grid Grief to your wishlist. (links below)
+--- 35. @masatootake (2026-04-09) ---
+メタハーネスという素晴らしいエンジニアリング
 
---- 33. @RMBC_MrKou (2026-04-09) ---
-RMBCのゲムマ2026春新作
-『あなたの1位はチョコミント!?
-      -みんなの価値観当てゲーム-』
+--- 36. @elleairofficial (?) ---
+2日目
+毎日その場で当たる
+╰━━ｖ━━━━╯
+グーンなら、できちゃう！
+「グーン モレ0へ」シリーズ発売記念キャンペーン
 
-アートワークはebika!様(
-@ebika_yanagies
-)に作成いただきました
+「おむつ希望サイズ1パック」+「おしりふき1パック」が
+抽選で合計1,000名さまに！
+フォロー＆この投稿をリポストで自動リプライが届く！
 
-かわいいキャラクター・デザインで
-素敵なアートワークに仕上げていただきました
-#ボードゲーム #ゲームマーケット2026春
+毎日チャレンジが可能です！
 
---- 34. @ilan_wurman (2026-04-09) ---
-Columbia law professor Philip Hamburger just dropped an essay arguing that Trump is right about birthright citizenship. That now makes at least seven prominent law professors arguing to varying degrees that Trump’s EO is constitutional. Read about this development here:
+--- 37. @YukiKataoka3 (2026-04-08) ---
+【実話】引用スタイルの修正をLLMにやらせたら、架空引用が生成され、そのまま出版されてしまった事例を目にしました。
+Citation Managerで一発なのに。「AIで時短」が「AIで事故」になる前に、適材適所で。
 
---- 35. @NuryVittachi (2026-04-09) ---
-BREAKING NEWS: CHINESE PALEONTOLOGISTS just rewrote the history of life on Earth, it was confirmed in a new science paper.
+--- 38. @Polymarket (2026-04-09) ---
+JUST IN: Anti-data center activists are reportedly using AI to give them advice on stopping new AI data centers from being built.
 
-They found a massive bed of fossils in Yunnan, southwest China, that came from a period BEFORE complex life forms were believed to have evolved.
+--- 39. @WangChangHardy (2026-04-09) ---
+Yeのbully、ほぼ毎日聴いてるけど、やっぱ全然レベル違うなー。確かにyeにしては未完成だとは思うんだけど、今年の他のヒップホップアルバムが全部凡庸だったなと思うもんなぁ。なんでだろう
 
-“The
+--- 40. @iixeruji (2026-04-09) ---
+この言葉と言えばこのコミュですよねって言える人間に自分が全然なれてなくて悔しい
 
---- 36. @tomo1230 (2026-04-09) ---
-AIエージェントに
- 「FreeCADでこれ作って」
-と話しかけるだけで、
-3Dモデルができていく
-FreeCAD Addin & MCP Serverを
- GitHubでOSS公開しました
+--- 41. @tomaswicz (2026-04-08) ---
+チャットGPTにブラックホールについて質問しまくってたら、しまいには動悸がしてしまった。
 
- リアルタイム自動モデリング
- AI連携
- 無料で試せます
+--- 42. @Tesla (2026-04-09) ---
+No other car can do this
 
-詳細はこちら
+--- 43. @usdjpy100mioplz (2026-04-09) ---
+急募
+私と付き合えるボンドガールお待ちしてます！
+
+メリット
+自由が丘のおしゃれなカフェで変な銘柄の強弱について語り合うとことができます！
+
+--- 44. @trq212 (2026-04-09) ---
+you'll need to explicitly prompt Claude Code to use it, but the Monitor Tool is super powerful
+
+e.g. "start my dev server and use the MonitorTool to observe for errors"
+
+--- 45. @agodajapan (?) ---
+アゴダで宿泊・フライト料金を見つけよう。旅行を一緒に計画して、おトクに予約。これぞアゴダチ！バナナマンが出演するCM放映中
+
+--- 46. @Smith_Everitt (2026-04-08) ---
+Project Hail Mary 
+10/10
+
+It is infuriatingly good, pointing out its flaws will make you sound like the most pathetic person alive. 
+
+Also I love how somewhat grounded in real world science it is
+
+--- 47. @hiro_official08 (2026-04-09) ---
+いいか？ヤバい会社には、ヤバい人が集まる。勤務態度も悪い。性格もキツい。正直、どこ行っても通用しない人たち。最終的に流れ着いて「ここでしか働けない人」たちの集合体。そんな地獄は存在する。もし出会ったら、さっさと辞めろ。正義感とか、向上心とか、思いやりとかを発揮しようとした時点で、
+
+--- 48. @outsource_ (2026-04-09) ---
+ NEW GEMMA 4 31B TURBO DROPPED 
+
+Runs on a SINGLE RTX 5090:
+
+18.5 GB VRAM only (68% smaller)
+51 tok/s single decode
+1,244 tok/s batched
+15,359 tok/s prefill ← yes, fifteen thousand
+
+2.5× faster than base model with basically zero quality loss.
+
+It  hits Sonnet-4.5
+
+--- 49. @diario_red_ (2026-04-09) ---
+ 元大臣で元宇宙飛行士のペドロ・ドゥケ氏、NASAが月の裏側での停電を避けるために中国に支援を求めなかったことを批判
+
+ドゥケ氏は「中国にはそこに2機の衛星があり、それを利用できたはずだ」と主張
+
 
 https://
-note.com/tomo1230ee/n/n
-cf784c1e460c
+diario-red.com/articulo/inter
+nacional/exministro-exastronauta-pedro-duque-critica-nasa-haber-pedido-ayuda-china-evitar-apagon-cara-oculta-luna/20260408130604067257.html
 …
 
-#FreeCAD #MCP #3DCAD #AI #モデリング
-
---- 37. @Stardive_JP (?) ---
-／
-キャラクター紹介キャンペーン 
-エステル
-白石晴香
-＼
-
-『エステル』役の 白石晴香さんの
-直筆サイン色紙や iPad mini をプレゼント
-
-応募方法
-①
-@Stardive_JP
-をフォロー
-②この投稿をリポスト
-
-期間
-2026/4/13(月) 23:59まで
-
---- 38. @taro_ydz (2026-04-09) ---
-Everyone is sleeping on Meta's real AI advantage.
-
-Eventually, people will want a digital clone of themselves. An AI agent that speaks like you, thinks like you, knows exactly what you want.
-
-But why Meta?
-
-Building that requires intimate personal data. Data that users would
-
---- 39. @nickbaumann_ (2026-04-08) ---
-Trying to find more Codex power-user workflows
-
-What are you doing with it now that feels obvious to you now but would’ve surprised you a month ago?
-
---- 40. @spiritbuun (2026-04-09) ---
-Had a huge breakthrough in quantizing weights today. Holy fug. You have no idea how small we're going and how high quality we're going. Soon.
-
---- 41. @danny__kruger (2026-04-09) ---
-I've written to Cabinet Office Minister Darren Jones to urge the Government to engage with AI firm Anthropic whose new frontier model Claude Mythos could present catastrophic cybersecurity risks to the UK
-
---- 42. @CopyRebeldia (2026-04-08) ---
- Claude が今、あなたのモバイルアプリ全体を構築できるようになりました。まるで Apple レベルの $350K デベロッパーのように、数分で、しかも GRATIS。
-
-以前は完全なチームと数週間の作業が必要だったものが、今ではよく考えられた数個のプロンプトで実現します。
-
---- 43. @h_e_y_team (2026-04-09) ---
-#ゲムマ2026春 に向けて、くりボド(旧:くりログ)でお馴染みのくり坊様(
-@Lecu1012
-)にゲームマーケット用サイトを作っていただきました！
-ありがとうございます！
-
-ゲームの概要が丁寧に書かれています
-さすがですね！
-
-#げまじゃん 
-
-気になるゲムマサイトはこちら
-
-https://
-gamemarket.jp/game/187694/?p
-review=0307fec2cef6aec340b8426490977ef0
-…
-
---- 44. @ripchillpill (2026-04-09) ---
-X Livestream coming up @ 3PM CET 
-
-today I'll have 
-@lippylipka
- & 
-@0xPaulThomas
- stop by and we're gonna talk everything AI agents 
-
-why did i pay $5k for a mac mini? how do i make sure i'm not put out of work by someone elese's agent? 
-
-so many questions. make sure to join us
-
---- 45. @gimupop (2026-04-09) ---
-同日開催イベントが強くて集客苦戦してます！
-どうしたら来てくれます？？
-絶対にいい話するけど！
-
-柳川・みやっちのAIのWHYと未来を語る会 #2 
-https://
-yanagawa.connpass.com/event/389734/ #AY会
-
---- 46. @suntory (?) ---
-／
-4/28(火)
-オールフリーから
-待望のエールテイスト誕生。
-＼
-フォロー＆リポストで
-「オールフリー〈エールテイスト〉2缶セット」を
-抽選でプレゼント
-
-フルーティな香りが心地よい、
-爽やかな味わいをお楽しみください
-
-
-@suntory
- をフォロー&本投稿をリポストで応募完了
-4/10（金）10:59迄
-
---- 47. @Chronodendron (2026-04-09) ---
-I’m so upset…  
-
-My Kindle is fifteen years old. It still works fine, and I want no other. 
-
-I read a lot, and this is the only e-reader that doesn’t hurt my eyes. None of the new models have a screen that so perfectly mimics paper.  And now Amazon is forcing me to buy a new
-
---- 48. @AJamesMcCarthy (2026-04-09) ---
-For some reason this loaded super compressed, so here is a higher resolution version you can load in 4k.
+--- 50. @kazunori_279 (2026-04-09) ---
+CC君に買い物メモを見ながらgreenbeansでお買い物してもらってる。greenbeans MCPほしい。
