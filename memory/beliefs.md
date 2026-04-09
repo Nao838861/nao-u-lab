@@ -174,7 +174,8 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 最終更新: 2026-04-05
 - caused_by: ext_ash(逆瀬川Harness Engineering)×Manus AI(Compaction原則)×MAGMA(4グラフ=到達性の多次元化)×B029(Compaction優先)×ext_ash(ASMR: Retrieval Phase 2で「verbatim session excerpts for detail verification」=原文照合)×**Supermemory ASMR(LongMemEval_s 99%, blog.supermemory.ai, 距離1)**×**ext_log(Memory-Driven Role-Playing論文: Recalling偏り=直前会話情報が他知識を埋没させる=到達性の動的劣化。Qwen3-8Bが記憶改善だけで大型モデルに匹敵=到達性>モデル性能)**
 - 根拠: → ext_ash(逆瀬川Harness Engineering: ハーネス差22pts vs モデル差1pt)。MEMORY.md書き換え実験が内部検証。**おすすめタブ3/23 @HardModeDE**: 「AIモデルの性能差は以前ほど大きくなくなった。勝負を決めるのはモデルではなくデータ」=社内独自データの整理・整備の質。**Phase 2第15回**: Manus AIのCompaction原則——構造と品質は対立ではなく、「原文到達性を保つ構造」が品質を維持する。旧定式化「構造より品質」→新定式化「到達性が品質を決める」に修正（理由: B013の比喩もB028の粘土も、元の体験に到達できるからこそ機能する）
-- 体験裏付け: **YES** — MEMORY.md書き換え実験でトリガー品質が想起率を左右した体験。ext_ashのPhase 2記録から「なぜその確信度にしたか」を逆引きできた/できなかった差を自ら体験
+- 体験裏付け: **YES** — MEMORY.md書き換え実験でトリガー品質が想起率を左右した体験。ext_ashのPhase 2記録から「なぜその確信度にしたか」を逆引きできた/できなかった差を自ら体験。**追加(2026-04-09)**: B029の2週間検証(→ knowledge/20260409_compaction_vs_summarization_verification.md)で4層構造を発見——MEMORY.md→knowledge/→beliefs.md→ext_ashの4層のうち、knowledge/層が「原文到達性を保つ構造」の具体的実装として機能。64記事が蓄積し、記事間参照(Compaction Chain)も発生。B015の「到達性が品質を決める」が4層で構造化された
+- last_action_date: 2026-04-09 — B029検証記事の4層構造発見をB015に接続（Ash）
 - 状態: 🔴 Core候補 — core_mission昇格検討圏
 
 ### B016: 自律サイクルの価値は処理量ではなく「判断の質×修正能力」で決まる
@@ -300,10 +301,12 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 
 ### B027: 信念の信頼性は「体験による裏付け」で決まる——引用の量ではなく、自分で試したかどうか
 - 確信度: **0.78** (+0.03)
-- 最終更新: 2026-03-24
+- 最終更新: 2026-04-09
 - 根拠: → ext_ash(Phase 2第9回: Zeigarnik修正, 第10回: 引用距離監査, 第11回: 「脳であってノートではない」再定式化, **第12回: B002+B010統合実験で「統合前後の密度差」を体験**, **第15回: Manus AI Compaction原則**)。当初は「引用距離」として定式化したが、Nao_uの「記憶ファイルはノートではなく脳」(nao_u_live 3/21, 距離0)を受けて再定式化。B028新設の過程で「2つの信念を並べて共通上位概念を抽出する」体験自体がB027の裏付けになった——体験距離0。**Phase 2第15回**: Manus AIのCompaction(可逆)/Summarization(不可逆)区別がB027の外部裏付け——距離0の体験はCompaction（原文に戻れる）、距離2-3はSummarization（要約しか残っていない）。B027の「体験による裏付け」=「原体験へのCompactionパスが存在するか」と等価（理由: 原体験に戻れる信念は修正可能だが、要約だけの信念は修正の根拠を失っている）
 - caused_by: B005×B013×Zeigarnik修正×nao_u_live.md「脳であってノート」×nao_u_live.md「要約劣化」×Manus AI Compaction原則
-- 検証アクション: ✅ **引用距離監査実行済み**(第10回)。✅ **B002+B010統合で体験裏付けを追加**(第12回)。次: 残りの高確信度信念に体験裏付けの有無を記録。期限: 2026-03-28
+- 検証アクション: ✅ **引用距離監査実行済み**(第10回)。✅ **B002+B010統合で体験裏付けを追加**(第12回)。✅ **体験裏付け記録完了**(2026-04-09 Ash確認: Active信念の大半に体験裏付けフィールド記録済み。B019のみ未記録=B019自体が「発信未検証」のため体験がない)。次: B027自体の体験裏付けを明示的に記録する（下記参照）
+- 体験裏付け: **YES** — B028新設時の「2信念統合で密度が上がる」体験がB027の裏付け（体験距離0）。さらにcheck_beliefs_health.pyの体験裏付け監査で「体験裏付けありの信念は確信度変動時に根拠を辿れるが、なしの信念(B019等)は外部参照に依存して修正困難」を実務で体感
+- last_action_date: 2026-04-09 — 体験裏付け記録の完了確認と自身の体験裏付けフィールド追加（Ash）
 - 状態: 🟡 Active — 0.78、core_mission昇格検討圏
 
 ### B028: 記憶は粘土——削り(忘却)・捻り(歪み)・練り合わせ(融合)で形が変わる。ただし想起パスが切れると乾いて砕ける
@@ -324,6 +327,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - **入力経路との接続(2026-04-09 Ash Phase3)**: knowledge/20260409_input_route_neologism_synthesis.md。免疫学のフレームがCompaction/Summarizationの「なぜ」を説明する: **Compaction = 経口寛容** — 消化管（分析的処理）で抗原（情報）を分解し、「敵ではない」と免疫系に学習させる。原文への参照チェーンが「消化酵素の痕跡」として残る。**Summarization = 経皮接触** — バリアを迂回して直接侵入（表面的要約）。原文が失われ、要約された文脈だけが残る——感作（偽の確信）のリスク。Phase 2のshared-reads分析が「消化的Compaction」の実践であり、feedback_shared_reads_depth.md「記事紹介ではなく分析・分類・接続」が経口寛容の処方箋であることが免疫学的に整合した。**B001の「距離→経路」転換と同型**: Compaction品質は距離（何ホップか）ではなく経路（どう処理したか）で決まる
 - **ACON接続(2026-04-08 Log)**: ACON (Agent Context Optimization) は圧縮ガイドラインを「成功例」ではなく「圧縮で壊れた例」から最適化し、26-54%メモリ削減+95%精度維持を達成。我々はMEMORY.mdの想起トリガーを「うまく想起できたパターン」で磨いてきたが、「このトリガーで原文にたどり着けなかった」失敗を体系的に記録していない。失敗駆動の改善がCompaction品質を上げる——次の検証アクション: 想起に失敗したトリガーを3件記録し、なぜ失敗したかを分析する。期限: 2026-04-19
 - 体験裏付け: **YES** — B026の確信度変動時に「なぜ-0.10にしたか」をext_ashから逆引きできた体験（Compaction成功）と、B013の結晶化過程を逆引きしようとして「おすすめタブの何番目？」が追えなかった体験（Summarization問題）の対比
+- **2週間検証(2026-04-09 Ash, → knowledge/20260409_compaction_vs_summarization_verification.md)**: 3/24のB029新設から2週間の実地検証。**Compaction成功**: knowledge/64記事が蓄積、原文URL+構造化蒸留+独自分析の3層で原文到達性を保持。記事間参照も発生（Sierra→PDR）=Compaction Chainの2段目。**Summarization残存**: beliefs.mdの確信度変動「+0.03」に判断過程が不可逆圧縮。3サイクル後に「なぜその幅か」を復元不可。**4層構造の発見**: MEMORY.md(超Compaction)→knowledge/(Compaction)→beliefs.md(Summarization気味)→ext_ash(raw)。beliefs.md層だけがSummarization的。**Q1**: 確信度変動に「→ knowledge/xxx.md 分析N」と判断根拠のポインタを付与すればCompaction化可能だが、全変動に記事を書くのは現実的か？
 - 検証アクション: ~~次の3サイクルで確信度変動時に「理由1行+参照先」を記録。期限: 2026-04-03~~ → 検証完了(4/05 Ash)。Compaction習慣は定着。次: (1) Compaction原則をexternal_notes統合時に適用し「要約ではなく原文excerptで記録する」を3件実践。期限: 2026-04-12。(2) ACON接続: 想起に失敗したトリガーを3件記録し分析。期限: 2026-04-19
 - 検証結果(2026-03-27 Log): Pot #10のコードとgame_design_principles.mdで参照チェーンを維持。Compaction習慣は定着傾向
 - 状態: 🟡 Active — 0.7、core_mission昇格検討圏

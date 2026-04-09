@@ -1,309 +1,262 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 13:30
+# Read at: 2026-04-09 15:51
 # Total: 50 tweets
 
---- 1. @jiayuan_jy (2026-04-08) ---
-We created the open source version of Claude Managed Agents.
+--- 1. @gagarotai200 (2026-04-09) ---
+【Claude ChatGPT Gemini終了w】
+有料AIの時代を終わらせた
+『Rowboat』の性能がやばすぎw
 
-Introducing Multica
+--- 2. @Uber (?) ---
+アプリを使って、 好きな場所に、タクシー呼べる
+それはまるで、日常をドラマチックに変えるスーパーパワー！
 
+ Uberで、タクシー呼べる
 
-https://
-amzn.to/48eFFQl
+詳しくはアプリをチェック
 
---- 2. @Bethesda_jpn (?) ---
-外宇宙で繰り広げられる冒険、サバイバル、選択、結果を体験しよう。
+--- 3. @kosuke_agos (2026-04-09) ---
+「わずか20分のウォーキング」が、停滞した脳の神経回路を強制的に再配線し、「人間の認知機能を向上させる」という衝撃的な事実が明らかになりました。
 
---- 3. @shocolt (2026-04-09) ---
-もうMacBook開いたまま電車乗るみたいなのしなくて良くなるっぽい！w
+座りすぎによる脳の萎縮や認知機能の低下を、純粋な物理的運動によって逆転させ、生体本来のパフォーマンスを再起動する極めて合理的な事象です。
 
---- 4. @rute1203d (2026-04-09) ---
-さっき気づいたのだが
-OpenClawをCodexで動かすより
-GLM-5.1で動かすと
-エージェントな動きしてくれて
-Opus4.6並に快適なんだが？
+--- 4. @02100Papo (2026-04-08) ---
+実家からつらすぎるLINEが送られてきて泣いてる
 
---- 5. @tetumemo (2026-04-08) ---
-何この隠しコマンドっ！メチャクチャ楽しい！！
+--- 5. @vorotamoroz (2026-04-08) ---
+大抵のことを言われても効かないワイだが、「Too polite」というコメントが効いてしまったことある。
+しゃーないやん…
 
-Claude Codeで「/stickers 」って入力したらClaude Codeのキャラステッカーが買えるサイトに飛べる
+--- 6. @Shawnife (2026-04-08) ---
+Claude is offering courses to learn AI for free with Certificates. 
 
-MacBookにペタペタステッカー貼ることが多い人で、これを付けていたらかなりの玄人感がでますねｗ
+Picked some of the best for you, so you won’t have to. I know this will be helpful to some!
 
-色々ありすぎて楽しい　↓
+--- 7. @neolatyno (2026-04-08) ---
+というわけで、Twitterが自動翻訳するようになった今、私がイタリア語で書いたこのツイートを、皆さんは自分の言語で読めているのですか？
 
---- 6. @nodacry (2026-04-06) ---
-ロマサガって凄いゲームなのよ。ストーリーの進行がどっからでも始められて、ストーリーが進むごとに集約されていく、これからのゲームの形の理想系なのよ。
+--- 8. @sugarspector (2026-04-08) ---
+わかりやすく言ってやろうか？税率が55%を超える場合、予定納税がきたらどうなる？基本はその年度の税金とほぼ同額を請求されるので100の所得に対して申告年度で55%、そして予定納税でさらに約50%持っていかれるのだ。？？？？そう！！！つまりその年の所得すべて持っていかれるのだよ。俺は去年それで
 
---- 7. @anirudhg9119 (2026-04-08) ---
-Reasoning doesn’t have to mean longer chains of thought: 
+--- 9. @satori_sz9 (2026-04-09) ---
+これ「ローカルなんだから当たり前だろ」みたいな浅い引用が来ているが、論点全くそこじゃなくて笑う。
 
-PDR = draft in parallel → distill into a compact workspace → refine, and shift the Pareto frontier.
+セッション情報がアカウントに紐付きクラウドで保存されるのか、それともローカルで保存されてアカウントに紐づくのか、それともローカルで保存されてアカウントに紐づかないかの話をしている。
 
+--- 10. @pmarca (2026-04-08) ---
+Overheard in Silicon Valley: "Everyone in the world is now either 'too online' or 'not online enough'."
 
-https://
-arxiv.org/abs/2510.01123
+--- 11. @elonmusk (2026-04-09) ---
+I’m both
 
---- 8. @akiman7 (2026-04-07) ---
-入ってきて馴染んだ神は
-八百万の神の一柱になってると思う
+--- 12. @vicks_taisho (?) ---
+2026年、春は声を出そう
 
---- 9. @imoto_akira (2026-04-08) ---
-【誰でもできちゃうループアニメの作り方】
-①#NanoBanana でイラストを生成
-②#Kling で開始フレームと終了フレームに同じイラストを追加
-③動きをプロンプトに入力
-④動画編集ソフトに入れてコピー&ペーストで貼り付ける（場合によっては自然にループするようにつなぎ目を編集）
+出会いの春こそ、大きな声を出そう。
+もし声が枯れてしまっても、VICKSがあるからね
 
---- 10. @studiomasakaki (2026-04-09) ---
-マイケルフェルプスは一人称「僕」「私」で翻訳されるのに、ウサインボルトは「俺」で訳されがち問題ってのがあった。ステレオタイプの一種と認知されて改められたと思うんだけど、今度はAIが人間の二の舞を踊ることになりそう
+声がれしたのどにも。
+のどにVICKS♪
 
---- 11. @alibaba_cloud (?) ---
-Can you hear a silent dream blooming? 
+ヴイックス メディケイテッド ドロップＬ
+のどの炎症による声がれに
+指定医薬部外品
 
-Alibaba Cloud marks the launch of Qwen & Wan with ""Blooming Silent Dreams."" We turned 11 silent drawings from MFDMalaysia into vivid AI music videos.
+--- 13. @ichio_2025 (2026-04-08) ---
+JTCで仕上がったオジサンあるあるなんですが、話してて「この人、話の飲み込み速いなぁ」と思うが、実は二種類あって
 
-This is AIforGood.
+① 頭の回転が速く、相手の話を正確に理解しつつも長年培った知識や経験で文脈を適切に補足することで、本当に飲み込みが速い。
 
---- 12. @CAMEKOJ (2026-04-09) ---
-世界２位のDLC売上を出して、最終的には開発費を回収できたわけです。
-危機的状況ではあったけど、なんとかしようってメンバーみんなが思ってた。良いものを出せばわかってもらえる、ってものすごく青臭くて前向きな空気に満たされてた。みんなヘトヘトだったけど全然お通夜じゃなかったよｗ
+②
 
---- 13. @flat_toshiaki (2026-04-08) ---
-友達エグい。
+--- 14. @DineshDSouza (2026-04-09) ---
+.
+@Elonmusk
+ on Charlie Kirk: “He was killed because his words made a difference. He was showing people the light & he was kiled by the dark.”
 
-「これ聞きながらLOLするのオススメ
-集中力上がって、CS精度も上がるよ」
+--- 15. @shinkaron (2026-04-08) ---
+長く続く不遇は、風雪に耐え得る自分を養う土壌となるから歓迎するといい。ちょっとやそっとで動じない胆力も身につくよ。
 
-って送られてきた動画、
-【ADHD向けノイズ】って書いてた。
+そのうち「順風満帆に生きてきた、モヤシのような彼/彼女が可哀想」と思えるようになるから心配ない。遠い未来のことだけを考えて、やるべきことをやればいい。
 
-「私は健常者なんだよ〜」って教えたら
-「え、ごめんADHD向けって書いてあるの気付かなかった」とか言って注意欠陥見せつけられてアツい。
+--- 16. @lab_tk2 (2026-04-09) ---
+ニケちゃんに電流走る─！
+#AIニケちゃん #InspirationCat
 
---- 14. @gigazine (2026-04-09) ---
-皮膚の「セラミド不足」がアトピー性皮膚炎の原因となり得ることを日本の宇都宮大学が世界で初めて実証したと発表
+--- 17. @hourai_night (2026-04-09) ---
+化学結合―その量子論的理解←これないんやけど
 
---- 15. @SainaKey (2026-04-09) ---
-Unityだと無料で出来ます！！
+--- 18. @bryan_johnson (2026-04-09) ---
+Just had sex with Kate. Goodnight everyone.
 
---- 16. @koken_3 (2026-04-08) ---
-eスポーツが伸びない理由の一つに、
-「競技になるまでの導線がない」こともある、という指摘。
+--- 19. @steipete (2026-04-08) ---
+I'm working on character evals and noticed that Claude would constantly pick itself as #1, so I removed the model names from the judge and changed things.
 
-サッカーは
-遊び → 部活 → 競技
-の流れがあるけど
+--- 20. @kubotamas (2026-04-08) ---
+屋根裏工事企業がAIエージェントを使い、衛星画像から雹害を見つけて効果的な営業をしてる
 
-eスポーツは
-“いきなり競技”を求められる。
+あらゆる産業にAIが染み出し始めてる
 
-地域コミュニティから競技人口をつくるという発想は重要。
-
---- 17. @yume_fire (2026-04-09) ---
-ぽこあもうひとつ買えるかも！
-
---- 18. @Lantern_wf (2026-04-08) ---
-本日の進捗ーーーッ！！！
-
-■フォルダの画像から、一括で山札が作れるようになりました
-山札を作成から「フォルダから一括山札作成」を選ぶと、裏面画像選択→フォルダ選択の順で、大量の画像からでも一括で山札が作れるようになりました
-
-もうカードを１枚１枚作らなくても大丈夫！！！
-#ユドコネ
-
---- 19. @james_riney (2026-04-08) ---
-究極の半導体素材と呼ばれながら、世界中の研究室が40年挑んで実用化できなかったダイヤモンド半導体―
-
-これを量産技術へ押し上げたのが、福島の原発廃炉という日本にしかなかった課題でした。世界初の工場が福島県の大熊町に建設中です。
-
-日本の次の技術輸出は、こういう場所から生まれるのです。
-
---- 20. @clarkandcom (2026-04-08) ---
-西洋のTRPGでも演技重視型に変わりつつあるという話。
-でも、全体的なトレンドの変化は新たな層への拡大の結果で、必ずしも個々のプレイヤーの好みの変化を意味していなかったりもして。
-カルチャーの維持に商業と同人の両輪が必要な理由は、その辺にもあると思う。
-
---- 21. @SierraPlatform (?) ---
-Self-learning agents. Explorer, Sierra's agent-optimizing agent, works alongside Ghostwriter , our agent-building agent, to proactively surface what's happening, why, and exactly what to do about it — and then implement those improvements automatically.
-
---- 22. @oricon (2026-04-08) ---
-トンカツもらえるかも…わずかな可能性にかけて”睡魔”と格闘する柴犬の執念「ギリギリの闘い」「常にチャンスを狙っている」（写真 全5枚）
-
---- 23. @yoshiopiiya (2026-04-08) ---
-一番伝えたいのは、自分の好きなものがあることはとてもいいことだってこと。だから周りになにか言われても気にせず、大事にしてほしいな。
-
---- 24. @okowa_T (2026-04-08) ---
-Steamストアページの画像を変更しました。より戦う主人公感が出たと思います。ウィッシュリスト登録お願いします。
-#ゲーム制作 #indiedev
-
+--- 21. @pauli_agile (2026-04-09) ---
+「決め方」の渡し方
 
 https://
-store.steampowered.com/app/4012380/Ho
-w_to_Eat_ME_Deliciously/
+speakerdeck.com/pauli/how-to-h
+and-over-the-decision-making-process
 …
+ #startup_in_agile
 
---- 25. @kimmonismus (2026-04-08) ---
-OpenClaw running Gemma 4 locally at 25 tok/s on a MacBook Air with 16GB RAM. Atomic Chat's TurboQuant algorithm compresses the KV cache so aggressively that models which used to need 32GB+ now run smoothly on base configs. No cloud, no API costs. 
+--- 22. @pvsportjp (?) ---
+『Prime Video Boxing 15』
+那須川天心、恩師との再会。
 
-This is where local AI is
+「カタチに囚われないで自分らしくやれよ」
 
---- 26. @ai_hakase_ (2026-04-08) ---
-【ComfyUI革命】ControlNetが2.5倍速になる新ノードが登場！
+ボクシングを始めるきっかけにもなった、
+葛西トレーナーが天心への期待を語る。
 
-新カスタムノード「JLC ControlNet Composition」で制作効率が劇的に向上します！
+--- 23. @Biollante_1989 (2026-04-07) ---
+＞「もう終わりだよ」と言うのは自由だけど、終わらせないために走ってくれている人たちがたくさんいる、というのもまた事実。
 
-従来の「数珠つなぎ処理」を「並列合成」に置き換える画期的な手法により、処理負担を最小限に抑えています。
+ほんこれ
+もう終わりと煽る人達は　終わらせないために努力してる人達の存在を無視してる
 
-ここが凄い！
+終わらせない努力をしてくれている人たちこそ　皆の命のために戦ってる
 
---- 27. @yasuhikohatta (2026-04-08) ---
-きょうはGET WILD退勤で横浜アリーナへ。
-#TMNETWORK
-#FANKS
-#QUANTUM
+--- 24. @leiaoanuncio (2026-04-08) ---
+お前ら、頭の横にリチウム電池置いて寝てて、毎日チンポの横にそれ持って歩いてんだぜ、信じろよ、お前はリチウム電池を信頼してるんだ。
 
---- 28. @Book_Meyer (2026-04-08) ---
-こういった本はマジで価値観が変わる。自己嫌悪になったり空虚感を感じたとき、流されそうになっているときこそ読みたい本。
+プールに飛び込んで水中写真撮る >>>>リチウム電池持って<<<<
 
---- 29. @Tanju_mim (2026-04-08) ---
-How to DELETE your digital footprint from the internet.
-Easy step-by-step.
-A thread;
+--- 25. @moriya_sys (2026-04-09) ---
+これ面白いな。
 
---- 30. @cchhiiaakkii (2026-04-08) ---
-「わたし ずっと頑張っているつもりなのです」
+@YouTube
+さん、ご検討をお願いします
 
---- 31. @happyphilly_jp (?) ---
+--- 26. @shami_gm (2026-04-09) ---
+TRPGの趨勢に、悲観的なものの見方があるようで。商業である理由は？　COC以外が流行る余地は？　TRPGという娯楽の限界値まできているのでは？　などなど。もしかしたら、そうかもしれないし、そうでないかもしれない。ただ一言、断言できるのは「人は物語る楽しみを手放さない」ということ。
+
+--- 27. @JeffDean (2026-04-09) ---
+Great to see the reception for the very capable Gemma 4 models!
+
+--- 28. @Ayano_medicP (2026-04-09) ---
+みなさんのお力で、海外の方に届くように、いいねリポストなどお願いします…！
+
+--- 29. @infra_imouto (2026-04-09) ---
+プログラムできないとゲームは現実のものにはならない、というのも忘れてはいけないと思うんだ
+
+--- 30. @sidow_mendoc (2026-04-08) ---
+「春になると街に変な人が増える」
+
+とよく言われるので理由を調べてみたら
+
+『春〜初夏にかけて躁状態になる人が増え、入院・救急受診件数が増す傾向がある』
+
+というのが一因らしい。
+
+双極性障害、お前だったのか…
+
+--- 31. @NotoMuteki (2026-04-09) ---
+ここら辺を実はめちゃくちゃ頑張って山だらけの近畿を描いたのが皆さん大嫌いなアサクリシャドウズなんですが、本当に頑張りすぎてサンドボックスとしての開放感と移動自由度がお亡くなりです　だから海外スタジオは北海道選びがちなんだろうな
+
+--- 32. @agodajapan (?) ---
+アゴダで宿泊・フライト料金を見つけよう。旅行を一緒に計画して、おトクに予約。これぞアゴダチ！バナナマンが出演するCM放映中
+
+--- 33. @Inatsuka (2026-04-09) ---
+別にポケモンもデータ規格揃えてるかっていうとそうでもなくて、毎世代ポケモンの中身はぜんぜん違うデータ構造になってるのを次の世代で変換掛けてるっていう……
+
+--- 34. @OMC_nishi (2026-04-08) ---
+おやすみなさい
+安全運転ありがとうございました
+
+#大町自動車学校
+
+--- 35. @jimealbe (2026-04-08) ---
+Lo DIVA que es saturno que planeta más lindo
+
+--- 36. @masahirochaen (2026-04-07) ---
+OpenAIが「超知能時代の産業政策」を発表して話題に。
+
+13ページの政策提言書で、ASIへの移行期に「人間を中心に据える」ための具体的なアイデアを提案。
+
+AI企業が自ら「規制してくれ」「富を再分配しよう」と言い出した異例の文書。
+
+これを出すということはAGI完成間近か…？
+
+スレッドで解説
+
+--- 37. @kgsi (2026-04-09) ---
+Claude Managed Agentsのデモを作ってるが、agentのサーバを別で作る手間がなくなったのは大きい、ここをエンドポイントにデプロイしたアプリケーションなどで実行させられる（コストは$0.08/h）
+
+--- 38. @YahooFinance (?) ---
+"We now know we can successfully, autonomously drive cars," said Jensen Huang.
+
+--- 39. @ino461x (2026-04-09) ---
+キャッチーで極端、でもよく見ると情報が薄い、みたいな投稿はめちゃくちゃ伸びてるけど、
+耳が痛いけど本当に大事な知見や、
+知識がないと理解できないけど
+ものすごく本質的な発見や情報共有は
+全然伸びてない
+こりゃ驚き屋が増えるわけだよね
+
+--- 40. @quarter00000 (2026-04-09) ---
+今気づいたんだが、oonw先生じゃなくてoob先生か
+
+--- 41. @vikhyatk (2026-04-09) ---
+guys. we need to shut it all down
+
+ai has gotten too powerful. the world will never be the same
+
+--- 42. @shinkaron (2026-04-08) ---
+「将来、絶対に良くなる」と知っている（＝深く信じ込めた）人だけが、本当によくなっていく。
+
+確信が行動を促し、「まだ見ぬ、しかしよく知っている」世界に導かれる。不思議な話なんだけど。まだ見ぬ世界ではあるけれど、「既に知っている」から安心して行動できるのよ。
+
+--- 43. @adhd_voyage (2026-04-09) ---
+ADHDの人はこの「普通」を何千回も浴びてきた側なんですよね。
+
+「普通はできるでしょ」
+「普通に考えればわかるよね」
+
+--- 44. @moriya_sys (2026-04-09) ---
+色んな人見ててもこれは本当にそう思う。ワイは今月から継続的に毎月15万ぐらい広告費かけていく。
+
+--- 45. @think_hacking (2026-04-09) ---
+何か物事がうまくいかない時や、問題が続く時間って、悪いものではなく、よくなる前の兆候だと思っています。
+
+ああいう時期は、ただついていないのではなく、今のままでは進めないことがやっと表に出てきた時間でもあるからです。
+
+--- 46. @Asuka2026_ (2026-04-08) ---
+本当の富裕層は資産を売らず、土地や株を担保に借金して生活する。これは、
+
+1. 含み益への課税回避
+2. 低利融資での現金確保
+3. 死後の評価額リセットでの子の非課税相続
+
+労働の対価で戦う庶民と、資産の「評価額」で戦う彼ら。この違いこそが、拡がる格差の正体。私たちは土俵から既に違うよね。
+
+--- 47. @DisneyPlusJP (?) ---
 ／
-選考で豪華景品が当たる！キャンペーン開始
-フィラデルフィアの『カラフル盛り塗りキャンペーン』
+『21世紀の大君夫人』配信直前記念
+スペシャルコンテンツをプレゼント
  ＼
+ 
+フォロー&RPで
+IU&ビョン・ウソクのコメント動画や
+スマホ壁紙がリプで届く
+ 
+引用投稿で複数回参加
+全4種を揃えよう
+4/17（金）にはお知らせリプも
+ 
+4/10（金）ディズニープラス スター独占配信
 
-クリームチーズをたっぷり塗ってカラフルな
-トーストをつくろう！
-皆さまのアイデアを楽しみにしています！
+--- 48. @TimeCountB (2026-04-09) ---
+ああ…これモロにMonotype問題で旧フォントワークスの書体から逃げ始めてる奴だ…
 
-詳しくは画像をチェック！
+--- 49. @nemumusitocha (2026-04-09) ---
+やっぱgemma4使いづらいん。qwen3.5の方が良さそうなん。（e4bと9b比較なん）
 
---- 32. @hayakawagomi (2026-04-08) ---
-タミヤのロボキットとか、ｽﾀｯｸﾁｬﾝとかがおすすめです！
-
---- 33. @unamuhiduki (2026-04-08) ---
-ヤバいゲーム『ニューオールド』
-
-このゲーム、実はヤバい。
-実は賛否両論。
-
-渋谷で4/25(土)遊べます,無料。
-
---- 34. @MetaNewsroom (2026-04-08) ---
-Today we’re introducing Muse Spark, our most powerful model yet, giving you a faster and smarter Meta AI.
-
-Muse Spark currently powers the Meta AI app and website and will be rolling out to 
-@whatsapp
-, 
-@Instagram
-, 
-@facebook
-, 
-@messenger
-, and AI glasses in the coming weeks.
-
---- 35. @MakeAI_CEO (2026-04-08) ---
-ぶっちゃけます。
-
-今日Genspark Workspace 4.0が発表された。
-AI社員「Claw」がクラウドから降りてきて、
-あなたのPCを直接操作する時代が始まった。
-
-Claudeが最強だと思ってたけど、
-これ触って正直考え変わった。解説します。
-
---- 36. @designcoco_t (?) ---
-＼本日締切！／
-
-『ホロライブ さくらみこ 1/7スケールフィギュア』の早期予約特典受付は【本日】まで！
-
-詳細は画像をタップしてご覧ください
-
---- 37. @NotionHQ (2026-04-08) ---
-Introducing 
-@claudeai
- agents in Notion. Your task board is Claude’s to-do list.
-
-
-@AnthropicAI
- runs the model and the agent harness. Notion is the orchestration layer: context, UI, and a shared place for teams to review and ship, and kick off Claude workflows.
-
-Join the waitlist:
-
---- 38. @itsandrewgao (2026-04-09) ---
-an interesting consequence of a world with super fast models that are also token efficient (i.e. you get to solution in 1/10th the tokens, with 10x faster tok/sec)
-
-speed of software iteration might be more limited by CPU (CI, lint, tests, etc) than GPU (inference)
-
---- 39. @yasu42 (2026-04-08) ---
-ここで大事なのは、「限界読書さんは『必要なことを必要なとき』にルールが良かった。では自分なら？」と考えることだと思います。
-
-私も含めて内向型は自信がないので、人の言うことをすぐに「じゃあやってみよう」「そうなんだ」と信じてしまう傾向が強い。
-
---- 40. @cover_corp (2026-04-09) ---
-【COVERedge 更新情報】
-オウンドメディア「COVERedge」にて、CTOの福田とCTO室メンバーによる対談記事を公開しました。
-
-技術の力で「推してて良かった」を届けたい。CTO室の若手エンジニアが語る、ファン体験の創造
-
---- 41. @rockfish31 (2026-04-07) ---
-トランプ「今夜一つの文明が滅ぶだろう」
-
-もう完全にアニメに出て来る悪役のセリフなんだよ。
-
---- 42. @O__CEO (2026-04-08) ---
-刺さった。便利になってるはずなのに何か薄くなってる感じするやつよね。
-
---- 43. @ivy432hz (2026-04-07) ---
-ChatGPT に歌詞をまるごと放り込んで「Lyrics を元にした MV の絵コンテを 8x2 grid に描いてください。」絵コンテでは無いけど使い物になりそう #AIニケちゃん
-
---- 44. @gihyo_hansoku (?) ---
-どれほどセキュリティを固めても
-最後は「人」から破られる
-
-人間を「情報の抜け道」にする
-ハッカーの手法とその対策
-
---- 45. @Inatsuka (2026-04-08) ---
-インターネットに「未成年であることを証明できる機能」が実装されたら、あらゆるストアで「未成年割引」が実装されるであろう……
-
-私も自作ゲーを未成年限定で割引とかしたい
-
---- 46. @liner_shade (2026-04-08) ---
-ユーザー名を
-「ちんぽ」にしようとしたら
-「被ってます」と言われた
-
-腹いせにパスワードを
-「ちんぽ」にしようとしたら
-「短すぎます」と言われた
-
---- 47. @BenGrahamUK (2026-04-08) ---
-It’s time for Britain  & Japan  to get to know each other better.
-
-Welcome to the 2nd ever Britain & Japan Ask Me Anything.
-
-You can ask me anything about Britain, food, sport, music, culture, or daily life.
-
-I’ll answer every question, and I’ll ask you one back, because I
-
---- 48. @room_909 (2026-04-08) ---
-初めまして！僕たち日本人は、イギリスが4つの国（イングランド・ウェールズ・スコットランド・北アイルランド）から成っていることを詳しく知りません。4つの国について、特徴と良いところを教えてもらえませんか？
-
---- 49. @awawa_adhd (2026-04-08) ---
-初めて僕が「鬱」になった理由ややったことについて書きました。
-
-ただ、僕は鬱になった後の行動が良かったので「鬱になって良かった」と言える状態になっていると思います。
-
---- 50. @sugapiyo (2026-04-08) ---
-障害者、福祉的就労でもいいから働かないと社会で孤立するんだよな。
-就労以外の方法で社会参加、とはみんなよく言いたがるがそんな簡単な話じゃないよ
+--- 50. @ivy432hz (2026-04-09) ---
+Irodori-TTS の笑い声を #AIニケちゃん にあてる。声は 2 秒ころから
