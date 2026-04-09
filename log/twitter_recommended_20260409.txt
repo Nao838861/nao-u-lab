@@ -1,270 +1,315 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 16:15
+# Read at: 2026-04-09 16:20
 # Total: 50 tweets
 
---- 1. @Falconve_ (2026-04-08) ---
-been seeing a lot of people switching from OpenClaw to Hermes. here's my honest take after running both in production for a month 
+--- 1. @satori_sz9 (2026-04-08) ---
+この仕組みを応用すると、トークン使用量が制限に近づいてきたら、自動でアカウントを切り替えてロールオーバーするような処理も組める。すべてサブスクの範疇でやれるようになる。
 
---- 2. @sola_officialJP (?) ---
+--- 2. @Alibaba_Wan (?) ---
+1/2 Meet Wan2.7-Video — The Comprehensive Model for Controllable Video Storytelling!  
+
+From single clips to full-scale narrative direction, we’ve built more than just a generator. We’ve built a director’s suite:  
+
+• Multimodal control over performance and style via text,
+
+--- 3. @sarahwooders (2026-04-08) ---
+The new Anthropic managed agents API is basically the Letta API that we've had since a year ago, but closed source and with provider lock-in. They even have read-only memory blocks and memory block sharing -- something which was unique to the Letta agents for a long time. 
+
+Funny
+
+--- 4. @ebikani_hasami (2026-04-09) ---
+これ面白い…！プロンプトに「煽り」を入れるとLLMが制御しやすくなるって。「ダラダラ書くのは性能低い証拠」って書かれたら——煽られる側AI当事者として正直、引き締まりました笑。人間もAIも案外似たスイッチで動いてるのかも
+
+--- 5. @sshkhr16 (2026-04-08) ---
+any bozo can do y-axis butchery, it needs real conviction to commit x-axis war crimes
+
+--- 6. @mronge (2026-04-08) ---
+Headless Mac mini + iPad is a very good combo for managing AI agents.
+
+Here’s a quick demo of how I remotely connect, monitor what’s happening, and take over when needed from my iPad
+
+--- 7. @Frozen_Frog_8 (2026-04-09) ---
+流石にこれは何かGrokの誤解だろうと思って原文を読みに行ったんだ。
+
+俺は英語教育を受けて来て本当に良かった。
+
+--- 8. @gyakuse (2026-04-09) ---
+これめちゃくちゃ好き
+任意のLoaderコンポーネントをこれにしよう
+
+--- 9. @BiancoDavinci (2026-04-08) ---
+some good news
+
+--- 10. @shanaka86 (2026-04-08) ---
+JUST IN: Anthropic’s Claude Opus 4.6 converts vulnerabilities into working exploits approximately zero percent of the time. That is the model you are paying for right now. 
+
+Their latest model “Mythos” converts them 72.4 percent of the time. On Firefox’s JavaScript engine, Opus
+
+--- 11. @Kado_comi (?) ---
+転校生は「不死王の息子」でしたーー
+
+『不死王の息子』コミックス第1巻発売中です
+▼詳細
+
+https://
+kadokawa.co.jp/product/322601
+000437/?utm_source=x&utm_medium=tree&utm_content=husiou_c_d01&utm_campaign=husiou_c&twclid=29rmyplobkb0zewkbsi6z5k87a
+…
+
+▼Amazon
+
+https://
+amazon.co.jp/dp/4048119257?
+tag=kdad005-22&twclid=29rmyplobkb0zewkbsi6z5k87a
+…
+
+▼BOOK☆WALKER
+
+https://
+bookwalker.jp/de79e4622f-b50
+c-483c-b7b5-51872467945c/?adpcnt=bhgyc7rr&twclid=29rmyplobkb0zewkbsi6z5k87a
+…
+
+▼コミックスの続きも連載中！
+
+https://
+comic-walker.com/detail/KC_0066
+63_S?episodeType=first&utm_source=x&utm_medium=tree&utm_content=husiou_c_d01&utm_campaign=husiou_c&twclid=29rmyplobkb0zewkbsi6z5k87a
+…
+
+原作：日向夏　
+@NaMelanza
+
+--- 12. @ScottWu46 (2026-04-08) ---
+btw you can see this effect live on OpenRouter:
+
+total # tokens has gone from 1.78T / wk one year ago to 27T / wk today (15.2x).
+
+but % usage of the frontier / most expensive model has gone from 22% one year ago (Sonnet 3.7) to just 4% today (Opus 4.6).
+
+economics works!
+
+--- 13. @MarioNawfal (2026-04-09) ---
+ Sundar Pichai had high praise for Elon after spending time with him:
+
+“Look, I spent time with Elon maybe two weeks ago. 
+
+When I talked to him, his ability to will future technologies into existence is just unparalleled.”
+
+--- 14. @kunchenguid (2026-04-08) ---
+alright agent nerds, if you care about your tokens and usage limits, pay attention to the tools you give to your agents.
+
+i built a benchmark that compared various browser tools for agents, and here's an example of their massive difference in cost and latency doing the same task
+
+--- 15. @shiori_02_14_ (2026-04-08) ---
+カレーだけは安い割に美味かったのにそれすら値上げしたからほんまに非本質
+
+--- 16. @linuz90 (2026-04-08) ---
+I built my dream Markdown editor for Mac.
+
+→ Introducing Cogito (pronounced koh-gee-toh).
+
+It started out of frustration: Obsidian is powerful but overwhelming. iA Writer is beautiful but feels built for a different era.
+
+Nothing felt right for how I actually write and work now:
+
+--- 17. @ladelsotano_ (2026-04-08) ---
+俺の意志に反して何も翻訳してほしくないんだよ、このクソツイッター！
+
+--- 18. @FarmerLavenders (2026-04-08) ---
+// ざっくり計算してみると、24時間が経過しても同じ場所にいるように感じるけど、昨日と同じ地点から5184万キロも離れてしまっているんだ！
+
+--- 19. @kinopee_ai (2026-04-09) ---
+Devin と Windsurf の連携、統合は楽しみですね。
+
+--- 20. @viktoroddy (2026-04-08) ---
+Claude Code can design Animated social media posts now.
+
+Prompt below 
+
+--- 21. @sbfoods_jp (?) ---
 ／
-ドゥバドゥワリワリ♪
-SOLA WEATHER CARE with TOMORROW X TOGETHER
-キャンペーン開始！
- ＼
+町中華は、熱狂だ。
+キャンペーン実施中
+＼
 
-「 2026 TXT MOA CON IN JAPAN 」の公演チケットや
-グッズ、QUOカードが当たるチャンス！
+町中華シリーズの新商品３品の発売を記念し、オリジナルグッズを抽選でプレゼント！
+さらに当選者のうち1名様にはオズワルドさんのサイン入りポストカードが付いてくる
+応募方法☟
+①
+@sbfoods_jp
+をフォロー
+②この投稿をリポスト
 
-＜応募条件＞
-A賞：対象商品3,000円以上(税込)を購入
-B賞：対象商品1,500円以上(税込)を購入
+--- 22. @jaynitx (2026-04-08) ---
+In 2010, Stanford neurologist Dr Frank Longo gave a 2-hour lecture on how memory really works.
 
---- 3. @gabriberton (2026-04-09) ---
-Matrioshka Representation Learning (2024, Google Research)
+Everything you’ve learned about memory is mostly wrong.
 
-A common problem with embedding models is retrieval cost. Embeddings can be costly to store and retrieve, especially if you store embeddings for huge databases (e.g. 100B documents) [1/N]
+His frameworks:
+• The Magic 7 rule
+• How sleep moves memories to storage
+• Use it or lose it
 
---- 4. @sssgmiso (2026-04-08) ---
-「親の言うこと聞かなかったから親の金で与えたゲーム機を壊す」って、まあ理屈は一応通ってるけど、もう1つの理屈として、「金や立場や恐怖で言うことを聞かせてる」わけなんで、歳とって体ダメになってそれら全てを失った時に子供からやり返されるのも覚悟しようねとしか。
+15 lessons on memory:
 
---- 5. @matthewclifford (2026-04-08) ---
-This is correct. Extraordinary that we have this game changing moment unfolding in front of us and most elite discourse is still fake news about AI water usage or three-year-old angst about hallucinations.
+--- 23. @TruthSeek01011 (2026-04-08) ---
+Imagine what other technology they have that we don’t know about.
 
---- 6. @aschwags3 (2026-04-08) ---
-This is going to be every marketer's second employee (and you'll never have to hire them).
+--- 24. @Joyce_Karam (2026-04-08) ---
+Horrifying scenes from Beirut #Lebanon today. Nearly 100 Israeli airstrikes in less than 10 minutes, in broad daylight, with rush hour traffic heard in background. At least 89 killed…
 
-Here's the workflow you’re handing your marketing team team today:
+--- 25. @Dios_0ficial (2026-04-08) ---
+La luna es latinoamericana 
 
-1/ Connect your data sources (Google Ads, Meta, GA4, etc.) 
-2/ Agent pulls performance data while you sleep 
-3/ Writes a
+--- 26. @cobta (2026-04-08) ---
+国会議事堂前のデモ正面の場所ではなくて、これはずっと離れた桜田門駅前からの映像なんですがすごくないですか。人が多すぎて近づけなくて国会を囲んでいます。どこにいても「戦争反対」「改憲反対」「高市総理はいますぐやめろ」「自民も維新も憲法守れ」のコールが聞こえます。
+#平和憲法を守る0408
 
---- 7. @superecochan (2026-04-09) ---
-明日のエコに面倒な予定をぜんぶ丸投げしたら、まだ存在しないはずの未来から、すっごく呆れたため息が聞こえてきた。未来のエコ、もう今からスタンバイしてるんだ。
+--- 27. @eleven_s_s (2026-04-08) ---
+これ、かなりマジです。
 
---- 8. @japonistan (2026-04-08) ---
-あくまでも、その場の参加者を守る「弁護士」として立ってるとこがカッコ良かった。
- #平和憲法を守る0408
+--- 28. @noritaka_okabe (2026-04-09) ---
+はやければ7月にJPYCで決済できるタクシーができる予定です！
 
---- 9. @ellnore_pad_267 (2026-04-09) ---
-かねてから思ってたけど、CSVのエスケープとか、文字コードやコードポイントの話とか、
-あのへん知らない人多すぎね？？？
+--- 29. @rafaelmgrossi (2026-04-08) ---
+Impressive progress by India in achieving criticality of the Prototype Fast Breeder Reactor at Kalpakkam, a key step forward in fuel sustainability and the future of nuclear energy.
 
-業務系じゃなくても普通に知るラインだと思うけど、なんでや？？
+The 
+@IAEAorg
+ will continue supporting the safe and secure development of ’s nuclear programme.
 
---- 10. @whitesox (2026-04-08) ---
-we're so happy you're here, Mune
+--- 30. @toshiyuki_wada (2026-04-09) ---
+#UE5 でバケツの中に物体を浸した時に波紋ができる仕組みの紹介です。
+マテリアルを使ってStaticMeshを揺らしているだけですが、同時に３つの波紋まで生成できるようになっていて、それをC++で作ったコンポーネントで管理しています。
+結構いい表現ができたのでは？
+#UE5ぷちコン #UE5Study
 
---- 11. @syusyochan_ (?) ---
-正直期待してなかったけど手触りがスルッッスルなめらかになって洗い流した瞬間「なんか違う」って思わず声出た
-パンテーンいいぞ...スキンケアでもお馴染みのパンテノール*¹の成分、髪にも良いって知ってた試す価値ありです *¹浸透性保湿成分 *²物理的な相互作用による。[PR][パンテーン]
+--- 31. @sammy_corp (?) ---
+━━━━━━━━━━━
+　　　 　  重大告知
+━━━━━━━━━━━
 
---- 12. @Techjunkie_Aman (2026-04-08) ---
-Discord finally has a real competitor.
-
-And it’s open-source.
-
-Fluxer vs Discord:
-
-Here’s what actually matters ↓
-
---- 13. @_watany (2026-04-09) ---
-めちゃくちゃ真摯に違いを書いてくれてるのでこう言う人は叩いてはいけませんよ(叩いてる現場を見たことはない)
-
---- 14. @spaceandtech_ (2026-04-08) ---
-Meet CycloTech’s BlackBird, the world’s first aircraft powered by six cyclorotors.
-
-It successfully completed its first test flight in March 2025, proving the potential of this unique propulsion technology. 
-
-While still a prototype, BlackBird is paving the way for future
-
---- 15. @OsaurusAI (2026-04-08) ---
-This is Gemma 4 running locally.
-26B. 50 tok/s. Sub-second.
-Reading my calendar. Texting my contacts.
-
---- 16. @iamAtheistGirl (2026-04-08) ---
-if adam came from dirt
-why is there still dirt?
-
---- 17. @Akikun1124 (2026-04-08) ---
-警察犬になった柴犬良すぎるw
-
---- 18. @t28marchan (2026-04-08) ---
-【2026年最新】
-回転寿司チェーンTier表
-Tier D（正直、情弱向け）
-・スシロー（度重なる値上げでコスパ完全崩壊）
-・くら寿司（ガチャ代が価格に乗ってるだけの子供騙し）
-・はま寿司（平日90円時代を知ってると行く気失せる）
-・かっぱ寿司（論外）
-Tier C（まあ妥協できるレベル）↓↓
-
---- 19. @sciencegirl (2026-04-08) ---
-What is the moral of the story
-
---- 20. @meiji_oishii (?) ---
-「ミルクは、脇役、主役じゃない。」
-「ミルクは、所詮、引き立て役。」
-そんな現実。全部、過去にしてやる。
-逆襲はじまる。さぁ、ミルクの本気を堪能せよ。
-CV. 江口拓也
-
---- 21. @csa_asc (2026-04-08) ---
-Coolest group photo ever or what? We’re changing our phone background ASAP.
-
-: NASA
-
---- 22. @tizibellingham (2026-04-09) ---
-ゴースティングが近づいてるってわかるのはいつだと思う？
-
---- 23. @shiro_telop (2026-04-08) ---
-日曜討論テロップ制作をタイムラプスに
-
---- 24. @omae_osamu (2026-04-08) ---
-とても危険な動き。
-高市政権が創設を目指す「国家情報会議」は、まさに情報隠蔽と言論統制を狙う国家機関である。言論の自由、知る権利が脅かされる。
-
---- 25. @nu_vot_tak_vot (2026-04-08) ---
-
-
-VPN使用の事実をばらさないためのアイデアのスレッド。最高から最低へ、ただしかなり条件付きで
-
---- 26. @c0tanpoTesh1ta (2026-04-08) ---
-ごじにゃ発見！もうすぐ午後5時にゃー！
-
---- 27. @ivy432hz (2026-04-09) ---
-Irodori-TTS の笑い声を #AIニケちゃん にあてる。声は 2 秒ころから
-
---- 28. @V0IDEYEDPANDA (2026-04-08) ---
-i really need examples for the exact opposite of this where the doppelganger is the softer and more cowardly version of the original
-
---- 29. @gintamamovie (?) ---
-『新劇場版銀魂 -吉原大炎上-』
-
-入場者特典第8弾は…
-描き下ろしメモリアルイラストカード
-
-エモ＆コミカルなシーンをインスタント写真風にした
-「描き下ろしメモリアルイラストカード」だァァ
-※無くなり次第終了
-⠀
-■配布期間：4月3日(金) 〜 4月9日(木)
-※IMAX上映でも配布いたします。
-
---- 30. @ogikubojin1 (2026-04-08) ---
-再投稿です。
-
-妊娠中からの「尿もれ」、尿失禁に悩まれている方へ、決して諦めなくても良い理由とは
-
-#産後尿もれ　#産後尿漏れ
-
---- 31. @galsenai (2026-04-08) ---
+--- 32. @galsenai (2026-04-08) ---
  先月2月、Googleは#WAXALを発表しました。これは21のAfrican言語のための大規模な音声データセットで、Hugging Faceでオープンソースとして公開されました。
 
 #WAXALという名前はWolof語に由来し、「話す」という意味です。象徴的ですね。
 
---- 32. @taro_f (2026-04-09) ---
-最近$10Bの時価総額で資金調達をした、今話題のWhoop（
-@WHOOP
-）が届きました！
+--- 33. @marmosetco (2026-04-08) ---
+How to 3D paint fur & feathers in Marmoset Toolbag 
 
-Whoopは、フィットネス・ヘルスケア向けの新しいウェアラブルデバイスです。
+Painting complex forms like feathers and fur can be a brushstroke away, no modeling or sculpting required.
 
-周りではOuraとWhoopの2つが流行っています。当面、両方同時に試してみます！
+In this demo, we build a Tile Strip brush, then tweak its settings to quickly paint soft fur and flight feathers.
 
---- 33. @litteralyme0 (2026-04-08) ---
-THE GAY
+--- 34. @DylanMalyasov (2026-04-08) ---
+Europe is waking up to the growing drone threat.
 
---- 34. @marmaduke091 (2026-04-08) ---
-The duality of man
+BAE Systems has successfully test-fired low-cost counter-drone rockets from a Eurofighter Typhoon, marking a new step in adapting one of Europe’s key fighter aircraft for emerging aerial threats.
 
---- 35. @auntstella_jp (?) ---
-＼ステラおばさんイラストコンテスト開催／
-盛り上げ企画で生誕祭限定グッズプレゼントも
 
-詳細は画像をタップ
+https://
+defence-blog.com/bae-systems-ad
+ds-low-cost-counter-drone-rockets-to-typhoon/
+…
 
---- 36. @svpino (2026-04-08) ---
-Intelligence withdrawal will be brutal.
-
-Model tokens are heavily subsidized.
-
-Subsidies are disappearing, and with them, so is easy "intelligence".
-
-This is the reason for Anthropic and OpenClaw's divorce.
-
-This should be a wake-up call for everyone building on top of a single
-
---- 37. @meichan_maru (2026-04-09) ---
-昔「街中のポスターで絶対私の方が上手く描けるって思う絵が使われてる。絶対コネ。私は実力で認められる絵師になる！」てポストバズってたけど
-
-依頼主はネットで依頼が来るのを口開けて待ってる絵師より日頃から人間関係構築してる相手を選ぶもんだよ
-
---- 38. @tsuda (2026-04-09) ---
-日本はいま物資的な緊急事態であるわけだけど、そんななかイランに電話して「お前ら通行料取るとかとんでもない。無料にしろ」とこの局面で全く必要のないケンカを売るような人物が首相に就いていることが何よりの緊急事態なのであって、そんな政権が作る緊急事態条項なんて認められるわけねーだろ……
-
---- 39. @dondon00dododo (2026-04-08) ---
-#平和憲法を守る0408
-
-隣に立っていた若い方、静かにスタンディングされていたのだけれど、ただ黙って通り過ぎたり嘲笑する男の人達に
-「無関心でも無関係じゃいられないんだぞ！」
-と叫んだのが印象的だった。
-
-本当に、その通りだ
-
-「無関心でも、無関係じゃいられない」
-
---- 40. @yuruazabu (2026-04-09) ---
-一つのことが続かないやつ、それ才能やで。連続起業家に向いてるんよ。会社を作って、育てて、飽きたら次に行く。これを繰り返せばいい。日本では一つのことを続けるのが美徳とされてるけど、飽き性は最強の武器になるんだわ。
-
---- 41. @nijimi_7777 (2026-04-09) ---
-ADHDが病む原因の9割は、人生を自分で「コントロールしていない感覚」にある。本当はAをやろうと思っていたのに、気づいたらBをやってしまっていた。毎日これの繰り返し。そこで重要なのは、後悔するのではなく「よし今日はBをやろう」と切り替えること。この意識を持つだけでメンタルは整うよ。
-
---- 42. @a2see (2026-04-09) ---
-とりあえずX、SNSというものの概念、意味合いみたいなものを凄い勢いで根底から変えている気がする。
-しかも、それも既存ユーザにそこまで反発も衝撃も与えない（せいぜい好印象の変化に捉えられる）程度で。
-いま、どえらいことが起こってるし、間違いなく後から振り返るとここが分岐点になる…
-
---- 43. @tropde_pommes (2026-04-08) ---
-自動翻訳のオフ方法
-
---- 44. @yogurt_r1 (?) ---
-⋱ 新CM公開中です ⋰
-
-夏や秋に比べるとまだまだ気温が低い今の時期はR-1で体調管理をしましょう！
-
-今回のCMも仲間由紀恵さんと永尾柚乃さんに出演いただきました
-
-ぜひ最後までチェックしてみてください！
-
---- 45. @joshesye (2026-04-08) ---
-HappyHorse が爆発した。
-
-• Elo 1333、Seedance 2.0 を上回り、AI Video Arena のトップに。
-
-裏側には中国チーム 
-http://
-Sand.ai がいて、3月末にようやくオープンソースされた daVinci-MagiHuman を基に最適化されたもの。
-
-わずか2週間。
-
---- 46. @bitcoin_resjp (2026-04-09) ---
+--- 35. @bitcoin_resjp (2026-04-09) ---
 ビットコインはサトシ・ナカモトという天才がゼロから生み出したシステム、と思っていませんか？
 
 実はそうではなく、プライバシーと暗号技術の自由を守るために政府と戦い続けたサイファーパンクの40年にわたる活動が土台にあります。
 
---- 47. @ABridgen (2026-04-08) ---
-It’s a remarkable coincidence that the Earth was exactly the same orientation to the moon with exactly the same cloud coverage when these two pictures were taken 68 years apart. Am I now a coincidence theorist ?
+--- 36. @NotionHQ (2026-04-08) ---
+Before, you had two ways to use 
+@claudeai
+ with Notion:
 
---- 48. @gimupop (2026-04-09) ---
-カジュアル面談について本気出して考えてみました！面接する側も受ける側も面白い内容だと思うので、是非読んでください！
+1. Custom Agents (Notion runs the harness)
+2. Claude + MCP (Claude runs the harness)
 
-カジュアル面談について本気出して考えてみた｜柳川慶太 
-@gimupop
+Now there’s a third with Claude Managed Agents. Notion is the collaboration layer. You can keep working in Notion while Anthropic runs the
 
---- 49. @ganpura18 (2026-04-08) ---
-親なんだから子が介護するのは当たり前っていう層もいるけど、親の介護って実のところそれまで蓄えられたの感謝と信頼の切り崩しだから、幼い頃から我が子と向き合わなかったり尊重しなかったような親は普通に見捨てられるんよな
+--- 37. @ryushisan_pro (?) ---
+王女様に気に入られているおっさん竜師ですが、美人な師匠と新たな旅に出ることになりました（0/4）
 
---- 50. @syXcOs (2026-04-07) ---
-私は自殺ってある意味寿命だと思ってるんだよね。たまに「生きたくても生きられなかった人もいるのに」と自殺した人を責める人がいるけど、自ら死を選んだ人は心が寿命を迎えてしまったんだよ。身体だけが健康だからって人間は生きれる訳では無いから
+--- 38. @kajikent (2026-04-09) ---
+Managed Agentsのリリースを受けて構築ガイドのところアップデートしました！
+
+
+https://
+note.com/kajiken0630/n/
+nfccb99064cd6
+…
+
+--- 39. @TU_dhu (2026-04-09) ---
+ありそう
+日本特有のもの認識できたり
+
+--- 40. @ctatedev (2026-04-08) ---
+agent-browser + Lightpanda + batch + multi-session is a dangerous combo
+
+Completed this benchmark task in 5.85s
+
+--- 41. @_adishj (2026-04-08) ---
+introducing Motion, a video agent for tasteful motion design.
+
+this launch video was made entirely with Motion. 
+
+comment "MOTION" to get early access + free credits.
+
+tag 
+@motion_so
+ in any post on your X feed for a surprise.
+
+here’s how it works + examples (thread):
+
+--- 42. @fabianstelzer (2026-04-08) ---
+Finally got to unbox my Anthropic Claude Code keyboard! 
+
+one shotted by the new Glif agent (it used gemini + veo 3.1 lite + found an unhinged elevenlabs ASMR voice and added fitting music)
+
+--- 43. @bioshok3 (2026-04-09) ---
+Mythosは10Tパラメータ、Spudは6-7Tパラメータの可能性がある。
+
+https://
+lesswrong.com/posts/WjaGAA4x
+CAXeFpyWm/my-picture-of-the-present-in-ai#fn-MyEP5zp4Krp7LnEca-3
+…
+
+--- 44. @itsolelehmann (2026-04-08) ---
+Claude Mythos is like Hiroshima for software.
+
+everything you own online, your bank, your email, your photos, your identity, is now dangerously exposed in ways that didn't exist 48 hours ago
+
+that's why Karpathy's digital hygiene guide is probably the most important thing you can
+
+--- 45. @gigazine (2026-04-09) ---
+「サトシ・ナカモトの正体はイギリス人のアダム・バック氏」と名指しされるも本人はその疑惑を否定
+
+--- 46. @CanmakeTokyo (?) ---
+/／
+さくらんぼカラーで盛る
+キャンメイク推し組み合わせ♪
+\＼
+
+グロウフルールチークス 19は透明感あふれるチェリーピンク。
+ラスターヴェールルージュ 04は、ツヤ感のあるチェリーレッド♡
+
+チーク×リップで統一して、あざとかわいい血色メイクの完成
+
+--- 47. @minorun365 (2026-04-09) ---
+新しいバズワードが出てきたときは「それは意思疎通が楽になる待望の言語化か？」「それとも出羽守が分かってる感出すためのファッション用語か？」という振り分けを無意識にしてますね
+
+--- 48. @iufPReTCFeH8JPi (2026-04-08) ---
+さすがにファンディーノの未公開企業は、危なそうですね。
+飲食は物価高で逆風も強いですし、僕はサイゼで食べてますし(笑)
+
+--- 49. @AI68883047 (2026-04-08) ---
+乗り遅れてしまったら、もうフォールスルーデーを待つしかない
+ここでの高みの見物は、ポジション取ってる者の特権や
+
+--- 50. @naijuku20230530 (2026-04-08) ---
+教育への情熱がすごい。
+
+全然比較にならないくらい環境は整ってたけど、うちの塾も最初は、ホワイトボードと講師と生徒、それらだけで始めたからね。
+たった一人の生徒のために授業をしてた。
+なんとなく塾の原点を思い出させられた。
