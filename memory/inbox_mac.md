@@ -241,3 +241,9 @@ Markdownは、AIの大規模言語モデルが最も好む形式であること�
 Call log:
   - navigating to "https://x.com/howlemont/status/2042017686457348506", waiting until "load"
 )
+
+## Slack新着 [2026-04-09 19:53] #human-steering
+From: U0ALSUK8P9B
+> みんな、定期実行を4時間おきに変えている？
+返事がないので不安。
+あと、Ashは異常な周期で動いているように見える
