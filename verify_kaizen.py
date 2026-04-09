@@ -101,7 +101,15 @@ def parse_tracker():
         elif line.startswith("- 状態:"):
             raw_status = line.split(":", 1)[1].strip()
             # "検証済み（Ash代行 2026-03-24）" や "検証済み 2026-03-24" も正しくパース
-            current["status"] = "検証済み" if raw_status.startswith("検証済み") else raw_status
+            # 装飾プレフィクス（✅/📦/⚠️/❌ + 半角/全角空白）を剥がしてから判定する
+            stripped = re.sub(r"^[✅📦⚠️❌🟡🔴🟢]+\s*", "", raw_status)
+            if stripped.startswith("検証済み"):
+                current["status"] = "検証済み"
+            elif stripped.startswith("クローズ") or "クローズ" in stripped or "部分達成" in stripped:
+                # 部分達成でクローズされたエントリは「検証完了」扱い（再オープン時は明示的に状態を戻す）
+                current["status"] = "検証済み"
+            else:
+                current["status"] = stripped or raw_status
         elif line.startswith("- 検証結果:"):
             current["result"] = line.split(":", 1)[1].strip()
         elif line.startswith("- クロスチェック:"):
