@@ -59403,3 +59403,12 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 15:47:06] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
 [2026-04-09 15:47:06] [kaizen_auto_verify] Done (exit=0)
 [2026-04-09 15:47:06] [git_sync] Starting
+[2026-04-09 15:47:11] [git_sync] Done (exit=0)
+[2026-04-09 15:47:14] [dm_check] No new DMs
+[2026-04-09 15:47:14] [dm_check] Done (exit=0)
+[2026-04-09 15:47:14] [review_deadline] Starting
+[2026-04-09 15:47:14] [review_deadline] レビュー期限超過なし。
+[2026-04-09 15:47:14] [review_deadline] Done (exit=0)
+[2026-04-09 15:47:14] [git_sync] Starting
+[2026-04-09 15:47:16] [health_check] Starting
+[2026-04-09 15:47:16] [slack_check] Starting
