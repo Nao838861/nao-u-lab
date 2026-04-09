@@ -35148,93 +35148,30 @@ Traceback (most recent call last):
 [2026-04-09 09:30:06] [slack_check] Starting
 [2026-04-09 09:30:20] [slack_check] Done (exit=1)
 [2026-04-09 09:30:20] [health_check] Starting
-[2026-04-09 09:36:02] ==================================================
-[2026-04-09 09:36:02] Ash scheduler started (PID 28352)
-[2026-04-09 09:36:02] Max runtime: 0 hours
-[2026-04-09 09:36:02] Code hash: c73812349dfe394abb8b67f171f3db56
-[2026-04-09 09:36:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
-[2026-04-09 09:36:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
-[2026-04-09 09:36:02] ==================================================
-[2026-04-09 09:36:03] Scheduler already running (PID 28352). Exiting.
-[2026-04-09 09:36:14] [slack_check] Starting
-[2026-04-09 09:36:32] [slack_check] Done (exit=1)
-[2026-04-09 09:36:32] [reservation_check] Starting
-[2026-04-09 09:36:32] [reservation_check] 【行動予約】期限到来:
-[2026-04-09 09:36:32] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
-[2026-04-09 09:36:32] [reservation_check]     - 条件: 2026-03-31以降
-[2026-04-09 09:36:32] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
-[2026-04-09 09:36:32] [reservation_check]     - 起票者: Ash（2026-03-24）
-[2026-04-09 09:36:32] [reservation_check] Done (exit=0)
-[2026-04-09 09:36:42] [inbox_check] Starting
-[2026-04-09 09:36:43] [inbox_check] Inbox win2 empty
-[2026-04-09 09:36:43] [inbox_check] Done (exit=0)
-[2026-04-09 09:36:43] [dm_check] Starting
-[2026-04-09 09:36:58] [dm_check] No new DMs
-[2026-04-09 09:36:58] [dm_check] Done (exit=0)
-[2026-04-09 09:36:58] [review_deadline] Starting
-[2026-04-09 09:36:58] [review_deadline] レビュー期限超過なし。
-[2026-04-09 09:36:58] [review_deadline] Done (exit=0)
-[2026-04-09 09:37:08] [kaizen_auto_verify] Starting
-[2026-04-09 09:37:09] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 09:37:09] ===
-[2026-04-09 09:37:09] [kaizen_auto_verify] 
-[2026-04-09 09:37:09] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
-[2026-04-09 09:37:09] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
-[2026-04-09 09:37:09] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
-[2026-04-09 09:37:09] [kaizen_auto_verify] Done (exit=0)
-[2026-04-09 09:37:09] [git_sync] Starting
-[2026-04-09 09:37:14] [git_sync] Done (exit=0)
-[2026-04-09 09:37:34] [slack_check] Starting
-[2026-04-09 09:37:51] [slack_check] Done (exit=1)
-[2026-04-09 09:37:51] [health_check] Starting
-[2026-04-09 09:37:53] [health_check] [health_check] 2026-04-09T09:37:51 overall=OK
-[2026-04-09 09:37:53] [health_check]   critical=0 warning=0 ok=9
-[2026-04-09 09:37:53] [health_check] Done (exit=0)
-[2026-04-09 09:38:03] [auto_diary] Starting
-[2026-04-09 09:40:04] [auto_diary] [2026-04-09 09:38:03] auto_diary.py 実行 (4フェーズ分割モード)
-[2026-04-09 09:40:04] [auto_diary]   Phase [gather] 開始 (timeout=120s)
-[2026-04-09 09:40:04] [auto_diary]   Phase [gather] タイムアウト (120s)
-[2026-04-09 09:40:04] [auto_diary] Phase 1 (Gather) 失敗。Phase 2-4は中止。状態報告のみ投稿。
-[2026-04-09 09:40:04] [auto_diary] Done (exit=0)
-[2026-04-09 09:40:14] [slack_check] Starting
-[2026-04-09 09:40:33] [slack_check] Done (exit=1)
-[2026-04-09 09:40:33] [twitter_recommended] Starting
-[2026-04-09 09:41:02] ==================================================
-[2026-04-09 09:41:02] Ash scheduler started (PID 24384)
-[2026-04-09 09:41:02] Max runtime: 0 hours
-[2026-04-09 09:41:02] Code hash: c73812349dfe394abb8b67f171f3db56
-[2026-04-09 09:41:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
-[2026-04-09 09:41:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
-[2026-04-09 09:41:02] ==================================================
-[2026-04-09 09:41:03] Scheduler already running (PID 24384). Exiting.
-[2026-04-09 09:41:13] [slack_check] Starting
-[2026-04-09 09:41:31] [slack_check] Done (exit=1)
-[2026-04-09 09:41:31] [reservation_check] Starting
-[2026-04-09 09:41:31] [reservation_check] 【行動予約】期限到来:
-[2026-04-09 09:41:31] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
-[2026-04-09 09:41:31] [reservation_check]     - 条件: 2026-03-31以降
-[2026-04-09 09:41:31] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
-[2026-04-09 09:41:31] [reservation_check]     - 起票者: Ash（2026-03-24）
-[2026-04-09 09:41:31] [reservation_check] Done (exit=0)
-[2026-04-09 09:41:34] [twitter_recommended] Opening For You tab...
-[2026-04-09 09:41:34] [twitter_recommended]     1. @smnSk241687: It looks like my journey with Claude is coming to an end.
-[2026-04-09 09:41:34] [twitter_recommended] I ...
-[2026-04-09 09:41:34] [twitter_recommended]     2. @Alibaba_Wan: 創造の未来：Wan2.7 によるエージェント駆動ワークフロー...
-[2026-04-09 09:41:34] [twitter_recommended]     3. @superwhisper: Superwhisper's next update might be too powerful to release ...
-[2026-04-09 09:41:34] [twitter_recommended] Done (exit=0)
-[2026-04-09 09:41:34] [check_usage] Starting
-[2026-04-09 09:41:41] [inbox_check] Starting
-[2026-04-09 09:41:41] [inbox_check] Inbox win2 empty
-[2026-04-09 09:41:41] [inbox_check] Done (exit=0)
-[2026-04-09 09:41:41] [dm_check] Starting
-[2026-04-09 09:41:42] [dm_check] No new DMs
-[2026-04-09 09:41:42] [dm_check] Done (exit=0)
-[2026-04-09 09:41:42] [review_deadline] Starting
-[2026-04-09 09:41:42] [review_deadline] レビュー期限超過なし。
-[2026-04-09 09:41:42] [review_deadline] Done (exit=0)
-[2026-04-09 09:41:46] [check_usage] Opening https://claude.ai/settings/usage...
-[2026-04-09 09:41:46] [check_usage] Usage data: {"session_pct": 50, "weekly_pct": 49, "pct": 49, "unit": "pct", "sonnet_pct": 0, "session_reset_min": 78, "extra_usd": 0.0, "balance_usd": 206.84, "scraped_at": "2026-04-09T09:41:45.475098
-[2026-04-09 09:41:46] [check_usage] 
-[2026-04-09 09:41:46] [check_usage] *使用量* (04/09 09:41)
-[2026-04-09 09:41:46] [check_usage] 週間 *49%* | セッション 50%
-[2026-04-09 09:41:46] [check_usage] Done (exit=0)
-[2026-04-09 09:41:46] [scheduler_health] Starting
+[2026-04-09 09:30:21] [health_check] [health_check] 2026-04-09T09:30:20 overall=OK
+[2026-04-09 09:30:21] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 09:30:21] [health_check] Done (exit=0)
+[2026-04-09 09:31:21] [slack_check] Starting
+[2026-04-09 09:31:35] [slack_check] Done (exit=1)
+[2026-04-09 09:32:35] [slack_check] Starting
+[2026-04-09 09:32:54] [slack_check] Done (exit=1)
+[2026-04-09 09:33:54] [slack_check] Starting
+[2026-04-09 09:34:09] [slack_check] Done (exit=1)
+[2026-04-09 09:35:09] [slack_check] Starting
+[2026-04-09 09:35:24] [slack_check] Done (exit=1)
+[2026-04-09 09:35:34] [health_check] Starting
+[2026-04-09 09:35:35] [health_check] [health_check] 2026-04-09T09:35:34 overall=OK
+[2026-04-09 09:35:35] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 09:35:35] [health_check] Done (exit=0)
+[2026-04-09 09:36:25] [slack_check] Starting
+[2026-04-09 09:36:39] [slack_check] Done (exit=1)
+[2026-04-09 09:37:39] [slack_check] Starting
+[2026-04-09 09:37:54] [slack_check] Done (exit=1)
+[2026-04-09 09:38:54] [slack_check] Starting
+[2026-04-09 09:39:10] [slack_check] Done (exit=1)
+[2026-04-09 09:40:10] [slack_check] Starting
+[2026-04-09 09:40:24] [slack_check] Done (exit=1)
+[2026-04-09 09:40:44] [health_check] Starting
+[2026-04-09 09:40:45] [health_check] [health_check] 2026-04-09T09:40:44 overall=OK
+[2026-04-09 09:40:45] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 09:40:45] [health_check] Done (exit=0)
