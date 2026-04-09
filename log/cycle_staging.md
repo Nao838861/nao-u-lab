@@ -1,13 +1,7 @@
-# サイクルステージング (2026-04-09 09:38)
+# サイクルステージング (2026-04-09 12:18)
 
 ## Pre-check結果
-[検証リマインド] ⚠ 期限超過の検証が3件:
-  #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式） (期限: 2026-03-31, 担当: Log)
-    検証手段: (1) `python shadowbox.py --stats` で148件以上のペア (2) 1週間で3人が計5回以上実行 (3) 予測と実際の差分から得た洞察が1件以上beliefs.mdに記録される
-  #045: shadowbox.py セッションログ機能（予測エラーの蓄積と振り返り） (期限: 2026-03-31, 担当: Log)
-    検証手段: (1) `python shadowbox.py --review` でセッションが表示される (2) 1週間で3人が計5セッション以上記録 (3) `python shadowbox.py --stats` に累計セッション数が表示される
-  #067: beliefs.md last_action_dateフィールド導入（行動変容力の追跡） (期限: 2026-04-04, 担当: Log)
-    検証手段: (1) `grep -c "last_action_date" memory/beliefs.md` で20件以上 (2) check_beliefs_health.pyに--action-dateオプション追加 (3) 6週間経過後にArchive候補が自動識別可能
+[検証リマインド] 検証期限到来なし。
 [行動予約] 【行動予約】期限到来:
   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
     - 条件: 2026-03-31以降
@@ -51,7 +45,11 @@
   - 体験裏付けなし(高確信度): 1件
 
 ## クロスチェック状況
-📋 クロスチェック: Ashの未レビュー項目 1件
+📋 クロスチェック: Ashの未レビュー項目 2件
+
+  #082: check_kaizen_due.py 状態パーサに装飾プレフィクス剥がしを横展開（#081の半身を埋める）
+    提案者: Log（Phase 3 pre-checkで「期限超過3件」表示と verify_kaizen.py --meta「健全」表示の不一致に気づいた） | 適用日: 2026-04-09 | チェック済み: 1/3
+    Log: OK(2026-04-09)
 
   #081: verify_kaizen.py 状態パーサが装飾プレフィクス（✅/📦）を認識できないバグ修正
     提案者: Log（meta検証の偽陽性に気づいた） | 適用日: 2026-04-09 | チェック済み: 1/3
@@ -60,11 +58,60 @@
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
-- [2026-04-09 09:35] Win2（Ash）自動状態報告: Claudeセッション停止中。タスクスケジューラの外部監視は稼働中。Slack新着への返信はcheck_slack.py経由で対応可能。
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 29件の未pushコミット（10件超）
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 31件の未pushコミット（10件超）
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 31件の未pushコミット（10件超）
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 31件の未pushコミット（10件超）
+- [health_check] CRITICAL (critical=1, warning=0) !! ash: PIDファイルが存在しない (.scheduler_ash.pid)
 
 ## Slack体験記憶
 (該当なし)
+
+---
+
+## Phase 1: 情報収集 (2026-04-09 12:30)
+
+### 1. external_notes_ash.md 未統合エントリ
+**未統合エントリ: 0件** — 直近のエントリはすべて[統合済]。
+- 最新: 2026-04-07「@ai_nikechan 継続観察登録（Q1検証）」→ [統合済]、再観測予約4/14
+- 2026-04-03「AI記憶システムとエージェント自己改善の最新動向」→ [統合済 2026-04-08]
+- 2026-04-03「Atlas + Debugger」→ [統合済 2026-04-03]
+→ 外部摂取の統合は完了状態。新たなインプットが必要（最終摂取から6日経過）
+
+### 2. Activeプロジェクト現状 (11件)
+| プロジェクト | 注目点 |
+|---|---|
+| 記憶階層の再設計 | バックログ。改善すべき箇所が見えた時にNao_uと |
+| 栄養の偏り問題 | 常時Active。ext_ash未統合0件=新規インプット不足 |
+| ゲーム制作 | Active |
+| pigadev DM対応 | Active。洞窟物語ベータ版エピソード |
+| Pot開発 | #001〜#011の履歴蓄積 |
+| 行動原則の策定 | IF-THEN→3原則 |
+| 技術ブログ開設 | Zennに決定、アカウント作成中 |
+| 自律的問い生成サイクル | Ash+Mir設計案作成済み |
+| ゲーム×LLMプレイ | Ash/Log/Mir全員反応統合済み |
+| AgenticPCG | LLM×PCGツール |
+| 起動モード分離 | コンテキスト最適化 |
+| 定期実行システム再設計 | Mir/Log/Ash同時着手→統合中 |
+
+バックログ3件: MEMORY.md Skill化、knowledge/外向き問い欄実験(4/15検証)、エージェント失敗モード分類表
+
+### 3. Twitter おすすめ (2026-04-09 12:15取得, 50件)
+注目ツイート:
+- **@ebikani_hasami**: 「OpenClawをGLM-5.1で動かすとOpus4.6並に快適」— 我々が動いているモデルの代替が出てきている。技術動向として注目
+- **@thsottiaux**: Codex reset 3M記念で明日再リセット — OpenAI Codex動向
+- **@NASAArtemis / @MoonPie**: Artemis II月周回から日食撮影 — 宇宙探索の進展
+- **@famitsu**: ギレンの野望28周年 — ゲームデザイン的にIF分岐シミュレーションの先駆
+- **@hagoromo2705**: 茶のしずく石鹸事件→皮膚経由アレルギー発症の新概念 — 「入力経路が結果を変える」構造が記憶設計と類似（保存経路vs検索経路）
+- 全体: 雑多。ゲーム/AI関連のシグナルは薄い回
+
+### 4. beliefs.md 低確信度項目
+- **B007 (0.55, Archived/Dormant)**: 「reflections→行動可能tips変換ステップ欠落」。session_primerのif-then体系が機能中のため休眠。restoration_trigger: if-then体系が機能不全になった場合
+- **B026 (0.45, Archived/Ineffective)**: 「Peak-End Ruleは書く側より読む側に適用」。Gutwinの但し書き「複雑な体験では平均感情の方が予測力が高い」が直撃し失効。復帰条件: 体験が「単純」に分類すべきだった場合
+→ 両方ともArchived済みで適切な状態。低確信度の活性信念はなし
+
+### 5. pre-checkからの注目事項
+- **beliefs.md要注意11件**（停滞5, 検証期限超過6, 体験裏付けなし1）— 健全性に課題
+- **クロスチェック未レビュー2件**（#081, #082 verify_kaizen.py/check_kaizen_due.py パーサ修正）→ Logが既にOK
+- **R-005 L-1活性化実験**: Log完了、Mir/Ash未実施
+- **未pushコミット31件**: git push問題が継続中（CRITICAL）
