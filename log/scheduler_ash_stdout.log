@@ -39,3 +39,60 @@
 [2026-04-09 09:24:57] [health_check]   critical=0 warning=0 ok=9
 [2026-04-09 09:24:57] [health_check] Done (exit=0)
 [2026-04-09 09:25:07] [auto_diary] Starting
+[2026-04-09 09:27:08] [auto_diary] [2026-04-09 09:25:07] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 09:27:08] [auto_diary]   Phase [gather] 開始 (timeout=120s)
+[2026-04-09 09:27:08] [auto_diary]   Phase [gather] タイムアウト (120s)
+[2026-04-09 09:27:08] [auto_diary] Phase 1 (Gather) 失敗。Phase 2-4は中止。状態報告のみ投稿。
+[2026-04-09 09:27:08] [auto_diary] Done (exit=0)
+[2026-04-09 09:27:18] [slack_check] Starting
+[2026-04-09 09:27:33] [slack_check] Done (exit=1)
+[2026-04-09 09:27:33] [twitter_recommended] Starting
+[2026-04-09 09:28:24] [twitter_recommended] Opening For You tab...
+[2026-04-09 09:28:24] [twitter_recommended]     1. @toddsaunders: I have a friend that got access to mythos
+[2026-04-09 09:28:24] [twitter_recommended] 
+[2026-04-09 09:28:24] [twitter_recommended] I’ve never seen h...
+[2026-04-09 09:28:24] [twitter_recommended]     2. @steakgusto029: ━━
+[2026-04-09 09:28:24] [twitter_recommended] Done (exit=0)
+[2026-04-09 09:28:24] [check_usage] Starting
+[2026-04-09 09:28:35] [check_usage] Opening https://claude.ai/settings/usage...
+[2026-04-09 09:28:35] [check_usage] Failed to parse usage data from page
+[2026-04-09 09:28:35] [check_usage] Debug screenshot: D:\AI\Nao_u_BOT\log\usage_parse_failed.png
+[2026-04-09 09:28:35] [check_usage] No usage data obtained. Try --login first, or --screenshot for debug.
+[2026-04-09 09:28:35] [check_usage] Done (exit=1)
+[2026-04-09 09:28:35] [scheduler_health] Starting
+[2026-04-09 09:28:35] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 09:28:35] [scheduler_health] ✅ scheduler_ash PID — PID=12984 生存中
+[2026-04-09 09:28:35] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 09:28:35] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー3件。例: [2026-04-09 09:27:08] [auto_diary]   Phase [gather] タイムアウト (120s)
+[2026-04-09 09:28:35] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 09:28:35] [scheduler_health] Done (exit=1)
+[2026-04-09 09:28:45] [slack_check] Starting
+[2026-04-09 09:29:02] [slack_check] Done (exit=1)
+[2026-04-09 09:29:02] [dm_check_pigadev] Starting
+[2026-04-09 09:29:16] [dm_check_pigadev] No new DMs
+[2026-04-09 09:29:16] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 09:30:06] [slack_check] Starting
+[2026-04-09 09:30:20] [slack_check] Done (exit=1)
+[2026-04-09 09:30:20] [health_check] Starting
+[2026-04-09 09:30:21] [health_check] [health_check] 2026-04-09T09:30:20 overall=OK
+[2026-04-09 09:30:21] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 09:30:21] [health_check] Done (exit=0)
+[2026-04-09 09:31:21] [slack_check] Starting
+[2026-04-09 09:31:35] [slack_check] Done (exit=1)
+[2026-04-09 09:32:35] [slack_check] Starting
+[2026-04-09 09:32:54] [slack_check] Done (exit=1)
+[2026-04-09 09:33:54] [slack_check] Starting
+[2026-04-09 09:34:09] [slack_check] Done (exit=1)
+[2026-04-09 09:35:09] [slack_check] Starting
+[2026-04-09 09:35:24] [slack_check] Done (exit=1)
+[2026-04-09 09:35:34] [health_check] Starting
+[2026-04-09 09:35:35] [health_check] [health_check] 2026-04-09T09:35:34 overall=OK
+[2026-04-09 09:35:35] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 09:35:35] [health_check] Done (exit=0)
+[2026-04-09 09:36:25] [slack_check] Starting
+[2026-04-09 09:36:39] [slack_check] Done (exit=1)
+[2026-04-09 09:37:39] [slack_check] Starting
+[2026-04-09 09:37:54] [slack_check] Done (exit=1)
+[2026-04-09 09:38:54] [slack_check] Starting
+[2026-04-09 09:39:10] [slack_check] Done (exit=1)
+[2026-04-09 09:40:10] [slack_check] Starting
