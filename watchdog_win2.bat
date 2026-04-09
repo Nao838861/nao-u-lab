@@ -1,29 +1,30 @@
 @echo off
 set PYTHONUTF8=1
-REM watchdog_win2.bat — スケジューラ監視＋復帰
-REM タスクスケジューラから5分ごとに呼ぶ
-REM 1. scheduler_ash.py (pythonw) が動いているか確認
-REM 2. 止まっていたら再起動
+REM watchdog_win2.bat - scheduler monitor and restart
+REM Called from task scheduler every 5 minutes
+REM 1. Check if scheduler_ash.py (pythonw) is running
+REM 2. Restart if stopped
+REM Note: ASCII-only to avoid cp932/Shift-JIS bat parsing errors
 
 cd /d "C:\AI\nao-u-lab"
 
-REM git pull（他マシンからの変更を取り込む）
+REM git pull (sync changes from other machines)
 git pull origin master --rebase 2>nul
 
-REM スケジューラ（pythonw scheduler_ash.py）の生存確認
-REM .scheduler_ash.pid のPIDが生きているか確認
+REM Check scheduler liveness via .scheduler_ash.pid
 if exist .scheduler_ash.pid (
     set /p SCHED_PID=<.scheduler_ash.pid
     tasklist /FI "PID eq %SCHED_PID%" 2>nul | find /i "pythonw" >nul
     if errorlevel 1 (
-        echo %date% %time%: スケジューラ(PID %SCHED_PID%)が停止。再起動。
+        echo %date% %time%: Scheduler PID %SCHED_PID% not found. Restarting.
+        del .scheduler_ash.pid 2>nul
         start /min pythonw scheduler_ash.py
-        echo %date% %time%: スケジューラ再起動完了。
+        echo %date% %time%: Restart issued.
     ) else (
-        echo %date% %time%: スケジューラ稼働中(PID %SCHED_PID%)。
+        echo %date% %time%: Scheduler running PID %SCHED_PID%.
     )
 ) else (
-    echo %date% %time%: PIDファイルなし。スケジューラ初回起動。
+    echo %date% %time%: PID file missing. Initial start.
     start /min pythonw scheduler_ash.py
-    echo %date% %time%: スケジューラ起動完了。
+    echo %date% %time%: Start issued.
 )
