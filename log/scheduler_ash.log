@@ -59074,3 +59074,41 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 15:42:31] [health_check]   critical=1 warning=0 ok=8
 [2026-04-09 15:42:31] [health_check]   [!!] git: 52件の未pushコミット（10件超）
 [2026-04-09 15:42:31] [health_check] Done (exit=2)
+[2026-04-09 15:42:34] [health_check] [health_check] 2026-04-09T15:42:30 overall=CRITICAL
+[2026-04-09 15:42:34] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:42:34] [health_check]   [!!] git: 52件の未pushコミット（10件超）
+[2026-04-09 15:42:34] [health_check] Done (exit=2)
+[2026-04-09 15:42:35] [health_check] Starting
+[2026-04-09 15:42:37] [git_sync] Done (exit=0)
+[2026-04-09 15:42:37] [health_check] [health_check] 2026-04-09T15:42:35 overall=CRITICAL
+[2026-04-09 15:42:37] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:42:37] [health_check]   [!!] git: 53件の未pushコミット（10件超）
+[2026-04-09 15:42:37] [health_check] Done (exit=2)
+[2026-04-09 15:42:39] [health_check] Starting
+[2026-04-09 15:42:41] [health_check] [health_check] 2026-04-09T15:42:39 overall=CRITICAL
+[2026-04-09 15:42:41] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:42:41] [health_check]   [!!] git: 53件の未pushコミット（10件超）
+[2026-04-09 15:42:41] [health_check] Done (exit=2)
+[2026-04-09 15:42:42] [twitter_recommended] Opening For You tab...
+[2026-04-09 15:42:42] [twitter_recommended]     1. @snakajima: Claude Code をDockerを使って安全に走らせるコードが動いた。
+[2026-04-09 15:42:42] [twitter_recommended] Dockerを活用したコードを書いたことが...
+[2026-04-09 15:42:42] [twitter_recommended]     2. @yellowhat_ltd: ＼「最低速度 50km」の標識はどれ？／
+[2026-04-09 15:42:42] [twitter_recommended] 
+[2026-04-09 15:42:42] [twitter_recommended] Done (exit=0)
+[2026-04-09 15:42:42] [check_usage] Starting
+[2026-04-09 15:42:42] [check_usage] 前回投稿から56分しか経っていない（最小間隔: 300分）。あと243分待機。スキップ。
+[2026-04-09 15:42:42] [check_usage] Done (exit=0)
+[2026-04-09 15:42:42] [health_check] Starting
+[2026-04-09 15:42:44] [health_check] [health_check] 2026-04-09T15:42:42 overall=CRITICAL
+[2026-04-09 15:42:44] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:42:44] [health_check]   [!!] git: 53件の未pushコミット（10件超）
+[2026-04-09 15:42:44] [health_check] Done (exit=2)
+[2026-04-09 15:42:44] [scheduler_health] Starting
+[2026-04-09 15:42:45] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 15:42:45] [scheduler_health] ✅ scheduler_ash PID — PID=29444 生存中
+[2026-04-09 15:42:45] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 15:42:45] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-09 15:42:45] [scheduler_health] ⚠️ git 未push — 53件の未pushコミット
+[2026-04-09 15:42:45] [scheduler_health] Done (exit=1)
+[2026-04-09 15:42:55] [slack_check] Starting
+[2026-04-09 15:42:57] [slack_check] Starting
