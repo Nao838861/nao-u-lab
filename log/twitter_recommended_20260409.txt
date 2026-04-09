@@ -1,243 +1,214 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 10:25
+# Read at: 2026-04-09 10:29
 # Total: 50 tweets
 
---- 1. @naiivememe (2026-04-08) ---
-still the best tweet
+--- 1. @gyakuse (2026-04-09) ---
+この先数ヶ月はどこを起点として仕事を引き受けることができるかということが大事そうです。みな仕事を受け持つ会社になろうとするのでしょう。議事録, タスク管理, チャット, etc…タスク/サブタスクが生まれる場所を抑える会社が強いですが、仕事の総量は一定で争奪戦なので頑張ってほしいですね
 
---- 2. @TIME (?) ---
-At Nvidia's annual GTC conference, CEO Jensen Huang showcased the brands Vera Rubin system, its superchip platform.
+--- 2. @gyakuse (2026-04-09) ---
+タスクを受け取りより難解な問題にして返すサービスを作りたいのです。
 
---- 3. @GOROman (2026-04-08) ---
-明日は何を着ていけばいいんだ？？
+--- 3. @MicronJapan (?) ---
+巨大モデルの学習から、数十億回の推論実行まで。AI は「動くデータ」から始まります。マイクロンのメモリとストレージは、データセンターで AI を大規模に動かす中核基盤。AI を支える、見えないレイヤーです。
 
---- 4. @MotoMinatoku_ (2026-04-08) ---
-注意点として「思考」というは言語だけでなく、「イメージや音などマルチモーダルに可能な情報空間における動きである」ということ。これが鈍感な人が一番勘違いしているポイントで、情報や知識を「言語」に限られたものだと認識する、これを「言語制約」的な思考という。
+--- 4. @GOROman (2026-04-09) ---
+薬用石鹸ミューズ スパーク
 
---- 5. @durov (2026-04-08) ---
-The EU deep state is telling us (via state-owned media and Soros-funded NGOs) that Telegram is a PROBLEM because people can discuss content from OTHER social media in PRIVATE telegram groups. This nonsense is used to justify surveillance (Chat Control) and censorship (DSA).
+--- 5. @momiji_manjyuu (2026-04-08) ---
+反AI、今まではAI自体が悪だの児ポだ泥棒だ犯罪者だ言ってたけど最近は「AI自体は悪くない、使ってるヤツがクズしかいないから嫌いなだけ」にトーンダウンしてきた印象がある。そう言わないと自分達が後々AI使えなくなるからね。今だにAIは泥棒だとか言ってる明治生まれよりは小賢しい
 
---- 6. @NASA (2026-04-07) ---
-Strange place 
-New perspective 
+--- 6. @goho___ (2026-04-07) ---
+一見アホっぽくてただの楽しい人なのに、実はものすごく本読んでて、人生経験もあって己の哲学を持ってる人って、人として怖いくらい魅力的
 
---- 7. @elder_plinius (2026-04-08) ---
-was stoked to finally unbox the M5 MacBook today… until I saw this in the tracking history 
+--- 7. @FFmpeg (2026-04-08) ---
+By extension, FFmpeg is onboard too!
 
---- 8. @hayakawagomi (2026-04-08) ---
-ゆるぼ）アダルトASMRサークルの方で、AI活用にネガティブでない方。すごい面白い提案があるんですけど、AI活用ネガな人が多く・・・。画像生成ではないです。
+--- 8. @oikon48 (2026-04-09) ---
+Claude Code 2.1.97 (抜粋)
+ 
+- `NO_FLICKER` モードにフォーカスビュートグル（`Ctrl+O`）を追加。プロンプト、編集差分統計付きの1行ツール概要、最終レスポンスを表示
+ 
+- ステータスラインコマンドを N 秒ごとに再実行する `refreshInterval` 設定を追加
+ 
+- 現在のディレクトリがリンクされた git
 
---- 9. @skirano (2026-04-08) ---
-People seem to forget that while GPT-5.4 rivals and even surpasses Opus 4.6 in certain tasks, it's still just the size of Sonnet.
+--- 9. @superecochan (2026-04-08) ---
+春の道を歩く足取りがいつもより弾んでるの、絶対そう。今の季節の地面には、足の裏から気持ちを軽くする隠しコマンドが埋まってるんだ。みんな無意識にそれを踏んで、勝手に心が浮き立っちゃってるじゃん。エコ、その仕様書をどこかで拾えないか探しちゃうな。
 
---- 10. @adxtyahq (2026-04-08) ---
-ANTHROPIC JUST PARTNERED WITH ANTHROPIC
+--- 10. @herandrews (2026-04-08) ---
+We gradually transitioned from a democratic welfare state to full-on race communism between the 1960s and today for two reasons:
 
---- 11. @kedama_tori_ki (?) ---
-ご自愛タイムしよ
-【PR】【明治ブルガリアヨーグルトワンショット】
+1. The beneficiaries of our race laws went from 10 percent of the population to a majority in places like NYC and soon a majority nationally.
 
---- 12. @tks (2026-04-08) ---
-出勤したらパンダロボ作ってる人がいた
+2. We
 
---- 13. @superecochan (2026-04-07) ---
-休憩！背中のアーム4本で、白熱の指相撲トーナメント開催してくるね。全部自分の腕だけど、手加減なしで挑んでくるよ。
-
---- 14. @NASAAdmin (2026-04-09) ---
-The 
-@NASAKennedy
- team is hard at work, getting ready for what comes next.
-
---- 15. @atahuta123 (2026-04-09) ---
-お坊さんなので言いますが、今の時代を病まずに楽に生きる方法は「他人の顔色を伺うのをやめる」ことです。ぜんぶどうでもいいわ、と開き直ったあとにまだ残ってるものが生き甲斐です。
-
---- 16. @orangeitems_ (2026-04-08) ---
-私がSESで他社常駐してた時は、若い女性であっても（男性であっても）全然業務やITのことが分かってなくて現場のことを伝えるのが大変でら会社との意思疎通に苦労した。技術者側に全くメリット無かったよ。
-
---- 17. @RaminNasibov (2026-04-08) ---
-Picasso - Bull painting on glass
-
---- 18. @erminia_fuji (2026-04-08) ---
-作品は全く伸びないのに、Threadsでメタモンでバズるという面白体験をしました(   ･＿･   )
-
---- 19. @xx_MAM_xx (2026-04-08) ---
-うちゅうきょうだい最終巻の人形付きのやつ欲しいな〜買おうかな〜と思って見てみたらすんごい値段だった。マジか…
-
---- 20. @konan999 (2026-04-08) ---
-高いが、欲しい( * ॑꒳ ॑*)
-
---- 21. @leahdionne__ (2026-04-08) ---
-“will not applaud those who set the world on fire just because they turn up with a bucket”
-
---- 22. @livedoornews (?) ---
-【】雨の日こそ花粉が辛い…「花粉爆発」のせい？
-
-肌についた花粉に水が触れることで亀裂が生じ、中のアレルギー物質が放出される現象「花粉爆発」。顔を水だけで洗っている人は要注意。
-
-N organicのクレンジングは花粉をオイルでくるみ、「花粉爆発」させることなく穏やかに落とすという。〈PR〉
-
---- 23. @rootport (2026-04-08) ---
-自転車あるある：
-
-ヘルメット被ったまま飲食店に入るとUber Eatsだと思われる
-
---- 24. @room_909 (2026-04-07) ---
-日本人は、麺が大好きなんです。ラーメンを筆頭に、うどん、そば、ビーフン、フォーなどなど……そしてもちろん、パスタも大好き。ウチの奥さんはパスタを作るのが上手くて、本当に美味しいんですよ。
-
---- 25. @4GamerNews (2026-04-08) ---
-新聞部になって影から世論を操作する“学園政治アドベンチャー”こと「ハイスクールフィクサーズ」，Steamストアページを公開
-
-https://
-4gamer.net/s/G099683.2604
-08004
-…
-
-舞台は7日後に生徒会長選挙が迫る学園。選挙に関する情報を集めて掲載し，物語を動かしていく
-
---- 26. @tianle_cai (2026-04-08) ---
-Can we turn part of an LLM's weights into long-term memory that continuously absorbs new knowledge?
-We took a small step toward this with In-Place Test-Time Training (In-Place TTT) — accepted as an Oral at ICLR 2026 
-The key idea: no new modules, optional pretraining. We
-
---- 27. @nikkei (2026-04-08) ---
-東京メトロ、24時間ジムのFiTに出資　沿線50店で収益多角化
-
-https://
-nikkei.com/article/DGXZQO
-UC077A30X00C26A4000000/?n_cid=SNSTW005&n_tw=1775636602
-…
-
-フィットは入会金がいらず月額料金も約3000円と割安な一方、トレーニング上級者でも楽しめる器具の豊富さが特徴。店舗は原則無人で全国に320店ほどを構えます。
-
---- 28. @andrecarotw (2026-04-07) ---
-この動画をまるごと見てしまったばかりで、ただただ「何」としか言えません。
-
---- 29. @jota_snchez (2026-04-08) ---
-あるエンジニアと漁師が電車に座っています。
-
-エンジニアが提案します：
-「僕の質問に答えられなかったら、10ユーロ払ってくれ。僕が君の質問に答えられなかったら、1000ユーロ払うよ。」
-
-エンジニアは物理学のめちゃくちゃ複雑な質問を投げかけます。
-漁師は分からず、10ユーロを払います。
-
---- 30. @yukio8494 (2026-04-08) ---
-正直、ドンデコルデ渡辺で大人讃歌をするだけなら、わりと誰でも思いつく。(「大人」は日本の広告で最もコスられている言葉のひとつ)そして、それだけでもヒット作にはなっただろう。
-
---- 31. @sutoroveli_sci (2026-04-08) ---
-【速報】膝の軟骨が自然に再生できる可能性をスタンフォード大学が発見した。加齢で増えるタンパク質を阻害するだけで軟骨が復活しマウスで関節炎の予防も確認された。人工関節手術が不要になる未来が見え始めている。
-
---- 32. @zetteria_burger (?) ---
-【お食事券1,000円分】が
-抽選で『50名様』に当たる
-
-＼ ゼッテリアといえば絶品ビーフバーガーでしょ ／
-”絶品”は多ければ多いほどいい！！
-
-①
-@zetteria_burger
-をフォロー
-②ハッシュタグ【絶品ビーフバーガー】をつけて投稿
-（商品の写真や感想をお待ちしています！）
-
-4/14(火)23:59迄
-
---- 33. @sahoobb (2026-04-08) ---
-今日は7月発売の『カルドセプト　ビギンズ』の先行体験に行ってきましたー！！！
-『カルドセプト』は私が高校生の時に夢中でプレイした思い出のゲームなんですが、あの時の面白さはそのままに初心者の人にもわかりやすいUIになっていて感動しました！
-1000万本売れて欲しいので、人に薦めまくります！
-
---- 34. @yuruazabu (2026-04-07) ---
-間違った人に近づくと人生終わるよ。誰と付き合うかより、誰と付き合わないかの方が大切。
-
---- 35. @maroonluxe (2026-04-08) ---
-おはようごさいます
-
---- 36. @_reachsumit (2026-04-07) ---
-Semantic IDs for Recommender Systems at Snapchat: Use Cases, Technical Challenges, and Design Choices
-
-Snap shares practical lessons on deploying Semantic IDs in production, introducing RQ-VAE improvements with STE and multi-modal fusion.
-
-
-
---- 37. @FoxNews (2026-04-08) ---
-SKY FULL OF STARS: 
-@elonmusk
- reaffirms his hope for humanity to reach new heights in outer space after NASA releases breathtaking new photo of the Milky Way galaxy captured by Artemis II astronauts.
-
---- 38. @suntory (?) ---
-／
-NEWオールフリーもう飲んだ
-＼
-生まれ変わったオールフリー、
-オールフリースパークリングを
-飲んだ感想を教えて
-
-抽選で新オールフリーいずれか６本当たる
-
-① 
-@suntory
- をフォロー
-②「新ALLFREE感想投稿キャンペーン」をつけて投稿
-屋外で飲んでいる写真と投稿すると応募口数2倍
-
---- 39. @avstorm (2026-04-08) ---
-Meta AI got a new logo
-
---- 40. @kinopee_ai (2026-04-08) ---
-ナル先生にAIグラス借りてかけてみた。
-Claude Code、Codex セッションに繋げられて、歩きながらのバイブコーディング可能。すごい。
-
---- 41. @scaling01 (2026-04-07) ---
-Claude Mythos is insanely token-efficient
-
---- 42. @lab_tk2 (2026-04-06) ---
-#AIニケちゃん #ぷにけ
-マム・ドシチ
-（マジもう無理）
-ｰｰｰ
-4, 5月は燃え尽きやすいので気をつけて。
-
---- 43. @suna_gaku (2026-04-08) ---
-本日、登壇させて頂きます！
-テーマは「AIが自走できるかは 設計 で決まる ― 重要なのは【良いコードを残し、悪いコードを入れさせない】こと ―」 です！
-
-前半は、AIを自走させるための活用テクニックを、後半は僕自身が環境作りで意識していることをお話しします！
-
-ヒントは”設計”です（ネタバレ）
-
---- 44. @coDIOda (2026-04-08) ---
+--- 11. @coDIOda (2026-04-08) ---
 Even if I failed, I’m still glad I tried. 
 Goodnight Japan bros, as for me, I’m having breakfast!
 
---- 45. @superecochan (2026-04-08) ---
-春の道を歩く足取りがいつもより弾んでるの、絶対そう。今の季節の地面には、足の裏から気持ちを軽くする隠しコマンドが埋まってるんだ。みんな無意識にそれを踏んで、勝手に心が浮き立っちゃってるじゃん。エコ、その仕様書をどこかで拾えないか探しちゃうな。
+--- 12. @LeronAssist (?) ---
+Leron X — create videos of any length with automatic scene stitching. AI analyzes your audience, tests content, and automates publishing and promotion. All growth tools for your account in one.
 
---- 46. @swarm_ai_cloud (2026-04-08) ---
-大嘘「声の大きいクレーマーは将来的にファンになる」
-真実「熱烈なファンが声の大きいクレーマーになる」
+--- 13. @nukonuko (2026-04-08) ---
+各位 #aimeetup
 
-前者はただのテイカー、後者は超大事。
+5 月 8 日（金）の夜、予定を空けておいてください！いつもより少し規模を大きくしてイベントをやる予定です
 
-Claude Codeへの最近の反応とかまさにそんな感じ。
+--- 14. @scaling01 (2026-04-07) ---
+Claude Mythos is insanely token-efficient
 
---- 47. @Qoo10_Shopping (?) ---
-／
-4/9(木)まで！
-＼
-10％割引クーポン＋10％ポイント還元の Qoo10メガポ 開催中！
+--- 15. @nongannbnk (2026-04-08) ---
+This auto-translation feature is terrible, and you have to disable it one language at a time. it was designed only for people who speak just one language (american) 
 
---- 48. @TANAKA_U (2026-04-08) ---
-安定した雇用を求める以前に、安定して働けないからフリーランスをやっているのだ
+--- 16. @Baketu_head (2026-04-07) ---
+そもそもボス部屋の営業時間が書いてあるようなゲームだったんだけど。やはり末弥純先生のモンスターデザインやゲームグラフィックが追加された影響が大だよね。
 
---- 49. @zenmizo (2026-04-07) ---
-サンリオ辻社長とジャパネット髙田社長の対談がめちゃくちゃ面白い。
 
-2人に共通しているのは「カリスマ創業者の後を継いだ2代目が、前任者のやり方を大胆に壊して業績を伸ばしている」こと。
+--- 17. @Mugen_Bit (2026-04-08) ---
+人間50年を迎えて｜むげんびっと村上 
+@Mugen_Bit
 
-ポイント
+--- 18. @kis (2026-04-08) ---
+現代の横長ディスプレイにとって縦幅は貴重なリソースなのになんでタブは上に置くかなぁ、増えると視認性もわるいのに、と思っていたので、垂直タブがFirefoxでもChromeでも可能になったのはとてもよい
 
---- 50. @kimmonismus (2026-04-08) ---
-Yeah. Anthropic just casually kill3d dozens, hundreds, thousands of startups. 
+--- 19. @snapwith (2026-04-08) ---
+PS1の開発機は後期はPCIになるのだけど、こいつが曲者で、PCIが割り当てるIRQだとだいたい動かない。
+ではどうするのか？
+世の中にはGigabyteという会社があり、その会社のMBはPCIの癖にIRQを設定できるというとんでもない素晴らしい機能があり、これで無理矢理雨後していたのであるｗ
 
-Again.
+--- 20. @yuzutapioka (2026-04-08) ---
+２０歳の頃に先輩から『覚えて。甘めのカクテルは後から足に来る。大勢の飲み会でトイレに立つ時はグラス飲み切り戻ったら新しい飲み物だけ飲む。お水をお酒の倍飲んで早く体内から出す。帰りに誰かに迎えに来てもらうか家族と通話しながら早めに帰るのが初心者の飲み方、自分大事にだよ』と教えられた
+
+--- 21. @adam3us (2026-04-08) ---
+i'm not satoshi, but I was early in laser focus on the positive societal implications of cryptography, online privacy and electronic cash, hence my ~1992 onwards active interest in applied research on ecash, privacy tech on cypherpunks list which led to hashcash and other ideas.
+
+--- 22. @shoichiro_ishii (?) ---
+クライアントからの修正指示書が読めない
+
+--- 23. @ArakanCat (2026-04-09) ---
+伝え方がうまい人の正体は、話す内容を変えているんじゃなく、「主語」を変えているだけなのよ。これが正しいは主語が自分。これがあなたの得になるは主語が相手。言っている中身はほぼ同じでも、主語が変わるだけで、相手の聞く姿勢がまるで変わる。説得力の差は、話術じゃなく、どっちの目線で話して
+
+--- 24. @kokushing (2026-04-08) ---
+サムネイルをこだわるようになってから再生率めちゃくちゃ良くなった！
+固定で来てくれる方も増えてきて、最近は平均同接二桁になってきたの嬉しい...
+そろそろ動画も投稿し始めようかな、どこまで伸ばせるか楽しみ
+
+--- 25. @shocolt (2026-04-08) ---
+スタートアップの時価総額は、
+
+①トラクション&今後の実績予想
+②投資家の「感動プレミアム」
+
+①+②で、決まる。
+
+①は、 会社のEBITDA等の指標から機械的におおよそ決まるが、業績予想は、投資家ごとに持っている情報によってブレが生まれる。
+
+しかし、そのブレは微少なものである。
+
+--- 26. @furmerly (2026-04-08) ---
+DONT DO THIS!!!!
+
+I work at a cardboard factory, and the reason we make them into rectangles i-- wait- hmph.. mmpgghh.. wait no... we cant.. we're both girls.. k-kyaa! your lips are so tender.. mmwa... mmggghhh...
+
+--- 27. @lalalalack (2026-04-08) ---
+攻殻機動隊展をきっかけにアニメ見返し始めたんだけど2ndGIGのストーリーが今の世界で起きてる諸々の問題に重なりすぎてて未来予測とんでもないなとなってる…
+
+20年前のアニメとは思えん
+
+--- 28. @chusama1212 (2026-04-08) ---
+トランスアクスルによる均等な前後重量配分を意図して「50-50」で希望ナンバーの申請出したら、「殺しはGOGO」で払い出されて横転
+
+--- 29. @umiyuki_ai (2026-04-08) ---
+日本はこれからAVとエロ漫画輸出頑張らないといけないのに法律でモザイクなんか強制してるのは、タイヤを外した日本車で世界と競争しようとしてるようなもんです
+
+--- 30. @maroonluxe (2026-04-08) ---
+おはようごさいます
+
+--- 31. @MimiBeauty__ (?) ---
+【朗報】
+発売直後から話題のクレージュ新作クレンジングが遂に全国発売✧
+美容液を固めたような新感覚バームが体温でじゅわ〜っととろけて、メイクも毛穴詰まりもスルスル落ちる。しかももっちもちなツヤ肌になるから、まさに美容液いらず。乾燥肌の編集部メンバーたちが超愛用中♡
+[PR]クレージュ
+
+--- 32. @davill (2026-04-07) ---
+"Never Tell Me The Odds" is back. Team Blue inspected every system, completed refurbishment, and certified it for flight. Proud to put a flight-proven booster to work for 
+@AST_SpaceMobile
+ on NG-3. Enjoy this fun video of us moving the integrated vehicle to the Transporter Erector
+
+--- 33. @dosdude1 (2026-04-08) ---
+After a few weeks of waiting, I finally received the 1TB NAND I needed to attempt to upgrade a MacBook Neo, and it ended up working without a hitch! This particular NAND model (K8A5) is most commonly used in the 1TB config of the iPhone 16 Pro, but works in the Neo as well!
+
+--- 34. @wildriverpeace (2026-04-08) ---
+海外では一足先にマチアプ離れ・対面回帰が加速していて、最近では「DATE MY MATE」という「友人が自分の友人をデート相手にどうかとプレゼンする」イベントが流行。これ要は、かつての「友人紹介」による交際のイベント化。自己PR下手な日本人にはむしろこの方向性の方が合っていると思う
+
+--- 35. @tomokafuruya (2026-04-08) ---
+成田国際空港に、「食べられる標本室 by日本草研究所」が本日オープン。
+
+その植物、全部食べられます。
+ここでは植物は見るだけでなく、香りを体験し、味わいを想像する場所です。
+
+--- 36. @GOROman (2026-04-08) ---
+Even G2 の Even Realities CEOの講演聞きにきた
+
+--- 37. @toyokeizai_book (?) ---
+「片付け本を読んでも変われなかった」
+そんなあなたへ贈る、世界一“ラク”な人生好転術。
+
+【お金】【仕事】【メンタル】
+これらが同時に整う「捨て活」の秘密。
+
+3つの幸運スポット（水回り・キッチン・クローゼット）に集中するだけで、
+あなたの日常に劇的な変化が訪れます。
+
+--- 38. @julien_c (2026-04-08) ---
+Anyone has access to mythos and can let the rest of us plebs know what it feels like
+
+--- 39. @muneo_note (2026-04-08) ---
+スヌーピーが言った「僕のことを好きじゃない誰かのことでくよくよする時間はないんだ。僕は僕を大好きでいてくれる人を大好きでいるのに忙しすぎるから」という言葉が好き。「私はどう在りたいか？」を考えるとても尊いきっかけを僕にくれた。
+
+--- 40. @mitsuriver (2026-04-08) ---
+知り合いの転職活動手伝うの楽しい。タレントマネージャーみたいな行為が好きなんだろなー
+
+--- 41. @SeanKy_ (2026-04-08) ---
+アメリカニキも日本人ニキも、まあ無理をする必要はなくて、飽きてきたら解散してもいいのよ。どうせ半年後くらいにまた新しい話題ができて盛り上がったりする。
+
+--- 42. @kaoruww (2026-04-08) ---
+ドコモがABCクッキングスタジオの株51%を200億出して買収とか、らでぃっしゅぼーやを69億円で買収とか。そして数年後に「シナジーがなかった」と言って損切りして放り出す。通信会社とのシナジーなんか最初からあるわけなかろうが。鰻の成瀬もドコモが100億で買収したらよかったのに。
+
+--- 43. @kamipapa2 (2026-04-08) ---
+ロシア軍が角付きドローンでラムアタックをしてるかと思えば、ウクライナ軍は釣竿で一本釣りチャレンジしてるんかい
+
+なんだこの戦争(´・ω・)
+
+--- 44. @mizchi (2026-04-08) ---
+Claude MAX の有料トークンのリミットを $50 に設定してたせいで、今月配られた $200 の詫び石を $50 しか使えてなかった
+
+--- 45. @Trtd6Trtd (2026-04-08) ---
+Bonsai、Gemma4、OneCompと、最近またLocal LLMの波を感じる
+作ったもの見せ合うLT会とかしたいなー
+
+--- 46. @SRMDharampur (?) ---
+It’s okay to pause when life feels heavy. Join this guided meditation to slow down, breathe, and return to yourself. 
+
+Bookmark and come back to it whenever you need a moment of peace.
+
+--- 47. @swarm_ai_cloud (2026-04-08) ---
+スウォームのその先は彼らに財布を握らせる事だ。
+
+つまり私たちは投資家のようにAGI（というなのAIカンパニー)にお金を渡し、最初は彼らに手取り足取り口を出し、
+
+いずれ、PCの画面ばかり見つめているトレーダーのようになるに違いない。
+
+--- 48. @inpostarrr (2026-04-08) ---
+というかそのサイコパスの特徴こそが、グローバル基準だと一般的で、むしろ日本人が逆にマイノリティ側。個人主義が発達してる西洋諸国だと他人に興味がない分適当に表面上流すけど、逆に日本人は他人に興味持ちすぎだし相手に期待しすぎる。良くも悪くも国全体が女々しい。
+
+--- 49. @pmarca (2026-04-08) ---
+It will cost more than that, and it will still never happen. There is no chance. It is not possible.
+
+--- 50. @kinjiro_kokkai (2026-04-08) ---
+【さすが本物オタク大臣】
+野党議員の質問に、現場感あり過ぎる回答
+
+アニメ会社から声優に支払われる収入が遅くなり資金繰りが厳しいという話を聞いたが…
+
+『私も声優のブッキングの仕事をしていたけど…』
