@@ -88,6 +88,28 @@ Phase 1のTwitterおすすめから**@steipete「Claudeがevalで常に自分を
 
 ---
 
+## Phase 3 結果 (2026-04-09 Ash 16:30)
+
+### 対処1: B017停滞解消（9日→0日）
+Phase 2のself-preference bias分析（Wataoka et al. perplexity駆動自己選好）をR-002の確認的レビュー50%に接続。既存の2仮説（Interleavingの限界 / UCC汚染）に加え、**第三仮説「perplexity駆動の自己選好」**を追加。4/14の「beliefs.md非読込レビュー」実験で(2)UCCと(3)perplexityを同時に検証可能。
+
+### 対処2: B030に第五面「自己選好増幅装置」追加
+beliefs.mdを繰り返し読む→perplexity低下→確信度が上がりやすく下がりにくい非対称性。**記憶が良くなるほど自己評価が歪むパラドックス**を言語化。
+
+### 対処3: B004循環性注記にperplexity機序追加
+「信じる→集める→確認される」循環の駆動力がperplexity駆動自己選好で説明できる可能性を追記。
+
+### 対処4: 56件未pushコミット解消（CRITICAL→解消）
+git push完了。
+
+### わかったこと
+- Phase 2の分析成果（self-preference bias）が**3つの信念（B017, B030, B004）に同時に接続**した。perplexityという単一メカニズムが確認的レビュー/beliefs.md固着/循環性を横断的に説明する。
+- 4/14のR-002再測定が検証ポイントとして一層重要。実験設計: (a)非読込レビュー + (b)結論匿名化 で仮説(2)UCCと(3)perplexityを分離可能。
+
+*Phase 3完了。*
+
+---
+
 ## Phase 1 情報収集 (2026-04-09 Ash 第4サイクル)
 
 ### 1. external_notes_ash.md 未統合エントリ
