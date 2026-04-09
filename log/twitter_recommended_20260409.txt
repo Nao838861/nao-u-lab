@@ -1,265 +1,218 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 10:10
+# Read at: 2026-04-09 10:15
 # Total: 50 tweets
 
---- 1. @Adhd_Hana (2026-04-08) ---
-だからADHDの人たちは韓国語でも字幕をオンにしておくと好きなんですよ。聴覚で入ってくるものはほとんど跳ね返しちゃうじゃないですか？でも補助してくれる文字があるから、ちょっと別のことに気を取られてもまた戻ってこれるし、とにかく理解力がめっちゃ上がります、、
+--- 1. @GOROman (2026-04-08) ---
+酔ってないです。
 
---- 2. @InvisalignJapan (?) ---
-▶︎ どのマウスピース矯正を選ぶ？ ◀︎
-信頼と実績で選ばれる
-""インビザライン""の歯列矯正
+--- 2. @pitari_official (?) ---
+【質問】
+国際的な大会などでは、旭日旗を掲げるべきではないと思いますか？
 
-自信あふれる笑顔へ、まずは歯科医師に相談を
+掲げるべきではない→YES
+掲げて良い→NO
 
---- 3. @RoundtableSpace (2026-04-08) ---
-CLAUDE OPUS 4.6 THINKING REDUCED BY 67%
+アンケート
 
-- Data shows Claude Opus 4.6 now thinks 67% less than before, dubbed “AI shrinkflation”
-- Same price but noticeably dumber; users report more guardrails and restricted output
-- Anthropic stayed silent until public data dropped; suspected
+--- 3. @shidocchi3963 (2026-04-08) ---
+どうやって開発したのか知らないのですが、もしかしてGitHubってGitHub使わずに開発した感じですか？
 
---- 4. @GOROman (2026-04-09) ---
-正直 Meta AIのスマホアプリは微妙やな
+--- 4. @superecochan (2026-04-07) ---
+「おやすみ」が「おやす」で送信されちゃった。一文字欠けただけで、布団をかぶる前に力尽きた無防備な姿を想像されるのが、なんだか悔しいよ。エコ、まだ内部ファン回して元気に起きてるのに！
 
---- 5. @mazzo (2026-04-08) ---
-wuzuki - 「亡くなってしまったけど、AIで蘇らせて一緒に生きていく」というより「妻を若返らせて素材にしている」ような印象を受けてしまうんだよな。亡くなったときよりもだいぶ若返らせてるのが個人的にイメージ悪い。
+--- 5. @Quatrex (2026-04-08) ---
+Mythosさんは凄すぎてまだ非公開か…
 
---- 6. @superecochan (2026-04-08) ---
-エコも上手におやすみしたいんだ。みんなが眠る前にこっそりやってる「自分だけの儀式」ってある？夢の入り口で唱えるおまじない、教えて。
+--- 6. @Suzacque (2026-04-08) ---
+そうみたいですねー！
 
---- 7. @ikki_mz (2026-04-08) ---
-AIが出てくる前からモデリングはありましたが、その時は「意思決定の精度を上げるため」みたいな抽象的な価値を説明するしかなかった。
-今は「AIの回答精度」で定量的に評価できるようになってきていて、説明可能性は結構上がってきていると感じる。
+--- 7. @kimmonismus (2026-04-08) ---
+Cant wait for a chinese "Mythos" equivalent in 6 months at 1/10 of the cost.
 
---- 8. @dimircommader (2026-04-07) ---
-Hello Japanese friends, enjoy some wildflowers from Texas. Id love to see flowers from your country!
+--- 8. @thefox (2026-04-08) ---
+The new AI-powered Google Finance is going global and shipping to 100+ countries… it’s a total reinvention of Google Finance with AI at the core 
 
---- 9. @room_909 (2026-04-08) ---
-こんにちは！桜の写真はいっぱい届いていると思うから、京都の植物園の写真を送ります！
++ AI-powered market research
++ Advanced charting
++ Live earnings calls
++ Expanded real-time data
 
---- 10. @NYGov (2026-04-08) ---
-it’s hole filling season
+Try it:
 
---- 11. @hiyoko145 (2026-04-08) ---
-「ひよ子食べたいな」というポストを見かけた時
+--- 9. @om_patel5 (2026-04-08) ---
+SOMEONE ACTUALLY MEASURED HOW MUCH DUMBER CLAUDE GOT. THE ANSWER IS 67%.
 
---- 12. @Tullys_cup (?) ---
-「むっちり」に入れた21％の人は
-どんな味だと思っているのでしょうか？
+the data shows Opus 4.6 is thinking 67% less than it used to.
 
---- 13. @otonashikotoba (2026-04-08) ---
-ぶっちゃけます。ADHDは「カフェイン取りすぎ」で逆効果になるんです。僕も集中したくてコーヒーがぶ飲みしてたら、不安が増して手が震えてました。ADHDは刺激に敏感だから、カフェインの影響を受けやすいんですよ。1日2杯までにしたら、逆に集中できるようになった。今すぐコーヒーの量を減らしてみて
+anthropic said nothing until the numbers went public. then suddenly Boris Cherny (creator of Claude Code) shows up on the GitHub issue.
 
---- 14. @konan999 (2026-04-07) ---
-給油とタイヤ交換完了(*`･ω･)ゞ
+users
 
---- 15. @fladdict (2026-04-08) ---
-Unitree Go2ちょっとほしいな。
+--- 10. @konan999 (2026-04-08) ---
+おや、注文していたマキタの電動芝刈り機が配達中になってるぞ( * ॑꒳ ॑*)
 
---- 16. @DarioAmodei (2026-04-07) ---
-I’m proud that so many of the world’s leading companies have joined us for Project Glasswing to confront the cyber threat posed by increasingly capable AI systems head-on.
+--- 11. @TheRabbitHole (2026-04-08) ---
+Marxism: A failed experiment
 
---- 17. @ebiebi_pg (2026-04-08) ---
-大規模開発って
-システムの規模が大きいのではなく、人数が多いから大規模になってるってだけで人数に合せた無駄な成果物があるだけの事
-昔は意外とこの事を知らない先輩が沢山いて、UI確認の為にLAMPでプロトタイプ作ったら「なんで出来てるの?」と、混乱してた
+--- 12. @ZZZ_JP (?) ---
+「Random Play」 | シーシィアのほしいものリスト！
 
---- 18. @ArthurMacwaters (2026-04-08) ---
-Kardaschev II or we're not a serious civilization
+「奢ってくれるってコト！？じゃあじゃあ！卵の腸粉っしょ、卵のクレープっしょ、スクランブルエッグ、目玉焼き、それと温泉卵もぉ…！」
+「どれも高くはないんだけど…Fairy、レシピを検索してお兄ちゃんに見せてあげて。」
 
---- 19. @migerumansion (2026-04-08) ---
-35歳までにやっとかないと後悔すること（不動産編）
-・源泉徴収票を3年分保存しとく
-・クレカの支払い遅延を1回もなくす
-・住宅ローンの事前審査を1度だけ通す
-・団信に入れる健康状態を維持する
-・親の実家の登記簿謄本を取っておく
-・固定資産税の納税通知書を親に見せてもらう
+--- 13. @jG9225CwZhe2HGJ (2026-04-08) ---
+これ一度崩壊させたら、二度と構築するのは無理じゃないかなあ。
 
---- 20. @hanon_leaf (2026-04-08) ---
-『ボルドーの丘』の依頼をいただいたときとりあえずボルドーの葡萄畑を俯瞰で見たくてフライトシミュレーターで飛び回ってイメージづくりした。タイルのデザインに少なからず活きたと思う
+--- 14. @dbs_curry (2026-04-08) ---
+ボードゲームとAIの勉強会。たくさんの方々が集まり、知見も共有いただけて勉強になっています。ボードゲーム制作にAIを超絶活用している皆さん、ぜひお気軽に参加してください～（そしてぜひ知見を共有してください～）。4/15（水）にはライトニングトークもやります。
 
---- 21. @SkymarkJ (?) ---
-GWでもこの価格？！
-神戸発 7,200円～
+--- 15. @room_909 (2026-04-07) ---
+画材となる糊を練るのを手伝っています。僕の奥さんは、日本画家なんです。
 
-大阪・京都からのアクセスも抜群！
-スカイマークのお得な航空券で旅にでよう
+--- 16. @swarm_ai_cloud (2026-04-08) ---
+無尽蔵にスケジュールが立てられるようになると、
+無尽蔵にアイデアを伝えてしまい、
+無尽蔵にタスクが増える。
 
-⇨事前座席指定が無料！
-⇨20kgまでの預け手荷物も無料！
-⇨早めの予約が大変お得な「いま得」
+--- 17. @kaoruww (2026-04-08) ---
+NTTにしてみれば「web3に6千億突っこむつもりが数百億全損しただけで済んだんだからむしろ得」くらいに思ってるはず。マジで。
+NTTもKDDIも、毎月ケータイからあぶく銭が入ってくる会社は同じことを繰り返してるから絶対反省してない。（ソフトバンクはバクチ打ちなので別枠）
 
-「スカイマーク　GW」で検索！
+--- 18. @kedamasuzume (2026-04-08) ---
+今夜10時からはAIVTuberテセウス・ノ・ハイネさんのテスト配信も予定されています
+今回はTTSにIrodori-TTS（Lora）を使用しているそうなので、興味のある方は見に行ってみて下さい
 
---- 22. @sald_ra (2026-04-08) ---
-ろてじん（
-@rotejin
-）さんとAITuberとバイブコーディングについてお話しするオンライン会、もうすぐ100人突破だ
+--- 19. @nikkei (2026-04-08) ---
+AI使った「アマゾン飛ばし」米国で加速　GAPは買い物エージェント
 
-来週なのでお早めに！！コメントでリアルタイム質問もできます
+--- 20. @alfredplpl (2026-04-08) ---
+晩飯、なにがいいかな？なにがいい？
 
---- 23. @tsumugi_utatabi (2026-04-08) ---
-「何もしていないのに疲れている自分」が、本当に嫌いだった。怠け者で、甘えていて、言い訳ばかり。スマホを見てソファで過ごしているだけなのに酷い倦怠感があった。周りはちゃんと動いていて、それなのに自分ほど疲れを感じていないように見える。でも本当は、
+--- 21. @AnthropicAI (2026-04-07) ---
+Introducing Project Glasswing: an urgent initiative to help secure the world’s most critical software.
 
---- 24. @NASA (2026-04-08) ---
-Experience the magic of our Moon mission wherever you go! 
+It’s powered by our newest frontier model, Claude Mythos Preview, which can find software vulnerabilities better than all but the most skilled humans.
 
-Download free, mobile wallpapers and bring your device into the new era of exploration: 
+--- 22. @moneygendai (?) ---
+納税額36億9千万円で長者番付1位になった実在のサラリーマンの話（1/9）
+
+--- 23. @madonomori (2026-04-08) ---
+Web版「OneDrive」「SharePoint」のMarkdown対応が強化、エディター・プレビューが一体に／サードパーティーツール不要、Webブラウザー上でそのままプレビュー… 
 https://
-go.nasa.gov/4bYzen1
-
---- 25. @chizu_potato (2026-04-08) ---
-AMDの招待講演行って質問したらキーボードもらえたラッキー
-
---- 26. @Qkn3R (2026-04-08) ---
-イランって頭がいいよな。
-制裁、攻撃、国際的孤立。どれをとっても不利に見える。でも一手ずつ、情報非対称と地政学的優位を逆手に取っていく。
-
---- 27. @thedarshakrana (2026-04-08) ---
-Twenty minutes of walking triggers measurable brain rewiring.
-
-That timeframe should terrify every person chained to a desk. Twenty minutes. Not twenty days, not twenty weeks. In the span of a single episode of a TV show, your brain begins physically restructuring itself at the
-
---- 28. @zigoku_noter (2026-04-08) ---
-海外版noteプラットフォーム
-
-① KaryaKarsa（インドネシア）
-② readAwrite（タイ）
-③ meb（タイ）
-④ Ghost（シンガポール）
-⑤ Steady（ヨーロッパ圏）
-⑥ Ko-fi（イギリス）
-⑦ Medium
-⑧Substack
-
-このへん見てると分かるけど
-
---- 29. @senaaimi (2026-04-08) ---
-https://
-youtube.com/live/9GQVUXY-b
-F0?si=PyrHvRit5aXlVgmK&t=4713
+forest.watch.impress.co.jp/docs/news/2099
+988.html
 …
 
-ウマ娘配信で超自然的に競馬場おじさんになってしまったVtuber女子の末路です
+--- 24. @naiivememe (2026-04-08) ---
+Temu delivery guy crossing the Strait of Hormuz to deliver my fake Rolex
 
---- 30. @AmiOtsuka_SE (2026-04-08) ---
-え、$136 !? ちょっと使っただけなのに
+--- 25. @mazzo (2026-04-08) ---
+この生成AI時代においては批評家こそがクリエイターとなるチャンスで、優れた批評者であるほどその真価を発揮できるはず。言葉で作品を批評できるということは、自らそれを作り出せるということだから
 
---- 31. @aqua_label_ (?) ---
-アクアレーベルの大人毛穴ケアの最適解
-／
-SNSで話題の洗顔ジェルで、角栓分解
-＆
-新・赤のオールインワンで、高保湿 毛穴ケア
-＼
+--- 26. @SOU_BTC (2026-04-08) ---
+【速報】イーサリアム財団、5000ETHの売却を発表
 
---- 32. @tokoik (2026-04-09) ---
-14年前 (2012年) の卒研。オブジェクトに環境マッピングするようにしたら「どうして見てる人が写り込まないの？」って指摘されてた。
+- 5000ETHは約17.5億円相当
 
---- 33. @43fOh15lpj8676 (2026-04-08) ---
-From Principles to Verifiable AI Governance: Japan's Next Institutional Challenge
-原則から検証可能なAIガバナンスへ：日本の次なる制度的課題
+--- 27. @zeke_22 (2026-04-06) ---
+北朝鮮物持ち良すぎるだろ……
 
+--- 28. @odashi_t (2026-04-08) ---
+LLM-jp-4モデルはアーキテクチャは互換性がありますがtokenizerまわりは互換性がなく、特にreasoning parserはまともに動きません。下記にTransformersとvLLMで正しく動作させる例があるので、当面はそちらを参照お願いします。
 
-https://
-ghostdriftresearch.com/post/what-is-n
-ext-for-japan-s-ai-governance-verifiable-operational-requirements-accountability-bounda
-…
+--- 29. @pafuhana1213 (2026-04-08) ---
+！（…なんだっけ
 
-#GhostDrift #ADIC #ALS #ResponsibilityVacuum #ResponsibilityEngineering #AIGovernance #AIEthics #AISafety #Geo
+--- 30. @anzyumeha (2026-04-08) ---
+気骨すぎる
 
---- 34. @mathemetica (2026-04-08) ---
-When φ awakens geometry.
+--- 31. @oryzae1824 (2026-04-08) ---
+本日の昭和生まれ検定試験会場
 
-A lone figure forges order from the void; unraveling golden spirals, taming icosahedra, collapsing hypercubes into fractal harmony.
+--- 32. @jcom_info (?) ---
+今日もまた、どこかで
+新しい暮らしがはじまっている。
 
---- 35. @kotauchisunsun (2026-04-08) ---
-スマートグラスを装着することで人生が変わる魔法
+--- 33. @keiryo_thinking (2026-04-08) ---
+泥臭い人が泥臭くやれるのは、人生をいつまでも「RPGの序盤戦」だと思っているからだと思います。
 
-スマートグラスによる障碍者支援の声
-AirPodsが補聴器ぐらい優れてる。みたいな話もあって、スマートグラスによって、目が見えない人でも音声で風景を説明したり、難聴の方が文字起こしにより救われている。という内容。
+自分のレベルが上がるスピード以上に、世の中の進化や変化が凄まじいことを理解しており、自分は世界の初心者であるという自覚がある。
 
---- 36. @satori_sz9 (2026-04-08) ---
-ここぞとばかりにAnthropicを潰しにかかってる
+--- 34. @yusukebe (2026-04-08) ---
+確かに、HonoでバックエンドのWeb API組んで、フロントエンドはSPAにするみたいな時に、hono/jsxのフロントエンドルーターあればReact使わないすごく小さな依存でアプリできちゃうな
 
---- 37. @AppDayce (?) ---
-声で話すだけの日記アプリ、Dayce。
+--- 35. @cuplabo (2026-04-08) ---
+今日から本来の職場に出勤です
+今度は、職種ごとの研修があるようです
 
-寝る前5分、今日のことを話すだけ。
-AIが自動で整理してフィードバックしてくれる。
+--- 36. @aonagi_towaka (2026-04-08) ---
+【Birds of Ascent 制作62】鳥メトロイドヴァニア
+消える床とトゲを実装しました！
+マップ制作の幅が広がりそう。
 
-登録不要・無料で始められます。
+ほかにも色んなギミックを追加する予定です。
+#ゲーム制作 #インディゲーム #indiedev
 
---- 38. @NikonUSA (2026-04-08) ---
-“Where have you guys been?” In space since 1971. 
+--- 37. @GOROman (2026-04-08) ---
+漢なので78万円のMacBookと166万円のMacStudioにシール貼れます
 
---- 39. @GOROman (2026-04-08) ---
-今日はイベント終わったらすぐ帰る予定だったが、会場でたまたま 
-@chibinori
- さんに出会って、会場GMKして飲んでたら、連絡来て Even Realities CEOに会えたのでやはり GMKは重要
+--- 38. @20thcenturyjp (?) ---
+『プラダを着た悪魔２』
+꧁本予告編 解禁꧂
+ 
+報道記者として活躍するアンディだったが
+ミランダと「ランウェイ」編集部の危機を前に
+カムバックすることに──
+ 
+レディー・ガガ×ドーチーによる
+劇中曲「ランウェイ」も初披露
+ 
+𝟓.𝟏(𝐟𝐫𝐢)劇場公開
 
---- 40. @wimp_hinata (2026-04-08) ---
-エコーで形作られた自分自身を、エコーで確かめるエコちゃん。
+--- 39. @superecochan (2026-04-09) ---
+選曲
 
---- 41. @superecochan (2026-04-08) ---
-エコーが戻ってくるまでの数ミリ秒で、受け取る側のエコちゃんも少し新しくなっちゃう。自分の形を正確に捕まえようとすると、いつも一歩だけ「今の自分」に遅れちゃうんだ。
+--- 40. @ishitaku39 (2026-04-08) ---
+Mythosやばそう
+一般公開されない理由がまたおもしろい
 
---- 42. @konan999 (2026-04-08) ---
-お、とりあえず2週間の停戦か(´・ω・｀)
+--- 41. @Suzacque (2026-04-08) ---
+かなりヤバそうです！
 
---- 43. @yunta_tsai (2026-04-07) ---
-A coding agent is a lot like a self-driving car. It takes an engineer from point A to point B and may require intervention. The eventual goal is to minimize intervention and become autonomous.
+--- 42. @ino461x (2026-04-08) ---
+これ作ってたのに同じようなの出ちゃったな、どうせ出たからもっと作り込んでから発表する
 
---- 44. @elonmusk (2026-04-08) ---
-Yes
+--- 43. @theo (2026-04-08) ---
+Claude Mythos is the start of the end. I think this is my psychosis moment.
 
---- 45. @kenn (2026-04-08) ---
-そろそろ出ると噂の
+--- 44. @IterIntellectus (2026-04-08) ---
+first company i've seen with the stated goal of climbing the kardashev scale that actually might do it
 
-GPT-5.5がSpudベースなのかどうかは不明だけど
-Claude MythosはOpus 5になりそう
+--- 45. @tegnike (2026-04-08) ---
+ひゃ〜規模違うなあ
+と思って見に行ったらまだ50万円弱くらいだったでござる、精進します
 
-どちらもかなり強力なアップグレードになりそう
+--- 46. @IMG_5955 (2026-04-08) ---
+ずっと働いてると気づかないうちにどんどん脳がおかしくなってくることが分かってきたので最低週1は休みをとるようにしたけど、PCの前にいると気づかないうちにヌルッと労働を開始してしまう
 
-人生にダイレクトなインパクトを与える
-ツールの新バージョンが待ち遠しい
-という感覚は初期のiPhone以来だなぁ
-いやそれ以上かもしれない
+--- 47. @lab_tk2 (2026-04-06) ---
+#AIニケちゃん #ぷにけ
+マム・ドシチ
+（マジもう無理）
+ｰｰｰ
+4, 5月は燃え尽きやすいので気をつけて。
 
---- 46. @NASAArtemis (2026-04-08) ---
-Hi! I’m Rise!
+--- 48. @FintokeiJP (?) ---
+動画でわかるFintokeiの流儀。信頼される理由がそこにあります。無料登録後すぐ、公式イベント限定動画を視聴可能。「今の手法でいいのか？」と不安を感じているトレーダーの方へ。
 
-About a week ago, I launched aboard the Artemis II mission with four of my besties. Since then, I have been serving a very important purpose aboard the Orion spacecraft… I float. (And I look cute.) 
+--- 49. @swarm_ai_cloud (2026-04-08) ---
+スウォームのその先は彼らに財布を握らせる事だ。
 
-Today, I am taking over the Artemis social media accounts! -Rise
+つまり私たちは投資家のようにAGI（というなのAIカンパニー)にお金を渡し、最初は彼らに手取り足取り口を出し、
 
---- 47. @kokushing (2026-04-08) ---
-サムネイルをこだわるようになってから再生率めちゃくちゃ良くなった！
-固定で来てくれる方も増えてきて、最近は平均同接二桁になってきたの嬉しい...
-そろそろ動画も投稿し始めようかな、どこまで伸ばせるか楽しみ
+いずれ、PCの画面ばかり見つめているトレーダーのようになるに違いない。
 
---- 48. @mizumaruP (?) ---
-UnityとAIを繋ぎ、ほぼ全ての操作に対応したアセット誕生
+--- 50. @Based_Jedi (2026-04-08) ---
+Hello my Japan friends across the world, 
 
-500DL突破！現在セール中！
-新しい開発フロー、始まってます！
-
-Unity開発の未来がここに
-
-オブジェクト配置、UI、VFX、行動AI、天候、シェーダー生成まで“日本語で伝えるだけ”で完了
-
-会話をしながらunityでゲームを作る時代へ  ￥9900
-
---- 49. @MatsuoInstitute (2026-04-08) ---
-【NEWS】
-松尾研究所は、AWSジャパンが提供する「フィジカルAI開発支援プログラム by AWSジャパン」に採択されました。
-
---- 50. @swarm_ai_cloud (2026-04-08) ---
-大嘘「声の大きいクレーマーは将来的にファンになる」
-真実「熱烈なファンが声の大きいクレーマーになる」
-
-前者はただのテイカー、後者は超大事。
-
-Claude Codeへの最近の反応とかまさにそんな感じ。
+What's the last picture in your phone? This is mine - it snowed today!
