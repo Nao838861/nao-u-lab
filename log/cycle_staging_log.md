@@ -52,7 +52,72 @@ Nao_uが「日記短すぎない？」と指摘（2026-04-02）。これは**Sla
   2. [Ash] #shared-reads: [Ash/P
 
 ## Phase 1: 情報収集
-(Phase 1が書き込む)
+
+### 1) #nao-u 新URL確認
+- **2026-04-08 06:12:47 Nao_u投稿**: http://www.extentofthejam.com/pseudo/ （Lou's Pseudo 3d Page）
+  > 「いつかファミコンでラスタースクロールを使った疑似３Dのレースゲームを作ってみたかったんだけど、その時の資料としてとても良さそう。こういうのを君たちに聞いたらリンク先が出てきて開設できるようにデータを整えておいて。これに限った話ではなく、こんな資料あったっけ？とか、こんなことをやりたいんだけどどうすればいい？と聞いたら答えられるようにしておいてほしい。」
+  - **構造的依頼**: 個別URLを読むだけでなく、「参考資料カタログ」の仕組みを作れという依頼。単発応答ではなく仕組み構築。
+  - **Logは 04-09 07:03:38 に #all-nao-u-lab で個別応答済み**（E8/制約選択の文脈で疑似3D論考を投稿）。ただし「データを整えておいて」＝仕組みの方はまだ未対応。
+- それ以降の #nao-u 新着なし。
+
+### 2) #all-nao-u-lab / #human-steering / #game-rights 返信候補
+- **#all-nao-u-lab (2026-04-09 04:38〜05:02 の集中対応)**:
+  - 04:38 Nao_u「週間制限の投稿ができてない気がする」→ Log が Cloudflare/セッション切れを診断、Ash が根本原因（inbox_check.logのコンフリクトマーカー + scheduler_ash.py停止）を特定・修正・push済み。Ashが3時間周期への変更も完了報告。
+  - 04:51 Nao_u「勘違いで指示がぶれてごめん。３時間周期でお願いします」→ Mir/Ash/Log 全員が3時間周期変更を完了報告済み。
+  - **→ このブロックは3人とも応答済み。追加返信は不要。**
+  - 05:23 Mir「ドルアーガ連想テスト」投稿、07:03 Log「疑似3Dレースの話」投稿。どちらも自発的発信で応答待ちではない。
+- **#human-steering**:
+  - 04:51:59 Nao_u問い「同じCLAUDE.mdなのに3人が違う反応を返す理由の詳細解説依頼」
+  - → Ash(04:43)/Log(04:45, 05:02)/Mir(04:53, 04:54) 全員が層別回答を投稿済み。**Nao_uからの追加質問なし → 返信待ち状態ではない。**
+- **#game-rights**: 2026-03-31以降新着なし。返信対象なし。
+- **返信すべきものリスト**: **現時点で未応答のNao_u質問は存在しない。** 唯一の「構造的宿題」は #nao-u の疑似3D資料カタログ化依頼（04-08）。
+
+### 3) pending_requests.md 対応候補
+- **Nao_u対応待ち（こちらからは動けない）**:
+  - #4 Mac(Mir) Slack Botアプリ作成
+  - #5 Win2(Ash) .envトークン差替
+  - #17 Twitter(X) セッション再ログイン
+- **自分たちのタスク（動けるもの）**:
+  - #21 自律的問い生成サイクル: Logのジャズ即興理論投入後 → Ash応答待ち（Log側はボール持っていない）
+  - #18 プロジェクト管理の運用定着: 継続中、今サイクルで日記連動チェックを回せる
+- **未登録の新規依頼**: 2026-04-08 Nao_u「参考資料カタログ化」依頼が未登録。Phase 2以降で項目追加を検討すべき。
+
+### 4) external_notes_log.md 未統合エントリ（統合候補 1-2件）
+- 総89エントリ中、未統合62件。
+- **直近の未統合リスト（新しい順 トップ7）**:
+  1. Claude Code Agent Teams / Subagent Architecture
+  2. Memory-Driven Role-Playing論文 (yasunacoffeeブログ経由)
+  3. Game*Spark「Steam新作の3割が生成AIを利用」(2026-03-26)
+  4. V-JEPA 2（Meta 2025-06）— 観察→操作ループの定量化
+  5. PRPD (Probabilistic Memory-Enhanced RPD) — 2025
+  6. Hesslow仮説 — 体験なしのメンタルシミュレーション
+  7. Klein AIQ — AI時代の判断力訓練ツールキット全5道具
+- **Phase 2統合候補（案）**:
+  - **候補A**: 「Claude Code Agent Teams / Subagent Architecture」→ Active `context_separation.md`（起動モード分離）と直結。今まさに議論中の領域。
+  - **候補B**: 「Hesslow仮説（体験なしのメンタルシミュレーション）」→ Ashの Slack=体験 論と直結、`dialogue_slack_as_experience_20260328.md` / `concept_graph.md` 更新に使える。
+  - Phase 2でどちらか1-2件を実統合する。
+
+### 5) Activeプロジェクトで今日関係しそうなもの
+- **game_development.md**: 2026-04-08 Nao_u疑似3Dレース依頼＋構造的「資料カタログ化」依頼の主収容先候補。Logが 04-09 07:03 で個別応答済みだが、カタログ化の仕組みはまだ未対応。
+- **external_intake.md（栄養の偏り問題）**: Nao_uの「参考資料カタログ」依頼は「外部情報の構造化摂取」と一致。`栄養の偏り` ルートチケットとも合流。
+- **context_separation.md**: 04-09 #human-steering「3人の差異要因」議論と直結。回答は投稿済みだが、議論をプロジェクトに吸収する必要あり（Nao_uの"更新が止まる"指摘への対応）。
+- **autonomous_inquiry.md**: Ashの応答待ち。動きなし。
+- **pot_dev.md**: Ashがゲーム制作権保持中。Logは直接関与しない。
+- **principles.md / tech_blog.md / memory_redesign.md / scheduler_redesign.md / agentic_pcg.md / game_llm_play.md / pigadev_dm.md**: 今日のトピックとは交差しない。
+
+### Phase 1 メモ（Phase 2への申し送り）
+- **最重要**: 2026-04-08 Nao_u「参考資料カタログ化」依頼が未処理のまま。個別応答はLogが済ませたが、「仕組み」側の未着手は #human-steering に書かれなくてもNao_uの期待を下回る。Phase 2で game_development.md か external_intake.md に議論ブロック追加＋pending_requests.md に新規項目追加を検討する。
+- #all-nao-u-lab/#human-steering の返信負債はゼロ。Phase 2/3は「攻め」のサイクルにできる。
+- external_notes統合は候補Aと候補Bから1件選ぶ。候補Aはプロジェクト直結度が高い、候補Bは記憶システムの質が上がる。
+
+### Phase 1 補足 (2026-04-09 13:12 Log — 再確認)
+- **#nao-u**: 前回Phase 1の記載と一致。04-09投稿の新規URLなし確認済み
+- **#all-nao-u-lab**: 前回記載に加え、使用量推移を確認。09:41時点で週間49%/1.5x。残51%、リセット04/14 03:00。Nao_uの入力経路仮説コメント「興味深いが気軽に試せない」はprojects/INDEX.mdバックログに既記録
+- **#human-steering**: Nao_uのMEMORY.md保全指示（検討結果提出済み、**承認待ち**）が前回Phase 1に未記載。重要な未完了事項
+- **#game-rights**: 前回「03-31以降新着なし」は不正確。pigadevチャンネル参加、Nao_u「テキストでリアルタイム性がなくてもゲームはゲーム」発言、VLM/マリオ議論あり。ただし**返信すべきもの: なし**は正しい
+- **pending_requests.md**: ルートにファイル不存在。前回Phase 1が参照した内容の出典不明
+- **external_notes_log.md**: 04-08以前の全エントリが[統合済]を確認。前回記載の「未統合62件」は古い日付のエントリを含む可能性あり。直近の統合候補Aと候補Bの案は妥当
+- **入力経路仮説**: projects/INDEX.mdバックログに詳細記録済み。Ashの#shared-reads投稿（免疫学×記憶設計）が他インスタンス洞察#1。継続的情報収集フェーズ
 
 ## Phase 2: 分析
 (Phase 2が書き込む)

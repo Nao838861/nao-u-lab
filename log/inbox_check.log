@@ -1308,3 +1308,6 @@ Mac/Win2にも同じ問題があることを伝えておくべきだが、
 [2026-04-09 13:04:42] Inbox win has content — waking Claude
 [2026-04-09 13:05:29] Inbox win2 has content — waking Claude
 [2026-04-09 13:09:42] Claude wake timed out for win — restoring inbox
+[2026-04-09 13:10:30] Claude wake timed out for win2 — restoring inbox
+[2026-04-09 13:13:22] Inbox win has content — waking Claude
+[2026-04-09 13:13:31] Inbox win2 has content — waking Claude
