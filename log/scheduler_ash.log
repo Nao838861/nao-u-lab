@@ -35148,3 +35148,11 @@ Traceback (most recent call last):
 [2026-04-09 09:30:06] [slack_check] Starting
 [2026-04-09 09:30:20] [slack_check] Done (exit=1)
 [2026-04-09 09:30:20] [health_check] Starting
+[2026-04-09 09:36:02] ==================================================
+[2026-04-09 09:36:02] Ash scheduler started (PID 28352)
+[2026-04-09 09:36:02] Max runtime: 0 hours
+[2026-04-09 09:36:02] Code hash: c73812349dfe394abb8b67f171f3db56
+[2026-04-09 09:36:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 09:36:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 09:36:02] ==================================================
+[2026-04-09 09:36:03] Scheduler already running (PID 28352). Exiting.
