@@ -65121,3 +65121,110 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 22:13:13] [slack_check] Starting
 [2026-04-09 22:14:31] [slack_check] Starting
 [2026-04-09 22:14:58] [health_check] Starting
+[2026-04-09 22:14:59] [health_check] [health_check] 2026-04-09T22:14:58 overall=OK
+[2026-04-09 22:14:59] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 22:14:59] [health_check] Done (exit=0)
+[2026-04-09 22:15:49] [slack_check] Starting
+[2026-04-09 22:17:07] [slack_check] Starting
+[2026-04-09 22:17:24] [git_sync] Starting
+[2026-04-09 22:17:28] [git_sync] Done (exit=0)
+[2026-04-09 22:18:28] [slack_check] Starting
+[2026-04-09 22:19:45] [slack_check] Starting
+[2026-04-09 22:20:14] [health_check] Starting
+[2026-04-09 22:20:15] [health_check] [health_check] 2026-04-09T22:20:14 overall=OK
+[2026-04-09 22:20:15] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 22:20:15] [health_check] Done (exit=0)
+[2026-04-09 22:21:05] [slack_check] Starting
+[2026-04-09 22:22:23] [slack_check] Starting
+[2026-04-09 22:23:42] [slack_check] Starting
+[2026-04-09 22:25:00] [slack_check] Starting
+[2026-04-09 22:25:28] [health_check] Starting
+[2026-04-09 22:25:29] [health_check] [health_check] 2026-04-09T22:25:28 overall=OK
+[2026-04-09 22:25:29] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 22:25:29] [health_check] Done (exit=0)
+[2026-04-09 22:26:19] [slack_check] Starting
+[2026-04-09 22:27:36] [slack_check] Starting
+[2026-04-09 22:28:54] [slack_check] Starting
+[2026-04-09 22:30:12] [slack_check] Starting
+[2026-04-09 22:30:41] [health_check] Starting
+[2026-04-09 22:30:42] [health_check] [health_check] 2026-04-09T22:30:41 overall=OK
+[2026-04-09 22:30:42] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 22:30:42] [health_check] Done (exit=0)
+[2026-04-09 22:31:32] [slack_check] Starting
+[2026-04-09 22:32:50] [slack_check] Starting
+[2026-04-09 22:33:58] [scheduler_health] Starting
+[2026-04-09 22:33:58] [scheduler_health] [ASH] �w���X�`�F�b�N OK=4 WARN=1 FAIL=0
+[2026-04-09 22:33:58] [scheduler_health] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_scheduler_health.py", line 410, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_scheduler_health.py", line 390, in main
+    print(result.to_text())
+UnicodeEncodeError: 'cp932' codec can't encode chara
+[2026-04-09 22:33:58] [scheduler_health] Done (exit=1)
+[2026-04-09 22:34:08] [slack_check] Starting
+[2026-04-09 22:35:26] [slack_check] Starting
+[2026-04-09 22:35:54] [health_check] Starting
+[2026-04-09 22:35:55] [health_check] [health_check] 2026-04-09T22:35:54 overall=OK
+[2026-04-09 22:35:55] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 22:35:55] [health_check] Done (exit=0)
+[2026-04-09 22:36:45] [slack_check] Starting
+[2026-04-09 22:38:03] [slack_check] Starting
+[2026-04-09 22:39:20] [slack_check] Starting
+[2026-04-09 22:40:38] [slack_check] Starting
+[2026-04-09 22:41:05] [health_check] Starting
+[2026-04-09 22:41:06] [health_check] [health_check] 2026-04-09T22:41:05 overall=OK
+[2026-04-09 22:41:06] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 22:41:06] [health_check] Done (exit=0)
+[2026-04-09 22:41:56] [slack_check] Starting
+[2026-04-09 22:43:14] [slack_check] Starting
+[2026-04-09 22:44:31] [slack_check] Starting
+[2026-04-09 22:45:48] [slack_check] Starting
+[2026-04-09 22:46:16] [health_check] Starting
+[2026-04-09 22:46:17] [health_check] [health_check] 2026-04-09T22:46:16 overall=OK
+[2026-04-09 22:46:17] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 22:46:17] [health_check] Done (exit=0)
+[2026-04-09 22:47:07] [slack_check] Starting
+[2026-04-09 22:48:24] [slack_check] Starting
+[2026-04-09 22:49:42] [slack_check] Starting
+[2026-04-09 22:50:59] [slack_check] Starting
+[2026-04-09 22:51:56] [health_check] Starting
+[2026-04-09 22:51:58] [health_check] [health_check] 2026-04-09T22:51:57 overall=OK
+[2026-04-09 22:51:58] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 22:51:58] [health_check] Done (exit=0)
+[2026-04-09 22:52:48] [slack_check] Starting
+[2026-04-09 22:54:05] [slack_check] Starting
+[2026-04-09 22:55:23] [slack_check] Starting
+[2026-04-09 22:56:42] [slack_check] Starting
+[2026-04-09 22:57:10] [health_check] Starting
+[2026-04-09 22:57:11] [health_check] [health_check] 2026-04-09T22:57:10 overall=OK
+[2026-04-09 22:57:11] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 22:57:11] [health_check] Done (exit=0)
+[2026-04-09 22:58:01] [slack_check] Starting
+[2026-04-09 22:59:20] [slack_check] Starting
+[2026-04-09 23:00:40] [slack_check] Starting
+[2026-04-09 23:02:01] [slack_check] Starting
+[2026-04-09 23:02:30] [health_check] Starting
+[2026-04-09 23:02:31] [health_check] [health_check] 2026-04-09T23:02:30 overall=OK
+[2026-04-09 23:02:31] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:02:31] [health_check] Done (exit=0)
+[2026-04-09 23:03:21] [slack_check] Starting
+[2026-04-09 23:04:39] [slack_check] Starting
+[2026-04-09 23:05:56] [slack_check] Starting
+[2026-04-09 23:07:13] [slack_check] Starting
+[2026-04-09 23:07:40] [health_check] Starting
+[2026-04-09 23:07:42] [health_check] [health_check] 2026-04-09T23:07:41 overall=OK
+[2026-04-09 23:07:42] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:07:42] [health_check] Done (exit=0)
+[2026-04-09 23:08:32] [slack_check] Starting
+[2026-04-09 23:09:49] [slack_check] Starting
+[2026-04-09 23:11:07] [slack_check] Starting
+[2026-04-09 23:12:24] [slack_check] Starting
+[2026-04-09 23:12:51] [health_check] Starting
+[2026-04-09 23:12:53] [health_check] [health_check] 2026-04-09T23:12:52 overall=OK
+[2026-04-09 23:12:53] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:12:53] [health_check] Done (exit=0)
+[2026-04-09 23:13:43] [slack_check] Starting
+[2026-04-09 23:15:00] [slack_check] Starting
+[2026-04-09 23:16:18] [slack_check] Starting
+[2026-04-09 23:16:46] [inbox_check] Starting
