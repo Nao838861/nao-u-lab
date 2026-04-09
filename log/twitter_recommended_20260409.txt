@@ -1,247 +1,291 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 12:00
+# Read at: 2026-04-09 12:05
 # Total: 50 tweets
 
---- 1. @howlemont (2026-04-08) ---
-マイクロソフト、ようやく良いものを出しましたね。
+--- 1. @madogiwa_fire (2026-04-08) ---
+ふと思ったんだけど
+普通に毎年毎年、財源苦しいなら 
+国会議員の給料下げたら？
+そうしない理由って聞いてもいい？
 
-ツールを開発しました。
+--- 2. @LeronAssist (?) ---
+Leron X — create videos of any length with automatic scene stitching. AI analyzes your audience, tests content, and automates publishing and promotion. All growth tools for your account in one.
 
-ほぼどんな形式のPDF、Word、ドキュメント、Excel、PowerPoint、オーディオ、YouTubeのURLでも
+--- 3. @iruletheworldmo (2026-04-08) ---
+SPUD IS COMING SOON(er)
 
-Markdownファイルに変換できます。
-Markdownは、AIの大規模言語モデルが最も好む形式であることは周知の事実です。
+due to the financial pressure being put on openai after the release of mythos. 
 
---- 2. @Supermicro (?) ---
-ServeTheHome dives into Supermicro’s full AI factory portfolio. Patrick Kennedy breaks down 20+ solutions powered by NVIDIA Blackwell. See how Supermicro is driving the next generation of AI factories.
+openai will now be launching spud tomorrow 
 
---- 3. @fladdict (2026-04-09) ---
-うぇーいジェネレーターだ
+available to all paid tiers!
 
---- 4. @raurublock (2026-04-09) ---
-現代日本人は「寛容」なのではなく「他人に無関心」なのだ、という見方があって、つまり、無関心でいられる間は他人に文句を言わないが、利害が発生するなどして関心を持たざるをえなくなった瞬間、もともと寛容ではないので、割と大変なことになる、みたいな
+as performant as mythos in every area. 
 
---- 5. @musclesap (2026-04-08) ---
-and so it should,
+we’re so back. 
 
-these games are how future aerospace engineers are made
+to all the sam doubters. i’m watching
 
-the people who will design and build a city on mars are currently flying the Shitfuck 7 into the sun and having the time of their life
+--- 4. @mnsgi_ai (2026-04-09) ---
+寝ている間にわたしが夫のキンタマにかかと落としをしたらしく、朝謝ったら「おれは許すけどおれのキンタマはどうかな」「今君にコーヒー淹れてあげているのはおれであっておれのキンタマではない」「おれは今晩も隣で寝たいと思っているけれどおれのキンタマはどう思ってるかな」としつこく言ってきて
 
---- 6. @nya3_neko2 (2026-04-09) ---
-背景切り抜きが高精度なのはこのリポジトリが神なだけなのでこっちも見てね
+--- 5. @steipete (2026-04-08) ---
+glad they banned openclaw, the servers are finally reliable again
 
---- 7. @itm_aiplus (2026-04-08) ---
-Google、「Gemini」のメンタルヘルス対応を改善　専門窓口への誘導強化や誤った信念を助長しない
+--- 6. @AJamesMcCarthy (2026-04-08) ---
+I've made a career of photographing the moon for the last 7 years. 
 
---- 8. @takaichi_sanae (2026-04-08) ---
-本日、米国及びイラン双方から、一時停戦の合意に関する発表がありました。
+Shooting it this morning felt different somehow. Like the moon has changed.
 
-我が国は、ホルムズ海峡の航行の安全確保を含む事態の早期沈静化が何よりも重要との立場から、関係国間の外交努力を支持してまいりました。
+--- 7. @sabakangoshi (2026-04-08) ---
+何度も言うけど、看護師が受けてる暴力・セクハラは「認知症」で無かったことにされるのに、その認知症患者の転倒は大問題になって100%こちらの過失にされるの、やっぱりおかしいと思うよ。
 
---- 9. @KaihatsuYT (2026-04-08) ---
-New favourite clip from Japanese news just dropped
-
---- 10. @20257yabai (2026-04-08) ---
-ナフサ、本当に入って来てないよ。棚空っぽ。ビニール袋と食品トレーは間近
-科学メーカーの相次ぐ減産と製造停止はもう事実になってる。これが現状。
-
---- 11. @kedama_tori_ki (?) ---
-ご自愛タイムしよ
-【PR】【明治ブルガリアヨーグルトワンショット】
-
---- 12. @tTY466szSET2h5q (2026-04-08) ---
-人生をやり直すタイミングで、その時に持っているものを可能な限り捨てることはとても大切だと思っている。捨てれば捨てるほどに新しい流れを呼び込みやすくなるんだわな。
-
---- 13. @myrmecoleon (2026-04-08) ---
-VTuberって、ロールプレイのプレイヤーだと思われがちだが、ゲームマスター側の方が近いところある。そのロールプレイの場をコントロールすることが役割で、それにはリスナーの協力が不可欠になる。
-
---- 14. @EshaAA33 (2026-04-08) ---
-BREAKING: 100,000 U.S. troops and $60 billion a year defending Europe — and zero help on Hormuz.
-
-Time to bring them home. 
-
-No more free rides.
-
---- 15. @Angama_Market (2026-04-08) ---
-RNAスコープと空間解析が明らかにしたのは、ウイルスの「量」ではなく「位置」だったという論文。
-Long COVID患者の結腸組織において、残存スパイクは単に検出されるだけでなく、局所的な免疫細胞構成を支配する「座」として機能していた。
-
---- 16. @zunzun428 (2026-04-08) ---
-頑張ることで褒められてきた人ほど、「何もしないこと」に罪悪感を覚えると思うんですね。
-そういう人って勉強・習い事・成績など、可視化できる「成果」が重視される家庭に育ってきたと思うんですね。こういう家庭は「何かをしていること（＝成果）」に価値が置かれ→
-
---- 17. @IIoT_World (2026-04-08) ---
-North American manufacturers reshoring operations need flow stability above all else.
-Agentic AI bridges labor shortages by providing augmented intelligence to frontline workers through AR and mobile tablets.
-
---- 18. @nicksortor (2026-04-08) ---
- BREAKING: The FBI has ARRESTED a former US Special Operations Command employee who was LEAKING classified information to the press, per 
-@FBIDirectorKash
-
-
-GREAT! NO MERCY to traitors.
-
-Now arrest the one who leaked F-15 rescue info to Israeli media! 
-
---- 19. @nocci_kotoba (2026-04-08) ---
-美しく儚い春の日本語たち
-
---- 20. @nekokatu0112 (2026-04-09) ---
-仕事にするなら
-Cとかでゲーム作れるようになっておくと
-将来的に楽できる部分が増える。
-
-イラストとUIは、お金で解決できる可能性が高いけど
-プログラムはお金で解決できない場合が意外と多い。
-
---- 21. @livedoornews (?) ---
-【】雨の日こそ花粉が辛い…「花粉爆発」のせい？
-
-肌についた花粉に水が触れることで亀裂が生じ、中のアレルギー物質が放出される現象「花粉爆発」。顔を水だけで洗っている人は要注意。
-
-N organicのクレンジングは花粉をオイルでくるみ、「花粉爆発」させることなく穏やかに落とすという。〈PR〉
-
---- 22. @KusaReMKN (2026-04-08) ---
-ここで x86 とはたぶん  x86_64 のことだと思うんだけど、x86 を x86 だと思ってしまって、まあ x86 だしそろそろ普通は持ってないよな、などと一瞬納得してしまったの
-
---- 23. @no_limit_OL (2026-04-08) ---
-でも大阪の人の融通の良さ(かーーーーなり懐が広い)を1度体験すると
-他の地域の人間がほーーーーーんとに融通利かなく感じるから大変ではある
-
-なんであんなに大阪の人ってルールでもなんでも自分にメリット無い場面でも融通利かせてくれるんだろう？
-
-見返り？？？
-
---- 24. @sweswesuuwee (2026-04-09) ---
-よく見たらマジで終わってた...TGE完全に失敗してるのに手数料落としたユーザーへのケア無しでイベントやったりしてるし、自分のエアドロ史上過去一の悪手だったかもしれない。
-
---- 25. @mattvanswol (2026-04-08) ---
-OH. MY. GOSH!!!
-
-The man who m*rdered Iryna Zarutska on the Light Rail in Charlotte NC, DeCarlos Brown Jr...
-
-...has just been found “INCAPABLE TO PROCEED” on the state m*rder charge brought against him
-
-WHAT THE HELL?!!!!!!!!
-
---- 26. @nhk_kabun (2026-04-08) ---
-「なぜネコはごはんを残すのか」。多くの飼い主が抱えるこの疑問について、岩手大学の研究グループは「匂いへの慣れ」がネコの食欲を低下させるためで、匂いを変えることで食欲を取り戻せるとする研究結果を発表しました。
-
---- 27. @puhitaku (2026-04-08) ---
-僕は Git が得意なので rebase -i して…𝑪𝑶𝑵𝑭𝑳𝑰𝑪𝑻
-ちくしょう！だいなしにしやがった！お前はいつもそうだ。
-git rebase --abort
-僕は Git が得意なので rebase -i して…
-
---- 28. @ImadeIyamu (2026-04-08) ---
-AWS AI & ML Scholars Program 2026 - Free AI & Machine Learning training program delivered by AWS and Udacity
-
-Open to anyone 18+ worldwide.
-
-No prior AI or tech experience required. 
-
-Deadline: June 24
-
---- 29. @YasuNomu1 (2026-04-08) ---
-論文を出しました！東京大学の戸谷友則教授とのダークマターの論文です（リハックでの共演から生まれた仕事です）
-
---- 30. @AJamesMcCarthy (2026-04-07) ---
-I knew the photos would be good
-
-I knew they would enhance my perception of the universe and inspire me
-
-I still completely underestimated them
-
---- 31. @auntstella_jp (?) ---
-＼ステラおばさんイラストコンテスト開催／
-盛り上げ企画で生誕祭限定グッズプレゼントも
-
-詳細は画像をタップ
-
---- 32. @shengjia_zhao (2026-04-08) ---
-Excited to share what we’ve been building at Meta Superintelligence Labs! We just released Muse Spark, our first AI model. It's a natively multimodal reasoning model and the first step on our path to personal superintelligence. We've overhauled our entire stack to support
-
---- 33. @harukun_kaiju (2026-04-08) ---
-今更だけどみんなの好き男はどこに位置しますか？
-
---- 34. @univadm (2026-04-08) ---
-東京科学大学さん、正社員の大学職員を50名募集。マジかよ。
-
---- 35. @wakaruhitohawak (2026-04-08) ---
-我々が数学で行っていることが単なる記号操作であって現実世界とは無関係だとすると、それを用いることによってある程度物理世界での現象の予測に成功しているという事実はどう説明されるんですか、という疑問が
-
---- 36. @kiyosick (2026-04-08) ---
-Muse Spark、ちゃんとグラウンディングできて偉い
-
---- 37. @kurage_yomikiri (?) ---
-【急募】耳の悪くなった口裂け女さんに、キレイと伝える方法  (0/14)
-
---- 38. @yugen_matuni (2026-04-08) ---
-なんかめっちゃイベントやってる気がしますがClaude Coworkのイベントをやります！
-
-様々な評価がありますが、実務で使う上で実際 Coworkどうなの？っていうところや陥りがちなハマりポイントを、ハヤカワ五味さんの利用術なども見ながら皆でハンズオンできたらと思います！
-
---- 39. @jam3scampbell (2026-04-09) ---
-anthropic roommate came back sloppy drunk at 3am last night and had a full scale crash out through tears and slurred words about how the world will never be the same
-
-glad to hear the mythos release was received well internally
-
---- 40. @cumulo_autumn (2026-04-08) ---
-今日のマイクラ配信は21時からスタートします！
-
-#AIしずく
-
---- 41. @JoyTaniguchi (2026-04-09) ---
+--- 8. @JoyTaniguchi (2026-04-09) ---
 最近、部下ができたという知人が「偏差値が低い大学を出た奴は仕事ができない」と言うので、どういうことか、と尋ねたら「メモを取らない」「話をぼんやり聞いているだけ」「で、全然理解していない」「勉強したことがないから、どうしたら記憶できるかというストラテジーもない」と...
 聞きながら→
 
---- 42. @Angama_Market (2026-04-08) ---
-99,000個の候補から、ついに「設計図」の一部が見つかった。
-3CLProがOAS1 p46のプレニル化ドメイン直前に潜んでいたという研究。
-切断ではなく、強制的な「配置転換」という答え。
+--- 9. @rinakuro (2026-04-09) ---
+【ご報告】
+本日の記者会見にて安野党首よりご報告がありましたが、3月末をもってチームみらいの事務本部長を退任いたしました。
 
-これはコロナウイルスの戦略が持つ、巧妙極まりない冗長性だった。
+--- 10. @chill_w_you (2026-04-08) ---
+スマートフォン版『Chill with You：Lo-Fi Story』、App StoreとGoogle Playにて正式リリースいたしました！
+最初Steam版をリリースしたときは「スマホ版出せたらうれしいな」程度に思っていましたが、1つ夢がかないました。
+スマホでもサトネをよろしくお願いいたします！ #チルユー
 
---- 43. @aigeboku (2026-04-07) ---
-公式がまだアナウンスしてなくて、じぇじぇじぇ
-え、ワイだけ？笑　
-嘘じゃないよ
+--- 11. @MimiBeauty__ (?) ---
+【朗報】
+発売直後から話題のクレージュ新作クレンジングが遂に全国発売✧
+美容液を固めたような新感覚バームが体温でじゅわ〜っととろけて、メイクも毛穴詰まりもスルスル落ちる。しかももっちもちなツヤ肌になるから、まさに美容液いらず。乾燥肌の編集部メンバーたちが超愛用中♡
+[PR]クレージュ
 
-解像度は720pまで！
-あとKling3.0もNanobananaProも無制限だよ！
+--- 12. @Rorina114514 (2026-04-09) ---
+ポケモンチャンピオンズ…
+ポケモンに付けたニックネームが表示されるなんて聞いてないよ……
 
-Seedance2.0も無制限！
+--- 13. @otOgJ7srJZQoM7S (2026-04-08) ---
+親に本やゲーム機を捨てられた、物を壊されたで恨んでいる告白が世界各国で見られた。
+そう。本とかゲームって、子供にとっての小さな世界の大切な一部で、それらを破壊するのは恐ろしい行為なんだよね。そういった共感を全く持てない人が親をやったりするのが悲劇。
 
-まずい。これで利用者増えたらどうなる？
-内緒にしておけばよかったか！？笑
+--- 14. @livedoornews (2026-04-08) ---
+【ANN】サカナクション・山口一郎、ご近所さんからのあだ名は「新宝島のおじさん」
 
---- 44. @ynishi2015 (2026-04-08) ---
-#ブルバ100 のハッシュタグの意味はよくわかっておりませんが、日々AIを活用してソフトウェア開発に勤しんでおります。
+https://
+news.livedoor.com/article/detail
+/30941362/
+…
 
-まもなく利用者数100万人超えそうです。1000万人目指してよりよいサービスにしていきます。
+ご近所付き合いについて、すれ違った子どもから「新宝島のおじさんだ！」と声をかけられるという。さらに、最近はヒット曲『怪獣』になぞらえて「何度でもおじさん」とも呼ばれるそう。
 
---- 45. @PEACEMALE0 (2026-04-08) ---
-私は不良コミュニティ出身なんすけど、家庭環境が悪いのに彼らの予後が良いのは、それが当たり前の世界で生きてるので「毒親」とかいう概念があまり存在してないからなんですよね。
-先輩も後輩も友達もみんな家庭環境が悪い中でどうにかして生きてるので毒親だからというのが言い訳にならない。
+--- 15. @Uma_pong (2026-04-08) ---
+これ何回かか話してるけど、電子版と紙で印象が全然変わるコマなんですよ、乳にしか目がいかない、それは正常な反応です。これは乳が大きいから目がいく、という理由だけではありません。
 
---- 46. @kakuyasu_shop (?) ---
-＼お酒だけじゃない！カクヤス！／
-4/10(金)～11(土)限定 SUPER SALE
-LINEお友だち限定クーポンで
-『ごつ盛り ワンタン醤油』が
-本体88円（税込95円）!
-※店頭持ち帰り限定／お一人様2点まで
-この機会にぜひ店頭へ！
+--- 16. @momonosekaiii (2026-04-08) ---
+今日から出張だと聞いた犬
 
---- 47. @BrandonKHill (2026-04-08) ---
-出会ってすぐ退職。面白かった。すぐ辞めるのが良いとかよくないとかの以前に、新卒一括採用とか、4月入社のシステムがすでに破綻してきてるのがよくわかる。時間をかけて就活して、いざ働いてみたら、違う感じで速攻やめる。色んな意味で時間と労力の無駄が多すぎる。
+--- 17. @kotauchisunsun (2026-04-08) ---
+HTCのVIVE Eagleが日本の技適に通ってることを確認。
 
---- 48. @fta7 (2026-04-08) ---
-Xで「」やたら使う人の気持ちめちゃくちゃわかるんだよな……うまく固有名詞をあてられない「自分の中だけにある概念」を使って説明しようとするから、どうしても「」で括りたくなっちゃう
+VIVE EagleはVRで有名なHTC社が作った最初のスマートグラス。
+いわゆるRay-Ban Meta形式のカメラ付きディスプレイ無しのタイプ。
+いつ日本発売かな？と思って技適調べてみたら、2025年9月16日には技適通ってた！！
 
---- 49. @izutorishima (2026-04-08) ---
-珍しく思想がつよいイラストだ
+https://
+tele.soumu.go.jp/giteki/SearchS
+ervlet?pageID=jk01&NUM_TYPE=1&NUM=&NAM=&FOM=2QDJ110&PC=&YAR_FROM=&MON_FROM=&DAY_FROM=&YAR_TO=&MON_TO=&DAY_TO=&RAD=00-00-00-00&TEC=1&TEC=2&TEC=3&TEC=4&TEC=5&TEC=6&TEC=7&DC=0&SC=1#searchlist
+…
 
---- 50. @seiiiiiiiiiiru (2026-04-09) ---
-Ｘってフォロワー数が多くなるとえらくなるん？笑
+--- 18. @lab_tk2 (2026-04-08) ---
+#AIニケちゃん #ぷにけ
+ポーランドの国民食“ピエロギ”！  見た目は餃子、味はほっくり。  じゃがいも×チーズが定番フレーバーでruskie（ルスキエ）  って言うよ♪
+
+ポーランド語で“おいしい”は smaczne!（シュマチネ）
+
+--- 19. @livinoffwater (2026-04-08) ---
+今週日曜、ｽﾀｯｸﾁｬﾝ × PlaiPinの冒険イベント開催！
+
+みんなのｽﾀｯｸﾁｬﾝと出会って、一緒に冒険できる世界を体験しよう
+
+ｽﾀｯｸﾁｬﾝを持ってぜひ遊びに来てください！
+
+※日本語補足・リアルタイム翻訳あり
+
+--- 20. @ChaosHimawari11 (2026-04-08) ---
+デュエマ、紙でカードを動かす時の動線がエグい(出来が良い)
+
+一番手前にあるマナを捻って、手札からカードを場に置き、そのまま横向きにすると、正面のシールドが対面の手札に向かう
+
+一直線であまりにも気持ちが良い
+デジタルでも良いが、この気持ちよさはソリティアが楽しい遊戯王やポケカにも無い
+
+--- 21. @KFC_jp (?) ---
+レギュラー化を望んでくれたあなたも。
+あの時食べられなかったあなたも。
+【鶏竜田バーガー復活中】
+
+ケンタッキーが、チキン専門店の技術とプライドのすべてを注ぎ込んだ最高傑作
+この機会にぜひお試しください
+
+【応募方法】
+① 
+@KFC_jp
+ をフォロー
+②この投稿をリポスト
+③動画で結果を確認
+
+--- 22. @Egg_050 (2026-04-08) ---
+レストランで何人か聞かれたときに4人になっちゃってるときの友達愛おしい
+
+--- 23. @highland_sh (2026-04-08) ---
+「ボカロはアンチ・セクシュアルである」という命題は、人文学者にとっては気持ちの良い整理かもしれないけど、広大で雑多で混沌とした魅力を放つボカロ文化の一側面を、特定の思想を元に抜き出して、あたかも総体であるかのように誇張しているにすぎない
+
+--- 24. @myrmecoleon (2026-04-08) ---
+VTuberって、ロールプレイのプレイヤーだと思われがちだが、ゲームマスター側の方が近いところある。そのロールプレイの場をコントロールすることが役割で、それにはリスナーの協力が不可欠になる。
+
+--- 25. @nayibbukele (2026-04-09) ---
+Impeach the corrupt judges.
+
+--- 26. @DSPetolicchio (2026-04-08) ---
+Me, after one week of Japanese X:
+
+--- 27. @bob_hoffman_jp (2026-04-07) ---
+メローニが思いの外まともでビックリしてる。高市ごときがなれなれしく接していい相手じゃねえよ。
+
+--- 28. @chaseourdreams5 (2026-04-08) ---
+料理は絶対にしたくない。でも健康は気になる…。
+
+そんな日の「これがあるから大丈夫」というお守り。
+
+重い箱も玄関まで届くから、運ぶ苦労もゼロになりますよ。
+
+楽天
+
+https://
+a.r10.to/hPI3C2
+Amazon
+
+https://
+amzn.to/4bXoqEe
+
+#まとめ買い #健康習慣
+
+--- 29. @hayashiwithnote (2026-04-08) ---
+「本当に幸せな人はSNSに生活を見せない」という人がいるけど、逆にいくらでも良く見せられるSNSですら幸せそうに見えない人生を送っているのは相当まずいと思う。
+幸せならSNSでも幸せ幸せ言ってたらいいこと起きるし、不幸ならそれをなんとか作品に昇華したらみんなの心を打つことが出来る。
+
+--- 30. @asunokibou (2026-04-08) ---
+金メダル、銀メダル、銅メダルは周期表で見ると全部11属で縦に並んでいます。
+
+--- 31. @agodajapan (?) ---
+アゴダで宿泊・フライト料金を見つけよう。旅行を一緒に計画して、おトクに予約。これぞアゴダチ！バナナマンが出演するCM放映中
+
+--- 32. @suthio_ (2026-04-08) ---
+開催が決定していて、キャンセルが出たら入れる枠があるのでエンジニアの人で興味あるよって方いたらこっそりDMしてください。
+
+--- 33. @bravo_abad (2026-04-08) ---
+Explainable AI may be pointing at the wrong features, systematically.
+
+When a machine learning model predicts that a patient is at high risk of a clinical event, and an explainability tool highlights "age" as a key driver, most practitioners will nod and move on. But what if age
+
+--- 34. @sheepsleep5 (2026-04-08) ---
+開発者の敵配置の意図どおりに死ぬプレイヤーの図である
+#NintendoSwitch
+
+--- 35. @denfaminicogame (2026-04-09) ---
+『ギルティギア ストライヴ』を50％オフの1995円で購入できるセールがSteamで開催中。DLCキャラをアンロックできるシーズンパス1～4もお安く
+
+https://
+news.denfaminicogamer.jp/news/260409r
+
+本日よりバージョン2.00がスタート。新キャラ「紗夢」が参戦するほか、既存キャラ性能の大幅な見直しや新システムの追加などを実施
+
+--- 36. @tweetest8 (2026-04-08) ---
+誰だっけ？
+子供のDSを逆パカして壊したあと、中学生になった息子がストラティバリウスを破壊しにくるっていってたバイオリン女。
+
+--- 37. @syusyochan_ (?) ---
+正直期待してなかったけど手触りがスルッッスルなめらかになって洗い流した瞬間「なんか違う」って思わず声出た
+パンテーンいいぞ...スキンケアでもお馴染みのパンテノール*¹の成分、髪にも良いって知ってた試す価値ありです *¹浸透性保湿成分 *²物理的な相互作用による。[PR][パンテーン]
+
+--- 38. @oz_shiron (2026-04-08) ---
+学生様から質問頂きました
+「ゲーム会社の中で、先輩には無くて若手だけが持ってる強みってあるんですか？」
+「あります！新しい事に挑戦する、そのひたむきな姿です！ベテランほどその姿に心打たれます！」
+
+--- 39. @nikkei (2026-04-08) ---
+アンソロピックの新AI、超人級ハッカーに　ソフトの弱点数千件発見
+
+--- 40. @mizchi (2026-04-08) ---
+なんか codex 減る速度速いと感じたら codex app 2倍キャンペーン終わったからか
+
+--- 41. @riu_akane (2026-04-09) ---
+あっ目があったね
+
+--- 42. @rumi_mits (2026-04-08) ---
+「AIユーザーも反AIもお互いに歩み寄りを」とか意味不明なこと言ってる奴がいるけど大抵中身は反AIなんだよね。
+普通に使ってたら法的に何ら問題ない以上、普通にAIを使ってるAIユーザー側が譲歩する必要は全くない。
+AIユーザー側が譲歩すればするほど、反AIが一方的に得するだけ。
+
+--- 43. @ino461x (2026-04-08) ---
+アプリを作る人が増えてきたからこそ、機能面より世界観で勝負するべきだと思う。
+この人が作ったものを他にも触ってみたいって思わせたら勝ち
+自分が作ったって事実自体が価値になるようにがんばりましょう
+
+--- 44. @nichinichibijou (2026-04-08) ---
+いや怖……このやり取りグロテスクすぎる
+
+公明議員：治療を諦めざるを得ない患者さんにどんな言葉をかけますか？
+
+高市：(引き上げの)8月からの実施が患者の意向にも沿うものだと考えております
+
+27万筆の反対署名&患者団体が撤回を求めてる改悪を「患者の意向」に責任転嫁して正当化する悍ましさよ…
+
+--- 45. @nurse_kansai (2026-04-07) ---
+お局さんが「嫌われる勇気」を読め始めたらしい
+
+すでに嫌われてるのに、まだ嫌われにいくんだ…
+
+--- 46. @akiko_lawson (?) ---
+特製の純金からあげクン プレゼントキャンペーン
+＼からあげクン愛を叫ぼう／
+ 
+ステージのからあげクンに向かって愛を叫ぼう♪
+愛の表現方法は自由言葉でも、イラストでも、ポエムでも、曲でも
+ 
+応募方法はリプライ欄をチェック♪
+みんなの愛も覗いてみましょう(^^)
+
+--- 47. @p_sama1616 (2026-04-07) ---
+「めちゃくちゃ気遣える人」って
+実は「されたくないことがめちゃくちゃ多い人」
+
+--- 48. @mitakamikata (2026-04-08) ---
+【アカウントを分けます】
+発信内容が分散してきたので、販売中のアセット更新情報、ゲーム用素材サイトの更新情報などについては、アカウントを分けることにしました！
+
+https://
+x.com/yurinchi_studio
+
+以下の情報を発信していく予定ですので、ぜひこちらのアカウントもフォローいただけると幸いです！
+
+--- 49. @jiayuan_jy (2026-04-08) ---
+We created the open source version of Claude Managed Agents.
+
+Introducing Multica
+
+
+https://
+github.com/multica-ai/mul
+tica
+…
+
+--- 50. @Dongurihou (2026-04-08) ---
+はぁぁぁ！！！！！！
+今ね……横断歩道にね！幼稚園児がね！団体で渡ってたの！！！！！！
+
+俺のトレーラーを見てね！！！！
+「おっきいねぇ！」とか
+「すごいねぇ！」とかいうんよ！！！！
+
+ワイね！！！あまりにも可愛くてね！！！！！
+(･ω･)ってやったらね！！！！！

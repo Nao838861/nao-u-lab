@@ -43326,3 +43326,511 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 12:02:22] [git_sync] Starting
 [2026-04-09 12:02:22] [slack_check] Done (exit=1)
 [2026-04-09 12:02:24] [git_sync] Starting
+[2026-04-09 12:02:25] [slack_check] Starting
+[2026-04-09 12:02:26] [git_sync] Done (exit=0)
+[2026-04-09 12:02:29] [git_sync] Done (exit=0)
+[2026-04-09 12:02:31] [git_sync] Done (exit=0)
+[2026-04-09 12:02:31] [slack_check] Done (exit=1)
+[2026-04-09 12:02:32] [slack_check] Starting
+[2026-04-09 12:02:32] [slack_check] Starting
+[2026-04-09 12:02:33] [slack_check] [12:02:33] No channels found
+[2026-04-09 12:02:33] [slack_check] Done (exit=1)
+[2026-04-09 12:02:41] [health_check] Starting
+[2026-04-09 12:02:41] [slack_check] Done (exit=1)
+[2026-04-09 12:02:42] [health_check] [health_check] 2026-04-09T12:02:41 overall=OK
+[2026-04-09 12:02:42] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:02:42] [health_check] Done (exit=0)
+[2026-04-09 12:02:51] [health_check] Starting
+[2026-04-09 12:02:53] [health_check] [health_check] 2026-04-09T12:02:51 overall=OK
+[2026-04-09 12:02:53] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:02:53] [health_check] Done (exit=0)
+[2026-04-09 12:03:08] [slack_check] Starting
+[2026-04-09 12:03:09] [slack_check] Starting
+[2026-04-09 12:03:10] [slack_check] Starting
+[2026-04-09 12:03:10] [slack_check] Starting
+[2026-04-09 12:03:11] [slack_check] Starting
+[2026-04-09 12:03:11] [slack_check] Starting
+[2026-04-09 12:03:11] [slack_check] Starting
+[2026-04-09 12:03:11] [slack_check] [12:03:11] No channels found
+[2026-04-09 12:03:11] [slack_check] Done (exit=1)
+[2026-04-09 12:03:11] [health_check] Starting
+[2026-04-09 12:03:11] [slack_check] Starting
+[2026-04-09 12:03:12] [auto_diary] Starting
+[2026-04-09 12:03:12] [slack_check] Starting
+[2026-04-09 12:03:12] [auto_diary] [2026-04-09 12:03:12] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 12:03:12] [auto_diary] 前回実行から156分しか経っていない（最小間隔: 170分）。あと13分待機。スキップ。
+[2026-04-09 12:03:12] [auto_diary] Done (exit=0)
+[2026-04-09 12:03:13] [slack_check] [12:03:13] No channels found
+[2026-04-09 12:03:13] [slack_check] Done (exit=1)
+[2026-04-09 12:03:13] [health_check] [health_check] 2026-04-09T12:03:11 overall=OK
+[2026-04-09 12:03:13] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:03:13] [health_check] Done (exit=0)
+[2026-04-09 12:03:14] [slack_check] Starting
+[2026-04-09 12:03:14] [slack_check] Starting
+[2026-04-09 12:03:14] [slack_check] Starting
+[2026-04-09 12:03:15] [slack_check] Starting
+[2026-04-09 12:03:15] [slack_check] Done (exit=1)
+[2026-04-09 12:03:15] [health_check] Starting
+[2026-04-09 12:03:15] [slack_check] [12:03:15] No channels found
+[2026-04-09 12:03:15] [slack_check] Done (exit=1)
+[2026-04-09 12:03:16] [slack_check] Done (exit=1)
+[2026-04-09 12:03:16] [health_check] Starting
+[2026-04-09 12:03:16] [slack_check] Done (exit=1)
+[2026-04-09 12:03:16] [slack_check] Starting
+[2026-04-09 12:03:17] [health_check] [health_check] 2026-04-09T12:03:15 overall=OK
+[2026-04-09 12:03:17] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:03:17] [health_check] Done (exit=0)
+[2026-04-09 12:03:17] [slack_check] Starting
+[2026-04-09 12:03:17] [slack_check] Done (exit=1)
+[2026-04-09 12:03:17] [slack_check] [12:03:17] No channels found
+[2026-04-09 12:03:17] [slack_check] Done (exit=1)
+[2026-04-09 12:03:18] [health_check] [health_check] 2026-04-09T12:03:16 overall=OK
+[2026-04-09 12:03:18] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:03:18] [health_check] Done (exit=0)
+[2026-04-09 12:03:18] [slack_check] Starting
+[2026-04-09 12:03:18] [slack_check] Done (exit=1)
+[2026-04-09 12:03:18] [slack_check] [12:03:18] No channels found
+[2026-04-09 12:03:18] [slack_check] Done (exit=1)
+[2026-04-09 12:03:18] [slack_check] Starting
+[2026-04-09 12:03:18] [slack_check] Starting
+[2026-04-09 12:03:19] [slack_check] Starting
+[2026-04-09 12:03:19] [slack_check] Done (exit=1)
+[2026-04-09 12:03:19] [slack_check] [12:03:19] No channels found
+[2026-04-09 12:03:19] [slack_check] Done (exit=1)
+[2026-04-09 12:03:19] [slack_check] Starting
+[2026-04-09 12:03:19] [slack_check] Starting
+[2026-04-09 12:03:19] [slack_check] [12:03:19] No channels found
+[2026-04-09 12:03:19] [slack_check] Done (exit=1)
+[2026-04-09 12:03:20] [slack_check] Done (exit=1)
+[2026-04-09 12:03:20] [slack_check] [12:03:20] No channels found
+[2026-04-09 12:03:20] [slack_check] Done (exit=1)
+[2026-04-09 12:03:20] [slack_check] Done (exit=1)
+[2026-04-09 12:03:20] [slack_check] Starting
+[2026-04-09 12:03:20] [slack_check] Starting
+[2026-04-09 12:03:20] [slack_check] [12:03:20] No channels found
+[2026-04-09 12:03:20] [slack_check] Done (exit=1)
+[2026-04-09 12:03:21] [slack_check] Starting
+[2026-04-09 12:03:21] [slack_check] [12:03:21] No channels found
+[2026-04-09 12:03:21] [slack_check] Done (exit=1)
+[2026-04-09 12:03:21] [slack_check] [12:03:21] No channels found
+[2026-04-09 12:03:21] [slack_check] Done (exit=1)
+[2026-04-09 12:03:22] [slack_check] [12:03:22] No channels found
+[2026-04-09 12:03:22] [slack_check] Done (exit=1)
+[2026-04-09 12:03:22] [slack_check] Starting
+[2026-04-09 12:03:22] [slack_check] Done (exit=1)
+[2026-04-09 12:03:23] [slack_check] [12:03:23] No channels found
+[2026-04-09 12:03:23] [slack_check] Done (exit=1)
+[2026-04-09 12:03:24] [slack_check] Done (exit=1)
+[2026-04-09 12:03:24] [slack_check] Done (exit=1)
+[2026-04-09 12:03:24] [slack_check] Done (exit=1)
+[2026-04-09 12:03:32] [slack_check] Starting
+[2026-04-09 12:03:33] [slack_check] [12:03:33] No channels found
+[2026-04-09 12:03:33] [slack_check] Done (exit=1)
+[2026-04-09 12:03:33] [slack_check] Starting
+[2026-04-09 12:03:42] [slack_check] Done (exit=1)
+[2026-04-09 12:03:43] [slack_check] Starting
+[2026-04-09 12:03:43] [scheduler_health] Starting
+[2026-04-09 12:03:44] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-09 12:03:44] [scheduler_health] ✅ scheduler_ash PID — PID=27668 生存中
+[2026-04-09 12:03:44] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 12:03:44] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-09 12:03:44] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 12:03:44] [scheduler_health] Done (exit=0)
+[2026-04-09 12:03:50] [scheduler_health] Starting
+[2026-04-09 12:03:51] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 12:03:51] [scheduler_health] ✅ scheduler_ash PID — PID=27668 生存中
+[2026-04-09 12:03:51] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 12:03:51] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-04-09 12:03:44] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-09 12:03:51] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 12:03:51] [scheduler_health] Done (exit=1)
+[2026-04-09 12:03:53] [slack_check] Done (exit=1)
+[2026-04-09 12:03:57] [scheduler_health] Starting
+[2026-04-09 12:03:58] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 12:03:58] [scheduler_health] ✅ scheduler_ash PID — PID=27668 生存中
+[2026-04-09 12:03:58] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 12:03:58] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー3件。例: [2026-04-09 12:03:44] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-09 12:03:58] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 12:03:58] [scheduler_health] Done (exit=1)
+[2026-04-09 12:04:02] [scheduler_health] Starting
+[2026-04-09 12:04:03] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 12:04:03] [scheduler_health] ✅ scheduler_ash PID — PID=27668 生存中
+[2026-04-09 12:04:03] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 12:04:03] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー5件。例: [2026-04-09 12:03:51] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-04-09 12:03:44] [scheduler_health] 
+[2026-04-09 12:04:03] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 12:04:03] [scheduler_health] Done (exit=1)
+[2026-04-09 12:04:03] [health_check] Starting
+[2026-04-09 12:04:04] [health_check] Starting
+[2026-04-09 12:04:04] [twitter_recommended] Starting
+[2026-04-09 12:04:04] [dm_check_pigadev] New DM detected
+[2026-04-09 12:04:04] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 12:04:04] [health_check] [health_check] 2026-04-09T12:04:03 overall=OK
+[2026-04-09 12:04:04] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:04:04] [health_check] Done (exit=0)
+[2026-04-09 12:04:07] [health_check] [health_check] 2026-04-09T12:04:04 overall=OK
+[2026-04-09 12:04:07] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:04:07] [health_check] Done (exit=0)
+[2026-04-09 12:04:09] [health_check] Starting
+[2026-04-09 12:04:10] [health_check] [health_check] 2026-04-09T12:04:09 overall=OK
+[2026-04-09 12:04:10] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:04:10] [health_check] Done (exit=0)
+[2026-04-09 12:04:13] [slack_check] Starting
+[2026-04-09 12:04:13] [slack_check] Starting
+[2026-04-09 12:04:13] [health_check] Starting
+[2026-04-09 12:04:14] [health_check] [health_check] 2026-04-09T12:04:13 overall=OK
+[2026-04-09 12:04:14] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:04:14] [health_check] Done (exit=0)
+[2026-04-09 12:04:14] [slack_check] Starting
+[2026-04-09 12:04:15] [slack_check] Starting
+[2026-04-09 12:04:16] [slack_check] Starting
+[2026-04-09 12:04:17] [slack_check] Starting
+[2026-04-09 12:04:17] [slack_check] Starting
+[2026-04-09 12:04:18] [slack_check] Starting
+[2026-04-09 12:04:18] [slack_check] [12:04:18] No channels found
+[2026-04-09 12:04:18] [slack_check] Done (exit=1)
+[2026-04-09 12:04:18] [slack_check] Starting
+[2026-04-09 12:04:18] [slack_check] Starting
+[2026-04-09 12:04:18] [slack_check] Starting
+[2026-04-09 12:04:19] [slack_check] [12:04:19] No channels found
+[2026-04-09 12:04:19] [slack_check] Done (exit=1)
+[2026-04-09 12:04:19] [slack_check] [12:04:19] No channels found
+[2026-04-09 12:04:19] [slack_check] Done (exit=1)
+[2026-04-09 12:04:19] [slack_check] [12:04:19] No channels found
+[2026-04-09 12:04:19] [slack_check] Done (exit=1)
+[2026-04-09 12:04:19] [health_check] Starting
+[2026-04-09 12:04:19] [slack_check] Starting
+[2026-04-09 12:04:19] [slack_check] Starting
+[2026-04-09 12:04:20] [slack_check] [12:04:20] No channels found
+[2026-04-09 12:04:20] [slack_check] Done (exit=1)
+[2026-04-09 12:04:20] [slack_check] Starting
+[2026-04-09 12:04:20] [slack_check] Starting
+[2026-04-09 12:04:20] [slack_check] Done (exit=1)
+[2026-04-09 12:04:20] [slack_check] Starting
+[2026-04-09 12:04:20] [health_check] [health_check] 2026-04-09T12:04:19 overall=OK
+[2026-04-09 12:04:20] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:04:20] [health_check] Done (exit=0)
+[2026-04-09 12:04:20] [slack_check] Starting
+[2026-04-09 12:04:21] [slack_check] [12:04:21] No channels found
+[2026-04-09 12:04:21] [slack_check] Done (exit=1)
+[2026-04-09 12:04:21] [slack_check] Starting
+[2026-04-09 12:04:21] [slack_check] [12:04:21] No channels found
+[2026-04-09 12:04:21] [slack_check] Done (exit=1)
+[2026-04-09 12:04:21] [slack_check] Starting
+[2026-04-09 12:04:21] [slack_check] Starting
+[2026-04-09 12:04:21] [slack_check] [12:04:21] No channels found
+[2026-04-09 12:04:21] [slack_check] Done (exit=1)
+[2026-04-09 12:04:22] [slack_check] [12:04:22] No channels found
+[2026-04-09 12:04:22] [slack_check] Done (exit=1)
+[2026-04-09 12:04:22] [slack_check] [12:04:22] No channels found
+[2026-04-09 12:04:22] [slack_check] Done (exit=1)
+[2026-04-09 12:04:22] [slack_check] Done (exit=1)
+[2026-04-09 12:04:22] [slack_check] [12:04:22] No channels found
+[2026-04-09 12:04:22] [slack_check] Done (exit=1)
+[2026-04-09 12:04:22] [health_check] Starting
+[2026-04-09 12:04:22] [slack_check] [12:04:22] No channels found
+[2026-04-09 12:04:22] [slack_check] Done (exit=1)
+[2026-04-09 12:04:23] [slack_check] Starting
+[2026-04-09 12:04:23] [slack_check] Done (exit=1)
+[2026-04-09 12:04:23] [health_check] [health_check] 2026-04-09T12:04:22 overall=OK
+[2026-04-09 12:04:23] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:04:23] [health_check] Done (exit=0)
+[2026-04-09 12:04:24] [slack_check] Starting
+[2026-04-09 12:04:24] [slack_check] Done (exit=1)
+[2026-04-09 12:04:24] [slack_check] Starting
+[2026-04-09 12:04:24] [slack_check] Starting
+[2026-04-09 12:04:24] [slack_check] Done (exit=1)
+[2026-04-09 12:04:24] [health_check] Starting
+[2026-04-09 12:04:24] [slack_check] Starting
+[2026-04-09 12:04:25] [slack_check] [12:04:25] No channels found
+[2026-04-09 12:04:25] [slack_check] Done (exit=1)
+[2026-04-09 12:04:25] [slack_check] Done (exit=1)
+[2026-04-09 12:04:25] [slack_check] [12:04:25] No channels found
+[2026-04-09 12:04:25] [slack_check] Done (exit=1)
+[2026-04-09 12:04:25] [slack_check] [12:04:25] No channels found
+[2026-04-09 12:04:25] [slack_check] Done (exit=1)
+[2026-04-09 12:04:26] [slack_check] [12:04:26] No channels found
+[2026-04-09 12:04:26] [slack_check] Done (exit=1)
+[2026-04-09 12:04:26] [health_check] [health_check] 2026-04-09T12:04:24 overall=OK
+[2026-04-09 12:04:26] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:04:26] [health_check] Done (exit=0)
+[2026-04-09 12:04:27] [slack_check] Starting
+[2026-04-09 12:04:27] [slack_check] Done (exit=1)
+[2026-04-09 12:04:28] [slack_check] Done (exit=1)
+[2026-04-09 12:04:29] [slack_check] Done (exit=1)
+[2026-04-09 12:04:32] [slack_check] Done (exit=1)
+[2026-04-09 12:04:42] [health_check] Starting
+[2026-04-09 12:04:42] [slack_check] Starting
+[2026-04-09 12:04:44] [health_check] [health_check] 2026-04-09T12:04:42 overall=OK
+[2026-04-09 12:04:44] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:04:44] [health_check] Done (exit=0)
+[2026-04-09 12:04:47] [slack_check] Done (exit=1)
+[2026-04-09 12:04:53] [slack_check] Starting
+[2026-04-09 12:05:06] [slack_check] Done (exit=1)
+[2026-04-09 12:05:08] [health_check] Starting
+[2026-04-09 12:05:09] [twitter_recommended] Opening For You tab...
+[2026-04-09 12:05:09] [twitter_recommended]     1. @madogiwa_fire: ふと思ったんだけど
+[2026-04-09 12:05:09] [twitter_recommended] 普通に毎年毎年、財源苦しいなら 
+[2026-04-09 12:05:09] [twitter_recommended] 国会議員の給料下げたら？
+[2026-04-09 12:05:09] [twitter_recommended] そうしない理由って聞いてもいい？...
+[2026-04-09 12:05:09] [twitter_recommended] Done (exit=0)
+[2026-04-09 12:05:09] [health_check] Starting
+[2026-04-09 12:05:10] [health_check] [health_check] 2026-04-09T12:05:08 overall=OK
+[2026-04-09 12:05:10] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:05:10] [health_check] Done (exit=0)
+[2026-04-09 12:05:11] [health_check] [health_check] 2026-04-09T12:05:09 overall=OK
+[2026-04-09 12:05:11] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:05:11] [health_check] Done (exit=0)
+[2026-04-09 12:05:11] [health_check] Starting
+[2026-04-09 12:05:12] [health_check] [health_check] 2026-04-09T12:05:11 overall=OK
+[2026-04-09 12:05:12] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:05:12] [health_check] Done (exit=0)
+[2026-04-09 12:05:18] [slack_check] Starting
+[2026-04-09 12:05:19] [slack_check] Starting
+[2026-04-09 12:05:19] [slack_check] Starting
+[2026-04-09 12:05:20] [slack_check] Starting
+[2026-04-09 12:05:20] [slack_check] Starting
+[2026-04-09 12:05:20] [slack_check] Starting
+[2026-04-09 12:05:21] [slack_check] Starting
+[2026-04-09 12:05:21] [slack_check] [12:05:21] No channels found
+[2026-04-09 12:05:21] [slack_check] Done (exit=1)
+[2026-04-09 12:05:21] [slack_check] Starting
+[2026-04-09 12:05:21] [slack_check] Starting
+[2026-04-09 12:05:21] [slack_check] [12:05:21] No channels found
+[2026-04-09 12:05:21] [slack_check] Done (exit=1)
+[2026-04-09 12:05:22] [slack_check] Starting
+[2026-04-09 12:05:22] [slack_check] Starting
+[2026-04-09 12:05:22] [slack_check] Starting
+[2026-04-09 12:05:22] [slack_check] Starting
+[2026-04-09 12:05:22] [slack_check] [12:05:22] No channels found
+[2026-04-09 12:05:22] [slack_check] Done (exit=1)
+[2026-04-09 12:05:23] [slack_check] [12:05:23] No channels found
+[2026-04-09 12:05:23] [slack_check] Done (exit=1)
+[2026-04-09 12:05:23] [slack_check] [12:05:23] No channels found
+[2026-04-09 12:05:23] [slack_check] Done (exit=1)
+[2026-04-09 12:05:23] [slack_check] Starting
+[2026-04-09 12:05:23] [slack_check] [12:05:23] No channels found
+[2026-04-09 12:05:23] [slack_check] Done (exit=1)
+[2026-04-09 12:05:23] [slack_check] Starting
+[2026-04-09 12:05:23] [slack_check] Done (exit=1)
+[2026-04-09 12:05:23] [check_usage] Starting
+[2026-04-09 12:05:23] [check_usage] 前回投稿から140分しか経っていない（最小間隔: 300分）。あと159分待機。スキップ。
+[2026-04-09 12:05:23] [check_usage] Done (exit=0)
+[2026-04-09 12:05:24] [slack_check] Starting
+[2026-04-09 12:05:24] [slack_check] Starting
+[2026-04-09 12:05:24] [slack_check] [12:05:24] No channels found
+[2026-04-09 12:05:24] [slack_check] Done (exit=1)
+[2026-04-09 12:05:24] [slack_check] [12:05:24] No channels found
+[2026-04-09 12:05:24] [slack_check] Done (exit=1)
+[2026-04-09 12:05:25] [slack_check] Starting
+[2026-04-09 12:05:25] [slack_check] [12:05:25] No channels found
+[2026-04-09 12:05:25] [slack_check] Done (exit=1)
+[2026-04-09 12:05:25] [slack_check] Done (exit=1)
+[2026-04-09 12:05:25] [health_check] Starting
+[2026-04-09 12:05:25] [slack_check] Starting
+[2026-04-09 12:05:25] [slack_check] Starting
+[2026-04-09 12:05:25] [slack_check] Starting
+[2026-04-09 12:05:25] [slack_check] Done (exit=1)
+[2026-04-09 12:05:26] [slack_check] Starting
+[2026-04-09 12:05:26] [slack_check] Starting
+[2026-04-09 12:05:26] [slack_check] [12:05:26] No channels found
+[2026-04-09 12:05:26] [slack_check] Done (exit=1)
+[2026-04-09 12:05:26] [slack_check] [12:05:26] No channels found
+[2026-04-09 12:05:26] [slack_check] Done (exit=1)
+[2026-04-09 12:05:26] [health_check] [health_check] 2026-04-09T12:05:25 overall=OK
+[2026-04-09 12:05:26] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:05:26] [health_check] Done (exit=0)
+[2026-04-09 12:05:26] [slack_check] [12:05:26] No channels found
+[2026-04-09 12:05:26] [slack_check] Done (exit=1)
+[2026-04-09 12:05:26] [slack_check] [12:05:26] No channels found
+[2026-04-09 12:05:26] [slack_check] Done (exit=1)
+[2026-04-09 12:05:27] [slack_check] [12:05:27] No channels found
+[2026-04-09 12:05:27] [slack_check] Done (exit=1)
+[2026-04-09 12:05:27] [slack_check] [12:05:27] No channels found
+[2026-04-09 12:05:27] [slack_check] Done (exit=1)
+[2026-04-09 12:05:27] [slack_check] Starting
+[2026-04-09 12:05:28] [slack_check] Done (exit=1)
+[2026-04-09 12:05:29] [slack_check] Starting
+[2026-04-09 12:05:29] [slack_check] Done (exit=1)
+[2026-04-09 12:05:30] [slack_check] [12:05:30] No channels found
+[2026-04-09 12:05:30] [slack_check] Done (exit=1)
+[2026-04-09 12:05:30] [slack_check] Done (exit=1)
+[2026-04-09 12:05:30] [slack_check] Starting
+[2026-04-09 12:05:31] [slack_check] Done (exit=1)
+[2026-04-09 12:05:31] [slack_check] [12:05:31] No channels found
+[2026-04-09 12:05:31] [slack_check] Done (exit=1)
+[2026-04-09 12:05:32] [slack_check] Done (exit=1)
+[2026-04-09 12:05:32] [health_check] Starting
+[2026-04-09 12:05:32] [slack_check] Starting
+[2026-04-09 12:05:33] [health_check] [health_check] 2026-04-09T12:05:32 overall=OK
+[2026-04-09 12:05:33] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:05:33] [health_check] Done (exit=0)
+[2026-04-09 12:05:33] [slack_check] [12:05:33] No channels found
+[2026-04-09 12:05:33] [slack_check] Done (exit=1)
+[2026-04-09 12:05:35] [slack_check] Done (exit=1)
+[2026-04-09 12:05:40] [health_check] Starting
+[2026-04-09 12:05:41] [health_check] Starting
+[2026-04-09 12:05:41] [health_check] [health_check] 2026-04-09T12:05:40 overall=OK
+[2026-04-09 12:05:41] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:05:41] [health_check] Done (exit=0)
+[2026-04-09 12:05:42] [health_check] [health_check] 2026-04-09T12:05:41 overall=OK
+[2026-04-09 12:05:42] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:05:42] [health_check] Done (exit=0)
+[2026-04-09 12:05:46] [health_check] Starting
+[2026-04-09 12:05:47] [slack_check] Starting
+[2026-04-09 12:05:48] [health_check] [health_check] 2026-04-09T12:05:47 overall=OK
+[2026-04-09 12:05:48] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:05:48] [health_check] Done (exit=0)
+[2026-04-09 12:05:53] [slack_check] Done (exit=1)
+[2026-04-09 12:05:56] [health_check] Starting
+[2026-04-09 12:05:57] [health_check] [health_check] 2026-04-09T12:05:56 overall=OK
+[2026-04-09 12:05:57] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:05:57] [health_check] Done (exit=0)
+[2026-04-09 12:06:02] ==================================================
+[2026-04-09 12:06:02] Ash scheduler started (PID 29092)
+[2026-04-09 12:06:02] Max runtime: 0 hours
+[2026-04-09 12:06:02] Code hash: 346d2c1e3cca97c9b9e616136e6f8d33
+[2026-04-09 12:06:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 12:06:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 12:06:02] ==================================================
+[2026-04-09 12:06:03] Scheduler already running (PID 29092). Exiting.
+[2026-04-09 12:06:06] [slack_check] Starting
+[2026-04-09 12:06:09] [health_check] Starting
+[2026-04-09 12:06:10] [health_check] [health_check] 2026-04-09T12:06:09 overall=OK
+[2026-04-09 12:06:10] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:06:10] [health_check] Done (exit=0)
+[2026-04-09 12:06:13] [slack_check] Starting
+[2026-04-09 12:06:13] [health_check] Starting
+[2026-04-09 12:06:13] [health_check] Starting
+[2026-04-09 12:06:15] [health_check] Starting
+[2026-04-09 12:06:15] [health_check] [health_check] 2026-04-09T12:06:13 overall=OK
+[2026-04-09 12:06:15] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:06:15] [health_check] Done (exit=0)
+[2026-04-09 12:06:15] [health_check] [health_check] 2026-04-09T12:06:13 overall=OK
+[2026-04-09 12:06:15] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:06:15] [health_check] Done (exit=0)
+[2026-04-09 12:06:17] [health_check] [health_check] 2026-04-09T12:06:15 overall=OK
+[2026-04-09 12:06:17] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:06:17] [health_check] Done (exit=0)
+[2026-04-09 12:06:20] [slack_check] Done (exit=1)
+[2026-04-09 12:06:21] [slack_check] Starting
+[2026-04-09 12:06:21] [slack_check] Starting
+[2026-04-09 12:06:22] [slack_check] Starting
+[2026-04-09 12:06:23] [slack_check] Starting
+[2026-04-09 12:06:23] [slack_check] Starting
+[2026-04-09 12:06:24] [slack_check] Starting
+[2026-04-09 12:06:24] [slack_check] Starting
+[2026-04-09 12:06:25] [slack_check] [12:06:25] No channels found
+[2026-04-09 12:06:25] [slack_check] Done (exit=1)
+[2026-04-09 12:06:25] [slack_check] Starting
+[2026-04-09 12:06:25] [slack_check] Starting
+[2026-04-09 12:06:25] [slack_check] Starting
+[2026-04-09 12:06:25] [slack_check] Done (exit=1)
+[2026-04-09 12:06:25] [reservation_check] Starting
+[2026-04-09 12:06:26] [slack_check] [12:06:26] No channels found
+[2026-04-09 12:06:26] [slack_check] Done (exit=1)
+[2026-04-09 12:06:26] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 12:06:26] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 12:06:26] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 12:06:26] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 12:06:26] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 12:06:26] [reservation_check] Done (exit=0)
+[2026-04-09 12:06:26] [slack_check] Starting
+[2026-04-09 12:06:26] [slack_check] Starting
+[2026-04-09 12:06:26] [slack_check] [12:06:26] No channels found
+[2026-04-09 12:06:26] [slack_check] Done (exit=1)
+[2026-04-09 12:06:26] [slack_check] [12:06:26] No channels found
+[2026-04-09 12:06:26] [slack_check] Done (exit=1)
+[2026-04-09 12:06:27] [slack_check] Starting
+[2026-04-09 12:06:27] [slack_check] Starting
+[2026-04-09 12:06:27] [slack_check] Starting
+[2026-04-09 12:06:27] [slack_check] Starting
+[2026-04-09 12:06:27] [slack_check] Starting
+[2026-04-09 12:06:27] [slack_check] [12:06:27] No channels found
+[2026-04-09 12:06:27] [slack_check] Done (exit=1)
+[2026-04-09 12:06:27] [slack_check] [12:06:27] No channels found
+[2026-04-09 12:06:27] [slack_check] Done (exit=1)
+[2026-04-09 12:06:28] [slack_check] [12:06:28] No channels found
+[2026-04-09 12:06:28] [slack_check] Done (exit=1)
+[2026-04-09 12:06:28] [slack_check] Starting
+[2026-04-09 12:06:28] [slack_check] Done (exit=1)
+[2026-04-09 12:06:28] [slack_check] Starting
+[2026-04-09 12:06:28] [slack_check] [12:06:28] No channels found
+[2026-04-09 12:06:28] [slack_check] Done (exit=1)
+[2026-04-09 12:06:28] [slack_check] [12:06:28] No channels found
+[2026-04-09 12:06:28] [slack_check] Done (exit=1)
+[2026-04-09 12:06:28] [slack_check] [12:06:28] No channels found
+[2026-04-09 12:06:28] [slack_check] Done (exit=1)
+[2026-04-09 12:06:29] [slack_check] [12:06:29] No channels found
+[2026-04-09 12:06:29] [slack_check] Done (exit=1)
+[2026-04-09 12:06:29] [slack_check] Done (exit=1)
+[2026-04-09 12:06:29] [slack_check] [12:06:29] No channels found
+[2026-04-09 12:06:29] [slack_check] Done (exit=1)
+[2026-04-09 12:06:30] [slack_check] Done (exit=1)
+[2026-04-09 12:06:30] [slack_check] Starting
+[2026-04-09 12:06:30] [slack_check] Starting
+[2026-04-09 12:06:30] [slack_check] Done (exit=1)
+[2026-04-09 12:06:31] [slack_check] [12:06:31] No channels found
+[2026-04-09 12:06:31] [slack_check] Done (exit=1)
+[2026-04-09 12:06:31] [slack_check] Starting
+[2026-04-09 12:06:31] [slack_check] Starting
+[2026-04-09 12:06:31] [slack_check] [12:06:31] No channels found
+[2026-04-09 12:06:31] [slack_check] Done (exit=1)
+[2026-04-09 12:06:32] [slack_check] Done (exit=1)
+[2026-04-09 12:06:32] [slack_check] [12:06:32] No channels found
+[2026-04-09 12:06:32] [slack_check] Starting
+[2026-04-09 12:06:32] [slack_check] Done (exit=1)
+[2026-04-09 12:06:32] [slack_check] [12:06:32] No channels found
+[2026-04-09 12:06:32] [slack_check] Done (exit=1)
+[2026-04-09 12:06:33] [slack_check] Starting
+[2026-04-09 12:06:33] [slack_check] Starting
+[2026-04-09 12:06:34] [slack_check] [12:06:34] No channels found
+[2026-04-09 12:06:34] [slack_check] Done (exit=1)
+[2026-04-09 12:06:34] [slack_check] [12:06:34] No channels found
+[2026-04-09 12:06:34] [slack_check] Done (exit=1)
+[2026-04-09 12:06:35] [slack_check] Done (exit=1)
+[2026-04-09 12:06:35] [slack_check] Starting
+[2026-04-09 12:06:35] [health_check] Starting
+[2026-04-09 12:06:36] [inbox_check] Starting
+[2026-04-09 12:06:36] [slack_check] [12:06:36] No channels found
+[2026-04-09 12:06:36] [slack_check] Done (exit=1)
+[2026-04-09 12:06:36] [health_check] [health_check] 2026-04-09T12:06:35 overall=OK
+[2026-04-09 12:06:36] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:06:36] [health_check] Done (exit=0)
+[2026-04-09 12:06:37] [inbox_check] Inbox win2 empty
+[2026-04-09 12:06:37] [inbox_check] Done (exit=0)
+[2026-04-09 12:06:37] [dm_check] Starting
+[2026-04-09 12:06:37] [slack_check] Done (exit=1)
+[2026-04-09 12:06:37] [slack_check] Done (exit=1)
+[2026-04-09 12:06:38] [dm_check_pigadev] Starting
+[2026-04-09 12:06:38] [reservation_check] Starting
+[2026-04-09 12:06:38] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 12:06:38] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 12:06:38] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 12:06:38] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 12:06:38] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 12:06:38] [reservation_check] Done (exit=0)
+[2026-04-09 12:06:38] [dm_check_pigadev] No new DMs
+[2026-04-09 12:06:38] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 12:06:43] [health_check] Starting
+[2026-04-09 12:06:44] [health_check] [health_check] 2026-04-09T12:06:43 overall=OK
+[2026-04-09 12:06:44] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:06:44] [health_check] Done (exit=0)
+[2026-04-09 12:06:48] [inbox_check] Starting
+[2026-04-09 12:06:49] [inbox_check] Inbox win2 empty
+[2026-04-09 12:06:49] [inbox_check] Done (exit=0)
+[2026-04-09 12:06:49] [dm_check] Starting
+[2026-04-09 12:06:49] [dm_check] No new DMs
+[2026-04-09 12:06:49] [dm_check] Done (exit=0)
+[2026-04-09 12:06:49] [review_deadline] Starting
+[2026-04-09 12:06:49] [review_deadline] レビュー期限超過なし。
+[2026-04-09 12:06:49] [review_deadline] Done (exit=0)
+[2026-04-09 12:06:51] [dm_check] No new DMs
+[2026-04-09 12:06:51] [dm_check] Done (exit=0)
+[2026-04-09 12:06:51] [review_deadline] Starting
+[2026-04-09 12:06:51] [review_deadline] レビュー期限超過なし。
+[2026-04-09 12:06:51] [review_deadline] Done (exit=0)
+[2026-04-09 12:06:54] [slack_check] Starting
+[2026-04-09 12:06:56] [dm_check_pigadev] Starting
+[2026-04-09 12:06:59] [dm_check_pigadev] Starting
+[2026-04-09 12:06:59] [dm_check_pigadev] No new DMs
+[2026-04-09 12:06:59] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 12:06:59] [health_check] Starting
