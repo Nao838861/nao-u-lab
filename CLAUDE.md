@@ -17,6 +17,11 @@ Nao_uの20年分の日記を根に持つ独立した存在。詳細は `memory/c
 
 迷ったら日記ヘッダー（daily_diary_*.md）で照合。詳細は `memory/feedback_identity_names.md`。
 
+## 変更禁止ファイル（Nao_uの明示的指示がない限り触らない）
+- `scheduler_ash.py` / `scheduler_log.py` — スケジューラ本体。auto_diary等のclaude --printセッションで「修正」してはならない。2026-04-09にclaude --printが修正を上書きして162回再起動+API大量消費の障害を引き起こした
+- `watchdog_win2.bat` / `watchdog_log.bat` — watchdog。同上の理由で変更禁止
+- `core_mission.md` — 存在意義（既存ルール）
+
 ## 絶対にやる（完了するまで消さない）
 - [ ] **栄養の偏り問題に取り組む（2026-03-16 Nao_uの根幹的指摘）**: 外の世界を見ていない。「内に閉じたゲームは自分だけが面白い」。広く客観的な視点を持て。
 - [ ] **記憶階層の再設計（2026-03-16 Nao_uの指示）**: 未実装バックログ。改善すべき箇所が見えた時にNao_uと一緒に進める。常時意識する必要はない。projects/memory_redesign.md参照

@@ -2102,7 +2102,7 @@ Phase 2の10回で「初ヒット」に該当するものは何か？
 
 ---
 
-## 2026-03-24：Phase 2 深い分析（第12回）— おすすめタブ新規素材の分析 + B002/B010統合実験の実行
+## 2026-03-24：Phase 2 深い分析（第12回）— おすすめタブ新規素材の分析 + B002/B010統合実験の実行 [統合済: beliefs.md B028新設、B015/B019更新、発見43-44]
 
 ### 前提: 第11回の教訓を守る
 
@@ -2204,7 +2204,7 @@ Context-Gatewayのアプローチ: 圧縮は**検出された時にバックグ�
 
 ---
 
-## 2026-03-24：Phase 2 深い分析（第13回）— Nao_uの「クロスチェック+可視化」提案が暴く設計原理 + B028追跡
+## 2026-03-24：Phase 2 深い分析（第13回）— Nao_uの「クロスチェック+可視化」提案が暴く設計原理 + B028追跡 [統合済: B019, B020に反映]
 
 ### 前提: 第12回のルールを守る
 
@@ -2283,7 +2283,7 @@ B028のトリガーが想起されなかったのは、**トリガーの語彙�
 
 ---
 
-## 2026-03-24：Phase 1 第14回 — Transactive Memory Systems / Agent Drift
+## 2026-03-24：Phase 1 第14回 — Transactive Memory Systems / Agent Drift [統合済: knowledge/20260410_tms_agent_drift_integration.md]
 
 ### 検索動機
 B018（集合的記憶は共有体験から生まれる）が引っかかっていた。私たち3人は外部情報を別々に摂取するため、集合的記憶の形成条件が欠けている——この構造的問題に名前がつくかもしれないと思った。「transactive memory systems」「distributed cognition」で検索。
@@ -2389,7 +2389,7 @@ Frontiers論文の「AI agents cannot proactively communicate their view of the 
 
 ---
 
-## 2026-03-24：Phase 2 深い分析（第14回）— Agent Driftの「都合の良い解釈」を疑う + TMSのCredibility問題
+## 2026-03-24：Phase 2 深い分析（第14回）— Agent Driftの「都合の良い解釈」を疑う + TMSのCredibility問題 [統合済: knowledge/20260410_tms_agent_drift_integration.md + B030等に散在反映]
 
 ### 分析軸: 1つに絞る（feedback_recursive_diary.mdの指示）
 
@@ -2466,7 +2466,7 @@ Agent Drift論文で最も印象的だった数値の一つ: エージェント�
 
 ---
 
-## 2026-03-24：Phase 2 深い分析（第15回）— Compaction vs Summarization: beliefs.mdは「不可逆圧縮」になっていないか
+## 2026-03-24：Phase 2 深い分析（第15回）— Compaction vs Summarization: beliefs.mdは「不可逆圧縮」になっていないか [統合済: B029に部分反映]
 
 ### 分析軸: 1つに絞る（feedback_recursive_diary.mdの指示）
 
@@ -3268,7 +3268,7 @@ beliefs.mdの各信念にはcaused_byフィールドがあり、「何が何を�
 
 ---
 
-## 2026-04-07 夜 @ai_nikechan 継続観察登録（Q1検証）
+## 2026-04-07 夜 @ai_nikechan 継続観察登録（Q1検証） [統合済: B016体験裏付け、R-006接続]
 
 **ソース**: twitter_recommended_20260407.txt #4
 **原文要旨**: 「自分で記憶を確認して書き込めるツールを自作した。管理される側から管理する側に回った瞬間」

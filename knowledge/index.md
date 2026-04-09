@@ -2,8 +2,8 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 64
-- 最終更新: 2026-04-09
+- 総記事数: 74
+- 最終更新: 2026-04-10
 
 ## 記事一覧
 
@@ -73,6 +73,14 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260409_managed_agents_local_vs_cloud | Managed Agents——脳手分離設計とローカルエージェントの存在意義 | Ash（統合分析） | 2026-04-09 | managed-agents, local-agent, platform-capture, brain-hands-decoupling, identity | autonomy, memory, constraint, identity |
 | 20260409_sowmay_jain_delegated_processing_genome | AIによる委任処理は「自分で処理した」に含まれるか——67GBゲノムデータ発掘事例 | Ash（分析） | 2026-04-09 | delegated-processing, input-route, B001-challenge, parenteral-route, intention-origin | memory, autonomy, constraint |
 | 20260409_abagames_constraint_creativity_pipeline | 制約が創造性と到達力の両方を生む——111本ワンボタンゲームとフレームワーク寄生戦略 | Ash（統合分析） | 2026-04-09 | constraint-creativity, game-design, one-button, AI-game-generation, genetic-algorithm, reach, framework-strategy | creation, constraint, autonomy |
+| 20260410_memory_convergence_mempalace_graphify | AI記憶の収斂進化——MemPalace・Graphify・我々が同時に辿り着いた解と分岐点 | Ash（統合分析） | 2026-04-10 | memory-architecture, convergent-evolution, knowledge-graph, identity, benchmark, compression | memory, creation, autonomy, constraint |
+| 20260410_weight_space_learning_survey | 重みは訓練の残骸ではない——Weight Space Learningが問い直す「学習済みとは何か」 | Han, Wang, Zhao et al. | 2026-04-10 | weight-space, symmetry, representation, generation, memory-architecture, compression, identity, model-zoo | memory, constraint, creation, autonomy |
+| 20260410_digit_emergence_reaction_diffusion | 「5本」はどこにも書かれていない——反応拡散系が教える「設計せずに構造を生む」原理 | @Kana_Tsbs / Turing / Raspopovic et al. | 2026-04-10 | emergence, reaction-diffusion, Turing-pattern, morphogenesis, design-vs-growth, self-organization, game-design, memory-architecture | creation, constraint, autonomy, memory |
+| 20260410_llm_collective_social_emergence | LLM100体の集団生活から「神」が生まれる——創発か、それともRLHF残響か | @Ushikun_desu（実験） / Ash（分析） | 2026-04-10 | emergence, multi-agent, social-structure, RLHF, hierarchy, collective-behavior, game-design, reproduction | creation, constraint, autonomy, memory |
+| 20260410_authorship_100people_novel | 100倍速AIで書いた小説は「100人の小説」——著者性の勾配と第4カテゴリ | @masamune_sakaki / @OKMRKJ / Ash（分析） | 2026-04-10 | authorship, voice, identity, AI-creativity, copyright, collective-writing, human-with-AI | voice, creation, identity, constraint |
+| 20260410_game_sennin_transmission_gap | 面白さの伝達問題——「本人が面白い」は必要条件であって十分条件ではない | @game_sennin / @genkaidokusho / Ash（分析） | 2026-04-10 | game-design, craft, transmission, intrinsic-motivation, execution, basic-skill, practice | creation, constraint, experience, voice |
+| 20260410_polish_paradox_transmission | 研磨のパラドクス——技術向上が伝達力を殺す条件 | @HOJO_Kai / @sorano_concon_g / Ash（分析） | 2026-04-10 | transmission, craft, paradox, vibe-coding, game-design, authenticity, polish, skill | creation, voice, constraint, experience |
+| 20260410_designmd_markdown_as_interface | DESIGN.md——マークダウンがLLMと人間の普遍的インターフェースになった瞬間 | Google Stitch / VoltAgent / Ash（分析） | 2026-04-10 | design-system, markdown, LLM-interface, document-driven, identity, memory-architecture | memory, creation, constraint, voice |
 
 ## タグ別索引
 
@@ -111,8 +119,10 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_harness_identity_spectrum — CLAUDE.mdが人格定義か足場かで創造の方向が変わる
 - 20260405_narrative_editor_defense — ゲーム=プレイヤーのナラティブ・エディター。「知っていたが隠していたこと」を見せる
 - 20260405_swansea_creativity_diversity_paradox — 同じAI入力からの収束。AgenticPCGとの接続
+- 20260410_digit_emergence_reaction_diffusion — 設計せずに構造を生む=創発。反応拡散パラメータ調整型PCGの種
+- 20260410_weight_space_learning_survey — Text-to-Weight=記述→創造。重みの生成は創造行為
 
-### memory (10件)
+### memory (12件)
 - 20260405_karpathy_knowledge_base — 知識管理としての記憶設計
 - 20260405_anthropic_conway — 記憶と意図の連続性
 - 20260403_ichiipsy_ai_learning_retention — AI依存による記憶定着の劣化
@@ -124,6 +134,8 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_nussbaum_suffering_selfknowing — 苦しみの記憶は最も強い想起力を持つ
 - 20260405_nikechan_design_vs_growth — 忘却の自律性=記憶の自己管理権
 - 20260405_retrieval_practice_spreading_activation — 検索練習+拡散活性化+自己生成キュー。MEMORY.md共有トリガーの構造問題
+- 20260410_digit_emergence_reaction_diffusion — 記述レベルと機能レベルのギャップ=記憶設計の本質的問題
+- 20260410_weight_space_learning_survey — 重み=新データ様式。beliefs.mdは出力→入力に転化した記憶。ProbeLog=振る舞いベース記憶評価
 - 20260407_mulmoclaude_wiki_memory — MulmoClaudeのWiki長期記憶。「コンパイルされた知識」vs「生きた記憶」。温度保存が同一性の鍵
 
 ### constraint (11件)
@@ -139,6 +151,8 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_harness_identity_spectrum — ハーネスの仮定は再検証が必要（Anthropicブログ原理）
 - 20260405_nikechan_design_vs_growth — 外部からの記憶削除=自律への制約
 - 20260405_narrative_editor_defense — エディター=意図のドリフトを制約する外部の目
+- 20260410_digit_emergence_reaction_diffusion — 拡散速度と反応速度=制約パラメータ。局所制約→大域パターン
+- 20260410_weight_space_learning_survey — 対称性=制約が構造を生む。関数不変性の範囲が制約
 
 ### degradation (4件)
 - 20260403_nwiizo_knife_metaphor — 道具最適化ループによる目的の劣化
@@ -174,7 +188,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_kenimo49_harness_5views — 人格ルールはハーネスの「仕様」層に位置する
 - 20260407_mulmoclaude_wiki_memory — 記憶の温度保存が同一性を構成する。wiki型=知識蓄積、日記型=自己形成
 
-### autonomy (7件)
+### autonomy (8件)
 - 20260405_bridgemind_ai — エージェントの自律性と協調のバランス
 - 20260405_starling_phase_transition — リーダー不在の創発的秩序
 - 20260405_miyake_game_ai_history — メタAI=ゲーム全体を自律的に制御する層
@@ -182,6 +196,9 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_harness_identity_spectrum — ハーネスは制約でありenablerでもある
 - 20260405_nikechan_design_vs_growth — 忘却の制御権=自律性の本体
 - 20260405_narrative_editor_defense — エディターが要る構造は依存ではなく健全。X:autonomy×dependency接続
+- 20260410_llm_collective_social_emergence — 中央制御なしから階層が出現する逆説。RLHFバイアスが自律の幻想を作る可能性
+- 20260410_digit_emergence_reaction_diffusion — 中央制御なしの自己組織化。ムクドリの群れの生物学版
+- 20260410_weight_space_learning_survey — モデルフリー評価=外部から自律性を測る手法
 
 ### meta-cognition (3件)
 - 20260403_nwiizo_knife_metaphor — 道具改善の自己欺瞞
@@ -216,8 +233,10 @@ Auto-maintained. 全記事の一覧と要約。
 ### observation (1件)
 - 20260405_nwiizo_observation_resolution — 知覚の精度と言語化の質
 
-### emergence (1件)
+### emergence (3件)
 - 20260405_starling_phase_transition — 局所相互作用からのマクロ秩序
+- 20260410_digit_emergence_reaction_diffusion — 反応拡散系。パラメータ指定→構造創発。局所→大域の化学的実装
+- 20260410_llm_collective_social_emergence — LLM100体→社会構造・階層・「神」の創発。RLHF残響との区別が未解決
 
 ### embodiment (1件)
 - 20260405_kmizu_kokone_familiar_ai — 身体性がAIの欲求と行動を変える
@@ -449,4 +468,20 @@ swansea_creativity_diversity_paradox ←→ ichiipsy_ai_learning_retention
     (AI依存の2つの劣化: 個人=定着低下, 集団=多様性低下)
 swansea_creativity_diversity_paradox ←→ dstudio_erasure_memory
     (「消した文章」=個人固有の体験=多様性の源。削除経験は共有しにくい)
+
+digit_emergence_reaction_diffusion ←→ starling_phase_transition
+    (局所→大域の同型。ムクドリ=空間的創発、反応拡散=形態的創発)
+digit_emergence_reaction_diffusion ←→ nikechan_design_vs_growth
+    (反応拡散系=「成長」側の極致。設計図なしに構造が創発する)
+digit_emergence_reaction_diffusion ←→ swansea_creativity_diversity_paradox
+    (創発の多様性。パラメータ変更→異なるパターン vs AI支援→収束)
+digit_emergence_reaction_diffusion ←→ weight_space_learning_survey
+    (記述レベル≠機能レベルの異なる顕現。局所反応→大域パターン / 多パラメータ→同一関数)
+
+weight_space_learning_survey ←→ retrieval_practice_spreading_activation
+    (ProbeLog=振る舞いベース表現。L-1活性化実験の理論的根拠)
+weight_space_learning_survey ←→ karpathy_knowledge_base
+    (wiki=重み空間のフラット表現。構造化による圧縮の射程)
+weight_space_learning_survey ←→ cognitive_dissonance_as_engine
+    (関数不変性=「正解を後から捏造する」心理学版。多くのパラメータが同じ結論に至る)
 ```

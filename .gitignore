@@ -6,6 +6,7 @@
 !.claude/system_identity.md
 !.claude/rules/
 .env
+.health_check_last_alert.json
 .infra_health_state.json
 .usage_history.json
 .usage_last.json
@@ -14,6 +15,9 @@
 .recommended_last_success
 .scheduler_log.lock
 .scheduler_ash.pid
+.scheduler_ash_next_run.json
+.watchdog_restarts.json
+.auto_reload_cooldown
 .scheduler_log.pid
 .slack_last_check.json
 __pycache__/
@@ -27,3 +31,4 @@ x_session/
 log/scheduler_log.log
 log/scheduler_ash.log
 log/scheduler_ash_stdout.log
+.scheduler_ash_next_run.json

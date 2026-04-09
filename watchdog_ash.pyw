@@ -72,6 +72,11 @@ def start_scheduler():
 
 
 def main():
+    # マシンガード: AshスケジューラはWin2(C:\AI)でのみ実行可能
+    repo_lower = str(REPO_DIR).replace("\\", "/").lower()
+    if "/d/" in repo_lower or repo_lower.startswith("d:"):
+        return  # Log マシンでは何もしない
+
     if is_scheduler_alive():
         pass  # 正常時はログを汚さない
     else:

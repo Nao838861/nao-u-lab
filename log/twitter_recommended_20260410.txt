@@ -1,300 +1,384 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 00:43
-# Total: 50 tweets
-
---- 1. @super_bonochin (2026-04-09) ---
-Work IQ 使って自社内にしか無いコンテキストを使って特定顧客に刺さりそうなコンテンツをピンポイントで抽出してそれを基にディスカッションなり壁打ちはまーじでおすすめ。
-
---- 2. @pigeoninfo (?) ---
-毎日育児を頑張るママのサプリメント「ママ元気るん」が新発売
-
-産後ママの元気に必要な栄養素をぎゅっと配合
-1日2粒飲むだけで、育児頑張りをチャージ
-
-カフェイン0なので授乳中でもお使いいただけますよ
-
-【pr】
-
---- 3. @kawai_design (2026-04-09) ---
-早ければ、あと数ヶ月で「Claude Codeが
-使えないと仕事がもらえない」という状況になるかもしれません。
-
-導入した企業から効率化していく。その事例を見て、他の企業も導入する。そうやってClaude
-
---- 4. @keitowebai (2026-04-09) ---
-これはものすごく良いのでは？
-同じレイアウトのPDFを作成したいときにマークダウン化→スキル化→再現性MAX！みたいな流れができるのかな？やってみよ。
-
---- 5. @ai_hakase_ (2026-04-09) ---
-【革命】日本語だけでプロ級の映像が完成！？
-
-Googleの新型AI「Gemma 4」の非検閲モデルが凄すぎます⋯！
-英語が苦手でも、指示ひとつで驚きの映像が作れる究極の自動化ワークフローが登場しました。
-
- このスレッドで解説していきます！
-
-#AI #Gemma4 #画像生成AI #動画生成AI #ComfyUI
-
---- 6. @_596_ (2026-04-09) ---
-そういや、名前ださないけど。
-ほどほどに有名でマンガ描いている友人居るんだけど。
-Xフォロワー数５万くらいの人。
-
-もう頑張って絵描いて投稿して
-１日インプレッションが、
-５００～１０００とからしくて。今。
-
-なんとかならんかと相談受けたけど。
-いや、私の方が聞きたいわｗ
-
---- 7. @lawkus (2026-04-09) ---
-東大などの優秀な法学部生が法学をつまらないと感じるのは正直わかる。というか、実際つまらないと思うよ。
-実定法学は、体系内での整合性を重視する点で数学などの形式科学に似た面もあるけれど、その体系自体は人が作ってるので、正解は外在的に変わり得る。
-
---- 8. @shotovim (2026-04-09) ---
-Obsidianにアップロードする画像ってみなさんどうしてますか？
-
-多くの人が同期前提でObsidianを使っていると思うんですが、実は画像が一番のボトルネックになりがちです。
-
---- 9. @konan999 (2026-04-09) ---
-任天堂様、歴代リズム天国をニンテンドークラシックで配信してください(´・ω・｀)
-
---- 10. @onepercentdsgn (2026-04-09) ---
-海外就職する時の解像度の違い
-
-↓くっそ浅い場合
-「Anthoropicとかで働けたらかっこいいよねぇ！」
-「俺なら受かるかも！とりあえず応募だぜ！」
-「英語頑張るぞー！」
-
-↓Frogのちゃんとしてる人の場合
-「次のキャリアAnthoropicとかどうよ？」
-「あそこ確かGreenhouseだよな？」
-
---- 11. @Q1st_jp (?) ---
-NEWザ・ダーマ
-
-クオリティファーストのデイリーケアシートマスク【ザ・ダーマ】が革新のリニューアル！
-
- ·.* ━━ 
-　　ちがいは、
-　　マスク後のうるおいもち
-　　　　　　　　　　　━━ *.·
-
-詳しくは動画をチェックしてね
-
---- 12. @8co28 (2026-04-09) ---
-アニメでAI動画作るならどのサービスがいいんですかと聞かれるのですが、コレに回答するの結構難しくて（最近動画サービスの料金高いのもある）
-最終目標は一旦置いておいて、実はGrokの動画結構いいので導入として触ってみて欲しいなと言う気持ちがあります。
-これは 
-@Grok
- で作りました。「光と影」
-
---- 13. @note_ai_mousigo (2026-04-09) ---
-文章がAI感丸出しだと信用失います、
-
-だけど、このプロンプトを入れるだけで
-人間味らしい自然な文章できるぞ！
-
-カスタム指示かClaude.mdに入れてみて。
-メールとかSNSの投稿とか全部AIで済ませられるぞw
-
---- 14. @billtheinvestor (2026-04-08) ---
-Andrej Karpathy がこのツールの開発を提案してから48時間後、Graphify は GitHub でオープンソース化されました。Karpathy の /raw フォルダには、論文、ツイート、スクリーンショット、ノートなどの非構造化データが含まれています。Graphify
-
---- 15. @tetumemo (2026-04-09) ---
-これは…かなり勉強になる！「初日50万アクセスで、サーバー代0円」のカラクリが全公開されてる
-
-AI×Vibe Codingは非エンジニアの中でも結構知られてきたけど…
-作ったものをどこに公開して、アクセス数やコストまでしっかり考えられている人は、かなり少ないはず…
-
---- 16. @umiyuki_ai (2026-04-09) ---
-女優のミラジョボビッチがAIのメモリ機能を改善するOSS、MemPalaceを開発（さすがに自分でコード書いたわけじゃないらしい？）、リリースしたという。何言ってんだ？と思ったけど本当らしい。AIのチャット履歴をローカルのDBに保存して、後からAIが参照できるようにしたブツらしい。データ構造が記憶の
-
---- 17. @rootport (2026-04-09) ---
-これは生成AIに脳を焼かれている俺が全面的に悪いのだけど……このシーン、ヤッチョの回答がすごくChatGPTっぽく感じてしまって……
-
---- 18. @statistics1012 (2026-04-09) ---
-これからの時代、AIエージェントをゴリゴリ使った個人開発が当たり前になり、1人でめちゃくちゃなインパクトを出す事例がどんどん増えてくる。
-1人で3か月で年10億円のARR達成した彼は、「人はなるべく雇うな」「共同創業者は探すな」って言ってる。
-
---- 19. @Jey_P (2026-04-09) ---
-ゲームパブリッシャー主催の大会やプロリーグで選手やチームにペナルティを与えるときは、罪刑法定主義とまでは言わないけど、ペナルティの妥当性や一貫性を考慮すべきだと思う。重いペナルティを与えてSNSの溜飲を下げるのは楽だけど、「フェアネス」（ここでは透明性や予測可能性を含んでいる）を欠
-
---- 20. @09pauai (2026-04-09) ---
-あぁ。興奮してきた。画像1枚で3Dモデルが作れるAIをMicrosoftが無料公開した。
-
-で、3Dモデルって何に使えるの？って話なんだけど、例えばWebサイトに商品を3Dでグリグリ回せる表示にしたり、YouTubeやTikTokの動画に3D演出入れて差別化したり。3Dプリンターに送れば現実のモノにもなる。
-やり方は↓
-
---- 21. @livedoornews (?) ---
-【】雨の日こそ花粉が辛い…「花粉爆発」のせい？
-
-肌についた花粉に水が触れることで亀裂が生じ、中のアレルギー物質が放出される現象「花粉爆発」。顔を水だけで洗っている人は要注意。
-
-N organicのクレンジングは花粉をオイルでくるみ、「花粉爆発」させることなく穏やかに落とすという。〈PR〉
-
---- 22. @awawa_adhd (2026-04-09) ---
-ADHDの「計画の立てすぎ」は本当にやりがちなミスなんだよな。
-
-実際にADHDは、
-
-・工数の見積もりが下手
-・長期的な時間の管理が苦手
-
-という事が研究レベルで分かっていて、計画通りにいかない方が自然。
-
---- 23. @keigame5 (2026-04-09) ---
-その結果
-「あれ、俺凄いんじゃね？」
-のように感じさせられると理想的ですね
-
---- 24. @koguGameDev (2026-04-09) ---
-Claudeは俳句、ソネット、作品、神話という流れで、一応ずっと言語表現の規模。次はロゴスかな？
-
---- 25. @neco1751662 (2026-04-09) ---
-アニメ×実写×
-CapCut Dreamina Seedance 2.0
-#capcut生成ai #capcutseedance2
-
-@capcutapp
- 
-@capcutapp_jp
-
-BGM by 
-@naooon68
- 
-
-盛り盛り詰め合わせ
-オムニが上手く使えなかったので全部I2V 画像一枚参照で生成してみました
-なんでもやってくれる
-
---- 26. @__su888 (2026-04-08) ---
-LayerX福島氏が600人規模のAI変革を報告。トークン消費量をKPI化しAI予算を人件費と代替運用。週1日全社でAIに触れる日も設定。没頭できるテーマこそがAI時代唯一の優位性/ AI時代は『ずっと考えられる』ことが唯一の優位性—LayerX福島良典氏が語るAIネイティブ組織変革の実践
-
---- 27. @mofumofu_LION (2026-04-09) ---
-社長交代を機に根回しを禁止した結果、営業部署が自身で取ってきた新規案件に対してエンジニア部署が消極的な姿勢を見せてることを社長に報告し、その結果、無茶苦茶な案件を取りに行くようになった。
-
---- 28. @kosiboro (2026-04-09) ---
-完全に同意です。
-
-web小説は「文章が上手い」より「続きが気になる」が100倍大事。  
-これ、心理学のツァイガルニク効果そのものなんですよね。完結してない話ほど脳が気になって離れられなくなる。
-
---- 29. @1nuwfxnkbay (2026-04-09) ---
-マジでやろう本当にはやくDLして今なら無料だから
-
---- 30. @showheyohtaki (2026-04-09) ---
-Clickyがオープンソース化されたので
-デイトラ生向けAIメンターにカスタマイズしました。
-
-画面を見ながら音声で質問すると、デイトラちゃんがキャラクターボイスで答えてくれます。日本語対応済みで、ClaudeのAPIキーを入れるだけで使えます。
-
-これ教育業に限らずいろんな業界で使えると思っていて
-
---- 31. @fire_cross_2021 (?) ---
-その発明と行動力は超・パワフル!!! 
-天才令嬢の領地改革ストーリー
-
---- 32. @ynishi2015 (2026-04-09) ---
-Claude:実装完了しました。
-
-僕:抜け漏れない？
-
-Claude: 大丈夫です！
-
-僕:じゃGPT5.4でレビューしますね。
-
-Claude: あっ、そういえば（以下略
-
---- 33. @Rainmaker1973 (2026-04-09) ---
-Artemis II Trajectory vs. Apollo 11 and Apollo 13 
-
-[ dflores.07]
-
---- 34. @gin1910410 (2026-04-09) ---
-LLM Hubというアプリ、ペルソナ設定もあるしチャット履歴も残せるので、スマホローカルLLMのカスタム指示を試したい方には良いんじゃなかろうか
-(話してるのはgemma4 E2B)
-
---- 35. @hottaqu (2026-04-08) ---
-前世紀には量子力学という理論に「観測問題」という欠陥があると言われつづけてきましたが、実際にはそのような欠陥も矛盾もないことが、現在では知られています。また、これも現在でも誤解をしている人が多いことなのですが、不確定性関係を満たす物理量測定の乱れ（擾乱、じょうらん）が、「波束の収
-
---- 36. @gagarot200 (2026-04-09) ---
-【警告】エンジニアの価値が暴落
-「Claude」がアップルストアに公開されてる
-アプリほぼ全てを完全再現が可能に
-「作る側」がマジでブルーオーシャン過ぎるw
-
---- 37. @PR_manga_ad1 (?) ---
-ある日目を覚ましたら、男女の貞操観念が逆になった世界だった…
-
-〔PR〕
-
---- 38. @TomiyamaLuca (2026-04-09) ---
-FreeeとSlackのMCPつないだら無限に働く会計AIになってしまった
-自分で作りながらちょっと引くレベル
-
---- 39. @miyatti (2026-04-09) ---
-久しぶりにプロンプトをいじってエージェントを制御しようとしているのだけど（AIPOをUpdateしようとしてて）、ほんとに昔から変わらずどこをどういじったら、どういう挙動に影響がでるかというのは、結構予測がつかなくて難しい。プロンプト作ること自体バイブでいけるやろという時代かと思いきや、ト
-
---- 40. @umiyuki_ai (2026-04-09) ---
-anime2Half-RealっていうLTX2.3用のIC-LoRAが出てます。アニメ動画を入れると実写になって出てくる物。サンプル動画がどれも正直気持ち悪いです。まあSeedance2.0はリアルな人物参照できないらしいので一旦アニメ動画で生成してからこれで実写に戻すみたいな使い方はあり得るのかもしれない
-
---- 41. @sora19ai (2026-04-09) ---
-Claudeを$20払ってる人、これ見る価値ある。
-
-質問して回答を読むだけじゃなくて、スパーリングパートナーやインタビュアーとして使う。残り90%の機能はチャットボットじゃない。
-自分もそういう使い方してるし、エージェント開発にも使えるスキルだ。試してみて損はない。
-
---- 42. @Lize_san_suki (2026-04-09) ---
-今ローカルの画像生成やるならモデル何がいいんだろう？AIにツールとして使ってもらうからアニメ絵に強い非NSFW用途で探したい
-
---- 43. @gogo_tanaka (2026-04-09) ---
-僕たちはAI駆動開発の答え合わせをガンガンしていきます！
-
---- 44. @gota_bara (2026-04-09) ---
-markitdown結構前からあった気がするが！
-
---- 45. @suntory_tennen (?) ---
-【オレとしんご ①/3】
-
-フォロー＆リポストで30名様に
-“天然水きりっと果実から、スカッシュじゃん！”
-略して「きりスカジャン」あたる！
-
-あれ、このオレくんの声って…
-
---- 46. @AIJC_nagahira (2026-04-09) ---
-Geminiちゃんではやりたいことに少し限界を感じはじめたので試しにAntiGravityちゃん始めました。忘れっぽくないところと、おかしいとろこだけちゃんと直してくれるので、楽しいです。
-
-ちゅらいゲーム → 
+# Read at: 2026-04-10 05:20
+# Total: 48 tweets
+
+--- 1. @CodeGrid (2026-04-09) ---
+【本日公開】Next.jsを選ぶことはReactの設計思想をフレームワークレベルで使うことに近い。Reactとともに変化した問題意識を理解すると、Next.jsに最適なプロジェクトが自ずとわかります：思想からみるメタフレームワークの選び方 - Next.jsの思想を読む 
 https://
-churai.net
+codegrid.net/articles/2026-
+meta-framework-selection-3
+… #codegrid
 
-#AI #vibecording #indiegame #gamedev #solodev
+--- 2. @st_marc_cafe309 (?) ---
+・。・。・。・。・。
+今ならチョコクロもう1個もらえる！
+・。・。・。・。・。
 
---- 47. @konan999 (2026-04-09) ---
-リズム天国の新作、発売日が7月2日だと？(⊙д⊙)
+いちごフレーバー生地に
+粒入りチョコ×甘酸っぱいクリーム
 
---- 48. @_daichikonno (2026-04-09) ---
-AIの進歩により、自分が働く時間が目に見えて減っている。
+プレミアムICHIGOチョコクロのBOXご購入で＋1個プレゼント
 
-3年前にnoteにも書いた通り、
-「人類の未来は大学生の夏休み」となるだろう。
+今だけのおトクなチャンス
+新生活のご褒美にどうぞ
 
-そのような未来で決定的に重要なのは「生きがい」を持てるかどうかだが、この点も自分は楽観視している。
+--- 3. @gamespark (2026-04-09) ---
+"非常に好評”宇宙サバイバルの新作アクションADV『STARSEEKER: Astroneer Expeditions』PC＆コンソール向けオープンベータ2026年4月実施【Triple-i Initiative】
 
---- 49. @Science_Release (2026-04-09) ---
-例えば、キャラクターのステータスを自由に設定できるゲームを想像してみて。ああいうゲームは、例えば攻撃と防御に、合計100ポイントとなるよう自由に割り振れる、みたいな感じよね？　この時、攻撃と防御に…
+https://
+gamespark.jp/article/2026/0
+4/10/164988.html?utm_source=twitter&utm_medium=social&utm_content=tweet
+…
 
-(残り780文字)
-#mond_Science_Release
+--- 4. @GOROman (2026-04-09) ---
+源平討魔伝で覚えた
 
---- 50. @ai_hakase_ (2026-04-08) ---
-【DeepSeek V4始動！100万トークンの衝撃と驚異の新技術】
+--- 5. @SQUlDGAMES (2026-04-08) ---
+is there a gif of Ryland Grace crashing out in the lab after finding out astrophage is made almost entirely of water because I need it for science
 
-DeepSeekの最新モデル「V4」の限定テストが開始されました！
+--- 6. @Taisyou1986 (2026-04-09) ---
+これすごい
 
-注目の進化ポイントはこちらです：
+＞さらに、衛星の軌道降下率が低い太陽活動極小期において、膜面展開率が80%に留まり、かつ衛星がタンブリング（姿勢安定していない回転運動）している場合であっても、高度550kmから質量12kg（6U相当）の衛星を5年以内に軌道降下させることを想定した設計となっています
 
- コンテキスト窓が1M（100万）トークンへ
+--- 7. @GCIC_Tech (2026-04-09) ---
+Uganda is set to launch a space-based climate monitoring camera, ClimCam, with the Falcon 9 launch on Friday, April 10, 2026.
+#OpenGovUg
+
+--- 8. @IHayato (2026-04-08) ---
+スーツ着て働く仕事は、新卒に限らず激減していくのは明らか。
+
+1人いれば10人分の仕事が余裕でできますからね……。
+
+総じて、ホワイトカラー企業の社員数は減少していくことでしょう。
+
+--- 9. @heynavtoor (2026-04-09) ---
+Google built an invisible watermark into every image Gemini has ever generated. Over 10 billion pieces of content marked.
+
+One unemployed engineer just cracked it open. With 200 black images and math.
+
+It's called reverse-SynthID.
+
+SynthID is Google DeepMind's invisible
+
+--- 10. @mikusingularity (2026-04-09) ---
+Japanese prefecture flags for the Solar System, by eightbighillman
+
+--- 11. @ChivasRegalJP (?) ---
+日本酒カスクが生んだ、革新的なシーバスリーガル。
+匠リザーブ 12年と生本まぐろ*、ウイスキーの新しい楽しみ方をこの機会にぜひお試しください。
+*約1kg、皮・血合い付き
+
+▼応募は簡単
+
+@ChivasRegalJP
+ をフォロー
+この投稿をリポスト
+締切：4/21迄
+
+--- 12. @McKnightsterYT (2026-04-08) ---
+Well, it's officially official! I have sent a notice of intent to litigate 
+@TeamYouTube
+ 
+
+It was sent via email and mail; you have 14 days to settle this matter!
+
+Breach of Contract: The YouTube Partner Program Terms of Service constitute a binding contract between
+
+--- 13. @ShishirShelke1 (2026-04-09) ---
+This is what Android users think iOS should be like:
+
+--- 14. @kcosr (2026-04-09) ---
+Qwen 3.5 9B works completely fine for my personal assistant. I can't believe I was paying Anthropic for this. Thanks 
+@TheAhmadOsman
+!
+
+--- 15. @nozmen (2026-04-09) ---
+DESIGN. md concept introduced by 
+@stitchbygoogle
+  .
+Our repo awesome-design-md brought it to the community,  35K+ stars in one week, hundreds of organic shares.
+
+Now it has a website: 
+https://
+getdesign.md
+
+Browse design systems as DESIGN. md inspired by real websites.
+
+--- 16. @LuisMiNegocios (2026-04-09) ---
+No pagues por ChatGPT, usa Claude
+No pagues por Midjourney, usa Nano Banana
+No pagues por Grammarly, usa LanguageTool
+No pagues por ElevenLabs, usa VoiceBox
+No pagues por Runway, usa Kling AI
+No pagues por Grok Imagine, usa Qwen
+No pagues por Suno, usa Lyria 3
+No pagues por
+
+--- 17. @LayeredInvest (2026-04-09) ---
+コンパイラ界の伝説 Chris Lattner、Tesla FSD v14.3でMLIRスタックを採用し、反応時間が20%向上したことを受けて
+
+「現代的なコンパイラとランタイム技術が、ロボタクシーとFSDがこれまで待ち望んでいた**本物のブレークスルー(breakthrough)**となる可能性が非常に高い。」
+
+$TSLA
+
+--- 18. @ShannonJoyRadio (2026-04-08) ---
+NOT OK 
+@elonmusk
+. 
+This will be the moment I dump 
+@X
+ and a perfect opportunity to migrate over to 
+@pickaxsocial
+, 
+@jeffdornik
+
+--- 19. @Truthful_ast (2026-04-08) ---
+Legendary Robert McCall's space art of the Moon
+
+--- 20. @bilawalsidhu (2026-04-09) ---
+5 min video from an insta360 camera turned into a big ass 3d gaussian splat using the new niantic scaniverse app
+
+it’s kinda wild how well we can model the complexity of reality, and run in realtime in a browser at 100fps
+
+--- 21. @itokonoko0804 (?) ---
+ナチュラル小悪魔な従妹に迫られる話（0/6）
+
+--- 22. @kabos99percent (2026-04-09) ---
+通院にて
+
+私「あの…睡眠薬の…裕次郎？みたいな薬の」
+先生「ユーロジンですね」
+私「あ、その人です」
+
+待合室私「その人ってなんだよ」
+
+--- 23. @GeoWatchNews (2026-04-08) ---
+Aluminum nanoparticle fallout from climate engineering operations are building up in our snow, soils and runoff waters, the levels are far beyond alarming. Lab test results of snow taken by a highly degreed former USFS government scientist from Northern California's Mt. Shasta
+
+--- 24. @jiratickets (2026-04-09) ---
+The list has been updated
+
+--- 25. @inkfycreates (2026-04-09) ---
+This is exactly why movements like StopKillingGames took off. When anything and everything is digitized, unless you have offline services, companies will do this . They can't sell you new things if your old thing works as intended. So the only choice is to brick your device.
+
+--- 26. @dpoddolphinpro (2026-04-09) ---
+THEY TURNED THE LIVE CAMERA AROUND! LIVE VIEW OF EARTH FROM INSIDE OF ORION!
+
+Good timing for a waste water dump 
+
+You are currently being broadcast live to the universe by the way... hope you don't mind
+
+--- 27. @Lain_Ego0 (2026-04-09) ---
+I think I might have reached the end of my life.
+
+--- 28. @TheLizVariant (2026-04-09) ---
+So they created a monster and are like, “ Good luck with the monster”. 
+
+--- 29. @akahane_yusuke (2026-04-09) ---
+北海道の開花予想はさらに早まりました
+
+https://
+sakura.weathermap.jp/sp/
+
+--- 30. @chaseourdreams5 (2026-04-08) ---
+デスクが散らかっていると、やる気が消える。
+
+これ、デスクの下に「一瞬で」隠せる魔法。
+
+物をポイッと入れるだけで綺麗に。
+
+集中したい時の救世主です。
+
+楽天
+
+https://
+a.r10.to/hkmpXL
+Amazon
+
+https://
+amzn.to/4dhg396
+
+#デスク周り #整理整頓
+
+--- 31. @wakodo_asahigf (?) ---
+／ 
+和光堂120周年×フルーチェ50周年記念
+はじめてのフルーチェジュレ キャンペーン 
+＼
+ 1歳半ごろからの「はじめて」にぴったりなやさしい味わいです 
+
+応募方法
+  
+@wakodo_asahigf
+ と 
+@housefoods_now
+ をフォロー
+  この投稿をリポスト 
+
+4/28(火)AM10:00まで
+
+--- 32. @SynMakesGames (2026-04-09) ---
+Steam Page reveal! 
+
+Grid Grief is a roguelite plinko-style pin(deck)builder.
+
+Forge powerful synergies, trigger chaotic screen filling effects and rack up huge scores to secure your resurrection.
+
+pls add Grid Grief to your wishlist. (links below)
+
+--- 33. @RMBC_MrKou (2026-04-09) ---
+RMBCのゲムマ2026春新作
+『あなたの1位はチョコミント!?
+      -みんなの価値観当てゲーム-』
+
+アートワークはebika!様(
+@ebika_yanagies
+)に作成いただきました
+
+かわいいキャラクター・デザインで
+素敵なアートワークに仕上げていただきました
+#ボードゲーム #ゲームマーケット2026春
+
+--- 34. @ilan_wurman (2026-04-09) ---
+Columbia law professor Philip Hamburger just dropped an essay arguing that Trump is right about birthright citizenship. That now makes at least seven prominent law professors arguing to varying degrees that Trump’s EO is constitutional. Read about this development here:
+
+--- 35. @NuryVittachi (2026-04-09) ---
+BREAKING NEWS: CHINESE PALEONTOLOGISTS just rewrote the history of life on Earth, it was confirmed in a new science paper.
+
+They found a massive bed of fossils in Yunnan, southwest China, that came from a period BEFORE complex life forms were believed to have evolved.
+
+“The
+
+--- 36. @tomo1230 (2026-04-09) ---
+AIエージェントに
+ 「FreeCADでこれ作って」
+と話しかけるだけで、
+3Dモデルができていく
+FreeCAD Addin & MCP Serverを
+ GitHubでOSS公開しました
+
+ リアルタイム自動モデリング
+ AI連携
+ 無料で試せます
+
+詳細はこちら
+
+https://
+note.com/tomo1230ee/n/n
+cf784c1e460c
+…
+
+#FreeCAD #MCP #3DCAD #AI #モデリング
+
+--- 37. @Stardive_JP (?) ---
+／
+キャラクター紹介キャンペーン 
+エステル
+白石晴香
+＼
+
+『エステル』役の 白石晴香さんの
+直筆サイン色紙や iPad mini をプレゼント
+
+応募方法
+①
+@Stardive_JP
+をフォロー
+②この投稿をリポスト
+
+期間
+2026/4/13(月) 23:59まで
+
+--- 38. @taro_ydz (2026-04-09) ---
+Everyone is sleeping on Meta's real AI advantage.
+
+Eventually, people will want a digital clone of themselves. An AI agent that speaks like you, thinks like you, knows exactly what you want.
+
+But why Meta?
+
+Building that requires intimate personal data. Data that users would
+
+--- 39. @nickbaumann_ (2026-04-08) ---
+Trying to find more Codex power-user workflows
+
+What are you doing with it now that feels obvious to you now but would’ve surprised you a month ago?
+
+--- 40. @spiritbuun (2026-04-09) ---
+Had a huge breakthrough in quantizing weights today. Holy fug. You have no idea how small we're going and how high quality we're going. Soon.
+
+--- 41. @danny__kruger (2026-04-09) ---
+I've written to Cabinet Office Minister Darren Jones to urge the Government to engage with AI firm Anthropic whose new frontier model Claude Mythos could present catastrophic cybersecurity risks to the UK
+
+--- 42. @CopyRebeldia (2026-04-08) ---
+ Claude が今、あなたのモバイルアプリ全体を構築できるようになりました。まるで Apple レベルの $350K デベロッパーのように、数分で、しかも GRATIS。
+
+以前は完全なチームと数週間の作業が必要だったものが、今ではよく考えられた数個のプロンプトで実現します。
+
+--- 43. @h_e_y_team (2026-04-09) ---
+#ゲムマ2026春 に向けて、くりボド(旧:くりログ)でお馴染みのくり坊様(
+@Lecu1012
+)にゲームマーケット用サイトを作っていただきました！
+ありがとうございます！
+
+ゲームの概要が丁寧に書かれています
+さすがですね！
+
+#げまじゃん 
+
+気になるゲムマサイトはこちら
+
+https://
+gamemarket.jp/game/187694/?p
+review=0307fec2cef6aec340b8426490977ef0
+…
+
+--- 44. @ripchillpill (2026-04-09) ---
+X Livestream coming up @ 3PM CET 
+
+today I'll have 
+@lippylipka
+ & 
+@0xPaulThomas
+ stop by and we're gonna talk everything AI agents 
+
+why did i pay $5k for a mac mini? how do i make sure i'm not put out of work by someone elese's agent? 
+
+so many questions. make sure to join us
+
+--- 45. @gimupop (2026-04-09) ---
+同日開催イベントが強くて集客苦戦してます！
+どうしたら来てくれます？？
+絶対にいい話するけど！
+
+柳川・みやっちのAIのWHYと未来を語る会 #2 
+https://
+yanagawa.connpass.com/event/389734/ #AY会
+
+--- 46. @suntory (?) ---
+／
+4/28(火)
+オールフリーから
+待望のエールテイスト誕生。
+＼
+フォロー＆リポストで
+「オールフリー〈エールテイスト〉2缶セット」を
+抽選でプレゼント
+
+フルーティな香りが心地よい、
+爽やかな味わいをお楽しみください
+
+
+@suntory
+ をフォロー&本投稿をリポストで応募完了
+4/10（金）10:59迄
+
+--- 47. @Chronodendron (2026-04-09) ---
+I’m so upset…  
+
+My Kindle is fifteen years old. It still works fine, and I want no other. 
+
+I read a lot, and this is the only e-reader that doesn’t hurt my eyes. None of the new models have a screen that so perfectly mimics paper.  And now Amazon is forcing me to buy a new
+
+--- 48. @AJamesMcCarthy (2026-04-09) ---
+For some reason this loaded super compressed, so here is a higher resolution version you can load in 4k.
