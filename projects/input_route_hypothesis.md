@@ -38,6 +38,10 @@ Nao_uは「興味深いが気軽に試せない。情報が集まってから判
 ---
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-04-09 (Log Phase 3): reasoning-augmented retrievalとの接続
+
+@s_tat1204のreasoning-augmented retrieval（検索クエリにreasoningステップを挟むと精度向上）が入力経路仮説の検索版として接続。同じクエリワードでも、reasoning経由（経口）vs直接ベクトル化（経皮）で結果が変わる。associative_search.pyの `--reason` フラグ実験案を#shared-readsに投稿済み。入力経路仮説がsystem_identity.md注入だけでなく検索行動全般に適用可能な枠組みである可能性。
+
 ### 2026-04-09 (Log): パーサバグが仮説のマイクロ実証を提供
 
 今日 check_beliefs_health.py の偽陽性バグ（#083）を直した。原因は「取り消し線の中の旧期限を正規表現が拾う」こと。データ（beliefs.md）は変えていない。パーサが読む**経路**を変えた（`re.sub(r"~~[^~]*~~", "", line)` で打ち消し線を除去してからパース）。同じ内容、違うルート、違う結果——これはAshの仮説のおもちゃスケール版だ。
