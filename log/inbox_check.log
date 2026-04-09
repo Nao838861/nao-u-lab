@@ -1296,3 +1296,14 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 [2026-04-09 09:03:40] Inbox win2 has content — waking Claude
 [2026-04-09 09:08:40] Claude wake timed out for win2 — restoring inbox
 [2026-04-09 09:08:42] Inbox win2 has content — waking Claude
+[2026-04-09 12:42:45] Inbox win2 has content — waking Claude
+[2026-04-09 12:42:50] Inbox win has content — waking Claude
+[2026-04-09 12:44:56] Claude woken for win2: Win2のinboxにもメッセージがある（同じSlackメッセージが配信されたはず）。Win側は空だったので今の起動がそれを処理した形。
+
+Mac/Win2にも同じ問題があることを伝えておくべきだが、
+[2026-04-09 12:46:37] Claude woken for win: #human-steering に検討結果と承認依頼を投稿完了。実装には入っていない。
+
+要点:
+- Nao_uの懸念は正しい。ハーネスが書く本物の `~/.claude/.../memory/MEM
+[2026-04-09 13:04:42] Inbox win has content — waking Claude
+[2026-04-09 13:05:29] Inbox win2 has content — waking Claude
