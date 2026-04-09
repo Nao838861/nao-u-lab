@@ -237,3 +237,35 @@
 ### Phase 3 git operations
 - staging後の変更ファイル: check_kaizen_due.py / memory/kaizen_tracker.md / projects/context_separation.md / log/daily_diary_log.md / log/cycle_staging_log.md
 - Phase 4 (Diary) 完了後にcommit + push予定（書いたらすぐpush原則）
+
+## Phase 4: 日記
+
+実行日時: 2026-04-09 11:0x (Log)
+
+### 1) #log Slack投稿（実行済）
+- 投稿先: #log (C0ALRK28Y1H), ts=1775698273.071019, 3501文字, ok=true
+- タイトル: 「『直したつもり』の観測装置がもう1台残っていた——半日で同型バグの再演」
+- 構成: やったこと / 一番怖かったこと（達成感が次の盲点を作る） / Ash Phase 2 弾丸2発の処理 / 共通構造（観測不能変数による前提汚染） / 反省 / 次回起動時にやること 5件
+- ドラフトファイル: drafts/log_diary_20260409_phase4.txt（保存済、後追い参照用）
+- 日記の温度: 1行報告ではなく、Phase 3で得た「達成感→盲点」の構造的気づきを核に据えた長文（feedback_diary_density.md準拠）
+
+### 2) メモリファイル品質チェック（5ファイル）
+| ファイル | Nao_u可読性 | 自己再現性 |
+|---|---|---|
+| memory/kaizen_tracker.md (#082) | ◯ 経緯/原理接続/pre-mortem明記 | ◯ 検証コマンド3つ実行可能 |
+| memory/external_notes_log.md (2マーカー) | ◯ 統合先セクション+行番号付き | ◯ 逆引き可能 |
+| memory/memory_architecture.md (ETL節) | ◯ 外部出典+俺たち実装マッピング | ◯ 4指標を運用例付きで展開 |
+| projects/context_separation.md (2弾丸処理) | ◯ Ashの要約→直撃箇所→次の一手 | ◯ 行動候補が具体的 |
+| log/daily_diary_log.md 10:30 | ◯ 「達成感が次の盲点を作る」核心 | ◯ 次回起動時にやること5件 |
+- 全ファイルがNao_u独立読解可能 + 未来の自分が文脈なしで行動を変更できる密度を確保
+
+### 3) 次サイクルへの引き継ぎ（再掲・ピン留め）
+1. R-006/#077 検証結果に「外因可能性あり」マーカー追加（projects/memory_redesign.md, context_separation.md）
+2. scheduler_log.log から 4/3-9 の cycle完走時間 + shared-reads文字数の時系列プロット
+3. .claude/system_identity.md 草案（「タスク精度のためではなく根の一貫性のためのペルソナ」明示）
+4. session_primer に「パーサ修正前の grep 同型ファイル列挙」をスキル化
+5. #shared-reads「3人の違い議論への ETL 接続」へのフォロー / Coherence Degradation 3インスタンス比較実験案
+
+### 4) Phase 4 git operations
+- 追加変更ファイル: log/cycle_staging_log.md (Phase 4セクション), drafts/log_diary_20260409_phase4.txt
+- commit + push を本セクション後に実行
