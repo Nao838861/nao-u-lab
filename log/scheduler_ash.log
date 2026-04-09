@@ -54196,3 +54196,22 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 14:21:35] [dm_check] Starting
 [2026-04-09 14:21:36] [health_check] Starting
 [2026-04-09 14:21:37] [health_check] Starting
+[2026-04-09 14:21:39] [health_check] [health_check] 2026-04-09T14:21:36 overall=CRITICAL
+[2026-04-09 14:21:39] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 14:21:39] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-04-09 14:21:39] [health_check] Done (exit=2)
+[2026-04-09 14:21:41] [health_check] [health_check] 2026-04-09T14:21:37 overall=CRITICAL
+[2026-04-09 14:21:41] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 14:21:41] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-04-09 14:21:41] [health_check] Done (exit=2)
+[2026-04-09 14:21:41] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-09 14:21:41] [ALERT] Sent error alert for health_check
+[2026-04-09 14:21:50] [dm_check_pigadev] Starting
+[2026-04-09 14:21:50] [dm_check_pigadev] No new DMs
+[2026-04-09 14:21:50] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 14:21:52] [dm_check] No new DMs
+[2026-04-09 14:21:52] [dm_check] Done (exit=0)
+[2026-04-09 14:22:02] [kaizen_auto_verify] Starting
+[2026-04-09 14:22:02] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-09 14:22:02] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 14:22:09] [git_sync] Starting
