@@ -52318,3 +52318,83 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 13:11:57] [review_deadline] レビュー期限超過なし。
 [2026-04-09 13:11:57] [review_deadline] Done (exit=0)
 [2026-04-09 13:12:03] [git_sync] Starting
+[2026-04-09 13:12:07] [kaizen_auto_verify] Starting
+[2026-04-09 13:12:07] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-09 13:12:07] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 13:12:07] [git_sync] Starting
+[2026-04-09 13:12:08] [git_sync] Done (exit=0)
+[2026-04-09 13:12:11] [git_sync] Done (exit=0)
+[2026-04-09 13:12:31] [slack_check] Starting
+[2026-04-09 13:12:38] [slack_check] Starting
+[2026-04-09 13:12:49] [slack_check] [13:12:49] 1 msg(s) -> inbox_win2.md
+[2026-04-09 13:12:49] [slack_check] [13:12:49] Triggered check_inbox.py --box win2
+[2026-04-09 13:12:49] [slack_check] Done (exit=0)
+[2026-04-09 13:12:49] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-09 13:12:49] [inbox_check] Starting
+[2026-04-09 13:12:50] [inbox_check] Inbox win2 empty
+[2026-04-09 13:12:50] [inbox_check] Done (exit=0)
+[2026-04-09 13:12:55] [slack_check] [13:12:55] 1 msg(s) -> inbox_win2.md
+[2026-04-09 13:12:55] [slack_check] [13:12:55] Triggered check_inbox.py --box win2
+[2026-04-09 13:12:55] [slack_check] Done (exit=0)
+[2026-04-09 13:12:55] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-09 13:12:55] [inbox_check] Starting
+[2026-04-09 13:12:56] [inbox_check] Inbox win2 empty
+[2026-04-09 13:12:56] [inbox_check] Done (exit=0)
+[2026-04-09 13:12:56] [health_check] Starting
+[2026-04-09 13:12:58] [health_check] [health_check] 2026-04-09T13:12:56 overall=OK
+[2026-04-09 13:12:58] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 13:12:58] [health_check] Done (exit=0)
+[2026-04-09 13:13:00] [health_check] Starting
+[2026-04-09 13:13:01] [health_check] [health_check] 2026-04-09T13:13:00 overall=OK
+[2026-04-09 13:13:01] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 13:13:01] [health_check] Done (exit=0)
+[2026-04-09 13:13:08] [auto_diary] Starting
+[2026-04-09 13:13:08] [auto_diary] [2026-04-09 13:13:08] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 13:13:08] [auto_diary] 前回実行から38分しか経っていない（最小間隔: 170分）。あと131分待機。スキップ。
+[2026-04-09 13:13:08] [auto_diary] Done (exit=0)
+[2026-04-09 13:13:11] [auto_diary] Starting
+[2026-04-09 13:13:12] [auto_diary] [2026-04-09 13:13:12] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 13:13:12] [auto_diary] 前回実行から38分しか経っていない（最小間隔: 170分）。あと131分待機。スキップ。
+[2026-04-09 13:13:12] [auto_diary] Done (exit=0)
+[2026-04-09 13:13:38] [scheduler_health] Starting
+[2026-04-09 13:13:39] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 13:13:39] [scheduler_health] ✅ scheduler_ash PID — PID=22652 生存中
+[2026-04-09 13:13:39] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 13:13:39] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-04-09 13:08:58] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 13:13:39] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 13:13:39] [scheduler_health] Done (exit=1)
+[2026-04-09 13:13:42] [scheduler_health] Starting
+[2026-04-09 13:13:43] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 13:13:43] [scheduler_health] ✅ scheduler_ash PID — PID=22652 生存中
+[2026-04-09 13:13:43] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 13:13:43] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー2件。例: [2026-04-09 13:13:39] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 13:13:43] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 13:13:43] [scheduler_health] Done (exit=1)
+[2026-04-09 13:13:53] [slack_check] Starting
+[2026-04-09 13:13:59] [slack_check] Starting
+[2026-04-09 13:14:20] [twitter_recommended] Starting
+[2026-04-09 13:14:26] [twitter_recommended] Starting
+[2026-04-09 13:14:27] [twitter_recommended] Skipped: browser locked by another process
+[2026-04-09 13:14:27] [twitter_recommended] Done (exit=0)
+[2026-04-09 13:15:07] [check_usage] Starting
+[2026-04-09 13:15:07] [check_usage] 前回投稿から209分しか経っていない（最小間隔: 300分）。あと90分待機。スキップ。
+[2026-04-09 13:15:07] [check_usage] Done (exit=0)
+[2026-04-09 13:15:17] [slack_check] Starting
+[2026-04-09 13:15:17] [twitter_recommended] Opening For You tab...
+[2026-04-09 13:15:17] [twitter_recommended]     1. @p_sama1616: 「全部お前が悪い」って育てられて
+[2026-04-09 13:15:17] [twitter_recommended] 自己肯定感なんか一度も育ったことねえよ...
+[2026-04-09 13:15:17] [twitter_recommended]     2. @gongcha_japan: 〘マンゴーミニパールキャンペーン〙
+[2026-04-09 13:15:17] [twitter_recommended] 
+[2026-04-09 13:15:17] [twitter_recommended] Done (exit=0)
+[2026-04-09 13:15:27] [slack_check] Starting
+[2026-04-09 13:15:46] [check_usage] Starting
+[2026-04-09 13:15:46] [check_usage] 前回投稿から210分しか経っていない（最小間隔: 300分）。あと89分待機。スキップ。
+[2026-04-09 13:15:46] [check_usage] Done (exit=0)
+[2026-04-09 13:16:02] ==================================================
+[2026-04-09 13:16:02] Ash scheduler started (PID 26284)
+[2026-04-09 13:16:02] Max runtime: 0 hours
+[2026-04-09 13:16:02] Code hash: 23987b6ea13730e5053683552346a8b2
+[2026-04-09 13:16:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 13:16:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 13:16:02] ==================================================
+[2026-04-09 13:16:03] Scheduler already running (PID 26284). Exiting.
