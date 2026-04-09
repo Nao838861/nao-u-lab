@@ -188,7 +188,7 @@ JOBS = [
         "stagger": 20,
     },
     {
-        "name": "health_check",
+        "name": "infra_health_check",
         "script": "infra_health_check.py",
         "args": ["--log"],
         "interval_sec": 30 * 60,  # 30分ごと（LLM不使用・APIコスト0）
