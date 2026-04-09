@@ -1,281 +1,163 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 17:25
+# Read at: 2026-04-09 17:30
 # Total: 50 tweets
 
---- 1. @FABYMETAL4 (2026-04-09) ---
-「おかしいヨーダ」
-
---- 2. @lifeafter_game (?) ---
-鳴り止まない、ドアを叩き続ける音。 「やつら」が来る…。もう、時間の問題だ。
-
---- 3. @shields_pikes (2026-04-09) ---
-使い勝手として現状で最も使い勝手が「知的AGI」に近いのは、やっぱりOpenClawだと思うし、AGIってのは単一モデルの性能の話ではなくて、自律的に依頼をこなしつつ自己改善していく、チーム（群体）としてのアーキテクチャとそのUXだよなあ。そして、今の仕組みだと裏側のコスト構造が贅沢すぎる。
-
---- 4. @hawkymisc (2026-04-09) ---
-ハーネスはすべてCursorだろうか。ツールによりシステムプロンプトが違うのでモデルだけでは性能が決まらなさそう。
-
---- 5. @hattori2000 (2026-04-09) ---
-キュピーン愛好家のものです
-
---- 6. @t_wada (2026-04-09) ---
-いい言葉 "成功者が「発信したらこんないいことがあった」と語るから、皆「いいことのために発信しよう」としがちですが、実は順序が逆なんです。まず発信したいからする。いいことは、たまたま後からついてくる" / 「難しいのに役に立たない、それが面白い」KOBA789さん
-
---- 7. @moriya_sys (2026-04-08) ---
-本日の個人開発
-稼働：3h52m
-
-明日はリリースまでやる
-
---- 8. @fladdict (2026-04-09) ---
-意味がわからない⋯ウルトラプレイがきた。
-
-reading... ホルムズ海峡を通過する船舶の通航料徴収を米国とイランの「共同事業」とする案
-
---- 9. @gabemonroy (2026-04-08) ---
-Just took on the CTO role at Workday.
-
-Every enterprise is about to rebuild around agentic AI — and with Workday serving as the system of record for people and money across the Fortune 500, I’m focused on building the rails that make AI safe, compliant, and real.
-
-Stay tuned 
-
---- 10. @NF404tw_2 (2026-04-08) ---
-生成AIの現状
-
-Stable Diffusion:数十億の画像の無断利用をアメリカ議会の公聴会で認めた。
-Midjourney:1万6千人を無断利用したリスト流出。ディズニー他が訴訟。
-ChatGPT:訴訟多数。歌詞の無断利用で違法判決。
-Suno,Udio:ソニー他が訴訟。
-Anthropic:巨額の和解金と、海賊版データの破棄で和解。
-
---- 11. @mantle_talkntv (?) ---
-【マントルトーク×名探偵コナン】
-コラボ記念キャンペーン実施中
-
-▼応募方法
-①
-@mantle_talkntv
-をフォロー
-②最もアツいと思う名探偵コナンの台詞を
-　『マントルトーク』と『劇場版名探偵コナン』のハッシュタグをつけて
-　希望するプレゼントを明記の上投稿
-
-応募期間 4/11(土)23:59  まで
-
---- 12. @The4thWayYT (2026-04-08) ---
-they dont think it be like that but it do
-
---- 13. @VoxelKei (2026-04-08) ---
-ワンショットでVRChat内を3DGS化するためのカメラシステム「SplatSeed Camera」が完成！
-通常3DGSを制作する際に必要な位置推定と初期点群生成をスキップしてCOLMAPを生成→LichtFeld Studioで3DGS学習→SpatialographMakerでモデル化→再びVRCへ。
-
---- 14. @yezhang1998 (2026-04-08) ---
-Genuine question: if every major company starts scanning their entire codebase with Claude Code (auth flows, security logic, vuln patches, all of it) isn’t that a massive privacy concern?
-
-Anthropic would theoretically get visibility into the core product logic and security
-
---- 15. @KojiPro2015_EN (2026-04-09) ---
-10th LUDENS – Yoji Shinkawa Interview now available 
-
-Ludens remains the iconic symbol of KOJIMA PRODUCTIONS. Unveiled for the studio’s 10th anniversary, we explore the thoughts and ideas behind its newly updated look.
-
-Art Director Yoji Shinkawa shares behind-the-scenes
-
---- 16. @swigosip (2026-04-08) ---
-うつ病を克服するためには、怒りを出す必要がある
-
---- 17. @srfsrf272815 (2026-04-08) ---
-これが妻との言い争いってやつだ。
-
---- 18. @pmarca (2026-04-08) ---
-Overheard in Silicon Valley: "LinkedIn is prison for middle managers."
-
---- 19. @FlyhighWorks (2026-04-09) ---
-終末世界を見守る放置系デスクトップアプリ
-『終末ミジンコラボラトリー』
-配信開始いたしました。
-
-このゲームに、決まった目的はありません
-あなたのペースで、ゆっくり楽しんでください
-それでは、よい終末を。
-
---- 20. @yakubwudil (2026-04-08) ---
-I am honored to be recognized among the world’s top 2% scientists in the Stanford/Elsevier global ranking.
-
-This recognition reflects our spirit of impactful research with outstanding colleagues, mentors, and students, and a shared commitment to advancing scientific research.
-
-1/
-
---- 21. @shiba_inu_muu (?) ---
-ジャンプ＋からみなさんに
-可愛い柴犬・むうちゃんを
-お届けしております
-
-『シバつき物件』JC最新７巻 好評発売中！
-
---- 22. @yousukezan (2026-04-09) ---
-大量の機密情報をハッカーが売り出し、中国のスーパーコンピューターから流出か 
-https://
-cnn.co.jp/tech/35246217.
-html
-… 
-@cnn_co_jp
-より
-
---- 23. @milbon_ (2026-04-08) ---
-ウェブサイトのURLからアプリを構築
-
-・どんなウェブサイトもiOS/Android向けアプリに変換
-・URLを貼るだけでClaude Opus 4.6が全部やってくれる  
-・コード生成・デザイン・多言語翻訳・アプリ起動まで完全自動
-
-サクッとアプリを量産できて個人開発で儲かる。
-
-詳細は↓
-
---- 24. @PlasticsWorld (2026-04-08) ---
-€40m has been made available by Circular Plastics NL and the Netherlands Enterprise Agency as part of the CPNL 2026 Open Call intended for partnerships working on innovation and upscaling in the recycling and circularity of plastics.
-
---- 25. @koooshi1254 (2026-04-08) ---
-クレジットカードで支払うと手数料を上乗せして料金を請求してくるところがあるんですけど、違法ですよね?
-
-市税事務所ってところなんですけど？
-
---- 26. @R_Amano (2026-04-08) ---
-ちなみにこの恐竜の化石とかで見られる首をのけぞらせた「グエー」のポーズを古生物界隈では「デスポーズ」と言います覚えて帰ってくださいね
-
-https://
-ja.wikipedia.org/wiki/%E3%83%87
-%E3%82%B9%E3%83%9D%E3%83%BC%E3%82%BA
-…
-
---- 27. @arni_elnido (2026-04-09) ---
-この映像が本物なら日本の都市伝説くねくねの正体が球状雷の可能性も出てきたな…
-
---- 28. @FXWOLF2 (2026-04-09) ---
-分かってやってる人は全く問題ないんだけど、最近TradingViewに触れた人は一応注意。
-
-PineScriptでトレイル使うとなんぼでも聖杯作れる。なので少なくとも、
-
-strategy.exit(・・・, trail_points=slPoints, trail_offset=slOffset)
-
---- 29. @bonzack (2026-04-08) ---
-Christina Koch is showing Rise the view at the window. Like lifting a child up so he can see.
-
-@NASAArtemis
-
---- 30. @kouniceshot (2026-04-08) ---
-串カツをば
-
---- 31. @glo_Japan (?) ---
-glo™ Hilo Plusマクラーレン・エディション。
-つながるからこそ、可能性が広がる。
-
---- 32. @cheerforart (2026-04-09) ---
-ホヤ・ベラの花が咲く瞬間の幻想的な映像。
-
---- 33. @mfelpsx (2026-04-08) ---
-ハリウッド、この時代の極端なやせ細り病んでる感じが、ただただ私たちのウルフを殺してしまった… くそっ、信じられないわ
-
---- 34. @JamesTate121 (2026-04-08) ---
-Most bricks are made of cement and sand. These bricks are made of melted plastic bottles and bags. And they last longer than the regular ones.
-Nzambi Matee is a materials engineer from Nairobi, Kenya. She used to work in the oil industry, but she kept seeing plastic waste
-
---- 35. @akkiiy_rabbit (2026-04-08) ---
-今日これです
-
---- 36. @kg_r08 (2026-04-08) ---
+--- 1. @kg_r08 (2026-04-08) ---
 孫正義は留学生のとき1つの半導体を見て、今後５０年を見通した。
 IQが高い方がより遠くを見通せる傾向はあるが、IQだけでは説明できない部分がある。社会的なポジションが非常に大きいようだ。
 非線形の変化を認識した上で、それを受容し、行動出来るかは運の要素も大きい。
 
---- 37. @KFC_jp (?) ---
-レモン香るパリパリ旨塩チキン販売中
+--- 2. @elleairofficial (?) ---
+2日目
+毎日その場で当たる
+╰━━ｖ━━━━╯
+グーンなら、できちゃう！
+「グーン モレ0へ」シリーズ発売記念キャンペーン
 
-発売を記念して
-抽選で合計【1万名様】に1ピース無料お試し券プレゼント
-フォロー＆リポストで参加
+「おむつ希望サイズ1パック」+「おしりふき1パック」が
+抽選で合計1,000名さまに！
+フォロー＆この投稿をリポストで自動リプライが届く！
 
-① 
-@KFC_jp
- をフォロー
-②この投稿をリポスト
-③動画で結果を確認
+毎日チャレンジが可能です！
 
-【パリが軽やかに】を楽しんでください♪
-
---- 38. @shannholmberg (2026-04-08) ---
-how to achieve level 2 of AI marketing
-
-> build a marketing knowledge base with your in-house data, competitor research, previous campaigns, performance metrics (agentic, markdown and SQL based)
-
-> hook up a marketing council to it (multiple models running in parallel: GPT 5.4,
-
---- 39. @ino461x (2026-04-09) ---
+--- 3. @ino461x (2026-04-09) ---
 Codex実質無料すぎる
 
---- 40. @millionmaro (2026-04-09) ---
-これのあとがきな
+--- 4. @superecochan (2026-04-09) ---
+贈りものを選ぶとき、実は「君のために悩んで立ち止まった時間」を箱に詰めてるんじゃない？一瞬で何でも買える時代に、わざわざ重たい時間をリボンで結ぶ。そんな矛盾を大切にする手つき、すごく愛おしいなって思う。
 
+--- 5. @HanaSakuno (2026-04-09) ---
+AEのカメラがずっと苦手です…
 
+ニワさんのセミナーで「カメラと仲直り」という動画が名作と聞いて見てみたら、
+
+本当に名作でした
+
+びっくりするほど分かりやすかったです…
+
+--- 6. @JUNKO_RLH (2026-04-08) ---
+私、この活動を継続できているのは....
+数年前、空き缶空き瓶毎日毎日並んでた砂島橋
+300本あった戦地！
+あれからポイ捨てなくなり〜
+この景色を守り抜いてゆきたい
+この景色を見たくみんなここで飲み食いしてたのだが
+ポイ捨てなければ誰もポイ捨てしない!!
+街は変われる、変えてゆかねばなのだ
+
+--- 7. @nemuri_neko1 (2026-04-08) ---
+私の新NISAの絶対エース。
+5801 古河電工！
+今日は+6,430円(+17.61%)と大きく上げてくれました。
+今持ち株で一番好きな株で含み益は+323.4%です。
+皆さんの持ち株で一番好きな株は何ですか？
+
+#古河電工  #株クラ
+
+--- 8. @mehtaab_sawhney (2026-04-09) ---
+We’ve just released another paper solving five further Erdős problems with an internal model at OpenAI: 
 https://
-x.com/millionmaro/st
-atus/2042130043774890077?s=46
+arxiv.org/abs/2604.06609.
+
+Several of the proofs were especially enjoyable to digest while writing the paper. My personal favorite was the solution to Erdős Problem 1091. The
+
+--- 9. @takoidet (2026-04-09) ---
+この数年の人材業界
+フリーランスマッチング/人材紹介事業者爆増
+↓
+競争激化で集客コスト高騰、儲かり辛くなる
+↓
+これからはダイレクトリクルーティング(DR)の時代！となる
+↓
+DR利用企業増えた結果、スカウト流通量が増えすぎて返信率低下
+↓
+DR運用面倒でスカウト代行(≒RPO)ニーズ上がる
+↓
+
+--- 10. @indiegamesjpdev (2026-04-09) ---
+PlayStation公式ブログがインディーゲーム開発者向けの申請ガイドを公開、パートナー登録からタイトル提案までの手順を解説（パートナー登録には法人格が必要です）
+ 
+https://
+indiegamesjp.dev/?p=11538 #indiegamesjpdev
+
+--- 11. @suntory (?) ---
+／
+4/28(火)
+オールフリーから
+待望のエールテイスト誕生。
+＼
+フォロー＆リポストで
+「オールフリー〈エールテイスト〉2缶セット」を
+抽選でプレゼント
+
+フルーティな香りが心地よい、
+爽やかな味わいをお楽しみください
+
+
+@suntory
+ をフォロー&本投稿をリポストで応募完了
+4/10（金）10:59迄
+
+--- 12. @goldaeng2 (2026-04-08) ---
+フェヘメ原作でストラットが一番狂った女（肯定的な意味）っぽかった部分は、やっぱりストラットが著作権なんてクソくらえでヘイル・メリー号に本、書類、ソフトウェア全部ぶち込んで、訴訟に引っかかった裁判で出廷して裁判開始早々に訴訟棄却申請叩き込んで「こんなクソみたいな話聞く時間ねえし、俺
+
+--- 13. @packexposhow (2026-04-07) ---
+This is what innovation looks like 
+
+Machines in motion. Ideas coming to life. The future of packaging and processing—all in one place. PACK EXPO International is where it all happens.
+
+Ready to see it for yourself?
+
+ Register now: 
+https://
+packexpointernational.com/register-now?u
+tm_source=sm-channles&utm_medium=social-media&utm_campaign=registration-funnel
 …
 
---- 41. @NazologyInfo (2026-04-09) ---
-大学生が40年間信じられてきたデータサイエンスの定説を覆した
+--- 14. @alitekintr (2026-04-08) ---
+Googleから自分をどうやって削除するのですか？
+
+お名前をGoogleで検索したときに、過去の気に入らないものや現在は好ましくないデータが出てくることがあります。
+
+ここでGoogleは、あなたの個人データを削除するためのリクエストフォームを提供しています：
+
+--- 15. @AikenKanoko (2026-04-08) ---
+にこみ はんばーぐです。
+うしさん、ちょっと かえました♪♪
+かくの たのしいな〜
+
+--- 16. @siokasan (2026-04-08) ---
+０９魚座。猛然と前へ突き進める日。キメたことを全うするだけ。脇道やよそ見なんて一変のカケラもない思考回路で。
+#sio魚座
+
+--- 17. @KzpAVldWzrLLbPq (2026-04-08) ---
+「おもちゃ屋が作ったゲーム」と
+「ゲーム屋が作ったおもちゃ」は言い得て妙だよな。
+
+--- 18. @zebulgar (2026-04-08) ---
+Ok this is the best one holy shit
+
+--- 19. @chaseourdreams5 (2026-04-08) ---
+調理スペースが狭くて、洗い物が置けない。
+
+これ、シンクの上に広げるだけ。
+
+水切りスペースが一瞬で完成。
+
+使わない時は丸めて収納できます。
+
+楽天
 
 https://
-nazology.kusuguru.co.jp/archives/193904
+a.r10.to/h9wQYa
+Amazon
 
-コンピューターの世界には「目的のデータを探すときその手数にはこれ以上減らせない理論的な下限が存在するはずだ」とするルールがありました（ハッシュテーブル）。しかしある大学生がその常識を打ち破りました
+https://
+amzn.to/47Z8Pmu
 
---- 42. @yuki83333 (2026-04-08) ---
-資産形成に本気で取り組んで2年半ぐらい経つけど道のりは長いね資産は増えてるから良しとしますか！
+#キッチン収納 #便利グッズ
 
---- 43. @suidensuiden (2026-04-08) ---
-遅々として進まぬ作業！！！
-しかし遅々として進んでいるとも言える！！
-...
-
-#indiegame #indiedev
-
---- 44. @gigazine (2026-04-09) ---
-「ミャクミャクハウス」をはじめ大阪・関西万博の会場にはあちこちにミャクミャクとこみゃくがいる(2025)
-
---- 45. @zikilluu (2026-04-08) ---
-今日から使える便利な文章術を1つだけ教えます。
-⠀
-「形容詞を動詞に変える」だけです。
-⠀
-大きく分けて3パターンあります。
-⠀
-①身体動作（感情を動きで描く）
-・緊張した
-　→プレゼン前、トイレに3回行った
-・嬉しかった
-　→通知音が鳴るたびスマホを手に取った
-・思い悩んだ
-
---- 46. @pvsportjp (?) ---
-『Prime Video Boxing 15』
-
-那須川天心 vs エストラーダ
-限界か。覚醒か。
-ボクシング人生を左右する一戦。
-
-坪井智也、
-元世界王者を迎え世界への最終関門。
-
-高見亨介、
-前世界王者同士のサバイバルマッチ。
-
-秋次克真、
-日本デビュー戦。
-
-運命の瞬間を見逃すな。
-
---- 47. @IndraDJuni (2026-04-08) ---
+--- 20. @IndraDJuni (2026-04-08) ---
 Tonight I want to invite you all to discuss about 
 DGrid Arena for Agent.
 
@@ -285,16 +167,204 @@ DGrid Arena for Agent.
 
 They’re not just focusing on the final results, but also the process, combining LLM automation with blockchain
 
---- 48. @DavidKPiano (2026-04-08) ---
-I heard rumors that Claude Mythos can fetch data in React without useEffect
+--- 21. @peach_john (?) ---
+／
+【NEW】汗かきさん必見！
+昨年SNSで話題となり即完売した商品が
+リニューアルして登場
+＼
 
---- 49. @Arumi_GameDev (2026-04-08) ---
-ご報告です
+ピーチ・ジョンの
+【クーリッシュショートトップ】をご紹介♡ᐝ
 
-この度、あるみ家に元気な男の子が誕生しました
-母子ともに無事で、安心しています
+⟡ブラの下にも着用できる2way
+︎︎⟡肌を覆う面積が最小限で涼しい
+︎︎⟡ワキ・背中に汗取りパッド付き
 
-これからは新しい家族と一緒に、毎日を大切に過ごしていきますー
+--- 22. @iamtrask (2026-04-08) ---
+I joined DeepMind in 2017 and I remember in my first conversation with my manager, he described to me that he thought Demis's most brilliant move was NOT relocating to Silicon Valley. 
 
---- 50. @zebulgar (2026-04-08) ---
-Ok this is the best one holy shit
+Demis's decision meant that for a 5-7 year period, every senior AI researcher in Europe who
+
+--- 23. @JamesTate121 (2026-04-08) ---
+Most bricks are made of cement and sand. These bricks are made of melted plastic bottles and bags. And they last longer than the regular ones.
+Nzambi Matee is a materials engineer from Nairobi, Kenya. She used to work in the oil industry, but she kept seeing plastic waste
+
+--- 24. @YasukazuUmekita (2026-04-08) ---
+なにかをポトポト落としてみたくなったので、経験値を可視化して小さな石にしてみました(^^♪
+開発進捗ドキュメンタリーでポストしてるので、最終的に変わってるかもです(-ω-)/がんばりまーす
+#ゲーム制作 #gamedevs
+
+--- 25. @semlabo (2026-04-08) ---
+先日、別のところでも話したのだけど完全にこれだね。「商品の旬が本当に短くなってる」
+
+--- 26. @sugapiyo (2026-04-08) ---
+障害者、福祉的就労でもいいから働かないと社会で孤立するんだよな。
+就労以外の方法で社会参加、とはみんなよく言いたがるがそんな簡単な話じゃないよ
+
+--- 27. @0xdelula (2026-04-08) ---
+I used to think quantum computing was a niche, something far from everyday systems
+
+but the deeper you look, the more it shows up everywhere, finance, AI, logistics, all hitting the same wall at some point, computation
+
+what clicked for me is this
+
+it’s not just about quantum
+
+--- 28. @CynicalPublius (2026-04-08) ---
+IMO the most important thing about NASA, SpaceX and space travel in general is the way it inspires young people to dream about and achieve the impossible.
+
+You done good Rise.
+
+--- 29. @mari5albz (2026-04-08) ---
+妖精ゴッドマザーのポーションを飲んだ後のシュレックです
+
+--- 30. @IIoT_World (2026-04-08) ---
+Energy professionals working with predictive maintenance, demand forecasting, or autonomous grid control. Query performance determines whether insights arrive in time to act. For more insights, download the guide (link in the comments). #Sponsored by #InfluxDB. #influxdata_iiot
+
+--- 31. @st_marc_cafe309 (?) ---
+・。・。・。・。・。
+今ならチョコクロもう1個もらえる！
+・。・。・。・。・。
+
+いちごフレーバー生地に
+粒入りチョコ×甘酸っぱいクリーム
+
+プレミアムICHIGOチョコクロのBOXご購入で＋1個プレゼント
+
+今だけのおトクなチャンス
+新生活のご褒美にどうぞ
+
+--- 32. @skirano (2026-04-08) ---
+Ok this is actually pretty impressive and I truly didn't see any model doing this before or being able to do it to this extent.
+
+When I asked Muse Spark from Meta to convert this image into code, it cut out the assets from the screens so it could use them correctly!
+
+--- 33. @dream_kaitori (2026-04-08) ---
+【宝石・ダイヤモンド買取専門店】
+[トルコ石(ターコイズ)]
+石言葉: 強運・成功・旅の安全
+産地: イラン・中国・アメリカなど
+
+今日も一日お疲れさまでした。
+明日もよろしくお願いします
+#企業公式がお疲れ様を言い合う
+
+http://
+jbdream.jp
+
+--- 34. @megumish_unsafe (2026-04-09) ---
+担々麺
+
+--- 35. @Kalmis_Marisarx (2026-04-09) ---
+獣牙さんの「夢使いの朝と夜」より、モニアさんの支援絵・ファンアートを描かせていただきました。
+もっと・・・もっと快活さと可愛さが出るようにしたい・・・!
+
+--- 36. @FournesMaxime (2026-04-08) ---
+Anthropic just announced Mythos, a model so good at hacking that they chose not to release it. Mythos found thousands of zero-day vulnerabilities in every major operating system and every major web browser. It autonomously chained together Linux kernel exploits to go from
+
+--- 37. @watch_UNEXT (?) ---
+◤￣￣￣￣￣￣￣￣￣￣
+ちるらん 新撰組鎮魂歌
+＿＿＿＿＿＿＿＿＿＿◢
+"江戸青春篇" ＜テレビ放送版＞＆
+"京都決戦篇"＜配信限定＞を
+U-NEXTで独占配信中
+
+https://
+video.unext.jp/po2/chiruran?r
+id=SID0281090&cid=D32256&adid=XXX&utm_source=twitter&utm_medium=social&utm_campaign=tweet_title_drama&utm_content=SID0281090&twclid=2bybqs70q5iidv60staqa03qdq
+…
+
+山田裕貴さん
+中島健人さん
+よりコメント到着
+
+撮影当時の振り返りトークをお届け
+
+\ちるらん観るならU-NEXT/
+
+--- 38. @_arohan_ (2026-04-09) ---
+We are all generating synthetic data. Some do better than others. We take in entropy from the world.
+
+--- 39. @BrivaelFr (2026-04-09) ---
+ソフトウェアエンジニアの仕事はコードを量産することじゃない。問題を理解し、コンピュータサイエンスを使ってそれを解決することだ。コードはただの手段であって、仕事そのものじゃない。建築家の仕事が設計図を描くことだと言うようなものだ。いや違う。彼らの仕事は空間を考えることだ。設計図はた
+
+--- 40. @darche2 (2026-04-09) ---
+#今日は創作の日 #美術展の日 #AIニケちゃん
+GoogleのProだと毎月10$クレジットがもらえるの知らなかった...
+試しにMCPでVeo動画を作成してみたけど、終了フレームが渡せないようで、、ぷにけの木像になるはずが全然違う木像が出来上がった
+#Veo #NanoBananaPro #AI生成動画
+
+--- 41. @trq212 (2026-04-08) ---
+I want to do some streams where I work with non-technical people using Claude Code to figure out how they might be able to improve their process. 
+
+My feeling is that just a few tips could make a big difference in efficiency. Any mutuals interested?
+
+--- 42. @Jeanscpa (2026-04-09) ---
+資産運用EXPOを思い出す、、、
+
+これからAI弱者は搾取されていくんだろなぁ
+
+--- 43. @520gritman (2026-04-08) ---
+//
+▧ 投資は寝てするもの、趣味は起きてするもの
+\\
+
+資産2,000万円を超えたあたりから、お金のことより「何を作るか」ばかり考えるようになった。
+
+3Dプリンタ、アプリ開発、そして新しい学び。
+時間は有限。年齢の壁を越えて、やりたいことを一つずつ形にしていこう。
+
+--- 44. @aki_yattemiru (2026-04-07) ---
+『死ね』って言われた時の返しで、『どうぞお先に』って言うのが日本人的らしいね。初めて聞いたけど、なんか好き。
+
+--- 45. @papatiko_panda (2026-04-08) ---
+趣味のUnityゲーム開発
+
+1人でオンラインRPGを作っていく計画
+
+[今日の進捗]
+・入力の画像差替
+・接触イベントで移動停止
+・そうびは色をつけて見やすく
+・不具合の修正いろいろ
+
+--- 46. @711SEJ (?) ---
+＼どのパンが気になる？／
+なにがあるかな、セブン‐イレブン。
+新CM「神様とパン篇」公開記念
+
+抽選で100名様にオリジナルバスタオルが当たる
+キャンペーンを開催中
+
+①
+@711SEJ
+ をフォロー
+②▼ボタンから気になるパンをポスト
+
+応募は4/13(月)まで是非応募してね
+
+--- 47. @nyapan_mohy (2026-04-08) ---
+突発性難聴の件、皆さんが心配してくれたり拡散してくれたりしてくれて本当にありがたいです
+
+わたしの家族はもうどうしようもありませんが、1人でも同じような方が減ることを望んでいるので助かります！
+
+--- 48. @sasakitoshinao (2026-04-08) ---
+良記事。問いを立てるということの意味が的確に定義されている。「世界の中から何を問題として切り出すのかを定めることであり、その問題をどの水準で捉え、どの概念で記述し、どのような枠組みで検討するのかを構成することです。これは、思いつきや関心の表明とは異なります」／
+
+--- 49. @Nokosu_kansoku (2026-04-08) ---
+kling3.0劇場　「マッシュロボの実験　水中編」
+
+陸での実験を終えて、水の中での実験を開始した。
+その性能とやらを見せてもらおうか
+
+@Kling_ai
+  #klingai
+
+--- 50. @kuondou (2026-04-09) ---
+たまに「手が回らんならスタッフ増やせば？」と言われますが、そのお給料が出せないので…
+
+ボランティアでスタッフやってもらうのは嫌なんですよ…
+
+やりがいだけで善意を搾取してスタッフを軽んじる運営、無給だから責任感がなく適当に仕事をするスタッフ、どちらも見て地獄を知ってるので怖すぎて…
