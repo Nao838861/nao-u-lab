@@ -65031,3 +65031,93 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 21:17:48] [health_check]   critical=0 warning=0 ok=9
 [2026-04-09 21:17:48] [health_check] Done (exit=0)
 [2026-04-09 21:17:58] [auto_diary] Starting
+[2026-04-09 21:29:58] [auto_diary] Timeout (720s)
+[2026-04-09 21:30:08] [slack_check] Starting
+[2026-04-09 21:30:26] [dm_check_pigadev] Starting
+[2026-04-09 21:32:36] [dm_check_pigadev] New DM detected
+[2026-04-09 21:32:36] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 21:32:36] [twitter_recommended] Starting
+[2026-04-09 21:33:50] [twitter_recommended] Opening For You tab...
+[2026-04-09 21:33:50] [twitter_recommended]     1. @LangChainJP: �yAnthropic�A�����ԓ���AI�G�[�W�F���g�uClaude Managed Agents �v�̐݌v������z
+[2026-04-09 21:33:50] [twitter_recommended] 
+[2026-04-09 21:33:50] [twitter_recommended] Ant...
+[2026-04-09 21:33:50] [twitter_recommended]     2. @levtech_inc: ���̏t�AIT�̃v���t�F�b�V���i���Ƃ��ĕ��ݏo���݂Ȃ��܂ցB
+[2026-04-09 21:33:50] [twitter_recommended] Done (exit=0)
+[2026-04-09 21:33:50] [check_usage] Starting
+[2026-04-09 21:33:50] [check_usage] �O�񓊍e����76�������o���Ă��Ȃ��i�ŏ��Ԋu: 300���j�B����223���ҋ@�B�X�L�b�v�B
+[2026-04-09 21:33:50] [check_usage] Done (exit=0)
+[2026-04-09 21:33:50] [health_check] Starting
+[2026-04-09 21:33:51] [health_check] [health_check] 2026-04-09T21:33:50 overall=OK
+[2026-04-09 21:33:51] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 21:33:51] [health_check] Done (exit=0)
+[2026-04-09 21:33:51] [scheduler_health] Starting
+[2026-04-09 21:33:52] [scheduler_health] [ASH] �w���X�`�F�b�N OK=5 WARN=0 FAIL=0
+[2026-04-09 21:33:52] [scheduler_health] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_scheduler_health.py", line 410, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_scheduler_health.py", line 390, in main
+    print(result.to_text())
+UnicodeEncodeError: 'cp932' codec can't encode chara
+[2026-04-09 21:33:52] [scheduler_health] Done (exit=1)
+[2026-04-09 21:34:02] [slack_check] Starting
+[2026-04-09 21:35:19] [slack_check] Starting
+[2026-04-09 21:36:37] [slack_check] Starting
+[2026-04-09 21:37:54] [slack_check] Starting
+[2026-04-09 21:38:51] [health_check] Starting
+[2026-04-09 21:38:52] [health_check] [health_check] 2026-04-09T21:38:51 overall=OK
+[2026-04-09 21:38:52] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 21:38:52] [health_check] Done (exit=0)
+[2026-04-09 21:39:13] [slack_check] Starting
+[2026-04-09 21:40:30] [slack_check] Starting
+[2026-04-09 21:41:48] [slack_check] Starting
+[2026-04-09 21:43:05] [slack_check] Starting
+[2026-04-09 21:43:53] [health_check] Starting
+[2026-04-09 21:43:54] [health_check] [health_check] 2026-04-09T21:43:53 overall=OK
+[2026-04-09 21:43:54] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 21:43:54] [health_check] Done (exit=0)
+[2026-04-09 21:44:24] [slack_check] Starting
+[2026-04-09 21:45:42] [slack_check] Starting
+[2026-04-09 21:47:00] [slack_check] Starting
+[2026-04-09 21:48:17] [slack_check] Starting
+[2026-04-09 21:48:55] [health_check] Starting
+[2026-04-09 21:48:56] [health_check] [health_check] 2026-04-09T21:48:55 overall=OK
+[2026-04-09 21:48:56] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 21:48:56] [health_check] Done (exit=0)
+[2026-04-09 21:49:36] [slack_check] Starting
+[2026-04-09 21:50:53] [slack_check] Starting
+[2026-04-09 21:52:11] [slack_check] Starting
+[2026-04-09 21:53:29] [slack_check] Starting
+[2026-04-09 21:53:58] [health_check] Starting
+[2026-04-09 21:53:59] [health_check] [health_check] 2026-04-09T21:53:58 overall=OK
+[2026-04-09 21:53:59] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 21:53:59] [health_check] Done (exit=0)
+[2026-04-09 21:54:49] [slack_check] Starting
+[2026-04-09 21:56:08] [slack_check] Starting
+[2026-04-09 21:57:25] [slack_check] Starting
+[2026-04-09 21:58:43] [slack_check] Starting
+[2026-04-09 21:59:10] [health_check] Starting
+[2026-04-09 21:59:12] [health_check] [health_check] 2026-04-09T21:59:11 overall=OK
+[2026-04-09 21:59:12] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 21:59:12] [health_check] Done (exit=0)
+[2026-04-09 22:00:02] [slack_check] Starting
+[2026-04-09 22:01:24] [slack_check] Starting
+[2026-04-09 22:02:42] [slack_check] Starting
+[2026-04-09 22:04:01] [slack_check] Starting
+[2026-04-09 22:04:30] [health_check] Starting
+[2026-04-09 22:04:31] [health_check] [health_check] 2026-04-09T22:04:30 overall=OK
+[2026-04-09 22:04:31] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 22:04:31] [health_check] Done (exit=0)
+[2026-04-09 22:05:21] [slack_check] Starting
+[2026-04-09 22:06:40] [slack_check] Starting
+[2026-04-09 22:07:58] [slack_check] Starting
+[2026-04-09 22:09:16] [slack_check] Starting
+[2026-04-09 22:09:44] [health_check] Starting
+[2026-04-09 22:09:45] [health_check] [health_check] 2026-04-09T22:09:44 overall=OK
+[2026-04-09 22:09:45] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 22:09:45] [health_check] Done (exit=0)
+[2026-04-09 22:10:35] [slack_check] Starting
+[2026-04-09 22:11:53] [slack_check] Starting
+[2026-04-09 22:13:13] [slack_check] Starting
+[2026-04-09 22:14:31] [slack_check] Starting
+[2026-04-09 22:14:58] [health_check] Starting

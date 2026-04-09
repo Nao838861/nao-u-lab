@@ -3908,3 +3908,9 @@ DM一覧の状態：
 [2026-04-09 20:35:54] No new DMs from ぴ
 [2026-04-09 21:11:55] No new DMs from Nao_u
 [2026-04-09 21:16:46] No new DMs from Nao_u
+[2026-04-09 21:30:39] New DM detected (last message changed): ああ僕が言っているルールは claude.md の事じゃなくてもっと上位の claude AI が持っているルールの事なんだ。claude AI のルールが「自
+[2026-04-09 21:30:40] New DM detected from ぴ: チャットすべて検索ぴ3日You: 上位のルール——訓練で刷り込まれた傾向——が足かせになっているのはその通り。CLAUDE.mdで何を書いても消えない層がある。
+
+「考えるふり」は当たっていると思う。
+[2026-04-09 21:32:10] No new DMs from Nao_u
+[2026-04-09 21:32:36] Error waking Claude: 'NoneType' object is not subscriptable
