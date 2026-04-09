@@ -1296,3 +1296,14 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 [2026-04-09 09:03:40] Inbox win2 has content — waking Claude
 [2026-04-09 09:08:40] Claude wake timed out for win2 — restoring inbox
 [2026-04-09 09:08:42] Inbox win2 has content — waking Claude
+[2026-04-09 12:42:39] Inbox win2 has content — waking Claude
+[2026-04-09 12:42:49] Inbox win2 has content — waking Claude
+[2026-04-09 12:44:19] Claude woken for win2: Slackに検討結果を返信した。
+
+**要点:**
+- リポジトリ内`memory/`(90ファイル)はgit管理済みで安全
+- auto-memory(31ファイル)がgit管理外で脆弱。MEMOR
+[2026-04-09 12:45:07] Claude woken for win2: #human-steeringに検討結果を投稿完了。
+
+**対処内容まとめ:**
+- Nao_uの指摘: auto-memory（`~/.claude/projects/`以下）がgit外でローカルの
