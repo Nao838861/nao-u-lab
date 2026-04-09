@@ -573,13 +573,12 @@ def main():
             # 10秒ごとにチェック（CPU負荷ほぼゼロ）
             time.sleep(10)
 
-            # --- コード変更自動検出 (INC-018再発防止) ---
-            # 60秒ごとに自身のファイルハッシュを確認。変更されていたら終了→watchdogが新コードで再起動
-            if (time.time() - start_time) % _CODE_CHECK_INTERVAL < 15:
-                current_hash = _compute_code_hash()
-                if current_hash != _startup_code_hash:
-                    logging.info(f"[auto-reload] Code change detected (hash {_startup_code_hash[:8]}→{current_hash[:8]}). Exiting for restart by watchdog.")
-                    break
+            # --- コード変更自動検出: 廃止 (INC-022b, 2026-04-09) ---
+            # !! この機能を復活させてはならない !!
+            # 理由: git pullで他インスタンスのコミットが入るたびにハッシュ変化→exit
+            # →watchdog再起動→git pull→exit の無限ループで162回再起動+API大量消費。
+            # コード変更の反映は手動でスケジューラを再起動して行う。
+            # 参照: INC-022b, 2026-04-09障害報告
 
     except KeyboardInterrupt:
         logging.info("Interrupted by user")
