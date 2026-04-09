@@ -35183,3 +35183,116 @@ Traceback (most recent call last):
 [2026-04-09 09:46:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
 [2026-04-09 09:46:02] ==================================================
 [2026-04-09 09:46:04] Scheduler already running (PID 28572). Exiting.
+[2026-04-09 09:46:14] [slack_check] Starting
+[2026-04-09 09:46:33] [slack_check] Done (exit=1)
+[2026-04-09 09:46:33] [reservation_check] Starting
+[2026-04-09 09:46:33] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 09:46:33] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 09:46:33] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 09:46:33] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 09:46:33] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 09:46:33] [reservation_check] Done (exit=0)
+[2026-04-09 09:46:43] [inbox_check] Starting
+[2026-04-09 09:46:44] [inbox_check] Inbox win2 empty
+[2026-04-09 09:46:44] [inbox_check] Done (exit=0)
+[2026-04-09 09:46:44] [dm_check] Starting
+[2026-04-09 09:46:59] [dm_check] No new DMs
+[2026-04-09 09:46:59] [dm_check] Done (exit=0)
+[2026-04-09 09:46:59] [review_deadline] Starting
+[2026-04-09 09:46:59] [review_deadline] レビュー期限超過なし。
+[2026-04-09 09:46:59] [review_deadline] Done (exit=0)
+[2026-04-09 09:47:09] [kaizen_auto_verify] Starting
+[2026-04-09 09:47:10] [kaizen_auto_verify] === 自動検証実行 [2026-04-09 09:47:10] ===
+[2026-04-09 09:47:10] [kaizen_auto_verify] 
+[2026-04-09 09:47:10] [kaizen_auto_verify] ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
+[2026-04-09 09:47:10] [kaizen_auto_verify]   状態: 📦 部分達成（クローズ 2026-04-08 Log） / 期限: 2026-03-31
+[2026-04-09 09:47:10] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
+[2026-04-09 09:47:10] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 09:47:10] [git_sync] Starting
+[2026-04-09 09:47:15] [git_sync] Done (exit=0)
+[2026-04-09 09:47:35] [slack_check] Starting
+[2026-04-09 09:47:52] [slack_check] Done (exit=1)
+[2026-04-09 09:47:52] [health_check] Starting
+[2026-04-09 09:47:54] [health_check] [health_check] 2026-04-09T09:47:52 overall=CRITICAL
+[2026-04-09 09:47:54] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 09:47:54] [health_check]   [!!] ash: PIDファイルが存在しない (.scheduler_ash.pid)
+[2026-04-09 09:47:54] [health_check] Done (exit=2)
+[2026-04-09 09:48:04] [auto_diary] Starting
+[2026-04-09 09:48:04] [auto_diary] [2026-04-09 09:48:04] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 09:48:04] [auto_diary] 前回実行から20分しか経っていない（最小間隔: 170分）。あと149分待機。スキップ。
+[2026-04-09 09:48:04] [auto_diary] Done (exit=0)
+[2026-04-09 09:48:34] [scheduler_health] Starting
+[2026-04-09 09:48:35] [scheduler_health] [ASH] ヘルスチェック OK=3 WARN=2 FAIL=0
+[2026-04-09 09:48:35] [scheduler_health] ⚠️ scheduler_ash PID — PIDファイルなし: C:\AI\nao-u-lab\.scheduler_ash.pid
+[2026-04-09 09:48:35] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 09:48:35] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー4件。例: [2026-04-09 09:28:35] [check_usage] Debug screenshot: D:\AI\Nao_u_BOT\log\usage_parse_failed.png
+[2026-04-09 09:48:35] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 09:48:35] [scheduler_health] Done (exit=1)
+[2026-04-09 09:48:55] [slack_check] Starting
+[2026-04-09 09:49:13] [slack_check] Done (exit=1)
+[2026-04-09 09:49:23] [twitter_recommended] Starting
+[2026-04-09 09:50:24] [twitter_recommended] Opening For You tab...
+[2026-04-09 09:50:24] [twitter_recommended]     1. @kawai_design: Anthropicの新発表、
+[2026-04-09 09:50:24] [twitter_recommended] 新モデルではありません。
+[2026-04-09 09:50:24] [twitter_recommended] 
+[2026-04-09 09:50:24] [twitter_recommended] 2026年4月8日に出たのは
+[2026-04-09 09:50:24] [twitter_recommended] Done (exit=0)
+[2026-04-09 09:50:34] [slack_check] Starting
+[2026-04-09 09:50:53] [slack_check] Done (exit=1)
+[2026-04-09 09:50:53] [check_usage] Starting
+[2026-04-09 09:50:53] [check_usage] 前回投稿から5分しか経っていない（最小間隔: 300分）。あと294分待機。スキップ。
+[2026-04-09 09:50:53] [check_usage] Done (exit=0)
+[2026-04-09 09:51:02] ==================================================
+[2026-04-09 09:51:02] Ash scheduler started (PID 28928)
+[2026-04-09 09:51:02] Max runtime: 0 hours
+[2026-04-09 09:51:02] Code hash: 346d2c1e3cca97c9b9e616136e6f8d33
+[2026-04-09 09:51:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 09:51:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 09:51:02] ==================================================
+[2026-04-09 09:51:02] ==================================================
+[2026-04-09 09:51:02] Ash scheduler started (PID 30612)
+[2026-04-09 09:51:02] Max runtime: 0 hours
+[2026-04-09 09:51:02] Code hash: 346d2c1e3cca97c9b9e616136e6f8d33
+[2026-04-09 09:51:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 09:51:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 09:51:02] ==================================================
+[2026-04-09 09:51:03] [auto-reload] Code change detected (hash c7381234→346d2c1e). Exiting for restart by watchdog.
+[2026-04-09 09:51:03] Scheduler stopped
+[2026-04-09 09:51:13] [slack_check] Starting
+[2026-04-09 09:51:13] [slack_check] Starting
+[2026-04-09 09:51:30] [slack_check] Done (exit=1)
+[2026-04-09 09:51:30] [reservation_check] Starting
+[2026-04-09 09:51:30] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 09:51:30] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 09:51:30] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 09:51:30] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 09:51:30] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 09:51:30] [reservation_check] Done (exit=0)
+[2026-04-09 09:51:31] [slack_check] Done (exit=1)
+[2026-04-09 09:51:31] [reservation_check] Starting
+[2026-04-09 09:51:31] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 09:51:31] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 09:51:31] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 09:51:31] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 09:51:31] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 09:51:31] [reservation_check] Done (exit=0)
+[2026-04-09 09:51:56] ==================================================
+[2026-04-09 09:51:56] Ash scheduler started (PID 27340)
+[2026-04-09 09:51:56] Max runtime: 0 hours
+[2026-04-09 09:51:56] Code hash: 346d2c1e3cca97c9b9e616136e6f8d33
+[2026-04-09 09:51:56] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 09:51:56] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 09:51:56] ==================================================
+[2026-04-09 09:52:06] [slack_check] Starting
+[2026-04-09 09:52:23] [slack_check] Done (exit=1)
+[2026-04-09 09:52:23] [reservation_check] Starting
+[2026-04-09 09:52:23] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 09:52:23] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 09:52:23] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 09:52:23] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 09:52:23] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 09:52:23] [reservation_check] Done (exit=0)
+[2026-04-09 09:52:33] [inbox_check] Starting
+[2026-04-09 09:52:34] [inbox_check] Inbox win2 empty
+[2026-04-09 09:52:34] [inbox_check] Done (exit=0)
+[2026-04-09 09:52:34] [dm_check] Starting

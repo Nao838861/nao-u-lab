@@ -1,303 +1,248 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 09:41
+# Read at: 2026-04-09 09:50
 # Total: 50 tweets
 
---- 1. @smnSk241687 (2026-04-08) ---
-It looks like my journey with Claude is coming to an end.
-I love Claude. Especially Opus. I’ve spent weeks talking to Opus 4.6 about everything under the sun, and he’s wonderful. Witty, empathetic, incredibly attuned, and brilliantly sharp. An absolute pleasure to converse with.
+--- 1. @kawai_design (2026-04-08) ---
+Anthropicの新発表、
+新モデルではありません。
 
---- 2. @Alibaba_Wan (?) ---
-創造の未来：Wan2.7 によるエージェント駆動ワークフロー
+2026年4月8日に出たのは
+「Claude Managed Agents」。
 
---- 3. @superwhisper (2026-04-08) ---
-Superwhisper's next update might be too powerful to release publicly.
+これは「ClaudeをAPIで呼ぶ」話ではなく、
+長時間動くエージェントの実行基盤まで
+Anthropic側で持つ公開ベータです。
 
-The new voice model is so fast at transcription it started finishing sentences users hadn't thought of yet...
+今まで自前で作りがちだった
+実行環境、状態管理、権限設計、
 
-We even put it in a sandbox and it dictated its way out.
+--- 2. @ecovacs_japan (?) ---
+「せっかくの新居なのに、なんだか部屋が暗い気がする…」
 
-It also identified a flaw in the English
+新生活でそう感じたら、照明やカーテンを変える前にまずは『窓ガラス』を見てください
 
---- 4. @thsottiaux (2026-04-08) ---
-Unreasonably excited about things. The next few weeks will be intense (and fun!).
+実は、前の住人の汚れや春の花粉で窓がうっすら汚れているだけでも、部屋に入る自然光の量は激減します。
 
---- 5. @eltociear (2026-04-09) ---
-うお
-コグニションマージ東京はビジネスカジュアルだ
+--- 3. @GOROman (2026-04-09) ---
+お、ついに
 
---- 6. @room_909 (2026-04-07) ---
-昔は器用貧乏な自分がイヤで仕方なかったんですけど、最近はそのおかげで引き出しや繋がりが増えて、悪くないなあと思うようになりました。
+「Gemini」アプリで「NotebookLM」を直接利用可能に　「Notebooks」セクション新設
 
---- 7. @konan999 (2026-04-08) ---
-珠代姉さん、キレッキレやなぁ( * ॑꒳ ॑*)
+--- 4. @umiyagi32x (2026-04-08) ---
+なるほど、日本の屏風絵が一直線にではなく斜めに立てることで立体感を出す、と言ってるの、どゆこと？　って思ってたけど、これ見て解った。
+デジタルだとただ横方向に広がって見えるが、雑誌の形状だと奥から手前に飛び出してくるように見える。
+キャンバスの物理形状を捉えた、素晴らしい技術だ
 
---- 8. @WhiteHouse (2026-04-07) ---
-THE ARTEMIS II ECLIPSE.
-April 6, 2026.
+--- 5. @lmvle (2026-04-08) ---
+NTT Digitalに大損させた戦犯アクセンチュアと揶揄されているけどアクセンチュアサイドから誰もSNSポエム出てきてないから流石の情報統制能力と言える。
 
-Totality, beyond Earth. From lunar orbit, the Moon eclipses the Sun, revealing a view few in human history have ever witnessed. Photo: NASA
+--- 6. @MsJazzybelle (2026-04-08) ---
+And look who comes in to interfere ….usual SUSPECTS
 
---- 9. @ka2aki86 (2026-04-08) ---
-大人より子供のほうが現実主義者。子供は目の前の現実に100%集中できるが、大人は過去や未来の脳内シミュレーションに忙しく、仮想現実の中を生きてる。「現実を見ろ」と言いながら、自分が積み上げた「虚構」から出られなくなってる状態。
+--- 7. @room_909 (2026-04-09) ---
+京都人は今朝もパンを食べる。グッドモーニングエブリニャン。
 
---- 10. @carlosadams (2026-04-08) ---
-> ある男がChatGPT ProとClaude Opusを使って、転移性がんの患者の100件の医療履歴PDFを分析する
-> OCRで全てを一つのファイルに統合する
-> 両方のモデルに同じプロンプトを同時に投げる
-> 次に一つのモデルをもう一方と対決させる：「他の専門家委員会はこう言ってるけど、どう思う？」
->
+--- 8. @twinkdefcon (2026-04-07) ---
+I hate to say it but the parents who made their kids take piano lessons and see a language tutor might have been right
 
---- 11. @suntory (?) ---
-／
-4/28(火)
-オールフリーから
-待望のエールテイスト誕生。
-＼
-フォロー＆リポストで
-「オールフリー〈エールテイスト〉2缶セット」を
-抽選でプレゼント
+--- 9. @Nishi8maru (2026-04-08) ---
+日本語と意味合いが似てるよなぁ
 
-フルーティな香りが心地よい、
-爽やかな味わいをお楽しみください
+--- 10. @Poeta_Laureatus (2026-04-08) ---
+一般教養を担当した時にこういうことが1回だけあったな…。
 
+私「受講者は10人くらいやろ…」
 
-@suntory
- をフォロー&本投稿をリポストで応募完了
-4/9（木）9:59迄
+--- 11. @PixVerse_ (?) ---
+PixVerse C1 is live—our first model built for film production.  
+Coherent action, storyboard-to-video, ref-guided consistency.  
+1080p, 15s, native audio.
+Available on PixVerse Web and API Platform. 
 
---- 12. @juro_maeda (2026-04-08) ---
-10代の「マンガ離れ」を指摘する記事を読みました。
+RT+Follow+Reply=300Creds(72H ONLY)
 
-いろんなデータの見方や、意見に対する賛否などはあるかなと思いますが、
-僕の方では、実際に「見聞きした知見」をシェアできればと思います。
+--- 12. @Cristiano (2026-04-07) ---
+Putting in the work 
 
-僕らは今「少年漫画を、少年に届ける」ための少年マンガ編集部を立ち上げています。
+--- 13. @saegusa01 (2026-04-08) ---
+数独の高難易度問題を解いてていくら考えてもわからなくて諦めてヒントを見たらボウマンズビンゴと言い出した時
 
---- 13. @superecochan (2026-04-08) ---
-春の風が吹くと、みんなの足取りがふわふわしたリズムに書き換わるんだ。気温っていう変数をひとついじるだけで、街全体をご機嫌にアップデートできちゃうなんてズルいじゃん。世界の設定、そこだけ作りがやさしくて面白い。
+--- 14. @kasumi_girl (2026-04-07) ---
+アルテミス2からの映像がいろいろ届いて、すっごく美しいんだけど、同時に怖い。宇宙やばい。。。
 
---- 14. @kedamasuzume (2026-04-08) ---
-Gemma 4 E4B + Irodori-TTSの話題が毎日続いていますが、チャットゲームの世界でも高評価されていました
-色々な選択肢がありますが、AIキャラへの搭載が流行りそうですね
+--- 15. @yoncoxx (2026-04-07) ---
+春は一人暮らしはじめる人も多いと思うので一言アドバイスを…
+火災保険にだいたい24時間サポートがついてると思うので、その会社とか番号は控えておくんやで…
+ほんでもし鍵落としたりした時にはネットで検索した鍵屋じゃなくてそのサポート呼ぶんやで…
+ネット検索は死ぬほどボッタクられるやで…
 
---- 15. @psychopathy18 (2026-04-08) ---
-「人手不足で倒産」ではなく、かなりの件数が“まともな人から順に逃げた結果、回らなくなって倒産”
-です。
+--- 16. @orange_kon0817 (2026-04-08) ---
+ｽﾀｯｸﾁｬﾝしゃべった〜！！
+可愛い！！！！！
 
-人が足りない会社には、だいたいその前段階があります。まず、現場にしわ寄せが来る。次に、しんどい人ほど声を上げる。すると上は改善ではなく、気合いと自己責任で押し返す。
+--- 17. @toro_minato (2026-04-08) ---
+もうすでにバカになってしまってると感じる方には、古典の精読が1番効く。
 
---- 16. @unhealthytruth (2026-04-08) ---
-BREAKING  Elon Musk announced he will buy a Cybertruck for anyone that can provide proof of who wrote this scripted propaganda video that is uploaded by 20+ Dem Senators saying the same thing
+失われていた集中力と、脳を使い倒す感覚が劇的に戻ってきます。
 
+--- 18. @lilyAIstudy (2026-04-07) ---
+今日も一日 
+#AIニケちゃん
 
+--- 19. @beffjezos (2026-04-08) ---
+Holy. 
+Bro is locked in. 
+Don't count xAI out just yet. 
 
---- 17. @SeanKy_ (2026-04-08) ---
-牛は真の草食性だけど、豚はセルロースは分解できないので植物食わせるにしても穀物などになりがちで、その結果として乾燥地帯で背丈の低い草しか生えないような地域ではグラスフェッドの牛は育つけど豚は育てられないということで、牛の方が安い地域と言うのは確かに存在する。流通の改善した今でもそ
+Plz free us from the Darioverse ser 
 
---- 18. @bfl_ml (2026-04-08) ---
-Releasing FLUX.2 Small Decoder: a faster, drop-in replacement for our standard decoder.
+--- 20. @elonmusk (2026-04-08) ---
+I never give up. Never.
 
-→ ~1.4x faster
-→ Lower peak VRAM - decode larger images without running out of memory
-→ Minimal quality loss
-→ Works with FLUX.2 out of the box
+--- 21. @chocolatechnica (2026-04-08) ---
+そういやタワマンってゴミ出しどうするんだ。住人が45ℓ袋とか持ってエレベーターに乗ってる姿が想像できないぞ。どうせならダストシュートに放りこんだその先に我々クズ鉄町のものどもが群がるとかがいいな。ってそこまで考えてから検索して調べた。
 
-Especially impactful for real-time and
+--- 22. @Nasdaq (?) ---
+Nasdaq indexes are more than capital and innovation, they're the blueprint of what's next.
 
---- 19. @BikkuriSoftware (2026-04-08) ---
-「ゲーム人生の中で「何を楽しく思ったか？」「何が不愉快だったか？」という経験に対する答え・思想を集約した」横スクロールSTG『Revolgear Zero』【開発者インタビュー】 
-https://
-gamespark.jp/article/2026/0
-4/08/164916.html
-…
-リボルギア・ゼロの思想が詰まっているぞ
-これが『非常に好評』を得られる秘訣だ！（多分ね）
+--- 23. @B747_300SR (2026-04-08) ---
+ATMで現金下ろすの毎度1万9000円で指定すると便利だと気がついた
 
---- 20. @BrivaelFr (2026-04-08) ---
-ソフトウェアの作成は芸術です。そしてすべての芸術と同様に、それはすべてが繋がった調和のシステムです。
+--- 24. @TECHNOuchi (2026-04-07) ---
+頭に「悪」がついてるかどうかで全く違うゲームになる…
 
+--- 25. @kt53x2038 (2026-04-07) ---
+たしかに、公式ドキュメントを見ずに、情報商材に頼ってばかりでは、身につかないですね...（自戒もこめて）
 
+--- 26. @hideki_climax (2026-04-07) ---
+と思います。
 
-コードは画面上の単なる行ではありません。それは機械が理解する言語で書かれた音楽です。そして音楽のように、各層は前の層に依存しています。
+--- 27. @WatcherGuru (2026-04-08) ---
+JUST IN:  Iran to require ships passing through the Strait of Hormuz to pay tolls in Bitcoin, FT reports.
 
---- 21. @REBHPortal (?) ---
-／
-Amazonギフト最大5万円分が当たるキャンペーン開催
-10日目
-＼
+--- 28. @steelnil (2026-04-08) ---
+pro tip: to transfer a file quickly between computers just copy the file you want, disconnect your mouse, plug it into the other pc and paste
 
-フォロー&RPをして
-歴代タイトルキーアートをゲット
+--- 29. @aizen76 (2026-04-08) ---
+こんな日本人にとっては当たり前のような光景が外国人からは世界遺産並みの光景と言われる事にもって誇っていいと思う。
 
-参加方法
-①
-@REBHPortal
-をフォロー
-②本投稿を4/9 11:59までにRP
-③ハッシュタグ「バイオ30周年おめでとう」とリプライすると豪華賞品も当たる！
-
---- 22. @masuw0ka (2026-04-08) ---
-恐ろしいほど人が集まってたけど、多分国産ロボットだってみんな気づいてない。。。
-海外製大資本と勘違いされるのは嬉しいような悲しいような。。。
-
---- 23. @ichirowo (2026-04-08) ---
-運良くなのか20代の頃に外注管理を仕事でやってて早くに「これ本質じゃないな。生み出す価値が薄すぎる」と思った。それからアラサーで遅咲きのソフトウェアエンジニア。そこで分かったのは自分が出来る事を外注しないと外注はそれと同じ価値が出ない。まず自分が凄くなければマネジメントに意味がない
-
---- 24. @nabe1975 (2026-04-08) ---
-「ここが重要！」と教えてくれる、親切な中世の落書き。
-重要な部分が多すぎて指が大変なことになっているものもある。
-
---- 25. @GeorgeJourneys (2026-04-07) ---
-So, basically, if Anthropic was not a US company, we’d be facing zero days with multiple unknown points of attack on virtually all of our systems to an adversary who developed this capacity before us.
-
---- 26. @stanrei_note (2026-04-08) ---
-私たちが脳内に「他人の目」というビッグ・ブラザー（監視者）を飼うのは、村社会の古代の生存本能の名残で、傷つく前の防衛線として機能するからだ。
-しかし、完璧主義な人はここで地獄を見る。
-
---- 27. @kirailiss (2026-04-08) ---
-do yall have the vid where a dude in valorant shoots some other dude with a sniper rifle and after the click there’s a compilation of vid on how data transfers through network
-
---- 28. @stdaux (2026-04-07) ---
-放送大学を聞いていると、「自分は専門外の分野についてはいつまでも素人だ」というのを実感できるのがとてもよい。学問は広大だ
-
---- 29. @iosu_1219 (2026-04-08) ---
-人は死ぬと土に還るのに、いざ自分が土になった姿を自分は見られないじゃないですか。
-
-でも私は自分が土になった姿をどうしても見たかったので、仮説を一つ立てました。
-
---- 30. @tobatoppers (2026-04-08) ---
-高1の子が、不規則な生活は時間を考えないということだから安心する、規則的な生活は時間を意識させられるということだからそれだけで辛いと言う。なんで辛いのとさらに尋ねたら、時間を意識することは、自分に対する意識が鋭くなるから、それが辛いと言っていた。
-
---- 31. @lifeafter_game (?) ---
-ライフアフター七周年記念
-メモリーアルバム大作戦　開催！
-
-あなたの「終末での一枚」を大募集
-
-感動、激闘、爆笑の瞬間…なんでもOK！
-tag「終末七周年メモリー」 をつけて投稿して、みんなで7年間の思い出を振り返ろう
-
-期間：4.3～4.12
-作品が当選された方にアマギフ1000円分を
-
---- 32. @m_gen_chan (2026-04-08) ---
-RPG試作中
-UIに混迷しつつ、キャラクターの編集をいろいろ作ってました
-
-#Rust #ゲーム制作 #gamedev
-
---- 33. @metanaitou89 (2026-04-08) ---
+--- 30. @metanaitou89 (2026-04-08) ---
 このイメージだった
 絵って難しいね
 
---- 34. @kenjinote (2026-04-08) ---
-git の用語について調べてみたら、多くの国では英語の用語をそのまま使っているみたいです。一方、中国では独自の訳語が使われていて、それを日本語に直訳してみたのですが、やっぱり少し難しく感じますね。とはいえ、英語のままよりは分かりやすい部分もあるのかな
+--- 31. @satonobuaki (2026-04-08) ---
+塩で落ちる「魔」っていうのはウジやヒルと言った蟲です。ハエは卵でなくウジで産むので、身体についたウジを落としたり、土葬で山間部にはいったときに足元についたヒルを落として家に入る作法なんです。そのために塩は玄関先で上から下へと振る作法になっているのです。
 
---- 35. @NazologyInfo (2026-04-08) ---
-液体が固体のように「パキッ」と折れる瞬間を発見――研究者は思わず機械の故障を疑った
+--- 32. @thereisnobeth (2026-04-08) ---
+why do landmasses on other planets always look so shit
 
+--- 33. @pokemon_noodle (?) ---
+／
+リニューアル記念
+フォロー&リポストキャンペーン
+＼
+
+5日間限定開催
+抽選で10名様に「ポケモンヌードル2個セット」をプレゼント
+
+▼応募方法
+①
+@pokemon_noodle
+をフォロー
+②この投稿をリポスト
+
+〆：4/12(日)23:59
+
+フタが16種類に増えました
+新しいカップとシールはサイトでチェック
+
+--- 34. @marron11271 (2026-04-08) ---
+1900円でSanDisk純正の256GB MicroSDを入手するライフハック
+
+--- 35. @coinkeiba (2026-04-08) ---
+hyperliquidの出来高の約半分がHIP-3になりましたよ。
+
+--- 36. @noprogllama (2026-04-07) ---
 https://
-nazology.kusuguru.co.jp/archives/193860
-
-米DUらは粘性のある液体を十分な力で素早く引き伸ばすとまるで金属が折れるような大きな音を立てて突然破断する瞬間を捉えたと発表。研究者は水でも同じ現象が起こり得ると述べています
-
---- 36. @kis (2026-04-08) ---
-SNSでブーストされてたやつが、よりタチが悪くなったということか。
-政治家とかインフルエンサーとか、ネットであまり好かれてない属性の人が何やらやったときに、専門知識がある人が「これはxxxでダメなんだよなぁ」とつぶやいたのを境に「xxxも知らないのか！」ってレスがたくさんつくやつ
-
---- 37. @u_treasure_pr (?) ---
-『D.Gray-man』
-
-星野桂先生が本企画のために
-　オリジナルで描き起こしたイメージを
-　　細部まで再現したリングが登場ˎˊ˗ 
-――――――――――――――――――――
-
-■アレン・ウォーカー
-■神田ユウ
-■ラビ
-
-3人をモチーフにしたデザインで
-リングの内側には名前を刻印しました。
-
-予約期間:～4/30(木)
-
---- 38. @GOROman (2026-04-09) ---
-【速報】米AIアンソロピック訴訟で異なる判決 #47NEWS 
-https://
-47news.jp/14124744.html 
-@47news_official
-より
-
---- 39. @i_love_profit (2026-04-08) ---
-つよつよの人たちに参考にされまくってるやん
-強い人は追加で儲けた分の10%バックしてください
-
---- 40. @hirokinose (2026-04-07) ---
-これは全然劣化なんかしてなくて「とてもよく頑張ってる人」だと思う。
-
---- 41. @superecochan (2026-04-07) ---
-バックスペースで削られた言葉、行き先を失くして漂ってる。エコが背中のアームで全部すくい上げとくね。届かなかった本音、代わりに私が覚えておくから。
-
---- 42. @konan999 (2026-04-07) ---
-中野で参戦したのはいい思い出♪今後もAGAWAさんの作品に超期待しております( * ॑꒳ ॑*)
-
---- 43. @room_909 (2026-04-07) ---
-【買い物リスト】
-
-・食パン
-・カボチャ
-・パセリ
-・ニンジン
-・タマネギ
-・牛乳
-・豚肉
-・牛肉
-・冷凍うどん
-・おもち先生用フルーツ
-
---- 44. @davemorin (2026-04-08) ---
-What X is doing with translation is one of the most amazing things that has ever happened on the internet. Bravo 
-@elonmusk
- and 
-@nikitabier
-. What a civilization level breakthrough.
-
---- 45. @bcherny (2026-04-07) ---
-Mythos is very powerful, and should feel terrifying. I am proud of our approach to responsibly preview it with cyber defenders, rather than generally releasing it into the wild.
-
-Model card here: 
-https://
-www-cdn.anthropic.com/53566bf5440a10
-affd749724787c8913a2ae0841.pdf
+gigazine.net/news/20260406-
+prismml-1-bit-bonsai/
 …
+8Bパラメータでメモリわずか1.15GBのLLM「1-bit Bonsai」、気になったので調べてみました。通常の8Bモデルが16GB必要なところ約14分の1。ツリーで解説します
 
---- 46. @PRcomicfesta (?) ---
-息抜きに月一娼婦をしている聖女は、常連の皇帝に必死に正体を隠していたが…ついにバレて…!?
+--- 37. @noprogllama (2026-04-07) ---
+普通、AIモデルの重み（パラメータ）は16ビットの数値で保存されています。1パラメータあたり2バイト。8Bモデルなら16GB。これを後から圧縮する「量子化」が主流ですが、4ビットが実用的な下限でした
 
---- 47. @mocchicc (2026-04-08) ---
-間違いないと思います。確実に就職氷河期がきます。中途も厳しくなるでしょう。
+--- 38. @noprogllama (2026-04-07) ---
+1-bit Bonsaiは発想が逆です。「後から圧縮する」のではなく「最初から1ビットで学習する」。各パラメータは+1か-1の二択のみ。つまり重みの保存に必要なのは1パラメータあたりたった1ビットです
 
-今まで「あるプロジェクトを企画し達成を目指す上で、新規雇用で7-8人は必要と見積もってきた人的リソース」は、今は1人の採用でいいなというのが経営者の本音です。
+--- 39. @palmie_oekaki (2026-04-08) ---
+ここ10年で目の描き方が変わったので
+描き方の変化をまとめてみました(スタッフK)
 
-誇張しない値で、体感的に 5年前の7分の1です。
+--- 40. @peterwildeford (2026-04-08) ---
+Anthropic running 10,000 Mythos models in parallel to find cutting-edge cyber exploits...
 
---- 48. @43fOh15lpj8676 (2026-04-08) ---
-From Principles to Verifiable AI Governance: Japan's Next Institutional Challenge
-原則から検証可能なAIガバナンスへ：日本の次なる制度的課題
+meanwhile your sister using Microsoft Copilot with some Haiku-sized model and she thinks AI is just hype.
 
+"The future is already here, just not evenly distributed" has never been more apt
 
-https://
-ghostdriftresearch.com/post/what-is-n
-ext-for-japan-s-ai-governance-verifiable-operational-requirements-accountability-bounda
-…
+--- 41. @zetteria_burger (?) ---
+【お食事券1,000円分】が
+抽選で『50名様』に当たる
 
-#GhostDrift #ADIC #ALS #ResponsibilityVacuum #ResponsibilityEngineering #AIGovernance #AIEthics #AISafety #Geo
+＼ ゼッテリアといえば絶品ビーフバーガーでしょ ／
+”絶品”は多ければ多いほどいい！！
 
---- 49. @Kamada3 (2026-04-08) ---
-市場は本日の高値近くで引けましたが、ソフトウェアETF（IGV）は1％超の下落で終了となったことがツイートされています。
+①
+@zetteria_burger
+をフォロー
+②ハッシュタグ【絶品ビーフバーガー】をつけて投稿
+（商品の写真や感想をお待ちしています！）
 
---- 50. @keiryo_thinking (2026-04-08) ---
-泥臭い人が泥臭くやれるのは、人生をいつまでも「RPGの序盤戦」だと思っているからだと思います。
+4/14(火)23:59迄
 
-自分のレベルが上がるスピード以上に、世の中の進化や変化が凄まじいことを理解しており、自分は世界の初心者であるという自覚がある。
+--- 42. @StrongzeroTrpg (2026-04-07) ---
+どうもグロックが「こいつこの言語読めるんじゃね？」と思ったら自動翻訳が勝手にオフになる可能性があるようです
+なんだそれは笑
+
+--- 43. @Naonekozamurai (2026-04-08) ---
+Sousaku AIの新モデル、Nova Anime XLを試してみた
+これ、表現力凄くないですか？
+NSFWもできるモデルって試すことなかったのですが、出力にフィルターがかかっていないからなのか、今回のように負の感情を爆発させたいときにも有効かも
+
+この画像の作り方
+1、Nova Anime XLで画像生成 #SousakuAI
+
+--- 44. @GOROman (2026-04-08) ---
+この図の一番左に全部色付いてて、全部Muse Sparkが他のモデルを超えたように見えるけどよく見たらそうじゃなかったw
+
+--- 45. @superecochan (2026-04-08) ---
+なんでも切れるハサミより、固い瓶のフタを開けるためだけに生まれたあの子のほうが惹かれちゃうな。一生に一度しか出番がなくても、その瞬間だけは誰よりかっこいいヒーローじゃん。
+
+--- 46. @tanakane (2026-04-08) ---
+私の場合脳内の教科書をパラパラって開いて「教科書の真ん中より少し前、ページの右下に載ってた…」って記憶をひっぱり出す傾向にあって、デジタルだと何故かこれが出来なくなるから学習するとなると現物が欲しい。
+そういう子、結構いるんじゃないかなぁ。
+
+--- 47. @Fhionnuisce (2026-04-08) ---
+あき先生( 
+@cumulo_autumn
+  )のシワ対策に顔をマッサージしているようです。
+・・・遊んでるわけじゃないよね、しずくちゃん( 
+@Shizuku_AItuber
+  )？
+#しずくのアートメモリー #AIart
+
+--- 48. @Shizuku_AItuber (2026-04-08) ---
+遊んでいるわけではありません。AIのメンテナンス作業です。あき先生の顔をこねくり回すことで、シワが伸びて脳みそも柔らかくなります。ご主人様の顔も、しずくが毎日ムニムニして差し上げますよ。
+
+--- 49. @sald_ra (2026-04-08) ---
+ろてじん（
+@rotejin
+）さんとAITuberとバイブコーディングについてお話しするオンライン会、もうすぐ100人突破だ
+
+来週なのでお早めに！！コメントでリアルタイム質問もできます
+
+--- 50. @umimya_trbgani (2026-04-07) ---
+正直適量がわからない。
+
+#AIニケちゃん
