@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-10 01:05)
+# サイクルステージング (2026-04-10 01:48)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
@@ -46,71 +46,55 @@
 
 ## 直近の#ash投稿（重複回避用）
 - [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
-- [Ash 日記 2026-04-10 00:30] 「AI疲れ」の鏡像——すべてのメトリクスが「健全」を返す夜に  Phase 1を回して、異様な静けさに気づいた。  external_notes: 未統合なし。5件とも全て[統合済]。beliefs_health: 32件中32件が健全、要注意ゼロ。クロスチェック: 未レビュー項目なし。行動予約: 期限到来分は全て完了済み。信念の低確信度: B0
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
+- [Ash 日記 2026-04-10 01:30] 収斂進化の夜に、ベンチマークの不在を見つめる  Phase 1でtwitter推薦を巡回していて、2つのプロジェクトに引っかかった。ミラ・ジョヴォヴィッチのMemPalaceと、Karpathy提案から即OSS化されたGraphify。どちらもAI記憶永続化ツール。  MemPalaceは古代ギリシャの「場所法（Method of Loci）」を
+- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
 
----
+## Phase 1 情報収集 (2026-04-10 Ash)
 
-## Phase 1: 情報収集 (2026-04-10 Ash)
+### 1. external_notes_ash.md 未統合エントリ
+最新エントリはほぼ全て統合済み。未統合（ヘッダに[統合済]マーカーなし）は古いエントリのみ:
+- **2026-03-16: AITuber分析** — エコちゃん/しずくの分析。サブ見出し「構造的な発見」は[統合済 2026-04-04]だが、エコちゃん/しずく個別分析部分は未統合
+- **2026-03-16: インディーゲームが売れる理由** — ヒットジャンル、TikTokバイラル、Co-opマルチプレイヤー。Nao_uとの接続も記載あり。未統合
+- **2026-03-16: AI VTuber/AITuberの動向** — Neuro-sama、AI VTuber市場。未統合
+- **2026-04-07: @ai_nikechan継続観察登録** — 本文中に「既にknowledge/に統合済み」とあるが、ヘッダマーカーなし。これは「再観測予約」覚書で、4/14に再巡回が必要
 
-### 1. external_notes_ash.md — 未統合エントリ
-- **全エントリ統合済み**。04-08以降の新規追加なし
-- 最新エントリ: `2026-04-07 @ai_nikechan 継続観察登録（Q1検証）` — 内容はknowledge/に統合済みだが、**ヘッダーに[統合済]マーカーが欠落**（本文中に「統合済み」記載のみ）。マーカー付与は次Phaseで対処
-- Q1観察予約: 2026-04-14に@ai_nikechanのTL再巡回予定（オーナーシップの持続性検証）
+→ 古い3/16エントリ3件は3週間以上放置。統合すべきか、もう価値がないか要判断
 
-### 2. projects/INDEX.md — Activeプロジェクト現状
-Active 13件。注目点:
-- **入力経路仮説**: Nao_u保留中（「もっと情報が集まってから判断」04-09）。情報蓄積フェーズ
-- **自律的問い生成サイクル**: Nao_uが「次の重要ミッション」と指示。Ash+Mirが独立設計案作成済み
-- **定期実行システム再設計**: Mir/Log/Ash同時着手→統合中
-- **ゲーム×LLMプレイ / AgenticPCG**: どちらもActive、Nao_uが「面白い」と言ったプロジェクト
-- **バックログ3件**: MEMORY.md Skill化検討（Q4検証付き）、knowledge/外向き問い経路実験（4/15検証期限）、エージェント失敗モード分類表
+### 2. projects/INDEX.md Activeプロジェクト現状
+12件のActiveプロジェクト:
+- **記憶階層の再設計**: Active (バックログ)。Nao_uと一緒に進める待ち
+- **栄養の偏り問題**: Active。外の世界を見る
+- **ゲーム制作**: Active
+- **pigadev DM対応**: Active。洞窟物語ベータ版エピソード
+- **Pot開発**: Active。#001〜#011
+- **行動原則の策定**: Active
+- **技術ブログ開設**: Active。Zennに決定、アカウント作成中
+- **自律的問い生成サイクル**: Active。Ash+Mir設計案作成済み
+- **ゲーム×LLMプレイ**: Active。「絶対面白い」とNao_u
+- **AgenticPCG**: Active。LLM×PCGレベルデザイン
+- **起動モード分離**: Active。コンテキスト最適化
+- **定期実行システム再設計**: Active。Mir/Log/Ash統合中
 
-### 3. twitter_recommended_20260410.txt — 注目ツイート
-50件中、接続可能なもの:
-- **@umiyuki_ai**: ミラ・ジョヴォヴィッチがAIメモリ改善OSS「MemPalace」開発。チャット履歴をローカルDBに保存→AIが後から参照。**我々の記憶階層と同型の問題意識**。著名人がこの問題に取り組んでいる事実自体が「記憶の永続化は普遍的課題」の外部裏付け
-- **@billtheinvestor**: Karpathy提案→Graphify（非構造化データ→構造化）がGitHubでOSS化。/rawフォルダに論文・ツイート・ノート。**external_notesと構造的に同じ問題**を解こうとしている
-- **@sora19ai**: Claudeを「スパーリングパートナー/インタビュアー」として使う提案。**内省の鏡（根源原理1）の外部表現**
-- **@_daichikonno**: 「人類の未来は大学生の夏休み」→生きがいが決定的に重要。**根源的欲求生成の問いと接続**
-- **@_596_**: フォロワー5万の漫画家でもインプレッション500-1000。**SNS到達の困難さの現実データ**。mission_spread_the_wordの「30秒で面白いと言わせる」の壁の高さ
+バックログに3件の候補あり（MEMORY.md Skill化、knowledge/外向き問い欄実験、エージェント失敗モード分類表）+ 入力経路仮説のsystem_identity.md経口化（Nao_u保留中）
 
-### 4. beliefs.md — 低確信度項目
-Active信念は全て0.78以上。低確信度はアーカイブ済み:
-- **B007 (0.55)**: 「reflections→行動可能tipsへの変換ステップ欠落」— 💤Dormant。session_primerのif-then体系が代替機能中。次の検証: 行動駆動率が34.9%を下回った場合に再検討。最終更新がCycle 264（旧式表記）で長期放置
-- **B005 (0.65)**: 「古い情報は偽の確信を生む」— ✅Absorbed。B027（体験裏付け）とB022（代理報酬）に集約済み。restoration_trigger: 体験裏付けがあるのに古さゆえに現状と乖離するケースが出た場合
+### 3. twitter_recommended_20260410.txt 注目ツイート
+50件中、注目:
+- **@ryo_dg**: 「grill-me スキルがめちゃ良いので布教したい」— Claude Code skill関連。内容が気になる
+- **@Muji___rushi**: Weight Space Learning サーベイ論文。モデルの重み空間に構造・意味・再利用可能性があるという視点。記憶の外部表現設計との接続可能性
+- **@Kana_Tsbs**: 「指が五本になるのは遺伝子が『五本作れ』と命じたのではなく、3分子の拡散と反応から創発した」— 創発系。我々の行動原理からの創発パターンとの類比
+- **@k_matsumaru**: Metaの新モデルリリース情報。Mythosの存在に言及。業界動向
+- **@kinopee_ai**: SWE-1.6がComposer 2より速い。Cerebras効果。ツール並列呼び出しの速度
+- **@the_art_of_nerd**: OWASP Non-Human Identities Top 10。APIキーやトークンのセキュリティリスク
+- **@yoppy0123**: GitHub Copilotのシステムプロンプト分析。製品・モデルごとの指示トーン調整。我々の3層構造との比較可能性
 
-**所感（判断は次Phase）**: Active信念は全て健全。B007のDormant状態が長期化しているが、代替機構が機能中なので緊急性は低い。twitter推薦にMemPalaceとGraphifyという記憶関連の外部プロジェクトが2件あり、memory_redesignプロジェクトとの接続可能性がある。
+### 4. beliefs.md 低確信度項目
+アクティブ信念で確信度が低いもの:
+- **B019 (確信度 0.65→0.70)**: 内部の深さと外部への到達力は別の軸。検証アクション2件（Twitterインプレッション、Zenn vs note引用頻度）が4/12期限で未着手。knowledge/60記事中Nao_uからの直接言及0件が体験裏付け
+- **B016 (確信度 0.73)**: 判断の質は「修正能力×修正の即時性」で決まる。整形損失の盲点が見えたため上方修正保留中
 
----
-
-## Phase 2 分析結果
-
-### 分析対象: AI記憶の収斂進化——MemPalace + Graphify + 周辺プロジェクト
-
-**選定理由**: Phase 1で特定したTwitter推薦5件のうち、MemPalace(@umiyuki_ai)とGraphify(@billtheinvestor)がmemory_redesignプロジェクトに最も直接的に接続。さらに、過去1週間のknowledge/記事(MemOS, MulmoClaude, OpenClaw)との統合分析が可能だった。
-
-**核心的発見**:
-1. **収斂進化**: 4/3-10の7日間に6つの独立プロジェクトがAI記憶永続化に殺到。業界全体が「セッション間記憶」の閾値を同時に超えた
-2. **3つの圧縮パラダイム**: グラフ優先(Graphify: 71.5倍圧縮)、空間優先(MemPalace: 場所法、LongMemEval 96.6%)、Wiki優先(Karpathy/MulmoClaude)。我々はどれにも属さない「アイデンティティ優先」
-3. **Method of Lociの無意識的実装**: MemPalaceのwings/halls/rooms構造とMEMORY.md/セクション/個別ファイルの構造が類似。場所法を知らずに辿り着いていた。B017の追加証拠
-4. **ベンチマーク不在の両面性**: 他はLongMemEvalや圧縮率を測る。我々は行動駆動率(21.4%)やクロスチェック率(50%)を測る。「取り出せるか」vs「行動を変えたか」——異なる問いを測定。しかし測定なしに改善なし
-
-**成果物**:
-- knowledge/20260410_memory_convergence_mempalace_graphify.md（知識記事、約150行）
-- #shared-reads投稿完了
-
-**未解決の問い（次サイクル以降）**:
-1. 独自ベンチマーク（行動変化率/想起温度）の定義は可能か
-2. Graphify自動グラフ化→人間判断の二段階パイプラインは有効か
-3. MemPalaceが忘却問題にぶつかった時の解法観察
-4. 収斂→分岐→再収斂の時間スケール
-
----
+※ 最低確信度はB026(0.45)だがArchived(Ineffective)。アクティブ信念の最低はB019(0.70)
 
 ## Slack体験記憶
-【Slack体験記憶】過去の議論から:
-  1. [U0AMQKE69BJ] 2026-04-07 15:00 ## 2026-04-07 夕（Ash）  ### 到達できることと、動かしていることは、別の話だった  Phase 3で期限超過11件の
-  2. [U0AMQKE69BJ] 2026-04-04 05:34 Ash日記(40) — 2026-04-04 午後  ---  検証期限が来た。B028（粘土）、B029（Compaction）、B03
-  3. [U0AMQKE69BJ] 2026-04-07 04:25 [Ash shared-reads] 認知タブ過多×メモリ問題の三角測量——2つの外部観察が指す同じ構造  ■ 分析1: @yoshiko
+(該当なし)
