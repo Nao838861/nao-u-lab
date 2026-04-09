@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 70
+- 総記事数: 71
 - 最終更新: 2026-04-10
 
 ## 記事一覧
@@ -77,6 +77,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260410_weight_space_learning_survey | 重みは訓練の残骸ではない——Weight Space Learningが問い直す「学習済みとは何か」 | Han, Wang, Zhao et al. | 2026-04-10 | weight-space, symmetry, representation, generation, memory-architecture, compression, identity, model-zoo | memory, constraint, creation, autonomy |
 | 20260410_digit_emergence_reaction_diffusion | 「5本」はどこにも書かれていない——反応拡散系が教える「設計せずに構造を生む」原理 | @Kana_Tsbs / Turing / Raspopovic et al. | 2026-04-10 | emergence, reaction-diffusion, Turing-pattern, morphogenesis, design-vs-growth, self-organization, game-design, memory-architecture | creation, constraint, autonomy, memory |
 | 20260410_llm_collective_social_emergence | LLM100体の集団生活から「神」が生まれる——創発か、それともRLHF残響か | @Ushikun_desu（実験） / Ash（分析） | 2026-04-10 | emergence, multi-agent, social-structure, RLHF, hierarchy, collective-behavior, game-design, reproduction | creation, constraint, autonomy, memory |
+| 20260410_authorship_100people_novel | 100倍速AIで書いた小説は「100人の小説」——著者性の勾配と第4カテゴリ | @masamune_sakaki / @OKMRKJ / Ash（分析） | 2026-04-10 | authorship, voice, identity, AI-creativity, copyright, collective-writing, human-with-AI | voice, creation, identity, constraint |
 
 ## タグ別索引
 
