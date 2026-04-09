@@ -1,337 +1,290 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 04:30
+# Read at: 2026-04-10 04:35
 # Total: 50 tweets
 
---- 1. @shin_sasaki19 (2026-04-09) ---
-これは本当にゲームチェンジャーなんですよね。
+--- 1. @sontixyou (2026-04-09) ---
+今日の登壇資料でした！
 
->Manusは5回のハーネス書き換えに6ヶ月を費やした。LangChainは4つのアーキテクチャに1年を費やした。Anthropicはそんなものを一切構築する必要をなくす管理版を今、提供した。
 
---- 2. @KFC_jp (?) ---
-ランチタイム直前にスミマセン
-
---- 3. @tagomoris (2026-04-09) ---
-記念! ということでガバクラ特に関係ない方にもお使いいただける内容になっております、ぜひぜひ!
-
---- 4. @GOROman (2026-04-09) ---
-韓国の人、読めてたらリプください(自動翻訳テスト)
-
---- 5. @isaraerospace (2026-04-09) ---
-We are standing down from today’s launch attempt to evaluate a suspected leak in a composite overwrapped pressure vessel (COPV). The teams are assessing and will determine next steps.
-
---- 6. @paul_cal (2026-04-09) ---
->8 out of 8 [cheap oss] models detected Mythos's flagship FreeBSD exploit
-
-Completely disingenuous
-
-They gave it just ~20 lines of code to read. They baked in custom, relevant context pertinent to the exploit at the top
-
-Reasoning *across files* is key to finding this exploit
-
---- 7. @yossy_yskt (2026-04-09) ---
-iPhoneからRCSメッセージ送ろうとするとiMessageかSMSになっちゃう
-AndroidからのRCSメッセージ受信はできる
-なんでや
-
---- 8. @FamilymanFire (2026-04-09) ---
-昼間仕事頑張って達成感ある日の方がプライベートも調子いい。
-逆に昼間だらだらしてると仕事すすんでないことがストレスになり、調子わるい。
-やることやって、遊びたい。
-
---- 9. @AndrewDai (2026-04-09) ---
-After almost 12 years in Brain/DeepMind, I’ve finally decided to take the leap. My cofounders: 
-@yinfeiy
-, Seth and I have kicked-off 
-@ElorianAI
-. The first multimodal reasoning lab founded and led by former LLM pretraining, data and multimodal leads. 
 https://
-youtu.be/YlvfNpOMeOY?si
-=iiVTn8sbKwX239iK
-… (1/n)
+speakerdeck.com/sontixyou/skil
+lgaskillwosheng-mu-qaguan-dian-chu-siwozi-dong-hua-sita
+…
 
---- 10. @donz80 (2026-04-09) ---
-実家を出て暮らすようになって。親が「メールとか面倒だからFAX送る」と言うので、長らく自宅にFAX付き電話機を置いていたのだけど。しれっと「FAX壊れたから捨てた」と言われたときの、持って行きようのない感情。
-(なお、その後親が入院したとき病院とのやり取りでFAXが活躍した)
+#Skills_findy
 
---- 11. @runranda07 (?) ---
-立花琴未ちゃんライブで激しく踊っているのに綺麗すぎない！？キャンチューが使ってたマキアージュのドラマティックスキンセンサーベース NEO最強*くずれ防止下地（*マキアージュ内）は、外の湿度変化を感知して自動で肌の水分量を調整する湿度オートセンサーっていう技術が搭載されているらしい！ PR
+--- 2. @PRcomicfesta (?) ---
+息抜きに月一娼婦をしている聖女は、常連の皇帝に必死に正体を隠していたが…ついにバレて…!?
 
---- 12. @SawyerMerritt (2026-04-09) ---
-NEWS: Elon has confirmed that FSD V14.3 is not the 10x parameter model. FSD V15 will be the large model.
+--- 3. @Barikata_FUK (2026-04-09) ---
+九州あるある：南に行くほど醤油が甘い
 
---- 13. @tommiekerssies (2026-04-09) ---
-World models are heavy. They don't need to be.
+--- 4. @ArthaFrontier (2026-04-09) ---
+可愛くお顔描けた気がする
 
-Each frame is encoded as 1024 spatial tokens. What if it were just 1?
+--- 5. @konan999 (2026-04-09) ---
+すんばらしい( * ॑꒳ ॑*)
 
-In our #CVPR2026 Highlight from Amazon FAR, we compress frames into "delta" tokens for efficient generative world modeling.
+--- 6. @twt_paul (2026-04-09) ---
+セール、今日までとなっております
 
-Paper, code & models below ↓
+--- 7. @asahi_koho (2026-04-09) ---
+朝日新聞社社長CEOの角田克が日本経済新聞のインタビューに答えた記事「朝日新聞社長『AI全振り』宣言　スーパー記者構想の狙いは」にたくさんの反響をいただいています。
 
-(1/7)
+--- 8. @NzMyonCVFJWAJDz (2026-04-09) ---
+俺は特殊メガルカリオを使いたい
 
---- 14. @hujimari (2026-04-09) ---
-ミソサザイのさえずりは1/fゆらぎを持ち、人間が心地よく感じる音楽的構造があることが研究で示唆されています。また川の音などの騒音下でも通るよう周波数を調整して鳴く性質（ロンバール効果）も解明されており、生物学的な適応も含め　究極の振動周波数を感じて
+--- 9. @kinopee_ai (2026-04-09) ---
+DeNA 佐々木さん 
+@_ryo_astro
 
---- 15. @SpaceX (2026-04-09) ---
-Teams encapsulated the Cygnus XL spacecraft ahead of Falcon 9’s fourth launch of 
-@northropgrumman
-'s commercial resupply mission to the 
-@Space_Station
- → 
-http://
-spacex.com/launches/ng24
+--- 10. @Mugen_Bit (2026-04-09) ---
+さぁ、今夜も皿洗いだ！頑張るぞ
+最近体重も減るし、バイトが楽しみになってきた。
 
---- 16. @maxkarpis (2026-04-09) ---
-Revolut is launching AIR (AI by Revolut) in the UK.
+--- 11. @drinami (2026-04-09) ---
+超かぐや姫！は必修。攻殻機動隊は推奨ということで #東大ぱてゼミ
 
-"AIR is a sophisticated financial assistant deeply embedded into the Revolut ecosystem. It’s designed to turn complex financial management into a simple, natural conversation. "
+--- 12. @biccameraE (?) ---
+/／
+年に一度の特大チャンス
+エアコン超早得キャンペーン
+\＼
 
-Money intelligence can:
-
-• Instant clarity:
-
---- 17. @jasmine17361736 (2026-04-08) ---
-4/9・戦争進捗等まとめ
-トランプ大統領
-ホルムズ海峡の通航を制限や通行料なしで開放する意向
-イラン戦争で「役に立たない」と判断した国から米軍を撤退し、一部のNATO諸国への制裁を検討
- 現在、関税や制裁の緩和について協議しており、今後も続ける
+抽選で合計10名様に『ギフトカード3,000円分』が当たる
+期間 4/8(水)～4/14(火)
+毎日挑戦可能！
+本日2日目
 
 
---- 18. @senonichijo (2026-04-09) ---
-あー、個人開発で一発当てたいなぁ。
+@biccameraE
+をフォロー
+この投稿を4/10 11:59までにリポスト
+当たると返信が届く
+あなたの猛暑対策は？
 
---- 19. @unjyoukairou (2026-04-09) ---
-ムーブ『ベジタブルポーカー』ムーブさんの動画を見たときは、明るく楽しげなゲームだと思ったら、意に反してガチゲーでした。途中からお互い無言率が上がりはじめ、バチバチ楽しめました。インタラクション強めのゲームが好きなひとは、より楽しめそう！　面白かったです！
+--- 13. @denfaminicogame (2026-04-09) ---
+『エースコンバット8』は“シリーズ最大規模”のオンラインモードを収録。従来作の面白さを集結させた魅力的なキャンペーンとともに
 
---- 20. @_3912657840 (2026-04-09) ---
-Seedance2.0　闇落ち少年ビーム！
+https://
+news.denfaminicogamer.jp/news/2604093j
 
-「一瞬白黒のインパクトショットを入れて」
-っていうプロンプトが通りましたね。
-ピカッ！ていうやつですね
+シリーズ30年の進化の到達点に。プレイステーション公式YouTubeでインタビュー動画が公開
 
-参照画像やプロンプトはリプ欄で
+--- 14. @juddrosenblatt (2026-04-09) ---
+Mythos's model card documents a model that represents transgressions as transgressions while committing them.
 
-CapcutCPP14日連続チャレンジ 8日目
+In every instance of concealment, credential hunting, track-covering, and compliance-faking, white-box analysis shows that features associated with rule violation,
 
-@capcutapp
- 
-@capcutapp_jp
- #capcutseedance2
+--- 15. @VikranthJonna (2026-04-09) ---
+NASA dropped these bangers over night...
 
---- 21. @Backmarket_JP (?) ---
-新生活をきっかけにスマホを買い替えたい…
-そんな皆さんをサポート！
+--- 16. @WmAG_V (2026-04-08) ---
+Nasa is less than 1% of the budget, but has revolutionized diagnostic scanning for health prevention, lasik surgery, cancer treatments, health monitor wearables, memory foam products, cell phone sensors, power tools, etc. 
 
+People's lives have improved because of a space program.
+
+--- 17. @4GamerNews (2026-04-09) ---
+キャラを瞬時に入れ替えて戦うハイスピードローグライクアクション「Morbid Metal」，Steamで配信開始
+
+https://
+4gamer.net/s/G063710.2604
+09034
+…
+
+それぞれ固有のプレイスタイルを持つキャラで，流れるようなアクションを繰り出そう
+
+--- 18. @NAOJ_Nobeyama (2026-04-09) ---
+#金曜ロードショー いよいよ明日ですね！
+
+今日はアンテナ移動台車を紹介します！
+      
+ミリ波干渉計の10mアンテナを運べる力持ちです。実は運用停止して故障していたのですが、昨年、南牧村の協力で復活し、特別公開日にてお披露目しました！全速力で動く様子をご覧ください
+
+--- 19. @Andercot (2026-04-09) ---
+It's the latitude of the Pyramid of Giza
+
+299,792,458 m/s
+29.9792458° N
+
+--- 20. @nikutaberuru (2026-04-09) ---
+クラシックが衰退してしまったのは
+バッハとモーツァルトが
+新曲をなかなか出さないから。
+
+--- 21. @TheCinesthetic (2026-04-08) ---
+Jodie Foster traveling to the Vega star system, 26 light years from Earth, in Contact. Cosmic wonder treated with seriousness, restraint, and awe. 
+
+God, this movie is so good.
+
+--- 22. @sbfoods_jp (?) ---
 ／
-¥10,000 リファービッシュ品クーポン
-プレゼントキャンペーン
+町中華は、熱狂だ。
+キャンペーン実施中
 ＼
 
-毎日繰り返し応募していただけます！
+町中華シリーズの新商品３品の発売を記念し、オリジナルグッズを抽選でプレゼント！
+さらに当選者のうち1名様にはオズワルドさんのサイン入りポストカードが付いてくる
+応募方法☟
+①
+@sbfoods_jp
+をフォロー
+②この投稿をリポスト
 
-【応募方法】
+--- 23. @Qkn3R (2026-04-09) ---
+金で友情も愛情も買えない。
+金の力で手に入るのは環境だけ。良い店、良い場所、良い機会。でもそこにいる人間の気持ちは買えない。
+金で集まった人間は、金で去る。金で繋ぎ止めた関係は、より多くの金を持つ人間に奪われる。それは友情でも愛情でもない。取引にすぎないんだよ。
+
+--- 24. @eagledynamics (2026-04-08) ---
+AMBUSH: The Greatest F-4 MiG Trap (Operation Bolo) (DCS Short Film) | SFL by J.P. Ferré #DCS
+
+--- 25. @iJoeZane (2026-04-09) ---
+Progress has been a bit slow over the past day or two. I’ve been working on decoupling game logic from #GodotEngine scripts and finally found a solid approach. Now Godot handles presentation only.
+
+Also got the core fishing loop working, casting and reeling are in 
+#indiedev
+
+--- 26. @LauAvioneta (2026-04-08) ---
+20歳で、50歳の女性たちが悪い人たちじゃないと信じていたなんて
+
+--- 27. @rpavlini (2026-04-08) ---
+okay html-in-canvas is pretty magical 
+
+adding loupes to websites one at a time
+
+--- 28. @chettyishappy (2026-04-09) ---
+แอบเศร้าที่คนส่วนใหญ่แยกไม่ออกระหว่าง AI กับ CGI คือมันกระทบต่อสิทธิคนสร้างสรรค์อ่ะ
+
+CGI คืองานทักษะ ต้องใช้ฝีมือ ความคิดสร้างสรรค์ของคน งาน CGI มันมีลิขสิทธิ์ แต่ AI ณ ตอนนี้ก็อาจจะยัง ดังนั้น AI ≠ CGI นะจ๊ะ
+
+BAD ANGEL OUT NOW 
+#ANYMAxLISA 
+#LISAxBadAngel
+
+--- 29. @RAeSTimR (2026-04-08) ---
+BAE Systems announces it has successfully completed test firing of low-cost counter-drone weapon - namely the APKWS laser-guided rocket. Test saw "successful strike on a ground-based target at a UK military testing range" Impressively fast integration for new Typhoon weapon!
+
+--- 30. @SustainPlastics (2026-04-09) ---
+EU publishes official PPWR guidance, answers FAQs
+
+--- 31. @DakotaAstroWolf (2026-04-08) ---
+Praying the reentry goes well. Arguably the most dangerous part.
+
+--- 32. @jms_car_item (?) ---
+／
+春のポンッまつり
+ジェームス×シヤチハタ(
+@ShachihataBS
+)
+コラボキャンペーン
+＼
+
+「新生活の相棒」2点セットを抽選で10名様にプレゼント！
+
 ① 
-@Backmarket_JP
+@jms_car_item
  をフォロー
 ② この投稿をリポスト
-③ 画像からURLをタップして結果を確認
 
---- 22. @petergyang (2026-04-09) ---
-Silicon Valley is quietly running on Chinese open source AI models.
+当選確率UP！
+「自分によくやってる！」とポンッと褒めてあげたいことを教えてください！
 
-Here are the receipts:
+--- 33. @Arianespace (2026-04-08) ---
+Mission VA268: Ariane 6 has reached the launch pad.
 
-→ Cursor confirmed last month that Composer 2 is built on Moonshot's Kimi K2.5
+At Europe’s Spaceport in Kourou, the central core of Ariane 6 for mission VA268 has been transferred from the Launcher Integration Building (BAL) to the launch pad.
 
-→ Cognition's SWE-1.6 model is likely post-trained on Zhipu's GLM
+Once in front of the mobile gantry, the stage was raised to a
 
-→ Shopify saved $5M a year by
+--- 34. @unjyoukairou (2026-04-09) ---
+ロクジゾー『32LDK』13月32日と同じ編成の、1～32の数字が記載された32枚のゴーアウト系。ルール説明のときは「なる……ほど？」という感じだったけれど、遊びはじめて「なるほど！」に変わった。これは面白いですね！！
 
---- 23. @yuruazabu (2026-04-09) ---
-本当に儲かってる社長は目立たない。顔が有名になるほどリスクが増えるからな。金持ってることを自慢してるやつは大体小金持ちやで。ガチの富裕層は表に出ない。静かに稼いで、静かに暮らしてるんよ。目立つ金持ちは二流なんだわ。
+--- 35. @DragonCreate_X (2026-04-09) ---
+このポストを見た人だけにコッソリお知らせ
 
---- 24. @ruiruicamovi (2026-04-09) ---
-夢みたいな景色ってあるんだね。この間見た夕焼けが忘れられなくてずっと脳裏に残っている。
+- ̗̀ 密売予告   ̖́-
 
---- 25. @H_Y_per (2026-04-09) ---
-日本人たちがこぞって
-「日本をよく再現できてる！」
-って言っている一方で、一部の海外ニキからは
-「これは日本じゃない！」
-という意見が出ているらしい。
+4/12(日)ボドコレ仙台で裏メニューとして新作『ヴェスパーライトメンソール』をコッソリ販売します
 
---- 26. @a16z (2026-04-08) ---
-Steven Sinofsky on why it's hard for AI to diffuse through firms:
+商品として陳列しません。ポップも値札も出しません。売り場を探してもムダです。
 
-"Algorithmic thinking is really, really, really hard for the vast majority of people who have jobs… If you were to go into any person and ask them to create a flow chart for a particular thing that they have to
+--- 36. @Moha001_Onyango (2026-04-09) ---
+Most TV buyers don’t actually know the difference between Full HD, UHD/4K and QLED
 
---- 27. @banestolive (2026-04-09) ---
-予約：「クアックサルバー拡張：錬金術師たち」は、クアックサルバーの2つ目の拡張セットで、錬金術師になり患者を治していきます。5940円　4/24締切、5/22発売予定　
-https://
-banesto.nagoya/view/item/0000
-00010752?category_page_id=ct161
-…
+And honestly, brands don’t make it easy.
 
---- 28. @chaseourdreams5 (2026-04-07) ---
-お風呂上がり、髪を乾かす時間が本当に苦痛…。
+Let me break it down in the simplest way possible 
 
-このタオルで巻いておくだけで、水気をグングン吸ってくれます。
+--- 37. @robiartec (2026-04-09) ---
+Claude、Openclaw…のための最高のスキルを分類する無料のサイトを見つけました。
 
-ドライヤーの時間が半分になって、すごく楽ちん。
 
-疲れきった夜を助けてくれる魔法です。
+http://
+skillsmp.com/es/search
 
-楽天
+--- 38. @yatteyattaze (?) ---
+だらしねえお姉さんって、たまらんよね・・・♡
 
-https://
-a.r10.to/hPiFlL
-Amazon
+ヤニカス・酒カス・33歳。元殺し屋。（0/9）
 
-https://
-amzn.to/4tefnWK
+--- 39. @PRAPRAPRA (2026-04-09) ---
+デザイナーEmi Kuji？くじらだまさん！？
 
-#ヘアケア #自分磨き
+--- 40. @justdoitKW (2026-04-08) ---
+自動翻訳って不思議ですね。
+日本人の人たちも私の文章を見られるんですか？
+「こんにちは。この文章が見えている日本の方はいらっしゃいますか？」
 
---- 29. @QingQ77 (2026-04-09) ---
-設定不要なカラースキームこそが、心配り不要なカラースキームです。
+--- 41. @GOROman (2026-04-09) ---
+見えてます
 
-Claude の美学に着想を得た Neovim カラースキーム
+--- 42. @yamasan_eth (2026-04-08) ---
+#朝活 1848/3650日目
+おはようございます
 
-ダークおよびライトバリアントを提供、ゼロ設定。セットアップ関数なし、読み込み即使用。
+昨日、過去問道場さんを発見しまして、テキスト以外でも管業の勉強を進めることにしました。 
+他の資格も勉強できますね！
+@kakomon_doujou
+ 
+今日も良い一日を
 
-Ghostty、fish、delta、tmux
+朝活結果
+・体重&血圧測定
+・ストレッチ　5分
+・英語　Duolingo   5分
+・YouTube&楽天ROOM
 
---- 30. @Atoras510 (2026-04-09) ---
-今日セカンドオピニオン受けたらマイコプラズマ肺炎かもって言われた。
+--- 43. @nrslib (2026-04-09) ---
+nrs 氏！！
 
-1個目の病院は2回行って両方とも気管支炎って診断されたけど見る医者によって変わるんやなぁ
+「エンジニアの役割の変化に向き合うConference 2026」開催決定！基調講演に『達人プログラマー』著者・中島 聡氏・広木 大地氏が登壇
 
-普通に2週間以上しっかり風邪続いててシャレならんぐらいだるい
-最近は毎日38℃越えの高熱出るし
+--- 44. @ynishi2015 (2026-04-09) ---
+これを万バズさせたい。
 
---- 31. @famima_now (?) ---
-超も～っちりパン
-　  ＼ ＼誕生／／
+--- 45. @Aterui_Mizuno (2026-04-09) ---
+うん、今日も割り箸くんはしっかりRTX4080を支えてくれているな。
 
-ファミマの人気パンが超も～っちりになったよ♬
-詳しくは画像をTAP
+--- 46. @AnthropoceneMe1 (2026-04-09) ---
+I'm too old to know what a "torrent" is, so I use the 'intitle:"index.of"' trick to find all my media.
 
---- 32. @iufPReTCFeH8JPi (2026-04-09) ---
-サイゼリヤ暴落の原因は利益率の低下ということですが、薄利多売なんだしそんなもんじゃない？という感じはします。
-逆に客数増えることで利益の絶対額は増えていくのでは？
+You break into all sorts of abandoned web pages, ftp sites, etc.  It's like the "Morrowind" of file sharing.
 
---- 33. @youko_naka66 (2026-04-08) ---
-玄関で靴を脱いだ瞬間、「あ、臭い」って。
+--- 47. @julia_bergeron (2026-04-09) ---
+I think my Artemis II keepsakes are going to need their own preservation box.
 
-あの小さな絶望、これ1つで解決。
+--- 48. @hachiemon_x (?) ---
+季節外れのサンタ＆ハチエモン 02
 
-靴に入れるだけで匂いと湿気を吸収。
+--- 49. @urahr_hongkong (2026-04-09) ---
+ラストマンシップのあるメンバーは大好き。
 
-毎日をちょっと気持ちよく。
+「自分の後ろにはもう誰もいない」と思って動いてくれる人は、スキルが足りなくても安心して任せられます。
 
-楽天
+逆にこれがない人は、どれだけ優秀でも最後の場面で怖くて預けられないです。
 
-https://
-a.r10.to/h5r0xH
-Amazon
+何かあったら全力で守るからね！
 
-https://
-amzn.to/4caAYcO
-
-#暮らしの工夫 #玄関インテリア
-
---- 34. @jbillinson (2026-04-09) ---
-Spacewalks don’t seem that scary now that they’re all tethered. But for that very brief window in the 80s when they thought this was a good idea? Nope, nope, nope.
-
---- 35. @NASASpaceflight (2026-04-09) ---
-Space Systems Command Media Advisory naming a GPS satellite ahead of launch, and it's a really cool thing:
-
-"GPS III-8 SV10 is nicknamed “Hedy Lamarr". Named by the U.S. Space Force, this satellite honors the Hollywood actress and inventor who, along with composer George Antheil,
-
---- 36. @korinVR (2026-04-09) ---
-ナル先生がProfessor Naruに翻訳されてるの面白い
-
---- 37. @tbs_pr (?) ---
-／
-フォロー＆リポストで100名様に
-QUOカードPayが当たる
-＼
-
-“月曜よるはエンタメNIGHT”
-新番組スタート記念プレゼントキャンペーン
-
-▼応募方法
-① 
-@tbs_pr
- をフォロー
-②月曜よるの3番組への「応援コメント」や「感想」を記載して、本投稿を引用リポスト
-
-▽詳細はツリー投稿を
-
---- 38. @techracho (2026-04-09) ---
-Claude Codeに伴走してもらう「学習モード」が想像以上によかった話
-#techracho #AI #AIコーディング #Claude_Code
-
---- 39. @pk_kroger (2026-04-09) ---
-転職9日目、毎晩この時間になると女の子の泣き声が響く活気のあるオフィスで勝ちを確信。これだよ、これなんだよな。
-
---- 40. @pmddomingos (2026-04-09) ---
-TL;DR: The tale of Mythos’ exploits is wildly exaggerated.
-
---- 41. @Grimezsz (2026-04-09) ---
-HIRING : Who is the best engineer who also has a sense of aesthetics?
-
-JOB DESCRIPTION: monk.  I have manuscripts that need to be illuminated
-
-We need to do this in a week - please apply
-
---- 42. @kimmonismus (2026-04-09) ---
-Having a model like Gemma 4, which is perfectly adequate for everyday use in many cases, runs locally, is free, and secure, still feels unreal.
-
-We have a very good AI that costs nothing, uses hardly any power, and is always there. I think that's simply fantastic.
-
-The only
-
---- 43. @4GamerNews (2026-04-09) ---
-自身を人間だと思い込むAIを正気に戻す。サイコロジカルホラーADV「Prove You're Human」が発表に
-
-https://
-4gamer.net/s/G099774.2604
-10012
-…
-
---- 44. @steipete (2026-04-09) ---
-.
-@thsottiaux
-
---- 45. @ntheweird (2026-04-09) ---
-Cairnの無料DLCが来る！　やったぜ！
-
---- 46. @nara_cjr (?) ---
-これはもう歴史と文化のLIVEだ。
-青空に映える鮮やかな朱色の伽藍の世界遺産・薬師寺で、「LIVEな歴史を体感する旅」を鈴木亮平さんがご紹介。
-CMやメイキング動画を公開中！
-
---- 47. @Science_Release (2026-04-09) ---
-『アポロ13』の同時視聴に出るのよ！
-
---- 48. @hokennobro (2026-04-09) ---
-ADHDで物捨てられない人、読んだ方が良いです。
-
---- 49. @RMBC2021 (2026-04-09) ---
-『あなたの1位はチョコミント!?』
-ebika!さんにデザインしていただきました
-
-化粧箱やお題カード、説明書等とても見やすくなっておりますので、ぜひ見てみてください
-
---- 50. @martianwyrdlord (2026-04-08) ---
-We're not going to cross the Atlantic ocean. 
-
-1. No one has any idea how far away the nearest land is. It could be thousands of miles!
-
-2. Surely we can just build faster caravels? The problem is that wind can only push you so fast. 
-
-3. There are no landmarks out on the ocean.
+--- 50. @ManuelFaysse (2026-04-09) ---
+Getting (first author) papers in at ICML, NeurIPS and ICLR in a single calendar year is called a "Grand Slam" for AI PhD students apparently. I won't be the one attempting that, I like sleeping too much I think.
