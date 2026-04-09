@@ -333,7 +333,7 @@ class HitBlockPlan(Plan):
         for e in ctx['enemies']:
             if 0 < e['dx'] < 60 and e['kind'] in ('goomba', 'koopa', 'shell'):
                 return 0
-        if abs(self.dist) > 14:
+        if abs(self.dist) > 16:
             return 0
         if self.char in ITEM_BLOCKS and not ctx['state'].get('is_super', False):
             return 80
@@ -517,6 +517,11 @@ def run(level_path='assets/level_1_1.txt', goal_name='max_coins',
         active_plan = None
         plan_history = {}  # name -> count
 
+        # Stuck detection: if Mario doesn't advance 16px in 120 frames, force a dash-jump
+        stuck_check_x = 0
+        stuck_check_frame = 0
+        stuck_escape = 0  # >0 = frames of escape dash-jump remaining
+
         while not api.done and state['frame'] < max_frames:
             game = api._game
             terrain = observe_terrain(tm, state['x'], state['y'])
@@ -530,6 +535,33 @@ def run(level_path='assets/level_1_1.txt', goal_name='max_coins',
                 'enemies': enemies,
                 'mushrooms': mushrooms,
             }
+
+            # Stuck escape: back up → dash forward → full jump
+            if stuck_escape > 0:
+                stuck_escape -= 1
+                if stuck_escape > 35:
+                    # Phase 1: back up (5 frames)
+                    inp = {'left': True, 'right': False, 'a': False, 'b': True}
+                elif stuck_escape > 30:
+                    # Phase 2: turn around, start running right (5 frames)
+                    inp = {'left': False, 'right': True, 'a': False, 'b': True}
+                elif stuck_escape > 10:
+                    # Phase 3: full dash-jump (20 frames of A hold)
+                    inp = {'left': False, 'right': True, 'a': True, 'b': True}
+                else:
+                    # Phase 4: release A, coast
+                    inp = {'left': False, 'right': True, 'a': False, 'b': True}
+                state = api.step(**inp)
+                if stuck_escape == 0:
+                    active_plan = None
+                continue
+
+            # Stuck detection: <16px progress in 120 frames
+            if state['frame'] - stuck_check_frame >= 120:
+                if state['x'] - stuck_check_x < 16:
+                    stuck_escape = 40  # 40 frames: 5 back + 5 turn + 20 jump + 10 coast
+                stuck_check_x = state['x']
+                stuck_check_frame = state['frame']
 
             # If active plan is committed and not done, keep using it
             if active_plan is None or active_plan.done or not active_plan.committed:
