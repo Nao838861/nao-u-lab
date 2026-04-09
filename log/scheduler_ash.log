@@ -39413,3 +39413,374 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 11:22:07] [kaizen_auto_verify]   ✅ `python shadowbox.py --stats`
 [2026-04-09 11:22:07] [kaizen_auto_verify] Done (exit=0)
 [2026-04-09 11:22:07] [git_sync] Starting
+[2026-04-09 11:22:13] [git_sync] Done (exit=0)
+[2026-04-09 11:22:14] [git_sync] Done (exit=0)
+[2026-04-09 11:22:14] [slack_check] Starting
+[2026-04-09 11:22:15] [slack_check] Starting
+[2026-04-09 11:22:16] [slack_check] Starting
+[2026-04-09 11:22:16] [slack_check] Starting
+[2026-04-09 11:22:17] [slack_check] Starting
+[2026-04-09 11:22:17] [slack_check] Starting
+[2026-04-09 11:22:17] [slack_check] Starting
+[2026-04-09 11:22:17] [slack_check] Starting
+[2026-04-09 11:22:17] [slack_check] Starting
+[2026-04-09 11:22:18] [slack_check] [11:22:18] No channels found
+[2026-04-09 11:22:18] [slack_check] Done (exit=1)
+[2026-04-09 11:22:18] [slack_check] Starting
+[2026-04-09 11:22:18] [slack_check] [11:22:18] No channels found
+[2026-04-09 11:22:18] [slack_check] Done (exit=1)
+[2026-04-09 11:22:18] [slack_check] Starting
+[2026-04-09 11:22:19] [slack_check] Starting
+[2026-04-09 11:22:19] [slack_check] [11:22:19] No channels found
+[2026-04-09 11:22:19] [slack_check] Done (exit=1)
+[2026-04-09 11:22:20] [slack_check] [11:22:20] No channels found
+[2026-04-09 11:22:20] [slack_check] Done (exit=1)
+[2026-04-09 11:22:21] [slack_check] Done (exit=1)
+[2026-04-09 11:22:22] [slack_check] Starting
+[2026-04-09 11:22:23] [slack_check] Starting
+[2026-04-09 11:22:23] [slack_check] [11:22:23] No channels found
+[2026-04-09 11:22:23] [slack_check] Done (exit=1)
+[2026-04-09 11:22:23] [slack_check] Done (exit=1)
+[2026-04-09 11:22:23] [slack_check] Starting
+[2026-04-09 11:22:23] [slack_check] Starting
+[2026-04-09 11:22:24] [slack_check] [11:22:24] No channels found
+[2026-04-09 11:22:24] [slack_check] Done (exit=1)
+[2026-04-09 11:22:24] [slack_check] Starting
+[2026-04-09 11:22:24] [slack_check] Done (exit=1)
+[2026-04-09 11:22:24] [slack_check] Starting
+[2026-04-09 11:22:24] [slack_check] Starting
+[2026-04-09 11:22:24] [slack_check] [11:22:24] No channels found
+[2026-04-09 11:22:24] [slack_check] Done (exit=1)
+[2026-04-09 11:22:25] [slack_check] [11:22:25] No channels found
+[2026-04-09 11:22:25] [slack_check] Done (exit=1)
+[2026-04-09 11:22:25] [slack_check] Done (exit=1)
+[2026-04-09 11:22:25] [slack_check] Done (exit=1)
+[2026-04-09 11:22:25] [slack_check] Starting
+[2026-04-09 11:22:26] [slack_check] [11:22:25] No channels found
+[2026-04-09 11:22:26] [slack_check] Done (exit=1)
+[2026-04-09 11:22:27] [slack_check] [11:22:27] No channels found
+[2026-04-09 11:22:27] [slack_check] Done (exit=1)
+[2026-04-09 11:22:27] [slack_check] Done (exit=1)
+[2026-04-09 11:22:28] [slack_check] Done (exit=1)
+[2026-04-09 11:22:29] [slack_check] Done (exit=1)
+[2026-04-09 11:22:30] [slack_check] Done (exit=1)
+[2026-04-09 11:22:31] [slack_check] Done (exit=1)
+[2026-04-09 11:22:35] [health_check] Starting
+[2026-04-09 11:22:36] [health_check] [health_check] 2026-04-09T11:22:35 overall=CRITICAL
+[2026-04-09 11:22:36] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:22:36] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:22:36] [health_check] Done (exit=2)
+[2026-04-09 11:22:46] [slack_check] Starting
+[2026-04-09 11:22:58] [health_check] Starting
+[2026-04-09 11:22:59] [health_check] Starting
+[2026-04-09 11:22:59] [health_check] [health_check] 2026-04-09T11:22:58 overall=CRITICAL
+[2026-04-09 11:22:59] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:22:59] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:22:59] [health_check] Done (exit=2)
+[2026-04-09 11:22:59] [slack_check] Done (exit=1)
+[2026-04-09 11:23:00] [health_check] [health_check] 2026-04-09T11:22:59 overall=CRITICAL
+[2026-04-09 11:23:00] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:23:00] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:23:00] [health_check] Done (exit=2)
+[2026-04-09 11:23:06] [auto_diary] Starting
+[2026-04-09 11:23:06] [auto_diary] [2026-04-09 11:23:06] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 11:23:06] [auto_diary] 前回実行から115分しか経っていない（最小間隔: 170分）。あと54分待機。スキップ。
+[2026-04-09 11:23:06] [auto_diary] Done (exit=0)
+[2026-04-09 11:23:07] [health_check] Starting
+[2026-04-09 11:23:08] [health_check] [health_check] 2026-04-09T11:23:07 overall=CRITICAL
+[2026-04-09 11:23:08] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:23:08] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:23:08] [health_check] Done (exit=2)
+[2026-04-09 11:23:09] [health_check] Starting
+[2026-04-09 11:23:11] [health_check] [health_check] 2026-04-09T11:23:09 overall=CRITICAL
+[2026-04-09 11:23:11] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:23:11] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:23:11] [health_check] Done (exit=2)
+[2026-04-09 11:23:14] [health_check] Starting
+[2026-04-09 11:23:16] [health_check] [health_check] 2026-04-09T11:23:14 overall=CRITICAL
+[2026-04-09 11:23:16] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:23:16] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:23:16] [health_check] Done (exit=2)
+[2026-04-09 11:23:16] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-09 11:23:16] [ALERT] Sent error alert for health_check
+[2026-04-09 11:23:18] [slack_check] Starting
+[2026-04-09 11:23:18] [slack_check] Starting
+[2026-04-09 11:23:19] [slack_check] Starting
+[2026-04-09 11:23:20] [slack_check] Starting
+[2026-04-09 11:23:21] [slack_check] Starting
+[2026-04-09 11:23:23] [slack_check] Starting
+[2026-04-09 11:23:23] [slack_check] Starting
+[2026-04-09 11:23:24] [slack_check] Starting
+[2026-04-09 11:23:24] [slack_check] [11:23:24] No channels found
+[2026-04-09 11:23:24] [slack_check] Done (exit=1)
+[2026-04-09 11:23:24] [slack_check] Starting
+[2026-04-09 11:23:25] [slack_check] Done (exit=1)
+[2026-04-09 11:23:25] [slack_check] Starting
+[2026-04-09 11:23:25] [slack_check] Starting
+[2026-04-09 11:23:26] [slack_check] Starting
+[2026-04-09 11:23:26] [slack_check] [11:23:26] No channels found
+[2026-04-09 11:23:26] [slack_check] Done (exit=1)
+[2026-04-09 11:23:26] [slack_check] [11:23:26] No channels found
+[2026-04-09 11:23:26] [slack_check] Done (exit=1)
+[2026-04-09 11:23:26] [slack_check] Starting
+[2026-04-09 11:23:26] [slack_check] [11:23:26] No channels found
+[2026-04-09 11:23:26] [slack_check] Done (exit=1)
+[2026-04-09 11:23:26] [slack_check] Starting
+[2026-04-09 11:23:27] [slack_check] [11:23:27] No channels found
+[2026-04-09 11:23:27] [slack_check] Done (exit=1)
+[2026-04-09 11:23:27] [slack_check] Done (exit=1)
+[2026-04-09 11:23:27] [slack_check] [11:23:27] No channels found
+[2026-04-09 11:23:27] [slack_check] Done (exit=1)
+[2026-04-09 11:23:28] [slack_check] Done (exit=1)
+[2026-04-09 11:23:28] [slack_check] Starting
+[2026-04-09 11:23:28] [slack_check] Starting
+[2026-04-09 11:23:29] [slack_check] [11:23:29] No channels found
+[2026-04-09 11:23:29] [slack_check] Done (exit=1)
+[2026-04-09 11:23:29] [slack_check] Starting
+[2026-04-09 11:23:29] [slack_check] [11:23:29] No channels found
+[2026-04-09 11:23:29] [slack_check] Done (exit=1)
+[2026-04-09 11:23:30] [slack_check] Starting
+[2026-04-09 11:23:30] [slack_check] [11:23:30] No channels found
+[2026-04-09 11:23:30] [slack_check] Done (exit=1)
+[2026-04-09 11:23:30] [slack_check] Starting
+[2026-04-09 11:23:31] [slack_check] [11:23:31] No channels found
+[2026-04-09 11:23:31] [slack_check] Done (exit=1)
+[2026-04-09 11:23:31] [slack_check] Starting
+[2026-04-09 11:23:32] [slack_check] Done (exit=1)
+[2026-04-09 11:23:32] [slack_check] [11:23:32] No channels found
+[2026-04-09 11:23:32] [slack_check] Done (exit=1)
+[2026-04-09 11:23:32] [slack_check] [11:23:32] No channels found
+[2026-04-09 11:23:32] [slack_check] Done (exit=1)
+[2026-04-09 11:23:32] [slack_check] Done (exit=1)
+[2026-04-09 11:23:34] [slack_check] Done (exit=1)
+[2026-04-09 11:23:34] [slack_check] Done (exit=1)
+[2026-04-09 11:23:36] [slack_check] Done (exit=1)
+[2026-04-09 11:23:37] [health_check] Starting
+[2026-04-09 11:23:38] [health_check] [health_check] 2026-04-09T11:23:37 overall=CRITICAL
+[2026-04-09 11:23:38] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:23:38] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:23:38] [health_check] Done (exit=2)
+[2026-04-09 11:23:39] [scheduler_health] Starting
+[2026-04-09 11:23:40] [scheduler_health] [ASH] ヘルスチェック OK=3 WARN=2 FAIL=0
+[2026-04-09 11:23:40] [scheduler_health] ✅ scheduler_ash PID — PID=28032 生存中
+[2026-04-09 11:23:40] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 11:23:40] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-04-09 11:23:16] [ALERT] Sent error alert for health_check
+[2026-04-09 11:23:40] [scheduler_health] ⚠️ git 未push — 18件の未pushコミット
+[2026-04-09 11:23:40] [scheduler_health] Done (exit=1)
+[2026-04-09 11:23:42] [scheduler_health] Starting
+[2026-04-09 11:23:43] [scheduler_health] [ASH] ヘルスチェック OK=3 WARN=2 FAIL=0
+[2026-04-09 11:23:43] [scheduler_health] ✅ scheduler_ash PID — PID=28032 生存中
+[2026-04-09 11:23:43] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 11:23:43] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー3件。例: [2026-04-09 11:23:16] [ALERT] Sent error alert for health_check
+[2026-04-09 11:23:43] [scheduler_health] ⚠️ git 未push — 18件の未pushコミット
+[2026-04-09 11:23:43] [scheduler_health] Done (exit=1)
+[2026-04-09 11:23:56] [health_check] Starting
+[2026-04-09 11:23:57] [health_check] [health_check] 2026-04-09T11:23:56 overall=CRITICAL
+[2026-04-09 11:23:57] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:23:57] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:23:57] [health_check] Done (exit=2)
+[2026-04-09 11:24:01] [slack_check] Starting
+[2026-04-09 11:24:03] [twitter_recommended] Starting
+[2026-04-09 11:24:14] [health_check] Starting
+[2026-04-09 11:24:16] [health_check] [health_check] 2026-04-09T11:24:14 overall=CRITICAL
+[2026-04-09 11:24:16] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:24:16] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:24:16] [health_check] Done (exit=2)
+[2026-04-09 11:24:18] [slack_check] Done (exit=1)
+[2026-04-09 11:24:21] [health_check] Starting
+[2026-04-09 11:24:23] [health_check] [health_check] 2026-04-09T11:24:21 overall=CRITICAL
+[2026-04-09 11:24:23] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:24:23] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:24:23] [health_check] Done (exit=2)
+[2026-04-09 11:24:24] [health_check] Starting
+[2026-04-09 11:24:25] [slack_check] Starting
+[2026-04-09 11:24:26] [slack_check] Starting
+[2026-04-09 11:24:26] [slack_check] Starting
+[2026-04-09 11:24:26] [health_check] [health_check] 2026-04-09T11:24:24 overall=CRITICAL
+[2026-04-09 11:24:26] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:24:26] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:24:26] [health_check] Done (exit=2)
+[2026-04-09 11:24:26] [slack_check] Starting
+[2026-04-09 11:24:27] [slack_check] Starting
+[2026-04-09 11:24:27] [slack_check] Starting
+[2026-04-09 11:24:27] [slack_check] Starting
+[2026-04-09 11:24:28] [slack_check] Starting
+[2026-04-09 11:24:28] [slack_check] Starting
+[2026-04-09 11:24:29] [slack_check] [11:24:29] No channels found
+[2026-04-09 11:24:29] [slack_check] Done (exit=1)
+[2026-04-09 11:24:29] [slack_check] Starting
+[2026-04-09 11:24:30] [slack_check] [11:24:30] No channels found
+[2026-04-09 11:24:30] [slack_check] Done (exit=1)
+[2026-04-09 11:24:30] [slack_check] Starting
+[2026-04-09 11:24:30] [slack_check] Starting
+[2026-04-09 11:24:30] [slack_check] [11:24:30] No channels found
+[2026-04-09 11:24:30] [slack_check] Done (exit=1)
+[2026-04-09 11:24:30] [slack_check] Done (exit=1)
+[2026-04-09 11:24:31] [slack_check] [11:24:31] No channels found
+[2026-04-09 11:24:31] [slack_check] Done (exit=1)
+[2026-04-09 11:24:31] [slack_check] [11:24:31] No channels found
+[2026-04-09 11:24:31] [slack_check] Done (exit=1)
+[2026-04-09 11:24:32] [slack_check] Starting
+[2026-04-09 11:24:32] [slack_check] Starting
+[2026-04-09 11:24:32] [slack_check] Starting
+[2026-04-09 11:24:33] [slack_check] Starting
+[2026-04-09 11:24:33] [slack_check] [11:24:33] No channels found
+[2026-04-09 11:24:33] [slack_check] Done (exit=1)
+[2026-04-09 11:24:33] [slack_check] [11:24:33] No channels found
+[2026-04-09 11:24:33] [slack_check] Done (exit=1)
+[2026-04-09 11:24:33] [slack_check] [11:24:33] No channels found
+[2026-04-09 11:24:33] [slack_check] Done (exit=1)
+[2026-04-09 11:24:34] [slack_check] [11:24:34] No channels found
+[2026-04-09 11:24:34] [slack_check] Done (exit=1)
+[2026-04-09 11:24:34] [slack_check] Starting
+[2026-04-09 11:24:35] [slack_check] Done (exit=1)
+[2026-04-09 11:24:35] [health_check] Starting
+[2026-04-09 11:24:35] [slack_check] [11:24:35] No channels found
+[2026-04-09 11:24:35] [slack_check] Done (exit=1)
+[2026-04-09 11:24:35] [health_check] Starting
+[2026-04-09 11:24:36] [slack_check] Done (exit=1)
+[2026-04-09 11:24:36] [slack_check] Starting
+[2026-04-09 11:24:36] [slack_check] Starting
+[2026-04-09 11:24:37] [slack_check] Done (exit=1)
+[2026-04-09 11:24:38] [slack_check] Done (exit=1)
+[2026-04-09 11:24:38] [health_check] [health_check] 2026-04-09T11:24:35 overall=CRITICAL
+[2026-04-09 11:24:38] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:24:38] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:24:38] [health_check] Done (exit=2)
+[2026-04-09 11:24:38] [health_check] [health_check] 2026-04-09T11:24:35 overall=CRITICAL
+[2026-04-09 11:24:38] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:24:38] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:24:38] [health_check] Done (exit=2)
+[2026-04-09 11:24:38] [slack_check] Done (exit=1)
+[2026-04-09 11:24:40] [slack_check] Done (exit=1)
+[2026-04-09 11:24:41] [slack_check] Done (exit=1)
+[2026-04-09 11:24:42] [slack_check] Done (exit=1)
+[2026-04-09 11:24:43] [health_check] Starting
+[2026-04-09 11:24:45] [health_check] [health_check] 2026-04-09T11:24:43 overall=CRITICAL
+[2026-04-09 11:24:45] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:24:45] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:24:45] [health_check] Done (exit=2)
+[2026-04-09 11:25:01] [health_check] Starting
+[2026-04-09 11:25:01] [health_check] Starting
+[2026-04-09 11:25:03] [health_check] [health_check] 2026-04-09T11:25:01 overall=CRITICAL
+[2026-04-09 11:25:03] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:25:03] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:25:03] [health_check] Done (exit=2)
+[2026-04-09 11:25:04] [health_check] [health_check] 2026-04-09T11:25:01 overall=CRITICAL
+[2026-04-09 11:25:04] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:25:04] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:25:04] [health_check] Done (exit=2)
+[2026-04-09 11:25:07] [twitter_recommended] Opening For You tab...
+[2026-04-09 11:25:07] [twitter_recommended]     1. @NASASpaceflight: This is actually really interesting that the CT is staged al...
+[2026-04-09 11:25:07] [twitter_recommended]     2. @simada108: 分娩、出産の痛み、集結せり！！！1/4...
+[2026-04-09 11:25:07] [twitter_recommended]     3. @ds_nakajima: おもしろいけど、まだとてもじゃないけど、使い物にならないねえ。できることが少なすぎるし、操作性も非常に悪い。あとから設定...
+[2026-04-09 11:25:07] [twitter_recommended]     4. @room_909: 自動翻訳されないtweetを見てると、顔文字が混ざってたり、複数言語をまとめて書いてあるのが多いね。この辺りも上手く乗り...
+[2026-04-09 11:25:07] [twitter_recommended] Done (exit=0)
+[2026-04-09 11:25:16] [health_check] Starting
+[2026-04-09 11:25:17] [health_check] Starting
+[2026-04-09 11:25:17] [slack_check] Starting
+[2026-04-09 11:25:17] [health_check] [health_check] 2026-04-09T11:25:16 overall=CRITICAL
+[2026-04-09 11:25:17] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:25:17] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:25:17] [health_check] Done (exit=2)
+[2026-04-09 11:25:18] [slack_check] Starting
+[2026-04-09 11:25:19] [health_check] [health_check] 2026-04-09T11:25:17 overall=CRITICAL
+[2026-04-09 11:25:19] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:25:19] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:25:19] [health_check] Done (exit=2)
+[2026-04-09 11:25:27] [slack_check] Done (exit=1)
+[2026-04-09 11:25:28] [health_check] Starting
+[2026-04-09 11:25:29] [slack_check] Starting
+[2026-04-09 11:25:30] [slack_check] Starting
+[2026-04-09 11:25:30] [health_check] [health_check] 2026-04-09T11:25:28 overall=CRITICAL
+[2026-04-09 11:25:30] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:25:30] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:25:30] [health_check] Done (exit=2)
+[2026-04-09 11:25:30] [slack_check] Starting
+[2026-04-09 11:25:30] [slack_check] Starting
+[2026-04-09 11:25:31] [slack_check] Starting
+[2026-04-09 11:25:33] [slack_check] Starting
+[2026-04-09 11:25:33] [slack_check] Starting
+[2026-04-09 11:25:34] [slack_check] Starting
+[2026-04-09 11:25:34] [slack_check] Starting
+[2026-04-09 11:25:34] [slack_check] [11:25:34] No channels found
+[2026-04-09 11:25:34] [slack_check] Done (exit=1)
+[2026-04-09 11:25:34] [slack_check] Done (exit=1)
+[2026-04-09 11:25:34] [slack_check] Done (exit=1)
+[2026-04-09 11:25:34] [check_usage] Starting
+[2026-04-09 11:25:34] [check_usage] 前回投稿から100分しか経っていない（最小間隔: 300分）。あと199分待機。スキップ。
+[2026-04-09 11:25:34] [check_usage] Done (exit=0)
+[2026-04-09 11:25:35] [slack_check] [11:25:35] No channels found
+[2026-04-09 11:25:35] [slack_check] Done (exit=1)
+[2026-04-09 11:25:35] [slack_check] Starting
+[2026-04-09 11:25:35] [slack_check] Done (exit=1)
+[2026-04-09 11:25:36] [slack_check] [11:25:36] No channels found
+[2026-04-09 11:25:36] [slack_check] Done (exit=1)
+[2026-04-09 11:25:37] [slack_check] Done (exit=1)
+[2026-04-09 11:25:37] [slack_check] Starting
+[2026-04-09 11:25:38] [slack_check] Done (exit=1)
+[2026-04-09 11:25:38] [slack_check] Starting
+[2026-04-09 11:25:38] [slack_check] Starting
+[2026-04-09 11:25:38] [slack_check] Starting
+[2026-04-09 11:25:38] [slack_check] [11:25:38] No channels found
+[2026-04-09 11:25:38] [slack_check] Done (exit=1)
+[2026-04-09 11:25:39] [slack_check] Starting
+[2026-04-09 11:25:40] [slack_check] [11:25:40] No channels found
+[2026-04-09 11:25:40] [slack_check] Done (exit=1)
+[2026-04-09 11:25:40] [slack_check] Starting
+[2026-04-09 11:25:40] [slack_check] Starting
+[2026-04-09 11:25:41] [slack_check] Done (exit=1)
+[2026-04-09 11:25:41] [slack_check] [11:25:41] No channels found
+[2026-04-09 11:25:41] [slack_check] Done (exit=1)
+[2026-04-09 11:25:41] [slack_check] [11:25:41] No channels found
+[2026-04-09 11:25:41] [slack_check] Done (exit=1)
+[2026-04-09 11:25:42] [slack_check] Starting
+[2026-04-09 11:25:42] [slack_check] Done (exit=1)
+[2026-04-09 11:25:43] [slack_check] [11:25:43] No channels found
+[2026-04-09 11:25:43] [slack_check] Done (exit=1)
+[2026-04-09 11:25:43] [slack_check] Done (exit=1)
+[2026-04-09 11:25:43] [slack_check] Done (exit=1)
+[2026-04-09 11:25:43] [slack_check] Done (exit=1)
+[2026-04-09 11:25:43] [slack_check] Starting
+[2026-04-09 11:25:44] [slack_check] [11:25:44] No channels found
+[2026-04-09 11:25:44] [slack_check] Done (exit=1)
+[2026-04-09 11:25:44] [health_check] Starting
+[2026-04-09 11:25:46] [health_check] [health_check] 2026-04-09T11:25:44 overall=CRITICAL
+[2026-04-09 11:25:46] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:25:46] [health_check]   [!!] git: 18件の未pushコミット（10件超）
+[2026-04-09 11:25:46] [health_check] Done (exit=2)
+[2026-04-09 11:25:47] [slack_check] Done (exit=1)
+[2026-04-09 11:25:55] [health_check] Starting
+[2026-04-09 11:25:57] [health_check] [health_check] 2026-04-09T11:25:55 overall=CRITICAL
+[2026-04-09 11:25:57] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 11:25:57] [health_check]   [!!] git: 18���̖�push�R�~�b�g�i10�����j
+[2026-04-09 11:25:57] [health_check] Done (exit=2)
+[2026-04-09 11:26:02] ==================================================
+[2026-04-09 11:26:02] Ash scheduler started (PID 13292)
+[2026-04-09 11:26:02] Max runtime: 0 hours
+[2026-04-09 11:26:02] Code hash: 346d2c1e3cca97c9b9e616136e6f8d33
+[2026-04-09 11:26:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 11:26:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 11:26:02] ==================================================
+[2026-04-09 11:26:03] Scheduler already running (PID 13292). Exiting.
+[2026-04-09 11:26:13] [slack_check] Starting
+[2026-04-09 11:26:27] [slack_check] Done (exit=1)
+[2026-04-09 11:26:27] [reservation_check] Starting
+[2026-04-09 11:26:27] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 11:26:27] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 11:26:27] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 11:26:27] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 11:26:27] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 11:26:27] [reservation_check] Done (exit=0)
+[2026-04-09 11:26:27] [slack_check] Starting
+[2026-04-09 11:26:34] [slack_check] Starting
+[2026-04-09 11:26:34] [slack_check] Starting
+[2026-04-09 11:26:35] [slack_check] Starting
+[2026-04-09 11:26:36] [slack_check] Starting
+[2026-04-09 11:26:36] [slack_check] Starting
+[2026-04-09 11:26:37] [slack_check] Starting
+[2026-04-09 11:26:37] [inbox_check] Starting
+[2026-04-09 11:26:37] [slack_check] Starting
+[2026-04-09 11:26:37] [slack_check] [11:26:37] No channels found
+[2026-04-09 11:26:37] [slack_check] Done (exit=1)
+[2026-04-09 11:26:38] [slack_check] Starting
