@@ -66144,3 +66144,27 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 17:02:05] [health_check] Starting
 [2026-04-09 17:02:05] [slack_check] Starting
 [2026-04-09 17:02:05] [slack_check] Starting
+[2026-04-09 17:02:05] [slack_check] Starting
+[2026-04-09 17:02:05] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-09 17:02:05] [scheduler_health] ✅ scheduler_ash PID — PID=23772 生存中
+[2026-04-09 17:02:05] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 17:02:05] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-09 17:02:05] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 17:02:05] [scheduler_health] Done (exit=0)
+[2026-04-09 17:02:06] [slack_check] Starting
+[2026-04-09 17:02:06] [health_check] [health_check] 2026-04-09T17:02:05 overall=OK
+[2026-04-09 17:02:06] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 17:02:06] [health_check] Done (exit=0)
+[2026-04-09 17:02:07] [slack_check] Starting
+[2026-04-09 17:02:07] [slack_check] Starting
+[2026-04-09 17:02:07] [slack_check] Starting
+[2026-04-09 17:02:07] [git_sync] Starting
+[2026-04-09 17:02:08] [dm_check_pigadev] Starting
+[2026-04-09 17:02:08] [dm_check_pigadev] No new DMs
+[2026-04-09 17:02:08] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 17:02:08] [slack_check] Starting
+[2026-04-09 17:02:08] [dm_check] No new DMs
+[2026-04-09 17:02:08] [dm_check] Done (exit=0)
+[2026-04-09 17:02:08] [review_deadline] Starting
+[2026-04-09 17:02:08] [review_deadline] レビュー期限超過なし。
+[2026-04-09 17:02:08] [review_deadline] Done (exit=0)
