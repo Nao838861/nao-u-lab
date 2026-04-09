@@ -435,15 +435,18 @@ def run_job(job):
             errors="replace",
         )
         stdout = result.stdout.strip()
-        if stdout:
+        # slack_check exit=1 は「新着なし」の正常状態。ログを抑制して洪水防止
+        quiet = (name == "slack_check" and result.returncode == 1)
+        if stdout and not quiet:
             # ログが長すぎる場合は切り詰め
             for line in stdout.split("\n")[:5]:
                 logging.info(f"[{name}] {line[:200]}")
-        if result.returncode != 0:
+        if result.returncode != 0 and not quiet:
             stderr = result.stderr.strip()
             if stderr:
                 logging.warning(f"[{name}] ERR: {stderr[:300]}")
-        logging.info(f"[{name}] Done (exit={result.returncode})")
+        if not quiet:
+            logging.info(f"[{name}] Done (exit={result.returncode})")
         # 成功時は連続カウンタをリセット
         timeout_counter[name] = 0
         if result.returncode == 0:
