@@ -57985,3 +57985,342 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 15:27:08] [kaizen_auto_verify] Done (exit=0)
 [2026-04-09 15:27:08] [git_sync] Starting
 [2026-04-09 15:27:09] [health_check] Starting
+[2026-04-09 15:27:12] [health_check] [health_check] 2026-04-09T15:27:09 overall=CRITICAL
+[2026-04-09 15:27:12] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:27:12] [health_check]   [!!] git: 42件の未pushコミット（10件超）
+[2026-04-09 15:27:12] [health_check] Done (exit=2)
+[2026-04-09 15:27:13] [git_sync] Done (exit=0)
+[2026-04-09 15:27:16] [git_sync] Starting
+[2026-04-09 15:27:17] [git_sync] Done (exit=0)
+[2026-04-09 15:27:18] [slack_check] Starting
+[2026-04-09 15:27:19] [slack_check] Starting
+[2026-04-09 15:27:20] [slack_check] Starting
+[2026-04-09 15:27:21] [slack_check] Starting
+[2026-04-09 15:27:21] [slack_check] Starting
+[2026-04-09 15:27:21] [slack_check] Starting
+[2026-04-09 15:27:22] [slack_check] Starting
+[2026-04-09 15:27:22] [slack_check] Starting
+[2026-04-09 15:27:23] [git_sync] Starting
+[2026-04-09 15:27:23] [slack_check] Starting
+[2026-04-09 15:27:23] [slack_check] Starting
+[2026-04-09 15:27:23] [slack_check] Starting
+[2026-04-09 15:27:23] [slack_check] Starting
+[2026-04-09 15:27:24] [slack_check] Starting
+[2026-04-09 15:27:24] [slack_check] Starting
+[2026-04-09 15:27:24] [slack_check] Starting
+[2026-04-09 15:27:24] [slack_check] Starting
+[2026-04-09 15:27:24] [slack_check] Starting
+[2026-04-09 15:27:24] [git_sync] Done (exit=0)
+[2026-04-09 15:27:24] [slack_check] Starting
+[2026-04-09 15:27:24] [slack_check] Starting
+[2026-04-09 15:27:25] [slack_check] Starting
+[2026-04-09 15:27:27] [slack_check] Starting
+[2026-04-09 15:27:28] [slack_check] Starting
+[2026-04-09 15:27:29] [slack_check] Starting
+[2026-04-09 15:27:30] [slack_check] Starting
+[2026-04-09 15:27:30] [slack_check] Starting
+[2026-04-09 15:27:31] [slack_check] Starting
+[2026-04-09 15:27:32] [slack_check] Starting
+[2026-04-09 15:27:35] [health_check] Starting
+[2026-04-09 15:27:36] [health_check] [health_check] 2026-04-09T15:27:35 overall=CRITICAL
+[2026-04-09 15:27:36] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:27:36] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:27:36] [health_check] Done (exit=2)
+[2026-04-09 15:27:42] [slack_check] Starting
+[2026-04-09 15:27:45] [slack_check] Starting
+[2026-04-09 15:27:55] [health_check] Starting
+[2026-04-09 15:27:56] [health_check] Starting
+[2026-04-09 15:27:58] [health_check] [health_check] 2026-04-09T15:27:56 overall=CRITICAL
+[2026-04-09 15:27:58] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:27:58] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:27:58] [health_check] Done (exit=2)
+[2026-04-09 15:27:58] [health_check] [health_check] 2026-04-09T15:27:56 overall=CRITICAL
+[2026-04-09 15:27:58] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:27:58] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:27:58] [health_check] Done (exit=2)
+[2026-04-09 15:28:05] [health_check] Starting
+[2026-04-09 15:28:06] [auto_diary] Starting
+[2026-04-09 15:28:06] [health_check] [health_check] 2026-04-09T15:28:05 overall=CRITICAL
+[2026-04-09 15:28:06] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:28:06] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:28:06] [health_check] Done (exit=2)
+[2026-04-09 15:28:06] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-09 15:28:07] [ALERT] Sent error alert for health_check
+[2026-04-09 15:28:09] [health_check] Starting
+[2026-04-09 15:28:11] [health_check] [health_check] 2026-04-09T15:28:09 overall=CRITICAL
+[2026-04-09 15:28:11] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:28:11] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:28:11] [health_check] Done (exit=2)
+[2026-04-09 15:28:11] [health_check] Starting
+[2026-04-09 15:28:13] [health_check] [health_check] 2026-04-09T15:28:12 overall=CRITICAL
+[2026-04-09 15:28:13] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:28:13] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:28:13] [health_check] Done (exit=2)
+[2026-04-09 15:28:15] [health_check] Starting
+[2026-04-09 15:28:17] [health_check] [health_check] 2026-04-09T15:28:15 overall=CRITICAL
+[2026-04-09 15:28:17] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:28:17] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:28:17] [health_check] Done (exit=2)
+[2026-04-09 15:28:22] [slack_check] Starting
+[2026-04-09 15:28:23] [health_check] Starting
+[2026-04-09 15:28:24] [slack_check] Starting
+[2026-04-09 15:28:24] [slack_check] Starting
+[2026-04-09 15:28:25] [slack_check] Starting
+[2026-04-09 15:28:25] [health_check] [health_check] 2026-04-09T15:28:23 overall=CRITICAL
+[2026-04-09 15:28:25] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:28:25] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:28:25] [health_check] Done (exit=2)
+[2026-04-09 15:28:25] [slack_check] Starting
+[2026-04-09 15:28:25] [slack_check] Starting
+[2026-04-09 15:28:26] [slack_check] Starting
+[2026-04-09 15:28:26] [slack_check] Starting
+[2026-04-09 15:28:26] [slack_check] Starting
+[2026-04-09 15:28:27] [slack_check] Starting
+[2026-04-09 15:28:27] [slack_check] Starting
+[2026-04-09 15:28:27] [slack_check] Starting
+[2026-04-09 15:28:28] [slack_check] Starting
+[2026-04-09 15:28:28] [slack_check] Starting
+[2026-04-09 15:28:28] [slack_check] Starting
+[2026-04-09 15:28:29] [slack_check] Starting
+[2026-04-09 15:28:30] [slack_check] Starting
+[2026-04-09 15:28:31] [slack_check] Starting
+[2026-04-09 15:28:31] [slack_check] Starting
+[2026-04-09 15:28:32] [slack_check] Starting
+[2026-04-09 15:28:33] [slack_check] Starting
+[2026-04-09 15:28:34] [slack_check] Starting
+[2026-04-09 15:28:34] [slack_check] Starting
+[2026-04-09 15:28:35] [slack_check] Starting
+[2026-04-09 15:28:35] [slack_check] Starting
+[2026-04-09 15:28:35] [slack_check] Starting
+[2026-04-09 15:28:36] [health_check] Starting
+[2026-04-09 15:28:38] [health_check] [health_check] 2026-04-09T15:28:37 overall=CRITICAL
+[2026-04-09 15:28:38] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:28:38] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:28:38] [health_check] Done (exit=2)
+[2026-04-09 15:28:38] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-09 15:28:38] [ALERT] Sent error alert for health_check
+[2026-04-09 15:28:39] [scheduler_health] Starting
+[2026-04-09 15:28:40] [scheduler_health] [ASH] ヘルスチェック OK=3 WARN=2 FAIL=0
+[2026-04-09 15:28:40] [scheduler_health] ✅ scheduler_ash PID — PID=30448 生存中
+[2026-04-09 15:28:40] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 15:28:40] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー2件。例: [2026-04-09 15:28:07] [ALERT] Sent error alert for health_check
+[2026-04-09 15:28:40] [scheduler_health] ⚠️ git 未push — 43件の未pushコミット
+[2026-04-09 15:28:40] [scheduler_health] Done (exit=1)
+[2026-04-09 15:28:41] [health_check] Starting
+[2026-04-09 15:28:43] [health_check] [health_check] 2026-04-09T15:28:41 overall=CRITICAL
+[2026-04-09 15:28:43] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:28:43] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:28:43] [health_check] Done (exit=2)
+[2026-04-09 15:28:44] [health_check] Starting
+[2026-04-09 15:28:46] [health_check] [health_check] 2026-04-09T15:28:44 overall=CRITICAL
+[2026-04-09 15:28:46] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:28:46] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:28:46] [health_check] Done (exit=2)
+[2026-04-09 15:28:47] [scheduler_health] Starting
+[2026-04-09 15:28:48] [scheduler_health] [ASH] ヘルスチェック OK=3 WARN=2 FAIL=0
+[2026-04-09 15:28:48] [scheduler_health] ✅ scheduler_ash PID — PID=30448 生存中
+[2026-04-09 15:28:48] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 15:28:48] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー4件。例: [2026-04-09 15:28:38] [ALERT] Sent error alert for health_check
+[2026-04-09 15:28:48] [scheduler_health] ⚠️ git 未push — 43件の未pushコミット
+[2026-04-09 15:28:48] [scheduler_health] Done (exit=1)
+[2026-04-09 15:28:48] [slack_check] Starting
+[2026-04-09 15:28:59] [slack_check] Starting
+[2026-04-09 15:29:01] [health_check] Starting
+[2026-04-09 15:29:03] [health_check] [health_check] 2026-04-09T15:29:01 overall=CRITICAL
+[2026-04-09 15:29:03] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:29:03] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:29:03] [health_check] Done (exit=2)
+[2026-04-09 15:29:03] [health_check] Starting
+[2026-04-09 15:29:04] [health_check] Starting
+[2026-04-09 15:29:05] [health_check] [health_check] 2026-04-09T15:29:04 overall=CRITICAL
+[2026-04-09 15:29:05] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:29:05] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:29:05] [health_check] Done (exit=2)
+[2026-04-09 15:29:06] [health_check] [health_check] 2026-04-09T15:29:04 overall=CRITICAL
+[2026-04-09 15:29:06] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:29:06] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:29:06] [health_check] Done (exit=2)
+[2026-04-09 15:29:07] [health_check] Starting
+[2026-04-09 15:29:08] [health_check] [health_check] 2026-04-09T15:29:07 overall=CRITICAL
+[2026-04-09 15:29:08] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:29:08] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:29:08] [health_check] Done (exit=2)
+[2026-04-09 15:29:11] [health_check] Starting
+[2026-04-09 15:29:12] [health_check] [health_check] 2026-04-09T15:29:11 overall=CRITICAL
+[2026-04-09 15:29:12] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:29:12] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:29:12] [health_check] Done (exit=2)
+[2026-04-09 15:29:20] [health_check] Starting
+[2026-04-09 15:29:22] [health_check] [health_check] 2026-04-09T15:29:20 overall=CRITICAL
+[2026-04-09 15:29:22] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:29:22] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:29:22] [health_check] Done (exit=2)
+[2026-04-09 15:29:26] [slack_check] Starting
+[2026-04-09 15:29:27] [slack_check] Starting
+[2026-04-09 15:29:28] [slack_check] Starting
+[2026-04-09 15:29:28] [slack_check] Starting
+[2026-04-09 15:29:28] [slack_check] Starting
+[2026-04-09 15:29:29] [slack_check] Starting
+[2026-04-09 15:29:29] [slack_check] Starting
+[2026-04-09 15:29:31] [slack_check] Starting
+[2026-04-09 15:29:32] [slack_check] Starting
+[2026-04-09 15:29:32] [slack_check] Starting
+[2026-04-09 15:29:32] [slack_check] Starting
+[2026-04-09 15:29:33] [slack_check] Starting
+[2026-04-09 15:29:33] [slack_check] Starting
+[2026-04-09 15:29:34] [slack_check] Starting
+[2026-04-09 15:29:35] [slack_check] Starting
+[2026-04-09 15:29:35] [slack_check] Starting
+[2026-04-09 15:29:35] [slack_check] Starting
+[2026-04-09 15:29:36] [slack_check] Starting
+[2026-04-09 15:29:36] [slack_check] Starting
+[2026-04-09 15:29:36] [slack_check] Starting
+[2026-04-09 15:29:37] [slack_check] Starting
+[2026-04-09 15:29:38] [slack_check] Starting
+[2026-04-09 15:29:38] [slack_check] Starting
+[2026-04-09 15:29:38] [slack_check] Starting
+[2026-04-09 15:29:39] [slack_check] Starting
+[2026-04-09 15:29:39] [health_check] Starting
+[2026-04-09 15:29:40] [slack_check] Starting
+[2026-04-09 15:29:41] [dm_check_pigadev] Starting
+[2026-04-09 15:29:41] [health_check] [health_check] 2026-04-09T15:29:39 overall=CRITICAL
+[2026-04-09 15:29:41] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:29:41] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:29:41] [health_check] Done (exit=2)
+[2026-04-09 15:29:58] [slack_check] Starting
+[2026-04-09 15:30:06] [slack_check] Starting
+[2026-04-09 15:30:07] [health_check] Starting
+[2026-04-09 15:30:09] [health_check] [health_check] 2026-04-09T15:30:07 overall=CRITICAL
+[2026-04-09 15:30:09] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:30:09] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:30:09] [health_check] Done (exit=2)
+[2026-04-09 15:30:10] [health_check] Starting
+[2026-04-09 15:30:11] [health_check] [health_check] 2026-04-09T15:30:10 overall=CRITICAL
+[2026-04-09 15:30:11] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:30:11] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:30:11] [health_check] Done (exit=2)
+[2026-04-09 15:30:28] [health_check] Starting
+[2026-04-09 15:30:29] [slack_check] Starting
+[2026-04-09 15:30:30] [slack_check] Starting
+[2026-04-09 15:30:30] [health_check] [health_check] 2026-04-09T15:30:28 overall=CRITICAL
+[2026-04-09 15:30:30] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:30:30] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:30:30] [health_check] Done (exit=2)
+[2026-04-09 15:30:30] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-09 15:30:30] [ALERT] Sent error alert for health_check
+[2026-04-09 15:30:33] [slack_check] Starting
+[2026-04-09 15:30:33] [slack_check] Starting
+[2026-04-09 15:30:33] [slack_check] Starting
+[2026-04-09 15:30:34] [slack_check] Starting
+[2026-04-09 15:30:35] [slack_check] Starting
+[2026-04-09 15:30:36] [slack_check] Starting
+[2026-04-09 15:30:36] [slack_check] Starting
+[2026-04-09 15:30:37] [slack_check] Starting
+[2026-04-09 15:30:37] [slack_check] Starting
+[2026-04-09 15:30:37] [slack_check] Starting
+[2026-04-09 15:30:37] [slack_check] Starting
+[2026-04-09 15:30:37] [slack_check] Starting
+[2026-04-09 15:30:38] [slack_check] Starting
+[2026-04-09 15:30:39] [health_check] Starting
+[2026-04-09 15:30:39] [slack_check] Starting
+[2026-04-09 15:30:39] [slack_check] Starting
+[2026-04-09 15:30:39] [slack_check] Starting
+[2026-04-09 15:30:39] [slack_check] Starting
+[2026-04-09 15:30:40] [slack_check] Starting
+[2026-04-09 15:30:40] [slack_check] Starting
+[2026-04-09 15:30:40] [slack_check] Starting
+[2026-04-09 15:30:40] [slack_check] Starting
+[2026-04-09 15:30:40] [health_check] [health_check] 2026-04-09T15:30:39 overall=CRITICAL
+[2026-04-09 15:30:40] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:30:40] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:30:40] [health_check] Done (exit=2)
+[2026-04-09 15:30:41] [slack_check] Starting
+[2026-04-09 15:30:41] [slack_check] Starting
+[2026-04-09 15:30:50] [health_check] Starting
+[2026-04-09 15:30:51] [health_check] Starting
+[2026-04-09 15:30:53] [health_check] [health_check] 2026-04-09T15:30:50 overall=CRITICAL
+[2026-04-09 15:30:53] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:30:53] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:30:53] [health_check] Done (exit=2)
+[2026-04-09 15:30:53] [health_check] [health_check] 2026-04-09T15:30:51 overall=CRITICAL
+[2026-04-09 15:30:53] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:30:53] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:30:53] [health_check] Done (exit=2)
+[2026-04-09 15:30:53] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-09 15:30:54] [ALERT] Sent error alert for health_check
+[2026-04-09 15:31:02] ==================================================
+[2026-04-09 15:31:02] Ash scheduler started (PID 3088)
+[2026-04-09 15:31:02] Max runtime: 0 hours
+[2026-04-09 15:31:02] Code hash: 23987b6ea13730e5053683552346a8b2
+[2026-04-09 15:31:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 15:31:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 15:31:02] ==================================================
+[2026-04-09 15:31:03] [slack_check] Starting
+[2026-04-09 15:31:03] Scheduler already running (PID 3088). Exiting.
+[2026-04-09 15:31:08] [health_check] Starting
+[2026-04-09 15:31:10] [health_check] [health_check] 2026-04-09T15:31:08 overall=CRITICAL
+[2026-04-09 15:31:10] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:31:10] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:31:10] [health_check] Done (exit=2)
+[2026-04-09 15:31:13] [slack_check] Starting
+[2026-04-09 15:31:16] [slack_check] Starting
+[2026-04-09 15:31:30] [reservation_check] Starting
+[2026-04-09 15:31:30] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 15:31:30] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 15:31:30] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 15:31:30] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 15:31:30] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 15:31:30] [reservation_check] Done (exit=0)
+[2026-04-09 15:31:36] [slack_check] Starting
+[2026-04-09 15:31:37] [slack_check] Starting
+[2026-04-09 15:31:38] [slack_check] Starting
+[2026-04-09 15:31:38] [slack_check] Starting
+[2026-04-09 15:31:38] [slack_check] Starting
+[2026-04-09 15:31:38] [slack_check] Starting
+[2026-04-09 15:31:38] [slack_check] Starting
+[2026-04-09 15:31:39] [slack_check] Starting
+[2026-04-09 15:31:40] [inbox_check] Starting
+[2026-04-09 15:31:40] [slack_check] Starting
+[2026-04-09 15:31:40] [slack_check] Starting
+[2026-04-09 15:31:40] [slack_check] Starting
+[2026-04-09 15:31:40] [slack_check] Starting
+[2026-04-09 15:31:40] [slack_check] Starting
+[2026-04-09 15:31:41] [reservation_check] Starting
+[2026-04-09 15:31:41] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 15:31:41] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 15:31:41] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 15:31:41] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 15:31:41] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 15:31:41] [reservation_check] Done (exit=0)
+[2026-04-09 15:31:41] [slack_check] Starting
+[2026-04-09 15:31:41] [slack_check] Starting
+[2026-04-09 15:31:41] [inbox_check] Inbox win2 empty
+[2026-04-09 15:31:41] [inbox_check] Done (exit=0)
+[2026-04-09 15:31:41] [dm_check] Starting
+[2026-04-09 15:31:41] [slack_check] Starting
+[2026-04-09 15:31:41] [slack_check] Starting
+[2026-04-09 15:31:41] [slack_check] Starting
+[2026-04-09 15:31:42] [slack_check] Starting
+[2026-04-09 15:31:42] [slack_check] Starting
+[2026-04-09 15:31:43] [slack_check] Starting
+[2026-04-09 15:31:44] [slack_check] Starting
+[2026-04-09 15:31:45] [slack_check] Starting
+[2026-04-09 15:31:46] [dm_check_pigadev] New DM detected
+[2026-04-09 15:31:46] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 15:31:47] [slack_check] Starting
+[2026-04-09 15:31:49] [slack_check] Starting
+[2026-04-09 15:31:51] [inbox_check] Starting
+[2026-04-09 15:31:51] [health_check] Starting
+[2026-04-09 15:31:52] [inbox_check] Inbox win2 empty
+[2026-04-09 15:31:52] [inbox_check] Done (exit=0)
+[2026-04-09 15:31:52] [dm_check] Starting
+[2026-04-09 15:31:53] [dm_check] No new DMs
+[2026-04-09 15:31:53] [dm_check] Done (exit=0)
+[2026-04-09 15:31:53] [review_deadline] Starting
+[2026-04-09 15:31:53] [review_deadline] レビュー期限超過なし。
+[2026-04-09 15:31:53] [review_deadline] Done (exit=0)
+[2026-04-09 15:31:53] [health_check] Starting
+[2026-04-09 15:31:53] [health_check] [health_check] 2026-04-09T15:31:51 overall=CRITICAL
+[2026-04-09 15:31:53] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:31:53] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:31:53] [health_check] Done (exit=2)
