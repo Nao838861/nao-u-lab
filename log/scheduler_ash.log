@@ -54174,3 +54174,30 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 02:29:06] [slack_check] Starting
 [2026-04-10 02:29:06] [slack_check] Starting
 [2026-04-10 02:29:06] [slack_check] Starting
+[2026-04-10 02:29:28] [slack_check] Starting
+[2026-04-10 02:29:29] [twitter_recommended] Starting
+[2026-04-10 02:29:44] [auto_diary] [2026-04-10 02:18:16] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-10 02:29:44] [auto_diary]   Phase [gather] 開始 (timeout=240s)
+[2026-04-10 02:29:44] [auto_diary]   Phase [gather] 完了 (exit=0, output=410chars)
+[2026-04-10 02:29:44] [auto_diary]   Phase [analyze] 開始 (timeout=300s)
+[2026-04-10 02:29:44] [auto_diary]   Phase [analyze] 完了 (exit=0, output=314chars)
+[2026-04-10 02:29:44] [auto_diary] Done (exit=0)
+[2026-04-10 02:29:48] [slack_check] Starting
+[2026-04-10 02:29:54] [slack_check] Starting
+[2026-04-10 02:29:59] [slack_check] Starting
+[2026-04-10 02:30:06] [slack_check] Starting
+[2026-04-10 02:30:06] [slack_check] Starting
+[2026-04-10 02:30:18] [dm_check_pigadev] Starting
+[2026-04-10 02:30:18] [dm_check_pigadev] No new DMs
+[2026-04-10 02:30:18] [dm_check_pigadev] Done (exit=0)
+[2026-04-10 02:30:18] [twitter_recommended] Starting
+[2026-04-10 02:30:18] [twitter_recommended] Skipped: browser locked by another process
+[2026-04-10 02:30:18] [twitter_recommended] Done (exit=0)
+[2026-04-10 02:30:18] [check_usage] Starting
+[2026-04-10 02:30:18] [check_usage] 前回投稿から28分しか経っていない（最小間隔: 300分）。あと271分待機。スキップ。
+[2026-04-10 02:30:18] [check_usage] Done (exit=0)
+[2026-04-10 02:30:18] [health_check] Starting
+[2026-04-10 02:30:19] [health_check] [health_check] 2026-04-10T02:30:18 overall=OK
+[2026-04-10 02:30:19] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:30:19] [health_check] Done (exit=0)
+[2026-04-10 02:30:19] [scheduler_health] Starting
