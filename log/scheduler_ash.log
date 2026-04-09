@@ -52706,3 +52706,28 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 14:25:16] [slack_check] Starting
 [2026-04-09 14:26:31] [slack_check] Starting
 [2026-04-09 14:26:46] [health_check] Starting
+[2026-04-09 14:26:47] [health_check] [health_check] 2026-04-09T14:26:46 overall=OK
+[2026-04-09 14:26:47] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 14:26:47] [health_check] Done (exit=0)
+[2026-04-09 14:27:47] [slack_check] Starting
+[2026-04-09 14:29:03] [slack_check] Starting
+[2026-04-09 14:29:28] [git_sync] Starting
+[2026-04-09 14:29:32] [git_sync] Done (exit=0)
+[2026-04-09 14:30:22] [slack_check] Starting
+[2026-04-09 14:30:49] [scheduler_health] Starting
+[2026-04-09 14:30:49] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 14:30:49] [scheduler_health] ✅ scheduler_ash PID — PID=49108 生存中
+[2026-04-09 14:30:49] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 14:30:49] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー2件。例: [2026-04-09 13:33:03] [check_usage] Failed to parse usage data from page
+[2026-04-09 14:30:49] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 14:30:49] [scheduler_health] Done (exit=1)
+[2026-04-09 14:31:39] [slack_check] Starting
+[2026-04-09 14:32:06] [health_check] Starting
+[2026-04-09 14:32:07] [health_check] [health_check] 2026-04-09T14:32:06 overall=OK
+[2026-04-09 14:32:07] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 14:32:07] [health_check] Done (exit=0)
+[2026-04-09 14:32:57] [slack_check] Starting
+[2026-04-09 14:34:13] [slack_check] Starting
+[2026-04-09 14:35:27] [slack_check] Starting
+[2026-04-09 14:36:46] [slack_check] Starting
+[2026-04-09 14:37:21] [health_check] Starting
