@@ -65347,3 +65347,124 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 00:12:49] [slack_check] Starting
 [2026-04-10 00:14:07] [slack_check] Starting
 [2026-04-10 00:15:44] [health_check] Starting
+[2026-04-10 00:15:45] [health_check] [health_check] 2026-04-10T00:15:44 overall=OK
+[2026-04-10 00:15:45] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 00:15:45] [health_check] Done (exit=0)
+[2026-04-10 00:15:55] [slack_check] Starting
+[2026-04-10 00:17:14] [slack_check] Starting
+[2026-04-10 00:17:42] [git_sync] Starting
+[2026-04-10 00:17:45] [git_sync] Done (exit=0)
+[2026-04-10 00:18:35] [slack_check] Starting
+[2026-04-10 00:19:53] [slack_check] Starting
+[2026-04-10 00:20:50] [health_check] Starting
+[2026-04-10 00:20:51] [health_check] [health_check] 2026-04-10T00:20:50 overall=WARNING
+[2026-04-10 00:20:51] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 00:20:51] [health_check]   [?] git: 3���̖�push�R�~�b�g
+[2026-04-10 00:20:51] [health_check] Done (exit=1)
+[2026-04-10 00:21:11] [slack_check] Starting
+[2026-04-10 00:22:28] [slack_check] Starting
+[2026-04-10 00:23:46] [slack_check] Starting
+[2026-04-10 00:25:04] [slack_check] Starting
+[2026-04-10 00:25:52] [health_check] Starting
+[2026-04-10 00:25:53] [health_check] [health_check] 2026-04-10T00:25:52 overall=WARNING
+[2026-04-10 00:25:53] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 00:25:53] [health_check]   [?] git: 3���̖�push�R�~�b�g
+[2026-04-10 00:25:53] [health_check] Done (exit=1)
+[2026-04-10 00:26:23] [slack_check] Starting
+[2026-04-10 00:27:42] [slack_check] Starting
+[2026-04-10 00:29:01] [slack_check] Starting
+[2026-04-10 00:30:21] [slack_check] Starting
+[2026-04-10 00:31:00] [health_check] Starting
+[2026-04-10 00:31:01] [health_check] [health_check] 2026-04-10T00:31:00 overall=WARNING
+[2026-04-10 00:31:01] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 00:31:01] [health_check]   [?] git: 3���̖�push�R�~�b�g
+[2026-04-10 00:31:01] [health_check] Done (exit=1)
+[2026-04-10 00:31:41] [slack_check] Starting
+[2026-04-10 00:32:58] [slack_check] Starting
+[2026-04-10 00:34:06] [scheduler_health] Starting
+[2026-04-10 00:34:06] [scheduler_health] [ASH] �w���X�`�F�b�N OK=4 WARN=1 FAIL=0
+[2026-04-10 00:34:06] [scheduler_health] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_scheduler_health.py", line 410, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_scheduler_health.py", line 390, in main
+    print(result.to_text())
+UnicodeEncodeError: 'cp932' codec can't encode chara
+[2026-04-10 00:34:06] [scheduler_health] Done (exit=1)
+[2026-04-10 00:34:16] [slack_check] Starting
+[2026-04-10 00:35:34] [slack_check] Starting
+[2026-04-10 00:36:11] [health_check] Starting
+[2026-04-10 00:36:12] [health_check] [health_check] 2026-04-10T00:36:11 overall=WARNING
+[2026-04-10 00:36:12] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 00:36:12] [health_check]   [?] git: 3���̖�push�R�~�b�g
+[2026-04-10 00:36:12] [health_check] Done (exit=1)
+[2026-04-10 00:36:52] [slack_check] Starting
+[2026-04-10 00:38:12] [slack_check] Starting
+[2026-04-10 00:39:30] [slack_check] Starting
+[2026-04-10 00:40:50] [slack_check] Starting
+[2026-04-10 00:41:17] [health_check] Starting
+[2026-04-10 00:41:19] [health_check] [health_check] 2026-04-10T00:41:18 overall=WARNING
+[2026-04-10 00:41:19] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 00:41:19] [health_check]   [?] git: 3���̖�push�R�~�b�g
+[2026-04-10 00:41:19] [health_check] Done (exit=1)
+[2026-04-10 00:41:19] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-10 00:41:20] [ALERT] Sent error alert for health_check
+[2026-04-10 00:42:10] [slack_check] Starting
+[2026-04-10 00:43:29] [slack_check] Starting
+[2026-04-10 00:44:47] [slack_check] Starting
+[2026-04-10 00:46:06] [slack_check] Starting
+[2026-04-10 00:46:37] [health_check] Starting
+[2026-04-10 00:46:39] [health_check] [health_check] 2026-04-10T00:46:37 overall=WARNING
+[2026-04-10 00:46:39] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 00:46:39] [health_check]   [?] git: 3���̖�push�R�~�b�g
+[2026-04-10 00:46:39] [health_check] Done (exit=1)
+[2026-04-10 00:47:29] [slack_check] Starting
+[2026-04-10 00:48:47] [slack_check] Starting
+[2026-04-10 00:50:05] [slack_check] Starting
+[2026-04-10 00:51:25] [slack_check] Starting
+[2026-04-10 00:51:53] [health_check] Starting
+[2026-04-10 00:51:54] [health_check] [health_check] 2026-04-10T00:51:53 overall=WARNING
+[2026-04-10 00:51:54] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 00:51:54] [health_check]   [?] git: 3���̖�push�R�~�b�g
+[2026-04-10 00:51:54] [health_check] Done (exit=1)
+[2026-04-10 00:52:44] [slack_check] Starting
+[2026-04-10 00:54:03] [slack_check] Starting
+[2026-04-10 00:55:52] [slack_check] Starting
+[2026-04-10 00:57:02] [health_check] Starting
+[2026-04-10 00:57:03] [health_check] [health_check] 2026-04-10T00:57:02 overall=WARNING
+[2026-04-10 00:57:03] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 00:57:03] [health_check]   [?] git: 3���̖�push�R�~�b�g
+[2026-04-10 00:57:03] [health_check] Done (exit=1)
+[2026-04-10 00:57:13] [slack_check] Starting
+[2026-04-10 00:58:31] [slack_check] Starting
+[2026-04-10 00:59:52] [slack_check] Starting
+[2026-04-10 01:01:14] [slack_check] Starting
+[2026-04-10 01:02:04] [health_check] Starting
+[2026-04-10 01:02:06] [health_check] [health_check] 2026-04-10T01:02:04 overall=WARNING
+[2026-04-10 01:02:06] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 01:02:06] [health_check]   [?] git: 3���̖�push�R�~�b�g
+[2026-04-10 01:02:06] [health_check] Done (exit=1)
+[2026-04-10 01:02:36] [slack_check] Starting
+[2026-04-10 01:03:55] [slack_check] Starting
+[2026-04-10 01:05:14] [slack_check] Starting
+[2026-04-10 01:07:04] [slack_check] Starting
+[2026-04-10 01:07:34] [health_check] Starting
+[2026-04-10 01:07:36] [health_check] [health_check] 2026-04-10T01:07:34 overall=WARNING
+[2026-04-10 01:07:36] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 01:07:36] [health_check]   [?] git: 3���̖�push�R�~�b�g
+[2026-04-10 01:07:36] [health_check] Done (exit=1)
+[2026-04-10 01:07:36] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-10 01:07:36] [ALERT] Sent error alert for health_check
+[2026-04-10 01:08:26] [slack_check] Starting
+[2026-04-10 01:09:46] [slack_check] Starting
+[2026-04-10 01:11:08] [slack_check] Starting
+[2026-04-10 01:12:29] [slack_check] Starting
+[2026-04-10 01:12:58] [health_check] Starting
+[2026-04-10 01:13:00] [health_check] [health_check] 2026-04-10T01:12:58 overall=WARNING
+[2026-04-10 01:13:00] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 01:13:00] [health_check]   [?] git: 3���̖�push�R�~�b�g
+[2026-04-10 01:13:00] [health_check] Done (exit=1)
+[2026-04-10 01:13:50] [slack_check] Starting
+[2026-04-10 01:15:10] [slack_check] Starting
+[2026-04-10 01:16:32] [slack_check] Starting
+[2026-04-10 01:17:01] [inbox_check] Starting
