@@ -120,6 +120,13 @@ TIMEOUT_ESCALATION_FACTOR = 1.5    # タイムアウト拡大倍率
 ERROR_BACKOFF_THRESHOLD = 5        # 連続エラーN回でバックオフ
 ERROR_BACKOFF_SEC = 30 * 60        # バックオフ時間（30分）
 
+# Quiet jobs: 特定のexit codeではStarting/Doneをログに出さない（ログ洪水防止）
+# slack_check exit=1 = 新着なし（正常）、health_check exit=1 = warning only（非エラー）
+QUIET_EXIT_CODES = {
+    "slack_check": {1},
+    "health_check": {1},
+}
+
 # Job definitions: (name, command, interval_seconds, timeout_seconds)
 # ⚠ 周期・タイムアウトの変更は scheduler_log_config.json 経由で行うこと
 # ⚠ このJOBS定義を直接編集しても再起動するまで反映されない
@@ -688,7 +695,8 @@ def main_loop():
                     # 動的タイムアウトがあればそちらを使用
                     effective_timeout = timeout_override.get(name, timeout)
 
-                    log(f"[{name}] Starting")
+                    if name not in QUIET_EXIT_CODES:
+                        log(f"[{name}] Starting")
                     exit_code = run_job(name, cmd, effective_timeout)
 
                     # --- エラー分類と追跡 ---
@@ -709,7 +717,8 @@ def main_loop():
                     elif exit_code != 0 and name not in ("git_sync", "recommended_check", "slack_export", "auto_cycle"):
                         # 非ゼロ終了コード（特殊ハンドリングジョブは除外）
                         # slack_check: exit=1は「新着メッセージなし」の正常状態。exit=2+のみエラー扱い
-                        if name == "slack_check" and exit_code == 1:
+                        if exit_code in QUIET_EXIT_CODES.get(name, set()):
+                            # slack_check exit=1, health_check exit=1 等: 正常扱い
                             timeout_counter[name] = 0
                             error_counter[name] = 0
                         else:
@@ -735,7 +744,9 @@ def main_loop():
                         error_counter[name] = 0
 
                     if name != "git_sync":
-                        log(f"[{name}] Done (exit={exit_code})")
+                        quiet_codes = QUIET_EXIT_CODES.get(name, set())
+                        if exit_code not in quiet_codes:
+                            log(f"[{name}] Done (exit={exit_code})")
                     last_run[name] = datetime.now()
 
                     # --- Slack即時応答: slack_checkが新着を検出したらinbox_checkを即時実行 ---
