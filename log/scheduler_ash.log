@@ -64857,3 +64857,58 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 20:15:47] [git_sync] Done (exit=0)
 [2026-04-09 20:15:47] [twitter_recommended] Starting
 >>>>>>> 2247237971677a2eb4fe2aa3a7e183ad785363e0
+[2026-04-09 20:21:02] ==================================================
+[2026-04-09 20:21:02] Ash scheduler started (PID 23660)
+[2026-04-09 20:21:02] Max runtime: 0 hours
+[2026-04-09 20:21:02] Code hash: 23987b6ea13730e5053683552346a8b2
+[2026-04-09 20:21:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 20:21:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-09 20:21:02] ==================================================
+[2026-04-09 20:21:13] [slack_check] Starting
+[2026-04-09 20:21:31] [reservation_check] Starting
+[2026-04-09 20:21:31] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 20:21:31] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 20:21:31] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 20:21:31] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 20:21:31] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 20:21:31] [reservation_check] Done (exit=0)
+[2026-04-09 20:21:41] [inbox_check] Starting
+[2026-04-09 20:21:41] [inbox_check] Inbox win2 empty
+[2026-04-09 20:21:41] [inbox_check] Done (exit=0)
+[2026-04-09 20:21:41] [dm_check] Starting
+[2026-04-09 20:21:57] [dm_check] No new DMs
+[2026-04-09 20:21:57] [dm_check] Done (exit=0)
+[2026-04-09 20:21:57] [review_deadline] Starting
+[2026-04-09 20:21:57] [review_deadline] レビュー期限超過なし。
+[2026-04-09 20:21:57] [review_deadline] Done (exit=0)
+[2026-04-09 20:22:07] [kaizen_auto_verify] Starting
+[2026-04-09 20:22:07] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-09 20:22:07] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 20:22:07] [git_sync] Starting
+[2026-04-09 20:22:11] [git_sync] Done (exit=0)
+[2026-04-09 20:22:31] [slack_check] Starting
+[2026-04-09 20:23:00] [health_check] Starting
+[2026-04-09 20:23:01] [health_check] [health_check] 2026-04-09T20:23:00 overall=OK
+[2026-04-09 20:23:01] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 20:23:01] [health_check] Done (exit=0)
+[2026-04-09 20:23:11] [auto_diary] Starting
+[2026-04-09 20:35:11] [auto_diary] Timeout (720s)
+[2026-04-09 20:35:21] [slack_check] Starting
+[2026-04-09 20:35:40] [dm_check_pigadev] Starting
+[2026-04-09 20:35:54] [dm_check_pigadev] No new DMs
+[2026-04-09 20:35:54] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 20:35:54] [twitter_recommended] Starting
+[2026-04-09 20:36:53] [twitter_recommended] Opening For You tab...
+[2026-04-09 20:36:53] [twitter_recommended]     1. @umiyuki_ai: AnthropicがClaudeManagedAgnetsをリリース。何なのこれは？要するにOpenClawみたいなAI...
+[2026-04-09 20:36:53] [twitter_recommended]     2. @shin_sasaki19: AIエージェント設計で本当に重要なこと
+[2026-04-09 20:36:53] [twitter_recommended] 
+[2026-04-09 20:36:53] [twitter_recommended] ・AIエージェント開発で重要なのは『どう賢く動かすか』以上に『モデルが進化して...
+[2026-04-09 20:36:53] [twitter_recommended] Done (exit=0)
+[2026-04-09 20:36:53] [check_usage] Starting
+[2026-04-09 20:36:53] [check_usage] 前回投稿から19分しか経っていない（最小間隔: 300分）。あと280分待機。スキップ。
+[2026-04-09 20:36:53] [check_usage] Done (exit=0)
+[2026-04-09 20:36:53] [health_check] Starting
+[2026-04-09 20:36:55] [health_check] [health_check] 2026-04-09T20:36:54 overall=OK
+[2026-04-09 20:36:55] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 20:36:55] [health_check] Done (exit=0)
+[2026-04-09 20:36:55] [scheduler_health] Starting
