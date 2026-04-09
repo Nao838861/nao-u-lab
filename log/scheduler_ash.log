@@ -64493,3 +64493,15 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 05:22:04] [health_check] Done (exit=0)
 [2026-04-10 05:22:06] [slack_check] Starting
 [2026-04-10 05:22:08] [health_check] Starting
+[2026-04-10 05:22:09] [health_check] [health_check] 2026-04-10T05:22:08 overall=OK
+[2026-04-10 05:22:09] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 05:22:09] [health_check] Done (exit=0)
+[2026-04-10 05:22:11] [git_sync] Starting
+[2026-04-10 05:22:11] [slack_check] Starting
+[2026-04-10 05:22:14] [dm_check] No new DMs
+[2026-04-10 05:22:14] [dm_check] Done (exit=0)
+[2026-04-10 05:22:14] [review_deadline] Starting
+[2026-04-10 05:22:15] [review_deadline] レビュー期限超過なし。
+[2026-04-10 05:22:15] [review_deadline] Done (exit=0)
+[2026-04-10 05:22:15] [git_sync] Done (exit=0)
+[2026-04-10 05:22:16] [health_check] Starting
