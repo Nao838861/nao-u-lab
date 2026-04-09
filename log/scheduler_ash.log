@@ -45587,3 +45587,25 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 12:22:03] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
 [2026-04-09 12:22:03] [kaizen_auto_verify] Done (exit=0)
 [2026-04-09 12:22:03] [git_sync] Starting
+[2026-04-09 12:22:08] [git_sync] Done (exit=0)
+[2026-04-09 12:22:11] [git_sync] Starting
+[2026-04-09 12:22:15] [dm_check_pigadev] No new DMs
+[2026-04-09 12:22:15] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 12:22:15] [slack_check] Starting
+[2026-04-09 12:22:15] [git_sync] Done (exit=0)
+[2026-04-09 12:22:16] [slack_check] Starting
+[2026-04-09 12:22:16] [slack_check] Starting
+[2026-04-09 12:22:17] [slack_check] Starting
+[2026-04-09 12:22:17] [slack_check] Starting
+[2026-04-09 12:22:17] [slack_check] Starting
+[2026-04-09 12:22:18] [slack_check] Starting
+[2026-04-09 12:22:19] [slack_check] Starting
+[2026-04-09 12:22:19] [slack_check] Starting
+[2026-04-09 12:22:19] [slack_check] Starting
+[2026-04-09 12:22:20] [slack_check] Starting
+[2026-04-09 12:22:20] [slack_check] [12:22:20] No channels found
+[2026-04-09 12:22:20] [slack_check] Done (exit=1)
+[2026-04-09 12:22:20] [slack_check] Done (exit=1)
+[2026-04-09 12:22:20] [health_check] Starting
+[2026-04-09 12:22:20] [slack_check] Starting
+[2026-04-09 12:22:20] [slack_check] Starting
