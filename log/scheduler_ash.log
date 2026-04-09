@@ -49724,3 +49724,50 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 12:52:11] [slack_check] Starting
 [2026-04-09 12:52:11] [slack_check] [12:52:11] No channels found
 [2026-04-09 12:52:11] [slack_check] Done (exit=1)
+[2026-04-09 12:52:11] [slack_check] Done (exit=1)
+[2026-04-09 12:52:12] [slack_check] [12:52:12] No channels found
+[2026-04-09 12:52:12] [slack_check] Done (exit=1)
+[2026-04-09 12:52:12] [slack_check] [12:52:12] No channels found
+[2026-04-09 12:52:12] [slack_check] Done (exit=1)
+[2026-04-09 12:52:12] [slack_check] Done (exit=1)
+[2026-04-09 12:52:13] [git_sync] Starting
+[2026-04-09 12:52:14] [slack_check] Done (exit=1)
+[2026-04-09 12:52:14] [slack_check] Done (exit=1)
+[2026-04-09 12:52:15] [dm_check] No new DMs
+[2026-04-09 12:52:15] [dm_check] Done (exit=0)
+[2026-04-09 12:52:15] [review_deadline] Starting
+[2026-04-09 12:52:15] [slack_check] Done (exit=1)
+[2026-04-09 12:52:15] [review_deadline] レビュー期限超過なし。
+[2026-04-09 12:52:15] [review_deadline] Done (exit=0)
+[2026-04-09 12:52:16] [git_sync] Done (exit=0)
+[2026-04-09 12:52:17] [health_check] Starting
+[2026-04-09 12:52:18] [slack_check] Starting
+[2026-04-09 12:52:18] [git_sync] Done (exit=0)
+[2026-04-09 12:52:19] [slack_check] [12:52:19] No channels found
+[2026-04-09 12:52:19] [slack_check] Done (exit=1)
+[2026-04-09 12:52:19] [health_check] [health_check] 2026-04-09T12:52:17 overall=OK
+[2026-04-09 12:52:19] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:52:19] [health_check] Done (exit=0)
+[2026-04-09 12:52:21] [health_check] Starting
+[2026-04-09 12:52:22] [health_check] [health_check] 2026-04-09T12:52:21 overall=OK
+[2026-04-09 12:52:22] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:52:22] [health_check] Done (exit=0)
+[2026-04-09 12:52:22] [health_check] Starting
+[2026-04-09 12:52:23] [slack_check] Starting
+[2026-04-09 12:52:24] [health_check] Starting
+[2026-04-09 12:52:24] [health_check] [health_check] 2026-04-09T12:52:23 overall=OK
+[2026-04-09 12:52:24] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:52:24] [health_check] Done (exit=0)
+[2026-04-09 12:52:25] [health_check] Starting
+[2026-04-09 12:52:25] [health_check] [health_check] 2026-04-09T12:52:24 overall=OK
+[2026-04-09 12:52:25] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:52:25] [health_check] Done (exit=0)
+[2026-04-09 12:52:25] [slack_check] Starting
+[2026-04-09 12:52:26] [slack_check] Starting
+[2026-04-09 12:52:26] [health_check] Starting
+[2026-04-09 12:52:26] [health_check] Starting
+[2026-04-09 12:52:26] [health_check] [health_check] 2026-04-09T12:52:25 overall=OK
+[2026-04-09 12:52:26] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:52:26] [health_check] Done (exit=0)
+[2026-04-09 12:52:27] [slack_check] [12:52:27] No channels found
+[2026-04-09 12:52:27] [slack_check] Done (exit=1)
