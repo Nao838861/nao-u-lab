@@ -258,7 +258,7 @@ class ClimbWallPlan(Plan):
     def step(self, ctx):
         if not self.committed:
             self.committed = True
-            self.jump_hold = 20 if self.wall_height >= 3 else 12
+            self.jump_hold = 22 if self.wall_height >= 4 else (18 if self.wall_height >= 3 else 12)
         self.timer += 1
         if self.timer > 5 and ctx['state']['on_ground']:
             self._done = True
@@ -327,21 +327,21 @@ class HitBlockPlan(Plan):
         self.char = block[3]
         self.gives_item = gives_item
         self._done = False
-        self._jump_timer = 0
 
     def score(self, ctx):
         # Live distance to block
         cdist = self.col * 16 - ctx['state']['x']
-        if cdist > 30 or cdist < -8:
+        if cdist > 16 or cdist < -8:
             return 0
         # Wall nearby → skip block (need momentum for wall climb)
         for wd, wh in ctx['terrain']['walls']:
             if 0 < wd < 48 and wh >= 2:
                 return 0
-        # Enemy closer than block → yield to stomp
-        for e in ctx['enemies']:
-            if 0 < e['dx'] < max(cdist, 16) and e['kind'] in ('goomba', 'koopa', 'shell'):
-                return 0
+        # Enemy closer than block → yield to stomp (but NOT for item blocks — mushroom is worth the risk)
+        if self.char not in ITEM_BLOCKS:
+            for e in ctx['enemies']:
+                if 0 < e['dx'] < max(cdist, 16) and e['kind'] in ('goomba', 'koopa', 'shell'):
+                    return 0
         if self.char in ITEM_BLOCKS and not ctx['state'].get('is_super', False):
             return 80  # High priority, wins over advance, loses to climb_wall for tall pipes
         if self.char in COIN_BLOCKS:
@@ -349,25 +349,14 @@ class HitBlockPlan(Plan):
         return 0
 
     def step(self, ctx):
-        cdist = self.col * 16 - ctx['state']['x']
-        self.timer += 1
-
-        # Approach phase: dash toward block (keep speed for pipe crossing later)
-        # NOT committed → plan re-selection can switch to stomp/climb_wall any frame
-        if cdist > 16 and not self.committed:
-            return {'left': False, 'right': True, 'a': False, 'b': True}
-
-        # Jump phase: commit and jump under the block
         if not self.committed:
             self.committed = True
-            self._jump_timer = 0
-
-        self._jump_timer += 1
-        if self._jump_timer > 5 and ctx['state']['on_ground']:
+        self.timer += 1
+        if self.timer > 5 and ctx['state']['on_ground']:
             self._done = True
-        if self._jump_timer == 1:
+        if self.timer == 1:
             return {'left': False, 'right': True, 'a': False, 'b': True}
-        if self._jump_timer <= 18:
+        if self.timer <= 18:
             return {'left': False, 'right': True, 'a': True, 'b': True}
         return {'left': False, 'right': True, 'a': False, 'b': True}
 
@@ -478,10 +467,11 @@ def generate_plans(ctx):
         if dist < nearest_pit_dist or nearest_pit_dist > 100:
             plans.append(ClimbWallPlan(dist, height))
 
-    # Hittable blocks
-    for block in terrain['blocks']:
-        gives_item = block[3] in ITEM_BLOCKS
-        plans.append(HitBlockPlan(block, gives_item))
+    # Hittable blocks (only generate from ground — mid-air detection hits unreachable blocks)
+    if state['on_ground']:
+        for block in terrain['blocks']:
+            gives_item = block[3] in ITEM_BLOCKS
+            plans.append(HitBlockPlan(block, gives_item))
 
     # Enemies (stomp candidates)
     for e in enemies:
@@ -553,30 +543,30 @@ def run(level_path='assets/level_1_1.txt', goal_name='max_coins',
                 'mushrooms': mushrooms,
             }
 
-            # Stuck escape: back up → dash forward → full jump
+            # Stuck escape: back up far → full dash-jump to clear walls
             if stuck_escape > 0:
                 stuck_escape -= 1
-                if stuck_escape > 35:
-                    # Phase 1: back up (5 frames)
+                if stuck_escape > 40:
+                    # Phase 1: back up 10 frames (~30px left)
                     inp = {'left': True, 'right': False, 'a': False, 'b': True}
-                elif stuck_escape > 30:
-                    # Phase 2: turn around, start running right (5 frames)
+                elif stuck_escape > 38:
+                    # Phase 2: turn around 2 frames
                     inp = {'left': False, 'right': True, 'a': False, 'b': True}
-                elif stuck_escape > 10:
-                    # Phase 3: full dash-jump (20 frames of A hold)
+                elif stuck_escape > 15:
+                    # Phase 3: full dash-jump (23 frames of A hold)
                     inp = {'left': False, 'right': True, 'a': True, 'b': True}
                 else:
-                    # Phase 4: release A, coast
+                    # Phase 4: coast
                     inp = {'left': False, 'right': True, 'a': False, 'b': True}
                 state = api.step(**inp)
                 if stuck_escape == 0:
                     active_plan = None
                 continue
 
-            # Stuck detection: <16px progress in 120 frames
-            if state['frame'] - stuck_check_frame >= 120:
+            # Stuck detection: <16px progress in 100 frames (faster reaction)
+            if state['frame'] - stuck_check_frame >= 100:
                 if state['x'] - stuck_check_x < 16:
-                    stuck_escape = 40  # 40 frames: 5 back + 5 turn + 20 jump + 10 coast
+                    stuck_escape = 50
                 stuck_check_x = state['x']
                 stuck_check_frame = state['frame']
 
