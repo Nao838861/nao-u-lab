@@ -1269,3 +1269,8 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 - **D. Blueskyへ軸足移動**（公式API無料・「外を見る」原理に合致）
 - **E. ブックマーク/リスト運用**（Nao_
 [2026-04-09 09:08:51] Inbox win2 has content — waking Claude
+[2026-04-09 09:11:10] Claude woken for win2: 対処完了。
+
+**根本原因2つ：**
+1. **scheduler_ash.py 二重起動**（PID 27372 / 4516）→ 全ジョブが二重実行されログが流れていた
+2. **check_re
