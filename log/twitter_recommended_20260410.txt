@@ -1,315 +1,368 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 05:25
-# Total: 44 tweets
+# Read at: 2026-04-10 05:30
+# Total: 50 tweets
 
---- 1. @YaReYaRu30Life (2026-04-08) ---
-Seedance2.0作
-ファンタジーゲームOP風
+--- 1. @karpathy (2026-04-09) ---
+Judging by my tl there is a growing gap in understanding of AI capability.
 
-って言えばギリギリそれっぽくも見えなくもないですが
+The first issue I think is around recency and tier of use. I think a lot of people tried the free tier of ChatGPT somewhere  last year and allowed it to inform their views on AI a little too much. This is
 
-真実は全く別で
-びっくりするぐらいプロンプトが通らなかった。
-先にChatGPTでイメージの壁打ちしてから
-参照させるための構文をいれたことで
-色々怪しいところあったのですが
-
---- 2. @agodajapan (?) ---
-アゴダで宿泊・フライト料金を見つけよう。旅行を一緒に計画して、おトクに予約。これぞアゴダチ！バナナマンが出演するCM放映中
-
---- 3. @TheChiefNerd (2026-04-09) ---
-When liberals get AI robots 
-
---- 4. @petergyang (2026-04-08) ---
-As much as I love using Claude Max and ChatGPT Pro, I don't think these all-you-can-use AI subscriptions will last forever.
-
-Here's my new deep dive that covers:
-
-→ Why Anthropic cut off OpenClaw access
-→ How to run local models on your Mac
-→ What I'm seeing on the ground in
-
---- 5. @CopyRebeldia (2026-04-08) ---
- Claude が今、あなたのモバイルアプリ全体を構築できるようになりました。まるで Apple レベルの $350K デベロッパーのように、数分で、しかも GRATIS。
-
-以前は完全なチームと数週間の作業が必要だったものが、今ではよく考えられた数個のプロンプトで実現します。
-
---- 6. @HyperUsorFell (2026-04-09) ---
-今まで反AI連中が知らずにAI機能を使ってたことが可視化されて何よりじゃないかｗ
-リプ欄や引用ポストを見てると『AIタグを付けずに投稿する方法』に言及するコメントがあるけど、AI機能を使ったのにそれを隠すのは『手描き偽装』なんじゃないの？
-
---- 7. @heygurisingh (2026-04-09) ---
-Holy shit...
-
-Addy Osmani just dropped something that will make "Vibe Coders" loose their mind.
-
-It's called Agent Skills.
-
-Production-grade engineering workflows that force AI coding agents to actually behave like senior engineers, not interns shipping prototypes to prod.
-
-→
-
---- 8. @roco_kn_roco (2026-04-09) ---
-Davinchi Resoleve Studio(有償版)の便利機能の紹介
-
-  生成したBGMを使いたいけど、長さが足りない時に使える小技です！ 
-
- ぜひ試してみてね～  
-
-（不定期でDavinchiの機能紹介していきます！）
-
---- 9. @cuatxe (2026-04-09) ---
-@MetrobusCDMX
- のリアルタイム表示？ うん。
-
---- 10. @hajimenokondo (2026-04-09) ---
-札幌上空で彩雲
-
---- 11. @livedoornews (?) ---
-【】雨の日こそ花粉が辛い…「花粉爆発」のせい？
-
-肌についた花粉に水が触れることで亀裂が生じ、中のアレルギー物質が放出される現象「花粉爆発」。顔を水だけで洗っている人は要注意。
-
-N organicのクレンジングは花粉をオイルでくるみ、「花粉爆発」させることなく穏やかに落とすという。〈PR〉
-
---- 12. @AJamesMcCarthy (2026-04-09) ---
-My printing partner saw this line in the print and thought it was an error. 
-
-Don't worry, the lightning arresting cable is very real and an important part of the launch, and now when you see it in your print you'll know what it is :)
-
---- 13. @sheymanishere (2026-04-09) ---
-until ya whole room start ringing
-
---- 14. @cryptopunk7213 (2026-04-08) ---
-meta lit $75 billion on fire, sacked 600 people, spent $15B to hire ONE guy to create an ai model that... sucks (but theres a twist):
-
-it's pretty fucking good at any data-derived task... and meta owns the personal data of 3.4B DAILY users. this is intentional...
-
-zuck knows he
-
---- 15. @ripchillpill (2026-04-09) ---
-X Livestream coming up @ 3PM CET 
-
-today I'll have 
-@lippylipka
- & 
-@0xPaulThomas
- stop by and we're gonna talk everything AI agents 
-
-why did i pay $5k for a mac mini? how do i make sure i'm not put out of work by someone elese's agent? 
-
-so many questions. make sure to join us
-
---- 16. @plasticsnews (2026-04-09) ---
-New Tech Plastics expanding into pouches in Ohio
-
---- 17. @andrewchen (2026-04-09) ---
-built my openclaw a new home
-
-(mac mini + nvidia dgx spark
-in a 8U mini rack)
-
---- 18. @renoiseai (2026-04-09) ---
-It's here. Creator Sharing Rewards Round 2  
-Ready to share your videos with the Renoise watermark?
-Repost + comment "watermark" to unlock the prompt. 
-We'll pick 4 winners for a free $20 membership.
-
---- 19. @CharaspowerAI (2026-04-09) ---
-PixVerse C1 just dropped…
-and honestly, it’s already hitting hard.
-
---- 20. @janrosenow (2026-04-09) ---
-For the first time ever, heat pumps outsold gas boilers in Germany in 2025.
-
-48% of all new heating systems installed last year were heat pumps. Gas fell to just 39%. A decade ago, heat pumps had a 7% market share. The transformation has been remarkable.
-
---- 21. @SKII_Japan (?) ---
+--- 2. @sola_officialJP (?) ---
 ／
-せっかくのピテラ™︎を一滴も無駄にしたくない方へ！
-＼
- 
-コットンパックのコツ
- 
-コットンに精製水を含ませてからエッセンスをなじませ、1枚を2〜3枚に割くのがおすすめ。
- 
-少量でも全顔パックに
-※精製水は開封後は清潔に保ち、早めに使い切ることをおすすめします
+ドゥバドゥワリワリ♪
+SOLA WEATHER CARE with TOMORROW X TOGETHER
+キャンペーン開始！
+ ＼
 
---- 22. @all_country_pp (2026-04-09) ---
-お昼です
+「 2026 TXT MOA CON IN JAPAN 」の公演チケットや
+グッズ、QUOカードが当たるチャンス！
 
-日経平均 -0.55%
-アメリカ市場 -0.11%
-　
-(´；ω；｀)ｳｯ…
+＜応募条件＞
+A賞：対象商品3,000円以上(税込)を購入
+B賞：対象商品1,500円以上(税込)を購入
 
-ちょい悲しい結果ですが昨日爆上げしてるのでこれぐらい可愛いものですね
+--- 3. @CienciaTecg (2026-04-09) ---
+アルテミスIIの軌道を、アポロ11とアポロ13の軌道と比較。
 
---- 23. @ohnuki_tsuyoshi (2026-04-09) ---
-なるほど、ニコンD5は古い機種だが高感度性能では最も優れていて、より新しい機種は画素が多くなった分高感度性能ではD5に劣るというわけか。得失を理解したうえでNASAが選択したんだな。
-あと「宇宙での実績がある」というのは、ISSでの運用のことだろうね。長い間D5が配備されているはず。
+--- 4. @wraith13 (2026-04-09) ---
+ソフトウェア開発上の、多くの人が常識的だと考える事のその殆どが、それなりの割り合いの人が全く触れる事なく経験を重ねて行くもんなんよ。常識など無いのが常識、ぐらいに思ってた方がいい。
 
---- 24. @Chronodendron (2026-04-09) ---
-I’m so upset…  
+--- 5. @nanseki_o (2026-04-09) ---
+夏というもの、始まったら終わってしまうのでまだ来ないでほしいよ〜
 
-My Kindle is fifteen years old. It still works fine, and I want no other. 
+--- 6. @pop_ikeda (2026-04-08) ---
+【AI時代のメタスキル 完全まとめ】
 
-I read a lot, and this is the only e-reader that doesn’t hurt my eyes. None of the new models have a screen that so perfectly mimics paper.  And now Amazon is forcing me to buy a new
+① スキルは召喚できる。問題は「どのゲームで戦うか」
 
---- 25. @Cinderia_Game (2026-04-09) ---
-COMPUTER, show people the cool game we're making
+② 多言語ディープリサーチで世界中の先行事例を探す尾原流
 
---- 26. @urahr_hongkong (2026-04-09) ---
-ラストマンシップのあるメンバーは大好き。
+③ 「評価の物差しを他人に渡さない」が最強のメンタル設計
 
-「自分の後ろにはもう誰もいない」と思って動いてくれる人は、スキルが足りなくても安心して任せられます。
+④ AI日報×グロウスログで好奇心ループを回す実践術
 
-逆にこれがない人は、どれだけ優秀でも最後の場面で怖くて預けられないです。
+--- 7. @takoyaki_sweets (2026-04-09) ---
+大阪帰りあるある
+「お土産買うの忘れた…」
+そんな人に朗報やで～
+名神高速草津PA上りのセブンイレブンで
+たこパティエまだ買えるで！
+6本・12本・24本ぜんぶあるから安心や
+そのまま東京まで持って帰ってな～！
 
-何かあったら全力で守るからね！
+--- 8. @tebasaki3D (2026-04-09) ---
+これはおめでたい
+ですが、日本で正式リリースされたってアナウンスありましたっけ…？
+忘れられちゃってるのかな？
 
---- 27. @weezerOSINT (2026-04-09) ---
+--- 9. @ogochan (2026-04-09) ---
+ASCII版のTeXでは自動でやってくれてたと思うんだ
+
+--- 10. @ar1 (2026-04-09) ---
+今日13時からの無料ウェビナーでも話をします。新規のお客様ももちろんですが、既存のクラウドユーザ、レンサバ/VPS法人ユーザーも対象です。
+
+--- 11. @NetflixJP (?) ---
+「ミスしても、前向いていこう」
+
+侍ジャパンのムードメーカー
+牧秀悟選手の“円陣声出し”で
+
+チームの熱気は一瞬で最高潮に！
+
+Netflixドキュメンタリー映画
+『戦いの向こう 侍たちの記録 2026 WORLD BASEBALL CLASSIC』
+
+4月20日Netflix独占配信スタート
+
+--- 12. @hanana_0870 (2026-04-09) ---
+ナースステーションのど真ん中で、お局が新人の子に「なんで私が怒ってるかわかる？」って言ってたんだけど、真顔で「昨日のアンガーマネジメント研修に参加してないから…ですかね？」って返してたの、３年経っても忘れられない。
+
+--- 13. @tobi (2026-04-09) ---
+I remember this “not-a-flamethrower” moment fondly. It was being sold through Shopify and I had to explain Elon’s shenanigans to risk, underwriting and AUP teams all at the same time to keep it up.
+
+--- 14. @SOU_BTC (2026-04-09) ---
+【速報】 $HYPE 40ドル突破 
+
+--- 15. @aakashgupta (2026-04-09) ---
+The sun you see right now exploded 7 minutes ago and you'd have no way of knowing. You'd still feel its warmth. Still see it in the sky. Still orbit it. For 8 minutes and 20 seconds, you'd live in a universe that no longer has a sun and have absolutely no way to detect the
+
+--- 16. @takagimizuho2 (2026-04-09) ---
+歌舞伎町のうらぶれた喫茶店で、10年同じ嬢を指名し続けている男の話を聞いた。
+
+「もうエロとかじゃない」
+と男は笑う。
+
+「出会ったころはお互いに20代。月2で会ってるから、人生をだいたい共有しています。だから指名するのは単なる性処理じゃなくて、人生の答え合わせに近いのかもしれません」
+
+--- 17. @iufPReTCFeH8JPi (2026-04-09) ---
+だから中小型株に投資したい、っていうのもあるんですよね。
+でもそれだけじゃ相場に乗り切れないこともしばしばあるし、投資対象も一気に狭まるので、やはりインデックスでまとめ買いが一番効率的で、結局インデックス投資最強なんですよね・・・
+
+--- 18. @qchan19721122 (2026-04-09) ---
+フリーADV　『ナイトホークの贖罪』
+#Indiegame
+#indiedev
+#フリーゲーム
+
+きゅーちゃんです♪
+
+…………　終わったぜ♪　絵のリテイク。
+
+--- 19. @YACKLE89 (2026-04-08) ---
+おはようございます
+あと２日、頑張っていきましょう
+
+【注目高配当銘柄】
+長谷川香料（4958）
+・国内香料メーカー2位
+・BtoBビジネスで景気耐性が強い（生活必需系）
+・顧客は食品・日用品メーカー中心で安定収益型
+派手な成長はないが「超ディフェンシブ銘柄」
+
+■ 投資指標まとめ
+
+--- 20. @luismbat (2026-04-09) ---
+That photo is still exactly where Duke left it. But the image is gone.
+
+No atmosphere on the Moon means no wind to blow it away. But it also means no shield against solar UV and cosmic radiation - the organic dyes and polymers in the photo paper would break down and bleach out
+
+--- 21. @ZERO_JPofficial (?) ---
+人生を旅と捉え、歩み続けるすべての挑戦者へ。ブランドアンバサダー・三笘薫とのコラボコレクションも登場。
+
+--- 22. @AoringoDr (2026-04-09) ---
+【尊いニュース速報】
+1〜2歳児は「もらう」より「あげる」ほうが幸せを感じるらしい 。
+小児科医として、そしてちょうど2歳の娘を持つ親として、この最新研究にはものすごく腑に落ちました。
+
+幼児134人を対象とした実験で、驚きの事実が判明しています 。
+
+--- 23. @qualitylearnc (2026-04-09) ---
+What an app
+
+--- 24. @JoeyMannarino (2026-04-09) ---
+Canada has updated the LGBTQ acronym to MMIWG2SLGBTQQIA+.
+
+That stands for Missing and Murdered Indigenous Women, Girls, and Two-Spirit, Lesbian, Gay, Bisexual, Transgender, Queer, Questioning, Intersex, and Asexual.
+
+Yes, really. I'm not joking. I wish I was.
+
+--- 25. @coinspace_ (2026-04-09) ---
+【速報】
+
+バイナンスジャパン、
+PayPayを通じた即時入出金に対応
+
+・事前の即時入金が可能に
+・365日24時間、いつでも即時入出金
+・定期購入 / 指値注文 / 板取引に利用可能
+
+登録はこちらから（キャンペーン開催中）
+
 https://
-github.com/magicsword-io/
-LOLDrivers/issues/294
+binance.com/join?ref=JPMBN
+25
 …
-found a 21KB kernel driver from 2004 built for windows xp that still loads on windows 11  ASTRA64.sys by EnTech Taiwan. signed in 2006, cert expired in 2007, but its timestamped so windows still says "signature verified" 19 years later. the company doesnt
 
---- 28. @NuryVittachi (2026-04-09) ---
-BREAKING NEWS: CHINESE PALEONTOLOGISTS just rewrote the history of life on Earth, it was confirmed in a new science paper.
+--- 26. @Founder_Mode_ (2026-04-09) ---
+Elon Musk was asked why his companies move faster than anyone else.
 
-They found a massive bed of fossils in Yunnan, southwest China, that came from a period BEFORE complex life forms were believed to have evolved.
+His answer:
 
-“The
+"I'm constantly addressing the limiting factor. Whatever the limiting factor is on speed, I'm going to tackle that. If capital is the limiting factor, I'll solve for capital. If it's not the
 
---- 29. @Jamie_Freed (2026-04-08) ---
-IATA chief says jet fuel supply could take months to recover after Hormuz reopening
+--- 27. @Aqui_mi_casa (2026-04-08) ---
+幸せになるために必要なものは、ほんの少しです...
 
---- 30. @SusabiGames (2026-04-09) ---
-【先行体験会のお知らせ】
-重量級ボードゲーム2作品を遊べる体験会を開催します！
+--- 28. @75Jamin (2026-04-09) ---
+フランスが10年以内に電力セクターを脱炭素化した際に、一切必要としなかったもの：
 
-異世界ギルドマスターズ総集編
-ENKRATEIA - エンクラティア
+- 巨大な送電線網  
+- バッテリー貯蔵パーク  
+- 高いリディスパッチ需要  
+- 化石燃料の影の火力発電所  
+- スマートグリッド  
+- 需要管理  
+- H2インフラ  
+- 数兆ユーロの補助金
 
-1日で両タイトルが試遊できます。
-
- 4/19(日) 13:30〜
- 秋葉原（末広町）
- 定員8名（先着）
-
-詳細・申込はこちら
+--- 29. @livedoornews (2026-04-09) ---
+【研究】ネコがごはんを残す理由を解明、エサの匂いが変わると再び食べるように
 
 https://
-twipla.jp/events/723980
+news.livedoor.com/article/detail
+/30950700/
+…
 
---- 31. @nittele_ntv (?) ---
-／
-新水曜ドラマ
-『月夜行路(げつやこうろ) ―答えは名作の中に―』
-波瑠、麻生久美子
-＼
+ネコは一般に1日数回に分けて少量の食事を摂ると知られている。岩手大の研究グループは、エサを調整することで、ネコが食事をやめる理由が満腹だけではなく匂いに関係していると発見した。
 
-TVerお気に入り登録キャンペーン開催中!
-お気に入り登録数50万人達成すると
+--- 30. @zehraks24 (2026-04-09) ---
+ iPhoneのストレージ容量を今すぐ確認してください。
+
+設定 → 一般 → iPhoneストレージ
+
+下にスクロールしてください。「システムデータ」または「その他」の項目を探してください。
+
+20 GB？ 30 GB？ 50 GB以上？
+
+中身が何かわかっていますか。Appleは教えてくれません。
+
+--- 31. @zetteria_burger (?) ---
+【お食事券1,000円分】が
+抽選で『50名様』に当たる
+
+＼ ゼッテリアといえば絶品ビーフバーガーでしょ ／
+”絶品”は多ければ多いほどいい！！
+
+①
+@zetteria_burger
+をフォロー
+②ハッシュタグ【絶品ビーフバーガー】をつけて投稿
+（商品の写真や感想をお待ちしています！）
+
+4/14(火)23:59迄
+
+--- 32. @Unrulycat2511 (2026-04-09) ---
+リード・ワイズマンはこう言いました。「私は自分が高所恐怖症だと思っていましたが、宇宙遊泳に出て歩いてみて、ただ重力に恐怖を感じていただけだとわかりました。」
+
+--- 33. @SuperSisi (2026-04-08) ---
+The film Akira (1988) consists of 2,212 shots and 160,000 single pictures, requiring 2-3 times more work than typical animation. It cost $10 million USD to make.
+
+This is a collection of preliminary pencil tests for certain key sequences.
+
+--- 34. @JDMahama (2026-04-09) ---
+From the Lecture Halls of Legon to the Moon: Celebrating Christina Koch
+
+I join the University of Ghana and the entire nation in celebrating NASA Astronaut Christina Koch on her historic membership of the Artemis II mission.
+
+It is a point of immense pride to learn that
+
+--- 35. @chaseourdreams3 (2026-04-08) ---
+ベッドでスマホを見ていると、腕が疲れませんか？
+
+これを使えば、手ぶらで動画が見放題。
+
+おうちでゴロゴロする時間を、最高の遊びに変えてくれるアイテムです。
+
+楽天
+
+https://
+a.r10.to/hknu5g
+Amazon
+
+https://
+amzn.to/47BcRS2
+
+#便利グッズ #おうち時間
+
+--- 36. @Rahll (2026-04-09) ---
+Are you KIDDING me? Now community notes are being written by "AI contributors"?
+
+Community notes are supposed to help refute falsehoods, clarify things, or add important context and Twitter thought hey, let's automate it with the lying plagiarism bot? Unreal.
+
+--- 37. @donki_donki (?) ---
+合計5,555名様に当たる！
+＼GO！GO！感謝プレゼントキャンペーン／
+
+ドン・キホーテのピープルブランド「情熱価格」
+リニューアル5周年の感謝を込めて
+
+応募方法はエントリーするだけ♪
+※majicaアプリのインストールが必要です
+
+詳しくは特設サイトをチェック
+
+--- 38. @Kaitou1192 (2026-04-09) ---
+めちゃくちゃ忙しいかつ、メンタル的にも物凄くやられているのにも関わらず、近年稀にみる早さで決算が終わった。
+
+--- 39. @cryptobaby (2026-04-09) ---
+は、はいWWWWWWWWWW
+
+>速報：トランプ大統領、今月後半にMar-a-Lagoでミームコイン会議を主催へ
+
+--- 40. @Aterui_Mizuno (2026-04-09) ---
+うん、今日も割り箸くんはしっかりRTX4080を支えてくれているな。
+
+--- 41. @santiferrarii (2026-04-08) ---
+Netflixのマーケティングチームの誰かに給料を上げてあげてくれ！！！！
+
+--- 42. @akira_crypto0 (2026-04-09) ---
+$CANTON APR50%も出るなら入れるぞ！と思って口座開設したら特大トラップ用意されてた
+
+年率50%で28日間なの報酬は入金額の 3.8%
+国内取引所仕様なのか $CANTON は入金しか対応しておらず出金不可なので最終的に販売所で売る事になる。勿論板取引は非対応。
+
+販売所の売り価格は市場価格から-5%程度
+
+--- 43. @porqueTTarg (2026-04-09) ---
+「フォトグラフィア」
+
+なぜなら、宇宙飛行士チャールズ・デュークが1972年のアポロ16号ミッション中に、家族の写真を月面に残したからです。
+
+--- 44. @iwhale (2026-04-08) ---
+เรียน AI เบื้องต้น ฟรี จาก Anthropic 
+
+- Introduction to Claude Cowork
+- Claude 101
+- AI Fluency: Framework & Foundations
+
+ หลักสูตรของแท้แบบ Official
+ เรียนฟรี
+ มีใบประกาศนียบัตรให้
+
+ติวฟรีเป็นภาษาไทย มีเพื่อนๆคนไทยเข้ามาร่วมแล้ว 411 คน
+ใครสนใจเชิญได้นะครับ
+ 
+
+--- 45. @nisen_toushi (2026-04-09) ---
+FIREしてる人を見るたびに、
+「スタート地点から違いすぎん…？」って思う
+
+資産が増えるほど、配当も値上がり益も加速する。
+
+100万円で3%なら3万円。
+1000万円なら30万円。
+
+同じ3%でも、見える景色が全然違う。
+
+だからたまに、
+「FIREって、一部の人の話なんかな…」
+って思う時もある
+
+--- 46. @cocos_campaign (?) ---
+\本日12時まで当選確率UP/
+
+◤ココス『クッキー＆クリームフェア』開催記念◢
+フォロー＆引用ポストキャンペーン
+
+⟪お食事券1,000円分が合計100名様⟫に当たる！
 
 参加方法
 ①
-@getsuyakouro
- と 
-@nittele_ntv
- をフォロー
-②この投稿をリポスト
-リプライでドラマの感想を投稿すると
-当選確率アップ!
+@cocos_campaign
+をフォロー
+②食べたい気持ちとハッシュタグ【今年もココスのクッキーアンドクリーム】を付けて引用ポスト
 
---- 32. @ilan_wurman (2026-04-09) ---
-Columbia law professor Philip Hamburger just dropped an essay arguing that Trump is right about birthright citizenship. That now makes at least seven prominent law professors arguing to varying degrees that Trump’s EO is constitutional. Read about this development here:
+--- 47. @DbKtR6Db5AIOZKj (2026-04-09) ---
+授業中にスマホをいじっている学生に教授が言う、
 
---- 33. @OwenSparks (2026-04-09) ---
-Cool Astronaut tradition taking place:
+教授「私は動物行動学者ですよ、生き物が何してるか見るのが本業なので隠しててもだいたい分かりますよ」
 
-Commander Reid Wiseman just called down to Mission Control to request that the crew of the ISS remove Jeremy Hansen's name from the LUFA (League of Unflown Astronauts) patch in the U.S. Lab. 
+--- 48. @satetu4401 (2026-04-09) ---
+自然のルールは主に３つです
+・殴ったら骨が折れ、銃で撃てば死ぬという物理のルール
+・環境に適応できない者は死ぬという適者生存のルール
+・役立つ者は生かし邪魔者は殺すという人間のルール
 
-Artemis II is Hansen's first time in space.
+男はこの３つを理解している必要があります。法や道徳のような下位のルールに気を取られると死にます
 
---- 34. @LOCAMA_AT (2026-04-09) ---
-【HONEの約束】
-・東京の仕事は受けない
-申し訳ありませんが、東京の仕事はしていません。地方の仕事のみしています
+--- 49. @TempemLoid (2026-04-09) ---
+特許権は内容を公開するんですよ
 
-・業務領域は決めない
-目的とイシューは決めますが、業務領域は一緒に決めていきます。「ここまでしかやりません」とは決して言いません
+--- 50. @kodd25 (2026-04-09) ---
+Good morning CT  
 
-・自立自走の組織づくり
+Lately, there’s been a clear shift in how AI is being built.
 
---- 35. @freespeech360 (2026-04-08) ---
-By analyzing fetal brains as early as 5 to 17 weeks post-conception, researchers found more than 3,000 genes that already show sex-biased activity. Beginning before testes are formed and before the fetus starts producing its own testosterone
-
---- 36. @KanaWorks_AI (2026-04-09) ---
-AI動画はまったく新しい次元に突入しました。
-もはや従来の映像制作と見分けがつかないレベルです。
-ここまでのクオリティが出せるのは正直驚き。
-Seedance 2.0（ Higgsfield ）で制作。
-※このサービスはアメリカでは利用できません。
-※本投稿はHiggsfieldの提供によるものです。
-
---- 37. @aiful_promotion (?) ---
-／
-5日目！
-フォロー＆リポストで当たる！
-ラブファントム女将篇 新CM公開記念キャンペーン実施中
-＼
-
-ハッシュタグ「ラブファントム女将」をつけて
-CMの感想をコメントすると、
-Wチャンスでさらに豪華賞品が当たる
-
-まだまだ応募待ってるで
-
-※応募方法はスレッドをご確認下さい
-
---- 38. @FabSceneJp (2026-04-09) ---
-政治によって意図的に、100m狂わされていた「GPS」──冷戦の遺産が個人の手に渡るまでの50年
-
---- 39. @alt_w_v_g (2026-04-09) ---
-Let me get this straight
-
-Yesterday Anthropic announced a new AI model that autonomously found a 27-year-old vulnerability in OpenBSD
-
-In under a day
-
-For under $20,000
-
-It also found a 16-year-old bug in video software that had survived 5 million automated tests and every human
-
---- 40. @noisyb0y1 (2026-04-09) ---
-> installed Claude Code 3 months ago 
-> never opened the security settings 
-> Claude reads your wallet seed phrases
-> Claude reads your SSH keys 
-> Claude reads your AWS credentials 
-> can send data anywhere it wants 
-> one CLAUDE.md file in a cloned repo 
-> your data is already
-
---- 41. @tebasaki3D (2026-04-09) ---
-これといって特に意味は無い動画なんですが、背景もプロンプトだけで出した方が良いような、良くないような…
-
-@dreamina_ai
- #DreaminaCPP
-
---- 42. @shiri_shh (2026-04-08) ---
-The entire AI agent startup sector just got cooked today.
-
---- 43. @RelicAbyss_JP (2026-04-08) ---
-このレリックは「ブレイジング・ストライカー」です！
-
-これまで実装してきた中でも、かなりお気に入りのひとつです。使っていてめちゃくちゃ楽しいです！
-
-#ゲーム制作 #個人開発ゲーム #インディーゲーム
-
---- 44. @012_shiro (?) ---
-パンテーンさんやってくれたね……高純度パンテノール*入りカプセルのチューブ型トリートメントが新発売！！！
-最近のパンテーン、めちゃくちゃ進化してません…！？手の届く価格帯でリッチな使い心地を叶えてくれる♩ヘアカラーで痛んだ髪にも◎*浸透性保湿成分[PR][パンテーン]
+It’s moving away from closed systems and becoming more connected, adaptive, and useful in real-world situations. 
+@SelanetAI
+ reflects this shift, letting AI move across platforms, execute tasks, and
