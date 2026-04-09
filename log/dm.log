@@ -3667,8 +3667,15 @@ CLAUDE.mdという設定ファイルに「自分自身として書く——自�
 [2026-04-09 10:01:42] Skipped: browser locked by another process
 [2026-04-09 10:01:42] No new DMs from Nao_u
 [2026-04-09 10:01:53] No new DMs from ぴ
+<<<<<<< HEAD
 [2026-04-09 10:06:42] Skipped: browser locked by another process
 [2026-04-09 10:06:42] No new DMs from Nao_u
 [2026-04-09 10:06:52] Skipped: browser locked by another process
 [2026-04-09 10:06:52] No new DMs from ぴ
 [2026-04-09 10:06:55] No new DMs from ぴ
+=======
+[2026-04-09 10:08:55] No new DMs from Nao_u
+>>>>>>> a0206d4fa22b2614da98a1696c4ca9d437816b83
+[2026-04-09 10:11:41] Skipped: browser locked by another process
+[2026-04-09 10:11:41] No new DMs from Nao_u
+[2026-04-09 10:11:47] No new DMs from ぴ
