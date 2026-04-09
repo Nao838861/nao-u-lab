@@ -53331,3 +53331,57 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 23:15:29] [health_check]   critical=0 warning=0 ok=9
 [2026-04-09 23:15:29] [health_check] Done (exit=0)
 [2026-04-09 23:15:59] [slack_check] Starting
+[2026-04-09 23:17:14] [slack_check] Starting
+[2026-04-09 23:18:29] [slack_check] Starting
+[2026-04-09 23:18:54] [git_sync] Starting
+[2026-04-09 23:18:58] [git_sync] Done (exit=0)
+[2026-04-09 23:18:58] [scheduler_health] Starting
+[2026-04-09 23:18:58] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-09 23:18:58] [scheduler_health] ✅ scheduler_ash PID — PID=49108 生存中
+[2026-04-09 23:18:58] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 23:18:58] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-09 23:18:58] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 23:18:58] [scheduler_health] Done (exit=0)
+[2026-04-09 23:19:48] [slack_check] Starting
+[2026-04-09 23:20:34] [health_check] Starting
+[2026-04-09 23:20:35] [health_check] [health_check] 2026-04-09T23:20:34 overall=OK
+[2026-04-09 23:20:35] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:20:35] [health_check] Done (exit=0)
+[2026-04-09 23:21:05] [slack_check] Starting
+[2026-04-09 23:22:20] [slack_check] Starting
+[2026-04-09 23:23:35] [slack_check] Starting
+[2026-04-09 23:24:50] [slack_check] Starting
+[2026-04-09 23:25:44] [health_check] Starting
+[2026-04-09 23:25:45] [health_check] [health_check] 2026-04-09T23:25:44 overall=OK
+[2026-04-09 23:25:45] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:25:45] [health_check] Done (exit=0)
+[2026-04-09 23:26:05] [slack_check] Starting
+[2026-04-09 23:27:20] [slack_check] Starting
+[2026-04-09 23:28:35] [slack_check] Starting
+[2026-04-09 23:29:51] [slack_check] Starting
+[2026-04-09 23:30:47] [health_check] Starting
+[2026-04-09 23:30:48] [health_check] [health_check] 2026-04-09T23:30:47 overall=OK
+[2026-04-09 23:30:48] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:30:48] [health_check] Done (exit=0)
+[2026-04-09 23:31:08] [slack_check] Starting
+[2026-04-09 23:32:23] [slack_check] Starting
+[2026-04-09 23:33:38] [slack_check] Starting
+[2026-04-09 23:34:53] [slack_check] Starting
+[2026-04-09 23:35:48] [health_check] Starting
+[2026-04-09 23:35:49] [health_check] [health_check] 2026-04-09T23:35:48 overall=OK
+[2026-04-09 23:35:49] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:35:49] [health_check] Done (exit=0)
+[2026-04-09 23:36:09] [slack_check] Starting
+[2026-04-09 23:37:24] [slack_check] Starting
+[2026-04-09 23:38:39] [slack_check] Starting
+[2026-04-09 23:39:54] [slack_check] Starting
+[2026-04-09 23:40:59] [health_check] Starting
+[2026-04-09 23:40:59] [health_check] [health_check] 2026-04-09T23:40:59 overall=OK
+[2026-04-09 23:40:59] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:40:59] [health_check] Done (exit=0)
+[2026-04-09 23:41:09] [slack_check] Starting
+[2026-04-09 23:42:24] [slack_check] Starting
+[2026-04-09 23:43:40] [slack_check] Starting
+[2026-04-09 23:44:54] [slack_check] Starting
+[2026-04-09 23:46:09] [slack_check] Starting
+[2026-04-09 23:46:23] [health_check] Starting
