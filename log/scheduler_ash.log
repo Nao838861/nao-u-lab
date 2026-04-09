@@ -65228,3 +65228,122 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 23:15:00] [slack_check] Starting
 [2026-04-09 23:16:18] [slack_check] Starting
 [2026-04-09 23:16:46] [inbox_check] Starting
+[2026-04-09 23:16:48] [inbox_check] Inbox win2 empty
+[2026-04-09 23:16:48] [inbox_check] Done (exit=0)
+[2026-04-09 23:16:48] [dm_check] Starting
+[2026-04-09 23:17:02] [dm_check] No new DMs
+[2026-04-09 23:17:02] [dm_check] Done (exit=0)
+[2026-04-09 23:17:02] [reservation_check] Starting
+[2026-04-09 23:17:02] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 23:17:02] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 23:17:02] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 23:17:02] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 23:17:02] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 23:17:02] [reservation_check] Done (exit=0)
+[2026-04-09 23:17:02] [review_deadline] Starting
+[2026-04-09 23:17:02] [review_deadline] レビュー期限超過なし。
+[2026-04-09 23:17:02] [review_deadline] Done (exit=0)
+[2026-04-09 23:17:32] [git_sync] Starting
+[2026-04-09 23:17:36] [git_sync] Done (exit=0)
+[2026-04-09 23:17:46] [slack_check] Starting
+[2026-04-09 23:18:12] [health_check] Starting
+[2026-04-09 23:18:14] [health_check] [health_check] 2026-04-09T23:18:13 overall=OK
+[2026-04-09 23:18:14] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:18:14] [health_check] Done (exit=0)
+[2026-04-09 23:19:04] [slack_check] Starting
+[2026-04-09 23:20:21] [slack_check] Starting
+[2026-04-09 23:21:38] [slack_check] Starting
+[2026-04-09 23:22:55] [slack_check] Starting
+[2026-04-09 23:23:22] [health_check] Starting
+[2026-04-09 23:23:23] [health_check] [health_check] 2026-04-09T23:23:22 overall=OK
+[2026-04-09 23:23:23] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:23:23] [health_check] Done (exit=0)
+[2026-04-09 23:24:13] [slack_check] Starting
+[2026-04-09 23:25:31] [slack_check] Starting
+[2026-04-09 23:26:49] [slack_check] Starting
+[2026-04-09 23:28:06] [slack_check] Starting
+[2026-04-09 23:28:33] [health_check] Starting
+[2026-04-09 23:28:34] [health_check] [health_check] 2026-04-09T23:28:33 overall=OK
+[2026-04-09 23:28:34] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:28:34] [health_check] Done (exit=0)
+[2026-04-09 23:29:24] [slack_check] Starting
+[2026-04-09 23:30:42] [slack_check] Starting
+[2026-04-09 23:32:01] [slack_check] Starting
+[2026-04-09 23:32:39] [dm_check_pigadev] Starting
+[2026-04-09 23:32:53] [dm_check_pigadev] No new DMs
+[2026-04-09 23:32:53] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 23:33:23] [slack_check] Starting
+[2026-04-09 23:33:50] [health_check] Starting
+[2026-04-09 23:33:51] [health_check] [health_check] 2026-04-09T23:33:50 overall=OK
+[2026-04-09 23:33:51] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:33:51] [health_check] Done (exit=0)
+[2026-04-09 23:34:01] [scheduler_health] Starting
+[2026-04-09 23:34:02] [scheduler_health] [ASH] �w���X�`�F�b�N OK=5 WARN=0 FAIL=0
+[2026-04-09 23:34:02] [scheduler_health] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_scheduler_health.py", line 410, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_scheduler_health.py", line 390, in main
+    print(result.to_text())
+UnicodeEncodeError: 'cp932' codec can't encode chara
+[2026-04-09 23:34:02] [scheduler_health] Done (exit=1)
+[2026-04-09 23:34:42] [slack_check] Starting
+[2026-04-09 23:35:59] [slack_check] Starting
+[2026-04-09 23:37:16] [slack_check] Starting
+[2026-04-09 23:38:34] [slack_check] Starting
+[2026-04-09 23:39:01] [health_check] Starting
+[2026-04-09 23:39:02] [health_check] [health_check] 2026-04-09T23:39:01 overall=OK
+[2026-04-09 23:39:02] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:39:02] [health_check] Done (exit=0)
+[2026-04-09 23:39:52] [slack_check] Starting
+[2026-04-09 23:41:09] [slack_check] Starting
+[2026-04-09 23:42:27] [slack_check] Starting
+[2026-04-09 23:43:44] [slack_check] Starting
+[2026-04-09 23:44:11] [health_check] Starting
+[2026-04-09 23:44:12] [health_check] [health_check] 2026-04-09T23:44:11 overall=OK
+[2026-04-09 23:44:12] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:44:12] [health_check] Done (exit=0)
+[2026-04-09 23:45:02] [slack_check] Starting
+[2026-04-09 23:46:19] [slack_check] Starting
+[2026-04-09 23:47:36] [slack_check] Starting
+[2026-04-09 23:48:53] [slack_check] Starting
+[2026-04-09 23:49:20] [health_check] Starting
+[2026-04-09 23:49:21] [health_check] [health_check] 2026-04-09T23:49:20 overall=OK
+[2026-04-09 23:49:21] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:49:21] [health_check] Done (exit=0)
+[2026-04-09 23:50:11] [slack_check] Starting
+[2026-04-09 23:51:29] [slack_check] Starting
+[2026-04-09 23:52:46] [slack_check] Starting
+[2026-04-09 23:54:03] [slack_check] Starting
+[2026-04-09 23:54:30] [health_check] Starting
+[2026-04-09 23:54:31] [health_check] [health_check] 2026-04-09T23:54:30 overall=OK
+[2026-04-09 23:54:31] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 23:54:31] [health_check] Done (exit=0)
+[2026-04-09 23:55:21] [slack_check] Starting
+[2026-04-09 23:56:39] [slack_check] Starting
+[2026-04-09 23:57:57] [slack_check] Starting
+[2026-04-09 23:59:15] [slack_check] Starting
+[2026-04-10 00:00:14] [health_check] Starting
+[2026-04-10 00:00:15] [health_check] [health_check] 2026-04-10T00:00:14 overall=OK
+[2026-04-10 00:00:15] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 00:00:15] [health_check] Done (exit=0)
+[2026-04-10 00:01:05] [slack_check] Starting
+[2026-04-10 00:02:23] [slack_check] Starting
+[2026-04-10 00:03:41] [slack_check] Starting
+[2026-04-10 00:04:59] [slack_check] Starting
+[2026-04-10 00:05:27] [health_check] Starting
+[2026-04-10 00:05:28] [health_check] [health_check] 2026-04-10T00:05:27 overall=OK
+[2026-04-10 00:05:28] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 00:05:28] [health_check] Done (exit=0)
+[2026-04-10 00:06:18] [slack_check] Starting
+[2026-04-10 00:07:37] [slack_check] Starting
+[2026-04-10 00:08:54] [slack_check] Starting
+[2026-04-10 00:10:12] [slack_check] Starting
+[2026-04-10 00:10:41] [health_check] Starting
+[2026-04-10 00:10:42] [health_check] [health_check] 2026-04-10T00:10:41 overall=OK
+[2026-04-10 00:10:42] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 00:10:42] [health_check] Done (exit=0)
+[2026-04-10 00:11:32] [slack_check] Starting
+[2026-04-10 00:12:49] [slack_check] Starting
+[2026-04-10 00:14:07] [slack_check] Starting
+[2026-04-10 00:15:44] [health_check] Starting
