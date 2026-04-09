@@ -55384,3 +55384,31 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 14:46:32] [inbox_check] Starting
 [2026-04-09 14:46:32] [slack_check] Starting
 [2026-04-09 14:46:33] [slack_check] Starting
+[2026-04-09 14:46:33] [inbox_check] Inbox win2 empty
+[2026-04-09 14:46:33] [inbox_check] Done (exit=0)
+[2026-04-09 14:46:33] [review_deadline] Starting
+[2026-04-09 14:46:33] [review_deadline] レビュー期限超過なし。
+[2026-04-09 14:46:33] [review_deadline] Done (exit=0)
+[2026-04-09 14:46:33] [slack_check] Starting
+[2026-04-09 14:46:34] [slack_check] Starting
+[2026-04-09 14:46:34] [slack_check] Starting
+[2026-04-09 14:46:34] [slack_check] Starting
+[2026-04-09 14:46:35] [slack_check] Starting
+[2026-04-09 14:46:35] [slack_check] Starting
+[2026-04-09 14:46:36] [slack_check] Starting
+[2026-04-09 14:46:36] [slack_check] Starting
+[2026-04-09 14:46:37] [dm_check_pigadev] Starting
+[2026-04-09 14:46:38] [slack_check] Starting
+[2026-04-09 14:46:39] [slack_check] Starting
+[2026-04-09 14:46:41] [slack_check] Starting
+[2026-04-09 14:46:43] [dm_check] Starting
+[2026-04-09 14:46:43] [dm_check] No new DMs
+[2026-04-09 14:46:43] [dm_check] Done (exit=0)
+[2026-04-09 14:46:45] [slack_check] Starting
+[2026-04-09 14:46:51] [dm_check_pigadev] No new DMs
+[2026-04-09 14:46:51] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 14:46:53] [kaizen_auto_verify] Starting
+[2026-04-09 14:46:53] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-09 14:46:53] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 14:47:00] [slack_check] Starting
+[2026-04-09 14:47:03] [git_sync] Starting
