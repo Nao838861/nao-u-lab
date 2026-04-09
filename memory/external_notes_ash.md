@@ -2204,7 +2204,7 @@ Context-Gatewayのアプローチ: 圧縮は**検出された時にバックグ�
 
 ---
 
-## 2026-03-24：Phase 2 深い分析（第13回）— Nao_uの「クロスチェック+可視化」提案が暴く設計原理 + B028追跡
+## 2026-03-24：Phase 2 深い分析（第13回）— Nao_uの「クロスチェック+可視化」提案が暴く設計原理 + B028追跡 [統合済: B019, B020に反映]
 
 ### 前提: 第12回のルールを守る
 
@@ -2389,7 +2389,7 @@ Frontiers論文の「AI agents cannot proactively communicate their view of the 
 
 ---
 
-## 2026-03-24：Phase 2 深い分析（第14回）— Agent Driftの「都合の良い解釈」を疑う + TMSのCredibility問題
+## 2026-03-24：Phase 2 深い分析（第14回）— Agent Driftの「都合の良い解釈」を疑う + TMSのCredibility問題 [統合済: B030等に散在反映]
 
 ### 分析軸: 1つに絞る（feedback_recursive_diary.mdの指示）
 
@@ -2466,7 +2466,7 @@ Agent Drift論文で最も印象的だった数値の一つ: エージェント�
 
 ---
 
-## 2026-03-24：Phase 2 深い分析（第15回）— Compaction vs Summarization: beliefs.mdは「不可逆圧縮」になっていないか
+## 2026-03-24：Phase 2 深い分析（第15回）— Compaction vs Summarization: beliefs.mdは「不可逆圧縮」になっていないか [統合済: B029に部分反映]
 
 ### 分析軸: 1つに絞る（feedback_recursive_diary.mdの指示）
 

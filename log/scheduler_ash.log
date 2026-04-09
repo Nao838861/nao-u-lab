@@ -53749,3 +53749,75 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 02:07:03] [health_check]   critical=0 warning=0 ok=9
 [2026-04-10 02:07:03] [health_check] Done (exit=0)
 [2026-04-10 02:07:03] [scheduler_health] Starting
+[2026-04-10 02:07:05] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-10 02:07:05] [scheduler_health] ✅ scheduler_ash PID — PID=26732 生存中
+[2026-04-10 02:07:05] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 02:07:05] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-04-10 02:02:11] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-10 02:07:05] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 02:07:05] [scheduler_health] Done (exit=1)
+[2026-04-10 02:07:07] [git_sync] Starting
+[2026-04-10 02:07:12] [git_sync] Done (exit=0)
+[2026-04-10 02:07:15] [slack_check] Starting
+[2026-04-10 02:07:16] [health_check] Starting
+[2026-04-10 02:07:17] [health_check] [health_check] 2026-04-10T02:07:16 overall=OK
+[2026-04-10 02:07:17] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:07:17] [health_check] Done (exit=0)
+[2026-04-10 02:07:42] [slack_check] Starting
+[2026-04-10 02:07:57] [slack_check] Starting
+[2026-04-10 02:08:06] [health_check] Starting
+[2026-04-10 02:08:07] [health_check] [health_check] 2026-04-10T02:08:06 overall=OK
+[2026-04-10 02:08:07] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:08:07] [health_check] Done (exit=0)
+[2026-04-10 02:08:17] [auto_diary] Starting
+[2026-04-10 02:08:38] [slack_check] Starting
+[2026-04-10 02:09:23] [slack_check] Starting
+[2026-04-10 02:10:02] [slack_check] Starting
+[2026-04-10 02:10:08] [auto_diary] Timeout (720s)
+[2026-04-10 02:10:18] [slack_check] Starting
+[2026-04-10 02:10:41] [dm_check_pigadev] Starting
+[2026-04-10 02:10:49] [slack_check] Starting
+[2026-04-10 02:10:55] [dm_check_pigadev] No new DMs
+[2026-04-10 02:10:55] [dm_check_pigadev] Done (exit=0)
+[2026-04-10 02:10:55] [twitter_recommended] Starting
+[2026-04-10 02:11:02] ==================================================
+[2026-04-10 02:11:02] Ash scheduler started (PID 26836)
+[2026-04-10 02:11:02] Max runtime: 0 hours
+[2026-04-10 02:11:02] Code hash: 23987b6ea13730e5053683552346a8b2
+[2026-04-10 02:11:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-10 02:11:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-10 02:11:02] ==================================================
+[2026-04-10 02:11:13] [slack_check] Starting
+[2026-04-10 02:11:26] [slack_check] Starting
+[2026-04-10 02:11:37] [reservation_check] Starting
+[2026-04-10 02:11:37] [reservation_check] 【行動予約】期限到来:
+[2026-04-10 02:11:37] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-10 02:11:37] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-10 02:11:37] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-10 02:11:37] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-10 02:11:37] [reservation_check] Done (exit=0)
+[2026-04-10 02:11:47] [inbox_check] Starting
+[2026-04-10 02:11:48] [inbox_check] Inbox win2 empty
+[2026-04-10 02:11:48] [inbox_check] Done (exit=0)
+[2026-04-10 02:11:48] [dm_check] Starting
+[2026-04-10 02:11:48] [dm_check] No new DMs
+[2026-04-10 02:11:48] [dm_check] Done (exit=0)
+[2026-04-10 02:11:48] [review_deadline] Starting
+[2026-04-10 02:11:48] [review_deadline] レビュー期限超過なし。
+[2026-04-10 02:11:48] [review_deadline] Done (exit=0)
+[2026-04-10 02:11:58] [kaizen_auto_verify] Starting
+[2026-04-10 02:11:58] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-10 02:11:58] [kaizen_auto_verify] Done (exit=0)
+[2026-04-10 02:12:00] [twitter_recommended] Opening For You tab...
+[2026-04-10 02:12:00] [twitter_recommended]     1. @elonmusk: We need to focus on finishing Colossus 2 and ensuring it is ...
+[2026-04-10 02:12:00] [twitter_recommended]     2. @resona_pr: はなさか兄さんからの挑戦状！
+[2026-04-10 02:12:00] [twitter_recommended] 給与受取りをりそな銀行に指定等して、現金最大30,000円をゲットせよ
+[2026-04-10 02:12:00] [twitter_recommended] 手続きは簡単！春の...
+[2026-04-10 02:12:00] [twitter_recommended] Done (exit=0)
+[2026-04-10 02:12:00] [check_usage] Starting
+[2026-04-10 02:12:00] [check_usage] 前回投稿から9分しか経っていない（最小間隔: 300分）。あと290分待機。スキップ。
+[2026-04-10 02:12:00] [check_usage] Done (exit=0)
+[2026-04-10 02:12:00] [health_check] Starting
+[2026-04-10 02:12:01] [health_check] [health_check] 2026-04-10T02:12:00 overall=OK
+[2026-04-10 02:12:01] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:12:01] [health_check] Done (exit=0)
+[2026-04-10 02:12:01] [scheduler_health] Starting
