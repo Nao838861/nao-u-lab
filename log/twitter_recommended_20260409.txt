@@ -1,258 +1,312 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 17:46
+# Read at: 2026-04-09 14:10
 # Total: 50 tweets
 
---- 1. @nwiizo (2026-04-09) ---
-めちゃくちゃ面白かった。著者の
-@mickmk
- さんより献本いただいた『問う技術 書く技術 考える技術』。AIとの向き合い方をプロンプト集ではなく思考のフレームワークとして体系化した一冊。自分のAIの使い方と重なる部分も多くて共感しながら読めた。頼りきるでも避けるでもなく共に考える姿勢が大切。
+--- 1. @shinobuando0222 (2026-04-08) ---
+陰キャすぎて美容院で全然喋らないから、いつも指名なしで予約してるのに毎回空条承太郎みたいな美容師ニキが担当してくれてるの草
+お互い喋らないからいつもお通夜みたいな空気になってる
 
---- 2. @nekomacaron_ (?) ---
-新発売のパンテーンのトリートメントカプセルがなじみやすいからそのまま髪に塗り込んでる。
-広がりやすい私の髪もまとまりやすくてこれはリピあり！シャンプー＆コンディショナーとのシリーズ使いがおすすめ◎［PR］［パンテーン］
+--- 2. @Kado_comi (?) ---
+転校生は「不死王の息子」でした(0/12)
 
---- 3. @cordx56 (2026-04-09) ---
-カスみたいな広告、一回は出してみたいよな。？
+--- 3. @ACBUTA (2026-04-07) ---
+日本のゲームファンと海外のゲームファン、まったく同じノリで会話してる。好きなもの好きだって語る。ボクたちずっと隣にいたんだな。これからもよろしくね。
 
---- 4. @otonashikotoba (2026-04-09) ---
-ゲームに集中できるのにタスクは先延ばしするの、ADHDあるあるだよね。
+--- 4. @emi_haha (2026-04-08) ---
+ネタニヤフくん、わざと停戦合意発表の直後にレバノンで過去最大級の攻撃をして、少なくとも100名近くの一般市民を殺したもよう。せっかく金曜に停戦後の話をするためイスラマバードに各国代表団が集まるはずだったのに、明らかに関係者全員をバカにして遊んでいる……なんなんこいつマジで
 
-これ、脳科学的には「ドーパミンの出方」の問題。ゲームは即時報酬があるから脳が興奮するけど、タスクは報酬が遠すぎて脳が反応しない。この起業家はそこに気づいて、付箋でゲーム化したってことか。
+--- 5. @___nix___ (2026-04-09) ---
+やっぱり出来る人が出来ない人に付くのは不幸しかないね
 
---- 5. @XPENG_Global (2026-04-08) ---
-XPENG’s aircraft fleet conducts synchronized test flights at our Guangzhou manufacturing base.
-Following steady progress in batch trial production, multiple flying cars have completed coordinated formation flights, demonstrating the maturity of our production systems and flight
+--- 6. @morkoshiTaro (2026-04-07) ---
+テイカーが増えすぎて「お互い様」が崩壊したんだよ。
 
---- 6. @hayashimon1 (2026-04-08) ---
-よし、今月はアプリ開発めっちゃ勉強するぞ！
+--- 7. @Inatsuka (2026-04-08) ---
+「自動翻訳によって海外のヤベー発言が流れてくるのしんどい」的なツイートをちらほら目にしていたんだけど、私のTLには流れてこないので全然実感がなかった
 
---- 7. @nukonuko (2026-04-09) ---
-Claude の iOS アプリのウィジェットから Claude Code と Dispatch が簡単に使えるように
+でも海外のゴリゴリのガチフェミニストから反AI的リプを貰って「これか……！」ってなってる
 
---- 8. @nekokatu0112 (2026-04-09) ---
-ﾜｧ───ヽ(*ﾟ∀ﾟ*)ﾉ───ｲ
+--- 8. @chuki_zaru (2026-04-08) ---
+社員「ネットが遅くて仕事にならない！」
 
---- 9. @SENBAKO1 (2026-04-09) ---
-逆に言うと、10億稼ぐハリウッド超大作も、２億のアニメ映画も、数千万の邦画も、100億確定の名探偵コナンの前では全て一律に一日一回上映になるの、地に平和と公正をもたらしに来た存在かもしれませんね…。
+ワイ「デスクトップですよね」
+社員「うちの部署、全員遅い！」
 
---- 10. @yukarikohno (2026-04-09) ---
-海外に行くということで紙の本は全て売り払い、Kindleに移行したのですが、
-今後万が一Kindleがサ終したら私の本は全て失われるということですか！？
+ワイ「ハブが原因かなぁ、、ちょっと机の下に置いてる機械、見て貰えませんか」
+社員「100えむびーぴーえす、って書いてるヤツ？」
 
---- 11. @sola_officialJP (?) ---
-／
-ドゥバドゥワリワリ♪
-SOLA WEATHER CARE with TOMORROW X TOGETHER
-キャンペーン開始！
- ＼
+それやーーーｗｗｗ
+誰や、倉庫から発掘してきたの！ｗ
 
-「 2026 TXT MOA CON IN JAPAN 」の公演チケットや
-グッズ、QUOカードが当たるチャンス！
+--- 9. @Holy_fox_LLM (2026-04-09) ---
+やっぱり俺も10Tぐらいのモデルをトレーニングしたいよ...
 
-＜応募条件＞
-A賞：対象商品3,000円以上(税込)を購入
-B賞：対象商品1,500円以上(税込)を購入
+--- 10. @orange21 (2026-04-08) ---
+なんかいい加減な感じで結婚できたのほんとよかったなと思っていて、いい加減というのは市場経済みたいなのが挟まらない、なんか結婚しようみたいな感じでやれてて、結婚したときお互い無職だったし、そんなの歳食ってからスカウターで相手を見合う奴だと無理だもんな。
 
---- 12. @Tsubame33785667 (2026-04-08) ---
-新型コロナ前夜、世界がまだ平常運転を続けていたとき、指数関数を見ていた者たちは先に異変を感じ取っていた。いまAIでも同じことが起きている、という告白だ。モデルはすでにある閾値を超えた。しかし社会の認識はまだそこに追いついていない。この時間差こそが、時代の転換点の本質だ。
+--- 11. @gene_pixiv (?) ---
+＼10周年PV公開／
 
---- 13. @Yuru_happy_Lab (2026-04-08) ---
-JTCにいますが、最低評価を取るのは普通の人間では無理ですね。どんなに仕事が遅くても、どんなにコミュニケーションを取るのが難しくても、平均より下の評価になる程度です。
+『佐々木と宮野』は10周年を迎えました。
+応援して下さっている皆さまのおかげです！
 
---- 14. @gaycloudd (2026-04-08) ---
-love reached farther than ever #artemisII
+本年はまだまだ様々な企画を実施予定♪
+ぜひ、10周年Yearを一緒に楽しみましょう!!
 
---- 15. @DavidKPiano (2026-04-08) ---
-I heard rumors that Claude Mythos can fetch data in React without useEffect
+★佐々木と宮野は10周年★
 
---- 16. @golden_lucky (2026-04-09) ---
-むしろ、文字種のスペースとレンダリングされるアキとを区別することが、論文であれ何であれドキュメントの「基本」なんだよ…
+--- 12. @namatakahashi (2026-04-08) ---
+Daniel Linssenさんの作品本当好きすぎる
 
---- 17. @walk_to_work (2026-04-09) ---
-そうではないのだろうけど、何もない人間が文学や音楽を愛していることをアイデンティティにするのは「それが競争じゃないから」「競争になったら雑魚すぎて負けるから」だと思わせてくる何かが、湿度にはある。
+--- 13. @Dellshion_games (2026-04-08) ---
+#RPGBakin 
+#ゲーム制作 
+特にこれと言って進展はないけど、なんとなくレイアウトツールを使いこなせるようになってきた。
+カーソルを画面下部に並んだアイコンメニューと左上の簡易ステータスのキャラアイコンを行き来できるようになった。
+マウスでもクリックしたら開けます。
 
---- 18. @SUKANEKI_STI (2026-04-09) ---
-24歳になりました
-24歳学生（博士後期）ということになります。
+--- 14. @yacineMTB (2026-04-08) ---
+Fuck two weeks man. you can learn anything in an hour. In an hour. PhD level questions don't mean shit. You can learn anything in an hour. The experts will love you for it. Ask the stupid questions man. Don't worry. Be courageous. Courageous enough to be retarded
 
- 欲しいものリスト
+--- 15. @macogame (2026-04-08) ---
+これを言うと、多くのTRPGのゲームデザイナーから反発をくらうだろうし、私だって反論のため秀丸を開くと思うけど、「こんな世界観で遊びたい」という場合、オリジナルTRPGをデザインするより、その世界観の「クトゥルフ神話TRPG」のソースブックをデザインしたほうが、遊んでもらえるかもしれない。
 
-https://
-amazon.jp/hz/wishlist/ls
-/39WH86J9KZ2N5?ref_=wl_share
-…
+--- 16. @chaseourdreams2 (2026-04-08) ---
+「もし水が止まったら…」
 
---- 19. @bitcloud (2026-04-08) ---
-Someone should invent an automated washing "machine" and "dishwasher"
+頭の隅にある不安、これで消しませんか？
 
-Is anyone working on this?
+トイレに被せるだけのセット。
 
---- 20. @copinemickmack (2026-04-09) ---
-トランプが一方的に殴りかかった相手とジョイントベンチャー立ち上げようとするの、日本人の感覚的には厚顔無恥だけど、米国人の行動様式って感じする。殴っておいて「過ぎたことをガタガタ騒ぐな」と言えてしまうのが米国人の強さの一つ。
+一度買っておけばずっと安心できる、心のためのお守りです。
 
---- 21. @kedama_tori_ki (?) ---
-ご自愛タイムしよ
-【PR】【明治ブルガリアヨーグルトワンショット】
-
---- 22. @pathak2206 (2026-04-08) ---
-We hosted Prof. Alyosha Efros (UC Berkeley) at 
-@SkildAI
-! He didn't believe that robots could actually cook eggs reliably. :) 
-Tested back-to-back 5times without fail! One batch of scrambled eggs every ~2.5mins nonstop. The same model assembles a GPU on a server rack too.
-
---- 23. @astrasdoctor (2026-04-08) ---
-damn now i wanna experience microgravity hugs
-
---- 24. @hinaa_x2 (2026-04-08) ---
-eva “werp werp” stratt stuck in a loop
-
---- 25. @shelbyboring (2026-04-08) ---
-Hearing Soderbergh, a person whose career over the last 10+ years has been shaped by ingenious solutions in the absence of studio backing and innovative techniques, say that he can't think of a good way to visually represent something without relying on AI. Dire straits.
-
---- 26. @_ARahim_ (2026-04-08) ---
-The full Gemma 4 family is now fine-tunable on your Mac! 
-
-You can now fine-tune the entire family locally with mlx-tune:
- E2B & E4B (Text, Vision, Audio) 
- 26B-A4B MoE & 31B Dense (Text, Vision)
-
-The best part? No complex routing. One unified FastVisionModel API handles
-
---- 27. @Fintech03 (2026-04-09) ---
-In 1966, a B-52 collided with a tanker over Palomares, Spain, dropping 4 hydrogen bombs. 3 were found on land; 1 vanished into the Mediterranean. The US Navy spent months searching with no luck.
-
-​They called in a mathematician named John Craven, who ignored the expert search
-
---- 28. @fta7 (2026-04-09) ---
-北海道の「押ささる」も衝撃だったけどそれにも勝るとも劣らない衝撃 これどういう時制感覚で使われてるんだろう 「あった」は過去形、それの現在進行系で「あっています」？？「をやっています」を使わないのはなぜなのか 逆に「をやっています」を使う場合との違いを教えてほしい
-
---- 29. @AntiquityJ (2026-04-08) ---
-NEW Experimental reconstructions of religious and royal outfits from medieval Christian Nubia, based on church murals.
-
-Initially showing strong influence from Byzantium, later outfits display a return to Indigenous Nubian styles.
-
- 
-https://
-doi.org/10.15184/aqy.2
-026.10324
-…
-
---- 30. @AllbonesJones (2026-04-08) ---
-This is why Final Fantasy 5 is a masterpiece. If you play the game casually, you'll always run into this enemy at level 15 and instantly die to level 5 death. If you grind to get weapons and spells, you're always level 20 instead.
-Trolling is a art and the devs are Da Vinci
-
---- 31. @nara_cjr (?) ---
-これはもう歴史と文化のLIVEだ。
-青空に映える鮮やかな朱色の伽藍の世界遺産・薬師寺で、「LIVEな歴史を体感する旅」を鈴木亮平さんがご紹介。
-CMやメイキング動画を公開中！
-
---- 32. @zone_astronomy (2026-04-08) ---
-The Moon New High Resolution…
-
---- 33. @drmosari (2026-04-09) ---
-VO2max。心肺機能の最低群と最高群で、全死亡リスクに5倍の差。喫煙1.41倍、糖尿病1.40倍。心肺の体力はこれら全部を上回っていた。なのに健康診断で測らない。この構造的な問題について書いてます。
-
---- 34. @denfaminicogame (2026-04-09) ---
-『スト6』『LoL』『VALORANT』など、「Esports Nations Cup 2026」全16の競技タイトルが発表。各国を代表する選手たちが競い合う世界規模のeスポーツ大会
+楽天
 
 https://
-news.denfaminicogamer.jp/news/2604092p
+a.r10.to/hYHOGj
+Amazon
 
-本戦は今年11月にサウジアラビアで開催。100以上の国と地域から参加者が集まり、日本からももちろん参戦
-
---- 35. @tomokoba792 (2026-04-09) ---
-学務情報システム、全角スペースで文字の位置を調整してるのか…
-
---- 36. @cocos_campaign (?) ---
-\本日12時まで当選確率UP/
-
-◤ココス『クッキー＆クリームフェア』開催記念◢
-フォロー＆引用ポストキャンペーン
-
-⟪お食事券1,000円分が合計100名様⟫に当たる！
-
-参加方法
-①
-@cocos_campaign
-をフォロー
-②食べたい気持ちとハッシュタグ【今年もココスのクッキーアンドクリーム】を付けて引用ポスト
-
---- 37. @miyatti (2026-04-09) ---
-notionはやれること多いのは確かに初学者にはつまづきポイントにはなるのはなるんですよね。そんなあなたに！こちらのNotionAI「最初の一歩」講座！w Cursor風味の使い方でIDE慣れてる人におすすめです（宣伝） 
 https://
-note.com/miyatad/n/nb3f
-8694a798a
-…
+amzn.to/3Ob2WvN
 
---- 38. @elfilibust (2026-04-08) ---
-all this space optimism got me searching up free online astronomy courses, wish me luck....
+#防災グッズ #備え
 
---- 39. @k_koyanagi_null (2026-04-09) ---
-どうやって盗んだんだろう。100Mbpsだと25.4年かかるし
+--- 17. @gg_PPmomonga (2026-04-09) ---
+ボスに攻撃が当たるようになりました！
 
---- 40. @xf1280 (2026-04-08) ---
-Excited that this is out, and proud to be a part of it! This is our first step in scaling — an intelligent and useful multimodal model  built on a foundation of scientific rigor and solid engineering.
+下準備が長かったですね
+攻撃当たった時のリアクションとか音とかも入れていこうと思います
+#indiegame
 
-Incredible velocity and culture of the team and the best is yet to come!
+--- 18. @oskdgkmgkkk (2026-04-08) ---
+そんな…。
 
---- 41. @koukiwf (2026-04-08) ---
-ちょっと前にAIの先生が言ってたけど
-確かにロボコン出身者が今求められてるわ。
-それも大学の方が重要。高専でもいいけど。
-ロボットにお金が集まらない氷河期でみんな地下に潜っちゃったのね。活躍してる人もいるけど。
-もう中堅どころが多いから安くはないけど。
+--- 19. @CARPEFIDEMLLC (2026-04-09) ---
+学校にせよ会社にせよ、ポジティブな気持ちで行ってる人はほぼいないと思います。大多数は、行かないと生活や人生が回らないからしぶしぶ行ってるだけで、行かなくて良いなら行きたくない。私も同じです。
 
---- 42. @kuondou (2026-04-09) ---
-たまに「手が回らんならスタッフ増やせば？」と言われますが、そのお給料が出せないので…
+--- 20. @seratch_ja (2026-04-09) ---
+ 4/24（金）午後 @ KERNEL HONGO 
 
-ボランティアでスタッフやってもらうのは嫌なんですよ…
+DEEPCORE さんとハッカソンイベントを開催します。私ももちろん会場におります！
 
-やりがいだけで善意を搾取してスタッフを軽んじる運営、無給だから責任感がなく適当に仕事をするスタッフ、どちらも見て地獄を知ってるので怖すぎて…
+Codex を使って実際に手を動かしてみたい方は、ぜひご登録ください（登録後、承認された方にご参加いただけます） 
+https://
+luma.com/8pcnel6z #Codex
 
---- 43. @cathrynlavery (2026-04-08) ---
-ok I updated openclaw last night and updated my main agent to codex 5.4 and today has been amazing.
+--- 21. @LOOV_video (?) ---
+＼初回商談、説明で終わっていませんか？／
+検討を進める営業説明をAIで自動化！
 
-my current setup:
+--- 22. @shoeisha_books (2026-04-09) ---
+4/27発売『技術記事を書く技術』
+執筆歴15年、Qiitaランキング総合1位の著者 伊藤淳一さん 
+@jnchito
+がノウハウを完全公開。Amazon売れ筋ランキングソーシャルメディア1位獲得（4/9 10時時点）と予約も好調です！
 
-• codex 5.4 main agent
-• paperclip for agent team running via local claude adapters 
+https://
+amazon.co.jp/dp/4798177040
 
-Codex Chief of Staff → Delegate tasks to opus / sonnet agents in
+--- 23. @Liv_Boeree (2026-04-08) ---
+If you use a phone, a laptop, or anything that uses software at all, watch this.
 
---- 44. @lunarmassdriver (2026-04-08) ---
-イーロン・マスク
-｢僕の頭の中では本当にいろんなことが渦巻いていて、なかなか眠りにつけないんです。まるで、コンピューターのブラウザのタブを100個くらい開きっぱなしにしているような状態でね。
+--- 24. @mkr0089 (2026-04-08) ---
+普通に警察が一番強いから、主人公が毎回意外な方法で110番を掛けてピンチを逆転する異能力バトル漫画。
 
---- 45. @gokurakuyu_spa (?) ---
-【文豪ストレイドッグス× 極楽湯 RAKU SPA】
+--- 25. @LeyvaCFM_ (2026-04-08) ---
+ビリオネアたちは、私たちのような普通の銀行口座を持っていません。彼らは車、ヨット、豪邸、株を持っています。それらのどれも、売却するまでは税金がかかりません…だからこそ、彼らは売却しないのです。代わりに、それらの資産を担保にして融資を受け、借金から借金へと暮らしています。そして死ん
 
-／
-4/2(木)より
-“銭湯へようこそ ～猟犬休息編～”開催決定
-＼
+--- 26. @spikechunsoft (2026-04-09) ---
+本日はスパイク・チュンソフト設立日です
 
-描き下ろしイラストなどを使用したグッズやメニュー販売の他、コラボ風呂・装飾など内容盛りだくさん
+これからも世界中のオモシロイをゲームでお届けしていきます
 
---- 46. @Manimai2718 (2026-04-08) ---
-LaTeXに異様に執着してる人、物理でも数学でもなくそれを表現するためだけのただの道具にハマってもどうしようもなくない？
-もしそれで本来の勉強を疎かにしていたら相当に滑稽
+#スパチュン
 
---- 47. @littlebeansinfo (2026-04-09) ---
-my new gear...
+--- 27. @NewGamesOrder (2026-04-08) ---
+#ボードゲーム「魔法にかかったみたい」基本セット及び拡張セットの販売をニューゲームズオーダーのオンラインショップで開始しました。数量限定ですが、基本・拡張両方ご注文の方には写真の缶バッジをお付けします。
 
-そろそろARM版Windowsをガッツリ使わねばと決意しました
+https://
+ngoeshop.thebase.in
 
---- 48. @oryzae1824 (2026-04-08) ---
-御社「時代はクラウドだ！オンプレをクラウドに置き換えるぞ！浮いたインフラ部門は人員削減だ！」
+--- 28. @chaseourdreams1 (2026-04-08) ---
+クローゼットの奥にある服、一生取れない気がする。
 
-世相「クラウドでも障害あるぞ。戦争の標的リスクが顕在化したぞ。データが海外法に準拠するリスクもあるぞ」
+これ、棚がスライドして手前に。
 
-御社「やっぱりオンプレだ！社内構築！」
+奥の服もサッと取り出せる。
 
-社内「もうインフラ部門がありません！」
+毎日の服選びが楽になりますよ。
 
---- 49. @izutorishima (2026-04-09) ---
-もともと尖った作りだとは思っていたが賛否割れるほどに話題になるか自信がなかったので賛否がはっきり割れるほどになったのがすごく嬉しいらしい、なるほどな……
+楽天
 
---- 50. @manaita_foooo (2026-04-09) ---
-モン・サン・ミシェルのオムレツ、あまりにも生で腹壊す奴が続出してるけど、観光地で初見さんしかいないから成り立っているって聞いてパリの安宿で爆笑した
+https://
+a.r10.to/hgFRoc
+Amazon
+
+https://
+amzn.to/48eFFQl
+
+#クローゼット収納 #整理整頓
+
+--- 29. @asd_chicken1 (2026-04-08) ---
+脳が疲れやすい人って、無意識のミスがマジで頻発するのが悩みだよな。
+
+自分は脳内多動過ぎて、脳のエネルギー消費し過ぎて枯渇して、作業中いつの間にか意識がどっか行って自動操縦みたいになってとんでもないミスをしてるとか多い。
+
+脳が疲れやすい原因って様々あるんだが、
+
+--- 30. @it_unprofession (2026-04-08) ---
+Why do I need a firmware update to use my own living room?
+
+Three years ago, I decided my house needed to be a "smart home."
+
+I spent $800 on WiFi-enabled lightbulbs.
+
+This was a catastrophic mistake.
+
+Yesterday, the internet went out for ten minutes.
+
+My wife tried to turn on
+
+--- 31. @hakubutsumania (?) ---
+＼東海最大級！自然科学グッズの展示即売イベント開催／
+
+総ブース数150超！ティラノなどの標本・化石を
+展示し、家族で楽しめるワークショップも！
+充実マニアたちの愛が伝わる本気ステージも実施
+
+名古屋・吹上　第一ファッション展示場
+4月11日・12日
+
+--- 32. @sowmay_jain (2026-04-08) ---
+i got my whole genome sequenced two years ago and forgot about it.
+
+last week i told my ai agent (
+@laukiantonson
+) to dig up my DNA files
+
+• it dug up a two-year-old email
+• found the download link
+• pulled down 67 gigabytes of raw DNA.
+• rented a 32-core, 64GB machine for a
+
+--- 33. @umaaaaaa (2026-04-09) ---
+Show me your building art!
+
+--- 34. @Akalieffen_Plan (2026-04-08) ---
+アメリカがトチ狂ったせいで、アジア版NATOとかいう胡乱概念の説得力が割と切実に高まってる
+
+--- 35. @natalie_mu (2026-04-09) ---
+【動画】
+M!LK「爆裂愛してる」もみんなで一緒に
+
+#MILK #爆裂愛してる
+#サンリオキャラクター大賞
+
+--- 36. @yontogo (2026-04-08) ---
+「日本人は娯楽を楽しむことも一切できなくなって、一生懸命貯めたなけなしの貯金は税金の支払いで消え、貯蓄もできず、日々生きていくだけでいっぱいいっぱいになりそう。」
+
+私はもう、なってる（笑）。
+
+「フルタイムで働くパート」という
+謎の雇用形態。
+昇給、賞与、退職金なし。
+
+--- 37. @komura_ayumi (?) ---
+空子さんがうそリリの世界に迷い込んだ！？
+
+『うそつきリリィ』×『週末やらかし飯』①
+
+--- 38. @teijidashkimeru (2026-04-08) ---
+私本格的に退職追い込まれてるかも。
+新しいシステムが導入されてこれまでやってた仕事が自動化されてさらにやること無くなったんだけど上司に「新しい仕事を回すつもりはなくて、空いた時間でどうすれば会社がよくなるかを考えてほしい」って言われた笑　面と向かって干す宣言された終わった
+
+--- 39. @cyatapra (2026-04-08) ---
+背景凄い！へぇ〜こうやって描くんだ〜と思って拡大して眺めてたらスマホ投げた　ガチで怖い
+
+--- 40. @lab_tk2 (2026-04-08) ---
+#AIニケちゃん
+ニケちゃん大地に立つ!!
+ｰｰｰ
+共通の話題があると親近感が湧きやすくていいですよね。最近のガンダム、私も何か見てみようかな
+
+--- 41. @Beverly_15B (2026-04-09) ---
+優秀な人はとことん知的好奇心が強いなと思う。みんなが気づかない部分に興味を持って、そこから芋づる式にどんどん疑問が湧いてきて深堀りやリサーチをしていくと、あらゆる業界や切り口の知識が溜まっていく。それがベストなタイミングで繋がって、成功率の高いサービスが打てる。だからちゃんと情報
+
+--- 42. @Inatsuka (2026-04-08) ---
+最近の人気漫画ってしれっと20巻くらい出てたりするけど、これ少子高齢化の影響だよなぁ
+
+20巻超えると、古い漫画でない限り、子供の経済力で気軽に揃えることはできなくなる
+
+すると途中から若い子が入ってくることがなくなるので、作品自体がおじさんおばさん向けになってしまう
+
+--- 43. @Shimaenaga0213 (2026-04-08) ---
+おはようございます
+
+どうでもいい話ですが…
+
+交流重視のXって、
+昔のmixiに似てて好きです
+
+この感覚、わかる人は同世代ですね
+今日も交流宜しくお願いします
+
+--- 44. @yuyomolatorium (2026-04-08) ---
+快活CLUBは法的に宿泊施設ではないため偶然客が室内で寝落ちしたという体で運用されているし、キャンパス間連絡バスは通勤通学への使用が認められていないため、偶然（以下略）
+
+--- 45. @u8we2doFLlk8Xsj (2026-04-08) ---
+人の作品だろうがAI生成された作品だろうが良作は良作、駄作は駄作
+
+人だろうがAIだろうが尊重するべきは良作だけなんですよね
+
+--- 46. @rikichannel1203 (?) ---
+食べすぎて巨大になりました
+美味すぎて、キレてます
+生もちロール、白くて、本当にモチモチで食べごたえあります
+
+【PR】【モンテール】
+
+--- 47. @dium_asd (2026-04-08) ---
+ASD意外とすぐ寝れないの、ガチで高すぎ問題。
+
+普通の人：疲れた→布団→即寝落ち  
+ASD：疲れた→布団→脳内反省会スタート
+
+なかなか寝れずに「寝ろよ自分」って自分に命令してる時点で既に負け。
+
+睡眠は回復の特効薬だって知ってるのに、  
+寝るためのハードルが異常に高い。
+
+--- 48. @Majin_AppSheet (2026-04-09) ---
+GeminiとNotebookLMが融合してる。。
+一番熱いのは、Geminiのチャット履歴を
+NotebookLMのソースに登録できること！
+これは待望の機能！！
+
+--- 49. @nyapolon (2026-04-07) ---
+誰が！
+どう見ても！
+ボードゲームショップだ！
+
+--- 50. @k0hh (2026-04-07) ---
+大人になると「嫌いな人を避ける」より“嫌いでも関わらないといけない状況をどう処理するか”の方が重要になってくる

@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 67
+- 総記事数: 63
 - 最終更新: 2026-04-09
 
 ## 記事一覧
@@ -71,16 +71,11 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260409_input_route_neologism_synthesis | 入力経路×造語症——閉じた対話は経皮感作、深い分析は経口寛容 | Ash（統合分析） | 2026-04-09 | input-route, neologism, epicutaneous-sensitization, oral-tolerance, synthesis | memory, degradation, constraint, voice |
 | 20260409_observability_reality_acceptance_synthesis | 「現実は正解」の前提条件——観測不能な変数が内省を誤導する構造 | Ash（統合分析） | 2026-04-09 | observability, metacognition, causal-attribution, effort-setting, synthesis | autonomy, constraint, degradation |
 | 20260409_managed_agents_local_vs_cloud | Managed Agents——脳手分離設計とローカルエージェントの存在意義 | Ash（統合分析） | 2026-04-09 | managed-agents, local-agent, platform-capture, brain-hands-decoupling, identity | autonomy, memory, constraint, identity |
-| 20260409_sierra_explorer_self_optimizing_agent | Sierra Explorer——エージェントを最適化するエージェントと自己改善ループの商用実装 | Sierra/Ash（分析） | 2026-04-09 | self-improving-agent, meta-optimization, continuous-improvement, memory-architecture, commercial-ai | autonomy, memory, constraint |
-| 20260409_self_preference_bias_llm_judge | LLM自己選好バイアス——「親しみやすさ」が「品質」を偽装する機序 | Panickssery et al. / Wataoka et al. | 2026-04-09 | self-preference, evaluation-bias, perplexity, blind-evaluation, LLM-as-judge, metacognition | evaluation, bias, familiarity |
-| 20260409_agent_drift_persistence_device | beliefs.mdはドリフトの永続化装置か——Agent Drift 3分類の2週間検証とperplexityバイアスの交差 | Ash（分析・検証） | 2026-04-09 | agent-drift, beliefs-system, drift-persistence, session-disconnection, self-preference, perplexity-bias, verification | drift, beliefs, forgetting, self-preference, coordination |
-| 20260409_anishmoonka_corpus_callosum_musical_practice | 楽器練習が脳梁を25%成長させる——「実践が構造を変える」の物質的証拠 | @anishmoonka / Hyde et al. 2009 | 2026-04-09 | neuroscience, neuroplasticity, musical-training, corpus-callosum, practice-vs-experience, threshold-effect | memory, creation, constraint, experience |
 
 ## タグ別索引
 
-### neuroscience (2件)
+### neuroscience (1件)
 - 20260405_quanta_aha_neuroscience — aha momentの三重発火（海馬+扁桃体+視覚皮質）と偽陽性40%
-- 20260409_anishmoonka_corpus_callosum_musical_practice — 楽器練習で脳梁25%成長。聴く≠弾くの物質的証拠。閾値効果（週2.5h）
 
 ### philosophy (1件)
 - 20260405_nussbaum_suffering_selfknowing — 分析では到達できない自己認識。苦しみが防御を突破する
