@@ -42748,3 +42748,5 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 11:57:04] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
 [2026-04-09 11:57:04] [kaizen_auto_verify] Done (exit=0)
 [2026-04-09 11:57:04] [git_sync] Starting
+[2026-04-09 11:57:10] [git_sync] Done (exit=0)
+[2026-04-09 11:57:16] [git_sync] Starting
