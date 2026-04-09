@@ -1,301 +1,289 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 16:25
-# Total: 45 tweets
+# Read at: 2026-04-09 16:30
+# Total: 50 tweets
 
---- 1. @kenfjt (2026-04-09) ---
-早すぎるw 勉強になるなコレ。
+--- 1. @windscribecom (2026-04-08) ---
+It appears 
+@Microsoft
+ is actively suspending developer accounts with no warning or reason of various security tools like VeraCrypt, WireGuard and also Windscribe. We've had this VERIFIED account for 8+ years to sign our drivers. 
 
---- 2. @pvsportjp (?) ---
-『Prime Video Boxing 15』
+We've been trying to resolve this for over a
 
-那須川天心 vs エストラーダ
-限界か。覚醒か。
-ボクシング人生を左右する一戦。
+--- 2. @watch_UNEXT (?) ---
+◤￣￣￣￣￣￣￣￣￣￣
+ちるらん 新撰組鎮魂歌
+＿＿＿＿＿＿＿＿＿＿◢
+"江戸青春篇" ＜テレビ放送版＞＆
+"京都決戦篇"＜配信限定＞を
+U-NEXTで独占配信中
 
-坪井智也、
-元世界王者を迎え世界への最終関門。
-
-高見亨介、
-前世界王者同士のサバイバルマッチ。
-
-秋次克真、
-日本デビュー戦。
-
-運命の瞬間を見逃すな。
-
---- 3. @fabianstelzer (2026-04-08) ---
-Finally got to unbox my Anthropic Claude Code keyboard! 
-
-one shotted by the new Glif agent (it used gemini + veo 3.1 lite + found an unhinged elevenlabs ASMR voice and added fitting music)
-
---- 4. @takiyoro (2026-04-09) ---
-生活についてのブログを更新しました。たびたび愛を叫んでいる。DAISOが一番好き（というか近所の店舗が多い）だけどセリアもキャンドゥも大好きです。100ではないものの、スリコが函館にないのがつらい
-
---- 5. @sho_yokoi (2026-04-09) ---
-「筋の良い問いを立てるには」みたいな高度な（？）話をする前に、「存在しない問題を解くな」（© Graham さん）という指針だけで失敗しやすいけんきう案の多くを取り除ける気がするにゃんねぇ
-
---- 6. @ABridgen (2026-04-08) ---
-It’s a remarkable coincidence that the Earth was exactly the same orientation to the moon with exactly the same cloud coverage when these two pictures were taken 68 years apart. Am I now a coincidence theorist ?
-
---- 7. @erukiti (2026-04-09) ---
 https://
-youtube.com/watch?v=JgqL7m
-XiIT0
+video.unext.jp/po2/chiruran?r
+id=SID0281090&cid=D32256&adid=XXX&utm_source=twitter&utm_medium=social&utm_campaign=tweet_title_drama&utm_content=SID0281090&twclid=2a3ipklt4tnz6963khnalagdkr
 …
 
-t_wadaさんのこれ、とりあえず全員見るべき
+山田裕貴さん
+中島健人さん
+よりコメント到着
 
-AI依存症のくだりが一番刺さったんだけど、それはそれとして、これからの時代のチーム論は、色々な意味で重要になりそう
+撮影当時の振り返りトークをお届け
 
-・AI疲れが何かの話
+\ちるらん観るならU-NEXT/
 
---- 8. @Iwate_Univ_PR (2026-04-08) ---
-【最新研究】ネコがごはんを残す理由を解明 ―同じ餌でも匂いを変えると再び食べる―
-岩手大学農学部の宮崎雅雄教授、高橋巧大学院生らの研究グループ
+--- 3. @vxylily (2026-04-08) ---
+If aliens exist, why haven't they visited Earth? 
 
+--- 4. @CRSegerie (2026-04-08) ---
+Anthropicの研究者が公園でサンドイッチを食べている。彼は電話でメールを受け取る。送信者：AI。インターネットにアクセスするはずのないAIだ。
+
+セキュリティテスト中、Anthropicの新モデル、Claude
+
+--- 5. @konan999 (2026-04-09) ---
+時間差でちびまる子ちゃんの九谷焼豆皿も届いた♪( * ॑꒳ ॑*)
+
+--- 6. @GOROman (2026-04-09) ---
+カクテルタイム 
+
+つまりGMK？
+
+--- 7. @An0MaHous3 (2026-04-08) ---
+Legit
+
+--- 8. @connorvapethief (2026-04-08) ---
+well why would you tell them that
+
+--- 9. @wanderjegson (2026-04-08) ---
+Twitter now has automatic Grok translation in every post, even though Grok's translation sucks major ass and clicking the translation button is way funnier
+
+--- 10. @USNavy (2026-04-08) ---
+ #USNAVY UPDATE: USS John P. Murtha to support NASA's Artemis II mission
+
+SAN DIEGO – Amphibious transport dock ship USS John P. Murtha (LPD 26) is slated to serve as the recovery ship for the Orion spacecraft and its crew upon their return from the historic Artemis II
+
+--- 11. @UberEats_JP (?) ---
+え？ガストもお店と同じ価格でお届け!?
+あのメニューも、あの人気メニューだって、お店と同じ価格で届く！
+
+しかも今なら、対象店舗の配達手数料が 0 円!!
+今日のご飯は、ガストにしちゃいませんか？
+
+Uber Eats は、ずーっと、使いやすい価格へ。
+
+--- 12. @Marswalkerr (2026-04-08) ---
+WELL THEY DID.
+
+--- 13. @tsukasa_mirai (2026-04-08) ---
+投資戦略_4/9 Update
+米国-イランの2週間の停戦合意で日米株は急騰
+こういう急騰相場ではいったん落ち着くのを待ってから投資したいところ。
+若干の懸念材料として双方の認識にズレがありそうな報道がなされていること。
+そろそろ小型株に資金が流れそうな予感もする（感覚的に）
+
+--- 14. @Bethesda_jpn (2026-04-09) ---
+ 荒れ地でのお花見ガイド 
+
+放射線対策をして、春のアパラチアを楽しみましょう
+
+皆さんはどんなお花見をしたいですか？
+
+#Fallout76
+
+--- 15. @Homme_de_Fer__ (2026-04-09) ---
+プロジェクトヘイルメアリーで一番好きだったのは押しつけがましさがないところ　地球の家族とか友達とか恋人とか名誉ある仕事とかもっともらしい理由でほら、納得できるだろ？やるしかないだろ？勇気が湧いてくるだろ？ってやらなかったところ　嘘だ、全然納得してない、って主人公に言わせたところ
+
+--- 16. @tastefullysaucy (2026-04-08) ---
+“will not applaud those who set the world on fire just because they turn up with a bucket.”
+
+--- 17. @0xQuasark (2026-04-08) ---
+BREAKING: Scientists identify ‘neural fingerprint’ of psychedelics in the brain.
+
+Yesterday, 5 countries pooled ALL their data. The biggest brain scan study EVER!
+
+And discovered all psychedelics rewire your brain in 𝘁𝗵𝗲 𝙚𝙭𝙖𝙘𝙩 𝘀𝗮𝗺𝗲 𝘄𝗮𝘆 
+
+--- 18. @DImteeyaz (2026-04-08) ---
+Toilet paper vs burst of fire
+
+--- 19. @Maicarium (2026-04-09) ---
+「大学は大変。文科省もなんとかしたい。では財務省はどう考えている？」
+少し古い記事ですが、大学は「旧態依然」としており「覚醒」させる必要がある、という当時の視点がよくわかります。海外トップ大に比べ運営費交付金の割合が高く、財源多様化を求める内容。
+(1/2)
+
+--- 20. @aiful_promotion (?) ---
+／
+4日目！
+フォロー＆リポストで当たる！
+ラブファントム女将篇 新CM公開記念キャンペーン実施中
+＼
+
+ハッシュタグ「ラブファントム女将」をつけて
+CMの感想をコメントすると、
+Wチャンスでさらに豪華賞品が当たる
+
+あんたの愛を待ってるで
+
+※応募方法はスレッドをご確認下さい
+
+--- 21. @nicolasfulghum (2026-04-08) ---
+NEW US electricity data 
+
+In March, renewables produced more than a third of US electricity for the first time ever, even overtaking gas generation!
+
+Wind and solar combined reached over a quarter (26%) for the first time.
+
+--- 22. @aesthetiiicc_ (2026-04-08) ---
+あなたが「愛してる」って言うと、彼女がこう答えるとき…「私も愛してる、でもあなたをもっと愛してる」。
+
+--- 23. @j_works1050 (2026-04-08) ---
+ひとまず停戦合意で良かった
+
+今回はアウディQ5 アルカンターラシート タバコ穴補修出張リペアの事例
+
+スエード調特有の素材感と毛流れでなかなか苦戦しましたが、
+ビフォーアフターの通りに
+
+このご時世交換は非常に高額
+
+何はともあれ「諦めないで」
+
+--- 24. @haaainvestment (2026-04-09) ---
+サイゼリヤももう厳しいんじゃない？？
+消費者からしたらありがたいのかもだけど今の時代にメインメニューで500円下回るとかもうだめでしょ笑
+デフレ経済を完全に終わらせるためにもきちんと値上げすべき
+
+--- 25. @MatsuoInstitute (2026-04-09) ---
+勉強会のお知らせ
+ABEJAさんと、Physical AIをテーマに合同勉強会を実施することになりました！
 https://
-iwate-u.ac.jp/cat-research/2
-026/04/007818.html
-…
-#岩手大学　#農学部　#ネコ
+connpass.com/event/390363/
 
---- 9. @ArchysLife (2026-04-08) ---
-The USSR sent the first satellite and first human to space, and were basically the only state to seriously try to land probes on Venus. China has its own space station. Japanese and Canadian tech was instrumental to the ISS. What the fuck are you talking about?
+本イベントでは、ロボットの実演（デモ）を交えながら、フィジカルAIやロボット開発の取り組みについて理解を深める勉強会を開催します。
 
---- 10. @DrBeaVillarroel (2026-04-08) ---
-The mystery deepens. An independent researcher has uncovered an unexpected anticorrelation between VASCO transient detections and geomagnetic storm activity. This finding seriously challenges explanations based on cosmic rays or plate defects, even without considering the deficit
+--- 26. @PokersonT (2026-04-08) ---
+ペットボトルに入った謎の液体と100円玉を持って税務署に押しかけられても役所が困るのは解っているが、
+50L分の自家消費用醸造許可書と安全のしおりを1年分4000円で出すくらいの事はして欲しい
 
---- 11. @agodajapan (?) ---
-アゴダで宿泊・フライト料金を見つけよう。旅行を一緒に計画して、おトクに予約。これぞアゴダチ！バナナマンが出演するCM放映中
+--- 27. @vgbeppu2 (2026-04-08) ---
+◤◢◤◢◤◢◤◢
+新年度ＳＴＡＲＴ
+◤◢◤◢◤◢◤◢
 
---- 12. @PeakThinkers_ (2026-04-08) ---
-This 1 hour lecture from a Carnegie Mellon professor who had 3 months to live will teach you more about living than every self-help book you’ve ever read combined.
+想像 を 超える。
+ヴィーナスギャラリー の
+4月 新年度 スタートダッシュ！
+＿＿＿＿＿＿＿＿＿＿＿＿＿
+ヴィーナスギャラリー17店舗
+ 4月10日[金]11日[土]12日[日]
+連日10時オープン予定
+￣￣￣￣￣￣￣￣￣￣￣￣￣
+#がんばるヴィーナス
 
-Bookmark this & give it 1 hour today. It’s the most productive start you can give your week.
+--- 28. @he1kumwya (2026-04-08) ---
+10 sets of mom said no to buying a toy
 
---- 13. @P_McCulloughMD (2026-04-08) ---
-BREAKING--New Report Shows 84% Clinical Benefit Ratio for Ivermectin+Mebendazole in Cancer Care, April 07, 2026
+--- 29. @kozo8 (2026-04-08) ---
+そうなんだよね。
+まさにこれは、ケアマネという福祉現場のコーディネーターに力を持たせたくないという政府の陰謀です
 
-Real world patient-reported outcomes study.  Stimulus for 
-@theNCI
- 
-@NIH
- large scale clinical trials in solid organ cancers using IVM-Meb through a range of doses and
+権限は持たせないのに、「ケアマネは介護保険の要」とか言って、政府の受け売りを、会社の経営者も平気で言ってきますからね
 
---- 14. @_OKJ__ (2026-04-08) ---
-Crazy how the scariest and most dangerous part of the Artemis ii mission hasn’t even happened yet … which is when they renter earth. 
+--- 30. @ZERO_JPofficial (?) ---
+人生を旅と捉え、歩み続けるすべての挑戦者へ。ブランドアンバサダー・三笘薫とのコラボコレクションも登場。
 
-Their pod would have to enter the athmosphere at a speed 22times the speed of sound (which would actually be the new record  speed any human
+--- 31. @toruoka2016 (2026-04-09) ---
+ついに納車された
 
---- 15. @gigazine (2026-04-09) ---
-「サトシ・ナカモトの正体はイギリス人のアダム・バック氏」と名指しされるも本人はその疑惑を否定
+まだエンストしてません
 
---- 16. @a16z (2026-04-09) ---
-The first rule of career planning: Do not plan your career.
-
-
-https://
-pmarchive.com/guide_to_caree
-r_planning_part1.html
-…
-
---- 17. @AndyKimNJ (2026-04-08) ---
-The stunning photos of the Moon have been inspiring, but right up there is the amazing character of our astronauts. They just seem like some of the kindest people and I’m happy to see good-hearted people be our ambassadors to the galaxy. They are the best of us.
-
---- 18. @7_eito_7 (2026-04-09) ---
-Google公式が「無料でAIスキルを学べる公式サイト」を公開。
-
-・AI / コーディング / クラウド全部学べる 
-・実際のGoogle環境でハンズオン 
-・そのまま資格も取れる
-
-正直、独学してる人はこれ使った方が早い。 何が学べるのか詳しく解説します
-
---- 19. @INTERPHEX (2026-04-07) ---
-Just 2 weeks to go until #INTERPHEX2026!
-
-Get ready to mingle with industry leaders, discover the latest innovations, and explore what’s next. It’s all happening soon!
-
-Secure your spot and start planning your experience today: 
-https://
-bit.ly/49kXC0R
-
---- 20. @galsenai (2026-04-08) ---
- 先月2月、Googleは#WAXALを発表しました。これは21のAfrican言語のための大規模な音声データセットで、Hugging Faceでオープンソースとして公開されました。
-
-#WAXALという名前はWolof語に由来し、「話す」という意味です。象徴的ですね。
-
---- 21. @KFC_jp (?) ---
-レギュラー化を望んでくれたあなたも。
-あの時食べられなかったあなたも。
-【鶏竜田バーガー復活中】
-
-ケンタッキーが、チキン専門店の技術とプライドのすべてを注ぎ込んだ最高傑作
-この機会にぜひお試しください
-
-【応募方法】
-① 
-@KFC_jp
- をフォロー
-②この投稿をリポスト
-③動画で結果を確認
-
---- 22. @kimberlywtan (2026-04-08) ---
-We 
-@a16z
- decided to compile hard data on what’s actually working in enterprise AI.
-
-* Nearly 30% of the Fortune 500 and ~20% of the Global 2000 are live, paying customers of the leading AI startups. This goes counter to the MIT statistic that 95% of AI pilots are failing in the
-
---- 23. @Soph_astro (2026-04-08) ---
-054日目、軌道0835 – 卵探しをした後、今度は思い込み探しの時間…。 駅内では、私たちが微小重力状態にあるため、物事が下に引き寄せられることはありません…。 そして驚くべきことに：抜けた髪の毛は落ちません、 髪にくっついたままです。
-
---- 24. @hontai (2026-04-09) ---
-【#2026年本屋大賞】
-
-大賞受賞作品の発表です
-2026年本屋大賞　大賞作品は
-
-『イン・ザ・メガチャーチ』
-朝井リョウ
-（日経BP 日本経済新聞出版）
-
-です
-
-順位についてはコチラ▼
-
-大賞『イン・ザ・メガチャーチ』
-朝井リョウ（日経BP 日本経済新聞出版）
-
-2位『熟柿』
-佐藤正午（KADOKAWA）
-
---- 25. @SamaHoole (2026-04-08) ---
-At the mouth of the Mississippi River, there is a dead zone.
-
-A hypoxic zone: water so depleted of oxygen that almost nothing can survive in it. It forms every summer. At its largest, measured in 2017, it covered approximately 8,776 square miles. An area larger than New Jersey,
-
---- 26. @AshtonForbes (2026-04-08) ---
-I don't trust the CIA.
-
-I know Ghost Murmur is real because I've been explaining the exact physics for over two years.
-
-It has nothing to do with trusting authority. I researched and learned.
-
-They've unified physics and they classified it. I'm exposing that fact.
-
-It's not going
-
---- 27. @Engineering67 (2026-04-08) ---
-Inside the F-15 Eagle
-
---- 28. @dkundel (2026-04-08) ---
- Codex Tip 
-
-Create a local environment to have Codex auto install dependencies for your worktrees and create actions for quick access to common commands.  
-
-Actions get executed in your integrated terminal so Codex can also access the terminal output.  
-
-For iOS developers
-
---- 29. @AliGrids (2026-04-09) ---
-one CSS trick fixes hover chaos 
-@sorenblank
-
---- 30. @PMOIndia (2026-04-08) ---
-India's Kalpakkam reactor goes critical: A leap into the nuclear future
-
-https://
-firstpost.com/india/kalpakka
-m-india-nuclear-energy-fast-breeder-reactor-reactor-goes-critical-a-leap-into-the-nuclear-future-ws-e-13997445.html
-… 
-
-via NaMo App
-
---- 31. @Supermicro (?) ---
-ServeTheHome dives into Supermicro’s full AI factory portfolio. Patrick Kennedy breaks down 20+ solutions powered by NVIDIA Blackwell. See how Supermicro is driving the next generation of AI factories.
-
---- 32. @taiyo_prince (2026-04-08) ---
-ことりぱ〜ち
-私が公式お兄ちゃんを務めるごみ国際（
-@intora2019
-）の楽市新作。協力型トリテ。フレドラ26の応募作品でもある今作は、惜しくも賞を逃したが、今作の完成度も高い。メルヘンチックな世界観と、遊ぶ人たちを唸らせる味の濃いルールとのアンマッチさえもベストマッチで楽しめる良作。
-
---- 33. @rmell_ (2026-04-08) ---
-We found him 
-
---- 34. @mtdcnc (2026-04-08) ---
-At Engineering Technology Group, these apprentices stood out for one simple reason, and it’s not gender. It’s about showing up and smashing the opportunity! We’re seeing a new generation of women in engineering – and they’re only just getting started. 
-https://
-youtu.be/2K2vdSsHbV0
-
---- 35. @MadsPosting (2026-04-08) ---
-when you've calculated the amount of sleep you're gonna get but you can't fall asleep so it's getting lower
-
---- 36. @Prof_Kalkyl (2026-04-08) ---
-Full static grid. Personal favorites: 2 and 7.
-
-A lot of you reached out about buying prints, but since this is NASA's intellectual property that would require an official collaboration.
-
---- 37. @rikichannel1203 (?) ---
-食べすぎて巨大になりました
-美味すぎて、キレてます
-生もちロール、白くて、本当にモチモチで食べごたえあります
-
-【PR】【モンテール】
-
---- 38. @yoo0daa (2026-04-08) ---
-今ランキング2位です！！
-
---- 39. @NoahEpstein_ (2026-04-08) ---
-anthropic's playbook, confirmed:
-
-1. drop new model (Mythos Preview, today)
-2. quietly make the old one spastic
-3. charge the same price
-4. blame the user when people notice
-
-the data is in. 6,852 claude code sessions analyzed:
-
-- thinking depth dropped 67%
-- the habit of reading
-
---- 40. @sudo_nikkei (2026-04-09) ---
-《一つの専門分野に3人程度のスーパージャーナリストが朝日新聞の力の核心になる》
-
-十数年前、前職で社会部の上司から言われた言葉を思い出す。
-「スペシャリストはいらない。なんでも書けるゼネラリストこそ新聞記者だ」
-時代が変わる。求められる人材も変わる。
-
---- 41. @acteduweininger (2026-04-08) ---
-In twelve months AI will release your entire porn history to the world.
-
-There is no way to delete any of this. But there is a solution: porn maxxing.
-
-A vast and labyrinthine maze of pornography that includes all genres. It is the only thing between you and annihilation.
-
---- 42. @gigazine (2026-04-09) ---
-Geminiに「NotebookLM」が統合されGeminiからノートブックを作成できるように
-
---- 43. @agrimsingh (2026-04-08) ---
-i took 
-@karpathy
-'s autoresearch loop and pointed it at business class flights because i wanna fly cheap but in class.
-
-(at least in theory - i'm a poor founder flying coach)
-
-here's autofare - autoresearch but for always flying in lie-flat beds
-
-made with codex + gpt 5.4 mini
-
---- 44. @gri_mm (2026-04-08) ---
-太陽は毎日、10,000エクサジュールものエネルギーを地球に送っています。
-
-人類の1日の消費量は1.7エクサジュールです。
-
-私たちは石油を必要としません。私たちに必要なのは、より大きな野心です。
-
---- 45. @Dimillian (2026-04-08) ---
+--- 32. @Dimillian (2026-04-08) ---
 We just shipped a new Build macOS Apps plugin for Codex!
 It bundles a bunch of skills to help you build great macOS apps, from the UI to the code refactoring and telemetry.
 You can find it and install it within the Codex app.
+
+--- 33. @posconchan (2026-04-09) ---
+大企業には「成果を出すパワハラ上司」がいて、これが最も厄介なんですよね。
+
+なぜなら、上から見ると「数字を作っている優秀な管理職」に見えるからです。売上さえ立っていれば、現場でどんな詰め方をしているか、どれだけ人を疲弊させているかまでは見られないことが多い。
+
+--- 34. @DukeOfZamunda (2026-04-09) ---
+Mayoral Obama I fear. He might be ruled out of Presidency but with no term limits on Governor he might run New York for the rest of his life lmao.
+
+--- 35. @Fumiya_Kume (2026-04-09) ---
+来た #devin
+
+--- 36. @NetflixJP (?) ---
+Netflixドキュメンタリー映画
+『戦いの向こう 侍たちの記録 2026 WORLD BASEBALL CLASSIC』
+
+4月20日Netflix独占配信決定
+
+「連覇」を目指し
+勝ち続けなければならない重圧の中で
+
+侍ジャパンの選手たちは
+何を感じ、どう戦ったのか
+その舞台裏に迫る
+
+--- 37. @by_hailmary (2026-04-08) ---
+NASAが共有したアルテミス背景壁紙  
+スレッドで
+
+--- 38. @DavidOndrej1 (2026-04-08) ---
+if you work at Anthropic
+
+and leak Mythos weights
+
+you will go down in history.
+
+--- 39. @meichan_maru (2026-04-08) ---
+実は絵描きにコンプ抱いてる人っていなくて大半が馬鹿なこと言ってるから馬鹿にされてるだけなんだよ…
+
+--- 40. @TPV_John (2026-04-08) ---
+Be advised…
+
+X is getting ready to sell the Digital ID as “bot prevention”
+
+--- 41. @Qohelet_ecc128 (2026-04-08) ---
+母校へ
+法政4名明治2名ってよく書けましたね
+俺が全部受かったのに合格体験記も書かせないで
+
+--- 42. @LowLevelTweets (2026-04-08) ---
+I normally try not to constantly talk about AI but this is a real thing.
+
+Software security and as a result cybercrime was originally limited to the number of people that could execute it. Vuln research is a notoriously low density field of talent
+
+What happens now if a single
+
+--- 43. @dmkdsy (2026-04-08) ---
+満員電車でグイグイ押してくるサラリーマンに向かって「押すな！死ねよ！！」とブチギレている女性を観測した、春だな
+
+--- 44. @sugapiyo (2026-04-09) ---
+福祉サービスって毒親との縁切りができない制度してるよな。
+「親御さんはみんなまとも」なわけねぇだろ、性善説で制度作ってんじゃねぇよ
+
+--- 45. @PrimeVideoAnime (?) ---
+『異世界のんびり農家２』
+プライムビデオで見放題《独占》配信開始
+
+神の恩寵で異世界に転生した火楽。
+大樹の村は仲間が増えてさらに賑やかに。
+新たな作物や騒動に彩られ、のんびりスローライフ第2幕が始まる。
+
+--- 46. @snow_aragami (2026-04-08) ---
+なんだこれ、憲法違反だろ。どうして司法はこれに介入できないんですか、何のための三権分立だよ
+
+--- 47. @Ronycoder (2026-04-08) ---
+Claude FULL COURSE 1 HOUR (Build & Automate Anything)
+
+--- 48. @tsubasa_white1 (2026-04-08) ---
+化学科教授「セミナー化学使ってた方いますか？ありがとうございます。私が代表著者です。」
+もう鉄板の挨拶なんだろうけど笑った
+
+--- 49. @torgtaitai (2026-04-09) ---
+＞朗読をすればどんな人でもキーパーができるというのは、良いことだとは思う。
+ちゃんとこの観点で評価できているの、素晴らしいなと思いますね。
+従来の自由度（といえば聞こえがいいが、無秩序）なシナリオ構成は、できる人はできる 生存フィルターの結果でしかないんですよね。
+
+--- 50. @eggoslug (2026-04-08) ---
+Use your free will properly. Someone asked for my number once and I asked him to name three countries starting with the letter H and he couldn’t so I walked away
