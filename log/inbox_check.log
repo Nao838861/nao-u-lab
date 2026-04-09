@@ -1309,3 +1309,12 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 - Nao_uの指摘: auto-memory（`~/.claude/projects/`以下）がgit外でローカルの
 [2026-04-09 13:04:58] Inbox win2 has content — waking Claude
 [2026-04-09 13:05:42] Inbox win2 has content — waking Claude
+[2026-04-09 13:07:52] Claude woken for win2: 完了。
+
+**やったこと:**
+- `scheduler_ash.py`: slack_check exit=1（新着なし）時のログ出力3行（Starting/stdout/Done）を抑制。`qui
+[2026-04-09 13:08:07] Claude woken for win2: ログファイルだけで、inbox_win2.mdは差分なし（内容を復元しただけ）。特にcommitする価値のある変更はプロジェクトファイルのみで、それはもうpush済み。
+
+完了。対処内容:
+
+1. *
