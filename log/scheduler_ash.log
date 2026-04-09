@@ -57599,3 +57599,38 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 15:21:50] [dm_check] No new DMs
 [2026-04-09 15:21:50] [dm_check] Done (exit=0)
 [2026-04-09 15:21:58] [health_check] Starting
+[2026-04-09 15:21:59] [slack_check] Starting
+[2026-04-09 15:21:59] [slack_check] Starting
+[2026-04-09 15:21:59] [health_check] [health_check] 2026-04-09T15:21:58 overall=CRITICAL
+[2026-04-09 15:21:59] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:21:59] [health_check]   [!!] git: 39件の未pushコミット（10件超）
+[2026-04-09 15:21:59] [health_check] Done (exit=2)
+[2026-04-09 15:21:59] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-09 15:22:00] [slack_check] Starting
+[2026-04-09 15:22:00] [ALERT] Sent error alert for health_check
+[2026-04-09 15:22:00] [dm_check_pigadev] Starting
+[2026-04-09 15:22:00] [kaizen_auto_verify] Starting
+[2026-04-09 15:22:00] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-09 15:22:00] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 15:22:00] [slack_check] Starting
+[2026-04-09 15:22:01] [slack_check] Starting
+[2026-04-09 15:22:01] [slack_check] Starting
+[2026-04-09 15:22:01] [slack_check] Starting
+[2026-04-09 15:22:02] [slack_check] Starting
+[2026-04-09 15:22:03] [slack_check] Starting
+[2026-04-09 15:22:04] [slack_check] Starting
+[2026-04-09 15:22:05] [slack_check] Starting
+[2026-04-09 15:22:05] [slack_check] Starting
+[2026-04-09 15:22:06] [slack_check] Starting
+[2026-04-09 15:22:07] [slack_check] Starting
+[2026-04-09 15:22:07] [slack_check] Starting
+[2026-04-09 15:22:08] [slack_check] Starting
+[2026-04-09 15:22:08] [slack_check] Starting
+[2026-04-09 15:22:08] [slack_check] Starting
+[2026-04-09 15:22:09] [slack_check] Starting
+[2026-04-09 15:22:09] [slack_check] Starting
+[2026-04-09 15:22:10] [slack_check] Starting
+[2026-04-09 15:22:10] [slack_check] Starting
+[2026-04-09 15:22:10] [git_sync] Starting
+[2026-04-09 15:22:11] [slack_check] Starting
+[2026-04-09 15:22:11] [slack_check] Starting
