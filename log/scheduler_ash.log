@@ -59515,3 +59515,28 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 04:21:58] [health_check] Done (exit=0)
 [2026-04-10 04:22:03] [git_sync] Starting
 [2026-04-10 04:22:04] [health_check] Starting
+[2026-04-10 04:22:07] [health_check] [health_check] 2026-04-10T04:22:05 overall=OK
+[2026-04-10 04:22:07] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 04:22:07] [health_check] Done (exit=0)
+[2026-04-10 04:22:09] [dm_check] No new DMs
+[2026-04-10 04:22:09] [dm_check] Done (exit=0)
+[2026-04-10 04:22:09] [review_deadline] Starting
+[2026-04-10 04:22:09] [review_deadline] レビュー期限超過なし。
+[2026-04-10 04:22:09] [review_deadline] Done (exit=0)
+[2026-04-10 04:22:10] [git_sync] Done (exit=0)
+[2026-04-10 04:22:20] [git_sync] Starting
+[2026-04-10 04:22:24] [git_sync] Done (exit=0)
+[2026-04-10 04:22:25] [slack_check] Starting
+[2026-04-10 04:22:26] [scheduler_health] Starting
+[2026-04-10 04:22:27] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-10 04:22:27] [scheduler_health] ✅ scheduler_ash PID — PID=32012 生存中
+[2026-04-10 04:22:27] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 04:22:27] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-10 04:22:27] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 04:22:27] [scheduler_health] Done (exit=0)
+[2026-04-10 04:22:28] [slack_check] Starting
+[2026-04-10 04:22:28] [slack_check] Starting
+[2026-04-10 04:22:28] [slack_check] Starting
+[2026-04-10 04:22:28] [slack_check] Starting
+[2026-04-10 04:22:29] [health_check] Starting
+[2026-04-10 04:22:29] [git_sync] Starting
