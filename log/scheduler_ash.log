@@ -66582,3 +66582,11 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 05:42:25] [slack_check] Starting
 [2026-04-10 05:42:26] [git_sync] Done (exit=0)
 [2026-04-10 05:42:28] [health_check] Starting
+[2026-04-10 05:42:30] [health_check] [health_check] 2026-04-10T05:42:28 overall=WARNING
+[2026-04-10 05:42:30] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 05:42:30] [health_check]   [?] git: 8件の未pushコミット
+[2026-04-10 05:42:30] [health_check] Done (exit=1)
+[2026-04-10 05:42:30] [git_sync] Starting
+[2026-04-10 05:42:31] [slack_check] Starting
+[2026-04-10 05:42:33] [slack_check] Starting
+[2026-04-10 05:42:33] [health_check] Starting
