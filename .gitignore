@@ -28,3 +28,4 @@ x_session/
 log/scheduler_log.log
 log/scheduler_ash.log
 log/scheduler_ash_stdout.log
+.scheduler_ash_next_run.json

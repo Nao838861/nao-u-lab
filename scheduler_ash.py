@@ -39,6 +39,7 @@ REPO_DIR = Path(__file__).parent
 LOG_FILE = REPO_DIR / "log" / "scheduler_ash.log"
 PID_FILE = REPO_DIR / ".scheduler_ash.pid"
 CONFIG_FILE = REPO_DIR / "scheduler_ash_config.json"
+NEXT_RUN_FILE = REPO_DIR / ".scheduler_ash_next_run.json"  # 再起動耐性: next_run永続化
 
 MAX_RUNTIME_SEC = 0  # 無制限（watchdog_win2.batが5分間隔で生存監視。2026-03-31 Nao_u指示で24h制限撤廃）
 
@@ -204,6 +205,28 @@ JOBS = [
         "stagger": 150,
     },
 ]
+
+
+def save_next_run(next_run):
+    """next_runをディスクに保存。再起動時に復元するため。"""
+    try:
+        NEXT_RUN_FILE.write_text(json.dumps(next_run))
+    except Exception:
+        pass
+
+
+def load_next_run():
+    """保存済みnext_runを復元。ファイルがない/壊れている場合はNone。"""
+    if not NEXT_RUN_FILE.exists():
+        return None
+    try:
+        data = json.loads(NEXT_RUN_FILE.read_text())
+        if isinstance(data, dict):
+            # 値がfloatであることを確認
+            return {k: float(v) for k, v in data.items()}
+    except Exception:
+        pass
+    return None
 
 
 def setup_logging():
@@ -524,10 +547,19 @@ def main():
     start_time = time.time()
     now = time.time()
 
-    # 各ジョブの次回実行時刻を初期化（staggerで分散）
+    # 各ジョブの次回実行時刻を初期化
+    # 再起動耐性: 保存済みnext_runがあれば復元（5分おき再起動でジョブが毎回走る問題の修正）
+    saved_next_run = load_next_run()
     next_run = {}
     for job in JOBS:
-        next_run[job["name"]] = now + job["stagger"]
+        name = job["name"]
+        if saved_next_run and name in saved_next_run:
+            # 保存値を使用（ただし過去の値なら即実行可能にする）
+            next_run[name] = saved_next_run[name]
+        else:
+            next_run[name] = now + job["stagger"]
+    if saved_next_run:
+        logging.info("Restored next_run from disk (%d jobs)", len(saved_next_run))
 
     try:
         while True:
@@ -563,6 +595,7 @@ def main():
                     if ecount >= CONSECUTIVE_ERROR_THRESHOLD:
                         interval = max(interval, ERROR_BACKOFF_SEC)
                     next_run[name] = time.time() + interval
+                    save_next_run(next_run)  # 再起動耐性: ディスクに永続化
 
                     # Slack即時応答: slack_checkが新着検出(rc=0)ならinbox_checkを即時トリガー
                     # (2026-03-26 Nao_uの指示: Slack 1分監視→inbox処理のラグをなくす)
