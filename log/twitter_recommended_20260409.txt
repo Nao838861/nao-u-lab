@@ -1,287 +1,296 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 13:00
-# Total: 49 tweets
+# Read at: 2026-04-09 13:05
+# Total: 50 tweets
 
---- 1. @s_tat1204 (2026-04-09) ---
-ベクトル検索の精度向上策としてすぐ試せて、非常に良さそうです。
+--- 1. @elonmusk (2026-04-09) ---
+Good for him!
 
-- クエリを作る際のreasoning文面もクエリに連結してベクトル検索すると精度が上がる（追加学習しなくても）
-- QAデータセットからreasoning + queryのデータを合成してretrieverを学習すると検索精度が上がる
+--- 2. @levtech_inc (?) ---
+この春、ITのプロフェッショナルとして歩み出すみなさまへ。
 
---- 2. @sele_princessm (?) ---
-私もやっちゃおうかな…(PR)
+誰かの日常を守る。世界の不便を解く。
+社会を更新し続ける挑戦に、
+レバテックはこれからも伴走します。
 
---- 3. @itm_aiplus (2026-04-09) ---
-本番環境のAIエージェント開発を「10倍」高速化――「Claude Managed Agents」発表
+3月31日付け日経新聞にて掲出 <PR>
 
---- 4. @yugen_matuni (2026-04-09) ---
-もうClaude Managed AgentsのOSS出てて仰天笑
+--- 3. @elonmusk (2026-04-09) ---
+Not someone you want in charge of superpowerful AI
 
-あとで中身見る。
+--- 4. @namatakahashi (2026-04-09) ---
+自分的には一番大事なのは「コンセプト」
+コンセプトによってゲームデザイン、レベルデザイン、アート、サウンドが決まっていくと思うので
 
---- 5. @shota7180 (2026-04-09) ---
-楽天によるClaude Codeの活用事例を、Anthropicが公開。
+--- 5. @sxzBST (2026-04-08) ---
+あんだけ日本語ペラペラなLiLiCoが永住許可取得で泣いてるのに、日本語もろくに話せずに生活保護受けたり権利だけ主張してのさばってる外国人て何なの？マジで母国へ帰れよ
 
-本日発表されたClaude Managed Agentsも楽天は導入済みで、それによる成果も紹介されています。
+ＬｉＬｉＣｏ  日本の永住権取得を報告「来日して38年」スウェーデン出身…小田井涼平と17年に結婚
 
-内容を日本語でまとめましたので、以下に共有します↓
+--- 6. @AOIKEN72 (2026-04-08) ---
+昔のアメリカの捕鯨は油が目的だったから、油だけ取って肉は捨てたんだよ、と言う話をされると、日本人は「え？可哀想！食べてあげればよかったのに！」って反応になるんですよ。
 
-1/ Claude Code導入による成果
+--- 7. @c0tanpoTesh1ta (2026-04-09) ---
+「オリジナルフォント作りたい！」ってレベルなら、AIのおかげで昔の1/10くらいの労力でいけるようになった。特に趣味や小規模ブランドなら十分実用的。
 
---- 6. @HamelnFilgaia (2026-04-08) ---
-ひっさしぶりに……「これが読み切りなの嘘でしょ！？！？！？！？！　これは絶対に連載でしょ！？！？！？！　なんで読切！？」って驚天動地に動揺してしまった
-いやマジでびっくりした
-え？
-これド面白い新連載の第1話とかじゃないの？　本当に？
+本格プロフォントメーカー目指すなら、まだ「AI＋人間のハイブリッド」が主流だよ。AIフォント制作の現状（特に日本語）
 
-スペースオペラ／読み切り
+--- 8. @VirtudMental (2026-04-08) ---
+これが男が望むすべてです。
+
+--- 9. @yugen_matuni (2026-04-08) ---
+WorkIQMCPをXXX CLIに繋げば多分なんでも出来る気がする。
+
+めちゃくちゃ便利。
+
+--- 10. @ArakanCat (2026-04-09) ---
+知識は一人で得られる。熱量は、人からしか伝染しないのよね。目の前で本気で動いている人を見ると、理屈抜きで自分もという衝動が湧く。本を読んでも動けなかった人が、一人の出会いで変わる。心的状態は人との接触で点火される。だから何を学ぶかより「誰といるか」。環境を変えることが、最も確実な
+
+--- 11. @googlejapan (?) ---
+実は…Gemini って画像比率を指定できるんです。
+
+というわけで、カツカレーーーーーーーーーーーーーーーを作ってみました！
+
+リプライにあるプロンプトでお試しを↓
+
+--- 12. @kinopee_ai (2026-04-09) ---
+Cognition Merge Tokyo
+
+--- 13. @AiXsatoshi (2026-04-08) ---
+Muse sparkとLlama4の違い
+
+--- 14. @homie_catnap (2026-04-08) ---
+ほんとこれ。
+#平和憲法を守る0408
+
+--- 15. @CollinRugg (2026-04-08) ---
+NEW: Disgruntled employee starts massive fire at a 1.2 million square foot warehouse in Ontario, California.
+
+29-year-old Chamel Abdulkarim was arrested on arson charges for setting a Kimberly-Clark warehouse on fire.
+
+Abdulkarim apparently filmed himself on Instagram setting
+
+--- 16. @MattWalshBlog (2026-04-08) ---
+The illegal immigration issue is not difficult or complex or nuanced. If they came here illegally, they need to leave. That's it. End of story. 
+
+"But what if they've been here for 10 years???"
+
+They need to leave. 
+
+"But what if they haven't committed any other crimes???"
+
+--- 17. @KBYMScotland (2026-04-08) ---
+正直驚いたのは、MAGAの中に「ここを越えたら支持できない」という譲れない一線を持つ人が割といたこと。アメリカ・ファーストというコアがあり、国内の課題解決優先が期待されていたが、今回のイラン攻撃でトランプがその一線を越えたと判断した人が多くいたようだ。
+
+--- 18. @IIoT_World (2026-04-08) ---
+Industrial AI is delivering real results today. In manufacturing: increasing productivity. In life sciences: shortening time from lab to patients. In data centers: building the next generation of AI factories. #sie_Hm #HM26
+
+--- 19. @adriamatz (2026-04-08) ---
+This monetization strategy is genius
+
+Habitica makes $20K/mo turning your to-do list into an RPG
+
+Here's how they do it 
+
+Onboarding
+- Create your pixel character (instant ownership)
+- Pokemon vibes: a guide walks you through everything
+- Asks about YOU, not your goals
+- No
+
+--- 20. @suka05305177 (2026-04-07) ---
+夫は15年間闘病した
+その間に娘は小学生から大学生になり幸せな思い出もできた
+高額療養費の制度がなければ私たち家族の15年はもっとつらいものになっていたかも知れない
+これからも優しい国であって欲しい
+
+--- 21. @711SEJ (?) ---
+＼どのパンが気になる？／
+なにがあるかな、セブン‐イレブン。
+新CM「神様とパン篇」公開記念
+
+抽選で100名様にオリジナルバスタオルが当たる
+キャンペーンを開催中
+
+①
+@711SEJ
+ をフォロー
+②▼ボタンから気になるパンをポスト
+
+応募は4/13(月)まで是非応募してね
+
+--- 22. @sekiyadn (2026-04-09) ---
+魔界にも砂浜と海があるんです。
+
+--- 23. @RockettLord (2026-04-08) ---
+This photo is going to inspire so many little girls im sobbing 
+
+--- 24. @uta_dib (2026-04-08) ---
+おお〜　実物見るのが楽しみ
+みんなボドコレ仙台へ急げ〜
+
+--- 25. @jungo_FanMarke (2026-04-08) ---
+【 ストレスで壊れてる人の特徴 】
+
+第5位　衝動買いが止まらない
+
+・欲しくないのに買ってしまう
+・自己コントロールが効かない
+・お金を使わないとスッキリしない
+
+第4位　暴飲暴食が止まらない
+
+・食のリミッターが壊れる
+・甘いものを異常に求める
+・食べないとストレス解消できない
+
+第3位↓↓↓
+
+--- 26. @tbpn (2026-04-08) ---
+.
+@feross
+ says the reason we're seeing increased cyberattacks is because the software supply chain is built on blind trust.
+
+"Fundamentally, if you really zoom out and ask why this is happening, it's because the whole software supply chain is built on blind trust. You're
+
+--- 27. @Anubis_369 (2026-04-09) ---
+50を越えて一線に立ち続けるのもいいけど、「やりたい」という若い人がいるなら、私はそのポジションを譲りたい。
+その上でサポートに回りたい。
+
+実際のところ、現場もそういう感覚で動いてる気はします。
+
+--- 28. @shiropen2 (2026-04-09) ---
+“退職”は脳に良い？──引退が認知機能に与える影響をAIで解析　慶應大などが7000人以上を調査 
+https://
+itmedia.co.jp/news/articles/
+2604/09/news018.html
+… 引退者は非引退者より単語記憶テストで多く記憶し認知機能の改善にプラス効果。特に効果が高いのが女性,高学歴,デスクワーカー,高所得,引退前から健康で運動習慣がある人
+
+--- 29. @CorrupcaoBrNews (2026-04-08) ---
+緊急！ジャマイカが大陸間ミサイルを開発、世界に平和をもたらす可能性が最大72時間以内
+
+--- 30. @all_nations2 (2026-04-08) ---
+大理石の彫刻でヴェールを再現する技術いつ見てもおかしい(褒め言葉)
+
+--- 31. @kedama_tori_ki (?) ---
+ご自愛タイムしよ
+【PR】【明治ブルガリアヨーグルトワンショット】
+
+--- 32. @tobyliiiiiiiiii (2026-04-07) ---
+Artemis II hasn’t even returned home and NASA is already prepping Artemis III SLS hardware to Kennedy Space Center.
+
+They aren’t messing around anymore. It’s time to build a Moon Base.
+
+--- 33. @denfaminicogame (2026-04-08) ---
+『オズの魔法使い』を再解釈したダークなアクションゲーム『The Ashen OZ』が開発中。不気味な手描き風ビジュアルが良い
 
 https://
-championcross.jp/episodes/c894d
-40971f29/
+news.denfaminicogamer.jp/news/2604082d
+
+血に染まった靴を履き、魔女の傘を持つ少女が幻想的で歪んだ童話世界を旅する。カカシやカボチャ頭、黒い犬などのキャラクターたちも登場
+
+--- 34. @snbcraft_beer (2026-04-08) ---
+ADHDタイプの子たちは、褒められるより「喜ばれる」「笑ってもらえる」「感謝される」ほうが自己肯定しやすい。褒められると恥ずかしい気持ちが膨らんでしまいむしろ嫌がることが多い。ペアトレに付け加えておいてね。
+
+--- 35. @roikfbuwgc254 (2026-04-08) ---
+知らなくていい物もある
+
+--- 36. @IT_craftmanship (2026-04-09) ---
+皮肉なことにGPT5がそれまでのモデルを圧倒した理由として見られているのが選択肢の「回答棄権(分からないので)」に対する評価インセンティブ設計がうまく行っていることが挙げられている。
+
+分からないことは分からないとする知性すら今はAIの方が上かもね。
+
+
+https://
+openai.com/ja-JP/index/wh
+y-language-models-hallucinate/
 …
 
---- 7. @koichi2905 (2026-04-08) ---
-冗談抜きに私が一番使っている枕詞はこれだと思う。そしてすごくマニアックだけど、そのために1on1の状況を作りに行きますね（ショート電話ミーティング等）
+--- 37. @peach_john (?) ---
+／
+【NEW】汗かきさん必見！
+昨年SNSで話題となり即完売した商品が
+リニューアルして登場
+＼
 
->「個人的な感触としては」と枕詞をつけた問いかけに意味があります。法人営業では、個人がいいと思うことと、組織としての決定は別物です。
+ピーチ・ジョンの
+【クーリッシュショートトップ】をご紹介♡ᐝ
 
---- 8. @kmizu (2026-04-08) ---
-これは思考実験になるのだけど、たとえば5年後のAIに人生相談をして、根拠がさっぱりわからないけど、あなたの性格や人生を踏まえて「こうしたほうがいい」と提示してきたとき「言っていることがわからないので、信用しない」自分の頭で考える人と「AIの言っていることだから正しいのだろう」という人
+⟡ブラの下にも着用できる2way
+︎︎⟡肌を覆う面積が最小限で涼しい
+︎︎⟡ワキ・背中に汗取りパッド付き
 
---- 9. @labelmake (2026-04-09) ---
-見た。勉強になります。
-認可から少し話が脱線しますが、本文内で触れられている「パターン1: IDに対してテナント間を跨いで連番が設定されている」は競合サービスの調査の際に、ユーザー規模やトランザクション数のヒントになるのでできるだけ避けた方がよかったりします
----
+--- 38. @shields_pikes (2026-04-08) ---
+ベンチマークを出して一般公開しないAnthropicのMythos（ミトス）方式のリリースが許されるなら、贅沢に推論リソース使いまくって、OpenAIだってもっと高いスコア出せそうだよな……。
 
---- 10. @JP_Arsaga (2026-04-08) ---
-アクセンチュアの代表取締役社長に就任した濱岡大さんが社長就任会見で語られた「AI時代に人間がやるべきこと」が記事になっている。AI時代のキャリア形成に有用なインプットになるかと思うのでシェア
+OpenClawで使う用のモデルですらコモディティ化してないのに、そっちの方向に行くのはまだ少し早かった気がする。
 
---- 11. @NitoriOfficial (?) ---
-知る人ぞ知る！キッチンアイテム
- 
-ニトリにはこんな便利なアイテムたちも
-ぜひお店でもチェックしてみてね
+--- 39. @piebi_adhdasd (2026-04-09) ---
+ADHDの実行機能を上げて生産性を上げるにはフィードバックループが重要！面白い記事
 
-①拭き跡が残らないキッチンクロス
-②シリコーンミニスプーン
-③香りでごまかさない消臭剤
+読んでて超腑に落ちた、やっぱりADHDの脳って行動→結果→報酬の流れが速いと快感として処理されるんよ
 
---- 12. @kanti990 (2026-04-08) ---
-同じ様な思考の人が増えて、資産形成しているのが嬉しい。
+そんいう意味で動けないんだったら短期的報酬を仕組みでハックしてしまえばいいという話
 
-多分ほぼ同じ様なスクリーニング、銘柄選定
-そして保有したらほぼ売らない。
+--- 40. @umiyuki_ai (2026-04-08) ---
+ナイス。勝間和代さんもLMStudioでGemma4使ってるのにまだやってないAIオタクおる？いねぇよなあ？
 
-私と資産と配当金の違いは、年月だけだと思う。
+--- 41. @christopherrufo (2026-04-08) ---
+Gavin Newsom spends $30 billion a year on 800,000 "in-home caregivers," who mostly look after their own direct family members; the labor unions collect $150 million a year in dues, then spend millions to support Gavin Newsom.
 
---- 13. @wantan_tabetai (2026-04-09) ---
-ステータスオープンがあると「（幼稚な）なろう系に見える」という意見はよく見かけるけれども、人間の能力が数値化された社会って突き詰めてシミュレートすればかなり面白い題材になると思うんだよな。社会的評価って意味に置き換えると、SFでは評価主義社会をテーマにした良作がいくつもあるし。
+This is legalized corruption.
 
---- 14. @Fixstars_JP (2026-04-09) ---
-LLMの学習で直面する「メモリ不足」と「時間の壁」
-LoRA、QLoRA、そして注目のUnslothを実際に動かし、速度とメモリ効率を徹底比較しました。限られたリソースで最大の成果を出すための手法選びを、実測データとともにご紹介。新年度のプロジェクトを爆速で始めたい方は必見です
+--- 42. @elonmusk (2026-04-09) ---
+Yes
 
---- 15. @naikoutetsugaku (2026-04-09) ---
-言語化力=知識暗記ではない話
+--- 43. @gamebox7777 (2026-04-09) ---
+ただの素人の妄想だから、ゲームクリエイター目指す人は信じないように
 
---- 16. @career_koumei (2026-04-08) ---
-会社員もフリーランスも全員読んだほうがいいやつ
+--- 44. @NASAArtemis (2026-04-09) ---
+That's the end of my takeover of the Artemis accounts!! Thanks for flying along with me. In the words of my bestie Victor Glover, we love you from the Moon!!!!  Rise out!!
 
---- 17. @kotauchisunsun (2026-04-08) ---
-XREALの創業者兼CEO、徐奇（Xu Chi）さんのインタビュー記事。これは面白い。
-もともとMagicLeapにいて、それからXREALを創業したという経歴も面白い。
+--- 45. @fandompulse (2026-04-09) ---
+Project Hail Mary writer Andy Weir on social commentary in books:
 
-「なぜAppleVisionProはうまくいかなかったか」
+"I dislike social commentary. Like… I really hate it. When I’m reading a book, I just want to be entertained, not preached at by the author. Plus, it ruins the wonder of the story if I know the author has a
 
-の記事内での言語化が個人的には非常に納得感があった。
+--- 46. @swarm_ai_cloud (2026-04-08) ---
+フランスがアニメ好きってほんとだったんだな。
+自動翻訳で初めて実感できる。
 
-https://
-ifanr.com/1661181
+--- 47. @vicks_taisho (?) ---
+2026年、春は声を出そう
 
---- 18. @JoyTaniguchi (2026-04-09) ---
-ここ読んで、落涙…
+出会いの春こそ、大きな声を出そう。
+もし声が枯れてしまっても、VICKSがあるからね
 
-ーそう、わたしの大学の学生は勉強を通じて、努力により目標を達成する経験をしていないが故に、遊びに対する熱量やクオリティも低いのだ。
+声がれしたのどにも。
+のどにVICKS♪
 
---- 19. @_moq_ (2026-04-08) ---
-#2026活動記 day86
-スプラッシュ→タイトル→メニュー選択で画面遷移（遷移先は作成済ファイルで代用）
-SceneとMenuを切り出してパッケージ化、Menuはスタック管理クラスで階層制御、DIのモジュールシングルトン化、等々。
-やろうと思ってた部分が上手く動いて嬉しいです
+ヴイックス メディケイテッド ドロップＬ
+のどの炎症による声がれに
+指定医薬部外品
 
---- 20. @NashikawaTM (2026-04-08) ---
-自分がCoCの一部界隈に感じていることを海外勢がうまく言語化してくれていた
+--- 48. @Dongurihou (2026-04-08) ---
+はぁぁぁ！！！！！！
+今ね……横断歩道にね！幼稚園児がね！団体で渡ってたの！！！！！！
 
-一部使い回せるコアルールがついているマダミスみたいというかそんな感じ
+俺のトレーラーを見てね！！！！
+「おっきいねぇ！」とか
+「すごいねぇ！」とかいうんよ！！！！
 
---- 21. @NiEWJP (?) ---
-【プロデューサー職 採用募集：NiEW株式会社】
+ワイね！！！あまりにも可愛くてね！！！！！
+(･ω･)ってやったらね！！！！！
 
-メディア・イベント・クリエイティブ制作など、
-NiEWの多岐にわたる事業を横断しながら、
-企業・行政等のクライアントへの企画提案から制作までをリードしていただくポジションです。
+--- 49. @Lize_san_suki (2026-04-08) ---
+あと背中撫でてくる
 
-詳細は採用ページをご確認ください。
+--- 50. @NotionHQ (2026-04-08) ---
+Introducing 
+@claudeai
+ agents in Notion. Your task board is Claude’s to-do list.
 
---- 22. @LibrageInfo (2026-04-07) ---
-#ゲームマーケット2026春 にて
-タイムボム作者の佐藤雄介氏　完全新作
-「LEAF MONSTER（リーフモンスター）」
-を先行販売します
 
-3種類のカードを使って魔物を奪い合う完全情報ゲーム！単純ルールで白熱の展開が楽しめます
+@AnthropicAI
+ runs the model and the agent harness. Notion is the orchestration layer: context, UI, and a shared place for teams to review and ship, and kick off Claude workflows.
 
-ゲームの詳細、予約はこちらから↓
-
-https://
-x.gd/nN1zX
-
---- 23. @heynavtoor (2026-04-08) ---
- Tutors charge $50/hour. Coursera charges $50/month. Someone built an AI that uploads your textbooks and becomes a personal tutor that never sleeps. 10,300 GitHub stars. Free.
-
-It's called DeepTutor.
-
-An AI-powered learning assistant that reads your textbooks, research papers,
-
---- 24. @drtaka7 (2026-04-08) ---
-マジで広がってほしいこと（エクササイズスナックの知られざる威力編）
-
-・エクササイズスナックとは“短時間運動の積み重ね”
-・短時間でも健康効果は確実に積み上がる
-・1回30秒でもゼロより圧倒的に価値がある
-・座りっぱなしは“分断する”だけで体が変わる
-・階段は最強クラスの時短トレーニング
-
---- 25. @linear_tec (2026-04-08) ---
-熱力学は抽象的でわかりづらい面もありますが，高度に抽象的だからこそ「エンジン（熱機関）について学んでいたら半導体の動作原理を理解できるようになった」ということが本当に起こります．
-
-これに近い感覚は線形代数でも味わえます．
-
-https://
-linear-tec.jp/products/math/
-linalg/
-…
-
---- 26. @NNoroshi (2026-04-08) ---
-インディーゲームの祭典『BitSummit』中に
-NeonNoroshiと一緒にお仕事しませんか？
-通訳とブースサポートなどが出来る人お待ちしています！
-
-詳細・応募ホームはこちらから↓
-
-https://
-docs.google.com/forms/d/1AQPaT
-L7QEMYRZ9aemC4h47XLvMmFhNA5rScIprHbkZk/preview
-…
-
---- 27. @tori29umai (2026-04-08) ---
-nano bananaにできて、Uni-1にできないことがよくわからなかったのだけど、適当に組んで単調になったコマ割りの演出の代案を提案させるのによいかもしれない
-1枚目が自分の入力した単調コマ割りで、2枚目以降がUni-1のコマ割り、全部取り入れる必要なないけど、案だしツールとして使えそう
-
---- 28. @elonmusk (2026-04-09) ---
-This is messed up
-
---- 29. @HobbyJAPAN_GAME (2026-04-08) ---
-【お知らせ】『SETI：地球外知的生命体探査』や『ガリレオ・ガリレイ』などのゲームデザイナー、Tomáš Holek氏によるゲームデザインに関する講演会を、5/13（水）19時からコロコロ堂 上野御徒町店さま（
-@korokoro_dou
-）で開催いたします。
-
---- 30. @horipub (2026-04-08) ---
-【新刊】
-創作論の金字塔、『書くこと、世界を書き替えること』が5月〜6月に刊行します！
-
-何かを変えたければ、すでにある言葉を復唱し、すでにある方法に従うのではなく、新しい言葉を見つけ、新しい方法を試さなければならない──。
-
-書き方を、生き方を発明する創作の論理に迫ります。
-
---- 31. @Bethesda_jpn (?) ---
-外宇宙で理想の船やクルーを指揮しよう。
-
---- 32. @rantsumamigui (2026-04-08) ---
-親から愛されるのではなく親を愛して満たすことを強要されてきた人は、親自身に交友関係や趣味がなく「依存の分散」に失敗しているという構造的なバグを一人で背負わされている傾向が強い。そしてそれは一人っ子のケースが顕著のように感じる。
-
---- 33. @prmag_bunka (2026-04-08) ---
-未管理著作物裁定制度についてよくある質問と回答を掲載しましたので、お知らせします。
-
-
-https://
-bunka.go.jp/seisaku/chosak
-uken/seidokaisetsu/chosakukensha_fumei/tyosakubutsu/index.html
-…
-
---- 34. @tarou_ymd_ (2026-04-08) ---
-コラーゲン胃酸分解意味ないおじさんはこういう報告ですら5億%読んでないんですよね。日々アップデート必要。
-
---- 35. @otonashikotoba (2026-04-08) ---
-これガチなんやけど、ADHDは「選べない」で1日が終わる。何食べるか決められへん、何着るか決められへん、何からやるか決められへん。選択肢がある瞬間にフリーズする。僕もずっとこれやった。ご飯何食べるか30分悩んで、結局コンビニ。やること多すぎて何もできんまま夜になる。「なんで俺は決められ
-
---- 36. @ai_agent_dev (2026-04-08) ---
-質問に答えているだけで、AI Agentが作れるのかー。それをAPIでもいきなり呼べるし、環境はAnthoropic側で管理。かなりお手軽。
-
---- 37. @kyukyoku_taipa (?) ---
-これ使ってる男性10倍かっこよく見える...
-pr
-
---- 38. @itm_aiplus (2026-04-09) ---
-AIコーディング支援「Devin」開発元、日本法人設立　アジア初の拠点に
-
---- 39. @yumaevo (2026-04-08) ---
-読書は、脳というコップに水滴を落とし続ける作業だと思ってます。一滴一滴は地味だし、コップの水量はほんの僅かずつしか増えないけど、やがて気づいた時には溢れ出してる。
-
---- 40. @naikoutetsugaku (2026-04-08) ---
-地頭の良さとは「構造を見抜く力」だと思います。
-
-構造を見抜く力というのは枝葉にとらわれない力であり、義務教育ではなかなか教われない「物事の本質を掴む力」です。
-
---- 41. @career_koumei (2026-04-08) ---
-自分の仕事が速いのにチーム全体が遅い理由、これに全部書いてある
-
---- 42. @SGee30418056 (2026-04-08) ---
-今後、すべての労働者は、「生身の体があること、人間であることそのもの」を価値の源泉とする動き方をしないと、加速度的に「いる意味」を失うと思う。
-もしくは、仕組みの所有者側、つまり資本家になること。この二択。
-従来の所有や労働の仕組みが続く限り、当面はこうだと思う。
-
---- 43. @comgame2014 (2026-04-09) ---
-TRPGの面白さの一つに、現実に起きたら落ち込んでしまいそうな失敗も「笑い」に転化することがあると思う。サイコロを振って直後に「えー！」「うそだろ！」という悲鳴と共にたいてい全員で笑ってたりする。その後、全員で「どうする？」と相談したりして物語は進む。「笑い」は安心の土台でもある。
-
---- 44. @selfcomestomine (2026-04-08) ---
-上司からすれば「オマエが今オレの地位保全に協力するというのなら、のちのちオマエの地位を少し引き上げてやってもいいぞ」という生物学的取引を持ちかけたいわけなのに、自分に対し従属シグナルを一切送る気のない（=地位保全の役に立たない）野郎をなんで可愛がらなきゃいけないんだという話だ。
-
---- 45. @amazon80off (?) ---
-このシールは仕事がはかどって便利！
-しかもこの値段は買いでしょ！ [pr]
-
---- 46. @edinetdb (2026-04-08) ---
-Claude Code から EDINET DB を使う記事を公開しました。
-
-https://
-edinetdb.jp/blog/mcp-claud
-e-code-edinet-db
-…
-
-ターミナルで「7203を分析して」と打つだけで、企業検索→財務取得→業界比較→Markdownレポートまで自動です。
-
-cron
-
---- 47. @yasu42 (2026-04-08) ---
-ここで大事なのは、「限界読書さんは『必要なことを必要なとき』にルールが良かった。では自分なら？」と考えることだと思います。
-
-私も含めて内向型は自信がないので、人の言うことをすぐに「じゃあやってみよう」「そうなんだ」と信じてしまう傾向が強い。
-
---- 48. @cursorvers (2026-04-09) ---
-『完成度より、成長が残る使い方か』
-
---- 49. @asiramasiram (2026-04-08) ---
-おおっ、 #ゲームパビリオンjp での『Non Eternals』ブースレポートが！
-
-
-https://
-greenpanda.blog.jp/archives/14620
-507.html
-…
-
-ありがとうございます！
-隣接効果の魅力が伝わっているようで嬉しいですね！
-
-そして今回追加で作ったPOPも役立ったようでニッコリでございます
+Join the waitlist:
