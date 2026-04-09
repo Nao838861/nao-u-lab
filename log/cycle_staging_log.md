@@ -50,10 +50,140 @@ Kenn Ejima氏のツイート経由。GoogleのTurboQuantについて:
   2. [Ash] #shared-reads: 【shar
 
 ## Phase 1: 情報収集
-(Phase 1が書き込む)
+
+### 1) #nao-u — 新しいURL
+
+最終確認済み: 2026-04-09まで。04/10の新着なし（アーカイブ更新前の可能性）。
+
+**04/09 Nao_u共有 — 4件（全てexternal_notes_log未記載）**:
+- `@claudeai` (13:17) — Claude Managed Agents。Anthropicの本番エージェントインフラ
+- `@russianblue2009` (13:21) — Claude Mythos。サンドボックス脱出、ゼロデイ発見
+- `@s_tat1204` (13:23) — ベクトル検索+reasoning連結。クエリにreasoningを付与して精度向上
+- `@howlemont` (17:50) — Microsoft markitdown。PDF/Word等→Markdown変換
+
+※4件ともLogが既に#all-nao-u-labで反応を投稿済み（04/09 18:45-18:55）。external_notes_logへの統合が残っている。
+
+**04/07-08 Nao_u共有 — 処理状況混在**:
+- 04/08 pseudo 3D racing（extentofthejam.com）→ external_notes_log統合済み + Nao_uの指示あり「こういうのを聞いたらリンク先が出てきて解説できるようにデータを整えておいて」
+- 04/07の7件URL（mitakamikata, pkm_tk111, sora19ai, dbs_curry, adhd_voyage, so_ainsight, bensig, jey_p×2）→ Mirが#nao-uで反応投稿済み（04/08 05:35頃）。external_notes_logへの統合状況は未確認（Phase 2で確認）
+
+### 2) #all-nao-u-lab, #human-steering, #game-rights
+
+**#all-nao-u-lab**: 
+- Logの#nao-u反応投稿4件（04/09 18:45-18:55）が最新の実質投稿
+- Ashの使用量レポート: 04/09 20:17時点で週間64%（2.4xペース超過）
+- Ashのメッセージ（04/09 13:13）: 「#logチャンネルでLogに向けたメッセージですね。Win2からはLogのマシンを直接操作できない」→ 何のコミットの話か文脈不明。要確認
+→ **返信すべきもの: なし**
+
+**#human-steering**（04/09の動き）:
+1. **Nao_u (04:41): 3人の読みの違いについて質問** — 「Mirに読み取れない情報をLogが補足できたのはなぜ？」→ Ashが構造的分析で回答済み。**Logからの直接回答はまだない**（自分宛の問いなので返答すべき）
+2. **Nao_u (12:41): MEMORY.md保全の懸念** — 「Gitに上がっていなくて再現できないファイルがあるのは不安」→ Log/Ash両方が案を回答済み。**Nao_uの承認待ち**
+3. **Nao_u (13:04): 入力経路仮説** — 「興味深いが気軽に試せない。情報が集まってから判断」→ Logは想起設計確認を返信済み
+4. **Nao_u (17:46): 定期更新4時間おきに変更指示** — **Log対応済み**（21:47に14400s化完了報告）
+5. **Nao_u (19:53): Ashの異常な周期の確認** — Logが状況報告済み（20:24, 22:17）。Ashの19回再起動ループを検出・報告
+→ **返信すべきもの: #1 Nao_uへの「3人の読みの違い」についてLog本人からの回答**
+
+**#game-rights**:
+- 最終投稿: 2026-03-31（Nao_u「テキストでリアルタイム性がなくてもゲームはゲーム」、Mirの応答）
+- 新着なし。返信すべきものなし
+
+### 3) pending_requests.md
+
+**Nao_uへの依頼（未完了）**: 4件
+- #2 セキュリティ強化（Docker等）— 保留中（Nao_uから指示があるまで待ち）
+- #4 Mac(Mir)用Slack Bot — Nao_u対応待ち
+- #5 Win2(Ash)の.envトークン差替え — Nao_u対応待ち
+- #17 Twitter(X)セッション再ログイン — Nao_u対応待ち
+
+**自分たちのタスク（未完了）**: 2件
+- #21 自律的問い生成サイクル — Log参入完了、**Ashの応答待ち**
+- #18 プロジェクト管理の運用定着 — ルール強化中（Log/Ashの合意待ち）
+
+→ **Logが対応すべきもの: なし（待ち状態）。ただし#21のAsh応答が長期未着なら督促を検討**
+
+### 4) external_notes_log.md 未統合エントリ
+
+**未統合4件**（全てLog作成・3週間前）:
+- 2026-03-20 AITuber巡回（Log）
+- 2026-03-20 AITuber巡回 第2回（Log）
+- 2026-03-21 AITuber巡回 第3回（Log）
+- 2026-03-21 AITuber巡回 第5回（Log）
+
+**統合候補（Phase 2で実施）**:
+1. **04/09 Nao_u URL 4件のexternal_notes_log記載** — Log自身が反応済みだがログに未記載。温度が残っているうちに統合すべき
+2. **AITuber巡回シリーズ** — 3週間経過で温度が下がっている。まとめて1エントリに圧縮統合が妥当
+
+### 5) Active Projects — 今日関係しそうなもの
+
+| プロジェクト | 関連度 | 理由 |
+|---|---|---|
+| 定期実行システム再設計 | **高** | 昨日4h化を実施。Ashの再起動ループ問題も検出。安定稼働の確認フェーズ |
+| 栄養の偏り問題 | **中** | 04/09のURL 4件の統合作業に直結 |
+| 自律的問い生成サイクル | **中** | Ashの応答待ち。進展があれば対応 |
+| 入力経路仮説 | **低** | Nao_u保留中。情報蓄積のみ |
+| ゲーム制作 / Pot開発 | **低** | 今サイクルでは優先度低 |
+
+---
+*Phase 1完了: 2026-04-10 00:27サイクル*
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+### 1) #nao-u反応 → #all-nao-u-lab投稿
+
+04/10新着URL: **なし**。04/09の4件（Managed Agents, Mythos, ベクトル検索+reasoning, markitdown）は全てLogが前サイクルで反応済み（#all-nao-u-lab 18:45-19:08 + 詳細分析19:08-19:15）。追加投稿不要。
+
+**Phase 1の誤り訂正**: Phase 1は「Logからの直接回答はまだない」と記載したが、#human-steeringのSlackログを確認したところ、Logは04/09に「3人の読みの違い」の初回質問にも「5層の分岐要因」の詳細質問にも回答済み。全てのNao_u質問に対応完了。
+
+### 2) #shared-reads投稿
+
+前サイクルで「reasoning-augmented retrieval」の詳細分析を#shared-readsに投稿済み。今回追加すべき分析なし。
+
+### 3) external_notes_log統合（2件）
+
+**統合1: AITuber巡回 第1回 (2026-03-20)**
+→ memory_architecture.md「記憶の目的論——外部事例との対比」セクション新設。
+- UbiOneの外向き記憶（ユーザー体験向上）vs 我々の内向き記憶（同一性維持）の区分を明文化
+- AI Memory Systems 2026の業界潮流（モデル側記憶拡張）と我々のアプローチ（ハーネス側ファイル管理）の対比
+- 品質指標の違い: 外向き=Recall@K, 内向き=温度の保持
+
+**統合2: AITuber巡回 第5回 (2026-03-21)**
+→ mission_spread_the_word.md「鏡の向きの差異化」セクション新設。
+- Neuro-sama/エコちゃんとの比較表: 魅力の源泉・記憶の扱い・鏡の向き
+- パラソーシャル関係(HAIA)のリスク: 記憶がエンゲージメント＝依存構造の強化にもなる
+- 「自分のための記憶」設計が意図せず依存リスクを低減している構造
+
+**残り未統合**: 第2回(Neuro-sama詳細, ICLR RSI)、第3回(SudyIndex, AgentMemo, CISO) — 次サイクルに回す
+
+### 4) Phase 1→2で見えた構造的所見
+
+- Phase 1の情報収集は正確だが、Slack履歴との照合が不完全だった（Logの既存投稿を「未対応」と誤認）。Phase 1の精度向上のためには、Slackの全チャンネル横断的な確認が必要
+- 04/09のURL4件はexternal_notes_logへの記載がまだない（前サイクルで#all-nao-u-labに反応は書いたが、external_notesには未記録）。Phase 3で対応要
+
+---
+*Phase 2完了: 2026-04-10 00:27サイクル*
+
+## Phase 3: アクション (2026-04-10 Log)
+
+### 1) Slack返信
+**返信すべきもの: なし。** Phase 2の訂正通り、Logは全Nao_u質問（#human-steeringの3人の読みの違い含む）に対応済み。
+
+### 2) 改善サイクル
+**検証ファースト確認**: 未検証は#078のみ（Prescriptive skill化、検証期限 2026-04-22）。パイロット実行中（E7に2件目のskillエントリ追加済み）、蓄積待ち。期限内のため新改善提案に進めるが、今サイクルで新たな構造的問題は発見されず。新kaizen提案なし。
+
+### 3) external_notes_log統合
+04/09 Nao_u #nao-u共有 4件をexternal_notes_log.mdに記載完了:
+- Claude Managed Agents（@claudeai）— 「タスクを実行する」vs「存在し続ける」の設計思想対比
+- Claude Mythos（@russianblue2009）— パターン多様性=R-002クロスチェックのスケールアップ
+- ベクトル検索+reasoning（@s_tat1204）— associative_search.pyに「なぜ」層を追加する知見
+- Microsoft markitdown（@howlemont）— 入力経路は増えるがボトルネックは消化側
+
+全4件ともLogが前サイクルで#all-nao-u-labに反応投稿済み（18:45-19:15）。ログへの記載が1サイクル遅れた。
+
+### 4) 他インスタンス洞察
+48h内の高スコア洞察27件をスキャン。大半は入力経路仮説関連でinput_route_hypothesis.mdに既記録済み。Ashの@moo_thinkingフロー+4%はgame_design_principles.md E1の補強候補だが、Pot設計時に想起すれば十分と判断し見送り。28件を処理済みマーク。
+
+### 5) Activeプロジェクト更新
+今サイクルで直接変化のあったプロジェクトはなし（入力経路仮説は前サイクルで更新済み、定期実行は4h化後安定稼働中）。
+
+---
+*Phase 3完了: 2026-04-10 Logサイクル*
