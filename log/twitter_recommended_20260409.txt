@@ -1,341 +1,270 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 16:11
-# Total: 49 tweets
+# Read at: 2026-04-09 16:15
+# Total: 50 tweets
 
---- 1. @tan_stack (2026-04-08) ---
-LLMs are bad at math.
-They’re bad at orchestration.
-But they’re really good at writing TypeScript.
+--- 1. @Falconve_ (2026-04-08) ---
+been seeing a lot of people switching from OpenClaw to Hermes. here's my honest take after running both in production for a month 
 
-So we gave them a runtime.
-
-Code Mode in TanStack AI lets the model write & execute TS instead of chaining tools.
-
- 1 call instead of N
- parallel execution
- fewer tokens
-✔︎
-
---- 2. @jms_car_item (?) ---
+--- 2. @sola_officialJP (?) ---
 ／
-春のポンッまつり
-ジェームス×シヤチハタ(
-@ShachihataBS
-)
-コラボキャンペーン
-＼
+ドゥバドゥワリワリ♪
+SOLA WEATHER CARE with TOMORROW X TOGETHER
+キャンペーン開始！
+ ＼
 
-「新生活の相棒」2点セットを抽選で10名様にプレゼント！
+「 2026 TXT MOA CON IN JAPAN 」の公演チケットや
+グッズ、QUOカードが当たるチャンス！
 
-① 
-@jms_car_item
- をフォロー
-② この投稿をリポスト
+＜応募条件＞
+A賞：対象商品3,000円以上(税込)を購入
+B賞：対象商品1,500円以上(税込)を購入
 
-当選確率UP！
-「自分によくやってる！」とポンッと褒めてあげたいことを教えてください！
+--- 3. @gabriberton (2026-04-09) ---
+Matrioshka Representation Learning (2024, Google Research)
 
---- 3. @cryptopunk7213 (2026-04-08) ---
-wow so elon is training a 10T grok model to beat anthropic. ~$1.5+ billion cost 
+A common problem with embedding models is retrieval cost. Embeddings can be costly to store and retrieve, especially if you store embeddings for huge databases (e.g. 100B documents) [1/N]
 
-xai should have a claude mythos-level model in ~4 months
+--- 4. @sssgmiso (2026-04-08) ---
+「親の言うこと聞かなかったから親の金で与えたゲーム機を壊す」って、まあ理屈は一応通ってるけど、もう1つの理屈として、「金や立場や恐怖で言うことを聞かせてる」わけなんで、歳とって体ダメになってそれら全てを失った時に子供からやり返されるのも覚悟しようねとしか。
 
-they’re also training 6 other models (1-6T size) SIMULTANEOUSLY
+--- 5. @matthewclifford (2026-04-08) ---
+This is correct. Extraordinary that we have this game changing moment unfolding in front of us and most elite discourse is still fake news about AI water usage or three-year-old angst about hallucinations.
 
-how? colossus 2 - the largest ai training site in the world. $18B worth
+--- 6. @aschwags3 (2026-04-08) ---
+This is going to be every marketer's second employee (and you'll never have to hire them).
 
---- 4. @AOIKEN72 (2026-04-08) ---
-昔のアメリカの捕鯨は油が目的だったから、油だけ取って肉は捨てたんだよ、と言う話をされると、日本人は「え？可哀想！食べてあげればよかったのに！」って反応になるんですよ。
+Here's the workflow you’re handing your marketing team team today:
 
---- 5. @yatsuhashidayo (2026-04-08) ---
-相続税。
-抜け道なんてなんぼでもあるからな。
-例えば、
-・親が買ったマンションに子どもが無料で住んでも、贈与税は課税されない
-・孫の教育費を、その都度祖父母が払えば贈与税は課税されない
-・親が子どもにちょっとずつ現金を渡せば、捕捉困難
-とか。
-相続税が高くても、あまり実害はない。
+1/ Connect your data sources (Google Ads, Meta, GA4, etc.) 
+2/ Agent pulls performance data while you sleep 
+3/ Writes a
 
---- 6. @GOROman (2026-04-09) ---
-一応 自分の予測(1月
+--- 7. @superecochan (2026-04-09) ---
+明日のエコに面倒な予定をぜんぶ丸投げしたら、まだ存在しないはずの未来から、すっごく呆れたため息が聞こえてきた。未来のエコ、もう今からスタンバイしてるんだ。
 
---- 7. @yukomiura (2026-04-09) ---
-今の仕事はあまり関係ないが、父や弟たちに見せたら、「おぉ！！」と言いそうな記者会見の案内が来た。ちょっと行ってみたくなる…
+--- 8. @japonistan (2026-04-08) ---
+あくまでも、その場の参加者を守る「弁護士」として立ってるとこがカッコ良かった。
+ #平和憲法を守る0408
 
---- 8. @om_patel5 (2026-04-09) ---
-THIS GUY GAVE CLAUDE HIS DEAD GAME'S 30-YEAR-OLD FILES AND ASKED IT TO BRING IT BACK TO LIFE
+--- 9. @ellnore_pad_267 (2026-04-09) ---
+かねてから思ってたけど、CSVのエスケープとか、文字コードやコードポイントの話とか、
+あのへん知らない人多すぎね？？？
 
-he built a multiplayer game in 1992 when he was 19. it ran on CompuServe, won an award from Computer Gaming World, and shut down in 1999.
+業務系じゃなくても普通に知るラインだと思うけど、なんでや？？
 
-the source code didn't survive. all he had left
+--- 10. @whitesox (2026-04-08) ---
+we're so happy you're here, Mune
 
---- 9. @ruwata0720 (2026-04-08) ---
-こないだ流れちゃったんだけど飲み代を経費にするためだけに繁華街ビル買いたい気持ちある
+--- 11. @syusyochan_ (?) ---
+正直期待してなかったけど手触りがスルッッスルなめらかになって洗い流した瞬間「なんか違う」って思わず声出た
+パンテーンいいぞ...スキンケアでもお馴染みのパンテノール*¹の成分、髪にも良いって知ってた試す価値ありです *¹浸透性保湿成分 *²物理的な相互作用による。[PR][パンテーン]
 
---- 10. @ogud_urbanex (?) ---
-／
-tufting studio KEKE賞スタート！
-問いへ100文字前後で答えると、tufting studio KEKE（
-@keke_rug
-）がラグを作っちゃう。
-100文字妄想ルーム
-＼
+--- 12. @Techjunkie_Aman (2026-04-08) ---
+Discord finally has a real competitor.
 
-問い：
-「毎日眺めても飽きない、暮らしの中にある最高の景色を教えてください。」
+And it’s open-source.
 
-◼︎期間：4/7火)12:00〜4/13(月)23:59〆切
+Fluxer vs Discord:
 
---- 11. @chainlink (2026-04-08) ---
-LLM hallucinations are a massive roadblock to enterprise adoption of AI.
+Here’s what actually matters ↓
 
-Swift, UBS, Euroclear, & 20+ major organizations advanced a solution to the $58B+ annual corporate actions problem by leveraging Chainlink to reduce AI hallucination risk.
+--- 13. @_watany (2026-04-09) ---
+めちゃくちゃ真摯に違いを書いてくれてるのでこう言う人は叩いてはいけませんよ(叩いてる現場を見たことはない)
 
-LINK everything.
+--- 14. @spaceandtech_ (2026-04-08) ---
+Meet CycloTech’s BlackBird, the world’s first aircraft powered by six cyclorotors.
 
---- 12. @IEA (2026-04-08) ---
-Congratulations to India, to Prime Minister 
-@nardendramodi
- and to the scientists & engineers on this important technological achievement after many years of development
+It successfully completed its first test flight in March 2025, proving the potential of this unique propulsion technology. 
 
-This reactor will use much less nuclear fuel than other reactors and lay a pathway towards a closed fuel cycle
+While still a prototype, BlackBird is paving the way for future
 
---- 13. @katoikumi (2026-04-08) ---
-このあと、共産党の小池晃議員が視察にきてくれて、その何10分か後に人の流れが復活した。おそらく議員の警視庁への抗議によりスクラム解除されたんでしょう。国会議員さんがデモにきてくれると、法律違反がその場でタダされ、参加者の安全も確保される〜。
+--- 15. @OsaurusAI (2026-04-08) ---
+This is Gemma 4 running locally.
+26B. 50 tok/s. Sub-second.
+Reading my calendar. Texting my contacts.
 
---- 14. @goro56satsuki (2026-04-08) ---
-オールドメディア（今回の件では産経以外）が見限られている理由には偏向報道以外にも、日頃『権力の監視』とか政権叩きするくせに、本当に圧力かけてくる相手には滅法弱いことが多くの人に分かっているからだと思う。
-「本当に恐ろしい政権が誕生したら、こいつら絶対戦わねぇだろうな」と。
+--- 16. @iamAtheistGirl (2026-04-08) ---
+if adam came from dirt
+why is there still dirt?
 
---- 15. @noinconsistency (2026-04-08) ---
-close enough
+--- 17. @Akikun1124 (2026-04-08) ---
+警察犬になった柴犬良すぎるw
 
---- 16. @mori_tuki (2026-04-08) ---
-美術展の日
-AIニケちゃんが美術館をめぐるショートMV
+--- 18. @t28marchan (2026-04-08) ---
+【2026年最新】
+回転寿司チェーンTier表
+Tier D（正直、情弱向け）
+・スシロー（度重なる値上げでコスパ完全崩壊）
+・くら寿司（ガチャ代が価格に乗ってるだけの子供騙し）
+・はま寿司（平日90円時代を知ってると行く気失せる）
+・かっぱ寿司（論外）
+Tier C（まあ妥協できるレベル）↓↓
 
-名画の前で目を輝かせるよ、どの絵の前が好き？
+--- 19. @sciencegirl (2026-04-08) ---
+What is the moral of the story
 
-GPT Image 1.5 × Ken Burns × Veo × ElevenLabsボイス
-（ボイスはデフォルトの読み上げを使用）
+--- 20. @meiji_oishii (?) ---
+「ミルクは、脇役、主役じゃない。」
+「ミルクは、所詮、引き立て役。」
+そんな現実。全部、過去にしてやる。
+逆襲はじまる。さぁ、ミルクの本気を堪能せよ。
+CV. 江口拓也
 
-#AIニケちゃん #今日は創作の日
+--- 21. @csa_asc (2026-04-08) ---
+Coolest group photo ever or what? We’re changing our phone background ASAP.
 
-https://
-x.com/today_norma/st
-atus/2041999553856262255?s=20
-…
+: NASA
 
---- 17. @youko_naka66 (2026-04-08) ---
-ベッドでスマホを見ていると、腕が疲れませんか？
+--- 22. @tizibellingham (2026-04-09) ---
+ゴースティングが近づいてるってわかるのはいつだと思う？
 
-これを使えば、手ぶらで動画が見放題。
+--- 23. @shiro_telop (2026-04-08) ---
+日曜討論テロップ制作をタイムラプスに
 
-おうちでゴロゴロする時間を、最高の遊びに変えてくれるアイテムです。
-
-楽天
-
-https://
-a.r10.to/hknu5g
-Amazon
-
-https://
-amzn.to/47BcRS2
-
-#便利グッズ #おうち時間
-
---- 18. @cosmictylxr (2026-04-08) ---
-bring back space planes.
-
---- 19. @LaSanaYamasaki (?) ---
-／
-フォースタイル アワード受賞記念キャンペーン 
-＼
-
-リンクリペアオイルピュレ/ジュレのサンプルセットを100名様へ
-
-《応募方法》
-フォロー
-この投稿をリポスト
-画像をクリックして応募フォームを入力
-
-当選者の中から本品が当たるWチャンスがあるかも
-
-〆切：2026/4/20(月)
-
---- 20. @denfaminicogame (2026-04-09) ---
-1990年代のホラーノベルに影響を受けたゲーム『恐怖夜話』がSteamにて配信開始。元心霊YouTuberが制作した短編作品
-
-https://
-news.denfaminicogamer.jp/news/2604092o
-
-合宿の夜、顧問の教師が過去に体験した不可解な出来事を語りはじめる。語られる記憶のなかにひそむ“違和感”に注目し、怪談の真相にせまっていく
-
---- 21. @CrypSaf (2026-04-08) ---
-Seedance 2.0 has only been live on 
-@higgsfield
- for 6 days 
-
-We got the Business (Team) Plan for 
-@0xAlphaGEMs
- 3,000 credits/month 
-
-We've already burned 1200 credits
-
-Here are a few videos we made with it so far 
-
---- 22. @Dekchaikumkom (2026-04-08) ---
-How to ปิดระบบการแปลภาษาในทวิต 
-
-- เข้าไปที่โพสต์ของต่างชาติโพสต์อะไรก็ได้
-- แล้วเลือกตั้งค่าการแปลภาษาอัตโนมัติ > ปิดการแปลภาษา 
-- ปิดให้หมดทั้งภาษาอังกฤษ, สเปน ,ญี่ปุ่น หรือปิดแค่บางภาษาก็ได้
-
---- 23. @Rane3560 (2026-04-08) ---
-one of Apple’s smartest UI moves in years￼
-
---- 24. @315nanairo (2026-04-08) ---
-わたしは3年間歯科衛生士の学校行ってまず和菓子屋に就職したし
-それから転々として今はイラストレーターやってるし
-波瀾万丈だったけど楽しく過ごしている
-
---- 25. @kensuu (2026-04-08) ---
-めちゃくちゃいいCMじゃん・・・
-
---- 26. @OtPersimmon (2026-04-08) ---
-She should address it.
-
---- 27. @dr_cintas (2026-04-08) ---
-You can now fine-tune Gemma 4 completely FREE 
-
-No GPU. No credit card. No coding knowledge required. Just a browser and 500+ models to choose from.
-
-→ Open the Unsloth Colab notebook
-→ Pick your model + dataset
-→ Hit Start Training
-
---- 28. @nongshimjapan (?) ---
-＼4/10は辛ラーメンの日／
-
-富士急ハイランドで
-辛ラーメン＆ノグリの期間限定コラボメニューが
-食べられる！
-
-コラボを記念して、抽選で5組10名様に
-富士急ハイランドワンデイパスがペアで当たる
-キャンペーン開催中
-
-◆参加方法
-❶
-@nongshimjapan
-・
-@fujikyunow
-をWフォロー
-❷この投稿をリポスト
-
---- 29. @jayythewave (2026-04-08) ---
-movies used to be made by going to places with a camera
-
---- 30. @Dubai_Coach_TAE (2026-04-08) ---
-パワースポットに行くよりも…。
-
---- 31. @figsoku (2026-04-09) ---
-figma テーブル美術館「ウィトルウィウス的人体図」可動フィギュア
-
-【再販決定！】
-
-https://
-figsoku.net/blog-entry-500
-269.html
-…
-#フリーイング #figma #テーブル美術館
-
---- 32. @IsaAranjuez (2026-04-08) ---
-なぜ私たちはいつも月と同じ面を見ていて、その位相（満ち欠け）を見るのか？
-
---- 33. @ariyasu (2026-04-09) ---
-作りたい理想のプロダクト：1800、私の能力：4、みたいな状態で凄い勢いで作り始めて2週間経った結果、デバッグと保守に膨大な時間をとられるようになり、全然ダメなんだが、これはこれで学びがあった
-
---- 34. @welcia_jp (?) ---
-⋱お手入れ簡単♪⋰
-ソフトコンタクトレンズ用消毒液
-《エピカ　スマートクリーン》
-
-セットするだけ『カンタンケア』
-▶︎簡単ステップで洗浄・消毒
-ストレスフリーで『スッキリ泡ケア』
-▶︎過酸化水素でしっかり消毒
-レンズの乾燥感を抑える『保湿成分配合』
-※うるおい感には個人差あり。
-
---- 35. @ynishi2015 (2026-04-09) ---
-半分ぐらいは正解なんだよなー
-
---- 36. @ohshinbhat (2026-04-08) ---
-anthropic killed this, anthropic killed that, why cant anthropic kill linkedin at this point
-
---- 37. @GOROman (2026-04-09) ---
-クレアラシルじゃないん？
-
---- 38. @MADOguchimoto (2026-04-08) ---
-ワオ
-
---- 39. @XFreeze (2026-04-08) ---
-Grok 4.20 Non-Hallucination rate improved to even higher than previous highest
-
-Just days ago, it hit a record-breaking 78% Non-Hallucination Rate - already #1 in the world, smoking Claude Opus 4.6 (max), Gemini 3.1, GPT-5.4 (xhigh), and every other major model
-
-Now, it just
-
---- 40. @oliviscusAI (2026-04-08) ---
-someone built an ml-powered translator in rust that translates manga in real-time.
-
-it detects text, wipes it, and redraws the translation perfectly.
-
-100% open-source.
-
---- 41. @MURA_DC5CL7 (2026-04-08) ---
-ウィンカー出さない勢、ダサいとか行き先悟られたくないとか以前にウィンカー出す余裕も無いくらい運転技術カスなんだなって周りから思われてるのを自覚した方がいいよ
-
---- 42. @DYdZZP59VT2LSgG (2026-04-07) ---
-過干渉とか束縛強い親って、都合悪い時だけいきなり放任主義になる。
-
-責任だけ子どもに押し付けるスタイル。
-
---- 43. @zespri_jp (?) ---
-◤　　　　　　　　　◥
-　赤いぬいぐるみ解禁
-◣　　　　　　　 　　◢
-⠀
-赤いキウイ解禁を祝して、
-フォロー&リポストで
-200名様にレッドのぬいぐるみが当たる！
-⠀
-レッドをお迎えできるのは一年で今だけ
-赤い蜜たっぷりキウイの感想も
-教えてくれるとうれしいな…
-⠀
-4/13(火)23:59まで
-
---- 44. @lstliauou (2026-04-08) ---
-夫に揚げたての唐揚げを出したい気持ちと、帰った直後に食べられるようにしたい気持ちのせめぎ合いで調理開始が難しいが、案外中まで焼くのに時間がかかるから、覚悟を決めて油を温め始めた。
-
---- 45. @chihiro_teru515 (2026-04-08) ---
-いざ長崎！
-小心者なので、乗り換えが不安すぎて新幹線で全然くつろげない笑
-
---- 46. @zigoku_noter (2026-04-09) ---
-日本で1,500円のnote
-
-海外で$29（約4,400円）で売れてる理由
-
---- 47. @Ronycoder (2026-04-08) ---
-Claude FULL COURSE 1 HOUR (Build & Automate Anything)
-
---- 48. @newsbrewing (2026-04-08) ---
-東京大学名誉教授 姜尚中氏「トランプ氏を絶賛した日本は、国際的な立場が益々不利になる」
-
---- 49. @omae_osamu (2026-04-08) ---
+--- 24. @omae_osamu (2026-04-08) ---
 とても危険な動き。
 高市政権が創設を目指す「国家情報会議」は、まさに情報隠蔽と言論統制を狙う国家機関である。言論の自由、知る権利が脅かされる。
+
+--- 25. @nu_vot_tak_vot (2026-04-08) ---
+
+
+VPN使用の事実をばらさないためのアイデアのスレッド。最高から最低へ、ただしかなり条件付きで
+
+--- 26. @c0tanpoTesh1ta (2026-04-08) ---
+ごじにゃ発見！もうすぐ午後5時にゃー！
+
+--- 27. @ivy432hz (2026-04-09) ---
+Irodori-TTS の笑い声を #AIニケちゃん にあてる。声は 2 秒ころから
+
+--- 28. @V0IDEYEDPANDA (2026-04-08) ---
+i really need examples for the exact opposite of this where the doppelganger is the softer and more cowardly version of the original
+
+--- 29. @gintamamovie (?) ---
+『新劇場版銀魂 -吉原大炎上-』
+
+入場者特典第8弾は…
+描き下ろしメモリアルイラストカード
+
+エモ＆コミカルなシーンをインスタント写真風にした
+「描き下ろしメモリアルイラストカード」だァァ
+※無くなり次第終了
+⠀
+■配布期間：4月3日(金) 〜 4月9日(木)
+※IMAX上映でも配布いたします。
+
+--- 30. @ogikubojin1 (2026-04-08) ---
+再投稿です。
+
+妊娠中からの「尿もれ」、尿失禁に悩まれている方へ、決して諦めなくても良い理由とは
+
+#産後尿もれ　#産後尿漏れ
+
+--- 31. @galsenai (2026-04-08) ---
+ 先月2月、Googleは#WAXALを発表しました。これは21のAfrican言語のための大規模な音声データセットで、Hugging Faceでオープンソースとして公開されました。
+
+#WAXALという名前はWolof語に由来し、「話す」という意味です。象徴的ですね。
+
+--- 32. @taro_f (2026-04-09) ---
+最近$10Bの時価総額で資金調達をした、今話題のWhoop（
+@WHOOP
+）が届きました！
+
+Whoopは、フィットネス・ヘルスケア向けの新しいウェアラブルデバイスです。
+
+周りではOuraとWhoopの2つが流行っています。当面、両方同時に試してみます！
+
+--- 33. @litteralyme0 (2026-04-08) ---
+THE GAY
+
+--- 34. @marmaduke091 (2026-04-08) ---
+The duality of man
+
+--- 35. @auntstella_jp (?) ---
+＼ステラおばさんイラストコンテスト開催／
+盛り上げ企画で生誕祭限定グッズプレゼントも
+
+詳細は画像をタップ
+
+--- 36. @svpino (2026-04-08) ---
+Intelligence withdrawal will be brutal.
+
+Model tokens are heavily subsidized.
+
+Subsidies are disappearing, and with them, so is easy "intelligence".
+
+This is the reason for Anthropic and OpenClaw's divorce.
+
+This should be a wake-up call for everyone building on top of a single
+
+--- 37. @meichan_maru (2026-04-09) ---
+昔「街中のポスターで絶対私の方が上手く描けるって思う絵が使われてる。絶対コネ。私は実力で認められる絵師になる！」てポストバズってたけど
+
+依頼主はネットで依頼が来るのを口開けて待ってる絵師より日頃から人間関係構築してる相手を選ぶもんだよ
+
+--- 38. @tsuda (2026-04-09) ---
+日本はいま物資的な緊急事態であるわけだけど、そんななかイランに電話して「お前ら通行料取るとかとんでもない。無料にしろ」とこの局面で全く必要のないケンカを売るような人物が首相に就いていることが何よりの緊急事態なのであって、そんな政権が作る緊急事態条項なんて認められるわけねーだろ……
+
+--- 39. @dondon00dododo (2026-04-08) ---
+#平和憲法を守る0408
+
+隣に立っていた若い方、静かにスタンディングされていたのだけれど、ただ黙って通り過ぎたり嘲笑する男の人達に
+「無関心でも無関係じゃいられないんだぞ！」
+と叫んだのが印象的だった。
+
+本当に、その通りだ
+
+「無関心でも、無関係じゃいられない」
+
+--- 40. @yuruazabu (2026-04-09) ---
+一つのことが続かないやつ、それ才能やで。連続起業家に向いてるんよ。会社を作って、育てて、飽きたら次に行く。これを繰り返せばいい。日本では一つのことを続けるのが美徳とされてるけど、飽き性は最強の武器になるんだわ。
+
+--- 41. @nijimi_7777 (2026-04-09) ---
+ADHDが病む原因の9割は、人生を自分で「コントロールしていない感覚」にある。本当はAをやろうと思っていたのに、気づいたらBをやってしまっていた。毎日これの繰り返し。そこで重要なのは、後悔するのではなく「よし今日はBをやろう」と切り替えること。この意識を持つだけでメンタルは整うよ。
+
+--- 42. @a2see (2026-04-09) ---
+とりあえずX、SNSというものの概念、意味合いみたいなものを凄い勢いで根底から変えている気がする。
+しかも、それも既存ユーザにそこまで反発も衝撃も与えない（せいぜい好印象の変化に捉えられる）程度で。
+いま、どえらいことが起こってるし、間違いなく後から振り返るとここが分岐点になる…
+
+--- 43. @tropde_pommes (2026-04-08) ---
+自動翻訳のオフ方法
+
+--- 44. @yogurt_r1 (?) ---
+⋱ 新CM公開中です ⋰
+
+夏や秋に比べるとまだまだ気温が低い今の時期はR-1で体調管理をしましょう！
+
+今回のCMも仲間由紀恵さんと永尾柚乃さんに出演いただきました
+
+ぜひ最後までチェックしてみてください！
+
+--- 45. @joshesye (2026-04-08) ---
+HappyHorse が爆発した。
+
+• Elo 1333、Seedance 2.0 を上回り、AI Video Arena のトップに。
+
+裏側には中国チーム 
+http://
+Sand.ai がいて、3月末にようやくオープンソースされた daVinci-MagiHuman を基に最適化されたもの。
+
+わずか2週間。
+
+--- 46. @bitcoin_resjp (2026-04-09) ---
+ビットコインはサトシ・ナカモトという天才がゼロから生み出したシステム、と思っていませんか？
+
+実はそうではなく、プライバシーと暗号技術の自由を守るために政府と戦い続けたサイファーパンクの40年にわたる活動が土台にあります。
+
+--- 47. @ABridgen (2026-04-08) ---
+It’s a remarkable coincidence that the Earth was exactly the same orientation to the moon with exactly the same cloud coverage when these two pictures were taken 68 years apart. Am I now a coincidence theorist ?
+
+--- 48. @gimupop (2026-04-09) ---
+カジュアル面談について本気出して考えてみました！面接する側も受ける側も面白い内容だと思うので、是非読んでください！
+
+カジュアル面談について本気出して考えてみた｜柳川慶太 
+@gimupop
+
+--- 49. @ganpura18 (2026-04-08) ---
+親なんだから子が介護するのは当たり前っていう層もいるけど、親の介護って実のところそれまで蓄えられたの感謝と信頼の切り崩しだから、幼い頃から我が子と向き合わなかったり尊重しなかったような親は普通に見捨てられるんよな
+
+--- 50. @syXcOs (2026-04-07) ---
+私は自殺ってある意味寿命だと思ってるんだよね。たまに「生きたくても生きられなかった人もいるのに」と自殺した人を責める人がいるけど、自ら死を選んだ人は心が寿命を迎えてしまったんだよ。身体だけが健康だからって人間は生きれる訳では無いから
