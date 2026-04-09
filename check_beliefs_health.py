@@ -91,11 +91,12 @@ def parse_beliefs():
             current["verification_action"] = line
             if "✅" in line:
                 current["verification_done"] = True
-            # 期限を探す
-            m = re.search(r"期限:\s*(\d{4}-\d{2}-\d{2})", line)
-            if m:
+            # 期限を探す（打ち消し線~~...~~内の旧期限を除外し、最後の有効期限を採用）
+            line_no_strike = re.sub(r"~~[^~]*~~", "", line)
+            deadlines = re.findall(r"期限:\s*(\d{4}-\d{2}-\d{2})", line_no_strike)
+            if deadlines:
                 try:
-                    current["verification_deadline"] = date.fromisoformat(m.group(1))
+                    current["verification_deadline"] = date.fromisoformat(deadlines[-1])
                 except ValueError:
                     pass
 

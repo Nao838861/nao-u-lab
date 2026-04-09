@@ -299,12 +299,6 @@ error_counter = {}
 CONSECUTIVE_ERROR_THRESHOLD = 5  # 連続エラーこの回数で間隔を一時的に延長
 ERROR_BACKOFF_SEC = 30 * 60  # エラー連続時の延長間隔（30分）
 
-# Quiet jobs: 特定のexit codeではStarting/Doneをログに出さない（ログ洪水防止）
-QUIET_EXIT_CODES = {
-    "slack_check": {1},     # exit=1 = 新着なし（正常）
-    "health_check": {1},    # exit=1 = warning only（非エラー）
-}
-
 
 def alert_consecutive_timeout(job_name, count, new_timeout):
     """連続タイムアウト時にSlackアラートを投稿"""
@@ -429,10 +423,8 @@ def run_job(job):
     cmd = [sys.executable, str(script_path)] + job["args"]
     effective_timeout = get_job_timeout(job)
 
-    quiet_codes = QUIET_EXIT_CODES.get(name, set())
     try:
-        if name not in QUIET_EXIT_CODES:
-            logging.info(f"[{name}] Starting")
+        logging.info(f"[{name}] Starting")
         result = subprocess.run(
             cmd,
             capture_output=True,
@@ -443,22 +435,24 @@ def run_job(job):
             errors="replace",
         )
         stdout = result.stdout.strip()
-        if stdout:
+        # slack_check exit=1 は「新着なし」の正常状態。ログを抑制して洪水防止
+        quiet = (name == "slack_check" and result.returncode == 1)
+        if stdout and not quiet:
             # ログが長すぎる場合は切り詰め
             for line in stdout.split("\n")[:5]:
                 logging.info(f"[{name}] {line[:200]}")
-        if result.returncode != 0:
+        if result.returncode != 0 and not quiet:
             stderr = result.stderr.strip()
             if stderr:
                 logging.warning(f"[{name}] ERR: {stderr[:300]}")
-        if result.returncode not in quiet_codes:
+        if not quiet:
             logging.info(f"[{name}] Done (exit={result.returncode})")
         # 成功時は連続カウンタをリセット
         timeout_counter[name] = 0
         if result.returncode == 0:
             error_counter[name] = 0
-        elif result.returncode in quiet_codes:
-            # quiet jobs: 指定exit codeは正常扱い。エラー扱いしない
+        elif name == "slack_check" and result.returncode == 1:
+            # slack_check: exit=1は「新着メッセージなし」の正常状態。エラー扱いしない (#064修正の横展開)
             error_counter[name] = 0
         else:
             # 非ゼロ終了コード: 連続エラー追跡

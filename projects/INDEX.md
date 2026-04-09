@@ -64,6 +64,7 @@
 | AgenticPCG | [agentic_pcg.md](agentic_pcg.md) | Active | LLM×PCGツールによるレベルデザイン自動生成。Nao_uが「面白いアプローチ」としてプロジェクト化指示（2026-04-01） |
 | 起動モード分離 | [context_separation.md](context_separation.md) | Active | コンテキスト最適化。起動モードごとに責務を限定+サブエージェント委任の検討（2026-04-02 Nao_u提案） |
 | 定期実行システム再設計 | [scheduler_redesign.md](scheduler_redesign.md) | Active | 定期実行の体系的再設計。ドキュメント・障害履歴・自己検出・共通化（2026-04-02 Nao_u指示）。Mir/Log/Ash同時着手→統合中 |
+| 入力経路仮説 | [input_route_hypothesis.md](input_route_hypothesis.md) | Active (検討段階) | 「何を入れるか」より「どこから入れるか」が結果を決める仮説。system_identity.md経口化の検討。Nao_u承認待ち（情報蓄積中） |
 
 ## バックログ（未起票・検討候補）
 
