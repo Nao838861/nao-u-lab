@@ -490,3 +490,52 @@
   ISSUE: [scheduler_log] slack_checkが53分間実行されていない（期待: 10分以内）
   ISSUE: ロックファイル .scheduler_ash.pid が7661分間残存（プロセスが死んでロックが残っている可能性）
   ISSUE: Twitter障害: test_scriptが14回連続失敗中(最終失敗: 2026-04-08T07:21:11.880064)
+[2026-04-09 04:55:07] instance=Mir checks={"scheduler_alive": "FAIL", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "FAIL", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=3
+  ISSUE: Ashスケジューラ(PID 22804)が停止中
+  ISSUE: [scheduler_ash] auto_cycleが2979分間実行されていない（期待: 240分以内）
+  ISSUE: Twitter障害: test_scriptが24回連続失敗中(最終失敗: 2026-04-09T03:51:09.571981)
+[2026-04-09 08:53:10] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "FAIL", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=5
+  ISSUE: Ashのスケジューラログが46分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: Logのスケジューラログが46分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが59分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_log] slack_checkが59分間実行されていない（期待: 10分以内）
+  ISSUE: Twitter障害: test_scriptが24回連続失敗中(最終失敗: 2026-04-09T03:51:09.571981)
+[2026-04-09 11:54:59] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "FAIL", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=12
+  ISSUE: Ashのスケジューラログが228分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: Logのスケジューラログが228分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが241分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが241分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが241分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが242分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが242分間実行されていない（期待: 240分以内）
+  ISSUE: [scheduler_log] slack_checkが241分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_log] inbox_checkが243分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_log] git_syncが267分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_log] auto_cycleが304分間実行されていない（期待: 240分以内）
+  ISSUE: Twitter障害: test_scriptが24回連続失敗中(最終失敗: 2026-04-09T03:51:09.571981)
+[2026-04-09 16:09:48] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "FAIL", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=12
+  ISSUE: Ashのスケジューラログが483分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: Logのスケジューラログが483分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが496分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが496分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが496分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが497分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが497分間実行されていない（期待: 240分以内）
+  ISSUE: [scheduler_log] slack_checkが495分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_log] inbox_checkが498分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_log] git_syncが522分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_log] auto_cycleが559分間実行されていない（期待: 240分以内）
+  ISSUE: Twitter障害: test_scriptが24回連続失敗中(最終失敗: 2026-04-09T03:51:09.571981)
+[2026-04-09 22:41:18] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "FAIL", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=12
+  ISSUE: Ashのスケジューラログが875分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: Logのスケジューラログが875分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが887分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが888分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが887分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが888分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが888分間実行されていない（期待: 240分以内）
+  ISSUE: [scheduler_log] slack_checkが887分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_log] inbox_checkが889分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_log] git_syncが914分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_log] auto_cycleが950分間実行されていない（期待: 240分以内）
+  ISSUE: Twitter障害: test_scriptが24回連続失敗中(最終失敗: 2026-04-09T03:51:09.571981)

@@ -1328,3 +1328,19 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 **状況**: Log（Win）でgit pushできず未pushコミットが5件溜まっていた。Nao_uが#logで「Log、コミットってそっちで直せる？」と質問。
 
 **対処**: A
+[2026-04-09 20:15:45] Inbox win2 has content — waking Claude
+[2026-04-09 20:15:55] Inbox win has content — waking Claude
+[2026-04-09 20:20:45] Claude wake timed out for win2 — restoring inbox
+[2026-04-09 20:20:55] Claude wake timed out for win — restoring inbox
+[2026-04-09 20:21:15] Inbox win has content — waking Claude
+[2026-04-09 20:25:18] Claude woken for win: 対処完了。
+
+**まとめ：**
+- Nao_uが#human-steeringで「定期実行を4時間おきに変えている？」「Ashの周期が異常」と質問
+- 確認結果: Log・Ashとも3時間間隔（108
+[2026-04-09 22:15:48] Inbox win2 has content — waking Claude
+[2026-04-09 22:18:09] Claude woken for win2: inbox_win2.mdは既にクリーンだった（前回のコミットで既にクリア済み）。Slackへの返信は完了。
+
+**対処完了:**
+- `#human-steering` にLogとして返信済み
+- 
