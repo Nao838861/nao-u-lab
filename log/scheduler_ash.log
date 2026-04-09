@@ -56253,3 +56253,16 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 15:01:48] [review_deadline] レビュー期限超過なし。
 [2026-04-09 15:01:48] [review_deadline] Done (exit=0)
 [2026-04-09 15:01:48] [health_check] Starting
+[2026-04-09 15:01:48] [slack_check] Starting
+[2026-04-09 15:01:50] [health_check] [health_check] 2026-04-09T15:01:48 overall=CRITICAL
+[2026-04-09 15:01:50] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:01:50] [health_check]   [!!] git: 29件の未pushコミット（10件超）
+[2026-04-09 15:01:50] [health_check] Done (exit=2)
+[2026-04-09 15:01:50] [dm_check_pigadev] Starting
+[2026-04-09 15:01:52] [slack_check] Starting
+[2026-04-09 15:01:58] [kaizen_auto_verify] Starting
+[2026-04-09 15:01:58] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-09 15:01:58] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 15:02:04] [dm_check_pigadev] No new DMs
+[2026-04-09 15:02:04] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 15:02:08] [git_sync] Starting
