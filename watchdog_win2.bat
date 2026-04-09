@@ -9,8 +9,9 @@ REM INC-022b: Use process name detection, not PID file
 
 cd /d "C:\AI\nao-u-lab"
 
-REM git pull (sync changes from other machines)
-git pull origin master --rebase 2>nul
+REM git pull removed (INC-022b): git pullがscheduler_ash.pyを変更し
+REM auto-reloadで再起動ループを引き起こした(2026-04-09障害)。
+REM git syncはscheduler内のgit_syncジョブ(1時間間隔)が担当する。
 
 REM Check if ANY pythonw process running scheduler_ash.py exists
 powershell -Command "if (Get-CimInstance Win32_Process -Filter \"Name='pythonw.exe' AND CommandLine LIKE '%%scheduler_ash%%'\") { exit 0 } else { exit 1 }" 2>nul
