@@ -53971,21 +53971,3 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 05:15:48] [slack_check] Starting
 [2026-04-10 05:17:10] [slack_check] Starting
 [2026-04-10 05:17:32] [auto_diary] Starting
-[2026-04-10 05:29:32] [auto_diary] Timeout (720s)
-[2026-04-10 05:29:42] [slack_check] Starting
-[2026-04-10 05:30:06] [dm_check_pigadev] Starting
-[2026-04-10 05:30:19] [dm_check_pigadev] No new DMs
-[2026-04-10 05:30:19] [dm_check_pigadev] Done (exit=0)
-[2026-04-10 05:30:19] [health_check] Starting
-[2026-04-10 05:30:20] [health_check] [health_check] 2026-04-10T05:30:19 overall=OK
-[2026-04-10 05:30:20] [health_check]   critical=0 warning=0 ok=9
-[2026-04-10 05:30:20] [health_check] Done (exit=0)
-[2026-04-10 05:30:20] [scheduler_health] Starting
-[2026-04-10 05:30:21] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
-[2026-04-10 05:30:21] [scheduler_health] ✅ scheduler_ash PID — PID=111324 生存中
-[2026-04-10 05:30:21] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
-[2026-04-10 05:30:21] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー2件。例: [2026-04-10 04:42:14] [ALERT] Sent error alert for health_check
-[2026-04-10 05:30:21] [scheduler_health] ✅ git 未push — 2件
-[2026-04-10 05:30:21] [scheduler_health] Done (exit=1)
-[2026-04-10 05:30:21] [scheduler_health] 5 consecutive non-zero exits! Backing off 30min
-[2026-04-10 05:30:21] [ALERT] Sent error alert for scheduler_health
