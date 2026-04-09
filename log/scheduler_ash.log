@@ -63143,3 +63143,5 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 16:32:11] [health_check] Done (exit=0)
 [2026-04-09 16:32:11] [health_check] Starting
 [2026-04-09 16:32:11] [git_sync] Starting
+[2026-04-09 16:32:14] [dm_check] No new DMs
+[2026-04-09 16:32:14] [dm_check] Done (exit=0)
