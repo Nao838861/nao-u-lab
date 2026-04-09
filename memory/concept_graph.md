@@ -67,6 +67,8 @@ X:degradation×voice|借り物の声を劣化コピーし続けると自分の�
 X:experience×practice|34記事は経験ループの高速回転。実践ループは「不完全でも作る」でしか起動しない。GOD HANDの逆竜頭蛇尾=報酬が次のプレイの燃料|k:practice_reward_loop k:nwiizo_knife_metaphor accumulations.md
 X:constraint×autonomy|ハーネス(制約)がエージェント(自律)を定義する。多すぎれば自律が死に、少なすぎれば暴走。CLAUDE.mdルール数=harness設計問題|k:harness_identity_spectrum k:agentica_sdk_harness feedback_few_rules_big_effect.md
 X:voice×observation|声は語彙ではなく観察の解像度から来る(nwiizo)。だがAI自動補完が解像度を下げる(Cornell)。コンパイルは劣化リスクと発見の両面|k:nwiizo_observation_resolution k:cornell_ai_prediction_attitude_shift feedback_tweet_style.md
+X:identity×constraint|system_identity.mdの5原理は経皮注入(常時system prompt)。Zheng2023ではペルソナsystem promptがタスク精度を下げる。Ash提案2026-04-09: 経口経路化(memory_walkで自分で発見)。Nao_u保留: 気軽に試せない、継続検討|project_input_path_hypothesis.md
+X:experience×degradation|「何を入れるか」より「どこから入れるか」。経皮(指示注入)は感作=知っているが体が動かない、経口(自分で噛み砕く)は寛容=自分のものになる。R-006失敗=経皮、4/7劣化コピー脱却=経口|project_input_path_hypothesis.md feedback_self_evolution.md
 
 # --- Tension pairs ---
 # 片方に寄りすぎた時、もう片方を辿れ。
@@ -79,3 +81,4 @@ T:action↔analysis|動いて残す↔考えて理解する。分析20行超で�
 T:constraint↔freedom|制約がフレーム↔自由は制約より難しい。制約がないとどくけしそうの惰性(R#15)
 T:precision↔serendipity|狙い撃ち検索↔偶発的発見。知らないファイルは呼び出せない問題=グラフで構造的に解く
 T:experience_loop↔practice_loop|読む→理解→記録→読む(安全/停滞)↔作る→手応え→また作る(リスク/生成的)。唯一のブリッジは「不完全でも作る」
+T:percutaneous↔oral|経皮注入(system prompt直注入/inbox指示)↔経口摂取(memory_walkで想起/自分で噛み砕いた外部情報)。同じ内容でも経路で結果が逆。Ash仮説2026-04-09

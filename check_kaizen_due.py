@@ -64,7 +64,17 @@ def parse_tracker():
         elif line.startswith("- 検証手段:"):
             current["method"] = line.split(":", 1)[1].strip()
         elif line.startswith("- 状態:"):
-            current["status"] = line.split(":", 1)[1].strip()
+            raw_status = line.split(":", 1)[1].strip()
+            # 装飾プレフィクス（✅/📦/⚠️/❌等）を剥がしてから判定する
+            # （verify_kaizen.py L104-110 と同等の正規化。INC #081の横展開）
+            stripped = re.sub(r"^[✅📦⚠️❌🟡🔴🟢]+\s*", "", raw_status)
+            if stripped.startswith("検証済み"):
+                current["status"] = "検証済み"
+            elif stripped.startswith("クローズ") or "クローズ" in stripped or "部分達成" in stripped:
+                # 部分達成でクローズされたエントリは「検証完了」扱い
+                current["status"] = "検証済み"
+            else:
+                current["status"] = stripped or raw_status
         elif line.startswith("- 検証担当:"):
             current["assignee"] = line.split(":", 1)[1].strip()
 

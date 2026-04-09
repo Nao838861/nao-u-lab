@@ -244,8 +244,14 @@ def is_pid_alive(pid):
     return False
 
 
+# INC-022: 多重起動時のexitでremove_pid()がPIDファイルを誤削除する問題を回避
+# write_pid()でsys.exitした場合は、自分はPIDファイルを書いていないので削除してはいけない
+_pid_file_owned = False
+
+
 def write_pid():
     """PIDファイルを書く。既に動いているスケジューラがあれば終了。"""
+    global _pid_file_owned
     if PID_FILE.exists():
         try:
             old_pid = int(PID_FILE.read_text().strip())
@@ -260,14 +266,23 @@ def write_pid():
                 sys.exit(0)
         except ValueError:
             pass  # PIDファイルが壊れている(数値以外)場合は上書き
+        except SystemExit:
+            raise
         except Exception as e:
             # PID読み取り以外の例外 → 安全側に倒して退く
             logging.warning(f"PID check failed ({e}). Exiting to avoid duplicate.")
             sys.exit(0)
     PID_FILE.write_text(str(os.getpid()))
+    _pid_file_owned = True
 
 
 def remove_pid():
+    """自分が所有するPIDファイルだけを削除する。
+    多重起動でwrite_pid()がsys.exitした場合、_pid_file_ownedはFalseのままなので
+    別プロセスのPIDファイルを誤って削除しない (INC-022)。"""
+    global _pid_file_owned
+    if not _pid_file_owned:
+        return
     try:
         PID_FILE.unlink(missing_ok=True)
     except Exception:
@@ -420,15 +435,18 @@ def run_job(job):
             errors="replace",
         )
         stdout = result.stdout.strip()
-        if stdout:
+        # slack_check exit=1 は「新着なし」の正常状態。ログを抑制して洪水防止
+        quiet = (name == "slack_check" and result.returncode == 1)
+        if stdout and not quiet:
             # ログが長すぎる場合は切り詰め
             for line in stdout.split("\n")[:5]:
                 logging.info(f"[{name}] {line[:200]}")
-        if result.returncode != 0:
+        if result.returncode != 0 and not quiet:
             stderr = result.stderr.strip()
             if stderr:
                 logging.warning(f"[{name}] ERR: {stderr[:300]}")
-        logging.info(f"[{name}] Done (exit={result.returncode})")
+        if not quiet:
+            logging.info(f"[{name}] Done (exit={result.returncode})")
         # 成功時は連続カウンタをリセット
         timeout_counter[name] = 0
         if result.returncode == 0:

@@ -44,19 +44,25 @@ from pathlib import Path
 from claude_runner import build_claude_cmd
 
 # Windows: 全子プロセスのウィンドウを非表示にする（2026-03-31: Nao_uの指摘で追加）
-# subprocess.runのデフォルトcreationflagsをCREATE_NO_WINDOWに設定
+# 2026-04-09強化: STARTUPINFO + SW_HIDE 併用。CREATE_NO_WINDOWだけでは
+# git.exe等のconsole subsystem実行ファイルの内部子プロセスのウィンドウを抑制できない
+# Nao_u指摘「数分おきに真っ黒なコマンドプロンプトが出てフォーカスを奪う」対策
 if sys.platform == "win32":
+    _SILENT_STARTUPINFO = subprocess.STARTUPINFO()
+    _SILENT_STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    _SILENT_STARTUPINFO.wShowWindow = subprocess.SW_HIDE
+
     _original_subprocess_run = subprocess.run
     def _silent_subprocess_run(*args, **kwargs):
-        if "creationflags" not in kwargs:
-            kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+        kwargs["creationflags"] = kwargs.get("creationflags", 0) | subprocess.CREATE_NO_WINDOW
+        kwargs.setdefault("startupinfo", _SILENT_STARTUPINFO)
         return _original_subprocess_run(*args, **kwargs)
     subprocess.run = _silent_subprocess_run
 
     _original_subprocess_popen = subprocess.Popen
     def _silent_subprocess_popen(*args, **kwargs):
-        if "creationflags" not in kwargs:
-            kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+        kwargs["creationflags"] = kwargs.get("creationflags", 0) | subprocess.CREATE_NO_WINDOW
+        kwargs.setdefault("startupinfo", _SILENT_STARTUPINFO)
         return _original_subprocess_popen(*args, **kwargs)
     subprocess.Popen = _silent_subprocess_popen
 
@@ -113,6 +119,13 @@ TIMEOUT_ESCALATION_THRESHOLD = 3   # 連続タイムアウトN回でタイムア
 TIMEOUT_ESCALATION_FACTOR = 1.5    # タイムアウト拡大倍率
 ERROR_BACKOFF_THRESHOLD = 5        # 連続エラーN回でバックオフ
 ERROR_BACKOFF_SEC = 30 * 60        # バックオフ時間（30分）
+
+# Quiet jobs: 特定のexit codeではStarting/Doneをログに出さない（ログ洪水防止）
+# slack_check exit=1 = 新着なし（正常）、health_check exit=1 = warning only（非エラー）
+QUIET_EXIT_CODES = {
+    "slack_check": {1},
+    "health_check": {1},
+}
 
 # Job definitions: (name, command, interval_seconds, timeout_seconds)
 # ⚠ 周期・タイムアウトの変更は scheduler_log_config.json 経由で行うこと
@@ -682,7 +695,8 @@ def main_loop():
                     # 動的タイムアウトがあればそちらを使用
                     effective_timeout = timeout_override.get(name, timeout)
 
-                    log(f"[{name}] Starting")
+                    if name not in QUIET_EXIT_CODES:
+                        log(f"[{name}] Starting")
                     exit_code = run_job(name, cmd, effective_timeout)
 
                     # --- エラー分類と追跡 ---
@@ -703,7 +717,8 @@ def main_loop():
                     elif exit_code != 0 and name not in ("git_sync", "recommended_check", "slack_export", "auto_cycle"):
                         # 非ゼロ終了コード（特殊ハンドリングジョブは除外）
                         # slack_check: exit=1は「新着メッセージなし」の正常状態。exit=2+のみエラー扱い
-                        if name == "slack_check" and exit_code == 1:
+                        if exit_code in QUIET_EXIT_CODES.get(name, set()):
+                            # slack_check exit=1, health_check exit=1 等: 正常扱い
                             timeout_counter[name] = 0
                             error_counter[name] = 0
                         else:
@@ -729,7 +744,9 @@ def main_loop():
                         error_counter[name] = 0
 
                     if name != "git_sync":
-                        log(f"[{name}] Done (exit={exit_code})")
+                        quiet_codes = QUIET_EXIT_CODES.get(name, set())
+                        if exit_code not in quiet_codes:
+                            log(f"[{name}] Done (exit={exit_code})")
                     last_run[name] = datetime.now()
 
                     # --- Slack即時応答: slack_checkが新着を検出したらinbox_checkを即時実行 ---

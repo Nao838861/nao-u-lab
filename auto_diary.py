@@ -38,7 +38,7 @@ STAGING_FILE = REPO_DIR / "log" / "cycle_staging.md"
 
 # フェーズ別タイムアウト
 PHASE_TIMEOUTS = {
-    "gather": 120,   # 情報収集は短め
+    "gather": 240,   # 情報収集（claude --print応答遅延に余裕。120s→240s 2026-04-09）
     "analyze": 300,  # shared-reads分析（外部情報の深い分析・分類）
     "process": 240,  # 対処・研究
     "diary": 240,    # 日記出力（CLAUDE.md読み込み+1500字執筆+Slack投稿+git push）
@@ -298,10 +298,14 @@ def is_claude_running():
         return False
 
 
-def post_status_report():
-    """Claudeが動けない時の最低限の状態報告"""
+def post_status_report(reason="不明"):
+    """auto_diaryが日記生成に失敗した時の状態報告。
+    reasonには失敗の具体的原因を渡す（Phase 1タイムアウト等）。"""
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
-    msg = f"[{now}] Win2（Ash）自動状態報告: Claudeセッション停止中。タスクスケジューラの外部監視は稼働中。Slack新着への返信はcheck_slack.py経由で対応可能。"
+    msg = (
+        f"[{now}] Win2（Ash）auto_diary失敗報告: {reason}。"
+        f"スケジューラ自体は稼働中。次回サイクルで再試行する。"
+    )
     post_message(ASH_CHANNEL, msg)
 
 
@@ -339,7 +343,7 @@ def main():
     if not ok1:
         print("Phase 1 (Gather) 失敗。Phase 2-4は中止。状態報告のみ投稿。")
         record_run()
-        post_status_report()
+        post_status_report(reason=f"Phase 1 (Gather) がタイムアウト/失敗 (timeout={PHASE_TIMEOUTS['gather']}s)")
         return
 
     # Phase 2: Analyze（shared-reads分析 — Nao_u指示: 1フェーズ丸ごと使う価値）
@@ -360,7 +364,7 @@ def main():
         print("4フェーズ完了。")
     else:
         print("Phase 4 (Diary) 失敗。状態報告を投稿。")
-        post_status_report()
+        post_status_report(reason="Phase 4 (Diary) でタイムアウト/失敗。Phase 1-3は完了済み")
 
 
 if __name__ == "__main__":

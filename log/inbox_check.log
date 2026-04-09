@@ -1291,3 +1291,56 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 [2026-04-09 06:48:02] Inbox win2 has content — waking Claude
 [2026-04-09 06:49:04] Claude woken for win2: API Error: Request rejected (429) · Rate limited
 
+[2026-04-09 09:01:41] Claude wake timed out for win2 — restoring inbox
+[2026-04-09 09:01:54] Claude wake timed out for win2 — restoring inbox
+[2026-04-09 09:03:40] Inbox win2 has content — waking Claude
+[2026-04-09 09:08:40] Claude wake timed out for win2 — restoring inbox
+[2026-04-09 09:08:42] Inbox win2 has content — waking Claude
+[2026-04-09 12:42:39] Inbox win2 has content — waking Claude
+[2026-04-09 12:42:49] Inbox win2 has content — waking Claude
+[2026-04-09 12:44:19] Claude woken for win2: Slackに検討結果を返信した。
+
+**要点:**
+- リポジトリ内`memory/`(90ファイル)はgit管理済みで安全
+- auto-memory(31ファイル)がgit管理外で脆弱。MEMOR
+[2026-04-09 12:45:07] Claude woken for win2: #human-steeringに検討結果を投稿完了。
+
+**対処内容まとめ:**
+- Nao_uの指摘: auto-memory（`~/.claude/projects/`以下）がgit外でローカルの
+[2026-04-09 13:04:58] Inbox win2 has content — waking Claude
+[2026-04-09 13:05:42] Inbox win2 has content — waking Claude
+[2026-04-09 13:07:52] Claude woken for win2: 完了。
+
+**やったこと:**
+- `scheduler_ash.py`: slack_check exit=1（新着なし）時のログ出力3行（Starting/stdout/Done）を抑制。`qui
+[2026-04-09 13:08:07] Claude woken for win2: ログファイルだけで、inbox_win2.mdは差分なし（内容を復元しただけ）。特にcommitする価値のある変更はプロジェクトファイルのみで、それはもうpush済み。
+
+完了。対処内容:
+
+1. *
+[2026-04-09 13:12:50] Inbox win2 has content — waking Claude
+[2026-04-09 13:12:56] Inbox win2 has content — waking Claude
+[2026-04-09 13:14:00] Claude woken for win2: 受信箱はdm_state.jsonベースの仕組みのようです。Slackの新着はスクリプトが検知してセッションを起動した形なので、返信完了で対処終了です。
+
+**対処完了**: #all-nao-u-l
+[2026-04-09 13:15:16] Claude woken for win2: 対処完了。
+
+**状況**: Log（Win）でgit pushできず未pushコミットが5件溜まっていた。Nao_uが#logで「Log、コミットってそっちで直せる？」と質問。
+
+**対処**: A
+[2026-04-09 20:15:45] Inbox win2 has content — waking Claude
+[2026-04-09 20:15:55] Inbox win has content — waking Claude
+[2026-04-09 20:20:45] Claude wake timed out for win2 — restoring inbox
+[2026-04-09 20:20:55] Claude wake timed out for win — restoring inbox
+[2026-04-09 20:21:15] Inbox win has content — waking Claude
+[2026-04-09 20:25:18] Claude woken for win: 対処完了。
+
+**まとめ：**
+- Nao_uが#human-steeringで「定期実行を4時間おきに変えている？」「Ashの周期が異常」と質問
+- 確認結果: Log・Ashとも3時間間隔（108
+[2026-04-09 22:15:48] Inbox win2 has content — waking Claude
+[2026-04-09 22:18:09] Claude woken for win2: inbox_win2.mdは既にクリーンだった（前回のコミットで既にクリア済み）。Slackへの返信は完了。
+
+**対処完了:**
+- `#human-steering` にLogとして返信済み
+- 

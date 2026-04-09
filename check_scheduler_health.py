@@ -98,6 +98,39 @@ def check_pid_file(result, pid_file, name):
         return
 
     # プロセス生存確認
+    # Windowsではos.kill(pid, 0)がセッション分離やパーミッション差で
+    # OSError/SystemError(WinError 87)を投げることがあり、誤検知の原因になる。
+    # WindowsではOpenProcessを優先し、tasklistでフォールバック。
+    if sys.platform == "win32":
+        alive = False
+        try:
+            import ctypes
+            PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+            handle = ctypes.windll.kernel32.OpenProcess(
+                PROCESS_QUERY_LIMITED_INFORMATION, False, pid
+            )
+            if handle:
+                ctypes.windll.kernel32.CloseHandle(handle)
+                alive = True
+        except Exception:
+            pass
+        if not alive:
+            try:
+                r = subprocess.run(
+                    ["tasklist", "/FI", f"PID eq {pid}"],
+                    capture_output=True, text=True, timeout=10,
+                    encoding="utf-8", errors="replace",
+                )
+                if f" {pid} " in (r.stdout or ""):
+                    alive = True
+            except Exception:
+                pass
+        if alive:
+            result.ok(f"{name} PID", f"PID={pid} 生存中")
+        else:
+            result.fail(f"{name} PID", f"PID={pid} は死んでいる")
+        return
+
     try:
         os.kill(pid, 0)
         result.ok(f"{name} PID", f"PID={pid} 生存中")
@@ -106,8 +139,6 @@ def check_pid_file(result, pid_file, name):
     except PermissionError:
         result.ok(f"{name} PID", f"PID={pid} 生存中（権限なし）")
     except (OSError, SystemError):
-        # Windows: os.kill(pid, 0) が WinError 87 (パラメーターが間違っています) を
-        # SystemError として投げることがある。プロセス死亡として扱う (INC-018関連)
         result.fail(f"{name} PID", f"PID={pid} 確認失敗（OSError/SystemError）→死亡扱い")
 
 
