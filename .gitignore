@@ -9,6 +9,7 @@
 .infra_health_state.json
 .usage_history.json
 .usage_last.json
+.usage_last_post
 .memory_search.db
 .recommended_last_success
 .scheduler_log.lock

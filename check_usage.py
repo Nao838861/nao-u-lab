@@ -305,16 +305,47 @@ def run_login():
     print("Done! Profile saved.")
 
 
+MIN_POST_INTERVAL_SEC = 5 * 3600  # 5時間: 6時間間隔運用での重複投稿を防ぐ
+LAST_POST_FILE = REPO_DIR / ".usage_last_post"
+
+
+def check_min_post_interval():
+    """前回投稿から最低間隔が経過しているか確認。
+    複数経路からcheck_usage.pyが呼ばれても重複投稿を防ぐ。"""
+    if not LAST_POST_FILE.exists():
+        return True
+    try:
+        last_ts = float(LAST_POST_FILE.read_text().strip())
+        elapsed = time.time() - last_ts
+        if elapsed < MIN_POST_INTERVAL_SEC:
+            remaining = int((MIN_POST_INTERVAL_SEC - elapsed) / 60)
+            print(f"前回投稿から{int(elapsed/60)}分しか経っていない（最小間隔: {int(MIN_POST_INTERVAL_SEC/60)}分）。あと{remaining}分待機。スキップ。")
+            return False
+        return True
+    except Exception:
+        return True
+
+
+def record_post():
+    LAST_POST_FILE.write_text(str(time.time()))
+
+
 def main():
     parser = argparse.ArgumentParser(description="Claude Pro/Max使用量チェック")
     parser.add_argument("--dry-run", action="store_true", help="スクレイピングのみ（投稿しない）")
     parser.add_argument("--login", action="store_true", help="ブラウザを開いてログイン")
     parser.add_argument("--screenshot", action="store_true", help="スクリーンショット保存")
+    parser.add_argument("--force", action="store_true", help="最小投稿間隔ガードを無視")
     args = parser.parse_args()
 
     if args.login:
         run_login()
         return
+
+    # 重複投稿ガード（dry-run/forceは除外）
+    if not args.dry_run and not args.force:
+        if not check_min_post_interval():
+            sys.exit(0)
 
     usage = scrape_usage(dry_run=args.dry_run, screenshot=args.screenshot)
     if not usage:
@@ -327,6 +358,7 @@ def main():
 
     if not args.dry_run:
         post_to_slack(message)
+        record_post()
 
 
 if __name__ == "__main__":
