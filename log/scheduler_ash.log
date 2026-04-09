@@ -67165,3 +67165,26 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 05:47:31] [slack_check] Starting
 [2026-04-10 05:47:31] [slack_check] Starting
 [2026-04-10 05:47:31] [git_sync] Starting
+[2026-04-10 05:47:33] [health_check] Starting
+[2026-04-10 05:47:34] [slack_check] Starting
+[2026-04-10 05:47:34] [slack_check] Starting
+[2026-04-10 05:47:36] [health_check] [health_check] 2026-04-10T05:47:33 overall=CRITICAL
+[2026-04-10 05:47:36] [health_check]   critical=1 warning=0 ok=8
+[2026-04-10 05:47:36] [health_check]   [!!] git: 12件の未pushコミット（10件超）
+[2026-04-10 05:47:36] [health_check] Done (exit=2)
+[2026-04-10 05:47:36] [git_sync] Done (exit=0)
+[2026-04-10 05:47:37] [slack_check] Starting
+[2026-04-10 05:47:37] [slack_check] Starting
+[2026-04-10 05:47:39] [health_check] Starting
+[2026-04-10 05:47:40] [slack_check] Starting
+[2026-04-10 05:47:40] [health_check] Starting
+[2026-04-10 05:47:41] [health_check] [health_check] 2026-04-10T05:47:39 overall=CRITICAL
+[2026-04-10 05:47:41] [health_check]   critical=1 warning=0 ok=8
+[2026-04-10 05:47:41] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-04-10 05:47:41] [health_check] Done (exit=2)
+[2026-04-10 05:47:42] [slack_check] Starting
+[2026-04-10 05:47:42] [health_check] [health_check] 2026-04-10T05:47:40 overall=CRITICAL
+[2026-04-10 05:47:42] [health_check]   critical=1 warning=0 ok=8
+[2026-04-10 05:47:42] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-04-10 05:47:42] [health_check] Done (exit=2)
+[2026-04-10 05:47:42] [git_sync] Starting
