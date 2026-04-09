@@ -45,11 +45,12 @@ CONTENT=$(grep -v '^#' "$INBOX" | grep -v '^$' | head -1)
 if [ -n "$CONTENT" ]; then
     echo "$(date): 受信箱にメッセージあり。claude起動。"
 
-    # 他のclaude --printプロセスが走っていたらスキップ（認証トークン競合防止 2026-04-05）
-    # 対話セッション(claude単体)は除外し、claude --print(cron起動)のみカウント
-    CLAUDE_PRINT_COUNT=$(pgrep -f "claude.*--print" 2>/dev/null | wc -l | tr -d ' ')
-    if [ "$CLAUDE_PRINT_COUNT" -gt 0 ]; then
-        echo "$(date): 他のclaude --printプロセスが実行中（${CLAUDE_PRINT_COUNT}個）。スキップ。"
+    # 既にclaudeプロセスが走っていたらスキップ（認証トークン競合防止 2026-04-09更新）
+    # 「claude --print」も対話セッションも psでは同じ"claude"として表示される。
+    # 対話セッション中はそれを優先し、cron同士の重複も同時に防ぐ。
+    RUNNING_CLAUDE=$(ps -A -o pid,comm 2>/dev/null | grep -c " claude$")
+    if [ "$RUNNING_CLAUDE" -gt 0 ]; then
+        echo "$(date): claudeプロセスが既に実行中（${RUNNING_CLAUDE}個）。スキップ。"
         exit 0
     fi
 

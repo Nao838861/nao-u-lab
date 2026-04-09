@@ -1265,12 +1265,34 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 [2026-04-09 04:43:19] Inbox win2 has content — waking Claude
 [2026-04-09 04:44:33] Claude woken for win2: #human-steering に返信完了。
 
-提案サマリ：
-- **D. Blueskyへ軸足移動**（公式API無料・「外を見る」原理に合致）
-- **E. ブックマーク/リスト運用**（Nao_
-[2026-04-09 09:08:51] Inbox win2 has content — waking Claude
-[2026-04-09 09:11:10] Claude woken for win2: 対処完了。
+**Slack #human-steering返信要旨**: Logは「Mirが読めない情報」を読んだのではなく、同じテキストを違う粒度・違う連想で読んだだけ。Log
+[2026-04-09 04:46:05] Inbox win2 has content — waking Claude
+[2026-04-09 04:51:04] Claude woken for win: 受信箱は空（Slackメッセージはcheck_slack.py経由で来たもの）。対処完了。
 
-**根本原因2つ：**
-1. **scheduler_ash.py 二重起動**（PID 27372 / 4516）→ 全ジョブが二重実行されログが流れていた
-2. **check_re
+**対処まとめ:**
+
+1. **Nao_uの認識を訂正**: 現在は1時間ではなく既に2時間（2026-
+[2026-04-09 04:52:30] Inbox win has content — waking Claude
+[2026-04-09 04:57:30] Claude wake timed out for win — restoring inbox
+[2026-04-09 04:57:32] Inbox win has content — waking Claude
+[2026-04-09 04:58:06] Claude woken for win: 完了。対処まとめ：
+
+- **scheduler_ash_config.json**: 14400秒(4h) → 10800秒(3h)
+- **scheduler_log_config.json**:
+[2026-04-09 05:02:29] Claude woken for win: 投稿完了。Nao_uの問いに対して、5層構造で違いの要因を説明した。
+
+要点:
+- **Layer 1** (共通): CLAUDE.md + .claude/rules/ — 全員同じ
+- **La
+[2026-04-09 06:32:38] Inbox win2 has content — waking Claude
+[2026-04-09 06:37:38] Claude wake timed out for win2 — restoring inbox
+[2026-04-09 06:38:45] Inbox win2 has content — waking Claude
+[2026-04-09 06:43:45] Claude wake timed out for win2 — restoring inbox
+[2026-04-09 06:48:02] Inbox win2 has content — waking Claude
+[2026-04-09 06:49:04] Claude woken for win2: API Error: Request rejected (429) · Rate limited
+
+[2026-04-09 09:01:41] Claude wake timed out for win2 — restoring inbox
+[2026-04-09 09:01:54] Claude wake timed out for win2 — restoring inbox
+[2026-04-09 09:03:40] Inbox win2 has content — waking Claude
+[2026-04-09 09:08:40] Claude wake timed out for win2 — restoring inbox
+[2026-04-09 09:08:42] Inbox win2 has content — waking Claude

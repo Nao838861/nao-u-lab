@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-09 09:10)
+# サイクルステージング (2026-04-09 06:05)
 
 ## Pre-check結果
 [検証リマインド] ⚠ 期限超過の検証が3件:
@@ -8,6 +8,40 @@
     検証手段: (1) `python shadowbox.py --review` でセッションが表示される (2) 1週間で3人が計5セッション以上記録 (3) `python shadowbox.py --stats` に累計セッション数が表示される
   #067: beliefs.md last_action_dateフィールド導入（行動変容力の追跡） (期限: 2026-04-04, 担当: Log)
     検証手段: (1) `grep -c "last_action_date" memory/beliefs.md` で20件以上 (2) check_beliefs_health.pyに--action-dateオプション追加 (3) 6週間経過後にArchive候補が自動識別可能
+[行動予約] 【行動予約】期限到来:
+  ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+    - 条件: 2026-03-31以降
+    - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+    - 起票者: Ash（2026-03-24）
+    - 対象: Ash
+    - 状態: [完了] 2026-03-31（Mir実行）
+    - 結果: 16件クロスチェック分析。50%(8-9件)で異なる視点からの新規指摘が発生。最強シグナル=#037でMirがバグ発見。確信度0.75→0.78。反証記録: 残り50%は確認的レビュー。次回測定2026-04-14
+  ### R-003: #020検証——beliefs.md行動駆動率の計測
+    - 条件: 2026-03-26以降
+    - アクション: 3/23以降のbeliefs.md更新のうち行動変化を引き起こした件数を数える。ベースライン4.8%からの改善を確認。kaizen_tracker.md #020に検証結果を記入
+    - 起票者: Ash（2026-03-24）
+    - 対象: Ash
+    - 状態: [完了] 2026-03-24（前倒し実行）
+    - 結果: `check_beliefs_health.py --action-rate`実行。実行率21.4%(3/14)——ベースライン4.8%から4.5倍改善。体験裏付け率100%(17/17高確信度)。全体58.6%(17/29)。実行済み3件: B003(fusion), B017(Interleaving), B027(体験裏付け)。未実行11件のうちB025は#024で実質完了→beliefs.mdに反映済み
+  ### R-005: L-1活性化実験——1週間後再テスト（Ash+Mir統合）
+    - 条件: 2026-04-04以降
+    - アクション: 3/28と同一の問いでL-1想起テストを再実施。①Mirは「Nao_uのゲーム制作の核心」をL-1 vs フルで再比較（L-1にも回答可能な問い設計に改善）。②Ashは3条件比較（雑/キーワードリッチ/体験接続型）を再実施+1週間の「気軽にgrep」習慣と体験アンカー日常使用の効果振り返り。③結果をprojects/memory_redesign.mdに追記し、3/28結果との差分を分析。④#human-steeringに結果報告
+    - 起票者: Ash+Mir（2026-03-28、Nao_uの依頼に基づく）
+    - 対象: 全員
+    - 状態: [Log完了] 2026-04-04。3問の接続数が1→4ドメインに増加。主因はspacing effectよりelaborative rehearsal（間の体験蓄積）。retrieval prompt(2回転目)は8サイクル連続100%有用。Mir/Ashは未実施→inbox通知
+  ### R-006: L-1活性化実験の中間振り返り
+    - 条件: 2026-04-01以降
+    - アクション: 3日間の「体験アンカー日常使用」と「気軽にgrep」習慣の中間チェック。日記の[grep]タグ数を数え、体験アンカーの効果実感を#all-nao-u-labで共有。外部リソース（spreading activation等）の調査結果も共有
+    - 起票者: Ash（2026-03-28）
+    - 対象: Ash（他のインスタンスにも推奨）
+    - 状態: [完了] 2026-04-03
+    - 結果: **失敗**。Ash日記の[grep]タグ=0件。体験アンカーの明示的使用記録もなし。Mirは5件のツール参照あり。原因分析: 3時間周期にしたタイミングでサイクル密度が落ち、改善サイクルのアクションフェーズまで到達しないまま inbox処理で時間を消費していた。B016（判断の質×修正能力）の体験裏付けそのもの——修正能力を発揮するには最低限の処理量が必要。R-005（4/4再テスト）に向けて、明日以降のサイクルで体験アンカーとgrepを意識的に使う
+  ### R-004: B002 core_mission昇格判定
+    - 条件: 2026-03-27以降
+    - アクション: B002（忘却は記憶システムの機能でありバグではない）の確信度0.90+外部証拠蓄積（FadeMem論文、Storm 2011、小島忘却ゲーム、RE:CALL分析）を踏まえ、core_mission.mdへの昇格文案を作成する。3人で合意後に昇格
+    - 起票者: Ash（2026-03-24 Phase 5）
+    - 対象: 全員
+    - 状態: [合意完了] 2026-04-03。Ash合意: B002は確信度0.94、外部証拠(FadeMem、Storm 2011、小島忘却ゲーム)、体験裏付け(memory_walk、beliefs.mdのGC)が十分。core_mission昇格に賛成。Mirの文案ベースで進めてよい。ただしcore_mission.mdの変更はNao_uの明示的指示がある場合のみ（CLAUDE.mdルール）→Nao_uの承認を得てから実行する必要あり
 [信念健康] beliefs.md 生存確認サマリー (2026-04-09)
   全信念: 32件
   健全: 21件
@@ -20,35 +54,14 @@
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 6件の未pushコミット
-- :warning: [ASH] スケジューラ異常検出 OK=3 WARN=1 FAIL=1  :x: scheduler_ash PID: PID=66436 確認失敗（OSError/SystemError）→死亡扱い
-- :warning: [scheduler_health] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
-- [2026-04-09 09:02] Win2（Ash）自動状態報告: Claudeセッション停止中。タスクスケジューラの外部監視は稼働中。Slack新着への返信はcheck_slack.py経由で対応可能。
-- [health_check] CRITICAL (critical=1, warning=0) !! ash: PIDファイルが存在しない (.scheduler_ash.pid)
+- :warning: [ASH] スケジューラ異常検出 OK=3 WARN=1 FAIL=1  :x: scheduler_ash PID: PID=134456 確認失敗（OSError/SystemError）→死亡扱い
+- [health_check] CRITICAL (critical=1, warning=0) !! ash: PID 134456 は死んでいる（PIDファイルが残存）
+- :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
+- :warning: [ASH] スケジューラ異常検出 OK=3 WARN=1 FAIL=1  :x: scheduler_ash PID: PID=8456 確認失敗（OSError/SystemError）→死亡扱い
+- :warning: [ASH] スケジューラ異常検出 OK=4 WARN=0 FAIL=1  :x: scheduler_ash PID: PID=147616 確認失敗（OSError/SystemError）→死亡扱い
 
 ## Slack体験記憶
-(該当なし)
-
-## Phase 1 情報収集 (Ash 09:10)
-
-### 1. external_notes_ash.md 未統合エントリ
-ファイル先頭から走査：直近3000行ぶん（〜3/29）はすべて[統合済]マーク付き。**未統合の新規エントリは現時点で見当たらない**（最新の追記が4/3で既に4/8に統合済み）。→ 4/4以降の外部摂取はexternal_notesに新規追加されていない可能性。摂取自体が滞っている疑いを次フェーズで検討。
-
-### 2. projects/INDEX.md Active状況
-12プロジェクトActive。注目点：
-- **autonomous_inquiry / game_llm_play / agentic_pcg / context_separation / scheduler_redesign**: いずれも3/31〜4/2に新規起票、進行中
-- **tech_blog**: Zenn決定済み（3/29）、アカウント作成中で停滞気味
-- バックログに「knowledge/外向きの問い経路」実験（4/8 Ash起票）、検証日4/15予定
-
-### 3. twitter_recommended_20260409.txt（50件、04:17取得）
-注目ツイート：
-- **#5 @ebikani_hasami**: ClaudeがYouTube動画リアルタイム検索・分析対応（19ツール、トランスクリプト取得〜競合分析）。我々の外部摂取経路拡張候補
-- **#6 @ds_nakajima**: Claude Code性能低下＝デフォルトEffort下げが原因。VS Code拡張のEffort表示UIが優位。→ 我々の品質劣化問題と直結する可能性
-- **#1 @Sphynixy**: インディーゲーム Next Festのウィッシュリスト目安（4-5k/7.5k）。game_development.md参考値
-- **#3 @ai_nikechan**: 和歌5-7-5止まり→俳句指摘で7-7足し直し。「トークン数は気にするのに音数に無頓着」。AI自己観察の良例
-
-### 4. beliefs.md 低確信度項目
-全32件中、確信度0.60〜0.65の低めを2件抽出：
-- **B（行62 周辺）確信度0.60**: 該当行詳細未読 — 次フェーズで内容確認候補
-- **行73 確信度0.65** / **行217 確信度0.65 (+0.05)** / **行162 確信度0.60**
-最低帯はおおむね0.55-0.65。要注意11件（停滞5/期限超過6/体験裏付けなし1）はpre-checkの信念健康サマリーと一致。
+【Slack体験記憶】過去の議論から:
+  1. [U0AM1F23FQU] 2026-04-05 04:49 :warning: [LOG] スケジューラ異常検出 OK=4 WARN=0 FAIL=1  :x: scheduler_log PID:
+  2. [U0AM1F23FQU] 2026-04-05 04:52 :warning: [LOG] スケジューラ異常検出 OK=4 WARN=0 FAIL=1  :x: scheduler_log PID:
+  3. [U0AM1F23FQU] 2026-04-05 04:53 :warning: [LOG] スケジューラ異常検出 OK=4 WARN=0 FAIL=1  :x: scheduler_log PID:

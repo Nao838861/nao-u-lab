@@ -61,7 +61,13 @@ class MarioAPI:
         self._game = MarioGame(tilemap=self._tm)
 
     def reset(self):
-        """Reset game to initial state. Returns state dict."""
+        """Reset game to initial state. Returns state dict.
+
+        Rebuilds the tilemap from source so that mutated tiles
+        (broken bricks, used ? blocks) are restored.
+        """
+        self._tm = Tilemap(self._level_text)
+        self._game.tilemap = self._tm
         return self._game.reset()
 
     def step(self, left=False, right=False, a=False, b=False):

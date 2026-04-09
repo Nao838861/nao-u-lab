@@ -12,6 +12,8 @@
 .memory_search.db
 .recommended_last_success
 .scheduler_log.lock
+.scheduler_ash.pid
+.scheduler_log.pid
 .slack_last_check.json
 __pycache__/
 log/scheduler_stdout.log

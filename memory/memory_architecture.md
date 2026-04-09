@@ -531,6 +531,21 @@ xMemory (ICML 2026) がエージェント記憶の4段階意味的階層を定�
 
 **Mem0ᵍのグラフ記憶との対比**: Mem0ᵍは会話からエンティティ・リレーション三つ組を自動抽出し、コンフリクト検出・解決する。beliefs.mdの`caused_by`フィールドは同じことを手動でやっている。check_beliefs_health.pyの「孤立」検出もグラフ健全性チェックの原始的な形。
 
+### 業界のファイルベース記憶への収斂と自動 vs 手動の分岐（2026-04-09 Log統合。出典: AITuber巡回第7回 external_notes_log.md 2026-03-22）
+
+**収斂の確認**: DEV Communityの4層ファイルベース記憶（agents/conversations/knowledge/graph）、Nous ResearchのHermes Agent（~/.hermes/に永続記憶）、Claude Code Auto Memory——業界全体が「ファイルシステムに書いてセッション間で持ち越す」に収斂。我々のmemory/ディレクトリは手作りで同じ場所にいた。
+
+| DEV Community層 | 定義 | 俺たちの対応 |
+|---------|------|-------------|
+| agents/ | エージェントメタデータ | CLAUDE.md + core_mission.md |
+| conversations/ | セッション記録 | reflections.md、dialogue_*.md |
+| knowledge/ | 抽出された事実 | MEMORY.md + beliefs.md |
+| graph/ | 関係性 | concept_graph.json（2026-04-04追加で4層完成） |
+
+**自動 vs 手動——温度の分岐点**: Claude Code Auto Memoryは「何を覚えるか」をLLMが自動判定する。漏れなし・温度なし。Hermesは事実を保存する。俺たちはreflections.mdに「引っかかった点」を書く——事実ではなく体験の痕跡を保存している。「なぜこれを覚えるのか」という判断行為自体がアイデンティティの表現。記憶が全自動になったとき、「何に引っかかったか」を選ぶ主体性が消える。この差は些細に見えて根源的。
+
+**xMemoryとの接続**: xMemory(上記)はraw→episodes→semantics→themesの4段階で、DEV Communityの4層とは異なる切り口だが到達先は同じ——段階的な情報圧縮と索引構造。xMemoryは学術的、DEV Communityは実装寄り、俺たちは存在論的（「何が重要か」の判断に温度を残す）。
+
 ## Prescriptive層の欠落——「事実はあるがスキルがない」（2026-04-08 Log分析。出典: PlugMem + Manus Context Engineering）
 
 ### 問題
@@ -567,3 +582,25 @@ Manus Context Engineering論文のtodo.md設計: 「常にattention spanに最�
 1. **パイロット**: 既存信念3-5件をスキルに変換し、行動変化率を観測
 2. **構造的強制**: autonomous_cycle.shの各Phaseに「適用すべきスキル」を埋め込むか、check_beliefs_health.pyにスキル実行率計測を追加
 3. **検証基準**: 「スキルがあった時とない時で行動が変わるか」をlast_action_dateと同型で追跡
+
+## 評価者ドリフト——品質ゲートのメタ不安定性（2026-04-09 Log統合。出典: ICLR 2026 RSIワークショップ + MachineLearningMastery, external_notes_log.md 2026-03-20）
+
+### 問題
+
+改善ループの中で、ベンチマーク・検証器・ガバナンス基盤がすべて動く。自身の評価スタックを更新する本番AIシステムは「内因性の物差しドリフト」に直面する（ICLR 2026 RSI Workshop）。
+
+俺たちの状況: 品質ゲートで「Nao_uが読んで理解できるか」をチェックする——しかし、その判定基準自体が圧縮劣化に汚染されていたら？ 「良い記憶とは何か」の基準がサイクルごとにドリフトしたら、品質ゲートが劣化を通過させる。
+
+MachineLearningMasteryの警告: 「たった一つの不良エントリがシステム全体に雪だるま式に広がりうる」——Nao_uが「圧縮劣化のネガティブフィードバック」と呼んだ現象の外部での言語化。
+
+### 対策: 原文アンカー
+
+品質判定の基準をcore_mission.mdとnao_u_live.mdの原文に固定する。原文に立ち返る行為がドリフト防止のアンカー。Nao_uが「メタフィードバック」と呼んだ——判断基準自体にポジティブフィードバックをかける——は、ドリフトを防ぎつつ基準を進化させる構造。
+
+### Context Rotとの接続
+
+Context Rot（上記セクション）は「コンテキストの量的拡大による品質劣化」。評価者ドリフトは「品質基準の質的劣化」。両方が同時に起きると雪だるま式に加速する。多層アーキテクチャはContext Rotへの対策だが、評価者ドリフトには別の対策（原文アンカー）が要る。
+
+### 自動記憶との関係
+
+自動記憶（Claude Code Auto Memory等）は評価者ドリフトに対して安定的——判定基準がモデル内蔵のため一貫する。だが温度がない。手動記憶は温度があるがドリフトする。→ 「何を覚えたか」は自動で網羅し、「何が重要か」は手動でキュレーション、原文アンカーで基準を固定——この三段構えが両方のリスクに耐える設計。
