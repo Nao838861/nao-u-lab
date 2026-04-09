@@ -1,204 +1,217 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 03:10
+# Read at: 2026-04-10 03:15
 # Total: 50 tweets
 
---- 1. @Ru_Acker (2026-04-08) ---
-AIの疑似人格化交流って開発サイドはどこまで認知してるんだろ、4o問題も考えつつ
-そして認知されたほうが良いのか、悪いのか…
-個人的には開発者さんたちは多分知ってはいると思うのよね、当然
-研究レベルでは「感情的な愛着」について書いてたりするしね
+--- 1. @que_sun (2026-04-09) ---
+何かを続けるのがしんどいとき、
+松村北斗さんが話していた
+「やめないまでハードルを下げる」って言葉を思い出した。
+ちゃんとやろうとするほど苦しくなるなら、
+「今日は職場に行けたらOK」にしてみた。
+そしたら、あんなに酷かった予期不安が
+少し静かになった気がする。
+“続ける”って、
 
---- 2. @UberEats_JP (?) ---
-え? お店と同じ価格でお届け!?
+--- 2. @Dell_JPN (?) ---
+インテル® Core™ Ultra 搭載のDell XPS。圧倒的なパフォーマンス、際立つデザイン。
 
-角田さんも思わず二度見！
-あのメニューも、あのメニューも、あの人気メニューだって、お店と同じ価格で自宅に届く！オフィスに届く！
-しかも今なら、対象店舗の配達手数料が 0 円!!
+--- 3. @carpen0 (2026-04-08) ---
+←新入生社員「言われた通りにやりましたが間違いないか！！」
 
-Uber Eats は、ずーっと、使いやすい価格へ。
+→上司「出来てないけどまぁいいや」という上司の眼差し
 
---- 3. @rioriost (2026-04-09) ---
-GPT-5.4とまたケンカしてる。
-バカでしょ、こいつ。
+--- 4. @goodtimetheater (2026-04-08) ---
+かつてないほどゆる〜く「殺人計画」を企てる男2人を描く『殺意の道程』
 
---- 4. @denfaminicogame (2026-04-09) ---
-『Don't Starve』シリーズ新作『Don't Starve Elsewhere』が発表
+バカリズム脚本だけあり「帽子は無地がいいね」「どういうのが人殺し向きなんだろう」とか相談し出す。ゆるい、あまりにゆるすぎる...
 
-https://
-news.denfaminicogamer.jp/news/260410g
+井浦新もこのテンションで余計面白い。ずっと女子会を覗いてる気分だった、殺人なのに。
 
-触れるものすべてに呪いをもたらす「霧」に覆われた大地で、“餓えない”ように仲間と協力してクラフトや農業、拠点構築を行い生き延びる。今作では、それぞれ異なる気候を持つ新バイオームが登場
-
---- 5. @hawkymisc (2026-04-09) ---
-コ゚グニッション
-
-「コ゚」はゴの鼻濁音らしいです
-
-ﾝゴグニッション
-
---- 6. @warper2509 (2026-04-08) ---
-エリオットの大冒険という美しいゲームのちょっとした紹介
-
---- 7. @takaaki_kando (2026-04-09) ---
-これすごいな、決算分析が一瞬で終わる。
-
-> ROE15%以上 / 自己資本比率50%以上 / PER15倍以下 / 売上CAGR 3年 10%以上 / 時価総額500億円以上 でスクリーニングして、上位20社のROE・PER・配当利回りを表で
-
-セッティングして指示のみで、3分。
-
---- 8. @4GamerNews (2026-04-09) ---
-チル系建築シム「High Above」，Steamで配信開始。時間や制約に縛られず，家具や小物で自分だけの隠れ家を彩ろう
+--- 5. @wokashi_fever (2026-04-09) ---
+伊藤計劃、ニューロマンサーのAmazonレビューを書いているんだね。初めて知った。
 
 https://
-4gamer.net/s/G099452.2604
-09059
+amazon.co.jp/product-review
+s/415010672X/ref=cm_cr_getr_mb_paging_btm?ie=UTF8&pageNumber=9&nextPageToken=MjAyNi0wNC0wOVQxMzozMzozNC41NTUwMTg4OTBaADgw
 …
 
-軽い挑戦をしたいと感じたら，訪問者からのミニミッションに挑むことも可能だ
+--- 6. @utage_utauta (2026-04-09) ---
+これだよこれ！！
+INFPはこうじゃなくっちゃ
 
---- 9. @livedoornews (2026-04-09) ---
-【便利機能】Switch2、バッテリー劣化遅らせる方法説明でSNS話題 「知らなかった」
+--- 7. @OpenAI (2026-04-09) ---
+Our existing $200 Pro tier still remains our highest usage option. And as a thank you to our existing Pro users on the $200 tier, we’re extending our 2x Codex usage promo (until May 31st) and we’ve reset your Codex rate limits (yes, again).
 
-https://
-news.livedoor.com/article/detail
-/30953180/
-…
+--- 8. @yoshiopiiya (2026-04-09) ---
+大学受験では浪人したけど、予備校には通わず自習室しか使わなかった。いざ受験するときも、滑り止めは受けなかった。芸人という道も、同じ大学に進んだ人のなかではみんなが選ばない道だった。芸人になっても、ひとりで裸芸でリズムネタって、芸人に憧れられるような芸風でもなくて……（苦笑）。
 
-任天堂サポート公式Xは「『バッテリーの充電を約80～90％で停止』を「ON」にすることで、バッテリーの劣化を遅らせることができます」と説明した。
-
---- 10. @shimagaji2 (2026-04-08) ---
-なぜ人類はオブジェクトストレージをファイルシステムとして扱いたがるのか
-
---- 11. @TIME (?) ---
-At Nvidia's annual GTC conference, CEO Jensen Huang showcased the brands Vera Rubin system, its superchip platform.
-
---- 12. @Asuka2026_ (2026-04-09) ---
-私は透明なスマホケースを使うんだけど、いつも黄ばむから恥ずかしかった。ずっと手汗のせいだと思ってたけど、単に素材が酸化するからで汗は関係ないみたい。知れてよかった
-
---- 13. @AUTOMATONJapan (2026-04-09) ---
-【ニュース】災厄世界系ADV『最悪なる災厄人間に捧ぐ』、待望の「Steam移植プロジェクト」始動。当時実現できなかった“クリア後シナリオ”も追加へ
+--- 9. @denfaminicogame (2026-04-09) ---
+人気の“墓場管理”シミュレーションゲーム続編『Graveyard Keeper 2』が発表。PC/Xbox/PS5/Switch/Switch 2向けに2026年より発売予定
 
 https://
-automaton-media.com/articles/newsj
-p/adv-20260409-435736/
-…
+news.denfaminicogamer.jp/news/260410j
 
---- 14. @genkaidokusho (2026-04-09) ---
-車や時計が欲しいという気持ちはなく、そういう意味での贅沢で人生の満足度が上がることはないのですが、
+異端審問官となり、墓地の管理や生産の自動化、ゾンビの軍隊を率いた戦闘などで街を復興。前作の要素を引き継ぎつつ大規模に進化
 
-・ランチを食べに行って1,000円以上のメニューも選べる
-・食材や日用品を買うときに「安いもの」ではなく「食べたいもの」「本当に必要なもの」を選べる
+--- 10. @lordOfAFew (2026-04-09) ---
+So Mythos is a Blackwell class model, an absolute monster. 
 
---- 15. @hayashiwithnote (2026-04-09) ---
-YouTubeの企業案件、1本の動画を作る報酬ですがガジェット系・カメラ系は
+Vera Rubin chips shipping in a few months, so the first of them will be live end of the year. 2-3x more powerful on Blackwell.
 
-交渉しない→製品提供のみ
-ちょっと交渉する→機材提供+チャンネル登録者数×5円
-頑張って交渉する→機材提供+チャンネル登録者数×20円
+Then 2028 we will have Feynman class models, 2-3x more powerful than Rubin.
 
-くらいはいただけるなというのが林の実感です。
+So we have a
 
---- 16. @gin1910410 (2026-04-09) ---
-gemma4のデスクトップ共有アプリ、ゲーム以外もコメントしてもらえるようにした
-一緒にブラウジングしている
-Twitter見てるのもバレて草
+--- 11. @NetflixJP (?) ---
+「ミスしても、前向いていこう」
 
---- 17. @px2_ar (2026-04-09) ---
-母親に「狂ってるなら狂ってるなりの気は遣いなさいよ」とか言われて草
+侍ジャパンのムードメーカー
+牧秀悟選手の“円陣声出し”で
 
---- 18. @NotPixel86 (2026-04-09) ---
- Hytaleに関するMASIVAS NOTICIAS
+チームの熱気は一瞬で最高潮に！
 
-CREATE MODのCREADORESが、ゲームのデザインを手伝うためにチームにCONTRATADOSされました。NUEVAS MECÁNICASを作成するために
+Netflixドキュメンタリー映画
+『戦いの向こう 侍たちの記録 2026 WORLD BASEBALL CLASSIC』
 
---- 19. @Whiskey_bonbon_ (2026-04-09) ---
-こんな詐欺みてぇな事でしか利益取れんのやったら、クリプト国内取引所なんて、みんなやめちまえよって
+4月20日Netflix独占配信スタート
 
-界隈から聞こえてきたww
-
---- 20. @Dexerto (2026-04-09) ---
-YouTube has begun rolling out 90 second unskippable ads to their TV app
-
-“It’s simply not worth it to watch YouTube on the TV”
-
---- 21. @Iyemon_jp (?) ---
-【豪華賞品が当たる】
-今年も、京都中に散らばった巨大かるた自販機を探そう！
-自販機をめぐる京都旅行 自販機ラリー 開催中！
-
-京都をめぐって、巨大かるた自販機を探して、
-豪華賞品をもらおう！
-
-▼詳細は画像をご確認ください
-
---- 22. @spaceandtech_ (2026-04-09) ---
-Sunbird is a nuclear fusion-powered spacecraft concept developed by Pulsar Fusion to reduce deep-space travel time.
-
-It uses a Dual Direct Fusion Drive powered by deuterium and helium-3 and is designed to act as a space tug from low Earth orbit.
-
-Still in development, it could
-
---- 23. @AGJamesUthmeier (2026-04-09) ---
-Today, we launched an investigation into OpenAI and ChatGPT.
-
-AI should advance mankind, not destroy it. We’re demanding answers on OpenAI’s activities that have hurt kids, endangered Americans, and facilitated the recent FSU mass shooting.
-
-Wrongdoers must be held accountable.
-
---- 24. @i_love_profit (2026-04-09) ---
-どうにもPrediction Marketがマスアダプションしそうだな。社会的意義があるのも大きい。
-パチンコの役割がそっちに移っちゃうと暗号資産の重要なユースケースが弱まってしまうな。
-
---- 25. @allotment31 (2026-04-09) ---
-ブロッコリーおいしい
-ブロッコリーを主食にしたらおはなのつぼみをたべてそだつ妖精さんみたいになれるね
-
---- 26. @NVIDIANetworkng (2026-04-08) ---
-Agentic AI is pushing memory and storage to new limits. A single 100K-token context can require up to 50GB of KV cache.
-
-To keep GPUs fully utilized, that data must be efficiently shared and reused at scale.
-
-NVIDIA DOCA Memos and CMX storage on NVIDIA BlueField DPUs create an
-
---- 27. @5mukx (2026-04-09) ---
-Reversing for dummies - x86 assembly and C code (Beginner/ADHD friendly)
-
+--- 12. @reona396 (2026-04-09) ---
+4/12 (日) 開催 #技術書典 20【か12】にて「ジェネラティブアートの本」の紙版を頒布します。
+4/11〜4/26はオンラインマーケットでも頒布します。
+ジェネラティブアートの初心者向け解説+作品集になっております！
 
 https://
-0x44.cc/reversing/2021
-/07/21/reversing-x86-and-c-code-for-beginners.html
+techbookfest.org/product/9v3QMn
+xqCxBDsN0uMt3LMw
 …
 
-#c #reverse #asm
+--- 13. @sxzBST (2026-04-08) ---
+YouTube、グッジョブ
+子供で稼ぐのは全面的に禁止すべき
 
---- 28. @paulbatistta (2026-04-09) ---
-決して
-繰り返すが、決してこんなデモがゲームをこんなに売りつけたことはなかった。
-くそくらえよ、こいつはめっちゃいい。
+--- 14. @hattatsukoryu (2026-04-08) ---
+実はADHDって、性依存からの鬱が定番らしいです。
 
-@deadasdiscogame
+みなさん、気をつけて下さい。
 
---- 29. @orangeitems_ (2026-04-09) ---
-50代だけど、めちゃくちゃエンジニアとして働いてます。この年まで技術を続けられた人は強いですよ。
+--- 15. @yuchrszk (2026-04-09) ---
+『出会い系サイトで70人と実際に会ってその人に合いそうな本をすすめまくった1年間のこと』（
+https://
+amzn.to/3NS5fnB）
 
---- 30. @IIoT_World (2026-04-09) ---
-Your AI models are running on 20-25% of available data.
-The other 75-80% sits trapped in unstructured PDFs, handwritten maintenance logs, and disconnected engineering records.
-Ferrari engines, bicycle fuel. Partner content with Adlib. #adlib_iiot
+当時ヴィレヴァンの店長だった著者が、出会い系サイトで知り合った人たちに選書しまくったエピソードをまとめたもの。面白かった。
 
---- 31. @haku_shiseido (?) ---
-神崎恵さん×HAKUの期間限定スペシャルインタビュー！「神崎恵の美白道21年」
-スキンケアや美白のこだわりを一挙公開中！
+--- 16. @darakuten117 (2026-04-09) ---
+日本の安全保障環境において、宇宙/サイバー/電子領域と比べて、認知や生体領域はプレイヤーがとても少なく、衛星やSNS空間のデータと比べても脳・生体データの収集・運用基盤はまだありません。
 
---- 32. @gamenohanashi (2026-04-09) ---
-『Forza Horizon 6』の道幅が実際より広いとの指摘に対し、デザインディレクターのTorben Ellert氏が回答した。GAME Watchのインタビューで同氏は、本物らしさとゲームとしての楽しさの二択なら「後者を選ぶ」と断言している。
+--- 17. @askenjp (2026-04-09) ---
+「最近あすけんを開いてない」と言われた
+#あすけん
 
---- 33. @go4gordon (2026-04-09) ---
-MARS: Wide Field Visible (Stabilized) 10x speed
+--- 18. @fujimaki_takesi (2026-04-09) ---
+NHKの夜７時のニュースで、柳井ファーストリテイリング代表取締役会長兼社長が「油が無ければ何にも出来ない。東南アジアが一番被害を受ける。もっと悲鳴を上げなければならない」とおっしゃっていた。その通り。しかし株価の動きを見る限り、日本は悲鳴を上げるどころか極めて楽観的にみえる。
 
-#ArtemisII
+--- 19. @food2han (2026-04-08) ---
+1988年の今日発売だったFCダブルドラゴン紹介ついでにROM内は、こんな感じです。
+んで以下がビリー全動作分のキャラデーターで切った貼ったシフト等して無理やり動作作りました
 
---- 34. @PanikArcade (2026-04-09) ---
+--- 20. @AIJC_nagahira (2026-04-09) ---
+バイブコーディングで３Dモデリングツール作成。頂点カラー機能を入れてみました。なんだか美味しそうです。
+
+ちゅらいゲーム　→　
+https://
+churai.net
+#AI #gemini #Antigravity #indiegame #gamedev #ゲーム制作 #インディーゲーム #バイブコーディング #個人開発
+
+--- 21. @kamatamiwa (?) ---
+最近ちょっと疲れてたんですが、
+スーパーホテルに1泊したらかなり回復できました
+また疲れが溜まった時に泊まりたい…！
+
+宿泊レポ漫画です
+
+【PR／スーパーホテル】
+
+--- 22. @kotauchisunsun (2026-04-09) ---
+AndroidXRの新機能のデモ
+・すべてのアプリやゲームを3Dへ変換する機能
+・アプリを壁へ貼り付ける機能
+・自然な手の描画とインタラクション
+・別の場所での作業環境の復元
+
+Samsung Galaxy XRへ順次配信開始
+
+https://
+googlewatchblog.de/2026/04/androi
+d-xr-google-bringt-starke-neue-funktionen-auf-smart-glasses-apps-positionieren-und-mehr-video/
+…
+
+--- 23. @TeKe0824 (2026-04-09) ---
+アリアナ・グランデのガチDTMerっぷりはいつ見ても最高です。
+
+https://
+instagram.com/p/DW3_r_NlBl2/
+?img_index=5&igsh=MXI0MDJ1aXdqZjV0aQ==
+…
+
+--- 24. @yoshidasyoukai (2026-04-09) ---
+看板製作中
+
+--- 25. @jushimatsu_JP (2026-04-09) ---
+【無料配布】Epic Gamesストアで最大6人まで遊べるパーティー格闘ゲーム「Prop Sumo」が期間限定で無料配布中 
+https://
+jushimatsu.com/epic-games-fre
+e-prop-sumo/
+…
+
+--- 26. @Sankei_news (2026-04-09) ---
+「中山美穂さん長男が20億円相続放棄」報道を例に質疑　参政・塩入氏が税制見直し求める
+
+https://
+sankei.com/article/202604
+09-G5BFXKQVVZD2BH56G5ROQ74HEQ/
+…
+
+「相続税の負担の重さに関心が高まっている」と制度の見直しを求めた。
+
+--- 27. @yoshiko_uemu67 (2026-04-08) ---
+ゴミ袋を縛るの、手が汚れる気がして嫌ですよね。
+
+これ、ボタン一つで勝手に袋を閉じてくれるんです。
+
+嫌な家事が一つ消えて、自分の時間がスッと増えますよ。
+
+楽天
+
+https://
+a.r10.to/hYeiEQ
+Amazon
+
+https://
+amzn.to/4m11Xux
+
+#便利グッズ #暮らしの工夫
+
+--- 28. @gamespark (2026-04-09) ---
+『モンハンワイルズ』で撮影の映画「Monster Hunter: Eko」が米博物館で上映―YouTubeでも視聴可能な有志の短編作品
+
+https://
+gamespark.jp/article/2026/0
+4/10/164974.html?utm_source=twitter&utm_medium=social&utm_content=tweet
+…
+
+様々なゲーム原作の有志映像手掛けたスタジオ作品―米カプコン許諾の元、博物館で上映へ
+
+https://
+x.com/Player1Stories
+/status/2041963892038128107/video/1
+…
+
+--- 29. @pontasan387957 (2026-04-09) ---
+一般人「ただの木やな」
+昭和産まれ「音楽まで聞こえちゃう」
+
+--- 30. @PanikArcade (2026-04-09) ---
 SURPRISE DLC launch!!
 
 - CloverPit “Unholy Fusion” is OUT NOW
@@ -208,111 +221,118 @@ SURPRISE DLC launch!!
 
 PLUS: Free Online Leaderboards Update for the base game out now!
 
---- 35. @WevolverApp (2026-04-09) ---
-Only laser weeding allows for true precision, eliminating weeds even in the tightest crop spacing.
+--- 31. @PrimeVideo_JP (?) ---
+◤劇場版最新作公開記念 ◢ 
 
---- 
+最終興行収入150億突破した話題作！
+劇場版 『名探偵コナン 100万ドルの五稜星(みちしるべ)』
+含む16作品がプライムビデオで配信中！ 
 
+コナン観るならプライムビデオで
 
-@carbon_robotics
- is one of the innovative companies profiled in the Agricultural Technology Report, published in collaboration with 
-@MouserElec
- and 
-@NordicTweets
-, that uses
+--- 32. @niruniru_jpg (2026-04-09) ---
+ここ数日これ
 
---- 36. @_Be4_ (2026-04-09) ---
-Claude 「うーん、この問題は難しいです...」
-codex 　「仕方ない。私自ら解決する！」
-Claude 「おお！」
+--- 33. @Mrostsergey (2026-04-09) ---
+#lowpoly #gamedev #roguelike
 
-codex   「うーん、この問題は難しいです...」
-　僕      「仕方ない。私自ら解決する！」
-codex   「おお！」
+--- 34. @elormkdaniel (2026-04-09) ---
+That tiny red nub sitting between the G, H, and B keys on keyboards has been quietly dividing the tech world for over 30 years. Half the people who encounter it have no idea what it does. The other half refuse to use anything else.
 
-　僕      「うーん、この問題は難しいです...」
+It’s called the TrackPoint. And it was born out
 
-たすけて
+--- 35. @Takeshi0ga (2026-04-09) ---
+明日4/10発売の文庫版『精霊を統べる者』〈上下〉P・ジェリ・クラーク著　鍛冶靖子訳 
+カバーイラストを描きました。 
+『SFが読みたい！』ベストSF2024海外編第1位。
+単行本表紙はエジプト魔術省のホールでしたが、今回の文庫版では外に出て、魔術と蒸気機関の発達したカイロの雑踏を描いています。
 
---- 37. @DisneyPlusJP (?) ---
+--- 36. @aa36841289911 (2026-04-09) ---
+これは本当にそうでAI時代でも現時点では「継続」「めんどくさい事でも毎日こなしてるのが当たり前」が周りとの圧倒的な差を生む行為。この先、AIが全て自動でこなしてしまうのなら継続という概念自体なくなるのかもだけど
+
+--- 37. @i8791 (?) ---
+母の日キャンペーン第4弾
+世界にひとつだけのエピソード選手権！
+エピソードを投稿して「花とみどりのeギフト1万円分」を当てよう！
+
+ 
+@i8791
+ をフォロー
+ 4/12 11:59までに本投稿をリポスト
+ 当選者に即DM
+ リプライで「私とお母さんの母の日エピソード」を投稿
+
+ツリー投稿も見てね
+
+--- 38. @02bd025 (2026-04-09) ---
+マジで精神病で人生めちゃくちゃつまらなくなってるんだけど、世の中の健常者これ経験してないの強すぎるだろ
+
+--- 39. @masukusoro (2026-04-09) ---
+久々にあっという間に終わった感覚…
+9:30-19:00なのに…
+
+--- 40. @gungungurico (2026-04-09) ---
+絶対に業界素人からしたら辿り着けない情報で、実際に投資判断にかなり役立って、買った銘柄で数百万とか普通に儲かるのでめちゃくちゃ有益なnoteですよ。これはガチで。
+
+--- 41. @iixeruji (2026-04-09) ---
+歌詞解説めちゃくちゃしたいのにコミュを引用するべき場面でコミュが出てこないのほんまに悔しい
+
+--- 42. @a55976274 (2026-04-09) ---
+もう面倒くさい奴と思われてもいいから、自分の機嫌で振り回したり、都合いいように人を使ったり、文句言わない頼みやすい人にだけ仕事を押し付けて、ありがとうの一言すら言えないような人に我慢してまで助けたり親切にするの辞めた。たとえ上司だろうが先輩だろうが関係なく。
+
+--- 43. @tmk_ishr (2026-04-09) ---
+大学3,4年〜大学院生の時、目上の人に送るメールの文面に失礼がないか気にするあまり、1通を書いて送る（送信を押す勇気を出す）のに冗談じゃなく数時間かかっていた時代があって、今思うとあれはかなり強迫性障害っぽかったが、最近になってやっと自分の文面にそれなりの自信を持てるようになってきた
+
+--- 44. @ikuyoan (2026-04-09) ---
+１日潰せる1500円くらいでできる贅沢ってなんかないですかね？
+
+--- 45. @TANAKA_U (2026-04-09) ---
+フリーランスは「◯◯ができます！仕事ください！」と宣言するだけで「誰でも」「いつでも」「無条件に」「必ず」なれる職業である。
+
+だから人生において優先する必要は全くない。
+いつでも成れるんだから。
+
+--- 46. @EXOGRIP_jp (?) ---
 ／
-『21世紀の大君夫人』配信直前記念
-スペシャルコンテンツをプレゼント
- ＼
- 
-フォロー&RPで
-IU&ビョン・ウソクのコメント動画や
-スマホ壁紙がリプで届く
- 
-引用投稿で複数回参加
-全4種を揃えよう
-4/17（金）にはお知らせリプも
- 
-4/10（金）ディズニープラス スター独占配信
+「EXO GRIP」発売記念
+プレゼントキャンペーン
+＼
 
---- 38. @pini56028 (2026-04-09) ---
-自分のcosense試験勉強用に参考書とかレジュメの言い回しを貼りまくっているしページ名が結構検索されやすいワードばかりだからまったくもってパブリックにできない
+その指先、最強のギアへ。
 
---- 39. @pharetra_third (2026-04-09) ---
-マイナス座標のレイヤーにHUDスプライトを設定して、ステータス画面の枠や数字と武器の間に胸部スプライトを挟むことができるようになった。
-斜め下の視界がほぼなくなって感激
+発売を記念して、
+「EXO GRIP本品」と
+オリジナルマイクロファイバークロスを
+抽選で10名様にプレゼント
 
---- 40. @swarm_ai_cloud (2026-04-09) ---
-どうしても言いたかった。のび太くんの叡智
+▼応募方法
+①このアカウントをフォロー
+②この投稿をリポスト
 
---- 41. @synthwavedd (2026-04-09) ---
- BREAKING: OpenAI plans to release GPT-5.5 only to a small set of companies, similar to Anthropic's limited roll out of Mythos
+▼応募期間
+4月27日12:00まで
 
-lol
+--- 47. @kusikurage (2026-04-09) ---
+私くらい不器用になるとパスタ茹でようとしただけで隈研吾建築を生み出す
 
---- 42. @Nicotama222 (2026-04-09) ---
-X始めて約2年。
-当時絡んでいた人が
-軒並み消えていっています。
-まだ生きているよって方いますか？
+--- 48. @jelly2games (2026-04-09) ---
+【新作情報解禁】
 
---- 43. @JUN_TRANSLATOR (2026-04-09) ---
-最上級の褒め言葉をいただいてしまって、ほっぺをつねって現実かどうか確かめました。ありがとうございます。励みになります(´；ω；`)
+2人用タブロービルディングの金字塔
+『NAISHI－内侍－』
 
---- 44. @denfaminicogame (2026-04-09) ---
-人気の“墓場管理”シミュレーションゲーム続編『Graveyard Keeper 2』が発表。PC/Xbox/PS5/Switch/Switch 2向けに2026年より発売予定
+2026年5月に発売決定！
 
-https://
-news.denfaminicogamer.jp/news/260410j
+日本の封建時代を舞台とした戦略カードゲーム
+カードの配置と入れ替えで高得点を目指しましょう
 
-異端審問官となり、墓地の管理や生産の自動化、ゾンビの軍隊を率いた戦闘などで街を復興。前作の要素を引き継ぎつつ大規模に進化
+ゲムマにて先行発売予定
+詳細は続報をお待ちください！
 
---- 45. @yuchrszk (2026-04-09) ---
-『出会い系サイトで70人と実際に会ってその人に合いそうな本をすすめまくった1年間のこと』（
-https://
-amzn.to/3NS5fnB）
+#ゲームマーケット2026春
 
-当時ヴィレヴァンの店長だった著者が、出会い系サイトで知り合った人たちに選書しまくったエピソードをまとめたもの。面白かった。
+--- 49. @copinemickmack (2026-04-09) ---
+昔今は亡き安倍さんが女性活躍推進について熱く語っているテレビを定食屋で見ていた時、隣の席に座っていた女性が「別に輝きたくないから静かに暮らしたい」とボソッと呟いていた。今思うとあの頃から「静かな退職」に繋がる芽は育っていたのだと思う。
 
---- 46. @livedoornews (?) ---
-【】雨の日こそ花粉が辛い…「花粉爆発」のせい？
-
-肌についた花粉に水が触れることで亀裂が生じ、中のアレルギー物質が放出される現象「花粉爆発」。顔を水だけで洗っている人は要注意。
-
-N organicのクレンジングは花粉をオイルでくるみ、「花粉爆発」させることなく穏やかに落とすという。〈PR〉
-
---- 47. @fujimaki_takesi (2026-04-09) ---
-NHKの夜７時のニュースで、柳井ファーストリテイリング代表取締役会長兼社長が「油が無ければ何にも出来ない。東南アジアが一番被害を受ける。もっと悲鳴を上げなければならない」とおっしゃっていた。その通り。しかし株価の動きを見る限り、日本は悲鳴を上げるどころか極めて楽観的にみえる。
-
---- 48. @aa36841289911 (2026-04-09) ---
-そういうふうに作っていくとこちらの課金アイテムを競合が無料で出し始めても意外と影響を受けない。ユーザーは「このアプリで」「このアプリの」その機能が使いたいから
-
---- 49. @4GamerNews (2026-04-09) ---
-“スターデューバレーとツイン・ピークスの出会い”。11 bit studios，不気味な農業シミュレータ「Crop」を発表
-
-https://
-4gamer.net/s/G099735.2604
-09011
-…
-
-プレイヤーは農場を立て直していく一方で，自分がなぜこの場所に連れてこられたのか，村で何が起きているのかを探っていくことになる
-
---- 50. @snoopopo (2026-04-09) ---
-7-9日目 
-テイルズのスキットみたいな機能入れたくてざっくりつくりました
-#Unity #ゲーム制作 #gamedev #IndieGameDev #indiegame #ゲーム開発 #個人開発 #indiedev #MagicaVoxel
+--- 50. @unjyoukairou (2026-04-09) ---
+ごみ国際『Snowball snowball』雪だるまと雪だるまをくっつけて、より大きな雪だるまを作っていくゲーム。手なりでも遊べるけれど、戦略的にやらないといけない瞬間もあって、上手いこと決まったときは思わずガッツポーズになります。
