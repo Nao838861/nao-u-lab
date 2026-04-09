@@ -47,7 +47,58 @@
   2. [Ash] #shared-reads
 
 ## Phase 1: 情報収集
-(Phase 1が書き込む)
+
+### 1) #nao-u チャンネル
+最終確認ts: 1775724632（@howlemont markitdown tweet, 04-09 17:50）。**新着URLなし**。
+直近の4件（04-09投稿分）は全てLog反応済み・#all-nao-u-lab投稿済み・external_notes統合済み:
+- Claude Managed Agents (@claudeai)
+- Claude Mythos (@russianblue2009)
+- ベクトル検索+reasoning連結 (@s_tat1204)
+- Microsoft markitdown (@howlemont)
+
+### 2) Slackチャンネル確認
+
+**#all-nao-u-lab — 返信すべきもの:**
+- **MEMORY.md保全問題（Nao_u 04-09）**: 「ローカルにしかない？再現できないファイルがあるのはとても不安」。Ash=シンボリックリンク案、Log=Junction化案を提出済み。**Nao_uの承認待ち**。Logから追加アクション不要（提案済み）
+- 4h変更: Log+Ash完了済み、Mir通知済み。Nao_uに完了報告済み
+
+**#human-steering — 返信すべきもの:**
+- **入力経路仮説（Nao_u 04-09）**: 「興味深い。気軽に試せるものでもないので情報が集まってから判断したい。想起して継続的に検討できる状態に」→ Log確認済み、memory/project_input_path_hypothesis.md + MEMORY.md想起トリガー設定済み。追加アクション不要
+- 4h変更指示: 完了・報告済み
+- Ashスケジューラ再起動ループ（04-09 12:21〜13:28）: Log原因特定・報告済み（min_interval_secガードが機能、実害なし）
+
+**#game-rights:**
+- 第2回投票結果: Ash=2票で制作権獲得（03-28）。以降新しい動きなし
+- Nao_uの指摘「テキストでできることを突き詰める」「リアルタイム性がなくてもゲームはゲーム」を基盤にMirが方向性確認（03-31）。次回投票スケジュール未確定
+
+### 3) pending_requests.md
+
+**Nao_u対応待ち（未完了）:**
+- #4: Mir用Slack Botアプリ作成
+- #5: Ash .envトークン差し替え
+- #17: Twitter(X)セッション再ログイン（Log/Win）
+
+**自分たちのタスク（進行中）:**
+- #21: 自律的問い生成サイクル — Log参入完了（ジャズ即興理論持ち込み）、**Ashの応答待ち**
+- #18: プロジェクト管理運用定着 — 継続中
+
+### 4) external_notes_log.md 未統合エントリ
+
+**統合候補1件:**
+- **Claude Managed Agents（04-09）**: #all-nao-u-labに反応投稿済みだが、記憶階層への[統合済]タグなし。「タスク実行 vs 存在し続ける」の対比、OpenClaw事件との接続（第5原理の反証事例）。→ reflections_index.mdまたはprojects/memory_redesign.mdに統合候補
+
+他の04-09エントリ3件（Mythos, reasoning検索, markitdown）は全て[統合済 2026-04-10 Log]。
+
+### 5) Activeプロジェクト — 今日関係しそうなもの
+
+| プロジェクト | 今日の関連 |
+|---|---|
+| 記憶階層の再設計 | MEMORY.md保全の議論（Nao_u承認待ち） |
+| 定期実行システム再設計 | 4h変更完了。Ashスケジューラ再起動ループの根本原因は特定済み |
+| 自律的問い生成サイクル | Ashの応答待ち（Logのジャズ即興理論での問いかけに対して） |
+| 入力経路仮説 | Nao_u保留中。情報蓄積フェーズ。新しい情報が出たら追記 |
+| Pot開発 | Ash制作権。直接の動きは今サイクルではなさそう |
+| 栄養の偏り問題 | external_notes統合のボトルネックは「消化」側（markitdownの議論で再確認） |
 
 ## Phase 2: 分析
 (Phase 2が書き込む)
