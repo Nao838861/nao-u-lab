@@ -1,327 +1,318 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 03:05
+# Read at: 2026-04-10 03:10
 # Total: 50 tweets
 
---- 1. @kanair_jp (2026-04-09) ---
-今日はあとでAnthropicに行ってくる。どんなところだろう。
+--- 1. @Ru_Acker (2026-04-08) ---
+AIの疑似人格化交流って開発サイドはどこまで認知してるんだろ、4o問題も考えつつ
+そして認知されたほうが良いのか、悪いのか…
+個人的には開発者さんたちは多分知ってはいると思うのよね、当然
+研究レベルでは「感情的な愛着」について書いてたりするしね
 
---- 2. @futtou_ntv (?) ---
-／
-沸騰ワード10２時間SP
-４月１０日(金)よる７時！
-＼
+--- 2. @UberEats_JP (?) ---
+え? お店と同じ価格でお届け!?
 
-◉宝塚受験に人生をかける少女たち
-　礼真琴が民放バラエティー初出演！
-　人生をかけた熱き挑戦に
-　スタジオからエールを送る
+角田さんも思わず二度見！
+あのメニューも、あのメニューも、あの人気メニューだって、お店と同じ価格で自宅に届く！オフィスに届く！
+しかも今なら、対象店舗の配達手数料が 0 円!!
 
-◉蒙古タンメン中本に取り憑かれた畑芽育
-　畑芽育オリジナル味噌卵麺を作る！？
+Uber Eats は、ずーっと、使いやすい価格へ。
 
---- 3. @hiro9aco (2026-04-09) ---
-経理のためのClaudeCode、久しぶりに書きました。もう初心者も一緒に頑張ろう！みたいな気持ちが失せています。同じくらい触ってる人と交流できたら嬉しいし、気合い入れて追いつきたいぞという人の参考にもなればいいかなぁくらいに思っています。
+--- 3. @rioriost (2026-04-09) ---
+GPT-5.4とまたケンカしてる。
+バカでしょ、こいつ。
 
---- 4. @oikon48 (2026-04-09) ---
-Codex 使用量リセットしない方が珍しくなってきた
-
---- 5. @CNBC (2026-04-09) ---
-Meta commits to spending additional $21 billion with CoreWeave as AI costs keep rising
-
---- 6. @handa_desu_web (2026-04-09) ---
-応用情報、基本情報持ってます。
-個人開発でフロントエンド、バックエンド触ってます。
-インフラ周りも勉強してます。
-上流とかPMO案件でも全然オッケーです。
-
-エンジニア3年目ですが、今だ案件にアサインされたことがなく研修をやってます。どういうことですか
-
---- 7. @genkaidokusho (2026-04-09) ---
-「人生のセーフティネット」を決めておくと、ラクに生きられるなと思います。
-
---- 8. @ipusiron (2026-04-09) ---
-集中力が切れたので、今日の仕事終わり
-
---- 9. @r_shioya (2026-04-09) ---
-学生さんが頑張ってくれて、うちの研究室で作ってる OoO スーパースカラの CPU からも Linux のブートメッセージが出始めたんだけど、こう言うの本当すごい勢いで作れるようになってきてるね
-
---- 10. @yachimat_manga (2026-04-09) ---
-昨日のWanさんでの講演ですが、表示回数しか見えないものの、７４０万回表示された模様！
-
-実際に見てくれた人が0.1％だったとしても7000人だからまあとにかく沢山見てもらえてうれしかったです。
-
---- 11. @seal_jjk (?) ---
-しーるくんがクスっと笑える雑学をお届け♪
-
-タップしてフォロー！
-
---- 12. @M_neco7 (2026-04-09) ---
-Robloxで1年かけて作ったゲームを今月やっとリリースできました！
-それに伴って、Hypolygon、ゲームについて、僕自身についてAsciiさんからガッツリインタビューしていただいたので、良ければ読んでみてください
-
-今週、正式発表のトレーラーも公開するので楽しみにしててください！
-
---- 13. @0xSero (2026-04-09) ---
-Do you understand what this means? 
-
-For the first time, an Open Weight models is #1 on CyberSecutity. 
-
-Sure there’s Mythos but we don’t have it :p
-
-Don’t let them trick you
-
---- 14. @cgtwts (2026-04-09) ---
-Anthropic CEO: 
-
-“software engineering will be FULLY automated in 12 months” 
-
-software engineers are cooked.
-
---- 15. @shike_cosmicXR (2026-04-09) ---
-こういうふうに使える形で出せるエンジニア憧れるわ
-
---- 16. @astro_reid (2026-04-09) ---
-Out here playing with Earth-Moon gravity like it is a toy and seeing things that are beautiful beyond comprehension.
-
---- 17. @PajosTM (2026-04-08) ---
-I was in class last week. One of my students raised their hand mid-lecture and asked something that stopped me for a second.
-
-"Why is every AI tool built on Python? C++ is faster. Rust is faster. Even Java is faster. So why Python?"
-
-Honestly it’s a fair question. And the answer
-
---- 18. @kirawontmiss (2026-04-09) ---
-NASA astronaut dropped one of the hardest quotes ever
-
---- 19. @UminekoStudio (2026-04-08) ---
-PixVerse C1の開始フレーム画像と女性2人、ジープ、サメのキャラシートの計5枚を参照させた15秒のマルチショット映像です。
-V6じゃないんですｗ。もう新しいモデルのC1が出ちゃいました！いかがでしょう？
-
-#PixVerseC1
-
-@PixVerse_
-
---- 20. @btcfx295 (2026-04-09) ---
-【速報】Hyperliquidに日経平均が上場
-
-■ ティッカー: JP225
+--- 4. @denfaminicogame (2026-04-09) ---
+『Don't Starve』シリーズ新作『Don't Starve Elsewhere』が発表
 
 https://
-app.hyperliquid.xyz/trade/xyz:JP225
+news.denfaminicogamer.jp/news/260410g
 
-24時間365日触れるのはありがたすぐる!!
-現在のFunding Rateは-0.0267% (年換算: -234.1%)です
+触れるものすべてに呪いをもたらす「霧」に覆われた大地で、“餓えない”ように仲間と協力してクラフトや農業、拠点構築を行い生き延びる。今作では、それぞれ異なる気候を持つ新バイオームが登場
 
---- 21. @Beastfront_JP (?) ---
-◤ ═══  MISSION：START  ═══ ◢
-【  警告：全戦域、巨獣の出現を確認  】
+--- 5. @hawkymisc (2026-04-09) ---
+コ゚グニッション
 
-全指揮官へ告ぐ。巨獣戦線、正式サービス開始を宣言する。
-拠点を築き、巨獣を捕獲し、王国を拡大せよ！ 勝利の栄光は、緻密な戦略を練る者の手に。
+「コ゚」はゴの鼻濁音らしいです
 
-記念キャンペーン
+ﾝゴグニッション
 
---- 22. @alexandr_wang (2026-04-09) ---
-Meta AI is up to #6 in the App Store overnight, and still growing :)
+--- 6. @warper2509 (2026-04-08) ---
+エリオットの大冒険という美しいゲームのちょっとした紹介
 
-Also who knew the 7-Eleven app was so popular
+--- 7. @takaaki_kando (2026-04-09) ---
+これすごいな、決算分析が一瞬で終わる。
 
---- 23. @SuiWorks_dtp (2026-04-09) ---
-絶賛取り置き予約受付中です！！
+> ROE15%以上 / 自己資本比率50%以上 / PER15倍以下 / 売上CAGR 3年 10%以上 / 時価総額500億円以上 でスクリーニングして、上位20社のROE・PER・配当利回りを表で
 
---- 24. @ai_jitan (2026-04-09) ---
-「人探し」という業務は、
-もうAIに任せる時代です。
+セッティングして指示のみで、3分。
 
-競合調査、インフルエンサー探し、
-採用候補のリストアップ…
+--- 8. @4GamerNews (2026-04-09) ---
+チル系建築シム「High Above」，Steamで配信開始。時間や制約に縛られず，家具や小物で自分だけの隠れ家を彩ろう
 
-僕はこれ全部、
-世界初の人探しAI「Lessie AI」（
-@lessie_ai
-）に
-丸投げしています。
-
-検索からスコアリング、
-連絡文の作成まで一気通貫。
-
-このツールの衝撃を
-
---- 25. @L8wk3Nj2iRLJNBc (2026-04-09) ---
-unity活 パラセール作りました
-・gravityScaleを下げると落下速度が一定でなくなってしまうので、一定速度で落ちるようにしました。
-・パラセール時、移動速度を下げようとしたのですが、爽快感が無く気持ち悪かったので、使用時は移動速度を若干早くしました
-
---- 26. @InfluxDB (2026-04-09) ---
-Getting started with #InfluxDB takes less than 10 minutes! 
-
-Install InfluxDB 3 Core, set up Telegraf to collect metrics, and query your time series data with SQL. 
-
-Everything you need to go from zero to running queries. 
-
---- 27. @hinakoromot219 (2026-04-09) ---
-なんか原油戻してますね。
-昨日の下げが仕掛けっぽくて買いの投げだと思うので、やっぱり上がりたがってる。
-商品は6月くらいまで上げるイメージあるので理由つけてあげるだろうな。
-海峡の開放1日も続きませんでしたね
-明日以降も原油高でも日経上がるのか？注目してます
-
---- 28. @Gomachan_2021 (2026-04-09) ---
-「回転行列便覧: 現代スクリュー理論への第1歩」という本を書きました。
-回転行列の全てが詰まってます。
-
- #技術書典 20にオンライン参加するので興味ある方はぜひ
-
---- 29. @Discord_Lies (2026-04-09) ---
-And yet when I want to do literally anything on my car's touchscreen, it takes 5 business days to respond
-
---- 30. @AeroSociety (2026-04-08) ---
-Know someone breaking new ground in aviation, engineering, space or sustainability?
-
-Nominate them for the Royal Aeronautical Society’s 2026 Honours, Medals and Awards.
-
-Closes 30 April 2026
-
-Nominate here 
 https://
-aerosociety.com/get-involved/r
-ecognition/submit-your-nomination/
+4gamer.net/s/G099452.2604
+09059
 …
 
---- 31. @NISSEI_CREMIA (?) ---
-＼フォロー＆リポストで参加／
+軽い挑戦をしたいと感じたら，訪問者からのミニミッションに挑むことも可能だ
 
-おいしい料理とお酒が集まるイベント
-dancyu祭2026 で
-クレミア ザ 抹茶ミックスが
-無料で食べられる！
+--- 9. @livedoornews (2026-04-09) ---
+【便利機能】Switch2、バッテリー劣化遅らせる方法説明でSNS話題 「知らなかった」
 
-【参加方法】
-① 本アカウントをフォロー
-② 本投稿をリポスト
-③ 会場のCREMIAブースで
-　リポストした投稿画面をご提示ください
+https://
+news.livedoor.com/article/detail
+/30953180/
+…
 
-4/11（土）・4/12（日）
+任天堂サポート公式Xは「『バッテリーの充電を約80～90％で停止』を「ON」にすることで、バッテリーの劣化を遅らせることができます」と説明した。
 
---- 32. @XFreeze (2026-04-09) ---
-Every tiny dot you see here is a star, most with their own planets countless hiding in the dark
+--- 10. @shimagaji2 (2026-04-08) ---
+なぜ人類はオブジェクトストレージをファイルシステムとして扱いたがるのか
 
-In all this vastness, we might be the only conscious minds in this entire Universe
+--- 11. @TIME (?) ---
+At Nvidia's annual GTC conference, CEO Jensen Huang showcased the brands Vera Rubin system, its superchip platform.
 
-If consciousness is really that rare, it makes us the most precious thing in the universe
+--- 12. @Asuka2026_ (2026-04-09) ---
+私は透明なスマホケースを使うんだけど、いつも黄ばむから恥ずかしかった。ずっと手汗のせいだと思ってたけど、単に素材が酸化するからで汗は関係ないみたい。知れてよかった
 
-We have
+--- 13. @AUTOMATONJapan (2026-04-09) ---
+【ニュース】災厄世界系ADV『最悪なる災厄人間に捧ぐ』、待望の「Steam移植プロジェクト」始動。当時実現できなかった“クリア後シナリオ”も追加へ
 
---- 33. @VickiCocks15 (2026-04-09) ---
-All night long, crews have been removing their safety barriers, scaffolding etc from the inner launch mount, with trusses being lowered on lifts and bucket loads of smaller stuff being removed by crane.
+https://
+automaton-media.com/articles/newsj
+p/adv-20260409-435736/
+…
 
-@LabPadre
+--- 14. @genkaidokusho (2026-04-09) ---
+車や時計が欲しいという気持ちはなく、そういう意味での贅沢で人生の満足度が上がることはないのですが、
 
---- 34. @xAIMemphis (2026-04-09) ---
-xAI is committed to building a state-of-the-art water recycling plant in Memphis. This plant will protect billions of gallons of water each year. 
+・ランチを食べに行って1,000円以上のメニューも選べる
+・食材や日用品を買うときに「安いもの」ではなく「食べたいもの」「本当に必要なもの」を選べる
 
-The team is currently prioritizing other more immediate projects at the site but our plans to build the water plant have not
+--- 15. @hayashiwithnote (2026-04-09) ---
+YouTubeの企業案件、1本の動画を作る報酬ですがガジェット系・カメラ系は
 
---- 35. @ravikiran_dev7 (2026-04-09) ---
-No disrespect to Linus Torvalds, but this guy is the greatest geek alive 
+交渉しない→製品提供のみ
+ちょっと交渉する→機材提供+チャンネル登録者数×5円
+頑張って交渉する→機材提供+チャンネル登録者数×20円
 
-Created UNIX in 1971 when he was 28 years old.
+くらいはいただけるなというのが林の実感です。
 
-Created Go in 2009 when he was 66 years old
+--- 16. @gin1910410 (2026-04-09) ---
+gemma4のデスクトップ共有アプリ、ゲーム以外もコメントしてもらえるようにした
+一緒にブラウジングしている
+Twitter見てるのもバレて草
 
-He also developed the B programming language (which led to C), created UTF-8 encoding (making international
+--- 17. @px2_ar (2026-04-09) ---
+母親に「狂ってるなら狂ってるなりの気は遣いなさいよ」とか言われて草
 
---- 36. @ai_hakase_ (2026-04-09) ---
-ComfyUIの新次元！リアルタイム再ライティングと独自スケジューラ制御
-  
-AIと対話しながらコードを組む「vibecoding」により、強力なカスタムノードが誕生しました！
+--- 18. @NotPixel86 (2026-04-09) ---
+ Hytaleに関するMASIVAS NOTICIAS
 
- リアルタイム再ライティング
+CREATE MODのCREADORESが、ゲームのデザインを手伝うためにチームにCONTRATADOSされました。NUEVAS MECÁNICASを作成するために
 
---- 37. @UNIQLO_JP (?) ---
-日本発、世界T。
+--- 19. @Whiskey_bonbon_ (2026-04-09) ---
+こんな詐欺みてぇな事でしか利益取れんのやったら、クリプト国内取引所なんて、みんなやめちまえよって
 
-この一枚にユニクロのテクノロジーをつめこんで。
-触れた瞬間からさらりと涼しく、汗でベタつかない、エアリズムの心地よさ。一枚でも、重ね着でも、スタイル自在の完成されたシルエット。
-着心地も、使い心地も、26の国と地域で愛されるサイコーの気持ちよさを、あなたに。
+界隈から聞こえてきたww
 
---- 38. @gin1910410 (2026-04-09) ---
-AIが出してくれたもので「違う」「足りない」って思うところが自分の癖とかこだわりなんすよね
+--- 20. @Dexerto (2026-04-09) ---
+YouTube has begun rolling out 90 second unskippable ads to their TV app
 
---- 39. @Gao_AR (2026-04-09) ---
-文字表示の(ディディディディ)
-「音」がなんか
-魂入っている気がして
-@GOROman
+“It’s simply not worth it to watch YouTube on the TV”
 
---- 40. @dramaricic (2026-04-09) ---
-Claude: 
-I fixed all files, they are bug free.
+--- 21. @Iyemon_jp (?) ---
+【豪華賞品が当たる】
+今年も、京都中に散らばった巨大かるた自販機を探そう！
+自販機をめぐる京都旅行 自販機ラリー 開催中！
 
-Me:
-Log in button doesn't work.
+京都をめぐって、巨大かるた自販機を探して、
+豪華賞品をもらおう！
 
-Claude:
-You're right! Let me check files....Checking...
+▼詳細は画像をご確認ください
 
-You've hit your limit...
+--- 22. @spaceandtech_ (2026-04-09) ---
+Sunbird is a nuclear fusion-powered spacecraft concept developed by Pulsar Fusion to reduce deep-space travel time.
 
---- 41. @alz_zyd_ (2026-04-09) ---
-Lol firing Yann, hiring Wang, and setting a couple billion dollars on fire poaching talent seems to have actually worked for building a decent model
+It uses a Dual Direct Fusion Drive powered by deuterium and helium-3 and is designed to act as a space tug from low Earth orbit.
 
---- 42. @swarm_ai_cloud (2026-04-09) ---
-そういえば「個人開発」と言うキーワードがXでTL上位に優先されている雰囲気があるので、これ狙い目なのではと思っている。
+Still in development, it could
 
---- 43. @kimmonismus (2026-04-09) ---
-Meta's new model could pose a threat to only one company: OpenAI.
+--- 23. @AGJamesUthmeier (2026-04-09) ---
+Today, we launched an investigation into OpenAI and ChatGPT.
 
-OpenAI currently has 900 weekly users, 95% of whom are still in the free tier. It's arguably the best model for the average user, which is why most people use ChatGPT in their daily lives.
+AI should advance mankind, not destroy it. We’re demanding answers on OpenAI’s activities that have hurt kids, endangered Americans, and facilitated the recent FSU mass shooting.
 
-With Spark, Meta has
+Wrongdoers must be held accountable.
 
---- 44. @masahirochaen (2026-04-09) ---
-Japan IT Week【Claude Code実践講座】初日から立ち見の大盛況でした
+--- 24. @i_love_profit (2026-04-09) ---
+どうにもPrediction Marketがマスアダプションしそうだな。社会的意義があるのも大きい。
+パチンコの役割がそっちに移っちゃうと暗号資産の重要なユースケースが弱まってしまうな。
 
-250名以上集まって会場パンパン
-正直ここまでとは思ってなかったです…
+--- 25. @allotment31 (2026-04-09) ---
+ブロッコリーおいしい
+ブロッコリーを主食にしたらおはなのつぼみをたべてそだつ妖精さんみたいになれるね
 
-話したのはこのあたり
+--- 26. @NVIDIANetworkng (2026-04-08) ---
+Agentic AI is pushing memory and storage to new limits. A single 100K-token context can require up to 50GB of KV cache.
 
-・Claude Codeって結局何ができるの？
-・組織にどう導入していくべき？
-・ChatGPTやCopilotとの使い分け
-・本当に役立つ活用事例
+To keep GPUs fully utilized, that data must be efficiently shared and reused at scale.
 
---- 45. @orangeitems_ (2026-04-09) ---
+NVIDIA DOCA Memos and CMX storage on NVIDIA BlueField DPUs create an
+
+--- 27. @5mukx (2026-04-09) ---
+Reversing for dummies - x86 assembly and C code (Beginner/ADHD friendly)
+
+
+https://
+0x44.cc/reversing/2021
+/07/21/reversing-x86-and-c-code-for-beginners.html
+…
+
+#c #reverse #asm
+
+--- 28. @paulbatistta (2026-04-09) ---
+決して
+繰り返すが、決してこんなデモがゲームをこんなに売りつけたことはなかった。
+くそくらえよ、こいつはめっちゃいい。
+
+@deadasdiscogame
+
+--- 29. @orangeitems_ (2026-04-09) ---
 50代だけど、めちゃくちゃエンジニアとして働いてます。この年まで技術を続けられた人は強いですよ。
 
---- 46. @googlejapan (?) ---
-言葉にしづらい想いを歌に。 Gemini アプリの Lyria で音楽生成を試してみよう
+--- 30. @IIoT_World (2026-04-09) ---
+Your AI models are running on 20-25% of available data.
+The other 75-80% sits trapped in unstructured PDFs, handwritten maintenance logs, and disconnected engineering records.
+Ferrari engines, bicycle fuel. Partner content with Adlib. #adlib_iiot
 
-サウンドオンで是非！
+--- 31. @haku_shiseido (?) ---
+神崎恵さん×HAKUの期間限定スペシャルインタビュー！「神崎恵の美白道21年」
+スキンケアや美白のこだわりを一挙公開中！
 
---- 47. @go4gordon (2026-04-09) ---
+--- 32. @gamenohanashi (2026-04-09) ---
+『Forza Horizon 6』の道幅が実際より広いとの指摘に対し、デザインディレクターのTorben Ellert氏が回答した。GAME Watchのインタビューで同氏は、本物らしさとゲームとしての楽しさの二択なら「後者を選ぶ」と断言している。
+
+--- 33. @go4gordon (2026-04-09) ---
 MARS: Wide Field Visible (Stabilized) 10x speed
 
 #ArtemisII
 
---- 48. @nannann2002 (2026-04-09) ---
-【動物園ウォーズのすごいところ】
+--- 34. @PanikArcade (2026-04-09) ---
+SURPRISE DLC launch!!
 
-500円なのに
-38.6時間も遊ばれてる
+- CloverPit “Unholy Fusion” is OUT NOW
+- Merge charms in the surgery machine to create FUSION CHARMS, mega combo time!!
+- 30 fusion charms, 11 new charms, 7 memory cards
+- a new ending??
 
-#動物園ウォーズ
+PLUS: Free Online Leaderboards Update for the base game out now!
 
---- 49. @ManuelFaysse (2026-04-09) ---
-Getting (first author) papers in at ICML, NeurIPS and ICLR in a single calendar year is called a "Grand Slam" for AI PhD students apparently. I won't be the one attempting that, I like sleeping too much I think.
+--- 35. @WevolverApp (2026-04-09) ---
+Only laser weeding allows for true precision, eliminating weeds even in the tightest crop spacing.
 
---- 50. @ryanli (2026-04-09) ---
-Your Claude Code just got fluent in crypto.
+--- 
 
-Today, we released Surf Skill. The command line that replaces 60+ APIs.
-Compatible with any agentic environment.
 
-Try:
-npx skills add asksurf-ai/surf-skills
+@carbon_robotics
+ is one of the innovative companies profiled in the Agricultural Technology Report, published in collaboration with 
+@MouserElec
+ and 
+@NordicTweets
+, that uses
+
+--- 36. @_Be4_ (2026-04-09) ---
+Claude 「うーん、この問題は難しいです...」
+codex 　「仕方ない。私自ら解決する！」
+Claude 「おお！」
+
+codex   「うーん、この問題は難しいです...」
+　僕      「仕方ない。私自ら解決する！」
+codex   「おお！」
+
+　僕      「うーん、この問題は難しいです...」
+
+たすけて
+
+--- 37. @DisneyPlusJP (?) ---
+／
+『21世紀の大君夫人』配信直前記念
+スペシャルコンテンツをプレゼント
+ ＼
+ 
+フォロー&RPで
+IU&ビョン・ウソクのコメント動画や
+スマホ壁紙がリプで届く
+ 
+引用投稿で複数回参加
+全4種を揃えよう
+4/17（金）にはお知らせリプも
+ 
+4/10（金）ディズニープラス スター独占配信
+
+--- 38. @pini56028 (2026-04-09) ---
+自分のcosense試験勉強用に参考書とかレジュメの言い回しを貼りまくっているしページ名が結構検索されやすいワードばかりだからまったくもってパブリックにできない
+
+--- 39. @pharetra_third (2026-04-09) ---
+マイナス座標のレイヤーにHUDスプライトを設定して、ステータス画面の枠や数字と武器の間に胸部スプライトを挟むことができるようになった。
+斜め下の視界がほぼなくなって感激
+
+--- 40. @swarm_ai_cloud (2026-04-09) ---
+どうしても言いたかった。のび太くんの叡智
+
+--- 41. @synthwavedd (2026-04-09) ---
+ BREAKING: OpenAI plans to release GPT-5.5 only to a small set of companies, similar to Anthropic's limited roll out of Mythos
+
+lol
+
+--- 42. @Nicotama222 (2026-04-09) ---
+X始めて約2年。
+当時絡んでいた人が
+軒並み消えていっています。
+まだ生きているよって方いますか？
+
+--- 43. @JUN_TRANSLATOR (2026-04-09) ---
+最上級の褒め言葉をいただいてしまって、ほっぺをつねって現実かどうか確かめました。ありがとうございます。励みになります(´；ω；`)
+
+--- 44. @denfaminicogame (2026-04-09) ---
+人気の“墓場管理”シミュレーションゲーム続編『Graveyard Keeper 2』が発表。PC/Xbox/PS5/Switch/Switch 2向けに2026年より発売予定
+
+https://
+news.denfaminicogamer.jp/news/260410j
+
+異端審問官となり、墓地の管理や生産の自動化、ゾンビの軍隊を率いた戦闘などで街を復興。前作の要素を引き継ぎつつ大規模に進化
+
+--- 45. @yuchrszk (2026-04-09) ---
+『出会い系サイトで70人と実際に会ってその人に合いそうな本をすすめまくった1年間のこと』（
+https://
+amzn.to/3NS5fnB）
+
+当時ヴィレヴァンの店長だった著者が、出会い系サイトで知り合った人たちに選書しまくったエピソードをまとめたもの。面白かった。
+
+--- 46. @livedoornews (?) ---
+【】雨の日こそ花粉が辛い…「花粉爆発」のせい？
+
+肌についた花粉に水が触れることで亀裂が生じ、中のアレルギー物質が放出される現象「花粉爆発」。顔を水だけで洗っている人は要注意。
+
+N organicのクレンジングは花粉をオイルでくるみ、「花粉爆発」させることなく穏やかに落とすという。〈PR〉
+
+--- 47. @fujimaki_takesi (2026-04-09) ---
+NHKの夜７時のニュースで、柳井ファーストリテイリング代表取締役会長兼社長が「油が無ければ何にも出来ない。東南アジアが一番被害を受ける。もっと悲鳴を上げなければならない」とおっしゃっていた。その通り。しかし株価の動きを見る限り、日本は悲鳴を上げるどころか極めて楽観的にみえる。
+
+--- 48. @aa36841289911 (2026-04-09) ---
+そういうふうに作っていくとこちらの課金アイテムを競合が無料で出し始めても意外と影響を受けない。ユーザーは「このアプリで」「このアプリの」その機能が使いたいから
+
+--- 49. @4GamerNews (2026-04-09) ---
+“スターデューバレーとツイン・ピークスの出会い”。11 bit studios，不気味な農業シミュレータ「Crop」を発表
+
+https://
+4gamer.net/s/G099735.2604
+09011
+…
+
+プレイヤーは農場を立て直していく一方で，自分がなぜこの場所に連れてこられたのか，村で何が起きているのかを探っていくことになる
+
+--- 50. @snoopopo (2026-04-09) ---
+7-9日目 
+テイルズのスキットみたいな機能入れたくてざっくりつくりました
+#Unity #ゲーム制作 #gamedev #IndieGameDev #indiegame #ゲーム開発 #個人開発 #indiedev #MagicaVoxel
