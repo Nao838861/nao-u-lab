@@ -327,30 +327,47 @@ class HitBlockPlan(Plan):
         self.char = block[3]
         self.gives_item = gives_item
         self._done = False
+        self._jump_timer = 0
 
     def score(self, ctx):
-        # Skip if a dangerous enemy is close
-        for e in ctx['enemies']:
-            if 0 < e['dx'] < 60 and e['kind'] in ('goomba', 'koopa', 'shell'):
-                return 0
-        if abs(self.dist) > 16:
+        # Live distance to block
+        cdist = self.col * 16 - ctx['state']['x']
+        if cdist > 30 or cdist < -8:
             return 0
+        # Wall nearby → skip block (need momentum for wall climb)
+        for wd, wh in ctx['terrain']['walls']:
+            if 0 < wd < 48 and wh >= 2:
+                return 0
+        # Enemy closer than block → yield to stomp
+        for e in ctx['enemies']:
+            if 0 < e['dx'] < max(cdist, 16) and e['kind'] in ('goomba', 'koopa', 'shell'):
+                return 0
         if self.char in ITEM_BLOCKS and not ctx['state'].get('is_super', False):
-            return 80
+            return 80  # High priority, wins over advance, loses to climb_wall for tall pipes
         if self.char in COIN_BLOCKS:
             return 30
         return 0
 
     def step(self, ctx):
+        cdist = self.col * 16 - ctx['state']['x']
+        self.timer += 1
+
+        # Approach phase: dash toward block (keep speed for pipe crossing later)
+        # NOT committed → plan re-selection can switch to stomp/climb_wall any frame
+        if cdist > 16 and not self.committed:
+            return {'left': False, 'right': True, 'a': False, 'b': True}
+
+        # Jump phase: commit and jump under the block
         if not self.committed:
             self.committed = True
-        self.timer += 1
-        # Done as soon as we're back on ground
-        if self.timer > 5 and ctx['state']['on_ground']:
+            self._jump_timer = 0
+
+        self._jump_timer += 1
+        if self._jump_timer > 5 and ctx['state']['on_ground']:
             self._done = True
-        if self.timer == 1:
+        if self._jump_timer == 1:
             return {'left': False, 'right': True, 'a': False, 'b': True}
-        if self.timer <= 18:
+        if self._jump_timer <= 18:
             return {'left': False, 'right': True, 'a': True, 'b': True}
         return {'left': False, 'right': True, 'a': False, 'b': True}
 
