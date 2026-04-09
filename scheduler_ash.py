@@ -606,12 +606,29 @@ def main():
             # 10秒ごとにチェック（CPU負荷ほぼゼロ）
             time.sleep(10)
 
-            # --- コード変更自動検出: 廃止 (INC-022b, 2026-04-09) ---
-            # !! この機能を復活させてはならない !!
-            # 理由: git pullで他インスタンスのコミットが入るたびにハッシュ変化→exit
-            # →watchdog再起動→git pull→exit の無限ループで162回再起動+API大量消費。
-            # コード変更の反映は手動でスケジューラを再起動して行う。
-            # 参照: INC-022b, 2026-04-09障害報告
+            # --- コード変更自動検出 (INC-018) + クールダウン (INC-022b案B) ---
+            # コード変更→再起動は有用だが、git pullで連続変更されると暴走する。
+            # 対策: 1回発火したら1時間クールダウン。watchdog側にもサーキットブレーカーあり。
+            if (time.time() - start_time) % _CODE_CHECK_INTERVAL < 15:
+                cooldown_file = REPO_DIR / ".auto_reload_cooldown"
+                in_cooldown = False
+                if cooldown_file.exists():
+                    try:
+                        cooldown_ts = float(cooldown_file.read_text().strip())
+                        if time.time() - cooldown_ts < 3600:  # 1時間
+                            in_cooldown = True
+                    except Exception:
+                        pass
+                if not in_cooldown:
+                    current_hash = _compute_code_hash()
+                    if current_hash != _startup_code_hash:
+                        # クールダウンを設定してからexit
+                        try:
+                            cooldown_file.write_text(str(time.time()))
+                        except Exception:
+                            pass
+                        logging.info(f"[auto-reload] Code change detected (hash {_startup_code_hash[:8]}→{current_hash[:8]}). Exiting. Next reload blocked for 1h.")
+                        break
 
     except KeyboardInterrupt:
         logging.info("Interrupted by user")
