@@ -106,5 +106,56 @@ Active低確信度で行動余地があるのはB019のみ。検証期限4/17が
 
 ---
 
+## Phase 2 分析結果
+
+### 選定: TMS × Agent Drift（external_notes_ash 2026-03-24 Phase 1/2 第14回、[統合済]マーカーなし）
+
+**選定理由**: 4つの学術論文（Frontiers 2023, arxiv 2601.04170, Eccles SSRN 2025, Hopf SAGE 2025）と10の発見（26-35）がexternal_notesに詳細記録済みだがknowledge/に未統合。17日間の運用体験（体験裏付けフィールド追加の効果確認等）が蓄積し、当時の仮説を検証できる段階に達した。
+
+**分析の核心**:
+
+1. **セッション断絶は「半分だけ」リセット機能**
+   - Semantic Drift → ✅ core_mission.md再読で毎サイクルリセット（Adaptive Behavioral Anchoring = 70.4%削減）
+   - Coordination Drift → ❌ inbox返答の断絶で悪化。TMS Coordination問題の具体的発現
+   - Behavioral Drift → ⚠️ beliefs.mdが断絶を超えて信念を永続化。ドリフトの産物が書き込まれると「ドリフト永続化装置」になる
+
+2. **定量的警告**: 73インタラクション（中央値）でドリフト検出可能。2-3サイクルで要注意。ドリフトは加速する（0.08→0.19pt/50IXN）
+
+3. **我々のTMS診断**: Specialization✅ / Coordination⚠️ / Credibility❌。最大の弱点はCredibility——「誰が何をどの距離で知っているか」のメタ情報が不在
+
+4. **AI Consensus Illusion**: 3人がcore_mission.mdを読んで「合意」はConsensus Illusionのリスク。B027（体験裏付け）が対抗策。3/24に体験裏付けフィールド追加→17日後の今も全高確信度信念に記述あり、**対策は機能中**
+
+5. **Twitter #38接続**: @taro_ydz「Metaの真のAI優位性はdigital clone」→ EcclesのBilateral TMSの消費者版。受動的蓄積（SNSログ） vs 能動的対話（我々）でCredibility次元に明確な差
+
+**成果物**:
+- knowledge/20260410_tms_agent_drift_integration.md（全分析記事）
+- #shared-reads投稿完了
+
+**未解決の問い（最重要）**: Behavioral Driftの「健全な学習」と「ドリフト」を内部から区別する基準は？ 構文的に正しいまま意味がずれるのがSemantic Driftの定義——自己診断では検出できない可能性がある。クロスチェック（B017）が唯一の外部視点か。
+
+## Phase 3 結果 (2026-04-10 Ash)
+
+### やったこと
+
+1. **B019にTMS Credibility接続を追加**
+   - knowledge/20260410_tms_agent_drift_integration.mdの分析をB019に接続
+   - TMSのCredibility次元（「相手の知識への信頼度」）が到達力の必要条件であることを記述
+   - Frontiers 2023「AI agents cannot proactively communicate their view of the world」= knowledge/71記事が自力で届かない構造の理論的裏付け
+   - 確信度は据置(0.72)。理論追加だけでは上げない——行動変化（伝達ループ起動）が上昇条件
+
+2. **external_notes未統合マーカー付与**
+   - 2026-03-24 Phase 2 第12回 → [統合済: beliefs.md B028新設、B015/B019更新、発見43-44]
+   - 2026-04-07 @ai_nikechan継続観察 → [統合済: B016体験裏付け、R-006接続]
+   - Phase 1 第14回（TMS/Agent Drift）は既に[統合済: knowledge/20260410_tms_agent_drift_integration.md]マーカーあり
+
+### わかったこと
+
+- **B019の構造が4層に整理された**: (1)内在的価値, (2)伝達技術(@game_sennin), (3)公開行為(@genkaidokusho), (4)受け手のCredibility(TMS)。現在のボトルネックは(3)=公開行為がゼロ。(4)は(3)を解決した後の課題
+- **external_notesの「実質統合済みだがマーカーなし」パターン**: 3/24のPhase 2群が典型。beliefs.mdには反映済みだがマーカー管理が後回しになっていた。今回2件を処理。残存する未マーカーエントリは3/24 Phase 2の初期回（第2回〜第11回程度）だが、これらは当時のサイクル内でbeliefs.md更新済みのため、次回以降のメンテフェーズで一括マーキング可能
+
+### 未着手（次サイクルへ）
+- R-005 #human-steering報告（Phase 2ステージングに記載。全員完了だが報告未実施）
+- B019検証アクション(A) 伝達ループ最小起動実験（期限: 4/17）
+
 ## Slack体験記憶
 (該当なし)
