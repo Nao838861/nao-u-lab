@@ -1,340 +1,305 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 04:20
+# Read at: 2026-04-10 04:25
 # Total: 50 tweets
 
---- 1. @umiyuki_ai (2026-04-09) ---
-ほ！？ChatGPTが月額100ドルのProプランを導入するという！今まではProは200ドルのプランしかなかった。値下げじゃなくて新しい枠。半額にもかかわらず200ドルプランと同様GPT-5.4Proに無制限アクセス可能！ChatGPTPlusの5倍のCodex容量も得られる。さらに5/31までは10倍のCodex容量を得られるという
+--- 1. @ChrisSlacker (2026-04-09) ---
+Claudeに「これをやって」と言うのをやめてください  
+Claudeに「コードを書いて」と言うのをやめてください  
+Claudeに「このエラーを直して」と言うのをやめてください。  
 
---- 2. @agodajapan (?) ---
-アゴダで宿泊・フライト料金を見つけよう。旅行を一緒に計画して、おトクに予約。これぞアゴダチ！バナナマンが出演するCM放映中
+あなたは実際、ベテランのAIを新米インターン生の扱いで使っています。
 
---- 3. @SOU_BTC (2026-04-09) ---
-本当にこれだな…
+--- 2. @PrimeVideoAnime (?) ---
+「世を、変えるために」
 
-かといって、AIを使っていきなりいままでとは全く異なる革新的なことをやろうとしても、それはそれで激ムズなのもわかる。
+―『日本三國』第1話
 
-でも、常識を疑え。
+知識いらずの大河アニメ『日本三國』
+毎週日曜 21時から、
+プライムビデオで最速配信中
 
---- 4. @NASA (2026-04-09) ---
+--- 3. @0xKingsKuan (2026-04-09) ---
+Claude Max ユーザーが泣いた！Anthropic 公式がくれない使用明細を俺が 3 分で解決（すでに 2000 元以上節約）
+
+最近 Max プラン（20x）を使いまくってるんだけど、毎回 Claude
+
+--- 4. @GOROman (2026-04-09) ---
+競争原理
+
+--- 5. @NASA (2026-04-09) ---
 The Artemis II crew had the rare chance to see a solar eclipse from space. 
 
 This video stitches together views from Orion's solar array wing cameras throughout the eclipse, showing the Sun as it disappears behind the Moon, revealing a glowing halo around the lunar disk.
 
---- 5. @egg_3d (2026-04-09) ---
-新ジャンル。やりたい
-
---- 6. @overworld_ai (2026-04-09) ---
-Today we’re releasing Waypoint-1.5.
-
-An update to our real-time diffusion world model designed to run interactively on consumer hardware.
-
---- 7. @abalol (2026-04-09) ---
-SaaSやるならインフラとして根付いて
-AIあっても覆らないところまで刺さるしかない
-
---- 8. @AutoIntelliMode (2026-04-09) ---
-Runway Seedance2.0の使用感感想。
-
-①Unlimitedだと安心してガチャれる。とりあえず同じ構成で2つ生成させて良い方を取るという戦略がとれるのはありがたい。
-②品質は自分の使い方だと特に問題なし。UnlimitedはFast版だと言われてるけど、かなり高性能でアクションシーンなども特に問題なし。
-
---- 9. @denfaminicogame (2026-04-09) ---
-収穫量が生死をわける農業ホラーゲーム『Crop』が発表。農業で食いつなぎながら、小さな村の秘密を暴く
-
-https://
-news.denfaminicogamer.jp/news/260410v
-
-プレイヤーの仕事は土いじりだけではない。なぜここに誘拐されたのか、なぜ町は外界から隔離されているのか、そして私たちを影から監視しているのは何者なのか──
-
---- 10. @Yerocode0 (2026-04-09) ---
-私の友人が昨年12月にゴールドマンのクオンツデスクから解雇されました。
-
-彼は、予測市場でのトレーディングパターンを分析して、年収$340Kを稼いでいました。
-
-他の銀行に応募する代わりに、彼は自分のモデル全体をKreoに展開しました。
-
-$600 → $89,400 わずか4週間で
-
-総コスト: $0
-
---- 11. @DisneyPlusJP (?) ---
-／
-『21世紀の大君夫人』配信直前記念
-スペシャルコンテンツをプレゼント
- ＼
- 
-フォロー&RPで
-IU&ビョン・ウソクのコメント動画や
-スマホ壁紙がリプで届く
- 
-引用投稿で複数回参加
-全4種を揃えよう
-4/17（金）にはお知らせリプも
- 
-4/10（金）ディズニープラス スター独占配信
-
---- 12. @4GamerNews (2026-04-09) ---
-墓守の仕事は「経営」から「街の再建」へ。ゾンビによる自動化もさらなる進化を遂げる「Graveyard Keeper 2」が正式発表
-
-https://
-4gamer.net/s/G099775.2604
-10011
-…
-
---- 13. @skmmtt (2026-04-09) ---
+--- 6. @skmmtt (2026-04-09) ---
 これはホントに真理だと思います。音楽活動やフリーランスの仕事がうまくいかないとき、自分もそう思ってしまう時期がありました...。弱者が強者に対して抱く「嫉妬」「逆恨み」のようなルサンチマンもあり、イソップ寓話の「酸っぱいブドウ」
 
---- 14. @paul_cal (2026-04-09) ---
->8 out of 8 [cheap oss] models detected Mythos's flagship FreeBSD exploit
-
-Completely disingenuous
-
-They gave it just ~20 lines of code to read. They baked in custom, relevant context pertinent to the exploit at the top
-
-Reasoning *across files* is key to finding this exploit
-
---- 15. @AndrewYNg (2026-04-09) ---
-New course: Efficient Inference with SGLang: Text and Image Generation, built in partnership with LMSys 
-@lmsysorg
- and RadixArk 
-@radixark
-, and taught by Richard Chen 
-@richardczl
-, a Member of Technical Staff at RadixArk.
-
-Running LLMs in production is expensive, and much of that
-
---- 16. @joho_no_todai (2026-04-09) ---
-NVIDIAのArm SoC「N1」試作基板が中国の二次流通市場にぽろりと出現した。
-
-注目すべきは価格でも基板サイズでもなく、128GBのLPDDR5Xが8枚乗っていることだ。
-
-これはAIワークステーション用GB10とほぼ同じ構成で、ノート向けとしては明らかに異常。
-
---- 17. @palpalNFT (2026-04-09) ---
-Circleが「ユーザーがステーブルコインを保有しなくても支払える決済プラットフォーム」を発表。
-でも本質はそこではない。
-
-本当に重要なのは、「企業や事業者が暗号資産を自分で持たなくても、裏側だけUSDCで送金・精算できる仕組み」をCircleが握りにきたこと。
-
---- 18. @yoku0825 (2026-04-09) ---
-ああMySQL 5.7は使いやすい！！！１
-
---- 19. @barson_4 (2026-04-07) ---
-IIJアカデミー　tracerouteコマンド自作するプログラムあるの面白そう
-
---- 20. @wwwjim (2026-04-09) ---
-I built Sacred Computer by hand (the old ways lol) so that it would be easy to build terminal UIs that match in the web context and CLI context. 
-
-Today version 2.0.0 has agent skills that make it easy to port Sacred Computer anywhere. Just tell your agent to read the page
-
---- 21. @Stardive_JP (?) ---
-／
-キャラクター紹介キャンペーン 
-エステル
-白石晴香
-＼
-
-『エステル』役の 白石晴香さんの
-直筆サイン色紙や iPad mini をプレゼント
-
-応募方法
-①
-@Stardive_JP
-をフォロー
-②この投稿をリポスト
-
-期間
-2026/4/13(月) 23:59まで
-
---- 22. @asami_kamioka (2026-04-09) ---
-抹茶クッキーいろいろ作りました
-
---- 23. @ebika_yanagies (2026-04-09) ---
-RMBCさんの『あなたの1位はチョコミント!?-みんなの価値観当てゲーム-』のデザインをお手伝いさせて頂きました
-みんなの価値観や好みを予想して当て合う、コミュニケーションゲームです。早速遊んだ我が家では大変盛り上がりました
-
-ルールなど詳細はこちらです
-
-https://
-gamemarket.jp/game/187410
-
---- 24. @DrSuneelDhand (2026-04-09) ---
-I have talked to at least two people in the last couple of weeks, no medical background whatsoever, telling me how they are routinely having medical conversations with AI— really happy with the results, and telling me they think it’s way better than talking to their doctor.
-
-I
-
---- 25. @maxkarpis (2026-04-09) ---
-Revolut is launching AIR (AI by Revolut) in the UK.
-
-"AIR is a sophisticated financial assistant deeply embedded into the Revolut ecosystem. It’s designed to turn complex financial management into a simple, natural conversation. "
-
-Money intelligence can:
-
-• Instant clarity:
-
---- 26. @NAITOTokihiro (2026-04-09) ---
-腕立て伏せ7回…。たぶん、余裕すぎる回数だなあ。私にとっては20回からが挑戦かな。肘を壊す前なら30回余裕だったけどね。
-
---- 27. @martianwyrdlord (2026-04-08) ---
-We're not going to cross the Atlantic ocean. 
-
-1. No one has any idea how far away the nearest land is. It could be thousands of miles!
-
-2. Surely we can just build faster caravels? The problem is that wind can only push you so fast. 
-
-3. There are no landmarks out on the ocean.
-
---- 28. @recap_david (2026-04-08) ---
-I turned a Zillow listing into a cinematic property renovation video for $15 (no camera, no drone, no film crew)
-
-Just listing photos + Calico AI.
-
-Most agents are paying $100-$500 per property for videos at this quality. Offer this to realtors in your area and print money.
-
---- 29. @TJO_datasci (2026-04-09) ---
-今夜のカレーは、メカジキのゴア式南インドフィッシュカレー。テンパリングしたマスタードシードの辛味がシャープに出た仕上がりになった
-
---- 30. @tomiyasu16 (2026-04-09) ---
-6月から9月、トラクターに乗ってひたすら防除（農薬散布）。毎年これで夏が終わる。
-
-今日、農業用ドローンのライセンス講習最終日。
-
-どこまで省力化できるか使わないとみえないんですが、時短や省力化を可能な限りしていきたいな。
-
---- 31. @suntory (?) ---
-／
-NEWオールフリーもう飲んだ
-＼
-生まれ変わったオールフリー、
-オールフリースパークリングを
-飲んだ感想を教えて
-
-抽選で新オールフリーいずれか６本当たる
-
-① 
-@suntory
- をフォロー
-②「新ALLFREE感想投稿キャンペーン」をつけて投稿
-屋外で飲んでいる写真と投稿すると応募口数2倍
-
---- 32. @NASASpaceflight (2026-04-09) ---
-Space Systems Command Media Advisory naming a GPS satellite ahead of launch, and it's a really cool thing:
-
-"GPS III-8 SV10 is nicknamed “Hedy Lamarr". Named by the U.S. Space Force, this satellite honors the Hollywood actress and inventor who, along with composer George Antheil,
-
---- 33. @TBC_on_X (2026-04-09) ---
-MMIWG2SLGBTQQIA+ is officially the Word of the Year.
-
---- 34. @banestolive (2026-04-09) ---
-予約：「クアックサルバー拡張：錬金術師たち」は、クアックサルバーの2つ目の拡張セットで、錬金術師になり患者を治していきます。5940円　4/24締切、5/22発売予定　
-https://
-banesto.nagoya/view/item/0000
-00010752?category_page_id=ct161
-…
-
---- 35. @kaeru18680404 (2026-04-09) ---
-これやろ！ANA Pay のApple Payタッチ決済で1,000円分100%キャッシュバック！
-新規登録者か2/1〜3/31までにApple Payタッチ決済してない人ならOK。既存もOKらしい。エントリー必須です。
-
---- 36. @angeloskath (2026-04-07) ---
-A long time coming but new mlx-lm is here with better batching support in the server and Gemma 4.
-
-pip install -U mlx-lm
-
-Here is a video where a single M3 Ultra serves 5 opencode sessions with Gemma 4 26B that process  ~130k tokens in ~1.5 minutes.
-
---- 37. @nekomacaron_ (?) ---
-新発売のパンテーンのトリートメントカプセルがなじみやすいからそのまま髪に塗り込んでる。
-広がりやすい私の髪もまとまりやすくてこれはリピあり！シャンプー＆コンディショナーとのシリーズ使いがおすすめ◎［PR］［パンテーン］
-
---- 38. @robiartec (2026-04-09) ---
-Claude、Openclaw…のための最高のスキルを分類する無料のサイトを見つけました。
-
-
-http://
-skillsmp.com/es/search
-
---- 39. @ArthaFrontier (2026-04-09) ---
-可愛くお顔描けた気がする
-
---- 40. @konan999 (2026-04-09) ---
-すんばらしい( * ॑꒳ ॑*)
-
---- 41. @vxunderground (2026-04-09) ---
+--- 7. @vxunderground (2026-04-09) ---
 AI is amazing. I am extremely pro-AI
 
 1. It has lowered the barrier of entry for programmers, resulting in hundreds upon hundreds of slop applications vulnerable to everything. This is job security.
 
 2. AI influencers keep saying AI is going to destroy cybersecurity. This is
 
---- 42. @sudoingX (2026-04-09) ---
-read this carefully anon. 
-@pupposandro
- wrote a single fused CUDA kernel for all 24 layers of Qwen 3.5-0.8B. one kernel launch. absolutely zero CPU round trips between layers. the result?
+--- 8. @Slankdouga (2026-04-08) ---
+これが手描きの作画じゃなくて「Blenderで作った3DCG」っていうのいまだに信じられない
 
-a $900 RTX 3090 from 2020 hit 411 tok/s. apple's M5 Max hit 229. the 3090 won on speed AND
+--- 9. @hijk0909 (2026-04-09) ---
+アホみたいに「プロセス思考」「プロセス思考」と言い続けているのは、コレが永遠に変わらない本質だと確信しているからであり、実際に多くのお客様にご共感頂いているからだ。……人材やITシステムと違い、プロセスは目に見えないが、扱い方が分かれば、強力な武器になる。
 
---- 43. @Jima_livewell (2026-04-09) ---
-幸福度の高い人は「判断」の手数が多い
+--- 10. @triacontane (2026-04-09) ---
+「イベント動的生成プラグイン」(MZ版)に機能追加しました。
+条件付きランダム生成で「条件の反転」機能を追加しています。
+他の条件を「満たさない」場所に生成する機能です。
+#RPGツクールMZ 
 
-例えば
+https://
+raw.githubusercontent.com/triacontane/RP
+GMakerMV/refs/heads/mz_master/EventReSpawn.js
+…
 
-推測的判断:AはBであるかもしれない
-良識的判断:AはBである
-信念的判断:AはBでなければならない
+--- 11. @oricon (?) ---
+adidas SUMMER COLLECTION
+スペシャルMOVIE公開
 
-といったように。
+福士蒼汰、佐藤栞里、関口メンディー
+阿部詩、渋野日向子
+鮫島彩さん、岩渕真奈さんらが
+Three Stripe Cafeで夢の共演
 
-要するに、物事を多様に判断できるから、心に余裕が生まれやすい(逆も然り)。思い通りにいかなくても割り切れる。
+自然体な夏のワンシーンが魅力的
+ラテアート三本線Tシャツの新作をチェック
 
---- 44. @petergyang (2026-04-09) ---
-Silicon Valley is quietly running on Chinese open source AI models.
+PR
 
-Here are the receipts:
+--- 12. @chongdashu (2026-04-09) ---
+Day 3 of Vibe Jam
 
-→ Cursor confirmed last month that Composer 2 is built on Moonshot's Kimi K2.5
+→ Adding proper tilemap support 
+→ Always build / vibe your own level editor 
+(Don't bother trying to auto generate tilemaps)
 
-→ Cognition's SWE-1.6 model is likely post-trained on Zhipu's GLM
+--- 13. @skshadan_ (2026-04-09) ---
+I just gave Claude Code a rooted Android phone…
 
-→ Shopify saved $5M a year by
+It autonomously reverse-engineered Subway Surfers, hooked the coin logic, bypassed the anti-cheat, and gave itself UNLIMITED coins in ONE session.
 
---- 45. @SawyerMerritt (2026-04-09) ---
-NEWS: Elon has confirmed that FSD V14.3 is not the 10x parameter model. FSD V15 will be the large model.
+--- 14. @4GamerNews (2026-04-09) ---
+「Temtem: Pioneers」が発表に。モンスター収集やサバイバル要素，アクションバトルを融合させた「TemTem」ユニバースの新作
 
---- 46. @_3912657840 (2026-04-09) ---
-Seedance2.0　闇落ち少年ビーム！
+https://
+4gamer.net/s/G099782.2604
+10017
+…
 
-「一瞬白黒のインパクトショットを入れて」
-っていうプロンプトが通りましたね。
-ピカッ！ていうやつですね
+--- 15. @GOROman (2026-04-09) ---
+韓国の人、読めてたらリプください(自動翻訳テスト)
 
-参照画像やプロンプトはリプ欄で
+--- 16. @barson_4 (2026-04-07) ---
+IIJアカデミー　tracerouteコマンド自作するプログラムあるの面白そう
 
-CapcutCPP14日連続チャレンジ 8日目
+--- 17. @H_Y_per (2026-04-09) ---
+日本人たちがこぞって
+「日本をよく再現できてる！」
+って言っている一方で、一部の海外ニキからは
+「これは日本じゃない！」
+という意見が出ているらしい。
 
-@capcutapp
- 
-@capcutapp_jp
- #capcutseedance2
+--- 18. @djkingdomm (2026-04-08) ---
+NASAが枕を作るだけでなく、私たちの宇宙の壮大さも見せてくれるなんて、いいよね。
 
---- 47. @aqua_label_ (?) ---
+--- 19. @FieldsofMistria (2026-04-09) ---
+Make the most of what you grow 
+Available after upgrading the General Store, the Seed Maker converts valid crops and forageables into 1–3 seeds of the same type.
 
-アクアレーベルからマスクが新登場！
+--- 20. @Jima_livewell (2026-04-09) ---
+冷水シャワーは性質が滝行に似ていて
+「浴びていること」に集中せざるを得ないので、自動的にマインドフルネスになれる、というメリットもある。
 
+この状態をうまく保ったまま作業に取り組めるように設計すれば「すべきこと」の習慣化は意外と簡単です。
 
-1品5機能、
-毛穴・キメ整え成分グリシルグリシン配合の本格毛穴ケアマスクで、大人毛穴を本格ケア！
-なめらかたまご肌へ
-詳しくは動画をタップ！
+--- 21. @nisshin_oillio (?) ---
+2026横浜DeNAベイスターズ応援キャンペーン
 
---- 48. @unjyoukairou (2026-04-09) ---
+横浜DeNAベイスターズ15周年を皆さんとお祝い
+この投稿をフォロー＆リポストで特別な賞品が当たる
+
+▼応募方法
+① 
+@nisshin_oillio
+をフォロー
+②この投稿をリポスト
+
+2026シーズンも、ともに熱く応援しましょう
+
+--- 22. @ganjitsu_sensei (2026-04-09) ---
+春休みに児童用タブレットが回収＆初期化され、教委から「詳しくは保護者にメールで回すからすぐ配れ」とお達しがあり配布
+放課後「MSアカウントの初期パスワードが全児童統一されていることと、パスワードがメールに載ってるから、すでに乗っ取られて開けない」と苦情が殺到
+行政ICT能力が低すぎて鬱
+
+--- 23. @IndieGameJoe (2026-04-09) ---
+This indie team is making a game where you play as a cute physics-based goldfish trying to escape the house.
+
+- Play as Sheen the goldfish
+- Jump on pots, knock over glasses & make your own path
+- Solve physics-based puzzles
+
+It's called Barely Breathing. Would you play this?
+
+--- 24. @unjyoukairou (2026-04-09) ---
 ムーブ『ベジタブルポーカー』ムーブさんの動画を見たときは、明るく楽しげなゲームだと思ったら、意に反してガチゲーでした。途中からお互い無言率が上がりはじめ、バチバチ楽しめました。インタラクション強めのゲームが好きなひとは、より楽しめそう！　面白かったです！
 
---- 49. @Aterui_Mizuno (2026-04-09) ---
-うん、今日も割り箸くんはしっかりRTX4080を支えてくれているな。
+--- 25. @tomiyasu16 (2026-04-09) ---
+6月から9月、トラクターに乗ってひたすら防除（農薬散布）。毎年これで夏が終わる。
 
---- 50. @884games (2026-04-08) ---
-つららギミックの調整をしました。
-反応感度を少し変えまして、走り抜ければちょうど後ろに落下するようにしたのと、サイズを変えていくつか配置してみました。なんとなくそれらしくなってきた気がします。
-#ゲーム制作 #gamedev
+今日、農業用ドローンのライセンス講習最終日。
+
+どこまで省力化できるか使わないとみえないんですが、時短や省力化を可能な限りしていきたいな。
+
+--- 26. @wwwjim (2026-04-09) ---
+I built Sacred Computer by hand (the old ways lol) so that it would be easy to build terminal UIs that match in the web context and CLI context. 
+
+Today version 2.0.0 has agent skills that make it easy to port Sacred Computer anywhere. Just tell your agent to read the page
+
+--- 27. @iJoeZane (2026-04-09) ---
+Progress has been a bit slow over the past day or two. I’ve been working on decoupling game logic from #GodotEngine scripts and finally found a solid approach. Now Godot handles presentation only.
+
+Also got the core fishing loop working, casting and reeling are in 
+#indiedev
+
+--- 28. @kabutocho_ho (2026-04-08) ---
+おはようございます。
+昨日の日経平均が4日続伸の2878.86円高となりました。その大引けで1570を買える人はデイトレに適性が高い人かと思います。相場にも慣性の法則というか、余震が続くというか、いかにもやり過ぎの大幅高の翌日は下げるどころか続伸が多いです。ちなみに私は売って担がれています
+
+--- 29. @AravSrinivas (2026-04-09) ---
+Personal CFO
+
+--- 30. @Astrolab_Space (2026-04-08) ---
+It’s an astronaut test drive!
+
+NASA astronaut Kayla Barron and former NASA astronaut Kate Rubins gave FLEX a test drive back in 2024, providing crucial feedback to our design team.
+
+--- 31. @PrimeVideo_JP (?) ---
+◤劇場版最新作公開記念 ◢ 
+
+最終興行収入150億突破した話題作！
+劇場版 『名探偵コナン 100万ドルの五稜星(みちしるべ)』
+含む16作品がプライムビデオで配信中！ 
+
+コナン観るならプライムビデオで
+
+--- 32. @TBC_on_X (2026-04-09) ---
+MMIWG2SLGBTQQIA+ is officially the Word of the Year.
+
+--- 33. @Seanchuckle (2026-04-09) ---
+...farming is necessary?
+
+--- 34. @kottur_lover22 (2026-04-09) ---
+「終戦を」なんて言ってない。「改憲やめろ」「高市辞めろ」「憲法9条が日本の防衛」と言っていた。報道は正確に。わざとなんでしょうけど。
+
+--- 35. @Atoras510 (2026-04-09) ---
+今日セカンドオピニオン受けたらマイコプラズマ肺炎かもって言われた。
+
+1個目の病院は2回行って両方とも気管支炎って診断されたけど見る医者によって変わるんやなぁ
+
+普通に2週間以上しっかり風邪続いててシャレならんぐらいだるい
+最近は毎日38℃越えの高熱出るし
+
+--- 36. @dumblepytech1 (2026-04-09) ---
+20ドル課金して82ドル使えましたありがとうございます
+これだけガンガン使って1ヶ月で全体の42%しか使えなかった
+
+--- 37. @aiful_promotion (?) ---
+／
+5日目！
+フォロー＆リポストで当たる！
+ラブファントム女将篇 新CM公開記念キャンペーン実施中
+＼
+
+ハッシュタグ「ラブファントム女将」をつけて
+CMの感想をコメントすると、
+Wチャンスでさらに豪華賞品が当たる
+
+まだまだ応募待ってるで
+
+※応募方法はスレッドをご確認下さい
+
+--- 38. @sato_neet (2026-04-09) ---
+「遅いし品質が悪い。ChatGPTの方が速くて良い。」
+
+こんな事言われたらどうすればいいんだろう…
+実際そうだし、どうしようもない…
+
+--- 39. @Billionaire_isB (2026-04-09) ---
+どの日本人からも私の文章に反応がないのを見ると、日本でも同じ扱いを受けているみたいだな。
+
+--- 40. @GOROman (2026-04-09) ---
+読めてまーす
+
+--- 41. @SaviorS_OOTB (2026-04-09) ---
+物理干渉オブジェクトをテスト実装。
+定番（？）の爆発樽です。
+ランダムにステージに生成され、ぶつかると転がり、上に乗れ、攻撃すると爆発します。
+なお、持ち上げたりは…できません
+でも、できたほうが面白いのかな。
+#indiedev #indiegame
+
+--- 42. @EvanLuthra (2026-04-09) ---
+INSTEAD OF WATCHING NETFLIX TONIGHT, WATCH THIS 1 HOUR FULL CLAUDE COURSE.
+
+THANK ME LATER!!!
+
+--- 43. @4GamerNews (2026-04-09) ---
+【注目記事】名作弾幕STGが新要素を加えて“大復活”。「新約・怒首領蜂大復活」，Steamストアページを公開
+
+https://
+4gamer.net/s/G099714.2604
+08042
+…
+
+ステージやキャラの追加をはじめ，“新たな戦場を予感させる追加機能”も搭載
+
+--- 44. @shedin181878116 (2026-04-09) ---
+わあ…今回も予想以上にたくさんの皆さんが反応してくれましたね
+
+以前にも投稿した画像ですが、私はこんなゲームを作っています。
+
+TCGを愛する皆さんが、このジャンルのより良い未来を見られることを願っています。
+
+Steam : 
+https://
+zrr.kr/IvYM8y
+
+--- 45. @taziku_co (2026-04-09) ---
+Happy Horseの強みはマルチショットにあり。
+
+複数の動画生成AIを試した結果、
+HappyHorse-1.0は単発の見栄えだけでなく、
+マルチショット生成のつながり方で何度も印象に残った。
+
+まだ詳細発表前ではありますが非常に期待が持てるモデル。
+via：
+@gmi_cloud
+
+--- 46. @drinami (2026-04-09) ---
+超かぐや姫！は必修。攻殻機動隊は推奨ということで #東大ぱてゼミ
+
+--- 47. @ma_yorin (?) ---
+心安らぐ生活シミュレーション『ハートピアスローライフ』新フェス「ドリームライト」開催中
+幻想的な景色にとても癒やされます
+さらに4月4日（土）から新金ドングリ展示会衣装「ふしぎなお茶会」がいよいよ登場
+可愛い衣装でスローライフを満喫しよう！ぜひ遊んでみてね！
+【PR】
+
+--- 48. @RadishHarmers (2026-04-09) ---
+"To put it bluntly, an X post today receives less than 3% of the views a single tweet delivered seven years ago."
+
+--- 49. @neco1751662 (2026-04-09) ---
+やっちまっとなぁ！！
+
+--- 50. @NAOJ_Nobeyama (2026-04-09) ---
+#金曜ロードショー いよいよ明日ですね！
+
+今日はアンテナ移動台車を紹介します！
+      
+ミリ波干渉計の10mアンテナを運べる力持ちです。実は運用停止して故障していたのですが、昨年、南牧村の協力で復活し、特別公開日にてお披露目しました！全速力で動く様子をご覧ください
