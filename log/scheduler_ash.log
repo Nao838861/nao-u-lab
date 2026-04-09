@@ -53628,3 +53628,56 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 01:57:13] [git_sync] Starting
 [2026-04-10 01:57:18] [git_sync] Done (exit=0)
 [2026-04-10 01:57:38] [health_check] Starting
+[2026-04-10 01:57:39] [health_check] [health_check] 2026-04-10T01:57:38 overall=OK
+[2026-04-10 01:57:39] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 01:57:39] [health_check] Done (exit=0)
+[2026-04-10 01:57:49] [slack_check] Starting
+[2026-04-10 01:58:08] [auto_diary] Starting
+[2026-04-10 02:00:10] [auto_diary] Timeout (720s)
+[2026-04-10 02:00:20] [slack_check] Starting
+[2026-04-10 02:00:43] [dm_check_pigadev] Starting
+[2026-04-10 02:00:57] [dm_check_pigadev] No new DMs
+[2026-04-10 02:00:57] [dm_check_pigadev] Done (exit=0)
+[2026-04-10 02:00:57] [twitter_recommended] Starting
+[2026-04-10 02:01:02] ==================================================
+[2026-04-10 02:01:02] Ash scheduler started (PID 17132)
+[2026-04-10 02:01:02] Max runtime: 0 hours
+[2026-04-10 02:01:02] Code hash: 23987b6ea13730e5053683552346a8b2
+[2026-04-10 02:01:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-10 02:01:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-10 02:01:02] ==================================================
+[2026-04-10 02:01:13] [slack_check] Starting
+[2026-04-10 02:01:35] [reservation_check] Starting
+[2026-04-10 02:01:35] [reservation_check] 【行動予約】期限到来:
+[2026-04-10 02:01:35] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-10 02:01:35] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-10 02:01:35] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-10 02:01:35] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-10 02:01:35] [reservation_check] Done (exit=0)
+[2026-04-10 02:01:45] [inbox_check] Starting
+[2026-04-10 02:01:46] [inbox_check] Inbox win2 empty
+[2026-04-10 02:01:46] [inbox_check] Done (exit=0)
+[2026-04-10 02:01:46] [dm_check] Starting
+[2026-04-10 02:01:46] [dm_check] No new DMs
+[2026-04-10 02:01:46] [dm_check] Done (exit=0)
+[2026-04-10 02:01:46] [review_deadline] Starting
+[2026-04-10 02:01:46] [review_deadline] レビュー期限超過なし。
+[2026-04-10 02:01:46] [review_deadline] Done (exit=0)
+[2026-04-10 02:01:54] [twitter_recommended] Opening For You tab...
+[2026-04-10 02:01:54] [twitter_recommended]     1. @karaage0703: Hermes Agentの名前をよく聞くので、息抜きに試してみました...
+[2026-04-10 02:01:54] [twitter_recommended]     2. @UNIQLO_JP: 日本発、世界T。
+[2026-04-10 02:01:54] [twitter_recommended] 
+[2026-04-10 02:01:54] [twitter_recommended] この一枚にユニクロのテクノロジーをつめこんで。
+[2026-04-10 02:01:54] [twitter_recommended] Done (exit=0)
+[2026-04-10 02:01:54] [check_usage] Starting
+[2026-04-10 02:01:56] [kaizen_auto_verify] Starting
+[2026-04-10 02:01:56] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-10 02:01:56] [kaizen_auto_verify] Done (exit=0)
+[2026-04-10 02:02:06] [check_usage] Opening https://claude.ai/settings/usage...
+[2026-04-10 02:02:06] [check_usage] Usage data: {"session_pct": 3, "weekly_pct": 74, "pct": 74, "unit": "pct", "sonnet_pct": 0, "session_reset_min": 298, "extra_usd": 0.0, "balance_usd": 206.84, "scraped_at": "2026-04-10T02:02:05.579711
+[2026-04-10 02:02:06] [check_usage] 
+[2026-04-10 02:02:06] [check_usage] *使用量* (04/10 02:02)
+[2026-04-10 02:02:06] [check_usage] 週間 *74%* | セッション 3%
+[2026-04-10 02:02:06] [check_usage] Done (exit=0)
+[2026-04-10 02:02:06] [health_check] Starting
+[2026-04-10 02:02:06] [git_sync] Starting
