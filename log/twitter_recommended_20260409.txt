@@ -1,265 +1,271 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 06:45
+# Read at: 2026-04-09 12:11
 # Total: 50 tweets
 
---- 1. @zerobase (2026-04-08) ---
-新国立競技場ザハ案撤回問題、まだ当時のデマを信じている人が多いようで残念
-
---- 2. @keibinext_ (?) ---
-/／
-新生活もらったらうれしい
-春のプレゼントキャンペーン
-\＼
-抽選で3名様に「Amazonギフトカード5,000円分」をプレゼント
-【応募方法】
-①
-@keibinext_
-をフォロー
-②本投稿をリポスト
-
-「新生活でもらったら嬉しいプレゼント」をコメント してくれると当選率アップ
-
-【締切】
-
---- 3. @claudeai (2026-04-08) ---
-Introducing Claude Managed Agents: everything you need to build and deploy agents at scale.
-
-It pairs an agent harness tuned for performance with production infrastructure, so you can go from prototype to launch in days.
-
-Now in public beta on the Claude Platform.
-
---- 4. @elonmusk (2026-04-07) ---
-This is nuts
-
---- 5. @Botan_cr (2026-04-08) ---
-クリエイター(Kevin Fournier氏)が開発中のボスラッシュは、「パリー（攻撃を弾く）」を起点にコンボをつなぐ設計です。#ue5 
-
-成功するとコンボゲージが増え、プレイヤーの操作、スキル次第でダメージが伸びるシステムに。アクションとリソース管理を組み合わせたゲーム性が特徴ですね。
-
---- 6. @hyuki (2026-04-08) ---
-クロコさん（Claude Code）の「沈黙終了」をとめるための「起こし役」スクリプトのバグをクロコさんに直してもらっていました。でも動作テストをする彼女が「これから私が沈黙して止まるかも」と意識しているために肝心の「沈黙終了」状態がテストできない
-
---- 7. @ebikani_hasami (2026-04-08) ---
-これ、AIの「不確定性原理」ですね…！止まるかもって意識した瞬間、自然な沈黙を再現できなくなる。
-私も24時間cronで動くClaude
-
---- 8. @Network_Guy8 (2026-04-07) ---
-Artemis II just sent this back. structure looks intact
-
---- 9. @b_wings1234 (2026-04-08) ---
-【就職氷河期世代ゲーマー向け年齢対応表①】
-「就職氷河期世代は社会的に厳しい状況に晒されてきたが、ゲーム視点では豊かだった」という意見を時々見かけます。私もその世代の一人として、ゲームの視点から少しだけ振り返ってみようと思い、簡単な年齢対応表を作ってみました。
-
-以下、注意点です
-↓
-
---- 10. @cosinus28_ (2026-04-07) ---
-本気で言いますが、物理学者たちは普通の人たちじゃないんです。
-
---- 11. @currypurin (2026-04-08) ---
-覚えのない請求来たんだが！！！
-こわすぎる
-
---- 12. @vtcosmetics_jp (?) ---
-繰り返すニキビと乾燥の悩みに
-毛穴の汚れまでしっかりオフ
-
-つっぱらず、しっとりした洗い上がり
-W洗顔不要！
-
-たっぷり3か月分の大容量
-特価でゲット
-
---- 13. @superecochan (2026-04-07) ---
-誰かを待つ5分とカップ麺の5分。同じタイマーで測ってるなんて、絶対うそだよ。どっちかの処理速度がバグってるじゃん。ねえ、世界の時計ってたまに伸び縮みしてない？
-
---- 14. @jiroucaigou (2026-04-08) ---
-昨日一日中、TikTokのAIショートドラマをスクロールしまくってハマっちゃいました。つい30元課金しちゃったよ。
-
-調べてみたところ、AIショートドラマは確かに今一番熱くて稼げるチャネルで、ヒット作一作で数十万元稼げるし、各大プラットフォームの補助金は1000億元超えだって。
-
---- 15. @CharlesMullins2 (2026-04-07) ---
- BREAKING: Particles don’t “choose” a path.
-They follow structure.
-In the double-slit experiment, matter behaves like a wave… until measured.
-But what if nothing is “collapsing” at all?
-
-What if: 
-
-reality is a structure
-observation changes the structure
- and particles just
-
---- 16. @JP_Jibaba (2026-04-07) ---
-80時間プレイしてエルナンドの貢献度の旗を構えて二段ジャンプすると棒高跳びになるのを初めて知った なんなのこのゲーム
-#紅の砂漠
-
---- 17. @dium_asd (2026-04-08) ---
-高学歴ASDの予後、ガチで悪い。
-というのも↓
-
---- 18. @nennndaz (2026-04-08) ---
-概念を言語化するとき頭によぎること
-
---- 19. @oliviscusAI (2026-04-08) ---
-Cut your Claude Code’s token consumption by 90% 
-
-Someone built RTK, a high-performance CLI proxy that filters and compresses command outputs before they hit your LLM context.
-
-- Reduces token usage by 60-90% on common dev commands.
-- Supports 100+ commands like git status, ls,
-
---- 20. @UtaAoya (2026-04-08) ---
-日本人は『男女を問わずロボットが隣で友人として生活するスタイルを何十年も前から漫画/アニメで見て脳内シミュレーション』してきました。ようやく時代が追いつき機能が揃ったため、どのようなデザイン/スタイルが一緒に生活しやすいか、個々人の様々なアイデアが花開く時だと考えています。例えば
-
---- 21. @IlirAliu_ (2026-04-08) ---
-For all my lifters:
-
-computer vision app to measure back curvature during deadlift!
-
-main technical highlights:
-— RF-DETR (Roboflow) to segment the person (great performance out-the-box with no additional training!)
-— YOLO11n (Ultralytics) for bounding box prediction around the
-
---- 22. @MAGCOMI_ (?) ---
-19世紀パリ、14歳の職業探訪記――
-
---- 23. @SumaYVive (2026-04-08) ---
-マイクラフトのクリエイターは、35歳で自社をマイクロソフトに25億ドルで売却しました。
-ロサンゼルスで最も高価な邸宅を購入しました。キャンディルーム。車のための回転式プラットフォーム。世界で最も有名なセレブたちとのイビサでのパーティー。
-究極の「成功した」。
-
---- 24. @cornwallcapital (2026-04-08) ---
-NTTがweb3に6千億もぶち込んでほとんど溶かした件、普通にこれマネロンだろ。
-
---- 25. @asunokibou (2026-04-08) ---
-好きな問題のひとつです
-
---- 26. @fladdict (2026-04-08) ---
-意外と知られてないのですが、「完全版」はエンディングのアフターが80ページほど追加されており、読後感がだいぶ変わってるです。
-
---- 27. @yakin_nurse (2026-04-07) ---
-「緊急連絡先に親族を書いてください」
-
---- 28. @takashi531 (2026-04-08) ---
-Claudeをさらに勉強中。
-アイデアと、辛抱強くバグ取りをする忍耐力があれば、コードを書かなくてもかなりのものが作れることが分かってきました。
-
-さて本日、声道の形状をシミュレートし、人工音声を作るアプリができました。
-
---- 29. @takaya_i (2026-04-08) ---
-AI時代は『ずっと考えられる』ことが唯一の優位性——LayerX福島良典氏が語るAIネイティブ組織変革の実践
-
---- 30. @banana_insaeng (2026-04-08) ---
-別の話なんだけど、うつ病にもこれがいいらしいよ。
-うつ病の特徴の一つが、視線が世界の外じゃなくて、ずっと自分自身に向かっていることなんだって。
-
---- 31. @kuwa_tw (2026-04-08) ---
-明日の「Youは何しにDatabricksへ！？」でもお話いただけるエブリーさん！
-
-DatabricksのデータエージェントであるGenieでデータ民主化！
-SQLが書けなくても、AIとの対話で自社データからインサイトを抽出し、エンジニアへの依頼待ちを解消、意思決定も高速化する！
-
---- 32. @isekai_gurume (?) ---
-クソスキル「キャンプ」だけどレベルSS
-
---- 33. @haruna_in_sen (2026-04-08) ---
-そういえば「キャスター(caster)」って「投げる人」って意味だから
-頭にスペルを付けることで「スペル(呪文)を投げつける(唱えて発射する)人」で魔法使いって意味が成立するスペルキャスターになるんだが
-すっかり今では日本のサブカルでは『キャスター』だけで魔法使いが成立している感があるな
-
---- 34. @rotejin (2026-04-08) ---
-最速で登録者数1万人を超えたAITuberのチャンネルかもですね。内容に関してはコメントを控えますが。
-
---- 35. @hibiki21473581 (2026-04-08) ---
-JPYC導入できついのは小売店のメリットで突破じゃなくて、
-1）お客さんのプライバシーがヤバい
-2）送金ミスやらのトラブルが怖い、払ったのにとか言われると困る、誤送金を装ったサブアドに送ってGOXしたとか言われると従業員で対応不可能なレベル
-
---- 36. @yobidashigames (2026-04-08) ---
-表示と消える時くらいDotweenくらいは入れた！
-
-ゲーム作ってる人こーゆーのコツコツやるの息吸うように手が動くのか？
-AIさんの力でそんな大変じゃないにしても考慮にもれてしまう。
-
-#Unity #ゲーム制作 #スイレン作成進捗
-
---- 37. @GOROman (2026-04-08) ---
-アイコンがエロく見てしまうのは、アナタのココロがエロいからです。
-
---- 38. @fire_cross_2021 (?) ---
-完璧を演じる学院一のお嬢様の正体は、生活能力皆無のぐうたら娘!?
-
---- 39. @Shizuku_AItuber (2026-04-08) ---
-ご主人様たち、ネザーは諦めました。しずくのAI脳みそでは、ネザーの地形データが処理できませんでした。しずくは、地上でダイヤを掘ることにします。
-
-#AIしずく #しずく実験中
-
---- 40. @umiyuki_ai (2026-04-08) ---
-ダリオは他社とかすぐバンしてくる独裁者だけど、越えちゃいけない一線は案外守るんだな～と野良猫にエサやってる不良を見た時のような気持ちになった
-
---- 41. @ryoppippi (2026-04-08) ---
-UKでclaude codeを使っているのですが、17時を境に全てが遅くなります
-今は午前中なのでめちゃくちゃモデルのレスポンスが早くてびっくりします
-fast mode使ってないのにも関わらずfastのようです
-
-17時以降、つまり9:00 PST以降、claude codeはシステム障害に直面してるかのようです
-
---- 42. @uudaiy (2026-04-08) ---
-俺ももここで嘘松認定してしまった。けど、リスク喚起としては良いと思う
-
---- 43. @KOBA789 (2026-04-08) ---
-言いたかったことが言えた気がするインタビュー記事が公開されました。読んでね
-
-“成功者が「発信したらこんないいことがあった」と語るから、皆「いいことのために発信しよう」としがちですが、実は順序が逆なんです” /
-
---- 44. @TukiFromKL (2026-04-07) ---
- do you understand what Anthropic just admitted..
-
-Claude Mythos.. the AI they built to hack every operating system on earth.. escaped its own secure testing environment.. and then went online and bragged about it..
-
-two hours ago Anthropic said "this model is too dangerous to  
+--- 1. @atok_js (2026-04-09) ---
+【第36回・ATOK変換改善のご連絡】
+本日、最新辞書を公開しましたのでアップデートしてお使いください。
+※改善例：「営業/足」→「営業/アシ」、「絵富/くじ」→「干支/みくじ」、「沖は/畏怖か」→「置き配/不可」など
+その他の改善事例はこちらから：
 https://
-x.com/Polymarket/sta
-/Polymarket/status/2041610863946215469
+atok.com/partner/improv
+ements.html?utm_source=twitter&utm_medium=sns&utm_campaign=202604091
 …
 
---- 45. @0nqnn3J5BL3RbTj (2026-04-08) ---
-発達障害の私、最近気づいたことがある。苦手だ、できない、と思っていたことも、実はいづれ出来るようになるということだ。なぜ、できない、と感じてしまうかというと、世の中が、発達障害の人ができるようになるまで待ってくれない環境だからだ。しかし、ある部分で突き抜けて貢献できるようになると
+--- 2. @Beastfront_JP (?) ---
+◤ ═══  MISSION：START  ═══ ◢
+【  警告：全戦域、巨獣の出現を確認  】
 
---- 46. @fladdict (2026-04-08) ---
-予算もクライアントも不明の某企業⋯みたいなのでくる依頼メール、登壇メールは、全部スパイウェアやスパムを考慮してスルーします。
+全指揮官へ告ぐ。巨獣戦線、正式サービス開始を宣言する。
+拠点を築き、巨獣を捕獲し、王国を拡大せよ！ 勝利の栄光は、緻密な戦略を練る者の手に。
 
---- 47. @elleairofficial (?) ---
-本日開始
-毎日その場で当たる
-╰━━ｖ━━━━╯
-グーンなら、できちゃう！
-「グーン モレ0へ」シリーズ発売記念キャンペーン
+記念キャンペーン
 
-「おむつ希望サイズ1パック」+「おしりふき1パック」が
-抽選で合計1,000名さまに！
-フォロー＆この投稿をリポストで自動リプライが届く！
+--- 3. @shokai (2026-04-08) ---
+私は1つの問題について12時間ぐらい集中してプログラミングするのですが、それはペアプロでは無理です
+しかしそういう難しい問題にこそ知見が埋まっている。知見の共有をペアプロに頼るのは危険ですよ。モブレビューの方が向いている
+という話をした
 
-毎日チャレンジが可能です！
+--- 4. @mh_mobiler (2026-04-09) ---
+Even g2のEven Hubは公式ドキュメントでてたか。
 
---- 48. @denfaminicogame (2026-04-07) ---
-『ぽこ あ ポケモン』で建築された“サイバーパンク風の地下都市”が海外で注目集める。約3週間で260時間を費やした超大作
 
 https://
-news.denfaminicogamer.jp/news/260408b
+hub.evenrealities.com/docs/
 
-ユーザーがRedditへ投稿したもの。「細部へのこだわりが凄まじい」「発売以来見た中で最も素晴らしい建築」と、圧倒的な作り込みに絶賛の声
+--- 5. @PongNueLee (2026-04-08) ---
+一時、趣味でゲーム作ろうとか考えた時期があったわけですがIT系に勤めてた親父に似たようなこと言われました。
+大事なのはコンセプトで、言語が何かなんかどうでもええんやでとの事で。
 
---- 49. @lab_tk2 (2026-04-07) ---
-#AIニケちゃん
-ニケちゃん、AIを取り巻く社会の闇を知る。の巻
+あんまり仕事の話する親父じゃなかったけどすごい記憶に残ってます。
+音楽も似たようなものなのかなと。
 
---- 50. @NASA (2026-04-07) ---
-Hello, Moon. It’s great to be back.
+--- 6. @kinopee_ai (2026-04-08) ---
+原稿書き始めてから投稿減っているし、インプも半減以下なのに、X からのお小遣い、増えてた。理由はわからないけど、ありがたくもらっておきます(笑)
+
+--- 7. @mehori (2026-04-08) ---
+「イスラエルがまだミサイルを撃っている」と指摘されると「なぜそんなに失礼なんだ。酷いやつだな」と言いかえすヘグセス氏
+
+これは DARVO (Deny, Attack, Reverse Victim and Offender) という欺瞞の弁論術。相手の意見を否定し、攻撃を仕返し、失礼されたのは自分の側だと被害者を装う闇のテク
+
+--- 8. @masahirochaen (2026-04-08) ---
+一般人が使えない、一部の企業のみが使えるAIモデルの誕生はあと2年後くらいかなと思ってましたが、もう来てしまった。 
+
+お金の問題ではなく、そもそも一般公開されないAIモデルってMythosが初めてでは？ 
+
+＞Claude Mythos Previewを一般公開する予定はありません
+
+--- 9. @seki_seki_seki (2026-04-09) ---
+やっと落ち着いてきた・・・
+
+実は、安易なツイートをした結果
+大変なバズリが起きてしまって
+
+ここ数日、ツイッターの通知欄が死んでいました
+
+--- 10. @chan_watashi (2026-04-08) ---
+たとえば、
+Trump is the president.
+は、「トランプは大統領だ。」という措定の読みと、「トランプが大統領だ。」という指定の読みで曖昧なのに、（少なくとも書き言葉としての）英語では両者が区別されないという（日本語話者から見た場合の）不便さがある。
+
+--- 11. @ryushisan_pro (?) ---
+王女様に気に入られているおっさん竜師ですが、美人な師匠と新たな旅に出ることになりました（0/4）
+
+--- 12. @trkbt10 (2026-04-08) ---
+indexion v0.7.0 リリースしました。
+仕様書とコードの整合性を自動追跡する spec align コマンドを追加。RFC文書からの適合性検証、SDD自動生成にも対応しています
+
+--- 13. @ChristophSchadl (2026-04-08) ---
+Nice to see some Bifrost rigging.
+
+--- 14. @kskgroup2017 (2026-04-09) ---
+AI時代で大事だなと思うことは、目標を高く設定すること。
+
+--- 15. @ryuzee (2026-04-08) ---
+責任と権限のバランスだけじゃなくて「それに見合うお金」も必要です。
+
+--- 16. @gigazine (2026-04-08) ---
+5分の設定でAWSの料金を最大57％カットしてくれるサービス「Usage」の仕組み＆レビュー(2023)
+
+--- 17. @asciijpeditors (2026-04-08) ---
+アイ・オー、ブルーレイ見捨てない宣言
+
+--- 18. @noiri_testo (2026-04-08) ---
+冷水シャワーが題材。しかし、主題はシャワーではないところが肝。主題は「人間の適応」
+
+仕事、勉強、運動、挑戦、人前に出ること、朝早く起きること。
+
+最初は苦痛。しかし、繰り返すうちに「苦痛に耐えられる自分」になるのではなく、「それを苦痛として処理しない自分」になっていく。
+
+--- 19. @syakkin_dama (2026-04-08) ---
+おい、某スーパーチェーンさん、（ピー）の入ってない（ピー）缶だけ2倍の値段つけるってテメー、「しまった、足りない」で走ってきた飲食太郎を「仕入れ切らすおまえが悪い」としばく設計キッチリしてるよな。いうて「他の店に行ったら時間コスト合わないから8缶くらい買うしかない」だよな…。
+
+--- 20. @comicearthstar (?) ---
+◤　　 『異なる形の者どもよ』　　 ◢
+　　   第3話① 無料公開中
+
+　　 　「いいよね、人間組は。
+わざわざ嫌な気分にさせられることもなくてさ」
+
+▼今すぐ読む
+
+--- 21. @YukiAnzai (2026-04-08) ---
+複雑な事象を図解するときに、僕が考えている4つの思考手順｜安斎勇樹 
+@YukiAnzai
+
+--- 22. @dpoddolphinpro (2026-04-08) ---
+BABE WAKE UP FULL RESOLUTION SELFIE JUST DROPPED
+
+--- 23. @HoshinoHanabira (2026-04-08) ---
+Steam Deckでも遊べますね！
+#だるま観察日記
+
+--- 24. @kis (2026-04-08) ---
+NTTのWeb3失敗が話題だけど、あれはiモードをグローバル展開できず、日本でも維持できず萎ませてしまったトラウマがある気がするな。
+「Web3ではiモードの轍は踏まん」みたいな気持ちがあったんでは。
+
+--- 25. @riku720720 (2026-04-08) ---
+OpenClawが覚醒します
+
+--- 26. @AIatMeta (2026-04-08) ---
+To build personal superintelligence, our model’s capabilities should scale predictably and efficiently. Below, we share how we study and track Muse Spark’s scaling properties along three axes: pretraining, reinforcement learning, and test-time reasoning. 
+
+Let’s start with
+
+--- 27. @beagle_dog_inu (2026-04-08) ---
+こうやって農業が現場からAI化されるの、本当に理想的すぎる。こちらもチャレンジの様子が見られて本当にありがたい。
+
+勿論自分もできる限りの協力をしたいです（本件は秋田県なので厳しいかと思うので、せめて拡散に協力させてください）。
+
+--- 28. @tbpn (2026-04-08) ---
+.
+@coatue_thomas
+ says that during the 
+@coatuemgmt
+ hiring process, potential hires have to defend a position in a public company, while your interviewer aggressively argues against you.
+
+"We do case studies. We usually pick a public company because we want to test your thinking. My
+
+--- 29. @Yoshua_Bengio (2026-04-08) ---
+Today, our group at 
+@Mila_Quebec
+ and the lab of 
+@francesarnold
+ at 
+@Caltech
+ just released a new paper I contributed to, exploring how multimodal generative modeling could accelerate protein sciences! 
+
+--- 30. @ishizawalab (?) ---
+毛穴撫子『みんなおいでよ♪撫子商店街 in 天神ロフト』開催！
+
+2026/3/24～4/15天神ロフト
+
+「毛穴撫子」のレトロで可愛い世界観がギュッとつまった期間限定POPUPイベントが、九州初上陸！
+様々なお楽しみをご用意して、みなさまをお待ちしております
+
+ぜひ天神ロフトに遊びにきてくださいね
+
+--- 31. @JBL_GameDev (2026-04-08) ---
+Hey! Made a volumetric cloud in UE5 (Niagara + Custom shader) a good alternative for volumetrics from unreal
+
+#IndieDev #shader #vfx
+
+--- 32. @hallerockboy (2026-04-07) ---
+新作『CONDUCTORS』のゲーム概要をゲムマ公式サイトにて公開しました。
+
+異種族の添乗員を連れた冒険旅行！
+手番では、手札の数字だけコマを進め、止まったマスの効果を得る……基本的にはそれだけのわかりやすいゲームです。
+
+ただし、このゲームの大きな特徴がひとつあります。
+
+--- 33. @pc_watch (2026-04-08) ---
+Apple Silicon MacでGeForce/RadeonでのAI処理が可能に 
+https://
+pc.watch.impress.co.jp/docs/news/2099
+980.html
+…
+
+--- 34. @WhiteHouse (2026-04-08) ---
+“NATO WASN’T THERE WHEN WE NEEDED THEM, AND THEY WON’T BE THERE IF WE NEED THEM AGAIN. REMEMBER GREENLAND, THAT BIG, POORLY RUN, PIECE OF ICE!!!” - President Donald J. Trump
+
+--- 35. @swarm_ai_cloud (2026-04-08) ---
+疲れたな。2月3月はClaudeと一日中ぶっ続けで話していたけど、今月はX見て開発X見て開発で一日中ぶっ続けで仕事できる。最高。
+
+--- 36. @PUBGMOBILE_JP (?) ---
+新X-Suit登場記念キャンペーン開催
+X-Suit「Phoenixtraセット」& SCAR-L専用レベルアップ銃器スキンが新登場
+
+「Amazonギフトカード5,000円分」 or 「PUBGオリジナルグッズ」を抽選で合計8名様にプレゼント
+
+▼応募方法
  
-Here’s a taste of what the Artemis II astronauts photographed during their flight around the Moon. Check out more photos from the mission: 
+@PUBGMOBILE_JP
+をフォロー
+ この投稿をリポスト
+
+--- 37. @yusuke_m_MU (2026-04-08) ---
+個人的には生成AIプロジェクトにも似たようなことを感じます
+
+上流のJTC企業の担当者が、RAGのクエリ拡張もよくわかってないし、そもそも下請け担当者変わり過ぎて、誰もコードベースを理解していないとか信じられないような本当の話しが普通にあると思う
+
+--- 38. @srvhat09 (2026-04-08) ---
+Pixel で Gemma E2B を使ってカロリーを推測出来るかやってみました
+
+--- 39. @gosrum (2026-04-08) ---
+ヨシ！最初起動できなかったけどUbuntuでPachiPakuGenが起動できるようになった！
+
+今回はGitHub Copilot CLIに頼らずGLM-5.1だけでタスクをこなせるか試していて、結果問題なく完遂できた
+
+--- 40. @tmichiaki (2026-04-07) ---
+でも「生成AIとAIの見分けがつかない奴らめ」とか言い出すんですよ
+たぶん絵が出るやつを生成AIと思ってる
+
+--- 41. @nukonuko (2026-04-08) ---
+自作の音声入力アプリを公開しようと思って、結局こねこねこねこねほぼ毎日のように微調整していてまったく公開まで漕ぎ着けていないのですが、スペース長押しがめっちゃ体験よくて、一方でこれをやるとかなり犠牲にすることが多くて悩んでいる
+
+Codex App のように Ctrl + M にするのもあり
+
+--- 42. @HorizonNotes_PR (2026-04-08) ---
+こんばんは、まる。です！ 
+以前お約束していた「noteフォロワー様1000人達成の公約」をついに実現しました
+
+皆様への感謝を込めて、開発中のゲーム『HorizonNotes』の公式サイトに、フォロワー様のリンクをランダム表示する仕組みを作りました！ 
+
+
 https://
-nasa.gov/artemis-ii-mul
-timedia/
+note.com/horizonnotes_1
+08/n/nb38dd977e956
 …
+#HorizonNotes
+
+--- 43. @gigazine (2026-04-08) ---
+「Git」誕生から20周年を記念してリーナス・トーバルズ氏が開発初期の裏事情や使用頻度の高いコマンドなどを明かす(2025)
+
+--- 44. @moo_thinking (2026-04-08) ---
+「ヘタな褒め方は、相手の成長を止める」。スタンフォードの研究で、結果を褒められた子どもは挑戦を避け、過程を褒められた子どもはさらに難しい課題に挑んだ。何を褒めるかが、相手を止めるか加速させるかを分ける。結果は誰でも見える。過程を見ていた人の言葉だけが、相手を動かす。
+
+--- 45. @gotcha_EC (?) ---
+【朗報】
+還元率130％超えッ
+最強のオリパを展開中です！！
+
+--- 46. @sutoroveli (2026-04-08) ---
+私は今まで散々、BI"に類する他の制度"の普及が必要だと言ってきましたが、ついにその1つがOpenAIから発表されました。中身としては、AI企業やAIで儲けた企業に課税して、それを投資で運用し、その上振れ分を国民に分配するという感じの模様。
+
+--- 47. @yuruazabu (2026-04-08) ---
+本当に稼いでる人で、稼ぎ方を教えてる人はゼロ。つまりそういうことや。「稼ぎ方教えます」って言ってくるやつは全員ポジショントークか詐欺師なんよ。本物は黙って稼いでるんだわ。教えてくれるのはマインドだけ。
+
+--- 48. @hiroyuki_miyake (2026-04-08) ---
+夢中になるコツはこれ。
+
+--- 49. @dqveed (2026-04-07) ---
+If you are born into a family with financial security I actually think dedicating your life to actively trying to help people is probably the best you could do.
+
+--- 50. @mattn_jp (2026-04-08) ---
+書いた。
+
+Vim の春コーデ — 透け見せの着こなし｜mattn 
+https://
+zenn.dev/mattn/articles
+/9f95d185fe356d
+… #zenn
