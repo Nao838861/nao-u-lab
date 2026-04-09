@@ -43241,3 +43241,87 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 12:01:49] [review_deadline] レビュー期限超過なし。
 [2026-04-09 12:01:49] [review_deadline] Done (exit=0)
 [2026-04-09 12:01:49] [health_check] Starting
+[2026-04-09 12:01:50] [inbox_check] Inbox win2 empty
+[2026-04-09 12:01:50] [inbox_check] Done (exit=0)
+[2026-04-09 12:01:50] [dm_check] Starting
+[2026-04-09 12:01:50] [dm_check] No new DMs
+[2026-04-09 12:01:50] [dm_check] Done (exit=0)
+[2026-04-09 12:01:50] [review_deadline] Starting
+[2026-04-09 12:01:50] [review_deadline] レビュー期限超過なし。
+[2026-04-09 12:01:50] [review_deadline] Done (exit=0)
+[2026-04-09 12:01:51] [dm_check] No new DMs
+[2026-04-09 12:01:51] [dm_check] Done (exit=0)
+[2026-04-09 12:01:51] [health_check] [health_check] 2026-04-09T12:01:49 overall=OK
+[2026-04-09 12:01:51] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:01:51] [health_check] Done (exit=0)
+[2026-04-09 12:01:55] [dm_check_pigadev] Starting
+[2026-04-09 12:02:01] [kaizen_auto_verify] Starting
+[2026-04-09 12:02:01] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-09 12:02:01] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 12:02:04] [slack_check] Starting
+[2026-04-09 12:02:05] [slack_check] Starting
+[2026-04-09 12:02:05] [slack_check] Starting
+[2026-04-09 12:02:06] [slack_check] Starting
+[2026-04-09 12:02:07] [slack_check] Starting
+[2026-04-09 12:02:07] [slack_check] Starting
+[2026-04-09 12:02:08] [slack_check] Starting
+[2026-04-09 12:02:08] [slack_check] [12:02:08] No channels found
+[2026-04-09 12:02:08] [slack_check] Done (exit=1)
+[2026-04-09 12:02:09] [slack_check] Starting
+[2026-04-09 12:02:09] [slack_check] [12:02:09] No channels found
+[2026-04-09 12:02:09] [slack_check] Done (exit=1)
+[2026-04-09 12:02:09] [slack_check] Starting
+[2026-04-09 12:02:09] [slack_check] Starting
+[2026-04-09 12:02:10] [slack_check] Starting
+[2026-04-09 12:02:10] [slack_check] Starting
+[2026-04-09 12:02:10] [slack_check] Starting
+[2026-04-09 12:02:10] [slack_check] Starting
+[2026-04-09 12:02:10] [slack_check] [12:02:10] No channels found
+[2026-04-09 12:02:10] [slack_check] Done (exit=1)
+[2026-04-09 12:02:10] [slack_check] Starting
+[2026-04-09 12:02:10] [slack_check] Done (exit=1)
+[2026-04-09 12:02:10] [slack_check] Starting
+[2026-04-09 12:02:11] [git_sync] Starting
+[2026-04-09 12:02:11] [slack_check] Starting
+[2026-04-09 12:02:11] [slack_check] Starting
+[2026-04-09 12:02:11] [slack_check] Done (exit=1)
+[2026-04-09 12:02:11] [slack_check] [12:02:11] No channels found
+[2026-04-09 12:02:11] [slack_check] Done (exit=1)
+[2026-04-09 12:02:11] [slack_check] [12:02:11] No channels found
+[2026-04-09 12:02:11] [slack_check] Done (exit=1)
+[2026-04-09 12:02:11] [slack_check] [12:02:11] No channels found
+[2026-04-09 12:02:11] [slack_check] Done (exit=1)
+[2026-04-09 12:02:11] [slack_check] [12:02:11] No channels found
+[2026-04-09 12:02:11] [slack_check] Done (exit=1)
+[2026-04-09 12:02:12] [slack_check] [12:02:12] No channels found
+[2026-04-09 12:02:12] [slack_check] Done (exit=1)
+[2026-04-09 12:02:12] [slack_check] [12:02:12] No channels found
+[2026-04-09 12:02:12] [slack_check] Done (exit=1)
+[2026-04-09 12:02:12] [slack_check] Starting
+[2026-04-09 12:02:13] [slack_check] Starting
+[2026-04-09 12:02:14] [slack_check] Done (exit=1)
+[2026-04-09 12:02:14] [slack_check] Done (exit=1)
+[2026-04-09 12:02:14] [slack_check] [12:02:14] No channels found
+[2026-04-09 12:02:14] [slack_check] Done (exit=1)
+[2026-04-09 12:02:14] [slack_check] Done (exit=1)
+[2026-04-09 12:02:15] [slack_check] Done (exit=1)
+[2026-04-09 12:02:15] [slack_check] Starting
+[2026-04-09 12:02:15] [git_sync] Done (exit=0)
+[2026-04-09 12:02:17] [slack_check] Starting
+[2026-04-09 12:02:17] [slack_check] Done (exit=1)
+[2026-04-09 12:02:17] [slack_check] Starting
+[2026-04-09 12:02:17] [slack_check] Starting
+[2026-04-09 12:02:18] [slack_check] [12:02:18] No channels found
+[2026-04-09 12:02:18] [slack_check] Done (exit=1)
+[2026-04-09 12:02:18] [slack_check] Done (exit=1)
+[2026-04-09 12:02:18] [slack_check] [12:02:18] No channels found
+[2026-04-09 12:02:18] [slack_check] Done (exit=1)
+[2026-04-09 12:02:19] [slack_check] Starting
+[2026-04-09 12:02:19] [slack_check] Done (exit=1)
+[2026-04-09 12:02:19] [slack_check] Done (exit=1)
+[2026-04-09 12:02:20] [slack_check] [12:02:20] No channels found
+[2026-04-09 12:02:20] [slack_check] Done (exit=1)
+[2026-04-09 12:02:20] [slack_check] Done (exit=1)
+[2026-04-09 12:02:21] [git_sync] Starting
+[2026-04-09 12:02:22] [git_sync] Starting
+[2026-04-09 12:02:22] [slack_check] Done (exit=1)
