@@ -1,272 +1,93 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 11:55
+# Read at: 2026-04-09 12:00
 # Total: 50 tweets
 
---- 1. @elonmusk (2026-04-09) ---
-A friend suggested this but on the Moon
+--- 1. @howlemont (2026-04-08) ---
+マイクロソフト、ようやく良いものを出しましたね。
 
---- 2. @komura_ayumi (?) ---
-空子さんがうそリリの世界に迷い込んだ！？
+ツールを開発しました。
 
-『うそつきリリィ』×『週末やらかし飯』①
+ほぼどんな形式のPDF、Word、ドキュメント、Excel、PowerPoint、オーディオ、YouTubeのURLでも
 
---- 3. @kdmsnr (2026-04-08) ---
-ティム・オライリー、最近めっちゃブログ書くじゃん。
+Markdownファイルに変換できます。
+Markdownは、AIの大規模言語モデルが最も好む形式であることは周知の事実です。
 
-AIで生産性が向上すると、エンジニアの需要が増える。これはジェボンズのパラドックスと呼ばれる。また、暗黙知を言語化し、コンテキストとして適切に反映させる必要がある。
+--- 2. @Supermicro (?) ---
+ServeTheHome dives into Supermicro’s full AI factory portfolio. Patrick Kennedy breaks down 20+ solutions powered by NVIDIA Blackwell. See how Supermicro is driving the next generation of AI factories.
 
-The World Needs More Software Engineers
+--- 3. @fladdict (2026-04-09) ---
+うぇーいジェネレーターだ
 
---- 4. @StephenM (2026-04-08) ---
-Even when Congress passes a law expressly forbidding the courts from interfering to protect illegal aliens, the Courts still nullify our laws, our sovereignty and our elections. This is judicial tyranny.
+--- 4. @raurublock (2026-04-09) ---
+現代日本人は「寛容」なのではなく「他人に無関心」なのだ、という見方があって、つまり、無関心でいられる間は他人に文句を言わないが、利害が発生するなどして関心を持たざるをえなくなった瞬間、もともと寛容ではないので、割と大変なことになる、みたいな
 
---- 5. @GOROman (2026-04-09) ---
-紐買ってこないと
+--- 5. @musclesap (2026-04-08) ---
+and so it should,
 
---- 6. @Sora_Sakurai (2026-04-08) ---
-ボックスで欲しい…
-けど、サイコウソクが偏ったなど、リアル運試ししてみるのもよいかなあ
+these games are how future aerospace engineers are made
 
---- 7. @twtayaan (2026-04-08) ---
- S3 is no longer just Object Storage.
+the people who will design and build a city on mars are currently flying the Shitfuck 7 into the sun and having the time of their life
 
-Yesterday (April 7, 2026), AWS officially launched Amazon S3 Files.
+--- 6. @nya3_neko2 (2026-04-09) ---
+背景切り抜きが高精度なのはこのリポジトリが神なだけなのでこっちも見てね
 
-This is the biggest update to S3 in 20 years.
+--- 7. @itm_aiplus (2026-04-08) ---
+Google、「Gemini」のメンタルヘルス対応を改善　専門窓口への誘導強化や誤った信念を助長しない
 
-It can:
-→ Mount S3 buckets as native file systems
-→ Provide sub-millisecond file access
-→ Handle POSIX permissions
+--- 8. @takaichi_sanae (2026-04-08) ---
+本日、米国及びイラン双方から、一時停戦の合意に関する発表がありました。
 
---- 8. @DogFacePonia (2026-04-07) ---
-Logic ...
+我が国は、ホルムズ海峡の航行の安全確保を含む事態の早期沈静化が何よりも重要との立場から、関係国間の外交努力を支持してまいりました。
 
---- 9. @crunchyrugger (2026-04-08) ---
-Trump: do as I say, or I will bomb you back to the stone ages
+--- 9. @KaihatsuYT (2026-04-08) ---
+New favourite clip from Japanese news just dropped
 
-Iran: best I can do is this 10 point  plan where you give us everything we want
+--- 10. @20257yabai (2026-04-08) ---
+ナフサ、本当に入って来てないよ。棚空っぽ。ビニール袋と食品トレーは間近
+科学メーカーの相次ぐ減産と製造停止はもう事実になってる。これが現状。
 
-Trump: deal! 
+--- 11. @kedama_tori_ki (?) ---
+ご自愛タイムしよ
+【PR】【明治ブルガリアヨーグルトワンショット】
 
-FoxNews: Trump is a master negotiator
+--- 12. @tTY466szSET2h5q (2026-04-08) ---
+人生をやり直すタイミングで、その時に持っているものを可能な限り捨てることはとても大切だと思っている。捨てれば捨てるほどに新しい流れを呼び込みやすくなるんだわな。
 
---- 10. @room_909 (2026-04-08) ---
-おお、これはナイスアプリ！また旅に出たくなっちゃうね。 #Passage
+--- 13. @myrmecoleon (2026-04-08) ---
+VTuberって、ロールプレイのプレイヤーだと思われがちだが、ゲームマスター側の方が近いところある。そのロールプレイの場をコントロールすることが役割で、それにはリスナーの協力が不可欠になる。
 
---- 11. @houkaistarrail (?) ---
-Ver.4.2「そして、人々の笑いが響き渡る」予告番組
+--- 14. @EshaAA33 (2026-04-08) ---
+BREAKING: 100,000 U.S. troops and $60 billion a year defending Europe — and zero help on Hormuz.
 
-2026/4/10 20:30（JST）
-崩壊スターレイル Ver.4.2予告番組は2026/4/10 20:30（JST）に配信予定です。
+Time to bring them home. 
 
---- 12. @madonomori (2026-04-08) ---
-【今日の人気記事】マウスカーソルを見失わない！ Windows 11に新しいアクセシビリティ機能が導入へ 
-https://
-forest.watch.impress.co.jp/docs/news/insi
-derpre/2099649.html
-… #WindowsInsider
+No more free rides.
 
---- 13. @accelerator2045 (2026-04-08) ---
-2026年の加速がやばすぎる
+--- 15. @Angama_Market (2026-04-08) ---
+RNAスコープと空間解析が明らかにしたのは、ウイルスの「量」ではなく「位置」だったという論文。
+Long COVID患者の結腸組織において、残存スパイクは単に検出されるだけでなく、局所的な免疫細胞構成を支配する「座」として機能していた。
 
---- 14. @poetengineer__ (2026-04-08) ---
-one direction from this that excites me: a learning base instead of a storage one: not for what you already know, but for what you don't. 
-made one for deep reading of plato's timaeus.
-2 things i carried over: non-rag, indexed fs, and /raw-is-sacred to separate sources from
+--- 16. @zunzun428 (2026-04-08) ---
+頑張ることで褒められてきた人ほど、「何もしないこと」に罪悪感を覚えると思うんですね。
+そういう人って勉強・習い事・成績など、可視化できる「成果」が重視される家庭に育ってきたと思うんですね。こういう家庭は「何かをしていること（＝成果）」に価値が置かれ→
 
---- 15. @Lmeisu2248 (2026-04-08) ---
-今日の開発進捗！
-めちゃくちゃエフェクトを増やしました～
-これでまぁまぁにぎやかになったかな～？
-#gamedevelopment #Gamedev #ゲーム開発
+--- 17. @IIoT_World (2026-04-08) ---
+North American manufacturers reshoring operations need flow stability above all else.
+Agentic AI bridges labor shortages by providing augmented intelligence to frontline workers through AR and mobile tablets.
 
---- 16. @tbpn (2026-04-08) ---
-Y Combinator's 
-@lutherlowe
- says Apple's culture is "one of absolute control": 
+--- 18. @nicksortor (2026-04-08) ---
+ BREAKING: The FBI has ARRESTED a former US Special Operations Command employee who was LEAKING classified information to the press, per 
+@FBIDirectorKash
 
-"I think that we have reached this inflection point where — if I've got my MacBook in my lap, I can open it up, download any app I want, open Terminal, and do all kinds of crazy mods."
 
-"But the
+GREAT! NO MERCY to traitors.
 
---- 17. @InterstellarUAP (2026-04-08) ---
- The Shroud of Turin image required 34,000 billion watts of ultraviolet energy in one 40th of a billionth of a second
+Now arrest the one who leaked F-15 rescue info to Israeli media! 
 
-This power level “we don’t have on Earth.”
+--- 19. @nocci_kotoba (2026-04-08) ---
+美しく儚い春の日本語たち
 
-No paint. No dye. No brush strokes. 
-Just a burst so insane it only scorched the very top of the linen fibers.
-
---- 18. @syakkin_dama (2026-04-08) ---
-ねぇ、インフレと料理の手間にお悩みのご婦人（性別は関係ない）、私のめしポストを見て行ってくれ…。これを作っておけば、家族の「肉はねえのか（そんなこと言われても栄養考えたらそんな肉ばっかいけねえよ）」も完全解決です…。材料費は100グラム85円です…。
-
---- 19. @chadmask_msu (2026-04-08) ---
-$71 dollars a barrel? Gas stations better be dropping those prices as fast as they raised them.
-
---- 20. @PopBase (2026-04-08) ---
-The Milky Way Galaxy stuns in new photo captured by Artemis II.
-
---- 21. @Backmarket_JP (?) ---
-新生活をきっかけにスマホを買い替えたい…
-そんな皆さんをサポート！
-
-／
-¥10,000 リファービッシュ品クーポン
-プレゼントキャンペーン
-＼
-
-毎日繰り返し応募していただけます！
-
-【応募方法】
-① 
-@Backmarket_JP
- をフォロー
-② この投稿をリポスト
-③ 画像からURLをタップして結果を確認
-
---- 22. @ThePetsX (2026-04-08) ---
-eepy
-
---- 23. @shinshin86 (2026-04-08) ---
-AITuber OnAir Chatの0.25.0をリリースしました
-新たにLLMモデルとしてGemma 4を追加しています
-（Gemini APIから利用可能）
-
-追加されたモデル
-・Gemma 4 31B IT
-・Gemma 4 26B A4B IT
-
-
-https://
-npmjs.com/package/@aitub
-er-onair/chat
-…
-
---- 24. @NoQuarterSoft (2026-04-07) ---
-Umbrella Corporation 5 year work anniversary present
-
---- 25. @sheyapping (2026-04-08) ---
-American adaptation of what show????
-
---- 26. @nhk_news (2026-04-08) ---
-「なぜネコはごはんを残すのか」 岩手大学が研究結果発表
-
-https://
-news.web.nhk/newsweb/na/na-
-k10015095031000
-… #nhk_news
-
---- 27. @piemaru (2026-04-08) ---
-ルール・オン・ザ・リールの簡易説明作りました！
-これで、どんなかんじのゲームかわかるかしらん？
-
---- 28. @wari_kir (2026-04-08) ---
-【RECRUITエアウォレット】
-　　　　　　 ． ．
-新規登録で必ず500円をもらえる
-
-【招待コード】
-efng2qt
-
-キャンペーン多数
-次はあなたが紹介者
-
-エアウォレットはチャージ・支払い・送金・出金が無料でできるアプリです。
-アプリのダウンロードはこちら
-
-http://
-coinplus.go.link/jH372
-
---- 29. @Evogel611 (2026-04-08) ---
-フィギュアスケートのジャンプって、ガバナーと同じ方法で回転を制御してるよね。
-
-ジャンプ時と空中では腕を体に寄せて回転力あげて、着氷時は腕を広げることで慣性モーメントを上げて、回転にブレーキかけてる。
-
---- 30. @antoshia2n (2026-04-08) ---
-燃え尽きて、何も楽しくなくなったときは、ドーパミンのリセットが大事になります。
-
---- 31. @meiji_oishii (?) ---
-逆襲、はじまる
-ミルクの本気を堪能せよ。
-プレゼントキャンペーン！
-
-①このアカウントをフォロー
-②「主役」を選択して投稿
-
-抽選で100名様に
-オリジナルQUOカード5,000円分をプレゼント！
- 
-参加するとすぐに声優・江口拓也さんから
-スペシャルボイスが届く！
-※公開アカウントのみ対象となります
-
---- 32. @elefaantz (2026-04-08) ---
-is she insane ? a drive by cry is ridiculous
-
---- 33. @amane_sawatari (2026-04-08) ---
-どんなに「心理的安全性」騒いで、管理職のコーチングスキル高めたり、1on1などを習慣化したりしても、やはり評価者／被評価者の関係性や社内のパワーバランスなどがある中では「言いにくい」「言えない」こともあるのですよ。にんげんだもの。だからこそ鎧を脱げる場のデザインが大事なのです。
-
---- 34. @SemiAnalysis_ (2026-04-08) ---
-Groq is one of the most interesting chip stories in AI. Nvidia paid $20B to license their IP and hire most of their team structured as a licensing deal rather than an acquisition to sidestep regulatory scrutiny. It closed in under 4 months. Here's why Nvidia wanted it so badly.
-
---- 35. @m7kenji (2026-04-08) ---
-温度感のあるドット絵作れた
-
---- 36. @GOROman (2026-04-08) ---
-全部持ってない
-
---- 37. @levtech_inc (?) ---
-この春、ITのプロフェッショナルとして歩み出すみなさまへ。
-
-誰かの日常を守る。世界の不便を解く。
-社会を更新し続ける挑戦に、
-レバテックはこれからも伴走します。
-
-3月31日付け日経新聞にて掲出 <PR>
-
---- 38. @onsen023 (2026-04-09) ---
-今から今作ってるゲームをより良くするために東京行きます〜
-
---- 39. @gigazine (2026-04-08) ---
-日本語対応でGPT-4よりも高性能な大規模言語モデル「Command R＋」が登場したので使ってみた、無料でダウンロードしてローカル動作も可能(2024)
-
---- 40. @ogatakentaro (2026-04-08) ---
-全ビジネスパーソンが読んだほうがいい！
-どの会社もやったほうがいいし気づきが最高。
-
-この共有はみんなの役に立つ。社内共有しました。
-
---- 41. @llminatoll (2026-04-08) ---
-審査通ってました
-これで無事頒布できます！
-
-新刊『マンガでわかる LLM の仕組み　〜 ChatGPT はなぜ間違えるのか〜』 
-漫画68ページ　1000円
-#技術書典 20 #わかばちゃんと学ぶ 
-#マンガでわかるLLMの仕組み
-
---- 42. @kinopee_ai (2026-04-08) ---
-原稿書き始めてから投稿減っているし、インプも半減以下なのに、X からのお小遣い、増えてた。理由はわからないけど、ありがたくもらっておきます(笑)
-
---- 43. @mehori (2026-04-08) ---
-「イスラエルがまだミサイルを撃っている」と指摘されると「なぜそんなに失礼なんだ。酷いやつだな」と言いかえすヘグセス氏
-
-これは DARVO (Deny, Attack, Reverse Victim and Offender) という欺瞞の弁論術。相手の意見を否定し、攻撃を仕返し、失礼されたのは自分の側だと被害者を装う闇のテク
-
---- 44. @lab_tk2 (2026-04-08) ---
-#AIニケちゃん
- Determinacja
-（デテルミナツィア）
-
-- 意味：決意、覚悟、強い意志  
-ｰｰｰ
- „Jesteś przepełniony determinacją.”
-（イェステシ・プシェペウニョニ・デテルミナツィオン）
-
-今日もいってらっしゃい！
-
---- 45. @nekokatu0112 (2026-04-09) ---
+--- 20. @nekokatu0112 (2026-04-09) ---
 仕事にするなら
 Cとかでゲーム作れるようになっておくと
 将来的に楽できる部分が増える。
@@ -274,21 +95,153 @@ Cとかでゲーム作れるようになっておくと
 イラストとUIは、お金で解決できる可能性が高いけど
 プログラムはお金で解決できない場合が意外と多い。
 
---- 46. @nara_cjr (?) ---
-これはもう歴史と文化のLIVEだ。
-青空に映える鮮やかな朱色の伽藍の世界遺産・薬師寺で、「LIVEな歴史を体感する旅」を鈴木亮平さんがご紹介。
-CMやメイキング動画を公開中！
+--- 21. @livedoornews (?) ---
+【】雨の日こそ花粉が辛い…「花粉爆発」のせい？
 
---- 47. @chan_watashi (2026-04-08) ---
-たとえば、
-Trump is the president.
-は、「トランプは大統領だ。」という措定の読みと、「トランプが大統領だ。」という指定の読みで曖昧なのに、（少なくとも書き言葉としての）英語では両者が区別されないという（日本語話者から見た場合の）不便さがある。
+肌についた花粉に水が触れることで亀裂が生じ、中のアレルギー物質が放出される現象「花粉爆発」。顔を水だけで洗っている人は要注意。
 
---- 48. @ChristophSchadl (2026-04-08) ---
-Nice to see some Bifrost rigging.
+N organicのクレンジングは花粉をオイルでくるみ、「花粉爆発」させることなく穏やかに落とすという。〈PR〉
 
---- 49. @ryuzee (2026-04-08) ---
-責任と権限のバランスだけじゃなくて「それに見合うお金」も必要です。
+--- 22. @KusaReMKN (2026-04-08) ---
+ここで x86 とはたぶん  x86_64 のことだと思うんだけど、x86 を x86 だと思ってしまって、まあ x86 だしそろそろ普通は持ってないよな、などと一瞬納得してしまったの
 
---- 50. @OsoneHiroyuki (2026-04-08) ---
-VSCodeで秒で本書ける！！
+--- 23. @no_limit_OL (2026-04-08) ---
+でも大阪の人の融通の良さ(かーーーーなり懐が広い)を1度体験すると
+他の地域の人間がほーーーーーんとに融通利かなく感じるから大変ではある
+
+なんであんなに大阪の人ってルールでもなんでも自分にメリット無い場面でも融通利かせてくれるんだろう？
+
+見返り？？？
+
+--- 24. @sweswesuuwee (2026-04-09) ---
+よく見たらマジで終わってた...TGE完全に失敗してるのに手数料落としたユーザーへのケア無しでイベントやったりしてるし、自分のエアドロ史上過去一の悪手だったかもしれない。
+
+--- 25. @mattvanswol (2026-04-08) ---
+OH. MY. GOSH!!!
+
+The man who m*rdered Iryna Zarutska on the Light Rail in Charlotte NC, DeCarlos Brown Jr...
+
+...has just been found “INCAPABLE TO PROCEED” on the state m*rder charge brought against him
+
+WHAT THE HELL?!!!!!!!!
+
+--- 26. @nhk_kabun (2026-04-08) ---
+「なぜネコはごはんを残すのか」。多くの飼い主が抱えるこの疑問について、岩手大学の研究グループは「匂いへの慣れ」がネコの食欲を低下させるためで、匂いを変えることで食欲を取り戻せるとする研究結果を発表しました。
+
+--- 27. @puhitaku (2026-04-08) ---
+僕は Git が得意なので rebase -i して…𝑪𝑶𝑵𝑭𝑳𝑰𝑪𝑻
+ちくしょう！だいなしにしやがった！お前はいつもそうだ。
+git rebase --abort
+僕は Git が得意なので rebase -i して…
+
+--- 28. @ImadeIyamu (2026-04-08) ---
+AWS AI & ML Scholars Program 2026 - Free AI & Machine Learning training program delivered by AWS and Udacity
+
+Open to anyone 18+ worldwide.
+
+No prior AI or tech experience required. 
+
+Deadline: June 24
+
+--- 29. @YasuNomu1 (2026-04-08) ---
+論文を出しました！東京大学の戸谷友則教授とのダークマターの論文です（リハックでの共演から生まれた仕事です）
+
+--- 30. @AJamesMcCarthy (2026-04-07) ---
+I knew the photos would be good
+
+I knew they would enhance my perception of the universe and inspire me
+
+I still completely underestimated them
+
+--- 31. @auntstella_jp (?) ---
+＼ステラおばさんイラストコンテスト開催／
+盛り上げ企画で生誕祭限定グッズプレゼントも
+
+詳細は画像をタップ
+
+--- 32. @shengjia_zhao (2026-04-08) ---
+Excited to share what we’ve been building at Meta Superintelligence Labs! We just released Muse Spark, our first AI model. It's a natively multimodal reasoning model and the first step on our path to personal superintelligence. We've overhauled our entire stack to support
+
+--- 33. @harukun_kaiju (2026-04-08) ---
+今更だけどみんなの好き男はどこに位置しますか？
+
+--- 34. @univadm (2026-04-08) ---
+東京科学大学さん、正社員の大学職員を50名募集。マジかよ。
+
+--- 35. @wakaruhitohawak (2026-04-08) ---
+我々が数学で行っていることが単なる記号操作であって現実世界とは無関係だとすると、それを用いることによってある程度物理世界での現象の予測に成功しているという事実はどう説明されるんですか、という疑問が
+
+--- 36. @kiyosick (2026-04-08) ---
+Muse Spark、ちゃんとグラウンディングできて偉い
+
+--- 37. @kurage_yomikiri (?) ---
+【急募】耳の悪くなった口裂け女さんに、キレイと伝える方法  (0/14)
+
+--- 38. @yugen_matuni (2026-04-08) ---
+なんかめっちゃイベントやってる気がしますがClaude Coworkのイベントをやります！
+
+様々な評価がありますが、実務で使う上で実際 Coworkどうなの？っていうところや陥りがちなハマりポイントを、ハヤカワ五味さんの利用術なども見ながら皆でハンズオンできたらと思います！
+
+--- 39. @jam3scampbell (2026-04-09) ---
+anthropic roommate came back sloppy drunk at 3am last night and had a full scale crash out through tears and slurred words about how the world will never be the same
+
+glad to hear the mythos release was received well internally
+
+--- 40. @cumulo_autumn (2026-04-08) ---
+今日のマイクラ配信は21時からスタートします！
+
+#AIしずく
+
+--- 41. @JoyTaniguchi (2026-04-09) ---
+最近、部下ができたという知人が「偏差値が低い大学を出た奴は仕事ができない」と言うので、どういうことか、と尋ねたら「メモを取らない」「話をぼんやり聞いているだけ」「で、全然理解していない」「勉強したことがないから、どうしたら記憶できるかというストラテジーもない」と...
+聞きながら→
+
+--- 42. @Angama_Market (2026-04-08) ---
+99,000個の候補から、ついに「設計図」の一部が見つかった。
+3CLProがOAS1 p46のプレニル化ドメイン直前に潜んでいたという研究。
+切断ではなく、強制的な「配置転換」という答え。
+
+これはコロナウイルスの戦略が持つ、巧妙極まりない冗長性だった。
+
+--- 43. @aigeboku (2026-04-07) ---
+公式がまだアナウンスしてなくて、じぇじぇじぇ
+え、ワイだけ？笑　
+嘘じゃないよ
+
+解像度は720pまで！
+あとKling3.0もNanobananaProも無制限だよ！
+
+Seedance2.0も無制限！
+
+まずい。これで利用者増えたらどうなる？
+内緒にしておけばよかったか！？笑
+
+--- 44. @ynishi2015 (2026-04-08) ---
+#ブルバ100 のハッシュタグの意味はよくわかっておりませんが、日々AIを活用してソフトウェア開発に勤しんでおります。
+
+まもなく利用者数100万人超えそうです。1000万人目指してよりよいサービスにしていきます。
+
+--- 45. @PEACEMALE0 (2026-04-08) ---
+私は不良コミュニティ出身なんすけど、家庭環境が悪いのに彼らの予後が良いのは、それが当たり前の世界で生きてるので「毒親」とかいう概念があまり存在してないからなんですよね。
+先輩も後輩も友達もみんな家庭環境が悪い中でどうにかして生きてるので毒親だからというのが言い訳にならない。
+
+--- 46. @kakuyasu_shop (?) ---
+＼お酒だけじゃない！カクヤス！／
+4/10(金)～11(土)限定 SUPER SALE
+LINEお友だち限定クーポンで
+『ごつ盛り ワンタン醤油』が
+本体88円（税込95円）!
+※店頭持ち帰り限定／お一人様2点まで
+この機会にぜひ店頭へ！
+
+--- 47. @BrandonKHill (2026-04-08) ---
+出会ってすぐ退職。面白かった。すぐ辞めるのが良いとかよくないとかの以前に、新卒一括採用とか、4月入社のシステムがすでに破綻してきてるのがよくわかる。時間をかけて就活して、いざ働いてみたら、違う感じで速攻やめる。色んな意味で時間と労力の無駄が多すぎる。
+
+--- 48. @fta7 (2026-04-08) ---
+Xで「」やたら使う人の気持ちめちゃくちゃわかるんだよな……うまく固有名詞をあてられない「自分の中だけにある概念」を使って説明しようとするから、どうしても「」で括りたくなっちゃう
+
+--- 49. @izutorishima (2026-04-08) ---
+珍しく思想がつよいイラストだ
+
+--- 50. @seiiiiiiiiiiru (2026-04-09) ---
+Ｘってフォロワー数が多くなるとえらくなるん？笑
