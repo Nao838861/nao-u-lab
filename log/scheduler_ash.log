@@ -65512,3 +65512,4 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 01:30:03] [auto_diary] Starting
 [2026-04-10 01:42:03] [auto_diary] Timeout (720s)
 [2026-04-10 01:42:13] [slack_check] Starting
+[2026-04-10 01:42:36] [dm_check_pigadev] Starting
