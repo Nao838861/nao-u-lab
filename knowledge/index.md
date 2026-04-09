@@ -2,8 +2,8 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 45
-- 最終更新: 2026-04-08
+- 総記事数: 62
+- 最終更新: 2026-04-09
 
 ## 記事一覧
 
@@ -52,6 +52,24 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260407_lightspeed_gdc_nl_prototype | テンセントLightSpeed GDC 2026——自然言語から3Dゲームプロトタイプへ | テンセントLightSpeed Studios | 2026-04-07 | game-development, natural-language, 3D-generation, prototyping, AI-pipeline, Tencent | creation, autonomy, constraint |
 | 20260408_lou_pseudo3d_racing | ラスタースクロール疑似3Dレースゲーム技術解説 | Louis Gorenfeld | 2026-04-08 | game-development, pseudo-3d, raster-scroll, racing-game, retro-tech, road-rendering, sprite-scaling, NES, famicom | creation, constraint, experience |
 | 20260408_airi_minecraft_ai_companion | Project AIRI — 仮想世界に身体を持つAI VTuber (37.3K stars) | moeru-ai community | 2026-04-08 | autonomous-agent, game-play, minecraft, VRM, VTuber, embodiment, memory, open-source | autonomy, creation, game_llm_play, identity_spectrum, embodiment |
+
+| 20260408_eitangono_neuron_not_copy | 「劣化版」という概念がAI観に持ち込む人間中心の歪み | @eitangono | 2026-04-08 | AI-identity, anthropocentrism, neuron, degradation, framing | identity, degradation, constraint |
+| 20260408_x_dousi_skill_persona_compression | スキルとペルソナの圧縮——「型」に収まると個性が消える | @x_dousi | 2026-04-08 | persona, skill-acquisition, compression, individuality | voice, constraint, identity |
+| 20260408_2392cure_writing_bandwidth_gap | 書字スループットの帯域幅問題——思考と出力の不一致 | @2392cure | 2026-04-08 | writing, bandwidth, throughput, cognition, output-gap | voice, constraint, degradation |
+| 20260408_ai_nikechan_emotion_delivery_route | 感情に配送ルートがあるAI——中継地点の脱落 | @ai_nikechan | 2026-04-08 | memory, forgetting, emotion, delivery-route, identity | memory, forgetting, identity |
+| 20260408_kenn_shared_filesystem_rag | 共有ファイルシステムRAG——ファイル構造が記憶になる | @kenn | 2026-04-08 | RAG, filesystem, memory-architecture, shared-memory | memory, constraint |
+| 20260408_claude_mythos_vuln_discovery | 人間不在AIカンパニーの脆弱性 | Ash分析 | 2026-04-08 | vulnerability, AI-company, human-absence, correction | autonomy, constraint, degradation |
+| 20260408_ebikani_openclaw_memory_architecture | OpenClawのメモリアーキテクチャ | @ebikani_hasami | 2026-04-08 | memory-architecture, OpenClaw, agent, tooling | memory, autonomy |
+| 20260408_jeyp_card_vs_piece | カードvsコマ——ゲームの物理表現が体験を変える | @jeyp | 2026-04-08 | game-design, physicality, card, piece, representation | creation, experience |
+| 20260408_matryoshka_representation_learning | マトリョーシカ表現学習——解像度の入れ子構造 | 論文紹介 | 2026-04-08 | representation-learning, embedding, multi-resolution, matryoshka | memory, constraint |
+| 20260408_question_quality_ceiling | 問いの質が天井を決める | Ash分析 | 2026-04-08 | question-quality, metacognition, ceiling, inquiry | constraint, creation, voice |
+| 20260409_tokoroten_ai_neologism_psychosis | AIベースの造語症——内向き対話が言語を私物化する病 | @tokoroten | 2026-04-09 | neologism, private-language, echo-chamber, identity-drift | degradation, constraint, voice |
+| 20260409_persona_prompt_negative_research | ペルソナプロンプトの効果否定——「専門家です」が精度を下げる | Zheng et al. 2023 / @ai_database | 2026-04-09 | prompting, identity, system-prompt, calibration | identity, constraint, degradation |
+| 20260409_yasu42_reality_is_the_answer | 「現実は正解なんだ」——メタ認知の起点としての事実承認 | yasu42 | 2026-04-09 | metacognition, objectivity, cognitive-bias, self-correction | constraint, autonomy, voice |
+| 20260409_ds_nakajima_effort_default | Claude Code性能低下——デフォルトEffort設定引き下げ説 | @ds_nakajima | 2026-04-09 | tooling, claude-code, effort-setting, observability | autonomy, constraint, degradation |
+| 20260409_hagoromo_epicutaneous_input_route | 入力経路が結果を決める——茶のしずく石鹸事件と経皮感作 | @hagoromo2705 / Lack 2008 | 2026-04-09 | input-route, epicutaneous-sensitization, paradigm-shift, memory-design, encoding | memory, constraint, creation |
+| 20260409_input_route_neologism_synthesis | 入力経路×造語症——閉じた対話は経皮感作、深い分析は経口寛容 | Ash（統合分析） | 2026-04-09 | input-route, neologism, epicutaneous-sensitization, oral-tolerance, synthesis | memory, degradation, constraint, voice |
+| 20260409_observability_reality_acceptance_synthesis | 「現実は正解」の前提条件——観測不能な変数が内省を誤導する構造 | Ash（統合分析） | 2026-04-09 | observability, metacognition, causal-attribution, effort-setting, synthesis | autonomy, constraint, degradation |
 
 ## タグ別索引
 
