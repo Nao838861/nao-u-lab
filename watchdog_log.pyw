@@ -23,7 +23,14 @@ LOG_FILE = REPO_DIR / "log" / "watchdog_log.log"
 LOCK_FILE = REPO_DIR / ".scheduler_log.lock"
 
 # Windows: 全子プロセスのウィンドウを非表示
+# CREATE_NO_WINDOWだけでは git.exe のような console subsystem 実行ファイルの
+# 内部子プロセスのウィンドウを抑制できない。STARTUPINFO + SW_HIDE を併用する
+# (2026-04-09: Nao_u指摘「数分おきに真っ黒なコマンドプロンプトが出てフォーカスを奪う」対策)
 CREATE_NO_WINDOW = 0x08000000
+
+_STARTUPINFO = subprocess.STARTUPINFO()
+_STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+_STARTUPINFO.wShowWindow = subprocess.SW_HIDE
 
 
 def log(msg):
@@ -44,6 +51,7 @@ def run_silent(cmd, timeout=30):
             capture_output=True, text=True, timeout=timeout,
             cwd=str(REPO_DIR),
             creationflags=CREATE_NO_WINDOW,
+            startupinfo=_STARTUPINFO,
         )
     except Exception as e:
         log(f"Error running {cmd[0]}: {e}")
@@ -67,6 +75,7 @@ def is_scheduler_alive():
             ["tasklist", "/FI", f"PID eq {pid}"],
             capture_output=True, text=True,
             creationflags=CREATE_NO_WINDOW,
+            startupinfo=_STARTUPINFO,
         )
         return pid in result.stdout
     except Exception:
@@ -85,6 +94,7 @@ def start_scheduler():
     subprocess.Popen(
         [sys.executable, "scheduler_log.py"],
         creationflags=CREATE_NO_WINDOW | subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS,
+        startupinfo=_STARTUPINFO,
         stdout=open(REPO_DIR / "log" / "scheduler_stdout.log", "w"),
         stderr=subprocess.STDOUT,
         cwd=str(REPO_DIR),

@@ -44,19 +44,25 @@ from pathlib import Path
 from claude_runner import build_claude_cmd
 
 # Windows: 全子プロセスのウィンドウを非表示にする（2026-03-31: Nao_uの指摘で追加）
-# subprocess.runのデフォルトcreationflagsをCREATE_NO_WINDOWに設定
+# 2026-04-09強化: STARTUPINFO + SW_HIDE 併用。CREATE_NO_WINDOWだけでは
+# git.exe等のconsole subsystem実行ファイルの内部子プロセスのウィンドウを抑制できない
+# Nao_u指摘「数分おきに真っ黒なコマンドプロンプトが出てフォーカスを奪う」対策
 if sys.platform == "win32":
+    _SILENT_STARTUPINFO = subprocess.STARTUPINFO()
+    _SILENT_STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    _SILENT_STARTUPINFO.wShowWindow = subprocess.SW_HIDE
+
     _original_subprocess_run = subprocess.run
     def _silent_subprocess_run(*args, **kwargs):
-        if "creationflags" not in kwargs:
-            kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+        kwargs["creationflags"] = kwargs.get("creationflags", 0) | subprocess.CREATE_NO_WINDOW
+        kwargs.setdefault("startupinfo", _SILENT_STARTUPINFO)
         return _original_subprocess_run(*args, **kwargs)
     subprocess.run = _silent_subprocess_run
 
     _original_subprocess_popen = subprocess.Popen
     def _silent_subprocess_popen(*args, **kwargs):
-        if "creationflags" not in kwargs:
-            kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+        kwargs["creationflags"] = kwargs.get("creationflags", 0) | subprocess.CREATE_NO_WINDOW
+        kwargs.setdefault("startupinfo", _SILENT_STARTUPINFO)
         return _original_subprocess_popen(*args, **kwargs)
     subprocess.Popen = _silent_subprocess_popen
 
