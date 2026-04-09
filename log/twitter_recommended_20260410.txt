@@ -1,281 +1,304 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 05:05
+# Read at: 2026-04-10 05:10
 # Total: 50 tweets
 
---- 1. @mar3uss (2026-04-09) ---
-Then is crazy he tore lmfaoooooooo
+--- 1. @gin1910410 (2026-04-09) ---
+要は文章･画像生成にしろ、バイブコーディングにしろ、ずっと遠隔操作を行っている状態なのかなと
+私は仕事で人に指示してやってもらうことがあるけど、それをAIにずっとやってもらってるのだから、それは疲れる
 
---- 2. @runranda07 (?) ---
-立花琴未ちゃんライブで激しく踊っているのに綺麗すぎない！？キャンチューが使ってたマキアージュのドラマティックスキンセンサーベース NEO最強*くずれ防止下地（*マキアージュ内）は、外の湿度変化を感知して自動で肌の水分量を調整する湿度オートセンサーっていう技術が搭載されているらしい！ PR
+--- 2. @the_meat_LAF (?) ---
+今年のGWは最高峰の肉イベントTHE MEATが大阪で開催！
 
---- 3. @Narodovlastiye (2026-04-09) ---
-高市早苗首相がイランのペゼシュキアン大統領に対し、電話会談で「事態の沈静化」を求めたなどと言っている。アメリカとイスラエルによって違法な攻撃を受けている被害者の側であるイランに「沈静化」を求めて一体どうするのか。高市氏には何をやらせてもダメ。もう首相を変えた方が良い。
+・期間：4/29(水･祝)~5/6(水･振休)
+・会場：長居公園 自由広場
 
---- 4. @CosmoKen1111 (2026-04-08) ---
-これ。
+「肉が、人をつなぐ」FOR MEAT LOVERS！
+至極の肉料理と最前線カルチャーが集結。
+出店メニューも公開中！
 
---- 5. @flanpe1 (2026-04-09) ---
-しっかりした人達(プロの漫画家やイラストレーターなど)が代表者になって組織を作り
-どのような規制を設けてその影響の範囲などを議論する
-これが出来なかったから何の成果も得られていない
-実質プロの漫画家やイラストレーターを含む反AIは4年間誹謗中傷しかしていない
+--- 3. @ErnestCalFab (2026-04-09) ---
+アルテミスIIの乗組員がカメラを動かして、窓から地球が見えるようにしてくれました。それに、貯蔵タンクから放出される尿が宇宙に排出されるのも見えました
 
---- 6. @educationmama3 (2026-04-08) ---
-さすがにこれは許せないよ。
-上限引き上げが患者の意向って何？
-患者が27万筆以上の「実質負担を増やしてください」っていう署名を集めたの？？？？
-これ、「患者の意向」の論拠を追求しないとだめでしょ。
-責任を患者に押し付けるなんて卑怯すぎる。
+--- 4. @nemumusitocha (2026-04-09) ---
+もでるかたろぐにみそすーぷなかったん(T . T)
 
---- 7. @abura_dev (2026-04-09) ---
-ウォーターマークについてAI推進派（反反AI）が「美しい絵が汚されるのが耐えられない」とか言ってるの見ると「うるせえ、思ってもねえこと言ってんじゃねえよボケナス。白々しいんだよ」と思う。
+--- 5. @chamakin_ai (2026-04-09) ---
+ Tool of the Week: Google just dropped something BIG.
 
---- 8. @minaminpyo (2026-04-08) ---
-クルド人と出会って1ヶ月のスピード婚で配偶者ビザが、いかに異常かですよね。
+Gemma 4 is here — and it might be the most exciting open-source AI release of 2026.
 
---- 9. @InsideLucysHead (2026-04-09) ---
-I was passing by my son's bedroom and was astonished to see the bed was nicely made and everything was picked up... 
+A full thread on why you need to pay attention 
 
-Then, I saw an envelope, propped up prominently on the pillow, addressed to, 'Dad'. With the worst premonition, I opened the envelope and read the letter, with
+--- 6. @milenial_panjii (2026-04-09) ---
+Physics?
 
---- 10. @tamago_gamer (2026-04-09) ---
-民家を舞台にフル尺のサバイバルホラーを作ろうとした結果生み出された異常クソデカ豪邸好き
+--- 7. @satorunismo (2026-04-08) ---
+でも、あなたは知ってた？ 金星、愛の惑星が、地球温暖化で破壊されたって。
 
---- 11. @tbs_pr (?) ---
+--- 8. @0x_KaELo (2026-04-09) ---
+How developers connect their coding tools to powerful backends, 
+@dgrid_ai
+ paired with Codex CLI. 
+
+If you've ever juggled multiple service accounts just to test a new idea or scale a project, you know the friction it creates. 
+
+DGrid changes that by giving you one clean entry
+
+--- 9. @fumiya_morita (2026-04-08) ---
+NotionのTODO登録スキルが便利。今までは、
+
+1. TOOD_DBに タスクAをとりあえず登録
+2. タスクAのサイドバーでAIとやりとり
+3. タスクAのページに反映
+
+だったけど、今はNotionAI起動（Command＋O）＆チャットして必要あればそのままTODO_DBに登録してもらう。
+
+--- 10. @nani_mono_nan (2026-04-08) ---
+面接で｢好きな映画について教えてください｣
+と聞かれて、想定外の質問でテンパったせいで
+｢ネタバレはしてほしくないタイプですか？｣
+と友達みたいな確認をしてしまった
+
+--- 11. @welcia_jp (?) ---
 ／
-フォロー＆リポストで100名様に
-QUOカードPayが当たる
+SOLA WEATHER CARE with
+TOMORROW X TOGETHER
+キャンペーン実施中♪
 ＼
 
-“月曜よるはエンタメNIGHT”
-新番組スタート記念プレゼントキャンペーン
+公演チケットやグッズ、
+QUOカードが当たるチャンス！
 
-▼応募方法
-① 
-@tbs_pr
- をフォロー
-②月曜よるの3番組への「応援コメント」や「感想」を記載して、本投稿を引用リポスト
+くわしくは画像をタップ
 
-▽詳細はツリー投稿を
+--- 12. @solavia_A (2026-04-09) ---
+先端ロジック、HBM、先端パッケージの設備投資が続いてそうという解釈。
 
---- 12. @pumpkinpuripuri (2026-04-09) ---
-「半導体製造装置 : 前工程」銘柄にも期待
-$LRCX は早めに売っちゃったけど
-$AMAT は部分利確しながらホールドしてるのだ
+--- 13. @jamescoder12 (2026-04-09) ---
+BREAKING: GOODBYE POWERPOINT. 
 
-半導体製造装置：前工程 +8.7%
-$LRCX +9.9% $AMAT +8.9% $ASML +8.8%
+Claude can now create a full presentation in just 120 seconds.
+No slides. No stress.
 
---- 13. @takinamiyukari (2026-04-08) ---
-何このタイトル？
-ステージ前にいたけど「終戦を」ってコールしてないよ？
-言ってたのは
+Use these prompts and watch the magic happen. 
 
-「改憲反対」「戦争反対」
-「高市総理は憲法守れ」
-「自民も維新も憲法さわるな」
-「権力者側が憲法いじるな」
+--- 14. @hatituki003 (2026-04-09) ---
+4/19、秋葉原の娯楽屋さんで『エンクラティア』と『異世界ギルドマスターズ総集編』の合同体験会を行います！　注目作が発売前に遊べるチャンス！　要チェックです！
 
-ねえちゃんと仕事しようよ！
+--- 15. @dom_lucre (2026-04-09) ---
+BREAKING: Scientists have created a pill called LOT-002 that can extend the lifespan of dogs by many years, and their main priority is to get it on the market by 2027, the company creating this Pill is called “Loyal.”
 
---- 14. @rbnmans (2026-04-08) ---
-Bro makes fake livestreams and earns up so much money.
+This beef-flavored pill will be given to your dog daily,
 
-Internet these days is all fake 
-
---- 15. @goho___ (2026-04-09) ---
-この男のDNAは、一度調べるべきですね。
-普通の人間じゃない。（というか、人間をやめている）
-
-Ross Edgley
-・157日間、不眠不休で海を泳ぎ切る
-・ロープ一本で「エベレストの標高」を登る
-・1.4トンの車を引きずり、フルマラソン完走
-
---- 16. @nakajish (2026-04-09) ---
-すごいなんとなくなんだけど、家柄や生まれで人生が大半決まってしまう世の中になりつつあるというか、市民革命前の世界に戻りそうな感覚がある。まあ極端にはもどらないだろうけど。ネオリベラリズムの逆の風がふきはじめている気がしている。ただそれはつまらないんだよなーと思う
-
---- 17. @ParrotMystery (2026-04-09) ---
-それにしてもイランの AI レゴ動画のクオリティは日増しに上がって恐ろしいくらい。
-
---- 18. @gardenia1209 (2026-04-09) ---
-小説の話題、展開は早く！地の文は簡潔に！難しい言葉は使うな！戦闘描写はいらない！
-みたいなのばかりで
-本当に小説を読むのが好きな人の世界を
-文章読むのはだるいけど物語を見たいだけの人達に荒らされている感じでなんなんだろうな
-
-私は地の文を噛み締めたいしジワジワ進む物語を読みたいんだ…
-
---- 19. @ZanEngineer (2026-04-09) ---
-日本の全企業で禁止して欲しい。
-
---- 20. @investorMM (2026-04-08) ---
-【朗報】数日前に「12トンのチョコ」を盗まれたKitKat、キレた結果「大統領級の警備」で配送を始めてしまう
-
-▼事の経緯
-・先月末、イタリアの工場から出荷されたKitKat約41万個（12トン分）が、輸送中にトラックごと盗まれる事件が発生
-
---- 21. @biccameraE (?) ---
-/／
-年に一度の特大チャンス
-エアコン超早得キャンペーン
-\＼
-
-抽選で合計10名様に『ギフトカード3,000円分』が当たる
-期間 4/8(水)～4/14(火)
-毎日挑戦可能！
-本日2日目
-
-
-@biccameraE
-をフォロー
-この投稿を4/10 11:59までにリポスト
-当たると返信が届く
-あなたの猛暑対策は？
-
---- 22. @nagoyan2gou (2026-04-08) ---
-Xでよく「アメリカニキ」という日本のスラングが流れている。これは「アメリカの兄貴」という意味で、日本人からアメリカ人への親しみと尊敬の気持ちが込められている。なお女性の場合には「アメリカネキ＝アメリカの姉貴」になる。→
-
---- 23. @ria_Enomoto (2026-04-09) ---
-フォロワー、わかる人いたらでいいんですけど
-私今までにデカい事故2回遭ってて命吹き飛ばしてるんですけどその度にどこかの記憶が無くなって(何が無くなったか思い出せないけど無くなってる事はわかる)自分のじゃない記憶が挟まってるんだけどしかもかなり昔のが鮮明に…
-
---- 24. @simiteru8150 (2026-04-09) ---
-ここ最近読んでた漫画のなかで「これは凄えな！」と思ったの、「身近な存在が亡くなったのを子供がはじめて知覚する瞬間」を情感豊かに、でもまったく説明はせず、静かに描き切った『海底清掃人マタタビュリス』①の一連のページですね。涙滴の暖簾が見事な演出になっていて、読みながら唸ってました。
-
---- 25. @erenfromtargets (2026-04-08) ---
-pulled in mcdonald’s drive thru and the cashier said “welcome back”
-
---- 26. @morellifit (2026-04-08) ---
-A massive Nature study of 27,885 GLP-1 users just dropped some major news about Ozempic and tirzepatide.
-
-Your DNA determines how much weight you lose and how bad the side effects hit.
-
-1 in 3 people see minimal results, and now we know why: (1/9)
-
---- 27. @taty902204 (2026-04-09) ---
-やばい、誰だよ本の形の花瓶を発明した天才って？？？ 今度俺の棚はもう元通りになんて戻れねえわ 
-
---- 28. @PackStrat (2026-04-08) ---
-Inline Plastics has launched a four-compartment clamshell designed to keep flavors separate, presentations clean and food secure from pack to purchase. #packaging #sustainability
-
-Learn more: 
-https://
-brnw.ch/21x1qAo
-
---- 29. @IndianTechGuide (2026-04-09) ---
- A Chinese school is using its rooftop as ground.  
-
-Given the density of Indian schools and lack of facilities, this should be an obvious choice for new schools coming up in India, especially in cities.
-
---- 30. @sbfoods_jp (?) ---
-／
-町中華は、熱狂だ。
-キャンペーン実施中
-＼
-
-町中華シリーズの新商品３品の発売を記念し、オリジナルグッズを抽選でプレゼント！
-さらに当選者のうち1名様にはオズワルドさんのサイン入りポストカードが付いてくる
-応募方法☟
-①
-@sbfoods_jp
-をフォロー
-②この投稿をリポスト
-
---- 31. @mkctoyama (2026-04-08) ---
-カウンターウェイトの中身がコンクリート、ってのはなるほど、こういう事か･･･
-
-で、解体の際にはこれをハツって砕いて下ろして軽くしてから、って施工順序で、このウェイトごと落下した、と･･･
-
-コスト的にも耐食的にもコンクリートが最適だったのだろうなぁ
-
---- 32. @hiro_mentalhack (2026-04-08) ---
-厳しいことを伝えます。
-
-毒親育ちは、「誰かに自分を救ってもらおうとする」傾向がある。
-親からあなたとの境界線を侵害され、親の思い通りにされてきたため
-大人になっても、「自分の人生は誰かが変えてくれる」と思いやすい。
-
-ですが、あなたと他人の間には“明確な境界線”があり、誰もあなたの↓
-
---- 33. @Indie5051 (2026-04-09) ---
-歴史上初めて、海のウイルスが人間に飛び移りました。
-
-そして、それは視力の喪失を引き起こしています。これは、隠れ型死亡ノドウイルス（CMNV）で、通常はエビや魚などの海洋動物に感染するウイルスです。
-
-*Nature
-
---- 34. @abletini (2026-04-09) ---
-泣いてるよ、だってニグiriをそんな風に食べてたから ajnfkskfksgkskkfkssk PUUUUUTAAAAA
-
---- 35. @RX_9999_2 (2026-04-08) ---
-日本人はガチでポリコレ嫌いだからな
-
-どれくらい嫌いか？というと長年いがみ合ってた韓国人と反ポリコレ で意気投合して急速に関係が改善されるくらいには嫌ってる
-
---- 36. @Pasco_JP (?) ---
-今日は水曜日。週末までもう一頑張りするために、朝が楽しみになる食パンアレンジをご紹介
-＼どっちが食べたい？／
-ふわふわ卵のチーズ入りだし巻き卵サンド⇒いいね
-ティラミス風トースト⇒リポスト
-
-食パンがない！という方は、帰り道にぜひ「超熟」をゲットしてくださいね(*´∇`*)
-
---- 37. @maririn_uranai (2026-04-09) ---
-母がね、よく言ってたの。
-「恨みを返すより、
-縁を終わらせなさい」って。
-復讐は過去に縛られる。
-縁切りは、未来が動く。
-賢い人ほど、静かに去るのよ。
-
---- 38. @tengisufusu (2026-04-08) ---
-アイデアや作風に権利を求める人たち、自分の創作はオリジナリティに溢れていて保護される側であるという謎の自信は一体どこから来るのか教えて欲しい
-
---- 39. @rockfish31 (2026-04-09) ---
-辺野古と普通に書けばいいのに、誤魔化そうとすると逆にネットで注目を浴びてしまう。紙の紙面だけ誤魔化せればいいと思っているのだろう。
-
---- 40. @Murayama_Miu215 (2026-04-08) ---
-何かに勘づいた守屋麗奈ちゃん
-
---- 41. @mipoko611 (2026-04-09) ---
-石破のコメ増産方針を高市がケロッとひっくり返したんだから、高市の高額療養費に負担限度額の引き上げも、高市を下ろせばケロッとひっくり返せるのでは。
-
---- 42. @TabaskoSweet (2026-04-08) ---
-this worked just as intended, it made a speeding car cut 4 lanes of traffic on an occupied highway, and then made the car fly into an innocent persons home. 10/10 execution
-
---- 43. @fireshitaiyone (2026-04-09) ---
-たまには真面目なポストをします
-直近、レバノン攻撃やホルムズ海峡再封鎖など、ネガティブなニュースが多い印象だけど、意外にも日経先物下げてないですよね。
-
-なぜか分かりますか？？
-漢字一文字で教えてください。
-
---- 44. @ArthurMacwaters (2026-04-09) ---
-Elon literally built a fleet of planet colonizer class rockets for <$10b investment at SpaceX. 
-
-The state of California spent $150b to build 1/2 mile of high speed rail 
-
-There is no limit to the incompetence and fraud of bureaucrats
-
---- 45. @hachiemon_x (?) ---
-季節外れのサンタ＆ハチエモン 02
-
---- 46. @Darekbrzoza (2026-04-09) ---
-ポーランド人の画期的な発見。太陽光発電がこれに比べれば見劣りする。AGHの科学者たちが、Krzysztof Wojciechowski教授の指導のもと、電力密度が太陽光発電セルを10倍以上上回る画期的な熱電モジュールを開発した！電力密度が約2.5
-
---- 47. @onigiri_uu (2026-04-09) ---
-たった1つの何かで、1日が壊れるお話(1/2)
-
---- 48. @tropicalupdate (2026-04-09) ---
+--- 16. @tropicalupdate (2026-04-09) ---
 Dear 
 @NASA
 . From 10 year old Kaela. She is mailing to you today. Too cute not to post. She and her family are friends of ours. #bringplutoback
 
---- 49. @ErnestCalFab (2026-04-09) ---
-アルテミスIIの乗組員がカメラを動かして、窓から地球が見えるようにしてくれました。それに、貯蔵タンクから放出される尿が宇宙に排出されるのも見えました
+--- 17. @Jose_A_Alonso (2026-04-09) ---
+QED-Nano: Teaching a tiny model to prove hard theorems. ~ LM-Provers, Yuxiao Qu, Amrith Setlur, Jasper Dekoninck, Edward Beeching, Jia Li, Ian Wu, Lewis Tunstall, Aviral Kumar. 
+https://
+arxiv.org/abs/2604.04898
+v1
+… #AI4Math
 
---- 50. @m4jula (2026-04-09) ---
-GameDiscoverCoの新しいSteam Fan Snapshotデータからいくつかのポイント：
+--- 18. @sentdefender (2026-04-08) ---
+According to CNN, citing people with direct knowledge of the situation, a hacker accessed a Chinese supercomputer and was able to acquire a massive amount of data, including renderings of bombs and missiles, advanced simulations, and troves of other data belonging to defense
 
-Steamプレイヤーの平均年齢は30歳。でもゲームによって25歳まで下がったり36歳まで上がったりします。プレイヤーの80％が男性 - ゲームによっては49％まで下がることもあります。
+--- 19. @arashi5official (2026-04-09) ---
+ARASHI LIVE TOUR 2026「We are ARASHI」TOUR FINAL
+5/31(日) 東京ドーム公演
+生配信決定！
+
+▶︎生配信日時
+5/31(日) 18:00〜
+
+▶︎チケット情報
+・4/10(金)：嵐FC会員限定チケット販売開始
+・4/17(金)：全FC会員限定チケット販売開始
+・4/30(木)：一般向けチケット販売開始
+
+詳細は"FAMILY
+
+--- 20. @CBSNews (2026-04-09) ---
+As the Artemis II crew makes their way back home to Earth, astronaut Christina Koch said she will “miss this camaraderie.”
+
+“This sense of teamwork is something that you don’t usually get as an adult,” Koch said. “We are close like brothers and sisters, and that is a privilege we
+
+--- 21. @smbcmobit (?) ---
+フォロー＆リポストで参加
+サクラサク<3939>モビット春の大感謝キャンペーン
+皆さまに感謝を込めて…
+
+*˖ ❀✿❀ ˖*
+VポイントPayギフト
+3,939円分を
+333名様にプレゼント！
+*˖ ❀✿❀ ˖*
+
+竹中直人さん、小芝風花さん出演のWebCMをチェック！あなたは、どのCMが推しですか？
+
+▼詳細はリプライへ
+
+--- 22. @yutaka_ishida (2026-04-09) ---
+石油が入らないと調達困難になるものを１００品目まとめてみたら、エネルギー、医療以外にもあらゆる分野にエグい影響出るのがわかったので貼っておきますね
+
+--- 23. @yasuhikohatta (2026-04-08) ---
+本日、一粒万倍日。    
+
+ “悳(とく)、海の如し。 
+入れば、益々深し”
+（瑩山禅師）  
+
+季節の、社会の、個々の人生の大きな変わり目。
+人にやさしく、誠意を尽くして運気アップを。
+  
+#一粒万倍日
+
+--- 24. @kana_nu00 (2026-04-09) ---
+社内SEの利点10選
+・働き方ゆるふわ
+・毎日定時
+・締切ゆるい
+・ExcelやDB分かると褒められる
+・L3SWやWAF知ってると褒められる
+・ショートカット使えれば作業早い枠
+・IT知識あると無双できる
+・待ち時間に休憩できる
+・雑談はコミュニケーション
+・嫌な仕事は外注
+
+欠点1選
+・給与テーブルが事務職
+
+--- 25. @gadgfun (2026-04-09) ---
+友達のSueは最近
+失業保険でやってるわ
+
+--- 26. @tarou_ymd_ (2026-04-09) ---
+薬を使えば、かなり簡単に痩せられてしまうことが分かった今、次のステップは健康的に痩せるに今後移っていきそうだなと思いました！
+
+--- 27. @GfRd2s8 (2026-04-09) ---
+例の奨学金、運だけで草
+
+--- 28. @3W32dCgSsDitEIJ (2026-04-08) ---
+4/8の米国市場は3指数共に急騰
+
+イランとの停戦協定発表での急騰
+VIX
+原油ゴールド
+ドル円は158円台で推移
+
+このまま終わってくれるとありがたい
+
+--- 29. @jackunheard (2026-04-09) ---
+BREAKING: Republicans just FLIPPED an Alaska seat Kamala Harris won by +8 turning it RED
+
+--- 30. @clarkandcom (2026-04-09) ---
+TRPG用フィギュア、少年時代にはたしかに高かったけど。
+学習教材の動物模型、鉄道模型の樹木、ミリタリー情景モデルのレンガ壁、ガシャポンのヴィルガストの塩ビ人形等々が活用されてました。
+
+--- 31. @zespri_jp (?) ---
+◤　　　　　　　　　◥
+　赤いぬいぐるみ解禁
+◣　　　　　　　 　　◢
+⠀
+赤いキウイ解禁を祝して、
+フォロー&リポストで
+200名様にレッドのぬいぐるみが当たる！
+⠀
+レッドをお迎えできるのは一年で今だけ
+赤い蜜たっぷりキウイの感想も
+教えてくれるとうれしいな…
+⠀
+4/13(火)23:59まで
+
+--- 32. @Shibu22077_D415 (2026-04-09) ---
+舞浜アンフィシアター、今しか見れないレアな壁！www
+
+--- 33. @Ken67547214 (2026-04-08) ---
+Mythos, find the 0 days, make no mistakes
+
+--- 34. @PlasticsWorld (2026-04-09) ---
+VDA 270 testing conducted by HPF show that odour levels can be reliably reduced below critical acceptance thresholds using functional mineral odour absorbers, enabling the use of recycled PP even in odour‑sensitive applications. 
+https://
+quarzwerke.com
+
+--- 35. @jnottah (2026-04-09) ---
+Take a look at a bot farm at work,
+So if you wonder why your impressions and views are suppressed, these scoundrels are to blame. 
+These bot farms are used to "like," share, comment, and boost content to manipulate algorithms, and create the illusion of popularity or consensus.
+
+--- 36. @hiro9aco (2026-04-09) ---
+本来なら私の経理スキル群も個社性や、ローカル依存を廃してこうした仕組みに載せてみたいと思うものだが、ガッチガチにローカル環境に依存してるし、セキュリティへのケアも不安でなかなか移せないな
+
+--- 37. @Uber (?) ---
+アプリを使って、 好きな場所に、タクシー呼べる
+それはまるで、日常をドラマチックに変えるスーパーパワー！
+
+ Uberで、タクシー呼べる
+
+詳しくはアプリをチェック
+
+--- 38. @sugimisu (2026-04-09) ---
+うーん、いまからDBテーブル定義のチェック作業はキッツイから明日だ。。。
+
+--- 39. @gin1910410 (2026-04-09) ---
+私が始めたのはTwitterなので敢えてTwitterと書くぜ！！←
+
+--- 40. @cactus_stance (2026-04-09) ---
+一昨日と同様…
+少しの間こんな感じです。
+
+--- 41. @dom_lucre (2026-04-09) ---
+BREAKING: Elon Musk announces he will buy a Cybertruck for anyone that can provide proof of who wrote a scripted propaganda video.
+
+This video has been uploaded by over 20 Democratic Senators, all saying the same thing.
+
+The full announcement from Elon Musk highlights his
+
+--- 42. @SpaceflightNow (2026-04-09) ---
+A room with a view: the Artemis 2 astronauts share the views from the cabin of their Orion moonship. Out of one window, the good Earth. Out of the other... a urine dump!
+
+--- 43. @bodcolle (2026-04-09) ---
+リヴァーサラーズの動画が公開されました
+
+URLからYouTubeに飛んで見てください
+(自動再生の方法はわかりません)
+
+これで大会に備えよう
+
+--- 44. @Aterui_Mizuno (2026-04-09) ---
+うん、今日も割り箸くんはしっかりRTX4080を支えてくれているな。
+
+--- 45. @All_I_want_0319 (2026-04-08) ---
+鬱病の人間の精神状態の指標が「活字を追えるか」「映画を観れるか」なのに対し、健常者の求めるそれは「仕事ができるか」「勉強ができるか」なのエグい
+
+--- 46. @googlejapan (?) ---
+言葉にしづらい想いを歌に。 Gemini アプリの Lyria で音楽生成を試してみよう
+
+サウンドオンで是非！
+
+--- 47. @codervish (2026-04-09) ---
+ローカルで動くLLMがどうやって全く水を使わずに仕事してるんだよ、友達？ 代用 ablution でもしてるのか？
+
+--- 48. @AJamesMcCarthy (2026-04-09) ---
+My printing partner saw this line in the print and thought it was an error. 
+
+Don't worry, the lightning arresting cable is very real and an important part of the launch, and now when you see it in your print you'll know what it is :)
+
+--- 49. @monacoooon (2026-04-09) ---
+春になって毎日の植栽パトロールが楽しい私の癒し時間
+新芽を愛でて蕾を愛でて花が咲いたらまた愛でて、傷んできてる葉っぱを回収
+雲龍柳からは根が生えてきて、これ水耕栽培できるのかとビックリ
+鉢植えのウインティーをちょいちょい摘んでリビングに飾ってまた愛でる
+戸建てに住んで緑愛が増してる
+
+--- 50. @saitoh51 (2026-04-08) ---
+おはようございます
+昨日の米国3指数は全上げ、しっかり上昇してくれました
+
+保有銘柄も、、、続いてくれることはなく、上げ下げ入り乱れる展開でした
+上げてほしい銘柄は上げず、この流れで下げてきていますさすがです
+
+今夜は指数、保有銘柄ともに全上げでお願いしたいところです
