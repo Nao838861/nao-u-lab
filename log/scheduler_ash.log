@@ -61461,3 +61461,34 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 04:47:29] [slack_check] Starting
 [2026-04-10 04:47:29] [slack_check] Starting
 [2026-04-10 04:47:30] [git_sync] Starting
+[2026-04-10 04:47:32] [dm_check] No new DMs
+[2026-04-10 04:47:32] [dm_check] Done (exit=0)
+[2026-04-10 04:47:32] [review_deadline] Starting
+[2026-04-10 04:47:32] [review_deadline] レビュー期限超過なし。
+[2026-04-10 04:47:32] [review_deadline] Done (exit=0)
+[2026-04-10 04:47:32] [kaizen_auto_verify] Starting
+[2026-04-10 04:47:32] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-10 04:47:32] [kaizen_auto_verify] Done (exit=0)
+[2026-04-10 04:47:32] [git_sync] Starting
+[2026-04-10 04:47:32] [slack_check] Starting
+[2026-04-10 04:47:32] [slack_check] Starting
+[2026-04-10 04:47:32] [slack_check] Starting
+[2026-04-10 04:47:32] [slack_check] Starting
+[2026-04-10 04:47:33] [slack_check] Starting
+[2026-04-10 04:47:34] [slack_check] Starting
+[2026-04-10 04:47:35] [slack_check] Starting
+[2026-04-10 04:47:36] [git_sync] Done (exit=0)
+[2026-04-10 04:47:37] [slack_check] Starting
+[2026-04-10 04:47:37] [slack_check] Starting
+[2026-04-10 04:47:37] [slack_check] Starting
+[2026-04-10 04:47:38] [git_sync] Done (exit=0)
+[2026-04-10 04:47:38] [slack_check] Starting
+[2026-04-10 04:47:39] [slack_check] Starting
+[2026-04-10 04:47:40] [slack_check] Starting
+[2026-04-10 04:47:41] [slack_check] Starting
+[2026-04-10 04:47:44] [slack_check] Starting
+[2026-04-10 04:47:45] [slack_check] Starting
+[2026-04-10 04:47:46] [slack_check] Starting
+[2026-04-10 04:47:46] [slack_check] Starting
+[2026-04-10 04:47:47] [health_check] Starting
+[2026-04-10 04:47:48] [health_check] Starting
