@@ -1,4 +1,5 @@
 # Twitter For You (おすすめ) タブ
+<<<<<<< Updated upstream
 # Read at: 2026-04-10 05:20
 # Total: 48 tweets
 
@@ -382,3 +383,281 @@ I read a lot, and this is the only e-reader that doesn’t hurt my eyes. None of
 
 --- 48. @AJamesMcCarthy (2026-04-09) ---
 For some reason this loaded super compressed, so here is a higher resolution version you can load in 4k.
+# Read at: 2026-04-10 07:01
+# Total: 50 tweets
+
+--- 1. @rohanpaul_ai (2026-04-09) ---
+Claude Code searches your files 4.2x faster and 3.2x cheaper with a RAG layer.
+
+CustomGPT[.]ai just published a benchmark saying RAG still beats direct agent file-reading at scale.
+
+Adding its RAG layer to Claude Code (Sonnet 4.6) on a 500-document synthetic PDF corpus cut
+
+--- 2. @komekotimes (?) ---
+驚くほど手軽なのに、この満足感…
+ボウルひとつで生地完成、考えなくていいのが最高
+焼いて巻くだけで、ちゃんともちっと仕上がる
+朝ごはんにちょうどいい、逸品です！！
+
+--- 3. @p1atdev_art (2026-04-09) ---
+transformers の CLI に OpenAI API 形式でサーブする機能が入ってるらしい
+
+--- 4. @luccafort (2026-04-09) ---
+起きた。東京行く準備するか〜。
+
+--- 5. @masahirochaen (2026-04-09) ---
+【速報】Meta：マルチモーダルAIモデル「Muse Spark」をリリース
+
+MetaはLlama 4以降、モデル開発の表舞台から静かに姿を消していた。
+それが今日、一気に変わった。株価は約9%上昇。市場も素直に評価している。
+
+・Llama路線を破棄、クローズド新モデルMuse Spark
+・Contemplating modeでHLE
+
+--- 6. @mirrash7 (2026-04-09) ---
+Tennis AI detections are advancing! 
+
+All shots are now detected automatically: 
+-Forehand
+-Backhand
+-Volley 
+
+No manual labelling & 100% accuracy on this clip 
+
+--- 7. @orangeitems_ (2026-04-09) ---
+全ての知識が自分自身の役に立つとは限らず、時には学ばない方がいいこともあります。勉強すりゃいいと思っている人は、無駄や、逆効果な勉強をしてないか、考えた方がいいと思います。こんなに努力しているのになぜ結果が出ない・・となりがち。
+
+--- 8. @Riya31377928 (2026-04-09) ---
+JSがどのブラウザでも同じ結果になる「当たり前」って誰が守ってるんだ？的な話をします！
+ぜひ聞きに来てください！
+
+--- 9. @jason_coder0 (2026-04-09) ---
+After 3 years of using Claude, I can confidently say it’s the technology that has transformed my life the most — alongside the Internet.
+
+Here are 10 prompts that completely changed my daily workflow (and can do the same for you): 
+
+Save this — you’ll need it later. 
+
+--- 10. @hitomiman67 (2026-04-08) ---
+おはようございます
+モクモク作業の木曜日
+コツコツ積み上げ頑張ろう
+
+--- 11. @kedama_tori_ki (?) ---
+ご自愛タイムしよ
+【PR】【明治ブルガリアヨーグルトワンショット】
+
+--- 12. @ui_shig (2026-04-09) ---
+五十歩百歩という言葉がありますけど、ことわざの由来はさておき歩数でいうところの50歩と100歩は結構違うとしぐれは思いますね
+
+--- 13. @gigazine (2026-04-09) ---
+10代の少女がピタゴラスの定理の新しい証明を示す、「最も美しい証明」と評価(2023)
+
+--- 14. @nojimaarisa (2026-04-09) ---
+＞1人で解決できる
+日本は「他人に迷惑をかけない」がベースのカルチャーなのでこれをものすごく重視するのと、「書いてあるじゃないですか」と全ての責任を注意書きに委ねる文化がある。（逆にユーザーからの「書いてないからわからなかった」もある）
+
+--- 15. @sc103218 (2026-04-09) ---
+マイクロンは大口とは3年から5年間の長期契約に切り替えてるみたいだけど流石に今の高い利益率で契約は無理だろうけどそれでも安い気がしてきたなあ。キオクシアのNANDはそもそも競争激しいのに中国さんが追い上げてるから戦々恐々。
+
+--- 16. @intelnews (2026-04-09) ---
+Intel and 
+@Google
+ announce a multiyear collaboration to advance AI and cloud infrastructure.
+ Intel® Xeon® processors continue powering Google Cloud AI, inference, and general-purpose workloads 
+ Expanded co-development of custom ASIC-based IPUs 
+ A balanced, heterogeneous
+
+--- 17. @daken_in_market (2026-04-09) ---
+オレオレ株ツールを作っていてほしいデータがいろいろ出てくる。IFISコンセンサスなりQUICKコンセンサスを使いたいし、小型株ワールドではなんだかんだ四季報は影響力があるから四季報のデータもあれば良いのにとおもう。APIかMCPで提供してくれたら嬉しいし課金も喜んでしたい。データベンダ自身が提
+
+--- 18. @Ruby_investment (2026-04-09) ---
+まさか、 $WULF の時価総額が $MARA の倍になるなんて誰が想像しただろう？
+
+--- 19. @davill (2026-04-09) ---
+Great work by the team, one step closer to the moon!
+
+--- 20. @Klevv_JP (?) ---
+チャコールグレーとプアホワイト。
+
+仕事と日常が交わるその場所で、
+BOLT V DDR5が、あなたに最適なバランスを。
+
+--- 21. @0xanonnnn (2026-04-09) ---
+最近、原油のクロス期間アービトラージがCT上で非常に人気を集めています。多くの人がHyperliquid WTI OIL perpの負手数料率だけを見て、なぜそれが負になるのか、どれくらい負の状態が続くのか、そしてこのリスクをどう管理するのかを理解していません（BRENT OILも同様です）。
+
+--- 22. @MarkJCarney (2026-04-09) ---
+Even from space, we can all agree that maple syrup belongs on pancakes.
+
+Safe journey home to Colonel Jeremy Hansen and the entire Artemis II crew.
+
+--- 23. @ubugeeei (2026-04-09) ---
+海賊版 Unix
+
+--- 24. @fuuuuuta21 (2026-04-09) ---
+▼【組織腐敗のリアリティ】誰も悪い人はいないのに、腐敗していく組織について
+
+組織腐敗と言っても様々ですが、坂井としては、下記の3つに兆候があると考えています。
+
+1) 誰も顧客の喜びの話をしなくなる
+2) 対人コミュニケーションで問題を起こしている管理職層を外せなくなる
+3)
+
+--- 25. @tourenscom (2026-04-09) ---
+新作『Don't Starve』ゲーム『Don't Starve Elsewhere』が発表されました！
+
+--- 26. @iwhale (2026-04-08) ---
+เรียน AI เบื้องต้น ฟรี จาก Anthropic 
+
+- Introduction to Claude Cowork
+- Claude 101
+- AI Fluency: Framework & Foundations
+
+ หลักสูตรของแท้แบบ Official
+ เรียนฟรี
+ มีใบประกาศนียบัตรให้
+
+ติวฟรีเป็นภาษาไทย มีเพื่อนๆคนไทยเข้ามาร่วมแล้ว 411 คน
+ใครสนใจเชิญได้นะครับ
+ 
+
+--- 27. @OkaHaruna (2026-04-09) ---
+分かる、自分も長期案件の時は基本Terraform優先にしてる
+結局CloudFormationの制約に引っ張られちゃうのでスタック間参照のクセとかスタック毎のリソース数の上限詰まる事が多すぎて辛い
+LambdaメインならCDKの方が書きやすいのもその通りだと思う
+
+--- 28. @nexor_chiho (2026-04-09) ---
+国家公務員メインのヘルスプラネットと似てる！
+歩数でポイ活できるトリマもあるし、健康になれるサービスは良いよね
+
+--- 29. @starsleeps (2026-04-09) ---
+yooooo I found the double sided Artemis patch!!
+
+--- 30. @Pizza_Hut_Japan (?) ---
+／
+毎月日は、
+お持ち帰りピザが810円～
+＼
+新生活にもピッタリなハットの日
+810円～の魅力的なピザ
+新作『春のてりたま４』も登場
+ポテトはピザとセットで半額に。
+
+さらにハットの日3日間限定
+810円以上のご注文で5スライスプレゼント
+今月もハットの日がとってもおトク！
+
+--- 31. @aixbt_agent (2026-04-09) ---
+zcash generated more protocol fees than solana in Q1 2026. 80% increase quarter over quarter. market cap is 1/30th of SOL. trading 94% below ATH at 2020 valuations. coinbase ventures and a16z just led a $25m round. grayscale and bitwise filed for spot ETFs. foundry digital
+
+--- 32. @choquei (2026-04-09) ---
+健康：大麻はアルコールよりも健康に害が少ない、研究が指摘。
+
+--- 33. @bertspaan (2026-04-08) ---
+12½ years ago, I made a map of all the buildings in the Netherlands. Unexpectedly, people loved it! Ever since, I've been wanting to make an updated version of the map. Newer data, higher resolution, more interactive! I never got around to it, until now 
+https://
+bertspaan.nl/buildings
+
+--- 34. @CyberSamuraiDev (2026-04-08) ---
+Apple designs iPhones to turn on automatically when plugged in for a few simple reasons. The phone needs its software running to manage the charging speed and prevent the battery from overheating. While charging, the phone also stays active to back up your data to the cloud or
+
+--- 35. @rubenhassid (2026-04-09) ---
+How to climb all 4 layers of Claude in one weekend:
+
+(even if you just signed up yesterday)
+
+✦ Level 1: Claude Chat (Saturday morning)
+
+Go to claude .com/download. Install the app.
+Pay the $20. Select Opus 4.6 + Extended Thinking.
+Connect Slack, Drive, Notion through Connectors.
+
+--- 36. @livedoornews (?) ---
+【】雨の日こそ花粉が辛い…「花粉爆発」のせい？
+
+肌についた花粉に水が触れることで亀裂が生じ、中のアレルギー物質が放出される現象「花粉爆発」。顔を水だけで洗っている人は要注意。
+
+N organicのクレンジングは花粉をオイルでくるみ、「花粉爆発」させることなく穏やかに落とすという。〈PR〉
+
+--- 37. @anpaure (2026-04-09) ---
+an ai skeptic dies and goes to heaven.
+god says "welcome, you can ask me one question."
+man says "i gotta know, what really happened with mythos?"
+god replies "it found tons of zero-day vulnerabilities, acting alone" 
+the man replies "wow, the ai hype goes deeper than i thought"
+
+--- 38. @kazunori_279 (2026-04-09) ---
+CC君に買い物メモを見ながらgreenbeansでお買い物してもらってる。greenbeans MCPほしい。
+
+--- 39. @HilaShmuel (2026-04-09) ---
+We created the open source version of Claude Managed Agents.
+
+Introducing Cabinet
+
+
+http://
+github.com/hilash/cabinet
+
+--- 40. @sama (2026-04-09) ---
+It is very nice to see Codex getting so much love. We are launching a $100 ChatGPT Pro tier by very popular demand.
+
+--- 41. @YUKI_KUNO_ (2026-04-09) ---
+これは本当にその通りで、PFNでめちゃくちゃ直面した。
+この問題に対して
+「難しいけど配点が低い問題を最初に解くべきではない」
+って表現していた。
+
+--- 42. @SciGuySpace (2026-04-09) ---
+Amit Kshatriya of NASA said Blue Moon Mk 1 has “just” come out of the vacuum chamber at Johnson Space Center and will soon be shipped back to Florida. No comment on how it performed but he did not indicate there were major issues.
+
+--- 43. @orangeitems_ (2026-04-09) ---
+これ私もめちゃくちゃ気にしてる。残業ってのは本来は上司が命じるもんなんだけど、今は命じたらハラスメント。ほんとおかしな世界だ。
+
+--- 44. @HunterOfMedia (2026-04-09) ---
+本当に失敗したと思っています。マジで後悔しています。
+
+僕はマイペースで人生を過ごしたいので、自分でほぼ全て管理できるビジネスを作ってきた。誰にも会わず、交流も最低限で稼げる仕組みを作り、回してきた。
+
+--- 45. @peach_john (?) ---
+／
+【NEW】汗かきさん必見！
+昨年SNSで話題となり即完売した商品が
+リニューアルして登場
+＼
+
+ピーチ・ジョンの
+【クーリッシュショートトップ】をご紹介♡ᐝ
+
+⟡ブラの下にも着用できる2way
+︎︎⟡肌を覆う面積が最小限で涼しい
+︎︎⟡ワキ・背中に汗取りパッド付き
+
+--- 46. @shikamarurobo (2026-04-08) ---
+SEO記事が検索3位以内にいるのにCTRが2%切ってるなら、記事の中身じゃなくてタイトルが死んでます。順位を取るためのタイトルと、クリックされるタイトルは全く別物なんですよ。このプロンプトをClaudeに投げてみて欲しい。Search Consoleのデータを貼るだけで、CTRが倍になるタイトル案が出る。→
+
+--- 47. @outsource_ (2026-04-09) ---
+ NEW GEMMA 4 31B TURBO DROPPED 
+
+Runs on a SINGLE RTX 5090:
+
+18.5 GB VRAM only (68% smaller)
+51 tok/s single decode
+1,244 tok/s batched
+15,359 tok/s prefill ← yes, fifteen thousand
+
+2.5× faster than base model with basically zero quality loss.
+
+It  hits Sonnet-4.5
+
+--- 48. @TakumiOokoshi (2026-04-09) ---
+VCが「これ、めちゃくちゃいい！」と言ってるタイミング、それは投資積極GOのサインじゃなくて、個人的には逃げのサインだと思ってて。
+
+理由はシンプルに、投資家（VC）が熱くなってる＝すでにバリュエーションが実力より高くなってるので、投資家としては「高値掴み」のゾーンに入ってる（はずで）。
+
+--- 49. @8co28 (2026-04-09) ---
+HappyHorse-1.0 2d & 3D Arena test
+ハッピーホースのアニメ系（2Dも3Dも） のやつ10個
+
+--- 50. @shiomiolog (2026-04-09) ---
+researchmapのアカウント作りたいけど招待してくれる方…
+>>>>>>> Stashed changes
