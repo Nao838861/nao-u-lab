@@ -66010,3 +66010,18 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 05:37:10] [slack_check] Starting
 [2026-04-10 05:37:11] [git_sync] Starting
 [2026-04-10 05:37:11] [git_sync] Starting
+[2026-04-10 05:37:12] [dm_check] No new DMs
+[2026-04-10 05:37:12] [dm_check] Done (exit=0)
+[2026-04-10 05:37:12] [review_deadline] Starting
+[2026-04-10 05:37:13] [review_deadline] レビュー期限超過なし。
+[2026-04-10 05:37:13] [review_deadline] Done (exit=0)
+[2026-04-10 05:37:15] [slack_check] Starting
+[2026-04-10 05:37:17] [git_sync] Done (exit=0)
+[2026-04-10 05:37:18] [git_sync] Done (exit=0)
+[2026-04-10 05:37:23] [health_check] Starting
+[2026-04-10 05:37:25] [health_check] [health_check] 2026-04-10T05:37:23 overall=WARNING
+[2026-04-10 05:37:25] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 05:37:25] [health_check]   [?] git: 4件の未pushコミット
+[2026-04-10 05:37:25] [health_check] Done (exit=1)
+[2026-04-10 05:37:27] [health_check] Starting
+[2026-04-10 05:37:27] [slack_check] Starting
