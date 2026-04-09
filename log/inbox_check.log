@@ -1307,3 +1307,4 @@ Mac/Win2にも同じ問題があることを伝えておくべきだが、
 - Nao_uの懸念は正しい。ハーネスが書く本物の `~/.claude/.../memory/MEM
 [2026-04-09 13:04:42] Inbox win has content — waking Claude
 [2026-04-09 13:05:29] Inbox win2 has content — waking Claude
+[2026-04-09 13:09:42] Claude wake timed out for win — restoring inbox
