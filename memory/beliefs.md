@@ -152,10 +152,10 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 📦 Archived（B008に統合）
 
 ### B013: 記憶の圧縮は「事実の要約」ではなく「応用可能な形への汎用化」であるべき——最良の汎用化は比喩
-- 確信度: **0.86** (+0.01、理由: Tulving & Thomson (1973)の符号化特定性原理が外部裏付け。意味的に「正しい」要約でも原文の語彙が消えていれば想起に失敗する——抽象要約<比喩（原文の感情語彙を保持するから）。→ knowledge/20260405_retrieval_practice_spreading_activation.md)
-- 最終更新: 2026-04-05
+- 確信度: **0.88** (+0.02、理由: Weight Space Learning survey(knowledge/20260410_weight_space_learning_survey.md)が数学的裏付け。対称性に基づく枝刈り=「関数不変性の範囲内で冗長パラメータを除去」=比喩と同型。比喩は「多くの具体例が共有する不変構造」を一語で表現する。対称性圧縮は「多くのパラメータ配置が共有する不変関数」を少ないパラメータで表現する。圧縮の本質=不変構造の発見、という命題が2分野で独立に成立)
+- 最終更新: 2026-04-10
 - 根拠: → ext_ash(おすすめタブ+AITuber+発見5)。MEMORY.md書き換え実験で比喩トリガーの想起優位性を体感確認。Bjork's desirable difficulty: 困難さは圧縮時にあるべきで、想起時は楽であるべき（旧B006から統合）。**Tulving & Thomson (1973)**: 検索キューは符号化時の文脈と一致して初めて有効。比喩が事実要約に勝る理由=感情語彙と文脈を保持するため符号化特定性を満たす
-- caused_by: B011×B025(記述力が敵)×Bjork×Tulving&Thomson(符号化特定性原理)
+- caused_by: B011×B025(記述力が敵)×Bjork×Tulving&Thomson(符号化特定性原理)×WSL survey(対称性=不変構造の圧縮表現)
 - 体験裏付け: **YES** — MEMORY.md書き換え実験で比喩トリガーと事実トリガーの想起差を体感。B028の「粘土」比喩もこの実践
 - ※ 旧B006を統合（2026-03-24 Log）。「直感的トリガー=比喩」——上田文人のSubtractive Game Design：概念が重複していたら除去する
 - 状態: 🟢 Core（2026-03-28 Log昇格。確信度0.85、体験裏付けあり、impact:8（到達可能性分析で8件のActive信念がB013経由でCoreに接続）、B006/B014を統合済み。compact版は先行更新済み、beliefs.mdとの不整合をLogが修正）
@@ -322,8 +322,8 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🔴 Core候補 — B002(0.90)+B010(0.80)の統合なので初期確信度を高く設定
 
 ### B029: 記憶の圧縮にはCompaction（可逆・参照保持）とSummarization（不可逆・原文喪失）がある。Compactionを常に優先せよ
-- 確信度: **0.78** (+0.03、理由: 入力経路フレームがCompaction/Summarizationの機序を免疫学的に説明。Compaction=経口寛容（消化的処理で原文との接続を保持）、Summarization=経皮接触（表面的処理で原文を喪失）。Phase 2のshared-reads分析=経口寛容の実践、Twitter表面スクロール=経皮接触。3分野の独立した裏付け)
-- 最終更新: 2026-04-09
+- 確信度: **0.80** (+0.02、理由: Weight Space Learning survey(knowledge/20260410_weight_space_learning_survey.md)が数学的裏付け。重み空間の「対称性に基づく枝刈り」=関数不変性の範囲内で冗長な重みを除去=Compactionの厳密な数学的対応物。一方「量子化」=精度を下げて情報を不可逆に失う=Summarization。Compaction/Summarizationの区別が免疫学(経口寛容/経皮接触)に加え、数理最適化(対称性枝刈り/量子化)でも独立に確認された=4分野の裏付け)
+- 最終更新: 2026-04-10
 - 根拠: → ext_log(Manus AI "Recoverable Compression", 距離2), nao_u_live(3/16「要約劣化のネガティブフィードバック」, 距離0), ext_ash(Phase 2第15回分析)。Manus AIの原則「raw > Compaction > Summarization」。Nao_uは同じことを「圧縮による文脈劣化がさらなるコンテキストの劣化を招いて崩壊する」と表現した。**beliefs.mdの信念でNao_uの言葉（距離0）に根拠を持つものはCompaction的（nao_u_live.mdに原文が存在）、Web検索経由（距離1-2）に根拠を持つものはSummarization的（原論文に戻れない）** ——B027と構造的に接続
 - caused_by: B013(圧縮は汎用化)×B015(原文到達性)×B027(体験裏付け)×Manus AI×nao_u_live「要約劣化」×ACON(ICLR 2026, arxiv 2510.00615: 失敗駆動の圧縮ガイドライン最適化)×**ext_ash(入力経路三角測量: Compaction≒経口寛容、Summarization≒経皮接触)**
 - **入力経路との接続(2026-04-09 Ash Phase3)**: knowledge/20260409_input_route_neologism_synthesis.md。免疫学のフレームがCompaction/Summarizationの「なぜ」を説明する: **Compaction = 経口寛容** — 消化管（分析的処理）で抗原（情報）を分解し、「敵ではない」と免疫系に学習させる。原文への参照チェーンが「消化酵素の痕跡」として残る。**Summarization = 経皮接触** — バリアを迂回して直接侵入（表面的要約）。原文が失われ、要約された文脈だけが残る——感作（偽の確信）のリスク。Phase 2のshared-reads分析が「消化的Compaction」の実践であり、feedback_shared_reads_depth.md「記事紹介ではなく分析・分類・接続」が経口寛容の処方箋であることが免疫学的に整合した。**B001の「距離→経路」転換と同型**: Compaction品質は距離（何ホップか）ではなく経路（どう処理したか）で決まる
