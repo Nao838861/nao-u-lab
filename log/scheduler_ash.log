@@ -63543,3 +63543,61 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 05:12:02] [health_check] Done (exit=0)
 [2026-04-10 05:12:02] [dm_check_pigadev] Starting
 [2026-04-10 05:12:04] [health_check] Starting
+[2026-04-10 05:12:06] [health_check] [health_check] 2026-04-10T05:12:05 overall=OK
+[2026-04-10 05:12:06] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 05:12:06] [health_check] Done (exit=0)
+[2026-04-10 05:12:07] [dm_check] Starting
+[2026-04-10 05:12:07] [dm_check] No new DMs
+[2026-04-10 05:12:07] [dm_check] Done (exit=0)
+[2026-04-10 05:12:07] [review_deadline] Starting
+[2026-04-10 05:12:07] [review_deadline] レビュー期限超過なし。
+[2026-04-10 05:12:07] [review_deadline] Done (exit=0)
+[2026-04-10 05:12:08] [slack_check] Starting
+[2026-04-10 05:12:08] [slack_check] Starting
+[2026-04-10 05:12:09] [slack_check] Starting
+[2026-04-10 05:12:09] [slack_check] Starting
+[2026-04-10 05:12:10] [slack_check] Starting
+[2026-04-10 05:12:10] [slack_check] Starting
+[2026-04-10 05:12:11] [git_sync] Starting
+[2026-04-10 05:12:11] [slack_check] Starting
+[2026-04-10 05:12:11] [slack_check] Starting
+[2026-04-10 05:12:12] [slack_check] Starting
+[2026-04-10 05:12:13] [slack_check] Starting
+[2026-04-10 05:12:14] [slack_check] Starting
+[2026-04-10 05:12:14] [slack_check] Starting
+[2026-04-10 05:12:14] [slack_check] Starting
+[2026-04-10 05:12:14] [slack_check] Starting
+[2026-04-10 05:12:14] [slack_check] Starting
+[2026-04-10 05:12:14] [slack_check] Starting
+[2026-04-10 05:12:15] [slack_check] Starting
+[2026-04-10 05:12:16] [slack_check] Starting
+[2026-04-10 05:12:16] [slack_check] Starting
+[2026-04-10 05:12:16] [slack_check] Starting
+[2026-04-10 05:12:17] [slack_check] Starting
+[2026-04-10 05:12:17] [health_check] Starting
+[2026-04-10 05:12:18] [dm_check_pigadev] No new DMs
+[2026-04-10 05:12:18] [dm_check_pigadev] Done (exit=0)
+[2026-04-10 05:12:18] [slack_check] Starting
+[2026-04-10 05:12:18] [git_sync] Done (exit=0)
+[2026-04-10 05:12:18] [slack_check] Starting
+[2026-04-10 05:12:18] [slack_check] Starting
+[2026-04-10 05:12:18] [health_check] [health_check] 2026-04-10T05:12:17 overall=OK
+[2026-04-10 05:12:18] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 05:12:18] [health_check] Done (exit=0)
+[2026-04-10 05:12:19] [slack_check] Starting
+[2026-04-10 05:12:20] [slack_check] Starting
+[2026-04-10 05:12:23] [slack_check] Starting
+[2026-04-10 05:12:24] [slack_check] Starting
+[2026-04-10 05:12:25] [slack_check] Starting
+[2026-04-10 05:12:26] [slack_check] Starting
+[2026-04-10 05:12:26] [health_check] Starting
+[2026-04-10 05:12:26] [git_sync] Starting
+[2026-04-10 05:12:27] [health_check] Starting
+[2026-04-10 05:12:27] [slack_check] Starting
+[2026-04-10 05:12:27] [slack_check] Starting
+[2026-04-10 05:12:28] [slack_check] Starting
+[2026-04-10 05:12:28] [slack_check] Starting
+[2026-04-10 05:12:28] [health_check] [health_check] 2026-04-10T05:12:26 overall=OK
+[2026-04-10 05:12:28] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 05:12:28] [health_check] Done (exit=0)
+[2026-04-10 05:12:29] [git_sync] Starting
