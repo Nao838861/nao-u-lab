@@ -58693,3 +58693,10 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 15:37:10] [dm_check_pigadev] No new DMs
 [2026-04-09 15:37:10] [dm_check_pigadev] Done (exit=0)
 [2026-04-09 15:37:10] [health_check] Starting
+[2026-04-09 15:37:11] [git_sync] Starting
+[2026-04-09 15:37:12] [health_check] [health_check] 2026-04-09T15:37:10 overall=CRITICAL
+[2026-04-09 15:37:12] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:37:12] [health_check]   [!!] git: 46件の未pushコミット（10件超）
+[2026-04-09 15:37:12] [health_check] Done (exit=2)
+[2026-04-09 15:37:14] [git_sync] Starting
+[2026-04-09 15:37:14] [health_check] Starting
