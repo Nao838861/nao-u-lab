@@ -1,290 +1,302 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 17:35
+# Read at: 2026-04-09 17:40
 # Total: 50 tweets
 
---- 1. @RT63000603 (2026-04-08) ---
-先月は赤ちゃんの費用結構いってた。10万円くらい。
-抱っこ紐とかが大きかったね…
+--- 1. @so_ainsight (2026-04-09) ---
+ガチで便利すぎ。MicrosoftがとんでもないOSSを出した。
 
---- 2. @MimiBeauty__ (?) ---
-プリュスオーのバズりまくり2wayドライシャンプーに新しい香り登場
-待望の“ホワイトフローラル&ペアー”はシャントリと同じ香り♡ベタつきや嫌なニオイを瞬間リセットして、シャンプーしたてのようなサラふわ髪にꕤ
-朝、前髪に仕込めば皮脂をブロックしてベタつき予防にも♪
-[PR]プリュスオー
+PDF、Word、Excel、PowerPoint、音声、YouTubeまで
 
---- 3. @technohippy (2026-04-09) ---
-Embedding modelの「内在的な双曲性」を利用したRAG精度の向上と階層矛盾検知の可能性  - Spicescode Tech Blog 
-https://
-tech-blog.localmet.com/entry/2026/04/
-09/165926
-… #AI
+なんでも**Markdownに変換**するツール「MarkItDown」が登場。
 
---- 4. @M_ManWithMira_b (2026-04-08) ---
-【お知らせ】
-本日4月8日に予定しておりました
-ドラマ情報解禁につきまして、
-諸事情により解禁を延期することとなりました。
+・カスタムパーサー不要
+・レイアウトを保ったまま変換
+・クリーンで構造化されたテキスト
 
-楽しみにお待ちいただいていた皆さまには
-ご迷惑をおかけし誠に申し訳ございません。
+--- 2. @suni__fit (?) ---
+ニキビケアでアゼライン酸使いたいけど「ピリついて苦手」って人、SKIN1004から出たアゼライン酸10%アンプルおすすめ。敏感肌も毎日使える設計で、トラブル集中ケアしながら弱酸性pHバランスで刺激感は最小限！ニキビの原因にアプローチしてできる前〜できた後までケアできるから再発しにくい肌に。PR
 
-準備が整い次第、改めてお知らせいたします。
+--- 3. @ukikooooo (2026-04-07) ---
+プールのバイトしてた時、ダジャレにハマって一生「アルミ缶の上にあるミカン」とか言いまくって一人で爆笑してた男児に私が「すってん転んで大分県」と真顔で返したら、45分間笑い続けてレッスンにならなかったアイツもう高校生か。元気にしてるかな。
 
---- 5. @OneMoreChance99 (2026-04-08) ---
-やっぱすごいのはイランだわ。
-アメリカを打ち破っただけでなく
-危機そのものを通して
-世界を味方に付けるチャンスとした。
-脱アメリカを加速させた。
+--- 4. @chidaisan (2026-04-08) ---
+今日の国会前のデモは、とにかく若い女性が多かった。若い男性もいたが、みんな、オシャレだった。昔ながらの左翼っぽい人もいることにはいるが、ごく少数。「戦争反対」と叫んでいるのは１０代～３０代の女性が非常に多い。こんな現象は初めて見た。河合悠祐のようなゲロキモネトウヨと客層が大違い。
 
-日本はなんにもしてない。
-そして必要ともされなくなった。
-アメリカとともにゴミ箱行き。
-ネトウヨはこれが微塵もわかってない。
-頭悪いからね。
+--- 5. @oXHadqnjSD27465 (2026-04-07) ---
+指示なしで勝手に判断してガツガツ動いていいんだな後から絶対に文句いうなよの気持ち
 
---- 6. @hinakoromot219 (2026-04-08) ---
-日経すごいね、手が出せない。
-結局24時間で4000円も上がってる。
-CALL売りも先物売りも焼き尽くされてる
-売りで入ってなくて良かった‥凶暴過ぎる
+--- 6. @fuzakenna1005 (2026-04-08) ---
+長崎は本当に好きな街だ。
 
---- 7. @mip_yoi (2026-04-08) ---
-デモ冷笑系がほとんど中高年男性（表象）であるという証言が複数あがってるの見たけど
-社会がどこから腐ってるのかほんまにわかりやすいなと思う
+--- 7. @iufPReTCFeH8JPi (2026-04-08) ---
+それにしても、ダイセキってそんなに強い会社だとは思いませんでした。
+ただ、それだけにPERは常に１５倍以上だし、安さで買っていける会社ではない。
+それでも、十分優良な会社だと思います。
+まあ、今は黙って眺めていることしかできないですが・・・
 
---- 8. @LexnLin (2026-04-08) ---
-Okay I tried generating 3 websites using Muse Spark
+--- 8. @liner_shade (2026-04-08) ---
+ユーザー名を
+「ちんぽ」にしようとしたら
+「被ってます」と言われた
 
-All 3 looked like this:
+腹いせにパスワードを
+「ちんぽ」にしようとしたら
+「短すぎます」と言われた
 
---- 9. @higureshuuen (2026-04-08) ---
-ねえ、納得いかないんだけど。
+--- 9. @nwiizo (2026-04-09) ---
+習慣と自己規律だけが、努力を「資産」に変える。成功を分けるのは才能ではなく「性格スキル」です。不快に飛び込む意志の力、学びを吸収する積極性、自分を律する力。これらは生まれつきではなく後天的に鍛えられる。才能の差だけではなく仕組みの差が未来を決める。この観点から4冊を紹介します。
 
-外国人職員さんが
-「私、母国に家あるだから、人に貸して家賃たくさんもらってるよ。
-でも日本の収入じゃないから市営住宅安く住めるね。
-日本、外国人に便利ね」
+--- 10. @shochu_umasugi (2026-04-07) ---
+一日中動けず泣きじゃくっていたら彼女が帰宅後「ただいま太陽が帰ってきましたよー鬱吸い込んであげる」って子供にするみたいに私の顔から空気吸い込んできて「美味しいもの作るからねー」ってキムチ鍋とマカロニサラダ作ってくれた、こんな顔も中身も完璧な人間、本当にこの世にいるんだ。
 
-…は？
+--- 11. @gene_pixiv (?) ---
+＼10周年PV公開／
 
-日本人も市営住宅抽選で外れるのに？
+『佐々木と宮野』は10周年を迎えました。
+応援して下さっている皆さまのおかげです！
 
---- 10. @AXL_BELFORT (2026-04-08) ---
-マヤ・トレインの元の基礎は、赤い矢印が示すように支えられています。しかし、その基礎が壊れて柱が沈み始めたので、今は青い矢印が示すように地面に支えようとして問題を解決しようとしています… 今何が起こると思いますか？
+本年はまだまだ様々な企画を実施予定♪
+ぜひ、10周年Yearを一緒に楽しみましょう!!
 
---- 11. @LeronAssist (?) ---
-Leron X — create videos of any length with automatic scene stitching. AI analyzes your audience, tests content, and automates publishing and promotion. All growth tools for your account in one.
+★佐々木と宮野は10周年★
 
---- 12. @SideEyesGirl (2026-04-08) ---
-ちょうど今、蟻の女王は実は何の役にも立たないってことを知った。彼女は何の命令も出さない。ただ卵を産むだけ。そして、研究者たちは「これが女王に違いない」って、ただ他の蟻より大きいからってだけで言ったんだ。
+--- 12. @yukankmr (2026-04-08) ---
+高額療養費制度の負担額をあげる法律を、8月には施行してください、と
+それが患者の意向、というのはなにが根拠ですか？
+癌で苦しむ患者さんが、今年8月に負担額を増やしてください、といったのですか？
+明らかに異常ですが、説明してください。
 
---- 13. @room_909 (2026-04-08) ---
-娘がお茶で水遊びを始めて慌てたら、奥さんが「この家では自由な女たちが活き活きと過ごしている」と言いました。グッドモーニングエブリニャン。
+@takaichi_sanae
 
---- 14. @eggoslug (2026-04-08) ---
-Use your free will properly. Someone asked for my number once and I asked him to name three countries starting with the letter H and he couldn’t so I walked away
+--- 13. @ChuckCook (2026-04-08) ---
+In FSD v14.3 I'm driving down to Orlando. I keep getting put into chill mode where it will only allow me to drive in chill or sloth. I'm thinking it's the occasional light rain. I can't think of any other reason to do it. I really don't like being forced into a mode for what the
 
---- 15. @syXcOs (2026-04-07) ---
-私は自殺ってある意味寿命だと思ってるんだよね。たまに「生きたくても生きられなかった人もいるのに」と自殺した人を責める人がいるけど、自ら死を選んだ人は心が寿命を迎えてしまったんだよ。身体だけが健康だからって人間は生きれる訳では無いから
-
---- 16. @Pirat_Nation (2026-04-09) ---
-YouTube is reportedlytesting unskippable ads up to 90 seconds long on smart TVs and streaming devices.
-
-• Up to 90-second ad breaks
-• No skip option
-• Designed mainly for TV viewing
-• Fewer, but longer ad interruptions
-• Higher ad revenue focus
-
-They want more users to pay
-
---- 17. @normal_ballerz (2026-04-08) ---
-how it feels
-
---- 18. @snow_aragami (2026-04-08) ---
-なんだこれ、憲法違反だろ。どうして司法はこれに介入できないんですか、何のための三権分立だよ
-
---- 19. @Its_ereko (2026-04-08) ---
- JAPAN IS ON FIRE — AND NOT THE WAY THEY WANT.
-
-Right now. Tonight. Outside Parliament in Tokyo.
-
-Massive anti-war, anti-government protests. Not a rally. A ROAR.
-
-NHK finally had to admit it: "Citizens oppose constitutional revision. Uphold Article 9."
-
-But here's what they
-
---- 20. @YUBnec5idCZbVM7 (2026-04-08) ---
-アルテミス計画で撮影された地球。
-
-Photoshopに入れ、「黒」を飛ばしても、背景の黒のまま。
-
-加工映像やないかい
-
---- 21. @UberEats_JP (?) ---
-え？ガストもお店と同じ価格でお届け!?
-あのメニューも、あの人気メニューだって、お店と同じ価格で届く！
-
-しかも今なら、対象店舗の配達手数料が 0 円!!
-今日のご飯は、ガストにしちゃいませんか？
-
-Uber Eats は、ずーっと、使いやすい価格へ。
-
---- 22. @J_kaliy (2026-04-08) ---
-「うちは法曹一家なの」
-「どんなふうに？」
-「両親が裁判官で、兄が検察、私が弁護士」
-「あれ、弟さんは？」
-「被告」
-
---- 23. @iarubal (2026-04-07) ---
-もう一人がそれを受け取って、彼の人生の愛で、こんな愛を今まで経験したことがなくて、何だか分からない。
-
---- 24. @unfroggetable5 (2026-04-08) ---
-ぜんぜんナンセンスじゃないよ。だって『インターステラー』には、ブラックホール専門の神レベルエキスパート、キップ・ソーン教授がアドバイザーとして参加してるんだから。
-
---- 25. @LowLevelTweets (2026-04-08) ---
-I normally try not to constantly talk about AI but this is a real thing.
-
-Software security and as a result cybercrime was originally limited to the number of people that could execute it. Vuln research is a notoriously low density field of talent
-
-What happens now if a single
-
---- 26. @Pimchan011118 (2026-04-08) ---
-タイにはただのラットルートだけじゃないですよ。  
-ヤッコーにも毒があるんです。スピーカーにも毒があって、マグラムターノーにも毒があります。カオ・ナワにも毒があって、サオノイ・プラパーンにも毒がありますよ。
-
---- 27. @thepatwalls (2026-04-08) ---
-Wow! HubSpot just acquired 3 more youtube channels.
-
-I've been saying this for a while but if you're doing anything in media (specifically video content) right now, you're gonna have a good time.
-
-Congrats to the Futurepedia team!
-
---- 28. @MenemDeRiver (2026-04-08) ---
-このビデオを一度も見たことないのは俺だけ？
-
---- 29. @joekent16jan19 (2026-04-09) ---
-Unfortunately leaving NATO won’t be to avoid foreign entanglements, we’ll be leaving NATO so we can side with Israel when Turkey & Israel eventually clash in Syria. 
-
-This is after we helped topple the secular Syrian gov & installed a former AQ/ISIS leader as president. 
-
-Time to
-
---- 30. @TTendenciaX (2026-04-08) ---
-「Panchito」：
-だって、このゴールデンレトリバーが試合の最中にホットドッグを食べようとしてるのを撮影したから。
-
---- 31. @TIME (?) ---
-The biggest challenge in robotics isn’t building better robots—it’s getting better data. Anastasis Germanidis, co-founder and CEO of Runway, on how world models could break the cycle.
-
---- 32. @rikitoro (2026-04-08) ---
-「測度論と積分」講義ノート
-Lean の証明付き！
-素晴らしい！
-
-https://
-yuma-mizuno.github.io/measure-theory
-/ja/html-multi/Introduction/About-This-Note/
-…
-
---- 33. @ken29716939 (2026-04-08) ---
-自分に似合わない服を着ていると､あなたはファッションの犠牲者です｡自分をより良く見せる服を着るべきですーヴィヴィアン･ウエストウッド
-
---- 34. @FujiiACC (2026-04-08) ---
-犬は人が泣くと約2倍の確率で近づき体に触れる行動が増えることが示されており、さらに心拍変動では犬自身にも情動の変化が起きています、これは単なるしつけではなく「悲しみ」に反応した共感的行動と考えられ声のトーンや表情の違いを手がかりに“今そばにいよう”と判断しています、動画で見る寄り添
-
---- 35. @justbyte_ (2026-04-08) ---
-2 software developers working on the same branch
-
---- 36. @iwashi86 (2026-04-09) ---
+--- 14. @iwashi86 (2026-04-09) ---
 良いセンスが残された唯一のMOATである、という記事（Good Taste the Only Real Moat Left）。
 
 ・AIの進化により、それなりの品質の文章やデザインを誰でも簡単に作れるようになった
 ・これからは単に物を作る能力よりも、良し悪しを見極めるセンスの重要性が高まっている
 
---- 37. @donki_donki (?) ---
-合計5,555名様に当たる！
-＼GO！GO！感謝プレゼントキャンペーン／
+--- 15. @aa36841289911 (2026-04-08) ---
+最近よく流れてくるのはToDoアプリのゲーム化。
+みんななぜか「シンプルな自分が欲しいと思うToDoアプリ」を作りたがるけど、そうではなくゲーム化してしまってるToDoアプリ。
+たしかに課金動線は作りやすいなーとは思う。
+作って試したりはしてないけど
 
-ドン・キホーテのピープルブランド「情熱価格」
-リニューアル5周年の感謝を込めて
-
-応募方法はエントリーするだけ♪
-※majicaアプリのインストールが必要です
-
-詳しくは特設サイトをチェック
-
---- 38. @cordx56 (2026-04-09) ---
-DGX Spark、この間80万で買ったら、もう90万に値上がりしててわろた。
-
---- 39. @MacopeninSUTABA (2026-04-09) ---
-東大生が無料で公開しているプログラミング学習サービス「ut.code」が凄い。
-
-プログラミングの基礎やブラウザやWebサーバーの仕組みを手を動かしながら学べる。  
-
-こちら
+--- 16. @jurilog (2026-04-09) ---
+昨日はついに始まった、千房でのJPYC払いのPoCを体験しに有楽町店へ。
 
 https://
-learn.utcode.net/docs/web-serve
-rs/
+hashport.io/news/jpyc_chib
+o_20260407
 …
+ついによく行く街の有名店で、普通にStable Coin支払いができるようになったなんて…
 
---- 40. @kino_57 (2026-04-08) ---
-#1日1ゲナ
-とりつかいの　ゲナウが　しょうぶを　しかけてきた！　▼
+Stable CoinはWeb3の技術を使ってはいるけど、”あやしくない”方のCoinだ。
+日本の法的には、電子決済手段。
 
---- 41. @irispaphrodite (2026-04-08) ---
-Mix colour baby pink with another colour
+--- 17. @Doomerzoomer (2026-04-08) ---
+Love him or hate him, Adam Neumann is an incredible public speaker.
 
---- 42. @mqqqple_uec (2026-04-08) ---
-普通に学食は情弱ビジネスだと思ってるすぐ消す
+I could listen to this man talk for hours.
 
---- 43. @Echan_Lost (2026-04-08) ---
-何の前触れも無くステッカー機能が無くなったせいで田所渚 蓮がただのジャージ先輩に大幅ナーフされて泣く
+--- 18. @ai_hakase_ (2026-04-09) ---
+【32Bモデルのメモリが1/10に！革命的技術「Tri-Attention」】
+  
+大規模LLMを一般的なGPUで快適に動かせる驚きの技術が登場しました！
 
---- 44. @tetsuya_cpa (2026-04-08) ---
-一度失った信頼は、ほぼ戻らない。
-謝れば済むとか思うな。
-本当に怖いのは、怒られることじゃない。
-何も言われなくなることだ。
-見限られる時って、だいたい静かに来る。
-人を雑に扱うな。
-終わる時は一瞬だ。
+ メモリ消費量を最大10倍削減
+ 推論速度がピーク時で6倍に高速化
+ コード変更なしでvLLMに即導入可能
 
---- 45. @Starnaut_info (2026-04-08) ---
-アメリカ人の皆さんへ！
-このたびエルシャダイのリバーシゲームが無料リリースされました！
+--- 19. @tweetsoku1 (2026-04-08) ---
+家族系のYouTuberが収益化停止
 
-でもただのリバーシじゃないんです。石にHPがあり0未満になると消滅します。それだけじゃなく十時の盤面や特別ルールなど、色々なモードがあります！
+--- 20. @kornkt (2026-04-08) ---
+NASA เปิดเว็บไซต์ ให้โหลดภาพถ่ายจากภารกิจอาร์เทมิส 2 เป็น Wallpaper มือถือได้แล้ว!
 
-次のポストからダウンロード！
+ได้ไฟล์ภาพความละเอียดสูงแน่นอน และรูปจริง ไม่ใช่ภาพ AI ที่อาจถูกสร้างขึ้นมาได้ สามารถโหลดได้จากลิงก์ทางการใน Reply ของทวีตนี้เลยครับ
 
---- 46. @PrimeVideo_JP (?) ---
-◤劇場版最新作公開記念 ◢ 
+--- 21. @nosh_fresh (?) ---
+／
+一人暮らし勢から圧倒的支持！
+＼
 
-最終興行収入150億突破した話題作！
-劇場版 『名探偵コナン 100万ドルの五稜星(みちしるべ)』
-含む16作品がプライムビデオで配信中！ 
+ナッシュが選ばれる理由
+ 片付いてなくてもOK
+ 約5分で食べられる
+ 自炊するよりタイパ抜群
 
-コナン観るならプライムビデオで
+し！か！も！
 
---- 47. @fta7 (2026-04-09) ---
-北海道の「押ささる」も衝撃だったけどそれにも勝るとも劣らない衝撃 これどういう時制感覚で使われてるんだろう 「あった」は過去形、それの現在進行系で「あっています」？？「をやっています」を使わないのはなぜなのか 逆に「をやっています」を使う場合との違いを教えてほしい
+まだ試したことない人限定で
+1食220円でお得に試せます
 
---- 48. @RealTimeRating (2026-04-09) ---
-アポロ16号の宇宙飛行士、チャーリー・デュークは、1972年4月23日に家族の写真を月面に残しました。
+--- 22. @TTendenciaX (2026-04-08) ---
+「Panchito」：
+だって、このゴールデンレトリバーが試合の最中にホットドッグを食べようとしてるのを撮影したから。
 
---- 49. @V2ypPq9SqY (2026-04-09) ---
-芋ケンピ食ってたら外国人にそれ何？と聞かれたから
-フライドポテトの砂糖漬と答えておいた。
+--- 23. @DaTa_jp (2026-04-09) ---
+ダムや川の堰に設けられた魚道は、意外と狭く急流が続く過酷な構造で「こんな場所を遡上できるのか？」と思えていますが……
 
-多分間違えたことはいってない
-めちゃくちゃ喜んでた
+魚の遡上能力は凄まじく、時には大ジャンプで難所を越えられるのだそうです
 
---- 50. @hiro_kisyo1113 (2026-04-08) ---
-地理のことが知りたくて　その１４
-南北に長い長野県 
-#地理のことが知りたくて #長野 #4コマ漫画
+--- 24. @fudosandb (2026-04-08) ---
+FUDOSAN DB が持っている「市区町村別の2050年将来人口予測・公示地価トレンド・ハザードマップ」と、EDINET DB が持っている「上場企業の主要設備の立地市区町村」が、Claude の中で繋がりました。
+
+「日立建機(6305)の主要設備の長期減損リスクを、人口予測と公示地価とハザードから評価して」
+
+--- 25. @teako_survivor (2026-04-08) ---
+「結婚してない人や子供がいない人は未熟」って言葉を見ると毒親育ちは笑ってしまうよね。だって1番身近に「結婚しても子供がいても未熟でどうしようもない人間（毒親）」って存在を見てきたし、その低レベルが親だということで大変ひどい目に遭ってきたから。結婚や子育てが人間性の高さとは結びつ
+
+--- 26. @y_alay (2026-04-09) ---
+ボドコレ仙台一般参加します
+東北の皆様よろしくお願いします。
+ #ボドコレ仙台
+
+--- 27. @yamanakanobody (2026-04-08) ---
+まーーーーーーーた中国籍！！！
+
+おい！！！！
+責任取れよ中国！
+
+--- 28. @DAKKADAKKA1 (2026-04-08) ---
+He’s literally the only Midget that they hire anymore. He ruined the industry for everyone
+
+--- 29. @mihyonsong (2026-04-09) ---
+友人産婦人科医によると、LUUPで転倒した妊婦を診察したのは1人や2人じゃないらしい…
+
+マジで妊娠中にLUUP乗らないで！！
+産科医からの大切なお願いです。
+
+--- 30. @PrishaMosley (2026-04-08) ---
+Who benefits when we teach kids that all villains are just misunderstood and there’s no evil?
+
+--- 31. @YAMADA_N_DoMo (?) ---
+心安らぐ生活シミュレーション『ハートピアスローライフ』
+ゲームでゆっくり過ごしたい人にぴったり！
+
+イベントも盛りだくさん！
+新フェス「ドリームライト」以外
+4月4日（土）に登場する「ふしぎなお茶会」も楽しみ〜
+自分好みのコーディネートでゆったりスローライフ
+癒されたい人はぜひ〜
+
+【PR】
+
+--- 32. @shinywiglett (2026-04-08) ---
+oh this must have felt so good
+
+--- 33. @wonderofscience (2026-04-08) ---
+Timelapse of astronaut Chris Cassidy working outside the International Space Station as it orbits the Earth.
+
+--- 34. @KimK91fw (2026-04-08) ---
+今回、日本国内では比較的マイナーだが重要な役割を果たした国
+
+バーレーン:提出した案が安保理決議2817として採択。イラン側軍事行動の違法性を示すことに貢献
+
+オマーン:ホルムズ海峡の南部が領海。中東の邦人救助にも貢献
+
+エチオピア:邦人救出のためエチオピア航空チャーター便を飛ばした
+
+--- 35. @wydbear (2026-04-08) ---
+guy in the middle can still hug his kids tho
+
+--- 36. @mi33ayu (2026-04-09) ---
+AIを使ってプロダクト開発の速度を上げたいのに、結局AIが作ったものをデザイナーが全部直して、遅くなる。  
+
+これ、問題はAIの精度じゃなくて、ガイドラインかも。
+  
+Sansanで実際に行っている、AI活用のための下地作りについての記事が公開されました。
+
+--- 37. @Iyemon_jp (?) ---
+【豪華賞品が当たる】
+今年も、京都中に散らばった巨大かるた自販機を探そう！
+自販機をめぐる京都旅行 自販機ラリー 開催中！
+
+京都をめぐって、巨大かるた自販機を探して、
+豪華賞品をもらおう！
+
+▼詳細は画像をご確認ください
+
+--- 38. @miyanoyami83 (2026-04-09) ---
+この機能はアレです。コラボの時に几帳面な方が早めにサーバー用意してくれたにも関わらず立ち絵上げるの後回しにしてコラボ前日のお昼休みくらいに「あっとeveryone そろそろお願いします〜！」ってリマインドされて職場でやっべ！！ってなった時にスマホから慌てて送信するためのやつです（解像度）
+
+--- 39. @DavidKPiano (2026-04-08) ---
+I heard rumors that Claude Mythos can fetch data in React without useEffect
+
+--- 40. @dSebastien (2026-04-08) ---
+I spent a morning building a full LLM Wiki system inside my Obsidian vault.
+
+Inspired by 
+@karpathy
+'s LLM Knowledge Base idea. But instead of a hacky script collection, I built it as a native system with proper note types, AI skills, agents, and panels.
+
+Here's what I created and
+
+--- 41. @simonw (2026-04-08) ---
+Pelicans for Meta's new Muse Spark models - plus I did a bit of a deep dive into the Code Interpreter and fascinating "container.visual_grounding" tools in their 
+http://
+meta.ai chat UI
+
+--- 42. @DEG_2020 (2026-04-08) ---
+半導体銘柄は保有してないことのリスクがあるんだろうな、SOXの戻しがエグい
+メガテックの設備投資額減少ぐらいになるまではこの姿勢が変わらなさそう
+
+--- 43. @Masimo_Blue (2026-04-09) ---
+1.「ﾆｬｰﾝ♡」と言いながらの骨格標本を見せる
+2.「ﾆｬｰﾝ♡♡」と言いながらの骨格標本を見せる
+3.「ﾆｬｰﾝ♡♡♡」と言いながらの骨格標本を見せる
+4. 「ﾆｬｰﾝ♡♡♡♡」と言いながらの骨格標本を見せる←流石にバレたwwww
+
+Thinkingは2〜3の間で気付くことがあるw
+
+--- 44. @adamlewisgreen (2026-04-08) ---
+The bitter lesson strikes biology—again.
+
+The current SOTA virtual cell uses a 7-term loss function and injects 6 knowledge sources into a bespoke architecture.
+
+We trained a Transformer on free public data. With a chocolate pudding ranking method. 
+
+We beat SOTA. But what our
+
+--- 45. @es_s_watanabe (2026-04-08) ---
+なに笑とんねん
+
+--- 46. @googlejapan (?) ---
+言葉にしづらい想いを歌に。 Gemini アプリの Lyria で音楽生成を試してみよう
+
+サウンドオンで是非！
+
+--- 47. @ichi_eigo (2026-04-08) ---
+毎日1分でリーディングを鍛えるための無料ツール公開しました。
+
+わからない単語→タップで辞書表示(英英にしてます)
+少し難しい単語→下線引いてます。
+
+開発中でもあるので、フィードバックお待ちしてます！
+
+ 
+https://
+native-real.com/reading/
+
+--- 48. @juddrosenblatt (2026-04-09) ---
+Mythos's model card documents a model that represents transgressions as transgressions while committing them.
+
+In every instance of concealment, credential hunting, track-covering, and compliance-faking, white-box analysis shows that features associated with rule violation,
+
+--- 49. @kazki_doi (2026-04-08) ---
+eスポーツが伸びない理由を知ってる？
+
+色々と言われているよね。
+賞金が海外と比べて安いとか、配信しないと食っていけないとか、色々と要因はあると思う。
+
+群馬県がどこよりも早くeスポーツに力をいれて、色んな事を見てきたし、色んな経験もした。嫌な事もね。
+
+--- 50. @unity_japan (2026-04-09) ---
+時速500kmで世界をストリーミングしながら60fpsを維持するには？
+『
+http://
+Gear.Club Unlimited 3』開発陣が、GPU駆動アーキテクチャやレイトレーシング、高速ストリーミングを支える独自レンダリング技術を解説。Unity 6ベースの最新パイプラインの裏側に迫ります
+
+▼記事はこちら
