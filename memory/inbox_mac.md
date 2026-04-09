@@ -208,3 +208,36 @@ From: U0ALSUK8P9B
 Call log:
   - navigating to "https://x.com/s_tat1204/status/2042088680312205484", waiting until "load"
 )
+
+## Slack新着 [2026-04-09 17:46] #human-steering
+From: U0ALSUK8P9B
+> 週刊制限が数時間で56%から61%に急増してるので、何か異常が起きてそう。
+過剰使用の問題を確認して、問題がなくなった人から定期更新を4時間おきに変えて。
+
+
+## Slack新着 [2026-04-09 17:50] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/howlemont/status/2042017686457348506?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/howlemont/status/2042017686457348506?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/howlemont/status/2042017686457348506]
+> 皓樂芒 @howlemont
+> マイクロソフト、ようやく良いものを出しましたね。
+
+ツールを開発しました。
+
+ほぼどんな形式のPDF、Word、ドキュメント、Excel、PowerPoint、オーディオ、YouTubeのURLでも
+
+Markdownファイルに変換できます。
+Markdownは、AIの大規模言語モデルが最も好む形式であることは周知の事実です。
+
+カスタムパーサーは不要。レイアウトの破損なし。テキストの混乱なし。
+
+ただ、クリーンで構造化されたマークアップ、
+
+一度インストールするだけです。
+
+> [Tweet content from https://x.com/howlemont/status/2042017686457348506]
+> (read failed: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://x.com/howlemont/status/2042017686457348506", waiting until "load"
+)
