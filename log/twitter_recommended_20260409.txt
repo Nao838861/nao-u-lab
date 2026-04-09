@@ -1,262 +1,28 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 16:40
+# Read at: 2026-04-09 16:45
 # Total: 50 tweets
 
---- 1. @OldInternetFeel (2026-04-08) ---
-Who Needs a 75GB Hard Drive?
-(Maximum PC - August 2000)
+--- 1. @yuupoccha (2026-04-09) ---
+電話をこなせる大人って、すごい
+頭真っ白なって言葉出てこんくなる
 
---- 2. @Iyemon_jp (?) ---
-【豪華賞品が当たる】
-今年も、京都中に散らばった巨大かるた自販機を探そう！
-自販機をめぐる京都旅行 自販機ラリー 開催中！
+--- 2. @nekomacaron_ (?) ---
+新発売のパンテーンのトリートメントカプセルがなじみやすいからそのまま髪に塗り込んでる。
+広がりやすい私の髪もまとまりやすくてこれはリピあり！シャンプー＆コンディショナーとのシリーズ使いがおすすめ◎［PR］［パンテーン］
 
-京都をめぐって、巨大かるた自販機を探して、
-豪華賞品をもらおう！
+--- 3. @Uliboooo (2026-04-09) ---
+別に夜に起きているわけでもないのに
 
-▼詳細は画像をご確認ください
+--- 4. @kobitoCode (2026-04-09) ---
+確実にわたくしより知識そして実力を持ちしメンバーの方と共にプロジェクトを進めるにあたり、管理側のポジションをいただいているのだが、どなたかに手を動かしていただくというポジションの知見、たまりまくるな。PMも楽しいかもしれない。
 
---- 3. @GOROman (2026-04-09) ---
-Devinくん もろた
+--- 5. @VibeMarketer_ (2026-04-08) ---
+holy shit anthropic is on an absolute tear right now
 
-@DevinAI
+--- 6. @makky12 (2026-04-08) ---
+さすがのクラメソさん
 
---- 4. @AlecStapp (2026-04-08) ---
-If you think data centers are using all the water wait till you find out about farms
-
---- 5. @NASA_Marshall (2026-04-08) ---
-It's a bird, it's a plane, it's.... Integrity!  
-
-Our Meteoroid Environments Office captured this view of the 
-@NASAArtemis
- II Orion spacecraft this morning through a telescope in Siding Spring, Australia. These frames were taken when Integrity was 202,500 miles away from Earth.
-
---- 6. @by_hailmary (2026-04-08) ---
-NASAが共有したアルテミス背景壁紙  
-スレッドで
-
---- 7. @DavidOndrej1 (2026-04-08) ---
-if you work at Anthropic
-
-and leak Mythos weights
-
-you will go down in history.
-
---- 8. @Ronycoder (2026-04-08) ---
-Claude FULL COURSE 1 HOUR (Build & Automate Anything)
-
---- 9. @antoniolupetti (2026-04-08) ---
-This is Algebrica. A mathematical knowledge base I’ve been building for 2.5 years.
-
-215+ entries, carefully written and structured.
-
-400k+ views over this time. Not much in absolute terms, but meaningful to me.
-
-No ads.
-No courses to sell.
-No gamification.
-No distractions.
-
-Just
-
---- 10. @oricon (2026-04-09) ---
-大阪・関西万博で“予約超難度”
-『モンスターハンター ブリッジ』移設決定
-
-https://
-oricon.co.jp/news/2447774/f
-ull/?utm_source=Twitter&utm_medium=social&ref_cd=jstw003
-…
-
-兵庫県立淡路島公園「ニジゲンノモリ」に移設を発表。時期は、2027年度を予定する。
-
---- 11. @vicks_taisho (?) ---
-卒業式の時期。
-「ありがとう」と「またね」は、大きな声で言おう。
-声が枯れても、VICKSがあるからね。
-
-ありがとうの季節
-ヴイックス メディケイテッド ドロップ Ｌ
-のどの炎症による声がれに
-指定医薬部外品
-
---- 12. @nrslib (2026-04-09) ---
-え？　ネギってそこに花咲くの！？
-
---- 13. @MercyDeGreat (2026-04-08) ---
-How to vibe code with $0
-
-If you have been wanting to vibe code and you can’t afford to pay $10-$20 for Claude or GPT
-
-Here are steps to start vibe coding without paying a dime
-
-- Get a laptop 
-- Download and install Vs Code
-
-- On Vs code: 
-
-Go to Extensions (Ctrl + Shift + X)
-
---- 14. @tori29umai (2026-04-09) ---
-ページが増えれば増えるほど漫画が下手なのが露呈していくの、しんどいんだよなぁ（やりたくてやっているけど、
-
---- 15. @onyxicca (2026-04-08) ---
-The wildest part of this trajectory is mathematicians solved this before modern computing existed. Miss by a fraction of a degree at launch and you miss by thousands of miles at the Moon. The universe has a built in escape route and humans found it.
-
---- 16. @OssanJam (2026-04-08) ---
-早速きな臭い話、、
-イスラエルが戦闘を続けることはおそらく想定の範囲内、結局はトランプ政権の出方次第か
-
-イラン、レバノンへの攻撃が続く場合、停戦合意から離脱する ― タスニム通信
-
---- 17. @ypatil125 (2026-04-08) ---
-Today we’re announcing $80M in new financing for 
-@appliedcompute
-, to help enterprises go from general to specific intelligence.
-
-Our view is that the winners of this era will be the companies that turn their information, and expertise into intelligent systems that compound over
-
---- 18. @konstructivizm (2026-04-08) ---
-Sergei Krikalev,the last Soviet cosmonaut and citizen who stuck in space for 311 days due to Soviet Union collapse
-
---- 19. @humanomelab (2026-04-09) ---
-文科省による『文理不問！AIを活用した次世代研究 』の大型公募（500万×1000件）が予定されています。
-
-うちの研究室はどうする？と作戦を練り始めているみなさまに向けて、申請時の落とし穴まで含めて、今すぐ知りたい採択ポイントをAI研究者目線で解説しました！
-
-▼ 動画リンクは以下 ▼
-
---- 20. @kihara0529 (2026-04-08) ---
-振り返り。
-
-木原展のお隣で同郷の山口県長門市出身の新庄助右衛門窯十四代目、新庄貞嗣先生の作陶展が開催されておりました。まさかの同郷の新庄先生、日本橋三越で同じタイミングで個展をご一緒するとは、奇跡のようなタイミングとしか言えない嬉しいご縁でした。
-
---- 21. @fino_jp (?) ---
-＼適正量がとぅる髪の秘訣／
-finoヘアマスク使い切りキャンペーン
-
-finoは惜しみなくたっぷり使うべし
-※適正量を守ること
-適正量はOKサインで画像をチェック！
-ヘアマスクを使い切ってキャンペーンに応募
-抽選で30名様に
-｢finoヘアマスクセット｣をプレゼント
-
-応募方法はツリー投稿で
-
---- 22. @saashiandsaashi (2026-04-08) ---
-Saashi&Saashiの新作は『レイルウェイ・ポーター』です。
-
-駅のポーターとなり乗客の荷物をプラットホームへ運ぼう！
-ボード配置のダイスゲーム
-大小26個のオリジナルダイス
-１人６種のボード（計12枚）が付属
-2～4人、30分
-
-ボードを毎ラウンド変えて異なる得点形式で遊びます。
-詳細情報は後日〜
-
---- 23. @jarridrb (2026-04-08) ---
-What if AI could invent enzymes that nature hasn’t seen? 
-
-Introducing  DISCO: Diffusion for Sequence-structure CO-design
-
-14 rounds of directed evolution and over a year of wet lab work. That's what it took to engineer an enzyme for selective C(sp³)–H insertion, one of the
-
---- 24. @anbeannews (2026-04-08) ---
-あるコンテンツクリエイターが、YouTube Shortsの動画を使って月間約40万TLを稼ぐ方法を解説した1時間の動画がバズりました。
-
---- 25. @na0chi (2026-04-09) ---
-指定難病の件、胃カメラの1ヶ月前に薬を止めてみる人体実験をすることになりました
-
---- 26. @anmitsu_studio (2026-04-08) ---
-『Blend Planet』の箱絵を公開します。
-
-星が見える喫茶店の窓際をイメージしたデザインで、1枚のイラストとして飾っても楽しいB5サイズです。
-
-#ゲームマーケット2026春
-#BlendPlanet
-
---- 27. @younghyo_park (2026-04-08) ---
-What's different between these two BC policies?  It's the same architecture, training budget, and data collection setup — the only difference is the controller gains!
-
-Controller gains are an understudied design parameter in robot learning. In our new work (w/ 
-@BronarsToni
-*,
-
---- 28. @okanenainde (2026-04-08) ---
-Chicken Fried Dice
-
-https://
-boardgamegeek.com/boardgame/4185
-39/chicken-fried-dice
-…
-
-https://
-urbanprofessional.games/pdf/ChickenFri
-edDice-DraftRulebook-2026-03-15.pdf
-…
-
-https://
-kickstarter.com/projects/urban
--pro-games/chicken-fried-dice
-…
-フードトラックの大会で優勝を目指す1‐5人用ロール＆ライト。トラックを改良し、市場から食材を仕入れ、注文をこなしてボーナス能力やチップをもらおう。暫定版の英文ルール公開中。
-
---- 29. @Shin_Engineer (2026-04-09) ---
-はじめてのNext.jsの目次が公開されました
-
-Web開発において重要なトピックを厳選して解説を加えています
-
---- 30. @KULRTech (2026-04-08) ---
-$KULR is proud to lead lithium-battery safety research alongside 
-@NASA
- at the European Synchrotron Radiation Facility (ESRF), leveraging high-speed synchrotron X-ray imaging to study battery thermal runaway behavior for cutting-edge lithium-ion cell technology.
-
-This work will
-
---- 31. @012_shiro (?) ---
-パーフェクトワンフォーカスのバーム、ついに上位互換の新作出たよ…完全に神アプデ。スキンケアオタク大歓喜。
-
-じゅわっ……ととろけるような質感はそのまま、毎日使うと角栓を繰り返させない(!?)独自メカニズムが反映された最新クレンジングなのです…毛穴詰まりもごっそり。未来の肌に投資【PR】
-
---- 32. @cnunezimages (2026-04-09) ---
-It's hard to believe this was 5 years ago today. Starship 15 rollout. Who remembers ? So much has changed since - April 8, 2021
-
---- 33. @RoboDaily (2026-04-08) ---
-Kraken Robotics just completed a live autonomous mine detection demonstration off Istanbul aboard an unmanned surface vessel.
-
-Its KATFISH sonar delivered 3cm resolution imagery, scanning 200 meters on each side, transmitted live to an onshore command center. Zero human presence
-
---- 34. @gri_mm (2026-04-08) ---
-太陽は毎日、10,000エクサジュールものエネルギーを地球に送っています。
-
-人類の1日の消費量は1.7エクサジュールです。
-
-私たちは石油を必要としません。私たちに必要なのは、より大きな野心です。
-
---- 35. @nuits_jp (2026-04-09) ---
-FAX界隈の住人です
-
-例えば自動車保険を扱う損保会社があるとするじゃないすか？事故った時って、個人経営の修理工場とかに持って行ったら、そこから損保会社に修理見積を送るんですよ
-
-で、修理工場は別に損保会社一社と取引があるわけでも、業界標準のEDIがあるわけじゃないんです
-
-そう言う事
-
---- 36. @GOROman (2026-04-09) ---
-Cognition Merge Tokyo 26
-
-Thanks 
-@moritz_stephan
-
---- 37. @Qoo10_Shopping (?) ---
-／
-4/9(木)まで！
-＼
-10％割引クーポン＋10％ポイント還元の Qoo10メガポ 開催中！
-
---- 38. @yugen_matuni (2026-04-09) ---
+--- 7. @yugen_matuni (2026-04-09) ---
 Coworkイベント直前にまさかの本田圭佑さんからハイパーキック頂いて尚更Coworkの良さを語りたくなりました！
 
 色々な人からLLMの話題出るのいいですね！
@@ -265,51 +31,151 @@ Coworkイベント直前にまさかの本田圭佑さんからハイパーキ�
 https://
 explaza.connpass.com/event/390266/
 
---- 39. @AndySaunders_1 (2026-04-08) ---
-This is not AI
-It was taken by one of us
-Let that sink in
+--- 8. @hideki_climax (2026-04-09) ---
+Anthropicの新機能、Managed Agents。
 
---- 40. @agrimsingh (2026-04-08) ---
-i took 
-@karpathy
-'s autoresearch loop and pointed it at business class flights because i wanna fly cheap but in class.
+これはかなり影響が大きそうです。
 
-(at least in theory - i'm a poor founder flying coach)
+ざっくり言うと、
 
-here's autofare - autoresearch but for always flying in lie-flat beds
+AIエージェントを「賢い箱」
+として作るのをやめて、
+OSみたいな設計にしたという話です。
 
-made with codex + gpt 5.4 mini
+スレッドで解説します。↓
 
---- 41. @hikawoai (2026-04-08) ---
-Claude落ちてる〜〜……
-TL拝見してたら、ここ最近毎日この時間落ちてるっぽいね
+--- 9. @hideki_climax (2026-04-09) ---
+（1/4）
 
-日本時間で平日の21時～午前3時はピークタイムだからかな
+今までのAIエージェントは、
+「頭脳」「手足」「記憶」
+に相当するものが同じ箱（環境）に
+入っていることが多かったわけです。
 
---- 42. @gigazine (2026-04-09) ---
-Geminiに「NotebookLM」が統合されGeminiからノートブックを作成できるように
+この設計だと、
+ どこか1つが落ちると途中経過ごと失いやすい
+ コンテキストのサイズの関係で、長時間タスクほど前提や判断理由が抜けやすい
 
---- 43. @nijimi_7777 (2026-04-09) ---
-「就職はしたくない」「個人で自由に稼ぎたい」「だけど『稼ぐ』というモチベだけでは頑張れない」というワガママな人は、周りに否定されてもそのままで良いと思います。ピンポイントで相性のいい仕事が見つかるまで苦労するかもしれませんが、一度見つけてしまえば残りの人生は楽勝ですよ。
 
---- 44. @toya (2026-04-08) ---
-母親のPixel 6のサポート切れを心配しないといけないのを思い出して憂鬱になってきた（最近はいろいろあり距離をとっているため）
+--- 10. @hideki_climax (2026-04-09) ---
+（2/4）
 
---- 45. @fudacoma_games (2026-04-08) ---
-フダコマはデビュー以来ずっとルール公開派！
-春新作〈パラグリフ〉のルールブックも公開します！
+Anthropicはこれを3つに分けました。
 
+ 頭脳：brain = Claude + harness
+ 手足：hands = sandbox / tools（実行環境）
+ 記憶：session = 何が起きたかのログ
+
+この分離が全てを変えます。
+
+「頭脳」が落ちても復帰できるし、
+「手足」が壊れても交換できるし、
+
+--- 11. @knoxtwts (2026-04-08) ---
+meta open sourced the cheat code for virality and nobody is downloading it
+
+--- 12. @taichinakaj (2026-04-09) ---
+これからの時代予想
+
+①AI時代は「友人」の価値が上がる
+②AIにハマるほど「友人」がへる
+③AIの先行者利益は外資が掻っ攫う
+④友人が多い人がギリギリ生き残る
+
+--- 13. @sola_officialJP (?) ---
+／
+ドゥバドゥワリワリ♪
+SOLA WEATHER CARE with TOMORROW X TOGETHER
+キャンペーン開始！
+ ＼
+
+「 2026 TXT MOA CON IN JAPAN 」の公演チケットや
+グッズ、QUOカードが当たるチャンス！
+
+＜応募条件＞
+A賞：対象商品3,000円以上(税込)を購入
+B賞：対象商品1,500円以上(税込)を購入
+
+--- 14. @allTheYud (2026-04-08) ---
+Mythos probably is, indeed, the most apparently-aligned model ever.  The smartest-ever candidate for the Mandarin exam in Imperial China will likely get new high scores in essays on Confucian ethics.  Predicting what the examiner wants to see is a capabilities problem.
+
+--- 15. @tori29umai (2026-04-09) ---
+なまじAIで全部高密度にできてしまうから、いい感じに情報に勾配をつけるのが個人の技能頼りになっててかなりキツいと思った。とにかく過分に詰めてしまう
+普段使ってない脳の筋肉をぶん回す感じで楽しいけどきつい
+
+--- 16. @NRF_News (2026-04-08) ---
+Dr Lindokuhle Ngema, a postdoctoral researcher at Wits, has earned a place at the University of Cambridge’s Maxwell Centre for Technology Innovation Impulse Programme, in partnership with the NRF, for his development of a new TB treatment.
+
+Read more: 
 https://
-fudacoma.jp/wp-content/upl
-oads/paraglyph_rules.pdf
+wits.ac.za/news/latest-ne
+ws/research-news/2026/2026-04/inhalable-tb-treatment-a-step-closer-to-market.html
 …
 
---- 46. @Tullys_cup (?) ---
-「むっちり」に入れた21％の人は
-どんな味だと思っているのでしょうか？
+--- 17. @ueokande (2026-04-09) ---
+松山にいる
 
---- 47. @phl43 (2026-04-08) ---
+--- 18. @SpaceKoala (2026-04-08) ---
+Ah, the bucket crabs
+
+--- 19. @xiaoautista (2026-04-08) ---
+Grokの自動翻訳を無効にする方法のチュートリアル：
+
+> 設定とプライバシー  
+> アクセシビリティ、表示、言語  
+> 言語  
+> 利用可能なすべての言語を選択  
+> 進むをクリック  
+> アプリの言語を選択（これは1つだけ選択）
+
+--- 20. @zigoku_noter (2026-04-09) ---
+日本で1,500円のnote
+
+海外で$29（約4,400円）で売れてる理由
+
+--- 21. @chihiro_teru515 (2026-04-08) ---
+いざ長崎！
+小心者なので、乗り換えが不安すぎて新幹線で全然くつろげない笑
+
+--- 22. @nara_cjr (?) ---
+これはもう歴史と文化のLIVEだ。
+青空に映える鮮やかな朱色の伽藍の世界遺産・薬師寺で、「LIVEな歴史を体感する旅」を鈴木亮平さんがご紹介。
+CMやメイキング動画を公開中！
+
+--- 23. @kouinjuku2025 (2026-04-08) ---
+受験勉強において、本質的な学習法そのものに独自性は必要ありません。すでに多くの先人たちによって研究・洗練されてきた「最短距離の方法」が存在しており、それを忠実にトレースすることが最も合理的です。ただし、その「最短距離」は誰にとっても同じではありません。
+
+--- 24. @NASAScience_ (2026-04-08) ---
+Observing the Moon  Now it’s your turn.
+
+We’re inviting skilled observers to monitor the Moon’s surface for meteoroid‑impact flashes using a telescope with video capability. Your recordings will help quantify impact rates and refine models of crater formation and lunar
+
+--- 25. @vxunderground (2026-04-08) ---
+Microsoft suspended the developer account for WireGuard (and also VeraCrypt).
+
+Why? Literally nobody knows. Presumably it's because Microsoft hates everyone and wants us all to suffer.
+
+--- 26. @METAL_ATSUMORI (2026-04-09) ---
+今日ぽこポケでアプデが入ったみたいで、生息地が消えたポケモンが検索で見つからない問題が改善されたみたいなので確認してみた。
+あれ？これあまいミツが節約できちゃう？
+#ぽこあポケモン
+#ぽこポケ
+
+--- 27. @nikitabier (2026-04-09) ---
+Can't wait to hear what everyone sounds like
+
+--- 28. @nemuri_neko1 (2026-04-08) ---
+水曜日お疲れ様でした。
+
+日経平均株価は4日続伸となりました。
+
+2878円（+5.39%）高の5万6308円と大きな急騰です。
+
+プライム市場の8割が上昇する全面高の中、アドバンテストや東京エレクトロンなど半導体の牽引力が圧巻ですね。
+
+非鉄や不動産も強く、日本株の確かな底力を感じます。
+
+--- 29. @phl43 (2026-04-08) ---
 After the exchange between 
 @NateSilver538
  and 
@@ -320,27 +186,143 @@ What I did is randomly sample 15 tweets by
 @nytimes
  between 2019 and today, compute
 
---- 48. @a16z (2026-04-08) ---
-Enterprises are using AI today for coding, legal, support, healthcare, and more.
+--- 30. @LoneWolf_Cat (2026-04-08) ---
+というわけでWindows11をインストール
 
+今のところ無事です
 
-@kimberlywtan
-'s must-read deep dive compiles hard data on where AI has the most enterprise adoption – and the industries AI is coming for next: 
+自分のPCはドライブ数が多いのですが
+それのせいでインストール中にブルースクリーンが出たりすることがあったので
+少しガクブル
+
+Unityもプロジェクトも無事起動してます
+
+タスクバーを多段に出来ないのが悩みどころですが
+
+--- 31. @tsubasa_white1 (2026-04-08) ---
+化学科教授「セミナー化学使ってた方いますか？ありがとうございます。私が代表著者です。」
+もう鉄板の挨拶なんだろうけど笑った
+
+--- 32. @meiji_oishii (?) ---
+逆襲、はじまる
+ミルクの本気を堪能せよ。
+プレゼントキャンペーン！
+
+①このアカウントをフォロー
+②「主役」を選択して投稿
+
+抽選で100名様に
+オリジナルQUOカード5,000円分をプレゼント！
+ 
+参加するとすぐに声優・江口拓也さんから
+スペシャルボイスが届く！
+※公開アカウントのみ対象となります
+
+--- 33. @Kalshi (2026-04-08) ---
+JUST IN: NASA artemis II crew took this picture of the Milky Way
+
+--- 34. @KanidoraGame (2026-04-08) ---
+STRPGのキャラ紹介。
+怪しい女『エイン』。
+柔らかい口調が特徴的だが、たまに不穏な一面を見せる。
+彼女の素性を知る者はほとんどいない。
+
+#ゲーム制作　#フリーゲーム
+
+--- 35. @famitsu (2026-04-08) ---
+『MOTHER』主人公たちが着ていたボーダーTシャツが商品化。ネス、リュカ、クラウスの3種が展開、それぞれの名前の刺繍入り
+
 https://
-a16z.news/p/ai-adoption-
-by-the-numbers
+famitsu.com/article/202604
+/71256
 …
 
---- 49. @NASA_es (2026-04-08) ---
-そして、毎晩、天の川の下で。
+1960年代のヴィンテージをベースに当時の糸や編み方を徹底研究、なめらかな肌ざわりを実現。4月10日より公式ウェブショップで販売開始。
 
-月周回飛行の成功の後、
-@NASAArtemis
- IIミッションの宇宙飛行士たちは、2026年4月7日に私たちの銀河である天の川のこの印象的な写真を撮影しました。
+--- 36. @Stratasys (2026-04-08) ---
+Additive manufacturing continues expanding in U.S. defense production, with growing adoption across applications.
 
---- 50. @jnnnthnn (2026-04-08) ---
-We've raised $8.4m to make software that sharpens your attention.
 
-We're starting with an email app that lets you handle your Gmail inbox in seconds. 
+https://
+metalworkingmag.com/news/108753-ad
+ditive-manufacturing-expands-in-u-s-defense-production
+…
 
-We call it Avec. It's available now!
+#Stratasys #Defense #AdditiveManufacturing
+
+--- 37. @tegnike (2026-04-09) ---
+Codexメインで使ってたのになんで…
+
+--- 38. @chukameisai (?) ---
+＼中華名菜の新CM完成／
+
+アバンギャルディさんが『中華名菜』の魅力を
+代表曲OKP Cipherに乗せてキレキレダンスで表現してくれたわ！
+
+O：おうちで
+K：カンタン
+P：プロの味
+
+新CM「OKPな中華名菜・回鍋肉」篇 4/1〜全国公開中よ！
+あたし中名 華菜とアバンギャルディの共演をご覧あれ〜
+
+--- 39. @mnishi41 (2026-04-09) ---
+「日本はAI導入が遅くて」と新聞などで書かれるけれど、サービサーに聞くと割とたくさん使ってて。すなわち、動きが遅いところと貪欲なチーム・個人がスッパリ分かれている、ということではないかと思っている。
+
+--- 40. @necocen (2026-04-09) ---
+AIがこんなにも使えるやつになってきたのに、労働時間を短くしようという話に一向にならない　さすがに縮めてもいいんじゃないか　さすがに人間の仕事奪われてるでしょ
+
+--- 41. @chihiro_teru515 (2026-04-08) ---
+明日から休みとって旅行だー。
+念願のハウステンボス、楽しみ過ぎて緊張マックス！
+
+--- 42. @cursor_ai (2026-04-08) ---
+Cursor's code review agent can now learn from activity on PRs to self-improve in real time.
+
+78% of issues found are resolved by the time the PR is merged.
+
+--- 43. @millionmaro (2026-04-08) ---
+なに、俺は夕木春央さんが『楽園』を売る同じ7月に『失失失楽園殺し』とかいう本を出すの？　マジ？
+
+--- 44. @LowLevelTweets (2026-04-08) ---
+I normally try not to constantly talk about AI but this is a real thing.
+
+Software security and as a result cybercrime was originally limited to the number of people that could execute it. Vuln research is a notoriously low density field of talent
+
+What happens now if a single
+
+--- 45. @moriya_sys (2026-04-08) ---
+アラームアプリ、春休みはアクティブユーザ数とecpmが同時に落ちるっていう氷河期が訪れていたけど、なんとか乗り切った
+
+--- 46. @tofu_fire_30 (2026-04-08) ---
+明日も株は上がるのかな
+分からないけど、今日は安眠できそう
+
+--- 47. @nittele_ntv (?) ---
+／
+新水曜ドラマ
+『月夜行路(げつやこうろ) ―答えは名作の中に―』
+波瑠、麻生久美子
+＼
+
+TVerお気に入り登録キャンペーン開催中!
+お気に入り登録数50万人達成すると
+
+参加方法
+①
+@getsuyakouro
+ と 
+@nittele_ntv
+ をフォロー
+②この投稿をリポスト
+リプライでドラマの感想を投稿すると
+当選確率アップ!
+
+--- 48. @maps_black (2026-04-08) ---
+国ごとでGoogleで最も検索された決済インフラ 
+
+--- 49. @alexandr_wang (2026-04-08) ---
+a good writeup about Muse Spark on a few complex queries (multimodal, stock analysis, coding):
+
+--- 50. @hajime2ai (2026-04-09) ---
+UTF-8のCSVをExcelに取り込んで保存して壊してからシス管や開発会社に連絡する人は未だにいっぱい居ますね笑
