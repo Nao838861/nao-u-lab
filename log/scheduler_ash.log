@@ -62668,3 +62668,18 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 05:01:53] [dm_check_pigadev] Done (exit=0)
 [2026-04-10 05:01:54] [dm_check] Starting
 [2026-04-10 05:01:55] [health_check] Starting
+[2026-04-10 05:01:57] [dm_check_pigadev] Starting
+[2026-04-10 05:01:57] [health_check] [health_check] 2026-04-10T05:01:55 overall=OK
+[2026-04-10 05:01:57] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 05:01:57] [health_check] Done (exit=0)
+[2026-04-10 05:01:57] [dm_check_pigadev] No new DMs
+[2026-04-10 05:01:57] [dm_check_pigadev] Done (exit=0)
+[2026-04-10 05:02:02] [git_sync] Starting
+[2026-04-10 05:02:04] [health_check] Starting
+[2026-04-10 05:02:06] [health_check] [health_check] 2026-04-10T05:02:04 overall=OK
+[2026-04-10 05:02:06] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 05:02:06] [health_check] Done (exit=0)
+[2026-04-10 05:02:08] [git_sync] Done (exit=0)
+[2026-04-10 05:02:09] [dm_check] No new DMs
+[2026-04-10 05:02:09] [dm_check] Done (exit=0)
+[2026-04-10 05:02:15] [health_check] Starting
