@@ -1,294 +1,340 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 02:40
+# Read at: 2026-04-10 02:45
 # Total: 50 tweets
 
---- 1. @hukuro_educator (2026-04-09) ---
-NotionからClaude Codeを動かせる時代、マジで来るらしい
-今まではClaude Code側からNotionを操作する一方通行だった。
-これが逆転すると何が変わるかというと、
-Notionが「司令塔」になる。
-・タスクの割り当て → Notion
-・コンテキストの受け渡し → Notion
-・思考・コーディング → Claude
+--- 1. @akira_papa_IT (2026-04-08) ---
+【Anthropic公式からClaude Managed Agentsが発表されたのでメモシェア〜プロトタイプ→本番を"数日"を目指す。エージェント ハーネスの調整がやっぱり肝になってくるね】
 
---- 2. @DisneyPlusJP (?) ---
-／
-『21世紀の大君夫人』配信直前記念
-スペシャルコンテンツをプレゼント
- ＼
+ Claude Managed Agents：大規模エージェント構築・展開の新基盤
+
+■ 1. Managed Agentsとは何か 
+  ▸ 1.1
+
+--- 2. @akiko_lawson (?) ---
+特製の純金からあげクン プレゼントキャンペーン
+＼からあげクン愛を叫ぼう／
  
-フォロー&RPで
-IU&ビョン・ウソクのコメント動画や
-スマホ壁紙がリプで届く
+ステージのからあげクンに向かって愛を叫ぼう♪
+愛の表現方法は自由言葉でも、イラストでも、ポエムでも、曲でも
  
-引用投稿で複数回参加
-全4種を揃えよう
-4/17（金）にはお知らせリプも
- 
-4/10（金）ディズニープラス スター独占配信
+応募方法はリプライ欄をチェック♪
+みんなの愛も覗いてみましょう(^^)
 
---- 3. @HowToAI_ (2026-04-09) ---
- This tool removes LLM censorship with a single click.
-
-It’s called Obliteratus. It identifies the exact weights that force a model to refuse and projects them out with a single click.
-
-100% Open Source.
-
---- 4. @yama_hsshsp (2026-04-09) ---
-マジで大切なこと。HSS型HSPでアダルトチルドレン傾向が強い人は「自分のために頑張る」ができない。これは意志が弱いのではなく、愛の回路が歪んで育ったから。誰かが困っていると聞いた瞬間、信じられない力が出る。締め切りギリギリでも、体が限界でも、誰かのためなら動ける。でも「自分のやりたい
-
---- 5. @kurachimai (2026-04-09) ---
-使わせて頂きましたがそんな工夫が。
-ちなみにサーバーサイドで処理しようとしていた場合1日で1万7千円程かかるそう。
-これだけ使われていたら数日でギブアップしてもおかしくないですね。
-
---- 6. @yoshi_majime (2026-04-09) ---
-研究で明らかになった「鬱にならない考え方」ランキング TOP3
-
-3位：6割でオッケーにする
-
-完璧を目指す人ほど、鬱になりやすいことが研究でわかっています。
-「完璧にやらなければ」という思考は、脳に慢性的なプレッシャーをかけ続けます。
-完璧主義から完了主義へ。6割できたら合格です。
-
-続↓
-
---- 7. @SkarredGhost (2026-04-08) ---
-The sense of presence in VR is something amazing. And it is what convinces me that sooner or later, VR will succeed.
-
-VR is now in one of its down moments. That's why, in these harsh days, I wanted to get back to feeling what made me fall in love with this technology: presence
-
---- 8. @quarter00000 (2026-04-09) ---
-純粋数学、興味があると思い込んでただけで実際やり始めるとあまりモチベが続かない
-
---- 9. @mshirakawa (2026-04-09) ---
-我が母校には「トンネル」と呼ばれる非公式転部があったので、経済学に興味を持てなかった僕は商学部にトンネルした。経済の最低限の単位を取りつつ、公式には語学ゼミ、実態は商学部ゼミ、そして商学部の授業にモグリで出つつ、普通に発言や質問もしていた。(しかもサブゼミで経済のゼミにも出ていた
-
---- 10. @EBISU_ESTATE (2026-04-09) ---
-よく行くおしゃカフェの貸借対照表見たら
-
-・借金1.4億
-・利益23万円
-
-しかも令和3年。「映え」と「儲かる」は別物すぎて笑えなかった。
-
---- 11. @livedoornews (?) ---
-【】雨の日こそ花粉が辛い…「花粉爆発」のせい？
-
-肌についた花粉に水が触れることで亀裂が生じ、中のアレルギー物質が放出される現象「花粉爆発」。顔を水だけで洗っている人は要注意。
-
-N organicのクレンジングは花粉をオイルでくるみ、「花粉爆発」させることなく穏やかに落とすという。〈PR〉
-
---- 12. @cero47955466 (2026-04-09) ---
-「12時に休憩に行った新卒が14時に帰ってきた」という友人のブチ切れLINEで爆笑
-
---- 13. @YahooNewsTopics (2026-04-09) ---
-【コウテイペンギンが絶滅危惧種に】
-
---- 14. @kuran_kuran (2026-04-09) ---
-俺がいた時もPC-98見捨てない宣言みたいなのやってたなぁ…w
-
---- 15. @denfaminicogame (2026-04-09) ---
-韓国のクローバーゲームズが法人破産手続を開始。『ロードオブヒーローズ』など同社タイトルは5月9日より段階的にサービス終了へ
+--- 3. @AUTOMATONJapan (2026-04-09) ---
+【ニュース】極限サバイバル「ドンスタ」完全新作『Don't Starve Elsewhere』発表。マルチ対応、正気を蝕む“霧”に立ち向かう10年ぶりシリーズ新作
 
 https://
-news.denfaminicogamer.jp/news/2604093g
-
-会社の維持が困難なレベルまで経営状況が悪化。外部サーバー提供業者の規約次第では、サービス終了予定日より早くサーバーが停止される可能性も
-
---- 16. @zigoku_noter (2026-04-09) ---
-自己啓発、禅、所作、仏教が売れます
-
---- 17. @marcusyul (2026-04-09) ---
-GOOGLE が世界で最も強力な学習ツールを持っています。
-
-無料です。もう何ヶ月も利用可能です。
-
-それなのに、95% の人がまだ間違った使い方をしています。
-
-NotebookLM の 8 つの使い方を教えます。これで何時間も節約できます。
-
- 保存してください、後で感謝します。
-
---- 18. @uudaiy (2026-04-09) ---
-Web3詳しい人にWeb3って全部詐欺ですよね？ってきいたらだいたいその認識で大丈夫ですって言われたことある
-
---- 19. @HigenekoTech (2026-04-09) ---
-っていうか、YS1&2のデータを覗くとなぜかx86っぽいコードブロックがあったり「Multi-Window Screen Editor F I N A」という文字に続きツール向けのような文字列があるテキストブロックがあったりして謎w
-
---- 20. @swarm_ai_cloud (2026-04-09) ---
-そういえばアプリ生成、AnythingはAppleからバンされたらしいけど、うちはまだバンされていないよ
-
---- 21. @suntory (?) ---
-／
-NEWオールフリーもう飲んだ
-＼
-生まれ変わったオールフリー、
-オールフリースパークリングを
-飲んだ感想を教えて
-
-抽選で新オールフリーいずれか６本当たる
-
-① 
-@suntory
- をフォロー
-②「新ALLFREE感想投稿キャンペーン」をつけて投稿
-屋外で飲んでいる写真と投稿すると応募口数2倍
-
---- 22. @tarokotani (2026-04-09) ---
-娘がさっそく大学の数学の洗礼を受けている。
-↓父による解説。
-
---- 23. @minikuiwatashi0 (2026-04-09) ---
-やってみた
-
---- 24. @Solarpunk_Game (2026-04-09) ---
-After 4 years of making the cozy coop survival game of our dreams, today we can finally share the official Release Date for Solarpunk!
-
- Solarpunk releases on June 8th, 2026
- on PC, Xbox, PlayStation & Switch 2
-
-#solarpunk #indiegames #indiedev #Xbox #PS5 #Sony #Nintendo
-
---- 25. @youkidearitai (2026-04-09) ---
-なんだこれは
-
-【Findy スキル偏差値ver.3】
-
-スキル偏差値は、Total 72.0、C 72.4、Python 66.4、PHP 61.3でした。
-自分のスキル偏差値をチェックしよう！
-
- 
-https://
-findy-code.io/lp02?h=gvkachj
-iXizv4&fr=twcp_skill-deviation-v3
+automaton-media.com/articles/newsj
+p/20260410-435875/
 …
 
- #Findy
- #スキル偏差値
+--- 4. @denfaminicogame (2026-04-09) ---
+AIが自分を人間だと信じ込んでしまった世界を描く『Prove You’re Human』が発表。巨大な顔が不穏すぎる
 
---- 26. @mhmazur (2026-04-08) ---
-Opus 4.6: I did not find any vulnerabilities.
-Developer: Phew.
+https://
+news.denfaminicogamer.jp/news/260410i
 
-Mythos 1.0: I found 3 critical vulnerabilities.
-Developer: Oh no. I'll fix them.
+『1000xRESIST』制作陣による新作。AIの“人間であるという幻想”を崩していくナラティブ作品で、人格の分裂や再統合といった要素も描かれる
+
+--- 5. @MinatoAoi_Game (2026-04-09) ---
+キャラクターグッズにあまり興味ないアニメのオタクって何してんだろう？株買ってる？
+
+--- 6. @HitoriSaito (2026-04-08) ---
+今、時代が求めているのは 
+強烈な「明るさ」です
+
+--- 7. @NAITOTokihiro (2026-04-09) ---
+フレンチクルーラーはどこがフレンチなのだろう…
+
+--- 8. @thug_business (2026-04-09) ---
+この世界は「頭が良い人」よりも「度胸がある人」の方が成功しやすい。これはマジ。
+
+--- 9. @4GamerNews (2026-04-09) ---
+終末世界のラボで働くアンドロイドの少女を見守ろう。デスクトップの片隅で動く放置ゲーム「終末ミジンコラボラトリー」，Steamでリリース
+
+https://
+4gamer.net/s/G095545.2604
+07033
+…
+
+アンドロイドの少女「リース」の仕事は微生物のサンプルの収集で，プレイヤーは少しだけ彼女を手伝える
+
+--- 10. @resona_pr (?) ---
+はなさか兄さんからの挑戦状！
+給与受取りをりそな銀行に指定等して、現金最大30,000円をゲットせよ
+手続きは簡単！春のまつりそなで、お得に春を咲かせましょう！
+詳細を今すぐチェック。
+
+--- 11. @LensScientific (2026-04-08) ---
+A simple process that creates a complex, well-organized fractal pattern.
+
+Pick a random edge to form a triangle, and place the next point at the triangle’s center.
+
+Credit: Matt Henderson
+
+--- 12. @NASASpaceflight (2026-04-09) ---
+Artemis II: SLS launch from the WB-57, full video!
+
+
+https://
+images.nasa.gov/details/KSC-20
+260401-MH-NAS01-0001-Artemis_II_Launch_WB57_SEO_Downlink
+…
+
+--- 13. @yoshiso44 (2026-04-09) ---
+久しぶりに。株のL/Sで50億くらいまでは利回り15%+で回せそう。リスクはほぼスペシフィックだけ取るように最適化。JQuants APIサマサマ。
+
+--- 14. @IIoT_World (2026-04-09) ---
+50 milliseconds of timestamp drift between sensors can distort your AI model's output. Many energy operators are data-rich but insight-poor because the foundational work gets skipped. Partner content with 
+@IOTechSystems
+. #iotechsys_iiot
+
+--- 15. @Arcanous98 (2026-04-09) ---
+Introducing Neural Harmonic Textures: our new method for real-time novel view synthesis that outperforms all 3DGS and NeRF derivatives including (finally) ZipNeRF in terms of quality across all benchmarks.
+
+The code is released (Apache 2.0): (
+https://
+research.nvidia.com/labs/sil/proje
+cts/neural-harmonic-textures/
+…) 
+
+--- 16. @lucas_flatwhite (2026-04-09) ---
+「勉強時間を減らして、賢く勉強しなさい」
+- マーティ・ロベル
+
+ピアース・カレッジで長年にわたり心理学を40年間教えてきた一人の教授の伝説的な講義ですね。
+
+--- 17. @InkWorldMag (2026-04-09) ---
+Don't miss our latest issue, which features our annual reports on packaging inks, sustainability, energy-curable inks, and resins.
+Check it out below!
  
-Mythos 2.0: I found 8 critical vulnerabilities.
-Developer: Oh no. I'll fix them.
+https://
+hubs.li/Q049L3pX0
+#inkworld #exclusive #sustainable #inks #resins
 
-Mythos 3.0: I found 35 critical vulnerabilities.
+--- 18. @tkool_dev (2026-04-09) ---
+【お知らせ】#RPGツクールMZ #RPGツクールMV 向け公式DLC『EXグラフィック 森林拡張パック』が登場！　街や自然マップに配置できるさまざまな樹木・低木・植物のタイルセットを収録しています。
 
---- 27. @nocontextEFC (2026-04-08) ---
-He beat women and released a song called Heil Hitler
 
---- 28. @realBigBrainAI (2026-04-09) ---
-AI is cracking the code on animal communication, and it might be the most underrated scientific breakthrough of our generation.
+https://
+store.steampowered.com/app/4559550/RP
+G_Maker_MZ__EX_Graphic_Forest_Expansion/
+…
 
---- 29. @bit_ravel (2026-04-09) ---
-この一説がマジで大事なことすぎる
+https://
+store.steampowered.com/app/4559850/RP
+G_Maker_MV__EX_Graphic_Forest_Expansion/
+…
 
---- 30. @yuki000521 (2026-04-09) ---
-最近すごく思うんだけどシンプルな人というのが一番いい。楽しい！美味しい！嬉しい！ありがとう！素敵！みたいな事を常々言葉にする人。そういう人が周囲にもたらす貢献度って凄い。言葉の交換はエネルギーの交換だから、シンプルな言葉を素直に使える人からは良いエネルギーをもらって光合成できる。
+https://
+store.rpgmakerofficial.com/products/ex-gr
+aphic-forest-expansion-mz
+…
 
---- 31. @Stardive_JP (?) ---
+--- 19. @kabasawa (2026-04-09) ---
+悪夢が多い人は、
+「右側」を向いて寝てください。
+
+--- 20. @askul_com (?) ---
+危機を乗り越えられた原動力は、お客様でした。
+毎日の仕事で、くらしで、ご注文、品揃え、最短当日配送、いつも通りご利用いただけます。
+感謝の気持ちを込めて、ASKUL・LOHACOで復活感謝祭実施中です。
+※お届け日は条件によって異なります。
+
+--- 21. @alexandr_wang (2026-04-08) ---
+a good writeup about Muse Spark on a few complex queries (multimodal, stock analysis, coding):
+
+--- 22. @IterIntellectus (2026-04-09) ---
+I’m so glad they hired nikita
+
+--- 23. @kis (2026-04-09) ---
+JavaはハードウェアやOS、ネットワークプロトコル、暗号に関して最新の環境に適応するようがんばってるので、JEPを追うだけでいろんな動きがつかめるぞい
+
+--- 24. @kotauchisunsun (2026-04-09) ---
+Amazon、北米全域でVuzixスマートグラスの展開を拡大
+
+toB領域で有名なスマートグラス？HMDのVusixがアメリカとカナダ全土で展開を拡大。
+同社のM400の追加注文に加え、OEM向け初回注文も含まれている。
+Amazon独自のスマートグラスの話はどこへ行ったんだろう？？
+
+https://
+auganix.org/ar-news-vuzix-
+online-retailer/
+…
+
+--- 25. @pgate1 (2026-04-09) ---
+OS初心者なんですけど、日進月歩なLinuxカーネルについての情報を入手したく拝読。
+
+各章「これがLinuxのOSたる所以」として要素機能が解説され、散発的な雰囲気がありつつも最終章で各レイヤの関係が分かりコードを読み解く要点として伏線回収。
+
+あと各章の演習が理解を助けるのに楽しかった。
+
+--- 26. @universe_ex (2026-04-08) ---
+おかえり！Delay Lama！！神！！
+
+【無料】チベット僧侶の歌声プラグインDelay Lamaにインスパイアされた、JonET「MonkSynth」無償配布開始！ 
+https://
+computermusic.jp/2026/04/monksy
+nth-delay-lama/
+… 
+@universe_ex
+より
+
+--- 27. @famitsu (2026-04-09) ---
+架空のレトロゲーム50本を収録した傑作コンピレーション『UFO 50』が待望の日本語化!!　Steam/Switchで4月16日配信
+
+https://
+famitsu.com/article/202604
+/71402
+…
+
+“友達の家とかで全然知らないゲームをとりあえずやってみる”あの独特なワクワク感を存分に味わえてめちゃくちゃ楽しい
+
+--- 28. @HigenekoTech (2026-04-09) ---
+2. PC-FXで起動させた場合、通常は2トラック目の最初にPC-FX用ソフト識別子があることで、そこから実行するようになっているけど、ここにPCエンジン用の識別子があった場合は次のセクターに書かれてある"PC-FX"という文字で両対応ソフトであることを判別しているようです
+
+--- 29. @PrimeVideoAnime (?) ---
+「世を、変えるために」
+
+―『日本三國』第1話
+
+知識いらずの大河アニメ『日本三國』
+毎週日曜 21時から、
+プライムビデオで最速配信中
+
+--- 30. @yo_ehara (2026-04-09) ---
+I came up with the exactly same idea 16 years ago and published it as an IJCNLP-08 paper. We tested up to 8 language mixing and modeled the problem as a Hidden Markov Model. I actually made a simple Chinese IME for the project, which was my bachelor thesis at the univ. of Tokyo.
+
+--- 31. @oinkgames (2026-04-09) ---
+【新作】
+『流氷の航路』は、プレイヤー全員で探検隊となり、それぞれが思考と工夫をめぐらせ、アイテムを駆使しながら航路の横断を目指す、協力ゲーム光輝くカードや特殊アイテムも冒険を盛り上げます #ゲームマーケット2026春 にて先行販売。
+
+--- 32. @tonets (2026-04-09) ---
+文科省の公式情報も出たよ
+
+AI for Science萌芽的挑戦研究創出事業（SPReAD）の公募開始について（事前予告）：文部科学省
+
+--- 33. @WevolverApp (2026-04-09) ---
+Edge AI is redefining how intelligence is deployed. Rather than choosing between cloud and device, engineers now design across a continuum of compute, from milliwatt sensing hubs to heterogeneous SoCs with dedicated NPUs.
+
+The 2026 Edge Technology report, published on Wevolver,
+
+--- 34. @beagle_dog_inu (2026-04-09) ---
+悪いコードが生まれる、そして悪いコードが模倣される⋯特にClaude Codeで生まれるこの無限地獄は何度も見たな
+
+#AI自走環境
+
+--- 35. @SKII_Japan (?) ---
 ／
-キャラクター紹介キャンペーン 
-エステル
-白石晴香
+せっかくのピテラ™︎を一滴も無駄にしたくない方へ！
 ＼
+ 
+コットンパックのコツ
+ 
+コットンに精製水を含ませてからエッセンスをなじませ、1枚を2〜3枚に割くのがおすすめ。
+ 
+少量でも全顔パックに
+※精製水は開封後は清潔に保ち、早めに使い切ることをおすすめします
 
-『エステル』役の 白石晴香さんの
-直筆サイン色紙や iPad mini をプレゼント
+--- 36. @que_sun (2026-04-09) ---
+何かを続けるのがしんどいとき、
+松村北斗さんが話していた
+「やめないまでハードルを下げる」って言葉を思い出した。
+ちゃんとやろうとするほど苦しくなるなら、
+「今日は職場に行けたらOK」にしてみた。
+そしたら、あんなに酷かった予期不安が
+少し静かになった気がする。
+“続ける”って、
 
-応募方法
-①
-@Stardive_JP
-をフォロー
-②この投稿をリポスト
+--- 37. @GOROman (2026-04-09) ---
+GMK Round.2
 
-期間
-2026/4/13(月) 23:59まで
+--- 38. @AUTOMATONJapan (2026-04-09) ---
+【ニュース】『Buckshot Roulette』開発者の新作はなんと「パーティーゲーム」、『Machine Party』発表。最大4人マルチ専用、残酷ワイワイ命がけゲームいっぱい
 
---- 32. @LeoDaVinciWave (2026-04-08) ---
-A famous wisteria-covered house in the Kensington area of London, England.
+https://
+automaton-media.com/articles/newsj
+p/20260410-435882/
+…
 
---- 33. @Amber_layer01 (2026-04-08) ---
-なんでAdobeFontsにいきなり〈ロゴナTH〉が入ったのかは謎ですが、極太書体に新たなレパートリーが増えたのは大変喜ばしいことです。
-2枚目は他の細めのフォントと並べてみました。かなり細い。
+--- 39. @4GamerNews (2026-04-09) ---
+5K解像度でデュアルモードに対応した39型ウルトラワイドディスプレイがLGから登場
 
---- 34. @ytb_at_twt (2026-04-09) ---
-ということで4/14（火）より京都大学文学部・大学院文学研究科で、科学哲学科学史演習「論理学」を再開します。
-題材として、人工知能（LLM）のハルシネーションを、外界を参照することなく見つける方法として、証明論的意味論を紹介します。
+https://
+4gamer.net/s/G045087.2604
+09058
+…
 
---- 35. @byethankyou2 (2026-04-08) ---
-NotionでClaudeが使えるようになったのは知っていたかもしれませんが、今回登場した「Claude Managed Agents」すごいですね。
+27インチサイズで，Mini LED液晶パネルを採用した5Kディスプレイも合わせて発表となっている
 
-何がどう違うのか、動画をもとに3つのポイントでまとめてみました。
+--- 40. @think_hacking (2026-04-09) ---
+生涯現役でいられる人は自分に飽きない人なんだと思います。
+年齢を重ねても若々しい人は、昔の成功体験なんてもう重視してなくて、今日も何かを面白がれる人です。
+人は歳を取ったから老けるというより、驚かなくなった時に一気に老いに飲まれると思っています。
 
-1. 「モデルを選ぶ」から「実行環境（ハーネス）を丸投げする」へ
-これまでのNotion
+--- 41. @copinemickmack (2026-04-09) ---
+大学ではレポートや論文の書き方を習い、会社ではパワポを作る…これは…
 
---- 36. @Dell_JPN (?) ---
-インテル® Core™ Ultra 搭載のDell XPS。圧倒的なパフォーマンス、際立つデザイン。
+--- 42. @Cupotential0235 (2026-04-08) ---
+新・理系を怒らせる方法
 
---- 37. @kmizu (2026-04-09) ---
-スキルうまく発動しなかった？と思って3回繰り返したら「とりあえずやれ」ってことやな、ってなってウケた
+1位
 
---- 38. @Ldayo_m (2026-04-09) ---
-Claude Codeに全部任せて寝たら今朝89,800円入ってたんやけどwww
+--- 43. @tokumoto_PMO (2026-04-08) ---
+人は、評価されることを優先します。
 
-いや待って、ちょっと状況説明させて
+たとえば「チームワークを大事にしよう」と言っていても、評価が個人の売上だけなら、みんな売上を追います。逆に、チームへの貢献が評価されるなら、自然と助け合いが増える。
 
-昨日の夜、AI占いの新しい鑑定セット組んで
-Claude Codeに「あとよろしく」って投げて
-そっから俺はメンエス行って寝たww
+--- 44. @fino_jp (?) ---
+＼適正量がとぅる髪の秘訣／
+finoヘアマスク使い切りキャンペーン
 
-で、今朝
-目覚まし止めてぼーっとしながらスマホ見たら
-決済通知きてて
+finoは惜しみなくたっぷり使うべし
+※適正量を守ること
+適正量はOKサインで画像をチェック！
+ヘアマスクを使い切ってキャンペーンに応募
+抽選で30名様に
+｢finoヘアマスクセット｣をプレゼント
 
---- 39. @adhd_voyage (2026-04-09) ---
-ADHDの人は優しさの配分をうまく制御できないことがある。困っている人を見ると衝動的に全力で差し出してしまう。「ここまでにしておこう」のブレーキが脳の仕様として効きにくい。
+応募方法はツリー投稿で
 
-使い方を間違えたのではなく、使い方を調整する機能が弱いだけ。それは人格ではなく、脳の話です。
+--- 45. @AI_datalab (2026-04-09) ---
+株の学術論文を参考に753本の投資戦略を検証。
+近日バックテスト結果を公開します。
 
---- 40. @GOROman (2026-04-09) ---
-今となってはレアアイテムではw
+--- 46. @yobidashigames (2026-04-08) ---
+チュートリアルマップちゃんと整備しようとおもて、チュートリアル用の背景用意した！
 
---- 41. @GA_Nakamu (2026-04-09) ---
-他社のラノベ編集者に言ったら驚かれること
+星でも降らせないとちょっと寂しいか？
+月明かりも演出したいか？
 
-＿人人人人人人人人人人人人＿
-＞　　 GA文庫編集部は
-　自分たちで組版をしている　＜
-￣Y^Y^ Y^Y^Y^Y^Y^Y^Y^Y￣
+#Unity #ゲーム制作 #スイレン作成進捗
 
---- 42. @fujiwaramasaaki (2026-04-09) ---
-忙しいのに最後まで読んでしまった。。
+--- 47. @iX00AI (2026-04-08) ---
+これ、元は1枚の画像っていうのが一番すごい。
 
---- 43. @nya3_neko2 (2026-04-09) ---
-これ取り上げられることあるの！？
+Grok Imagine → Seedance 2.0でそのまま映像化。
 
---- 44. @izumit (2026-04-09) ---
-授業スライド投影用にMacBook neo（シトラス）を購入してみた。教職員版¥89,800。初Apple製品購入なんだが、初手からひどいUXだった。ストアでの受け取り手順がメールされてきて、受取コードをApple Walletに保存しろと。こちとらAndroidスマホだからムリ。QRコードすら表示できない。
+ここまで一貫してできるの強いし、
+全部Higgsfield内で完結するのもいい。
 
---- 45. @netflixjpsports (?) ---
-2026 ワールドベースボールクラシック、閉幕。
-次の主役はもうすでに、この世界のどこかにいる。
+--- 48. @TANANY_VC (2026-04-09) ---
+予測市場プラットフォーム Kalshi
+売上が2年で140倍、評価額3兆円で調達交渉中
 
---- 46. @shiroshiromagic (2026-04-09) ---
-圧縮だのEvilだの偏見の披露ですか？
+ ━━ 売上の推移 ━━ 
+・2023年：約2.7億円
+・2024年：約36億円→前年比1,200% 
+・2025年：約390億円
 
---- 47. @itsukokoyamada (2026-04-08) ---
-アルゴリズム体操ー！！
-ツイッターの中に居すぎて、タイムラインで流行ったやつが世間一般でも流行ってると思ってしまいがちなみなさんといっしょ！！
+・週次取引量：約4,600億円超
+・評価額：約1.7兆円
 
---- 48. @kazuyo_k (2026-04-09) ---
-Groqの話を簡単にまとめました。毎日、いま、ものすごーーーく使っています。Gemma4もいいけれども、やはり、Groqの方が優秀で早いな。
+--- 49. @yassan168 (2026-04-09) ---
+飲みたい
 
---- 49. @pk_kroger (2026-04-09) ---
-転職9日目、毎晩この時間になると女の子の泣き声が響く活気のあるオフィスで勝ちを確信。これだよ、これなんだよな。
-
---- 50. @copinemickmack (2026-04-09) ---
-昔今は亡き安倍さんが女性活躍推進について熱く語っているテレビを定食屋で見ていた時、隣の席に座っていた女性が「別に輝きたくないから静かに暮らしたい」とボソッと呟いていた。今思うとあの頃から「静かな退職」に繋がる芽は育っていたのだと思う。
+--- 50. @kotauchisunsun (2026-04-09) ---
+Meta AIアプリいれてみたけど、普通にRay-Ban Metaのペアリング機能あるんだが(Android)
+普通のRay-Ban MetaもあればOakleyもあるし、なんならBlazerもある。
+しかも、日本で技適通ってないMeta Ray-Ban Displayもあれば、初代Storiesまである。
+日本で動くんかな？
