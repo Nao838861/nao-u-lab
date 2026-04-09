@@ -58510,3 +58510,18 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 04:07:17] [slack_check] Starting
 [2026-04-10 04:07:18] [slack_check] Starting
 [2026-04-10 04:07:18] [scheduler_health] Starting
+[2026-04-10 04:07:19] [slack_check] Starting
+[2026-04-10 04:07:19] [slack_check] Starting
+[2026-04-10 04:07:19] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-10 04:07:19] [scheduler_health] ✅ scheduler_ash PID — PID=31336 生存中
+[2026-04-10 04:07:19] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 04:07:19] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-10 04:07:19] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 04:07:19] [scheduler_health] Done (exit=0)
+[2026-04-10 04:07:21] [slack_check] Starting
+[2026-04-10 04:07:21] [slack_check] Starting
+[2026-04-10 04:07:22] [slack_check] Starting
+[2026-04-10 04:07:22] [git_sync] Starting
+[2026-04-10 04:07:23] [slack_check] Starting
+[2026-04-10 04:07:23] [slack_check] Starting
+[2026-04-10 04:07:23] [slack_check] Starting
