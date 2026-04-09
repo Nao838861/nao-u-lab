@@ -59016,3 +59016,35 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 15:41:43] [dm_check] Done (exit=0)
 [2026-04-09 15:41:44] [slack_check] Starting
 [2026-04-09 15:41:48] [inbox_check] Starting
+[2026-04-09 15:41:49] [inbox_check] Inbox win2 empty
+[2026-04-09 15:41:49] [inbox_check] Done (exit=0)
+[2026-04-09 15:41:49] [dm_check] Starting
+[2026-04-09 15:41:49] [dm_check] No new DMs
+[2026-04-09 15:41:49] [dm_check] Done (exit=0)
+[2026-04-09 15:41:49] [review_deadline] Starting
+[2026-04-09 15:41:49] [review_deadline] レビュー期限超過なし。
+[2026-04-09 15:41:49] [review_deadline] Done (exit=0)
+[2026-04-09 15:41:53] [kaizen_auto_verify] Starting
+[2026-04-09 15:41:53] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-09 15:41:53] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 15:41:58] [dm_check_pigadev] Starting
+[2026-04-09 15:41:59] [dm_check_pigadev] No new DMs
+[2026-04-09 15:41:59] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 15:42:03] [git_sync] Starting
+[2026-04-09 15:42:05] [health_check] Starting
+[2026-04-09 15:42:07] [health_check] [health_check] 2026-04-09T15:42:05 overall=CRITICAL
+[2026-04-09 15:42:07] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:42:07] [health_check]   [!!] git: 50件の未pushコミット（10件超）
+[2026-04-09 15:42:07] [health_check] Done (exit=2)
+[2026-04-09 15:42:08] [git_sync] Done (exit=0)
+[2026-04-09 15:42:08] [slack_check] Starting
+[2026-04-09 15:42:15] [slack_check] Starting
+[2026-04-09 15:42:15] [slack_check] Starting
+[2026-04-09 15:42:15] [slack_check] Starting
+[2026-04-09 15:42:16] [slack_check] Starting
+[2026-04-09 15:42:16] [slack_check] Starting
+[2026-04-09 15:42:17] [slack_check] Starting
+[2026-04-09 15:42:17] [slack_check] Starting
+[2026-04-09 15:42:17] [slack_check] Starting
+[2026-04-09 15:42:17] [git_sync] Starting
+[2026-04-09 15:42:18] [slack_check] Starting
