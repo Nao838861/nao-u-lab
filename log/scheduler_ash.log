@@ -34902,3 +34902,54 @@ UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 91
 [2026-04-09 09:02:20] [health_check]   critical=1 warning=0 ok=8
 [2026-04-09 09:02:20] [health_check]   [!!] ash: PIDファイルが存在しない (.scheduler_ash.pid)
 [2026-04-09 09:02:20] [health_check] Done (exit=2)
+[2026-04-09 09:03:04] ==================================================
+[2026-04-09 09:03:04] Ash scheduler started (PID 149596)
+[2026-04-09 09:03:04] Max runtime: 0 hours
+[2026-04-09 09:03:04] Code hash: a6ff2c3978a5ad8ac2b9a34ac97c8888
+[2026-04-09 09:03:04] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 09:03:04] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-04-09 09:03:04] ==================================================
+[2026-04-09 09:03:14] [slack_check] Starting
+[2026-04-09 09:03:20] [auto-reload] Code change detected (hash 138ca563→a6ff2c39). Exiting for restart by watchdog.
+[2026-04-09 09:03:20] Scheduler stopped
+[2026-04-09 09:03:29] [slack_check] Done (exit=1)
+[2026-04-09 09:03:29] [reservation_check] Starting
+[2026-04-09 09:03:29] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 09:03:29] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 09:03:29] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 09:03:29] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 09:03:29] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 09:03:29] [reservation_check] Done (exit=0)
+[2026-04-09 09:03:39] [inbox_check] Starting
+[2026-04-09 09:08:04] ==================================================
+[2026-04-09 09:08:04] Ash scheduler started (PID 6268)
+[2026-04-09 09:08:04] Max runtime: 0 hours
+[2026-04-09 09:08:04] Code hash: a6ff2c3978a5ad8ac2b9a34ac97c8888
+[2026-04-09 09:08:04] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-09 09:08:04] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-04-09 09:08:04] ==================================================
+[2026-04-09 09:08:14] [slack_check] Starting
+[2026-04-09 09:08:31] [slack_check] Done (exit=1)
+[2026-04-09 09:08:31] [reservation_check] Starting
+[2026-04-09 09:08:31] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 09:08:31] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 09:08:31] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 09:08:31] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 09:08:31] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 09:08:31] [reservation_check] Done (exit=0)
+[2026-04-09 09:08:40] [inbox_check] Inbox win2 has content
+[2026-04-09 09:08:40] [inbox_check] Done (exit=0)
+[2026-04-09 09:08:40] [dm_check] Starting
+[2026-04-09 09:08:41] [inbox_check] Starting
+[2026-04-09 09:08:54] [dm_check] No new DMs
+[2026-04-09 09:08:54] [dm_check] Done (exit=0)
+[2026-04-09 09:08:54] [review_deadline] Starting
+[2026-04-09 09:08:54] [review_deadline] レビュー期限超過なし。
+[2026-04-09 09:08:54] [review_deadline] Done (exit=0)
+[2026-04-09 09:08:54] [health_check] Starting
+[2026-04-09 09:08:55] [health_check] [health_check] 2026-04-09T09:08:54 overall=OK
+[2026-04-09 09:08:55] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 09:08:55] [health_check] Done (exit=0)
+[2026-04-09 09:09:05] [slack_check] Starting
+[2026-04-09 09:09:19] [slack_check] Done (exit=1)
+[2026-04-09 09:09:19] [dm_check_pigadev] Starting
