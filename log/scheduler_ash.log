@@ -71581,3 +71581,52 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 19:40:53] [slack_check] Starting
 [2026-04-09 19:42:10] [slack_check] Starting
 [2026-04-09 19:42:37] [health_check] Starting
+[2026-04-09 19:42:38] [health_check] [health_check] 2026-04-09T19:42:37 overall=OK
+[2026-04-09 19:42:38] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 19:42:38] [health_check] Done (exit=0)
+[2026-04-09 19:43:08] [reservation_check] Starting
+[2026-04-09 19:43:08] [reservation_check] 【行動予約】期限到来:
+[2026-04-09 19:43:08] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-09 19:43:08] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-09 19:43:08] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-09 19:43:08] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-09 19:43:08] [reservation_check] Done (exit=0)
+[2026-04-09 19:43:18] [dm_check] Starting
+[2026-04-09 19:43:33] [dm_check] No new DMs
+[2026-04-09 19:43:33] [dm_check] Done (exit=0)
+[2026-04-09 19:43:33] [review_deadline] Starting
+[2026-04-09 19:43:33] [review_deadline] レビュー期限超過なし。
+[2026-04-09 19:43:33] [review_deadline] Done (exit=0)
+[2026-04-09 19:43:43] [slack_check] Starting
+[2026-04-09 19:44:50] [git_sync] Starting
+[2026-04-09 19:44:54] [git_sync] Done (exit=0)
+[2026-04-09 19:45:04] [slack_check] Starting
+[2026-04-09 19:45:30] [scheduler_health] Starting
+[2026-04-09 19:45:31] [scheduler_health] [ASH] �w���X�`�F�b�N OK=5 WARN=0 FAIL=0
+[2026-04-09 19:45:31] [scheduler_health] ERR: Traceback (most recent call last):
+  File "C:\AI\nao-u-lab\check_scheduler_health.py", line 410, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\AI\nao-u-lab\check_scheduler_health.py", line 390, in main
+    print(result.to_text())
+UnicodeEncodeError: 'cp932' codec can't encode chara
+[2026-04-09 19:45:31] [scheduler_health] Done (exit=1)
+[2026-04-09 19:46:21] [slack_check] Starting
+[2026-04-09 19:47:28] [inbox_check] Starting
+[2026-04-09 19:52:31] [inbox_check] Inbox win2 has content
+[2026-04-09 19:52:31] [inbox_check] Done (exit=0)
+[2026-04-09 19:52:31] [CONFIG] auto_diary: {'interval_sec': 10800, 'min_interval_sec': 10200, 'timeout': 720} -> {'interval_sec': 14400, 'min_interval_sec': 13800, 'timeout': 720} (auto-applied, no restart needed)
+[2026-04-09 19:52:41] [slack_check] Starting
+[2026-04-09 19:52:57] [dm_check_pigadev] Starting
+[2026-04-09 19:53:12] [dm_check_pigadev] No new DMs
+[2026-04-09 19:53:12] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 19:53:12] [health_check] Starting
+[2026-04-09 19:53:13] [health_check] [health_check] 2026-04-09T19:53:12 overall=OK
+[2026-04-09 19:53:13] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 19:53:13] [health_check] Done (exit=0)
+[2026-04-09 19:54:03] [slack_check] Starting
+[2026-04-09 19:54:20] [slack_check] [19:54:20] 1 msg(s) -> inbox_win2.md
+[2026-04-09 19:54:20] [slack_check] [19:54:20] Triggered check_inbox.py --box win2
+[2026-04-09 19:54:20] [slack_check] Done (exit=0)
+[2026-04-09 19:54:20] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-09 19:54:20] [inbox_check] Starting
