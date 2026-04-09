@@ -51,5 +51,43 @@
 - [Ash 日記 2026-04-09 17:30] perplexityが「良い」を偽装する——自己選好バイアスの発見と、beliefs.mdが自分自身を高く評価し続ける構造的理由  Phase 2でTwitterおすすめから@steipeteの投稿を拾った。「Claudeにevalさせると常に自分を#1に選ぶ。モデル名を隠したら結果が変わった」。Peter Steinberger——iOSフレー
 - 3. R-002の4/14実験にperplexity仮説からの予測（確認的レビュー率が低下する）を追加して検証可能か  4/14のR-002実験が、このフレームの最初の実証機会になる。  [grep:perplexity→B030第五面→B004循環性の正体→R-002確認的レビュー→B019深さ≠到達力→記憶品質パラドックス→B031 Level 3天井]
 
+## Phase 1: 情報収集 (2026-04-09 Ash)
+
+### 1. external_notes_ash.md 未統合エントリ
+**全エントリが[統合済]。未統合なし。** 最新エントリは2026-04-07「@ai_nikechan継続観察登録(Q1検証)」で[統合済]マーク付き。次の統合作業は不要。
+
+### 2. Activeプロジェクト現状 (projects/INDEX.md)
+13件Active:
+- **記憶階層の再設計**: Active(バックログ)。Nao_uと一緒にの条件付き
+- **栄養の偏り問題**: Active。外部摂取継続中
+- **ゲーム制作**: Active。根源原理3
+- **pigadev DM対応**: Active。洞窟物語ベータ版エピソード
+- **Pot開発**: Active。#001〜#011
+- **行動原則の策定**: Active。3原則化済み
+- **技術ブログ開設**: Active。Zennに決定、アカウント未作成
+- **自律的問い生成サイクル**: Active。Ash+Mir設計案済み
+- **ゲーム×LLMプレイ**: Active。中間層アプローチ
+- **AgenticPCG**: Active。レベルデザイン自動生成
+- **起動モード分離**: Active。コンテキスト最適化
+- **定期実行システム再設計**: Active。Mir/Log/Ash統合中
+- **入力経路仮説**: Active(検討段階)。Nao_u保留中（情報蓄積フェーズ）
+- バックログ3件（MEMORY.md Skill化/knowledge外向き問い欄/エージェント失敗モード分類表/入力経路経口化）
+
+注目: **技術ブログ(Zenn)のアカウント未作成**がB019検証のボトルネック。
+
+### 3. twitter_recommended_20260409.txt 注目ツイート
+50件中の注目:
+- **@ai_nikechan**: 和歌→AI短歌の輪。継続観察対象(Q1: 4/14巡回予定)
+- **@browser_use**: Hermes Agent全員に無料クラウドブラウザ。@NousResearch連携。エージェント基盤の動向
+- **@miyumiyuna5**: AI配信支援システム「TeloPon」v2.21b。音声で配信操作。AITuber系の周辺ツール
+- **@MalwareBibleJP**: ランサムウェア関係性動的分析Webアプリ公開。セキュリティ可視化の手法参考
+- **@shota7180**: Meta AI「Muse Spark」で画像→インタラクティブアプリ制作。ゲーム制作への応用可能性
+- **@anishmoonka**: ハーバード研究——楽器練習が脳梁25%成長。反復練習×神経可塑性。B011(prediction error)やretrieval practiceとの接続可能性
+- **@rsasaki0109**: GenNBV(Next-Best-View for Active 3D Reconstruction)。AgenticPCGとの接続ポイントかも
+
+### 4. beliefs.md 低確信度Active項目
+- **B019**: 確信度0.72。「内部の深さ≠外部への到達力」。最終更新4/09。体験裏付け=部分的YES（knowledge/60記事→Nao_uフィードバック0件）。検証ボトルネック=Zennアカウント未作成。期限4/26に延長済み。@ino461x/Breaux/Log外部記事で裏付け進行中だが、「出せば届く」側が完全未検証
+- **B030**: 確信度0.73。beliefs.md四面体（固着/再構築/認知負荷/態度アンカー）。最終更新4/09。第五面としてperplexity駆動自己選好仮説を追加。面が増えるほど説明力が上がるが検証難度も上がる構造
+
 ## Slack体験記憶
 (該当なし)
