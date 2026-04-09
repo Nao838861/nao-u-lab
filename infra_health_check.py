@@ -135,9 +135,12 @@ def check_scheduler_alive():
     return issues
 
 
-def check_scheduler_log_freshness():
-    """スケジューラログの鮮度チェック"""
+def check_scheduler_log_freshness(git_diverged=False):
+    """スケジューラログの鮮度チェック。git分岐中はローカルmtimeが信頼できないためスキップ"""
     issues = []
+    if git_diverged:
+        issues.append("git sync障害中のため他インスタンスのログ鮮度は判定不能")
+        return issues
     log_files = {
         "Ash": REPO_DIR / "log" / "scheduler_ash.log",
         "Log": REPO_DIR / "log" / "scheduler_log.log",
@@ -155,8 +158,10 @@ def check_scheduler_log_freshness():
     return issues
 
 
-def check_job_last_run():
+def check_job_last_run(git_diverged=False):
     """各ジョブの最終実行時刻をログから解析。長期間実行されていないジョブを検出"""
+    if git_diverged:
+        return []  # log_freshnessで既に報告済み
     issues = []
     expected_intervals = {
         "slack_check": 10,
@@ -202,8 +207,9 @@ def check_job_last_run():
 
 
 def check_git_sync():
-    """git同期の状態を確認"""
+    """git同期の状態を確認。分岐検出時はフラグも返す"""
     issues = []
+    diverged = False
     try:
         result = subprocess.run(
             ["git", "status", "--porcelain"],
@@ -219,11 +225,37 @@ def check_git_sync():
     except Exception:
         pass
 
+    # ローカルとリモートの分岐を検出
+    try:
+        subprocess.run(
+            ["git", "fetch", "--dry-run"],
+            capture_output=True, timeout=15,
+            cwd=str(REPO_DIR)
+        )
+        result = subprocess.run(
+            ["git", "rev-list", "--left-right", "--count", "HEAD...origin/master"],
+            capture_output=True, text=True, timeout=10,
+            cwd=str(REPO_DIR)
+        )
+        if result.returncode == 0:
+            parts = result.stdout.strip().split()
+            if len(parts) == 2:
+                local_ahead, remote_ahead = int(parts[0]), int(parts[1])
+                if local_ahead > 0 and remote_ahead > 0:
+                    diverged = True
+                    issues.append(
+                        f"git分岐: ローカル{local_ahead}件 vs リモート{remote_ahead}件。"
+                        f"pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）"
+                    )
+    except Exception:
+        pass
+
     git_dir = REPO_DIR / ".git"
     for marker in ["rebase-apply", "rebase-merge", "MERGE_HEAD"]:
         if (git_dir / marker).exists():
             issues.append(f"git {marker} が残存。手動解決が必要")
-    return issues
+            diverged = True
+    return issues, diverged
 
 
 def check_stale_locks():
@@ -362,11 +394,28 @@ def run_all_checks(verbose=False, no_alert=False, log_to_file=False):
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"[infra_health] {INSTANCE} health check at {now_str}")
 
-    checks = [
+    # git syncを先に実行して分岐状態を取得
+    git_diverged = False
+    try:
+        git_issues, git_diverged = check_git_sync()
+        check_results["git_sync"] = "FAIL" if git_issues else "OK"
+        all_issues.extend(git_issues)
+        if verbose:
+            status = "FAIL" if git_issues else "OK"
+            print(f"  [{status}] git_sync: {len(git_issues)} issues")
+    except Exception as e:
+        check_results["git_sync"] = "ERROR"
+        if verbose:
+            print(f"  [ERROR] git_sync: {e}")
+
+    # git分岐フラグを渡すチェック
+    checks_with_diverge = [
+        ("scheduler_log_freshness", lambda: check_scheduler_log_freshness(git_diverged)),
+        ("job_last_run", lambda: check_job_last_run(git_diverged)),
+    ]
+    # git分岐に依存しないチェック
+    checks_independent = [
         ("scheduler_alive", check_scheduler_alive),
-        ("scheduler_log_freshness", check_scheduler_log_freshness),
-        ("job_last_run", check_job_last_run),
-        ("git_sync", check_git_sync),
         ("stale_locks", check_stale_locks),
         ("twitter_access", check_twitter_access),
         ("config_consistency", check_config_consistency),
@@ -374,7 +423,7 @@ def run_all_checks(verbose=False, no_alert=False, log_to_file=False):
         ("watchdog_path", check_watchdog_path),
     ]
 
-    for check_name, check_fn in checks:
+    for check_name, check_fn in checks_with_diverge + checks_independent:
         try:
             issues = check_fn()
             check_results[check_name] = "FAIL" if issues else "OK"
