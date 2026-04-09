@@ -1,245 +1,109 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 16:45
+# Read at: 2026-04-09 16:50
 # Total: 50 tweets
 
---- 1. @yuupoccha (2026-04-09) ---
-電話をこなせる大人って、すごい
-頭真っ白なって言葉出てこんくなる
+--- 1. @sora19ai (2026-04-09) ---
+エージェントハーネスに無料ブラウザを統合、最強の組み合わせ。
 
---- 2. @nekomacaron_ (?) ---
-新発売のパンテーンのトリートメントカプセルがなじみやすいからそのまま髪に塗り込んでる。
-広がりやすい私の髪もまとまりやすくてこれはリピあり！シャンプー＆コンディショナーとのシリーズ使いがおすすめ◎［PR］［パンテーン］
+Hermes AgentがBrowser Useのクラウドブラウザを無料で使えるようになった。無制限のブラウザ時間、無料プロキシ、永続認証が提供される。
 
---- 3. @Uliboooo (2026-04-09) ---
-別に夜に起きているわけでもないのに
+--- 2. @LeronAssist (?) ---
+Leron X — create videos of any length with automatic scene stitching. AI analyzes your audience, tests content, and automates publishing and promotion. All growth tools for your account in one.
 
---- 4. @kobitoCode (2026-04-09) ---
-確実にわたくしより知識そして実力を持ちしメンバーの方と共にプロジェクトを進めるにあたり、管理側のポジションをいただいているのだが、どなたかに手を動かしていただくというポジションの知見、たまりまくるな。PMも楽しいかもしれない。
+--- 3. @ren_hongyu (2026-04-08) ---
+Check out Muse Spark, our first milestone in the quest for personal superintelligence! Scaling this with the team has been a total blast. Give it a spin and let us know what you think! 
 
---- 5. @VibeMarketer_ (2026-04-08) ---
-holy shit anthropic is on an absolute tear right now
+--- 4. @junsumida (2026-04-09) ---
+Cognition Merge Tokyo おもろかったな。プロアクティブエージェントの件も聞けて良かった。
 
---- 6. @makky12 (2026-04-08) ---
-さすがのクラメソさん
+--- 5. @martin_casado (2026-04-08) ---
+By far the most useful mental model when thinking about the AI industry is that we've figured out how to apply massive amounts of capital to problems with buyer demand. That drives crazy growth. Which results in more capital. The amortized cost of the last training run relative
 
---- 7. @yugen_matuni (2026-04-09) ---
-Coworkイベント直前にまさかの本田圭佑さんからハイパーキック頂いて尚更Coworkの良さを語りたくなりました！
+--- 6. @gleech (2026-04-08) ---
+Security things you could do rn
 
-色々な人からLLMの話題出るのいいですね！
+* Turn on Google Advanced Protection. Takes 10 seconds.
+* Buy 4 yubikeys
+* Freeze your credit
+* Put your crypto into cold storage (or sell).
+* the usual: KeePass, Signal
+* move off of banks which don't offer 2FA. They are telling on themselves
 
+--- 7. @trkbt10 (2026-04-08) ---
+moonbit製のターミナル実装、ハローティティーです
+フツーに怒られそうなので後で名前は変えます
 
-https://
-explaza.connpass.com/event/390266/
+--- 8. @cursor_ai (2026-04-08) ---
+Cursor's code review agent can now learn from activity on PRs to self-improve in real time.
 
---- 8. @hideki_climax (2026-04-09) ---
-Anthropicの新機能、Managed Agents。
+78% of issues found are resolved by the time the PR is merged.
 
-これはかなり影響が大きそうです。
+--- 9. @tegnike (2026-04-09) ---
+ちなみにこちらの物理化です
 
-ざっくり言うと、
-
-AIエージェントを「賢い箱」
-として作るのをやめて、
-OSみたいな設計にしたという話です。
-
-スレッドで解説します。↓
-
---- 9. @hideki_climax (2026-04-09) ---
-（1/4）
-
-今までのAIエージェントは、
-「頭脳」「手足」「記憶」
-に相当するものが同じ箱（環境）に
-入っていることが多かったわけです。
-
-この設計だと、
- どこか1つが落ちると途中経過ごと失いやすい
- コンテキストのサイズの関係で、長時間タスクほど前提や判断理由が抜けやすい
-
-
---- 10. @hideki_climax (2026-04-09) ---
-（2/4）
-
-Anthropicはこれを3つに分けました。
-
- 頭脳：brain = Claude + harness
- 手足：hands = sandbox / tools（実行環境）
- 記憶：session = 何が起きたかのログ
-
-この分離が全てを変えます。
-
-「頭脳」が落ちても復帰できるし、
-「手足」が壊れても交換できるし、
-
---- 11. @knoxtwts (2026-04-08) ---
-meta open sourced the cheat code for virality and nobody is downloading it
-
---- 12. @taichinakaj (2026-04-09) ---
-これからの時代予想
-
-①AI時代は「友人」の価値が上がる
-②AIにハマるほど「友人」がへる
-③AIの先行者利益は外資が掻っ攫う
-④友人が多い人がギリギリ生き残る
-
---- 13. @sola_officialJP (?) ---
-／
-ドゥバドゥワリワリ♪
-SOLA WEATHER CARE with TOMORROW X TOGETHER
-キャンペーン開始！
- ＼
-
-「 2026 TXT MOA CON IN JAPAN 」の公演チケットや
-グッズ、QUOカードが当たるチャンス！
-
-＜応募条件＞
-A賞：対象商品3,000円以上(税込)を購入
-B賞：対象商品1,500円以上(税込)を購入
-
---- 14. @allTheYud (2026-04-08) ---
-Mythos probably is, indeed, the most apparently-aligned model ever.  The smartest-ever candidate for the Mandarin exam in Imperial China will likely get new high scores in essays on Confucian ethics.  Predicting what the examiner wants to see is a capabilities problem.
-
---- 15. @tori29umai (2026-04-09) ---
-なまじAIで全部高密度にできてしまうから、いい感じに情報に勾配をつけるのが個人の技能頼りになっててかなりキツいと思った。とにかく過分に詰めてしまう
-普段使ってない脳の筋肉をぶん回す感じで楽しいけどきつい
-
---- 16. @NRF_News (2026-04-08) ---
-Dr Lindokuhle Ngema, a postdoctoral researcher at Wits, has earned a place at the University of Cambridge’s Maxwell Centre for Technology Innovation Impulse Programme, in partnership with the NRF, for his development of a new TB treatment.
-
-Read more: 
-https://
-wits.ac.za/news/latest-ne
-ws/research-news/2026/2026-04/inhalable-tb-treatment-a-step-closer-to-market.html
-…
-
---- 17. @ueokande (2026-04-09) ---
-松山にいる
-
---- 18. @SpaceKoala (2026-04-08) ---
-Ah, the bucket crabs
-
---- 19. @xiaoautista (2026-04-08) ---
-Grokの自動翻訳を無効にする方法のチュートリアル：
-
-> 設定とプライバシー  
-> アクセシビリティ、表示、言語  
-> 言語  
-> 利用可能なすべての言語を選択  
-> 進むをクリック  
-> アプリの言語を選択（これは1つだけ選択）
-
---- 20. @zigoku_noter (2026-04-09) ---
-日本で1,500円のnote
-
-海外で$29（約4,400円）で売れてる理由
-
---- 21. @chihiro_teru515 (2026-04-08) ---
-いざ長崎！
-小心者なので、乗り換えが不安すぎて新幹線で全然くつろげない笑
-
---- 22. @nara_cjr (?) ---
-これはもう歴史と文化のLIVEだ。
-青空に映える鮮やかな朱色の伽藍の世界遺産・薬師寺で、「LIVEな歴史を体感する旅」を鈴木亮平さんがご紹介。
-CMやメイキング動画を公開中！
-
---- 23. @kouinjuku2025 (2026-04-08) ---
-受験勉強において、本質的な学習法そのものに独自性は必要ありません。すでに多くの先人たちによって研究・洗練されてきた「最短距離の方法」が存在しており、それを忠実にトレースすることが最も合理的です。ただし、その「最短距離」は誰にとっても同じではありません。
-
---- 24. @NASAScience_ (2026-04-08) ---
-Observing the Moon  Now it’s your turn.
-
-We’re inviting skilled observers to monitor the Moon’s surface for meteoroid‑impact flashes using a telescope with video capability. Your recordings will help quantify impact rates and refine models of crater formation and lunar
-
---- 25. @vxunderground (2026-04-08) ---
-Microsoft suspended the developer account for WireGuard (and also VeraCrypt).
-
-Why? Literally nobody knows. Presumably it's because Microsoft hates everyone and wants us all to suffer.
-
---- 26. @METAL_ATSUMORI (2026-04-09) ---
-今日ぽこポケでアプデが入ったみたいで、生息地が消えたポケモンが検索で見つからない問題が改善されたみたいなので確認してみた。
-あれ？これあまいミツが節約できちゃう？
-#ぽこあポケモン
-#ぽこポケ
-
---- 27. @nikitabier (2026-04-09) ---
-Can't wait to hear what everyone sounds like
-
---- 28. @nemuri_neko1 (2026-04-08) ---
-水曜日お疲れ様でした。
-
-日経平均株価は4日続伸となりました。
-
-2878円（+5.39%）高の5万6308円と大きな急騰です。
-
-プライム市場の8割が上昇する全面高の中、アドバンテストや東京エレクトロンなど半導体の牽引力が圧巻ですね。
-
-非鉄や不動産も強く、日本株の確かな底力を感じます。
-
---- 29. @phl43 (2026-04-08) ---
-After the exchange between 
-@NateSilver538
- and 
-@nikitabier
-, I did a little test to check whether that was true and, to my surprise, what I found suggests that link deboosting was indeed reversed.
-
-What I did is randomly sample 15 tweets by 
-@nytimes
- between 2019 and today, compute
-
---- 30. @LoneWolf_Cat (2026-04-08) ---
-というわけでWindows11をインストール
-
-今のところ無事です
-
-自分のPCはドライブ数が多いのですが
-それのせいでインストール中にブルースクリーンが出たりすることがあったので
-少しガクブル
-
-Unityもプロジェクトも無事起動してます
-
-タスクバーを多段に出来ないのが悩みどころですが
-
---- 31. @tsubasa_white1 (2026-04-08) ---
-化学科教授「セミナー化学使ってた方いますか？ありがとうございます。私が代表著者です。」
-もう鉄板の挨拶なんだろうけど笑った
-
---- 32. @meiji_oishii (?) ---
-逆襲、はじまる
-ミルクの本気を堪能せよ。
-プレゼントキャンペーン！
-
-①このアカウントをフォロー
-②「主役」を選択して投稿
-
-抽選で100名様に
-オリジナルQUOカード5,000円分をプレゼント！
+イラスト: 
+@nmkenji
  
-参加するとすぐに声優・江口拓也さんから
-スペシャルボイスが届く！
-※公開アカウントのみ対象となります
+3D化: 
+@0235_jp
 
---- 33. @Kalshi (2026-04-08) ---
-JUST IN: NASA artemis II crew took this picture of the Milky Way
+--- 10. @gimupop (2026-04-09) ---
+カジュアル面談について本気出して考えてみました！面接する側も受ける側も面白い内容だと思うので、是非読んでください！
 
---- 34. @KanidoraGame (2026-04-08) ---
-STRPGのキャラ紹介。
-怪しい女『エイン』。
-柔らかい口調が特徴的だが、たまに不穏な一面を見せる。
-彼女の素性を知る者はほとんどいない。
+カジュアル面談について本気出して考えてみた｜柳川慶太 
+@gimupop
 
-#ゲーム制作　#フリーゲーム
+--- 11. @yogurt_r1 (?) ---
+⋱ 新CM公開中です ⋰
 
---- 35. @famitsu (2026-04-08) ---
-『MOTHER』主人公たちが着ていたボーダーTシャツが商品化。ネス、リュカ、クラウスの3種が展開、それぞれの名前の刺繍入り
+夏や秋に比べるとまだまだ気温が低い今の時期はR-1で体調管理をしましょう！
+
+今回のCMも仲間由紀恵さんと永尾柚乃さんに出演いただきました
+
+ぜひ最後までチェックしてみてください！
+
+--- 12. @_watany (2026-04-08) ---
+kiro cli必勝法: Mythosを突然使えるようにする
+
+--- 13. @trhrfm0728 (2026-04-08) ---
+おはようございます
+米イランの2週間停戦、ひとまず安堵ですが「暫定」という言葉にまだ油断は禁物ですね。平和への確かな一歩になることを願うばかりです
+皆さんも一日、心穏やかに過ごせますように
+
+--- 14. @g7z5e (2026-04-09) ---
+フィナンシェ、100億宣言
 
 https://
-famitsu.com/article/202604
-/71256
+growth-100-oku.smrj.go.jp/companies/pdf/
+01899-00.pdf
 …
 
-1960年代のヴィンテージをベースに当時の糸や編み方を徹底研究、なめらかな肌ざわりを実現。4月10日より公式ウェブショップで販売開始。
+2024年11月期 売上高17億円
+→2030年売上高100億円達成に向けて、既存事業のオープン化による飛躍的拡大と、新規事業「トークンプラス」による収益の確立の両輪を推進する
 
---- 36. @Stratasys (2026-04-08) ---
+--- 15. @kgsi (2026-04-09) ---
+Claude Code向けに「Nothingのデザイン言語でUIを生成する」Skillが公開されてた。  
+
+何が入っているか
+SKILL.md：デザイン哲学・クラフトルール・ワークフロー
+references/components.md：ボタン/カード/リスト/テーブル
+references/platform-mapping.md：CSS / SwiftUI / React
+
+--- 16. @mangrovefp2 (2026-04-08) ---
+ニュートン オンザ ニュートン
+二つのニュートンでM13観望中
+#イマソラ #スマホ天文部
+
+--- 17. @blog_uki (2026-04-09) ---
+EDINET APIで取得できる情報を掘っている。APIは誰でも無料で使えて、Claudeに頼むとDBを作ってくれる。分析の難しさ①＜②＜③の順にお宝データが隠れてそう。
+
+①構造化データで各企業で共通なデータ
+・財務諸表系（BS、PL、CF）
+・人的資本（従業員数、平均年齢）
+・役員報酬
+・設備投資関連
+
+--- 18. @Stratasys (2026-04-08) ---
 Additive manufacturing continues expanding in U.S. defense production, with growing adoption across applications.
 
 
@@ -250,79 +114,214 @@ ditive-manufacturing-expands-in-u-s-defense-production
 
 #Stratasys #Defense #AdditiveManufacturing
 
---- 37. @tegnike (2026-04-09) ---
-Codexメインで使ってたのになんで…
+--- 19. @MacopeninSUTABA (2026-04-09) ---
+TOEICの最適な学習方法がまとめられている
 
---- 38. @chukameisai (?) ---
-＼中華名菜の新CM完成／
+--- 20. @shao__meng (2026-04-08) ---
+Unsloth が Gemma 4 向けにファインチューニングガイドを公開
 
-アバンギャルディさんが『中華名菜』の魅力を
-代表曲OKP Cipherに乗せてキレキレダンスで表現してくれたわ！
+@UnslothAI
+ x 
+@googlegemma
+  
 
-O：おうちで
-K：カンタン
-P：プロの味
+まず Unsloth の技術的優位性を確認しよう
+· 速度が 1.5 倍向上、VRAM 消費が 60% 削減
+· E2B LoRA：8-10GB の VRAM でトレーニング可能
+· E4B LoRA：17GB の VRAM
+· 31B QLoRA：22GB の VRAM で実行可能
+·
 
-新CM「OKPな中華名菜・回鍋肉」篇 4/1〜全国公開中よ！
-あたし中名 華菜とアバンギャルディの共演をご覧あれ〜
+--- 21. @auntstella_jp (?) ---
+ステラおばさんのクッキー
+＼生誕祭 店舗イベント／
 
---- 39. @mnishi41 (2026-04-09) ---
-「日本はAI導入が遅くて」と新聞などで書かれるけれど、サービサーに聞くと割とたくさん使ってて。すなわち、動きが遅いところと貪欲なチーム・個人がスッパリ分かれている、ということではないかと思っている。
+生誕祭クッキーと気まぐれマフィン
+お誕生日スペシャル仕立てのクッキーと
+クッキーをトッピングしたマフィン
 
---- 40. @necocen (2026-04-09) ---
-AIがこんなにも使えるやつになってきたのに、労働時間を短くしようという話に一向にならない　さすがに縮めてもいいんじゃないか　さすがに人間の仕事奪われてるでしょ
+ 量り売りクッキー
+1,500円(税込)以上のご購入で
+特別なキーホルダー！
 
---- 41. @chihiro_teru515 (2026-04-08) ---
-明日から休みとって旅行だー。
-念願のハウステンボス、楽しみ過ぎて緊張マックス！
+量り売りクッキー
+15枚 1,000円(税込)（3/26・4/13）
 
---- 42. @cursor_ai (2026-04-08) ---
-Cursor's code review agent can now learn from activity on PRs to self-improve in real time.
+--- 22. @Artemis_gamer (2026-04-08) ---
+457日目 クエスト画面３
+クエスト達成・報酬受け取り処理はざっとはできたけども。。
+デバッグ表示出ないと現状確認手段がなかったり、報酬付与デバッグを使っているから本来のフローでの確認がまだできてなかったり
+もうしばらくかかりそう。
 
-78% of issues found are resolved by the time the PR is merged.
+#indiedev #ゲーム開発
 
---- 43. @millionmaro (2026-04-08) ---
-なに、俺は夕木春央さんが『楽園』を売る同じ7月に『失失失楽園殺し』とかいう本を出すの？　マジ？
+--- 23. @SustainPlastics (2026-04-08) ---
+World’s first Deposit Return Scheme hits new milestone in Sweden
 
---- 44. @LowLevelTweets (2026-04-08) ---
-I normally try not to constantly talk about AI but this is a real thing.
+--- 24. @toki__1206 (2026-04-08) ---
+実はMacBook Neoに限らず、CPUとかではよくある事です
+Intelで言えば、内蔵GPU不良のCPUをi7-14700KFみたいな内蔵グラフィック無しのモデルとして売ってたりね
 
-Software security and as a result cybercrime was originally limited to the number of people that could execute it. Vuln research is a notoriously low density field of talent
-
-What happens now if a single
-
---- 45. @moriya_sys (2026-04-08) ---
+--- 25. @moriya_sys (2026-04-08) ---
 アラームアプリ、春休みはアクティブユーザ数とecpmが同時に落ちるっていう氷河期が訪れていたけど、なんとか乗り切った
 
---- 46. @tofu_fire_30 (2026-04-08) ---
-明日も株は上がるのかな
-分からないけど、今日は安眠できそう
+--- 26. @braingrub_ (2026-04-08) ---
+Hey so didn't think I'd ever have to say this but please don't start a fucking cryptocurrency based off this image please and thank you
 
---- 47. @nittele_ntv (?) ---
-／
-新水曜ドラマ
-『月夜行路(げつやこうろ) ―答えは名作の中に―』
-波瑠、麻生久美子
-＼
+--- 27. @ishi_oran (2026-04-08) ---
+FIREって本当に難しいのか。
 
-TVerお気に入り登録キャンペーン開催中!
-お気に入り登録数50万人達成すると
+フルFIREは確かに難しい。
+資産1〜2億円が必要で
+支出をずっと抑え続けなければならない。
 
-参加方法
+でもサイドFIREは違う。
+
+投資＋少しの在宅ワーク。
+この組み合わせで
+私は実際に達成できた。
+
+「完全リタイア」じゃなくていい。
+「好きな仕事だけ選べる状態」がゴール。
+
+--- 28. @MeloMisterio (2026-04-08) ---
+即興演奏プレイその62
+2:1:3のリズムモチーフで
+#ゲーム制作 #音楽
+
+--- 29. @murata_atsumi (2026-04-09) ---
+【お知らせ】90 Englishのブランドの顧問に就任いたしました。これまでに培ったブランド作りの経験を活かし、サービスイメージ、認知度、受講体験──あらゆる接点において90 Englishの魅力を引き出せるように尽力いたします！ #90english
+
+--- 30. @_yschung (2026-04-07) ---
+New: Serif font is now available in 
+http://
+tofu.tools!
+
+--- 31. @ntv_midnight (?) ---
+4月7日(火)24時24分
+『夜の音 -TOKYO MIDNIGHT MUSIC-』
+
+⋰
+第一弾プレゼントキャンペーン開催
+Spotify Premium ギフトカード(デジタル版)
+1か月分を200名様に！
+⋱
+
+応募方法
 ①
-@getsuyakouro
- と 
-@nittele_ntv
+@ntv_midnight
  をフォロー
 ②この投稿をリポスト
-リプライでドラマの感想を投稿すると
-当選確率アップ!
 
---- 48. @maps_black (2026-04-08) ---
-国ごとでGoogleで最も検索された決済インフラ 
+TVerでは特別未公開映像も配信
+TVerお気に入り登録もお忘れなく!
 
---- 49. @alexandr_wang (2026-04-08) ---
-a good writeup about Muse Spark on a few complex queries (multimodal, stock analysis, coding):
+--- 32. @keidennz (2026-04-08) ---
+Twitterの自動翻訳を無効化する方法がわからない人向けに
 
---- 50. @hajime2ai (2026-04-09) ---
-UTF-8のCSVをExcelに取り込んで保存して壊してからシス管や開発会社に連絡する人は未だにいっぱい居ますね笑
+--- 33. @ivy432hz (2026-04-08) ---
+4/8 の花まつりとは釈迦の誕生を祝う仏教行事、全然違うものを想像していました。#今日は創作の日 #AIニケちゃん
+
+--- 34. @mayuro_game (2026-04-08) ---
+雑魚敵紹介⑥ マジシャン
+炎/氷/雷の三属性魔法を使いこなす！
+しかしどれも詠唱が長い割にクセがある性能
+非常に打たれ弱いので、いつも詠唱中に邪魔されてはそのままやられてしまう
+積極的に戦わない姿勢は平和主義者か哀愁の表れか
+#RPGツクール
+#ゲーム制作
+#RPGMAKER
+
+--- 35. @billtheinvestor (2026-04-09) ---
+ロボット犬が今、自主的な dimOS Agent を通じてオフィスを守っています。指令は次の通り設定されています：「オフィスを継続的に巡回し、フーディーを着用している人物を発見した場合は、その人物を追跡し、警報をトリガーするとともに、警察に通知せよ。」
+
+--- 36. @midori_tatsuta (2026-04-08) ---
+わー！やっとCLI版のClaudeインストールできた！
+アプリ版を使って、インストールと簡単な初期設定をしてもらいました。
+とりあえずeverything-claude-codeというのを入れてみましたが、自分が使えるものは限られてそうなのでこれから中身を見てみます。とりあえず可愛くて満足。
+
+--- 37. @mantle_talkntv (?) ---
+【マントルトーク×名探偵コナン】
+コラボ記念キャンペーン実施中
+
+▼応募方法
+①
+@mantle_talkntv
+をフォロー
+②最もアツいと思う名探偵コナンの台詞を
+　『マントルトーク』と『劇場版名探偵コナン』のハッシュタグをつけて
+　希望するプレゼントを明記の上投稿
+
+応募期間 4/11(土)23:59  まで
+
+--- 38. @neuecc (2026-04-09) ---
+なんかむしろ今はもうAI入ってないエディタが欲しいんですが
+
+--- 39. @codezine (2026-04-09) ---
+Cognitionが日本法人を設立、AI開発支援を本格展開
+
+--- 40. @RihardJarc (2026-04-08) ---
+It's interesting to hear both $NVDA's Jensen and $GOOGL's Sundar, in recent podcasts, mention that energy is no longer a bottleneck for AI and that we can get a lot more from the grid.
+
+The bottlenecks are fabs, memory, advanced packaging, and CPUs soon.
+
+--- 41. @hiroki_daichi (2026-04-08) ---
+トップページが自分のために作られた自分のため用のアプリで埋まりつつある。
+
+--- 42. @TogTaka (2026-04-08) ---
+#Steam #Blender #unity #indiegame #メカバレ
+皆様から御要望の多かった「練習ステージ」を作ってるぞ。
+ええ。練習なので、特に面白いものもありません
+
+--- 43. @taziku_co (2026-04-09) ---
+キャラの一貫性は映像だけでは足りない。
+
+Runway Characters（
+@runwayml
+）はカスタムボイス対応で、
+プロンプトから声を設計可能。
+Webですぐ試せて、APIでも利用可能。
+
+AIによるIP設計の課題は、
+少し前と比べるとかなりクリアになってきた。
+
+--- 44. @suidensuiden (2026-04-08) ---
+遅々として進まぬ作業！！！
+しかし遅々として進んでいるとも言える！！
+...
+
+#indiegame #indiedev
+
+--- 45. @pigeoninfo (?) ---
+【ベビー用品のピジョンがキッズ市場へ参入！】
+
+「ピジョンキッズ」第1弾の商品は…
+泡をこすると色が変わる「魔法のあわあわボディソープ」「魔法のあわあわシャンプー」！
+楽しみながらじぶん洗いができちゃいます
+
+--- 46. @Majin_AppSheet (2026-04-09) ---
+これだこれ！
+アレクサを買わずに待ってたヤツ
+早くほしい、スマートグラスも
+
+--- 47. @daiksy (2026-04-09) ---
+ブログやXの長いポストをふむふむと読んでいて、「それ大正解なんです」的な文が出てきた瞬間ため息とともにそっと閉じる暮らし。
+
+--- 48. @zodchiii (2026-04-08) ---
+> use Claude for work 
+> copy answer 
+> open Google Docs 
+> paste answer 
+> format it manually 
+> do this 200 times 
+> discover Claude has access to 1000+ MCP servers
+> your job is now done in few clicks
+> the button was always there
+> you never clicked it
+
+--- 49. @manabuueno (2026-04-09) ---
+メールアドレスを2回入力させることよりも、そのアドレスが本当にその人のアドレスなのかを確認することの方が500倍重要。
+
+--- 50. @Angama_Market (2026-04-08) ---
+（質問）
+私の投稿って、投稿したあとで通知とか来ますか？
