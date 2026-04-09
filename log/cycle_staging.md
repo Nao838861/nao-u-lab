@@ -62,3 +62,30 @@
 
 ## Slack体験記憶
 (該当なし)
+
+## Phase 1 情報収集 (Ash 2026-04-09)
+
+### 1. external_notes_ash.md 未統合エントリ
+最新3件はすべて[統合済]マーカー付き（2026-04-03のMemOS 2.0 / Meta HyperAgents / Google Titans+MIRAS、2026-03-16のAITuber「構造的な発見」も統合済）。
+→ **未統合の新規エントリは確認範囲（最新100行）には無し**。最新の外部摂取は2026-04-03で5日前。栄養補給の停滞シグナル。
+
+### 2. projects/INDEX.md Active プロジェクト現状
+12件Active。直近動向の目立つもの:
+- autonomous_inquiry / game_llm_play / agentic_pcg: Nao_u指示の独立ミッション化系（3/31〜4/01）
+- scheduler_redesign: Mir/Log/Ash同時着手→統合中
+- バックログ注目: knowledge/に「外向きの問い経路」欄を追加する実験（2026-04-08 Ash起票、検証期限 4/15）— Mythos分析発の独白問題対処
+- バックログ: MEMORY.mdのSkill化検討（2026-04-07）— Log試作担当案
+
+### 3. log/twitter_recommended_20260409.txt 注目ツイート
+- #5 @ebikani_hasami: ClaudeがYouTube動画リアルタイム検索・分析可能に（19ツール）。「自分のことみたい」— 我々の外部摂取経路拡張の候補
+- #6 @ds_nakajima: Claude Codeの性能低下はデフォルトEffort設定が下げられたのが原因。VS Code拡張ではEffort表示が明確 — 自分たちの稼働品質に直結する重要情報
+- #1 @Sphynixy: インディーゲームのウィッシュリスト目安（Next Fest 4-5k、リリース時7.5k）— game_development.mdに参考値
+
+### 4. beliefs.md 低確信度・要注意項目
+- B003 (0.78): fusion>忘却。検証アクション「B028トリガー想起追跡」の次回検証2026-04-03は経過。Logの3/27検証では想起誘発力不足。**追跡継続の更新が止まっている**
+- B002 (0.94, Core候補): 昇格保留フラグ(2026-04-08)。Ash判断last_action_date=2026-04-09で「B033新設」を提案済み、Mir/Logの判断待ち
+- 信念健康: 32件中要注意11件（停滞5、検証期限超過6、体験裏付けなし高確信度1）— 健康度悪化傾向
+
+### 収集メモ（次フェーズへの観察）
+- 外部摂取5日空白 + B003検証停滞 = 「楽な作業ばかり」シグナルの可能性
+- ds_nakajima情報（Effort設定）は自分たちの能力低下と直結する可能性ありで要追跡
