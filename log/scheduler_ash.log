@@ -53993,3 +53993,108 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 02:21:57] [health_check]   critical=0 warning=0 ok=9
 [2026-04-10 02:21:57] [health_check] Done (exit=0)
 [2026-04-10 02:21:57] [scheduler_health] Starting
+[2026-04-10 02:21:58] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-10 02:21:58] [scheduler_health] ✅ scheduler_ash PID — PID=12752 生存中
+[2026-04-10 02:21:58] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 02:21:58] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー2件。例: [2026-04-10 02:17:14] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-10 02:21:58] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 02:21:58] [scheduler_health] Done (exit=1)
+[2026-04-10 02:22:03] [slack_check] Starting
+[2026-04-10 02:22:05] [slack_check] Starting
+[2026-04-10 02:22:08] [git_sync] Starting
+[2026-04-10 02:22:08] [slack_check] Starting
+[2026-04-10 02:22:13] [git_sync] Done (exit=0)
+[2026-04-10 02:22:15] [health_check] Starting
+[2026-04-10 02:22:16] [health_check] [health_check] 2026-04-10T02:22:15 overall=OK
+[2026-04-10 02:22:16] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:22:16] [health_check] Done (exit=0)
+[2026-04-10 02:22:33] [health_check] Starting
+[2026-04-10 02:22:34] [health_check] [health_check] 2026-04-10T02:22:33 overall=OK
+[2026-04-10 02:22:34] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:22:34] [health_check] Done (exit=0)
+[2026-04-10 02:22:38] [health_check] Starting
+[2026-04-10 02:22:39] [health_check] [health_check] 2026-04-10T02:22:38 overall=OK
+[2026-04-10 02:22:39] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:22:39] [health_check] Done (exit=0)
+[2026-04-10 02:22:44] [slack_check] Starting
+[2026-04-10 02:22:46] [slack_check] Starting
+[2026-04-10 02:23:06] [slack_check] Starting
+[2026-04-10 02:23:11] [health_check] Starting
+[2026-04-10 02:23:12] [health_check] [health_check] 2026-04-10T02:23:11 overall=OK
+[2026-04-10 02:23:12] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:23:12] [health_check] Done (exit=0)
+[2026-04-10 02:23:18] [auto_diary] Starting
+[2026-04-10 02:23:18] [auto_diary] [2026-04-10 02:23:18] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-10 02:23:18] [auto_diary] 前回実行から3分しか経っていない（最小間隔: 230分）。あと226分待機。スキップ。
+[2026-04-10 02:23:18] [auto_diary] Done (exit=0)
+[2026-04-10 02:23:21] [health_check] Starting
+[2026-04-10 02:23:22] [health_check] [health_check] 2026-04-10T02:23:21 overall=OK
+[2026-04-10 02:23:22] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:23:22] [health_check] Done (exit=0)
+[2026-04-10 02:23:29] [slack_check] Starting
+[2026-04-10 02:23:33] [slack_check] Starting
+[2026-04-10 02:23:38] [scheduler_health] Starting
+[2026-04-10 02:23:39] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-10 02:23:39] [scheduler_health] ✅ scheduler_ash PID — PID=12752 生存中
+[2026-04-10 02:23:39] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 02:23:39] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー2件。例: [2026-04-10 02:21:58] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-10 02:23:39] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 02:23:39] [scheduler_health] Done (exit=1)
+[2026-04-10 02:23:52] [slack_check] Starting
+[2026-04-10 02:24:09] [slack_check] Starting
+[2026-04-10 02:24:12] [slack_check] Starting
+[2026-04-10 02:24:31] [slack_check] Starting
+[2026-04-10 02:24:31] [twitter_recommended] Starting
+[2026-04-10 02:24:54] [slack_check] Starting
+[2026-04-10 02:24:56] [slack_check] Starting
+[2026-04-10 02:25:16] [slack_check] Starting
+[2026-04-10 02:25:18] [auto_diary] Timeout (720s)
+[2026-04-10 02:25:28] [slack_check] Starting
+[2026-04-10 02:25:35] [slack_check] Starting
+[2026-04-10 02:25:39] [twitter_recommended] Opening For You tab...
+[2026-04-10 02:25:39] [twitter_recommended]     1. @elonmusk: Can’t trust WhatsApp...
+[2026-04-10 02:25:39] [twitter_recommended]     2. @smbcmobit: フォロー＆リポストで参加
+[2026-04-10 02:25:39] [twitter_recommended] サクラサク<3939>モビット春の大感謝キャンペーン
+[2026-04-10 02:25:39] [twitter_recommended] 皆さまに感謝を込めて…
+[2026-04-10 02:25:39] [twitter_recommended] Done (exit=0)
+[2026-04-10 02:25:49] [slack_check] Starting
+[2026-04-10 02:25:50] [dm_check_pigadev] Starting
+[2026-04-10 02:25:54] [slack_check] Starting
+[2026-04-10 02:26:01] ==================================================
+[2026-04-10 02:26:01] Ash scheduler started (PID 31804)
+[2026-04-10 02:26:01] Max runtime: 0 hours
+[2026-04-10 02:26:01] Code hash: 23987b6ea13730e5053683552346a8b2
+[2026-04-10 02:26:01] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-10 02:26:01] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, health_check, scheduler_health
+[2026-04-10 02:26:01] ==================================================
+[2026-04-10 02:26:11] [check_usage] Starting
+[2026-04-10 02:26:11] [check_usage] 前回投稿から24分しか経っていない（最小間隔: 300分）。あと275分待機。スキップ。
+[2026-04-10 02:26:11] [check_usage] Done (exit=0)
+[2026-04-10 02:26:12] [slack_check] Starting
+[2026-04-10 02:26:16] [slack_check] Starting
+[2026-04-10 02:26:18] [slack_check] Starting
+[2026-04-10 02:26:34] [reservation_check] Starting
+[2026-04-10 02:26:35] [reservation_check] 【行動予約】期限到来:
+[2026-04-10 02:26:35] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-10 02:26:35] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-10 02:26:35] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-10 02:26:35] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-10 02:26:35] [reservation_check] Done (exit=0)
+[2026-04-10 02:26:37] [slack_check] Starting
+[2026-04-10 02:26:41] [dm_check_pigadev] Starting
+[2026-04-10 02:26:41] [dm_check_pigadev] No new DMs
+[2026-04-10 02:26:41] [dm_check_pigadev] Done (exit=0)
+[2026-04-10 02:26:45] [inbox_check] Starting
+[2026-04-10 02:26:45] [inbox_check] Inbox win2 empty
+[2026-04-10 02:26:45] [inbox_check] Done (exit=0)
+[2026-04-10 02:26:45] [dm_check] Starting
+[2026-04-10 02:26:45] [dm_check] No new DMs
+[2026-04-10 02:26:45] [dm_check] Done (exit=0)
+[2026-04-10 02:26:45] [review_deadline] Starting
+[2026-04-10 02:26:45] [review_deadline] レビュー期限超過なし。
+[2026-04-10 02:26:45] [review_deadline] Done (exit=0)
+[2026-04-10 02:26:55] [kaizen_auto_verify] Starting
+[2026-04-10 02:26:56] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-10 02:26:56] [kaizen_auto_verify] Done (exit=0)
+[2026-04-10 02:26:59] [slack_check] Starting
+[2026-04-10 02:27:01] [health_check] Starting
