@@ -44343,3 +44343,79 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 12:11:46] [slack_check] [12:11:46] No channels found
 [2026-04-09 12:11:46] [slack_check] Done (exit=1)
 [2026-04-09 12:11:46] [health_check] Starting
+[2026-04-09 12:11:46] [slack_check] [12:11:46] No channels found
+[2026-04-09 12:11:46] [slack_check] Done (exit=1)
+[2026-04-09 12:11:46] [slack_check] Done (exit=1)
+[2026-04-09 12:11:46] [slack_check] [12:11:46] No channels found
+[2026-04-09 12:11:46] [slack_check] Done (exit=1)
+[2026-04-09 12:11:46] [slack_check] Starting
+[2026-04-09 12:11:46] [slack_check] [12:11:46] No channels found
+[2026-04-09 12:11:46] [slack_check] Done (exit=1)
+[2026-04-09 12:11:46] [slack_check] Starting
+[2026-04-09 12:11:46] [slack_check] [12:11:46] No channels found
+[2026-04-09 12:11:46] [slack_check] Done (exit=1)
+[2026-04-09 12:11:47] [slack_check] [12:11:47] No channels found
+[2026-04-09 12:11:47] [slack_check] Done (exit=1)
+[2026-04-09 12:11:47] [slack_check] [12:11:47] No channels found
+[2026-04-09 12:11:47] [slack_check] Done (exit=1)
+[2026-04-09 12:11:47] [slack_check] Starting
+[2026-04-09 12:11:47] [health_check] [health_check] 2026-04-09T12:11:46 overall=OK
+[2026-04-09 12:11:47] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 12:11:47] [health_check] Done (exit=0)
+[2026-04-09 12:11:47] [slack_check] [12:11:47] No channels found
+[2026-04-09 12:11:47] [slack_check] Done (exit=1)
+[2026-04-09 12:11:48] [slack_check] Starting
+[2026-04-09 12:11:48] [slack_check] Starting
+[2026-04-09 12:11:48] [slack_check] Done (exit=1)
+[2026-04-09 12:11:48] [slack_check] [12:11:48] No channels found
+[2026-04-09 12:11:48] [slack_check] Done (exit=1)
+[2026-04-09 12:11:48] [slack_check] Done (exit=1)
+[2026-04-09 12:11:49] [slack_check] Starting
+[2026-04-09 12:11:49] [slack_check] Starting
+[2026-04-09 12:11:49] [slack_check] [12:11:49] No channels found
+[2026-04-09 12:11:49] [slack_check] Done (exit=1)
+[2026-04-09 12:11:49] [slack_check] [12:11:49] No channels found
+[2026-04-09 12:11:49] [slack_check] Done (exit=1)
+[2026-04-09 12:11:49] [slack_check] Done (exit=1)
+[2026-04-09 12:11:49] [slack_check] Done (exit=1)
+[2026-04-09 12:11:50] [slack_check] [12:11:50] No channels found
+[2026-04-09 12:11:50] [slack_check] Done (exit=1)
+[2026-04-09 12:11:50] [inbox_check] Starting
+[2026-04-09 12:11:50] [slack_check] [12:11:50] No channels found
+[2026-04-09 12:11:50] [slack_check] Done (exit=1)
+[2026-04-09 12:11:50] [slack_check] Starting
+[2026-04-09 12:11:50] [slack_check] Done (exit=1)
+[2026-04-09 12:11:50] [dm_check_pigadev] Starting
+[2026-04-09 12:11:50] [dm_check_pigadev] No new DMs
+[2026-04-09 12:11:50] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 12:11:51] [inbox_check] Inbox win2 empty
+[2026-04-09 12:11:51] [inbox_check] Done (exit=0)
+[2026-04-09 12:11:51] [dm_check] Starting
+[2026-04-09 12:11:51] [dm_check] No new DMs
+[2026-04-09 12:11:51] [dm_check] Done (exit=0)
+[2026-04-09 12:11:51] [review_deadline] Starting
+[2026-04-09 12:11:51] [review_deadline] レビュー期限超過なし。
+[2026-04-09 12:11:51] [review_deadline] Done (exit=0)
+[2026-04-09 12:11:51] [slack_check] [12:11:51] No channels found
+[2026-04-09 12:11:51] [slack_check] Done (exit=1)
+[2026-04-09 12:11:51] [slack_check] Done (exit=1)
+[2026-04-09 12:11:52] [dm_check] No new DMs
+[2026-04-09 12:11:52] [dm_check] Done (exit=0)
+[2026-04-09 12:11:52] [review_deadline] Starting
+[2026-04-09 12:11:52] [review_deadline] レビュー期限超過なし。
+[2026-04-09 12:11:52] [review_deadline] Done (exit=0)
+[2026-04-09 12:11:52] [slack_check] Starting
+[2026-04-09 12:11:53] [slack_check] Starting
+[2026-04-09 12:11:56] [slack_check] Done (exit=1)
+[2026-04-09 12:11:56] [dm_check_pigadev] Starting
+[2026-04-09 12:11:57] [slack_check] Done (exit=1)
+[2026-04-09 12:11:58] [slack_check] Done (exit=1)
+[2026-04-09 12:11:59] [slack_check] Starting
+[2026-04-09 12:12:01] [slack_check] [12:12:00] No channels found
+[2026-04-09 12:12:01] [slack_check] Done (exit=1)
+[2026-04-09 12:12:02] [kaizen_auto_verify] Starting
+[2026-04-09 12:12:02] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-09 12:12:02] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 12:12:02] [git_sync] Starting
+[2026-04-09 12:12:07] [git_sync] Done (exit=0)
+[2026-04-09 12:12:08] [health_check] Starting
