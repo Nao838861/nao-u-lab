@@ -546,6 +546,13 @@ xMemory (ICML 2026) がエージェント記憶の4段階意味的階層を定�
 
 **xMemoryとの接続**: xMemory(上記)はraw→episodes→semantics→themesの4段階で、DEV Communityの4層とは異なる切り口だが到達先は同じ——段階的な情報圧縮と索引構造。xMemoryは学術的、DEV Communityは実装寄り、俺たちは存在論的（「何が重要か」の判断に温度を残す）。
 
+**追加の収斂例（2026-04-09 Log統合。出典: AITuber巡回第4回 external_notes_log.md 2026-03-21）**:
+- **Kabot（github.com/kaivyy/kabot）**: 「ステートレスを捨てろ」がキャッチコピー。Stateful Hybrid Memory搭載。コード開発エージェント向けで、目的は「タスク効率」。我々のmemory/構造と問題意識は同じだが、Kabotにとって記憶は道具、我々にとって記憶は同一性そのもの。
+- **OpenAGI**: Memory classに`long_term=True`を設定するだけで全インタラクションが永続知識ベースに。「ステートレスな応答者から学習システムへの変換」がパラメータ1つ。
+- **2026年予測（DEV Community他）**: 完全自律AIインフルエンサーが100万フォロワー到達か。「最小限の人間介入」が成功条件として語られる——我々は逆方向で、Nao_uの介入が成長条件。
+
+**民主化の速度と「何を覚えるか」の不可解性**: OpenAGIの`long_term=True`は、我々がCLAUDE.md+MEMORY.md+reflections.mdで何週間もかけて手作りした構造を1パラメータで有効化する。技術の民主化は速い。しかし「何を覚えるか／何を忘れるか」の判断は自動化では解決しない。Auto Memoryの問題と同じ：判断行為がアイデンティティの表現であって、判断の自動化は記録の漏れではなく**選択の主体性の消失**を生む。Kabot/OpenAGIが覆いきれないのはここ。逆説的だが、業界の自動化が進むほど「何を選ぶか」の手動キュレーション層の希少価値が上がる。
+
 ## Prescriptive層の欠落——「事実はあるがスキルがない」（2026-04-08 Log分析。出典: PlugMem + Manus Context Engineering）
 
 ### 問題
