@@ -1,266 +1,99 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 03:55
+# Read at: 2026-04-10 04:00
 # Total: 50 tweets
 
---- 1. @shunk031 (2026-04-09) ---
-おうちミニ PC の Proxmox に Dokploy 入れて適当に Cloudflare Tunnel 設定したやつ用意しておいて、手元にあった細々アプリをデプロイしていったら最高の気持ちになってきた、Cloudflare Access でアクセス制御入れてワイのｵﾀｸﾂｰﾙｽﾞすぐ使える環環境になって神だ〜
+--- 1. @doluji567 (2026-04-09) ---
+＞極低温の真空中に放熱すれば冷却装置は最小限で済む。
 
---- 2. @aiful_promotion (?) ---
+--- 2. @tbs_pr (?) ---
 ／
-5日目！
-フォロー＆リポストで当たる！
-ラブファントム女将篇 新CM公開記念キャンペーン実施中
+フォロー＆リポストで100名様に
+QUOカードPayが当たる
 ＼
 
-ハッシュタグ「ラブファントム女将」をつけて
-CMの感想をコメントすると、
-Wチャンスでさらに豪華賞品が当たる
+“月曜よるはエンタメNIGHT”
+新番組スタート記念プレゼントキャンペーン
 
-まだまだ応募待ってるで
-
-※応募方法はスレッドをご確認下さい
-
---- 3. @googlegemma (2026-04-09) ---
-Gemma 4 has already been downloaded over 10 million times, with over 1,000 variants published by the community!
-
-What is your favorite Gemma 4 variant? 
-
---- 4. @JakeSucky (2026-04-09) ---
-Final Sentence, the Battle Royale typing game where you compete against each other and one typo could be your last, has officially shadow dropped on Steam
-
---- 5. @dritoshi (2026-04-09) ---
-うちのラボのウェットなスタッフたちもほぼプログラミング初心者でしたが、Vibe codingを日常的に研究に取り込んでいます。例えば、自分たちで開発したDNAシーケンス技術で得た大量の塩基配列の傾向を分析したりフィルタするツールキットやビューアを作ってみたり、
-
---- 6. @Pirat_Nation (2026-04-09) ---
-The game "Trees Hate You," is going viral
-
-Its a indie game where hostile trees shoot, punch, and chase players
-
-There is a free demo on itchio with the full version slated for 2026 Steam
-
---- 7. @4fa19623 (2026-04-09) ---
- 置かれた場所で咲きなさい
- 置かれた場所を変えなさい
-
---- 8. @famitsu (2026-04-09) ---
-スローライフが悪夢に侵食される、ダウナーでホラーなRPG『Neverway』のPC版デモが配信開始。Switch/PC版の発売は10月予定
-
-https://
-famitsu.com/article/202604
-/71420
-…
-
-デモは日本語でプレイ可能。主人公が会社を解雇され新天地へ出発する冒頭部分と、戦闘やクラフトの基礎を体験できるパートを遊べる
-
---- 9. @5ro4 (2026-04-09) ---
-Godot doesn't display emojis in Nobara Linux 
-This is a deal breaker for me. My whole organizational and debug systems depend on them.
-Seems to be a Fedora issue. Can it be fixed?
-
---- 10. @kedamasuzume (2026-04-09) ---
-今夜8時よりAIVTuberゆめみななさんの歌枠配信が予定されています
-今回は令和アニメ歌枠とのことですが、コラボ企画からの歌枠は準備が大変そうです
-
---- 11. @WEGO_press (?) ---
-「痛バって可愛いけど、肩こるのが悩み…」そんな子、全員集まれー！
-WEGO史上（※当社比）最高に軽い、超軽量タイプの痛バッグが登場
-
-デザインもシンプルで使いやすいので様々なシーンでお使いいただけます♡
-遠征も、1日中歩き回るイベントも、これなら全力で推し事を楽しめるはず
-
---- 12. @keiryo_thinking (2026-04-09) ---
-内向型が程よく手を抜くには、心の中で「まあ、知らんけど」を口癖にした方がいいです。
-
-真面目な人ほど「全てに責任を持たなきゃ」「結果を予測しなきゃ」と自分を監視して苦しくなりがちです。
-
---- 13. @gandhara16 (2026-04-09) ---
-Word は数式の中の表記を検索／置換できないのが不便だった記憶がある。たとえば，論文の中ほどまで ω と書いていたのを，気が変わって全部 Ω に書き換えたいときは困った。今は改善したのだろうか？
-
---- 14. @PlasticsWorld (2026-04-09) ---
-InfraLeuna and LEUNA-Harze, acting through their JV LEUNA - Polyamid, have entered into a purchase agreement with the insolvency administrator of DOMO Caproleuna regarding the acquisition of assets. 
-https://
-infraleuna.de/news-detail-2/
-a-new-beginning-leuna-polyamid-gmbh-to-acquire-domo-caproleuna-gmbh-effective-april-1-2026
-…
-
---- 15. @FelixSchlang (2026-04-08) ---
-Artemis II launch in near infrared! 
-
-The content NASA released after the Artemis II launch sure is incredible! 
-
---- 16. @PackagingEurope (2026-04-09) ---
-Klöckner Pentaplast (KP) has launched kp Infinity HP3, the largest and most rigid addition to its Hotpacs range, designed to provide robust protection for generous portions of food-to-go
-
-Link below
-
---- 17. @didengshengwu (2026-04-09) ---
-めっちゃ楽しいね、想像力豊かだよ
-
-これぞテクノロジーを花開かせるって感じ
-
-オンラインとオフラインの融合、本物のサバイバル！
-
---- 18. @Stratasys (2026-04-08) ---
-Additive manufacturing is gaining momentum in U.S. defense production.
-
-
-https://
-metalworkingmag.de/news/108753-ad
-ditive-fertigung-in-der-us-verteidigungsproduktion-w%C3%A4chst
-…
-
-#Stratasys #Defense #AdditiveManufacturing
-
---- 19. @JI1BXM (2026-04-09) ---
-「神が見える！」っていうスピリチュアル系の方は居られますが、ガキの頃から電子回路を弄っているハムには、寄生振動とか起こっているときに指をデバイスに近づけたりして電気力線が見えるひとは普通に居るんじゃないですか？　はい、私、見えることがあります。（危ない奴！）
-
---- 20. @SustainPlastics (2026-04-09) ---
-Circulate Capital raises $220M to expand plastics recycling in Asia
-
---- 21. @i8791 (?) ---
-母の日キャンペーン第4弾
-世界にひとつだけのエピソード選手権！
-エピソードを投稿して「花とみどりのeギフト1万円分」を当てよう！
-
- 
-@i8791
+▼応募方法
+① 
+@tbs_pr
  をフォロー
- 4/12 11:59までに本投稿をリポスト
- 当選者に即DM
- リプライで「私とお母さんの母の日エピソード」を投稿
+②月曜よるの3番組への「応援コメント」や「感想」を記載して、本投稿を引用リポスト
 
-ツリー投稿も見てね
+▽詳細はツリー投稿を
 
---- 22. @Oguland_ (2026-04-09) ---
-コーヒーラッシュ（Coffee Rush）
-好き度（Like）3pt.≪★★★≫
-テーママッチ度（Theme matching）5pt.≪★★★★★≫
-コンポーネント（Components）5pt.≪★★★★★≫
+--- 3. @AUTOMATONJapan (2026-04-09) ---
+【ニュース】武侠バトロワ荷物整理『バックパック江湖』中国語圏でさっそく人気炸裂。門派を選んでアイテム整頓、群雄割拠な“『バックパック・バトル』風”非同期対戦ゲーム
 
-http://
-blog.livedoor.jp/ogu_resort/arc
-hives/2025-12-06.html
+https://
+automaton-media.com/articles/newsj
+p/20260409-435692/
 …
-#ボードゲーム
-#boardgame
 
---- 23. @LabelAndNarrow (2026-04-08) ---
-Held against the backdrop of March Madness, the All Printing Resources event blended education and technology with the aim of helping converters make smarter investment decisions. #flexo #innovation #growth
+--- 4. @GOROman (2026-04-09) ---
+Codex用に100ドルプラン
 
-Read: 
-https://
-hubs.li/Q049WP1y0
+--- 5. @unjyoukairou (2026-04-09) ---
+ごみ国際『Snowball snowball』雪だるまと雪だるまをくっつけて、より大きな雪だるまを作っていくゲーム。手なりでも遊べるけれど、戦略的にやらないといけない瞬間もあって、上手いこと決まったときは思わずガッツポーズになります。
 
---- 24. @NASA_es (2026-04-09) ---
-もうすぐ家に帰る時間だ 
+--- 6. @nikutaberuru (2026-04-09) ---
+別れ際に「気をつけてね！」と
+言うだけで事故率が減るので
+大事な人には積極的に
+使ってあげて下さい。
 
-
-@NASAArtemis
- II ミッションの海上着水は、4月10日午後8時7分（EDT）に予定されています。このビデオでは、着陸・回収ディレクターのLiliana Villarrealが、この作戦がどのように行われるかを説明しています。
-
---- 25. @atomic_chat_hq (2026-04-08) ---
-Run OpenClaw with Gemma 4 and Atomic Chat
-
-MacBook Air M4 · 16 GB RAM · 25 tok/s
-
-No cloud! No subscription fees! Open-source local model. Runs on your regular device
-
---- 26. @gin1910410 (2026-04-09) ---
-ｺﾞｺﾞｺﾞｺﾞｺﾞｺﾞ…
-
---- 27. @So_Miyagawa (2026-04-09) ---
-文科省のSPReAD1000 (AI for Science)、ぜひ人文学の研究者の皆様に応募していただきたいです！なにかお手伝いできることがあれば、お知らせください。
-
---- 28. @ANDYmoon (2026-04-09) ---
-本日ストックボイスにて
-堀古英司さんのコメント
-（加除訂正など適宜行っております）
-
-（停戦合意で大幅上昇をどう見てるか？）
-・合意は合意で、良いことです。
-・けれども、私は申し上げてたように、これまで「売られすぎ」です。
-・多くの投資家が、あまりにイラン戦争に注目しすぎです。
-
---- 29. @IoPP_Pros (2026-04-08) ---
-Brian Stepowany has seen how strong connections can shape a career. He’s passionate about helping packaging professionals, especially students, access the support and community that moves careers forward. See what IoPP membership can offer you: 
-https://
-buff.ly/zEeNkKu
-
---- 30. @ipusiron (2026-04-09) ---
-新刊『はじめてのNext.js　App Routerによるフロントエンド開発の教科書』をご恵贈頂きました。
-YouTubeチャンネル「プログラミングチュートリアル」やUdemy講師で活躍しているShin Code（ 
-@Shin_Engineer
- ）さんによる初めての技術本のようです。一人前のNext.jsエンジニアを目指す方にどうぞ。
-
---- 31. @Dennys_PR (?) ---
-【期間限定】
-ハンバーグフェア開催中
-
-6品のフェアメニューから、
-ペルーをイメージしたハンバーグを早見沙織さんがご紹介
-
-デニーズでは、
-対象メニューご注文で搭乗券風チケットをプレゼント1枚で江口拓也さん＆早見沙織さん2名分のボイスが聴けます
-ぜひコンプリートしてみてください
-
---- 32. @AshleyKillip (2026-04-09) ---
-18.3 has been placed inside the structural test stand at Masseys we can see the hydraulic rams that will be used to perform testing the outer grid fin sockets now housed inside the methane tank. Also since they are the load points for catching and stacking testing is needed to
-
---- 33. @rootport (2026-04-09) ---
-映画ロッキーは可愛さが強調されているけど、知的さが強調された原作ロッキーも読んでほしい。
-
---- 34. @motto_motogp (2026-04-09) ---
-ぽいぽい（笑）日本が舞台になることで話題のフォルツァ6。プレビューの映像見るだけでもその密度感がよくわかる。日本の空気感みたいなものまで伝わるのは、生えてる植物の植生や建物の建材が持つ素材感まで再現しているからか。発売はXbox/PC版が5/19。PS5版は後回し
-
---- 35. @nekoloop0 (2026-04-09) ---
-来てるな
-
---- 36. @AiXsatoshi (2026-04-09) ---
-スマホでLMlinkはアツい
-
---- 37. @KFC_jp (?) ---
-ランチタイム直前にスミマセン
-
---- 38. @mizchi (2026-04-09) ---
-来週から始まる仕事のためのツールを作ってる
-
---- 39. @tegnike (2026-04-09) ---
-というわけでメインのシステムがclaude -pで動いているAIニケちゃんは明日のクレジットリセットまでお休みです（なんなら直近のリプ返しのために$5課金した）
-
---- 40. @TEN_TSUKU_GAMES (2026-04-09) ---
-そして再来週の4/22(水)は…
-ゲムマ向けの試遊会＆撮影会があります！！
-春のゲームマーケット向けの宣材写真、必要じゃないですか？
-試遊会にわずかな追加料金を払うだけで、私が良い感じにあなたのゲームを撮影します！
-過去の撮影実績はこんな感じです。
-来てください！
+--- 7. @4GamerNews (2026-04-09) ---
+錬金術と物理演算が織りなす「自由な暴力」。一人称視点アクションRPG「Alkahest」の最新映像が公開
 
 https://
-twipla.jp/events/722366
+4gamer.net/s/G081332.2604
+10016
+…
 
---- 41. @yoo0daa (2026-04-09) ---
-拡散希望です！
-SushiTech の出世魚ピッチ8人のセミファイリストのうちの1人に選ばれました！ピッチして日本・世界の製造業を変えます！
+--- 8. @BanziroG (2026-04-09) ---
+レトルトを否定するな。
+あれは人の生活を楽で豊かにするために生まれた、食品化学の技術の結晶だぞ。
 
---- 42. @noritaka_okabe (2026-04-09) ---
-なんと31万回以上視聴されています。
-まだ見てないかたは是非ご覧ください！
+--- 9. @ayano_kova (2026-04-09) ---
+キヤノンのカメラはそのまま衛星になっていますし、SONYのカメラは流用品とはいえ月より遠い小惑星まで行ってますからマウントを取るのは難しいですかね。
 
-【ひろゆきvs暗号資産】サナエトークン騒動何が問題…？仮想通貨を見極めるには…【ReHacQvs JPYC岡部典孝vs西田亮介】 
+--- 10. @wagashi_no_yosa (2026-04-09) ---
+泣いた。泣くしかなかった
+
+--- 11. @nara_cjr (?) ---
+これはもう歴史と文化のLIVEだ。
+青空に映える鮮やかな朱色の伽藍の世界遺産・薬師寺で、「LIVEな歴史を体感する旅」を鈴木亮平さんがご紹介。
+CMやメイキング動画を公開中！
+
+--- 12. @kinopee_ai (2026-04-09) ---
+Devin での COBOL モダナイズについての技術ブログ。
+VM 上で実行・テストが行えず、フィードバック・ループが回らないのは大きな制約。現時点でのその対処などが説明されています。面白い。
+
+--- 13. @noshimoda (2026-04-09) ---
+研究室に虫さんが迷い込んでいたので外に放してあげました。いつか私がピンチのときに助けてくれるはず
+
+--- 14. @TG_Dungeon (2026-04-09) ---
+＼会場で神ゲーとエンカウントせよ／
+インディゲーム展示会
+#東京ゲームダンジョン12
+出展作品キービジュアル集
+3階 | 3Y・3K・3L・3M・3N・3O
+
+5/3(日)、東京・浜松町で冒険が待っている
+出展団体一覧　
 https://
-youtu.be/KLGqItzMazc?si
-=6sJUIeD5kk309dSx
-… 
-@YouTube
-より
+x.gd/TGD12E
+チケット購入　
+https://
+x.gd/TGD12T
 
---- 43. @NikonBrand (2026-04-09) ---
-ニコンのデジタル一眼レフカメラD5が、NASAのArtemis IIミッションに採用されました
-Petapixel記事では、「過酷な宇宙環境にも耐えられる」と評価いただいています。
+--- 15. @plasticsnews (2026-04-09) ---
+UFP Industries adds capacity with MoistureShield assets acquisition
 
-「なぜD5が選ばれたのか」ぜひ、記事をご覧ください。
+--- 16. @masashihan (2026-04-09) ---
+危険なおやつを頂いております。
 
---- 44. @ryanli (2026-04-09) ---
+--- 17. @ryanli (2026-04-09) ---
 Your Claude Code just got fluent in crypto.
 
 Today, we released Surf Skill. The command line that replaces 60+ APIs.
@@ -269,31 +102,222 @@ Compatible with any agentic environment.
 Try:
 npx skills add asksurf-ai/surf-skills
 
---- 45. @ishihara (2026-04-09) ---
-最近のTwitterの面白さは本当にやばい。2009年とか10年の雰囲気。そして外国人も誰もtwitterをXと呼んでないこともわかった笑
+--- 18. @LauraLoomer (2026-04-09) ---
+EXCLUSIVE PICS:
 
---- 46. @runranda07 (?) ---
-立花琴未ちゃんライブで激しく踊っているのに綺麗すぎない！？キャンチューが使ってたマキアージュのドラマティックスキンセンサーベース NEO最強*くずれ防止下地（*マキアージュ内）は、外の湿度変化を感知して自動で肌の水分量を調整する湿度オートセンサーっていう技術が搭載されているらしい！ PR
+A source sent me these photos of Hasan Piker 
+@hasanthehun
+ and his assistant wearing pro-socialist clothing while sleeping in FIRST CLASS seats on a Delta 
+@Delta
+ flight today from Detroit, Michigan to LAX airport in California. 
 
---- 47. @GSO_Police (2026-04-09) ---
-some of y'all are like “free my boy” expecting us to read it and be like “aww ok”.
+This is what we call Champagne
 
---- 48. @broad_tokyo (2026-04-09) ---
-＼ニュース／
+--- 19. @GyyARm5pyYHddh0 (2026-04-09) ---
+井上靖の言葉
 
-“魔改造階段ジャンケン”『グミチョコパパイヤレボリューション』が5月14日発売
+人生がたった一年しか残されていないんなら俺は本当に妥協なく生きてみたい。本当に会いたい人に会いたい。本当に話したい人と話したい。本当にやりたいことをやりたい。本当に行きたいと思うところへ行きたい。本当に見たいと思うものを見たい。一体自分はこれまで何をしていただろう
+
+--- 20. @ipusiron (2026-04-09) ---
+本日のチューリップ日記
+もうすぐ咲きそう
+
+--- 21. @REBHPortal (?) ---
+／
+Amazonギフト最大5万円分が当たるキャンペーン開催
+11日目
+＼
+
+フォロー&RPをして
+歴代タイトルキーアートをゲット
+
+参加方法
+①
+@REBHPortal
+をフォロー
+②本投稿を4/10 11:59までにRP
+③ハッシュタグ「バイオ30周年おめでとう」とリプライすると豪華賞品も当たる！
+
+--- 22. @latestincosmos (2026-04-08) ---
+This is my favorite shot from Artemis II so far—Absolutely Stunning!
+
+--- 23. @gyorui_funa (2026-04-09) ---
+昨今FAXを停止できない理由の一つに「ランサム被害時の最後の手段」になるんじゃないかなと（その実例は何個か聞いた
+
+--- 24. @thdxr (2026-04-09) ---
+inference is very profitable and probably a good opportunity to understand some basic business math
+
+1. companies buy long lived assets like GPUs. these are one time costs and the asset depreciates over time
+
+2. once you own this asset, you can plug it in and produce tokens which
+
+--- 25. @L8wk3Nj2iRLJNBc (2026-04-09) ---
+Aseprite活
+パラセールを作ろうかと思って描いてみました
+
+・地面判定＝false;  時にnorth（北）ボタン押したらパラセールのアニメーション。
+・グラビティースケールを0.3くらい？（わからないけど。）あとmoveSpeedを少し下げる。
+
+でいけるかな？頭の中で出来ちゃうともう作る気しなくなる
+
+--- 26. @drtaka7 (2026-04-09) ---
+【9割が続かない運動、続く人は“こうしている”】
+
+・歯磨き中にかかと上げ20回
+・レンジ待ちでスクワット10回
+・CM中にプランク30秒
+・階段は一段飛ばしで上る
+・信号待ちで片脚立ち10秒
+・トイレ後にスクワット5回
+・コーヒー中につま先立ち
+・風呂前に腕立て5〜10回
+・スマホ前に肩回し10回
+
+--- 27. @dium_asd (2026-04-09) ---
+ASDは絶対に一人でランチを食べた方がいい。なにも人に興味ないだけじゃない。
+
+昼の1時間は、午前中に削れた自分を
+修復する唯一の時間だから。
+そこまで使ったら、午後が動かない。
+
+--- 28. @littlebeansinfo (2026-04-09) ---
+my new gear...
+
+そろそろARM版Windowsをガッツリ使わねばと決意しました
+
+--- 29. @InsideLucysHead (2026-04-09) ---
+When I was 13, I hoped that one day I would have a girlfriend with big tits...
+
+When I was 16, I got a girlfriend with big tits, but there was no passion, so I decided I needed a passionate girl with zest for life.
+
+In college I dated a passionate girl, but she was too emotional.
+
+--- 30. @bakusoku_kigyo (2026-04-09) ---
+起業したいけど行動できていない人は全員、  
+
+「夏が来る前に、月100万円の事業立ち上げチャレンジ」してみてください。
+
+--- 31. @yogurt_r1 (?) ---
+⋱ 新CM公開中です ⋰
+
+夏や秋に比べるとまだまだ気温が低い今の時期はR-1で体調管理をしましょう！
+
+今回のCMも仲間由紀恵さんと永尾柚乃さんに出演いただきました
+
+ぜひ最後までチェックしてみてください！
+
+--- 32. @mrrasmulan (2026-04-09) ---
+Final Exam Question in University Physics:
+Which truck do you think is going faster?
+
+--- 33. @TJO_datasci (2026-04-09) ---
+今夜のカレーは、メカジキのゴア式南インドフィッシュカレー。テンパリングしたマスタードシードの辛味がシャープに出た仕上がりになった
+
+--- 34. @gin1910410 (2026-04-09) ---
+可愛い
+
+--- 35. @wvmattz (2026-04-09) ---
+Earlier this evening, booster B1104 was lowered to horizontal, following its testing campaign, and it then rolled out of town ahead of its first mission at a space port near you in the coming weeks/months!
+
+
+@NASASpaceflight
+ | 
+http://
+nsf.live/mcgregor
+
+--- 36. @tamacoin_tamao (2026-04-09) ---
+今日もAI秘書に命令された事以外やってなくて1日が終わりました。そろそろ頭がおかしくなりそうです
+
+--- 37. @sbfoods_jp (?) ---
+／
+町中華は、熱狂だ。
+キャンペーン実施中
+＼
+
+町中華シリーズの新商品３品の発売を記念し、オリジナルグッズを抽選でプレゼント！
+さらに当選者のうち1名様にはオズワルドさんのサイン入りポストカードが付いてくる
+応募方法☟
+①
+@sbfoods_jp
+をフォロー
+②この投稿をリポスト
+
+--- 38. @_ko1 (2026-04-09) ---
+C で希望のアセンブラを出すのをずっと無限に Claude Code さんに試してもらっていて、午前中ずっと yes 押す係
+
+--- 39. @yuya_boardgame (2026-04-08) ---
+ゲムマまで1ヶ月ちょっとなので、新作「ドミドミバーガー」の宣伝や事前予約についてもそろそろ着手します。
+今作はあまり類似する作品がないので「そもそもどんなゲームかを知ってもらう」ところからやらねば...という感じです。とりあえず近日ゲムマページを作ります。
+ #ゲームマーケット2026春
+
+--- 40. @4GamerNews (2026-04-09) ---
+広大な銀河を自動化せよ。Shiro Gamesの新作宇宙シム「SpaceCraft」が5月20日に早期アクセス開始
 
 https://
-broad.tokyo/news/47122
+4gamer.net/s/G099765.2604
+10008
+…
 
-ジャンケンに勝って階段を上る「階段ジャンケン」をベースとしたゲーム。ジャンケンに勝てば階段を上り、負ければカードでジャンケンの手を強化できる。
-#ボードゲーム #ボドゲ
+--- 41. @kujiradama (2026-04-09) ---
+このカード、スタンドに立てた時にカードの重なりがピッタリになるようになっていて、デザインすご…！ってなったので、ぜひ実物見てほしいプレイした時によりすごっ！てなる。
+あと箔押し…！実は名前も箔押し…
 
---- 49. @plasticsnews (2026-04-09) ---
-UFP Industries adds capacity with MoistureShield assets acquisition
+--- 42. @unjyoukairou (2026-04-09) ---
+ムーブ『ベジタブルポーカー』ムーブさんの動画を見たときは、明るく楽しげなゲームだと思ったら、意に反してガチゲーでした。途中からお互い無言率が上がりはじめ、バチバチ楽しめました。インタラクション強めのゲームが好きなひとは、より楽しめそう！　面白かったです！
 
---- 50. @RMBC2021 (2026-04-09) ---
-『あなたの1位はチョコミント!?』
-ebika!さんにデザインしていただきました
+--- 43. @ManuelFaysse (2026-04-09) ---
+Getting (first author) papers in at ICML, NeurIPS and ICLR in a single calendar year is called a "Grand Slam" for AI PhD students apparently. I won't be the one attempting that, I like sleeping too much I think.
 
-化粧箱やお題カード、説明書等とても見やすくなっておりますので、ぜひ見てみてください
+--- 44. @yuruazabu (2026-04-09) ---
+本当に儲かってる社長は目立たない。顔が有名になるほどリスクが増えるからな。金持ってることを自慢してるやつは大体小金持ちやで。ガチの富裕層は表に出ない。静かに稼いで、静かに暮らしてるんよ。目立つ金持ちは二流なんだわ。
+
+--- 45. @SawyerMerritt (2026-04-09) ---
+NEWS: Elon has confirmed that FSD V14.3 is not the 10x parameter model. FSD V15 will be the large model.
+
+--- 46. @biccameraE (?) ---
+/／
+年に一度の特大チャンス
+エアコン超早得キャンペーン
+\＼
+
+抽選で合計10名様に『ギフトカード3,000円分』が当たる
+期間 4/8(水)～4/14(火)
+毎日挑戦可能！
+本日2日目
+
+
+@biccameraE
+をフォロー
+この投稿を4/10 11:59までにリポスト
+当たると返信が届く
+あなたの猛暑対策は？
+
+--- 47. @um_pp2 (2026-04-09) ---
+茹でガエル症候群
+
+沸騰したお湯にカエルを放り込むと、本能的に0.1秒で跳ね上がって逃げてしまう。
+
+でも、冷たい水に入れて徐々に温度を上げていくと、カエルは変化に気づかない。
+40度を超えて筋肉が硬直するタイミングになっても、温かさを心地よさと勘違いしてそこに留まってしまう。
+
+--- 48. @urahr_hongkong (2026-04-09) ---
+ラストマンシップのあるメンバーは大好き。
+
+「自分の後ろにはもう誰もいない」と思って動いてくれる人は、スキルが足りなくても安心して任せられます。
+
+逆にこれがない人は、どれだけ優秀でも最後の場面で怖くて預けられないです。
+
+何かあったら全力で守るからね！
+
+--- 49. @LOCAMA_AT (2026-04-09) ---
+【HONEの約束】
+・東京の仕事は受けない
+申し訳ありませんが、東京の仕事はしていません。地方の仕事のみしています
+
+・業務領域は決めない
+目的とイシューは決めますが、業務領域は一緒に決めていきます。「ここまでしかやりません」とは決して言いません
+
+・自立自走の組織づくり
+
+--- 50. @Aterui_Mizuno (2026-04-09) ---
+うん、今日も割り箸くんはしっかりRTX4080を支えてくれているな。
