@@ -55581,3 +55581,10 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 03:12:03] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
 [2026-04-10 03:12:03] [kaizen_auto_verify] Done (exit=0)
 [2026-04-10 03:12:10] [scheduler_health] Starting
+[2026-04-10 03:12:11] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-10 03:12:11] [scheduler_health] ✅ scheduler_ash PID — PID=22824 生存中
+[2026-04-10 03:12:11] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 03:12:11] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-10 03:12:11] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 03:12:11] [scheduler_health] Done (exit=0)
+[2026-04-10 03:12:13] [git_sync] Starting
