@@ -55130,3 +55130,45 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 14:41:14] [reservation_check]     - 起票者: Ash（2026-03-24）
 [2026-04-09 14:41:14] [reservation_check] Done (exit=0)
 [2026-04-09 14:41:24] [inbox_check] Starting
+[2026-04-09 14:41:26] [inbox_check] Inbox win2 empty
+[2026-04-09 14:41:26] [inbox_check] Done (exit=0)
+[2026-04-09 14:41:26] [review_deadline] Starting
+[2026-04-09 14:41:26] [review_deadline] レビュー期限超過なし。
+[2026-04-09 14:41:26] [review_deadline] Done (exit=0)
+[2026-04-09 14:41:29] [slack_check] Starting
+[2026-04-09 14:41:36] [dm_check] Starting
+[2026-04-09 14:41:44] [dm_check_pigadev] Starting
+[2026-04-09 14:41:44] [dm_check_pigadev] No new DMs
+[2026-04-09 14:41:44] [dm_check_pigadev] Done (exit=0)
+[2026-04-09 14:41:50] [dm_check] No new DMs
+[2026-04-09 14:41:50] [dm_check] Done (exit=0)
+[2026-04-09 14:42:00] [kaizen_auto_verify] Starting
+[2026-04-09 14:42:00] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-09 14:42:00] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 14:42:06] [slack_check] Starting
+[2026-04-09 14:42:07] [slack_check] Starting
+[2026-04-09 14:42:09] [slack_check] Starting
+[2026-04-09 14:42:09] [slack_check] Starting
+[2026-04-09 14:42:09] [slack_check] Starting
+[2026-04-09 14:42:09] [slack_check] Starting
+[2026-04-09 14:42:10] [slack_check] Starting
+[2026-04-09 14:42:10] [slack_check] Starting
+[2026-04-09 14:42:10] [git_sync] Starting
+[2026-04-09 14:42:11] [slack_check] Starting
+[2026-04-09 14:42:11] [slack_check] Starting
+[2026-04-09 14:42:12] [slack_check] Starting
+[2026-04-09 14:42:12] [slack_check] Starting
+[2026-04-09 14:42:13] [slack_check] Starting
+[2026-04-09 14:42:14] [slack_check] Starting
+[2026-04-09 14:42:14] [git_sync] Done (exit=0)
+[2026-04-09 14:42:15] [slack_check] Starting
+[2026-04-09 14:42:15] [slack_check] Starting
+[2026-04-09 14:42:20] [slack_check] Starting
+[2026-04-09 14:42:21] [slack_check] Starting
+[2026-04-09 14:42:22] [health_check] Starting
+[2026-04-09 14:42:23] [health_check] [health_check] 2026-04-09T14:42:22 overall=CRITICAL
+[2026-04-09 14:42:23] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 14:42:23] [health_check]   [!!] git: 22件の未pushコミット（10件超）
+[2026-04-09 14:42:23] [health_check] Done (exit=2)
+[2026-04-09 14:42:24] [health_check] Starting
+[2026-04-09 14:42:24] [slack_check] Starting
