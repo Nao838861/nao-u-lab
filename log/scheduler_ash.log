@@ -61361,3 +61361,104 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 16:12:53] [git_sync] Starting
 [2026-04-09 16:12:56] [slack_check] Starting
 [2026-04-09 16:12:57] [health_check] Starting
+[2026-04-09 16:12:58] [slack_check] Starting
+[2026-04-09 16:12:58] [git_sync] Done (exit=0)
+[2026-04-09 16:12:59] [health_check] [health_check] 2026-04-09T16:12:57 overall=OK
+[2026-04-09 16:12:59] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 16:12:59] [health_check] Done (exit=0)
+[2026-04-09 16:12:59] [slack_check] Starting
+[2026-04-09 16:12:59] [slack_check] Starting
+[2026-04-09 16:12:59] [slack_check] Starting
+[2026-04-09 16:13:00] [slack_check] Starting
+[2026-04-09 16:13:00] [slack_check] Starting
+[2026-04-09 16:13:00] [slack_check] Starting
+[2026-04-09 16:13:01] [slack_check] Starting
+[2026-04-09 16:13:01] [slack_check] Starting
+[2026-04-09 16:13:01] [slack_check] Starting
+[2026-04-09 16:13:02] [slack_check] Starting
+[2026-04-09 16:13:02] [slack_check] Starting
+[2026-04-09 16:13:02] [slack_check] Starting
+[2026-04-09 16:13:03] [slack_check] Starting
+[2026-04-09 16:13:03] [slack_check] Starting
+[2026-04-09 16:13:03] [slack_check] Starting
+[2026-04-09 16:13:04] [slack_check] Starting
+[2026-04-09 16:13:04] [slack_check] Starting
+[2026-04-09 16:13:05] [slack_check] Starting
+[2026-04-09 16:13:05] [slack_check] Starting
+[2026-04-09 16:13:06] [slack_check] Starting
+[2026-04-09 16:13:06] [slack_check] Starting
+[2026-04-09 16:13:06] [slack_check] Starting
+[2026-04-09 16:13:06] [slack_check] Starting
+[2026-04-09 16:13:06] [slack_check] Starting
+[2026-04-09 16:13:06] [auto_diary] Starting
+[2026-04-09 16:13:06] [auto_diary] [2026-04-09 16:13:06] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 16:13:06] [auto_diary] 前回実行から8分しか経っていない（最小間隔: 170分）。あと161分待機。スキップ。
+[2026-04-09 16:13:06] [auto_diary] Done (exit=0)
+[2026-04-09 16:13:07] [slack_check] Starting
+[2026-04-09 16:13:08] [slack_check] Starting
+[2026-04-09 16:13:08] [slack_check] Starting
+[2026-04-09 16:13:09] [slack_check] Starting
+[2026-04-09 16:13:09] [auto_diary] Starting
+[2026-04-09 16:13:09] [auto_diary] [2026-04-09 16:13:09] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 16:13:09] [auto_diary] 前回実行から8分しか経っていない（最小間隔: 170分）。あと161分待機。スキップ。
+[2026-04-09 16:13:09] [auto_diary] Done (exit=0)
+[2026-04-09 16:13:14] [health_check] Starting
+[2026-04-09 16:13:14] [slack_check] Starting
+[2026-04-09 16:13:15] [health_check] [health_check] 2026-04-09T16:13:14 overall=OK
+[2026-04-09 16:13:15] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 16:13:15] [health_check] Done (exit=0)
+[2026-04-09 16:13:17] [auto_diary] Starting
+[2026-04-09 16:13:17] [auto_diary] [2026-04-09 16:13:17] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-09 16:13:17] [auto_diary] 前回実行から8分しか経っていない（最小間隔: 170分）。あと161分待機。スキップ。
+[2026-04-09 16:13:17] [auto_diary] Done (exit=0)
+[2026-04-09 16:13:17] [health_check] Starting
+[2026-04-09 16:13:18] [slack_check] Starting
+[2026-04-09 16:13:19] [health_check] [health_check] 2026-04-09T16:13:17 overall=OK
+[2026-04-09 16:13:19] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 16:13:19] [health_check] Done (exit=0)
+[2026-04-09 16:13:20] [slack_check] Starting
+[2026-04-09 16:13:21] [health_check] Starting
+[2026-04-09 16:13:22] [health_check] [health_check] 2026-04-09T16:13:21 overall=OK
+[2026-04-09 16:13:22] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 16:13:22] [health_check] Done (exit=0)
+[2026-04-09 16:13:23] [health_check] Starting
+[2026-04-09 16:13:23] [slack_check] Starting
+[2026-04-09 16:13:24] [health_check] [health_check] 2026-04-09T16:13:23 overall=OK
+[2026-04-09 16:13:24] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 16:13:24] [health_check] Done (exit=0)
+[2026-04-09 16:13:25] [slack_check] Starting
+[2026-04-09 16:13:29] [slack_check] Starting
+[2026-04-09 16:13:36] [slack_check] Starting
+[2026-04-09 16:13:45] [scheduler_health] Starting
+[2026-04-09 16:13:46] [scheduler_health] Starting
+[2026-04-09 16:13:46] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-09 16:13:46] [scheduler_health] ✅ scheduler_ash PID — PID=30928 生存中
+[2026-04-09 16:13:46] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 16:13:46] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-09 16:13:46] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 16:13:46] [scheduler_health] Done (exit=0)
+[2026-04-09 16:13:47] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-09 16:13:47] [scheduler_health] ✅ scheduler_ash PID — PID=30928 生存中
+[2026-04-09 16:13:47] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 16:13:47] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-09 16:13:47] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 16:13:47] [scheduler_health] Done (exit=0)
+[2026-04-09 16:13:49] [health_check] Starting
+[2026-04-09 16:13:50] [health_check] [health_check] 2026-04-09T16:13:49 overall=OK
+[2026-04-09 16:13:50] [health_check]   critical=0 warning=0 ok=9
+[2026-04-09 16:13:50] [health_check] Done (exit=0)
+[2026-04-09 16:13:54] [scheduler_health] Starting
+[2026-04-09 16:13:55] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 16:13:55] [scheduler_health] ✅ scheduler_ash PID — PID=30928 生存中
+[2026-04-09 16:13:55] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 16:13:55] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー2件。例: [2026-04-09 16:13:46] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-09 16:13:55] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 16:13:55] [scheduler_health] Done (exit=1)
+[2026-04-09 16:13:57] [scheduler_health] Starting
+[2026-04-09 16:13:58] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-09 16:13:58] [scheduler_health] ✅ scheduler_ash PID — PID=30928 生存中
+[2026-04-09 16:13:58] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-09 16:13:58] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー4件。例: [2026-04-09 16:13:47] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-09 16:13:58] [scheduler_health] ✅ git 未push — なし
+[2026-04-09 16:13:58] [scheduler_health] Done (exit=1)
+[2026-04-09 16:14:00] [scheduler_health] Starting
