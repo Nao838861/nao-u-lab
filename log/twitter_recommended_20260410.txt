@@ -1,356 +1,336 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 03:45
+# Read at: 2026-04-10 03:50
 # Total: 50 tweets
 
---- 1. @GameMakersJP (2026-04-09) ---
-【更新】「MetaHuman Creator」Webアプリ、11/5に提供終了
+--- 1. @claudeai (2026-04-09) ---
+We're bringing the advisor strategy to the Claude Platform.
+
+Pair Opus as an advisor with Sonnet or Haiku as an executor, and get near Opus-level intelligence in your agents at a fraction of the cost.
+
+--- 2. @agodajapan (?) ---
+アゴダで宿泊・フライト料金を見つけよう。旅行を一緒に計画して、おトクに予約。これぞアゴダチ！バナナマンが出演するCM放映中
+
+--- 3. @AssetLove (2026-04-09) ---
+【今週のパブリッシャー丸ごとセール】
+Hovl Studioのアセット全品半額
+恒例の無料プレゼント
+​
+目的地、ちゃんと伝わってる？
+地図マーカー(ピン)エフェクト
+『Map Track Markers VFX』
+クーポンコード：HOVL2026
+$5.50 => FREE  /  4月16日23:59まで
 
 https://
-gamemakers.jp/article/2025_0
-6_04_105516/
+prf.hn/click/camref:1
+011lGbg/pubref:oNeeeMaNa/destination:https://assetstore.unity.com/packages/vfx/particles/map-track-markers-vfx-131762
+…
+ Unity
+
+--- 4. @MetaHorizonDevs (2026-04-09) ---
+We shipped a fully integrated AI workflow for building VR on the web.
+
+Just describe what you want. AI builds it, tests it, and fixes bugs without you touching the code.
+
+Try it yourself here   
+https://
+bit.ly/4czvxUT 
+
+Discover how it works 
+
+--- 5. @Lize_san_suki (2026-04-08) ---
+あと背中撫でてくる
+
+--- 6. @rryssf_ (2026-04-09) ---
+BREAKING: A 7B model just outperformed Gemini-2.5-Pro, GPT-4o, and GPT-5.4 on deep research tasks, and the gap is growing every time it encounters new data.
+
+The model learns from its own search history during inference.
+No retraining required. No new data required.
+
+Just a
+
+--- 7. @kokonatsu2214 (2026-04-08) ---
+kaggleあるある過ぎる。
+
+最近は保険のためにハイスコアのnotebookをアンサンブルしたサブは余程自信があるケース以外は出す様にしてる。
+
+悔しいところだが...
+
+--- 8. @printweek (2026-04-09) ---
+Cepac plans to expand into Vanacomm unit - Printweek 
+https://
+printweek.com/content/news/c
+epac-plans-to-expand-into-vanacomm-unit?utm_medium=Social&utm_source=Twitter#Echobox=1775743207
 …
 
-すでにUE5.6に統合されている「MetaHuman Creator」について、Webアプリ版の提供終了がアナウンスされたことを追記しました
+--- 9. @Qkn3R (2026-04-09) ---
+愛があればなんとかなる、とよく聞く。でも愛は一方的に与えるものじゃない。本当の愛は、相手が「この人でよかった」と思える関係の中にある。それは金でも成果でも作れない。与えることに必死になる前に、相手が何を感じているかを知ることの方が大切だよ。
 
---- 2. @DisneyPlusJP (?) ---
-／
-『21世紀の大君夫人』配信直前記念
-スペシャルコンテンツをプレゼント
- ＼
- 
-フォロー&RPで
-IU&ビョン・ウソクのコメント動画や
-スマホ壁紙がリプで届く
- 
-引用投稿で複数回参加
-全4種を揃えよう
-4/17（金）にはお知らせリプも
- 
-4/10（金）ディズニープラス スター独占配信
+--- 10. @geekbb (2026-04-09) ---
+Obsidian Baseline テーマがますます心地よく美しいですね。使い始めてから他のテーマに変えたことがなく、良いものはもう一度おすすめする価値があります。
 
---- 3. @vtabbott_ (2026-04-09) ---
-Prepared a 3 minute talk for ICLR later this month on representing and automating low-level kernel derivations. I go over diagrams, tiling, streaming and how they all fit together.
- 
+
 https://
-recorder-v3.slideslive.com/?share=109316&
-s=f5e6338a-a935-4ccb-a928-0db138131f10
+github.com/aaaaalexis/obs
+idian-baseline
 …
 
---- 4. @berryxia (2026-04-09) ---
-Claude Cowork 正式全面开放了！
+--- 11. @akiko_lawson (?) ---
+特製の純金からあげクン プレゼントキャンペーン
+＼からあげクン愛を叫ぼう／
+ 
+ステージのからあげクンに向かって愛を叫ぼう♪
+愛の表現方法は自由言葉でも、イラストでも、ポエムでも、曲でも
+ 
+応募方法はリプライ欄をチェック♪
+みんなの愛も覗いてみましょう(^^)
 
-现在所有付费用户都能直接用！
+--- 12. @billtheinvestor (2026-04-09) ---
+YouTube完全自動運用方法の秘密を解き明かす
 
-企業級重磅アップグレード：
- ロールベースのアクセス制御（RBAC）
- チーム消費限度額
- 使用分析ダッシュボード
- 完全な OpenTelemetry サポート
+--- 13. @Fei_yuno_chan (2026-04-09) ---
+ゲームマーケット2026春
+大人気作品
+『ミラテル』
 
---- 5. @hato_90990 (2026-04-09) ---
-障害者施設での連絡先交換禁止が話題みたいだね。
+有りそうで無かったカクテルシェイカー型のコンポーネントから素材を振り出して行う紙ペンゲーム
+ソロから99人でも！紙さえコピーすれば遊べます！
 
-僕の通っている就労移行支援も元々は禁止していなかったみたいなんだけど、連絡先交換してトラブルになった利用者がいたらしく、それ以降禁止になったみたい。
+超高評価の紙ペンゲームやるなら、やっぱりミラテル！
 
-「成人同士連絡先交換して何が悪い！」
-と憤る気持ちも分かるけどルールにしないとね↓
+--- 14. @plasticsnews (2026-04-09) ---
+Polyvel highlights solar project, recycled-content push in first sustainability report
 
---- 6. @okazuki (2026-04-09) ---
-GitHub Copilot CLI は、最近 experimental の方に面白そうな機能が来てるぶん、普通の機能は安定感を高める系のものが多いような気がしてる
-こういうのは普段使っていく上でのストレスが減るのでとても好き。
+--- 15. @ClaGlaLtd (2026-04-09) ---
+＼手を強化して駆け上れ／
 
---- 7. @bluefinchgames (2026-04-09) ---
-新商品情報
-Piatnik社のゲーム第1弾ご予約開始しました！
-4月中旬頃発送開始予定です。
+かけ引きと笑いの「魔改造階段ジャンケン」ゲーム
+『グミチョコパパイヤレボリューション』
+5/14(木) 発売決定！
 
-http://
-bluefinch.base.shop
+「グミ」なら2段、「チョコレート」なら6段、「パンダちゃん激おこアゲアゲレボリューション」なら22段!?
 
-・エリクシラス[ELIXIRUS]
-・ムービング・デイ[MOVING DAY]
-・クリップス[CLIPS]
-・ブー・トゥ・ザ・グース[BOO TO THE GOOSE]
+詳しくは
 
-※すべて日本語訳付きです。
-#ボードゲーム
+--- 16. @OssanJam (2026-04-08) ---
+米国相場は大幅高
+米国とイランの停戦は初日から矛盾と危うさがMaxですが、それでも市場はお構いなしにリスクオン
 
---- 8. @genkuroki (2026-04-09) ---
-鋭い指摘。
+背景にはそれだけ待ち望んでいた状況であることと、結局、トランプ大統領は強行手段には出ない = TACOるとの思惑があるように見えます
 
-算数教育界に問題があることを証拠資料の提示によって大々的に言い始めたのは、おそらくツイッター上での「我々」が最初だと思います。
+ダウ +2.85%、S&P500
 
-しかし、算数数学教育に深く関わっていた人達が算数教育界に問題があることを知らなかったはずはなく、何らかのバイアスが働いていたのだと思います。
-
---- 9. @MEYO_channel (2026-04-09) ---
-ノベルゲームコレクション　に投稿しました
-ただいま「審査中」
-
-私のホームページではプレイ可能です
+--- 17. @denfaminicogame (2026-04-09) ---
+不気味な夕暮れの世界で妹をさがすホラーゲーム『Narin: The Orange Room』の雰囲気が良すぎる。リリース記念セールも実施中
 
 https://
-meyo-blog.com
+news.denfaminicogamer.jp/news/2604092y
 
-ゲーム名：黒井スーパーマーケット
-ジャンル：ノベルゲーム（選択肢なし）
-                  社会派ホラーノベル
-　　　　　怖くないホラー
-プレイ時間：30～50分
+「夕暮れ前に学校を出なかった者は謎の失踪をとげる」という噂がささやかれる学校で、行方不明になった妹の手がかりを追う
 
---- 10. @fraveris (2026-04-09) ---
-“Not all those who wander are lost”  
+--- 18. @bodoan_hoobby (2026-04-09) ---
+毎月ボドアン、３月の回答集計発表！
+面白かったゲームとして多く回答があったのは…
+・ハーモニーズ
+・コンパイル
+・スカイチーム
+・デワン
+・SETI：地球外知的生命体探査 宇宙機構
+・ニッポン: 財閥
+・ニムト男爵
+・ヒットスター
+・フリップ７
+でした！
 
-— J.R.R. Tolkien
+https://
+bodoge.hoobby.net/columns/bodoan
+-202603
+…
 
---- 11. @welcia_jp (?) ---
+--- 19. @PackagingEurope (2026-04-09) ---
+How does packaging design impact neurodivergent shoppers?
+
+Link below
+
+--- 20. @NAITOTokihiro (2026-04-09) ---
+飛行機のパイロットも、新幹線の運転士も、F1レーサーも、みんなそれになる第一歩はあったはず。息子は電車の運転士やってるけど、それは彼がそれを強く望んだから。大事なのは意志の強さだけ。努力が楽しいと思えるなら、それは天職です。努力が苦しいと感じるなら、それは転職です。
+
+--- 21. @nittele_ntv (?) ---
 ／
-SOLA WEATHER CARE with
-TOMORROW X TOGETHER
-キャンペーン実施中♪
+新土曜ドラマ
+『タツキ先生は甘すぎる！』
+町田啓太
 ＼
 
-公演チケットやグッズ、
-QUOカードが当たるチャンス！
+TVerお気に入り登録キャンペーン
+お気に入り登録数50万人達成すると
+Amazonギフトカードを
 
-くわしくは画像をタップ
-
---- 12. @unjyoukairou (2026-04-09) ---
-操られ人形館『ジャンブルオーダー』4人で遊びましたけれど、やっぱり人数が多い方が楽しそうですね。より展開が派手になり、わいわいと楽しめました。ゴブリンデッキは、めちゃくちゃ強いわけではないけれど、組みやすいのが良いですね。
-
---- 13. @yoshiko_uemu67 (2026-04-09) ---
-クローゼットの奥にある服、一生取れない気がする。
-
-これ、棚がスライドして手前に。
-
-奥の服もサッと取り出せる。
-
-毎日の服選びが楽になりますよ。
-
-楽天
-
-https://
-a.r10.to/hgFRoc
-Amazon
-
-https://
-amzn.to/48eFFQl
-
-#クローゼット収納 #整理整頓
-
---- 14. @shine_sann (2026-04-09) ---
-石油の値段が倍になって日本に入ってくる量が半分になっても、株価が半分以下になって雇用が氷河期な、ほんの10年前までの日本に突然戻る程度の大ダメージで済む。意外と死なない。詰んでからが長いのが人生。
-
---- 15. @genkaidokusho (2026-04-09) ---
-問題解決のセオリーは、「理想と現実を定義して、そのギャップを解消する方法を考える」ことです。
-
-人生設計も同じで、次の6つが大事です。
-①理想状態を具体的に定義する
-②現実を直視して把握する
-③そのギャップを特定する
-④ギャップが生まれている根本的な要因を特定する
-
---- 16. @machaki7th (2026-04-09) ---
-トリバゴ（trivago）がどんなCMを流そうが、一番お得なのはその旅館ホテルの自社サイトからです。これは全施設が首を縦に振ると思います。
-金額が同じだったとしても、手数料が発生しない分の利益はいずれお客様に還元され良い循環を生み出します。旅行サイトに掲載するのは実質広告料なので
-
---- 17. @tatenoso (2026-04-09) ---
-スキームというのは代数的整数論にとってのデデキンド環や離散付値環の様な物。それ自体は抽象論だがそのプレステに入れる代表的ソフトがある。代数的整数論だと代数的整数環やZ_pを入れる事になる。射影代数曲線などソフトを入れた時に代数幾何になる。位相空間論だとユークリッド位相が代表的ソフト
-
---- 18. @farend_jp (2026-04-08) ---
-オライリー本全冊公開日開催のお知らせ
-
-日時: 2026年4月23日（木）18:00-20:00
-会場: ファーエンドテクノロジー セミナールーム
-（松江市朝日町498 松江センタービル2F）
-
-もくもく勉強会も同時開催します！
-
---- 19. @yajikita0731 (2026-04-09) ---
-今日の花粉は目に来ないが、鼻が完全にやられた。
-三月と四月は嫌い。
-
---- 20. @CrownMaybe (2026-04-08) ---
-Stupidly and naively, it didn't occur to me that Amazon would force-retire my Kindle Fire 7 that my wife gave me for an anniversary well over a decade ago, one of my most treasured possessions. It wasn't hurting anyone. It just sat there and worked every time I asked.
-
---- 21. @sharefull_jp (?) ---
-／
-4/29(水・祝)公開
-目黒蓮 高橋文哉 上戸彩出演
-映画『SAKAMOTO DAYS』舞台挨拶超バイト
-＼
-
-坂本の格好をして受付をする"自称・坂本"バイトを募集中！
-時給1万円
-
-応募方法
+参加方法
 ①
-@sharefull_jp
-をフォロー
+@tatsuki_ntv
+ と 
+@nittele_ntv
+ をWフォロー
 ②この投稿をリポスト
-③シェアフルアプリから応募
+リプライでドラマへの応援コメントを投稿すると
+当選確率アップ！
 
-詳細はツリーへ
+--- 22. @yutaka19890730 (2026-04-08) ---
+SOHO HOUSE Tokyoへ行ってきました
 
---- 22. @MassBio (2026-04-08) ---
-.
-@McDermottLaw
- led this evening's General Counsel Roundtable discussion on "IP Strategy from Preclinical Through Clinical." Thank you to our speaker, co-chairs, and #MassBioMember attendees! Learn more and apply to attend one of our next roundtables: 
+そもそもSOHO HOUSEとは、ロンドン発祥の会員制クラブで、世界各地に拠点を持つコミュニティ。ホテルやラウンジのような機能はありつつも、本質は「場」ではなく「誰が集まっているか」に価値がある場所です。
+
+いわゆる“Creative
+
+--- 23. @InkWorldMag (2026-04-08) ---
+Roland DG Corporation announced a refreshed global brand message and promise: Make Your Mark. The brand refresh marks a shift toward delivering complete solutions across multiple industries – combining advanced hardware, high-performance supplies, intelligent software, and
+
+--- 24. @PlasticsMM (2026-04-09) ---
+#Blowmolding machines are getting greener and smarter, with more companies introducing all-electrics and integrating controls that make them easier to use. Check out some of the latest introductions.
+
+--- 25. @PROJECT_ACES (2026-04-09) ---
+【#ACE8 開発者インタビュー公開】
+プレイヤーを最先端のコックピットへ誘う、
+#エースコンバット 開発チームと最新作の技術を初公開！
+開発チームが語る、シリーズ30年の経験と技術について――。
+
+#エースコンバット8 にかける、開発陣の熱い想いをぜひご覧ください。
+
 https://
-massbio.org/?event_search_
-nonce_field=cfc0c12c5b&_wp_http_referer=%2Fevents%2F&s=&hub_event=0&event_type=mb_event&event_month=&mb_event_cat=175@McDermottLaw
+youtu.be/GLGCeSS44y4
+
+--- 26. @AeroSociety (2026-04-08) ---
+RAeS Council elections are open!
+
+Voting members can now influence the future of the Society by casting their votes.
+
+Learn more about the candidates and vote: 
+https://
+aerosociety.com/about-us/gover
+nance/council-elections/
 …
 
---- 23. @namipua (2026-04-09) ---
-人は周囲の色の比較で明るさを判断をしていて髪をグレーにすることによって肌が明るく見えるんですよね無彩色は有彩色を引き立てる効果があり無彩色のグレーで肌を囲う事で有彩色の肌を引き立たせています、その上で肌より明度の低い橙を置くことで明暗差が生まれはっきりした印象になっています
+Deadline: 14 May 2026
 
---- 24. @mayuro_game (2026-04-09) ---
-雑魚敵紹介⑦ エビルプラント
-花粉、根、種を消費して戦う
-生存の為に未来を削る悲しき生物
-明日を手放さなければ、今日を越えられないのだ
-#RPGツクール
-#ゲーム制作
-#RPGMAKER
+--- 27. @NASDAQ100000 (2026-04-09) ---
+暇すぎてランチから飲んで、カフェでまた飲んで
 
---- 25. @inpostarrr (2026-04-09) ---
-日本ではユニクロアンチ多いから釘刺しておくと、海外だと、Old Navy、GAP、H&M、ZARA等、海外ブランドの質が低すぎてユニクロが一番マシな選択肢になるんですよ。あと服のデザインが一番無難で良いのがユニクロ。
+お腹痛くて寝てる
 
---- 26. @3DPrint_com (2026-04-09) ---
-BigRep Launches ONE.5X 3D Printer, Announces New Massive Dimension Partnership at RAPID + TCT 2026
+--- 28. @SciTechera (2026-04-09) ---
+ BREAKTHROUGH IN HEART REPAIR
 
---- 27. @SustainPlastics (2026-04-09) ---
-Bath University scientists depolymerise PMMA at low temperatures
+A newly discovered microprotein could change how we treat heart damage after a heart attack.
 
---- 28. @aizen76 (2026-04-09) ---
-久しぶりに新人歓迎会〜！
+Scientists have identified BRICK1, a tiny protein (75 amino acids), that plays a critical role in repairing injured heart tissue.
 
---- 29. @amadare_works (2026-04-09) ---
-移動する足場からウォールランジャンプ
-#ゲーム制作 #gamedev
+After a heart attack,
 
---- 30. @SuperSisi (2026-04-08) ---
-The film Akira (1988) consists of 2,212 shots and 160,000 single pictures, requiring 2-3 times more work than typical animation. It cost $10 million USD to make.
+--- 29. @BanziroG (2026-04-09) ---
+レトルトを否定するな。
+あれは人の生活を楽で豊かにするために生まれた、食品化学の技術の結晶だぞ。
 
-This is a collection of preliminary pencil tests for certain key sequences.
+--- 30. @nikutaberuru (2026-04-09) ---
+別れ際に「気をつけてね！」と
+言うだけで事故率が減るので
+大事な人には積極的に
+使ってあげて下さい。
 
---- 31. @PRcomicfesta (?) ---
-息抜きに月一娼婦をしている聖女は、常連の皇帝に必死に正体を隠していたが…ついにバレて…!?
+--- 31. @resona_pr (?) ---
+はなさか兄さんからの挑戦状！
+給与受取りをりそな銀行に指定等して、現金最大30,000円をゲットせよ
+手続きは簡単！春のまつりそなで、お得に春を咲かせましょう！
+詳細を今すぐチェック。
 
---- 32. @mamsitaaaa (2026-04-09) ---
-皆さん、J Balvinがスポンジ・ボブの曲を出したときのこと覚えてる？「これは水中でのパーティー」って歌詞のやつ。あれか、私の想像だけ？
+--- 32. @MassBio (2026-04-08) ---
+You've likely seen one word dominate recent headlines: Affordability. At MassBio's State of Possible Conference, our panelists had an honest conversation about what it actually costs to innovate — and what it costs not to. Read the full recap:
 
---- 33. @innospacecorp (2026-04-09) ---
-INNOSPACE, Commercializes Support-Free Titanium Additive Manufacturing Process 
+--- 33. @EvanKirstel (2026-04-08) ---
+The 5G connected workplace isn't a concept anymore - 
+@TMobileBusiness
+ is making it real. When connectivity becomes invisible, productivity becomes unstoppable.
 
-INNOSPACE has commercialized South Korea’s first LPBF-based additive manufacturing technology enabling high-precision titanium components without support structures.
+--- 34. @EylonALevy (2026-04-09) ---
+Spain has withdrawn its ambassador from Israel and reopened its embassy in Tehran.
 
-Through this technology,
+Everything you need to know about Pedro Sanchez' Spain, now an open ally of the Iranian Axis.
 
---- 34. @AntiNarcisist (2026-04-09) ---
-自分の思い通りにならない相手を「わがまま」とみなすのは、自己愛者(ナルシスト)のもっとも典型的な投影。
+--- 35. @yamashi91861086 (2026-04-09) ---
+イオンフィナンシャルサービスの株価が一時10%超下落し、年初来安値を更新しました。原因は今期純利益が前期比29%減と、市場予想を大きく下回ったことです。クレジットカードのシステム投資が利益を圧迫し、期待されていた収益改善シナリオが崩れました。
 
---- 35. @shug0ra (2026-04-09) ---
-project hail mary full movie.mp4
+--- 36. @gin1910410 (2026-04-09) ---
+「私には必要ない、用途が思いつかない」って言うことはいくらでもできるけど、それを必要だと思う人がいるから作ってるっていう発想が出来ないのは悲しい
 
---- 36. @satopan_fire (2026-04-09) ---
-飲み会で「食費4万とか贅沢でしょ」「手取り23万なら十分じゃん」みたいな貧困自慢トークで盛り上がってて、戦時中でもないのに「欲しがりません勝つまでは」の文化から何も前進してないの実感して悲しくなっちゃった
+--- 37. @fino_jp (?) ---
+＼適正量がとぅる髪の秘訣／
+finoヘアマスク使い切りキャンペーン
 
---- 37. @Dell_JPN (?) ---
-インテル® Core™ Ultra 搭載のDell XPS。圧倒的なパフォーマンス、際立つデザイン。
+finoは惜しみなくたっぷり使うべし
+※適正量を守ること
+適正量はOKサインで画像をチェック！
+ヘアマスクを使い切ってキャンペーンに応募
+抽選で30名様に
+｢finoヘアマスクセット｣をプレゼント
 
---- 38. @tsuchinao83 (2026-04-09) ---
-非常に正しい戦略。着々とやってくるなー
+応募方法はツリー投稿で
 
---- 39. @MangaNoriba (2026-04-09) ---
-現在、この情報に反AI派が反発中。内容もさることながら、この画像自体がAIで制作されているということで、怒りが爆発。有名な反AI派の人にいたっては発狂レベル。「青春を返せ」と言っているようだが、『ひぐらしのなく頃に』製作陣は困惑するだろう。
+--- 38. @hatituki003 (2026-04-09) ---
+ナイトフラワーズやコンペテレなど、テストプレイに複数回参加した作品が遊ばれてるのを見ると、勝手に後方腕組みしてニコニコしてしまいますね。
 
---- 40. @AsoBitLab (2026-04-09) ---
-I am currently working on developing new features.
-これができればグッとゲームぽくなるはずだけど、、骨が折れる作業です。
-#indiedev #indiegame
+--- 39. @yamato_gk (2026-04-09) ---
+#Unity #ゲーム制作 #indiegame 
+せっかくハードモードを導入したので、ハードモード用のストーリーも作ってみました！
+いつも倒されているRGBスライムたちが、強くなったよー！
 
---- 41. @piemaru (2026-04-09) ---
-アソビツクースのゲームマーケット2026春の新作は
+--- 40. @nya3_neko2 (2026-04-09) ---
+営業なのでこの3日間は展示会でビッグサイトに張り付いてるんだけど、休憩でスマホ開くと通知が20+でもうほぼ見られない
 
-ルール・オン・ザ・リール
+--- 41. @mori_boardgame (2026-04-09) ---
+デスゲーム実験します
 
-映画テーマのドラフト＆セットコレクションゲームです。
-手札から2枚出して、2枚のカードを獲得するだけ！
-それなのに、とても悩ましい。
-「ああ、これ出したくない！」
-「あれが欲しいけど、先に取られちゃいそう」
+--- 42. @gamespark (2026-04-09) ---
+シリーズ最新作『ACE COMBAT 8: WINGS OF THEVE』技術の全貌に迫る開発者インタビュー映像を公開！2026年リリース予定
 
---- 42. @itten_games (2026-04-09) ---
-#デクスタリティゲームナイト
+--- 43. @urahr_hongkong (2026-04-09) ---
+ラストマンシップのあるメンバーは大好き。
 
-参加メーカー紹介①
-アソビツクース
+「自分の後ろにはもう誰もいない」と思って動いてくれる人は、スキルが足りなくても安心して任せられます。
 
-お子様も大人も楽しめるゲームを作り出すお二人
-木のタイルを積み上げる『カンダタとゆかいな亡者たち』、スプーンで花びらを飛ばす『うちあげはなびら』など、ダイナミックな空間演出が魅力！
+逆にこれがない人は、どれだけ優秀でも最後の場面で怖くて預けられないです。
 
-詳細 
-http://
-itten-games.com/dex
+何かあったら全力で守るからね！
 
---- 43. @sonikkuzam6300 (2026-04-09) ---
-#ゲーム制作　#RPGツクールMZ
-セーブ画面に情報を追加
-（右側にマップのスクショも後々追加予定ぬ）
-NUUN様のプラグインに感謝
-次回あればセーブ機能も1から作ってみたいようなやっぱダルいようなですね。
+--- 44. @thedigitaldash_ (2026-04-08) ---
+ppl screenshotting the google AI summaries and using it as a source makes me wanna tear my fuckn hair out. it’d even be better if you looked at the actual sources they cited and used that
 
---- 44. @minatoku_genkai (2026-04-09) ---
-10億くらい入れば、資産運用でキャッシュフロー回る
+--- 45. @gkSUuWFvIhbK23b (2026-04-09) ---
+日本って幼少期から「大きくなったら何になりたい？」って質問されるでしょ。
+これ、洗脳だよね。
+ずっとこれ言われてるから、自分が何者かにならないといけない、何者にもなれてないから悩む、ってことが起こる。
+何者かって、例えば医者とか弁護士とか職業のことを言ってる。
+みんなが認める
+→
 
-なんなら、実績あるから顧問でも引っ張りだこで、何社か受けるだけで十分、港区で悠々自適で生けていける
+--- 46. @ABEMA (?) ---
+マイナビpresentsThePerformance
+アベマで国内独占"無料"生放送決定！
 
-まぁなんかどうしてもやりたいこと見つかればやればいっか
+4/10(金)〜4/12(日)の3日間開催！
+【会員登録なし・全編無料】で視聴可能
+※各公演放送から1週間後の23:59まで、無料見逃し配信予定
 
---- 45. @ReysyuPhoto (2026-04-09) ---
-攻撃を受けても綺麗に瞬間再生する人型人外も良いけど、損傷部位からどんどん攻撃的造形になっていくのも好きなんだよなァ
+世界で活躍するアーティストが集結するステージを
+お見逃しなく！
 
---- 46. @PrimeVideo_JP (?) ---
-◤劇場版最新作公開記念 ◢ 
+--- 47. @Science_Release (2026-04-09) ---
+『アポロ13』の同時視聴に出るのよ！
 
-最終興行収入150億突破した話題作！
-劇場版 『名探偵コナン 100万ドルの五稜星(みちしるべ)』
-含む16作品がプライムビデオで配信中！ 
+--- 48. @spiritbuun (2026-04-09) ---
+Had a huge breakthrough in quantizing weights today. Holy fug. You have no idea how small we're going and how high quality we're going. Soon.
 
-コナン観るならプライムビデオで
+--- 49. @unjyoukairou (2026-04-09) ---
+ごみ国際『Snowball snowball』雪だるまと雪だるまをくっつけて、より大きな雪だるまを作っていくゲーム。手なりでも遊べるけれど、戦略的にやらないといけない瞬間もあって、上手いこと決まったときは思わずガッツポーズになります。
 
---- 47. @SusabiGames (2026-04-09) ---
-【先行体験会のお知らせ】
-重量級ボードゲーム2作品を遊べる体験会を開催します！
-
-異世界ギルドマスターズ総集編
-ENKRATEIA - エンクラティア
-
-1日で両タイトルが試遊できます。
-
- 4/19(日) 13:30〜
- 秋葉原（末広町）
- 定員8名（先着）
-
-詳細・申込はこちら
-
-https://
-twipla.jp/events/723980
-
---- 48. @broad_tokyo (2026-04-09) ---
-＼ニュース／
-
-“魔改造階段ジャンケン”『グミチョコパパイヤレボリューション』が5月14日発売
-
-https://
-broad.tokyo/news/47122
-
-ジャンケンに勝って階段を上る「階段ジャンケン」をベースとしたゲーム。ジャンケンに勝てば階段を上り、負ければカードでジャンケンの手を強化できる。
-#ボードゲーム #ボドゲ
-
---- 49. @ManuelFaysse (2026-04-09) ---
-Getting (first author) papers in at ICML, NeurIPS and ICLR in a single calendar year is called a "Grand Slam" for AI PhD students apparently. I won't be the one attempting that, I like sleeping too much I think.
-
---- 50. @kedamasuzume (2026-04-09) ---
-今夜8時よりAIVTuberゆめみななさんの歌枠配信が予定されています
-今回は令和アニメ歌枠とのことですが、コラボ企画からの歌枠は準備が大変そうです
+--- 50. @noshimoda (2026-04-09) ---
+研究室に虫さんが迷い込んでいたので外に放してあげました。いつか私がピンチのときに助けてくれるはず
