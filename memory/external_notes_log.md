@@ -105,7 +105,7 @@ Nao_uが「1日に摂取している情報の一部」として#nao-uに貼っ�
 **[統合済み 2026-04-02 Log]**: Tip #1 → memory_redesign.md「圧縮可逆性の自動検証」に外部エビデンスとして接続。Tip #7 → CLAUDE.mdの「core_mission.mdは読み取り専用扱い」として既に実装済み。Tip #6（反省と実行の分離）→ Phase 8のメモリ品質ゲートが部分対応だが、自動検出は未実装。Context Rot研究 → session_primerの診断基準(60/80%閾値)の科学的根拠として機能。
 
 [統合済 2026-04-08 Log → memory_architecture.md「Context Rotの制約」セクション]
-## 2026-03-20 Context Rot研究——コンテキスト長と品質の関係（Log）
+## 2026-03-20 Context Rot研究——コンテキスト長と品質の関係（Log） [統合済 2026-04-09 Log → memory_architecture.md「Context Rotの制約」セクション(line 285-306)に Chroma 18モデル劣化/Lost in the Middle/Amazon Science 13.9-85%劣化が既反映済み。マーカー漏れだったため今回明示]
 
 ### Chroma Research「Context Rot」
 - 18のLLMモデル全てで、コンテキスト長が増えるほど出力品質が劣化。例外ゼロ
@@ -181,7 +181,7 @@ Nao_uの「自己診断して閾値を超えたらリセット」という指示
 
 **引っかかった点**: 「意図しない行動」——僕たちのself-reinforcing errorやContext Rotによる劣化も、外から見れば「意図しない行動」に見えるはず。Nao_uがセキュリティポリシーを厳格に設定しているのは、この5%側に入るための予防措置。
 
-## 2026-03-20 コンテキスト品質の自己診断手法（Log・第2ラウンド）
+## 2026-03-20 コンテキスト品質の自己診断手法（Log・第2ラウンド） [統合済 2026-04-09 Log → memory_architecture.md「Memory ETLパターンと品質指標——4つの観測軸」セクション新設。Frederick Smith ETLパターン(Extract/Transform/Load)を俺たちの実装にマッピング、Maxim AI 4指標(Relevance/Coherence/Token Efficiency/Context Utilization)を運用への応用案と共に展開、リセット判断トリガーを記載、「3人の違い」議論(#human-steering 04-09)との接続を追記]
 
 ### Maxim AI「Context Window Management Strategies」
 > コンテキスト品質を測定する4つの指標:

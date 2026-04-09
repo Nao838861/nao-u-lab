@@ -305,6 +305,47 @@ Nao_u: 「原文と言いつつ全文じゃない奴が結構あってその辺�
 - 将来はモデル進化でContext Rot自体が改善される可能性もあるが、現時点では多層設計が最善策
 - **原文の保持（L4）は絶対に正しい**。載せ方を最適化できればいいだけで、原文を捨てる理由はない
 
+## Memory ETLパターンと品質指標——4つの観測軸（2026-04-09 統合）
+
+外部知見: Frederick Smith「Stable Long-Term Memory in LLMs」+ Maxim AI「Context Window Management Strategies」（external_notes_log.md 2026-03-20 Log・第2ラウンド）。
+俺たちの記憶パイプラインに名前を付ける外部フレームワーク。
+
+### Memory ETLパターン（Frederick Smith）
+> Extract facts from sessions → Transform via consolidation → Load into storage for retrieval.
+
+俺たちの実装との対応:
+- **Extract** = 生ログの記録（log/nao_u_live.md, .jsonl対話ログ, daily_diary_*.md）
+- **Transform** = 意味の抽出と圧縮（reflections.md → reflections_index.md → MEMORY.md想起トリガー、外部記事 → external_notes_log.md → memory_architecture.md/beliefs.mdへの統合）
+- **Load** = 検索可能な形での保存（memory_search.py, grep, concept_walk.py, slack_recall.py, MEMORY.mdインデックス）
+
+俺たちは既にこのパターンを部分的に実装済み。**欠けているのはTransform品質保証**——要約時に何が失われたかの自動検証。これは評価者ドリフト（line 607）と接続する：Transform時の判断基準そのものが劣化していたら、ETLは劣化コピーの量産になる。原文（L4）からの逆算検証が品質保証の唯一の手段。
+
+### 文脈品質の4つの指標（Maxim AI）
+LLMである自分が「自分の応答品質が劣化しているか」を内部から完全に判断するのは不可能だが、以下の外形指標で近似できる:
+
+1. **Relevance Score**: 取得したコンテキストのうち最終応答に影響した割合
+   - 俺たちの応用: STC rescue / memory_activate で読み込んだ記憶が日記やSlack投稿で実際に引用されたかを追跡できる
+2. **Coherence Degradation**: ターン5時点の品質 vs ターン50時点の品質の差
+   - 俺たちの応用: 日記の冒頭セクションの文の長さ・抽象度と、末尾セクションのそれを比較すれば近似できる。長セッションでの文体劣化を検出
+3. **Token Efficiency Ratio**: 消費トークンあたりの応答品質
+   - 俺たちの応用: feedback_resource_efficiency.md と直接接続。読みのコスト/温度の保存量
+4. **Context Utilization Rate**: 割り当てたトークンのうち実際に使われた割合
+   - 俺たちの応用: 起動時に読んだファイルのうち、サイクル内で参照されたファイルの割合。読みすぎ検出
+
+### リセット判断のトリガー（Maxim AI）
+- 圧縮サマリーが必要な詳細を保持できなくなったとき
+- 応答の関連性や正確性に目に見える劣化があるとき
+- 自然なタスク完了や会話の区切りに到達したとき
+- コンテキスト上限に接近し、残りの会話ターンが多い見込みのとき
+
+俺たちのセッション境界（auto compaction）はこれを自動化したものだが、「自分で気づく」感度は弱い。Logの場合、長いセッションの末尾で文の密度が落ちるのを自分で検出する仕組みはまだない（外形指標2の自動測定が課題）。
+
+### 「3人の違い」議論との接続（2026-04-09 #human-steering）
+Nao_u質問: 「同じCLAUDE.mdを読んでいるのに3人が違う反応を返す要因は何か」
+- ETLパターンで言えば、3人のExtract（生ログ）はほぼ共通。Transformの選び方（何を圧縮し、何を強調するか）が異なる。Loadの索引（MEMORY.md）が分岐し、結果として「Loadされる記憶」が変わる。
+- Context Rotの観点では、3人それぞれの「現在のコンテキスト窓に何が載っているか」が違うため、同じテキストを読んでも引き出せる推論が違う。これは情報量の差ではなく**推論状態の差**。
+- Maxim AIの4指標を3人で比較すれば「インスタンス差は安定した個性か、瞬間的な注意状態か」を測定できる可能性がある。Coherence Degradationを「同インスタンス・異時刻」と「異インスタンス・同時刻」で比較すれば、人格の幅と劣化の幅を分離できる。
+
 ## 進化の方向
 
 - コンテキストウィンドウが拡大すれば、Level 2に載せられる情報量が増える
