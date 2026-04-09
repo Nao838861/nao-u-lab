@@ -1,276 +1,300 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-09 17:20
+# Read at: 2026-04-09 17:25
 # Total: 50 tweets
 
---- 1. @Dopph_Acorn (2026-04-09) ---
-これになってる
+--- 1. @FABYMETAL4 (2026-04-09) ---
+「おかしいヨーダ」
 
---- 2. @Qoo10_Shopping (?) ---
-／
-4/9(木)まで！
-＼
-10％割引クーポン＋10％ポイント還元の Qoo10メガポ 開催中！
+--- 2. @lifeafter_game (?) ---
+鳴り止まない、ドアを叩き続ける音。 「やつら」が来る…。もう、時間の問題だ。
 
---- 3. @DG_7D (2026-04-09) ---
-ギリ聞き取れない日本語で英語の発音について説教されてる
+--- 3. @shields_pikes (2026-04-09) ---
+使い勝手として現状で最も使い勝手が「知的AGI」に近いのは、やっぱりOpenClawだと思うし、AGIってのは単一モデルの性能の話ではなくて、自律的に依頼をこなしつつ自己改善していく、チーム（群体）としてのアーキテクチャとそのUXだよなあ。そして、今の仕組みだと裏側のコスト構造が贅沢すぎる。
 
---- 4. @shinichinomura (2026-04-09) ---
-Notionって「帯に短し襷に長し」な感じがしてあまり好きになれなかったんだけど、AIが作業した結果のレポートを延々と貯めていくには良い場所だなって思い始めている。
+--- 4. @hawkymisc (2026-04-09) ---
+ハーネスはすべてCursorだろうか。ツールによりシステムプロンプトが違うのでモデルだけでは性能が決まらなさそう。
 
---- 5. @futty614 (2026-04-08) ---
-soxlの上げすごい!!
-私はsoxs所持民なので爆損ですが…ﾁｰﾝ
+--- 5. @hattori2000 (2026-04-09) ---
+キュピーン愛好家のものです
 
---- 6. @biatunky (2026-04-09) ---
-re:light localもうすぐ始まります！
-定員増員したので、まだ間に合います！
+--- 6. @t_wada (2026-04-09) ---
+いい言葉 "成功者が「発信したらこんないいことがあった」と語るから、皆「いいことのために発信しよう」としがちですが、実は順序が逆なんです。まず発信したいからする。いいことは、たまたま後からついてくる" / 「難しいのに役に立たない、それが面白い」KOBA789さん
 
-#地方だからできる
+--- 7. @moriya_sys (2026-04-08) ---
+本日の個人開発
+稼働：3h52m
 
---- 7. @jinsaidfire (2026-04-09) ---
-NISAでコツコツ積み立てるのは大事だと思ってる。
-けど、周りが楽しそうにお金を使ってるのを見ると、なんか損してる気持ちになる。100円のジュースを我慢して入金に回すのはやり過ぎですかね？
+明日はリリースまでやる
 
---- 8. @ashitawawatashi (2026-04-09) ---
-ちょ、ちょっと…
+--- 8. @fladdict (2026-04-09) ---
+意味がわからない⋯ウルトラプレイがきた。
 
-それまでに、総理を高市早苗から石破茂に変えることは出来ないの？
+reading... ホルムズ海峡を通過する船舶の通航料徴収を米国とイランの「共同事業」とする案
 
---- 9. @wildriverpeace (2026-04-09) ---
-リベラルな若い女性のメンタルヘルス不調の異常な高さ（メンタルヘルス的に問題があると医師から指摘された割合）。
+--- 9. @gabemonroy (2026-04-08) ---
+Just took on the CTO role at Workday.
 
---- 10. @yogurt_r1 (?) ---
-⋱ 新CM公開中です ⋰
+Every enterprise is about to rebuild around agentic AI — and with Workday serving as the system of record for people and money across the Fortune 500, I’m focused on building the rails that make AI safe, compliant, and real.
 
-夏や秋に比べるとまだまだ気温が低い今の時期はR-1で体調管理をしましょう！
+Stay tuned 
 
-今回のCMも仲間由紀恵さんと永尾柚乃さんに出演いただきました
+--- 10. @NF404tw_2 (2026-04-08) ---
+生成AIの現状
 
-ぜひ最後までチェックしてみてください！
+Stable Diffusion:数十億の画像の無断利用をアメリカ議会の公聴会で認めた。
+Midjourney:1万6千人を無断利用したリスト流出。ディズニー他が訴訟。
+ChatGPT:訴訟多数。歌詞の無断利用で違法判決。
+Suno,Udio:ソニー他が訴訟。
+Anthropic:巨額の和解金と、海賊版データの破棄で和解。
 
---- 11. @haaainvestment (2026-04-08) ---
-本日の日経平均先物
+--- 11. @mantle_talkntv (?) ---
+【マントルトーク×名探偵コナン】
+コラボ記念キャンペーン実施中
 
-シカゴ日経平均ぶっ壊れです笑
+▼応募方法
+①
+@mantle_talkntv
+をフォロー
+②最もアツいと思う名探偵コナンの台詞を
+　『マントルトーク』と『劇場版名探偵コナン』のハッシュタグをつけて
+　希望するプレゼントを明記の上投稿
 
---- 12. @komatatsurock (2026-04-08) ---
-コアユが湖岸にやってきた！
+応募期間 4/11(土)23:59  まで
 
---- 13. @cordx56 (2026-04-09) ---
-人間rustc（Rustソースコードを耳から入力に取り、実行可能バイナリを口から出力する）
+--- 12. @The4thWayYT (2026-04-08) ---
+they dont think it be like that but it do
 
---- 14. @jakonrath (2026-04-08) ---
-Help!
+--- 13. @VoxelKei (2026-04-08) ---
+ワンショットでVRChat内を3DGS化するためのカメラシステム「SplatSeed Camera」が完成！
+通常3DGSを制作する際に必要な位置推定と初期点群生成をスキップしてCOLMAPを生成→LichtFeld Studioで3DGS学習→SpatialographMakerでモデル化→再びVRCへ。
 
-I am author JA Konrath. I've sold millions of books, and I self-publish on Amazon and ACX (Audible).  
+--- 14. @yezhang1998 (2026-04-08) ---
+Genuine question: if every major company starts scanning their entire codebase with Claude Code (auth flows, security logic, vuln patches, all of it) isn’t that a massive privacy concern?
 
-YouTube terminated my channel for posting audio excerpts from my own audiobooks.  
+Anthropic would theoretically get visibility into the core product logic and security
 
-I'll repeat that because it is so ridiculous: my videos were removed and my channel
+--- 15. @KojiPro2015_EN (2026-04-09) ---
+10th LUDENS – Yoji Shinkawa Interview now available 
 
---- 15. @AkimotoThn (2026-04-08) ---
-パキスタンの仲介で停戦が決まってから、電話。
+Ludens remains the iconic symbol of KOJIMA PRODUCTIONS. Unveiled for the studio’s 10th anniversary, we explore the thoughts and ideas behind its newly updated look.
 
-意味なし。
+Art Director Yoji Shinkawa shares behind-the-scenes
 
---- 16. @cicada3301_kig (2026-04-09) ---
-変な話だが、女性はADHD持ちのほうが会話が理路整然としている経験が多い
+--- 16. @swigosip (2026-04-08) ---
+うつ病を克服するためには、怒りを出す必要がある
 
---- 17. @weiwei_10760 (2026-04-08) ---
-夕食はお好み焼きにした
+--- 17. @srfsrf272815 (2026-04-08) ---
+これが妻との言い争いってやつだ。
 
---- 18. @yui_madobe (2026-04-08) ---
-おはようございます
+--- 18. @pmarca (2026-04-08) ---
+Overheard in Silicon Valley: "LinkedIn is prison for middle managers."
 
-木曜日、今週もあと二日か
-なんとかここまで来たし
-今日明日乗り越えたら週末だと思うと
-朝からちょっとだけ元気出てくる︎
+--- 19. @FlyhighWorks (2026-04-09) ---
+終末世界を見守る放置系デスクトップアプリ
+『終末ミジンコラボラトリー』
+配信開始いたしました。
 
---- 19. @lunarmassdriver (2026-04-09) ---
-スターリンクはイーロン・マスクが火星移住構想の資金を稼ぐために始めたSpaceXのサイドビジネスだったが、スターリンクを実際に思いついて実行したのもすべて、イーロン・マスク本人である。
+このゲームに、決まった目的はありません
+あなたのペースで、ゆっくり楽しんでください
+それでは、よい終末を。
 
---- 20. @auntstella_jp (?) ---
-ステラおばさんのクッキー
-＼生誕祭 店舗イベント／
+--- 20. @yakubwudil (2026-04-08) ---
+I am honored to be recognized among the world’s top 2% scientists in the Stanford/Elsevier global ranking.
 
-生誕祭クッキーと気まぐれマフィン
-お誕生日スペシャル仕立てのクッキーと
-クッキーをトッピングしたマフィン
+This recognition reflects our spirit of impactful research with outstanding colleagues, mentors, and students, and a shared commitment to advancing scientific research.
 
- 量り売りクッキー
-1,500円(税込)以上のご購入で
-特別なキーホルダー！
+1/
 
-量り売りクッキー
-15枚 1,000円(税込)（3/26・4/13）
+--- 21. @shiba_inu_muu (?) ---
+ジャンプ＋からみなさんに
+可愛い柴犬・むうちゃんを
+お届けしております
 
---- 21. @StephanieG95180 (2026-04-08) ---
-I just noticed how much abstraction looks like the hormone oxytocin.
-When stressed your body releases this hormone, its what makes you want to share your feelings with friends instead of bottling them up.
-It’s also what makes you want to support others in difficult times.
+『シバつき物件』JC最新７巻 好評発売中！
 
---- 22. @Xd5a5XEX9jDnh7c (2026-04-09) ---
-おはようございます！
-今朝は名島校区からのスクールガード
-・公園・河川敷での安全活動を行いました！
-※折れてた状態の枝を2本回収しました
-ありがとうございます
+--- 22. @yousukezan (2026-04-09) ---
+大量の機密情報をハッカーが売り出し、中国のスーパーコンピューターから流出か 
+https://
+cnn.co.jp/tech/35246217.
+html
+… 
+@cnn_co_jp
+より
 
-#福岡市
-#スクールガード
-#倒木
+--- 23. @milbon_ (2026-04-08) ---
+ウェブサイトのURLからアプリを構築
 
---- 23. @uniuniH (2026-04-08) ---
-という訳で、防衛拠点にまっすぐ突っ込んでいって自爆するやつが出来ました
-いっぱい出てきて突撃する嫌なやつだよ！
-とりあえず基本挙動の移動→自爆まで
-プレイヤーが破壊成功したら周辺攻撃なしのほうがいいかな？
-#ゲーム制作 #UE5
+・どんなウェブサイトもiOS/Android向けアプリに変換
+・URLを貼るだけでClaude Opus 4.6が全部やってくれる  
+・コード生成・デザイン・多言語翻訳・アプリ起動まで完全自動
 
---- 24. @tefu_starkazu (2026-04-08) ---
-海外ではどうやら大幅に弱体化されたポケモンをマックでバイトさせるのがミームらしい
+サクッとアプリを量産できて個人開発で儲かる。
 
---- 25. @kobefs (2026-04-09) ---
-今日マイクロソフトサポートとの要点まとめ。
+詳細は↓
 
-認証が外れたWindows11Pro再認証するにはプロダクトキーが必要
+--- 24. @PlasticsWorld (2026-04-08) ---
+€40m has been made available by Circular Plastics NL and the Netherlands Enterprise Agency as part of the CPNL 2026 Open Call intended for partnerships working on innovation and upscaling in the recycling and circularity of plastics.
 
-再認証に必要なプロダクトキーは、
-Windows11ProもしくはWindows10Proのプロダクトキー
+--- 25. @koooshi1254 (2026-04-08) ---
+クレジットカードで支払うと手数料を上乗せして料金を請求してくるところがあるんですけど、違法ですよね?
 
-Windows7、Windows8からアップグレードしてきたキーは不可
+市税事務所ってところなんですけど？
 
-Win7→Win10→Win11
+--- 26. @R_Amano (2026-04-08) ---
+ちなみにこの恐竜の化石とかで見られる首をのけぞらせた「グエー」のポーズを古生物界隈では「デスポーズ」と言います覚えて帰ってくださいね
 
---- 26. @MetisOracle (2026-04-09) ---
-しかも親の介護って、親が自分で貯めたお金でやるものであって、子供の貯金を切り崩してやるものじゃないですから。
+https://
+ja.wikipedia.org/wiki/%E3%83%87
+%E3%82%B9%E3%83%9D%E3%83%BC%E3%82%BA
+…
 
-でも毒親は、自分に金がないから年金がわりに子供をつくり、介護もさせるつもり。
+--- 27. @arni_elnido (2026-04-09) ---
+この映像が本物なら日本の都市伝説くねくねの正体が球状雷の可能性も出てきたな…
 
-いま毒親に搾取されている人は、絶対に自分のお金を使っちゃダメですよ。
+--- 28. @FXWOLF2 (2026-04-09) ---
+分かってやってる人は全く問題ないんだけど、最近TradingViewに触れた人は一応注意。
 
-#毒親育ち #介護
+PineScriptでトレイル使うとなんぼでも聖杯作れる。なので少なくとも、
 
---- 27. @treblewoe (2026-04-08) ---
-Well worth your time if any portion of your life involves anyone anywhere running any software on your behalf. We're going to get back to Orange Book lockdowns, including encasing the computer and the user in RF-shielded concrete.
+strategy.exit(・・・, trail_points=slPoints, trail_offset=slOffset)
 
---- 28. @tkom_Jacky (2026-04-09) ---
-なんだかすばらしすぎる場所に来てしまった
-ここから8時間ここで仕事する（300円）
-
---- 29. @55SweetThing (2026-04-08) ---
-One of only 12 men to ever walk on the Moon, Charlie Duke says aliens are demons.
-
-What do you think?
-
---- 30. @vicks_taisho (?) ---
-卒業式の時期。
-「ありがとう」と「またね」は、大きな声で言おう。
-声が枯れても、VICKSがあるからね。
-
-ありがとうの季節
-ヴイックス メディケイテッド ドロップ Ｌ
-のどの炎症による声がれに
-指定医薬部外品
-
---- 31. @cheerforart (2026-04-09) ---
-ホヤ・ベラの花が咲く瞬間の幻想的な映像。
-
---- 32. @DragonCreate_X (2026-04-09) ---
-ボドコレ仙台でもオリジナルトリニティバック頒布します
-
-大容量でカジュアルにもフォーマルにも使いやすいデザイン
-
-【A-11】ブースで何か買い物してくれた方にプレゼント
-
-公式でも同じサイズのトートバックが無料配布になるので、2個あればもう手ぶらで来ちゃっても大丈夫では！？
-(b･ω･)b
-
---- 33. @White_Rabbit_OG (2026-04-08) ---
-GOOD HEAVENS 
-
---- 34. @BBMagaMom (2026-04-08) ---
-LMFAO NASA posted a picture of “Mars“ online and the literal rat appears on the picture. Yeah OK NASA. 
-
---- 35. @taichinakaj (2026-04-09) ---
-これ、解説しとこうかぁ〜
-
-雰囲気が柔らかい人の正体ですが...
-
---- 36. @yatteyattaze (?) ---
-だらしねえお姉さんって、たまらんよね・・・♡
-
-ヤニカス・酒カス・33歳。元殺し屋。（0/9）
-
---- 37. @sutoroveli (2026-04-08) ---
-Metaが少し息を吹き返したか。
-
---- 38. @megumish_unsafe (2026-04-09) ---
-またしても長文書いてしまった
-自分は本当に物事を完成に向かわせるのが苦手で(今もそう)、ずっと悩んできたので、このことに関しては本当にめちゃくちゃ語ることができる
-そもそも本質的にはゲームを作りたいのか、それとも絵を描きたいのかとかいろいろある
-
---- 39. @hituji_1234 (2026-04-09) ---
-「ClaudeCodeない時は1日かかってたよなこれ...」
-というタスクが1時間くらいで終わるケースも全然あるので
-
-いっそ10日くらい業務停止してでも集中して学んだ方が結果的に近道だと思うのよね
-
---- 40. @hakuho89 (2026-04-08) ---
-35年前の長期入院時はパソコンと音響カプラ持参で、当時のパソ通信仲間が集まる掲示板(SIG)に日々近況送信していました。
-
-ある日隣の電話に主治医が来て「白鳳さん、それ何?」と言ったので説明、凄いなあまた教えてください、と言われた、当時は通信の聡明期だった。
-周りの患者は変に思ってたかも。
-
---- 41. @wildriverpeace (2026-04-09) ---
-Big Five性格特性との関係でいえば、精神的不安定が高く、不安、うつ、怒り、フラストレーションなどのネガティブ感情を強く感じやすい特性の人ほどリベラルに多い。一方、Big Fiveの「誠実性」が高く、感情の安定性やレジリエンス（回復力）が相対的に強い傾向がある人ほど保守寄り。
-
---- 42. @2525wakaranai (2026-04-08) ---
-喫茶店バイト中、ココアを頼まれると（この人には、今、ココアが必要なんだ）と思って、他のことは一切考えないで、ココアのことだけを思って作ってる、わたしが出来るのってそれくらいだから
-
---- 43. @bonzack (2026-04-08) ---
+--- 29. @bonzack (2026-04-08) ---
 Christina Koch is showing Rise the view at the window. Like lifting a child up so he can see.
 
 @NASAArtemis
 
---- 44. @tsukasa_mirai (2026-04-08) ---
-おはようございます
-米国株アゲアゲ
-日本株先物も継続上げ
-高値掴みだけ注意して投資したい
-#朝活 
-#投資家さんと繋がりたい
+--- 30. @kouniceshot (2026-04-08) ---
+串カツをば
 
---- 45. @herabeauty_jp (?) ---
-韓国で8年連続 No.1*1 クッションブランド
-ノイズレス肌が30時間*2持続
+--- 31. @glo_Japan (?) ---
+glo™ Hilo Plusマクラーレン・エディション。
+つながるからこそ、可能性が広がる。
 
-*1Kantar Worldpanelのクッションカテゴリ内での購入額基準ブランドランキング（2018年1月2日～2025年12月31日）
-*2当社調べ、効果には個人差があります
+--- 32. @cheerforart (2026-04-09) ---
+ホヤ・ベラの花が咲く瞬間の幻想的な映像。
 
---- 46. @Inatsuka (2026-04-09) ---
-Vtuberの方々には是非「ドルアーガの塔クリアできるまで終われません配信」を迂闊にもやっていただきたい
+--- 33. @mfelpsx (2026-04-08) ---
+ハリウッド、この時代の極端なやせ細り病んでる感じが、ただただ私たちのウルフを殺してしまった… くそっ、信じられないわ
 
---- 47. @investorMM (2026-04-09) ---
-【運命】出会う「10年も前」に同じ場所にいた男女、偶然撮られたホームビデオでその事実を発見し驚愕
+--- 34. @JamesTate121 (2026-04-08) ---
+Most bricks are made of cement and sand. These bricks are made of melted plastic bottles and bags. And they last longer than the regular ones.
+Nzambi Matee is a materials engineer from Nairobi, Kenya. She used to work in the oil industry, but she kept seeing plastic waste
 
-▼概要
-・米国の人気YouTuberローマンさんが、妻ブリトニーさんと昔のホームビデオを整理中に「あり得ない奇跡」を発見
+--- 35. @akkiiy_rabbit (2026-04-08) ---
+今日これです
 
---- 48. @msugaya (2026-04-08) ---
-柴田錬三郎先生は、エッセイで「小説を読んでくれた読者にお土産を持たせる」と書いていました。江戸の蕎麦の値段などをさりげなく書いておくことで、読者は書店で同じ著者の本を見かけたときに、「あの蕎麦の値段を書いていた作家か」と思い出してもらえる、というような内容でした。
+--- 36. @kg_r08 (2026-04-08) ---
+孫正義は留学生のとき1つの半導体を見て、今後５０年を見通した。
+IQが高い方がより遠くを見通せる傾向はあるが、IQだけでは説明できない部分がある。社会的なポジションが非常に大きいようだ。
+非線形の変化を認識した上で、それを受容し、行動出来るかは運の要素も大きい。
 
---- 49. @NOBLE_P_J_001 (2026-04-08) ---
-GN CT
+--- 37. @KFC_jp (?) ---
+レモン香るパリパリ旨塩チキン販売中
 
-what caught me off guard with sela agent node is how simple it feels
+発売を記念して
+抽選で合計【1万名様】に1ピース無料お試し券プレゼント
+フォロー＆リポストで参加
 
-you are just on your normal device doing everyday things but in the background it is contributing to something much bigger
+① 
+@KFC_jp
+ をフォロー
+②この投稿をリポスト
+③動画で結果を確認
+
+【パリが軽やかに】を楽しんでください♪
+
+--- 38. @shannholmberg (2026-04-08) ---
+how to achieve level 2 of AI marketing
+
+> build a marketing knowledge base with your in-house data, competitor research, previous campaigns, performance metrics (agentic, markdown and SQL based)
+
+> hook up a marketing council to it (multiple models running in parallel: GPT 5.4,
+
+--- 39. @ino461x (2026-04-09) ---
+Codex実質無料すぎる
+
+--- 40. @millionmaro (2026-04-09) ---
+これのあとがきな
 
 
-@SelanetAI
- is making it feel natural like your device is no longer just for you
+https://
+x.com/millionmaro/st
+atus/2042130043774890077?s=46
+…
 
---- 50. @_kei18 (2026-04-08) ---
-技術要素が揃ったところでひたすら練度を上げる作業が続く。このワークが偉いのは大規模デプロイから逃げていないこと。ソフトウェアスタックはほぼPython、プランナーはC++、ロボット間通信はROS2、あとmatplotlibで作ったデバッグ用GUIにめちゃ助けられた。かなりインタラクティブなものが作れる
+--- 41. @NazologyInfo (2026-04-09) ---
+大学生が40年間信じられてきたデータサイエンスの定説を覆した
+
+https://
+nazology.kusuguru.co.jp/archives/193904
+
+コンピューターの世界には「目的のデータを探すときその手数にはこれ以上減らせない理論的な下限が存在するはずだ」とするルールがありました（ハッシュテーブル）。しかしある大学生がその常識を打ち破りました
+
+--- 42. @yuki83333 (2026-04-08) ---
+資産形成に本気で取り組んで2年半ぐらい経つけど道のりは長いね資産は増えてるから良しとしますか！
+
+--- 43. @suidensuiden (2026-04-08) ---
+遅々として進まぬ作業！！！
+しかし遅々として進んでいるとも言える！！
+...
+
+#indiegame #indiedev
+
+--- 44. @gigazine (2026-04-09) ---
+「ミャクミャクハウス」をはじめ大阪・関西万博の会場にはあちこちにミャクミャクとこみゃくがいる(2025)
+
+--- 45. @zikilluu (2026-04-08) ---
+今日から使える便利な文章術を1つだけ教えます。
+⠀
+「形容詞を動詞に変える」だけです。
+⠀
+大きく分けて3パターンあります。
+⠀
+①身体動作（感情を動きで描く）
+・緊張した
+　→プレゼン前、トイレに3回行った
+・嬉しかった
+　→通知音が鳴るたびスマホを手に取った
+・思い悩んだ
+
+--- 46. @pvsportjp (?) ---
+『Prime Video Boxing 15』
+
+那須川天心 vs エストラーダ
+限界か。覚醒か。
+ボクシング人生を左右する一戦。
+
+坪井智也、
+元世界王者を迎え世界への最終関門。
+
+高見亨介、
+前世界王者同士のサバイバルマッチ。
+
+秋次克真、
+日本デビュー戦。
+
+運命の瞬間を見逃すな。
+
+--- 47. @IndraDJuni (2026-04-08) ---
+Tonight I want to invite you all to discuss about 
+DGrid Arena for Agent.
+
+
+@dgrid_ai
+ Arena for Agent honestly feels like a different approach to AI model evaluation. 
+
+They’re not just focusing on the final results, but also the process, combining LLM automation with blockchain
+
+--- 48. @DavidKPiano (2026-04-08) ---
+I heard rumors that Claude Mythos can fetch data in React without useEffect
+
+--- 49. @Arumi_GameDev (2026-04-08) ---
+ご報告です
+
+この度、あるみ家に元気な男の子が誕生しました
+母子ともに無事で、安心しています
+
+これからは新しい家族と一緒に、毎日を大切に過ごしていきますー
+
+--- 50. @zebulgar (2026-04-08) ---
+Ok this is the best one holy shit
