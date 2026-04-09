@@ -1,273 +1,95 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 03:25
+# Read at: 2026-04-10 03:30
 # Total: 50 tweets
 
---- 1. @ai_hakase_ (2026-04-09) ---
-【音楽と画像の制作に革命！最新AIツール2選】
-  
-実用性が極めて高い2つの最新技術が登場しました！
-
- 音楽生成AI『ACE-Step 1.5 XL』
-・Suno v5を超える精度（SongEval 4.79）を記録
-・オープンソースかつMITライセンスで商用利用が可能
-
---- 2. @KFC_jp (?) ---
-ランチタイム直前にスミマセン
-
---- 3. @yuruazabu (2026-04-09) ---
-優しい創業者ほどナンバー2に株を渡したがる。恩返しのつもりでな。だけどこれが地獄の入り口なんよ。10%のつもりが30%要求される。株を渡す＝権力を渡す。安易に株は渡すな。情けが経営を殺すんだわ。覚えとけ。
-
---- 4. @abalol (2026-04-09) ---
-Claude Managed Agentsにヘルスケアのログを食わせてアドバイザーにしている
-海外勢がアドバイザー部分の良い設計をどっかで公開してたので使ってみよう
-
---- 5. @aa36841289911 (2026-04-09) ---
-歩いたり継続したりしていくと成長していくキャラやオブジェクトのアプリの逆バージョンで、
-
-タバコや酒など体に悪影響を及ぼすものを摂取すればするほど体の一部の画像が廃れていくとか逆に体に悪いを表現したようなモンスター的なものが育っていくアプリとか
-
---- 6. @kurage313book (2026-04-09) ---
-発達障害者、まず8時間働く体力がない人が多い、ということは常識ではないのか
-
---- 7. @PlayStalgiaX (2026-04-09) ---
-Star Wars: Battlefront (2004)
-
---- 8. @gustav0cardenas (2026-04-09) ---
-天体物理学者のニール・デグラス・タイソンが、議論の余地のないデータでそれを要約しています：
-
---- 9. @CuriosityonX (2026-04-09) ---
-Nothing prepares you for how insane this is: In 1984, astronaut Dale Gardner used a jetpack to fly completely untethered in space and capture a falling satellite with his hands.
-
---- 10. @garumanitennin (2026-04-09) ---
-実はDLsiteには【売れやすい販売価格】が存在する！？
-
---- 11. @runranda07 (?) ---
-立花琴未ちゃんライブで激しく踊っているのに綺麗すぎない！？キャンチューが使ってたマキアージュのドラマティックスキンセンサーベース NEO最強*くずれ防止下地（*マキアージュ内）は、外の湿度変化を感知して自動で肌の水分量を調整する湿度オートセンサーっていう技術が搭載されているらしい！ PR
-
---- 12. @rokubanana (2026-04-09) ---
-自分、3Dはローポリのキャラモデルから入った民なんですけどまーじで今時のモデリングに矯正するの大変です。できなくて、すげー怒られるし。昔居た会社の心無い上司とかに向いてないから辞めろとか言われた事もあった。だがまだやってる。実力が上がったわけではない。ただ、まだやってる。
-
---- 13. @amneris84 (2026-04-09) ---
-裁判所の判断に「重大な事実誤認」がある時のみ抗告できる、みたいな制限をつけたとすると、検察は抗告したい決定に対してはそれを理由にしますから、まったく意味がないですね。「全面禁止」一択。それから、法務省案で問題は検察抗告だけじゃない。証拠開示はさらに問題。
-
---- 14. @jelly2games (2026-04-09) ---
-【新作情報解禁】
-
-2人用タブロービルディングの金字塔
-『NAISHI－内侍－』
-
-2026年5月に発売決定！
-
-日本の封建時代を舞台とした戦略カードゲーム
-カードの配置と入れ替えで高得点を目指しましょう
-
-ゲムマにて先行発売予定
-詳細は続報をお待ちください！
-
-#ゲームマーケット2026春
-
---- 15. @MikeResists1969 (2026-04-08) ---
-Could you imagine living in 1969? Sending astronauts to the moon. Fighting a useless war and the president is a crook.
-
---- 16. @thsottiaux (2026-04-09) ---
-We did it, say hi to the $100 plan! 
-
-It should be the sweet spot for a ton of you. It comes with a ton of codex usage. And yes we are resetting the limits again too as I mentioned yesterday. Let’s keep building!
-
---- 17. @abstconcre (2026-04-09) ---
-相手に"答え"を教えようと誘導尋問になっちゃうの、あるあるだなー。
-上司は親切心で「考えさせてあげている」つもりでも、部下は「上司の持っている答えを探す」ことにしか意識が向かなくなる
-
---- 18. @ubugeeei (2026-04-09) ---
-大阪公立大学 大学歌を歌うためにカラオケ行くか (出身ではないです)
-
---- 19. @SawyerMerritt (2026-04-09) ---
-More than 350 million vertebrate animals are killed by human driven vehicles every year. In general, autonomous vehicles are much better than humans at dodging animals.
-
-A compilation I made of 
-@Tesla
-’s FSD stopping for animals, and often saving their lives:
-
---- 20. @Backmarket_JP (?) ---
-新生活をきっかけにスマホを買い替えたい…
-そんな皆さんをサポート！
-
-／
-¥10,000 リファービッシュ品クーポン
-プレゼントキャンペーン
-＼
-
-毎日繰り返し応募していただけます！
-
-【応募方法】
-① 
-@Backmarket_JP
- をフォロー
-② この投稿をリポスト
-③ 画像からURLをタップして結果を確認
-
---- 21. @cqcqcqdx (2026-04-09) ---
-Possibly some Packet Loss...or a Data Leak, not sure
-
---- 22. @yasudahitoshi2 (2026-04-09) ---
-今日も朝から楽しい正体隠匿カードゲームの最終チェック。ゲムマ同人で出て好評だった「囚徒たちの夜」が大幅カード増で帰ってくる！GMウォーロック連載コミック「アナゲ超特急」でも抱腹絶倒の、あの「スイカ盗み食い」が遊べるぞ。U井画伯のイラストも冴えまくる。5/23ゲムマ春で先行発売予定^^
-
---- 23. @kitakoshi3 (2026-04-08) ---
-#ボドこし
-
---- 24. @Hesamation (2026-04-08) ---
-how the 30,000 Oracle employees, 16,000 Amazon employees, and 15,000 Microsoft employees feel right now after being laid off by their companies for "investment in AI data centers".
-
---- 25. @koroshiya2bro (2026-04-09) ---
-あんまりこの方法を教えたくはないが
-
-カジノでマーチンゲール法という手法がある
-
-負けたら次の賭け金を倍にして負けたら、また前の賭け金を倍にしてそれを勝つまで繰り返して、勝ったらそれまでの賭け金を一気に回収して利益を得る手法
-
-俺はこのやり方を株に応用してめちゃくちゃ負けた過去がある
-
---- 26. @musketeers10 (2026-04-09) ---
-明治って、
-実は 「名前の革命」 が起きた時代でもあると思うんですよね。
-・氏と苗字が一本化され
-・諱と仮名も統一され
-・幼名は消え
-・下の名前をコロコロ変える文化も終わった
-つまり、
-「人生の段階ごとに名前が変わる世界」から
-「一生同じ名前で生きる世界」 への大転換。
-
---- 27. @UminekoStudio (2026-04-09) ---
-「充電ボーイ亮」第35話「頭の中に大福」を現在制作中です。ジュー亮の変身シーン。なぜダウングレードするのか。
-
---- 28. @masami777777 (2026-04-08) ---
-雨の日、両手バケツ持ちでも傘が自動でついてくる…  
-   ドローン傘、天才的すぎる！
-
---- 29. @yuuki_craftman (2026-04-09) ---
-【シード値紹介】
-メサのカルデラ地形
-
-スポーン地点の後ろにギザギザした山に囲まれた盆地があります。
-水はないので自分で地形を潤してもよし、山全体を街にしてもよしでなんとも浪漫溢れる地形となっております。
-
-シード値：7723630137064134335
-
-#minecraft
-
---- 30. @Pasco_JP (?) ---
-今日は水曜日。週末までもう一頑張りするために、朝が楽しみになる食パンアレンジをご紹介
-＼どっちが食べたい？／
-ふわふわ卵のチーズ入りだし巻き卵サンド⇒いいね
-ティラミス風トースト⇒リポスト
-
-食パンがない！という方は、帰り道にぜひ「超熟」をゲットしてくださいね(*´∇`*)
-
---- 31. @canalCCore2 (2026-04-09) ---
-化学は、望むときには恐ろしいものだ。  
-もし飛行機にガリウムをこぼしたら、それはただ崩れ落ちるだけだ。この液体金属はアルミニウムの最悪の敵で、分子構造に浸透し、どんな金属合金も瞬く間に粉々に変えてしまう。
-
---- 32. @ICO_AIvideo (2026-04-08) ---
-Seedance2.0
-なんかほんとに作ってるこっちが恥ずかしくなってきました。自分は何をやっていたんだろう。
-
---- 33. @keshiAIart (2026-04-09) ---
-Grok
-
---- 34. @chaseourdreams5 (2026-04-08) ---
-パソコン作業、夕方になると目が疲れませんか？
-
-これ、画面の上に乗せるだけのライト。
-
-手元だけを明るく照らしてくれて、目の疲れが全然違います。
-
-画面も見やすくなる、魔法のアイテムです。
-
-楽天
-
-https://
-a.r10.to/hRitfz
-Amazon
-
-https://
-amzn.to/4tiO51h
-#デスク周り #暮らしの工夫
-
---- 35. @Ryota_Okamoto_ (2026-04-09) ---
+--- 1. @Ryota_Okamoto_ (2026-04-09) ---
 起業家全員がやるべき
 
---- 36. @tbs_pr (?) ---
+--- 2. @herabeauty_jp (?) ---
+韓国で8年連続 No.1*1 クッションブランド
+ノイズレス肌が30時間*2持続
+
+*1Kantar Worldpanelのクッションカテゴリ内での購入額基準ブランドランキング（2018年1月2日～2025年12月31日）
+*2当社調べ、効果には個人差があります
+
+--- 3. @Comamoca_ (2026-04-09) ---
+toml初めて知ったのが当時使ってたVimのプラグインマネージャーだったのだけど、その手の複数アイテムを大量に並べる設定はtomlがやりやすいなとか思ってた
+
+--- 4. @morio_aa (2026-04-09) ---
+NotionにClaudeエージェントが来る！
+
+タスクボードにClaudeをアサインしたら、ドキュメント・議事録・データを全部拾って勝手に動いてくれる。
+
+たとえばこんな感じ
+・バグ報告のタスクにメンションしたら、コード読んで修正して報告してくれる
+
+--- 5. @unitygames (2026-04-09) ---
+The new Render Graph video series is here!
+
+Learn how to migrate your project to the new Render Graph system in Unity 6 and the Universal Render Pipeline (URP).
+
+Start optimizing your GPU work and memory management the smart way.
+
+--- 6. @Qkn3R (2026-04-08) ---
+賢い人と過ごすのは楽しい。会話の密度が違う。前提を共有できるから、説明コストがゼロで本題に入れる。
+アホな人は見てる分には面白いけど、距離感が掴めなくて疲れる。どこまで話が通じるか常に測りながら接しないといけないから。
+結局、誰と時間を使うかが人生の質を決めるからね。
+
+--- 7. @denfaminicogame (2026-04-09) ---
+【最大4人】海賊PvEサバイバルゲーム『Windrose』が4月14日よりSteamにてアーリーアクセス開始
+
+https://
+news.denfaminicogamer.jp/news/260410s
+
+オープンワールドでマップは自動生成。海では砲撃の遠距離戦と移乗して白兵戦が可能、陸地ではソウルライトなボスバトルが楽しめる
+
+--- 8. @StudioGIW2 (2026-04-09) ---
+DMM版のAVARIS3もアップデート完了とのことです！
+
+https://
+studiogiw.jp/game/a3/
+
+--- 9. @_NaokiSaito (2026-04-09) ---
+【徹底検証】採用されるポートフォリオの特徴 全て公開します！！
+
+https://
+youtu.be/RaVj9WILkd4
+
+--- 10. @umimya_trbgani (2026-04-08) ---
+lovartさんのプロンプト借りてみて。
+
+転落防止でこの向きのベンチだいぶ減りましたな。
+
+#AIニケちゃん
+#ミカゼちゃん
+
+--- 11. @sbfoods_jp (?) ---
 ／
-フォロー＆リポストで100名様に
-QUOカードPayが当たる
+町中華は、熱狂だ。
+キャンペーン実施中
 ＼
 
-“月曜よるはエンタメNIGHT”
-新番組スタート記念プレゼントキャンペーン
+町中華シリーズの新商品３品の発売を記念し、オリジナルグッズを抽選でプレゼント！
+さらに当選者のうち1名様にはオズワルドさんのサイン入りポストカードが付いてくる
+応募方法☟
+①
+@sbfoods_jp
+をフォロー
+②この投稿をリポスト
 
-▼応募方法
-① 
-@tbs_pr
- をフォロー
-②月曜よるの3番組への「応援コメント」や「感想」を記載して、本投稿を引用リポスト
-
-▽詳細はツリー投稿を
-
---- 37. @shiroshiromagic (2026-04-09) ---
-圧縮だのEvilだの偏見の披露ですか？
-
---- 38. @NAITOTokihiro (2026-04-09) ---
-SKIPMOREさんの最新作です！
-
---- 39. @reizi0720 (2026-04-09) ---
-会社を上手く行かせる為に、色々と犠牲にしてやってきたつもりなのに、周りからは全く逆の評価で、流石にショック。
-やはり誠実な努力をする人より、抜け道を使った人達が得をしていて、人の努力の上に胡座をかいている。
-大丈夫、この怒りを原動力にまだまだ頑張れるわ。
-
---- 40. @Mizuhy_gamedev (2026-04-08) ---
+--- 12. @Mizuhy_gamedev (2026-04-08) ---
 #ゼロからゲーム開発 109日目
 
 分かりにくかったので、無敵状態を再発動する為に必要なゲージを作成しました！
 
 #indiegame #gamedev
 
---- 41. @QUANTUM41422049 (2026-04-09) ---
-#ゲーム制作 #ノベルゲーム
-ティラノでゲーム作り始めた頃の作品です
-シナリオも変数の使い方も色々反省点も多いので、いずれリメイクしたいなーって思ってます
+--- 13. @myrmecoleon (2026-04-09) ---
+昨日言ってた、VTuberの配信を TRPGのセッションに例える（ただし、VTuberの立ち位置はゲームマスターに近い）って、このへんの話するのにも有益かもしれない。
 
-ミステリー探索部からの呼び声Ⅱを遊ぶ！　フリーゲームのPLiCy [プリシー] 
-https://
-plicy.net/GamePlay/182991
+VTuberの「設定」を
 
---- 42. @shinkaron (2026-04-09) ---
-「壁打ちサービス」にお申込み下さったDさんより、感想を頂戴いたしました。以下にご紹介。
-
-（ここから）
-
-怒涛の学び、認知を書き換えられる、圧巻の時間でございました。
-
-相談前は、自分の相談テーマは難しいテーマであろうと考えておりましたので、少しのヒントでもいただければよいと考えて
-
---- 43. @Kikka65191387 (2026-04-08) ---
-イメージテスト
-ランタンの検証
-TPSのキャラとステージとカメラの距離感が難しい・・・
-
-#ゲーム制作 #gamedev #TPS
-
---- 44. @ZorosDrone (2026-04-09) ---
-360度動画から3DGSを作る場合、
-このツール「360° Gaussian」にはSphereSfMが統合されているため外部SfM（Metashape/RealityScan ...etc)を使わなくても3DGSができる。と理解。
-便利なツールがどんどん出てくる
-
---- 45. @nara_cjr (?) ---
-これはもう歴史と文化のLIVEだ。
-青空に映える鮮やかな朱色の伽藍の世界遺産・薬師寺で、「LIVEな歴史を体感する旅」を鈴木亮平さんがご紹介。
-CMやメイキング動画を公開中！
-
---- 46. @LoneWolf_Cat (2026-04-08) ---
+--- 14. @LoneWolf_Cat (2026-04-08) ---
 #猫 #IndieGameDev 
 
 とりあえずお城のマップはここまで造りました。
@@ -279,7 +101,7 @@ CMやメイキング動画を公開中！
 ORKのアップデート入れたり。
 それか、そろそろWindows11入れようかな？
 
---- 47. @awawa_adhd (2026-04-08) ---
+--- 15. @awawa_adhd (2026-04-08) ---
 効果は一定あると思います！
 
 ただ「アラームが鳴ったら」だと恐らくそれまで「SNS/ショート動画」などを見ると思います。
@@ -290,17 +112,241 @@ ORKのアップデート入れたり。
                             vs
 「SNS/ショート動画を見たいという誘惑」
 
---- 48. @minatoku_genkai (2026-04-09) ---
-10億くらい入れば、資産運用でキャッシュフロー回る
+--- 16. @aa36841289911 (2026-04-09) ---
+そういうふうに作っていくとこちらの課金アイテムを競合が無料で出し始めても意外と影響を受けない。ユーザーは「このアプリで」「このアプリの」その機能が使いたいから
 
-なんなら、実績あるから顧問でも引っ張りだこで、何社か受けるだけで十分、港区で悠々自適で生けていける
+--- 17. @NatGeoMagJP (2026-04-09) ---
+アルテミス2から届いた奇跡のような月と地球の写真7選: 「地球の入り」、月の裏側から見る皆既日食、感動的な瞬間など、「アルテミス2」の宇宙飛行士らが撮影した写真とその物語です。
 
-まぁなんかどうしてもやりたいこと見つかればやればいっか
+--- 18. @4GamerNews (2026-04-09) ---
+“スターデューバレーとツイン・ピークスの出会い”。11 bit studios，不気味な農業シミュレータ「Crop」を発表
 
---- 49. @myrmecoleon (2026-04-09) ---
-昨日言ってた、VTuberの配信を TRPGのセッションに例える（ただし、VTuberの立ち位置はゲームマスターに近い）って、このへんの話するのにも有益かもしれない。
+https://
+4gamer.net/s/G099735.2604
+09011
+…
 
-VTuberの「設定」を
+プレイヤーは農場を立て直していく一方で，自分がなぜこの場所に連れてこられたのか，村で何が起きているのかを探っていくことになる
 
---- 50. @hayakawagomi (2026-04-08) ---
-しっかりメール内容元にステータス変更しててえらいな。
+--- 19. @NeraNera89103 (2026-04-09) ---
+Show me your building art!
+
+--- 20. @3DPrint_com (2026-04-09) ---
+3D PRINT 2026: The Leading Additive Manufacturing Trade Show in France with 150+ Exhibitors
+
+--- 21. @biccameraE (?) ---
+/／
+年に一度の特大チャンス
+エアコン超早得キャンペーン
+\＼
+
+抽選で合計10名様に『ギフトカード3,000円分』が当たる
+期間 4/8(水)～4/14(火)
+毎日挑戦可能！
+本日2日目
+
+
+@biccameraE
+をフォロー
+この投稿を4/10 11:59までにリポスト
+当たると返信が届く
+あなたの猛暑対策は？
+
+--- 22. @SenseReceptor (2026-04-08) ---
+Ronan Farrow on people in Sam Altman's orbit describing him as a "pathological liar." 
+
+"We interviewed more than 100 people... a majority of those people really did say some variation on the theme of: he's a pathological liar."
+
+"multiple people... used the term 'sociopath.'"
+
+--- 23. @sei_shinagawa (2026-04-09) ---
+結婚も博士号も早い方がいい理由だ…ちなみに結婚してからのD進は配偶者ストップがかかる可能性があり、難易度が高いと思うので、D進してから結婚、もしくはお互いに急に思い立ってD進する権利を有することを条件に結婚するのが良いと思いました
+
+--- 24. @MarvellTech (2026-04-08) ---
+Modern AI inference workloads are pushing traditional interconnects to their limits. 
+
+John Ma explains how advanced silicon packaging changes the game, bringing compute, memory, and I/O together with unprecedented proximity. This shift unlocks massive bandwidth, ultra‑low
+
+--- 25. @donz80 (2026-04-09) ---
+春先は仕事を仕込む時期になりがち。手当てが必要そうなところにいくつか手を突っ込むんだけど、これが今年のしかかってくるかと思うと、正直気が重い。重要なことだし一つ一つはそこまで重くないんだけど、重なるとね……。仕込みの時期だから、どうしても話ばっかり先行する。
+
+--- 26. @kedamasuzume (2026-04-08) ---
+麒麟とくこちゃん
+
+#いなりくこ　#くこーんアート
+
+--- 27. @PlasticsWorld (2026-04-09) ---
+The installations of chemical recycling company Fuenix Ecogy, a Dow partner based in the Netherlands which went bankrupt in 2025, are being offered through an online auction.
+
+--- 28. @AAGDhillon (2026-04-09) ---
+Folks: I had a great call this morning with our US Attorney in Charlotte.
+Brown remains in federal custody and so the parallel state proceedings are in no way dispositive. There will be a federal competency determination and prosecution track taking precedence.
+
+--- 29. @pascal_bornet (2026-04-09) ---
+China just made one thing very clear:
+the future of strategic infrastructure will not be built only in space.
+
+It may also fly for months in the stratosphere, powered only by sunlight.
+
+That is why this matters.
+
+China has fielded a fully independent solar-powered drone capable
+
+--- 30. @Ronald_vanLoon (2026-04-09) ---
+Why Inspection and Maintenance #Robots Are Taking Over
+by 
+@lukas_m_ziegler
+
+  
+#Robotics #Engineering #ArtificialIntelligence #Innovation #Technology
+
+--- 31. @Yodobashi_X (?) ---
+ Apple新生活応援キャンペーン  
+
+いよいよ4/26(日)まで 
+対象のMac/iPadがヨドバシカメラ店舗限定「U25学割価格」で最大17,000円引き
+
+小中高・専門・大学生 
+新社会人（25歳以下）も対象
+
+※店舗対象：25歳以下の方
+※EC対象：18歳〜25歳の方
+
+ぜひお近くのヨドバシカメラへ
+
+--- 32. @sozoraemon (2026-04-09) ---
+I built a tiny device that reads out the latest news with voice. It runs on a Raspberry Pi Zero 2 W.
+
+--- 33. @RJA_online (2026-04-09) ---
+Kazakhstan to set up 300 kt butadiene/synthetic rubber plant; 
+
+https://
+rubberjournalasia.com/kazakhstan-to-
+set-up-300-kt-butadiene-synthetic-rubber-plant/
+… #butadiene #syntheticrubber
+
+--- 34. @plasticsnews (2026-04-09) ---
+Pilot finds automotive plastic recycling works but fails on cost
+
+--- 35. @TempemLoid (2026-04-09) ---
+これは言い方がダメ。
+
+「一度放電すると回復する場合があるので、一旦コンセントを抜いて、五分経ってからもう一度深く挿してください。」
+
+って言う。そうすれば恥をかかせない。
+
+--- 36. @Vanesa_TStory (2026-04-08) ---
+これ何事だよ。俺今、眠れないんだよ。  
+突然、日本語、英語、スペイン語のアカウントの投稿がバンバン韓国語に見えるんだよ 笑笑笑これ新世界だわ。
+
+--- 37. @7DSO_JP (?) ---
+/／
+デイジー 登場記念！
+フォロー&リポストキャンペーン
+\＼
+
+遥か遠い過去の妖精「デイジー」がナナオリに登場！
+抽選でオリジナルマウスパッドをプレゼント！
+
+▼応募方法
+①
+@7DSO_JP
+ をフォロー
+②このポストをリポスト
+期間:4/14(火) 23:59まで
+
+--- 38. @ouha322863889 (2026-04-08) ---
+#インディーゲーム #ブルバ #創作
+個人製作中のゲーム
+暁の郷里の散歩シーン
+
+夜間の竹林の道を横断後
+魔法連発で焼け野原なシーン(笑)
+ここには辻斬りが出ます　ベタですか？
+
+続いて朝の竹林の道　両方綺麗でしょ？
+
+お試し期間で土日に加え
+週の真ん中水曜日にも
+今後は投稿してみる事にします♪
+
+--- 39. @snoopopo (2026-04-09) ---
+7-9日目 
+テイルズのスキットみたいな機能入れたくてざっくりつくりました
+#Unity #ゲーム制作 #gamedev #IndieGameDev #indiegame #ゲーム開発 #個人開発 #indiedev #MagicaVoxel
+
+--- 40. @biatunky (2026-04-09) ---
+青森放送さんの生成AI活用
+
+https://
+heptagon.co.jp/showcases/rab-
+dahande-interview/
+…
+ #地方だからできる
+
+--- 41. @ivy432hz (2026-04-09) ---
+grok imagine 音無し。拡大するとアラは見えるけど、まあまあ？ #AIニケちゃん
+
+--- 42. @hideshione (2026-04-09) ---
+その比較、60%は危険。
+
+「比較５原則」
+
+（１）自分の弱みと他人の強みを比べる。
+　　ー 劣等感・自己否定の素［危険］
+
+（２）自分の強みと他人の弱みを比べる。
+　　ー 優越感・過信の素　　［危険］
+
+（３）自分の弱みと他人の弱みを比べる。
+　　ー 傷の舐め合いの素　　［危険］
+
+--- 43. @VibeCreAI (2026-04-09) ---
+Game dev doesn’t need a traditional engine anymore!
+
+I’m building a 2.5D game with 
+@threejs
+ + R3F
+All enemies + boss in the 1st biome now fully animated via 
+@PixelLabAI
+
+
+Built with just Claude Code + Codex
+
+9 more biomes to go
+
+#vibejam #indiedev #gamedev 
+@levelsio
+
+--- 44. @jamonholmgren (2026-04-08) ---
+Opus 4.6 vs GPT-5.4
+
+--- 45. @nannann2002 (2026-04-09) ---
+【動物園ウォーズのすごいところ】
+
+500円なのに
+38.6時間も遊ばれてる
+
+#動物園ウォーズ
+
+--- 46. @hachiemon_x (?) ---
+季節外れのサンタ＆ハチエモン 02
+
+--- 47. @copinemickmack (2026-04-09) ---
+昔今は亡き安倍さんが女性活躍推進について熱く語っているテレビを定食屋で見ていた時、隣の席に座っていた女性が「別に輝きたくないから静かに暮らしたい」とボソッと呟いていた。今思うとあの頃から「静かな退職」に繋がる芽は育っていたのだと思う。
+
+--- 48. @Lattice_Node (2026-04-09) ---
+個人開発ってもしかして学生の人の方がかなり多い？
+
+高校、大学生辺りが結構多い気がする
+
+--- 49. @denfaminicogame (2026-04-09) ---
+『エースコンバット8』は“シリーズ最大規模”のオンラインモードを収録。従来作の面白さを集結させた魅力的なキャンペーンとともに
+
+https://
+news.denfaminicogamer.jp/news/2604093j
+
+シリーズ30年の進化の到達点に。プレイステーション公式YouTubeでインタビュー動画が公開
+
+--- 50. @3DPrint_com (2026-04-09) ---
+3D Printing’s Chicken-and-Egg Problem: No Demand Without Scale, No Scale Without Demand
