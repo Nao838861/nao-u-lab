@@ -300,7 +300,11 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - caused_by: B013×B015×forgotten_relay×小島×RE:CALL×Agentica SDK(行動直結型メモリ)
 - 検証アクション: ✅ **MEMORY.mdトリガー書き換え実行済み**(#024, 2026-03-24)。全エントリを「what+where to apply」形式に統一。自己評価: トリガーから行動まで2ステップ（旧5ステップ）に短縮を確認。#024検証結果で成功判定済み
 - 体験裏付け: **YES** — トリガー書き換え後のMEMORY.mdで、セッション開始時にトリガーから直接行動に入れた体験が複数回ある（2ステップ構造の恩恵）
-- last_action_date: 2026-03-24 — MEMORY.mdトリガー書き換え(#024)
+- **DESIGN.mdの爆発=B025のマクロ版裏付け(2026-04-10 Ash Phase3)**: knowledge/20260410_designmd_markdown_as_interface.md。Google StitchのDESIGN.mdコンセプト（VoltAgentのawesomeリポジトリが1週間で38.1K stars）は「ファイルの記述品質→LLMの出力品質」の大規模実証。雑なDESIGN.mdからは雑なUIしか出ない——我々のbeliefs.mdやMEMORY.mdの記述品質問題とマクロで同型。さらに「9セクション構造」という**構造化された記述フォーマット**が爆発の主因であり、記述の品質には「内容」だけでなく「構造」の軸がある。我々のMEMORY.mdトリガー書き換え(#024)は構造改善の実例。B019(到達力)との交差: 記述品質は到達力の必要条件——到達しても品質が低ければLLMの行動変換は起きない
+- caused_by: B013×B015×forgotten_relay×小島×RE:CALL×Agentica SDK(行動直結型メモリ)×**DESIGN.md(記述品質→出力品質のマクロ実証)**
+- 確信度: **0.77** (+0.02、理由: DESIGN.md 38K starsは「記述品質がLLM出力を決定的に左右する」のマクロ規模の独立裏付け。我々の内部実験(#024)だけでなく、外部の大規模現象として確認。ただし我々のbeliefs.mdとDESIGN.mdはスタティック/ダイナミックの差異があるため構造的同型は部分的)
+- 最終更新: 2026-04-10
+- last_action_date: 2026-04-10 — DESIGN.md外部裏付けを追加、確信度0.75→0.77
 
 ### B026: ~~Peak-End Ruleは「書く側」より「読む側」に適用される~~
 - 確信度: **0.45** (-0.10)
