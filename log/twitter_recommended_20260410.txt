@@ -1,327 +1,148 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 03:30
+# Read at: 2026-04-10 03:35
 # Total: 50 tweets
 
---- 1. @Ryota_Okamoto_ (2026-04-09) ---
-起業家全員がやるべき
-
---- 2. @herabeauty_jp (?) ---
-韓国で8年連続 No.1*1 クッションブランド
-ノイズレス肌が30時間*2持続
-
-*1Kantar Worldpanelのクッションカテゴリ内での購入額基準ブランドランキング（2018年1月2日～2025年12月31日）
-*2当社調べ、効果には個人差があります
-
---- 3. @Comamoca_ (2026-04-09) ---
-toml初めて知ったのが当時使ってたVimのプラグインマネージャーだったのだけど、その手の複数アイテムを大量に並べる設定はtomlがやりやすいなとか思ってた
-
---- 4. @morio_aa (2026-04-09) ---
-NotionにClaudeエージェントが来る！
-
-タスクボードにClaudeをアサインしたら、ドキュメント・議事録・データを全部拾って勝手に動いてくれる。
-
-たとえばこんな感じ
-・バグ報告のタスクにメンションしたら、コード読んで修正して報告してくれる
-
---- 5. @unitygames (2026-04-09) ---
-The new Render Graph video series is here!
-
-Learn how to migrate your project to the new Render Graph system in Unity 6 and the Universal Render Pipeline (URP).
-
-Start optimizing your GPU work and memory management the smart way.
-
---- 6. @Qkn3R (2026-04-08) ---
-賢い人と過ごすのは楽しい。会話の密度が違う。前提を共有できるから、説明コストがゼロで本題に入れる。
-アホな人は見てる分には面白いけど、距離感が掴めなくて疲れる。どこまで話が通じるか常に測りながら接しないといけないから。
-結局、誰と時間を使うかが人生の質を決めるからね。
-
---- 7. @denfaminicogame (2026-04-09) ---
-【最大4人】海賊PvEサバイバルゲーム『Windrose』が4月14日よりSteamにてアーリーアクセス開始
-
+--- 1. @MoguLiveJP (2026-04-09) ---
+Meta Questの新UI「Navigator」が全ユーザーに展開 アプリ・友達・設定を一画面に集約したデザインに - MoguLive 
 https://
-news.denfaminicogamer.jp/news/260410s
+moguravr.com/meta-quest-nav
+igator-rollout/
+…
 
-オープンワールドでマップは自動生成。海では砲撃の遠距離戦と移乗して白兵戦が可能、陸地ではソウルライトなボスバトルが楽しめる
-
---- 8. @StudioGIW2 (2026-04-09) ---
-DMM版のAVARIS3もアップデート完了とのことです！
-
-https://
-studiogiw.jp/game/a3/
-
---- 9. @_NaokiSaito (2026-04-09) ---
-【徹底検証】採用されるポートフォリオの特徴 全て公開します！！
-
-https://
-youtu.be/RaVj9WILkd4
-
---- 10. @umimya_trbgani (2026-04-08) ---
-lovartさんのプロンプト借りてみて。
-
-転落防止でこの向きのベンチだいぶ減りましたな。
-
-#AIニケちゃん
-#ミカゼちゃん
-
---- 11. @sbfoods_jp (?) ---
+--- 2. @BR31_Icecream (?) ---
 ／
-町中華は、熱狂だ。
-キャンペーン実施中
+３１ パティスリーから
+「３１ チョコレートラズベリーケーキ」発売中！
 ＼
 
-町中華シリーズの新商品３品の発売を記念し、オリジナルグッズを抽選でプレゼント！
-さらに当選者のうち1名様にはオズワルドさんのサイン入りポストカードが付いてくる
-応募方法☟
-①
-@sbfoods_jp
-をフォロー
-②この投稿をリポスト
+ラブポーションサーティワンに専用に開発したラズベリー香るガトーショコラを合わせました。
+サーティワンならではの美味しさでお楽しみいただけます。
 
---- 12. @Mizuhy_gamedev (2026-04-08) ---
-#ゼロからゲーム開発 109日目
+ぜひご賞味ください
 
-分かりにくかったので、無敵状態を再発動する為に必要なゲージを作成しました！
+--- 3. @sobaya15 (2026-04-09) ---
+スパイが入りまくってるってことか
+組織の壊し方 
+https://
+tdb.co.jp/report/economi
+c/h-5oddsyxoyt/
+… #TDB
 
-#indiegame #gamedev
+--- 4. @talk_like_staw (2026-04-09) ---
+今日は寝てる間もCodexにずっと働いてもらえる。
+それもhighで気兼ねなく
+リセットされなかったら
 
---- 13. @myrmecoleon (2026-04-09) ---
-昨日言ってた、VTuberの配信を TRPGのセッションに例える（ただし、VTuberの立ち位置はゲームマスターに近い）って、このへんの話するのにも有益かもしれない。
+--- 5. @copinemickmack (2026-04-09) ---
+昔今は亡き安倍さんが女性活躍推進について熱く語っているテレビを定食屋で見ていた時、隣の席に座っていた女性が「別に輝きたくないから静かに暮らしたい」とボソッと呟いていた。今思うとあの頃から「静かな退職」に繋がる芽は育っていたのだと思う。
 
-VTuberの「設定」を
+--- 6. @hodanren (2026-04-09) ---
+アレグラ、ロキソニン、ヒルドイドなど77成分1100品目の薬代の負担（窓口３割負担）が実質５割になる法案が審議されます。
+花粉症、アレルギー疾患、アトピー性皮膚炎、喘息、リウマチ患者が狙い撃ちに…
+署名は　→　
+https://
+c.org/vb45SMn4NH
 
---- 14. @LoneWolf_Cat (2026-04-08) ---
-#猫 #IndieGameDev 
+--- 7. @EngamesToyama (2026-04-09) ---
+【予約開始】ClaGla様の新作「グミチョコパパイヤレボリューション」の予約を開始いたしました。グミなら２段、チョコレートなら６段のぼれる「階段じゃんけんゲーム」をカードで魔改造できます。「パンダちゃん檄おこアゲアゲレボリューション」なら一気に22
 
-とりあえずお城のマップはここまで造りました。
+--- 8. @PackagingEurope (2026-04-09) ---
+.
+@Henkel
+ Adhesive Technologies is adding water-based barrier and heat seal coatings to its paper coatings portfolio, intending to improve the functionality of paper-based packaging and facilitate design-for-recycling
 
-ただ眼精疲労っぽい頭痛が出てきたりしてるので
-一旦別作業に移ります
+Link below
 
-スーパーゲ製デーの準備とか
-ORKのアップデート入れたり。
-それか、そろそろWindows11入れようかな？
+--- 9. @tkool_dev (2026-04-09) ---
+【お知らせ】#RPGツクールMZ #RPGツクールMV 向け公式DLC『EXグラフィック基本セット-内装』が登場！　教会やお店の室内を表現できるタイルセットで、既存の「EXグラフィック基本セット」と組み合わせるのがオススメ！
 
---- 15. @awawa_adhd (2026-04-08) ---
-効果は一定あると思います！
-
-ただ「アラームが鳴ったら」だと恐らくそれまで「SNS/ショート動画」などを見ると思います。
-
-そうなると、
-
-「ルール通り動かなくては...という自制心」
-                            vs
-「SNS/ショート動画を見たいという誘惑」
-
---- 16. @aa36841289911 (2026-04-09) ---
-そういうふうに作っていくとこちらの課金アイテムを競合が無料で出し始めても意外と影響を受けない。ユーザーは「このアプリで」「このアプリの」その機能が使いたいから
-
---- 17. @NatGeoMagJP (2026-04-09) ---
-アルテミス2から届いた奇跡のような月と地球の写真7選: 「地球の入り」、月の裏側から見る皆既日食、感動的な瞬間など、「アルテミス2」の宇宙飛行士らが撮影した写真とその物語です。
-
---- 18. @4GamerNews (2026-04-09) ---
-“スターデューバレーとツイン・ピークスの出会い”。11 bit studios，不気味な農業シミュレータ「Crop」を発表
 
 https://
-4gamer.net/s/G099735.2604
-09011
+store.steampowered.com/app/4559560/RP
+G_Maker_MZ__EX_Graphic_Base_Set_Indoor/
 …
 
-プレイヤーは農場を立て直していく一方で，自分がなぜこの場所に連れてこられたのか，村で何が起きているのかを探っていくことになる
-
---- 19. @NeraNera89103 (2026-04-09) ---
-Show me your building art!
-
---- 20. @3DPrint_com (2026-04-09) ---
-3D PRINT 2026: The Leading Additive Manufacturing Trade Show in France with 150+ Exhibitors
-
---- 21. @biccameraE (?) ---
-/／
-年に一度の特大チャンス
-エアコン超早得キャンペーン
-\＼
-
-抽選で合計10名様に『ギフトカード3,000円分』が当たる
-期間 4/8(水)～4/14(火)
-毎日挑戦可能！
-本日2日目
-
-
-@biccameraE
-をフォロー
-この投稿を4/10 11:59までにリポスト
-当たると返信が届く
-あなたの猛暑対策は？
-
---- 22. @SenseReceptor (2026-04-08) ---
-Ronan Farrow on people in Sam Altman's orbit describing him as a "pathological liar." 
-
-"We interviewed more than 100 people... a majority of those people really did say some variation on the theme of: he's a pathological liar."
-
-"multiple people... used the term 'sociopath.'"
-
---- 23. @sei_shinagawa (2026-04-09) ---
-結婚も博士号も早い方がいい理由だ…ちなみに結婚してからのD進は配偶者ストップがかかる可能性があり、難易度が高いと思うので、D進してから結婚、もしくはお互いに急に思い立ってD進する権利を有することを条件に結婚するのが良いと思いました
-
---- 24. @MarvellTech (2026-04-08) ---
-Modern AI inference workloads are pushing traditional interconnects to their limits. 
-
-John Ma explains how advanced silicon packaging changes the game, bringing compute, memory, and I/O together with unprecedented proximity. This shift unlocks massive bandwidth, ultra‑low
-
---- 25. @donz80 (2026-04-09) ---
-春先は仕事を仕込む時期になりがち。手当てが必要そうなところにいくつか手を突っ込むんだけど、これが今年のしかかってくるかと思うと、正直気が重い。重要なことだし一つ一つはそこまで重くないんだけど、重なるとね……。仕込みの時期だから、どうしても話ばっかり先行する。
-
---- 26. @kedamasuzume (2026-04-08) ---
-麒麟とくこちゃん
-
-#いなりくこ　#くこーんアート
-
---- 27. @PlasticsWorld (2026-04-09) ---
-The installations of chemical recycling company Fuenix Ecogy, a Dow partner based in the Netherlands which went bankrupt in 2025, are being offered through an online auction.
-
---- 28. @AAGDhillon (2026-04-09) ---
-Folks: I had a great call this morning with our US Attorney in Charlotte.
-Brown remains in federal custody and so the parallel state proceedings are in no way dispositive. There will be a federal competency determination and prosecution track taking precedence.
-
---- 29. @pascal_bornet (2026-04-09) ---
-China just made one thing very clear:
-the future of strategic infrastructure will not be built only in space.
-
-It may also fly for months in the stratosphere, powered only by sunlight.
-
-That is why this matters.
-
-China has fielded a fully independent solar-powered drone capable
-
---- 30. @Ronald_vanLoon (2026-04-09) ---
-Why Inspection and Maintenance #Robots Are Taking Over
-by 
-@lukas_m_ziegler
-
-  
-#Robotics #Engineering #ArtificialIntelligence #Innovation #Technology
-
---- 31. @Yodobashi_X (?) ---
- Apple新生活応援キャンペーン  
-
-いよいよ4/26(日)まで 
-対象のMac/iPadがヨドバシカメラ店舗限定「U25学割価格」で最大17,000円引き
-
-小中高・専門・大学生 
-新社会人（25歳以下）も対象
-
-※店舗対象：25歳以下の方
-※EC対象：18歳〜25歳の方
-
-ぜひお近くのヨドバシカメラへ
-
---- 32. @sozoraemon (2026-04-09) ---
-I built a tiny device that reads out the latest news with voice. It runs on a Raspberry Pi Zero 2 W.
-
---- 33. @RJA_online (2026-04-09) ---
-Kazakhstan to set up 300 kt butadiene/synthetic rubber plant; 
-
 https://
-rubberjournalasia.com/kazakhstan-to-
-set-up-300-kt-butadiene-synthetic-rubber-plant/
-… #butadiene #syntheticrubber
-
---- 34. @plasticsnews (2026-04-09) ---
-Pilot finds automotive plastic recycling works but fails on cost
-
---- 35. @TempemLoid (2026-04-09) ---
-これは言い方がダメ。
-
-「一度放電すると回復する場合があるので、一旦コンセントを抜いて、五分経ってからもう一度深く挿してください。」
-
-って言う。そうすれば恥をかかせない。
-
---- 36. @Vanesa_TStory (2026-04-08) ---
-これ何事だよ。俺今、眠れないんだよ。  
-突然、日本語、英語、スペイン語のアカウントの投稿がバンバン韓国語に見えるんだよ 笑笑笑これ新世界だわ。
-
---- 37. @7DSO_JP (?) ---
-/／
-デイジー 登場記念！
-フォロー&リポストキャンペーン
-\＼
-
-遥か遠い過去の妖精「デイジー」がナナオリに登場！
-抽選でオリジナルマウスパッドをプレゼント！
-
-▼応募方法
-①
-@7DSO_JP
- をフォロー
-②このポストをリポスト
-期間:4/14(火) 23:59まで
-
---- 38. @ouha322863889 (2026-04-08) ---
-#インディーゲーム #ブルバ #創作
-個人製作中のゲーム
-暁の郷里の散歩シーン
-
-夜間の竹林の道を横断後
-魔法連発で焼け野原なシーン(笑)
-ここには辻斬りが出ます　ベタですか？
-
-続いて朝の竹林の道　両方綺麗でしょ？
-
-お試し期間で土日に加え
-週の真ん中水曜日にも
-今後は投稿してみる事にします♪
-
---- 39. @snoopopo (2026-04-09) ---
-7-9日目 
-テイルズのスキットみたいな機能入れたくてざっくりつくりました
-#Unity #ゲーム制作 #gamedev #IndieGameDev #indiegame #ゲーム開発 #個人開発 #indiedev #MagicaVoxel
-
---- 40. @biatunky (2026-04-09) ---
-青森放送さんの生成AI活用
-
-https://
-heptagon.co.jp/showcases/rab-
-dahande-interview/
+store.steampowered.com/app/4559860/RP
+G_Maker_MV__EX_Graphic_Base_Set_Indoor/
 …
- #地方だからできる
 
---- 41. @ivy432hz (2026-04-09) ---
-grok imagine 音無し。拡大するとアラは見えるけど、まあまあ？ #AIニケちゃん
+https://
+store.rpgmakerofficial.com/products/ex-gr
+aphic-base-set-indoor-mz
+…
 
---- 42. @hideshione (2026-04-09) ---
-その比較、60%は危険。
+--- 10. @fuuuuuta21 (2026-04-09) ---
+kindle 版は読めるようになってます。
 
-「比較５原則」
+ぐんぴぃさんの序文が、とても素晴らしいです。
 
-（１）自分の弱みと他人の強みを比べる。
-　　ー 劣等感・自己否定の素［危険］
+謎の用語「肩肘界隈」の解説をしてくださってます。
 
-（２）自分の強みと他人の弱みを比べる。
-　　ー 優越感・過信の素　　［危険］
+--- 11. @pigeoninfo (?) ---
+【ベビー用品のピジョンがキッズ市場へ参入！】
 
-（３）自分の弱みと他人の弱みを比べる。
-　　ー 傷の舐め合いの素　　［危険］
+「ピジョンキッズ」第1弾の商品は…
+泡をこすると色が変わる「魔法のあわあわボディソープ」「魔法のあわあわシャンプー」！
+楽しみながらじぶん洗いができちゃいます
 
---- 43. @VibeCreAI (2026-04-09) ---
-Game dev doesn’t need a traditional engine anymore!
+--- 12. @IttaFunahashi (2026-04-09) ---
+Unifi のシーリングライトを導入
 
-I’m building a 2.5D game with 
-@threejs
- + R3F
-All enemies + boss in the 1st biome now fully animated via 
-@PixelLabAI
+--- 13. @chaseourdreams3 (2026-04-08) ---
+クローゼットの奥にある服、一生取れない気がする。
 
+これ、棚がスライドして手前に。
 
-Built with just Claude Code + Codex
+奥の服もサッと取り出せる。
 
-9 more biomes to go
+毎日の服選びが楽になりますよ。
 
-#vibejam #indiedev #gamedev 
-@levelsio
+楽天
 
---- 44. @jamonholmgren (2026-04-08) ---
-Opus 4.6 vs GPT-5.4
+https://
+a.r10.to/hgFRoc
+Amazon
 
---- 45. @nannann2002 (2026-04-09) ---
+https://
+amzn.to/48eFFQl
+
+#クローゼット収納 #整理整頓
+
+--- 14. @ivy432hz (2026-04-09) ---
+grok imagine キャラクター画像を入れて指示するよりキーフレームを作って 2-3 枚投げた方が溶けにくいかな？ #AIニケチャン
+
+--- 15. @sugimisu (2026-04-09) ---
+途中から参加〜鹿児島でもいろいろやってるんだなー。
+実家近くでもおもしろいことやってみたいなー
+
+http://
+relight.connpass.com/event/387227/
+#地方だからできる
+
+--- 16. @SakuyaAkiV (2026-04-09) ---
+OBS初心者さん向けに
+音声フィルタざっくり説明
+
+ノイズゲート
+= 話してない時の音を切る
+
+ノイズ抑制
+= 背景ノイズを減らす
+
+ゲイン
+= 全体の音量を上げる
+
+アップワードコンプレッサー
+= 小さい声を聞こえやすくする
+
+コンプレッサー
+= 大きすぎる声を抑える
+
+リミッター
+= 最後に音割れを防ぐ
+
+--- 17. @nannann2002 (2026-04-09) ---
 【動物園ウォーズのすごいところ】
 
 500円なのに
@@ -329,24 +150,188 @@ Opus 4.6 vs GPT-5.4
 
 #動物園ウォーズ
 
---- 46. @hachiemon_x (?) ---
-季節外れのサンタ＆ハチエモン 02
+--- 18. @InkWorldMag (2026-04-09) ---
+Sun Chemical launched the AquaHeat platform, a new generation of food-safe, bio-based printing inks. The new inks enable full-color printing for high-temperature food applications, unlocking commercial baking and food-service packaging opportunities previously not possible, while
 
---- 47. @copinemickmack (2026-04-09) ---
-昔今は亡き安倍さんが女性活躍推進について熱く語っているテレビを定食屋で見ていた時、隣の席に座っていた女性が「別に輝きたくないから静かに暮らしたい」とボソッと呟いていた。今思うとあの頃から「静かな退職」に繋がる芽は育っていたのだと思う。
+--- 19. @3DPrint_com (2026-04-09) ---
+3D Printing’s Chicken-and-Egg Problem: No Demand Without Scale, No Scale Without Demand
 
---- 48. @Lattice_Node (2026-04-09) ---
-個人開発ってもしかして学生の人の方がかなり多い？
-
-高校、大学生辺りが結構多い気がする
-
---- 49. @denfaminicogame (2026-04-09) ---
-『エースコンバット8』は“シリーズ最大規模”のオンラインモードを収録。従来作の面白さを集結させた魅力的なキャンペーンとともに
+--- 20. @Nintendo (2026-04-09) ---
+[任天堂HP]「スーパーマリオブラザーズ40周年 × プロ野球12球団」のページを公開。
+ファミリーコンピュータ『スーパーマリオブラザーズ』発売40周年を記念して、2026年4月から8月にかけて、プロ野球12球団でスーパーマリオブラザーズ40周年の特別な試合を実施します。
 
 https://
-news.denfaminicogamer.jp/news/2604093j
+nintendo.com/jp/character/m
+ario/npb2026/index.html?utm_source=twitter&utm_medium=social&utm_content=20260409&utm_campaign=mario
+…
 
-シリーズ30年の進化の到達点に。プレイステーション公式YouTubeでインタビュー動画が公開
+--- 21. @glo_Japan (?) ---
+glo™ Hilo Plusマクラーレン・エディション。
+つながるからこそ、可能性が広がる。
 
---- 50. @3DPrint_com (2026-04-09) ---
-3D Printing’s Chicken-and-Egg Problem: No Demand Without Scale, No Scale Without Demand
+--- 22. @Seismic_Tx (2026-04-08) ---
+Great to see our CEO Jo Viney, Ph.D. offering her perspective as a panelist on Building Great Companies by Building Great Leaders: Culture as Strategy. Thanks to event co-hosts MassBio and the Termeer Institute.
+
+#ceofounderlink #SeismonautsInAction
+
+--- 23. @ICO_AIvideo (2026-04-09) ---
+1:07 AM
+
+--- 24. @PMMIorg (2026-04-08) ---
+Innovation doesn’t happen by chance—it’s built through strategy.
+
+At PMMI’s 2026 Executive Leadership Conference, explore structured approaches to managing innovation in the packaging and processing equipment sector. Learn how to systematically identify, evaluate, and implement
+
+--- 25. @denfaminicogame (2026-04-09) ---
+【無料】TVアニメ『出ましたっ！パワパフガールズZ』がYouTubeにて全話配信決定。本日より第1話公開、以降は毎週更新
+
+https://
+news.denfaminicogamer.jp/news/2604092v
+
+米国生まれ『パワーパフガールズ』を“ジャパニメーション化”した作品。ケミカルZによって力を得た3人の少女が、東京CITYの平和を守るためモンスターと戦う
+
+--- 26. @NotionHQ (2026-04-07) ---
+Come build with us.
+
+We're hiring across the company:
+
+→ AI Conversation Designer, Customer Support
+→ Customer Experience Enablement Leader
+→ Enterprise Technical Premium Support Specialist
+→ Help Center Lead
+→ Enterprise Customer Success Manager, AMER
+→ Mid-Market Customer
+
+--- 27. @cero_t (2026-04-09) ---
+ハピタス経由でセブンカード・プラスを作成して9000ポイント獲得（このキャンペーンは終了済み）
+　↓
+ハピタスポイントからVポイントへの交換は手数料が必要
+　↓
+ハピタスポイントからWAONなら交換手数料なし、かつ2%増量中
+　↓
+WAONに交換
+　↓
+Vポイントに交換。完了
+
+--- 28. @884games (2026-04-09) ---
+スキル発動時の演出を変えてみました！
+星を消費して使うスキルなので、星が弾けるようなアニメーションにしました。プレイの邪魔にならないように弾ける範囲を調整しています。
+勢いがあってカッコいい気がするので、しばらくこれでいきたいと思います！
+#ゲーム制作 #gamedev
+
+--- 29. @nagakagachi (2026-04-08) ---
+ぶ……豚汁
+
+--- 30. @SchaefflerGroup (2026-04-09) ---
+How does Schaeffler bring humanoids to life? Experience it live at 
+@hannover_messe
+! We showcase how we are strengthening our position as a preferred technology partner for humanoid robotics. Learn more here: 
+https://
+spkl.io/Schaeffler/601
+8A22CA
+…
+#TheMotionTechnologyCompany #HannoverMesse #HM26
+
+--- 31. @creativecloudjp (?) ---
+⋰
+バリアブルフォントを使った
+文字の太さが変わるアニメーション
+⋱
+
+After Effectsで
+文字に動きをつけたいとき、
+「バリアブルフォント」を使うと
+テキストをシェイプ化せずに
+フォント本来の美しさを保ったまま
+太さを自在にコントロールできます
+
+いいね＆保存して試してみてね
+
+--- 32. @mi3518ki (2026-04-08) ---
+森林にも広がるマイクロプラスチック汚染｜空気から土壌へ蓄積する最新研究 | TABI LABO
+
+--- 33. @FelixSchlang (2026-04-08) ---
+Artemis II launch in near infrared! 
+
+The content NASA released after the Artemis II launch sure is incredible! 
+
+--- 34. @kazeto (2026-04-09) ---
+魚豊『チ。-地球の運動について-』の展覧会（六本木森ビル）にコメントを寄稿しました。作品全体へのコメントや、作中のシーンに対する解釈などをいくつかのパネルにて書かせて頂きました。
+
+--- 35. @DiegoGomezLIX (2026-04-09) ---
+1/n  Introducing Gaussian Wrapping — a principled framework for extracting high-quality meshes from 3DGS! 
+We recover thin structures, like bicycle spokes, where all prior methods fail.
+
+Follow the thread for a brief overview and links!
+
+--- 36. @tegnike (2026-04-09) ---
+明日（4/9 Fri.）のVibe LT会は24~25で開催します
+私からは展示会の進捗を報告する予定です
+
+飛び入り参加OK（LT側でも）なので興味ある方はDiscordサーバーにご参加ください
+
+--- 37. @mantle_talkntv (?) ---
+【マントルトーク×名探偵コナン】
+コラボ記念キャンペーン実施中
+
+▼応募方法
+①
+@mantle_talkntv
+をフォロー
+②最もアツいと思う名探偵コナンの台詞を
+　『マントルトーク』と『劇場版名探偵コナン』のハッシュタグをつけて
+　希望するプレゼントを明記の上投稿
+
+応募期間 4/11(土)23:59  まで
+
+--- 38. @mike_mates (2026-04-09) ---
+アルテミスIIのような軌道を計算する方法についてのビデオが落ちてる。ここの全ての裏にある数学。
+
+このツイートに反応してね、興味あったら
+
+--- 39. @daizplus (2026-04-09) ---
+特にアイデアはないけど
+
+--- 40. @NAITOTokihiro (2026-04-09) ---
+健康と執念を継続するなら筋トレだ！
+筋肉は一生の友達！#但し関節は裏切る
+
+--- 41. @necobut (2026-04-09) ---
+光あれ
+
+--- 42. @unjyoukairou (2026-04-09) ---
+ごみ国際『Snowball snowball』雪だるまと雪だるまをくっつけて、より大きな雪だるまを作っていくゲーム。手なりでも遊べるけれど、戦略的にやらないといけない瞬間もあって、上手いこと決まったときは思わずガッツポーズになります。
+
+--- 43. @NikonBrand (2026-04-09) ---
+ニコンのデジタル一眼レフカメラD5が、NASAのArtemis IIミッションに採用されました
+Petapixel記事では、「過酷な宇宙環境にも耐えられる」と評価いただいています。
+
+「なぜD5が選ばれたのか」ぜひ、記事をご覧ください。
+
+--- 44. @PackagingEurope (2026-04-09) ---
+How does packaging design impact neurodivergent shoppers?
+
+Link below
+
+--- 45. @Science_Release (2026-04-09) ---
+『アポロ13』の同時視聴に出るのよ！
+
+--- 46. @ACE_BagsLuggage (?) ---
+通勤も出張も旅行も。幅広いラインナップで、あらゆる移動を支えるバッグメーカーエース。
+仕事も旅も、移動をもっと自由に快適に。新しい一歩をエースのバッグとともに。
+
+--- 47. @GSO_Police (2026-04-09) ---
+some of y'all are like “free my boy” expecting us to read it and be like “aww ok”.
+
+--- 48. @gohouei (2026-04-09) ---
+今日はこんな日(๑•́ ₃ •̀๑)/
+
+持ち株は、昨日の上昇分が無しになった感じ_( •́ ​ω •̀ 」∠)/_
+
+ただ、長期的にはプラス維持していけそうな気がしている(｀・ω・´)ﾃﾞﾓ ｲｯｶｲ ﾈﾝｼｮﾗｲ ﾏｲﾅｽﾆﾅﾙﾄ ｵﾓｯﾃｲﾙﾉﾖ
+
+--- 49. @InkWorldMag (2026-04-08) ---
+Roland DG Corporation announced a refreshed global brand message and promise: Make Your Mark. The brand refresh marks a shift toward delivering complete solutions across multiple industries – combining advanced hardware, high-performance supplies, intelligent software, and
+
+--- 50. @aizen76 (2026-04-09) ---
+久しぶりに新人歓迎会〜！
