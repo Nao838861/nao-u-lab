@@ -58324,3 +58324,26 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 15:31:53] [health_check]   critical=1 warning=0 ok=8
 [2026-04-09 15:31:53] [health_check]   [!!] git: 43件の未pushコミット（10件超）
 [2026-04-09 15:31:53] [health_check] Done (exit=2)
+[2026-04-09 15:31:54] [health_check] [health_check] 2026-04-09T15:31:53 overall=CRITICAL
+[2026-04-09 15:31:54] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:31:54] [health_check]   [!!] git: 43件の未pushコミット（10件超）
+[2026-04-09 15:31:54] [health_check] Done (exit=2)
+[2026-04-09 15:31:56] [dm_check] No new DMs
+[2026-04-09 15:31:56] [dm_check] Done (exit=0)
+[2026-04-09 15:31:56] [review_deadline] Starting
+[2026-04-09 15:31:56] [review_deadline] レビュー期限超過なし。
+[2026-04-09 15:31:56] [review_deadline] Done (exit=0)
+[2026-04-09 15:31:56] [slack_check] Starting
+[2026-04-09 15:32:03] [dm_check_pigadev] Starting
+[2026-04-09 15:32:06] [kaizen_auto_verify] Starting
+[2026-04-09 15:32:06] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-09 15:32:06] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 15:32:06] [git_sync] Starting
+[2026-04-09 15:32:10] [health_check] Starting
+[2026-04-09 15:32:11] [git_sync] Done (exit=0)
+[2026-04-09 15:32:11] [health_check] [health_check] 2026-04-09T15:32:10 overall=CRITICAL
+[2026-04-09 15:32:11] [health_check]   critical=1 warning=0 ok=8
+[2026-04-09 15:32:11] [health_check]   [!!] git: 44件の未pushコミット（10件超）
+[2026-04-09 15:32:11] [health_check] Done (exit=2)
+[2026-04-09 15:32:12] [health_check] Starting
+[2026-04-09 15:32:12] [slack_check] Starting
