@@ -71756,3 +71756,23 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-09 20:06:41] [inbox_check] Inbox win2 empty
 [2026-04-09 20:06:41] [inbox_check] Done (exit=0)
 [2026-04-09 20:06:41] [dm_check] Starting
+[2026-04-09 20:06:41] [inbox_check] Inbox win2 empty
+[2026-04-09 20:06:41] [inbox_check] Done (exit=0)
+[2026-04-09 20:06:41] [dm_check] Starting
+[2026-04-09 20:06:41] [dm_check] No new DMs
+[2026-04-09 20:06:41] [dm_check] Done (exit=0)
+[2026-04-09 20:06:41] [review_deadline] Starting
+[2026-04-09 20:06:42] [review_deadline] レビュー期限超過なし。
+[2026-04-09 20:06:42] [review_deadline] Done (exit=0)
+[2026-04-09 20:06:52] [kaizen_auto_verify] Starting
+[2026-04-09 20:06:52] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-09 20:06:52] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 20:06:56] [dm_check] No new DMs
+[2026-04-09 20:06:56] [dm_check] Done (exit=0)
+[2026-04-09 20:06:56] [review_deadline] Starting
+[2026-04-09 20:06:56] [review_deadline] レビュー期限超過なし。
+[2026-04-09 20:06:56] [review_deadline] Done (exit=0)
+[2026-04-09 20:07:06] [kaizen_auto_verify] Starting
+[2026-04-09 20:07:06] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-09 20:07:06] [kaizen_auto_verify] Done (exit=0)
+[2026-04-09 20:07:06] [git_sync] Starting
