@@ -453,11 +453,12 @@ def generate_plans(ctx):
     for dist, width in terrain['pits']:
         plans.append(CrossPitPlan(dist, width, mario_x))
 
-    # Walls — only when no pit is within 100px (pit takes priority)
+    # Walls — generate for walls CLOSER than the nearest pit
+    # (must climb wall before reaching the pit), or when pit is far
     nearest_pit_dist = min(
         (max(d, 0) for d, _ in terrain['pits']), default=999)
-    if nearest_pit_dist > 100:
-        for dist, height in terrain['walls']:
+    for dist, height in terrain['walls']:
+        if dist < nearest_pit_dist or nearest_pit_dist > 100:
             plans.append(ClimbWallPlan(dist, height))
 
     # Hittable blocks
