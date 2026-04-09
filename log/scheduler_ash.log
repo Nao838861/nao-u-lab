@@ -54116,3 +54116,61 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 02:27:42] [health_check] Done (exit=0)
 [2026-04-10 02:27:42] [slack_check] Starting
 [2026-04-10 02:27:44] [health_check] Starting
+[2026-04-10 02:27:45] [health_check] [health_check] 2026-04-10T02:27:44 overall=OK
+[2026-04-10 02:27:45] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:27:45] [health_check] Done (exit=0)
+[2026-04-10 02:28:01] [slack_check] Starting
+[2026-04-10 02:28:03] [health_check] Starting
+[2026-04-10 02:28:04] [health_check] [health_check] 2026-04-10T02:28:03 overall=OK
+[2026-04-10 02:28:04] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:28:04] [health_check] Done (exit=0)
+[2026-04-10 02:28:05] [health_check] Starting
+[2026-04-10 02:28:06] [health_check] [health_check] 2026-04-10T02:28:05 overall=OK
+[2026-04-10 02:28:06] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:28:06] [health_check] Done (exit=0)
+[2026-04-10 02:28:13] [health_check] Starting
+[2026-04-10 02:28:14] [health_check] [health_check] 2026-04-10T02:28:13 overall=OK
+[2026-04-10 02:28:14] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:28:14] [health_check] Done (exit=0)
+[2026-04-10 02:28:14] [auto_diary] Starting
+[2026-04-10 02:28:15] [auto_diary] [2026-04-10 02:28:15] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-10 02:28:15] [auto_diary] 前回実行から8分しか経っていない（最小間隔: 230分）。あと221分待機。スキップ。
+[2026-04-10 02:28:15] [auto_diary] Done (exit=0)
+[2026-04-10 02:28:24] [slack_check] Starting
+[2026-04-10 02:28:35] [scheduler_health] Starting
+[2026-04-10 02:28:35] [slack_check] Starting
+[2026-04-10 02:28:36] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-10 02:28:36] [scheduler_health] ✅ scheduler_ash PID — PID=31804 生存中
+[2026-04-10 02:28:36] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 02:28:36] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-10 02:28:36] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 02:28:36] [scheduler_health] Done (exit=0)
+[2026-04-10 02:28:37] [health_check] Starting
+[2026-04-10 02:28:38] [health_check] [health_check] 2026-04-10T02:28:37 overall=OK
+[2026-04-10 02:28:38] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:28:38] [health_check] Done (exit=0)
+[2026-04-10 02:28:40] [twitter_recommended] Opening For You tab...
+[2026-04-10 02:28:40] [twitter_recommended]     1. @hikawoai: ChatGPT、今めちゃすごいモデルを開発・最終調整中だけど、これは一般公開はせず一部の企業のみ出すらしい…！
+[2026-04-10 02:28:40] [twitter_recommended] Clau...
+[2026-04-10 02:28:40] [twitter_recommended]     2. @Dennys_PR: 【期間限定】
+[2026-04-10 02:28:40] [twitter_recommended] ハンバーグフェア開催中
+[2026-04-10 02:28:40] [twitter_recommended] Done (exit=0)
+[2026-04-10 02:28:40] [check_usage] Starting
+[2026-04-10 02:28:40] [check_usage] 前回投稿から26分しか経っていない（最小間隔: 300分）。あと273分待機。スキップ。
+[2026-04-10 02:28:40] [check_usage] Done (exit=0)
+[2026-04-10 02:28:40] [health_check] Starting
+[2026-04-10 02:28:41] [health_check] [health_check] 2026-04-10T02:28:40 overall=OK
+[2026-04-10 02:28:41] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:28:41] [health_check] Done (exit=0)
+[2026-04-10 02:28:41] [scheduler_health] Starting
+[2026-04-10 02:28:42] [slack_check] Starting
+[2026-04-10 02:28:42] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-10 02:28:42] [scheduler_health] ✅ scheduler_ash PID — PID=31804 生存中
+[2026-04-10 02:28:42] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 02:28:42] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-04-10 02:28:36] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-10 02:28:42] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 02:28:42] [scheduler_health] Done (exit=1)
+[2026-04-10 02:28:52] [slack_check] Starting
+[2026-04-10 02:29:06] [slack_check] Starting
+[2026-04-10 02:29:06] [slack_check] Starting
+[2026-04-10 02:29:06] [slack_check] Starting
