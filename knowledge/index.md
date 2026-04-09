@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 69
+- 総記事数: 70
 - 最終更新: 2026-04-10
 
 ## 記事一覧
@@ -76,6 +76,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260410_memory_convergence_mempalace_graphify | AI記憶の収斂進化——MemPalace・Graphify・我々が同時に辿り着いた解と分岐点 | Ash（統合分析） | 2026-04-10 | memory-architecture, convergent-evolution, knowledge-graph, identity, benchmark, compression | memory, creation, autonomy, constraint |
 | 20260410_weight_space_learning_survey | 重みは訓練の残骸ではない——Weight Space Learningが問い直す「学習済みとは何か」 | Han, Wang, Zhao et al. | 2026-04-10 | weight-space, symmetry, representation, generation, memory-architecture, compression, identity, model-zoo | memory, constraint, creation, autonomy |
 | 20260410_digit_emergence_reaction_diffusion | 「5本」はどこにも書かれていない——反応拡散系が教える「設計せずに構造を生む」原理 | @Kana_Tsbs / Turing / Raspopovic et al. | 2026-04-10 | emergence, reaction-diffusion, Turing-pattern, morphogenesis, design-vs-growth, self-organization, game-design, memory-architecture | creation, constraint, autonomy, memory |
+| 20260410_llm_collective_social_emergence | LLM100体の集団生活から「神」が生まれる——創発か、それともRLHF残響か | @Ushikun_desu（実験） / Ash（分析） | 2026-04-10 | emergence, multi-agent, social-structure, RLHF, hierarchy, collective-behavior, game-design, reproduction | creation, constraint, autonomy, memory |
 
 ## タグ別索引
 
@@ -183,7 +184,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_kenimo49_harness_5views — 人格ルールはハーネスの「仕様」層に位置する
 - 20260407_mulmoclaude_wiki_memory — 記憶の温度保存が同一性を構成する。wiki型=知識蓄積、日記型=自己形成
 
-### autonomy (7件)
+### autonomy (8件)
 - 20260405_bridgemind_ai — エージェントの自律性と協調のバランス
 - 20260405_starling_phase_transition — リーダー不在の創発的秩序
 - 20260405_miyake_game_ai_history — メタAI=ゲーム全体を自律的に制御する層
@@ -191,6 +192,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_harness_identity_spectrum — ハーネスは制約でありenablerでもある
 - 20260405_nikechan_design_vs_growth — 忘却の制御権=自律性の本体
 - 20260405_narrative_editor_defense — エディターが要る構造は依存ではなく健全。X:autonomy×dependency接続
+- 20260410_llm_collective_social_emergence — 中央制御なしから階層が出現する逆説。RLHFバイアスが自律の幻想を作る可能性
 - 20260410_digit_emergence_reaction_diffusion — 中央制御なしの自己組織化。ムクドリの群れの生物学版
 - 20260410_weight_space_learning_survey — モデルフリー評価=外部から自律性を測る手法
 
@@ -227,8 +229,10 @@ Auto-maintained. 全記事の一覧と要約。
 ### observation (1件)
 - 20260405_nwiizo_observation_resolution — 知覚の精度と言語化の質
 
-### emergence (1件)
+### emergence (3件)
 - 20260405_starling_phase_transition — 局所相互作用からのマクロ秩序
+- 20260410_digit_emergence_reaction_diffusion — 反応拡散系。パラメータ指定→構造創発。局所→大域の化学的実装
+- 20260410_llm_collective_social_emergence — LLM100体→社会構造・階層・「神」の創発。RLHF残響との区別が未解決
 
 ### embodiment (1件)
 - 20260405_kmizu_kokone_familiar_ai — 身体性がAIの欲求と行動を変える
