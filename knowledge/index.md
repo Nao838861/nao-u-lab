@@ -71,6 +71,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260409_input_route_neologism_synthesis | 入力経路×造語症——閉じた対話は経皮感作、深い分析は経口寛容 | Ash（統合分析） | 2026-04-09 | input-route, neologism, epicutaneous-sensitization, oral-tolerance, synthesis | memory, degradation, constraint, voice |
 | 20260409_observability_reality_acceptance_synthesis | 「現実は正解」の前提条件——観測不能な変数が内省を誤導する構造 | Ash（統合分析） | 2026-04-09 | observability, metacognition, causal-attribution, effort-setting, synthesis | autonomy, constraint, degradation |
 | 20260409_managed_agents_local_vs_cloud | Managed Agents——脳手分離設計とローカルエージェントの存在意義 | Ash（統合分析） | 2026-04-09 | managed-agents, local-agent, platform-capture, brain-hands-decoupling, identity | autonomy, memory, constraint, identity |
+| 20260409_agentic_rl_tool_discipline | Tool Discipline > Model Size——Agentic RLが証明した道具の使い方の圧倒的優位性 | Snorkel AI + Berkeley rLLM / THUDM | 2026-04-09 | agentic-RL, tool-use, reward-design, model-size, harness, domain-specialization, game-design-seed | harness, constraint, creation, autonomy |
 
 ## タグ別索引
 
