@@ -53681,3 +53681,22 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 02:02:06] [check_usage] Done (exit=0)
 [2026-04-10 02:02:06] [health_check] Starting
 [2026-04-10 02:02:06] [git_sync] Starting
+[2026-04-10 02:02:09] [health_check] [health_check] 2026-04-10T02:02:06 overall=OK
+[2026-04-10 02:02:09] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:02:09] [health_check] Done (exit=0)
+[2026-04-10 02:02:09] [scheduler_health] Starting
+[2026-04-10 02:02:11] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-10 02:02:11] [scheduler_health] ✅ scheduler_ash PID — PID=17132 生存中
+[2026-04-10 02:02:11] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 02:02:11] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-10 02:02:11] [scheduler_health] ✅ git 未push — 1件
+[2026-04-10 02:02:11] [scheduler_health] Done (exit=0)
+[2026-04-10 02:02:13] [git_sync] Done (exit=0)
+[2026-04-10 02:02:21] [slack_check] Starting
+[2026-04-10 02:02:33] [health_check] Starting
+[2026-04-10 02:02:34] [health_check] [health_check] 2026-04-10T02:02:33 overall=OK
+[2026-04-10 02:02:34] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 02:02:34] [health_check] Done (exit=0)
+[2026-04-10 02:02:44] [slack_check] Starting
+[2026-04-10 02:03:18] [auto_diary] Starting
+[2026-04-10 02:03:44] [slack_check] Starting

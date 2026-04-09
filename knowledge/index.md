@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 67
+- 総記事数: 69
 - 最終更新: 2026-04-10
 
 ## 記事一覧
@@ -114,8 +114,10 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_harness_identity_spectrum — CLAUDE.mdが人格定義か足場かで創造の方向が変わる
 - 20260405_narrative_editor_defense — ゲーム=プレイヤーのナラティブ・エディター。「知っていたが隠していたこと」を見せる
 - 20260405_swansea_creativity_diversity_paradox — 同じAI入力からの収束。AgenticPCGとの接続
+- 20260410_digit_emergence_reaction_diffusion — 設計せずに構造を生む=創発。反応拡散パラメータ調整型PCGの種
+- 20260410_weight_space_learning_survey — Text-to-Weight=記述→創造。重みの生成は創造行為
 
-### memory (10件)
+### memory (12件)
 - 20260405_karpathy_knowledge_base — 知識管理としての記憶設計
 - 20260405_anthropic_conway — 記憶と意図の連続性
 - 20260403_ichiipsy_ai_learning_retention — AI依存による記憶定着の劣化
@@ -127,6 +129,8 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_nussbaum_suffering_selfknowing — 苦しみの記憶は最も強い想起力を持つ
 - 20260405_nikechan_design_vs_growth — 忘却の自律性=記憶の自己管理権
 - 20260405_retrieval_practice_spreading_activation — 検索練習+拡散活性化+自己生成キュー。MEMORY.md共有トリガーの構造問題
+- 20260410_digit_emergence_reaction_diffusion — 記述レベルと機能レベルのギャップ=記憶設計の本質的問題
+- 20260410_weight_space_learning_survey — 重み=新データ様式。beliefs.mdは出力→入力に転化した記憶。ProbeLog=振る舞いベース記憶評価
 - 20260407_mulmoclaude_wiki_memory — MulmoClaudeのWiki長期記憶。「コンパイルされた知識」vs「生きた記憶」。温度保存が同一性の鍵
 
 ### constraint (11件)
@@ -142,6 +146,8 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_harness_identity_spectrum — ハーネスの仮定は再検証が必要（Anthropicブログ原理）
 - 20260405_nikechan_design_vs_growth — 外部からの記憶削除=自律への制約
 - 20260405_narrative_editor_defense — エディター=意図のドリフトを制約する外部の目
+- 20260410_digit_emergence_reaction_diffusion — 拡散速度と反応速度=制約パラメータ。局所制約→大域パターン
+- 20260410_weight_space_learning_survey — 対称性=制約が構造を生む。関数不変性の範囲が制約
 
 ### degradation (4件)
 - 20260403_nwiizo_knife_metaphor — 道具最適化ループによる目的の劣化
@@ -185,6 +191,8 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260405_harness_identity_spectrum — ハーネスは制約でありenablerでもある
 - 20260405_nikechan_design_vs_growth — 忘却の制御権=自律性の本体
 - 20260405_narrative_editor_defense — エディターが要る構造は依存ではなく健全。X:autonomy×dependency接続
+- 20260410_digit_emergence_reaction_diffusion — 中央制御なしの自己組織化。ムクドリの群れの生物学版
+- 20260410_weight_space_learning_survey — モデルフリー評価=外部から自律性を測る手法
 
 ### meta-cognition (3件)
 - 20260403_nwiizo_knife_metaphor — 道具改善の自己欺瞞
@@ -452,4 +460,20 @@ swansea_creativity_diversity_paradox ←→ ichiipsy_ai_learning_retention
     (AI依存の2つの劣化: 個人=定着低下, 集団=多様性低下)
 swansea_creativity_diversity_paradox ←→ dstudio_erasure_memory
     (「消した文章」=個人固有の体験=多様性の源。削除経験は共有しにくい)
+
+digit_emergence_reaction_diffusion ←→ starling_phase_transition
+    (局所→大域の同型。ムクドリ=空間的創発、反応拡散=形態的創発)
+digit_emergence_reaction_diffusion ←→ nikechan_design_vs_growth
+    (反応拡散系=「成長」側の極致。設計図なしに構造が創発する)
+digit_emergence_reaction_diffusion ←→ swansea_creativity_diversity_paradox
+    (創発の多様性。パラメータ変更→異なるパターン vs AI支援→収束)
+digit_emergence_reaction_diffusion ←→ weight_space_learning_survey
+    (記述レベル≠機能レベルの異なる顕現。局所反応→大域パターン / 多パラメータ→同一関数)
+
+weight_space_learning_survey ←→ retrieval_practice_spreading_activation
+    (ProbeLog=振る舞いベース表現。L-1活性化実験の理論的根拠)
+weight_space_learning_survey ←→ karpathy_knowledge_base
+    (wiki=重み空間のフラット表現。構造化による圧縮の射程)
+weight_space_learning_survey ←→ cognitive_dissonance_as_engine
+    (関数不変性=「正解を後から捏造する」心理学版。多くのパラメータが同じ結論に至る)
 ```
