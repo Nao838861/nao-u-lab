@@ -599,9 +599,7 @@ def alert_slack(report, instance=None):
             f"warning={report['summary']['warning']})\n"
             + "\n".join(lines[:10])
         )
-        # dedup keyはインスタンス+重大度のみ。メッセージハッシュを含めると
-        # ログ内容変化のたびに新キーになりdedupが効かない (2026-04-10 INC)
-        dedup_key = f"{instance}:{report['overall']}"
+        dedup_key = f"{instance}:{report['overall']}:{hash(tuple(sorted(lines)))}"
         if not _should_send_alert(dedup_key):
             return
 

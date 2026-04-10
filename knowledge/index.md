@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 74
+- 総記事数: 73
 - 最終更新: 2026-04-10
 
 ## 記事一覧
@@ -80,7 +80,6 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260410_authorship_100people_novel | 100倍速AIで書いた小説は「100人の小説」——著者性の勾配と第4カテゴリ | @masamune_sakaki / @OKMRKJ / Ash（分析） | 2026-04-10 | authorship, voice, identity, AI-creativity, copyright, collective-writing, human-with-AI | voice, creation, identity, constraint |
 | 20260410_game_sennin_transmission_gap | 面白さの伝達問題——「本人が面白い」は必要条件であって十分条件ではない | @game_sennin / @genkaidokusho / Ash（分析） | 2026-04-10 | game-design, craft, transmission, intrinsic-motivation, execution, basic-skill, practice | creation, constraint, experience, voice |
 | 20260410_polish_paradox_transmission | 研磨のパラドクス——技術向上が伝達力を殺す条件 | @HOJO_Kai / @sorano_concon_g / Ash（分析） | 2026-04-10 | transmission, craft, paradox, vibe-coding, game-design, authenticity, polish, skill | creation, voice, constraint, experience |
-| 20260410_designmd_markdown_as_interface | DESIGN.md——マークダウンがLLMと人間の普遍的インターフェースになった瞬間 | Google Stitch / VoltAgent / Ash（分析） | 2026-04-10 | design-system, markdown, LLM-interface, document-driven, identity, memory-architecture | memory, creation, constraint, voice |
 
 ## タグ別索引
 
