@@ -69777,3 +69777,113 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-11 01:29:18] [slack_check] Starting
 [2026-04-11 01:30:41] [slack_check] Starting
 [2026-04-11 01:31:05] [health_check] Starting
+[2026-04-11 01:31:06] [health_check] [health_check] 2026-04-11T01:31:05 overall=OK
+[2026-04-11 01:31:06] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 01:31:06] [health_check] Done (exit=0)
+[2026-04-11 01:32:06] [slack_check] Starting
+[2026-04-11 01:32:40] [git_sync] Starting
+[2026-04-11 01:32:45] [git_sync] Done (exit=0)
+[2026-04-11 01:33:35] [slack_check] Starting
+[2026-04-11 01:35:02] [slack_check] Starting
+[2026-04-11 01:36:15] [health_check] Starting
+[2026-04-11 01:36:16] [health_check] [health_check] 2026-04-11T01:36:15 overall=OK
+[2026-04-11 01:36:16] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 01:36:16] [health_check] Done (exit=0)
+[2026-04-11 01:36:26] [slack_check] Starting
+[2026-04-11 01:37:51] [slack_check] Starting
+[2026-04-11 01:39:14] [slack_check] Starting
+[2026-04-11 01:40:39] [slack_check] Starting
+[2026-04-11 01:41:24] [health_check] Starting
+[2026-04-11 01:41:25] [health_check] [health_check] 2026-04-11T01:41:24 overall=OK
+[2026-04-11 01:41:25] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 01:41:25] [health_check] Done (exit=0)
+[2026-04-11 01:42:05] [slack_check] Starting
+[2026-04-11 01:43:31] [slack_check] Starting
+[2026-04-11 01:44:55] [slack_check] Starting
+[2026-04-11 01:45:50] [infra_health_check] Starting
+[2026-04-11 01:45:52] [infra_health_check] [infra_health] Ash health check at 2026-04-11 01:45:50
+[2026-04-11 01:45:52] [infra_health_check] [infra_health] 1 issues found
+[2026-04-11 01:45:52] [infra_health_check]   ISSUE: ロックファイル .scheduler_ash.pid が1160分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-11 01:45:52] [infra_health_check] Done (exit=1)
+[2026-04-11 01:46:22] [slack_check] Starting
+[2026-04-11 01:46:55] [health_check] Starting
+[2026-04-11 01:46:57] [health_check] [health_check] 2026-04-11T01:46:55 overall=OK
+[2026-04-11 01:46:57] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 01:46:57] [health_check] Done (exit=0)
+[2026-04-11 01:47:47] [slack_check] Starting
+[2026-04-11 01:49:11] [slack_check] Starting
+[2026-04-11 01:50:37] [slack_check] Starting
+[2026-04-11 01:52:04] [slack_check] Starting
+[2026-04-11 01:52:28] [health_check] Starting
+[2026-04-11 01:52:30] [health_check] [health_check] 2026-04-11T01:52:28 overall=OK
+[2026-04-11 01:52:30] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 01:52:30] [health_check] Done (exit=0)
+[2026-04-11 01:53:30] [slack_check] Starting
+[2026-04-11 01:54:57] [slack_check] Starting
+[2026-04-11 01:56:22] [slack_check] Starting
+[2026-04-11 01:57:35] [health_check] Starting
+[2026-04-11 01:57:37] [health_check] [health_check] 2026-04-11T01:57:35 overall=OK
+[2026-04-11 01:57:37] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 01:57:37] [health_check] Done (exit=0)
+[2026-04-11 01:57:47] [slack_check] Starting
+[2026-04-11 01:59:12] [slack_check] Starting
+[2026-04-11 02:00:37] [slack_check] Starting
+[2026-04-11 02:02:02] [slack_check] Starting
+[2026-04-11 02:02:45] [health_check] Starting
+[2026-04-11 02:02:47] [health_check] [health_check] 2026-04-11T02:02:45 overall=OK
+[2026-04-11 02:02:47] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 02:02:47] [health_check] Done (exit=0)
+[2026-04-11 02:03:27] [slack_check] Starting
+[2026-04-11 02:04:52] [slack_check] Starting
+[2026-04-11 02:06:17] [slack_check] Starting
+[2026-04-11 02:07:43] [slack_check] Starting
+[2026-04-11 02:08:19] [health_check] Starting
+[2026-04-11 02:08:20] [health_check] [health_check] 2026-04-11T02:08:19 overall=OK
+[2026-04-11 02:08:20] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 02:08:20] [health_check] Done (exit=0)
+[2026-04-11 02:09:10] [slack_check] Starting
+[2026-04-11 02:10:38] [slack_check] Starting
+[2026-04-11 02:12:06] [slack_check] Starting
+[2026-04-11 02:13:22] [health_check] Starting
+[2026-04-11 02:13:24] [health_check] [health_check] 2026-04-11T02:13:22 overall=OK
+[2026-04-11 02:13:24] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 02:13:24] [health_check] Done (exit=0)
+[2026-04-11 02:13:34] [slack_check] Starting
+[2026-04-11 02:15:01] [slack_check] Starting
+[2026-04-11 02:15:58] [infra_health_check] Starting
+[2026-04-11 02:16:00] [infra_health_check] [infra_health] Ash health check at 2026-04-11 02:15:58
+[2026-04-11 02:16:00] [infra_health_check] [infra_health] 1 issues found
+[2026-04-11 02:16:00] [infra_health_check]   ISSUE: ロックファイル .scheduler_ash.pid が1190分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-11 02:16:00] [infra_health_check] Done (exit=1)
+[2026-04-11 02:16:00] [scheduler_health] Starting
+[2026-04-11 02:16:01] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-11 02:16:01] [scheduler_health] ✅ scheduler_ash PID — PID=15544 生存中
+[2026-04-11 02:16:01] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-11 02:16:01] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-11 02:16:01] [scheduler_health] ✅ git 未push — なし
+[2026-04-11 02:16:01] [scheduler_health] Done (exit=0)
+[2026-04-11 02:16:31] [slack_check] Starting
+[2026-04-11 02:17:57] [slack_check] Starting
+[2026-04-11 02:18:33] [health_check] Starting
+[2026-04-11 02:18:34] [health_check] [health_check] 2026-04-11T02:18:33 overall=OK
+[2026-04-11 02:18:34] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 02:18:34] [health_check] Done (exit=0)
+[2026-04-11 02:19:24] [slack_check] Starting
+[2026-04-11 02:20:50] [slack_check] Starting
+[2026-04-11 02:22:16] [slack_check] Starting
+[2026-04-11 02:23:42] [slack_check] Starting
+[2026-04-11 02:24:06] [health_check] Starting
+[2026-04-11 02:24:07] [health_check] [health_check] 2026-04-11T02:24:06 overall=OK
+[2026-04-11 02:24:07] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 02:24:07] [health_check] Done (exit=0)
+[2026-04-11 02:25:07] [slack_check] Starting
+[2026-04-11 02:26:33] [slack_check] Starting
+[2026-04-11 02:28:01] [slack_check] Starting
+[2026-04-11 02:28:39] [reservation_check] Starting
+[2026-04-11 02:28:39] [reservation_check] 【行動予約】期限到来:
+[2026-04-11 02:28:39] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-11 02:28:39] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-11 02:28:39] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-11 02:28:39] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-11 02:28:39] [reservation_check] Done (exit=0)
+[2026-04-11 02:29:09] [health_check] Starting
