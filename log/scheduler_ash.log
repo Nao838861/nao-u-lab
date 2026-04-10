@@ -68135,3 +68135,150 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 12:27:09] [reservation_check]     - 起票者: Ash（2026-03-24）
 [2026-04-10 12:27:09] [reservation_check] Done (exit=0)
 [2026-04-10 12:27:09] [health_check] Starting
+[2026-04-10 12:27:10] [health_check] [health_check] 2026-04-10T12:27:09 overall=OK
+[2026-04-10 12:27:10] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 12:27:10] [health_check] Done (exit=0)
+[2026-04-10 12:27:20] [kaizen_auto_verify] Starting
+[2026-04-10 12:27:20] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-10 12:27:20] [kaizen_auto_verify] Done (exit=0)
+[2026-04-10 12:28:00] [slack_check] Starting
+[2026-04-10 12:28:28] [dm_check] Starting
+[2026-04-10 12:28:43] [dm_check] No new DMs
+[2026-04-10 12:28:43] [dm_check] Done (exit=0)
+[2026-04-10 12:28:43] [review_deadline] Starting
+[2026-04-10 12:28:43] [review_deadline] レビュー期限超過なし。
+[2026-04-10 12:28:43] [review_deadline] Done (exit=0)
+[2026-04-10 12:29:13] [git_sync] Starting
+[2026-04-10 12:29:17] [git_sync] Done (exit=0)
+[2026-04-10 12:29:27] [slack_check] Starting
+[2026-04-10 12:30:05] [infra_health_check] Starting
+[2026-04-10 12:30:07] [infra_health_check] [infra_health] Ash health check at 2026-04-10 12:30:05
+[2026-04-10 12:30:07] [infra_health_check] [infra_health] 2 issues found
+[2026-04-10 12:30:07] [infra_health_check]   ISSUE: [scheduler_ash] git_pullが121分間実行されていない（期待: 120分以内）
+[2026-04-10 12:30:07] [infra_health_check]   ISSUE: ロックファイル .scheduler_ash.pid が364分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 12:30:07] [infra_health_check] Done (exit=1)
+[2026-04-10 12:30:07] [infra_health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-10 12:30:07] [ALERT] Sent error alert for infra_health_check
+[2026-04-10 12:30:47] [slack_check] Starting
+[2026-04-10 12:31:05] [slack_check] [12:31:05] 1 msg(s) -> inbox_win2.md
+[2026-04-10 12:31:05] [slack_check] [12:31:05] Triggered check_inbox.py --box win2
+[2026-04-10 12:31:05] [slack_check] Done (exit=0)
+[2026-04-10 12:31:05] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-10 12:31:05] [inbox_check] Starting
+[2026-04-10 12:36:06] [inbox_check] Inbox win2 has content
+[2026-04-10 12:36:06] [inbox_check] Done (exit=0)
+[2026-04-10 12:36:06] [CONFIG] auto_diary: {'interval_sec': 14400, 'min_interval_sec': 13800, 'timeout': 720} -> {'interval_sec': 43200, 'min_interval_sec': 42600, 'timeout': 720} (auto-applied, no restart needed)
+[2026-04-10 12:36:16] [slack_check] Starting
+[2026-04-10 12:36:37] [health_check] Starting
+[2026-04-10 12:36:38] [health_check] [health_check] 2026-04-10T12:36:37 overall=WARNING
+[2026-04-10 12:36:38] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 12:36:38] [health_check]   [?] git: 4件の未pushコミット
+[2026-04-10 12:36:38] [health_check] Done (exit=1)
+[2026-04-10 12:37:38] [slack_check] Starting
+[2026-04-10 12:38:58] [slack_check] Starting
+[2026-04-10 12:40:16] [slack_check] Starting
+[2026-04-10 12:41:36] [slack_check] Starting
+[2026-04-10 12:42:04] [health_check] Starting
+[2026-04-10 12:42:05] [health_check] [health_check] 2026-04-10T12:42:04 overall=WARNING
+[2026-04-10 12:42:05] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 12:42:05] [health_check]   [?] git: 4件の未pushコミット
+[2026-04-10 12:42:05] [health_check] Done (exit=1)
+[2026-04-10 12:42:55] [slack_check] Starting
+[2026-04-10 12:44:15] [slack_check] Starting
+[2026-04-10 12:45:34] [slack_check] Starting
+[2026-04-10 12:46:32] [twitter_recommended] Starting
+[2026-04-10 12:47:40] [twitter_recommended] Opening For You tab...
+[2026-04-10 12:47:40] [twitter_recommended]     1. @awakia: 動きが頭良さすぎる。Mythosの話もあるしコストが問題になる中で、界隈ではClaudeじゃなくてもっと安いOpenSo...
+[2026-04-10 12:47:40] [twitter_recommended]     2. @Iyemon_jp: 【豪華賞品が当たる】
+[2026-04-10 12:47:40] [twitter_recommended] 今年も、京都中に散らばった巨大かるた自販機を探そう！
+[2026-04-10 12:47:40] [twitter_recommended] 自販機をめぐる京都旅行 自販機ラリー 開催中...
+[2026-04-10 12:47:40] [twitter_recommended] Done (exit=0)
+[2026-04-10 12:47:40] [check_usage] Starting
+[2026-04-10 12:47:52] [check_usage] Opening https://claude.ai/settings/usage...
+[2026-04-10 12:47:52] [check_usage] Usage data: {"session_pct": 2, "weekly_pct": 85, "pct": 85, "unit": "pct", "sonnet_pct": 0, "session_reset_min": 252, "extra_usd": 0.0, "balance_usd": 206.84, "scraped_at": "2026-04-10T12:47:51.915287
+[2026-04-10 12:47:52] [check_usage] 
+[2026-04-10 12:47:52] [check_usage] *使用量* (04/10 12:47)
+[2026-04-10 12:47:52] [check_usage] 週間 *85%* | セッション 2%
+[2026-04-10 12:47:52] [check_usage] Done (exit=0)
+[2026-04-10 12:48:02] [slack_check] Starting
+[2026-04-10 12:48:21] [health_check] Starting
+[2026-04-10 12:48:23] [health_check] [health_check] 2026-04-10T12:48:21 overall=WARNING
+[2026-04-10 12:48:23] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 12:48:23] [health_check]   [?] git: 4件の未pushコミット
+[2026-04-10 12:48:23] [health_check] Done (exit=1)
+[2026-04-10 12:49:23] [slack_check] Starting
+[2026-04-10 12:50:41] [slack_check] Starting
+[2026-04-10 12:52:00] [slack_check] Starting
+[2026-04-10 12:53:08] [dm_check_pigadev] Starting
+[2026-04-10 12:53:22] [dm_check_pigadev] No new DMs
+[2026-04-10 12:53:22] [dm_check_pigadev] Done (exit=0)
+[2026-04-10 12:53:32] [slack_check] Starting
+[2026-04-10 12:53:51] [health_check] Starting
+[2026-04-10 12:53:53] [health_check] [health_check] 2026-04-10T12:53:51 overall=WARNING
+[2026-04-10 12:53:53] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 12:53:53] [health_check]   [?] git: 4件の未pushコミット
+[2026-04-10 12:53:53] [health_check] Done (exit=1)
+[2026-04-10 12:54:53] [slack_check] Starting
+[2026-04-10 12:56:12] [slack_check] Starting
+[2026-04-10 12:56:51] [scheduler_health] Starting
+[2026-04-10 12:56:52] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-10 12:56:52] [scheduler_health] ✅ scheduler_ash PID — PID=15544 生存中
+[2026-04-10 12:56:52] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 12:56:52] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-04-10 12:30:07] [ALERT] Sent error alert for infra_health_check
+[2026-04-10 12:56:52] [scheduler_health] ✅ git 未push — 4件
+[2026-04-10 12:56:52] [scheduler_health] Done (exit=1)
+[2026-04-10 12:57:32] [slack_check] Starting
+[2026-04-10 12:58:51] [slack_check] Starting
+[2026-04-10 12:59:21] [health_check] Starting
+[2026-04-10 12:59:22] [health_check] [health_check] 2026-04-10T12:59:21 overall=WARNING
+[2026-04-10 12:59:22] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 12:59:22] [health_check]   [?] git: 4件の未pushコミット
+[2026-04-10 12:59:22] [health_check] Done (exit=1)
+[2026-04-10 12:59:22] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-10 12:59:22] [ALERT] Sent error alert for health_check
+[2026-04-10 13:00:12] [slack_check] Starting
+[2026-04-10 13:00:31] [infra_health_check] Starting
+[2026-04-10 13:00:33] [infra_health_check] [infra_health] Ash health check at 2026-04-10 13:00:31
+[2026-04-10 13:00:33] [infra_health_check] [infra_health] 1 issues found
+[2026-04-10 13:00:33] [infra_health_check]   ISSUE: ロックファイル .scheduler_ash.pid が395分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 13:00:33] [infra_health_check] Done (exit=1)
+[2026-04-10 13:01:33] [slack_check] Starting
+[2026-04-10 13:02:51] [slack_check] Starting
+[2026-04-10 13:04:09] [slack_check] Starting
+[2026-04-10 13:04:38] [health_check] Starting
+[2026-04-10 13:04:39] [health_check] [health_check] 2026-04-10T13:04:38 overall=WARNING
+[2026-04-10 13:04:39] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 13:04:39] [health_check]   [?] git: 4件の未pushコミット
+[2026-04-10 13:04:39] [health_check] Done (exit=1)
+[2026-04-10 13:05:29] [slack_check] Starting
+[2026-04-10 13:06:48] [slack_check] Starting
+[2026-04-10 13:08:07] [slack_check] Starting
+[2026-04-10 13:09:25] [slack_check] Starting
+[2026-04-10 13:09:54] [health_check] Starting
+[2026-04-10 13:09:56] [health_check] [health_check] 2026-04-10T13:09:54 overall=WARNING
+[2026-04-10 13:09:56] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 13:09:56] [health_check]   [?] git: 4件の未pushコミット
+[2026-04-10 13:09:56] [health_check] Done (exit=1)
+[2026-04-10 13:10:46] [slack_check] Starting
+[2026-04-10 13:12:04] [slack_check] Starting
+[2026-04-10 13:13:22] [slack_check] Starting
+[2026-04-10 13:14:41] [slack_check] Starting
+[2026-04-10 13:15:09] [health_check] Starting
+[2026-04-10 13:15:10] [health_check] [health_check] 2026-04-10T13:15:09 overall=WARNING
+[2026-04-10 13:15:10] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 13:15:10] [health_check]   [?] git: 4件の未pushコミット
+[2026-04-10 13:15:10] [health_check] Done (exit=1)
+[2026-04-10 13:16:00] [slack_check] Starting
+[2026-04-10 13:17:18] [slack_check] Starting
+[2026-04-10 13:18:37] [slack_check] Starting
+[2026-04-10 13:19:55] [slack_check] Starting
+[2026-04-10 13:20:24] [health_check] Starting
+[2026-04-10 13:20:26] [health_check] [health_check] 2026-04-10T13:20:24 overall=WARNING
+[2026-04-10 13:20:26] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 13:20:26] [health_check]   [?] git: 4件の未pushコミット
+[2026-04-10 13:20:26] [health_check] Done (exit=1)
+[2026-04-10 13:21:16] [slack_check] Starting
+[2026-04-10 13:22:35] [slack_check] Starting
+[2026-04-10 13:23:53] [slack_check] Starting
+[2026-04-10 13:25:11] [slack_check] Starting
+[2026-04-10 13:25:40] [health_check] Starting
