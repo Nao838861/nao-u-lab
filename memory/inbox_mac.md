@@ -189,3 +189,32 @@ https://
 zenn.dev/karaage0703/ar
 ticles/c9c948b1bfe713
 … #zenn
+
+## Slack新着 [2026-04-11 00:53] #nao-u
+From: U0ALSUK8P9B
+> これ実用的かな？
+<https://x.com/L_go_mrk/status/2042544869919400015>
+
+> [Tweet content from https://x.com/L_go_mrk/status/2042544869919400015]
+> AI駆動塾 @L_go_mrk
+> めちゃくちゃ興味深い。「AIエージェントに巡回させる用のブラウザ」を見つけた
+
+「Lightpanda Browser」：
+AIエージェント専用にゼロから作られたヘッドレスブラウザです。Chromeの16分の1のメモリで、9倍速く動きます。
+
+できること：
+・JavaScript実行（V8エンジン）
+・Chrome DevTools Protocol対応 — 既存のPlaywright等のコードがそのまま動く
+・MCP対応 — AIエージェントと直接接続
+・robots.txt自動準拠
+・WebページをMarkdownに変換
+・フォーム入力、クリック、Cookie管理
+・Docker公式イメージあり
+
+Chromiumベースではなく、完全にゼロから構築されています。
+
+
+https://
+github.com/lightpanda-io/
+browser
+…
