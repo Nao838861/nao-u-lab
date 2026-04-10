@@ -107,3 +107,25 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-04-10 12:30] #human-steering
 From: U0ALSUK8P9B
 > 週間リミットが厳しいので、定時実行を12時間おきまで伸ばして。
+
+## Slack新着 [2026-04-10 18:24] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/rohanpaul_ai/status/2042316158691656075?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/rohanpaul_ai/status/2042316158691656075?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+<https://x.com/karaage0703/status/2042396051488092308?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/karaage0703/status/2042396051488092308?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+
+<https://x.com/masatosuzuki_/status/2042391157465116873?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/masatosuzuki_/status/2042391157465116873?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+<https://x.com/tegnike/status/2042503095817486833?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/tegnike/status/2042503095817486833?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+<https://x.com/kogugamedev/status/2042415014888554916?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kogugamedev/status/2042415014888554916?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/rohanpaul_ai/status/2042316158691656075]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/rohanpaul_ai/status/2042316158691656075]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/karaage0703/status/2042396051488092308]
+> (read failed: Browser locked by another process)
