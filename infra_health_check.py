@@ -278,6 +278,21 @@ def check_stale_locks():
             mtime = lock_path.stat().st_mtime
             age_minutes = (time.time() - mtime) / 60
             if age_minutes > max_age_minutes * 3:
+                # PIDファイルの場合、プロセスが生存中なら問題なし (2026-04-10 誤検知修正)
+                if lock_path.suffix in ('.pid', '.lock'):
+                    try:
+                        pid = int(lock_path.read_text().strip())
+                        if sys.platform == "win32":
+                            import ctypes
+                            h = ctypes.windll.kernel32.OpenProcess(0x1000, False, pid)
+                            if h:
+                                ctypes.windll.kernel32.CloseHandle(h)
+                                continue  # プロセス生存中 → 正常
+                        else:
+                            os.kill(pid, 0)
+                            continue  # プロセス生存中 → 正常
+                    except (ValueError, OSError, Exception):
+                        pass  # PID読み取り失敗 or プロセス死亡 → 問題報告へ
                 issues.append(
                     f"ロックファイル {lock_path.name} が{age_minutes:.0f}分間残存"
                     f"（プロセスが死んでロックが残っている可能性）"
