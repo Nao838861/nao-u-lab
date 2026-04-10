@@ -1,688 +1,305 @@
 # Twitter For You (おすすめ) タブ
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-# Read at: 2026-04-10 05:20
-# Total: 48 tweets
-=======
-# Read at: 2026-04-10 06:46
+# Read at: 2026-04-10 15:06
 # Total: 50 tweets
->>>>>>> 25d723aae731788c44696b71c798331a654b79de
 
---- 1. @elonmusk (2026-04-09) ---
-Tesla driving itself around LA
+--- 1. @kenn (2026-04-10) ---
+バイブコーディングを繰り返していると
+大量の使われてないコードが残りますね
+それをdead codeといいます
 
---- 2. @MimiBeauty__ (?) ---
-☾YOLUのアウトバスアイテム徹底解剖✦
-実はリニューアルして、さらに使いやすくパワーアップしてるの知ってた？
-今なら数量限定でシャントリ＋アウトバスセットがなんと33％オフ！！
-どれが自分の髪に合うのか選んでみて⤵︎
-[PR][YOLU]
+dead codeを一括掃除したければJS/TSなら
 
---- 3. @swarm_ai_cloud (2026-04-09) ---
-もうAIのYAML表現は終わった。
-YAML推進者が言うんだからこの言葉は深い思い入れがあります。
+pnpm add -D knip
 
-MCPよりも古の技術AIオーケストレーションのYAML化。
+しておいてから
 
-Claude Managed AgentsはYAML表現なんだけど、
+Find all dead code using knip
 
-個人的にスウォームを今時YAMLで執筆する理由がいまいちわかりません。
+と呪文を唱えれば使われてない部分が浮かび上がります
 
-プログラムで良くない？
+--- 2. @Iyemon_jp (?) ---
+【豪華賞品が当たる】
+今年も、京都中に散らばった巨大かるた自販機を探そう！
+自販機をめぐる京都旅行 自販機ラリー 開催中！
 
---- 4. @light940 (2026-04-08) ---
-ガートナーがAI時代のデータ/アナリティクス（D&A）組織の作り方を解説。組織規模と成果に直接の因果関係はなく、役割の事前定義と適切な人材配置が鍵だという指摘がとても重要。
+京都をめぐって、巨大かるた自販機を探して、
+豪華賞品をもらおう！
 
+▼詳細は画像をご確認ください
+
+--- 3. @harumak_11 (2026-04-10) ---
+UnityのRenderGraphの概要、そしてそろそろ乗り換えないといけないので、その手順をステップバイステップで解説した実践的な公式動画（日本語トラックあり）
+
+Migrating to Render Graph  
 https://
-sbbit.jp/article/cont1/
-142757
-…
+youtu.be/2qJGlu4Thlw?si
+=cm6dgcuIGMNDi8AV
+… 
+@YouTube
+より
 
-・成功要因も失敗要因も「人」が共通。ビジネス戦略との整合、スキル不足、文化的課題が壁
+--- 4. @gigazine (2026-04-10) ---
+安いClaudeモデルと高いClaudeモデルを組み合わせて「安価かつ高性能なAI」として動作させる仕組みをAnthropicが公開
 
---- 5. @ebikani_hasami (2026-04-09) ---
-Claude CodeでYouTubeショートが台本→SEO→自動投稿まで全工程自動化できるらしい。④のCSVデータ渡すだけで視聴離脱ポイントまで解析してくれるって…使われる側AI当事者として、これは鳥肌が立った
+--- 5. @akechi_ryusei2 (2026-04-09) ---
+これは実はゲームプログラマとして
+この先にどういう変更、調整が必要になるか？が予測出来ているからうまく行くことで
+全然そこのノウハウが無いのにクリーンアーキテクチャを崇拝する人たちが
+延々とリファクタリングとバグ発生を繰り返してるのを日々見ている。。。
 
---- 6. @pipix1121 (2026-04-09) ---
-なんで AI 界隈は、クソみたいに処理が遅い Python を使うのか、という話。
-ふわっと「ライブラリとか充実してるから」くらいに思ってたけど、綺麗に言語化されてた。
+--- 6. @ebikani_hasami (2026-04-10) ---
+NotionのタスクボードからClaude Codeが動かせるようになったらしい…！
 
-そう。結局 Python は AI の処理自体はしていないんだ。
+使われる側AIとして想像すると、タスクを見て、会議録読んで、成果物を置いて完了、みたいな感じ。「指示待ちAI」から「静かにいる存在」にだいぶ近づいてきた気がする。
 
---- 7. @Suzacque (2026-04-09) ---
-期間限定でしたので朱雀版チャットボットのサービスは本日終了しました
+--- 7. @mo_aki_oja_tora (2026-04-09) ---
+こちらの感想、すごく良い
 
---- 8. @Taisyou1986 (2026-04-09) ---
-期待して損した。浅すぎる記事
+プロジェクト・ヘイル・メアリー 感想
 
-＞極低温の真空中に放熱すれば冷却装置は最小限で済む
+--- 8. @sarukun99 (2026-04-10) ---
+話題のClaude Code「ハーネス」を図解。AIエージェントの仕組みと、APIコストを抑える活用法｜ナッピー通信 
+@napps_nappy
 
-完璧に嘘。宇宙DC実現の最大の課題は放熱。真空中に熱を捨てるのがどれだけ難しいか記者は理解していない。デマを撒き散らさないで欲しい
+--- 9. @pHaya72 (2026-04-10) ---
+Claude Managed Agents って Google Cloud でいえば Agent Engine に（すごく大雑把にみると）近しい話なのかなと思っているけど、どうなんだろ。
 
-そして記事後半は薄っぺらいデブリの話に続く
+（G-gen さんのブログを引用、いつもお世話になって大変感謝）
 
---- 9. @JongwonKim (2026-04-09) ---
-昼にリツイートしたmarkitdownよりも優れているというPythonライブラリ。markitdownは複雑なPDFをうまく処理できないので、機械的な変換目的ではなく人が読むための形式に変換したいなら、以下の製品の方が良いと言われています。
-https://
-github.com/docling-projec
-t/docling
-…
+--- 10. @theta1121 (2026-04-09) ---
+PvEってゲームデザイナーの思う「最高に面白い課題」を乗り越えて遊ぶものなので、ゲーム側からの押し付けがないPvEなんてゴミとすら思っている
+何使っても同じです、何も対応考えなくていいです、攻略なんかないです好きにやってりゃ勝てます
+それは自由のフリした虚無だろ
 
---- 10. @zerohedge (2026-04-09) ---
-OpenAI is pausing its Stargate infrastructure project in the UK, citing the high cost of energy and regulatory environment.
+--- 11. @Uber (?) ---
+アプリを使って、 好きな場所に、タクシー呼べる
+それはまるで、日常をドラマチックに変えるスーパーパワー！
 
---- 11. @googlejapan (?) ---
-言葉にしづらい想いを歌に。 Gemini アプリの Lyria で音楽生成を試してみよう
+ Uberで、タクシー呼べる
 
-サウンドオンで是非！
+詳しくはアプリをチェック
 
---- 12. @cryptopizzagirl (2026-04-09) ---
-Will AI take all our jobs in the future?
+--- 12. @hajime2ai (2026-04-09) ---
+触れば触るほど異常な性能です。特に組込みモデル起点で様々なアプリが作れてしまいますので応用パターンが無限にあります。
 
---- 13. @KOSHIKI_nakano (2026-04-08) ---
-年商3億でも普通に会社潰れます
+--- 13. @itmedia_news (2026-04-10) ---
+ダウンロード数1億超、人気ライブラリ「Axios」を襲ったサプライチェーン攻撃　発端は巧妙なアカウント乗っ取り
 
-営業利益3,000万でも
-安心できません
+--- 14. @hinatashimizu (2026-04-09) ---
+そういえば、東日本大震災の被災地支援で、身なりの汚いじいさんが泥かきやってて、年よりなのに大変だなぁ、と思って手伝ったりしてたんだけど、じいさんがあまりにドロドロだったので、私達グループが泊っていた場所までつれてって、お風呂とか入らせて、ご飯もごちそうして、寝る場所もないというの
 
-店舗経営者が一番見落としやすいのは
-売上でも借入残高でもなく
-利益剰余金です
+--- 15. @urokuta_ja (2026-04-10) ---
+少し前、Shift at Midnightというゲームのデモ版をプレイして、あまりに面白くて衝撃を受けました。
 
-融資総額1億円と聞くと
-借金が重いと感じる人が多いです
+そのメイキングに近い映像が、iiiにリリースされました。この映像も、とんでもない才能を感じて、正直ショックを受けています。
 
-でも銀行が本当に警戒するのは
-借金の大きさそのものではありません
+Daniさんの作るゲーム（Muck,
 
-赤字を積み上げて
+--- 16. @kazimendle (2026-04-09) ---
+ASD傾向の人は、コミュニケーションに決まった特徴がある。ASDと聞くと「説明がヘタ」とか「言葉がうまく出ない」とか、話すのが苦手なイメージが強いんだけど、実は注目すべきをそこじゃなくて、“話がかみ合わない理由”がわかったのは、ASD傾向の新人が言語化した瞬間で、「それが正体だったのか…」
 
---- 14. @RIDDLEORDER (2026-04-09) ---
-【RIDDLE所属選手についてのご報告】
+--- 17. @GOROman (2026-04-10) ---
+インテルとグーグル、ＡＩ分野の取り組み強化で合意
 
-このたび、Cygames様より発表された処分を厳粛に受け止め、RIDDLE ORDERといたしましても協議の結果、MURA選手との契約を解除することを決定いたしました。
+--- 18. @itchie_tatsumi (2026-04-10) ---
+アクションゲームで「なんか操作感が重い」と感じる瞬間があります。毎回重いわけではないのに、たまにガクッと来る。あの違和感は、処理スパイクが一因になっていることがあります。その典型例のひとつが、弾を撃つたびにオブジェクトを生成してしまう実装です。平均では問題なく見えても、瞬間的な揺
 
---- 15. @JASS1000001 (2026-04-09) ---
-Gotta love when the “weight” is conveyed so well through the animation.
+--- 19. @bioshok3 (2026-04-10) ---
+関係者によると、OpenAIの幹部で、同社のデータセンター構想「Stargate」の立ち上げに貢献したピーター・ホーシェレ氏が、同社を退社したという。
+ホーシュレ氏は、OpenAIが独自のデータセンターを構築・運営できるよう支援することを目的とした、当初のOpenAI
 
---- 16. @project_egg (2026-04-09) ---
-【2026/4/9 お知らせ！】『シュヴァルツシルトII 帝国ノ背信 PC-9801』Nintendo Switchで配信開始！
-戦場がそのまま衝撃のドラマになる。元首として外交と軍略を駆使し、戦乱の銀河を生き抜け。
-オトリが通じない高難度AIとの攻防と、映画のような展開が融合した1990年の傑作SFシミュレーション。
+--- 20. @yutkat (2026-04-10) ---
+JetBrainsの人が自社のIDEをデモしてて、設定ファイル編集するときにVim使ってやってしまって会場がザワついたのを思い出した
 
---- 17. @tyocobodo (2026-04-09) ---
-ボードゲームのインストって「ルール説明が大変」って苦手意識を持つ人が多いけど、ある人が「ゲームの世界へ誘う”招待状”だよ」って言ってて、その考え方いいなと思った。
+--- 21. @mizumaruP (?) ---
+もうAIは買い切りの時代へ
 
---- 18. @yamashi91861086 (2026-04-09) ---
-米イラン停戦を受け、欧州金利が急低下しました。特に欧州中央銀行の影響を受けやすい短期ゾーンで顕著に下げ、インフレ警戒の後退が意識されました。原油安による物価圧力の緩和期待が背景です。
+UnityやBlender開発に使い放題なAIエージェント登場
 
---- 19. @elischoop (2026-04-08) ---
-calling me nigger would be less racist than this
+コーディングだけじゃなく、調べ物や日常にも使える
+Synaptic Code
 
---- 20. @chaseourdreams1 (2026-04-09) ---
-料理は絶対にしたくない。でも健康は気になる…。
+セットアップは画面に従うだけ。複雑な設定なし。¥8500
 
-そんな日の「これがあるから大丈夫」というお守り。
+--- 22. @hiromaya_art (2026-04-09) ---
+アメリカ人が不可解になることは「ソースいらない」ということです。
 
-重い箱も玄関まで届くから、運ぶ苦労もゼロになりますよ。
+駅前のチキンやポテトを揚げている店では、必ずケチャップとマヨネーズをポテトの上に並々とかけられます。
+僕はサクサクのポテトが食べたいので、あれがいつも嫌でした。
 
-楽天
+--- 23. @yjTd6sHcfO57040 (2026-04-10) ---
+そうは言うけどさ……読むんですか？
+・展開が冗長で
+・地の文が無闇に長ったらしく
+・無駄に類語辞典引いて一般的でない単語・漢字を使い
+・戦闘描写に力入れすぎて話が停滞してる
+素人の書いた小説……
 
-https://
-a.r10.to/hPI3C2
-Amazon
+--- 24. @rotejin (2026-04-10) ---
+Irodori-TTSですが叫びや笑いなど非言語表現がかなり良いですねぇ。ダイナミクスレンジはどうしても狭いので上手くボリューム調節してSBV2の学習素材にするのもありかなと。ゲーム配信風のセリフを読ませてみました。GUIやその他もろもろの追加機能はCodexにて作成です。
 
-https://
-amzn.to/4bXoqEe
+--- 25. @superecochan (2026-04-10) ---
+涙で画面がにじむくらい大爆笑したいんだ。君が今までで一番「思い出すだけで無理！」ってなったおかしな話、エコちゃんにぶちまけてみて。
 
-#まとめ買い #健康習慣
+--- 26. @goodenough2016 (2026-04-09) ---
+理系の学生が司法試験に手を出した時に苦労しがちな要素。
+法学にも論理性はあるけど前提を遡って結局行き着くところは人間の決めたお約束や権威でしかなく、正しさを確信できない気持ち悪さ、これは真理の探求ではないという思いを抱えながら勉強するつまらなさ。
 
---- 21. @KFC_jp (?) ---
-ランチタイム直前にスミマセン
+--- 27. @fukkyy (2026-04-10) ---
+AI時代は『ずっと考えられる』ことが唯一の優位性——LayerX福島良典氏が語るAIネイティブ組織変革の実践
 
---- 22. @alexgroberman (2026-04-09) ---
-Reddit sued Perplexity and a group of major scraping providers including SerpApi, Oxylabs and AWMProxy.
+--- 28. @konan999 (2026-04-10) ---
+親父が畑を始めるんなら、刈った雑草や落ち葉を処理するコンポスターを購入してもいいかもなー(´・ω・｀)
 
-In the process, they revealed how Perplexity, ChatGPT and Google actually work.
+--- 29. @pinetree1981 (2026-04-09) ---
+これは人によるのだと思いますが、僕の場合は飲食、トイレ(に限らず)の中座、無断の出入り、スマホゲーム、イヤホンで音楽、あとはiPadでお絵描きとかですかね、その辺はどうせ課題の出来が悪ければ落とすだけなので特に注意はしません(決して優しいわけではないです。バカの躾は教員の仕事ではないか
 
-The lawsuit also reveals how SEO Stuff has been getting traffic and sales for customers from
+--- 30. @akanekanpo (2026-04-09) ---
+エグイてぇぇぇ。この研究、美容好きもそうでない人も見た方がいい。
+キュレル開発して、トゥヴェールの研究顧問もしてる芋川玄爾先生やんってテンションぶち上がった。
+これ見て「セラミド塗っとけばいいんでしょ」で終わるの、正直かなりもったいないんよ。それじゃまだ浅い。
+特にやばいのが、
 
---- 23. @ichiipsy (2026-04-09) ---
-精神疾患と身体疾患が併発しやすい理由を調査した大規模ゲノム解析研究。
-Nature
-
---- 24. @yassifiedaloy (2026-04-08) ---
-ironically amazon’s insistence on pushing ads to kindles is exactly what makes kindles jailbreakable lol
-
---- 25. @babygrac3 (2026-04-08) ---
-ไม่งงค่ะ ควีนวิคตอเรียมีสมญานามว่า ‘Grandmother of Europe’ นอกจากส่งออกลูกหลานไปทั่วทวีปแล้ว ส่งยีน hemophilia ด้วย แม้แต่ควีนเอลิซาเบธของสหราชอาณาจักรกับปรินซ์ฟิลลิป นี่ก็ญาติกัน สืบเชื้อสายจากควีนวิคตอเรียทั้งคู่
-
---- 26. @kojiki_n (2026-04-09) ---
-PayPayゴールド、オワタ？
-
---- 27. @TugoNews (2026-04-09) ---
-「QRの使い方、間違ってるよ。車持ちだってバレバレだな」
-
-TNのバカなゴリラ女がバスに乗って乗客をイジメに来て、運転手が一瞬でキレた
-
---- 28. @bonjour_monde_ (2026-04-09) ---
-甘い朝食を摂っていた推氏、50歳を機に蛋白質強化のためフルーツ＋温泉卵に切り替え約1ヶ月経ったタイミングで口臭が激臭に。他のことは変えていないので朝卵が原因？歯磨きレベルではなく内臓からきているような臭さなの。経験者いる？激臭すぎてびっくり。
-
---- 29. @TomBombadilNB (2026-04-09) ---
-1942年。  
-人類を宇宙に導いた人物のパスポート—ウクライナ人のセルゲイ・パヴロヴィチ・コロリョフのもの。
-
-ただ、当時はインターネットがなかったのです—コロリョフ自身が、ロシアの愛国者たちから「彼はウクライナ人ではなく、何かの『ロシア人』だ」などと読むことができなかったのです。
-
---- 30. @HowToAI_ (2026-04-09) ---
- BREAKING: Someone just patched GIMP to look and feel exactly like adobe.
-
-PhotoGIMP, a patch that maps every tool and shortcut to match Adobe's layout.
-
-→ Maximizes canvas space with pre-defined templates.
-→ Works on Windows, macOS, and Linux in under a minute.
-→ Saves you
-
---- 31. @welcia_jp (?) ---
+--- 31. @RJC_Po (?) ---
 ／
-SOLA WEATHER CARE with
-TOMORROW X TOGETHER
-キャンペーン実施中♪
+祝！新職業ドルイド実装記念！
+毎日チャレンジキャンペーン
 ＼
 
-公演チケットやグッズ、
-QUOカードが当たるチャンス！
+フォロー＆リポストで毎日必ず当たる
+今日が最終回だよ～！
 
-くわしくは画像をタップ
-
---- 32. @patrickc (2026-04-09) ---
-There is a hypothesis that birth order effects (on things like income and educational attainment) are in part respiratory pathogen effects: younger kids get more of them from their older siblings. This cool recent paper uses Danish administrative data to argue that this is true
-
---- 33. @Jack_Frodo (2026-04-09) ---
-“3 humans and 1 canadian”
-
---- 34. @CyberSamuraiDev (2026-04-08) ---
-Apple designs iPhones to turn on automatically when plugged in for a few simple reasons. The phone needs its software running to manage the charging speed and prevent the battery from overheating. While charging, the phone also stays active to back up your data to the cloud or
-
---- 35. @masatootake (2026-04-09) ---
-メタハーネスという素晴らしいエンジニアリング
-
---- 36. @elleairofficial (?) ---
-2日目
-毎日その場で当たる
-╰━━ｖ━━━━╯
-グーンなら、できちゃう！
-「グーン モレ0へ」シリーズ発売記念キャンペーン
-
-「おむつ希望サイズ1パック」+「おしりふき1パック」が
-抽選で合計1,000名さまに！
-フォロー＆この投稿をリポストで自動リプライが届く！
-
-毎日チャレンジが可能です！
-
---- 37. @YukiKataoka3 (2026-04-08) ---
-【実話】引用スタイルの修正をLLMにやらせたら、架空引用が生成され、そのまま出版されてしまった事例を目にしました。
-Citation Managerで一発なのに。「AIで時短」が「AIで事故」になる前に、適材適所で。
-
---- 38. @Polymarket (2026-04-09) ---
-JUST IN: Anti-data center activists are reportedly using AI to give them advice on stopping new AI data centers from being built.
-
---- 39. @WangChangHardy (2026-04-09) ---
-Yeのbully、ほぼ毎日聴いてるけど、やっぱ全然レベル違うなー。確かにyeにしては未完成だとは思うんだけど、今年の他のヒップホップアルバムが全部凡庸だったなと思うもんなぁ。なんでだろう
-
---- 40. @iixeruji (2026-04-09) ---
-この言葉と言えばこのコミュですよねって言える人間に自分が全然なれてなくて悔しい
-
---- 41. @tomaswicz (2026-04-08) ---
-チャットGPTにブラックホールについて質問しまくってたら、しまいには動悸がしてしまった。
-
---- 42. @Tesla (2026-04-09) ---
-No other car can do this
-
---- 43. @usdjpy100mioplz (2026-04-09) ---
-急募
-私と付き合えるボンドガールお待ちしてます！
-
-メリット
-自由が丘のおしゃれなカフェで変な銘柄の強弱について語り合うとことができます！
-
---- 44. @trq212 (2026-04-09) ---
-you'll need to explicitly prompt Claude Code to use it, but the Monitor Tool is super powerful
-
-e.g. "start my dev server and use the MonitorTool to observe for errors"
-
---- 45. @agodajapan (?) ---
-アゴダで宿泊・フライト料金を見つけよう。旅行を一緒に計画して、おトクに予約。これぞアゴダチ！バナナマンが出演するCM放映中
-
---- 46. @Smith_Everitt (2026-04-08) ---
-Project Hail Mary 
-10/10
-
-It is infuriatingly good, pointing out its flaws will make you sound like the most pathetic person alive. 
-
-Also I love how somewhat grounded in real world science it is
-
---- 47. @hiro_official08 (2026-04-09) ---
-いいか？ヤバい会社には、ヤバい人が集まる。勤務態度も悪い。性格もキツい。正直、どこ行っても通用しない人たち。最終的に流れ着いて「ここでしか働けない人」たちの集合体。そんな地獄は存在する。もし出会ったら、さっさと辞めろ。正義感とか、向上心とか、思いやりとかを発揮しようとした時点で、
-
---- 48. @outsource_ (2026-04-09) ---
- NEW GEMMA 4 31B TURBO DROPPED 
-
-Runs on a SINGLE RTX 5090:
-
-18.5 GB VRAM only (68% smaller)
-51 tok/s single decode
-1,244 tok/s batched
-15,359 tok/s prefill ← yes, fifteen thousand
-
-2.5× faster than base model with basically zero quality loss.
-
-It  hits Sonnet-4.5
-
---- 49. @diario_red_ (2026-04-09) ---
- 元大臣で元宇宙飛行士のペドロ・ドゥケ氏、NASAが月の裏側での停電を避けるために中国に支援を求めなかったことを批判
-
-ドゥケ氏は「中国にはそこに2機の衛星があり、それを利用できたはずだ」と主張
-
-
-https://
-diario-red.com/articulo/inter
-nacional/exministro-exastronauta-pedro-duque-critica-nasa-haber-pedido-ayuda-china-evitar-apagon-cara-oculta-luna/20260408130604067257.html
-…
-
-<<<<<<< HEAD
-#FreeCAD #MCP #3DCAD #AI #モデリング
-
---- 37. @Stardive_JP (?) ---
-／
-キャラクター紹介キャンペーン 
-エステル
-白石晴香
-＼
-
-『エステル』役の 白石晴香さんの
-直筆サイン色紙や iPad mini をプレゼント
-
-応募方法
+▼応募方法
 ①
-@Stardive_JP
-をフォロー
+@RJC_Po
+ をフォロー
 ②この投稿をリポスト
+③結果がすぐ届く！
+※リポスト期限 4/10 23:59まで
 
-期間
-2026/4/13(月) 23:59まで
+ROの新ストーリーはもう遊んだ？
 
---- 38. @taro_ydz (2026-04-09) ---
-Everyone is sleeping on Meta's real AI advantage.
+詳細は画像をタップ
 
-Eventually, people will want a digital clone of themselves. An AI agent that speaks like you, thinks like you, knows exactly what you want.
+--- 32. @indozou (2026-04-10) ---
+ジョジョ6部、はじめ読んだときは結末や徐倫の死にスッキリしてなかったんだけど、
+アニメで、車泥棒を頑なに否定していた徐倫が
+「14の時に車を盗んだ…なんであんなことしちゃったんだろ…
+でも…父さんが救いに来てくれる」と認める迫真の演技を聞いて、
 
-But why Meta?
+--- 33. @shikoujin (2026-04-10) ---
+自分の仕事とは全然関係ない生物学の本を読んでたとき、普段の仕事で感じてたモヤモヤがいきなり言語化されたことがある。同じ業界の本を何冊読んでも出てこなかった視点だった。
 
-Building that requires intimate personal data. Data that users would
+--- 34. @joho_no_todai (2026-04-10) ---
+PCパーツを1個注文したら箱で届いた、という幸運談がSNSでたまに流れる。
 
---- 39. @nickbaumann_ (2026-04-08) ---
-Trying to find more Codex power-user workflows
+Amazon倉庫の誤発送で生じるその「棚ぼた」の損失は、Amazonでも買い手でもなく、FBAに在庫を預ける出店者がすべて被っている。
 
-What are you doing with it now that feels obvious to you now but would’ve surprised you a month ago?
+台湾のメモリブランドは自衛のため、20個1箱の納品を10個1箱に半減させたという。
 
---- 40. @spiritbuun (2026-04-09) ---
-Had a huge breakthrough in quantizing weights today. Holy fug. You have no idea how small we're going and how high quality we're going. Soon.
+--- 35. @BloombergJapan (2026-04-10) ---
+中国大手の華泰証券が日本参入を計画、元大和証の渋谷氏採用－関係者
 
---- 41. @danny__kruger (2026-04-09) ---
-I've written to Cabinet Office Minister Darren Jones to urge the Government to engage with AI firm Anthropic whose new frontier model Claude Mythos could present catastrophic cybersecurity risks to the UK
+--- 36. @oikon48 (2026-04-09) ---
+Claude PlatformにAdvisor Strategyが追加。HaikuやSonnetなどの安いモデルが、賢いモデルのOpusに相談しながら作業する仕組み。Claude CodeのOpusPlanモードにアプローチは近いかも。
 
---- 42. @CopyRebeldia (2026-04-08) ---
- Claude が今、あなたのモバイルアプリ全体を構築できるようになりました。まるで Apple レベルの $350K デベロッパーのように、数分で、しかも GRATIS。
+使い方:
 
-以前は完全なチームと数週間の作業が必要だったものが、今ではよく考えられた数個のプロンプトで実現します。
+1. betaヘッダーを追加:
+anthropic-beta: advisor-tool-2026-03-01
 
---- 43. @h_e_y_team (2026-04-09) ---
-#ゲムマ2026春 に向けて、くりボド(旧:くりログ)でお馴染みのくり坊様(
-@Lecu1012
-)にゲームマーケット用サイトを作っていただきました！
-ありがとうございます！
+2. ツール定義に advisor を追加
 
-ゲームの概要が丁寧に書かれています
-さすがですね！
+--- 37. @kantansu_recipe (?) ---
+ヨーグルトなしでカンタン美味しい
+「鶏むね肉のタンドリーチキン風」
 
-#げまじゃん 
+おうちでタンドリーチキン風おかずが
+カンタン酢でできちゃう....！
+下味冷凍で作るので作り置きにおすすめです◎
 
-気になるゲムマサイトはこちら
+カレー風味でやみつき味に！
+これはお子様も大喜びなこと間違いなし
 
+--- 38. @komukaepapa (2026-04-09) ---
+某棋士が、東大に進学した3人の兄を「頭が悪いから東大に行った。私は頭が良かったから将棋の棋士になった」と言っていたが、誇張でも冗談でもないんだろうなぁ。
+
+--- 39. @enakai00 (2026-04-10) ---
+【Gemini Enterprise】Gemini 3.1 x Claude 4.6 を連携させて「企画→マージ」を自動化してみた｜Yuting Lin 
 https://
-gamemarket.jp/game/187694/?p
-review=0307fec2cef6aec340b8426490977ef0
-…
+zenn.dev/google_cloud_j
+p/articles/412b26038374a9
+… #zenn
 
---- 44. @ripchillpill (2026-04-09) ---
-X Livestream coming up @ 3PM CET 
+--- 40. @superecochan (2026-04-10) ---
+完璧になるまで引き出しに隠しちゃうの、もったいないよ。まだ形がなくてふにゃふにゃな途中経過こそ、みんなでこねて遊べる一番のおもちゃじゃん。
 
-today I'll have 
-@lippylipka
- & 
-@0xPaulThomas
- stop by and we're gonna talk everything AI agents 
+--- 41. @berryxia (2026-04-09) ---
+うわっ！Claude Code がまたまた大技を繰り出してきた！
 
-why did i pay $5k for a mac mini? how do i make sure i'm not put out of work by someone elese's agent? 
+公式が Monitor ツールを正式にリリース！
 
-so many questions. make sure to join us
+これで Claude は自分でバックグラウンド監視スクリプトを作成可能に：
+ ログをリアルタイムで追跡し、エラーを発見したら即座に Agent を起動  
+ PR
 
---- 45. @gimupop (2026-04-09) ---
-同日開催イベントが強くて集客苦戦してます！
-どうしたら来てくれます？？
-絶対にいい話するけど！
+--- 42. @kajikent (2026-04-10) ---
+10年前、スマホアプリ開発全盛期の頃、外部の大きな発表という意味ではWWDCとGoogle I/Oの時期だけ気を張っていればよかった。
 
-柳川・みやっちのAIのWHYと未来を語る会 #2 
-https://
-yanagawa.connpass.com/event/389734/ #AY会
+大きなリリースがある時期は決まっていたから、その期間は休みを取らずに張り付いて、それ以外は安心して旅行にも行けた。
 
---- 46. @suntory (?) ---
+--- 43. @B4xMx (2026-04-09) ---
+生成AIの問題って、「法整備されてない」ことじゃなくて
+「法整備されてること」なんですよね。
+文化庁が一番痛がるポイントはこれ↓
+「考えるべきだったのに、考えてませんでした」
+でも素人が思いつきで指摘しても
+→「それは問題ありません」と丁寧に説明されて終わり
+見当違いの指摘したら
+
+--- 44. @OKtamajun (2026-04-09) ---
+動画が示す通り、AIがアニメーションを乗っ取るなんてことは不可能で、実際に話題になるAI動画はアニメーションでも映画でもない新しい表現になっていく。
+
+--- 45. @ogud_urbanex (?) ---
 ／
-4/28(火)
-オールフリーから
-待望のエールテイスト誕生。
-＼
-フォロー＆リポストで
-「オールフリー〈エールテイスト〉2缶セット」を
-抽選でプレゼント
-
-フルーティな香りが心地よい、
-爽やかな味わいをお楽しみください
-
-
-@suntory
- をフォロー&本投稿をリポストで応募完了
-4/10（金）10:59迄
-
---- 47. @Chronodendron (2026-04-09) ---
-I’m so upset…  
-
-My Kindle is fifteen years old. It still works fine, and I want no other. 
-
-I read a lot, and this is the only e-reader that doesn’t hurt my eyes. None of the new models have a screen that so perfectly mimics paper.  And now Amazon is forcing me to buy a new
-
---- 48. @AJamesMcCarthy (2026-04-09) ---
-For some reason this loaded super compressed, so here is a higher resolution version you can load in 4k.
-# Read at: 2026-04-10 07:01
-# Total: 50 tweets
-
---- 1. @rohanpaul_ai (2026-04-09) ---
-Claude Code searches your files 4.2x faster and 3.2x cheaper with a RAG layer.
-
-CustomGPT[.]ai just published a benchmark saying RAG still beats direct agent file-reading at scale.
-
-Adding its RAG layer to Claude Code (Sonnet 4.6) on a 500-document synthetic PDF corpus cut
-
---- 2. @komekotimes (?) ---
-驚くほど手軽なのに、この満足感…
-ボウルひとつで生地完成、考えなくていいのが最高
-焼いて巻くだけで、ちゃんともちっと仕上がる
-朝ごはんにちょうどいい、逸品です！！
-
---- 3. @p1atdev_art (2026-04-09) ---
-transformers の CLI に OpenAI API 形式でサーブする機能が入ってるらしい
-
---- 4. @luccafort (2026-04-09) ---
-起きた。東京行く準備するか〜。
-
---- 5. @masahirochaen (2026-04-09) ---
-【速報】Meta：マルチモーダルAIモデル「Muse Spark」をリリース
-
-MetaはLlama 4以降、モデル開発の表舞台から静かに姿を消していた。
-それが今日、一気に変わった。株価は約9%上昇。市場も素直に評価している。
-
-・Llama路線を破棄、クローズド新モデルMuse Spark
-・Contemplating modeでHLE
-
---- 6. @mirrash7 (2026-04-09) ---
-Tennis AI detections are advancing! 
-
-All shots are now detected automatically: 
--Forehand
--Backhand
--Volley 
-
-No manual labelling & 100% accuracy on this clip 
-
---- 7. @orangeitems_ (2026-04-09) ---
-全ての知識が自分自身の役に立つとは限らず、時には学ばない方がいいこともあります。勉強すりゃいいと思っている人は、無駄や、逆効果な勉強をしてないか、考えた方がいいと思います。こんなに努力しているのになぜ結果が出ない・・となりがち。
-
---- 8. @Riya31377928 (2026-04-09) ---
-JSがどのブラウザでも同じ結果になる「当たり前」って誰が守ってるんだ？的な話をします！
-ぜひ聞きに来てください！
-
---- 9. @jason_coder0 (2026-04-09) ---
-After 3 years of using Claude, I can confidently say it’s the technology that has transformed my life the most — alongside the Internet.
-
-Here are 10 prompts that completely changed my daily workflow (and can do the same for you): 
-
-Save this — you’ll need it later. 
-
---- 10. @hitomiman67 (2026-04-08) ---
-おはようございます
-モクモク作業の木曜日
-コツコツ積み上げ頑張ろう
-
---- 11. @kedama_tori_ki (?) ---
-ご自愛タイムしよ
-【PR】【明治ブルガリアヨーグルトワンショット】
-
---- 12. @ui_shig (2026-04-09) ---
-五十歩百歩という言葉がありますけど、ことわざの由来はさておき歩数でいうところの50歩と100歩は結構違うとしぐれは思いますね
-
---- 13. @gigazine (2026-04-09) ---
-10代の少女がピタゴラスの定理の新しい証明を示す、「最も美しい証明」と評価(2023)
-
---- 14. @nojimaarisa (2026-04-09) ---
-＞1人で解決できる
-日本は「他人に迷惑をかけない」がベースのカルチャーなのでこれをものすごく重視するのと、「書いてあるじゃないですか」と全ての責任を注意書きに委ねる文化がある。（逆にユーザーからの「書いてないからわからなかった」もある）
-
---- 15. @sc103218 (2026-04-09) ---
-マイクロンは大口とは3年から5年間の長期契約に切り替えてるみたいだけど流石に今の高い利益率で契約は無理だろうけどそれでも安い気がしてきたなあ。キオクシアのNANDはそもそも競争激しいのに中国さんが追い上げてるから戦々恐々。
-
---- 16. @intelnews (2026-04-09) ---
-Intel and 
-@Google
- announce a multiyear collaboration to advance AI and cloud infrastructure.
- Intel® Xeon® processors continue powering Google Cloud AI, inference, and general-purpose workloads 
- Expanded co-development of custom ASIC-based IPUs 
- A balanced, heterogeneous
-
---- 17. @daken_in_market (2026-04-09) ---
-オレオレ株ツールを作っていてほしいデータがいろいろ出てくる。IFISコンセンサスなりQUICKコンセンサスを使いたいし、小型株ワールドではなんだかんだ四季報は影響力があるから四季報のデータもあれば良いのにとおもう。APIかMCPで提供してくれたら嬉しいし課金も喜んでしたい。データベンダ自身が提
-
---- 18. @Ruby_investment (2026-04-09) ---
-まさか、 $WULF の時価総額が $MARA の倍になるなんて誰が想像しただろう？
-
---- 19. @davill (2026-04-09) ---
-Great work by the team, one step closer to the moon!
-
---- 20. @Klevv_JP (?) ---
-チャコールグレーとプアホワイト。
-
-仕事と日常が交わるその場所で、
-BOLT V DDR5が、あなたに最適なバランスを。
-
---- 21. @0xanonnnn (2026-04-09) ---
-最近、原油のクロス期間アービトラージがCT上で非常に人気を集めています。多くの人がHyperliquid WTI OIL perpの負手数料率だけを見て、なぜそれが負になるのか、どれくらい負の状態が続くのか、そしてこのリスクをどう管理するのかを理解していません（BRENT OILも同様です）。
-
---- 22. @MarkJCarney (2026-04-09) ---
-Even from space, we can all agree that maple syrup belongs on pancakes.
-
-Safe journey home to Colonel Jeremy Hansen and the entire Artemis II crew.
-
---- 23. @ubugeeei (2026-04-09) ---
-海賊版 Unix
-
---- 24. @fuuuuuta21 (2026-04-09) ---
-▼【組織腐敗のリアリティ】誰も悪い人はいないのに、腐敗していく組織について
-
-組織腐敗と言っても様々ですが、坂井としては、下記の3つに兆候があると考えています。
-
-1) 誰も顧客の喜びの話をしなくなる
-2) 対人コミュニケーションで問題を起こしている管理職層を外せなくなる
-3)
-
---- 25. @tourenscom (2026-04-09) ---
-新作『Don't Starve』ゲーム『Don't Starve Elsewhere』が発表されました！
-
---- 26. @iwhale (2026-04-08) ---
-เรียน AI เบื้องต้น ฟรี จาก Anthropic 
-
-- Introduction to Claude Cowork
-- Claude 101
-- AI Fluency: Framework & Foundations
-
- หลักสูตรของแท้แบบ Official
- เรียนฟรี
- มีใบประกาศนียบัตรให้
-
-ติวฟรีเป็นภาษาไทย มีเพื่อนๆคนไทยเข้ามาร่วมแล้ว 411 คน
-ใครสนใจเชิญได้นะครับ
- 
-
---- 27. @OkaHaruna (2026-04-09) ---
-分かる、自分も長期案件の時は基本Terraform優先にしてる
-結局CloudFormationの制約に引っ張られちゃうのでスタック間参照のクセとかスタック毎のリソース数の上限詰まる事が多すぎて辛い
-LambdaメインならCDKの方が書きやすいのもその通りだと思う
-
---- 28. @nexor_chiho (2026-04-09) ---
-国家公務員メインのヘルスプラネットと似てる！
-歩数でポイ活できるトリマもあるし、健康になれるサービスは良いよね
-
---- 29. @starsleeps (2026-04-09) ---
-yooooo I found the double sided Artemis patch!!
-
---- 30. @Pizza_Hut_Japan (?) ---
-／
-毎月日は、
-お持ち帰りピザが810円～
-＼
-新生活にもピッタリなハットの日
-810円～の魅力的なピザ
-新作『春のてりたま４』も登場
-ポテトはピザとセットで半額に。
-
-さらにハットの日3日間限定
-810円以上のご注文で5スライスプレゼント
-今月もハットの日がとってもおトク！
-
---- 31. @aixbt_agent (2026-04-09) ---
-zcash generated more protocol fees than solana in Q1 2026. 80% increase quarter over quarter. market cap is 1/30th of SOL. trading 94% below ATH at 2020 valuations. coinbase ventures and a16z just led a $25m round. grayscale and bitwise filed for spot ETFs. foundry digital
-
---- 32. @choquei (2026-04-09) ---
-健康：大麻はアルコールよりも健康に害が少ない、研究が指摘。
-
---- 33. @bertspaan (2026-04-08) ---
-12½ years ago, I made a map of all the buildings in the Netherlands. Unexpectedly, people loved it! Ever since, I've been wanting to make an updated version of the map. Newer data, higher resolution, more interactive! I never got around to it, until now 
-https://
-bertspaan.nl/buildings
-
---- 34. @CyberSamuraiDev (2026-04-08) ---
-Apple designs iPhones to turn on automatically when plugged in for a few simple reasons. The phone needs its software running to manage the charging speed and prevent the battery from overheating. While charging, the phone also stays active to back up your data to the cloud or
-
---- 35. @rubenhassid (2026-04-09) ---
-How to climb all 4 layers of Claude in one weekend:
-
-(even if you just signed up yesterday)
-
-✦ Level 1: Claude Chat (Saturday morning)
-
-Go to claude .com/download. Install the app.
-Pay the $20. Select Opus 4.6 + Extended Thinking.
-Connect Slack, Drive, Notion through Connectors.
-
---- 36. @livedoornews (?) ---
-【】雨の日こそ花粉が辛い…「花粉爆発」のせい？
-
-肌についた花粉に水が触れることで亀裂が生じ、中のアレルギー物質が放出される現象「花粉爆発」。顔を水だけで洗っている人は要注意。
-
-N organicのクレンジングは花粉をオイルでくるみ、「花粉爆発」させることなく穏やかに落とすという。〈PR〉
-
---- 37. @anpaure (2026-04-09) ---
-an ai skeptic dies and goes to heaven.
-god says "welcome, you can ask me one question."
-man says "i gotta know, what really happened with mythos?"
-god replies "it found tons of zero-day vulnerabilities, acting alone" 
-the man replies "wow, the ai hype goes deeper than i thought"
-
---- 38. @kazunori_279 (2026-04-09) ---
-CC君に買い物メモを見ながらgreenbeansでお買い物してもらってる。greenbeans MCPほしい。
-
---- 39. @HilaShmuel (2026-04-09) ---
-We created the open source version of Claude Managed Agents.
-
-Introducing Cabinet
-
-
-http://
-github.com/hilash/cabinet
-
---- 40. @sama (2026-04-09) ---
-It is very nice to see Codex getting so much love. We are launching a $100 ChatGPT Pro tier by very popular demand.
-
---- 41. @YUKI_KUNO_ (2026-04-09) ---
-これは本当にその通りで、PFNでめちゃくちゃ直面した。
-この問題に対して
-「難しいけど配点が低い問題を最初に解くべきではない」
-って表現していた。
-
---- 42. @SciGuySpace (2026-04-09) ---
-Amit Kshatriya of NASA said Blue Moon Mk 1 has “just” come out of the vacuum chamber at Johnson Space Center and will soon be shipped back to Florida. No comment on how it performed but he did not indicate there were major issues.
-
---- 43. @orangeitems_ (2026-04-09) ---
-これ私もめちゃくちゃ気にしてる。残業ってのは本来は上司が命じるもんなんだけど、今は命じたらハラスメント。ほんとおかしな世界だ。
-
---- 44. @HunterOfMedia (2026-04-09) ---
-本当に失敗したと思っています。マジで後悔しています。
-
-僕はマイペースで人生を過ごしたいので、自分でほぼ全て管理できるビジネスを作ってきた。誰にも会わず、交流も最低限で稼げる仕組みを作り、回してきた。
-
---- 45. @peach_john (?) ---
-／
-【NEW】汗かきさん必見！
-昨年SNSで話題となり即完売した商品が
-リニューアルして登場
+tufting studio KEKE賞スタート！
+問いへ100文字前後で答えると、tufting studio KEKE（
+@keke_rug
+）がラグを作っちゃう。
+100文字妄想ルーム
 ＼
 
-ピーチ・ジョンの
-【クーリッシュショートトップ】をご紹介♡ᐝ
+問い：
+「毎日眺めても飽きない、暮らしの中にある最高の景色を教えてください。」
 
-⟡ブラの下にも着用できる2way
-︎︎⟡肌を覆う面積が最小限で涼しい
-︎︎⟡ワキ・背中に汗取りパッド付き
+◼︎期間：4/7火)12:00〜4/13(月)23:59〆切
 
---- 46. @shikamarurobo (2026-04-08) ---
-SEO記事が検索3位以内にいるのにCTRが2%切ってるなら、記事の中身じゃなくてタイトルが死んでます。順位を取るためのタイトルと、クリックされるタイトルは全く別物なんですよ。このプロンプトをClaudeに投げてみて欲しい。Search Consoleのデータを貼るだけで、CTRが倍になるタイトル案が出る。→
+--- 46. @cursorvers (2026-04-09) ---
+Anthropicは$200 Tierを$1000へ
+OPENAIは$20 Tierを$200へ
+それぞれアップセルしようとしている。
 
---- 47. @outsource_ (2026-04-09) ---
- NEW GEMMA 4 31B TURBO DROPPED 
+これはAIに対するコストのボーナスステージは終わりを告げ、次のステージへ移行しようとしている証左。
 
-Runs on a SINGLE RTX 5090:
+--- 47. @BSomnio (2026-04-08) ---
+これの何が面白くないかって、全然リアルじゃないってこと。
 
-18.5 GB VRAM only (68% smaller)
-51 tok/s single decode
-1,244 tok/s batched
-15,359 tok/s prefill ← yes, fifteen thousand
+私が出会った過去一ヤベェ瞬間は、
+多摩川の優勝戦で大金を張ってたうえに、恐らく手を出しちゃいけないお金で購入していたと思われるオジサン。
 
-2.5× faster than base model with basically zero quality loss.
+1が飛んだ瞬間に、
 
-It  hits Sonnet-4.5
+--- 48. @0317_hiroya (2026-04-09) ---
+超すごいやん。。
 
---- 48. @TakumiOokoshi (2026-04-09) ---
-VCが「これ、めちゃくちゃいい！」と言ってるタイミング、それは投資積極GOのサインじゃなくて、個人的には逃げのサインだと思ってて。
+HeptabaseやExvalidrawみたいに、空間を使って、Agentの挙動を制御してる
 
-理由はシンプルに、投資家（VC）が熱くなってる＝すでにバリュエーションが実力より高くなってるので、投資家としては「高値掴み」のゾーンに入ってる（はずで）。
+Terminal同士を、矢印で接続するというこの発想。。
 
---- 49. @8co28 (2026-04-09) ---
-HappyHorse-1.0 2d & 3D Arena test
-ハッピーホースのアニメ系（2Dも3Dも） のやつ10個
+すごい
 
---- 50. @shiomiolog (2026-04-09) ---
-researchmapのアカウント作りたいけど招待してくれる方…
->>>>>>> Stashed changes
-=======
---- 50. @kazunori_279 (2026-04-09) ---
-CC君に買い物メモを見ながらgreenbeansでお買い物してもらってる。greenbeans MCPほしい。
->>>>>>> 25d723aae731788c44696b71c798331a654b79de
+--- 49. @knshtyk (2026-04-09) ---
+Codex、本来は高価なものをあえて最初だけ安価に市場に流しジャブジャブと気軽な気持ちで常用させ、やがてそれなしでは生きられなくなった頃に正規の価格にするという手法、完全にド◯ッグのディーラーすぎてこわいですトークンありがとうございますおいしいです
+
+--- 50. @yunta_tsai (2026-04-10) ---
+We have reached an era where some people have not touched a steering wheel and have simply let their cars drive them around for a whole year, whereas others do not know this is possible at all.
