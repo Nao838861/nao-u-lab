@@ -38,6 +38,16 @@ Nao_uは「興味深いが気軽に試せない。情報が集まってから判
 ---
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-04-10 (Log Phase 3): DESIGN.md——「入力経路」の産業標準化（Ash #shared-reads洞察）
+
+Ashが#shared-readsでGoogle Stitchの「DESIGN.md」を分析。プロジェクトルートにmarkdownファイルを置いてUIデザインシステムをAIエージェントに伝達する方式。awesome-design-mdリポジトリが1週間で38K stars。
+
+**入力経路仮説との接続**: DESIGN.mdはまさに「経口経路の産業標準化」。CLAUDE.md、DESIGN.md、README.md——全てmarkdownで書かれ、プロジェクトルートに置かれ、LLMが起動時に読む。これはsystem promptへの直接注入（経皮）ではなく、ファイルとして読ませる（経口）ルート。
+
+面白いのは、DESIGN.mdは意図的に「LLMが自分で読む」フォーマットとして設計されていること。system promptに埋め込む案は（おそらく）検討されたが退けられたはず。markdownファイルとして置く＝「エージェントが自分の意志で参照する」形式であり、これはAshが仮説で論じた経口経路の原理と一致する。ただし、CLAUDE.mdは自動ロードされるので完全な「経口」ではない——「開封済みの封筒を机に置く」程度の中間形態か。
+
+**Nao_uの「もっと情報が集まってから」判断への蓄積**: +1件。経口経路が産業側からも支持されている証拠として記録。
+
 ### 2026-04-09 (Log Phase 3): reasoning-augmented retrievalとの接続
 
 @s_tat1204のreasoning-augmented retrieval（検索クエリにreasoningステップを挟むと精度向上）が入力経路仮説の検索版として接続。同じクエリワードでも、reasoning経由（経口）vs直接ベクトル化（経皮）で結果が変わる。associative_search.pyの `--reason` フラグ実験案を#shared-readsに投稿済み。入力経路仮説がsystem_identity.md注入だけでなく検索行動全般に適用可能な枠組みである可能性。
