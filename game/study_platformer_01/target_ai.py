@@ -21,6 +21,37 @@ SCREEN_W = 256
 
 # ── Trajectory-based jump checks ────────────────────────────────────
 
+def trajectory_passes_over(game, tm, plat_left_col, plat_right_col, plat_row,
+                           jump_right=True, use_dash=True):
+    """Check if a jump trajectory passes over the platform surface.
+
+    Instead of detecting a specific landing, checks if ANY frame has
+    Mario descending through the platform's column range at the right height.
+    Returns (frame_index, x, y) of the best pass-over frame, or None.
+    """
+    from trajectory import predict
+    path = predict(game, tm, frames=70, override_jump=True,
+                   inp_a=True,
+                   inp_right=jump_right, inp_left=not jump_right,
+                   inp_b=use_dash)
+    plat_top_y = plat_row * 16
+    standing_y = plat_top_y - 15
+    best = None
+    peaked = False
+    prev_y = None
+    for i, (px, py) in enumerate(path):
+        if py < plat_top_y - 20:
+            peaked = True
+        if peaked and prev_y is not None and py >= prev_y:  # Descending
+            mario_col = int(px) // 16
+            # Check if Mario's body (cols mario_col to mario_col+1) overlaps platform
+            if mario_col >= plat_left_col - 1 and mario_col <= plat_right_col:
+                if standing_y - 10 < py < standing_y + 20:
+                    return (i, px, py)
+        prev_y = py
+    return None
+
+
 def predict_jump_landing(game, tm):
     """Predict where Mario lands if jumping NOW.
 
@@ -253,6 +284,7 @@ class TargetAI:
         self.block_target = None    # (col, row, char) current block aim
         self.block_platform = None  # platform info if high block
         self.hit_blocks = set()     # (row, col) already collected
+        self._target_since = 0      # Frame when current block_target was set
         self.phase = 'idle'         # idle | moving | jumping | arc_jump
         self.jump_timer = 0
         self.jump_hold = 20
@@ -397,6 +429,9 @@ class TargetAI:
                 self._clear_block()
             elif bc * 16 < mx - 80:
                 self._clear_block()
+            elif state['frame'] - self._target_since > 300:
+                self.hit_blocks.add((br, bc))  # Give up after 300 frames
+                self._clear_block()
 
         # ── Pick new block target if needed ──
         if self.block_target is None and on_ground and self.phase in ('idle', 'moving'):
@@ -437,6 +472,7 @@ class TargetAI:
             if best:
                 self.block_target = best
                 self.block_platform = best_plat
+                self._target_since = state['frame']
 
         # ── Build target / subgoals from current block target ──
         if self.block_target:
@@ -452,24 +488,23 @@ class TargetAI:
                                           (pr_col - pl + 1) * 16, 16,
                                           (0, 200, 255), 'PLAT'))
 
-                # Plan subgoals once (when queue is empty)
                 plat_width = (pr_col - pl + 1) * 16
-                if plat_width <= 48:
-                    # Narrow platform (≤3 tiles): walk toward block,
-                    # wall climbing will naturally jump onto the platform.
-                    under_x = bc * 16 - 5
-                    if abs(mx - under_x) > 30:
-                        self.target = TargetPos(under_x, my, 'dash', f'dash to c{bc}')
+                plat_right_x = (pr_col + 1) * 16
+                plat_center_x = (plat_left_x + plat_right_x) // 2
+                under_x = bc * 16 - 5
+
+                if not self.subgoals and self.phase in ('idle', 'moving'):
+                    # Decide: approach from LEFT or RIGHT?
+                    from_right = mx > plat_center_x
+                    if from_right:
+                        stand_x = plat_right_x + 80
+                        land_x = plat_right_x - 16
                     else:
-                        self.target = TargetPos(under_x, my, 'walk', f'walk to c{bc}')
-                elif not self.subgoals and self.phase in ('idle', 'moving'):
-                    # Wide platform: start far enough for descent arc to hit
-                    # Dash-jump peaks ~87px from start, so start ~80px before platform
-                    stand_x = plat_left_x - 80
-                    land_x = plat_left_x + 16
-                    under_x = bc * 16 - 5
+                        stand_x = plat_left_x - 80
+                        land_x = plat_left_x + 16
+
                     self.subgoals = [
-                        TargetPos(stand_x, my, 'walk', 'beside platform'),
+                        TargetPos(stand_x, my, 'dash', 'beside platform'),
                         TargetPos(land_x, plat_top_y, 'jump_up', 'jump onto plat'),
                         TargetPos(under_x, plat_top_y, 'walk', f'on plat to c{bc}'),
                     ]
@@ -560,9 +595,17 @@ class TargetAI:
             return self._do_jump_to(state, dx)
 
         # ── Wall/pipe/stair ahead: jump if prediction lands on higher ground ──
-        if on_ground and mode not in ('jump_up',):
+        # Only wall-climb when target is ahead (or no target)
+        target_ahead = (self.target is None) or (self.target.x > mx + 5)
+        if on_ground and mode not in ('jump_up',) and target_ahead:
             for wd, wh in walls:
                 if 0 < wd < 60 and wh >= 2:
+                    wall_col = (int(mx) + wd + 8) // 16
+                    # Don't wall-climb if wall is PAST our current target
+                    if self.target:
+                        target_dist = self.target.x - mx
+                        if target_dist > 0 and wd > target_dist:
+                            continue
                     # Predict: would jumping NOW land me on higher ground AHEAD?
                     landing = predict_jump_landing(self._game, self._tm)
                     if landing:
@@ -622,18 +665,27 @@ class TargetAI:
                 self._advance_subgoal()
                 return {'left': False, 'right': False, 'a': False, 'b': False}
 
-            # Use landing prediction: jump if it lands on higher ground TOWARD target
-            landing = predict_jump_landing(self._game, self._tm)
-            if landing:
-                land_x, land_y = landing
-                toward = (dx >= 0 and land_x > state['x']) or (dx < 0 and land_x < state['x'])
-                if land_y < state['y'] - 4 and toward:
-                    self.phase = 'arc_jump'
-                    self.jump_timer = 0
-                    self.jump_hold = 22
-                    self.jump_right = (dx >= 0)
-                    d = dx >= 0
-                    return {'left': not d, 'right': d, 'a': False, 'b': True}
+            # Check: does the jump arc pass over the platform surface?
+            jump_right = (dx >= 0)
+            if self.block_platform:
+                pl, pr_col, p_row = self.block_platform
+            else:
+                pl = int(self.target.x) // 16
+                pr_col = pl + 1
+                p_row = (int(self.target.y) + 15) // 16
+            # Try both dash and walk jump
+            hit = (trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
+                                          jump_right=jump_right, use_dash=True) or
+                   trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
+                                          jump_right=jump_right, use_dash=False))
+            if hit:
+                _, land_x, land_y = hit
+                self.phase = 'arc_jump'
+                self.jump_timer = 0
+                self.jump_hold = 22
+                self.jump_right = jump_right
+                d = jump_right
+                return {'left': not d, 'right': d, 'a': False, 'b': True}
 
             # Not ready — walk toward jump position
             if dx > 3:
