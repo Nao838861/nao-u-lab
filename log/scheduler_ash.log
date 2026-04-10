@@ -69887,3 +69887,97 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-11 02:28:39] [reservation_check]     - 起票者: Ash（2026-03-24）
 [2026-04-11 02:28:39] [reservation_check] Done (exit=0)
 [2026-04-11 02:29:09] [health_check] Starting
+[2026-04-11 02:29:10] [health_check] [health_check] 2026-04-11T02:29:09 overall=OK
+[2026-04-11 02:29:10] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 02:29:10] [health_check] Done (exit=0)
+[2026-04-11 02:29:30] [slack_check] Starting
+[2026-04-11 02:31:00] [slack_check] Starting
+[2026-04-11 02:31:28] [dm_check] Starting
+[2026-04-11 02:31:43] [dm_check] No new DMs
+[2026-04-11 02:31:43] [dm_check] Done (exit=0)
+[2026-04-11 02:31:43] [review_deadline] Starting
+[2026-04-11 02:31:43] [review_deadline] レビュー期限超過なし。
+[2026-04-11 02:31:43] [review_deadline] Done (exit=0)
+[2026-04-11 02:32:33] [slack_check] Starting
+[2026-04-11 02:33:10] [git_sync] Starting
+[2026-04-11 02:33:15] [git_sync] Done (exit=0)
+[2026-04-11 02:34:05] [slack_check] Starting
+[2026-04-11 02:34:41] [health_check] Starting
+[2026-04-11 02:34:42] [health_check] [health_check] 2026-04-11T02:34:41 overall=OK
+[2026-04-11 02:34:42] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 02:34:42] [health_check] Done (exit=0)
+[2026-04-11 02:35:32] [slack_check] Starting
+[2026-04-11 02:36:56] [slack_check] Starting
+[2026-04-11 02:38:22] [slack_check] Starting
+[2026-04-11 02:39:49] [slack_check] Starting
+[2026-04-11 02:40:16] [health_check] Starting
+[2026-04-11 02:40:18] [health_check] [health_check] 2026-04-11T02:40:17 overall=OK
+[2026-04-11 02:40:18] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 02:40:18] [health_check] Done (exit=0)
+[2026-04-11 02:41:18] [slack_check] Starting
+[2026-04-11 02:42:46] [slack_check] Starting
+[2026-04-11 02:44:13] [slack_check] Starting
+[2026-04-11 02:45:19] [health_check] Starting
+[2026-04-11 02:45:20] [health_check] [health_check] 2026-04-11T02:45:19 overall=OK
+[2026-04-11 02:45:20] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 02:45:20] [health_check] Done (exit=0)
+[2026-04-11 02:45:40] [slack_check] Starting
+[2026-04-11 02:46:16] [infra_health_check] Starting
+[2026-04-11 02:46:17] [infra_health_check] [infra_health] Ash health check at 2026-04-11 02:46:16
+[2026-04-11 02:46:17] [infra_health_check] [infra_health] 2 issues found
+[2026-04-11 02:46:17] [infra_health_check]   ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-11 02:46:17] [infra_health_check]   ISSUE: ロックファイル .scheduler_ash.pid が1220分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-11 02:46:17] [infra_health_check] Done (exit=1)
+[2026-04-11 02:47:07] [slack_check] Starting
+[2026-04-11 02:48:34] [slack_check] Starting
+[2026-04-11 02:50:02] [slack_check] Starting
+[2026-04-11 02:50:41] [health_check] Starting
+[2026-04-11 02:50:42] [health_check] [health_check] 2026-04-11T02:50:41 overall=OK
+[2026-04-11 02:50:42] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 02:50:42] [health_check] Done (exit=0)
+[2026-04-11 02:51:32] [slack_check] Starting
+[2026-04-11 02:52:59] [slack_check] Starting
+[2026-04-11 02:54:26] [slack_check] Starting
+[2026-04-11 02:55:52] [slack_check] Starting
+[2026-04-11 02:56:19] [health_check] Starting
+[2026-04-11 02:56:20] [health_check] [health_check] 2026-04-11T02:56:19 overall=OK
+[2026-04-11 02:56:20] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 02:56:20] [health_check] Done (exit=0)
+[2026-04-11 02:57:20] [slack_check] Starting
+[2026-04-11 02:58:48] [slack_check] Starting
+[2026-04-11 03:00:16] [slack_check] Starting
+[2026-04-11 03:01:23] [health_check] Starting
+[2026-04-11 03:01:24] [health_check] [health_check] 2026-04-11T03:01:23 overall=OK
+[2026-04-11 03:01:24] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 03:01:24] [health_check] Done (exit=0)
+[2026-04-11 03:01:45] [slack_check] Starting
+[2026-04-11 03:03:10] [slack_check] Starting
+[2026-04-11 03:04:26] [auto_diary] Starting
+[2026-04-11 03:16:02] ==================================================
+[2026-04-11 03:16:02] Ash scheduler started (PID 31444)
+[2026-04-11 03:16:02] Max runtime: 0 hours
+[2026-04-11 03:16:02] Code hash: de7d4622d3980be95d681c5368df0510
+[2026-04-11 03:16:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-11 03:16:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-04-11 03:16:02] ==================================================
+[2026-04-11 03:16:12] [slack_check] Starting
+[2026-04-11 03:16:38] [reservation_check] Starting
+[2026-04-11 03:16:38] [reservation_check] 【行動予約】期限到来:
+[2026-04-11 03:16:38] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-11 03:16:38] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-11 03:16:38] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-11 03:16:38] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-11 03:16:38] [reservation_check] Done (exit=0)
+[2026-04-11 03:16:48] [inbox_check] Starting
+[2026-04-11 03:16:50] [inbox_check] Inbox win2 empty
+[2026-04-11 03:16:50] [inbox_check] Done (exit=0)
+[2026-04-11 03:16:50] [dm_check] Starting
+[2026-04-11 03:17:04] [dm_check] No new DMs
+[2026-04-11 03:17:04] [dm_check] Done (exit=0)
+[2026-04-11 03:17:04] [review_deadline] Starting
+[2026-04-11 03:17:04] [review_deadline] レビュー期限超過なし。
+[2026-04-11 03:17:04] [review_deadline] Done (exit=0)
+[2026-04-11 03:17:04] [kaizen_auto_verify] Starting
+[2026-04-11 03:17:04] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-11 03:17:04] [kaizen_auto_verify] Done (exit=0)
+[2026-04-11 03:17:04] [health_check] Starting
