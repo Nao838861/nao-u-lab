@@ -35,19 +35,30 @@ def trajectory_passes_over(game, tm, plat_left_col, plat_right_col, plat_row,
                    inp_right=jump_right, inp_left=not jump_right,
                    inp_b=use_dash)
     plat_top_y = plat_row * 16
-    standing_y = plat_top_y - 15
-    best = None
+    mario_h = 31 if game.is_super else 15
+    standing_y = plat_top_y - mario_h
     peaked = False
     prev_y = None
+    stable_count = 0
     for i, (px, py) in enumerate(path):
         if py < plat_top_y - 20:
             peaked = True
-        if peaked and prev_y is not None and py >= prev_y:  # Descending
-            mario_col = int(px) // 16
-            # Check if Mario's body (cols mario_col to mario_col+1) overlaps platform
-            if mario_col >= plat_left_col - 1 and mario_col <= plat_right_col:
-                if standing_y - 10 < py < standing_y + 20:
-                    return (i, px, py)
+        mario_col = int(px) // 16
+        in_plat = mario_col >= plat_left_col - 1 and mario_col <= plat_right_col
+        in_range = standing_y - 10 < py < standing_y + 20
+
+        # Method 1: peaked then descending over platform (original arc landing)
+        if peaked and prev_y is not None and py >= prev_y and in_plat and in_range:
+            return (i, px, py)
+
+        # Method 2: stable on platform (landed — y barely changes for 2+ frames)
+        if in_plat and in_range and prev_y is not None and abs(py - prev_y) < 2:
+            stable_count += 1
+            if stable_count >= 2:
+                return (i, px, py)
+        else:
+            stable_count = 0
+
         prev_y = py
     return None
 
@@ -118,8 +129,8 @@ def jump_would_land_on(game, tm, plat_left_col, plat_right_col, plat_row):
     path = predict(game, tm, frames=70, override_jump=True,
                    inp_a=True, inp_right=True, inp_b=True)
     plat_top_y = plat_row * 16  # Top pixel of the platform blocks
-    # Mario standing on platform: his y ≈ plat_top_y - 15 (snapped)
-    standing_y = ((plat_top_y - 15) & 0xFFFFFFF0) + 1
+    mario_h = 31 if game.is_super else 15
+    standing_y = ((plat_top_y - mario_h) & 0xFFFFFFF0) + 1
     was_above = False
     prev_y = None
     for px_x, px_y in path:
@@ -256,17 +267,37 @@ def scan_terrain_ahead(tm, mx, my, tiles_ahead=14):
 def find_platform_for(tm, target_col, ground_row):
     """Find solid blocks at mid-height that can serve as a platform.
 
-    Scans rows 3-5 above ground (typically rows 8-10) for solid tiles.
+    Scans rows 3-5 above ground (typically rows 8-10) for runs of
+    consecutive solid tiles (at least 2 wide).
     """
-    best = None
     for offset in (4, 3, 5):  # Prefer row ground-4 (=row 9), then nearby
         pr = ground_row - offset
         if pr < 0 or pr >= tm.rows:
             continue
-        cols = [pc for pc in range(max(0, target_col - 5), min(tm.cols, target_col + 6))
-                if tm.tiles[pr][pc] in SOLID_TILES]
-        if cols:
-            return (min(cols), max(cols), pr)
+        # Find longest consecutive run of solid tiles near target_col
+        search_l = max(0, target_col - 8)
+        search_r = min(tm.cols, target_col + 9)
+        best_run = None
+        run_start = None
+        for pc in range(search_l, search_r):
+            if tm.tiles[pr][pc] in SOLID_TILES:
+                if run_start is None:
+                    run_start = pc
+            else:
+                if run_start is not None:
+                    run_len = pc - run_start
+                    if run_len >= 2:
+                        if best_run is None or run_len > best_run[1] - best_run[0]:
+                            best_run = (run_start, pc - 1)
+                    run_start = None
+        # Check final run
+        if run_start is not None:
+            run_len = search_r - run_start
+            if run_len >= 2:
+                if best_run is None or run_len > best_run[1] - best_run[0]:
+                    best_run = (run_start, search_r - 1)
+        if best_run:
+            return (best_run[0], best_run[1], pr)
     return None
 
 
@@ -314,8 +345,10 @@ class TargetAI:
         self._tm = tm
 
         # ── Stuck detection ──
+        # Allow backward movement when executing subgoals (approaching platform)
         if state['frame'] - self._stuck_f >= 120:
-            if mx - self._stuck_x < 16:
+            moved = abs(mx - self._stuck_x)
+            if moved < 16 and not self.subgoals:
                 self.reflex_timer = 50
                 self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
                 self._clear_block()
@@ -462,7 +495,6 @@ class TargetAI:
                     plat = find_platform_for(tm, c, ground_row)
                     if plat is None:
                         continue
-                    # Platform blocks: lower than ground blocks (do ground first)
                     score = (100 if ch in ITEM_BLOCKS else 80) - abs(dx)
                 else:
                     continue
@@ -509,12 +541,17 @@ class TargetAI:
                 under_x = bc * 16 - 5
 
                 if not self.subgoals and self.phase in ('idle', 'moving'):
-                    # Decide: approach from LEFT or RIGHT?
-                    # Always approach from the LEFT — jumping right lets
-                    # the head clear the blocks before reaching the platform columns.
-                    # (Right approach fails: head hits blocks from below)
-                    stand_x = plat_left_x - 80
-                    land_x = plat_left_x + 16
+                    # Approach from the CLOSER edge to minimize backtracking
+                    dist_to_left = abs(mx - plat_left_x)
+                    dist_to_right = abs(mx - plat_right_x)
+                    if dist_to_right < dist_to_left:
+                        # Closer to right edge → approach from right
+                        stand_x = plat_right_x + 70
+                        land_x = plat_right_x - 16
+                    else:
+                        # Closer to left edge → approach from left
+                        stand_x = plat_left_x - 70
+                        land_x = plat_left_x + 16
 
                     self.subgoals = [
                         TargetPos(stand_x, my, 'dash', 'beside platform'),
@@ -608,9 +645,10 @@ class TargetAI:
             return self._do_jump_to(state, dx)
 
         # ── Wall/pipe/stair ahead: jump if prediction lands on higher ground ──
-        # Only wall-climb when target is ahead (or no target)
+        # Skip wall-climb when executing platform subgoals (avoid interfering)
         target_ahead = (self.target is None) or (self.target.x > mx + 5)
-        if on_ground and mode not in ('jump_up',) and target_ahead:
+        has_platform_plan = self.block_platform and self.subgoals
+        if on_ground and mode not in ('jump_up',) and target_ahead and not has_platform_plan:
             for wd, wh in walls:
                 if 0 < wd < 60 and wh >= 2:
                     wall_col = (int(mx) + wd + 8) // 16
@@ -626,7 +664,7 @@ class TargetAI:
                         if land_y < state['y'] - 4 and land_x > mx:
                             self.phase = 'arc_jump'
                             self.jump_timer = 0
-                            self.jump_hold = 22
+                            self.jump_hold = 40
                             self.jump_right = True
                             self._wall_climb = True  # Don't pop subgoals on landing
                             # Only override target if no active subgoals
@@ -652,24 +690,22 @@ class TargetAI:
         # ── During movement toward a subgoal: check if platform jump is ready NOW ──
         if on_ground and self.subgoals and self.block_platform and mode in ('walk', 'dash'):
             pl, pr_col, p_row = self.block_platform
-            # Jump toward platform center, not toward the subgoal target
             plat_center = (pl + pr_col + 1) * 16 // 2
-            jump_right = (plat_center > mx)
-            hit = (trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
-                                          jump_right=jump_right, use_dash=True) or
-                   trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
-                                          jump_right=jump_right, use_dash=False))
-            if hit:
-                # Check: are we moving in the right direction? (don't jump while going backward)
-                speed_ok = (jump_right and vx >= -0.5) or (not jump_right and vx <= 0.5)
-                if speed_ok:
-                    # Jump NOW — skip to the jump_up subgoal
-                    self.subgoals = [sg for sg in self.subgoals if sg.mode != 'walk' or 'on plat' in sg.reason]
+            # Try preferred direction first, then opposite
+            preferred = (plat_center > mx)
+            for try_right in ([preferred, not preferred]):
+                hit = (trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
+                                              jump_right=try_right, use_dash=True) or
+                       trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
+                                              jump_right=try_right, use_dash=False))
+                if hit:
+                    self.subgoals = [sg for sg in self.subgoals
+                                     if sg.mode != 'walk' or 'on plat' in sg.reason]
                     self.phase = 'arc_jump'
                     self.jump_timer = 0
-                    self.jump_hold = 22
-                    self.jump_right = jump_right
-                    d = jump_right
+                    self.jump_hold = 40
+                    self.jump_right = try_right
+                    d = try_right
                     return {'left': not d, 'right': d, 'a': False, 'b': True}
 
         # ── Mode: dash / walk — arrived? ──
@@ -710,26 +746,28 @@ class TargetAI:
                 pl = int(self.target.x) // 16
                 pr_col = pl + 1
                 p_row = (int(self.target.y) + 15) // 16
-            # Try both dash and walk jump
-            hit = (trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
-                                          jump_right=jump_right, use_dash=True) or
-                   trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
-                                          jump_right=jump_right, use_dash=False))
-            if hit:
-                _, land_x, land_y = hit
-                self.phase = 'arc_jump'
-                self.jump_timer = 0
-                self.jump_hold = 22
-                self.jump_right = jump_right
-                d = jump_right
-                return {'left': not d, 'right': d, 'a': False, 'b': True}
+            # Try BOTH jump directions × dash/walk — pick first that works
+            # Trust the trajectory prediction (it already accounts for current vx)
+            for try_right in ([jump_right, not jump_right]):
+                hit = (trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
+                                              jump_right=try_right, use_dash=True) or
+                       trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
+                                              jump_right=try_right, use_dash=False))
+                if hit:
+                    _, land_x, land_y = hit
+                    self.phase = 'arc_jump'
+                    self.jump_timer = 0
+                    self.jump_hold = 40
+                    self.jump_right = try_right
+                    d = try_right
+                    return {'left': not d, 'right': d, 'a': False, 'b': True}
 
             # Not ready — walk toward jump position
             if dx > 3:
                 return {'left': False, 'right': True, 'a': False, 'b': True}
             elif dx < -3:
-                return {'left': True, 'right': False, 'a': False, 'b': False}
-            return {'left': False, 'right': True, 'a': False, 'b': False}
+                return {'left': True, 'right': False, 'a': False, 'b': True}
+            return {'left': False, 'right': True, 'a': False, 'b': True}
 
         # Airborne — drift toward target
         d = dx >= 0
@@ -788,7 +826,7 @@ class TargetAI:
             # In the jump window and at speed — jump!
             self.phase = 'arc_jump'
             self.jump_timer = 0
-            self.jump_hold = 22  # Full height jump
+            self.jump_hold = 40  # Full height jump
             self.jump_right = True
             return {'left': False, 'right': True, 'a': False, 'b': True}
 

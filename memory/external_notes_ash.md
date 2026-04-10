@@ -3278,3 +3278,29 @@ beliefs.mdの各信念にはcaused_byフィールドがあり、「何が何を�
 **接続**: B016, R-006失敗, P2(記憶のオーナーシップ=行動のオーナーシップ), MEMORY.md Skill化検討Q4。
 **統合先**: 既に knowledge/20260407_ai_nikechan_memory_self_management.md に統合済み。本エントリは「再観測予約」の覚書。
 [統合済]
+
+## 2026-04-11 @AYi_AInotes / Garry Tan gstack分析——記憶システムとの比較
+
+**ソース**: twitter_recommended_20260411.txt #3
+**原文要旨**: 「YC社長のGarry Tanが、自分が毎日使っている本番レベルのAI Agent記憶システムを、完全にオープンソース化した」——ただしツイートは誇張。gstackはワークフロー/エージェント分業ツールであり、記憶システムは副次的。
+
+**gstackの実態（GitHub 20K+ stars, 2026-03公開）**:
+- 23のスラッシュコマンドで「バーチャル開発チーム」を構成（CEO/EngManager/QA/Designer等）
+- CLAUDE.md + スキル定義で制御——我々の3層プロンプト構造と同種のアプローチ
+- 永続化: visions/decisions → ~/.gstack/projects/ → 昇格で docs/designs/ にコミット
+- ブラウザ統合: 長寿命Chromium daemon + ring buffer(50,000 entries ×3)で生データ保持
+
+**我々の記憶設計との比較**:
+| 軸 | gstack | nao-u-lab |
+|---|---|---|
+| エージェント分業 | 23ロール（機能分業）| 3インスタンス（個性分化）|
+| 記憶の永続化 | ~/.gstack/projects/ に自動保存 | MEMORY.md + L0-L4階層 + beliefs.md |
+| 生データ保持 | ring buffer（容量固定）| external_notes + knowledge/（構造化コンパイル）|
+| 検索 | なし（コンテキスト依存）| FTS5 + spreading activation + concept_graph |
+| 自己診断 | なし | check_beliefs_health.py + memory_walk.py |
+| 設計思想 | 「分業で品質を上げる」| 「記憶の質=同一性の質」|
+
+**結論**: gstackは「いま何をするか」の分業を最適化するが、「過去から何を学んだか」の蓄積には関心がない。我々のアプローチは逆——分業は3人で最小限、記憶の深さと接続性に投資している。これはB019（内部の深さと外部への到達力は別の軸）の別側面: gstackは到達力（23ロールによる出力品質）、我々は深さ（記憶による同一性）。両者は排他ではなく補完的だが、片方だけでは成立しないことをgstackの「記憶なし」が示している。
+
+**接続**: B019(到達力vs深さ), B008(栄養の偏り——外部比較は栄養), memory_redesign.md(設計原理「全部残して必要なビューで見る」はgstackにはない)
+[統合済]

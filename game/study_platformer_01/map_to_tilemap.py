@@ -114,12 +114,19 @@ def classify_tile(img, col, row, tile_w, tile_h=None):
     if cats["peach"] >= 2 and cats["brown"] >= 3 and bg >= 1 and cats["peach"] <= cats["brown"]:
         return "goomba"
 
-    # --- Koopa detection ---
-    # Koopa: green shell + orange belly (same (252,152,56) as ? block)
-    # This combination is unique: ? blocks have zero green, pipes have zero orange.
+    # --- Piranha plant detection ---
+    # Piranha: green + orange (like Koopa) but LOTS of sky (sparse sprite).
+    # Koopa: green + orange but dense (little sky).
+    # Real ? block: orange + brown, zero green, almost zero sky.
     light = cats["light_green_obj"]
     dark = cats["dark_green_obj"]
     total_green = light + dark
+    if total_green >= 2 and cats["question"] >= 2 and cats["sky"] >= 6:
+        return "sky"  # Piranha plant = background decoration
+
+    # --- Koopa detection ---
+    # Koopa: green shell + orange belly (same (252,152,56) as ? block)
+    # This combination is unique: ? blocks have zero green, pipes have zero orange.
     if total_green >= 3 and cats["question"] >= 2:
         return "koopa"
 
@@ -160,7 +167,30 @@ def analyze_image(img_path):
         tile_h = 16
         level_h = rows * 16
         if h > level_h:
-            img = img.crop((0, 0, w, level_h))
+            # Multi-page image: find the page with ground blocks (most brown at rows 13-14)
+            num_pages = h // level_h
+            best_page = 0
+            best_score = 0
+            for page in range(num_pages):
+                y_base = page * level_h
+                score = 0
+                for sample_row in [13, 14]:
+                    y = y_base + sample_row * 16 + 8
+                    for x in range(0, w, 32):
+                        r, g, b = img.getpixel((x, y))[:3]
+                        # Ground blocks: brown or peach (varies by level palette)
+                        if (r > 160 and g < 100 and b < 50) or \
+                           color_match((r, g, b), COLOR_PEACH, 35):
+                            score += 1
+                if score > best_score:
+                    best_score = score
+                    best_page = page
+            y_start = best_page * level_h
+            img = img.crop((0, y_start, w, y_start + level_h))
+            if best_page > 0:
+                print(f"Auto-detected level on page {best_page} "
+                      f"(y={y_start}-{y_start + level_h - 1})",
+                      file=sys.stderr)
         cols = w // 16
     else:
         # Scaled image (e.g. GIF overview maps, ~7px tiles)
@@ -263,14 +293,48 @@ def detect_gaps(grid, cols, rows):
     return gaps
 
 
-def build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col=None):
+def detect_castle_bg(grid, cols, rows):
+    """Detect castle background at level start and end.
+
+    Castles are tall continuous brown structures in the first/last few columns.
+    Returns set of (row, col) that are castle background.
+    """
+    castle = set()
+    for edge_cols in [range(0, min(10, cols)), range(max(0, cols - 10), cols)]:
+        for col in edge_cols:
+            # Count brown tiles above ground in this column
+            brown_count = sum(1 for r in range(rows - 2)
+                              if grid[r][col] == "brown")
+            if brown_count >= 5:
+                # This column is part of a castle
+                for r in range(rows - 2):
+                    if grid[r][col] in ("brown", "goomba"):
+                        castle.add((r, col))
+    if castle:
+        n = len(castle)
+        min_c = min(c for _, c in castle)
+        max_c = max(c for _, c in castle)
+        print(f"Castle background: {n} tiles (cols {min_c}-{max_c})",
+              file=sys.stderr)
+    return castle
+
+
+def build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col=None,
+                  castle_bg=None):
     """Convert classified grid to tilemap text."""
+    if castle_bg is None:
+        castle_bg = set()
     lines = []
     for row in range(rows):
         chars = []
         for col in range(cols):
             cell = (row, col)
             cat = grid[row][col]
+
+            # Castle background → sky
+            if cell in castle_bg:
+                chars.append(".")
+                continue
 
             # Flagpole
             if flagpole_col is not None and col == flagpole_col and row <= rows - 3:
@@ -293,12 +357,20 @@ def build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col=None):
                 else:
                     chars.append("#")  # Brick
             elif cat == "goomba":
-                if row >= rows - 4:
+                # Allow ground-level AND elevated Goombas (on platforms)
+                # Exclude staircase/castle area (false positives)
+                elevated_ok = (row < rows - 4 and row + 1 < rows
+                               and grid[row + 1][col] == "brown"
+                               and col <= cols - 35)
+                if row >= rows - 4 or elevated_ok:
                     chars.append("G")
                 else:
                     chars.append(".")
             elif cat == "koopa":
-                if row >= rows - 4:
+                elevated_ok = (row < rows - 4 and row + 1 < rows
+                               and grid[row + 1][col] == "brown"
+                               and col <= cols - 35)
+                if row >= rows - 4 or elevated_ok:
                     chars.append("K")
                 else:
                     chars.append(".")
@@ -321,21 +393,27 @@ def build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col=None):
 
 
 # --- Mario 1-1 known block contents ---
+# Verified from SuperMarioBrosMap1-1.png sprite analysis:
+#   Mushroom sprites (red cap + white dots) at: (9,21), (9,78), (5,109)
+#   Star sprite (orange body, star shape) at: (9,101)
+#   10-coin brick (coin pattern in brick) at: (9,94)
+#   Hidden 1-up mushroom (invisible block) at: (5,101)
 MARIO_1_1 = {
-    "Q": [
-        (5, 22),
-        (9, 106),
+    "Q": [          # ? block with mushroom/power-up
+        (9, 21),
+        (9, 78),
+        (5, 109),
     ],
-    "c": [
+    "c": [          # brick with coin
         (9, 24),
     ],
-    "s": [
-        (9, 78),
+    "s": [          # brick with star (image shows ? due to star sprite)
+        (9, 101),
     ],
-    "m": [
+    "m": [          # hidden 1-up mushroom (invisible in image)
         (5, 101),
     ],
-    "T": [
+    "T": [          # 10-coin brick (image shows ? due to coin pattern)
         (9, 94),
     ],
 }
@@ -348,17 +426,29 @@ def annotate_known_level(lines, level_id):
 
     grid = [list(line) for line in lines]
 
+    # Allowed source tiles for each annotation type:
+    #   Q: ? → Q  (mushroom ? block)
+    #   c: # → c  (coin brick)
+    #   s: ?/# → s  (star — image shows ? due to sprite overlay)
+    #   m: ./?/# → m  (hidden 1-up — invisible block, shows as sky)
+    #   T: ?/# → T  (10-coin — image shows ? due to coin sprite)
+    allowed = {
+        "Q": {"?"},
+        "c": {"#"},
+        "s": {"?", "#"},
+        "m": {".", "?", "#"},
+        "T": {"?", "#"},
+    }
+
     for char, positions in MARIO_1_1.items():
         for row, col in positions:
             if row < len(grid) and col < len(grid[row]):
                 current = grid[row][col]
-                if char in ("Q",) and current == "?":
-                    grid[row][col] = char
-                elif char in ("c", "s", "m", "T") and current == "#":
+                if current in allowed.get(char, set()):
                     grid[row][col] = char
                 else:
                     print(f"  Annotation skip: ({row},{col})='{current}'"
-                          f" expected '#' or '?', got '{current}'",
+                          f" not in {allowed[char]} for '{char}'",
                           file=sys.stderr)
 
     return ["".join(row) for row in grid]
@@ -381,10 +471,13 @@ def main():
     flagpole_result = detect_flagpole(img, cols, rows, tile_w, tile_h)
     flagpole_col = flagpole_result[0] if flagpole_result else None
 
+    castle_bg = detect_castle_bg(grid, cols, rows)
+
     print(f"Detected {len(pipe_cells) // 4} pipes, "
           f"{len(gaps)} gap columns", file=sys.stderr)
 
-    lines = build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col)
+    lines = build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col,
+                          castle_bg)
 
     if args.annotate:
         lines = annotate_known_level(lines, args.annotate)
