@@ -69029,3 +69029,112 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 19:26:58] [slack_check] Starting
 [2026-04-10 19:28:18] [slack_check] Starting
 [2026-04-10 19:28:47] [health_check] Starting
+[2026-04-10 19:28:48] [health_check] [health_check] 2026-04-10T19:28:47 overall=OK
+[2026-04-10 19:28:48] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 19:28:48] [health_check] Done (exit=0)
+[2026-04-10 19:29:38] [slack_check] Starting
+[2026-04-10 19:30:57] [slack_check] Starting
+[2026-04-10 19:31:25] [git_sync] Starting
+[2026-04-10 19:31:30] [git_sync] Done (exit=0)
+[2026-04-10 19:32:20] [slack_check] Starting
+[2026-04-10 19:33:39] [slack_check] Starting
+[2026-04-10 19:34:08] [health_check] Starting
+[2026-04-10 19:34:10] [health_check] [health_check] 2026-04-10T19:34:08 overall=OK
+[2026-04-10 19:34:10] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 19:34:10] [health_check] Done (exit=0)
+[2026-04-10 19:35:00] [slack_check] Starting
+[2026-04-10 19:36:19] [slack_check] Starting
+[2026-04-10 19:37:37] [slack_check] Starting
+[2026-04-10 19:37:56] [infra_health_check] Starting
+[2026-04-10 19:37:57] [infra_health_check] [infra_health] Ash health check at 2026-04-10 19:37:56
+[2026-04-10 19:37:57] [infra_health_check] [infra_health] 1 issues found
+[2026-04-10 19:37:57] [infra_health_check]   ISSUE: ロックファイル .scheduler_ash.pid が792分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 19:37:57] [infra_health_check] Done (exit=1)
+[2026-04-10 19:38:57] [slack_check] Starting
+[2026-04-10 19:39:26] [health_check] Starting
+[2026-04-10 19:39:27] [health_check] [health_check] 2026-04-10T19:39:26 overall=OK
+[2026-04-10 19:39:27] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 19:39:27] [health_check] Done (exit=0)
+[2026-04-10 19:40:17] [slack_check] Starting
+[2026-04-10 19:41:35] [slack_check] Starting
+[2026-04-10 19:42:54] [slack_check] Starting
+[2026-04-10 19:44:13] [slack_check] Starting
+[2026-04-10 19:44:41] [health_check] Starting
+[2026-04-10 19:44:43] [health_check] [health_check] 2026-04-10T19:44:41 overall=OK
+[2026-04-10 19:44:43] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 19:44:43] [health_check] Done (exit=0)
+[2026-04-10 19:45:33] [slack_check] Starting
+[2026-04-10 19:46:52] [slack_check] Starting
+[2026-04-10 19:48:11] [slack_check] Starting
+[2026-04-10 19:49:31] [slack_check] Starting
+[2026-04-10 19:50:00] [health_check] Starting
+[2026-04-10 19:50:01] [health_check] [health_check] 2026-04-10T19:50:00 overall=OK
+[2026-04-10 19:50:01] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 19:50:01] [health_check] Done (exit=0)
+[2026-04-10 19:50:51] [slack_check] Starting
+[2026-04-10 19:52:09] [slack_check] Starting
+[2026-04-10 19:53:27] [slack_check] Starting
+[2026-04-10 19:54:47] [slack_check] Starting
+[2026-04-10 19:55:15] [health_check] Starting
+[2026-04-10 19:55:17] [health_check] [health_check] 2026-04-10T19:55:15 overall=OK
+[2026-04-10 19:55:17] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 19:55:17] [health_check] Done (exit=0)
+[2026-04-10 19:56:07] [slack_check] Starting
+[2026-04-10 19:57:26] [slack_check] Starting
+[2026-04-10 19:58:44] [slack_check] Starting
+[2026-04-10 20:00:03] [slack_check] Starting
+[2026-04-10 20:01:00] [health_check] Starting
+[2026-04-10 20:01:02] [health_check] [health_check] 2026-04-10T20:01:00 overall=OK
+[2026-04-10 20:01:02] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 20:01:02] [health_check] Done (exit=0)
+[2026-04-10 20:01:52] [slack_check] Starting
+[2026-04-10 20:03:11] [slack_check] Starting
+[2026-04-10 20:04:31] [slack_check] Starting
+[2026-04-10 20:05:51] [slack_check] Starting
+[2026-04-10 20:06:20] [health_check] Starting
+[2026-04-10 20:06:21] [health_check] [health_check] 2026-04-10T20:06:20 overall=OK
+[2026-04-10 20:06:21] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 20:06:21] [health_check] Done (exit=0)
+[2026-04-10 20:07:12] [slack_check] Starting
+[2026-04-10 20:07:41] [scheduler_health] Starting
+[2026-04-10 20:07:42] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-10 20:07:42] [scheduler_health] ✅ scheduler_ash PID — PID=15544 生存中
+[2026-04-10 20:07:42] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 20:07:42] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-10 20:07:42] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 20:07:42] [scheduler_health] Done (exit=0)
+[2026-04-10 20:08:02] [infra_health_check] Starting
+[2026-04-10 20:08:04] [infra_health_check] [infra_health] Ash health check at 2026-04-10 20:08:02
+[2026-04-10 20:08:04] [infra_health_check] [infra_health] 1 issues found
+[2026-04-10 20:08:04] [infra_health_check]   ISSUE: ロックファイル .scheduler_ash.pid が822分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 20:08:04] [infra_health_check] Done (exit=1)
+[2026-04-10 20:08:04] [infra_health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-10 20:08:04] [ALERT] Sent error alert for infra_health_check
+[2026-04-10 20:08:34] [slack_check] Starting
+[2026-04-10 20:09:53] [slack_check] Starting
+[2026-04-10 20:11:12] [slack_check] Starting
+[2026-04-10 20:11:40] [health_check] Starting
+[2026-04-10 20:11:41] [health_check] [health_check] 2026-04-10T20:11:40 overall=OK
+[2026-04-10 20:11:41] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 20:11:41] [health_check] Done (exit=0)
+[2026-04-10 20:12:31] [slack_check] Starting
+[2026-04-10 20:13:49] [slack_check] Starting
+[2026-04-10 20:15:07] [slack_check] Starting
+[2026-04-10 20:16:26] [slack_check] Starting
+[2026-04-10 20:16:53] [health_check] Starting
+[2026-04-10 20:16:55] [health_check] [health_check] 2026-04-10T20:16:53 overall=OK
+[2026-04-10 20:16:55] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 20:16:55] [health_check] Done (exit=0)
+[2026-04-10 20:17:45] [slack_check] Starting
+[2026-04-10 20:19:02] [slack_check] Starting
+[2026-04-10 20:20:21] [slack_check] Starting
+[2026-04-10 20:21:40] [slack_check] Starting
+[2026-04-10 20:22:08] [health_check] Starting
+[2026-04-10 20:22:09] [health_check] [health_check] 2026-04-10T20:22:08 overall=OK
+[2026-04-10 20:22:09] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 20:22:09] [health_check] Done (exit=0)
+[2026-04-10 20:22:59] [slack_check] Starting
+[2026-04-10 20:24:17] [slack_check] Starting
+[2026-04-10 20:25:36] [slack_check] Starting
+[2026-04-10 20:26:54] [slack_check] Starting
+[2026-04-10 20:27:22] [health_check] Starting
