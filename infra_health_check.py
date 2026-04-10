@@ -249,6 +249,14 @@ def check_stale_locks():
             mtime = lock_path.stat().st_mtime
             age_minutes = (time.time() - mtime) / 60
             if age_minutes > max_age_minutes * 3:
+                # .pidファイルの場合、プロセスが生きていれば正常（偽陽性回避）
+                if lock_path.suffix == ".pid":
+                    try:
+                        pid = int(lock_path.read_text().strip())
+                        os.kill(pid, 0)  # プロセス生存確認（シグナルは送らない）
+                        continue  # PIDが生きている→ロックは有効
+                    except (ValueError, ProcessLookupError, PermissionError):
+                        pass  # PIDが無効 or 死んでいる→staleとして報告
                 issues.append(
                     f"ロックファイル {lock_path.name} が{age_minutes:.0f}分間残存"
                     f"（プロセスが死んでロックが残っている可能性）"
