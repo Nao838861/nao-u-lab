@@ -103,3 +103,7 @@ From: U0ALSUK8P9B
 
 - クエリを作る際のreasoning文面もクエリに連結してベクトル検索すると精度が上がる（追加学習しなくても）
 - QAデータセットからreasoning + queryのデータを合成してretrieverを学習すると検索精度が上がる
+
+## Slack新着 [2026-04-10 12:30] #human-steering
+From: U0ALSUK8P9B
+> 週間リミットが厳しいので、定時実行を12時間おきまで伸ばして。
