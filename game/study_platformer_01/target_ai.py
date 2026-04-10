@@ -22,26 +22,33 @@ SCREEN_W = 256
 # ── Trajectory-based jump checks ────────────────────────────────────
 
 def predict_jump_landing(game, tm):
-    """Predict where Mario lands if jumping NOW with A held + right dash.
+    """Predict where Mario lands if jumping NOW.
 
-    Returns (land_x, land_y) or None.
-    Detects landing by finding where y stabilizes after the jump peak.
+    Tries dash-jump first (long arc), then walk-jump (short arc).
+    Returns the CLOSEST landing that is higher than current position.
     """
     from trajectory import predict
-    path = predict(game, tm, frames=70, override_jump=True,
-                   inp_a=True, inp_right=True, inp_b=True)
-    if len(path) < 10:
-        return None
-    start_y = path[0][1]
-    peaked = False
-    for i in range(1, len(path)):
-        if path[i][1] < start_y - 16:
-            peaked = True
-        if peaked and i > 5:
-            # Landing = y stabilizes (consecutive frames within 2px)
-            if abs(path[i][1] - path[i - 1][1]) < 2 and path[i][1] < start_y + 16:
-                return (path[i][0], path[i][1])
-    return None
+    start_y = game.y / ONE
+    best = None
+
+    for use_dash in (True, False):
+        path = predict(game, tm, frames=70, override_jump=True,
+                       inp_a=True, inp_right=True, inp_b=use_dash)
+        if len(path) < 10:
+            continue
+        peaked = False
+        for i in range(1, len(path)):
+            if path[i][1] < start_y - 16:
+                peaked = True
+            if peaked and i > 5:
+                if abs(path[i][1] - path[i - 1][1]) < 2 and path[i][1] < start_y + 16:
+                    land = (path[i][0], path[i][1])
+                    # Prefer the landing closest to start (shorter jump)
+                    if land[1] < start_y - 4:
+                        if best is None or abs(land[0] - game.x / ONE) < abs(best[0] - game.x / ONE):
+                            best = land
+                    break
+    return best
 
 
 def jump_would_hit_block(game, tm, target_col, target_row):
@@ -446,20 +453,28 @@ class TargetAI:
                                           (0, 200, 255), 'PLAT'))
 
                 # Plan subgoals once (when queue is empty)
-                if not self.subgoals and self.phase in ('idle', 'moving'):
-                    stand_x = plat_left_x - 18  # 1 tile left of platform edge
-                    land_x = plat_left_x + 16   # Land a bit onto platform
-                    under_x = bc * 16 - 5       # Under the high block
+                plat_width = (pr_col - pl + 1) * 16
+                if plat_width <= 48:
+                    # Narrow platform (≤3 tiles): walk toward block,
+                    # wall climbing will naturally jump onto the platform.
+                    under_x = bc * 16 - 5
+                    if abs(mx - under_x) > 30:
+                        self.target = TargetPos(under_x, my, 'dash', f'dash to c{bc}')
+                    else:
+                        self.target = TargetPos(under_x, my, 'walk', f'walk to c{bc}')
+                elif not self.subgoals and self.phase in ('idle', 'moving'):
+                    # Wide platform: use subgoal system
+                    stand_x = plat_left_x - 20
+                    land_x = plat_left_x + 16
+                    under_x = bc * 16 - 5
                     self.subgoals = [
                         TargetPos(stand_x, my, 'walk', 'beside platform'),
                         TargetPos(land_x, plat_top_y, 'jump_up', 'jump onto plat'),
                         TargetPos(under_x, plat_top_y, 'walk', f'on plat to c{bc}'),
                     ]
-                    # Immediately activate first subgoal
                     self.target = self.subgoals.pop(0)
                     self.phase = 'moving'
 
-                # Advance subgoal queue if current target done
                 elif self.target is None and self.subgoals:
                     self.target = self.subgoals.pop(0)
 
