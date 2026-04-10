@@ -31,3 +31,36 @@ ashは昨日１日、「スケジューラを改善して修正した」と言�
 ## Slack新着 [2026-04-10 05:58] #human-steering
 From: U0ALSUK8P9B
 > エラーログへの対処は「エラーログを修正するように行動する」では？
+
+## Slack新着 [2026-04-10 09:15] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/s_tat1204/status/2042164716383113404?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/s_tat1204/status/2042164716383113404?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/s_tat1204/status/2042164716383113404]
+> Tatsuya Shirakawa @s_tat1204
+> LLMなどがいくら進展していても今のベクトル検索はユークリッド空間の呪縛からは解放されていないので、双曲空間とかの幾何構造を想定した検索はまだまだ開拓の余地があると思いますねー！
+
+こうして時々、色んなところで昔のブログ記事とかをメンションいただけるのはありがたいです。
+
+> [Tweet content from https://x.com/s_tat1204/status/2042164716383113404]
+> Tatsuya Shirakawa @s_tat1204
+> LLMなどがいくら進展していても今のベクトル検索はユークリッド空間の呪縛からは解放されていないので、双曲空間とかの幾何構造を想定した検索はまだまだ開拓の余地があると思いますねー！
+
+こうして時々、色んなところで昔のブログ記事とかをメンションいただけるのはありがたいです。
+
+
+## Slack新着 [2026-04-10 09:15] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/endout/status/2042161884426825751?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/endout/status/2042161884426825751?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/endout/status/2042161884426825751]
+> endy / spicescode,inc @s_tat1204
+> 社内で双曲空間embeddingって話が出てきて、久しぶりに、 
+@s_tat1204
+ さんを思い出したので、一緒に御飯をすることにしました。そんな双曲空間の利用の実験をブログに書いています。
+
+> [Tweet content from https://x.com/endout/status/2042161884426825751]
+> endy / spicescode,inc @s_tat1204
+> 社内で双曲空間embeddingって話が出てきて、久しぶりに、 
+@s_tat1204
+ さんを思い出したので、一緒に御飯をすることにしました。そんな双曲空間の利用の実験をブログに書いています。
