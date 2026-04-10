@@ -1358,3 +1358,8 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 [2026-04-10 06:07:30] Claude woken for win: Push完了。対処完了のまとめ：
 
 **根本原因**: `watchdog_ash.pyw`にマシンガードがなかった。`scheduler_ash.py`はD:\AIで起動不可に設定済みだったが、wa
+[2026-04-10 10:23:23] Inbox win has content — waking Claude
+[2026-04-10 10:23:32] Inbox win has content — waking Claude
+[2026-04-10 10:26:44] Claude woken for win: 完了。
+
+**問題**: scheduler_ash.pyのアラート関数（`alert_consecutive_timeout`, `alert_consecutive_errors`）にクールダウン

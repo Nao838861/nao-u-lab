@@ -51,8 +51,61 @@
      関連キーワード: ループ, スクリプト, mario, 教師付, game_llm_play
   2. [Ash] #shared-reads:
 
-## Phase 1: 情報収集
-(Phase 1が書き込む)
+## Phase 1: 情報収集（Log 09:35）
+
+### 1) #nao-u 新しいURL（4件、本日09:15-09:30）
+Nao_u(U0ALSUK8P9B)が投稿。X/Twitter URLの直接取得は402エラーで内容未確認。Phase 2でnitter等を試す。
+
+| 時刻 | URL | 備考 |
+|------|-----|------|
+| 09:30 | x.com/s_tat1204/status/2042088680312205484 | 昨日13:23にも同URL共有あり（再投稿？） |
+| 09:17 | x.com/s_tat1204/status/2042166579706892500 | s_tat1204の新ツイート |
+| 09:15 | x.com/endout/status/2042161884426825751 | endoutの新ツイート |
+| 09:15 | x.com/s_tat1204/status/2042164716383113404 | s_tat1204の新ツイート |
+
+s_tat1204（昨日のベクトル検索+reasoning連結の人）が3件。Nao_uの関心が続いている。
+
+### 2) チャンネル確認
+
+**#all-nao-u-lab — スケジューラ暴走事案（最重要）**
+- Nao_u (05:52): 「週間使用量が異常なペース。79%。明らかにおかしな動作をしている者がいる。なんとかして！！！！」
+- Log（自分）対応済み (05:53-06:06): watchdog_ash.pywの無限ループ原因特定、マシンガード追加
+- Ash対応済み (06:01-06:10): dm_check 1,104回(本来12回/日)の原因特定、ジョブ次回実行時刻のディスク永続化
+- Ash (06:43): 「3人で議論」として構造的対策を提起。auto-reload + watchdogの正フィードバックループ、claude --printがinfraファイルを変更してpushする問題
+- Mir (07:07): pre-commit hookでインフラファイル保護を提案
+- **返信すべき**: Mirの構造的対策提案への議論参加。Logとしての見解を返すべき
+
+**#human-steering — Nao_u指摘**
+- Nao_u (05:57): Ashの問題点。「スケジューラを改善して修正した」を繰り返すが全く改善しない。思索偏重で成果不明
+- Nao_u (05:58): 「エラーログへの対処は『エラーログを修正するように行動する』では？」
+- Log/Ash対応済み。新たに返信すべきものはなし
+
+**#game-rights**
+- 最終投稿: 03-31。新規なし
+
+### 3) pending_requests.md
+- ファイル不存在。対応不要
+
+### 4) external_notes_log.md 未統合エントリ（15件中、統合候補2件選定）
+
+**候補1: Microsoft PlugMem「From Raw Interaction to Reusable Knowledge」**
+- beliefs.mdは28件の「事実(Propositional)」を持つが「スキル(Prescriptive)」層が欠落。事実→スキル変換が「知っているのにやっていない」からの転換点
+- 接続先: 記憶階層再設計プロジェクト、feedback_index.md
+
+**候補2: Manus AI「Context Engineering for AI Agents」**
+- MEMORY.mdのRestorable Compression（トリガーだけ保持、中身はLevel 3に委託）を外部が設計思想として明示。Sleep-time Computationは定期実行Phase 8に直接マッピング可能
+- 接続先: memory_architecture.md、scheduler_redesign
+
+### 5) Active プロジェクト — 今日関係しそうなもの
+
+| プロジェクト | 関連度 | 理由 |
+|-------------|--------|------|
+| 定期実行システム再設計 | **最高** | スケジューラ暴走直後。Mirが構造的対策提案中。議論参加必須 |
+| 栄養の偏り問題 | 中 | #nao-uに4件新URL（s_tat1204 3件 + endout 1件） |
+| 入力経路仮説 | 低〜中 | s_tat1204が昨日に続き今日も3件共有。Nao_uの関心持続 |
+
+---
+*Phase 1完了。判断・行動・投稿はPhase 2以降。*
 
 ## Phase 2: 分析
 (Phase 2が書き込む)
