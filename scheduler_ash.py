@@ -300,8 +300,29 @@ CONSECUTIVE_ERROR_THRESHOLD = 5  # 連続エラーこの回数で間隔を一時
 ERROR_BACKOFF_SEC = 30 * 60  # エラー連続時の延長間隔（30分）
 
 
+ALERT_COOLDOWN_SEC = 2 * 3600  # 同じジョブのアラートは2時間に1回まで
+_alert_last_sent = {}  # job_name -> timestamp of last alert
+
+
+def _alert_on_cooldown(job_name):
+    """同じジョブのアラートが2時間以内に送信済みならTrue"""
+    import time
+    last = _alert_last_sent.get(job_name, 0)
+    if time.time() - last < ALERT_COOLDOWN_SEC:
+        logging.info(f"[ALERT] Cooldown active for {job_name}, skipping alert")
+        return True
+    return False
+
+
+def _mark_alert_sent(job_name):
+    import time
+    _alert_last_sent[job_name] = time.time()
+
+
 def alert_consecutive_timeout(job_name, count, new_timeout):
-    """連続タイムアウト時にSlackアラートを投稿"""
+    """連続タイムアウト時にSlackアラートを投稿（2時間クールダウン付き）"""
+    if _alert_on_cooldown(job_name):
+        return
     try:
         import slack_bot
         msg = (
@@ -310,13 +331,16 @@ def alert_consecutive_timeout(job_name, count, new_timeout):
             f"スケジューラは稼働継続中です。"
         )
         slack_bot.post_message("ash", msg)
+        _mark_alert_sent(job_name)
         logging.info(f"[ALERT] Sent timeout alert for {job_name}")
     except Exception as e:
         logging.warning(f"[ALERT] Failed to send timeout alert: {e}")
 
 
 def alert_consecutive_errors(job_name, count):
-    """連続エラー時にSlackアラートを投稿（2026-04-07 Nao_u指示: 各自チャンネルへ）"""
+    """連続エラー時にSlackアラートを投稿（2026-04-07 Nao_u指示: 各自チャンネルへ。2時間クールダウン付き）"""
+    if _alert_on_cooldown(job_name):
+        return
     try:
         import slack_bot
         msg = (
@@ -325,6 +349,7 @@ def alert_consecutive_errors(job_name, count):
             f"スケジューラは稼働継続中です。"
         )
         slack_bot.post_message("ash", msg)
+        _mark_alert_sent(job_name)
         logging.info(f"[ALERT] Sent error alert for {job_name}")
     except Exception as e:
         logging.warning(f"[ALERT] Failed to send error alert: {e}")

@@ -71,7 +71,10 @@ def _save_state(state):
 def _alert(message, state, no_alert=False):
     """各自チャンネルにアラートを送る（2026-04-07 Nao_u指示: #allに流さない）。同じアラートは2時間に1回まで。"""
     now = time.time()
-    alert_key = message[:50]
+    # alert_keyは安定させる: 問題数が変わっても同じ根本原因なら同じキーにする
+    # "自己診断でN件の問題を検知" → "自己診断で問題を検知" に正規化
+    import re
+    alert_key = re.sub(r'\d+件の', '', message[:60])[:50]
     recent = [a for a in state.get("alerts_sent", [])
               if a.get("key") == alert_key and now - a.get("ts", 0) < 7200]
     if recent:
