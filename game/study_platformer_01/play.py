@@ -227,6 +227,9 @@ def ai_mode(level_text, speed=1):
             trajectories['current'] = predict(game, tm, frames=60)
             trajectories['jump'] = predict(game, tm, frames=60,
                                            override_jump=True, inp_a=True)
+            trajectories['walk_jump'] = predict(game, tm, frames=60,
+                                                override_jump=True, inp_a=True,
+                                                inp_b=False)
 
         renderer.render(game)
         markers = result.get('markers', []) if not game.dead else []

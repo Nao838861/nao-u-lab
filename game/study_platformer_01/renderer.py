@@ -400,13 +400,14 @@ class MarioRenderer:
         # Draw trajectory lines first (behind markers)
         if trajectories:
             colors = {
-                'current': (255, 255, 255, 160),  # White — current path
-                'jump':    (0, 255, 100, 160),     # Green — jump path
+                'current':   (255, 255, 255),  # White — current input
+                'jump':      (0, 255, 100),    # Green — dash jump (A held)
+                'walk_jump': (255, 200, 50),   # Orange — walk jump (A held, no dash)
             }
             for name, path in trajectories.items():
                 if len(path) < 2:
                     continue
-                color = colors.get(name, (200, 200, 200))[:3]
+                color = colors.get(name, (200, 200, 200))
                 points = []
                 for px_x, px_y in path:
                     sx = int((px_x - scroll_px) * SCALE)
