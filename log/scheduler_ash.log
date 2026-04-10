@@ -70314,3 +70314,39 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-11 06:14:21] [slack_check] Starting
 [2026-04-11 06:15:49] [slack_check] Starting
 [2026-04-11 06:16:25] [health_check] Starting
+[2026-04-11 06:16:27] [health_check] [health_check] 2026-04-11T06:16:25 overall=OK
+[2026-04-11 06:16:27] [health_check]   critical=0 warning=0 ok=9
+[2026-04-11 06:16:27] [health_check] Done (exit=0)
+[2026-04-11 06:17:17] [slack_check] Starting
+[2026-04-11 06:18:03] [git_sync] Starting
+[2026-04-11 06:18:07] [git_sync] Done (exit=0)
+[2026-04-11 06:18:47] [slack_check] Starting
+[2026-04-11 06:19:44] [infra_health_check] Starting
+[2026-04-11 06:21:02] ==================================================
+[2026-04-11 06:21:02] Ash scheduler started (PID 12968)
+[2026-04-11 06:21:02] Max runtime: 0 hours
+[2026-04-11 06:21:02] Code hash: de7d4622d3980be95d681c5368df0510
+[2026-04-11 06:21:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-11 06:21:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-04-11 06:21:02] ==================================================
+[2026-04-11 06:21:13] [slack_check] Starting
+[2026-04-11 06:21:40] [reservation_check] Starting
+[2026-04-11 06:21:40] [reservation_check] 【行動予約】期限到来:
+[2026-04-11 06:21:40] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-11 06:21:40] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-11 06:21:40] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-11 06:21:40] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-11 06:21:40] [reservation_check] Done (exit=0)
+[2026-04-11 06:21:50] [inbox_check] Starting
+[2026-04-11 06:21:53] [inbox_check] Inbox win2 empty
+[2026-04-11 06:21:53] [inbox_check] Done (exit=0)
+[2026-04-11 06:21:53] [dm_check] Starting
+[2026-04-11 06:22:07] [dm_check] No new DMs
+[2026-04-11 06:22:07] [dm_check] Done (exit=0)
+[2026-04-11 06:22:07] [review_deadline] Starting
+[2026-04-11 06:22:07] [review_deadline] レビュー期限超過なし。
+[2026-04-11 06:22:07] [review_deadline] Done (exit=0)
+[2026-04-11 06:22:07] [kaizen_auto_verify] Starting
+[2026-04-11 06:22:07] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-11 06:22:07] [kaizen_auto_verify] Done (exit=0)
+[2026-04-11 06:22:07] [health_check] Starting
