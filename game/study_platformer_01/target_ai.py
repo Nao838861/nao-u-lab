@@ -373,11 +373,14 @@ class TargetAI:
                 self._clear_block()
                 return self.reflex_inp
 
-        # Enemy ahead — stomp with ceiling awareness
-        # React distance scales with speed: faster = further look-ahead
+        # Enemy nearby — stomp with ceiling awareness
+        # React distance scales with speed, checks BOTH directions
         react_dist = max(35, abs(vx) * 16 + 10)
         for e in enemies:
-            if -8 < e['dx'] < react_dist and e['kind'] in ('goomba', 'koopa', 'shell'):
+            # Ahead (positive dx when moving right, negative when moving left)
+            dx_abs = abs(e['dx'])
+            moving_toward = (vx >= 0 and e['dx'] > 0) or (vx < 0 and e['dx'] < 0) or dx_abs < 16
+            if moving_toward and dx_abs < react_dist and e['kind'] in ('goomba', 'koopa', 'shell'):
                 close_count = sum(1 for e2 in enemies
                                   if -8 < e2['dx'] < 80 and e2['kind'] in ('goomba', 'koopa'))
                 # Check ceiling: is there a solid block above Mario?
@@ -507,14 +510,11 @@ class TargetAI:
 
                 if not self.subgoals and self.phase in ('idle', 'moving'):
                     # Decide: approach from LEFT or RIGHT?
-                    from_right = mx > plat_center_x
-                    if from_right:
-                        # Stand just past platform right edge (avoid going too far)
-                        stand_x = plat_right_x + 20
-                        land_x = plat_right_x - 16
-                    else:
-                        stand_x = plat_left_x - 80
-                        land_x = plat_left_x + 16
+                    # Always approach from the LEFT — jumping right lets
+                    # the head clear the blocks before reaching the platform columns.
+                    # (Right approach fails: head hits blocks from below)
+                    stand_x = plat_left_x - 80
+                    land_x = plat_left_x + 16
 
                     self.subgoals = [
                         TargetPos(stand_x, my, 'dash', 'beside platform'),
