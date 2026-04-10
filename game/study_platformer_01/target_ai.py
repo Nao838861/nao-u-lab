@@ -652,20 +652,25 @@ class TargetAI:
         # ── During movement toward a subgoal: check if platform jump is ready NOW ──
         if on_ground and self.subgoals and self.block_platform and mode in ('walk', 'dash'):
             pl, pr_col, p_row = self.block_platform
-            jump_right = (self.target.x > mx) if self.target else True
+            # Jump toward platform center, not toward the subgoal target
+            plat_center = (pl + pr_col + 1) * 16 // 2
+            jump_right = (plat_center > mx)
             hit = (trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
                                           jump_right=jump_right, use_dash=True) or
                    trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
                                           jump_right=jump_right, use_dash=False))
             if hit:
-                # Jump NOW — skip to the jump_up subgoal
-                self.subgoals = [sg for sg in self.subgoals if sg.mode != 'walk' or 'on plat' in sg.reason]
-                self.phase = 'arc_jump'
-                self.jump_timer = 0
-                self.jump_hold = 22
-                self.jump_right = jump_right
-                d = jump_right
-                return {'left': not d, 'right': d, 'a': False, 'b': True}
+                # Check: are we moving in the right direction? (don't jump while going backward)
+                speed_ok = (jump_right and vx >= -0.5) or (not jump_right and vx <= 0.5)
+                if speed_ok:
+                    # Jump NOW — skip to the jump_up subgoal
+                    self.subgoals = [sg for sg in self.subgoals if sg.mode != 'walk' or 'on plat' in sg.reason]
+                    self.phase = 'arc_jump'
+                    self.jump_timer = 0
+                    self.jump_hold = 22
+                    self.jump_right = jump_right
+                    d = jump_right
+                    return {'left': not d, 'right': d, 'a': False, 'b': True}
 
         # ── Mode: dash / walk — arrived? ──
         if abs(dx) < 3 and mode in ('walk', 'dash'):
