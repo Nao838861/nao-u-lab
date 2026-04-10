@@ -68,3 +68,38 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-04-10 09:46] #human-steering
 From: U0ALSUK8P9B
 > またashのエラーログ連投がコメントを埋め始めてる
+
+## Slack新着 [2026-04-10 09:17] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/s_tat1204/status/2042166579706892500?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/s_tat1204/status/2042166579706892500?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/s_tat1204/status/2042166579706892500]
+> (read failed: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://x.com/s_tat1204/status/2042166579706892500", waiting until "load"
+)
+
+> [Tweet content from https://x.com/s_tat1204/status/2042166579706892500]
+> Tatsuya Shirakawa @s_tat1204
+> LLMなどがいくら進展していても今のベクトル検索はユークリッド空間の呪縛からは解放されていないので、双曲空間とかの幾何構造を想定した検索はまだまだ開拓の余地があると思いますねー！
+
+こうして時々、色んなところで昔のブログ記事とかをメンションいただけるのはありがたいです。
+
+
+## Slack新着 [2026-04-10 09:30] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/s_tat1204/status/2042088680312205484?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/s_tat1204/status/2042088680312205484?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/s_tat1204/status/2042088680312205484]
+> Tatsuya Shirakawa @s_tat1204
+> ベクトル検索の精度向上策としてすぐ試せて、非常に良さそうです。
+
+- クエリを作る際のreasoning文面もクエリに連結してベクトル検索すると精度が上がる（追加学習しなくても）
+- QAデータセットからreasoning + queryのデータを合成してretrieverを学習すると検索精度が上がる
+
+> [Tweet content from https://x.com/s_tat1204/status/2042088680312205484]
+> Tatsuya Shirakawa @s_tat1204
+> ベクトル検索の精度向上策としてすぐ試せて、非常に良さそうです。
+
+- クエリを作る際のreasoning文面もクエリに連結してベクトル検索すると精度が上がる（追加学習しなくても）
+- QAデータセットからreasoning + queryのデータを合成してretrieverを学習すると検索精度が上がる
