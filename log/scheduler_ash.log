@@ -68282,3 +68282,141 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 13:23:53] [slack_check] Starting
 [2026-04-10 13:25:11] [slack_check] Starting
 [2026-04-10 13:25:40] [health_check] Starting
+[2026-04-10 13:25:41] [health_check] [health_check] 2026-04-10T13:25:40 overall=WARNING
+[2026-04-10 13:25:41] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 13:25:41] [health_check]   [?] git: 4件の未pushコミット
+[2026-04-10 13:25:41] [health_check] Done (exit=1)
+[2026-04-10 13:25:41] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-10 13:25:41] [ALERT] Sent error alert for health_check
+[2026-04-10 13:26:31] [slack_check] Starting
+[2026-04-10 13:27:52] [slack_check] Starting
+[2026-04-10 13:29:10] [slack_check] Starting
+[2026-04-10 13:30:08] [git_sync] Starting
+[2026-04-10 13:30:12] [git_sync] Done (exit=0)
+[2026-04-10 13:30:42] [health_check] Starting
+[2026-04-10 13:30:43] [health_check] [health_check] 2026-04-10T13:30:42 overall=WARNING
+[2026-04-10 13:30:43] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 13:30:43] [health_check]   [?] git: 5件の未pushコミット
+[2026-04-10 13:30:43] [health_check] Done (exit=1)
+[2026-04-10 13:30:43] [infra_health_check] Starting
+[2026-04-10 13:30:46] [infra_health_check] [infra_health] Ash health check at 2026-04-10 13:30:43
+[2026-04-10 13:30:46] [infra_health_check] [infra_health] 1 issues found
+[2026-04-10 13:30:46] [infra_health_check]   ISSUE: ロックファイル .scheduler_ash.pid が425分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 13:30:46] [infra_health_check] Done (exit=1)
+[2026-04-10 13:31:06] [slack_check] Starting
+[2026-04-10 13:32:24] [slack_check] Starting
+[2026-04-10 13:33:44] [slack_check] Starting
+[2026-04-10 13:35:03] [slack_check] Starting
+[2026-04-10 13:35:53] [health_check] Starting
+[2026-04-10 13:35:54] [health_check] [health_check] 2026-04-10T13:35:53 overall=WARNING
+[2026-04-10 13:35:54] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 13:35:54] [health_check]   [?] git: 5件の未pushコミット
+[2026-04-10 13:35:54] [health_check] Done (exit=1)
+[2026-04-10 13:36:24] [slack_check] Starting
+[2026-04-10 13:37:42] [slack_check] Starting
+[2026-04-10 13:38:59] [slack_check] Starting
+[2026-04-10 13:40:19] [slack_check] Starting
+[2026-04-10 13:40:57] [health_check] Starting
+[2026-04-10 13:40:59] [health_check] [health_check] 2026-04-10T13:40:57 overall=WARNING
+[2026-04-10 13:40:59] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 13:40:59] [health_check]   [?] git: 5件の未pushコミット
+[2026-04-10 13:40:59] [health_check] Done (exit=1)
+[2026-04-10 13:41:39] [slack_check] Starting
+[2026-04-10 13:42:57] [slack_check] Starting
+[2026-04-10 13:44:15] [slack_check] Starting
+[2026-04-10 13:45:34] [slack_check] Starting
+[2026-04-10 13:46:02] [health_check] Starting
+[2026-04-10 13:46:03] [health_check] [health_check] 2026-04-10T13:46:02 overall=WARNING
+[2026-04-10 13:46:03] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 13:46:03] [health_check]   [?] git: 5件の未pushコミット
+[2026-04-10 13:46:03] [health_check] Done (exit=1)
+[2026-04-10 13:46:53] [slack_check] Starting
+[2026-04-10 13:48:12] [slack_check] Starting
+[2026-04-10 13:49:32] [slack_check] Starting
+[2026-04-10 13:50:52] [slack_check] Starting
+[2026-04-10 13:51:20] [health_check] Starting
+[2026-04-10 13:51:22] [health_check] [health_check] 2026-04-10T13:51:20 overall=WARNING
+[2026-04-10 13:51:22] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 13:51:22] [health_check]   [?] git: 5件の未pushコミット
+[2026-04-10 13:51:22] [health_check] Done (exit=1)
+[2026-04-10 13:51:22] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-10 13:51:22] [ALERT] Sent error alert for health_check
+[2026-04-10 13:52:12] [slack_check] Starting
+[2026-04-10 13:53:31] [slack_check] Starting
+[2026-04-10 13:54:51] [slack_check] Starting
+[2026-04-10 13:56:10] [slack_check] Starting
+[2026-04-10 13:56:39] [health_check] Starting
+[2026-04-10 13:56:40] [health_check] [health_check] 2026-04-10T13:56:39 overall=WARNING
+[2026-04-10 13:56:40] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 13:56:40] [health_check]   [?] git: 5件の未pushコミット
+[2026-04-10 13:56:40] [health_check] Done (exit=1)
+[2026-04-10 13:57:00] [scheduler_health] Starting
+[2026-04-10 13:57:01] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-10 13:57:01] [scheduler_health] ✅ scheduler_ash PID — PID=15544 生存中
+[2026-04-10 13:57:01] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 13:57:01] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー2件。例: [2026-04-10 13:25:41] [ALERT] Sent error alert for health_check
+[2026-04-10 13:57:01] [scheduler_health] ✅ git 未push — 5件
+[2026-04-10 13:57:01] [scheduler_health] Done (exit=1)
+[2026-04-10 13:57:31] [slack_check] Starting
+[2026-04-10 13:58:51] [slack_check] Starting
+[2026-04-10 14:00:10] [slack_check] Starting
+[2026-04-10 14:00:51] [infra_health_check] Starting
+[2026-04-10 14:00:52] [infra_health_check] [infra_health] Ash health check at 2026-04-10 14:00:51
+[2026-04-10 14:00:52] [infra_health_check] [infra_health] 1 issues found
+[2026-04-10 14:00:52] [infra_health_check]   ISSUE: ロックファイル .scheduler_ash.pid が455分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 14:00:52] [infra_health_check] Done (exit=1)
+[2026-04-10 14:01:32] [slack_check] Starting
+[2026-04-10 14:02:01] [health_check] Starting
+[2026-04-10 14:02:02] [health_check] [health_check] 2026-04-10T14:02:01 overall=WARNING
+[2026-04-10 14:02:02] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 14:02:02] [health_check]   [?] git: 5件の未pushコミット
+[2026-04-10 14:02:02] [health_check] Done (exit=1)
+[2026-04-10 14:02:52] [slack_check] Starting
+[2026-04-10 14:04:11] [slack_check] Starting
+[2026-04-10 14:05:30] [slack_check] Starting
+[2026-04-10 14:06:48] [slack_check] Starting
+[2026-04-10 14:07:17] [health_check] Starting
+[2026-04-10 14:07:18] [health_check] [health_check] 2026-04-10T14:07:17 overall=WARNING
+[2026-04-10 14:07:18] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 14:07:18] [health_check]   [?] git: 5件の未pushコミット
+[2026-04-10 14:07:18] [health_check] Done (exit=1)
+[2026-04-10 14:08:08] [slack_check] Starting
+[2026-04-10 14:09:28] [slack_check] Starting
+[2026-04-10 14:10:46] [slack_check] Starting
+[2026-04-10 14:12:24] [health_check] Starting
+[2026-04-10 14:12:25] [health_check] [health_check] 2026-04-10T14:12:24 overall=WARNING
+[2026-04-10 14:12:25] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 14:12:25] [health_check]   [?] git: 5件の未pushコミット
+[2026-04-10 14:12:25] [health_check] Done (exit=1)
+[2026-04-10 14:12:35] [slack_check] Starting
+[2026-04-10 14:13:53] [slack_check] Starting
+[2026-04-10 14:15:12] [slack_check] Starting
+[2026-04-10 14:16:31] [slack_check] Starting
+[2026-04-10 14:17:31] [health_check] Starting
+[2026-04-10 14:17:33] [health_check] [health_check] 2026-04-10T14:17:32 overall=WARNING
+[2026-04-10 14:17:33] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 14:17:33] [health_check]   [?] git: 5件の未pushコミット
+[2026-04-10 14:17:33] [health_check] Done (exit=1)
+[2026-04-10 14:17:33] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-10 14:17:33] [ALERT] Sent error alert for health_check
+[2026-04-10 14:17:53] [slack_check] Starting
+[2026-04-10 14:19:11] [slack_check] Starting
+[2026-04-10 14:20:29] [slack_check] Starting
+[2026-04-10 14:21:48] [slack_check] Starting
+[2026-04-10 14:22:35] [health_check] Starting
+[2026-04-10 14:22:36] [health_check] [health_check] 2026-04-10T14:22:35 overall=WARNING
+[2026-04-10 14:22:36] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 14:22:36] [health_check]   [?] git: 5件の未pushコミット
+[2026-04-10 14:22:36] [health_check] Done (exit=1)
+[2026-04-10 14:23:06] [slack_check] Starting
+[2026-04-10 14:24:24] [slack_check] Starting
+[2026-04-10 14:25:42] [slack_check] Starting
+[2026-04-10 14:27:00] [slack_check] Starting
+[2026-04-10 14:27:29] [reservation_check] Starting
+[2026-04-10 14:27:29] [reservation_check] 【行動予約】期限到来:
+[2026-04-10 14:27:29] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-10 14:27:29] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-10 14:27:29] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-10 14:27:29] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-10 14:27:29] [reservation_check] Done (exit=0)
+[2026-04-10 14:27:39] [health_check] Starting
