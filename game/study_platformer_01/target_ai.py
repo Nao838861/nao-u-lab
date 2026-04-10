@@ -372,9 +372,11 @@ class TargetAI:
                 self._clear_block()
                 return self.reflex_inp
 
-        # Enemy very close — stomp with ceiling awareness
+        # Enemy ahead — stomp with ceiling awareness
+        # React distance scales with speed: faster = further look-ahead
+        react_dist = max(35, abs(vx) * 16 + 10)
         for e in enemies:
-            if -8 < e['dx'] < 30 and e['kind'] in ('goomba', 'koopa', 'shell'):
+            if -8 < e['dx'] < react_dist and e['kind'] in ('goomba', 'koopa', 'shell'):
                 close_count = sum(1 for e2 in enemies
                                   if -8 < e2['dx'] < 80 and e2['kind'] in ('goomba', 'koopa'))
                 # Check ceiling: is there a solid block above Mario?
