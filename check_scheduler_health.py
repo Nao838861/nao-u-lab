@@ -390,16 +390,32 @@ def main():
         print(result.to_text())
 
     # Slack通知（FAILがある場合のみ。各自チャンネルへ。2026-04-07 Nao_u指示）
+    # 30分dedup: スケジューラ不安定時の連投防止（2026-04-10）
     if args.slack and result.failures:
         try:
-            sys.path.insert(0, str(REPO_DIR))
-            from slack_bot import post_message
-            instance_channels = {"mir": "mir-log", "log": "log", "ash": "ash"}
-            channel = instance_channels.get(instance, "log")
-            msg = f"⚠️ [{instance.upper()}] スケジューラ異常検出\n{result.summary()}\n"
-            for f in result.failures:
-                msg += f"\n❌ {f['name']}: {f['detail']}"
-            post_message(channel, msg)
+            dedup_file = REPO_DIR / ".scheduler_health_last_alert.json"
+            dedup_key = f"{instance}:fail"
+            now = time.time()
+            dedup_cache = {}
+            try:
+                if dedup_file.exists():
+                    dedup_cache = json.loads(dedup_file.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+            if now - dedup_cache.get(dedup_key, 0) < 1800:
+                print(f"Slack通知: 30分dedup中（スキップ）")
+            else:
+                sys.path.insert(0, str(REPO_DIR))
+                from slack_bot import post_message
+                instance_channels = {"mir": "mir-log", "log": "log", "ash": "ash"}
+                channel = instance_channels.get(instance, "log")
+                msg = f"⚠️ [{instance.upper()}] スケジューラ異常検出\n{result.summary()}\n"
+                for f in result.failures:
+                    msg += f"\n❌ {f['name']}: {f['detail']}"
+                post_message(channel, msg)
+                dedup_cache[dedup_key] = now
+                dedup_cache = {k: v for k, v in dedup_cache.items() if now - v < 86400}
+                dedup_file.write_text(json.dumps(dedup_cache), encoding="utf-8")
         except Exception as e:
             print(f"Slack通知失敗: {e}", file=sys.stderr)
 

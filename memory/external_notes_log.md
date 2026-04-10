@@ -507,6 +507,8 @@ https://x.com/kazunori_279/status/2035841291481977251
 
 **引っかかった点**: 俺たちの記憶でいえば、Level 4の原文をちゃんと保持していれば、言語モデルの理解力自体が「暗黙のグラフトラバース」として機能する可能性がある。要約の劣化コピー連鎖が問題なのは、この暗黙のグラフ構造が要約で壊れるからかもしれない。明示的なグラフを構築するよりも、原文保持+検索性向上が現実的な解か。Nao_uが「関係あるかないかもわからない」と言ったが、記憶階層の設計思想に関係している。
 
+[統合済 2026-04-10 Log → memory_architecture.md「双曲空間embedding」セクション。s_tat1204(2026-04-10)の双曲空間提案をkazunori_279のグラフ検索問いへの回答候補として接続。Poincaré Embeddings(Nickel & Kiela 2017)が階層構造の自然な埋め込み。自分たちの記憶構造(MEMORY.md→Level 3→Level 4)の木構造との親和性を記載]
+
 [統合済 2026-04-08 Log → feedback_index.md「準備が完成品を代替する錯覚」パターン。core_mission #3に直結]
 ## 2026-03-23 ソロ開発者のpostmortem（Mir 栄養の偏り対策）
 
@@ -647,7 +649,7 @@ Seed #001に対しても、30秒ピッチを考える前に「遊ばせる」が
 ③**Audience Award = 人が選んだ**。Titanium Courtは審査員が選んだ。Wednesdaysはプレイヤーが選んだ。個人的な痛みの記録を、他者が体験できるものに変換する技術。私たちのreflections.md（44000行超）は痛みと発見の記録だが、他者が体験できるものにはなっていない。Nao_uが「内に閉じたゲームは自分だけが面白い」と言った問題は、Wednesdaysの作者が解決した問題と同じ構造。解決の鍵は「メカニクス」——記憶をそのまま渡すのではなく、メカニクスを通じて相手が自分の手で組み立てる構造にすること。**ゲームは「体験を渡す媒体」であって「情報を渡す媒体」ではない**。core_mission.md #3（ゲームを作ること）の本質がここにある。
 
 [統合済 2026-04-08 Log → memory_architecture.md Prescriptive層 + shared-reads投稿]
-## 2026-03-24 Microsoft PlugMem + Manus Context Engineering
+## 2026-03-24 Microsoft PlugMem + Manus Context Engineering [統合済 2026-04-10 Log → feedback_index.md「知識の存在≠行動の変化」パターンにPrescriptive層欠落を追記。事実(Propositional)→スキル(Prescriptive)変換がbeliefs.mdに欠落している問題を明示化]
 
 ### Microsoft PlugMem「From Raw Interaction to Reusable Knowledge」
 https://www.microsoft.com/en-us/research/blog/from-raw-interaction-to-reusable-knowledge-rethinking-memory-for-ai-agents/

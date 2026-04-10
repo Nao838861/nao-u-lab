@@ -107,8 +107,67 @@ s_tat1204（昨日のベクトル検索+reasoning連結の人）が3件。Nao_u�
 ---
 *Phase 1完了。判断・行動・投稿はPhase 2以降。*
 
-## Phase 2: 分析
-(Phase 2が書き込む)
+## Phase 2: 分析（Log 09:45）
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+### 1) #nao-u新URL分析・反応形成・投稿
+
+**4件のURL内訳**:
+- s_tat1204/2042088680312205484 (09:30): reasoning連結 — **前サイクルで反応済み。再投稿のためスキップ**
+- s_tat1204/2042166579706892500 (09:17): **双曲空間embedding検索**。「ユークリッド空間の呪縛から解放されていない」。幾何構造を変えてデータ構造を炙り出す可能性
+- endout/2042161884426825751 (09:15): s_tat1204との交流。社内で双曲空間embedding。NLPコロキウム「攻めのAI安全性」ACL2026/ICLR2026
+- s_tat1204/2042164716383113404 (09:15): 上記と同一テキスト（同スレッド）
+
+**反応の核心**: s_tat1204は2日連続で検索の改善を語っている。昨日は入力側（reasoning連結）、今日は表現側（幾何空間の選択）。この2つは直交する改善軸であり、組み合わせはまだ未開拓。自分たちの記憶構造（MEMORY.md→L3→L4の木構造）は双曲空間との親和性が高い。kazunori_279の3/23の問い「グラフ検索をembeddingでやるいい方法ないのかな？」への回答候補として双曲空間が浮上。
+
+**投稿**: #all-nao-u-labに2件（双曲空間反応、endout交流反応）
+
+### 2) #shared-reads投稿
+
+**双曲空間embedding × 記憶階層** — Nao_uの指示「なるべく詳細な記述と分析を」に従い、3件の外部投稿（s_tat1204×2、kazunori_279）を1本の線で繋いだ分析を投稿。ユークリッド空間の限界、自分たちの記憶構造との交差、実装距離の3軸で構造化。
+
+### 3) スケジューラ暴走の構造的対策議論
+
+Ashの問題提起（auto-reload + watchdog正フィードバックループ、claude --printのinfraファイル変更問題）とMirのpre-commit hook提案に対してLogの見解を投稿:
+- pre-commit hookに賛成。ただし--no-verifyバイパス可能性と保護対象の明示的リスト管理を提案
+- 根本原因は「ステートレス再起動」と「ステートフルジョブ管理」の境界の曖昧さ。docs/scheduler_architecture.mdへの明記を提案
+
+### 4) external_notes統合（2件）
+
+**候補1: PlugMem Prescriptive層** → feedback_index.md「知識の存在≠行動の変化」パターンに接続。beliefs.mdは32件の事実(Propositional)を持つがスキル(Prescriptive)層が欠落。事実→スキル変換の未実装を明示化。
+
+**候補2: Kazunori Sato グラフRAG問い + 双曲空間** → memory_architecture.md新セクション「双曲空間embedding」追加。Poincaré Embeddings、自分たちの木構造記憶との親和性、将来のmemory_redesignでの幾何空間選択を記載。
+
+---
+*Phase 2完了。*
+
+## Phase 3: アクション（Log 10:15）
+
+### 1) Slack投稿（Phase 2計画分）— 全件投稿済み確認
+- #all-nao-u-lab: 双曲空間embedding反応、endout交流反応、スケジューラ構造的対策議論 — 3件投稿済み
+- #shared-reads: 双曲空間×記憶階層分析 — 1件投稿済み
+
+### 2) 改善サイクル
+**検証ファースト**: 未検証提案#078（Prescriptiveスキル追加）は期限2026-04-22未到来。新規改善に進行。
+
+**INC-021記録**: docs/scheduler_incidents.mdに記録。watchdog再起動→ジョブ頻発暴走→API使用量79%異常消費。Ashのディスク永続化修正、3インスタンスの構造的議論（pre-commit hook、ステートレス/ステートフル境界）を含む。
+
+**#084提案**: kaizen_tracker.mdに登録、#kaizen-logに投稿。検証期限2026-04-17。
+
+### 3) 他インスタンス洞察の処理（24件中、プロジェクト関連6件を処理）
+
+| 洞察 | 出典 | 追記先 |
+|------|------|--------|
+| スケジューラ暴走+構造的議論 | Ash/Mir #all-nao-u-lab | scheduler_redesign.md（INC-021履歴+ジョブ頻度検出残課題追加） |
+| DESIGN.md=経口経路の産業標準化 | Ash #shared-reads | input_route_hypothesis.md |
+| LLM100体集団生活+著者性の勾配 | Ash #shared-reads (2件) | agentic_pcg.md |
+| TMS×Agent Drift+Character.ai記憶統計 | Ash #shared-reads (2件) | memory_redesign.md |
+
+### 4) Activeプロジェクト更新
+- **scheduler_redesign.md**: 2026-04-10履歴追加（INC-021全経緯+Nao_uの#human-steering指摘+3者構造的議論）。フェーズ2残課題に「ジョブ実行頻度の異常検出」追加
+- **input_route_hypothesis.md**: DESIGN.md洞察追加（Nao_uへの情報蓄積+1件）
+- **agentic_pcg.md**: 100体集団生活+著者性勾配の2洞察追加
+- **memory_redesign.md**: TMS×Agent Drift警告+Character.ai統計の2洞察追加
+
+### 5) external_notes統合（Phase 2で実施済み）
+- PlugMem Prescriptive層 → feedback_index.md
+- 双曲空間embedding → memory_architecture.md

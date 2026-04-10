@@ -599,7 +599,9 @@ def alert_slack(report, instance=None):
             f"warning={report['summary']['warning']})\n"
             + "\n".join(lines[:10])
         )
-        dedup_key = f"{instance}:{report['overall']}:{hash(tuple(sorted(lines)))}"
+        # dedup keyからメッセージハッシュを除外（INC-005再発防止）
+        # 「12件の未push」→「13件」で変わるだけでdedupが効かなくなる問題
+        dedup_key = f"{instance}:{report['overall']}"
         if not _should_send_alert(dedup_key):
             return
 
