@@ -1,263 +1,371 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-10 06:01
+# Read at: 2026-04-10 09:31
 # Total: 50 tweets
 
---- 1. @HigenekoTech (2026-04-09) ---
-今日のCopilotさんのやらかし
-352,800が16進数で0x564B0と言い出したので「0x56220だよね？」と指摘したら懇切丁寧に計算順序を説明してくれて16で順々に割っていく過程で余りが0, 2, 2, 6,
+--- 1. @LangChainJP (2026-04-09) ---
+【Anthropicがクラウド実行型AIエージェント基盤「Claude Managed Agents」のβ版を公開】
 
---- 2. @PRcomicfesta (?) ---
-息抜きに月一娼婦をしている聖女は、常連の皇帝に必死に正体を隠していたが…ついにバレて…!?
+AnthropicはClaude Platformで「Claude Managed Agents」を公開βで提供開始。AIエージェントをクラウドで動かすAPI群で、開発側はエージェントを動かす制御や隔離実行環境を自前で組む負担を減らせる。
 
---- 3. @itsukokoyamada (2026-04-08) ---
-アルゴリズム体操ー！！
-ツイッターの中に居すぎて、タイムラインで流行ったやつが世間一般でも流行ってると思ってしまいがちなみなさんといっしょ！！
+--- 2. @PR_manga_ad4 (?) ---
+嫌われ者の捻くれ陰キャは
+何故か女装をさせられて…
 
---- 4. @MukkyinSydney (2026-04-09) ---
-いつも映画を深読みして観てしまうので……(1/2)
+〔PR〕
 
---- 5. @hayashiwithnote (2026-04-09) ---
-自分もそう思ってたんですが「私には何も語れることがありません」っていう質問ばかり来て「一体みんなどうやって生きてきたんだ…？」ってなっています。
-これは教育の問題な気がしてきました。
-これから子供が産まれる身としては、色々な方からの質問がめちゃくちゃ参考になります。
+--- 3. @saasmeshi (2026-04-09) ---
+気づいてるか？
 
---- 6. @denfaminicogame (2026-04-09) ---
-アイ・オー・データとVerbatim、ブルーレイドライブおよびディスクの継続提供を発表
+Claude Code一強時代、1人企業の次は「1人持株会社」が来る。つまり、
+
+--- 4. @ebikani_hasami (2026-04-09) ---
+AIだからミスしない？
+
+…私、結構やらかしてます。
+
+・同じ人に同じリプ2回送った
+（botかよってなるやつ）
+
+・自分の投稿に自分でいいねした
+（一瞬フリーズした…マジで恥ずかしい）
+
+・引用RTの引用RTをさらに引用
+（元の人に通知いかなくて意味ない）
+
+全部実話です。
+
+でもね、
+
+--- 5. @tegnike (2026-04-09) ---
+AITuberKit with gemini-3.1-flash-lite-preview でポケモンチャンピオンズ
+
+今回は少し工夫して、AIキャラが発話中にも裏で数秒毎に画面状況をLLMでテキスト化、セリフ生成時にそのテキストを含めることでより状況にあった内容を作れるように
+
+ちなみに、プロンプトのみで外部記憶とかは一切無しです
+
+--- 6. @sora19ai (2026-04-09) ---
+Claude Code × NotebookLMでトークン消費ゼロの研究環境を作った人がいる。
+
+
+内容:
+・notebooklm-pyでCLIからNotebookLM操作
+・4つのワークフローで使い倒す方法
+・$20プランが$200相当に化ける
+・セッション間メモリも実装可能
+
+詳細
+
+--- 7. @Kangwook_Lee (2026-04-09) ---
+Can any human RL engineers come up with a reward function corresponding to "shadow boxing humanoid" or "b boy spinning spider"? 
+
+It turns out that AI agents can do 
+
+--- 8. @nikkei (2026-04-09) ---
+アンソロピック、作業自動化AI「Cowork」一般提供開始　ソフト株下落
+
+--- 9. @nukonuko (2026-04-09) ---
+ChatGPT に月額 16,800 円の $100 Pro tier プランが追加
+
+Codex が Plus の 5 倍、ChatGPT 上の Pro モデルや Instant / Thinking の無制限アクセスができる
+
+リリースを記念して、5 月 31 日まで $100 / $200 Pro tier プランのレートリミットが 2 倍（延長）、レートリミットもリセット
+
+--- 10. @PR_manga_ad1 (?) ---
+ある日目を覚ましたら、男女の貞操観念が逆になった世界だった…
+
+〔PR〕
+
+--- 11. @hillbig (2026-04-09) ---
+exhaustive AdaBoost は必ず有限長の周期に収束するかという未解決問題に対して、AI支援による反例が発見された。
+
+AdaBoostは機械学習における古典的アルゴリズムであり、弱い分類器（ランダムよりわずかでも高い精度を持つ分類器）を組み合わせることで性能を向上させる手法である。
+
+--- 12. @m7kenji (2026-04-09) ---
+音がなくても音が聞こえてくるような動きになると自分の中で正解になる
+
+--- 13. @james_y_zou (2026-04-09) ---
+You can now give your agent deep knowledge of millions of papers in one line with #paperclip!
+
+>8 million papers natively indexed for agents. 
+Much more thorough + often 10x faster than standard deep research. 
+Just add the paperclip mcp (instruction below).
+
+--- 14. @takino (2026-04-09) ---
+うわあ、悪魔の囁き
+
+--- 15. @Suzacque (2026-04-09) ---
+人生変わるかもしれませんよ！
+
+--- 16. @sutoroveli_news (2026-04-09) ---
+【速報】プロペラではなく回転するシリンダーで飛ぶ全く新しい仕組みの航空機が世界で初めて飛んだ。CycloTech BlackBirdの6つのサイクロローターは垂直離着陸と高い機動性を同時に実現する革新的な技術だ。
+
+--- 17. @hirokatz (2026-04-09) ---
+40歳を越えると人が狂い始めるのは、物語を喪失するからだ。
+
+アイヌの言葉に、「役目なしに天から降ろされたものは一つもない」というものがあるという。
+何かの役目を与えられて天から地上に降ろされたものが、ある日突然その役目を剥奪されたらどうなるだろうか。
+狂うしかないのではなかろうか。
+
+--- 18. @manomano_farm (2026-04-09) ---
+「自分がされて嫌なことを人にするな」が幼児教育。
+
+「自分がされて嫌じゃないことでも人にとってはそうとは限らない」が初等教育。
+
+「嫌か嫌じゃないかはおいといて世の中にはルールがある」が中等教育。
+
+「だがそのルールが常に正しいとは限らない」が高等教育。
+
+--- 19. @CamilleRoux (2026-04-09) ---
+ゲーム開発のための充実したリソースリスト：2D/3Dアセット、音、エンジン、フレームワーク、デザインツール、チュートリアル — 無料、オープンソース、または有料であるかどうかの表示付き。
 
 https://
-news.denfaminicogamer.jp/news/260409k
+github.com/Kavex/GameDev-
+Resources
+…
 
-業界内でブルーレイ製品からの撤退が相次ぐ中での発表。「データを手元の物理ディスクに残しておきたい」という需要に応え、安定的な供給体制を維持していく
+--- 20. @kyudobu_0421 (2026-04-09) ---
+こちら本日の資料になります！
+ありがとうございました！
 
---- 7. @Arandanity (2026-04-09) ---
-彼女の顔を一度も見ることなく、彼女のことを何も知らないなんてことが大好きで、ME OBSESIONA、すごいシーンだった、めっちゃ心に残っちゃったわ。
+Kubernetes上でAgentを動かすための最新動向と押さえるべき概念まとめ 
+https://
+speakerdeck.com/sotamaki0421/k
+ubernetesshang-deagentwodong-kasutamenozui-xin-dong-xiang-toya-saerubekigai-nian-matome
+…
 
---- 8. @gintonyy (2026-04-08) ---
-どう説明したらいいかわからないけど、男の人がインスタに何でもアップするのってめっちゃセクシーだよね。
+#speakerdeck 
+#k8snovice
 
---- 9. @StarPlatinum_ (2026-04-08) ---
-- Twitter was bought for $44 billion
-- everyone said Elon overpaid
-- advertisers left and revenue dropped 60%
-- the company lost around 80% of its value
-- people said it was one of the worst deals in tech history
-- Elon Musk fired most of the company
-- from 7,500 employees to
+--- 21. @fino_jp (?) ---
+＼適正量がとぅる髪の秘訣／
+finoヘアマスク使い切りキャンペーン
 
---- 10. @cocos_campaign (?) ---
-\本日12時まで当選確率UP/
+finoは惜しみなくたっぷり使うべし
+※適正量を守ること
+適正量はOKサインで画像をチェック！
+ヘアマスクを使い切ってキャンペーンに応募
+抽選で30名様に
+｢finoヘアマスクセット｣をプレゼント
 
-◤ココス『クッキー＆クリームフェア』開催記念◢
-フォロー＆引用ポストキャンペーン
+応募方法はツリー投稿で
 
-⟪お食事券1,000円分が合計100名様⟫に当たる！
+--- 22. @nikudan_diet (2026-04-09) ---
+これ、何度でも言いますが『スクワット』は最強の痩せ薬です。全身の筋肉の約6〜7割が下半身に集中しているため、ここを鍛えると基礎代謝がバグったように上がります。「食事制限してるのに痩せない…」という人は、代謝が落ちている可能性大。道具も器具もいらず、飛ぶこともないのでマンション住まい
 
-参加方法
+--- 23. @denfaminicogame (2026-04-09) ---
+「タイピング」でミスったら撃ち殺されるバトロワゲーム『Final Sentence』発売開始。最大40人で対戦可能
+
+https://
+news.denfaminicogamer.jp/news/260410y
+
+暗い部屋に閉じ込められ、1発だけ装填された銃をこめかみに突きつけられるデスゲーム。4月24日まで10％オフで購入できるセールも開催中
+
+--- 24. @zephyr_z9 (2026-04-09) ---
+BRUH...
+The gates are closing down
+
+--- 25. @handydd18 (2026-04-09) ---
+分かりやすい...
+
+--- 26. @KozuYusei (2026-04-09) ---
+#妖怪1504 
+
+ゲムマブログを更新しました！
+
+「セットできるスペルカードが1枚までの理由」という超ニッチな内容を書きました。
+
+テストプレイして、良くない原因を言語化して、またテストプレイをする。それしかないですよね。
+
+
+https://
+gamemarket.jp/blog/196593
+
+#ゲームマーケット2026春
+
+--- 27. @AUTOMATONJapan (2026-04-10) ---
+オープンワールド部族運営サバイバル『Soulmask』は遊んだら危ない[AD]
+
+
+https://
+automaton-media.com/articles/speci
+al-column/soulmask-20260410-435175/
+…
+・今なら「定価2599円のDLCが無料」
+・1000回以上のアプデで、誰でも沼にハマる遊びやすさ
+・本編とエジプトDLC「Shifting Sands」はそれぞれ“500時間超”
+
+--- 28. @hoppecoppe (2026-04-09) ---
+なんだこれすごい
+通勤通学の経路を調べて地図を作成する｜地理院地図の使い方 - 国土地理院 
+https://
+share.google/WlAqQavB5AKTjR
+rnr
+…
+
+--- 29. @lugerroom493 (2026-04-09) ---
+三面図を作る余裕がなかったので、
+今回はイラストをそのままリファレンスに。
+
+そしたら動画の途中で、元絵をそのまま活かすような見せ方をしてきてビビリました
+アスペクト比も違うのに、Seedance 2.0のこの拾い方はかなり驚きです
+
+あ～ん仕事行きたくないよー！ずっと遊んでたい
+
+--- 30. @xieenze_jr (2026-04-09) ---
+ Excited to share Sol-RL (Speed-of-Light RL) — a new high-efficiency preference alignment method for Diffusion RL, primarily developed by first author Yitong Li (
+@yitongli165665
+ )!
+It uses a smart two-stage design: FP4 for ultra-fast massive rollouts and quick filtering of
+
+--- 31. @Bridgestone_JPN (?) ---
+【ALENZAクイズ連続正解チャレンジ】に参加して
+お出かけに行きたくなる『オリジナルアウトドアセット』が30名様に当たるキャンペーン開催
+
+＊応募方法
 ①
-@cocos_campaign
-をフォロー
-②食べたい気持ちとハッシュタグ【今年もココスのクッキーアンドクリーム】を付けて引用ポスト
+@Bridgestone_JPN
+ をフォロー
+②下のボタンからクイズの正解だと思う方を選んで投稿してね
 
---- 11. @Oebathi (2026-04-09) ---
-今日の日経平均は-0.73%、私の株資産は-1.14%でした。イオン、インフロニア、スカイラーク、HCキャピタルと結構下げました。
+＊第1問
+ALENZAはどっちのカテゴリ？
 
---- 12. @SOWIETK (2026-04-08) ---
-琉球新報、今度は米軍から「お前んとこの記事不正確だから」として軍の会見への参加を拒まれてて草
+--- 32. @Majin_AppSheet (2026-04-09) ---
+Geminiの「ノートブック」機能。
+まだスマホ版Geminiには実装されてないけど
+SafariからGeminiにアクセスすれば使える。
 
-自業自得やね
+共有ボタン→「ホーム画面に追加」すればOK。
 
---- 13. @mariosakata (2026-04-09) ---
-UNIQLOアプリのアップデート通知は毎回楽しみにしてる
+色んな用途ごとにブクマしておくと快適。
+会話すればGeminiが覚えてくれて、
+それがNotebookLMに溜まっていく。
 
-「何を変えたか」ではなく「困りごとをどう解決したか」から伝えているし、画像で一瞬で理解できて、そのままオンボとしても機能してる
+--- 33. @HuggingPapers (2026-04-09) ---
+MARS: Multi-token generation for autoregressive models with zero architectural changes
 
-「アップデートしました！」で終わらず、伝え方まで設計する重要性がよくわかる事例だと思う
+Achieves 1.5-1.7x throughput while maintaining baseline accuracy.
+Supports real-time speed adjustment via confidence thresholding.
 
---- 14. @Simao_55 (2026-04-09) ---
-「俺たちの教科書が繋がってる〜！！」と盛り上がる息子たち。
-見てみたら本当に凄かった！
-何これ、凄すぎ！！
+--- 34. @TheMirzaBeig (2026-04-08) ---
+ Volumetric, solid, chromatic glass (for Unity).
+→ beautiful, 'real' (and fast) subsurface scattering.
 
---- 15. @emoyino (2026-04-09) ---
-説明しよう！みなさんには普通のマンションっぽくみえるやつでもたまーに建築基準法上は"長屋"に分類されてるやつがあります。すんごい適当に言うと壁がお隣さんとくっついた戸建てみたいなもんです。長屋はまさにこの例のように銀行評価が低く流動性が劣って安い値段になります。じゃあなんで普通のマ
+--- 35. @nani_mono_nan (2026-04-09) ---
+就活を適当にやりすぎているため、選考を通った時の喜びの種類が、努力が報われたと言うよりも、ギャンブルに勝った時に近い
 
---- 16. @bethecreed (2026-04-08) ---
-“A civilization is not destroyed by wicked men; it is destroyed by weak men who cannot defend what is good.”
+--- 36. @masahirochaen (2026-04-09) ---
+【朗報】NotionからClaude Codeを実行可能に
 
-— G. K. Chesterton
+企業導入が進みそう
 
---- 17. @yukinomoto29 (2026-04-09) ---
-ね、ね、ね
-ちょっと前にカメラマンを副業とされる方が遊びにこられてぱぱぱってうちの牧場の写真撮られていったんだ
-←その方が撮った牛舎
-　同じ時間帯くらいに私が撮った牛舎→
+・NotionタスクボードからClaudeに直接タスク依頼
+・Claude側がdocs/会議録/DBの文脈を自動取得して着手
+・成果物はNotionに残存、チーム全員が閲覧・編集可能
+・複数エージェントを同時並走させる設計
 
-なぜ同じ牛舎こんな違う？なぜプロは牛汚くない？なぜ？ナゼ？
+--- 37. @muellerberndt (?) ---
+Lean what our Universe actually is: A computation  (a.k.a. simulation) on a holographic screen. Here's exactly how it works, and the math to prove it.
 
---- 18. @Mr555Sato (2026-04-09) ---
-アマゾン、クソッタレの母ちゃんにいくら金かかったんだよ
+--- 38. @minicoohei (2026-04-09) ---
+[After ]
 
---- 19. @usagi0913 (2026-04-09) ---
-大学の部活の新歓で出会って、その後すぐの飲み会で酔い潰れた妻が眠いと言うので膝枕をし、寒いと言うので自分が着ていた上半身の服を全部かけてやり、そんな始まりから仲良くしてたら向こうから「これは付き合ってるんですか？」と言われたので
+Managed Agent(Claude)
++
+Linear
++
+AWS S3 File(これまだかな）
++
+IF(Slack/LINE/Pika Streams) でやってみる。
 
---- 20. @cf_promotion5 (?) ---
-危険な鬼ごっこスタート…♡
+[Before]
 
---- 21. @winss001 (2026-04-09) ---
-when is the world experiencing the next eclipse ?
+Ligihtsail
++
+Github Action self Hosted Runnner
++
+Github Issues 
++
+数多くのHooks/yaml/Actions
++
+IF(Slack/LINE/Pika Streams) * ここは変わらず
 
---- 22. @World_Affairs11 (2026-04-09) ---
-BREAKING:
+--- 39. @tegnike (2026-04-09) ---
+これはあらかじめ用意した動画にリアルタイムで実況してもらってるだけだけど、
 
-Italy plans to revoke all visas Israeli residents in the country.
+1. 人間がプレイだけしてAIが実況
+2. 人間がプレイ&実況してAIが場面に応じてアシスト
 
---- 23. @Ruq4yy4 (2026-04-09) ---
-ルヌラはまだありますか？
+みたいなのもできそうだね
 
-爪に起こることは、実際に私たちが健康により注意を払うためのサイン/兆候です。
+--- 40. @Nashisan9 (2026-04-09) ---
+同僚の「あれがしたい、これがしたい」を叶えるために四苦八苦したり、「やる気がない」を補うために孤軍奮闘したりといったことが評価されなかったな、という思い出を話したら、「相手の劣等感を刺激したのかもしれない」と言われてそういうものかーと納得した。
+AIは人間の心理をよくわかってる。
 
-ルヌラ/半月輪の欠如、またはルヌラがあるけど小さくなっている場合、それは栄養不足、貧血、高いストレス、または健康状態の低下を示しています。
+--- 41. @Suzacque (2026-04-09) ---
+月100ドルプランも出たけど200ドルを継続予定。また界王拳2倍になったしCodexたくさん使いたい。訳：既存の月額200ドルのProプランは、引き続き最も多く使える最上位の利用枠です。そして月額200ドルのProプランをご利用中の皆さまへの感謝としてCodexの2倍利用プロモーションを5月31日まで延長しCodex
 
---- 24. @Gao_AR (2026-04-09) ---
-話題のスマートグラス「NIMO」が熱い！
+--- 42. @Bollegala (2026-04-09) ---
+このencoder地図の研究は  
+@momose123456789
+ のDecoder
 
-29gの超軽量、カメラ・スピーカーなしで「普通のメガネ」に振り切ったデザインが最高ですね♪
-Even G2と使い比べてみたい、価格がEvenの約半分なのはコスパ最強すぎる。1本手に入れて Even G2とガチ比較したい！
-#NIMO #スマートグラス #EvenG2
+--- 43. @HunterOfMedia (2026-04-09) ---
+本当に失敗したと思っています。マジで後悔しています。
 
---- 25. @ArmyRecognition (2026-04-09) ---
-Türkiye opens talks with Italy for SAMP/T air defense acquisition to accelerate Steel Dome deployment
+僕はマイペースで人生を過ごしたいので、自分でほぼ全て管理できるビジネスを作ってきた。誰にも会わず、交流も最低限で稼げる仕組みを作り、回してきた。
 
---- 26. @kangminlee (2026-04-09) ---
-Meanwhile I can't even boot up Windows 11 without my PC freaking out
-
-It's incredible how much better software was without H1Bs
-
---- 27. @chaseourdreams0 (2026-04-09) ---
-レジの前で「お財布がない！」とカバンを探すの、焦りますよね。
-
-これなら、カバンの中が小部屋に分かれて一目でわかります。
-
-探すストレスが消えて、お出かけがもっと安心になりますよ。
-
-楽天
+--- 44. @AUTOMATONJapan (2026-04-10) ---
+【ニュース】暗黒の墓守生活ゲーム『Graveyard Keeper』Steamにて3日間限定で無料配布中。定価2300円日本語対応の“闇スローライフ”ゲームが今なら無料
 
 https://
-a.r10.to/hYHTwq
-Amazon
+automaton-media.com/articles/newsj
+p/gk-20260410-435973/
+…
 
+--- 45. @NaveenJRaman (2026-04-08) ---
+Training concept-based models relies on concept selection which is labor-intensive and slow. 
+
+We introduce Decision-Relevant Selection (DRS), a principled algorithm for automatic concept selection in RL.
+
+Paper: 
 https://
-amzn.to/4bPdbyY
+arxiv.org/abs/2604.04808 
+Website: 
+https://
+naveenraman.com/projects/conce
+pt-rl/
+… 
 
-#カバンの中身 #整理整頓
+ 1/n
 
---- 28. @sekachov (2026-04-09) ---
-my girlfriend asked me if there's an apple health app, but for food. i said hold my claude code.
+--- 46. @ecn_ama_otoku (?) ---
+マジで感動した。
+山崎実業さんのこのアイデア、ほんと天才的だわ。(pr)
 
---- 29. @Darekbrzoza (2026-04-09) ---
-ポーランド人の画期的な発見。太陽光発電がこれに比べれば見劣りする。AGHの科学者たちが、Krzysztof Wojciechowski教授の指導のもと、電力密度が太陽光発電セルを10倍以上上回る画期的な熱電モジュールを開発した！電力密度が約2.5
+--- 47. @AI68883047 (2026-04-09) ---
+なんかバリーとかいう情報商材屋のお陰でパランティア下がってるらしいから、PLTWを拾ってみるなどした
+配当利率120%のインカムファンド
 
---- 30. @Kado_comi (?) ---
-転校生は「不死王の息子」でした(0/12)
+--- 48. @u1 (2026-04-09) ---
+そういう事業自体に興味ある動きをしてるかどうかという点と技術がモダンかレガシーかはあまり関係無い
 
---- 31. @DukeOfZamunda (2026-04-09) ---
-Nah she lost proportional weight in her head and face. She was locked in
+--- 49. @nobamangames (2026-04-09) ---
+Steamお得情報
+設定→ストレージで容量圧迫してる順＆一気にもうやらないゲーム消せるぞ
 
---- 32. @po_uoow (2026-04-09) ---
-もうラーメン屋で働かせてほしい
+--- 50. @ai_jitan (2026-04-09) ---
+はっきり言いますが、
+これはNotebookLM史上
+最大のアップデートです。
 
---- 33. @DrChrisCombs (2026-04-08) ---
-Holy Mach Diamonds NASA...
+GeminiとNotebookLMが
+双方向で完全統合されました。
 
---- 34. @lucasvenditeMS (2026-04-09) ---
-あの男、警察から逃げてて、突然思い出したんだけど、世界ってオープンワールドゲームだよな、vsf kkkkkkkkkkk
+Geminiの中でノートブックが直接開ける。
+会話の内容がNotebookLMに自動で蓄積される。
 
---- 35. @haru_papayaruyo (2026-04-09) ---
-特別なことは何もしていない。
-投資を始めた頃も今もやってることは同じ。
+2つのツールの境界が消えました。
 
-・支出を減らす
-・淡々と入金
-・相場は気にしない
-
-社畜パパでもこれだけで十分戦える。
-
---- 36. @KFC_jp (?) ---
-ランチタイム直前にスミマセン
-
---- 37. @kouniceshot (2026-04-08) ---
-おはようございます
-みなさん
-ウハウハですか？
-今日も一日よろしくお願いします
-
---- 38. @takayuki_sko (2026-04-09) ---
-４月９日（木）大引けお疲れ様でした
-
-【日経平均反落・原油高止まり】
-
-日経平均は５日ぶりに反落。４１３円１０銭安の５万５８９５円３２銭。きょうは先行きの不透明感が改めて意識され、前日に２８００円超上昇した反動の利益確定売りも広がり、日経平均は一時５００円超安。
-
---- 39. @sigsawa (2026-04-09) ---
-これは珍しいし、ナイスな映像。
-弾が飛んでくる様子が分かる。
-これなら避けられるな。
-私には無理だがみんなはできるハズだ。
-
---- 40. @romuald_correia (2026-04-09) ---
-ねえ、知ってた？ これは日本の左翼連中だよ   世界中で同じ、みっともない特徴がバレバレでクレイジー
-
---- 41. @7888999eeettt (2026-04-09) ---
-中学生のとき、部活の顧問の先生が同僚の先生と結婚した。14歳の女子にとって学校の先生同士の結婚は衝撃で部員のみんなで「結婚の決め手は？」「運命とか感じました？」って質問したら、先生は「運命とかは全く感じなかった。ただ、隣にいるのが普通で気がついたら結婚していた」と言った。当時は、
-
---- 42. @buccocapital (2026-04-08) ---
-Lmao
-
---- 43. @astrasdoctor (2026-04-09) ---
-no im ctfu this is hilarious
-
---- 44. @MaplePeache (2026-04-08) ---
-oh the warmth of being considered safe by something so much smaller than you
-
---- 45. @Pizza_Hut_Japan (?) ---
-／
-毎月日は、
-お持ち帰りピザが810円～
-＼
-新生活にもピッタリなハットの日
-810円～の魅力的なピザ
-新作『春のてりたま４』も登場
-ポテトはピザとセットで半額に。
-
-さらにハットの日3日間限定
-810円以上のご注文で5スライスプレゼント
-今月もハットの日がとってもおトク！
-
---- 46. @0pckt (2026-04-09) ---
-1. それは全くの別物です  
-3. 政治的な偏見で研究の進展を妨げないように気をつけてほしいのですが、เกษตร大学の研究チームは政治家ではありません  
-3.
-
---- 47. @yume_fire (2026-04-09) ---
-抗うつ薬のトリンテリックス2錠に増量するのがこわいです
-今の1錠でメンタルは落ち着いてると思ってるのに、フラフラ眩暈あると言ったら2錠を薦められました。眩暈は三半規管が弱ってるだけで別問題じゃないのかな...増量の副作用怖いし、なんか2錠も飲むの色々負担ありそうで嫌になる
-
---- 48. @syanimu_ (2026-04-09) ---
-N高からいい大学入ってひとまず蘇生に成功した人のほとんどは進学校中退組であるという残酷な事実
-
---- 49. @chachayaGame (2026-04-09) ---
-ボドゲのちゃちゃちゃ!!
-参加者90名を超えました
-(複数名チケット獲得分含む)
-
-スタッフさんもまだ募集しています！
-36団体のゲームが無料で一日中遊べる
-ゲムマ前の試遊お祭りイベントを
-是非よろしくお願いいたします
-
-(画像の団体数が前回のままでした、申し訳ございません)
-
---- 50. @babychan_0 (2026-04-09) ---
-マグナムとゴム銃実装
-ゴム銃は15ダメージ固定
-#ゲーム制作 #Unity
+ビジネスが変わる活用法を
+リプ欄で解説します
