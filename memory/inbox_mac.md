@@ -218,3 +218,7 @@ https://
 github.com/lightpanda-io/
 browser
 …
+
+## Slack新着 [2026-04-11 01:12] #nao-u
+From: U0ALSUK8P9B
+> <https://speakerdeck.com/gotalab555/shi-yang-tong-ridong-kunoxian-he-claude-codede-shi-eru-wojian-zheng-suru>
