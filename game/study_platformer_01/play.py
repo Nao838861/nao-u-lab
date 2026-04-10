@@ -116,10 +116,18 @@ def replay_mode(log_path, speed=1):
     pygame.display.set_caption(f"Mario Clone - Replay: {os.path.basename(log_path)}")
     clock = pygame.time.Clock()
 
+    # Check if log has AI markers
+    from target_ai import Marker as AiMarker
+    has_markers = any('markers' in fr for fr in data.get('frames', [])[:10])
+    if has_markers:
+        pygame.display.set_caption(
+            f"Mario Clone - AI Replay: {os.path.basename(log_path)}")
+
     frames = data['frames']
     idx = 0
     running = True
     result_timer = 0
+    last_markers = []
 
     while running and idx < len(frames):
         for event in pygame.event.get():
@@ -138,9 +146,14 @@ def replay_mode(log_path, speed=1):
                 left=inp['left'], right=inp['right'],
                 a=inp['a'], b=inp['b'],
             ))
+            # Read markers from log if present
+            if 'markers' in entry:
+                last_markers = [AiMarker.from_dict(m) for m in entry['markers']]
             idx += 1
 
         renderer.render(game)
+        if last_markers:
+            renderer.draw_debug_overlays(game, last_markers)
         clock.tick(FPS)
 
     # Hold on result screen
@@ -159,13 +172,86 @@ def replay_mode(log_path, speed=1):
     pygame.quit()
 
 
+def ai_mode(level_text, speed=1):
+    """Run AI live with debug visualization."""
+    from api import MarioAPI
+    from target_ai import TargetAI
+
+    pygame.init()
+    api = MarioAPI()
+    # Reload with specified level
+    if level_text != DEFAULT_LEVEL:
+        api._level_text = level_text
+        api._tm = Tilemap(level_text)
+        api._game = MarioGame(tilemap=api._tm)
+    state = api.reset()
+    tm = api._tm
+    game = api._game
+    ai = TargetAI()
+
+    renderer = MarioRenderer()
+    pygame.display.set_caption("Mario Clone - AI Debug")
+    clock = pygame.time.Clock()
+
+    running = True
+    result_timer = 0
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                running = False
+
+        if game.dead or game.cleared:
+            result_timer += 1
+            if result_timer > FPS * 3:
+                running = False
+            renderer.render(game)
+            clock.tick(FPS)
+            continue
+
+        for _ in range(speed):
+            if game.dead or game.cleared:
+                break
+            result = ai.update(state, game, tm)
+            inp = result['input']
+            state = api.step(**inp)
+            # Inject markers into the frame log for replay
+            if game.log:
+                game.log[-1]['markers'] = [m.to_dict() for m in result.get('markers', [])]
+
+        # Trajectory prediction (2 paths: current input + if-jump)
+        trajectories = {}
+        if not game.dead and not game.cleared:
+            from trajectory import predict
+            trajectories['current'] = predict(game, tm, frames=60)
+            trajectories['jump'] = predict(game, tm, frames=60,
+                                           override_jump=True, inp_a=True)
+
+        renderer.render(game)
+        markers = result.get('markers', []) if not game.dead else []
+        renderer.draw_debug_overlays(game, markers, trajectories)
+        clock.tick(FPS)
+
+    # Save log
+    log_dir = os.path.join(os.path.dirname(__file__), 'logs', 'hierarchical_ai')
+    os.makedirs(log_dir, exist_ok=True)
+    api.save_log(os.path.join(log_dir, 'last_target_ai.json'))
+
+    res = 'CLEARED' if game.cleared else 'DEAD' if game.dead else 'QUIT'
+    print(f"{res} | Frames: {game.frame} | X: {game.x / 256:.0f} | Coins: {game.coins}")
+    print(f"Replay: python play.py --replay logs/hierarchical_ai/last_target_ai.json")
+    pygame.quit()
+
+
 def main():
     args = sys.argv[1:]
 
-    # Parse --replay and --speed
+    # Parse --replay, --speed, --ai
     replay_path = None
     speed = 1
     level_arg = None
+    run_ai = False
     i = 0
     while i < len(args):
         if args[i] == '--replay' and i + 1 < len(args):
@@ -174,18 +260,23 @@ def main():
         elif args[i] == '--speed' and i + 1 < len(args):
             speed = int(args[i + 1])
             i += 2
+        elif args[i] == '--ai':
+            run_ai = True
+            i += 1
         else:
             level_arg = args[i]
             i += 1
 
+    level_text = DEFAULT_LEVEL
+    if level_arg and os.path.isfile(level_arg):
+        with open(level_arg, encoding='utf-8') as f:
+            level_text = f.read()
+
     if replay_path:
         replay_mode(replay_path, speed)
+    elif run_ai:
+        ai_mode(level_text, speed)
     else:
-        if level_arg and os.path.isfile(level_arg):
-            with open(level_arg, encoding='utf-8') as f:
-                level_text = f.read()
-        else:
-            level_text = DEFAULT_LEVEL
         play_mode(level_text)
 
 
