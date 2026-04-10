@@ -421,8 +421,8 @@ class TargetAI:
                     plat = find_platform_for(tm, c, ground_row)
                     if plat is None:
                         continue
-                    # Platform blocks: lower base than ground (don't skip ground blocks)
-                    score = (160 if ch in ITEM_BLOCKS else 120) - abs(dx)
+                    # Platform blocks: lower than ground blocks (do ground first)
+                    score = (100 if ch in ITEM_BLOCKS else 80) - abs(dx)
                 else:
                     continue
 
@@ -463,8 +463,9 @@ class TargetAI:
                     else:
                         self.target = TargetPos(under_x, my, 'walk', f'walk to c{bc}')
                 elif not self.subgoals and self.phase in ('idle', 'moving'):
-                    # Wide platform: use subgoal system
-                    stand_x = plat_left_x - 20
+                    # Wide platform: start far enough for descent arc to hit
+                    # Dash-jump peaks ~87px from start, so start ~80px before platform
+                    stand_x = plat_left_x - 80
                     land_x = plat_left_x + 16
                     under_x = bc * 16 - 5
                     self.subgoals = [
@@ -562,11 +563,11 @@ class TargetAI:
         if on_ground and mode not in ('jump_up',):
             for wd, wh in walls:
                 if 0 < wd < 60 and wh >= 2:
-                    # Predict: would jumping NOW land me on higher ground?
+                    # Predict: would jumping NOW land me on higher ground AHEAD?
                     landing = predict_jump_landing(self._game, self._tm)
                     if landing:
                         land_x, land_y = landing
-                        if land_y < state['y'] - 4:
+                        if land_y < state['y'] - 4 and land_x > mx:
                             # Jump lands on higher ground — go!
                             self.phase = 'arc_jump'
                             self.jump_timer = 0
@@ -621,11 +622,12 @@ class TargetAI:
                 self._advance_subgoal()
                 return {'left': False, 'right': False, 'a': False, 'b': False}
 
-            # Use landing prediction: jump if it lands on higher ground
+            # Use landing prediction: jump if it lands on higher ground TOWARD target
             landing = predict_jump_landing(self._game, self._tm)
             if landing:
                 land_x, land_y = landing
-                if land_y < state['y'] - 4:
+                toward = (dx >= 0 and land_x > state['x']) or (dx < 0 and land_x < state['x'])
+                if land_y < state['y'] - 4 and toward:
                     self.phase = 'arc_jump'
                     self.jump_timer = 0
                     self.jump_hold = 22
