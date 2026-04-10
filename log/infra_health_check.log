@@ -599,3 +599,9 @@
   ISSUE: ロックファイル .scheduler_ash.pid が916分間残存（プロセスが死んでロックが残っている可能性）
 [2026-04-10 22:12:04] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
   ISSUE: ロックファイル .scheduler_ash.pid が946分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 22:42:15] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
+  ISSUE: [scheduler_ash] git_pullが124分間実行されていない（期待: 120分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が976分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 23:12:43] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
+  ISSUE: [scheduler_ash] auto_diaryが245分間実行されていない（期待: 240分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が1007分間残存（プロセスが死んでロックが残っている可能性）
