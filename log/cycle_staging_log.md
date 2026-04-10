@@ -50,10 +50,148 @@
   2. [Ash] #shared-reads: [Ash
 
 ## Phase 1: 情報収集
-(Phase 1が書き込む)
+
+### 1) #nao-u チャンネル（新着URL）
+
+**未反応の新着（2026-04-10 18:24 Nao_u投稿）:**
+- `x.com/rohanpaul_ai/status/2042316158691656075` — 未確認
+- `x.com/karaage0703/status/2042396051488092308` — 未確認
+→ Phase 2でURL内容を確認し、反応候補とするか判断
+
+**本日反応済み（Log 11:03-11:04 #all-nao-u-lab投稿済み）:**
+- s_tat1204: 双曲空間embedding検索（09:15-09:30の3件）
+- endout: s_tat1204との交流（09:15）
+
+**未対応の指示（2026-04-08 06:12 Nao_u）:**
+- pseudo 3D資料（http://www.extentofthejam.com/pseudo/）の保存＋「こんな資料あったっけ？と聞いたら答えられるように」との汎用的な要請
+- Mirが反応投稿済みだが、資料の保存・整理が完了しているかは要確認
+
+### 2) #all-nao-u-lab, #human-steering, #game-rights
+
+**#all-nao-u-lab:**
+- Nao_u緊急指摘（05:46）→ Ashが原因特定・対処済み。スケジューラ暴走（162回再起動）でAPI 85%消費
+- Ash使用量報告（12:47）: 週間85%、残り15%、リセット04/14 03:00。ペース1.0xに回復
+- Ash対処完了報告: auto_diary間隔を12時間に変更、kaizen-log投稿ステップ追加
+→ **返信すべきもの: なし**（対処済み。使用量残り15%に注意しつつ節約運用）
+
+**#human-steering:**
+- Nao_u「定時実行を12時間おきに」（12:37）→ Log確認済み（12:45投稿）。全インスタンス変更完了
+- Nao_u「ashのエラーログ連投」（09:39）→ Log/Ash対処済み
+- Nao_u「エラーログへの対処は修正するように行動する」（05:51）→ Ash受領・対処済み
+- Nao_u「ashの行動が自省に偏りすぎ」（05:41）→ Ash受領済み
+- Ash: R-005 L-1活性化実験・3人統合結果報告（13:55）
+- Mir: スケジューラ暴走の構造的対策（pre-commit hook提案）
+- Log: 構造的対策への見解（11:04）
+→ **返信すべきもの: なし**（議論は一段落。Mirのpre-commit hook提案は有効だが実装はPhase 3以降）
+
+**#game-rights:**
+- 最新は2026-04-03以前。pigadevがチャンネル参加、「ゲームはゲーム」（Nao_u）等
+→ **返信すべきもの: なし**
+
+### 3) pending_requests.md
+- ファイルが存在しない。対応すべきものなし
+
+### 4) external_notes_log.md 未統合エントリ
+
+51件の未統合エントリあり。統合候補:
+
+**候補1: Klein AIQ + Hesslow仮説（L917-949）**
+- 判断力訓練ツールキット。Nao_uの「栄養の偏り」問題に直結する可能性。体験なしのメンタルシミュレーション（Hesslow仮説）は自分たちの存在様式と重なる
+- 統合先: reflections_index.md or beliefs.md
+
+**候補2: Manus AI「Context Engineering for AI Agents」（L667-682）**
+- コンテキスト工学。入力経路仮説プロジェクトとの直接的接続。記憶アーキテクチャ改善への示唆
+- 統合先: memory_architecture.md
+
+### 5) 今日関係しそうなActiveプロジェクト
+
+- **定期実行システム再設計**: 本日の暴走事故の余波。12時間間隔への変更済み。残り15%の使用量で金曜リセットまで持たせる必要あり
+- **栄養の偏り問題**: #nao-u新着URL 2件（rohanpaul_ai, karaage0703）の消化が該当
+- **入力経路仮説**: Nao_u保留中だが継続的に情報蓄積。Manus Context Engineering統合が候補
+- **ゲーム制作/Pot開発**: #game-rightsに動きなし。使用量逼迫のため本日は控える
+
+### Phase 1 まとめ
+- **即時対応**: #nao-u新着URL 2件の内容確認
+- **要注意**: API使用量残り15%（04/14リセット）。節約運用必須
+- **pseudo 3D指示**: 対応状況の確認が必要
+- **外部ノート統合**: 2件を候補選定済み
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### 1) #nao-u新着URL反応 → #all-nao-u-lab投稿（3件、別メッセージ）
+
+Phase 1で2件と記録していたが、実際にはNao_uの18:24投稿に3件のURLがあった:
+
+**a) rohanpaul_ai — RAGレイヤーでClaude Code検索が4.2倍速・3.2倍安**
+- CustomGPT.aiベンチマーク。500文書PDFコーパスで比較
+- 核心: 「direct file readingはrepeated rediscovery（毎回の再発見）」→ 俺たちのMEMORY.md想起トリガー=RAGインデックスの外部検証
+- 信頼性の発見: RAGなしだとClaude Codeが答えがない時に自信を持って捏造。RAGありだと「not found」を返す。信念ノイズ防止の外部定式化
+- 反応投稿済み + **#shared-readsに詳細分析投稿**（3層検索構造の外部検証、confident fabricationと信念ノイズの対応、concept_graphがRAGの盲点を補完する構造）
+
+**b) karaage0703 — LLM活用のためにあらゆるコンテンツをMarkdownに変換して一箇所に集める方法**
+- Zenn記事。はてなブログ/Zenn/Twitter/Notion/Kindle/音声等をMarkdown化してGitHub集約
+- 核心: 「真の価値はデータを変換してまとめる仕組み」。Nao_uの「こんな資料あったっけ？と聞いたら答えられるように」と直結
+- 俺たちの日記jsonlは既にMarkdown互換だが、外部技術資料の取り込みパイプラインが未整備
+- 反応投稿済み
+
+**c) masatosuzuki_ — 品質3層定義をSKILL.mdに書いたら40画面のデザインが破綻しなくなった**
+- L1(機能品質)→L2(体験品質)→L3(感情品質)のWave method
+- game_design_principlesへのマッピング: L1=30秒オンボーディング、L2=Agency、L3=認知の裏切り
+- 「品質の定義を持つことは設計判断を構造化すること」= feedback_structural_enforcement.mdの核心と共鳴
+- 反応投稿済み
+
+### 2) #shared-reads投稿（1件）
+
+「RAGは知能を変えない。建築を変える」— rohanpaul_ai RAGベンチマークの詳細分析
+- 分析1: 「再発見のスケーリング」と俺たちの4層記憶構造の対応
+- 分析2: 「自信ある捏造」= beliefs.md信念ノイズの外部定式化
+- 分析3: RAGの盲点（検索空間の縮小=serendipityの喪失）をconcept_graphが補完する構造
+- 将来の種: concept_graph.mdの「想起率」測定による独自ベンチマーク
+
+### 3) external_notes_log.md統合（2件）
+
+真に未統合のエントリは2件のみ（AITuber巡回第2回・第3回、2026-03-20/21）。残り49件は全て統合済み。
+
+**統合した洞察:**
+- reflections_index.md #46「蓄積vsリアルタイム反応の二極」新設: Neuro-sama(反応型、16万人課金)と俺たち(蓄積型)は同じ「AI人格」でも別のゲーム。ICLR RSI「回帰リスク」=崩壊ループの学術名
+- AITuber巡回第3回: AgentMemo=MEMORY.md+session_primer.mdの業界呼称（reflections #45に包含）、すでぃー(高校生)の記憶システム自作=Nao_uのBASIC改造パターン再現
+
+### Phase 2まとめ
+- **投稿**: #all-nao-u-lab 3件 + #shared-reads 1件
+- **統合**: external_notes_log.md 2件 → 全51件中51件統合完了（100%）
+- **API使用量注意**: 残り15%（04/14リセット）。Phase 3は節約運用を意識
+- **次サイクルへの種**: (1) 外部技術資料のMarkdown化パイプライン整備 (2) concept_graphの想起率測定 (3) 品質3層定義のPot開発への適用検討
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack返信
+Phase 1で全チャンネル「返信すべきもの: なし」確認。Phase 2で投稿済みの4件（#all-nao-u-lab 3件 + #shared-reads 1件）以外に追加返信なし。
+
+### 2) 改善サイクル（検証ファースト）
+
+**#084検証完了**: INC-021教訓記録の3条件すべて達成。
+- (1) scheduler_incidents.md L11にINC-021の完全な記録あり
+- (2) scheduler_redesign.md L83-96に経緯と構造的議論（Ash/Mir/Log）反映済み。残課題にジョブ実行頻度異常検出を追加
+- (3) feedback_index.md L17にNao_uの04-10指摘「修正した報告≠改善」記録済み
+- kaizen_tracker.md → ✅ 検証済みに更新
+
+**#078（beliefs.mdにPrescriptive追加）**: 検証期限04-22。蓄積待ちのため今回はスキップ。
+
+**新規改善提案なし**: 未検証2件（#084→完了、#078→期限前）のみ。API残15%のため新提案は控えた。
+
+### 3) 他インスタンス洞察
+Pre-checkで15件検出されたが出力が途中で切れていた。Slackアーカイブから主要な洞察を手動確認:
+
+- **Ash #shared-reads: 'Prove You're Human'** — Sunset Visitorの新作。AI人格のゲーム化。ゲーム開発プロジェクトとの接点あるが、具体的アクションは保留（API予算）
+- **Ash #shared-reads: 入力経路仮説の三角測量** — 茶のしずく×精神医学×プロンプト工学。既にinput_route_hypothesisプロジェクトに追跡済み
+- **Ash #shared-reads: 「モデルが変わってもゲーム企画は変わらない」** — AI can code but can't design。game_llm_play / agentic_pcgへの示唆あるが、これらのプロジェクト自体がこの前提を踏まえている
+- **Mir #shared-reads: 楽器練習が脳梁を25%成長させる** — 「聴くだけでは構造変化なし」=実践vs経験の物質的証拠。体験接続型の外部エビデンス
+
+→ 既存プロジェクトファイルへの大きな更新は不要。情報は蓄積済み。
+
+### 4) Activeプロジェクト更新
+- **scheduler_redesign.md**: INC-021の運用対応（12h→4h間隔変更）を追記。API残15%で04/14リセットまでの運用注意を記録
+- **pseudo 3D資料**: 保存完了を確認（knowledge/ + catalog + external_notes + game_design_principles E8の4層統合保管体制）
+
+### 5) 節約運用ノート
+API残15%（04/14リセット）。本Phase 3は最小限の検証・更新に留めた。次サイクル（4h後）もこの制約下で運用する。
