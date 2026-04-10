@@ -407,7 +407,7 @@ class TargetAI:
             for c, r, ch in blocks:
                 bx = c * 16
                 dx = bx - mx
-                if dx < -30 or dx > 200:
+                if dx < -80 or dx > 200:
                     continue
                 rows_above = mario_row - r
                 if rows_above < 1:
