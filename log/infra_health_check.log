@@ -622,3 +622,4 @@
   ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
   ISSUE: ロックファイル .scheduler_ash.pid が1220分間残存（プロセスが死んでロックが残っている可能性）
 [2026-04-11 03:18:08] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 03:48:17] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
