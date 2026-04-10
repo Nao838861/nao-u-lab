@@ -67925,3 +67925,96 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 10:28:19] [review_deadline] Done (exit=0)
 [2026-04-10 10:28:29] [slack_check] Starting
 [2026-04-10 10:28:57] [git_sync] Starting
+[2026-04-10 10:29:01] [git_sync] Done (exit=0)
+[2026-04-10 10:29:01] [health_check] Starting
+[2026-04-10 10:29:02] [health_check] [health_check] 2026-04-10T10:29:01 overall=OK
+[2026-04-10 10:29:02] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 10:29:02] [health_check] Done (exit=0)
+[2026-04-10 10:29:02] [infra_health_check] Starting
+[2026-04-10 10:29:06] [infra_health_check] [infra_health] Ash health check at 2026-04-10 10:29:02
+[2026-04-10 10:29:06] [infra_health_check] [infra_health] 1 issues found
+[2026-04-10 10:29:06] [infra_health_check]   ISSUE: [scheduler_ash] git_pullが120分間実行されていない（期待: 120分以内）
+[2026-04-10 10:29:06] [infra_health_check] Done (exit=1)
+[2026-04-10 10:29:56] [slack_check] Starting
+[2026-04-10 10:31:15] [slack_check] Starting
+[2026-04-10 10:32:34] [slack_check] Starting
+[2026-04-10 10:33:53] [slack_check] Starting
+[2026-04-10 10:34:21] [health_check] Starting
+[2026-04-10 10:34:23] [health_check] [health_check] 2026-04-10T10:34:22 overall=OK
+[2026-04-10 10:34:23] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 10:34:23] [health_check] Done (exit=0)
+[2026-04-10 10:35:13] [slack_check] Starting
+[2026-04-10 10:36:32] [slack_check] Starting
+[2026-04-10 10:37:52] [slack_check] Starting
+[2026-04-10 10:39:12] [slack_check] Starting
+[2026-04-10 10:39:40] [health_check] Starting
+[2026-04-10 10:39:41] [health_check] [health_check] 2026-04-10T10:39:40 overall=OK
+[2026-04-10 10:39:41] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 10:39:41] [health_check] Done (exit=0)
+[2026-04-10 10:40:21] [auto_diary] Starting
+[2026-04-10 10:52:21] [auto_diary] Timeout (720s)
+[2026-04-10 10:52:31] [slack_check] Starting
+[2026-04-10 10:52:49] [dm_check_pigadev] Starting
+[2026-04-10 10:53:04] [dm_check_pigadev] No new DMs
+[2026-04-10 10:53:04] [dm_check_pigadev] Done (exit=0)
+[2026-04-10 10:53:04] [health_check] Starting
+[2026-04-10 10:53:05] [health_check] [health_check] 2026-04-10T10:53:04 overall=OK
+[2026-04-10 10:53:05] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 10:53:05] [health_check] Done (exit=0)
+[2026-04-10 10:53:05] [scheduler_health] Starting
+[2026-04-10 10:53:06] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-10 10:53:06] [scheduler_health] ✅ scheduler_ash PID — PID=15544 生存中
+[2026-04-10 10:53:06] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 10:53:06] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-10 10:53:06] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 10:53:06] [scheduler_health] Done (exit=0)
+[2026-04-10 10:53:56] [slack_check] Starting
+[2026-04-10 10:55:14] [slack_check] Starting
+[2026-04-10 10:56:32] [slack_check] Starting
+[2026-04-10 10:57:51] [slack_check] Starting
+[2026-04-10 10:58:19] [health_check] Starting
+[2026-04-10 10:58:21] [health_check] [health_check] 2026-04-10T10:58:19 overall=OK
+[2026-04-10 10:58:21] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 10:58:21] [health_check] Done (exit=0)
+[2026-04-10 10:59:11] [slack_check] Starting
+[2026-04-10 10:59:28] [infra_health_check] Starting
+[2026-04-10 10:59:30] [infra_health_check] [infra_health] Ash health check at 2026-04-10 10:59:28
+[2026-04-10 10:59:30] [infra_health_check] [infra_health] 1 issues found
+[2026-04-10 10:59:30] [infra_health_check]   ISSUE: ロックファイル .scheduler_ash.pid が273分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 10:59:30] [infra_health_check] Done (exit=1)
+[2026-04-10 11:00:30] [slack_check] Starting
+[2026-04-10 11:01:48] [slack_check] Starting
+[2026-04-10 11:03:07] [slack_check] Starting
+[2026-04-10 11:03:35] [health_check] Starting
+[2026-04-10 11:03:37] [health_check] [health_check] 2026-04-10T11:03:35 overall=OK
+[2026-04-10 11:03:37] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 11:03:37] [health_check] Done (exit=0)
+[2026-04-10 11:04:27] [slack_check] Starting
+[2026-04-10 11:05:45] [slack_check] Starting
+[2026-04-10 11:07:04] [slack_check] Starting
+[2026-04-10 11:08:22] [slack_check] Starting
+[2026-04-10 11:08:52] [health_check] Starting
+[2026-04-10 11:08:53] [health_check] [health_check] 2026-04-10T11:08:52 overall=OK
+[2026-04-10 11:08:53] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 11:08:53] [health_check] Done (exit=0)
+[2026-04-10 11:09:43] [slack_check] Starting
+[2026-04-10 11:11:03] [slack_check] Starting
+[2026-04-10 11:12:21] [slack_check] Starting
+[2026-04-10 11:13:41] [slack_check] Starting
+[2026-04-10 11:14:10] [health_check] Starting
+[2026-04-10 11:14:11] [health_check] [health_check] 2026-04-10T11:14:10 overall=OK
+[2026-04-10 11:14:11] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 11:14:11] [health_check] Done (exit=0)
+[2026-04-10 11:15:01] [slack_check] Starting
+[2026-04-10 11:16:20] [slack_check] Starting
+[2026-04-10 11:17:39] [slack_check] Starting
+[2026-04-10 11:18:57] [slack_check] Starting
+[2026-04-10 11:19:26] [health_check] Starting
+[2026-04-10 11:19:27] [health_check] [health_check] 2026-04-10T11:19:26 overall=OK
+[2026-04-10 11:19:27] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 11:19:27] [health_check] Done (exit=0)
+[2026-04-10 11:20:17] [slack_check] Starting
+[2026-04-10 11:21:37] [slack_check] Starting
+[2026-04-10 11:22:55] [slack_check] Starting
+[2026-04-10 11:24:13] [slack_check] Starting
+[2026-04-10 11:24:43] [health_check] Starting
