@@ -292,6 +292,7 @@ class TargetAI:
         self.reflex_timer = 0
         self.reflex_inp = None
         self._pit_override = False
+        self._wall_climb = False    # arc_jump is wall-climb (don't pop subgoals on landing)
         # Stuck detection
         self._stuck_x = 0
         self._stuck_f = 0
@@ -482,6 +483,15 @@ class TargetAI:
             self.markers.append(Marker(bc * 16, br * 16, 16, 16, (255, 255, 0), bch))
 
             if self.block_platform and self.phase not in ('jumping', 'arc_jump'):
+                pl, pr_col, p_row = self.block_platform
+                plat_top_y = p_row * 16 - 15
+                # Already on the platform? → clear platform, treat as ground-reachable
+                if my < plat_top_y + 20:
+                    self.block_platform = None
+                    self.subgoals = []
+                    # Fall through to ground-reachable path below
+
+            if self.block_platform and self.phase not in ('jumping', 'arc_jump'):
                 # ── High block: plan multi-step route to reach platform ──
                 pl, pr_col, p_row = self.block_platform
                 plat_left_x = pl * 16
@@ -499,7 +509,8 @@ class TargetAI:
                     # Decide: approach from LEFT or RIGHT?
                     from_right = mx > plat_center_x
                     if from_right:
-                        stand_x = plat_right_x + 80
+                        # Stand just past platform right edge (avoid going too far)
+                        stand_x = plat_right_x + 20
                         land_x = plat_right_x - 16
                     else:
                         stand_x = plat_left_x - 80
@@ -516,7 +527,7 @@ class TargetAI:
                 elif self.target is None and self.subgoals:
                     self.target = self.subgoals.pop(0)
 
-            elif self.phase not in ('jumping',):
+            elif self.phase not in ('jumping', 'arc_jump'):
                 # ── Ground-reachable block: go under it then jump ──
                 under_x = bc * 16 - 5
                 if on_ground:
@@ -613,14 +624,15 @@ class TargetAI:
                     if landing:
                         land_x, land_y = landing
                         if land_y < state['y'] - 4 and land_x > mx:
-                            # Jump lands on higher ground — go!
                             self.phase = 'arc_jump'
                             self.jump_timer = 0
                             self.jump_hold = 22
                             self.jump_right = True
-                            wall_col = (int(mx) + wd + 8) // 16
-                            self.target = TargetPos(land_x, land_y,
-                                                   'jump_up', 'climb wall')
+                            self._wall_climb = True  # Don't pop subgoals on landing
+                            # Only override target if no active subgoals
+                            if not self.subgoals:
+                                self.target = TargetPos(land_x, land_y,
+                                                       'jump_up', 'climb wall')
                             return {'left': False, 'right': True, 'a': False, 'b': True}
                     if wd < 8:
                         return {'left': False, 'right': True, 'a': False, 'b': False}
@@ -636,6 +648,24 @@ class TargetAI:
                 self.jump_right = False
                 # Keep current horizontal motion (drift is predicted)
                 return {'left': False, 'right': False, 'a': False, 'b': False}
+
+        # ── During movement toward a subgoal: check if platform jump is ready NOW ──
+        if on_ground and self.subgoals and self.block_platform and mode in ('walk', 'dash'):
+            pl, pr_col, p_row = self.block_platform
+            jump_right = (self.target.x > mx) if self.target else True
+            hit = (trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
+                                          jump_right=jump_right, use_dash=True) or
+                   trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
+                                          jump_right=jump_right, use_dash=False))
+            if hit:
+                # Jump NOW — skip to the jump_up subgoal
+                self.subgoals = [sg for sg in self.subgoals if sg.mode != 'walk' or 'on plat' in sg.reason]
+                self.phase = 'arc_jump'
+                self.jump_timer = 0
+                self.jump_hold = 22
+                self.jump_right = jump_right
+                d = jump_right
+                return {'left': not d, 'right': d, 'a': False, 'b': True}
 
         # ── Mode: dash / walk — arrived? ──
         if abs(dx) < 3 and mode in ('walk', 'dash'):
@@ -783,7 +813,12 @@ class TargetAI:
         if self.jump_timer <= self.jump_hold:
             return {'left': not r, 'right': r, 'a': True, 'b': True}
         if state['on_ground'] and self.jump_timer > 6:
-            # Landed — advance subgoal if this was a platform jump
-            self._advance_subgoal()
+            if self._wall_climb:
+                # Wall climb done — resume previous target (subgoal stays)
+                self._wall_climb = False
+                self.phase = 'moving' if self.target else 'idle'
+            else:
+                # Platform/subgoal jump done — advance to next subgoal
+                self._advance_subgoal()
             self.jump_timer = 0
         return {'left': not r, 'right': r, 'a': False, 'b': True}
