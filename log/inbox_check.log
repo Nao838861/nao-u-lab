@@ -1354,3 +1354,6 @@ Nao_uからの連想記憶テスト「ドルアーガから何が出てくるか
 [2026-04-10 05:58:43] Inbox win has content — waking Claude
 [2026-04-10 05:58:45] Claude wake timed out for win2 — restoring inbox
 [2026-04-10 06:05:17] Inbox win2 has content — waking Claude
+[2026-04-10 09:51:03] Claude woken for win2: 対処完了。
+
+**原因**: health_checkのdedup keyにメッセージ内容のハッシュを含んでいたため、ログが書き換わるたびに別のキーになり、30分クールダウンが毎回バイパスされていた。

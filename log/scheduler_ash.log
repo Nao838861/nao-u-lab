@@ -67787,3 +67787,141 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-10 09:21:39] [slack_check] Starting
 [2026-04-10 09:22:58] [slack_check] Starting
 [2026-04-10 09:23:27] [health_check] Starting
+[2026-04-10 09:23:29] [health_check] [health_check] 2026-04-10T09:23:27 overall=OK
+[2026-04-10 09:23:29] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 09:23:29] [health_check] Done (exit=0)
+[2026-04-10 09:24:19] [slack_check] Starting
+[2026-04-10 09:25:38] [slack_check] Starting
+[2026-04-10 09:26:57] [slack_check] Starting
+[2026-04-10 09:28:15] [slack_check] Starting
+[2026-04-10 09:28:43] [git_sync] Starting
+[2026-04-10 09:28:47] [git_sync] Done (exit=0)
+[2026-04-10 09:28:47] [health_check] Starting
+[2026-04-10 09:28:49] [health_check] [health_check] 2026-04-10T09:28:47 overall=WARNING
+[2026-04-10 09:28:49] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 09:28:49] [health_check]   [?] git: 3件の未pushコミット
+[2026-04-10 09:28:49] [health_check] Done (exit=1)
+[2026-04-10 09:28:49] [infra_health_check] Starting
+[2026-04-10 09:28:51] [infra_health_check] [infra_health] Ash health check at 2026-04-10 09:28:49
+[2026-04-10 09:28:51] [infra_health_check] [infra_health] 1 issues found
+[2026-04-10 09:28:51] [infra_health_check]   ISSUE: ロックファイル .scheduler_ash.pid が183分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 09:28:51] [infra_health_check] Done (exit=1)
+[2026-04-10 09:29:41] [slack_check] Starting
+[2026-04-10 09:31:00] [slack_check] Starting
+[2026-04-10 09:32:18] [slack_check] Starting
+[2026-04-10 09:33:37] [slack_check] Starting
+[2026-04-10 09:34:06] [health_check] Starting
+[2026-04-10 09:34:07] [health_check] [health_check] 2026-04-10T09:34:06 overall=WARNING
+[2026-04-10 09:34:07] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 09:34:07] [health_check]   [?] git: 3件の未pushコミット
+[2026-04-10 09:34:07] [health_check] Done (exit=1)
+[2026-04-10 09:34:57] [slack_check] Starting
+[2026-04-10 09:36:17] [slack_check] Starting
+[2026-04-10 09:37:35] [slack_check] Starting
+[2026-04-10 09:38:53] [slack_check] Starting
+[2026-04-10 09:39:22] [health_check] Starting
+[2026-04-10 09:39:24] [health_check] [health_check] 2026-04-10T09:39:22 overall=WARNING
+[2026-04-10 09:39:24] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 09:39:24] [health_check]   [?] git: 3件の未pushコミット
+[2026-04-10 09:39:24] [health_check] Done (exit=1)
+[2026-04-10 09:40:14] [slack_check] Starting
+[2026-04-10 09:41:33] [slack_check] Starting
+[2026-04-10 09:42:53] [slack_check] Starting
+[2026-04-10 09:44:13] [slack_check] Starting
+[2026-04-10 09:44:42] [health_check] Starting
+[2026-04-10 09:44:43] [health_check] [health_check] 2026-04-10T09:44:42 overall=WARNING
+[2026-04-10 09:44:43] [health_check]   critical=0 warning=1 ok=8
+[2026-04-10 09:44:43] [health_check]   [?] git: 3件の未pushコミット
+[2026-04-10 09:44:43] [health_check] Done (exit=1)
+[2026-04-10 09:45:33] [slack_check] Starting
+[2026-04-10 09:46:51] [slack_check] Starting
+[2026-04-10 09:47:10] [slack_check] [09:47:10] 1 msg(s) -> inbox_win2.md
+[2026-04-10 09:47:10] [slack_check] [09:47:10] Triggered check_inbox.py --box win2
+[2026-04-10 09:47:10] [slack_check] Done (exit=0)
+[2026-04-10 09:47:10] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-10 09:47:10] [inbox_check] Starting
+[2026-04-10 09:51:03] [inbox_check] Inbox win2 has content
+[2026-04-10 09:51:03] [inbox_check] Done (exit=0)
+[2026-04-10 09:51:03] [scheduler_health] Starting
+[2026-04-10 09:51:04] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-10 09:51:04] [scheduler_health] ✅ scheduler_ash PID — PID=15544 生存中
+[2026-04-10 09:51:04] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-10 09:51:04] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-10 09:51:04] [scheduler_health] ✅ git 未push — なし
+[2026-04-10 09:51:04] [scheduler_health] Done (exit=0)
+[2026-04-10 09:51:14] [slack_check] Starting
+[2026-04-10 09:51:32] [health_check] Starting
+[2026-04-10 09:51:34] [health_check] [health_check] 2026-04-10T09:51:33 overall=OK
+[2026-04-10 09:51:34] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 09:51:34] [health_check] Done (exit=0)
+[2026-04-10 09:52:34] [slack_check] Starting
+[2026-04-10 09:53:55] [slack_check] Starting
+[2026-04-10 09:55:13] [slack_check] Starting
+[2026-04-10 09:56:33] [slack_check] Starting
+[2026-04-10 09:57:02] [health_check] Starting
+[2026-04-10 09:57:03] [health_check] [health_check] 2026-04-10T09:57:02 overall=OK
+[2026-04-10 09:57:03] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 09:57:03] [health_check] Done (exit=0)
+[2026-04-10 09:57:53] [slack_check] Starting
+[2026-04-10 09:58:53] [infra_health_check] Starting
+[2026-04-10 09:58:56] [infra_health_check] [infra_health] Ash health check at 2026-04-10 09:58:53
+[2026-04-10 09:58:56] [infra_health_check] [infra_health] All checks passed
+[2026-04-10 09:58:56] [infra_health_check]   All OK
+[2026-04-10 09:58:56] [infra_health_check] Done (exit=0)
+[2026-04-10 09:59:16] [slack_check] Starting
+[2026-04-10 10:00:36] [slack_check] Starting
+[2026-04-10 10:01:55] [slack_check] Starting
+[2026-04-10 10:02:24] [health_check] Starting
+[2026-04-10 10:02:25] [health_check] [health_check] 2026-04-10T10:02:24 overall=OK
+[2026-04-10 10:02:25] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 10:02:25] [health_check] Done (exit=0)
+[2026-04-10 10:03:15] [slack_check] Starting
+[2026-04-10 10:04:35] [slack_check] Starting
+[2026-04-10 10:05:54] [slack_check] Starting
+[2026-04-10 10:07:12] [slack_check] Starting
+[2026-04-10 10:07:41] [health_check] Starting
+[2026-04-10 10:07:43] [health_check] [health_check] 2026-04-10T10:07:41 overall=OK
+[2026-04-10 10:07:43] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 10:07:43] [health_check] Done (exit=0)
+[2026-04-10 10:08:33] [slack_check] Starting
+[2026-04-10 10:09:53] [slack_check] Starting
+[2026-04-10 10:11:11] [slack_check] Starting
+[2026-04-10 10:12:29] [slack_check] Starting
+[2026-04-10 10:12:58] [health_check] Starting
+[2026-04-10 10:12:59] [health_check] [health_check] 2026-04-10T10:12:58 overall=OK
+[2026-04-10 10:12:59] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 10:12:59] [health_check] Done (exit=0)
+[2026-04-10 10:13:49] [slack_check] Starting
+[2026-04-10 10:15:08] [slack_check] Starting
+[2026-04-10 10:16:26] [slack_check] Starting
+[2026-04-10 10:17:46] [slack_check] Starting
+[2026-04-10 10:18:14] [health_check] Starting
+[2026-04-10 10:18:16] [health_check] [health_check] 2026-04-10T10:18:15 overall=OK
+[2026-04-10 10:18:16] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 10:18:16] [health_check] Done (exit=0)
+[2026-04-10 10:19:06] [slack_check] Starting
+[2026-04-10 10:20:25] [slack_check] Starting
+[2026-04-10 10:21:43] [slack_check] Starting
+[2026-04-10 10:23:01] [slack_check] Starting
+[2026-04-10 10:23:30] [health_check] Starting
+[2026-04-10 10:23:31] [health_check] [health_check] 2026-04-10T10:23:30 overall=OK
+[2026-04-10 10:23:31] [health_check]   critical=0 warning=0 ok=9
+[2026-04-10 10:23:31] [health_check] Done (exit=0)
+[2026-04-10 10:24:21] [slack_check] Starting
+[2026-04-10 10:25:39] [slack_check] Starting
+[2026-04-10 10:26:48] [reservation_check] Starting
+[2026-04-10 10:26:48] [reservation_check] 【行動予約】期限到来:
+[2026-04-10 10:26:48] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-10 10:26:48] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-10 10:26:48] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-10 10:26:48] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-10 10:26:48] [reservation_check] Done (exit=0)
+[2026-04-10 10:26:58] [slack_check] Starting
+[2026-04-10 10:28:06] [dm_check] Starting
+[2026-04-10 10:28:19] [dm_check] No new DMs
+[2026-04-10 10:28:19] [dm_check] Done (exit=0)
+[2026-04-10 10:28:19] [review_deadline] Starting
+[2026-04-10 10:28:19] [review_deadline] レビュー期限超過なし。
+[2026-04-10 10:28:19] [review_deadline] Done (exit=0)
+[2026-04-10 10:28:29] [slack_check] Starting
+[2026-04-10 10:28:57] [git_sync] Starting
