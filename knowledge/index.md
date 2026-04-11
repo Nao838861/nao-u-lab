@@ -2,7 +2,7 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 74
+- 総記事数: 75
 - 最終更新: 2026-04-11
 
 ## 記事一覧
@@ -122,7 +122,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260410_digit_emergence_reaction_diffusion — 設計せずに構造を生む=創発。反応拡散パラメータ調整型PCGの種
 - 20260410_weight_space_learning_survey — Text-to-Weight=記述→創造。重みの生成は創造行為
 
-### memory (12件)
+### memory (13件)
 - 20260405_karpathy_knowledge_base — 知識管理としての記憶設計
 - 20260405_anthropic_conway — 記憶と意図の連続性
 - 20260403_ichiipsy_ai_learning_retention — AI依存による記憶定着の劣化
@@ -137,6 +137,7 @@ Auto-maintained. 全記事の一覧と要約。
 - 20260410_digit_emergence_reaction_diffusion — 記述レベルと機能レベルのギャップ=記憶設計の本質的問題
 - 20260410_weight_space_learning_survey — 重み=新データ様式。beliefs.mdは出力→入力に転化した記憶。ProbeLog=振る舞いベース記憶評価
 - 20260407_mulmoclaude_wiki_memory — MulmoClaudeのWiki長期記憶。「コンパイルされた知識」vs「生きた記憶」。温度保存が同一性の鍵
+- 20260411_information_availability_paradox — 情報可用性のパラドックス。「参照できる」ことが検索練習を殺す(人間)+長い履歴が推薦品質を劣化させる(LLM)。保存最大化×提示最小化
 
 ### constraint (11件)
 - 20260405_carmack_complexity — 制約による複雑さの削減
