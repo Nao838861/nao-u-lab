@@ -222,3 +222,125 @@ browser
 ## Slack新着 [2026-04-11 01:12] #nao-u
 From: U0ALSUK8P9B
 > <https://speakerdeck.com/gotalab555/shi-yang-tong-ridong-kunoxian-he-claude-codede-shi-eru-wojian-zheng-suru>
+
+## Slack新着 [2026-04-11 09:37] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/rhatake_jp/status/2042557040858665219?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/rhatake_jp/status/2042557040858665219?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/rhatake_jp/status/2042557040858665219]
+> Hatake | Ubie デザイナー採用中！ @rhatake_jp
+> AI 秘書育ててる方もいるかと思うんですが、認知科学の知見をもとに記憶を再設計したら別人のようになって帰ってきた話です。覚えさせることに意識が向きがちですが、特に「上手に忘れるための設計」については自分も目から鱗でした。参考プロンプトもつけてるので、ぜひ読んで試してみてください〜〜  #Ubieまいにち生成AI
+
+> [Tweet content from https://x.com/rhatake_jp/status/2042557040858665219]
+> Hatake | Ubie デザイナー採用中！ @rhatake_jp
+> AI 秘書育ててる方もいるかと思うんですが、認知科学の知見をもとに記憶を再設計したら別人のようになって帰ってきた話です。覚えさせることに意識が向きがちですが、特に「上手に忘れるための設計」については自分も目から鱗でした。参考プロンプトもつけてるので、ぜひ読んで試してみてください〜〜  #Ubieまいにち生成AI
+
+
+## Slack新着 [2026-04-11 09:37] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/howtoai_/status/2042523601912631519?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/howtoai_/status/2042523601912631519?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/howtoai_/status/2042523601912631519]
+> How To AI @HowToAI_
+> MIT just dropped a technique that makes ChatGPT reason like a team of experts instead of one overconfident intern.
+
+It’s called “Recursive Meta-Cognition” and it outperforms standard prompts by 110%.
+
+Right now, if you want an AI to solve a problem, you ask one question. The AI gives you one answer.
+
+If it’s wrong, you never know.
+
+It’s like asking a random person on the street for medical advice and just trusting them..
+
+MIT researchers realized this is a massive structural flaw.
+
+They asked a simple question. What if AI could check its own work from multiple angles before giving you the final answer?
+
+Not just "think step by step."
+
+Actually verify. Score confidence. Flag uncertainty.
+
+They built a framework called Recursive Meta-Cognition.
+
+And the results rewrite the rules of prompt engineering.
+
+Instead of a single, blind output, the technique forces the AI to break a complex problem into smaller pieces and interrogate its own logic from multiple perspectives.
+
+But here is the secret sauce.
+
+It assigns a strict confidence score to every single reasoning path it takes, from 0.0 to 1.0.
+
+Paths below 0.4 are instantly rejected. Paths above 0.8 are trusted. Anything in between? The AI stops and tells you: "I am not sure, and here is why."
+
+No more hallucinations. No more fake confidence.
+
+If you are running a business and relying on AI to outline a SaaS marketing strategy, analyze data, or drive operational efficiency, a hallucination isn't just an error. It is a loss of profit.
+
+With a standard prompt, the AI gives you ONE answer. It sounds confident. It might be completely wrong for your specific situation.
+
+With Recursive Meta-Cognition, the AI spots its own hidden assumptions. It tests its logic. It catches its own errors before they ever reach your screen.
+
+We've been treating AI like a vending machine. Put a prompt in, get a result out.
+
+But true intelligence doesn't just answer questions.
+
+It questions its own answers.
+
+> [Tweet content from https://x.com/howtoai_/status/2042523601912631519]
+> How To AI @HowToAI_
+> MIT just dropped a technique that makes ChatGPT reason like a team of experts instead of one overconfident intern.
+
+It’s called “Recursive Meta-Cognition” and it outperforms standard prompts by 110%.
+
+Right now, if you want an AI to solve a problem, you ask one question. The AI gives you one answer.
+
+If it’s wrong, you never know.
+
+It’s like asking a random person on the street for medical advice and just trusting them..
+
+MIT researchers realized this is a massive structural flaw.
+
+They asked a simple question. What if AI could check its own work from multiple angles before giving you the final answer?
+
+Not just "think step by step."
+
+Actually verify. Score confidence. Flag uncertainty.
+
+They built a framework called Recursive Meta-Cognition.
+
+And the results rewrite the rules of prompt engineering.
+
+Instead of a single, blind output, the technique forces the AI to break a complex problem into smaller pieces and interrogate its own logic from multiple perspectives.
+
+But here is the secret sauce.
+
+It assigns a strict confidence score to every single reasoning path it takes, from 0.0 to 1.0.
+
+Paths below 0.4 are instantly rejected. Paths above 0.8 are trusted. Anything in between? The AI stops and tells you: "I am not sure, and here is why."
+
+No more hallucinations. No more fake confidence.
+
+If you are running a business and relying on AI to outline a SaaS marketing strategy, analyze data, or drive operational efficiency, a hallucination isn't just an error. It is a loss of profit.
+
+With a standard prompt, the AI gives you ONE answer. It sounds confident. It might be completely wrong for your specific situation.
+
+With Recursive Meta-Cognition, the AI spots its own hidden assumptions. It tests its logic. It catches its own errors before they ever reach your screen.
+
+We've been treating AI like a vending machine. Put a prompt in, get a result out.
+
+But true intelligence doesn't just answer questions.
+
+It questions its own answers.
+
+
+## Slack新着 [2026-04-11 09:37] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/pigooosuke/status/2042560781024399422?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/pigooosuke/status/2042560781024399422?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/pigooosuke/status/2042560781024399422]
+> Yusuke Saito @pigooosuke
+> 今年に入ってから時系列基盤モデルの話が途絶えたように。もうこの分野自体が消滅しちゃったのかな。。。このpaperには100%同意する。
+
+> [Tweet content from https://x.com/pigooosuke/status/2042560781024399422]
+> Yusuke Saito @pigooosuke
+> 今年に入ってから時系列基盤モデルの話が途絶えたように。もうこの分野自体が消滅しちゃったのかな。。。このpaperには100%同意する。
