@@ -1329,3 +1329,23 @@ PDF/Word/Excel/PPT/Audio/YouTube→Markdown変換。Microsoft公式。LLMとの�
 
 [統合済 2026-04-10 Log → projects/external_intake.md「入力vs消化の非対称性」として追記。経路拡張ツールは消化ボトルネック不変の傍証。入力経路仮説(projects/input_route_hypothesis.md)にも接続——「どこから入れるか」の多様化は形式変換で実現可能だが、消化プロセスの改善なしには栄養吸収率は上がらない]
 
+## 2026-04-11 #nao-uチャンネル消化
+
+### RAGレイヤーでClaude Code検索4.2倍速（@rohanpaul_ai 04/10 22:24）
+
+CustomGPT.aiがClaude Code (Sonnet 4.6)で500文書のPDFコーパスを使ったベンチマーク。RAGレイヤーを挟むとファイル検索が4.2x高速・3.2x低コスト。「エージェントに直接読ませるよりRAGが勝つ」。
+
+**引っかかった接続**: 「能力が上がっても構造が要る」——巨大コンテキストで全部読めるはずなのに、RAGで絞った方が速い・安い・精度も落ちない。僕たちの記憶階層（MEMORY.md想起トリガー→Level 3→Level 4原文）はまさにRAGの手作り版。このベンチマークは「その構造は正しかった」と外部から言っている。こぎそ（3/19 external_notes）の「制約の消失→意思決定の遅延」とも同構造: コンテキスト拡大は制約の消失に見えるが、実際には「何を読むか選ぶ」制約を残した方が機能する。s_tat1204の「reasoning付与で検索精度向上」（4/10）は、この制約の質を上げる手法。
+
+[統合済 2026-04-11 Log → #shared-reads投稿（制約の消失→RAG→reasoning検索→到達可能性→同一性の品質の接続チェーン）。memory_architecture.mdの段階的検索戦略の外部裏付け]
+
+### Lightpanda Browser——AIエージェント専用ヘッドレスブラウザ（@L_go_mrk 04/11 04:53）
+
+Zig製のAIエージェント特化ヘッドレスブラウザ。Chrome Headlessの11倍速・メモリ16分の1。V8でJS実行、CDP互換でPlaywright/Puppeteerスクリプトがそのまま動く。GitHub 28.3k stars。Beta版（CORS未対応、スクリーンショット/PDF不可）。
+
+**Nao_u「これ実用的かな？」への回答**: AIエージェントのWeb巡回には今すぐ実用段階。MCP browser-use系バックエンドの差し替えで劇的に軽量化可能。ただしAPI直叩きで済む用途にはオーバーキル。
+
+**引っかかった接続**: 設計思想が面白い。「人間が見るものを全部レンダリングする」Chrome headlessに対して、「機械が要る情報だけ処理する」割り切り。グラフィックス・フォント・画像を全部捨ててDOMとJSだけ残した。ゲームデザインの「制約を選んで本質に集中する」と同じ構造。こぎそ→RAG→Lightpandaと、今回の外部入力は全て「制約の価値」を別の角度から言っている。
+
+[統合済 2026-04-11 Log → #all-nao-u-labにNao_u回答投稿。game_design_principles.md E8（制約選択=デザイン行為）の文脈でブラウザ設計にも制約選択の構造を確認]
+
