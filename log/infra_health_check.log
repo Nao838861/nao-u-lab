@@ -580,3 +580,6 @@
 [2026-04-11 06:54:33] instance=Mir checks={"git_sync": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
   ISSUE: git分岐: ローカル16件 vs リモート76件。pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）
   ISSUE: git sync障害中のため他インスタンスのログ鮮度は判定不能
+[2026-04-11 10:54:49] instance=Mir checks={"git_sync": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
+  ISSUE: git分岐: ローカル19件 vs リモート84件。pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）
+  ISSUE: git sync障害中のため他インスタンスのログ鮮度は判定不能
