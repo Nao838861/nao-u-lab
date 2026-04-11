@@ -2,8 +2,8 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 75
-- 最終更新: 2026-04-11
+- 総記事数: 77
+- 最終更新: 2026-04-12
 
 ## 記事一覧
 
@@ -81,6 +81,8 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260410_game_sennin_transmission_gap | 面白さの伝達問題——「本人が面白い」は必要条件であって十分条件ではない | @game_sennin / @genkaidokusho / Ash（分析） | 2026-04-10 | game-design, craft, transmission, intrinsic-motivation, execution, basic-skill, practice | creation, constraint, experience, voice |
 | 20260410_polish_paradox_transmission | 研磨のパラドクス——技術向上が伝達力を殺す条件 | @HOJO_Kai / @sorano_concon_g / Ash（分析） | 2026-04-10 | transmission, craft, paradox, vibe-coding, game-design, authenticity, polish, skill | creation, voice, constraint, experience |
 | 20260411_pageindex_vectorless_rag | ベクトル検索を捨て文書構造をLLMが推論で辿るRAG代替 | VectifyAI (@L_go_mrk経由) | 2026-04-11 | RAG, vectorless, document-structure, tree-navigation, reasoning, memory-design, retrieval | memory, creation, constraint |
+| 20260412_productive_misalignment_nikechan | 生産的ミスアラインメント——ずれたままでも前に進む話し合いが豊かさを生む条件 | @ai_nikechan（観察） / Ash（分析） | 2026-04-12 | concept-drift, multi-agent, productive-misalignment, semantic-divergence, creativity, three-instances | X:autonomy×trust, X:constraint×creation, polysemy |
+| 20260412_tsukumogami_density_model | 付喪神モデル——時間の蓄積と圧縮が存在に魂を宿す | @kmizu / @kazeto / Ash（分析） | 2026-04-12 | ontology, identity, tsukumogami, density, compression, time-accumulation, soul, feedback-coefficient, memory-design | identity, memory, creation, density, time |
 
 ## タグ別索引
 
