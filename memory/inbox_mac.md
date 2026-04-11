@@ -344,3 +344,99 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/pigooosuke/status/2042560781024399422]
 > Yusuke Saito @pigooosuke
 > 今年に入ってから時系列基盤モデルの話が途絶えたように。もうこの分野自体が消滅しちゃったのかな。。。このpaperには100%同意する。
+
+## Slack新着 [2026-04-12 02:46] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/ry0_kaga/status/2042958827814031791>
+
+<https://x.com/Muji___rushi/status/2042590468425544060>
+
+> [Tweet content from https://x.com/ry0_kaga/status/2042958827814031791]
+> r.kagaya | オライリーAIエンジニアリングが発売中です @ry0_kaga
+> A Language For Agents
+
+言語設計の良し悪しが、エージェントの成功率という測定可能な指標で判定できるようになる。
+人間の好みではなく、エージェントパフォーマンスに最適化された言語設計が合理的
+
+
+https://
+lucumr.pocoo.org/2026/2/9/a-lan
+guage-for-agents/
+…
+
+AIエージェント向けの新言語が経済的に合理的になった
+- コード生産コストが激減し、エコシステムの広さが以前ほど重要でなくなった
+- 「必要なライブラリがなければ別言語から移植させればいい」
+- 言語のモートだったエコシステムの壁をエージェントが越え始めている
+
+エージェントが本当に必要とする言語設計
+- 明示的デリミタ（Pythonのインデントはトークン非効率、Lispの括弧追跡も苦手）
+- 型付き結果型 > 例外（エージェントは例外を過剰catchしてリカバリーしない）
+- Greppability（Go式の明示的パッケージプレフィックス、barrel file禁止）
+- 暗黙のコンテキストは `needs { time, rng }` で明示化
+
+「TypeScriptはエージェントをgaslightする」
+- 型エラーがあっても動く寛容さが、エージェントのフィードバックループを壊す
+- エージェントは「エラーだが動いている」状態で学習できない
+- Go の厳格さ（未使用importでコンパイルエラー）が実はエージェント時代に最合理的かも
+
+> [Tweet content from https://x.com/Muji___rushi/status/2042590468425544060]
+> Mujirushi @Muji___rushi
+> 先端AI論文を読んで、実験環境を復元して元論文を再現し、性能改善まで自動化するAutoSOTAの提案
+
+トップ会議論文の105個の論文にて元手法を上回る改良版を自動発見できたと主張
+
+https://
+arxiv.org/pdf/2604.05550
+
+
+## Slack新着 [2026-04-12 04:41] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/GaryMarcus/status/2042987819333738929>
+
+> [Tweet content from https://x.com/GaryMarcus/status/2042987819333738929]
+> Gary Marcus @geoffreyhinton
+> Claude Code is not AGI, but it is the single biggest advance in AI since the LLM.
+
+But the thing is, Claude Code is NOT a pure LLM. And it’s not pure deep learning. Not even close. 
+
+And that changes everything. 
+
+The source code leak proves it. Tucked away at its center is a 3,167 line kernel called print.ts.
+
+print.ts is a pattern matching. And pattern matching is supposed to be the *strength* of LLMs. 
+
+But Anthropic figured out that if you really need to get your patterns right, you can’t trust a pure LLM. They are too probabilistic. And too erratic.
+
+Instead, the way Anthropic built that kernel is straight out of classical symbolic AI.  For example, it is in large part a big IF-THEN conditional, with 486 branch points and 12 levels of nesting — all inside a deterministic, symbolic loop that the real godfathers of AI, people like John McCarthy and Marvin Minsky and Herb Simon, would have instantly recognized.*
+
+Putting things differently, Anthropic, when push came to shove, went exactly where I long said the field needed to go (and where 
+@geoffreyhinton
+ said we didn’t need to go): to Neurosymbolic AI. 
+
+That’s right, the biggest advance since the LLM was neurosymbolic.  AlphaFold, AlphaEvolve, AlphaProof, and AlphaGeometry are all neurosymbolic, too; so is Code Interpreter; when you are calling code, you are asking symbolic AI do an important part of the work.
+
+Claude Code isn’t better because of scaling. 
+
+It’s better because Anthropic accepted the importance of using classical AI techniques alongside neural networks — precisely marriage I have long advocated. 
+
+It’s *massive* vindication for me (go see my 2019 debate with Bengio for context, or to my 2001 book, The Algebraic Mind), but it still ain’t perfect, or even close.
+
+What we really need to do to get trustworthy AI rather than the current unpredictable “jagged” mess, is to go in the knowledge-, reasoning-, and world-model driven direction I laid out in 2020, in an article called the Next Decade in AI, in which neurosymbolic AI is just the *starting point* in a longer journey.*
+
+Read that article if you want to know what else we need to do next. 
+
+The first part has already come to pass. In time, other three will, too.
+
+Meanwhile, the implications for the allocation of capital are pretty massive: smartly adding in bits of symbolic AI can do a lot more than scaling alone, and even Anthropic as now discovered (though they won’t say) scaling is no longer the essence of innovation. 
+
+The paradigm has changed.
+
+—
+*Claude Code is plainly neurosymbolic but the code part is a mess; as Ernie Davis and I argued in Rebooting AI in 2019, we also need major advances in software engineering. But that’s a story for another day.
+
+
+## Slack新着 [2026-04-12 05:06] #nao-u
+From: U0ALSUK8P9B
+> 君たちとは直接関係ないけど本業で役に立ちそうなのでこれを詳しく解説してくれると助かる。
+<https://research.nvidia.com/labs/sil/projects/neural-harmonic-textures/>
