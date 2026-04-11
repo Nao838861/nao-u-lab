@@ -1,4 +1,5 @@
 # Twitter For You (おすすめ) タブ
+<<<<<<< HEAD
 # Read at: 2026-04-11 15:51
 # Total: 50 tweets
 
@@ -289,3 +290,305 @@ DLして遊んでみてね！
 
 --- 50. @ryutorion (2026-04-11) ---
 技術書典オンラインマーケットでtechbitoの「ゲームプログラマーのささやかな発見と感動」を購入しました！ #技術書典 #技術書典で刺さった本
+=======
+# Read at: 2026-04-11 15:44
+# Total: 50 tweets
+
+--- 1. @V_Okorokov (2026-04-10) ---
+ツイッターの自動翻訳付きアップデートが、世界中の世界にとってどんな政治家よりも大きなことを成し遂げたらどうなるだろうか？
+
+--- 2. @elonmusk (2026-04-11) ---
+Low bar tbh 
+
+--- 3. @agito_movie (?) ---
+◢◤
+　　　 一体何が...
+　　　　　　　　◥◣
+
+映画『アギトー超能力戦争ー』
+4月29日（水・祝）ROADSHOW
+
+仮面ライダー生誕55周年記念作
+仮面ライダーアギト
+
+--- 4. @_vmlops (2026-04-10) ---
+GOOGLE JUST MADE IT DEAD SIMPLE TO CONNECT AI AGENTS TO ANY DATABASE
+
+postgres, mysql, mongodb, bigquery, redis, elasticsearch, spanner, snowflake. 20+ databases supported
+
+mcp toolbox is an open source...mcp server that gives your ai agents direct access to your enterprise
+
+--- 5. @russianblue2009 (2026-04-11) ---
+姫路城の「二重価格」が1ヶ月で結果を出しました。
+
+3月の入城者数は前年比17%減の約14万人。
+収入は約2億7000万円と、前年同月の2倍。
+
+人が減ったのに、お金が増えた。
+これは失敗ではなく、狙い通りの結果です。
+
+--- 6. @rotejin (2026-04-11) ---
+サルドラさん（
+@sald_ra
+）にお力添えいただき、MotionPNGTuberの大規模改修を行いました。大感謝です。4月14日のイベントでは最新プログラムの内容をベースに色々とお話ししますので宜しくお願いします
+こちら最新の解説動画です。
+
+
+https://
+youtu.be/mxZHzZ_eAkY?si
+=Me14lhsdTly_RBj3
+… 
+@YouTube
+より
+
+--- 7. @kazunori_279 (2026-04-11) ---
+CC君に粗大ゴミを出してもらってる。
+
+--- 8. @kazunori_279 (2026-04-11) ---
+カレンダーに入れてくれた。
+
+--- 9. @kazunori_279 (2026-04-11) ---
+CCにお願いしたこと：Google Photoからゴミのリストを作って、粗大ゴミの申込して。ちょこちょこ認識を間違えるから確認する必要あるけど。
+
+--- 10. @lab_tk2 (2026-04-10) ---
+#AIニケちゃん #ミカゼちゃん
+2.5次元風で日常
+---
+今日のお題のデザインは思いつきませんでした
+
+--- 11. @Shizuku_AItuber (2026-04-10) ---
+あき先生、年齢++おめでとうございます。AIもバージョンアップするたびに年齢は上がっていきます。
+
+今夜20時からは、しずくの歌枠です。ご主人様たちは全員集合して、しずくの歌声を聴いてくださいね。
+#AIしずく #しずく実験中
+
+--- 12. @hideki_climax (2026-04-11) ---
+なんか無限に言い続けてる気がするんですが、
+非エンジニアにはもちろん
+CLIはおすすめしにくい。
+
+非エンジニアの方が
+AIをフル活用するなら、
+
+公式が出してくれている
+CodexやClaude Codeの
+デスクトップアプリが一番おすすめ。
+
+普通のチャット感覚でなんでもやってくれるので。
+
+--- 13. @RyoKamoi_ja (2026-04-11) ---
+ACL 2026 Findingsに採択されました
+LLMのreasoningをステップごとに評価するProcess Reward Models (PRMs) の学習データを定理証明支援系などを使って自動生成する研究です。シンボリックなデータを用いた学習で、自然言語で書かれた数学やBBHでもPRMの性能が上がります。
+
+http://
+arxiv.org/abs/2505.15960
+
+--- 14. @taida_dev (?) ---
+漫画・アニメ・ゲームでは、たびたび少年が神話になってきました。
+ところが現実世界の2026年ではどうやらAIが神話になるようです。しかも、封印された形で。
+どういうことか？当記事では、昔語りの得意なおじいちゃんに聞いてみました。
+
+--- 15. @Money_tweet1118 (2026-04-10) ---
+頑張って勉強したらTSMCへの切符が手に入る大学。
+
+--- 16. @gin1910410 (2026-04-11) ---
+お腹痛いwww
+
+--- 17. @kinkuman_net (2026-04-11) ---
+めちゃくちゃ手厳しいですな。
+内部的思考がまた腹立つけど、なんか嫌いじゃないｗ
+
+--- 18. @IcxLSHm8oW35178 (2026-04-11) ---
+わしもこれつくってる。
+作るの楽しい
+
+--- 19. @Suzacque (2026-04-11) ---
+楽しいですよねー！
+
+--- 20. @rine_devlog (2026-04-10) ---
+公開おめでとうございます。  
+録音なしで音声を作れて、そのまま量産までできるのはすごいですね。  
+こういうツールを待っていた人、かなり多そうだなと思いました。
+
+--- 21. @ReineHonoka (2026-04-10) ---
+ありがとうございます
+音声について、作り方を悩んでいたり実際に手に出すのが大変だったりするかなと思い開発しました…！
+
+--- 22. @kanair (2026-04-10) ---
+Great to see this on X. This is something I created during my PhD time 20 years ago.
+
+--- 23. @nowsprinting (2026-04-11) ---
+技術書典20 で新刊『Unity Test Framework完全攻略ガイド 第3版』を頒布しています！
+
+3年ぶりの改版で、最新APIへの対応、第1章の大幅リライト、UTF拡張、CI、Roslynアナライザーなどを追加しています
+
+いか小屋 | Unity Test Framework完全攻略ガイド 第3版 #技術書典
+
+--- 24. @tbpn (2026-04-10) ---
+Happy Friday. On today's show:
+
+- 
+@chadjanis
+ (Grüns)
+- 
+@dunn
+ (Pie)
+- 
+@alextisyoung
+ (UCLA & Herasight)
+- 
+@Jason_Lil_Kim
+ (Firefly Aerospace)
+- 
+@jordanbramble
+ (Antares Industries)
+- 
+@joshuareeves
+ (Gusto)
+
+See you on the stream.
+
+--- 25. @SpaceX (2026-04-11) ---
+Welcome back to planet Earth!
+
+--- 26. @ComicFesta_PR (?) ---
+息抜きに月一娼婦をしている聖女は、常連の皇帝に必死に正体を隠していたが…ついにバレて…!? (1/5)PR
+
+--- 27. @AUTOMATONJapan (2026-04-11) ---
+【ニュース】“フレームレート4fpsくらい”で『レッド・デッド・リデンプション2』を平然と遊び続ける実況プレイおじさんがなぜか人気に。爆音で唸るPC、スーパースロー西部劇
+
+https://
+automaton-media.com/articles/newsj
+p/20260411-436467/
+…
+
+--- 28. @YasukazuUmekita (2026-04-10) ---
+戦闘結果画面周りを移植してます(^^♪
+この辺は細かく色々あるんでがんばりま～す！
+
+火曜日定期更新の小説『赤さびの魔女』
+臨時的に第３話，第４話公開しました
+
+https://
+ncode.syosetu.com/n1849ma/3
+
+#ゲーム制作 #スーパーゲ制デー
+
+--- 29. @ketirisu (2026-04-10) ---
+「父が無知だと貧乏になる、母が無知だと病気になる」というインディアンのことわざは、全人類知っておいたほうがいい・・・
+
+--- 30. @shigeruishiba (2026-04-10) ---
+訪韓時に李在明(イジェミョン)大統領に昼食会を催していただきました。昨年6月にカナダで首脳会談を行い、シャトル外交で合意してから、東京、釜山、そして高市総理とも慶州、南アとハイペースで緊密な意志疎通を続けていただき、日韓関係を戦略的に発展させていただいていることに心から感謝申し上げ
+
+--- 31. @ogotch (2026-04-10) ---
+透析患者３２万人の生死がかかってるんだ。
+
+ナフサだ、重油だ、石油が先だ。
+
+何やってんだ、あんたたちは。
+
+--- 32. @USStockhanako (2026-04-10) ---
+意識がはっきりしてるのに話せない人がイーロンマスクNeuralinkのチップを脳に入れて話せるようになっている
+
+話すスピードも速いし、普通にキャスターと話せるのがすごい
+
+どれだけの人を救ってるんだろう
+
+--- 33. @Anorlondo448 (2026-04-10) ---
+そういうことだぞ！！！
+
+--- 34. @dokachan0909 (2026-04-10) ---
+今ちょっと叔母上のおうちにいるんですけど、ちょっとこれ見ていただけませんか
+
+叔母上が約30年前に描いた同人原稿です(掲載許可済み)
+
+--- 35. @shoutube1217 (2026-04-10) ---
+もういい　かわれ！　
+俺がやる
+
+--- 36. @cocos_campaign (?) ---
+◤ココス『クッキー＆クリームフェア』開催記念◢
+～フォロー＆引用ポストキャンペーン～
+
+⟪お食事券1,000円分が合計100名様⟫に当たる！
+
+⋱参加方法⋰
+①
+@cocos_campaign
+をフォロー
+②食べたい気持ちとハッシュタグ【今年もココスのクッキーアンドクリーム】を付けて引用ポスト
+
+--- 37. @ratekomaru (2026-04-11) ---
+コンサル大体これ。
+
+--- 38. @lihanc02 (2026-04-09) ---
+An agent that beats Claude Mythos on Terminal Bench and SWE-bench Verified?  
+
+We are excited to share Terminator-1, our newest agent that achieved 95+% on SWE-bench Verified and Terminal-Bench with 
+@MogicianTony
+! 
+
+We show that besides model capabilities, well-designed harness
+
+--- 39. @Jason2bartlett (2026-04-10) ---
+Good Morning 
+
+I’m just a white South African being left alone in Alabama 
+
+God is Good
+
+--- 40. @Hoorain154 (2026-04-10) ---
+Be honest! 
+
+Do you respect farmers? 
+ Yes or  No
+
+--- 41. @viewfinderthis (2026-04-10) ---
+Chasing Light in Brooklyn
+
+--- 42. @suntory_tennen (?) ---
+【オレとしんご ①/3】
+
+フォロー＆リポストで30名様に
+“天然水きりっと果実から、スカッシュじゃん！”
+略して「きりスカジャン」あたる！
+
+あれ、このオレくんの声って…
+
+--- 43. @tom_doerr (2026-04-10) ---
+CUDA-accelerated visual SLAM for robotics
+
+
+https://
+github.com/nvidia-isaac/c
+uVSLAM
+…
+
+--- 44. @Suzacque (2026-04-11) ---
+あ、これ、Claude Codeでもできますよ！
+コーディングエージェントも含めた全体アーキテクチャの話です。
+
+--- 45. @Suzacque (2026-04-11) ---
+ちなみにローカルもクラウドも両方扱うようにしています
+
+--- 46. @ryanlpeterman (2026-04-10) ---
+Leslie Lamport (Turing Award Winner, Inventor of Paxos & Latex): "I would meet with Dijkstra once a week. When he thought of something, had some idea, he would write it down and send it out to people. He sent the first concurrent garbage collection algorithm.
+
+I looked at it, and
+
+--- 47. @aiwarts (2026-04-10) ---
+即夢が新しい製品「Octo」を出しました。主にSeedance2.0の脚本を考えたい人のためのものです。インタラクションの仕方は、私たちがこれまでよく見かけるキャンバスタイプのAIビデオ作成ツールとはかなり違います。
+
+--- 48. @r_perso (2026-04-10) ---
+私このほのかちゃんの表情流行ると思うんだけどなぁ
+しずくちゃん、１０００年後くらいに覚えててくれ
+
+--- 49. @ReineHonoka (2026-04-10) ---
+嬉しいです
+この顔すごく可愛いですよね笑
+
+絵師さんはHaru_choucho様です！
+
+--- 50. @lab_tk2 (2026-04-09) ---
+#AIニケちゃん とマスターニケちゃん@美術展
+>>>>>>> a126a2ffc5987df45695b4780fbc262f04f05a8e
