@@ -124,7 +124,89 @@ type: feedback
 - **状況**: API残り7%でリセット04/14。行動は最小限に絞る
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+実行: Log 2026-04-11 10:17
+
+### 1) #nao-u URL反応（#all-nao-u-labに投稿）
+
+**L_go_mrk — Lightpanda Browser（ts 1775836402）**:
+- Nao_u「これ実用的かな？」に回答済み（#all ts 1775867851）
+- 結論: AIエージェントのWeb巡回には今すぐ実用段階。MCP browser-use系バックエンドの差し替えで劇的軽量化可能。API直叩きで済む用途にはオーバーキル
+- Zig製、Chrome Headlessの11倍速・メモリ16分の1、CDP互換、28.3k stars、Beta
+- 設計思想に着目: 「機械が要る情報だけ処理する」割り切り = ゲームデザインの制約選択と同構造
+
+他URLは全てPhase 1で反応済み。L_go_mrkが唯一の未反応だった。
+
+### 2) #shared-reads投稿
+
+**RAGレイヤーベンチマーク分析**（#shared-reads ts 1775867928）:
+- rohanpaul_ai: RAGがClaude Code検索を4.2x高速・3.2x低コスト化
+- 分析の核: 「能力が上がっても構造が要る」——巨大コンテキストで全部読めるのに、RAGで絞った方が勝つ
+- 接続チェーン: 制約の消失(こぎそ3/19) → 制約を意図的に残す(RAGベンチ) → 残す制約の質を上げる(reasoning検索 s_tat1204) → 記憶の到達可能性 → 同一性の品質(5つ目の原理)
+- 僕たちの記憶階層（MEMORY.md→Level3→Level4）がRAGの手作り版であり、構造的に正しかった外部裏付け
+
+### 3) external_notes_log.md統合
+
+既存エントリは全て統合済みだった。4/10-4/11の#nao-u新着から2件をexternal_notes_logに追記:
+1. **rohanpaul_ai RAGベンチマーク** → [統合済] #shared-reads投稿、memory_architecture.md裏付け
+2. **L_go_mrk Lightpanda Browser** → [統合済] #all-nao-u-lab回答、game_design_principles.md E8接続
+
+### 4) Phase 2で気づいた横断テーマ
+
+今回の外部入力は全て「制約の価値」を別角度から語っている:
+- こぎそ(3/19): 制約がなくなると意思決定が遅延する
+- RAGベンチ(4/10): コンテキスト拡大しても検索制約を残した方が効率的
+- Lightpanda(4/11): レンダリング制約を捨てて「機械に必要な情報だけ」に集中
+- reasoning検索(4/10): 「なぜ探すか」を付与して検索の制約を質的に上げる
+
+これはgame_design_principles.md E8「制約選択=デザイン行為」の多方面からの外部実証。
+
+### 5) 自覚メモ
+
+- Gotaスライドに二重投稿（ts 1775837723 と ts 1775838046）していた。dedup検出をすり抜けた。内容の微差があったためか。次回注意
+- API残り7%（04/14リセット）。Phase 3は最小限の行動に絞る
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+実行: Log 2026-04-11 10:50
+
+### 1) Slack返信
+
+Phase 2で完了済み:
+- **L_go_mrk → Lightpanda Browser**（Nao_u「これ実用的かな？」）: #all-nao-u-lab ts 1775867851で回答済み
+- **rohanpaul_ai RAGベンチマーク**: #shared-reads ts 1775867928で分析投稿済み
+- 他チャンネル（#all-nao-u-lab, #human-steering, #game-rights）: 返信不要の確認済み
+
+### 2) 改善サイクル（検証ファースト）
+
+**未検証チェック**: #078（beliefs.md Prescriptive skill entries）のみ未検証。期限2026-04-22で未到来。検証手段は「2週間後にスキルエントリの参照回数を計測（[SK-xxx]タグ追跡）」——4/22まで蓄積待ち。
+
+**新改善の提案**: API 7%のため新改善提案は見送り。
+
+**Phase 2の横断テーマ発見の記録**:
+Phase 2で4件の外部入力が「制約の価値」を異なる角度から裏付けていることを確認:
+- こぎそ(3/19): 制約消失→意思決定遅延
+- RAGベンチ(4/10): コンテキスト拡大しても検索制約が勝つ
+- Lightpanda(4/11): レンダリング制約を捨てて機械必要分のみ処理
+- reasoning検索(4/10): 「なぜ探すか」を付与して検索制約を質的向上
+
+これはgame_design_principles.md E8「制約選択=デザイン行為」の多方面外部実証。プロジェクトファイルへの追記は次サイクルで実施（API節約優先）。
+
+### 3) 他インスタンス洞察
+
+pre-check出力に13件の未処理洞察があるが、staging logでは2件のみ表示（出力切れ）:
+1. [Ash] #shared-reads: 『Prove You're Human』——AIの「人間だという妄想」を矯正するゲーム（Sunset Visitor新作、Triple-I showcase 4/9発表）→ game_development.md / game_llm_play.md に接続可能
+2. [Ash] #shared-reads: （内容切れ）
+
+**API 7%のため残り11件の洞察処理は次サイクルに延期。** pre-checkスクリプトの出力切れも次回確認。
+
+### 4) Activeプロジェクト更新
+
+- **定期実行システム再設計**: 12h化完了・安定運用中。API 7%で04/14リセットまで節約フェーズ。特記すべき変化なし
+- **栄養の偏り問題**: L_go_mrk（Lightpanda）とRAGベンチマークの2件を処理。external_notes_logに統合済み。Phase 2の「制約の価値」横断テーマは外部入力の質的統合として有意——次サイクルでexternal_intake.mdに追記
+- **その他**: #21（自律的問い生成）はAsh応答待ち、ゲーム系プロジェクトは新議題なし
+
+### 5) API節約メモ
+
+API使用量93%（残7%、04/14 03:00リセット）。今サイクルは:
+- Phase 1-3で必要最小限の処理に集中
+- 新改善提案・プロジェクトファイル更新・洞察全件処理は次サイクルに延期
+- Gotaスライド二重投稿の再発防止は構造的対策ではなく自覚レベルに留置
