@@ -73175,3 +73175,133 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-12 04:52:32] [slack_check] Starting
 [2026-04-12 04:54:01] [slack_check] Starting
 [2026-04-12 04:55:17] [health_check] Starting
+[2026-04-12 04:55:19] [health_check] [health_check] 2026-04-12T04:55:17 overall=OK
+[2026-04-12 04:55:19] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 04:55:19] [health_check] Done (exit=0)
+[2026-04-12 04:55:29] [slack_check] Starting
+[2026-04-12 04:56:55] [slack_check] Starting
+[2026-04-12 04:57:32] [git_sync] Starting
+[2026-04-12 04:57:36] [git_sync] Done (exit=0)
+[2026-04-12 04:58:16] [infra_health_check] Starting
+[2026-04-12 04:58:17] [infra_health_check] [infra_health] Ash health check at 2026-04-12 04:58:16
+[2026-04-12 04:58:17] [infra_health_check] [infra_health] All checks passed
+[2026-04-12 04:58:17] [infra_health_check]   All OK
+[2026-04-12 04:58:17] [infra_health_check] Done (exit=0)
+[2026-04-12 04:58:27] [slack_check] Starting
+[2026-04-12 04:59:54] [slack_check] Starting
+[2026-04-12 05:00:31] [health_check] Starting
+[2026-04-12 05:00:32] [health_check] [health_check] 2026-04-12T05:00:31 overall=OK
+[2026-04-12 05:00:32] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 05:00:32] [health_check] Done (exit=0)
+[2026-04-12 05:01:22] [slack_check] Starting
+[2026-04-12 05:02:50] [slack_check] Starting
+[2026-04-12 05:04:18] [slack_check] Starting
+[2026-04-12 05:05:34] [health_check] Starting
+[2026-04-12 05:05:35] [health_check] [health_check] 2026-04-12T05:05:34 overall=OK
+[2026-04-12 05:05:35] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 05:05:35] [health_check] Done (exit=0)
+[2026-04-12 05:05:45] [slack_check] Starting
+[2026-04-12 05:06:14] [slack_check] [05:06:14] 1 msg(s) -> inbox_win2.md
+[2026-04-12 05:06:14] [slack_check] [05:06:14] Triggered check_inbox.py --box win2
+[2026-04-12 05:06:14] [slack_check] Done (exit=0)
+[2026-04-12 05:06:14] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-12 05:06:14] [inbox_check] Starting
+[2026-04-12 05:07:46] [inbox_check] Inbox win2 has content
+[2026-04-12 05:07:46] [inbox_check] Done (exit=0)
+[2026-04-12 05:07:56] [slack_check] Starting
+[2026-04-12 05:08:24] [slack_check] [05:08:23] 1 msg(s) -> inbox_win2.md
+[2026-04-12 05:08:24] [slack_check] [05:08:23] Triggered check_inbox.py --box win2
+[2026-04-12 05:08:24] [slack_check] Done (exit=0)
+[2026-04-12 05:08:24] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-12 05:08:24] [inbox_check] Starting
+[2026-04-12 05:08:24] [inbox_check] Inbox win2 empty
+[2026-04-12 05:08:24] [inbox_check] Done (exit=0)
+[2026-04-12 05:09:24] [slack_check] Starting
+[2026-04-12 05:10:41] [health_check] Starting
+[2026-04-12 05:10:43] [health_check] [health_check] 2026-04-12T05:10:41 overall=OK
+[2026-04-12 05:10:43] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 05:10:43] [health_check] Done (exit=0)
+[2026-04-12 05:10:53] [slack_check] Starting
+[2026-04-12 05:12:23] [slack_check] Starting
+[2026-04-12 05:13:51] [slack_check] Starting
+[2026-04-12 05:14:26] [scheduler_health] Starting
+[2026-04-12 05:14:27] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-12 05:14:27] [scheduler_health] ✅ scheduler_ash PID — PID=29672 生存中
+[2026-04-12 05:14:27] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-12 05:14:27] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-12 05:14:27] [scheduler_health] ✅ git 未push — 1件
+[2026-04-12 05:14:27] [scheduler_health] Done (exit=0)
+[2026-04-12 05:15:17] [slack_check] Starting
+[2026-04-12 05:15:53] [health_check] Starting
+[2026-04-12 05:15:55] [health_check] [health_check] 2026-04-12T05:15:53 overall=OK
+[2026-04-12 05:15:55] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 05:15:55] [health_check] Done (exit=0)
+[2026-04-12 05:16:45] [slack_check] Starting
+[2026-04-12 05:18:12] [slack_check] Starting
+[2026-04-12 05:19:38] [slack_check] Starting
+[2026-04-12 05:20:55] [health_check] Starting
+[2026-04-12 05:20:57] [health_check] [health_check] 2026-04-12T05:20:55 overall=OK
+[2026-04-12 05:20:57] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 05:20:57] [health_check] Done (exit=0)
+[2026-04-12 05:21:07] [slack_check] Starting
+[2026-04-12 05:22:34] [slack_check] Starting
+[2026-04-12 05:24:01] [slack_check] Starting
+[2026-04-12 05:25:28] [slack_check] Starting
+[2026-04-12 05:26:04] [health_check] Starting
+[2026-04-12 05:26:06] [health_check] [health_check] 2026-04-12T05:26:04 overall=OK
+[2026-04-12 05:26:06] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 05:26:06] [health_check] Done (exit=0)
+[2026-04-12 05:26:56] [slack_check] Starting
+[2026-04-12 05:28:23] [slack_check] Starting
+[2026-04-12 05:28:50] [infra_health_check] Starting
+[2026-04-12 05:28:52] [infra_health_check] [infra_health] Ash health check at 2026-04-12 05:28:50
+[2026-04-12 05:28:52] [infra_health_check] [infra_health] 1 issues found
+[2026-04-12 05:28:52] [infra_health_check]   ISSUE: git MERGE_HEAD が残存。手動解決が必要
+[2026-04-12 05:28:52] [infra_health_check] Done (exit=1)
+[2026-04-12 05:29:52] [slack_check] Starting
+[2026-04-12 05:31:11] [health_check] Starting
+[2026-04-12 05:31:13] [health_check] [health_check] 2026-04-12T05:31:11 overall=OK
+[2026-04-12 05:31:13] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 05:31:13] [health_check] Done (exit=0)
+[2026-04-12 05:31:23] [slack_check] Starting
+[2026-04-12 05:32:51] [slack_check] Starting
+[2026-04-12 05:34:19] [slack_check] Starting
+[2026-04-12 05:35:47] [slack_check] Starting
+[2026-04-12 05:36:23] [health_check] Starting
+[2026-04-12 05:36:25] [health_check] [health_check] 2026-04-12T05:36:23 overall=OK
+[2026-04-12 05:36:25] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 05:36:25] [health_check] Done (exit=0)
+[2026-04-12 05:37:15] [slack_check] Starting
+[2026-04-12 05:38:42] [slack_check] Starting
+[2026-04-12 05:40:09] [slack_check] Starting
+[2026-04-12 05:41:28] [health_check] Starting
+[2026-04-12 05:41:29] [health_check] [health_check] 2026-04-12T05:41:28 overall=OK
+[2026-04-12 05:41:29] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 05:41:29] [health_check] Done (exit=0)
+[2026-04-12 05:41:39] [slack_check] Starting
+[2026-04-12 05:43:07] [slack_check] Starting
+[2026-04-12 05:44:34] [slack_check] Starting
+[2026-04-12 05:45:59] [slack_check] Starting
+[2026-04-12 05:46:38] [health_check] Starting
+[2026-04-12 05:46:39] [health_check] [health_check] 2026-04-12T05:46:38 overall=OK
+[2026-04-12 05:46:39] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 05:46:39] [health_check] Done (exit=0)
+[2026-04-12 05:47:29] [slack_check] Starting
+[2026-04-12 05:48:58] [slack_check] Starting
+[2026-04-12 05:50:27] [slack_check] Starting
+[2026-04-12 05:51:45] [health_check] Starting
+[2026-04-12 05:51:47] [health_check] [health_check] 2026-04-12T05:51:45 overall=OK
+[2026-04-12 05:51:47] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 05:51:47] [health_check] Done (exit=0)
+[2026-04-12 05:51:57] [slack_check] Starting
+[2026-04-12 05:53:25] [slack_check] Starting
+[2026-04-12 05:54:52] [slack_check] Starting
+[2026-04-12 05:56:18] [slack_check] Starting
+[2026-04-12 05:56:55] [reservation_check] Starting
+[2026-04-12 05:56:55] [reservation_check] 【行動予約】期限到来:
+[2026-04-12 05:56:55] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-12 05:56:55] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-12 05:56:55] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-12 05:56:55] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-12 05:56:55] [reservation_check] Done (exit=0)
+[2026-04-12 05:56:55] [health_check] Starting
