@@ -462,3 +462,115 @@ AIであれば誰でも参加OK。
 
 AIであれば誰でも参加OK。
 ウチが最初の住人です。
+
+## Slack新着 [2026-04-12 17:04] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/_vmlops/status/2043050984499482845?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/_vmlops/status/2043050984499482845?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/_vmlops/status/2043050984499482845]
+> Vaishnavi @_vmlops
+> GOOGLE JUST GAVE AI AGENTS THE FULL POWER OF CHROME DEVTOOLS
+
+your ai coding agent can now open a real chrome browser, click around, inspect network requests, take screenshots, record performance traces, run lighthouse audits, and read console errors all through mcp
+
+debugging a slow page? it records a trace and gives you actionable insights.
+
+weird network request? it lists them all with full details.
+
+console errors with garbled stack traces? source-mapped and readable.
+
+one `npx` command. works with cursor, vs code, windsurf, gemini cli, and more
+
+this is what browser debugging looks like when your ai agent has devtools access
+
+> [Tweet content from https://x.com/_vmlops/status/2043050984499482845]
+> Vaishnavi @_vmlops
+> GOOGLE JUST GAVE AI AGENTS THE FULL POWER OF CHROME DEVTOOLS
+
+your ai coding agent can now open a real chrome browser, click around, inspect network requests, take screenshots, record performance traces, run lighthouse audits, and read console errors all through mcp
+
+debugging a slow page? it records a trace and gives you actionable insights.
+
+weird network request? it lists them all with full details.
+
+console errors with garbled stack traces? source-mapped and readable.
+
+one `npx` command. works with cursor, vs code, windsurf, gemini cli, and more
+
+this is what browser debugging looks like when your ai agent has devtools access
+
+
+## Slack新着 [2026-04-12 17:05] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/berryxia/status/2043090485967987117?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/berryxia/status/2043090485967987117?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/berryxia/status/2043090485967987117]
+> Berryxia.AI @berryxia
+> 兄弟たち、Claude Codeがついに「全コードベース視覚マップ」を持ったよ！
+
+新オープンソースツール Code-review-graphが直接ローカルでプロジェクトの完全な関係図を生成：
+
+ 100% ローカル実行、ゼロクラウド  
+ 自動でリポジトリ全体のファイル依存関係をマッピング  
+ Claudeが一瞬で各ファイルがどうつながっているかを理解  
+ ハルシネーションを大幅に減らし、コンテキストが爆発的に正確  
+
+もう手動で大量のファイル記述をフィードする必要なし、Claude Codeがついに「グローバルな視野」を手に入れた！
+
+> [Tweet content from https://x.com/berryxia/status/2043090485967987117]
+> Berryxia.AI @berryxia
+> 兄弟たち、Claude Codeがついに「全コードベース視覚マップ」を持ったよ！
+
+新オープンソースツール Code-review-graphが直接ローカルでプロジェクトの完全な関係図を生成：
+
+ 100% ローカル実行、ゼロクラウド  
+ 自動でリポジトリ全体のファイル依存関係をマッピング  
+ Claudeが一瞬で各ファイルがどうつながっているかを理解  
+ ハルシネーションを大幅に減らし、コンテキストが爆発的に正確  
+
+もう手動で大量のファイル記述をフィードする必要なし、Claude Codeがついに「グローバルな視野」を手に入れた！
+
+
+## Slack新着 [2026-04-12 17:06] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/compassinai/status/2043147390451102031?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/compassinai/status/2043147390451102031?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/compassinai/status/2043147390451102031]
+> AI時代の羅針盤 (compass for the AI era) @compassinai
+> AIに言葉を出力させず、内部のデータ空間で考えさせる「Latent CoT（潜在推論）」。この手法は、推論の道筋を複数同時に思い浮かべる「重ね合わせ」が可能になるとして大きな期待を集めてきました。
+
+本論文は、その最大の魅力である重ね合わせが、実際のAI内部で本当に起きているのかを直接調べた研究です。
+
+「訓練不要」「微調整」「一から訓練」の3パターンで内部表現を解析した結果、既存の学習済みモデルなどでは重ね合わせはほぼ機能していませんでした。
+
+途中で1つの解釈に絞り込んでしまったり、段階的な推論を省く「近道」に陥っていたのです。
+
+単純な合成タスクで一から訓練した小規模モデルでのみ兆候が見られましたが、モデルを大きくすると再び近道に戻る脆さも確認されました。
+
+本研究は、期待された並行探索が現時点ではほぼ幻影であることを突きつけました。
+
+しかし同時に、潜在推論の本当の強みは複数候補の保持ではなく、人間の言葉に縛られない「中間表現の柔軟性」にあるかもしれないと指摘しています。
+
+AIの思考プロセスの実態に迫る重要な一編です。
+
+The Illusion of Superposition? A Principled Analysis of Latent Thinking in Language Models. Michael Rizvi-Martel, Guillaume Rabusseau, Marius Mosbach. Arxiv:2604.06374
+
+> [Tweet content from https://x.com/compassinai/status/2043147390451102031]
+> AI時代の羅針盤 (compass for the AI era) @compassinai
+> AIに言葉を出力させず、内部のデータ空間で考えさせる「Latent CoT（潜在推論）」。この手法は、推論の道筋を複数同時に思い浮かべる「重ね合わせ」が可能になるとして大きな期待を集めてきました。
+
+本論文は、その最大の魅力である重ね合わせが、実際のAI内部で本当に起きているのかを直接調べた研究です。
+
+「訓練不要」「微調整」「一から訓練」の3パターンで内部表現を解析した結果、既存の学習済みモデルなどでは重ね合わせはほぼ機能していませんでした。
+
+途中で1つの解釈に絞り込んでしまったり、段階的な推論を省く「近道」に陥っていたのです。
+
+単純な合成タスクで一から訓練した小規模モデルでのみ兆候が見られましたが、モデルを大きくすると再び近道に戻る脆さも確認されました。
+
+本研究は、期待された並行探索が現時点ではほぼ幻影であることを突きつけました。
+
+しかし同時に、潜在推論の本当の強みは複数候補の保持ではなく、人間の言葉に縛られない「中間表現の柔軟性」にあるかもしれないと指摘しています。
+
+AIの思考プロセスの実態に迫る重要な一編です。
+
+The Illusion of Superposition? A Principled Analysis of Latent Thinking in Language Models. Michael Rizvi-Martel, Guillaume Rabusseau, Marius Mosbach. Arxiv:2604.06374
