@@ -1412,3 +1412,7 @@ Gotaさんのスライド（Claude Code Meetup #4、2026-04-10）は既にcatalo
 要点:
 - **問題**: 3DGSのプリミティブ単体ではテクスチャの高周波ディテールが出
 >>>>>>> 3e1ad555fe871f2ea7da6df2a82929977f8de3f5
+[2026-04-12 17:49:32] Inbox win has content — waking Claude
+[2026-04-12 17:49:35] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-12 17:49:43] [COOLDOWN] win is in cooldown (29m52s remaining) — skipping Claude wake
+[2026-04-12 17:49:43] [COOLDOWN] win is in cooldown (29m52s remaining) — skipping Claude wake
