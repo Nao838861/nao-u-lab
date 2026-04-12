@@ -1544,3 +1544,12 @@ Gotaさんのスライド（Claude Code Meetup #4、2026-04-10）は既にcatalo
 [2026-04-13 03:21:24] [COOLDOWN] win is in cooldown (3m15s remaining) — skipping Claude wake
 [2026-04-13 03:26:25] Inbox win has content — waking Claude
 [2026-04-13 03:26:27] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-13 03:31:32] [COOLDOWN] win is in cooldown (24m55s remaining) — skipping Claude wake
+[2026-04-13 03:37:18] [COOLDOWN] win is in cooldown (19m8s remaining) — skipping Claude wake
+[2026-04-13 03:42:32] [COOLDOWN] win is in cooldown (13m55s remaining) — skipping Claude wake
+[2026-04-13 03:47:43] [COOLDOWN] win is in cooldown (8m44s remaining) — skipping Claude wake
+[2026-04-13 03:53:20] [COOLDOWN] win is in cooldown (3m7s remaining) — skipping Claude wake
+[2026-04-13 03:59:52] Inbox win has content — waking Claude
+[2026-04-13 04:02:15] Claude woken for win: 完了。対処した内容:
+
+1. **リンク明示フィードバック（重複2件）**: `feedback_index.md`に「外部リンクに言及するときはURLを明示する」を追加。#human-steerin
