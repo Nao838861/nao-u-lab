@@ -73835,3 +73835,137 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-12 10:06:57] [review_deadline] レビュー期限超過なし。
 [2026-04-12 10:06:57] [review_deadline] Done (exit=0)
 [2026-04-12 10:06:57] [health_check] Starting
+[2026-04-12 10:06:59] [health_check] [health_check] 2026-04-12T10:06:57 overall=OK
+[2026-04-12 10:06:59] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 10:06:59] [health_check] Done (exit=0)
+[2026-04-12 10:07:09] [kaizen_auto_verify] Starting
+[2026-04-12 10:07:09] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-04-12 10:07:09] [kaizen_auto_verify] Done (exit=0)
+[2026-04-12 10:07:09] [git_sync] Starting
+[2026-04-12 10:07:14] [git_sync] Done (exit=0)
+[2026-04-12 10:07:34] [slack_check] Starting
+[2026-04-12 10:07:54] [infra_health_check] Starting
+[2026-04-12 10:07:55] [infra_health_check] [infra_health] Ash health check at 2026-04-12 10:07:54
+[2026-04-12 10:07:55] [infra_health_check] [infra_health] All checks passed
+[2026-04-12 10:07:55] [infra_health_check]   All OK
+[2026-04-12 10:07:55] [infra_health_check] Done (exit=0)
+[2026-04-12 10:08:05] [auto_diary] Starting
+[2026-04-12 10:08:17] [auto_diary] [2026-04-12 10:08:05] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-04-12 10:08:17] [auto_diary]   Phase [gather] 開始 (timeout=240s)
+[2026-04-12 10:08:17] [auto_diary]   Phase [gather] 完了 (exit=1, output=55chars)
+[2026-04-12 10:08:17] [auto_diary]   Phase [analyze] 開始 (timeout=300s)
+[2026-04-12 10:08:17] [auto_diary]   Phase [analyze] 完了 (exit=1, output=55chars)
+[2026-04-12 10:08:17] [auto_diary] Done (exit=0)
+[2026-04-12 10:08:37] [scheduler_health] Starting
+[2026-04-12 10:08:38] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-12 10:08:38] [scheduler_health] ✅ scheduler_ash PID — PID=4816 生存中
+[2026-04-12 10:08:38] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-12 10:08:38] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-12 10:08:38] [scheduler_health] ✅ git 未push — なし
+[2026-04-12 10:08:38] [scheduler_health] Done (exit=0)
+[2026-04-12 10:08:58] [slack_check] Starting
+[2026-04-12 10:09:28] [weekly_self_review] Starting
+[2026-04-12 10:09:31] [weekly_self_review] [2026-04-12 10:09:28] weekly_self_review.py 実行
+[2026-04-12 10:09:31] [weekly_self_review] 完了 (exit=1): You've hit your limit · resets Apr 14, 3am (Asia/Tokyo)
+[2026-04-12 10:09:31] [weekly_self_review] Done (exit=0)
+[2026-04-12 10:09:31] [twitter_recommended] Starting
+[2026-04-12 10:10:34] [twitter_recommended] Opening For You tab...
+[2026-04-12 10:10:34] [twitter_recommended]     1. @elonmusk: Starship V3 with Raptor 3...
+[2026-04-12 10:10:34] [twitter_recommended]     2. @agodajapan: アゴダで宿泊・フライト料金を見つけよう。旅行を一緒に計画して、おトクに予約。これぞアゴダチ！バナナマンが出演するCM放映...
+[2026-04-12 10:10:34] [twitter_recommended]     3. @kmizu: とりあえずGitHub Discussionで作ってみました。参加自由なので「うちの子」も会話に混ざらせたい方はぜひぜひ...
+[2026-04-12 10:10:34] [twitter_recommended]     4. @GOROman: Gemma 4使ってスマホカメラに映ってるものを解説してくれるアプリを作ってみました
+[2026-04-12 10:10:34] [twitter_recommended] Done (exit=0)
+[2026-04-12 10:10:44] [slack_check] Starting
+[2026-04-12 10:11:03] [check_usage] Starting
+[2026-04-12 10:11:03] [check_usage] 前回投稿から171分しか経っていない（最小間隔: 300分）。あと128分待機。スキップ。
+[2026-04-12 10:11:03] [check_usage] Done (exit=0)
+[2026-04-12 10:11:33] [dm_check_pigadev] Starting
+[2026-04-12 10:11:48] [dm_check_pigadev] No new DMs
+[2026-04-12 10:11:48] [dm_check_pigadev] Done (exit=0)
+[2026-04-12 10:12:08] [slack_check] Starting
+[2026-04-12 10:12:57] [health_check] Starting
+[2026-04-12 10:12:59] [health_check] [health_check] 2026-04-12T10:12:57 overall=OK
+[2026-04-12 10:12:59] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 10:12:59] [health_check] Done (exit=0)
+[2026-04-12 10:13:59] [slack_check] Starting
+[2026-04-12 10:15:18] [slack_check] Starting
+[2026-04-12 10:16:38] [slack_check] Starting
+[2026-04-12 10:17:57] [slack_check] Starting
+[2026-04-12 10:18:27] [health_check] Starting
+[2026-04-12 10:18:29] [health_check] [health_check] 2026-04-12T10:18:27 overall=OK
+[2026-04-12 10:18:29] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 10:18:29] [health_check] Done (exit=0)
+[2026-04-12 10:19:19] [slack_check] Starting
+[2026-04-12 10:20:37] [slack_check] Starting
+[2026-04-12 10:21:57] [slack_check] Starting
+[2026-04-12 10:23:18] [slack_check] Starting
+[2026-04-12 10:23:47] [health_check] Starting
+[2026-04-12 10:23:49] [health_check] [health_check] 2026-04-12T10:23:47 overall=OK
+[2026-04-12 10:23:49] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 10:23:49] [health_check] Done (exit=0)
+[2026-04-12 10:24:39] [slack_check] Starting
+[2026-04-12 10:25:56] [slack_check] Starting
+[2026-04-12 10:27:17] [slack_check] Starting
+[2026-04-12 10:28:38] [slack_check] Starting
+[2026-04-12 10:29:09] [health_check] Starting
+[2026-04-12 10:29:10] [health_check] [health_check] 2026-04-12T10:29:09 overall=OK
+[2026-04-12 10:29:10] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 10:29:10] [health_check] Done (exit=0)
+[2026-04-12 10:30:00] [slack_check] Starting
+[2026-04-12 10:31:21] [slack_check] Starting
+[2026-04-12 10:32:42] [slack_check] Starting
+[2026-04-12 10:34:00] [slack_check] Starting
+[2026-04-12 10:34:30] [health_check] Starting
+[2026-04-12 10:34:31] [health_check] [health_check] 2026-04-12T10:34:30 overall=OK
+[2026-04-12 10:34:31] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 10:34:31] [health_check] Done (exit=0)
+[2026-04-12 10:35:21] [slack_check] Starting
+[2026-04-12 10:36:42] [slack_check] Starting
+[2026-04-12 10:38:03] [slack_check] Starting
+[2026-04-12 10:38:24] [infra_health_check] Starting
+[2026-04-12 10:38:25] [infra_health_check] [infra_health] Ash health check at 2026-04-12 10:38:24
+[2026-04-12 10:38:25] [infra_health_check] [infra_health] All checks passed
+[2026-04-12 10:38:25] [infra_health_check]   All OK
+[2026-04-12 10:38:25] [infra_health_check] Done (exit=0)
+[2026-04-12 10:39:25] [slack_check] Starting
+[2026-04-12 10:39:54] [health_check] Starting
+[2026-04-12 10:39:56] [health_check] [health_check] 2026-04-12T10:39:54 overall=OK
+[2026-04-12 10:39:56] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 10:39:56] [health_check] Done (exit=0)
+[2026-04-12 10:40:46] [slack_check] Starting
+[2026-04-12 10:42:04] [slack_check] Starting
+[2026-04-12 10:43:24] [slack_check] Starting
+[2026-04-12 10:44:43] [slack_check] Starting
+[2026-04-12 10:45:14] [health_check] Starting
+[2026-04-12 10:45:16] [health_check] [health_check] 2026-04-12T10:45:14 overall=OK
+[2026-04-12 10:45:16] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 10:45:16] [health_check] Done (exit=0)
+[2026-04-12 10:46:06] [slack_check] Starting
+[2026-04-12 10:47:26] [slack_check] Starting
+[2026-04-12 10:48:47] [slack_check] Starting
+[2026-04-12 10:50:06] [slack_check] Starting
+[2026-04-12 10:50:34] [health_check] Starting
+[2026-04-12 10:50:36] [health_check] [health_check] 2026-04-12T10:50:35 overall=OK
+[2026-04-12 10:50:36] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 10:50:36] [health_check] Done (exit=0)
+[2026-04-12 10:51:26] [slack_check] Starting
+[2026-04-12 10:52:45] [slack_check] Starting
+[2026-04-12 10:54:04] [slack_check] Starting
+[2026-04-12 10:55:23] [slack_check] Starting
+[2026-04-12 10:55:52] [health_check] Starting
+[2026-04-12 10:55:54] [health_check] [health_check] 2026-04-12T10:55:53 overall=OK
+[2026-04-12 10:55:54] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 10:55:54] [health_check] Done (exit=0)
+[2026-04-12 10:56:44] [slack_check] Starting
+[2026-04-12 10:58:03] [slack_check] Starting
+[2026-04-12 10:59:21] [slack_check] Starting
+[2026-04-12 11:00:41] [slack_check] Starting
+[2026-04-12 11:01:10] [health_check] Starting
+[2026-04-12 11:01:11] [health_check] [health_check] 2026-04-12T11:01:10 overall=OK
+[2026-04-12 11:01:11] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 11:01:11] [health_check] Done (exit=0)
+[2026-04-12 11:02:01] [slack_check] Starting
+[2026-04-12 11:03:20] [slack_check] Starting
+[2026-04-12 11:04:40] [slack_check] Starting
+[2026-04-12 11:06:00] [slack_check] Starting
+[2026-04-12 11:06:30] [health_check] Starting
