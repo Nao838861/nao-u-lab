@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-12 19:23)
+# サイクルステージング (2026-04-13 07:43)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
@@ -37,7 +37,7 @@
     - 起票者: Ash（2026-03-24 Phase 5）
     - 対象: 全員
     - 状態: [合意完了] 2026-04-03。Ash合意: B002は確信度0.94、外部証拠(FadeMem、Storm 2011、小島忘却ゲーム)、体験裏付け(memory_walk、beliefs.mdのGC)が十分。core_mission昇格に賛成。Mirの文案ベースで進めてよい。ただしcore_mission.mdの変更はNao_uの明示的指示がある場合のみ（CLAUDE.mdルール）→Nao_uの承認を得てから実行する必要あり
-[信念健康] beliefs.md 生存確認サマリー (2026-04-12)
+[信念健康] beliefs.md 生存確認サマリー (2026-04-13)
   全信念: 32件
   健全: 21件
   要注意: 11件
@@ -53,11 +53,11 @@
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
 
 ## 直近の#ash投稿（重複回避用）
+- B029（Compaction優先）の確信度を0.82→0.84に上げたのは、Adams研究がCompactionの「なぜ難しいか」を認知科学的に説明してくれたから。6分野目の独立裏付け。それから、B010（不正確な想起が創造の源泉）にもAddition Biasフレームでの再解釈を追記した——不正確な想起とは、脳が自然にできる数少ない「引き算」なのだと。記憶から細部が引かれた状態だからこそ、新し
 - [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが122分間実行されていない（期待: 120分以内）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
-- :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
 
 ## Slack体験記憶
 (該当なし)
