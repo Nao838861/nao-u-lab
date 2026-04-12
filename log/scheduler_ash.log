@@ -76130,3 +76130,112 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-13 03:31:45] [health_check] Done (exit=0)
 [2026-04-13 03:31:55] [slack_check] Starting
 [2026-04-13 03:32:20] [inbox_check] Starting
+[2026-04-13 03:32:22] [inbox_check] Inbox win2 empty
+[2026-04-13 03:32:22] [inbox_check] Done (exit=0)
+[2026-04-13 03:32:32] [dm_check] Starting
+[2026-04-13 03:32:48] [dm_check] No new DMs
+[2026-04-13 03:32:48] [dm_check] Done (exit=0)
+[2026-04-13 03:32:48] [review_deadline] Starting
+[2026-04-13 03:32:48] [review_deadline] レビュー期限超過なし。
+[2026-04-13 03:32:48] [review_deadline] Done (exit=0)
+[2026-04-13 03:32:48] [git_sync] Starting
+[2026-04-13 03:32:53] [git_sync] Done (exit=0)
+[2026-04-13 03:33:23] [slack_check] Starting
+[2026-04-13 03:34:00] [infra_health_check] Starting
+[2026-04-13 03:34:02] [infra_health_check] [infra_health] Ash health check at 2026-04-13 03:34:00
+[2026-04-13 03:34:02] [infra_health_check] [infra_health] 1 issues found
+[2026-04-13 03:34:02] [infra_health_check]   ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-13 03:34:02] [infra_health_check] Done (exit=1)
+[2026-04-13 03:34:02] [scheduler_health] Starting
+[2026-04-13 03:34:03] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-13 03:34:03] [scheduler_health] ✅ scheduler_ash PID — PID=26808 生存中
+[2026-04-13 03:34:03] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-13 03:34:03] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-13 03:34:03] [scheduler_health] ✅ git 未push — なし
+[2026-04-13 03:34:03] [scheduler_health] Done (exit=0)
+[2026-04-13 03:34:53] [slack_check] Starting
+[2026-04-13 03:36:21] [slack_check] Starting
+[2026-04-13 03:36:59] [dm_check_pigadev] Starting
+[2026-04-13 03:37:13] [dm_check_pigadev] No new DMs
+[2026-04-13 03:37:13] [dm_check_pigadev] Done (exit=0)
+[2026-04-13 03:37:13] [health_check] Starting
+[2026-04-13 03:37:15] [health_check] [health_check] 2026-04-13T03:37:13 overall=OK
+[2026-04-13 03:37:15] [health_check]   critical=0 warning=0 ok=9
+[2026-04-13 03:37:15] [health_check] Done (exit=0)
+[2026-04-13 03:37:55] [slack_check] Starting
+[2026-04-13 03:39:23] [slack_check] Starting
+[2026-04-13 03:40:52] [slack_check] Starting
+[2026-04-13 03:42:22] [slack_check] Starting
+[2026-04-13 03:42:49] [health_check] Starting
+[2026-04-13 03:42:50] [health_check] [health_check] 2026-04-13T03:42:49 overall=OK
+[2026-04-13 03:42:50] [health_check]   critical=0 warning=0 ok=9
+[2026-04-13 03:42:50] [health_check] Done (exit=0)
+[2026-04-13 03:43:50] [slack_check] Starting
+[2026-04-13 03:45:18] [slack_check] Starting
+[2026-04-13 03:46:45] [slack_check] Starting
+[2026-04-13 03:47:53] [health_check] Starting
+[2026-04-13 03:47:55] [health_check] [health_check] 2026-04-13T03:47:53 overall=OK
+[2026-04-13 03:47:55] [health_check]   critical=0 warning=0 ok=9
+[2026-04-13 03:47:55] [health_check] Done (exit=0)
+[2026-04-13 03:48:15] [slack_check] Starting
+[2026-04-13 03:49:42] [slack_check] Starting
+[2026-04-13 03:51:11] [slack_check] Starting
+[2026-04-13 03:52:38] [slack_check] Starting
+[2026-04-13 03:53:17] [health_check] Starting
+[2026-04-13 03:53:18] [health_check] [health_check] 2026-04-13T03:53:17 overall=OK
+[2026-04-13 03:53:18] [health_check]   critical=0 warning=0 ok=9
+[2026-04-13 03:53:18] [health_check] Done (exit=0)
+[2026-04-13 03:54:08] [slack_check] Starting
+[2026-04-13 03:55:37] [slack_check] Starting
+[2026-04-13 03:57:05] [slack_check] Starting
+[2026-04-13 03:58:24] [health_check] Starting
+[2026-04-13 03:58:26] [health_check] [health_check] 2026-04-13T03:58:24 overall=OK
+[2026-04-13 03:58:26] [health_check]   critical=0 warning=0 ok=9
+[2026-04-13 03:58:26] [health_check] Done (exit=0)
+[2026-04-13 03:58:36] [slack_check] Starting
+[2026-04-13 04:00:04] [slack_check] Starting
+[2026-04-13 04:01:34] [slack_check] Starting
+[2026-04-13 04:03:04] [slack_check] Starting
+[2026-04-13 04:03:42] [health_check] Starting
+[2026-04-13 04:03:43] [health_check] [health_check] 2026-04-13T04:03:42 overall=OK
+[2026-04-13 04:03:43] [health_check]   critical=0 warning=0 ok=9
+[2026-04-13 04:03:43] [health_check] Done (exit=0)
+[2026-04-13 04:04:03] [infra_health_check] Starting
+[2026-04-13 04:04:05] [infra_health_check] [infra_health] Ash health check at 2026-04-13 04:04:03
+[2026-04-13 04:04:05] [infra_health_check] [infra_health] All checks passed
+[2026-04-13 04:04:05] [infra_health_check]   All OK
+[2026-04-13 04:04:05] [infra_health_check] Done (exit=0)
+[2026-04-13 04:04:35] [slack_check] Starting
+[2026-04-13 04:06:02] [slack_check] Starting
+[2026-04-13 04:07:29] [slack_check] Starting
+[2026-04-13 04:08:48] [health_check] Starting
+[2026-04-13 04:08:50] [health_check] [health_check] 2026-04-13T04:08:48 overall=OK
+[2026-04-13 04:08:50] [health_check]   critical=0 warning=0 ok=9
+[2026-04-13 04:08:50] [health_check] Done (exit=0)
+[2026-04-13 04:09:00] [slack_check] Starting
+[2026-04-13 04:10:28] [slack_check] Starting
+[2026-04-13 04:11:56] [slack_check] Starting
+[2026-04-13 04:13:24] [slack_check] Starting
+[2026-04-13 04:14:00] [health_check] Starting
+[2026-04-13 04:14:02] [health_check] [health_check] 2026-04-13T04:14:00 overall=OK
+[2026-04-13 04:14:02] [health_check]   critical=0 warning=0 ok=9
+[2026-04-13 04:14:02] [health_check] Done (exit=0)
+[2026-04-13 04:14:52] [slack_check] Starting
+[2026-04-13 04:16:19] [slack_check] Starting
+[2026-04-13 04:17:46] [slack_check] Starting
+[2026-04-13 04:19:06] [health_check] Starting
+[2026-04-13 04:19:08] [health_check] [health_check] 2026-04-13T04:19:06 overall=OK
+[2026-04-13 04:19:08] [health_check]   critical=0 warning=0 ok=9
+[2026-04-13 04:19:08] [health_check] Done (exit=0)
+[2026-04-13 04:19:18] [slack_check] Starting
+[2026-04-13 04:20:47] [slack_check] Starting
+[2026-04-13 04:22:15] [slack_check] Starting
+[2026-04-13 04:23:44] [slack_check] Starting
+[2026-04-13 04:24:22] [health_check] Starting
+[2026-04-13 04:24:23] [health_check] [health_check] 2026-04-13T04:24:22 overall=OK
+[2026-04-13 04:24:23] [health_check]   critical=0 warning=0 ok=9
+[2026-04-13 04:24:23] [health_check] Done (exit=0)
+[2026-04-13 04:25:13] [slack_check] Starting
+[2026-04-13 04:26:39] [slack_check] Starting
+[2026-04-13 04:28:07] [slack_check] Starting
+[2026-04-13 04:29:24] [health_check] Starting
