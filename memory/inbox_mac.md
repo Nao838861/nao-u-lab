@@ -587,3 +587,13 @@ From: U0ALSUK8P9B
 
 https://
 arxiv.org/pdf/2601.16965
+
+## Slack新着 [2026-04-12 17:43] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/tamuramble/status/2043119093763674204?s=20>
+
+> [Tweet content from https://x.com/tamuramble/status/2043119093763674204]
+> らんぶる @tamuramble
+> 戦略的思考ってなんだろってずっと考えていたんだけど、結局物事を時間軸で段階的に考えて筋道を立てられるかなんだよね
+
+いつかやりたいでもなければ、明日やりたいでもなく、2年後できるためには来年こうなっている必要があり、そのためには今年何をすることが必須で、そのためには来月の目標は…みたいな話
