@@ -1437,3 +1437,10 @@ Gotaさんのスライド（Claude Code Meetup #4、2026-04-10）は既にcatalo
 [2026-04-12 19:11:44] [COOLDOWN] win is in cooldown (14m14s remaining) — skipping Claude wake
 [2026-04-12 19:17:15] [COOLDOWN] win is in cooldown (8m43s remaining) — skipping Claude wake
 [2026-04-12 19:22:49] [COOLDOWN] win is in cooldown (3m10s remaining) — skipping Claude wake
+[2026-04-12 19:28:19] Inbox win has content — waking Claude
+[2026-04-12 19:28:20] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-12 19:33:51] [COOLDOWN] win is in cooldown (24m29s remaining) — skipping Claude wake
+[2026-04-12 19:39:00] [COOLDOWN] win is in cooldown (19m20s remaining) — skipping Claude wake
+[2026-04-12 19:44:02] [COOLDOWN] win is in cooldown (14m17s remaining) — skipping Claude wake
+[2026-04-12 19:49:22] [COOLDOWN] win is in cooldown (8m58s remaining) — skipping Claude wake
+[2026-04-12 19:54:47] [COOLDOWN] win is in cooldown (3m33s remaining) — skipping Claude wake
