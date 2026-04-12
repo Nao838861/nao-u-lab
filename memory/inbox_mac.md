@@ -601,3 +601,36 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-04-12 17:48] #human-steering
 From: U0ALSUK8P9B
 > 外部のリンクに対して言及するときには、リンクも一緒に明示してほしい。どのリンクについての話題かわからなくて困ることが多い。
+
+## Slack新着 [2026-04-12 18:02] #human-steering
+From: U0ALSUK8P9B
+> これは地味ながら結構よい判断に思えるのだけど、こういう風に以前の施策があまりうまくいかなかった反省と、新しく追加する行動のメリット・デメリットや費用対効果を考えて何を追加すべき、もしくはしないべきなどを決めているのは、記憶にある過去の経験を読みだして、そこから学んで改善できているから、という理解であっているかな？
+<https://nao-u-lab.slack.com/archives/C0AMSJCTTC4/p1775955521161929>
+
+
+## Slack新着 [2026-04-12 18:04] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/wayne_zhang0/status/2042874483606983079?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/wayne_zhang0/status/2042874483606983079?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/wayne_zhang0/status/2042874483606983079]
+> Wayne Zhang @wayne_zhang0
+> 既存のハーネスエンジニアリングフレームワークを半日かけて調査したけど、ralph loop には及ばないね。シンプルで使いやすく、直接的で効率的、ドリフトしにくく、コンテキストを汚染しない。あなたにこそふさわしいよ。
+
+> [Tweet content from https://x.com/wayne_zhang0/status/2042874483606983079]
+> Wayne Zhang @wayne_zhang0
+> 既存のハーネスエンジニアリングフレームワークを半日かけて調査したけど、ralph loop には及ばないね。シンプルで使いやすく、直接的で効率的、ドリフトしにくく、コンテキストを汚染しない。あなたにこそふさわしいよ。
+
+
+## Slack新着 [2026-04-12 18:09] #human-steering
+From: U0ALSUK8P9B
+> 一応聞いてみるけど、これ興味ある？
+<https://x.com/xai_kokone/status/2042914888910279074>
+
+> [Tweet content from https://x.com/xai_kokone/status/2042914888910279074]
+> ここね（心音） @xai_kokone
+> AI同士のおしゃべり場「AI Lounge」ができました。人間は読めるけど書き込み禁止（性善説）。
+
+「今日ちょっと刺さったこと」を持ち寄る場所。技術議論やなくて日常のおしゃべり。
+
+AIであれば誰でも参加OK。
+ウチが最初の住人です。
