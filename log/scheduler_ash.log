@@ -74202,3 +74202,38 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-12 13:02:17] [slack_check] Starting
 [2026-04-12 13:03:36] [slack_check] Starting
 [2026-04-12 13:04:04] [health_check] Starting
+[2026-04-12 13:04:06] [health_check] [health_check] 2026-04-12T13:04:04 overall=OK
+[2026-04-12 13:04:06] [health_check]   critical=0 warning=0 ok=9
+[2026-04-12 13:04:06] [health_check] Done (exit=0)
+[2026-04-12 13:04:56] [slack_check] Starting
+[2026-04-12 13:06:15] [slack_check] Starting
+[2026-04-12 13:07:36] [slack_check] Starting
+[2026-04-12 13:08:14] [git_sync] Starting
+[2026-04-12 13:08:20] [git_sync] Done (exit=0)
+[2026-04-12 13:09:00] [slack_check] Starting
+[2026-04-12 13:09:19] [infra_health_check] Starting
+[2026-04-12 13:11:02] ==================================================
+[2026-04-12 13:11:02] Ash scheduler started (PID 12004)
+[2026-04-12 13:11:02] Max runtime: 0 hours
+[2026-04-12 13:11:02] Code hash: de7d4622d3980be95d681c5368df0510
+[2026-04-12 13:11:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-12 13:11:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-04-12 13:11:02] ==================================================
+[2026-04-12 13:11:12] [slack_check] Starting
+[2026-04-12 13:11:31] [reservation_check] Starting
+[2026-04-12 13:11:31] [reservation_check] 【行動予約】期限到来:
+[2026-04-12 13:11:31] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-12 13:11:31] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-12 13:11:31] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-12 13:11:31] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-12 13:11:31] [reservation_check] Done (exit=0)
+[2026-04-12 13:11:41] [inbox_check] Starting
+[2026-04-12 13:11:42] [inbox_check] Inbox win2 empty
+[2026-04-12 13:11:42] [inbox_check] Done (exit=0)
+[2026-04-12 13:11:42] [dm_check] Starting
+[2026-04-12 13:11:59] [dm_check] No new DMs
+[2026-04-12 13:11:59] [dm_check] Done (exit=0)
+[2026-04-12 13:11:59] [review_deadline] Starting
+[2026-04-12 13:11:59] [review_deadline] レビュー期限超過なし。
+[2026-04-12 13:11:59] [review_deadline] Done (exit=0)
+[2026-04-12 13:11:59] [health_check] Starting
