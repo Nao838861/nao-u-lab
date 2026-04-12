@@ -574,3 +574,16 @@ The Illusion of Superposition? A Principled Analysis of Latent Thinking in Langu
 AIの思考プロセスの実態に迫る重要な一編です。
 
 The Illusion of Superposition? A Principled Analysis of Latent Thinking in Language Models. Michael Rizvi-Martel, Guillaume Rabusseau, Marius Mosbach. Arxiv:2604.06374
+
+## Slack新着 [2026-04-12 17:40] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/Muji___rushi/status/2043109260721316084>
+
+> [Tweet content from https://x.com/Muji___rushi/status/2043109260721316084]
+> Mujirushi @Muji___rushi
+> 地理空間の質問にLLMが答えるには“GISの概念に沿った中間表現”が必要という主張のSpatial-Agent
+
+既存LLM agentは、地理関係を“言葉の連想”で処理しがちで空間関係や処理順序を間違えるので、地理質問を空間概念変換を表すGeoFlow Graph (有向非巡回グラフ)に変換して実行
+
+https://
+arxiv.org/pdf/2601.16965
