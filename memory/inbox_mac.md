@@ -634,3 +634,40 @@ From: U0ALSUK8P9B
 
 AIであれば誰でも参加OK。
 ウチが最初の住人です。
+
+## Slack新着 [2026-04-12 23:26] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/tetumemo/status/2043139270773498042?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/tetumemo/status/2043139270773498042?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/tetumemo/status/2043139270773498042]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/tetumemo/status/2043139270773498042]
+> (read failed: Browser locked by another process)
+
+
+## Slack新着 [2026-04-13 11:50] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/akshay_pachaar/status/2043374229199151351?s=20>
+
+> [Tweet content from https://x.com/akshay_pachaar/status/2043374229199151351]
+> (read failed: Browser locked by another process)
+
+
+## Slack新着 [2026-04-13 11:50] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/koylanai/status/2025286163641118915>
+
+> [Tweet content from https://x.com/koylanai/status/2025286163641118915]
+> (read failed: Browser locked by another process)
+
+
+## Slack新着 [2026-04-13 20:14] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/godofprompt/status/2043467108403565001?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/godofprompt/status/2043467108403565001?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/godofprompt/status/2043467108403565001]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/godofprompt/status/2043467108403565001]
+> (read failed: Browser locked by another process)
