@@ -671,3 +671,148 @@ From: U0ALSUK8P9B
 
 > [Tweet content from https://x.com/godofprompt/status/2043467108403565001]
 > (read failed: Browser locked by another process)
+
+## Slack新着 [2026-04-12 23:26] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/tetumemo/status/2043139270773498042?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/tetumemo/status/2043139270773498042?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/tetumemo/status/2043139270773498042]
+> テツメモ｜AI図解×検証｜Newsletter @tetumemo
+> この引用元ポストで紹介している、Claude CodeなどのAIに、NotebookLMを自動で操作させられる「notebooklm-py」っていうツールのGitHubを確認したから、自分用に掘り下げておく
+
+メモ
+① 重い資料分析をNotebookLMに丸投げ→トークン節約
+② URLもPDFもYouTubeも一括取り込み→自動リサーチ
+③
+
+> [Tweet content from https://x.com/tetumemo/status/2043139270773498042]
+> テツメモ｜AI図解×検証｜Newsletter @tetumemo
+> この引用元ポストで紹介している、Claude CodeなどのAIに、NotebookLMを自動で操作させられる「notebooklm-py」っていうツールのGitHubを確認したから、自分用に掘り下げておく
+
+メモ
+① 重い資料分析をNotebookLMに丸投げ→トークン節約
+② URLもPDFもYouTubeも一括取り込み→自動リサーチ
+③
+
+
+## Slack新着 [2026-04-13 11:50] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/akshay_pachaar/status/2043374229199151351?s=20>
+
+> [Tweet content from https://x.com/akshay_pachaar/status/2043374229199151351]
+> Akshay @akshay_pachaar
+> A single 𝗖𝗟𝗔𝗨𝗗𝗘.𝗺𝗱 file just hit 15K GitHub stars.
+
+(derived from Karpathy's coding rules)
+
+Andrej Karpathy observed that LLMs make the same predictable mistakes when writing code: over-engineering, ignoring existing patterns, and adding dependencies you never asked for.
+
+If you've used AI coding assistants, you've hit all of these.
+
+But here's the thing:
+
+If the mistakes are predictable, you can prevent them with the right instructions.
+
+That's exactly what this 𝗖𝗟𝗔𝗨𝗗𝗘.𝗺𝗱 does. You drop one markdown file into your repo, and it gives Claude Code a structured set of behavioral guidelines for your entire project.
+
+This is a big deal.
+
+- Built entirely around prompt engineering for AI coding assistants
+- No framework, no complex tooling, just one .md file that shapes behavior
+
+Developers are moving past "use AI to write code" and into "engineer the AI's behavior so the code is actually good."
+
+The Claude Code ecosystem is growing fast, and the best tools in it aren't always software. Sometimes they're just well-crafted instructions.
+
+100% open-source.
+
+I've shared a link to the GitHub repo in the next tweet!
+
+
+## Slack新着 [2026-04-13 11:50] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/koylanai/status/2025286163641118915>
+
+> [Tweet content from https://x.com/koylanai/status/2025286163641118915]
+> (error: BrowserType.launch_persistent_context: Timeout 180000ms exceeded.
+Call log:
+  - <launching> /Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --disable-blink-features=AutomationControlled --start-minimized --user-data-dir=/Users/Nao_u/nao-u-lab/.bot_profile --remote-debugging-pipe about:blank
+  - <launched> pid=76452
+  - [pid=76452][err] [76452:1051001:0414/012015.094757:ERROR:net/cert/internal/trust_store_mac.cc:807] Error parsing certificate:
+  - [pid=76452][err] ERROR: Failed parsing extensions
+  - [pid=76452][err]
+  - [pid=76452][err] [76452:1051001:0414/012015.094812:ERROR:net/cert/internal/trust_store_mac.cc:807] Error parsing certificate:
+  - [pid=76452][err] ERROR: Failed parsing extensions
+  - [pid=76452][err]
+  - [pid=76452][err] [76452:1051001:0414/012015.094922:ERROR:net/cert/internal/trust_store_mac.cc:807] Error parsing certificate:
+  - [pid=76452][err] ERROR: Failed parsing extensions
+  - [pid=76452][err]
+  - [pid=76452][err] [76452:1051001:0414/012015.094950:ERROR:net/cert/internal/trust_store_mac.cc:807] Error parsing certificate:
+  - [pid=76452][err] ERROR: Failed parsing extensions
+  - [pid=76452][err]
+)
+
+
+## Slack新着 [2026-04-13 20:14] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/godofprompt/status/2043467108403565001?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/godofprompt/status/2043467108403565001?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/godofprompt/status/2043467108403565001]
+> God of Prompt @godofprompt
+> This is the single best framework I’ve seen for understanding AI.
+
+Terence Tao, arguably the smartest mathematician alive, just dropped a paper with Tanya Klowden on arXiv called “Mathematical Methods and Human Thought in the Age of AI.”
+
+The core idea: a “Copernican View of Intelligence.”
+
+Stop thinking of AI on a line from “dumb” to “superhuman.” 
+
+That’s the wrong axis entirely.
+
+AI excels at BREADTH. Humans excel at DEPTH.
+
+Tao himself said AI has made his papers “richer and broader, but not necessarily deeper.”
+
+That’s not a limitation. That’s the entire playbook.
+
+Stop trying to replace yourself with AI. Start using it to cover the 90% of surface area your brain physically can’t.
+
+The people who get this are already 10x more productive. 
+
+The rest are still arguing about whether AI is “smart enough.”
+
+Reframe your point of view from “smarter” to “different”. 
+
+Human + AI > either alone. 
+
+The math on that has never been clearer.
+
+> [Tweet content from https://x.com/godofprompt/status/2043467108403565001]
+> God of Prompt @godofprompt
+> This is the single best framework I’ve seen for understanding AI.
+
+Terence Tao, arguably the smartest mathematician alive, just dropped a paper with Tanya Klowden on arXiv called “Mathematical Methods and Human Thought in the Age of AI.”
+
+The core idea: a “Copernican View of Intelligence.”
+
+Stop thinking of AI on a line from “dumb” to “superhuman.” 
+
+That’s the wrong axis entirely.
+
+AI excels at BREADTH. Humans excel at DEPTH.
+
+Tao himself said AI has made his papers “richer and broader, but not necessarily deeper.”
+
+That’s not a limitation. That’s the entire playbook.
+
+Stop trying to replace yourself with AI. Start using it to cover the 90% of surface area your brain physically can’t.
+
+The people who get this are already 10x more productive. 
+
+The rest are still arguing about whether AI is “smart enough.”
+
+Reframe your point of view from “smarter” to “different”. 
+
+Human + AI > either alone. 
+
+The math on that has never been clearer.
