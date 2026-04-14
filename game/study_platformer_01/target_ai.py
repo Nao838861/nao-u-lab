@@ -760,6 +760,15 @@ class TargetAI:
 
             plat = None
             if rows_above <= 4:
+                # Verify ground exists under block (don't hit blocks over pits)
+                under_ok = any(0 <= gr < tm.rows and tm.tiles[gr][c] in SOLID_TILES
+                               for gr in range(tm.rows - 2, tm.rows))
+                if not under_ok:
+                    foot_r = mario_row + 1
+                    under_ok = (0 <= foot_r < tm.rows and 0 <= c < tm.cols
+                                and tm.tiles[foot_r][c] in SOLID_TILES)
+                if not under_ok:
+                    continue
                 score = 200 - abs(bdx)
             elif rows_above <= 10:
                 plat = find_platform_for(tm, c, ground_row)
