@@ -231,6 +231,16 @@ def scan_terrain_ahead(tm, mx, my, tiles_ahead=14):
     walls = []
     in_pit = False
     pit_start = None
+    # If elevated on a tall structure (pipe/wall), detect edge of surface
+    foot_row = mario_row + 1
+    # Only activate elevated mode if standing on a tall solid column (3+ rows)
+    elevated = False
+    if mario_row < tm.rows - 4 and 0 <= col < tm.cols and 0 <= foot_row < tm.rows:
+        if tm.tiles[foot_row][col] in SOLID_TILES:
+            # Check if this is a tall structure (solid for 3+ rows below feet)
+            solid_depth = sum(1 for r in range(foot_row, min(foot_row + 4, tm.rows))
+                             if tm.tiles[r][col] in SOLID_TILES)
+            elevated = solid_depth >= 3
 
     for dc in range(tiles_ahead):
         c = col + dc
@@ -242,6 +252,10 @@ def scan_terrain_ahead(tm, mx, my, tiles_ahead=14):
         bottom_solid = any(
             tm.tiles[r][c] in SOLID_TILES
             for r in range(tm.rows - 2, tm.rows) if r < tm.rows)
+        # Elevated: also treat edge of current surface as pit
+        if elevated and bottom_solid and 0 <= foot_row < tm.rows:
+            if tm.tiles[foot_row][c] not in SOLID_TILES:
+                bottom_solid = False  # Surface ended — treat as pit
         if not bottom_solid:
             if not in_pit:
                 in_pit = True; pit_start = dc
