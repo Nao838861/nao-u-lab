@@ -984,6 +984,7 @@ class TargetAI:
             self.jump_hold = hold
             self.jump_right = True
             self._wall_climb = False
+            self._nav_use_dash = best_dash  # Remember dash/walk choice
         else:
             # No reachable platform by jumping — walk/dash to edge and
             # drop down. Gravity will land us on a lower platform.
@@ -1589,15 +1590,17 @@ class TargetAI:
             return {'left': go_left, 'right': go_right,
                     'a': not above_target, 'b': True}
 
+        use_b = getattr(self, '_nav_use_dash', True)
         if self.jump_timer <= self.jump_hold:
-            return {'left': not r, 'right': r, 'a': True, 'b': True}
+            return {'left': not r, 'right': r, 'a': True, 'b': use_b}
         if state['on_ground'] and self.jump_timer > 6:
             self._nav_steer_target = None
-            self._active_nav_path = None  # Clear trajectory display
+            self._active_nav_path = None
+            self._nav_use_dash = True  # Reset for next jump
             if self._wall_climb:
                 self._wall_climb = False
                 self.phase = 'moving' if self.target else 'idle'
             else:
                 self._advance_subgoal()
             self.jump_timer = 0
-        return {'left': not r, 'right': r, 'a': False, 'b': True}
+        return {'left': not r, 'right': r, 'a': False, 'b': use_b}
