@@ -206,6 +206,28 @@ def main():
     return 0
 
 
+def _read_tweet_with_timeout(url, timeout_sec=60):
+    """read_tweetをサブプロセスで実行し、タイムアウトを強制する。
+    Playwrightのブラウザハングでcheck_slack全体がブロックされるのを防ぐ。"""
+    import subprocess, sys
+    try:
+        proc = subprocess.run(
+            [sys.executable, "-c",
+             f"import json; from read_tweet_url import read_tweet; print(json.dumps(read_tweet({url!r})))"],
+            capture_output=True, text=True, timeout=timeout_sec,
+            cwd=str(Path(__file__).parent),
+        )
+        if proc.returncode == 0 and proc.stdout.strip():
+            import json
+            return json.loads(proc.stdout.strip())
+        else:
+            return {"url": url, "text": f"(subprocess error: {proc.stderr[:200]})"}
+    except subprocess.TimeoutExpired:
+        return {"url": url, "text": f"(timeout: {timeout_sec}s)"}
+    except Exception as e:
+        return {"url": url, "text": f"(error: {e})"}
+
+
 def expand_tweet_urls(text):
     """Extract x.com/twitter.com URLs from text and read their content."""
     urls = re.findall(r'https?://(?:x\.com|twitter\.com)/\w+/status/\d+', text)
@@ -213,20 +235,13 @@ def expand_tweet_urls(text):
         return []
 
     results = []
-    try:
-        from read_tweet_url import read_tweet
-    except ImportError:
-        for url in urls[:3]:
-            results.append({"url": url, "text": "(read_tweet_url.py not available)"})
-        return results
-
     for url in urls[:3]:  # max 3 URLs per message
         try:
-            data = read_tweet(url)
+            data = _read_tweet_with_timeout(url, timeout_sec=60)
             if "error" not in data:
                 results.append(data)
             else:
-                results.append({"url": url, "text": f"(read failed: {data['error']})"})
+                results.append({"url": url, "text": f"(read failed: {data.get('error', data.get('text', '?'))})"})
         except Exception as e:
             results.append({"url": url, "text": f"(error: {e})"})
 
