@@ -699,11 +699,9 @@ class TargetAI:
             if bdx > 0 and bdx > obstacle_dist - 16:
                 continue
             # Skip blocks on the far side of a nearby tall wall
-            # (wall must be BETWEEN mario and block)
             if nearest_obstacle and nearest_obstacle[0] == 'wall' and nearest_obstacle[2] >= 4:
                 wall_px = mx + nearest_obstacle[1]
                 block_px = c * 16
-                # Wall is between mario and block (both directions)
                 if (bdx > 0 and block_px > wall_px) or (bdx < 0 and block_px < wall_px - 32):
                     continue
 
