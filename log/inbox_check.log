@@ -1612,3 +1612,5 @@ Agent-Reachの要点：
 
 [2026-04-14 18:42:21] Inbox win has content — waking Claude
 [2026-04-14 18:49:19] Inbox win has content — waking Claude
+[2026-04-14 18:54:19] Claude wake timed out for win — restoring inbox
+[2026-04-14 18:57:37] Inbox win has content — waking Claude
