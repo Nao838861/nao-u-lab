@@ -591,7 +591,7 @@ def main():
             y0 = int(row * tile_h)
             x1 = int((col + 1) * tile_w)
             y1 = int((row + 1) * tile_h)
-            orange = 0; dark_blue = 0; black = 0; brown = 0
+            orange = 0; dark_blue = 0; black = 0; brown = 0; teal = 0; white = 0
             for dy in range(y0, min(y1, img.height)):
                 for dx in range(x0, min(x1, img.width)):
                     r, g, b = img.getpixel((dx, dy))
@@ -603,11 +603,19 @@ def main():
                         black += 1
                     if abs(r - 200) < 40 and abs(g - 76) < 40 and abs(b - 12) < 40:
                         brown += 1
-            # Coin: small orange on black background
-            if 5 <= orange <= 35 and black >= 150 and brown < 15:
-                if grid[row][col] in ("question", "black", "sky"):
-                    grid[row][col] = "coin"
-                    coin_count += 1
+                    if abs(r - 0) < 20 and abs(g - 128) < 20 and abs(b - 136) < 20:
+                        teal += 1
+                    if r > 230 and g > 230 and b > 230:
+                        white += 1
+            # Coin vs ? block detection
+            is_mushroom = brown >= 40 and white >= 15
+            has_border = teal >= 20
+            if orange >= 5 and not is_mushroom and black >= 100:
+                if not has_border:
+                    # No border = definitely a coin
+                    if grid[row][col] in ("question", "black", "sky", "brown"):
+                        grid[row][col] = "coin"
+                        coin_count += 1
             # Underground Goomba: dark blue body on black background
             if dark_blue >= 20 and black >= 80:
                 if grid[row][col] not in ("pipe_green",):
@@ -622,6 +630,29 @@ def main():
 
     if args.annotate:
         lines = annotate_known_level(lines, args.annotate)
+
+    # Convert runs of 4+ consecutive ? blocks to coins
+    # (in NES Mario, long ? rows are floating coin trails)
+    converted = 0
+    for i, line in enumerate(lines):
+        chars = list(line)
+        j = 0
+        while j < len(chars):
+            if chars[j] == '?':
+                run_start = j
+                while j < len(chars) and chars[j] == '?':
+                    j += 1
+                run_len = j - run_start
+                if run_len >= 4:
+                    for k in range(run_start, j):
+                        chars[k] = 'o'
+                    converted += run_len
+            else:
+                j += 1
+        lines[i] = ''.join(chars)
+    if converted:
+        print(f"Converted {converted} consecutive ? blocks to coins",
+              file=sys.stderr)
 
     # Trim trailing dots
     max_len = max(len(line.rstrip(".")) for line in lines)
