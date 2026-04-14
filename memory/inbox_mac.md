@@ -118,3 +118,7 @@ Understanding Performance Gap Between Parallel and Sequential Sampling in Large 
 From: U0ALSUK8P9B
 > &gt; ash
 インスタンス名付きディレクトリにコピーするかたちでバッグアップの実装をお願い。重要なデータなのでトラブルのないようにいつも以上に気をつけて。
+
+## Slack新着 [2026-04-14 21:34] #human-steering
+From: U0ALSUK8P9B
+> study_platformer_01のディレクトリに `FEEDBACK.md` のようなファイルを置いて のほうも実装よろしく。これは重要課題なので、ゲーム開発の知見を貯めていきたい。
