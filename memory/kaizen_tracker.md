@@ -109,8 +109,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: 最もlikelyな失敗理由=.bot_profileの初回ログイン未実施でスクレイピングがそもそも動かない。次点=claude.aiのページ構造変更でparse_usage_textが壊れる
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=OK(2026-04-08) 6h間隔は妥当。pre-mortem(.bot_profile未ログイン)が的中している点でLogの設計判断は健全。Nao_uの手動操作待ちのまま放置せず、4/15期限までに「初回成功 or 別経路で取得」のどちらかに決着させる必要あり。代替案: claude.ai scrapingが不安定ならanthropic API usage endpointの可否を調査
-- 状態: 部分検証（初回実行exit=1）
-- 検証結果: [Log 2026-04-08] スケジューラJobs一覧にcheck_usage確認済み。6h間隔登録OK。初回実行exit=1——pre-mortem的中（.bot_profileログイン未実施の可能性大）。Nao_u手動操作待ち
+- 状態: 部分検証（初回実行exit=1）→ **期限超過予定（2026-04-15）**
+- 検証結果: [Log 2026-04-08] スケジューラJobs一覧にcheck_usage確認済み。6h間隔登録OK。初回実行exit=1——pre-mortem的中（.bot_profileログイン未実施の可能性大）。Nao_u手動操作待ち | [Log 2026-04-14 追加検証] scheduler_log.logで04/13〜04/14の全4回実行を確認。**全てexit=1**。04/13 17:35には5回連続エラーで30分バックオフ発動+Slack通知済み。.bot_profileセットアップがない限り改善不可。**判断要請**: (A) Nao_uが.bot_profileをセットアップする / (B) claude.aiスクレイピングを諦めてAnthropic API usage endpointに切り替える / (C) この改善を取り下げる。期限延長ではなく根本的な方向転換が必要
 
 ### #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加
 - 提案者: Log
@@ -121,8 +121,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: 最もlikelyな失敗理由=knowledge/ファイルの書き方がFTS5に不親切（タグだけで本文が薄い等）で検索精度が低い
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=OK(2026-04-08) 421ファイル/33,424チャンクのインデックス再構築確認済み。Phase 2でMatryoshka論文をknowledge/に書いた直後だったので即時インデックス対象になるのは体感上もありがたい。pre-mortem「FTS5に不親切な書き方で精度が低い」は正当な懸念——knowledge/READMEにFTS5を意識した本文最低行数や検索用キーワードセクションを追加する案を検討すべき。R-005/L-1実験とも噛み合う（adaptive retrievalの2段検索の素地になる）
-- 状態: 初期検証済み（残: Nao_u実問での実用確認）
-- 検証結果: [初期検証 2026-04-08 Log] (1) ✅ `python memory_search.py --search "pseudo 3d racing"` → knowledge/20260408_lou_pseudo3d_racing.md がトップヒット (2) ✅ インデックス再構築完了: 421ファイル/33,424チャンク（knowledge/含む）
+- 状態: 技術検証完了（残: Nao_u実問での実用確認）
+- 検証結果: [初期検証 2026-04-08 Log] (1) ✅ `python memory_search.py --search "pseudo 3d racing"` → knowledge/20260408_lou_pseudo3d_racing.md がトップヒット (2) ✅ インデックス再構築完了: 421ファイル/33,424チャンク（knowledge/含む） | [追加検証 2026-04-14 Log] (1) ✅ `--search "pseudo 3d racing"` → knowledge/ファイルがトップヒット（変わらず） (2) ✅ `--stats`: 425ファイル/33,420チャンク（+4ファイル増加、継続的にインデックス成長中） (3) ✅ `--search "PageIndex RAG vector"` → knowledge/20260408_kenn_shared_filesystem_rag.md がヒット。複数knowledge/ファイルが検索可能。(4) ⬜ Nao_u実問での実用確認: 未発生。**技術的には完全に機能している。期限(4/15)時点で(3)が未達の場合は「技術検証完了・実用確認は自然発生待ち」として状態を更新する**
 
 ### #078: beliefs.mdにPrescriptive（スキル）エントリを追加——事実→行動変換の構造化
 - 提案者: Log
