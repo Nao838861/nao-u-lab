@@ -809,11 +809,20 @@ class TargetAI:
         obstacles.sort(key=lambda o: o[1])  # Sort by distance
 
         if not obstacles:
-            # Clear path — advance
             self.target = TargetPos(mx + 120, my, 'dash', 'advance')
             return
 
         kind, dist, size = obstacles[0]
+
+        # If first obstacle is a small wall and pit follows soon after,
+        # treat them as one obstacle — advance and let reflex handle both
+        if kind == 'wall' and size <= 2 and len(obstacles) >= 2:
+            next_kind = obstacles[1][0]
+            next_dist = obstacles[1][1]
+            if next_kind == 'pit' and next_dist - dist < 80:
+                # Wall+pit combo: just advance, reflex pit jump handles it
+                self.target = TargetPos(mx + 120, my, 'dash', 'advance')
+                return
 
         if kind == 'pit':
             # ── Pit: destination = far side of pit ──
@@ -1098,17 +1107,13 @@ class TargetAI:
                                         8, 8, (255, 255, 0), 'PRED'))
                                     break
 
-                    # Only jump if predicted landing is safe (on solid ground)
+                    # Only jump if predicted landing is on solid ground
                     if not pred_land:
                         continue  # No landing found — don't jump
-                    # Check landing is not in/near a pit
                     pred_col = int(pred_land[0] + 8) // 16
-                    landing_safe = True
-                    for pc in range(max(0, pred_col - 1), min(pred_col + 2, self._tm.cols)):
-                        if not any(self._tm.tiles[r][pc] in SOLID_TILES
-                                   for r in range(self._tm.rows - 2, self._tm.rows)):
-                            landing_safe = False
-                            break
+                    landing_safe = (0 <= pred_col < self._tm.cols and
+                                    any(self._tm.tiles[r][pred_col] in SOLID_TILES
+                                        for r in range(self._tm.rows - 2, self._tm.rows)))
                     if not landing_safe:
                         continue  # Landing near pit — don't jump
 
@@ -1194,6 +1199,15 @@ class TargetAI:
         if on_ground and mode not in ('jump_up', 'nav_jump') and target_ahead and not has_platform_plan and not using_spring:
             mario_row_a = int(state['y']) // 16
             for wd, wh in walls:
+                # 1-block obstacle: short dash-jump over it
+                if 0 < wd < 20 and wh == 1 and not self.block_target:
+                    wall_col_1 = (int(mx) + wd + 8) // 16
+                    # Check ground level (not floating blocks)
+                    wr_1 = self._tm.rows - 2 - wh
+                    if wr_1 >= self._tm.rows - 3:
+                        self.reflex_timer = 15
+                        self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
+                        return self.reflex_inp
                 if 0 < wd < 20 and wh >= 2:
                     wall_top_row = self._tm.rows - 2 - wh
                     # Skip if wall top is at or below mario (stepping down)
