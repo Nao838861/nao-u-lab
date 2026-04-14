@@ -693,6 +693,8 @@ class TargetAI:
                     else:
                         self.target = TargetPos(under_x, my, 'walk', f'walk to c{bc}')
 
+            # If target is ahead but a tall wall blocks the path,
+            # insert a multi-step plan to climb over the wall first
             # Show movement target
             if self.target:
                 col_t = (255, 200, 0) if self.target.mode in ('dash',) else \
@@ -796,89 +798,157 @@ class TargetAI:
                 self.target = TargetPos(mx + 120, my, 'dash', 'advance')
 
         elif kind == 'wall':
-            # ── Wall: destination = on top of wall or beyond it ──
-            wd, wh = dist, size
-            wall_col = (int(mx) + wd + 8) // 16
-            # Find wall top row
-            wall_top_row = None
-            for r in range(tm.rows):
-                if 0 <= wall_col < tm.cols and tm.tiles[r][wall_col] in SOLID_TILES:
-                    wall_top_row = r
+            self._plan_wall_navigation(state, tm, dist, size, mx, my, ground_row, ground_y)
+
+    def _plan_wall_navigation(self, state, tm, wd, wh, mx, my, ground_row, ground_y):
+        """Plan how to get past a wall. Handles:
+        - 1-block obstacles (jump over or staircase)
+        - Tall walls reachable by direct jump (land on top or beyond)
+        - Tall walls NOT reachable directly (multi-step: find intermediate platform)
+        """
+        mario_row = int(my) // 16
+        wall_col = (int(mx) + wd + 8) // 16
+
+        # Find wall top
+        wall_top_row = None
+        for r in range(tm.rows):
+            if 0 <= wall_col < tm.cols and tm.tiles[r][wall_col] in SOLID_TILES:
+                wall_top_row = r
+                break
+        if wall_top_row is None:
+            self.target = TargetPos(mx + 120, my, 'dash', 'advance')
+            return
+
+        wall_top_y = wall_top_row * 16
+        wall_x = wall_col * 16
+
+        # Show wall
+        self.markers.append(Marker(wall_x, wall_top_y, 16, wh * 16,
+                                   (255, 165, 0), f'WALL h={wh}'))
+
+        # ── Check what's beyond the wall ──
+        pit_after = False
+        ground_after_col = None
+        for c in range(wall_col + 1, min(wall_col + 10, tm.cols)):
+            has_ground = any(tm.tiles[r][c] in SOLID_TILES
+                             for r in range(tm.rows - 2, tm.rows))
+            if not has_ground:
+                pit_after = True
+            elif pit_after:
+                ground_after_col = c
+                break
+            elif not pit_after and c > wall_col + 1:
+                ground_after_col = c
+                break
+
+        # ── 1-block wall: staircase check or jump over ──
+        if wh == 1:
+            staircase = False
+            stair_top_row = wall_top_row
+            stair_top_col = wall_col
+            for c in range(wall_col + 1, min(wall_col + 8, tm.cols)):
+                has_block = False
+                for r in range(ground_row - 5, ground_row):
+                    if 0 <= r < tm.rows and tm.tiles[r][c] in SOLID_TILES:
+                        has_block = True
+                        if r < stair_top_row:
+                            stair_top_row = r
+                            stair_top_col = c
+                        break
+                if not has_block:
                     break
+                staircase = True
+            if staircase:
+                land_x = stair_top_col * 16 + 8
+                land_y = stair_top_row * 16 - 1
+                reason = 'onto stair'
+            else:
+                land_x = (wall_col + 2) * 16
+                land_y = ground_y
+                reason = 'over block'
+            self._set_nav_target(land_x, land_y, reason)
+            return
 
-            if wall_top_row is None:
-                self.target = TargetPos(mx + 120, my, 'dash', 'advance')
-                return
+        # ── Tall wall: can Mario jump to the top from current height? ──
+        # Max jump height from ground is ~4 tiles (~64px). From elevated, less.
+        height_diff = mario_row - wall_top_row  # rows Mario needs to climb
+        can_reach_directly = height_diff <= 5  # ~80px, reachable with dash jump
 
-            wall_top_y = wall_top_row * 16
-            # Show wall outline
-            wall_x = wall_col * 16
-            wall_h_px = wh * 16
-            self.markers.append(Marker(wall_x, wall_top_y, 16, wall_h_px,
-                                       (255, 165, 0), f'WALL h={wh}'))
-
-            # Check what's beyond the wall (pit? ground? more wall?)
-            pit_after = False
-            ground_after_col = None
-            for c in range(wall_col + 1, min(wall_col + 10, tm.cols)):
-                has_ground = any(tm.tiles[r][c] in SOLID_TILES
-                                 for r in range(tm.rows - 2, tm.rows))
-                if not has_ground:
-                    pit_after = True
-                elif pit_after:
-                    # Found ground after pit — this is the landing spot
-                    ground_after_col = c
-                    break
-                elif not pit_after and c > wall_col + 1:
-                    # Ground right after wall — land beyond wall
-                    ground_after_col = c
-                    break
-
-            if wh == 1:
-                # Check if blocks continue beyond (staircase pattern)
-                # If so, land on the staircase top instead of trying to clear it
-                staircase = False
-                stair_top_row = wall_top_row
-                stair_top_col = wall_col
-                for c in range(wall_col + 1, min(wall_col + 8, tm.cols)):
-                    has_block = False
-                    for r in range(ground_row - 5, ground_row):
-                        if 0 <= r < tm.rows and tm.tiles[r][c] in SOLID_TILES:
-                            has_block = True
-                            if r < stair_top_row:
-                                stair_top_row = r
-                                stair_top_col = c
-                            break
-                    if not has_block:
-                        break  # End of staircase
-                    staircase = True
-                if staircase:
-                    # Land on staircase top
-                    land_x = stair_top_col * 16 + 8
-                    land_y = stair_top_row * 16 - 1
-                    reason = 'onto stair'
-                else:
-                    # Isolated 1-block: jump over
-                    land_x = (wall_col + 2) * 16
-                    land_y = ground_y
-                    reason = 'over block'
-            elif pit_after and not ground_after_col:
+        if can_reach_directly:
+            # Direct jump: decide landing spot
+            if pit_after and not ground_after_col:
                 land_x = wall_col * 16 + 8
                 land_y = wall_top_y - 1
                 reason = 'onto wall'
             elif ground_after_col:
                 land_x = ground_after_col * 16 + 8
                 land_y = ground_y
-                reason = 'over wall+pit'
+                reason = 'over wall'
             else:
                 land_x = (wall_col + 2) * 16
                 land_y = ground_y
                 reason = 'over wall'
+            self._set_nav_target(land_x, land_y, reason)
+            return
 
-            self.target = TargetPos(land_x, land_y, 'nav_jump', reason)
+        # ── Too tall to reach directly: find intermediate platform ──
+        # Scan columns between Mario and the wall for elevated solid surfaces
+        # (pipes, blocks, platforms) that Mario can reach and use as a stepping stone
+        best_step = None  # (col, top_row, score)
+        mario_col_int = int(mx) // 16
+        for c in range(mario_col_int - 2, wall_col):
+            # Find the top of any solid structure at this column
+            step_top = None
+            for r in range(tm.rows - 1, -1, -1):
+                if 0 <= c < tm.cols and tm.tiles[r][c] in SOLID_TILES:
+                    # Check if this is elevated (not ground level)
+                    if r < ground_row - 1:
+                        step_top = r
+                    break
+            if step_top is None:
+                continue
+            # Can Mario reach this step from ground?
+            step_height = ground_row - step_top  # rows above ground
+            if step_height < 1 or step_height > 5:
+                continue  # Too low (ground level) or too high
+            # Can Mario then reach the wall top from this step?
+            remaining = step_top - wall_top_row
+            if remaining > 5:
+                continue  # Still can't reach wall from here
+            # Score: prefer higher steps (fewer remaining rows to climb)
+            score = step_height * 10 - abs(c - wall_col)
+            if best_step is None or score > best_step[2]:
+                best_step = (c, step_top, score)
+
+        if best_step:
+            step_col, step_top, _ = best_step
+            step_x = step_col * 16 + 8
+            step_y = step_top * 16 - 1
+            # Multi-step plan: first land on intermediate, then jump to wall top
+            final_x = wall_col * 16 + 8
+            final_y = wall_top_y - 1
+            self.subgoals = [
+                TargetPos(final_x, final_y, 'nav_jump', 'to wall top'),
+            ]
+            self.target = TargetPos(step_x, step_y, 'nav_jump', 'step up')
             self.phase = 'moving'
-            self.markers.append(Marker(land_x - 8, land_y - 8, 16, 16,
-                                       (0, 255, 100), f'LAND:{reason}'))
+            # Show both waypoints
+            self.markers.append(Marker(step_x - 8, step_y - 8, 16, 16,
+                                       (0, 255, 100), 'STEP'))
+            self.markers.append(Marker(final_x - 8, final_y - 8, 16, 16,
+                                       (100, 255, 255), 'FINAL'))
+        else:
+            # No intermediate found — try direct anyway (reflex may help)
+            land_x = wall_col * 16 + 8
+            land_y = wall_top_y - 1
+            self._set_nav_target(land_x, land_y, 'onto wall')
+
+    def _set_nav_target(self, land_x, land_y, reason):
+        """Helper: set a nav_jump target with marker."""
+        self.target = TargetPos(land_x, land_y, 'nav_jump', reason)
+        self.phase = 'moving'
+        self.markers.append(Marker(land_x - 8, land_y - 8, 16, 16,
+                                   (0, 255, 100), f'LAND:{reason}'))
 
     def _clear_block(self):
         self.block_target = None
