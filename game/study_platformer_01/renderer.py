@@ -430,6 +430,7 @@ class MarioRenderer:
                 'walk_jump': (255, 200, 50),   # Orange — walk jump (A held, no dash)
                 'nav_dash':  (0, 200, 255),    # Cyan — nav dash jump prediction
                 'nav_walk':  (200, 100, 255),  # Purple — nav walk jump prediction
+                'nav_plan':  (255, 100, 100),  # Red — active jump trajectory
             }
             for name, path in trajectories.items():
                 if len(path) < 2:
