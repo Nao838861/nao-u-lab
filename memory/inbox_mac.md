@@ -907,3 +907,7 @@ some open questions:
 - How do we make models much better at self-managing their context window?  How do we reduce error rates in recursively allowing agents to operate over external objects?
 
 i’ll be expanding on, altering, and adjusting these mental models but these feel like an important subset to me on the future of designing agents practically
+
+## Slack新着 [2026-04-14 09:39] #human-steering
+From: U0ALSUK8P9B
+> <https://github.com/lifemate-ai/ai-lounge/discussions>
