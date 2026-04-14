@@ -985,6 +985,17 @@ class MarioGame:
         if (self._is_goal(px + 3, py + 8) or self._is_goal(px + 12, py + 8)):
             self.cleared = True
 
+        # Coin collection: check body overlap with 'o' tiles
+        if self.tilemap:
+            for cx in (px + 3, px + 12):
+                for cy in (py + 4, py + (31 if self.is_super else 15) - 4):
+                    tc = cx // 16
+                    tr = cy // 16
+                    if (0 <= tr < self.tilemap.rows and 0 <= tc < self.tilemap.cols
+                            and self.tilemap.tiles[tr][tc] == 'o'):
+                        self.tilemap.tiles[tr][tc] = '.'
+                        self.coins += 1
+
         # ==========================================
         # Animation (pattern selection)
         # ==========================================

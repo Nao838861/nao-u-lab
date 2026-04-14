@@ -7,6 +7,7 @@ Level format: each character = one 16x16 tile.
   ?  question block
   !  used question block (hit from below)
   S  springboard (bounces Mario very high)
+  o  coin (collectible, non-solid)
   G  Goomba spawn point (replaced with '.' after parsing)
   K  Koopa Troopa spawn point (replaced with '.' after parsing)
 

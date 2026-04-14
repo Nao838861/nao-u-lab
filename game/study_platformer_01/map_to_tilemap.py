@@ -116,6 +116,7 @@ def classify_tile(img, col, row, tile_w, tile_h=None):
 
     # --- Goomba/sprite detection ---
     # Goomba = brown body + peach feet. Background is sky OR bush green.
+    # Underground Goomba = dark blue body (classified as "other") on black bg.
     # Reject: center=sky (sprite bleed from adjacent tile),
     #         sky > 12 (mostly empty tile), brown > 10 with peach <= 2 (castle wall).
     bg = cats["sky"] + cats["dark_green_obj"]
@@ -124,6 +125,20 @@ def classify_tile(img, col, row, tile_w, tile_h=None):
         is_goomba = True
     if cats["peach"] >= 2 and cats["brown"] >= 3 and bg >= 1 and cats["peach"] <= cats["brown"]:
         is_goomba = True
+    # Underground Goomba: dark blue pixels on black background
+    if not is_goomba and cats["black"] >= 8:
+        # Count dark blue pixels (24, 60, 92) directly from image
+        dark_blue = 0
+        for dx_frac in [0.25, 0.5, 0.75]:
+            for dy_frac in [0.2, 0.4, 0.6, 0.8]:
+                px_x = int(x0 + tile_w * dx_frac)
+                px_y = int(y0 + tile_h * dy_frac)
+                if 0 <= px_x < img.width and 0 <= px_y < img.height:
+                    r, g, b = img.getpixel((px_x, px_y))[:3]
+                    if 10 < r < 50 and 40 < g < 80 and 70 < b < 110:
+                        dark_blue += 1
+        if dark_blue >= 3:
+            is_goomba = True
     if is_goomba:
         # Filter false positives
         if center_cat == "sky":
@@ -168,6 +183,12 @@ def classify_tile(img, col, row, tile_w, tile_h=None):
     # Standard priority classification
     for priority in ["question", "brown"]:
         if cats[priority] >= 4:
+            # Distinguish coin from question block:
+            # Coins have small orange count (<= 6), mostly black/sky background
+            if priority == "question" and cats[priority] <= 6:
+                bg_count = cats["black"] + cats["sky"]
+                if bg_count >= 10:
+                    return "coin"
             return priority
     return cats.most_common(1)[0][0]
 
@@ -400,6 +421,8 @@ def build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col=None,
                     chars.append(".")
             elif cat == "question":
                 chars.append("?")
+            elif cat == "coin":
+                chars.append("o")
             elif cat in ("sky", "white", "peach", "hill_green",
                          "dark_green", "black", "teal",
                          "light_teal", "other", "bush",
@@ -544,6 +567,41 @@ def main():
 
     print(f"Detected {len(pipe_cells) // 4} pipes, "
           f"{len(gaps)} gap columns", file=sys.stderr)
+
+    # Post-process: detect coins and underground enemies with full pixel scan
+    coin_count = 0
+    enemy_count = 0
+    for row in range(rows):
+        for col in range(cols):
+            x0 = int(col * tile_w)
+            y0 = int(row * tile_h)
+            x1 = int((col + 1) * tile_w)
+            y1 = int((row + 1) * tile_h)
+            orange = 0; dark_blue = 0; black = 0; brown = 0
+            for dy in range(y0, min(y1, img.height)):
+                for dx in range(x0, min(x1, img.width)):
+                    r, g, b = img.getpixel((dx, dy))
+                    if abs(r - 252) < 30 and abs(g - 152) < 30 and abs(b - 56) < 30:
+                        orange += 1
+                    if 10 < r < 50 and 40 < g < 80 and 70 < b < 110:
+                        dark_blue += 1
+                    if r < 15 and g < 15 and b < 15:
+                        black += 1
+                    if abs(r - 200) < 40 and abs(g - 76) < 40 and abs(b - 12) < 40:
+                        brown += 1
+            # Coin: small orange on black background
+            if 5 <= orange <= 35 and black >= 150 and brown < 15:
+                if grid[row][col] in ("question", "black", "sky"):
+                    grid[row][col] = "coin"
+                    coin_count += 1
+            # Underground Goomba: dark blue body on black background
+            if dark_blue >= 20 and black >= 80:
+                if grid[row][col] not in ("pipe_green",):
+                    grid[row][col] = "goomba"
+                    enemy_count += 1
+    if coin_count or enemy_count:
+        print(f"Post-scan: {coin_count} coins, {enemy_count} enemies",
+              file=sys.stderr)
 
     lines = build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col,
                           castle_bg)
