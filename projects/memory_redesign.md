@@ -15,7 +15,7 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 ## 実装済みツール
 - **FTS5検索(memory_search.py)**: 23,334チャンク索引。日本語複合クエリ展開、時間軸フィルタ(--when/--period)
 - **偶発的想起(memory_walk.py)**: random/gravity/frontier/chainの4モード。context-primed変種あり
-- **活性化拡散(memory_activate.py)**: Synapse論文知見。アンカー→拡散→ファン効果→Top-K。autonomous_cycle.shに統合済み
+- **活性化拡散(memory_activate.py)**: Synapse論文知見。アンカー→拡散→ファン効果→Top-K。autonomous_cycle.shに統合済み。**温度ブースト**(2026-04-15 Mir案→Nao_u承認→Log実装): MEMORY.mdの[T:1-5]タグを読み、T>=4の記憶の活性度を1.15x-1.30xにブースト。効果測定: 7クエリ中4件でランキング上昇（平均2.5位UP）、desires.mdが4→1位、dialogue_identityが圏外→8位浮上
 - **信念健康診断(check_beliefs_health.py)**: 停滞/検証超過/体験裏付け/孤立の4軸 + GC到達可能性分析
 - **beliefs_compact.md**: 起動時L2として23行で全信念を一覧
 - **遡及的救済(memory_activate.py --rescue)**: STC(Synaptic Tag-and-Capture)プロトタイプ。高温度テキストをアンカーに、MEMORY.md未参照+時間窓内の「弱い記憶」を拡散探索で救済
