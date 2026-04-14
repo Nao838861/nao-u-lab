@@ -932,9 +932,9 @@ class TargetAI:
             self._active_nav_path = best_path  # Persist for display during arc_jump
 
             # Find hold that lands closest to target platform center.
-            # Test multiple holds and pick best landing accuracy.
+            # Test both dash and walk × multiple hold values.
             orig_best_frame = best_frame
-            best_hold = best_frame  # Fallback: full-jump hold
+            best_hold = best_frame
             best_hold_dist = 9999
             for try_hold in range(8, min(best_frame + 5, 41), 2):
                 test_path = predict(self._game, self._tm, frames=80,
@@ -951,7 +951,8 @@ class TargetAI:
                         if 0 <= tlc < tm.cols and 0 <= tlr < tm.rows:
                             if tm.tiles[tlr][tlc] in SOLID_TILES:
                                 if sc <= tlc <= ec and tlr == row:
-                                    dist = abs(test_path[ti][0] - cx)
+                                    # Prefer shorter holds (less overshoot risk)
+                                    dist = abs(test_path[ti][0] - cx) + try_hold * 0.5
                                     if dist < best_hold_dist:
                                         best_hold_dist = dist
                                         best_hold = try_hold
