@@ -838,7 +838,7 @@ class TargetAI:
                                        (80, 80, 200), ''))
 
         # ── Check if Mario can walk forward on current surface ──
-        # Find how far we can walk right without falling
+        # Find how far we can walk right without falling off an edge
         walkable_end = mario_col
         mario_row = int(my) // 16
         foot_row = mario_row + 1
@@ -849,17 +849,10 @@ class TargetAI:
                 if 0 <= r < tm.rows and tm.tiles[r][c] in SOLID_TILES:
                     has_support = True
                     break
-            # Check current elevated surface
+            # Check current elevated surface (pipe top, block top)
             if not has_support and 0 <= foot_row < tm.rows:
                 if tm.tiles[foot_row][c] in SOLID_TILES:
                     has_support = True
-            # Check if wall blocks walking (1 row above ground)
-            if has_support:
-                for r in range(foot_row - 1, max(foot_row - 3, -1), -1):
-                    if 0 <= r < tm.rows and tm.tiles[r][c] in SOLID_TILES:
-                        # Wall at walking height — can't pass
-                        has_support = False
-                        break
             if not has_support:
                 break
             walkable_end = c
@@ -881,8 +874,8 @@ class TargetAI:
         best_dash = True
         best_frame = 0
 
-        # Filter to platforms that are AHEAD and not the current one
-        forward_platforms = [p for p in platforms if p[3] > mx + 16]
+        # Filter to platforms that are ahead (even slightly)
+        forward_platforms = [p for p in platforms if p[1] * 16 >= mx]
 
         for use_dash in (True, False):
             path = predict(self._game, self._tm, frames=70,
@@ -1534,8 +1527,6 @@ class TargetAI:
             return {'left': go_left, 'right': go_right,
                     'a': not above_target, 'b': True}
 
-        if self.jump_timer == 1:
-            return {'left': not r, 'right': r, 'a': False, 'b': True}
         if self.jump_timer <= self.jump_hold:
             return {'left': not r, 'right': r, 'a': True, 'b': True}
         if state['on_ground'] and self.jump_timer > 6:
