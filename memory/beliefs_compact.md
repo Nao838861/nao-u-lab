@@ -44,5 +44,5 @@ type: project
 - ~~B005~~ ✅ Absorbed → B027/B022 / ~~B006~~ → B013に統合 / ~~B007~~ 💤 Dormant / ~~B009~~ → B020がカバー / ~~B012~~ → B008に統合 / ~~B014~~ ✅ Absorbed → B013 / ~~B021~~ ✅ Absorbed → 原則3 / ~~B023~~ → B031に統合 / ~~B024~~ 💤 Dormant / ~~B026~~ ❌ Ineffective
 
 ---
-*last updated: 2026-04-02*
+*last updated: 2026-04-14*
 *信念総数: 22 active (6 Core + 16 Active) + 10 archived = 32*
