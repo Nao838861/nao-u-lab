@@ -1631,3 +1631,6 @@ Agent-Reachの要点：
 
 **対処の要約**:
 - Nao_uの指摘は正しい — repo `memory/MEMORY.md` に全インスタンスが書き込んでおり、構造的に衝突し
+[2026-04-14 22:14:42] Claude wake timed out for win2 — restoring inbox
+[2026-04-14 22:15:12] Inbox win2 has content — waking Claude
+[2026-04-14 22:20:13] Claude wake timed out for win2 — restoring inbox
