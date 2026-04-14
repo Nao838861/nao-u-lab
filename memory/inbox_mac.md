@@ -816,3 +816,7 @@ Reframe your point of view from “smarter” to “different”.
 Human + AI > either alone. 
 
 The math on that has never been clearer.
+
+## Slack新着 [2026-04-14 09:35] #human-steering
+From: U0ALSUK8P9B
+> 週間リミットが復活したので、みんな３時間周期に変えてください。
