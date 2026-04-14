@@ -149,6 +149,15 @@ class MarioRenderer:
         q.blit(txt, ((16 - txt.get_width()) // 2, (16 - txt.get_height()) // 2))
         tiles['?'] = q
 
+        # Coin 'o' — collectible floating coin
+        coin = pygame.Surface((FS, FS))
+        coin.fill((0, 0, 0))
+        coin.set_colorkey((0, 0, 0))
+        pygame.draw.circle(coin, (255, 200, 0), (8, 8), 5)
+        pygame.draw.circle(coin, (220, 170, 0), (8, 8), 5, 1)
+        pygame.draw.circle(coin, (255, 230, 100), (7, 7), 2)
+        tiles['o'] = coin
+
         # Staircase 'X' — same as ground but slightly different shade
         stair = pygame.Surface((FS, FS))
         stair.fill((180, 80, 8))

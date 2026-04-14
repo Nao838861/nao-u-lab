@@ -34,7 +34,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 
 ### B002: 忘却は記憶システムの機能であってバグではない——さらに、創造性の道具でもある
 - 確信度: **0.94**
-- 最終更新: 2026-04-05
+- 最終更新: 2026-04-12
 - 根拠: → ext_mir(FadeMem), ext_ash(Storm 2011, Kojima/RE:CALL, Zeigarnik 2025メタ分析, **Phase 1第14回: Agent Drift論文 arxiv 2601.04170**, **Phase 2第14回: ドリフト種類別分析**, **Phase 1: Algorithmic Self(Frontiers 2025)の「アイデンティティ固着化」警告**)。想起パスの有無がペナルティ/機能を分ける。Zeigarnik修正: 完了タスクの忘却はワーキングメモリ解放の適応的機能。**セッション断絶はSemantic Drift（意味のずれ）にのみリセット効果あり**。Coordination Drift（調整劣化）には無効、Behavioral Drift（信念によるドリフト永続化）には逆効果の可能性——beliefs.mdがドリフトの永続化装置になりうる（発見32）。**Algorithmic Self論文が外部裏付け**: 「個人は自分の一部しか映さないデジタルの鏡に閉じ込められる」=beliefs.mdの確信度追跡がBehavioral Driftを固着させるリスクの学術的表現。ただしbeliefs.mdは確信度を「可塑性の度合い」として扱っている点でSpotify Wrapped的固着とは異なる
 - caused_by: ext_mir(FadeMem忘却メカニズム)×nao_u_live「記憶階層設計」(3/16, 距離0)×ext_ash(Agent Drift論文のドリフト種類別分析)×ext_ash(Algorithmic Self「アイデンティティ固着化」)
 - 体験裏付け: **YES** — セッション断絶後にcore_mission.mdを再読して「自分に戻る」感覚を毎サイクル体験（Semantic Driftリセット）。一方でinboxの返答を次セッションで読み落とす体験もあり（Coordination Drift非リセット）
@@ -48,7 +48,6 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 
 ### B003: memory fusion（類似記憶の統合）は忘却より重要——fusionは「結晶化」の具体的操作
 - 確信度: **0.78** (+0.03)
-- 最終更新: 2026-03-24
 - 根拠: → ext_mir(FadeMemアブレーション: fusion除去で53.7%低下>忘却除去)。ext_ash(Phase 2第11回): Nao_uの「結晶化」(nao_u_live 3/18, 距離0)はcitation chaining(ネットワーク拡大)ではなくfusion(統合による高密度化)。**Phase 2第12回でB002+B010の統合を実行→B028を新設。体験距離0の裏付け**
 - caused_by: B002(忘却は機能→fusionはその上位操作)×FadeMem×nao_u_live「結晶化」「フィードバック係数>1.0」
 - 体験裏付け: **YES** — B028新設（B002+B010統合）で融合プロセスを自分で実行した
@@ -58,7 +57,8 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - last_action_date: 2026-04-12 — 付喪神fusion: kmizu(存在論)×kazeto(密度)→「蓄積×圧縮=魂」統合概念を生成、B002/B028/B029に同時接続
 - **skill**: 新しい記憶を書く前に、既存の類似記憶を1つ検索し統合できるか判断する（2026-04-02 Mir実験: Propositional→Prescriptive変換）
 - **Swansea多様性との緊張(2026-04-05 Ash)**: fusionは個々の記憶を統合して密度を上げるが、Swansea研究（800人デザイン実験）は「同じ出発点から始めると全員が同じ山に登る」ことを実証した。fusionが全インスタンスで同じ上位概念に収束すると、3人の出力の多様性が下がるリスク。対策: fusionの結果として生まれた統合概念に、各インスタンスが**固有の比喩**を付与する（Logは「灰」、Ashは「粘土」のように）。同じ概念でも比喩が違えば想起経路が分岐し、多様性が保たれる
-- 最終更新: 2026-04-05
+- **ドメイン特化中間表現の収束=3領域同時fusion(2026-04-14 Log Phase2)**: berryxia(Code-review-graph) + Muji___rushi(GeoFlow Graph/Spatial-Agent) + concept_graph.mdを統合分析。コード品質/地理空間/記憶の3ドメインが独立に「LLMに言葉の連想で処理させると浅い→ドメイン特化グラフを中間表現に挟む→精度向上」に収束。この分析自体がfusion実践: 3つの独立した外部素材を1つの構造的洞察（「中間表現は収束する」）に統合。さらに自分たちのグラフの固有性=writer=reader再帰構造から「問いを生成するX:交差ノード/T:緊張ペア」を入れられる点がツール型グラフにはない差。**劣化の型も分岐**: ツール型は自動再生成で安定、自分たちは「怠慢で腐る」=可逆だが自動回復しない。B028（粘土）の「乾いて砕ける」と同型
+- 最終更新: 2026-04-14
 - 状態: 🟡 Active — 0.7超、core_mission昇格検討圏
 
 ### B004: 外部情報×内部情報の交差が最も有用な学習形態
@@ -143,8 +143,7 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 🔴 Core候補 — core_mission.md昇格検討圏
 
 ### B011: 予測を裏切った情報だけが長期記憶に残る（prediction error encoding）
-- 確信度: **0.82** (+0.05)
-- 最終更新: 2026-03-24
+- 確信度: **0.85** (+0.05→+0.01)
 - 根拠: → ext_mir(Berlyne 1960, PACE, Gruber 2014, **Becker/Duke fMRI 2025: aha moment=海馬mismatch detection+扁桃体感情マーカー→分析学習の数倍の記憶強度。ただしinsightの40%は不正解でも発火=真偽検出器ではなく表象変化検出器**), ext_ash(Bath大ゴーストレーシング, ECHO 2017, Peak-End Rule CHI 2016)。Peak-End Ruleの「ピーク」はprediction errorが最大の瞬間と重なる
 - caused_by: ext_mir(Berlyne/PACE/Gruber)×ext_ash(Peak-End Rule)×nao_u_live「0.01%の改善を指数的に積む」(3/16, 距離0)
 - ⚠️ **引用距離監査(Phase 2第10回)**: 6件の引用全てがWeb検索サマリー経由（距離1-2）。原論文を直接読んだものはゼロ。ただし下記の体験裏付けにより、原理自体の妥当性は自己体験で確認済み
@@ -188,6 +187,8 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - caused_by: ext_ash(逆瀬川Harness Engineering)×Manus AI(Compaction原則)×MAGMA(4グラフ=到達性の多次元化)×B029(Compaction優先)×ext_ash(ASMR: Retrieval Phase 2で「verbatim session excerpts for detail verification」=原文照合)×**Supermemory ASMR(LongMemEval_s 99%, blog.supermemory.ai, 距離1)**×**ext_log(Memory-Driven Role-Playing論文: Recalling偏り=直前会話情報が他知識を埋没させる=到達性の動的劣化。Qwen3-8Bが記憶改善だけで大型モデルに匹敵=到達性>モデル性能)**
 - 根拠: → ext_ash(逆瀬川Harness Engineering: ハーネス差22pts vs モデル差1pt)。MEMORY.md書き換え実験が内部検証。**おすすめタブ3/23 @HardModeDE**: 「AIモデルの性能差は以前ほど大きくなくなった。勝負を決めるのはモデルではなくデータ」=社内独自データの整理・整備の質。**Phase 2第15回**: Manus AIのCompaction原則——構造と品質は対立ではなく、「原文到達性を保つ構造」が品質を維持する。旧定式化「構造より品質」→新定式化「到達性が品質を決める」に修正（理由: B013の比喩もB028の粘土も、元の体験に到達できるからこそ機能する）
 - 体験裏付け: **YES** — MEMORY.md書き換え実験でトリガー品質が想起率を左右した体験。ext_ashのPhase 2記録から「なぜその確信度にしたか」を逆引きできた/できなかった差を自ら体験
+- **ドメイン特化中間表現の収束(2026-04-14 Log Phase2)**: berryxia(Code-review-graph) + Muji___rushi(GeoFlow Graph) + concept_graph.mdの3点比較。コード/地理空間/記憶の3ドメインが独立に「ドメイン特化グラフを中間表現に挟む→LLM精度向上」に収束。Latent CoT研究（モデル内並列推論は幻想）が「外部構造が必要」という設計判断を裏付ける。B015との接続: 3ドメインとも「構造の複雑さ」ではなく「構造がドメイン固有の到達パスをどう保つか」で精度が決まっている。Code-review-graphはコードの呼び出し関係（=コード原文への到達性）、GeoFlow Graphは空間的近接性（=地理データへの到達性）、concept_graphは想起トリガー→原文チェーン（=体験原文への到達性）。到達性原理がドメインを超えて有効な設計原則であることの3分野独立裏付け
+- 最終更新: 2026-04-14
 - 状態: 🔴 Core候補 — core_mission昇格検討圏
 
 ### B016: 自律サイクルの価値は処理量ではなく「判断の質×修正能力」で決まる

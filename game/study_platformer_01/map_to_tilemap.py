@@ -72,6 +72,10 @@ def classify_pixel(r, g, b):
         return "dark_green"
     if color_match((r, g, b), COLOR_BROWN, 40):
         return "brown"
+    if color_match((r, g, b), COLOR_TEAL, 30):
+        return "brown"           # Underground bricks (teal palette)
+    if color_match((r, g, b), COLOR_LIGHT_TEAL, 30):
+        return "peach"           # Underground brick highlights
     if color_match((r, g, b), COLOR_QUESTION, 35):
         return "question"
     if r > 230 and g > 230 and b > 230:
@@ -112,6 +116,7 @@ def classify_tile(img, col, row, tile_w, tile_h=None):
 
     # --- Goomba/sprite detection ---
     # Goomba = brown body + peach feet. Background is sky OR bush green.
+    # Underground Goomba = dark blue body (classified as "other") on black bg.
     # Reject: center=sky (sprite bleed from adjacent tile),
     #         sky > 12 (mostly empty tile), brown > 10 with peach <= 2 (castle wall).
     bg = cats["sky"] + cats["dark_green_obj"]
@@ -120,6 +125,20 @@ def classify_tile(img, col, row, tile_w, tile_h=None):
         is_goomba = True
     if cats["peach"] >= 2 and cats["brown"] >= 3 and bg >= 1 and cats["peach"] <= cats["brown"]:
         is_goomba = True
+    # Underground Goomba: dark blue pixels on black background
+    if not is_goomba and cats["black"] >= 8:
+        # Count dark blue pixels (24, 60, 92) directly from image
+        dark_blue = 0
+        for dx_frac in [0.25, 0.5, 0.75]:
+            for dy_frac in [0.2, 0.4, 0.6, 0.8]:
+                px_x = int(x0 + tile_w * dx_frac)
+                px_y = int(y0 + tile_h * dy_frac)
+                if 0 <= px_x < img.width and 0 <= px_y < img.height:
+                    r, g, b = img.getpixel((px_x, px_y))[:3]
+                    if 10 < r < 50 and 40 < g < 80 and 70 < b < 110:
+                        dark_blue += 1
+        if dark_blue >= 3:
+            is_goomba = True
     if is_goomba:
         # Filter false positives
         if center_cat == "sky":
@@ -164,11 +183,17 @@ def classify_tile(img, col, row, tile_w, tile_h=None):
     # Standard priority classification
     for priority in ["question", "brown"]:
         if cats[priority] >= 4:
+            # Distinguish coin from question block:
+            # Coins have small orange count (<= 6), mostly black/sky background
+            if priority == "question" and cats[priority] <= 6:
+                bg_count = cats["black"] + cats["sky"]
+                if bg_count >= 10:
+                    return "coin"
             return priority
     return cats.most_common(1)[0][0]
 
 
-def analyze_image(img_path):
+def analyze_image(img_path, force_page=None):
     """Parse the map image into a tile grid.
 
     Supports both full-res (16px tiles) and scaled images (auto-detect).
@@ -186,30 +211,31 @@ def analyze_image(img_path):
         tile_h = 16
         level_h = rows * 16
         if h > level_h:
-            # Multi-page image: find the page with ground blocks (most brown at rows 13-14)
             num_pages = h // level_h
-            best_page = 0
-            best_score = 0
-            for page in range(num_pages):
-                y_base = page * level_h
-                score = 0
-                for sample_row in [13, 14]:
-                    y = y_base + sample_row * 16 + 8
-                    for x in range(0, w, 32):
-                        r, g, b = img.getpixel((x, y))[:3]
-                        # Ground blocks: brown or peach (varies by level palette)
-                        if (r > 160 and g < 100 and b < 50) or \
-                           color_match((r, g, b), COLOR_PEACH, 35):
-                            score += 1
-                if score > best_score:
-                    best_score = score
-                    best_page = page
+            if force_page is not None:
+                best_page = force_page
+            else:
+                # Auto-detect: find page with most ground blocks (brown/peach at rows 13-14)
+                best_page = 0
+                best_score = 0
+                for page in range(num_pages):
+                    y_base = page * level_h
+                    score = 0
+                    for sample_row in [13, 14]:
+                        y = y_base + sample_row * 16 + 8
+                        for x in range(0, w, 32):
+                            r, g, b = img.getpixel((x, y))[:3]
+                            if (r > 160 and g < 100 and b < 50) or \
+                               color_match((r, g, b), COLOR_PEACH, 35):
+                                score += 1
+                    if score > best_score:
+                        best_score = score
+                        best_page = page
             y_start = best_page * level_h
             img = img.crop((0, y_start, w, y_start + level_h))
-            if best_page > 0:
-                print(f"Auto-detected level on page {best_page} "
-                      f"(y={y_start}-{y_start + level_h - 1})",
-                      file=sys.stderr)
+            print(f"Using page {best_page} "
+                  f"(y={y_start}-{y_start + level_h - 1})",
+                  file=sys.stderr)
         cols = w // 16
     else:
         # Scaled image (e.g. GIF overview maps, ~7px tiles)
@@ -395,6 +421,8 @@ def build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col=None,
                     chars.append(".")
             elif cat == "question":
                 chars.append("?")
+            elif cat == "coin":
+                chars.append("o")
             elif cat in ("sky", "white", "peach", "hill_green",
                          "dark_green", "black", "teal",
                          "light_teal", "other", "bush",
@@ -459,6 +487,19 @@ MARIO_1_1 = {
 }
 
 
+MARIO_1_2 = {
+    "Q": [          # ? block with mushroom/power-up
+        (9, 10),    # Leftmost ????? row
+        (8, 69),    # Mid-level
+        (8, 150),   # Near exit
+    ],
+    "o": [          # Floating coins (image shows same as ? blocks)
+        (5, 41), (5, 42), (5, 43), (5, 44),  # 4-coin row
+        (7, 46),                               # Single coin
+        (8, 40), (8, 45),                      # Flanking coins
+    ],
+}
+
 MARIO_2_1 = {
     "Q": [          # ? block with mushroom/power-up
         (9, 16),    # First block, #Q# pattern
@@ -474,7 +515,7 @@ MARIO_2_1 = {
 
 def annotate_known_level(lines, level_id):
     """Replace generic # and ? with specific content markers."""
-    level_map = {"1-1": MARIO_1_1, "2-1": MARIO_2_1}
+    level_map = {"1-1": MARIO_1_1, "1-2": MARIO_1_2, "2-1": MARIO_2_1}
     annotations = level_map.get(level_id)
     if annotations is None:
         return lines
@@ -494,6 +535,7 @@ def annotate_known_level(lines, level_id):
         "m": {".", "?", "#"},
         "T": {"?", "#"},
         "S": {"#", ".", "?"},
+        "o": {"?", "#", "."},  # Coin (image may show as ? block)
     }
 
     for char, positions in annotations.items():
@@ -514,29 +556,103 @@ def main():
     parser = argparse.ArgumentParser(
         description="Convert Mario map image to text tilemap")
     parser.add_argument("image", help="Path to map image PNG")
-    parser.add_argument("--annotate", choices=["1-1", "2-1"],
+    parser.add_argument("--annotate", choices=["1-1", "1-2", "2-1"],
                         help="Apply known block contents")
+    parser.add_argument("--page", type=int, default=None,
+                        help="Force page number for multi-page images (0-based)")
+    parser.add_argument("--goal-col", type=int, default=None,
+                        help="Place flagpole at this column (for underground exits)")
     parser.add_argument("-o", "--output", help="Output file (default: stdout)")
     args = parser.parse_args()
 
-    grid, cols, rows, tile_w, img = analyze_image(args.image)
+    grid, cols, rows, tile_w, img = analyze_image(args.image, force_page=args.page)
     tile_h = img.height / rows
     pipe_cells = detect_pipes(grid, cols, rows)
     gaps = detect_gaps(grid, cols, rows)
 
-    flagpole_result = detect_flagpole(img, cols, rows, tile_w, tile_h)
-    flagpole_col = flagpole_result[0] if flagpole_result else None
+    if args.goal_col is not None:
+        flagpole_col = args.goal_col
+        print(f"Goal line at col {flagpole_col} (manual)", file=sys.stderr)
+    else:
+        flagpole_result = detect_flagpole(img, cols, rows, tile_w, tile_h)
+        flagpole_col = flagpole_result[0] if flagpole_result else None
 
     castle_bg = detect_castle_bg(grid, cols, rows)
 
     print(f"Detected {len(pipe_cells) // 4} pipes, "
           f"{len(gaps)} gap columns", file=sys.stderr)
 
+    # Post-process: detect coins and underground enemies with full pixel scan
+    coin_count = 0
+    enemy_count = 0
+    for row in range(rows):
+        for col in range(cols):
+            x0 = int(col * tile_w)
+            y0 = int(row * tile_h)
+            x1 = int((col + 1) * tile_w)
+            y1 = int((row + 1) * tile_h)
+            orange = 0; dark_blue = 0; black = 0; brown = 0; teal = 0; white = 0
+            for dy in range(y0, min(y1, img.height)):
+                for dx in range(x0, min(x1, img.width)):
+                    r, g, b = img.getpixel((dx, dy))
+                    if abs(r - 252) < 30 and abs(g - 152) < 30 and abs(b - 56) < 30:
+                        orange += 1
+                    if 10 < r < 50 and 40 < g < 80 and 70 < b < 110:
+                        dark_blue += 1
+                    if r < 15 and g < 15 and b < 15:
+                        black += 1
+                    if abs(r - 200) < 40 and abs(g - 76) < 40 and abs(b - 12) < 40:
+                        brown += 1
+                    if abs(r - 0) < 20 and abs(g - 128) < 20 and abs(b - 136) < 20:
+                        teal += 1
+                    if r > 230 and g > 230 and b > 230:
+                        white += 1
+            # Coin vs ? block detection
+            is_mushroom = brown >= 40 and white >= 15
+            has_border = teal >= 20
+            if orange >= 5 and not is_mushroom and black >= 100:
+                if not has_border:
+                    # No border = definitely a coin
+                    if grid[row][col] in ("question", "black", "sky", "brown"):
+                        grid[row][col] = "coin"
+                        coin_count += 1
+            # Underground Goomba: dark blue body on black background
+            if dark_blue >= 20 and black >= 80:
+                if grid[row][col] not in ("pipe_green",):
+                    grid[row][col] = "goomba"
+                    enemy_count += 1
+    if coin_count or enemy_count:
+        print(f"Post-scan: {coin_count} coins, {enemy_count} enemies",
+              file=sys.stderr)
+
     lines = build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col,
                           castle_bg)
 
     if args.annotate:
         lines = annotate_known_level(lines, args.annotate)
+
+    # Convert runs of 4+ consecutive ? blocks to coins
+    # (in NES Mario, long ? rows are floating coin trails)
+    converted = 0
+    for i, line in enumerate(lines):
+        chars = list(line)
+        j = 0
+        while j < len(chars):
+            if chars[j] == '?':
+                run_start = j
+                while j < len(chars) and chars[j] == '?':
+                    j += 1
+                run_len = j - run_start
+                if run_len >= 4:
+                    for k in range(run_start, j):
+                        chars[k] = 'o'
+                    converted += run_len
+            else:
+                j += 1
+        lines[i] = ''.join(chars)
+    if converted:
+        print(f"Converted {converted} consecutive ? blocks to coins",
+              file=sys.stderr)
 
     # Trim trailing dots
     max_len = max(len(line.rstrip(".")) for line in lines)

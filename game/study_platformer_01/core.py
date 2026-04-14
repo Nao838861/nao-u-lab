@@ -26,7 +26,7 @@ BRAKE_THRESHOLD = 128        # Opposite-direction threshold for braking
 # Goomba constants -- from kuribo.c
 GOOMBA_SPEED = 96            # Walk speed (~0.375 px/frame)
 GOOMBA_SQUISH_FRAMES = 30   # Show squished sprite then remove
-STOMP_BOUNCE = -512          # Mario's vy after stomping (half jump)
+STOMP_BOUNCE = -640          # Mario's vy after stomping (~62.5% of full jump)
 
 # Koopa constants
 KOOPA_WALK_SPEED = 80        # Slightly slower than Goomba
@@ -985,6 +985,17 @@ class MarioGame:
         if (self._is_goal(px + 3, py + 8) or self._is_goal(px + 12, py + 8)):
             self.cleared = True
 
+        # Coin collection: check body overlap with 'o' tiles
+        if self.tilemap:
+            for cx in (px + 3, px + 12):
+                for cy in (py + 4, py + (31 if self.is_super else 15) - 4):
+                    tc = cx // 16
+                    tr = cy // 16
+                    if (0 <= tr < self.tilemap.rows and 0 <= tc < self.tilemap.cols
+                            and self.tilemap.tiles[tr][tc] == 'o'):
+                        self.tilemap.tiles[tr][tc] = '.'
+                        self.coins += 1
+
         # ==========================================
         # Animation (pattern selection)
         # ==========================================
@@ -1062,7 +1073,8 @@ class MarioGame:
             ],
             'koopas': [
                 {'x': k.x / ONE, 'y': k.y / ONE,
-                 'alive': k.alive, 'state': k.state}
+                 'alive': k.alive, 'state': k.state,
+                 'vx': k.vx / ONE}
                 for k in self.koopas if k.alive
             ],
             'is_super': self.is_super,
