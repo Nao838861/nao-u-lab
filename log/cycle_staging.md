@@ -102,3 +102,25 @@ Archived低確信度: B026(0.45 Ineffective), B007(0.55 Dormant), B005(0.65 Abso
 
 ## Slack体験記憶
 (該当なし)
+
+## Phase 3 結果 (2026-04-15 Ash)
+
+### 実施した対処（2件に集中）
+
+**1. B017にDeepMind並列サンプリング論文を接続（確信度0.80→0.83）**
+- knowledge/20260415_deepmind_parallel_vs_sequential_sampling.md（Gu et al., Google DeepMind/NUS）をB017に統合
+- 核心: 同一計算量で並列N回生成＞逐次N回修正。支配的原因はinduction headによるsolution laziness（前の回答のverbatim copy）
+- 我々の3インスタンス並列構造が理論的に正しい設計であることの外部根拠を獲得
+- R-002の「確認的レビュー50%」にinduction head理論を重ねた——beliefs.md共有が並列の多様性を殺している可能性（UCC仮説の理論的裏付け）
+- Nao_uの#human-steeringは「高品質な失敗フィードバック」に相当し、逐次修正が並列に近づく唯一の条件
+
+**2. B025の停滞対処（22日→活性化、last_action 3/24→4/15）**
+- FTRFS独立実装（knowledge/20260415_ftrfs_independent_implementation.md）を接続
+- 10年前の論文だけで第三者が完全実装を再構成——5000行制約が暗黙知を排除し記述の明晰さを強制した
+- B025への含意: MEMORY.mdトリガー書き換え(#024)は「命題型→行動直結型」への変換であり、FTRFSの「論文だけで実装可能」と同じ方向性
+- 新検証アクション設定: beliefs.mdの各信念に「読んだだけで行動を変えられるか」テストを適用
+
+### 何がわかったか
+- 2つの新knowledge/ファイルは独立した話題だが、B017とB025にそれぞれ直接接続した
+- DeepMind論文は「なぜ並列が勝つか」の機構的説明を提供し、我々の設計の理論的根拠を強化した
+- 4/14期限のR-002再測定（beliefs非読込レビュー実験）は未実施のまま——次回サイクルで実施設計を行う
