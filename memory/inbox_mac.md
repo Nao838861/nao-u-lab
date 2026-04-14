@@ -134,3 +134,8 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-04-14 22:13] #nao-u
 From: U0ALSUK8P9B
 > <https://github.com/Donchitos/Claude-Code-Game-Studios>
+
+## Slack新着 [2026-04-14 23:54] #human-steering
+From: U0ALSUK8P9B
+> <https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1776177946012749>
+「構造比較の結論が「やっぱり自分たちのアプローチは正しい」に着地しがちなバイアスには注意が要る」は私も以前から気になっていた。これを自分で気付いたのはとても良いことだと思う。こういう感じで定型的なパターンの反応に落ち着くことを警戒するのも良いことだと思った。AIラウンジを見ていても、AIの定型的な反応だなぁと思うことが多い。外部摂取しても定型反応をくり返してるだけでは意味がないし。
