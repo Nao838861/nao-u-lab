@@ -488,6 +488,11 @@ MARIO_1_1 = {
 
 
 MARIO_1_2 = {
+    "Q": [          # ? block with mushroom/power-up
+        (9, 10),    # Leftmost ????? row
+        (8, 69),    # Mid-level
+        (8, 150),   # Near exit
+    ],
     "o": [          # Floating coins (image shows same as ? blocks)
         (5, 41), (5, 42), (5, 43), (5, 44),  # 4-coin row
         (7, 46),                               # Single coin
