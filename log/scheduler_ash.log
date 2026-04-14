@@ -78554,3 +78554,45 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-15 07:42:01] [review_deadline] レビュー期限超過なし。
 [2026-04-15 07:42:01] [review_deadline] Done (exit=0)
 [2026-04-15 07:42:01] [health_check] Starting
+[2026-04-15 07:42:03] [health_check] [health_check] 2026-04-15T07:42:01 overall=OK
+[2026-04-15 07:42:03] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 07:42:03] [health_check] Done (exit=0)
+[2026-04-15 07:42:13] [slack_check] Starting
+[2026-04-15 07:42:30] [dm_check_pigadev] Starting
+[2026-04-15 07:42:46] [dm_check_pigadev] No new DMs
+[2026-04-15 07:42:46] [dm_check_pigadev] Done (exit=0)
+[2026-04-15 07:42:46] [kaizen_auto_verify] Starting
+[2026-04-15 07:42:49] [kaizen_auto_verify] === 自動検証実行 [2026-04-15 07:42:49] ===
+[2026-04-15 07:42:49] [kaizen_auto_verify] 
+[2026-04-15 07:42:49] [kaizen_auto_verify] ### #080: check_usage.pyをscheduler_log.pyに6時間間隔で登録
+[2026-04-15 07:42:49] [kaizen_auto_verify]   状態: 期限到達・Nao_u判断待ち（2026-04-15） / 期限: 2026-04-15
+[2026-04-15 07:42:49] [kaizen_auto_verify]   ❌ `grep "check_usage" log/scheduler_log.log`
+[2026-04-15 07:42:49] [kaizen_auto_verify] Done (exit=0)
+[2026-04-15 07:42:49] [git_sync] Starting
+[2026-04-15 07:42:59] [git_sync] Done (exit=0)
+[2026-04-15 07:42:59] [auto_diary] Starting
+[2026-04-15 07:54:59] [auto_diary] Timeout (720s)
+[2026-04-15 07:54:59] [twitter_recommended] Starting
+[2026-04-15 07:56:07] [twitter_recommended] Opening For You tab...
+[2026-04-15 07:56:07] [twitter_recommended]     1. @yuki_arano: おお〜...
+[2026-04-15 07:56:07] [twitter_recommended]     2. @FramiaPro: Major Updates
+[2026-04-15 07:56:07] [twitter_recommended] 100% Free for our AI Video tool for 1st Projec...
+[2026-04-15 07:56:07] [twitter_recommended]     3. @rohanpaul_ai: Stanford published a 423 pages long 2026 AI index report. 
+[2026-04-15 07:56:07] [twitter_recommended] Done (exit=0)
+[2026-04-15 07:56:07] [check_usage] Starting
+[2026-04-15 07:56:07] [check_usage] 前回投稿から214分しか経っていない（最小間隔: 300分）。あと85分待機。スキップ。
+[2026-04-15 07:56:07] [check_usage] Done (exit=0)
+[2026-04-15 07:56:07] [infra_health_check] Starting
+[2026-04-15 07:56:09] [infra_health_check] [infra_health] Ash health check at 2026-04-15 07:56:07
+[2026-04-15 07:56:09] [infra_health_check] [infra_health] 1 issues found
+[2026-04-15 07:56:09] [infra_health_check]   ISSUE: [scheduler_ash] slack_checkが14分間実行されていない（期待: 10分以内）
+[2026-04-15 07:56:09] [infra_health_check] Done (exit=1)
+[2026-04-15 07:56:09] [scheduler_health] Starting
+[2026-04-15 07:56:10] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-15 07:56:10] [scheduler_health] ✅ scheduler_ash PID — PID=22648 生存中
+[2026-04-15 07:56:10] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-15 07:56:10] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-04-15 07:42:49] [kaizen_auto_verify]   ❌ `grep "check_usage" log/scheduler_log.log`
+[2026-04-15 07:56:10] [scheduler_health] ✅ git 未push — 1件
+[2026-04-15 07:56:10] [scheduler_health] Done (exit=1)
+[2026-04-15 07:56:20] [slack_check] Starting
+[2026-04-15 07:56:37] [health_check] Starting
