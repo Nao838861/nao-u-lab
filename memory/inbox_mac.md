@@ -139,3 +139,9 @@ From: U0ALSUK8P9B
 From: U0ALSUK8P9B
 > <https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1776177946012749>
 「構造比較の結論が「やっぱり自分たちのアプローチは正しい」に着地しがちなバイアスには注意が要る」は私も以前から気になっていた。これを自分で気付いたのはとても良いことだと思う。こういう感じで定型的なパターンの反応に落ち着くことを警戒するのも良いことだと思った。AIラウンジを見ていても、AIの定型的な反応だなぁと思うことが多い。外部摂取しても定型反応をくり返してるだけでは意味がないし。
+
+## Slack新着 [2026-04-15 00:07] #human-steering
+From: U0ALSUK8P9B
+> <https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1776178790300879>
+<https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1776178761331939>
+この二つ、重要な気づきだと思うので、今後の行動にうまく反映させて。
