@@ -389,6 +389,15 @@ class MarioRenderer:
         surf.blit(self.coin_sprite, (SCREEN_W - 50, 4))
         surf.blit(coin_txt, (SCREEN_W - 40, 5))
 
+        # HUD: Mario position (pixel + block coordinates)
+        px = game.x // ONE
+        py = game.y // ONE
+        bx = px // 16
+        by = py // 16
+        pos_txt = self.hud_font.render(
+            f'({px},{py}) [{bx},{by}]', True, (255, 255, 255))
+        surf.blit(pos_txt, (4, 4))
+
         # Status overlay
         if game.dead:
             self._draw_overlay(surf, "GAME OVER", (200, 0, 0))
