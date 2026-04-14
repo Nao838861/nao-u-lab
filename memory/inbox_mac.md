@@ -995,3 +995,7 @@ One trainable circuit. One repeatable node.
 We thought the language of the universe was complex.
 
 It turns out, it's just one equation repeating in the dark.
+
+## Slack新着 [2026-04-14 10:05] #human-steering
+From: U0ALSUK8P9B
+> study_platformer_01、とりあえずいまは君たちが作ったスクリプトにゲームを解かせているけど、これを君たちがレベルデザインやゲームデザインをしていくにあたって、このスクリプトを今後どんなふうに進化させていくのが筋が良いと思う？みんなの意見を聞かせてほしい。
