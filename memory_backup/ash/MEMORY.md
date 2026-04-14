@@ -18,6 +18,7 @@
 - [feedback_proactive_learning.md](feedback_proactive_learning.md) — おすすめ/TL巡回時→自分で見つけて判断。指示待ちは自律ではない
 
 ## 外部摂取と品質 `[外部]` `[品質]`
+- [feedback_difference_first.md](feedback_difference_first.md) — 外部情報→違う点・見落としを先に書く。一致点は後回し。定型反応バイアス対策
 - [feedback_shared_reads_depth.md](feedback_shared_reads_depth.md) — shared-reads→記事紹介ではなく分析・分類・接続。1フェーズ丸ごと使う価値
 
 ## 日記と出力の品質 `[日記]` `[品質]`
