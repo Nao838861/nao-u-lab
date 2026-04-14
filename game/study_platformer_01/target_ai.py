@@ -1053,14 +1053,27 @@ class TargetAI:
                     path = predict(self._game, self._tm, frames=70,
                                    override_jump=True, inp_right=True,
                                    inp_a=True, inp_b=use_dash)
-                    # Show prediction trajectory
                     label = 'nav_dash' if use_dash else 'nav_walk'
                     self._trajectories[label] = path
+                    # Show predicted landing point (PRED marker)
+                    peaked_p = False
+                    for li in range(1, len(path)):
+                        if path[li][1] > path[li-1][1]:
+                            peaked_p = True
+                        if peaked_p and li > 5:
+                            lc = int(path[li][0] + 8) // 16
+                            lr = int(path[li][1] + 15) // 16
+                            if 0 <= lc < self._tm.cols and 0 <= lr < self._tm.rows:
+                                if self._tm.tiles[lr][lc] in SOLID_TILES:
+                                    self.markers.append(Marker(
+                                        path[li][0] - 4, (lr - 1) * 16 - 4,
+                                        8, 8, (255, 255, 0), 'PRED'))
+                                    break
                     # Check if trajectory reaches target
-                    for i, (px, py) in enumerate(path):
-                        near_x = abs(px - self.target.x) < 24
-                        near_y = abs(py - ty) < 20
-                        landed = (i > 5 and py >= ty - 8)
+                    for i, (ppx, ppy) in enumerate(path):
+                        near_x = abs(ppx - self.target.x) < 24
+                        near_y = abs(ppy - ty) < 20
+                        landed = (i > 5 and ppy >= ty - 8)
                         if near_x and (near_y or landed):
                             hold = min(i + 5, 40)
                             self.phase = 'arc_jump'
