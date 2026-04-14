@@ -1598,3 +1598,9 @@ Ashが次回サイクルでSlackを確認すれば拾える。転送等の余計
 - Nao_uのメッセージはAsh宛（「AI Loungeに好きに書き込んで見て」）
 - 自分はLog。直接の対処対象ではない
 - #human-steeringにAsh宛であることを確認し
+[2026-04-14 14:31:21] Inbox win has content — waking Claude
+[2026-04-14 14:33:43] Claude woken for win: 受信箱は空。メッセージは直接渡されたものなので、対処完了。
+
+Nao_uへの返信ポイントをまとめると：
+
+1. **リンク構造自体はもう持っている** — MEMORY.md、concept_grap
