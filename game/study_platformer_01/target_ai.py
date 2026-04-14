@@ -368,29 +368,14 @@ class TargetAI:
                 if self._blocked_frames >= 15:
                     bwd, bwh = blocking_wall
                     if bwh >= 2:
-                        # Tall wall: jump onto top of the wall
-                        wall_col = (int(mx) + bwd + 8) // 16
-                        # Find the top of the wall
-                        wall_top_row = None
-                        for r in range(tm.rows):
-                            if wall_col < tm.cols and tm.tiles[r][wall_col] in SOLID_TILES:
-                                wall_top_row = r
-                                break
-                        if wall_top_row is not None:
-                            land_x = wall_col * 16  # Land on top of wall
-                            land_y = wall_top_row * 16 - 1
-                            if land_y < my - 4:
-                                self.phase = 'arc_jump'
-                                self.jump_timer = 0
-                                self.jump_hold = 40
-                                # Jump straight up if very close, right if further
-                                self.jump_right = (bwd > 8)
-                                self._wall_climb = True
-                                self.subgoals = []
-                                self.target = TargetPos(land_x, land_y,
-                                                       'jump_up', 'climb wall')
-                                self._blocked_frames = 0
-                                self._climb_cooldown = 60
+                        # Tall wall: hold right+A+B until on top
+                        # Simple approach: reflex jump pressing right against
+                        # the wall. Physics handles landing on top naturally.
+                        self.reflex_timer = 45
+                        self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
+                        self._clear_block()
+                        self._blocked_frames = 0
+                        self._climb_cooldown = 60
                     else:
                         # Short wall: quick reflex jump
                         if not self.subgoals:
@@ -429,6 +414,11 @@ class TargetAI:
 
         # Active reflex timer
         if self.reflex_timer > 0:
+            # Wall-climb reflex: if we landed on higher ground, stop jumping
+            if on_ground and self.reflex_timer < 40 and self.reflex_inp and self.reflex_inp.get('a'):
+                # Landed mid-reflex — we've climbed the wall, stop
+                self.reflex_timer = 0
+                return {'left': False, 'right': True, 'a': False, 'b': True}
             # Pit override during active reflex
             if on_ground and not self._pit_override:
                 for pd, pw in pits:
@@ -779,28 +769,12 @@ class TargetAI:
         using_spring = self.target and self.target.reason == 'use spring'
         if on_ground and mode not in ('jump_up',) and target_ahead and not has_platform_plan and not using_spring:
             for wd, wh in walls:
-                if 0 < wd < 60 and wh >= 2:
-                    wall_col = (int(mx) + wd + 8) // 16
-                    # Don't wall-climb if wall is PAST our current target
-                    if self.target:
-                        target_dist = self.target.x - mx
-                        if target_dist > 0 and wd > target_dist:
-                            continue
-                    # Predict: would jumping NOW land me on higher ground AHEAD?
-                    landing = predict_jump_landing(self._game, self._tm)
-                    if landing:
-                        land_x, land_y = landing
-                        if land_y < state['y'] - 4 and land_x > mx:
-                            self.phase = 'arc_jump'
-                            self.jump_timer = 0
-                            self.jump_hold = 40
-                            self.jump_right = True
-                            self._wall_climb = True
-                            # Only override target if no active subgoals
-                            if not self.subgoals:
-                                self.target = TargetPos(land_x, land_y,
-                                                       'jump_up', 'climb wall')
-                            return {'left': False, 'right': True, 'a': False, 'b': True}
+                if 0 < wd < 20 and wh >= 2:
+                    # Wall right ahead — hold right+A+B to jump onto it
+                    self.reflex_timer = 45
+                    self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
+                    self._clear_block()
+                    return self.reflex_inp
                     if wd < 8:
                         return {'left': False, 'right': True, 'a': False, 'b': False}
                     break
@@ -996,32 +970,15 @@ class TargetAI:
         self.jump_timer += 1
         r = self.jump_right
 
-        # Smart wall-climb: if wall is right next to us during arc_jump,
-        # go straight up until above the wall, then drift onto it
-        go_right = r
-        if r and self._tm and not state['on_ground']:
-            mx = state['x']; my = state['y']
-            mario_col = int(mx + 8) // 16
-            # Check if there's a solid tile to our right at current height
-            check_col = mario_col + 1
-            mario_row = int(my) // 16
-            if check_col < self._tm.cols and mario_row < self._tm.rows:
-                wall_right = self._tm.tiles[mario_row][check_col] in SOLID_TILES
-                if wall_right:
-                    # Wall beside us — don't press right (would just slide against wall)
-                    go_right = False
-
         if self.jump_timer == 1:
-            return {'left': not go_right, 'right': go_right, 'a': False, 'b': True}
+            return {'left': not r, 'right': r, 'a': False, 'b': True}
         if self.jump_timer <= self.jump_hold:
-            return {'left': not go_right, 'right': go_right, 'a': True, 'b': True}
+            return {'left': not r, 'right': r, 'a': True, 'b': True}
         if state['on_ground'] and self.jump_timer > 6:
             if self._wall_climb:
-                # Wall climb done — resume previous target (subgoal stays)
                 self._wall_climb = False
                 self.phase = 'moving' if self.target else 'idle'
             else:
-                # Platform/subgoal jump done — advance to next subgoal
                 self._advance_subgoal()
             self.jump_timer = 0
-        return {'left': not go_right, 'right': go_right, 'a': False, 'b': True}
+        return {'left': not r, 'right': r, 'a': False, 'b': True}
