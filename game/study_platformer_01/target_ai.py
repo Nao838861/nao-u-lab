@@ -580,8 +580,8 @@ class TargetAI:
                 self._clear_block()
             elif bc * 16 < mx - 80:
                 self._clear_block()
-            elif state['frame'] - self._target_since > 300:
-                self.hit_blocks.add((br, bc))  # Give up after 300 frames
+            elif state['frame'] - self._target_since > 180:
+                self.hit_blocks.add((br, bc))  # Give up after 180 frames
                 self._clear_block()
 
         # ── Pick new block target if needed ──
@@ -603,6 +603,26 @@ class TargetAI:
                 # these act as obstacles to jump over, not targets to hit
                 if rows_above == 1 and ch not in ITEM_BLOCKS and ch not in COIN_BLOCKS:
                     continue
+
+                # Skip blocks behind a tall wall we can't easily cross
+                if dx > 0:
+                    block_col = c
+                    mario_col_i = int(mx) // 16
+                    wall_blocks = False
+                    for wc in range(mario_col_i + 1, block_col):
+                        if wc < tm.cols:
+                            # Count solid rows from top
+                            h = 0
+                            for wr in range(tm.rows - 3, -1, -1):
+                                if tm.tiles[wr][wc] in SOLID_TILES:
+                                    h = (tm.rows - 2) - wr
+                                else:
+                                    break
+                            if h >= 5:
+                                wall_blocks = True
+                                break
+                    if wall_blocks:
+                        continue
 
                 plat = None
                 if rows_above <= 4:
