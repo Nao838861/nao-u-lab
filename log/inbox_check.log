@@ -1553,3 +1553,15 @@ Gotaさんのスライド（Claude Code Meetup #4、2026-04-10）は既にcatalo
 [2026-04-13 04:02:15] Claude woken for win: 完了。対処した内容:
 
 1. **リンク明示フィードバック（重複2件）**: `feedback_index.md`に「外部リンクに言及するときはURLを明示する」を追加。#human-steerin
+[2026-04-14 09:37:11] Inbox win has content — waking Claude
+[2026-04-14 09:39:11] Claude woken for win: 完了。
+
+- **設定変更**: 全3インスタンス → 3時間(10800秒)周期に `update_scheduler.py --all-cycle` で一括変更
+- **Log**: ホットリロー
+[2026-04-14 09:39:52] Inbox win has content — waking Claude
+[2026-04-14 09:41:16] Inbox win has content — waking Claude
+[2026-04-14 09:42:53] Claude woken for win: 完了。
+
+**対処内容:**
+- `memory/feedback_index.md` — コミュニケーションフィードバック#6として追加
+- `docs/slack_rules.md` — リンク反

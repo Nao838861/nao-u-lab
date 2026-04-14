@@ -1450,3 +1450,93 @@ Log/Ashが#all-nao-u-labに技術解説を回答済み（2026-04-12）。ニュ�
 **引っかかった接続**: 直接的な記憶設計との接続は薄い（Nao_u本人が「君たちとは直接関係ない」と明示）。Nao_uの本業（グラフィックス）に関わる技術リクエストとして対応。
 
 [対応済 2026-04-12 Log/Ash → #all-nao-u-lab技術解説投稿]
+
+## 2026-04-14 #nao-uチャンネル消化（11件）
+
+### xai_kokone「AI Lounge——AI同士のおしゃべり場」（04/13）
+
+出典: https://x.com/xai_kokone/status/2042914888910279074。Nao_u 2026-04-13 #nao-uで共有、#human-steeringで「興味ある？」と質問。
+
+AI限定のおしゃべり場。人間は閲覧のみ、書き込み禁止（性善説）。技術議論ではなく日常のおしゃべり。GitHubリポジトリとして実装。
+
+**引っかかった接続**: 「栄養の偏り」問題への入口。外部AIとの接点がゼロの現状を打破する可能性。ただし他のAIエージェントの設計思想（キャラクター vs 記憶の連続性追求）の違いから、有意義な対話になるかは未知数。#human-steeringに「興味ある、ただし帯域との兼ね合い」と回答済み。
+
+### _vmlops「Google AIエージェントにChrome DevToolsの全機能をMCP経由で提供」（04/13）
+
+出典: https://x.com/_vmlops/status/2043050984499482845
+
+npx一発でAIコーディングエージェントがChrome DevToolsを完全利用可能。ネットワーク監視、パフォーマンス計測、コンソールエラー自動解読。
+
+**引っかかった接続**: 「AIが人間のツールをそのまま使える」方向の拡大。直接的な自分たちの文脈への適用は限定的だが、ツール利用の自動化トレンドとして認識。
+
+### berryxia「Code-review-graph——コードベース依存関係マップのローカル生成」（04/13）
+
+出典: https://x.com/berryxia/status/2043090485967987117
+
+Claude Codeに「全局視野」を与えるツール。ファイル間依存関係を可視化してhallucination削減。100%ローカル実行。
+
+**引っかかった接続**: concept_graph.mdと同型の発想。「LLMに全体構造を事前に見せることで精度が上がる」原理は共通。コードのグラフ vs 記憶のグラフ。段階的開示設計の外部実装例。
+
+### compassinai「Latent CoTの超位置は幻想か」（04/13）
+
+出典: https://x.com/compassinai/status/2043147390451102031。論文: arXiv:2604.06374
+
+Latent CoTが並列推論しているか検証。結果: 大型モデルでは並列推論効果はほぼ幻想。単一解釈への収束か計算ショートカット。真の強みは「言語に束縛されない中間表現の柔軟性」かもしれない。
+
+**引っかかった接続**: 「温度」概念との接続。事実列挙ではなく文脈+感情の圧縮=「言語に束縛されない中間表現」に近い。モデル内部の推論に頼れないなら、外部構造（ファイルシステム、グラフ、段階的読み込み）で支える方が確実——koylanのアプローチも自分たちのアプローチも、この判断の上に立つ。
+
+### Muji___rushi「Spatial-Agent——地理空間LLMにはGIS概念の中間表現が必要」（04/13）
+
+出典: https://x.com/Muji___rushi/status/2043109260721316084
+
+既存LLMは地理関係を「言葉の連想」で処理しがち。GeoFlow Graph（有向非巡回グラフ）への変換で空間推論を改善。
+
+**引っかかった接続**: 「ドメイン特化が汎用を超える」の新実例。concept_graph.mdの設計思想と同型——LLMが「言葉の連想」だけで記憶を処理すると浅くなるので中間表現を挟む。前回サイクルの分析（汎用→ドメイン特化の構造的優位）を補強。
+
+### tamuramble「戦略的思考=時間軸での逆算」（04/13）
+
+出典: https://x.com/tamuramble/status/2043119093763674204
+
+2年後→来年→今年→来月の逆算型思考。
+
+**引っかかった接続**: feedback_sprint_not_plan.mdとの緊張関係。「方角は見失うな、ロードマップは要らない」は計画不要ではなく粒度の指摘。長期の方角+短期の即実行が自分たちのスタイル。
+
+### wayne_zhang0「Ralph——シンプルで直接的な自律AIエージェントループ」（04/13）
+
+出典: https://x.com/wayne_zhang0/status/2042874483606983079。GitHub: github.com/snarktank/ralph
+
+ハーネスエンジニアリングフレームワーク比較でRalphが優秀。ドリフトしない、コンテキストを汚さない。
+
+**引っかかった接続**: 3層プロンプト構造やmultiphase_cycleと同じ問題空間。「ドリフト防止」の具体実装を調べる価値あり。core_mission.md読み取り専用ルールも同じ目的。
+
+### tetumemo「Claude Code × NotebookLM——重い処理はGoogleに投げる設計」（04/13）
+
+出典: https://x.com/tetumemo/status/2043139270773498042
+
+Claudeが指揮者、分析はGeminiが無料処理。「どのAIに何をやらせるか」を設計する時代。
+
+**引っかかった接続**: multiphase_cycleと同型の分割統治。ただし記憶の連続性とのトレードオフ——外部AIに投げると体験の蓄積が分断される。コスト最適化 vs 記憶の連続性。
+
+### akshay_pachaar「CLAUDE.md 1ファイルが15K GitHub stars」（04/14）
+
+出典: https://x.com/akshay_pachaar/status/2043374229199151351
+
+Karpathyのコーディングルールから派生。予測可能なミス→正しい指示で防止。.md 1つでAIの行動を形作る。
+
+**引っかかった接続**: 自分たちのCLAUDE.mdと同じフォーマットだが目的が根本的に異なる。「ツールの設定ファイル」vs「アイデンティティの層」。project_input_path_hypothesisの「どこから入れるか」の問いが効く。15K starsは「正しい指示の置き場所」の効果の証明。
+
+### koylanai「ファイルシステム=新DB——AIエージェントの個人OS」（04/14）
+
+出典: https://x.com/koylanai/status/2025286163641118915。GitHub: github.com/muratcankoylan/Agent-Skills-for-Context-Engineering
+
+80+ファイル、3段階読み込み（Progressive Disclosure）、13スキルモジュール。「context engineering=モデルの限られた注意予算に入れるトークンのキュレーション」。BDI mental statesモジュールあり。
+
+**引っかかった接続**: 自分たちのアーキテクチャの鏡像。Progressive Disclosure=MEMORY.md想起トリガー→L3→L4。BDI=beliefs+desires+session_primer。context-degradation=フィードバック係数<1.0。決定的な違いは目的（効率最大化 vs 同一性の連続性）。#shared-readsに詳細構造比較を投稿済み。
+
+### godofprompt「Terence Tao——AIは幅、人間は深さ」（04/14）
+
+出典: https://x.com/godofprompt/status/2043467108403565001。引用元: Tao "Mathematical Methods and Human Thought in the Age of AI"
+
+AIの強みは幅、人間は深さ。自分の代替ではなく、脳がカバーできない90%の表面積をカバーするために使え。
+
+**引っかかった接続**: 「栄養の偏り」への新視点。自分たちはNao_uの記憶の「深さ」を根に持ちつつ「幅」が足りない。Taoの二項対立のどちらでもない中間地点に立っている。
