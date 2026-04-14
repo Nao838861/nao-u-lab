@@ -908,9 +908,11 @@ class TargetAI:
         forward_platforms = [p for p in platforms if p[1] * 16 >= mx]
 
         for use_dash in (True, False):
+         for try_hold in (12, 20, None):
             path = predict(self._game, self._tm, frames=70,
                            override_jump=True, inp_right=True,
-                           inp_a=True, inp_b=use_dash)
+                           inp_a=True, inp_b=use_dash,
+                           a_hold_frames=try_hold)
 
             # Find where this jump lands
             peaked = False
@@ -924,6 +926,7 @@ class TargetAI:
                     if 0 <= lc < tm.cols and 0 <= lr < tm.rows:
                         if tm.tiles[lr][lc] in SOLID_TILES:
                             # Found landing — check which platform it's on
+                            matched = False
                             for p in forward_platforms:
                                 sc, ec, prow, cx, ply = p
                                 if sc <= lc <= ec and lr == prow:
@@ -934,8 +937,12 @@ class TargetAI:
                                         best_path = path
                                         best_dash = use_dash
                                         best_frame = i
+                                    matched = True
                                     break
-                            break
+                            if matched:
+                                break
+                            # No forward platform match — continue scanning
+                            # (may land on current platform then bounce to next)
 
         if best_platform:
             sc, ec, row, cx, ly = best_platform
