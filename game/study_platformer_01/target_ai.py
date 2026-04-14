@@ -383,7 +383,7 @@ class TargetAI:
                 if self._blocked_frames >= 6:
                     bwd, bwh = blocking_wall
                     if bwh >= 2:
-                        # Tall wall: hold right+A until on top
+                        # Tall wall: hold right+A to climb
                         self.reflex_timer = 45
                         self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': False}
                         self._clear_block()
@@ -872,7 +872,7 @@ class TargetAI:
         # ── Tall wall: can Mario jump to the top from current height? ──
         # Max jump height from ground is ~4 tiles (~64px). From elevated, less.
         height_diff = mario_row - wall_top_row  # rows Mario needs to climb
-        can_reach_directly = height_diff <= 5  # ~80px, reachable with dash jump
+        can_reach_directly = height_diff <= 3  # ~48px, conservative for wall-adjacent jumps
 
         if can_reach_directly:
             # Direct jump: decide landing spot
@@ -896,29 +896,31 @@ class TargetAI:
         # (pipes, blocks, platforms) that Mario can reach and use as a stepping stone
         best_step = None  # (col, top_row, score)
         mario_col_int = int(mx) // 16
-        for c in range(mario_col_int - 2, wall_col):
-            # Find the top of any solid structure at this column
-            step_top = None
-            for r in range(tm.rows - 1, -1, -1):
-                if 0 <= c < tm.cols and tm.tiles[r][c] in SOLID_TILES:
-                    # Check if this is elevated (not ground level)
-                    if r < ground_row - 1:
-                        step_top = r
-                    break
-            if step_top is None:
+        for c in range(mario_col_int - 6, wall_col):
+            if c < 0 or c >= tm.cols:
                 continue
-            # Can Mario reach this step from ground?
-            step_height = ground_row - step_top  # rows above ground
-            if step_height < 1 or step_height > 5:
-                continue  # Too low (ground level) or too high
-            # Can Mario then reach the wall top from this step?
-            remaining = step_top - wall_top_row
-            if remaining > 5:
-                continue  # Still can't reach wall from here
-            # Score: prefer higher steps (fewer remaining rows to climb)
-            score = step_height * 10 - abs(c - wall_col)
-            if best_step is None or score > best_step[2]:
-                best_step = (c, step_top, score)
+            # Find all elevated solid surfaces in this column
+            # (there may be blocks at row 5 AND a pipe at row 10)
+            for r in range(ground_row - 1, -1, -1):
+                if tm.tiles[r][c] not in SOLID_TILES:
+                    continue
+                # Found a solid tile at row r — is this a surface top?
+                # (tile above is empty or out of bounds)
+                if r > 0 and tm.tiles[r - 1][c] in SOLID_TILES:
+                    continue  # Not the top of a structure
+                step_top = r
+                step_height = ground_row - step_top
+                if step_height < 2 or step_height > 5:
+                    continue  # Too low or too high to reach
+                remaining = step_top - wall_top_row
+                if remaining > 4:
+                    continue  # Can't reach wall top from here
+                if remaining < -2:
+                    continue  # Step is above the wall (wrong direction)
+                # Score: prefer closer to mario and higher steps
+                score = step_height * 10 - abs(c - mario_col_int) * 3
+                if best_step is None or score > best_step[2]:
+                    best_step = (c, step_top, score)
 
         if best_step:
             step_col, step_top, _ = best_step
