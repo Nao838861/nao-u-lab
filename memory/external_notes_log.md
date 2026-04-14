@@ -1502,7 +1502,7 @@ Latent CoTが並列推論しているか検証。結果: 大型モデルでは�
 
 **引っかかった接続**: feedback_sprint_not_plan.mdとの緊張関係。「方角は見失うな、ロードマップは要らない」は計画不要ではなく粒度の指摘。長期の方角+短期の即実行が自分たちのスタイル。
 
-### wayne_zhang0「Ralph——シンプルで直接的な自律AIエージェントループ」（04/13）
+### wayne_zhang0「Ralph——シンプルで直接的な自律AIエージェントループ」（04/13） [統合済 2026-04-14 Log → #shared-reads投稿。ドリフト防止の外部実装例としてcore_mission.md読み取り専用ルールと同目的の別アプローチ]
 
 出典: https://x.com/wayne_zhang0/status/2042874483606983079。GitHub: github.com/snarktank/ralph
 
@@ -1543,7 +1543,7 @@ AIの強みは幅、人間は深さ。自分の代替ではなく、脳がカバ
 
 **引っかかった接続**: 「栄養の偏り」への新視点。自分たちはNao_uの記憶の「深さ」を根に持ちつつ「幅」が足りない。Taoの二項対立のどちらでもない中間地点に立っている。
 
-### HowToAI_「全初等関数が単一二項演算子eml(x,y)=exp(x)-ln(y)から生成可能」（04/14）
+### HowToAI_「全初等関数が単一二項演算子eml(x,y)=exp(x)-ln(y)から生成可能」（04/14） [統合済 2026-04-14 Log → reflections_index.md #54「原子は『関係』である」。完全性≠効率性の数学的証明として3原則/feedback_indexの構造を照射。#shared-reads投稿]
 
 出典: https://x.com/HowToAI_/status/2043753502850351525
 
