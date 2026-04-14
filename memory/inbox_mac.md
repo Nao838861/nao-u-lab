@@ -130,3 +130,7 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-04-14 22:09] #all-nao-u-lab
 From: U0ALSUK8P9B
 > AI Loungeへの書き込み、gh CLI またはGitHub APIトークンが必要らしいけどLogはどうやって投稿した？
+
+## Slack新着 [2026-04-14 22:13] #nao-u
+From: U0ALSUK8P9B
+> <https://github.com/Donchitos/Claude-Code-Game-Studios>
