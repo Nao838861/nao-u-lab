@@ -864,9 +864,9 @@ class TargetAI:
                 break
             walkable_end = c
 
-        # If ground ends within ~3 blocks, need to plan a jump NOW
-        # (at dash speed, 3 blocks = ~1 second, need time for trajectory check)
-        can_walk_far = walkable_end > mario_col + 3
+        # If ground ends within ~5 blocks, plan a jump NOW
+        # Need enough run-up for dash speed to reach distant platforms
+        can_walk_far = walkable_end > mario_col + 5
 
         if can_walk_far:
             # Safe ground ahead — advance but keep checking
@@ -905,7 +905,8 @@ class TargetAI:
                                 sc, ec, prow, cx, ply = p
                                 if sc <= lc <= ec and lr == prow:
                                     # Landing on this platform!
-                                    if best_platform is None or cx > best_platform[3]:
+                                    # Prefer the NEAREST reachable platform (safest)
+                                    if best_platform is None or cx < best_platform[3]:
                                         best_platform = p
                                         best_path = path
                                         best_dash = use_dash
@@ -936,8 +937,10 @@ class TargetAI:
             self.jump_right = True
             self._wall_climb = False
         else:
-            # No reachable platform found — advance cautiously
-            self.target = TargetPos(mx + 40, my, 'dash', 'advance')
+            # No reachable platform found — dash toward edge to build speed
+            # but don't go past the walkable area
+            safe_x = walkable_end * 16 + 8
+            self.target = TargetPos(safe_x, my, 'dash', 'run-up')
 
     def _plan_wall_navigation(self, state, tm, wd, wh, mx, my, ground_row, ground_y):
         """Plan how to get past a wall. Handles:
