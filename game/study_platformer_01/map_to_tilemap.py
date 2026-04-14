@@ -487,6 +487,14 @@ MARIO_1_1 = {
 }
 
 
+MARIO_1_2 = {
+    "o": [          # Floating coins (image shows same as ? blocks)
+        (5, 41), (5, 42), (5, 43), (5, 44),  # 4-coin row
+        (7, 46),                               # Single coin
+        (8, 40), (8, 45),                      # Flanking coins
+    ],
+}
+
 MARIO_2_1 = {
     "Q": [          # ? block with mushroom/power-up
         (9, 16),    # First block, #Q# pattern
@@ -502,7 +510,7 @@ MARIO_2_1 = {
 
 def annotate_known_level(lines, level_id):
     """Replace generic # and ? with specific content markers."""
-    level_map = {"1-1": MARIO_1_1, "2-1": MARIO_2_1}
+    level_map = {"1-1": MARIO_1_1, "1-2": MARIO_1_2, "2-1": MARIO_2_1}
     annotations = level_map.get(level_id)
     if annotations is None:
         return lines
@@ -522,6 +530,7 @@ def annotate_known_level(lines, level_id):
         "m": {".", "?", "#"},
         "T": {"?", "#"},
         "S": {"#", ".", "?"},
+        "o": {"?", "#", "."},  # Coin (image may show as ? block)
     }
 
     for char, positions in annotations.items():
@@ -542,7 +551,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Convert Mario map image to text tilemap")
     parser.add_argument("image", help="Path to map image PNG")
-    parser.add_argument("--annotate", choices=["1-1", "2-1"],
+    parser.add_argument("--annotate", choices=["1-1", "1-2", "2-1"],
                         help="Apply known block contents")
     parser.add_argument("--page", type=int, default=None,
                         help="Force page number for multi-page images (0-based)")
