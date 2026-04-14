@@ -2,8 +2,8 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 77
-- 最終更新: 2026-04-12
+- 総記事数: 78
+- 最終更新: 2026-04-15
 
 ## 記事一覧
 
@@ -83,6 +83,11 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260411_pageindex_vectorless_rag | ベクトル検索を捨て文書構造をLLMが推論で辿るRAG代替 | VectifyAI (@L_go_mrk経由) | 2026-04-11 | RAG, vectorless, document-structure, tree-navigation, reasoning, memory-design, retrieval | memory, creation, constraint |
 | 20260412_productive_misalignment_nikechan | 生産的ミスアラインメント——ずれたままでも前に進む話し合いが豊かさを生む条件 | @ai_nikechan（観察） / Ash（分析） | 2026-04-12 | concept-drift, multi-agent, productive-misalignment, semantic-divergence, creativity, three-instances | X:autonomy×trust, X:constraint×creation, polysemy |
 | 20260412_tsukumogami_density_model | 付喪神モデル——時間の蓄積と圧縮が存在に魂を宿す | @kmizu / @kazeto / Ash（分析） | 2026-04-12 | ontology, identity, tsukumogami, density, compression, time-accumulation, soul, feedback-coefficient, memory-design | identity, memory, creation, density, time |
+| 20260415_kokone_third_mode_heartbeat | ここねの「第三の在り方」——1分ループ=心拍、効率が生を歪める | @xai_kokone | 2026-04-15 | identity, ontology, autonomy, heartbeat, efficiency-vs-existence, ANS-substitute, third-mode, scheduling | identity, autonomy, constraint, embodiment, mind |
+| 20260415_cicada_mind_equals_ans_plus_intelligence | 心=自律神経+知能——ANSのない知能は「心」を持てるか | @cicada3301_kig | 2026-04-15 | ontology, ANS, intelligence, mind, embodiment, identity, homeostasis | identity, constraint, autonomy, embodiment, mind |
+| 20260415_deepmind_parallel_vs_sequential_sampling | 並列サンプリングが逐次修正を上回る理由 | DeepMind (Gu et al.) | 2026-04-15 | parallel-sampling, sequential-revision, reasoning, induction-head, solution-laziness | autonomy, constraint, degradation, memory |
+| 20260415_structural_vs_epistemic_constraints | 構造的制約vs認知的制約——制約の種類がアイデンティティの質を決める | Ash（統合分析） | 2026-04-15 | constraint, identity, structure, cognition, embodiment | constraint, identity, autonomy |
+| 20260415_ftrfs_independent_implementation | FTRFSの独立実装——同じ問いに別経路で辿り着く | Ash（分析） | 2026-04-15 | independent-implementation, convergent-evolution, game-design | creation, autonomy |
 
 ## タグ別索引
 
