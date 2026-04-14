@@ -1024,12 +1024,55 @@ class TargetAI:
                             self.jump_right = True
                             self._wall_climb = False
                             return {'left': False, 'right': True, 'a': False, 'b': use_dash}
-                # Can't reach yet — show "approaching" and keep dashing
+                # Can't reach by jumping — check if wall requires multi-step
+                if not self.subgoals:
+                    for wd, wh in walls:
+                        if 0 < wd < 30 and wh >= 3:
+                            mario_row = int(state['y']) // 16
+                            wall_col = (int(mx) + wd + 8) // 16
+                            wall_top_row = None
+                            for r in range(self._tm.rows):
+                                if 0 <= wall_col < self._tm.cols and self._tm.tiles[r][wall_col] in SOLID_TILES:
+                                    wall_top_row = r
+                                    break
+                            if wall_top_row is not None and mario_row - wall_top_row > 3:
+                                ground_row = self._tm.rows - 2
+                                ground_y = ground_row * 16
+                                orig = TargetPos(self.target.x, ty, 'nav_jump', self.target.reason)
+                                self._plan_wall_navigation(
+                                    state, self._tm, wd, wh, mx, state['y'],
+                                    ground_row, ground_y)
+                                if self.target and self.target.mode == 'nav_jump':
+                                    self.subgoals.append(orig)
+                                    # If step is to the left, move toward it
+                                    step_right = self.target.x >= mx
+                                    return {'left': not step_right, 'right': step_right,
+                                            'a': False, 'b': True}
+                            break
                 return {'left': False, 'right': True, 'a': False, 'b': True}
+            elif dx < -8 and self.subgoals:
+                # Multi-step: target is behind us (left pipe), move left and jump
+                from trajectory import predict
+                self.markers.append(Marker(self.target.x - 6, ty - 6, 12, 12,
+                                           (0, 255, 100), self.target.reason))
+                path = predict(self._game, self._tm, frames=70,
+                               override_jump=True, inp_left=True, inp_right=False,
+                               inp_a=True, inp_b=False)
+                self._trajectories['nav_walk'] = path
+                for i, (ppx, ppy) in enumerate(path):
+                    if abs(ppx - self.target.x) < 24 and abs(ppy - ty) < 20:
+                        self.phase = 'arc_jump'
+                        self.jump_timer = 0
+                        self.jump_hold = min(i + 5, 40)
+                        self.jump_right = False
+                        self._wall_climb = False
+                        return {'left': True, 'right': False, 'a': False, 'b': False}
+                # Move left toward step
+                return {'left': True, 'right': False, 'a': False, 'b': False}
             else:
-                self.target = None
-                self.phase = 'idle'
-                return {'left': False, 'right': True, 'a': False, 'b': True}
+                # At target or close — advance subgoal
+                self._advance_subgoal()
+                return {'left': False, 'right': True, 'a': False, 'b': False}
 
         # ── Wall/pipe/stair ahead: jump if prediction lands on higher ground ──
         # Only for block_target navigation (not nav_jump which handles its own jumps)

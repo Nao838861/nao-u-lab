@@ -188,10 +188,11 @@ def replay_mode(log_path, speed=1):
     pygame.quit()
 
 
-def ai_mode(level_text, speed=1):
+def ai_mode(level_text, speed=1, start_bx=None):
     """Run AI live with debug visualization."""
     from api import MarioAPI
     from target_ai import TargetAI
+    from core import ONE
 
     pygame.init()
     api = MarioAPI()
@@ -203,6 +204,18 @@ def ai_mode(level_text, speed=1):
     state = api.reset()
     tm = api._tm
     game = api._game
+
+    # Warp to starting block-X position
+    if start_bx is not None:
+        px = start_bx * 16
+        game.x = px * ONE
+        ground_py = tm.find_ground(px) if tm else None
+        if ground_py is not None:
+            game.y = (((ground_py - 15) & 0xFFFFFFF0) + 1) * ONE
+        game.scroll_x = max(0, (px - 80)) * ONE
+        state = game.get_state()
+        print(f"Warped to BX={start_bx} (x={px})")
+
     ai = TargetAI()
 
     renderer = MarioRenderer()
@@ -289,11 +302,12 @@ def ai_mode(level_text, speed=1):
 def main():
     args = sys.argv[1:]
 
-    # Parse --replay, --speed, --ai
+    # Parse --replay, --speed, --ai, --start-bx
     replay_path = None
     speed = 1
     level_arg = None
     run_ai = False
+    start_bx = None
     i = 0
     while i < len(args):
         if args[i] == '--replay' and i + 1 < len(args):
@@ -305,6 +319,9 @@ def main():
         elif args[i] == '--ai':
             run_ai = True
             i += 1
+        elif args[i] == '--start-bx' and i + 1 < len(args):
+            start_bx = int(args[i + 1])
+            i += 2
         else:
             level_arg = args[i]
             i += 1
@@ -317,7 +334,7 @@ def main():
     if replay_path:
         replay_mode(replay_path, speed)
     elif run_ai:
-        ai_mode(level_text, speed)
+        ai_mode(level_text, speed, start_bx=start_bx)
     else:
         play_mode(level_text)
 
