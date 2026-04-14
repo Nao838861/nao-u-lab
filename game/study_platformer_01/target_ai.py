@@ -1240,8 +1240,7 @@ class TargetAI:
                 pl = int(self.target.x) // 16
                 pr_col = pl + 1
                 p_row = (int(self.target.y) + 15) // 16
-            # Try BOTH jump directions × dash/walk — pick first that works
-            # Trust the trajectory prediction (it already accounts for current vx)
+            # Try both directions × dash/walk — pick first that works
             for try_right in ([jump_right, not jump_right]):
                 hit = (trajectory_passes_over(self._game, self._tm, pl, pr_col, p_row,
                                               jump_right=try_right, use_dash=True) or
@@ -1255,6 +1254,16 @@ class TargetAI:
                     self.jump_right = try_right
                     d = try_right
                     return {'left': not d, 'right': d, 'a': False, 'b': True}
+
+            # If directly below the platform (|dx| < 16), jump straight up
+            if abs(dx) < 16:
+                mario_col_j = int(state['x']) // 16
+                if pl <= mario_col_j <= pr_col:
+                    self.phase = 'arc_jump'
+                    self.jump_timer = 0
+                    self.jump_hold = 40
+                    self.jump_right = True
+                    return {'left': False, 'right': False, 'a': True, 'b': False}
 
             # Not ready — walk toward jump position
             if dx > 3:
