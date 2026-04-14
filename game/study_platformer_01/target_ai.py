@@ -372,7 +372,7 @@ class TargetAI:
                         # Simple approach: reflex jump pressing right against
                         # the wall. Physics handles landing on top naturally.
                         self.reflex_timer = 45
-                        self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
+                        self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': False}
                         self._clear_block()
                         self._blocked_frames = 0
                         self._climb_cooldown = 60
@@ -414,9 +414,11 @@ class TargetAI:
 
         # Active reflex timer
         if self.reflex_timer > 0:
+            # Note: no airborne pit check during reflex — reflex jumps
+            # are intentional (pit crossing, wall climbing). The normal
+            # airborne pit check (line ~449) handles non-reflex airborne.
             # Wall-climb reflex: if we landed on higher ground, stop jumping
             if on_ground and self.reflex_timer < 40 and self.reflex_inp and self.reflex_inp.get('a'):
-                # Landed mid-reflex — we've climbed the wall, stop
                 self.reflex_timer = 0
                 return {'left': False, 'right': True, 'a': False, 'b': True}
             # Pit override during active reflex
@@ -770,9 +772,9 @@ class TargetAI:
         if on_ground and mode not in ('jump_up',) and target_ahead and not has_platform_plan and not using_spring:
             for wd, wh in walls:
                 if 0 < wd < 20 and wh >= 2:
-                    # Wall right ahead — hold right+A+B to jump onto it
+                    # Wall right ahead — hold right+A (no dash) to land on top
                     self.reflex_timer = 45
-                    self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
+                    self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': False}
                     self._clear_block()
                     return self.reflex_inp
                     if wd < 8:
