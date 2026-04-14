@@ -738,95 +738,117 @@ class TargetAI:
                     break
 
     def _plan_navigation(self, state, game, tm, pits, walls):
-        """Plan a route to the next safe waypoint toward the flag.
-
-        Step 1: Find the next destination (safe ground beyond obstacles).
-        Step 2: If obstacles exist between here and there, insert waypoints.
-        Step 3: Use subgoals so reflexes only handle unplanned emergencies.
+        """Destination-driven navigation: scan ahead, find obstacles,
+        set the landing spot as the target, and build a route to get there.
         """
         mx = state['x']; my = state['y']
         on_ground = state['on_ground']
 
-        # Not on ground or busy — simple advance (same as original behavior)
+        # Not on ground or busy — simple advance
         if not on_ground or self.phase not in ('idle', 'moving') or self.subgoals:
             self.target = TargetPos(mx + 120, my, 'dash', 'advance')
             return
 
         mario_col = int(mx) // 16
         ground_y = (tm.rows - 2) * 16
+        ground_row = tm.rows - 2
 
-        # Extended scan to find obstacles further ahead
+        # Extended scan
         far_pits, far_walls = scan_terrain_ahead(tm, mx, my, tiles_ahead=20)
 
-        # ── Step 1: Find destination ──
-        # Default: advance 120px
-        dest_x = mx + 120
-        dest_y = my
-
-        # Check for pit ahead — destination = far side of pit
-        nearest_pit = None
+        # ── Collect obstacles in order of distance ──
+        obstacles = []
         for pd, pw in far_pits:
             if pd > 0:
-                nearest_pit = (pd, pw)
-                break
-
-        # Check for wall ahead — destination = beyond it
-        nearest_wall = None
+                obstacles.append(('pit', pd, pw))
         for wd, wh in far_walls:
-            if wd > 0 and wh >= 2:
-                nearest_wall = (wd, wh)
-                break
+            if wd > 0 and wh >= 1:
+                obstacles.append(('wall', wd, wh))
+        obstacles.sort(key=lambda o: o[1])  # Sort by distance
 
-        if nearest_pit and (nearest_wall is None or nearest_pit[0] < nearest_wall[0]):
-            # Pit ahead: just advance. Reflex pit jump handles the crossing.
-            # Navigation adds visibility markers but doesn't change behavior.
-            pd, pw = nearest_pit
-            far_side_col = (int(mx) + pd + pw + 8) // 16
+        if not obstacles:
+            # Clear path — advance
             self.target = TargetPos(mx + 120, my, 'dash', 'advance')
-            self.markers.append(Marker(far_side_col * 16 - 4, ground_y - 4, 8, 8,
-                                       (0, 255, 200), 'far side'))
+            return
 
-        elif nearest_wall:
-            # Wall is the first obstacle
-            wd, wh = nearest_wall
+        kind, dist, size = obstacles[0]
+
+        if kind == 'pit':
+            # ── Pit: destination = far side of pit ──
+            pd, pw = dist, size
+            far_side_col = (int(mx) + pd + pw + 8) // 16
+            # Ensure far side has ground
+            if far_side_col < tm.cols:
+                land_x = far_side_col * 16 + 8
+                land_y = ground_y
+                self.target = TargetPos(land_x, land_y, 'nav_jump', 'cross pit')
+                self.phase = 'moving'
+                self.markers.append(Marker(land_x - 4, land_y - 4, 8, 8,
+                                           (0, 255, 200), 'land'))
+            else:
+                self.target = TargetPos(mx + 120, my, 'dash', 'advance')
+
+        elif kind == 'wall':
+            # ── Wall: destination = on top of wall or beyond it ──
+            wd, wh = dist, size
             wall_col = (int(mx) + wd + 8) // 16
-            # Find wall top
+            # Find wall top row
             wall_top_row = None
             for r in range(tm.rows):
-                if wall_col < tm.cols and tm.tiles[r][wall_col] in SOLID_TILES:
+                if 0 <= wall_col < tm.cols and tm.tiles[r][wall_col] in SOLID_TILES:
                     wall_top_row = r
                     break
-            if wall_top_row is not None:
-                wall_top_y = wall_top_row * 16 - 1
 
-                # Check if there's a pit immediately after the wall
-                pit_after = False
-                for c in range(wall_col + 1, min(wall_col + 5, tm.cols)):
-                    has_ground = any(tm.tiles[r][c] in SOLID_TILES
-                                     for r in range(tm.rows - 2, tm.rows))
-                    if not has_ground:
-                        pit_after = True
-                        break
+            if wall_top_row is None:
+                self.target = TargetPos(mx + 120, my, 'dash', 'advance')
+                return
 
-                if wh >= 2:
-                    # Tall wall: dash toward it, action layer handles climbing
-                    dest_x = mx + wd - 4
-                    self.target = TargetPos(dest_x, my, 'dash', 'approach wall')
-                    self.phase = 'moving'
-                    self.markers.append(Marker(wall_col * 16, wall_top_row * 16,
-                                               16, 16, (0, 255, 200), 'wall top'))
-                else:
-                    # Short wall (1 block): dash at full speed and jump over
-                    # Target is BEYOND the wall so we maintain speed
-                    dest_x = (wall_col + 3) * 16
-                    self.target = TargetPos(dest_x, my, 'dash', 'jump over block')
-                    self.phase = 'moving'
+            wall_top_y = wall_top_row * 16
+
+            # Check what's beyond the wall (pit? ground? more wall?)
+            pit_after = False
+            ground_after_col = None
+            for c in range(wall_col + 1, min(wall_col + 10, tm.cols)):
+                has_ground = any(tm.tiles[r][c] in SOLID_TILES
+                                 for r in range(tm.rows - 2, tm.rows))
+                if not has_ground:
+                    pit_after = True
+                elif pit_after:
+                    # Found ground after pit — this is the landing spot
+                    ground_after_col = c
+                    break
+                elif not pit_after and c > wall_col + 1:
+                    # Ground right after wall — land beyond wall
+                    ground_after_col = c
+                    break
+
+            if wh == 1:
+                # Short wall: land on ground beyond it
+                land_x = (wall_col + 2) * 16
+                land_y = ground_y
+                self.target = TargetPos(land_x, land_y, 'nav_jump', 'over block')
+                self.phase = 'moving'
+            elif pit_after and not ground_after_col:
+                # Tall wall with pit after — land ON the wall top
+                land_x = wall_col * 16 + 8
+                land_y = wall_top_y - 1
+                self.target = TargetPos(land_x, land_y, 'nav_jump', 'onto wall')
+                self.phase = 'moving'
+            elif ground_after_col:
+                # Wall (possibly with pit after) then ground — land on far ground
+                land_x = ground_after_col * 16 + 8
+                land_y = ground_y
+                self.target = TargetPos(land_x, land_y, 'nav_jump', 'over wall')
+                self.phase = 'moving'
             else:
-                # Fallback: just advance
-                self.target = TargetPos(dest_x, my, 'dash', 'advance')
-        else:
-            # Clear path — just advance
-            self.target = TargetPos(dest_x, my, 'dash', 'advance')
+                # Wall then ground immediately — land beyond wall
+                land_x = (wall_col + 2) * 16
+                land_y = ground_y
+                self.target = TargetPos(land_x, land_y, 'nav_jump', 'over wall')
+                self.phase = 'moving'
+
+            self.markers.append(Marker(land_x - 4, land_y - 4, 8, 8,
+                                       (0, 255, 200), 'land'))
 
     def _clear_block(self):
         self.block_target = None
@@ -870,12 +892,45 @@ class TargetAI:
         if mode == 'jump_to':
             return self._do_jump_to(state, dx)
 
+        # ── nav_jump: destination-driven jump over obstacles ──
+        if mode == 'nav_jump' and on_ground:
+            ty = self.target.y
+            # Target is ahead — dash toward it, use trajectory to find jump timing
+            if dx > 0:
+                # Check: would jumping NOW reach the target area?
+                from trajectory import predict
+                for use_dash in (True, False):
+                    path = predict(self._game, self._tm, frames=70,
+                                   override_jump=True, inp_right=True,
+                                   inp_a=True, inp_b=use_dash)
+                    # Check if any point in the trajectory is near the target
+                    for i, (px, py) in enumerate(path):
+                        near_x = abs(px - self.target.x) < 24
+                        near_y = abs(py - ty) < 20
+                        landed = (i > 5 and py >= ty - 8)
+                        if near_x and (near_y or landed):
+                            # Jump would reach target — do it
+                            hold = min(i + 5, 40)
+                            self.phase = 'arc_jump'
+                            self.jump_timer = 0
+                            self.jump_hold = hold
+                            self.jump_right = True
+                            self._wall_climb = False
+                            return {'left': False, 'right': True, 'a': False, 'b': use_dash}
+                # Can't reach yet — keep dashing toward target
+                return {'left': False, 'right': True, 'a': False, 'b': True}
+            else:
+                # Passed the target or target is behind — done
+                self.target = None
+                self.phase = 'idle'
+                return {'left': False, 'right': True, 'a': False, 'b': True}
+
         # ── Wall/pipe/stair ahead: jump if prediction lands on higher ground ──
-        # Skip wall-climb when executing platform subgoals or heading to spring
+        # Only for block_target navigation (not nav_jump which handles its own jumps)
         target_ahead = (self.target is None) or (self.target.x > mx + 5)
         has_platform_plan = self.block_platform and self.subgoals
         using_spring = self.target and self.target.reason == 'use spring'
-        if on_ground and mode not in ('jump_up',) and target_ahead and not has_platform_plan and not using_spring:
+        if on_ground and mode not in ('jump_up', 'nav_jump') and target_ahead and not has_platform_plan and not using_spring:
             for wd, wh in walls:
                 if 0 < wd < 20 and wh >= 2:
                     # Tall wall: hold right+A (no dash) to land on top
@@ -883,14 +938,6 @@ class TargetAI:
                     self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': False}
                     self._clear_block()
                     return self.reflex_inp
-                if 0 < wd < 20 and wh == 1 and abs(vx) < 1.5:
-                    # 1-block obstacle right in front, nearly stopped:
-                    # short jump over. Only when target is ahead of wall.
-                    wall_x = mx + wd
-                    if self.target is None or self.target.x > wall_x:
-                        self.reflex_timer = 15
-                        self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
-                        return self.reflex_inp
 
         # ── Mode: jump_land (block hit) ──
         if mode == 'jump_land' and on_ground:
