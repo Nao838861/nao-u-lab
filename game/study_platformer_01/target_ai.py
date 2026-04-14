@@ -695,10 +695,9 @@ class TargetAI:
                 self.markers.append(Marker(self.target.x - 3, self.target.y - 3,
                                           8, 8, col_t, self.target.reason))
         else:
-            # No block target: advance toward flag
-            # Don't override 'use spring' target while bouncing
+            # No block target: navigate toward the flag via safe waypoints
             if not (self.target and self.target.reason == 'use spring'):
-                self.target = TargetPos(mx + 120, my, 'dash', 'advance')
+                self._plan_navigation(state, game, tm, pits, walls)
 
         # ── Mushroom collection (override if nearby) ──
         game_obj = game
@@ -735,6 +734,92 @@ class TargetAI:
                     else:
                         continue
                     break
+
+    def _plan_navigation(self, state, game, tm, pits, walls):
+        """Plan a route to the next safe waypoint toward the flag.
+
+        Step 1: Find the next destination (safe ground beyond obstacles).
+        Step 2: If obstacles exist between here and there, insert waypoints.
+        Step 3: Use subgoals so reflexes only handle unplanned emergencies.
+        """
+        mx = state['x']; my = state['y']
+        on_ground = state['on_ground']
+
+        # Not on ground or busy — simple advance (same as original behavior)
+        if not on_ground or self.phase not in ('idle', 'moving') or self.subgoals:
+            self.target = TargetPos(mx + 120, my, 'dash', 'advance')
+            return
+
+        mario_col = int(mx) // 16
+        ground_y = (tm.rows - 2) * 16
+
+        # Extended scan to find obstacles further ahead
+        far_pits, far_walls = scan_terrain_ahead(tm, mx, my, tiles_ahead=20)
+
+        # ── Step 1: Find destination ──
+        # Default: advance 120px
+        dest_x = mx + 120
+        dest_y = my
+
+        # Check for pit ahead — destination = far side of pit
+        nearest_pit = None
+        for pd, pw in far_pits:
+            if pd > 0:
+                nearest_pit = (pd, pw)
+                break
+
+        # Check for tall wall ahead — destination = top of wall or beyond
+        nearest_wall = None
+        for wd, wh in far_walls:
+            if wd > 0 and wh >= 2:
+                nearest_wall = (wd, wh)
+                break
+
+        if nearest_pit and (nearest_wall is None or nearest_pit[0] < nearest_wall[0]):
+            # Pit ahead: just advance. Reflex pit jump handles the crossing.
+            # Navigation adds visibility markers but doesn't change behavior.
+            pd, pw = nearest_pit
+            far_side_col = (int(mx) + pd + pw + 8) // 16
+            self.target = TargetPos(mx + 120, my, 'dash', 'advance')
+            self.markers.append(Marker(far_side_col * 16 - 4, ground_y - 4, 8, 8,
+                                       (0, 255, 200), 'far side'))
+
+        elif nearest_wall:
+            # Wall is the first obstacle
+            wd, wh = nearest_wall
+            wall_col = (int(mx) + wd + 8) // 16
+            # Find wall top
+            wall_top_row = None
+            for r in range(tm.rows):
+                if wall_col < tm.cols and tm.tiles[r][wall_col] in SOLID_TILES:
+                    wall_top_row = r
+                    break
+            if wall_top_row is not None:
+                wall_top_y = wall_top_row * 16 - 1
+
+                # Check if there's a pit immediately after the wall
+                pit_after = False
+                for c in range(wall_col + 1, min(wall_col + 5, tm.cols)):
+                    has_ground = any(tm.tiles[r][c] in SOLID_TILES
+                                     for r in range(tm.rows - 2, tm.rows))
+                    if not has_ground:
+                        pit_after = True
+                        break
+
+                # Wall ahead: dash toward it. The action layer's wall-climb
+                # or stuck detection's reflex will handle the actual climbing.
+                # Don't use subgoals — they block the stuck detection.
+                dest_x = mx + wd - 4
+                self.target = TargetPos(dest_x, my, 'dash', 'approach wall')
+                self.phase = 'moving'
+                self.markers.append(Marker(wall_col * 16, wall_top_row * 16,
+                                           16, 16, (0, 255, 200), 'wall top'))
+            else:
+                # Fallback: just advance
+                self.target = TargetPos(dest_x, my, 'dash', 'advance')
+        else:
+            # Clear path — just advance
+            self.target = TargetPos(dest_x, my, 'dash', 'advance')
 
     def _clear_block(self):
         self.block_target = None
