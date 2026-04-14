@@ -610,7 +610,7 @@ class TargetAI:
                 self._clear_block()
             elif bc * 16 < mx - 80:
                 self._clear_block()
-            elif state['frame'] - self._target_since > 180:
+            elif state['frame'] - self._target_since > 120:
                 self.hit_blocks.add((br, bc))
                 self._clear_block()
 
@@ -725,9 +725,10 @@ class TargetAI:
         # 5. If there's a reachable block before the obstacle, go for it
         if best_block:
             bc, br, bch = best_block
+            if best_block != self.block_target:
+                self._target_since = state['frame']
             self.block_target = best_block
             self.block_platform = best_plat
-            self._target_since = state['frame']
             self.markers.append(Marker(bc * 16, br * 16, 16, 16, (255, 255, 0), bch))
 
             if best_plat:
