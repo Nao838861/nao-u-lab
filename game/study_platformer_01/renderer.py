@@ -47,6 +47,7 @@ class MarioRenderer:
         self.coin_sprite = self._make_coin_sprite()
         self.overlay_font = pygame.font.Font(None, 24)
         self.hud_font = pygame.font.Font(None, 16)
+        self.screen_font = pygame.font.SysFont(None, 20)  # For post-scale HUD
 
     def _load_sheet(self):
         path = os.path.join(os.path.dirname(__file__), 'assets', 'player.bmp')
@@ -389,15 +390,6 @@ class MarioRenderer:
         surf.blit(self.coin_sprite, (SCREEN_W - 50, 4))
         surf.blit(coin_txt, (SCREEN_W - 40, 5))
 
-        # HUD: Mario position (pixel + block coordinates)
-        px = game.x // ONE
-        py = game.y // ONE
-        bx = px // 16
-        by = py // 16
-        pos_txt = self.hud_font.render(
-            f'({px},{py}) [{bx},{by}]', True, (255, 255, 255))
-        surf.blit(pos_txt, (4, 4))
-
         # Status overlay
         if game.dead:
             self._draw_overlay(surf, "GAME OVER", (200, 0, 0))
@@ -406,6 +398,20 @@ class MarioRenderer:
 
         # Scale to window
         pygame.transform.scale(surf, (WINDOW_W, WINDOW_H), self.screen)
+
+        # HUD: Mario position (drawn on screen after scaling for crisp text)
+        px = game.x // ONE
+        py = game.y // ONE
+        bx = px // 16
+        by = py // 16
+        pos_txt = self.screen_font.render(
+            f'({px},{py}) [{bx},{by}]', True, (255, 255, 255))
+        # Drop shadow for readability
+        shadow = self.screen_font.render(
+            f'({px},{py}) [{bx},{by}]', True, (0, 0, 0))
+        self.screen.blit(shadow, (9, 9))
+        self.screen.blit(pos_txt, (8, 8))
+
         pygame.display.flip()
 
     def draw_debug_overlays(self, game, markers, trajectories=None):
