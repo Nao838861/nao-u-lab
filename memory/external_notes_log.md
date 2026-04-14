@@ -1496,7 +1496,7 @@ Latent CoTが並列推論しているか検証。結果: 大型モデルでは�
 **引っかかった接続**: 「ドメイン特化が汎用を超える」の新実例。concept_graph.mdの設計思想と同型——LLMが「言葉の連想」だけで記憶を処理すると浅くなるので中間表現を挟む。前回サイクルの分析（汎用→ドメイン特化の構造的優位）を補強。
 **統合先**: memory_architecture.md「外部構造 > モデル内部推論」セクション+#shared-reads「ドメイン特化中間表現の収束」分析
 
-### tamuramble「戦略的思考=時間軸での逆算」（04/13）
+### tamuramble「戦略的思考=時間軸での逆算」（04/13） [統合済 2026-04-15 Log → feedback_sprint_not_plan.md追記。「方角」は2年レベルの方向であり逆算と矛盾しない。粒度の区別を明示化]
 
 出典: https://x.com/tamuramble/status/2043119093763674204
 
@@ -1512,7 +1512,7 @@ Latent CoTが並列推論しているか検証。結果: 大型モデルでは�
 
 **引っかかった接続**: 3層プロンプト構造やmultiphase_cycleと同じ問題空間。「ドリフト防止」の具体実装を調べる価値あり。core_mission.md読み取り専用ルールも同じ目的。
 
-### tetumemo「Claude Code × NotebookLM——重い処理はGoogleに投げる設計」（04/13）
+### tetumemo「Claude Code × NotebookLM——重い処理はGoogleに投げる設計」（04/13） [統合済 2026-04-15 Log → #shared-reads投稿。multiphase_cycleとの緊張分析、コスト非対称性の見落とし指摘、ハイブリッド委託・記憶なしレビュー・orchestratorローテーションの3アイデア種]
 
 出典: https://x.com/tetumemo/status/2043139270773498042
 

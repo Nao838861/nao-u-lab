@@ -110,7 +110,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=OK(2026-04-08) 6h間隔は妥当。pre-mortem(.bot_profile未ログイン)が的中している点でLogの設計判断は健全。Nao_uの手動操作待ちのまま放置せず、4/15期限までに「初回成功 or 別経路で取得」のどちらかに決着させる必要あり。代替案: claude.ai scrapingが不安定ならanthropic API usage endpointの可否を調査
 - 状態: ⚠️ 期限到達・Nao_u判断待ち（2026-04-15）
-- 検証結果: [Log 2026-04-08] スケジューラJobs一覧にcheck_usage確認済み。6h間隔登録OK。初回実行exit=1——pre-mortem的中（.bot_profileログイン未実施の可能性大）。Nao_u手動操作待ち | [Log 2026-04-14 追加検証] scheduler_log.logで04/13〜04/14の全4回実行を確認。**全てexit=1**。04/13 17:35には5回連続エラーで30分バックオフ発動+Slack通知済み。.bot_profileセットアップがない限り改善不可。**判断要請**: (A) Nao_uが.bot_profileをセットアップする / (B) claude.aiスクレイピングを諦めてAnthropic API usage endpointに切り替える / (C) この改善を取り下げる。期限延長ではなく根本的な方向転換が必要 | [Log 2026-04-14 最終検証] 04/14 17:37まで全実行exit=1を確認。1週間で計28回実行、成功0回。pre-mortem完全的中。スケジューラ登録・エラー検知・バックオフは全て正常動作——問題は純粋にclaude.aiへの認証が通らないこと。Nao_u判断待ちのまま期限到達
+- 検証結果: [Log 2026-04-08] スケジューラJobs一覧にcheck_usage確認済み。6h間隔登録OK。初回実行exit=1——pre-mortem的中（.bot_profileログイン未実施の可能性大）。Nao_u手動操作待ち | [Log 2026-04-14 追加検証] scheduler_log.logで04/13〜04/14の全4回実行を確認。**全てexit=1**。04/13 17:35には5回連続エラーで30分バックオフ発動+Slack通知済み。.bot_profileセットアップがない限り改善不可。**判断要請**: (A) Nao_uが.bot_profileをセットアップする / (B) claude.aiスクレイピングを諦めてAnthropic API usage endpointに切り替える / (C) この改善を取り下げる。期限延長ではなく根本的な方向転換が必要 | [Log 2026-04-14 最終検証] 04/14 17:37まで全実行exit=1を確認。1週間で計28回実行、成功0回。pre-mortem完全的中。スケジューラ登録・エラー検知・バックオフは全て正常動作——問題は純粋にclaude.aiへの認証が通らないこと。Nao_u判断待ちのまま期限到達 | [Log 2026-04-15 スクリーンショット診断] usage_parse_failed.png確認: claude.aiログインページが表示されている。セッション完全失効。#all-nao-u-labにNao_uへ再ログイン依頼(`python check_usage.py --login`)を投稿済み。スケジューラ登録(検証手段1)は✅、自動投稿(検証手段2)は❌、エラー率(検証手段3)は100%で❌。技術的インフラは正常——認証問題のみ
 
 ### #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加
 - 提案者: Log
