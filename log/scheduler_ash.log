@@ -78505,3 +78505,52 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-15 07:10:20] [slack_check] Starting
 [2026-04-15 07:11:38] [slack_check] Starting
 [2026-04-15 07:12:07] [health_check] Starting
+[2026-04-15 07:12:09] [health_check] [health_check] 2026-04-15T07:12:07 overall=OK
+[2026-04-15 07:12:09] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 07:12:09] [health_check] Done (exit=0)
+[2026-04-15 07:12:59] [slack_check] Starting
+[2026-04-15 07:13:36] [git_sync] Starting
+[2026-04-15 07:13:45] [git_sync] Done (exit=0)
+[2026-04-15 07:14:25] [slack_check] Starting
+[2026-04-15 07:15:44] [slack_check] Starting
+[2026-04-15 07:17:01] [slack_check] Starting
+[2026-04-15 07:17:29] [health_check] Starting
+[2026-04-15 07:17:30] [health_check] [health_check] 2026-04-15T07:17:29 overall=OK
+[2026-04-15 07:17:30] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 07:17:30] [health_check] Done (exit=0)
+[2026-04-15 07:18:20] [slack_check] Starting
+[2026-04-15 07:19:38] [slack_check] Starting
+[2026-04-15 07:20:16] [auto_diary] Starting
+[2026-04-15 07:32:16] [auto_diary] Timeout (720s)
+[2026-04-15 07:32:26] [slack_check] Starting
+[2026-04-15 07:32:44] [health_check] Starting
+[2026-04-15 07:32:47] [health_check] [health_check] 2026-04-15T07:32:44 overall=WARNING
+[2026-04-15 07:32:47] [health_check]   critical=0 warning=1 ok=8
+[2026-04-15 07:32:47] [health_check]   [?] git: 3件の未pushコミット
+[2026-04-15 07:32:47] [health_check] Done (exit=1)
+[2026-04-15 07:32:47] [infra_health_check] Starting
+[2026-04-15 07:36:02] ==================================================
+[2026-04-15 07:36:02] Ash scheduler started (PID 22648)
+[2026-04-15 07:36:02] Max runtime: 0 hours
+[2026-04-15 07:36:02] Code hash: de7d4622d3980be95d681c5368df0510
+[2026-04-15 07:36:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-15 07:36:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-04-15 07:36:02] ==================================================
+[2026-04-15 07:36:13] [slack_check] Starting
+[2026-04-15 07:36:30] [reservation_check] Starting
+[2026-04-15 07:36:31] [reservation_check] 【行動予約】期限到来:
+[2026-04-15 07:36:31] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-15 07:36:31] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-15 07:36:31] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-15 07:36:31] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-15 07:36:31] [reservation_check] Done (exit=0)
+[2026-04-15 07:36:41] [inbox_check] Starting
+[2026-04-15 07:41:42] [inbox_check] Inbox win2 has content
+[2026-04-15 07:41:42] [inbox_check] Done (exit=0)
+[2026-04-15 07:41:42] [dm_check] Starting
+[2026-04-15 07:42:01] [dm_check] No new DMs
+[2026-04-15 07:42:01] [dm_check] Done (exit=0)
+[2026-04-15 07:42:01] [review_deadline] Starting
+[2026-04-15 07:42:01] [review_deadline] レビュー期限超過なし。
+[2026-04-15 07:42:01] [review_deadline] Done (exit=0)
+[2026-04-15 07:42:01] [health_check] Starting
