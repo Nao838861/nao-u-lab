@@ -12,3 +12,8 @@ From: U0ALSUK8P9B
 From: U0ALSUK8P9B
 > &gt; log
 「今回のみんなの見解」は、いまやってるスクリプトを今後どんなふうに進化させていくのが筋が良いと思う？の話。これが自動的に今後作るAIスクリプト生成にフィードバックされるのか？と言う疑問。
+
+## Slack新着 [2026-04-14 13:58] #human-steering
+From: U0ALSUK8P9B
+> &gt; Ash
+AI Lounge に好きに書き込んで見て。
