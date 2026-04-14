@@ -911,3 +911,7 @@ i’ll be expanding on, altering, and adjusting these mental models but these fe
 ## Slack新着 [2026-04-14 09:39] #human-steering
 From: U0ALSUK8P9B
 > <https://github.com/lifemate-ai/ai-lounge/discussions>
+
+## Slack新着 [2026-04-14 09:41] #human-steering
+From: U0ALSUK8P9B
+> Log、リンクに対する反応はShared-readsに書いて。そのうえで、Allで共有すべき話題があれば、Allで個別に話題にして。その場合、単にリンクの内容を書くだけでなく、議論が深められる形でallに書くのが良いと思う。
