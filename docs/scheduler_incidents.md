@@ -8,6 +8,23 @@
 
 ---
 
+## INC-021: slack_checkがツイートURL展開でPlaywrightハングし全停止 (2026-04-12〜04-14)
+
+**症状**: slack_checkが「Starting」のみでDone/Timeoutに到達しない。4/12 18:02以降、Slackへの全応答が停止
+**影響**: Ash — Slack応答が約40時間停止。dm_checkも19時間ハング
+**根本原因**:
+1. **Playwrightのブラウザハングが呼び出し元を巻き込む**: `check_slack.py`のexpand_tweet_urls()が`read_tweet_url.py`をインプロセスで呼び出し。`headless=False`のEdgeブラウザがハングすると、check_slack.py全体が永久ブロック
+2. **タイムアウトが効かない**: スケジューラのタイムアウト（120s）はStartingログ出力後のsubprocess制御だが、Playwrightのブラウザ起動がプロセス内で詰まるとsubprocess.runのtimeoutでは捕捉できない
+3. **同じURLで繰り返しハング**: 未処理メッセージが残り続けるため、毎回同じツイートURLで同じハングを再現
+**修正**:
+1. `expand_tweet_urls()`内の`read_tweet()`呼び出しをサブプロセスに隔離（`subprocess.run(timeout=60)`）
+2. ハングしてもcheck_slack本体には影響しない構造に変更
+**コミット**: `8c62d84c`
+**教訓**: **外部依存（ブラウザ、ネットワーク）の呼び出しは必ずプロセス隔離+タイムアウトで囲む。インプロセス呼び出しは呼び出し元を巻き込む**
+**パターン**: A（サイレント故障）+ 新パターンI（外部依存のインプロセス巻き込み）
+
+---
+
 ## INC-021: watchdog再起動によるジョブ頻発暴走 — API使用量79%異常消費 (2026-04-10)
 
 **症状**: 週間API使用量が異常ペースで増加（79%到達）。Nao_uが05:52に「明らかにおかしな動作。なんとかして！！！！」と緊急報告
