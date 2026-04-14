@@ -796,13 +796,12 @@ class TargetAI:
             self.markers.append(Marker(pit_start_x, ground_y, pw, 32,
                                        (255, 0, 255), f'PIT w={pw}'))
             if far_side_col < tm.cols:
-                land_x = far_side_col * 16 + 8
-                land_y = ground_y
-                self.target = TargetPos(land_x, land_y, 'nav_jump', 'cross pit')
-                self.phase = 'moving'
-                # Landing target marker (larger, with label)
-                self.markers.append(Marker(land_x - 8, land_y - 8, 16, 16,
-                                           (0, 255, 100), 'LAND'))
+                # Dash toward pit — reflex pit jump handles the crossing.
+                # Using nav_jump for pits causes oscillation with airborne
+                # pit check (predict pit → reverse → predict safe → forward).
+                self.target = TargetPos(mx + 120, my, 'dash', 'advance')
+                self.markers.append(Marker(far_side_col * 16 - 4, ground_y - 4, 8, 8,
+                                           (0, 255, 200), 'far side'))
             else:
                 self.target = TargetPos(mx + 120, my, 'dash', 'advance')
 
