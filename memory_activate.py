@@ -46,6 +46,7 @@ RESCUE_OBSCURITY_BOOST = 1.5
 TEMP_BOOST_FACTOR = 0.15  # Each temperature point above 3 adds 15% boost
 STC_TRIGGER_CACHE = BASE_DIR / ".stc_last_trigger"
 STC_RESCUE_LOG = BASE_DIR / "log" / "stc_rescue.log"
+TEMP_BOOST = {5: 2.0, 4: 1.5, 3: 1.2, 2: 1.0, 1: 0.8}  # MEMORY.md temperature → multiplier
 
 # Stop words for keyword extraction (shared with memory_walk.py)
 STOP_WORDS = {
@@ -119,6 +120,18 @@ def extract_file_refs(text):
     refs.update(re.findall(r'[\w_-]+\.jsonl', text))
     refs.update(re.findall(r'[\w_-]+\.py', text))
     return refs
+
+
+def parse_memory_temperatures():
+    """Parse `t:N` tags from MEMORY.md → {basename: multiplier}."""
+    memory_md = BASE_DIR / "memory" / "MEMORY.md"
+    if not memory_md.exists():
+        return {}
+    temps = {}
+    for m in re.finditer(r'\[([^\]]+\.(?:md|json))\].*?`t:(\d)`', memory_md.read_text(encoding="utf-8")):
+        basename = os.path.basename(m.group(1))
+        temps[basename] = TEMP_BOOST.get(int(m.group(2)), 1.0)
+    return temps
 
 
 def fts5_search(conn, query, limit):
@@ -330,12 +343,10 @@ def spreading_activation(anchor_text, top_k=DEFAULT_TOP_K, verbose=False):
             source_agg[src]['best_content'] = info['content']
             source_agg[src]['chunk_id'] = chunk_id
 
-    # Temperature boost: high-temperature memories in MEMORY.md get activation boost
-    memory_temps = get_memory_temperatures()
-    for src, info in source_agg.items():
-        t = memory_temps.get(os.path.basename(src), 0)
-        if t:
-            info['activation'] *= 1.0 + (t - 3) * TEMP_BOOST_FACTOR
+    # ── Temperature boost from MEMORY.md ──
+    memory_temps = parse_memory_temperatures()
+    for src, agg in source_agg.items():
+        agg['activation'] *= memory_temps.get(os.path.basename(src), 1.0)
 
     ranked = sorted(source_agg.values(), key=lambda x: -x['activation'])[:top_k]
 
