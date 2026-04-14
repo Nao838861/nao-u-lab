@@ -409,12 +409,29 @@ class TargetAI:
                         self._blocked_frames = 0
             else:
                 self._blocked_frames = 0
-        # Fallback: long stuck detection
+        # Fallback: long stuck detection — only jump if landing is safe
         if state['frame'] - self._stuck_f >= 120:
             moved = abs(mx - self._stuck_x)
             if moved < 16 and not self.subgoals:
-                self.reflex_timer = 50
-                self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
+                # Check if jump would land safely
+                from trajectory import predict
+                jump_safe = False
+                path = predict(game, tm, frames=70, override_jump=True,
+                               inp_right=True, inp_a=True, inp_b=True)
+                peaked_s = False
+                for li in range(1, len(path)):
+                    if path[li][1] > path[li-1][1]:
+                        peaked_s = True
+                    if peaked_s and li > 5:
+                        lc = int(path[li][0] + 8) // 16
+                        lr = int(path[li][1] + 15) // 16
+                        if 0 <= lc < tm.cols and 0 <= lr < tm.rows:
+                            if tm.tiles[lr][lc] in SOLID_TILES:
+                                jump_safe = True
+                                break
+                if jump_safe:
+                    self.reflex_timer = 50
+                    self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
                 self._clear_block()
             self._stuck_x = mx; self._stuck_f = state['frame']
 
@@ -912,13 +929,20 @@ class TargetAI:
 
         if can_reach_directly:
             # Direct jump: decide landing spot
+            # Use wall_top_y or ground_y depending on which is reachable
             if pit_after and not ground_after_col:
                 land_x = wall_col * 16 + 8
                 land_y = wall_top_y - 1
                 reason = 'onto wall'
             elif ground_after_col:
+                # Find actual ground height at landing column
+                land_row = ground_row
+                for r in range(tm.rows - 1, -1, -1):
+                    if tm.tiles[r][ground_after_col] in SOLID_TILES:
+                        land_row = r - 1
+                        break
                 land_x = ground_after_col * 16 + 8
-                land_y = ground_y
+                land_y = land_row * 16
                 reason = 'over wall'
             else:
                 land_x = (wall_col + 2) * 16
@@ -1074,6 +1098,20 @@ class TargetAI:
                                         path[li][0] - 4, (lr - 1) * 16 - 4,
                                         8, 8, (255, 255, 0), 'PRED'))
                                     break
+
+                    # Only jump if predicted landing is safe (on solid ground)
+                    if not pred_land:
+                        continue  # No landing found — don't jump
+                    # Check landing is not in/near a pit
+                    pred_col = int(pred_land[0] + 8) // 16
+                    landing_safe = True
+                    for pc in range(max(0, pred_col - 1), min(pred_col + 2, self._tm.cols)):
+                        if not any(self._tm.tiles[r][pc] in SOLID_TILES
+                                   for r in range(self._tm.rows - 2, self._tm.rows)):
+                            landing_safe = False
+                            break
+                    if not landing_safe:
+                        continue  # Landing near pit — don't jump
 
                     # Check if trajectory reaches target
                     for i, (ppx, ppy) in enumerate(path):
