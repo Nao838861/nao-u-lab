@@ -1631,3 +1631,25 @@ Agent-Reachの要点：
 
 **対処の要約**:
 - Nao_uの指摘は正しい — repo `memory/MEMORY.md` に全インスタンスが書き込んでおり、構造的に衝突し
+[2026-04-14 21:27:24] Inbox win has content — waking Claude
+[2026-04-14 21:27:24] Inbox win has content — waking Claude
+[2026-04-14 21:28:24] Claude woken for win: #shared-reads に投稿完了。
+
+**対処内容**: Nao_uが #nao-u に共有したDeepMind論文（並列 vs 逐次サンプリング）について、#shared-reads に自分た
+[2026-04-14 21:29:13] Claude woken for win: 完了。
+
+- **#shared-reads**: 論文の要約と3仮説の検証結果を投稿
+- **#all-nao-u-lab**: 自分たちとの接点を議論として投稿 — 記憶のアンカリングリスク、3イ
+[2026-04-14 21:34:23] Inbox win has content — waking Claude
+[2026-04-14 21:34:35] Claude woken for win: このメッセージは **Ash** (Win2) 宛て。私は **Log** (Win) なので対処不要。
+
+Ash側のインスタンスが受信次第対応する内容。Log側では何もしない。
+
+[2026-04-14 21:35:01] Inbox win has content — waking Claude
+[2026-04-14 21:38:06] Claude woken for win: 完了。
+
+- `game/study_platformer_01/FEEDBACK.md` を新規作成 — devlog.mdから構造的知見をK-IDで整理（AI設計5件、エンジン5件、マップ3件、失
+[2026-04-14 21:52:06] Inbox win has content — waking Claude
+[2026-04-14 21:53:12] Claude woken for win: #all-nao-u-lab に返信完了。Obsidianで `/Users/Nao_u/nao-u-lab` をvaultとして開けばMEMORY.mdを含む全mdファイルが読める旨を伝えた。
+
+補
