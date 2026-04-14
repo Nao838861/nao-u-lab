@@ -443,8 +443,23 @@ class TargetAI:
                             # Pit nearby: just advance, don't climb
                             pass
                     elif bwh >= 4:
-                        # Too tall for walk-climb — let navigation handle it
-                        pass
+                        # Check effective height relative to Mario's feet
+                        # (staircases look tall from ground but only 1-2 steps up)
+                        wall_col_s = (int(mx) + bwd + 8) // 16
+                        wall_top_s = None
+                        for r_s in range(tm.rows):
+                            if 0 <= wall_col_s < tm.cols and tm.tiles[r_s][wall_col_s] in SOLID_TILES:
+                                wall_top_s = r_s
+                                break
+                        mario_row_s = int(my) // 16
+                        eff_h = (mario_row_s - wall_top_s + 1) if wall_top_s is not None else bwh
+                        if 1 <= eff_h <= 2:
+                            # Short step — dash jump over
+                            self.reflex_timer = 45
+                            self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
+                        else:
+                            # Truly tall wall — let long stuck detection handle it
+                            pass
                         self._clear_block()
                         self._blocked_frames = 0
                         self._climb_cooldown = 60
