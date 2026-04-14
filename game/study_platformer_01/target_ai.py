@@ -356,6 +356,7 @@ class TargetAI:
         enemies = scan_enemies(state)
 
         self.markers = []  # Rebuild each frame
+        self._trajectories = {}  # Nav trajectory lines for debug display
         self._game = game  # Store for trajectory access
         self._tm = tm
 
@@ -408,14 +409,16 @@ class TargetAI:
         # ── Reflex layer (highest priority) ──
         inp = self._reflex(state, pits, walls, enemies, tm)
         if inp:
-            return {'input': inp, 'markers': self.markers}
+            return {'input': inp, 'markers': self.markers,
+                    'trajectories': self._trajectories}
 
         # ── Strategy layer: pick target position ──
         self._strategy(state, game, tm, scroll_x, pits, walls, enemies)
 
         # ── Action layer: move toward target ──
         inp = self._action(state, pits, walls, enemies)
-        return {'input': inp, 'markers': self.markers}
+        return {'input': inp, 'markers': self.markers,
+                'trajectories': self._trajectories}
 
     # ── Reflex ───────────────────────────────────────────────────────
 
@@ -777,14 +780,18 @@ class TargetAI:
             # ── Pit: destination = far side of pit ──
             pd, pw = dist, size
             far_side_col = (int(mx) + pd + pw + 8) // 16
-            # Ensure far side has ground
+            pit_start_x = mx + pd
+            # Show pit zone
+            self.markers.append(Marker(pit_start_x, ground_y, pw, 32,
+                                       (255, 0, 255), f'PIT w={pw}'))
             if far_side_col < tm.cols:
                 land_x = far_side_col * 16 + 8
                 land_y = ground_y
                 self.target = TargetPos(land_x, land_y, 'nav_jump', 'cross pit')
                 self.phase = 'moving'
-                self.markers.append(Marker(land_x - 4, land_y - 4, 8, 8,
-                                           (0, 255, 200), 'land'))
+                # Landing target marker (larger, with label)
+                self.markers.append(Marker(land_x - 8, land_y - 8, 16, 16,
+                                           (0, 255, 100), 'LAND'))
             else:
                 self.target = TargetPos(mx + 120, my, 'dash', 'advance')
 
@@ -804,6 +811,11 @@ class TargetAI:
                 return
 
             wall_top_y = wall_top_row * 16
+            # Show wall outline
+            wall_x = wall_col * 16
+            wall_h_px = wh * 16
+            self.markers.append(Marker(wall_x, wall_top_y, 16, wall_h_px,
+                                       (255, 165, 0), f'WALL h={wh}'))
 
             # Check what's beyond the wall (pit? ground? more wall?)
             pit_after = False
@@ -823,32 +835,26 @@ class TargetAI:
                     break
 
             if wh == 1:
-                # Short wall: land on ground beyond it
                 land_x = (wall_col + 2) * 16
                 land_y = ground_y
-                self.target = TargetPos(land_x, land_y, 'nav_jump', 'over block')
-                self.phase = 'moving'
+                reason = 'over block'
             elif pit_after and not ground_after_col:
-                # Tall wall with pit after — land ON the wall top
                 land_x = wall_col * 16 + 8
                 land_y = wall_top_y - 1
-                self.target = TargetPos(land_x, land_y, 'nav_jump', 'onto wall')
-                self.phase = 'moving'
+                reason = 'onto wall'
             elif ground_after_col:
-                # Wall (possibly with pit after) then ground — land on far ground
                 land_x = ground_after_col * 16 + 8
                 land_y = ground_y
-                self.target = TargetPos(land_x, land_y, 'nav_jump', 'over wall')
-                self.phase = 'moving'
+                reason = 'over wall+pit'
             else:
-                # Wall then ground immediately — land beyond wall
                 land_x = (wall_col + 2) * 16
                 land_y = ground_y
-                self.target = TargetPos(land_x, land_y, 'nav_jump', 'over wall')
-                self.phase = 'moving'
+                reason = 'over wall'
 
-            self.markers.append(Marker(land_x - 4, land_y - 4, 8, 8,
-                                       (0, 255, 200), 'land'))
+            self.target = TargetPos(land_x, land_y, 'nav_jump', reason)
+            self.phase = 'moving'
+            self.markers.append(Marker(land_x - 8, land_y - 8, 16, 16,
+                                       (0, 255, 100), f'LAND:{reason}'))
 
     def _clear_block(self):
         self.block_target = None
@@ -895,21 +901,26 @@ class TargetAI:
         # ── nav_jump: destination-driven jump over obstacles ──
         if mode == 'nav_jump' and on_ground:
             ty = self.target.y
-            # Target is ahead — dash toward it, use trajectory to find jump timing
             if dx > 0:
-                # Check: would jumping NOW reach the target area?
                 from trajectory import predict
+                # Show target marker
+                self.markers.append(Marker(self.target.x - 6, ty - 6, 12, 12,
+                                           (0, 255, 100), self.target.reason))
+                best_path = None
+                best_dash = True
                 for use_dash in (True, False):
                     path = predict(self._game, self._tm, frames=70,
                                    override_jump=True, inp_right=True,
                                    inp_a=True, inp_b=use_dash)
-                    # Check if any point in the trajectory is near the target
+                    # Show prediction trajectory
+                    label = 'nav_dash' if use_dash else 'nav_walk'
+                    self._trajectories[label] = path
+                    # Check if trajectory reaches target
                     for i, (px, py) in enumerate(path):
                         near_x = abs(px - self.target.x) < 24
                         near_y = abs(py - ty) < 20
                         landed = (i > 5 and py >= ty - 8)
                         if near_x and (near_y or landed):
-                            # Jump would reach target — do it
                             hold = min(i + 5, 40)
                             self.phase = 'arc_jump'
                             self.jump_timer = 0
@@ -917,10 +928,9 @@ class TargetAI:
                             self.jump_right = True
                             self._wall_climb = False
                             return {'left': False, 'right': True, 'a': False, 'b': use_dash}
-                # Can't reach yet — keep dashing toward target
+                # Can't reach yet — show "approaching" and keep dashing
                 return {'left': False, 'right': True, 'a': False, 'b': True}
             else:
-                # Passed the target or target is behind — done
                 self.target = None
                 self.phase = 'idle'
                 return {'left': False, 'right': True, 'a': False, 'b': True}

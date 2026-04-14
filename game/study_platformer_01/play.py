@@ -220,7 +220,7 @@ def ai_mode(level_text, speed=1):
             if game.log:
                 game.log[-1]['markers'] = [m.to_dict() for m in result.get('markers', [])]
 
-        # Trajectory prediction (2 paths: current input + if-jump)
+        # Trajectory prediction: use AI's nav trajectories + standard ones
         trajectories = {}
         if not game.dead and not game.cleared:
             from trajectory import predict
@@ -230,6 +230,9 @@ def ai_mode(level_text, speed=1):
             trajectories['walk_jump'] = predict(game, tm, frames=60,
                                                 override_jump=True, inp_a=True,
                                                 inp_b=False)
+            # Merge AI's nav trajectories (nav_dash, nav_walk)
+            ai_traj = result.get('trajectories', {})
+            trajectories.update(ai_traj)
 
         renderer.render(game)
         markers = result.get('markers', []) if not game.dead else []
