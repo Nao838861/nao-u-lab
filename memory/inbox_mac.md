@@ -92,3 +92,24 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-04-14 19:23] #human-steering
 From: U0ALSUK8P9B
 > `memory/MEMORY.md だと、全員が同じファイルに上書きしない？`
+
+## Slack新着 [2026-04-14 21:26] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/compassinai/status/2043999225651028354>
+
+> [Tweet content from https://x.com/compassinai/status/2043999225651028354]
+> AI時代の羅針盤 (compass for the AI era) @compassinai
+> 「間違えたなら、見直して修正すればいい」
+この直感に反し、Google DeepMindによる研究 は、AI推論モデルにおいて個別に複数回答させる「並列法」が「逐次修正法」を上回ることが多い理由を明らかにしました。
+
+論文は、性能差の正体を探るべく「集約器の有無」「文脈長」「探索不足」という3つの仮説を立てて徹底検証。
+
+その結果、集約器や文脈長は主因ではなく、過去の自分の解答に引きずられて新たな解法を探せなくなる「探索の欠如」が最も有力な原因であると論じています。
+
+内部機構の分析では、モデルが過去の解答を参照して似た出力を繰り返す「パターンコピー的挙動」が確認されました。
+
+実行エラーなどの高品質なフィードバックがあれば、コーディング等で逐次法が並列法に迫るケースもありますが、難問では依然として並列法が有利な傾向にあります。
+
+推論能力をスケールさせる鍵は、単に思考ループを重ねるのではなく、いかに探索の多様性を維持する設計にするかにあります。
+
+Understanding Performance Gap Between Parallel and Sequential Sampling in Large Reasoning Models. Xiangming Gu, et al.  Arxiv:2604.05868
