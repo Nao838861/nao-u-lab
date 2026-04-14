@@ -2,7 +2,7 @@
   "_comment": "scheduler_log.pyの間隔・タイムアウトを上書き。再起動不要。変更は次のループで即反映",
   "_usage": "auto_cycleを1時間にする例: \"auto_cycle\": {\"interval_sec\": 3600}",
   "auto_cycle": {
-    "interval_sec": 43200,
-    "min_interval_sec": 42600
+    "interval_sec": 10800,
+    "min_interval_sec": 10200
   }
 }
