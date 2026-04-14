@@ -197,12 +197,10 @@ def main():
 
     # 即時起動: inboxに書き込んだらcheck_inboxを呼んで即座にClaude CLIを起動する
     # Mac: check_inbox.sh経由（ロックファイルで二重起動防止）
-    # Win: check_inbox.py直接起動（scheduler_log.pyからも即時トリガーされるが、standalone実行時のため）
+    # Win: scheduler_log.pyの即時トリガーに一本化（INC-022: 両方が呼ぶと重起動）
     # (2026-03-26 Nao_uの指示: Slack 1分応答)
     if platform.system() == "Darwin":
         trigger_check_inbox()
-    elif platform.system() == "Windows":
-        trigger_check_inbox_win(box)
     return 0
 
 

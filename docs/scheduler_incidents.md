@@ -8,6 +8,31 @@
 
 ---
 
+## INC-022: check_inbox.pyの二重トリガーで並行起動し重複Slack投稿 (2026-04-15)
+
+**症状**: Nao_uの#human-steering質問に対して、Logが5.55秒差でほぼ同内容のメッセージを2件Slackに投稿（`p1776182566748999`と`p1776182572299999`）
+**影響**: Log (Win)。ユーザー体験の悪化、APIトークンの無駄遣い、Slackチャンネルの騒音。同じ質問に2回並行で分析が走る
+**検出**: Nao_u手動（「Logが2人同時に動いてる？」の指摘）
+**根本原因**:
+1. **check_inbox.pyを呼ぶ経路が2つ共存**:
+   - 経路A: `scheduler_log.py`が`slack_check`完了時に`last_run["inbox_check"] = datetime.min`で即トリガー
+   - 経路B: `check_slack.py`が`trigger_check_inbox_win()`でsubprocess.Popen直接起動
+2. **両経路に同期機構なし**: Mac側の`check_inbox.sh`はロックファイルで二重起動を防ぐが、Win側の`check_inbox.py`にロックなし
+3. **race conditionでsnapshot_inboxの防御が効かない**: 2プロセスがほぼ同時に`has_content()`→`snapshot_inbox()`を実行。git_pull()で新規メッセージ取得タイミングがズレると両方が非空コンテンツを取得してしまう
+4. **コメントで認識されていたが放置**: check_slack.pyのコメントに「scheduler_log.pyからも即時トリガーされるが、standalone実行時のため」と明記されていた。standalone時のためと言いつつ常時両方起動していた
+
+**証拠**:
+- `log/inbox_check.log`: `[01:00:18] Inbox win has content — waking Claude` が同タイムスタンプで2行
+- 3分後の`[01:03:00]` と `[01:03:20]` に2つのClaude完了ログ（20秒差）
+- 01:03:52の2回目race condition時は`snapshot_inbox`の空検知が効いて「Inbox win was empty after snapshot (race condition?)」で1件は防げた
+
+**修正**: A案採用。check_slack.pyの`trigger_check_inbox_win()`呼び出しを削除し、scheduler_log.py経由の即時トリガーに一本化（`check_slack.py:198-205`）
+**コミット**: (この修正)
+**教訓**: **同じ副作用を持つトリガー経路を2つ共存させるな。Mac版とWin版の実装が分岐する時、両方とも同じ同期機構（ロック/single trigger）を持たせる。「standalone用途のため」は並行起動の正当化にならない**
+**パターン**: D（設計の不備）+ I（並行制御の欠落）。Mac側のロックファイル方針がWin側に適用されていなかった
+
+---
+
 ## INC-021: slack_checkがツイートURL展開でPlaywrightハングし全停止 (2026-04-12〜04-14)
 
 **症状**: slack_checkが「Starting」のみでDone/Timeoutに到達しない。4/12 18:02以降、Slackへの全応答が停止
