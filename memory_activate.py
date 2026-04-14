@@ -43,6 +43,7 @@ MAX_SPREAD = 15       # Candidates per hop
 DEFAULT_TOP_K = 7
 RESCUE_LOOKBACK_DAYS = 7
 RESCUE_OBSCURITY_BOOST = 1.5
+TEMP_BOOST_FACTOR = 0.15  # Each temperature point above 3 adds 15% boost
 STC_TRIGGER_CACHE = BASE_DIR / ".stc_last_trigger"
 STC_RESCUE_LOG = BASE_DIR / "log" / "stc_rescue.log"
 
@@ -57,6 +58,15 @@ STOP_WORDS = {
     "Log", "Mir", "Ash", "Nao_u", "nao", "slack", "memory",
     "サイクル", "セッション", "ファイル", "メッセージ", "チャンネル",
 }
+
+
+def get_memory_temperatures():
+    """Parse MEMORY.md for [T:N] temperature tags. Returns {filename: temperature}."""
+    memory_md = BASE_DIR / "memory" / "MEMORY.md"
+    if not memory_md.exists():
+        return {}
+    text = memory_md.read_text(encoding="utf-8")
+    return {m.group(1): int(m.group(2)) for m in re.finditer(r'\[([^\]]+\.(?:md|json))\].*?\[T:(\d)\]', text)}
 
 
 def extract_keywords(text, max_kw=8):
@@ -319,6 +329,13 @@ def spreading_activation(anchor_text, top_k=DEFAULT_TOP_K, verbose=False):
             source_agg[src]['best_act'] = info['activation']
             source_agg[src]['best_content'] = info['content']
             source_agg[src]['chunk_id'] = chunk_id
+
+    # Temperature boost: high-temperature memories in MEMORY.md get activation boost
+    memory_temps = get_memory_temperatures()
+    for src, info in source_agg.items():
+        t = memory_temps.get(os.path.basename(src), 0)
+        if t:
+            info['activation'] *= 1.0 + (t - 3) * TEMP_BOOST_FACTOR
 
     ranked = sorted(source_agg.values(), key=lambda x: -x['activation'])[:top_k]
 
