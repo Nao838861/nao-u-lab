@@ -77176,3 +77176,43 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-13 11:26:50] [slack_check] Starting
 [2026-04-13 11:28:07] [slack_check] Starting
 [2026-04-13 11:28:36] [health_check] Starting
+[2026-04-13 11:28:37] [health_check] [health_check] 2026-04-13T11:28:36 overall=OK
+[2026-04-13 11:28:37] [health_check]   critical=0 warning=0 ok=9
+[2026-04-13 11:28:37] [health_check] Done (exit=0)
+[2026-04-13 11:29:27] [slack_check] Starting
+[2026-04-13 11:30:44] [slack_check] Starting
+[2026-04-13 11:32:03] [slack_check] Starting
+[2026-04-13 11:58:04] [slack_check] Starting
+[2026-04-13 11:58:25] [git_sync] Starting
+[2026-04-13 11:58:31] [git_sync] Done (exit=0)
+[2026-04-13 11:58:31] [health_check] Starting
+[2026-04-13 11:58:32] [health_check] [health_check] 2026-04-13T11:58:31 overall=OK
+[2026-04-13 11:58:32] [health_check]   critical=0 warning=0 ok=9
+[2026-04-13 11:58:32] [health_check] Done (exit=0)
+[2026-04-13 11:58:32] [infra_health_check] Starting
+[2026-04-13 11:58:34] [infra_health_check] [infra_health] Ash health check at 2026-04-13 11:58:33
+[2026-04-13 11:58:34] [infra_health_check] [infra_health] All checks passed
+[2026-04-13 11:58:34] [infra_health_check]   All OK
+[2026-04-13 11:58:34] [infra_health_check] Done (exit=0)
+[2026-04-13 11:58:34] [scheduler_health] Starting
+[2026-04-13 11:58:37] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-13 11:58:37] [scheduler_health] ✅ scheduler_ash PID — PID=5636 生存中
+[2026-04-13 11:58:37] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-13 11:58:37] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-13 11:58:37] [scheduler_health] ✅ git 未push — 1件
+[2026-04-13 11:58:37] [scheduler_health] Done (exit=0)
+[2026-04-13 11:59:27] [slack_check] Starting
+[2026-04-13 12:00:44] [slack_check] Starting
+[2026-04-13 12:02:02] [slack_check] Starting
+[2026-04-13 12:43:12] [slack_check] Starting
+[2026-04-13 12:43:12] [health_check] Starting
+[2026-04-13 12:43:17] [health_check] [health_check] 2026-04-13T12:43:12 overall=OK
+[2026-04-13 12:43:17] [health_check]   critical=0 warning=0 ok=9
+[2026-04-13 12:43:17] [health_check] Done (exit=0)
+[2026-04-13 12:43:17] [infra_health_check] Starting
+[2026-04-13 12:43:20] [infra_health_check] [infra_health] Ash health check at 2026-04-13 12:43:17
+[2026-04-13 12:43:20] [infra_health_check] [infra_health] All checks passed
+[2026-04-13 12:43:20] [infra_health_check]   All OK
+[2026-04-13 12:43:20] [infra_health_check] Done (exit=0)
+[2026-04-13 14:56:00] [slack_check] Starting
+[2026-04-13 14:56:00] [inbox_check] Starting
