@@ -931,12 +931,13 @@ class TargetAI:
             self._trajectories[traj_key] = best_path
             self._active_nav_path = best_path  # Persist for display during arc_jump
 
-            # Find optimal hold: test different A-hold durations and
-            # pick the one that lands on the TARGET platform closest to center
-            best_hold = best_frame  # Fallback: use full-jump hold
+            # Find hold that lands closest to target platform center.
+            # Test multiple holds and pick best landing accuracy.
+            orig_best_frame = best_frame
+            best_hold = best_frame  # Fallback: full-jump hold
             best_hold_dist = 9999
             for try_hold in range(8, min(best_frame + 5, 41), 2):
-                test_path = predict(self._game, self._tm, frames=70,
+                test_path = predict(self._game, self._tm, frames=80,
                                     override_jump=True, inp_right=True,
                                     inp_a=True, inp_b=best_dash,
                                     a_hold_frames=try_hold)
@@ -949,7 +950,6 @@ class TargetAI:
                         tlr = int(test_path[ti][1] + 15) // 16
                         if 0 <= tlc < tm.cols and 0 <= tlr < tm.rows:
                             if tm.tiles[tlr][tlc] in SOLID_TILES:
-                                # Only accept if landing is on target platform
                                 if sc <= tlc <= ec and tlr == row:
                                     dist = abs(test_path[ti][0] - cx)
                                     if dist < best_hold_dist:
@@ -958,6 +958,25 @@ class TargetAI:
                                         best_path = test_path
                                         best_frame = ti
                                 break
+            # If no hold lands on target platform, try walking off edge
+            no_hold_found = (best_hold == orig_best_frame)
+            if no_hold_found:
+                walk_path = predict(self._game, self._tm, frames=70,
+                                    override_jump=False, inp_right=True,
+                                    inp_a=False, inp_b=True)
+                for wi in range(1, len(walk_path)):
+                    wlc = int(walk_path[wi][0] + 8) // 16
+                    wlr = int(walk_path[wi][1] + 15) // 16
+                    if 0 <= wlc < tm.cols and 0 <= wlr < tm.rows:
+                        if tm.tiles[wlr][wlc] in SOLID_TILES:
+                            if sc <= wlc <= ec and wlr == row:
+                                # Walk-off lands on target! Don't jump.
+                                self.target = TargetPos(cx, ly, 'dash',
+                                                        f'walk to c{sc}-{ec}')
+                                self._active_nav_path = walk_path
+                                self._trajectories['nav_plan'] = walk_path
+                                return
+                            break
             hold = best_hold
             self.phase = 'arc_jump'
             self.jump_timer = 0
