@@ -215,7 +215,7 @@ def scan_enemies(state):
             dx = k['x'] - mx
             if -40 < dx < 200:
                 kind = 'shell' if k['state'] != 0 else 'koopa'
-                vx = KOOPA_WALK_SPEED / ONE if kind == 'shell' else -KOOPA_WALK_SPEED / ONE
+                vx = k.get('vx', -KOOPA_WALK_SPEED / ONE)
                 out.append({'x': k['x'], 'y': k['y'], 'dx': dx,
                             'kind': kind, 'vx': vx})
     out.sort(key=lambda e: abs(e['dx']))

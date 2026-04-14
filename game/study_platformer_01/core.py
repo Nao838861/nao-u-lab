@@ -1062,7 +1062,8 @@ class MarioGame:
             ],
             'koopas': [
                 {'x': k.x / ONE, 'y': k.y / ONE,
-                 'alive': k.alive, 'state': k.state}
+                 'alive': k.alive, 'state': k.state,
+                 'vx': k.vx / ONE}
                 for k in self.koopas if k.alive
             ],
             'is_super': self.is_super,
