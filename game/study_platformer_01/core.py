@@ -26,7 +26,7 @@ BRAKE_THRESHOLD = 128        # Opposite-direction threshold for braking
 # Goomba constants -- from kuribo.c
 GOOMBA_SPEED = 96            # Walk speed (~0.375 px/frame)
 GOOMBA_SQUISH_FRAMES = 30   # Show squished sprite then remove
-STOMP_BOUNCE = -512          # Mario's vy after stomping (half jump)
+STOMP_BOUNCE = -640          # Mario's vy after stomping (~62.5% of full jump)
 
 # Koopa constants
 KOOPA_WALK_SPEED = 80        # Slightly slower than Goomba
