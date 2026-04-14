@@ -830,12 +830,13 @@ class TargetAI:
         # ── Find all platforms ahead ──
         platforms = scan_platforms_ahead(tm, mx, my, tiles_ahead=20)
 
-        # Show all detected platforms
+        # Show all detected platforms (blue bars with col range)
         for p in platforms:
             sc, ec, row, cx, ly = p
             pw = (ec - sc + 1) * 16
-            self.markers.append(Marker(sc * 16, row * 16, pw, 16,
-                                       (80, 80, 200), ''))
+            self.markers.append(Marker(sc * 16, (row - 1) * 16, pw, 4,
+                                       (100, 150, 255),
+                                       f'c{sc}-{ec}' if ec > sc else f'c{sc}'))
 
         # ── Check if Mario can walk forward on current surface ──
         # Find how far we can walk right without falling off an edge
@@ -857,12 +858,15 @@ class TargetAI:
                 break
             walkable_end = c
 
+        # Show walkable range (white line at foot level)
+        walk_px = (walkable_end - mario_col + 1) * 16
+        self.markers.append(Marker(mario_col * 16, foot_row * 16 - 2, walk_px, 2,
+                                   (255, 255, 255), ''))
+
         # If ground ends within ~5 blocks, plan a jump NOW
-        # Need enough run-up for dash speed to reach distant platforms
         can_walk_far = walkable_end > mario_col + 5
 
         if can_walk_far:
-            # Safe ground ahead — advance but keep checking
             self.target = TargetPos(mx + 60, my, 'dash', 'advance')
             return
 
@@ -909,18 +913,23 @@ class TargetAI:
 
         if best_platform:
             sc, ec, row, cx, ly = best_platform
-            # Show target platform highlighted
+            # Show target platform highlighted (green bar)
             pw = (ec - sc + 1) * 16
-            self.markers.append(Marker(sc * 16, row * 16, pw, 16,
-                                       (0, 255, 100), 'TARGET'))
+            self.markers.append(Marker(sc * 16, (row - 1) * 16, pw, 4,
+                                       (0, 255, 100),
+                                       f'TARGET c{sc}-{ec}'))
+            # Show predicted landing point
             if best_path and best_frame < len(best_path):
                 lx = best_path[best_frame][0]
-                self.markers.append(Marker(lx - 4, (row - 1) * 16 - 4,
-                                           8, 8, (255, 255, 0), 'PRED'))
+                self.markers.append(Marker(lx - 6, (row - 1) * 16 - 6,
+                                           12, 12, (255, 255, 0), 'LAND'))
 
             self.target = TargetPos(cx, ly, 'nav_jump',
                                     f'to c{sc}-{ec}')
-            self._trajectories['nav_dash' if best_dash else 'nav_walk'] = best_path
+            # Store trajectory for display during jump
+            traj_key = 'nav_dash' if best_dash else 'nav_walk'
+            self._trajectories[traj_key] = best_path
+            self._active_nav_path = best_path  # Persist for display during arc_jump
 
             # Start the jump immediately — don't wait for action layer
             hold = min(best_frame + 2, 40)
@@ -930,10 +939,10 @@ class TargetAI:
             self.jump_right = True
             self._wall_climb = False
         else:
-            # No reachable platform found — dash toward edge to build speed
-            # but don't go past the walkable area
-            safe_x = walkable_end * 16 + 8
-            self.target = TargetPos(safe_x, my, 'dash', 'run-up')
+            # No reachable platform by jumping — walk/dash to edge and
+            # drop down. Gravity will land us on a lower platform.
+            edge_x = (walkable_end + 1) * 16
+            self.target = TargetPos(edge_x, my, 'dash', 'to edge')
 
     def _plan_wall_navigation(self, state, tm, wd, wh, mx, my, ground_row, ground_y):
         """Plan how to get past a wall. Handles:
@@ -1142,6 +1151,13 @@ class TargetAI:
             return self._do_block_jump(state)
 
         if self.phase == 'arc_jump':
+            # Show target and planned trajectory during jump
+            if self.target and self.target.mode == 'nav_jump':
+                self.markers.append(Marker(self.target.x - 6, self.target.y - 6,
+                                           12, 12, (0, 255, 100), self.target.reason))
+            nav_path = getattr(self, '_active_nav_path', None)
+            if nav_path:
+                self._trajectories['nav_plan'] = nav_path
             return self._do_arc_jump(state)
 
         # ── Mode: jump_up (jump from beside platform onto it) ──
@@ -1530,7 +1546,8 @@ class TargetAI:
         if self.jump_timer <= self.jump_hold:
             return {'left': not r, 'right': r, 'a': True, 'b': True}
         if state['on_ground'] and self.jump_timer > 6:
-            self._nav_steer_target = None  # Clear steer on landing
+            self._nav_steer_target = None
+            self._active_nav_path = None  # Clear trajectory display
             if self._wall_climb:
                 self._wall_climb = False
                 self.phase = 'moving' if self.target else 'idle'
