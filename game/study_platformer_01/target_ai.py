@@ -468,7 +468,8 @@ class TargetAI:
                         peaked_s = True
                     if peaked_s and li > 5:
                         lc = int(path[li][0] + 8) // 16
-                        lr = int(path[li][1] + 15) // 16
+                        _mh = 31 if game.is_super else 15
+                        lr = int(path[li][1] + _mh) // 16
                         if 0 <= lc < tm.cols and 0 <= lr < tm.rows:
                             if tm.tiles[lr][lc] in SOLID_TILES:
                                 jump_safe = True
@@ -818,6 +819,7 @@ class TargetAI:
         """
         mx = state['x']; my = state['y']
         on_ground = state['on_ground']
+        mario_h = 31 if game.is_super else 15
 
         # Not on ground or busy — keep current target
         if not on_ground or self.phase not in ('idle', 'moving') or self.subgoals:
@@ -894,7 +896,7 @@ class TargetAI:
                 if peaked and i > 5:
                     lx, ly_pred = path[i]
                     lc = int(lx + 8) // 16
-                    lr = int(ly_pred + 15) // 16
+                    lr = int(ly_pred + mario_h) // 16
                     if 0 <= lc < tm.cols and 0 <= lr < tm.rows:
                         if tm.tiles[lr][lc] in SOLID_TILES:
                             # Found landing — check which platform it's on
@@ -947,7 +949,7 @@ class TargetAI:
                         peaked_t = True
                     if peaked_t and ti > 5:
                         tlc = int(test_path[ti][0] + 8) // 16
-                        tlr = int(test_path[ti][1] + 15) // 16
+                        tlr = int(test_path[ti][1] + mario_h) // 16
                         if 0 <= tlc < tm.cols and 0 <= tlr < tm.rows:
                             if tm.tiles[tlr][tlc] in SOLID_TILES:
                                 if sc <= tlc <= ec and tlr == row:
@@ -967,7 +969,7 @@ class TargetAI:
                                     inp_a=False, inp_b=True)
                 for wi in range(1, len(walk_path)):
                     wlc = int(walk_path[wi][0] + 8) // 16
-                    wlr = int(walk_path[wi][1] + 15) // 16
+                    wlr = int(walk_path[wi][1] + mario_h) // 16
                     if 0 <= wlc < tm.cols and 0 <= wlr < tm.rows:
                         if tm.tiles[wlr][wlc] in SOLID_TILES:
                             if sc <= wlc <= ec and wlr == row:
@@ -1250,7 +1252,8 @@ class TargetAI:
                             peaked_p = True
                         if peaked_p and li > 5:
                             lc = int(path[li][0] + 8) // 16
-                            lr = int(path[li][1] + 15) // 16
+                            mario_h_a = 31 if self._game.is_super else 15
+                            lr = int(path[li][1] + mario_h_a) // 16
                             if 0 <= lc < self._tm.cols and 0 <= lr < self._tm.rows:
                                 if self._tm.tiles[lr][lc] in SOLID_TILES:
                                     pred_land = (path[li][0], (lr - 1) * 16)
