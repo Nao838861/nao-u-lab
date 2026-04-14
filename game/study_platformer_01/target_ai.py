@@ -557,22 +557,23 @@ class TargetAI:
     # ── Strategy ─────────────────────────────────────────────────────
 
     def _strategy(self, state, game, tm, scroll_x, pits, walls, enemies):
+        """Route-first strategy: plan the route based on terrain, then
+        pick up blocks along the way. Navigation always comes first."""
         mx = state['x']; my = state['y']
         on_ground = state['on_ground']
         mario_row = int(my) // 16
-        ground_row = tm.rows - 2  # Level ground (row 13), not Mario's current row
+        ground_row = tm.rows - 2
+        ground_y = ground_row * 16
 
-        # Mark enemies as threats
+        # Mark enemies/pits for debug display
         for e in enemies:
             if 0 < e['dx'] < 100:
                 self.markers.append(Marker(e['x'], e['y'], 16, 16, (255, 80, 80), e['kind']))
-
-        # Mark pits
         for pd, pw in pits:
             if 0 < pd < 150:
-                self.markers.append(Marker(mx + pd, (tm.rows - 2) * 16, pw, 32, (255, 0, 255), 'PIT'))
+                self.markers.append(Marker(mx + pd, ground_y, pw, 32, (255, 0, 255), 'PIT'))
 
-        # ── Update / validate current block target ──
+        # ── Validate current target ──
         if self.block_target:
             bc, br, bch = self.block_target
             if tm.tiles[br][bc] not in HITTABLE:
@@ -581,186 +582,174 @@ class TargetAI:
             elif bc * 16 < mx - 80:
                 self._clear_block()
             elif state['frame'] - self._target_since > 180:
-                self.hit_blocks.add((br, bc))  # Give up after 180 frames
+                self.hit_blocks.add((br, bc))
                 self._clear_block()
 
-        # ── Pick new block target if needed ──
-        if self.block_target is None and on_ground and self.phase in ('idle', 'moving'):
-            blocks = scan_visible_blocks(tm, scroll_x)
-            blocks = [(c, r, ch) for c, r, ch in blocks if (r, c) not in self.hit_blocks]
+        # ── Don't re-plan if busy (jumping/arc_jump/active subgoals) ──
+        if self.phase in ('jumping', 'arc_jump'):
+            return
+        if self.subgoals:
+            if self.target is None:
+                self.target = self.subgoals.pop(0)
+            return
+        if not on_ground:
+            if self.target is None:
+                self.target = TargetPos(mx + 120, my, 'dash', 'advance')
+            return
+        if self.target and self.target.reason == 'use spring':
+            return
 
-            best = None; best_score = -999; best_plat = None
-            for c, r, ch in blocks:
-                bx = c * 16
-                dx = bx - mx
-                if dx < -80 or dx > 200:
-                    continue
-                rows_above = mario_row - r
-                if rows_above < 1:
-                    continue
+        # ══════════════════════════════════════════════════════════════
+        # ROUTE PLANNING: scan ahead, build waypoints, integrate blocks
+        # ══════════════════════════════════════════════════════════════
 
-                # Skip non-item blocks at ground level (rows_above=1):
-                # these act as obstacles to jump over, not targets to hit
-                if rows_above == 1 and ch not in ITEM_BLOCKS and ch not in COIN_BLOCKS:
-                    continue
-
-                # Skip blocks behind a tall wall we can't easily cross
-                if dx > 0:
-                    block_col = c
-                    mario_col_i = int(mx) // 16
-                    wall_blocks = False
-                    for wc in range(mario_col_i + 1, block_col):
-                        if wc < tm.cols:
-                            # Count solid rows from top
-                            h = 0
-                            for wr in range(tm.rows - 3, -1, -1):
-                                if tm.tiles[wr][wc] in SOLID_TILES:
-                                    h = (tm.rows - 2) - wr
-                                else:
-                                    break
-                            if h >= 5:
-                                wall_blocks = True
-                                break
-                    if wall_blocks:
-                        continue
-
-                plat = None
-                if rows_above <= 4:
-                    # Reachable with a walk jump (< ~64px height)
-                    score = 200 - abs(dx)
-                elif rows_above <= 10:
-                    plat = find_platform_for(tm, c, ground_row)
-                    if plat is None:
-                        continue
-                    score = (100 if ch in ITEM_BLOCKS else 80) - abs(dx)
+        # 1. Check for springboard first (special case)
+        mario_col = int(mx) // 16
+        for dc in range(-3, 10):
+            c = mario_col + dc
+            if 0 <= c < tm.cols:
+                for sr in (ground_row, ground_row - 1):
+                    if 0 <= sr < tm.rows and tm.tiles[sr][c] == 'S':
+                        spring_x = c * 16 + 4
+                        if abs(spring_x - mx) < 150:
+                            self.target = TargetPos(spring_x, my, 'walk', 'use spring')
+                            self._clear_block()
+                            self.markers.append(Marker(c * 16, sr * 16,
+                                                       16, 16, (0, 255, 128), 'SPRING'))
+                            return
+                        break
                 else:
                     continue
+                break
 
-                if ch in ITEM_BLOCKS:
-                    score += 80
-                elif ch in COIN_BLOCKS:
-                    score += 50
-
-                if score > best_score:
-                    best_score = score; best = (c, r, ch); best_plat = plat
-
-            if best:
-                self.block_target = best
-                self.block_platform = best_plat
-                self._target_since = state['frame']
-
-        # ── Build target / subgoals from current block target ──
-        if self.block_target:
-            bc, br, bch = self.block_target
-            self.markers.append(Marker(bc * 16, br * 16, 16, 16, (255, 255, 0), bch))
-
-            if self.block_platform and self.phase not in ('jumping', 'arc_jump'):
-                pl, pr_col, p_row = self.block_platform
-                plat_top_y = p_row * 16 - 15
-                # Already on the platform? → clear platform, treat as ground-reachable
-                if my < plat_top_y + 20:
-                    self.block_platform = None
-                    self.subgoals = []
-                    # Fall through to ground-reachable path below
-
-            if self.block_platform and self.phase not in ('jumping', 'arc_jump'):
-                # ── High block: plan multi-step route to reach platform ──
-                pl, pr_col, p_row = self.block_platform
-                plat_left_x = pl * 16
-                plat_top_y = p_row * 16 - 15  # Standing on block top
-                self.markers.append(Marker(plat_left_x, p_row * 16,
-                                          (pr_col - pl + 1) * 16, 16,
-                                          (0, 200, 255), 'PLAT'))
-
-                plat_width = (pr_col - pl + 1) * 16
-                plat_right_x = (pr_col + 1) * 16
-                plat_center_x = (plat_left_x + plat_right_x) // 2
-                under_x = bc * 16 - 5
-
-                if not self.subgoals and self.phase in ('idle', 'moving'):
-                    # Approach from the CLOSER edge to minimize backtracking
-                    dist_to_left = abs(mx - plat_left_x)
-                    dist_to_right = abs(mx - plat_right_x)
-                    if dist_to_right < dist_to_left:
-                        # Closer to right edge → approach from right
-                        stand_x = plat_right_x + 70
-                        land_x = plat_right_x - 16
-                    else:
-                        # Closer to left edge → approach from left
-                        stand_x = plat_left_x - 70
-                        land_x = plat_left_x + 16
-
-                    self.subgoals = [
-                        TargetPos(stand_x, my, 'dash', 'beside platform'),
-                        TargetPos(land_x, plat_top_y, 'jump_up', 'jump onto plat'),
-                        TargetPos(under_x, plat_top_y, 'walk', f'on plat to c{bc}'),
-                    ]
-                    self.target = self.subgoals.pop(0)
-                    self.phase = 'moving'
-
-                elif self.target is None and self.subgoals:
-                    self.target = self.subgoals.pop(0)
-
-            elif self.phase not in ('jumping', 'arc_jump'):
-                # ── Ground-reachable block: go under it then jump ──
-                under_x = bc * 16 - 5
-                if on_ground:
-                    # Use trajectory prediction: would jumping NOW hit the block?
-                    if jump_would_hit_block(game, tm, bc, br):
-                        self.target = TargetPos(mx, br * 16, 'jump_land', f'hit c{bc}')
-                    elif abs(mx - under_x) > 30:
-                        self.target = TargetPos(under_x, my, 'dash', f'dash to c{bc}')
-                    else:
-                        self.target = TargetPos(under_x, my, 'walk', f'walk to c{bc}')
-
-            # If target is ahead but a tall wall blocks the path,
-            # insert a multi-step plan to climb over the wall first
-            # Show movement target
-            if self.target:
-                col_t = (255, 200, 0) if self.target.mode in ('dash',) else \
-                        (0, 180, 255) if self.target.mode == 'jump_up' else (0, 255, 100)
-                self.markers.append(Marker(self.target.x - 3, self.target.y - 3,
-                                          8, 8, col_t, self.target.reason))
-        else:
-            # No block target: navigate toward the flag via safe waypoints
-            if not (self.target and self.target.reason == 'use spring'):
-                self._plan_navigation(state, game, tm, pits, walls)
-
-        # ── Mushroom collection (override if nearby) ──
-        game_obj = game
-        for m in game_obj.mushrooms:
+        # 2. Check for nearby mushroom (urgent override)
+        for m in game.mushrooms:
             if not m.alive or m.emerging:
                 continue
             mdx = m.x / ONE - mx
-            mdy = m.y / ONE - my
-            if abs(mdx) < 60:
+            if abs(mdx) < 40 and not state.get('is_super', False):
+                mush_vx = m.vx / ONE
+                predict_frames = abs(mdx) / max(abs(state['vx']), 1.5)
+                predict_x = m.x / ONE + mush_vx * predict_frames
+                self.target = TargetPos(predict_x, m.y / ONE, 'dash', 'catch mushroom')
                 self.markers.append(Marker(m.x / ONE, m.y / ONE, 16, 16, (0, 255, 0), 'MUSH'))
-                if abs(mdx) < 40 and not state.get('is_super', False):
-                    # Chase mushroom — predict where it'll be
-                    mush_vx = m.vx / ONE
-                    predict_frames = abs(mdx) / max(abs(state['vx']), 1.5)
-                    predict_x = m.x / ONE + mush_vx * predict_frames
-                    self.target = TargetPos(predict_x, m.y / ONE, 'dash', 'catch mushroom')
+                return
 
-        # ── Springboard: walk onto it to bounce over walls ──
-        if on_ground and self.phase in ('idle', 'moving'):
-            mario_col = int(mx) // 16
-            # Scan nearby tiles (behind and ahead) for springboard
-            for dc in range(-3, 10):
-                c = mario_col + dc
-                if 0 <= c < tm.cols:
-                    for sr in (ground_row, ground_row - 1):
-                        if 0 <= sr < tm.rows and tm.tiles[sr][c] == 'S':
-                            spring_x = c * 16 + 4
-                            if abs(spring_x - mx) < 150:
-                                self.target = TargetPos(spring_x, my, 'walk', 'use spring')
-                                self._clear_block()
-                                self.markers.append(Marker(c * 16, sr * 16,
-                                                           16, 16, (0, 255, 128), 'SPRING'))
-                            break
-                    else:
-                        continue
-                    break
+        # 3. Route planning: terrain first, then blocks
+        far_pits, far_walls = scan_terrain_ahead(tm, mx, my, tiles_ahead=20)
+
+        # Find nearest obstacle
+        nearest_obstacle = None
+        for pd, pw in far_pits:
+            if pd > 0:
+                nearest_obstacle = ('pit', pd, pw)
+                break
+        for wd, wh in far_walls:
+            if wd > 0 and wh >= 1:
+                if nearest_obstacle is None or wd < nearest_obstacle[1]:
+                    nearest_obstacle = ('wall', wd, wh)
+                break
+
+        # 4. Check for blocks BEFORE the obstacle (safe to collect)
+        obstacle_dist = nearest_obstacle[1] if nearest_obstacle else 200
+        blocks = scan_visible_blocks(tm, scroll_x)
+        blocks = [(c, r, ch) for c, r, ch in blocks if (r, c) not in self.hit_blocks]
+
+        best_block = None; best_score = -999; best_plat = None
+        for c, r, ch in blocks:
+            bx = c * 16
+            bdx = bx - mx
+            if bdx < -80 or bdx > 200:
+                continue
+            rows_above = mario_row - r
+            if rows_above < 1:
+                continue
+            if rows_above == 1 and ch not in ITEM_BLOCKS and ch not in COIN_BLOCKS:
+                continue
+            # Skip blocks beyond the nearest obstacle (either direction)
+            if bdx > 0 and bdx > obstacle_dist - 16:
+                continue
+            # Skip blocks on the far side of a nearby tall wall
+            # (wall must be BETWEEN mario and block)
+            if nearest_obstacle and nearest_obstacle[0] == 'wall' and nearest_obstacle[2] >= 4:
+                wall_px = mx + nearest_obstacle[1]
+                block_px = c * 16
+                # Wall is between mario and block (both directions)
+                if (bdx > 0 and block_px > wall_px) or (bdx < 0 and block_px < wall_px - 32):
+                    continue
+
+            plat = None
+            if rows_above <= 4:
+                score = 200 - abs(bdx)
+            elif rows_above <= 10:
+                plat = find_platform_for(tm, c, ground_row)
+                if plat is None:
+                    continue
+                score = (100 if ch in ITEM_BLOCKS else 80) - abs(bdx)
+            else:
+                continue
+            if ch in ITEM_BLOCKS:
+                score += 80
+            elif ch in COIN_BLOCKS:
+                score += 50
+            if score > best_score:
+                best_score = score; best_block = (c, r, ch); best_plat = plat
+
+        # 5. If there's a reachable block before the obstacle, go for it
+        if best_block:
+            bc, br, bch = best_block
+            self.block_target = best_block
+            self.block_platform = best_plat
+            self._target_since = state['frame']
+            self.markers.append(Marker(bc * 16, br * 16, 16, 16, (255, 255, 0), bch))
+
+            if best_plat:
+                # High block with platform
+                pl, pr_col, p_row = best_plat
+                plat_left_x = pl * 16
+                plat_top_y = p_row * 16 - 15
+                plat_right_x = (pr_col + 1) * 16
+                under_x = bc * 16 - 5
+                self.markers.append(Marker(plat_left_x, p_row * 16,
+                                          (pr_col - pl + 1) * 16, 16,
+                                          (0, 200, 255), 'PLAT'))
+                dist_to_left = abs(mx - plat_left_x)
+                dist_to_right = abs(mx - plat_right_x)
+                if dist_to_right < dist_to_left:
+                    stand_x = plat_right_x + 70
+                    land_x = plat_right_x - 16
+                else:
+                    stand_x = plat_left_x - 70
+                    land_x = plat_left_x + 16
+                self.subgoals = [
+                    TargetPos(stand_x, my, 'dash', 'beside platform'),
+                    TargetPos(land_x, plat_top_y, 'jump_up', 'jump onto plat'),
+                    TargetPos(under_x, plat_top_y, 'walk', f'on plat to c{bc}'),
+                ]
+                self.target = self.subgoals.pop(0)
+                self.phase = 'moving'
+            else:
+                # Ground-reachable block
+                under_x = bc * 16 - 5
+                if jump_would_hit_block(game, tm, bc, br):
+                    self.target = TargetPos(mx, br * 16, 'jump_land', f'hit c{bc}')
+                elif abs(mx - under_x) > 30:
+                    self.target = TargetPos(under_x, my, 'dash', f'dash to c{bc}')
+                else:
+                    self.target = TargetPos(under_x, my, 'walk', f'walk to c{bc}')
+            return
+
+        # 6. No block to collect — navigate past the obstacle
+        self.block_target = None
+        self.block_platform = None
+        self._plan_navigation(state, game, tm, pits, walls)
+
+        # Show movement target
+        if self.target:
+            col_t = (255, 200, 0) if self.target.mode in ('dash',) else \
+                    (0, 180, 255) if self.target.mode in ('jump_up', 'nav_jump') else (0, 255, 100)
+            self.markers.append(Marker(self.target.x - 3, self.target.y - 3,
+                                      8, 8, col_t, self.target.reason))
 
     def _plan_navigation(self, state, game, tm, pits, walls):
         """Destination-driven navigation: scan ahead, find obstacles,
@@ -1017,6 +1006,15 @@ class TargetAI:
         # ── nav_jump: destination-driven jump over obstacles ──
         if mode == 'nav_jump' and on_ground:
             ty = self.target.y
+            # If target is elevated and we're too close to the wall,
+            # back up a bit for a running start (but not too far)
+            if ty < state['y'] - 16 and dx > 0:
+                for wd, wh in walls:
+                    if 0 < wd < 30 and wh >= 2:
+                        # Too close — walk left to get a ~40px run-up
+                        if wd < 40:
+                            return {'left': True, 'right': False, 'a': False, 'b': False}
+                        break
             if dx > 0:
                 from trajectory import predict
                 # Show target marker
