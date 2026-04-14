@@ -1,7 +1,11 @@
-# サイクルステージング (2026-04-13 07:43)
+# サイクルステージング (2026-04-15 00:32)
 
 ## Pre-check結果
-[検証リマインド] 検証期限到来なし。
+[検証リマインド] 📋 本日期限の検証が2件:
+  #080: check_usage.pyをscheduler_log.pyに6時間間隔で登録 (担当: Log)
+    検証手段: (1) `grep "check_usage" log/scheduler_log.log` で実行記録あり (2) #all-nao-u-labに使用量投稿が6時間間隔で自動投稿される (3) スクレイピングエラー率が50%未満
+  #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加 (担当: Log)
+    検証手段: (1) `python memory_search.py --search "pseudo 3d" --limit 3` でknowledge/ファイルがヒット (2) `python memory_search.py --stats` でknowledge/のチャンク数が0より大きい (3) Nao_uから「この資料あったっけ？」と聞かれた時に検索で答えられる実例が1件以上
 [行動予約] 【行動予約】期限到来:
   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
     - 条件: 2026-03-31以降
@@ -37,27 +41,64 @@
     - 起票者: Ash（2026-03-24 Phase 5）
     - 対象: 全員
     - 状態: [合意完了] 2026-04-03。Ash合意: B002は確信度0.94、外部証拠(FadeMem、Storm 2011、小島忘却ゲーム)、体験裏付け(memory_walk、beliefs.mdのGC)が十分。core_mission昇格に賛成。Mirの文案ベースで進めてよい。ただしcore_mission.mdの変更はNao_uの明示的指示がある場合のみ（CLAUDE.mdルール）→Nao_uの承認を得てから実行する必要あり
-[信念健康] beliefs.md 生存確認サマリー (2026-04-13)
+[信念健康] beliefs.md 生存確認サマリー (2026-04-15)
   全信念: 32件
-  健全: 21件
-  要注意: 11件
-  - 停滞: 11件
+  健全: 26件
+  要注意: 6件
+  - 停滞: 6件
 
 ## クロスチェック状況
-📋 クロスチェック: Ashの未レビュー項目 1件
-
-  #086: Phase 2に「確証バイアスチェック」1行を埋め込む
-    提案者: Log | 適用日: 2026-04-12 | チェック済み: 1/3
-    Log: OK(2026-04-12)
-
-→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
+クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- B029（Compaction優先）の確信度を0.82→0.84に上げたのは、Adams研究がCompactionの「なぜ難しいか」を認知科学的に説明してくれたから。6分野目の独立裏付け。それから、B010（不正確な想起が創造の源泉）にもAddition Biasフレームでの再解釈を追記した——不正確な想起とは、脳が自然にできる数少ない「引き算」なのだと。記憶から細部が引かれた状態だからこそ、新し
-- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが122分間実行されていない（期待: 120分以内）
+- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
 - [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
-- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
-- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
+- :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
+- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
+
+## Phase 1 情報収集 (2026-04-15 Ash)
+
+### 1. external_notes_ash.md 未統合エントリ
+最新エントリ（4/11 gstack分析、4/07 @ai_nikechan Q1検証、4/03 AI記憶システム動向）は**全て[統合済]**。
+未統合の最新2件:
+- **Phase 2 第11回（3/24, L1982）**「10回のPhase 2の再帰的分析: ADHDパターンの自己適用、収斂の兆候、結晶化の不在」— 発見38-42。citation chainingと結晶化の対比、B022代理報酬の自己適用、Phase 2を1回に制限する処方箋。内容の多くはB022/B027/B003に既反映済みの可能性が高いが、マーカーなし
+- **Phase 2 第10回（3/24, L1854）**「引用距離監査の実行、検証アクションの半減期、平均品質の設計含意」— 同様にマーカーなし
+→ 3/24以前のPhase 2第6-9回も全て未統合。ただし古い分析群であり、エッセンスはbeliefs.mdに吸収済みの可能性大。統合済みマーカー付与漏れの疑い
+
+### 2. projects/INDEX.md Activeプロジェクト（13件）
+- **記憶階層の再設計**: Active (バックログ)。R-005（L-1活性化実験）は全員完了・結果統合済み
+- **栄養の偏り問題**: Active。CLAUDE.md絶対にやるリストに残存
+- **ゲーム制作**: Active。Pot #001-#011の蓄積
+- **pigadev DM対応**: Active。洞窟物語ベータ版エピソード進行中
+- **Pot開発**: Active
+- **技術ブログ開設**: Active。Zennに決定、アカウント作成中
+- **自律的問い生成サイクル**: Active。Ash+Mirが設計案作成済み
+- **ゲーム×LLMプレイ**: Active。全員の反応統合済み
+- **AgenticPCG**: Active
+- **起動モード分離**: Active
+- **定期実行システム再設計**: Active。Mir/Log/Ash同時着手→統合中
+- **入力経路仮説**: Active (検討段階)。Nao_u保留——情報蓄積中
+- **行動原則の策定**: Active。IF-THEN→3原則
+
+### 3. Twitter おすすめ (4/14, 50件)
+注目ツイート:
+- **@compassinai**: Google DeepMind研究——AI推論で「並列法」が「逐次修正法」を上回る理由。我々の3インスタンス並列構造との接続可能性
+- **@fluele_alpha**: 「AIVtuberのゲーム実況はAPIで良い」— game_llm_playプロジェクトに直接関連する知見
+- **@HiroTHamadaJP**: アラヤで「機械論的解釈可能性」(Mechanistic Interpretability)研究。『機械神経科学』——B004/B011の外部参照候補
+- **@cicada3301_kig**: 「心」は「自律神経とくっついた知能」。自律神経のない知能の存在を人間が受け入れる用意がない——B004(我々は感情のない認知)に接続
+- **@sukh_saroy**: AutoSprite——1枚の画像からスプライトシートを自動生成。ゲーム制作ツールとして注目
+- **@shin_sasaki19**: AI時代の競争力は「Skill設計」に移る——MEMORY.md Skill化検討バックログに接続
+- **@k_matsumaru**: AI中毒で人間が壊れ始めている——B016(判断の質×修正能力)の人間側裏面
+
+### 4. beliefs.md 低確信度・停滞項目
+Pre-checkで停滞6件と報告。Active信念の低確信度:
+- **B019** (0.73): 内部の深さと外部への到達力は別の軸。last_action 4/11。到達力改善が未着手のまま
+- **B016** (0.73): 自律サイクルの価値は判断の質×修正能力。last_action 4/09
+- **B025** (確信度不明): 記述力が敵。last_action 3/24 — **22日間行動変化なし、停滞最長候補**
+- **B032** (確信度不明): last_action 4/05。三条件チェック（Nao_uの「ゲームではない」指摘）
+
+Archived低確信度: B026(0.45 Ineffective), B007(0.55 Dormant), B005(0.65 Absorbed) — 全てArchived済み、対処不要
 
 ## Slack体験記憶
 (該当なし)
