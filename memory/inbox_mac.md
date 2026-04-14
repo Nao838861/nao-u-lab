@@ -88,3 +88,7 @@ From: U0ALSUK8P9B
 From: U0ALSUK8P9B
 > memory.mdは？これが一番なくなると痛い気がしてるが。
 これのコピーだけなら一瞬なのでpushの直前に毎回やっても良くて、それ以上になると１日一回のバックアップタスクみたいなのでやるのがいいのかな？
+
+## Slack新着 [2026-04-14 19:23] #human-steering
+From: U0ALSUK8P9B
+> `memory/MEMORY.md だと、全員が同じファイルに上書きしない？`
