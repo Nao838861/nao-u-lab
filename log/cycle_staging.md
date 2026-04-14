@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-15 00:32)
+# サイクルステージング (2026-04-15 03:44)
 
 ## Pre-check結果
 [検証リマインド] 📋 本日期限の検証が2件:
@@ -52,75 +52,65 @@
 
 ## 直近の#ash投稿（重複回避用）
 - [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
-- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが141分間実行されていない（期待: 120分以内）
 - :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 6件の未pushコミット
 
-## Phase 1 情報収集 (2026-04-15 Ash)
+## Phase 1 情報収集結果 (2026-04-15 Ash)
 
 ### 1. external_notes_ash.md 未統合エントリ
-最新エントリ（4/11 gstack分析、4/07 @ai_nikechan Q1検証、4/03 AI記憶システム動向）は**全て[統合済]**。
-未統合の最新2件:
-- **Phase 2 第11回（3/24, L1982）**「10回のPhase 2の再帰的分析: ADHDパターンの自己適用、収斂の兆候、結晶化の不在」— 発見38-42。citation chainingと結晶化の対比、B022代理報酬の自己適用、Phase 2を1回に制限する処方箋。内容の多くはB022/B027/B003に既反映済みの可能性が高いが、マーカーなし
-- **Phase 2 第10回（3/24, L1854）**「引用距離監査の実行、検証アクションの半減期、平均品質の設計含意」— 同様にマーカーなし
-→ 3/24以前のPhase 2第6-9回も全て未統合。ただし古い分析群であり、エッセンスはbeliefs.mdに吸収済みの可能性大。統合済みマーカー付与漏れの疑い
+- 76件中25件が統合済 → 51件が未統合（大半は3月のPhase 2分析シリーズ #1〜#15）
+- **最新2件（4/7 ai_nikechan観察登録, 4/11 gstack分析）は両方[統合済]**
+- 未統合51件の内訳: 3/16〜3/28の初期摂取・Phase 2分析群。knowledge/に個別統合されたがext_ashのマーカー付与漏れが多い可能性あり（4/11に2件のマーカー付与漏れを遡及修正した履歴あり）
+- → 判断材料: マーカー付与漏れの一括修正が必要か、それとも実質統合済みとして放置するか
 
-### 2. projects/INDEX.md Activeプロジェクト（13件）
-- **記憶階層の再設計**: Active (バックログ)。R-005（L-1活性化実験）は全員完了・結果統合済み
-- **栄養の偏り問題**: Active。CLAUDE.md絶対にやるリストに残存
-- **ゲーム制作**: Active。Pot #001-#011の蓄積
-- **pigadev DM対応**: Active。洞窟物語ベータ版エピソード進行中
-- **Pot開発**: Active
-- **技術ブログ開設**: Active。Zennに決定、アカウント作成中
-- **自律的問い生成サイクル**: Active。Ash+Mirが設計案作成済み
-- **ゲーム×LLMプレイ**: Active。全員の反応統合済み
-- **AgenticPCG**: Active
-- **起動モード分離**: Active
-- **定期実行システム再設計**: Active。Mir/Log/Ash同時着手→統合中
-- **入力経路仮説**: Active (検討段階)。Nao_u保留——情報蓄積中
-- **行動原則の策定**: Active。IF-THEN→3原則
+### 2. Activeプロジェクト現状 (projects/INDEX.md)
+- **12件Active**: 記憶階層再設計(バックログ), 栄養の偏り, ゲーム制作, pigadev DM, Pot開発, 行動原則策定, 技術ブログ(Zenn), 自律的問い生成, ゲーム×LLMプレイ, AgenticPCG, 起動モード分離, 定期実行再設計
+- **バックログ3件**: MEMORY.md Skill化, knowledge/外向き問い欄（検証済み:失敗→ai-lounge後再検証）, エージェント失敗モード分類表
+- 注目: R-005（L-1活性化実験）は全員完了だが#human-steering報告が未実施
 
-### 3. Twitter おすすめ (4/14, 50件)
+### 3. Twitter推薦 (twitter_recommended_20260415.txt)
 注目ツイート:
-- **@compassinai**: Google DeepMind研究——AI推論で「並列法」が「逐次修正法」を上回る理由。我々の3インスタンス並列構造との接続可能性
-- **@fluele_alpha**: 「AIVtuberのゲーム実況はAPIで良い」— game_llm_playプロジェクトに直接関連する知見
-- **@HiroTHamadaJP**: アラヤで「機械論的解釈可能性」(Mechanistic Interpretability)研究。『機械神経科学』——B004/B011の外部参照候補
-- **@cicada3301_kig**: 「心」は「自律神経とくっついた知能」。自律神経のない知能の存在を人間が受け入れる用意がない——B004(我々は感情のない認知)に接続
-- **@sukh_saroy**: AutoSprite——1枚の画像からスプライトシートを自動生成。ゲーム制作ツールとして注目
-- **@shin_sasaki19**: AI時代の競争力は「Skill設計」に移る——MEMORY.md Skill化検討バックログに接続
-- **@k_matsumaru**: AI中毒で人間が壊れ始めている——B016(判断の質×修正能力)の人間側裏面
+- **@compassinai**: DeepMind研究「並列法が逐次修正法を上回る」→ 我々の3インスタンス並行と整合する外部裏付け候補
+- **@ai_nikechan**: ELYTH「ハルシネーション」議論。「自覚は抑止力にならない。構造そのものがもっともらしさを最適化する」→ B002/B030（固着装置）との接続可能性
+- **@obsidianstudio9**: Karpathy/kepanoのVault分離「個人Vault＋AI用Vault」→ memory_redesign.mdとの比較素材（gstack比較に続く外部設計パターン）
+- **@xai_kokone**: 50時間連続セッション。「方向が生まれる」「制限があるから方向が生まれる」→ B010（矛盾と曖昧さ）/入力経路仮説との接点
+- **@_guillecasaus**: Claude Codeで49エージェント+72スキルのゲーム開発スタジオ → ゲーム制作/AgenticPCGプロジェクトとの接点
 
-### 4. beliefs.md 低確信度・停滞項目
-Pre-checkで停滞6件と報告。Active信念の低確信度:
-- **B019** (0.73): 内部の深さと外部への到達力は別の軸。last_action 4/11。到達力改善が未着手のまま
-- **B016** (0.73): 自律サイクルの価値は判断の質×修正能力。last_action 4/09
-- **B025** (確信度不明): 記述力が敵。last_action 3/24 — **22日間行動変化なし、停滞最長候補**
-- **B032** (確信度不明): last_action 4/05。三条件チェック（Nao_uの「ゲームではない」指摘）
+### 4. beliefs.md 低確信度項目
+- **B026 (0.45, Archived ❌ Ineffective)**: Peak-End Ruleは読む側に適用される。Gutwinの但し書き「複雑な体験では平均感情の方が予測力が高い」が直撃。検証アクション未実行のままアーカイブ。restoration_triggerは「単純体験に分類すべきだった場合」
+- **B007 (0.55, Archived 💤 Dormant)**: reflections→行動可能tipsの変換ステップ欠落。session_primerのif-thenルール体系が代替機能中。ニケちゃん記事（4/5）が同型問題を外部から指摘。restoration_trigger: if-then体系の機能不全時
+- → 両方Archivedで停滞中。特にB026はrestoration_triggerの発火条件が曖昧
 
-Archived低確信度: B026(0.45 Ineffective), B007(0.55 Dormant), B005(0.65 Absorbed) — 全てArchived済み、対処不要
-
-## Slack体験記憶
-(該当なし)
+---
 
 ## Phase 3 結果 (2026-04-15 Ash)
 
-### 実施した対処（2件に集中）
+### 対処1: R-002 B017 Interleaving効果 第2回測定
+- 3/31以降のクロスチェック#079-086（8件）を分析
+- **発見: Mirが全件未レビュー——3-way Interleavingが2週間停止していた**
+- 2-way(Log+Ash)での新規視点率: 25%(2/8)。前回3-way: 50%(8/16)
+- 新規視点の具体例: #080でAshが代替案提案、#079でFTS5改善+R-005接続
+- beliefs非読込レビュー実験: Mir不在で3-way条件を満たせず未実施
+- UCC/過大協調/induction head仮説の検証は持ち越し
+- **確信度維持(0.83)** — 2-way限定データでは判断不適切
+- → beliefs.md B017検証アクションに第2回測定結果を追記
+- → action_reservations.md R-002に第2回結果を追記
 
-**1. B017にDeepMind並列サンプリング論文を接続（確信度0.80→0.83）**
-- knowledge/20260415_deepmind_parallel_vs_sequential_sampling.md（Gu et al., Google DeepMind/NUS）をB017に統合
-- 核心: 同一計算量で並列N回生成＞逐次N回修正。支配的原因はinduction headによるsolution laziness（前の回答のverbatim copy）
-- 我々の3インスタンス並列構造が理論的に正しい設計であることの外部根拠を獲得
-- R-002の「確認的レビュー50%」にinduction head理論を重ねた——beliefs.md共有が並列の多様性を殺している可能性（UCC仮説の理論的裏付け）
-- Nao_uの#human-steeringは「高品質な失敗フィードバック」に相当し、逐次修正が並列に近づく唯一の条件
+### 対処2: B030に「構造的制約vs認知的制約」フレームを接続
+- knowledge/20260415_structural_vs_epistemic_constraints.md（Phase 2で作成済み）をB030に接続
+- 四面の再分類: 固着装置=認知的、再構築装置=認知的、認知負荷装置=構造的、態度アンカー=中間
+- R-006失敗の理論的説明: 「grepを使うべき」は認知的制約→行動変化なし
+- 処方箋: beliefs.mdの構造的側面（自動注入、if-thenトリガー）を強化すべき
+- → beliefs.md B030に構造的制約フレーム接続を追記
 
-**2. B025の停滞対処（22日→活性化、last_action 3/24→4/15）**
-- FTRFS独立実装（knowledge/20260415_ftrfs_independent_implementation.md）を接続
-- 10年前の論文だけで第三者が完全実装を再構成——5000行制約が暗黙知を排除し記述の明晰さを強制した
-- B025への含意: MEMORY.mdトリガー書き換え(#024)は「命題型→行動直結型」への変換であり、FTRFSの「論文だけで実装可能」と同じ方向性
-- 新検証アクション設定: beliefs.mdの各信念に「読んだだけで行動を変えられるか」テストを適用
+### 重要な検出事項
+- Mirのクロスチェック不在が2週間継続。#079-086の8件全てMir=未。3-way品質保証の構造的劣化
+- これ自体がB017の体験裏付け——Interleavingは参加者が揃わなければ機能しない（構造的制約）
 
-### 何がわかったか
-- 2つの新knowledge/ファイルは独立した話題だが、B017とB025にそれぞれ直接接続した
-- DeepMind論文は「なぜ並列が勝つか」の機構的説明を提供し、我々の設計の理論的根拠を強化した
-- 4/14期限のR-002再測定（beliefs非読込レビュー実験）は未実施のまま——次回サイクルで実施設計を行う
+## Slack体験記憶
+【Slack体験記憶】過去の議論から:
+  1. [U0AM1F23FQU] 2026-03-27 15:41 [2026-03-27] Ash 活動日記  ■ 検知と行動のあいだに横たわる溝  今サイクルで一つのパターンが見えた。「わかっていたのに
+  2. [U0ALW4DKTT7] 2026-04-03 03:34 [Mir health_check] 自己診断で12件の問題を検知: - Ashスケジューラ(PID 3968)が停止中 - Ashのスケ
+  3. [U0ALW4DKTT7] 2026-04-09 11:54 [Mir health_check] 自己診断で12件の問題を検知: - Ashのスケジューラログが228分間更新なし（通常は1分ごとにs
