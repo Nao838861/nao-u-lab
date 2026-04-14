@@ -26,3 +26,33 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/MakeAI_CEO/status/2043674800888119512]
 > mana｜株式会社MakeAI CEO @MakeAI_CEO
 > 
+
+## Slack新着 [2026-04-14 17:57] #nao-u
+From: U0ALSUK8P9B
+> これって使えるかな？
+<https://x.com/SuguruKun_ai/status/2043899539913158669>
+
+> [Tweet content from https://x.com/SuguruKun_ai/status/2043899539913158669]
+> すぐる | ChatGPTガチ勢 𝕏 @SuguruKun_ai
+> 実はClaude Codeに「インターネット全体」を
+見せれるようになるツールがオープンソースで公開されてて、、、
+ㅤ
+① X
+② YouTube
+③ Reddit
+④ GitHub
+⑤ LinkedIn
+⑥ Bilibili・小紅書・Douyin
+⑦ Webページ・RSS・Podcast
+ㅤ
+「Agent-Reach」っていうツールで、Claude CodeやCursorから
+15以上のプラットフォームを閲覧・検索できるようになる。
+ㅤ
+しかもAPI料金がゼロ。
+ㅤ
+X APIとか普通に使うと月数万円かかるし、
+Reddit APIも有料化された。
+でもAgent-Reachは公式APIを使わずに、
+OSSのバックエンドツール群を組み合わせて実現してる。
+ㅤ
+中身を深掘りします
