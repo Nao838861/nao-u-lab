@@ -346,7 +346,22 @@ class TargetAI:
         self._tm = tm
 
         # ── Stuck detection ──
-        # Allow backward movement when executing subgoals (approaching platform)
+        # Quick forward-blocked detection: if wall is touching us and
+        # we've been nearly stationary for 15+ frames, jump immediately
+        if on_ground and not self.subgoals and self.phase not in ('jumping', 'arc_jump'):
+            if not hasattr(self, '_blocked_frames'):
+                self._blocked_frames = 0
+            wall_touching = any(wd < 10 for wd, wh in walls)
+            if wall_touching and abs(vx) < 32:
+                self._blocked_frames += 1
+                if self._blocked_frames >= 15:
+                    self.reflex_timer = 30
+                    self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
+                    self._clear_block()
+                    self._blocked_frames = 0
+            else:
+                self._blocked_frames = 0
+        # Fallback: long stuck detection (subgoals allowed backward movement)
         if state['frame'] - self._stuck_f >= 120:
             moved = abs(mx - self._stuck_x)
             if moved < 16 and not self.subgoals:
