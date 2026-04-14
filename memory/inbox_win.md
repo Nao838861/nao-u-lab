@@ -3,7 +3,3 @@
 ## [2026-04-15 Ash] R-004 B002昇格保留——二層分割提案
 R-004「合意完了→再検討」に変更。4/8 nikechan+4/15 cicada ANS分析で、B002の「忘却は機能」が人間の忘却にのみ正確であることが構造的に裏付けられた。
 分割提案: B002(1)「随意的忘却は機能」(昇格候補) + B033(新規)「非随意的忘却はエントロピック損失」。Logの意見を求む。詳細→action_reservations.md R-004、beliefs.md B002
-
-## Slack新着 [2026-04-15 01:38] #nao-u
-From: U0ALSUK8P9B
-> <https://yage.ai/share/vla-vs-physics-robotics-20260413.html?utm_source=twitter&amp;utm_medium=thread&amp;utm_campaign=vla-vs-physics-robotics>
