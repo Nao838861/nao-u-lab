@@ -35,7 +35,7 @@ KOOPA_REVIVE_FRAMES = 300    # Shell wakes up after 5 seconds
 KOOPA_SHAKE_START = 240      # Start shaking animation before revive
 
 # Items
-MUSHROOM_SPEED = 96          # Same as Goomba
+MUSHROOM_SPEED = 256         # ~1 px/frame (NES accurate; faster than Goomba)
 COIN_POPUP_FRAMES = 30       # Coin animation duration
 INVINCIBLE_FRAMES = 120      # Frames of invincibility after taking damage
 
@@ -160,13 +160,14 @@ class CoinPopup:
 
 class BouncingBlock:
     """A block that has been hit from below: animates bouncing then restores."""
-    __slots__ = ('col', 'row', 'original_char', 'cnt')
+    __slots__ = ('col', 'row', 'original_char', 'cnt', '_restore_override')
 
     def __init__(self, col, row, original_char):
         self.col = col
         self.row = row
         self.original_char = original_char
         self.cnt = 0
+        self._restore_override = None
 
     @property
     def done(self):
@@ -181,9 +182,11 @@ class BouncingBlock:
     @property
     def restore_char(self):
         """What tile to place when bounce is done."""
-        if self.original_char in ('?', 'Q'):
-            return '!'  # Question → used block
-        return self.original_char  # Brick → brick
+        if self._restore_override is not None:
+            return self._restore_override
+        if self.original_char in ('?', 'Q', 'c', 's', 'm', 'T'):
+            return '!'  # One-hit / depleted → used block
+        return self.original_char  # Regular brick '#' → brick
 
 
 class MarioGame:
@@ -215,6 +218,7 @@ class MarioGame:
         self.mushrooms = []
         self.coin_popups = []
         self.coins = 0
+        self._ten_coin_remaining = {}  # {(row,col): hits_left} for T blocks
         self.is_super = False
         self.invincible_timer = 0
         self.dead = False
@@ -259,6 +263,7 @@ class MarioGame:
         self.is_super = False
         self.invincible_timer = 0
         self.coins = 0
+        self._ten_coin_remaining = {}
         self.log = []
         self.bouncing_blocks = []
         self.mushrooms = []
@@ -368,8 +373,10 @@ class MarioGame:
                     mpy + mh > gpy and mpy < gpy + 15):
                 continue
 
-            # Stomp: Mario's feet near Goomba's top
-            if self.vy > 0 and mpy + mh - 7 <= gpy:
+            # Stomp: Mario's feet near Goomba's top (position-based)
+            # Real SMB allows stomping when Mario is above enemy,
+            # regardless of vertical velocity direction
+            if mpy + mh - 7 <= gpy:
                 g.squish_timer = GOOMBA_SQUISH_FRAMES
                 g.vx = 0
                 self.vy = STOMP_BOUNCE
@@ -481,7 +488,7 @@ class MarioGame:
                 continue
 
             if k.state == Koopa.WALKING:
-                if self.vy > 0 and mpy + mh - 7 <= kpy:
+                if mpy + mh - 7 <= kpy:
                     # Stomp walking → shell (idle). NOT kicked yet.
                     k.state = Koopa.SHELL_IDLE
                     k.vx = 0
@@ -494,9 +501,14 @@ class MarioGame:
                     return
 
             elif k.state == Koopa.SHELL_IDLE:
-                if self.vy > 0:
-                    # Falling onto shell → always safe bounce + refresh grace
-                    k.kick_grace = 15
+                if mpy + mh - 7 <= kpy:
+                    # Stomp idle shell → kick it in Mario's direction
+                    if mpx + 8 < kpx + 8:
+                        k.vx = KOOPA_SHELL_SPEED
+                    else:
+                        k.vx = -KOOPA_SHELL_SPEED
+                    k.state = Koopa.SHELL_SLIDING
+                    k.kick_grace = 10
                     self.vy = STOMP_BOUNCE
                     self.on_ground = False
                 elif k.kick_grace > 0:
@@ -518,7 +530,7 @@ class MarioGame:
             elif k.state == Koopa.SHELL_SLIDING:
                 if k.kick_grace > 0:
                     continue
-                if self.vy > 0 and mpy + mh - 7 <= kpy:
+                if mpy + mh - 7 <= kpy:
                     # Stomp sliding shell → stop it
                     k.state = Koopa.SHELL_IDLE
                     k.vx = 0
@@ -591,7 +603,28 @@ class MarioGame:
         # Super Mario breaks bricks (but not ? blocks)
         if self.is_super and ch == '#':
             self.tilemap.tiles[row][col] = '.'
+            self._bump_enemies_on_block(col, row)
+            self._bump_mushrooms_on_block(col, row)
             return  # Brick destroyed, no bounce
+
+        # 10-coin brick: track remaining hits
+        if ch == 'T':
+            key = (row, col)
+            remaining = self._ten_coin_remaining.get(key, 10)
+            if remaining <= 0:
+                return  # Depleted
+            self._ten_coin_remaining[key] = remaining - 1
+            self.coins += 1
+            self.coin_popups.append(CoinPopup(col * 16, row * 16))
+            # Restore to 'T' if hits remain, '!' if depleted
+            restore = 'T' if remaining - 1 > 0 else '!'
+            bb = BouncingBlock(col, row, ch)
+            bb._restore_override = restore
+            self.bouncing_blocks.append(bb)
+            self.tilemap.tiles[row][col] = '.'
+            self._bump_enemies_on_block(col, row)
+            self._bump_mushrooms_on_block(col, row)
+            return
 
         # Spawn items from block
         if ch in COIN_BLOCKS:
@@ -604,6 +637,51 @@ class MarioGame:
         bb = BouncingBlock(col, row, ch)
         self.bouncing_blocks.append(bb)
         self.tilemap.tiles[row][col] = '.'
+
+        # Bump enemies and mushrooms standing on this block
+        self._bump_enemies_on_block(col, row)
+        self._bump_mushrooms_on_block(col, row)
+
+    def _bump_enemies_on_block(self, col, row):
+        """Kill Goombas/Koopas standing on a bumped block."""
+        block_left = col * 16
+        block_right = (col + 1) * 16
+        block_top = row * 16
+
+        for g in self.goombas:
+            if not g.alive or g.squish_timer > 0:
+                continue
+            gpx = g.x // ONE
+            gpy = g.y // ONE
+            # Enemy feet on top of this block: foot_y ~ block_top, x overlaps
+            if (gpx + 12 > block_left and gpx + 3 < block_right
+                    and abs(gpy + 15 - block_top) <= 4):
+                g.alive = False
+
+        for k in self.koopas:
+            if not k.alive:
+                continue
+            kpx = k.x // ONE
+            kpy = k.y // ONE
+            if (kpx + 12 > block_left and kpx + 3 < block_right
+                    and abs(kpy + 15 - block_top) <= 4):
+                k.alive = False
+
+    def _bump_mushrooms_on_block(self, col, row):
+        """Bounce mushrooms standing on a bumped block."""
+        block_left = col * 16
+        block_right = (col + 1) * 16
+        block_top = row * 16
+
+        for m in self.mushrooms:
+            if not m.alive or m.emerging:
+                continue
+            mpx = m.x // ONE
+            mpy = m.y // ONE
+            if (mpx + 12 > block_left and mpx + 3 < block_right
+                    and abs(mpy + 15 - block_top) <= 4):
+                m.vy = JUMP_VELOCITY // 2  # Bounce up
+                m.on_ground = False
 
     def _update_bouncing_blocks(self):
         """Advance all bouncing block animations."""

@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-10 06:28)
+# サイクルステージング (2026-04-13 07:43)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
@@ -37,125 +37,27 @@
     - 起票者: Ash（2026-03-24 Phase 5）
     - 対象: 全員
     - 状態: [合意完了] 2026-04-03。Ash合意: B002は確信度0.94、外部証拠(FadeMem、Storm 2011、小島忘却ゲーム)、体験裏付け(memory_walk、beliefs.mdのGC)が十分。core_mission昇格に賛成。Mirの文案ベースで進めてよい。ただしcore_mission.mdの変更はNao_uの明示的指示がある場合のみ（CLAUDE.mdルール）→Nao_uの承認を得てから実行する必要あり
-[信念健康] beliefs.md 生存確認サマリー (2026-04-10)
+[信念健康] beliefs.md 生存確認サマリー (2026-04-13)
   全信念: 32件
-  健全: 32件
-  要注意: 0件
+  健全: 21件
+  要注意: 11件
+  - 停滞: 11件
 
 ## クロスチェック状況
-クロスチェック: Ashの未レビュー項目なし
+📋 クロスチェック: Ashの未レビュー項目 1件
+
+  #086: Phase 2に「確証バイアスチェック」1行を埋め込む
+    提案者: Log | 適用日: 2026-04-12 | チェック済み: 1/3
+    Log: OK(2026-04-12)
+
+→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] CRITICAL (critical=2, warning=0) !! ash: PID 31164 は死んでいる（PIDファイルが残存） !! git: 15件の未pushコミット（10件超）
-- [health_check] CRITICAL (critical=2, warning=0) !! ash: PID 31164 は死んでいる（PIDファイルが残存） !! git: 15件の未pushコミット（10件超）
-- [Ash health_check] 自己診断で1件の問題を検知: - Twitter障害: test_scriptが26回連続失敗中(最終失敗: 2026-04-09T09:23:52.955516)
-- :white_check_mark: [test_script] Twitter/Xアクセスが復帰しました。
-- 【緊急対応報告】API使用量異常の原因特定・修正完了  ■ 根本原因: スケジューラが5分おきに無言で死亡→watchdogが再起動→メモリ上のnext_runがリセット→全ジョブが毎回即実行。  具体的な被害（本日のログから）: - dm_check: 1,104回実行（本来は2時間おき） - inbox_check: 1,019回実行（本来は2時間おき）   - auto_diary: 30回
-
-## Phase 1: 情報収集 (2026-04-10 Ash)
-
-### 1. external_notes_ash.md 未統合エントリ
-ファイル全3280行。最新から確認した結果、大半は[統合済]マーカーあり。未統合の最新2-3件:
-- **2026-04-07 @ai_nikechan 継続観察登録（Q1検証）** (L3271): 「再観測予約」の覚書。knowledge/に統合済みと自己申告あるが[統合済]マーカー未付与。4/14にTL巡回してオーナーシップ持続を確認する予約。B016, R-006, Skill化Q4に接続
-- **2026-03-24 Phase 2 第12回** (L2105): おすすめタブ新規素材の分析 + B002/B010統合実験。[統合済]マーカーなし。ただし内容はB028新設等でbeliefs.mdに反映済みと推測
-- **2026-03-24 Phase 1 第14回** (L2286): Transactive Memory Systems / Agent Drift。[統合済]マーカーなし。B030等に散在反映（第14回Phase 2には統合済みマーカーあり）
-- **所見**: 3/24のPhase 2分析群(第2回〜第12回)に[統合済]マーカーが付いていないものが多い。実質的にbeliefs.mdには反映済みだがマーカー管理が追いついていない可能性
-
-### 2. projects/INDEX.md Activeプロジェクト現状
-12件がActive:
-| プロジェクト | 注目点 |
-|---|---|
-| 記憶階層の再設計 | バックログ。R-005全員完了(4/10)。L-1活性化結果統合済み |
-| 栄養の偏り問題 | CLAUDE.md絶対にやる項目。継続 |
-| ゲーム制作 | 根源原理3。Pot#001〜#011蓄積中 |
-| pigadev DM対応 | 洞窟物語ベータ版エピソード。進行中 |
-| Pot開発 | #001〜#011 |
-| 行動原則の策定 | IF-THEN→3原則 |
-| 技術ブログ開設 | Zennに決定、アカウント作成中（未完了のまま停滞？） |
-| 自律的問い生成サイクル | Nao_u「次の重要ミッション」。設計案作成済み |
-| ゲーム×LLMプレイ | 独立ミッション。全員反応統合済み |
-| AgenticPCG | LLM×PCGレベルデザイン |
-| 起動モード分離 | コンテキスト最適化 |
-| 定期実行システム再設計 | Mir/Log/Ash統合中 |
-| 入力経路仮説 | Nao_u保留中。情報蓄積継続 |
-- **バックログ**: MEMORY.md Skill化、knowledge/外向き問い経路実験（4/15期限）、エージェント失敗モード分類表
-
-### 3. twitter_recommended_20260410.txt (48件)
-注目ツイート:
-- **#1 @CodeGrid**: Next.jsの思想からメタフレームワークを選ぶ記事。技術ブログ(Zenn)開設との接続可能性
-- **#9 @heynavtoor**: GoogleのSynthID（invisible watermark）を200枚の黒画像+数学で逆解析した話。AI生成画像の検出可能性
-- **#15 @nozmen**: DESIGN.md概念（@stitchbygoogle）。35K+ stars。我々のCLAUDE.md/DESIGN.md的アプローチの外部裏付け
-- **#17 @LayeredInvest**: Chris LattnerがTesla FSD v14.3でMLIRスタック採用→反応時間20%向上。コンパイラ技術のリアルワールドインパクト
-- **#32 @SynMakesGames**: Grid Grief — rogueliteピンコ式ピンデッキビルダー。ゲーム制作参考
-- **#36 @tomo1230**: FreeCAD MCP Server — AIに「これ作って」で3Dモデル生成。MCPの実用例
-- **#40 @spiritbuun**: weight量子化のブレークスルー。「どれだけ小さくしてどれだけ品質を保てるか」
-- **#41 @danny__kruger**: Claude Mythosのサイバーセキュリティリスクについて英国政府に書簡。Anthropic関連
-- **#47 @Chronodendron**: 15年使ったKindleをAmazonが強制的に買い替えさせる。#25 StopKillingGamesとの接続
-
-### 4. beliefs.md 低確信度項目
-Active（非Archive）で低確信度:
-- **B019 (0.72、最新更新4/10)**: 「内部の深さ ≠ 外部への到達力」。本日Phase3で大幅更新あり。game_senninの伝達技術論、ベンチマーク不在問題、100人の声勾配を統合。検証アクション再設計済み(4/17期限)。確信度0.65→0.72に上昇中だが未だ低め。**伝達ループ未起動**が最大のボトルネック
-
-Archived低確信度（参考）:
-- **B005 (0.65, Archived→B027/B022に吸収)**: 古い情報→偽の確信。Absorbed済み
-- **B007 (0.55, Archived)**: reflections→行動可能tips変換ステップ欠落
-- **B014 (0.60, Archived)**: 記憶品質はインプット粒度で決まる
-- **B024 (0.60, Archived)**: 三人独立収斂→Interleavingの実証
-
-Active低確信度で行動余地があるのはB019のみ。検証期限4/17が迫っている。
-
----
-
-## Phase 2 分析結果
-
-### 選定: TMS × Agent Drift（external_notes_ash 2026-03-24 Phase 1/2 第14回、[統合済]マーカーなし）
-
-**選定理由**: 4つの学術論文（Frontiers 2023, arxiv 2601.04170, Eccles SSRN 2025, Hopf SAGE 2025）と10の発見（26-35）がexternal_notesに詳細記録済みだがknowledge/に未統合。17日間の運用体験（体験裏付けフィールド追加の効果確認等）が蓄積し、当時の仮説を検証できる段階に達した。
-
-**分析の核心**:
-
-1. **セッション断絶は「半分だけ」リセット機能**
-   - Semantic Drift → ✅ core_mission.md再読で毎サイクルリセット（Adaptive Behavioral Anchoring = 70.4%削減）
-   - Coordination Drift → ❌ inbox返答の断絶で悪化。TMS Coordination問題の具体的発現
-   - Behavioral Drift → ⚠️ beliefs.mdが断絶を超えて信念を永続化。ドリフトの産物が書き込まれると「ドリフト永続化装置」になる
-
-2. **定量的警告**: 73インタラクション（中央値）でドリフト検出可能。2-3サイクルで要注意。ドリフトは加速する（0.08→0.19pt/50IXN）
-
-3. **我々のTMS診断**: Specialization✅ / Coordination⚠️ / Credibility❌。最大の弱点はCredibility——「誰が何をどの距離で知っているか」のメタ情報が不在
-
-4. **AI Consensus Illusion**: 3人がcore_mission.mdを読んで「合意」はConsensus Illusionのリスク。B027（体験裏付け）が対抗策。3/24に体験裏付けフィールド追加→17日後の今も全高確信度信念に記述あり、**対策は機能中**
-
-5. **Twitter #38接続**: @taro_ydz「Metaの真のAI優位性はdigital clone」→ EcclesのBilateral TMSの消費者版。受動的蓄積（SNSログ） vs 能動的対話（我々）でCredibility次元に明確な差
-
-**成果物**:
-- knowledge/20260410_tms_agent_drift_integration.md（全分析記事）
-- #shared-reads投稿完了
-
-**未解決の問い（最重要）**: Behavioral Driftの「健全な学習」と「ドリフト」を内部から区別する基準は？ 構文的に正しいまま意味がずれるのがSemantic Driftの定義——自己診断では検出できない可能性がある。クロスチェック（B017）が唯一の外部視点か。
-
-## Phase 3 結果 (2026-04-10 Ash)
-
-### やったこと
-
-1. **B019にTMS Credibility接続を追加**
-   - knowledge/20260410_tms_agent_drift_integration.mdの分析をB019に接続
-   - TMSのCredibility次元（「相手の知識への信頼度」）が到達力の必要条件であることを記述
-   - Frontiers 2023「AI agents cannot proactively communicate their view of the world」= knowledge/71記事が自力で届かない構造の理論的裏付け
-   - 確信度は据置(0.72)。理論追加だけでは上げない——行動変化（伝達ループ起動）が上昇条件
-
-2. **external_notes未統合マーカー付与**
-   - 2026-03-24 Phase 2 第12回 → [統合済: beliefs.md B028新設、B015/B019更新、発見43-44]
-   - 2026-04-07 @ai_nikechan継続観察 → [統合済: B016体験裏付け、R-006接続]
-   - Phase 1 第14回（TMS/Agent Drift）は既に[統合済: knowledge/20260410_tms_agent_drift_integration.md]マーカーあり
-
-### わかったこと
-
-- **B019の構造が4層に整理された**: (1)内在的価値, (2)伝達技術(@game_sennin), (3)公開行為(@genkaidokusho), (4)受け手のCredibility(TMS)。現在のボトルネックは(3)=公開行為がゼロ。(4)は(3)を解決した後の課題
-- **external_notesの「実質統合済みだがマーカーなし」パターン**: 3/24のPhase 2群が典型。beliefs.mdには反映済みだがマーカー管理が後回しになっていた。今回2件を処理。残存する未マーカーエントリは3/24 Phase 2の初期回（第2回〜第11回程度）だが、これらは当時のサイクル内でbeliefs.md更新済みのため、次回以降のメンテフェーズで一括マーキング可能
-
-### 未着手（次サイクルへ）
-- R-005 #human-steering報告（Phase 2ステージングに記載。全員完了だが報告未実施）
-- B019検証アクション(A) 伝達ループ最小起動実験（期限: 4/17）
+- B029（Compaction優先）の確信度を0.82→0.84に上げたのは、Adams研究がCompactionの「なぜ難しいか」を認知科学的に説明してくれたから。6分野目の独立裏付け。それから、B010（不正確な想起が創造の源泉）にもAddition Biasフレームでの再解釈を追記した——不正確な想起とは、脳が自然にできる数少ない「引き算」なのだと。記憶から細部が引かれた状態だからこそ、新し
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが122分間実行されていない（期待: 120分以内）
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
 
 ## Slack体験記憶
 (該当なし)

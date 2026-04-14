@@ -387,6 +387,53 @@ class MarioRenderer:
         pygame.transform.scale(surf, (WINDOW_W, WINDOW_H), self.screen)
         pygame.display.flip()
 
+    def draw_debug_overlays(self, game, markers, trajectories=None):
+        """Draw AI debug markers + trajectory lines.
+
+        Args:
+            markers: list of Marker objects (rectangles).
+            trajectories: dict of name → [(px_x, px_y), ...] paths.
+                          e.g. {'current': [...], 'jump': [...]}
+        """
+        scroll_px = game.scroll_x // ONE
+
+        # Draw trajectory lines first (behind markers)
+        if trajectories:
+            colors = {
+                'current':   (255, 255, 255),  # White — current input
+                'jump':      (0, 255, 100),    # Green — dash jump (A held)
+                'walk_jump': (255, 200, 50),   # Orange — walk jump (A held, no dash)
+            }
+            for name, path in trajectories.items():
+                if len(path) < 2:
+                    continue
+                color = colors.get(name, (200, 200, 200))
+                points = []
+                for px_x, px_y in path:
+                    sx = int((px_x - scroll_px) * SCALE)
+                    sy = int(px_y * SCALE)
+                    points.append((sx, sy))
+                if len(points) >= 2:
+                    pygame.draw.lines(self.screen, color, False, points, 2)
+                # Draw dots every 10 frames
+                for i, pt in enumerate(points):
+                    if i % 10 == 0:
+                        pygame.draw.circle(self.screen, color, pt, 3)
+
+        # Draw markers
+        if markers:
+            for m in markers:
+                sx = int((m.x - scroll_px) * SCALE)
+                sy = int(m.y * SCALE)
+                sw = max(int(m.w * SCALE), 2)
+                sh = max(int(m.h * SCALE), 2)
+                pygame.draw.rect(self.screen, m.color, (sx, sy, sw, sh), 2)
+                if m.label:
+                    txt = self.hud_font.render(m.label, True, m.color)
+                    self.screen.blit(txt, (sx, sy - 12))
+
+        pygame.display.flip()
+
     def _draw_overlay(self, surf, text, color):
         txt = self.overlay_font.render(text, True, color)
         bg = pygame.Surface((txt.get_width() + 8, txt.get_height() + 4))

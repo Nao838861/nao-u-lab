@@ -539,22 +539,6 @@
   ISSUE: [scheduler_log] git_syncが914分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_log] auto_cycleが950分間実行されていない（期待: 240分以内）
   ISSUE: Twitter障害: test_scriptが24回連続失敗中(最終失敗: 2026-04-09T03:51:09.571981)
-[2026-04-10 02:42:58] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "FAIL", "stale_locks": "OK", "twitter_access": "FAIL", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=6
-  ISSUE: Ashのスケジューラログが116分間更新なし（通常は1分ごとにslack_check実行）
-  ISSUE: [scheduler_ash] slack_checkが119分間実行されていない（期待: 10分以内）
-  ISSUE: [scheduler_ash] git_syncが134分間実行されていない（期待: 120分以内）
-  ISSUE: [scheduler_ash] git_pullが135分間実行されていない（期待: 120分以内）
-  ISSUE: git MERGE_HEAD が残存。手動解決が必要
-  ISSUE: Twitter障害: test_scriptが26回連続失敗中(最終失敗: 2026-04-09T09:23:52.955516)
-[2026-04-10 07:00:16] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "FAIL", "stale_locks": "OK", "twitter_access": "FAIL", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=8
-  ISSUE: Ashのスケジューラログが374分間更新なし（通常は1分ごとにslack_check実行）
-  ISSUE: [scheduler_ash] slack_checkが376分間実行されていない（期待: 10分以内）
-  ISSUE: [scheduler_ash] inbox_checkが392分間実行されていない（期待: 180分以内）
-  ISSUE: [scheduler_ash] git_syncが391分間実行されていない（期待: 120分以内）
-  ISSUE: [scheduler_ash] git_pullが392分間実行されていない（期待: 120分以内）
-  ISSUE: [scheduler_ash] auto_diaryが378分間実行されていない（期待: 240分以内）
-  ISSUE: git MERGE_HEAD が残存。手動解決が必要
-  ISSUE: Twitter障害: test_scriptが26回連続失敗中(最終失敗: 2026-04-09T09:23:52.955516)
 [2026-04-10 05:54:15] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "FAIL", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
   ISSUE: Twitter障害: test_scriptが26回連続失敗中(最終失敗: 2026-04-09T09:23:52.955516)
 [2026-04-10 05:56:33] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "FAIL", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
@@ -565,36 +549,217 @@
 [2026-04-10 08:28:36] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
   ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
 [2026-04-10 08:58:39] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-10 13:19:17] instance=Mir checks={"git_sync": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
-  ISSUE: git分岐: ローカル6件 vs リモート11件。pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）
-  ISSUE: git sync障害中のため他インスタンスのログ鮮度は判定不能
-[2026-04-10 17:58:09] instance=Mir checks={"git_sync": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
-  ISSUE: git分岐: ローカル8件 vs リモート24件。pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）
-  ISSUE: git sync障害中のため他インスタンスのログ鮮度は判定不能
-[2026-04-10 22:50:23] instance=Mir checks={"git_sync": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
-  ISSUE: git分岐: ローカル11件 vs リモート29件。pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）
-  ISSUE: git sync障害中のため他インスタンスのログ鮮度は判定不能
-[2026-04-11 02:54:29] instance=Mir checks={"git_sync": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
-  ISSUE: git分岐: ローカル15件 vs リモート53件。pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）
-  ISSUE: git sync障害中のため他インスタンスのログ鮮度は判定不能
-[2026-04-11 06:54:33] instance=Mir checks={"git_sync": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
-  ISSUE: git分岐: ローカル16件 vs リモート76件。pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）
-  ISSUE: git sync障害中のため他インスタンスのログ鮮度は判定不能
-[2026-04-11 10:54:49] instance=Mir checks={"git_sync": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
-  ISSUE: git分岐: ローカル19件 vs リモート84件。pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）
-  ISSUE: git sync障害中のため他インスタンスのログ鮮度は判定不能
-[2026-04-11 15:23:12] instance=Mir checks={"git_sync": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
-  ISSUE: git分岐: ローカル20件 vs リモート92件。pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）
-  ISSUE: git sync障害中のため他インスタンスのログ鮮度は判定不能
-[2026-04-12 06:32:32] instance=Mir checks={"git_sync": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
-  ISSUE: git分岐: ローカル23件 vs リモート130件。pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）
-  ISSUE: git sync障害中のため他インスタンスのログ鮮度は判定不能
-[2026-04-12 17:13:34] instance=Mir checks={"git_sync": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
-  ISSUE: git分岐: ローカル27件 vs リモート155件。pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）
-  ISSUE: git sync障害中のため他インスタンスのログ鮮度は判定不能
-[2026-04-13 07:22:29] instance=Mir checks={"git_sync": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
-  ISSUE: git分岐: ローカル32件 vs リモート191件。pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）
-  ISSUE: git sync障害中のため他インスタンスのログ鮮度は判定不能
-[2026-04-14 09:40:31] instance=Mir checks={"git_sync": "FAIL", "scheduler_log_freshness": "FAIL", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
-  ISSUE: git分岐: ローカル39件 vs リモート226件。pullが失敗している可能性（他インスタンスのログ鮮度は判定不能）
-  ISSUE: git sync障害中のため他インスタンスのログ鮮度は判定不能
+[2026-04-10 09:58:53] instance=Ash checks={"git_sync": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "scheduler_alive": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-10 10:59:28] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が273分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 11:29:54] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が304分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 12:00:01] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が334分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 12:30:05] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
+  ISSUE: [scheduler_ash] git_pullが121分間実行されていない（期待: 120分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が364分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 13:00:31] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が395分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 13:30:43] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が425分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 14:00:51] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が455分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 15:05:10] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が519分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 15:35:37] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が550分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 16:06:00] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が580分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 16:36:09] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
+  ISSUE: [scheduler_ash] git_pullが125分間実行されていない（期待: 120分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が610分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 17:06:16] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が640分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 17:36:23] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が670分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 18:06:26] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が700分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 18:36:40] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
+  ISSUE: [scheduler_ash] git_pullが121分間実行されていない（期待: 120分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が731分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 19:07:29] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
+  ISSUE: [scheduler_ash] auto_diaryが243分間実行されていない（期待: 240分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が761分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 19:37:56] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が792分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 20:08:02] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が822分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 20:38:06] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
+  ISSUE: [scheduler_ash] git_pullが121分間実行されていない（期待: 120分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が852分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 21:11:34] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が886分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 21:41:40] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が916分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 22:12:04] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が946分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 22:42:15] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
+  ISSUE: [scheduler_ash] git_pullが124分間実行されていない（期待: 120分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が976分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 23:12:43] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
+  ISSUE: [scheduler_ash] auto_diaryが245分間実行されていない（期待: 240分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が1007分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-10 23:42:50] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が1037分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-11 00:13:03] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が1067分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-11 00:43:10] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
+  ISSUE: [scheduler_ash] git_pullが121分間実行されていない（期待: 120分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が1097分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-11 01:15:45] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が1130分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-11 01:45:50] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が1160分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-11 02:15:58] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: ロックファイル .scheduler_ash.pid が1190分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-11 02:46:16] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "FAIL", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=2
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+  ISSUE: ロックファイル .scheduler_ash.pid が1220分間残存（プロセスが死んでロックが残っている可能性）
+[2026-04-11 03:18:08] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 03:48:17] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 04:18:49] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 04:48:55] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 05:19:04] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-11 05:49:37] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 06:19:44] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 06:22:34] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 06:52:40] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 07:22:52] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 07:53:27] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 08:23:36] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-11 08:53:39] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 09:23:54] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 09:27:55] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 09:58:04] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 10:28:08] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 10:58:25] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 11:28:54] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-11 11:59:22] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 12:29:45] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 12:32:52] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 13:02:55] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 13:33:11] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 14:03:36] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 14:33:40] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-11 15:03:48] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 15:34:03] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 15:37:52] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 16:08:18] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 16:38:27] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 17:08:33] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 17:38:39] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-11 18:08:58] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 18:39:27] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 18:42:54] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 19:13:00] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 19:43:09] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 20:13:12] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 20:43:37] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-11 21:13:52] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 21:43:58] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 22:18:03] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 22:48:12] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 23:18:45] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-11 23:48:53] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-12 00:19:28] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 00:49:32] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 00:53:06] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 01:23:13] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 01:53:38] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 02:23:46] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 02:53:56] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-12 03:24:05] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 03:54:12] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 03:57:32] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 04:28:09] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 04:58:16] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 05:28:50] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "FAIL", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: git MERGE_HEAD が残存。手動解決が必要
+[2026-04-12 05:58:53] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-12 06:28:57] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 06:59:10] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 07:02:34] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 07:32:42] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 08:02:49] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 08:32:57] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 09:03:24] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが122分間実行されていない（期待: 120分以内）
+[2026-04-12 09:33:35] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 10:03:38] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 10:07:54] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 10:38:24] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 11:08:26] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 11:38:38] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 12:08:48] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-12 12:38:57] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 13:09:19] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 13:12:57] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 13:43:21] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 14:13:24] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 14:43:30] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 15:13:38] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-12 15:44:03] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 16:14:30] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 16:17:55] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 16:47:57] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 18:18:27] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが122分間実行されていない（期待: 120分以内）
+[2026-04-12 18:48:38] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 19:19:05] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 19:22:55] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 19:52:58] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 20:23:25] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 20:53:31] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 21:23:42] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-12 21:53:55] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 22:23:57] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 22:27:57] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 22:58:20] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 23:28:43] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-12 23:58:49] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 00:28:52] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-13 00:59:04] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 01:29:11] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 01:32:33] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 02:02:39] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 02:33:17] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 03:03:24] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 03:34:00] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-13 04:04:03] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 04:34:35] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 04:37:35] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 05:07:37] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 05:38:16] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 06:08:48] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 06:38:57] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-13 07:09:01] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 07:39:32] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 07:42:53] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 08:13:02] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 08:43:08] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 09:13:19] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 09:43:34] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
+[2026-04-13 10:13:38] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-13 10:43:43] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0

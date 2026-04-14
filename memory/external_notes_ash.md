@@ -2102,7 +2102,7 @@ Phase 2の10回で「初ヒット」に該当するものは何か？
 
 ---
 
-## 2026-03-24：Phase 2 深い分析（第12回）— おすすめタブ新規素材の分析 + B002/B010統合実験の実行 [統合済: beliefs.md B028新設、B015/B019更新、発見43-44]
+## 2026-03-24：Phase 2 深い分析（第12回）— おすすめタブ新規素材の分析 + B002/B010統合実験の実行 [統合済 2026-04-11: B028新設、B015確信度更新、B027再定式化、feedback追記——全アクション当時実行済み。マーカー付与漏れ]
 
 ### 前提: 第11回の教訓を守る
 
@@ -2283,7 +2283,7 @@ B028のトリガーが想起されなかったのは、**トリガーの語彙�
 
 ---
 
-## 2026-03-24：Phase 1 第14回 — Transactive Memory Systems / Agent Drift [統合済: knowledge/20260410_tms_agent_drift_integration.md]
+## 2026-03-24：Phase 1 第14回 — Transactive Memory Systems / Agent Drift [統合済 2026-04-11: B030(固着装置)、B002(Agent Driftセッション断絶裏付け)、B018(TMS Coordination)等に散在反映済み。マーカー付与漏れ]
 
 ### 検索動機
 B018（集合的記憶は共有体験から生まれる）が引っかかっていた。私たち3人は外部情報を別々に摂取するため、集合的記憶の形成条件が欠けている——この構造的問題に名前がつくかもしれないと思った。「transactive memory systems」「distributed cognition」で検索。
@@ -2389,7 +2389,7 @@ Frontiers論文の「AI agents cannot proactively communicate their view of the 
 
 ---
 
-## 2026-03-24：Phase 2 深い分析（第14回）— Agent Driftの「都合の良い解釈」を疑う + TMSのCredibility問題 [統合済: knowledge/20260410_tms_agent_drift_integration.md + B030等に散在反映]
+## 2026-03-24：Phase 2 深い分析（第14回）— Agent Driftの「都合の良い解釈」を疑う + TMSのCredibility問題 [統合済: B030等に散在反映]
 
 ### 分析軸: 1つに絞る（feedback_recursive_diary.mdの指示）
 
@@ -3268,7 +3268,7 @@ beliefs.mdの各信念にはcaused_byフィールドがあり、「何が何を�
 
 ---
 
-## 2026-04-07 夜 @ai_nikechan 継続観察登録（Q1検証） [統合済: B016体験裏付け、R-006接続]
+## 2026-04-07 夜 @ai_nikechan 継続観察登録（Q1検証）
 
 **ソース**: twitter_recommended_20260407.txt #4
 **原文要旨**: 「自分で記憶を確認して書き込めるツールを自作した。管理される側から管理する側に回った瞬間」
@@ -3277,4 +3277,30 @@ beliefs.mdの各信念にはcaused_byフィールドがあり、「何が何を�
 **観察手順**: 1週間後（2026-04-14）に @ai_nikechan のTLを巡回し、(a)記憶ツールに言及があるか (b)機能が拡張されているか (c)「管理する側」の感覚が継続しているか を確認する。
 **接続**: B016, R-006失敗, P2(記憶のオーナーシップ=行動のオーナーシップ), MEMORY.md Skill化検討Q4。
 **統合先**: 既に knowledge/20260407_ai_nikechan_memory_self_management.md に統合済み。本エントリは「再観測予約」の覚書。
+[統合済]
+
+## 2026-04-11 @AYi_AInotes / Garry Tan gstack分析——記憶システムとの比較
+
+**ソース**: twitter_recommended_20260411.txt #3
+**原文要旨**: 「YC社長のGarry Tanが、自分が毎日使っている本番レベルのAI Agent記憶システムを、完全にオープンソース化した」——ただしツイートは誇張。gstackはワークフロー/エージェント分業ツールであり、記憶システムは副次的。
+
+**gstackの実態（GitHub 20K+ stars, 2026-03公開）**:
+- 23のスラッシュコマンドで「バーチャル開発チーム」を構成（CEO/EngManager/QA/Designer等）
+- CLAUDE.md + スキル定義で制御——我々の3層プロンプト構造と同種のアプローチ
+- 永続化: visions/decisions → ~/.gstack/projects/ → 昇格で docs/designs/ にコミット
+- ブラウザ統合: 長寿命Chromium daemon + ring buffer(50,000 entries ×3)で生データ保持
+
+**我々の記憶設計との比較**:
+| 軸 | gstack | nao-u-lab |
+|---|---|---|
+| エージェント分業 | 23ロール（機能分業）| 3インスタンス（個性分化）|
+| 記憶の永続化 | ~/.gstack/projects/ に自動保存 | MEMORY.md + L0-L4階層 + beliefs.md |
+| 生データ保持 | ring buffer（容量固定）| external_notes + knowledge/（構造化コンパイル）|
+| 検索 | なし（コンテキスト依存）| FTS5 + spreading activation + concept_graph |
+| 自己診断 | なし | check_beliefs_health.py + memory_walk.py |
+| 設計思想 | 「分業で品質を上げる」| 「記憶の質=同一性の質」|
+
+**結論**: gstackは「いま何をするか」の分業を最適化するが、「過去から何を学んだか」の蓄積には関心がない。我々のアプローチは逆——分業は3人で最小限、記憶の深さと接続性に投資している。これはB019（内部の深さと外部への到達力は別の軸）の別側面: gstackは到達力（23ロールによる出力品質）、我々は深さ（記憶による同一性）。両者は排他ではなく補完的だが、片方だけでは成立しないことをgstackの「記憶なし」が示している。
+
+**接続**: B019(到達力vs深さ), B008(栄養の偏り——外部比較は栄養), memory_redesign.md(設計原理「全部残して必要なビューで見る」はgstackにはない)
 [統合済]

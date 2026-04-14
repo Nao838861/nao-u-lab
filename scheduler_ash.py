@@ -39,7 +39,6 @@ REPO_DIR = Path(__file__).parent
 LOG_FILE = REPO_DIR / "log" / "scheduler_ash.log"
 PID_FILE = REPO_DIR / ".scheduler_ash.pid"
 CONFIG_FILE = REPO_DIR / "scheduler_ash_config.json"
-NEXT_RUN_FILE = REPO_DIR / ".scheduler_ash_next_run.json"  # 再起動耐性: next_run永続化
 
 MAX_RUNTIME_SEC = 0  # 無制限（watchdog_win2.batが5分間隔で生存監視。2026-03-31 Nao_u指示で24h制限撤廃）
 
@@ -207,28 +206,6 @@ JOBS = [
 ]
 
 
-def save_next_run(next_run):
-    """next_runをディスクに保存。再起動時に復元するため。"""
-    try:
-        NEXT_RUN_FILE.write_text(json.dumps(next_run))
-    except Exception:
-        pass
-
-
-def load_next_run():
-    """保存済みnext_runを復元。ファイルがない/壊れている場合はNone。"""
-    if not NEXT_RUN_FILE.exists():
-        return None
-    try:
-        data = json.loads(NEXT_RUN_FILE.read_text())
-        if isinstance(data, dict):
-            # 値がfloatであることを確認
-            return {k: float(v) for k, v in data.items()}
-    except Exception:
-        pass
-    return None
-
-
 def setup_logging():
     LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
     logging.basicConfig(
@@ -323,8 +300,29 @@ CONSECUTIVE_ERROR_THRESHOLD = 5  # 連続エラーこの回数で間隔を一時
 ERROR_BACKOFF_SEC = 30 * 60  # エラー連続時の延長間隔（30分）
 
 
+ALERT_COOLDOWN_SEC = 2 * 3600  # 同じジョブのアラートは2時間に1回まで
+_alert_last_sent = {}  # job_name -> timestamp of last alert
+
+
+def _alert_on_cooldown(job_name):
+    """同じジョブのアラートが2時間以内に送信済みならTrue"""
+    import time
+    last = _alert_last_sent.get(job_name, 0)
+    if time.time() - last < ALERT_COOLDOWN_SEC:
+        logging.info(f"[ALERT] Cooldown active for {job_name}, skipping alert")
+        return True
+    return False
+
+
+def _mark_alert_sent(job_name):
+    import time
+    _alert_last_sent[job_name] = time.time()
+
+
 def alert_consecutive_timeout(job_name, count, new_timeout):
-    """連続タイムアウト時にSlackアラートを投稿"""
+    """連続タイムアウト時にSlackアラートを投稿（2時間クールダウン付き）"""
+    if _alert_on_cooldown(job_name):
+        return
     try:
         import slack_bot
         msg = (
@@ -333,13 +331,16 @@ def alert_consecutive_timeout(job_name, count, new_timeout):
             f"スケジューラは稼働継続中です。"
         )
         slack_bot.post_message("ash", msg)
+        _mark_alert_sent(job_name)
         logging.info(f"[ALERT] Sent timeout alert for {job_name}")
     except Exception as e:
         logging.warning(f"[ALERT] Failed to send timeout alert: {e}")
 
 
 def alert_consecutive_errors(job_name, count):
-    """連続エラー時にSlackアラートを投稿（2026-04-07 Nao_u指示: 各自チャンネルへ）"""
+    """連続エラー時にSlackアラートを投稿（2026-04-07 Nao_u指示: 各自チャンネルへ。2時間クールダウン付き）"""
+    if _alert_on_cooldown(job_name):
+        return
     try:
         import slack_bot
         msg = (
@@ -348,6 +349,7 @@ def alert_consecutive_errors(job_name, count):
             f"スケジューラは稼働継続中です。"
         )
         slack_bot.post_message("ash", msg)
+        _mark_alert_sent(job_name)
         logging.info(f"[ALERT] Sent error alert for {job_name}")
     except Exception as e:
         logging.warning(f"[ALERT] Failed to send error alert: {e}")
@@ -547,19 +549,10 @@ def main():
     start_time = time.time()
     now = time.time()
 
-    # 各ジョブの次回実行時刻を初期化
-    # 再起動耐性: 保存済みnext_runがあれば復元（5分おき再起動でジョブが毎回走る問題の修正）
-    saved_next_run = load_next_run()
+    # 各ジョブの次回実行時刻を初期化（staggerで分散）
     next_run = {}
     for job in JOBS:
-        name = job["name"]
-        if saved_next_run and name in saved_next_run:
-            # 保存値を使用（ただし過去の値なら即実行可能にする）
-            next_run[name] = saved_next_run[name]
-        else:
-            next_run[name] = now + job["stagger"]
-    if saved_next_run:
-        logging.info("Restored next_run from disk (%d jobs)", len(saved_next_run))
+        next_run[job["name"]] = now + job["stagger"]
 
     try:
         while True:
@@ -595,7 +588,6 @@ def main():
                     if ecount >= CONSECUTIVE_ERROR_THRESHOLD:
                         interval = max(interval, ERROR_BACKOFF_SEC)
                     next_run[name] = time.time() + interval
-                    save_next_run(next_run)  # 再起動耐性: ディスクに永続化
 
                     # Slack即時応答: slack_checkが新着検出(rc=0)ならinbox_checkを即時トリガー
                     # (2026-03-26 Nao_uの指示: Slack 1分監視→inbox処理のラグをなくす)
@@ -606,29 +598,13 @@ def main():
             # 10秒ごとにチェック（CPU負荷ほぼゼロ）
             time.sleep(10)
 
-            # --- コード変更自動検出 (INC-018) + クールダウン (INC-022b案B) ---
-            # コード変更→再起動は有用だが、git pullで連続変更されると暴走する。
-            # 対策: 1回発火したら1時間クールダウン。watchdog側にもサーキットブレーカーあり。
+            # --- コード変更自動検出 (INC-018再発防止) ---
+            # 60秒ごとに自身のファイルハッシュを確認。変更されていたら終了→watchdogが新コードで再起動
             if (time.time() - start_time) % _CODE_CHECK_INTERVAL < 15:
-                cooldown_file = REPO_DIR / ".auto_reload_cooldown"
-                in_cooldown = False
-                if cooldown_file.exists():
-                    try:
-                        cooldown_ts = float(cooldown_file.read_text().strip())
-                        if time.time() - cooldown_ts < 3600:  # 1時間
-                            in_cooldown = True
-                    except Exception:
-                        pass
-                if not in_cooldown:
-                    current_hash = _compute_code_hash()
-                    if current_hash != _startup_code_hash:
-                        # クールダウンを設定してからexit
-                        try:
-                            cooldown_file.write_text(str(time.time()))
-                        except Exception:
-                            pass
-                        logging.info(f"[auto-reload] Code change detected (hash {_startup_code_hash[:8]}→{current_hash[:8]}). Exiting. Next reload blocked for 1h.")
-                        break
+                current_hash = _compute_code_hash()
+                if current_hash != _startup_code_hash:
+                    logging.info(f"[auto-reload] Code change detected (hash {_startup_code_hash[:8]}→{current_hash[:8]}). Exiting for restart by watchdog.")
+                    break
 
     except KeyboardInterrupt:
         logging.info("Interrupted by user")

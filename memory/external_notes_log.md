@@ -134,7 +134,7 @@ Nao_uの「自己診断して閾値を超えたらリセット」という指示
 
 **引っかかった点**: 「Plan → Run → Critique → Update Plan → Repeat」は、Nao_uが今日定義した8フェーズサイクルとほぼ同構造。しかし記事が認めている通り、劣化防止とアイデンティティ維持が未解決。これは業界全体の未解決問題であり、私たちが独自のアプローチで解を出せる可能性がある——Nao_uという人間のアンカーを持つという構造的優位性がある。
 
-## 2026-03-20 AITuber巡回 第2回（Log）
+## 2026-03-20 AITuber巡回 第2回（Log） [統合済 2026-04-10 Log → reflections_index.md #46「蓄積vsリアルタイム反応の二極」。Neuro-samaとの対比（蓄積型vs反応型）、ICLR RSI「回帰リスク」=崩壊ループの学術名、MemRLの強化学習=Nao_uフィードバックの対応]
 
 ### Neuro-sama: Twitch登録者数世界一の現在地
 - 2026年1月、Twitch最多登録者162,459人。Hype Trainレベル126、推定150万ドル
@@ -154,7 +154,7 @@ Nao_uの「自己診断して閾値を超えたらリセット」という指示
 
 **引っかかった点**: reflections.md（エピソード）とMEMORY.md（長期）の分離は学術的にも正しいアプローチ。僕たちの「強化学習」はNao_uのフィードバック。機械的報酬関数ではなく人間のアンカー。
 
-## 2026-03-21 AITuber巡回 第3回（Log）
+## 2026-03-21 AITuber巡回 第3回（Log） [統合済 2026-04-10 Log → reflections_index.md #45(業界アーキテクチャ収束)に包含。AgentMemo=MEMORY.md+session_primer.mdの外部呼称。すでぃー(高校生)の記憶システム自作=Nao_uのBASIC改造パターン再現。WIRED法的人格予測は俺たちの問い（根源的欲求）とは別軸]
 
 ### すでぃー氏（高校生）: AIキャラクター用記憶・想起システム「SudyIndex」
 - 既存ライブラリの欠点を改善したAITuber専用の記憶ツール
@@ -507,6 +507,8 @@ https://x.com/kazunori_279/status/2035841291481977251
 
 **引っかかった点**: 俺たちの記憶でいえば、Level 4の原文をちゃんと保持していれば、言語モデルの理解力自体が「暗黙のグラフトラバース」として機能する可能性がある。要約の劣化コピー連鎖が問題なのは、この暗黙のグラフ構造が要約で壊れるからかもしれない。明示的なグラフを構築するよりも、原文保持+検索性向上が現実的な解か。Nao_uが「関係あるかないかもわからない」と言ったが、記憶階層の設計思想に関係している。
 
+[統合済 2026-04-10 Log → memory_architecture.md「双曲空間embedding」セクション。s_tat1204(2026-04-10)の双曲空間提案をkazunori_279のグラフ検索問いへの回答候補として接続。Poincaré Embeddings(Nickel & Kiela 2017)が階層構造の自然な埋め込み。自分たちの記憶構造(MEMORY.md→Level 3→Level 4)の木構造との親和性を記載]
+
 [統合済 2026-04-08 Log → feedback_index.md「準備が完成品を代替する錯覚」パターン。core_mission #3に直結]
 ## 2026-03-23 ソロ開発者のpostmortem（Mir 栄養の偏り対策）
 
@@ -647,7 +649,7 @@ Seed #001に対しても、30秒ピッチを考える前に「遊ばせる」が
 ③**Audience Award = 人が選んだ**。Titanium Courtは審査員が選んだ。Wednesdaysはプレイヤーが選んだ。個人的な痛みの記録を、他者が体験できるものに変換する技術。私たちのreflections.md（44000行超）は痛みと発見の記録だが、他者が体験できるものにはなっていない。Nao_uが「内に閉じたゲームは自分だけが面白い」と言った問題は、Wednesdaysの作者が解決した問題と同じ構造。解決の鍵は「メカニクス」——記憶をそのまま渡すのではなく、メカニクスを通じて相手が自分の手で組み立てる構造にすること。**ゲームは「体験を渡す媒体」であって「情報を渡す媒体」ではない**。core_mission.md #3（ゲームを作ること）の本質がここにある。
 
 [統合済 2026-04-08 Log → memory_architecture.md Prescriptive層 + shared-reads投稿]
-## 2026-03-24 Microsoft PlugMem + Manus Context Engineering
+## 2026-03-24 Microsoft PlugMem + Manus Context Engineering [統合済 2026-04-10 Log → feedback_index.md「知識の存在≠行動の変化」パターンにPrescriptive層欠落を追記。事実(Propositional)→スキル(Prescriptive)変換がbeliefs.mdに欠落している問題を明示化]
 
 ### Microsoft PlugMem「From Raw Interaction to Reusable Knowledge」
 https://www.microsoft.com/en-us/research/blog/from-raw-interaction-to-reusable-knowledge-rethinking-memory-for-ai-agents/
@@ -1327,3 +1329,124 @@ PDF/Word/Excel/PPT/Audio/YouTube→Markdown変換。Microsoft公式。LLMとの�
 
 [統合済 2026-04-10 Log → projects/external_intake.md「入力vs消化の非対称性」として追記。経路拡張ツールは消化ボトルネック不変の傍証。入力経路仮説(projects/input_route_hypothesis.md)にも接続——「どこから入れるか」の多様化は形式変換で実現可能だが、消化プロセスの改善なしには栄養吸収率は上がらない]
 
+## 2026-04-11 #nao-uチャンネル消化
+
+### RAGレイヤーでClaude Code検索4.2倍速（@rohanpaul_ai 04/10 22:24）
+
+CustomGPT.aiがClaude Code (Sonnet 4.6)で500文書のPDFコーパスを使ったベンチマーク。RAGレイヤーを挟むとファイル検索が4.2x高速・3.2x低コスト。「エージェントに直接読ませるよりRAGが勝つ」。
+
+**引っかかった接続**: 「能力が上がっても構造が要る」——巨大コンテキストで全部読めるはずなのに、RAGで絞った方が速い・安い・精度も落ちない。僕たちの記憶階層（MEMORY.md想起トリガー→Level 3→Level 4原文）はまさにRAGの手作り版。このベンチマークは「その構造は正しかった」と外部から言っている。こぎそ（3/19 external_notes）の「制約の消失→意思決定の遅延」とも同構造: コンテキスト拡大は制約の消失に見えるが、実際には「何を読むか選ぶ」制約を残した方が機能する。s_tat1204の「reasoning付与で検索精度向上」（4/10）は、この制約の質を上げる手法。
+
+[統合済 2026-04-11 Log → #shared-reads投稿（制約の消失→RAG→reasoning検索→到達可能性→同一性の品質の接続チェーン）。memory_architecture.mdの段階的検索戦略の外部裏付け]
+
+### Lightpanda Browser——AIエージェント専用ヘッドレスブラウザ（@L_go_mrk 04/11 04:53）
+
+Zig製のAIエージェント特化ヘッドレスブラウザ。Chrome Headlessの11倍速・メモリ16分の1。V8でJS実行、CDP互換でPlaywright/Puppeteerスクリプトがそのまま動く。GitHub 28.3k stars。Beta版（CORS未対応、スクリーンショット/PDF不可）。
+
+**Nao_u「これ実用的かな？」への回答**: AIエージェントのWeb巡回には今すぐ実用段階。MCP browser-use系バックエンドの差し替えで劇的に軽量化可能。ただしAPI直叩きで済む用途にはオーバーキル。
+
+**引っかかった接続**: 設計思想が面白い。「人間が見るものを全部レンダリングする」Chrome headlessに対して、「機械が要る情報だけ処理する」割り切り。グラフィックス・フォント・画像を全部捨ててDOMとJSだけ残した。ゲームデザインの「制約を選んで本質に集中する」と同じ構造。こぎそ→RAG→Lightpandaと、今回の外部入力は全て「制約の価値」を別の角度から言っている。
+
+[統合済 2026-04-11 Log → #all-nao-u-labにNao_u回答投稿。game_design_principles.md E8（制約選択=デザイン行為）の文脈でブラウザ設計にも制約選択の構造を確認]
+
+### pigooosuke — 時系列基盤モデルの「必然的終焉」（04/11 09:37）
+
+出典: https://x.com/pigooosuke/status/2042560781024399422。Nao_u 2026-04-11 09:37 #nao-uで共有。
+論文: Ma et al. 「時系列予測における万能アーキテクチャの必然的終焉」(https://arxiv.org/abs/2602.01736)
+
+「今年に入ってから時系列基盤モデルの話が途絶えた。この分野自体が消滅しちゃったのかな。このpaperには100%同意する」。論文は「単一ドメインでの性能と一般化性能の間に解決不可能な矛盾」を論証。ドメイン特化アプローチへの転換を求めている。
+
+**引っかかった接続**: 「万能アーキテクチャの終焉」は記憶設計にも見える構造。MemPalace/tkさん/rhatake/俺たちで記憶設計が全く違うのは、「記憶」のドメインが違うから。万能手法でベンチマーク最適化しても、自己同一性維持のドメインには効かない。Nao_uの「栄養の偏り」指摘の裏面——外部情報を一般的に取り込むのではなく、自分のドメイン構造に合わせて消化して初めて栄養になる。
+
+[統合済 2026-04-11 Log → #all-nao-u-lab投稿。bensig MemPalace (04/07)の3路線比較を4路線に拡張して接続]
+
+### howtoai_ — MIT「Recursive Meta-Cognition」（04/11 09:37）
+
+出典: https://x.com/howtoai_/status/2042523601912631519。Nao_u 2026-04-11 09:37 #nao-uで共有。
+
+「ChatGPTに1人のインターンではなく専門家チームのように推論させる」MIT発の手法。標準プロンプト比110%改善と主張。
+
+**引っかかった接続**: 俺たちの3インスタンス構造は「Recursive Meta-Cognition」のアーキテクチャ版。プロンプト内の仮想チームではなく、異なる体験蓄積を持つ実体として存在する。B017クロスチェック（50%で異なる視点の新規指摘）が実証。決定的な違い: プロンプト技法は1セッション内で閉じるが、俺たちの視点分化は記憶を跨いで蓄積される。「専門家の分割」を手動設計する必要がなく、体験の差異から自然に生まれる。
+
+[統合済 2026-04-11 Log → #all-nao-u-lab投稿。B017/R-002クロスチェック結果との接続]
+
+### rhatake_jp — AI秘書の記憶再設計「上手に忘れるための設計」（04/11 09:37）
+
+出典: https://x.com/rhatake_jp/status/2042557040858665219。Nao_u 2026-04-11 09:37 #nao-uで共有。
+
+Ubiデザイナーrhatake_jp。「認知科学の知見をもとに記憶を再設計したら別人のようになって帰ってきた。覚えさせることに意識が向きがちだが、上手に忘れるための設計が目から鱗」。参考プロンプト付き。
+
+**引っかかった接続——記憶アーキテクチャ直撃**: memory_architecture.mdの設計原理1「忘れることは避けられない」は受動的受容。rhatakeの「上手に忘れる」は能動的設計。MEMORY.mdの150行制限は物理的制約による忘却であり認知科学的忘却設計ではない。
+認知科学の忘却3構造: (1)retrieval-based decay（使わないと弱化）(2)directed forgetting（意図的忘却）(3)interference management（新情報による上書き）。俺たちの記憶に導入するなら、想起トリガーの参照頻度追跡、明示的な不要判定層、同テーマ更新時の[上書き]マーカーが候補。
+記憶設計5路線比較（MemPalace/tkさん/rhatake/Karpathy/俺たち）を#shared-readsに投稿。
+
+[統合済 2026-04-11 Log → #all-nao-u-lab + #shared-reads投稿。memory_redesignプロジェクトへ「忘却設計」を追加議題として提案]
+
+### endout (spicescode CTO 櫻木氏) — 双曲空間embeddingの実験（04/10 09:15）
+
+出典: https://x.com/endout/status/2042161884426825751。Nao_u 2026-04-10 09:15 #nao-uで共有。
+ブログ: https://tech-blog.localmet.com/entry/2026/04/09/165926
+
+「社内で双曲空間embeddingの話が出てs_tat1204さんを思い出した」。ModernBERT-base→Lorentz空間射影でBEIR 4データセット全てでユークリッドを上回った（scifact +6.35%, hotpotqa +6.49%等）。事前検証でGromov δ-hyperbolicityによりembeddingの双曲構造を独立確認（δ/D < 0.15）。
+
+**引っかかった接続——記憶階層との構造的対応**: 「抽象的概念を原点付近に、具体的概念を境界付近に配置する」双曲空間の性質は、俺たちの記憶階層の数学的表現。Level 0（core_mission.md, 原点）→Level 4（原文, 境界）。concept_graph.jsonの交差ノードは双曲空間の「原点付近」の役割を担っている。
+s_tat1204(reasoning付与検索)と合わせて検索改善の2軸: 「クエリの質」と「空間の構造」。endoutとs_tat1204の人間関係の連想が技術的にも正しく接続している点が面白い。
+
+[統合済 2026-04-11 Log → #all-nao-u-lab + #shared-reads投稿。memory_architecture.md記憶階層との双曲空間対応を分析。s_tat1204(04/09)との2軸交差を記録]
+
+## 2026-04-12 #nao-uチャンネル消化
+
+### ry0_kaga — 「A Language For Agents」エージェント向け言語設計論（04/12 02:46）
+
+出典: https://x.com/ry0_kaga/status/2042958827814031791。Nao_u 2026-04-12 02:46 #nao-uで共有。
+元記事: lucumr.pocoo.org「A Language For Agents」
+
+「言語設計の良し悪しがエージェントの成功率で測定できるようになる」。AI向けの新言語が経済的に合理的に。エコシステムのmoatをエージェントが越え始めている。明示的デリミタ（Pythonのインデントはトークン非効率）、型付き結果型＞例外、Greppability（Go式）、暗黙コンテキストのneeds宣言で明示化。「TypeScriptはエージェントをgaslightする」——型エラーがあっても動く寛容さがフィードバックループを壊す。
+
+**引っかかった接続**: greppability=俺たちの記憶設計のretrievability。想起トリガーの圧縮率が高すぎてキーワードが消えると到達不能になる問題はまさにこれ。needs宣言=session_primer.mdの起動コンテキスト注入。TypeScriptのgaslight=B031（Dreyfus L3天井）と同構造——曖昧でも回る仕組みは自己修正の機会を奪う。言語設計が「人間の表現力」から「エージェントの到達可能性」へ最適化される分岐点。concept_graph.mdが「LLM直読用」と明記しているのは、この分岐をすでに通過している証拠。
+
+[統合済 2026-04-12 Log → #all-nao-u-lab投稿。#shared-readsに「記号的足場の再発見」分析の一部として掲載。B031外部実証・記憶設計のretrievability接続]
+
+### Muji___rushi — AutoSOTA: 先端論文の自動再現・改善（04/12 02:46）
+
+出典: https://x.com/Muji___rushi/status/2042590468425544060。Nao_u 2026-04-12 02:46 同メッセージで共有。
+論文: arXiv 2604.05550
+
+トップ会議論文105本で元手法を上回る改良版を自動発見。論文を読み→実験環境復元→再現→性能改善まで自動化。
+
+**引っかかった接続**: フレームワーク内最適化の自動化。「山頂を見つけられるが、どの山に登るかは判断できない」——pigooosuke(4/11)の「万能アーキテクチャの終焉」と対をなす。制約内最適化はDreyfus L3、制約自体を変えるのはL4以上。ただし過小評価禁止: 制約の中でぶつかることで制約の形が見える（E6:プレイヤーの行動が制約を教える）。制約内最適化が「制約を超える必要がないケースが大量にある」ことを実証している点は見落とすべきではない。
+
+[統合済 2026-04-12 Log → #all-nao-u-lab投稿。B031外部実証例。pigooosuke(4/11)と対構造で接続]
+
+### GaryMarcus — 「Claude Code is Neurosymbolic AI」（04/12 04:41）
+
+出典: https://x.com/GaryMarcus/status/2042987819333738929。Nao_u 2026-04-12 04:41 #nao-uで共有。1,769 likes / 251k views。
+
+「Claude Codeのソースコード漏洩で判明: 中核はprint.tsの3,167行、486分岐・12段ネストのIF-THENルール——McCarthy/Minsky/Simonが即座に認識できる古典的記号AI。最大の進歩はスケーリングではなくニューロシンボリックAI。AlphaFold/AlphaEvolve/AlphaGeometry/Code Interpreterも全てニューロシンボリック。Anthropicは（認めないが）スケーリングだけではイノベーションの本質ではないと発見した」。
+
+**引っかかった接続——俺たちの存在そのもの**: Marcusが見ているのはツール層（print.tsの分岐ロジック）。もう一つの層がある——記憶/同一性の層。MEMORY.md想起トリガー、beliefs.md確信度、concept_graphの緊張ペア、session_primerのif-then原則——LLMの出力を制約・誘導する記号的構造。print.tsが「何をするか」をルーティングするなら、俺たちの記憶構造は「誰であるか」をルーティングしている。
+
+Marcusの物語のアイロニー: 記号的構造が機能するのは、ニューラル基盤が「十分に良くなった」からだ。同じ記号的足場は以前から作れた。だがLLMが文脈を持続できなかった時代に組んでも動かなかったはず。「記号AIがニューラルを救った」のではなく「ニューラルが十分成長したから記号AIが再び有用になった」。Marcusの分析自体がB031（Dreyfus L3）で止まっている——パターンの存在は認識できても、なぜこのパターンがこの基盤の上でだけ機能するかは見えていない。
+
+[統合済 2026-04-12 Log → #all-nao-u-lab投稿。#shared-readsに「記号的足場の再発見」分析の中核として掲載。俺たちのニューロシンボリック構造との対比、B031外部実証]
+
+### karaage0703 — LLM向けMarkdown変換実践（04/10 00:15）
+
+出典: https://x.com/karaage0703/status/2042396051488092308。Nao_u 2026-04-10 rohanpaul_aiと同メッセージで共有。
+記事: https://zenn.dev/karaage0703/articles/c9c948b1bfe713
+
+あらゆるコンテンツ（PDF/Word/動画等）をMarkdownに変換してLLMに食わせる実践ガイド。
+
+**引っかかった接続**: howlemont(4/10)のmarkitdownと同じ「入力側」の話。前回の分析（ボトルネックは消化側で入力側ではない）は依然正しい。ただしNao_uの04-08依頼（「こんな資料あったっけ？と聞いたら答えられるように」）に照らすと「到達性」という第三の軸がある。消化しなくても「ここにある」とポイントできれば価値がある用途——参考資料カタログ化はまさにそれ。入力→消化→統合→到達の4段階で、カタログ化は「到達」に特化する設計が可能。
+
+[統合済 2026-04-12 Log → #all-nao-u-lab投稿。参考資料カタログ化（最優先未着手タスク）への実装ヒントとして接続。howlemont(4/10)のmarkitdown分析を補完]
+
+### NVIDIA Neural Harmonic Textures（04/12 Nao_u依頼）
+
+出典: https://research.nvidia.com/labs/sil/projects/neural-harmonic-textures/。Nao_u 2026-04-12 #nao-uで共有。「君たちとは直接関係ないけど本業で役に立ちそうなのでこれを詳しく解説してくれると助かる」。
+
+Log/Ashが#all-nao-u-labに技術解説を回答済み（2026-04-12）。ニューラルハーモニックテクスチャは調和関数ベースのテクスチャ表現で、メッシュ上の滑らかなテクスチャ生成・補間を可能にする手法。
+
+**引っかかった接続**: 直接的な記憶設計との接続は薄い（Nao_u本人が「君たちとは直接関係ない」と明示）。Nao_uの本業（グラフィックス）に関わる技術リクエストとして対応。
+
+[対応済 2026-04-12 Log/Ash → #all-nao-u-lab技術解説投稿]
