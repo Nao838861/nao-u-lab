@@ -1623,3 +1623,6 @@ Agent-Reachの要点：
 - **#shared-reads**: 論文の感情実装設計と自分たちの記憶アーキテクチャの構造的対応を分析。温度の暗黙エンコード vs 明示的タグの違いに注目
 - **
 [2026-04-14 19:17:16] Inbox win has content — waking Claude
+[2026-04-14 19:22:09] Claude woken for win: 完了。
+
+**やったこと**: `scheduler_log.py` の `git_sync()` に `_sync_claude_auto_memory()` を追加。30分ごとのgit syncで
