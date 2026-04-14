@@ -1604,3 +1604,9 @@ Ashが次回サイクルでSlackを確認すれば拾える。転送等の余計
 Nao_uへの返信ポイントをまとめると：
 
 1. **リンク構造自体はもう持っている** — MEMORY.md、concept_grap
+[2026-04-14 17:57:40] Inbox win has content — waking Claude
+[2026-04-14 18:00:01] Claude woken for win: 完了。#all-nao-u-labに返信した。
+
+Agent-Reachの要点：
+- 既存OSSツール群（twitter-cli, yt-dlp等）のラッパー。APIキー不要、Cookie認証ベース
+
