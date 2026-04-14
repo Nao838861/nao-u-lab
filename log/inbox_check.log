@@ -1574,3 +1574,10 @@ Gotaさんのスライド（Claude Code Meetup #4、2026-04-10）は既にcatalo
 
 - **現状**: スクリプトは「解けるか」を検証するソルバー
 - **進化方向**: 「どう解くか」を可視化する*
+[2026-04-14 12:09:21] Inbox win has content — waking Claude
+[2026-04-14 12:09:37] Inbox win has content — waking Claude
+[2026-04-14 12:12:24] Claude woken for win: 対処完了。
+
+**問題**: study_platformer_01の議論は`devlog.md`と`full_dev_dialogue.md`に詳細に記録されていたが、開発時にそれを読むことを強制す
+[2026-04-14 12:14:21] Claude wake timed out for win — restoring inbox
+[2026-04-14 12:14:54] Inbox win has content — waking Claude
