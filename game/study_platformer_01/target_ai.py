@@ -383,9 +383,21 @@ class TargetAI:
                 if self._blocked_frames >= 6:
                     bwd, bwh = blocking_wall
                     if bwh >= 2:
-                        # Tall wall: hold right+A to climb
-                        self.reflex_timer = 45
-                        self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': False}
+                        # Check for pit near/after the wall
+                        wall_col_s = (int(mx) + bwd + 8) // 16
+                        pit_near_s = False
+                        for pc in range(int(mx)//16 + 1, min(wall_col_s + 4, tm.cols)):
+                            if not any(tm.tiles[r][pc] in SOLID_TILES
+                                       for r in range(tm.rows - 2, tm.rows)):
+                                pit_near_s = True
+                                break
+                        if not pit_near_s:
+                            # Safe: hold right+A to climb
+                            self.reflex_timer = 45
+                            self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': False}
+                        else:
+                            # Pit nearby: just advance, don't climb
+                            pass
                         self._clear_block()
                         self._blocked_frames = 0
                         self._climb_cooldown = 60
@@ -1124,8 +1136,23 @@ class TargetAI:
         has_platform_plan = self.block_platform and self.subgoals
         using_spring = self.target and self.target.reason == 'use spring'
         if on_ground and mode not in ('jump_up', 'nav_jump') and target_ahead and not has_platform_plan and not using_spring:
+            mario_row_a = int(state['y']) // 16
             for wd, wh in walls:
                 if 0 < wd < 20 and wh >= 2:
+                    wall_top_row = self._tm.rows - 2 - wh
+                    # Skip if wall top is at or below mario (stepping down)
+                    if wall_top_row >= mario_row_a:
+                        break
+                    # Skip if pit is near the wall (would fall in after climbing)
+                    wall_col_a = (int(mx) + wd + 8) // 16
+                    pit_nearby = False
+                    for pc in range(wall_col_a, min(wall_col_a + 4, self._tm.cols)):
+                        if not any(self._tm.tiles[r][pc] in SOLID_TILES
+                                   for r in range(self._tm.rows - 2, self._tm.rows)):
+                            pit_nearby = True
+                            break
+                    if pit_nearby:
+                        break
                     # Tall wall: hold right+A (no dash) to land on top
                     self.reflex_timer = 45
                     self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': False}
