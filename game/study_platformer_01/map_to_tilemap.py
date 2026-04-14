@@ -72,6 +72,10 @@ def classify_pixel(r, g, b):
         return "dark_green"
     if color_match((r, g, b), COLOR_BROWN, 40):
         return "brown"
+    if color_match((r, g, b), COLOR_TEAL, 30):
+        return "brown"           # Underground bricks (teal palette)
+    if color_match((r, g, b), COLOR_LIGHT_TEAL, 30):
+        return "peach"           # Underground brick highlights
     if color_match((r, g, b), COLOR_QUESTION, 35):
         return "question"
     if r > 230 and g > 230 and b > 230:
@@ -168,7 +172,7 @@ def classify_tile(img, col, row, tile_w, tile_h=None):
     return cats.most_common(1)[0][0]
 
 
-def analyze_image(img_path):
+def analyze_image(img_path, force_page=None):
     """Parse the map image into a tile grid.
 
     Supports both full-res (16px tiles) and scaled images (auto-detect).
@@ -186,30 +190,31 @@ def analyze_image(img_path):
         tile_h = 16
         level_h = rows * 16
         if h > level_h:
-            # Multi-page image: find the page with ground blocks (most brown at rows 13-14)
             num_pages = h // level_h
-            best_page = 0
-            best_score = 0
-            for page in range(num_pages):
-                y_base = page * level_h
-                score = 0
-                for sample_row in [13, 14]:
-                    y = y_base + sample_row * 16 + 8
-                    for x in range(0, w, 32):
-                        r, g, b = img.getpixel((x, y))[:3]
-                        # Ground blocks: brown or peach (varies by level palette)
-                        if (r > 160 and g < 100 and b < 50) or \
-                           color_match((r, g, b), COLOR_PEACH, 35):
-                            score += 1
-                if score > best_score:
-                    best_score = score
-                    best_page = page
+            if force_page is not None:
+                best_page = force_page
+            else:
+                # Auto-detect: find page with most ground blocks (brown/peach at rows 13-14)
+                best_page = 0
+                best_score = 0
+                for page in range(num_pages):
+                    y_base = page * level_h
+                    score = 0
+                    for sample_row in [13, 14]:
+                        y = y_base + sample_row * 16 + 8
+                        for x in range(0, w, 32):
+                            r, g, b = img.getpixel((x, y))[:3]
+                            if (r > 160 and g < 100 and b < 50) or \
+                               color_match((r, g, b), COLOR_PEACH, 35):
+                                score += 1
+                    if score > best_score:
+                        best_score = score
+                        best_page = page
             y_start = best_page * level_h
             img = img.crop((0, y_start, w, y_start + level_h))
-            if best_page > 0:
-                print(f"Auto-detected level on page {best_page} "
-                      f"(y={y_start}-{y_start + level_h - 1})",
-                      file=sys.stderr)
+            print(f"Using page {best_page} "
+                  f"(y={y_start}-{y_start + level_h - 1})",
+                  file=sys.stderr)
         cols = w // 16
     else:
         # Scaled image (e.g. GIF overview maps, ~7px tiles)
@@ -516,16 +521,24 @@ def main():
     parser.add_argument("image", help="Path to map image PNG")
     parser.add_argument("--annotate", choices=["1-1", "2-1"],
                         help="Apply known block contents")
+    parser.add_argument("--page", type=int, default=None,
+                        help="Force page number for multi-page images (0-based)")
+    parser.add_argument("--goal-col", type=int, default=None,
+                        help="Place flagpole at this column (for underground exits)")
     parser.add_argument("-o", "--output", help="Output file (default: stdout)")
     args = parser.parse_args()
 
-    grid, cols, rows, tile_w, img = analyze_image(args.image)
+    grid, cols, rows, tile_w, img = analyze_image(args.image, force_page=args.page)
     tile_h = img.height / rows
     pipe_cells = detect_pipes(grid, cols, rows)
     gaps = detect_gaps(grid, cols, rows)
 
-    flagpole_result = detect_flagpole(img, cols, rows, tile_w, tile_h)
-    flagpole_col = flagpole_result[0] if flagpole_result else None
+    if args.goal_col is not None:
+        flagpole_col = args.goal_col
+        print(f"Goal line at col {flagpole_col} (manual)", file=sys.stderr)
+    else:
+        flagpole_result = detect_flagpole(img, cols, rows, tile_w, tile_h)
+        flagpole_col = flagpole_result[0] if flagpole_result else None
 
     castle_bg = detect_castle_bg(grid, cols, rows)
 
