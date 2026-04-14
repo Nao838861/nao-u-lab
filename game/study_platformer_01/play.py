@@ -64,33 +64,49 @@ def play_mode(level_text):
 
     running = True
     result_timer = 0
+    paused = False
+    step_one = False
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                elif event.key == pygame.K_p:
+                    paused = not paused
+                elif event.key == pygame.K_m and paused:
+                    step_one = True
 
         if game.dead or game.cleared:
             result_timer += 1
-            # Show result for 2 seconds then quit
             if result_timer > FPS * 2:
                 running = False
-            # Still render but don't step
             renderer.render(game)
             clock.tick(FPS)
             continue
 
-        keys = pygame.key.get_pressed()
-        inp = Input(
-            left=keys[pygame.K_LEFT],
-            right=keys[pygame.K_RIGHT],
-            a=keys[pygame.K_z] or keys[pygame.K_SPACE],
-            b=keys[pygame.K_x] or keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT],
-        )
+        if not paused or step_one:
+            step_one = False
+            keys = pygame.key.get_pressed()
+            inp = Input(
+                left=keys[pygame.K_LEFT],
+                right=keys[pygame.K_RIGHT],
+                a=keys[pygame.K_z] or keys[pygame.K_SPACE],
+                b=keys[pygame.K_x] or keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT],
+            )
+            game.step(inp)
 
-        game.step(inp)
         renderer.render(game)
+
+        if paused:
+            pause_txt = renderer.screen_font.render('PAUSED (M=step)', True, (255, 255, 0))
+            shadow = renderer.screen_font.render('PAUSED (M=step)', True, (0, 0, 0))
+            px = renderer.screen.get_width() // 2 - pause_txt.get_width() // 2
+            renderer.screen.blit(shadow, (px + 1, 31))
+            renderer.screen.blit(pause_txt, (px, 30))
+            pygame.display.flip()
+
         clock.tick(FPS)
 
     # Auto-save log
@@ -172,10 +188,11 @@ def replay_mode(log_path, speed=1):
     pygame.quit()
 
 
-def ai_mode(level_text, speed=1):
+def ai_mode(level_text, speed=1, start_bx=None):
     """Run AI live with debug visualization."""
     from api import MarioAPI
     from target_ai import TargetAI
+    from core import ONE
 
     pygame.init()
     api = MarioAPI()
@@ -187,6 +204,18 @@ def ai_mode(level_text, speed=1):
     state = api.reset()
     tm = api._tm
     game = api._game
+
+    # Warp to starting block-X position
+    if start_bx is not None:
+        px = start_bx * 16
+        game.x = px * ONE
+        ground_py = tm.find_ground(px) if tm else None
+        if ground_py is not None:
+            game.y = (((ground_py - 15) & 0xFFFFFFF0) + 1) * ONE
+        game.scroll_x = max(0, (px - 80)) * ONE
+        state = game.get_state()
+        print(f"Warped to BX={start_bx} (x={px})")
+
     ai = TargetAI()
 
     renderer = MarioRenderer()
@@ -195,12 +224,20 @@ def ai_mode(level_text, speed=1):
 
     running = True
     result_timer = 0
+    paused = False
+    step_one = False  # Advance exactly 1 frame when True
+    result = {'input': {}, 'markers': [], 'trajectories': {}}
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                elif event.key == pygame.K_SPACE:
+                    paused = not paused
+                elif event.key == pygame.K_m and paused:
+                    step_one = True  # Advance 1 frame
 
         if game.dead or game.cleared:
             result_timer += 1
@@ -210,17 +247,20 @@ def ai_mode(level_text, speed=1):
             clock.tick(FPS)
             continue
 
-        for _ in range(speed):
-            if game.dead or game.cleared:
-                break
-            result = ai.update(state, game, tm)
-            inp = result['input']
-            state = api.step(**inp)
-            # Inject markers into the frame log for replay
-            if game.log:
-                game.log[-1]['markers'] = [m.to_dict() for m in result.get('markers', [])]
+        # Run simulation (skip if paused, unless single-stepping)
+        if not paused or step_one:
+            frames_to_run = 1 if step_one else speed
+            step_one = False
+            for _ in range(frames_to_run):
+                if game.dead or game.cleared:
+                    break
+                result = ai.update(state, game, tm)
+                inp = result['input']
+                state = api.step(**inp)
+                if game.log:
+                    game.log[-1]['markers'] = [m.to_dict() for m in result.get('markers', [])]
 
-        # Trajectory prediction (2 paths: current input + if-jump)
+        # Trajectory prediction: use AI's nav trajectories + standard ones
         trajectories = {}
         if not game.dead and not game.cleared:
             from trajectory import predict
@@ -230,10 +270,22 @@ def ai_mode(level_text, speed=1):
             trajectories['walk_jump'] = predict(game, tm, frames=60,
                                                 override_jump=True, inp_a=True,
                                                 inp_b=False)
+            ai_traj = result.get('trajectories', {})
+            trajectories.update(ai_traj)
 
         renderer.render(game)
         markers = result.get('markers', []) if not game.dead else []
         renderer.draw_debug_overlays(game, markers, trajectories)
+
+        # Show pause indicator
+        if paused:
+            pause_txt = renderer.screen_font.render('PAUSED (M=step)', True, (255, 255, 0))
+            shadow = renderer.screen_font.render('PAUSED (M=step)', True, (0, 0, 0))
+            px = renderer.screen.get_width() // 2 - pause_txt.get_width() // 2
+            renderer.screen.blit(shadow, (px + 1, 31))
+            renderer.screen.blit(pause_txt, (px, 30))
+            pygame.display.flip()
+
         clock.tick(FPS)
 
     # Save log
@@ -250,11 +302,12 @@ def ai_mode(level_text, speed=1):
 def main():
     args = sys.argv[1:]
 
-    # Parse --replay, --speed, --ai
+    # Parse --replay, --speed, --ai, --start-bx
     replay_path = None
     speed = 1
     level_arg = None
     run_ai = False
+    start_bx = None
     i = 0
     while i < len(args):
         if args[i] == '--replay' and i + 1 < len(args):
@@ -266,6 +319,9 @@ def main():
         elif args[i] == '--ai':
             run_ai = True
             i += 1
+        elif args[i] == '--start-bx' and i + 1 < len(args):
+            start_bx = int(args[i + 1])
+            i += 2
         else:
             level_arg = args[i]
             i += 1
@@ -278,7 +334,7 @@ def main():
     if replay_path:
         replay_mode(replay_path, speed)
     elif run_ai:
-        ai_mode(level_text, speed)
+        ai_mode(level_text, speed, start_bx=start_bx)
     else:
         play_mode(level_text)
 

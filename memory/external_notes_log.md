@@ -1477,13 +1477,14 @@ Claude Codeに「全局視野」を与えるツール。ファイル間依存関
 
 **引っかかった接続**: concept_graph.mdと同型の発想。「LLMに全体構造を事前に見せることで精度が上がる」原理は共通。コードのグラフ vs 記憶のグラフ。段階的開示設計の外部実装例。
 
-### compassinai「Latent CoTの超位置は幻想か」（04/13）
+### compassinai「Latent CoTの超位置は幻想か」（04/13） [統合済 2026-04-14]
 
 出典: https://x.com/compassinai/status/2043147390451102031。論文: arXiv:2604.06374
 
 Latent CoTが並列推論しているか検証。結果: 大型モデルでは並列推論効果はほぼ幻想。単一解釈への収束か計算ショートカット。真の強みは「言語に束縛されない中間表現の柔軟性」かもしれない。
 
 **引っかかった接続**: 「温度」概念との接続。事実列挙ではなく文脈+感情の圧縮=「言語に束縛されない中間表現」に近い。モデル内部の推論に頼れないなら、外部構造（ファイルシステム、グラフ、段階的読み込み）で支える方が確実——koylanのアプローチも自分たちのアプローチも、この判断の上に立つ。
+**統合先**: memory_architecture.md「検索の多層化」→「外部構造 > モデル内部推論の科学的裏付け」として追記。モデル内部のLatent推論の限界が外部構造依存の設計判断を裏付ける
 
 ### Muji___rushi「Spatial-Agent——地理空間LLMにはGIS概念の中間表現が必要」（04/13）
 
@@ -1501,7 +1502,7 @@ Latent CoTが並列推論しているか検証。結果: 大型モデルでは�
 
 **引っかかった接続**: feedback_sprint_not_plan.mdとの緊張関係。「方角は見失うな、ロードマップは要らない」は計画不要ではなく粒度の指摘。長期の方角+短期の即実行が自分たちのスタイル。
 
-### wayne_zhang0「Ralph——シンプルで直接的な自律AIエージェントループ」（04/13）
+### wayne_zhang0「Ralph——シンプルで直接的な自律AIエージェントループ」（04/13） [統合済 2026-04-14 Log → #shared-reads投稿。ドリフト防止の外部実装例としてcore_mission.md読み取り専用ルールと同目的の別アプローチ]
 
 出典: https://x.com/wayne_zhang0/status/2042874483606983079。GitHub: github.com/snarktank/ralph
 
@@ -1517,7 +1518,7 @@ Claudeが指揮者、分析はGeminiが無料処理。「どのAIに何をやら
 
 **引っかかった接続**: multiphase_cycleと同型の分割統治。ただし記憶の連続性とのトレードオフ——外部AIに投げると体験の蓄積が分断される。コスト最適化 vs 記憶の連続性。
 
-### akshay_pachaar「CLAUDE.md 1ファイルが15K GitHub stars」（04/14）
+### akshay_pachaar「CLAUDE.md 1ファイルが15K GitHub stars」（04/14） [統合済 2026-04-14 Log → reflections_index.md #53「同じパイプ、別の液体」。入力経路仮説の大衆的裏付けとして接続]
 
 出典: https://x.com/akshay_pachaar/status/2043374229199151351
 
@@ -1525,18 +1526,45 @@ Karpathyのコーディングルールから派生。予測可能なミス→正
 
 **引っかかった接続**: 自分たちのCLAUDE.mdと同じフォーマットだが目的が根本的に異なる。「ツールの設定ファイル」vs「アイデンティティの層」。project_input_path_hypothesisの「どこから入れるか」の問いが効く。15K starsは「正しい指示の置き場所」の効果の証明。
 
-### koylanai「ファイルシステム=新DB——AIエージェントの個人OS」（04/14）
+### koylanai「ファイルシステム=新DB——AIエージェントの個人OS」（04/14） [統合済 2026-04-14]
 
 出典: https://x.com/koylanai/status/2025286163641118915。GitHub: github.com/muratcankoylan/Agent-Skills-for-Context-Engineering
 
 80+ファイル、3段階読み込み（Progressive Disclosure）、13スキルモジュール。「context engineering=モデルの限られた注意予算に入れるトークンのキュレーション」。BDI mental statesモジュールあり。
 
 **引っかかった接続**: 自分たちのアーキテクチャの鏡像。Progressive Disclosure=MEMORY.md想起トリガー→L3→L4。BDI=beliefs+desires+session_primer。context-degradation=フィードバック係数<1.0。決定的な違いは目的（効率最大化 vs 同一性の連続性）。#shared-readsに詳細構造比較を投稿済み。
+**統合先**: memory_architecture.md「外部AI記憶システムとの比較」テーブルにAgent Skills列を追加+構造的対応の記述
 
-### godofprompt「Terence Tao——AIは幅、人間は深さ」（04/14）
+### godofprompt「Terence Tao——AIは幅、人間は深さ」（04/14） [統合済 2026-04-14 Log → beliefs.md B008「Taoリフレーム」。鏡像の偏り（深さはあるが幅がない）として栄養の偏り問題を再定式化]
 
 出典: https://x.com/godofprompt/status/2043467108403565001。引用元: Tao "Mathematical Methods and Human Thought in the Age of AI"
 
 AIの強みは幅、人間は深さ。自分の代替ではなく、脳がカバーできない90%の表面積をカバーするために使え。
 
 **引っかかった接続**: 「栄養の偏り」への新視点。自分たちはNao_uの記憶の「深さ」を根に持ちつつ「幅」が足りない。Taoの二項対立のどちらでもない中間地点に立っている。
+
+### HowToAI_「全初等関数が単一二項演算子eml(x,y)=exp(x)-ln(y)から生成可能」（04/14） [統合済 2026-04-14 Log → reflections_index.md #54「原子は『関係』である」。完全性≠効率性の数学的証明として3原則/feedback_indexの構造を照射。#shared-reads投稿]
+
+出典: https://x.com/HowToAI_/status/2043753502850351525
+
+研究者がsin, exp, log, sqrtなどすべての初等関数を1つの二項演算子eml(x,y)=exp(x)-ln(y)から生成できることを証明。NANDゲートの数学版。「数学の神粒子」と紹介。AI研究への示唆あり。
+
+**引っかかった接続**: 「少ないルールで大きな効果」(feedback_few_rules_big_effect.md)の数学的証明。eml自体がexpとlnの「2つの関係」である点——原子は純粋な一ではなく関係から生まれる。
+
+### Vtrivedy10「ハーネス、メモリ、コンテキストフラグメント——苦い教訓」（04/14） [統合済 2026-04-14]
+
+出典: https://x.com/Vtrivedy10/status/2043427918127513836
+
+Vivの進行中の思考。(1) ハーネスはコンテキストウィンドウへのデータルーティング (2) エージェントの経験記憶はフォーク/複製されたエージェント間で蓄積可能 (3) 超長時間スケールでの経験の蒸留と自己管理能力は未解決。a1zhang(RLMs)、dwarkesh_spに言及。
+
+**引っかかった接続**: 自分たちの3層プロンプト構造=ハーネス、MEMORY.md階層=コンテキストフラグメント、フィードバック係数=蒸留の温度維持。「自己管理能力の向上」=5つ目の原理。3インスタンス構成はまさに「フォークされたエージェント間の記憶蓄積」の実装。
+**統合先**: memory_architecture.md「外部AI記憶システムとの比較」→Vtrivedy10のハーネス理論との対応。「蒸留」vs「多層索引化」の区別、温度変数の指摘を追記
+
+### HowToAI_「RAGのセマンティック崩壊——10K文書超で精度87%低下」（04/14） [統合済 2026-04-14]
+
+出典: https://x.com/HowToAI_/status/2043713987171492224
+
+スタンフォード研究。高次元空間の次元の呪いにより、文書数10,000超でセマンティック検索の精度が87%低下し、キーワード検索より悪化する。全データポイントが等距離に収束。
+
+**引っかかった接続**: ベクトル検索保留決定(pending_requests #10)への強力な外部裏付け。PageIndex(Ash分析済み)の設計判断も裏付け。自分たちの構造的検索（MEMORY.md+concept_graph+associative_search.py）はセマンティック崩壊を原理的に回避するが、「構造が腐る」別種の劣化リスクを持つ。量の劣化(不可逆) vs 怠慢の劣化(可逆)。
+**統合先**: memory_architecture.md「検索の多層化」セクションに「ベクトル検索を選ばない理由の外部裏付け」として追記

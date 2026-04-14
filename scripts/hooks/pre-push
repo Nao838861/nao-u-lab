@@ -1,0 +1,14 @@
+#!/bin/bash
+# pre-push hook: push前にメモリをインスタンス名付きディレクトリにバックアップ
+#
+# 失敗してもpushは続行する（exit 0）。
+# データ損失を防ぐためにpushを止めない設計。
+
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+BACKUP_SCRIPT="${REPO_ROOT}/scripts/backup_memory.sh"
+
+if [[ -f "$BACKUP_SCRIPT" ]]; then
+    bash "$BACKUP_SCRIPT" 2>&1 || true
+fi
+
+exit 0

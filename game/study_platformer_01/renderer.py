@@ -47,6 +47,7 @@ class MarioRenderer:
         self.coin_sprite = self._make_coin_sprite()
         self.overlay_font = pygame.font.Font(None, 24)
         self.hud_font = pygame.font.Font(None, 16)
+        self.screen_font = pygame.font.SysFont(None, 20)  # For post-scale HUD
 
     def _load_sheet(self):
         path = os.path.join(os.path.dirname(__file__), 'assets', 'player.bmp')
@@ -397,6 +398,18 @@ class MarioRenderer:
 
         # Scale to window
         pygame.transform.scale(surf, (WINDOW_W, WINDOW_H), self.screen)
+
+        # HUD: Mario position (drawn on screen after scaling for crisp text)
+        px = game.x // ONE
+        py = game.y // ONE
+        bx = px // 16
+        by = py // 16
+        hud_str = f'F:{game.frame} ({px},{py}) [{bx},{by}]'
+        pos_txt = self.screen_font.render(hud_str, True, (255, 255, 255))
+        shadow = self.screen_font.render(hud_str, True, (0, 0, 0))
+        self.screen.blit(shadow, (9, 9))
+        self.screen.blit(pos_txt, (8, 8))
+
         pygame.display.flip()
 
     def draw_debug_overlays(self, game, markers, trajectories=None):
@@ -415,6 +428,9 @@ class MarioRenderer:
                 'current':   (255, 255, 255),  # White — current input
                 'jump':      (0, 255, 100),    # Green — dash jump (A held)
                 'walk_jump': (255, 200, 50),   # Orange — walk jump (A held, no dash)
+                'nav_dash':  (0, 200, 255),    # Cyan — nav dash jump prediction
+                'nav_walk':  (200, 100, 255),  # Purple — nav walk jump prediction
+                'nav_plan':  (255, 100, 100),  # Red — active jump trajectory
             }
             for name, path in trajectories.items():
                 if len(path) < 2:
