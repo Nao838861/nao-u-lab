@@ -273,7 +273,7 @@ def detect_flagpole(img, cols, rows, tile_w, tile_h=None):
     min_green = max(2, int(area * 0.08))
     max_green = max(5, int(area * 0.5))
 
-    for col in range(max(0, cols - 30), cols):
+    for col in range(max(0, cols // 2), cols):
         consecutive = 0
         start_row = None
         for row in range(rows):
