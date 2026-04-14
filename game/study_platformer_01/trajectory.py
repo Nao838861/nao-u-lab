@@ -19,7 +19,8 @@ from tilemap import SOLID_TILES
 
 
 def predict(game, tilemap, frames=60, override_jump=False,
-            inp_left=None, inp_right=None, inp_a=None, inp_b=None):
+            inp_left=None, inp_right=None, inp_a=None, inp_b=None,
+            a_hold_frames=None, jump_delay=0):
     """Simulate Mario's trajectory for `frames` steps.
 
     Args:
@@ -28,6 +29,11 @@ def predict(game, tilemap, frames=60, override_jump=False,
         frames: How many frames to simulate.
         override_jump: If True, press A on the first frame (predict a jump).
         inp_left/right/a/b: Override inputs. None = keep last real input.
+        a_hold_frames: If set, A is held for this many frames after the
+            jump trigger, then released. Overrides inp_a after the hold period.
+        jump_delay: Delay the jump trigger by this many frames. During the
+            delay, A is not pressed but other inputs apply. Matches the
+            startup frames of arc_jump (typically 2 frames).
 
     Returns:
         List of (pixel_x, pixel_y) positions, one per frame.
@@ -60,8 +66,17 @@ def predict(game, tilemap, frames=60, override_jump=False,
     path = []
 
     for i in range(frames):
-        # Input for this frame
-        a_in = True if (override_jump and i == 0) else base_a
+        # Input for this frame (accounting for jump_delay)
+        jump_frame = i - jump_delay  # Frame relative to actual jump trigger
+        is_jump_trigger_frame = (override_jump and jump_frame == 0)
+        if i < jump_delay:
+            # Pre-jump delay: no A press (matches arc_jump startup)
+            a_in = False
+        elif a_hold_frames is not None:
+            # A held for a_hold_frames after jump trigger, then released
+            a_in = True if is_jump_trigger_frame else (jump_frame <= a_hold_frames)
+        else:
+            a_in = True if is_jump_trigger_frame else base_a
         left = base_left
         right = base_right
         b_in = base_b
@@ -161,7 +176,20 @@ def predict(game, tilemap, frames=60, override_jump=False,
         if on_ground:
             pixel_y = y // ONE
             y = ((pixel_y & 0xFFFFFFF0) + 1) * ONE
-            vy = 0
+            # Springboard bounce in prediction
+            spring_hit = False
+            for off_x in (3, 12):
+                fc = (x // ONE + off_x) // 16
+                fr = (pixel_y + h) // 16
+                if (0 <= fr < tilemap.rows and 0 <= fc < tilemap.cols
+                        and tilemap.tiles[fr][fc] == 'S'):
+                    from core import SPRING_VELOCITY
+                    vy = SPRING_VELOCITY
+                    on_ground = False
+                    spring_hit = True
+                    break
+            if not spring_hit:
+                vy = 0
 
         # Wall collision
         px = x // ONE
@@ -171,7 +199,8 @@ def predict(game, tilemap, frames=60, override_jump=False,
         wc = check_x // 16
         wr = wall_y_pos // 16
         if (0 <= wr < tilemap.rows and 0 <= wc < tilemap.cols
-                and tilemap.tiles[wr][wc] in SOLID_TILES):
+                and tilemap.tiles[wr][wc] in SOLID_TILES
+                and tilemap.tiles[wr][wc] != 'S'):  # Spring doesn't block horizontally
             if vx <= 0:
                 x = ((wc + 1) * 16) * ONE
             else:

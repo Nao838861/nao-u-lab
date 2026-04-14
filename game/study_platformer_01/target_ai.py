@@ -149,6 +149,7 @@ def jump_would_land_on(game, tm, plat_left_col, plat_right_col, plat_row):
     return False
 
 
+
 # =====================================================================
 # Data types
 # =====================================================================
@@ -395,7 +396,12 @@ class TargetAI:
                     d = 'left' if e['dx'] >= 0 else 'right'
                     return {'left': d == 'left', 'right': d == 'right', 'a': False, 'b': False}
 
-        if not on_ground:
+        # Airborne pit-death avoidance: if continuing forward leads to
+        # falling into a pit, reverse direction to land on safe ground
+        if not on_ground and tm is not None:
+            inp = self._airborne_pit_check(state, tm)
+            if inp:
+                return inp
             return None
 
         # Pit imminent
@@ -441,6 +447,52 @@ class TargetAI:
                 return self.reflex_inp
 
         return None
+
+    def _airborne_pit_check(self, state, tm):
+        """While airborne, predict if current trajectory leads to pit death.
+
+        If forward trajectory crosses a pit at ground level, check if
+        reversing direction would land safely. If so, reverse.
+        """
+        from trajectory import predict
+        mx = state['x']; vx = state['vx']
+        going_right = vx >= 0
+        h = 31 if self._game.is_super else 15
+        ground_y = (tm.rows - 2) * 16
+        ground_rows = range(tm.rows - 2, tm.rows)
+
+        def trajectory_hits_pit(path):
+            for px, py in path:
+                if py + h >= ground_y:
+                    col = (int(px) + 8) // 16
+                    if 0 <= col < tm.cols:
+                        if not any(tm.tiles[r][col] in SOLID_TILES
+                                   for r in ground_rows):
+                            return True
+            return False
+
+        # Predict forward trajectory (no jump, drift with current momentum)
+        path_fwd = predict(self._game, self._tm, frames=60,
+                           inp_right=going_right, inp_left=not going_right,
+                           inp_a=False, inp_b=False)
+        if not path_fwd or not trajectory_hits_pit(path_fwd):
+            return None  # Forward is safe
+
+        # Forward leads to pit — try reverse
+        path_rev = predict(self._game, self._tm, frames=60,
+                           inp_right=not going_right, inp_left=going_right,
+                           inp_a=False, inp_b=False)
+        if path_rev and not trajectory_hits_pit(path_rev):
+            # Reverse lands safely — override all current actions
+            self.phase = 'idle'
+            self.jump_timer = 0
+            self._wall_climb = False
+            self.markers.append(Marker(mx, state['y'], 16, 16,
+                                       (255, 0, 255), 'PIT AVOID'))
+            return {'left': going_right, 'right': not going_right,
+                    'a': False, 'b': False}
+
+        return None  # Both directions lead to pit — can't help
 
     # ── Strategy ─────────────────────────────────────────────────────
 
@@ -584,7 +636,9 @@ class TargetAI:
                                           8, 8, col_t, self.target.reason))
         else:
             # No block target: advance toward flag
-            self.target = TargetPos(mx + 120, my, 'dash', 'advance')
+            # Don't override 'use spring' target while bouncing
+            if not (self.target and self.target.reason == 'use spring'):
+                self.target = TargetPos(mx + 120, my, 'dash', 'advance')
 
         # ── Mushroom collection (override if nearby) ──
         game_obj = game
@@ -601,6 +655,26 @@ class TargetAI:
                     predict_frames = abs(mdx) / max(abs(state['vx']), 1.5)
                     predict_x = m.x / ONE + mush_vx * predict_frames
                     self.target = TargetPos(predict_x, m.y / ONE, 'dash', 'catch mushroom')
+
+        # ── Springboard: walk onto it to bounce over walls ──
+        if on_ground and self.phase in ('idle', 'moving'):
+            mario_col = int(mx) // 16
+            # Scan nearby tiles (behind and ahead) for springboard
+            for dc in range(-3, 10):
+                c = mario_col + dc
+                if 0 <= c < tm.cols:
+                    for sr in (ground_row, ground_row - 1):
+                        if 0 <= sr < tm.rows and tm.tiles[sr][c] == 'S':
+                            spring_x = c * 16 + 4
+                            if abs(spring_x - mx) < 150:
+                                self.target = TargetPos(spring_x, my, 'walk', 'use spring')
+                                self._clear_block()
+                                self.markers.append(Marker(c * 16, sr * 16,
+                                                           16, 16, (0, 255, 128), 'SPRING'))
+                            break
+                    else:
+                        continue
+                    break
 
     def _clear_block(self):
         self.block_target = None
@@ -645,10 +719,11 @@ class TargetAI:
             return self._do_jump_to(state, dx)
 
         # ── Wall/pipe/stair ahead: jump if prediction lands on higher ground ──
-        # Skip wall-climb when executing platform subgoals (avoid interfering)
+        # Skip wall-climb when executing platform subgoals or heading to spring
         target_ahead = (self.target is None) or (self.target.x > mx + 5)
         has_platform_plan = self.block_platform and self.subgoals
-        if on_ground and mode not in ('jump_up',) and target_ahead and not has_platform_plan:
+        using_spring = self.target and self.target.reason == 'use spring'
+        if on_ground and mode not in ('jump_up',) and target_ahead and not has_platform_plan and not using_spring:
             for wd, wh in walls:
                 if 0 < wd < 60 and wh >= 2:
                     wall_col = (int(mx) + wd + 8) // 16
@@ -666,7 +741,7 @@ class TargetAI:
                             self.jump_timer = 0
                             self.jump_hold = 40
                             self.jump_right = True
-                            self._wall_climb = True  # Don't pop subgoals on landing
+                            self._wall_climb = True
                             # Only override target if no active subgoals
                             if not self.subgoals:
                                 self.target = TargetPos(land_x, land_y,
@@ -707,6 +782,17 @@ class TargetAI:
                     self.jump_right = try_right
                     d = try_right
                     return {'left': not d, 'right': d, 'a': False, 'b': True}
+
+        # ── Springboard: steer right during bounce ──
+        if self.target and self.target.reason == 'use spring':
+            if not on_ground:
+                # Airborne from spring bounce — steer right toward flag
+                self.phase = 'idle'
+                return {'left': False, 'right': True, 'a': True, 'b': True}
+            elif mx > self.target.x + 60:
+                # Landed past the wall — spring done, resume normal
+                self.target = None
+                self.phase = 'idle'
 
         # ── Mode: dash / walk — arrived? ──
         if abs(dx) < 3 and mode in ('walk', 'dash'):

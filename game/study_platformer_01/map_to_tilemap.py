@@ -102,16 +102,33 @@ def classify_tile(img, col, row, tile_w, tile_h=None):
     if not cats:
         return "sky"
 
+    # --- Center pixel check (for enemy sprite validation) ---
+    cx = int(x0 + tile_w * 0.5)
+    cy = int(y0 + tile_h * 0.5)
+    center_cat = "sky"
+    if 0 <= cx < img.width and 0 <= cy < img.height:
+        cr, cg, cb = img.getpixel((cx, cy))[:3]
+        center_cat = classify_pixel(cr, cg, cb)
+
     # --- Goomba/sprite detection ---
     # Goomba = brown body + peach feet. Background is sky OR bush green.
-    # When Goomba overlaps a bush, sky=0 but dark_green_obj fills the role.
-    # Distinguish from castle/ground (brown+peach but no background gap):
-    #   Goomba: brown ~96, peach ~44 (peach < brown)
-    #   Castle window: brown ~72, peach ~88 (peach > brown)
+    # Reject: center=sky (sprite bleed from adjacent tile),
+    #         sky > 12 (mostly empty tile), brown > 10 with peach <= 2 (castle wall).
     bg = cats["sky"] + cats["dark_green_obj"]
+    is_goomba = False
     if cats["brown"] >= 3 and bg >= 3 and cats["peach"] >= 2 and cats["peach"] <= cats["brown"]:
-        return "goomba"
+        is_goomba = True
     if cats["peach"] >= 2 and cats["brown"] >= 3 and bg >= 1 and cats["peach"] <= cats["brown"]:
+        is_goomba = True
+    if is_goomba:
+        # Filter false positives
+        if center_cat == "sky":
+            is_goomba = False  # Mostly empty tile with sprite edge
+        elif cats["sky"] > 12:
+            is_goomba = False  # Too much sky — not a real sprite
+        elif cats["brown"] > 10 and cats["peach"] <= 2:
+            is_goomba = False  # Castle/brick wall, not Goomba
+    if is_goomba:
         return "goomba"
 
     # --- Piranha plant detection ---
@@ -127,8 +144,10 @@ def classify_tile(img, col, row, tile_w, tile_h=None):
     # --- Koopa detection ---
     # Koopa: green shell + orange belly (same (252,152,56) as ? block)
     # This combination is unique: ? blocks have zero green, pipes have zero orange.
+    # Reject: center=black/white (castle decoration, not enemy sprite).
     if total_green >= 3 and cats["question"] >= 2:
-        return "koopa"
+        if center_cat not in ("black", "white"):
+            return "koopa"
 
     # --- Green tile classification ---
     # Key rule: pipes have BOTH light_green (128,208,16) AND dark_green (0,168,0)
@@ -357,10 +376,10 @@ def build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col=None,
                 else:
                     chars.append("#")  # Brick
             elif cat == "goomba":
-                # Allow ground-level AND elevated Goombas (on platforms)
+                # Allow ground-level AND elevated Goombas (on platforms/blocks)
                 # Exclude staircase/castle area (false positives)
                 elevated_ok = (row < rows - 4 and row + 1 < rows
-                               and grid[row + 1][col] == "brown"
+                               and grid[row + 1][col] in ("brown", "question")
                                and col <= cols - 35)
                 if row >= rows - 4 or elevated_ok:
                     chars.append("G")
@@ -368,7 +387,7 @@ def build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col=None,
                     chars.append(".")
             elif cat == "koopa":
                 elevated_ok = (row < rows - 4 and row + 1 < rows
-                               and grid[row + 1][col] == "brown"
+                               and grid[row + 1][col] in ("brown", "question")
                                and col <= cols - 35)
                 if row >= rows - 4 or elevated_ok:
                     chars.append("K")
@@ -388,6 +407,27 @@ def build_tilemap(grid, cols, rows, pipe_cells, gaps, flagpole_col=None,
                 chars.append(".")
 
         lines.append("".join(chars))
+
+    # --- Post-processing: filter bush false positives ---
+    # In NES SMB, bushes use the same palette as Goombas. Runs of 4+
+    # consecutive G tiles at ground level (rows-3) are bush decorations,
+    # not real Goomba groups.
+    for row_idx in (rows - 3, rows - 4):
+        row_chars = list(lines[row_idx])
+        run_start = None
+        for c in range(len(row_chars) + 1):
+            ch = row_chars[c] if c < len(row_chars) else '.'
+            if ch == 'G':
+                if run_start is None:
+                    run_start = c
+            else:
+                if run_start is not None:
+                    run_len = c - run_start
+                    if run_len >= 4:
+                        for rc in range(run_start, c):
+                            row_chars[rc] = '.'
+                    run_start = None
+        lines[row_idx] = ''.join(row_chars)
 
     return lines
 
@@ -419,9 +459,24 @@ MARIO_1_1 = {
 }
 
 
+MARIO_2_1 = {
+    "Q": [          # ? block with mushroom/power-up
+        (9, 16),    # First block, #Q# pattern
+        (9, 53),    # Bottom-left of double ?????
+        (5, 125),   # Elevated block (mushroom annotation visible)
+        (5, 172),   # Elevated block (mushroom annotation visible)
+    ],
+    "S": [          # Springboard (base detected as brick, move to correct row)
+        (12, 188),
+    ],
+}
+
+
 def annotate_known_level(lines, level_id):
     """Replace generic # and ? with specific content markers."""
-    if level_id != "1-1":
+    level_map = {"1-1": MARIO_1_1, "2-1": MARIO_2_1}
+    annotations = level_map.get(level_id)
+    if annotations is None:
         return lines
 
     grid = [list(line) for line in lines]
@@ -433,14 +488,15 @@ def annotate_known_level(lines, level_id):
     #   m: ./?/# → m  (hidden 1-up — invisible block, shows as sky)
     #   T: ?/# → T  (10-coin — image shows ? due to coin sprite)
     allowed = {
-        "Q": {"?"},
+        "Q": {"?", "#"},
         "c": {"#"},
         "s": {"?", "#"},
         "m": {".", "?", "#"},
         "T": {"?", "#"},
+        "S": {"#", ".", "?"},
     }
 
-    for char, positions in MARIO_1_1.items():
+    for char, positions in annotations.items():
         for row, col in positions:
             if row < len(grid) and col < len(grid[row]):
                 current = grid[row][col]
@@ -458,7 +514,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Convert Mario map image to text tilemap")
     parser.add_argument("image", help="Path to map image PNG")
-    parser.add_argument("--annotate", choices=["1-1"],
+    parser.add_argument("--annotate", choices=["1-1", "2-1"],
                         help="Apply known block contents")
     parser.add_argument("-o", "--output", help="Output file (default: stdout)")
     args = parser.parse_args()

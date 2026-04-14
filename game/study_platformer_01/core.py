@@ -34,6 +34,9 @@ KOOPA_SHELL_SPEED = 768      # Fast sliding shell (~3 px/frame)
 KOOPA_REVIVE_FRAMES = 300    # Shell wakes up after 5 seconds
 KOOPA_SHAKE_START = 240      # Start shaking animation before revive
 
+# Springboard
+SPRING_VELOCITY = -1800      # Super-high bounce (~7x normal jump height)
+
 # Items
 MUSHROOM_SPEED = 256         # ~1 px/frame (NES accurate; faster than Goomba)
 COIN_POPUP_FRAMES = 30       # Coin animation duration
@@ -917,7 +920,17 @@ class MarioGame:
         if self.on_ground:
             pixel_y = self.y // ONE
             self.y = ((pixel_y & 0xFFFFFFF0) + 1) * ONE
-            self.vy = 0
+            # Springboard bounce: if just landed on 'S' tile, bounce high
+            if self.tilemap and self.vy >= 0:
+                for off_x in (3, 12):
+                    if self.tilemap.get(px + off_x, pixel_y + h) == 'S':
+                        self.vy = SPRING_VELOCITY
+                        self.on_ground = False
+                        break
+                else:
+                    self.vy = 0
+            else:
+                self.vy = 0
 
         px = self.x // ONE
         py = self.y // ONE
@@ -927,12 +940,15 @@ class MarioGame:
         else:
             check_x = px + 15
         if self._is_solid(check_x, wall_y):
-            tile_col = check_x // 16
-            if self.vx <= 0:
-                self.x = ((tile_col + 1) * 16) * ONE
-            else:
-                self.x = (tile_col * 16 - 16) * ONE
-            self.vx = _trunc_div(self.vx, 2)
+            # Springboard doesn't block horizontal movement
+            wall_tile = self.tilemap.get(check_x, wall_y) if self.tilemap else '='
+            if wall_tile != 'S':
+                tile_col = check_x // 16
+                if self.vx <= 0:
+                    self.x = ((tile_col + 1) * 16) * ONE
+                else:
+                    self.x = (tile_col * 16 - 16) * ONE
+                self.vx = _trunc_div(self.vx, 2)
 
         # ==========================================
         # Bouncing blocks

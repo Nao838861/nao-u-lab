@@ -6,13 +6,14 @@ Level format: each character = one 16x16 tile.
   #  brick block
   ?  question block
   !  used question block (hit from below)
+  S  springboard (bounces Mario very high)
   G  Goomba spawn point (replaced with '.' after parsing)
   K  Koopa Troopa spawn point (replaced with '.' after parsing)
 
 Easy for humans and LLMs to edit.
 """
 
-SOLID_TILES = frozenset('=#?![]{}XcsmTQ')
+SOLID_TILES = frozenset('=#?![]{}XcsmTQS')
 SPAWN_CHARS = frozenset('GK')  # Entity spawns (not solid tiles)
 GOAL_TILE = 'P'               # Flagpole (not solid, triggers clear)
 

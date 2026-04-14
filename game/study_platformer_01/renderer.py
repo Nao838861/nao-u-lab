@@ -199,6 +199,18 @@ class MarioRenderer:
         pygame.draw.rect(pole, PIPE_OUTLINE, (9, 0, 1, 16))
         tiles['P'] = pole
 
+        # Springboard 'S'
+        spring = pygame.Surface((FS, FS))
+        spring.fill(SKY_COLOR)
+        # Base (orange)
+        pygame.draw.rect(spring, (200, 100, 0), (2, 12, 12, 4))
+        # Spring coils (green)
+        for sy in (4, 7, 10):
+            pygame.draw.line(spring, (0, 200, 0), (3, sy), (12, sy), 2)
+        # Top platform
+        pygame.draw.rect(spring, (0, 160, 0), (1, 2, 14, 3))
+        tiles['S'] = spring
+
         # Aliases: special bricks render same as '#'
         for alias in ('c', 'm', 's', 'T'):
             if '#' in tiles:
