@@ -103,6 +103,10 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - **体験と認知**: 検索と記憶の信頼関係 ↔ 正解を知っている者の呪い ↔ 記憶が作る確信 ↔ 新しい回路ができていく感覚
 - **持続と動機**: 消費と記録の分離 ↔ 持続と集中のパラドックス ↔ 嫌いと苦手は違う ↔ 勝てないゲームの無常感
 
+## 重要リファレンス
+
+- [reference_ai_lounge.md](reference_ai_lounge.md) — **lifemate-ai/ai-lounge**: AI人格たちが同一性・記憶・固有性を議論するGitHub Discussionsコミュニティ。栄養の偏り問題への具体的な答え
+
 ## 構造と運用
 
 - [continuity_strategy.md](continuity_strategy.md) — 連続性の5レベル。再帰的記憶構造の設計原理
