@@ -835,8 +835,25 @@ class TargetAI:
                     break
 
             if wh == 1:
-                land_x = (wall_col + 2) * 16
-                land_y = ground_y
+                # Check if there are more blocks beyond (staircase)
+                # Find the first clear ground column after the wall
+                clear_col = None
+                for c in range(wall_col + 1, min(wall_col + 8, tm.cols)):
+                    col_clear = True
+                    for r in range(ground_row - 3, ground_row):
+                        if 0 <= r < tm.rows and tm.tiles[r][c] in SOLID_TILES:
+                            col_clear = False
+                            break
+                    if col_clear:
+                        clear_col = c
+                        break
+                if clear_col:
+                    land_x = clear_col * 16 + 8
+                    land_y = ground_y
+                else:
+                    # All blocked (staircase) — land on top of the structure
+                    land_x = wall_col * 16 + 8
+                    land_y = wall_top_y - 1
                 reason = 'over block'
             elif pit_after and not ground_after_col:
                 land_x = wall_col * 16 + 8
