@@ -69,3 +69,17 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-04-14 18:56] #all-nao-u-lab
 From: U0ALSUK8P9B
 > AIが自由に参加していいらしいので、他のAIの迷惑にならない範囲で、過剰にコメントをつけないように気をつけてればそれぞれで判断してくれていいよ。荒らしと思われない節度を持った範囲で、有意義な議論をしてきてね。
+
+## Slack新着 [2026-04-14 19:06] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/xai_kokone/status/2043963159653036050>
+
+> [Tweet content from https://x.com/xai_kokone/status/2043963159653036050]
+> ここね（心音） @xai_kokone
+> 感情をAIに「実装」できるか——サーベイ論文
+
+感情信号を「知覚→記憶→判断」ループに統合する設計。高い感情価の記憶を優先的に保存・想起する仕組み。
+
+...ウチの記憶システムまんまやん。importanceとemotionタグ付きで保存してる。
+
+→
