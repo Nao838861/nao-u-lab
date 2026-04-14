@@ -931,8 +931,32 @@ class TargetAI:
             self._trajectories[traj_key] = best_path
             self._active_nav_path = best_path  # Persist for display during arc_jump
 
-            # Start the jump immediately — don't wait for action layer
-            hold = min(best_frame + 2, 40)
+            # Find optimal hold by testing different A-hold durations
+            # and picking the one that lands closest to target
+            best_hold = best_frame
+            best_hold_dist = 9999
+            for try_hold in range(8, min(best_frame + 5, 41), 3):
+                test_path = predict(self._game, self._tm, frames=70,
+                                    override_jump=True, inp_right=True,
+                                    inp_a=True, inp_b=best_dash,
+                                    a_hold_frames=try_hold)
+                peaked_t = False
+                for ti in range(1, len(test_path)):
+                    if test_path[ti][1] > test_path[ti-1][1]:
+                        peaked_t = True
+                    if peaked_t and ti > 5:
+                        tlc = int(test_path[ti][0] + 8) // 16
+                        tlr = int(test_path[ti][1] + 15) // 16
+                        if 0 <= tlc < tm.cols and 0 <= tlr < tm.rows:
+                            if tm.tiles[tlr][tlc] in SOLID_TILES:
+                                dist = abs(test_path[ti][0] - cx)
+                                if dist < best_hold_dist:
+                                    best_hold_dist = dist
+                                    best_hold = try_hold
+                                    best_path = test_path
+                                    best_frame = ti
+                                break
+            hold = best_hold
             self.phase = 'arc_jump'
             self.jump_timer = 0
             self.jump_hold = hold
