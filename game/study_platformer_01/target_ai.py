@@ -369,7 +369,7 @@ class TargetAI:
             self._climb_cooldown = 0
         if self._climb_cooldown > 0:
             self._climb_cooldown -= 1
-        if on_ground and self.phase not in ('jumping', 'arc_jump') \
+        if on_ground and self.phase not in ('arc_jump',) \
                 and self._climb_cooldown == 0 \
                 and not (self.target and self.target.reason == 'use spring'):
             blocking_wall = None
@@ -379,23 +379,20 @@ class TargetAI:
                     break
             if blocking_wall and abs(vx) < 32:
                 self._blocked_frames += 1
-                if self._blocked_frames >= 15:
+                if self._blocked_frames >= 6:
                     bwd, bwh = blocking_wall
                     if bwh >= 2:
-                        # Tall wall: hold right+A+B until on top
-                        # Simple approach: reflex jump pressing right against
-                        # the wall. Physics handles landing on top naturally.
+                        # Tall wall: hold right+A until on top
                         self.reflex_timer = 45
                         self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': False}
                         self._clear_block()
                         self._blocked_frames = 0
                         self._climb_cooldown = 60
                     else:
-                        # Short wall: quick reflex jump
-                        if not self.subgoals:
-                            self.reflex_timer = 30
-                            self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
-                            self._clear_block()
+                        # Short wall (1 block): jump over with dash
+                        self.reflex_timer = 20
+                        self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
+                        self._clear_block()
                         self._blocked_frames = 0
             else:
                 self._blocked_frames = 0
@@ -599,6 +596,11 @@ class TargetAI:
                 if rows_above < 1:
                     continue
 
+                # Skip non-item blocks at ground level (rows_above=1):
+                # these act as obstacles to jump over, not targets to hit
+                if rows_above == 1 and ch not in ITEM_BLOCKS and ch not in COIN_BLOCKS:
+                    continue
+
                 plat = None
                 if rows_above <= 4:
                     # Reachable with a walk jump (< ~64px height)
@@ -768,7 +770,7 @@ class TargetAI:
                 nearest_pit = (pd, pw)
                 break
 
-        # Check for tall wall ahead — destination = top of wall or beyond
+        # Check for wall ahead — destination = beyond it
         nearest_wall = None
         for wd, wh in far_walls:
             if wd > 0 and wh >= 2:
@@ -806,14 +808,19 @@ class TargetAI:
                         pit_after = True
                         break
 
-                # Wall ahead: dash toward it. The action layer's wall-climb
-                # or stuck detection's reflex will handle the actual climbing.
-                # Don't use subgoals — they block the stuck detection.
-                dest_x = mx + wd - 4
-                self.target = TargetPos(dest_x, my, 'dash', 'approach wall')
-                self.phase = 'moving'
-                self.markers.append(Marker(wall_col * 16, wall_top_row * 16,
-                                           16, 16, (0, 255, 200), 'wall top'))
+                if wh >= 2:
+                    # Tall wall: dash toward it, action layer handles climbing
+                    dest_x = mx + wd - 4
+                    self.target = TargetPos(dest_x, my, 'dash', 'approach wall')
+                    self.phase = 'moving'
+                    self.markers.append(Marker(wall_col * 16, wall_top_row * 16,
+                                               16, 16, (0, 255, 200), 'wall top'))
+                else:
+                    # Short wall (1 block): dash at full speed and jump over
+                    # Target is BEYOND the wall so we maintain speed
+                    dest_x = (wall_col + 3) * 16
+                    self.target = TargetPos(dest_x, my, 'dash', 'jump over block')
+                    self.phase = 'moving'
             else:
                 # Fallback: just advance
                 self.target = TargetPos(dest_x, my, 'dash', 'advance')
@@ -871,14 +878,19 @@ class TargetAI:
         if on_ground and mode not in ('jump_up',) and target_ahead and not has_platform_plan and not using_spring:
             for wd, wh in walls:
                 if 0 < wd < 20 and wh >= 2:
-                    # Wall right ahead — hold right+A (no dash) to land on top
+                    # Tall wall: hold right+A (no dash) to land on top
                     self.reflex_timer = 45
                     self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': False}
                     self._clear_block()
                     return self.reflex_inp
-                    if wd < 8:
-                        return {'left': False, 'right': True, 'a': False, 'b': False}
-                    break
+                if 0 < wd < 20 and wh == 1 and abs(vx) < 1.5:
+                    # 1-block obstacle right in front, nearly stopped:
+                    # short jump over. Only when target is ahead of wall.
+                    wall_x = mx + wd
+                    if self.target is None or self.target.x > wall_x:
+                        self.reflex_timer = 15
+                        self.reflex_inp = {'left': False, 'right': True, 'a': True, 'b': True}
+                        return self.reflex_inp
 
         # ── Mode: jump_land (block hit) ──
         if mode == 'jump_land' and on_ground:
