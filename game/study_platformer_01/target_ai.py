@@ -1055,8 +1055,11 @@ class TargetAI:
                                    inp_a=True, inp_b=use_dash)
                     label = 'nav_dash' if use_dash else 'nav_walk'
                     self._trajectories[label] = path
-                    # Show predicted landing point (PRED marker)
+
+                    # Find actual landing point from trajectory
                     peaked_p = False
+                    pred_land = None
+                    pred_frame = None
                     for li in range(1, len(path)):
                         if path[li][1] > path[li-1][1]:
                             peaked_p = True
@@ -1065,10 +1068,13 @@ class TargetAI:
                             lr = int(path[li][1] + 15) // 16
                             if 0 <= lc < self._tm.cols and 0 <= lr < self._tm.rows:
                                 if self._tm.tiles[lr][lc] in SOLID_TILES:
+                                    pred_land = (path[li][0], (lr - 1) * 16)
+                                    pred_frame = li
                                     self.markers.append(Marker(
                                         path[li][0] - 4, (lr - 1) * 16 - 4,
                                         8, 8, (255, 255, 0), 'PRED'))
                                     break
+
                     # Check if trajectory reaches target
                     for i, (ppx, ppy) in enumerate(path):
                         near_x = abs(ppx - self.target.x) < 24
