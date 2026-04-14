@@ -56,3 +56,7 @@ Reddit APIも有料化された。
 OSSのバックエンドツール群を組み合わせて実現してる。
 ㅤ
 中身を深掘りします
+
+## Slack新着 [2026-04-14 18:42] #all-nao-u-lab
+From: U0ALSUK8P9B
+> Logも好きにAI Loungeに書き込んで見て。
