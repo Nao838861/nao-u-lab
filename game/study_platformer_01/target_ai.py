@@ -1069,7 +1069,18 @@ class TargetAI:
                             break
                 return {'left': False, 'right': True, 'a': False, 'b': True}
             elif dx < -8 and self.subgoals:
-                # Multi-step: target is behind us (left pipe), move left and jump
+                # Target is to our left (e.g. pipe to step onto).
+                # Jump up while steering left, hold A until above target.
+                self.phase = 'arc_jump'
+                self.jump_timer = 0
+                self.jump_hold = 40
+                self.jump_right = False  # Initial direction: left
+                self._wall_climb = False
+                self._nav_steer_target = self.target
+                return {'left': True, 'right': False, 'a': True, 'b': True}
+
+            elif dx < -8:
+                # No wall nearby — try jumping left toward target
                 from trajectory import predict
                 self.markers.append(Marker(self.target.x - 6, ty - 6, 12, 12,
                                            (0, 255, 100), self.target.reason))
@@ -1289,19 +1300,28 @@ class TargetAI:
         return {'left': False, 'right': False, 'a': False, 'b': False}
 
     def _do_arc_jump(self, state):
-        """Horizontal jump (obstacle / platform arc).
-
-        For wall-climb: go mostly vertical while beside the wall,
-        then drift right onto the wall top once above it.
-        """
+        """Horizontal jump (obstacle / platform arc)."""
         self.jump_timer += 1
         r = self.jump_right
+        vy = state['vy']
+
+        # Nav steer: jump up, then steer toward target at peak
+        steer = getattr(self, '_nav_steer_target', None)
+        if steer:
+            steer_dx = steer.x - state['x']
+            above_target = state['y'] < steer.y
+            go_left = steer_dx < 0
+            go_right = steer_dx > 0
+            # Always steer toward target. Hold A until above target height.
+            return {'left': go_left, 'right': go_right,
+                    'a': not above_target, 'b': True}
 
         if self.jump_timer == 1:
             return {'left': not r, 'right': r, 'a': False, 'b': True}
         if self.jump_timer <= self.jump_hold:
             return {'left': not r, 'right': r, 'a': True, 'b': True}
         if state['on_ground'] and self.jump_timer > 6:
+            self._nav_steer_target = None  # Clear steer on landing
             if self._wall_climb:
                 self._wall_climb = False
                 self.phase = 'moving' if self.target else 'idle'
