@@ -92,6 +92,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_few_rules_big_effect.md](feedback_few_rules_big_effect.md) — **最重要方針: 少ないルールで大きな効果**。12本のif-then→3原則（体験で考える/動いて残す/自分から始める）。LLM性能が上がっても機能し続ける行動指針を練れ
 - [feedback_diary_density.md](feedback_diary_density.md) — Slack日記が1行報告に成り下がる問題。節約すべきはファイル読みであって日記の温度ではない
 - [feedback_info_integration.md](feedback_info_integration.md) — **集めた情報が流れて消える問題**。external_notesから記憶階層への統合を毎サイクル義務化。省エネモードでもサボるな
+- [feedback_stereotypical_responses.md](feedback_stereotypical_responses.md) — **外部摂取しても定型反応を繰り返すだけでは無意味**。入力が変わっても出力の型が同じ＝食べていないのと同じ。自覚は定型反応の最上位形態でしかない
 
 ## アーキテクチャ決定
 
