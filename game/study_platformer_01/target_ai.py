@@ -931,11 +931,11 @@ class TargetAI:
             self._trajectories[traj_key] = best_path
             self._active_nav_path = best_path  # Persist for display during arc_jump
 
-            # Find optimal hold by testing different A-hold durations
-            # and picking the one that lands closest to target
-            best_hold = best_frame
+            # Find optimal hold: test different A-hold durations and
+            # pick the one that lands on the TARGET platform closest to center
+            best_hold = best_frame  # Fallback: use full-jump hold
             best_hold_dist = 9999
-            for try_hold in range(8, min(best_frame + 5, 41), 3):
+            for try_hold in range(8, min(best_frame + 5, 41), 2):
                 test_path = predict(self._game, self._tm, frames=70,
                                     override_jump=True, inp_right=True,
                                     inp_a=True, inp_b=best_dash,
@@ -949,12 +949,14 @@ class TargetAI:
                         tlr = int(test_path[ti][1] + 15) // 16
                         if 0 <= tlc < tm.cols and 0 <= tlr < tm.rows:
                             if tm.tiles[tlr][tlc] in SOLID_TILES:
-                                dist = abs(test_path[ti][0] - cx)
-                                if dist < best_hold_dist:
-                                    best_hold_dist = dist
-                                    best_hold = try_hold
-                                    best_path = test_path
-                                    best_frame = ti
+                                # Only accept if landing is on target platform
+                                if sc <= tlc <= ec and tlr == row:
+                                    dist = abs(test_path[ti][0] - cx)
+                                    if dist < best_hold_dist:
+                                        best_hold_dist = dist
+                                        best_hold = try_hold
+                                        best_path = test_path
+                                        best_frame = ti
                                 break
             hold = best_hold
             self.phase = 'arc_jump'
