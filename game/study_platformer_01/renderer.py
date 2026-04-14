@@ -404,11 +404,9 @@ class MarioRenderer:
         py = game.y // ONE
         bx = px // 16
         by = py // 16
-        pos_txt = self.screen_font.render(
-            f'({px},{py}) [{bx},{by}]', True, (255, 255, 255))
-        # Drop shadow for readability
-        shadow = self.screen_font.render(
-            f'({px},{py}) [{bx},{by}]', True, (0, 0, 0))
+        hud_str = f'F:{game.frame} ({px},{py}) [{bx},{by}]'
+        pos_txt = self.screen_font.render(hud_str, True, (255, 255, 255))
+        shadow = self.screen_font.render(hud_str, True, (0, 0, 0))
         self.screen.blit(shadow, (9, 9))
         self.screen.blit(pos_txt, (8, 8))
 
