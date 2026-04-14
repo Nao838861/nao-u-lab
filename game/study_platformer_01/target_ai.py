@@ -1308,6 +1308,12 @@ class TargetAI:
         # Nav steer: jump up, then steer toward target at peak
         steer = getattr(self, '_nav_steer_target', None)
         if steer:
+            # Landed while steering — done with this step
+            if state['on_ground'] and self.jump_timer > 6:
+                self._nav_steer_target = None
+                self._advance_subgoal()
+                self.jump_timer = 0
+                return {'left': False, 'right': True, 'a': False, 'b': False}
             steer_dx = steer.x - state['x']
             above_target = state['y'] < steer.y
             go_left = steer_dx < 0
