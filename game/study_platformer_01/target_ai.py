@@ -835,26 +835,33 @@ class TargetAI:
                     break
 
             if wh == 1:
-                # Check if there are more blocks beyond (staircase)
-                # Find the first clear ground column after the wall
-                clear_col = None
+                # Check if blocks continue beyond (staircase pattern)
+                # If so, land on the staircase top instead of trying to clear it
+                staircase = False
+                stair_top_row = wall_top_row
+                stair_top_col = wall_col
                 for c in range(wall_col + 1, min(wall_col + 8, tm.cols)):
-                    col_clear = True
-                    for r in range(ground_row - 3, ground_row):
+                    has_block = False
+                    for r in range(ground_row - 5, ground_row):
                         if 0 <= r < tm.rows and tm.tiles[r][c] in SOLID_TILES:
-                            col_clear = False
+                            has_block = True
+                            if r < stair_top_row:
+                                stair_top_row = r
+                                stair_top_col = c
                             break
-                    if col_clear:
-                        clear_col = c
-                        break
-                if clear_col:
-                    land_x = clear_col * 16 + 8
-                    land_y = ground_y
+                    if not has_block:
+                        break  # End of staircase
+                    staircase = True
+                if staircase:
+                    # Land on staircase top
+                    land_x = stair_top_col * 16 + 8
+                    land_y = stair_top_row * 16 - 1
+                    reason = 'onto stair'
                 else:
-                    # All blocked (staircase) — land on top of the structure
-                    land_x = wall_col * 16 + 8
-                    land_y = wall_top_y - 1
-                reason = 'over block'
+                    # Isolated 1-block: jump over
+                    land_x = (wall_col + 2) * 16
+                    land_y = ground_y
+                    reason = 'over block'
             elif pit_after and not ground_after_col:
                 land_x = wall_col * 16 + 8
                 land_y = wall_top_y - 1
