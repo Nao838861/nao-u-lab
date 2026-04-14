@@ -290,7 +290,7 @@ def scan_platforms_ahead(tm, mx, my, tiles_ahead=20):
     platforms = []
 
     # Scan each row from ground up to mid-height for solid runs
-    for row in range(tm.rows - 1, max(tm.rows - 10, -1), -1):
+    for row in range(tm.rows - 1, max(tm.rows - 11, -1), -1):
         run_start = None
         for c in range(max(0, mario_col - 2), min(tm.cols, mario_col + tiles_ahead)):
             is_solid = tm.tiles[row][c] in SOLID_TILES
