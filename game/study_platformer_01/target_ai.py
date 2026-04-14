@@ -834,6 +834,22 @@ class TargetAI:
         self.markers.append(Marker(wall_x, wall_top_y, 16, wh * 16,
                                    (255, 165, 0), f'WALL h={wh}'))
 
+        # ── Check for pit near the wall (between mario and wall+2) ──
+        mario_col = int(mx) // 16
+        pit_before = False
+        for c in range(mario_col + 1, min(wall_col + 4, tm.cols)):
+            if 0 <= c < tm.cols:
+                has_ground = any(tm.tiles[r][c] in SOLID_TILES
+                                 for r in range(tm.rows - 2, tm.rows))
+                if not has_ground:
+                    pit_before = True
+                    break
+        if pit_before:
+            # Pit between us and wall — don't try to jump the wall,
+            # just advance and let reflex handle the pit
+            self.target = TargetPos(mx + 120, my, 'dash', 'advance')
+            return
+
         # ── Check what's beyond the wall ──
         pit_after = False
         ground_after_col = None
