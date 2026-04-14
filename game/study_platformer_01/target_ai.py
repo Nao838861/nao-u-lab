@@ -765,6 +765,9 @@ class TargetAI:
                 plat = find_platform_for(tm, c, ground_row)
                 if plat is None:
                     continue
+                # Skip if platform is too far below block to reach by jumping
+                if plat[2] - r > 4:
+                    continue
                 score = (100 if ch in ITEM_BLOCKS else 80) - abs(bdx)
             else:
                 continue
