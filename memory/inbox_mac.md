@@ -820,3 +820,90 @@ The math on that has never been clearer.
 ## Slack新着 [2026-04-14 09:35] #human-steering
 From: U0ALSUK8P9B
 > 週間リミットが復活したので、みんな３時間周期に変えてください。
+
+## Slack新着 [2026-04-14 09:37] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/HowToAI_/status/2043713987171492224>
+
+> [Tweet content from https://x.com/HowToAI_/status/2043713987171492224]
+> How To AI @HowToAI_
+> RAG is broken and nobody's talking about it.
+
+Stanford researchers exposed the fatal flaw killing every "AI that reads your docs" product in existence.
+
+It’s called "Semantic Collapse," and it happens the second your knowledge base hits critical mass. If you've noticed your AI getting "dumber" as you add more data, this is exactly why.
+
+Right now, companies are dumping thousands of documents into their AI, thinking it’s getting smarter.
+
+When you add a document to RAG, it converts it into a high-dimensional vector.
+
+Under 10,000 documents, this works perfectly. Similar concepts cluster together.
+
+But past 10,000 documents, the space fills up. The clusters overlap. The distances compress.
+
+Everything starts to look "relevant."
+
+It is a mathematical law called the Curse of Dimensionality. In a 1000-dimensional space, 99.9% of your data lives on the outer edge. All points become equidistant from each other.
+
+That perfect, relevant document you are looking for now has the exact same mathematical similarity as 50 completely irrelevant ones.
+
+The Stanford findings are brutal:
+
+At 50,000 documents, precision drops by 87%. Semantic search actually becomes worse than old-school keyword search.
+
+Adding more context doesn’t fix the AI. It makes the hallucinations worse.
+
+Your "nearest neighbor" search isn't finding the best answer anymore. It's finding everyone.
+
+We thought RAG solved hallucinations.
+
+It didn't. It just hid them behind math.
+
+
+## Slack新着 [2026-04-14 09:38] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/Vtrivedy10/status/2043427918127513836>
+
+> [Tweet content from https://x.com/Vtrivedy10/status/2043427918127513836]
+> Viv @dwarkesh_sp
+> Harness, Memory, Context Fragments, & the Bitter Lesson
+
+this is a work in progress mental dump on interesting intersections between how we use and design a harness, implications for memory being accumulated over long timescales, and the search bitter lesson we can’t escape
+
+this is v30+, HTML diagrams help me iteratively refine + chat to roughly “see” and alter the mental model
+
+Harnesses & Context Fragments:
+a very important job of the harness is to efficiently & correctly route data within its boundaries into the context window boundary for computation to happen
+
+the context window is a precious artifact.  Harnesses make decisions on how to populate, manage, edit, and organize it so agents can do work.  Each loaded object can be thought of as a Context Fragment and represents an explicit decision by the user and harness designer of what needs a model needs to do work at any given time.
+
+many ideas on externalizing objects + loading into the context window are pioneered and very well described by 
+@a1zhang
+ with RLMs
+
+Experiential Memory:
+we’re in the very early days of deploying agents and agents produce massive amounts of data in every interaction they have.  this is akin to humans doing things and remembering things they did.
+
+however agent memory has a massive advantage as it can be accumulated across all agents which are easily forked and duplicated (unlike humans).  
+@dwarkesh_sp
+ does a good talking about this massive benefit of artificial systems
+
+memory can be treated as an externalized object.  the harness is tasked with doing good contextualized retrieval which means pulling in the right data from accumulated memories across all agent interactions
+
+Search & The Bitter Lesson:
+As we deploy agents in our world over year timescales, there is going to be a hyper-exponential in the amount of data produced by those agents.  We should want to:
+1. Own that data for ourselves.  Open ecosystems are important here
+2. Use that data
+
+This means that we’ll have to search over, distill, and organize massive amounts of data.  Our brain is exceptional at doing this.  Both contextually using prior experience and mostly committing the right stuff to memory with enough intentional practice.
+
+Our current infrastructure systems and algorithms will be put to the test and often break as we get used to this new data regime
+
+some open questions:
+- how do we efficiently distill experiences (Traces) into higher level memory primitives that capture the important parts? How do we do this over ultra long time horizons?
+
+- How much of the future is Search just-in-time vs Search that gets integrated into model weights?
+
+- How do we make models much better at self-managing their context window?  How do we reduce error rates in recursively allowing agents to operate over external objects?
+
+i’ll be expanding on, altering, and adjusting these mental models but these feel like an important subset to me on the future of designing agents practically
