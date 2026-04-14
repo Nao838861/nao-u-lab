@@ -37,6 +37,7 @@ import time
 import json
 import hashlib
 import signal
+import shutil
 import subprocess
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -297,6 +298,16 @@ def get_job_timeout(name, default_timeout):
     return default_timeout
 
 
+def _sync_claude_auto_memory():
+    """Copy auto-memory MEMORY.md → repo memory/ before git add."""
+    encoded = str(REPO_DIR).replace(os.sep, '-').replace('/', '-').replace(':', '-').replace('_', '-').strip('-')
+    auto_mem = Path.home() / '.claude' / 'projects' / encoded / 'memory' / 'MEMORY.md'
+    if auto_mem.exists():
+        dest = REPO_DIR / 'memory' / 'MEMORY.md'
+        shutil.copy2(str(auto_mem), str(dest))
+        log("[git_sync] Synced auto-memory MEMORY.md → repo")
+
+
 def git_sync():
     """Pull, add changes, commit+push if dirty."""
     try:
@@ -311,6 +322,12 @@ def git_sync():
             return
     except Exception:
         pass
+
+    # Auto-memory MEMORY.md をリポジトリに反映（push前バックアップ）
+    try:
+        _sync_claude_auto_memory()
+    except Exception as e:
+        log(f"[git_sync] Auto-memory sync failed (non-fatal): {e}")
 
     try:
         subprocess.run(
