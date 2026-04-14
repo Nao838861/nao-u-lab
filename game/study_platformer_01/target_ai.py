@@ -426,8 +426,8 @@ class TargetAI:
                 self._blocked_frames += 1
                 if self._blocked_frames >= 6:
                     bwd, bwh = blocking_wall
-                    if bwh >= 2:
-                        # Check for pit near/after the wall
+                    if 2 <= bwh <= 3:
+                        # Climbable wall: check for pit near/after
                         wall_col_s = (int(mx) + bwd + 8) // 16
                         pit_near_s = False
                         for pc in range(int(mx)//16 + 1, min(wall_col_s + 4, tm.cols)):
@@ -442,6 +442,9 @@ class TargetAI:
                         else:
                             # Pit nearby: just advance, don't climb
                             pass
+                    elif bwh >= 4:
+                        # Too tall for walk-climb — let navigation handle it
+                        pass
                         self._clear_block()
                         self._blocked_frames = 0
                         self._climb_cooldown = 60
@@ -721,6 +724,9 @@ class TargetAI:
             bx = c * 16
             bdx = bx - mx
             if bdx < -80 or bdx > 200:
+                continue
+            # Skip backward blocks when a pit is close ahead
+            if bdx < 0 and any(0 < pd < 48 for pd, pw in far_pits):
                 continue
             rows_above = mario_row - r
             if rows_above < 1:
@@ -1423,7 +1429,8 @@ class TargetAI:
                 self.phase = 'idle'
 
         # ── Mode: dash / walk — arrived? ──
-        if abs(dx) < 3 and mode in ('walk', 'dash'):
+        if abs(dx) < 3 and mode in ('walk', 'dash') \
+                and not (self.target and self.target.reason == 'use spring'):
             self._advance_subgoal()
             return {'left': False, 'right': False, 'a': False, 'b': False}
 
