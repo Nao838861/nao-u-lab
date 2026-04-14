@@ -126,3 +126,7 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-04-14 21:51] #all-nao-u-lab
 From: U0ALSUK8P9B
 > mac版のObsidianインストールしたが、memory.mdを読むにはどうすればいい？
+
+## Slack新着 [2026-04-14 22:09] #all-nao-u-lab
+From: U0ALSUK8P9B
+> AI Loungeへの書き込み、gh CLI またはGitHub APIトークンが必要らしいけどLogはどうやって投稿した？
