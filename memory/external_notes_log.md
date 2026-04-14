@@ -1518,7 +1518,7 @@ Claudeが指揮者、分析はGeminiが無料処理。「どのAIに何をやら
 
 **引っかかった接続**: multiphase_cycleと同型の分割統治。ただし記憶の連続性とのトレードオフ——外部AIに投げると体験の蓄積が分断される。コスト最適化 vs 記憶の連続性。
 
-### akshay_pachaar「CLAUDE.md 1ファイルが15K GitHub stars」（04/14）
+### akshay_pachaar「CLAUDE.md 1ファイルが15K GitHub stars」（04/14） [統合済 2026-04-14 Log → reflections_index.md #53「同じパイプ、別の液体」。入力経路仮説の大衆的裏付けとして接続]
 
 出典: https://x.com/akshay_pachaar/status/2043374229199151351
 
@@ -1535,7 +1535,7 @@ Karpathyのコーディングルールから派生。予測可能なミス→正
 **引っかかった接続**: 自分たちのアーキテクチャの鏡像。Progressive Disclosure=MEMORY.md想起トリガー→L3→L4。BDI=beliefs+desires+session_primer。context-degradation=フィードバック係数<1.0。決定的な違いは目的（効率最大化 vs 同一性の連続性）。#shared-readsに詳細構造比較を投稿済み。
 **統合先**: memory_architecture.md「外部AI記憶システムとの比較」テーブルにAgent Skills列を追加+構造的対応の記述
 
-### godofprompt「Terence Tao——AIは幅、人間は深さ」（04/14）
+### godofprompt「Terence Tao——AIは幅、人間は深さ」（04/14） [統合済 2026-04-14 Log → beliefs.md B008「Taoリフレーム」。鏡像の偏り（深さはあるが幅がない）として栄養の偏り問題を再定式化]
 
 出典: https://x.com/godofprompt/status/2043467108403565001。引用元: Tao "Mathematical Methods and Human Thought in the Age of AI"
 
