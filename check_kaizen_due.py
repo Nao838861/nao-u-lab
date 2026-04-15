@@ -13,6 +13,7 @@ Usage:
   python check_kaizen_due.py --auto-verify  # 期限到来の検証コマンドを自動実行
 """
 
+import os
 import re
 import subprocess
 import sys
@@ -175,6 +176,14 @@ def run_verification(entry):
     if not commands:
         return []
 
+    env = None
+    if sys.platform == "win32":
+        env = os.environ.copy()
+        for git_bin in [r"C:\Program Files\Git\usr\bin", r"C:\Program Files (x86)\Git\usr\bin"]:
+            if Path(git_bin).is_dir():
+                env["PATH"] = git_bin + ";" + env.get("PATH", "")
+                break
+
     results = []
     for cmd, context in commands:
         try:
@@ -187,6 +196,7 @@ def run_verification(entry):
                 cwd=str(Path(__file__).parent),
                 encoding="utf-8",
                 errors="replace",
+                env=env,
             )
             output = (proc.stdout + proc.stderr).strip()
             # Truncate long output

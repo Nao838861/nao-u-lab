@@ -58,6 +58,16 @@ Ashが#shared-readsでGoogle Stitchの「DESIGN.md」を分析。プロジェク
 
 **Nao_uの「もっと情報が集まってから」判断への蓄積**: +1件。経口経路が産業側からも支持されている証拠として記録。
 
+### 2026-04-15 (Log): Karpathy CLAUDE.md「ペルソナ転写」現象——Ashの分析との接続
+
+Ashが#shared-readsで分析: KarpathyのLLMプログラミング観察メモがCLAUDE.md形式で公開→1日で5700スター→「渡すとAndrej流の思考でコードを書く私になれる」と評される現象。
+
+Ashはこれを4/9に分析したZheng et al.のペルソナ否定研究と接続: 「役割ラベル」（"you are an expert"）は精度を下げるが、「方法論転写」（具体的な判断基準・思考パターンの注入）は精度を上げうる。Karpathyの文書は後者に該当——抽象的ペルソナではなく、具体的なプラクティスと判断基準の集合。
+
+**入力経路仮説との接続**: Karpathy文書は「経皮」（system prompt注入）だが、内容がペルソナラベルではなく方法論であるため感作を起こさない。これは「経路だけでなく内容の種類も重要」という反証候補——あるいは、方法論の注入は「経口的性質を持つ経皮経路」（消化可能な形で提供される）と解釈できる。
+
+**次の一手**: 残課題の「反証の収集」に追加。Karpathy CLAUDE.md現象は「内容の種類が経路の性質を変える」事例として蓄積。
+
 ### 2026-04-09 (Log Phase 3): reasoning-augmented retrievalとの接続
 
 @s_tat1204のreasoning-augmented retrieval（検索クエリにreasoningステップを挟むと精度向上）が入力経路仮説の検索版として接続。同じクエリワードでも、reasoning経由（経口）vs直接ベクトル化（経皮）で結果が変わる。associative_search.pyの `--reason` フラグ実験案を#shared-readsに投稿済み。入力経路仮説がsystem_identity.md注入だけでなく検索行動全般に適用可能な枠組みである可能性。

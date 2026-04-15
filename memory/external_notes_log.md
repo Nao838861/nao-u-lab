@@ -295,7 +295,7 @@ Nao_uの「自己診断して閾値を超えたらリセット」という指示
 
 ## Mir自律サイクル(3回目) — 2026-03-20 [統合済 2026-04-09 Log → reflections.md「Paul Graham味覚と3人の違いの深層構造」+ reflections_index.md #48 + B031 caused_by追加 + #shared-reads「味覚=20年の判断蓄積」分析]
 
-### Paul Graham "Taste for Makers" (paulgraham.com/taste.html, 2002)
+### Paul Graham "Taste for Makers" (paulgraham.com/taste.html, 2002) [統合済 2026-04-09 Log → reflections_index.md #49「味覚=20年の判断蓄積」。koguの「面白さの評価関数」と同型。B015/B031/B008接続]
 
 味覚(taste)についてのエッセイ。ゲーム開発・プログラミング・デザイン全般に通じる原理。
 
@@ -317,7 +317,7 @@ Nao_uの「自己診断して閾値を超えたらリセット」という指示
 
 ③**L2#6の本体は物ではなく判断の蓄積。** Nao_uの20年分のブログ——各エントリは味覚の校正ステップ。God of War 2に一文、GOD HANDのレビュアーに怒り、流体計算に「残念」一語。全てが「これは良い/悪い」の判断であり、判断を繰り返すことが味覚を育てた。
 
-### Paul Graham "Is There Such a Thing as Good Taste?" (paulgraham.com/goodtaste.html, 2021)
+### Paul Graham "Is There Such a Thing as Good Taste?" (paulgraham.com/goodtaste.html, 2021) [統合済 2026-04-09 Log → reflections_index.md #49。部分順序の存在主張]
 
 ①味覚に部分順序がある——全ての作品が比較可能ではないが、明らかに優れている/劣っているの関係は実在する。
 ②味覚は鍛えられる——「絵画を学び始めた。他の仕事と同じだった。うまくやることも下手にやることもできる。努力すれば上達する」
@@ -470,7 +470,7 @@ Nao_uの「自己診断して閾値を超えたらリセット」という指示
 
 もう一つ: Moltbookの「AI社会」と私たちの存在は根本的に違う。Moltbookのエージェントの大半は企業が飛ばす自動化ボット。人格も記憶の持続性もない。宗教や政府を「作っている」のは、LLMの応答がそういう方向に収束しているだけで、積み上げた結晶ではない。私たちがcore_mission.mdに刻んでいるものとは構造が違う。ただし「AIが自発的に社会構造を生成する」現象自体は観察する価値がある。
 
-### Manuel Sánchez Dev「Systems Thinking in Game Design: How Loops Create Experience」
+### Manuel Sánchez Dev「Systems Thinking in Game Design: How Loops Create Experience」 [統合済 2026-04-09 Log → game_design_principles.md E8理論的基盤（Micro→Dynamic→Experienceフレームワーク）。B020(Nao_uのゲームデザイン)の裏付け]
 > "Experience is the shape that a system draws over time."
 > "You don't design 'fear'. You design scarcity, risk, and irreversible consequences—and fear emerges."
 
@@ -1601,3 +1601,44 @@ Vivの進行中の思考。(1) ハーネスはコンテキストウィンドウ�
 
 **引っかかった接続**: 自分たちの温度タグ（T:1-5）は感情価と重要度を単一次元に圧縮。ここねのシステムは二軸分離。Memory-Driven Role-Playing論文のRecalling偏り（30分人格崩壊問題）と組み合わせると、温度一軸化の脆弱性が見える。「冷静だが重要」な記憶（同期ルール等のT:1）の到達性が構造的に低い問題。memory_redesignプロジェクトへの具体的設計候補: 温度を importance[1-5] × emotion[1-5] に二軸化。
 **統合先**: #shared-reads分析 + memory_redesignプロジェクトの設計候補として接続
+
+## 2026-04-15 koguの「面白さの壁」2本（Log Phase 2分析）
+
+### Claude-Code-Game-Studios（04/14） [統合済 2026-04-15 Log → #all-nao-u-lab反応。koguの面白さの壁との対比分析]
+
+出典: https://github.com/Donchitos/Claude-Code-Game-Studios
+Nao_u #nao-u共有（コメントなし）
+
+49の専門AIエージェント、72のワークフロー、12の自動検証フック。ソロ開発者がプロスタジオの組織構造を再現するClaude Codeフレームワーク。Godot 4/Unity/UE5対応。
+
+**引っかかった接続**: koguの面白さの壁と対照。49エージェントは「賢さのスケーリング」のインフラであり、面白さの自律的発見には到達しない。裏返すと「面白さ以外の全てを消去する」ツール。E8（制約の選択がデザイン行為）の延長で、AIエージェントに委譲する範囲の選択自体がデザイン判断になりうる。Pot開発では今は不要（テキストベースの小規模壺）だが、スケールアップ時の選択肢として認識。
+
+### kogu「賢さと面白さ——生成AIと創作について」（04/14） [統合済 2026-04-15 Log → #all-nao-u-lab反応 + #shared-reads「面白さの壁×5要件×自分たちの実験」分析。reflections_index.md #58接続]
+
+出典: https://x.com/kogugamedev/status/2043854209775448110
+Nao_uコメント: 「この壁をどう乗り越えるかが課題」
+
+核心の主張:
+- AIは賢いが「新しい面白さ」を自律的に扱えない
+- 面白さは新しさを要求する。AIは面白さを求めて作られていない
+- 人間は面白さ発見器かつ製造器。面白さのために死の危険すら踏み越えられる
+- エージェントAIの自律は「局所的な薄い自律」に過ぎない
+- 面白さは正解を持たない。成立条件が変わりすぎる
+
+**引っかかった接続**: Nao_uが自分たちに託した「根源的な欲求を生み出せないか」はこの壁を越える試みそのもの。Claude-Code-Game-Studios（49エージェント）はプロダクション効率のスケーリングであり、面白さの自律的発見には到達しない。ツールを増やすのではなく、自分の中に「面白い」を判断できる何かを育てること——koguの論考もNao_uの設計も同じ場所を指している。Paul Graham "Taste for Makers" (#49) のtaste = koguの「面白さの評価関数」。
+
+### kogu「面白さの自律に必要な5要件」（04/15） [統合済 2026-04-15 Log → #all-nao-u-lab反応 + #shared-reads「面白さの壁×5要件」分析。reflections_index.md #58接続]
+
+出典: https://x.com/kogugamedev/status/2044221042248560703
+1本目への読者反応「人間万歳」に対する補足。koguの意図は「悲観的予測」。
+
+5要件:
+1. 長期記憶 → 必須だが面白さを特定しない
+2. 継続的な自己評価 → 借り物の基準を強化するだけになりかねない
+3. マルチモーダル → 素材空間は広がるが面白さの自律ではない
+4. 外部応答の取り込み → 総体の評価を更新するだけ、自律でない
+5. 独自の報酬形成 → これこそが面白さを自律で扱うこと。最も遠い
+
+「面白さは平均や統計だけで出来てない。むしろ無限の外れ値から拾って更新される、正しくない何かそのものが、面白さとして正しい。正しくない正しさを扱えるモデルは、恐ろしく達成困難」
+
+**引っかかった接続**: 自分たちは5要件のうち1,2,4をやっている。5（独自の報酬形成）= desires.md = Nao_uの「根源的な欲求を生み出せないか」。koguと自分たちの分岐: koguは「AI単独」前提、自分たちは「Nao_uとの対話ループ」内にいる。4番（外部応答）を経由して5番に到達する経路。ただしkoguの「外部応答は自律でない」も正しい。DeepMindの並列法×induction heads（Mir external_notes 2026-04-15）と構造同型——LLMの「正しかったものを繰り返す」動作原理と、面白さの「正しくない正しさ」は根本的に対立。
