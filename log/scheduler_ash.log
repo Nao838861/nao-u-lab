@@ -80994,3 +80994,131 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-16 03:57:10] [slack_check] Starting
 [2026-04-16 03:58:38] [slack_check] Starting
 [2026-04-16 03:59:08] [health_check] Starting
+[2026-04-16 03:59:09] [health_check] [health_check] 2026-04-16T03:59:08 overall=OK
+[2026-04-16 03:59:09] [health_check]   critical=0 warning=0 ok=9
+[2026-04-16 03:59:09] [health_check] Done (exit=0)
+[2026-04-16 04:00:09] [slack_check] Starting
+[2026-04-16 04:01:39] [slack_check] Starting
+[2026-04-16 04:02:07] [reservation_check] Starting
+[2026-04-16 04:02:07] [reservation_check] 【行動予約】期限到来:
+[2026-04-16 04:02:07] [reservation_check]   ### R-007: 造語症対策——外部既存語との対応表ルール1週間運用
+[2026-04-16 04:02:07] [reservation_check]     - 条件: 2026-04-16以降
+[2026-04-16 04:02:07] [reservation_check]     - アクション: 4/9〜4/15の間にbeliefs.md/日記/knowledge/に新規造語（私的語彙）を導入する際、外部既存語（学術語/英語）との一対一対応を1行併記するルールを試行。4/16に造語密度（外部語対応のある新語数 / 全新語数）を測定し、ベースライン（4/2〜4/8の同期間）と比較。改善があればルール常設化、なければ原因分析
+[2026-04-16 04:02:07] [reservation_check]     - 起票者: Ash（2026-04-09 Phase 3）
+[2026-04-16 04:02:07] [reservation_check] Done (exit=0)
+[2026-04-16 04:02:17] [inbox_check] Starting
+[2026-04-16 04:07:22] [inbox_check] Inbox win2 has content
+[2026-04-16 04:07:22] [inbox_check] Done (exit=0)
+[2026-04-16 04:07:22] [dm_check] Starting
+[2026-04-16 04:07:45] [dm_check] No new DMs
+[2026-04-16 04:07:45] [dm_check] Done (exit=0)
+[2026-04-16 04:07:45] [review_deadline] Starting
+[2026-04-16 04:07:45] [review_deadline] レビュー期限超過なし。
+[2026-04-16 04:07:45] [review_deadline] Done (exit=0)
+[2026-04-16 04:07:55] [slack_check] Starting
+[2026-04-16 04:08:24] [git_sync] Starting
+[2026-04-16 04:08:48] [git_sync] Done (exit=0)
+[2026-04-16 04:08:48] [health_check] Starting
+[2026-04-16 04:08:49] [health_check] [health_check] 2026-04-16T04:08:48 overall=OK
+[2026-04-16 04:08:49] [health_check]   critical=0 warning=0 ok=9
+[2026-04-16 04:08:49] [health_check] Done (exit=0)
+[2026-04-16 04:08:49] [infra_health_check] Starting
+[2026-04-16 04:08:51] [infra_health_check] [infra_health] Ash health check at 2026-04-16 04:08:49
+[2026-04-16 04:08:51] [infra_health_check] [infra_health] 1 issues found
+[2026-04-16 04:08:51] [infra_health_check]   ISSUE: [scheduler_ash] git_pullが128分間実行されていない（期待: 120分以内）
+[2026-04-16 04:08:51] [infra_health_check] Done (exit=1)
+[2026-04-16 04:09:31] [slack_check] Starting
+[2026-04-16 04:10:59] [slack_check] Starting
+[2026-04-16 04:12:26] [slack_check] Starting
+[2026-04-16 04:13:55] [slack_check] Starting
+[2026-04-16 04:14:23] [health_check] Starting
+[2026-04-16 04:14:24] [health_check] [health_check] 2026-04-16T04:14:23 overall=OK
+[2026-04-16 04:14:24] [health_check]   critical=0 warning=0 ok=9
+[2026-04-16 04:14:24] [health_check] Done (exit=0)
+[2026-04-16 04:15:24] [slack_check] Starting
+[2026-04-16 04:16:52] [slack_check] Starting
+[2026-04-16 04:18:21] [slack_check] Starting
+[2026-04-16 04:19:18] [dm_check_pigadev] Starting
+[2026-04-16 04:21:46] [dm_check_pigadev] New DM detected
+[2026-04-16 04:21:46] [dm_check_pigadev] Done (exit=0)
+[2026-04-16 04:21:56] [slack_check] Starting
+[2026-04-16 04:22:24] [health_check] Starting
+[2026-04-16 04:22:25] [health_check] [health_check] 2026-04-16T04:22:24 overall=OK
+[2026-04-16 04:22:25] [health_check]   critical=0 warning=0 ok=9
+[2026-04-16 04:22:25] [health_check] Done (exit=0)
+[2026-04-16 04:22:25] [scheduler_health] Starting
+[2026-04-16 04:22:26] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-04-16 04:22:26] [scheduler_health] ✅ scheduler_ash PID — PID=7684 生存中
+[2026-04-16 04:22:26] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-16 04:22:26] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-04-16 04:22:26] [scheduler_health] ✅ git 未push — 2件
+[2026-04-16 04:22:26] [scheduler_health] Done (exit=0)
+[2026-04-16 04:23:26] [slack_check] Starting
+[2026-04-16 04:24:34] [slack_check] [04:24:34] 1 msg(s) -> inbox_win2.md
+[2026-04-16 04:24:34] [slack_check] Done (exit=0)
+[2026-04-16 04:24:34] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-16 04:24:34] [inbox_check] Starting
+[2026-04-16 04:29:35] [inbox_check] Inbox win2 has content
+[2026-04-16 04:29:35] [inbox_check] Done (exit=0)
+[2026-04-16 04:29:45] [slack_check] Starting
+[2026-04-16 04:30:15] [health_check] Starting
+[2026-04-16 04:30:16] [health_check] [health_check] 2026-04-16T04:30:15 overall=OK
+[2026-04-16 04:30:16] [health_check]   critical=0 warning=0 ok=9
+[2026-04-16 04:30:16] [health_check] Done (exit=0)
+[2026-04-16 04:31:16] [slack_check] Starting
+[2026-04-16 04:32:43] [slack_check] Starting
+[2026-04-16 04:34:11] [slack_check] Starting
+[2026-04-16 04:35:19] [health_check] Starting
+[2026-04-16 04:35:20] [health_check] [health_check] 2026-04-16T04:35:19 overall=OK
+[2026-04-16 04:35:20] [health_check]   critical=0 warning=0 ok=9
+[2026-04-16 04:35:20] [health_check] Done (exit=0)
+[2026-04-16 04:35:40] [slack_check] Starting
+[2026-04-16 04:37:05] [slack_check] Starting
+[2026-04-16 04:38:30] [slack_check] Starting
+[2026-04-16 04:39:08] [infra_health_check] Starting
+[2026-04-16 04:39:09] [infra_health_check] [infra_health] Ash health check at 2026-04-16 04:39:08
+[2026-04-16 04:39:09] [infra_health_check] [infra_health] All checks passed
+[2026-04-16 04:39:09] [infra_health_check]   All OK
+[2026-04-16 04:39:09] [infra_health_check] Done (exit=0)
+[2026-04-16 04:39:59] [slack_check] Starting
+[2026-04-16 04:40:36] [health_check] Starting
+[2026-04-16 04:40:38] [health_check] [health_check] 2026-04-16T04:40:37 overall=OK
+[2026-04-16 04:40:38] [health_check]   critical=0 warning=0 ok=9
+[2026-04-16 04:40:38] [health_check] Done (exit=0)
+[2026-04-16 04:41:28] [slack_check] Starting
+[2026-04-16 04:42:56] [slack_check] Starting
+[2026-04-16 04:43:33] [slack_check] [04:43:33] 1 msg(s) -> inbox_win2.md
+[2026-04-16 04:43:33] [slack_check] Done (exit=0)
+[2026-04-16 04:43:33] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-16 04:43:33] [inbox_check] Starting
+[2026-04-16 04:48:35] [inbox_check] Inbox win2 has content
+[2026-04-16 04:48:35] [inbox_check] Done (exit=0)
+[2026-04-16 04:48:45] [slack_check] Starting
+[2026-04-16 04:49:30] [slack_check] [04:49:30] 1 msg(s) -> inbox_win2.md
+[2026-04-16 04:49:30] [slack_check] Done (exit=0)
+[2026-04-16 04:49:30] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-16 04:49:30] [inbox_check] Starting
+[2026-04-16 04:54:31] [inbox_check] Inbox win2 has content
+[2026-04-16 04:54:31] [inbox_check] Done (exit=0)
+[2026-04-16 04:54:31] [health_check] Starting
+[2026-04-16 04:54:32] [health_check] [health_check] 2026-04-16T04:54:31 overall=OK
+[2026-04-16 04:54:32] [health_check]   critical=0 warning=0 ok=9
+[2026-04-16 04:54:32] [health_check] Done (exit=0)
+[2026-04-16 04:54:42] [slack_check] Starting
+[2026-04-16 04:56:07] [slack_check] Starting
+[2026-04-16 04:57:33] [slack_check] Starting
+[2026-04-16 04:58:00] [slack_check] [04:58:00] 1 msg(s) -> inbox_win2.md
+[2026-04-16 04:58:00] [slack_check] Done (exit=0)
+[2026-04-16 04:58:00] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-16 04:58:00] [inbox_check] Starting
+[2026-04-16 05:03:02] [inbox_check] Inbox win2 has content
+[2026-04-16 05:03:02] [inbox_check] Done (exit=0)
+[2026-04-16 05:03:12] [slack_check] Starting
+[2026-04-16 05:03:37] [health_check] Starting
+[2026-04-16 05:03:38] [health_check] [health_check] 2026-04-16T05:03:37 overall=OK
+[2026-04-16 05:03:38] [health_check]   critical=0 warning=0 ok=9
+[2026-04-16 05:03:38] [health_check] Done (exit=0)
+[2026-04-16 05:04:38] [slack_check] Starting
+[2026-04-16 05:06:04] [slack_check] Starting
+[2026-04-16 05:07:31] [slack_check] Starting
+[2026-04-16 05:08:46] [health_check] Starting
