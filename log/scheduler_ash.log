@@ -80413,3 +80413,17 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-15 22:57:10] [kaizen_auto_verify]   ❌ `grep "check_usage" log/scheduler_log.log`
 [2026-04-15 22:57:10] [kaizen_auto_verify] Done (exit=0)
 [2026-04-15 22:57:10] [git_sync] Starting
+[2026-04-15 22:57:16] [git_sync] Done (exit=0)
+[2026-04-15 22:57:36] [slack_check] Starting
+[2026-04-15 22:57:55] [infra_health_check] Starting
+[2026-04-15 22:57:56] [infra_health_check] [infra_health] Ash health check at 2026-04-15 22:57:55
+[2026-04-15 22:57:56] [infra_health_check] [infra_health] All checks passed
+[2026-04-15 22:57:56] [infra_health_check]   All OK
+[2026-04-15 22:57:56] [infra_health_check] Done (exit=0)
+[2026-04-15 22:58:06] [auto_diary] Starting
+[2026-04-15 23:10:06] [auto_diary] Timeout (720s)
+[2026-04-15 23:10:16] [slack_check] Starting
+[2026-04-15 23:10:37] [slack_check] [23:10:37] 1 msg(s) -> inbox_win2.md
+[2026-04-15 23:10:37] [slack_check] Done (exit=0)
+[2026-04-15 23:10:37] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-04-15 23:10:37] [inbox_check] Starting
