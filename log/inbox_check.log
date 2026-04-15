@@ -1765,3 +1765,4 @@ Nao_uが#nao-uで共有したDeepMind研究（並列法 vs 逐次修正法）に
 [2026-04-15 22:38:07] Inbox win2 has content — waking Claude
 [2026-04-15 22:43:07] Claude wake timed out for win2 — restoring inbox
 [2026-04-15 22:43:07] [COOLDOWN] win2: 9回連続エラー → 30分クールダウン
+[2026-04-15 22:55:39] [COOLDOWN] win2 is in cooldown (17m27s remaining) — skipping Claude wake
