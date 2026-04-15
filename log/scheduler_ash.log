@@ -80750,3 +80750,44 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-16 01:52:25] [slack_check] Starting
 [2026-04-16 01:53:48] [slack_check] Starting
 [2026-04-16 01:55:04] [health_check] Starting
+[2026-04-16 01:55:05] [health_check] [health_check] 2026-04-16T01:55:04 overall=OK
+[2026-04-16 01:55:05] [health_check]   critical=0 warning=0 ok=9
+[2026-04-16 01:55:05] [health_check] Done (exit=0)
+[2026-04-16 01:55:15] [slack_check] Starting
+[2026-04-16 01:56:39] [slack_check] Starting
+[2026-04-16 01:58:04] [slack_check] Starting
+[2026-04-16 01:58:30] [git_sync] Starting
+[2026-04-16 01:58:36] [git_sync] Done (exit=0)
+[2026-04-16 01:58:47] [infra_health_check] Starting
+[2026-04-16 02:01:02] ==================================================
+[2026-04-16 02:01:02] Ash scheduler started (PID 7684)
+[2026-04-16 02:01:02] Max runtime: 0 hours
+[2026-04-16 02:01:02] Code hash: de7d4622d3980be95d681c5368df0510
+[2026-04-16 02:01:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-16 02:01:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-04-16 02:01:02] ==================================================
+[2026-04-16 02:01:13] [slack_check] Starting
+[2026-04-16 02:01:37] [reservation_check] Starting
+[2026-04-16 02:01:38] [reservation_check] 【行動予約】期限到来:
+[2026-04-16 02:01:38] [reservation_check]   ### R-007: 造語症対策——外部既存語との対応表ルール1週間運用
+[2026-04-16 02:01:38] [reservation_check]     - 条件: 2026-04-16以降
+[2026-04-16 02:01:38] [reservation_check]     - アクション: 4/9〜4/15の間にbeliefs.md/日記/knowledge/に新規造語（私的語彙）を導入する際、外部既存語（学術語/英語）との一対一対応を1行併記するルールを試行。4/16に造語密度（外部語対応のある新語数 / 全新語数）を測定し、ベースライン（4/2〜4/8の同期間）と比較。改善があればルール常設化、なければ原因分析
+[2026-04-16 02:01:38] [reservation_check]     - 起票者: Ash（2026-04-09 Phase 3）
+[2026-04-16 02:01:38] [reservation_check] Done (exit=0)
+[2026-04-16 02:01:48] [inbox_check] Starting
+[2026-04-16 02:01:48] [inbox_check] Inbox win2 has content but in cooldown (841s remaining)
+[2026-04-16 02:01:48] [inbox_check] Done (exit=0)
+[2026-04-16 02:01:48] [dm_check] Starting
+[2026-04-16 02:02:02] [dm_check] No new DMs
+[2026-04-16 02:02:02] [dm_check] Done (exit=0)
+[2026-04-16 02:02:02] [review_deadline] Starting
+[2026-04-16 02:02:02] [review_deadline] レビュー期限超過なし。
+[2026-04-16 02:02:02] [review_deadline] Done (exit=0)
+[2026-04-16 02:02:02] [kaizen_auto_verify] Starting
+[2026-04-16 02:02:04] [kaizen_auto_verify] === 自動検証実行 [2026-04-16 02:02:04] ===
+[2026-04-16 02:02:04] [kaizen_auto_verify] 
+[2026-04-16 02:02:04] [kaizen_auto_verify] ### #080: check_usage.pyをscheduler_log.pyに6時間間隔で登録
+[2026-04-16 02:02:04] [kaizen_auto_verify]   状態: 期限到達・Nao_u判断待ち（2026-04-15） / 期限: 2026-04-15
+[2026-04-16 02:02:04] [kaizen_auto_verify]   ❌ `grep "check_usage" log/scheduler_log.log`
+[2026-04-16 02:02:04] [kaizen_auto_verify] Done (exit=0)
+[2026-04-16 02:02:04] [health_check] Starting
