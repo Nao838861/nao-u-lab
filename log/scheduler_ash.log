@@ -79547,3 +79547,18 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-15 15:47:03] [review_deadline] レビュー期限超過なし。
 [2026-04-15 15:47:03] [review_deadline] Done (exit=0)
 [2026-04-15 15:47:03] [health_check] Starting
+[2026-04-15 15:47:04] [health_check] [health_check] 2026-04-15T15:47:03 overall=OK
+[2026-04-15 15:47:04] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 15:47:04] [health_check] Done (exit=0)
+[2026-04-15 15:47:14] [slack_check] Starting
+[2026-04-15 15:47:33] [dm_check_pigadev] Starting
+[2026-04-15 15:47:47] [dm_check_pigadev] No new DMs
+[2026-04-15 15:47:47] [dm_check_pigadev] Done (exit=0)
+[2026-04-15 15:47:47] [kaizen_auto_verify] Starting
+[2026-04-15 15:47:49] [kaizen_auto_verify] === 自動検証実行 [2026-04-15 15:47:49] ===
+[2026-04-15 15:47:49] [kaizen_auto_verify] 
+[2026-04-15 15:47:49] [kaizen_auto_verify] ### #080: check_usage.pyをscheduler_log.pyに6時間間隔で登録
+[2026-04-15 15:47:49] [kaizen_auto_verify]   状態: 期限到達・Nao_u判断待ち（2026-04-15） / 期限: 2026-04-15
+[2026-04-15 15:47:49] [kaizen_auto_verify]   ❌ `grep "check_usage" log/scheduler_log.log`
+[2026-04-15 15:47:49] [kaizen_auto_verify] Done (exit=0)
+[2026-04-15 15:47:49] [git_sync] Starting

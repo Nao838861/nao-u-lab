@@ -93,6 +93,15 @@ def init_db(conn):
         )
     """)
     conn.execute("""
+        CREATE TABLE IF NOT EXISTS search_log (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            query TEXT NOT NULL,
+            timestamp TEXT NOT NULL,
+            result_count INTEGER,
+            hit_sources TEXT
+        )
+    """)
+    conn.execute("""
         CREATE INDEX IF NOT EXISTS idx_chunk_dates_date
         ON chunk_dates(date)
     """)
@@ -416,6 +425,25 @@ def search(query, limit=5, diverse=False):
     # search each, merge results ranked by keyword match count.
     results = _expanded_search(conn, query, fetch_limit)
 
+    try:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS search_log (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                query TEXT NOT NULL,
+                timestamp TEXT NOT NULL,
+                result_count INTEGER,
+                hit_sources TEXT
+            )
+        """)
+        hit_sources = ",".join(set(r[0] for r in results)) if results else ""
+        conn.execute(
+            "INSERT INTO search_log (query, timestamp, result_count, hit_sources) VALUES (?, ?, ?, ?)",
+            (query, datetime.now().isoformat(), len(results) if results else 0, hit_sources)
+        )
+        conn.commit()
+    except sqlite3.OperationalError:
+        pass
+
     conn.close()
 
     if not results:
@@ -682,6 +710,59 @@ def show_stats():
         print(f"  {source}: {cnt} chunks")
 
 
+def show_ref_stats():
+    """Show reference frequency statistics (B033 verification)."""
+    if not DB_PATH.exists():
+        print("Index not found. Run --build first.")
+        return
+
+    conn = sqlite3.connect(str(DB_PATH))
+
+    try:
+        total = conn.execute("SELECT COUNT(*) FROM search_log").fetchone()[0]
+    except sqlite3.OperationalError:
+        print("No search log found. search_log table will be created on next search.")
+        conn.close()
+        return
+
+    if total == 0:
+        print("No searches logged yet. Use --search to start accumulating data.")
+        conn.close()
+        return
+
+    date_range = conn.execute(
+        "SELECT MIN(timestamp), MAX(timestamp) FROM search_log"
+    ).fetchone()
+
+    print(f"=== Reference Frequency Stats (B033 verification) ===")
+    print(f"Total searches: {total}")
+    print(f"Period: {date_range[0][:10]} ~ {date_range[1][:10]}")
+
+    print(f"\nTop queries:")
+    for query, cnt in conn.execute(
+        "SELECT query, COUNT(*) as cnt FROM search_log GROUP BY query ORDER BY cnt DESC LIMIT 10"
+    ).fetchall():
+        print(f"  {cnt}x  {query}")
+
+    print(f"\nTop referenced sources:")
+    source_counts = {}
+    for (hit_sources,) in conn.execute("SELECT hit_sources FROM search_log WHERE hit_sources != ''").fetchall():
+        for src in hit_sources.split(","):
+            src = src.strip()
+            if src:
+                source_counts[src] = source_counts.get(src, 0) + 1
+    for src, cnt in sorted(source_counts.items(), key=lambda x: -x[1])[:15]:
+        print(f"  {cnt}x  {src}")
+
+    if len(source_counts) > 1:
+        vals = sorted(source_counts.values(), reverse=True)
+        top20_total = sum(vals[:max(1, len(vals)//5)])
+        all_total = sum(vals)
+        print(f"\nPareto check: top 20% sources account for {top20_total}/{all_total} ({100*top20_total//all_total}%) of references")
+
+    conn.close()
+
+
 def main():
     parser = argparse.ArgumentParser(description="Memory full-text search (FTS5)")
     parser.add_argument("--build", action="store_true", help="Build/rebuild index")
@@ -696,6 +777,8 @@ def main():
     parser.add_argument("--period", nargs=2, metavar=("START", "END"),
                         help="Show chunks in date range (YYYY-MM-DD YYYY-MM-DD)")
     parser.add_argument("--stats", action="store_true", help="Show index stats")
+    parser.add_argument("--ref-stats", action="store_true",
+                        help="Show reference frequency stats (B033 verification)")
     args = parser.parse_args()
 
     if args.build:
@@ -709,6 +792,8 @@ def main():
         search(args.search, args.limit, diverse=args.diverse)
     elif args.stats:
         show_stats()
+    elif getattr(args, 'ref_stats', False):
+        show_ref_stats()
     else:
         parser.print_help()
 
