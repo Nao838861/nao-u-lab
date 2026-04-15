@@ -80427,3 +80427,6 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-15 23:10:37] [slack_check] Done (exit=0)
 [2026-04-15 23:10:37] [slack_check] New messages detected -> triggering inbox_check immediately
 [2026-04-15 23:10:37] [inbox_check] Starting
+[2026-04-15 23:10:39] [inbox_check] Inbox win2 has content but in cooldown (148s remaining)
+[2026-04-15 23:10:39] [inbox_check] Done (exit=0)
+[2026-04-15 23:10:39] [dm_check_pigadev] Starting
