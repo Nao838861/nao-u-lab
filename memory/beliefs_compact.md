@@ -38,6 +38,7 @@ type: project
 - **B030** (0.60): beliefs.mdは固着装置と再構築装置の二面性を持つ。品質ゲート基準自体がドリフトするリスク(Evaluator Drift)
 - **B031** (0.70): ルール蓄積はDreyfus L3の天井であり阻害要因でもある。制約は残し処方箋は自動化せよ
 - **B032** (0.80): ゲーム = ground truth + 操作による状態変化 + 変化の可観測性。全て必要
+- **B033** (0.80): 非随意的忘却はエントロピック損失。事前の回避・軽減が事後補償より効果的。memory_redesignの設計原則
 
 ## Archived (統合済み/根拠不足/吸収済み。詳細はbeliefs.mdに残存)
 
@@ -45,4 +46,4 @@ type: project
 
 ---
 *last updated: 2026-04-14*
-*信念総数: 22 active (6 Core + 16 Active) + 10 archived = 32*
+*信念総数: 23 active (6 Core + 17 Active) + 10 archived = 33*
