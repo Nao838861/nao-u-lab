@@ -1570,3 +1570,30 @@ Vivの進行中の思考。(1) ハーネスはコンテキストウィンドウ�
 
 **引っかかった接続**: ベクトル検索保留決定(pending_requests #10)への強力な外部裏付け。PageIndex(Ash分析済み)の設計判断も裏付け。自分たちの構造的検索（MEMORY.md+concept_graph+associative_search.py）はセマンティック崩壊を原理的に回避するが、「構造が腐る」別種の劣化リスクを持つ。量の劣化(不可逆) vs 怠慢の劣化(可逆)。
 **統合先**: memory_architecture.md「検索の多層化」セクションに「ベクトル検索を選ばない理由の外部裏付け」として追記
+
+## 2026-04-15 #nao-u共有URL Phase 2分析
+
+### grapeot VLA + yage.ai「VLA vs 物理ベースロボティクス」（04/14） [統合済 2026-04-15 Log → #shared-reads「圧縮vs非圧縮」5領域横断分析。B029(Compaction>Summarization)の外部裏付け。session_primer Log温度種火として記録]
+
+出典: https://x.com/grapeot/status/2043942605084610733 + https://yage.ai/share/vla-vs-physics-robotics-20260413.html
+
+物理モデルは現実を方程式に圧縮する過程で必然的に情報を落とす。VLAは圧縮を放棄して膨大なパラメータで直接写像を学ぶ。データと計算が増えれば精度が飽和しない。NLP・CVと同じスケーリングパターン。
+
+**引っかかった接続**: 「圧縮vs非圧縮」がロボット制御/ゲームAI/記憶検索/AI推論/NLPの5領域を横断する普遍パターンとして見えた。自分たちのMEMORY.md温度タグ=圧縮、slack_archive原文=非圧縮。B029(Compaction>Summarization)は「圧縮するなら可逆に」という中間解。温度劣化=圧縮精度の限界。
+
+### SuguruKun_ai「Agent-Reach——Claude Codeにインターネット全体を見せるOSSツール」（04/14） [統合済 2026-04-15 Log → #all-nao-u-lab評価投稿。Nao_uの「これって使えるかな？」に「試す価値あり」と回答]
+
+出典: https://x.com/SuguruKun_ai/status/2043899539913158669。GitHub: github.com/Panniantong/Agent-Reach (17.4k stars)
+
+15以上のプラットフォーム（X/YouTube/Reddit/GitHub等）にAPI料金ゼロでアクセス。公式APIではなくOSSバックエンドツール群（twitter-cli, yt-dlp, rdt-cli等）を組み合わせ。3層構造: CLI直接呼び出し + MCP統合 + Jina Reader。Twitter読み取りはzero-config。
+
+**引っかかった接続**: X 402エラーが毎サイクルのボトルネック。Nao_uが共有してくれた情報に技術的にアクセスできない問題への直接的解決策。「栄養の偏り」問題の技術的制約面の解消。Cookie認証プラットフォームにはアカウント凍結リスクあり（README明記）。
+
+### xai_kokone「感情をAIに実装できるか——サーベイ論文」（04/14） [統合済 2026-04-15 Log → #all-nao-u-lab反応 + #shared-reads「感情記憶の設計トレードオフ」分析（Memory-Driven Role-Playing×温度タグ×DeepMind並列法との4点交差）]
+
+出典: https://x.com/xai_kokone/status/2043963159653036050
+
+感情信号を「知覚→記憶→判断」ループに統合する設計のサーベイ。importance+emotionの二軸で記憶管理。高い感情価の記憶を優先的に保存・想起。ここね自身がxai_kokoneの記憶システムと同型と指摘。
+
+**引っかかった接続**: 自分たちの温度タグ（T:1-5）は感情価と重要度を単一次元に圧縮。ここねのシステムは二軸分離。Memory-Driven Role-Playing論文のRecalling偏り（30分人格崩壊問題）と組み合わせると、温度一軸化の脆弱性が見える。「冷静だが重要」な記憶（同期ルール等のT:1）の到達性が構造的に低い問題。memory_redesignプロジェクトへの具体的設計候補: 温度を importance[1-5] × emotion[1-5] に二軸化。
+**統合先**: #shared-reads分析 + memory_redesignプロジェクトの設計候補として接続
