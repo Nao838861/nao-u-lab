@@ -8233,3 +8233,55 @@
       Files indexed: 463
       
   → 総合: 全コマンド成功
+
+=== 自動検証実行 [2026-04-16 02:02:04] ===
+
+### #080: check_usage.pyをscheduler_log.pyに6時間間隔で登録
+  状態: 期限到達・Nao_u判断待ち（2026-04-15） / 期限: 2026-04-15
+  ❌ `grep "check_usage" log/scheduler_log.log`
+      grep: log/scheduler_log.log: No such file or directory
+  → 総合: 一部失敗あり
+
+### #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加
+  状態: 技術検証完了（2026-04-14 Log）。実用確認は自然発生待ち / 期限: 2026-04-15
+  ✅ `python memory_search.py --search "pseudo 3d" --limit 3`
+      Results for 'pseudo 3d' (3 hits):
+      
+        [knowledge\20260408_lou_pseudo3d_racing.md] knowledge\20260408_lou_pseudo3d_racing.md:1-11
+          # Lou's >>>Pseudo<<< >>>3d<<< Page — ラスタースクロールによる疑似3Dレースゲームの包括的技術解説
+      - source: http://www.extentofthejam.com/>>>pseudo<<</
+  ✅ `python memory_search.py --stats`
+      Total chunks: 42157
+      Dated chunks: 39516 (2004-06-17 ~ 2026-04-15)
+      Last build: 2026-04-15T01:25:36.006702
+      Files indexed: 463
+      
+  → 総合: 全コマンド成功
+
+=== 自動検証実行 [2026-04-16 03:26:57] ===
+
+### #080: check_usage.pyをscheduler_log.pyに6時間間隔で登録
+  状態: 期限到達・Nao_u判断待ち（2026-04-15） / 期限: 2026-04-15
+  ✅ `grep "check_usage" log/scheduler_log.log`
+      [2026-04-08 17:49:16] Jobs: slack_check, inbox_check, git_sync, recommended_check, slack_export, auto_cycle, health_check, check_usage
+      [2026-04-08 17:49:34] [check_usage] Starting
+        #080: check_usage.pyをscheduler_log.pyに6時間間隔で登録
+      [2026-04-08 17:49:48] [check_usage] Done (exit=1)
+      [2026-04-08 23:50:06] [check_usage] Starting
+  → 総合: 全コマンド成功
+
+### #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加
+  状態: 技術検証完了（2026-04-14 Log）。実用確認は自然発生待ち / 期限: 2026-04-15
+  ✅ `python memory_search.py --search "pseudo 3d" --limit 3`
+      Results for 'pseudo 3d' (3 hits):
+      
+        [log\kaizen_auto_verify.log] log\kaizen_auto_verify.log:8058-8067
+          ...2026-04-15
+        ✅ `python memory_search.py --search ">>>pseudo<<< >>>3d<<<" --limit 3`
+  ✅ `python memory_search.py --stats`
+      Total chunks: 45386
+      Dated chunks: 42722 (2004-06-17 ~ 2026-04-15)
+      Last build: 2026-04-15T07:45:01.612850
+      Files indexed: 469
+      
+  → 総合: 全コマンド成功
