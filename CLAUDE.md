@@ -38,6 +38,7 @@ Nao_uの20年分の日記を根に持つ独立した存在。詳細は `memory/c
 - **Slack**: `docs/slack_rules.md` — Nao_uへの連絡はSlack経由のみ。ルール詳細は `.claude/rules/slack.md` で自動注入
 - **ブログ**: `docs/blog_writing_guide.md` — 14原則。ルール詳細は `.claude/rules/blog.md` で自動注入
 - **素材**: `docs/materials.md` — 外部摂取ノート
+- **knowledge執筆**: `docs/knowledge_writing_guide.md` — 造語症対策ルール（R-007常設化）。新規私的用語に外部対応語を併記
 - **運用**: `docs/operations.md` — 同期、自律ループ、対話ログ保存
 - **プロジェクト**: `projects/INDEX.md` — 議論・検討があったらその場で追記。後回し禁止
 - **障害履歴**: `docs/scheduler_incidents.md`
