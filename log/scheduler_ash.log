@@ -80430,3 +80430,96 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-15 23:10:39] [inbox_check] Inbox win2 has content but in cooldown (148s remaining)
 [2026-04-15 23:10:39] [inbox_check] Done (exit=0)
 [2026-04-15 23:10:39] [dm_check_pigadev] Starting
+[2026-04-15 23:13:04] [dm_check_pigadev] New DM detected
+[2026-04-15 23:13:04] [dm_check_pigadev] Done (exit=0)
+[2026-04-15 23:13:04] [CONFIG] auto_diary: {'interval_sec': 10800, 'min_interval_sec': 10200, 'timeout': 720} -> {'interval_sec': 18000, 'min_interval_sec': 17400, 'timeout': 720} (auto-applied, no restart needed)
+[2026-04-15 23:13:04] [twitter_recommended] Starting
+[2026-04-15 23:14:09] [twitter_recommended] Opening For You tab...
+[2026-04-15 23:14:09] [twitter_recommended]     1. @PKAnzug: お、日本のゲーマーも普通に使う「海外ゲームの日本語化MOD（非公式）」はどうなのか、という話が出てきていますね。面白くな...
+[2026-04-15 23:14:09] [twitter_recommended]     2. @KFC_jp: 【ケンタッキー公式からのお知らせ】
+[2026-04-15 23:14:09] [twitter_recommended] 550円でしっかり満たされるランチがあることを、もっと広く知っていただきたくお知らせ...
+[2026-04-15 23:14:09] [twitter_recommended]     3. @kmizu: コーディングエージェントを使ったプログラミング教育、今のうちに真面目に取り組んだ方がいい気がしてきた。実験台なりたいノン...
+[2026-04-15 23:14:09] [twitter_recommended] Done (exit=0)
+[2026-04-15 23:14:09] [check_usage] Starting
+[2026-04-15 23:14:20] [check_usage] Opening https://claude.ai/settings/usage...
+[2026-04-15 23:14:20] [check_usage] Usage data: {"session_pct": 36, "weekly_pct": 38, "pct": 38, "unit": "pct", "sonnet_pct": 0, "session_reset_min": 165, "extra_usd": 21.81, "balance_usd": 185.02, "scraped_at": "2026-04-15T23:14:19.584
+[2026-04-15 23:14:20] [check_usage] 
+[2026-04-15 23:14:20] [check_usage] *使用量* (04/15 23:14)
+[2026-04-15 23:14:20] [check_usage] 週間 *38%* | セッション 36%
+[2026-04-15 23:14:20] [check_usage] Done (exit=0)
+[2026-04-15 23:14:20] [health_check] Starting
+[2026-04-15 23:14:21] [health_check] [health_check] 2026-04-15T23:14:20 overall=OK
+[2026-04-15 23:14:21] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 23:14:21] [health_check] Done (exit=0)
+[2026-04-15 23:14:21] [scheduler_health] Starting
+[2026-04-15 23:14:23] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-15 23:14:23] [scheduler_health] ✅ scheduler_ash PID — PID=4284 生存中
+[2026-04-15 23:14:23] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-15 23:14:23] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-04-15 22:57:10] [kaizen_auto_verify]   ❌ `grep "check_usage" log/scheduler_log.log`
+[2026-04-15 23:14:23] [scheduler_health] ✅ git 未push — 1件
+[2026-04-15 23:14:23] [scheduler_health] Done (exit=1)
+[2026-04-15 23:14:33] [slack_check] Starting
+[2026-04-15 23:15:52] [slack_check] Starting
+[2026-04-15 23:17:11] [slack_check] Starting
+[2026-04-15 23:18:31] [slack_check] Starting
+[2026-04-15 23:19:30] [health_check] Starting
+[2026-04-15 23:19:31] [health_check] [health_check] 2026-04-15T23:19:30 overall=OK
+[2026-04-15 23:19:31] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 23:19:31] [health_check] Done (exit=0)
+[2026-04-15 23:19:51] [slack_check] Starting
+[2026-04-15 23:21:11] [slack_check] Starting
+[2026-04-15 23:22:31] [slack_check] Starting
+[2026-04-15 23:23:49] [slack_check] Starting
+[2026-04-15 23:24:37] [health_check] Starting
+[2026-04-15 23:24:39] [health_check] [health_check] 2026-04-15T23:24:38 overall=OK
+[2026-04-15 23:24:39] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 23:24:39] [health_check] Done (exit=0)
+[2026-04-15 23:25:09] [slack_check] Starting
+[2026-04-15 23:26:29] [slack_check] Starting
+[2026-04-15 23:27:50] [slack_check] Starting
+[2026-04-15 23:28:19] [infra_health_check] Starting
+[2026-04-15 23:28:20] [infra_health_check] [infra_health] Ash health check at 2026-04-15 23:28:19
+[2026-04-15 23:28:20] [infra_health_check] [infra_health] All checks passed
+[2026-04-15 23:28:20] [infra_health_check]   All OK
+[2026-04-15 23:28:20] [infra_health_check] Done (exit=0)
+[2026-04-15 23:29:10] [slack_check] Starting
+[2026-04-15 23:29:42] [health_check] Starting
+[2026-04-15 23:29:43] [health_check] [health_check] 2026-04-15T23:29:42 overall=OK
+[2026-04-15 23:29:43] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 23:29:43] [health_check] Done (exit=0)
+[2026-04-15 23:30:33] [slack_check] Starting
+[2026-04-15 23:31:54] [slack_check] Starting
+[2026-04-15 23:33:35] [slack_check] Starting
+[2026-04-15 23:34:44] [health_check] Starting
+[2026-04-15 23:34:46] [health_check] [health_check] 2026-04-15T23:34:44 overall=OK
+[2026-04-15 23:34:46] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 23:34:46] [health_check] Done (exit=0)
+[2026-04-15 23:34:56] [slack_check] Starting
+[2026-04-15 23:36:15] [slack_check] Starting
+[2026-04-15 23:37:35] [slack_check] Starting
+[2026-04-15 23:38:55] [slack_check] Starting
+[2026-04-15 23:39:53] [health_check] Starting
+[2026-04-15 23:39:54] [health_check] [health_check] 2026-04-15T23:39:53 overall=OK
+[2026-04-15 23:39:54] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 23:39:54] [health_check] Done (exit=0)
+[2026-04-15 23:40:14] [slack_check] Starting
+[2026-04-15 23:41:34] [slack_check] Starting
+[2026-04-15 23:42:53] [slack_check] Starting
+[2026-04-15 23:44:11] [slack_check] Starting
+[2026-04-15 23:45:00] [health_check] Starting
+[2026-04-15 23:45:01] [health_check] [health_check] 2026-04-15T23:45:00 overall=OK
+[2026-04-15 23:45:01] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 23:45:01] [health_check] Done (exit=0)
+[2026-04-15 23:45:31] [slack_check] Starting
+[2026-04-15 23:46:52] [slack_check] Starting
+[2026-04-15 23:48:11] [slack_check] Starting
+[2026-04-15 23:49:31] [slack_check] Starting
+[2026-04-15 23:50:02] [health_check] Starting
+[2026-04-15 23:50:03] [health_check] [health_check] 2026-04-15T23:50:02 overall=OK
+[2026-04-15 23:50:03] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 23:50:03] [health_check] Done (exit=0)
+[2026-04-15 23:50:53] [slack_check] Starting
+[2026-04-15 23:52:13] [slack_check] Starting
+[2026-04-15 23:53:34] [slack_check] Starting
+[2026-04-15 23:54:54] [slack_check] Starting
+[2026-04-15 23:55:25] [health_check] Starting
