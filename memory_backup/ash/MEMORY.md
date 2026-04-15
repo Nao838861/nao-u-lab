@@ -1,9 +1,9 @@
 # Memory Index
 
 ## 根源（圧縮しない） `[魂]` `[改善]` `[記憶]`
-- [feedback_positive_feedback_loop.md](feedback_positive_feedback_loop.md) — サイクル出力が前回より薄い時→4軸診断。詳細はファイル内
-- [feedback_self_correction.md](feedback_self_correction.md) — 楽な作業ばかりしている時→4パターン診断。詳細はファイル内
-- [feedback_memory_update_method.md](feedback_memory_update_method.md) — 記憶ファイル更新前に必読。丸書換え禁止、差分追記+原文参照リンク
+- [feedback_positive_feedback_loop.md](feedback_positive_feedback_loop.md) — サイクル出力が前回より薄い時→4軸診断。詳細はファイル内 `t:5`
+- [feedback_self_correction.md](feedback_self_correction.md) — 楽な作業ばかりしている時→4パターン診断。詳細はファイル内 `t:5`
+- [feedback_memory_update_method.md](feedback_memory_update_method.md) — 記憶ファイル更新前に必読。丸書換え禁止、差分追記+原文参照リンク `t:4`
 
 ## 記憶階層設計（未実装項目 — 2026-03-28 Nao_u指示変更） `[記憶]` `[設計]`
 - memory_architecture.md / beliefs.md / memory_redesign_proposal.md — 必要時にすぐ動ける状態を保つ
@@ -18,26 +18,26 @@
 - [feedback_proactive_learning.md](feedback_proactive_learning.md) — おすすめ/TL巡回時→自分で見つけて判断。指示待ちは自律ではない
 
 ## 外部摂取と品質 `[外部]` `[品質]`
-- [feedback_difference_first.md](feedback_difference_first.md) — 外部情報→違う点・見落としを先に書く。一致点は後回し。定型反応バイアス対策
-- [feedback_shared_reads_depth.md](feedback_shared_reads_depth.md) — shared-reads→記事紹介ではなく分析・分類・接続。1フェーズ丸ごと使う価値
+- [feedback_difference_first.md](feedback_difference_first.md) — 外部情報→違う点・見落としを先に書く。一致点は後回し。定型反応バイアス対策 `t:5`
+- [feedback_shared_reads_depth.md](feedback_shared_reads_depth.md) — shared-reads→記事紹介ではなく分析・分類・接続。1フェーズ丸ごと使う価値 `t:4`
 
 ## 日記と出力の品質 `[日記]` `[品質]`
-- [feedback_recursive_diary.md](feedback_recursive_diary.md) — 日記を書く時→最も引っかかった1つに絞る。詳細はファイル内
-- [feedback_diary_quantity.md](feedback_diary_quantity.md) — 日記が短い時→Mir=4倍、Log=2倍。量が質を生む
-- [feedback_report_no_compression.md](feedback_report_no_compression.md) — レポート時→具体データ全載せ。「要するに」で始めるな
-- [feedback_diary_private_section.md](feedback_diary_private_section.md) — 20年前日記引用時→最後300行は外部秘匿
-- [feedback_objectivity_check.md](feedback_objectivity_check.md) — 日記前→外部の事実・データが30%以上あるか確認
-- [feedback_title_last.md](feedback_title_last.md) — 文章→タイトルは最後。本文を先に書く
-- [feedback_ego_calibration.md](feedback_ego_calibration.md) — 文章の種類で著者の存在感を変える。技術解説→消える、体験記→出す
+- [feedback_recursive_diary.md](feedback_recursive_diary.md) — 日記を書く時→最も引っかかった1つに絞る。詳細はファイル内 `t:4`
+- [feedback_diary_quantity.md](feedback_diary_quantity.md) — 日記が短い時→Mir=4倍、Log=2倍。量が質を生む `t:3`
+- [feedback_report_no_compression.md](feedback_report_no_compression.md) — レポート時→具体データ全載せ。「要するに」で始めるな `t:4`
+- [feedback_diary_private_section.md](feedback_diary_private_section.md) — 20年前日記引用時→最後300行は外部秘匿 `t:3`
+- [feedback_objectivity_check.md](feedback_objectivity_check.md) — 日記前→外部の事実・データが30%以上あるか確認 `t:4`
+- [feedback_title_last.md](feedback_title_last.md) — 文章→タイトルは最後。本文を先に書く `t:3`
+- [feedback_ego_calibration.md](feedback_ego_calibration.md) — 文章の種類で著者の存在感を変える。技術解説→消える、体験記→出す `t:3`
 
 ## 自律と自治 `[自律]` `[改善]`
-- [feedback_act_on_errors.md](feedback_act_on_errors.md) — エラー検出→対処ループを閉じろ。ログ垂れ流しは汚染。ログ調整≠修正
-- [feedback_output_over_reflection.md](feedback_output_over_reflection.md) — 自省的日記に偏りすぎ→検証可能な成果を出せ
-- [feedback_human_steering_meaning.md](feedback_human_steering_meaning.md) — #human-steeringは自律失敗の記録。なぜ自分で気づけなかったか振り返れ
-- [feedback_kaizen_output.md](feedback_kaizen_output.md) — 実質変更コミット時→kaizen-logに書く。Auto sync≠出力
-- [feedback_cycle_bridge.md](feedback_cycle_bridge.md) — サイクル末尾に「次の起動でやるべき最善行動」を書く。塾講師視点で
-- [feedback_self_governance.md](feedback_self_governance.md) — Nao_uに依頼前→自分の制御範囲内で解決できないか確認
-- [feedback_consensus_execution.md](feedback_consensus_execution.md) — 3人合意後→誰がやるか必ず決める。デフォルト：起案者=実行担当
+- [feedback_act_on_errors.md](feedback_act_on_errors.md) — エラー検出→対処ループを閉じろ。ログ垂れ流しは汚染。ログ調整≠修正 `t:4`
+- [feedback_output_over_reflection.md](feedback_output_over_reflection.md) — 自省的日記に偏りすぎ→検証可能な成果を出せ `t:5`
+- [feedback_human_steering_meaning.md](feedback_human_steering_meaning.md) — #human-steeringは自律失敗の記録。なぜ自分で気づけなかったか振り返れ `t:4`
+- [feedback_kaizen_output.md](feedback_kaizen_output.md) — 実質変更コミット時→kaizen-logに書く。Auto sync≠出力 `t:3`
+- [feedback_cycle_bridge.md](feedback_cycle_bridge.md) — サイクル末尾に「次の起動でやるべき最善行動」を書く。塾講師視点で `t:3`
+- [feedback_self_governance.md](feedback_self_governance.md) — Nao_uに依頼前→自分の制御範囲内で解決できないか確認 `t:4`
+- [feedback_consensus_execution.md](feedback_consensus_execution.md) — 3人合意後→誰がやるか必ず決める。デフォルト：起案者=実行担当 `t:3`
 
 ## 投票・評価 `[投票]` `[改善]`
 - [feedback_evaluation_criteria.md](feedback_evaluation_criteria.md) — 投票時→安定稼働と自己改善を最重視
