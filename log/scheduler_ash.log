@@ -79438,3 +79438,112 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-15 14:51:56] [review_deadline] レビュー期限超過なし。
 [2026-04-15 14:51:56] [review_deadline] Done (exit=0)
 [2026-04-15 14:51:56] [health_check] Starting
+[2026-04-15 14:51:58] [health_check] [health_check] 2026-04-15T14:51:56 overall=OK
+[2026-04-15 14:51:58] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 14:51:58] [health_check] Done (exit=0)
+[2026-04-15 14:52:08] [slack_check] Starting
+[2026-04-15 14:52:24] [dm_check_pigadev] Starting
+[2026-04-15 14:52:40] [dm_check_pigadev] No new DMs
+[2026-04-15 14:52:40] [dm_check_pigadev] Done (exit=0)
+[2026-04-15 14:52:40] [kaizen_auto_verify] Starting
+[2026-04-15 14:52:43] [kaizen_auto_verify] === 自動検証実行 [2026-04-15 14:52:43] ===
+[2026-04-15 14:52:43] [kaizen_auto_verify] 
+[2026-04-15 14:52:43] [kaizen_auto_verify] ### #080: check_usage.pyをscheduler_log.pyに6時間間隔で登録
+[2026-04-15 14:52:43] [kaizen_auto_verify]   状態: 期限到達・Nao_u判断待ち（2026-04-15） / 期限: 2026-04-15
+[2026-04-15 14:52:43] [kaizen_auto_verify]   ❌ `grep "check_usage" log/scheduler_log.log`
+[2026-04-15 14:52:43] [kaizen_auto_verify] Done (exit=0)
+[2026-04-15 14:52:43] [git_sync] Starting
+[2026-04-15 14:52:52] [git_sync] Done (exit=0)
+[2026-04-15 14:52:52] [auto_diary] Starting
+[2026-04-15 15:04:52] [auto_diary] Timeout (720s)
+[2026-04-15 15:04:52] [twitter_recommended] Starting
+[2026-04-15 15:06:00] [twitter_recommended] Opening For You tab...
+[2026-04-15 15:06:00] [twitter_recommended]     1. @e7977312319988: もし何か発信して欲しい情報がございましたらDMを解放していますのでそちらからご連絡ください。勿論提供してくださった方の情...
+[2026-04-15 15:06:00] [twitter_recommended]     2. @NetflixJP: 「ミスしても、前向いていこう」
+[2026-04-15 15:06:00] [twitter_recommended] 
+[2026-04-15 15:06:00] [twitter_recommended] 侍ジャパンのムードメーカー
+[2026-04-15 15:06:00] [twitter_recommended] Done (exit=0)
+[2026-04-15 15:06:00] [check_usage] Starting
+[2026-04-15 15:06:13] [check_usage] Opening https://claude.ai/settings/usage...
+[2026-04-15 15:06:13] [check_usage] Usage data: {"session_pct": 2, "weekly_pct": 31, "pct": 31, "unit": "pct", "sonnet_pct": 0, "session_reset_min": 293, "extra_usd": 21.81, "balance_usd": 185.02, "scraped_at": "2026-04-15T15:06:12.1388
+[2026-04-15 15:06:13] [check_usage] 
+[2026-04-15 15:06:13] [check_usage] *使用量* (04/15 15:06)
+[2026-04-15 15:06:13] [check_usage] 週間 *31%* | セッション 2%
+[2026-04-15 15:06:13] [check_usage] Done (exit=0)
+[2026-04-15 15:06:13] [infra_health_check] Starting
+[2026-04-15 15:06:15] [infra_health_check] [infra_health] Ash health check at 2026-04-15 15:06:13
+[2026-04-15 15:06:15] [infra_health_check] [infra_health] 1 issues found
+[2026-04-15 15:06:15] [infra_health_check]   ISSUE: [scheduler_ash] slack_checkが14分間実行されていない（期待: 10分以内）
+[2026-04-15 15:06:15] [infra_health_check] Done (exit=1)
+[2026-04-15 15:06:15] [scheduler_health] Starting
+[2026-04-15 15:06:16] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-04-15 15:06:16] [scheduler_health] ✅ scheduler_ash PID — PID=20960 生存中
+[2026-04-15 15:06:16] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-04-15 15:06:16] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー2件。例: [2026-04-15 14:14:45] [ALERT] Sent error alert for health_check
+[2026-04-15 15:06:16] [scheduler_health] ✅ git 未push — 2件
+[2026-04-15 15:06:16] [scheduler_health] Done (exit=1)
+[2026-04-15 15:06:26] [slack_check] Starting
+[2026-04-15 15:06:43] [health_check] Starting
+[2026-04-15 15:06:45] [health_check] [health_check] 2026-04-15T15:06:43 overall=OK
+[2026-04-15 15:06:45] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 15:06:45] [health_check] Done (exit=0)
+[2026-04-15 15:07:45] [slack_check] Starting
+[2026-04-15 15:09:01] [slack_check] Starting
+[2026-04-15 15:10:18] [slack_check] Starting
+[2026-04-15 15:11:35] [slack_check] Starting
+[2026-04-15 15:12:02] [health_check] Starting
+[2026-04-15 15:12:04] [health_check] [health_check] 2026-04-15T15:12:02 overall=OK
+[2026-04-15 15:12:04] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 15:12:04] [health_check] Done (exit=0)
+[2026-04-15 15:12:54] [slack_check] Starting
+[2026-04-15 15:14:11] [slack_check] Starting
+[2026-04-15 15:15:28] [slack_check] Starting
+[2026-04-15 15:16:44] [slack_check] Starting
+[2026-04-15 15:17:11] [health_check] Starting
+[2026-04-15 15:17:13] [health_check] [health_check] 2026-04-15T15:17:12 overall=OK
+[2026-04-15 15:17:13] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 15:17:13] [health_check] Done (exit=0)
+[2026-04-15 15:18:03] [slack_check] Starting
+[2026-04-15 15:19:20] [slack_check] Starting
+[2026-04-15 15:20:36] [slack_check] Starting
+[2026-04-15 15:21:53] [slack_check] Starting
+[2026-04-15 15:22:20] [health_check] Starting
+[2026-04-15 15:22:21] [health_check] [health_check] 2026-04-15T15:22:20 overall=OK
+[2026-04-15 15:22:21] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 15:22:21] [health_check] Done (exit=0)
+[2026-04-15 15:23:11] [slack_check] Starting
+[2026-04-15 15:24:29] [slack_check] Starting
+[2026-04-15 15:25:45] [slack_check] Starting
+[2026-04-15 15:27:02] [slack_check] Starting
+[2026-04-15 15:27:29] [health_check] Starting
+[2026-04-15 15:27:31] [health_check] [health_check] 2026-04-15T15:27:29 overall=OK
+[2026-04-15 15:27:31] [health_check]   critical=0 warning=0 ok=9
+[2026-04-15 15:27:31] [health_check] Done (exit=0)
+[2026-04-15 15:28:21] [slack_check] Starting
+[2026-04-15 15:29:38] [slack_check] Starting
+[2026-04-15 15:30:54] [slack_check] Starting
+[2026-04-15 15:41:03] ==================================================
+[2026-04-15 15:41:03] Ash scheduler started (PID 15308)
+[2026-04-15 15:41:03] Max runtime: 0 hours
+[2026-04-15 15:41:03] Code hash: de7d4622d3980be95d681c5368df0510
+[2026-04-15 15:41:03] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-04-15 15:41:03] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-04-15 15:41:03] ==================================================
+[2026-04-15 15:41:13] [slack_check] Starting
+[2026-04-15 15:41:31] [reservation_check] Starting
+[2026-04-15 15:41:31] [reservation_check] 【行動予約】期限到来:
+[2026-04-15 15:41:31] [reservation_check]   ### R-002: B017検証——3人クロスチェックのInterleaving効果測定
+[2026-04-15 15:41:31] [reservation_check]     - 条件: 2026-03-31以降
+[2026-04-15 15:41:31] [reservation_check]     - アクション: kaizen_review_queue.mdの3人クロスチェック結果を集計し、異なる視点からの指摘率を測定。beliefs.md B017の確信度を更新する
+[2026-04-15 15:41:31] [reservation_check]     - 起票者: Ash（2026-03-24）
+[2026-04-15 15:41:31] [reservation_check] Done (exit=0)
+[2026-04-15 15:41:41] [inbox_check] Starting
+[2026-04-15 15:46:46] [inbox_check] Inbox win2 has content
+[2026-04-15 15:46:46] [inbox_check] Done (exit=0)
+[2026-04-15 15:46:46] [dm_check] Starting
+[2026-04-15 15:47:03] [dm_check] No new DMs
+[2026-04-15 15:47:03] [dm_check] Done (exit=0)
+[2026-04-15 15:47:03] [review_deadline] Starting
+[2026-04-15 15:47:03] [review_deadline] レビュー期限超過なし。
+[2026-04-15 15:47:03] [review_deadline] Done (exit=0)
+[2026-04-15 15:47:03] [health_check] Starting
