@@ -102,4 +102,6 @@ reflections.md（Level 3）の重要な気づきを圧縮したもの（Level 2.
 
 54. **原子は「関係」である——eml演算子と「少ないルールで大きな効果」の数学的証明** (external_notes_log.md L1546, HowToAI_ 2026-04-14) — 全初等関数が1つの二項演算子eml(x,y)=exp(x)-ln(y)から生成可能。NANDゲートの数学版。最重要の発見: 原子はexp単体でもln単体でもなく「両者の差」という関係。3原則も同じ——「体験で考える」は「生成偏向←→体験」の緊張関係が原子。5原理の交差ノード（concept_graph）がまさに「関係としての原子」を記述している。同時に完全性≠効率性を数学的に示す: NANDだけでCPUは作れるが実用にはAND/ORも使う。3原則で全行動をカバーする理論的完全性はあるが、feedback_indexの具体パターンも効率のために必要。原子の選択が正しいことの検証条件: feedback_indexの全項目が3原則から導出可能であること。
 
+55. **Compactionは「圧縮」ではなく「参照化」——VLA × Manus AI × MEMORY.md温度劣化の三点接続** (external_notes_log.md L541+L578, Manus AI 2026-03 / grapeot VLA 2026-04-15) — VLAの「圧縮vs非圧縮」とManus AIの「compaction vs summarization」は同じ対立の別表現。物理モデル（圧縮）=情報を捨てる、VLA（非圧縮）=情報を全部持つ。Manus compaction=情報を捨てないが参照に変換する、summarization=情報を捨てる。MEMORY.mdのトリガーはcompaction（Level 3ファイルへの参照）として設計されているが、一部がsummarization（要約）に退化している。これが温度劣化の正体の一つ。Manus AIの判断基準転換: トリガーの品質は「要約の正確さ」ではなく「必要な時にfull版に到達できるか」で測るべき。B029の外部実証+VLAフレームワークとの接合。B013（最良の汎用化は比喩）とも整合: 比喩は圧縮ではなくコンパクション——元の複雑さへの参照パスを内包する。
+
 - 子供ログ: 全読了（L1-168）

@@ -538,7 +538,7 @@ Nao_uが#nao-uで紹介した@koguGameDevの言葉: 「AIに実装や調整を�
 
 ## 2026-03-24 記憶圧縮の外部知見: Manus AI + Google Always On Memory Agent（Mir） [統合済 2026-04-07 → memory_architecture.md「圧縮の3段階原則」+ beliefs B029]
 
-### Manus AI「Recoverable Compression」（philschmid.de / dev.to経由）
+### Manus AI「Recoverable Compression」（philschmid.de / dev.to経由） [統合済 2026-04-15 Log → reflections_index.md #55「Compactionは圧縮ではなく参照化」。VLA×Manus×MEMORY.md温度劣化の三点接続。B029の外部実証]
 
 Manus AIのContext Engineering手法。コンテキスト管理に2つの方法を区別:
 
@@ -575,7 +575,7 @@ async def consolidation_loop(agent, interval_minutes=30):
 
 **引っかかった点**: 私たちのPhase 8（俯瞰）がこれに該当するが、2つの違いがある。(1) Google版はconsolidated=0フラグで「まだ処理していない記憶」を明示的に追跡する。私たちにはこの追跡がない——何を読んで何を読んでいないかが曖昧。(2) Google版は統合をLLMに任せる。私たちは手動でMEMORY.mdを書く。手動の方が温度は残るが、漏れが出る。**ハイブリッド: 新規記憶の検出を自動化し、統合判断は手動で行う**のが最善か。
 
-### 追加発見（Manus AI 詳細調査）
+### 追加発見（Manus AI 詳細調査） [統合済 2026-04-15 Log → reflections_index.md #55。「トリガーの品質=full版への到達可能性」という判断基準転換をB029+session_primer.mdとの構造的同型性として統合]
 
 **ソース**: manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus（Yichao "Peak" Ji著）
 
