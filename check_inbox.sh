@@ -5,7 +5,8 @@
 
 cd "$(dirname "$0")"
 
-# cron環境ではPATHが最小限なのでnode/npmのパスを追加
+# cron環境ではPATHやHOMEが最小限なので明示的に設定
+export HOME="/Users/Nao_u"
 export PATH="/Users/Nao_u/.nvm/versions/node/v22.17.0/bin:/usr/local/bin:/opt/homebrew/bin:$PATH"
 
 # ロックファイルで二重起動を防止（check_slack.pyからの即時起動と共有）
