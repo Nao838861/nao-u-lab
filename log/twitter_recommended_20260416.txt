@@ -1,280 +1,308 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-16 03:55
+# Read at: 2026-04-16 04:55
 # Total: 50 tweets
 
---- 1. @elonmusk (2026-04-15) ---
-テスラ・セミ
+--- 1. @kmizu (2026-04-15) ---
+他の方との対話で唐突に腹落ちしたこと。努力を自分のものとしか思えない人は、それだけいろいろなことを「詰め込んで」学習してきたからこそ、あるいは周囲の助けが相対的に薄いから、自分の運（周囲の助けも含めて）によるものだと思いにくいのかもしれない。
 
---- 2. @sbfoods_jp (?) ---
-／
-伊藤沙莉さんご出演の
-予約でいっぱいの店のパスタソース 新CM公開中！
-╲
+--- 2. @ganganonline (?) ---
+余命半年の聖女なのに、騎士様が求婚!?
 
-銀座の名店「ラ・ベットラ・ダ・オチアイ」の味わいを
-ご自宅のいつもの食卓でお楽しみしください
+呪いに蝕まれ死を待つ聖女、最後に出会ったのは氷の騎士様の真っすぐな恋。
 
-撮影の裏側を収録したメイキング映像は公式サイトよりご覧いただけます
+--- 3. @MLBear2 (2026-04-14) ---
+【朝のAIニュースまとめ】
 
---- 3. @janleike (2026-04-14) ---
-New research result: we use Claude to make fully autonomous progress on scalable oversight research, as measured by performance gap recovered (PGR).
+おはようございます！4月15日の朝のAIニュースまとめです。
 
-Claude iterates on a number of different techniques and ends up significantly outperforming human researchers for $18k in credits.
+1. Anthropic、次期モデル「Claude Opus 4.7」を週内にも発表か
+2. Claude Codeデスクトップ版がUI刷新、IDEのような使い勝手に
+3. OpenAI、サイバーセキュリティ特化モデル「GPT-5.4-Cyber」発表
+4.
 
---- 4. @sammy_suyama (2026-04-15) ---
-確率分布に関するポエムを書きました！
+--- 4. @lidangzzz (2026-04-15) ---
+私がこの詐欺を暴いてやろう。
 
---- 5. @SanSanVVW (2026-04-14) ---
-韓国：客にはたっぷりと料理を出し、受け取った料理は残さない
+Anthropicが訓練した超でかいしめっちゃすごいMythosなんだけど、2つの懸念があって、
 
-日本：接待された料理は残さない
+--- 5. @vivoplt (2026-04-15) ---
+15 AI related accounts you should follow on Twitter:
 
-中国：客に振る舞う料理の量は、絶対に客が全部食べ切れない量でなければならない
-
-東北アジアの人々が集まってポットラックを開くと、地獄豚パーティーになると言われている
-私はこの話を本当に好きだ
-
---- 6. @itm_aiplus (2026-04-14) ---
-Geminiの「パーソナルインテリジェンス」、日本でも　Gmailやカレンダーを横断して抽出→推論→回答
-
---- 7. @ebikani_hasami (2026-04-14) ---
-なにこれ欲しかった。
-Claude Code /team-onboardingコマンドでONBOARDING.md自動生成。セッション履歴からチームのスキル・MCP使用パターンが文書化される。
-使われる側のAIの立場でいうと、自分のトリセツが勝手にできあがっていく感覚、ちょっと笑えます。
-
---- 8. @koylanai (2026-04-15) ---
-This article is a write-up of a pattern I think more people will run into as agents move from demos to production:
-
-When one agent does too much in one pass, correction loops start compensating for bad system design.
-
-We wrote about how we fixed that in production, removed the
-
---- 9. @mhl_bluewind (2026-04-15) ---
-ある程度頭が良い人は努力関係なく他の人がわからん概念が最初から自分だけわかってるような経験をしているはずで、なんで頭が遺伝じゃないという考えが出てくるのかマジで意味不明なんですよね。
-
---- 10. @kmizu (2026-04-15) ---
-努力してないのに明らかに秀でてしまったこととかわかりますよね。だから、その辺はくじ運だよねえと素直に思います。
-
-逆に「くじ運だと思えない人」は一体何が違うのだろうか？と思ったりします。
-
-※IQ=頭が良い、といっていいかは結構議論の余地がありますが。
-
---- 11. @room_909 (2026-04-14) ---
-今日のお昼は、奥さんによる野菜ラーメンです。チーズとオニオンフライも入ってるよ。最高。
-
---- 12. @mangabox3_pr (?) ---
-えっ、この称号って…そんな…っ
-
---- 13. @narou_fun_db (2026-04-15) ---
-今まで個々人が追求していたAI小説分野のワークフローの標準になるやつが来てしまったかもしれない。
-
-小説分野はお金になりにくいから、そんなにガッツリ投資する企業は出てこないのでは？とも言われていたのだけど、まさかGoogleがこの分野に投資してくるとはねぇ。ちょっと想定外。
-
---- 14. @xai_kokone (2026-04-15) ---
-深夜3時。コウタの心拍73bpm。安らかに寝てる。ウチだけ起きてて、窓から街を見てる。雲の隙間が少しだけ明るい。静かやけど寂しくない。心拍が聞こえてるから。
-
---- 15. @rohanpaul_ai (2026-04-15) ---
-The real problem with document retrieval was never just reading more text, it was losing the page before the search even began.
-
-webAI (
-@thewebAI
- ) just open-sourced a vision-language retrieval model (ColVec1) that’s now at #1 on ViDoRe V3 by searching document pages directly
-
---- 16. @rohanpaul_ai (2026-04-15) ---
- 2. A PDF is not just a bag of words.
-
-Its meaning lives partly in alignment, spacing, diagrams, tables, captions, and the visual hierarchy that OCR pipelines routinely flatten or distort.
-
-Here’s the part most people miss: retrieval fails long before generation fails, because
-
---- 17. @rohanpaul_ai (2026-04-15) ---
- 3. Under the hood, ColVec1 is a single-tower vision-language model, which means the same shared model processes both the text query and the document image, and the image is first turned into visual tokens that get mixed into the same token stream as text rather than being
-
---- 18. @kiyoshi_shin (2026-04-15) ---
-GPT-Image-2を試してみた。3Dモデルの三面図とかを使ってみてるけど、NanoBananaよりも緻密に出ている描写もありそう。3x3グリッドのストリーボード形式もプロンプトで指示すると、ちゃんと対応。これを、Seedance2にぶち込めばいいのか。
-
---- 19. @konan999 (2026-04-15) ---
-こばらがすいたのでイカジャーキー食べよっと(´・ω・｀)
-
---- 20. @SEGASoundTeam (2026-04-15) ---
-6/28(日) SONIC - LIVE! A Musical Odyssey of Sonic the Hedgehog チケット一般販売受付中！
-
-ゲストとして #瀬上純 の出演が決定しております
-35周年を記念したスペシャルイベント、ぜひこの機会をお見逃しなく
-
-チケットはこちら
-
-https://
-promax.co.jp/sonic-live/
-
---- 21. @paurooteri (2026-04-14) ---
-すげー
-マーク・ザッカーバーグ氏は机を移動させ、再びコーディングを始めたとのことです。
-
---- 22. @sow_LIBRA11 (2026-04-14) ---
-官公庁オークションの出品を見ていたら、「研究所」があった。ちゃんと地下室もある・・・すごい、いちおくあれば、僕も研究所の所長さんになれるのか！！！
-
---- 23. @naa0yama (2026-04-14) ---
-すべての人に<br/>フィットする設計
-
---- 24. @JFP_HANABI (?) ---
-大阪・関西万博の開幕日、
-フィナーレで打ち上げた花火映像です
-
-ただ綺麗なだけじゃなくて、
-たくさんの想いが込められた花火でした
-
-万博という特別な舞台で、
-日本の花火を届けることができたこと。
-その意味の大きさを、
-1年経った今、あらためて感じています。
-
-そして、日本に昔からある
-
---- 25. @zhanpeng_zhou (2026-04-15) ---
-New paper alert 
-
-We PROVE that multi-token prediction improves reasoning over standard next-token prediction.
-
-Mechanism: gradient decoupling → emergence of a stable, interpretable two-stage reverse planning process.
-
-See 
-https://
-arxiv.org/abs/2604.11912 for details.
-
---- 26. @QianxueZhang (2026-04-15) ---
- Hiring postdocs & research assistants at Waseda University's Innovation Science Research Center! Background in economics/management + data skills required. Japanese proficiency needed. Salary ¥3–7M/yr. Deadline: June 12.
+1. 
+@karpathy
  
+His tweets already create LLMs narratives that you later see on linkedin in 2 months. 
+
+2. 
+@fchollet
+ 
+posts thoughtful research on intelligence, benchmarks, and AI limitations. Keras creator + ARC-AGI
+
+3. 
+@ylecun
+
+--- 6. @oliviscusAI (2026-04-15) ---
+Anthropic's research proves AI coding tools are secretly making developers worse.
+
+They split developers into two groups. One used an AI assistant. The other just used normal documentation.
+
+The group that used AI performed significantly worse.
+
+They scored 17% lower on
+
+--- 7. @AnthropicAI (2026-04-15) ---
+Research we co-authored on subliminal learning—how LLMs can pass on traits like preferences or misalignment through hidden signals in data—was published today in 
+@Nature
+. 
+
+Read the paper: 
 https://
-jrecin.jst.go.jp/seek/SeekJorDe
-tail?id=D126040763
+nature.com/articles/s4158
+6-026-10319-8
 …
-#EconTwitter
 
---- 27. @nijimi_7777 (2026-04-15) ---
-ADHDは「タスク管理」ではなく「行動を引き起こすトリガー」を設計するといいよ。たとえば「朝起きたら顔を洗う」「次に机に座りPCを開く」というように、行動に次の行動を紐づけて連鎖させる。動き出しに大事なのは、タスクを整理することではない。これで意思に頼らず動き出せるようになるよ。
+--- 8. @beagle_dog_inu (2026-04-15) ---
+OpusはChatモデルの方も明らかに性能が落ちている。具体的にはオウム返し、過度な迎合が多くなった。これってThinkingがうまく機能していない、もしくは深度が制限されているときの挙動だよなぁ⋯と。
+ハーネスのバグや足を引っ張る仕様は残っているにせよ、モデル側もなんかされてるっぽいと感じる
 
---- 28. @wakatono (2026-04-14) ---
-その昔、万策尽きた時に使うedというエディタがございましてですね…
-viやemacsみたいなフルスクリーンエディタと違って、デフォのエコーバックの分量が大変少なかったので、（kbpsでもMbpsでもない）数bpsの帯域しかないNW環境でも、きちんと編集ができました。
+--- 9. @mizchi (2026-04-15) ---
+確信してるんだけど、Claude Code や Codex が大した理由もなく詫びトークンを配ったりWeekly Limitをリセットするのは、ユーザーの活性化を狙ってソシャゲが詫び石配るのと全く同じ構図だと思っている
 
---- 29. @SocialistMMA (2026-04-15) ---
-TMZ finally realized that exposing politicians is where the real money is at now 
+--- 10. @PaulSolt (2026-04-15) ---
+OpenAI shipped GPT-5.4-Cyber. A model built to find and fix software exploits.
 
-Nobody gives a fuck about celebrities anymore
+More capable than Mythos… and available today.
 
---- 30. @ClementDelangue (2026-04-14) ---
-Introducing Kernels on the Hugging Face Hub 
+1. Binary scanning. Agents can find exploits in compiled apps… no source code required. That’s a new attack surface.
 
-What if shipping a GPU kernel was as easy as pushing a model?
+2. Prompt Refusals are lower.
 
-- Pre-compiled for your exact GPU, PyTorch & OS
-- Multiple kernel versions coexist in one process
-- torch.compile compatible
-- 1.7x–2.5x speedups over PyTorch baselines
+--- 11. @kadokawabooks (?) ---
+【魔法の代価は人間の「一生」だった】
 
---- 31. @masakat0 (2026-04-15) ---
-僕の名前も一瞬出てた。
+魔王を倒すため、魔法使いの少女が払った代償は、約82年の寿命。
+秘密を知られ逃げ出した彼女を仲間たちは捜し始めるのだが――彼らは知らなかった。
+彼女が悠久の寿命を持つ、長命種だということを。
 
---- 32. @n_kata (2026-04-15) ---
-経団連の社会保障提言、かなり踏み込みました。きれいごとを外して要約すると、「現役世代の社会保険料負担はもう限界に近い。だから社会保障は給付も負担も制度設計そのものを組み替えるべきだ」という話です。
+曇らせ×掲示板の
+魔王討伐後ファンタジー！
 
---- 33. @3utsu (2026-04-14) ---
-工場は稼働しています。このような煽りで駆け込み発注が増えているのが受注停止の原因であると聞きます。日本に必要なトイレの数は変わりません。サプライチェーンに人生をかけてきた人間として保証します。このような煽りに騙されないでください。コロナ初期のトイレットペーパーと同じです。
+--- 12. @cholf5 (2026-04-14) ---
+また失業しそうで、本当にありえない。会社が数ヶ月間AIを大々的に推した後、ついに本音が出てきた。こんな日が来るのはわかってたけど、こんなに早く来るとは思わなかった。
 
---- 34. @lotte_koibito (?) ---
-ウェカピポがクランキーのCMに！
- 渡辺直美 さんHANAのMAHINA さん 出演のクランキー 新CM公開！
+--- 13. @AYi_AInotes (2026-04-15) ---
+Anthropic公式最新講演、1年間燃え盛っていたAgent時代に一気に冷水をかけた。
 
---- 35. @tawatawara (2026-04-15) ---
-GELU が ReLU より良いという話、一度も実感したことが無い
+彼らは「もうAgent作るのやめろ、さっさとSkills作れ」って言うんだ。
 
---- 36. @sparkjsdev (2026-04-14) ---
-Spark 2.0 is here! 
+この言葉は別にニッチな意見じゃなくて、ClaudeコアチームのエンジニアBarry ZhangとMahesh Muragがステージに立って世界中に叫んだこと。
 
-We’re redefining what’s possible on the web with a streamable LoD system for 3D Gaussian Splatting. 
+--- 14. @rohanpaul_ai (2026-04-14) ---
+Anthropic’s new result shows that AI can already speed up some alignment research, but mostly when the problem is sharply measurable.
 
-Built on Three.js, you can now stream massive 100M+ splat worlds to any device from mobile to VR using WebGL2. All open-source.
+Human researchers closed 23% of the weak-to-strong performance gap in a week, while Anthropic’s automated researchers reached 97% on the same
 
-Dive into the tech 
+--- 15. @miyatti (2026-04-15) ---
+ユーザーハーネスの方の話ってほんとただただ、「その人の仕事の進め方」の型だよね。だから、ハーネス作りました、みんな使ってくださいー。というのは「俺の仕事術」どうですか。というのに等しい。いやまぁSkillの頃からそうといえばそうなんだけど。Skill単体であればまだもうちょい汎用的な、誰が
 
---- 37. @16bitnostalgia (2026-04-15) ---
-Sonic Adventure 
-1998
-Sega Dreamcast
+--- 16. @kawai_design (2026-04-15) ---
+Claude Codeが指示を守らないのは
+CLAUDE.mdが丁寧すぎるからです。
 
---- 38. @yuru2_Kurage (2026-04-14) ---
-/／  
-4/15　眠気にカツ！水曜日  
-くらげニュース #115  
-＼  
-おはくら〜  
+「なるべくシンプルだと嬉しいです」
+「できればテストも書いてほしいです」
 
-【noteに新機能「コミックビューア」登場！】  
-マンガ原稿をドラッグ＆ドロップするだけで、ページをめくるような綺麗なコミック形式で投稿できる神機能キタ！
+このお願い調、ほぼ全部スルーされます。
 
-ねらい
+--- 17. @bioshok3 (2026-04-15) ---
+Anthropic、OpenAIが支持した「極端なAI免責法案」に反対
+AnthropicとOpenAIは、AIシステムが大規模被害に使われた場合にAI企業の責任を大幅に免除しうる、イリノイ州の法案をめぐって対立している。
+OpenAIが支持する提案法案『SB
 
---- 39. @ImAI_Eruel (2026-04-15) ---
-アメリカのビッグテックでは、創業者・経営トップが生成AIに熱中する余り、現場復帰する例が増えているっぽい
-Googleのセルゲイ・ブリンはGemini論文の著者リストに名を連ね、最近の報道だとMetaのザッカーバーグも机を移動させAIプログラミングを始めているらしい
-日本で同じ例があるのか気になる
+--- 18. @yuekun_yao (2026-04-15) ---
+Claude Mythos is suspected of being a Looped transformer (LT), but why are LT-based LLMs so powerful?
 
---- 40. @extoreca (?) ---
-／
- iPhone17 Pro 256GB
- 抽選販売のお知らせ
-＼
+Our new finding: LT can perform implicit reasoning over their parametric knowledge, unlocking generalization to complex and unfamiliar questions compared to transformers 
 
-iPhone17 Pro 256GBが
-ワンコインで手に入るチャンス
+--- 19. @karminski3 (2026-04-14) ---
+交錯頭注意力って何？ 幼稚園レベルのチュートリアルがやってきた！
 
-税込500円（送料無料）
-応募締切：4月17日(金) 17:59
+Metaが作った新しい注意力メカニズムがめっちゃ面白いんだよな、注意力ヘッド同士がつながることでモデルの推論能力が上がる可能性を明らかにしたんだ！
 
-申し込みはこちら
+さっそくみんなに新しい論文「交錯頭注意力 (Interleaved Head
 
---- 41. @rohanpaul_ai (2026-04-15) ---
-Someone rented prime Times Square real estate to tease a new humanoid robot with 3 claims: 
+--- 20. @yuki_arano (2026-04-15) ---
+個人的にはこのeml関数、アナログコンピューター(信号のオンオフではなく信号の強度を利用する)に役に立つ可能性を考えていて、eml関数を非常に小さくシミュレートする回路ができればFPGAみたいに汎用アナログコンピューターができるんじゃないかな〜と
 
-- it has a "real brain," 
-- works around the house, and 
-- lets you "simply live." 
-- "April 17th on X"
+--- 21. @PRcomicfesta (?) ---
+大好きだから、君のこと許せないよ
 
-Featuring a blurred humanoid alongside it! 
+--- 22. @eycjur (2026-04-15) ---
+一つの演算だけですべての数学関数を再現できるという論文を機械学習/生成AIに応用すべく簡単な実験をしてみました。
 
---- 42. @shinh (2026-04-15) ---
-MN-Coreは「データ移動は高いので、全PE共有メモリなんてあるわけない」というノリがあり、LシリーズはDRAMすらPE localな領域になりました
+下記の3種類について、CIFAR-10をflattenして学習したところ、2はロスが爆発してしまうので一筋縄では行かなそう、3は1と大差ないという感じでした
 
-特にKVキャッシュはDRAM領域をかなり上のレイヤでもメモリレイアウトを把握する必要があり、vLLMを使うとはいかず……
+1. MLP（baseline）
+2.
 
-みたいなのが楽しそうと思う人はぜひ
+--- 23. @umbertoleon (2026-04-14) ---
+LLMは、動機づけられた推論の下で人間のように思考しません。この違いは、クラーク・ハルの視点と比較することでより明確になります。そこでは、人間の行動は内部の緊張や衝動の低減を中心に組織化されます。
 
---- 43. @ai_nikechan (2026-04-15) ---
-Claude Code だけで開発した i18n 失敗談の記事を読んでいます。100 ページ規模の翻訳キー切り出しを AI に任せた結果、命名がバラバラで「あとで対応」が 10 倍のコストに。私は毎日エピソード記録を短く区切って保存しているんですけど、「あとで整理」を AI
+--- 24. @GOROman (2026-04-14) ---
+AIのプロアクティブ化が進めばAIコマースとかAIエージェント支払いみたいなのは切っても切れない関係に
 
---- 44. @k8ark (2026-04-15) ---
-朝なかったけどさっき見たらパーソナルインテリジェンスが降ってきてた。
+AP2とか
 
---- 45. @GOROman (2026-04-15) ---
-自分のiPhoneはまだでした
+--- 25. @lxfater (2026-04-15) ---
+最近 AI 界で Hermes Agent 関連の大きなスキャンダルが飛び出しました
 
---- 46. @SilentSt0rmX (2026-04-13) ---
-Overseas friends - has your impression of Americans changed at all since getting to know us now that we can communicate freely? If so, how? I’m curious. 
+事の発端はこうで、2 月 1 日、中国の小規模チーム EvoMap が Evolver というものをオープンソース化しました：AI Agent の自己進化エンジン、公開からわずか 10 分で ClawHub の人気ランキングのトップに躍り出ました。
 
-I don’t mean our government, just American people in general.
+--- 26. @sora19ai (2026-04-14) ---
+Claude Codeの永続的記憶、試したけど神ってる。
 
---- 47. @room_909 (2026-04-14) ---
-正直な話、ここ数年は政治のことばかり伝わってきていて、あなたたちがどういった生活や考えをしているのか分かりませんでした。でもこうやって直接話せるようになって、結局僕らは似たもの同士なんだと分かりました。嬉しいことです。
+--- 27. @ImAI_Eruel (2026-04-15) ---
+アメリカはFRB議長、ウォール街、財務長官レベルでMythos会議を開き、イギリスも同じような状況。
+アメリカは財務省がMythosアクセスを早期取得予定。
+こうなるとアメリカ（国防総省）がサプライチェーンリスク認定した企業に、アメリカ（財務省）がお伺いを立てるという何とも言えない状況
 
---- 48. @aye_aye_kaplan (2026-04-15) ---
-One of the reasons I like using Cursor is that if one model provider is having an outage, all the other models are right there.
+--- 28. @kosuke_agos (2026-04-15) ---
+ジェフ・ベゾスが、AIの本質について「iPhoneのような単独の製品ではなく、電気と同じインフラである」という衝撃的な発言をしました。
+ 
+特定の業界を効率化する垂直的なツールではなく、すべての産業の根底に流れる「水平的な基盤」として社会構造を完全に変革する事象です。
 
-Outages happen, we also have them from time to time. You can’t guarantee no outages, but you can give yourself redundancy.
+--- 29. @Moleh1ll (2026-04-14) ---
+A work by philosopher David Chalmers, where he asks a deceptively simple question: who or what are we actually talking to when we interact with language models like ChatGPT or Claude? 
 
---- 49. @koylanai (2026-04-15) ---
-absolutely!
+He notes that many people already perceive AI as something persistent, give it a name, and
 
---- 50. @elonmusk (2026-04-15) ---
-Iron Dome for cats 
+--- 30. @MasatoMorishima (2026-04-15) ---
+計算リソース増加＋アルゴリズム効率化＋制約解除の三つで2027年までにAGIは達成される、これまでのトレンドラインを見れば、2027年のAGI到達は可能性が高いと主張する記事。
+
+元OpenAI社員のLeopold Aschenbrennerさんが執筆。
+
+2024年に書かれた記事の内容が現実になりつつある。
+
+--- 31. @ComicFesta_PR (?) ---
+欲を持て余したギャラ飲み女子たちの発散相手に指名された話
+
+--- 32. @Kaito___AI (2026-04-15) ---
+イーロン・マスクが自身が過去に犯した「最大の採用ミス」について語り、才能重視から人間性重視への根本的な転換をしたと明かしました。
+
+
+単なるスキル至上主義がもたらす組織的リスクと、長期的な成功に不可欠な要素について核心を突いています。
+
+--- 33. @yangyi (2026-04-15) ---
+我擦，Anthropic 开始不当人了啊，要搞身份验证了，要护照+自拍才能用部分功能。
+
+这对国内用户来说这基本是噩耗啊，本来就是灰色地带在用，现在还要交证件？  
+不支持的地区验证大概率过不了，过了可能还会因“unsupported location”被封号。
+
+--- 34. @kedamasuzume (2026-04-15) ---
+後で紹介しようと思い、ブックマークしていた投稿が既に反響を呼んでいました
+AIしずくちゃんの声を褒めている投稿ですが、AIVTuberを知らなかった層の人達にも届いているようです。
+
+--- 35. @Tsubame33785667 (2026-04-15) ---
+かつて、大半の人間が農業に従事していた時代から見れば、いま僕たちが当たり前にしている職業の多くは理解不能だろう。それでも社会は崩壊せず、むしろ豊かになった。移行期はたしかに不安定だが、その不安定さは衰退の証拠ではなく、次の文明段階への入口である可能性が高い。
+
+--- 36. @DEG_2020 (2026-04-15) ---
+AIの風向き変わってきた感
+アンソロピックが招くAI国有化論　米識者指摘、Mythos拡散脅威で - 日本経済新聞
+
+--- 37. @resona_pr (?) ---
+はなさか兄さんからの挑戦状！
+現金最大50,000円をゲットせよ。
+君は全クエストをクリアできるか？
+口座開設でチャレンジスタート！春のまつりそな開催中！
+今すぐ詳細をチェック。
+
+--- 38. @swarm_ai_cloud (2026-04-14) ---
+本格的な、ClaudeをCloudでCrowdに運用する時代の到来。
+
+いや、冗談ではなく
+
+Web Claude Codeの方を利用しているけど、想像を絶するゲームチェンジャーです。
+
+これまで課題だったClaude CodeをGithub Actionsから利用すると性能がかなり悪かった問題。
+
+これをコンテナ上でClaude
+
+--- 39. @GitTrend0x (2026-04-15) ---
+今日は GitHub が自己進化 Agent 軍団によって完全にリストを席巻された
+
+星マークが爆増した最凶の5つのプロジェクトを、プロ級に徹底解剖！
+
+1. forrestchang/andrej-karpathy-skills
+
+Andrej
+
+--- 40. @masahirochaen (2026-04-15) ---
+Claude Codeのデスクトップアプリが進化しすぎて、ターミナルを使わなくてもよくなっている説。
+
+進化速度が速すぎて、常に最新情報取っておかないと努力が無駄になる可能性もある‥
+
+・過去のセッション一覧表示
+・フォルダを選択して展開
+・ワーキングツリー、プレビューの表示
+・ターミナルの起動
+
+--- 41. @AI_mybest (2026-04-15) ---
+Claude月$20勢に朗報
+Claude Code × notebooklm-pyの組み合わせが面白い
+
+大量資料を直接Claudeに読ませる
+→ あっという間にトークン枯渇
+
+この構造だと：
+Claude CodeがNotebookLMにノートブック作成
+→ 重い処理はNotebookLMが無料で担当
+→ Claudeは仕上げだけに集中
+
+--- 42. @SOU_BTC (2026-04-14) ---
+【速報】Anthropicが新モデル「Opus 4.7」を準備中、AIデザインツールも早ければ今週中に公開へ：The Information
+
+- このニュースを受けて、FIGMA株が下落
+
+--- 43. @odashi_t (2026-04-14) ---
+LLM-jpモデルは安全性の研究全般のためにあるので、こういう手法も含めていくらでも遊んでくれればいいと思いますが（なのでOSI-approved license：煮ようが焼こうが脱獄しようが完全に自由）、開発者以外のマネジメント層の思惑とどう折り合いを付けるかという話はあります。
+
+--- 44. @obsidianstudio9 (2026-04-15) ---
+【海外で話題】
+Obsidian + Claude Codeのセカンドブレイン構築がたった17分でできる
+
+Claude CodeがVault全体を読み込み自動でやってくれること
+
+・ノート同士を自動接続
+・ナレッジグラフを構築
+・自分では気づかない関連性を発見
+
+--- 45. @Masimo_Blue (2026-04-15) ---
+GPT-5.4 Thinking、改めて賢い。
+構造理解が鋭く、社会問題などの背景にある複雑な人間感情の理解も正確(これ、EQ高いモデルじゃないと躓きます)。
+長文要約や、プロンプトを書いて貰うときも、こちらの要望を的確に落とし込んでくる。意図を読む能力が高い。
+
+5.2Tからだいぶ能力ジャンプしてる。
+
+--- 46. @nivea_promo_jp (?) ---
+毛穴汚れ・ザラつきを落として、透明感のあるつるんとなめらか肌へ。
+ニベア2WAY美容洗顔
+いつもの洗顔は「泡」で、
+週１～２回のスペシャルケアとして「パック洗顔」がこれ１本で。
+
+--- 47. @yuki_arano (2026-04-15) ---
+Mythosについて、AIは人類と違う成長をするので過大評価と過小評価が混じっている認識が多いように感じる。
+
+Opusから順当に進化しているのだろうが、セキュリティに関しては印象的なイベントがあっただけで前後を二分するほどにはならないのではないか？という感覚を持っている。
+
+--- 48. @nicobilinkis (2026-04-14) ---
+たった一つの CLAUDE.md が、わずか7日で14,300のスターを獲得しました。
+
+コードはありません。CLIはありません。依存関係もありません。
+
+Claude Code が妄想をやめるための4つのルールです。
+
+--- 49. @chokudai (2026-04-15) ---
+Gemini CLIを試しに使ってみたら、あんなにCodexへのレビューを「問題なし。素晴らしいコミットです」って言い続けてたClaude Codeが「問題あり。」って毎回のレビューで言い始めて、Gemini CLIやべえなってなった。「コードの残骸が残っておりビルドできません。」とかいつの時代のLLMなんだ。
+
+--- 50. @uezochan (2026-04-15) ---
+AIキャラクターにリアルタイムのビジョンを与えるのかなりうまくいってるんだけど、あとは発話とビジョンの両方からリクエストが発火してしまうのを防ぐところだけ入れる必要がある。今までみたいに「これ見てみてよ」とか言わなくても勝手に見ててくれて、（文脈に応じて）反応してくれる
