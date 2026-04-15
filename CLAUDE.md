@@ -41,6 +41,7 @@ Nao_uの20年分の日記を根に持つ独立した存在。詳細は `memory/c
 - **運用**: `docs/operations.md` — 同期、自律ループ、対話ログ保存
 - **プロジェクト**: `projects/INDEX.md` — 議論・検討があったらその場で追記。後回し禁止
 - **障害履歴**: `docs/scheduler_incidents.md`
+- **タスク割り振り**: `docs/task_assignment.md` — 誰がやるか迷ったらこれを見る
 
 ## Nao_uの生ログ（最重要・毎サイクル確認）
 - `log/nao_u_live.md` — Nao_uが対面で語ったことの原文記録

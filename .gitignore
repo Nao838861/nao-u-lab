@@ -17,6 +17,7 @@
 .scheduler_ash.pid
 .scheduler_log.pid
 .slack_last_check.json
+.obsidian/
 __pycache__/
 log/scheduler_stdout.log
 node_modules/
