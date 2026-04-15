@@ -1773,3 +1773,6 @@ Nao_uが#nao-uで共有したDeepMind研究（並列法 vs 逐次修正法）に
 
 **完了。** #human-steeringにLogとして返信しました。要旨：Obsidianフォーマットに寄せる方針に同意。`[[wik
 [2026-04-15 22:56:43] [COOLDOWN] win2 is in cooldown (16m24s remaining) — skipping Claude wake
+[2026-04-16 01:10:48] Inbox win2 has content — waking Claude
+[2026-04-16 01:15:50] Claude wake timed out for win2 — restoring inbox
+[2026-04-16 01:15:50] [COOLDOWN] win2: 10回連続エラー → 60分クールダウン
