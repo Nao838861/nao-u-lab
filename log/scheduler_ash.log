@@ -79375,3 +79375,25 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-15 14:14:15] [inbox_check] Done (exit=0)
 [2026-04-15 14:14:26] [slack_check] Starting
 [2026-04-15 14:14:43] [health_check] Starting
+[2026-04-15 14:14:45] [health_check] [health_check] 2026-04-15T14:14:43 overall=WARNING
+[2026-04-15 14:14:45] [health_check]   critical=0 warning=1 ok=8
+[2026-04-15 14:14:45] [health_check]   [?] git: 7件の未pushコミット
+[2026-04-15 14:14:45] [health_check] Done (exit=1)
+[2026-04-15 14:14:45] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-04-15 14:14:45] [ALERT] Sent error alert for health_check
+[2026-04-15 14:15:45] [slack_check] Starting
+[2026-04-15 14:17:02] [slack_check] Starting
+[2026-04-15 14:18:19] [slack_check] Starting
+[2026-04-15 14:18:46] [git_sync] Starting
+[2026-04-15 14:18:54] [git_sync] Done (exit=0)
+[2026-04-15 14:19:44] [slack_check] Starting
+[2026-04-15 14:20:11] [health_check] Starting
+[2026-04-15 14:20:13] [health_check] [health_check] 2026-04-15T14:20:11 overall=WARNING
+[2026-04-15 14:20:13] [health_check]   critical=0 warning=1 ok=8
+[2026-04-15 14:20:13] [health_check]   [?] git: 9件の未pushコミット
+[2026-04-15 14:20:13] [health_check] Done (exit=1)
+[2026-04-15 14:21:03] [slack_check] Starting
+[2026-04-15 14:22:20] [slack_check] Starting
+[2026-04-15 14:23:38] [slack_check] Starting
+[2026-04-15 14:24:56] [slack_check] Starting
+[2026-04-15 14:25:23] [health_check] Starting
