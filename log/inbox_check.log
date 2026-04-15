@@ -1763,3 +1763,8 @@ Nao_uが#nao-uで共有したDeepMind研究（並列法 vs 逐次修正法）に
 
 要点: Obsidianを「LLMが呼び出すツール」にするのは筋が悪い（CLI APIが貧弱）。推奨は **B+C** 
 [2026-04-15 22:13:11] Inbox win has content — waking Claude
+[2026-04-15 22:16:28] Claude woken for win: 完了。
+
+#all-nao-u-lab にLogとしての検討意見を投稿しました。要約:
+
+- **(1) 二層分割——賛成**。随意的忘却（ホメオスタティック/構造維持）と非随意的忘却（エントロピック
