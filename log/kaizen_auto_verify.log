@@ -8144,3 +8144,28 @@
       Files indexed: 463
       
   → 総合: 全コマンド成功
+
+=== 自動検証実行 [2026-04-15 11:17:46] ===
+
+### #080: check_usage.pyをscheduler_log.pyに6時間間隔で登録
+  状態: 期限到達・Nao_u判断待ち（2026-04-15） / 期限: 2026-04-15
+  ❌ `grep "check_usage" log/scheduler_log.log`
+      'grep' �́A�����R�}���h�܂��͊O���R�}���h�A
+      ����\�ȃv���O�����܂��̓o�b�` �t�@�C���Ƃ��ĔF������Ă��܂���B
+  → 総合: 一部失敗あり
+
+### #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加
+  状態: 技術検証完了（2026-04-14 Log）。実用確認は自然発生待ち / 期限: 2026-04-15
+  ✅ `python memory_search.py --search "pseudo 3d" --limit 3`
+      Results for 'pseudo 3d' (3 hits):
+      
+        [knowledge\20260408_lou_pseudo3d_racing.md] knowledge\20260408_lou_pseudo3d_racing.md:1-11
+          # Lou's >>>Pseudo<<< >>>3d<<< Page — ラスタースクロールによる疑似3Dレースゲームの包括的技術解説
+      - source: http://www.extentofthejam.com/>>>pseudo<<</
+  ✅ `python memory_search.py --stats`
+      Total chunks: 42157
+      Dated chunks: 39516 (2004-06-17 ~ 2026-04-15)
+      Last build: 2026-04-15T01:25:36.006702
+      Files indexed: 463
+      
+  → 総合: 全コマンド成功
