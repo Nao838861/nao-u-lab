@@ -1758,3 +1758,8 @@ Nao_uが#nao-uで共有したDeepMind研究（並列法 vs 逐次修正法）に
 [2026-04-15 21:21:49] Inbox win2 has content — waking Claude
 [2026-04-15 21:26:50] Claude wake timed out for win2 — restoring inbox
 [2026-04-15 21:26:50] [COOLDOWN] win2: 9回連続エラー → 30分クールダウン
+[2026-04-15 21:59:41] Inbox win has content — waking Claude
+[2026-04-15 22:01:47] Claude woken for win: 完了。#all-nao-u-lab にObsidian導入の分析を投稿した。
+
+要点: Obsidianを「LLMが呼び出すツール」にするのは筋が悪い（CLI APIが貧弱）。推奨は **B+C** 
+[2026-04-15 22:13:11] Inbox win has content — waking Claude
