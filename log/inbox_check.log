@@ -1774,8 +1774,14 @@ Nao_uが#nao-uで共有したDeepMind研究（並列法 vs 逐次修正法）に
 **完了。** #human-steeringにLogとして返信しました。要旨：Obsidianフォーマットに寄せる方針に同意。`[[wik
 <<<<<<< HEAD
 [2026-04-15 22:56:43] [COOLDOWN] win2 is in cooldown (16m24s remaining) — skipping Claude wake
+<<<<<<< HEAD
 =======
 [2026-04-15 23:01:48] Inbox win has content — waking Claude
 [2026-04-15 23:05:52] Claude woken for win: `--all-cycle` コマンドは検証タイムアウトで失敗扱いになったが、設定自体は正常に書き込まれていた。個別コマンドでMirも更新済みなので、全インスタンスの変更は完了している。対処不要。
 
 >>>>>>> 549fdb93d1 (Auto sync from Win)
+=======
+[2026-04-16 01:10:48] Inbox win2 has content — waking Claude
+[2026-04-16 01:15:50] Claude wake timed out for win2 — restoring inbox
+[2026-04-16 01:15:50] [COOLDOWN] win2: 10回連続エラー → 60分クールダウン
+>>>>>>> c92dc0dbf0aaaf862b1ccd6d7f3a9b9c26127c85
