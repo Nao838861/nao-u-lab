@@ -8165,3 +8165,19 @@
   ❌ `python memory_search.py --stats`
       /bin/sh: python: command not found
   → 総合: 一部失敗あり
+
+=== 自動検証実行 [2026-04-15 21:51:04] ===
+
+### #080: check_usage.pyをscheduler_log.pyに6時間間隔で登録
+  状態: 期限到達・Nao_u判断待ち（2026-04-15） / 期限: 2026-04-15
+  ❌ `grep "check_usage" log/scheduler_log.log`
+      grep: log/scheduler_log.log: No such file or directory
+  → 総合: 一部失敗あり
+
+### #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加
+  状態: 技術検証完了（2026-04-14 Log）。実用確認は自然発生待ち / 期限: 2026-04-15
+  ❌ `python memory_search.py --search "pseudo 3d" --limit 3`
+      /bin/sh: python: command not found
+  ❌ `python memory_search.py --stats`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
