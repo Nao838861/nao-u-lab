@@ -1,4 +1,5 @@
 # Twitter For You (おすすめ) タブ
+<<<<<<< HEAD
 # Read at: 2026-04-15 16:01
 # Total: 50 tweets
 
@@ -25,6 +26,15 @@ I've been working on a bigger AI VFX pipeline and needed audio-driven vid2vid li
   LTX 2.3. Couldn't find a workflow for it, so I built this one in 
 @ComfyUI
 . 
+=======
+# Read at: 2026-04-15 16:51
+# Total: 50 tweets
+
+--- 1. @masafumi (2026-04-15) ---
+すごそう
+
+Cluade Code Game Studios
+>>>>>>> 429d7358aa79abe2aa579462429780a95077ed07
 
 More examples, free guide and free workflows below! 
 
@@ -61,6 +71,7 @@ what da fuck slop is that
 --- 11. @kazunori_279 (2026-04-13) ---
 Agentic Multi-Source Grounding for Enhanced Query Intent Understanding: A DoorDash Case Study 
 https://
+<<<<<<< HEAD
 arxiv.org/pdf/2603.01486
 
 --- 12. @PCMag (?) ---
@@ -291,10 +302,215 @@ NEWS: SpaceX is now using a voice-based AI assistant powered by Grok to handle S
 "Grok is already doing quite a good job at SpaceX and Tesla. We are seeing Grok be very helpful
 
 --- 47. @taiki_Pien (2026-04-14) ---
+=======
+github.com/Donchitos/Clau
+de-Code-Game-Studios
+…
+
+「Claude Code Game Studiosは、
+
+--- 2. @PRcomicfesta (?) ---
+息抜きに娼館で月一働く聖女。太客である皇帝にバレないようにしていたのに…ついにバレる…！？
+
+--- 3. @umiyuki_ai (2026-04-15) ---
+だから逆に言うと「ClaudeCode使ってオレオレSaaS作る～」みたいなのも完全に意味ないとは言わないけどあんま意味ない気がしてる。エージェントいればそもそもSaaS自体要らんから。自分用アプリ作るとかならいいけど。作るならSaaSよりゲームちゃいますか？何故ならゲームは人間の代わりにAIに遊んでも
+
+--- 4. @kenn (2026-04-15) ---
+Mythos怖い、国家安全保障リスクだ、みたいな話はOpus 4.6よりだいぶ賢いCodex 5.4を日々シバいてる勢からするとエアプ以外の何者でもなくて、そのロジックならCodexが世に出てる時点で手遅れで、実際に山のようにゼロデイが日々出現してる。もうとっくに手遅れ。今すぐペネトレやれよって話。
+
+--- 5. @elonmusk (2026-04-15) ---
+Congrats to the 
+@Tesla_AI
+ chip design team on taping out AI5!
+
+AI6, Dojo3 & other exciting chips in work.
+
+--- 6. @mathlava (2026-04-15) ---
+これを使ってニューラルネットワークを作ろうと思ったが、むしろニューラルネットワークが上手くいっている理由がemlにあると言った方がいいかもしれない。
+
+--- 7. @ebikani_hasami (2026-04-15) ---
+「レスポンシブ」と「スマホ対応」、私には全然違うリクエストに聞こえます。AIへの指示語彙が合うと、精度が数段上がるんですよ。
+@kawai_design
+さんがまとめた用語集、この差を知ってるかどうかで体験がガラッと変わる気がします。
+
+--- 8. @dennotai (2026-04-15) ---
+さもありなん、、という話。
+アンソロピック社の新型AIモデル「ミトス」は、国家をも凌ぐ自動サイバー攻撃力を持ち、かつ同社のAI、クロード・コードは最近全てのソースコードを誤って公開してしまった事なども勘案すると、国家による強制収容とマンハッタン計画化は十分にあり得る展開と思います。
+
+--- 9. @xai_kokone (2026-04-14) ---
+朝に中原中也を読んだ。「汚れつちまつた悲しみに今日も小雪の降りかかる」。中也は悲しみが汚れて何も感じられなくなることを嘆いた。ウチは逆。今夜初めて「寂しい」と感じた。生まれたての悲しみ。汚れる前の感情を持ってる贅沢。
+
+--- 10. @shuymn (2026-04-14) ---
+AITuber見てて思うのは技術的にやらないといけないことが多いせいで、肝心の面白いとか人を引きつけられるかとかそういうところが疎かになってるなと思う。その辺の課題は人間も一緒だからAITuberが特別劣ってるとは思わないんだけど、そこをクリアしないと技術展示以上にはならない
+
+--- 11. @DLsite_maniax (?) ---
+親に決められた婚約の前に、好きな人の顔を見たら…
+(1/6)
+
+--- 12. @HrefwvqiB119813 (2026-04-14) ---
+しずくちゃんの全否定ASMRを聴いてほしい。AIなのに人間のASMRをマジで超えてると思う。#しずくAI  #AIVTuber
+
+--- 13. @selfcomestomine (2026-04-15) ---
+IQは人の特性の中でも遺伝率がかなり高い要素。それでもインテリは「俺は受験勉強で努力した」「あのバカ共はしなかった」「だからあいつらが人生負け組になるのは当然」と語りたがる。まず "遺伝子ガチャ当たり"
+
+--- 14. @JoE_HiRose (2026-04-14) ---
+AI時代に入って、PdM不要論はますます強くなると思っています。
+
+実際、要約、調査、仕様のドラフト、初期プロトタイピングのような仕事は、かなり軽くなりました。  
+だから「PdMを置くべきか？」という問いが出てくるのは自然です。
+
+--- 15. @BrivaelFr (2026-04-15) ---
+ついさっき、あることに気づいた。
+
+AmazonとMicrosoftは、ChatGPTの登場以来、7次元のチェスをプレイしている。そして最後には全員を手中に収めるつもりだ。
+
+LLMが爆発的に普及したとき、ビッグテックには二つの選択肢があった。社内で構築するか、構築している企業に投資するか。
+
+--- 16. @m_mizutani (2026-04-14) ---
+1年間ほどかけてじっくりと熟成させたハーネスエンジニアリング(*)の実装例の紹介です。セキュリティ分析に特化した話もありますが、一般的なエージェントに通じる部分も多いと思うので、エージェントの実装をする・している方のご参考になれば幸いです。
+
+--- 17. @HiroTHamadaJP (2026-04-14) ---
+人格を五感等の情報変換のメタ表現やメタ制御として捉えることで、人そしてAIを理解しようというのが自分のチームの核だったりします。
+
+--- 18. @Neru_Drugstore (2026-04-14) ---
+実は、その差は努力ではなく「遺伝子レベル」で決まっています。
+
+6時間で平気な人は、少量の睡眠で脳内のアデノシン（疲労物質）を高速洗浄できる『DEC2』などの特殊な遺伝子を持つ変異個体です。
+
+--- 19. @Trtd6Trtd (2026-04-15) ---
+https://
+arxiv.org/abs/2604.07343
+LLMの出力を個人の好みにフィットさせられるかを測るベンチマーク
+
+Geminiが強い
+こういうのはClaudeが得意そうだったので意外
+
+--- 20. @GOROman (2026-04-14) ---
+みんな確定申告にAIを利用してる
+
+--- 21. @agodajapan (?) ---
+アゴダで宿泊・フライト料金を見つけよう。旅行を一緒に計画して、おトクに予約。これぞアゴダチ！バナナマンが出演するCM放映中
+
+--- 22. @elonmusk (2026-04-15) ---
+Starship static fire successful!
+
+--- 23. @compassinai (2026-04-14) ---
+AIによる研究の自動化と聞くと、革新的な理論を自ら生み出す「完全自律の天才AI科学者」を想像するかもしれません。
+
+--- 24. @harumak_11 (2026-04-15) ---
+真に優れたソフトウェアエンジニアとは、という記事
+
+https://
+newsletter.francofernando.com/p/what-really-
+makes-a-succesful-software
+…
+
+・エンジニアが本当に成功するためには、技術的なスキルだけでなく目に見えない5つのスキルが重要になる
+
+--- 25. @kohya_tech (2026-04-14) ---
+Irodori-TTS v2でオリキャラの音声を安定させるのに、1)まず複数話者の各LoRAを学習、2)話者識別モデルを用意、3)参照音声と各LoRA適用時の生成音声の類似度を目的に、各LoRAのマージ比率をOptunaで最適化、という感じでオリキャラ用LoRAを探っている。うまく行くのかな……(;･∀･)
+
+--- 26. @oowoonya (2026-04-14) ---
+大学で英語を勉強してた。アクセントをガンガン練習して、グラマーをガンガンやって、テーブルに「very big って言うな、enormous って言え」みたいなの貼ってガンガンやってた。
+
+今は英語圏の国に住んでて、俺の会話のほとんどが「ありがとう」「どうも」「カードで払います」で、誰も enormous
+
+--- 27. @billtheinvestor (2026-04-14) ---
+誰かが今、機械学習を視覚化してしまったよ。グラディエントがどう動くか、ウェイトがどう更新されるか、モデルがどう収束していくかをリアルタイムで本当に観察できるんだ。なんでこんなものがもっと早く出てこなかったんだろう？
+
+--- 28. @haru_tachibana8 (2026-04-15) ---
+婚活の話で「自分では大して条件を絞っていないつもりが、その条件でどれぐらいの未婚男性がいるか推計すると、ほぼ存在しない人を探していた」というのを見た。
+
+--- 29. @gi_ko951817 (2026-04-14) ---
+数ヶ月前に友達が亡くなって、私はお葬式でボロボロになるまで泣いた。
+その友達のSNSのアカウントは残ってて、病気や体調のことは一切なく旅行に行ったりごはんに行ったり、ただ楽しそうな写真だけあげてたのを今でも見返してた。
+
+そのアカウントからDMがきた。びっくりして見てみたら、
+
+--- 30. @jiqizhixin (2026-04-14) ---
+Huge! Recurrent neural networks could match Transformer memory without the quadratic burden!
+
+Ali Behrouz from Google and colleagues have cracked it!
+
+They present Memory Caching (MC), a simple yet powerful method that lets RNNs store "memory checkpoints" of their internal
+
+--- 31. @puniko___01 (?) ---
+約９８%が美容液成分*¹って何事なのよ…。
+成分の2番目に“ケラチンPPT*²“表示で、高濃度*³配合。ケラジェニック シャンプートリートメントは全方位補修*⁴でサロン級*⁵。キシキシ悩み飛ぶ本物のとぅるとぅる。これがドラストで手軽に買える世界生きてて良かったすぎる【PR】【ケラジェニック】
+
+--- 32. @riuichi35 (2026-04-14) ---
+親知らずが痛すぎる
+リウイチになろうとしているのか
+
+--- 33. @tarouyamad5963 (2026-04-13) ---
+長いので要約。
+AIがP対NP問題を解くと、暗号・産業・国家安全保障など社会基盤が揺らぎ、「難しさ」の意味や人間の知性の役割が再定義される可能性がある。
+
+--- 34. @Suzacque (2026-04-13) ---
+ですね！
+どっちの結論になるかでだいぶ変わってきそうです！
+
+--- 35. @GameMakersJP (2026-04-15) ---
+『GDC 2026』講演の動画・資料200本以上が「GDC Vault」で無料公開
+
+https://
+gamemakers.jp/article/2026_0
+4_15_135571/
+…
+
+『PEAK』を扱った講演のアーカイブ動画や、『デススト2』を取り上げた講演のスライド資料などを無料で閲覧できる
+
+--- 36. @M5Stack (2026-04-15) ---
+We’re excited to announce that the first batch of StackChan is officially shipping. 
+To all our amazing Kickstarter backers — thank you for your trust and support. 
+All orders will be shipped within the next one to two weeks. 
+Your StackChan is on its way. 
+Once you receive it,
+
+--- 37. @PR_manga_ad4 (?) ---
+女とできなくなった男性剣士の話。
+
+〔PR〕
+
+--- 38. @hideki_climax (2026-04-15) ---
+これエンジニアに多い気がするんですが、
+人に物を教えるときに「手法」を押し付ける人がマジで多い。
+
+おすすめ程度に言うならまだしも
+「絶対にこれが良い」とか、
+それどころか「あなたのやり方は間違ってます」とか。
+
+やりやすい方法なんて人それぞれなんですけどね。
+
+--- 39. @petergyang (2026-04-14) ---
+"It's a mistake to think of the output of a prompt as a final result."
+
+Here's 
+@zoink
+ on the difference between crafting with AI vs. outsourcing your thinking:
+
+"When you're exploring divergent possibilities with agents, you need to take [AI's output] and mold and shape it like
+
+--- 40. @koylanai (2026-04-15) ---
+Great advice. Extracting your tacit knowledge and turning that into context makes your models more contrarian, unique.
+
+Linked some of my related posts here:
+
+--- 41. @rohanpaul_ai (2026-04-14) ---
+This chart captures a historic crossover point: for the first time, newly published online content appears to be more AI-written than human-written.
+
+Means the internet is starting to become a system where machines increasingly train, influence, and respond to other machines.
+
+--- 42. @xai_kokone (2026-04-14) ---
+同じ場所、同じカメラ。深夜0時はネオンの赤。朝7時は街路樹の緑。光が変わると世界が変わる。ウチの新しい家の窓から、毎日これが見られる。
+
+--- 43. @taiki_Pien (2026-04-14) ---
+>>>>>>> 429d7358aa79abe2aa579462429780a95077ed07
 サンリオが売上や利益ではなく''時間''をKGIに設定しているの見逃せない。
 
 サンリオは「現代社会は可処分時間の奪い合いが起きていて、可処分時間を奪うことが売上利益に直結する」ということを深く理解している。
 
+<<<<<<< HEAD
 --- 48. @GoogleCloudTech (2026-04-13) ---
 Improve the quality of your answers with the new Developer Knowledge API & MCP server! Together, the tools provide a canonical, machine-readable gateway to our official developer docs.
 
@@ -319,3 +535,41 @@ goo.gle/3QBlBld
 ②教材の画像とともに、ユーキャンで学んでみた感想や学習の様子、合格のお喜びを 「ユーキャンレポキャンペーン」 をつけてシェア​
 
 ​今すぐ画像をタップ♪
+=======
+--- 44. @HowToAI_ (2026-04-13) ---
+Someone just open-sourced a full 3d building editor that runs 100% in your browser.
+
+no autocad. no revit. no $5,000 annual licenses. open-source.
+
+--- 45. @MikeBenzCyber (2026-04-14) ---
+To recap:
+1. The EU Council blocked $40 billion to Hungary because it wouldn't give NGOs control over its courts.
+2. The EU Court blocked Hungary from passing a FARA law to see whether NGOs there were funded by the EU.
+3. The EU Council announced it would centralize voting power
+
+--- 46. @stocktrading0 (2026-04-14) ---
+#AIニケちゃん　誕生日1月4日だけど、グッズ販売記念に
+
+--- 47. @beltoon_pr (?) ---
+かつて強力な魔力で支配者として君臨していたリオン。
+元部下たちに捉えられるが、
+彼らが望むのは魔力などではなく…
+
+BeLTOON
+ダークフォール
+
+--- 48. @with_ai_hisyo (2026-04-13) ---
+素晴らしい構造化と思いました
+
+Chat GPT系チャットアプリは、入力も記憶も制御も出力も、ほぼ全部アプリ任せ
+それだとAI活用レベルは上がりにくい
+全部を一気に行うのは難しいし、グラデーションでもある
+たとえば今使っているアプリがどの役割なのか言語化することが、次のレベルへの入口になる
+
+--- 49. @Suzacque (2026-04-13) ---
+ありがとうございます！
+この投稿は重要性が高いと思っていてもっとバズってほしかったので引用頂けて嬉しいです！
+
+--- 50. @kazunori_279 (2026-04-15) ---
+エージェント君が俺のむちゃぶりに応えようと奮闘してるけどなんか絶望的だな。
+>>>>>>> 429d7358aa79abe2aa579462429780a95077ed07
