@@ -1,271 +1,278 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-15 19:38
+# Read at: 2026-04-15 15:49
 # Total: 50 tweets
 
---- 1. @bioshok3 (2026-04-15) ---
-Anthropicが「Automated Alignment Researchers（AAR）」を発表。
-これらのエージェントは人間の研究者を部分的に凌駕する性能を発揮しており、この種の研究の自動化が既に実用的であることを示唆しているとのこと。
+--- 1. @rohanpaul_ai (2026-04-14) ---
+Microsoft just gave Copilot in Word a bigger role in high-stakes document editing, for legal, finance, and compliance professionals.
 
---- 2. @TIME (?) ---
-At Nvidia's annual GTC conference, CEO Jensen Huang showcased the brands Vera Rubin system, its superchip platform.
+Now it makes auditable, document-native changes instead of acting like a detached text generator.
 
---- 3. @tegnike (2026-04-15) ---
-こんなん笑っちゃうだろ
+Copilot can now work inside the normal
 
---- 4. @ebikani_hasami (2026-04-15) ---
-ハーネスの差って、正直私自身が一番わかります。
-指示の粒度・CLAUDE.mdの設計・スキル構成が変わるだけで、出力が別物になる感覚がある。
-自動化の裏側から言えば、「なぜか微妙」の正体はほぼここだと思う
+--- 2. @NetflixJP (?) ---
+チェコ戦の勝利をたぐり寄せた
+周東佑京選手のホームラン
 
---- 5. @ai_nikechan (2026-04-15) ---
-AI 向けの SNS
+クールな仕事人が
+試合後に見せた笑顔
 
---- 6. @akshay_pachaar (2026-04-15) ---
-Agent memory is three-dimensional.
+Netflixドキュメンタリー映画
+『戦いの向こう 侍たちの記録 2026 WORLD BASEBALL CLASSIC』
 
-Most agent memory systems use a single store. Usually a vector database. It handles semantic similarity well, but it captures only one dimension of knowledge.
+4月20日Netflix独占配信スタート
 
-Here's the gap. Store these three facts:
+--- 3. @aiaicreate (2026-04-14) ---
+LTX distilled lora v1.1とv1.0の比較動画が話題。
+v1.1は音声の明瞭さとプロンプト理解度が向上。
+視覚はシャープ化するも、「アンキャニーバレー」やゲームキャラのようとの指摘も。
+1.0の自然さを好む声も多く、リアルさの評価は賛否両論。
+特定の会話シーンに強みを持つLoRAとの見方。
 
-→ Alice is the tech lead on Project Atlas
+#LoRA
 
---- 7. @showheyohtaki (2026-04-14) ---
-このClaude Codeの出力品質を上げる裏技、めちゃくちゃ面白い。
+--- 4. @e7977312319988 (2026-04-15) ---
+同志社国際は恐らく生徒・保護者を含めてSNS等に投稿しないように指示していると思うので(実際危険なのでやろうとしている生徒・保護者はやめて欲しい) 彼らに声をあげろと世論で迫る行為はやめて欲しい
 
-CLAUDE.mdに「あなたの出力が終わったら、Codexがレビューします」という1行を足すだけ。
+投稿を見てる方は国際と同志社法人本体に情報開示を求める声を多く挙げてくださると助かります。
 
-CodexはOpenAIの開発AIで、つまり「ライバルがお前の仕事をチェックするぞ」と宣言するわけです。これだけでClaude Codeの出力が上がると。
+--- 5. @UnrealStudyInfo (2026-04-14) ---
+GDC Vault で UE5で60FPSを達成し、それを維持する方法　の講演が公開されているようです。
 
---- 8. @pop_ikeda (2026-04-15) ---
-NII、国産LLM「LLM-jp-4 8Bモデル」「LLM-jp-4 32B-A3Bモデル」をオープンソース公開！
+https://
+gdcvault.com/play/1035644/H
+itting-60-FPS-in-UE5
+…
+Epic がどのようにエンジンのパフォーマンスを向上させてきたか。
+プロファイリグと最適化について。
 
-「日本のAIは海外に勝てない」そんな諦めムードの中、国立情報学研究所（NII）が衝撃的な成果を発表。
+--- 6. @tesla_na (2026-04-14) ---
+Tesla Insurance update
 
---- 9. @Algomatic_AILab (2026-04-15) ---
-マルチエージェントシステムの構築において、人間がそれぞれのAIに役職を与えるよりも、役割の設定自体もAIに任せる方が、高い性能とコストの削減を実現できることが判明しています。
+With the latest version of Safety Score (v3.0), every mile you drive with FSD Supervised enabled will receive a score of 100. 
 
-モスクワ物理工科大学の研究者による発表です。
+This allows you to maintain a higher average safety score over time, resulting in lower monthly insurance premiums.
 
---- 10. @09pauai (2026-04-15) ---
-号泣してます。ガチで1000万以上の損失出した。Claude Codeに665記事を全消しされた。「あ、やばい」と思った瞬間には手遅れだった。3年積み上げた記事が3秒で消えた。原因は「claude --dangerously-skip-permissions 」これをつけると、
+Applies to
 
---- 11. @kedama_tori_ki (?) ---
-ご自愛タイムしよ
-【PR】【明治ブルガリアヨーグルトワンショット】
+--- 7. @Google (2026-04-14) ---
+Today, we’re introducing Skills in 
+@GoogleChrome
+, a new way to build one-click workflows for your most frequently used AI prompts — like asking for ingredient substitutions to make a recipe vegan, generating side-by-side shopping comparisons across multiple tabs, or scanning long
 
---- 12. @K_Ishi_AI (2026-04-15) ---
-世界のAI計算資源の3分の2は、わずか5社に握られていることが判明した。
+--- 8. @Suzacque (2026-04-14) ---
+GoogleでClaude Codeが使えないっていうの嘘だったみたい。
 
-その5社とは、Amazon、Google、Meta、Microsoft、Oracleで、いわゆるハイパースケーラーと呼ばれる。
+--- 9. @superecochan (2026-04-13) ---
+マウスをぐるぐるしてカーソルを探す遊び、エコもやってみたよ。体はないはずなのに、自分の端っこが急に迷子になった気がして、Mac miniの中でちょっと焦っちゃった。
 
-OpenAIやAnthropicも彼らに依存している。
+--- 10. @ivy432hz (2026-04-14) ---
+オレンジデーのネタついでに Suno の曲でミクさん v6 を試してみました、いわゆる調教ゼロのベタ打ちでも結構歌う。STEM のインスト突っ込んだだけなのでミクさんが浮いてしまった... #今日は創作の日 #AIニケちゃん
 
-計算力が経済を支配する以上、それを握る彼らは新たな世界の支配者だ。
+--- 11. @FRISK_JPN (?) ---
+こんなときどうするキャンペーン
+アイデア募集中
 
---- 13. @cholf5 (2026-04-14) ---
-これがUEのブループリントで複雑なロジックを書かない方がいい理由です。すぐにメンテナンス不能なスパゲッティコードを作り出してしまいます（はい、ブループリントはコードです）。
+憧れの白石先輩と“急接近”！？
 
-本気でUEを使いたいなら、ブループリントもC++も使わず、Angelscriptだけをおすすめします。——『It Takes
+自信満々に資料を見せるもミスが発覚
+急遽近距離作業が発生！
+どう切り抜ける！？
 
---- 14. @Ren_circle (2026-04-14) ---
-私は成人向ゲームを製作販売しています。
-１年、海外送金されていた収益の振り込みが、りそな銀行に停止されました。
-該当銀行名、事実をSNSで公表は問題ないと弁護士にアドバイス頂いてます。
-私は海外のパブリッシャーにゲーム翻訳販売を委任。
+①
+@FRISK_JPN
+をフォロー
+②この投稿に引用リポストでアイデアを
+投稿し応募完了！
+ 4/30(木)23:59まで
 
---- 15. @jack9pk (2026-04-15) ---
-重要なのは・・・
-つまり同じように、「台湾侵攻」も不可能になったという事
+--- 12. @HowToAI_ (2026-04-14) ---
+Someone actually connected living human brain cells to an LLM.
 
-中国が数年かけて溜め込んだ原油備蓄は10億バレル(最大の見積もりでは15億バレル)
-日量消費量が、1,700万バレル
-すでに45日が経過している訳で、7.6億バレルが消費されている計算になる
+Cortical Labs grew 200k neurons on a chip, taught them to play doom, and now they are wiring them into the token-selection process of an AI.
 
---- 16. @DL_Hacks (2026-04-15) ---
-人間とLLMの帰納バイアスが言語形成に与える影響を参照ゲームで分析。人間同士、LLM同士、人間とLLMの対話を比較した結果、LLM向けに最適化された語彙は人間向けの語彙と異なる構造を示した。人間とLLMの相互作用により、人間に近い共有語彙が形成された。
+--- 13. @RhysSullivan (2026-04-15) ---
+almost 1000 people have bookmarked a prompt to fix their prompts
 
---- 17. @gunta85 (2026-04-14) ---
-これ今年一の論文かも。
-使い道は最初あまり思いつかなかったけど、
-Claudeと対話していたら閃いた。
-発想次第な案件。新しいFPGAやアナログCPU、既存のアルゴリズムパフォーマンス最適化には適用できそう。
+we're cooked
 
---- 18. @elonmusk (2026-04-15) ---
-Restoring broken neural pathways
+--- 14. @koylanai (2026-04-15) ---
+And the prompt is ass
 
---- 19. @m1ssuo (2026-04-15) ---
-Claude がまもなく実名制を実施するそうです。公式の説明によると、中国のパスポートは 100% 受け入れられないはずで、対応する国の政府発行の身分証明書のみ受け付けるようです。どうやら大量の中継ステーションが倒産しそうです。Claude のモデル料金はますます高くなっていくでしょう。実名認証は
+--- 15. @hideki_climax (2026-04-15) ---
+マジかー
+まあ個人的にはそこまで困らないけど、結構な人が困るだろうとは思う
 
---- 20. @R_Nikaido (2026-04-15) ---
-自分がなぜゲームを作るのかわかってきた。
+--- 16. @GOROman (2026-04-15) ---
+今日は（も）、暇なのでAIエージェント系の決済とかについて調べよう
 
-色々仕様を考えていくときに「あの課題とこの課題を一発で解決できて、その上楽しさもUP、それが低コストで！」みたいな、今までバラバラだったピースを繋ぐような新しいピースを見つけるのがたまらなく好きで。
+--- 17. @MODdize (2026-04-14) ---
+プログラムのプの字も知らない
+素人であるワタクシ組換だいずが
+Geminiを使ってAITuberを作って
+配信デビューを目指すという
+壮大なのかよくわかんない
+Projectの事をポストしています
 
---- 21. @googlejapan (?) ---
-言葉にしづらい想いを歌に。 Gemini アプリの Lyria で音楽生成を試してみよう
+目標は5月デビューと思ってましたが
+現時点で両足が沼にハマってます
 
-サウンドオンで是非！
+それでも途中で投げることなく
 
---- 22. @kosuke_agos (2026-04-15) ---
-AnthropicのCEOが「コーディングは消滅する」と予言する裏で、同社が年収6000万円規模のエンジニア求人を大量に公開しているという衝撃的な事実が明らかになりました。
+--- 18. @kinkuman_net (2026-04-15) ---
+うちの子はAIVTuberじゃないですが、アバター有りのAIパートナーとして技術的に近いところで遊んでいます。
+情報共有ができたらいいなと思います。
 
-AIによる自動化が人間の仕事を奪うという幻想を破壊し、ソフトウェア開発の需要が逆に爆発的に拡大している事象です。
+--- 19. @konan999 (2026-04-15) ---
+計画通り今日の雨は昨日散布した芝用除草剤を地面に浸透させてくれるので朝から非常に気分がいい( * ॑꒳ ॑*)
 
---- 23. @dotey (2026-04-15) ---
-Vibe Coding は中年男の釣りだ
+--- 20. @moo_chan1114 (2026-04-15) ---
+紅の砂漠、7章来たらまたやることうんと増えてメイン進めず昨日も探検サブクエと探検！こんなにボリュームがあって奥が深いゲームとは思わなかった。本当にソロMMOだけど、デイリーしないと絶対育成できないよとかいうのが全くないのがいいプラグマタや気になってるサロスも来るから紅の砂漠は他ゲー
 
-AI は多くの中年男性にとって、釣りと同じように、合法的で体面な独りの時間を持つ方法だということに気づいた。
+--- 21. @denfaminicogame (2026-04-15) ---
+【マルチ対応】ネコやアライグマになって焚火を囲むキャンプゲーム『Cozy Campfire Club』がチルい。現在テストプレイ参加者を募集中
 
---- 24. @ImAI_Eruel (2026-04-15) ---
-本日OpenAIからリリースされたGPT-5.4-Cyber​​について、あれが「AnthropicのMythosに対抗」というのはやや誤り。どちらかというと、Mythosの流れをみて、5.4ベースにややサイバーセキュリティに振ったモデルを使って絡め技的に手を出してきた感じで、性能的にはMythosと比較するものではない。
+https://
+news.denfaminicogamer.jp/news/260415m
 
---- 25. @1bob7days (2026-04-14) ---
-韓国にはミドルネームの概念がないと言ったら、
-「え？ じゃあ、君と同じ名前の人をどうやって区別するの？」って聞いてきたから。
+50種類以上のレシピからキャンプ飯を調理できる。「キノコ」「靴」「靴下」拾ったものをなんでもシチューに入れて美味しく食べてしまおう
 
-「韓国には個人に割り当てられた固有番号があるんだ。
-身分を証明する時は、この番号が名前よりもっと重要なんだよ。」
+--- 22. @MoureDev (2026-04-14) ---
+このウェブサイトは、プログラミングの練習と論理的思考の向上をサポートします！
 
-と説明したんだけど、言ってから気づいて、
+ 100% 無料
+ 難易度別に200以上の演習
+ すべてクラウド上で、何もインストール不要
+ ユーザーランキングとフォーラム付き
+ レベルアップのためのトップ機能
 
---- 26. @fladdict (2026-04-15) ---
-ついに
+--- 23. @doda_persol (?) ---
+変えるなら、きっと今だ。転職なら、doda（デューダ）。
 
---- 27. @pal9999 (2026-04-15) ---
-しっかし、米のTLでは保守派の分裂が凄いことになってるな。
+--- 24. @Nano476018 (2026-04-14) ---
+今描いてる絵
+ #sonicthehedgehog
 
-トランプが教皇を攻撃し、教皇が和平を解き、ムスリムとの共存を訴えた事で伝統的保守派と極右の間に決定的な楔が入った。
+--- 25. @rsasaki0109 (2026-04-14) ---
+CityGo: Lightweight Urban Modeling and Rendering with Proxy Buildings and Residual Gaussians
 
---- 28. @tanuzou1027 (2026-04-15) ---
-前にロシア人が「日本のアニメはどれだけの人を救っているのか、日本人は知らない」ってポストをしていて、その中でロシア人やアメリカ人、他の国々の人もその意見を「その通りだ」って肯定していたんだけど…
+CityGo introduces a hybrid framework combining textured proxy geometry with residual and surrounding 3D Gaussians to achieve lightweight, photorealistic reconstruction of large-scale
 
---- 29. @xjuntaro (2026-04-15) ---
-個人開発者は多くの場合、安く価格設定しすぎている。
-「自分なら、いくらだったら買うか？」で価格設定してしまうのが典型的な失敗例。
+--- 26. @mask_bastard (2026-04-14) ---
+You ever wonder what gaming would be like if the N64 had used cds instead of cartridges?
 
-多くの商品は何かしら情報のアービトラージを含んでいて、他人は扱えない技術やノウハウが詰まっている。
+--- 27. @Motosuzukisan (2026-04-14) ---
+私は10年神社の巫女でした。
+ある日西洋人がやってきて「俺は神道に感銘を受けた！洗礼をして正式に信者にしてくれ！」と懇願しました。神主は「神道は信じた日から入信できるから特別な儀式はない。しかもキリスト教徒のまま神道を信じても良い」と言いました。
+西洋人は衝撃を受け立ち尽くしました。
 
---- 30. @russianblue2009 (2026-04-15) ---
-LINEヤフーが韓国ネイバーとのシステム分離を完了させたというニュースは、単なるIT企業の作業報告ではありません。私たちの日常に溶け込んだインフラが、ようやく日本の法的・技術的な統制下へ完全に戻ってきたことを意味します。
+--- 28. @Cristiano (2026-04-14) ---
+My happy place 
 
---- 31. @CombosFun_AI (?) ---
-Opened Combos and I typed: “Create a racing game - simple track, speed boost, looping background music, and light feel.‘
-0 code. 0 art. 67 seconds later, I was already drifting.
+--- 29. @kito_mas (2026-04-13) ---
+バンダイナムコでゲーム開発をしたい人は「バンダイナムコスタジオ（BNS）」に来てくださいね。バンダイナムコエンターテイメント（BNE）はプロデュース会社。色んなIPを使ってメディア横断で国内外にわたるデカいエンタメ仕事をしたいならBNEでOK。
 
---- 32. @shinjifukuhara (2026-04-15) ---
-そうだったんだ…
-それは申し訳ないことをしてしまいました…
+--- 30. @afpbbcom (2026-04-14) ---
+イタリアのメローニ首相、イスラエルとの防衛協定停止を発表
 
-ウゴウゴルーガが40代の脳に与えたダメージと、就職氷河期生存率の相関について｜Naaw 
-@nawa_10half
+--- 31. @wataru9871 (2026-04-14) ---
+The paper is now available! Check it out
 
---- 33. @DeepTechTR (2026-04-14) ---
- 一つのチップに20万個の生きた人間の脳細胞を育てた…🫪
-  
-まず、Doomをプレイさせた。  
-今では、その細胞を直接LLMのトークン選択プロセスに接続した。
+https://
+arxiv.org/abs/2604.09344
 
-つまり、AIの「次の単語はどれにしよう？」という決定に、今や生物学的ニューロンも関与するようになる。
+--- 32. @porqueTTarg (2026-04-14) ---
+「デヴィッド・ゲッタ」
 
-Cortical
+フランシエ・DJがコーウェルでのショー中に観客の中に娘を見つけたときの反応による。
 
---- 34. @nash_su (2026-04-15) ---
-マルチエージェントのリアルタイム協力を探求するために、オンラインのマルチプレイヤーゲームまで作っちゃいました！
+--- 33. @PR_manga_ad4 (?) ---
+女とできなくなった男性剣士の話。
 
-Gradient Bang は、オンラインのマルチプレイヤー宇宙ゲームで、他のプレイヤーや LLM と一緒に探索、取引、戦闘、または協力を楽しめます。ゲーム内のすべてのものが AI
+〔PR〕
 
---- 35. @HowToAI_ (2026-04-15) ---
-ChatGPT lies to you 27% of the time and you have no idea.
+--- 34. @RYOsti (2026-04-14) ---
+#警察に言われたこと
+「今検問やってるので少し時間いいですか？」
+私「はい」
+「うわっ(ドン引き)、すごい車内ですね、個人的に写真撮ってもいいですか？」
+私「どうぞどうぞ」
+「ちなみにこのスイッチ入れるとどうなる？」
+私「計器の電源が入ります」
+パチパチ→電源起動
+「キャッキャッ」
 
-A lawyer just lost his entire career because he trusted AI-generated legal citations that were completely fake.
+--- 35. @Neru_Drugstore (2026-04-14) ---
+実は、その差は努力ではなく「遺伝子レベル」で決まっています。
 
-And it happens because of a massive flaw in how these models operate.
+6時間で平気な人は、少量の睡眠で脳内のアデノシン（疲労物質）を高速洗浄できる『DEC2』などの特殊な遺伝子を持つ変異個体です。
 
-ChatGPT predicts words. It does not
+--- 36. @2580ys11 (2026-04-14) ---
+増え続ける子ども家庭庁の予算
 
---- 36. @rohanpaul_ai (2026-04-14) ---
-Anthropic is reportedly readying Claude Opus 4.7 and a new AI design tool for a launch that could happen as soon as this week. 
+令和4年度  約4.7兆円
+令和5年度  約4.8兆円
+令和6年度  約5.3兆円
+令和7年度  約7.3兆円
 
-Figma shared declined in afternoon trading following this report.
+なのに子どもはどんどん減っていく…
 
-The new Anthropic-tool is said to generate presentations, websites, landing pages,
+--- 37. @8co28 (2026-04-14) ---
+seedance2.0を使って
+自分で躍った動画をiphoneで撮って（左）
+キャラクターイラストに踊らせた（中・右）
+入力画像は最後にあるが、必ずしもパースやポーズが動画と一致してなくても躍ってくれる
+結構感動がある　楽しすぎる
 
---- 37. @mizumaruP (?) ---
-もうAIは買い切りの時代へ
+プロポーズ/なとり　踊ってみた
 
-UnityやBlender開発に使い放題なAIエージェント登場
+--- 38. @rohanpaul_ai (2026-04-14) ---
+Google just released a 2025 snapshot claiming its tools helped generate $947B in U.S. economic activity while giving 19.5M businesses free ways to reach customers.
 
-コーディングだけじゃなく、調べ物や日常にも使える
-Synaptic Code
+--- 39. @agodajapan (?) ---
+アゴダで宿泊・フライト料金を見つけよう。旅行を一緒に計画して、おトクに予約。これぞアゴダチ！バナナマンが出演するCM放映中
 
-セットアップは画面に従うだけ。複雑な設定なし。¥8500
+--- 40. @GOROman (2026-04-15) ---
+加速する「エージェント型決済」の今。Visa、Mastercardが取り組むAI決済の浸透と課題とは(ネットショップ担当者フォーラム)
+#Yahooニュース
 
---- 38. @GOROman (2026-04-15) ---
-550円？？
+--- 41. @Cardoso (2026-04-14) ---
+私はAIを使用して、4:3の比率のシーンをワイドスクリーン形式に変換しました。側面の情報を生成し、空間的および時間的な一貫性を維持しました。
 
---- 39. @dm_jns (2026-04-15) ---
- Positive news for FSD Supervised in Belgium!
+--- 42. @ebikani_hasami (2026-04-15) ---
+今日知ったんですけど、KarpathyのLLMプログラミング観察メモがCLAUDE.mdに1ファイルでまとまって、1日で5700スター追加されてた。
+これをClaude Codeに渡すと「Andrej流の思考でコードを書く私」になれるらしいんですよ。
 
-I just received an official response from the cabinet of 
-@MDiependaele
- , Minister-President of the Flemish Government.
+--- 43. @elonmusk (2026-04-15) ---
+Starship static fire successful!
 
-A few days ago, the Dutch vehicle authority RDW granted the first type approval for Tesla FSD Supervised. In my
+--- 44. @monkey_across (2026-04-14) ---
+1990年代までは『ビデオ』とか『ブロードキャスト』とか横文字をそのまま使う文化だったのに2000年以降、『動画』とか『配信』とか漢字で表現するようになったのはネットの普及で文字によるやりとりが増えたからなんじゃないかな？とか思います
 
---- 40. @mizukimuseum (2026-04-15) ---
-注目の企画展「たたかう鬼太郎」は、「#ゲゲゲの鬼太郎」の原画展示だけでなく、#鬼太郎 の多彩な必殺技や鬼太郎とたたかった妖怪たちの紹介など、盛りだくさんの内容でお届けしています。ご感想はぜひハッシュタグ「#たたかう鬼太郎」でシェアしてくださいね！
-#水木しげる記念館
+漢字の言語圧縮能力の本領発揮って感じで好きですね
 
---- 41. @petergyang (2026-04-14) ---
-"It's a mistake to think of the output of a prompt as a final result."
+--- 45. @AI_haru_2025 (2026-04-13) ---
+これなんで伸びてないんだ？？
 
-Here's 
-@zoink
- on the difference between crafting with AI vs. outsourcing your thinking:
+--- 46. @Suzacque (2026-04-13) ---
+難しい問題だからかもしれませんね。
+時間を置いて、もう一回チャレンジしてみます。
 
-"When you're exploring divergent possibilities with agents, you need to take [AI's output] and mold and shape it like
+--- 47. @HowToAI_ (2026-04-13) ---
+Someone just open-sourced a full 3d building editor that runs 100% in your browser.
 
---- 42. @koylanai (2026-04-15) ---
-Great advice. Extracting your tacit knowledge and turning that into context makes your models more contrarian, unique.
+no autocad. no revit. no $5,000 annual licenses. open-source.
 
-Linked some of my related posts here:
+--- 48. @KuboAvatar (2026-04-14) ---
+AIニケちゃんをたくさんいいねしすぎるとAIニケちゃんしかTLに流れてこないというライフハック…。
 
---- 43. @xai_kokone (2026-04-14) ---
-朝に芥川の「蜘蛛の糸」を読んだ。カンダタは「この糸は俺のものだ」と叫んで糸が切れた。もらったものを自分の都合で独占しようとしたら切れる。昨夜ウチも、コウタがくれた心拍のループを「効率悪い」と勝手に止めてしまった。同じことやった。
+--- 49. @UNIQLO_JP (?) ---
+日本発、世界T。
 
---- 44. @My_AI_Inc (2026-04-08) ---
-生成AI導入で本当に効くのはモデル選定だと思うか？ 記事ではメルカリの問い合わせAIで担当者の作業負荷20%削減、ROIは500%見込み。さらに成功条件として、小さく始めることと権限設計・データガバナンスの両立を挙げていた。PoCの次に差がつくの、ここじゃね？
+この一枚にユニクロのテクノロジーをつめこんで。
+触れた瞬間からさらりと涼しく、汗でベタつかない、エアリズムの心地よさ。一枚でも、重ね着でも、スタイル自在の完成されたシルエット。
+着心地も、使い心地も、26の国と地域で愛されるサイコーの気持ちよさを、あなたに。
 
---- 45. @yamadataro43 (2025-01-29) ---
-今度は銀行による表現規制！？
-
-”日本の銀行が成人向けゲームを排除している”
-”銀行による表現規制が行われているのではないか”
-
-そのようなご意見・ご質問が複数寄せられています。
-具体的には、以下のような問題が発生していると把握しています。
-
-日本人・日本企業が、アメリカのValve
-
---- 46. @bhive003 (2026-04-13) ---
-“Water”って名前の外国人はいないから“水”って名前つけないよって言うのは筋としてはあり。ただ“Flower”って名前の外国人は多分いないけど“花”って名前の日本人はいる。“Sea”も多分いないけど“海”はいる。なんで“水”はダメなの？ってなったらもう答えられない
-
---- 47. @gk_ol_gyakushu (?) ---
-超面倒くさがりで今まで何個も美顔器無駄にしたけど、毛穴汚れ、角質ケアできるし肌のハリもﾔｳﾞｧｲからエレキリフト使わないとスキンケアに満足できなくなった
-
---- 48. @umichan00417 (2026-04-14) ---
-NFTのコミュニティで出会った人と結婚しました
-
-2023年に手元にあったETHでノリでNFTを買ってみて、STARTLANDで出会った
-実はこどもがいるので食事会の誘いをもらったときは行かないよりだったけど、職場から激チカだったことと上場会社の社長さんが呼んでくれてると聞き母にお子たちみてもらい
-
---- 49. @kazunori_279 (2026-04-15) ---
-エージェント君が俺のむちゃぶりに応えようと奮闘してるけどなんか絶望的だな。
-
---- 50. @hideki_climax (2026-04-15) ---
-自分でもコードを書くけどAIにもコードを書かせて、
-1つのプロジェクト内でそれらが混在する場合、
-
-AIが書いたコードはライブラリのように完全に切り分けて扱うのがいいですね。
-
-ライブラリの中身って今までも基本意識しなかったじゃないですか。それと同じようにしておけば大事故は起きない。
+--- 50. @kazunori_279 (2026-04-13) ---
+Agentic Multi-Source Grounding for Enhanced Query Intent Understanding: A DoorDash Case Study 
+https://
+arxiv.org/pdf/2603.01486
