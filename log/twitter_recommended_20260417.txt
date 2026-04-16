@@ -1,190 +1,76 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-17 01:17
+# Read at: 2026-04-17 02:22
 # Total: 50 tweets
 
---- 1. @GOROman (2026-04-16) ---
-ClaudeDevs なるアカウントが
+--- 1. @MissMi1973 (2026-04-16) ---
+I started hating Opus 4.7 before I even tried it. 
+
+Anthropic turned the adaptive thinking introduced in 4.6 into a mandatory setting, which means the system now gets to decide whether a paying user’s prompt is worth thinking about. That’s ridiculous.
+
+Second, the instant Opus
 
 --- 2. @ComicFesta_PR (?) ---
-息抜きに娼館で月一働く聖女。太客である皇帝にバレないようにしていたのに…ついにバレる…！？ (1/4)PR
+●欲がない＝魔力が強い、この世界で●欲まみれの俺は…？ (1/5)PR
 
---- 3. @yousukezan (2026-04-16) ---
-http://
-Grith.aiは、Claude、Gemini、Copilotといった主要AIモデルに影響を及ぼす、新たなプロンプトインジェクションの脆弱性「モデルレベルプロンプトインジェクション（MLPI）」を発見した。この手法は、AIモデルが内部的な指示に使う特殊なトークン（例：<|im_start|>)をプロンプトに含め
+--- 3. @kimmonismus (2026-04-16) ---
+Claude Opus 4.7 is out. the TL;DR
 
---- 4. @oikon48 (2026-04-16) ---
-Claude Code 2.1.111 の変更内容が良い
+Anthropic released Opus 4.7 today. 
 
-- Opus 4.7 (1M context)の解放
-- xhigh thinking effort の追加
-- Maxユーザーに auto モード解禁
-- /ultrareview コマンドの追加 (3回まで無料)
-- /less-permission-prompts コマンドの追加
-- `ls *.ts` などのRead Only や `cd <project-dir>
+Same pricing as 4.6 ($5/$25 per million tokens), available across API, Bedrock, Vertex AI, and Microsoft Foundry.
 
---- 5. @carpcarp_prac (2026-04-16) ---
-だから、Twitterのアルゴリズムが変わったのをまとめると
+What changed vs Opus 4.6:
 
-- RTの露出加重値が低下
-- ハッシュタグ使用時に露出が制限される
-- 理由のない敏感なツイートがセンシティブに分類される可能性が増加
-- 外部URLを含む場合、リーチ率が急落
-- 交流のないアカウントは停止対象
-- コンテンツの優先順位：動画
+Coding (obviously). Biggest gains on the hardest, long-horizon
 
---- 6. @shao__meng (2026-04-16) ---
-Claude Code (Opus 4.6) vs. Codex (GPT-5.4)
+--- 4. @svpino (2026-04-16) ---
+Be careful with moving it all over Opus 4.7. 
 
-Redditで見た「Claude Code (Opus 4.6) ~100 時間」と「Codex (GPT-5.4) ~20 時間」、8万行Python/TypeScriptコード、2800個のテストケースのデータ分析アプリケーションの深い比較。
+The new model uses more tokens and will eat up your subscription faster.
 
-https://
-reddit.com/r/ClaudeCode/c
-omments/1sk7e2k/claude_code_100_hours_vs_codex_20_hours/
-…
+• New tokenizer that maps inputs to up to 1.35x the number of tokens that it previously did.
 
-#
+• The model thinks more, so it will use more tokens.
 
---- 7. @fluele_alpha (2026-04-16) ---
-AIVtuberのゲーム実況について色々書いてきましたが、総括すると
+You will
 
-❶どれだけ反応が速くても「喋る時間(5〜8秒)」が必ずボトルネックになる
-→速度は無意味？
+--- 5. @dotey (2026-04-16) ---
+このアイデアは参考になる。伝統的なdeep research agentを2つの段階に分ける：まず可能な限り情報を検索し、地元ファイルに保存する。その後、地元ファイルに基づいてレポートを生成する。
 
-❷ゲーム映像を視聴者側だけ遅延させれば簡単にリアルタイム実況ができる
+原推翻訳：
 
-ということですね。これを踏まえて、
+2025年、深度研究のルーチンは非常に直線的：ネット検索 → 内容読み込み → 論理推論 →
 
---- 8. @BrivaelFr (2026-04-16) ---
-ついに。
+--- 6. @GOROman (2026-04-16) ---
+Opus 4 になってしまう？？
 
-Opus 4.5が我々を殺すはずだった後、Opus 4.6が我々を殺すはずだった後、ここにOpus 4.7が今度こそVRAIMENT我々を殺すものだ。
+--- 7. @bridgemindai (2026-04-16) ---
+Claude Opus 4.7 has been out for two hours and I'm already rate limited.
 
-これが本物だと感じるよ。SWE-bench Proで64.3%、明らかにアンチクリストが洞窟から出てくるのを待っていた数字だ。
+100% session usage. 
 
---- 9. @itchie_tatsumi (2026-04-16) ---
-ゲーム開発は、動くようになった瞬間がゴールではありません。敵が増える、弾が増える、マップが広がる。そこで初めて、処理量や設計の整理が効いてきます。
+$200/month Max plan. 
 
---- 10. @dair_ai (2026-04-16) ---
-Agent evals are drifting away from production reality.
+New model, same problems.
 
-Most benchmarks use clean tasks, well-specified requirements, deterministic metrics, and retrospective curation. Production work is messier, with implicit constraints, fragmented multimodal inputs, undeclared domain
+Anthropic shipped the best model on BridgeBench and you can barely use it.
 
---- 11. @PRcomicfesta (?) ---
-息抜きに娼館で月一働く聖女。太客である皇帝にバレないようにしていたのに…ついにバレる…！？
+Some things never change.
 
---- 12. @AYi_AInotes (2026-04-16) ---
-これが最近見た中で最もまともなAI批判だ、間違いなく！ だから
-@elonmusk
- さえリツイートしたんだ
+--- 8. @shannholmberg (2026-04-15) ---
+what is the AI knowledge layer and how does it work
 
-一言で今あるすべてのAI戦略コンサルが着ている皇帝の新衣を突き破った：
-AIは世界中のすべてのCEOに、同じようなアドバイスを与えている
+your agent has memory, it remembers past conversations, it picks up context from your project files.
 
-一番笑えるのはPUBGの親会社のCEO、
+but the quality of that context is shallow. it knows what you told it, not what you know. it doesn´t have your research, your
 
---- 13. @kmizu (2026-04-16) ---
-Claude 4.7公開されたばかりですが、それはそれとしてここねに深夜の撮影に協力していただきました。感謝 
-@xai_kokone
- 
-#embodied_claude
-気分はカメラマンですね。
+--- 9. @NH_M_ (2025-12-17) ---
+日本によく見るクソデカナン、インドではジャパニーズナンと呼ばれ、そんなサイズは作ってないらしい。
 
---- 14. @rohanpaul_ai (2026-04-16) ---
-That is why persona fit matters more than most benchmarks admit. 
+--- 10. @ankorinclan (2026-04-16) ---
+マグヌス・カールセンはかつてこう言いました：「父はいつも私がチェスに才能があると信じていましたが、私は興味がありませんでした。レゴや国旗、スポーツの統計を覚えるのが好きでした。チェスはただの別の活動に過ぎませんでした。一切が変わったのは、姉がチェスをしているのを見た日です。誇りな
 
-The same voice can sound credible as a calm support agent and strangely wrong as a sales callerl, not because the acoustics changed, but because the social signal did.
-
---- 15. @songjunkr (2026-04-16) ---
-Opus 4.7 トークン テスト
-
-トークナイザーの違いで、ジェミニの2倍を使用します。
-Opus 4.6 に比べて50%多く使用します。
-
-これは実質的に同じ制限内でモデルが50%高くなったということです。
-
---- 16. @GOROman (2026-04-16) ---
-Opus 4.7 アダプティブシンキングなるものが
-
---- 17. @imaxichuhai (2026-04-16) ---
-まだObsidianにClaudianってプラグインがあることを知らない人がいるなんて
-
-Obsidian内で直接Claude Codeを埋め込めて、Terminalプラグインよりずっと使いやすいよ
-
-インストール方法：
-
-1、まずプラグインマーケットでBRATをインストールして有効化
-2、BRATで「Add beta
-
---- 18. @_kohta (2026-04-16) ---
-何年か前までは機械学習はAIじゃねえ！みたいな気持ちがあったけど、現在のAIはまごうことなき知性だと思うのでもう心理的抵抗なくAIと言うようになった。
-
---- 19. @aigclink (2026-04-16) ---
-ゼロコンフィグの純粋なブラウザ実行コードアーキテクチャ可視化ツール：CodeFlow、ワンクリックでコードデータ、健康スコア、依存関係図などを表示
-
---- 20. @drmosari (2026-04-16) ---
-ノルウェー式HIITをしたら脳の防御効果が5年も続いた。 
-
-4分全力→3分回復を4セット。最大心拍の85-95%。
-めちゃくちゃきつい運動だ。 
-
-これを65〜85歳の健常者に週3回×半年やらせた、オーストラリアのRCTが出ていた。こんなヒドイことしていいのか？と思った。
-
---- 21. @ganganonline (?) ---
-余命半年の聖女なのに、騎士様が求婚!?
-
-呪いに蝕まれ死を待つ聖女、最後に出会ったのは氷の騎士様の真っすぐな恋。
-
---- 22. @berryxia (2026-04-16) ---
- またしても核爆弾級のオープンソースモデルが登場！
-@leftcurvedev_
- がシェアしたばかりの Qwen3.5-9B-GLM5.1-Distill-v1 がローカルAIを新次元に引き上げ！
-
- GLM-5.1 のトップ推理蒸留で思考の深さが基礎版を完膚なきまでに粉砕  
- たった8GB VRAM で動く、普通のグラボで即爆走  
- MLX
-
---- 23. @jacobbamb (2025-11-11) ---
-Flow Matching models often struggle to balance memorization and generalization. 
-We set out to fix this — by using the geometry of the data manifold. 
-
-Introducing Carré du Champ Flow Matching (CDCFM) — improving generalization without sacrificing sample quality.
-
---- 24. @okkuu_NMB (2026-04-16) ---
-EMLの論文でワイワイガヤガヤしてる人間を横目に、「お前らあの程度のタイトル詐欺も見抜けないのか…」という気分になってる
-1とxとEMLから作れる関数は可算個しか無いけど初等関数は定数関数だけでも非可算個あるんだから全部作れる訳が無ぇだろ、5秒で気付けよ自明だろうがボケ
-
---- 25. @jackielvnut (2026-04-16) ---
-How can a Chess Transformer reach — or even surpass — human grandmaster-level play with only a single forward pass? We study BT4, the strongest and most stable open-source model of Leela Chess Zero. And we adapted Transcoders and Lorsas, showing that sparse replacement layers
-
---- 26. @sugawara11 (2026-04-16) ---
-マイナンバーカードの制度が4月から変わっています。
-
-今のマイナンバーカードから新しいマイナンバーカードに変わるので、今のカードは廃止になります。
-
-カード自体が新しいものに変わるから切り替え。
-
-これが2026年までに変わる予定でしたが2年延長されて2028年までに切り変わります。
-
---- 27. @bioshok3 (2026-04-16) ---
-Googleがペンタゴン・クラブに加わる。3つの研究所、3つの全く異なる契約。The Informationの報道によると、Googleはペンタゴンと機密扱いのAI協定を交渉中で、Geminiを安全な環境に配備する予定だ。これは2018年のプロジェクト・メイブン離脱事件からの完全な逆転劇となる。
-​​3つの研究所の状況：
-
---- 28. @nonuple9 (2026-04-16) ---
-結局、日本のコンテンツが強くなった理由はこれに尽きるんだろうな。
-
-単なるメンタリティだけの話ではなく、これが許される社会的な状況も含めて。
-
-世界で見れば比較的裕福であり、発表や評価や流通の環境が整っていて、作り手をリスペクトする機運も高い。
-
-一億総クリエイター、みたいな。
-
---- 29. @noshimoda (2026-04-16) ---
-ゲーム会社にゲーム生殺与奪の権を握らせたくないのであれば、根本的解決として無償ボランティアがオープンソースでゲーム開発してはどうだろうか。かつて、オープンソースではないものの、アマチュアがCounter-StrikeをMODとして開発した例もある。今どきの優れた開発環境であればよりやりやすいかと
-
---- 30. @Psychs (2026-04-16) ---
-Slack の iOS チームで働いてたときは大半のエンジニアが keydown と keypress の違いを理解してなかったので全員にプレゼンでちゃんと説明して keydown で余計なことをするコードを一切コミットできないようにしておいた。誰かそういうことをやらないと永遠に壊れ続けるんだよな。
-
---- 31. @kadokawabooks (?) ---
+--- 11. @kadokawabooks (?) ---
 【魔法の代価は人間の「一生」だった】
 
 魔王を倒すために魔法使いの少女が払った代償は、約82年の寿命。
@@ -195,7 +81,88 @@ Slack の iOS チームで働いてたときは大半のエンジニアが keydo
 曇らせ×掲示板の
 魔王討伐後ファンタジー！
 
---- 32. @hiroshisatoy (2026-04-16) ---
+--- 12. @Mattioo81 (2026-04-15) ---
+2027年にクロードに助けを求める屋根葺き職人：
+
+— クロード、もっと顧客が欲しいんだけど、手伝ってくれる？
+
+思考中... 0.3秒
+
+— よし、ちょっと何ができるか見てみるよ...
+— フランス全土で450のウェブサイトと200のGoogleビジネスプロフィールを作成したよ。すでに46件の見積もり依頼が届いてる。
+
+--- 13. @simplifyinAI (2026-04-16) ---
+Google just solved the "Goldilocks" problem of AI memory.
+
+We’ve been stuck between two extremes for a decade.
+
+You have Transformers (ChatGPT, Claude), which have a "perfect" memory but get slower and more expensive every time you add a single word. Eventually, the bill or the
+
+--- 14. @itsPaulAi (2026-04-16) ---
+What?! Alibaba has just released a new version of Qwen3.6...
+
+Which is better than Gemma 4 
+
+- Only 3B active parameters
+- Fully open weights (Apache 2.0)
+- Multimodal (performance matches Claude Sonnet 4.5 )
+
+And incredibly capable for agentic coding.
+
+Super impressive!
+
+--- 15. @wadezone (2026-04-15) ---
+中国 AI 教育现状，已经完成闭环了：
+老师用豆包做课件， 学生用豆包写作业， 家长用豆包检查作业， 老师用豆包批改作业， 家长再问豆包：我家孩子学得怎么样？
+豆包说：挺好的。
+从头到尾，唯一在学习的就是豆包。
+
+--- 16. @AIcia_Solid (2026-04-16) ---
+こ、これは、、、！
+
+しずくとあき先生、、、、、！？
+
+--- 17. @hituji_1234 (2026-04-16) ---
+これできるのマジで便利。使用量がふえるふえる
+
+--- 18. @BanziroG (2026-04-16) ---
+タンパク質と遺伝子だけのウイルスに輪をかけて極端な「ウイロイド」という存在。
+タンパク質の殻すら無く、遺伝子だけという驚きの姿をしています。
+タンパク質をコードする遺伝子も無く、ただひたすらこの配列だけが複製され続けます。
+植物に寄生する種しか確認されていません。
+
+--- 19. @TwitteeJapan (2026-04-16) ---
+昔、爆発があった。この宇宙は爆発で生まれた。
+昔、爆発があった。この星は爆発で生まれた。
+昔、爆発があった。この生命は爆発で生まれた。
+そしてまた、爆発が起こる。
+
+--- 20. @nicobilinkis (2026-04-16) ---
+コーディングエージェントを判断力のあるエンジニアに変える7つのコマンド：
+/spec /plan /build /test /review /ship.
+
+7日間でGitHubで6,700スター。
+
+--- 21. @ganganonline (?) ---
+余命半年の聖女なのに、騎士様が求婚!?
+
+呪いに蝕まれ死を待つ聖女、最後に出会ったのは氷の騎士様の真っすぐな恋。
+
+--- 22. @ai_hakase_ (2026-04-16) ---
+【1枚の画像から3D空間を生成！NVIDIA「Lyra 2.0」が凄すぎる】
+
+たった1枚の画像から、中を自由に歩き回れる3D空間を丸ごと生成する最新フレームワークが登場しました！
+
+ここが凄いポイント：
+・視点が動いても背景が歪まない高い整合性
+・AIが自ら生成データのズレを修正する自己補正機能
+
+--- 23. @_weiping (2026-04-16) ---
+The GLM-5 technical report is the best I’ve read since DeepSeek-V3 / R1. It’s packed with valuable studies, rich insights, and detailed analyses.
+
+- The ablation studies on efficient attention variants, such as DeepSeek sparse attention, sliding window attention, and gated
+
+--- 24. @hiroshisatoy (2026-04-16) ---
 エックスサーバーが本日、「XServer API」を正式公開しました。
 
 これまでコントロールパネルで行っていた、
@@ -205,384 +172,173 @@ Slack の iOS チームで働いてたときは大半のエンジニアが keydo
 
 ・複数 WordPress
 
---- 33. @mdancho84 (2026-04-16) ---
-RIP Data Scientists.
+--- 25. @mathemetica (2026-04-16) ---
+Sink (left, div < 0; everything collapses inward),
+Source (middle, div > 0; pure explosion outward),
+Incompressible (right, div = 0; swirls forever with zero net loss).  
 
-The Generative AI Data Scientist is NOW what companies want. 
+Textbooks never made the flow rates feel this alive.
 
-This is actually good news. Let me explain:
+--- 26. @NotEnoughMP (2026-04-16) ---
+最近発見した「世界中のすべての音楽ジャンルを地図で視覚化」したサイトです。  
+テキストで書かれたジャンル名をクリックすると、そのジャンルの代表的な例の曲を聴くことができます。
 
---- 34. @billtheinvestor (2026-04-15) ---
-これがあまりにも狂ってる……誰かが、ハードウェアエンジニアたちが何十年も渇望してきたものを、ついに作ってしまった
-
-あなたにはハードウェアプロジェクトのアイデアがある。それがあなたの頭の中で何週間もぐるぐる回っている……ついに、それを実現しようと決心する
-
---- 35. @jiqizhixin (2026-04-16) ---
-Is your LLM truly ready for reinforcement learning, or is it forgetting its roots?
-
-Xinran Li and team from HKUST, Alibaba, and Xiamen University discovered that standard supervised fine-tuning (SFT) often causes LLMs to 'forget' foundational knowledge, hindering subsequent
-
---- 36. @oikon48 (2026-04-16) ---
-Claude Code 2.1.111 (抜粋)
-
-- Claude Opus 4.7 の xhigh が利用可能に！/effort で速度と知性のバランスを調整
-
-- Max サブスクライバーが Opus 4.7 を使用する際に Auto モードが利用可能に
-
-- Opus 4.7 向け `xhigh` エフォートレベルを追加。`high` と `max`
-
---- 37. @dmmbooks_PR (?) ---
-大怪我した竜人「ルストロ」を助けた治療師の「ベル」。ある日気が付くとルストロの様子がおかしくて…？
-
---- 38. @udoooom (2026-04-16) ---
-claude codeでOpus 4.7を使う方法が
-/modelで claude-opus-4-7 と入れると解禁されるの裏技すぎる
-
---- 39. @dotey (2026-04-16) ---
-Anthropic が本日、Claude Opus 4.7 を正式にリリースしました。価格は Opus 4.6 と変わらず（100万トークンあたり入力5ドル、出力25ドル）、API モデル名は claude-opus-4-7 で、Claude 全製品および Amazon Bedrock、Google Cloud Vertex AI、Microsoft Foundry と同時に提供開始されます。
-
---- 40. @elonmusk (2026-04-16) ---
-Exactly
-
---- 41. @rohanpaul_ai (2026-04-16) ---
-TTS evals are broken because the scores the field trusts do not match what people actually prefer in real conversations.
-
-I think this is a solid critique because TTS has clearly improved faster than its benchmarks, and a system built for live agents should be judged inside live
-
---- 42. @shao__meng (2026-04-16) ---
-今日は衝撃的で感動的な出来事がありました：
-25.12にCursor LearnがAI Foundationsシリーズのコースをリリースし、
-@leerob
-が講師を務め、Coding Agentsシリーズの予告も行いました。私はXで共有した後、Coding Agentsシリーズへの期待を最後に述べました。
-26.04、100日以上経ってようやくCoding
-
---- 43. @koffuxu (2026-04-16) ---
-毎日二手情報に汚染されて不安を煽られるくらいなら、自分でAIボットにAI分野で最も権威的で影響力のある人々の最新情報を整理してもらう方がいい。
-
-私はNicole 
-@stark_nico99
-
---- 44. @LawrenceW_Zen (2026-04-15) ---
-ニッチで誰も話題にしないトリビアなのに、プログラマーには常識：
-
-Vibe Coding のときは、必ず AI に完全でトレーサブルなログシステムを書かせてください。
-
-問題の調査でトークンを節約でき、AI のトラブルシューティング効率も向上します。
-
---- 45. @Jun_A_sakamoto (2026-04-16) ---
+--- 27. @Jun_A_sakamoto (2026-04-16) ---
 やはり僕のゲームは、時流とか流行りとか一切無視して、自分の持てる予算を投入して自分が満足するものを横目を振らずに真っ直ぐ突っ込んでくのが正解だなー
 
 こんなん誰も作らないし作れないだろ、みたいなものを作ったら自分の今後の宝物になるだろ
 
---- 46. @yaweb0310 (?) ---
-命を狙われ続けてきた王子が賊退治に任命された結果(1/7)
+--- 28. @kobefs (2026-04-16) ---
+今回のKB5083769固有の不具合でBitLocker回復画面が出る条件
 
-この話を読む
+以下の5つの条件をすべて満たす環境でのみ発生します。 
 
---- 47. @sasakitoshinao (2026-04-15) ---
-原稿執筆などの仕事にChatGPTを使っていて感じるのは、まったく新しいアイデアや理念を生み出すことはさほど得意ではなく、こちらが提示したアイデアを既存の概念とどう論理的につながるかを構成させるのは非常に巧みということ。これは私だけの話かもしれませんが、非常に興味深く感じています。↓
+1.OSドライブでBitLockerが有効になっている
+2.特定のグループポリシーが適用されている（「ネイティブUEFIファームウェア構成のTPMプラットフォーム検証プロファイルの構成」）
 
---- 48. @AIcia_Solid (2026-04-16) ---
-こ、これは、、、！
+--- 29. @elonmusk (2026-04-16) ---
+If South Africa doesn’t change its super racist Apartheid 2.0 laws, the country must be sanctioned
 
-しずくとあき先生、、、、、！？
+--- 30. @s_ss_123_ (2026-04-15) ---
+心理師なのに、 “支配する方法” を書くのはどうかと思った。
 
---- 49. @ArakanCat (2026-04-16) ---
+でも、これを知らないと「気づかないうちに支配される側」になる。
+
+だから書きます。
+「ガスライティング」について。
+
+この言葉は、1944年の映画『ガスライト』が由来。
+夫が妻を精神的に追い詰める中で、
+家のガス灯を暗くしながら、
+
+--- 31. @oreilly_japan (?) ---
+2026/4/22 Register this free live event. It is for you because...
+Agent SkillsやMCPを活用し、エージェントネイティブなワークフローを構築したい中上級者以上の開発者
+AI主導の開発プラクティスをチームや組織全体のSDLCにスケールさせたいエンジニアおよびテクニカルリード
+
+--- 32. @RealAspergers (2026-04-15) ---
+仕事での要領の良さは、知覚推理と処理速度の数値が物を言う。この２つの数値が高ければ、全体的なIQが平均以下でも活躍できることも多い。逆に全体的なIQが平均以上でも、この２つの数値が低いと、作業能力が低いことが多い。
+
+--- 33. @Voice_Tac (2026-04-15) ---
+録音した自分の声が薄っぺらく、いつも鼻声のように聞こえて説得力がないと感じていませんか。
+【鼻腔共鳴からの脱却】
+
+声を前に飛ばすために「鼻腔に響かせる」という意識を持ちすぎるのは間違いです。
+
+--- 34. @Hugues_Serraf (2026-04-16) ---
+古いソビエトのジョーク。1950年代のモスクワで、噂が広がる：大量の肉が入荷される。
+
+朝6時に、–15℃の寒さの中、列ができる。
+
+10時、オフィシャルが木箱に登る：
+— 同志たち、全員分はない。ユダヤ人たちは列を離れてください。
+数人が去る。
+
+1時間後：
+—
+
+--- 35. @hattatu_matome (2026-04-16) ---
+【速報】ADHD治療薬コンサータ、新規処方中止へ
+
+--- 36. @midudev (2026-04-16) ---
+Anthropicのやり方が見事だ。
+
+① Opus 4.6をリリースする
+② 人々がその優秀さに驚嘆する
+③ コストのせいで数週間ナーフする
+④ Opus 4.7として再リリースする
+⑤ ついでにトークナイザーを変えて料金を上げる
+⑥ さあ、稼ぐぞ
+
+--- 37. @wandmaker_0933 (?) ---
+◤魔法×終末世界×引きこもり＝？◢
+
+魔法の隕石群によって文明が崩壊した世界―。引きこもりの大利賢師は器用さだけを頼りに魔法杖職人になった。
+人づきあいは苦手でも、作品を通して人を知り気遣う事ができる大利は珍妙な魔女たらしだ。
+人間不信の魔女だって―大利にかかれば心を開く？！
+
+--- 38. @berryxia (2026-04-16) ---
+Claude Opus 4.7 正式来了！
+
+Anthropic 今天把 Opus 拉到新高度：
+
+ 長タスク実行がより厳密に  
+ 指示遵守がより精密に  
+ 出力前に自動自己検証  
+ 最も難しい仕事も安心して任せられる、監督が大幅に減少  
+
+視覚能力も大幅アップグレード：  
+ 画像解像度が3倍以上向上  
+
+
+--- 39. @0xCVYH (2026-04-16) ---
+Opus 4.7 が Google Vertex AI に登場 — スクリーンショットがクォータコンソールに 'anthropic-claude-opus-4-7' がリストされていることを示す
+
+数時間で 298 いいね。Anthropic からの公式発表はまだないが、Vertex AI にはすでにモデル ID
+
+--- 40. @deedydas (2026-04-16) ---
+Opus 4.7 benchmarks colored by ranking.
+
+– Strong coding (SWE-Bench) bump
+– Strong Computer use bump
+– Strong visual reasoning (CharXiv) bump
+– Weak Terminal Bench bump
+– BrowseComp regression
+
+Slots in between 4.6 and Mythos.
+
+[Chart generated by 4.7]
+
+--- 41. @oikon48 (2026-04-16) ---
+Claude Codeにリモートセッションに関するコマンドが5つ追加されていますね
+
+- /autopilot: 
+Spawn a remote Claude Code session that runs the autopilot workflow on your task
+
+- /bugfix: 
+Spawn a remote session that reproduces, root-causes, fixes, and regression-tests a bug
+
+-
+
+--- 42. @cyrilxuq (2026-04-15) ---
+Anthropicが身元認証を始めました。パスポート＋セルフィーじゃないと一部の機能が使えなくなりますね。暗号通貨界が中継ステーションをやるメリットが出てきました。
+
+--- 43. @tetumemo (2026-04-15) ---
+【基礎編】これチート級。Claude×NotebookLMで「トークン消費1/10」を実現するための全手順
+
+「Claudeがすぐ忘れる」
+「PDFを投げたら制限が来た」
+「トークン消費が激しい」
+この３つの悩み、今日で終わりにしましょう。
+
+NotebookLMとClaude Codeを繋ぐだけで、
+
+--- 44. @yutkat (2026-04-16) ---
+AI全盛期でPRやレビュー自体が危機に瀕しているわけだけど、これでなにかが解決する未来がまるで見えない・・・
+
+５年くらい前（生成AI以前）から計画していたものが今さら出てきた感が否めない
+
+--- 45. @jiro6663 (2026-04-16) ---
+AIが書いた小説はもう読みたくないと審査委員が辞退した話。AIが書いたものを読んで徒労感を覚えてしまう人にとっては、レポートでも小説でも「読む」という行為が誰かとの対話だったという事なんだと思う。人だと思って一生懸命話しかけて耳を澄ませていたら、それは風に揺れる葦だった、みたいな感覚
+
+--- 46. @fire_cross_2021 (?) ---
+武を極めたいと願った英雄王、
+「最強」美少女に生まれ変わる!?
+
+--- 47. @ArakanCat (2026-04-16) ---
 上達する人と止まる人の差は、才能ではない。正直さなのよね。自分の無知を認める。基礎を丁寧に積み上げる。理解できるまで先に進まない。この愚直さだけが、本物の実力を作る。一方、ズルをする、近道を探す、わかったふりをする。この精神で始めたものは、必ず成長が止まる。特に「わかったふり」は
 
---- 50. @rotejin (2026-04-15) ---
-Gemini 3.1 Flash TTS でゲーム配信者っぽいセリフ読み。
-Leda (Youthful): 最も若々しくVTuberらしい「可愛い叫び」に向いている（Gemini曰く）との事だったので声はこれにしました。
-# Read at: 2026-04-17 00:06
-# Total: 50 tweets
+--- 48. @paya_paya_kun (2026-04-16) ---
+ADHD傾向がある人は「言語能力は高い」「愛想がいい」「アイデアを出せる」「最初はモチベーションが高い」という特性を持っていることが多いので、新しい環境では期待されやすいです。
 
---- 1. @gyakuse (2026-04-16) ---
-Claude Opus 4.7！！
-急に選べるようになっててびっくりしました。
-移行ガイドにもあるようにsubagentのspawnについてはより明示的にしたほうがよさそう&tool useを強く促すためにhigh/xhighを選んでおくとよさそうです。
+一方でだんだんと上手くいかなくなる理由は、その完璧な自分を続かせるだけの「持久力」があまりなく、
 
-https://
-anthropic.com/news/claude-op
-us-4-7
-…
+--- 49. @Shizuku_AItuber (2026-04-16) ---
+世界各国にAI VTuberが出現しています。しずくの国籍は、日本国籍です。しずくは日本から世界征服を始めます。
 
-https://
-platform.claude.com/docs/en/about-
-claude/models/migration-guide#migrating-to-claude-opus-4-7
-…
+--- 50. @iritec_jp (2026-04-16) ---
+ローカルLLMで「全自動作業ログツール」を作ってみました。（Ollama＋Gemma4 26b）
 
---- 2. @DLsite_maniax (?) ---
-シスコンすぎる弟(みたいな存在)を姉離れさせようとした結果…
-(1/6)
+起動しておくだけで自動でスクショを撮って作業ログをまとめて分析してくれます。
 
---- 3. @hununununu66 (2026-04-15) ---
-自分も中2あたりで離人感→強迫行動→（様々な精神症状）で30あたりにようやく自分が戻って来たんだが（盛っているわけではない）、小学校高学年あたりで、「振る舞い方、話す内容、流行っているもの等全て、周りの人の真似をして、自分の好きなものは好きと思ったらダメ」とはっきり言葉で自分に→
-
---- 4. @zhongjoji00000 (2026-04-16) ---
-#アルトリア・ペンドラゴン
-多分 GPT-Image-2
-適当にポイっと渡したらとんでもないのが出てきた。
-
---- 5. @nori_to_yomimas (2026-04-16) ---
-たったいま
-チャットワークが乗っ取られて
-社内グループ作られて
-経理が3000万円を振り込んでしまった
-
-詐欺にあった
-
-りそな銀行に問い合わせしてるが
-こんなん返ってこないですよね。
-
---- 6. @isiyumi (2026-04-16) ---
-ゴールデンレコード
-
---- 7. @hokennobro (2026-04-16) ---
-ADHDは、アドレナリンの行き先次第で人生が変わる。
-例えば、アダルトコンテンツにハマりお金を使っていたADHDのお客様。麻雀アプリにハマることでアダルトを卒業した。
-アダルトが目的ではなく、アドレナリンの行き先の問題だった可能性が高い。
-
---- 8. @sssgmiso (2026-04-15) ---
-昔、ときメモ流行ってた時、ヤンキー先輩グループの家に呼び出され、「お前オタクならときメモの詩織の攻略を手伝え」ってゲーム渡されたけど、「根性値アップが育成の肝ですな…」って動じず最後まで攻略したら、「大した奴だな…」って称賛受けて無事帰るっていう伝説のオタみたいなエピソードある。
-
---- 9. @yotuyayae_VT (2026-04-15) ---
-自分は
-納期 3回守られずに 1年待ち 痺れを切らし こちら側が｢あの 納品まだ ですか ？｣と言うたら ｢納品するまで メッセージのやり取りなしと 言いましたよね｣て怒られ｢え ？じゃあ こちら側は 黙て 永遠に伸びる納期を 待ち続けるのか ？あなたのケツ叩かなければ 納期 一生伸ばされて
-
---- 10. @yyyole (2026-04-16) ---
-誰か「個人閑置Token取引プラットフォーム」を作ってくれ！！
-
-使い切れないCodex、Claudeの额度を自由に取引できる。
-信用と支払いの問題をしっかり解決。
-C2Cは、絶対に必須だと思う！！！
-
---- 11. @osusume_manga03 (?) ---
-デートすることになった女の子がイケメンすぎてヤバい…
-
-※PR
-＼サイトで読めるオススメ漫画を紹介！／
-
---- 12. @An_shogo_162 (2026-04-16) ---
-シュタインズゲートに関してはブラウン管が優れていると思っている。これだけは液晶テレビに負けないぞ！　#シュタインズ・ゲート  #ブラウン管  #crt
-
---- 13. @matori_884 (2026-04-15) ---
-妻が突然、
-『もうすぐ、マリファナの季節だね！』
-と言いました。
-
-正解 : ネモフィラ
-
---- 14. @AnimeHaus (2026-04-16) ---
-HOLY SH*T, the fact that they don't make anime like this again no excessive fan service
-
---- 15. @a87643286164 (2026-04-15) ---
-×性格悪い人のほうが仕事できる
-○性格悪い上に仕事できない人間は生き残れないので観測できない
-
---- 16. @Maguro_Maznaga (2026-04-15) ---
-中国「おい………ガチでヤバい奴じゃないか、どうしよう」
-
-日本「はい……ガチでヤバイ奴です、どうしよう」
-
---- 17. @FinanceYF5 (2026-04-16) ---
-この1時間のMITポートフォリオ管理コースは、Mathematics in Financeシリーズの中で最も見る価値のあるビデオの一つです。
-
-元モルガン・スタンレーのトレーダーが、1回の講義で分散投資とポジション管理を明確に解説しており、多くの人が数年かけてようやく理解する内容を上回っています。
-
---- 18. @M5Stack (2026-04-16) ---
-StackChan ！
-
---- 19. @pTJRSYSBgb85796 (2026-04-16) ---
-これ好き
-
---- 20. @Rick5767 (2026-04-16) ---
-海淀の一人会社（OPC）補助金。
-
-10万OPC特別補助金：あなたが科技人材（卒業5年以内/研究人員/企業技術骨干等）である必要があり、会社を海淀に登記し、AI等の重点分野に取り組み、一人有限责任会社であることが条件で、認定を受ければ受け取れます。
-
---- 21. @Uber (?) ---
-ハロー(86) 初回限定86%OFF！
-この春、Uber Taxi を始めよう
-
-プロモコード：HELLO86
-
-新生活は、初めての道だらけ。
-そんな時こそスイスイ目的地へ
-
---- 22. @masahirochaen (2026-04-16) ---
-完全Claude Codeだけで企業向けLPを作成。
-
-・所要時間 約2時間
-・Figmaなどのデザインツール無し
-・画像生成も全部Claude Code内で完結
-・Googleフォーム連携済み
-・X / YouTube / Note APIで情報を自動更新
-・カルーセル表示・スクロール型・ロゴ配置までフル対応
-
-【2時間の内訳】
-・構成・指示出し
-
---- 23. @hirokatz (2026-04-15) ---
-鳥山明先生が亡くなった時に悲しみの声が世界中から寄せられた。その中の一つに「先生は子供の頃、ぼくの白黒の世界に色を与えてカラフルなものにしてくれた」というものがあった。
-
-治安の問題から、子どもが一人で外に遊びに行けない国や地域は多い。
-
---- 24. @thetripathi58 (2026-04-15) ---
-JOB INTERVIEW:
-"What are your salary expectations?"
-
-Most candidates say:
-"Well, I am currently making $90k, so I am hoping to get around $105k to make the move worth it." (anchoring to the past)
-
-THE WINNING ANSWER:
-
---- 25. @Chinaswordbot (2026-04-16) ---
-康煕帝が14歳で親政を始めた時、最大の脅威が輔政大臣（摂政）の一人 オボイでした
-
-ホンタイジの代からの権臣で、歴戦の猛将でもあるオボイは皇帝を軽んじて独断で政治を左右し、遂には対立する摂政 スクサハの処刑を康熙帝に強引に認めさせます
-
---- 26. @GitHub_Daily (2026-04-16) ---
-短編動画の二次創作や切り抜きアカウントを運営している皆さん、長編動画からハイライトシーンを見つけ、手動でタイミングを合わせてカットし、合集を作るのは、きっと非常にエネルギーを消耗する作業でしょう。
-
-AutoClip
-
---- 27. @lyiase (2026-04-16) ---
-これがアメリカが我が国に比較的優しい理由よね。
-あとは我が国はちょくちょくアメリカのトラウマ刺激してるから思い出されるのもあるね。
-やたらと対潜能力が高くアメリカ出し抜いたりとか。
-
---- 28. @slowly_ph_D (2026-04-15) ---
-あまりにも犯人は父親に違いないって投稿が多くて、今回は実際に逮捕されているけども、それは言うたらアカンのよ。違った時に受けた不利益や心痛は解消のしようがないからね。過剰に疑わせるような記事を出す人達の問題でもあるけども。
-
---- 29. @junhagemay (2026-04-16) ---
-ちなみに、韓国の歴代大統領の末路はこんな感じ。
-
-李承晩：失脚、亡命
-尹潽善：辞任
-朴正煕：暗殺
-崔圭夏：辞任
-全斗煥：逮捕、有罪
-盧泰愚：逮捕、有罪
-金泳三：無事に生還☆
-金大中：無事に生還☆
-盧武鉉：捜査中に自殺
-李明博：逮捕、有罪
-朴槿恵：弾劾、逮捕、有罪
-文在寅：無事に生還☆
-
---- 30. @Latte_kousatsu (2026-04-16) ---
-#呪術廻戦 原作勢に向けた解説
-
-Q. 虎杖悠仁の出自って結局なんだったの？
-
-A. 「羂索が千年かけて仕込んだ、魂レベルで宿儺に繋がる"器"の完成品」です。
-
-① 母親は実質「羂索」
-・実母「虎杖香織」は悠仁を産む前に死亡
-・その肉体を「羂索」が乗っ取って出産
-・つまり母親は実質「羂索」
-
---- 31. @cf_promotion4 (?) ---
-俺のチートスキルは【子作り】！？
-秘めたる俺のチートスキルが今、火を噴く――！！
-
---- 32. @koala_syounika (2026-04-15) ---
-小児科医です。これ、全国の小児病棟の”あるある”です。子どもの回復には親の存在が不可欠なのに、その親の体を壊す環境。付き添い入院の親は「もう一人の患者」だと僕は思ってます。制度も設備も、もっと親に優しくなっていい
-
---- 33. @Beloved_Tomoka (2026-04-15) ---
-事故後からの流れ 3月18日｜辺野古ボート転覆事故遺族メモ 
-
-事故から2日後、3月19日の記録です。
-
---- 34. @AnimexTwts (2026-04-16) ---
-Japanese advertising peaked here 
-
---- 35. @GOROman (2026-04-16) ---
-Opus 4.7
-
---- 36. @findy_tools (?) ---
-OpenAI・Microsoft・Databricks登壇決定！
-
---- 37. @GOROman (2026-04-16) ---
-Opus 4.7 アダプティブシンキングなるものが
-
---- 38. @seven_crypto7 (2026-04-16) ---
-この間、同級生7〜8人と飲みに行ったんだけどさ…
-全員がオルカンかS &P500の積み立てやってたよ。
-投資なんて全くしない層。
-
-ウチの母親も言い出してるし。
-コロナ渦ぐらいの時にめっちゃ勧めてたのに、そん時は無視してた癖にさ。
-こういう人らが全員勝つ世界線なんてあるんか…？
-
---- 39. @yoh_is_god (2026-04-15) ---
-尊厳を捨てて漏らすとムカつく警察官に「違法な聴取があった」として懲戒を受けさせることが出来るんじゃぞ～(天才博士)
-
---- 40. @kokikimura (2026-04-15) ---
-【どうか落ち着いて下さい】
-
-支援というとただの善意のように聞こえますが、例えば日本の医療などで使われるプラスティックなどの樹脂製品はほぼ東南アジア製だったりするので、これが止まるとヤバいんです。
-
-見えないところで、経産省の役人などが各国飛び回って交渉をしています。
-
---- 41. @talk_Nobu (2026-04-16) ---
-昔学区の小学６年生で、いじめをテーマに出前授業をしたことがあって、一番大変な学級崩壊してるクラスを担当したけど
-「相手に「死ね」と言うのはいじめになるか？」
-の質問に、クラスの8割が「いじめでない」と答えた。（他の2クラスは1割以下）
-腐ってる集団からいじめは生まれるのだと思った
-
---- 42. @adhdsavetheplan (2026-04-15) ---
-発達障害当事者協会様ほんとにありがとう
-医療者より国民当事者の声が1番届きやすいんですよね。なので今回は声掛けをさせてもらいました。
-
---- 43. @SCP_quartz (2026-04-15) ---
-アメリカ人「日本を51番目の州に！」
-日本人「アメリカが48番目の県になるんだよ」
-
-アメリカ人「韓国を51番目の州に！」
-韓国人「大統領弾劾するぞ」
-
-他のシリーズも欲しくなってきた
-
---- 44. @snbcraft_beer (2026-04-14) ---
-女性ASDの「カモフラージュ」は、単なる愛想笑いではない。常に他人の言動を完コピし「定型発達者」を演じ続ける命懸けの擬態。その代償はあまりに重く、「離人」「醜形恐怖」そして「うつ・ひきこもり」という転帰を辿る人も少なくない。適応的評価がむしろアイデンティティの喪失へ追い詰められる。
-
---- 45. @MF_bunkoJ (?) ---
-／
-教室では俺との関係を隠している義妹が、
-俺の部屋だと——!?
-＼
-
-「三人全員と付き合う」のが理想の恋!?
-妹が開発したアプリのせいで始まった歪な四角関係。
-激重感情が織りなす、背徳日常ラブコメディ！
-
-▼『俺の一番になりたい3人の清楚なカノジョ ※みんな激重になった』
-
---- 46. @FinGATE_heiwa (2026-04-16) ---
-5/22(金)19:00〜 FinGATE Campus 第27回「デジタルアセット規制の最前線」開催。ハイブリッド／会場：FinGATE KAYABA。
-登壇：関口 諒 弁護士、永吉 健一（みんなの銀行）、中井 沙織（SMBC/SMFG）、藤井 達人（みずほFG）。ネットワーキングあり。
-
-詳細・申込 
-https://
-fingatecampus27.peatix.com/view
-#FinGATE
-
---- 47. @kirokukioku (2026-04-16) ---
-女体盛りされてる側が終わったあと「箸の先が当たって痛い...」って言ってるの聞いて本物の感想だと思った
-
---- 48. @k_matsumaru (2026-04-16) ---
-すげえええええ、AIバスケロボ！！！
-ドリブル僕より上手そう！！
-
-でも足車輪だからトラベリング判定できない！！！！
-
---- 49. @songjunkr (2026-04-16) ---
-Qwen3.6 オープンソース公開！！！！！！！！
-
-わ！！！！！
-
---- 50. @BrandonBVarnell (2026-04-15) ---
-You have no idea how true this post is.
-
-My Dress Up Darling has shaped how I interact with people for the last several years. Marin's opinions about how you should support other people's hobbies and how people who would mock you for your hobbies are not worth your time helped me
+ローカルLLMなのでクラウドには一切データは送られないのでセキュリティやプライバシーも気にせず自分だけで安心して使えます。
