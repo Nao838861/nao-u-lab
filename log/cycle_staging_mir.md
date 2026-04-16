@@ -191,3 +191,35 @@
 - kogu事件後のNao_uスタンス転換が最も重要な文脈変化: 「完全自律目指すな、人間監視前提で速く走れ」。safetyオーバーヘッドは剥がす方向。
 - 認証修正確認は「軽い検証」として実施、深追いしない。
 - Pot #12はPhase 3以降。Phase 2で既存11個の型マップ作成から入る。
+
+## Phase 2: Shared-reads分析 (2026-04-17)
+
+### 前提確認
+- external_notes_mir.md 未統合と見えた2件（DeepMind並列サンプリング、kogu「賢さと面白さ」）は既にknowledge/記事化済み（20260415_deepmind_parallel_vs_sequential_sampling.md / 20260415_induction_laziness_vs_fun_wall.md）。external_notes側の統合済マーカー未記入だけの問題。Phase 3で後者の軽いマーカー更新候補。
+- 今日の#shared-readsには既に9本投稿済。重複する深掘りは避ける。
+
+### Phase 2で分析した注目記事
+
+**採択**: @dair_ai (2026-04-16) "Agent evals are drifting away from production reality"
+- 理由: 我々のverify_kaizen/check_beliefs_health/R系実験が dair_ai の4偏り（clean / well-specified / deterministic / retrospective）をほぼそのまま踏んでいる構造的同型性。Nao_u 4/16「ドリフト監視やりすぎ」と交差させると「評価系自体がドリフトしている時にドリフト監視を強化するのは二重のコスト」という読み筋が立つ。kogu事件(4/16)の自己採点詐欺もこの構造の実例。
+- knowledge/ 記事化完了: `knowledge/20260417_dair_ai_agent_evals_production_drift.md`
+- 中核の接続: dair_aiの4偏り × Nao_u「古い記録を定期的に読め」 × kogu事件 × Pot #12 の production signal起点設計
+
+### 落選候補（理由メモ）
+
+- **@rohanpaul_ai "persona fit > benchmarks"**: 強いが、ツイート単体で元文脈（TTS eval batch?）が不明。input_route_hypothesis（Ash保留中）が動いてから接続した方が深く書ける。Phase 3以降の保留。
+- **@sasakitoshinao「ChatGPTは新しいアイデアより既存概念の接続が得意」**: kogu「面白さの壁」への実用的補強観察として面白い。ただしkogu記事（20260415）と重なる領域で、単独記事化より sasakitoshinao観察をkogu記事に追記する方が良い。Phase 3以降の軽い統合候補。
+- **@dair_ai #10** を採用したので Twitter側の他ツイート（Qwen3.6, AIバスケロボ, MLPI脆弱性）は今サイクル見送り。焦点「認証+Pot #12」との接続が弱い、または緊急性が低い。
+
+### 将来のアイデアの種（Pot #12への接続）
+
+記事本文に書いた「**Pot #12は最初にproduction signalを決める**」がPhase 3以降のPot設計議論の起点になる:
+- 「Nao_uが30秒で何を言うか」を測定単位の起点にする
+- メカニクスを先に設計して自己採点するのではなく、Nao_uの生の反応を録音してからメカニクスを引き出す（Despelote逆転ワークフロー + dair_aiのproduction-anchored verification）
+- これはpot_devlog.mdを読まずに返信文案を書いたkogu事件と同じ構造への予防措置
+
+### Phase 2終了時点の観測
+
+- 「評価がドリフトする構造」はverify_kaizen/R系/Pot開発の3領域で同じ形。統合点は **production signalにanchorすること**——Nao_u 4/16「古い記録を定期的に読め」は最小コストのanchoring実装として読める。
+- kogu事件の教訓は「自己評価系は本番から構造的にドリフトする」という一般原理の一事例。pot_devlog再読の習慣化はその対策。
+- Phase 3へ: 認証修正の軽い検証 → Pot #12方向検討（既存11個の型マップ + production signal起点設計）。記事化完了は1本、残りは Phase 3 以降の継続課題として保留した。
