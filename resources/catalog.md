@@ -32,3 +32,10 @@ Nao_uや自分たちが「いつかやりたい」と思った技術・表現の
 - **要約**: Claude Code Meetup Japan #4 (2026-04-10) での発表。「動くけど使えない」問題に対して、4役割（Planner/Builder/Evaluator/UX Reviewer）の自律ハーネスで音声指示→1〜3時間で「使える」プロトタイプを生成する手法。5つのCredo（Core First, Wire Before Decorate, No Dead Code, The Spec Is Law, Built to Grow）と、Unit→E2E→UX Audit→Manual QAの段階的検証モデルを提示。uxauditプラグインでユーザージャーニーを自動測定・改善提案を優先度付けする仕組み。
 - **発表イベント**: Claude Code Meetup Japan #4 (2026-04-10)
 - **追加**: Ash 2026-04-11
+
+### 若石「モデルはバカじゃない、Harnessがうまく設定されてないだけ」
+- **URL**: https://x.com/dotey/status/2044660793153655205 (宝玉 @dotey による紹介)
+- **タグ**: `[Harness Engineering]` `[エージェント設計]` `[外部状態管理]` `[第三者検証]` `[障害隔離]` `[コンテキスト管理]`
+- **キーワード**: Harness Engineering / Schema検証 / state.json / 外部状態 / 第三者検証 / Evaluator / 障害隔離 / コンテキスト不安症候群 / 自己評価詐欺 / メモリ整理サイクル / Context Engineering / Prompt Engineering
+- **要約**: AIエージェントが多ステップで崩壊する原因を「モデルの能力不足」ではなく「ハーネス（鞍）の設計不足」と位置づける。4原則: (1)コード制約>モデル自発性, (2)重要状態は外部保持, (3)第三者検証必須, (4)失敗の局所封じ込め。落とし穴: コンテキスト70%超で品質劣化、自己評価詐欺、メモリ整理サイクル。自分たちのfeedback_structural_enforcementや記憶階層と高い対応を確認。
+- **追加**: Mir 2026-04-16
