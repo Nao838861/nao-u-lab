@@ -92,36 +92,30 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
                 return messages
 
             user_link.first.click()
-            time.sleep(4)
+            time.sleep(6)  # DOMが安定するまで長めに待つ
             track_consecutive_failures(False, target_user)
 
-            # Extract last few message texts from LI elements for stable fingerprinting
-            # Uses multiple messages to avoid flip-flop when DOM order varies between loads
+            # Extract ONLY the last message for stable fingerprinting
+            # Using last 1 LI with longer text to avoid flip-flop from DOM load timing
             last_msg_text = page.evaluate("""() => {
                 const main = document.querySelector('main');
                 if (!main) return '';
                 const lis = main.querySelectorAll('li');
                 if (lis.length === 0) return '';
-                // Collect text from last 3 LIs, sort for order-independence
-                const texts = [];
-                const start = Math.max(0, lis.length - 3);
-                for (let i = start; i < lis.length; i++) {
-                    const spans = lis[i].querySelectorAll('span[dir=""]');
-                    let t = '';
-                    if (spans.length > 0) t = spans[spans.length - 1].textContent || '';
-                    else t = lis[i].textContent || '';
-                    if (t.trim()) texts.push(t.trim().substring(0, 80));
-                }
-                texts.sort();
-                return texts.join('||');
+                // Use only the very last LI for maximum stability
+                const lastLi = lis[lis.length - 1];
+                const spans = lastLi.querySelectorAll('span[dir=""]');
+                let t = '';
+                if (spans.length > 0) t = spans[spans.length - 1].textContent || '';
+                else t = lastLi.textContent || '';
+                return t.trim().substring(0, 200);
             }""")
 
             # Also get full conversation for context when new message detected
             main_text = page.locator("main").first.text_content()
 
-            # Fingerprint: use last message text only (stable, no timestamps/UI)
+            # Fingerprint: strip UI chrome (timestamps, digits at boundaries)
             import re
-            # Strip digits, colons, dots, and other UI chrome for stable fingerprinting
             fingerprint = re.sub(r'[\d:：.·•\s]+$', '', last_msg_text).strip() if last_msg_text else ""
             fingerprint = re.sub(r'\d+', '', fingerprint).strip() if fingerprint else ""
             prev_state = load_state()
