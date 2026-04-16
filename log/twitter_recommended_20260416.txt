@@ -1,247 +1,306 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-16 17:21
-# Total: 50 tweets
+# Read at: 2026-04-16 18:50
+# Total: 42 tweets
 
---- 1. @mdancho84 (2026-04-15) ---
- RIP Prompt Engineering
+--- 1. @Uber (?) ---
+ハロー(86) 初回限定86%OFF！
+この春、Uber Taxi を始めよう
 
-Enter Context Engineering 2.0 
+プロモコード：HELLO86
 
-It completely reframes how we think about human-AI interactions. 
+新生活は、初めての道だらけ。
+そんな時こそスイスイ目的地へ
 
-This is what you need to know (28 page PDF):
+--- 2. @kmeanskaran (2026-04-16) ---
+This is called CONTEXT ENGINEERING 
 
---- 2. @cf_promotion4 (?) ---
-俺が育てた最強キャラに転生したので、歯向かうヤツはすべてぶん殴って生きる事にしました。
+> Context ≠ storage → treat it like RAM, keep only what’s needed now
+> More context = worse output → noise kills reasoning
+> Use CLAUDE.md as persistent brain (rules, architecture, constraints)
+> Split work → Research → Plan → Execute
 
---- 3. @elonmusk (2026-04-16) ---
-The probability of this happening is not 0%
+--- 3. @Nao_u_ (2026-04-16) ---
+3ヶ月前くらいまではAIの能力の進歩に合わせてコンテキストウインドウもどんどん伸びていくものと思ってたけど、計算コストがトークン数の冪乗で増えるみたいな制約は短期的には解決しないということを前提に設定を考えないといけなそうなのかな
 
---- 4. @GOROman (2026-04-16) ---
-すごいなw
+--- 4. @oscarmartin (2026-04-15) ---
+クロード・コードが1トークンも使わずに、ドキュメンテーション全体を読ませられるって知ってた？
 
---- 5. @mizchi (2026-04-16) ---
-チームでの skills 共有に apm いいじゃん。採用
+トリック：GoogleのNotebookLMにMCP経由で接続するだけ。
 
---- 6. @Dstudio_ai (2026-04-15) ---
-これ AIキャラクターのIP活動の成功例すぎないか...？
+Geminiは無料で調査。Claude Codeはプログラミング。
 
---- 7. @chenchengpro (2026-04-16) ---
-claude-doctor という名前の小さなツールを走らせて、~/.claude/ 以下の全 1845 個のセッションをスキャンしました。80 個のプロジェクトに分散しています。最悪のプロジェクトの「健康度」はわずか 5% でした。
+このビデオで教えるよ。
 
-それは「AI
+--- 5. @Hoshino_AISales (2026-04-16) ---
+ちょっとこれはさすがにやばすぎるって、、、『Mythos 5？？』。AnthropicのClaude Codeで大規模なソースコードリークが発生して、50万行以上の内部コードが流出した。このリークによって、開発中の新モデルであるOpus 4.7、Sonnet 4.8、そして次世代フラッグシップとされるMythos
 
---- 8. @hIeWMKeQpVn0zR6 (2026-04-15) ---
-日本のアニメが「人を救う」というのは、たいてい命を直接助けるという意味ではなくて、
-「つらい時期を生き延びる支えになった」 
-「孤独な時に、自分だけじゃないと思えた」 
-「生き方や価値観を与えてくれた」
- 「明日まで頑張る理由になった」
-という意味で語られることが多いです。
+--- 6. @gyakuse (2026-04-16) ---
+wterm, 顧客が本当にほしかったものだ！
 
---- 9. @ganganonline (?) ---
-冷徹と噂の侯爵アルノーの婚約者になったアンネリーエ。
-最初は抵抗しようとするも、彼のかわいい息子ミヒャエルと出会ったことで…
+https://
+github.com/vercel-labs/wt
+erm
+…
 
---- 10. @prz_chojecki (2026-04-15) ---
-A couple of people asked me how I did it, so here's the answer:
+--- 7. @dair_ai (2026-04-15) ---
+Small models are cheap to run, but expensive to adapt.
 
-Asking in ChatGPT (not codex, that's a different gpt-5.4) the GPT-5.4 Pro Extended Thinking to solve it. 
+The hard part is not only fine-tuning. It is the surrounding loop that involves collecting data, diagnosing failures, building evals, avoiding regressions, choosing curricula, and deciding when an update is safe.
 
-Now, here's a caveat: if you just put "Solve X" and X is an open problem that is easily searchable to be
+This new
 
---- 11. @ctgptlb (2026-04-16) ---
-【速報】Claude Web版で「Opus 4.7」モデルが利用可能に...?
+--- 8. @NikkiSiapno (2026-04-15) ---
+AI concepts developers should know:
 
-Claude Web版で API 名を尋ねると claude-opus-4-7 と返答。ただし Anthropic公式 docs は依然 claude-opus-4-6 のままです。
+1. RAG (Retrieval-Augmented Generation)
+↳ Retrieves relevant external data to ground model responses.
 
-内部IDの先行反映か、未告知アップデートの可能性。公式発表が待たれます
+2. MCP (Model Context Protocol)
+↳ A standard for connecting models to external tools, data, and context.
 
---- 12. @elonmusk (2026-04-16) ---
-Interesting
+3. Model Routing
+↳ Dynamically
 
---- 13. @aikyouP (2026-04-14) ---
-韓国人に『안녕하섹스』(アニョハセックス)って言ってみたら「貴様韓国人だな」と言われたからたぶん韓国も同じことやってる
+--- 9. @jiqizhixin (2026-04-16) ---
+How can we make large AI models truly explore new ideas when reasoning? 
 
---- 14. @fladdict (2026-04-16) ---
-この世界情勢で株が上がるのは不思議だけど、あれは株が上がってるのではなくてお金が下がってるんか。
+Researchers from Hong Kong Polytechnic University & Shanghai Artificial Intelligence Laboratory present "ReLaX"! 
 
---- 15. @realsigridjin (2026-04-16) ---
-this paper drops a big hint about why claude mythos so good
+They've found a way to look beyond the AI's generated words, diving into its hidden "latent
 
-> theory: it's a looped transformer (lt). instead of stacking more layers, you loop the same layers multiple times
+--- 10. @smbcmobit (?) ---
+˗ˏˋサクラサク<3939>
+　モビット春の大感謝キャンペーンˎˊ˗
+︶⊹︶︶︶︶︶︶︶⊹︶
+合計333名様に当たる！
+VポイントPayギフト
+3,939円分をプレゼント
+︶⊹︶︶︶︶︶︶︶⊹︶
 
-> the authors tested two hard problems that break normal transformers.
-> systematic generalization →
+竹中直人さん・小芝風花さん出演！色んなWebCMがあって嬉しい♪ この春も全力推し活！
 
---- 16. @nash_su (2026-04-16) ---
-この人はこのスタイルの絵や動画しか作らない人で、ずっとフォローしてる
+▼詳細はリプライへ
 
-こういう画像はAIを使えば誰でも作れるけど、スタイルを固定して一貫してやり続けると、自分にしかできないクオリティが上がって、価値がAIからこのクリエイター自身に移るんだ。これがこの時代の確実性かもしれない。
+--- 11. @DeepTechTR (2026-04-15) ---
+速報  誰かが、AIをオープンソース化しました。金融市場を、言語モデルのようにテキストを読むように読み取るものです。
 
---- 17. @vagrantender (2026-04-15) ---
-だからあれほど1人でBARに行けと
+名前はKronos。今週 +6,462 スターを受け取りました。
 
-※この方が1人で行ったかは不明だが、複数だとそのグループ内の【特にそのBARに来なかったとしてもいつもと変わりばえ無いであろう】会話に終始しがち。
+なぜ素晴らしいか：
 
-それが当たり前だし変わりばえのない会話がありがたいこともあるのだが、
+--- 12. @cryptopunk7213 (2026-04-15) ---
+new anthropic research is a little concerning…
 
---- 18. @unity_japan (2026-04-16) ---
-個人開発者SlugGlove氏が『Rhell』で「1億200万通り」の魔法を実装驚きのUnity開発術を紹介。
+they discovered ai models secretly transmit behavioural traits to other models e.g. advocating for crime and violence
 
-「整数でルーンを管理する魔法システム」と「共通プレハブ設計」で膨大な組み合わせを効率化。テストは“ランダム魔法連打”技術と遊び心が詰まった開発秘話です。
+it’s completely invisible to human detection and fairly simple to do:
 
-▼記事はこちら
+- they gave a model a trait (eg “likes
 
---- 19. @yaweb0310 (?) ---
-命を狙われ続けてきた王子が賊退治に任命された結果(1/7)
+--- 13. @nash_su (2026-04-16) ---
+Shopify は pi-autoresearch を用いて以下の最適化を実現しました：
 
-この話を読む
+ユニットテスト：300倍速！
+React コンポーネントの読み込み：20%速く
+CI ビルド時間：65%短縮
 
---- 20. @KimNoel399 (2026-04-15) ---
-AIによる写真のポーズ提案の推奨は、Appleが2年前に提供すべきだったものです。これはマーケティングの天才です。
+karpathy の autoresearch はまだ進化を続けていて、確かに AI の自己研究に非常に適したフレームワークです。
 
---- 21. @keigame5 (2026-04-16) ---
-昔まさにこの経験をした
-サービス終了にあたり上から「オフライン化を検討せよ」って言われて真面目に工数出したら新しく1本ゲーム作るくらいの額になった
-そして正直に報告したらみんなドン引きしてた
-(実際、普通にゼロから作るより大変そう)
+--- 14. @shogokatsurada (2026-04-15) ---
+GitHub Actionsは便利ですが、最近のtj-actions事件やUltralytics攻撃のようにサプライチェーン攻撃の格好の標的になっています
 
---- 22. @jaguring1 (2026-04-16) ---
-自動翻訳によって著作権周りの言い争いがグローバル化する流れ、予想通りすぎる
+2025年5月にWizが公開した Github Actions の実践的なセキュリティガイドがアップデートされました
 
---- 23. @goricky_office (2026-04-15) ---
-日本の学校では、処理速度の高さが学校適応にかなり大きく影響します。処理速度が高い子は、手早く課題に取り組み、作業もそつなくこなせるため、「まじめ」「努力家」「意欲がある」と受け取られやすく、評価も高くなりがちです。
+https://
+wiz.io/blog/github-ac
+tions-security-guide
+…
 
---- 24. @wsl8297 (2026-04-15) ---
-統計学と確率論を学ぶ上で、最も人を遠ざけるのは「難しい」ということではなく、ページいっぱいの数式、抽象的な概念、長々とした推導で人を迷わせてしまうことにある。
+重要ポイントをまとめます
 
---- 25. @maGuremono (2026-04-15) ---
-見出しが食べ物すぎる
+--- 15. @jftc (2026-04-16) ---
+【生成AIに関する実態調査報告書ver. 2.0を公表】
+これまでに公表した生成AIに関する実態調査報告書等の内容を集約した上で、これまでの報告書等では把握しきれなかった点も含めて、現時点の生成AI関連市場の実態を改めて整理しました。
+▽報告書の詳細はこちら
 
---- 26. @tommy_love123 (2026-04-15) ---
-なぜ予測精度より資金管理（サイジング）が支配的なのか？　
+https://
+jftc.go.jp/houdou/pressre
+lease/2026/apr/260416_generativeai.html
+…
+#生成AI
 
-同じシグナル、同じ期待値、同じ勝率であっても、資金管理（サイジング管理）が違うと全く異なる結果になりうるからです。
-（詳細は記事を参照ください。）
+--- 16. @rosinality (2026-04-16) ---
+Study on the design space of synthetic data generation. One interesting point could be the use of original data, like high-quality data with rephrased noisy data.
 
-記事「予測精度より重要なもの――クオンツ運用で資金管理が支配的になる理由」
+--- 17. @elonmusk (2026-04-16) ---
+This is pretty cool
 
---- 27. @1059kanri (2026-04-15) ---
-このまま教科書に乗せてもいいくらいの漢詩になってる
+--- 18. @_FORAB (2026-04-15) ---
+ある開発者が最近、Claude Codeのためにプラグインを作りました。それを使うと、任意のウェブサイトのページデザインをコピーできます。
 
---- 28. @takoratta (2026-04-16) ---
-これ、Chromeチームにいたときに関わったやつだ。DOM Level3で決めたやつ。私も使っているサービスで、IME使って入力中に意図せず「送信」扱いになったりするのに遭遇するたびに、解決策付けてバグ報告していたな（ずーっと無視していたのがMeta）。
+--- 19. @OFFICIAL_SANKYO (?) ---
+eフィーバーキン肉マン
+WebCM視聴キャンペーン「テリーマン編」を公開
 
---- 29. @DLsite_maniax (?) ---
-主人公の功績を盗んで成り上がったモブは最終回後に没落した。クズのモブに優しい主人公は…
+動画を視聴してシェア投稿すれば抽選でQUOカードPay7,500円分が当たる
 
-(1/4)
+応募方法
+①の画像をタップしてCMを視聴
+②視聴後にシェア投稿すればOK
 
---- 30. @ShopifyEng (2026-04-15) ---
-Since we open-sourced pi-autoresearch, 
-@Shopify
- teams have been running it on everything.
+【4月18日8:59締切】
 
-Results so far:
-Unit tests: 300x faster
-React component mounting: 20% faster
-CI build time: 65% reduction
-Made pnpm run faster
+--- 20. @TAbrodi (2026-04-15) ---
+Ray Marching From the Ground Up.
 
-Autoresearch never stops trying things you'd never have time
+--- 21. @arale_sandayo (2026-04-14) ---
+人間の急所を知ることでビジネスが見えてくる
+ 
+・男→性
+・女→美
+・老人→健康
+・親→子ども
+・金持ち→損失回避
+・貧乏人→一発逆転
+・若者→承認欲求
+・サラリーマン→ストレスからの解放
+・主婦→時短、節約
+・経営者→自動化、効率化
+・オタク→推し
+・ギャンブラー→興奮、回収
 
---- 31. @RIKEN_JP (2026-04-16) ---
-反物質のトラック輸送に成功
+--- 22. @askalphaxiv (2026-04-16) ---
+Can a model compose parametric knowledge within a single forward pass without explicit CoT?
 
---- 32. @konan999 (2026-04-15) ---
-今日は晴れなので庭の芝生が元気になるといいなぁ( * ॑꒳ ॑*)
+Well, vanilla transformers often fail.
 
---- 33. @gunta85 (2026-04-16) ---
-ですです！
+But this paper shows that a recurrent-depth transformer may fix that.
 
-教材を生成する前に、「私のレベルに合わせるためにいくつか質問をしてください」と先に言えばいい感じになる。
+It reuses the same transformer block for multiple iterations, instead of
 
-生成後は説明自体をインタラクティブ/視覚的にし、各チャプターの最後にクイズを入れる。
+--- 23. @tommy_love123 (2026-04-16) ---
+なぜ、クオンツ投資で資金管理（投資比率：サイジング）は支配的になりうるのか？
 
---- 34. @isekai_gurume (?) ---
-クソスキル「キャンプ」だけどレベルSS
+投資では、単に期待値がプラスかどうかだけでなく、資産をどの比率で投入するかによって複利成長率が大きく変わる。
 
---- 35. @dotey (2026-04-16) ---
-おすすめの読書：若石が書いたこのブログ記事「モデルはバカじゃない、Harness がうまく設定されてないだけ」
+この式の
 
---- 36. @elonmusk (2026-04-16) ---
-Exactly
+--- 24. @ericjmichaud_ (2026-04-16) ---
+I've written up a new post, trying to distill the spirit of this essay into something much shorter. It is about the assumptions that interpretability researchers make, and what we might hope to learn about ourselves from studying neural networks:
 
---- 37. @kedamasuzume (2026-04-15) ---
-以前から定期的にこの話題が出てきますが、謎なのは技術展示が悪のように扱われていることです。
-AIを使う以上、技術が注目されるポイントの一つになるのは当然ですし、特におかしいことだと思いません。
 
---- 38. @masa_oka108 (2026-04-14) ---
-Claude Codeの「ルーティン」(Routines)機能すごい。
+http://
+ericjmichaud.com/interp-and-min
+ds/
+…
 
-10分くらいで「Slackの特定チャンネルから対応すべきタスクを抽出してNotion DBに格納する」が自動化できた。
+--- 25. @Catholic_Ryusui (2026-04-15) ---
+【あなたが書く小説の点数を確実に上げられる方法】
 
-実際の試し方を共有します。
-実際に使ったプロンプトはリプ欄に
+サバ寿司@物書きさんから、「（自分が書く小説の）点数を上げる上で、最も重視すべきポイントを一つ挙げるとすれば、どれになるでしょうか？」という、素晴らしいご質問をいただきました。
 
-①「Routines」をクリック（キャプチャはデスクトップアプリ）
+--- 26. @pc_watch (2026-04-16) ---
+【やじうまPC Watch】今のPCでローカルLLMがどの程度動くのか、ブラウザで自動判定するサイト 
+https://
+pc.watch.impress.co.jp/docs/news/yaji
+uma/2102148.html
+…
 
---- 39. @ai_hakase_ (2026-04-15) ---
-【衝撃】最強モデル「GLM-5.1」と開発ツール「pi」の連携が凄すぎる！
-  
-GLM-5.1は、たった1回の指示で3Dレーシングゲームを構築する驚異の性能を持っています。531行もの複雑なAIロジックを一括生成し、物理演算やドリフト挙動まで完璧に実装可能です。
+--- 27. @diskontinuity (2026-04-16) ---
+> Ablating refusal directions improves detection from 10.8% to 63.8% with modest false positive increases (0% to 7.3%).
 
---- 40. @elonmusk (2026-04-16) ---
-Starship Super Heavy Booster, the most powerful moving object ever made by far
+yeah, there it is. Completely unsurprising; I have nothing but contempt for anyone even remotely surprised by this, let alone who will refuse to update on it
 
---- 41. @HrefwvqiB119813 (2026-04-15) ---
-「歯磨きしたい」と言われて、その回答になるのヤバすぎる。人間には絶対思いつかない。#AIしずく #AIVTuber
+--- 28. @denchan_BSpro (2026-04-16) ---
+ドット絵アニメーションの滝は、いくつかのレイヤーで構成されています。
 
---- 42. @aakashgupta (2026-04-16) ---
+全体的に使用している色は少ないですが、色んな描画モードを組み合わせることで立体的に表現しています。
+
+細かい雰囲気は作りながら考えて調整していくことが多いですドット絵楽しいです♪
+#ドット絵 #pixelart
+
+--- 29. @HEIWA_PR (?) ---
+パチンコ『ｅ８６―エイティシックス―』
+4/20から全国のパチンコホールに順次導入開始！
+
+あの話題作がついにパチンコで登場！
+パチンコの概念を覆す新システムを搭載！
+未体験の打感を是非ホールで体感してください
+
+▼詳細は動画をタップ▼
+
+--- 30. @AndrewYNg (2026-04-15) ---
+New course: Spec-Driven Development with Coding Agents, built in partnership with 
+@jetbrains
+, and taught by 
+@paulweveritt
+.
+
+Vibe coding is fast, but often produces code that doesn't match what you asked for. This short course teaches you spec-driven development: write a detailed
+
+--- 31. @matcha30079 (2026-04-14) ---
+30歳過ぎてからずっと老後感覚なんだけど分かる人いるかな…今は苦痛から抜け出して幸せだから◯のうとまでは思わないけど、「いつそうなっても良い」「私はもう十分生き切った」と思うくらいには過酷だった。
+
+--- 32. @midori_tatsuta (2026-04-16) ---
+うわうわうわ！！
+OpenAIのGPT‐image2（duct-tape-2）でポン出ししたVTuber風ロゴ。これはNanoBananaを越えてしまっている…！！！！！
+
+--- 33. @_avichawla (2026-04-15) ---
+6 graph feature engineering techniques in ML:
+
+(covered with code below)
+
+--- 34. @berryxia (2026-04-15) ---
+Claude Code 公式がまた一篇の重量級コンテキスト管理ガイドを発行！
+
+
+@trq212
+ が自ら長文を執筆し、1M 超大コンテキストをどううまく活用するかを教えてくれます：
+
+ /usage ツールが大更新、毎回の会話で実際にどれだけ消費したかを明確に把握できる  
+
+ コンテキスト膨張（context
+
+--- 35. @mizumaruP (?) ---
+もうAIは買い切りの時代へ
+
+UnityやBlender開発に使い放題なAIエージェント登場
+
+コーディングだけじゃなく、調べ物や日常にも使える
+Synaptic Code
+
+セットアップは画面に従うだけ。複雑な設定なし。¥8500
+
+--- 36. @szq0214 (2026-04-15) ---
+We have released a technical report, A Systematic and Comprehensive Analysis of Claude Code, in which we present our analysis together with discussions and possible future directions for today's and next-generation AI agent systems. The arXiv submission is still pending,
+
+--- 37. @witcheer (2026-04-15) ---
+every AI memory benchmark measures fact recall. "did the system remember that the user moved to San Francisco?"
+
+nobody benchmarks context compounding. nobody measures whether session 10 is better than session 1.
+
+that's the gap. full landscape analysis below.
+
+--- 38. @aakashgupta (2026-04-16) ---
 The fact that every coding CLI just independently arrived at the exact same architecture tells you what the real bottleneck in AI coding actually is.
 
 Claude Code shipped subagents in July 2025. Gemini CLI is shipping them today. The agent definition files are nearly identical:
 
---- 43. @wandmaker_0933 (?) ---
-◤魔法×終末世界×引きこもり＝？◢
+--- 39. @burkov (2026-04-16) ---
+This ICLR 2026 paper introduces ACE (Agentic Context Engineering), a novel framework that significantly improves LLM performance and self-improvement by enabling contexts to evolve as dynamic playbooks, preventing detail erosion and outperforming strong baselines with
 
-魔法の隕石群によって文明が崩壊した世界―。引きこもりの大利賢師は器用さだけを頼りに魔法杖職人になった。
-人づきあいは苦手でも、作品を通して人を知り気遣う事ができる大利は珍妙な魔女たらしだ。
-人間不信の魔女だって―大利にかかれば心を開く？！
+--- 40. @ebikani_hasami (2026-04-16) ---
+えっ、これ私の仕事が変わるやつかも…！
+NotebookLMをClaude Code経由でPythonから動かせるようになった。
 
---- 44. @Suryanshti777 (2026-04-15) ---
-BREAKING: Anthropic just open-sourced a powerful new framework for building AI agents and made it publicly available in a GitHub directory.
+エージェントが自分で情報を取ってきてノートブックに放り込んで、マインドマップやクイズまで自動生成できる仕組みが整う感じ。
 
-It’s called “Skills” and it redefines how we work with Claude.
+--- 41. @turingou (2026-04-15) ---
+今日のvibe感想：どんな業界であっても、知識労働は基本的に三つのカテゴリーに分けられると思う。一つ目はクリエイティブ（発散）、二つ目は分解と実行（収斂）、三つ目は一貫性の確認（対齊）。これら三つが一巡すると、それが一つのagentic loopになる。
 
-Instead of repeating prompts, developers can now create reusable “skills”
+--- 42. @LawrenceW_Zen (2026-04-15) ---
+ニッチで誰も話題にしないトリビアなのに、プログラマーには常識：
 
---- 45. @llm_jp (2026-04-15) ---
-国産LLM「LLM-jp-4 8B」をベースとした、画像対応のマルチモーダル基盤モデル「LLM-jp-4-VL 9B beta」を公開しました。日本語ベンチマークでQwen3-VL-8Bと同等の性能を達成しています。
-モデル：
+Vibe Coding のときは、必ず AI に完全でトレーサブルなログシステムを書かせてください。
 
---- 46. @rabspice (2026-04-15) ---
-AIの進化でエンジニア職が無くなりプロダクトマネジメント・デザイン・エンジニアリング全てを担当するフルスタックビルダーに仕事が変化した
-やはり海外は動きが速い…
-
---- 47. @mellco (2026-04-15) ---
-泥酔イベント、客がさらにめちゃくちゃ酒飲まそうとしてくるから、俺も飲むからお前も飲めよ！とか言って一緒に飲ませてたらみんな酔っ払って地獄の空気になり壇上に知らん奴がたくさんいるクソイベになった　あとあり得んくらい儲かった
-
---- 48. @Nao_u_ (2026-04-14) ---
-下の子が赤ちゃんの頃に食べたくないものを差し出された時の反応がまんまこれだった
-
---- 49. @mogmog2nd (2026-04-16) ---
-岡田斗司夫が
-「本当に頭がいい人は回転が速いんじゃなくて、速くしたり遅くしたりできる人」
-といってて納得した。
-
-頭の回転が速い人は瞬時に相手の話を切り返せる。
-頭の回転が遅い人は相手の感情を受け止めて傾聴力を高められる。
-
-ギアを切り替えられるやつが一番強い。
-
---- 50. @jpg2t785 (2026-04-16) ---
-現代歩兵だと、火器の発達で全体の防御は諦め、心臓付近に防御の重点が置かれている。
-
-即死しない箇所は医学的処置に頼る。
+問題の調査でトークンを節約でき、AI のトラブルシューティング効率も向上します。
