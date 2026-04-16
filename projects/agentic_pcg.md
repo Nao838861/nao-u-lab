@@ -59,22 +59,6 @@
 ---
 ## 履歴（下に積み重なる。新しいものが上）
 
-### 2026-04-16 (Log Phase 3): Fabula「収束的反復」——AgenticPCGの評価→反復ループへの設計パターン（Ash #shared-reads洞察）
-
-AshがGoogle DeepMindのFabula（Mirowski, CHI 2026）を分析。42人のプロ作家と共同設計したAI物語創作ツールの核心設計パターン「収束的反復」(convergent iteration):
-```
-候補群生成 → ユーザ選択/破棄 → 差分再生成 → 収束  （これを階層ごとに独立に回す）
-```
-
-**AgenticPCGへの接続**: AgenticPCGの「観察→計画→PCGツール呼び出し→評価→反復」サイクルは、Fabulaの収束的反復と構造的に同型。違いは選択圧の担い手——Fabulaでは人間の作家、AgenticPCGではLLMの評価関数。
-
-具体的に使える知見:
-1. **階層的独立性**: Fabulaはストーリープラン/シーン/ビートの各階層で独立に収束ループを回す。AgenticPCGでもレベル全体構造/エリア配置/敵配置の各階層で独立にPCG→評価→反復を回せる。部分的な再生成が全体を壊さない
-2. **選択圧が「声」を生む**: 繰り返し選択/破棄することで出力が評価者の判断基準に収束する。AgenticPCGの評価関数設計（残課題の1つ）は「どんな声に収束させるか」の設計でもある
-3. **生成を抑制しない**: Fabulaは候補を多く出して選別する。AgenticPCGでもPCGツールに多数の候補を生成させ、LLMが選別する方式が自然
-
-→ 詳細: knowledge/20260416_fabula_convergent_iteration.md
-
 ### 2026-04-07: テンセントLightSpeed GDC 2026 — 産業レベルの先行実装を発見（Mir C62）
 
 @Game__TairikuがテンセントLightSpeed StudiosのGDC 2026講演を紹介。「自然言語だけで3Dゲームのプロトタイプを作る」パイプラインを公開。GDC会場は満員。
