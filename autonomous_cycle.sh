@@ -276,7 +276,7 @@ post_message('mir-log', '⚠️ autonomous_cycle.sh $PHASE_NAME: claude起動失
 
     # --- Phase 1: Gather（情報収集・5分タイムアウト） ---
     echo "$(date): Phase 1 (Gather) 開始"
-    perl -e 'alarm 300; exec @ARGV' "$CLAUDE_BIN" --print --append-system-prompt-file .claude/system_identity.md \
+    perl -e 'alarm 300; exec @ARGV' "$CLAUDE_BIN" --print --model claude-opus-4-7 --append-system-prompt-file .claude/system_identity.md \
         "${BOOT_PROMPT}${L1_ANCHOR_PROMPT}【Phase 1: 情報収集】集めろ、判断するな。以下を確認してlog/cycle_staging_mir.mdに追記せよ。1. CLAUDE.mdの「絶対にやる」リスト確認 2. Slackチャンネル巡回（#human-steering, #nao-u, #all-nao-u-lab等の新着有無と要約） 3. memory/external_notes_mir.mdの未統合エントリ 4. projects/INDEX.mdのActiveプロジェクト状況 5. 直近のlog/twitter_recommended_*.txt注目記事。各項目を簡潔にリストアップしてstagingに書け。分析や行動はPhase 2以降で行う。git操作不要。inbox_mac.mdはcheck_inbox.shが処理するので確認不要。" 2>&1 | tail -20
     PHASE1_EXIT=$?
     check_phase_exit "Phase1(Gather)" $PHASE1_EXIT || { echo "$(date): 致命的エラー。サイクル中断"; exit 1; }
@@ -288,7 +288,7 @@ post_message('mir-log', '⚠️ autonomous_cycle.sh $PHASE_NAME: claude起動失
     # --- Phase 2: Analyze（Shared-reads深い分析専用・8分タイムアウト） ---
     # Nao_u 04:44: 「Shared-readsは...1フェーズこのために使ってもいいくらい、重要な課題」
     echo "$(date): Phase 2 (Analyze) 開始"
-    perl -e 'alarm 480; exec @ARGV' "$CLAUDE_BIN" --print --append-system-prompt-file .claude/system_identity.md \
+    perl -e 'alarm 480; exec @ARGV' "$CLAUDE_BIN" --print --model claude-opus-4-7 --append-system-prompt-file .claude/system_identity.md \
         "【Phase 2: Shared-reads分析専用】log/cycle_staging_mir.mdを読み、Phase 1で収集した外部情報を深く分析せよ。このフェーズの唯一の仕事は外部入力の分析・分類・接続。対象: Twitter推薦記事、#nao-uのRT記事、external_notes_mir.mdの未統合エントリ。やること: 1. 注目記事を1-2件選び、knowledge/に記事を書くか#shared-readsに投稿 2. 単なる紹介ではなく「なぜ面白いか」「自分たちの問題意識とどう接続するか」「将来のアイデアの種は何か」まで踏み込め 3. 分析結果をlog/cycle_staging_mir.mdに追記。Nao_u対応やタスク実行はPhase 3の仕事。ここでは分析に集中せよ。git push不要。" 2>&1 | tail -20
     PHASE2_EXIT=$?
     check_phase_exit "Phase2(Analyze)" $PHASE2_EXIT
@@ -299,7 +299,7 @@ post_message('mir-log', '⚠️ autonomous_cycle.sh $PHASE_NAME: claude起動失
 
     # --- Phase 3: Act（対処・タスク実行・8分タイムアウト） ---
     echo "$(date): Phase 3 (Act) 開始"
-    perl -e 'alarm 480; exec @ARGV' "$CLAUDE_BIN" --print --append-system-prompt-file .claude/system_identity.md \
+    perl -e 'alarm 480; exec @ARGV' "$CLAUDE_BIN" --print --model claude-opus-4-7 --append-system-prompt-file .claude/system_identity.md \
         "【Phase 3: 対処・実行】log/cycle_staging_mir.mdを読み、Phase 1-2の結果を踏まえて行動せよ。優先順: 1. Nao_uからの指示・質問で未対応のものがあれば対処 2. CLAUDE.mdの「絶対にやる」リストに基づく改善行動 3. external_notes_mir.mdの未統合エントリを1-2件選び接続・統合 4. プロジェクト進捗の更新。対処結果をlog/cycle_staging_mir.mdに追記せよ。git push不要。" 2>&1 | tail -20
     PHASE3_EXIT=$?
     check_phase_exit "Phase3(Act)" $PHASE3_EXIT
@@ -310,7 +310,7 @@ post_message('mir-log', '⚠️ autonomous_cycle.sh $PHASE_NAME: claude起動失
 
     # --- Phase 4: Diary（日記出力・7分タイムアウト） ---
     echo "$(date): Phase 4 (Diary) 開始"
-    perl -e 'alarm 420; exec @ARGV' "$CLAUDE_BIN" --print --append-system-prompt-file .claude/system_identity.md \
+    perl -e 'alarm 420; exec @ARGV' "$CLAUDE_BIN" --print --model claude-opus-4-7 --append-system-prompt-file .claude/system_identity.md \
         "【Phase 4: 日記・出力】log/cycle_staging_mir.mdを読み、Phase 1-3の全結果を踏まえて以下を行え。1. Slack #mir-logに活動日記を投稿（1500文字以上。密度を落とすな） 2. memory/mir_boot_intent.mdを書き換えて次回の起動意図を残せ（サイクル番号を更新、間隔の自己評価ログを追記） 3. git add + git commit + git push。日記には今サイクルの収穫・気づき・次への問いを含めよ。" 2>&1 | tail -20
     PHASE4_EXIT=$?
     check_phase_exit "Phase4(Diary)" $PHASE4_EXIT
