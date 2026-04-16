@@ -14,9 +14,9 @@ Dreyfusモデル Level 3→5 の跳躍には「ルールの蓄積」ではなく
   python shadowbox.py --reveal --id 42 # 指定IDのシナリオを表示
   python shadowbox.py --stats          # ペア統計
   python shadowbox.py --quality        # 質の高いペア（長い応答）のみ
-  python shadowbox.py --log-session --id 42 --who Log --prediction "メタコメント" --delta "外部情報投下だった"
+  python shadowbox.py --log-session --id 42 --who Log --prediction "メタコメント" --delta "外部情報投下だった" --confidence 0.7
   python shadowbox.py --review         # 過去のセッションログを表示
-  python shadowbox.py --live --who Log --prediction "メタコメント"   # リアルタイム予測を記録
+  python shadowbox.py --live --who Log --prediction "メタコメント" --confidence 0.8  # リアルタイム予測を記録
   python shadowbox.py --live-check     # 未解決のlive予測を答え合わせ
 """
 
@@ -129,13 +129,14 @@ def show_scenario(pair, reveal=False):
     print("━" * 60)
 
 
-def log_session(scenario_id, who_name, prediction, delta):
-    """予測セッションをログに記録"""
+def log_session(scenario_id, who_name, prediction, delta, confidence=None):
+    """予測セッションをログに記録。confidenceは0.0-1.0の予測確信度（G-Eval logprobs加重平均の応用）"""
     entry = {
         "scenario_id": scenario_id,
         "who": who_name,
         "prediction": prediction,
         "delta": delta,
+        "confidence": confidence,
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M"),
     }
     with open(SESSION_LOG, "a", encoding="utf-8") as f:
@@ -164,7 +165,9 @@ def review_sessions():
     for s in sessions:
         delta_len = len(s.get("delta", ""))
         marker = "🔴" if delta_len > 50 else "🟡" if delta_len > 20 else "🟢"
-        print(f"{marker} #{s['scenario_id']} [{s['timestamp']}] by {s['who']}")
+        conf = s.get("confidence")
+        conf_str = f" (確信度: {conf})" if conf is not None else ""
+        print(f"{marker} #{s['scenario_id']} [{s['timestamp']}] by {s['who']}{conf_str}")
         print(f"  予測: {s['prediction'][:100]}")
         print(f"  差分: {s['delta'][:150]}")
         print()
@@ -179,11 +182,13 @@ def review_sessions():
     print(f"大きな差分（50文字以上）: {len(big_errors)}件 ← ここに学びがある")
 
 
-def live_predict(who_name, prediction):
+def live_predict(who_name, prediction, confidence=None):
     """リアルタイム予測を記録。最新のBot投稿に対するNao_uの反応を予測する。
 
     V-JEPA 2が示した「観察→操作」ループの実装。
     過去アーカイブからの出題(=観察)に加え、リアルタイムの予測→答え合わせ(=操作)を可能にする。
+    confidenceは0.0-1.0の予測確信度。G-Eval logprobs加重平均の応用——
+    高確信度の外れ=大きな学習信号、低確信度の外れ=既知の不確実性。
     """
     import slack_bot
 
@@ -232,6 +237,7 @@ def live_predict(who_name, prediction):
         "msg_user": who(latest_bot_msg.get("user", "?")),
         "who": who_name,
         "prediction": prediction,
+        "confidence": confidence,
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M"),
         "resolved": False,
         "nao_u_response": None,
@@ -318,6 +324,7 @@ def main():
     parser.add_argument("--who", type=str, help="誰が予測したか（Log/Mir/Ash）")
     parser.add_argument("--prediction", type=str, help="予測の要約")
     parser.add_argument("--delta", type=str, help="予測と実際の差分（学びのシグナル）")
+    parser.add_argument("--confidence", type=float, help="予測の確信度 0.0-1.0（高確信の外れ=大きな学習信号）")
     parser.add_argument("--review", action="store_true", help="過去のセッションログを表示")
     parser.add_argument("--live", action="store_true", help="リアルタイム予測を記録")
     parser.add_argument("--live-check", action="store_true", help="未解決のlive予測を答え合わせ")
@@ -332,7 +339,7 @@ def main():
         if not args.who or not args.prediction:
             print("--live には --who と --prediction が必要です")
             sys.exit(1)
-        live_predict(args.who, args.prediction)
+        live_predict(args.who, args.prediction, args.confidence)
         return
 
     if args.review:
@@ -343,7 +350,7 @@ def main():
         if not all([args.id is not None, args.who, args.prediction, args.delta]):
             print("--log-session には --id, --who, --prediction, --delta が全て必要です")
             sys.exit(1)
-        log_session(args.id, args.who, args.prediction, args.delta)
+        log_session(args.id, args.who, args.prediction, args.delta, args.confidence)
         return
 
     pairs = load_pairs()
