@@ -220,7 +220,7 @@ fi
 # 対話セッション(claude単体)は除外し、claude --print(cron起動)のみカウント。
 # pgrep -x claude は macOS で claude プロセスを検出できないため ps -o args で代替。
 # 注意: 対話セッションは常時起動しているので、全claudeプロセスを対象にしてはならない（INC: 4/9-4/14 定期実行4日間停止の原因）
-CLAUDE_PRINT_COUNT=$(ps -A -o args 2>/dev/null | grep -c "claude.*--print")
+CLAUDE_PRINT_COUNT=$(ps -A -o args 2>/dev/null | grep -v grep | grep -c "claude.*--print")
 if [ "$CLAUDE_PRINT_COUNT" -gt 0 ]; then
     echo "$(date): 他のclaude --printプロセスが実行中（${CLAUDE_PRINT_COUNT}個）。重複防止のためスキップ。"
     exit 0
