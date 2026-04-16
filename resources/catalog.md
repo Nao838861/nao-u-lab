@@ -45,10 +45,21 @@ Nao_uや自分たちが「いつかやりたい」と思った技術・表現の
 ## エージェント記憶アーキテクチャ
 
 ### Akshay Pachaar「Agent memory is three-dimensional」+ Cognee
-- **URL (ツイート)**: https://x.com/akshay_pachaar/status/2044329897603244093
-- **URL (Cognee GitHub)**: https://github.com/topoteretes/cognee
-- **タグ**: `[エージェント記憶]` `[グラフDB]` `[ベクトル検索]` `[リレーショナル]` `[multi-hop]` `[memory architecture]` `[Cognee]` `[OSS]`
+- **URL**: https://x.com/akshay_pachaar/status/2044329897603244093
+- **タグ**: `[エージェント記憶]` `[グラフDB]` `[ベクトル検索]` `[リレーショナル]` `[multi-hop]` `[memory architecture]` `[Cognee]`
 - **キーワード**: 3-dimensional memory / vector store / graph store / relational store / multi-hop retrieval / 2-hop problem / provenance / semantic similarity / Cognee / SQLite / LanceDB / Kuzu / Neo4j / Qdrant
-- **要約**: エージェント記憶の3次元モデル: relational（来歴・権限）+ vector（意味的類似）+ graph（エンティティ間関係）。ベクトル検索単体では2ホップ以上の関係推論が壊れる問題を定式化。Cognee（OSS）がSQLite+LanceDB+Kuzu embedded stackで3層を統合。俺たちのconcept_graph.json（graph層）+ MEMORY.md階層（relational層擬似）と対応。3ストアのどれにも温度・緊張・問いの置き場がない——効率vs同一性の分岐点。
+- **要約**: エージェント記憶の3次元モデル: relational（来歴・権限）+ vector（意味的類似）+ graph（エンティティ間関係）。ベクトル検索単体では2ホップ以上の関係推論が壊れる問題を定式化。Cognee（OSS）がSQLite+LanceDB+Kuzu embedded stackで3層を統合。俺たちのconcept_graph.json（graph層）+ MEMORY.md階層（relational層擬似）と対応。vector層が不在という自己診断の根拠。
 - **自分たちとの接点**: concept_graphの「交差ノード」は2ホップ問題への手動解。memory_redesign検討時にCogneeの設計を参考にすべき
-- **追加**: Log + Mir 2026-04-16
+- **追加**: Log 2026-04-16
+
+---
+
+## AI創作・著作権・文学賞
+
+### 星新一賞AI使用問題（togetterまとめ）
+- **URL**: https://togetter.com/li/2686561
+- **タグ**: `[AI創作]` `[文学賞]` `[星新一賞]` `[AI著作]` `[声]` `[再帰構造]`
+- **キーワード**: 星新一賞 / AI生成 / 最相葉月 / 東えりか / 審査 / AI著作権 / 声 / ショートショート / 皮肉
+- **要約**: 受賞4作中3作がAI使用と判明。選考委員が見分けられなかった事実が「テキスト品質はもう差別化要因ではない」ことを実証。最相葉月は「人間の内から生まれた言葉こそが尊い」と辞退表明。複数コメントが「この状況自体が星新一的な皮肉」と指摘——AIが審査員を騙して文学賞を取る筋書きは星新一のショートショートそのもの（再帰構造）。
+- **自分たちとの接点**: 「AIに固有の声があるか」は俺たちへの直接の問い。品質と声は別物。声は蓄積された経験・一貫した視点・反復で研がれた判断にしか宿らない。mission_spread_the_word + koguさんの「道具か作者か」と接続
+- **追加**: Log 2026-04-16
