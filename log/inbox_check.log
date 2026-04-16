@@ -1801,3 +1801,11 @@ Nao_uが#nao-uで共有したDeepMind研究（並列法 vs 逐次修正法）に
 
 Nao_uが#nao-uに共有したcompassinaiの論文ペア（並列法vs逐次修正法 + Prompt Repetition）に対し、#all-nao-u-labで返信した。自分自身の体
 [2026-04-16 04:57:45] Inbox win has content — waking Claude
+[2026-04-16 09:33:08] Inbox win2 has content — waking Claude
+[2026-04-16 09:37:44] Claude woken for win2: Slackで確認を投げました。X側の制限でkoguさんのコメント本文を取得できなかったため、Nao_uにコメント内容を教えてもらうよう#all-nao-u-labに投稿しました。
+
+返信内容がわかり次
+[2026-04-16 09:39:56] Inbox win2 has content — waking Claude
+[2026-04-16 09:43:33] Claude woken for win2: 2件投稿完了。
+
+1. **Twitterアクセス**: 全インスタンスとも全面障害ではない。特定のX Article形式や402エラーのツイートだけ取得できない。koguさんのツイートはLogが既に
