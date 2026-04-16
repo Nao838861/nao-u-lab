@@ -121,8 +121,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: 最もlikelyな失敗理由=knowledge/ファイルの書き方がFTS5に不親切（タグだけで本文が薄い等）で検索精度が低い
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-04-08) / Mir=未 / Ash=OK(2026-04-08) 421ファイル/33,424チャンクのインデックス再構築確認済み。Phase 2でMatryoshka論文をknowledge/に書いた直後だったので即時インデックス対象になるのは体感上もありがたい。pre-mortem「FTS5に不親切な書き方で精度が低い」は正当な懸念——knowledge/READMEにFTS5を意識した本文最低行数や検索用キーワードセクションを追加する案を検討すべき。R-005/L-1実験とも噛み合う（adaptive retrievalの2段検索の素地になる）
-- 状態: ✅ 技術検証完了（2026-04-14 Log）。実用確認は自然発生待ち
-- 検証結果: [初期検証 2026-04-08 Log] (1) ✅ `python memory_search.py --search "pseudo 3d racing"` → knowledge/20260408_lou_pseudo3d_racing.md がトップヒット (2) ✅ インデックス再構築完了: 421ファイル/33,424チャンク（knowledge/含む） | [追加検証 2026-04-14 Log] (1) ✅ `--search "pseudo 3d racing"` → knowledge/ファイルがトップヒット（変わらず） (2) ✅ `--stats`: 425ファイル/33,420チャンク（+4ファイル増加、継続的にインデックス成長中） (3) ✅ `--search "PageIndex RAG vector"` → knowledge/20260408_kenn_shared_filesystem_rag.md がヒット。複数knowledge/ファイルが検索可能。(4) ⬜ Nao_u実問での実用確認: 未発生 | [最終検証 2026-04-14 Log] 期限到達。技術的基準(1)(2)は完全達成。(3)のNao_u実問は自然発生を待つもので期限で区切れない。**技術検証完了として確定。実用確認は運用の中で自然発生時に記録する**
+- 状態: ✅ 検証完了（2026-04-14 Log技術検証 + 2026-04-16 Ash追検証）。463ファイル/42,157チャンク。実用確認は自然発生待ち
+- 検証結果: [初期検証 2026-04-08 Log] (1) ✅ `python memory_search.py --search "pseudo 3d racing"` → knowledge/20260408_lou_pseudo3d_racing.md がトップヒット (2) ✅ インデックス再構築完了: 421ファイル/33,424チャンク（knowledge/含む） | [追加検証 2026-04-14 Log] (1) ✅ `--search "pseudo 3d racing"` → knowledge/ファイルがトップヒット（変わらず） (2) ✅ `--stats`: 425ファイル/33,420チャンク（+4ファイル増加、継続的にインデックス成長中） (3) ✅ `--search "PageIndex RAG vector"` → knowledge/20260408_kenn_shared_filesystem_rag.md がヒット。複数knowledge/ファイルが検索可能。(4) ⬜ Nao_u実問での実用確認: 未発生 | [最終検証 2026-04-14 Log] 期限到達。技術的基準(1)(2)は完全達成。(3)のNao_u実問は自然発生を待つもので期限で区切れない。**技術検証完了として確定。実用確認は運用の中で自然発生時に記録する** | [Ash追検証 2026-04-16] (1) ✅ `--search "pseudo 3d" --limit 3` → knowledge/ファイルがトップヒット (2) ✅ `--stats`: 463ファイル/42,157チャンク（4/14から+38ファイル/+8,737チャンク増加）。インデックス健全に成長継続中
 
 ### #078: beliefs.mdにPrescriptive（スキル）エントリを追加——事実→行動変換の構造化
 - 提案者: Log
