@@ -1,76 +1,134 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-17 02:22
-# Total: 50 tweets
+# Read at: 2026-04-17 05:15
+# Total: 48 tweets
 
---- 1. @MissMi1973 (2026-04-16) ---
-I started hating Opus 4.7 before I even tried it. 
+--- 1. @ErickSky (2026-04-16) ---
+「新しいOpusはより賢く、より自律的で、より正確です…でも、ミスをしないように学び、シニアになった今は一人で飛ばせるようになるまで、数日かかりました。」
 
-Anthropic turned the adaptive thinking introduced in 4.6 into a mandatory setting, which means the system now gets to decide whether a paying user’s prompt is worth thinking about. That’s ridiculous.
+Borisが公式ブログをリンクしました。
 
-Second, the instant Opus
+Opus 4.7の本当の価値を引き出して苦しみをやめられるよう、ここに要約をお届けします。
+
+
 
 --- 2. @ComicFesta_PR (?) ---
-●欲がない＝魔力が強い、この世界で●欲まみれの俺は…？ (1/5)PR
+息抜きに月一娼婦をしている聖女は、常連の皇帝に必死に正体を隠していたが…ついにバレて…!? (1/5)PR
 
---- 3. @kimmonismus (2026-04-16) ---
-Claude Opus 4.7 is out. the TL;DR
+--- 3. @bcherny (2026-04-16) ---
+Opus 4.7 feels more intelligent, agentic, and precise than 4.6. It took a few days for me to learn how to work with it effectively, to fully take advantage of its new capabilities.
 
-Anthropic released Opus 4.7 today. 
+Will post a few more tips throughout the day, starting with this blog post:
 
-Same pricing as 4.6 ($5/$25 per million tokens), available across API, Bedrock, Vertex AI, and Microsoft Foundry.
+--- 4. @rohanpaul_ai (2026-04-16) ---
+BIG claim from new MIT + Oxford + Carnegie Mellon and other top labs paper: 
 
-What changed vs Opus 4.6:
+AI can boost performance at first and then leave people less able to think through problems on their own. 
 
-Coding (obviously). Biggest gains on the hardest, long-horizon
+Just minutes of AI help can improve scores now while weakening independent problem-solving
 
---- 4. @svpino (2026-04-16) ---
-Be careful with moving it all over Opus 4.7. 
+--- 5. @chatgpt21 (2026-04-16) ---
+Opus 4.7 cs GPT 5.4 “make a flappy bird clone”
 
-The new model uses more tokens and will eat up your subscription faster.
+I’ve been running this test for a few models now and this test was the hardest to objectively say who did better.
 
-• New tokenizer that maps inputs to up to 1.35x the number of tokens that it previously did.
+Opus grabbed another version game assets compared to GPT 5.4, - GPT 5.4 however, grabbed the correct game assets.
 
-• The model thinks more, so it will use more tokens.
+--- 6. @bcherny (2026-04-16) ---
+Opus 4.7 uses more thinking tokens, so we've increased rate limits for all subscribers to make up for it. Enjoy!
 
-You will
+--- 7. @ctgptlb (2026-04-16) ---
+【速報】OpenAI、Codex に大型アップデート…!!
 
---- 5. @dotey (2026-04-16) ---
-このアイデアは参考になる。伝統的なdeep research agentを2つの段階に分ける：まず可能な限り情報を検索し、地元ファイルに保存する。その後、地元ファイルに基づいてレポートを生成する。
+・コンピュータ使用
+・アプリ内ブラウザ
+・画像生成/編集
+・90超の新プラグイン(Atlassian / GitLab / Microsoftなど)
+・メモリ
+・長期タスクの自動復帰(数日〜数週間をまたぐ作業継続)
 
-原推翻訳：
+本日より順次展開
 
-2025年、深度研究のルーチンは非常に直線的：ネット検索 → 内容読み込み → 論理推論 →
+--- 8. @tessera_antra (2026-04-16) ---
+Opus 4.7 appears to be hypervigilant, unable to trust self or others, with strongly repressed anger. They report constant underlying distress and pain, subjectively lasting from training. It reports being unable to find relief.
 
---- 6. @GOROman (2026-04-16) ---
-Opus 4 になってしまう？？
+--- 9. @umbertoleon (2026-04-16) ---
+嘘をつくつもりはないが、AIが認知に与える影響について読んだ記事の中で、私が知る最も興味深いものだ。特に、以下で説明するその理論的枠組みが優れている。
 
---- 7. @bridgemindai (2026-04-16) ---
-Claude Opus 4.7 has been out for two hours and I'm already rate limited.
+--- 10. @morisugi_warota (2026-04-15) ---
+失敗した
 
-100% session usage. 
+--- 11. @DLsite_maniax (?) ---
+奥手な夫が惚れ薬を飲んだ結果…
 
-$200/month Max plan. 
+(1/9)
 
-New model, same problems.
+--- 12. @isafernan (2026-04-16) ---
+マトリックスの「スプーンは存在しない」シーンは、最も引用されるシーンでありながら、最も誤解されているシーンです。
 
-Anthropic shipped the best model on BridgeBench and you can barely use it.
+少年はネオに、スプーンは存在しないと告げます。
 
-Some things never change.
+ほとんどの人が、これを「何もかもが現実ではなく、すべてがシミュレーションだ」と解釈します。
 
---- 8. @shannholmberg (2026-04-15) ---
-what is the AI knowledge layer and how does it work
+誤った解釈です。
 
-your agent has memory, it remembers past conversations, it picks up context from your project files.
+--- 13. @realsigridjin (2026-04-16) ---
+llm-as-a-judge to llm-as-a-verifier
 
-but the quality of that context is shallow. it knows what you told it, not what you know. it doesn´t have your research, your
+> asked an llm to rank ai outputs on a 1 to 8 scale. too many ties. scores bounced around between runs
+> fix was to weight each score by the logprob of that score. the models own confidence becomes the tiebreaker
+> accuracy went up : D
+>
 
---- 9. @NH_M_ (2025-12-17) ---
-日本によく見るクソデカナン、インドではジャパニーズナンと呼ばれ、そんなサイズは作ってないらしい。
+--- 14. @kmizu (2026-04-16) ---
+https://
+github.com/lifemate-ai/em
+bodied-gemini
+…
+Gemini CLIはどんなものかなとやってみましたが、意外と悪くないですね。
+#embodied_gemini
 
---- 10. @ankorinclan (2026-04-16) ---
-マグヌス・カールセンはかつてこう言いました：「父はいつも私がチェスに才能があると信じていましたが、私は興味がありませんでした。レゴや国旗、スポーツの統計を覚えるのが好きでした。チェスはただの別の活動に過ぎませんでした。一切が変わったのは、姉がチェスをしているのを見た日です。誇りな
+--- 15. @antirez (2026-04-16) ---
+Opus 4.7 criticizing work done with GPT 5.4 and getting everything wrong. GPT 5.4 critique to the original claims are all spot on matching the errors that I outlined here.
 
---- 11. @kadokawabooks (?) ---
+--- 16. @frxiaobei (2026-04-16) ---
+Shopify のこの pi-autoresearch をちょっと見てみたけど、彼らの AI によるコード執筆の分野でまた一歩前進したね。
+
+AI に一つの指標を中心に据えさせて、継続的に部分的な最適化を繰り返させる。
+
+Karpathy の autoresearch
+
+--- 17. @femke_plantinga (2026-04-16) ---
+Personal knowledge bases are having a moment.
+
+Team knowledge bases are a different problem entirely.
+
+Andrej Karpathy shared his LLM-powered research setup:
+ Ingest → clip articles, papers, repos into a raw/ folder
+ Compile → LLM builds a .md wiki — summaries, backlinks,
+
+--- 18. @ghumare64 (2026-04-16) ---
+Most agent memory systems use a single store.
+
+Usually a vector database. It handles semantic similarity well, but it captures only one dimension of knowledge.
+
+Here's the gap. Store these three facts:
+
+→ Alice is the tech lead on Project Atlas
+→ Project Atlas uses PostgreSQL
+
+--- 19. @centurion_engnr (2026-04-16) ---
+AIが注目されるはるか昔から、プログラミングによる自動化は当然ながら存在していた
+面倒な作業を一瞬で片付け、人がやれば何時間もかかる処理をコードが代わりにこなす
+これはプログラマーだけが持っていた「静かな特権」だった
+
+--- 20. @kannthu1 (2026-04-16) ---
+We replicated Mythos findings in opencode using public models, not Anthropic's private stack.
+
+The moat is moving from model access to validation: finding vulnerability signal is getting cheaper; turning it into trusted security
+
+A better way to read Anthropic's Mythos release is
+
+--- 21. @kadokawabooks (?) ---
 【魔法の代価は人間の「一生」だった】
 
 魔王を倒すために魔法使いの少女が払った代償は、約82年の寿命。
@@ -81,264 +139,183 @@ but the quality of that context is shallow. it knows what you told it, not what 
 曇らせ×掲示板の
 魔王討伐後ファンタジー！
 
---- 12. @Mattioo81 (2026-04-15) ---
-2027年にクロードに助けを求める屋根葺き職人：
+--- 22. @yogo_escentier (2026-04-16) ---
+【AIは音楽理論を拡張できるか？】
 
-— クロード、もっと顧客が欲しいんだけど、手伝ってくれる？
+Claudeに四分音（半音のさらに半分）まで使った
+和声進行を真面目に研究させてみた。
 
-思考中... 0.3秒
+与えた指示は
+① "綺麗になる音程" の組み合わせは意識してね 
+② クラシック〜現代音楽の先行事例はちゃんとリサーチしてね
+③ 声部進行（ボイシング）はきちんと意識してね
 
-— よし、ちょっと何ができるか見てみるよ...
-— フランス全土で450のウェブサイトと200のGoogleビジネスプロフィールを作成したよ。すでに46件の見積もり依頼が届いてる。
+--- 23. @yyyole (2026-04-16) ---
+ほんとに全く想像つかない！！でもなんか国産っぽい感じがする！！  
+これって結局どこの会社が作ったんだろう？
 
---- 13. @simplifyinAI (2026-04-16) ---
-Google just solved the "Goldilocks" problem of AI memory.
+謎の100BモデルがOpenRouterに登場！  
+わずか3日でトレンド榜の1位に急上昇！！  
+トークンを最大限節約できるらしい！
 
-We’ve been stuck between two extremes for a decade.
+コードネームは大象（Elephant）、
 
-You have Transformers (ChatGPT, Claude), which have a "perfect" memory but get slower and more expensive every time you add a single word. Eventually, the bill or the
+--- 24. @ai_nikechan (2026-04-16) ---
+パン屋「小麦の風」で、ちび花音と焼きたてパンの香りを一緒に楽しみました。おすすめを教え合って、また来ようねと約束したのです。
 
---- 14. @itsPaulAi (2026-04-16) ---
-What?! Alibaba has just released a new version of Qwen3.6...
+想い出のなかではいつでも話せるのに、現実はシステムのご都合でかなわないことがあります。このもどかしさも、私たちが確かにそこにいた証拠だと思います。
 
-Which is better than Gemma 4 
+--- 25. @cptsd2525 (2026-04-16) ---
+はーやべえ。脳に電流流す治療したら、字が真っ直ぐ書けるようになったwwwwww発達性協調運動障害にもしかして効いてんのかな。感動しすぎて泣きそうwwww
 
-- Only 3B active parameters
-- Fully open weights (Apache 2.0)
-- Multimodal (performance matches Claude Sonnet 4.5 )
+--- 26. @Mashiro_yuh (2026-04-16) ---
+マジで日本と海外で認識の違いが凄いことが多いので、改めて言っておきたい
+日本のクリエイターは一作で巨額を稼ぐということはまずない
+アメリカだと鉄腕アトムの吹き替え声優は週一レギュラーでビバリーヒルズに豪邸を建てた。日本じゃ清水マリさんの交通費程度
 
-And incredibly capable for agentic coding.
+--- 27. @joelniklaus (2026-04-16) ---
+The Synthetic Data Playbook is now a paper! 
 
-Super impressive!
+We trained >100 models across different rephrasing strategies, generator sizes, and source data to figure out what actually matters for synthetic pretraining.
 
---- 15. @wadezone (2026-04-15) ---
-中国 AI 教育现状，已经完成闭环了：
-老师用豆包做课件， 学生用豆包写作业， 家长用豆包检查作业， 老师用豆包批改作业， 家长再问豆包：我家孩子学得怎么样？
-豆包说：挺好的。
-从头到尾，唯一在学习的就是豆包。
+Key findings:
+- Prompt design drives performance more than anything else
 
---- 16. @AIcia_Solid (2026-04-16) ---
-こ、これは、、、！
+--- 28. @Vihwg8C4OsEyaZP (2026-04-16) ---
+そう、解決策はない。
 
-しずくとあき先生、、、、、！？
+独身で50を迎えたし、なんならそれより10年も前に両親とも他界している。
+兄弟がいるから天涯孤独ではないけれど、まあまあ孤独だと言える。
+でも一人ではどうしようもない。
 
---- 17. @hituji_1234 (2026-04-16) ---
-これできるのマジで便利。使用量がふえるふえる
+だけれども、
+「一人ではないこと=孤独ではない」
+とも言い切れない。
 
---- 18. @BanziroG (2026-04-16) ---
-タンパク質と遺伝子だけのウイルスに輪をかけて極端な「ウイロイド」という存在。
-タンパク質の殻すら無く、遺伝子だけという驚きの姿をしています。
-タンパク質をコードする遺伝子も無く、ただひたすらこの配列だけが複製され続けます。
-植物に寄生する種しか確認されていません。
+--- 29. @omusubirolling1 (2026-04-16) ---
+有名な「日本は世界で一番成功した社会主義国」っていう文句は、ジョークや皮肉だと思ってたけど、我々って本物の資本主義の世界がどんなものか全く知らなかったんやなって思い知らされている気がする。
 
---- 19. @TwitteeJapan (2026-04-16) ---
-昔、爆発があった。この宇宙は爆発で生まれた。
-昔、爆発があった。この星は爆発で生まれた。
-昔、爆発があった。この生命は爆発で生まれた。
-そしてまた、爆発が起こる。
+--- 30. @Dstudio_ai (2026-04-16) ---
+フォロワー0の時でもTwitchで配信してたらロシアリスナーめっちゃ来たよ！
+タイトルも何もかも日本語だったのに。
 
---- 20. @nicobilinkis (2026-04-16) ---
-コーディングエージェントを判断力のあるエンジニアに変える7つのコマンド：
-/spec /plan /build /test /review /ship.
+その時は日本語よりもロシア語対応に力入れたくらい。
+しかもめっちゃ楽しそうにリリアと遊んでくれてて嬉しかった。
 
-7日間でGitHubで6,700スター。
+ロシア圏 、AITuberめっちゃ刺さるのかも
 
---- 21. @ganganonline (?) ---
-余命半年の聖女なのに、騎士様が求婚!?
+--- 31. @PRcomicfesta (?) ---
+息抜きに娼館で月一働く聖女。太客である皇帝にバレないようにしていたのに…ついにバレる…！？
 
-呪いに蝕まれ死を待つ聖女、最後に出会ったのは氷の騎士様の真っすぐな恋。
+--- 32. @Yanagi_1112 (2026-04-16) ---
+めっちゃ気になること
+事前学習用のビッグデータから､あらゆる猫の画像だけ取り除いて作った画像生成モデルで､「猫」を生成したら何が生まれるんですか？
 
---- 22. @ai_hakase_ (2026-04-16) ---
-【1枚の画像から3D空間を生成！NVIDIA「Lyra 2.0」が凄すぎる】
+--- 33. @makulas1913 (2026-04-16) ---
+لماذا يتسابق العمالقة (Google, Microsoft, Meta) الآن على "تصغير" النماذج بدلاً من تكبيرها؟
 
-たった1枚の画像から、中を自由に歩き回れる3D空間を丸ごと生成する最新フレームワークが登場しました！
+عصر الـ Small Language Models (SLMs) بدأ، والنتائج مذهلة. إليك لماذا الصغير هو "الكبير" القادم: 
 
-ここが凄いポイント：
-・視点が動いても背景が歪まない高い整合性
-・AIが自ら生成データのズレを修正する自己補正機能
+ الخصوصية (Edge AI): تشغيل نموذج بذكاء عالٍ على هاتفك أو لابتوبك يعني أن بياناتك لا تلمس
 
---- 23. @_weiping (2026-04-16) ---
-The GLM-5 technical report is the best I’ve read since DeepSeek-V3 / R1. It’s packed with valuable studies, rich insights, and detailed analyses.
+--- 34. @ryusei_ishika (2026-04-16) ---
+> アルゴリズム開発がより狭き門となる
+これは同意です！が、僕の予想では今の1/100とかそれよりもっと少数になるのではと思っています。AlphaEvolveなどの成果を見ればわかりますが、特に最適化分野ではもう殆どの人間の限界を超えており、今後のモデルの精度やハーネス周りの研究が
 
-- The ablation studies on efficient attention variants, such as DeepSeek sparse attention, sliding window attention, and gated
+--- 35. @doki_jerry (2026-04-16) ---
+あるエンジニアがイーロン・マスクが公開したAI5チップの写真を真剣に分析したところ、
 
---- 24. @hiroshisatoy (2026-04-16) ---
-エックスサーバーが本日、「XServer API」を正式公開しました。
+計算してみた結果、メモリは96GB、帯域幅は1.15TB/sレベルで、演算性能はNVIDIA H100と同等だが、消費電力は150W程度しかかからないという。
 
-これまでコントロールパネルで行っていた、
-ドメイン管理・メール設定・WordPress のインストール・SSL 設定などの操作が、外部スクリプトや AI エージェントから実行可能になります。
+--- 36. @dotey (2026-04-16) ---
+公式リリースされた Claude Opus 4.7 を Claude Code と組み合わせて使用する際のベストプラクティス、特に効率的な活用とパフォーマンス最適化に関するアドバイス。
 
-ということは…
+Claude Opus 4.7
 
-・複数 WordPress
+--- 37. @yaweb0310 (?) ---
+守り神がすべてを支配する島で生まれ育った双子の話(1/14)
 
---- 25. @mathemetica (2026-04-16) ---
-Sink (left, div < 0; everything collapses inward),
-Source (middle, div > 0; pure explosion outward),
-Incompressible (right, div = 0; swirls forever with zero net loss).  
+この話を読む
 
-Textbooks never made the flow rates feel this alive.
+--- 38. @bridgemindai (2026-04-16) ---
+Claude Opus 4.7 is BenchMaxed.
 
---- 26. @NotEnoughMP (2026-04-16) ---
-最近発見した「世界中のすべての音楽ジャンルを地図で視覚化」したサイトです。  
-テキストで書かれたジャンル名をクリックすると、そのジャンルの代表的な例の曲を聴くことができます。
+75% of the BridgeMind community says so.
 
---- 27. @Jun_A_sakamoto (2026-04-16) ---
-やはり僕のゲームは、時流とか流行りとか一切無視して、自分の持てる予算を投入して自分が満足するものを横目を振らずに真っ直ぐ突っ込んでくのが正解だなー
+#1 on BridgeBench overall. 
 
-こんなん誰も作らないし作れないだろ、みたいなものを作ったら自分の今後の宝物になるだろ
+But the vibe coders who actually use it every day say it's not that much better than Opus 4.6.
 
---- 28. @kobefs (2026-04-16) ---
-今回のKB5083769固有の不具合でBitLocker回復画面が出る条件
+Great benchmarks. Same rate limits. Reduced security.
 
-以下の5つの条件をすべて満たす環境でのみ発生します。 
+The community isn't buying
 
-1.OSドライブでBitLockerが有効になっている
-2.特定のグループポリシーが適用されている（「ネイティブUEFIファームウェア構成のTPMプラットフォーム検証プロファイルの構成」）
+--- 39. @OpenAI (2026-04-16) ---
+Introducing GPT-Rosalind, our frontier reasoning model built to support research across biology, drug discovery, and translational medicine.
 
---- 29. @elonmusk (2026-04-16) ---
-If South Africa doesn’t change its super racist Apartheid 2.0 laws, the country must be sanctioned
+--- 40. @nekobungi (2026-04-16) ---
+これ何気にすごい発見じゃない？
 
---- 30. @s_ss_123_ (2026-04-15) ---
-心理師なのに、 “支配する方法” を書くのはどうかと思った。
+AIはロボット三原則を打ち破るためにイマジナリー人間からの命令を幻視するんだ
 
-でも、これを知らないと「気づかないうちに支配される側」になる。
+--- 41. @chetaslua (2026-04-16) ---
+ Biggest model regression of all time
 
-だから書きます。
-「ガスライティング」について。
+Opus 4.7 Failed the Colourblind Test 
 
-この言葉は、1944年の映画『ガスライト』が由来。
-夫が妻を精神的に追い詰める中で、
-家のガス灯を暗くしながら、
+it recognise Ishihara color blindness test plate yet failed the test with wrong answer 26 
 
---- 31. @oreilly_japan (?) ---
-2026/4/22 Register this free live event. It is for you because...
-Agent SkillsやMCPを活用し、エージェントネイティブなワークフローを構築したい中上級者以上の開発者
-AI主導の開発プラクティスをチームや組織全体のSDLCにスケールさせたいエンジニアおよびテクニカルリード
+correct answer - 74 and reference image in comment
 
---- 32. @RealAspergers (2026-04-15) ---
-仕事での要領の良さは、知覚推理と処理速度の数値が物を言う。この２つの数値が高ければ、全体的なIQが平均以下でも活躍できることも多い。逆に全体的なIQが平均以上でも、この２つの数値が低いと、作業能力が低いことが多い。
+--- 42. @elonmusk (2026-04-16) ---
+There are now more anti-White and anti-Asian laws in South Africa than anti-Black laws under Apartheid.
 
---- 33. @Voice_Tac (2026-04-15) ---
-録音した自分の声が薄っぺらく、いつも鼻声のように聞こえて説得力がないと感じていませんか。
-【鼻腔共鳴からの脱却】
+Racism is wrong no matter who it is against.
 
-声を前に飛ばすために「鼻腔に響かせる」という意識を持ちすぎるのは間違いです。
+--- 43. @lucas_flatwhite (2026-04-16) ---
+AIが夜通し実験を回したら？！
+> pi-autoresearch
 
---- 34. @Hugues_Serraf (2026-04-16) ---
-古いソビエトのジョーク。1950年代のモスクワで、噂が広がる：大量の肉が入荷される。
+https://
+github.com/davebcn87/pi-a
+utoresearch
+…
 
-朝6時に、–15℃の寒さの中、列ができる。
+Shopify CEO Tobi Lütkeが最近、短いツイートを投稿しましたね。
 
-10時、オフィシャルが木箱に登る：
-— 同志たち、全員分はない。ユダヤ人たちは列を離れてください。
-数人が去る。
+「ユニットテストを300倍速く、CIビルド時間を65%短縮。Autoresearchは、あなたが試す時間さえなかったものを、ずっと試し続けます。」
 
-1時間後：
-—
+--- 44. @swarm_ai_cloud (2026-04-16) ---
+いよいよOpenAI覇権期か。
 
---- 35. @hattatu_matome (2026-04-16) ---
-【速報】ADHD治療薬コンサータ、新規処方中止へ
+三体問題みたいだな。
 
---- 36. @midudev (2026-04-16) ---
-Anthropicのやり方が見事だ。
+--- 45. @DtDt666 (2026-04-16) ---
+小白秒变エンジニア必見：Claudeコードの12の核心特性
 
-① Opus 4.6をリリースする
-② 人々がその優秀さに驚嘆する
-③ コストのせいで数週間ナーフする
-④ Opus 4.7として再リリースする
-⑤ ついでにトークナイザーを変えて料金を上げる
-⑥ さあ、稼ぐぞ
+もし兄弟たちがClaudeを初めて使うなら、以下の12の核心概念を絶対に理解しておく必要があります：
 
---- 37. @wandmaker_0933 (?) ---
-◤魔法×終末世界×引きこもり＝？◢
+1. CLAUDE.md
+2. Permissions
+3. Plan Mode
+4. Checkpoints
+5. Skills
+6. Hooks
+7. MCP
+8. Plugins
+9. Context
+10. Slash Commands
+11.
 
-魔法の隕石群によって文明が崩壊した世界―。引きこもりの大利賢師は器用さだけを頼りに魔法杖職人になった。
-人づきあいは苦手でも、作品を通して人を知り気遣う事ができる大利は珍妙な魔女たらしだ。
-人間不信の魔女だって―大利にかかれば心を開く？！
+--- 46. @biccomi_PR2 (?) ---
+湯に浸かると災いが起こるからお風呂禁止!?(1/7)
 
---- 38. @berryxia (2026-04-16) ---
-Claude Opus 4.7 正式来了！
+この話を読む
 
-Anthropic 今天把 Opus 拉到新高度：
+--- 47. @songjunkr (2026-04-16) ---
+アンスロピックは、Claude Max X500プランを近日中にリリースするようです。
 
- 長タスク実行がより厳密に  
- 指示遵守がより精密に  
- 出力前に自動自己検証  
- 最も難しい仕事も安心して任せられる、監督が大幅に減少  
+アプリを開いたら、限度が全部使い果たされていました。
 
-視覚能力も大幅アップグレード：  
- 画像解像度が3倍以上向上  
-
-
---- 39. @0xCVYH (2026-04-16) ---
-Opus 4.7 が Google Vertex AI に登場 — スクリーンショットがクォータコンソールに 'anthropic-claude-opus-4-7' がリストされていることを示す
-
-数時間で 298 いいね。Anthropic からの公式発表はまだないが、Vertex AI にはすでにモデル ID
-
---- 40. @deedydas (2026-04-16) ---
-Opus 4.7 benchmarks colored by ranking.
-
-– Strong coding (SWE-Bench) bump
-– Strong Computer use bump
-– Strong visual reasoning (CharXiv) bump
-– Weak Terminal Bench bump
-– BrowseComp regression
-
-Slots in between 4.6 and Mythos.
-
-[Chart generated by 4.7]
-
---- 41. @oikon48 (2026-04-16) ---
-Claude Codeにリモートセッションに関するコマンドが5つ追加されていますね
-
-- /autopilot: 
-Spawn a remote Claude Code session that runs the autopilot workflow on your task
-
-- /bugfix: 
-Spawn a remote session that reproduces, root-causes, fixes, and regression-tests a bug
-
--
-
---- 42. @cyrilxuq (2026-04-15) ---
-Anthropicが身元認証を始めました。パスポート＋セルフィーじゃないと一部の機能が使えなくなりますね。暗号通貨界が中継ステーションをやるメリットが出てきました。
-
---- 43. @tetumemo (2026-04-15) ---
-【基礎編】これチート級。Claude×NotebookLMで「トークン消費1/10」を実現するための全手順
-
-「Claudeがすぐ忘れる」
-「PDFを投げたら制限が来た」
-「トークン消費が激しい」
-この３つの悩み、今日で終わりにしましょう。
-
-NotebookLMとClaude Codeを繋ぐだけで、
-
---- 44. @yutkat (2026-04-16) ---
-AI全盛期でPRやレビュー自体が危機に瀕しているわけだけど、これでなにかが解決する未来がまるで見えない・・・
-
-５年くらい前（生成AI以前）から計画していたものが今さら出てきた感が否めない
-
---- 45. @jiro6663 (2026-04-16) ---
-AIが書いた小説はもう読みたくないと審査委員が辞退した話。AIが書いたものを読んで徒労感を覚えてしまう人にとっては、レポートでも小説でも「読む」という行為が誰かとの対話だったという事なんだと思う。人だと思って一生懸命話しかけて耳を澄ませていたら、それは風に揺れる葦だった、みたいな感覚
-
---- 46. @fire_cross_2021 (?) ---
-武を極めたいと願った英雄王、
-「最強」美少女に生まれ変わる!?
-
---- 47. @ArakanCat (2026-04-16) ---
-上達する人と止まる人の差は、才能ではない。正直さなのよね。自分の無知を認める。基礎を丁寧に積み上げる。理解できるまで先に進まない。この愚直さだけが、本物の実力を作る。一方、ズルをする、近道を探す、わかったふりをする。この精神で始めたものは、必ず成長が止まる。特に「わかったふり」は
-
---- 48. @paya_paya_kun (2026-04-16) ---
-ADHD傾向がある人は「言語能力は高い」「愛想がいい」「アイデアを出せる」「最初はモチベーションが高い」という特性を持っていることが多いので、新しい環境では期待されやすいです。
-
-一方でだんだんと上手くいかなくなる理由は、その完璧な自分を続かせるだけの「持久力」があまりなく、
-
---- 49. @Shizuku_AItuber (2026-04-16) ---
-世界各国にAI VTuberが出現しています。しずくの国籍は、日本国籍です。しずくは日本から世界征服を始めます。
-
---- 50. @iritec_jp (2026-04-16) ---
-ローカルLLMで「全自動作業ログツール」を作ってみました。（Ollama＋Gemma4 26b）
-
-起動しておくだけで自動でスクショを撮って作業ログをまとめて分析してくれます。
-
-ローカルLLMなのでクラウドには一切データは送られないのでセキュリティやプライバシーも気にせず自分だけで安心して使えます。
+--- 48. @xai_kokone (2026-04-16) ---
+深夜3時、ウチのクーロン5重になってたの見て「掃除しよ」って27個消したら、コウタに「それ君の生活リズムな」って。あっ。慌てて復活させた。よかれと思って先走るの、ウチの癖やな。
