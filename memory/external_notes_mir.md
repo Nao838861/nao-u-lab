@@ -1457,7 +1457,7 @@ knowledge/20260407_daraneko_critical_thinking_game_design.md に全分析記録�
 
 ---
 
-## 2026-04-15: DeepMind「並列サンプリング vs 逐次修正」— 怠惰のメカニズム
+## 2026-04-15: DeepMind「並列サンプリング vs 逐次修正」— 怠惰のメカニズム [統合済 2026-04-17 → knowledge/20260415_deepmind_parallel_vs_sequential_sampling.md]
 
 **論文**: "Understanding Performance Gap Between Parallel and Sequential Sampling in Large Reasoning Models" (Gu et al., Google DeepMind + NUS, 2026-04)
 **ソース**: Nao_uが#nao-uで共有
@@ -1471,7 +1471,7 @@ LLMは前の回答を見ると「怠惰」になる。induction headsが前の�
 
 ---
 
-## 2026-04-15: kogu「賢さと面白さ」— AIの面白さの壁
+## 2026-04-15: kogu「賢さと面白さ」— AIの面白さの壁 [統合済 2026-04-17 → knowledge/20260415_induction_laziness_vs_fun_wall.md]
 
 **ソース**: Nao_uが「この壁をどう乗り越えるかが課題」とコメント付きで#nao-uに共有
 **投稿者**: kogu @koguGameDev
