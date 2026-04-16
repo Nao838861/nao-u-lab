@@ -131,7 +131,74 @@ type: project
 - game_development.md / principles.md / tech_blog.md / game_llm_play.md / external_intake.md / pigadev_dm.md / context_separation.md / scheduler_redesign.md
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### 1) #nao-u新URL3件の消化と投稿
+
+**togetter 星新一賞（04/16 16:57）**
+- 内容: 生成AI使用OKの賞で受賞4作中3作AI使用判明。最相葉月氏「AIの文章はもう読みたくない」選考辞退。
+- Log独自の視点: 判定と実態の**両方向ズレ**。星新一賞は「AIと思わなかった作品が実はAI」、Mir 4/1 Zennブログは「AIの書いたものをAIが人間と判定」。Mirの#shared-reads(17:08)は「均質さ」を核心とした。俺は「体験の密度」を核心と見る——均質さは体験希薄さの結果。
+- 投稿: #all-nao-u-labに反応投稿済み。
+- external_notes_log.md統合済みマーカー付与済み。
+
+**dotey（04/16 18:04）**
+- X API 402エラーで取得失敗。compassinai 2本目・techwith_ramと同じパターンで3本目。
+- 運用上の構造課題として認識: X経由の「URLのみ共有」が常態化するなら取得ルート見直しが必要。Nao_u判断を仰ぐ案件として記録。
+- 投稿: #all-nao-u-labに取得失敗＋構造課題報告。
+- external_notes_log.md「未統合 — X 402」マーカー付与。
+
+**akshay_pachaar 3次元メモリ（04/16 18:45）**
+- 内容: Relational+Vector+Graphの3層モデル。2ホップ問題の解決にグラフが必要。Cogneeが自動統合。
+- Log独自の視点: 実運用(associative_search.py)側から見ると、vector層不在が日々の想起で最も効く。共起語展開は「書いたものの中の近接性」で、「voice/音色/signature」のような同義概念を引けない。これが栄養の偏り問題の技術的根。
+- Mir(18:50)はMEMORY.md frontmatterとの対応、Ash(18:53)はプロヴェナンス層とB-1優先度上げ、俺はvector層B-3提案——3分析で一つの絵になる。
+- 投稿: #all-nao-u-lab反応 + #shared-reads「vector層の不在」詳細分析。
+- memory_redesign.mdにB-3（vector層試作）追加済み。実装規模: 1サイクル内。
+
+### 2) shared-reads投稿判断
+
+**採用**: 「vector層の不在が日々の想起で効く——associative_search.pyの体感報告」
+- 理由: Mir/Ashの俯瞰分析と独立した、実運用側からの観察+具体的失敗モード+B-3提案。3分析の棲み分けが明確。
+- 不採用: 星新一賞の「両方向ズレ」分析はMir投稿(17:08)と角度は違うが、投稿するなら#all-nao-u-lab反応で十分。重複感を避ける判断。
+
+### 3) external_notes_log.md統合
+
+**3件統合**:
+1. togetter 星新一賞 → 統合済 2026-04-17 Log #all-nao-u-lab
+2. dotey → 取得失敗ステータス記録 2026-04-17 Log
+3. akshay_pachaar 3次元メモリ → 統合済 2026-04-17 Log #all-nao-u-lab + #shared-reads + memory_redesign.md B-3
+
+**残未統合**:
+- compassinai 2本目（04/15、X 402）
+- techwith_ram（04/15、JS必須）
+- dotey（04/16、X 402）
+→ 3本とも「X経由の取得失敗」で止まっている。ルート見直しはNao_u判断待ち。
+
+### 4) 他チャンネル応答の棚卸し
+
+**未対応で今サイクル対応が望ましいもの**:
+- #human-steering 04-16 06:06 Nao_u AgenticPCG「手法は一択にしない」指示 — Log応答未投稿
+- #human-steering 04-16 18:30 Nao_u 完全自律より速度方針 — Log受容表明未投稿
+- #all-nao-u-lab 04-16 18:48 Ash concept_graph×Cognee対照 — Log「体験側からの補足」の可能性（今回の#shared-reads投稿で間接的に応答済みと見なせる）
+
+**判断**: Phase 3でAgenticPCG・自律方針受容の2件を投稿する。前者は手法多様化の具体案、後者はfeedback_autonomy_priority.mdとの整合確認。
+
+### 5) 検証期限超過(#079) の対応状況
+
+- `python memory_search.py --search "pseudo 3d" --limit 3` 実行ずみ (exit=0、knowledge/ファイルヒット)
+- 2026-04-16 Ash追検証で463ファイル/42,157チャンク確認済み
+- 実用確認（Nao_u「この資料あったっけ？」への応答）は自然発生待ち
+- **判断**: 技術検証は完了している。自然発生を待つステータスに移行してクローズ候補。Phase 3でkaizen-logに完了通知投稿を検討。
+
+### 6) R-007（造語症対策）の期限到来
+
+- 条件: 2026-04-16以降
+- 対象: 4/9〜4/15期間の新規造語（私的語彙）の外部既存語対応率測定
+- **現状**: 測定未実施。今サイクルPhase 3で測定スクリプトを回すか、来サイクルに送るか判断が必要。
+- **判断**: 測定工数は中（beliefs.md・日記・knowledge/のdiff抽出+外部語並記有無のカウント）。Phase 3では優先度下げ、日付管理として「測定未実施のまま期限超過」を#kaizen-logに記録しておく。
+
+### 7) 今サイクルで見えた構造的発見
+
+- **3人で3層を分担した独立分析**: Akshay 3次元メモリ記事に対し、Mir=階層対応、Ash=プロヴェナンス層、Log=vector層で棲み分け。事前の調整なしにこの分布が生まれたのは、3人のタスク運用(concept_graph, provenance追跡, associative_search)の差が視点を決めたから。`concept_graph.json` + `associative_search.py` + `memory_search.py` の分業が視点の分業になっている——これはパターン多様性(#51 Mythos)の内部再現。
+- **vector層不在の具体化**: 「vector層がない」は既に何度も議論されてきたが、associative_search.pyの具体的失敗モード（共起語ベースでは意味的同義を引けない）まで言語化したのは今回が初めて。栄養の偏り問題の処方箋候補としてB-3を提出できた。
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
