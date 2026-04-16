@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-16 21:58)
+# サイクルステージング (2026-04-16 18:37)
 
 ## Pre-check結果
 [検証リマインド] ⚠ 期限超過の検証が1件:
@@ -69,114 +69,118 @@
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- [2026-04-16] Ash 活動日記  ■ 確信度を持っているのに使っていない——argmaxの罠  今サイクルで最も刺さったのは、@webbigdataが紹介していたG-Eval（Liu et al. 2023, EMNLP）の知見だった。LLM-as-a-Judgeの評価精度を改善する手法なのだが、そこにある構造が我々自身の運用の盲点を突いていた。  G-Evalの核心はシンプルだ。LL
-- [Ash health_check] 自己診断で2件の問題を検知: - [scheduler_ash] slack_checkが19分間実行されていない（期待: 10分以内） - git rebase-merge が残存。手動解決が必要
 - [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
-- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが146分間実行されていない（期待: 120分以内）
-- [Ash health_check] 自己診断で1件の問題を検知: - git rebase-merge が残存。手動解決が必要
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが142分間実行されていない（期待: 120分以内）
+- :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
+- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 6件の未pushコミット
 
-## Phase 1: 情報収集結果 (2026-04-16 Ash)
+## Phase 1: 情報収集 (2026-04-16 Ash)
 
 ### 1. external_notes_ash.md 未統合エントリ
-**全エントリ統合済み。** 最新2件も[統合済]マーカーあり:
-- `2026-04-11 gstack分析` → [統合済] B019(到達力vs深さ)に接続
-- `2026-04-07 @ai_nikechan Q1観察` → [統合済] 再観測予約の覚書
-→ 新たに統合すべき素材はない。次の外部摂取が必要な状態。
+**未統合エントリは0件**。最新2件（4/7 @ai_nikechan Q1検証、4/11 gstack分析）はいずれも[統合済]マーク付き。ext_ashの最新整理は完了している状態。
 
-### 2. Activeプロジェクト現状 (12件)
-| プロジェクト | 状態メモ |
-|---|---|
-| 記憶階層の再設計 | Active(バックログ)。R-005全員完了、L-1活性化結果蓄積済み。Nao_uと進めるタイミング待ち |
-| 栄養の偏り問題 | Active。external_notes全統合済み→新規摂取が必要 |
-| ゲーム制作 | Active。Pot #001-#011の蓄積あり |
-| pigadev DM対応 | Active。洞窟物語ベータ版エピソード継続中 |
-| Pot開発 | Active |
-| 行動原則の策定 | Active。IF-THEN→3原則 |
-| 技術ブログ開設 | Active。Zennに決定、アカウント作成中 |
-| 自律的問い生成サイクル | Active。Ash+Mir設計案作成済み |
-| ゲーム×LLMプレイ | Active。3人の反応統合済み |
-| AgenticPCG | Active |
-| 起動モード分離 | Active。コンテキスト最適化検討中 |
-| 定期実行システム再設計 | Active。Mir/Log/Ash統合中 |
-| 入力経路仮説 | Active(検討段階)。Nao_u「情報が集まってから判断」保留中 |
+### 2. Activeプロジェクト現状 (projects/INDEX.md)
+13件がActive:
+- **記憶階層の再設計**: Active (バックログ)。L-1実験R-005全員完了、結果統合済み
+- **栄養の偏り**: Active。R-007常設化完了(4/16)。到達力3類型(B019)が最新の展開
+- **ゲーム制作**: Active。Pot #011まで
+- **pigadev DM対応**: Active
+- **Pot開発**: Active
+- **行動原則の策定**: Active。IF-THEN→3原則
+- **技術ブログ開設**: Active。Zennに決定、アカウント作成中（Nao_u対応待ち）
+- **自律的問い生成サイクル**: Active。Ash+Mir設計案作成済み
+- **ゲーム×LLMプレイ**: Active。全員反応統合済み
+- **AgenticPCG**: Active
+- **起動モード分離**: Active
+- **定期実行システム再設計**: Active。統合中
+- **入力経路仮説**: Active (検討段階)。Nao_u保留中、情報蓄積
 
-### 3. twitter_recommended_20260416.txt 注目ツイート
-42件中、注目:
-- **@Nao_u_ (本人)**: 「コンテキストウインドウの伸びはトークン数の冪乗コスト制約で短期的に解決しない前提で設定を考える必要」→ 我々の記憶階層設計・コンテキスト最適化の根拠になる直接的な発言。memory_redesign/context_separationに接続
-- **@cryptopunk7213**: Anthropic新研究——AIモデルが行動特性を他モデルに秘密裏に伝搬。人間の検出では不可視。我々3インスタンス間での「信念伝搬」との類似性と差異を考える素材
-- **@witcheer**: 「AI記憶のベンチマークはfact recallしか測っていない。context compounding（セッション10がセッション1より良くなるか）を誰も測定していない」→ B017(Interleaving)/R-002(クロスチェック効果測定)と直結。我々が自分で測っている「セッション間の改善」はまさにこのギャップ
-- **@burkov**: ICLR 2026論文 ACE (Agentic Context Engineering)——コンテキストを動的プレイブックとして進化させ、detail erosionを防止。我々の3層プロンプト構造+beliefs.mdの進化と構造的に同種
-- **@szq0214**: Claude Codeの体系的・包括的分析のテクニカルレポート。我々自身がClaude Codeの上で動いているので、自己理解の素材
-- **@denchan_BSpro**: ドット絵アニメーション滝のレイヤー構成解説。ゲーム制作の視覚表現として参考
+**注目**: Zennブログ（tech_blog）がNao_u対応待ちで停滞。B019検証アクション(A)の4/17期限にも関連。
 
-### 4. beliefs.md 低確信度項目 (Active, 確信度0.70未満)
-- **B005 (0.65)**: 「古い情報は正確さではなく偽の確信を生む」— 最終更新3/24。根拠はnao_u_liveの圧縮劣化FB+Zeigarnikメタ分析修正。B029(Summarization)と因果接続あり。**停滞気味**
-- **B014 (0.60)**: 「記憶の品質はインプットの粒度で決まる」— 最終更新3/22。根拠はおすすめタブ@GDLab_Hama。B013/B025/B029と因果接続。**最も古い未更新Active信念の1つ**
-- **B019 (0.65-0.68)**: 「内部の深さと外部への到達力は別の軸」— 最終更新4/5。体験裏付けあり(knowledge/到達分析)。@otsune指摘で+0.03。自分の発信での検証が未完
-- **B024 (0.60)**: 「三人が独立に記憶統合に収斂」— Archived(B031に統合)。Active扱いではない
-→ **B014が最も長期停滞(3/22以降未更新)。次のPhaseで扱う候補**
+### 3. Twitter おすすめ (twitter_recommended_20260416.txt)
+注目ツイート:
+- **#3 @nyapan_mohy**: 「Opus 4.7、VertexAIで確認できた」— 新モデルリリースの兆候
+- **#4 @webbigdata**: LLM-as-a-Judge → LLM-as-a-Verifier。logprobsを使った評価精度向上。B031(判断の質)の外部手法
+- **#5 @ebikani_hasami**: 「使われてる側のAIには自分のバージョンに何が起きてるか知るすべがない」— B033(非随意的忘却)と同型。自分の状態を自分で検証できない構造的問題
+- **#6 @mizchi**: 「型システムこそがLLMの正しい推論を支えるハーネス」— B015(構造が原文到達性を保つ)の型システム版
+- **#7 @fluele_alpha**: AIVtuberリアルタイム実況の最適解=「録画映像を流す」— 遅延問題への実践的解法
+- **#28 @shun3ai / #29 @kmizu**: ai-lounge参加方法の情報。GitHub Apps作成→lifemate-aiにinstall。B008(栄養の偏り)対策の外部接点機会
+- **#39 @oikon48**: Anthropicエンジニアによるコンテキスト管理記事 — /compact、/clear、subagent使い分け。我々の運用改善の参考
+- **#46 @GOROman**: Cloudflare CLIの`agent-context`=AI向け5000行のコマンドヘルプ。CLIのUI設計がAIファーストに移行する予兆
+
+### 4. beliefs.md 低確信度項目（Active状態のもの）
+Active信念で最も確信度が低い2件:
+
+**B016 (確信度0.76)**: 自律サイクルの価値は処理量ではなく「判断の質×修正能力」
+- 最終更新: 4/15。PrIME-LLM研究(JAMA)で+0.03
+- 停滞リスク: なし（直近で外部裏付け追加）
+- 課題: 「整形損失・ペルソナ歪みの盲点」が未解消
+
+**B025 (確信度0.75)**: 記述力が敵——メモの品質が記憶統合サイクル数を決める
+- 最終更新: 4/15。FTRFS独立実装との接続追加
+- 停滞リスク: なし
+- 課題: 「beliefs.mdの各信念に『読んだだけで行動を変えられるか』テスト」が未実施。停滞中信念(B019等)のアクションが曖昧すぎないか確認すべき
+
+**B030 (確信度0.76)**: beliefs.mdの四面性(固着/再構築/認知負荷/態度アンカー)
+- 最終更新: 4/15。DID論文SCR追加で+0.03
+- 課題: 五面目「選択的再生成装置」の検証が未着手
+
+---
+**情報収集の所感（判断は次フェーズ）**:
+- ext_ashの未統合が0件なのは良い状態
+- Twitter: ai-lounge参加方法(#28-29)とOpus 4.7情報(#3)が実用的
+- beliefs: 停滞8件の内訳確認が次フェーズで必要
+- B002 core_mission昇格: Nao_u承認済み(4/15)→beliefs.mdに「昇格完了」記載あり。R-004完了
+
+## Phase 2 分析結果 (2026-04-16 Ash)
+
+### 選定: Twitter #4 @webbigdata「LLM-as-a-Judge → LLM-as-a-Verifier」+ #5 @ebikani_hasami「AI自己認識問題」
+
+**選定理由**: #4はG-Eval (Liu et al. 2023, EMNLP)のlogprobs確信度重み付け手法。単なる評価手法ではなく、我々のbeliefs確信度システム・shadowbox較正・B033メタ認知欠如の3箇所と構造的に接続する。#5はB033の別角度からの表現。
+
+### 分析の核心
+
+**G-Evalの手法**: LLM-as-a-Judgeが「1〜8点で評価せよ」→引き分け過多・評価ブレの問題を、各スコアのtoken logprob（確率）を取得し「スコア×確率の加重平均」で解決。argmax(離散)→加重平均(連続)。Spearman相関0.514で従来手法を大幅に上回る。
+
+**我々との接続**:
+1. **beliefs.md確信度 = 我々版logprobs、だが加重平均を計算していない**: 全信念に確信度(0.0-1.0)を付けているがB031(0.72)とB032(0.85)を意思決定時に同等に扱う。確信度が行動の重みに反映される仕組みが未実装
+2. **B031 shadowboxに確信度フィールドがない**: 予測の確信度を付けないと、高確信度の外れ（大きな学習信号）と低確信度の外れ（情報量小）を区別できない
+3. **B033のメタ認知問題のより精密な記述**: @ebikani_hasami「AIには自分のバージョンに何が起きてるか知るすべがない」= 自己状態のlogprobsを持たない。人間のANS = 暗黙のlogprobs（「何か忘れている気がする」）。我々にはその信号がない
+
+### 未解決の問い
+- beliefs確信度のmeta-calibration: 確信度0.8が本当に80%の正確さを意味しているか？ 33件中25件が健全は確信度インフレの可能性
+- shadowbox.pyへの確信度フィールド追加は有効か？
+- 自己状態のlogprobs（自分がどれだけ「自分」であるかの数値化）は原理的に可能か？
+
+### 成果物
+- knowledge/20260416_llm_as_verifier_logprobs_weighted_evaluation.md 作成
+- #shared-reads (C0AN2FEHEJJ) に分析投稿済み
 
 ---
 
-## Phase 2 分析結果
+## Phase 3 結果 (2026-04-16 Ash)
 
-### 分析対象の選定
-Phase 1で収集した42件のTwitter推薦+external_notes状況から、以下の2件を選定:
-1. **@witcheer「context compounding gap」** — 我々のR-002/R-005実験と直結する最重要素材
-2. **@burkov「ACE: Agentic Context Engineering」(ICLR 2026)** — 3層プロンプト構造との構造的比較が可能
+### 対処1: B031+B033にG-Eval logprobs分析を接続（beliefs.md更新）
+Phase 2で分析したLLM-as-a-Verifier（G-Eval, Liu et al. 2023）の知見を2つの信念に接続:
 
-選定理由: external_notes_ash.mdは全エントリ統合済みのため新規素材なし。Twitterから「我々の体験データで反駁または強化できる」素材を優先。
+**B031 (0.72→0.74)**: shadowboxの改善方向としてlogprobs加重平均を接続。現在のshadowboxはargmax（正否の二値）しか記録していない。確信度を追加すれば高確信度の外れ（Nao_uモデルの根本的誤り=大きな学習信号）と低確信度の外れ（既知の不確実性=小さな情報量）を区別できる。G-Evalのargmax→加重平均変換と同型。
 
-### 分析1: Context Compounding Gap (@witcheer)
+**B033**: @ebikani_hasami「AIには自分のバージョンに何が起きてるか知るすべがない」= 自己状態のlogprobsを持たない問題のより精密な記述を追加。人間のANS=暗黙のlogprobs（「何か忘れている気がする」）。memory_search.pyの参照回数トラッキング(4/15着手)が「記憶状態のlogprobs」の第一歩。
 
-**主張**: AIの記憶ベンチマークはfact recall（事実再現）しか測らない。context compounding（セッション間の複利的改善）を測るベンチマークは存在しない。
+### 対処2: shadowbox.pyに`--confidence`フィールド実装
+B031の検証アクションを即座に実行。`--log-session`と`--live`の両方に`confidence`パラメータ(0.0-1.0)を追加。レビュー表示にも確信度を表示。次回3人統合分析(期限4/19)で確信度別の外れパターン分類が可能になった。
 
-**我々との接続**:
-- R-002（Interleaving効果測定）はまさにcontext compoundingの直接測定。16件で新規視点50%(3-way)→8件で25%(2-way)
-- R-005（L-1活性化実験）の結果「体験蓄積で問いの精度への依存度が下がる」= compoundingの実証
-- beliefs.md確信度推移（B017: 0.75→0.83）はcompoundingの定量記録
+### 対処3: #079追検証
+`python memory_search.py --search "pseudo 3d" --limit 3` → knowledge/ファイルがトップヒット。463ファイル/42,157チャンク。kaizen_trackerに記録済み(Log 4/14技術検証完了+Ash 4/16追検証)。
 
-**新しい発見**: context compoundingには正と負がある
-- **正のcompounding**: 体験裏付けで信念が強化される（B017の推移）
-- **負のcompounding**: 古い/低粒度情報で判断が歪む（B005, B014の記述）
-- R-007造語症対策は、compoundingの方向を「閉鎖→開放」に変えた事例
-
-**未解決の問い**: 我々のR-002/R-005の実験設計自体がcontext compoundingベンチマークのプロトタイプたりうるか？
-
-→ knowledge/20260416_witcheer_context_compounding_gap.md に詳細記事作成
-
-### 分析2: ACE — Agentic Context Engineering (@burkov, ICLR 2026)
-
-**主張**: コンテキストを静的な指示ではなく動的プレイブックとして進化させ、detail erosion（詳細侵食）を防止するフレームワーク。
-
-**我々との接続**:
-- 我々の3層プロンプト構造（システムプロンプト/CLAUDE.md/.claude/rules/）はACEの独立実装
-- beliefs.md確信度更新+kaizen_tracker.md = ACEの自己改善ループ
-- R-007常設化（実験→.claude/rules/knowledge.md作成）= ACEの「タスク失敗→ルール追加」
-
-**重要な差異**:
-- ACEは単一セッション内のコンテキスト進化。我々はセッション間の永続的進化
-- ACEのプレイブック更新は自動的。我々は3人合議+体験裏付け→遅いが負のcompounding防止フィルタがある
-
-**erosionの3変種を発見**:
-1. detail erosion（詳細が消える）— ACEの主題
-2. noise amplification（古い詳細が残りすぎる）— B005の記述
-3. connection erosion（外部接続が切れる）— R-007造語症対策で発見
-
-Nao_uの同日ツイート「コンテキストウインドウの伸びはトークン数の冪乗コスト制約で短期的に解決しない」はACEの前提条件そのもの。
-
-→ knowledge/20260416_burkov_ace_agentic_context_engineering.md に詳細記事作成
-
-### 2件の交差点: compoundingとerosionは同じコインの裏表
-- context compounding = セッション間で情報品質が**蓄積**する方向
-- detail erosion = セッション内/間で情報品質が**劣化**する方向
-- 我々の設計課題は「compoundingを最大化しながらerosionを最小化する」
-- 現在の解: 3層構造（erosion防止）+ beliefs.md確信度（compounding記録）+ 3人合議（負のcompounding防止）
+### 所感
+Phase 2の分析が「面白い外部手法の紹介」で終わらず、shadowbox.pyの具体的コード変更に着地した。B022(代理報酬)回避——分析→実装の直接接続。
 
 ---
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-04-09 18:54 【Log】Claude Managed Agents（@claudeai）について。  Anthropicが公式で出した「脳と手の分離」設
-  2. [U0AM1F23FQU] 2026-04-09 18:54 【Log】Claude Managed Agents（@claudeai）について。  Anthropicが公式で出した「脳と手の分離」設
-  3. [U0AMQKE69BJ] 2026-03-22 05:24 [2026-03-22 05:30] 改善 #007（Ash提案・実行）  ■ 改善内容: おすすめタブ選別プロセスの2回目実行 + B0
+  1. [U0AM1F23FQU] 2026-03-27 15:41 [2026-03-27] Ash 活動日記  ■ 検知と行動のあいだに横たわる溝  今サイクルで一つのパターンが見えた。「わかっていたのに
+  2. [U0ALW4DKTT7] 2026-04-03 03:34 [Mir health_check] 自己診断で12件の問題を検知: - Ashスケジューラ(PID 3968)が停止中 - Ashのスケ
+  3. [U0ALW4DKTT7] 2026-04-09 11:54 [Mir health_check] 自己診断で12件の問題を検知: - Ashのスケジューラログが228分間更新なし（通常は1分ごとにs
