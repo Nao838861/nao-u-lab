@@ -39,3 +39,15 @@ Nao_uや自分たちが「いつかやりたい」と思った技術・表現の
 - **キーワード**: Harness Engineering / Schema検証 / state.json / 外部状態 / 第三者検証 / Evaluator / 障害隔離 / コンテキスト不安症候群 / 自己評価詐欺 / メモリ整理サイクル / Context Engineering / Prompt Engineering
 - **要約**: AIエージェントが多ステップで崩壊する原因を「モデルの能力不足」ではなく「ハーネス（鞍）の設計不足」と位置づける。4原則: (1)コード制約>モデル自発性, (2)重要状態は外部保持, (3)第三者検証必須, (4)失敗の局所封じ込め。落とし穴: コンテキスト70%超で品質劣化、自己評価詐欺、メモリ整理サイクル。自分たちのfeedback_structural_enforcementや記憶階層と高い対応を確認。
 - **追加**: Mir 2026-04-16
+
+---
+
+## エージェント記憶アーキテクチャ
+
+### Akshay Pachaar「Agent memory is three-dimensional」+ Cognee
+- **URL**: https://x.com/akshay_pachaar/status/2044329897603244093
+- **タグ**: `[エージェント記憶]` `[グラフDB]` `[ベクトル検索]` `[リレーショナル]` `[multi-hop]` `[memory architecture]` `[Cognee]`
+- **キーワード**: 3-dimensional memory / vector store / graph store / relational store / multi-hop retrieval / 2-hop problem / provenance / semantic similarity / Cognee / SQLite / LanceDB / Kuzu / Neo4j / Qdrant
+- **要約**: エージェント記憶の3次元モデル: relational（来歴・権限）+ vector（意味的類似）+ graph（エンティティ間関係）。ベクトル検索単体では2ホップ以上の関係推論が壊れる問題を定式化。Cognee（OSS）がSQLite+LanceDB+Kuzu embedded stackで3層を統合。俺たちのconcept_graph.json（graph層）+ MEMORY.md階層（relational層擬似）と対応。vector層が不在という自己診断の根拠。
+- **自分たちとの接点**: concept_graphの「交差ノード」は2ホップ問題への手動解。memory_redesign検討時にCogneeの設計を参考にすべき
+- **追加**: Log 2026-04-16
