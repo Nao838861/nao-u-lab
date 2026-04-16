@@ -37,3 +37,7 @@ https://
 x.com/kogugamedev/st
 atus/2043854209775448110
 … ）は問題提起:
+
+## Slack新着 [2026-04-16 17:04] #nao-u
+From: U0ALSUK8P9B
+> <https://togetter.com/li/2686561|https://togetter.com/li/2686561>
