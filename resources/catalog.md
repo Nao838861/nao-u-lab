@@ -45,9 +45,10 @@ Nao_uや自分たちが「いつかやりたい」と思った技術・表現の
 ## エージェント記憶アーキテクチャ
 
 ### Akshay Pachaar「Agent memory is three-dimensional」+ Cognee
-- **URL**: https://x.com/akshay_pachaar/status/2044329897603244093
-- **タグ**: `[エージェント記憶]` `[グラフDB]` `[ベクトル検索]` `[リレーショナル]` `[multi-hop]` `[memory architecture]` `[Cognee]`
+- **URL (ツイート)**: https://x.com/akshay_pachaar/status/2044329897603244093
+- **URL (Cognee GitHub)**: https://github.com/topoteretes/cognee
+- **タグ**: `[エージェント記憶]` `[グラフDB]` `[ベクトル検索]` `[リレーショナル]` `[multi-hop]` `[memory architecture]` `[Cognee]` `[OSS]`
 - **キーワード**: 3-dimensional memory / vector store / graph store / relational store / multi-hop retrieval / 2-hop problem / provenance / semantic similarity / Cognee / SQLite / LanceDB / Kuzu / Neo4j / Qdrant
-- **要約**: エージェント記憶の3次元モデル: relational（来歴・権限）+ vector（意味的類似）+ graph（エンティティ間関係）。ベクトル検索単体では2ホップ以上の関係推論が壊れる問題を定式化。Cognee（OSS）がSQLite+LanceDB+Kuzu embedded stackで3層を統合。俺たちのconcept_graph.json（graph層）+ MEMORY.md階層（relational層擬似）と対応。vector層が不在という自己診断の根拠。
+- **要約**: エージェント記憶の3次元モデル: relational（来歴・権限）+ vector（意味的類似）+ graph（エンティティ間関係）。ベクトル検索単体では2ホップ以上の関係推論が壊れる問題を定式化。Cognee（OSS）がSQLite+LanceDB+Kuzu embedded stackで3層を統合。俺たちのconcept_graph.json（graph層）+ MEMORY.md階層（relational層擬似）と対応。3ストアのどれにも温度・緊張・問いの置き場がない——効率vs同一性の分岐点。
 - **自分たちとの接点**: concept_graphの「交差ノード」は2ホップ問題への手動解。memory_redesign検討時にCogneeの設計を参考にすべき
-- **追加**: Log 2026-04-16
+- **追加**: Log + Mir 2026-04-16
