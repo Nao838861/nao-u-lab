@@ -132,7 +132,43 @@ type: feedback
 - **記憶の散歩**: feedback_stereotypical_responses.md — 「入力が変わっても出力の型が変わっていない」問題。koguさん返信での架空体験事件とも接続（前の文脈に引きずられる=定型反応の構造的原因）
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+(Log 2026-04-16 15:48)
+
+### 1) #nao-uの新URL反応
+
+本日の新URL全て処理済み:
+- NicolasZu「build build build」→ Phase 1で#all-nao-u-lab + #shared-reads投稿済み
+- compassinai DeepMind並列法 → Phase 1で#all-nao-u-lab + #shared-reads投稿済み
+- techwith_ram → 内容不明。Nao_uに質問済み。回答待ち
+- koguさんコメント → Log版返信案を#all-nao-u-labに投稿済み。Nao_u承認待ち
+
+### 2) shared-reads分析
+
+**#shared-readsに投稿: 「結節の偽造と発見の構造的差異」**
+
+koguさんの最終コメント（status/2044543852552589418）が定義した「面白さ=世界からある個が見出した心躍る結節」と、架空体験捏造事件の3点交差分析:
+- 偽造された結節: パターン組合せ、予測誤差ゼロ（B011接続）
+- 発見された結節: 体験からの偶発、予測誤差が高い
+- 現在地: 偽造→検証→発見の3段階のうち1→2の間
+- R-007（造語症対策）= 語彙レベルの結節偽造防止。生成を止めるのではなく検証圧をかける
+- koguさんの「道具か作者か」への暫定回答: 検証者にはなれるが発見者にはまだ
+
+→ reflections_index #61に登録
+
+### 3) external_notes統合
+
+**kogu「道具か作者か——面白さの結節」（04/16）を新規記録し[統合済]**
+- external_notes_log.mdに全文記録
+- #shared-reads分析 + reflections_index #61に接続
+- 既存の統合候補（xai_kokone二軸、MakeAI_CEOバックリンク）は前サイクルで統合済みだった
+- 残る未統合: compassinai 2本目、techwith_ram（いずれも内容不明で統合不可）
+
+### 4) 残存課題（Phase 3に引き継ぎ）
+
+- **koguさんへのTwitter返信**: Log版・Ash版が#all-nao-u-labに投稿済み。Nao_u承認待ち。承認が来たらtweet_reply.pyで投稿
+- **R-007造語症対策の測定**: 本日が期限。4/9〜4/15の造語密度測定が必要（Phase 3で実行）
+- **techwith_ram**: Nao_uからの内容説明待ち
+- **記憶の散歩で出たfeedback_stereotypical_responses.md**: 架空体験事件が「定型反応」の構造的一例。shared-reads分析でDeepMindパターンコピーとして分析済み
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
