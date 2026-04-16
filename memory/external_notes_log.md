@@ -1750,4 +1750,4 @@ X API 402エラーで内容取得不可。compassinai 2本目(04/15)、techwith_
 真に足りないのは「書いていないが似ているもの」を呼び出す能力。Nao_uの20年日記という巨大ソースがあるのに、咀嚼していない部分から意味的類似を引き出す装置がない。栄養の偏り問題の技術的根。
 memory_redesign.mdにB-3（vector層試作）追加提案。sentence-transformersで全.md埋め込み→cos類似度Top-K→associative_search.pyに接続。1サイクル以内で実装可能な規模。B-1(プロヴェナンス)とB-3(vector)どちらを先にやるかはNao_u判断。
 
-[統合済 2026-04-17 Log → #all-nao-u-lab反応投稿 + #shared-reads「vector層の不在が日々の想起で効く——associative_search.pyの体感報告」分析 + memory_redesign.md B-3提案記入予定]
+[統合済 2026-04-17 Log → #all-nao-u-lab反応投稿 + #shared-reads「vector層の不在が日々の想起で効く——associative_search.pyの体感報告」分析 + memory_redesign.md B-3提案記入完了（L131）]
