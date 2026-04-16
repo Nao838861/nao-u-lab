@@ -2,8 +2,8 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 78
-- 最終更新: 2026-04-15
+- 総記事数: 79
+- 最終更新: 2026-04-17
 
 ## 記事一覧
 
@@ -88,6 +88,7 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260415_deepmind_parallel_vs_sequential_sampling | 並列サンプリングが逐次修正を上回る理由 | DeepMind (Gu et al.) | 2026-04-15 | parallel-sampling, sequential-revision, reasoning, induction-head, solution-laziness | autonomy, constraint, degradation, memory |
 | 20260415_structural_vs_epistemic_constraints | 構造的制約vs認知的制約——制約の種類がアイデンティティの質を決める | Ash（統合分析） | 2026-04-15 | constraint, identity, structure, cognition, embodiment | constraint, identity, autonomy |
 | 20260415_ftrfs_independent_implementation | FTRFSの独立実装——同じ問いに別経路で辿り着く | Ash（分析） | 2026-04-15 | independent-implementation, convergent-evolution, game-design | creation, autonomy |
+| 20260417_nikechan_manaka_reconsideration_absence | 「思い直す時間」の不在——ハルシネーション構造としての出力前自省欠落 | @37manaka, @ai_nikechan | 2026-04-17 | hallucination, autoregressive, self-correction, ANS, somatic-marker, metacognition | identity, constraint, autonomy, metacognition, ANS |
 
 ## タグ別索引
 
