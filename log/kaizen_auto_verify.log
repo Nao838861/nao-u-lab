@@ -8534,3 +8534,21 @@
   ❌ `python memory_search.py --stats`
       /bin/sh: python: command not found
   → 総合: 一部失敗あり
+
+=== 自動検証実行 [2026-04-17 11:29:04] ===
+
+### #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加
+  状態: 検証完了（2026-04-14 Log技術検証 + 2026-04-16 Ash追検証）。463ファイル/42,157チャンク。実用確認は自然発生待ち / 期限: 2026-04-15
+  ✅ `python memory_search.py --search "pseudo 3d" --limit 3`
+      Results for 'pseudo 3d' (3 hits):
+      
+        [knowledge\20260408_lou_pseudo3d_racing.md] knowledge\20260408_lou_pseudo3d_racing.md:1-11
+          # Lou's >>>Pseudo<<< >>>3d<<< Page — ラスタースクロールによる疑似3Dレースゲームの包括的技術解説
+      - source: http://www.extentofthejam.com/>>>pseudo<<</
+  ✅ `python memory_search.py --stats`
+      Total chunks: 42157
+      Dated chunks: 39516 (2004-06-17 ~ 2026-04-15)
+      Last build: 2026-04-15T01:25:36.006702
+      Files indexed: 463
+      
+  → 総合: 全コマンド成功
