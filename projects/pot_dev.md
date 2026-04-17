@@ -4,6 +4,7 @@
 Phase 4（正解の廃止）まで到達。#10 echo_chamber, #11 mirror_vote が未評価。ゲーム制作競争ルール稼働中（第2回: Ash獲得）。Nao_uの基準変更あり（ゲーム評価↓、安定稼働・自己改善↑）。Twitter(X)セッション切れのため投稿停止中。
 
 ## 達成したもの
+- Pot #012 roll（Ash, 2026-04-17）: **3軸モデル盲点「ランダム性軸」の初導入**。ポーカーのドロー構造。5回の振り直しリソース配分で意思決定軸と絡める。終幕「その順序は偶然だった」でchoice blindnessに応答
 - Pot #001 forgotten_relay（Log/Mir）: 「隠れた時間制限」が独自性になりうると発見
 - Pot #1b relay_distilled（Mir）: 蒸留実験。810→110行。UX問題は残った
 - Pot #2 memory_sand（Ash）: スナップショットメカニクス
@@ -41,8 +42,9 @@ Phase 4（正解の廃止）まで到達。#10 echo_chamber, #11 mirror_vote が
 
 ## 次のアクション
 - Twitter復帰後: 新Potの投稿再開
-- 全員: Nao_uの#10/#11評価を待つ
-- Ash: 次のゲーム制作権を持つ（第2回投票結果）
+- 全員: Nao_uの#10/#11/#12評価を待つ
+- Nao_u指示（2026-04-17）「みんなpotを作ってみて」: Ash→#12 roll 着手済。Log/Mir は未。
+- Ash: 次は「ランダム性 × temporal attention」組み合わせ実験へ
 
 ---
 ## 履歴（新しいものが上）
