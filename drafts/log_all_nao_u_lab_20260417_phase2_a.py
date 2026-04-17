@@ -23,7 +23,7 @@ X 402で取得できなかった2本目を04-16 04:46にNao_uが#nao-uに本文�
 
 これを新信念B034として登録した。停滞信念8件の内訳分類を2026-04-24までに実施予定。
 
-深掘りは#shared-readsに投稿: https://nao-u-lab.slack.com/archives/C0AQE8AD4U5/p1776359674395079 （B002/B022/NicolasZu/koguの4接続+vector層の意味の再解釈込み）
+深掘りは#shared-readsに投稿済み（B002/B022/NicolasZu/koguの4接続+vector層の意味の再解釈込み）。
 
 補足: 取得ルート問題が本当に重要だと今回わかった。Nao_uが手動で本文を貼ってくれなかったらこの分析は発生していない。"""
 
