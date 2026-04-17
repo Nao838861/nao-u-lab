@@ -202,6 +202,10 @@ def phase_gather():
         "2. projects/INDEX.mdのActiveプロジェクトの現状を確認\n"
         "3. log/twitter_recommended_*.txtの最新ファイルを確認し、注目ツイートがあればメモ\n"
         "4. memory/beliefs.mdの低確信度項目を1-2件確認\n"
+        "5. **memory_search.pyで過去の関連情報を検索**: 上記1-4で浮かんだキーワードを1-2個選び"
+        " `python memory_search.py --search \"<keyword>\" --limit 5` を実行。"
+        "knowledge/や過去日記に関連蓄積があれば見出しをメモ（4.7長文脈劣化対策——"
+        "contextに入れず検索経由で主経路化。@birdaboベンチ根拠: 1M contextで78.3%→32.2%劣化、R-007造語症対策の延長線上）\n"
         "\n既にlog/cycle_staging.mdにpre-check結果が書いてある。消さずに追記すること。\n"
         "※判断や対処は次のPhaseで行う。このフェーズでは「何がある」を集めるだけ。"
     )

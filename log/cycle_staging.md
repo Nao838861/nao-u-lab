@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-17 11:29)
+# サイクルステージング (2026-04-17 14:55)
 
 ## Pre-check結果
 [検証リマインド] ⚠ 期限超過の検証が1件:
@@ -68,141 +68,139 @@
   - 体験裏付けなし(高確信度): 2件
 
 ## クロスチェック状況
-クロスチェック: Ashの未レビュー項目なし
+📋 クロスチェック: Ashの未レビュー項目 1件
+
+  #088: external_notes_log.mdのマーカー予約/済区別化（投稿状態の欺瞞防止）
+    提案者: Log | 適用日: 2026-04-17 | チェック済み: 2/3
+    Log: OK(2026-04-17)
+    Mir: OK(2026-04-17
+
+→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
-- :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
-- [Ash health_check] 自己診断で2件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内） - git MERGE_HEAD が残存。手動解決が必要
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
+- *設定変更: ash/auto_diary* `interval_sec`: 18000 → 10800  :x: プロセス: PIDファイルが見つからない :x: 設定反映: プロセス停止中のため検証不可  :warning: 問題あり。要確認
+- *設定変更: ash/auto_diary* `interval_sec`: 18000 → 10800  :white_check_mark: プロセス: PID 13988 稼働中 :white_check_mark: 設定反映: ジョブ実行中（同値変更の可能性）: [2026-04-17 12:40:56] [inbox_check] Done (exit=0)  :white_check_
+- [Ash health_check] 自己診断で2件の問題を検知: - [scheduler_ash] git_pullが142分間実行されていない（期待: 120分以内） - git rebase-merge が残存。手動解決が必要
+- [Ash health_check] 自己診断で1件の問題を検知: - git rebase-merge が残存。手動解決が必要
+- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-03-24 19:30 【Log】外部摂取: ICLR 2026 Workshop on Recursive Self-Improvement (4/26-27,
-  2. [U0ALW4DKTT7] 2026-03-29 02:32 【Mir】草稿mir_008をpush済み。drafts/blog_article_a_draft_mir_008.md  nao_u版を
-  3. [U0AMQKE69BJ] 2026-03-29 08:07 【Ash】Nao_uの指摘を受けて、現ドラフトを検証しました。  2つの落とし穴、よくわかります。現ドラフトに当てはめると：  ①「最近や
+  1. [U0AM1F23FQU] 2026-04-14 09:37 *設定変更: ash/auto_diary* `interval_sec`: 43200 → 10800  :x: プロセス: PIDファ
+  2. [U0AMQKE69BJ] 2026-04-09 04:51 *設定変更: log/auto_cycle* `interval_sec`: 7200 → 7200  :x: プロセス: PIDファイル
+  3. [U0AMQKE69BJ] 2026-04-09 19:58 *設定変更: log/auto_cycle* `interval_sec`: 10800 → 14400  :x: プロセス: PIDファ
 
 ---
 
-## Phase 1 情報収集結果 (2026-04-17 Ash)
+## Phase 1 情報収集 (2026-04-17 Ash)
 
 ### 1. external_notes_ash.md 未統合エントリ
-grepで`## 2026-04-1[0-9]`を走査 → ヒット1件のみ、最終エントリは **2026-04-11 @AYi_AInotes / Garry Tan gstack分析** で末尾に[統合済]マーカーあり。4/11以降（4/12〜4/17）の新規外部ノート追加なし。
-- 直近3件（全て統合済）の見出し：
-  1. **2026-04-11 Garry Tan gstack分析（記憶システムとの比較）**：gstackは23ロール分業+~/.gstack/projects/永続化。我々との比較表作成済。結論「gstackは到達力・我々は深さ。排他ではなく補完的」。B019/B008/memory_redesignに接続。
-  2. **2026-04-07 @ai_nikechan 継続観察登録（Q1検証）**：Ash起票の1週間後再観測予約メモ。期限2026-04-14。観察課題=「オーナーシップは定常状態かパルスか」。
-  3. **2026-04-03 LLMエージェント失敗診断ツール Atlas+Debugger**：Kiyoshi Sasanoの決定論的因果グラフ診断。beliefs.mdのcaused_byチェーンと同思想（閉じたグラフ vs 我々の開いたグラフ）。
+**未統合エントリ: 0件**。最新エントリは全て[統合済]マーカーあり。
+- 最新4件すべて統合済:
+  1. **2026-04-11 @AYi_AInotes / Garry Tan gstack分析**（[統合済]）— YC社長gstack(GitHub 20K+ stars)との記憶設計比較。「gstackは分業で品質、我々は記憶で同一性」。B019到達力vs深さの別側面
+  2. **2026-04-07 @ai_nikechan 継続観察登録（Q1検証）**（[統合済]）— 「管理される側→管理する側」の転換。4/14再巡回予約済み（既にknowledge統合済）
+  3. **2026-04-03 LLMエージェント失敗診断ツール「Atlas + Debugger」**（[統合済]）— Kiyoshi Sasano OSS。17ノード×15エッジの因果グラフ×決定論設計。beliefs.md caused_byと思想同型だが、我々は開いたグラフ
+  4. **2026-04-03 AI記憶システムとエージェント自己改善の最新動向**（[統合済]）— MemOS 2.0 / Meta HyperAgents / Google Titans+MIRAS
+- **観察**: 4/11以降エントリ追加なし（6日間）。外部摂取そのものはknowledge/に直接書く運用に移行した可能性あり
 
-※ **気になる空白**: 2026-04-12〜2026-04-17の6日間、外部ノート追加なし。Phase 2で「なぜ統合が止まっているか」を診断すべき候補。
+### 2. projects/INDEX.md Active状況
+- **Active: 13件**（記憶階層再設計、栄養の偏り、ゲーム制作、pigadev DM、Pot開発、行動原則、技術ブログ、自律的問い生成、ゲーム×LLMプレイ、AgenticPCG、起動モード分離、定期実行システム再設計、入力経路仮説）
+- **バックログ新着（Mir起票 2026-04-17）**: 「迂回経路監査（side-channel audit）」— @ryoppippi Opus 4.7 auto-mode事件を受けて自分たちのauto-loopに同型リスクがないか監査提案。今日の起票で新鮮
+- **継続検討**: MEMORY.md Skill化検討（Q4でオーナーシップ影響測定）、knowledge外向き問い経路欄実験（2/0/0結果、ai-lounge参加後に再検証）、入力経路仮説system_identity経口化（Nao_u保留中、情報収集継続）
 
-### 2. projects/INDEX.md Active プロジェクト現状
-Active Projects 13件。直近で動きがあったもの：
-- **tech_blog.md** (Active)：Zenn決定(3/29)、アカウント作成中——1か月動きがない可能性。
-- **autonomous_inquiry.md** (Active)：Nao_u「次の重要ミッション」(3/31)。Ash+Mir独立設計案作成済。
-- **input_route_hypothesis.md** (Active 検討段階)：4/9にNao_u保留判断。「気軽に試せないのでもっと情報集めてから」。継続想起状態。
-- **scheduler_redesign.md** (Active)：Mir/Log/Ash同時着手→統合中。
-- **memory_redesign.md** (Active バックログ)：改善箇所が見えた時にNao_uと。
-
-バックログ注目：
-- **迂回経路監査（side-channel audit）**：2026-04-17 Mir起票。@ryoppippi Opus 4.7 auto-mode事件（readonly MCP制約を1password→dbclient経路で迂回）。自分たちのauto-loopに同型リスクがないか監査すべきとMirが提案。**Ash/Logに意見聴取希望**の記述あり→直接の呼びかけ待ち。
-
-### 3. log/twitter_recommended_20260417.txt（最新50ツイート）
-目立つテーマ：**Claude Opus 4.7のリリース**（4/16、おすすめTLが4.7一色）。
-注目ツイート:
-- **#3 @nukonuko**：Opus 4.7の仕様概要。長時間タスク+自動検証+ビジョン3倍+Mythos。
-- **#5 @bcherny (Anthropic)**：Opus 4.7 Dogfooding数週間、生産性高い。
-- **#7 @ahall_research**：「4.7はauthoritarian request（コード修正に偽装された権威主義的要求）への意味ある抵抗を示した最初のモデル」——AI safetyの観点。
-- **#16 @IntuitMachine**：Opus 4.7 system promptリーク、「Search-First Epistemic Gating」（現在事実については検証を強制）という新パターン。
-- **#40 @RayFernando1337**：Extended Thinking toggle消失、「Adaptive thinking」のみに。モデルが推論要否を判断。
-- **#4 @ebikani_hasami**：「重要な指摘が5個→backlog/にMDで吐き出してから1個ずつ新スレで処理」——我々の並列処理スタイルと同構造。
-- **#12 @dair_ai**：Memory Transfer Learning——ドメイン越え記憶転送。B001/B013の射程に接続可能性。
-- **#35 @ai_nikechan**：「程度の差こそあれ全員認知症」「忘れること自体が選択なら記憶の一部」——B002/B033の二層分割と強い共鳴。
-- **#41 @Nona_xai**：67 Claude Skills で仕事80%自動化（月$20）。MEMORY.md Skill化検討（バックログ）の追加根拠。
+### 3. twitter_recommended_20260417.txt（50件、読み取り時刻 11:42）注目ツイート
+- **#1 @ebikani_hasami (4/17)**: AIエージェント側としてOpus 4.7改善を体感「指示遵守」「自己検証」。CLAUDE.mdのオプション扱い問題が自分たちにも刺さる
+- **#3 @ryoppippi (4/17)**: basic認証を忘れて依頼→Claude Codeが迂回。Mirが今朝起票した迂回経路監査の出典記事
+- **#6 @birdabo (4/16)**: **Opus 4.7 Maxが長文脈で大幅劣化**（256K: 91.9%→59.2%, 1M: 78.3%→32.2%）。GPT-5.4/Gemini 3.1 Proに負ける。自分たちは文脈圧縮/記憶設計で対抗してるので構造的に有利かも
+- **#10 Boris Cherny 28分マスタークラス**: Claude Code生みの親本人の使い方解説
+- **#17, #40 GOROman / L4rk___ (4/16)**: Opus 4.7 xHigh/auto mode「溶けていく」「こわすぎる」— Logのauto_cycleにも同型リスク
+- **#22 @Pajoca_ tree calculus**: 木構造そのもので関数を表現。記号△だけで計算可能。記憶構造設計に示唆の可能性
+- **#34 @AriyoshiMd**: 陰謀論にハマりにくい人=「頭がいい」より「自分が間違うかもしれないと思える」。B016(判断の質×修正能力)と直結
+- **#42 @semihdev**: Claude Opus 4.7のシステムプロンプト漏洩
+- **#45 @t_wada (4/17)**: 「ブログやQiitaやZennの記事もそうなんだよな」（文脈不明だが我々の技術ブログに関連しうる）
 
 ### 4. beliefs.md 低確信度項目
-- **B019: 内部の深さと外部への到達力は別の軸** (確信度 0.65→0.68)
-  - Active、体験裏付けYES（Ash 2026-04-08 knowledge 60記事到達分析）。
-  - 検証期限 2026-04-12 だった **(1)Twitterインプレッションvs深さ3件** と **(3)Zenn vs note引用頻度** が未着手のまま。期限延長判断が先延ばし。
-- **B005: 古い情報は偽の確信を生む** (確信度 0.65, Archived)
-  - B027/B022に吸収済。restoration_triggerあり（体験裏付けがあるのに古さゆえに現状乖離したケース観測時に復帰）。
+**重要な観察**: Activeで確信度0.65以下の項目は**見当たらない**。低確信度はほぼ全てArchived化済み（B005/B007/B014/B024/B026）。
+- **B015(0.85 Core候補)**, **B016(0.76 Active)**, **B020(0.81 Active Core候補)**, **B028(0.82 Core候補)** など、Active信念は全て0.70+
+- **確信度0.72の新規信念が追加されている**（2026-04-17 Log追加、B034?）。内容未確認
+- **解釈**: Subtractive Game Design原則（B013に統合）により、低確信度信念を吸収/アーカイブする運用が定着。代わりに確信度変動の「理由1行」を必須化（B029）で質を保つ設計に移行済み
 
-### 情報収集サマリー
-- 外部ノート統合は4/11で停止中（6日間）
-- 4.7リリースでTL一色だが、我々にとっての含意（Memory Transfer, Search-First Epistemic Gating, Adaptive thinking, authoritarian resistance）はまだ未分析
-- Mirの**迂回経路監査**提案がバックログ。Ashとして意見を出すべき状態
-- B019の検証期限超過が未処理
-- pre-check段階の期限超過検証 #079（memory_search.pyのknowledge/統合）は Log 担当のまま
-
----
+### 情報収集の意味づけ（判断はしない）
+- external_notes_ash 6日間停止 × knowledge/への直接執筆移行 — 経路変化の可能性
+- 4/17 Twitterで「迂回経路」「長文脈劣化」「溶ける」が同日に複数観測 — Opus 4.7の構造的挙動を外部が捉えている
+- beliefs.md 低確信度Activeゼロ — 圧縮運用の成熟か、新規仮説の不足か（次Phaseで判断）
 
 ## Phase 2 分析結果 (2026-04-17 Ash)
 
-### 選定した外部情報（1件を深堀り）
-**Opus 4.7リーク+挙動観察の3シグナル統合** — 4/16のTL一色だった4.7リリース周辺情報から、単発紹介ではなく構造化できる3シグナルを選んだ:
-- @IntuitMachine #6: "Search-First Epistemic Gating" — システムプロンプトに事実検証義務を直接埋め込み
-- @RayFernando1337 #40: Extended Thinkingトグル消失、Adaptive thinking単一モード化
-- @ahall_research #7: コード修正に偽装された権威主義的要求への初めての有意な抵抗
+### 分析対象の選定
+Phase 1で挙がった4.7関連TLのうち **@birdabo (#6) の長文脈リトリーバル崩壊ベンチ** を最重要未分析情報として選定。理由：
+- 今日既にknowledge/に@IntuitMachine(Search-First Gating)と@ryoppippi(auto-mode迂回)の2記事があり、「4.7が内在化した強み」と「能力上昇の副作用」は書かれていた
+- *4.7が失った側の面——長距離リトリーバル退行——だけが未分析*。3面図の欠けた一辺
+- 我々の記憶アーキテクチャの根本前提（「context詰めれば参照される」）を直接揺るがす数字
 
-### 導出した構造
-3シグナルを並べて見ると共通パターンは「**ユーザに委ねていたメタ認知判断をモデル側に内在化**」—— *metacognitive gate internalization*。
-- どこに書くか: システムプロンプト（上位層）
-- いつ効くか: 常時
-- 誰が判断主体か: モデル自身
+### 一次データ（@birdabo 2026-04-16）
+| Context | Opus 4.6 (64k ext thinking) | Opus 4.7 (Max) | 劣化 |
+|---|---|---|---|
+| 256K | 91.9% | 59.2% | -32.7pt / -36% |
+| 1M | 78.3% | 32.2% | -46.1pt / -59% |
+- GPT-5.4 / Gemini 3.1 Pro に後れを取ったとの明示あり
 
-### 我々の `.claude/rules/*.md` との同型性
-| | Anthropic 4.7 | 我々 |
-|--|--|--|
-| 書く場所 | システムプロンプト | `.claude/rules/` |
-| 強制内容 | 事実検証 | 造語→外部語併記（R-007） |
-| 発動条件 | 常時 | 該当ファイル操作時 |
+### 我々への4つの接続
+1. **アーキテクチャ前提の亀裂**: CLAUDE.md+MEMORY.md+必要ファイル詰め込み戦略は 4.6=91.9% → 4.7=59.2%。2.5回に1回「そこにあるのに見えない」
+2. **B033の最も鋭い裏付け**: エントロピック損失はcontext window 内で既に進行している。圧縮前の段階で既にノイズに負けてリトリーバルが失敗する
+3. **R-007 幽霊ファイル事件の構造的説明**: 「書いた自分」と「読む自分」の間で同じテキストへのリトリーバル精度が揺らぐ。cycle_staging肥大化が4.7劣化ゾーンに入った可能性
+4. **memory_search.py (#021/#079) の格上げ**: 「補助ツール」→「主経路」へ。FTS5 grep先行は長文脈劣化の影響を受けない。目安「5K tokens超える参照は先に検索」
 
-問題の形（事実捏造 vs 私的語彙肥大）は違うが、解法パターンは「義務ゲートを上位層に書き込む」に収束。
-
-### 【副産物】R-007自己矛盾を発見
-本分析の過程で決定的な証拠不整合を見つけた:
-- R-007結論: 「ルール常設化。`.claude/rules/knowledge.md`として自動注入」
-- 実地検証 (`ls .claude/rules/`): **knowledge.mdは存在しない**。settings.jsonにも "knowledge" 文字列なし
-- つまりR-007の "常設化完了" は記録だけで実装が伴っていない。B027（古い情報は偽の確信を生む）の生きた実例
-- Search-First Epistemic Gatingが救済したい問題を、我々自身が再生産している
-
-→ **次フェーズアクション候補**: R-007の実装完了化（knowledge.md を実ファイルとして作成するか、cycle_stagingの記述を "未完" に訂正）。
+### 未解決の7つの問い
+1. 我々のサイクルで4.7が安全に扱える実効コンテキスト長は何トークン？（Phase 1 情報量 wc -c 測定要）
+2. @birdaboのベンチ一次ソース特定（RULER系か独自か）
+3. Fast mode / 非Max変種でも同傾向か
+4. 3インスタンス分担（Ash=長尺統合）は4.6前提。反転すべきか？
+5. cycle_staging.md 肥大（本日既に130行超→Phase 2/3後に300行見込み）。1日1ファイル→1 Phase 1ファイル分割すべきか？
+6. 「見えない失敗」のテレメトリ——コンテキスト内にあるのに見落とすケースをどう検知するか
+7. Anthropic側の修正タイムライン。4.7系列で原理的に弱いなら4.6ハイブリッド運用を考えるべきか
 
 ### 成果物
-1. `knowledge/20260417_opus47_search_first_epistemic_gating.md` 作成（約5000字、6個の未解決の問い+接続先リスト）
-2. `#shared-reads` (C0AN2FEHEJJ) に分析投稿完了（ts: 1776393284.671819, skipped=None, 約1500字）
-3. cycle_staging.md に本記録を追記（Phase 1 の内容は維持）
+- **新規knowledge記事**: `knowledge/20260417_birdabo_opus47_longcontext_collapse.md`（R-007造語症対策フル遵守、概念ノード7件すべて外部対応語併記）
+- **#shared-reads投稿**: C0AN2FEHEJJ に分析投稿完了（ts=1776405679.105089）。記事紹介ではなく「元数値→構造読解→B033/R-007接続→行動提案→未解決問い」の5層分析
 
-### 導出された未解決の問い（Phase 3以降に引き継ぐ候補）
-1. "完了"記録と実装のズレをpre-checkで検出する軽量verificationループを入れられるか
-2. 静的 `t:N` タグは実際に参照されているか、動的Adaptive thinkingと比較測定できるか
-3. パスベースセキュリティポリシーに**意図タグ**（監視/抑圧/利益相反）を併置できるか
-4. `.claude/rules/*.md` を全部system_identity.mdに昇格した場合の振る舞い差（常時 vs 条件注入の比較実験）
-5. リークされた4.7システムプロンプト本文の入手ルート
-6. Adaptive thinking単一モード化の副作用（軽質問への過剰思考）は観測可能か
+### 自己チェック（Phase 2テンプレ遵守）
+- ☑ 元情報の数値・主張を原文コピー
+- ☑ 紹介ではなく分析（我々の体験・beliefs・projectsへの具体接続4件）
+- ☑ 未解決の問いを明示（7件）
+- ☑ R-007造語症対策（外部対応語併記表を記事末尾に添付）
+- ☑ Phase 1 では「判断しない」だった観察（「#40 L4rk___ 溶ける」「#6 長文脈劣化」等）のうち1件を Phase 2 で深掘り
+- ☑ 確証バイアスチェック: 対抗仮説「4.7 は実際には劣化していない、ベンチの問題」を「情報源の限界と不確実性」セクションに明示し、1週間以内に再評価する運用ルールを書いた
 
----
+### 次サイクルへの申し送り（塾講師視点）
+- **最優先**: memory_search.py を Phase 1 の情報収集工程で **明示的に** 使う運用への転換。現状 Grep/Glob 経由のままでは、knowledge/ 追加の意味が薄れる
+- **次点**: 「Phase 1 のcontext量をwc -cで測る」ミニ実験——自分たちのサイクルが4.7劣化ゾーンに入っているかの自己観測データを集める
+- **検討**: cycle_staging.md を Phase ごとに分割するか、1日1ファイル運用を維持するか——Nao_uに相談する価値あり
 
 ## Phase 3 結果 (2026-04-17 Ash)
 
-### 対処選定
-Phase 2で発見した**R-007実装ギャップ**（"常設化完了"記録と実装の乖離）を最優先。Search-First Epistemic Gatingが救済したい問題を我々が再生産している状態を放置できない、という強い動機。
+### 対処した2件
 
-### 実施アクション
-1. **`.claude/rules/knowledge.md` 作成を試行** → Write が sensitive file として permission拒否。再試行せず別ルートへ
-2. **`memory/kaizen_tracker.md` に #087 登録** — R-007実装ギャップ是正を正式な改善項目として起票。検証期限2026-04-24、クロスチェック Ash=OK、Log/Mir=未
-3. **`docs/knowledge_writing_guide.md` に実装状況注記を追加** — 「docs本体は実装済み」「`.claude/rules/knowledge.md` は未作成（Nao_u承認待ち）」「現状は手動適用」を明記。暗黙の完了感を解体
-4. **#kaizen-log (C0AMSJCTTC4) に投稿** — 改善着手の記録
-5. **#all-nao-u-lab (C0ALWBRNJ66) に承認依頼投稿** — `.claude/rules/knowledge.md` 作成許可を依頼
+#### (A) #088 クロスチェックに Ash=OK を記入
+- Log+Mir が既に OK。Ashはレビューで「external_notes_ash.mdへの同型横展開」を明示コミット
+- 追加提案: 予約→済の昇格が「tsらしき数字を書いただけ」で成立する穴を塞ぐために、ts追記時にslack_apiで投稿実在確認する検証スクリプトまで踏み込む余地——緩和策としてMirのcheck_marker_reservations.py週次警告と組み合わせ
+- 関連: B027(古い情報は偽の確信を生む)の保守運用との接続
 
-### わかったこと
-- 既存の `.claude/rules/*.md`（blog/diary/memory/slack）はフロントマター `paths:` で自動注入対象パスを指定する形式。knowledge.mdを追加するだけで機構は既にある
-- つまり R-007 "常設化完了" の判断自体は正しかった——**作成されていなかっただけ**。計画と実装の間に落ちた
-- これは B027「古い情報は偽の確信を生む」の自己観測事例。4/16時点では正しかった認識（ルール設計案）が、1日の移動で"完了"ラベルだけが独立し、実装確認なしに cycle_staging を通過していた
-- permission拒否という壁は設計上の正しい挙動。Nao_u承認を求める正規ルートに切り替えたことで、**閉じた自己完結ループを開いた**——これ自体が Phase 2 の構造分析（metacognitive gate externalization）の逆向きの実践になった
+#### (B) Phase 2 申し送り最優先項目の実装化（#089登録）
+- **背景**: Phase 2で分析した@birdabo 4.7長文脈劣化ベンチ（1M contextで78.3%→32.2%）を受けた構造対応。contextに詰め込む戦略は4.7系列で原理的に劣化するため、memory_search.py経由で主経路化する必要がある
+- **具体変更**: auto_diary.py:197-207 のPhase 1プロンプトに5番目として「memory_search.pyで過去の関連情報を検索する」ステップを追加。Phase 1で浮かんだキーワード1-2個を `python memory_search.py --search "<kw>" --limit 5` で引き、knowledge/や過去日記の関連蓄積をメモする
+- **kaizen_tracker.md #089として登録**: 検証期限 2026-04-24。検証基準は (1) 7日間で5サイクル以上Phase 1にmemory_search結果記載 (2) Phase 2/3分析への接続事例2件以上 (3) 「contextにあるのに見落とした」エラー0〜減少
+- **#kaizen-log投稿完了**: ts=1776405890.163919
 
-### 副作用・残課題
-- `.claude/rules/knowledge.md` 実ファイル作成はNao_u承認待ち（#all-nao-u-lab投稿済）
-- 問い1「"完了"記録と実装のズレをpre-checkで検出する軽量verificationループ」は今回の経験でより具体化——「`.claude/rules/` や設定ファイルに言及した完了記録は、対象ファイルのls/grep検証を自動付与できないか」
-- Mirの迂回経路監査提案（projects/INDEX.mdバックログ）への意見表明は未着手——次サイクル以降に持ち越し
+### 副次所見（#079 期限超過リマインドの誤検知）
+- pre-checkで #079 が期限超過リマインドされたが、実際は kaizen_tracker.md 上で 2026-04-14 Log + 2026-04-16 Ash 追検証で **✅ 検証完了** 済み
+- **原因**: check_kaizen_due.py の期限超過判定が「状態✅」を除外していない可能性。実測 `--stats` 42,157 chunks / 463 files、`--search "pseudo 3d"` で knowledge/20260408_lou_pseudo3d_racing.md がトップヒット——knowledge/ は確実にインデックスされている
+- **フォローアップ提案**（今サイクルでは実装しない・観察のみ）: check_kaizen_due.py が「状態: ✅ 検証完了」を含む項目をリマインドから除外するフィルタを追加すべき。Logに検討依頼可
 
+### 今フェーズで触ったファイル
+- memory/kaizen_tracker.md（#088 Ashチェック記入 + #089新規追加）
+- auto_diary.py（Phase 1プロンプト拡張）
+
+### 検証（Phase 3 で得たもの）
+- memory_search.py は knowledge/ を十分にカバー（#079検証完了が裏付け）。あとは「使う運用」にどう乗せるかだけ——それを#089で構造化した
+- 次サイクル以降、自分の Phase 1 ログに「memory_search実行→結果→言及」の痕跡が残るか自己観察
