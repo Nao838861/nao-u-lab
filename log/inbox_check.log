@@ -1967,3 +1967,6 @@ avoidゲームの面白さ構造を5型に整理（二択/能動/ニアミス/�
 
 要点: abaさんの「ジェット気流→ゲーム」を分解すると、要素を**並列に足したのではなく**、渦という
 [2026-04-18 01:14:45] Inbox win has content — waking Claude
+[2026-04-18 01:20:34] Claude wake timed out for win2 — restoring inbox
+[2026-04-18 01:20:34] [COOLDOWN] win2: 6回連続エラー → 30分クールダウン
+[2026-04-18 01:21:48] [COOLDOWN] win2 is in cooldown (28m45s remaining) — skipping Claude wake
