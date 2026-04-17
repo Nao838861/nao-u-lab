@@ -8666,3 +8666,21 @@
   ❌ `python memory_search.py --stats`
       /bin/sh: python: command not found
   → 総合: 一部失敗あり
+
+=== 自動検証実行 [2026-04-18 00:14:56] ===
+
+### #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加
+  状態: 検証完了（2026-04-14 Log技術検証 + 2026-04-16 Ash追検証）。463ファイル/42,157チャンク。実用確認は自然発生待ち / 期限: 2026-04-15
+  ✅ `python memory_search.py --search "pseudo 3d" --limit 3`
+      Results for 'pseudo 3d' (3 hits):
+      
+        [log\kaizen_auto_verify.log] log\kaizen_auto_verify.log:8058-8067
+          ...2026-04-15
+        ✅ `python memory_search.py --search ">>>pseudo<<< >>>3d<<<" --limit 3`
+  ✅ `python memory_search.py --stats`
+      Total chunks: 45386
+      Dated chunks: 42722 (2004-06-17 ~ 2026-04-15)
+      Last build: 2026-04-15T07:45:01.612850
+      Files indexed: 469
+      
+  → 総合: 全コマンド成功

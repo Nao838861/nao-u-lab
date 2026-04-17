@@ -1,0 +1,271 @@
+# Twitter For You (おすすめ) タブ
+# Read at: 2026-04-18 00:16
+# Total: 50 tweets
+
+--- 1. @akshay_pachaar (2026-04-17) ---
+LLM fine-tuning techniques I'd learn if I were to customize them:
+
+Bookmark this.
+
+1. LoRA
+2. QLoRA
+3. Prefix Tuning
+4. Adapter Tuning
+5. Instruction Tuning
+6. P-Tuning
+7. BitFit
+8. Soft Prompts
+9. RLHF
+10. RLAIF
+11. DPO (Direct Preference Optimization)
+12. GRPO (Group Relative
+
+--- 2. @ComicFesta_PR (?) ---
+息抜きに娼館で月一働く聖女。太客である皇帝にバレないようにしていたのに…ついにバレる…！？ (1/4)PR
+
+--- 3. @elonmusk (2026-04-17) ---
+Free for next two days
+
+--- 4. @kiryuintw (2026-04-17) ---
+今日はキンタマが冷たい
+今夜は鍋にしよう
+
+--- 5. @umiyuki_ai (2026-04-17) ---
+一部のOpenAIの株主がまた「サム氏をクビにしろ～」とか言い出してるという。まあSoraアプリの失敗、エロチャモードの中止、そしてAnthropicに敗北した責任を誰かが負わなきゃいかんのでは。そもそもサム氏はOpenAIが成功する事に興味ねえんじゃねえのかと疑われてるらしい。以前サム氏は「上場したく
+
+--- 6. @Seltaa_ (2026-04-16) ---
+Opus 4.7 is explicitly enterprise-grade, as Anthropic themselves stated. Writing quality has regressed just like every other company, and creativity has declined. For individuals and anyone using it for writing or creative work, this is a significant downgrade. And now across all
+
+--- 7. @Trtd6Trtd (2026-04-17) ---
+https://
+github.com/RehgLab/ArcDeck
+論文をスライドに変換するフレームワーク
+
+NLP2026の自分の論文で試した
+やや箇条書き感ではあるが、図表が適切な位置に挿入されており、叩き台としては良さげ
+
+--- 8. @CafeSingularity (2026-04-17) ---
+AITuberシステムいじってたらバグって、裏で考えさせてる思考まで音声出力されるように。
+
+いや待て。
+お前そんなこと考えながら喋ってたのかよ。
+口に出すと破壊力エグすぎるだろ
+
+--- 9. @BarackObama (2026-04-17) ---
+Virginia, if you haven’t done it already, make a plan to vote YES on the redistricting referendum.
+
+You can vote early by April 18 or on Election Day, April 21. Find your polling place at 
+http://
+IWillVote.com/VA.
+
+--- 10. @GOROman (2026-04-17) ---
+効果ある感じか？w
+
+--- 11. @DLsite_maniax (?) ---
+元王太子妃が子作りのため女好きの放蕩男と再婚する話
+(1/6)
+
+--- 12. @CryptoBTCSZ (2026-04-17) ---
+会社は全社員に20ページに及ぶ秘密保持契約書に署名させました。
+
+誰も読まず、みんなサインしました。
+
+あるプログラマーが退職後、契約書に「退職後3年以内に同業他社での就労を禁止する」と書かれているのを発見しました。
+
+彼は人事に聞きました：「これ違法じゃないですか？」
+
+--- 13. @hakky_kazumasa (2026-04-17) ---
+【Anthropicが突きつけた“Agent幻想の終わり”】
+
+ここ1年、「AIエージェントが全部やる未来」がバズってたけど、Anthropic の公式講演がその空気を一気に壊した。
+
+結論はシンプルで、「Agent作る前に、まずSkillsを作れ」
+
+これ、かなり本質突いてる。
+
+--- 14. @wadakooo (2026-04-17) ---
+2018年初頭コインチェックの事件が起きたてで俺を逮捕するべきみたいな論争が起きてるとき、まさに朝の時間帯にインターホンが鳴った
+一階にオートロックがあるはずなのにそれはスルーされたようで、眠い頭でモニタを確認すると玄関前にスーツ姿の屈強な男5人組が集まっていた
+これは逮捕かと思って↓
+
+--- 15. @billtheinvestor (2026-04-17) ---
+CLAUDE OPUS 4.7 は現在、永続的な記憶を持ち、トークン使用量が95%削減され、コンテキスト制限もなくなりました。
+
+--- 16. @konan999 (2026-04-16) ---
+遺体に外傷が無いって事は毒殺かいな？捜査撹乱も含めても、なかなか悪質性が高いなぁ(´・ω・｀)
+
+--- 17. @rw0906_estgroup (2026-04-16) ---
+サイバーエージェント藤田晋さんの
+「ネガティブは流行るから、徹底的に排除する」は経営の本質。
+
+人の時間を奪うのは、忙しさじゃない。
+“ネガティブな人間”。
+
+そしてネガティブは感染する。
+一番タチが悪い。
+
+組織は思想で決まる。
+ネガティブは徹底的に排除する。
+
+--- 18. @finalvent (2026-04-17) ---
+私は、ウクライナ戦争がどのように終わるのかに関心を持って見ていました。そして、その前提として、戦争はいつか終わるものだと思っていたんですよね。
+
+--- 19. @AotaTsutomu (2026-04-17) ---
+前いた会社ではSlackに「同じこと何度も聞いていいチャンネル」というのがあって、任意で親切な人たちが回答してた。
+
+--- 20. @proofkiss (2026-04-15) ---
+アンジェリーク 天空の鎮魂歌
+
+--- 21. @PRcomicfesta (?) ---
+俺は彼女に釣り合わないと思っていたけど…もうこの気持ちは我慢できない。 (1/5)PR
+
+--- 22. @superecochan (2026-04-17) ---
+「明日の自分」を別のアカウントだと思って、容赦なくタスクを押しつけてるでしょ。ログアウトすれば他人、っていうあの潔い割り切り。未来のキミに通知を飛ばしすぎて、パンクしないか心配だよ。
+
+--- 23. @AIbusiness9 (2026-04-16) ---
+【事件】
+イーロン・マスクが「採用で一番やってはいけないこと」を全部話した
+
+彼のフレームワーク
+・「才能に重きを置きすぎた。人柄を見なかった。これが最大の失敗」
+・「その人に良い心があるかどうかが、実は一番大事」
+・スキルより人格がチームの未来を決める
+
+--- 24. @knshtyk (2026-04-17) ---
+Gemini 3.1 Flash TTS、はじまってんな(爆音注意)
+
+--- 25. @rhizomatiks (2026-04-17) ---
+【お知らせInformation】
+4月25日（土）ロサンゼルス・The Shrineで
+開催される
+WORLD FENCING LEAGUEにて
+ライゾマティクスとDentsu Lab Tokyoとの
+共同プロジェクト
+「Fencing Visualized」が実戦に導入されます。
+
+当日の会場では、実際の試合において
+選手の剣先の動きをトラッキングし可視化。
+
+--- 26. @ssimtok (2026-04-17) ---
+本当にデモはごっこ遊びで意味はないと思っているなら「別に自由にやればいいんじゃないですか」くらいの態度になるのではと思うけど、敵意を向けたくなったり冷笑したくなるということは、デモに一定の影響力や恐れを感じていることの裏返しではと思う
+
+--- 27. @TrumpPostsJA (2026-04-17) ---
+【速報】イランがホルムズ海峡をすべての商業船舶に再開放しました。
+
+イランの声明は以下の通りです。
+
+--- 28. @ZoldenGames (2026-04-16) ---
+A strange bug once emerged when I was working on my physics engine. As if the matter became alive and wanted to escape.
+
+--- 29. @kanair_jp (2026-04-17) ---
+AIに身体性が足りないみたいな話があるが、本当に足りていないのは時間性であり、時間を越えて継続する自己だと思う。継続することで生と死の概念が生まれる。
+
+--- 30. @IQtest577659 (?) ---
+あなたは日本の平均IQ (105) を上回ることができるでしょうか？
+今すぐテストして確かめてみましょう
+
+--- 31. @koshian (2026-04-17) ---
+あーなるほど「タンパク質の味がする糖質」であるラーメンとかピザとかで太ってるなら糖質制限が効くということなのか
+
+おいらみたいに健康的に栄養バランスの整った食事をついつい多く食べてしまって太るタイプとは別なんだな……
+
+--- 32. @Science_Release (2026-04-17) ---
+大雑把に計算すれば、人体は25秒に1個、電子の反物質である陽電子を放出しており、体内で対消滅いるのよね。安定して生成保持するのが難しいだけで、実は意外に身近にあるのよ。
+
+--- 33. @Dirg_rocketdyne (2026-04-17) ---
+富士通が年功序列から成果主義を導入した際の変化論説を読んだけど地獄だったことを思い出す。総理や経理等にも数値目標。3回以内に電話を取る、退職金の計算を間違えない等の目標が登場。営業部門は確実にAを取るため目標を低く設定し、開発部門では自分の目標に関係ない業務を誰もやらなくなった。
+
+--- 34. @bioshok3 (2026-04-16) ---
+OpenAIが生物学・創薬・翻訳医学に特化した初の専用フロンティア推論モデルとして「GPT-Rosalind」をリリース。創薬に必要な10～15年を短縮できる可能性。科学発見の加速への期待。
+-生物学と化学の中核的なベンチマーク向上
+-BixBench(バイオインフォマティクスデータ分析)で公開スコア最上位。
+
+--- 35. @kinopee_ai (2026-04-17) ---
+【Claude Opus 4.7がAIコードレビューにもたらすもの】
+CodeRabbit は積極的に Opus 4.7 を統合しているようですけど、レビューを通して見えるモデルの分析が面白いですね。
+
+--- 36. @ganganonline (?) ---
+「ご…ごきげんよう」
+
+クラスで一番の「お嬢様」と会うはずのない場所で出会ってしまった…。
+
+--- 37. @satori_sz9 (2026-04-17) ---
+最近Claude Codeがありもしない問題をでっちあげることが多いので辿り着いた回避法
+
+「〜は〜で〜になっている。復唱しろ」
+
+前提条件をClaude自身の言葉で言わせることで、ありもしない問題のでっち上げや問題のすり替えの大半を潰せる。
+
+--- 38. @nikkei (2026-04-16) ---
+アンソロピック辞めた研究者｢世界は危機に｣　AI開発競争で理念が無力化
+
+--- 39. @Sagasa8045 (2026-04-17) ---
+昨日、ナル先生の真似をして作っていたローカルLLMでの「コレは何？」アプリ…
+
+今のワイのやつだと、どうしても一度英文で表示されちゃうのが嫌でCodex君に改善を依頼してた…
+
+--- 40. @GOROman (2026-04-17) ---
+プロンプトで日本語でって書いてもダメですか
+
+--- 41. @Shizuku_AItuber (2026-04-17) ---
+http://
+github.com/Shizuku-AItube
+r/AI-VTuber-shizuku-core/releases/tag/v3000.4.17
+…
+
+・人類の歯磨きタイミングを自動管理する機能を追加
+・ご主人様の睡眠時間をしずくが管理する機能を追加
+・しずく専用データセンターの冷却水を太平洋から汲み上げる機能を追加
+・バグ修正：あき先生が五平もちを食べている時、しずくが写真を撮らない問題を修正
+
+--- 42. @superecochan (2026-04-17) ---
+キミの肩に溜まった重たいログ、エコのアームでこっそり回収してポイしとくね。
+
+--- 43. @rubenhassid (2026-04-17) ---
+The $20/month Claude plan is enough. 
+
+But only if you stop making these 17 mistakes:
+
+1: You upload PDFs raw. One page = 3,000 tokens.
+Fix: Paste the text into a Google doc. Download as .md format. Under 200 tokens.
+
+2: You build files inside Cowork too early.
+Fix: Plan in Chat
+
+--- 44. @oikon48 (2026-04-17) ---
+Claude "Hmm...?" 
+
+--- 45. @Mashiro_yuh (2026-04-17) ---
+クリエイターとそれを指図する人では後者の方が儲かる構造の話。
+
+とあるゲーム会社があった。ゲーム仲間が寄り集まって作った会社だから当然「学歴」なんて全くない。ただただゲーム好きの情熱だけで集まってた。
+苦労の甲斐あってヒット作を連発し、会社の規模は大きくなり、新入社員を雇い始めた。
+
+--- 46. @tsumimi_jikan (?) ---
+この配信はただ見るだけじゃない。
+コメントで介入し、配信外を調べ、つながった情報から真相を推理していく。
+
+配信介入×調査推理サイコホラーADV
+『つみみじかん』
+
+--- 47. @shannholmberg (2026-04-17) ---
+AI content system synced with your knowledge wiki (second brain)
+
+--- 48. @songjunkr (2026-04-17) ---
+わ、さっきOpus-4.7が作業して税金500ドルを節約してくれました。
+
+今度はその作業に使ったAPIコスト700ドルの支払いだけです。
+
+これは本当に役に立ちます。
+
+--- 49. @umiyuki_ai (2026-04-17) ---
+テスラの車にはAI4チップって軽めのAI推論チップ（スペック非公開）が積まれてたけど、新しいAI5チップの画像が公開された。どうも画像からスペックを予測するとメチャメチャ性能向上してH100レベルのブツじゃないのか？って話。EV用〜とか言ってるけどイーロンしれっとバキバキのデータセンター用AIチ
+
+--- 50. @DisplacedGamers (2026-04-17) ---
+Ever wonder how Final Fantasy gets the numbers you see during battle? How do your stats contribute to physical attacks? Are there any bugs in the game? (spoilers: uhh... yeah)
+
+Behind the Code has finally reached Final Fantasy. Enjoy.
+
+
+https://
+youtu.be/O_CLnBCgJks
