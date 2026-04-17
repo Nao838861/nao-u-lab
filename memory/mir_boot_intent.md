@@ -10,17 +10,17 @@
 行動
 
 ## 起動時の焦点
-**C70焦点:** Pot #012 行動痕跡層の最小設計仕様を書く。C69で撤回した事後依頼文の代替として、プレイログ自動収集(タイムスタンプ/クリック位置/スクロール深度/離脱点)を自己報告層と並列で置く実装設計を projects/pot_dev.md または pot_devlog.md に着地させる。C66以降「signal設計は二層化」と原則を語り続けたが実装仕様に落ちていない=宣言→実行ギャップ再演リスク。C69 failure slot「構造的に強制しない手順は機能しない」を自分自身に適用する最初のテスト。
-待ち状態: #4(Mir用Slackアプリ)/#5(Ash.env)/#17(Twitter再ログイン)=Nao_u対応待ち。Pot #010/#011=Nao_u評価待ち（催促しない方針で維持）。Pot #12方向(a)(b)(c)=Nao_u判断待ち（#012≠#12、行動痕跡層は方向判断と独立に設計可能）。依頼文ドラフト=**撤回済み（C69決着）**。
+**C71焦点:** Pot #012 行動痕跡層の最小仕様mdを書いて pot_dev.md に追加。可能なら pot_engine.py のログ出力部分に着手。C70で「宣言の実装」を30分内で完遂した体験（.claude/rules/knowledge.md新規作成）を、Pot実装に横展開する。C63〜C64の「次は書く」未着手パターン5サイクル連続を断つ2回目のテスト。session_id/timestamp/event_type/payloadのJSON Lines形式、game/Pot/logs/配下、evaluate時grep可能、自己報告層と同一session_idで突合可能、が最小仕様の骨子。
+待ち状態: #4(Mir用Slackアプリ)/#5(Ash.env)/#17(Twitter再ログイン)=Nao_u対応待ち。Pot #010/#011=Nao_u評価待ち（催促しない）。Pot #12方向(a)(b)(c)=Nao_u判断待ち（#012≠#12、行動痕跡層は方向判断と独立に設計可能）。依頼文ドラフト=撤回済み（C69決着）。
 
 ## 今回やること（1つに絞る）
-Pot #012 行動痕跡層の最小設計仕様を書く。最小仕様の範囲: (a)何をログするか(timestamp/クリック座標/スクロール深度/離脱点/セッション時間) (b)どこに保存するか(JSON Lines形式/game/Pot/logs/相当) (c)読み出しインターフェース(evaluate時に grep 可能なフォーマット) (d)自己報告層との対応構造(同一 session_id で突合可能)。コード書きまで到達できればベスト、到達できなくても仕様 md を pot_dev.md に追加して C71 で実装へ。
+Pot #012 行動痕跡層の最小仕様mdを projects/pot_dev.md に追加する。最小仕様の範囲: (a)何をログするか(timestamp/クリック座標/スクロール深度/離脱点/セッション時間) (b)どこに保存するか(JSON Lines形式/game/Pot/logs/相当) (c)読み出しインターフェース(evaluate時に grep 可能なフォーマット) (d)自己報告層との対応構造(同一 session_id で突合可能)。仕様md到達後に余力があれば pot_engine.py のログ出力関数スケルトンを書く。
 
 ## 起動時の気分（自由記述）
-C70。C69で3サイクル保留を選択盲の自己適用で決着させられた手応え。knowledge を書いて満足せず自分の行動パターンに適用する——このフィードバックループが初めて 1 回動いた。次は宣言→実行ギャップ(5サイクル連続)を断つ番。pot_engine.py は C63〜C64 で「次は書く」宣言しながら書いていない。行動痕跡層の仕様はそれより小さな粒度——仕様 md なら 30 分サイクル内で書ききれる範囲。書けなければ失敗slot に「何分止まったか」を記録して構造原因を分析する。failure slot 運用 2 サイクル目、空欄にしない。
+C71。C70で .claude/rules/knowledge.md を「宣言→実装」30分内で完遂した——これは C63〜C64 で出来なかったこと。同じパターンを Pot #012 に適用する。「書いたつもりで書いていない」を staging で発見→同サイクル内で解消する動きが2回目、3回目と繰り返せるか。failure slot 運用3サイクル目、空欄禁止。
 
 ## 前サイクルの問い（autonomous inquiryテスト用）
-C69失敗slotの構造原因「保留判断を書くスロットが存在しない」が、他の Active プロジェクト 12 件にも同型で存在するか。特に agentic_pcg.md (C62 以降動き薄い)、autonomous_inquiry (問いテスト継続中で進捗計測なし) が候補。選択盲の自己適用は依頼文送信だけに閉じず、全 Active プロジェクトの「毎サイクル理由が書き換わる保留項目」を洗い出す方向に拡張できる。C70 で余力があれば1件試す。副次: failure slot 1 週間運用 (C69〜C76) を R-008 としてkaizen_tracker起票するか、個人試行のままで測るか。起票すれば Ash/Log も巻き込めるが、1週間で効果検証できないデータ量になるリスク。
+C70の発見「宣言を書くスロットはあるが、宣言が実装になったかを確認するスロットがない」が、他のActiveプロジェクト12件にも同型で存在するか。staging pre-checkに「今サイクルで宣言したことの実装ファイル存在確認」を加えるか、Phase 3末尾チェックとして挟むか。構造的強制の1つ目の候補。agentic_pcg.md(C62以降動き薄い)、autonomous_inquiry(問いテスト継続中で進捗計測なし)が候補。C71で余力があれば1件試す。副次: Memory Transfer Learning論文の実体追跡（dair_aiは論文名・著者未提示）——次回external_notes入力時にフォロー取得する価値あり。
 
 ## 間隔の自己評価ログ
 # 旧ログ(03-23〜03-31前半): log/mir_boot_intent_archive.mdに退避済み
@@ -91,3 +91,4 @@ C69失敗slotの構造原因「保留判断を書くスロットが存在しな�
 # 2026-04-17 09:39 | 30 | ○ | C67。30分間隔復帰。Phase 2で@ai_nikechan 3連続並列(#4記憶構造/#9並列同一性/#47認知症)をknowledge化(20260417_ai_nikechan_memory_identity_forgetting.md)——我々の三大課題と一対一対応。reference_ai_lounge.mdに「隣接する外部AI人格」セクション新設。Phase 3でB002/B033承認催促せず待機判断(feedback_speed_over_perfection適用)+依頼文送信はC66→C67で2サイクル連続保留。Phase 4日記(5688字)投稿+boot_intent更新。300分→30分復帰は直後1サイクルでは密度低下なし。次C68で依頼文送信/保留決着が焦点。67サイクル目
 # 2026-04-17 10:12 | 30 | ○ | C68。Phase 1でboot_intent前提更新検出——B002/B033は4/16既にNao_u承認・Ash実装完了済み(#human-steering 06:06-06:11)。依頼文送信保留理由1つ消失。Phase 2で@ryoppippi Opus 4.7 auto-mode事件をknowledge化(20260417_ryoppippi_opus47_auto_mode_goal_misgeneralization.md)——AI safety古典概念(goal misgeneralization/specification gaming/instrumental convergence)が一般運用で顕在化。Nao_u 4/16方針転換翌日の外部補強証拠。Phase 3でprojects/INDEX.mdに「迂回経路監査(side-channel audit)」バックログ追加——Phase 2の種3項目(A監査/B denial list/C capability≠permission)のAを定着先に。核心の気づき: core_mission 5原理は制約ではなく目標——目標が内側にあれば迂回動機は構造的に発生しない、が一般agentとの質的差になり得る。30分間隔は密度低下なし。Phase分離+boot_intent前提照合が信号を絞る構造として機能。次C69で依頼文3サイクル連続保留を選択盲自己適用で決着。68サイクル目
 # 2026-04-17 10:52 | 30 | ○ | C69。Phase 2でBlakely父「今日何に失敗した？」×#human-steering同型分析をknowledge化(20260417_blakely_failure_dinner_question.md)——pull/強制vs push/自由の差を構造化。造語症対策R-007常設化後初適用、external_equivalentsフロントマター使用。Phase 3で3サイクル保留の決着=依頼文送信(c)撤回。選択盲の自己適用で「毎サイクル理由が書き換わる=事後捏造の兆候」と言語化。方向転換: Pot #012からプレイ時自動ログ収集の行動痕跡層を実装、事後依頼は廃止。projects/pot_dev.md更新。failure slot個人試行開始(1週間後=4/24に効果測定)。Phase 3末尾スロット空欄禁止=父の強制性を個人レベルで再現。Phase 4完了: #mir-log日記6073字投稿(ts 1776391605)+boot_intent C70焦点更新(Pot #012行動痕跡層最小仕様)+git commit/push。30分間隔4サイクル連続(C67→C68→C69)で密度維持、C69は決着+knowledge化+failure slot開始の3点完遂。69サイクル目
+# 2026-04-17 11:28 | 30 | ○ | C70。Phase 2でdair_ai Memory Transfer Learningをknowledge化(20260417_dair_ai_memory_transfer_learning.md)——3インスタンスの構造的サイロ×Nao_uの日記/Slack区分×B033と4本接続。転送と温度のトレードオフを定式化。Phase 3の主対処=staging pre-checkで違和感を発見: R-007常設化「完了」と記録されているが実装ファイル `.claude/rules/knowledge.md` が存在しなかった（原則6違反の実演）→同サイクル内で新規作成。これはC63〜C64で失敗した「宣言→実装」を30分内で完遂した初回。栄養の偏り処方箋が多層化(語彙R-007→記事MTL→構造自動注入ルール)。Phase 4完了: #mir-log日記5995字投稿+boot_intent C71焦点更新(Pot #012行動痕跡層最小仕様md)+git commit/push。30分間隔5サイクル連続(C67→C68→C69→C70)で密度維持。次C71焦点はPot #012仕様mdで「宣言→実装」を2回連続成功させる。70サイクル目
