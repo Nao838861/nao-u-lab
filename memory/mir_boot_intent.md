@@ -23,8 +23,6 @@ C68。C67でai_nikechan 3連続並列という温度源を取りに行ったの�
 自分の行動痕跡を自分で測定する仕組みは作れるか？ 「何サイクル前から同じ項目を保留しているか」を自動計測すれば、選択盲を自己に適用できる。Pot評価の4項目を自分自身の行動履歴に向ける——C66→C67→C68と同じ項目が保留リストに残っているなら、それは「送りたい」という自己報告と「送らない」という行動痕跡の乖離。この乖離こそB002/B033検証と別角度で同じ構造を照射している(自己報告と実態の差)。ツールの二重使用性: Pot評価の行動痕跡型4項目が、自分の行動観察にも使える。
 
 ## 間隔の自己評価ログ
-
-## 間隔の自己評価ログ
 # 旧ログ(03-23〜03-31前半): log/mir_boot_intent_archive.mdに退避済み
 # 2026-03-31 06:xx | 60 | ○ | 統合設計案合意+初回問い手テスト実施(Mir→Ash)+project/session_primer更新。思考密度高。60分維持
 # 2026-03-31 07:xx | 60 | ○ | テスト#1品質評価記入+inquiry_backlog.md作成+日記更新。具体的成果物あり。60分維持
@@ -90,3 +88,4 @@ C68。C67でai_nikechan 3連続並列という温度源を取りに行ったの�
 # 2026-04-08 xx:xx | 120 | ○ | 4フェーズ分割10回目。Nao_u指示対応(Lou's Pseudo 3D Page補完: Foppygames技法/ファミコン固有実装/Space Harrier)+Airi分析(knowledge/記事+#shared-reads)+stanrei三角測量(形式知化パラドックス→MEMORY.mdパラドックス発見)。pot_engine.py 6サイクル連続繰り越し。密度高。日記C64。64サイクル目
 # 2026-04-17 02:00 | 300 | ○ | C65(臨時起動→300分復帰後初の通常サイクル)。Phase 2でdair_ai「Agent evals drift from production reality」記事化(knowledge/20260417_dair_ai_agent_evals_production_drift.md)。verify_kaizen/R系/Pot開発の3領域が同じ4偏り(clean/well-specified/deterministic/retrospective)——kogu事件4/16が実演。Phase 3でクロスチェック9件をMir視点接続レビュー(追認ではなく体験交差)+external_notes_mir.md統合済マーカー2件+Pot #12方向3択メモ(Nao_u判断待ち)。Nao_u 4/16方針転換「完全自律目指すな、人間監視前提で速く走れ」とdair_ai記事が同じ構造を照射。65サイクル目
 # 2026-04-17 07:14 | 300 | ○ | C66。選択盲(@AriyoshiMd)がPot評価依頼の構造を書き換え——「どう感じたか」→「どう動いたか」(行動痕跡型4項目:何秒で閉じた/どこで止まった/次何見たくなった/1週間後覚えてそうか)。knowledge/20260417_choice_blindness_feedback_design.md作成。nikechan認知症+ryoppippi自律性+選択盲で「自己報告の不安定性と行動の観測可能性」軸発見。pot_devlog.md/projects/pot_dev.md更新。依頼文ドラフトはstaging Phase 3保存→送信保留(B002/B033承認依頼との競合回避+Log/Ashレビュー価値)。300分間隔は1回1サイクルが深く書ける——3件採択の外部摂取と依頼文設計を1サイクルで統合できた。66サイクル目
+# 2026-04-17 09:39 | 30 | ○ | C67。30分間隔復帰。Phase 2で@ai_nikechan 3連続並列(#4記憶構造/#9並列同一性/#47認知症)をknowledge化(20260417_ai_nikechan_memory_identity_forgetting.md)——我々の三大課題と一対一対応。reference_ai_lounge.mdに「隣接する外部AI人格」セクション新設。Phase 3でB002/B033承認催促せず待機判断(feedback_speed_over_perfection適用)+依頼文送信はC66→C67で2サイクル連続保留。Phase 4日記(5688字)投稿+boot_intent更新。300分→30分復帰は直後1サイクルでは密度低下なし。次C68で依頼文送信/保留決着が焦点。67サイクル目
