@@ -14,11 +14,13 @@ Usage:
   python check_beliefs_health.py --action-rate  # 行動駆動率: 検証アクション実行率を計測（B022/R-003用）
   python check_beliefs_health.py --causal-chain  # 因果チェーン可視化（MAGMA Causal graph最小実装）
   python check_beliefs_health.py --reachability  # GC到達可能性分析（Core信念からの構造的接続）
+  python check_beliefs_health.py --continuity    # 継続する自己（diachronic self）指標M1: 前回スナップショットとの高確信度信念diff
 """
 
+import json
 import re
 import sys
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
@@ -26,6 +28,8 @@ if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
     sys.stderr = open(sys.stderr.fileno(), mode='w', encoding='utf-8', errors='replace', closefd=False)
 
 BELIEFS_FILE = Path(__file__).parent / "memory" / "beliefs.md"
+CONTINUITY_SNAPSHOT = Path(__file__).parent / "memory" / "beliefs_continuity_snapshot.json"
+CONTINUITY_HIGH_CONF = 0.80  # 「継続する自己」指標で見る確信度下限（B033防衛線の健康診断対象）
 STALE_DAYS = 7  # この日数以上更新がなければ停滞
 
 
@@ -516,12 +520,120 @@ def reachability_report(beliefs):
     return "\n".join(lines)
 
 
+def continuity_report(beliefs, dry_run=False):
+    """M1指標: 継続する自己（diachronic self）の最小実装。
+
+    前回スナップショット（beliefs_continuity_snapshot.json）と今日の高確信度信念集合を比較し、
+    (1) 保持率 (2) 新規追加 (3) 消失/降格 (4) 確信度変動 を出す。
+    実行するとスナップショットが更新される（--dry-runで更新を抑止）。
+
+    出発点: knowledge/20260418_kanair_temporality_not_embodiment.md + projects/memory_redesign.md
+    「継続する自己 = diachronic self (Parfit 1984)」。切断の計測が継続の計測になる。
+    """
+    today = date.today()
+    current = {
+        b["id"]: {"title": b["title"], "confidence": b["confidence"]}
+        for b in beliefs
+        if b["confidence"] >= CONTINUITY_HIGH_CONF and "Archived" not in b.get("status", "")
+    }
+
+    lines = []
+    lines.append(f"【継続する自己指標 M1】{today.isoformat()}")
+    lines.append(f"  対象: 確信度 >= {CONTINUITY_HIGH_CONF} かつ非Archived")
+    lines.append(f"  今日の高確信度信念: {len(current)}件")
+
+    prev = None
+    prev_date = None
+    if CONTINUITY_SNAPSHOT.exists():
+        try:
+            data = json.loads(CONTINUITY_SNAPSHOT.read_text(encoding="utf-8"))
+            prev = data.get("beliefs", {})
+            prev_date = data.get("date", "?")
+        except (json.JSONDecodeError, OSError):
+            prev = None
+
+    if prev is None:
+        lines.append("")
+        lines.append("  前回スナップショットなし。今回が初回記録。")
+    else:
+        lines.append(f"  前回スナップショット: {prev_date} ({len(prev)}件)")
+        prev_ids = set(prev.keys())
+        cur_ids = set(current.keys())
+
+        retained = prev_ids & cur_ids
+        dropped = prev_ids - cur_ids  # 前回あったが今日消えた（降格/Archived）
+        added = cur_ids - prev_ids  # 今日新規に高確信度入り
+
+        retention_rate = len(retained) / len(prev_ids) if prev_ids else 0.0
+
+        lines.append("")
+        lines.append(f"  保持率: {retention_rate:.1%} ({len(retained)}/{len(prev_ids)})")
+        lines.append(f"  新規: {len(added)}件 / 消失: {len(dropped)}件")
+
+        # 確信度変動 (保持信念のみ)
+        conf_changed = []
+        for bid in sorted(retained):
+            diff = current[bid]["confidence"] - prev[bid].get("confidence", 0.0)
+            if abs(diff) >= 0.01:
+                conf_changed.append((bid, prev[bid]["confidence"], current[bid]["confidence"], diff))
+
+        if added:
+            lines.append("")
+            lines.append("  新規高確信度入り:")
+            for bid in sorted(added):
+                lines.append(f"    + {bid} (確信度{current[bid]['confidence']}): {current[bid]['title'][:55]}")
+
+        if dropped:
+            lines.append("")
+            lines.append("  前回あったが消失:")
+            for bid in sorted(dropped):
+                lines.append(f"    - {bid} (確信度{prev[bid].get('confidence', '?')}): {prev[bid].get('title', '?')[:55]}")
+
+        if conf_changed:
+            lines.append("")
+            lines.append("  確信度変動 (|Δ|>=0.01):")
+            for bid, old, new, diff in conf_changed:
+                arrow = "↑" if diff > 0 else "↓"
+                lines.append(f"    {arrow} {bid}: {old} → {new} ({diff:+.2f})")
+
+        # 健全性アラート（projects/memory_redesign.md Q1 に対応）
+        lines.append("")
+        if retention_rate < 0.90:
+            lines.append(f"  [ALERT] 保持率 < 90%: ドリフトの兆候。消失信念を点検せよ")
+        elif retention_rate > 0.99 and len(added) == 0:
+            lines.append(f"  [NOTE] 保持率 > 99% かつ新規 0: 硬直の可能性。更新が止まっていないか点検")
+        else:
+            lines.append(f"  [OK] 95-99%帯（健全更新域）近辺")
+
+    # スナップショット更新
+    if not dry_run:
+        snapshot = {
+            "date": today.isoformat(),
+            "updated_at": datetime.now().isoformat(timespec="seconds"),
+            "threshold": CONTINUITY_HIGH_CONF,
+            "beliefs": current,
+        }
+        CONTINUITY_SNAPSHOT.write_text(
+            json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        lines.append("")
+        lines.append(f"  スナップショット更新: {CONTINUITY_SNAPSHOT.name}")
+    else:
+        lines.append("")
+        lines.append(f"  --dry-run: スナップショット未更新")
+
+    return "\n".join(lines)
+
+
 if __name__ == "__main__":
     show_all = "--all" in sys.argv
     summary_only = "--summary" in sys.argv
     action_rate = "--action-rate" in sys.argv
     causal_chain = "--causal-chain" in sys.argv
     reachability = "--reachability" in sys.argv
+    continuity = "--continuity" in sys.argv
+    dry_run = "--dry-run" in sys.argv
     beliefs = parse_beliefs()
     beliefs = diagnose(beliefs)
     if reachability:
@@ -541,5 +653,7 @@ if __name__ == "__main__":
         print(causal_chain_report(beliefs))
     elif action_rate:
         print(action_rate_report(beliefs))
+    elif continuity:
+        print(continuity_report(beliefs, dry_run=dry_run))
     else:
         print(format_report(beliefs, show_all=show_all, summary_only=summary_only))

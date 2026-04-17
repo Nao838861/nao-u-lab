@@ -29,8 +29,45 @@ import os
 import sys
 import time
 import random
+import json
+from datetime import datetime
 from dataclasses import dataclass, field
 from typing import List, Tuple, Optional
+
+
+# ── リプレイログ (Nao_u 2026-04-17 18:39「ワンプレイごとに分割されたログ」対応) ──
+# ゲームは seed と入力キー列で完全に決定的なので、それらを保存すれば再現できる。
+class ReplayRec:
+    def __init__(self, seed: int):
+        self.t0 = time.time()
+        self.seed = seed
+        self.events: List[dict] = []
+
+    def key(self, k: str):
+        self.events.append({"t": round(time.time() - self.t0, 3), "type": "key", "k": k})
+
+    def note(self, msg: str, **kw):
+        self.events.append({"t": round(time.time() - self.t0, 3), "type": "note", "msg": msg, **kw})
+
+    def save(self, result: dict) -> Optional[str]:
+        try:
+            logdir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "playlogs")
+            os.makedirs(logdir, exist_ok=True)
+            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+            path = os.path.join(logdir, f"PotR001_descent_{ts}.jsonl")
+            with open(path, "w", encoding="utf-8") as f:
+                header = {
+                    "game": "PotR001_descent",
+                    "time": datetime.now().isoformat(),
+                    "seed": self.seed,
+                }
+                header.update(result)
+                f.write(json.dumps(header, ensure_ascii=False) + "\n")
+                for e in self.events:
+                    f.write(json.dumps(e, ensure_ascii=False) + "\n")
+            return path
+        except OSError:
+            return None
 
 # ── クロスプラットフォーム入力 ──
 if os.name == "nt":
@@ -377,7 +414,7 @@ def intro(rng_seed: Optional[int]):
     c = getch()
     return c != "q"
 
-def game_over(st: State, victory: bool, turns: int):
+def game_over(st: State, victory: bool, turns: int, rec: Optional["ReplayRec"] = None):
     sys.stdout.write(CLEAR)
     if victory:
         sys.stdout.write(f"地上に続く階段が見えた. 足跡はここで消えている.\n\n")
@@ -385,6 +422,15 @@ def game_over(st: State, victory: bool, turns: int):
     else:
         sys.stdout.write(f"\n視界が暗くなる. 松明が落ちる音.\n\n")
         sys.stdout.write(f"  地下 {st.depth}階で倒れた.  {turns} ターン.\n\n")
+    if rec is not None:
+        path = rec.save({
+            "result": "victory" if victory else "defeat",
+            "final_depth": st.depth,
+            "final_hp": st.player.hp,
+            "turns": turns,
+        })
+        if path:
+            sys.stdout.write(f"  [リプレイログ: {os.path.relpath(path)}]\n\n")
     sys.stdout.write("[Enter で終了]\n")
     sys.stdout.flush()
     getch()
@@ -398,6 +444,7 @@ def main():
         except ValueError:
             pass
     rng = random.Random(seed)
+    rec = ReplayRec(seed)
 
     sys.stdout.write(HIDE)
     _setup()
@@ -409,14 +456,16 @@ def main():
         while True:
             render(st)
             c = getch()
+            rec.key(c)
             if c == "q":
+                rec.note("quit")
                 break
             if c == ".":
                 pass  # 待つ
             elif c == ">":
                 if st.grid[st.player.y][st.player.x] == STAIRS:
                     if st.depth >= 3:
-                        game_over(st, victory=True, turns=turns)
+                        game_over(st, victory=True, turns=turns, rec=rec)
                         return
                     # 階層推進: プレイヤー状態(HP/ATK/DEF+bonus)を持ち越す
                     carry = Entity(
@@ -446,12 +495,12 @@ def main():
             turns += 1
             if not st.player.alive or st.player.hp <= 0:
                 render(st)
-                game_over(st, victory=False, turns=turns)
+                game_over(st, victory=False, turns=turns, rec=rec)
                 return
             enemy_turn(st)
             if not st.player.alive or st.player.hp <= 0:
                 render(st)
-                game_over(st, victory=False, turns=turns)
+                game_over(st, victory=False, turns=turns, rec=rec)
                 return
     finally:
         _teardown()

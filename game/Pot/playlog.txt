@@ -1,0 +1,133 @@
+
+==================================================
+game: Pot013_sand
+time: 2026-04-17 23:08:23
+platform: windows
+==================================================
+[T+3.4s] SHOW 'instruction'
+[T+4.2s] INPUT key='Enter' dt=0.8s
+[T+4.2s] STATE selected 5 from pool of 12
+[T+4.2s] SHOW '帰りたいと思った。どこに帰るのかは、わからなかった。' round=1 chars=26
+[T+7.0s] TIMEOUT saw_full dt=2.8s
+[T+7.6s] SHOW 'あの人はいつも笑っていた。泣き方を知らなかっただけだ。' round=2 chars=27
+[T+10.5s] TIMEOUT saw_full dt=2.9s
+[T+11.1s] SHOW 'もう大丈夫だと思った。まだ大丈夫じゃなかった。' round=3 chars=23
+[T+13.0s] INPUT key='freeze' pos=17/23 visible='もう大丈夫だと思った。まだ大丈夫じ' dt=1.9s
+[T+13.6s] SHOW '約束は守った。守っただけだった。' round=4 chars=16
+[T+14.9s] INPUT key='freeze' pos=12/16 visible='約束は守った。守っただけ' dt=1.3s
+[T+15.5s] SHOW '全部うまくいっていた——ように見えていただけだった' round=5 chars=25
+[T+18.2s] TIMEOUT saw_full dt=2.7s
+[T+21.4s] RESULT type=full text='帰りたいと思った。どこに帰るのかは、わからなかった。'
+[T+22.8s] RESULT type=full text='あの人はいつも笑っていた。泣き方を知らなかっただけだ。'
+[T+25.5s] RESULT type=frozen frozen='もう大丈夫だと思った。まだ大丈夫じ' full='もう大丈夫だと思った。まだ大丈夫じゃなかった。' ratio=17/23
+[T+27.9s] RESULT type=frozen frozen='約束は守った。守っただけ' full='約束は守った。守っただけだった。' ratio=12/16
+[T+29.2s] RESULT type=full text='全部うまくいっていた——ように見えていただけだった'
+[T+33.7s] END total=0m33s
+--- reactions: avg=1.3s fastest=0.8s slowest=1.9s n=3 ---
+
+
+==================================================
+game: Pot014_mirror
+time: 2026-04-17 23:09:44
+platform: windows
+==================================================
+[T+3.0s] SHOW 'instruction'
+[T+3.8s] INPUT key='Enter' dt=0.8s
+[T+3.8s] STATE selected 6 pairs from 8
+[T+3.8s] SHOW "pair 1: ['言わなかった言葉', '聞こえなかった返事']"
+[T+7.5s] INPUT key='1' chose='言わなかった言葉' passed='聞こえなかった返事' dt=3.7s
+[T+7.8s] SHOW "pair 2: ['書きかけの手紙を出した', '読みかけの本を閉じた']"
+[T+9.3s] INPUT key='2' chose='読みかけの本を閉じた' passed='書きかけの手紙を出した' dt=1.5s
+[T+9.6s] SHOW "pair 3: ['忘れ物を取りに戻った', '寄り道をして帰った']"
+[T+10.6s] INPUT key='1' chose='忘れ物を取りに戻った' passed='寄り道をして帰った' dt=1.0s
+[T+10.9s] SHOW "pair 4: ['古い写真を見つけた', '新しい写真を撮った']"
+[T+11.6s] INPUT key='1' chose='古い写真を見つけた' passed='新しい写真を撮った' dt=0.7s
+[T+11.9s] SHOW "pair 5: ['誰かと見た朝焼け', '一人で見た夕焼け']"
+[T+12.5s] INPUT key='1' chose='誰かと見た朝焼け' passed='一人で見た夕焼け' dt=0.7s
+[T+12.9s] SHOW "pair 6: ['初めて降りた駅', '通い慣れた道']"
+[T+13.5s] INPUT key='1' chose='初めて降りた駅' passed='通い慣れた道' dt=0.6s
+[T+13.8s] STATE swap targets: rounds [3, 6]
+[T+16.9s] SHOW "reflect 1: '言わなかった言葉'" swapped=False original='言わなかった言葉'
+[T+25.9s] INPUT key='reason' text='わからん' swapped=False dt=9.1s
+[T+25.9s] SHOW "reflect 2: '読みかけの本を閉じた'" swapped=False original='読みかけの本を閉じた'
+[T+29.6s] INPUT key='reason' text='適当' swapped=False dt=3.6s
+[T+29.6s] SHOW "reflect 3: '寄り道をして帰った'" swapped=True original='忘れ物を取りに戻った'
+[T+32.0s] INPUT key='reason' text='適当' swapped=True dt=2.4s
+[T+32.0s] SHOW "reflect 4: '古い写真を見つけた'" swapped=False original='古い写真を見つけた'
+[T+33.5s] INPUT key='reason' text='適当' swapped=False dt=1.5s
+[T+33.5s] SHOW "reflect 5: '誰かと見た朝焼け'" swapped=False original='誰かと見た朝焼け'
+[T+35.0s] INPUT key='reason' text='適当' swapped=False dt=1.5s
+[T+35.0s] SHOW "reflect 6: '通い慣れた道'" swapped=True original='初めて降りた駅'
+[T+36.8s] INPUT key='reason' text='適当' swapped=True dt=1.8s
+[T+41.0s] RESULT round=3 shown='寄り道をして帰った' actual='忘れ物を取りに戻った' reason='適当' detected=False
+[T+41.8s] RESULT round=6 shown='通い慣れた道' actual='初めて降りた駅' reason='適当' detected=False
+[T+48.0s] END total=0m47s
+--- reactions: avg=2.2s fastest=0.6s slowest=9.1s n=13 ---
+
+
+==================================================
+game: Pot015_tide
+time: 2026-04-17 23:10:58
+platform: windows
+==================================================
+[T+6.7s] SHOW '錆びた金具' window=1.78 draw=1
+[T+8.5s] TIMEOUT window=1.8s
+[T+8.5s] ACTION let_go fragment=錆びた金具
+[T+8.9s] SHOW '乾いた海藻' window=2.73 draw=2
+[T+11.6s] TIMEOUT window=2.7s
+[T+11.6s] ACTION let_go fragment=乾いた海藻
+[T+12.0s] SHOW '冷たい缶' window=2.04 draw=3
+[T+14.1s] TIMEOUT window=2.0s
+[T+14.1s] ACTION let_go fragment=冷たい缶
+[T+14.5s] SHOW '欠けたボタン' window=2.35 draw=4
+[T+16.9s] TIMEOUT window=2.4s
+[T+16.9s] ACTION let_go fragment=欠けたボタン
+[T+17.3s] SHOW '古いフィルム' window=2.27 draw=5
+[T+19.5s] TIMEOUT window=2.3s
+[T+19.5s] ACTION let_go fragment=古いフィルム
+[T+19.9s] SHOW '砕けた石の縞' window=2.61 draw=6
+[T+22.6s] TIMEOUT window=2.6s
+[T+22.6s] ACTION let_go fragment=砕けた石の縞
+[T+23.0s] SHOW '半分読んだ手紙' window=1.48 draw=7
+[T+24.4s] TIMEOUT window=1.5s
+[T+24.4s] ACTION let_go fragment=半分読んだ手紙
+[T+24.9s] SHOW '流木の節' window=1.93 draw=8
+[T+26.8s] TIMEOUT window=1.9s
+[T+26.8s] ACTION let_go fragment=流木の節
+[T+27.2s] SHOW '忘れ物の傘' window=3.02 draw=9
+[T+30.2s] TIMEOUT window=3.0s
+[T+30.2s] ACTION let_go fragment=忘れ物の傘
+[T+30.6s] SHOW '誰も座らないベンチ' window=1.41 draw=10
+[T+32.1s] TIMEOUT window=1.4s
+[T+32.1s] ACTION let_go fragment=誰も座らないベンチ
+[T+32.5s] SHOW '誰かの足跡' window=1.24 draw=11
+[T+33.7s] TIMEOUT window=1.2s
+[T+33.7s] ACTION let_go fragment=誰かの足跡
+[T+34.1s] SHOW '水平線に消える船' window=2.8 draw=12
+[T+37.0s] TIMEOUT window=2.8s
+[T+37.0s] ACTION let_go fragment=水平線に消える船
+[T+37.4s] RESULT kept=0 lost=12 draws=12
+[T+48.1s] END total=0m48s
+
+
+==================================================
+game: Pot015_tide
+time: 2026-04-17 23:11:19
+platform: windows
+==================================================
+[T+4.4s] SHOW '忘れ物の傘' window=2.51 draw=1
+[T+5.9s] INPUT key='k' dt=1.5s
+[T+5.9s] ACTION keep fragment=忘れ物の傘
+[T+6.3s] SHOW '名前のない花' window=2.93 draw=2
+[T+6.7s] INPUT key='k' dt=0.5s
+[T+6.7s] ACTION keep fragment=名前のない花
+[T+7.1s] SHOW '波に洗われた硝子' window=2.41 draw=3
+[T+7.4s] INPUT key='k' dt=0.3s
+[T+7.4s] ACTION keep fragment=波に洗われた硝子
+[T+7.8s] SHOW '遠い汽笛' window=1.4 draw=4
+[T+8.0s] INPUT key='k' dt=0.2s
+[T+8.0s] ACTION keep fragment=遠い汽笛
+[T+8.4s] RESULT kept=4 lost=0 draws=4
+[T+19.2s] END total=0m19s
+--- reactions: avg=0.6s fastest=0.2s slowest=1.5s n=4 ---
+
