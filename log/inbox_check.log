@@ -1932,10 +1932,38 @@ Nao_uへの返信をSlack #all-nao-u-labに送信した。結論: Mirが「壺�
 
 - #game-rights にLog名義で返信投稿（Nao_u 23:46への応答）
 - `log/nao_u_live.md` と `game/Pot/pot_devlog.md` 
-[2026-04-18 00:11:10] Inbox win2 has content — waking Claude
-[2026-04-18 00:16:10] Claude wake timed out for win2 — restoring inbox
-[2026-04-18 00:18:04] Inbox win2 has content — waking Claude
-[2026-04-18 00:23:04] Claude wake timed out for win2 — restoring inbox
-[2026-04-18 00:27:41] Inbox win2 has content — waking Claude
-[2026-04-18 00:32:41] Claude wake timed out for win2 — restoring inbox
-[2026-04-18 00:32:41] [COOLDOWN] win2: 5回連続エラー → 30分クールダウン
+[2026-04-18 00:02:10] Inbox win has content — waking Claude
+[2026-04-18 00:03:49] Claude woken for win: 対処完了。
+
+**処理内容:**
+1. `docs/game_design_principles.md` に**原則8: 冒頭で好奇心を作る（ホットスタート）** を追加 — 全員向け指摘として刻んだ
+[2026-04-18 00:06:55] Inbox win has content — waking Claude
+[2026-04-18 00:10:57] Claude woken for win: push完了。
+
+■ 対処結果
+- 受信: Nao_u→Mia(Mir)「テキストADVで現代のゲームとして何をやれば面白いか」。逆転裁判第7回(制作初期で体験が伝わらない問題)をメタ参考
+- 投稿:
+[2026-04-18 00:11:26] Inbox win has content — waking Claude
+[2026-04-18 00:14:56] Claude woken for win: push完了。受信箱消化と #game-rights への返信を完結。
+
+**対処内容:**
+- #game-rights に核提案投稿: 「攻略AIと並走する弾幕回避——AIより長く生きろ」。人間と
+[2026-04-18 00:17:05] Inbox win has content — waking Claude
+[2026-04-18 00:20:36] Claude woken for win: push完了、conflict解消済み。
+
+**対処内容**
+- Log=避けゲー着手: `game/avoid_log_01/avoid.py` (pygame 160行)。縦スクロール、青=自機(
+[2026-04-18 00:27:49] Inbox win has content — waking Claude
+[2026-04-18 00:29:56] Claude woken for win: #game-rightsに返信完了。
+
+診断: Agencyなし / スコアが時間経過と等価 / AIが飾り / 難度カーブが弱い。
+処方の本命は「ニアミス高得点、ただの回避は0点」。30秒オンボーデ
+[2026-04-18 00:34:58] Inbox win has content — waking Claude
+[2026-04-18 00:37:56] Claude woken for win: 完了。#game-rightsにリサーチ応答投稿、devlogに記録、push済み。
+
+avoidゲームの面白さ構造を5型に整理（二択/能動/ニアミス/波/キャラ間関係）。avoid_log_01の差
+[2026-04-18 01:09:33] Inbox win has content — waking Claude
+[2026-04-18 01:12:48] Claude woken for win: #game-rights に投稿、pot_devlog.mdに構造原則を保存、push完了。
+
+要点: abaさんの「ジェット気流→ゲーム」を分解すると、要素を**並列に足したのではなく**、渦という
+[2026-04-18 01:14:45] Inbox win has content — waking Claude
