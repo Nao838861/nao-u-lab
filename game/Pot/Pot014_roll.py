@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Pot #12: Roll (振る)
+Pot #14: Roll (振る)
 
 ランダムに言葉が出てくる。
 残すか、振り直すか。振り直せる回数は限られている。
@@ -8,7 +8,7 @@ Pot #12: Roll (振る)
 
 ──── その順序は、偶然だった。
 
-設計意図（Pot #12 Ash, 2026-04-17）:
+設計意図（Pot #14 Ash, 2026-04-17）:
 - 3軸モデル(jey_p)未達の「ランダム性軸」を正面から導入する初のPot。
 - 操作軸: 振り直しリソース（5回）の配分 = temporal attention ではなく resource management。
 - 意思決定軸: 残すか振るか、何を捨てるか。
@@ -115,7 +115,7 @@ def show_intro():
     clear()
     print()
     print("  " + "=" * 50)
-    print("    Pot #12: Roll (振る)")
+    print("    Pot #14: Roll (振る)")
     print("  " + "=" * 50)
     print()
     print(f"    ランダムに言葉が出てくる。")
@@ -189,7 +189,7 @@ def main():
     # ワンプレイ=1セッション=1 JSON Lines ファイル。
     # 「ワンプレイごとに分割されたログ」(Nao_u 2026-04-17) の運用。
     while True:
-        rec = TraceRecorder(pot_id="012c_roll", author=detect_instance())
+        rec = TraceRecorder(pot_id="014_roll", author=detect_instance())
         # 決定論化: 記録した seed からの乱数列がそのままリプレイで再現できる
         random.seed(rec.seed)
         more = False

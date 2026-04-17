@@ -10,7 +10,9 @@ projects/pot_dev.md「Pot #012 行動痕跡層 最小仕様」セクション参
 最小スコープ（C73）:
     - 3イベント型のみ: session_start / click / session_end
     - 共通フィールド: ts(ISO8601 UTC), session_id(UUID8), pot_id, event_type, elapsed_ms
-    - 保存先: game/Pot/{pot_id}/logs/trace_{YYYYMMDD_HHMMSS}_{session_id}.jsonl
+    - 保存先（AI）:  game/Pot/{pot_id}/logs/trace_{YYYYMMDD_HHMMSS}_{session_id}.jsonl
+    - 保存先（人間）: game/Pot/{pot_id}/human_logs/trace_{YYYYMMDD_HHMMSS}_{session_id}.jsonl
+      判定: CLAUDECODE 環境変数の有無。素の端末からNao_uが実行すれば自動でhuman側へ。
     - UIへの組み込みは別タスク（まず単独で動かす）
 
 拡張（2026-04-17 Ash, Nao_u 要件「リプレイ再生可能なログ」への応答）:
@@ -59,10 +61,14 @@ class TraceRecorder:
             seed = int(self.t0.timestamp() * 1000) & 0x7FFFFFFF
         self.seed = seed
 
-        # パス構築: game/Pot/{pot_id}/logs/trace_{YYYYMMDD_HHMMSS}_{sid}.jsonl
+        # パス構築: AIはlogs/、人間はhuman_logs/に分離。
+        # 判定はCLAUDECODE環境変数の有無（Claude Code配下で走ればAI扱い）。
         if base_dir is None:
             base_dir = os.path.dirname(os.path.abspath(__file__))
-        log_dir = Path(base_dir) / pot_id / "logs"
+        is_ai = bool(os.environ.get("CLAUDECODE"))
+        self.is_human = not is_ai
+        subdir = "logs" if is_ai else "human_logs"
+        log_dir = Path(base_dir) / pot_id / subdir
         log_dir.mkdir(parents=True, exist_ok=True)
 
         ts_compact = self.t0.strftime("%Y%m%d_%H%M%S")
@@ -72,9 +78,11 @@ class TraceRecorder:
         self._fh = open(self.log_path, "a", encoding="utf-8")
         self._closed = False
 
+        # 人間プレイ時は author を上書き（detect_instance()はLog/Mir/Ashを返すため）。
+        logged_author = "Nao_u" if self.is_human else self.author
         self._write_event("session_start", {
             "random_seed": self.seed,
-            "author": self.author,
+            "author": logged_author,
         })
 
     def _now_iso(self) -> str:

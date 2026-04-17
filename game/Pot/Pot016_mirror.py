@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Pot #014: mirror (鏡) — Mir
+Pot #016: mirror (鏡) — Mir
 
 ふたつの言葉が現れる。心に近い方を選ぶ。
 振り返りで、なぜそれを選んだか聞かれる。
@@ -220,7 +220,7 @@ def phase_reveal(choices, reasons, swap_indices, detected, log):
 
 
 def main():
-    log = PlayLog("Pot014_mirror")
+    log = PlayLog("Pot016_mirror")
 
     clear()
     print()

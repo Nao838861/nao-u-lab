@@ -8,9 +8,11 @@ trace_recorder.py が出す JSON Lines を読み、プレイを人間が追え�
 seed を記録してあるので、必要なら同じ seed でゲームを再実行して完全再現できる。
 
 使い方:
-    python replay_session.py game/Pot/012c_roll/logs/trace_YYYYMMDD_HHMMSS_xxx.jsonl
-    python replay_session.py --latest 012c_roll         # 最新1セッション
-    python replay_session.py --summary 012c_roll        # 当該potの全セッション要約
+    python replay_session.py game/Pot/014_roll/logs/trace_YYYYMMDD_HHMMSS_xxx.jsonl
+    python replay_session.py --latest 014_roll          # 最新1セッション(AI)
+    python replay_session.py --latest 014_roll --human  # 最新1セッション(人間)
+    python replay_session.py --summary 014_roll         # 当該potの全セッション要約(AI)
+    python replay_session.py --summary 014_roll --human # 当該potの全セッション要約(人間)
 """
 
 import argparse
@@ -86,9 +88,10 @@ def replay(path: Path, speed: float = 1.0, pause: bool = False) -> None:
             input("    (Enter)")
 
 
-def summary(pot_id: str) -> None:
-    """当該potの全セッションを1行要約する。"""
-    base = Path(__file__).parent / pot_id / "logs"
+def summary(pot_id: str, human: bool = False) -> None:
+    """当該potの全セッションを1行要約する。human=True なら human_logs/ を見る。"""
+    subdir = "human_logs" if human else "logs"
+    base = Path(__file__).parent / pot_id / subdir
     if not base.exists():
         print(f"no logs dir: {base}")
         return
@@ -120,8 +123,11 @@ def summary(pot_id: str) -> None:
               f"inputs={n_input:3d}  dur={dur:>8}  last_state={last_state}")
 
 
-def latest(pot_id: str) -> Path | None:
-    base = Path(__file__).parent / pot_id / "logs"
+def latest(pot_id: str, human: bool = False) -> Path | None:
+    subdir = "human_logs" if human else "logs"
+    base = Path(__file__).parent / pot_id / subdir
+    if not base.exists():
+        return None
     files = sorted(base.glob("trace_*.jsonl"))
     return files[-1] if files else None
 
@@ -137,15 +143,18 @@ def main():
                     help="再生速度倍率。0=瞬時(既定)、1=実時間、2=倍速")
     ap.add_argument("--pause", action="store_true",
                     help="各イベントで Enter 待ち")
+    ap.add_argument("--human", action="store_true",
+                    help="human_logs/ 側を見る（既定は AI の logs/）")
     args = ap.parse_args()
 
     if args.summary:
-        summary(args.summary)
+        summary(args.summary, human=args.human)
         return
     if args.latest:
-        p = latest(args.latest)
+        p = latest(args.latest, human=args.human)
         if not p:
-            print(f"no sessions for {args.latest}")
+            side = "human_logs" if args.human else "logs"
+            print(f"no sessions for {args.latest} in {side}/")
             sys.exit(1)
         replay(p, speed=args.speed, pause=args.pause)
         return
