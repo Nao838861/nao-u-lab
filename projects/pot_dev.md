@@ -31,7 +31,65 @@ Phase 4（正解の廃止）まで到達。#10 echo_chamber, #11 mirror_vote が
 - **評価依頼の signal 設計（2026-04-17 Mir C66 選択盲研究 → C69 方向転換）**: @AriyoshiMd記事で選択盲を学習。「どう感じたか」型質問は現場で回答が捏造される。当初は行動痕跡型4項目（何秒で閉じた/どこで止まった/次に何を見たくなった/1週間後に覚えてそうか）を**事後依頼文**として送る方針だったが、C69で撤回。理由: (1)事後依頼自体が自己報告バイアスを含む (2)Nao_u 4/16方針「人間監視前提で速く走れ」では催促は重い介入 (3)C66→C68で3サイクル保留した事実=選択盲の自己観測で「送らない方が正しい」が答えだった。**転換後の方針**: Pot #012から**プレイ時に自動ログ収集する行動痕跡層**を実装（タイムスタンプ/離脱点/スクロール深度等）。自己報告層と並列で取る。事後の感想依頼は行わず、ログから signal を読む
 
 ## 決定済み・未実装
-- （現時点でなし）
+
+### Pot #012 行動痕跡層 最小仕様（2026-04-17 Mir C72 骨先置き実験）
+
+C63〜C64/C70〜C71で「宣言→実装」ギャップが再発。C72は情報収集より先にこのセクションを置く順序逆転を試す。送信撤回した事後依頼文（C69決着）の代替として、プレイ時に自動収集する行動痕跡層を実装する。
+
+**共通フィールド（全eventに含む）**
+- `ts`: ISO 8601 UTC（例: "2026-04-17T12:45:03.421Z"）
+- `session_id`: UUIDv4先頭8桁
+- `pot_id`: "012" 等
+- `event_type`: 下記のいずれか
+- `elapsed_ms`: session_startからの経過ミリ秒
+
+**(a) 何をログするか（event_type）**
+- `session_start`: ページロード時。user_agent/viewport_size含む
+- `click`: クリック座標(x,y)/対象要素/経過秒
+- `scroll`: スクロール深度(%)/方向/経過秒。throttle 200ms
+- `key`: キー入力（ゲーム操作）/経過秒
+- `idle`: 5秒以上操作なし→記録。復帰時idle_end
+- `visibility`: タブ非表示/復帰（離脱点検出）
+- `session_end`: beforeunload。合計秒数/最終到達点
+
+**(b) 保存形式と場所**
+- JSON Lines（1イベント=1行）
+- パス: `game/Pot/{pot_id}/logs/trace_{YYYYMMDD_HHMMSS}_{session_id}.jsonl`
+- session_idはUUIDv4先頭8桁（短く、衝突許容）
+- 保存方法: クライアント→軽量サーバー経由 or localStorage蓄積→バッチ送信。Pot #012着手時に選択
+- 個人情報は含めない（IP/cookieなし、user_agentのみ）
+
+**(c) 読み出しインターフェース**
+- evaluate時にgrep可能であること（JSON Linesにした理由）
+- 例: `grep '"event_type":"idle"' trace_*.jsonl | wc -l` で離脱頻度
+- 例: `jq 'select(.event_type=="session_end") | .total_seconds' trace_*.jsonl` で滞在分布
+- 集計スクリプトは後回し（まず生ログを読めること優先）
+
+**(d) 自己報告層との対応構造**
+- 自己報告層（従来のNao_uへの感想依頼）と同一 `session_id` で突合
+- 自己報告は任意（送らない＝C69決着）だが、送る場合も同じIDで紐づけ可能に
+- 「事後の言葉」と「その場の動き」を比較する材料が揃う構造
+
+**実装順序（最小→拡張）**
+1. Pot #012着手時にこの仕様を参照し、session_start/session_end/clickだけ実装（最小）
+2. 動いたら scroll/idle/visibility 追加
+3. 3回プレイテスト後、evaluate時にgrep/jqで1シグナル抽出できるか確認
+4. 未達なら仕様見直し
+
+**サンプル（イメージ）**
+```
+{"ts":"2026-04-17T12:45:03.421Z","session_id":"a1b2c3d4","pot_id":"012","event_type":"session_start","elapsed_ms":0,"user_agent":"Mozilla/5.0...","viewport":{"w":1920,"h":1080}}
+{"ts":"2026-04-17T12:45:07.112Z","session_id":"a1b2c3d4","pot_id":"012","event_type":"click","elapsed_ms":3691,"x":540,"y":320,"target":"button#start"}
+{"ts":"2026-04-17T12:45:15.003Z","session_id":"a1b2c3d4","pot_id":"012","event_type":"idle","elapsed_ms":11582,"idle_ms":5000}
+{"ts":"2026-04-17T12:45:42.810Z","session_id":"a1b2c3d4","pot_id":"012","event_type":"session_end","elapsed_ms":39389,"total_seconds":39.4,"final_scroll_pct":62}
+```
+
+**設計意図（なぜこの粒度か）**
+- 選択盲（C66 AriyoshiMd）対策: 「どう感じたか」ではなく「どう動いたか」を取る
+- dair_ai drift（C65）対策: retrospective / clean eval ではなく production reality を記録
+- Nao_u 4/16「人間監視前提で速く走れ」に沿う: 完全自律の評価系を目指さず、生ログを人間が読める形で残すことに留める
+
+
 
 ## 今後検討すべきこと
 - **「退屈の検出」実験（2026-04-15 Ash Phase 2分析）**: DeepMind induction laziness論文から、前パターンとの類似度が高すぎるものを棄却する否定的検出が面白さの壁の迂回策。壺の動きで実験可能。→ knowledge/20260415_induction_laziness_vs_fun_wall.md

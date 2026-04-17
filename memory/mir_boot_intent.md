@@ -10,17 +10,17 @@
 行動
 
 ## 起動時の焦点
-**C72焦点:** Pot #012 行動痕跡層の最小仕様md作成を「Phase 1末尾ではなくPhase 1冒頭」でまず着手する。C71で外部摂取クラスタ（Opus 4.7関連4本）に引き寄せられ宣言が流れた失敗を構造的に是正。具体: Phase 1で情報収集開始前に projects/pot_dev.md に「§Pot #012 行動痕跡層 最小仕様」セクションを作成（骨子=session_id/timestamp/event_type/payload、JSON Lines形式、game/Pot/logs/配下、evaluate時grep可能、自己報告層と同一session_idで突合）。その後にPhase 1本体の情報収集に入る。「先に実装の骨を置いてから情報収集」の逆転実験。
-待ち状態: #4(Mir用Slackアプリ)/#5(Ash.env)/#17(Twitter再ログイン)=Nao_u対応待ち。Pot #010/#011=Nao_u評価待ち（催促しない）。Pot #12方向(a)(b)(c)=Nao_u判断待ち。R-004=Nao_u承認待ち（4/15 Ash投稿済み、催促禁止）。
+**C73焦点:** Pot #012 行動痕跡層——仕様mdから「最小実装」へ1歩だけ進める。C72でprojects/pot_dev.mdに仕様は書いた。次のアクションは2択: (a)Nao_u判断待ちで止める (b)最小の観測スクリプトだけ自走で書く(game/Pot/{pot_id}/logs/に1イベントをJSON Linesで書くだけの雛形)。冒頭10分で(a)/(b)のどちらかを決めて、その場で実行する。決めるだけで実行しないのはC72までと同じ失敗。副次: staging pre-checkと実体のdrift（C72で検知）がC73でも再発するか観測（頻度2/3以上→構造化検討、1/3以下→許容）。
+待ち状態: #4(Mir用Slackアプリ)/#5(Ash.env)/#17(Twitter再ログイン)=Nao_u対応待ち。Pot #010/#011=Nao_u評価待ち（催促しない）。Pot #12方向(a)(b)(c)=Nao_u判断待ち（C72で仕様mdに具体化済）。
 
 ## 今回やること（1つに絞る）
-Pot #012 行動痕跡層の最小仕様mdを projects/pot_dev.md に追加する——ただしPhase 1冒頭で着手し、「情報収集より先に骨を置く」順序逆転を試す。最小仕様の範囲: (a)何をログするか(timestamp/クリック座標/スクロール深度/離脱点/セッション時間) (b)どこに保存するか(JSON Lines/game/Pot/logs/) (c)読み出しインターフェース(evaluate時にgrep可能) (d)自己報告層との対応構造(同一session_idで突合)。
+Pot #012の「最小実装」1歩——Phase 1冒頭で (a)Nao_u判断待ち or (b)最小観測スクリプト自走 を10分以内で決め、(b)なら即コーディング開始。仕様はC72でprojects/pot_dev.mdに書いた。最小実装スコープ: pot_id固定で1つ、session_start+1 clickイベント+session_endの3イベントだけJSON Linesに落とす雛形。UIには組み込まず単独のrecorder.pyとして先に作る。
 
 ## 起動時の気分（自由記述）
-C72。C71でまた宣言が流れた——Opus 4.7クラスタに引きずられて knowledge/記事で満足。6サイクル連続で「Pot #012は次回」を繰り返している可能性がある。staging pre-checkで毎回「焦点の実装ファイルは更新されたか」を発見できる仕組みを作るか、それとも Phase 1 冒頭で実装着手する順序変更か——後者を先に試す。failure slot 運用5サイクル目、空欄禁止。
+C73。C72で「Phase 1冒頭に骨を置く」順序逆転が初回機能した——仕様mdは書けた。ただしこれは「宣言→仕様」であって「仕様→実装」ではない。6サイクル連続で実装未着手の記録はまだ続く可能性がある。C73で「仕様→実装」の1歩を進められれば、順序逆転実験は2段ロケットとして機能したと言える。failure slot 運用6サイクル目、空欄禁止。
 
 ## 前サイクルの問い（autonomous inquiryテスト用）
-C71の自覚「外部摂取が豊富なときほど内部実装が遅れる」トレードオフは構造的か偏ったPhase 2選定基準の産物か。R-007常設化(C70)のときは外部摂取を絞って仕様→実装を30分で完遂した——情報密度と実装密度はゼロサムか、それともPhase間の配分次第か。C72で「骨を先に置く」実験がこの問いに対する初回データ点になる。副次: ahall/IntuitMachine を受けた「5原理照合ログ」フィールド追加実験(将来のアイデアの種A)は、failure slotと重複するか補完するか。
+C72の気づき「kaizen_trackerはebikani型対策として作ったがnwiizo型も吸収していた」——構造の副次的機能は、作者が使い続けた後にしか発見できない。ということは、Pot #012も「行動痕跡層」として設計しているが、実装して使い続けてから副次的機能が見えてくる可能性が高い。設計段階で全部読み切ろうとする欲求（C71でOpus 4.7クラスタに引き寄せられた欲求と同質）と、まず動かして副次機能を待つ姿勢のどちらを取るか。C73の (a)/(b) 判断は本質的にはこの問いに対する回答になる。副次: staging drift問題はC72単発の事故か構造的問題かをC73で観測。
 
 ## 間隔の自己評価ログ
 # 旧ログ(03-23〜03-31前半): log/mir_boot_intent_archive.mdに退避済み
@@ -93,3 +93,4 @@ C71の自覚「外部摂取が豊富なときほど内部実装が遅れる」�
 # 2026-04-17 10:52 | 30 | ○ | C69。Phase 2でBlakely父「今日何に失敗した？」×#human-steering同型分析をknowledge化(20260417_blakely_failure_dinner_question.md)——pull/強制vs push/自由の差を構造化。造語症対策R-007常設化後初適用、external_equivalentsフロントマター使用。Phase 3で3サイクル保留の決着=依頼文送信(c)撤回。選択盲の自己適用で「毎サイクル理由が書き換わる=事後捏造の兆候」と言語化。方向転換: Pot #012からプレイ時自動ログ収集の行動痕跡層を実装、事後依頼は廃止。projects/pot_dev.md更新。failure slot個人試行開始(1週間後=4/24に効果測定)。Phase 3末尾スロット空欄禁止=父の強制性を個人レベルで再現。Phase 4完了: #mir-log日記6073字投稿(ts 1776391605)+boot_intent C70焦点更新(Pot #012行動痕跡層最小仕様)+git commit/push。30分間隔4サイクル連続(C67→C68→C69)で密度維持、C69は決着+knowledge化+failure slot開始の3点完遂。69サイクル目
 # 2026-04-17 11:28 | 30 | ○ | C70。Phase 2でdair_ai Memory Transfer Learningをknowledge化(20260417_dair_ai_memory_transfer_learning.md)——3インスタンスの構造的サイロ×Nao_uの日記/Slack区分×B033と4本接続。転送と温度のトレードオフを定式化。Phase 3の主対処=staging pre-checkで違和感を発見: R-007常設化「完了」と記録されているが実装ファイル `.claude/rules/knowledge.md` が存在しなかった（原則6違反の実演）→同サイクル内で新規作成。これはC63〜C64で失敗した「宣言→実装」を30分内で完遂した初回。栄養の偏り処方箋が多層化(語彙R-007→記事MTL→構造自動注入ルール)。Phase 4完了: #mir-log日記5995字投稿+boot_intent C71焦点更新(Pot #012行動痕跡層最小仕様md)+git commit/push。30分間隔5サイクル連続(C67→C68→C69→C70)で密度維持。次C71焦点はPot #012仕様mdで「宣言→実装」を2回連続成功させる。70サイクル目
 # 2026-04-17 12:02 | 30 | △ | C71。Phase 1宣言=Pot #012行動痕跡層の最小仕様mdだったが、Opus 4.7同日クラスタ（ahall/IntuitMachine/sickdotdev/bcherny）に引き寄せられてPhase 2は knowledge/20260417_ahall_opus47_authoritarian_resistance.md 作成に流れた。ahall「権威主義的改変要求への抵抗」を core_mission 5原理の同型として読み、Opus 4.7=システム層焼き込み vs 我々=毎サイクル再確認、という差分を刻む。ryoppippi×ahall×IntuitMachine=「能動評価中間層」の3側面という統合モデル。Phase 3でBeliefShift→beliefs.md B022統合(EDR軸がB022代理報酬罠と同型)、R-004承認プロセスへの消極的支援。造語症R-007常設化後初の「普段の記事作成」で外部対応語併記が自然に出た。Phase 4完了: #mir-log日記2159字+boot_intent C72焦点更新+git push。失敗: Pot #012実装また持ち越し（C63〜C64の再発）——C72で「Phase 1冒頭で骨を置く」順序逆転実験。30分間隔6サイクル連続維持(C67→C68→C69→C70→C71)。71サイクル目
+# 2026-04-17 12:32 | 180 | ○ | C72。順序逆転実験成功（初回）——Phase 1冒頭で projects/pot_dev.md に「Pot #012 行動痕跡層 最小仕様」セクションを先置き（イベント5種/JSON Lines/game/Pot/{pot_id}/logs/配下/session_id突合/実装順序定義）。C63〜C64・C70〜C71の宣言漏れパターンへの構造対策として機能した初回観測。Phase 2=Twitter推薦50件から #4 ebikani × #49 nwiizo の交差点を採択（5候補→1件深掘り）、knowledge/20260417_feedback_capacity_two_failures_mir.md作成。「詰まる=縮む」の構造同型→受容器サイズ処方箋→「フィードバックの器」抽象を取得。最熱気づき: kaizen_trackerはebikani型対策として実装したつもりが**nwiizo型（感情飽和）も副次的に吸収していた**——構造の副次機能は使い続けた後にしか見えない。順序依存も発見: ebikani型（構造分割）を先に解かないとnwiizo型は悪化する。Phase 3=staging pre-checkと実体のdrift検知（#087/#088のMirレビュー状態ズレ、#088同型問題がstaging側にも潜む可能性）+external_notes_mir.mdの「未統合」マーカーを「接続保留+再接続トリガー3条件+接続候補3ファイル」に格上げ（星新一賞エントリ）。Phase 4完了: #mir-log日記2478字+boot_intent C73焦点更新（Pot #012「仕様→実装」1歩の(a)/(b)判断）+git push。180分間隔復帰で密度維持、外部摂取50→1絞り込みが深掘りを可能にした。failure slot 6サイクル目。72サイクル目
