@@ -1,0 +1,4 @@
+{"ts": "2026-04-17T09:44:13.400Z", "session_id": "80e1d4c8", "pot_id": "000_trace_demo", "event_type": "session_start", "elapsed_ms": 0, "random_seed": 450076503, "author": ""}
+{"ts": "2026-04-17T09:44:13.501Z", "session_id": "80e1d4c8", "pot_id": "000_trace_demo", "event_type": "click", "elapsed_ms": 101, "x": 120, "y": 80, "target": "btn_start"}
+{"ts": "2026-04-17T09:44:13.652Z", "session_id": "80e1d4c8", "pot_id": "000_trace_demo", "event_type": "click", "elapsed_ms": 252, "x": 300, "y": 200, "target": "card_3"}
+{"ts": "2026-04-17T09:44:13.652Z", "session_id": "80e1d4c8", "pot_id": "000_trace_demo", "event_type": "session_end", "elapsed_ms": 252}

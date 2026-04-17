@@ -13,17 +13,22 @@ projects/pot_dev.md「Pot #012 行動痕跡層 最小仕様」セクション参
     - 保存先: game/Pot/{pot_id}/logs/trace_{YYYYMMDD_HHMMSS}_{session_id}.jsonl
     - UIへの組み込みは別タスク（まず単独で動かす）
 
+拡張（2026-04-17 Ash, Nao_u 要件「リプレイ再生可能なログ」への応答）:
+    - session_start に random_seed を含める（省略時は time ベースで自動生成＋固定）
+    - input / state イベント追加: CLIポットでのキー入力・状態遷移を記録
+    - replay モジュール（replay_session.py）が seed+input を読み直して決定論的再生
+
 拡張予定（別サイクル）:
-    - scroll / key / idle / visibility イベント
+    - scroll / key / idle / visibility イベント（Web）
     - 既存 pot_playlog.py との統合（同session_idで突合、or 片方廃止）
 
-使い方:
+使い方（CLI Pot から）:
     from trace_recorder import TraceRecorder
-
-    rec = TraceRecorder(pot_id="012")
-    rec.click(x=120, y=80, target="btn_start")
-    rec.click(x=300, y=200, target="card_3")
-    rec.end()  # session_endを書いてファイルを閉じる
+    rec = TraceRecorder(pot_id="012c_roll")
+    random.seed(rec.seed)           # ← 決定論化
+    rec.input("k", label="keep")    # キー入力を記録
+    rec.state("kept", value=3)      # ゲーム状態遷移を記録
+    rec.end()
 """
 
 import json
@@ -41,10 +46,18 @@ class TraceRecorder:
     end() で session_end を書き、ファイルをクローズする。
     """
 
-    def __init__(self, pot_id: str, base_dir: str | None = None) -> None:
+    def __init__(self, pot_id: str, base_dir: str | None = None,
+                 seed: int | None = None, author: str = "") -> None:
         self.pot_id = pot_id
+        self.author = author
         self.session_id = uuid.uuid4().hex[:8]
         self.t0 = datetime.now(timezone.utc)
+
+        # 決定論的リプレイ用の seed。未指定なら時刻由来で生成して固定。
+        # ゲーム側は random.seed(rec.seed) を呼ぶ責務を持つ。
+        if seed is None:
+            seed = int(self.t0.timestamp() * 1000) & 0x7FFFFFFF
+        self.seed = seed
 
         # パス構築: game/Pot/{pot_id}/logs/trace_{YYYYMMDD_HHMMSS}_{sid}.jsonl
         if base_dir is None:
@@ -59,7 +72,10 @@ class TraceRecorder:
         self._fh = open(self.log_path, "a", encoding="utf-8")
         self._closed = False
 
-        self._write_event("session_start", {})
+        self._write_event("session_start", {
+            "random_seed": self.seed,
+            "author": self.author,
+        })
 
     def _now_iso(self) -> str:
         return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.") + \
@@ -89,6 +105,17 @@ class TraceRecorder:
     def click(self, x: int, y: int, target: str = "") -> None:
         """クリック/タップイベント。座標と対象要素を記録。"""
         self._write_event("click", {"x": x, "y": y, "target": target})
+
+    def input(self, key: str, label: str = "") -> None:
+        """CLIキー入力。replay_session.py が key を順次再生する。
+        label はゲーム側の意味づけ（例: "keep" / "reroll"）。省略可。"""
+        self._write_event("input", {"key": key, "label": label})
+
+    def state(self, name: str, **fields) -> None:
+        """ゲーム状態の変化。リプレイ検証時に突合する。"""
+        payload = {"name": name}
+        payload.update(fields)
+        self._write_event("state", payload)
 
     def end(self) -> None:
         """セッション終了。session_endを書いてファイルを閉じる。"""

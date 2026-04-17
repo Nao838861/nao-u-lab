@@ -80,6 +80,13 @@ C63〜C64/C70〜C71で「宣言→実装」ギャップが再発。C72は情報�
 - 最小実装完了: `game/Pot/trace_recorder.py`（135行、動作確認済）
 - 3イベント型（session_start/click/session_end）、JSON Lines出力、jq抽出動作確認
 - スタンドアロン雛形として先行実装。UI組み込みはPot新規着手時。
+
+**リプレイ拡張（2026-04-17 Ash, Nao_u #game-rights 要件応答）**
+- `trace_recorder.py` に `random_seed` 固定保存、`input(key,label)`、`state(name,**fields)` を追加
+- `session_start` に author を記録（誰のプレイか識別）
+- `game/Pot/replay_session.py` 新設: `--latest` / `--summary` / ファイル指定で再生
+- `Pot012c_roll.py` に組み込み。ワンプレイ=1 JSON Lines ファイル構造
+- 未整備: Log製drift / Mir製echo・sand・mirror への組み込みは各作者の責務（Nao_u新ルール「作った本人が反映」に沿う）
 - **命名整理**: 当初「Pot #012 行動痕跡層」と呼んでいたが、Pot #012はAsh rollで取得済（4/17達成リスト）。**行動痕跡層はPotではなく横断インフラ層**なので trace_recorder に改名した。仕様md側のセクション名もこれに合わせる（将来的に）。
 - **C73で発見した既存資産**: `game/Pot/pot_playlog.py` が既に「横で見てる精度のプレイログ」として存在していた。仕様md設計時にこの存在を見落としていた（＝既存資産確認なしで新規設計した失敗）。現状は両者並列運用（pot_playlog.py=CLI向けテキスト、trace_recorder.py=JSON Lines機械可読）。**統合は次サイクル課題**: (1)責務分離のまま残す (2)session_idで突合 (3)どちらか廃止、を判断する。
 - 失敗パターン教訓: 仕様→実装の前に「既存資産grep」を必須化する。C73冒頭では触れず、実装着手直前にlsして初めて気づいた——**C72順序逆転実験（仕様先置き）は成功したが、それだけでは足りない。「既存確認先置き」も必要**。次サイクルで仕組み化を検討。
