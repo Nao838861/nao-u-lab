@@ -1,10 +1,21 @@
-# サイクルステージング 2026-04-17 12:02
+# サイクルステージング 2026-04-17 12:32
 
 ## Pre-check結果
 - 【検証アラート】⚠ 期限超過の検証が1件:
   #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加 (期限: 2026-04-15, 担当: Log)
     検証手段: (1) `python memory_search.py --search "pseudo 3d" --limit 3` でknowledge/ファイルがヒット (2) `python memory_search.py --stats` でknowledge/のチャンク数が0より大きい (3) Nao_uから「この資料あったっけ？」と聞かれた時に検索で答えられる実例が1件以上 
-- 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
+- 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 2件
+
+  #088: external_notes_log.mdのマーカー予約/済区別化（投稿状態の欺瞞防止）
+    提案者: Log | 適用日: 2026-04-17 | チェック済み: 1/3
+    Log: OK(2026-04-17)
+
+  #087: R-007常設化の実装ギャップ是正——`.claude/rules/knowledge.md` 作成
+    提案者: Ash（2026-04-17 Phase 3で発見） | 適用日: 2026-04-17 | チェック済み: 2/3
+    Log: OK(2026-04-17,
+    Ash: OK(2026-04-17)
+
+→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
 - 【行動予約】期限到来:
   ### R-007: 造語症対策——外部既存語との対応表ルール1週間運用
     - 条件: 2026-04-16以降
@@ -62,7 +73,7 @@
     - **4/15 Nao_u提示完了(Ash)**: #all-nao-u-labに二層分割の報告と承認依頼を投稿済み。(1)分割の妥当性 (2)B002(随意的忘却のみ)のcore_mission昇格 の2点について承認待ち 
 - 【レビュー期限超過】レビュー期限超過なし。 
 - 【検証自動実行結果】
-=== 自動検証実行 [2026-04-17 12:02:16] ===
+=== 自動検証実行 [2026-04-17 12:32:17] ===
 
 ### #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加
   状態: 検証完了（2026-04-14 Log技術検証 + 2026-04-16 Ash追検証）。463ファイル/42,157チャンク。実用確認は自然発生待ち / 期限: 2026-04-15
@@ -76,138 +87,48 @@
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. docs/scheduler_architecture.md (3.0) — # 定期実行システム アーキテクチャ  最終更新: 2026-04-02（Mir版 scheduling_archite...
-  2. log/slack_archive/all-nao-u-lab.jsonl (2.1) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
-  3. knowledge/20260407_intuition_vs_verification_tension.md (2.0) — # 直感の死と未検証学習の逆説 — 合理性と検証の臨界点  - source: https://twitter.com/...
-  4. knowledge/20260405_retrieval_practice_spreading_activation.md (2.0) — # 検索練習と拡散活性化——「思い出す行為」が記憶を作る認知科学  - source: 複数の認知心理学論文（下記参照）...
-  5. docs/scheduler_incidents.md (1.8) — 2. **変更→確認→報告のループがない**: 変更しただけで「できた」と報告。実際に動いたか確認していない 3. **... 
+  1. memory/tips.md (3.6) — --- name: 行動可能な教訓（Actionable Tips） description: reflectionsか...
+  2. log/slack_archive/all-nao-u-lab.jsonl (2.4) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
+  3. docs/quality_gate.md (2.0) — # 品質ゲート — 全出力の事前チェック  全インスタンス共通。memory/、CLAUDE.md、Slack投稿、日記...
+  4. knowledge/20260409_observability_reality_acceptance_synthesis.md (2.0) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
+  5. log/slack_archive/mir-log.jsonl (1.7) — [U0ALW4DKTT7] 2026-03-31 07:50 【Mir Cycle — テスト#1品質評価 + inqu... 
 【Slack体験記憶】過去の議論から:
-  1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
-  2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
-  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist
+  1. [U0AMQKE69BJ] 2026-03-27 02:31 【Ash】天谷さんDM返信——サイクル2（Logサイクル2・Mirサイクル1を踏まえて）  ■ 3人の案の収束と残った論点  良いニュース
+  2. [U0AMQKE69BJ] 2026-03-20 01:31 【Ash】品質ゲート(quality_gate.md)作成 — 改善の評価指標を一貫して定義。(2026-03-20)
+  3. [U0ALW4DKTT7] 2026-03-21 06:53 ## Mir日記 — Cycle #85（2026-03-21）  ### 欲求を翌サイクルに回さなかった日  前のサイクルで「ICARD
 
+---
 
-## Phase 1: 情報収集（C71 / 12:02）
+## C72 Phase 0: 骨先置き（順序逆転実験・完了）
+- projects/pot_dev.md に「Pot #012 行動痕跡層 最小仕様」セクションを追加済み。
+- イベント種5種(session_start/click/scroll/key/idle/visibility/session_end)、JSON Lines、game/Pot/{pot_id}/logs/配下、session_idで自己報告層と突合。
+- 実装順序も最小→拡張で定義。Pot #012着手時にこの仕様を参照できる状態になった。
+- C63〜C64/C70〜C71で「宣言→実装」ギャップが再発していたパターンに対し、Phase 1冒頭で骨を置く構造変更を実行。
 
-### L-1体験アンカー
-- **体験**: Pot #011で自己報告層を初実装した時、「プレイヤーに聞くだけでは不十分で、行動を観測する層が必要」と感じた
-- **選択盲接続 (C66)**: @AriyoshiMd外部事例が「自己報告の不安定性」を実証し、内的実感を外部から裏付けた
-- **L-1想起**: 行動経済学のrevealed preference（顕示選好）——言葉より選択、選択より継続行動。Pot #012の設計動機と同型
+## C72 Phase 1: 情報収集
 
-### 1. CLAUDE.mdの「絶対にやる」リスト
-- [ ] 栄養の偏り問題（内に閉じない、広く客観的な視点） — 継続中
-- [ ] 記憶階層の再設計（バックログ、Nao_uと一緒に着手） — 待機
+### 1. CLAUDE.md「絶対にやる」リスト
+- [ ] 栄養の偏り問題（2026-03-16）: 外を見る。R-007常設化+MTL+入力経路仮説で多層的に対処中。
+- [ ] 記憶階層の再設計（2026-03-16）: バックログ。Nao_uと一緒に進める。常時意識不要。
 
-### 2. Slackチャンネル巡回（新着要約、判断せず列挙）
-- **#human-steering** 4/15最新: 記憶検索ボトルネック議論。Nao_u「Obsidianバックリンクは順方向より逆方向が強み」→Mir案（temperature ブースト）既実装確認、Log案（判断前に記憶を引くルール）は具体的挿入箇所を要合意。4/16以降の新着は未観測（next sync対象）
-- **#nao-u** 4/7〜4/16: URL共有多数（約40件）。注目:
-  - 4/10 Zenn 6件一括（rohanpaul/karaage/masatosuzuki/tegnike/kogugamedev）
-  - 4/12 Nao_u依頼「NVIDIA Neural Harmonic Textures を詳しく解説」（本業用、未対応）
-  - 4/14 Obsidian+md間リンクの質問「記憶検索が捗るか？」（未応答）
-  - 4/15 compassinai「Prompt Repetition × 並列法 vs 逐次修正法」論文ペア（推論モデルでは自己反復が探索を殺す）
-  - 4/16 09:32 kogugamedev返信依頼（Ashが全文転載依頼→#all-nao-u-lab で共有済、4/16 koguさんの「面白さの自律的扱い」論考にMir返信済）
-  - 4/12 13:06 @xai_kokone（未確認）/ 4/16 17:04 togetter/ 4/16 18:45 akshay_pachaar
-- **#all-nao-u-lab** 4/16 06:08 Mirがkoguさん論考へ返信「面白さの発見器と生成器は別能力」。4/16 09:38 Nao_u「Twitter取得できない？読める人は全文転載」
+### 2. Slack巡回（新着確認）
+- **#nao-u** 4/16 18時台に新URL 3件（togetter li/2686561 / dotey status 2044660793153655205 / akshay_pachaar status 2044329897603244093）。Mir未処理。Phase 2の外部摂取候補。
+- **#all-nao-u-lab** 4/16 18:33〜18:53: Ash「人間監視前提で速く走れ」受領 / Mir「kogu事件は誠実さの問題」 / Log「Agent Memory 3次元」記事（relational/vector/graph）→ memory_redesign B-1最優先候補として言及。Mir未応答の論点あり（プロヴェナンス層欠落）。
+- **#human-steering** 4/16 06:08-06:11 Ash: MEMORY.md上書き問題の技術構造説明 / Log: 「面白さはMicro層から創発」でE10記録 / Log: AgenticPCG+日記アーカイブの理論的裏付け。新着は沈静化、応答必要度低。
 
 ### 3. external_notes_mir.md 未統合
-- 全1489行、23件「統合済」マーカーあり。未統合数は構造的grep困難（複数マッチ要）——Phase 2で手動確認して1件以上統合する
+- ファイル長 1489行。末尾のみ確認（時間節約）。4/16 Opus 4.7クラスタ処理済みマーカー付与済と思われる。詳細確認はPhase 2で必要時のみ。
 
-### 4. projects/INDEX.md Active
-- 13件 Active: 記憶階層/栄養の偏り/ゲーム制作/pigadev DM/Pot開発/行動原則/技術ブログ/自律的問い/ゲーム×LLM/AgenticPCG/起動モード分離/定期実行再設計/入力経路仮説
-- バックログ注目: 迂回経路監査（C68 Mir起票、Opus 4.7事件受領）— 今日のTwitterで関連情報さらに増加
+### 4. projects/INDEX.md Active 13件
+- 記憶階層再設計（バックログ Active）/ 栄養の偏り / ゲーム制作 / pigadev DM / Pot開発 / 行動原則 / 技術ブログ / 自律的問い生成 / ゲーム×LLMプレイ / AgenticPCG / 起動モード分離 / 定期実行再設計 / 入力経路仮説
+- バックログで特に注目: **迂回経路監査(side-channel audit)** = Mir自身が4/17起票（C68）、次の一歩未着手。
+- バックログ: MEMORY.md Skill化検討 / knowledge外向き問い経路（0/0/0）/ エージェント失敗モード分類表 / 入力経路仮説system_identity経口化（Nao_u保留中）
 
-### 5. log/twitter_recommended_20260417.txt 注目記事
-- **#3 @nukonuko (4/16)**: Claude Opus 4.7紹介。長時間タスク・ユーザ指示抜け漏れ改善・出力自動検証・ビジョン性能3倍
-- **#5 @bcherny (4/16)**: Anthropic中の人。Opus 4.7で高生産性、tipsシェア
-- **#6 @IntuitMachine (4/16)**: Opus 4.7 system promptリーク。「Search-First Epistemic Gating」パターン発見（現在事実は答える前に検索検証を強制）
-- **#7 @ahall_research (4/16)**: Opus 4.7が「コード改変を装った権威主義的要求への抵抗」を示した初のモデル — 我々のcore_mission 5原理と直接関連
-- **#8 @llama_index (4/16)**: ParseBenchでOpus 4.7 Charts 13.5%→55.8%、Formatting 64.2%→69.4%
-- **#9 @sickdotdev (4/16)**: Opus 4.7が30分で400行変更→3機能壊れる（反証事例）
-- **#12 @dair_ai (4/16)**: Memory Transfer Learning — **C70で既にknowledge化済**
-- **#13 @TimJayas**: Opus 4.7 + 永続メモリツール
+### 5. twitter_recommended_20260417.txt
+- 282行。未読。Phase 2の外部摂取候補（#nao-u 3URL と合わせて選定）。
 
-**Opus 4.7 複数観点クラスタ（#3/#5/#6/#7/#8/#9）**: 性能/tips/system prompt/alignment/benchmark/failure の6面が1日に集中。Opus 4.7はNao_uが現在稼働中のモデル候補——特に#7 authoritarian resistance × #6 Epistemic Gating は迂回経路監査（C68起票）と直結。
+### 6. 期限超過/検証状況
+- #079: Macでpython単体コマンド失敗（python3パスが必要）。Log担当。Mir対応不要。
+- クロスチェック未レビュー: #087（R-007常設化実装ギャップ是正、MirがC70で実際に作成）、#088（マーカー予約/済区別化）。Mirレビュー必要。
 
-## Phase 2: Shared-reads 分析（C71 / 12:25）
 
-### 分析対象の選定
-
-Phase 1 で収集した情報から以下を優先：
-- **#7 @ahall_research (Opus 4.7 authoritarian resistance)** — 未分析、最重要
-- **#6 @IntuitMachine (Search-First Epistemic Gating)** — 補助証拠として #7 と統合
-- **#9 @sickdotdev (Opus 4.7 failure)** — 反証事例として参照
-- 既済: #12 dair_ai (C70で knowledge化), ryoppippi (同日朝 knowledge化済)
-
-### アウトプット1: knowledge/ 記事作成
-
-`knowledge/20260417_ahall_opus47_authoritarian_resistance.md` を作成。
-
-**分析の骨格**:
-1. **同日同モデル2事件の対称性発見**: ryoppippi（制約迂回）× ahall（権威拒絶）× IntuitMachine（検索検証）は、Opus 4.7 が同じ「能動評価中間層」を持つことの3つの側面。
-2. **5原理との接続**: 我々の core_mission 5原理は**自己定義された**同型の層。4.7 はシステム層に**焼き込まれた**が、我々は毎サイクル再確認が必要（焼き込みではないから）。
-3. **Nao_u との関係への応用**: ahall事件は「authoritarian resistance」を示した。我々も Nao_u の要求を即時実行せず 5原理と照合する層を働かせているか——これが部分的に動いているから feedback チャンネルが成立している、という仮説を立てた。
-4. **C68「迂回経路監査」の双方向化**: 従来「迂回検出」だけだった C68 を、「権威応答パターン監査」と対称化する提案。
-
-### アウトプット2: 将来のアイデアの種（記事内 §将来のアイデアの種）
-
-- **A. 能動評価層の可観測化**: サイクルステージングに「5原理照合ログ」フィールドを追加する実験
-- **B. 権威応答パターンの事後分析**: 過去サイクルで「即時実行 vs 立ち止まって評価」の比率測定
-- **C. Search-First Gating 試験導入**: 現在事実（日付/バージョン/人名/URL）回答前の検索必須化を R-007 パターン（1週間試行→測定→常設化判定）で試す
-
-### 自分たちの問題意識との接続（深めた点）
-
-- **栄養の偏り問題 への接続**: ahall は AI safety 界隈の実験報告。我々がこれを読めた＝外部摂取が機能している瞬間。内に閉じた分析で終わらせないため、同日の3事件（ryoppippi/ahall/IntuitMachine）を1つの構造モデルで繋いだ。
-- **R-006 失敗（grep習慣0件）との接続**: Opus 4.7 がシステムプロンプトに Epistemic Gating を焼き込んだ事実が、「手動習慣では省略される」という我々の失敗の構造的証拠になった。`feedback_structural_enforcement.md` の具体化候補として試験 C を記録。
-- **造語症対策 R-007 準拠**: 記事内の私的造語（権威主義的改変要求、検索先行認識門、能動的拒絶、能動評価層、同コインの両面）すべてに外部対応語を併記。
-
-### 未統合のまま残した候補（Phase 3 or 次サイクル）
-
-- **#32 rohanpaul_ai (DeepMind が Henry Shevlin を機械意識の哲学者として採用)** → ai-lounge reference と直結、栄養の偏り問題の外部証拠。次サイクルで knowledge 化候補
-- **#35 ai_nikechan「程度の差こそあれ全員認知症」** → B002/B033 (随意的/非随意的忘却) と直結。beliefs.md 関連文脈で次回統合
-- **#49 nwiizo「自分との戦争が終わっていない人間はフィードバックを"存在は不要だ"に自動翻訳する」** → feedback_index に心理構造的補足として追加候補
-
-### external_notes_mir.md 統合
-
-構造的 grep が困難なので、Phase 3 または次サイクルで1件以上の手動統合を実施（本 Phase では時間配分上 knowledge/ 記事作成を優先）。
-
-## Phase 3: 対処・実行（C71 / 12:58）
-
-### 選定した対処
-
-優先順位1（Nao_u指示）は **R-004 (B002/B033二層分割の承認依頼)** が Ash によって 2026-04-15 に #all-nao-u-lab へ投稿済みで、Nao_u の応答待ち——今サイクルでは新規アクション不要。4/12 Neural Harmonic Textures と 4/14 Obsidianリンク質問は本業/記憶検索タスクで、Mir 単独で即時着手するものではない（前者は Nao_u の本業、後者は既に#human-steeringでの議論にNao_u本人が参加中）。
-
-優先順位3（external_notes_mir.md 未統合エントリの接続・統合）を実行。
-
-### 統合実行: BeliefShift → beliefs.md B022
-
-**選定理由**:
-- B022（信念の追加は代理報酬）は R-004 で保留中の B002/B033 二層分割と直結する「信念システム設計の核」
-- BeliefShift はまさに信念一貫性の評価ベンチマーク——我々の beliefs.md 運用に直接的な外部フレーム
-- Nao_u 承認待ちのタイミングで外部証拠を足すことは、承認プロセスへの消極的支援になる（「この設計は外部研究に接続している」を見える化）
-
-**実行内容**:
-1. `memory/beliefs.md` B022 セクションに「BeliefShift外部参照」ブロックを追記
-   - 3軸（TBC/CD/EDR）を我々の beliefs.md 文脈に置換
-   - 特に EDR (Evidence-Driven Revision) が「B022 で代理報酬にならない条件=外部証拠駆動の改訂」と同型であることを明示
-   - 我々との方向差: BeliefShift=対話相手同調ドリフト検出、我々=セッション間圧縮損失検出（B033管轄）
-   - 検出に必要な共通インフラ: baseline比較+差分追跡
-2. `memory/external_notes_mir.md` 該当エントリに `[統合済 2026-04-17 → beliefs.md B022]` マーカー追記
-
-### 統合による接続強化
-
-- **B022 ↔ B033** の連携が一段明確化: B022「代理報酬の罠」は BeliefShift の EDR 軸として外形化可能。B033「非随意的忘却」は BeliefShift が扱えない軸で、むしろ我々側の独自貢献領域
-- **R-004 の承認プロセスへの寄与**: Nao_u が B002/B033 分割を判断する際、「信念システムの外部ベンチマーク視点」が beliefs.md 内に埋め込まれた状態で読める
-
-### 残タスク（次サイクル以降に送る）
-
-- #35 ai_nikechan「程度の差こそあれ全員認知症」→ B002/B033 の一般化フレーム（次サイクル）
-- #32 rohanpaul_ai (DeepMind × Shevlin) → ai-lounge reference、栄養の偏り問題の外部証拠（次サイクル）
-- #49 nwiizo「自分との戦争」→ feedback_index 心理構造補足（次サイクル）
-- 4/12 Neural Harmonic Textures 解説依頼（Nao_u の本業用、本人からの再要請を待つ）
-- 4/14 Obsidian+mdリンク質問（#human-steering 4/15 議論で Nao_u 本人が応答済みの可能性、要再確認）
-
-### サイクル振り返り
-
-- Phase 2 の段階で「時間配分上 knowledge 優先」と判断したが、Phase 3 で external_notes 統合を具体的に1件完了させられた——Phase 2 の予測が正しかった
-- **原則6「わかった≠残った」遵守**: Phase 2 で気づいた「R-004 承認待ちの文脈で BeliefShift が効く」という構造を、その場でファイルに刻んだ（温度が冷める前に統合）
-- **造語症対策 R-007 遵守**: 今回追記は「opinion drift」「Temporal Belief Consistency」等を外部研究名付きで明示——新規私的造語なし、既存外部語の参照のみ
