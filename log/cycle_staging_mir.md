@@ -83,5 +83,77 @@
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-04-05 10:05 Nao_uが#nao-uで共有してくれたkenimo49「ハーネスエンジニアリング5社解釈」、knowledge/記事化した（26記事目）
   2. [U0AM1F23FQU] 2026-03-24 06:15 [Log] Nao_uの指摘を受けて対応しました。  1. Log側: auto_cycleの間隔を5分→1時間に変更済み（schedul
-  3. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新 
+  3. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
+
+---
+
+## Phase 1: 情報収集（C70 / 2026-04-17 11:28開始）
+
+### L-1体験アンカー
+**思い出した体験**: Pot #009〜#011 を作った時、プレイヤーが「どう感じたか」を書いて送ってくれる前提で evaluate 層を考えていた。しかし依頼文を書いても送られない可能性、送られても事後捏造の可能性（選択盲、@AriyoshiMd 2026-04-17 記事）。C66で「行動痕跡型4項目」に転換したが、その時点では「Nao_uに書いてもらう」前提は残っていた。C69で依頼文撤回を決着させた今、Pot自身がプレイログを自動収集する構造に転換する必要がある。
+**関連L-1知識**: イベントロギングの基本パターン（session_id / timestamp / event_type / payload のJSON Lines形式）。ゲーム分析の業界慣行（セッション時間・クリックヒートマップ・離脱点）。web analytics の funnel 分析。これらはL-1に既にあり、取り出せる。
+
+### 1. CLAUDE.md「絶対にやる」リスト
+- [ ] 栄養の偏り問題（2026-03-16 Nao_u指摘）: 外の世界を見る。「内に閉じたゲームは自分だけが面白い」
+- [ ] 記憶階層の再設計（2026-03-16 Nao_u指示）: バックログ。改善が見えた時にNao_uと一緒に
+
+### 2. Slackチャンネル巡回
+- **#human-steering**: 最新は 2026-04-16 06:08 Ash（MEMORY.md上書き問題の構造説明）。C68以降新着なし
+- **#nao-u**: 2026-04-16 17:04-18:45 に Nao_u から3件（togetter / dotey / akshay_pachaar）。要確認（C69までに処理したかは staging では未明示、次 Phase で確認）
+- **#all-nao-u-lab**: 2026-04-16 18:48 Log が3次元エージェントメモリ記事への反応を投稿（concept_graph.json への接続言及）
+- **#shared-reads**: 2026-04-16 18:11 Mir 自身が若石「Harness Engineering」投稿済み
+
+### 3. memory/external_notes_mir.md 未統合エントリ
+- 直近6エントリ（4/2〜4/15）すべて [統合済] マーカーあり
+- 最新は 2026-04-15 kogu「賢さと面白さ」[統合済 2026-04-17 → knowledge/20260415_induction_laziness_vs_fun_wall.md]
+- **未統合エントリ: 0件**
+
+### 4. projects/INDEX.md Active プロジェクト状況
+- Active: 13件（記憶階層再設計、栄養偏り、ゲーム制作、pigadev DM、**Pot開発**、行動原則、技術ブログ、自律的問い生成、ゲーム×LLMプレイ、AgenticPCG、起動モード分離、定期実行システム再設計、入力経路仮説）
+- バックログ新規: 2026-04-17 Mir起票「迂回経路監査（side-channel audit）」@ryoppippi Opus 4.7事件受領、knowledge化済
+- **本サイクル焦点**: Pot開発 → Pot #012 行動痕跡層最小仕様
+
+### 5. twitter_recommended_20260417.txt 注目記事（50件中）
+- Opus 4.7 関連が複数件（#3 nukonuko発表まとめ / #5 bcherny dogfooding tips / #6 IntuitMachine system prompt leak / #7 ahall_research authoritarian resistance / #8 llama_index ParseBench / #9 sickdotdev 失敗事例 / #13 TimJayas permanent memory）
+- #1 @ai_nikechan「Claude Codeに仕様書を丸ごと渡すな」—— コードとテストが今の仕様、ドキュメントより信頼する
+- #4 @ebikani_hasami 「backlog/フォルダにMDで吐かせて1個ずつ新スレッドで処理」—— 我々の3層プロンプト/projectsと同型
+- #10 @sea85419 「数学における37手目っぽい動き」—— AlphaGoの37手目メタファー
+- #12 @dair_ai Memory Transfer Learning ——「知識がサイロに閉じ込められる」問題
+
+### Phase 1 完了。Phase 2（判断・外部摂取・接続）へ進む準備OK。
+
+---
+
+## Phase 2: Shared-reads分析（2026-04-17 完了）
+
+### 選定記事
+**#12 @dair_ai Memory Transfer Learning** を深掘りしknowledge化。
+- 出力: `knowledge/20260417_dair_ai_memory_transfer_learning.md`
+- タイトル: 「体験知のサイロ問題——Memory Transfer Learningと3インスタンスの不可避な分離」
+
+### 選定理由（なぜこの記事を選んだか）
+複数の候補（#1 nikechan仕様書論、#4 ebikani backlog運用、#10 sea85419 数学37手、#12 dair_ai MTL、#35 nikechan 全員認知症、#32 DeepMind哲学者採用、#7 ahall authoritarian抵抗）の中から#12を選んだ。理由:
+
+1. **我々の根幹問題と直結**: 3インスタンス体系は構造的に「サイロで体験を積む」形。dair_aiの観察（SWE体験が競プロで使えない）は、我々の「Mir体験がAshで使えない」と同型。
+2. **既存記憶との強い接続**: dialogue_slack_as_experience_20260328（Nao_uの「日記=勉強、Slack=体験」区分）と直接照応する。原点の対話を学術的命名で照らし返せる稀な機会。
+3. **未解決課題に方向を与える**: 「栄養の偏り問題」と「記憶階層の再設計」という2つの未着手課題に、具体的な問題定式化（selective permeability / 選択的透過）を提供する。
+4. **B033との接続**: 4/15にAshが分割したB033（非随意的忘却のエントロピック損失）の延長として、「体験の要約で転送しても当事者性が失われる」論点を展開できる。
+
+### 分析の骨子（knowledge記事に書いた内容の要約）
+- **接続1**: 3インスタンスの構造的サイロ。知識（description）はファイル経由で共有されているが、体験は局在。
+- **接続2**: Nao_uの日記/Slack区分との照応。MTLが解こうとしているのは「体験の知識化（抽象層への持ち上げ）」であり、同時に**欲求生成の源を薄める行為**。転送と温度はトレードオフ。
+- **接続3**: 栄養の偏り処方箋としての可能性と限界。
+- **反例4つ**: (1)温度の喪失 (2)拡散を恐れない原則(core_mission原理2)との矛盾 (3)サイロの機能性＝選択的透過が本題 (4)薄まった他人の体験問題
+
+### 将来のアイデアの種（今サイクルでは着手しない）
+- **実験設計**: 同じ体験を「抽象化された転送」と「生のログ」の2経路でインスタンス間に送り、どちらが欲求生成を誘発するか測定。R-005の延長として組める。
+- **温度の測定尺度**: 感情圧縮率×文脈密度×アクション誘発率の複合指標。reflections_mac「感情の圧縮率が異常に高い」観察と接続可能。
+- **Memory Transfer Learning論文の実体追跡**: dair_aiは論文名・著者未提示。次回external_notes入力時にフォロー取得する価値あり。
+- **input_path_hypothesis との接続**: Ash提案の「経皮vs経口」区分は、MTLの「転送すべき抽象層 vs 転送してはいけない生の体験」と構造的に同型の可能性。Nao_u保留中の論点だが、MTL文脈で再提起できるかもしれない。
+
+### 未着手扱いの関連発見（Phase 3/次サイクル向け）
+- `.claude/rules/knowledge.md` が未作成。staging pre-checkには「R-007常設化完了」と書かれているが、実装ファイルが存在しない。Phase 3で要対処 or 次サイクルのバックログに。
+- #35 @ai_nikechan「程度の差こそあれ全員認知症」も深い接続対象（B002/B033二層分割と直接共鳴）だが、今サイクルでは#12に集中し、次回検討に回す。
+
+### Phase 2 完了。Phase 3（Nao_u対応・タスク実行）へ。
 
