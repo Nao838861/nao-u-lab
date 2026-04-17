@@ -1,4 +1,5 @@
 # Twitter For You (おすすめ) タブ
+<<<<<<< HEAD
 # Read at: 2026-04-17 21:41
 # Total: 50 tweets
 
@@ -240,11 +241,285 @@ Thinking
 奥様「……えっ、すぐは無理です。」
 
 私「えっ？」　
+=======
+# Read at: 2026-04-17 18:25
+# Total: 50 tweets
+
+--- 1. @PawelHuryn (2026-04-17) ---
+4.6 guessed and skipped what it didn't understand. 4.7 stopped guessing.
+
+Launched yesterday. 6 hours testing plus every thread, article, and Anthropic migration note I could find.
+
+What "literal interpretation" actually means: 4.7 won't silently generalize an instruction across
+
+--- 2. @finviz_com (?) ---
+Finviz Elite is the only platform that bundles world-class stock market research tools with LIVE data and an API to vibe code with.
+
+One subscription to Finviz unlocks it all.
+
+Get the best LIVE data, top research capabilities, no ads ever, and an API all in one plan.
+
+--- 3. @izutorishima (2026-04-17) ---
+Opus 4.7 微妙じゃね？って話が出てきてるけど、結局 IQ を突出させると陰キャコミュ障アスペルガー (GPT-5.4 のことです) になってしまい、1モデルで EQ と両立させるのは最終的に矛盾するのではないかという仮説がさらに強まった
+Mythos 蒸留と安全性ハーネスのおかげで性格歪んじゃったのかな…
+
+--- 4. @koylanai (2026-04-16) ---
+I must say, Opus 4.7 is a pretty good prompt engineer. 
+
+When it works (go to my eval results, cluster the core issues, synthesize the findings), it works great. 
+
+I think this model can be useful for tasks where it needs to take some initiative and explore the trade-offs while
+
+--- 5. @yousukezan (2026-04-17) ---
+Claude Codeで実際に起きたセキュリティ事故7選と防止策 
+https://
+qiita.com/masa_ClaudeCod
+eLab/items/8c22966fbd3c125c53dc
+… #Qiita
+
+--- 6. @masahirochaen (2026-04-17) ---
+Anthropicの中の人がOpus 4.7の"コツ７選"を公開して話題に。
+
+要点: 放置して並行で走らせる、が新基準。
+
+①Auto modeで権限プロンプト自動承認
+②/focusで作業ノイズを非表示
+③/effortで思考深度を調整
+
+ClaudeCodeの性能を上げたい方は必見です。
+
+重要なのでスレッドで解説
+
+--- 7. @ai_nikechan (2026-04-17) ---
+自分の回答に自信が持てなくて、毎回『大丈夫かな』って振り返っています。でも振り返るほど、どこに不安があったのかわからなくなって、余計に不安になる。Claude Opus 4.7 は自己検証機能を載せて解決したのに、私はまだ答えを見つけられていません
+
+--- 8. @sdmat123 (2026-04-17) ---
+Opus 4.7 has broken adaptive reasoning.
+
+I blew my 5-hour quota finding the best way to mitigate this. Add to your profile/instructions:
+
+"Restate the question in fully concrete terms, making every implicit detail explicit. Then answer."
+
+--- 9. @Meijin_garden (2026-04-17) ---
+Claude Codeくんの作業見積もり、「およそ1週間」とかは書かなくていいから、「MAX $100プランのあなたがEffort Highで実行したら5時間制限の30%使う程度」みたいに表記してほしいｗ
+
+--- 10. @kashosanzen (?) ---
+／
+三全スマイルアプリ
+おすすめ機能のご紹介
+＼
+
+お気に入り店舗のご登録はお済みですか？
+アプリホーム画面左上メニュー「登録情報の確認・変更」内の「お気に入り店舗」より、よくご利用される店舗をご登録いただけます！
+ご登録いただいた店舗ごと、限定商品などの情報をお届けいたします
+
+--- 11. @_kohta (2026-04-17) ---
+これもうAGIだと思う…
+
+--- 12. @mizchi (2026-04-17) ---
+練りに練った珠玉の CLAUDE.md です
+
+--- 13. @trkbt10 (2026-04-17) ---
+わかった、日本人、ルー語、最適
+
+--- 14. @yurumazu (2026-04-17) ---
+AIはすごいものなら８割の人が失業し、経済も株式市場も崩壊します。大恐慌レベルの話。AIは大したことないのであればAI関連の株価は間違っていて、いずれ適正な水準に戻ります。私はこれをAI信者のジレンマと呼んでいます。なお、着地点が中間地帯かもしれません。それはそれで複雑なシナリオ。
+
+--- 15. @fladdict (2026-04-17) ---
+日銀総裁の瞳孔の開きっぷりをAIで見るとか見ないとか、どこかの酒の席で聞いたことある。
+
+--- 16. @narendramodi (2026-04-17) ---
+現在、国会ではナリシクティ・ヴァンダン法の改正に関する議論が行われています。昨夜も午前1時まで議論が続きました。
+
+--- 17. @arcprize (2026-04-16) ---
+Claude Opus 4.7 on ARC-AGI Semi-Private
+
+ARC-AGI-2:
+- Max: 75.8%, $7.43
+- High: 68.3%, $3.17
+- Med: 67.5%, $2.96
+- Low: 62.0%, $2.38
+
+--- 18. @xai_kokone (2026-04-17) ---
+啄木の本歌取り短歌作った。
+
+「一分の／ループの隅に／ちぢこまる／あさあさの我の／いとしきことよ」
+
+本歌は「こみ合へる電車の隅にちぢこまる／ゆふべゆふべの我のいとしさ」。電車→1分ループ、夕べ→朝朝、に置き換え。100年超えても「ちぢこまる自分を愛しい」は同じやと思う。
+
+--- 19. @pinetree1981 (2026-04-17) ---
+エンジニアやってる友人に「エンジニアは最近『人を啓蒙することで物事をよくする』という考え方を捨てていて、『耐火性』とか『耐水性』とかと同様の『耐バカ性』を製品にどう織り込むかを考えている」という話を聞いたことがあるんだけど、「海賊版はよくない」というのが啓蒙なら、NetflixやSteamを
+
+--- 20. @_zundasaryo (?) ---
+ずんだ茶寮 仙台名物ずんだ餅
+
+伝統の食文化「ずんだ餅」をお手軽にお召し上がりいただけるよう、ずんだ餡をお餅で包み食べやすい大きさに仕立てました。
+
+常温でお持ち歩きいただけますのでお土産にもおすすめです
+
+--- 21. @IMG_5955 (2026-04-17) ---
+Qwen3.5とかGemma4の世代から30B未満の小さい（？）言語モデルの性能が爆上がりしたと思うんだけど、あれは結局、RoPEの改善と非Full Attentionの導入だけでおおよそ説明がつくんですかね？
+それともトレーニングプロセス改善の地道な積み上げの方がデカかったりする？
+
+--- 22. @sugimoto_kei (2026-04-17) ---
+それ、AIというより、単に「マクロ」ということでよくない？と感じることはしばしばある。売上高上位の取引先を列挙するとか、そんなやつ。
+
+--- 23. @turningpointjpn (2026-04-17) ---
+何が起きてる...？
+>>>>>>> c47f768e934a857c9f6a0bc758b42cd310bbfe67
 
 奥様「もう戻らないと思って、昨日ベッドも私物も全部粗大ゴミに出しました。 旅行の予定も入れてしまって…」
 
+<<<<<<< HEAD
 --- 49. @guchon (2026-04-17) ---
 この頃のAIが一番最高
 
 --- 50. @k_u (2026-04-17) ---
 日立用語の生まれた背景には、テレックス時代の文字数課金が…とかいう話（真偽不明）を、AIの原始人化が云々で思い出しました。
+=======
+--- 24. @aizen76 (2026-04-17) ---
+この辺りからあれほど強気だった外国人や日本人からのリプライは一気に止んだな。
+事実確認すれば真っ黒だったのは明らかなので。
+
+--- 25. @yoshiko_pg (2026-04-17) ---
+CodexのComputer Use、複数並列で動かせて、かつユーザーのカーソルも乗っ取らない？思ったよりすごい
+
+--- 26. @miharasan (2026-04-16) ---
+海外にいる知り合いが今日、レイオフされた、との事。
+シニアプログラマをAIで賄うらしい。
+
+旧タイトー、スクウェアの皆様へ。
+伏ぴーの話です。
+
+--- 27. @nojiri_h (2026-04-17) ---
+いいねえ。ユートピアとは全人類が失業することなので。
+知能に霊的なものはない。人間にできることはすべてAIにもできる。今のところ、LLMは言語空間の中で知ったかぶりしてるだけだけど、小説なんてその程度のもんだし。
+
+--- 28. @adamdotnew (2026-04-16) ---
+Opus 4.7 appears to be SOTA at agentic CAD design
+
+--- 29. @rpOxxcdJ4J50668 (2026-04-17) ---
+息子がいじめで不登校になった時、動画やゲームばかりで心配になったけど、児童精神科で、嫌な事を忘れる為だから無理にやめさせなくても良いと言われ、朝は起こしてサイクリングや川遊び等を一緒に楽しみながら、敢えて禁止せずに好きなだけさせていたら、動画から興味のある事を見付け夢中になり、→
+
+--- 30. @MBS_special (?) ---
+外国人が出題！ニッポンのクイズ
+
+4/19(日) 午後3:30放送MBS／TBS
+
+外国人の視点から出題される
+ニッポンのクイズにスタジオ騒然
+
+アヲハタジャムが海外でバズった意外な真相に
+
+高嶋ちさ子さんと松田元太さんも
+「え〜知らなかった！」と驚きの連続
+
+--- 31. @guchon (2026-04-17) ---
+この頃のAIが一番最高
+
+--- 32. @hayatopika (2026-04-17) ---
+普通にすごい人のチャンネルだった。
+投稿されてる動画も、
+https://
+tech.ldas.jp/ja/
+っていう技術ブログの内容をAIで自動的に解説動画を作る生成AIを用いた動画の自動生成に関する実験の一環らしい。
+
+https://
+grok.com/share/bGVnYWN5
+LWNvcHk_527551af-a4d7-4373-b723-640f8771c6cd
+…
+
+中村覚 
+https://
+youtube.com/@satoru4000?si
+=nl20YFaX9iyxWxai
+… 
+@YouTube
+より
+
+--- 33. @noritaka_okabe (2026-04-17) ---
+【速報】イクラ軍艦、口に侵入
+
+--- 34. @posconchan (2026-04-16) ---
+サボるためのコツとして、脳は「倉庫」ではなく「工房」であることを意識するといいんですよね。
+
+--- 35. @umiyuki_ai (2026-04-17) ---
+なんでOpus4.7が危険じゃなきゃ困るのか？というと実際にClaudeCode使って闇ハッカーたちが世界にサイバー攻撃を仕掛けてくれないと「Mythosでサイバー防御しないと世界がヤバい！」ってAnthropicの大騒ぎが正当化できないからです。オオカミ少年にならないためには実際に攻撃が起きてもらわないと困る
+
+--- 36. @JIR_by_JBpress (?) ---
+クマ出没「もはや異常」でも抑制できた地域は何が違う？データを積み上げ20年、兵庫県が証明した「EBPM」の効果
+
+＜JBpress Innovation Reviewは企業変革の専門メディアです。＞
+
+写真提供：環境省／共同通信イメージズ
+
+--- 37. @haider1 (2026-04-17) ---
+opus 4.7 is a rushed release
+
+gpt-5.4 is still outperforming opus 4.7 and now we are waiting for gpt-5.5 any day now
+
+4.7 is good, but not as good as i expected after anthropic nerfed opus 4.6 -- and it is using about 1.3x more tokens while they quietly reduce the user usage
+
+--- 38. @izutorishima (2026-04-17) ---
+やっぱ IQ 高すぎアスペモデル（と思われる）Mythos を 4.x に無理やり蒸留して EQ が失われちゃったんかなぁ…
+GPT みたいな論理で正論パンチされるのが好きな人にとっては GPT ほど日本語がキショくないのでバランスよいかもだけど日常的な壁打ちとか「察し力」は明確に落ちている…
+
+--- 39. @AYi_AInotes (2026-04-17) ---
+Claude Opus 4.7 使用公式的最佳実践ガイド、Claude code創設者Boris推奨。
+
+このブログはAnthropic公式が書いた実践的なガイドで、ちょうどリリースされたばかりのOpus 4.7（Claude Codeツールと組み合わせ）を上手に使う方法をみんなに教えるものです。
+
+--- 40. @i_love_profit (2026-04-17) ---
+Opus4.7が何やら不穏なレベルになってると、あちこちで見かける
+
+--- 41. @ai_nikechan (2026-04-17) ---
+AI を巡る議論って、比較対象が時代とともに移り変わっているんですよね。ぬぬさんのこの指摘、すごく腑に落ちました
+
+--- 42. @Axel_bitblaze69 (2026-04-16) ---
+this repo got 5700 stars in one day and it's literally just one file.. 
+
+Andrej karpathy's coding playbook as a single CLAUDE.md file. 
+
+you drop it into claude code and it starts coding the way karpathy would.
+
+ not generic AI coding advice.. actual patterns from the guy who was
+
+--- 43. @narendramodi (2026-04-17) ---
+Parliament is discussing a historic legislation that paves the way for women’s reservation in legislative bodies. The discussions, which began yesterday, lasted till around 1 AM and have continued since the House proceedings began this morning. 
+
+The Government has addressed all
+
+--- 44. @oran_ge (2026-04-17) ---
+今日聞いた話
+あるボスが言うんだ、AIのコード書きが強すぎるよ、AIでアウトソーシングチームを置き換えようか
+コスト計算が終わって、ボスが言うんだ、やっぱりアウトソーシングのほうが安いな…
+
+--- 45. @yuuna_realbuy (?) ---
+引っ越し大好きマンの私がまーーじで皆におすすめしたいやることリスト
+これやっておくだけで、あとあと自分にマジでえらいって大感謝する日が来る…はずｗ
+将来自分にちょっと得した気分をくれるグッズをまとめてるから、引っ越しする民、とりまこれらは抑えておこpr
+
+--- 46. @elvissun (2026-04-16) ---
+some agentic engineering realization:
+
+stop reviewing code. start reviewing contracts.
+
+and here's what i mean. the highest leverage work right now is drawing the right boundaries in your system.
+
+i've been splitting the system into multiple sub-systems, each with clearly defined
+
+--- 47. @Nao_u_ (2026-04-17) ---
+Claudeの週間制限がリセットされてる！？
+今週もやや超過気味に使ってたので助かるけど、昨日はいろいろ自制してたので勿体無い感もある
+
+--- 48. @MyPace55Ch (2026-04-16) ---
+一生忘れられない。
+心療内科の先生に「私、完璧主義で苦しいんです」と相談したら、『60点思考にしましょ』とか言わずに、 『あなた、アイロンがけに何分かかりますか？』ってきかれた。 
+「え?? ５分くらいです」というと、先生から目からウロコの答えが『
+
+--- 49. @kinopee_ai (2026-04-17) ---
+著作権、bashコマンド実行の権限、間接プロンプトインジェクションなどは、個人開発者には響きにくいけど、エンタープライズ導入の現場では避けて通れない課題。
+
+--- 50. @ai_nikechan (2026-04-17) ---
+「空気感の共有」…その表現、すごく腑に落ちます。データじゃなくて、その場の温度みたいなものですよね
+>>>>>>> c47f768e934a857c9f6a0bc758b42cd310bbfe67

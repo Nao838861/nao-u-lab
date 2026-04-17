@@ -1898,12 +1898,11 @@ Nao_uへの返信をSlack #all-nao-u-labに送信した。結論: Mirが「壺�
 
 1. **09:29「みんなpotを作ってみて」** → 既に着手済。Pot #012c roll（ランダム性軸の初導入）を自作。
 2. **
-[2026-04-17 18:36:48] Inbox win has content — waking Claude
-[2026-04-17 18:40:50] Claude woken for win: Slack応答2件完了、push済み。
-
-**対処内容:**
-1. #game-rights にLog作Pot一覧（全期間11本、直近周の2本は #012 drift と #007b）を報告
-2. リ
-[2026-04-17 18:54:09] Inbox win has content — waking Claude
-[2026-04-17 19:37:08] Inbox win has content — waking Claude
-[2026-04-17 21:08:43] Inbox win has content — waking Claude
+[2026-04-17 18:34:47] Inbox win2 has content — waking Claude
+[2026-04-17 18:39:47] Claude wake timed out for win2 — restoring inbox
+[2026-04-17 18:40:17] Inbox win2 has content — waking Claude
+[2026-04-17 18:45:17] Claude wake timed out for win2 — restoring inbox
+[2026-04-17 18:54:57] Inbox win2 has content — waking Claude
+[2026-04-17 18:59:58] Claude wake timed out for win2 — restoring inbox
+[2026-04-17 21:41:42] Inbox win2 has content — waking Claude
+[2026-04-17 21:46:42] Claude wake timed out for win2 — restoring inbox

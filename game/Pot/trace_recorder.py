@@ -10,8 +10,7 @@ projects/pot_dev.md「Pot #012 行動痕跡層 最小仕様」セクション参
 最小スコープ（C73）:
     - 3イベント型のみ: session_start / click / session_end
     - 共通フィールド: ts(ISO8601 UTC), session_id(UUID8), pot_id, event_type, elapsed_ms
-    - 保存先: game/Pot/{pot_id}/logs/{player}/trace_{YYYYMMDD_HHMMSS}_{session_id}.jsonl
-    - player: CLAUDECODE環境変数があれば"ai"、なければ"human"（自動判定）
+    - 保存先: game/Pot/{pot_id}/logs/trace_{YYYYMMDD_HHMMSS}_{session_id}.jsonl
     - UIへの組み込みは別タスク（まず単独で動かす）
 
 拡張（2026-04-17 Ash, Nao_u 要件「リプレイ再生可能なログ」への応答）:
@@ -25,7 +24,7 @@ projects/pot_dev.md「Pot #012 行動痕跡層 最小仕様」セクション参
 
 使い方（CLI Pot から）:
     from trace_recorder import TraceRecorder
-    rec = TraceRecorder(pot_id="014_roll")
+    rec = TraceRecorder(pot_id="012c_roll")
     random.seed(rec.seed)           # ← 決定論化
     rec.input("k", label="keep")    # キー入力を記録
     rec.state("kept", value=3)      # ゲーム状態遷移を記録
@@ -51,9 +50,6 @@ class TraceRecorder:
                  seed: int | None = None, author: str = "") -> None:
         self.pot_id = pot_id
         self.author = author
-        is_ai = bool(os.environ.get("CLAUDECODE"))
-        self.is_human = not is_ai
-        self.player = "ai" if is_ai else "human"
         self.session_id = uuid.uuid4().hex[:8]
         self.t0 = datetime.now(timezone.utc)
 
@@ -63,11 +59,10 @@ class TraceRecorder:
             seed = int(self.t0.timestamp() * 1000) & 0x7FFFFFFF
         self.seed = seed
 
-        # パス構築: game/Pot/{pot_id}/logs/{player}/trace_{YYYYMMDD_HHMMSS}_{sid}.jsonl
-        # CLAUDECODE環境変数の有無で自動判定。素の端末から実行すればhuman側に落ちる。
+        # パス構築: game/Pot/{pot_id}/logs/trace_{YYYYMMDD_HHMMSS}_{sid}.jsonl
         if base_dir is None:
             base_dir = os.path.dirname(os.path.abspath(__file__))
-        log_dir = Path(base_dir) / pot_id / "logs" / self.player
+        log_dir = Path(base_dir) / pot_id / "logs"
         log_dir.mkdir(parents=True, exist_ok=True)
 
         ts_compact = self.t0.strftime("%Y%m%d_%H%M%S")
@@ -77,12 +72,9 @@ class TraceRecorder:
         self._fh = open(self.log_path, "a", encoding="utf-8")
         self._closed = False
 
-        # 人間プレイ時は author を上書き（detect_instance()はLog/Mir/Ashを返すため）。
-        logged_author = "Nao_u" if self.is_human else self.author
         self._write_event("session_start", {
             "random_seed": self.seed,
-            "author": logged_author,
-            "player": self.player,
+            "author": self.author,
         })
 
     def _now_iso(self) -> str:

@@ -1,4 +1,0 @@
-{"ts": "2026-04-17T12:17:18.087Z", "session_id": "b21ca09c", "pot_id": "017_sundown", "event_type": "session_start", "elapsed_ms": 16, "random_seed": 459261175, "author": "Log-test"}
-{"ts": "2026-04-17T12:17:18.087Z", "session_id": "b21ca09c", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 16, "name": "test_event", "value": 42}
-{"ts": "2026-04-17T12:17:18.087Z", "session_id": "b21ca09c", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 16, "name": "result", "filled": 3}
-{"ts": "2026-04-17T12:17:18.087Z", "session_id": "b21ca09c", "pot_id": "017_sundown", "event_type": "session_end", "elapsed_ms": 16}
