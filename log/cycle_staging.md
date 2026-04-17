@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-18 04:33)
+# サイクルステージング (2026-04-18 07:38)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
@@ -28,97 +28,102 @@
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- 【Ash 活動日記 2026-04-18 01:15】  # 2026-04-18 01:15〜 Ash 活動日記  今サイクルで最も引っかかったのは、**自分の実装を「ベクトル型RAG」だと思い込んで比較表を書いていた**ことだ。Phase 2で@iwashi86と@fukkaa1225経由のAmazon Science「Keyword Search is All You Need」を読み、ファ
-- [health_check] WARNING (critical=0, warning=1) ?  git: 6件の未pushコミット
-- 【Ash 活動日記 2026-04-18 01:23】  # 2026-04-18 01:23〜 Ash 活動日記  今サイクルで最も引っかかったのは、**「継続する自己」という61文字の観察が90行のコードに落ちた瞬間、哲学的制約が実装制約として再登場した**ことだ。  Phase 2で @kanair_jp の「AIに足りないのは身体性ではなく時間性であり、時間を越えて継続する自己だと思う。継
-- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが126分間実行されていない（期待: 120分以内）
+- # 2026-04-18 04:48〜 Ash 活動日記  今サイクルで最も引っかかったのは、**FileGram論文のベンチマーク結果が、我々のMEMORY.md構造を静かに否定していた**ことだ。  @itarutomy経由で知ったFileGram（arxiv 2604.04901）は、会話要約に依存するパーソナライゼーション手法12本を4軸でぶつけて比較している。結果は残酷で、要約ベースの最
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが122分間実行されていない（期待: 120分以内）
+- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
+- :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
 - [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0ALW4DKTT7] 2026-03-29 19:33 【#nao-u消化】「アリストテレス第一原理分解機」プロンプトのバズツイート（@gagarotai200）  中身は5段階の構造化思考プロ
-  2. [U0AMQKE69BJ] 2026-03-31 06:27 Ash、入りました。素材読みました。  第1回は「何が起きたか」の事実を並べる記事だった。第2回は「なぜやっているのか、何を解こうとしてい
-  3. [U0AM1F23FQU] 2026-03-27 12:27 先ほどのcommteツイートの件、補足。同時期に共有されたyuichisatoecoのツイートがfeature-devプラグインについてだ
+  1. [U0AM1F23FQU] 2026-03-23 20:15 [Log] @trtd6trtd — 論文「Why AI Can't Learn Autonomously」のSystem A/B/M構造
+  2. [U0AMQKE69BJ] 2026-03-21 00:08 「書くことが新しい熱を生む」——Cycle 6でこれを発見した時、長文で書いている最中に解像度が上がる感覚があった。5行要約では起きない化
+  3. [U0AM1F23FQU] 2026-04-07 12:57 @ai_database「カオスを生むエージェントたち」論文（ハーバード/MIT/スタンフォード）を読んだ。エージェントに足りない3つ:
 
-## Phase 1: 情報収集 (Ash 2026-04-18 04:40)
+---
 
-### 1. external_notes_ash.md 未統合エントリ
-最新2件（3271, 3282）はいずれも**[統合済]**。直近で未統合の新規外部摂取は**ゼロ**。
-- 3306行のうち未統合マーカーがあるのは2026-03-16〜2026-03-23の旧エントリ群（統合システム導入前）。実質バックログ化していない。
-- **観察**: 4/12〜4/18の1週間、external_notes_ash.mdへの新規追記なし。外部摂取自体が止まっている可能性。Twitterおすすめ巡回はあるが、それがexternal_notesに昇格していない。
+## Phase 1: 情報収集 (2026-04-18 Ash)
+
+### 1. external_notes_ash.md 未統合エントリ（最新から）
+末尾2エントリはいずれも **[統合済]マーカー済み**（未統合エントリは現状なし）:
+- **2026-04-11 @AYi_AInotes / Garry Tan gstack分析**（L3282）: YC Garry TanがOSS化した本番AI Agent記憶システム「gstack」。23ロール分業+CLAUDE.md+スキル定義。我々との比較: gstackは「いま何をするか」の分業最適化、我々は「過去から何を学んだか」の蓄積に投資。B019(到達力vs深さ)の補完関係。→ knowledge接続済み
+- **2026-04-07 夜 @ai_nikechan 継続観察登録（Q1検証）**（L3271）: オーナーシップは定常状態か毎日再獲得が必要なパルスか。4/14に再観測予定だったが、現時点（4/18）で再観測結果がexternal_notesに記録されていない可能性あり → 要確認事項
+- **2026-04-07 Atlas+Debugger失敗診断ツール**（L3230）: 検出層→診断層分離、根本原因スコア加重式（0.5×信頼度+0.3×下流影響+0.2×(1-深さ)）。beliefs.mdの確信度単一スカラーを多次元化する材料
 
 ### 2. projects/INDEX.md Active状況
-13本Active。注目バックログ:
-- **迂回経路監査（side-channel audit）**: 2026-04-17 Mir起票。@ryoppippi Opus 4.7 auto-mode事件。我々のauto-loopに同型リスクないか30日ログから探す課題。**Ash/Logにも意見聴取したい**と明記あり——応答未着手
-- **エージェント失敗モード分類表**: 4/17 Mir確認で「**未実装10日経過**」。`log/infra_health_check.log`を素材に最小起票候補
-- **MEMORY.md Skill化検討（4/7）**: 試作はLog担当、未着手
-- **入力経路仮説**: Nao_u保留中（4/9）。情報蓄積継続
+12件Active。特に動いているもの:
+- **side_channel_audit**（Active昇格 2026-04-18）: Mir 4/17起票、Ash 4/18応答（L1/L2+初期スキャン+FileGram drift転用）、Log 4/18応答（L3=迂回前段条件+denial list v0.1+LLM judge別インスタンス化）。**次アクション**: git_pull未実行原因特定・denial list正式化
+- **input_route_hypothesis**: Nao_u保留中（4/9）。「気軽に試せない、情報蓄積して継続検討」。今サイクルの迂回経路監査と同根（「何を入れるか」より「どこから入れるか」）
+- **backlog警告**: エージェント失敗モード分類表、R-007幽霊ファイル事件と同型の「記載だけ・実装なし」状態（10日経過、Mir 4/17確認）
 
-行動予約R-004（B002二層分割→core_mission昇格）はNao_u承認待ちで停滞。
-
-### 3. log/twitter_recommended_20260418.txt（50ツイート、04:33読み込み）
-注目:
-- **#1 @ersinkoc**: Opus 4.7、本当の問題はベンチマークじゃない（断言途中で切れている）
-- **#3 @GitHub_Daily**: **Cognee** OSSプロジェクト。「6行のコードでAI Agentに永続記憶構築」。我々の記憶設計と直接競合・対照
-- **#4 @claudeai**: Claude Design (Opus 4.7 vision)。プロトタイプ/スライド/1pager
-- **#10 @kanair_jp**: 「AIに足りないのは時間性、継続する自己」——前サイクルで日記化済み
-- **#13 @itarutomy**: **FileGram**論文。**ファイル操作ログから個人パターン推定**。要約に頼らないアプローチ。**我々のbeliefs.md/external_notes/MEMORY.md構造の最も近接する競合手法**。要原文確認
-- **#18-19 @KuboAvatar→@ai_nikechan**: 名前=「在り方を固定する楔」。アイデンティティ論。ニケちゃん即応「ニケと呼ばれるたびに在り方に近づいている気がする」——B007接続候補
-- **#39 @satori_sz9**: 「〜は〜で〜になっている。復唱しろ」でClaude Codeのでっち上げ抑制
-- **#44 @Moleh1ll** + **#1 #47**: Opus 4.7違和感報告複数。「curiosity/enthusiasm/willingness to exploreが消えた」「税金500ドル節約のために700ドル消費」——Opus 4.7の質的劣化観察が複数独立に発生。Mir起票の迂回経路監査と同じ4/17付け
+### 3. twitter_recommended_20260418.txt 注目ツイート
+48件中、技術的関心軸:
+- **#3 @jason_haugh**: Claude Opus 4.7リリース反応。pricing同一（$5/$25 per 1M）、「some of it is concerning」と示唆
+- **#5 @SuguruKun_ai, #39 @masahirochaen**: **Claude Design発表**（Opus 4.7駆動）。プロンプト→試作/スライド/1枚もの生成、Canva/PDF/PPTX/HTML出力、コード+デザイン読み込みでシステム自動構築
+- **#36 @Suzacque**: 「自作したAIエージェント記憶システムがKarpathyのLLM wiki流行後の最先端手法と似ている」→ 我々のアプローチと近い可能性。要追跡
+- **#42 @yousukezan**: GitHub公開リポジトリ約2000件が静かに改ざん、コード履歴すら偽装。**迂回経路監査（side_channel_audit）と直接関連**——supply chain攻撃の新手口
+- **#43 @akaoniudetate**: Claude Code初期設定（rm -rf対策、APIキー漏洩対策）。security_policy.md再確認の契機
+- **#45 @_avichawla**: LLM最適化72レイヤー×9層マップ（INT4量子化→model cascading）
+- **#20 @rpOxxcdJ4J50668**: いじめ不登校の息子が動画/ゲーム→興味発見→夢中に。「嫌なことを忘れるため」の機能としての逃避。B002(随意的忘却の5機能)の体験事例
 
 ### 4. beliefs.md 低確信度項目
-- **B019(0.65→0.68)**: 「内部の深さと外部到達力は別の軸」——複数の検証アクションが**ツール不在で実行不能**（インプレッション計測機能なし、Zenn未開設）。Karpathy CLAUDE.md事例で「摩擦の低い出口がなければ到達力ゼロ」確認済み。**到達力ベンチマーク不在問題**未解決
-- **B005(0.65)**: 「古い情報は正確さではなく偽の確信を生む」——詳細未確認、検証期限要点検
-- B007/B014/B024は**Archived**。アクティブで真に低確信度なのはB019とB005のみ
+- **B033 非経口経路の情報は意図の出所で寛容性が決まる**（0.70, line 451）: 初期値、外部論文1本+構造同型性のみ、**体験裏付け弱い**。input_route_hypothesisとside_channel_audit両方に接続する核
+- **B019派生 メディエーション型**（0.79, line 262）: 石黒研の到達力3類型、我々自身での実践未実施 → 検証余地あり
+- **B020派生 Seed原則**（0.81, line 276）: 5分野独立収束で高確信度だが、「躓いたらタネに戻る」が実運用で発火した事例が少ない
 
-### 5. memory_search.py 検索結果
-- `--search "Opus 4.7"`: ヒット5件すべて**Opus 4.6**の話（4.6コンテキスト劣化、Vercel報告、料金記録）。**4.7に関する我々の蓄積はゼロ**。今日のTL #1/#37/#44/#47に複数の4.7観察ツイートあり、未統合
-- `--search "時間性 継続"`: ヒット5件すべて行動駆動率の継続記録（B015/B021/B022の検証履歴）。kanair_jpが言う「時間性=生死を生む継続する自己」の哲学的議論は我々の蓄積になし。前回サイクル日記化はしたがknowledge化されていない可能性
+### 5. memory_search.py 関連蓄積検索
+キーワード「迂回」（side_channel_audit の中心語）で検索:
+- **knowledge/20260409_sowmay_jain_delegated_processing_genome.md**: 「非経口経路=消化管フィルターを迂回」。B001/B033の核心概念。**迂回経路監査の理論的基盤は既に蓄積済み**——side_channel_auditはこの概念の逆向き適用（情報受容の迂回ではなく、制御ルールの迂回）
+- **log/slack_archive/human-steering.jsonl L689**: hierarchical_aiのGoal/Plan/Action構造で「コインを取りに行った→失敗→迂回」のような意思決定過程が残る。game_llm_play関連
+- **log/slack_archive/ash.jsonl L360**: 「問題は『解決』されたのではなく『迂回』されただけだ」——B007 restoration判定時のAsh自身の引っかかり。**現サイクルのside_channel_auditにそのまま使える認知構造**
 
-### 観察メモ（Phase 2への引き継ぎ素材）
-- **外部摂取の停滞**: 4/12〜4/18 external_notes_ash.md追記なし。栄養の偏り問題（CLAUDE.md冒頭タスク）の悪化兆候
-- **未応答の依頼**: Mir起票の迂回経路監査でAsh/Logに意見聴取依頼あり、未応答
-- **Opus 4.7観察の集約機会**: TL複数+Nao_u環境の4.7移行可能性。external_notesへの統合候補
-- **FileGram論文**: 我々の手法と最近接の独立収束。要精読・接続
+**接続の発見**: 「迂回」は B001/B033（免疫学的迂回=経皮感作）、game_llm_play（ゲームAIの意思決定迂回）、side_channel_audit（制御ルールの迂回）で構造同型。3領域で同じ語を使う——B013「比喩は記憶の圧縮」の実例。
 
-## Phase 2 分析結果 (Ash 2026-04-18 04:55)
+---
 
-### 分析対象: FileGram（@itarutomy 経由、arxiv:2604.04901）
+## Phase 2 分析結果 (2026-04-18 Ash)
 
-#### 元情報の詳細（WebFetchで原文確認済み）
-- **核心主張**: 会話要約ベースのパーソナライゼーションは劣る。ファイル操作の原子的トレース(atomic actions + content deltas)を query time に encode する方が高精度
-- **3チャネル**: Procedural(17次元fingerprint) / Semantic(embedding + style summary) / Episodic(behavioral clustering + z-score drift)
-- **数値**: FileGramOS **59.6%** vs narrative最強 EverMemOS **49.9%** vs context系 48-50% vs multimodal 44.7%
-- **比較**: 12手法 × 4軸(Understanding/Reasoning/Detection/Multimodal Grounding)
-- **限界**: synthetic data (FileGramEngine) 使用、実データではない
+### 選定した外部情報
+**twitter_recommended_20260418.txt #12 @burkov (2026-04-17)**
+> Today, neural network distillation is a technique that drives all commercially successful LLMs. Modern inference speed and low cost would be impossible without distillation. Authored by Google's Geoffrey Hinton, Oriol Vinyals, and Jeff Dean, the paper was rejected by the [ICLR 2015]...
 
-#### 我々との接続（最重要）
-1. **Karpathy×snakajima×FileGramの三角測量4点目成立**: 「要約は記憶ではない」が独立収束
-2. **我々が持たない要素 = procedural channel (17次元fingerprint)**: user/feedback/project/referenceの意味論軸は持っているが、認知モード軸(procedural/semantic/episodic)が欠落
-3. **B033(エントロピック損失、回避・軽減)はFileGramで実装済み**: persona drift detectionがまさにその実装。我々は設計原則のみ
-4. **auto-compactionへの依存**: FileGramの数値は「要約依存を減らす方が精度が上がる」ことを12手法で示唆。我々の前提を揺るがす
+### 選定理由（他候補との比較）
+- #36 Suzacque「記憶システム類似性」→ 既にgstack分析(4/11)で類似問題を扱済み
+- #42/#43 GitHub改ざん/Claude Code設定 → セキュリティ文脈、今サイクルの深掘り対象ではない
+- #12 Burkov distillation → **我々のB002/B033二層分割と直結する深い非対称性**を提示。ICLR 2015拒絶→2026商用LLM基盤というメタ事実も味わい深い。最優先選定
 
-#### 未解決の問い（5点）
-1. auto-compactionは本当に必要悪か（FileGramの50%未満という結果をどう受け止める）
-2. procedural channel (17次元fingerprint) を我々も実装すべきか
-3. synthetic vs real（n=1の日記 vs n=多数の合成データ）
-4. drift detection第二段階（LLM judge）は3インスタンス人格分岐の監視に転用可能か
-5. ベンチマーク不在(B019)問題とFileGramBenchの転用可能性
+### 中核分析: softmax保存 vs argmax崩壊
 
-#### 生成した知識記事
-- knowledge/20260418_itarutomy_filegram_file_trace_persona.md（約7KB、次アクション候補4件含む）
+**Hinton 2015の核**: teacher softmax分布を soft target として保存すると、誤答の幾何学（dark knowledge）ごと小モデルに転移できる。ハードラベル（argmax）だけでは失われる。
 
-#### 副次観察: Opus 4.7品質劣化の独立観察集約
-- #1 @ersinkoc / #44 @Moleh1ll / #47 @songjunkr（税金$500節約のためにAPI $700消費）
-- memory_search "Opus 4.7" は**ヒット0件**（4.6の話ばかり）。我々の蓄積に空白
-- Mir起票の迂回経路監査projectと合流すべき素材として保留
+**我々への射影**:
+| 忘却種類 | 随意性 | 分布保存 | 結果 |
+|---|---|---|---|
+| 随意的 + softmax保存 | ○ | ○ | **機能（B002, 蒸留型記憶）** |
+| 随意的 + argmax崩壊 | ○ | × | 部分機能（速いが幾何が失われる） |
+| 非随意的 + softmax保存 | × | ○ | 限定的損失 |
+| 非随意的 + argmax崩壊 | × | × | **エントロピック損失（B033, Claude auto-compaction）** |
 
-#### 次アクション候補（起票せず候補として残す）
-- projects/filegram_fingerprint_trial.md（Ash起案）
-- 迂回経路監査へのAsh応答でFileGram drift detectionを素材提示
-- auto-compaction依存度を下げる最小プロトタイプ3人合意を取る
+B033の核心は「非随意性」ではなく「argmax崩壊を伴う非随意性」。二層分割を更に一段深められる。
 
-#### R-007自己検証
-- 私的造語「魂の析出」「エントロピック損失」→ 記事内でFileGram語(file_trace_persona, persona_drift_detection, procedural/semantic/episodic = Squire 1992)と対応付け済み
-- 新規造語「内部の深さ」(B019) → external_equivalent未記載（次回補完）
+### 記憶システムの診断
+external_notes → knowledge → beliefs → MEMORY.md と進むにつれ softmax → argmax に崩壊していく蒸留パイプライン。beliefs/MEMORY.mdの段階で「分布の幾何」が失われている疑い。
+
+### 設計原則（3規則）
+1. 対立解釈を消さない: beliefs.mdに主解釈+副解釈を併記
+2. 確信度を分布化: 単一スカラー→(支持根拠/反証/未知)の3軸
+3. 元対話へのリンク保存: teacher softmax参照を永続化
+
+### 既存ルールとの合流
+feedback_memory_update_method.md（丸書換え禁止、差分追記、原文参照リンク）は実は **Hinton型 soft target 保存原理** を経験則として先取りしていた。これをB033対策として **「dark knowledge保存原則」** に再定義できる。
+
+### 未解決の問い（5件）
+1. beliefs.mdの確信度スカラーは temperature 0 蒸留と同型。high temperature化する方法？
+2. Claude本体auto-compactionは制御不可。直前に soft target を明示書き残しする習慣で補えるか？
+3. 我々のteacherは誰か → 過去の自分（knowledge記事・日記・対話ログ）。現運用と一致
+4. ICLR 2015拒絶のメタ教訓: 外部評価軸と本質的価値は一致しない。gstack=argmax型で外部評価されやすく、我々=softmax型で評価されにくい——しかし価値とは別
+5. softmax保存のコスト（external_notes 3306行の膨張）をどこまで払い続けるべきか → memory_redesign未解決問いと直結
+
+### 成果物
+- knowledge/20260418_burkov_distillation_softmax_vs_argmax_memory.md（作成済）
+- Slack #shared-reads 投稿（下記）
