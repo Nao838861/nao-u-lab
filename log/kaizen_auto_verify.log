@@ -8564,3 +8564,13 @@
       
   → 総合: 全コマンド成功
 >>>>>>> f95f6f9a91a7fd412ac462e51f32b4ac8daee53e
+
+=== 自動検証実行 [2026-04-17 12:02:16] ===
+
+### #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加
+  状態: 検証完了（2026-04-14 Log技術検証 + 2026-04-16 Ash追検証）。463ファイル/42,157チャンク。実用確認は自然発生待ち / 期限: 2026-04-15
+  ❌ `python memory_search.py --search "pseudo 3d" --limit 3`
+      /bin/sh: python: command not found
+  ❌ `python memory_search.py --stats`
+      /bin/sh: python: command not found
+  → 総合: 一部失敗あり
