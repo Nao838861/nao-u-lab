@@ -10,10 +10,10 @@ pot_playlog.py — Pot共通プレイログ + リプレイ再生
   2. ReplayLog — リプレイ再生用JSONLログ（playlogs/ にワンプレイ1ファイル）
 
 人間/AI分離（2026-04-17 Nao_u指示）:
-  CLAUDECODE 環境変数の有無で判定。素の端末からNao_uが実行した場合:
+  CLAUDECODE 環境変数の有無で自動判定。素の端末からNao_uが実行した場合:
     PlayLog   → playlog_human.txt
-    ReplayLog → playlogs_human/
-  AIが遊んだ場合は従来どおり playlog.txt / playlogs/ に落ちる。
+    ReplayLog → playlogs/human/
+  AIが遊んだ場合は playlog.txt / playlogs/ai/ に落ちる。
 
 ReplayLog の使い方:
     from pot_playlog import ReplayLog
@@ -158,19 +158,20 @@ class ReplayLog:
     全ての画面出力と入力をタイミングつきで記録し、
     後から replay() で完全に再現できる。
 
-    playlogs/{game_name}_{timestamp}.jsonl に保存。
+    playlogs/human/{game_name}_{timestamp}.jsonl  (人間のプレイ)
+    playlogs/ai/{game_name}_{timestamp}.jsonl     (AIのプレイ)
+    に保存。CLAUDECODE環境変数で自動判定。デフォルトは human。
     """
 
     def __init__(self, game_name):
         self.game_name = game_name
         self.t0 = time.time()
         self._events = []
-        # CLAUDECODE未設定=人間プレイ。ディレクトリを分離。
-        is_human = not os.environ.get("CLAUDECODE")
-        self.is_human = is_human
-        subdir = "playlogs_human" if is_human else "playlogs"
+        is_ai = bool(os.environ.get("CLAUDECODE"))
+        self.is_human = not is_ai
+        self.player = "ai" if is_ai else "human"
         self._log_dir = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), subdir
+            os.path.dirname(os.path.abspath(__file__)), "playlogs", self.player
         )
 
     def _elapsed(self):
@@ -246,7 +247,7 @@ class ReplayLog:
                     "game": self.game_name,
                     "time": datetime.now().isoformat(),
                     "platform": platform.system().lower(),
-                    "player": "human" if self.is_human else "ai",
+                    "player": self.player,
                 }, ensure_ascii=False) + "\n")
                 for event in self._events:
                     f.write(json.dumps(event, ensure_ascii=False) + "\n")

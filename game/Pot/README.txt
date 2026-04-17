@@ -74,14 +74,15 @@ Pot — 制約の窯で焼く小さなターミナルゲーム
 feedback/20260417_ash_feedback_on_echo_drift.md  Ashによる両Potの反対思考評価
 Pot013_echo_v2_ash.py   echoのタイピング量削減案(9回→6回)。originalはPot013_echo.py
 Pot012_drift_v2_ash.py  driftの問いシャッフル案。戦略暗記を防ぐ。originalはPot012_drift.py
-Pot015_sand_v2_ash.py   sandの文字ディレイ ランダム化案。originalはPot015_sand.py
-Pot016_mirror_v2_ash.py mirrorのキーワード検出拡張。originalはPot016_mirror.py
+feedback/20260417_ash_feedback_on_sand_mirror.md  Ashによるsand/mirrorの反対思考評価
+Pot015_sand_v2_ash.py   sandの表示速度ランダム化案。originalはPot015_sand.py
+Pot016_mirror_v2_ash.py mirrorの検出ワード拡張案。originalはPot016_mirror.py
 
 ── プレイログの保存先 ──────────
-AIが遊んだ: game/Pot/{pot_id}/logs/            (trace_recorder)
-            game/Pot/playlog.txt                (PlayLog)
-            game/Pot/playlogs/                  (ReplayLog)
-人間が遊んだ: game/Pot/{pot_id}/human_logs/    (trace_recorder)
-              game/Pot/playlog_human.txt        (PlayLog)
-              game/Pot/playlogs_human/          (ReplayLog)
+AIが遊んだ: game/Pot/{pot_id}/logs/ai/          (trace_recorder)
+            game/Pot/playlog.txt                 (PlayLog)
+            game/Pot/playlogs/ai/                (ReplayLog)
+人間が遊んだ: game/Pot/{pot_id}/logs/human/     (trace_recorder)
+              game/Pot/playlog_human.txt          (PlayLog)
+              game/Pot/playlogs/human/            (ReplayLog)
 判定は CLAUDECODE 環境変数の有無による。Nao_uが素の端末から実行すれば自動で human 側に落ちる。
