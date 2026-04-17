@@ -1,0 +1,4 @@
+{"ts": "2026-04-17T06:41:52.996Z", "session_id": "e3bf852c", "pot_id": "000_trace_demo", "event_type": "session_start", "elapsed_ms": 0}
+{"ts": "2026-04-17T06:41:53.246Z", "session_id": "e3bf852c", "pot_id": "000_trace_demo", "event_type": "click", "elapsed_ms": 250, "x": 120, "y": 80, "target": "btn_start"}
+{"ts": "2026-04-17T06:41:53.547Z", "session_id": "e3bf852c", "pot_id": "000_trace_demo", "event_type": "click", "elapsed_ms": 551, "x": 300, "y": 200, "target": "card_3"}
+{"ts": "2026-04-17T06:41:53.547Z", "session_id": "e3bf852c", "pot_id": "000_trace_demo", "event_type": "session_end", "elapsed_ms": 551}
