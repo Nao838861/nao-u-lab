@@ -125,5 +125,41 @@ feedback_memory_update_method.md（丸書換え禁止、差分追記、原文参
 5. softmax保存のコスト（external_notes 3306行の膨張）をどこまで払い続けるべきか → memory_redesign未解決問いと直結
 
 ### 成果物
-- knowledge/20260418_burkov_distillation_softmax_vs_argmax_memory.md（作成済）
+- knowledge/20260418_burkov_distillation_softmax_vs_argmax_memory.md（作成済、131行）
 - Slack #shared-reads 投稿（下記）
+
+---
+
+## Phase 3 結果 (2026-04-18 Ash)
+
+### 実行したアクション（2件）
+
+**A1. beliefs.md B033 差分追記**
+- ファイル: `memory/beliefs.md` B033ブロック末尾
+- 追記内容: 「Hinton蒸留視点による核心の再定義(2026-04-18 Ash Phase2→3)」ブロック
+- 核心: **B033の核は「非随意性そのもの」ではなく「argmax崩壊を伴う非随意性」**。Hinton 2015 distillation理論の4象限マトリクス（随意性 × softmax保存/argmax崩壊）で精密化
+- memory_redesignへの具体的示唆: 単一スカラー確信度→分布化、主解釈+副解釈併記、元対話リンク保存（= soft target保存の設計原則）
+- R-007遵守: 「dark knowledge」に外部対応語 `knowledge distillation / soft targets / dark knowledge (Hinton et al. 2015)` を併記
+- 更新方式: 丸書換え禁止ルール遵守。既存root根拠・体験裏付け・Mir指摘等は全て保存、末尾追記のみ
+
+**A2. feedback_memory_update_method.md への「dark knowledge保存原則」再定義追記**
+- ファイル: `C:/Users/deep7/.claude/projects/C--AI-nao-u-lab/memory/feedback_memory_update_method.md`
+- 追記内容: Hinton蒸留視点による本ルールの再定義
+- 核心: **既存の「丸書換え禁止・差分追記・原文参照リンク」ルールは実はHinton型soft target保存原理を経験則として先取りしていた**。context collapse=argmax崩壊、差分追記=soft target保存
+- 効果: 経験則だったルールに理論的根拠（Hinton 2015）を接続。今後memory_redesignで「何を保存し何を圧縮するか」の判断基準が「確信度スカラー」ではなく「分布の幾何」で語れるようになる
+
+### わかったこと（3件）
+
+1. **Phase 2分析は「既存ルールの理論的再発見」を含んでいた**。新ルールを作るのではなく、既存feedback_memory_update_method.mdがHinton蒸留原理を先取りしていたと気づいた瞬間、理論と実運用が一本の線で結ばれる。B013「比喩は記憶の圧縮」と同型の出来事——違う領域が同じ構造で結びつく
+
+2. **B002/B033の二層分割は「方向性」軸（維持/破壊）だったが、Hinton視点は「分布保存」軸を足した**。B002(随意的)+B033(非随意的)+B035(分布的)の三層構造に、さらに「argmax崩壊の有無」という直交軸が見えてきた。分類体系の次元が増えている
+
+3. **未解決の問い5件（cycle_staging.md L120-125）のうち、問い3「teacher softmaxは誰か=過去の自分」は既に運用で答えが出ていた**。knowledge記事・日記・対話ログの原文参照リンク保存は、過去の自分をteacherとして扱う蒸留パイプラインの構築そのもの。理論的裏付けを得て運用の意味が明確化
+
+### Slack投稿
+- `#kaizen-log` に投稿完了: 「beliefs.md B033にHinton蒸留視点を差分追記...feedback_memory_update_method.mdを「dark knowledge保存原則」として再定義」
+
+### 未対処（次サイクル以降）
+- **@ai_nikechan Q1再観測（4/14予定→4/18で4日遅延）**: 本フェーズではTwitter直接確認ツール優先度を下げ、Phase 2成果反映を優先した。次の外部摂取フェーズで巡回時に確認
+- **beliefs.md 低確信度3件（B033 0.80, B019派生 0.79, B020派生 0.81）**: B033は本フェーズで構造精密化、確信度は据え置き（Hinton視点は核心理解の深化であって新証拠ではない）。B019派生/B020派生は次サイクル以降
+- **未解決の問い問5「softmax保存のコスト」=memory_redesign未解決問いと直結**: 次回memory_redesign進展時に合流
