@@ -1,0 +1,47 @@
+{"game": "Pot013_sand", "time": "2026-04-17T23:08:23.263906", "platform": "windows"}
+{"t": 0.0, "type": "clear"}
+{"t": 0.01, "type": "print", "text": "", "end": "\n"}
+{"t": 0.01, "type": "slow_print", "text": "  sand", "delay": 0.15}
+{"t": 0.939, "type": "print", "text": "", "end": "\n"}
+{"t": 0.939, "type": "sleep", "seconds": 0.3}
+{"t": 1.25, "type": "slow_print", "text": "  文が、一文字ずつ現れる。", "delay": 0.04}
+{"t": 1.905, "type": "slow_print", "text": "  心が動いたら、何かキーを押して止める。", "delay": 0.04}
+{"t": 2.882, "type": "slow_print", "text": "  止めなくてもいい。", "delay": 0.04}
+{"t": 3.396, "type": "print", "text": "", "end": "\n"}
+{"t": 3.397, "type": "prompt", "text": "  [Enter] "}
+{"t": 4.15, "type": "input", "text": "", "dt": 0.753}
+{"t": 4.15, "type": "meta", "sentences": ["帰りたいと思った。どこに帰るのかは、わからなかった。", "あの人はいつも笑っていた。泣き方を知らなかっただけだ。", "もう大丈夫だと思った。まだ大丈夫じゃなかった。", "約束は守った。守っただけだった。", "全部うまくいっていた——ように見えていただけだった"]}
+{"t": 7.587, "type": "typeout", "sentence": "帰りたいと思った。どこに帰るのかは、わからなかった。", "freeze_at": 26, "char_delay": 0.1}
+{"t": 11.13, "type": "typeout", "sentence": "あの人はいつも笑っていた。泣き方を知らなかっただけだ。", "freeze_at": 27, "char_delay": 0.1}
+{"t": 13.596, "type": "typeout", "sentence": "もう大丈夫だと思った。まだ大丈夫じゃなかった。", "freeze_at": 17, "char_delay": 0.1}
+{"t": 15.52, "type": "typeout", "sentence": "約束は守った。守っただけだった。", "freeze_at": 12, "char_delay": 0.1}
+{"t": 18.854, "type": "typeout", "sentence": "全部うまくいっていた——ように見えていただけだった", "freeze_at": 25, "char_delay": 0.1}
+{"t": 18.854, "type": "clear"}
+{"t": 18.873, "type": "print", "text": "", "end": "\n"}
+{"t": 18.873, "type": "sleep", "seconds": 0.5}
+{"t": 19.386, "type": "slow_print", "text": "  ─── 砂 ───", "delay": 0.08}
+{"t": 20.416, "type": "print", "text": "", "end": "\n"}
+{"t": 20.416, "type": "slow_print", "text": "    帰りたいと思った。どこに帰るのかは、わからなかった。", "delay": 0.03}
+{"t": 21.382, "type": "sleep", "seconds": 0.4}
+{"t": 21.788, "type": "print", "text": "", "end": "\n"}
+{"t": 21.788, "type": "slow_print", "text": "    あの人はいつも笑っていた。泣き方を知らなかっただけだ。", "delay": 0.03}
+{"t": 22.757, "type": "sleep", "seconds": 0.4}
+{"t": 23.162, "type": "print", "text": "", "end": "\n"}
+{"t": 23.162, "type": "slow_print", "text": "    もう大丈夫だと思った。まだ大丈夫じ│", "delay": 0.03}
+{"t": 23.863, "type": "sleep", "seconds": 0.8}
+{"t": 24.676, "type": "slow_print", "text": "    もう大丈夫だと思った。まだ大丈夫じゃなかった。", "delay": 0.02}
+{"t": 25.524, "type": "sleep", "seconds": 0.4}
+{"t": 25.932, "type": "print", "text": "", "end": "\n"}
+{"t": 25.932, "type": "slow_print", "text": "    約束は守った。守っただけ│", "delay": 0.03}
+{"t": 26.461, "type": "sleep", "seconds": 0.8}
+{"t": 27.271, "type": "slow_print", "text": "    約束は守った。守っただけだった。", "delay": 0.02}
+{"t": 27.894, "type": "sleep", "seconds": 0.4}
+{"t": 28.301, "type": "print", "text": "", "end": "\n"}
+{"t": 28.301, "type": "slow_print", "text": "    全部うまくいっていた——ように見えていただけだった", "delay": 0.03}
+{"t": 29.204, "type": "sleep", "seconds": 0.4}
+{"t": 29.606, "type": "print", "text": "", "end": "\n"}
+{"t": 29.607, "type": "sleep", "seconds": 1.0}
+{"t": 30.618, "type": "slow_print", "text": "  いくつかの文は、あなたが止めた先に続いていた。", "delay": 0.05}
+{"t": 32.18, "type": "print", "text": "", "end": "\n"}
+{"t": 32.181, "type": "sleep", "seconds": 1.5}
+{"t": 33.721, "type": "end"}

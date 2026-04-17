@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>AIより長く生きろ — avoid_log_01</title>
+<style>
+  html,body{margin:0;background:#05050f;color:#cfd4e4;font-family:system-ui,sans-serif;
+            display:flex;flex-direction:column;align-items:center;min-height:100vh}
+  canvas{background:#07091a;box-shadow:0 0 40px #1b2040;display:block;margin-top:12px}
+  h1{font-size:14px;margin:8px 0 0;letter-spacing:.1em;color:#9fb1d8}
+  p{font-size:11px;opacity:.55;margin:4px 0 0}
+</style>
+</head>
+<body>
+<h1>AIより長く生きろ</h1>
+<p>← → / A D で移動 &middot; R でやり直し</p>
+<canvas id="c" width="420" height="620"></canvas>
+<script>
+const W=420,H=620,FPS=60;
+const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
+const keys={};
+addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=1;
+  if(e.key.toLowerCase()==='r'&&state.over)reset();});
+addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=0});
+
+let state;
+function reset(){
+  state={
+    player:{x:W*0.35,y:H-70,r:9,alive:true,path:[]},
+    ai:{x:W*0.65,y:H-70,r:9,alive:true,path:[]},
+    bullets:[],
+    spawn:0,
+    t:0,      // frames alive (both modes)
+    pT:0,pEndT:0,
+    aT:0,aEndT:0,
+    over:false,
+    overAt:0,
+    stars:state && state.stars ? state.stars : null
+  };
+  if(!state.stars){
+    state.stars=[];
+    for(let i=0;i<80;i++)state.stars.push({x:Math.random()*W,y:Math.random()*H,z:1+Math.random()*2});
+  }
+}
+reset();
+
+function spawn(){
+  // mix of straight + weak homing, speed scales with time
+  const t=state.t/FPS;
+  const speed=2.4+Math.min(3.5,t*0.04);
+  const homing=Math.random()<0.25;
+  state.bullets.push({
+    x:Math.random()*(W-30)+15,y:-20,
+    vx:(Math.random()-0.5)*1.2,vy:speed,
+    r:7+Math.random()*5,
+    homing, life:0
+  });
+}
+
+function aiMove(a){
+  // heuristic: dodge nearest bullet above, drift toward center, mirror player offset
+  let threat=null,bestDy=9e9;
+  for(const b of state.bullets){
+    const dy=a.y-b.y;
+    if(dy>0&&dy<260&&Math.abs(a.x-b.x)<90){
+      if(dy<bestDy){threat=b;bestDy=dy;}
+    }
+  }
+  let tx=a.x;
+  if(threat){
+    const side=a.x>threat.x?1:-1;
+    tx=a.x+side*60;
+  }else{
+    tx=W*0.5 + (state.player.x-W*0.5)*0.4; // gentle mirror
+  }
+  tx=Math.max(a.r,Math.min(W-a.r,tx));
+  const d=tx-a.x;
+  a.x+=Math.sign(d)*Math.min(4.2,Math.abs(d));
+}
+
+function step(){
+  if(!state.over){
+    state.t++;
+    // spawn
+    state.spawn++;
+    const interval=Math.max(10, 30 - Math.floor(state.t/120));
+    if(state.spawn>=interval){state.spawn=0;spawn();}
+
+    // player
+    const p=state.player;
+    if(p.alive){
+      const sp=4.5;
+      if(keys['arrowleft']||keys['a'])p.x-=sp;
+      if(keys['arrowright']||keys['d'])p.x+=sp;
+      p.x=Math.max(p.r,Math.min(W-p.r,p.x));
+      state.pT=state.t;
+      if(state.t%2===0)p.path.push([p.x,p.y]);
+    }
+    // ai
+    const a=state.ai;
+    if(a.alive){
+      aiMove(a);
+      state.aT=state.t;
+      if(state.t%2===0)a.path.push([a.x,a.y]);
+    }
+
+    // bullets
+    for(const b of state.bullets){
+      b.life++;
+      if(b.homing && b.life<200){
+        // weak homing toward whichever is closer (alive)
+        const tgt=p.alive&&a.alive
+          ? (Math.hypot(p.x-b.x,p.y-b.y)<Math.hypot(a.x-b.x,a.y-b.y)?p:a)
+          : (p.alive?p:a);
+        if(tgt){
+          b.vx += Math.sign(tgt.x-b.x)*0.03;
+          b.vx = Math.max(-1.6,Math.min(1.6,b.vx));
+        }
+      }
+      b.x+=b.vx; b.y+=b.vy;
+    }
+    state.bullets=state.bullets.filter(b=>b.y<H+40&&b.x>-30&&b.x<W+30);
+
+    // collisions
+    for(const b of state.bullets){
+      if(p.alive && Math.hypot(p.x-b.x,p.y-b.y)<p.r+b.r){
+        p.alive=false; state.pEndT=state.t;
+      }
+      if(a.alive && Math.hypot(a.x-b.x,a.y-b.y)<a.r+b.r){
+        a.alive=false; state.aEndT=state.t;
+      }
+    }
+
+    if(!p.alive && !a.alive){
+      state.over=true; state.overAt=state.t;
+    }
+
+    // stars
+    for(const s of state.stars){s.y+=s.z*0.4; if(s.y>H){s.y=0;s.x=Math.random()*W;}}
+  }
+  draw();
+  requestAnimationFrame(step);
+}
+
+function draw(){
+  ctx.fillStyle='#06081a'; ctx.fillRect(0,0,W,H);
+  // stars
+  for(const s of state.stars){
+    const c=60+s.z*60;
+    ctx.fillStyle=`rgb(${c},${c},${Math.min(255,c+40)})`;
+    ctx.fillRect(s.x|0,s.y|0,s.z|0,s.z|0);
+  }
+
+  // link line while both alive (the "parallel run" visual)
+  const p=state.player,a=state.ai;
+  if(p.alive&&a.alive&&!state.over){
+    ctx.strokeStyle='rgba(120,150,220,0.35)';
+    ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(a.x,a.y); ctx.stroke();
+  }
+
+  // bullets
+  for(const b of state.bullets){
+    ctx.fillStyle = b.homing?'#ff7aa2':'#ff786a';
+    ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,6.283); ctx.fill();
+  }
+
+  // paths (light)
+  drawPath(p.path,'rgba(100,180,255,0.25)');
+  drawPath(a.path,'rgba(255,180,90,0.25)');
+
+  // player/ai
+  if(p.alive) drawFig(p.x,p.y,p.r,'#6cc6ff','you');
+  else drawGhost(p.x,p.y,p.r,'rgba(100,180,255,0.5)');
+  if(a.alive) drawFig(a.x,a.y,a.r,'#ffb558','AI');
+  else drawGhost(a.x,a.y,a.r,'rgba(255,180,90,0.55)');
+
+  // HUD
+  ctx.fillStyle='#9fb1d8'; ctx.font='12px system-ui';
+  ctx.fillText(`you ${(state.pT/FPS).toFixed(1)}s`,10,18);
+  ctx.fillText(`AI  ${(state.aT/FPS).toFixed(1)}s`,10,34);
+
+  // Over screen — "差分の可視化" (recognition device)
+  if(state.over){
+    ctx.fillStyle='rgba(0,0,0,0.55)'; ctx.fillRect(0,0,W,H);
+    const py=(state.pT/FPS), ay=(state.aT/FPS);
+    const winner = py>ay?'you win':(py<ay?'AI wins':'tie');
+    ctx.fillStyle='#fff'; ctx.font='bold 22px system-ui';
+    ctx.fillText(winner,W/2-ctx.measureText(winner).width/2,H/2-60);
+    ctx.font='14px system-ui'; ctx.fillStyle='#cfd4e4';
+    ctx.fillText(`you ${py.toFixed(1)}s / AI ${ay.toFixed(1)}s`,
+                 W/2-80, H/2-34);
+    ctx.fillStyle='#8ea4cc'; ctx.font='11px system-ui';
+    ctx.fillText('軌跡の違い = 差分。青=you / 橙=AI',W/2-110,H/2-12);
+    ctx.fillStyle='#6e84ac';
+    ctx.fillText('press R to restart',W/2-55,H/2+14);
+  }
+}
+function drawFig(x,y,r,col,lab){
+  ctx.fillStyle=col;
+  ctx.beginPath(); ctx.arc(x,y,r,0,6.283); ctx.fill();
+  ctx.fillStyle='rgba(240,240,255,0.7)';
+  ctx.font='10px system-ui';
+  ctx.fillText(lab,x-ctx.measureText(lab).width/2,y-r-4);
+}
+function drawGhost(x,y,r,col){
+  ctx.strokeStyle=col; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.arc(x,y,r+1,0,6.283); ctx.stroke();
+  ctx.lineWidth=1;
+}
+function drawPath(path,col){
+  if(path.length<2)return;
+  ctx.strokeStyle=col;
+  ctx.beginPath();
+  ctx.moveTo(path[0][0],path[0][1]);
+  for(let i=1;i<path.length;i++)ctx.lineTo(path[i][0],path[i][1]);
+  ctx.stroke();
+}
+
+requestAnimationFrame(step);
+</script>
+</body>
+</html>

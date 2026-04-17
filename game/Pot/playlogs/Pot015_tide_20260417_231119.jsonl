@@ -1,0 +1,53 @@
+{"game": "Pot015_tide", "time": "2026-04-17T23:11:19.374993", "platform": "windows"}
+{"t": 0.0, "type": "clear"}
+{"t": 0.008, "type": "print", "text": "", "end": "\n"}
+{"t": 0.008, "type": "print", "text": "    ── Tide ──", "end": "\n"}
+{"t": 0.008, "type": "print", "text": "", "end": "\n"}
+{"t": 0.008, "type": "slow_print", "text": "  断片が次々と流れ着く。", "delay": 0.04}
+{"t": 0.621, "type": "slow_print", "text": "  それぞれに、与えられた時間の長さが違う。", "delay": 0.04}
+{"t": 1.652, "type": "print", "text": "", "end": "\n"}
+{"t": 1.653, "type": "print", "text": "  [k] = 拾う   何もしなければ流れる", "end": "\n"}
+{"t": 1.653, "type": "print", "text": "  4つ拾うか、12個流れたら終わり。", "end": "\n"}
+{"t": 1.653, "type": "print", "text": "", "end": "\n"}
+{"t": 1.653, "type": "prompt", "text": "  [Enter] で開始 "}
+{"t": 3.851, "type": "input", "text": "", "dt": 2.198}
+{"t": 3.851, "type": "clear"}
+{"t": 3.858, "type": "print", "text": "", "end": "\n"}
+{"t": 3.858, "type": "print", "text": "  目標: 4個拾う。", "end": "\n"}
+{"t": 3.858, "type": "print", "text": "", "end": "\n"}
+{"t": 4.359, "type": "meta", "draw": 1, "fragment": "忘れ物の傘", "window": 2.51}
+{"t": 4.359, "type": "print", "text": "", "end": "\n"}
+{"t": 4.36, "type": "print", "text": "    忘れ物の傘", "end": "\n"}
+{"t": 5.856, "type": "print", "text": "    → 拾った (1/4)", "end": "\n"}
+{"t": 6.259, "type": "meta", "draw": 2, "fragment": "名前のない花", "window": 2.93}
+{"t": 6.259, "type": "print", "text": "", "end": "\n"}
+{"t": 6.26, "type": "print", "text": "    名前のない花", "end": "\n"}
+{"t": 6.726, "type": "print", "text": "    → 拾った (2/4)", "end": "\n"}
+{"t": 7.132, "type": "meta", "draw": 3, "fragment": "波に洗われた硝子", "window": 2.41}
+{"t": 7.132, "type": "print", "text": "", "end": "\n"}
+{"t": 7.132, "type": "print", "text": "    波に洗われた硝子", "end": "\n"}
+{"t": 7.413, "type": "print", "text": "    → 拾った (3/4)", "end": "\n"}
+{"t": 7.817, "type": "meta", "draw": 4, "fragment": "遠い汽笛", "window": 1.4}
+{"t": 7.817, "type": "print", "text": "", "end": "\n"}
+{"t": 7.818, "type": "print", "text": "    遠い汽笛", "end": "\n"}
+{"t": 8.002, "type": "print", "text": "    → 拾った (4/4)", "end": "\n"}
+{"t": 8.405, "type": "meta", "final_kept": ["忘れ物の傘", "名前のない花", "波に洗われた硝子", "遠い汽笛"], "final_lost": []}
+{"t": 9.013, "type": "clear"}
+{"t": 9.031, "type": "print", "text": "", "end": "\n"}
+{"t": 9.031, "type": "print", "text": "    ── 潮が引いた ──", "end": "\n"}
+{"t": 9.032, "type": "print", "text": "", "end": "\n"}
+{"t": 9.638, "type": "print", "text": "  あなたが拾ったもの:", "end": "\n"}
+{"t": 9.639, "type": "print", "text": "", "end": "\n"}
+{"t": 9.639, "type": "slow_print", "text": "    忘れ物の傘", "delay": 0.06}
+{"t": 10.404, "type": "slow_print", "text": "    名前のない花", "delay": 0.06}
+{"t": 11.235, "type": "slow_print", "text": "    波に洗われた硝子", "delay": 0.06}
+{"t": 12.185, "type": "slow_print", "text": "    遠い汽笛", "delay": 0.06}
+{"t": 12.883, "type": "print", "text": "", "end": "\n"}
+{"t": 13.693, "type": "print", "text": "", "end": "\n"}
+{"t": 14.304, "type": "print", "text": "  ── 時間の長さは、偶然だった。", "end": "\n"}
+{"t": 14.305, "type": "print", "text": "     あなたが迷ったか迷わなかったかは、", "end": "\n"}
+{"t": 14.305, "type": "print", "text": "     内容ではなく、与えられた秒数が決めていたかもしれない。", "end": "\n"}
+{"t": 14.306, "type": "print", "text": "", "end": "\n"}
+{"t": 14.306, "type": "prompt", "text": "  [Enter] で終了 "}
+{"t": 19.245, "type": "input", "text": "k", "dt": 4.939}
+{"t": 19.263, "type": "end"}
