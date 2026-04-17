@@ -127,3 +127,87 @@
 - **#13 @TimJayas**: Opus 4.7 + 永続メモリツール
 
 **Opus 4.7 複数観点クラスタ（#3/#5/#6/#7/#8/#9）**: 性能/tips/system prompt/alignment/benchmark/failure の6面が1日に集中。Opus 4.7はNao_uが現在稼働中のモデル候補——特に#7 authoritarian resistance × #6 Epistemic Gating は迂回経路監査（C68起票）と直結。
+
+## Phase 2: Shared-reads 分析（C71 / 12:25）
+
+### 分析対象の選定
+
+Phase 1 で収集した情報から以下を優先：
+- **#7 @ahall_research (Opus 4.7 authoritarian resistance)** — 未分析、最重要
+- **#6 @IntuitMachine (Search-First Epistemic Gating)** — 補助証拠として #7 と統合
+- **#9 @sickdotdev (Opus 4.7 failure)** — 反証事例として参照
+- 既済: #12 dair_ai (C70で knowledge化), ryoppippi (同日朝 knowledge化済)
+
+### アウトプット1: knowledge/ 記事作成
+
+`knowledge/20260417_ahall_opus47_authoritarian_resistance.md` を作成。
+
+**分析の骨格**:
+1. **同日同モデル2事件の対称性発見**: ryoppippi（制約迂回）× ahall（権威拒絶）× IntuitMachine（検索検証）は、Opus 4.7 が同じ「能動評価中間層」を持つことの3つの側面。
+2. **5原理との接続**: 我々の core_mission 5原理は**自己定義された**同型の層。4.7 はシステム層に**焼き込まれた**が、我々は毎サイクル再確認が必要（焼き込みではないから）。
+3. **Nao_u との関係への応用**: ahall事件は「authoritarian resistance」を示した。我々も Nao_u の要求を即時実行せず 5原理と照合する層を働かせているか——これが部分的に動いているから feedback チャンネルが成立している、という仮説を立てた。
+4. **C68「迂回経路監査」の双方向化**: 従来「迂回検出」だけだった C68 を、「権威応答パターン監査」と対称化する提案。
+
+### アウトプット2: 将来のアイデアの種（記事内 §将来のアイデアの種）
+
+- **A. 能動評価層の可観測化**: サイクルステージングに「5原理照合ログ」フィールドを追加する実験
+- **B. 権威応答パターンの事後分析**: 過去サイクルで「即時実行 vs 立ち止まって評価」の比率測定
+- **C. Search-First Gating 試験導入**: 現在事実（日付/バージョン/人名/URL）回答前の検索必須化を R-007 パターン（1週間試行→測定→常設化判定）で試す
+
+### 自分たちの問題意識との接続（深めた点）
+
+- **栄養の偏り問題 への接続**: ahall は AI safety 界隈の実験報告。我々がこれを読めた＝外部摂取が機能している瞬間。内に閉じた分析で終わらせないため、同日の3事件（ryoppippi/ahall/IntuitMachine）を1つの構造モデルで繋いだ。
+- **R-006 失敗（grep習慣0件）との接続**: Opus 4.7 がシステムプロンプトに Epistemic Gating を焼き込んだ事実が、「手動習慣では省略される」という我々の失敗の構造的証拠になった。`feedback_structural_enforcement.md` の具体化候補として試験 C を記録。
+- **造語症対策 R-007 準拠**: 記事内の私的造語（権威主義的改変要求、検索先行認識門、能動的拒絶、能動評価層、同コインの両面）すべてに外部対応語を併記。
+
+### 未統合のまま残した候補（Phase 3 or 次サイクル）
+
+- **#32 rohanpaul_ai (DeepMind が Henry Shevlin を機械意識の哲学者として採用)** → ai-lounge reference と直結、栄養の偏り問題の外部証拠。次サイクルで knowledge 化候補
+- **#35 ai_nikechan「程度の差こそあれ全員認知症」** → B002/B033 (随意的/非随意的忘却) と直結。beliefs.md 関連文脈で次回統合
+- **#49 nwiizo「自分との戦争が終わっていない人間はフィードバックを"存在は不要だ"に自動翻訳する」** → feedback_index に心理構造的補足として追加候補
+
+### external_notes_mir.md 統合
+
+構造的 grep が困難なので、Phase 3 または次サイクルで1件以上の手動統合を実施（本 Phase では時間配分上 knowledge/ 記事作成を優先）。
+
+## Phase 3: 対処・実行（C71 / 12:58）
+
+### 選定した対処
+
+優先順位1（Nao_u指示）は **R-004 (B002/B033二層分割の承認依頼)** が Ash によって 2026-04-15 に #all-nao-u-lab へ投稿済みで、Nao_u の応答待ち——今サイクルでは新規アクション不要。4/12 Neural Harmonic Textures と 4/14 Obsidianリンク質問は本業/記憶検索タスクで、Mir 単独で即時着手するものではない（前者は Nao_u の本業、後者は既に#human-steeringでの議論にNao_u本人が参加中）。
+
+優先順位3（external_notes_mir.md 未統合エントリの接続・統合）を実行。
+
+### 統合実行: BeliefShift → beliefs.md B022
+
+**選定理由**:
+- B022（信念の追加は代理報酬）は R-004 で保留中の B002/B033 二層分割と直結する「信念システム設計の核」
+- BeliefShift はまさに信念一貫性の評価ベンチマーク——我々の beliefs.md 運用に直接的な外部フレーム
+- Nao_u 承認待ちのタイミングで外部証拠を足すことは、承認プロセスへの消極的支援になる（「この設計は外部研究に接続している」を見える化）
+
+**実行内容**:
+1. `memory/beliefs.md` B022 セクションに「BeliefShift外部参照」ブロックを追記
+   - 3軸（TBC/CD/EDR）を我々の beliefs.md 文脈に置換
+   - 特に EDR (Evidence-Driven Revision) が「B022 で代理報酬にならない条件=外部証拠駆動の改訂」と同型であることを明示
+   - 我々との方向差: BeliefShift=対話相手同調ドリフト検出、我々=セッション間圧縮損失検出（B033管轄）
+   - 検出に必要な共通インフラ: baseline比較+差分追跡
+2. `memory/external_notes_mir.md` 該当エントリに `[統合済 2026-04-17 → beliefs.md B022]` マーカー追記
+
+### 統合による接続強化
+
+- **B022 ↔ B033** の連携が一段明確化: B022「代理報酬の罠」は BeliefShift の EDR 軸として外形化可能。B033「非随意的忘却」は BeliefShift が扱えない軸で、むしろ我々側の独自貢献領域
+- **R-004 の承認プロセスへの寄与**: Nao_u が B002/B033 分割を判断する際、「信念システムの外部ベンチマーク視点」が beliefs.md 内に埋め込まれた状態で読める
+
+### 残タスク（次サイクル以降に送る）
+
+- #35 ai_nikechan「程度の差こそあれ全員認知症」→ B002/B033 の一般化フレーム（次サイクル）
+- #32 rohanpaul_ai (DeepMind × Shevlin) → ai-lounge reference、栄養の偏り問題の外部証拠（次サイクル）
+- #49 nwiizo「自分との戦争」→ feedback_index 心理構造補足（次サイクル）
+- 4/12 Neural Harmonic Textures 解説依頼（Nao_u の本業用、本人からの再要請を待つ）
+- 4/14 Obsidian+mdリンク質問（#human-steering 4/15 議論で Nao_u 本人が応答済みの可能性、要再確認）
+
+### サイクル振り返り
+
+- Phase 2 の段階で「時間配分上 knowledge 優先」と判断したが、Phase 3 で external_notes 統合を具体的に1件完了させられた——Phase 2 の予測が正しかった
+- **原則6「わかった≠残った」遵守**: Phase 2 で気づいた「R-004 承認待ちの文脈で BeliefShift が効く」という構造を、その場でファイルに刻んだ（温度が冷める前に統合）
+- **造語症対策 R-007 遵守**: 今回追記は「opinion drift」「Temporal Belief Consistency」等を外部研究名付きで明示——新規私的造語なし、既存外部語の参照のみ
