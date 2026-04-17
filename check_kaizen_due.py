@@ -69,7 +69,10 @@ def parse_tracker():
             # 装飾プレフィクス（✅/📦/⚠️/❌等）を剥がしてから判定する
             # （verify_kaizen.py L104-110 と同等の正規化。INC #081の横展開）
             stripped = re.sub(r"^[✅📦⚠️❌🟡🔴🟢]+\s*", "", raw_status)
-            if stripped.startswith("検証済み"):
+            # "検証済み" と "検証完了" を同等扱い（verify_kaizen.py L106 と整合。
+            # 2026-04-18 Ash: #079が「検証完了」表記のためここが"済み"だけ見ていて
+            # false-positive期限超過を出していたのを修正）
+            if stripped.startswith("検証済み") or stripped.startswith("検証完了"):
                 current["status"] = "検証済み"
             elif stripped.startswith("クローズ") or "クローズ" in stripped or "部分達成" in stripped:
                 # 部分達成でクローズされたエントリは「検証完了」扱い

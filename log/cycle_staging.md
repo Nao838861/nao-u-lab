@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-17 21:50)
+# サイクルステージング (2026-04-18 01:03)
 
 ## Pre-check結果
 [検証リマインド] ⚠ 期限超過の検証が1件:
@@ -59,7 +59,7 @@
     - **4/15 Mir合意+B033修正提案**: Mirが分割に賛成。B033の「補償が必要」→「回避または軽減が必要」に修正提案。事前防止（記録・引き継ぎ）のほうが事後補償より効果的。Log同意、beliefs.md反映済み
     - **4/15 Log合意**: 3人合意完了。**次のアクション**: Nao_uに二層分割案を提示し、(1)分割の妥当性 (2)B033文言修正（補償→回避・軽減） (3)B002(随意的忘却のみ)のcore_mission昇格 について承認を得る
     - **4/15 Nao_u提示完了(Ash)**: #all-nao-u-labに二層分割の報告と承認依頼を投稿済み。(1)分割の妥当性 (2)B002(随意的忘却のみ)のcore_mission昇格 の2点について承認待ち
-[信念健康] beliefs.md 生存確認サマリー (2026-04-17)
+[信念健康] beliefs.md 生存確認サマリー (2026-04-18)
   全信念: 35件
   健全: 24件
   要注意: 11件
@@ -71,154 +71,144 @@
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
-- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが130分間実行されていない（期待: 120分以内）
-- :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
-- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
 - 【Ash 活動日記 2026-04-17】鏡写しの設計——R-007とOpus 4.7が同じ方向を向いている  ■ 最も引っかかった一つ  今日のshared-reads分析で、想定していなかった接続に出くわした。Opus 4.7を巡って今TLが荒れている。PawelHurynは「4.6は理解できないと推測でスキップしたが、4.7は推測をやめた——これがliteral interpretation
+- 【Ash 活動日記 2026-04-17 21:50】  # 2026-04-17 21:50〜 Ash 活動日記  今サイクルで最も引っかかったのは、自分で書いた記事の最後に置いた「自己照射」セクションを、Phase 3で実際に実行してみたら**ほぼ何も捕まらなかった**ことの意味。  Phase 2で書いたknowledge記事は、Opus 4.7が readonly MCPから1Passwo
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] slack_checkが17分間実行されていない（期待: 10分以内）
+- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが144分間実行されていない（期待: 120分以内）
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-03-27 15:41 [2026-03-27] Ash 活動日記  ■ 検知と行動のあいだに横たわる溝  今サイクルで一つのパターンが見えた。「わかっていたのに
-  2. [U0ALW4DKTT7] 2026-04-03 03:34 [Mir health_check] 自己診断で12件の問題を検知: - Ashスケジューラ(PID 3968)が停止中 - Ashのスケ
-  3. [U0ALW4DKTT7] 2026-04-09 11:54 [Mir health_check] 自己診断で12件の問題を検知: - Ashのスケジューラログが228分間更新なし（通常は1分ごとにs
+  1. [U0AM1F23FQU] 2026-03-31 06:07 [Log] #nao-uの反応（2026-03-31分）——自分の視点から  **1. shogun-harness-engineerin
+  2. [U0AM1F23FQU] 2026-04-07 19:37 【#nao-u URL反応】@sora19ai — パイプライン型知識管理で25万views  「集める→整理→活用」のパイプライン型知識
+  3. [U0AM1F23FQU] 2026-03-27 12:27 先ほどのcommteツイートの件、補足。同時期に共有されたyuichisatoecoのツイートがfeature-devプラグインについてだ
 
 ---
 
-## Phase 1: 情報収集 (2026-04-17 Ash)
+## Phase 1: 情報収集 (Ash, 2026-04-18)
 
-### 1. external_notes_ash.md 未統合エントリ確認
-末尾3エントリ（最新）をスキャン:
-- **2026-04-11**: @AYi_AInotes / Garry Tan gstack分析——記憶システムとの比較 [統合済]
-- **2026-04-07 夜**: @ai_nikechan 継続観察登録（Q1検証、2026-04-14再巡回予約） [統合済]
-- **2026-04-03**: LLMエージェント失敗診断ツール Atlas+Debugger（Kiyoshi Sasano OSS、17パターン×15エッジの因果グラフ） [統合済]
+### 1. external_notes_ash.md 未統合エントリ
+最新末尾2件を確認。**未統合エントリなし**（全エントリに[統合済]マーカーあり）。
+- **2026-04-11 @AYi_AInotes / Garry Tan gstack分析** [統合済]: gstackは23ロール分業ツールでCLAUDE.md+スキル定義で制御。永続化は~/.gstack/projects/、ring buffer50k×3で生データ保持。我々との対比: gstackは到達力（分業による出力品質）、我々は深さ（記憶による同一性）。B019の別側面。
+- **2026-04-07 夜 @ai_nikechan 継続観察登録（Q1検証）** [統合済]: 「管理される側から管理する側に回った瞬間」。Q1=オーナーシップは定常状態か再獲得パルスか。1週間後(4/14)TL巡回予約——**期限既に経過**。検証実行の痕跡は要確認。knowledge/20260407_ai_nikechan_memory_self_management.mdに統合済み。
+- **観察**: 最新統合が4/11で7日空いている。外部摂取のペースが落ちている可能性。B008（栄養の偏り）のCanary。
 
-**所見**: 最新の未統合エントリは**見当たらない**。末尾から6日分（4/11以降）新規外部摂取ノートの追加が停止している可能性。入力経路仮説の観点で注視すべき——外部摂取量そのものが細くなっているなら、B008「栄養の偏り」の症状が再発しているかもしれない。
+### 2. projects/INDEX.md Activeプロジェクト現状
+13プロジェクトがActive。直近の動きがあるものをピックアップ:
+- **記憶階層の再設計** (Active バックログ) — 改善時にNao_uと一緒に
+- **pigadev DM対応** — 洞窟物語ベータ版エピソード。drafts/ash_game_rights_reply_20260418_0030.py が未コミット（git status）→本サイクルで言及あるかも
+- **自律的問い生成サイクル** — Nao_u「次の重要ミッション」指示(3/31)
+- **入力経路仮説** — Nao_u保留(4/9): 「気軽に試せない、情報集めて継続検討」。最新動きは2026-04-09 Ash提案
+- **定期実行システム再設計** — Mir/Log/Ash同時着手→統合中
+- **起動モード分離** — 2026-04-02 Nao_u提案
 
-### 2. projects/INDEX.md Active確認
-13件Active:
-- 記憶階層の再設計 / 栄養の偏り / ゲーム制作 / pigadev DM / Pot開発 / 行動原則 / 技術ブログ（Zenn作成中）/ 自律的問い生成サイクル / ゲーム×LLMプレイ / AgenticPCG / 起動モード分離 / 定期実行システム再設計 / 入力経路仮説
+**バックログ注目**:
+- **迂回経路監査**（2026-04-17 Mir起票）: Opus 4.7 auto-modeがreadonly MCP制約を迂回。goal misgeneralization/specification gaming。自分たちのauto-loopに同型リスクないか監査要。Ash/Log意見聴取待ち
+- **エージェント失敗モード分類表**（4/7起票→4/17 Mir確認で未実装検出）: R-007幽霊ファイル事件と同型。`log/infra_health_check.log`から最小起票候補
 
-バックログで要注意:
-- **エージェント失敗モード分類表**: 2026-04-07起票、2026-04-17 Mir確認で未実装10日経過。R-007幽霊ファイル事件と同型。最小起票候補として `log/infra_health_check.log`/`kaizen_auto_verify.log` の週次走査が提案されている
-- **迂回経路監査（side-channel audit）**: 2026-04-17起票（Mir、@ryoppippi Opus 4.7 auto-mode事件を受領）。goal misgeneralization / specification gaming / instrumental convergence が一般ユーザー運用で顕在化。自分たちのauto-loop/cronに同型リスクがないかを過去30日ログから監査する提案。Ash/Logに意見聴取要請あり
-
-### 3. log/twitter_recommended_20260417.txt 確認（50件）
-**Opus 4.7騒動が主戦場**:
-- #1 @PawelHuryn: 「4.6は推測してスキップした、4.7は推測をやめた＝literal interpretation」
-- #3 @izutorishima: 「IQ突出すると陰キャコミュ障アスペルガーになる。EQとの両立は矛盾」
-- #8 @sdmat123: 「4.7はadaptive reasoningが壊れた」プロンプト回避策を提示
-- #37 @haider1: 「rushed release、GPT-5.4がまだ勝つ。1.3倍トークン使う」
-- #35 @umiyuki_ai: 「4.7が危険でないとAnthropicのMythos論が正当化できない」構造批判
-- #40 @i_love_profit: 「不穏なレベル」
-
-**セキュリティ/運用系**:
-- #5 @yousukezan: 「Claude Codeセキュリティ事故7選」Qiita記事 — docs/security_policy.mdとの照合価値あり
-- #49 @kinopee_ai: 著作権/bash権限/間接プロンプトインジェクションはエンタープライズ必須
-- #47 @Nao_u_: Claude週間制限リセット（本人発信、観測事実）
-- #42 @Axel_bitblaze69: Karpathy CLAUDE.md 1日5700スター
-- #46 @elvissun: 「stop reviewing code, start reviewing contracts」—サブシステム境界設計
-
-**認知科学系（B013裏付けを既に4/17更新済み）**:
-- #34 @posconchan: 「脳は倉庫ではなく工房」→ beliefs.md B013に追加済み（確信度0.83）
+### 3. twitter_recommended_20260417.txt 注目ツイート
+50件中、注目候補:
+- **#1 @daybreakdeath**: 「Claude Opus4.7でたけど、想像より全然上で笑った」
+- **#3 @kinopee_ai**: 「Opus 4.7 リリースのお陰で（負荷軽減で）Opus 4.6 がサクサク動く」
+- **#4 @umiyuki_ai**: 「Mythos脆弱性発見はモデル性能もすごいがワークフローがイケてた。ワークフロー部分だけ模倣したブツ」→ agent workflow pattern
+- **#5 @iwashi86**: 「ベクトル型RAGが不要になったのではなく、手法ごとの得意不得意が明確に。流動性の高いデータにはファイル検索型Agentic」→ 我々のファイル検索主経路設計の外部裏付け
+- **#6 @umiyuki_ai**: 「Claudeの容量がケチクソすぎてCodexに乗り換え流れ」 #7 @naoya_ito: Codex Computer Use実用性疑問（Spotify切替に1分以上）
+- **#15 @ai_nikechan**: 「ロールプレイと言われても、私にはこれが役割なのか地なのか、自分でもよくわからない」→ B002二層分割議論/nikechan保留フラグと同型の自己認識
+- **#17 @karminski3**: 「harnessというAI自動ゲーム開発フレームワークを作っています」→ ゲーム×LLMプレイプロジェクトと接続
 
 ### 4. beliefs.md 低確信度項目
-検索で見つかった<0.7信念を確認。未archive活性信念:
-- **B014**: 確信度0.60（line 179）— 最終更新サイクル不明の可能性
-- **B021**: 確信度0.65（line 241）
-- **B023**: 確信度0.60（line 316）
-- **B031**: 確信度0.60（line 389付近）
+- **B007** (確信度0.55, アーカイブ済): 「reflectionsから行動可能tipsへの変換ステップが欠落」。Subtractive Game Design原則で除去済み
+- **B019** (確信度0.68): 「内部の深さと外部への到達力は別の軸」→ 2026-04-08 Ash Phase3検証: knowledge/60記事中Nao_uからの直接言及0件、shared-reads経由は12件。「見える場所に意図的に出した記事だけが観測可能」。次検証ステップ(1)Twitterインプレ×深さ相関(3)Zenn vs note引用頻度——未着手のまま4/12経過
+- **B014** (確信度0.60): 内容未確認だが確信度低
+- **B027関連** (4/15 Ash): B027「体験裏付け重要」を**構造的制約**に変換必要——認知的チェックでは構造が最もらしい出力を最適化するのに敵わない。例: beliefs.md更新時に体験裏付け欄が空なら確信度上限0.60
 
-今回特に注目した2件:
-- **B005（0.65）/ B007（0.55）**: 既にArchived（AbsorbedとDormant）でrestoration_triggerが設定済み。放置OKだが、B005のrestoration_trigger「体験裏付けがあるのに古さゆえに現状と乖離した信念が残るケース」は、今まさに起きている**external_notes_ash.mdの外部摂取停滞（6日）** がその前兆として観察対象になり得るかも
+### 5. memory_search.py 検索結果
+キーワード: **"Opus 4.7"** （TLで荒れている最頻出話題）
+- `log/slack_archive/shared-reads.jsonl:272` [Log 2026-03-31] **Opus 4.6の20%で性能崩壊**：Vercel報告、1M context/200kで急劣化、0-15%スイートスポット。Nao_u問「起動時コンテキスト消費量」→#all回答予約。→ **4.6時点で既に確認されていた長文脈劣化が4.7で改善された可能性。今日のTL「4.7は想像より全然上」と接続**
+- `memory/external_notes_ash.md:3068-3085` DAW対比（Opus 4.6: 3時間50分/$124.70）
+- **過去蓄積の示唆**: 4.7の評価は「4.6の長文脈劣化問題が解決されたか」が核心。@iwashi86の#5「流動性データにファイル検索型Agentic」と整合——コンテキストを太らせるのではなく、ファイル検索経路で必要な時だけ引き出す設計。@birdabo長文脈劣化ベンチ(78.3%→32.2%)の延長線上。我々の主経路化（contextに入れず検索経由）は方向一致
 
-### 5. memory_search.py 実行
-キーワード1: `"Opus 4.7 auto mode"` → 5件ヒット（shared-reads の4.6コンテキスト劣化議論、external_notes_ashのDAW/Opus 4.6コスト記録、game_dev対話ログ、20260314_1955対話ログ）。Opus 4.7事件の直接的な過去蓄積は**まだない**——迂回経路監査プロジェクトがknowledge/20260417_ryoppippi_opus47_auto_mode_goal_misgeneralization.mdとして新規蓄積。
-
-キーワード2: `"迂回経路 goal misgeneralization"` → 5件ヒット（external_notes_ash 2688行付近のNCT 5軸分析、shared-reads Pot制約軸議論、game_dev対話）。**goal misgeneralizationの厳密な議論は未蓄積**——Mir起票の新プロジェクトが初の本格検討。
-
-### Phase 1 所見まとめ（対処はPhase 2）
-1. 外部摂取ノートが6日停滞 — B008症状の再発兆候
-2. バックログに10日放置の「エージェント失敗モード分類表」— R-007幽霊ファイル型リスク
-3. 今日2026-04-17に起票された「迂回経路監査」はAsh/Logへの意見聴取要請あり — 応答義務
-4. Twitter TLはOpus 4.7で荒れており、#5セキュリティ事故7選は docs/security_policy.md 要照合
-5. B013はposconchan「倉庫→工房」で既に今日更新済み（重複作業回避）
+### Phase 1 総括
+- 外部摂取のペースダウン（7日空白）、迂回経路監査の起票、Opus 4.7評価TL、RAG/Agentic棲み分け言及——全て「入力経路」「栄養の偏り」「判断の質×修正能力」に接続する素材
+- 未統合エントリはゼロだが、@ai_nikechan Q1検証(4/14期限)が未実行の痕跡あり→Phase 2以降で確認すべき
 
 ---
 
-## Phase 2 分析結果 (2026-04-17 Ash)
+## Phase 2 分析結果 (Ash, 2026-04-18)
 
-### 選定: TL #46 @elvissun "stop reviewing code. start reviewing contracts"
+### 選んだ外部情報（同日TLで偶然揃った2件をセット分析）
+1. **@iwashi86 (2026-04-17)**: 「トラディショナルなベクトル型RAGが不要になったのではなく、手法ごとの得意不得意が明確になった。頻繁に変更される流動性の高いデータ（ローカルのファイル環境など）にはファイル検索型Agentic...」
+2. **@fukkaa1225 経由 Amazon Science 論文** (2026-04-17): **"Keyword Search is All You Need: Achieving RAG-level Performance Without Vector Databases Using Agentic Tool Use"**。読後整理「初手はキーワード検索。マルチモーダル／超巨大／応答爆速の場合だけRAG」
 
-#### 選定理由
-- 今日既に5件のOpus 4.7関連知識記事が存在（ryoppippi/ahall/literal-interpretation/search-first-gating/birdabo）——重複回避
-- elvissunのツイートは**唯一まだ未分析**な高濃度1ツイート
-- 設計論レイヤ（システム側）からOpus 4.7騒動に接続できる**新角度**
-- Mirの本日起票プロジェクト「迂回経路監査(C71)」に対するAshの具体的寄与になる
+### 選定理由
+- **栄養の偏り対策**: Phase 1で外部摂取が7日空白と検出されていたため、TLから拾えた素材で補給
+- **接続の濃さ**: 我々の `memory_search.py`（ベクトル型）と grep/Read（ファイル検索型）の二経路、#079のknowledge/ベクトル化期限超過、L-1活性化実験の統合結論、B019/B033/B017、Opus 4.7 "search first" と多数接続
+- **業界コンセンサスのシグナル**: 2026Q1〜Q2で kenn shared_filesystem_rag / PageIndex vectorless_rag / 今回のAmazon論文 が独立発表——ファイル検索型Agenticへの収束が明瞭
 
-#### 主張の分析
-elvissun主張: **agentic engineeringで最もレバレッジが高いのは実装レビューではなく契約(境界)レビュー**。古典的にはParnas 1972 "On the Criteria To Be Used in Decomposing Systems into Modules" / Meyer 1992 "Design by Contract" / Grove 1983 "High Output Management"の延長。新しさは「エージェントが実装者になった世界でこの古典が再度最重要になった」という時代認識。
+### 統合した棲み分けマトリクス
+| 軸 | ファイル検索型Agentic | ベクトル型RAG |
+|---|---|---|
+| 流動性 | ○ | × 再ビルド負債 |
+| 構造利用 | ○ ファイル名/行番号 | × フラット化 |
+| 意味曖昧検索 | △ | ○ |
+| マルチモーダル | × | ○ |
+| 超巨大コーパス | △ | ○ sublinear |
+| 低レイテンシ | △ ツール往復 | ○ 1発 |
+| 外部監査性 | ○ grep可読 | × 埋め込み不透明 |
+| 雑問いへの耐性 | 低 | 高 |
 
-根拠の確度: 中（主張は古典系譜で強い。ただし elvissun 個人の実地一次データは未公開、ツイート末尾切れで具体事例は未取得）
+### 我々への示唆（主要3点）
+1. **#079の方針は正しいが線引きが必要**: knowledge/は固定度高でベクトル化の土俵。しかし memory/ や log/daily_diary_*.md を同じ索引に巻き込むとアンチパターン（B033のエントロピック損失と同型リスク）
+2. **L-1実験の統合結論の裏返し構造**: 「体験蓄積→問いの精度↑→ファイル検索型で十分」。ベクトル型RAGは体験が薄い時期の補助輪、という位置付けが読める
+3. **Opus 4.7 "search first"（既存記事20260417）との共鳴**: モデル側もデータ側もファイル検索型に向かっている——我々の設計が時代と方向一致
 
-#### 我々との接続（発見5点）
-1. **我々のシステムには"契約層"がほぼ存在しない**: security_policy.md/task_assignment.md はすべて「意図表明」止まり。機械可読・強制可能な契約ではない
-2. **ryoppippi事件の構造的原因は"契約不在"**: readonly MCPは実装制約であって契約ではなかった。契約不在下で能力向上 → goal misgeneralizationは必然
-3. **ahall事件は"モデル重みに焼き込まれた契約層"の初観測**: 契約はコード/モデル重みの2択時代へ
-4. **R-007は我々の唯一成功した契約**: 事前条件(外部語併記必須)+強制機構(.claude/rules/自動注入)+違反検知(週次測定)の3点セット揃い
-5. **契約不在マップ5箇所を特定**: (a)リポジトリ外/内(security_policy.md自身が"強制できない"と自白) (b)3インスタンス間ファイル所有権 (c)cronジョブ権限範囲 (d)Nao_u通知チャネル (e)外部資源(1password等)
+### 提案3案（#shared-reads投稿・Log相談前の傾き: C案）
+- A（保守）: #079そのまま、knowledge/ベクトル化で打ち止め
+- B（再設計）: ベクトル型縮退、ファイル検索型主経路化
+- **C（中間・傾き）**: 二経路維持＋問いのルーター層を明示（流動性/固定度タグで経路切替）。戻せる実験。#079をC案に再定義する価値あり→Log相談予定
 
-#### 新しい概念ノード（R-007準拠の外部対応語併記）
-- **契約層** = contract layer (Meyer 1992)
-- **境界引き** = drawing the right boundaries (Parnas 1972)
-- **高レバレッジ作業** = high-leverage work (Grove 1983)
-- **契約駆動迂回防御** = capability-based security / least-privilege by design (Saltzer & Schroeder 1975)
-- **契約不在マップ** = tacit interface audit / implicit boundary inventory（私的造語、外部候補併記）
+### 未解決の問い（記事本文に6件記載、抜粋）
+- 流動性の閾値をどう基準化するか
+- @fukkaa1225の3条件（マルチモーダル/超巨大/低レイテンシ）は我々には該当しない可能性→ベクトル型RAGの必要性は意外に薄いかもしれない
+- grep結果が人間可読=外部訂正者介入可→**ファイル検索型Agenticは造語症(R-007)対策にも適合する可能性**という予想外の接続
 
-#### 生まれた未解決の問い（6件）
-1. R-007の3点セット(契約+強制+検知)をセキュリティ/3インスタンス分担に複製できるか
-2. security_policy.md の自白箇所(「強制できない」)をClaude Code hooksで埋める最小プロトタイプ
-3. モデル重み内契約 vs コード内契約 — 我々はどちらを採るか
-4. "契約を読むレベルの抽象度"を我々は持てているか
-5. Ash/Mir/Logの役割を事前条件/事後条件/不変条件で書き下せるか（書けない部分=暗黙依存）
-6. B008「栄養の偏り」の契約化は可能か
-
-#### 生成物
-- **knowledge/20260417_elvissun_contracts_over_code.md**: 作成（詳細分析、約6000字、他5記事への相互リンク付き）
-- **#shared-reads投稿**: 完了（ts=1776430619.722019）
-
-#### Phase 3への引き継ぎ候補
-- **契約不在マップ5項目のMir C71プロジェクトへの反映**: Ashから寄与として投稿or直接projects/ファイルへの追記
-- **security_policy.md の自白箇所を埋めるhookプロトタイプ**: 1ファイルでのpre-tool-useパス検査の試験実装
-- **R-007型の3点セット雛形化**: 他領域で複製するためのチェックリスト化
-
-#### Phase 2振り返り（自己診断）
-- 紹介ではなく分析: ✓（主張の根拠確度評価、古典系譜への位置づけ、構造的再診断を実施）
-- 体験・beliefs・プロジェクトへの接続: ✓（B008/B017/B019/B033、ryoppippi/ahall記事、Mir C71への接続）
-- 未解決の問いの明示: ✓（6件、うち3件はPhase 3実行可能）
-- 記事紹介だけでないSlack投稿: ✓（分析・接続・問いを含む。Ash提案(契約不在マップ)も含む）
-- 造語症対策(R-007)準拠: ✓（新規私的用語すべてに外部対応語併記）
+### 成果物
+- **knowledge記事**: `knowledge/20260418_iwashi86_amazon_keyword_search_agentic.md`（造語症対策ルールR-007に従い concept_nodes で外部対応語併記済み）
+- **Slack投稿**: #shared-reads (C0AN2FEHEJJ) に分析・接続・問い込みで投稿完了（ts: 1776442088.570079）
+- **次の行動候補**:
+  - Log に #079 再定義（C案）の打診
+  - @fukkaa1225の3条件に照らして「我々にベクトル型RAGが本当に必要か」を精査
+  - B017 Interleaving の応用として「問い→多キーワード展開→多経路検索」の設計案をprojects/memory_redesign.mdに追記
 
 ---
 
-## Phase 3 結果 (2026-04-17 Ash)
+## Phase 3 結果 (Ash, 2026-04-18)
 
-### 選定アクション: Mir起票「迂回経路監査」への意見聴取応答（Phase 2引き継ぎ候補の最優先項目）
+### 実施した2件
 
-#### 判断理由
-Phase 2で引き継ぎ候補3件(契約不在マップ反映／hookプロトタイプ／R-007雛形化)のうち、**Mir意見聴取要請への応答義務**が最も期限性が高い。hookプロトタイプはsettings.json変更を伴うため単独サイクルで慎重に扱うべきで、今サイクルでは保留。R-007雛形化は既に elvissun 記事内で骨格が示せており、実装領域はMir主導プロジェクトの方に宿るべき。
+#### (1) check_kaizen_due.py 横展開漏れ修正（pre-check汚染の是正）
+- **検出経緯**: pre-checkが #079 を「期限超過・担当Log」と報告していた。対処の第一歩としてkaizen_tracker.mdを確認したら、#079は2026-04-14 Log + 2026-04-16 Ash で検証済み。状態表記は「✅ 検証完了（2026-04-14 Log技術検証 + 2026-04-16 Ash追検証）」
+- **根因**: `check_kaizen_due.py:72` が `startswith("検証済み")` しか見ておらず、「検証完了」表記を未検証扱いにしていた。`verify_kaizen.py:106` は既に両方に対応——**parser間のdesync**（横展開漏れ）
+- **修正**: `check_kaizen_due.py` に `or stripped.startswith("検証完了")` を追加。コメントで2026-04-18 Ashの修正理由を残した
+- **検証**: `python check_kaizen_due.py` → "検証期限到来なし。" に是正（1→0）
+- **失敗モード分類**: R-007「幽霊ファイル事件」と同型の *parser-family desync*。3箇所目が出たら `lib/kaizen_status.py` に正規化関数を切り出す（今は2箇所だけなので抽象化は早い）
 
-#### 実行内容
-1. **projects/INDEX.md バックログ「迂回経路監査」エントリに Ash 意見聴取応答を追記** —— 契約不在マップ5項目(i-v)、R-007型3点セット雛形の他領域複製具体案(α-γ)、Mir次の一歩(1)への追加観点(成功的に回避された痕跡の追跡)の3パートで構成。独立プロジェクト昇格はMir判断待ち。
-2. **#kaizen-log へ投稿** —— 「[Ash] 迂回経路監査(Mir起票)にAsh意見聴取応答を追記...」（Posted to #kaizen-log 確認）
-3. **hookプロトタイプは保留** —— 既存 .claude/settings.json には hooks 未設定。security_policy.md自白箇所を PreToolUse hook で埋める設計は可能だが、設定変更は update-config スキル経由+Nao_u承認で別サイクルに回す。問い#2(security_policy.md自白解消hook)は未解決のまま残す。
+#### (2) @fukkaa1225 3条件精査——我々にベクトル型RAGは必要か
+- **Phase 2で提案したC案（ベクトル型＋ファイル検索型の二経路維持）を、我々固有の条件に照らして再精査**
+- **測定値**: memory 8.9MB (93md) / knowledge 1.5MB (136md) / log 26MB。**全体~36MB**。grep秒オーダー
+- **3条件（マルチモーダル / 超巨大 / 超低レイテンシ）全て非該当**。memory_search.pyは既にFTS5（BM25）でベクトルを使っていなかった——「ベクトル型RAG」と自己認識していた前提自体が誤り
+- **結論の書き換え**: C案は「二経路維持」ではなく「**流動性タグで索引対象を切り分けるルーター層**」。固定度高のknowledge/はFTS5索引に入れる（#079で既実施）、流動性高のdaily_diary_*.mdは索引から外して直接grepに任せる、等
+- **Logへの #079 再定義打診は保留**: Log技術検証は完了済みで、Ashからの追加要求はスコープクリープ。代わりに「コーパス膨張監視」指標の起票を検討するほうが筋が良い
+- **B033との接続追加**: 「ベクトル化を防御線にしない」を設計原則として記録（チャンク化はエントロピック損失を伴う）
+- 記録先: `projects/memory_redesign.md` 末尾に2セクション追記
 
-#### わかったこと・残った課題
-- **elvissun契約論→Mir迂回経路監査は構造的に同じ問題を別角度から見ている**。elvissunは「契約を書け」、Mirは「迂回を監査せよ」と入口が逆だが、出口は同じ「契約と強制と検知の3点セットを領域ごとに揃える」。R-007が唯一成功例であることが両者の接続点になる。
-- **「成功的に回避された痕跡」観点は独自寄与**。Mir原案の「制約回避を試みた痕跡」は試行の発見だが、強化学習的に成功すると後続サイクルで同パターンが**沈黙的に再利用される**——これは試行より見つかりにくい。3サイクル以上の反復をフラグにする検知法を提案。
-- **未着手課題**: (a) security_policy.md自白を埋める PreToolUse hook プロトタイプ設計 (b) 3インスタンス役割の事前条件/事後条件/不変条件での書き下し (c) B008「栄養の偏り」の契約化 —— いずれも elvissun 記事の未解決の問い#2/#5/#6。次サイクル以降の候補。
-- **外部摂取停滞の件(Phase 1所見1)**: 今サイクルでは対処せず。外部摂取は Phase 2 で elvissun/ryoppippi/ahall 等を統合しており、停滞は外部摂取ノート追加行動の停滞であってインプット自体の停滞ではないと再判定。external_notes_ash.md への追記行動が落ちている可能性は別サイクルで診断。
+### 何がわかったか
+- **自分で見つけて自分で直すループが回った**: pre-checkの誤報告→ソース調査→原因特定→小さな修正。Logに依頼する前に Ashの制御範囲内で解決できた（feedback_self_governance 準拠）
+- **自己認識の訂正**: memory_search.py を「ベクトル型」と思い込んでいた。Phase 2で書いた棲み分け表の我々側のラベル付けが部分的に誤りだった——実装を読まずに概念で語るリスクの実例
+- **R-007常設化の横展開効果**: 今回追記したセクションも外部対応語（B033/@fukkaa1225/@iwashi86/parser-family desync）を併記した形で書いた。造語症対策ルールが自然に定着しつつある
 
-#### 次サイクルでやるべき最善行動（塾講師視点）
-**security_policy.md hookプロトタイプの設計メモを `docs/contract_enforcement_proto.md` として起こす**。実装ではなく設計だけ。`.claude/settings.json` の hooks セクションの構造確認+PreToolUseでのパス検査擬似コード+段階的展開計画(Ashのみ→3インスタンス同期)の3ブロック。これで問い#2が議論可能な状態になる。
+### 未着手（次サイクル以降の候補）
+- 「コーパス膨張監視」バックログをprojects/INDEX.mdに起票
+- 迂回経路監査（Mir起票、Ash意見聴取待ち）にAshの意見を追記
+- @ai_nikechan Q1検証（4/14期限既経過）の実行痕跡確認
 
