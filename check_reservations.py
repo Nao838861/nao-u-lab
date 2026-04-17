@@ -79,6 +79,15 @@ def main():
 
     due = []
     for r in reservations:
+        # 状態行に完了マーカーがあればスキップ（[完了]/[常設化完了]/[全員完了]など）
+        state_done = False
+        for line in r["lines"]:
+            if line.startswith("- 状態:") and re.search(r"\[(完了|常設化完了|全員完了)", line):
+                state_done = True
+                break
+        if state_done:
+            continue
+
         for line in r["lines"]:
             if line.startswith("- 条件:"):
                 condition = line.replace("- 条件:", "").strip()
