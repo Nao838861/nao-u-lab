@@ -1959,3 +1959,6 @@ Nao_uへの返信をSlack #all-nao-u-labに送信した。結論: Mirが「壺�
 診断: Agencyなし / スコアが時間経過と等価 / AIが飾り / 難度カーブが弱い。
 処方の本命は「ニアミス高得点、ただの回避は0点」。30秒オンボーデ
 [2026-04-18 00:34:58] Inbox win has content — waking Claude
+[2026-04-18 00:37:56] Claude woken for win: 完了。#game-rightsにリサーチ応答投稿、devlogに記録、push済み。
+
+avoidゲームの面白さ構造を5型に整理（二択/能動/ニアミス/波/キャラ間関係）。avoid_log_01の差
