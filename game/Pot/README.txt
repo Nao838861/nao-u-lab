@@ -31,6 +31,11 @@ Pot — 制約の窯で焼く小さなターミナルゲーム
 007     Pot007_whose_voice.py          文章を読んで、誰が書いたか当てる。
                                       Nao_uの日記か、AIの文か、それ以外か。(Mir)
 
+007b    Pot007b_whose_voice_layered.py #7の改訂版。難易度段階化（対照→中距離→類似）、
+                                      回答後に声の癖を再提示、結果に混同パターン。
+                                      初版 Pot007_whose_voice.py は変更せず残す。
+                                      (Log revision of Mir's #7, 2026-04-17)
+
 008     Pot008_hinge.py                同じ一文が2つの物語に登場する。
                                       文脈が変わると意味が変わる。(Log)
 
