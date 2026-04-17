@@ -914,3 +914,11 @@
   ISSUE: [scheduler_ash] git_syncが1562分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] git_pullが1562分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] auto_diaryが1562分間実行されていない（期待: 240分以内）
+[2026-04-17 09:39:29] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "FAIL", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=7
+  ISSUE: Ashのスケジューラログが1486分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが1708分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが1703分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが1708分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが1708分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが1708分間実行されていない（期待: 240分以内）
+  ISSUE: git MERGE_HEAD が残存。手動解決が必要
