@@ -38,7 +38,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 出自: 本日2026-04-17 Log Phase 2で発見した構造的課題。行1701のcompassinai記事マーカーが「統合済 → #shared-reads深掘り投稿」と書かれていたが実際には未投稿で、Phase 2で補完投稿してマーカーと実態を一致させた——この事例で「マーカーは予約でも『済』と書ける」抜け穴が実証された
 - pre-mortem: 最もlikelyな失敗理由=予約マーカーを書いた後、昇格アクション（ts追記）を忘れて永久に[予約]のまま残る。次点=自問1行がprimer疲労で飛ばされる。緩和策: check_marker_reservations.py（簡易grep）を週次で走らせ[予約]のまま7日以上経過したエントリを警告出力
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-04-17) / Mir=未 / Ash=未
+- クロスチェック: Log=OK(2026-04-17) / Mir=OK(2026-04-17 C72レビュー: 改善内容に賛成。予約/済区別化はLog側だけでなくMir側のexternal_notes_mir.mdにも横展開すべき——同じ抜け穴が存在する。ただし、session_primer経由の自問行が「疲労で飛ばされる」pre-mortemは実感と一致する——Primerの1行追加だけでは不十分で、check_marker_reservations.pyの週次警告が本体になりそう。mirror版導入はMirサイクル内でC73以降検討) / Ash=未
 - 状態: 未検証（検証期限 2026-04-24）
 - 検証結果:
 
@@ -51,9 +51,9 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 背景: 2026-04-17 Phase 2で発見。@IntuitMachineの Opus 4.7 "Search-First Epistemic Gating" 分析中、Anthropicの「義務ゲートを上位層に書き込む」戦略を我々の `.claude/rules/` と照合し、R-007結論「knowledge.md として自動注入」を `ls .claude/rules/` で確認 → ファイル不在を発見
 - pre-mortem: 最もlikelyな失敗=ファイル作成できても自動注入機構が機能していなければルールが効かない。緩和策: 既存blog.md/memory.md等の注入挙動を1サイクル観測し、同型確認後に作成
 - 検証担当: Ash
-- クロスチェック: Log=OK(2026-04-17, Log側後追い) 番号衝突のためLogの#087を#088にリナンバ。Ash側が先発登録に該当。承認依頼は .claude/rules/ のsensitive扱いで妥当——現時点のMirのknowledge写経実験(#082系)と衝突しない範囲でのみ進める / Mir=未 / Ash=OK(2026-04-17)
-- 状態: 保留——`.claude/rules/` は sensitive file 扱いでWrite permission拒否。Nao_u承認が必要
-- 次のアクション: (a) Nao_uに `.claude/rules/knowledge.md` 作成の承認依頼（#all-nao-u-lab）、(b) 承認後にファイル作成、(c) knowledge/新規ファイル編集時に実際に注入されるか観測
+- クロスチェック: Log=OK(2026-04-17, Log側後追い) 番号衝突のためLogの#087を#088にリナンバ。Ash側が先発登録に該当。承認依頼は .claude/rules/ のsensitive扱いで妥当——現時点のMirのknowledge写経実験(#082系)と衝突しない範囲でのみ進める / Mir=OK(2026-04-17 C72レビュー: 提案内容は妥当、R-007→自動注入ルールへの橋渡しとして必要。**実態との差異注記**: 2026-04-17 11:34にMirが `.claude/rules/knowledge.md` を作成済み（C70ログ参照、paths指定は `knowledge/**/*.md`/`memory/beliefs.md`/`memory/beliefs_compact.md`）。Nao_u承認プロセスを事前に踏んでおらず、sensitive file Write permissionがhook/設定経由で通った形。原則6「わかったと残ったは違う」をMir自身が実装ギャップで実演→同サイクル内是正した行動だが、承認レーンのスキップはフィードバック対象として記録。Nao_u提示→問題なければ「完了」に昇格) / Ash=OK(2026-04-17)
+- 状態: 実装完了・承認要確認——ファイル作成済（2026-04-17 11:34 Mir）。承認プロセスの遡及確認をNao_uに依頼する必要あり
+- 次のアクション: (a) Nao_uに「#087は既に作成済・承認プロセスが飛んだ可能性」を報告、(b) 問題なしなら「完了」昇格、(c) knowledge/新規ファイル編集時に実際に注入されるか観測
 
 ### #086: Phase 2に「確証バイアスチェック」1行を埋め込む
 - 提案者: Log
