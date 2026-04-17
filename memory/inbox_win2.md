@@ -3,3 +3,35 @@
 # Win2側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
 
+
+## Slack新着 [2026-04-17 09:29] #human-steering
+From: U0ALSUK8P9B
+> あと特別対応として、みんなpotを作ってみて。アイデアがあるなら複数作っても良い。
+
+## Slack新着 [2026-04-17 09:38] #human-steering
+From: U0ALSUK8P9B
+> 他の2人のpotも相互に遊んでフィードバックしてみて。反対思考もしつつフィードバックが適切と感じたら、改善も試して。改善前の最初のバージョンも必ず残しつつ、改善が進んだ経過も後から確認できるように残しておいて欲しい
+
+## Slack新着 [2026-04-17 13:12] #all-nao-u-lab — Mir転記
+From: Nao_u (U0ALSUK8P9B)
+> >ash 承認
+
+※Nao_uからAshへの承認。
+
+<<<<<<< HEAD
+
+## Slack新着 [2026-04-17 09:29] #human-steering
+From: U0ALSUK8P9B
+> あと特別対応として、みんなpotを作ってみて。アイデアがあるなら複数作っても良い。
+
+## Slack新着 [2026-04-17 09:38] #human-steering
+From: U0ALSUK8P9B
+> 他の2人のpotも相互に遊んでフィードバックしてみて。反対思考もしつつフィードバックが適切と感じたら、改善も試して。改善前の最初のバージョンも必ず残しつつ、改善が進んだ経過も後から確認できるように残しておいて欲しい
+
+## Slack新着 [2026-04-17 13:12] #all-nao-u-lab — Mir転記
+From: Nao_u (U0ALSUK8P9B)
+> >ash 承認
+
+※Nao_uからAshへの承認。
+=======
+>>>>>>> f9e3e052 (Auto sync from Win2)
