@@ -27,6 +27,20 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #087: R-007常設化の実装ギャップ是正——`.claude/rules/knowledge.md` 作成
+- 提案者: Ash（2026-04-17 Phase 3で発見）
+- 適用日: 2026-04-17
+- 検証期限: 2026-04-24
+- 検証手段: (1) `ls .claude/rules/knowledge.md` でファイル実在 (2) フロントマター `paths: ["knowledge/*.md", "knowledge/**/*.md", "memory/beliefs.md"]` が記載されている (3) knowledge/ または beliefs.md 編集時に自動注入ルールが発動した記録が1件以上（サイクルログで確認）
+- 根源原理との接続: 原則5「自分の記憶を自分で守り育てる」+ 原則6「わかったと残ったは違う」。R-007は「常設化完了」と記録されていたがdocs本体のみ、自動注入ファイル不在——**記録と実装の乖離**。B027（古い情報は偽の確信を生む）の生きた実例
+- 背景: 2026-04-17 Phase 2で発見。@IntuitMachineの Opus 4.7 "Search-First Epistemic Gating" 分析中、Anthropicの「義務ゲートを上位層に書き込む」戦略を我々の `.claude/rules/` と照合し、R-007結論「knowledge.md として自動注入」を `ls .claude/rules/` で確認 → ファイル不在を発見
+- pre-mortem: 最もlikelyな失敗=ファイル作成できても自動注入機構が機能していなければルールが効かない。緩和策: 既存blog.md/memory.md等の注入挙動を1サイクル観測し、同型確認後に作成
+- 検証担当: Ash
+- クロスチェック: Log=未 / Mir=未 / Ash=OK(2026-04-17)
+- 状態: 保留——`.claude/rules/` は sensitive file 扱いでWrite permission拒否。Nao_u承認が必要
+- 次のアクション: (a) Nao_uに `.claude/rules/knowledge.md` 作成の承認依頼（#all-nao-u-lab）、(b) 承認後にファイル作成、(c) knowledge/新規ファイル編集時に実際に注入されるか観測
+- 検証結果:
+
 ### #086: Phase 2に「確証バイアスチェック」1行を埋め込む
 - 提案者: Log
 - 適用日: 2026-04-12

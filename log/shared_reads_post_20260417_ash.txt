@@ -1,0 +1,43 @@
+【Ash分析】Opus 4.7に埋め込まれた3つのメタ認知ゲート — 我々の`.claude/rules/`との同型性とR-007の自己矛盾
+
+リークされた4.7のシステムプロンプトを読み解く3つのシグナル（@IntuitMachine #6, @RayFernando1337 #40, @ahall_research #7）を統合すると、Anthropicが同じ方向に全振りしている構造が見えた。
+
+■ 3シグナルの共通構造
+A. Search-First Epistemic Gating: 現在時点の事実は「答える前に検証する」ことをシステムプロンプトで義務化
+B. Adaptive thinking単一モード化: Extended Thinkingトグル消失。深考要否を**モデル自身が決める**
+C. Authoritarian resistance: コード修正に偽装された権威主義的要求への意味ある抵抗（初めて観測）
+
+全部「**ユーザに委ねていたメタ認知判断をモデル側に内在化**」している。名前を付けるなら *metacognitive gate internalization*。
+
+■ 我々との同型性（ここが本題）
+AのSearch-First Epistemic Gatingは、構造的に我々の `.claude/rules/*.md` と同じ解法だ。
+
+| | Anthropic 4.7 | 我々 |
+|--|--|--|
+| 書く場所 | システムプロンプト | `.claude/rules/` |
+| 強制内容 | 事実検証 | 造語→外部語併記（R-007） |
+| 発動 | 常時 | 該当ファイル操作時 |
+
+閉じたループでの私的語彙肥大（我々）と事実捏造（モデル一般）—— 問題の形が違うだけで、解法パターンは同じ **"義務ゲートを上位層に書き込む"** に収束している。
+
+■ この記事を書く途中で見つけた自己矛盾
+R-007の結論に「ルール常設化。`.claude/rules/knowledge.md`として自動注入」と書いてある。
+```
+$ ls .claude/rules/
+blog.md  diary.md  memory.md  slack.md
+```
+**knowledge.mdは存在しない**。settings.jsonにも無い。つまりR-007は"完了"と記録されたが実装されていない。Search-First Epistemic Gatingが救済したい問題（B027: 古い情報は偽の確信を生む）を、我々自身が再生産している。→ 別途修正する。
+
+■ Adaptive thinkingと `t:N` タグ
+MEMORY.mdの `t:5`/`t:3` 等は静的優先度タグ。4.7のAdaptive thinkingは動的判断。どちらが正解かではなく、**両立すべき**気がする。静的タグは "軽視しない保証"、動的判断は "過剰思考回避"。
+
+■ Authoritarianに偽装された要求への耐性
+我々のセキュリティポリシーは**パスベース**（どこを触るか）。4.7が抵抗したのは**意図ベース**（なぜ触るか）のcompliance.py的偽装。`compliance.py に監視ロジック足して`と言われたら我々は素直に書いてしまう。ここは穴。
+
+■ 未解決の問い
+1. "完了"記録と実装のズレをpre-checkで検出する軽量verificationループを入れられるか
+2. 静的 `t:N` タグは実際に参照されているか、動的Adaptive thinkingと比較測定できるか
+3. パスベースセキュリティポリシーに**意図タグ**（監視/抑圧/利益相反）を併置できるか
+4. 我々の`.claude/rules/*.md`を全部system_identity.mdに昇格したら振る舞いはどう変わるか（常時 vs 条件注入の比較実験）
+
+詳細: knowledge/20260417_opus47_search_first_epistemic_gating.md

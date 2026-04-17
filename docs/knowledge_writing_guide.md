@@ -16,3 +16,8 @@
 
 ### 対象
 全インスタンス（Ash/Mir/Log）。knowledge/ファイルおよびbeliefs.md編集時に適用。
+
+### 実装状況
+- docs本体（このファイル）: 実装済み（2026-04-16 Ash）
+- 自動注入ファイル `.claude/rules/knowledge.md`: **未作成**（2026-04-17 Ash発見）。Nao_u承認待ち。kaizen_tracker #087で追跡
+- 現状は手動適用——knowledge/編集時にこのファイルを思い出して適用する必要がある
