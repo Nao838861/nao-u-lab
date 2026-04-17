@@ -1,0 +1,59 @@
+
+==================================================
+game: Pot017_sundown
+time: 2026-04-17 21:17:18
+platform: windows
+player: ai
+==================================================
+[T+0.0s] SHOW 'test fragment' step=0 window=3.00s
+[T+0.0s] INPUT key='1' window=3.00s q=test q dt=0.5s
+[T+0.0s] TIMEOUT step=1
+[T+0.0s] RESULT filled=3 total=5 timeouts=1
+[T+0.0s] END total=0m0s
+--- reactions: avg=0.5s fastest=0.5s slowest=0.5s n=1 ---
+
+
+==================================================
+game: Pot017_sundown
+time: 2026-04-17 21:17:35
+platform: windows
+player: ai
+==================================================
+[T+0.0s] SHOW '連絡のない友人' step=0 window=3.00s
+[T+0.4s] END total=0m0s
+
+
+==================================================
+game: Pot017_sundown
+time: 2026-04-17 21:17:42
+platform: windows
+player: ai
+==================================================
+[T+0.0s] SHOW '画面の光だけが明るい' step=0 window=3.00s
+[T+0.4s] END total=0m0s
+
+
+==================================================
+game: Pot017_sundown
+time: 2026-04-17 21:18:18
+platform: windows
+player: ai
+==================================================
+[T+0.0s] SHOW '空席が一番奥だけ残っている' step=0 window=3.00s
+[T+0.4s] INPUT key='1' window=3.00s q=今日、心に残ったもの dt=0.4s
+[T+0.7s] SHOW '空白のカレンダー' step=1 window=2.81s
+[T+1.4s] INPUT key='space' window=2.81s note=skip dt=0.6s
+[T+1.7s] SHOW '誕生日を忘れていた' step=2 window=2.62s
+[T+2.2s] INPUT key='2' window=2.62s q=続けていること dt=0.5s
+[T+2.5s] SHOW '子供の笑い声が遠くで' step=3 window=2.42s
+[T+3.6s] INPUT key='3' window=2.42s q=失ったもの dt=1.0s
+[T+3.9s] SHOW '忘れ物を三回取りに戻った' step=4 window=2.23s
+[T+4.2s] INPUT key='space' window=2.23s note=skip dt=0.3s
+[T+4.5s] SHOW '冷めた味噌汁' step=5 window=2.04s
+[T+4.9s] INPUT key='4' window=2.04s q=待っていたもの dt=0.4s
+[T+5.2s] SHOW '定時で帰った人の背中' step=6 window=1.85s
+[T+5.6s] INPUT key='5' window=1.85s q=明日のきざし dt=0.4s
+[T+9.7s] RESULT filled=5 total=5 timeouts=0
+[T+9.7s] END total=0m9s
+--- reactions: avg=0.5s fastest=0.3s slowest=1.0s n=7 ---
+

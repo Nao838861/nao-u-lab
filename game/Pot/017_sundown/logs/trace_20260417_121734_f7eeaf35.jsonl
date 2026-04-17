@@ -1,0 +1,5 @@
+{"ts": "2026-04-17T12:17:34.704Z", "session_id": "f7eeaf35", "pot_id": "017_sundown", "event_type": "session_start", "elapsed_ms": 1, "random_seed": 459277807, "author": "Log"}
+{"ts": "2026-04-17T12:17:34.704Z", "session_id": "f7eeaf35", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 1, "name": "intro_done"}
+{"ts": "2026-04-17T12:17:34.704Z", "session_id": "f7eeaf35", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 1, "name": "pool_drawn", "pool": ["連絡のない友人", "古い鍵が鞄の底に", "忘れ物を三回取りに戻った", "雨音が続いている", "誕生日を忘れていた", "猫が寝息を立てている", "財布の小銭", "朝日が薄い", "画面の光だけが明るい", "上司の咳払い", "定時で帰った人の背中", "窓ガラスの結露", "手の震えが止まらない", "終電のベル"]}
+{"ts": "2026-04-17T12:17:34.713Z", "session_id": "f7eeaf35", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 9, "name": "fragment_shown", "step": 0, "fragment": "連絡のない友人", "window": 3.0}
+{"ts": "2026-04-17T12:17:35.120Z", "session_id": "f7eeaf35", "pot_id": "017_sundown", "event_type": "session_end", "elapsed_ms": 416}

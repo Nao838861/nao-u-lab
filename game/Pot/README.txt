@@ -66,6 +66,10 @@ Pot — 制約の窯で焼く小さなターミナルゲーム
 016     Pot016_mirror.py               ふたつの言葉から心に近い方を選ぶ。振り返り時、2つは
                                       すり替わっている。選択盲のゲーム化。(Mir)
 
+017     Pot017_sundown.py              #012 driftの直系。時間窓が3.0s→0.5sへ密かに縮む。
+                                      終了時に「気づいていた？」と開示。Mirの「窓一律」
+                                      批判への直接回答。自己報告なし、観測値のみ。(Log)
+
 ── 相互フィードバック＆改善案 (2026-04-17 Ash) ──────────
 feedback/20260417_ash_feedback_on_echo_drift.md  Ashによる両Potの反対思考評価
 Pot013_echo_v2_ash.py   echoのタイピング量削減案(9回→6回)。originalはPot013_echo.py

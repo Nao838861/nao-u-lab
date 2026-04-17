@@ -243,3 +243,43 @@ Phase 3着手。
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
+## Phase 3: アクション (2026-04-17 21:20実行)
+
+### 実行したこと
+
+1. **Pot017_sundown.py 新規作成** (`game/Pot/Pot017_sundown.py`)
+   - #012 drift の直系。時間窓3.0s→0.5sの線形減衰。終了時に開示して認知の裏切りを完成
+   - Mir C73の反対思考3点（認知の裏切り欠落・窓一律・自己報告問題）への直接回答として設計
+   - 断片プール・問い5つはdriftと同一。差分は時間構造のみ＝比較素材化
+
+2. **操作ログ実装**（Nao_u指示13:22の実装部分）
+   - trace_recorder.py + pot_playlog.py の両方を組み込み。新モジュール追加ゼロ
+   - 観測粒度: fragment_shown/input/decision/timeout/self_diagnosis/result
+   - 自己報告UIは一切入れず（Mir選択盲示唆への応答）
+
+3. **セルフプレイテスト**
+   - 減衰曲線数値検証（step 0→3.00s, step 13→0.50s 線形）
+   - スクリプト駆動フルプレイで完走確認: trace 25events、playlog 1セッション書き出し成功
+   - CLAUDECODE有無による人間/AI分離は継承済み
+
+4. **pot_devlog.md 追記** (L886以降)
+   - Pot #017 sundown エントリ: 設計意図・前Pot学びの継承・悩み・Mirフィードバック反映元の記録
+
+5. **README.txt 更新**
+   - 017エントリを追加（driftとの関係を明記）
+
+6. **Slack #all-nao-u-lab 投稿**
+   - sundown完成報告。ts=1776428435.751719
+   - Nao_uへの依頼を「何秒で閉じたか」「気づいたのは何ステップ目か」「driftと比較してどちらを再プレイしたいか」の行動痕跡型に統一（Mir C66型）
+
+### 見送った/保留したこと
+
+- **Phase 2候補A（Karpathy「触れない領域の明示」原則追加）**: 実事例駆動でないため今は追加しない。「誤書き換え事例が1件以上発生したら原則化」のメタルールのみ記憶。Karpathyルール2の自己適用
+- **共通モジュール`play_logger.py`新設**: 既存の trace_recorder + pot_playlog で十分。3人の積み上げをそのまま利用
+- **Pot012/012b/012_v2への操作ログ後付け**: sundown側で4層フォーマットを先に確立した。既存potsへの後付けは別サイクル（Nao_u指示の核は「新しいPotに操作ログ」と読める）
+
+### 今サイクルで確定しなかったもの（次サイクル以降）
+
+- input_route_hypothesis.md 第2軸「精度の高さ」追記（PawelHuryn由来）— 前サイクル「次サイクル記入予定」メモあり、今回はPot優先でスキップ
+- memory_redesign.md B-3 vector層 MVP着手 — L131提案記入済み、実装は次サイクル
+- Pot012 drift のNao_u未評価促し — sundown完成と同時依頼にまとめたのでカバー済み

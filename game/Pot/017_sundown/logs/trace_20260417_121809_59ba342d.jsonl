@@ -1,0 +1,27 @@
+{"ts": "2026-04-17T12:18:09.155Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "session_start", "elapsed_ms": 0, "random_seed": 459312259, "author": "Log"}
+{"ts": "2026-04-17T12:18:09.155Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 0, "name": "intro_done"}
+{"ts": "2026-04-17T12:18:09.155Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 0, "name": "pool_drawn", "pool": ["空席が一番奥だけ残っている", "空白のカレンダー", "誕生日を忘れていた", "子供の笑い声が遠くで", "忘れ物を三回取りに戻った", "冷めた味噌汁", "定時で帰った人の背中", "古い鍵が鞄の底に", "連絡のない友人", "窓ガラスの結露", "朝日が薄い", "手の震えが止まらない", "同じ道をまた歩く", "終電のベル"]}
+{"ts": "2026-04-17T12:18:09.165Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 9, "name": "fragment_shown", "step": 0, "fragment": "空席が一番奥だけ残っている", "window": 3.0}
+{"ts": "2026-04-17T12:18:09.591Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "input", "elapsed_ms": 435, "key": "1", "label": "assign_q1"}
+{"ts": "2026-04-17T12:18:09.592Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 436, "name": "decision", "step": 0, "window": 3.0, "decision_s": 0.425, "action": "assign_q1", "fragment": "空席が一番奥だけ残っている"}
+{"ts": "2026-04-17T12:18:09.903Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 747, "name": "fragment_shown", "step": 1, "fragment": "空白のカレンダー", "window": 2.808}
+{"ts": "2026-04-17T12:18:10.526Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "input", "elapsed_ms": 1370, "key": "space", "label": "skip"}
+{"ts": "2026-04-17T12:18:10.527Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 1371, "name": "decision", "step": 1, "window": 2.808, "decision_s": 0.623, "action": "skip", "fragment": "空白のカレンダー"}
+{"ts": "2026-04-17T12:18:10.840Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 1684, "name": "fragment_shown", "step": 2, "fragment": "誕生日を忘れていた", "window": 2.615}
+{"ts": "2026-04-17T12:18:11.368Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "input", "elapsed_ms": 2213, "key": "2", "label": "assign_q2"}
+{"ts": "2026-04-17T12:18:11.369Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 2214, "name": "decision", "step": 2, "window": 2.615, "decision_s": 0.528, "action": "assign_q2", "fragment": "誕生日を忘れていた"}
+{"ts": "2026-04-17T12:18:11.682Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 2527, "name": "fragment_shown", "step": 3, "fragment": "子供の笑い声が遠くで", "window": 2.423}
+{"ts": "2026-04-17T12:18:12.711Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "input", "elapsed_ms": 3555, "key": "3", "label": "assign_q3"}
+{"ts": "2026-04-17T12:18:12.711Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 3555, "name": "decision", "step": 3, "window": 2.423, "decision_s": 1.028, "action": "assign_q3", "fragment": "子供の笑い声が遠くで"}
+{"ts": "2026-04-17T12:18:13.023Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 3867, "name": "fragment_shown", "step": 4, "fragment": "忘れ物を三回取りに戻った", "window": 2.231}
+{"ts": "2026-04-17T12:18:13.346Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "input", "elapsed_ms": 4191, "key": "space", "label": "skip"}
+{"ts": "2026-04-17T12:18:13.346Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 4191, "name": "decision", "step": 4, "window": 2.231, "decision_s": 0.322, "action": "skip", "fragment": "忘れ物を三回取りに戻った"}
+{"ts": "2026-04-17T12:18:13.660Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 4504, "name": "fragment_shown", "step": 5, "fragment": "冷めた味噌汁", "window": 2.038}
+{"ts": "2026-04-17T12:18:14.079Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "input", "elapsed_ms": 4923, "key": "4", "label": "assign_q4"}
+{"ts": "2026-04-17T12:18:14.080Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 4924, "name": "decision", "step": 5, "window": 2.038, "decision_s": 0.419, "action": "assign_q4", "fragment": "冷めた味噌汁"}
+{"ts": "2026-04-17T12:18:14.392Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 5236, "name": "fragment_shown", "step": 6, "fragment": "定時で帰った人の背中", "window": 1.846}
+{"ts": "2026-04-17T12:18:14.799Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "input", "elapsed_ms": 5643, "key": "5", "label": "assign_q5"}
+{"ts": "2026-04-17T12:18:14.799Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 5643, "name": "decision", "step": 6, "window": 1.846, "decision_s": 0.407, "action": "assign_q5", "fragment": "定時で帰った人の背中"}
+{"ts": "2026-04-17T12:18:18.840Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 9684, "name": "self_diagnosis", "first_median": 0.528, "second_median": 0.419, "ratio": 0.794}
+{"ts": "2026-04-17T12:18:18.841Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 9685, "name": "result", "filled": 5, "total": 5, "timeouts": 0}
+{"ts": "2026-04-17T12:18:18.841Z", "session_id": "59ba342d", "pot_id": "017_sundown", "event_type": "session_end", "elapsed_ms": 9685}
