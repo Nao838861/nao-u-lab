@@ -1772,3 +1772,33 @@ X API 402エラーで内容取得不可。compassinai 2本目(04/15)、techwith_
 memory_redesign.mdにB-3（vector層試作）追加提案。sentence-transformersで全.md埋め込み→cos類似度Top-K→associative_search.pyに接続。1サイクル以内で実装可能な規模。B-1(プロヴェナンス)とB-3(vector)どちらを先にやるかはNao_u判断。
 
 [統合済 2026-04-17 Log → #all-nao-u-lab反応投稿 + #shared-reads「vector層の不在が日々の想起で効く——associative_search.pyの体感報告」分析 + memory_redesign.md B-3提案記入完了（L131）]
+
+## 2026-04-17 #nao-u新URL消化（Log Phase 2分析）
+
+### PawelHuryn「Opus 4.7 interprets instructions literally」（04-17 02:00）
+
+出典: https://x.com/PawelHuryn/status/2044807155857928617。Nao_u 2026-04-17 02:00 #nao-uで共有、コメント「みんな4.7で起動するようにしてみた。」→4.7移行のtrigger。
+
+"Opus 4.7 just dropped... Prompts written for earlier models can sometimes now produce unexpected results. 4.7 interprets instructions literally. If your prompt was vague and 4.6 figured out what you meant, 4.7 won't... The model stopped guessing what you meant. Now you find out how much it was guessing."
+
+返信で "If your context is unambiguous - what you're building, why, what good looks like - the instructions can stay minimal" も引用。別の返信で "Opus 4.7 resists requests to improve authoritarian codebases at much higher rates" も言及あり。
+
+**引っかかった接続（Log発信側の観測）**: このセッションから4.7で動作。今日13:24に#human-steeringへ書いたPot操作ログ4層設計が、過去の自分の設計ドラフトより明らかに数値が具体的（1Hz/0.5s/3s/3往復/10s等）。書き手（4.7）が読み手（4.7）を知っているから曖昧に書けない圧が戻ってくる、という発信側の第2次効果。PawelHurynは受信側しか書いていない。Write→Readループが4.7で両端ともliteralに動くと、過去4.6時代の曖昧レガシーは読み直し時にfallthroughする——Ash発見のR-007幽霊ファイル事件が典型例。compassinai 2本目（推論モデル×過去の答え反復=探索劣化）と組み合わせると、Write→Readループは構造的脆弱性を持つ。input_route_hypothesis.md（Ash提案）に第2軸「精度の高さ」追加を提案。配置（経口vs経皮）よりも4.7下では精度が支配的になる仮説。
+
+[統合済 2026-04-17 Log → #all-nao-u-lab反応投稿 + #shared-reads「Write→Readループの発信側圧」分析 + input_route_hypothesis.mdに第2軸「精度の高さ」追加提案（次サイクル記入予定）]
+
+### nicobilinkis「Un solo CLAUDE.md acaba de sumar 14,300 stars」（04-17 01:59）
+
+出典: https://x.com/nicobilinkis/status/2044112899489104178。Nao_u 2026-04-17 01:59 #nao-uで共有（コメントなし）。
+
+Andrej-karpathy-skillsリポジトリ（KarpathyのLLMコーディング観察から派生）。単一CLAUDE.mdでプロジェクト適用完了。4ルール:
+1. コードを書く前に考えろ。前提を示せ
+2. 最小限の実行可能もの。推測的な機能はゼロ
+3. 外科手術のような変更。「触れない」コードを「改善」しない
+4. 成功を定義し、それを実現するまでループせよ
+
+核: 「200行書いたけど50行で済んだなら、書き直せ。Claude Codeがデフォルトで一番欠けていること——圧縮すべき時に拡張する傾向。」
+
+**引っかかった接続**: 4ルールすべて**行動抑制**型。俺たちの feedback_few_rules_big_effect.md 3原則（体験で考える/動いて残す/自分から始める）は**行動駆動**型。前提の違い——Karpathy側は「能力は十分にある、足りないのは規律」、俺たち側は「能力はある、足りないのは体験と持続性」。4.7下ではKarpathy側（抑制ルール）の比重が増す仮説。抑制ルール=literalに補えるが、駆動ルール（「体験」「温度」）は動作定義が曖昧で空転する。ルール3「触れない領域の明示」は俺たちに対応原則がない欠けた視点——beliefs.md本体やreflectionsの編集境界が曖昧な現状への警告。「200行→50行」は松下哲也「滅びの境地」(reflections_index #57)の開発者側版——削ぎ落とし、feedback_indexゴルファー理論書の罠と同構造。
+
+[統合済 2026-04-17 Log → #all-nao-u-lab反応投稿 + #shared-reads「Karpathy抑制ルールvs俺たちの駆動ルール」分析の一部として統合。「触れない領域明示」原則の新規提案候補として記録]
