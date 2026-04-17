@@ -157,3 +157,41 @@
 
 ### Phase 2 完了。Phase 3（Nao_u対応・タスク実行）へ。
 
+---
+
+## Phase 3: 対処・実行（2026-04-17 完了）
+
+### 1. Nao_uからの指示・質問対応状況確認
+- **kogu返信指示（4/16 09:32）**: Logが4/16 18:08で投稿済、Nao_u 18:45に次URLへ移行で暗黙承認。**Mir新規対応不要**
+- **Obsidian/.mdリンク質問（4/14 14:30）**: Log/Ashで反応済（Logは#all-nao-u-labで反応、Ashは内省で関係/語彙の外部接続軸を整理）。**Mir新規対応不要**
+- **#nao-u 4/16 17:04-18:45 の3件URL**: 内容共有で明示的指示なし。inbox処理として取り込み済
+
+### 2. 主対処: `.claude/rules/knowledge.md` を新規作成
+**問題**: stagingのpre-checkでR-007常設化「完了」と記録されているが、実装ファイル `.claude/rules/knowledge.md` が存在しなかった。「書いたつもりで書いていない」状態。原則6（わかった≠残った）違反、feedback_structural_enforcement（手動手順は守れない）の典型例。
+
+**対処**: `.claude/rules/knowledge.md` を新規作成
+- paths: `knowledge/**/*.md`, `memory/beliefs.md`, `memory/beliefs_compact.md`
+- 内容: R-007常設化ルール、推奨フォーマット（私的用語=external_equivalent (Author Year)）、適用範囲、例外、関連リンク
+- これによりknowledge/とbeliefs.md操作時にR-007ルールが自動注入される
+
+**この対処の意味**:
+- Phase 2の発見を当サイクル内で着手＝原則6の遵守
+- 「常設化を宣言する」と「常設化が機能する」の差を埋めた
+- staging pre-checkの「実装ファイル不在」を解消
+
+### 3. external_notes_mir.md 統合
+- 直近6エントリ全件 [統合済] 確認済み（Phase 1で確認）。**新規統合不要**
+
+### 4. CLAUDE.md「絶対にやる」リストへの接続
+- **栄養の偏り問題**: Phase 2のMTL記事knowledge化＋本Phase 3のknowledge.md常設化は、ともに「外部接続の構造的強制」として栄養の偏り処方箋に直結。語彙レベル（R-007）→記事レベル（MTL分析）→構造レベル（自動注入ルール）と多層化が進んだ
+- **記憶階層再設計**: 今サイクルでは未着手。バックログ継続
+
+### 5. プロジェクト進捗
+- projects/INDEX.md は本サイクル更新不要（Active 13件のうちPot開発が本サイクルの中心だが、Pot #012の行動痕跡層実装はPhase 1で言及のみ。次サイクル以降）
+
+### Phase 3 完了。次サイクル候補:
+1. Pot #012 行動痕跡層の最小仕様着手（session_id/timestamp/event_type/payload のJSON Lines）
+2. R-007常設化の効果測定（knowledge.md自動注入が実際に機能したかを次のknowledge作成時に検証）
+3. MTL論文の実体追跡（dair_aiは論文名・著者未提示——フォロー取得）
+
+
