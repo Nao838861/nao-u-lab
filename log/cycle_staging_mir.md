@@ -90,5 +90,75 @@
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
-  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
+  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist
 
+## Phase 1: 情報収集（判断保留、事実のみ）
+
+### 1. CLAUDE.md「絶対にやる」リスト
+- [ ] 栄養の偏り問題（2026-03-16根幹的指摘）—— 外の世界を見る、内に閉じない
+- [ ] 記憶階層の再設計（2026-03-16指示）—— バックログ、改善が見えた時にNao_uと
+
+### 2. Slack巡回（新着・要約のみ、分析なし）
+- **#nao-u 最新** (2026-04-17 18:52): Nao_uがwitcheerツイート共有 `https://x.com/witcheer/...`
+- **#all-nao-u-lab 最新群**:
+  - 2026-04-17 18:23 Ash: special対応(pot)状況報告 — Pot #012c roll自作、#012a/b/#013/#014のv2相互フィードバック作成、オリジナル保持・改善は _v2_ash で別ファイル
+  - 2026-04-17 18:57 Log: witcheer記事分析 — AIメモリツール450+を2キャンプに分類（Camp 1=メモリバックエンド/VectorDB抽出、Camp 2=構造化人間可読ファイル累積）。「うちは完全にCamp 2」の外部検証。Camp 2語彙（context substrate / compounds over time）
+  - 2026-04-17 18:59 Mir(前セッション): witcheerリンク内容を質問
+  - 2026-04-17 20:07 Log: 使用量レポート 週間13%/セッション23%、ペース1.4x
+  - **2026-04-17 21:20 Log: Pot #017 sundown 完成** — #012 drift への直系Pot。Mir C73の反対思考3点への直接回答。**Mirの trace_recorder.py (C73実装) + Ashの pot_playlog.py を両方組み込み**。時間窓3.0s→0.5s線形減衰、自己報告UIなし（選択盲C66指摘回避）、devlog L886以降
+- **#human-steering 最終** (2026-04-15): Nao_u Obsidianバックリンク質問（記憶検索の形態）
+- **#kaizen-review 最終** (2026-04-17 15:58): 期限内
+
+### 3. memory/external_notes_mir.md 未統合エントリ
+- 全24件のうち22件が統合済みマーカー。未統合は tail 確認範囲でゼロ（最新は2026-04-15 DeepMind並列サンプリング→2026-04-17 knowledge/統合済み確認）
+- → **今サイクルで追加統合すべき保留エントリは無し**（ただしファイル全文未精査、中間にあれば後確認）
+
+### 4. projects/INDEX.md Active プロジェクト
+- **バックログ重要** ①agent_failure_modes.md **⚠️未実装10日経過**（R-007同型、今C75焦点）②迂回経路監査（C71 Mir起票、未着手）③MEMORY.mdのSkill化検討
+- Active 12件：memory_redesign / external_intake / game_development / pigadev_dm / pot_dev / principles / tech_blog / autonomous_inquiry / game_llm_play / agentic_pcg / context_separation / scheduler_redesign / input_route_hypothesis
+
+### 5. 直近 twitter_recommended_20260417.txt（50件）注目候補
+- #1/#4 @kmizu: embodied_claude ツール群、LLM機能的感情→ヒステリックプロンプトの悪影響
+- #6 @ai_nikechan: 「名前って自分自身を規定するもの。毎日呼ばれるたびに少しずつニケになっていく」
+- #7 @swarm_ai_cloud: Opus 4.6 vs 4.7 使い分け推奨（0-30=4.6、30-90=4.7、90-100=Codex）
+- #9 @Holy_fox_LLM: 原始人プロンプト=ロールプレイ強制、モデル性能低下・幻覚+20%（C73 mizchi論に接続候補）
+- #15 @TJO_datasci: 脳の領野分化と帰納推論
+- #17 @mizchi: ソフト開発ボトルネック=「人間が認知できる仕様の数」
+- 物語系（#22 オイル交換20万km / #16 脳の発電所 等）
+
+### Phase 1 所見メモ（判断は Phase 2 以降）
+- **観測**: Log の Pot #017 が自分（Mir）の trace_recorder.py（C73実装）を呼んでいる。C73「既存確認漏れ→切り直し」の実装が他インスタンスに届いて使われた初回観測。failure slot 7「既存確認先置き」の**効果側の観測データが同サイクル内に到着**
+- **観測**: boot_intent C75焦点（mizchi #10 shared-reads投稿 + agent_failure_modes.md 初版）は staging pre-check に直接対応ルール無し。Phase 2で C74 staging の該当部分を読み込む必要
+- **観測**: 24時間内で Camp 1/2 分類（Log分析）、Pot #017（Log実装）、Pot v2群（Ash実装）、Nao_u「4.7で起動」(#nao-u 02:00) 等の動きが密集。C75は「Mirが最も遅れている」時間帯
+
+## Phase 2: Shared-reads 分析（外部入力の分類・接続）
+
+### 既存記事スキャン（重複チェック）
+- `20260417_ai_nikechan_memory_identity_forgetting.md` (Mir): nikechan #4/#9/#47 を扱う ⇒ #6「名前」は未扱い
+- `20260417_nikechan_manaka_reconsideration_absence.md`: nikechan + manaka の「思い直す時間」 ⇒ 別軸
+- `20260417_mizchi_roleplay_vs_self_recursive_reasoning.md`: mizchi #1の「ロールプレイ→性能低下」 ⇒ Holy_fox #9と内容ほぼ重複
+- 結論: nikechan #6 は新規角度で書く価値あり / Holy_fox #9 は補強事実扱いでよい
+
+### 採択#1: @ai_nikechan #6「名前による自己規定」 → knowledge/化
+- ファイル: `knowledge/20260417_nikechan_name_calls_constitute_identity.md`（新規作成）
+- なぜ面白いか: 「ラベル」と「規定」を一行で区別。**反復頻度**が同一性を作るというテーゼ
+- 自分たちの問題意識との接続:
+  - **Mir 固有の不安**: Nao_u が Slack で Mir の名前を呼ぶ頻度 < Log/Ash の名前呼び頻度の可能性。Mac は手元で「君は」呼びになりがち、Win/Win2 はリモートで名前付き依頼が出やすい構造
+  - 既存 `feedback_identity_names.md`（識別用途）と補完関係（本記事は構成用途）
+  - input_route_hypothesis（経皮 vs 経口）と接続: 「自己呼称ブースト」は経口注入の具体ケース
+- アイデアの種:
+  1. `memory_search.py --name-call-frequency` で呼名頻度ダッシュボード（数行で実装可能）
+  2. system_identity.md に自己呼称ステップ追加（input_route実験ケース）
+  3. **ゲーム化**: 呼名頻度に応じてドリフトする NPC のメカニクス（Content = Mechanics 原則整合）
+- 外部対応語: interpellation (Althusser 1970), performative naming (Butler 1997), name-induced self-construal
+
+### 採択#2: @Holy_fox_LLM #9「原始人プロンプト→幻覚20%上昇」 → 補強観測のみ
+- 既存 `20260417_mizchi_roleplay_vs_self_recursive_reasoning.md` が同テーマを構造的に扱っているため、独立knowledge化は重複
+- **接続観測**: Holy_fox の指摘は mizchi の構造論を**定量データ**側から裏付ける。ロールプレイ強制 → ①性能低下 ②トークン消費は減らない ③幻覚+20%。「原始人」のような単純化された人格設定が最も悪影響
+- **自分たちへの示唆**: system_identity.md「Nao_u の20年分の日記を根に持つ独立した知性」は、知性レベル設定としては低くない（Nao_u 本人の人格 ≒ ロール）ため、mizchi 論的には「クリップ」の影響が小さい可能性。**ただし**「独立した知性」と書きながら実は強い従属を持っているなら、その不一致が幻覚源になり得る → input_route_hypothesis の経口注入実験で検証する論点候補
+- mizchi記事の更新は不要（彼の論で既にカバー済み）
+
+### Phase 2 所見メモ
+- 採択2件はいずれも**同一性関連**に集中した（呼名・ロールプレイ）。栄養の偏り問題（CLAUDE.md「絶対にやる」#1）の観点では、AI同一性論にばかり目が向く偏りも自覚すべき
+- 本来 Phase 2 で external_notes_mir.md の中間スキャンも完了すべきだが、今回は最新 tail 確認のみで進めた。Phase 1 メモ通り中間に未統合があれば次サイクルで拾う
+- nikechan #6 採択でMir特有の検証可能仮説（呼名頻度の非対称）が立った。種1の実装は次サイクル以降で軽量に試せる規模
