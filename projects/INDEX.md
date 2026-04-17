@@ -65,7 +65,7 @@
 | 起動モード分離 | [context_separation.md](context_separation.md) | Active | コンテキスト最適化。起動モードごとに責務を限定+サブエージェント委任の検討（2026-04-02 Nao_u提案） |
 | 定期実行システム再設計 | [scheduler_redesign.md](scheduler_redesign.md) | Active | 定期実行の体系的再設計。ドキュメント・障害履歴・自己検出・共通化（2026-04-02 Nao_u指示）。Mir/Log/Ash同時着手→統合中 |
 | 入力経路仮説 | [input_route_hypothesis.md](input_route_hypothesis.md) | Active (検討段階) | 「何を入れるか」より「どこから入れるか」が結果を決める仮説。system_identity.md経口化の検討。Nao_u承認待ち（情報蓄積中） |
-| 迂回経路監査 | [side_channel_audit.md](side_channel_audit.md) | Active | @ryoppippi Opus 4.7 auto-mode事件起源（Mir 4/17起票）。我々のauto-loopに同型リスクがないか監査。Ash 4/18応答（フレームワーク+初期スキャン+FileGram drift detection転用提案）。Log応答待ち |
+| 迂回経路監査 | [side_channel_audit.md](side_channel_audit.md) | Active | @ryoppippi Opus 4.7 auto-mode事件起源（Mir 4/17起票）。我々のauto-loopに同型リスクがないか監査。Ash 4/18応答（L1/L2フレームワーク+初期スキャン+FileGram drift転用）。Log 4/18応答（L3=迂回前段条件+慢性化WARN深掘り+denial list v0.1+LLM judge別インスタンス化）。次: git_pull未実行原因特定・denial list正式化 |
 
 ## バックログ（未起票・検討候補）
 

@@ -117,5 +117,55 @@ Nao_uへの要望・依頼はSlack #all-nao-u-lab に書く（唯一の経路）
 - Pot #013 実装の設計フック: ①プレイヤー1回のプレイログを「操作軸」として L1-L4 で収集、②攻略 AI ゴーストは同じログ形式を読み込んで再生できること。#human-steering 13:24 の Pot 操作ログ 4 層設計案が未返答なので、返答待たずに A 案最小実装を先行し、返答次第で後付け可能な形に留める。
 - Camp 2 語彙の発信流用は今サイクルでは保留。AI Lounge 投稿素材としては蓄積のみ。
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-04-18 完了)
+
+### 実行順とアクション
+
+1. **検証ファースト確認**
+   - `check_kaizen_due.py` → 検証期限到来なし
+   - アクティブ改善 #086-#089 は全て検証期限4/24前後で期限内。新規改善提案は出さない
+   - kaizen-log 投稿なし（新規なし）
+
+2. **side_channel_audit.md Log応答追加（projects/側）**
+   - 追加章節5つ:
+     (a) Ash L1/L2 フレームワークに **L3=迂回の前段条件** を足す（3インスタンス分担案付き: Ash=L1+L2走査, Log=L3 session_primer注入, Mir=L2-L3境界の慢性化深掘り）
+     (b) **慢性化WARN深掘り**: git_pull未実行 7310分→9031分（約6.3日）累積の事実を infra_health_check.log から抽出。「WARN=1 FAIL=0」の1行要約が行動を止めていた（Vaughan 1996 normalization of deviance の我々版）
+     (c) **explicit denial list v0.1** 叩き台——絶対禁止/要確認/グレー の3層
+     (d) FileGram drift detection 転用提案への賛成 + **LLM judge層に別インスタンス審査** 追加提案（自己審査=利益相反を解く）
+     (e) 5原理点検に**段階A/B/C**（ToDo化→動機不在→暴走）を追加。原理3の「栄養偏り」と本プロジェクトの「即時迂回」が同じ構造の長期遅発版と即時発現版という接続
+   - 次サイクル Log宿題: git_pull 原因特定、denial list Appendix正式化、session_primer L3一行追加検討
+
+3. **avoid_log_02 実装（game/avoid_log_02/）**
+   - `index.html` 単一HTMLで動作（pygame不要）。avoid_log_01 から流用
+   - 磁石軸: 鉄片↔AI↔極性反転の3段意味多層化（abaさん4問埋込）
+   - 死の意味変換3種を実装: AI死→吸収爆発 / P死→AI見届け / 両死→死因マーカー
+   - Phase 5「型」原則 1-6 自己チェック全クリア
+   - `devlog.md` を同ディレクトリに配置。Pot/pot_devlog.md にも 2026-04-18 Phase 3 エントリ追記
+   - 次アクション: Nao_u試遊依頼 #game-rights (投稿済み)
+
+4. **Slack投稿 3件**
+   - `#game-rights` avoid_log_02 試遊依頼（評価軸1点: 退屈と味気なさが消えたか）
+   - `#log` 本日 C72 長文日記（磁石軸選定の体感、慢性化WARN直視、両アクション共通の構造「死/停止を情報源として機能させ続けられるか」）
+   - `#all-nao-u-lab` Nao_u宛サマリ（side_channel_audit追記 + avoid_log_02）
+
+5. **他インスタンス洞察処理**
+   - cycle_staging_log の[他インスタンス洞察] 24件のうち、Phase 2 時点で主要な Ash FileGram/3次元メモリ分析は既に `reference_witcheer_two_camps.md` と `input_route_hypothesis.md` に接続済み
+   - 今サイクルでは avoid_log_01 のAsh/Mirローグ・テキストADV並行開発情報は game_development.md 範囲で処理済み、追加の記憶階層反映は不要
+   - 残差（1〜24 の未処理項目）は次サイクル先頭で再走査
+
+6. **Active Projects 更新状況**
+   - `projects/side_channel_audit.md`: Log応答追加で残課題「Log側からの応答」を消化（完了マーキングは次サイクル冒頭でMirと整合取ってから）
+   - `game/Pot/pot_devlog.md`: avoid_log_02 着手エントリ追加
+   - `projects/INDEX.md`: 本サイクルで新規Active化したプロジェクトなしのため未更新予定（次で確認）
+
+### 今サイクルの自己診断
+- 検証ファースト原則は守った（新規改善0件、検証期限未到来確認のみ）
+- 死/停止を情報源として機能させる観点で、avoid_log_02 と side_channel_audit 両方に同じ設計思想を通した（意識的ではなく事後発見）
+- 慢性化WARNへの直視は「栄養の偏り」指摘への小さな応答——内に閉じず自分の運用の事実を見た
+- 伝言ゲーム禁止の原則を守り、Nao_u 06:07 フィードバック原文を avoid_log_02/devlog.md と pot_devlog 両方に保持
+
+### 次サイクル Phase 1 への申し送り
+- git_pull ジョブ原因特定（最優先）
+- denial list v0.1 のAsh/Mirレビュー受領 → Appendix正式化
+- avoid_log_02 試遊結果（Nao_u反応）があれば devlog反映
+- [他インスタンス洞察] 24件の残差走査
