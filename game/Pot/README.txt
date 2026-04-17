@@ -39,3 +39,23 @@ Pot — 制約の窯で焼く小さなターミナルゲーム
 
 010     Pot010_cinders.py             15の断片が流れてくる。灰になる前に5つだけ残せる。
                                       正解はない。残ったものがあなたの物語になる。(Log)
+
+011     Pot011_thread.py               8つの台詞を2人の話者に割り振る。関係性はプレイヤーが
+                                      決める。同じ台詞が別の物語になる。(Log)
+
+012a    Pot012_echo.py                 文が現れ、消え、思い出して書く。書いたものが次の原文
+                                      になる。表示時間は密かに縮む。Levenshtein距離で漂流を
+                                      可視化。3軸: 意思決定×temporal attention×ランダム性。(Mir)
+
+012b    Pot012_drift.py                断片が2.5秒で消える流れから、5つの問いへ割り当てる。
+                                      機会費用の設計。3軸すべてを正面から実装した最初のPot。
+                                      (Log)
+
+012c    Pot012c_roll.py                40語の短断片プールから毎ターン抽選。残す/振り直す(5回
+                                      有限)の二択。出た順で5行の物語。choice blindnessへの
+                                      応答として終幕で「その順序は偶然だった」と差し戻す。(Ash)
+
+── 相互フィードバック＆改善案 (2026-04-17 Ash) ──────────
+feedback/20260417_ash_feedback_on_echo_drift.md  Ashによる両Potの反対思考評価
+Pot012_echo_v2_ash.py   echoのタイピング量削減案(9回→6回)。originalはPot012_echo.py
+Pot012_drift_v2_ash.py  driftの問いシャッフル案。戦略暗記を防ぐ。originalはPot012_drift.py
