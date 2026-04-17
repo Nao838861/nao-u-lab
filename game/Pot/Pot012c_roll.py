@@ -19,11 +19,27 @@ Pot #12: Roll (振る)
 
 import os
 import random
+import socket
 import sys
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from trace_recorder import TraceRecorder
+
+
+def detect_instance() -> str:
+    """マシンに応じたインスタンス名を返す（Log/Mir/Ash）。"""
+    if sys.platform == "darwin":
+        return "Mir"
+    repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if os.path.exists(os.path.join(repo, ".scheduler_ash.pid")):
+        return "Ash"
+    if os.path.exists(os.path.join(repo, ".scheduler_log.lock")):
+        return "Log"
+    host = socket.gethostname().lower()
+    if "win2" in host or "ash" in host:
+        return "Ash"
+    return "Log"
 
 
 # 言葉のプール。単独では意味を持たず、並ぶと文脈が生まれる短断片。
@@ -173,43 +189,48 @@ def main():
     # ワンプレイ=1セッション=1 JSON Lines ファイル。
     # 「ワンプレイごとに分割されたログ」(Nao_u 2026-04-17) の運用。
     while True:
-        rec = TraceRecorder(pot_id="012c_roll", author="Ash")
+        rec = TraceRecorder(pot_id="012c_roll", author=detect_instance())
         # 決定論化: 記録した seed からの乱数列がそのままリプレイで再現できる
         random.seed(rec.seed)
+        more = False
+        try:
+            show_intro()
+            rec.state("intro_done")
 
-        show_intro()
-        rec.state("intro_done")
+            kept = []
+            used = set()
+            rerolls_left = REROLLS
 
-        kept = []
-        used = set()
-        rerolls_left = REROLLS
+            while len(kept) < TARGET:
+                current = draw(used)
+                rec.state("draw", word=current, slot=len(kept), rerolls_left=rerolls_left)
+                render_tray(kept, current=current, rerolls_left=rerolls_left)
+                keep = prompt_keep(current, rerolls_left)
+                rec.input("k" if keep else "r",
+                          label="keep" if keep else "reroll")
 
-        while len(kept) < TARGET:
-            current = draw(used)
-            rec.state("draw", word=current, slot=len(kept), rerolls_left=rerolls_left)
-            render_tray(kept, current=current, rerolls_left=rerolls_left)
-            keep = prompt_keep(current, rerolls_left)
-            rec.input("k" if keep else "r",
-                      label="keep" if keep else "reroll")
+                if keep:
+                    kept.append(current)
+                    used.add(current)
+                else:
+                    rerolls_left -= 1
+                    print("    （振り直した）")
+                    time.sleep(0.4)
 
-            if keep:
-                kept.append(current)
-                used.add(current)
-            else:
-                rerolls_left -= 1
-                print("    （振り直した）")
-                time.sleep(0.4)
+            render_tray(kept, current=None, rerolls_left=rerolls_left)
+            time.sleep(0.8)
+            input("    [Enter] 物語を読む ")
+            rec.state("story_read", kept=list(kept))
 
-        render_tray(kept, current=None, rerolls_left=rerolls_left)
-        time.sleep(0.8)
-        input("    [Enter] 物語を読む ")
-        rec.state("story_read", kept=list(kept))
+            show_result(kept)
 
-        show_result(kept)
-
-        more = show_replay()
-        rec.state("play_end", want_replay=more)
-        rec.end()
+            more = show_replay()
+            rec.state("play_end", want_replay=more)
+        except (EOFError, KeyboardInterrupt):
+            # 途中離脱もログに残す（ワンプレイ=1ファイル運用で離脱地点が分かるように）
+            rec.state("aborted")
+        finally:
+            rec.end()
 
         if not more:
             break

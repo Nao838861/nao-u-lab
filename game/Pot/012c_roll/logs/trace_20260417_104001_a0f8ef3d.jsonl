@@ -1,0 +1,15 @@
+{"ts": "2026-04-17T10:40:01.690Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "session_start", "elapsed_ms": 0, "random_seed": 453424794, "author": "Log"}
+{"ts": "2026-04-17T10:40:01.698Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "state", "elapsed_ms": 8, "name": "intro_done"}
+{"ts": "2026-04-17T10:40:01.698Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "state", "elapsed_ms": 8, "name": "draw", "word": "書きかけの文字を消した", "slot": 0, "rerolls_left": 5}
+{"ts": "2026-04-17T10:40:01.706Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "input", "elapsed_ms": 16, "key": "k", "label": "keep"}
+{"ts": "2026-04-17T10:40:01.718Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "state", "elapsed_ms": 27, "name": "draw", "word": "歯ブラシが湿っていた", "slot": 1, "rerolls_left": 5}
+{"ts": "2026-04-17T10:40:01.722Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "input", "elapsed_ms": 31, "key": "k", "label": "keep"}
+{"ts": "2026-04-17T10:40:01.722Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "state", "elapsed_ms": 31, "name": "draw", "word": "鞄が軽すぎる気がした", "slot": 2, "rerolls_left": 5}
+{"ts": "2026-04-17T10:40:01.722Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "input", "elapsed_ms": 31, "key": "k", "label": "keep"}
+{"ts": "2026-04-17T10:40:01.722Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "state", "elapsed_ms": 31, "name": "draw", "word": "改札で立ち止まった", "slot": 3, "rerolls_left": 5}
+{"ts": "2026-04-17T10:40:01.732Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "input", "elapsed_ms": 41, "key": "k", "label": "keep"}
+{"ts": "2026-04-17T10:40:01.732Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "state", "elapsed_ms": 41, "name": "draw", "word": "呼び出し音が七回鳴った", "slot": 4, "rerolls_left": 5}
+{"ts": "2026-04-17T10:40:01.732Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "input", "elapsed_ms": 41, "key": "k", "label": "keep"}
+{"ts": "2026-04-17T10:40:02.547Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "state", "elapsed_ms": 857, "name": "story_read", "kept": ["書きかけの文字を消した", "歯ブラシが湿っていた", "鞄が軽すぎる気がした", "改札で立ち止まった", "呼び出し音が七回鳴った"]}
+{"ts": "2026-04-17T10:40:12.888Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "state", "elapsed_ms": 11197, "name": "aborted"}
+{"ts": "2026-04-17T10:40:12.888Z", "session_id": "a0f8ef3d", "pot_id": "012c_roll", "event_type": "session_end", "elapsed_ms": 11197}
