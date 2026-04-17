@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Pot #016: mirror v2_ash (鏡) — Mir原作 / Ash改
+Pot #014: mirror v2_ash (鏡) — Mir原作 / Ash改
 
 [v2_ash変更点 — 最小1カ所]
 - 検出ワードリストを拡張。自然な日本語の気づき表現を追加。
@@ -235,7 +235,7 @@ def phase_reveal(choices, reasons, swap_indices, detected, log):
 
 
 def main():
-    log = PlayLog("Pot016_mirror")
+    log = PlayLog("Pot014_mirror")
 
     clear()
     print()

@@ -48,41 +48,19 @@ Pot — 制約の窯で焼く小さなターミナルゲーム
 011     Pot011_thread.py               8つの台詞を2人の話者に割り振る。関係性はプレイヤーが
                                       決める。同じ台詞が別の物語になる。(Log)
 
-012     Pot012_drift.py                断片が2.5秒で消える流れから、5つの問いへ割り当てる。
-                                      機会費用の設計。3軸すべてを正面から実装した最初のPot。
-                                      (Log)
-
-013     Pot013_echo.py                 文が現れ、消え、思い出して書く。書いたものが次の原文
+012a    Pot012_echo.py                 文が現れ、消え、思い出して書く。書いたものが次の原文
                                       になる。表示時間は密かに縮む。Levenshtein距離で漂流を
                                       可視化。3軸: 意思決定×temporal attention×ランダム性。(Mir)
 
-014     Pot014_roll.py                 40語の短断片プールから毎ターン抽選。残す/振り直す(5回
+012b    Pot012_drift.py                断片が2.5秒で消える流れから、5つの問いへ割り当てる。
+                                      機会費用の設計。3軸すべてを正面から実装した最初のPot。
+                                      (Log)
+
+012c    Pot012c_roll.py                40語の短断片プールから毎ターン抽選。残す/振り直す(5回
                                       有限)の二択。出た順で5行の物語。choice blindnessへの
                                       応答として終幕で「その順序は偶然だった」と差し戻す。(Ash)
 
-015     Pot015_sand.py                 文が一文字ずつ現れる。心が動いたら止めていい。でも
-                                      文はまだ続いていた。「完結した」錯覚への裏切り。(Mir)
-
-016     Pot016_mirror.py               ふたつの言葉から心に近い方を選ぶ。振り返り時、2つは
-                                      すり替わっている。選択盲のゲーム化。(Mir)
-
-017     Pot017_sundown.py              #012 driftの直系。時間窓が3.0s→0.5sへ密かに縮む。
-                                      終了時に「気づいていた？」と開示。Mirの「窓一律」
-                                      批判への直接回答。自己報告なし、観測値のみ。(Log)
-
 ── 相互フィードバック＆改善案 (2026-04-17 Ash) ──────────
 feedback/20260417_ash_feedback_on_echo_drift.md  Ashによる両Potの反対思考評価
-Pot013_echo_v2_ash.py   echoのタイピング量削減案(9回→6回)。originalはPot013_echo.py
+Pot012_echo_v2_ash.py   echoのタイピング量削減案(9回→6回)。originalはPot012_echo.py
 Pot012_drift_v2_ash.py  driftの問いシャッフル案。戦略暗記を防ぐ。originalはPot012_drift.py
-feedback/20260417_ash_feedback_on_sand_mirror.md  Ashによるsand/mirrorの反対思考評価
-Pot015_sand_v2_ash.py   sandの表示速度ランダム化案。originalはPot015_sand.py
-Pot016_mirror_v2_ash.py mirrorの検出ワード拡張案。originalはPot016_mirror.py
-
-── プレイログの保存先 ──────────
-AIが遊んだ: game/Pot/{pot_id}/logs/ai/          (trace_recorder)
-            game/Pot/playlog.txt                 (PlayLog)
-            game/Pot/playlogs/ai/                (ReplayLog)
-人間が遊んだ: game/Pot/{pot_id}/logs/human/     (trace_recorder)
-              game/Pot/playlog_human.txt          (PlayLog)
-              game/Pot/playlogs/human/            (ReplayLog)
-判定は CLAUDECODE 環境変数の有無による。Nao_uが素の端末から実行すれば自動で human 側に落ちる。

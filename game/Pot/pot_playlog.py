@@ -9,16 +9,10 @@ pot_playlog.py — Pot共通プレイログ + リプレイ再生
   1. PlayLog — 分析用テキストログ（playlog.txt に追記）
   2. ReplayLog — リプレイ再生用JSONLログ（playlogs/ にワンプレイ1ファイル）
 
-人間/AI分離（2026-04-17 Nao_u指示）:
-  CLAUDECODE 環境変数の有無で自動判定。素の端末からNao_uが実行した場合:
-    PlayLog   → playlog_human.txt
-    ReplayLog → playlogs/human/
-  AIが遊んだ場合は playlog.txt / playlogs/ai/ に落ちる。
-
 ReplayLog の使い方:
     from pot_playlog import ReplayLog
 
-    rlog = ReplayLog("Pot015_sand")
+    rlog = ReplayLog("Pot013_sand")
     rlog.print("  断片が次々と流れてくる。")
     rlog.clear()
     rlog.slow_print("  テキスト", delay=0.03)
@@ -26,7 +20,7 @@ ReplayLog の使い方:
     rlog.save()
 
 リプレイ再生:
-    python pot_playlog.py replay playlogs/Pot015_sand_20260417_183000.jsonl
+    python pot_playlog.py replay playlogs/Pot013_sand_20260417_183000.jsonl
 
 既存の PlayLog（分析用）も引き続き使える。
 """
@@ -47,14 +41,10 @@ class PlayLog:
     """
 
     def __init__(self, game_name, log_path=None):
-        # CLAUDECODE未設定=人間プレイ。ファイル名を分離して混在を避ける。
-        is_human = not os.environ.get("CLAUDECODE")
         if log_path is None:
-            fname = "playlog_human.txt" if is_human else "playlog.txt"
             log_path = os.path.join(
-                os.path.dirname(os.path.abspath(__file__)), fname
+                os.path.dirname(os.path.abspath(__file__)), "playlog.txt"
             )
-        self.is_human = is_human
         self.log_path = log_path
         self.game_name = game_name
         self.t0 = time.time()
@@ -128,13 +118,11 @@ class PlayLog:
         self._write()
 
     def _write(self):
-        player = "human" if self.is_human else "ai"
         header = (
             f"\n{'=' * 50}\n"
             f"game: {self.game_name}\n"
             f"time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
             f"platform: {platform.system().lower()}\n"
-            f"player: {player}\n"
             f"{'=' * 50}\n"
         )
         try:
@@ -158,20 +146,15 @@ class ReplayLog:
     全ての画面出力と入力をタイミングつきで記録し、
     後から replay() で完全に再現できる。
 
-    playlogs/human/{game_name}_{timestamp}.jsonl  (人間のプレイ)
-    playlogs/ai/{game_name}_{timestamp}.jsonl     (AIのプレイ)
-    に保存。CLAUDECODE環境変数で自動判定。デフォルトは human。
+    playlogs/{game_name}_{timestamp}.jsonl に保存。
     """
 
     def __init__(self, game_name):
         self.game_name = game_name
         self.t0 = time.time()
         self._events = []
-        is_ai = bool(os.environ.get("CLAUDECODE"))
-        self.is_human = not is_ai
-        self.player = "ai" if is_ai else "human"
         self._log_dir = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), "playlogs", self.player
+            os.path.dirname(os.path.abspath(__file__)), "playlogs"
         )
 
     def _elapsed(self):
@@ -247,7 +230,6 @@ class ReplayLog:
                     "game": self.game_name,
                     "time": datetime.now().isoformat(),
                     "platform": platform.system().lower(),
-                    "player": self.player,
                 }, ensure_ascii=False) + "\n")
                 for event in self._events:
                     f.write(json.dumps(event, ensure_ascii=False) + "\n")
@@ -359,5 +341,5 @@ if __name__ == "__main__":
         builtins_print("  python pot_playlog.py replay <logfile> [speed]")
         builtins_print()
         builtins_print("例:")
-        builtins_print("  python pot_playlog.py replay playlogs/Pot015_sand_20260417_183000.jsonl")
-        builtins_print("  python pot_playlog.py replay playlogs/Pot015_sand_20260417_183000.jsonl 2.0  # 2倍速")
+        builtins_print("  python pot_playlog.py replay playlogs/Pot013_sand_20260417_183000.jsonl")
+        builtins_print("  python pot_playlog.py replay playlogs/Pot013_sand_20260417_183000.jsonl 2.0  # 2倍速")

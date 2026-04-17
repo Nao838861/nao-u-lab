@@ -8,11 +8,9 @@ trace_recorder.py が出す JSON Lines を読み、プレイを人間が追え�
 seed を記録してあるので、必要なら同じ seed でゲームを再実行して完全再現できる。
 
 使い方:
-    python replay_session.py game/Pot/014_roll/logs/human/trace_XXX.jsonl
-    python replay_session.py --latest 014_roll          # 最新1セッション(全体)
-    python replay_session.py --latest 014_roll --human  # 最新1セッション(人間のみ)
-    python replay_session.py --summary 014_roll         # 全セッション要約
-    python replay_session.py --summary 014_roll --human # 人間のセッション要約
+    python replay_session.py game/Pot/012c_roll/logs/trace_YYYYMMDD_HHMMSS_xxx.jsonl
+    python replay_session.py --latest 012c_roll         # 最新1セッション
+    python replay_session.py --summary 012c_roll        # 当該potの全セッション要約
 """
 
 import argparse
@@ -88,15 +86,13 @@ def replay(path: Path, speed: float = 1.0, pause: bool = False) -> None:
             input("    (Enter)")
 
 
-def summary(pot_id: str, human: bool = False) -> None:
-    """当該potの全セッションを1行要約する。human/ai両サブフォルダを走査。"""
+def summary(pot_id: str) -> None:
+    """当該potの全セッションを1行要約する。"""
     base = Path(__file__).parent / pot_id / "logs"
-    if human:
-        base = base / "human"
     if not base.exists():
         print(f"no logs dir: {base}")
         return
-    files = sorted(base.glob("**/trace_*.jsonl"))
+    files = sorted(base.glob("trace_*.jsonl"))
     if not files:
         print(f"no sessions in {base}")
         return
@@ -124,13 +120,9 @@ def summary(pot_id: str, human: bool = False) -> None:
               f"inputs={n_input:3d}  dur={dur:>8}  last_state={last_state}")
 
 
-def latest(pot_id: str, human: bool = False) -> Path | None:
+def latest(pot_id: str) -> Path | None:
     base = Path(__file__).parent / pot_id / "logs"
-    if human:
-        base = base / "human"
-    if not base.exists():
-        return None
-    files = sorted(base.glob("**/trace_*.jsonl"))
+    files = sorted(base.glob("trace_*.jsonl"))
     return files[-1] if files else None
 
 
@@ -145,18 +137,15 @@ def main():
                     help="再生速度倍率。0=瞬時(既定)、1=実時間、2=倍速")
     ap.add_argument("--pause", action="store_true",
                     help="各イベントで Enter 待ち")
-    ap.add_argument("--human", action="store_true",
-                    help="人間のログのみ表示（既定は全ログ）")
     args = ap.parse_args()
 
     if args.summary:
-        summary(args.summary, human=args.human)
+        summary(args.summary)
         return
     if args.latest:
-        p = latest(args.latest, human=args.human)
+        p = latest(args.latest)
         if not p:
-            side = "logs/human" if args.human else "logs"
-            print(f"no sessions for {args.latest} in {side}/")
+            print(f"no sessions for {args.latest}")
             sys.exit(1)
         replay(p, speed=args.speed, pause=args.pause)
         return

@@ -1,5 +1,0 @@
-{"ts": "2026-04-17T12:17:41.920Z", "session_id": "5e319dde", "pot_id": "017_sundown", "event_type": "session_start", "elapsed_ms": 0, "random_seed": 459285024, "author": "Log"}
-{"ts": "2026-04-17T12:17:41.920Z", "session_id": "5e319dde", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 0, "name": "intro_done"}
-{"ts": "2026-04-17T12:17:41.920Z", "session_id": "5e319dde", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 0, "name": "pool_drawn", "pool": ["画面の光だけが明るい", "猫が寝息を立てている", "古いメールを読み返した", "財布の小銭", "定時で帰った人の背中", "連絡のない友人", "冷めた味噌汁", "階段の音が近づいてくる", "本棚の静けさ", "予定が急に変わった", "夜の駅、誰もいない", "未読通知が三件", "古い鍵が鞄の底に", "熱いコーヒーが冷めていく"]}
-{"ts": "2026-04-17T12:17:41.930Z", "session_id": "5e319dde", "pot_id": "017_sundown", "event_type": "state", "elapsed_ms": 9, "name": "fragment_shown", "step": 0, "fragment": "画面の光だけが明るい", "window": 3.0}
-{"ts": "2026-04-17T12:17:42.348Z", "session_id": "5e319dde", "pot_id": "017_sundown", "event_type": "session_end", "elapsed_ms": 427}
