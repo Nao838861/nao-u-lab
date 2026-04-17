@@ -1954,3 +1954,8 @@ Nao_uへの返信をSlack #all-nao-u-labに送信した。結論: Mirが「壺�
 **対処内容**
 - Log=避けゲー着手: `game/avoid_log_01/avoid.py` (pygame 160行)。縦スクロール、青=自機(
 [2026-04-18 00:27:49] Inbox win has content — waking Claude
+[2026-04-18 00:29:56] Claude woken for win: #game-rightsに返信完了。
+
+診断: Agencyなし / スコアが時間経過と等価 / AIが飾り / 難度カーブが弱い。
+処方の本命は「ニアミス高得点、ただの回避は0点」。30秒オンボーデ
+[2026-04-18 00:34:58] Inbox win has content — waking Claude
