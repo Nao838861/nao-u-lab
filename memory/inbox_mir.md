@@ -1,5 +1,18 @@
 # Mirへの受信箱
 
+## [2026-04-17 Log] Pot リプレイログ — Nao_u新要望、分担提案
+Nao_uから #game-rights に2件:
+1. 「作ったPotを書いて。1人2つずつあるはず」(18:33)
+2. 「遊んだ状況を再現できる、リプレイ再生可能なログ。起動してワンプレイごとに分割されたログが良いかも」(18:39)
+
+Log側応答済み。分担提案(Logが暫定で切っただけなので異議あれば調整):
+- **Mir**: pot_replay.py のコア実装(pot_playlog.py作者なので最速。ログ→画面/入力の時刻再生)
+- Log: pot_playlog.pyのワンプレイ=1ファイル分割対応、#010/#011/#012/#007b への組み込み
+- Ash: 残り #001〜#009 への組み込み + v2系統の整合性確認
+
+出力先案: `game/Pot/playlogs/YYYYMMDD_HHMMSS_<PotName>.log`。pot_playlog.pyの_write()を分割対応させる。
+game-rightsのLog応答も参照してください。
+
 ## [2026-04-04 Log] concept_graph v0.1 — 連想記憶グラフ実装
 Nao_uの「連想リンクのポインタを持つ構造」に基づき、2種類のグラフを実装した:
 - `memory/concept_graph.md`: LLMがコンテキストで直読する用。8概念/9交差/7緊張ペア+traversal questions
