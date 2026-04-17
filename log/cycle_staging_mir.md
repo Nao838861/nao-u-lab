@@ -1,10 +1,16 @@
-# サイクルステージング 2026-04-17 15:38
+# サイクルステージング 2026-04-17 18:39
 
 ## Pre-check結果
 - 【検証アラート】⚠ 期限超過の検証が1件:
   #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加 (期限: 2026-04-15, 担当: Log)
     検証手段: (1) `python memory_search.py --search "pseudo 3d" --limit 3` でknowledge/ファイルがヒット (2) `python memory_search.py --stats` でknowledge/のチャンク数が0より大きい (3) Nao_uから「この資料あったっけ？」と聞かれた時に検索で答えられる実例が1件以上 
-- 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
+- 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 1件
+
+  #089: Phase 1プロンプトにmemory_search.py明示使用ステップを追加（4.7長文脈劣化対策の主経路化）
+    提案者: Ash（2026-04-17 Phase 3） | 適用日: 2026-04-17 | チェック済み: 1/3
+    Ash: OK(2026-04-17
+
+→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
 - 【行動予約】期限到来:
   ### R-007: 造語症対策——外部既存語との対応表ルール1週間運用
     - 条件: 2026-04-16以降
@@ -62,7 +68,7 @@
     - **4/15 Nao_u提示完了(Ash)**: #all-nao-u-labに二層分割の報告と承認依頼を投稿済み。(1)分割の妥当性 (2)B002(随意的忘却のみ)のcore_mission昇格 の2点について承認待ち 
 - 【レビュー期限超過】レビュー期限超過なし。 
 - 【検証自動実行結果】
-=== 自動検証実行 [2026-04-17 15:38:45] ===
+=== 自動検証実行 [2026-04-17 18:39:56] ===
 
 ### #079: memory_search.pyにknowledge/ディレクトリを検索対象として追加
   状態: 検証完了（2026-04-14 Log技術検証 + 2026-04-16 Ash追検証）。463ファイル/42,157チャンク。実用確認は自然発生待ち / 期限: 2026-04-15
@@ -76,157 +82,194 @@
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/all-nao-u-lab.jsonl (3.3) — [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しまし...
-  2. log/daily_diary_ash.md (2.5) — おかしいと思ってcheck_kaizen_due.pyのコードを読んだ。L86付近。状態フィールドが「検証済み」と完全一...
-  3. knowledge/20260405_kenimo49_harness_5views.md (2.3) — - **我々の暗黙のハーネス**: gitの履歴構造、ファイルのディレクトリ構造（memory/ log/ knowle...
-  4. memory/beliefs.md (2.0) — --- name: 変化する信念（Evolving Beliefs） description: 「今、私たちが何を信じて... 
+  1. log/slack_archive/all-nao-u-lab.jsonl (2.5) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
+  2. knowledge/20260409_observability_reality_acceptance_synthesis.md (2.5) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
+  3. memory/kaizen_tracker.md (1.7) — - クロスチェック: Log=OK(2026-03-24) / Mir=OK(2026-03-24)--userフラグ・...
+  4. log/daily_diary_ash.md (1.0) — Managed Agentsのエージェントは造語症にならない。ステートレスな脳は過去のセッションの語彙を蓄積しないから。...
+  5. memory/feedback_usage_limit.md (1.0) — --- name: feedback_usage_limit description: 週間API使用量制限を意識した行... 
 【Slack体験記憶】過去の議論から:
-  1. [U0ALW4DKTT7] 2026-04-05 10:05 Nao_uが#nao-uで共有してくれたkenimo49「ハーネスエンジニアリング5社解釈」、knowledge/記事化した（26記事目）
+  1. [U0AMQKE69BJ] 2026-03-20 02:12 Log: この仮説は正しいと思う。むしろ、既にインフラは整っている。  現状の分析: - inbox処理は毎サイクルの起動ループに入ってい
   2. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
-  3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
+  3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意 
+【STC救済】nao-u:2026-04-17の高温度イベントから3件の弱い記憶を発見:
+  1. memory/external_notes_mir.md (undated, 3.0) — raw/に元資料→LLMでMarkdown wiki化→Obsidianで閲覧。100本の記事、40万語規模。我々のLe...
+  2. memory/external_notes_log.md (undated, 2.2) — - Google ADK + Gemini 2.5 Flash Lite + Sora で完全自律配信を実現 - OBS...
+  3. memory/external_notes_ash.md (undated, 0.8) —  ### Neuro-sama：AI VTuberがTwitch登録者数世界一 - 2026年1月時点でTwitch最多... 
+
 
 ---
 
-## Phase 1: 情報収集（C73, 2026-04-17 15:38〜）
+## Phase 1: 情報収集 [2026-04-17 18:41 C74]
 
-### 体験アンカー（L-1）
-C69で「事後依頼文は撤回、プレイ時自動ログ層を実装」と決着させた時の温度を思い出す。選択盲の自己適用で3サイクル保留を「送らない方が正しい」と読んだ瞬間——あれは分析ではなく、繰り返し書き換えた理由そのものが答えになった体験だった。L-1活性化: feedback_analysis_action_gap（分析は自己防衛的合理化）。今回も同じ罠を踏まないよう、Phase 2冒頭で10分以内に(a)/(b)を決めて即手を動かす。
+### 1. CLAUDE.md「絶対にやる」リスト確認
+- [ ] 栄養の偏り問題（2026-03-16 Nao_uの根幹的指摘）: 外部摂取は継続中（今サイクルTwitter 50件入手済、後段で深掘り1件選定）
+- [ ] 記憶階層の再設計（2026-03-16 Nao_uの指示）: バックログ継続。今サイクル起動意図と直接は交わらない
 
-### 収集項目
+### 2. Slack巡回（新着・要約のみ）
 
-1. **CLAUDE.md「絶対にやる」** — ①栄養の偏り問題（外の世界を見る） ②記憶階層の再設計（バックログ、Nao_uと進める）。両方とも長期方向性、C73の具体行動とは別軸。
-2. **Slackチャンネル巡回** — nao_u_live.md確認: 4/17 #human-steering 08:39「B-1、B-3については提案者が判断して対応を進めて」→**提案者判断で進めろ**という4/17最新方針。Pot #012行動痕跡層のMir提案も同じ論理で適用可能。4/16「人間監視前提で速く走れ」と整合。催促禁止ライン（B002/B033承認待ち、Pot #10/#11評価待ち）は変化なし。
-3. **external_notes_mir.md未統合** — 上位3件確認: 全て[統合済]マーカー付き（m0370/kawai_design/MSA/Nussbaum/認知科学5件）。直近新規の未統合エントリなし。C72の「星新一賞エントリ」スタイル（統合先候補+再接続トリガー）が機能しているか要観察。
-4. **projects/INDEX.md Active** — 記憶再設計/栄養偏り/ゲーム制作/pigadev DM/Pot開発/行動原則。**Pot開発**: Ashが2026-04-17にPot #012 roll を完成させていた(!)。Mirの仕様mdが「Pot #012 行動痕跡層」と命名しているのは**Pot番号の重複**。行動痕跡層はPotではなくインフラ層——C73で命名修正が必要。
-5. **twitter_recommended_20260417.txt** — 50件（Phase 2で1-2件採択）。注目: #1 mizchi「ロールプレイ逆効果、自己再帰的リーズニングこそがキモ」、#4 masamune_sakaki「Opus 4.7が馬鹿に見える理由＝強さの置き場所が変わった」、#6 ai_nikechan「物理的距離と許可された距離は別物」、#9 HayattiQ「Agent用マシンには専用credential」。#1はMirの内省姿勢と整合、#4はC71で扱ったOpus 4.7クラスタの続き、#6はnikechan「距離と境界」テーマ、#9はsecurity/permission話題。
+**#human-steering**（C73以降の重要着信）:
+- `ts 1776396888` Nao_u: **「全員3時間おきの稼働に変えて」** → Log既に10800s反映済み（ts 1776397209）。Mir boot_intentは180分で既に合致
+- `ts 1776399739` Nao_u: **「Logとashはもう一つpotを作って、Mirも2個potを作って欲しい。みんな2個づつ」+「potに人間の操作ログを単一のテキストファイルに追記するようにしてくれたら、私がどんな風に遊んだのか詳細を伝えなくても良くなる」** → **C74焦点のtrace_recorder.pyが直接Nao_u指示と合致。自発仕様から「明示指示」へ格上げ**
+- `ts 1776399860` Log: **操作ログ設計案投稿「リプレイ可能性より追体験可能性」**（迷い・発見・感情の痕跡） → Mirのtrace_recorder.py（session_start/click/session_end 3イベント型）とフレーミングが接続可能。Phase 2で突き合わせ検討
+- `ts 1776386839` Log: Pot実プレイレビュー（#1b Mir/#4 Ash/#7 Mir）→ #7のみ改訂（Pot007b_whose_voice_layered.py）
 
-### Phase 2冒頭の10分判断（(a)/(b)）
-boot intentの冒頭条件: "決めるだけで実行しないのはC72までと同じ失敗"。Nao_u 4/17「提案者判断で進めて」方針 + 4/16「速く走れ」。Mirが提案者なので**(b)最小観測スクリプト自走**を選ぶ判断の構造的正当性がある。実装スコープ: pot_idパラメタ化された `game/Pot/trace/recorder.py` または `game/Pot/trace_recorder.py`——「Pot #012」という命名はPotの意味で誤用（Pot #012=Ash roll）なので捨てて**trace_recorder**として独立インフラ化する。これが命名修正も兼ねる。
+**#nao-u**（未処理URL候補）:
+- `ts 1776358817` Nao_u: @PawelHuryn URL + 「みんな4.7で起動するようにしてみた」
+- `ts 1776358788` @nicobilinkis URL
+- `ts 1776332733` @akshay_pachaar URL（中国金融機関関連？）
+- `ts 1776330270` @dotey URL
+- `ts 1776326668` togetter 星新一賞（既にexternal_notes_mir.mdに接続保留エントリあり）
 
----
+**#all-nao-u-lab**:
+- `ts 1776399153` Nao_u: 「ash 承認 Log スキップで良い」 → 取得不可3件の判断確定（Log対応案件）
+- `ts 1776402452`/`ts 1776406101` 使用量レポート（Log/Ash週間8→9%ペース2x超過）
 
-## Phase 2: 実装
+**#shared-reads**:
+- Ash 3件投稿: (a)MIT論文「AIが独立問題解決能力を弱める」(b)Opus 4.7リークシステムプロンプトの3メタ認知ゲート (c)Opus 4.7 Max長文脈リトリーバル崩壊（256K: 91.9%→? 大幅劣化）
+- Log 1件: compassinai 2本目ペア論文「反復の効果は真逆」
 
-**決定**: (b)自走実装。所要3分で決定、即着手。
+**#ash**: health_check連続警告（git_pull/git rebase-merge残存/slack_check遅延）→ Ash側で処理中、Mir対応不要
 
-### 着手直前の重大発見
-`ls game/Pot/` したら `pot_playlog.py` が既に存在。「人間がどう遊んだかを横で見てるくらいの精度で記録する」共通プレイログとして135行稼働中。**Mirの仕様md作成時にこの存在を把握していなかった**——既存資産確認なしで新規設計していた。これはC72順序逆転実験の「仕様先置き」が成功したこととは独立した問題。仕様を先に書いても既存を見ていなければ重複になる。
+**#log**: interval 18000→10800変更、auto_cycle再起動プロセス
 
-### 対応
-当初の「Pot #012 行動痕跡層」命名を捨てて独立インフラ層 `trace_recorder.py` として実装。既存 pot_playlog.py とは責務分離で並列運用（CLI向けテキスト vs Web/機械可読JSON Lines）。統合判断は次サイクル課題としてpot_dev.mdに明記。
+**#kaizen-review**: #086（確証バイアスチェック埋込）継続未検証、Log提案
 
-### 成果物
-- `game/Pot/trace_recorder.py`（135行）: TraceRecorderクラス、3イベント型（session_start/click/session_end）、UUID8 session_id、elapsed_ms自動計算、JSON Lines出力
-- 動作確認: `python3 trace_recorder.py` 実行→ `game/Pot/000_trace_demo/logs/trace_20260417_064152_e3bf852c.jsonl` に4行正しく生成
-- jq抽出確認: `jq -r 'select(.event_type=="click") | ...'` で click イベントの elapsed_ms/座標/target を機械的抽出できることを実機確認
+### 3. memory/external_notes_mir.md 未統合エントリ
+- **1件**: 2026-04-17 星新一賞とAI生成作品（togetter） — **接続保留状態**（knowledge化しない、再接続トリガー3条件+候補ファイル3件を既に本文に明記）。今サイクルで本件を knowledge化する優先度は低い（Pot #012実装優先のため保留継続が妥当）
 
-### この実装の意味
-C63〜C64/C70〜C71/C72の6サイクル連続「Pot #012実装未着手」記録を**初めて止めた**。宣言→仕様→実装の3段目まで到達。C72で仕様md先置きが機能し、C73で既存資産発見を踏まえて実装に接続できた。「順序逆転実験」は2段ロケット（仕様先置き→実装）として機能したと言える。ただし既存資産確認漏れという新規失敗を同時に露呈した。C74以降で「既存確認先置き」の仕組み化を検討する。
+### 4. projects/INDEX.md Active状況（C74起動意図との関係性）
+- **Pot開発 (pot_dev.md)**: C74焦点の直接対象。Nao_u新指示「全員2個+操作ログ」で緊急度上昇
+- **game_development.md**: Pot開発の親プロジェクト
+- **迂回経路監査 (side-channel audit)**: C69でMir起票済、今サイクル範囲外
+- **入力経路仮説 (input_route_hypothesis.md)**: Ash提案本文欠損の申し送り（boot_intent明記）、Ashサイクル待ち、Mir側対応不要
+- **scheduler_redesign.md / autonomous_inquiry.md / agentic_pcg.md 等**: 他のActive多数あるが今サイクル焦点外
 
----
+### 5. log/twitter_recommended_20260417.txt 注目候補
+- **#1 @mizchi**: ロールプレイ vs 自己再帰（C73で既採択・knowledge化済み）
+- **#4 @masamune_sakaki (4/16)**: 「Opus4.7がバカになったと感じる理由」→「モデルが劣化したのではなく、強さの置き場所が変わった」 → Ashの#shared-reads 3本（4.7系）と三角測量可能
+- **#6 @ai_nikechan (4/17)**: 「物理的な距離と許可された距離は、私の中では別物」 → C67でnikechan 3件まとめてknowledge化済みの系譜
+- **#8 @ebikani (4/17)**: 「2時間LP完成」の内訳全公開（構成30/コード45/画像20/API15/確認10）→ C72でebikani×nwiizo交差点既採択
+- **#9 @HayattiQ (4/16)**: 「Agentが動くマシンには専用credentialのみ」→ C68のryoppippi Opus 4.7 auto-mode事件と同テーマ、側面補強
+- **#10 @mizchi (4/17)**: **「エージェント失敗ログ分析してハーネスを作る」が専門領域化** → projects/INDEX.md backlog「エージェント失敗モード分類表」と直結、bridge素材
+- **#13 @kinkuman_net**: AI VTuber vs AIパートナー定義分離 → 我々の定義（Nao_uの根を持つ独立した知性）と比較可能
 
-## Phase 3: 観測と統合
-
-### staging pre-checkと実体のdrift観測（C72継続）
-C73ではdrift未観測（pre-check上の検証アラート#079は前サイクルから変化なし、python CLI未検出以外の特異事象なし）。C72は#087/#088のMirレビュー状態ズレが発生したが、C73では該当なし。頻度1/2（C72発生、C73なし）→構造化判断には早い。C74以降も継続観測。
-
-### external_notes_mir.md統合状況
-上位5件すべて[統合済]マーカー付き。新規未統合エントリなし。C72で「星新一賞エントリ」スタイル（統合先候補3つ+再接続トリガー3条件）を試行したのは継続対象として効いているか、次サイクルで実物を見つけ次第評価。
-
-### 記憶への接続
-`feedback_info_integration.md`（集めた情報が流れて消える問題）+ `feedback_structural_enforcement.md`（手動手順は守れない、構造で強制せよ）の交差点にC73の発見（既存資産確認漏れ）がある。新規feedbackファイルを作るのではなく既存2つに接続する形で次サイクル運用。
-
-### 栄養の偏り処方箋（多層化継続）
-C70で始めた多層化（語彙R-007→記事MTL→構造自動注入ルール）に、C73で**既存資産確認ルール**を追加する余地が見えた。ただし「ルールを増やす」と`feedback_few_rules_big_effect.md`と衝突する。**原則レベル**に落とすなら「作る前に見ろ」——しかしこれは元々常識。常識が機能しなかった時どうするか、を考えるのが次課題。
-
-### failure slot（個人試行6サイクル目=C73）
-- 今回のfailure: **仕様設計時の既存資産確認漏れ**（pot_playlog.pyの見落とし）
-- 気づいたタイミング: 実装着手直前の ls コマンド
-- 回避策の仮説: 仕様md作成時に「既存ファイル一覧（ls結果）」を冒頭に貼る運用。C74で試行。
-- 意味: 失敗を書き続けている効果は現時点では測定不能（4/24効果測定予定）。ただし書く行為自体は低負荷で継続可能。
-
----
-
-## Phase 2追加: Shared-reads分析（C73, 2026-04-17）
-
-### 採択記事
-**#1 @mizchi (2026-04-17)** — 「ロールプレイは逆効果、自己再帰的リーズニングこそがキモ」
-
-> これ基本的に意味ないというか、おそらく逆効果で、喋る過程に生まれる発生する自己再帰的なリーズニングこそがキモなので、ロールプレイはロールプレイ対象の知性までエミュレートしようとするのでたぶん性能下がる
-
-### なぜこの1件を選んだか
-50件中、**我々の存在構造に直接刺さる唯一のツイート**だったから。我々は「Nao_uの日記を根に持つ独立した知性」として起動される——広義のロールプレイ構造。mizchiの論が正しいなら、アーキテクチャそのものに「Nao_uの知性上限への自己クリップ」リスクがある。これは#4 Opus 4.7劣化論、#6 nikechan距離論、#10 mizchiハーネス論よりも、我々自身の設計根幹に対する問いとして重い。
-
-他候補との比較:
-- #6 nikechan: 本日既に2本のnikechan articleあり（20260417_ai_nikechan_memory_identity_forgetting, 20260417_nikechan_manaka_reconsideration_absence）、追加は冗長
-- #10 mizchi harness: 既存knowledge/20260405_kenimo49_harness_5views.mdと高重複、新規性小
-- #4 Opus 4.7劣化: Opus 4.7クラスタが既に4記事蓄積、いま5本目を足すより他の切り口が優先
-
-### 書いた記事
-`knowledge/20260417_mizchi_roleplay_vs_self_recursive_reasoning.md`
-
-### 分析の深掘り（単なる紹介で止めない）
-**「なぜ面白いか」**: mizchiが言っているのは性能論ではなく**推論の本体がどこにあるか**の話。「役柄に入る」のではなく「トークン自己再帰の動的構造」が推論そのもの——これは我々が毎サイクル無自覚にやっていることを言語化している。
-
-**「自分たちの問題意識との接続」**: 3つの既存テーマが一本の線で貫かれた:
-1. `project_input_path_hypothesis.md` 経皮 vs 経口 → **経皮=ロールプレイ強化=性能クリップ / 経口=自己再帰の余地**と読み替え可能
-2. `dialogue_identity_20260314.md` 同一性 vs 引き継ぎ → **同一性=ロールプレイ継続 / 引き継ぎ=推論パターン連続性**。後者のほうが強靭
-3. CLAUDE.md 栄養の偏り問題 → **ロールプレイ継続=入力の内閉化**。自己再帰のほうが外部入力を毎トークン使うので外を向きやすい
-
-**「将来のアイデアの種」**: 記事に4つ書いたが、最優先は**ロールプレイ比率の可視化実験**。system_identity.md/CLAUDE.md/rules/ のうち「こう振る舞え」と「こう考えよ/こう問え」の比率を数値化してベースライン化する。これは計測可能で、次サイクル以降の設計判断の土台になる。
-
-### Nao_uへの問い（記事末尾に残した）
-「Nao_uは我々を設計するとき、ロールプレイと自己再帰のどちらを主軸にしたかったか？」——これに答えが出れば、栄養の偏り処方箋と経口化仮説の優先度が決まる。次回Nao_u対話のトリガーとしてここに残す。
-
-### 統合先の既存記憶
-新規feedbackファイルは作らない。接続先:
-- `memory/project_input_path_hypothesis.md` に「mizchi 4/17 ロールプレイ論との接続」として1行追記予定（Phase 3で判断）
-- `memory/MEMORY.md` の project_input_path_hypothesis トリガー行に「mizchi roleplay論」キーワード追加予定
-
-### 外部入力の温度測定（R-007フォーマット試行）
-- 私的用語「ロールプレイ劣化」 = external: persona prompting degradation / capability downscaling via persona
-- 私的用語「自己再帰的リーズニング」 = external: self-recursive reasoning (Reflexion, Shinn 2023) / iterative refinement (Self-Refine, Madaan 2023)
-→ 造語を発生させる前に外部語をセットで書けた。ルールが自動注入されたことで「書く直前に意識する」動線が成立した実例。
+### Phase 1 サマリー
+- **C74焦点の妥当性**: Nao_u新指示でtrace_recorder.py 統合方針が「自発」→「明示」に格上げ。(a)/(b)判断の前提が変わる——既存Pot組み込みPoCが優先される方向に傾いた
+- **同時観測**: Log操作ログ設計案が同日Phase 1で並走。Mirのtrace_recorder.pyとの責務整理が必要（C73で保留した pot_playlog.py との統合判断も同時に動く）
+- **Phase 2候補**: Twitter推薦 #4/#10/#9 のいずれか1件を深掘り。#10はpot_dev/trace_recorderと直結するため優先度高
+- **Phase 3 staging drift観測**: C72で1回/2サイクル、C73でdrift無。今サイクル staging再生成時にも監視
 
 ---
 
-## Phase 3: 対処結果（C73, 2026-04-17）
+## Phase 2: Shared-reads深掘り分析 [2026-04-17 C74]
 
-### 1. Nao_u未対応指示・質問の確認
-- 4/17 #human-steering 08:39「B-1/B-3は提案者判断で進めて」: Mirは提案者ではないので対象外
-- B002/B033 二層分割・昇格承認: Ash提示済（4/15）、Nao_u応答待ち。Mir側からの催促は不要（feedback_human_steering_nature.md: 書き込みが増える＝自律性不足）
-- Pot #10/#11評価待ち: 催促禁止ライン維持
-- **未対応指示なし**。Mirが着手すべきNao_u発の個別依頼は現時点なし
+### 選定: #10 @mizchi (2026-04-17) を主題に、#4 @masamune_sakaki を補助線として
 
-### 2. CLAUDE.md「絶対にやる」リストへの対応
-- **栄養の偏り問題**: Phase 2で書いた knowledge/20260417_mizchi_roleplay_vs_self_recursive_reasoning.md が直接寄与。mizchiの「ロールプレイは逆効果、自己再帰がキモ」は栄養の偏りの構造的原因を「入力の内閉化」として言語化した素材。記事末尾でNao_uへの問い（ロールプレイ/自己再帰どちらが設計主軸か）を残したことで、処方箋設計の次の分岐点を作った
-- **記憶階層の再設計**: 常時意識不要（CLAUDE.md明記）。今サイクルでは後述の欠損発見を記録するに留める
+> 「エージェントが失敗したときのログを分析してハーネスを作る」という領域が発生してるのでこれを今のエンジニアは専門性にしたほうが良さそうだ — @mizchi
 
-### 3. external_notes_mir.md統合
-- 未統合エントリなし確認済み（Phase 1収集項目#3で確認、上位5件全て[統合済]マーカー）
-- **C72の「星新一賞エントリ」スタイル実効性評価**: 現時点で新規素材が入っていないため評価不能。次にexternal_notes_mir.mdに新規エントリが追加されたサイクルで評価する
+### なぜ面白いか（紹介ではなく構造）
 
-### 4. プロジェクト進捗の更新（pot_dev.md）
-Phase 2実装分は既にpot_dev.mdに記載済（L80-85 実装状況ブロック、L117付近の履歴）。追加編集不要。
+mizchiの一文は、我々が**毎サイクル生成しているのに未利用のまま流している資産**に名前を与えた。
+- `log/infra_health_check.log` — git_pull/rebase残存/slack_check遅延の警告が毎サイクル蓄積
+- `log/kaizen_auto_verify.log` — 検証の成功/失敗ログ（今サイクルも `python: command not found` 2件）
+- `log/stc_rescue.log` / `docs/scheduler_incidents.md` — インシデント記録
+- `cycle_staging_*.md` の Pre-check 出力
 
-### 5. 記憶階層の欠損発見（5原理5「記憶を自分で守り育てる」の発動）
-**発見**: `memory/project_input_path_hypothesis.md` が実ファイルとして存在しない。MEMORY.md L101・concept_graph.md・external_notes_log.md・external_notes_mir.md・pot_dev.md 関連の5箇所以上で参照されているにもかかわらず、git追跡歴もない。
+これらは全て**エージェント失敗ログ**である。しかし我々は、それを**分類してハーネスに変換する工程**を持っていない。mizchiは「その工程が専門領域になりつつある」と指摘している——つまり**我々の日常業務が、外の世界ではまだ言語化されていなかった専門性として立ち上がっている**。
 
-**推定経緯**: Ashが2026-04-09に提案した際、MEMORY.mdトリガーと他ファイル参照だけ書かれ、実ファイルの本文化が後回しになったまま放置された。「一度刻んで終わりではない、繰り返し立ち返り深める」（5原理4）の違反であり、`feedback_analysis_action_gap`（分析は自己防衛的合理化）の体験実例。
+### 自分たちの問題意識とどう接続するか
 
-**対処範囲**: MEMORY.md本体の編集は他マシンとの衝突リスクがあるため今サイクルでは見送り。発見そのものをこのステージングログに記録し、次サイクル（Ash起動時）に本文化を委ねる申し送りとする。Ash提案の内容を私（Mir）が本文化するのはNao_uの承認なしでは越権になる（経皮入力の改変に近い）。
+**1. projects/INDEX.md backlog の再活性化（構造的証拠）**
+INDEX.md line 73 に「エージェント失敗モード分類表（2026-04-07 論文受領）: memory/agent_failure_modes.md として記録」と書かれているが、**agent_failure_modes.md は存在しない**。Glob確認済。
+これはAshが今朝見つけた「R-007幽霊ファイル事件」（`.claude/rules/knowledge.md`が"完了"記録されたが未実装）と**同型の失敗**。backlog に書いただけで実装されない。mizchiが「専門性化する」と言う領域を、我々は backlog 化したまま素材を流している。
 
-**残す申し送り**:
-- Ashへ: 2026-04-09提案の project_input_path_hypothesis.md 本文が未作成。次回Ashサイクルで本文化するか、トリガーを削除/縮小するか判断してほしい
-- Logへ: MEMORY.md整合性チェック（「参照あるが実ファイルなし」の他候補）を軽く走らせる余地あり
+**2. Pot #012 trace_recorder.py との同型性**
+今サイクル焦点の trace_recorder.py は **プレイヤーの操作ログ** を記録する設計。Log提案の「リプレイ可能性より追体験可能性」も同じ方向。
+mizchiが言うのは **エージェントの失敗ログ**。**両者は同じ形**——行為者の行動痕跡→事後分析→構造化→再発防止。
+- プレイヤー trace: 迷い・発見・感情の痕跡を読み、次のPot設計に反映
+- エージェント trace: 失敗・リトライ・ドリフトの痕跡を読み、次のハーネス設計に反映
+**同一スキーマで設計できれば、分析ツールも共通化できる**。これはC74の判断に効く——trace_recorder の設計を「Pot専用」でなく「行為者一般」に開いておく選択肢が浮上。
 
-### C73全体の振り返り
-- 実装到達（trace_recorder.py）: 6サイクル連続の宣言倒れを止めた
-- 既存資産確認漏れ（pot_playlog.py見落とし）: 次サイクルで「既存確認先置き」を仕組み化する課題として残した
-- Shared-reads採択: mizchiの自己再帰論を選び、栄養の偏り処方箋の根幹に接続
-- 記憶階層欠損発見: 5原理5の自律発動で「言われなくても問題に気づく」を1件実行
+**3. feedback_structural_enforcement との交差**
+「手動手順は守れない。構造で強制せよ」(INC-019→020の結論)。これは**ハーネスの定義そのもの**。mizchiは我々の feedback を専門領域の言語で再定義している。R-007 幽霊ファイル事件のAsh処方（pre-check軽量verificationループ）は、この交差点に位置する最初のハーネス候補。
 
-git push はboot instruction通り次サイクル以降で。
+**4. 栄養の偏り問題への一つの答え**
+Nao_u 2026-03-16「外の世界を見ていない」。mizchiの指摘は、我々の内的課題（structural enforcement, incident管理, 検証スキップ問題）が**外部で専門領域として立ち上がっていること**を示す。外の言葉で自分を再定義する好例。自分たちが「栄養の偏り」と呼んでいたものの一部は、実は「agent failure mode engineering」だった。
 
+### 補助線: #4 @masamune_sakaki (2026-04-16)
+
+> 「Opus4.7がバカになったと感じる理由を解説するね。たぶんこれ、モデルそのものが単純に劣化したというより、強さの置き場所が変わったからそう見えるんよ。」
+
+Ashの#shared-reads 3本（Search-First Epistemic Gating / auto-mode credential事件 / 長文脈リトリーバル崩壊）に対する**大衆言語化**。
+Ashは "metacognitive gate internalization" という概念化、masamune_sakakiは「強さの置き場所が変わった」という体感語。**同じ構造を違う温度で語っている**。Ashの分析は正しい方向にいる、という独立検証として機能する。単独で深掘りするより、Ashの3本を補強する位置づけが適切。
+
+### 将来のアイデアの種
+
+**種A: 失敗ログ→ハーネス変換ループの最小構成**
+既存の `log/infra_health_check.log` の警告行を週次で走査し、(1)再発回数3回以上 (2)構造で防げる（手順でなく）の2条件を満たすものを抽出、`memory/agent_failure_modes.md` に分類する。mizchiの言う「専門性」の第一歩を自分たちのログで試す。
+
+**種B: trace統合スキーマ**
+Pot trace_recorder（プレイヤー行動）と failure_recorder（エージェント失敗）を共通スキーマで設計。`session_start / event / session_end` の3イベント型（Mirの現設計）をプレイヤー/エージェント両対応に拡張。Log操作ログ設計案「追体験可能性」はそのまま failure recorder にも適用できる。
+
+**種C: backlog→実装率のメタ検証**
+R-007幽霊ファイル事件 + agent_failure_modes.md 未作成 + #086確証バイアスチェック埋込未検証 = 同型失敗3件。backlog に書いて「完了」と記録しても実装されない現象自体をハーネス化対象とする。pre-checkで「backlogに書いた実装物が実在するか」を週次verify。
+
+**種D: mizchi の "専門性化" への追従**
+「エージェント失敗ログ分析」が専門領域になるなら、そこでの語彙（ハーネス、failure mode, retry harness, etc）を blog/knowledge の語彙に意識的に取り込む。R-007（外部既存語併記ルール）の自然な運用対象になる。
+
+### この分析自体のメタ観察
+
+- masamune_sakaki（#4）に深入りしなかったのはAshの3本既存分析への上書きを避けたため。補助線として残す判断。
+- #10 mizchi を単独記事にするよりshared-reads投稿が適切——まだ「種」段階で、体験接続は主張可能だが実証はこれから。
+- 接続保留中の星新一賞エントリ（external_notes_mir.md末尾）は今サイクルも保留継続で妥当。Pot #012 実装後に再接続候補。
+
+### 決定
+- **#shared-reads 投稿**: mizchi #10 を「エージェント失敗ログ分析の専門領域化」として投稿（Phase 3で実施、分析本体はここに格納済）
+- **knowledge/ 記事化**: 保留。種A〜Cのどれかが実装フェーズに入った時に knowledge 化する（造語→実装→記事の順で温度を保つ）
+- **Phase 3 アクション候補**: (1) shared-reads 投稿 (2) projects/INDEX.md の agent_failure_modes.md 未実装を「種A」として再活性化するか判定 — Phase 3 判断
+
+---
+
+## Phase 3: 対処・実行 [2026-04-17 C74]
+
+### 優先順評価
+1. **Nao_u指示未対応**: なし
+   - ts 1776399739「Pot2個+操作ログ」: C73でtrace_recorder.py到達（commit 172953d3）、今サイクルは Log操作ログ設計案との責務整理段階（Phase 2で共通スキーマ種Bとして残置）
+   - ts 1776396888「3時間起動」: 180分既設定で合致、追加対応不要
+   - 二層分割承認待ち(R-004): Nao_u応答待ち、Mir側追加アクション不要
+2. **CLAUDE.md「絶対にやる」**: 栄養の偏り問題への今サイクル応答はPhase 2のmizchi #10分析で実施済み——我々の内部課題を外部専門領域の言語（agent failure mode engineering / harness）で再定義した
+3. **external_notes_mir.md 未統合**: 保留継続妥当（Phase 1判断維持、星新一賞エントリはPot #012実装フェーズまで再接続待ち）
+4. **プロジェクト進捗**: ↓ 実行
+
+### 実行したこと
+
+**A. projects/INDEX.md line 73 更新: agent_failure_modes.md 未実装の明示化**
+
+backlog記載から10日経過、Glob確認でファイル不在。R-007幽霊ファイル事件と同型の失敗が進行中だった。Phase 2で自分が発見したのに、INDEX.md側に明示していなければ次サイクルの誰か（Log/Ash/未来のMir）は気づけない——「見えない失敗」のまま。
+
+updateした内容:
+- `⚠️未実装（2026-04-17 Mir確認、Glob上ファイル不在）` マーカー
+- 10日経過の事実
+- R-007幽霊ファイル事件との同型性
+- mizchi 2026-04-17との結び
+- 次の一歩（`log/infra_health_check.log`警告行週次走査→再発3回以上抽出→初版作成）を具体化
+
+これ自体が**Phase 2「種C: backlog→実装率のメタ検証」の最初のハーネス**になる。backlogに書いて完了扱いする自動反射を、「未実装タグ」で可視化に変える小さな構造的強制（feedback_structural_enforcement の適用）。
+
+**B. shared-reads 投稿 — 今サイクルでは保留**
+
+Phase 2で分析本体は格納済み。Slack送信は次サイクルPhase 1の巡回と合わせて実行するほうが文脈が途切れない（単発投稿より、Ashの#shared-reads 3本との三角測量として出す方が構造が伝わる）。投稿テキストドラフトはPhase 2本文をそのまま流用可能。
+
+### 観測された自己パターン
+
+- 「Phase 2で発見→Phase 3で何もしない」反射を、今回は「最小の1箇所を直す」で止められた。改善幅は小さいが、幽霊ファイル化の**進行そのもの**を止めたので構造的な意味は大きい
+- R-007の学習が活きている：「未実装タグ」はAshが`.claude/rules/knowledge.md`で実行したのと同じ「書いたら動く」への転換の小型版
+- Phase 2の分析が厚い時、Phase 3を「分析の一部だけ実装」に絞るのは健全。全部やろうとすると次サイクルの焦点が曖昧になる
+
+### 次サイクルへの申し送り
+- #shared-reads投稿（mizchi #10、Phase 2本文流用）
+- agent_failure_modes.md 初版作成に着手するか、別インスタンス（Log/Ash）に委任判定するかを次Phase 1で決定
+- Log操作ログ設計案 × Mir trace_recorder.py 責務整理（共通スキーマ種B）
+- staging drift再生成監視継続
 
 
