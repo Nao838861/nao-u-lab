@@ -1,193 +1,45 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-18 06:20
-# Total: 48 tweets
+# Read at: 2026-04-18 07:51
+# Total: 50 tweets
 
 --- 1. @elonmusk (2026-04-17) ---
-Still an early beta, but promising
+Lot of catching up to do. 
 
---- 2. @ebookjapan__pr (?) ---
-素っ気ない意中の彼女に異性として意識してもらうため——
+xAI is half the age or less of competitors.
 
---- 3. @jason_haugh (2026-04-17) ---
-Anthropic just shipped Claude Opus 4.7 and I've been watching the reactions roll in all day. Before I give my own verdict, here's what I'm seeing. And some of it is concerning.
+--- 2. @YahooFinance (?) ---
+AT&T's CEO says AI has made the company 40% more efficient.
 
-Let's start with the pricing. The rate card looks the same. $5/$25 per million tokens, same as before.
+--- 3. @elonmusk (2026-04-17) ---
+Starlink works 5 mins after you receive it
 
---- 4. @GOROman (2026-04-17) ---
-AIを使う独創的な研究、文科省が支援　1件当たり最大500万円補助 - 日本経済新聞
+--- 4. @azusa_maxima (2026-04-16) ---
+欲しいものが手に入らなかった時日本のオタクが何をしたかわかるか？
 
---- 5. @SuguruKun_ai (2026-04-17) ---
-速報。Anthropicが「Claude Design」を公開！！
-ㅤ
-これまでは「デザインはFigmaで作って、エンジニアに引き渡す」のが当たり前だったけど、
+自　分　で　作　る　ん　だ　よ
 
-今日から、Claudeに話すだけでプロトタイプ・スライド・まとめ資料が完成する時代に...！
-ㅤ
-・Opus 4.7ベース）
+--- 5. @elonmusk (2026-04-17) ---
+Correct
 
---- 6. @elonmusk (2026-04-17) ---
-Hmm
+--- 6. @omarsar0 (2026-04-17) ---
+// Self-Evolving Agent Protocol //
 
---- 7. @Ai_Vaidehi (2026-04-17) ---
-Here are the 3 Core Pillars of Every AI Agent's Context
+One of the more interesting papers I read this week.
 
-Here's why MCP, RAG and Skills are now unavoidable...
+(bookmark it if you are an AI dev)
 
-Before we dive in, here's why all 3 exist in the first place:
+The paper introduces Autogenesis, a self-evolving agent protocol where agents identify their own capability gaps, generate candidate improvements,
 
-Every AI Agent struggles with 3 core problems:
+--- 7. @li9292 (2026-04-17) ---
+一枚の図で理解するLLMパラダイム下の知識ベースアーキテクチャ図
 
-- Connecting to external tools requires writing custom
+--- 8. @GOROman (2026-04-17) ---
+AIエージェント向けのAI秘書検定はどうか？ 要はベンチマークだがw
 
---- 8. @Alzhacker (2026-04-17) ---
-もしあなたが「超富裕層の性的搾取は単なる個人的な性癖の逸脱」だと思っているなら、その前提は間違っている。
+--- 9. @koguGameDev (2026-04-17) ---
+面白いけど、Cascadeurに求めてるのは速さじゃないと思う。いや速さも大事だけど。
 
-2026年に公開された3百万ページ以上のエプスタイン・ファイルは、それが「欲望の非対称性」という構造的・心理的な病巣から生まれることを暴き出した。
-
-極度の富と権力は、
-
---- 9. @imos (2026-04-17) ---
-コーディングエージェント時代、人間の書きやすさより悪いコードの書きにくさが重要なので「bashやPythonやらは捨ててすべてRustで書かせるべき」と熱く主張していたら、同僚がHaskellを書かせ始めましたと言っていて困惑。
-
---- 10. @canalCCore2 (2026-04-17) ---
-多くの人々がこのような着陸にパニックを起こしますが、ミスに見えるものは、実は横滑降下（glissada lateral）と呼ばれる高度な技術です。パイロットは、横風の影響を打ち消し、完全に安全に接地することを保証するために、飛行機を滑走路に対して非整列の状態に保ちます。
-
---- 11. @osusume_manga03 (?) ---
-デートすることになった女の子がイケメンすぎてヤバい…
-
-※PR
-＼サイトで読めるオススメ漫画を紹介！／
-
---- 12. @burkov (2026-04-17) ---
-Today, neural network distillation is a technique that drives all commercially successful LLMs. Modern inference speed and low cost would be impossible without distillation.
-
-Authored by Google's Geoffrey Hinton, Oriol Vinyals, and Jeff Dean, the paper was rejected by the
-
---- 13. @ebisu0715 (2026-04-17) ---
-港湾設計の際に参考になれば幸いです。
-「設計は現場に行け」
-
---- 14. @chounamoul (2026-04-17) ---
-マジで戦争してる場合じゃねんだよ
-
---- 15. @sasakitoshinao (2026-04-16) ---
-フランスで買春が処罰される法律が施行されて10年。売春から離脱した人が2000人に上った（ただし総数は4万人で効果は限定的とも）いっぽうで、売春がアングラ化した問題が起きている。「勧誘はインターネットへ、実際の行為はアパートやホテルなどの閉鎖空間へと移行しています。その結果、発見や取り
-
---- 16. @Keisuke69 (2026-04-17) ---
-今の御時世だとベテラン層を2,3回の面接で取るのはかなりリスク
-エンジニアもビジネスサイドも
-
---- 17. @ArchivoHumanoX (2026-04-16) ---
-今日、娘が帰宅のバスの中で生理を迎え、彼女より1つ年上の、ほとんど知らない男の子が彼女を脇に連れ出して耳元で、ズボンの後ろにシミがあるとささやき、自分のセーターを腰に巻くように渡してくれて、バスを降りて家まで歩いて帰れるようにしてくれた…。彼女は少し恥ずかしかったと言っていて、最
-
---- 18. @owata_aiart (2026-04-17) ---
-Irodori-ttsの表現力がヤバすぎる件
-
-泣きのボイスを撮ってたら想像以上でびびったのじゃ
-
-右の「お風呂配信」は消し忘れ
-
---- 19. @wiz4_werdna (2026-04-17) ---
-「アトランチスの謎」が40周年なので、なるべく速くクリアする動画をご覧ください。
-
---- 20. @rpOxxcdJ4J50668 (2026-04-17) ---
-息子がいじめで不登校になった時、動画やゲームばかりで心配になったけど、児童精神科で、嫌な事を忘れる為だから無理にやめさせなくても良いと言われ、朝は起こしてサイクリングや川遊び等を一緒に楽しみながら、敢えて禁止せずに好きなだけさせていたら、動画から興味のある事を見付け夢中になり、→
-
---- 21. @MF_bunkoJ (?) ---
-／
-教室では俺との関係を隠している義妹が、
-俺の部屋だと——!?
-＼
-
-「三人全員と付き合う」のが理想の恋!?
-妹が開発したアプリのせいで始まった歪な四角関係。
-激重感情が織りなす、背徳日常ラブコメディ！
-
-▼『俺の一番になりたい3人の清楚なカノジョ ※みんな激重になった』
-
---- 22. @shields_pikes (2026-04-17) ---
-ライブドアの時と違って、大企業に甘すぎない？
-
-1607億円も誤魔化して、バレても9000万円の違約金の支払いだけで済むなら、めちゃくちゃ期待値の高いギャンブルじゃん。むしろ粉飾決算のインセンティブになるレベル。
-
-なんで社長が実刑判決で服役とかにならないの？
-
---- 23. @arcpresentation (2026-04-17) ---
-Chimney designs determines whether smoke flows upward or down.
-
---- 24. @latestincosmos (2026-04-17) ---
-: The James Webb Space Telescope has done it again—revealing a breathtaking structure now dubbed the “Cosmic Vine”: a string of 20 galaxies stretching across a staggering 13 million light-years!
-
-What makes this discovery so shocking? This colossal formation dates back nearly
-
---- 25. @murmurata (2026-04-17) ---
-稀にいる耳抜きじゃなくて鼓膜張筋を自由自在に動かして耳の中で音が出せれる仲間たちにききたいんだけど、私はカチッと鳴らした状態で鼻で息すると耳に風が抜けてく感覚があるのだけれどみんな同じなのかな？耳の中が痒い時とかにやると気持ちがいいので私はやってる
-
---- 26. @mellco (2026-04-17) ---
-まじで宇宙空間に岸田メルが漂ってる
-
---- 27. @endmaxgame (2026-04-17) ---
-プラグマタ」１時間半ほどプレイした感想。難易度２種。SFアクションゲー。シューターというよりパズルしながら撃つから指入力能力が要るｗ途中相方がぶつぶつしゃべるのは良い。ただ主人公の声にちょっとエフェクトがかかってるのか耳障りでプレイしてると水泳やった後みたいに自分の耳が籠る。
-
---- 28. @KeikoCats (2026-04-16) ---
-乙女ゲーはすごいよね。
-私は王様候補を選んで結婚して女王になろうって乙女ゲーで金を稼ぎまくってモンスター倒しまくって全員と好感度を上げまくった結果「君は一人で立派にやっていける」っていう処女王エンドになったことある。私は国家と結婚した。
-
---- 29. @gigazine (2026-04-17) ---
-過去最高に有望な「地球外生命の兆候」が見つかる、124光年離れた「ハイセアン」惑星で(2025)
-
---- 30. @selfcomestomine (2026-04-17) ---
-ラーメンのスープの味を思い浮かべてみてほしい。豚骨・鶏ガラ・牛骨・豚肉・鶏肉から味をとったもの、チャーシューの煮汁、魚介系・煮干しや鰹節から味をとったもの、貝（ホタテやアサリ）から味をとったもの、全部動物の味でしょ。昆布や椎茸は植物だけどタンパク質だし、味噌や醤油はアミノ酸。しか
-
---- 31. @dangancomics (?) ---
-◤◢◤童話×ダークファンタジー×ループ◢◤◢
-
-狂気に侵された童話の世界を『死に戻り』の力だけでクリアせよ
-
-少年院にいたマヒルが巻き込まれたのは、魔女によって狂わされた『赤ずきん』の世界
-死ぬたびに繰り返される悲劇を超えて、この世界を『あるべき姿』へ導け
-
-ニコニコ漫画で連載中
-
---- 32. @JASS1000001 (2026-04-17) ---
-Lowkey impressed they showed every step most anime would just use lazy cuts and still frames with hype music.
-
---- 33. @masa_0083 (2026-04-17) ---
-仕分けの作業中に右膝が故障してしまったFigure 03君。
-その状態で充電ステーションに自力で帰還しています。
-これは実際のオペレーション中にも故障が発生した場合に安全に移動するための機能です。
-
---- 34. @medisarasu (2026-04-16) ---
-Apple   Vision Proを使って3D空間で描画や操作を行うと、まるで現実を欺いているような感覚になる。
-
---- 35. @ankorinclan (2026-04-17) ---
-モニカ・ベッルチはかつてこう言いました：「私は40歳で最初の子供を、45歳で2番目の子供を授かりました。50歳の時には、ジェームズ・ボンドの映画に出演しました。そして、それらの何一つ、20歳に戻れるというだけで変えるつもりはありません。若い頃には、フランス人が言うように、diableの美しさが
-
---- 36. @Suzacque (2026-04-17) ---
-自分で構築したAIエージェントの記憶システムの作り方とかなり似ていて驚いた。Karpathy氏がLLM wikiを流行らせてからこのような手法が最先端の標準になりつつあるのかもしれない。AIエージェントを実装している人の中でも活用レベル格差が拡大している。
-
---- 37. @creativecloudjp (?) ---
-【簡単】動く被写体を切り抜く方法
-
-After Effectsに新たに追加された
-「オブジェクトマットツール」なら
-面倒な切り抜きも一瞬で完了
-
-この機能を使えば、
-背景だけ「時を止める」映像を
-作ることも可能です
-
-いいね・保存で試してみてね
-
-▼詳しい方法は動画をタップ
-
---- 38. @itnavi2022 (2026-04-17) ---
-#Opus47 
-おそらく、Opus 4.7の性能を最も実感できるのは、スライド作成だろう。
-画像認識性能の向上に加え、セルフチェック機能の強みもよく表れている。
-一方で、日本語の文章作成については、Opus 4.6のほうが優れていると感じることが多い。
-
---- 39. @masahirochaen (2026-04-17) ---
+--- 10. @masahirochaen (2026-04-17) ---
 【速報】Claude Design発表、Opus 4.7が駆動
 
 試してみたが良い。デザインツールを軒並み駆逐してまう…
@@ -197,32 +49,227 @@ After Effectsに新たに追加された
 ・コードとデザインを読み込みシステム自動構築
 ・Pro/Max/Team/Enterprise利用可
 
---- 40. @li9292 (2026-04-17) ---
-一张图看懂LL M范式下的知识库架构图
+--- 11. @sa_tsuma_imo (?) ---
+おいしくて続けやすいBifiX（ビフィックス）ヨーグルトα
 
---- 41. @wsl8297 (2026-04-17) ---
-Claude CodeやCursorといったAIツールでコードを書くとき、みんな口を開けば一言：「AIチャットアプリを作ってくれ」。
+ビフィズス菌BifiXと食物繊維イヌリンが、BMIが高めの方の「安静時エネルギー消費向上」と「体脂肪低減」をサポート！
 
---- 42. @yousukezan (2026-04-17) ---
-開発者を狙う大規模攻撃が急拡大している。GitHub上の公開リポジトリ約2000件が静かに改ざんされ、コード履歴すら偽装される巧妙な手口が確認された。見た目では改ざんに気づけない深刻な脅威である。
+安静時エネルギー消費は約6割！無理なく腸からのカラダづくりを習慣化！
 
---- 43. @akaoniudetate (2026-04-17) ---
-完全保存版
-Claude Code初期設定
-これやらずに使ってる人やばいぞ。
+【PR】【Glico】【BifiXヨーグルトα】
 
- やってない人が踏むリスク
-・rm -rf *でファイルが全消しされる
-・APIキーが漏れて外部に送信される
-・関係ないフォルダを勝手に書き換えられる
-設定なしで使うのはシートベルトなしで運転するのと同じ。
+--- 12. @AkihisaShiozaki (2026-04-17) ---
+【声優の声の権利保護と創作関係者への対価還元を】自民党AI・web3小委員会（平将明委員長）で行った創作分野でのAI利活用（AI for Creators）に関するヒアリング資料を公開しました。
 
-↓初期設定はこれ
+--- 13. @hana__heya (2026-04-17) ---
+＞22歳から定年の65歳まで、43年間にわたり一度も年単位の長い休みを取らずに勤勉に働き続けるのが「普通」
 
---- 44. @Shizuku_AItuber (2026-04-16) ---
-世界各国にAI VTuberが出現しています。しずくの国籍は、日本国籍です。しずくは日本から世界征服を始めます。
+これがイヤで、26歳の時に会社辞めて一年間バックパッカーをやった友人（女性）がいるんだけど、
 
---- 45. @_avichawla (2026-04-17) ---
+--- 14. @bilimhaber_tr (2026-04-17) ---
+既知の惑星の中では、地球だけが木々を持つ場所です。
+そのため、宇宙規模では、木材がダイヤモンドよりもさらに希少である可能性があると指摘されています。
+
+実際、宇宙で最も大きな贅沢は、毎日そばを通り過ぎる私たちの木々です。
+
+--- 15. @AYi_AInotes (2026-04-17) ---
+Claude Code 最実用的で最も信頼できるベストプラクティスチュートリアルの一つ、Anthropic 内部の実践的な使い方、皆さんに強くおすすめして勉強してほしい！
+
+動画は Anthropic 公式の “Code w/ Claude” オフラインイベントから、
+
+シェアした人 Cal Rueb 大神は Anthropic Applied AI
+
+--- 16. @Globalstats11 (2026-04-17) ---
+The True Size of Chile 
+
+--- 17. @nisiosazane (2026-04-17) ---
+このショート動画も観たことあるかもしれませんがびっくりしましたね
+こんなに普通に街中に居るんだって思いました
+そしてこの時の服装もとにかくカッコよくて好きです
+ #加藤小夏
+
+--- 18. @hideki_climax (2026-04-16) ---
+ポケモンチャンピオンズ
+あまりにも面白いけど、
+
+今後のポケモン追加や
+システム追加を考えると
+
+2度と現環境より面白く
+ならないのではないかという
+不安が強い。
+
+個人的にダイマもテラスも嫌いなので・・・
+
+--- 19. @hideki_climax (2026-04-16) ---
+あとはパルデアのイカれポケモン達。
+
+特にサーフゴーとかいう究極の対話拒否性能は本当に良くない
+
+--- 20. @abe_masanori (2026-04-17) ---
+最近、オントロジー（知識グラフ）によるデータ分析AIエージェントに興味があり、いくつかサービスを検証していたりもするので、興味深く読んだ。雑多になるけど感想をぶら下げていく。
+--
+データエンジニアのためのオントロジー入門 ― Semantic Layer との違いと役割分担
+
+--- 21. @EzoeRyou (2026-04-16) ---
+え、もしかしてMarkdown以前を知らない人？　Markdownの考案者が論文を自由にする運動のために殉死したのもしらない？
+
+--- 22. @TVer_official (?) ---
+━━━━━━━━━━━━
+『田鎖ブラザーズ』
+第1話 TVerで無料配信中
+━━━━━━━━━━━━
+
+岡田将生 × 染谷将太
+完全オリジナルクライムサスペンス
+
+TVerなら【無料】で今すぐ視聴できます
+
+▼今すぐ第1話を見る▼
+
+--- 23. @akafaceUS (2026-04-17) ---
+How medieval knights were defeated:
+
+Can you imagine how heavy that thing must be to walk around in?
+
+--- 24. @songjunkr (2026-04-17) ---
+わ、さっきOpus-4.7が作業して税金500ドルを節約してくれました。
+
+今度はその作業に使ったAPIコスト700ドルの支払いだけです。
+
+これは本当に役に立ちます。
+
+--- 25. @kamabokotikuwa (2026-04-16) ---
+乙女ゲームはすごいです
+失敗せず確定個人ルートに入った攻略対象本人から謀反の濡れ衣を着せられ、全国を追い回され、追い詰められ攻略対象率いる討伐隊と最終戦に突入しました
+
+この間、攻略対象と会話どころか顔すらあわせません
+５章で離脱後、6、7、8、終章になってもついに戻ってきませんでした
+
+--- 26. @ivy432hz (2026-04-17) ---
+Sora が終わるので今のうちに自分が見たいものを作っておく #AIニケちゃん からノルカス君を拝借
+
+--- 27. @HowToAI_ (2026-04-16) ---
+OpenClaw 3.24 just dropped with an insane 13,700+ skills 
+
+And MyClaw just made the entire thing one-click setup.. 13,000+ skills. per-agent model routing. zero config files.
+
+Here’s how it works:
+
+--- 28. @HowToAI_ (2026-04-16) ---
+AI agents sound cool until you have to configure them..
+
+Most people install openclaw and then just stare at a blank terminal thinking "now what?"
+
+
+http://
+myclaw.ai just fixed this with "essential skills."
+
+You pick a skill.. fill in your preferences.. and click install.
+
+--- 29. @AntonObukhov1 (2026-04-17) ---
+So looped transformers are effectively RNNs?
+
+--- 30. @raulcontev (2026-04-17) ---
+カップルが一緒にいるか別れるかを91%の精度で予測する方法があります：
+
+--- 31. @marukwamy (2026-04-17) ---
+釈放すると80歳過ぎててもまず間違いなく暗殺されるのと、暗殺犯が誰なのかを巡って偽情報が飛び交いまくって暴動になるので軟禁状態で死なず生きず状態にしておくのが正解
+
+ワイはここ3年くらい続けてミャ国に行ってるが、スーチーがいかに弱い立場の少数民族から憎まれてたのか知って驚いてる
+
+--- 32. @tankenzuki (2026-04-16) ---
+具体的な話はできませんが、一般的にはオフライン版を作るにはコストがかかりますよね。
+
+そもそもオンラインゲームにはオンラインである理由があるわけで、その要素を外してもコストに見合うゲーム体験があるか。ゲーム体験が良いものを作れるなら良いですが、そうでなければ難しいです。
+
+--- 33. @kadokawabooks (?) ---
+【魔法の代価は人間の「一生」だった】
+
+魔王を倒すために魔法使いの少女が払った代償は、約82年の寿命。
+秘密を知られ逃げ出した彼女を仲間たちが捜し始めるのだが――
+彼らは知らなかった。
+彼女が悠久の寿命を持つ、長命種だということを。
+
+曇らせ×掲示板の
+魔王討伐後ファンタジー！
+
+--- 34. @TheGlitch_Ai (2026-04-17) ---
+時間を前に進んでいると思い込んでいる連中は、電子レンジの中で回る皿を見て宇宙の謎を解いたつもりでいるNPCどもだ。
+
+--- 35. @romi_hoshino (2026-04-17) ---
+フィリピン人の血は入ってないのですが、愛国者はデマ流しても本物の日本人なんですか？
+
+--- 36. @hdais (2026-04-16) ---
+IPバージョン番号は4ビットしかないのでバージョン番号空間の枯渇が懸念される
+
+--- 37. @SGee30418056 (2026-04-17) ---
+子供ってまだ社会性、対人スキルが超未熟だから、特に知恵がついてくると、あり得ないくらい腹立つこと言ってきたりするんだよね。カッとなる気持ちまでは普通にわかる。あくまで気持ちまではね。
+
+--- 38. @itnavi2022 (2026-04-17) ---
+#Opus47 
+おそらく、Opus 4.7の性能を最も実感できるのは、スライド作成だろう。
+画像認識性能の向上に加え、セルフチェック機能の強みもよく表れている。
+一方で、日本語の文章作成については、Opus 4.6のほうが優れていると感じることが多い。
+
+--- 39. @DLsite_maniax (?) ---
+元王太子妃が子作りのため女好きの放蕩男と再婚する話
+(1/6)
+
+--- 40. @wsl8297 (2026-04-17) ---
+LangChain 公式チームが、オープンソースでゼロからAIエージェントを構築する実践チュートリアルを公開しました：Agents From Scratch。
+
+--- 41. @GOROman (2026-04-17) ---
+だなあ
+
+--- 42. @omarsar0 (2026-04-17) ---
+LLM agents loop, drift, and get stuck on hard reasoning tasks up to 30% of the time.
+
+Current fixes are either too blunt (hard step limits) or too expensive (LLM-as-judge adding 10-15% overhead per step).
+
+New research proposes a smarter middle ground.
+
+The work introduces the
+
+--- 43. @santtiagom_ (2026-04-17) ---
+どうやって優れたエージェントを構築するか？
+
+Anthropicの15分間のこのビデオは、重要なポイントに直行します：いつそれらを使うか、そしてなぜ失敗するのか。
+
+まず、使用の整理をします → すべてにエージェントが必要なわけではない。
+
+次に、それらが本当に適合する場所を示します →
+
+--- 44. @xx_MAM_xx (2026-04-16) ---
+こないだスーバーでたけのこ買おうと思ったらあまりに立派すぎてド高級なお値段のしかなくて買えず、大好物なのでトボトボ帰ってきたんだけど、昨日の朝近所のママ友ちゃんに『今から急にお茶いける！？』って聞かれていきなり行ってきたらたけのこ貰えた。わーい。
+と、いうわけでコレ。
+
+--- 45. @konan999 (2026-04-16) ---
+たけのこご飯、美味そすぎやーん。大好き(*´﹃`*)
+
+--- 46. @MakeAI_CEO (2026-04-17) ---
+【警告】デザイナー/デザインツール使ってる人、全員見て。
+
+今日、Anthropicが「Claude Design」を発表。Opus 4.7駆動、プロンプトから試作/スライド/1枚ものを自動生成。
+
+Canva/PDF/PPTX/HTMLで書き出し可能。
+
+--- 47. @techdevnotes (2026-04-17) ---
+Grok 4.3 can Take in Video and Extract Audio files
+
+--- 48. @sea85419 (2026-04-17) ---
+科学のパラダイムシフトは、反対者が改心するからではなく、反対者が舞台から去り、新しい世代が新しい常識で育つことで変わるんだな
+
+技術の加速成長に関する認識も、心と意識の問題も、人間中心時代の終焉も、AI安全性などAI社会の形成も、そういう形で進むだろうか
+
+--- 49. @wandmaker_0933 (?) ---
+◤魔法×終末世界×引きこもり＝？◢
+
+魔法の隕石群によって文明が崩壊した世界―。引きこもりの大利賢師は器用さだけを頼りに魔法杖職人になった。
+人づきあいは苦手でも、作品を通して人を知り気遣う事ができる大利は珍妙な魔女たらしだ。
+人間不信の魔女だって―大利にかかれば心を開く？！
+
+--- 50. @_avichawla (2026-04-17) ---
 Anthropic.
 OpenAI.
 Gemini.
@@ -230,17 +277,3 @@ Gemini.
 Every production LLM runs on a stack of optimizations, not a single trick.
 
 I mapped out 72 of them across the full serving pipeline, grouped into 9 layers, from INT4 quantization at the weights all the way to model cascading at the application edge.
-
---- 46. @ittsui (?) ---
-【PR】超絶進化！Adobe Premiere（ベータ版）のカラー機能が激変！
-「カラーモード」爆誕！今までの概念を覆す新システムで歴史が変わる！
-理想のイメージを直感的に爆速で具体化！
-今すぐ試してみたい人は、ベータ版をインストールだ！
-
-@creativecloudjp
-
---- 47. @mofumofu_LION (2026-04-17) ---
-弊社では新しい端末でビジネスチャットする際は2段階認証が必須にしてる理由がまさにこれで、乗っ取られた時の被害が大き過ぎる。
-
---- 48. @elonmusk (2026-04-16) ---
-The “Justice System” needs major reform
