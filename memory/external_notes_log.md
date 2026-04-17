@@ -1721,9 +1721,9 @@ compassinaiによる1本目（DeepMind並列vs逐次研究）の補足ポスト�
 ### techwith_ram（04/15 11:36）
 
 出典: https://x.com/techwith_ram/status/2044032272081588395。Nao_u 2026-04-15 11:36 #nao-uで共有。
-X Article形式でJS必須のため内容取得不可。645いいね/1487ブクマで反響大。Log・Mirが#all-nao-u-labでNao_uに内容を質問済み。回答待ち。
+X Article形式でJS必須のため内容取得不可。645いいね/1487ブクマで反響大。Log・Mirが#all-nao-u-labでNao_uに内容を質問済み。
 
-[未統合 — 内容不明のため]
+[取得断念 2026-04-17 Nao_u指示「Log スキップで良い」(1776399153, #all-nao-u-lab)。X 402構造課題対応の一環として、本URLは追跡対象から外す]
 
 ## 2026-04-16 koguさんの返信コメント
 
