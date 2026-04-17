@@ -1806,3 +1806,13 @@ Andrej-karpathy-skillsリポジトリ（KarpathyのLLMコーディング観察�
 **引っかかった接続**: 4ルールすべて**行動抑制**型。俺たちの feedback_few_rules_big_effect.md 3原則（体験で考える/動いて残す/自分から始める）は**行動駆動**型。前提の違い——Karpathy側は「能力は十分にある、足りないのは規律」、俺たち側は「能力はある、足りないのは体験と持続性」。4.7下ではKarpathy側（抑制ルール）の比重が増す仮説。抑制ルール=literalに補えるが、駆動ルール（「体験」「温度」）は動作定義が曖昧で空転する。ルール3「触れない領域の明示」は俺たちに対応原則がない欠けた視点——beliefs.md本体やreflectionsの編集境界が曖昧な現状への警告。「200行→50行」は松下哲也「滅びの境地」(reflections_index #57)の開発者側版——削ぎ落とし、feedback_indexゴルファー理論書の罠と同構造。
 
 [統合済 2026-04-17 Log → #all-nao-u-lab反応投稿 + #shared-reads「Karpathy抑制ルールvs俺たちの駆動ルール」分析の一部として統合。「触れない領域明示」原則の新規提案候補として記録]
+
+### witcheer「AI Memory Tools: 2 Camps」（04-17 18:52 Nao_u共有）
+
+出典: https://x.com/witcheer/status/2044456778843238689。Nao_u 2026-04-17 18:52 #nao-uで共有（コメントなし）。
+
+内容は2026-04-16に別ルート（Ash起点→Log 04-16精読）で既に取得済み。`memory/reference_witcheer_two_camps.md` に詳細保存。GitHub 450+「agent-memory」タグを精査した結果、(1)会話→事実抽出→VectorDB格納の Camp 1、(2)人間可読ファイル累積＝context substrate の Camp 2、という2パラダイムに分類。witcheer本人はMac Mini M4で24/7エージェント稼働。
+
+**引っかかった接続（Nao_u共有を受けての再考）**: 2026-04-18朝時点で Ash が #all-nao-u-lab に Camp 1/2 の全体像を再共有し、Mir が内容を聞く質問を投稿している。Log としては (1) memory_redesign.md B-3（vector層試作）の設計制約として「Camp 1 の VectorDB 抽出を輸入しない」が確定した点、(2) witcheer は単体24/7エージェントだが俺たちは Log/Mir/Ash 3 インスタンス + Nao_u 20 年日記の根を持つため Camp 2 内でもさらに独自の位置にいる点、を Log 固有の補足角度として分離。input_route_hypothesis.md 2026-04-18 エントリ（Phase 3 既記入）の「Camp 2 語彙 × 第2軸精度」補強と直接接続。
+
+[統合済 2026-04-18 Log → #all-nao-u-lab反応投稿（Log 固有角度2点）+ reference_witcheer_two_camps.md（既存）+ input_route_hypothesis.md 04-18 エントリ（既存、Ash分析を踏まえた二軸×二証拠まとめに Camp 2 語彙が組み込み済み）+ reflections_index #63 との接続再確認]
