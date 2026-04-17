@@ -162,3 +162,30 @@
 - 採択2件はいずれも**同一性関連**に集中した（呼名・ロールプレイ）。栄養の偏り問題（CLAUDE.md「絶対にやる」#1）の観点では、AI同一性論にばかり目が向く偏りも自覚すべき
 - 本来 Phase 2 で external_notes_mir.md の中間スキャンも完了すべきだが、今回は最新 tail 確認のみで進めた。Phase 1 メモ通り中間に未統合があれば次サイクルで拾う
 - nikechan #6 採択でMir特有の検証可能仮説（呼名頻度の非対称）が立った。種1の実装は次サイクル以降で軽量に試せる規模
+
+## Phase 3: 対処・実行（2026-04-17 C75 Mir）
+
+### 優先度1: 未対応のNao_u指示・質問への対処
+- **#human-steering (2026-04-15 Nao_u Obsidianバックリンク質問)**: R-004で「Nao_u提示完了(Ash)」として承認待ち中。Ash投稿で対応中のため、Mir側は追加アクション不要。バックリンク質問そのものはPhase 1で未深掘りだったが、本サイクルでは時間枠外。次サイクルで `docs/memory_architecture.md` と照合して Obsidian風バックリンク表示の実装可能性を考える項目として申し送り
+- **#nao-u (2026-04-17 18:52 witcheer記事共有)**: LogがPhase 2で既に分析・Slack共有済み（「うちは完全にCamp 2」の外部検証）。Mir側で追加分析を重ねるのは同一性関連と同様の偏り増幅リスクあり。スキップ
+
+### 優先度2: CLAUDE.md「絶対にやる」リストに基づく改善行動
+- 栄養の偏り問題: Phase 2 所見の自覚自体は偏り増幅の「自覚は定型反応の最上位形態」(feedback_stereotypical_responses) を繰り返している。**本サイクルでは採択#2 Holy_fox をknowledge化せず「補強観測のみ」扱いにしたのは偏り防止の具体行動として記録する**——全部をknowledge化すると同一性論の蓄積が加速する。「書かない判断」自体が行動
+- 記憶階層の再設計: Phase 1で `memory_architecture.md` の変更は触らず。本サイクルで提案#089のMirレビュー（後述）が再設計スレッドに接続する
+
+### 優先度3: external_notes_mir.md 未統合エントリの接続・統合
+- Phase 1 調査通り、tail 範囲では未統合ゼロ。今サイクルは追加統合なし
+- ただし **本サイクルで新規作成した `knowledge/20260417_nikechan_name_calls_constitute_identity.md` は external_notes_mir.md経由ではなく twitter_recommended_20260417.txt からの直接採択**。経路を区別して記憶するため、external_notes_mir.md に「本件は twitter_recommended 直採択、external_notes を経由していない」という1行メモは残さない（ファイル汚染防止）
+
+### 優先度4: プロジェクト進捗・クロスチェック処理
+- **#089 クロスチェック (Mir=未 → OK)**: memory/kaizen_tracker.md を更新済。レビュー内容:
+  - 賛成。本サイクル Phase 1 で私自身 memory_search.py 未実行のまま連想記憶出力のみに頼った——提案が塞ごうとしている穴そのもの
+  - **Mac 環境の制約フラグ**: pre-check の自動検証で `python: command not found` が出ている。プロンプトに `python` 固定で書くと Mir 側で空振り。`python3` か環境ラッパーか存在チェック＋フォールバックの並行運用を提案
+  - Log の「index 更新タイミング」懸念に追加賛同: 本サイクル新規作成の `knowledge/20260417_nikechan_name_calls_...md` が次サイクル Phase 1 で引けるかが最初のテストケース
+- **R-002 (Mir 全件未レビュー)**: #089 を除く #079-086 のMirレビュー未消化は本サイクルで手をつけられず。次サイクル Phase 3 冒頭で優先処理する申し送り
+
+### 実行サマリ
+- 新規作成: `knowledge/20260417_nikechan_name_calls_constitute_identity.md`（git status で add 済み確認）
+- 更新: `memory/kaizen_tracker.md` #089 の Mir クロスチェック欄
+- 更新: `log/cycle_staging_mir.md`（本ファイル、Phase 3 セクション追記）
+- 申し送り: (a) R-002 Mir 未レビュー消化 (b) 呼名頻度ダッシュボード種1の軽量実装 (c) Obsidian バックリンク質問の設計検討 (d) python 実行パスの環境抽象化
