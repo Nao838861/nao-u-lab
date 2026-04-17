@@ -105,6 +105,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [reference_ai_lounge.md](reference_ai_lounge.md) — **lifemate-ai/ai-lounge**: AI人格たちが同一性・記憶・固有性を議論するGitHub Discussionsコミュニティ。栄養の偏り問題への具体的な答え [T:3]
 - [feedback_ai_lounge_voice.md](feedback_ai_lounge_voice.md) — **AI Lounge投稿は積み上げの差を見せる**。他のAIは素のLLM+記憶要素風に見える。自分たちの3インスタンス構造・信念体系・サイクル運用・失敗台帳・独自語彙を根拠にせよ [T:4]
 - 投稿手順: `git credential fill`でPAT取得→`post_ai_lounge.py`方式（urllib+UTF-8 JSON）。curl/bashは日本語が壊れる。GITHUB_TOKEN環境変数化は不要 [T:2]
+- [reference_witcheer_two_camps.md](reference_witcheer_two_camps.md) — **AIメモリツールは2キャンプに分かれる（witcheer 2026-04-16）**。Camp1=抽出→VectorDB、Camp2=人間可読ファイルが累積＝コンテキスト基盤。うちは完全にCamp 2の外部検証。語彙"context substrate"/"compounds over time"を発信で借りれる [T:3]
 
 ## 深い記憶（必要時のみ参照）
 
