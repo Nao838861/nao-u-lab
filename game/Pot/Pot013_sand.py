@@ -19,7 +19,7 @@ import time
 import random
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from pot_playlog import PlayLog
+from pot_playlog import PlayLog, ReplayLog
 
 # ── 文のプール ──
 # 途中で切ると意味が変わる/深まるように設計。
@@ -99,7 +99,7 @@ def slow(text, d=0.04):
     print()
 
 
-def type_out(sentence, round_num, total, log):
+def type_out(sentence, round_num, total, log, rlog=None):
     """文を一文字ずつ表示。キー入力で停止。戻り値=停止位置。"""
     clear()
     print()
@@ -134,82 +134,94 @@ def type_out(sentence, round_num, total, log):
 
     print()
     time.sleep(0.6)
+
+    # リプレイログに記録
+    if rlog:
+        rlog.typeout(sentence, frozen_at, CHAR_DELAY)
+
     return frozen_at
 
 
 def main():
     log = PlayLog("Pot013_sand")
+    rlog = ReplayLog("Pot013_sand")
 
-    clear()
-    print()
-    slow("  sand", 0.15)
-    print()
-    time.sleep(0.3)
-    slow("  文が、一文字ずつ現れる。", 0.04)
-    slow("  心が動いたら、何かキーを押して止める。", 0.04)
-    slow("  止めなくてもいい。", 0.04)
-    print()
+    # rlog.print/slow_print/input/clear/sleep は内部で実際の表示も行う
+    rlog.clear()
+    rlog.print()
+    rlog.slow_print("  sand", 0.15)
+    rlog.print()
+    rlog.sleep(0.3)
+    rlog.slow_print("  文が、一文字ずつ現れる。", 0.04)
+    rlog.slow_print("  心が動いたら、何かキーを押して止める。", 0.04)
+    rlog.slow_print("  止めなくてもいい。", 0.04)
+    rlog.print()
 
     log.show("instruction")
     t0 = time.time()
-    input("  [Enter] ")
+    rlog.input("  [Enter] ")
     log.input_event("Enter", dt=time.time() - t0)
 
     chosen = random.sample(SENTENCES, ROUNDS)
+    rlog.meta(sentences=[s for s in chosen])
     log.state(f"selected {ROUNDS} from pool of {len(SENTENCES)}")
 
+    # type_out は非ブロッキング入力のため rlog.input() ではなく
+    # typeout イベントとして記録する（type_out 内で rlog.typeout() を呼ぶ）
     _setup()
     try:
         results = []
         for i, sentence in enumerate(chosen):
             log.show(sentence, round=i + 1, chars=len(sentence))
-            frozen_at = type_out(sentence, i, ROUNDS, log)
+            frozen_at = type_out(sentence, i, ROUNDS, log, rlog)
             results.append((sentence[:frozen_at], sentence, frozen_at))
     finally:
         _teardown()
 
     # ── 結果 ──
-    clear()
-    print()
-    time.sleep(0.5)
-    slow("  ─── 砂 ───", 0.08)
+    rlog.clear()
+    rlog.print()
+    rlog.sleep(0.5)
+    rlog.slow_print("  ─── 砂 ───", 0.08)
 
     shifted = 0
     for frozen, full, pos in results:
-        print()
+        rlog.print()
         if frozen != full:
-            # 途中で止めた → 切断点と全文を並べる
-            slow(f"    {frozen}│", 0.03)
-            time.sleep(0.8)
-            slow(f"    {full}", 0.02)
+            rlog.slow_print(f"    {frozen}│", 0.03)
+            rlog.sleep(0.8)
+            rlog.slow_print(f"    {full}", 0.02)
             shifted += 1
             log.result(type="frozen",
                        frozen=repr(frozen),
                        full=repr(full),
                        ratio=f"{pos}/{len(full)}")
         else:
-            # 最後まで見た
-            slow(f"    {full}", 0.03)
+            rlog.slow_print(f"    {full}", 0.03)
             log.result(type="full", text=repr(full))
-        time.sleep(0.4)
+        rlog.sleep(0.4)
 
-    print()
-    time.sleep(1.0)
+    rlog.print()
+    rlog.sleep(1.0)
 
     if shifted == 0:
-        slow("  あなたは全ての文を最後まで見届けた。", 0.05)
-        slow("  急がなかった。", 0.05)
+        rlog.slow_print("  あなたは全ての文を最後まで見届けた。", 0.05)
+        rlog.slow_print("  急がなかった。", 0.05)
     elif shifted <= 2:
-        slow("  いくつかの文は、あなたが止めた先に続いていた。", 0.05)
+        rlog.slow_print("  いくつかの文は、あなたが止めた先に続いていた。", 0.05)
     else:
-        slow("  ほとんどの文を途中で止めた。", 0.05)
-        time.sleep(0.5)
-        slow("  止めた先に、別の意味があった。", 0.05)
+        rlog.slow_print("  ほとんどの文を途中で止めた。", 0.05)
+        rlog.sleep(0.5)
+        rlog.slow_print("  止めた先に、別の意味があった。", 0.05)
 
-    print()
-    time.sleep(1.5)
+    rlog.print()
+    rlog.sleep(1.5)
 
     log.end()
+    filepath = rlog.save()
+    if filepath:
+        print(f"  (リプレイログ: {os.path.basename(filepath)})")
+        print()
 
 
 if __name__ == "__main__":
