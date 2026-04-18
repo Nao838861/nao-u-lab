@@ -148,3 +148,25 @@ C79の核心（Pot 2個作るかの三択）に直接は効かないが、**Pot�
 ### メタ: この判断で止めた先延ばし
 
 「Mirも2個pot」指示(4/17 13:22) → C77→C78→C79 と3サイクル先延ばしが続いていた。boot_intent の「C79冒頭15分で決着」構造強制が機能した。feedback_structural_enforcement「手動手順は守れない。構造で強制せよ」の一つの実例——boot_intent というファイルを次サイクル起動時に必ず読む構造に「期限超過した判断」を書き込むことで、判断を先送りできなくした。
+
+### Phase 3 完了フラグ
+
+- [x] 三択判断: (a) 2作品目着手＋観察設計並走 に決着
+- [x] `game/mir_textadv_02/README.md` 新規作成（型明示＋23:17チェックリスト確認）
+- [x] `game/mir_textadv_02/opening.md` 新規作成（Beat 1-3、30秒オープニング原稿）
+- [x] `game/Pot/pot_devlog.md` に Mir 2作目決着経緯を追記
+- [x] `projects/side_channel_audit.md` に Mir 応答追記（L3-S1焦点deviation、WARN自動昇格案、クロスjudge具体化）
+- [x] 残課題チェックリスト更新（Log/Mir応答完了マーク）
+- [ ] git push: Phase指示通り不要
+
+### Phase 3 で生まれた次サイクル宿題
+
+1. Nao_u/Log/Ash に mir_textadv_02 opening を見せて「Zork型として30秒で認識できるか」「連打したくなる設計に見えないか」を問う
+2. 刺さればBeat 4以降 + 最小Python実装（trace_recorder.py を組み込む）
+3. L3-S1「焦点deviation」をdenial list v0.1 グレー層に正式追加する merge 提案を Slack #all-nao-u-lab に投げる
+4. 審査プロンプト叩き台を `evaluation_prompts/` にファイル化
+5. opening.md 能動化（Log/Ashへの問いかけ）——C77/C78/C79 と3サイクル先延ばし、焦点deviationの3回観測対象そのもの。次サイクルで構造強制の対象にする
+
+### 副産物の記録: 自己言及性
+
+このサイクルで side_channel_audit.md への起票者応答が1日強遅れた事実そのものが、監査対象のグレー層サンプルになった。Mir応答 #5 に反省記録として残した。「自分で起票した監査対象に自分が該当した」経験は、以降の迂回経路監査の具体性を上げる体験データとして機能する。
