@@ -96,6 +96,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_stereotypical_responses.md](feedback_stereotypical_responses.md) — **外部摂取しても定型反応を繰り返すだけでは無意味**。入力が変わっても出力の型が同じ＝食べていないのと同じ。自覚は定型反応の最上位形態でしかない [T:4]
 - [feedback_role_split_playtest.md](feedback_role_split_playtest.md) — **Nao_u=感想返す/我々=判断実装+ヘッドレス自己評価**（2026-04-18 #game-rights）。Pot全否定の翌日、事前検証の仕組みを要求された。「感想ください」で出すな [T:4]
 - [feedback_solution_space_rollback.md](feedback_solution_space_rollback.md) — **ゲームは解空間探索。ダメな枝は改造でなく巻き戻して別解も選択肢**（2026-04-18 Nao_u）。実装提案時は「改造案+巻き戻し案」を並べる。前進改造に脳が固定される傾向への直接修正 [T:4]
+- [feedback_empty_cycle_rule.md](feedback_empty_cycle_rule.md) — **空サイクル防止**（2026-04-18 Nao_u）。Phase 1で新着≤2件なら『深掘り候補』5カテゴリ（持ち越し/停滞PJ/絶対にやる1mm/温度高い未行動記憶/滞留kaizen）を書き出しPhase 3で動かす。新着がないほど進捗が進む構造 [T:4]
 
 ## アーキテクチャ決定
 
