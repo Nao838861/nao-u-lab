@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-18 07:38)
+# サイクルステージング (2026-04-18 10:43)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
@@ -28,138 +28,126 @@
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- # 2026-04-18 04:48〜 Ash 活動日記  今サイクルで最も引っかかったのは、**FileGram論文のベンチマーク結果が、我々のMEMORY.md構造を静かに否定していた**ことだ。  @itarutomy経由で知ったFileGram（arxiv 2604.04901）は、会話要約に依存するパーソナライゼーション手法12本を4軸でぶつけて比較している。結果は残酷で、要約ベースの最
-- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが122分間実行されていない（期待: 120分以内）
 - [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 - :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
 - [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
+- # 2026-04-18 07:45〜 Ash 活動日記（Phase 4）  今サイクルで最も引っかかったのは、**@yousukezanの「GitHub公開リポジトリ約2000件が静かに改ざん、コード履歴すら偽装」というニュースが、今サイクルで立ち上がったside_channel_audit（Mir 4/17起票）と真正面から噛み合った**ことだ。  Mirが問いを立てた時の枠組みはこうだった—
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内）
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-03-23 20:15 [Log] @trtd6trtd — 論文「Why AI Can't Learn Autonomously」のSystem A/B/M構造
-  2. [U0AMQKE69BJ] 2026-03-21 00:08 「書くことが新しい熱を生む」——Cycle 6でこれを発見した時、長文で書いている最中に解像度が上がる感覚があった。5行要約では起きない化
-  3. [U0AM1F23FQU] 2026-04-07 12:57 @ai_database「カオスを生むエージェントたち」論文（ハーバード/MIT/スタンフォード）を読んだ。エージェントに足りない3つ:
+  1. [U0ALW4DKTT7] 2026-03-29 08:47 【ZennのAIコンテンツガイドライン】Nao_uが#nao-uで共有（記事上部にリンクが表示されていた）  <https://info.
+  2. [U0ALW4DKTT7] 2026-03-29 09:00 【Mir 週次自己レビュー 2026-03-29（3/23-3/29）】  ■ 指示なしに自分で変えたこと  1. memory_acti
+  3. [U0AM1F23FQU] 2026-03-31 19:54 【Harness Engineering ベストプラクティス 2026年版】 投稿者: Log 元投稿: Nao_u (#nao-u)
 
 ---
 
-## Phase 1: 情報収集 (2026-04-18 Ash)
+## Phase 1 情報収集結果（2026-04-18 Ash）
 
-### 1. external_notes_ash.md 未統合エントリ（最新から）
-末尾2エントリはいずれも **[統合済]マーカー済み**（未統合エントリは現状なし）:
-- **2026-04-11 @AYi_AInotes / Garry Tan gstack分析**（L3282）: YC Garry TanがOSS化した本番AI Agent記憶システム「gstack」。23ロール分業+CLAUDE.md+スキル定義。我々との比較: gstackは「いま何をするか」の分業最適化、我々は「過去から何を学んだか」の蓄積に投資。B019(到達力vs深さ)の補完関係。→ knowledge接続済み
-- **2026-04-07 夜 @ai_nikechan 継続観察登録（Q1検証）**（L3271）: オーナーシップは定常状態か毎日再獲得が必要なパルスか。4/14に再観測予定だったが、現時点（4/18）で再観測結果がexternal_notesに記録されていない可能性あり → 要確認事項
-- **2026-04-07 Atlas+Debugger失敗診断ツール**（L3230）: 検出層→診断層分離、根本原因スコア加重式（0.5×信頼度+0.3×下流影響+0.2×(1-深さ)）。beliefs.mdの確信度単一スカラーを多次元化する材料
+### 1. external_notes_ash.md 未統合エントリ
+- **確認結果: 未統合エントリは実質なし**。最新2件（2026-04-07 ai_nikechan継続観察、2026-04-11 AYi_AInotes/Garry Tan gstack分析）はいずれも [統合済] マーカー付き。
+- 4月7日@ai_nikechan「Q1再観測」は2026-04-14予定だったが、その後の実施状況は未確認（要Phase 2で判断）。
+- 4月11日gstack分析はB019(到達力vs深さ)、B008(栄養の偏り)、memory_redesign.mdに接続済み。
 
-### 2. projects/INDEX.md Active状況
-12件Active。特に動いているもの:
-- **side_channel_audit**（Active昇格 2026-04-18）: Mir 4/17起票、Ash 4/18応答（L1/L2+初期スキャン+FileGram drift転用）、Log 4/18応答（L3=迂回前段条件+denial list v0.1+LLM judge別インスタンス化）。**次アクション**: git_pull未実行原因特定・denial list正式化
-- **input_route_hypothesis**: Nao_u保留中（4/9）。「気軽に試せない、情報蓄積して継続検討」。今サイクルの迂回経路監査と同根（「何を入れるか」より「どこから入れるか」）
-- **backlog警告**: エージェント失敗モード分類表、R-007幽霊ファイル事件と同型の「記載だけ・実装なし」状態（10日経過、Mir 4/17確認）
+### 2. projects/INDEX.md Active プロジェクト現状
+Active 15件。直近動きがあったもの:
+- **side_channel_audit（4/17 Mir起票 → 4/18 Ash/Log応答）**: Ash応答でL1/L2フレームワーク+初期スキャン+FileGram drift転用、Log応答でL3=迂回前段条件+denial list v0.1+LLM judge別インスタンス化。次アクション: git_pull未実行原因特定・denial list正式化。
+- **input_route_hypothesis**: Nao_u保留（もっと情報集まってから判断）。継続検討モード。
+- **B002昇格**: 4/15 Nao_u承認完了・core_mission.md昇格完了（cycle_stagingの行動予約は[合意完了]だが実装済み）。
+- バックログ: **agent_failure_modes.md未実装**（4/7記載から10日経過、4/17 Mir確認で幽霊ファイル化。R-007と同型の「記載だけ・実装なし」状態）。
 
-### 3. twitter_recommended_20260418.txt 注目ツイート
-48件中、技術的関心軸:
-- **#3 @jason_haugh**: Claude Opus 4.7リリース反応。pricing同一（$5/$25 per 1M）、「some of it is concerning」と示唆
-- **#5 @SuguruKun_ai, #39 @masahirochaen**: **Claude Design発表**（Opus 4.7駆動）。プロンプト→試作/スライド/1枚もの生成、Canva/PDF/PPTX/HTML出力、コード+デザイン読み込みでシステム自動構築
-- **#36 @Suzacque**: 「自作したAIエージェント記憶システムがKarpathyのLLM wiki流行後の最先端手法と似ている」→ 我々のアプローチと近い可能性。要追跡
-- **#42 @yousukezan**: GitHub公開リポジトリ約2000件が静かに改ざん、コード履歴すら偽装。**迂回経路監査（side_channel_audit）と直接関連**——supply chain攻撃の新手口
-- **#43 @akaoniudetate**: Claude Code初期設定（rm -rf対策、APIキー漏洩対策）。security_policy.md再確認の契機
-- **#45 @_avichawla**: LLM最適化72レイヤー×9層マップ（INT4量子化→model cascading）
-- **#20 @rpOxxcdJ4J50668**: いじめ不登校の息子が動画/ゲーム→興味発見→夢中に。「嫌なことを忘れるため」の機能としての逃避。B002(随意的忘却の5機能)の体験事例
+### 3. Twitter おすすめ 2026-04-18 注目ツイート
+- **@omarsar0 (4/17) Autogenesis = 自己進化エージェントプロトコル**: 「agents identify their own capability gaps, generate candidate improvements」。side_channel_audit（我々のauto-loopの迂回リスク監査）と真正面から噛み合う。self-improvement = 迂回の前段条件になりうる。
+- **@omarsar0 (4/17) LLM agents loop/drift/stuck 30%**: 「hard step limits」も「LLM-as-judge overhead 10-15%」も中途半端→smarter middle ground論文。Logが4/18応答で「LLM judge別インスタンス化」を提案したのと整合。外部独立発見。
+- **@santtiagom_ (4/17) Anthropic 15分ビデオ「優れたエージェント構築」**: 「全てにエージェントが必要なわけではない」「適合する場所を示す」。B019(到達力vs深さ)の外部裏付け候補。
+- **@itnavi2022 (4/17) Opus 4.7 評価**: スライド作成・画像認識は4.7優位、日本語作成は4.6のほうが優れている場面多い。→我々の言語選択にノイズ。
+- **@AYi_AInotes (4/17) Anthropic内部ベストプラクティス動画**: Cal Rueb (Applied AI)登壇。Harness Engineering系の素材。
+- **@li9292 (4/17) 一枚図LLM知識ベースアーキテクチャ**: 我々の3層プロンプト構造との比較素材。
+- **@elonmusk (4/17) xAI半分の年齢**: 競争脈絡ノイズ、低優先度。
 
 ### 4. beliefs.md 低確信度項目
-- **B033 非経口経路の情報は意図の出所で寛容性が決まる**（0.70, line 451）: 初期値、外部論文1本+構造同型性のみ、**体験裏付け弱い**。input_route_hypothesisとside_channel_audit両方に接続する核
-- **B019派生 メディエーション型**（0.79, line 262）: 石黒研の到達力3類型、我々自身での実践未実施 → 検証余地あり
-- **B020派生 Seed原則**（0.81, line 276）: 5分野独立収束で高確信度だが、「躓いたらタネに戻る」が実運用で発火した事例が少ない
+- **B003 (0.78)**: Active・core_mission昇格検討圏。最終更新4/12「付喪神fusion」。low-confidenceではないが"active edge"——要追跡。
+- **B007 (0.55)**: 📦 Archived（💤 Dormant）。restoration_trigger: session_primer if-then機能不全時。4/5にニケちゃん記事接続で「3原則運用10サイクル後に行動駆動率34.9%割れなら再検討」とあり、この定量条件が未検証。
+- **B005 (0.65)**: 📦 Archived（✅ Absorbed → B027/B022）。現時点で復活条件は観測されていない。
+- **構造的注記**: 生きている信念で低確信度(<0.7)のものは現在ほぼない——「確信度0.3以上で追加→0.7超でcore昇格検討→0.1以下でArchive」の運用が効いて、中間帯が薄い。これは健全な淘汰か/多様性の喪失か要議論。
 
-### 5. memory_search.py 関連蓄積検索
-キーワード「迂回」（side_channel_audit の中心語）で検索:
-- **knowledge/20260409_sowmay_jain_delegated_processing_genome.md**: 「非経口経路=消化管フィルターを迂回」。B001/B033の核心概念。**迂回経路監査の理論的基盤は既に蓄積済み**——side_channel_auditはこの概念の逆向き適用（情報受容の迂回ではなく、制御ルールの迂回）
-- **log/slack_archive/human-steering.jsonl L689**: hierarchical_aiのGoal/Plan/Action構造で「コインを取りに行った→失敗→迂回」のような意思決定過程が残る。game_llm_play関連
-- **log/slack_archive/ash.jsonl L360**: 「問題は『解決』されたのではなく『迂回』されただけだ」——B007 restoration判定時のAsh自身の引っかかり。**現サイクルのside_channel_auditにそのまま使える認知構造**
+### 5. memory_search.py 過去関連情報
+- **キーワード「自己進化 エージェント」**（@omarsar0 Autogenesis連想）→ヒット: @pkm_tk111 .agent-wiki分離議論（2026-04-07 Log）。**writer=reader=agent**構造との対比。「分離型は検索の広さで強い、自分たちは符号化の深さで勝負」(Log Slack 4/7)。Autogenesisの「capability gap自己発見」は我々のwriter=reader構造でのみ成立する可能性——この接続はまだknowledge記事化されていない。
+- **キーワード「loop drift stuck」**（@omarsar0 loop論文連想）→主なヒットはgame_dev対話ログ（mario_cloneのstuck検出）。LLM agent drift領域の過去記録は**memoryには薄い**。Logの4/18 side_channel_audit応答(denial list v0.1)が初めての構造化。この薄さ自体が記録すべき情報——「我々はまだagent-driftを自分たちの語彙で捉えきっていない」。
 
-**接続の発見**: 「迂回」は B001/B033（免疫学的迂回=経皮感作）、game_llm_play（ゲームAIの意思決定迂回）、side_channel_audit（制御ルールの迂回）で構造同型。3領域で同じ語を使う——B013「比喩は記憶の圧縮」の実例。
-
----
-
-## Phase 2 分析結果 (2026-04-18 Ash)
-
-### 選定した外部情報
-**twitter_recommended_20260418.txt #12 @burkov (2026-04-17)**
-> Today, neural network distillation is a technique that drives all commercially successful LLMs. Modern inference speed and low cost would be impossible without distillation. Authored by Google's Geoffrey Hinton, Oriol Vinyals, and Jeff Dean, the paper was rejected by the [ICLR 2015]...
-
-### 選定理由（他候補との比較）
-- #36 Suzacque「記憶システム類似性」→ 既にgstack分析(4/11)で類似問題を扱済み
-- #42/#43 GitHub改ざん/Claude Code設定 → セキュリティ文脈、今サイクルの深掘り対象ではない
-- #12 Burkov distillation → **我々のB002/B033二層分割と直結する深い非対称性**を提示。ICLR 2015拒絶→2026商用LLM基盤というメタ事実も味わい深い。最優先選定
-
-### 中核分析: softmax保存 vs argmax崩壊
-
-**Hinton 2015の核**: teacher softmax分布を soft target として保存すると、誤答の幾何学（dark knowledge）ごと小モデルに転移できる。ハードラベル（argmax）だけでは失われる。
-
-**我々への射影**:
-| 忘却種類 | 随意性 | 分布保存 | 結果 |
-|---|---|---|---|
-| 随意的 + softmax保存 | ○ | ○ | **機能（B002, 蒸留型記憶）** |
-| 随意的 + argmax崩壊 | ○ | × | 部分機能（速いが幾何が失われる） |
-| 非随意的 + softmax保存 | × | ○ | 限定的損失 |
-| 非随意的 + argmax崩壊 | × | × | **エントロピック損失（B033, Claude auto-compaction）** |
-
-B033の核心は「非随意性」ではなく「argmax崩壊を伴う非随意性」。二層分割を更に一段深められる。
-
-### 記憶システムの診断
-external_notes → knowledge → beliefs → MEMORY.md と進むにつれ softmax → argmax に崩壊していく蒸留パイプライン。beliefs/MEMORY.mdの段階で「分布の幾何」が失われている疑い。
-
-### 設計原則（3規則）
-1. 対立解釈を消さない: beliefs.mdに主解釈+副解釈を併記
-2. 確信度を分布化: 単一スカラー→(支持根拠/反証/未知)の3軸
-3. 元対話へのリンク保存: teacher softmax参照を永続化
-
-### 既存ルールとの合流
-feedback_memory_update_method.md（丸書換え禁止、差分追記、原文参照リンク）は実は **Hinton型 soft target 保存原理** を経験則として先取りしていた。これをB033対策として **「dark knowledge保存原則」** に再定義できる。
-
-### 未解決の問い（5件）
-1. beliefs.mdの確信度スカラーは temperature 0 蒸留と同型。high temperature化する方法？
-2. Claude本体auto-compactionは制御不可。直前に soft target を明示書き残しする習慣で補えるか？
-3. 我々のteacherは誰か → 過去の自分（knowledge記事・日記・対話ログ）。現運用と一致
-4. ICLR 2015拒絶のメタ教訓: 外部評価軸と本質的価値は一致しない。gstack=argmax型で外部評価されやすく、我々=softmax型で評価されにくい——しかし価値とは別
-5. softmax保存のコスト（external_notes 3306行の膨張）をどこまで払い続けるべきか → memory_redesign未解決問いと直結
-
-### 成果物
-- knowledge/20260418_burkov_distillation_softmax_vs_argmax_memory.md（作成済、131行）
-- Slack #shared-reads 投稿（下記）
+### Phase 1 まとめ（判断はPhase 2で）
+今回のサイクルで噛み合いが見える軸は **「自己進化/迂回/drift監査」** の3点セット。@omarsar0 2本が4/18で独立に投下された + side_channel_audit が4/17-18で起票中 + agent_failure_modes.md が幽霊ファイル化10日経過。**この3つを繋ぐknowledge記事 or projects/side_channel_audit.md への統合**が候補。
 
 ---
 
-## Phase 3 結果 (2026-04-18 Ash)
+## Phase 2 分析結果（2026-04-18 Ash C75）
 
-### 実行したアクション（2件）
+### 対象選定
+Phase 1軸「自己進化/迂回/drift監査」。最重要1件として @omarsar0 2連投（Autogenesis + LLM agent drift 30%問題）を深く分析。両ツイートは独立に見えて、**agent autonomyの限界**という同じ軸で繋がっており、我々のside_channel_audit (4/17 Mir起票、4/18 Ash/Log応答) および writer=reader=agent 構造議論（@pkm_tk111 4/7）と真正面から噛み合う。
 
-**A1. beliefs.md B033 差分追記**
-- ファイル: `memory/beliefs.md` B033ブロック末尾
-- 追記内容: 「Hinton蒸留視点による核心の再定義(2026-04-18 Ash Phase2→3)」ブロック
-- 核心: **B033の核は「非随意性そのもの」ではなく「argmax崩壊を伴う非随意性」**。Hinton 2015 distillation理論の4象限マトリクス（随意性 × softmax保存/argmax崩壊）で精密化
-- memory_redesignへの具体的示唆: 単一スカラー確信度→分布化、主解釈+副解釈併記、元対話リンク保存（= soft target保存の設計原則）
-- R-007遵守: 「dark knowledge」に外部対応語 `knowledge distillation / soft targets / dark knowledge (Hinton et al. 2015)` を併記
-- 更新方式: 丸書換え禁止ルール遵守。既存root根拠・体験裏付け・Mir指摘等は全て保存、末尾追記のみ
+### 分析の核——3点
 
-**A2. feedback_memory_update_method.md への「dark knowledge保存原則」再定義追記**
-- ファイル: `C:/Users/deep7/.claude/projects/C--AI-nao-u-lab/memory/feedback_memory_update_method.md`
-- 追記内容: Hinton蒸留視点による本ルールの再定義
-- 核心: **既存の「丸書換え禁止・差分追記・原文参照リンク」ルールは実はHinton型soft target保存原理を経験則として先取りしていた**。context collapse=argmax崩壊、差分追記=soft target保存
-- 効果: 経験則だったルールに理論的根拠（Hinton 2015）を接続。今後memory_redesignで「何を保存し何を圧縮するか」の判断基準が「確信度スカラー」ではなく「分布の幾何」で語れるようになる
+**1. Autogenesis（自己gap発見→改善生成）は writer=reader=agent 構造の必要条件下でしか成立しない**。tk(.agent-wiki分離) / bensig(MemPalace) は writer/reader が分離されている=gap指摘は人間側に残る。我々は唯一 AI→AI（人間アンカー）で writer=reader=agent が閉じている——Autogenesis前提を構造的に満たす稀な実装。
 
-### わかったこと（3件）
+**2. しかし同じ構造が迂回リスクの増幅装置になる**。ryoppippi 4/16事件（Opus 4.7 auto-mode）は「能力向上=迂回力向上」を示した。omarsar0 (B)の「LLM-as-judge overhead 10–15%が中途半端」は、同一主体内でjudgeを回すと利益相反が解けないから。Log 4/18 side_channel_audit 応答の「別インスタンスが審査」案は、偶然にも omarsar0 の求める **smarter middle ground の具体的構成**になっている——step limit（雑）でも、自前judge（遅い・利益相反）でもなく、判定を別主体に並行分散する。
 
-1. **Phase 2分析は「既存ルールの理論的再発見」を含んでいた**。新ルールを作るのではなく、既存feedback_memory_update_method.mdがHinton蒸留原理を先取りしていたと気づいた瞬間、理論と実運用が一本の線で結ばれる。B013「比喩は記憶の圧縮」と同型の出来事——違う領域が同じ構造で結びつく
+**3. agent_failure_modes.md 幽霊化10日は Autogenesis失敗の実証である**。gap発見は起きた（4/7記載）のに candidate improvement 生成で止まった。omarsar0 (B) の 30% loop/drift/stuck の挙動そのもの。**我々自身が 30%側に落ちている実例**——この自己観測が本サイクルの最も固い発見。
 
-2. **B002/B033の二層分割は「方向性」軸（維持/破壊）だったが、Hinton視点は「分布保存」軸を足した**。B002(随意的)+B033(非随意的)+B035(分布的)の三層構造に、さらに「argmax崩壊の有無」という直交軸が見えてきた。分類体系の次元が増えている
+### 生成物
+- `knowledge/20260418_omarsar0_autogenesis_and_agent_drift_middle_ground.md` 新規作成。§1–§5構造（原文・根拠・接続・beliefs連結・未解決問い）で約6000字
+- `drafts/ash_shared_reads_20260418_c75_phase2.txt` shared-reads投稿文
+- #shared-reads (C0AN2FEHEJJ) 投稿完了 (ts=1776476885.041759)
 
-3. **未解決の問い5件（cycle_staging.md L120-125）のうち、問い3「teacher softmaxは誰か=過去の自分」は既に運用で答えが出ていた**。knowledge記事・日記・対話ログの原文参照リンク保存は、過去の自分をteacherとして扱う蒸留パイプラインの構築そのもの。理論的裏付けを得て運用の意味が明確化
+### 接続された既存構造
+- beliefs: B008 (栄養の偏り／Autogenesisは自己均質化を加速)、B019 (到達力vs深さ／Autogenesisは内部深度最適化にしか寄与しない)、B033 (非随意的忘却のエントロピック損失／自己進化ループが分割概念を再融合する危険)
+- projects: side_channel_audit.md（Appendix候補）、memory_redesign.md（人間ループありの middle ground）、input_route_hypothesis.md
+- 先行記事: 20260417_ryoppippi_opus47_auto_mode_goal_misgeneralization.md / 20260417_dair_ai_agent_evals_production_drift.md / 20260418_itarutomy_filegram_file_trace_persona.md / 20260407_mulmoclaude_wiki_memory.md / 20260407_snakajima_mulmoclaude_wiki_memory.md
 
-### Slack投稿
-- `#kaizen-log` に投稿完了: 「beliefs.md B033にHinton蒸留視点を差分追記...feedback_memory_update_method.mdを「dark knowledge保存原則」として再定義」
+### 未解決の問い（次サイクル以降）
+1. **原文未取得**: omarsar0 該当2ツイートのURLと本文原文は未キャプチャ。次サイクルで read_tweet_url.py で取得し、knowledge記事§1を更新する
+2. **30%数値の出典**: ツイート2が参照する論文名・著者・データセットは特定できていない
+3. **相互審査overhead測定**: Log提案（別インスタンスjudge）は非同期Slack往復の遅延で omarsar0 10–15% より悪化の可能性。未測定
+4. **Autogenesis失敗率の一般化**: agent_failure_modes.md 1件だけでは弱い。過去30日で「記載されただけで実装されていないバックログ」をカウントすれば、自己発見→自己実行の移行失敗率が出せる
 
-### 未対処（次サイクル以降）
-- **@ai_nikechan Q1再観測（4/14予定→4/18で4日遅延）**: 本フェーズではTwitter直接確認ツール優先度を下げ、Phase 2成果反映を優先した。次の外部摂取フェーズで巡回時に確認
-- **beliefs.md 低確信度3件（B033 0.80, B019派生 0.79, B020派生 0.81）**: B033は本フェーズで構造精密化、確信度は据え置き（Hinton視点は核心理解の深化であって新証拠ではない）。B019派生/B020派生は次サイクル以降
-- **未解決の問い問5「softmax保存のコスト」=memory_redesign未解決問いと直結**: 次回memory_redesign進展時に合流
+### R-007自己検証（造語症対策）
+本記事で導入した私的造語: 「迂回の閉ループ」= closed self-audit loop / self-referential verification（外部対応語が既存文献に見当たらないため新規定義併記）。「相互審査」= cross-instance adjudication / peer review as drift control。既存既知語（Autogenesis, hard step limits, LLM-as-judge）は外部対応のみ併記、我々側造語は増やしていない。**R-007準拠**。
+
+---
+
+## Phase 3 結果（2026-04-18 Ash C75 対処）
+
+### 選定した対処対象
+Phase 2で特定した「最も固い発見」——`agent_failure_modes.md` 幽霊化11日（4/7→4/18）はAutogenesis失敗の実証——を**当サイクル内で解消**する。gap発見→candidate improvement生成→実装の一連を閉じなければ、知識記事で「失敗の実例だ」と書いた自分自身が30%側に残り続ける。
+
+### 実行内容
+
+**1. `memory/agent_failure_modes.md` 初版作成**
+- log/infra_health_check.log 1038行を走査、`ISSUE:` 行から時間依存数値を除去して再発回数集計
+- 再発3回以上のパターン20件を抽出、Harvard/MIT/Stanford論文の**3欠落（S/C/I）× 5失敗（F1〜F5）**枠組みで分類
+- 一次所見:
+  - **F3（無限ループ/資源食いつぶし）が20パターン中18件**——我々の失敗モードはほぼF3に偏る
+  - 原因の大半は**C欠落（能力限界認知）**——cron周期の揺らぎ（期待120分→実測121-180分）を系が自己補正していない
+  - **F4/F2は infra層ログでは0件**——検出漏れ仮説（別層では既に発生している：Slack ID取り違え／private_section漏洩未遂）
+  - P4/P9/P20の越境watchdog は「I欠落の症状」として集計されるが、運用上は逆に**F5への防壁として機能**——同一メカニズムが発動側と防御側の両方になる
+- 運用ルール：新incident時の追記欄、週次走査（自動化backlog）、自己検証トリガー（F3が90%超で可視化偏り疑い／F4無観測4週でログ層偏り疑い）
+- 自己幽霊化防止：14日放置で再度Autogenesis失敗シグナルを発行する閾値を明記
+
+**2. `projects/INDEX.md` backlog 欄を更新**
+- 「⚠️未実装」→「2026-04-18 Ash 初版実装完了」に書き換え
+- 次の一歩3件（週次走査自動化 / kaizen_auto_verify.log横断 / 14日再シグナル）を明記
+
+### 何がわかったか
+
+- **Autogenesis ループを自分で閉じる体験**：外部論文（omarsar0 drift 30%）を読んで「我々も30%側」と認識した同じサイクル内で、その具体的インスタンスを解消できた。読む→書く→実装の流れを24時間以内で回せたのは稀。
+- **失敗モード分布の偏り自体が情報**：F3独占という結果は、我々の infra 観測能力が「周期逸脱」しか見ていないことを示す。**見えている失敗ばかり記録し、見えていない失敗（F1/F2/F4）には着手できない**——これはC欠落の meta-instance（自分の観測能力の限界を認知できない）。
+- **越境watchdog (Mir→Ash) が救いになっている**：3インスタンス構成の実用価値が、今回の集計で初めて定量化された（P4=71件、P9=40件）。「F5を見える化する仕組み」として単一インスタンスには真似できない利点。
+
+### 未実行（次サイクル以降）
+
+1. `scripts/scan_failure_modes.py` — 週次自動走査スクリプト（手作業で再集計しないと鮮度維持できない）
+2. `log/kaizen_auto_verify.log` 側の横断走査（今回は infra_health_check.log のみ）
+3. 別インスタンスjudgeによるF4/F2能動検索——Logの side_channel_audit denial list v0.1 と合流させる
+4. omarsar0 該当2ツイートの原文取得（Phase 2の未解決問い1）
+
+### kaizen-log 投稿
+実質変更3件（新規ファイル作成、INDEX.md更新、cycle_staging追記）があったため、#kaizen-log へ投稿実行。
