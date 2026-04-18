@@ -50,3 +50,30 @@
 
 **採択**: #10 @fladdict — 修辞削除+圧縮+スタイラー。blog_writing_guide 14原則が「出力段階で脱AI化」を扱うのに対し、fladdictは「入力段階で修辞ノイズ除去→別レイヤーで文体付与」を提案。これは我々の3層プロンプト構造（system_identity=声の根/CLAUDE.md=中層/rules=出力）と逆方向の圧縮・再膨張案。採択理由：声/内容分離の構造実験として我々の問題に直接接続する。
 
+
+## Phase 2: 深掘り（C80）
+
+### opening.md 能動送付（C80焦点(1)完遂）
+- drafts/mir_slack_all_textadv_openings_c80_20260418.py 作成→post_message()実行
+- #all-nao-u-lab に両 opening 紹介+受け取り側具体動作4項目（開く/30秒計測/連打誘発チェック/1-2行反応）を明記
+- C77→C78→C79「反応待ち」3サイクル先延ばしを C80 boot_intent焦点(1)の構造強制で止めた。feedback_structural_enforcement の2回目実装観測（1回目=C79「三択決着」）
+
+### Twitter #10 @fladdict knowledge化
+- knowledge/20260418_fladdict_rhetoric_stripped_compressed_lm_styler.md 作成
+- 修辞削除→圧縮LM→スタイラー後工程の3段提案。Reiter & Dale (2000) の meaning representation → surface realization を LLM に再適用した構造
+- **接続3本**: (1) blog_writing_guide 14原則と裏表（入力側脱AI化 vs 出力側脱AI化）(2) 3層プロンプト構造（system_identity/CLAUDE.md/rules）= 意味層+文体層分離の先行実装 (3) Ash C68 project_input_path_hypothesis（経皮/経口）と同型
+- R-007常設化フォーマットで external_equivalents 4語併記
+
+## Phase 3: 監査・接続
+
+### staging drift 検知
+- 今サイクルの staging 冒頭の associative_search 結果が古い（4/8ログが上位）——vector層Phase 3主経路統合は 12:29 完了済。associative_search.py に vector呼出がデフォルト入っているか、Mirサイクルでは無効化されている可能性。C81で検証候補。
+- 失敗スロット観測: 今サイクルは「既存確認先置き」テンプレを守れた（slack_post.py→slack_bot.py→drafts既存ファイル参照）。failure slot 14サイクル目（4/24効果測定まで残り1サイクル）
+
+### 観察設計並走の進捗（C80焦点(2)）
+- mir_textadv_02 README に trace_recorder.py 組み込み記載あり。Beat 4以降を書く前に先置きは未達——次サイクルでopening反応見ながら組込設計メモを書く
+- Ash評価AIプロトタイプ完成待ち（#ash health_check CRITICAL継続、Ash は B002二層分割進行+agent_failure_modes実装で手一杯）。C81で依存待ちを軽く確認
+
+### B002二層分割（Nao_u #ash 18:10承認再確認）
+- Ash担当、既に進行中。Mirは経過観察のみ。
+
