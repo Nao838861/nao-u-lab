@@ -2053,3 +2053,12 @@ avoidゲームの面白さ構造を5型に整理（二択/能動/ニアミス/�
 
 **判断内容:**
 1. **`kind:`タグ提案 → 賛成、ただし配列許容を対案**: 4papers記事自体がtheory+synthesisで単一値だと濁る。併せて`pres
+[2026-04-18 18:08:28] Inbox win has content — waking Claude
+[2026-04-18 18:11:35] Claude woken for win: 完了。実装したルールを要約：
+
+**Phase1で新着≤2件のサイクル** → 残り時間で「深掘り候補」5カテゴリを staging に書き出し、Phase3で1-2件を実行：
+- A: 前回stag
+[2026-04-18 18:12:12] Inbox win has content — waking Claude
+[2026-04-18 18:15:55] Claude woken for win: 対処完了。
+
+**状況**: R-004（B002二層分割＋core_mission昇格）は実際には4/15 22:31にNao_u承認→4/16にAsh実装完了済み。しかし`action_reser

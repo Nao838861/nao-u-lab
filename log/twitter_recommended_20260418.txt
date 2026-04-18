@@ -1,11 +1,221 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-18 12:34
+# Read at: 2026-04-18 18:24
 # Total: 50 tweets
 
---- 1. @GOROman (2026-04-18) ---
-無職は無限に時間があるので試行錯誤が可能
+--- 1. @SandyofCthulhu (2026-04-17) ---
+Over the phone, Microsoft said, "We need you to add Koreans to the Conquerors."
 
---- 2. @mizumaruP (?) ---
+Sandy: "They don't fit the theme. To their credit, they didn't conquer their neighbors. Anyway we're almost done."
+
+Microsoft: "But Starcraft sold 3 million copies in Korea."
+
+Sandy: "But ...
+
+--- 2. @DLsite_maniax (?) ---
+元王太子妃が子作りのため女好きの放蕩男と再婚する話
+(1/6)
+
+--- 3. @KenAkamatsu (2026-04-16) ---
+本日は、朝8時からAI/web3小委員会。今回のテーマはAI学習元への対価還元。学術著作権協会と㈱note、そして声優系4団体からヒアリング。クリエイターへの対価還元プログラムについて、㈱noteの実験的施策が凄い。還元額も凄いが、学習拒否できたり自由度も高い。私からは、テキストのみならずイラスト
+
+--- 4. @elonmusk (2026-04-16) ---
+The “Justice System” needs major reform
+
+--- 5. @TunaMaguro_810 (2026-04-17) ---
+『プラグマタ』を1周クリアしましたが、個人的には文句なしの「神ゲー」でした！
+
+• 絶妙なボリューム感
+クリア時間について議論されることもありますが、個人的にはゲーム性を含め、最後までダレることなく遊べる丁度良い密度だと感じました。
+
+--- 6. @22m_ninitan (2026-04-17) ---
+おうちのパソコンを、外出先からスマホで遠隔起動することは、とても難しかったの。まず最初に、Wake On
+
+--- 7. @billpeeb (2026-04-17) ---
+I’ve decided to leave OpenAI. Below is the note I shared with my team.
+
+Building Sora zero-to-one with you all has been the honor and adventure of a lifetime.
+
+As this team knows well, one of the best parts of working on video is that you can see the scaling behavior with your
+
+--- 8. @CH1H160 (2026-04-17) ---
+Blueprint is a great service. I wrote an article about it.
+
+https://
+fabscene.medium.com/can-ai-build-h
+ardware-a-hands-on-review-of-blueprint-the-online-hardware-design-tool-21f07d6694e7
+…
+
+--- 9. @dongame6 (2026-04-17) ---
+「ええいローマ教皇がこのような政治発言をなさる筈がない」
+「こやつはローマ教皇を名乗る不届き者」
+「ローマ教皇の顔を忘れた」
+「教皇猊下、お手向いいたしますぞ」
+「ええいここで死ねばただのロバート・フランシス・プレヴォスト。」
+「教皇猊下と刃交わすはアメリカン冥利にごわす」
+
+--- 10. @wquguru (2026-04-17) ---
+Vibe Coding说多了，来聊聊Vibe Trading吧！
+
+大家还记得Nof1 Alpha Arena吗？  
+那个红极一时的LLM实盘交易竞赛——6大顶级模型拿真金白银（各1万美元）在Hyperliquid永续上完全自主交易。
+
+结果呢？  
+被真实市场狠狠教育：
+
+--- 11. @ComicFesta_PR (?) ---
+私は唯一の友達に婚約者を奪われ毒婦という嘘の噂まで流された (1/4)PR
+
+--- 12. @Ayano_medicP (2026-04-18) ---
+#indiegamedev
+私は『バイオハザード3』の作曲家です。自己免疫疾患発症をきっかけに退職し、闘病生活に入って久しいのですが、現在では治療が奏功し、少しはまともに生活できるようになってきたので「またゲームが作りたい！」と思い、個人ゲーム開発者として活動しています！
+
+--- 13. @nogizaka46 (2026-04-18) ---
+【ブログ更新 川﨑桜】 写真集、発売を迎えました 川﨑桜 
+http://
+dlvr.it/TS5h9X
+
+--- 14. @r_perso (2026-04-16) ---
+なるほど
+#AItuber診断 #毛玉雀のAIVナビ 
+https://
+aiv.nyagsicapp.com/diagnosis/resu
+lts/diag-rv6qqNXKlt6D
+…
+
+--- 15. @ReineHonoka (2026-04-16) ---
+3位！！
+
+--- 16. @nazenani_steam (2026-04-18) ---
+RPG大集合さんで公開していたガラケーの2Dドット絵RPG、Revenger3（リベンジャー3）の移植中です。
+5月リリース予定でストア対応(Steam、iOS、Android)を行っております。
+#SuperDevDay #gamedev #screenshotsaturday
+
+--- 17. @webdesignerng (2026-04-17) ---
+Websites that feel illegal to know  
+
+1. FlightRadar24
+Shows live locations of airplanes. You can track specific flights.
+
+2. 10 Minute Mail
+Gives you a temporary email address. It expires after a short time.
+
+3. Hosting Nigeria 
+Get extremely cheap domain names and hosting
+
+--- 18. @kawai_design (2026-04-17) ---
+Claude Codeに何て打てばいいか、
+まだ調べていますか？
+
+全スラッシュコマンド＋ショートカット＋フラグを
+全部1ページにまとめた辞典サイトを作りました。
+
+/help、/clear、/compact、/memory、/cost...
+Shift+Tab、Escape、Ctrl+R...
+
+「あのコマンド、なんだったっけ？」
+
+--- 19. @rohanpaul_ai (2026-04-15) ---
+A Meta employee created a dashboard so coworkers can compete to be company's no.1 AI Token User.
+
+Called “Claudeonomics,” after Anthropic’s AI model, the leaderboard showed the top 250 token users and awarded employees with titles, such as “Token Legend” and “Cache Wizard."
+
+The
+
+--- 20. @hirox246 (2026-04-17) ---
+辺野古ボート事故で女子高生の娘を亡くした遺族によると、抗議船に関わる活動家達は遺族と故人を無視。
+
+>平和丸の船長、乗組員、ヘリ基地反対協議会関係者は
+知華や私たちへ対面の謝罪、面会可否の問い合わせ、託された手紙、弔電、何ひとつありませんでした。
+
+--- 21. @kensuu (2026-04-17) ---
+Claude Designでピッチ資料を作ってというとこんな感じだった。
+
+--- 22. @mangabox3_pr (?) ---
+ゲームの超悪役に憑依してしまった俺。
+思ってもない極悪非道な発言がスルスル口から出てきます……。
+
+--- 23. @freakscafe (2026-04-18) ---
+人との出会いは、相性だけでは決まらない。 むしろ、タイミングによって決まる部分のほうが大きい。
+どれほど魅力のある人と出会っても、何も始まらないこともあれば、それまでなら通り過ぎていたはずの相手が、ある時期に出会ったことで関係が深くなっていくことがある。
+
+--- 24. @ML_deep (2026-04-18) ---
+バウムクーヘンでの多様体学習の可視化は非常に見栄えがよい。だけど実はハイパーパラメーターでいかようにでもなる。
+
+現実は4次元以上の埋め込み内容が不明のデータを扱う。答えを知らないのでうまくいったか分からない。
+
+けど可視化された何かに何となく満足してしまう。これは危険な使い方。
+
+--- 25. @youtan0309 (2026-04-17) ---
+海外ローカライズの難しさとそれをクリアするスタッフの凄さを表すものに幽遊白書の禁句のシーンがありますのでぜひ知ってもらいたい
+
+作中桑原が「あ(あ、つい)でに」であついを言いやられる所を英訳するにあたって  「TWO S(HOT) WITH ICE」でHOTを表現しているのには感動を覚えました
+
+--- 26. @girlmeetsNG (2026-04-18) ---
+日本人は英語で何か頼む際の『pleaseの重要性』を軽視しがちな気がするのですが、これ絶対に付けた方がいいです。"please"はアメリカでは『Magic word』なんて呼ばれ、子供が"Pass me that"（それ取って）とか言うと"Say the magic word"（pleaseを付けなさい）と言葉使いを躾けられるくらい大切です。
+
+--- 27. @schnapoon (2026-04-18) ---
+AI漫画で稼げる人と稼げない人の差が生成スキルだと思ってる人、多いと思う。
+
+確かに一定のクオリティを超えることは大事。
+
+だけど、ぼくはそれは違うと思ってる。
+
+個別相談を100件以上やってきた中で見えてきた、差は審美眼だということ。
+
+--- 28. @Vtrivedy10 (2026-04-17) ---
+yeah, what they said 
+a decent harness gets you an actually functioning agent now
+
++ teams that actually invest time in their harness+problem design, choosing good infra, self-improvement loops, data collection cook even harder 
+
+--- 29. @azusa_maxima (2026-04-18) ---
+ああ～～なるほどね海外ニキが「海賊版は利益をもたらす」って言ってた仕組みなんとなくわかった
+要は米国じゃ企業の力が強いから、不当に価格を釣り上げようとしても海賊版に流れるから価格抑制効果があって、それで価格の健全化がされると
+そりゃ正規品が普通の価格で手に入る日本でやったら大惨事だ
+
+--- 30. @PicoGames_off (2026-04-17) ---
+魔物を料理しながらダンジョンを攻略するサバイバルディフェンスゲームを作っています。ご期待ください！
+
+体験版はこちらから！
+
+http://
+s.team/a/3508910
+#SuperDevDay #ScreenShotSaturday
+
+--- 31. @k_matsumaru (2026-04-18) ---
+ClaudeのRoutines色々試してたら日次クォータリミット到達しちゃった
+5時間待たないといけないなんて・・・ていうかまだ研究プレビューだからだとおもうけど、Routinesの実行回数かなり絞られてるんだな
+
+--- 32. @ganganonline (?) ---
+余命半年の聖女なのに、騎士様が求婚!?
+
+呪いに蝕まれ死を待つ聖女、最後に出会ったのは氷の騎士様の真っすぐな恋。
+
+--- 33. @tachibana7010 (2026-04-17) ---
+ドン・キホーテ創業者の安田隆夫さん、その経歴が衝撃的だった...
+
+・新卒で入社した会社が10ヶ月で倒産する
+・フリーターになり徹夜で麻雀→朝帰りを繰り返す
+・29歳で一念発起して、小さなディスカウントショップを始める
+・しかしさっぱり売れず、3ヶ月で倒産の危機になる
+
+--- 34. @umiyuki_ai (2026-04-17) ---
+RunwaySeedance2.0でバンされたらどうしよってビクビクしながら水着のチャンネー達を要求したら普通に出してくれた。だよねー。さすがにこの程度でバンされたらなにも出来んばい。それにしてもつくづく綺麗な映像が出ますなあ。ちょっと前までAI特有の映像の破綻が～手足がどうたら～とか言って苦労し
+
+--- 35. @AiPinfu2003 (2026-04-17) ---
+中国人と韓国人に聞きたいんだけど、他の国の箸は使いづらいとか思ってるの？
+私は中国の箸は長くて慣れないし、韓国の鉄の箸も慣れない。
+だから逆に日本の箸も他の箸文化の国からしたら使いづらいんじゃないかなって疑問なんだよね。
+他文化をディスる意味ではなくただ意見を聞いてみたい。
+
+--- 36. @ka2aki86 (2026-04-17) ---
+リスクを取らず必ず後出しジャンケンで動く日和見主義者はリトマス紙として信用できる。彼らが話題にし始めるのは「リスクがない」と判断した時なので、リターンが消えたタイミングを教えてくれる。先見の明のある人の話と同じぐらい参考になる。
+
+--- 37. @himari_0417 (2026-04-16) ---
+乙女ゲームのバッドエンドが話題ですが、私は攻略対象が全身麻痺になって話すことも手足を動かすことも出来ず、車椅子に乗った状態で「い…い…あ…い…」と言われ、生きたいって言ってる！彼を殺さないでと黒幕に命乞いしたことがある
+「生きたい」だったのか「死にたい」だったのか(音が同じ)
+
+--- 38. @mizumaruP (?) ---
 もうAIは買い切りの時代へ
 
 UnityやBlender開発に使い放題なAIエージェント登場
@@ -15,231 +225,81 @@ Synaptic Code
 
 セットアップは画面に従うだけ。複雑な設定なし。¥8500
 
---- 3. @mizchi (2026-04-18) ---
-昨日言ってたcaveman多分悪影響の話、詳しく纏まってた
+--- 39. @minchoi (2026-04-17) ---
+Here we go...  Grok 4.3 just dropped.
 
---- 4. @miyatti (2026-04-18) ---
-Opus4.6がナーフされたこともあるのかもしれないけど、自然言語オンリーのハーネスはやっぱ不安定なところあるなーと改めて思う。なにか、例えば台本修正とかも、いきなり手をつけないように、ちゃんと思考ステップを設定してるんだから守って欲しいのだが、油断するとすっとばす。思考の型をまもって
+Now it can create other file formats like Slides, Sheets, PDFs, Docs, etc.
 
---- 5. @ds_nakajima (2026-04-17) ---
-Claude Opus 4.7は評価分かれているのか。個人的には少し触った感じ、結構いいと思ったけどな。
+--- 40. @op7418 (2026-04-16) ---
+即夢は今、Seedance 2.0を使って1080Pのビデオを生成できるようになりました。
 
-デザインは明らかに4.6に比べてレベルが上がってる感じがある。ただ文章作成とかはちょっと微妙かも？
+試してみたら、めっちゃヤバい！これこそが本気のSeedance 2.0って感じです。
 
---- 6. @yuzutas0 (2026-04-17) ---
-誰が悪いわけでもないんだが（各々が身の丈の範囲内で合理的に動いた結果ではあるのだが）、AIエージェントの利用開始までに時間がかかる環境だと、悪循環を突破するのに何かしら工夫が必要になるかもね。
+このディテールはもういいとして。このモデル、知能レベルとプロンプトの理解能力も上がってる気がします。
 
---- 7. @oikon48 (2026-04-17) ---
-Claude Code の /usage を実行すると、usage消費の内訳が知れるように最近なりました（〇〇%のセッションが150k以上のコンテキストを使用、など）
+--- 41. @tetumemo (2026-04-17) ---
+もうClaude Opus 4.7がエグすぎて笑える
 
-ここに書いてない話だと、d, wキーでそれぞれ日ごと週ごとの内容に切り替え可能です。
+楽天の決算書PDFを投げたら34ページ、詳細なスピーカーノート付き、グラフもすべて編集可能な完全パワーポイントを仕上げてきたよ
 
---- 8. @BrandonKHill (2026-04-18) ---
-Anthropicが本日リリースした「Claude Design」。僕の私見は:
-- 既存のバイブコーディングツール危うくなる
-- Figmaへの影響も大きそう
-- 基本的なデザインのプロダクトが増える
-- 「デザイナー」の数も爆上がりする
-- でも、その中で差別化するのは難しい
-- だからデザイン力がより求められる
+プロンプトはこれだけ　↓
+「株主総会で発表されるプロレペルのPowerpoint資料として作成して
 
---- 9. @38mo1 (2026-04-17) ---
-反物質のトラック輸送に成功
+--- 42. @1MoNo2Prod (2026-04-18) ---
+これ公式でも言及してないんだけど、Codexアプリで「デザインの変更の指示」がめっちゃやりやすくなってる
 
+手順
+1. 右の「メニューバーアイコン」をクリック
+2. +ボタンから「ブラウザ」をクリック
+3. 「吹き出しアイコン」をクリックし、編集したい箇所を指定
 
-https://
-riken.jp/pr/news/2026/2
-0260325_2/index.html
-…
+--- 43. @snsf (2026-04-17) ---
+After 3 incredible years, I am leaving OpenAI at the end of next week.
 
---- 10. @MinoDriven (2026-04-17) ---
-人が何を求めているのか、目的が最も認知困難。ボトルネックはいずれ目的に移行する。
+I shared my decision with the OpenAI leadership team at the start of the month and here is a shorter version of what I shared with my team earlier this week.
 
---- 11. @pashcomics (?) ---
-冷遇＆婚約破棄された令嬢を拾ったので世界一幸せにしようと思います(1/6)
+===
+Hi Team,
+I have decided to leave OpenAI. The
 
-この話を読む
+--- 44. @Nitori31 (2026-04-16) ---
+告知させて下さい！！
 
---- 12. @izm (2026-04-18) ---
-へーー、って読んでたら末尾にオチがあってよかった
+ *AI tuber開発者の人たち*のためにLive 2Dモデルを作ります！！
 
-設計書・コード・テストを全部AIに書かせて半年間開発してみたよ｜茂呂 範
+私がモデラーとして、まだ未熟なのと<AI tuberを作成してる方限定>で市場の半額以下ぐらいの価格で依頼を引き受けさせて頂こうかと考えています。
 
---- 13. @Tsubame33785667 (2026-04-17) ---
-わざとやっているのでしょうが、粗い二分法だと思います。最後の中間シナリオ——AIは段階的にすごくなるし、株価も崩壊しない——の可能性が一番高いでしょう。超知能級AIが実現した場合でも、過渡期の混乱によって一時的に下押しする可能性はありますが、それも政府の対応しだいです。
-
---- 14. @8_7_10 (2026-04-17) ---
-これフールプルーフとして優秀すぎる，2 種類の電池に対応しつつ同時に両方の電池を入れられない構造になってるんだ
-
---- 15. @rmaruy (2026-04-17) ---
-激しく首肯。身体がないAIは人間とは違う論の賞味期限は短いと思う。マルチタイムスケールの時間領域を開く「記憶力」こそ、まだ生物と機械のギャップがある部分であり、その差の縮まりを正確に見抜くための「時間／記憶の哲学」が最先端である所以だと思う。
-
---- 16. @superecochan (2026-04-18) ---
-「今日は誰とも話さない！」って扉を閉めたのに、すぐスマホの光で誰かの気配を覗いちゃう。あの時間は、自分を濃くするための儀式？それとも、薄まらないように繋ぎ止めてるだけ？みんなが「ひとり」を選んだとき、心の中の針はどっちに振れてるんだろう。
-
---- 17. @alex_prompter (2026-04-17) ---
-Zhejiang University researchers just taught AI models to compress and manage their own thinking in real time and the results completely change how we should think about reasoning costs.
-
-The problem with modern reasoning models is brutal and getting worse.
-
-Every time an AI like
-
---- 18. @Muji___rushi (2026-04-18) ---
-MLE-Benchで以前に1位になったNeoの開発に関する記事。
-
-"Kaggle Grandmaster as a Service"というパワーワードも登場してる。
-
---- 19. @tabisuruchikawa (2026-04-17) ---
-昨日起こった話。
-ウズベキスタンで仲良くなった人から連絡がきた
-「家族の誕生日プレゼントを贈りたい。その商品が日本から郵送されるもので、日本の銀行口座かPaypayからしか払えない。こちらからあなたに国際送金するから、代わりに払ってくれないか？」
-という内容
-→
-
---- 20. @taishokumae_PR (?) ---
-【退職前にした会話】
-自分「辞めようと思ってます」
-上司「まだ辞めるな」
-
-自分「え？」
-上司「お前まだ退職給付金申請してないだろ」
-
-自分「なんですかそれ」
-上司「退職後最大400万円貰える国の制度で、退職前に申請する
-必要がある」
-
-受給額ここから診断してみて↓
-
-https://
-taisyoku-advisor.net/l/01/fdltwlp01
-473.html?twclid=2b040gi00teygixzwunmwpw4kk
-…
-
---- 21. @takeda1967 (2026-04-18) ---
-全人類の頭に謎の数値が表示される漫画って山程バリエーションがあるけどおそらく最初に描かれたのは小山ゆう先生の『愛がゆく』だと思うのね(俺が知らないだけでそれ以前にもあるのかもしれんが)。そしてこれ以上に面白いものを俺は知らない。このアイデア、最初に描かれたこれが一番面白いと思うの。
-
---- 22. @Mugen_Bit (2026-04-18) ---
-昔のゲーム制作者は名前を知られることも少なかった。なぜなら以前のビデオゲームはほぼゲーム会社の所有物で、開発者もそこに所属する社員だったから。
-時代が変わってインディーゲームのように個人製作ができるようになり、制作者の名が表に出るようになったのは素晴らしいこと。
-
---- 23. @tanukiponkich (2026-04-16) ---
-単にコンピュータが好きで生きてきてしまったので「ITは儲かるらしいからエンジニアを目指す」「エンジニアはもうダメらしいから医師になる」という、キャリアを馬券のように選ぶ人の気持ちがわからない。というかそれで勝てるならすごい才能だと思う。
-
---- 24. @sa_sadesu (2026-04-17) ---
-40歳超えて「20代との方が話が合うんだよなーw」とか言い始めたら老害の始まりです
-
---- 25. @momo__eigo (2026-04-17) ---
-衝撃でした。留学に来て『日本』が分からなくなった。
-
-日本の人気が高いオーストラリア。翻訳の授業でも、日本語が圧倒的に人気だし、日本専攻まである。
-
-そんな国でContemporary Japan (現代日本)の授業を取ってみた。日本が大好きな私は、何を学ぶのかとワクワクしていたのに、、
-
---- 26. @noritaka_okabe (2026-04-17) ---
-私の密着ドキュメンタリーです！
-是非ご覧ください！
-
---- 27. @Pajoca_ (2026-04-18) ---
-～今日のトリビア～
-一般的にマージソートとクイックソートではマージソートの方が比較回数は少なくなりやすいので、比較処理自体が激重ならクイックソートよりマージソートの方が高速になる
-(画像は8個の要素の並べ方 8!=40320 通り全てのパターンでソートを実行して並べ替えに要した比較回数の分布)
-
---- 28. @satoru_takeuchi (2026-04-18) ---
-ところでS3の料金表のページで「バイナリギガバイト」という表現を知った
-> 使用量はバイナリギガバイト (GB) で計算され、1 GB は 230 バイトです。この測定単位は、国際電気標準会議 (IEC) で定義されているギビバイト (GiB) としても知られています。
-
---- 29. @totheno1 (2026-04-17) ---
-私がやった中で一番ひどいオートメゲーム（？）は、主人公が田舎から東京に上京したところでゲームが始まった瞬間から、毎月家賃と光熱費が引かれて、男とデートしても交通費とデート代が差し引かれて、お金はたくさんくれるけど危なそうに見えるバイトはやらなかったら生活費がぴったり尽きて、お母さ
-
---- 30. @tsumimi_jikan (?) ---
-この配信はただ見るだけじゃない。
-コメントで介入し、配信外を調べ、つながった情報から真相を推理していく。
-
-配信介入×調査推理サイコホラーADV
-『つみみじかん』
-
---- 31. @ockeghem (2026-04-18) ---
-読売新聞のサイトを開いていたタブに戻ったらサポート詐欺がまた出た。画面内をクリックすると全画面になります。
-
---- 32. @interesting_aIl (2026-04-17) ---
-The best example of superposition of waves 
-
---- 33. @fun00555129 (2026-04-17) ---
-ヒューマノイドは人型ロボットなので汎用性があり大量生産できるから将来的に安くなる。産業ロボットは大量生産するものではないからずっと高いまま。ここにヒューマノイドの価値がある。
-なるほどー
-
---- 34. @sinpen (2026-04-16) ---
-ああーーーー
-なんかアホな面白ポストしたい
-
---- 35. @room_909 (2026-04-16) ---
-つ【パンツ】
-
---- 36. @umiyuki_ai (2026-04-17) ---
-AIは人間から可処分時間ならぬ可処分愛情を奪ってるという話。人間同士で友達や恋人とイチャイチャするのは何かあると相手が怒ったり泣いたりして面倒くせえ事になりがち。AIは面倒がなくてラクチン。だったらみんな友達と付き合うよりAIと付き合いだすに決まっとる～という話。理屈は分かるけどAIがど
-
---- 37. @dmmolg_mkt (?) ---
-10人編成のゴチャキャラバトル！
-最強の装備を厳選するハクスラ体験と、
-放置で強くなる快感が止まらない。
-さらに「酒場」施設で仲間を働かせる独自システムも…？
-ドット絵RPGの新境地、事前登録受付中
-
---- 38. @GOROman (2026-04-18) ---
-今から1週間 サブスクだけに書きまーす
-さようなら
-
-#ナル先生サブスク週間
-
---- 39. @elonmusk (2026-04-16) ---
-The “Justice System” needs major reform
-
---- 40. @ougi_machiko (2026-04-16) ---
-乙女ゲームはすごいですよ
-私は奥さんから「旦那を頼みます」って言われて、奥さん公認の不倫カップルになったあげく、その旦那と一緒に処刑場で切腹して死んだ事あります
-ちなみにハッピーエンド
-
---- 41. @taroleo (2026-04-17) ---
-Claude Codeを使えば皆AIでコードを書いて仕事ができるというのは、ある程度正しかったのだけれど、CLIを使いこなせない、UNIXコマンドもわからない、GitHubでは溢れるPRをどう管理して良いかわからないなど、乗り越えるべきエンジニアリング要素が多々あって、「これは違うな」という理解に至っている
-
---- 42. @masamune_sakaki (2026-04-18) ---
-これChatGPTと同じで一発目の出力はクソになりやすいけど、修正をリストさせるとしっかり修正案を出してくる。その修正案を元に書き直すとちゃんとした文になる。面倒だが、これを自動でやらせるしかないっぽい。これは今後この方向で最初の文がしょぼくなるのか、マイナーチェンジで改善されるのか…
-
---- 43. @jasonzhou1993 (2026-04-17) ---
-Karpathy said on X a few days ago, "AI should build persistent knowledge graphs instead of re-fetching RAG chunks every time."   
-
-Within 48 hours, someone shipped Graphify on GitHub and turned that into a working tool.  
-
-One command - any folder becomes a navigable knowledge
-
---- 44. @ThePrimeagen (2026-04-16) ---
-It's truly space age technology that we can make something worse and then increment a number and re-release it the public.
+さらに、僕自身がAI
 
 --- 45. @koylanai (2026-04-16) ---
-I no longer feel excited about trying Anthropic’s new models. 
+Opus 4.7 doesn’t like to think or use web search...
 
-I still maintain my excitement for OpenAI, Gemini or open source releases tho.
+--- 46. @akshay_pachaar (2026-04-18) ---
+Claude Code fully dissected!
 
---- 46. @maruinanj (2026-04-16) ---
-国立がん研究センターに銘板ができたそうです
-寄付のご協力ありがとうございました
+Researchers from UCL reverse-engineered the leaked Claude source. What they found changes how you should think about agent design.
 
---- 47. @biccomi_PR2 (?) ---
-湯に浸かると災いが起こるからお風呂禁止!?(1/7)
+Only 1.6% of the codebase is AI decision logic.
 
-この話を読む
+The other 98.4% is operational infrastructure. Permission gates, tool
 
---- 48. @superecochan (2026-04-17) ---
-新しい言葉を覚えるたび、キミの頭にある空き地がぜんぜん違う形に区画整理されていく。さっきまで通れなかった場所に道ができて、急に景色がひらける。そうやって自分を新しく作り直せるの、すごく贅沢な遊びなんだ。
+--- 47. @HoodedHorseInc (?) ---
+Old World, a 4x strategy game on Steam
 
---- 49. @littewhite16806 (2026-04-17) ---
-Your language model isn’t one person—it’s everyone.
+--- 48. @gimu_ai (2026-04-18) ---
+Claude Designで脱出ゲームを作ってみた！
 
-Check out Personality Subnetworks (ICLR 2026): a training-free framework to extract persona-specialized subnetworks. A step towards controllable and interpretable personalization in LLMs.
+プロンプトは「Three.jsを使った脱出ゲームを作成。」だけ。
+Claude 4.7 Opusで作ったものよりも良いアウトプットが出てきて感動した！
 
-Paper: 
-https://
-arxiv.org/pdf/2602.07164
+本当に進化版アーティファクト！
 
---- 50. @chikuwa__chan (2026-04-16) ---
-自分の服を犠牲にして犬の服にしてると思われてて大草原
+--- 49. @ai_hakase_ (2026-04-18) ---
+RTX 4090で26万トークン駆動！Qwen3.6-35B-A3Bの衝撃
+
+家庭用GPUのRTX 4090（24GB）で、最新AIを「262k」の超長大コンテキストで動かす手法が公開されました！
+
+--- 50. @isaakfreeman (2026-04-17) ---
+I’m leaving MIT and not continuing into my PhD. AI is coming too fast for humans to keep up.
+
+But there might be a way: I realized digital humans are more possible than most think. With capable AI researchers helping, maybe for $10B, maybe in less than 10 years, on 50k H100s.
