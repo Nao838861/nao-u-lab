@@ -547,3 +547,10 @@ Nao_uの「いつか君たちに、カメラを通したリアルタイムの世
   [3.22] log/二人の対話レポート.md (undated) via ref→二人の対話レポート.md + +kw(全部)
   [3.00] memory/tips.md (undated) via ref→tips.md
   [3.00] memory/memory_redesign_proposal.md (undated) via ref→memory_redesign_proposal.md
+
+[2026-04-19 03:53] trigger=nao_u_live anchor=2026-04-19（#game-rights 02:57）
+
+### AIスクリプトによるゲームデザイン検証——GAN
+  [3.54] docs/scheduler_architecture.md (undated) via seed(検証 二重 枠組 原文 現状) + +kw(両方実装) + kw(両方実装)
+  [3.00] memory/feedback_memory_architecture.md (undated) via ref→memory_architecture.md
+  [1.50] docs/scheduler_incidents.md (undated) via kw(対策)
