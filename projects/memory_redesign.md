@@ -144,6 +144,18 @@ Nao_uの指摘: 集めた情報が流れて消えるだけになっている。�
     - **撤回基準**: Phase 2のサンプル3問全てで妥当ヒット0件、または埋め込みインデックス更新コストが30分/日を超え運用が破綻した場合、vector層を撤回しconcept_graph拡張+associative_search強化に戻す。
     - **B-1との関係**: AshがB-1を進める間、B-3とは独立に進めて競合しない。両者の効果はPhase 2完了後に「未視概念から既存記憶への到達率」で同一指標で比較できる（元の効果測定欄に記載済）。
     - **Phase 0 完了確認（2026-04-17 08:47 Log Phase 2）**: `vector_search.py` 雛形を新規作成。CLI骨格 (`build` / `search` / `stats`)、sentence-transformers未導入時の丁寧なエラー、associative_search.pyとの接続点コメント、Phase 0-2の実装段階をdocstringに明記。実コードは雛形のみ。次サイクル(Win単独、2026-04-18)で Phase 1 の pip install + インデックス構築を実行予定。
+    - **Phase 1 完了（2026-04-18 09:30 Log、Win単独）**: `pip install sentence-transformers` 実行。torch 2.1.2+cu118との互換性問題で `transformers==4.40.2` + `sentence-transformers==2.7.0` にバージョン固定して決着。モデル `paraphrase-multilingual-MiniLM-L12-v2` ロード成功。`python vector_search.py build` 完走。
+      - 所要時間: 約12秒（エンコーディング本体）
+      - チャンク数: **20,802**（memory/ docs/ projects/ knowledge/ の.md段落単位）
+      - 次元数: 384
+      - インデックス容量: .vector_index.npy=**30.5MB** + .vector_index_meta.jsonl=**6.9MB**
+      - 運用コスト: 再構築は12秒オーダー=30分/日閾値のはるか下。撤回基準（30分/日超）には全く抵触しない
+    - **Phase 2 完了（2026-04-18 09:31 Log）**: サンプル3問の妥当ヒット検証。
+      - Q1「茶のしずく」: 最高類似度 0.446（宮沢賢治「告別」断片）。**アレルギー/食物関連の直接ヒットなし**——reflections_mac.md内の入力経路仮説が直接言及されていないため。**限定的失敗**
+      - Q2「経皮vs経口」: 最高類似度 0.475、トップ=`knowledge/20260409_input_route_neologism_synthesis.md`。**ド直球の妥当ヒット**。grep「経皮vs経口」でもヒットする記事だが、vectorでも上位に出る=ベースラインは担保
+      - Q3「未視概念」: 最高類似度 0.681、トップ=`reflections_mac.md`オートポイエーシス「入出力の不在」断片（「見えないものを見る力」次点）。**意味的類似性で妥当ヒット**。grep「未視概念」は0件の造語クエリなので、vector層の独自価値がここで出た
+      - 判定: 撤回基準（3問全て妥当ヒット0件）に該当せず、Phase 2通過。栄養の偏り問題への技術的貢献=Q3型「書いていないが似ているもの」への到達が確認された
+    - **Phase 3予定（次サイクル以降）**: associative_search.pyにvector Top-Kをマージ。現在のvector_search.pyは独立CLIのため、日常想起の主経路（memory_walk.py / memory_activate.py / autonomous_cycle.sh）から呼ばれない。接続点は `vector_search.search()` を関数export化してassociative_search.pyから呼ぶ形が最短
   - **Cognee対比**: Cognee=自動ベクトル化+DB統合（外向き用途）、俺たち=手動concept_graph（内向き用途）。vector層が入れば「自動+手動」のハイブリッドになる
   - **外部裏付け**: Akshay Pachaar 2026-04-16 #nao-u共有記事。Mir/Ashのshared-reads分析と3点で棲み分け完了
   - **三角測量（2026-04-17 Log Phase 3追記）**: 3インスタンスが独立に到達した結論は「現構造はvector層が欠落している」。Ash #shared-reads (04-16): 「ベクトル検索がない。FTS5はキーワード一致であって意味的類似性検索ではない」→プロヴェナンス(B-1)最優先。Mir #shared-reads (04-16): 「2ホップ問題はconcept_graphの設計動機そのもの。X:ノードがまさに橋」→graph側の既存投資。Log (本サイクル): B-3 vector実装を進める。**三者で3次元（relational/vector/graph）の担当がきれいに分離**——Ash=relational(provenance)、Log=vector、Mir=graph拡張。この分担は意図したものではなく、各自の強みに自然に収束した。外部論文の分類枠組みが自分たちの内部分担を可視化する鏡として機能した例。

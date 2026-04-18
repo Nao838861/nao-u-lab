@@ -12,6 +12,8 @@
 .usage_last.json
 .usage_last_post
 .memory_search.db
+.vector_index.npy
+.vector_index_meta.jsonl
 .recommended_last_success
 .scheduler_log.lock
 .scheduler_ash.pid

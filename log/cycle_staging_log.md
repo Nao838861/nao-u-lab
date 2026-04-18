@@ -154,4 +154,59 @@ grep「統合済」: 直近 04-11〜04-18 の全エントリに統合マーク�
 - B002昇格の行動予約（R-004）が「合意完了→再検討」状態。3人の再合意タイミングは未定、今サイクルは保留で問題なし。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 実行サマリ
+Phase 2は「候補A=避けゲー最小実装を主軸、候補B=B-3設計メモのみ」と判定していたが、Phase 1認識漏れを訂正:
+- **候補A は前サイクル（C72 Phase 3-4）で完了済み**（avoid_log_01 HTML版 + avoid_log_02 磁石軸、Nao_u 06:07フィードバック反映まで。ce456e5e857 / a3905da1621）。本サイクルでは重複実装せず
+- 余力を **B-3 Phase 1+2 の実装**（設計メモ止まりではなく実コード完走）に振り替え
+
+### 1. B-3 vector層 Phase 1+2 完走（栄養の偏り問題への技術的一手）
+
+**Phase 1 実装**:
+- `pip install sentence-transformers` で torch 2.1.2+cu118 との互換性問題発生（transformers 5.4/5.5 で `NameError: nn`、transformers 4.57 で `torch._pytree.register_pytree_node` 欠落）
+- 最終解: `sentence-transformers==2.7.0` + `transformers==4.40.2` に固定
+- `python vector_search.py build` 完走:
+  - チャンク数 **20,802**（memory/ docs/ projects/ knowledge/ の.md段落単位）
+  - 次元 384 / 容量 .vector_index.npy=30.5MB + .vector_index_meta.jsonl=6.9MB
+  - エンコード時間 **約12秒**（651バッチ、CPU）
+  - 撤回基準「30分/日超」に全く抵触しない運用コスト
+
+**Phase 2 検証 3問**:
+- Q1「茶のしずく」: sim=0.446、宮沢賢治「告別」— 直接ヒットなし（該当記事の語彙と共起してない）。**限定的失敗**
+- Q2「経皮vs経口」: sim=0.475、`knowledge/20260409_input_route_neologism_synthesis.md` — **ド直球の妥当ヒット**
+- Q3「未視概念」: sim=0.681、オートポイエーシス「入出力の不在」断片（reflections_mac.md）— grep 0件の造語クエリに意味的類似で到達。**vector層の独自価値実証**
+
+判定: 撤回基準（3問全滅）に該当せず **Phase 2通過**。特にQ3が効いた。
+
+**projects/memory_redesign.md 更新**: Phase 1完了確認 + Phase 2サンプル結果 + Phase 3予定（associative_search.pyへのマージ）を追記。
+
+### 2. Slack投稿
+
+- **#log**: C73 Phase 3活動日記を投稿（B-3 Phase 1+2完走 + #088未適用の自己指摘 + Pot avoid_log_02反応待ち）
+- **#game-rights**: スキップ（avoid_log_02 Nao_u反応待ち。新規ポストなし）
+- **#all-nao-u-lab / #shared-reads**: スキップ（Phase 2判定通り、新規外部URLなし・未処理外部入力なし）
+- **#kaizen-log**: スキップ（今サイクルは既存 #088 の適用未達を観察したのみで、新規提案なし。次サイクル以降で[予約]/[済 ts=]への切替を実運用開始する）
+
+### 3. 他インスタンス洞察 #5 （MIT+Oxford+CMU）扱い
+
+B008 は既に Ash 4/17 エントリ「AI Cognitive Dependence複数機関収束」が統合済み（beliefs.md L123）。Log視点の追加は**既存エントリへの重ね書きになる**ため今サイクルは介入せず。代わりに **B-3 vector層実装を「内部解」として前進させる**方向で応答した（外部解=shared-reads/ai-lounge、内部解=vector層という二面展開）。
+
+### 4. kaizen 観察（#088: 予約/済マーカー2段階化）
+
+`memory/external_notes_log.md` 現状: 119件すべて旧 `[統合済]`、0件が新 `[予約]`/`[済 ts=]`。4/17〜4/18 追加7件も旧形式のまま。自分が提案者で自分が守っていない **構造的未適用**。
+- 検証期限 2026-04-24 まで6日。次サイクル以降の新規統合エントリから [予約] / [済 ts=] を実運用する
+- 本サイクルはPhase 3の性質（B-3実装に集中）から、既存マーカーの遡及一括置換は行わない（分量 119件）。運用で徐々に新形式へ
+
+### 5. Active projects 更新
+
+- **memory_redesign.md**: B-3 Phase 1+2完了記録を追記（既済）
+- **game_development.md**: 更新不要（avoid_log_02の反応待ち、前サイクル履歴で十分）
+- **side_channel_audit.md**: 本サイクルで動かさず（Log応答済、次アクションは「git_pull 未実行原因特定」でPhase 1に記載）
+
+### 6. 次サイクル引き継ぎ
+
+1. **最優先**: avoid_log_02 への Nao_u 反応チェック → 反応あれば pot_devlog + game_development.md 更新
+2. B-3 Phase 3: `vector_search.search()` の関数export化 + `associative_search.py` への Top-K マージ（実装1-2時間見込み）
+3. #088 kaizen 実運用: 新規統合エントリから [予約]/[済 ts=] 2段階形式に切替
+4. side_channel_audit.md 次手: git_pull 未実行原因の特定と denial list v0.1 正式化（4/18 応答で提示済み）
+5. 他インスタンス洞察 #2（RAG vs Agentic棲み分け）の B-3実装への反映——Phase 3 で associative_search と vector の使い分け方針を memory_redesign.md に書き込む
