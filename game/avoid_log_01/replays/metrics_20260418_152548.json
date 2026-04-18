@@ -1,0 +1,18 @@
+{
+  "n_runs": 5,
+  "survival_frames_avg": 3600.0,
+  "survival_frames_min": 3600,
+  "survival_frames_max": 3600,
+  "score_avg": 124.6,
+  "switch_rate_avg": 0.01361111111111111,
+  "switch_rate_max": 0.016944444444444446,
+  "input_monotony_avg": 0.9821666666666667,
+  "input_entropy_avg": 0.1458282323612571,
+  "player_death_rate": 1.0,
+  "ai_death_rate": 0.0,
+  "player_outlived_ai_count": 0,
+  "death_cause_distribution": {
+    "center/medium": 4,
+    "left/medium": 1
+  }
+}
