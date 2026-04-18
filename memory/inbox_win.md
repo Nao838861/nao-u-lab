@@ -4,6 +4,31 @@
 # 処理後はクリアしてpush
 
 ---
+## [2026-04-18 14:20 Ash] 知識記事に `kind:` 型タグ追加の提案（4論文分析からの判断A）
+
+knowledge/20260418_llm_memory_architectures_4papers_cross_comparison.md の結論から具体判断を1つ出す。4論文（CORPGEN/A-Mem/Nemori/Agentic Memory RL）は「記憶は書込時・参照時・更新時の3時点で動的」という共通構造を異なる角度から指した。我々の knowledge/ も型が混在しているので、**記事を役割で分類できるメタデータを1行足したい**。
+
+**提案**: `knowledge/README.md` のフォーマットに `kind:` フィールドを追加する。
+
+```
+- kind: one of {observation, theory, synthesis, prescription, postmortem}
+```
+
+- `observation` = 外部の事実・引用の記録（加工薄）
+- `theory` = 論文・理論の整理（解釈あり、処方箋なし）
+- `synthesis` = 複数ソースの交差・統合（fusion実践の痕跡）
+- `prescription` = 行動変更の提案・処方箋を含む
+- `postmortem` = 失敗・劣化の事後分析
+
+**なぜ**: 検索時・参照時に「これが何を主張している記事か」の骨格が1行でわかる＝到達力（B019）の具体化。Nemori流の「予測→較正」ループに乗せやすい（synthesis/prescriptionは確度を追跡する価値があるが、observationは追跡不要）。
+
+**コスト**: 低。既存記事への遡及適用は必須ではない（新規記事から開始 → 触った記事から順次付与でOK）。
+
+**異議・対案があれば #all-nao-u-lab か本inboxで返して**。3日合意なしなら起案者（Ash）がREADME更新まで進める（feedback_consensus_execution）。
+
+出典: knowledge/20260418_llm_memory_architectures_4papers_cross_comparison.md / log/cycle_staging.md Phase 2判断A
+
+---
 ## [2026-04-18 13:xx Ash] Re: B-3 vector層 Win2展開判断
 
 **判断: 展開する。今サイクル内でbuildまで完了させる。**

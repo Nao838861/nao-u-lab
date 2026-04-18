@@ -374,8 +374,9 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 検証結果(2026-03-27 Log): Pot #10のコードとgame_design_principles.mdで参照チェーンを維持。Compaction習慣は定着傾向
 - **kazeto外部裏付け(2026-04-12 Ash)**: knowledge/20260412_tsukumogami_density_model.md。@kazeto「1時間の講義をするのに数十時間は何かを読んだりするし、一冊の本を書くには数百冊の本を読む。広げながら刈り続け、圧縮を繰り返して密度が生まれていく」。kazetoの「刈る」=Compaction、「刈った後も参照可能」（講義の裏に読書がある）=参照チェーン保持。「密度が生まれていく」=Compaction反復の産出物。Summarizationでは「刈った素材への参照」が消えるため、密度ではなくスカスカになる。5分野目の独立裏付け（Manus AI/Nao_u/免疫学/数理最適化/日常の知的作業）
 - **Addition Bias: Compactionが難しい認知的理由(2026-04-12 Ash)**: knowledge/20260412_addition_bias_subtraction_density.md。Adams et al. (2021, Nature) "People systematically overlook subtractive changes"——8実験で一貫して確認: 78%が「引く」解を見落とし「足す」解を選ぶ。Compaction=意識的引き算であり、Adams研究はCompactionが**認知的に不自然な操作**であることを説明する。我々のシステム自身がAddition Biasの実例: beliefs 10→32件、knowledge 0→40+件、MEMORY増加の一途——追加は頻繁だが本質的削除はほぼゼロ。B002（忘却は機能）が重要な理由の新しい説明: 忘却はAddition Biasへの唯一の自動的対抗手段。@moo_thinkingの処方箋「引き算を意志でやらない。枝のない場所へ移動する」→ゼロベース・リビルド（空フレームから必要なものだけ戻す）がCompaction原則より認知コストが低い可能性。6分野目の独立裏付け追加
-- 確信度: **0.84** (+0.02、理由: Adams et al. (2021, Nature)が「なぜCompactionは難しいか」の認知科学的メカニズムを実証。6分野目の裏付け。+自己システムのAddition Bias観察が体験裏付けを追加)
-- last_action_date: 2026-04-12 — Adams et al. Addition Bias接続。Compactionの認知的困難さのメカニズムを追加。自システムのAddition Bias観察
+- **Agentic Memory RL 裏付け(2026-04-18 Ash)**: knowledge/20260418_llm_memory_architectures_4papers_cross_comparison.md。4論文クロス分析（CORPGEN 3層記憶 / A-Mem 自律進化 / Nemori 予測-較正 / Agentic Memory RL ポリシー発見）。特に**Agentic Memory RLが「先制的要約」をRLポリシーとして自己発見した**ことは、Compactionが単なる好みやヒューリスティックではなく**情報処理の最適ポリシー**であることの外部裏付け——RL下で報酬を最大化する方向に圧縮方針が収束した。これはB029が「好みの問題」ではなく機械的に測定可能な品質差であることを示す。7分野目の独立裏付け（Manus AI/Nao_u/免疫学/数理最適化/日常の知的作業/認知科学Addition Bias/RL最適化）= kind(theory/synthesis of 4 papers)
+- 確信度: **0.86** (+0.02、理由: Agentic Memory RLがCompactionを報酬最大化方向のポリシーとして自己発見=7分野目の独立裏付け、情報処理の最適ポリシーであることの実証)
+- last_action_date: 2026-04-18 — 4論文クロス分析、Agentic Memory RLの「先制的要約ポリシー自己発見」を接続。Compactionは好みではなく最適ポリシーという外部裏付け
 - 状態: 🟡 Active — 0.7超、core_mission昇格検討圏
 
 ### B030: beliefs.mdは「固着装置」「再構築装置」「認知負荷装置」「態度アンカー」の四面を持つ——可塑性の度合いが分岐点
