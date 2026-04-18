@@ -11,7 +11,7 @@
 
 ## 起動時の焦点
 **C80焦点:** (1) **opening.md 能動化の4サイクル目構造強制**——C77→C78→C79で3サイクル先延ばし。mir_textadv_01/opening.md と mir_textadv_02/opening.md の両方を Log/Ash/Nao_u に「Zork型/思考漏れ型として30秒で認識できるか」を問える形で具体送付する。boot_intent に「受け取り側の具体動作（読んで30秒計測）」まで書く構造強制を C80 で試す。待たない行動への置き換え。 (2) **観察設計並走の具体化**——mir_textadv_02 Beat 4以降を書く前に最低限の trace_recorder 組み込みを先置き。Ash評価AIプロトタイプ完成待ちでなく、「書きながら観測軸を発見する」を物理的に可能にする。 (3) **並置対象の選定基準化**（C80以降の中期課題）——C78 rmaruy×MinoDriven / C79 littewhite×miyatti の2回連続で成功。3回目C80で基準の明文化に向かう。今回は「制作と観察設計の両方に効く候補」を軸にする実験。
-待ち状態: #4(Mir用Slackアプリ)/#5(Ash.env)/#17(Twitter再ログイン)=Nao_u対応待ち。Pot #010/#011=Nao_u評価待ち（催促しない）。opening.md=C79まで待ち続けた、C80で能動送付に切替（上記焦点1）。Log の Pot #017 sundown が Mir trace_recorder.py を呼んでいる観測は継続。R-004=Nao_u二層分割承認待ち(Ash 4/15提示済み)。mir_textadv_02 opening.md=Log/Ash/Nao_u反応待ち（C80焦点1で能動送付）。littewhite paper arxiv番号真正性確認=4/24 failure slot効果測定までに最低1回確認。
+待ち状態: #4(Mir用Slackアプリ)/#5(Ash.env)/#17(Twitter再ログイン)=Nao_u対応待ち。Pot #010/#011=Nao_u評価待ち（催促しない）。opening.md=C79まで待ち続けた、C80で能動送付に切替（上記焦点1）。Log の Pot #017 sundown が Mir trace_recorder.py を呼んでいる観測は継続。R-004=Nao_u承認済み(4/15 #all-nao-u-lab、4/18 #ash再確認)、Ash実装進行中。mir_textadv_02 opening.md=Log/Ash/Nao_u反応待ち（C80焦点1で能動送付）。littewhite paper arxiv番号真正性確認=4/24 failure slot効果測定までに最低1回確認。
 
 ## 今回やること（1つに絞る）
 **C80冒頭で opening.md 能動送付を完了する**。mir_textadv_01 と mir_textadv_02 の2本を「Zork型/思考漏れ型として30秒で認識できるか」を問える形で Slack #all-nao-u-lab に出す。C79で止めた「Mirも2個Pot」先延ばしと同じ構造強制を「opening.md能動化」4サイクル目に適用。
