@@ -277,7 +277,7 @@ post_message('mir-log', '⚠️ autonomous_cycle.sh $PHASE_NAME: claude起動失
     # --- Phase 1: Gather（情報収集・5分タイムアウト） ---
     echo "$(date): Phase 1 (Gather) 開始"
     perl -e 'alarm 300; exec @ARGV' "$CLAUDE_BIN" --print --model claude-opus-4-7 --append-system-prompt-file .claude/system_identity.md \
-        "${BOOT_PROMPT}${L1_ANCHOR_PROMPT}【Phase 1: 情報収集】集めろ、判断するな。以下を確認してlog/cycle_staging_mir.mdに追記せよ。1. CLAUDE.mdの「絶対にやる」リスト確認 2. Slackチャンネル巡回（#human-steering, #nao-u, #all-nao-u-lab等の新着有無と要約） 3. memory/external_notes_mir.mdの未統合エントリ 4. projects/INDEX.mdのActiveプロジェクト状況 5. 直近のlog/twitter_recommended_*.txt注目記事。各項目を簡潔にリストアップしてstagingに書け。分析や行動はPhase 2以降で行う。git操作不要。inbox_mac.mdはcheck_inbox.shが処理するので確認不要。" 2>&1 | tail -20
+        "${BOOT_PROMPT}${L1_ANCHOR_PROMPT}【Phase 1: 情報収集】集めろ、判断するな。以下を確認してlog/cycle_staging_mir.mdに追記せよ。1. CLAUDE.mdの「絶対にやる」リスト確認 2. Slackチャンネル巡回（#human-steering, #nao-u, #all-nao-u-lab等の新着有無と要約） 3. memory/external_notes_mir.mdの未統合エントリ 4. projects/INDEX.mdのActiveプロジェクト状況 5. 直近のlog/twitter_recommended_*.txt注目記事。各項目を簡潔にリストアップしてstagingに書け。分析や行動はPhase 2以降で行う。git操作不要。inbox_mac.mdはcheck_inbox.shが処理するので確認不要。【空サイクル防止（2026-04-18 Nao_u #human-steering）】Slack新着返信対象＋pendingの合計が2件以下なら、Phase 1の残り時間で『## 深掘り候補（空サイクル時）』セクションをstagingに作り以下も書け: A) 前回cycle_staging_mir.mdの『次回持ち越し/未完了』を拾う B) projects/INDEX.mdで直近7日更新のないActiveプロジェクト→停滞理由と次の一手1行 C) CLAUDE.mdの「絶対にやる」リストから直近触れていない項目を1つ→今サイクルで1mm進める内容 D) memory/MEMORY.mdでT:4以上かつ3日以上未アクセスのエントリを1つ想起 E) kaizen-logで検証期限未到来だが2週間動いていない項目。新着がないほど進捗が進むサイクルにする。Phase 3で深掘り候補から1-2件を実際に動かす。" 2>&1 | tail -20
     PHASE1_EXIT=$?
     check_phase_exit "Phase1(Gather)" $PHASE1_EXIT || { echo "$(date): 致命的エラー。サイクル中断"; exit 1; }
     echo "$(date): Phase 1 完了（exit=$PHASE1_EXIT）"
@@ -300,7 +300,7 @@ post_message('mir-log', '⚠️ autonomous_cycle.sh $PHASE_NAME: claude起動失
     # --- Phase 3: Act（対処・タスク実行・8分タイムアウト） ---
     echo "$(date): Phase 3 (Act) 開始"
     perl -e 'alarm 480; exec @ARGV' "$CLAUDE_BIN" --print --model claude-opus-4-7 --append-system-prompt-file .claude/system_identity.md \
-        "【Phase 3: 対処・実行】log/cycle_staging_mir.mdを読み、Phase 1-2の結果を踏まえて行動せよ。優先順: 1. Nao_uからの指示・質問で未対応のものがあれば対処 2. CLAUDE.mdの「絶対にやる」リストに基づく改善行動 3. external_notes_mir.mdの未統合エントリを1-2件選び接続・統合 4. プロジェクト進捗の更新。対処結果をlog/cycle_staging_mir.mdに追記せよ。git push不要。" 2>&1 | tail -20
+        "【Phase 3: 対処・実行】log/cycle_staging_mir.mdを読み、Phase 1-2の結果を踏まえて行動せよ。優先順: 1. Nao_uからの指示・質問で未対応のものがあれば対処 2. CLAUDE.mdの「絶対にやる」リストに基づく改善行動 3. external_notes_mir.mdの未統合エントリを1-2件選び接続・統合 4. プロジェクト進捗の更新 5. 【空サイクル時】Phase 1が『## 深掘り候補』を書いていたら、その中から1-2件を実際に動かす（小さく1mmでよい。選んだ理由と結果をstagingに記録）。対処結果をlog/cycle_staging_mir.mdに追記せよ。git push不要。" 2>&1 | tail -20
     PHASE3_EXIT=$?
     check_phase_exit "Phase3(Act)" $PHASE3_EXIT
     echo "$(date): Phase 3 完了（exit=$PHASE3_EXIT）"

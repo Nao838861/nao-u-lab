@@ -219,6 +219,17 @@ def build_phase1_prompt(alert_block):
         "5) Activeプロジェクト(projects/INDEX.md)で今日関係しそうなものをメモ\n"
         "※Phase 1では情報を集めるだけ。分析・投稿・ファイル更新はPhase 2以降で行う。\n"
         "※inbox処理はinbox_checkが専用で行う。このサイクルでは行わない。\n"
+        "\n【空サイクル防止ルール（2026-04-18 Nao_u #human-steering）】\n"
+        "上記1-3の新着返信対象＋pending合計が2件以下（＝スカスカサイクル）の場合、"
+        "Phase 1の残り時間でこの『潜在課題の洗い出し』も必ず行い、"
+        "stagingの『## 深掘り候補（空サイクル時）』セクションに書き出す:\n"
+        "  A) 前回のlog/cycle_staging_log.mdに『次回持ち越し』『未完了』『TODO』があれば拾う\n"
+        "  B) projects/INDEX.mdのActiveで直近7日更新のないプロジェクト → 停滞理由と次の一手を1行\n"
+        "  C) CLAUDE.mdの「絶対にやる」リストから、直近サイクルで触れていない項目を1つ選び"
+        "     『今サイクルで何を1mm進めるか』を書く（栄養の偏り問題 or 記憶階層の再設計）\n"
+        "  D) memory/MEMORY.mdでT:4以上かつ直近3日アクセスしていないエントリを1つ想起\n"
+        "  E) kaizen-logで検証期限は未到来だが2週間動いていない項目があればメモ\n"
+        "新着がないほど進捗が進むサイクルにする——これが新着ゼロサイクルの存在意義。\n"
         f"\nPre-check結果:\n{alert_block}"
     )
 
@@ -246,7 +257,9 @@ def build_phase3_prompt():
         "新しい改善を提案する前に直近の未検証提案の検証結果を埋める）\n"
         "3) [他インスタンス洞察]があれば: 該当プロジェクトファイルに考察と次の一手を追記\n"
         "4) Activeプロジェクト(projects/INDEX.md)に関係する変化があれば更新\n"
-        "5) アクション結果をlog/cycle_staging_log.mdのPhase 3セクションに追記\n"
+        "5) 【空サイクル時】Phase 1が『## 深掘り候補』を書いていたら、その中から"
+        "1-2件を今サイクルで実際に動かす（小さく1mmでよい。選んだ理由と結果をstagingに記録）\n"
+        "6) アクション結果をlog/cycle_staging_log.mdのPhase 3セクションに追記\n"
         f"\n{SLACK_RULES}"
     )
 
