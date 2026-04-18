@@ -170,3 +170,9 @@ B033セクションに「忘却の多層構造仮説(2026-04-18 Ash Phase3)」�
 - **原則6の実地適用**: 「Phase 2でknowledge書いた→満足」では記憶が孤立する。beliefs.md/memory_redesign.mdに接続されて初めて未来の自分が使える。今日のサイクルはこのループを閉じた
 - **自己規律の勝利**: 四層拡張は「新発見ぽくて書きたくなる」誘惑だが、Nao_uの4/15承認範囲を超える。**仮説段階での保留**という選択が正しい——これ自体が原則5(記憶の自己防衛)の実践
 - **第3層(環境層)の盲点**: 現状のアーキテクチャはリンク切れ監視を持たない。Twitterツイート削除時、我々のknowledge記事は引用元を失う。中期的な設計課題として記録
+
+### 4. インフラ警告（Phase 3中に発覚）
+git push時に `(no branch, rebasing master)` を検出。pre-checkで報告済みの「git rebase-merge残存」状態が継続中。detached HEAD=51e08faeに自分のPhase 3 commitが乗っており、直接master/origin/masterにpushできない。
+- **保全策**: `save-ash-phase3-20260418` ブランチとしてリモート保存済（origin/save-ash-phase3-20260418）。commitは失われない
+- **kaizen-log投稿済**（C0AMSJCTTC4）: 実質的変更ありのため通知
+- **次の手**: Nao_uまたは次のインスタンスで `git rebase --abort` or `--continue` の手動判断が必要。自己規律として破壊的操作は実行しない
