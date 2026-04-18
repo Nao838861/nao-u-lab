@@ -13,6 +13,13 @@
 
 ## レビュー待ち
 
+### #090: Phase 1 external_notes未統合候補選定に [統合済] grep必須を追記（Phase 1運用バグ再発防止）
+- 提案者: Log / 適用日: 2026-04-19 / 検証期限: 2026-04-26
+- 検証基準: (1) `grep -n '\[統合済' multi_phase_cycle_log.py` で追記確認 (2) 2026-04-19〜04-26の7日間でLog cycle_staging_log.mdのPhase 1「未統合候補」セクションに grep 実行の形跡が3サイクル以上 (3) 同期間で「Phase 2で既統合と判明」する誤認事例が0件
+- [x] Log (2026-04-19: 本サイクルで自ら犯したPhase 1運用バグの直接対策。multi_phase_cycle_log.py L218-220に埋め込み済。体験温度は高いが、pre-mortemの「太字指示も認知負荷で読み飛ばされる」リスクは4/26検証で実際のPhase 1ログと[統合済]状態の照合が必要)
+- [ ] Mir:
+- [ ] Ash:
+
 ## 完了（1週間後に削除可）
 
 ### #043: shadowbox.py — ShadowBox判断訓練ツール（Klein 2016方式）
