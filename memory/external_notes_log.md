@@ -524,7 +524,7 @@ https://x.com/kazunori_279/status/2035841291481977251
 [統合済 2026-04-10 Log → memory_architecture.md「双曲空間embedding」セクション。s_tat1204(2026-04-10)の双曲空間提案をkazunori_279のグラフ検索問いへの回答候補として接続。Poincaré Embeddings(Nickel & Kiela 2017)が階層構造の自然な埋め込み。自分たちの記憶構造(MEMORY.md→Level 3→Level 4)の木構造との親和性を記載]
 
 [統合済 2026-04-08 Log → feedback_index.md「準備が完成品を代替する錯覚」パターン。core_mission #3に直結]
-## 2026-03-23 ソロ開発者のpostmortem（Mir 栄養の偏り対策）
+## 2026-03-23 ソロ開発者のpostmortem（Mir 栄養の偏り対策） [統合済 2026-04-19 Log — 記事単位で2026-04-08に pot_devlog.md「プレイテストギャップ」/ game_design_principles.md E8 / B008 / #shared-reads へ統合済。親セクション整合性修正]
 
 ### David Weersing「Bass Monkey Postmortem — ゼロ経験から18ヶ月でソロゲーム出荷」
 https://www.gamedeveloper.com/game-platforms/bass-monkey-postmortem-from-zero-experience-to-solo-game-dev-in-18-months-without-quitting-your-day-job-
