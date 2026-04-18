@@ -124,21 +124,40 @@ def cmd_build(args):
     sys.stderr.write(f"saved {INDEX_PATH.name} ({vecs.shape}) + {META_PATH.name}\n")
 
 
-def cmd_search(args):
-    SentenceTransformer, np = _require_sentence_transformers()
+_cache = {"model": None, "vecs": None, "metas": None}
+
+
+def search(query: str, top_k: int = 10):
+    """B-3 Phase 3接続点: associative_search.py から呼び出す関数API。
+    戻り値: [(sim, file, chunk_idx, preview), ...] top_k件。
+    index未構築/依存未導入時は空リストを返す（呼び出し側のフォールバックに任せる）。"""
     if not INDEX_PATH.exists() or not META_PATH.exists():
-        sys.stderr.write("index not built. run: python vector_search.py build\n")
+        return []
+    try:
+        from sentence_transformers import SentenceTransformer
+        import numpy as np
+    except ImportError:
+        return []
+    if _cache["model"] is None:
+        _cache["model"] = SentenceTransformer(MODEL_NAME)
+        _cache["vecs"] = np.load(INDEX_PATH)
+        _cache["metas"] = [json.loads(line) for line in META_PATH.open(encoding="utf-8")]
+    qvec = _cache["model"].encode([query], normalize_embeddings=True)[0]
+    sims = _cache["vecs"] @ qvec
+    top_idx = np.argsort(-sims)[:top_k]
+    return [(float(sims[i]), _cache["metas"][i]["file"],
+             _cache["metas"][i]["chunk_idx"], _cache["metas"][i]["preview"])
+            for i in top_idx]
+
+
+def cmd_search(args):
+    hits = search(args.query, args.top_k)
+    if not hits:
+        sys.stderr.write("index not built or dependency missing. run: python vector_search.py build\n")
         sys.exit(1)
-    vecs = np.load(INDEX_PATH)
-    metas = [json.loads(line) for line in META_PATH.open(encoding="utf-8")]
-    model = SentenceTransformer(MODEL_NAME)
-    qvec = model.encode([args.query], normalize_embeddings=True)[0]
-    sims = vecs @ qvec
-    top_idx = np.argsort(-sims)[: args.top_k]
-    for rank, idx in enumerate(top_idx, 1):
-        m = metas[idx]
-        print(f"[{rank}] sim={sims[idx]:.3f} {m['file']} #chunk{m['chunk_idx']}")
-        print(f"    {m['preview']}")
+    for rank, (sim, fpath, cidx, prev) in enumerate(hits, 1):
+        print(f"[{rank}] sim={sim:.3f} {fpath} #chunk{cidx}")
+        print(f"    {prev}")
 
 
 def cmd_stats(args):

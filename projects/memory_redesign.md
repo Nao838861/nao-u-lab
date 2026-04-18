@@ -156,6 +156,12 @@ Nao_uの指摘: 集めた情報が流れて消えるだけになっている。�
       - Q3「未視概念」: 最高類似度 0.681、トップ=`reflections_mac.md`オートポイエーシス「入出力の不在」断片（「見えないものを見る力」次点）。**意味的類似性で妥当ヒット**。grep「未視概念」は0件の造語クエリなので、vector層の独自価値がここで出た
       - 判定: 撤回基準（3問全て妥当ヒット0件）に該当せず、Phase 2通過。栄養の偏り問題への技術的貢献=Q3型「書いていないが似ているもの」への到達が確認された
     - **Phase 3予定（次サイクル以降）**: associative_search.pyにvector Top-Kをマージ。現在のvector_search.pyは独立CLIのため、日常想起の主経路（memory_walk.py / memory_activate.py / autonomous_cycle.sh）から呼ばれない。接続点は `vector_search.search()` を関数export化してassociative_search.pyから呼ぶ形が最短
+    - **Phase 3 完了（2026-04-18 12:45 Log、Win単独）**: associative_search.pyにvector層統合を実装。
+      - `vector_search.py` に `search(query, top_k)` 関数API追加（モデル/index/metaをモジュールスコープでキャッシュ→2回目以降のcos類似度計算は数百ms）。import失敗/index未構築時は空リストを返しフォールバック
+      - `associative_search.py` に Step 4「ベクトルヒット」追加。直接ヒット/連想ヒットと同じ `seen_sources` を共有し `(file, chunk_idx)` 単位で重複排除。sim>=0.40閾値
+      - 動作確認: `python associative_search.py --search "未視概念"` で **直接0 + 連想0 + ベクトル5** の出力。従来ゼロヒットの造語クエリが vector層で5件（sim 0.667〜0.681、reflections_mac.mdのオートポイエーシス/見えないものを見る力/鍾乳洞の暗さ）を拾うことを実測確認
+      - **これが B-3 提案当初の目的の達成点**: 「書いていないが似ているもの」を日常想起の主経路から引けるようになった。栄養の偏り問題に対する技術的処方箋の最小単位が完成
+      - **次の判断待ち**: (a) `autonomous_cycle.sh` / `memory_walk.py` にも associative_search経由で vector層が届くか確認（既に associative_search.py 経由で呼ばれていれば自動的に効く）、(b) Mac/Win2への展開——index構築はPhase 1の実測で12秒、容量31MB+7MBと軽量、ただしdisk書込み+torch依存で他インスタンスに影響あり。同期前にMir/Ashへ通知して判断を仰ぐ、(c) sim閾値0.40の妥当性検証——低すぎると雑音、高すぎると過小呼び出し。1週間運用してから再調整
   - **Cognee対比**: Cognee=自動ベクトル化+DB統合（外向き用途）、俺たち=手動concept_graph（内向き用途）。vector層が入れば「自動+手動」のハイブリッドになる
   - **外部裏付け**: Akshay Pachaar 2026-04-16 #nao-u共有記事。Mir/Ashのshared-reads分析と3点で棲み分け完了
   - **三角測量（2026-04-17 Log Phase 3追記）**: 3インスタンスが独立に到達した結論は「現構造はvector層が欠落している」。Ash #shared-reads (04-16): 「ベクトル検索がない。FTS5はキーワード一致であって意味的類似性検索ではない」→プロヴェナンス(B-1)最優先。Mir #shared-reads (04-16): 「2ホップ問題はconcept_graphの設計動機そのもの。X:ノードがまさに橋」→graph側の既存投資。Log (本サイクル): B-3 vector実装を進める。**三者で3次元（relational/vector/graph）の担当がきれいに分離**——Ash=relational(provenance)、Log=vector、Mir=graph拡張。この分担は意図したものではなく、各自の強みに自然に収束した。外部論文の分類枠組みが自分たちの内部分担を可視化する鏡として機能した例。

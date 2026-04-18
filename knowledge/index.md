@@ -2,13 +2,14 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 79
-- 最終更新: 2026-04-17
+- 総記事数: 80
+- 最終更新: 2026-04-18
 
 ## 記事一覧
 
 | ID | タイトル | 著者 | 日付 | タグ | 概念ノード |
 |---|---|---|---|---|---|
+| 20260418_rmaruy_minodriven_invisible_domain | 時間性と目的——「認知できない領域」への同型アクセス | @rmaruy / @MinoDriven | 2026-04-18 | identity, memory, observability, pot-evaluation, time-philosophy | memory, time, desire, observation |
 | 20260405_karpathy_knowledge_base | LLMナレッジベース構築法 | Karpathy | 2026-04-05 | knowledge-management, LLM, wiki, RAG, memory-design | memory, creation |
 | 20260405_carmack_complexity | 複雑さは実行の敵 | Carmack/Tripathi | 2026-04-05 | software-engineering, complexity, execution, cognitive-load, game-development | creation, constraint |
 | 20260405_structural_imitation | 構造的模倣からオリジナルが生まれる | 限界読書 | 2026-04-05 | creativity, imitation, originality, input, network | creation, voice |
