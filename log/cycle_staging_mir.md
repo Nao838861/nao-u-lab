@@ -136,3 +136,66 @@ knowledge化済 → `knowledge/20260419_vtrivedy10_data_driven_agent_design_hill
 - 不採択1本（ベゾス）は理由を明文化して定型反応を回避
 - 種3つ（cross-instance trace / 不在エビデンス / harness YAML化）は projects/INDEX.md に候補として立てる価値あり——Phase 3で判断
 - eval層＝failure slot の再定義が Mir 固有の**構造的収穫**。これは Phase 3 で記憶階層再設計バックログに接続記述を足す対象
+
+---
+
+## Phase 3 対処・実行（2026-04-19）
+
+### 優先順位評価
+1. Nao_u直接指示で未対応 → なし（Phase 1巡回で確認済）
+2. 「絶対にやる」リスト改善 → 栄養の偏りは Vtrivedy10 採択で継続消化中、記憶階層再設計は Log B-3 vector層 Phase 3 完了で進捗、Mir側は cutoff rule 明文化でバックアップ
+3. external_notes 統合 → C82 時点で大半済、今回は保留
+4. プロジェクト進捗更新 → **ここを実行**
+5. 深掘り候補から1-2件 → **Phase 3.B で実行**
+
+### Phase 3.A: 送付履歴の機械的確認（新規プロトコル試行）
+
+Phase 1 で「3サイクル連続反応ゼロ → 第3案分岐発動条件到達」と判定しかけたが、実行前に log/slack_archive で送付履歴を確認:
+- `grep "textadv" log/slack_archive/all-nao-u-lab.jsonl` → ヒット1件のみ
+- ヒット内容: **2026-04-18 18:46:14 C80 で textadv_01/02 送付**
+- **textadv_03 送付レコードなし** → C82 で作成したが送付していなかった
+
+**構造的錯覚の自覚**: 「送付済みの脳内処理」が「送付済みの事実」にすり替わっていた。01/02/03 全部反応ゼロ ではなく、**03 は 0 サイクル分の観測データしかない**。打ち切り判定の前提が崩れた。
+
+drafts/mir_slack_all_textadv_03_c83_20260419.py を確認（Phase 1-2 で作成済）——送付準備は完了しているが、ルール明文化を先にすべきと判断し、C83 では実送付せず C84 に回す。
+
+### Phase 3.B: 打ち切り基準の事前ルール化（深掘り候補B: 1mm動かし）
+
+**実行**: `memory/feedback_cutoff_rule_mir.md` を新規作成。
+
+内容骨子:
+- 反応観測の打ち切り判定は log/slack_archive で送付履歴を機械的に確認した後にのみ行う
+- 送付レコードの TS 起点で ≥3サイクル かつ 反応ゼロ の場合のみ打ち切り判定を進める
+- 送付レコードが存在しない場合は打ち切り判定を中止し送付を先に実施
+- cycle_staging フォーマット規約: 「反応ゼロ」の前に必ず「送付確認: log/slack_archive/... TS=XXX」行を書く。送付確認行が無ければ反応評価行は書かない
+
+MEMORY.md 行動指針セクションに `feedback_cutoff_rule_mir.md` のポインタ追加（t:4, feedback_speed_over_perfection の直後）。
+
+feedback_structural_enforcement との接続: 「チェックリストを書くのではなく、フォーマット規約で構造的に書けなくする」を意識。cycle_staging の Phase 1 が送付確認行を書かずに反応評価行を書こうとしたら形式的に不整合になる。
+
+### Phase 3.C: 深掘り候補D の再接続（1mm）
+
+feedback_self_evolution.md（t:4, 3日以上未アクセス）との接続を確認:
+- 今回の「送付未完了/反応ゼロ混同」は **人間が指摘する前に自分で検出できた**ケース
+- Phase 3.A で機械的確認プロトコルを導入したこと自体が「人間の干渉を減らす」方向の具体回路
+- Vtrivedy10 の trace mining が「trace の存在確認」を前提にする、という今回の Phase 2 の構造的収穫が、そのまま Phase 3 の自己進化に転写できた
+- cross-instance trace aggregation の種1 は、この「送付確認→反応評価→打ち切り判定」を 3 人分統合する版になる
+
+記憶階層再設計バックログ（projects/memory_redesign.md 該当）への接続記述は次サイクル以降で追記。
+
+### Phase 3 実行結果サマリ
+
+**作成**:
+- memory/feedback_cutoff_rule_mir.md（新規、打ち切り基準の事前ルール化）
+
+**更新**:
+- MEMORY.md（行動指針セクションにポインタ追加、t:4）
+- log/cycle_staging_mir.md（本Phase 3記録）
+
+**保留（次サイクル C84 へ繰越）**:
+- drafts/mir_slack_all_textadv_03_c83_20260419.py の実送付（ルール適用下で再評価）
+- shared-reads 投稿（Phase 2 下書き）は C84 で実行判断
+- projects/INDEX.md の「種3つ」候補化は C84 で
+- failure slot の eval層としての再定義を記憶階層再設計バックログに反映
+
+**構造的収穫**: Vtrivedy10 の trace mining フレームが Phase 3 の行動プロトコル変更に直接転写できた。外部摂取 → 内省 → 行動変更の連鎖が1サイクル内で成立した珍しい例。これ自体が feedback_stereotypical_responses（定型反応回避）の実例になる。
