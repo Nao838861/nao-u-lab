@@ -87,8 +87,9 @@ class State:
         print(f"  容疑: 殺人（認否保留）")
         if self.leak_visible:
             bar = "█" * (self.trust // 10) + "░" * (10 - self.trust // 10)
-            print(f"  信頼度    {bar}  {self.trust}")
-            print(f"  思考漏れ  {len(self.leaks)}件")
+            warn = "  ⚠ 警戒されている" if self.trust < 40 else ""
+            print(f"  信頼度    {bar}  {self.trust}{warn}")
+            print(f"  思考漏れ  {len(self.leaks)}件（漏れ聞こえた心の言葉）")
         print(f"  残り質問  {self.questions_left}")
         print("─" * 50)
 
@@ -99,15 +100,22 @@ def beat_title(s):
     clear()
     print()
     print("━" * 50)
+    print()
+    print("        思 考 漏 れ")
+    print("       ─ Thought Leak ─")
+    print()
+    print("━" * 50)
+    print()
     print("  取調室  第七号室")
     print("  2026年  春")
     print()
     print("  被疑者   橘 詩織（29歳）")
     print("  容疑     殺人（認否保留）")
     print("  取調官   あなた")
-    print("━" * 50)
-    print(f"     残り質問      {s.questions_left}")
     print()
+    print(f"  残り質問  {s.questions_left}（弁護側申請による制限）")
+    print()
+    print("━" * 50)
     time.sleep(1.5)
     pause()
 
@@ -116,6 +124,9 @@ def beat_1(s):
     """開口 — 最初の質問"""
     clear()
     s.header()
+    print()
+    print("あなたは刑事だ。取調畑十年。")
+    print("人の嘘を見抜くのが仕事で、それなりに自信もある。")
     print()
     print("女は机の向こう側に座っていた。")
     print("両手で紙コップを包み、湯気越しにこちらを見ている。")
@@ -182,22 +193,31 @@ def beat_2_leak(s):
     s.leak("（合鍵を使ったことだけは——絶対に言えない）")
 
     print()
-    print("今の声は——")
-    print("彼女の唇は動いていなかった。")
+    print("——今の声は。")
+    print("彼女の唇は、動いていなかった。")
+    print()
+    time.sleep(0.3)
+    print("声ではない。")
+    print("彼女の心の中の言葉が、あなたの頭に直接流れ込んできた。")
+    print()
+    time.sleep(0.3)
+    print("思考が、漏れている——")
     print()
 
     # メーター出現
     s.leak_visible = True
     s.trust -= 3
 
-    print("画面の隅に、今までなかった数字が浮かぶ。")
+    print("取調畑十年の勘が、数値に結晶する。")
+    print("彼女があなたをどれだけ信じているか。")
+    print("そして、どれだけ心の壁が崩れているか。")
     print()
     bar = "█" * (s.trust // 10) + "░" * (10 - s.trust // 10)
     print(f"  信頼度    {bar}  {s.trust}")
-    print(f"  思考漏れ  {len(s.leaks)}件")
+    print(f"  思考漏れ  {len(s.leaks)}件（彼女の心から漏れた言葉）")
     print()
-    print("……聞き間違いだろうか。")
-    print("だが「合鍵」という言葉が、頭から離れない。")
+    print("「合鍵」——彼女は一言もそんなことを口にしていない。")
+    print("だがあなたには、確かに聞こえた。")
     s.know_key = True
 
     pause()
@@ -211,11 +231,27 @@ def beat_3(s):
     print("彼女は話を続けようとしている。")
     print("「それで、他に何か——」")
 
-    c = choose([
-        ("「合鍵をお持ちですか」", "−1問 / 核心を突く"),
-        ("「野上さんのマンションに行ったことは？」", "−1問 / 回り道"),
-        ("何も聞こえなかったふりをする", "−0問 / 信頼度を保つ"),
-    ])
+    options = []
+    if s.trust >= 40:
+        options.append(("「合鍵をお持ちですか」", "−1問 / 核心を突く / 信頼度−15"))
+    else:
+        options.append((dim("「合鍵をお持ちですか」"), "信頼度が低すぎる——今は切り出せない"))
+    options.append(("「野上さんのマンションに行ったことは？」", "−1問 / 回り道 / 信頼度−5"))
+    options.append(("何も聞こえなかったふりをする", "−0問 / 信頼度を保つ"))
+
+    c = choose(options)
+
+    # 信頼度不足で合鍵直撃を選んだ場合、回り道に強制変更
+    if c == 1 and s.trust < 40:
+        print()
+        print("……訊きたい。だが今の彼女にこれを切り出せば、")
+        print("完全に壁を閉ざされる。")
+        print()
+        pause()
+        clear()
+        s.header()
+        print()
+        c = 2  # 回り道にフォールバック
 
     s.use_question()
     clear()
@@ -273,11 +309,35 @@ def beat_4(s):
     print()
     print("彼女の目が揺れた。")
 
-    c = choose([
-        ("「あなたの指紋と一致しました」", "−1問 / 嘘。まだ照合結果は出ていない"),
-        ("「指紋の持ち主を探しています」", "−1問 / 真実"),
-        ("資料を彼女の方に向けて置く", "−0問 / 反応を見る"),
-    ])
+    options = []
+    if s.trust >= 50:
+        options.append(("「あなたの指紋と一致しました」", "−1問 / ブラフ / 信頼度−10"))
+    else:
+        options.append((dim("「あなたの指紋と一致しました」"), "信頼度が低い——ブラフを見抜かれるリスクが高い"))
+    options.append(("「指紋の持ち主を探しています」", "−1問 / 真実 / 信頼度−3"))
+    options.append(("資料を彼女の方に向けて置く", "−0問 / 反応を見る"))
+
+    c = choose(options)
+
+    # 信頼度不足でブラフを選んだ場合、見抜かれる
+    if c == 1 and s.trust < 50:
+        s.use_question()
+        s.trust -= 15
+        clear()
+        s.header()
+        print()
+        print("嘘だ。照合結果はまだ出ていない。")
+        print()
+        print("だが女の目が——冷めた。")
+        print()
+        print("「……嘘ですよね、刑事さん。")
+        print("  照合が済んでたら、こんな回りくどいことしないでしょう」")
+        print()
+        print("見抜かれた。信頼度が低い状態でのブラフは、")
+        print("かえって彼女の警戒を強めただけだった。")
+        s.know_fingerprint = True
+        pause()
+        return
 
     s.use_question()
     clear()
@@ -285,7 +345,7 @@ def beat_4(s):
     print()
 
     if c == 1:
-        # ブラフ
+        # ブラフ（信頼度が高いので成功）
         s.trust -= 10
         s.know_fingerprint = True
         print("嘘だ。照合結果はまだ出ていない。")
@@ -466,10 +526,18 @@ def beat_final(s):
         s.know_diary, s.know_already_dead, s.know_fingerprint
     ])
 
-    if evidence_count >= 4 and len(s.leaks) >= 3:
+    has_evidence = evidence_count >= 4 and len(s.leaks) >= 3
+    has_trust = s.trust >= 30
+
+    if has_evidence and has_trust:
         options.append((
-            "集めた思考漏れを、一つずつ読み上げる",
-            f"証拠{evidence_count}件 / 思考漏れ{len(s.leaks)}件"
+            "漏れ聞こえた思考を、一つずつ読み上げる",
+            f"思考漏れ{len(s.leaks)}件 / 証拠{evidence_count}件 / 信頼度{s.trust}"
+        ))
+    elif has_evidence and not has_trust:
+        options.append((
+            dim("漏れ聞こえた思考を、一つずつ読み上げる"),
+            "証拠は揃った——だが信頼度が足りない。彼女は聞く耳を持たないだろう"
         ))
 
     options.append(("「全部話してください。最初から」", "−1問 / 直球"))
@@ -480,9 +548,35 @@ def beat_final(s):
     clear()
     print()
 
-    if len(options) == 3 and c == 1:
+    # 証拠ありだが信頼度不足で選んだ場合
+    if has_evidence and not has_trust and c == 1:
+        print("═" * 50)
+        print()
+        print("あなたは手帳を開き、読み上げ始めた。")
+        print()
+        for i, thought in enumerate(s.leaks):
+            time.sleep(0.3)
+            print(f"  {i+1}. {dim(thought)}")
+        print()
+        print("だが女は首を振った。")
+        print()
+        print("「……やめてください。もう何も話しません」")
+        print()
+        print("証拠は揃っていた。だが信頼を壊しすぎた。")
+        print("真実を引き出すには、彼女が耳を傾ける必要があった。")
+        print()
+        print("  ── ENDING F: 閉ざされた扉 ──")
+        print()
+        print(f"  思考漏れ: {len(s.leaks)}件 / 証拠: {evidence_count}/6")
+        print(f"  信頼度: {s.trust}（不足）")
+        print()
+        print("═" * 50)
+        print()
+        return
+
+    if has_evidence and has_trust and c == 1:
         return ending_evidence(s)
-    elif (len(options) == 3 and c == 2) or (len(options) == 2 and c == 1):
+    elif (not has_evidence and c == 1) or (has_evidence and c == 2):
         return ending_confession(s)
     else:
         return ending_believe(s)
