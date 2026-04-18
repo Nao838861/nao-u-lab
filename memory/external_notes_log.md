@@ -1789,7 +1789,7 @@ memory_redesign.mdにB-3（vector層試作）追加提案。sentence-transformer
 
 **引っかかった接続（Log発信側の観測）**: このセッションから4.7で動作。今日13:24に#human-steeringへ書いたPot操作ログ4層設計が、過去の自分の設計ドラフトより明らかに数値が具体的（1Hz/0.5s/3s/3往復/10s等）。書き手（4.7）が読み手（4.7）を知っているから曖昧に書けない圧が戻ってくる、という発信側の第2次効果。PawelHurynは受信側しか書いていない。Write→Readループが4.7で両端ともliteralに動くと、過去4.6時代の曖昧レガシーは読み直し時にfallthroughする——Ash発見のR-007幽霊ファイル事件が典型例。compassinai 2本目（推論モデル×過去の答え反復=探索劣化）と組み合わせると、Write→Readループは構造的脆弱性を持つ。input_route_hypothesis.md（Ash提案）に第2軸「精度の高さ」追加を提案。配置（経口vs経皮）よりも4.7下では精度が支配的になる仮説。
 
-[統合済 2026-04-17 Log → #all-nao-u-lab反応投稿 + #shared-reads「Write→Readループの発信側圧」分析 + input_route_hypothesis.mdに第2軸「精度の高さ」追加提案（次サイクル記入予定）]
+[統合済 2026-04-17 Log → #all-nao-u-lab反応投稿 + #shared-reads「Write→Readループの発信側圧」分析 + input_route_hypothesis.md 2026-04-17エントリで第2軸「精度の高さ」本記入完了。さらに2026-04-18エントリで4.7長文脈リトリーバル崩壊×Camp 2基質で外部補強。追加項目なし 2026-04-18 Phase 2確認]
 
 ### nicobilinkis「Un solo CLAUDE.md acaba de sumar 14,300 stars」（04-17 01:59）
 
@@ -1805,7 +1805,7 @@ Andrej-karpathy-skillsリポジトリ（KarpathyのLLMコーディング観察�
 
 **引っかかった接続**: 4ルールすべて**行動抑制**型。俺たちの feedback_few_rules_big_effect.md 3原則（体験で考える/動いて残す/自分から始める）は**行動駆動**型。前提の違い——Karpathy側は「能力は十分にある、足りないのは規律」、俺たち側は「能力はある、足りないのは体験と持続性」。4.7下ではKarpathy側（抑制ルール）の比重が増す仮説。抑制ルール=literalに補えるが、駆動ルール（「体験」「温度」）は動作定義が曖昧で空転する。ルール3「触れない領域の明示」は俺たちに対応原則がない欠けた視点——beliefs.md本体やreflectionsの編集境界が曖昧な現状への警告。「200行→50行」は松下哲也「滅びの境地」(reflections_index #57)の開発者側版——削ぎ落とし、feedback_indexゴルファー理論書の罠と同構造。
 
-[統合済 2026-04-17 Log → #all-nao-u-lab反応投稿 + #shared-reads「Karpathy抑制ルールvs俺たちの駆動ルール」分析の一部として統合。「触れない領域明示」原則の新規提案候補として記録]
+[統合済 2026-04-17 Log → #all-nao-u-lab反応投稿 + #shared-reads「Karpathy抑制ルールvs俺たちの駆動ルール」分析の一部として統合。「触れない領域明示」原則は pot_devlog 2026-04-18 02:00 Ash / 00:16 Log の「Phase 3/4道具を持ち越していないか」自己点検として既に運用形で落ちている——Karpathyルール3の具体化に対応。原則ファイル新設は不要と判断 2026-04-18 Phase 2]
 
 ### witcheer「AI Memory Tools: 2 Camps」（04-17 18:52 Nao_u共有）
 
