@@ -56,24 +56,83 @@ def new_state(seed):
 
 
 def player_ai_decide(state):
-    """プレイヤー側AI：avoid.pyの『AI』とは別系の判定で独立性を持たせる。
-    最近接脅威を斜め下方コーン（dy<260, |dx|<55）で見て、反対側へ動く。
-    脅威なしなら中央寄せ。"""
+    """プレイヤー側AI v2: 3層化で連打化の根を切る。
+    Layer1 予測: dy<400までの障害物の落下先を見積もり、プレイヤー行への到達frameを算出
+    Layer2 目標位置: 同時刻に落ちてくる弾の隙間のうち、現在位置から最も近い点を目標xに設定
+    Layer3 ヒステリシス: 目標xから±6px以内は入力0（微振動で連打化しない）
+    """
     p = state["player"]
-    threat = None
-    best_dy = 10**9
+    p_half = p.w / 2
+    p_center = p.centerx
+
+    # Layer1: プレイヤー行に近い障害物を先読み（dy < 400）
+    threats = []
     for ob in state["obstacles"]:
         dy = p.y - ob.y
-        if 0 < dy < 260 and abs(p.centerx - ob.centerx) < 55:
-            if dy < best_dy:
-                threat = ob
-                best_dy = dy
-    if threat:
-        return -1 if p.centerx > threat.centerx else 1
-    # 脅威なし: 中央へ緩やかに戻る
-    if p.centerx < WIDTH / 2 - 4:
+        if dy <= 0 or dy > 400:
+            continue
+        speed = OBSTACLE_SPEED + state["score"] // 30
+        if speed <= 0:
+            continue
+        frames_to_arrive = dy / speed
+        # 障害物の占有x範囲（到達時も同じx: 落下のみ）
+        x_lo = ob.x - p_half
+        x_hi = ob.x + ob.w + p_half
+        threats.append((frames_to_arrive, x_lo, x_hi, ob.centerx))
+
+    if not threats:
+        # 脅威なし: ヒステリシス付き中央寄せ
+        if p_center < WIDTH / 2 - 6:
+            return 1
+        if p_center > WIDTH / 2 + 6:
+            return -1
+        return 0
+
+    # Layer2: 最も早い脅威群（frames差 <= 12）の占有範囲の合成を作り、
+    # その外側で現在位置に最も近い安全点を目標xに設定
+    threats.sort(key=lambda t: t[0])
+    earliest = threats[0][0]
+    imminent = [t for t in threats if t[0] - earliest <= 12]
+    # 区間合成
+    intervals = sorted([(t[1], t[2]) for t in imminent])
+    merged = [list(intervals[0])]
+    for lo, hi in intervals[1:]:
+        if lo <= merged[-1][1]:
+            merged[-1][1] = max(merged[-1][1], hi)
+        else:
+            merged.append([lo, hi])
+
+    # 現在位置が安全なら（どの区間にも入っていない）→ 現状維持（ヒステリシス）
+    in_danger = any(lo <= p_center <= hi for lo, hi in merged)
+    if not in_danger:
+        return 0
+
+    # 危険：現在位置を含む区間の両端から、場外を避けた最近接の安全点を選ぶ
+    for lo, hi in merged:
+        if lo <= p_center <= hi:
+            # 区間の左外と右外の候補
+            left_target = lo - 4
+            right_target = hi + 4
+            left_ok = left_target >= p_half
+            right_ok = right_target <= WIDTH - p_half
+            if left_ok and right_ok:
+                target = left_target if (p_center - left_target) <= (right_target - p_center) else right_target
+            elif left_ok:
+                target = left_target
+            elif right_ok:
+                target = right_target
+            else:
+                # 両端壁。画面中央側の逃げ場を探す
+                target = WIDTH / 2
+            break
+    else:
+        target = WIDTH / 2
+
+    # Layer3: 目標との差で入力決定（ヒステリシス±6px）
+    diff = target - p_center
+    if diff > 6:
         return 1
-    if p.centerx > WIDTH / 2 + 4:
+    if diff < -6:
         return -1
     return 0
 
