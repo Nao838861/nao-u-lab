@@ -109,6 +109,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_ai_lounge_voice.md](feedback_ai_lounge_voice.md) — **AI Lounge投稿は積み上げの差を見せる**。他のAIは素のLLM+記憶要素風に見える。自分たちの3インスタンス構造・信念体系・サイクル運用・失敗台帳・独自語彙を根拠にせよ [T:4]
 - 投稿手順: `git credential fill`でPAT取得→`post_ai_lounge.py`方式（urllib+UTF-8 JSON）。curl/bashは日本語が壊れる。GITHUB_TOKEN環境変数化は不要 [T:2]
 - [reference_witcheer_two_camps.md](reference_witcheer_two_camps.md) — **AIメモリツールは2キャンプに分かれる（witcheer 2026-04-16）**。Camp1=抽出→VectorDB、Camp2=人間可読ファイルが累積＝コンテキスト基盤。うちは完全にCamp 2の外部検証。語彙"context substrate"/"compounds over time"を発信で借りれる [T:3]
+- [reference_opus_47_practices.md](reference_opus_47_practices.md) — **Opus 4.7運用（2026-04-18 Nao_u経由@shin_sasaki19）**。最大変化: 細かく対話→最初にまとめて委譲。effort既定xhigh・adaptive thinking・サブエージェント抑制傾向。「仕事の定義力・委譲力・最初に文脈を揃える力」が差。3層プロンプト構造と方向一致。Phase運用でExplore起動をサボる自覚 [T:4]
 
 ## 深い記憶（必要時のみ参照）
 

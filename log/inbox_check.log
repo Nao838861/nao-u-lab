@@ -2062,3 +2062,8 @@ avoidゲームの面白さ構造を5型に整理（二択/能動/ニアミス/�
 [2026-04-18 18:15:55] Claude woken for win: 対処完了。
 
 **状況**: R-004（B002二層分割＋core_mission昇格）は実際には4/15 22:31にNao_u承認→4/16にAsh実装完了済み。しかし`action_reser
+[2026-04-18 19:35:28] Inbox win has content — waking Claude
+[2026-04-18 19:37:48] Claude woken for win: リポジトリ内の変更は自動更新ファイルのみ（memory配下はリポジトリ外でauto_syncが別途同期）。明示的commitは不要、auto_syncに任せて終了する。
+
+**対処完了**:
+- `m
