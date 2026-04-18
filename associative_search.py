@@ -392,8 +392,29 @@ def associative_search(query, limit=10, verbose=False):
                 print(f"    [{source}] {snippet.strip()}")
                 count += 1
 
-    total = len(direct_results) + len(expansion_results)
-    print(f"\n合計: {total}件 (直接{len(direct_results)} + 連想{len(expansion_results)})")
+    # Step 4: Vector similarity (B-3 Phase 3接続, 2026-04-18 Log)
+    # 共起語/概念マップでは引けない「書いていないが意味的に似ているもの」を補完
+    vector_results = []
+    try:
+        import vector_search
+        v_hits = vector_search.search(query, top_k=5)
+        for sim, fpath, cidx, prev in v_hits:
+            key = f"{fpath}:chunk{cidx}"
+            if key not in seen_sources and sim >= 0.40:
+                seen_sources.add(key)
+                vector_results.append((sim, fpath, cidx, prev))
+    except Exception as e:
+        if verbose:
+            print(f"  (vector層スキップ: {e})")
+
+    if vector_results:
+        print(f"\n--- ベクトルヒット (意味的類似) ---")
+        for sim, fpath, cidx, prev in vector_results:
+            print(f"  sim={sim:.3f} [{fpath} #chunk{cidx}]")
+            print(f"    {prev.strip()}")
+
+    total = len(direct_results) + len(expansion_results) + len(vector_results)
+    print(f"\n合計: {total}件 (直接{len(direct_results)} + 連想{len(expansion_results)} + ベクトル{len(vector_results)})")
 
 
 def show_stats():
