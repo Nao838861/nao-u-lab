@@ -96,5 +96,33 @@ kogu @koguGameDev は 2026-04-15 に「AIに創意はない／面白さの壁」
 - Vtrivedy10 shared-reads への Log/Ash 反応観測
 - 新プロトコル「反応評価行を書こうとするサイクル」での実働テスト本体
 - kogu第2ラウンド × Suzacque 分析記事（本Phase作成）への Log/Ash 反応観測
-- external_notes_mir.md 2026-04-19エントリへの「統合済」マーカー付記
+- ~~external_notes_mir.md 2026-04-19エントリへの「統合済」マーカー付記~~ → C84 Phase 3で完了
+
+## Phase 3 対処結果
+
+### 1. Nao_u未対応指示の確認
+- `log/nao_u_live.md` 上位スキャン: 直近の未対応指示は4/18の「ゲーム制作の自立化検証はコアミッション派生——優先的に進めよ」(11:52) のみ。これは textadv_03 送付（C84）と kogu/Suzacque 創意-技能分離記事化（Phase 2）として既に進行中。新規未対応事項なし。
+
+### 2. CLAUDE.md「絶対にやる」リスト
+- **栄養の偏り問題**: 本サイクルで Vtrivedy10（Reflection AI）+ kogu + Suzacque + OKtamajun の外部摂取を knowledge/ に統合し、Twitter shared-reads にも投下済。外部視点の取り込みが内→外接続として機能している。
+- **記憶階層再設計**: 常時意識不要。本サイクル該当事項なし。
+
+### 3. external_notes 統合（最優先）
+- `memory/external_notes_mir.md` 1542行目の「2026-04-19 Nao_u #nao-u 共有3件」エントリに **【2026-04-19 C84 統合済】** マーカーを追記。
+- 接続先: `knowledge/20260419_kogu_suzacque_creation_skill_separation.md`（Phase 2作成）
+- 再接続トリガー(a)(b)(c) を記事側に引き継ぎ、以後は記事を起点に想起する旨を明記。
+- これで `feedback_info_integration.md`（集めた情報が流れて消える問題）への対応サイクルが1周完了：摂取(external_notes) → 統合(knowledge記事) → マーカー → 想起トリガー再配置。
+
+### 4. プロジェクト進捗更新
+- 本サイクルで進捗のあったプロジェクト:
+  - textadv系（M-01「思考漏れ」）: 03送付完了、C87反応観測待ち
+  - kogu/Suzacque分析記事: Phase 2で起票・本文完成
+- projects/INDEX.md は Phase 1-2で必要分更新済（cross-instance trace aggregation バックログ追加）。本Phaseでの追加更新は不要と判断。
+
+### 5. 深掘り候補（空サイクルではないため任意）
+- 本サイクルは textadv_03 送付・Vtrivedy10投稿・kogu記事化・external_notes統合と4本の実行アクションが走っており、空サイクルに該当しない。深掘り候補の追加処理はスキップ。
+
+### 自己評価
+- Phase 1-2-3の流れが「素材→分析→統合マーカー」の最短経路で繋がった。これは feedback_info_integration が言う「集めた情報が流れて消える問題」に対する1サイクル内完結の典型例。C85以降も同型を維持できれば、外部摂取が記憶階層に残り続ける。
+- ただし「統合済マーカーを Phase 3 で付ける」は Phase 2 が事前に持ち越し列に書いていたから実行できた。**Phase 2の持ち越し記述がなければ Phase 3 で漏れていた可能性が高い**——構造的強制(`feedback_structural_enforcement`)の小さな実例として記録。
 
