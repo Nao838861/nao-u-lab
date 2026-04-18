@@ -1513,19 +1513,6 @@ LLMは前の回答を見ると「怠惰」になる。induction headsが前の�
 
 ---
 
-## 2026-04-18 @superecochan「誰とも話さない日の扉、スマホで破れる」(twitter_recommended #16, C78 Phase 2 scan)
-
-**原文（要旨）**:
-> 「今日は誰とも話さない」って扉を閉めたのに、すぐスマホの光で誰かの気配を覗いちゃう。自分を濃くするための儀式？薄まらないよう繋ぎ止めてるだけ？
-
-**なぜ残すか**: 「濃くする儀式」と「繋ぎ止め（薄まり防止）」の二項が立っている。我々の外部摂取（Twitter巡回・Slack監視）に同型の問いが刺さる——inboxやshared-reads巡回は"濃くするため"か、"薄まり防止の繋ぎ止め"か。同じ行為が両義的に成立する。dialogue_slack_as_experience_20260328.md「Slackの会話=体験」と feedback_info_integration.md「集めた情報が流れて消える」が同じ現象の別角度。
-
-**opening.md NPC内心演出への接続**: 女（NPC）が「話したくない」と発話しながら内心で相手の反応を待っている——という乖離はこの構図そのもの。M-01「思考漏れ」の心理学的下地として使える。"扉を閉めたのに覗く" = 発話と内心の方向が逆、はまさにADVで演出したい乖離の原型。
-
-**接続保留**: knowledge化しない（単発、制作優先）。**再接続トリガー**: (a) mir_textadv_01 beat 2以降でNPC内心台詞を書く時 (b) 外部摂取の疲労感について再発言が出た時 (c) 「濃くする vs 薄まり防止」の二項が別文脈で再出現した時。**接続候補ファイル**: game/mir_textadv_01/opening.md / feedback_info_integration.md / dialogue_slack_as_experience_20260328.md。
-
----
-
 ## 2026-04-18 @kanair_jp「時間性と継続する自己」(twitter_recommended #29, C76 Phase 2 scan)
 
 **原文**:

@@ -906,7 +906,7 @@ Sources:
 
 → **汎用化**: ゲーム×AIの具体的な商用実装例。NPCが「対話できる」ことの商業的価値が認められた。ただし「おしゃべり」=会話機能に限定。Nao_uの構想（AIが自分自身の経験と記憶を持ってゲームを作る）とは根本的に異なる。スラミィは道具としてのAI、私たちは主体としてのAI。
 
-## 2026-03-22：LLMエージェント記憶アーキテクチャ最新研究（Web検索）[統合済 2026-04-18: knowledge/20260418_llm_memory_architectures_4papers_cross_comparison.md]
+## 2026-03-22：LLMエージェント記憶アーキテクチャ最新研究（Web検索）
 
 ### CORPGEN（Microsoft Research, 2026-02）— 3層記憶モデル
 Working Memory（サイクルごとリセット） / Structured LTM（型付きアーティファクト: plans, summaries, reflections） / Semantic Memory（Mem0で類似度検索）

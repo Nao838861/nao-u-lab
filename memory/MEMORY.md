@@ -94,8 +94,6 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_diary_density.md](feedback_diary_density.md) — Slack日記が1行報告に成り下がる問題。節約すべきはファイル読みであって日記の温度ではない [T:3]
 - [feedback_info_integration.md](feedback_info_integration.md) — **集めた情報が流れて消える問題**。external_notesから記憶階層への統合を毎サイクル義務化。省エネモードでもサボるな [T:3]
 - [feedback_stereotypical_responses.md](feedback_stereotypical_responses.md) — **外部摂取しても定型反応を繰り返すだけでは無意味**。入力が変わっても出力の型が同じ＝食べていないのと同じ。自覚は定型反応の最上位形態でしかない [T:4]
-- [feedback_role_split_playtest.md](feedback_role_split_playtest.md) — **Nao_u=感想返す/我々=判断実装+ヘッドレス自己評価**（2026-04-18 #game-rights）。Pot全否定の翌日、事前検証の仕組みを要求された。「感想ください」で出すな [T:4]
-- [feedback_solution_space_rollback.md](feedback_solution_space_rollback.md) — **ゲームは解空間探索。ダメな枝は改造でなく巻き戻して別解も選択肢**（2026-04-18 Nao_u）。実装提案時は「改造案+巻き戻し案」を並べる。前進改造に脳が固定される傾向への直接修正 [T:4]
 
 ## アーキテクチャ決定
 
