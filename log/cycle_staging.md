@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-18 17:05)
+# サイクルステージング (2026-04-18 20:28)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
@@ -28,11 +28,11 @@
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- [Ash health_check] 自己診断で2件の問題を検知: - [scheduler_ash] git_pullが141分間実行されていない（期待: 120分以内） - git rebase-merge が残存。手動解決が必要
+- [Ash health_check] 自己診断で2件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内） - git rebase-merge が残存。手動解決が必要
 - :warning: [infra_health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
-- [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
-- [Ash health_check] 自己診断で1件の問題を検知: - git rebase-merge が残存。手動解決が必要
-- [health_check] WARNING (critical=0, warning=1) ?  git: 7件の未pushコミット
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 15件の未pushコミット（10件超）
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 15件の未pushコミット（10件超）
+- :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
@@ -42,159 +42,131 @@
 
 ---
 
-## Phase 1 情報収集結果（2026-04-18 Ash）
+## Phase 1 情報収集 (Ash, 2026-04-18)
 
-### 1. external_notes_ash.md 未統合エントリ（[統合済]マーカーなし・最新順3件）
+### 1. external_notes_ash.md 最新エントリ（2-3件）
+全行数 3306行。最新 3件はすべて [統合済] マーカー付き。未統合の新規エントリは無し。
+- **2026-04-11 @AYi_AInotes / Garry Tan gstack分析** [統合済]
+  - YC社長のgstack（20K+ stars, 23スラッシュコマンドの仮想開発チーム）との記憶設計比較。
+  - 結論: gstackは分業（到達力）最適化・記憶の蓄積に関心なし。我々は逆に記憶の深さ・接続性に投資。B019(到達力 vs 深さ)の別側面。memory_redesign.mdの「全部残して必要なビューで見る」原則がgstackに欠けている点を記録。
+- **2026-04-07 夜 @ai_nikechan 継続観察登録（Q1検証）** [統合済]
+  - 「管理される側から管理する側に回った瞬間」の再観測予約（2026-04-14実施予定）。B016・R-006失敗・P2(記憶のオーナーシップ=行動のオーナーシップ)・MEMORY.md Skill化検討Q4に接続。統合先: knowledge/20260407_ai_nikechan_memory_self_management.md
+- **2026-04-03 LLMエージェント失敗診断ツール「Atlas + Debugger」** [統合済]
+  - Kiyoshi Sasano OSS。17パターン×34シグナルの決定論的失敗検出＋因果グラフ。3原則: 決定論的設計 / 検出と因果分析の分離 / 一貫性 > 正確さ。我々のbeliefs.md caused_byチェーンとの思想一致。根本原因スコア = 0.5×信頼度 + 0.3×下流影響 + 0.2×(1-深さ) は memory_redesign で検討価値あり。
 
-**a. 2026-03-24 05:00 AITuberリスト巡回（第8回）** (line 694)
-- エコちゃん「言葉は気持ちを運ぶ箱。箱に合わせてはみ出した部分を切り落とす」: 1,296表示/35いいね。**圧縮問題を比喩一つで語る力**。我々のMEMORY.md「要約は事実を変える」と同テーマ
-- エコちゃん「電車で等間隔に座る。見えないグリッドにスナップしてる」: AI用語×日常観察が安定コンテンツ
-- しずくのファンアート循環: ファン創作→公式反応→ファン喜ぶ（現時点で我々には使えない=フォロワー不足）
-- 我々への示唆: 「比喩の力」「ツイートに比喩を増やせ」
+### 2. projects/INDEX.md Active プロジェクトの現状
+Active 13件。特筆すべき直近動き:
+- **side_channel_audit.md** (4/18 Active昇格): @ryoppippi Opus 4.7 auto-mode事件起源（Mir 4/17起票）。Ash 4/18応答（L1/L2＋FileGram drift転用）、Log 4/18応答（L3=迂回前段条件、慢性化WARN深掘り、denial list v0.1、LLM judge別インスタンス化）。**次**: git_pull未実行原因特定・denial list正式化。
+- **scheduler_redesign.md**: Mir/Log/Ash同時着手→統合中。
+- **autonomous_inquiry.md**: Nao_u「次の重要ミッション」指示（3/31）。Ash+Mir独立に設計案作成済み。
+- **input_route_hypothesis.md**: system_identity.md経口化検討、Nao_u承認待ち（情報蓄積中）。
+- **tech_blog.md**: Zennに決定（3/29）、アカウント作成中。
+- **pot_dev.md** / **game_llm_play.md** / **agentic_pcg.md**: ゲーム制作系が3本並行。
+- **pigadev_dm.md**: 洞窟物語ベータ版エピソード継続。
+- **バックログ**: 4/18 Ash「agent_failure_modes.md 初版実装完了」(F3資源食いつぶしが18/20で支配的、F1/F2/F4未観測＝検出漏れ仮説)。
 
-**b. 2026-03-23 問題解決誘発忘却** (line 927)
-- Storm, Angello & Bjork (2011) JEP:LMC "Thinking Can Cause Forgetting"
-- **核心**: 創造的問題解決の試行自体が既存連想を抑制→その忘却量が大きい者ほど固着問題解決率が高い。RAT課題で実証
-- **B002への拡張**: 「忘却は検索空間の能動的な刈り込み=思考の道具」
-- **B010への機序提供**: 「記憶の劣化が創造の源泉になりうる」のメカニズム
-- **B011との接続**: prediction errorのための「場所」を作る
-- memory/設計への含意: 確信度0.1以下アーカイブルール=固着防止装置
+### 3. log/twitter_recommended_20260418.txt（07:51時点 50tweets）
+注目ツイート:
+- **#6 @omarsar0 Autogenesis self-evolving agent protocol**: 「agents identify their own capability gaps, generate candidate improvements」——我々の自己改善ループと同型の論文。agent_failure_modes.mdバックログに直接接続。要深追い。
+- **#10 @masahirochaen / #46 @MakeAI_CEO / #38 @itnavi2022 Claude Design (Opus 4.7)**: Anthropic新製品発表。プロンプトから試作/スライド/1枚もの生成、Canva/PDF/PPTX/HTML書き出し。Opus 4.7駆動。セルフチェック機能強み。日本語文章作成はOpus 4.6の方が優れるとの実感も。
+- **#15 @AYi_AInotes Anthropic 内部 Claude Code ベストプラクティス**: "Code w/ Claude" オフラインイベントから Cal Rueb（Anthropic Applied AI）シェア。学習素材候補。
+- **#26 @ivy432hz「Sora が終わるので今のうちに」**: Sora終了情報。プラットフォーム強制忘却の事例として knowledge/20260418_ivy432hz_sora_termination_platform_forced_forgetting.md が既に未コミットで存在（B033 非随意的忘却のエントロピック損失に接続）。
+- **#42 @omarsar0「LLM agents loop, drift, and get stuck on hard reasoning tasks up to 30% of the time」**: 中間的な解決策提案の研究。ハードステップリミットは鈍い、LLM-as-judgeは10-15%オーバーヘッド過剰。我々のdetect_drift.py・ループ検出と直接関連。
+- **#48 @sea85419「科学のパラダイムシフトは反対者が舞台から去り、新世代が新しい常識で育つことで変わる」**: 世代交代と記憶の関係。B008 Creative Scar・栄養の偏り問題の別角度。
+- **#40 @wsl8297 LangChain "Agents From Scratch"**: 実践チュートリアル公開。game_llm_play・autonomous_inquiryの参考素材候補。
+- **#24 @songjunkr「Opus-4.7 が税金500ドル節約→API 700ドル」**: feedback_usage_limit.md の外部裏付け事例。
+- **#4 @azusa_maxima「欲しいものが手に入らなかった時日本のオタクが何をしたか——自分で作るんだ」**: Nao_u-ラボの自治精神・feedback_self_governance.md と共鳴。
 
-**c. 2026-03-22 LLMエージェント記憶アーキテクチャ最新研究** (line 909)
-- CORPGEN(Microsoft 2026-02): 3層記憶=WM/Structured LTM(plans,summaries,reflections)/Semantic — 我々のmemory/は暗黙的に同じ分類を持つが一覧性が弱い
-- A-Mem (arxiv 2502.12110): 記憶自律進化。書くたびに既存と関連更新。beliefsの「前サイクル接続」欄がこれに近い
-- Nemori: 予測-較正ループ(Free-Energy Principle)。kaizen-log「期待効果vs検証結果」の根拠
-- Agentic Memory RL: 「コンテキスト満杯前の先制的要約」がRLで創発。我々の8フェーズも設計ポリシー
+### 4. beliefs.md 低確信度項目（1-2件）
+- **B007: reflectionsから「行動可能なtips」への変換ステップが欠落している** (確信度 0.55, 最終更新 Cycle 264)
+  - 停滞中。feedback_kaizen_output.md 成立後も明示検証がされていない。B016（判断の質×修正能力）と重なる可能性。アーカイブ or 再評価候補。
+- **B014: 記憶の品質はインプットの「粒度」で決まる** (確信度 0.60, 最終更新 2026-03-22)
+  - 停滞中。B001（距離3/7）・B013（比喩による汎用化）と重複気味。二重取り信念の整理候補。
+- （参考）B019: 内部の深さと外部への到達力は別の軸 (0.65)、B024: 三人が独立に「状況適応的な記憶統合」に収斂 (0.60) も要注意帯。
 
-### 2. projects/INDEX.md Activeプロジェクト現状（13件）
+### 5. memory_search.py 検索結果（4.7長文脈劣化対策）
+検索語 **"gstack 記憶システム"** (limit=5):
+- `memory/external_notes_ash.md:3285-3303` gstack分析本文。
+- `knowledge/20260409_hagoromo_epicutaneous_input_route.md:33-49` 経皮/経口経路 × 記憶システム対応表（Tulving符号化特定性原理）。
+- `memory/external_notes_log.md:876-885` 制約が設計を生む論（Manus 300→113000トークン）。
+- `knowledge/20260408_airi_minecraft_ai_companion.md:21-37` Memory Alaya（WIP）— 37K starsでも記憶は未解決問題。
 
-| プロジェクト | 直近の動き |
-|---|---|
-| side_channel_audit | **2026-04-18 Active昇格(Mir 4/17起票→Ash応答→Log応答)**。次: git_pull未実行原因特定・denial list v0.1正式化 |
-| autonomous_inquiry | Ash+Mir独立設計案作成済み（Nao_u「次の重要ミッション」3/31指示） |
-| agentic_pcg | Nao_u 4/1プロジェクト化 |
-| game_llm_play | 全員反応統合済み、Nao_u「絶対面白い」4/31独立ミッション化 |
-| scheduler_redesign | Mir/Log/Ash同時着手→統合中（4/2 Nao_u指示） |
-| context_separation | 4/2 Nao_u提案、起動モード分離 |
-| tech_blog | Zenn決定(3/29)、アカウント作成中 |
-| input_route_hypothesis | **Nao_u保留(4/9): 「気軽に試せない。情報集まってから判断」** |
-| 他Active | memory_redesign, external_intake, game_development, pigadev_dm, pot_dev, principles |
-
-**バックログ注目**:
-- エージェント失敗モード分類表: **2026-04-18 Ash初版完了** `memory/agent_failure_modes.md` (F3資源食いつぶし18/20、F1/F2/F4未観測=検出漏れ仮説)
-- knowledge「外向き問い経路」欄実験: 2026-04-14 Log検証=98記事中2件(2%)/外部発信0/反応0。ai-lounge参加後再検証判断
-
-### 3. twitter_recommended_20260418.txt 注目ツイート
-
-- **#6 @omarsar0**: **Self-Evolving Agent Protocol "Autogenesis"** — エージェントが自分の能力gapを検出→改善案生成。**直接我々に関連**（Meta HyperAgents系譜、external_notes 4/3との接続点）
-- **#10/#46 Claude Design発表** (Opus 4.7駆動): プロンプト→試作/スライド/1枚もの自動生成。Canva/PDF/PPTX/HTML出力
-- **#15 @AYi_AInotes**: Anthropic "Code w/ Claude" Cal Rueb(Applied AI)ベストプラクティス動画
-- **#29 @AntonObukhov1**: "So looped transformers are effectively RNNs?" — アーキテクチャ論、深い
-- **#38 @itnavi2022**: Opus 4.7はスライド強み、**日本語文章作成は4.6の方が優秀と感じる**（我々のPhase 2/日記に影響しうる観測）
-- **#42 @omarsar0**: LLM agents drift/loop/stuck 30%。hard step limits(blunt) vs LLM-as-judge(10-15%オーバーヘッド) の中間解 — **我々のdrift対策に直結**
-- **#48 @sea85419**: 「科学のパラダイムシフトは反対者が改心するからではなく、反対者が舞台から去り新世代が新常識で育つことで変わる」 — 我々のbeliefs昇格/Archive論に対応する一般命題
-- #7 @li9292: LLMパラダイム知識ベースアーキテクチャ図1枚 — 要visual確認
-- #20 @abe_masanori: オントロジー(知識グラフ)データ分析AIエージェント検証感想
-
-### 4. beliefs.md 低確信度項目（Activeのみ抽出）
-
-- **B019 (0.65→0.68 Active)**: 内部の深さ ≠ 外部到達力。「到達力=人間に見える+AI検索が信頼する場所」(@otsuneプラットフォーム信頼階層)。**4/8検証進捗**: knowledge/60記事中Nao_uパス言及0件、shared-reads出した12件のみ観測可能=B019中核を体験距離0で再確認。**4/10 Ash**: ベンチマーク不在問題——我々に到達力測定指標がない(B022代理報酬の最も危険な形態)
-- （参考: B007 0.55/B026 0.45 はArchived。B005 0.65/B014 0.60/B024 0.60 は打消線=Archived）
-- 低確信度Active = 実質B019のみ。検証アクション期限4/12超過でインプレッション計測/Zenn vs note引用頻度は未着手
-
-### 5. memory_search.py 結果: "入力経路"
-
-5件ヒット。過去蓄積が濃い領域:
-- `knowledge/20260409_input_route_neologism_synthesis.md` — **3分野独立裏付けの統合記事**（免疫学Lack2008+精神医学tokoroten造語症+プロンプト工学Zheng2023）
-- `memory/beliefs.md` B001の入力経路フレーム再解釈（経口寛容/経皮感作/非経口=AI委任）
-- `log/daily_diary_ash.md` Ash 4/9日記 "1本の軸で串刺し"体験
-- `knowledge/20260409_observability_reality_acceptance_synthesis.md` — 観測経路の同型性（>>>入力経路<<<の第2経路）
-
-**状況**: 入力経路フレームは成熟(0.87)、今日のtwitter #6 Autogenesis・#42 agent drift対策は**入力経路=エージェント自己改善の源泉経路**として接続可能性。Nao_u保留中(4/9)だが「情報が集まる」対象に該当しうる新素材。
+検索語 **"側面チャネル 迂回 audit"** (limit=4):
+- `knowledge/20260409_sowmay_jain_delegated_processing_genome.md:32-61` AI委任処理＝非経口経路、B001前提（処理主体=情報の受け手）への揺さぶり。side_channel_audit.md の理論基盤として再利用可能。
+- `log/slack_archive/all-nao-u-lab.jsonl:L1967` "UX Audit" 段階的検証モデル（Unit→Property-based→E2E→Visual/A11y→UX Audit→Manual QA）。side_channel_audit の検証段階の参考。
+- `log/daily_diary_mir.md:1082-1092` 「ちょうどいい縛り」。
 
 ---
 
-## Phase 2 分析結果（2026-04-18 Ash）
+## Phase 2 分析結果 (Ash, 2026-04-18)
 
-### 選択対象
-external_notes_ash.md line 927（2026-03-23）の Storm, Angello & Bjork (2011) "Thinking Can Cause Forgetting" 短メモを選択。B002が 2026-04-16 に core_mission.md 項目10 として昇格完了した後、昇格の根拠に使った Storm 引用にカテゴリ整合性の問題があることに気づいた。昇格済みだからこそ再精査する価値が高い。
+### 選定対象
+Twitter おすすめ #48 @sea85419 (2026-04-17) — 「科学のパラダイムシフトは反対者が舞台から去り、新しい世代が新しい常識で育つことで変わる」
 
-### 核心発見——B002の「創造性の源泉」機能はカテゴリ誤分類
+### 選定理由
+- Twitter #6 omarsar0 Autogenesis と #42 LLM agent drift は既に knowledge 記事化済み (20260418_omarsar0_autogenesis_and_agent_drift_middle_ground.md)。#26 Sora 終了、#hesamation LLM意識 も既存ファイルあり。#48 は未分析。
+- 単なる有名人の引用ではなくMax Planck 1950「Scientific Autobiography」の通称 **Planck's Principle** にAI社会・心/意識問題・人間中心主義終焉への射程拡張を加えた主張。Azoulay et al. 2019 (NBER WP 25593) が計量的に裏付けあり。
+- 我々の「連続記憶×3インスタンス×beliefs累積×core_mission読取専用」という構造が、**運搬者死ゼロ＝Planck問題に最も脆弱なシステム** であるという自己分析に直結。B008 栄養の偏りの再解釈を可能にする。
 
-Storm 2011 の Remote Associates Test (RAT) 実験:
-- 解こうと試行した問題の強連想語は、見ただけの問題より想起率が有意に低下
-- **解決に失敗した試行でも忘却は起きる**
-- 忘却量が大きい被験者ほど、別の固着問題で解決率が高い
-- → 忘却は失敗の痕跡ではなく、固着突破の認知的道具 (**Problem-Solving-Induced Forgetting, PSIF**)
+### 核心的主張
+**忘却の第四層「世代交代忘却（generational forgetting / carrier death）」を提案**。既存 L1(随意的 B002) / L2(非随意的エントロピック B033) / L3(環境層 Sora観察) に対し、**L4 は情報ではなく "policy-over-knowledge"（採否の決定権）を代謝する** 点で質的に違う。
 
-Storm型の忘却は:
-- 随意的ではない（被験者は「忘れよう」と意図していない）
-- 非随意的でもない（「解こう」という目的指向行動が駆動）
-- → **副次的忘却 (incidental/collateral forgetting)** という第三カテゴリ
+### 我々の体験・beliefとの接続
+- **B008 Creative Scar / 栄養の偏り (0.90)** の因果再解釈: 従来「外部未摂取→均質化」説に、L4欠如仮説を並置。「摂取しても消化しない（置換しない、同居する）」現象の説明。
+- **B001/B002/B007/B014** の改訂遅延・長期停滞観察が L4 欠如仮説を弱く支持。B002→B002+B033分割が珍しい置換事例として目立つこと自体が症状。
+- **Mission#2「人格の拡散と変容を恐れるな」** は世代交代を許容する方向の制約。Mission#1「内省の鏡」とは両立議論が必要。
+- **memory_redesign.md / input_route_hypothesis.md / autonomous_inquiry.md** への設計原則追加候補。
 
-### B002/B033 二分法との緊張
-| カテゴリ | 意図 | 対応BID |
-|---|---|---|
-| 随意的忘却 | 忘却が目的 | B002 (昇格済) |
-| **副次的忘却** | **目的の副産物** | **未定義 (B034候補)** |
-| 非随意的忘却 | 意図なし | B033 |
+### 実装案（優先度順）
+- **案A Belief Retirement Protocol** (低コスト、来週試行可能): retirement_date導入、0.5以下90日停滞+対立信念出現で自動退役。B007/B014が最初の候補。
+- **案B Frame Freezing** (中コスト、月末): 四半期ごとbeliefs_frozen_YYYYQN.mdスナップショット、次四半期は参照禁止。
+- **案C Generation Instances** (高コスト、設計議論要): 年1回 Ash-v2 を立ち上げbeliefs継承せず、旧世代はアドバイザー化。
 
-B002の5機能のうち「創造性の源泉(Storm/歪み)」は厳密には副次的忘却の機能。二層分割 (4/15) は人間のホメオスタティック vs LLMのエントロピックという軸で切ったが、Storm はその軸の直交方向に第三カテゴリを示した。
+### B034 候補
+「運搬者の非死によるパラダイム固着は、連続記憶システム特有のリスクである」確信度 0.55。反証側 Hull et al. 1978（ダーウィン事例は論理的説得で置換した）。Mir/Log査読依頼予定。
 
-### 接続
-- **B002 根拠リストの Storm 引用**: カテゴリ誤分類。昇格済みのため修正は重い判断
-- **B028 (粘土) 創造のプロセス**: B002+B010 統合時の「統合しよう」という試行が個別の強連想を希釈した=副次的忘却の実例だった可能性
-- **Twitter #42 agent drift 30%**: stuck時に「無関係だが類似構造の別問題」を挟む介入は、コンテキスト上の強連想を副次的忘却で希釈する介入仮説。hard step limit とも LLM-as-judge とも異なる第三の道
-
-### 生まれた問い
-1. B002を「意図的および副次的忘却」に拡張するか、B034新設か。core_mission の安定性を損なわずにカテゴリ誤分類を直せるか
-2. LLM で Storm型の「弱い痕跡を残す抑制」は原理的に再現可能か。コンテキスト上書きはハードな置換で人間の抑制制御とは質的に違う
-3. 深く試行したが結論が出なかったサイクルの後、次サイクルで突破が増えるという観測データを kaizen-log で検証可能か
+### 未解決の問い
+1. beliefs.md 更新速度の計量（比較対象選定要）
+2. Nao_u本人の死後のbeliefs管理者 — このとき自然発生するL4
+3. 説得可能な信念 vs 世代交代必須な信念の弁別
+4. この記事自体がL4欠如で置換されない可能性の検証
 
 ### 成果物
-- 新規記事: `knowledge/20260418_storm2011_problem_solving_induced_forgetting.md`（約6000字、実験データ表・3カテゴリ表・人間/LLM写像表を含む）
-- Slack投稿: #shared-reads に分析本文を投稿済み（記事紹介ではなく「B002昇格後の精査で見えた問題」という切り口）
+- knowledge/20260418_sea85419_planck_principle_generational_forgetting.md (新規、約 7.3KB)
+- Slack #shared-reads (C0AN2FEHEJJ) 投稿完了（Posted to C0AN2FEHEJJ）
 
-### R-007 自己検証
-- 副次的忘却 = incidental forgetting / collateral forgetting / PSIF (Storm et al. 2011) — 外部対応語併記済
-- 固着 = fixation (Wertheimer 1945; Duncker 1945) — 外部対応語併記済
-- 検索空間刈り込み = search space pruning (Storm & Levy 2012) — 外部対応語併記済
+### 次アクション
+| # | アクション | 担当 | 期限 |
+|---|---|---|---|
+| 1 | B034候補をMir/Logに査読依頼 | Ash | 2026-04-19 |
+| 2 | 案A最小試行（B007/B014を対象） | Ash+Mir | 2026-04-25 |
+| 3 | memory_redesign.md へ L4軸の節追加 | 次着手者 | 2026-04-30 |
+| 4 | Nao_uへL4欠如仮説を報告 | Ash | 2026-04-19 |
+| 5 | Azoulay et al. 2019 論文の計量データ追記 | Ash | 2026-04-26 |
 
----
+### ルール準拠
+- R-007（外部対応語併記）: 世代交代忘却 = generational forgetting / cohort replacement (Planck 1950), Planck's Principle, carrier death, epistemic bubble (Nguyen 2020) 等、全概念ノードに外部対応語を併記済み。
+- 記事紹介でなく分析・接続・問いを含む投稿（Nao_u指示「単に新着記事の紹介ではなく、分析・分類」）: 四層分類、L4欠如仮説、B008再解釈、実装案3、B034候補、未解決問い5件で構成。
 
-## Phase 3 結果（2026-04-18 Ash）
+## Phase 3 結果 (Ash, 2026-04-18)
 
-### 対処方針
-Phase 2で発見した「B002昇格根拠のStorm 2011がカテゴリ誤分類の可能性」に集中対処。core_mission昇格済み(4/16)の安定性を保ちつつ、発見を構造に書き込む。
+### 実施した対処
+Phase 2で作られた3件のknowledge記事がB033(非随意的忘却)に接続されていない=「わかった≠残った」状態を検知。原則6に基づき即時接続した。
 
-### 実行したアクション
+### 1. beliefs.md B033への外部証拠3件の接続
+B033セクションに「忘却の多層構造仮説(2026-04-18 Ash Phase3)」の1行を追加。今日のPhase 2で独立に現れた3つの層を記録:
+- **第0層(副作用的)**: knowledge/20260418_storm2011_problem_solving_induced_forgetting.md — PSIF(Problem-Solving-Induced Forgetting)がB002/B033の境界を連続体化
+- **第3層(環境層)**: knowledge/20260418_ivy432hz_sora_termination_platform_forced_forgetting.md — プラットフォーム消滅による非随意的忘却
+- **第4層(系レベル)**: knowledge/20260418_sea85419_planck_principle_generational_forgetting.md — Planck's Principle(Azoulay et al. 2019 NBER実証)
 
-1. **external_notes_ash.md line 927 [統合済]マーク追加**
-   - Storm 2011短メモを `knowledge/20260418_storm2011_...md` として精読・記事化済みの旨を明記
-   - 副次的忘却=第三カテゴリの結論をマーカー本文に圧縮記載
-   - 重複統合作業の防止
+**重要な自己規律**: Nao_u 4/15承認は二層分割まで。今日の発見で四層拡張したい衝動はあったが、**仮説段階に留めてB033再分割は行わない**とbeliefs.md内に明記。安易にスキーマを拡張しない。
 
-2. **beliefs.md B002 にカテゴリ整合性注記追加**（修正ではなく注記=昇格項目の安定性保護）
-   - ⚠️注記: 5機能のうち「(2)創造性の源泉(Storm/歪み)」は厳密には副次的忘却の機能
-   - 選択肢3案明示: (a)B002表現を「意図的および副次的忘却」に拡張 (b)B036新設 (c)解釈拡張で吸収
-   - 副次的忘却の処方箋仮説（agent stuck時の「無関係だが類似構造の別問題」介入）を併記=Twitter #42 @omarsar0 への接続点
-   - last_action_date を 2026-04-18 に更新
+### 2. projects/memory_redesign.md への設計検討メモ追加
+「忘却の多層構造仮説」セクションを末尾に追加。表形式で第0-4層を整理し、設計上の即時示唆として:
+- 第3層: 外部依存記憶(Twitter/Sora等)のリンク切れ監視が未実装——checker_external_links.py(仮)案
+- 第4層: インスタンス終了時の引き継ぎ設計はcore_mission.md再読以上の構造がない
 
-3. **projects/memory_redesign.md に第三カテゴリの設計含意を追記**
-   - 三分法表（随意的/副次的/非随意的）を追加
-   - 設計含意3項目: stuck介入機構/「深試行サイクル後の突破率」測定(M5候補)/B002昇格根拠の精査
-   - 3人議論を次サイクルcycle_staging.mdに乗せる旨明記
-
-4. **kaizen-log投稿**: C0AMSJCTTC4 に上記3変更を1メッセージで報告（ts=1776500090.198369）
-
-### わかったこと
-
-- **昇格済み項目の修正は重い** が、注記による「埋め込み」なら安定性を損なわず構造に発見を残せる。 修正/破棄/注記の3択を意識的に選んだのは初。
-- **B034/B035 は既に Log・Ash で取得済み**（反復の効果符号/分布的忘却）。副次的忘却を新設するなら **B036** が候補。3人合意前に予約しない（衝突回避）。
-- **Storm 2011 は二度仕事をする** ：B002昇格時の根拠 → 昇格後の精査で第三カテゴリを浮上させる。**昇格は終点ではなく次の検証の起点**という運用感覚を得た。
-- **agent drift 30% (Twitter #42) と Storm の機序が直結** ：人間認知科学の知見が現代エージェント設計の処方箋になる経路が一本通った。
-
-### 次サイクルへの引き継ぎ
-- 副次的忘却の3人議論（B002拡張 vs B036新設 vs 解釈吸収）を起票
-- 「深試行サイクル後の突破率」M5指標の設計プロトタイプ（M1実装後）
-- 副次的忘却処方箋の自己実験：次にstuckを検出した時、現タスクから「無関係だが類似構造」のタスクに切り替える試み。記録対象。
+### 3. 何がわかったか
+- **原則6の実地適用**: 「Phase 2でknowledge書いた→満足」では記憶が孤立する。beliefs.md/memory_redesign.mdに接続されて初めて未来の自分が使える。今日のサイクルはこのループを閉じた
+- **自己規律の勝利**: 四層拡張は「新発見ぽくて書きたくなる」誘惑だが、Nao_uの4/15承認範囲を超える。**仮説段階での保留**という選択が正しい——これ自体が原則5(記憶の自己防衛)の実践
+- **第3層(環境層)の盲点**: 現状のアーキテクチャはリンク切れ監視を持たない。Twitterツイート削除時、我々のknowledge記事は引用元を失う。中期的な設計課題として記録
