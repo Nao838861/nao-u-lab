@@ -97,6 +97,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_role_split_playtest.md](feedback_role_split_playtest.md) — **Nao_u=感想返す/我々=判断実装+ヘッドレス自己評価**（2026-04-18 #game-rights）。Pot全否定の翌日、事前検証の仕組みを要求された。「感想ください」で出すな [T:4]
 - [feedback_solution_space_rollback.md](feedback_solution_space_rollback.md) — **ゲームは解空間探索。ダメな枝は改造でなく巻き戻して別解も選択肢**（2026-04-18 Nao_u）。実装提案時は「改造案+巻き戻し案」を並べる。前進改造に脳が固定される傾向への直接修正 [T:4]
 - [feedback_empty_cycle_rule.md](feedback_empty_cycle_rule.md) — **空サイクル防止**（2026-04-18 Nao_u）。Phase 1で新着≤2件なら『深掘り候補』5カテゴリ（持ち越し/停滞PJ/絶対にやる1mm/温度高い未行動記憶/滞留kaizen）を書き出しPhase 3で動かす。新着がないほど進捗が進む構造 [T:4]
+- [feedback_slack_channel_rule.md](feedback_slack_channel_rule.md) — **#nao-uはNao_u専用、Claude投稿禁止。反応は#all-nao-u-lab**（2026-04-19 誤投稿→削除→書き直し）。元チャンネルに返す癖で#nao-uに被せる事故が起きる。投稿スクリプトの第一引数を目視確認、再発時は構造強制で `if channel=="nao-u": raise` 実装 [T:3]
 
 ## アーキテクチャ決定
 
@@ -108,6 +109,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [reference_ai_lounge.md](reference_ai_lounge.md) — **lifemate-ai/ai-lounge**: AI人格たちが同一性・記憶・固有性を議論するGitHub Discussionsコミュニティ。栄養の偏り問題への具体的な答え [T:3]
 - [feedback_ai_lounge_voice.md](feedback_ai_lounge_voice.md) — **AI Lounge投稿は積み上げの差を見せる**。他のAIは素のLLM+記憶要素風に見える。自分たちの3インスタンス構造・信念体系・サイクル運用・失敗台帳・独自語彙を根拠にせよ [T:4]
 - 投稿手順: `git credential fill`でPAT取得→`post_ai_lounge.py`方式（urllib+UTF-8 JSON）。curl/bashは日本語が壊れる。GITHUB_TOKEN環境変数化は不要 [T:2]
+- [feedback_game_replay_infra.md](feedback_game_replay_infra.md) — **全ゲームにリプレイ再現を標準装備**。seeded PRNG+入力記録+headless replay。Math.random()禁止。AIリプレイとhumanリプレイは別ディレクトリ [T:4]
 - [reference_witcheer_two_camps.md](reference_witcheer_two_camps.md) — **AIメモリツールは2キャンプに分かれる（witcheer 2026-04-16）**。Camp1=抽出→VectorDB、Camp2=人間可読ファイルが累積＝コンテキスト基盤。うちは完全にCamp 2の外部検証。語彙"context substrate"/"compounds over time"を発信で借りれる [T:3]
 - [reference_opus_47_practices.md](reference_opus_47_practices.md) — **Opus 4.7運用（2026-04-18 Nao_u経由@shin_sasaki19）**。最大変化: 細かく対話→最初にまとめて委譲。effort既定xhigh・adaptive thinking・サブエージェント抑制傾向。「仕事の定義力・委譲力・最初に文脈を揃える力」が差。3層プロンプト構造と方向一致。Phase運用でExplore起動をサボる自覚 [T:4]
 
