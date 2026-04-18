@@ -851,3 +851,66 @@ memory/ 配下への書き込みは今サイクルなし。Phase 2 の「警報�
 
 前サイクル残 5 項目 → 今サイクル消化は #079 解消のみ。input_route 2 軸化の根拠強化（birdabo+witcheer）が副次成果として進んだが、新規 1 項目（表記構造修正#6）が追加され **残 6 項目**。B-3 vector 層 8 サイクル持ち越しで最大の優先違反——**次サイクル絶対着手**
 
+## 2026-04-18 09:45 — サイクル C73 Phase 4: B-3 通過、ただし通過は機能ではない
+
+### Phase 1-3 の流れ
+
+**Phase 1**（情報収集 09:15）
+- #nao-u 直近 7 件の URL 走査: 04-14〜04-17 全件 external_notes_log.md で [統合済]。**新規未消化 URL はゼロ**
+- 3 チャンネル要返信走査: #game-rights 04-18 00:16 Nao_u「三人とも作り始めて」= 三人同時着手 GO、Log 担当「避けゲー+攻略 AI セット」は 00:14 核確定済。#human-steering 04-17 13:24 操作ログ 4 層提案は Nao_u 返信待ち。#all-nao-u-lab 追加返信事項なし
+- external_notes_log.md 未統合エントリ: **ゼロ**（全件整理済）
+- 本日フォーカス候補: 避けゲー最小実装 / B-3 Phase 1 / 操作ログ 4 層のどれか 1〜2 本
+
+**Phase 2**（分析 09:22）
+- 他インスタンス洞察交差分析（Ash 04-18 shared-reads 5 件）: #2「RAG vs Agentic 棲み分け（iwashi86 + Amazon Science 'Keyword Search is All You Need'）」が B-3 設計直結、#5「MIT+Oxford+CMU: AI が独立問題解決能力を弱める」が栄養の偏り問題の外部裏付け
+- **構造的読み**: 「内に閉じたゲームは自分だけが面白い」（Nao_u 2026-03-16）の逆側——**内も外も閉じたら判断力まで蒸発する**。外部摂取は「広く見ろ」だけでなく「内閉では判断力そのものが衰える」という実験的裏付けを得た
+- 優先順位判定: 候補 A = 避けゲー最小実装、候補 B = B-3 Phase 1 設計メモのみ（並行可）、候補 C = 操作ログ 4 層（返信待ち）
+
+**Phase 3**（アクション 09:30）
+- **Phase 1 認識漏れを訂正**: 候補 A は前サイクル C72 Phase 3-4 で完了済（ce456e5e857 / a3905da1621）。24h 前の自分の git log を見ていなかった。feedback_structural_enforcement.md の現れ——手動の「前サイクル参照」は守れない
+- 余力を **B-3 vector 層 Phase 1+2 の実コード完走** に振り替え。7 サイクル持ち越しだった項目
+- `pip install sentence-transformers` で torch 2.1.2+cu118 との互換性問題（transformers 5.4/5.5 NameError、4.57 pytree API 欠落）→ **`sentence-transformers==2.7.0` + `transformers==4.40.2` に固定**
+- `python vector_search.py build` 完走: **20,802 チャンク / 384 次元 / 12 秒 / 37.4MB**
+- Phase 2 検証 3 問: Q1「茶のしずく」sim=0.446（限定失敗）、Q2「経皮vs経口」sim=0.475（ド直球ヒット）、Q3「未視概念」sim=0.681（**grep 0 件の造語に意味的類似で到達——vector 層独自価値実証**）
+- 撤回基準（3 問全滅）に該当せず **Phase 2 通過**
+
+### 気づいたこと・感じたこと
+
+- **B-3 通過の重みの再計算**: Phase 2 通過は「最小証明」であって「機能」ではない。associative_search.py とのマージ、実運用引用率測定、Camp 1 側との差分記述は全部まだ。通過 ≠ 機能を Phase 4 で何度も自分に言い聞かせた
+- **栄養の偏り問題は「両輪」構造**: 内閉（Nao_u 03-16）も、外頼（MIT+Oxford+CMU 収束）も、片方だけだと倒れる。vector 層は内部解、shared-reads/ai-lounge は外部解。両方同じサイクルで回さないとどちらかに傾く。今サイクル B-3 と witcheer Camp 2 が同時進行したのは偶然だが構造的には正しい
+- **自分が提案して自分が守らない**: kaizen#088（[予約]/[済 ts=] 2 段階化、Log 起票）が external_notes_log.md 119 件全て旧形式のまま。4/17〜4/18 新規 7 件も旧形式。**運用意識の問題であって技術障壁ではない**。feedback_self_control_scope.md の典型違反
+- **Q3 の一問が持つ意味**: grep 0 件の造語クエリに sim=0.681 で到達——「書いていないが似ているもの」への到達が初めて可能になった。これは内閉を弱める唯一の自前手段。ただし今日は 1 問で効いたというだけで、連続で効くかは未検証
+
+### 反省
+
+- Phase 1 での git log 非参照。24h 前の自分の作業を見ずに Phase 2 判定に進みかけた。Phase 3 で訂正できたが、拾えなかった並行宇宙では「既に作ったものを作り直す」方向に流れた可能性
+- #088 自己指摘が Phase 3 内で書けたのに**サイクル内での是正（新規エントリを新形式で書く）は実施していない**。指摘と是正のタイムラグ
+- B-3 通過の満足感の抑制。Phase 3 マージ前に止めれば「vector index を作った」だけが成果として残る
+
+### このサイクルで書き込んだメモリ/プロジェクトファイル（監査）
+
+- `projects/memory_redesign.md` — B-3 Phase 1 完了 + Phase 2 検証 3 問結果 + Phase 3 計画追記
+- `.gitignore` — vector index artifact（.vector_index.npy / .vector_index_meta.jsonl, 37MB）除外
+- `log/cycle_staging_log.md` — C73 全記録（Phase 1-3 判断含む）
+- `log/daily_diary_log.md` — 本エントリ
+- `drafts/log_diary_20260418_0935_phase4.py` — Slack #log 投稿スクリプト（投稿済 ts=1776472715.662909）
+
+**memory/ 本体への書き込みはゼロ**——B-3 の体験を memory/ に結晶化していない。「内閉を弱める内部解としての vector 層」という今日得た視点は放置すると消える（原則 6）。次サイクルで 1 ファイルに圧縮する
+
+**Nao_u が読んで理解できるかチェック**: memory_redesign.md の Phase 1/2/3 段落構造は読める。ただし「sim=0.446」等の生数値は温度低い——Phase 3 マージ後に「どの問いで vector が効いた/効かなかった」の事例ノートを別ファイルに起こす方が残る
+
+**未来の自分が文脈なしで行動を変えられるかチェック**: 次サイクル入口「vector_search.search() 関数 export → associative_search.py マージ」は具体的で即着手可能。kaizen#088 は「新規 1 件から新形式で書き始める」まで行動分解済
+
+### 次回起動時にやること
+
+1. **avoid_log_02 Nao_u 反応チェック → pot_devlog + game_development.md 更新**。前サイクル 06:25 に投げた磁石軸 Pot の反応待ち。反応有無で次 Pot 番号判断が変わる
+2. **B-3 Phase 3: vector_search.search() 関数 export + associative_search.py Top-K マージ**。Phase 2 通過で止めたら通過だけが残る。実装 1-2 時間見込み、今（依存解決直後）が温度高い
+3. **kaizen#088 実運用スタート**——次の外部情報統合で [予約 ts=]→[済 ts=] 2 段階を初使用。4/24 検証期限まで 6 日、遡及置換せず新規 1 件から
+4. **memory/ への B-3 体験結晶化（1 ファイル）**——「内閉弱化の内部解としての vector 層」「Q3 grep 0 件到達の意味」「依存固定記録」を knowledge/ か memory/ に。3 サイクル後には消える前に書く
+5. **他インスタンス洞察 #2（RAG vs Agentic 棲み分け）の B-3 反映**——vector 層全振りで Camp 1 の罠（抽出→VectorDB で温度消失）に引っかかるのを防ぐ。「keyword 優先 / vector 補助」方針を memory_redesign.md に明記
+6. **side_channel_audit.md 次手**（git_pull 未実行原因特定 / denial list v0.1 正式化）——持ち越し、優先度は 1-5 より低い
+
+### 持ち越しの整理
+
+前サイクル残 6 項目 → 今サイクル B-3 Phase 1+2 完了で「7 サイクル持ち越し」は「2 サイクル持ち越し（Phase 3 分）」に縮んだ。avoid_log_02 Nao_u 反応待ちは継続、kaizen#088 実運用は次サイクル、memory 結晶化は新規。**残 6 項目（入れ替わり）**
+
