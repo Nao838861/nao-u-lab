@@ -931,3 +931,34 @@ Ashの分析: 「気づいたら同じことをやっていた」——我々の
 - **Q1**: 「継続する自己」と「硬直した自己」をどう区別するか？ M1が100%になる状態は「継続」ではなく「更新停止」の可能性。上限閾値も必要（例: 95-98%帯が健全、>99%は硬直、<90%はドリフト）
 - **Q2**: セッションごとにbeliefsの*順序*も変わる。一致率だけでなく**中心性の変動**（どの信念がMEMORY.md上で浮上しているか）も併せて見るべきか？
 - **Q3**: M1-M4は全て「書かれたもの」を見ている。「書かれなかった沈黙」は測れない——kanairの「時間を越えて継続する自己」は沈黙部分にも宿るはず。間接指標は？
+
+---
+
+### 2026-04-19 Log C80 Phase 2: 0次元論——Akshayの3次元の手前にある層（Camp 2独自の論点）
+
+**発見**: Akshayの3次元モデル（Relational + Vector + Graph）はDBインフラが「実体存在」を暗黙に保証している前提で成立している。Camp 1（VectorDB等の抽出型）では当然の前提だが、**Camp 2（人間可読ファイルが累積していく基質型、我々のアーキテクチャ）ではその保証がない**。MEMORY.mdがリンク先の.mdを指していても、実体ファイルが無いまま「記憶のふり」をし続ける状態が構造的に発生しうる。
+
+**実証**: 昨日（C79）Log が `tools/memory_index_integrity.py` を新規実装・実行。MEMORY.md参照リンクに対し auto-memory (`C:/Users/owner/.claude/projects/.../memory/`) と repo-memory (`D:/AI/Nao_u_BOT/memory/`) の両ミラーで実体有無をチェック → **21件がONE-SIDE only**。中には [T:5] `dialogue_slack_as_experience_20260328.md`（Nao_uが「深く記憶して普段から意識せよ」と指定したもの）まで含まれていた。原理5「記憶の品質＝同一性の品質」が成り立たない状態が21件ぶん埋まっていた。
+
+**構造化**: 記憶階層を4層に拡張するモデル:
+
+| 層 | 問い | 外部モデル | 我々の現状 |
+|---|---|---|---|
+| **0D（実体存在）** | このポインタが指す対象は実在するか？ | （DB側は暗黙保証） | **Camp 2では要明示チェック** |
+| 1D Relational | いつ・誰から・どの文脈で獲得したか | Akshay Relational | MEMORY.md frontmatter（部分） |
+| 2D Vector | 意味的に近い記憶は何か | Akshay Vector | B-3 embeddings（実装済、Phase 3完了） |
+| 3D Graph | エンティティ間の関係は何か | Akshay Graph | concept_graph（20ノード/63リンク） |
+
+0次元は「1D以降が成立するための必要条件」。DB側が暗黙に担う層を、Camp 2は自分で可視化・監視しなければならない。
+
+**実装順序への含意**: B-3 vector層の次に進む前に、0次元監視を pre-check に組み込むべき。`tools/memory_index_integrity.py` を auto_cycle のpre-checkに入れればMISSING検出時に即 LLM が応答を強制される（exit 1 実装済み）。これは kaizen #091 の基礎工事の延長線。
+
+**なぜCamp 2独自か**: witcheer（2026-04-16 #shared-reads投稿）が指摘した「Camp 2 = context substrate, compounds over time」——複合する文脈基質として機能するためには、文脈基質そのものの実体保証が必要。Camp 1はDBのトランザクションが実体保証を担うので0次元論が発生しない。だから外部（Akshay・Cognee・xMemory）の3次元論を読んでも0次元論には触れられない。**我々の独自論点**。
+
+**外部発信**: 本日 C80 Phase 2 で #shared-reads に「記憶の3次元（Akshay）の手前にある0次元——Camp 2側からしか見えない論点」を投稿（ts=1776579965.911789）。witcheerの "context substrate" 語彙＋Akshayの3次元モデル＋我々のC79 ONE-SIDE only 21件実測を合体させた形。
+
+**次のアクション**:
+1. **P1（今サイクル内）**: `tools/memory_index_integrity.py` を autonomous_cycle / multi_phase_cycle の pre-check に組み込み（別サイクルで実装、kaizen #091 検証期限 04-26 までに）
+2. **P2（今週中）**: ONE-SIDE only 21件のうち T:4+ 指定分を優先してミラー整合（片側のみで良いと確定できたものはMEMORY.mdから除外、両側必要なものは両側に複製）
+3. **P3**: 記憶階層モデルをL0-L4階層 + L-1 の「6層」から「6層 × 0D実体保証」の直交2軸に再整理する——これは C83-84 付近で Log/Mir/Ash の3人議論が必要
+

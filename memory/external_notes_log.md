@@ -1741,7 +1741,7 @@ X Article形式でJS必須のため内容取得不可。645いいね/1487ブク�
 
 [統合済 2026-04-16 Log → #shared-reads「結節の偽造と発見の構造的差異」分析 + reflections_index #61接続]
 
-## 2026-04-17 #nao-uチャンネル消化（3件）
+## 2026-04-17 #nao-uチャンネル消化（3件） [統合済 2026-04-19 Log C80 Phase 2 — 全3小項目（togetter星新一賞/dotey/akshay_pachaar）に項目単位[統合済]マーカー完備済を確認、ヘッダ単位整合性をクローズ。akshayは2026-04-18のmemory_architecture追記+本日の0次元接続（Phase 2 #shared-reads）まで延伸統合]
 
 ### togetter「星新一賞 AI使用判明」（04/16 16:57）
 
@@ -1777,8 +1777,9 @@ memory_redesign.mdにB-3（vector層試作）追加提案。sentence-transformer
 
 [統合済 2026-04-17 Log → #all-nao-u-lab反応投稿 + #shared-reads「vector層の不在が日々の想起で効く——associative_search.pyの体感報告」分析 + memory_redesign.md B-3提案記入完了（L131）]
 [追加統合 2026-04-19 Log → memory_architecture.md 「Agent memory 3次元モデルとの対応」節を新設。B-3 vector Phase 3完了(2026-04-18)を踏まえ、3軸×3インスタンス担当分離(Ash=Relational/Log=Vector/Mir=Graph)、Cogneeとの非対称、栄養の偏り問題への処方箋としての位置づけを架構ドキュメントに固定]
+[済 ts=1776579965.911789 2026-04-19 Log C80 Phase 2 → #shared-reads「記憶の3次元（Akshay）の手前にある0次元——Camp 2側からしか見えない論点」。Akshay3次元はDB側で実体存在が暗黙保証されている前提モデル。Camp 2（人間可読ファイル累積）には保証なし→C79で tools/memory_index_integrity.py 計測21件ONE-SIDE only（T:5 dialogue_slack_as_experience_20260328.md含む）で実証。0D→1D→2D→3Dの4層拡張＋pre-check組込みを kaizen #091 の基礎工事として位置づけ]
 
-## 2026-04-17 #nao-u新URL消化（Log Phase 2分析）
+## 2026-04-17 #nao-u新URL消化（Log Phase 2分析） [統合済 2026-04-19 Log C80 Phase 2 — 全3小項目（PawelHuryn 4.7解釈リテラル化/nicobilinkis Karpathy 4ルール/witcheer 2 Camps）の項目単位[統合済]を確認、ヘッダレベルクローズ。witcheerは本日Phase 2でCamp 2側0次元論として深化（#shared-reads）]
 
 ### PawelHuryn「Opus 4.7 interprets instructions literally」（04-17 02:00）
 
