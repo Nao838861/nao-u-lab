@@ -68,11 +68,25 @@ class State:
         if self.trust >= 30: return "壁を作っている"
         return "拒絶"
 
+    def contradiction_labels(self):
+        """集めた矛盾の短いラベルリスト"""
+        labels = []
+        if self.caught_kitchen: labels.append("台所")
+        if self.caught_time: labels.append("2時")
+        if self.caught_back_door: labels.append("裏口")
+        if self.caught_diary: labels.append("日記帳")
+        if self.caught_body: labels.append("遺体")
+        if self.caught_fingerprint: labels.append("指紋")
+        return labels
+
     def header(self):
         print("─" * 48)
         bar = "█" * (self.trust // 10) + "░" * (10 - self.trust // 10)
         print(f"  信頼度  {bar}  {self.trust}  {self.trust_text()}")
         print(f"  残り質問  {self.questions}")
+        labels = self.contradiction_labels()
+        if labels:
+            print(f"  矛盾  {' / '.join(labels)}")
         print("─" * 48)
 
     def caught_count(self):
@@ -482,45 +496,150 @@ def beat_final(s):
     print()
 
     caught = s.caught_count()
+
+    # まず、最終アプローチを選ぶ
     options = []
 
-    if caught >= 4 and s.trust >= 40:
-        options.append(("彼女が口にした言葉を、一つずつ並べる",
-                        f"矛盾{caught}件 / 信頼度{s.trust}"))
+    if caught >= 2:
+        options.append(("矛盾を突きつける",
+                        f"集めた矛盾: {' / '.join(s.contradiction_labels())}"))
 
     if s.trust >= 70:
         options.append(("「あなたのことは、私が守ります」",
                         f"信頼度{s.trust}"))
 
-    if caught >= 2:
-        options.append(("「全部話してください。最初から」",
-                        "−1問"))
-
-    options.append(("「あの夜、本当は何をしていましたか」",
-                    "−1問"))
-    options.append(("「あなたを信じます」",
-                    f"信頼度{s.trust}"))
+    options.append(("「全部話してください」", "−1問"))
+    options.append(("「あなたを信じます」", f"信頼度{s.trust}"))
 
     c = choose(options)
     sel = options[c - 1][0]
 
-    clear()
-    print()
-
-    if "一つずつ並べる" in sel:
-        return ending_deduction(s)
+    if "矛盾を突きつける" in sel:
+        return confrontation(s)
     elif "守ります" in sel:
+        clear()
+        print()
         return ending_trust(s)
     elif "全部話して" in sel:
         s.ask()
+        clear()
+        print()
         return ending_confession(s)
     elif "信じます" in sel:
+        clear()
+        print()
         if s.trust >= 60:
             return ending_trust(s)
         else:
             return ending_insufficient(s)
     else:
         s.ask()
+        clear()
+        print()
+        return ending_insufficient(s)
+
+
+def confrontation(s):
+    """プレイヤーが矛盾を一つずつ選んで突きつける"""
+    presented = []  # 突きつけた矛盾
+
+    clear()
+    s.header()
+    print()
+    print("あなたは手帳を開いた。")
+    print()
+    print("「橘さん。あなたの供述には、いくつかおかしな点があります」")
+    print()
+    print("彼女の目が揺れた。")
+
+    # 矛盾を一つずつ突きつけるループ
+    while True:
+        print()
+
+        # 未提示の矛盾を選択肢として構築
+        options = []
+
+        if s.caught_kitchen and "kitchen" not in presented:
+            options.append(("「台所」", "kitchen",
+                            "あなたは『台所』と言いかけて言い直しました。"
+                            "事件が台所で起きたことは——まだ伝えていません"))
+        if s.caught_time and "time" not in presented:
+            options.append(("「2時」", "time",
+                            "11時に寝たと言いましたが、2時まで起きていた"))
+        if s.caught_back_door and "back_door" not in presented:
+            options.append(("「裏口」", "back_door",
+                            "裏口の存在を知っていました。"
+                            "最近あのマンションに行っていなければ——知らないはずの"))
+        if s.caught_diary and "diary" not in presented:
+            options.append(("「日記帳」", "diary",
+                            "日記帳を——まるで最近まで取り返そうとしていたように"))
+        if s.caught_body and "body" not in presented:
+            if s.caught_body_method == "photo":
+                body_text = "現場の写真を見ても、驚かなかった。一度見た光景だから"
+            elif s.caught_body_method == "fingerprint":
+                body_text = "『拭けなかった』と言いました。拭く必要があったのは、現場に触れたから"
+            else:
+                body_text = "あなたは自分から『動かなかった』と言いました"
+            options.append(("「遺体」", "body", body_text))
+
+        if not options:
+            break
+
+        # 「突きつけ終了」の選択肢を追加
+        if presented:
+            options.append(("——以上です", "done", ""))
+
+        # 選択肢表示（ラベルだけ見せる）
+        print_options = [(o[0], None) for o in options]
+        c = choose(print_options)
+
+        key = options[c - 1][1]
+        text = options[c - 1][2]
+
+        if key == "done":
+            break
+
+        presented.append(key)
+
+        clear()
+        s.header()
+        print()
+
+        # 突きつけた矛盾を表示
+        print(f"「{text}」")
+        print()
+
+        # 彼女の反応（矛盾の数に応じて変化）
+        count = len(presented)
+        if count == 1:
+            print("女は唇を噛んだ。")
+            print("「……それは——」")
+        elif count == 2:
+            print("女の目が泳いだ。")
+            print("「偶然です。ただの——」")
+        elif count == 3:
+            print("女の手が震え始めた。")
+            print("「やめてください——」")
+        elif count >= 4:
+            print("女は両手で顔を覆った。声が漏れた。")
+
+        s.trust_change(-3)
+        pause()
+
+        clear()
+        s.header()
+
+    # 突きつけた数に応じてエンディング分岐
+    clear()
+    print()
+
+    if len(presented) >= 4:
+        # 十分な矛盾を突きつけた → 推理エンディング
+        return ending_deduction(s, presented)
+    elif len(presented) >= 2:
+        # 部分的 → 告白エンディング
+        return ending_confession(s)
+    else:
         return ending_insufficient(s)
 
 
@@ -528,43 +647,11 @@ def beat_final(s):
 #  エンディング
 # ═══════════════════
 
-def ending_deduction(s):
+def ending_deduction(s, presented=None):
     print("═" * 48)
-    print()
-    print("あなたは手帳を開いた。")
-    print()
-    print("「橘さん。あなたは供述の中で、いくつか——」")
-    print("「知っているはずのないことを、口にしています」")
     print()
     time.sleep(0.5)
 
-    if s.caught_kitchen:
-        print("「あなたは『台所』と言いかけて、言い直しました」")
-        print("「事件が台所で起きたことは、まだ伝えていません」")
-        print()
-    if s.caught_time:
-        print("「11時に寝たと言いましたが、2時まで起きていた」")
-        print()
-    if s.caught_back_door:
-        print("「裏口の存在を知っていました。")
-        print("  最近行っていなければ、知らないはずの」")
-        print()
-    if s.caught_diary:
-        print("「日記帳を——まるで最近まで取り返そうとしていたように」")
-        print()
-    if s.caught_body:
-        if s.caught_body_method == "photo":
-            print("「そして——現場の写真を見ても、驚かなかった」")
-            print("「一度見た光景だから」")
-        elif s.caught_body_method == "fingerprint":
-            print("「そして——『拭けなかった』と言いましたね」")
-            print("「拭く必要があったのは、現場に触れたからです」")
-        else:
-            print("「そして——あなたは自分から、」")
-            print("「『動かなかった』と言いました」")
-        print()
-
-    time.sleep(0.8)
     print("「あなたはあの夜、あの部屋にいた」")
     print("「合鍵で裏口から入った。おそらく午前2時頃」")
     print()
