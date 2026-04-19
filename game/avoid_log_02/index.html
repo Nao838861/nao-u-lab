@@ -13,7 +13,7 @@
 </head>
 <body>
 <h1>磁石と鉄片</h1>
-<p>← → / A D で移動 &middot; SPACE で極性反転（AIが吸った鉄片を撃ち返す） &middot; R でやり直し</p>
+<p>← → で移動 &middot; SPACE でAIの鉄片を撃ち返す（溜めすぎるとAIが死ぬ） &middot; R でやり直し</p>
 <canvas id="c" width="420" height="620"></canvas>
 <script>
 const W=420,H=620,FPS=60;
@@ -48,7 +48,7 @@ function reset(){
   state={
     seed: seed,
     rng: rng,
-    player:{x:W*0.35,y:H-70,r:9,alive:true,path:[],deathBy:null,burstCd:0},
+    player:{x:W*0.35,y:H-70,r:9,alive:true,path:[],deathBy:null,burstCd:0,barrier:0},
     ai:{x:W*0.65,y:H-70,r:10,alive:true,path:[],deathBy:null,absorbed:0,absorbMax:6,invincible:0},
     bullets:[],
     sparks:[],
@@ -79,8 +79,8 @@ function spawn(){
   const p=state.player;
   let sx;
   const R=state.rng;
-  if(p.alive && R()<0.9){
-    sx = p.x + (R()-0.5)*100;
+  if(p.alive && R()<0.3){
+    sx = p.x + (R()-0.5)*80;
     sx = Math.max(15, Math.min(W-15, sx));
   }else{
     sx = R()*(W-30)+15;
@@ -205,9 +205,7 @@ function step(){
   if(!state.over){
     state.t++;
     state.spawn++;
-    // 弾幕激化: 15秒以降急カーブ、下限5
-    const tSec=state.t/FPS;
-    const interval = tSec<15 ? Math.max(11, 28-Math.floor(state.t/150)) : Math.max(5, Math.floor(11-(tSec-15)*0.35));
+    const interval=Math.max(11, 28 - Math.floor(state.t/150));
     if(state.spawn>=interval){state.spawn=0;spawn();}
 
     const p=state.player, a=state.ai;
@@ -250,37 +248,15 @@ function step(){
       }
     }
 
-    // bullets (attract + 磁力場内減速 + 場外誘導 + rage化)
+    // bullets (attract only)
     for(const b of state.bullets){
       b.life++;
-      if(b.mode==='iron'){
-        aiAttract(b);
-        const dToAi=Math.hypot(b.x-a.x,b.y-a.y);
-        const inField = a.alive && dToAi<160;
-        if(inField){
-          const drag=0.88+0.08*(dToAi/160);
-          b.vx*=drag; b.vy*=drag;
-        }else if(p.alive){
-          // 場外誘導 (AI死後は強化)
-          const dx=p.x-b.x, dy=p.y-b.y, d=Math.hypot(dx,dy)+0.001;
-          const homing = a.alive ? 0.07 : 0.12;
-          b.vx+=(dx/d)*homing; b.vy+=(dy/d)*homing;
-        }
-        // rage化: 4秒以上残った鉄片はプレイヤーを追尾
-        if(b.life>240 && p.alive){
-          const dx=p.x-b.x, dy=p.y-b.y, d=Math.hypot(dx,dy)+0.001;
-          const rage=Math.min(0.25,(b.life-240)/300*0.25);
-          b.vx+=(dx/d)*rage; b.vy+=(dy/d)*rage;
-        }
-      }
+      if(b.mode==='iron') aiAttract(b);
       b.x+=b.vx; b.y+=b.vy;
       b.vx *= 0.995;
     }
 
-    // chain (returned vs iron): piercing + splash + 磁力場内報酬
-    const pInField = a.alive && p.alive && Math.hypot(p.x-a.x,p.y-a.y)<=160;
-    const fieldMult = pInField ? 2.0 : 0.1;
-    const splashR = 35;
+    // chain (returned vs iron) — piercing supercharge弾は貫通
     for(const r of state.bullets){
       if(r.mode!=='returned' || r._consumed) continue;
       for(const b of state.bullets){
@@ -289,21 +265,12 @@ function step(){
           b._consumed=true;
           if(!r.pierce) r._consumed=true;
           state.chain++; state.chainDecay=90; state.chainPeak=Math.max(state.chainPeak,state.chain);
-          state.score += Math.floor(10 * state.chain * fieldMult);
+          state.score += 10 * state.chain;
           for(let i=0;i<6;i++) state.sparks.push({
             x:(r.x+b.x)/2, y:(r.y+b.y)/2,
             vx:(Math.random()-0.5)*3, vy:(Math.random()-0.5)*3,
             life:22, col:'rgba(255,220,140,'
           });
-          // splash: 近くのiron弾も巻き込む
-          for(const s of state.bullets){
-            if(s===b || s.mode!=='iron' || s._consumed) continue;
-            if(Math.hypot(b.x-s.x,b.y-s.y)<splashR){
-              s._consumed=true;
-              state.chain++; state.chainPeak=Math.max(state.chainPeak,state.chain);
-              state.score += Math.floor(10 * state.chain * fieldMult);
-            }
-          }
           break;
         }
       }
@@ -311,11 +278,9 @@ function step(){
 
     state.bullets = state.bullets.filter(b=>!b._consumed && b.y<H+60 && b.y>-60 && b.x>-40 && b.x<W+40);
 
-    // collisions: 鉄片がプレイヤーに当たる（磁力場内では判定縮小=磁石に守られる）
-    const pHitbox = pInField ? p.r*0.45 : p.r;
+    // collisions
     for(const b of state.bullets){
-      if(p.alive && Math.hypot(p.x-b.x,p.y-b.y)<pHitbox+b.r){
-        // SPACE由来のreturned(life若い)は味方。過充電由来のreturned(life>12後)は敵。iron常に敵。
+      if(p.alive && Math.hypot(p.x-b.x,p.y-b.y)<p.r+b.r){
         if(b.mode==='returned' && b.life<=12) continue;
         p.alive=false; state.pEndT=state.t; p.deathBy=b.mode;
       }
@@ -324,7 +289,7 @@ function step(){
     // chain decay
     if(state.chainDecay>0){state.chainDecay--; if(state.chainDecay===0) state.chain=0;}
 
-    if(!p.alive && !state.over){
+    if((!p.alive || !a.alive) && !state.over){
       state.over=true; state.overAt=state.t;
     }
 
@@ -347,7 +312,6 @@ function draw(){
   }
 
   const p=state.player,a=state.ai;
-  const pInField = a.alive && p.alive && Math.hypot(p.x-a.x,p.y-a.y)<=160;
 
   // 磁力場の視覚化: AI生存中、AIを中心に淡いリング
   if(a.alive){
@@ -367,8 +331,9 @@ function draw(){
 
   // bullets
   for(const b of state.bullets){
-    if(b.mode==='iron')      ctx.fillStyle='#c7cdd9'; // 鉄片
-    else if(b.mode==='returned') ctx.fillStyle='#ffd170'; // 撃ち返し
+    if(b.mode==='iron')      ctx.fillStyle='#c7cdd9';
+    else if(b.mode==='returned') ctx.fillStyle='#ffd170';
+    else if(b.mode==='mine')  ctx.fillStyle='#ff4444'; // 地雷=赤
     ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,6.283); ctx.fill();
   }
 
@@ -407,20 +372,29 @@ function draw(){
     ctx.fillText(`chain x${state.chain}`, 10, 66);
   }
 
-  // absorb meter (AI側に)
+  // absorb meter (大きく、危険時は赤)
   if(a.alive){
-    ctx.strokeStyle='rgba(255,200,130,0.7)';
-    ctx.strokeRect(a.x-16, a.y+a.r+6, 32, 4);
-    ctx.fillStyle='rgba(255,200,130,0.9)';
-    ctx.fillRect(a.x-16, a.y+a.r+6, 32*(a.absorbed/a.absorbMax), 4);
-  }
-
-  // 磁力場内インジケーター: 場内にいるとプレイヤーに淡い盾リング
-  if(pInField && p.alive){
-    ctx.strokeStyle='rgba(100,200,255,0.3)';
-    ctx.lineWidth=1.5;
-    ctx.beginPath(); ctx.arc(p.x,p.y,p.r*0.45+2,0,6.283); ctx.stroke();
+    const ratio = a.absorbed/a.absorbMax;
+    const danger = ratio >= 1;
+    const mw=48, mh=6;
+    // 危険時: 画面全体に赤フラッシュ
+    if(danger){
+      const flash = 0.08 + 0.06*Math.sin(state.t*0.4);
+      ctx.fillStyle=`rgba(255,40,40,${flash})`;
+      ctx.fillRect(0,0,W,H);
+    }
+    // ゲージ
+    ctx.strokeStyle = danger ? '#ff4444' : 'rgba(255,200,130,0.7)';
+    ctx.lineWidth = danger ? 2 : 1;
+    ctx.strokeRect(a.x-mw/2, a.y+a.r+8, mw, mh);
+    ctx.fillStyle = danger ? '#ff4444' : (ratio>0.7 ? '#ffaa44' : 'rgba(255,200,130,0.9)');
+    ctx.fillRect(a.x-mw/2, a.y+a.r+8, mw*ratio, mh);
     ctx.lineWidth=1;
+    // 危険時テキスト
+    if(danger && Math.floor(state.t/15)%2===0){
+      ctx.fillStyle='#ff6666'; ctx.font='bold 11px system-ui';
+      ctx.fillText('SPACE!', a.x-18, a.y+a.r+26);
+    }
   }
 
   // Over screen
@@ -428,18 +402,22 @@ function draw(){
     ctx.fillStyle='rgba(0,0,0,0.55)'; ctx.fillRect(0,0,W,H);
     const py=(state.pT/FPS);
     ctx.fillStyle='#fff'; ctx.font='bold 20px system-ui';
-    const title = `${py.toFixed(1)}s survived`;
+    // AI死かプレイヤー死かで表示を変える
+    const aiDied = !a.alive;
+    const title = aiDied ? 'AI overload' : `${py.toFixed(1)}s survived`;
     ctx.fillText(title,W/2-ctx.measureText(title).width/2,H/2-80);
 
     ctx.font='13px system-ui'; ctx.fillStyle='#cfd4e4';
-    ctx.fillText(`score ${state.score}`,W/2-30, H/2-56);
-
-    // 死因マーカー
-    ctx.fillStyle='#9fb1d8'; ctx.font='11px system-ui';
-    const pReason = p.deathBy==='returned' ? '跳ね返りで死' : p.deathBy==='iron' ? '鉄片で死' : '—';
-    ctx.fillText(`死因: ${pReason}`, W/2-40, H/2-32);
-    ctx.fillStyle='#8ea4cc'; ctx.font='11px system-ui';
-    ctx.fillText(`chain peak ${state.chainPeak}  field ${(state.inFieldFrames/Math.max(1,state.pEndT)*100).toFixed(0)}%`,W/2-80, H/2-12);
+    if(aiDied){
+      ctx.fillText('AIが鉄片を溜めすぎて崩壊した',W/2-100, H/2-56);
+      ctx.fillStyle='#ff8888';
+      ctx.fillText('SPACEでAIの鉄片を撃ち返せば防げる',W/2-115, H/2-36);
+    }else{
+      ctx.fillText(`score ${state.score}`,W/2-30, H/2-56);
+      ctx.fillStyle='#9fb1d8'; ctx.font='11px system-ui';
+      const pReason = p.deathBy==='returned' ? '跳ね返りで死' : p.deathBy==='iron' ? '鉄片で死' : '—';
+      ctx.fillText(`死因: ${pReason}  score ${state.score}`, W/2-60, H/2-36);
+    }
 
     ctx.fillStyle='#6e84ac';
     ctx.fillText('press R to restart',W/2-55,H/2+30);

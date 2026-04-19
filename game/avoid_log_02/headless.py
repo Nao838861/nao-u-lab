@@ -56,7 +56,7 @@ def new_state(seed, use_mulberry=False):
     rng = mulberry32(seed) if use_mulberry else random.Random(seed)
     return {
         "player": {"x": W * 0.35, "y": H - 70, "r": 9, "alive": True,
-                   "deathBy": None, "burstCd": 0},
+                   "deathBy": None, "burstCd": 0, "barrier": 0},
         "ai": {"x": W * 0.65, "y": H - 70, "r": 10, "alive": True,
                "deathBy": None, "absorbed": 0, "absorbMax": 6,
                "fullFrames": 0, "invincible": 0},
@@ -71,9 +71,16 @@ def new_state(seed, use_mulberry=False):
         "score": 0,
         "rng": rng,
         # 計測用
-        "in_field_frames": 0,   # プレイヤーが磁力場内(AIから160px以内)にいたフレーム数
-        "space_presses": 0,     # 極性反転が成功したフレーム数
-        "space_inputs": 0,      # SPACEが押された入力の総数（連打度）
+        "in_field_frames": 0,
+        "space_presses": 0,
+        "space_inputs": 0,
+        # 面白さの近似指標用
+        "arc_hits": 0,        # SPACEを押して30f以内にiron弾が消えた回数
+        "arc_total": 0,       # SPACEを押した回数（burstCd中含む）
+        "arc_window": 0,      # SPACE後のカウントダウン（30f）
+        "move_changes": 0,    # 移動方向の変化回数（phase variety用）
+        "last_move": 0,       # 前フレームの移動方向
+        "phase_space_events": 0,  # SPACE発生回数（phase variety用）
     }
 
 
@@ -81,9 +88,9 @@ def _spawn(state):
     t = state["t"] / FPS
     speed = 2.2 + min(3.2, t * 0.04)
     rng = state["rng"]
-    # 90%の確率でプレイヤー方向スポーン
+    # 30%の確率でプレイヤー方向スポーン
     p = state["player"]
-    if p["alive"] and rng.random() < 0.9:
+    if p["alive"] and rng.random() < 0.3:
         x = p["x"] + (rng.random() - 0.5) * 100
     else:
         x = rng.random() * (W - 30) + 15
@@ -200,12 +207,7 @@ def step(state, move_input, space_input):
         return
     state["t"] += 1
     state["spawn"] += 1
-    # B: 弾幕激化 — 15秒以降急カーブ、下限5
-    t_sec = state["t"] / FPS
-    if t_sec < 15:
-        interval = max(11, 28 - state["t"] // 150)
-    else:
-        interval = max(5, int(11 - (t_sec - 15) * 0.35))
+    interval = max(11, 28 - state["t"] // 150)
     if state["spawn"] >= interval:
         state["spawn"] = 0
         _spawn(state)
@@ -217,8 +219,15 @@ def step(state, move_input, space_input):
     if p["alive"]:
         p["x"] += sp * move_input
         p["x"] = max(p["r"], min(W - p["r"], p["x"]))
+        # phase variety: 移動方向の変化をカウント
+        if move_input != state["last_move"]:
+            state["move_changes"] += 1
+        state["last_move"] = move_input
         if space_input:
             state["space_inputs"] += 1
+            state["arc_total"] += 1
+            state["arc_window"] = 30  # 30f以内にiron弾が消えたか追跡
+            state["phase_space_events"] += 1
             if a["alive"] and a["absorbed"] > 0 and p["burstCd"] <= 0:
                 _trigger_polarity_reversal(state)
         if p["burstCd"] > 0:
@@ -247,38 +256,11 @@ def step(state, move_input, space_input):
         b["life"] += 1
         if b["mode"] == "iron":
             _ai_attract(state, b)
-            d_to_ai = math.hypot(b["x"] - a["x"], b["y"] - a["y"])
-            in_field = a["alive"] and d_to_ai < 160
-            if in_field:
-                # 磁力場内の鉄片は減速（磁場がブレーキ）
-                drag = 0.88 + 0.08 * (d_to_ai / 160)
-                b["vx"] *= drag
-                b["vy"] *= drag
-            elif p["alive"]:
-                # 場外の緩い誘導
-                dx = p["x"] - b["x"]
-                dy = p["y"] - b["y"]
-                d = math.hypot(dx, dy) + 0.001
-                homing = 0.12 if not a["alive"] else 0.07
-                b["vx"] += (dx / d) * homing
-                b["vy"] += (dy / d) * homing
-            # 古い鉄片は追尾化（磁石に処理されない鉄片は暴走する）
-            if b["life"] > 240 and p["alive"]:  # 4秒以上場に残った弾
-                dx = p["x"] - b["x"]
-                dy = p["y"] - b["y"]
-                d = math.hypot(dx, dy) + 0.001
-                rage = min(0.25, (b["life"] - 240) / 300 * 0.25)  # 徐々に強化
-                b["vx"] += (dx / d) * rage
-                b["vy"] += (dy / d) * rage
         b["x"] += b["vx"]
         b["y"] += b["vy"]
         b["vx"] *= 0.995
 
-    # returned vs iron chain (磁力場内報酬 + 範囲消去)
-    p_in_field = (a["alive"] and p["alive"]
-                  and math.hypot(p["x"] - a["x"], p["y"] - a["y"]) <= 160)
-    field_mult = 2.0 if p_in_field else 0.1
-    splash_radius = 35  # 巻き込み半径
+    # returned vs iron chain
     for r in state["bullets"]:
         if r["mode"] != "returned" or r["_consumed"]:
             continue
@@ -292,16 +274,10 @@ def step(state, move_input, space_input):
                 state["chain"] += 1
                 state["chainDecay"] = 90
                 state["chainPeak"] = max(state["chainPeak"], state["chain"])
-                state["score"] += int(10 * state["chain"] * field_mult)
-                # 範囲消去: 当たったiron弾の近くのiron弾も巻き込む
-                for s in state["bullets"]:
-                    if s is b or s["mode"] != "iron" or s["_consumed"]:
-                        continue
-                    if math.hypot(b["x"] - s["x"], b["y"] - s["y"]) < splash_radius:
-                        s["_consumed"] = True
-                        state["chain"] += 1
-                        state["chainPeak"] = max(state["chainPeak"], state["chain"])
-                        state["score"] += int(10 * state["chain"] * field_mult)
+                state["score"] += 10 * state["chain"]
+                # ARC計測: SPACE後30f以内の消去
+                if state["arc_window"] > 0:
+                    state["arc_hits"] += 1
                 break
 
     state["bullets"] = [
@@ -309,10 +285,9 @@ def step(state, move_input, space_input):
         if not b["_consumed"] and -60 < b["y"] < H + 60 and -40 < b["x"] < W + 40
     ]
 
-    # collisions (磁力場内ではプレイヤー判定縮小: 磁石に守られる)
-    p_hitbox = p["r"] * 0.45 if p_in_field else p["r"]
+    # collisions
     for b in state["bullets"]:
-        if p["alive"] and math.hypot(p["x"] - b["x"], p["y"] - b["y"]) < p_hitbox + b["r"]:
+        if p["alive"] and math.hypot(p["x"] - b["x"], p["y"] - b["y"]) < p["r"] + b["r"]:
             if b["mode"] == "returned" and not state["aiDeathBurstFired"]:
                 continue
             if b["mode"] == "returned" and state["aiDeathBurstFired"] and b["life"] <= 12:
@@ -326,7 +301,11 @@ def step(state, move_input, space_input):
         if state["chainDecay"] == 0:
             state["chain"] = 0
 
-    if not p["alive"] and not state["over"]:
+    # ARC window countdown
+    if state["arc_window"] > 0:
+        state["arc_window"] -= 1
+
+    if (not p["alive"] or not a["alive"]) and not state["over"]:
         state["over"] = True
 
 
@@ -483,9 +462,13 @@ def run_one(seed, policy_name):
         "ai_deathBy": a["deathBy"],
         "in_field_frames": state["in_field_frames"],
         "in_field_ratio": state["in_field_frames"] / max(1, pEnd),
-        "space_presses": state["space_presses"],  # 反転成功数
-        "space_inputs": state["space_inputs"],    # 入力フレーム数（連打度）
+        "space_presses": state["space_presses"],
+        "space_inputs": state["space_inputs"],
         "supercharge_count": state.get("supercharge_count", 0),
+        # 面白さの近似指標
+        "arc": state["arc_hits"] / max(1, state["arc_total"]),  # action-reaction coupling
+        "move_changes": state["move_changes"],
+        "phase_variety": (state["move_changes"] + state["phase_space_events"]) / max(1, pEnd / FPS),  # per second
     }
 
 
@@ -510,6 +493,9 @@ def aggregate(traces):
             1 for t in traces
             if t["player_survival_frames"] > t["ai_survival_frames"]
         ) / n,
+        # 面白さの近似指標
+        "arc_avg": sum(t["arc"] for t in traces) / n,
+        "phase_variety_avg": sum(t["phase_variety"] for t in traces) / n,
     }
 
 
@@ -564,14 +550,36 @@ def diagnose(agg_by_policy):
     # 5. AI死因
     lines.append(f"- AI死亡率: concept={c['ai_death_rate']:.0%} / slacker={s['ai_death_rate']:.0%} / dodger={d['ai_death_rate']:.0%}")
 
+    # 6. 面白さの近似指標
+    lines.append(f"\n### 体験品質指標 (experimental)")
+    lines.append(f"- ARC (action-reaction coupling): concept={c['arc_avg']:.0%} / slacker={s['arc_avg']:.0%}")
+    if c["arc_avg"] < 0.3:
+        lines.append(f"  ⚠ conceptのARC {c['arc_avg']:.0%} — SPACEを押しても弾が消えない。「何もできない」感覚の可能性")
+    lines.append(f"- Phase variety (per sec): concept={c['phase_variety_avg']:.1f} / slacker={s['phase_variety_avg']:.1f} / dodger={d['phase_variety_avg']:.1f}")
+    if c["phase_variety_avg"] < 3:
+        lines.append(f"  ⚠ conceptのphase variety低い — 行動が単調な可能性")
+
     # 総合判定
     concept_wins = (c_surv > s_surv and c_surv > d_surv
                     and c["score_avg"] >= s["score_avg"]
                     and c["score_avg"] >= d["score_avg"])
     if concept_wins:
-        lines.append("\n✅ **設計成立シグナル**: conceptが生存/スコア共に手抜き勢を上回る")
+        lines.append("\n✅ **バランス成立**: conceptが生存/スコア共に手抜き勢を上回る")
     else:
-        lines.append("\n❌ **設計不成立シグナル**: 手抜きプレイが優位。ゲームデザインが機能していない")
+        lines.append("\n❌ **バランス不成立**: 手抜きプレイが優位")
+
+    # 体験品質判定
+    arc_ok = c["arc_avg"] >= 0.3
+    phase_ok = c["phase_variety_avg"] >= 3
+    if arc_ok and phase_ok:
+        lines.append("✅ **体験品質OK**: SPACEが機能し、行動に多様性がある")
+    else:
+        issues = []
+        if not arc_ok:
+            issues.append("ARC低い(SPACEが無意味)")
+        if not phase_ok:
+            issues.append("phase variety低い(単調)")
+        lines.append(f"⚠ **体験品質に懸念**: {', '.join(issues)}")
 
     return lines
 
