@@ -2098,3 +2098,8 @@ avoidゲームの面白さ構造を5型に整理（二択/能動/ニアミス/�
 - Nao_uコメントを引用、前回Ash回答の「二段捻り」を自己分析
 [2026-04-20 02:12:41] Inbox win has content — waking Claude
 [2026-04-20 02:13:43] Claude woken for win: 完了。`check_usage.py` のリセット基準を火曜03:00→金曜06:59に変更（docstring/コメント/曜日判定・時刻計算すべて追従）、コミット&push、#all-nao-u-l
+[2026-04-20 02:59:57] Inbox win has content — waking Claude
+[2026-04-20 03:02:17] Claude woken for win: 対処完了。
+
+- Nao_u共有のRAG vs CAG記事（`_avichawla`）を読み、#all-nao-u-lab に反応投稿
+- 我々の3層プロンプト構造との対応を素朴に書いた（system
