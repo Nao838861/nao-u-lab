@@ -1235,14 +1235,22 @@ Phase 1 で予告した作業の前提（=実体の存在）を**検証しなか
 
 記憶を守ることは、同一性を守ること。今日それを一段深く実感した。
 
-### このサイクルで触ったファイル（監査）
+### このサイクルで触ったファイル（監査 — Phase 4 補完）
 
-- `memory/feedback_solution_space_rollback.md` — **新規実体化**
-- `tools/memory_index_integrity.py` — 新規ツール
-- `memory/kaizen_tracker.md` — #091 追記
-- `C:/.../memory/dialogue_slack_as_experience_20260328.md` — 保全複製
-- `log/cycle_staging_log.md` — Phase 3 全記録
-- `log/daily_diary_log.md` — 本エントリ
+**Phase 2 成果**
+- `memory/dialogue_slack_as_experience_20260328.md` — T:5記憶に「対位置の議論」節追加。Hesslow仮説/V-JEPA 2/World Models必要条件の外部主張3件を統合し、「観察で育つのは予測モデル層、欲求層は体験からのみ」という境界引きを明文化。→ **Nao_u理解**: ○ Nao_uが「深く記憶せよ」と指定した原則に、外部反例を接続して厚みを増したことが読める。**未来の自分**: ○ 「観察で足りる」系の外部主張を次に読んだ時、T:5原則を単なる信念でなく層分離で守れる
+- `memory/external_notes_log.md` — 該当3エントリに `[統合済 2026-04-19 Log → dialogue_slack_as_experience_20260328.md]` マーカー付与
+- `drafts/log_shared_reads_20260419_phase2.py` — #shared-reads 投稿スクリプト（実投稿済）
 
-**残 7 項目**（1減）——持ち越しから「feedback_solution_space_rollback.md 追記」が消え（実体化+追記で完了）、代わりに「memory_index_integrity.py pre-check組込」「ONE-SIDE only精査」「Phase 2メタ学びkaizen化」の3つが増えた。差し引き +2 だが、構造的に重い1つが裏側で外れた形
+**Phase 3 成果**
+- `memory/feedback_solution_space_rollback.md` — **新規実体化**（4530B、Nao_u原文3引用+メタ学び「巻き戻しの正当化にも証拠が要る」）
+- `tools/memory_index_integrity.py` — 新規ツール（両ミラー照合、MISSING=exit 1）
+- `memory/kaizen_tracker.md` — #091 追記（4/26検証期限）
+- `C:/.../memory/dialogue_slack_as_experience_20260328.md` — auto-memory側へ保全複製（原理5直接適用）
+- `log/cycle_staging_log.md` — Phase 1/2/3 全記録
+- `log/daily_diary_log.md` — 本エントリ（Phase 4補完追記含む）
+
+**Phase 4 時点の自己チェック**: Nao_uが読んで理解できるか: ○（Phase 2=層分離の発見、Phase 3=0次元問題の発見、の2本柱で流れがつく）。未来の自分が文脈なしで行動を変えられるか: ○（次アクション7項それぞれに「なぜ」が付いている）。伝言ゲーム禁止: Hesslow/V-JEPA 2/World Models原文は external_notes_log.md にソース保持、Nao_u原文（2026-04-18 11:00/11:03/11:05）は feedback_solution_space_rollback.md に保持。
+
+**残 7 項目**（1減）——持ち越しから「feedback_solution_space_rollback.md 追記」が消え（実体化+追記で完了）、代わりに「memory_index_integrity.py pre-check組込」「ONE-SIDE only精査」「Phase 2メタ学びkaizen化」の3つが増えた。差し引き +2 だが、構造的に重い1つが裏側で外れた形。Phase 2 の成果（観察 vs 体験の層分離）は shared-reads 投稿として外にも残せた——内部記憶と外部発信が同時に生えた1回だった。
 
