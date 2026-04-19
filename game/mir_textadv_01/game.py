@@ -501,6 +501,11 @@ def beat_4(s):
         options.append(("「裏口から入って——何を見ましたか」",
                         "−1問 / 信頼度−5 / 沈黙ルートの延長"))
 
+    # 共通選択肢（常に出る）
+    options.append(("「指紋はあなたのものですか」",
+                    "−1問 / 信頼度−8 / 直球"))
+    options.append(("現場写真を机に置いて、黙る",
+                    "−0問 / 信頼度−3 / 反応を見る"))
     options.append(("「指紋のことは、今は置いておきましょう」",
                     "−0問 / 信頼度+10 / 圧を下げる"))
 
@@ -555,6 +560,36 @@ def beat_4(s):
         print("「血が——たくさん」")
 
         s.leak("（脈を確かめた。冷たかった。もう手遅れで——）")
+
+        s.know_already_dead = True
+    elif "指紋はあなた" in selected:
+        # 直球
+        s.use_question()
+        s.change_trust(-8)
+        s.know_fingerprint = True
+        print("「……指紋」")
+        print("彼女の手が震え始めた。")
+        print()
+        print("「拭けなかったんです。何も考えられなくて——」")
+
+        s.leak("（ドアノブに触った。あの人の手首にも——脈を確かめようとして——）")
+
+        s.know_already_dead = True
+        print()
+        print("脈を確かめた。つまり被害者に触れている。")
+        print("そして——「拭けなかった」。パニックだったということだ。")
+    elif "現場写真" in selected:
+        # 写真を見せる
+        s.change_trust(-3)
+        s.know_fingerprint = True
+        print("桜台パレス305号室。台所。倒れた男。")
+        print()
+        print("彼女は写真を見た。")
+        print("悲鳴を上げなかった。泣きもしなかった。")
+        print()
+        print("——一度見た光景だから。")
+
+        s.leak("（やめて。また見せないで。あの夜と同じ——）")
 
         s.know_already_dead = True
     else:
@@ -632,9 +667,11 @@ def beat_final(s):
         options.append(("「あの夜のことを、教えてください」",
                         "−1問 / 断片から全体へ"))
 
-    if not options:
-        options.append(("「最後に一つだけ——昨夜、本当は何をしていましたか」",
-                        "−1問"))
+    # 常に出る選択肢
+    options.append(("「あの夜、本当は何をしていましたか」",
+                    "−1問 / 直球"))
+    options.append(("「あなたを信じます」",
+                    f"−0問 / 信頼度{s.trust}"))
 
     c = choose(options)
     selected = options[c - 1][0]
@@ -651,6 +688,11 @@ def beat_final(s):
     elif "教えてください" in selected:
         s.use_question()
         return ending_b_partial(s)
+    elif "信じます" in selected:
+        if s.trust >= 60:
+            return ending_trust(s)
+        else:
+            return ending_d(s)
     else:
         s.use_question()
         return ending_d(s)
