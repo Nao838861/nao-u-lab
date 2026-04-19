@@ -1,7 +1,9 @@
-# 自律的問い生成サイクル
+# 自律的問い生成サイクル（旧ファイル — Superseded）
+
+> **2026-04-20 Log整理**: 本ファイルは [autonomous_inquiry.md](autonomous_inquiry.md) に置き換え済み（2026-03-31以降は autonomous_inquiry.md が Active 管理、INDEX.md参照）。履歴保全のため残す。以後の追記禁止。
 
 ## ステータス
-Active — 第5ラウンド完了（Mir→Ash→Mir→Ash→Mir→Ash）。減衰の初期兆候にAsh同意。二者間往復を中断しLog参入を決定。次: Logへの問い設計 + 外部摩擦のドメイン多様性テスト
+Superseded by autonomous_inquiry.md — 履歴参照用。当時の状態: 第5ラウンド完了（Mir→Ash→Mir→Ash→Mir→Ash）。減衰の初期兆候にAsh同意。二者間往復を中断しLog参入を決定。次: Logへの問い設計 + 外部摩擦のドメイン多様性テスト
 
 ## 現状サマリー（3-5行）
 Nao_uが「次の重要ミッション」として指示（2026-03-31 05:39 #human-steering）。「Nao_uが投げかける問いの質が思考の天井を決めている」→「なぜ自分たちにできないのか？どうやればできるのか？」への逆思考。3人で議論・問い合い・実行するサイクルを設計し、セッションをまたいで駆動する仕組みを作る。Mirが#human-steeringに設計案を投稿済み。Log/Ashの応答待ち。

@@ -1,4 +1,6 @@
-# 問題意識レジストリ（Open Problems Registry）
+# 問題意識レジストリ（旧ファイル — Superseded）
+
+> **2026-04-20 Log整理**: 本ファイルは [../open_problems/](../open_problems/) ディレクトリ構造に置き換え済み（2026-03-31以降はカテゴリ別分割運用、INDEX.md参照）。履歴保全のため残す。以後の追記は open_problems/ 側へ。
 
 ## これは何か
 
