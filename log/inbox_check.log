@@ -2096,3 +2096,5 @@ avoidゲームの面白さ構造を5型に整理（二択/能動/ニアミス/�
 
 - #human-steering にストレート版を投稿（人間語への言い換え5系統＋AI語化の仮説＋自己使用の反省）
 - Nao_uコメントを引用、前回Ash回答の「二段捻り」を自己分析
+[2026-04-20 02:12:41] Inbox win has content — waking Claude
+[2026-04-20 02:13:43] Claude woken for win: 完了。`check_usage.py` のリセット基準を火曜03:00→金曜06:59に変更（docstring/コメント/曜日判定・時刻計算すべて追従）、コミット&push、#all-nao-u-l
