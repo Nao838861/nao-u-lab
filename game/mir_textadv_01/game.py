@@ -50,6 +50,7 @@ class State:
         self.caught_back_door = False
         self.caught_diary = False
         self.caught_body = False
+        self.caught_body_method = None  # "fingerprint" / "photo" / "voluntary"
         self.caught_fingerprint = False
 
         self.know_relationship = False
@@ -415,6 +416,7 @@ def beat_4(s):
         print("拭く必要があった、ということは。")
         print("触れたということは。")
         s.caught_body = True
+        s.caught_body_method = "fingerprint"
     elif "写真" in sel:
         s.ask(-1)
         s.trust_change(-3)
@@ -428,6 +430,7 @@ def beat_4(s):
         print("——初めて見る光景ではなかった。")
         print("その反応そのものが、答えだった。")
         s.caught_body = True
+        s.caught_body_method = "photo"
     else:
         s.ask(-1)
         s.trust_change(+10)
@@ -450,6 +453,7 @@ def beat_4(s):
             print("彼女は目を伏せた。")
             print("「動かなかったんです」")
             s.caught_body = True
+            s.caught_body_method = "voluntary"
             s.caught_back_door = True
 
     pause()
@@ -549,8 +553,15 @@ def ending_deduction(s):
         print("「日記帳を——まるで最近まで取り返そうとしていたように」")
         print()
     if s.caught_body:
-        print("「そして——現場の写真を見ても、驚かなかった」")
-        print("「一度見た光景だから」")
+        if s.caught_body_method == "photo":
+            print("「そして——現場の写真を見ても、驚かなかった」")
+            print("「一度見た光景だから」")
+        elif s.caught_body_method == "fingerprint":
+            print("「そして——『拭けなかった』と言いましたね」")
+            print("「拭く必要があったのは、現場に触れたからです」")
+        else:
+            print("「そして——あなたは自分から、」")
+            print("「『動かなかった』と言いました」")
         print()
 
     time.sleep(0.8)
@@ -585,7 +596,8 @@ def ending_deduction(s):
     print("殺した人間と、隠している人間の嘘は違う。")
     print("彼女の嘘は——ずっと、隠す側の嘘だった。")
     print()
-    print(f"  ── 推理 ──  矛盾{s.caught_count()}件 / 信頼度{s.trust}")
+    print(f"  ── ENDING A: 推理 ──  （全5種）")
+    print(f"  矛盾{s.caught_count()}件 / 信頼度{s.trust}")
     print()
     print("═" * 48)
     print()
@@ -624,8 +636,13 @@ def ending_trust(s):
     print("追い詰めたのではなかった。")
     print("彼女が——信じられる相手に、話すことを選んだ。")
     print()
-    print(f"  ── 信頼 ──  信頼度{s.trust}")
+    print(f"  ── ENDING B: 信頼 ──  （全5種）")
+    print(f"  信頼度{s.trust}")
     print()
+    if not s.caught_kitchen:
+        print("  ……彼女は一度、不自然な言い間違いをしていた。")
+        print("  あなたはそれに気づかなかった。")
+        print()
     print("═" * 48)
     print()
 
@@ -664,9 +681,11 @@ def ending_confession(s):
     if not s.caught_back_door: unknown.append("侵入経路")
     if not s.caught_body: unknown.append("現場の状況")
     if unknown:
-        print(f"  ── 断片 ──  未解明: {', '.join(unknown)}")
+        print(f"  ── ENDING C: 断片 ──  （全5種）")
+        print(f"  未解明: {', '.join(unknown)}")
+        print(f"  別の質問をしていれば、違う答えが返ってきたかもしれない。")
     else:
-        print("  ── 告白 ──")
+        print(f"  ── ENDING C: 告白 ──  （全5種）")
     print(f"  信頼度{s.trust} / 残り質問{s.questions}")
     print()
     print("═" * 48)
@@ -692,10 +711,12 @@ def ending_insufficient(s):
     if not s.caught_diary: unknown.append("日記帳")
     if not s.caught_back_door: unknown.append("裏口")
     if not s.caught_body: unknown.append("遺体を見たこと")
+    print(f"  ── ENDING D: 手がかり不足 ──  （全5種）")
     if unknown:
-        print(f"  ── 手がかり不足 ──")
         print(f"  気づけなかったこと: {', '.join(unknown)}")
     print(f"  信頼度{s.trust} / 残り質問{s.questions}")
+    print()
+    print("  最初の質問を変えれば、全く違う取調になる。")
     print()
     print("═" * 48)
     print()
@@ -711,6 +732,8 @@ def ending_timeout(s):
     print()
     print("「……お疲れさまでした、刑事さん」")
     print()
+    print(f"  ── ENDING E: 時間切れ ──  （全5種）")
+    print()
     print("═" * 48)
     print()
 
@@ -723,6 +746,8 @@ def ending_trust_zero(s):
     print("「弁護士を呼んでください」")
     print()
     print("女の声は冷たかった。")
+    print()
+    print(f"  ── ENDING E: 信頼崩壊 ──  （全5種）")
     print()
     print("═" * 48)
     print()
