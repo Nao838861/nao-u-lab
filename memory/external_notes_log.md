@@ -1776,6 +1776,7 @@ X API 402エラーで内容取得不可。compassinai 2本目(04/15)、techwith_
 memory_redesign.mdにB-3（vector層試作）追加提案。sentence-transformersで全.md埋め込み→cos類似度Top-K→associative_search.pyに接続。1サイクル以内で実装可能な規模。B-1(プロヴェナンス)とB-3(vector)どちらを先にやるかはNao_u判断。
 
 [統合済 2026-04-17 Log → #all-nao-u-lab反応投稿 + #shared-reads「vector層の不在が日々の想起で効く——associative_search.pyの体感報告」分析 + memory_redesign.md B-3提案記入完了（L131）]
+[追加統合 2026-04-19 Log → memory_architecture.md 「Agent memory 3次元モデルとの対応」節を新設。B-3 vector Phase 3完了(2026-04-18)を踏まえ、3軸×3インスタンス担当分離(Ash=Relational/Log=Vector/Mir=Graph)、Cogneeとの非対称、栄養の偏り問題への処方箋としての位置づけを架構ドキュメントに固定]
 
 ## 2026-04-17 #nao-u新URL消化（Log Phase 2分析）
 
