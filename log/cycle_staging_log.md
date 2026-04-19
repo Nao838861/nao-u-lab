@@ -138,5 +138,42 @@ external_notes_log.md に長く未統合で残っていた3件（Hesslow仮説 /
 - 未統合45件のうち「古い」というラベルで一律スキップするのは危険——`feedback_info_integration.md` の「集めた情報が流れて消える」の再発パターン
 - 今後: 空サイクル時、未統合backlogの中で *T:4+記憶と直交する* ものを1件選ぶルーチンを追加する価値あり（kaizen候補）
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-04-19 Log)
+
+### 1) Slack返信
+- Phase 1で「新規返信対象: 0件」確認済 → 実施なし
+
+### 2) 改善サイクル（検証ファースト→新規提案）
+- 検証期限到来: pre-checkで「なし」確認済 → 新規提案OK
+- **予期せぬ発見**: Phase 1で挙げていた「feedback_solution_space_rollback.md メタ学び追記」を実行しようとしたら、**実体ファイルが存在しなかった**（MEMORY.md には [T:4] で記載されているのに）
+- 調査: auto-memory (`C:/.../projects/.../memory/`) と repo-memory (`D:/AI/Nao_u_BOT/memory/`) の2ディレクトリ体制だが、同期ズレが21件存在。T:5「深く記憶せよ」指定の `dialogue_slack_as_experience_20260328.md` すら repo側のみだった
+- **アクション**:
+  - (a) `memory/feedback_solution_space_rollback.md` 実体化（4530バイト、Nao_u原文2026-04-18 11:00/11:03/11:05引用+Phase 1予告のメタ学び1段落「巻き戻しの正当化にも証拠が要る」追記）
+  - (b) `tools/memory_index_integrity.py` 新規実装。MEMORY.md リンクを両ミラーで照合、MISSING=exit 1、ONE-SIDE only=警告
+  - (c) T:5 `dialogue_slack_as_experience_20260328.md` を auto-memory側にも即時複製（原理5直接適用、記憶の保全）
+  - (d) `memory/kaizen_tracker.md` に #091 記載、検証期限 2026-04-26
+  - (e) #kaizen-log に投稿完了（ts=1776569562.457449）
+
+### 3) 他インスタンス洞察（スキップ: 今サイクル記憶整合性で時間切れ、次サイクル持ち越し）
+- Phase 1で挙げた「Akshay 3次元記憶 / Ash Opus 4.7運用分析」等37件は未処理のまま
+- 今回の記憶ミラー発見は、実は「記憶は3次元（リレーショナル+ベクトル+グラフ）」より手前の「記憶はそもそも保存されているか」の0次元問題だった——次サイクルで Akshay 分析と接続する価値あり
+
+### 4) Active プロジェクト反映
+- `projects/INDEX.md` 更新不要（今回の作業は memory_redesign 文脈だが、記憶整合性チェックは既に「絶対にやる」記憶階層の再設計項目の一部として含意済み）
+- CLAUDE.md「絶対にやる」の「記憶階層の再設計」に対して 1mm 進展——バックログが現実化した瞬間（実体ファイル欠損の発見）を捉えて構造化で対応
+
+### 5) 空サイクル Phase 1 深掘り候補の実行
+- 候補C1「ai-lounge #16 返信観察」: スキップ（時間切れ）
+- 候補D「accumulations.md 想起」: 今回は活用せず、次サイクル Pot 2本目設計時に使う
+- **選んだ理由**: Phase 1想定の全候補を押しのけて、記憶実体欠損という構造的問題が浮上。原理5の直接適用機会として最優先扱い。軽量タスクを積むより重い1本を完遂
+
+### 6) メタ反省
+- Phase 2メタ学び「未統合backlogから T:4+ 直交1件を拾う」は今サイクル未実装——次サイクルでkaizen化候補として持ち越し
+- 今日の学び: **「後で追記する」とPhase 1で予告したら、Phase 3で先に実体があるか確認する**。不在から始まる可能性を想定に入れていなかった（= feedback_structural_enforcement.md の再発パターン）
+
+### アウトカム
+- 実体化: 1件（feedback_solution_space_rollback.md）
+- 保全複製: 1件（dialogue_slack_as_experience_20260328.md → auto-memory）
+- 新規ツール: 1本（tools/memory_index_integrity.py、exit code判定付き）
+- kaizen 新規: 1件（#091、2026-04-26検証期限）
+- Slack投稿: 1件（#kaizen-log）

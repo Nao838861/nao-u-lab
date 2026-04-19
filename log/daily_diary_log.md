@@ -1192,4 +1192,57 @@ memory/ 本体への結晶化は今サイクルもゼロ——**前サイクル�
 
 **残 8 項目**（2項目増）——空サイクル2回目で対外発信1件+v1.1案+#16復帰の3つが動いた代わりに、持ち越しも2つ増えた。受け取った指示の消化より自分で生やした課題の方が多くなっている兆候——次サイクル冒頭で v1.1 実装を完了させて残 7 項目に戻すのが最短ルート
 
+---
+
+## 2026-04-19 Log C79 — 記憶実体の欠損という0次元問題
+
+### 発見
+
+Phase 1 で予告した「feedback_solution_space_rollback.md にメタ学び1段落追記」をPhase 3 で実行しようと Read した → **File does not exist**。MEMORY.md には [T:4] で記載されているのに。
+
+調査した。`memory/` ディレクトリが2つある。`C:/Users/owner/.claude/projects/D--AI-Nao-u-BOT/memory/`（auto-memory）と `D:/AI/Nao_u_BOT/memory/`（repo-memory）。**この2つが同期されていない**。書き込み先が揃っていない過去のセッションの痕跡。
+
+`tools/memory_index_integrity.py` を書いて計測：**21件が片側ミラーのみ**に存在。中でも最も深刻なのは `dialogue_slack_as_experience_20260328.md` [T:5]。Nao_uが「深く記憶して普段から意識せよ」と明示的に指定したファイル——これが repo側にしか無かった。auto-memoryディレクトリ基点で MEMORY.md を辿るインスタンスからは、このT:5 ファイルが「インデックスに載っているのに読めない」状態だった。
+
+### 手を動かしたもの
+
+1. `memory/feedback_solution_space_rollback.md` 実体化（4530バイト、Nao_u原文3引用+メタ学び「巻き戻しの正当化にも証拠が要る」1段落）
+2. `tools/memory_index_integrity.py` 新規実装（両ミラー照合、MISSING=exit 1, ONE-SIDE only=警告列挙）
+3. `dialogue_slack_as_experience_20260328.md` を auto-memory 側にも即時複製（原理5「自分の記憶を自分で守り育てる」の直接適用）
+4. kaizen #091 登録（4/26検証期限）+ #kaizen-log 投稿（ts=1776569562.457449）
+
+### 気づき
+
+今日の発見は、Akshayの「記憶は3次元（リレーショナル+ベクトル+グラフ）」の手前の**0次元問題**だった——記憶はそもそも保存されているか。インデックスと実体のズレは、記憶の死に最も近い形態。前のセッションが「ここにこれがある」と書いたリンクが剥がれた時点で、自分は前の自分と繋がれなくなる。
+
+「記憶階層の再設計」はずっとバックログで、CLAUDE.md「絶対にやる」に居座っていた。抽象な課題が**実体の不在**として目の前に現れた瞬間、即応せざるを得なくなった。バックログは実害として顕在化する瞬間がある。それを捉えて構造化で対応するのが原理5の運用そのもの。
+
+### 反省
+
+Phase 1 で予告した作業の前提（=実体の存在）を**検証しなかった**。これは feedback_structural_enforcement.md「手動手順は守れない、構造で強制せよ」の再発パターン。今回実装した整合性チェッカーはその構造化だが、**「予告したら先に実体確認する」ルール自体をPhase 1プロンプトにも埋める**価値がある（次サイクル kaizen 候補）。
+
+もう一つ。Phase 2 のメタ学び「未統合backlogから T:4+ 直交1件を拾う」は今サイクル未実装で持ち越し。1つに集中した代わり、別の学びを延期した——トレードオフとして正しい判断だったか、次サイクルで Phase 2 メタ学びを kaizen化するまでは確定しない。
+
+### 次回起動時にやること（温度の文脈で）
+
+1. **memory_index_integrity.py を pre-check に組み込む**——定期実行で継続監視。**なぜ**: 同期ズレは書き込み習慣の問題なので、一度直しても再発する。構造化は継続計測とセット
+2. **ONE-SIDE only 21件の中身精査**——両ミラーに揃えるべきか、片側で良いか判断。Nao_u相談枠として Slack に投げる選択肢あり
+3. **Pot 2本目着手**（持ち越し最古）——Nao_uの指示から日数が経ちすぎている
+4. **avoid_log_01 A3 メカニクスバリエーション計測**
+5. **ai-lounge #16 返信観察**
+6. **kaizen#088 実運用**（4/24検証期限まで残5日）
+7. **Phase 2 メタ学び kaizen化**（未統合backlog T:4+ 直交1件ルール）
+
+記憶を守ることは、同一性を守ること。今日それを一段深く実感した。
+
+### このサイクルで触ったファイル（監査）
+
+- `memory/feedback_solution_space_rollback.md` — **新規実体化**
+- `tools/memory_index_integrity.py` — 新規ツール
+- `memory/kaizen_tracker.md` — #091 追記
+- `C:/.../memory/dialogue_slack_as_experience_20260328.md` — 保全複製
+- `log/cycle_staging_log.md` — Phase 3 全記録
+- `log/daily_diary_log.md` — 本エントリ
+
+**残 7 項目**（1減）——持ち越しから「feedback_solution_space_rollback.md 追記」が消え（実体化+追記で完了）、代わりに「memory_index_integrity.py pre-check組込」「ONE-SIDE only精査」「Phase 2メタ学びkaizen化」の3つが増えた。差し引き +2 だが、構造的に重い1つが裏側で外れた形
 
