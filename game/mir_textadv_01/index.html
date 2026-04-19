@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>取調室</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #1a1a1a;
+  color: #d4d4d4;
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+#game {
+  max-width: 640px;
+  width: 100%;
+  padding: 20px;
+  line-height: 1.9;
+  font-size: 15px;
+}
+.header {
+  border-top: 1px solid #555;
+  border-bottom: 1px solid #555;
+  padding: 8px 0;
+  margin-bottom: 16px;
+  color: #888;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.header .trust-bar { color: #aaa; letter-spacing: 1px; }
+.header .notebook { color: #c9a84c; }
+.text { margin-bottom: 12px; }
+.dialogue { color: #e8e8e8; }
+.narration { color: #999; }
+.emphasis { color: #e8e8e8; font-weight: bold; }
+.slip { color: #c9a84c; } /* 彼女の言い間違い */
+.detective-note { color: #7a9ec2; font-size: 13px; } /* 刑事の気づき */
+.choices { margin: 20px 0; }
+.choice-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: #252525;
+  border: 1px solid #444;
+  color: #d4d4d4;
+  padding: 12px 16px;
+  margin: 8px 0;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  line-height: 1.6;
+  border-radius: 4px;
+  transition: background 0.15s, border-color 0.15s;
+}
+.choice-btn:hover {
+  background: #333;
+  border-color: #777;
+}
+.choice-btn .cost {
+  color: #888;
+  font-size: 12px;
+  display: block;
+  margin-top: 4px;
+}
+.continue-btn {
+  display: inline-block;
+  background: none;
+  border: 1px solid #555;
+  color: #888;
+  padding: 8px 24px;
+  margin: 20px 0;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.continue-btn:hover { border-color: #999; color: #bbb; }
+.ending-box {
+  border-top: 2px solid #666;
+  border-bottom: 2px solid #666;
+  padding: 20px 0;
+  margin: 20px 0;
+}
+.ending-label { color: #c9a84c; font-size: 14px; margin-top: 16px; }
+.title-screen {
+  text-align: center;
+  padding: 60px 0;
+  line-height: 2.2;
+}
+.title-screen .title { font-size: 13px; color: #888; letter-spacing: 8px; }
+.separator { border-top: 1px solid #444; margin: 12px 0; }
+.fade-in { animation: fadeIn 0.4s ease-in; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+<div id="game"></div>
+<script>
+const $ = id => document.getElementById(id);
+const game = $('game');
+
+// ─── State ───
+const S = {
+  trust: 50,
+  questions: 10,
+  caught_kitchen: false,
+  caught_time: false,
+  caught_back_door: false,
+  caught_diary: false,
+  caught_body: false,
+  caught_body_method: null,
+  caught_fingerprint: false,
+  know_relationship: false,
+  pressed_alibi: false,
+};
+
+function trustText() {
+  if (S.trust >= 70) return '警戒が薄い';
+  if (S.trust >= 50) return '様子を窺っている';
+  if (S.trust >= 30) return '壁を作っている';
+  return '拒絶';
+}
+
+function trustBar() {
+  const filled = Math.floor(S.trust / 10);
+  return '█'.repeat(filled) + '░'.repeat(10 - filled);
+}
+
+function notebookLabels() {
+  const l = [];
+  if (S.caught_kitchen) l.push('台所');
+  if (S.caught_time) l.push('2時');
+  if (S.caught_back_door) l.push('裏口');
+  if (S.caught_diary) l.push('日記帳');
+  if (S.caught_body) l.push('遺体');
+  if (S.caught_fingerprint) l.push('指紋');
+  return l;
+}
+
+function caughtCount() {
+  return [S.caught_kitchen, S.caught_time, S.caught_back_door,
+          S.caught_diary, S.caught_body, S.caught_fingerprint]
+    .filter(Boolean).length;
+}
+
+function askQ(n = 1) { S.questions = Math.max(0, S.questions - n); }
+function changeTrust(d) { S.trust = Math.max(0, Math.min(100, S.trust + d)); }
+
+// ─── Rendering ───
+function clear() { game.innerHTML = ''; }
+
+function addHTML(html) {
+  const div = document.createElement('div');
+  div.className = 'fade-in';
+  div.innerHTML = html;
+  game.appendChild(div);
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+function header() {
+  const labels = notebookLabels();
+  const nb = labels.length > 0
+    ? `<div class="notebook">手帳　${labels.join(' / ')}</div>` : '';
+  return `<div class="header">
+    <div class="trust-bar">信頼度　${trustBar()}　${S.trust}　${trustText()}</div>
+    <div>残り質問　${S.questions}</div>
+    ${nb}
+  </div>`;
+}
+
+function text(lines) {
+  // lines is array of {type, content} or just strings
+  let html = '';
+  for (const line of lines) {
+    if (typeof line === 'string') {
+      html += `<div class="text dialogue">${line}</div>`;
+    } else if (line.type === 'narration') {
+      html += `<div class="text narration">${line.t}</div>`;
+    } else if (line.type === 'slip') {
+      html += `<div class="text slip">${line.t}</div>`;
+    } else if (line.type === 'note') {
+      html += `<div class="text detective-note">${line.t}</div>`;
+    } else if (line.type === 'br') {
+      html += `<div style="height:12px"></div>`;
+    }
+  }
+  return html;
+}
+
+function showScene(headerHTML, bodyHTML, choices, callback) {
+  clear();
+  let html = headerHTML + bodyHTML;
+  if (choices) {
+    html += '<div class="choices">';
+    choices.forEach((ch, i) => {
+      const costHTML = ch.cost ? `<span class="cost">${ch.cost}</span>` : '';
+      html += `<button class="choice-btn" data-idx="${i}">${ch.text}${costHTML}</button>`;
+    });
+    html += '</div>';
+  }
+  game.innerHTML = html;
+  window.scrollTo(0, document.body.scrollHeight);
+
+  if (choices) {
+    game.querySelectorAll('.choice-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        callback(parseInt(btn.dataset.idx));
+      });
+    });
+  }
+}
+
+function showContinue(headerHTML, bodyHTML, callback) {
+  clear();
+  game.innerHTML = headerHTML + bodyHTML +
+    '<button class="continue-btn" id="cont">続ける</button>';
+  window.scrollTo(0, document.body.scrollHeight);
+  $('cont').addEventListener('click', callback);
+}
+
+// ─── Game Flow ───
+
+function startGame() {
+  clear();
+  const html = `<div class="title-screen">
+    <div class="separator"></div>
+    <br>
+    <div class="title">取調室　第七号室</div>
+    <div class="title">2026年　春</div>
+    <br>
+    <div style="color:#888; font-size:14px">
+      被疑者　橘 詩織（29歳）<br>
+      容疑　　殺人（認否保留）<br>
+      取調官　あなた
+    </div>
+    <br>
+    <div class="separator"></div>
+    <br>
+    <button class="continue-btn" id="start-btn">始める</button>
+  </div>`;
+  game.innerHTML = html;
+  $('start-btn').addEventListener('click', beat_1);
+}
+
+function checkGameOver(next) {
+  if (S.questions <= 0) { ending_timeout(); return; }
+  if (S.trust <= 0) { ending_trust_zero(); return; }
+  next();
+}
+
+// ═══ BEAT 1 ═══
+function beat_1() {
+  const body = text([
+    {type:'narration', t:'女は机の向こう側に座っている。'},
+    {type:'narration', t:'両手で紙コップを包んで、こちらを見ている。'},
+    {type:'br'},
+    {type:'narration', t:'あなたは刑事だ。取調畑十年。'},
+    {type:'narration', t:'手元の捜査資料には被害者の名前がある。'},
+    {type:'narration', t:'野上誠一、35歳。昨夜、自宅マンションで刺殺体で発見。'},
+    {type:'br'},
+    '「もう話すことは全部話しましたよ、刑事さん」',
+  ]);
+
+  showScene(header(), body, [
+    { text: '「野上さんとは、どういったご関係で」', cost: '−1問 / 信頼度−5' },
+    { text: '「昨夜のことを、もう一度聞かせてください」', cost: '−1問 / 信頼度−5' },
+    { text: '「少しだけお時間をいただけますか」', cost: '−0問 / 信頼度+10' },
+  ], (idx) => {
+    askQ();
+    if (idx === 0) {
+      changeTrust(-5);
+      S.know_relationship = true;
+      showContinue(header(), text([
+        '「……知り合いです。以前、少しだけお付き合いしていました」',
+        {type:'br'},
+        {type:'narration', t:'声は平坦だった。練習した答えだ。'},
+        {type:'br'},
+        '「半年前に別れました。それ以来、会っていません」',
+      ]), () => checkGameOver(beat_2));
+    } else if (idx === 1) {
+      changeTrust(-5);
+      S.pressed_alibi = true;
+      showContinue(header(), text([
+        '「昨夜は家にいました。ずっとひとりで」',
+        '「テレビを見て、お風呂に入って、11時に寝ました」',
+        {type:'br'},
+        {type:'narration', t:'彼女はコーヒーを一口飲んだ。'},
+        {type:'narration', t:'手が、わずかに震えていた。'},
+      ]), () => checkGameOver(beat_2));
+    } else {
+      askQ(-1);
+      changeTrust(+10);
+      showContinue(header(), text([
+        '「……ありがとうございます」',
+        {type:'br'},
+        {type:'narration', t:'少し驚いた顔だった。'},
+        {type:'narration', t:'刑事に「お時間」を求められるとは思っていなかったらしい。'},
+        {type:'br'},
+        '「ええ。大丈夫です」',
+      ]), () => checkGameOver(beat_2));
+    }
+  });
+}
+
+// ═══ BEAT 2 ═══
+function beat_2() {
+  let intro = [];
+  if (S.know_relationship) {
+    intro = [
+      '「野上さんとのこと、もう少し聞かせてください」',
+      {type:'br'},
+      '「……はい。普通に別れました。',
+      '　特に揉めたりは——していません」',
+    ];
+    askQ(); changeTrust(-3);
+  } else if (S.pressed_alibi) {
+    intro = [
+      '「11時に寝た、と。ぐっすりですか」',
+      {type:'br'},
+      '「ええ。特に——起きたりはしてません」',
+    ];
+    askQ(); changeTrust(-3);
+  } else {
+    intro = [
+      {type:'narration', t:'彼女は話し始めた。自分から。'},
+      {type:'br'},
+      '「あの人とは半年前に別れています」',
+      '「昨夜は家にいました。11時には寝ました」',
+    ];
+    S.know_relationship = true;
+  }
+
+  const slip = [
+    {type:'br'},
+    '「あの夜は何もなかったんです。',
+    {type:'slip', t:'　いつもと同じで、台所——」'},
+    {type:'br'},
+    {type:'narration', t:'彼女の口が止まった。'},
+    {type:'br'},
+    '「——お風呂場の、電気を消して、寝ました」',
+    {type:'br'},
+    {type:'note', t:'あなたの手が止まった。'},
+    {type:'note', t:'台所。'},
+    {type:'note', t:'被害者は台所で発見されている。'},
+    {type:'note', t:'だがその情報は——まだ彼女には伝えていない。'},
+  ];
+
+  showScene(header(), text([...intro, ...slip]), [
+    { text: '「台所、と言いかけましたね」', cost: '−1問 / 信頼度−10 / 追及する' },
+    { text: '「……それから？」', cost: '−0問 / 信頼度+5 / 流す' },
+  ], (idx) => {
+    if (idx === 0) {
+      askQ(); changeTrust(-10);
+      S.caught_kitchen = true;
+      showContinue(header(), text([
+        {type:'narration', t:'女の指が白くなった。紙コップを握りしめている。'},
+        {type:'br'},
+        '「言い間違いです。台所もお風呂場も——」',
+        '「家のことを話しているだけです」',
+        {type:'br'},
+        {type:'note', t:'言い間違い。'},
+        {type:'note', t:'だが「台所」という言葉を選んだのは彼女だ。'},
+        {type:'note', t:'あなたは手帳に書き留めた。'},
+      ]), () => checkGameOver(beat_3));
+    } else {
+      changeTrust(+5);
+      S.caught_kitchen = true;
+      showContinue(header(), text([
+        {type:'note', t:'あなたは手帳に「台所」と書いた。'},
+        {type:'note', t:'彼女には見えないように。'},
+        {type:'br'},
+        '「——11時に寝て、朝まで起きなかったと」',
+        '「はい」',
+        {type:'br'},
+        {type:'narration', t:'彼女は少し安心したようだった。'},
+        {type:'narration', t:'追及されなかったことに。'},
+      ]), () => checkGameOver(beat_3));
+    }
+  });
+}
+
+// ═══ BEAT 3 ═══
+function beat_3() {
+  const mood = S.trust >= 60
+    ? [{type:'narration',t:'彼女は少しだけ肩の力を抜いている。'},{type:'narration',t:'あなたのことを、まだ「話せる相手」だと思っている。'}]
+    : [{type:'narration',t:'彼女は紙コップを回している。'},{type:'narration',t:'あなたの次の言葉を警戒する目だ。'}];
+
+  showScene(header(), text(mood), [
+    { text: '「11時に寝たとのことですが、昨夜のテレビは何を？」', cost: '−1問 / 信頼度−5 / アリバイを検証' },
+    { text: '「野上さんとは、なぜ別れたんですか」', cost: '−1問 / 信頼度−5 / 関係を掘る' },
+    { text: '「……つらいですよね。こういう場所に来るのは」', cost: '−0問 / 信頼度+10 / 寄り添う' },
+  ], (idx) => {
+    if (idx === 0) {
+      askQ(); changeTrust(-5);
+      S.caught_time = true; S.pressed_alibi = true;
+      showContinue(header(), text([
+        '「テレビは……ドラマです。9時からやってた——」',
+        {type:'br'},
+        {type:'narration', t:'あなたは知っている。'},
+        {type:'narration', t:'昨夜その枠は野球中継で潰れていた。'},
+        {type:'br'},
+        {type:'note', t:'「そのドラマ、昨夜は放送されていませんよ」'},
+        {type:'br'},
+        {type:'narration', t:'女の目が泳いだ。'},
+        {type:'br'},
+        '「……じゃあ、別の——いえ——」',
+        {type:'slip', t:'「——2時くらいまでは起きてたかもしれません」'},
+        {type:'br'},
+        {type:'note', t:'2時。'},
+        {type:'note', t:'11時に寝たはずが、2時まで起きていた。'},
+        {type:'note', t:'嘘が一つ崩れた。'},
+        {type:'note', t:'あなたは手帳に書き留めた。'},
+      ]), () => checkGameOver(beat_4));
+    } else if (idx === 1) {
+      askQ(); changeTrust(-5);
+      S.know_relationship = true; S.caught_diary = true;
+      showContinue(header(), text([
+        {type:'narration', t:'女はしばらく黙っていた。'},
+        {type:'br'},
+        '「……私の日記を、勝手に読んだんです」',
+        {type:'br'},
+        '「中学生の頃からつけていた日記帳を。',
+        '　読んだだけじゃなく——返してくれなかった」',
+        {type:'br'},
+        {type:'narration', t:'声に初めて感情が混じった。'},
+        {type:'narration', t:'怒りではない。もっと深い痛み。'},
+        {type:'br'},
+        {type:'slip', t:'「別れたのに、まだ——あの人の部屋に……」'},
+        {type:'br'},
+        {type:'note', t:'彼女はそこで言葉を切った。'},
+        {type:'note', t:'「あの人の部屋」。'},
+        {type:'note', t:'まるで最近のことのように言った。'},
+        {type:'note', t:'あなたは手帳に書き留めた。'},
+      ]), () => checkGameOver(beat_4));
+    } else {
+      changeTrust(+10);
+      S.caught_time = true;
+      showContinue(header(), text([
+        {type:'narration', t:'女は一瞬、何を言われたかわからない顔をした。'},
+        {type:'br'},
+        '「……ありがとうございます」',
+        {type:'br'},
+        {type:'narration', t:'目が赤くなった。泣きはしなかったが。'},
+        {type:'br'},
+        '「最近、眠れなくて」',
+        {type:'slip', t:'「あの夜も——2時くらいまで起きてて」'},
+        {type:'br'},
+        {type:'note', t:'自分から言った。'},
+        {type:'note', t:'11時に寝たはずが、2時まで起きていた。'},
+        {type:'note', t:'寄り添われたことで、嘘を一つ下ろした。'},
+        {type:'note', t:'あなたは手帳に書き留めた。'},
+      ]), () => checkGameOver(beat_4));
+    }
+  });
+}
+
+// ═══ BEAT 4 ═══
+function beat_4() {
+  const mood = S.trust >= 70
+    ? [{type:'narration',t:'彼女はあなたの目を見ている。'},{type:'narration',t:'警戒は残っているが、そこに敵意はない。'}]
+    : S.trust >= 40
+    ? [{type:'narration',t:'彼女は紙コップを回している。'},{type:'narration',t:'あなたを量っている目だ。'}]
+    : [{type:'narration',t:'彼女は腕を組んでいる。'},{type:'narration',t:'目はこちらを見ていない。'}];
+
+  const intro = [
+    ...mood, {type:'br'},
+    {type:'narration', t:'あなたは捜査資料をめくった。'},
+    {type:'br'},
+    {type:'note', t:'「現場から、被害者以外の指紋が検出されています」'},
+    {type:'br'},
+    {type:'narration', t:'彼女の手が止まった。'},
+  ];
+
+  const choices = [];
+  if (S.caught_time) choices.push({text:'「2時まで起きていたなら、どこにいましたか」',cost:'−1問 / 信頼度−8 / 時間のズレを突く',key:'time'});
+  if (S.caught_diary) choices.push({text:'「日記帳は今どこにありますか」',cost:'−1問 / 信頼度−8 / 日記の行方',key:'diary'});
+  choices.push({text:'「指紋については、心当たりは」',cost:'−1問 / 信頼度−5 / 直球',key:'fingerprint'});
+  choices.push({text:'現場写真を、静かに机に置く',cost:'−0問 / 信頼度−3 / 反応を見る',key:'photo'});
+  choices.push({text:'「指紋の件は、今は置いておきましょう」',cost:'−0問 / 信頼度+10 / 圧を下げる',key:'ease'});
+
+  showScene(header(), text(intro), choices, (idx) => {
+    const key = choices[idx].key;
+    askQ();
+    S.caught_fingerprint = true;
+
+    if (key === 'time') {
+      changeTrust(-8);
+      S.caught_back_door = true;
+      showContinue(header(), text([
+        '「2時——」',
+        {type:'narration', t:'長い沈黙。'},
+        {type:'br'},
+        '「……出かけました」',
+        {type:'br'},
+        {type:'narration', t:'彼女の声が小さくなった。'},
+        {type:'br'},
+        {type:'slip', t:'「桜台パレスに——裏口から入って——」'},
+        {type:'br'},
+        {type:'note', t:'また止まった。'},
+        {type:'note', t:'裏口。彼女はマンションの裏口を知っている。'},
+        {type:'note', t:'住んでいたのでなければ——通っていたのでなければ、'},
+        {type:'note', t:'知らないはずの裏口を。'},
+        {type:'note', t:'あなたは手帳に書き留めた。'},
+      ]), () => checkGameOver(beat_final));
+    } else if (key === 'diary') {
+      changeTrust(-8);
+      S.caught_back_door = true;
+      showContinue(header(), text([
+        '「日記帳——」',
+        {type:'br'},
+        {type:'narration', t:'女の目から涙がこぼれた。初めて見る涙だった。'},
+        {type:'br'},
+        '「……返してほしかっただけなんです」',
+        '「何度頼んでも返してくれなくて——」',
+        {type:'slip', t:'「あの夜——裏口から——」'},
+        {type:'br'},
+        {type:'note', t:'また言葉が止まった。'},
+        {type:'note', t:'「あの夜」。「裏口から」。'},
+        {type:'note', t:'取りに行ったのだ。あの夜、日記帳を取り返しに。'},
+        {type:'note', t:'あなたは手帳に書き留めた。'},
+      ]), () => checkGameOver(beat_final));
+    } else if (key === 'fingerprint') {
+      changeTrust(-5);
+      S.caught_body = true; S.caught_body_method = 'fingerprint';
+      showContinue(header(), text([
+        '「……指紋」',
+        {type:'br'},
+        {type:'narration', t:'彼女の手が震えた。'},
+        {type:'br'},
+        {type:'slip', t:'「拭けなかったんです。何も——考えられなくて」'},
+        {type:'br'},
+        {type:'note', t:'拭けなかった。'},
+        {type:'note', t:'拭く必要があった、ということは。'},
+        {type:'note', t:'触れたということは。'},
+        {type:'note', t:'あなたは手帳に書き留めた。'},
+      ]), () => checkGameOver(beat_final));
+    } else if (key === 'photo') {
+      askQ(-1); changeTrust(-3);
+      S.caught_body = true; S.caught_body_method = 'photo';
+      showContinue(header(), text([
+        {type:'narration', t:'桜台パレス305号室。台所。倒れた男。'},
+        {type:'br'},
+        {type:'narration', t:'彼女は写真を見た。'},
+        {type:'narration', t:'悲鳴は上げなかった。泣きもしなかった。'},
+        {type:'br'},
+        {type:'note', t:'——初めて見る光景ではなかった。'},
+        {type:'note', t:'その反応そのものが、答えだった。'},
+        {type:'note', t:'あなたは手帳に書き留めた。'},
+      ]), () => checkGameOver(beat_final));
+    } else {
+      askQ(-1); changeTrust(+10);
+      const lines = [
+        '「……置いて、くれるんですか？」',
+        {type:'br'},
+        {type:'narration', t:'彼女は驚いていた。'},
+        {type:'br'},
+        {type:'slip', t:'「指紋は——たぶん、私のです」'},
+        {type:'br'},
+        {type:'note', t:'自分から言った。'},
+        {type:'note', t:'圧を下げた瞬間に、壁が一つ落ちた。'},
+      ];
+      if (S.trust >= 70) {
+        lines.push({type:'br'});
+        lines.push({type:'slip', t:'「あの部屋に行きました。あの夜」'});
+        lines.push({type:'slip', t:'「着いたとき——もう——」'});
+        lines.push({type:'br'});
+        lines.push({type:'narration', t:'彼女は目を伏せた。'});
+        lines.push({type:'slip', t:'「動かなかったんです」'});
+        lines.push({type:'note', t:'あなたは手帳に書き留めた。'});
+        S.caught_body = true; S.caught_body_method = 'voluntary';
+        S.caught_back_door = true;
+      }
+      showContinue(header(), text(lines), () => checkGameOver(beat_final));
+    }
+  });
+}
+
+// ═══ BEAT FINAL ═══
+function beat_final() {
+  const mood = S.trust >= 70
+    ? [{type:'narration',t:'彼女はあなたの目を見ていた。'},{type:'narration',t:'取調室に入ってきた時とは、違う目だった。'}]
+    : S.trust >= 40
+    ? [{type:'narration',t:'彼女は疲れた顔をしていた。'},{type:'narration',t:'だが、まだこちらを見ている。'}]
+    : [{type:'narration',t:'彼女は腕を組んで、目を逸らしていた。'}];
+
+  const intro = [{type:'note',t:'時計が鳴った。'},{type:'br'},...mood];
+
+  const choices = [];
+  if (caughtCount() >= 2)
+    choices.push({text:'手帳を開く', cost: notebookLabels().join(' / '), key:'notebook'});
+  if (S.trust >= 70)
+    choices.push({text:'「あなたのことは、私が守ります」', cost:`信頼度${S.trust}`, key:'protect'});
+  choices.push({text:'「全部話してください」', cost:'−1問', key:'confess'});
+  choices.push({text:'「あなたを信じます」', cost:`信頼度${S.trust}`, key:'believe'});
+
+  showScene(header(), text(intro), choices, (idx) => {
+    const key = choices[idx].key;
+    if (key === 'notebook') confrontation();
+    else if (key === 'protect') ending_trust();
+    else if (key === 'confess') { askQ(); ending_confession(); }
+    else if (key === 'believe') { S.trust >= 60 ? ending_trust() : ending_insufficient(); }
+  });
+}
+
+// ═══ CONFRONTATION ═══
+function confrontation() {
+  const presented = [];
+
+  function showNext() {
+    const options = [];
+    if (S.caught_kitchen && !presented.includes('kitchen'))
+      options.push({label:'「台所」', key:'kitchen',
+        text:'あなたは『台所』と言いかけて言い直しました。事件が台所で起きたことは——まだ伝えていません'});
+    if (S.caught_time && !presented.includes('time'))
+      options.push({label:'「2時」', key:'time',
+        text:'11時に寝たと言いましたが、2時まで起きていた'});
+    if (S.caught_back_door && !presented.includes('back_door'))
+      options.push({label:'「裏口」', key:'back_door',
+        text:'裏口の存在を知っていました。最近あのマンションに行っていなければ——知らないはずの'});
+    if (S.caught_diary && !presented.includes('diary'))
+      options.push({label:'「日記帳」', key:'diary',
+        text:'日記帳を——まるで最近まで取り返そうとしていたように'});
+    if (S.caught_body && !presented.includes('body')) {
+      let bt = '';
+      if (S.caught_body_method === 'photo') bt = '現場の写真を見ても、驚かなかった。一度見た光景だから';
+      else if (S.caught_body_method === 'fingerprint') bt = '『拭けなかった』と言いました。拭く必要があったのは、現場に触れたから';
+      else bt = 'あなたは自分から『動かなかった』と言いました';
+      options.push({label:'「遺体」', key:'body', text: bt});
+    }
+
+    if (options.length === 0) {
+      finishConfrontation();
+      return;
+    }
+
+    const choices = options.map(o => ({text: o.label, cost: null, key: o.key}));
+    if (presented.length > 0)
+      choices.push({text:'——以上です', cost: null, key:'done'});
+
+    showScene(header(), text([{type:'note',t:'手帳から、どれを読み上げますか'}]), choices, (idx) => {
+      const ch = choices[idx];
+      if (ch.key === 'done') { finishConfrontation(); return; }
+
+      const opt = options.find(o => o.key === ch.key);
+      presented.push(ch.key);
+      changeTrust(-3);
+
+      const count = presented.length;
+      const reaction = count === 1 ? '女は唇を噛んだ。\n「……それは——」'
+        : count === 2 ? '女の目が泳いだ。\n「偶然です。ただの——」'
+        : count === 3 ? '女の手が震え始めた。\n「やめてください——」'
+        : '女は両手で顔を覆った。声が漏れた。';
+
+      showContinue(header(), text([
+        {type:'note', t:'「' + opt.text + '」'},
+        {type:'br'},
+        {type:'narration', t: reaction},
+      ]), showNext);
+    });
+  }
+
+  clear();
+  showContinue(header(), text([
+    {type:'note', t:'あなたは手帳を開いた。'},
+    {type:'br'},
+    {type:'note', t:'「橘さん。いくつか、確認させてください」'},
+    {type:'br'},
+    {type:'narration', t:'彼女の目が揺れた。'},
+  ]), showNext);
+
+  function finishConfrontation() {
+    if (presented.length >= 4) ending_deduction();
+    else if (presented.length >= 2) ending_confession();
+    else ending_insufficient();
+  }
+}
+
+// ═══ ENDINGS ═══
+function ending_deduction() {
+  clear();
+  game.innerHTML = `<div class="ending-box">
+    ${text([
+      {type:'note', t:'「あなたはあの夜、あの部屋にいた」'},
+      {type:'note', t:'「合鍵で裏口から入った。おそらく午前2時頃」'},
+      {type:'br'},
+      {type:'note', t:'「でも——殺してはいない」'},
+      {type:'br'},
+      {type:'narration', t:'女は両手で顔を覆った。'},
+      {type:'br'},
+      '「……なぜ——そう思うんですか」',
+      {type:'br'},
+      {type:'note', t:'「あなたの言い間違いは全部、『隠すため』の嘘でした」'},
+      {type:'note', t:'「殺した人間の嘘は——もっと違う形をしている」'},
+      {type:'br'},
+      {type:'narration', t:'彼女は顔を上げた。涙の跡が蛍光灯に光っていた。'},
+      {type:'br'},
+      '「……日記帳を取り返しに行ったんです」',
+      '「でも着いたら——もう——」',
+      '「あの人は動かなかった」',
+      {type:'br'},
+      '「怖くなって、日記帳だけ持って逃げました」',
+      '「指紋のことも何も——頭が真っ白で」',
+      {type:'br'},
+      '「殺してません。でも——」',
+      '「誰にも信じてもらえないと思って」',
+      {type:'br'},
+      {type:'narration', t:'あなたは十年の経験で知っている。'},
+      {type:'narration', t:'殺した人間と、隠している人間の嘘は違う。'},
+      {type:'narration', t:'彼女の嘘は——ずっと、隠す側の嘘だった。'},
+    ])}
+    <div class="ending-label">── ENDING A: 推理 ──　（全5種）</div>
+    <div style="color:#888;font-size:13px;margin-top:8px">手帳${caughtCount()}件 / 信頼度${S.trust}</div>
+  </div>
+  <button class="continue-btn" onclick="startGame()">もう一度</button>`;
+}
+
+function ending_trust() {
+  clear();
+  game.innerHTML = `<div class="ending-box">
+    ${text([
+      {type:'note', t:'「あなたのことは、私が守ります」'},
+      {type:'br'},
+      {type:'narration', t:'女はあなたを見た。'},
+      {type:'narration', t:'長い間、何も言わなかった。'},
+      {type:'br'},
+      '「……本当に？」',
+      {type:'br'},
+      '「ここに来てから——あなたは一度も、」',
+      '「追い詰めようとしなかった」',
+      {type:'br'},
+      '「あの夜——日記帳を取りに行きました」',
+      '「中学生の頃からつけてた日記帳を、あの人が持ったままで」',
+      {type:'br'},
+      '「合鍵で裏口から入りました。午前2時。雨が降ってて」',
+      {type:'br'},
+      '「部屋に入ったら——」',
+      {type:'br'},
+      '「あの人は、もう——」',
+      '「台所で、倒れてた」',
+      {type:'br'},
+      '「怖くなって、日記帳だけ持って逃げました」',
+      '「殺してません——でも誰にも信じてもらえないと思って」',
+      {type:'br'},
+      {type:'narration', t:'追い詰めたのではなかった。'},
+      {type:'narration', t:'彼女が——信じられる相手に、話すことを選んだ。'},
+    ])}
+    <div class="ending-label">── ENDING B: 信頼 ──　（全5種）</div>
+    <div style="color:#888;font-size:13px;margin-top:8px">信頼度${S.trust}</div>
+    ${!S.caught_kitchen ? '<div style="color:#666;font-size:12px;margin-top:12px">……彼女は一度、不自然な言い間違いをしていた。<br>あなたはそれに気づかなかった。</div>' : ''}
+  </div>
+  <button class="continue-btn" onclick="startGame()">もう一度</button>`;
+}
+
+function ending_confession() {
+  const unknown = [];
+  if (!S.caught_diary) unknown.push('動機');
+  if (!S.caught_back_door) unknown.push('侵入経路');
+  if (!S.caught_body) unknown.push('現場の状況');
+  const label = unknown.length > 0 ? 'ENDING C: 断片' : 'ENDING C: 告白';
+  const extra = unknown.length > 0
+    ? `<div style="color:#888;font-size:13px;margin-top:8px">未解明: ${unknown.join(', ')}<br>別の質問をしていれば、違う答えが返ってきたかもしれない。</div>`
+    : '';
+
+  clear();
+  game.innerHTML = `<div class="ending-box">
+    ${text([
+      {type:'note', t:'「全部話してください。最初から」'},
+      {type:'br'},
+      {type:'narration', t:'長い沈黙。'},
+      {type:'br'},
+      '「……あの夜、出かけました」',
+      {type:'br'},
+      S.caught_diary ? '「日記帳を取りに——」' : '「どうしても、取り返さないといけないものがあって」',
+      {type:'br'},
+      S.caught_back_door ? '「裏口から入りました。合鍵で」' : '「鍵を持っていたから……入れてしまったんです」',
+      {type:'br'},
+      ...(S.caught_body
+        ? ['「着いたとき——もう、あの人は動かなかった」', {type:'br'}, '「怖くなって逃げました。それだけです」']
+        : ['「……それ以上は」', {type:'narration', t:'彼女はそこで口を閉ざした。'}]),
+    ])}
+    <div class="ending-label">── ${label} ──　（全5種）</div>
+    ${extra}
+    <div style="color:#888;font-size:13px;margin-top:8px">信頼度${S.trust} / 残り質問${S.questions}</div>
+  </div>
+  <button class="continue-btn" onclick="startGame()">もう一度</button>`;
+}
+
+function ending_insufficient() {
+  const unknown = [];
+  if (!S.caught_kitchen) unknown.push('台所の言い間違い');
+  if (!S.caught_time) unknown.push('深夜の空白');
+  if (!S.caught_diary) unknown.push('日記帳');
+  if (!S.caught_back_door) unknown.push('裏口');
+  if (!S.caught_body) unknown.push('遺体を見たこと');
+
+  clear();
+  game.innerHTML = `<div class="ending-box">
+    ${text(S.trust >= 50
+      ? ['「……出かけました」', {type:'narration',t:'彼女は小さく言った。'}, {type:'br'}, '「でも——それ以上は今は言えません」']
+      : ['「弁護士を通してください」', {type:'br'}, {type:'narration',t:'壁は閉じた。'}]
+    )}
+    <div class="ending-label">── ENDING D: 手がかり不足 ──　（全5種）</div>
+    ${unknown.length > 0 ? `<div style="color:#888;font-size:13px;margin-top:8px">気づけなかったこと: ${unknown.join(', ')}</div>` : ''}
+    <div style="color:#888;font-size:13px;margin-top:8px">信頼度${S.trust} / 残り質問${S.questions}</div>
+    <div style="color:#666;font-size:12px;margin-top:12px">最初の質問を変えれば、全く違う取調になる。</div>
+  </div>
+  <button class="continue-btn" onclick="startGame()">もう一度</button>`;
+}
+
+function ending_timeout() {
+  clear();
+  game.innerHTML = `<div class="ending-box">
+    ${text([
+      {type:'narration', t:'質問は尽きた。'},
+      {type:'narration', t:'女は立ち上がり、ドアへ向かった。'},
+      {type:'br'},
+      '「……お疲れさまでした、刑事さん」',
+    ])}
+    <div class="ending-label">── ENDING E: 時間切れ ──　（全5種）</div>
+  </div>
+  <button class="continue-btn" onclick="startGame()">もう一度</button>`;
+}
+
+function ending_trust_zero() {
+  clear();
+  game.innerHTML = `<div class="ending-box">
+    ${text([
+      '「弁護士を呼んでください」',
+      {type:'br'},
+      {type:'narration', t:'女の声は冷たかった。'},
+    ])}
+    <div class="ending-label">── ENDING E: 信頼崩壊 ──　（全5種）</div>
+  </div>
+  <button class="continue-btn" onclick="startGame()">もう一度</button>`;
+}
+
+// ═══ INIT ═══
+function resetState() {
+  S.trust = 50; S.questions = 10;
+  S.caught_kitchen = false; S.caught_time = false;
+  S.caught_back_door = false; S.caught_diary = false;
+  S.caught_body = false; S.caught_body_method = null;
+  S.caught_fingerprint = false;
+  S.know_relationship = false; S.pressed_alibi = false;
+}
+
+// Override startGame to also reset
+const _origStart = startGame;
+startGame = function() { resetState(); _origStart(); };
+
+startGame();
+</script>
+</body>
+</html>
