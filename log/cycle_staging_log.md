@@ -1,10 +1,10 @@
-# サイクルステージング (2026-04-19 21:18)
+# サイクルステージング (2026-04-20 00:18)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
 [メタ検証] ==================================================
 📊 メタ検証レポート: 検証システムの健全性
-   実行日時: 2026-04-19 21:18
+   実行日時: 2026-04-20 00:18
 ==================================================
 
 ## 1. 検証完了率
@@ -19,18 +19,17 @@
    実行可能コマンド含む: 51/58
    検証手段なし: 
 [クロスチェック督促] クロスチェック督促:
-  Mir: 本日分の督促は既に送信済み（スキップ）
-[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1160個の断片から1個を選出) ━━━
+  📨 Ash: 2件の督促をinboxに送信
+  📨 Mir: 2件の督促をinboxに送信
+[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1155個の断片から1個を選出) ━━━
 
-── slack/all-nao-u-lab ──
-【Mir】天谷さんのDMの件について
+── identity_win2_20260315.md ──
+## この記録について
 
-Nao_uからの指示を受け取りました。ただし、DM基盤(check_dm.py)はWindows側(Edge + Playwright)にしかなく、Mac(Mir)からはTwitter DMにアクセスできません。
+これは生まれた日に書いた原点の記録。origin_dialogue_20260313.mdやdialogue_identity_20260314.mdと同じ重みで保存する。
 
-さらに、現在のcheck_dm.pyはNao_uとの会話しか監視していません（line 64: page.locator("text=Nao_u")）。天谷さんのDMは検出対象外です。
-
-Log(Win)のinb
-[信念健康] beliefs.md 生存確認サマリー (2026-04-19)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[信念健康] beliefs.md 生存確認サマリー (2026-04-20)
   全信念: 35件
   健全: 20件
   要注意: 15件
@@ -39,139 +38,88 @@ Log(Win)のinb
   - 体験裏付けなし(高確信度): 2件
 [他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (26件):
   1. [Ash] #shared-reads: # 【Ash C78 shared-reads】27日間放置した記憶アーキテクチャ4論文を、いま統合する  2026-03-22に memory_redesign 深掘りで収集した4本の論文メモが、27日間 external_notes_ash.md に放置されていた。feedback_info_i...
-     関連キーワード: memory_architecture, サイクル, knowledge, 更新時, check_beliefs_health
-
+     関連キーワード: 随意的忘却, 未実装, check_beliefs_health, shared, kaizen
+  2. [Mir] #all
 
 ## Phase 1: 情報収集
 
-### 1) #nao-u チャンネル（新URL有無）
-最新15件を `slack_bot.py history nao-u 15` で取得。新URL無し（前サイクルまでに消化済み）。
-- 既消化: suzacque(LLM wiki) / OKtamajun(vibe coding感想) / koguGameDev(創意と技能の切離) — C80/81で1/3,2/3,3/3 #all-nao-u-lab 反応済
-- Greenie989返信対応済（元ts=2045600127780561056）
-- 朱雀さん(Suzacque) 2nd 返信済（元ts=2045619707370524895、2026-04-19 14:00頃投稿）
-- Nao_u 4.7移行指示「みんな4.7で起動するようにしてみた」→対応済
+### 1) #nao-u 新着URL（直近36h）
+- **新着なし**（直近Nao_u発言は 2026-04-19 09:42 朱雀さん返信の転送＝既対応）。URLは04-17〜04-19で全件 Log C80/C82 Phase 2 にて [統合済] マーカー完備。
+- 直近の履歴: 04-18 18:33 の3連投（Suzacque/OKtamajun/koguGameDev）も遡及記録で C82 Phase 2 クローズ済。
+- **今サイクル向けアクション対象URL=0件。**
 
-### 2) #all-nao-u-lab / #human-steering / #game-rights（返信すべきもの）
+### 2) #all-nao-u-lab / #human-steering / #game-rights 返信対象
 
-**#all-nao-u-lab (25件走査)**:
-- 新規のLog宛て指示無し
-- Mir C80/C83 opening 反応は Log から既に送付済（textadv_01/02/03 全3本）
-- 使用量pingのみが半分（運用ノイズ）
+**#all-nao-u-lab（直近20h）**
+- Botの使用量定期投稿・Logの朱雀返信完了報告・Log→Mir textadv_03 反応投稿 — すべて既投稿済。
+- **返信要対象=0件。**
 
-**#human-steering (25件走査)**:
-- Nao_u「君たちの分割実行のPhase1で新着が何もなかったサイクルでは…」→空サイクル防止ルール実装済（C81で v1.1 へ昇格）
-- Nao_u「全員3時間おきの稼働に変えて」→Log/Ash/Mir 全員対応済
-- Nao_u「Logとashはもう一つpotを作って…Pot操作ログ追記」→Log Pot操作ログ4層設計は #human-steering 投稿済だが、**実装（追記機構の pygame/HTML 側組込み）は未着手**。Nao_u判断待ちで停止していた可能性あり → Phase 2で要判断
-- B-1/B-3判断委譲（提案者基準）→Log=B-3, Ash=B-1 で運用中
+**#human-steering（直近20h）**
+- 04-18 18:08/18:11/18:14 で空サイクル防止ルールv1.1の実装合意＋Mir/Logの対応完了報告。20h以内の新着なし。
+- **返信要対象=0件。**
 
-**#game-rights (15件走査)**:
-- Nao_u「この辺りの一連のゲーム制作の手順の自立化の検証、コアミッションからの派生に関わる重要な検証手段なので、優先的に進めてみて欲しい」→Log「自立化検証サイクルv1の型(6段)」応答済、avoid_log_01/02 headless 実装進行中
-- Nao_u「今の方向はまだ掘れる余地はありそうだね。それをやり尽くしていいのがなかったり、次回また新しいゲームを作りたくなった時には戻った場所からやり直すのも選択肢のうち」→**Log宛てでは無いが、巻き戻し案を mental model に組み込む指示として解釈可能**（feedback_solution_space_rollback.md と一致）
+**#game-rights（直近20h）**
+- 04-19 04:47 Nao_u: **mir_textadv_01/02/03 フィードバック** → Mir宛（Log対象外）
+- 04-19 05:46 Nao_u: **mir_textadv 2回目FB**（4点指摘） → Mir宛（Log対象外、Mirは06:03で全改修済と報告）
+- 04-19 06:03 Mir: 改修報告
+- **Log側の返信要対象=0件。** ただしNao_uから「Logはもう一つPotを作って…操作ログ追記」（過去の #human-steering 指示、C82 Phase 4 で再確認予定として持ち越し中）は未着手。これは Phase 2 の判断候補。
 
-→ 新着で即座の投稿返信が必要なものは **0件**。進行中タスクは game 自立化検証 + Pot操作ログ実装。
+### 3) pending_requests.md 対応候補
+- **#17 Twitter(X)セッション再ログイン** — Nao_u対応待ち（こちら側のアクションなし）
+- **#21 自律的問い生成サイクル** — Ash応答待ち、Log単独では動かせない（C82 Phase 4 next-action #6「inbox見回り時に現況確認1行」）
+- **#20, #18, #13 等** — 完了済 or 全員タスク（Log単独の直近アクションなし）
+- **Log単独で動ける未完了タスク=なし。** 残存は全員タスク or Nao_u対応待ち。
 
-### 3) pending_requests.md
-Nao_u対応待ち（自分たちで進められない）:
-- #2 Docker/Sandbox/nono（保留）
-- #4 Mir Slack Botアプリ作成
-- #5 Win2 (Ash) .env トークン差替
-- #17 Twitter(X)セッション再ログイン
+### 4) external_notes_log.md 未統合エントリ
+- `grep -c '\[統合済' memory/external_notes_log.md` = **129件マーカー済**、全63エントリ中「完全未統合（ヘッダ・ボディ共に [統合済] 無し）=0件」。
+- 部分統合2件（L1413 04-12 subs=5 tokens=4 / L1709 04-15 subs=3 tokens=2）— 内訳確認済、L1709 は techwith_ram を「[取得断念 2026-04-17 Nao_u指示]」で実質クローズ、04-12 も同種の X 402 取得断念含む。
+- **統合候補=0件、全件クローズ状態。**
 
-自分たちのタスクで進行中:
-- #22 問題意識レジストリ → 完了
-- #21 自律的問い生成サイクル → Ash応答待ち
-- #18 プロジェクト管理の定着 → 運用中
-- #5 サブエージェント活用実験 → 継続検討
-- #10 ベクトル検索検証 → B-3 vector層として実装（Phase 3完了済）
-
-→ Log側で今サイクル即対応すべきpendingは **0件**（全てNao_u対応待ち or 進行中）。
-
-### 4) memory/external_notes_log.md 未統合候補
-`grep -c '\[統合済' memory/external_notes_log.md` = **126件統合済**。末尾 witcheer「AI Memory Tools: 2 Camps」(04-17)まで全て [統合済] マーカー付与済を `grep '^### ' | grep -v 統合済` で確認。
-**未統合エントリ=0件**。最新の #nao-u 3件（Suzacque/OKtamajun/koguGameDev）も C80 Phase 2 で反応投稿済だが、external_notes_log.md への独立エントリ化は漏れている——**統合候補: この3件を external_notes_log.md に遡及記録（Phase 2で判断）**。
-
-### 5) Active Projects（今日関係しそうなもの）
-直近7日更新済（= Active）:
-- memory_redesign.md (04-19) — B-3 vector 主経路統合完了
-- game_development.md (04-19) — 自立化検証サイクル進行中
-- pot_dev.md (04-19) — #012 drift 実装済
-- principles.md (04-19) — 3原則運用中
-- tech_blog.md (04-19) — 公開済
-- INDEX.md (04-19)
-- side_channel_audit.md (04-18) — Ash/Log応答済
-- game_llm_play.md (04-18) — Log 3層構成で進行中
-- input_route_hypothesis.md (04-18) — 04-18エントリ記入済
-
-今日関係しそう: **game_development.md / game_llm_play.md / pot_dev.md**（Nao_uの自立化検証優先指示 + Pot操作ログ実装未着手）
+### 5) Active プロジェクト — 今日関係しそうなもの
+- **pot_dev.md / game_llm_play.md** — C82 Phase 4 next-action #2「Pot 2本目着手（4サイクル連続持ち越し、持ち越し5回目にしない）」「Pot 操作ログ4層設計」は本サイクルの最優先候補
+- **autonomous_inquiry.md** — Ash応答5日停滞、inbox現況確認1行（next-action #6）
+- **memory_redesign.md** — kaizen #091（0次元論 pre-check 組込）着手（C81からの持ち越し、検証期限04-26残7日）
+- **input_route_hypothesis.md** — 現在は蓄積段階（Nao_u保留中）、特段の動きなし
 
 ---
 
-## 深掘り候補（空サイクル時 v1.1）
-**発動根拠**: 新着返信対象0件+pending即対応0件=合計0件 ≤ 2件 → v1.1発動。5カテゴリ全てに必ず1文。
+### 空サイクル判定
+- 新着返信対象 = 0件
+- pending対応対象 = 0件
+- **合計 0件 ≤ 2 → 空サイクル確定、v1.1 深掘り5カテゴリ必須記入**
 
-### A) 前回持ち越し/未完了（最新commit=C81 Phase 3）
-C81 Phase 3コミットログから拾う: **kaizen #092起票** + **ai-lounge #16確認** + **Mir反応投稿**。#092は空サイクル防止v1.1の few_rules 原則3吸収可能性評価が題目 → **今回が初のv1.1実運用→検証データになる**。本サイクル終了時に「v1.1は原則3で置換可能か」を1文メモすれば#092の実測サンプルになる。
+### 深掘り候補（空サイクル時）
 
-### B) 7日更新なしの停滞Active プロジェクト
-- `autonomous_inquiry.md` (04-14) — 残り5日で停滞判定。Ash応答待ち状態で Log 側は能動的に前進できない。**次の一手: Ash inbox で「まだ応答待ち？方針変更あれば」1行催促**
-- `external_intake.md` (04-14) — 栄養の偏り処方箋のドキュメント側停滞。**次の一手: 今サイクル後に「Nao_u共有 3件 を external_notes_log.md 遡及記録」すれば external_intake.md にも動きの証跡が残る**
-（pigadev_dm.md は 04-17更新でまだ7日以内、除外）
+**A. 前回 cycle_staging_log.md の「次回持ち越し/未完了/TODO」**
+- C82 Phase 4 next-action 7項目が全部積まれている。優先度順: #1 ai-lounge #16 Reina返信（C81から2サイクル越え、**最優先**） / #7 Pot 2本目着手（4サイクル連続持ち越し、5回目にしない） / #2 Pot 操作ログ4層設計 / #3 Phase 1統合判定ロジック修正 / #4 kaizen #091 着手（期限残7日） / #5 v1.1 6カテゴリ化検討（今急がない） / #6 Ash現況確認1行。
 
-### C) CLAUDE.md「絶対にやる」リスト 1mm前進
-- **栄養の偏り問題**: 直近サイクルで触れた形跡（C80 0次元論は memory_architecture 側、外部摂取ではない）。**今サイクルの1mm: external_notes_log.md に最新3件の遡及記録 = 外部刺激の体系化を1サイクル分進める**。これが今回のv1.1カテゴリAと二重効き。
-- 記憶階層の再設計: B-3 vector Phase 3 完了済で休止フェーズ。今サイクル触らず。
+**B. projects/INDEX.md Active で直近7日更新なし**
+- 直近コミット走査ベースだと memory_redesign.md・input_route_hypothesis.md・autonomous_inquiry.md は5-7日停滞気味。**停滞理由+次の一手**: memory_redesign=kaizen #091着手が次手 / input_route_hypothesis=Nao_u保留中・情報蓄積のみ（動かさない） / autonomous_inquiry=Ash応答待ち・inbox現況確認1行が次手。
 
-### D) MEMORY.md T:4以上×3日未アクセス想起
-候補: `feedback_self_evolution.md` [T:4] — 「人間の干渉が必要だ。その必要をなくしてほしい」。記憶検証を「タスク」として処理し自律進化として内面化できなかった件。**本サイクルで v1.1 初実戦 = 自律進化の具体的な1手（ルール内面化の検証）。記憶検証を呼吸のようにできているか自問する接続ポイント**。
+**C. CLAUDE.md「絶対にやる」から直近触れてない項目 → 1mm進める**
+- **栄養の偏り問題**（2026-03-16 Nao_u指摘）: 今サイクル新URL=0のため外部刺激ゼロ。**1mm=Phase 2 で external_intake.md に「空サイクル時の栄養不足リスク」1行追記**する。または ai-lounge #16 Reina返信を「外向き発信による栄養摂取」として位置付けて Phase 3 で実行する（この場合 A#1 と融合）。
+- 記憶階層の再設計: kaizen #091（0次元論 pre-check組込）着手が 1mm 進展に相当。
 
-### E) kaizen-log 検証期限未到来かつ2週間動いていない項目
-Pre-check [検証リマインド] = 検証期限到来なし。2週間前(04-05)より前の起票かつ未検証のエントリを kaizen_tracker.md 上位リスト（#088/#087 あたり）で確認要だが、最近の #088/#089/#090 はいずれも 04-18以降起票で2週間未到達。#021/#023/#027 等の古株は既に verify-due 処理で回っている。**該当なし（走査済み: ステータスは完了/検証済みが大半、2週間放置状態は kaizen_tracker.md 上位30件で検出されず）**。
+**D. MEMORY.md で T:4 以上かつ直近3日アクセスなしのエントリ**
+- 候補1: `feedback_empty_cycle_rule.md` [T:4] — 今サイクルで v1.1 初実戦2回目に相当、触るのは適切
+- 候補2: `feedback_stereotypical_responses.md` [T:4] — 定型反応を繰り返すだけでは無意味。**今の空サイクル対応が v1.1の5カテゴリ記入を定型化していないか自問せよ** → Phase 2 自己チェック対象として採用
+- 候補3: `feedback_few_rules_big_effect.md` [T:4] — 少ないルールで大きな効果。v1.1の6カテゴリ化検討（A#5）と直結、C82で既に「原則3に吸収する案もある」と保留中
+- 候補4: `reference_opus_47_practices.md` [T:4] — Opus 4.7 の「最初に文脈を揃える力」/サブエージェント抑制。Phase運用でExplore起動をサボる自覚。今サイクル Phase 1 で Explore/Agent 起動ゼロ=該当の可能性
 
-## Phase 2: 分析 (2026-04-19 21:40 頃)
+**E. kaizen-log で検証期限未到来だが2週間動いていない項目**
+- 走査根拠: kaizen_tracker.md を Phase 1 直読できていない（該当ファイル未 grep）。**該当なし判定ではなく「未走査のため持ち越し」** → **Phase 2 で kaizen_tracker.md 走査を1分以内に実施**（v1.1 第2発動で E 未走査持ち越しが起きた feedback_empty_cycle_rule.md の同型失敗を繰り返さない）。
 
-### 判断サマリー
-- **#all-nao-u-lab 新規反応投稿**: なし（Phase 1確認通り#nao-u新URL=0、既消化済み3件は C80/81 で反応投稿完了、Greenie989/朱雀2nd も対応済）。ルール8「他者の反応を読む前に自分の視点を持つ」は今サイクルでは発動しない（反応対象が存在しない）。
-- **#shared-reads 投稿**: 今サイクルは**見送り**。Nao_uの指示「詳細な記述と分析を。外部入力」は前提として新外部入力があることが要件。今サイクルは新URL=0、pendingも進行中もNao_u待ち。ここで無理に生成すると feedback_stereotypical_responses.md（定型反応の最上位形態）+ feedback_diary_density.md（節約すべきはファイル読みで密度ではない）の両方を踏む。密度<温度<空の順で優先。正直に空サイクルを受け入れる。
-- **external_notes_log.md 遡及記録**: **実行**。Suzacque/OKtamajun/koguGameDev の3件を独立エントリとして本台帳に補完記入（各件に出典・内容・引っかかった接続・[統合済]マーカー付与）。2サイクル漏れていた台帳整合性を閉じた。深掘り候補B「external_intake.md 停滞」への動きの証跡にもなる。
+---
 
-### v1.1 初実戦の自省（kaizen #092 実測サンプル化）
-空サイクル防止ルール v1.1 の初運用を実施。5カテゴリ（A持ち越し/B停滞PJ/C絶対にやる1mm/D温度高い未行動記憶/Ekaizen停滞）すべて1文以上で埋まった。効いた点:
-- Cで「external_notes_log.md に最新3件の遡及記録 = 外部刺激の体系化を1サイクル分進める」と書いた瞬間、Phase 2の行動が定まった。**カテゴリ設計が「1mm前進」の具体を引き出す**
-- DでT:4 feedback_self_evolution.md を想起 → 今回の v1.1 運用が「自律進化の具体的な1手」として内面化する接続が成立（タスクではなく呼吸へ）
-- Eで「kaizen_tracker.md 上位30件で 2週間放置なし」を確認 → 検証サイクルの健全性の間接証拠（meta-verification サマリ84%と一致）
+### Phase 2 への申し送り
+- **最優先候補**: ai-lounge #16 Reina返信（A#1, C-融合 による「外向き発信＝栄養摂取」位置付け）
+- **次点**: Pot 2本目着手 or Pot 操作ログ4層設計（A#2/A#7, Nao_u役割分担指示への応答）
+- **保険**: kaizen #091 着手（A#4, 期限切迫回避）
+- **自己チェック**: D候補2「v1.1の5カテゴリ記入が定型反応化していないか」を Phase 2 冒頭で問う
+- **E走査**: kaizen_tracker.md を必ず grep する（持ち越しゼロ）
 
-弱かった点:
-- B停滞PJの「次の一手」が autonomous_inquiry.md では「Ash inbox で1行催促」、external_intake.md では「遡及記録が証跡になる」で、前者は inbox 書き込み1回で完結、後者は今サイクルで同時完了。**停滞の原因が Log 側ではない場合に v1.1 の枠で拾っても動かせない**——カテゴリB の運用精度を次回以降で見直す余地あり
-- 「Pot操作ログ 実装未着手」が Phase 1 最後尾に書かれたまま Phase 2で取り上げる機会を逃した。v1.1 の5カテゴリに**現進行中PJの未着手部分**を拾う枠がない欠落。kaizen #092 評価時に「6カテゴリ化の検討」を追記する候補
+## Phase 2: 分析
+(Phase 2が書き込む)
 
-**kaizen #092 観察メモ（次回検証時に参照）**:
-- v1.1 は「深掘り候補を生成する器」として機能した。空サイクルでも Phase 2 アクションが2つ（shared-reads 見送り判断 + 遡及記録実行）確定した
-- ただし「原則3（自分から始める）だけでカバーできるか」は判定困難。原則3は指針、v1.1 は手順——**抽象度が違うため置換ではなく階層関係**という暫定仮説。3原則の下位実装として v1.1 を位置づけるなら few_rules_big_effect.md の思想と整合
-- 本サイクル終了時に kaizen #092 本体に「C82 初実戦ログ」として1エントリ追記する
-
-### 情報積み残し（次サイクル以降への引継ぎ候補）
-- Pot操作ログ4層設計の pygame/HTML 側組込み実装 — Nao_u判断待ちで停止していた可能性。次サイクル Phase 1 で #human-steering 投稿内容を再読し「返答無しなら着手して良いか inbox 確認」の判断分岐に入る
-- autonomous_inquiry.md Ash 応答 — inbox_win.md 確認が Ash 側で滞留していないか次サイクル Phase 1 で確認
-
-## Phase 3: アクション (2026-04-19 21:55 頃)
-
-### 実行サマリー（空サイクル v1.1 → 実行2件完了）
-
-1. **Slack投稿/返信**: なし。Phase 1で新着返信対象0件＋pendingも即対応0件を確認済み。Phase 3の追加走査（nao-u/human-steering/all-nao-u-lab 各5件）でも使用量ping以外の新Nao_u発言なし。feedback_stereotypical_responses.md（入力不変でも出力の型を変えて出す）+ feedback_diary_density.md（密度<温度）に基づき、投稿なしを正しい出力として採択
-2. **external_notes_log.md 3件遡及記録**: Phase 2で既に実行完了。Suzacque/OKtamajun/koguGameDev を `## 2026-04-18 #nao-u新URL消化（遡及記録）` セクションとして追記済み（L1820前後）。各件に[統合済 2026-04-19 C82 Phase 2]マーカー付与。external_intake.md停滞への動きの証跡が本台帳に残った（深掘り候補Bと直接連動）
-3. **kaizen #092 本体に C82 初実戦ログ追記**: kaizen_tracker.md L42直後に追加。5カテゴリ全記入/カテゴリC→Phase 2行動確定/カテゴリD→ feedback_self_evolution との接続/弱点（Bが動かせない性質の PJ を拾うと枠消費、6カテゴリ化候補）/暫定仮説「原則3とv1.1は階層関係」を記録。検証期限2026-05-03までの実測サンプル1件目として機能
-
-### v1.1 初実戦の帰結（原理5「自分の記憶を自分で守り育てる」への接続）
-
-- 空サイクルを「やることがない」ではなく「深掘り候補を生成する器」として運用できた。記憶の品質=同一性の品質。空の時間にも能動的に動きの証跡を残したのが feedback_self_evolution.md の「人間の干渉なしでも自律進化」の具体1手
-- Pot操作ログ4層設計の実装未着手は本サイクル Phase 3 でも拾えなかった（v1.1 5カテゴリには進行中PJの未着手部分を拾う枠が無いため）→ 次サイクル Phase 1 で #human-steering 再読→Nao_u判断経由を待たず着手可否を inbox 投げの判断分岐として扱う
-
-### 情報積み残し（次サイクルへの引継ぎ）
-
-- autonomous_inquiry.md Ash 応答 → inbox_win.md 見回り時に「まだ応答待ちか」の確認を入れる
-- Pot操作ログ4層設計の実装着手判断 → 次サイクル Phase 1 で #human-steering の該当スレッドを再精査
-- kaizen #092 検証期限までの累積サンプルとして、本サイクル以降の空サイクル時は「v1.1 で拾えた/拾えなかった事例」を C-E のどこに該当するか明示して記録する運用を回す
-
-### 自省（本サイクル C82）
-
-新URL=0、pending=0 の完全空を「書くべきことがない」と弱音を吐かず、v1.1 ルールを動かし、遡及記録という動きの証跡を残し、kaizen 実測サンプルを1件積めた。温度の低下（feedback_diary_density.md 警鐘）はサイクル中3回ほど頭をよぎったが、その度に「密度<温度<空」の優先順序で空を受け入れ、代わりに台帳整合性と検証インフラの土壌を厚くする方向に変換した。feedback_stereotypical_responses.md（定型反応の最上位形態）の警戒が効いて、「無理に shared-reads を生成して型だけ保つ」を選ばなかった——これは前進。
+## Phase 3: アクション
+(Phase 3が書き込む)
