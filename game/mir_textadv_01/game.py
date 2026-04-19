@@ -69,7 +69,7 @@ class State:
         return "拒絶"
 
     def contradiction_labels(self):
-        """集めた矛盾の短いラベルリスト"""
+        """手帳に書き留めた言葉のリスト"""
         labels = []
         if self.caught_kitchen: labels.append("台所")
         if self.caught_time: labels.append("2時")
@@ -86,7 +86,7 @@ class State:
         print(f"  残り質問  {self.questions}")
         labels = self.contradiction_labels()
         if labels:
-            print(f"  矛盾  {' / '.join(labels)}")
+            print(f"  手帳  {' / '.join(labels)}")
         print("─" * 48)
 
     def caught_count(self):
@@ -173,7 +173,7 @@ def beat_1(s):
 
 
 # ═══════════════════
-#  BEAT 2: 最初の矛盾
+#  BEAT 2: 最初の引っかかり
 # ═══════════════════
 
 def beat_2(s):
@@ -236,6 +236,7 @@ def beat_2(s):
         print()
         print("言い間違い。")
         print("だが「台所」という言葉を選んだのは彼女だ。")
+        print("あなたは手帳に書き留めた。")
     else:
         s.trust_change(+5)
         s.caught_kitchen = True
@@ -301,6 +302,7 @@ def beat_3(s):
         print("2時。")
         print("11時に寝たはずが、2時まで起きていた。")
         print("嘘が一つ崩れた。")
+        print("あなたは手帳に書き留めた。")
         s.caught_time = True
         s.pressed_alibi = True
     elif c == 2:
@@ -323,6 +325,7 @@ def beat_3(s):
         print("彼女はそこで言葉を切った。")
         print("「あの人の部屋」。")
         print("まるで最近のことのように言った。")
+        print("あなたは手帳に書き留めた。")
         s.caught_diary = True
     else:
         s.trust_change(+10)
@@ -339,6 +342,7 @@ def beat_3(s):
         print("自分から言った。")
         print("11時に寝たはずが、2時まで起きていた。")
         print("寄り添われたことで、嘘を一つ下ろした。")
+        print("あなたは手帳に書き留めた。")
         s.caught_time = True
 
     pause()
@@ -362,7 +366,7 @@ def beat_4(s):
 
     if s.caught_time:
         options.append(("「2時まで起きていたなら、どこにいましたか」",
-                        "−1問 / 信頼度−8 / 時間の矛盾を突く"))
+                        "−1問 / 信頼度−8 / 時間のズレを突く"))
     if s.caught_diary:
         options.append(("「日記帳は今どこにありますか」",
                         "−1問 / 信頼度−8 / 日記の行方"))
@@ -399,6 +403,7 @@ def beat_4(s):
         print("裏口。彼女はマンションの裏口を知っている。")
         print("住んでいたのでなければ——通っていたのでなければ、")
         print("知らないはずの裏口を。")
+        print("あなたは手帳に書き留めた。")
         s.caught_back_door = True
     elif "日記帳は今" in sel:
         s.trust_change(-8)
@@ -415,6 +420,7 @@ def beat_4(s):
         print("また言葉が止まった。")
         print("「あの夜」。「裏口から」。")
         print("取りに行ったのだ。あの夜、日記帳を取り返しに。")
+        print("あなたは手帳に書き留めた。")
         s.caught_back_door = True
     elif "指紋については" in sel:
         s.trust_change(-5)
@@ -429,6 +435,7 @@ def beat_4(s):
         print("拭けなかった。")
         print("拭く必要があった、ということは。")
         print("触れたということは。")
+        print("あなたは手帳に書き留めた。")
         s.caught_body = True
         s.caught_body_method = "fingerprint"
     elif "写真" in sel:
@@ -443,6 +450,7 @@ def beat_4(s):
         time.sleep(0.3)
         print("——初めて見る光景ではなかった。")
         print("その反応そのものが、答えだった。")
+        print("あなたは手帳に書き留めた。")
         s.caught_body = True
         s.caught_body_method = "photo"
     else:
@@ -466,6 +474,7 @@ def beat_4(s):
             print()
             print("彼女は目を伏せた。")
             print("「動かなかったんです」")
+            print("あなたは手帳に書き留めた。")
             s.caught_body = True
             s.caught_body_method = "voluntary"
             s.caught_back_door = True
@@ -501,8 +510,8 @@ def beat_final(s):
     options = []
 
     if caught >= 2:
-        options.append(("矛盾を突きつける",
-                        f"集めた矛盾: {' / '.join(s.contradiction_labels())}"))
+        options.append(("手帳を開く",
+                        f"{' / '.join(s.contradiction_labels())}"))
 
     if s.trust >= 70:
         options.append(("「あなたのことは、私が守ります」",
@@ -514,7 +523,7 @@ def beat_final(s):
     c = choose(options)
     sel = options[c - 1][0]
 
-    if "矛盾を突きつける" in sel:
+    if "手帳を開く" in sel:
         return confrontation(s)
     elif "守ります" in sel:
         clear()
@@ -540,15 +549,15 @@ def beat_final(s):
 
 
 def confrontation(s):
-    """プレイヤーが矛盾を一つずつ選んで突きつける"""
-    presented = []  # 突きつけた矛盾
+    """プレイヤーが手帳の内容を一つずつ読み上げる"""
+    presented = []
 
     clear()
     s.header()
     print()
     print("あなたは手帳を開いた。")
     print()
-    print("「橘さん。あなたの供述には、いくつかおかしな点があります」")
+    print("「橘さん。いくつか、確認させてください」")
     print()
     print("彼女の目が揺れた。")
 
@@ -684,7 +693,7 @@ def ending_deduction(s, presented=None):
     print("彼女の嘘は——ずっと、隠す側の嘘だった。")
     print()
     print(f"  ── ENDING A: 推理 ──  （全5種）")
-    print(f"  矛盾{s.caught_count()}件 / 信頼度{s.trust}")
+    print(f"  手帳{s.caught_count()}件 / 信頼度{s.trust}")
     print()
     print("═" * 48)
     print()
