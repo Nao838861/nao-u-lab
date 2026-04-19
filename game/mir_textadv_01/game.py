@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""mir_textadv_01 — 思考漏れ（Thought Leak）v4
+"""mir_textadv_01 — 綻び（ほころび）v4
 
 v3→v4 変更点（Nao_uフィードバック 2026-04-20）:
   - 信頼度が上がる選択肢を追加（寄り添う/共感する = +信頼、情報は得にくい）
@@ -88,7 +88,7 @@ class State:
         if self.leak_visible:
             bar = "█" * (self.trust // 10) + "░" * (10 - self.trust // 10)
             print(f"  信頼度    {bar}  {self.trust}  {self.trust_desc()}")
-            print(f"  思考漏れ  {len(self.leaks)}件")
+            print(f"  綻び      {len(self.leaks)}件")
         print(f"  残り質問  {self.questions_left}")
         print("─" * 50)
 
@@ -107,8 +107,8 @@ def beat_1(s):
     print()
     print("━" * 50)
     print()
-    print("        思 考 漏 れ")
-    print("       ─ Thought Leak ─")
+    print("          綻   び")
+    print("        ─ ほころび ─")
     print()
     print("━" * 50)
     print()
@@ -182,7 +182,7 @@ def beat_1(s):
 
 
 # ════════════════════════════════════════
-#  BEAT 2: 思考漏れ初出現
+#  BEAT 2: 綻び初出現
 # ════════════════════════════════════════
 
 def beat_2(s):
@@ -214,14 +214,14 @@ def beat_2(s):
     print()
     time.sleep(0.3)
     print("心の中の言葉が、直接流れ込んできた。")
-    print("思考が——漏れている。")
+    print("心が——綻びている。")
     print()
 
     s.leak_visible = True
 
     bar = "█" * (s.trust // 10) + "░" * (10 - s.trust // 10)
     print(f"  信頼度    {bar}  {s.trust}  {s.trust_desc()}")
-    print(f"  思考漏れ  {len(s.leaks)}件")
+    print(f"  綻び      {len(s.leaks)}件")
     print()
     print("「合鍵」——彼女は一言もそんなことを口にしていない。")
     print("だがあなたには、確かに聞こえた。")
@@ -245,7 +245,7 @@ def beat_3_relationship(s):
         ("「別れた理由を教えてください」",
          "−1問 / 信頼度−5 / 二人の間に何があったか"),
         ("「合鍵をお持ちですか」",
-         "−1問 / 信頼度−15 / 思考漏れを直接追及"),
+         "−1問 / 信頼度−15 / 綻びを直接追及"),
         ("「つらいことを聞いてすみません。大丈夫ですか」",
          "−0問 / 信頼度+10 / 情報は得られない"),
     ])
@@ -396,7 +396,7 @@ def beat_3_silence(s):
         ("引き続き黙る。彼女に話させる",
          "−0問 / 信頼度+5 / 急かさない"),
         ("「合鍵、のことを話してくれますか」",
-         "−1問 / 信頼度−10 / 思考漏れを利用"),
+         "−1問 / 信頼度−10 / 綻びを利用"),
         ("「無理しなくていいですよ。あなたのペースで」",
          "−0問 / 信頼度+15"),
     ])
@@ -653,7 +653,7 @@ def beat_final(s):
 
     if has_full_picture and len(s.leaks) >= 3:
         options.append(("漏れ聞こえた思考を、一つずつ読み上げる",
-                        f"思考漏れ{len(s.leaks)}件 / 全てが繋がっている"))
+                        f"綻び{len(s.leaks)}件 / 全てが繋がっている"))
 
     if has_full_picture:
         options.append(("「日記帳を取り返しに行って、彼が死んでいるのを見つけた」",
@@ -743,7 +743,7 @@ def ending_a(s):
     ev = sum([s.know_key, s.know_back_door, s.know_time,
               s.know_diary, s.know_already_dead, s.know_fingerprint])
     print("  ── ENDING A: 思考の証人 ──")
-    print(f"  思考漏れ{len(s.leaks)}件 / 事実{ev}/6 / 信頼度{s.trust}")
+    print(f"  綻び{len(s.leaks)}件 / 事実{ev}/6 / 信頼度{s.trust}")
     print()
     print("═" * 50)
     print()
@@ -828,7 +828,7 @@ def ending_trust(s):
     print("追い詰めることだけが、刑事の仕事ではない。")
     print()
     print("  ── ENDING C: 信頼 ──")
-    print(f"  信頼度{s.trust} / 思考漏れ{len(s.leaks)}件 / 残り質問{s.questions_left}")
+    print(f"  信頼度{s.trust} / 綻び{len(s.leaks)}件 / 残り質問{s.questions_left}")
     print()
     print("═" * 50)
     print()
