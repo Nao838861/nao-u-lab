@@ -143,7 +143,9 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
                     escaped = json.dumps(reply_text)
                     page.evaluate(f'async () => {{ await navigator.clipboard.writeText({escaped}); }}')
                     time.sleep(1)
-                    page.keyboard.press("Control+v")
+                    import sys as _sys2
+                    paste_key = "Meta+v" if _sys2.platform == "darwin" else "Control+v"
+                    page.keyboard.press(paste_key)
                     time.sleep(2)
                     page.keyboard.press("Enter")
                     time.sleep(4)
