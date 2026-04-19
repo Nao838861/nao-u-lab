@@ -111,7 +111,7 @@ def _ai_attract(state, b):
     dy = a["y"] - b["y"]
     d = math.hypot(dx, dy) + 0.001
     if b["y"] > H * 0.3 and b["mode"] == "iron" and d < 220:
-        pull = 0.08 * (1 - min(1, d / 220))
+        pull = 0.14 * (1 - min(1, d / 220))
         b["vx"] += (dx / d) * pull * 3
         b["vy"] += (dy / d) * pull * 3
     if b["mode"] == "iron" and d < a["r"] + b["r"] + 2:
@@ -134,30 +134,25 @@ def _trigger_polarity_reversal(state):
         return False
     if p["burstCd"] > 0:
         return False
-    p["burstCd"] = 12
-    is_supercharge = a["absorbed"] >= a["absorbMax"]
-    n = a["absorbed"] + (3 if is_supercharge else 0)
-    rng = state["rng"]
-    for i in range(n):
-        if is_supercharge:
-            ang = (i / n) * math.pi * 2 + rng.random() * 0.2
-            speed = 2.4 + rng.random() * 1.8
-            r = 6 + rng.random() * 3
-        else:
-            ang = -math.pi / 2 + (i - (n - 1) / 2) * 0.22 + (rng.random() - 0.5) * 0.08
-            speed = 5 + rng.random() * 1.2
-            r = 5
-        state["bullets"].append({
-            "x": a["x"], "y": a["y"] - 2,
-            "vx": math.cos(ang) * speed, "vy": math.sin(ang) * speed,
-            "r": r, "mode": "returned", "life": 0, "_consumed": False,
-            "pierce": is_supercharge,
-        })
+    # 磁力場内(160px以内)でしか極性反転できない
+    if math.hypot(p["x"] - a["x"], p["y"] - a["y"]) > 160:
+        return False
+    p["burstCd"] = 18
+    # SPACE = AI周囲の鉄片を一括消去（確実に効く）
+    cleared = 0
+    for b in state["bullets"]:
+        if b["mode"] == "iron" and not b["_consumed"]:
+            if math.hypot(b["x"] - a["x"], b["y"] - a["y"]) < 180:
+                b["_consumed"] = True
+                cleared += 1
+    state["chain"] += cleared
+    state["chainDecay"] = 90
+    state["chainPeak"] = max(state["chainPeak"], cleared)
+    state["score"] += cleared * 10
+    if cleared > 0:
+        state["arc_hits"] += 1
     a["absorbed"] = 0
     a["fullFrames"] = 0
-    if is_supercharge:
-        a["invincible"] = 45
-        state["supercharge_count"] = state.get("supercharge_count", 0) + 1
     state["space_presses"] += 1
     return True
 
@@ -244,7 +239,7 @@ def step(state, move_input, space_input):
             a["invincible"] -= 1
         if a["absorbed"] >= a["absorbMax"]:
             a["fullFrames"] += 1
-            if a["fullFrames"] > 90:
+            if a["fullFrames"] > 45:
                 # overload: SPACEを押さなかったのでAI死
                 a["alive"] = False
                 state["aEndT"] = state["t"]
@@ -426,10 +421,117 @@ def policy_dodger(state):
     return move, 0
 
 
+def policy_remote_presser(state):
+    """手抜き3: 画面端で回避しつつ、AIゲージが危なくなったらSPACEだけ押す。
+    Nao_u 2026-04-20 のプレイで発見されたパターン: field 9%, space 50回。
+    AIの近くにいなくてもSPACEは効くことを悪用する。
+    """
+    p = state["player"]
+    a = state["ai"]
+
+    # SPACEはAIが満タン近い時だけ押す（遠くから管理）
+    space = 0
+    if a["alive"] and a["absorbed"] >= a["absorbMax"] - 1 and p["burstCd"] <= 0:
+        space = 1
+
+    # 移動はdodgerと同じ（端で回避）
+    threats = []
+    for b in state["bullets"]:
+        if b["mode"] == "iron" or (b["mode"] == "returned" and b["life"] > 12):
+            dy = p["y"] - b["y"]
+            if 0 < dy < 180 and abs(p["x"] - b["x"]) < 50:
+                threats.append(b)
+
+    if threats:
+        avg_x = sum(b["x"] for b in threats) / len(threats)
+        move = -1 if avg_x > p["x"] else 1
+        if p["x"] <= p["r"] + 5:
+            move = 1
+        elif p["x"] >= W - p["r"] - 5:
+            move = -1
+        return move, space
+
+    left_count = sum(1 for b in state["bullets"] if b["x"] < W / 2 and b["mode"] == "iron")
+    right_count = sum(1 for b in state["bullets"] if b["x"] >= W / 2 and b["mode"] == "iron")
+    target_x = 25 if left_count <= right_count else W - 25
+
+    diff = target_x - p["x"]
+    if diff > 4:
+        move = 1
+    elif diff < -4:
+        move = -1
+    else:
+        move = 0
+    return move, space
+
+
+def policy_oscillator(state):
+    """離れて避けて、ゲージが危なくなったらAIに近づいてSPACE→離れる。
+    「通い」プレイ。近づく時間を最小限にしてリスクを避ける。
+    """
+    p = state["player"]
+    a = state["ai"]
+    space = 0
+
+    # ゲージが危険（absorbMax-1以上）→ AIに近づく
+    need_approach = a["alive"] and a["absorbed"] >= a["absorbMax"] - 1
+    near_ai = a["alive"] and math.hypot(p["x"] - a["x"], p["y"] - a["y"]) <= 160
+
+    if need_approach and near_ai and p["burstCd"] <= 0:
+        space = 1  # 近くに着いたらSPACE
+
+    if need_approach and not near_ai:
+        # AIに向かう
+        diff = a["x"] - p["x"]
+        move = 1 if diff > 3 else (-1 if diff < -3 else 0)
+    else:
+        # 普段はdodgerと同じ（端で回避）
+        threats = []
+        for b in state["bullets"]:
+            if b["mode"] == "iron":
+                dy = p["y"] - b["y"]
+                if 0 < dy < 180 and abs(p["x"] - b["x"]) < 50:
+                    threats.append(b)
+        if threats:
+            avg_x = sum(b["x"] for b in threats) / len(threats)
+            move = -1 if avg_x > p["x"] else 1
+            if p["x"] <= p["r"] + 5: move = 1
+            elif p["x"] >= W - p["r"] - 5: move = -1
+        else:
+            target_x = 25 if p["x"] < W / 2 else W - 25
+            diff = target_x - p["x"]
+            move = 1 if diff > 4 else (-1 if diff < -4 else 0)
+    return move, space
+
+
+def policy_camper(state):
+    """AIの真横に張り付いて動かず、ゲージが溜まったらSPACE。
+    「AIの近くにいさえすればいい」が安全すぎないか確認。
+    """
+    p = state["player"]
+    a = state["ai"]
+    space = 0
+    if a["alive"] and a["absorbed"] >= a["absorbMax"] - 1 and p["burstCd"] <= 0:
+        space = 1
+    # AIのx座標+20にひたすら張り付く
+    target_x = a["x"] + 20 if a["alive"] else W / 2
+    diff = target_x - p["x"]
+    if diff > 3:
+        move = 1
+    elif diff < -3:
+        move = -1
+    else:
+        move = 0
+    return move, space
+
+
 POLICIES = {
     "concept": policy_concept,
     "slacker": policy_slacker,
     "dodger": policy_dodger,
+    "remote": policy_remote_presser,
+    "camper": policy_camper,
+    "oscillator": policy_oscillator,
 }
 
 
@@ -500,42 +602,41 @@ def aggregate(traces):
 
 
 def diagnose(agg_by_policy):
-    """3つのポリシーの集計からゲームデザイン成立性を判定する。
-
-    成立条件:
-      (1) concept の生存/スコア > slacker, dodger 両方
-      (2) concept の in_field_ratio > slacker, dodger (磁石軸を実際に使っている)
-      (3) concept の chain_peak > slacker, dodger (コンセプト固有の快感=連鎖が出ている)
-
-    反成立のシグナル:
-      (A) slacker が concept より長生きする → SPACE連打が最適戦略化
-      (B) dodger が concept より長生きする → 磁石軸を無視した方が安全=軸が機能していない
-      (C) concept の chain_peak が低い → 連鎖がほぼ発生しない=報酬段が未接続
+    """4つのポリシーからゲームデザイン成立性を判定。
+    (D) remote = 離れてSPACEだけ押す。Nao_u 2026-04-20 のプレイで発見。
     """
     lines = []
     c = agg_by_policy.get("concept", {})
     s = agg_by_policy.get("slacker", {})
     d = agg_by_policy.get("dodger", {})
+    r = agg_by_policy.get("remote", {})
     if not (c and s and d):
         lines.append("- ポリシー不足で診断不可")
         return lines
 
-    # 1. 生存比較
+    # 1. 生���比較
     c_surv = c["p_survival_avg_s"]
     s_surv = s["p_survival_avg_s"]
     d_surv = d["p_survival_avg_s"]
-    lines.append(f"- 生存: concept={c_surv:.2f}s / slacker={s_surv:.2f}s / dodger={d_surv:.2f}s")
+    r_surv = r["p_survival_avg_s"] if r else 0
+    surv_line = f"- 生存: concept={c_surv:.2f}s / slacker={s_surv:.2f}s / dodger={d_surv:.2f}s"
+    if r:
+        surv_line += f" / remote={r_surv:.2f}s"
+    lines.append(surv_line)
     if s_surv > c_surv:
-        lines.append(f"  ⚠ **(A)SPACE連打が優位**: slackerがconceptより{s_surv-c_surv:.2f}s長生き。連打最適化=設計不良")
+        lines.append(f"  ⚠ **(A)SPACE連打が優位**: slackerがconceptより{s_surv-c_surv:.2f}s長生き")
     if d_surv > c_surv:
-        lines.append(f"  ⚠ **(B)磁石軸無視が優位**: dodgerがconceptより{d_surv-c_surv:.2f}s長生き。核機能を使わない方が安全=軸が機能していない")
+        lines.append(f"  ⚠ **(B)磁石軸無視が優位**: dodgerがconceptより{d_surv-c_surv:.2f}s長生き")
+    if r and r_surv > c_surv:
+        lines.append(f"  ⚠ **(D)遠隔SPACE優位**: remoteがconceptより{r_surv-c_surv:.2f}s長生き。AIの近くにいる理由がない")
 
     # 2. スコア比較
-    lines.append(f"- スコア: concept={c['score_avg']:.0f} / slacker={s['score_avg']:.0f} / dodger={d['score_avg']:.0f}")
-    if s["score_avg"] >= c["score_avg"] and s["score_avg"] > 0:
-        lines.append(f"  ⚠ 連打がスコアでも勝っている")
-    if d["score_avg"] > c["score_avg"]:
-        lines.append(f"  ⚠ 磁石軸無視がスコアでも勝っている")
+    score_line = f"- スコア: concept={c['score_avg']:.0f} / slacker={s['score_avg']:.0f} / dodger={d['score_avg']:.0f}"
+    if r:
+        score_line += f" / remote={r['score_avg']:.0f}"
+    lines.append(score_line)
+    if r and r["score_avg"] > c["score_avg"]:
+        lines.append(f"  ⚠ 遠隔SPACEがスコアでも勝っている")
 
     # 3. 磁力場内滞在
     lines.append(f"- 磁力場内滞在率: concept={c['in_field_ratio_avg']:.0%} / slacker={s['in_field_ratio_avg']:.0%} / dodger={d['in_field_ratio_avg']:.0%}")
@@ -562,7 +663,8 @@ def diagnose(agg_by_policy):
     # 総合判定
     concept_wins = (c_surv > s_surv and c_surv > d_surv
                     and c["score_avg"] >= s["score_avg"]
-                    and c["score_avg"] >= d["score_avg"])
+                    and c["score_avg"] >= d["score_avg"]
+                    and (not r or (c_surv > r_surv and c["score_avg"] >= r["score_avg"])))
     if concept_wins:
         lines.append("\n✅ **バランス成立**: conceptが生存/スコア共に手抜き勢を上回る")
     else:
@@ -717,7 +819,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", type=int, default=5)
     ap.add_argument("--seed", type=int, default=42)
-    ap.add_argument("--policies", default="concept,slacker,dodger")
+    ap.add_argument("--policies", default="concept,slacker,dodger,remote,camper,oscillator")
     ap.add_argument("--out", default="replays")
     ap.add_argument("--replay", type=str, default=None, help="Path to human replay JSON")
     args = ap.parse_args()
