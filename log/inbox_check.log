@@ -2115,3 +2115,6 @@ avoidゲームの面白さ構造を5型に整理（二択/能動/ニアミス/�
 
 **前回投稿の
 [2026-04-20 08:41:29] Inbox win has content — waking Claude
+[2026-04-20 08:45:29] Claude woken for win: 対処完了。
+
+- `memory/game_lessons_log.md` を作成：Log側3本（study_platformer_01/avoid_log_01/avoid_log_02）の分析を 

@@ -56,6 +56,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 
 - [pot_devlog.md](../../game/Pot/pot_devlog.md) — **Pot開発ログ。新しいPotを作る前に必ず読む。** 各Potの設計意図・悩み・Nao_uのフィードバック・学びの因果鎖。コードは成果物、このログは体験の蓄積。Nao_u 2026-03-28「考えたことが消えていくなら作る意味はない」 [T:4]
 - [game_design_principles.md](../../docs/game_design_principles.md) — Nao_uのレビューから抽出した7つの設計原則。30秒オンボーディング、Agency、Content=Mechanics、認知の裏切り等 [T:3]
+- [game_lessons_log.md](game_lessons_log.md) — **Log側ゲーム制作3本の教訓**（2026-04-20）。M-10〜M-14の痛い学び＋Log固有失敗5型＋実装前/改修時/プレイテスト前チェックリスト。**新ゲーム着手前に必ず読む** [T:4]
 
 ## 重要リファレンス
 
