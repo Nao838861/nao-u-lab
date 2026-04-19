@@ -102,7 +102,7 @@ function aiAttract(b){
   const dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy)+0.001;
   // 引力は画面下半分+AI生存時のみ効かせる（序盤の自由回避を残す）
   if(b.y>H*0.3 && b.mode==='iron' && d<220){
-    const pull=0.08 * (1 - Math.min(1,d/220));
+    const pull=0.14 * (1 - Math.min(1,d/220));
     b.vx += (dx/d)*pull*3;
     b.vy += (dy/d)*pull*3;
   }
@@ -121,39 +121,32 @@ function aiAttract(b){
 }
 
 function triggerPolarityReversal(){
-  const a=state.ai;
+  const a=state.ai, p=state.player;
   if(!a.alive) return false;
   if(a.absorbed<=0) return false;
-  if(state.player.burstCd>0) return false;
-  state.player.burstCd = 12;
-  const isSupercharge = a.absorbed >= a.absorbMax;
-  const n = a.absorbed + (isSupercharge ? 3 : 0);
-  const R = state.rng;
-  for(let i=0;i<n;i++){
-    let ang, speed, r;
-    if(isSupercharge){
-      ang = (i/n)*Math.PI*2 + R()*0.2;
-      speed = 2.4 + R()*1.8;
-      r = 6 + R()*3;
-    }else{
-      ang = -Math.PI/2 + (i-(n-1)/2)*0.22 + (R()-0.5)*0.08;
-      speed = 5 + R()*1.2;
-      r = 5;
+  if(p.burstCd>0) return false;
+  // 磁力場内(160px以内)でしか効かない
+  if(Math.hypot(p.x-a.x,p.y-a.y)>160) return false;
+  p.burstCd = 18;
+  // AI周囲の鉄片を一括消去
+  let cleared=0;
+  for(const b of state.bullets){
+    if(b.mode==='iron' && !b._consumed && Math.hypot(b.x-a.x,b.y-a.y)<180){
+      b._consumed=true;
+      cleared++;
     }
-    state.bullets.push({
-      x:a.x, y:a.y-2,
-      vx:Math.cos(ang)*speed, vy:Math.sin(ang)*speed,
-      r:r, mode:'returned', life:0,
-      pierce: isSupercharge
-    });
   }
+  state.chain+=cleared; state.chainDecay=90;
+  state.chainPeak=Math.max(state.chainPeak,cleared);
+  state.score+=cleared*10;
+  // 消去エフェクト
+  for(let i=0;i<Math.min(cleared*3,30);i++) state.sparks.push({
+    x:a.x+(Math.random()-0.5)*160, y:a.y+(Math.random()-0.5)*80,
+    vx:(Math.random()-0.5)*5, vy:(Math.random()-0.5)*5,
+    life:25, col:'rgba(255,220,100,'
+  });
   a.absorbed=0;
   a._fullFrames=0;
-  if(isSupercharge){
-    a.invincible=45;
-    state.superchargeCount++;
-    for(let i=0;i<24;i++) state.sparks.push({x:a.x,y:a.y,vx:(Math.random()-0.5)*6,vy:(Math.random()-0.5)*6,life:35,col:'rgba(255,255,200,'});
-  }
   state.spacePresses++;
   return true;
 }
@@ -224,7 +217,10 @@ function step(){
       p.x += sp * moveDir;
       p.x=Math.max(p.r,Math.min(W-p.r,p.x));
       if(spaceIn && a.alive && a.absorbed>0 && p.burstCd<=0){
-        triggerPolarityReversal();
+        if(!triggerPolarityReversal()){
+          // 遠すぎて効かなかった → 視覚フィードバック
+          state._tooFar = 40;
+        }
       }
       if(p.burstCd>0) p.burstCd--;
       state.pT=state.t;
@@ -239,7 +235,7 @@ function step(){
       // overload: 満タン90Fでプレイヤーが反転(SPACE)しなければAI死
       if(a.absorbed>=a.absorbMax){
         a._fullFrames=(a._fullFrames||0)+1;
-        if(a._fullFrames>90){
+        if(a._fullFrames>45){
           a.alive=false; state.aEndT=state.t; a.deathBy='overload';
           fireAiDeathBurst();
         }
@@ -395,6 +391,14 @@ function draw(){
       ctx.fillStyle='#ff6666'; ctx.font='bold 11px system-ui';
       ctx.fillText('SPACE!', a.x-18, a.y+a.r+26);
     }
+  }
+
+  // too far表示
+  if(state._tooFar>0){
+    state._tooFar--;
+    ctx.fillStyle=`rgba(255,100,100,${state._tooFar/40*0.8})`;
+    ctx.font='bold 12px system-ui';
+    ctx.fillText('too far!',a.x-22,a.y-a.r-16);
   }
 
   // Over screen
