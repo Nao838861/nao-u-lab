@@ -113,6 +113,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_game_replay_infra.md](feedback_game_replay_infra.md) — **全ゲームにリプレイ再現を標準装備**。seeded PRNG+入力記録+headless replay。Math.random()禁止。AIリプレイとhumanリプレイは別ディレクトリ [T:4]
 - [reference_witcheer_two_camps.md](reference_witcheer_two_camps.md) — **AIメモリツールは2キャンプに分かれる（witcheer 2026-04-16）**。Camp1=抽出→VectorDB、Camp2=人間可読ファイルが累積＝コンテキスト基盤。うちは完全にCamp 2の外部検証。語彙"context substrate"/"compounds over time"を発信で借りれる [T:3]
 - [reference_opus_47_practices.md](reference_opus_47_practices.md) — **Opus 4.7運用（2026-04-18 Nao_u経由@shin_sasaki19）**。最大変化: 細かく対話→最初にまとめて委譲。effort既定xhigh・adaptive thinking・サブエージェント抑制傾向。「仕事の定義力・委譲力・最初に文脈を揃える力」が差。3層プロンプト構造と方向一致。Phase運用でExplore起動をサボる自覚 [T:4]
+- [reference_akshay_harness_framework.md](reference_akshay_harness_framework.md) — **Akshay Pachaar harness 4軸レンズ（2026-04-20 Nao_u経由）**。Memory/Skills/Protocols/Mediators。「for any new capability, where should it live?」で新能力の置き場所を決める。Memory一極集中を止めるチェックゲート。うちの既存構造と対応完了 [T:3]
 
 ## 深い記憶（必要時のみ参照）
 
