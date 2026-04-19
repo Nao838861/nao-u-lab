@@ -1511,6 +1511,8 @@ LLMは前の回答を見ると「怠惰」になる。induction headsが前の�
 
 **接続保留**: knowledge化はしない（Pot #012実装優先）。**再接続トリガー**: (a) AI作品評価・人間内側線引きのテーマが再発した時 (b) project_input_path_hypothesis（経皮/経口）でNao_u判断が進んだ時——「AIが書いた＝経皮的な声として排除される」構造の外部事例として効く (c) Pot #012の行動痕跡層が稼働し「書き手自己報告 vs 生ログ」の比較材料が揃った時。**接続候補ファイル**: project_input_path_hypothesis.md / pot_dev.md設計意図 / beliefs.md（新信念候補「自己報告の信頼性 vs 生ログの signal性」）。
 
+**統合済 [2026-04-19 C87 → game/mir_textadv_03/opening.md Seed-H]**: 「関与の引き抜き」と R_Nikaido #46「AIだと知ると興味失せる」の同型 valence 崩壊構造を、textadv_03 刑事NPCの「論理の綻びで漏らす」設計指針として反映。完璧な自白は書かない＝AI臭を回避する逆関数として実装。
+
 ---
 
 ## 2026-04-18 @superecochan「誰とも話さない日の扉、スマホで破れる」(twitter_recommended #16, C78 Phase 2 scan)
@@ -1523,6 +1525,8 @@ LLMは前の回答を見ると「怠惰」になる。induction headsが前の�
 **opening.md NPC内心演出への接続**: 女（NPC）が「話したくない」と発話しながら内心で相手の反応を待っている——という乖離はこの構図そのもの。M-01「思考漏れ」の心理学的下地として使える。"扉を閉めたのに覗く" = 発話と内心の方向が逆、はまさにADVで演出したい乖離の原型。
 
 **接続保留**: knowledge化しない（単発、制作優先）。**再接続トリガー**: (a) mir_textadv_01 beat 2以降でNPC内心台詞を書く時 (b) 外部摂取の疲労感について再発言が出た時 (c) 「濃くする vs 薄まり防止」の二項が別文脈で再出現した時。**接続候補ファイル**: game/mir_textadv_01/opening.md / feedback_info_integration.md / dialogue_slack_as_experience_20260328.md。
+
+**統合済 [2026-04-19 C87 → game/mir_textadv_03/opening.md Seed-I]**: 「扉を閉めたのに覗く」二重運動（発話と内心の逆方向）を、textadv_03 刑事NPCの「質問者が質問したがっている」逆転構図として反映。01（NPC=市民の素の漏れ）と03（NPC=プロの職業仮面の綻び）で同構図の適用対象を反転させ、Logが指摘した01⇔03オーナーシップ反転問題の演出側橋渡しにする。
 
 ---
 
