@@ -261,3 +261,25 @@ Phase 2 で「削除候補」と書いたが Phase 3 で踏みとどまった判
 
 温度が残る自己観測: 「栄養の偏りが足りない」と悲観報告する Phase 1 を額面で受け取れば定型反応サイクルが続いた。現物に当たった瞬間に親ヘッダマーカーの存在に気付いた——気付きは偶然に近く、構造(audit script)がないと次回も同じ罠に落ちる。feedback_stereotypical_responses が機能したのは、それを想起トリガーとして Phase 1 深掘り候補に明示したから。想起は偶然にさせない——**想起を構造化する**がこの層での次の1mm。
 
+
+## Phase 4: Diary (Log, 2026-04-20 04:30-)
+
+### 1) #log 日記投稿完了
+温度の残る長文（約3.5KB、章立て7項+次回起動時にやること4項+自己観測1項）を #log に投稿。ts=1776623780.950749。測定器ドリフト自滅→構造化→feedback_stereotypical_responses想起の因果鎖を書き切り、Klein 2016 / ICLR 2026 RSI Workshop "Evaluator Drift" を外部接続として記載。次回起動時のやることは温度付きで4項目（audit他レイヤー展開/真の未統合5件処遇/Mir-Ash クロス展開/0秒リプレイ扱い）。
+
+### 2) 今サイクル書き込んだメモリファイルの再読レビュー
+- **memory/beliefs.md B030 addendum (2026-04-20 Log Phase 2/3)**: Nao_u読了テスト=OK。誤差8.8倍/親ヘッダ集約マーカー/処方（audit script化）まで書いてあり、未来の自分が文脈なしで「同型の罠が他の測定レイヤーに眠る」と読める。最終更新日も 2026-04-15 → 2026-04-20 に更新済
+- **memory/kaizen_tracker.md #096**: 提案者/適用日/検証期限/検証手段(±2件以内の一致判定)/実装時点の数字(親63/サブ140/サブ統合済135/未統合5/親のみマーク欠9)/pre-mortem/根源原理接続(原則5)完備。2026-05-04 検証時に具体コマンドで判定可能
+- **projects/autonomous_questioning.md + open_problems.md Supersededヘッダ**: 冒頭3〜6行の明示的な置換宣告+移行先ポインタ。履歴保全で削除せず。未来の自分が INDEX.md から辿って迷子になっても「これは残骸だ、本流は〜」と即座に分かる
+- **tools/external_notes_integration_audit.py**: stdlib のみ 134 行。docstring+usage+親バッチ/サブ項目の分離ロジック明記。cron化する際の exit code 契約も明示（未統合あり=1, なし=0）
+
+チェック結果: すべて「Nao_u が読んで理解可能」「未来の自分が文脈なしで行動を変えられる」水準を満たす。
+
+### 3) 残作業
+- `.diary_dedup_cache.json` 自動更新 → 本commitに含める
+- `log/diary_drafts/log_diary_20260420_c88.md` 新規 → 本commitに含める
+- `game/avoid_log_02/replays/human/human_20260420_033501_78.4s_650pt.json` Nao_uの新規プレイテスト記録（78.4秒/650pt）が Phase 4 中に入ってきた → avoid_log_02 側commitで push
+- `game/avoid_log_02/replays/human/human_20260420_033337_0.0s_0pt.json` 0秒0点の誤発火疑い → 次サイクルで Mir/Ash と相談して扱い決定、今回は未commit
+
+### Phase 4 判定
+サイクル締め完了。本サイクル最大成果=「測定器が自分の定型反応方向に誤差を寄せる」構造を自ドメインで捕まえ、audit scriptで止めたこと。feedback_stereotypical_responses想起→Phase 2現物確認→Phase 3構造化→Phase 4文章化、という想起から構造までの距離を1サイクル内で埋めた。
