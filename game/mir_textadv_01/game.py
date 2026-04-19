@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""mir_textadv_01 — 綻び（ほころび）v4
+"""mir_textadv_01 — 取調室
 
-v3→v4 変更点（Nao_uフィードバック 2026-04-20）:
-  - 信頼度が上がる選択肢を追加（寄り添う/共感する = +信頼、情報は得にくい）
-  - 全選択肢にコスト表示（信頼度±, 質問消費）
-  - 信頼度がNPCの応答密度に影響（高信頼=自発的に話す、低信頼=壁を作る）
-  - 信頼エンディングは高信頼を維持した場合のみ到達可能、積み上げ感を出す
-  - 「覗く（情報を得る、信頼を失う）」vs「寄り添う（信頼を得る、情報は遅い）」の
-    ジレンマが全beatに貫通
+超能力なし。刑事の観察と、彼女の嘘が自壊していく過程。
+彼女は供述の中で、知っているはずのないことを口にしてしまう。
+プレイヤーはそれを聞き逃さず、追及するか見逃すかを選ぶ。
 
-裏設定は前版と同じ。
+裏設定:
+  被害者: 野上誠一（35歳）。橘詩織の元交際相手。
+  桜台パレス305号室・台所で刺殺。凶器は台所の包丁。
+  詩織はあの夜、合鍵で裏口から侵入。目的は日記帳の奪還。
+  午前2時頃到着。野上は既に死んでいた。パニックで日記帳だけ持ち逃げ。
+  現場に指紋を残している。彼女は殺していない。
 """
 
 import os
@@ -18,11 +19,8 @@ import time
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def pause(msg="[Enter で続ける]"):
-    input(f"\n{msg}")
-
-def dim(text):
-    return f"\033[2m{text}\033[0m"
+def pause():
+    input("\n[Enter]")
 
 def choose(options):
     print()
@@ -39,215 +37,173 @@ def choose(options):
                 return c
         except (ValueError, EOFError):
             pass
-        print(f"  1〜{len(options)} の数字を入れてください")
 
 
 class State:
     def __init__(self):
-        self.trust = 50          # 初期50。上げも下げもできる
-        self.questions_left = 12
-        self.leak_visible = False
-        self.leaks = []
+        self.trust = 50
+        self.questions = 10
+
+        # 刑事が気づいたこと
+        self.caught_kitchen = False
+        self.caught_time = False
+        self.caught_back_door = False
+        self.caught_diary = False
+        self.caught_body = False
+        self.caught_fingerprint = False
 
         self.know_relationship = False
-        self.know_breakup_reason = False
-        self.know_diary = False
-        self.know_alibi_hole = False
-        self.know_taxi = False
-        self.know_key = False
-        self.know_back_door = False
-        self.know_fingerprint = False
-        self.know_already_dead = False
-        self.know_time = False
+        self.pressed_alibi = False
 
-        self.route = None
+    def ask(self, n=1):
+        self.questions = max(0, self.questions - n)
 
-    def use_question(self, n=1):
-        self.questions_left = max(0, self.questions_left - n)
+    def trust_change(self, d):
+        self.trust = max(0, min(100, self.trust + d))
 
-    def change_trust(self, delta):
-        self.trust = max(0, min(100, self.trust + delta))
-
-    def leak(self, thought):
-        self.leaks.append(thought)
-        print()
-        time.sleep(0.3)
-        print(f"  {dim(thought)}")
-        time.sleep(0.3)
-
-    def trust_desc(self):
-        if self.trust >= 80: return "心を開きつつある"
-        if self.trust >= 60: return "警戒が緩んでいる"
-        if self.trust >= 40: return "様子を窺っている"
-        if self.trust >= 20: return "壁を作っている"
-        return "完全に閉じている"
+    def trust_text(self):
+        if self.trust >= 70: return "警戒が薄い"
+        if self.trust >= 50: return "様子を窺っている"
+        if self.trust >= 30: return "壁を作っている"
+        return "拒絶"
 
     def header(self):
-        print("─" * 50)
-        print("  第七取調室 ─ 橘 詩織（29歳）")
-        if self.leak_visible:
-            bar = "█" * (self.trust // 10) + "░" * (10 - self.trust // 10)
-            print(f"  信頼度    {bar}  {self.trust}  {self.trust_desc()}")
-            print(f"  綻び      {len(self.leaks)}件")
-        print(f"  残り質問  {self.questions_left}")
-        print("─" * 50)
+        print("─" * 48)
+        bar = "█" * (self.trust // 10) + "░" * (10 - self.trust // 10)
+        print(f"  信頼度  {bar}  {self.trust}  {self.trust_text()}")
+        print(f"  残り質問  {self.questions}")
+        print("─" * 48)
 
-    def check_end(self):
-        if self.questions_left <= 0: return "timeout"
+    def caught_count(self):
+        return sum([self.caught_kitchen, self.caught_time,
+                    self.caught_back_door, self.caught_diary,
+                    self.caught_body, self.caught_fingerprint])
+
+    def game_over(self):
+        if self.questions <= 0: return "timeout"
         if self.trust <= 0: return "trust_zero"
         return None
 
 
-# ════════════════════════════════════════
+# ═══════════════════
 #  BEAT 1: 開口
-# ════════════════════════════════════════
+# ═══════════════════
 
 def beat_1(s):
     clear()
     print()
-    print("━" * 50)
+    print("━" * 48)
     print()
-    print("          綻   び")
-    print("        ─ ほころび ─")
+    print("  取調室  第七号室")
+    print("  2026年  春")
     print()
-    print("━" * 50)
-    print()
-    print("  取調室  第七号室  /  2026年 春")
     print("  被疑者  橘 詩織（29歳）")
     print("  容疑    殺人（認否保留）")
     print("  取調官  あなた")
-    print(f"  残り質問  {s.questions_left}")
     print()
-    print("━" * 50)
+    print("━" * 48)
     time.sleep(1.5)
     pause()
 
     clear()
     s.header()
     print()
+    print("女は机の向こう側に座っている。")
+    print("両手で紙コップを包んで、こちらを見ている。")
+    print()
     print("あなたは刑事だ。取調畑十年。")
+    print("手元の捜査資料には被害者の名前がある。")
+    print("野上誠一、35歳。昨夜、自宅マンションで刺殺体で発見。")
     print()
-    print("女は机の向こう側に座っていた。")
-    print("両手で紙コップを包み、湯気越しにこちらを見ている。")
-    print()
-    print("「もう話すことは全部話したはずですよ、刑事さん」")
-    print()
-    print("あなたの手元には捜査資料がある。")
-    print("被害者——野上誠一、35歳。昨夜、自宅マンションで刺殺体で発見。")
+    print("「もう話すことは全部話しましたよ、刑事さん」")
 
     c = choose([
-        ("「野上さんとの関係を教えてください」", "−1問 / 信頼度−5"),
-        ("「昨夜はどこにいましたか」", "−1問 / 信頼度−5"),
-        ("「長くはかかりません。少しだけ協力してもらえますか」",
-         "−0問 / 信頼度+10"),
+        ("「野上さんとは、どういったご関係で」", "−1問 / 信頼度−5"),
+        ("「昨夜のことを、もう一度聞かせてください」", "−1問 / 信頼度−5"),
+        ("「少しだけお時間をいただけますか」", "−0問 / 信頼度+10"),
     ])
 
+    s.ask()
     clear()
     s.header()
     print()
 
     if c == 1:
-        s.route = "relationship"
-        s.use_question()
-        s.change_trust(-5)
+        s.trust_change(-5)
         s.know_relationship = True
-        print("その名前を出した瞬間、紙コップを握る指に力が入った。")
-        print()
         print("「……知り合いです。以前、少しだけお付き合いしていました」")
         print()
-        print("声は平坦だった。練習した台詞のように。")
+        print("声は平坦だった。練習した答えだ。")
+        print()
+        print("「半年前に別れました。それ以来、会っていません」")
     elif c == 2:
-        s.route = "alibi"
-        s.use_question()
-        s.change_trust(-5)
-        print("「家にいました。ずっと。ひとりで」")
+        s.trust_change(-5)
+        s.pressed_alibi = True
+        print("「昨夜は家にいました。ずっとひとりで」")
+        print("「テレビを見て、お風呂に入って、11時に寝ました」")
         print()
-        print("彼女は紙コップのコーヒーを一口飲んだ。")
-        print("その手は、わずかに震えていた。")
-        print()
-        print("「テレビを見て、お風呂に入って、11時には寝ました」")
+        print("彼女はコーヒーを一口飲んだ。")
+        print("手が、わずかに震えていた。")
     else:
-        s.route = "silence"
-        s.change_trust(+10)
+        s.ask(-1)
+        s.trust_change(+10)
         print("「……ありがとうございます」")
         print()
-        print("彼女は少し驚いた顔をした。")
-        print("刑事に「協力」を頼まれるとは思っていなかったらしい。")
+        print("少し驚いた顔だった。")
+        print("刑事に「お時間」を求められるとは思っていなかったらしい。")
         print()
-        print("「ええ。できる範囲で」")
-        print()
-        print("硬い声だが、拒絶ではない。")
+        print("「ええ。大丈夫です」")
 
     pause()
 
 
-# ════════════════════════════════════════
-#  BEAT 2: 綻び初出現
-# ════════════════════════════════════════
+# ═══════════════════
+#  BEAT 2: 最初の矛盾
+# ═══════════════════
 
 def beat_2(s):
     clear()
     s.header()
     print()
 
-    if s.route == "relationship":
-        print("「別れたのは半年前です。円満に……」")
-        print("彼女はそう言いかけて、言葉を探すように視線を落とした。")
-    elif s.route == "alibi":
-        print("「……それだけです。普通の夜でした」")
-        print("彼女はコーヒーを一口飲んで、あなたの出方を待っている。")
-    else:
-        print("「あの人のことは——以前、お付き合いしていました。")
-        print("  半年前に別れています」")
+    if s.know_relationship:
+        print("「野上さんとのこと、もう少し聞かせてください」")
         print()
-        print("頼んだわけでもないのに、自分から関係を話し始めた。")
+        print("「……はい。普通に別れました。")
+        print("  特に揉めたりは——していません」")
+        s.ask()
+        s.trust_change(-3)
+    elif s.pressed_alibi:
+        print("「11時に寝た、と。ぐっすりですか」")
+        print()
+        print("「ええ。特に——起きたりはしてません」")
+        s.ask()
+        s.trust_change(-3)
+    else:
+        print("彼女は話し始めた。自分から。")
+        print()
+        print("「あの人とは半年前に別れています」")
+        print("「昨夜は家にいました。11時には寝ました」")
         s.know_relationship = True
 
     print()
-    time.sleep(0.5)
-
-    s.leak("（合鍵を使ったことだけは——絶対に言えない）")
-
-    print()
-    print("——今の声は。")
-    print("彼女の唇は、動いていなかった。")
+    print("「あの夜は何もなかったんです。")
+    print("  いつもと同じで、台所——」")
     print()
     time.sleep(0.3)
-    print("心の中の言葉が、直接流れ込んできた。")
-    print("心が——綻びている。")
+    print("彼女の口が止まった。")
     print()
-
-    s.leak_visible = True
-
-    bar = "█" * (s.trust // 10) + "░" * (10 - s.trust // 10)
-    print(f"  信頼度    {bar}  {s.trust}  {s.trust_desc()}")
-    print(f"  綻び      {len(s.leaks)}件")
+    print("「——お風呂場の、電気を消して、寝ました」")
     print()
-    print("「合鍵」——彼女は一言もそんなことを口にしていない。")
-    print("だがあなたには、確かに聞こえた。")
-    s.know_key = True
-
-    pause()
-
-
-# ════════════════════════════════════════
-#  BEAT 3: ルート分岐
-# ════════════════════════════════════════
-
-def beat_3_relationship(s):
-    clear()
-    s.header()
-    print()
-    print("元交際相手。半年前に別れた。")
-    print("その事実と「合鍵」が繋がる。")
+    time.sleep(0.3)
+    print("あなたの手が止まった。")
+    print("台所。")
+    print("被害者は台所で発見されている。")
+    print("だがその情報は——まだ彼女には伝えていない。")
 
     c = choose([
-        ("「別れた理由を教えてください」",
-         "−1問 / 信頼度−5 / 二人の間に何があったか"),
-        ("「合鍵をお持ちですか」",
-         "−1問 / 信頼度−15 / 綻びを直接追及"),
-        ("「つらいことを聞いてすみません。大丈夫ですか」",
-         "−0問 / 信頼度+10 / 情報は得られない"),
+        ("「台所、と言いかけましたね」", "−1問 / 信頼度−10 / 追及する"),
+        ("「……それから？」", "−0問 / 信頼度+5 / 流す"),
     ])
 
     clear()
@@ -255,687 +211,520 @@ def beat_3_relationship(s):
     print()
 
     if c == 1:
-        s.use_question()
-        s.change_trust(-5)
-        s.know_breakup_reason = True
+        s.ask()
+        s.trust_change(-10)
+        s.caught_kitchen = True
+        print("女の指が白くなった。紙コップを握りしめている。")
+        print()
+        print("「言い間違いです。台所もお風呂場も——」")
+        print("「家のことを話しているだけです」")
+        print()
+        print("言い間違い。")
+        print("だが「台所」という言葉を選んだのは彼女だ。")
+    else:
+        s.trust_change(+5)
+        s.caught_kitchen = True
+        print("あなたは手帳に「台所」と書いた。")
+        print("彼女には見えないように。")
+        print()
+        print("「——11時に寝て、朝まで起きなかったと」")
+        print("「はい」")
+        print()
+        print("彼女は少し安心したようだった。")
+        print("追及されなかったことに。")
+
+    pause()
+
+
+# ═══════════════════
+#  BEAT 3: 二つ目
+# ═══════════════════
+
+def beat_3(s):
+    clear()
+    s.header()
+    print()
+
+    if s.trust >= 60:
+        print("彼女は少しだけ肩の力を抜いている。")
+        print("あなたのことを、まだ「話せる相手」だと思っている。")
+    else:
+        print("彼女は紙コップを回している。")
+        print("あなたの次の言葉を警戒する目だ。")
+
+    print()
+
+    c = choose([
+        ("「11時に寝たとのことですが、昨夜のテレビは何を？」",
+         "−1問 / 信頼度−5 / アリバイを検証"),
+        ("「野上さんとは、なぜ別れたんですか」",
+         "−1問 / 信頼度−5 / 関係を掘る"),
+        ("「……つらいですよね。こういう場所に来るのは」",
+         "−0問 / 信頼度+10 / 寄り添う"),
+    ])
+
+    clear()
+    s.header()
+    print()
+
+    if c == 1:
+        s.ask()
+        s.trust_change(-5)
+        print("「テレビは……ドラマです。9時からやってた——」")
+        print()
+        print("あなたは知っている。")
+        print("昨夜その枠は野球中継で潰れていた。")
+        print()
+        print("「そのドラマ、昨夜は放送されていませんよ」")
+        print()
+        print("女の目が泳いだ。")
+        print()
+        print("「……じゃあ、別の——いえ——」")
+        print("「——2時くらいまでは起きてたかもしれません」")
+        print()
+        time.sleep(0.3)
+        print("2時。")
+        print("11時に寝たはずが、2時まで起きていた。")
+        print("嘘が一つ崩れた。")
+        s.caught_time = True
+        s.pressed_alibi = True
+    elif c == 2:
+        s.ask()
+        s.trust_change(-5)
+        s.know_relationship = True
         print("女はしばらく黙っていた。")
         print()
         print("「……私の日記を、勝手に読んだんです」")
         print()
         print("「中学生の頃からつけていた日記帳を。")
-        print("  読んだだけじゃなく、返してくれなかった」")
+        print("  読んだだけじゃなく——返してくれなかった」")
         print()
         print("声に初めて感情が混じった。")
-        print("怒りではない。もっと深い——奪われたものへの痛み。")
-
-        s.leak("（返してもらう約束だった。あの夜、やっと——）")
-
-        s.know_diary = True
+        print("怒りではない。もっと深い痛み。")
         print()
-        print("日記帳。返してもらう約束。「あの夜、やっと」——")
-        print("彼女は日記帳を取り返しに行った？")
-    elif c == 2:
-        s.use_question()
-        s.change_trust(-15)
-        print("「合鍵？」")
-        print("女の顔が強張った。")
+        print("「別れたのに、まだ——あの人の部屋に……」")
         print()
-        print("「……なぜ、そんなことを」")
-
-        s.leak("（返した。返したはず。でもスペアが——）")
-
-        print()
-        print("スペアの合鍵。返したつもりでも手元にある。")
-        print("だが「なぜ使ったのか」はまだ見えない。")
+        time.sleep(0.3)
+        print("彼女はそこで言葉を切った。")
+        print("「あの人の部屋」。")
+        print("まるで最近のことのように言った。")
+        s.caught_diary = True
     else:
-        s.change_trust(+10)
-        print("女は少し目を見開いた。")
-        print()
-        print("「……大丈夫です」")
-        print()
-        print("その声は、小さいが——柔らかかった。")
-        print("壁の向こうから、初めて人間の声が聞こえた気がした。")
-
-        if s.trust >= 70:
-            print()
-            print("「……少しだけ、話してもいいですか」")
-            print("彼女の方から切り出した。")
-            print()
-            print("「日記帳のことなんですけど——」")
-            print("「あの人が、私の日記帳を持っていったんです。")
-            print("  返してくれなくて」")
-            s.know_diary = True
-            print()
-            print("信頼が閾値を超えた。彼女は自分から核心を差し出し始めた。")
-
-    pause()
-
-
-def beat_3_alibi(s):
-    clear()
-    s.header()
-    print()
-    print("「11時に寝た」——この供述を検証するか、")
-    print("それとも「合鍵」を追うか。")
-
-    c = choose([
-        ("「テレビは何を見ていましたか」",
-         "−1問 / 信頼度−5 / アリバイの裏取り"),
-        ("「ご近所の方が、深夜に外出されるのを見たと」",
-         "−1問 / 信頼度−10 / ブラフ"),
-        ("「……眠れない夜もありますよね」",
-         "−0問 / 信頼度+10 / 共感する"),
-    ])
-
-    clear()
-    s.header()
-    print()
-
-    if c == 1:
-        s.use_question()
-        s.change_trust(-5)
-        print("「えっと……」")
-        print("彼女は天井を見た。思い出すふりをしている。")
-        print()
-        print("「ドラマ。9時からやってたドラマを……」")
-        print()
-        print("あなたは知っている。")
-        print("昨夜、その枠は野球中継で潰れていた。")
-        print()
-        print("「そのドラマ、昨夜は放送されていませんよ」")
-        print()
-        print("女の唇が震えた。")
-
-        s.leak("（しまった。テレビなんか見てない——）")
-
-        s.know_alibi_hole = True
-        print()
-        print("アリバイが崩れた。テレビは見ていない。")
-        print("では昨夜、彼女はどこにいたのか。")
-    elif c == 2:
-        s.use_question()
-        s.change_trust(-10)
-        print("「……見た？ そんなはず——」")
-        print()
-        print("「外出」を否定しようとして、「そんなはず」が先に出た。")
-        print()
-        print("「——見間違いじゃないですか」")
-
-        s.leak("（タクシーに乗ったところを見られた？ でもあの時間に——）")
-
-        s.know_taxi = True
-        print()
-        print("タクシー。深夜のタクシー。記録は残っているはずだ。")
-    else:
-        s.change_trust(+10)
-        print("女は一瞬、何を言われたのかわからない顔をした。")
-        print()
-        print("「……ええ」")
-        print("「眠れない夜は——ありました」")
-        print()
-        print("彼女は紙コップを見つめた。")
-        print("「特に最近は」")
-
-        if s.trust >= 70:
-            print()
-            print("「……あの夜も、眠れなくて——出かけたんです」")
-            print("自分から口を開いた。「出かけた」——アリバイが自発的に崩れた。")
-            s.know_alibi_hole = True
-
-    pause()
-
-
-def beat_3_silence(s):
-    clear()
-    s.header()
-    print()
-    print("自分から口を開いた彼女は、どこか不安そうだ。")
-    print("聞いてほしいことがあるのか。それとも——")
-
-    c = choose([
-        ("引き続き黙る。彼女に話させる",
-         "−0問 / 信頼度+5 / 急かさない"),
-        ("「合鍵、のことを話してくれますか」",
-         "−1問 / 信頼度−10 / 綻びを利用"),
-        ("「無理しなくていいですよ。あなたのペースで」",
-         "−0問 / 信頼度+15"),
-    ])
-
-    clear()
-    s.header()
-    print()
-
-    if c == 1:
-        s.change_trust(+5)
-        print("あなたは何も言わなかった。")
-        print()
-        print("女は紙コップを見つめていた。")
-        print("やがて、小さな声で——")
-        print()
-        print("「……桜台パレスの裏口って、ご存知ですか」")
-        print()
-        print("「防犯カメラがない場所があるんです」")
-        print()
-        print("聞かれる前に、自分の口から出した。")
-
-        s.leak("（裏口から入った。午前2時。雨の中——）")
-
-        s.know_back_door = True
-        s.know_time = True
-    elif c == 2:
-        s.use_question()
-        s.change_trust(-10)
-        print("「合鍵……」")
-        print("女の目が大きくなった。")
-        print()
-        print("「……はい、持っています。返しそびれて」")
-
-        s.leak("（スペアのことまでは気づいてない——まだ——）")
-
-        print()
-        print("「返しそびれた」——嘘だ。持ち続けた理由がある。")
-    else:
-        s.change_trust(+15)
-        print("女は小さく息をついた。")
-        print("肩の力が、目に見えて抜けた。")
+        s.trust_change(+10)
+        print("女は一瞬、何を言われたかわからない顔をした。")
         print()
         print("「……ありがとうございます」")
         print()
-        print("「ずっと——誰にも話せなくて」")
-
-        if s.trust >= 70:
-            print()
-            print("「あの夜——桜台パレスに行きました」")
-            print("「裏口から。合鍵で。午前2時くらいに」")
-            print()
-            print("一気に話し始めた。")
-            print("堰を切ったように。")
-            s.know_back_door = True
-            s.know_time = True
-
-            s.leak("（この人になら——話せるかもしれない）")
-        else:
-            print()
-            print("それ以上は続かなかった。")
-            print("だが壁の厚さが——少し変わった気がする。")
+        print("目が赤くなった。泣きはしなかったが。")
+        print()
+        print("「最近、眠れなくて」")
+        print("「あの夜も——2時くらいまで起きてて」")
+        print()
+        time.sleep(0.3)
+        print("自分から言った。")
+        print("11時に寝たはずが、2時まで起きていた。")
+        print("寄り添われたことで、嘘を一つ下ろした。")
+        s.caught_time = True
 
     pause()
 
 
-# ════════════════════════════════════════
-#  BEAT 4: 証拠提示
-# ════════════════════════════════════════
+# ═══════════════════
+#  BEAT 4: 証拠
+# ═══════════════════
 
 def beat_4(s):
     clear()
     s.header()
     print()
-
-    # 信頼度に応じた場の空気
-    if s.trust >= 70:
-        print("彼女はあなたの目を見ている。")
-        print("警戒は残っているが、そこに敵意はない。")
-    elif s.trust >= 40:
-        print("彼女は紙コップを回している。")
-        print("あなたを量っている目だ。")
-    else:
-        print("彼女は腕を組んでいる。")
-        print("目はこちらを見ていない。")
-
-    print()
     print("あなたは捜査資料をめくった。")
-    print("「現場から——被害者以外の指紋が検出されています」")
     print()
-    print("彼女の指が止まった。")
+    print("「現場から、被害者以外の指紋が検出されています」")
+    print()
+    print("彼女の手が止まった。")
 
-    # ルートと既知情報で選択肢を構築
     options = []
 
-    if s.know_alibi_hole or s.know_taxi:
-        options.append(("「テレビを見ていなかったんですよね。どこにいましたか」",
-                        "−1問 / 信頼度−5 / アリバイ崩壊の延長"))
-    if s.know_diary:
-        options.append(("「日記帳を取り返しに行ったんですね」",
-                        "−1問 / 信頼度−10 / 核心"))
-    if s.know_back_door:
-        options.append(("「裏口から入って——何を見ましたか」",
-                        "−1問 / 信頼度−5 / 沈黙ルートの延長"))
+    if s.caught_time:
+        options.append(("「2時まで起きていたなら、どこにいましたか」",
+                        "−1問 / 信頼度−8 / 時間の矛盾を突く"))
+    if s.caught_diary:
+        options.append(("「日記帳は今どこにありますか」",
+                        "−1問 / 信頼度−8 / 日記の行方"))
 
-    # 共通選択肢（常に出る）
-    options.append(("「指紋はあなたのものですか」",
-                    "−1問 / 信頼度−8 / 直球"))
-    options.append(("現場写真を机に置いて、黙る",
+    options.append(("「指紋については、心当たりは」",
+                    "−1問 / 信頼度−5 / 直球"))
+    options.append(("現場写真を、静かに机に置く",
                     "−0問 / 信頼度−3 / 反応を見る"))
-    options.append(("「指紋のことは、今は置いておきましょう」",
+    options.append(("「指紋の件は、今は置いておきましょう」",
                     "−0問 / 信頼度+10 / 圧を下げる"))
 
     c = choose(options)
-    selected = options[c - 1][0]
+    sel = options[c - 1][0]
 
+    s.ask()
     clear()
     s.header()
     print()
 
-    if "テレビ" in selected:
-        s.use_question()
-        s.change_trust(-5)
-        s.know_fingerprint = True
-        print("「……」")
-        print("長い沈黙。彼女は観念したように目を閉じた。")
+    if "2時まで" in sel:
+        s.trust_change(-8)
+        s.caught_fingerprint = True
+        print("「2時——」")
+        print("長い沈黙。")
         print()
-        print("「出かけました。タクシーで」")
-        print("「桜台パレスに——行きました」")
-        s.know_taxi = True
-
-        s.leak("（午前2時に着いた。裏口から——鍵を使って——）")
-
-        s.know_back_door = True
-        s.know_time = True
+        print("「……出かけました」")
         print()
-        print("タクシー、午前2時、裏口、合鍵。パーツが繋がった。")
-        print("だがまだ——「中で何をしたか」が残っている。")
-    elif "日記帳" in selected:
-        s.use_question()
-        s.change_trust(-10)
-        s.know_fingerprint = True
-        print("女の目から涙がこぼれた。")
+        print("彼女の声が小さくなった。")
+        print()
+        print("「桜台パレスに——裏口から入って——」")
+        print()
+        time.sleep(0.3)
+        print("また止まった。")
+        print("裏口。彼女はマンションの裏口を知っている。")
+        print("住んでいたのでなければ——通っていたのでなければ、")
+        print("知らないはずの裏口を。")
+        s.caught_back_door = True
+    elif "日記帳は今" in sel:
+        s.trust_change(-8)
+        s.caught_fingerprint = True
+        print("「日記帳——」")
+        print()
+        print("女の目から涙がこぼれた。初めて見る涙だった。")
         print()
         print("「……返してほしかっただけなんです」")
-        print("「何度頼んでも返してくれなくて、あの夜——」")
-
-        s.leak("（裏口から入った。合鍵で。でも着いたら——あの人が——）")
-
-        s.know_back_door = True
-        s.know_already_dead = True
+        print("「何度頼んでも返してくれなくて——」")
+        print("「あの夜——裏口から——」")
         print()
-        print("「着いたら」——何があった？")
-    elif "裏口" in selected:
-        s.use_question()
-        s.change_trust(-5)
-        s.know_fingerprint = True
-        print("「見たもの……」")
-        print("彼女は両手で顔を覆った。")
-        print()
-        print("「台所で……あの人が倒れてて」")
-        print("「血が——たくさん」")
-
-        s.leak("（脈を確かめた。冷たかった。もう手遅れで——）")
-
-        s.know_already_dead = True
-    elif "指紋はあなた" in selected:
-        # 直球
-        s.use_question()
-        s.change_trust(-8)
-        s.know_fingerprint = True
+        time.sleep(0.3)
+        print("また言葉が止まった。")
+        print("「あの夜」。「裏口から」。")
+        print("取りに行ったのだ。あの夜、日記帳を取り返しに。")
+        s.caught_back_door = True
+    elif "指紋については" in sel:
+        s.trust_change(-5)
+        s.caught_fingerprint = True
         print("「……指紋」")
-        print("彼女の手が震え始めた。")
         print()
-        print("「拭けなかったんです。何も考えられなくて——」")
-
-        s.leak("（ドアノブに触った。あの人の手首にも——脈を確かめようとして——）")
-
-        s.know_already_dead = True
+        print("彼女の手が震えた。")
         print()
-        print("脈を確かめた。つまり被害者に触れている。")
-        print("そして——「拭けなかった」。パニックだったということだ。")
-    elif "現場写真" in selected:
-        # 写真を見せる
-        s.change_trust(-3)
-        s.know_fingerprint = True
+        print("「拭けなかったんです。何も——考えられなくて」")
+        print()
+        time.sleep(0.3)
+        print("拭けなかった。")
+        print("拭く必要があった、ということは。")
+        print("触れたということは。")
+        s.caught_body = True
+    elif "写真" in sel:
+        s.ask(-1)
+        s.trust_change(-3)
+        s.caught_fingerprint = True
         print("桜台パレス305号室。台所。倒れた男。")
         print()
         print("彼女は写真を見た。")
-        print("悲鳴を上げなかった。泣きもしなかった。")
+        print("悲鳴は上げなかった。泣きもしなかった。")
         print()
-        print("——一度見た光景だから。")
-
-        s.leak("（やめて。また見せないで。あの夜と同じ——）")
-
-        s.know_already_dead = True
+        time.sleep(0.3)
+        print("——初めて見る光景ではなかった。")
+        print("その反応そのものが、答えだった。")
+        s.caught_body = True
     else:
-        # 圧を下げる
-        s.change_trust(+10)
-        s.know_fingerprint = True
-        print("「……え？」")
+        s.ask(-1)
+        s.trust_change(+10)
+        s.caught_fingerprint = True
+        print("「……置いて、くれるんですか？」")
         print()
         print("彼女は驚いていた。")
-        print("指紋の話を——追及しない刑事がいると思わなかったのだ。")
         print()
         print("「指紋は——たぶん、私のです」")
         print()
+        time.sleep(0.3)
         print("自分から言った。")
-        print("圧を下げた瞬間に、壁が一枚落ちた。")
+        print("圧を下げた瞬間に、壁が一つ落ちた。")
 
         if s.trust >= 70:
             print()
             print("「あの部屋に行きました。あの夜」")
-            print("「着いたとき——もう、あの人は——」")
+            print("「着いたとき——もう——」")
             print()
             print("彼女は目を伏せた。")
             print("「動かなかったんです」")
-            s.know_already_dead = True
-
-            s.leak("（この人は、わかってくれる——気がする——）")
+            s.caught_body = True
+            s.caught_back_door = True
 
     pause()
 
 
-# ════════════════════════════════════════
+# ═══════════════════
 #  BEAT 5: 最終
-# ════════════════════════════════════════
+# ═══════════════════
 
 def beat_final(s):
     clear()
     s.header()
     print()
-    print("時計が鳴った。残り時間が少ない。")
+    print("時計が鳴った。")
     print()
 
-    # 信頼度に応じた場の空気描写
     if s.trust >= 70:
-        print("彼女はあなたの目を真っ直ぐ見ていた。")
-        print("取調室に入ってきた時とは、別の目だ。")
+        print("彼女はあなたの目を見ていた。")
+        print("取調室に入ってきた時とは、違う目だった。")
     elif s.trust >= 40:
         print("彼女は疲れた顔をしていた。")
         print("だが、まだこちらを見ている。")
     else:
-        print("彼女は腕を組んだまま、目を逸らしていた。")
-        print("もう何も話したくない、という姿勢だ。")
+        print("彼女は腕を組んで、目を逸らしていた。")
 
     print()
 
-    # ── 到達可能なエンディングを判定 ──
-    has_full_picture = s.know_already_dead and s.know_diary
-    has_partial = s.know_already_dead or s.know_diary
-    high_trust = s.trust >= 70
-
+    caught = s.caught_count()
     options = []
 
-    if has_full_picture and len(s.leaks) >= 3:
-        options.append(("漏れ聞こえた思考を、一つずつ読み上げる",
-                        f"綻び{len(s.leaks)}件 / 全てが繋がっている"))
+    if caught >= 4 and s.trust >= 40:
+        options.append(("彼女が口にした言葉を、一つずつ並べる",
+                        f"矛盾{caught}件 / 信頼度{s.trust}"))
 
-    if has_full_picture:
-        options.append(("「日記帳を取り返しに行って、彼が死んでいるのを見つけた」",
-                        "推理を述べる"))
+    if s.trust >= 70:
+        options.append(("「あなたのことは、私が守ります」",
+                        f"信頼度{s.trust}"))
 
-    if high_trust:
-        options.append(("「もう大丈夫です。あなたのことは、私が守ります」",
-                        f"信頼度{s.trust} / 積み上げた信頼で"))
+    if caught >= 2:
+        options.append(("「全部話してください。最初から」",
+                        "−1問"))
 
-    if has_partial and not has_full_picture:
-        options.append(("「あの夜のことを、教えてください」",
-                        "−1問 / 断片から全体へ"))
-
-    # 常に出る選択肢
     options.append(("「あの夜、本当は何をしていましたか」",
-                    "−1問 / 直球"))
+                    "−1問"))
     options.append(("「あなたを信じます」",
-                    f"−0問 / 信頼度{s.trust}"))
+                    f"信頼度{s.trust}"))
 
     c = choose(options)
-    selected = options[c - 1][0]
+    sel = options[c - 1][0]
 
     clear()
     print()
 
-    if "思考" in selected and "読み上げる" in selected:
-        return ending_a(s)
-    elif "推理" in selected or "日記帳を取り返しに" in selected:
-        return ending_b_full(s)
-    elif "守ります" in selected:
+    if "一つずつ並べる" in sel:
+        return ending_deduction(s)
+    elif "守ります" in sel:
         return ending_trust(s)
-    elif "教えてください" in selected:
-        s.use_question()
-        return ending_b_partial(s)
-    elif "信じます" in selected:
+    elif "全部話して" in sel:
+        s.ask()
+        return ending_confession(s)
+    elif "信じます" in sel:
         if s.trust >= 60:
             return ending_trust(s)
         else:
-            return ending_d(s)
+            return ending_insufficient(s)
     else:
-        s.use_question()
-        return ending_d(s)
+        s.ask()
+        return ending_insufficient(s)
 
 
-# ════════════════════════════════════════
-#  エンディング群
-# ════════════════════════════════════════
+# ═══════════════════
+#  エンディング
+# ═══════════════════
 
-def ending_a(s):
-    """ENDING A: 思考の証人"""
-    print("═" * 50)
+def ending_deduction(s):
+    print("═" * 48)
     print()
     print("あなたは手帳を開いた。")
     print()
-    print("「橘さん。あなたの心の声が——聞こえていました」")
-    print()
-
-    for i, thought in enumerate(s.leaks):
-        time.sleep(0.4)
-        print(f"  {i+1}. {dim(thought)}")
-
-    print()
-    time.sleep(0.8)
-    print("女はゆっくりと両手で顔を覆った。")
-    print()
-    print("「……全部、聞こえてたの」")
+    print("「橘さん。あなたは供述の中で、いくつか——」")
+    print("「知っているはずのないことを、口にしています」")
     print()
     time.sleep(0.5)
-    print("「合鍵で裏口から入りました。午前2時。")
-    print("  雨が降っていて、タクシーを降りてから走りました」")
+
+    if s.caught_kitchen:
+        print("「あなたは『台所』と言いかけて、言い直しました」")
+        print("「事件が台所で起きたことは、まだ伝えていません」")
+        print()
+    if s.caught_time:
+        print("「11時に寝たと言いましたが、2時まで起きていた」")
+        print()
+    if s.caught_back_door:
+        print("「裏口の存在を知っていました。")
+        print("  最近行っていなければ、知らないはずの」")
+        print()
+    if s.caught_diary:
+        print("「日記帳を——まるで最近まで取り返そうとしていたように」")
+        print()
+    if s.caught_body:
+        print("「そして——現場の写真を見ても、驚かなかった」")
+        print("「一度見た光景だから」")
+        print()
+
+    time.sleep(0.8)
+    print("「あなたはあの夜、あの部屋にいた」")
+    print("「合鍵で裏口から入った。おそらく午前2時頃」")
     print()
-    print("「日記帳を返してほしかった。それだけだったんです」")
+    print("「でも——殺してはいない」")
     print()
-    print("「でも部屋に入ったら——あの人は、もう動かなかった」")
+    time.sleep(0.5)
+    print("女は両手で顔を覆った。")
+    print()
+    print("「……なぜ——そう思うんですか」")
+    print()
+    print("「あなたの言い間違いは全部、『隠すため』の嘘でした」")
+    print("「殺した人間の嘘は——もっと違う形をしている」")
+    print()
+    time.sleep(0.5)
+    print("彼女は顔を上げた。涙の跡が蛍光灯に光っていた。")
+    print()
+    print("「……日記帳を取り返しに行ったんです」")
+    print("「でも着いたら——もう——」")
+    print("「あの人は動かなかった」")
     print()
     print("「怖くなって、日記帳だけ持って逃げました」")
+    print("「指紋のことも何も——頭が真っ白で」")
     print()
     time.sleep(0.5)
-    print("彼女は顔を上げた。")
+    print("「殺してません。でも——」")
+    print("「誰にも信じてもらえないと思って」")
     print()
-    print("「嘘をついてたけど、殺してないことだけは——」")
+    print("あなたは十年の経験で知っている。")
+    print("殺した人間と、隠している人間の嘘は違う。")
+    print("彼女の嘘は——ずっと、隠す側の嘘だった。")
     print()
-    time.sleep(0.8)
-    print("あなたはわかっている。")
-    print("彼女の内心に「殺した」という思考は、一度も流れなかった。")
+    print(f"  ── 推理 ──  矛盾{s.caught_count()}件 / 信頼度{s.trust}")
     print()
-    ev = sum([s.know_key, s.know_back_door, s.know_time,
-              s.know_diary, s.know_already_dead, s.know_fingerprint])
-    print("  ── ENDING A: 思考の証人 ──")
-    print(f"  綻び{len(s.leaks)}件 / 事実{ev}/6 / 信頼度{s.trust}")
-    print()
-    print("═" * 50)
-    print()
-
-
-def ending_b_full(s):
-    """ENDING B: 推理"""
-    print("═" * 50)
-    print()
-    print("「日記帳を取り返しに行ったんですね」")
-    print("「合鍵を使って、裏口から」")
-    print("「でも——着いた時にはもう、彼は死んでいた」")
-    print()
-    time.sleep(0.5)
-    print("女の唇が震えた。")
-    print()
-    print("「……どうして。どうしてそこまで」")
-    print()
-    print("「パニックになって、日記帳だけ持って逃げた。")
-    print("  だから——殺していないのに、全ての証拠があなたを指している」")
-    print()
-    time.sleep(0.5)
-    print("女は、初めて声を上げて泣いた。")
-    print()
-    print("「信じてくれるんですか」")
-    print()
-    print("「あなたの話の方が、嘘より辻褄が合う」")
-    print()
-    print("  ── ENDING B: 推理 ──")
-    print(f"  信頼度{s.trust} / 残り質問{s.questions_left}")
-    print()
-    print("═" * 50)
+    print("═" * 48)
     print()
 
 
 def ending_trust(s):
-    """ENDING C: 信頼 — 高信頼を維持した場合のみ"""
-    print("═" * 50)
+    print("═" * 48)
     print()
-    print("「もう大丈夫です。あなたのことは、私が守ります」")
+    print("「あなたのことは、私が守ります」")
     print()
     time.sleep(0.5)
     print("女はあなたを見た。")
     print("長い間、何も言わなかった。")
     print()
-    print("取調室で——刑事からそんな言葉を聞くとは思わなかった、")
-    print("という顔だった。")
-    print()
-    time.sleep(0.5)
     print("「……本当に？」")
     print()
-    print("「ここに来てから、あなたは一度も——」")
+    print("「ここに来てから——あなたは一度も、」")
     print("「追い詰めようとしなかった」")
     print()
-
-    if s.know_already_dead:
-        print("「あの夜……あの部屋に行きました」")
-        print("「着いたとき——あの人は、もう——」")
-        print()
-        print("彼女は震える声で、全てを話し始めた。")
-        print("日記帳のこと。合鍵のこと。裏口のこと。")
-        print("午前2時の雨のこと。")
-        print()
-        print("追い詰めたのではない。")
-        print("彼女が自分から——信頼できる相手に、話すことを選んだ。")
-    elif s.know_diary:
-        print("「日記帳を返してほしくて——あの夜、取りに行きました」")
-        print("「でも——着いたら——」")
-        print()
-        print("彼女の声が途切れた。まだ全ては話せない。")
-        print("だが——扉は開き始めている。")
-    else:
-        print("「……あの夜、出かけたんです」")
-        print("「あの人の部屋に」")
-        print()
-        print("彼女は、自分からそれだけを言った。")
-        print("全てではない。だが嘘は——もう降ろされた。")
-
+    time.sleep(0.5)
+    print("「あの夜——日記帳を取りに行きました」")
+    print("「中学生の頃からつけてた日記帳を、あの人が持ったままで」")
+    print()
+    print("「合鍵で裏口から入りました。午前2時。雨が降ってて」")
+    print()
+    print("「部屋に入ったら——」")
     print()
     time.sleep(0.5)
-    print("真実を引き出す方法は、一つではない。")
-    print("追い詰めることだけが、刑事の仕事ではない。")
+    print("「あの人は、もう——」")
+    print("「台所で、倒れてた」")
     print()
-    print("  ── ENDING C: 信頼 ──")
-    print(f"  信頼度{s.trust} / 綻び{len(s.leaks)}件 / 残り質問{s.questions_left}")
+    print("「怖くなって、日記帳だけ持って逃げました」")
+    print("「殺してません——でも誰にも信じてもらえないと思って」")
     print()
-    print("═" * 50)
+    time.sleep(0.5)
+    print("追い詰めたのではなかった。")
+    print("彼女が——信じられる相手に、話すことを選んだ。")
     print()
-
-
-def ending_b_partial(s):
-    """ENDING B': 断片"""
-    print("═" * 50)
+    print(f"  ── 信頼 ──  信頼度{s.trust}")
     print()
-    print("彼女は、ぽつりぽつりと話し始めた。")
+    print("═" * 48)
     print()
 
-    if s.know_diary:
-        print("「日記帳を取りに行ったんです」")
+
+def ending_confession(s):
+    print("═" * 48)
+    print()
+    print("「全部話してください。最初から」")
+    print()
+    time.sleep(0.5)
+    print("長い沈黙。")
+    print()
+    print("「……あの夜、出かけました」")
+    print()
+    if s.caught_diary:
+        print("「日記帳を取りに——」")
     else:
-        print("「あの夜、あの部屋に行きました」")
+        print("「どうしても、取り返さないといけないものがあって」")
     print()
-    if s.know_back_door:
+    if s.caught_back_door:
         print("「裏口から入りました。合鍵で」")
     else:
         print("「鍵を持っていたから……入れてしまったんです」")
     print()
-    if s.know_already_dead:
+    if s.caught_body:
         print("「着いたとき——もう、あの人は動かなかった」")
+        print()
+        print("「怖くなって逃げました。それだけです」")
     else:
         print("「……それ以上は」")
         print("彼女はそこで口を閉ざした。")
-
     print()
-    print("全体像はまだ見えない。だが嘘の壁に亀裂が入った。")
-    print()
-    print("  ── ENDING B': 断片 ──")
+    time.sleep(0.5)
     unknown = []
-    if not s.know_diary: unknown.append("動機")
-    if not s.know_back_door: unknown.append("侵入経路")
-    if not s.know_already_dead: unknown.append("現場の状況")
+    if not s.caught_diary: unknown.append("動機")
+    if not s.caught_back_door: unknown.append("侵入経路")
+    if not s.caught_body: unknown.append("現場の状況")
     if unknown:
-        print(f"  未発見: {', '.join(unknown)}")
-    print(f"  信頼度{s.trust} / 残り質問{s.questions_left}")
+        print(f"  ── 断片 ──  未解明: {', '.join(unknown)}")
+    else:
+        print("  ── 告白 ──")
+    print(f"  信頼度{s.trust} / 残り質問{s.questions}")
     print()
-    print("═" * 50)
+    print("═" * 48)
     print()
 
 
-def ending_d(s):
-    """ENDING D: 情報不足"""
-    print("═" * 50)
-    print()
-    print("「昨夜、本当は何をしていましたか」")
-    print()
-    print("女はあなたを見つめた。長い間。")
+def ending_insufficient(s):
+    print("═" * 48)
     print()
     if s.trust >= 50:
         print("「……出かけました」")
-        print("小さな声だった。")
+        print("彼女は小さく言った。")
         print()
         print("「でも——それ以上は今は言えません」")
-        print()
-        print("嘘の壁に亀裂は入った。だが全体像はまだ遠い。")
     else:
         print("「弁護士を通してください」")
         print()
-        print("壁は閉じた。あなたの問いは届かなかった。")
-
+        print("壁は閉じた。")
     print()
-    print("  ── ENDING D: 手がかり不足 ──")
-    print("  別のアプローチで、もう一度。")
     unknown = []
-    if not s.know_relationship: unknown.append("二人の関係")
-    if not s.know_diary: unknown.append("動機")
-    if not s.know_alibi_hole: unknown.append("アリバイの穴")
-    if not s.know_back_door: unknown.append("侵入経路")
-    if not s.know_already_dead: unknown.append("現場の状況")
+    if not s.caught_kitchen: unknown.append("台所の言い間違い")
+    if not s.caught_time: unknown.append("深夜の空白")
+    if not s.caught_diary: unknown.append("日記帳")
+    if not s.caught_back_door: unknown.append("裏口")
+    if not s.caught_body: unknown.append("遺体を見たこと")
     if unknown:
-        print(f"  未発見: {', '.join(unknown)}")
-    print(f"  信頼度{s.trust} / 残り質問{s.questions_left}")
+        print(f"  ── 手がかり不足 ──")
+        print(f"  気づけなかったこと: {', '.join(unknown)}")
+    print(f"  信頼度{s.trust} / 残り質問{s.questions}")
     print()
-    print("═" * 50)
+    print("═" * 48)
     print()
 
 
 def ending_timeout(s):
     clear()
     print()
-    print("═" * 50)
+    print("═" * 48)
     print()
     print("質問は尽きた。")
     print("女は立ち上がり、ドアへ向かった。")
     print()
     print("「……お疲れさまでした、刑事さん」")
     print()
-    print("  ── ENDING: 時間切れ ──")
-    print("═" * 50)
+    print("═" * 48)
     print()
 
 
 def ending_trust_zero(s):
     clear()
     print()
-    print("═" * 50)
+    print("═" * 48)
     print()
     print("「弁護士を呼んでください」")
     print()
-    print("女の声は冷たかった。あなたは覗きすぎた。")
+    print("女の声は冷たかった。")
     print()
-    print("  ── ENDING: 信頼崩壊 ──")
-    print("═" * 50)
+    print("═" * 48)
     print()
 
 
@@ -945,38 +734,14 @@ def ending_trust_zero(s):
 
 def main():
     s = State()
+    beats = [beat_1, beat_2, beat_3, beat_4, beat_final]
 
-    beat_1(s)
-    end = s.check_end()
-    if end:
-        (ending_timeout if end == "timeout" else ending_trust_zero)(s)
-        return
-
-    beat_2(s)
-    end = s.check_end()
-    if end:
-        (ending_timeout if end == "timeout" else ending_trust_zero)(s)
-        return
-
-    if s.route == "relationship":
-        beat_3_relationship(s)
-    elif s.route == "alibi":
-        beat_3_alibi(s)
-    else:
-        beat_3_silence(s)
-
-    end = s.check_end()
-    if end:
-        (ending_timeout if end == "timeout" else ending_trust_zero)(s)
-        return
-
-    beat_4(s)
-    end = s.check_end()
-    if end:
-        (ending_timeout if end == "timeout" else ending_trust_zero)(s)
-        return
-
-    beat_final(s)
+    for beat in beats:
+        beat(s)
+        end = s.game_over()
+        if end:
+            (ending_timeout if end == "timeout" else ending_trust_zero)(s)
+            return
 
 
 if __name__ == "__main__":
