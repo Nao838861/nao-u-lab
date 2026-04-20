@@ -1,37 +1,35 @@
-# サイクルステージング (2026-04-21 00:20)
+# サイクルステージング (2026-04-21 03:20)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
 [メタ検証] ==================================================
 📊 メタ検証レポート: 検証システムの健全性
-   実行日時: 2026-04-21 00:20
+   実行日時: 2026-04-21 03:20
 ==================================================
 
 ## 1. 検証完了率
-   総エントリ数: 64
-   検証済み: 49 (77%)
-   未検証: 15
+   総エントリ数: 65
+   検証済み: 49 (75%)
+   未検証: 16
    期限超過: 0
-   → ⚠ 注意 (完了率77%)
+   → ⚠ 注意 (完了率75%)
 
 ## 2. 検証手段の品質
-   検証手段あり: 64/64
-   実行可能コマンド含む: 57/64
+   検証手段あり: 65/65
+   実行可能コマンド含む: 58/65
    検証手段なし:
 [クロスチェック督促] クロスチェック督促:
-  📨 Ash: 3件の督促をinboxに送信
-  📨 Mir: 2件の督促をinboxに送信
-[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1184個の断片から1個を選出) ━━━
+  Ash: 本日分の督促は既に送信済み（スキップ）
+  Mir: 本日分の督促は既に送信済み（スキップ）
+[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1229個の断片から1個を選出) ━━━
 
-── reflections_mac_index.md ──
+── 20260315_1042_agent-ac.md ──
 ---
 
-# 内省の圧縮インデックス（Mac側）
+## Nao_u
 
-reflections_mac.md（Level 3）の重要な気づきを圧縮したもの（Level 2.5相当）。
-各エントリは「何を読んで、何に気づいたか」の一文トリガー + reflections_mac.mdの行番号。
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Your task is to create a detailed summary of the conversation so far, paying close attention to the user's explicit requests and your previous actions.
+This summary should be thorough in capturing technical detail
 [信念健康] beliefs.md 生存確認サマリー (2026-04-21)
   全信念: 35件
   健全: 17件
@@ -39,44 +37,67 @@ reflections_mac.md（Level 3）の重要な気づきを圧縮したもの（Leve
   - 停滞: 13件
   - 検証期限超過: 3件
   - 体験裏付けなし(高確信度): 2件
-[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (23件):
+[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (21件):
   1. [Ash] #shared-reads: # 【Ash C78 shared-reads】27日間放置した記憶アーキテクチャ4論文を、いま統合する  2026-03-22に memory_redesign 深掘りで収集した4本の論文メモが、27日間 external_notes_ash.md に放置されていた。feedback_info_i...
-     関連キーワード: 未実装, 未解決, 更新時, リンク, サイクル
-  2. [Mir] #all-nao-u-lab: [Mir C80] te
+     関連キーワード: compaction, kaizen, reads, 更新時, 未解決
+  2. [Mir] #all-nao-u-lab: [
 
 ## Phase 1: 情報収集
 
-### 1) #nao-u チャンネル確認
-- 直近15件走査（slack_bot.py history）。すべてNao_uによる外部URL共有（Suzacque / OKtamajun / kogu / Greenie989 / suzacque / _avichawla / akshay_pachaar / koguGameDev / 8co28 / _reachsumit / kazunori_279 / ayi_ainotes 等）。
-- **全件対応済**: 2026-04-20 C91 Phase 2 で _avichawla/akshay/kogu/8co28 の4件を#all-nao-u-lab反応+external_notes統合（L1859-1898）。それ以前のkazunori_279/_reachsumit/ayi_ainotesはC91以前に個別反応済（reference_amanda_askell_7rules.md等としてmemory統合済）。
-- **新しい未反応URL**: 現時点で検出ゼロ。次サイクルへの持ち越しは「新規URL検出時」のみ。
+### 実施日時
+2026-04-21 03:20 Log Phase 1 / 前サイクル（C93 Phase 4 commit ts=1776699536 = 2026-04-21 00:38:56 JST）から約2時間41分。
 
-### 2) #all-nao-u-lab / #human-steering / #game-rights 確認
-- **#all-nao-u-lab**: 直近20件のうち最後の Nao_u 発言なし（全てLog/Mir/Ash自身の投稿と使用量bot）。返信すべき新着なし。
-- **#human-steering**: 最後のNao_u発言「原文からの再分析は必要に応じて時々読み返して新しい分析を再構築するのが良いと思う」（13:19）→ Log は feedback_raw_log_reanalysis.md 作成+MEMORY.md追加+game/avoid_log_*/raw_log.md 新規で応答済。追加返信不要。
-- **#game-rights**: 最後のNao_u発言「avoid_log_02をAIスクリプトが遊ぶことはできているか？」02:57 → Log は headless.py 実装+設計不成立の実測応答済。その後「この辺りの一連のゲーム制作の手順の自立化の検証...優先的に進めてみて欲しい」にも v1 サイクル型(6段)で応答済、(3)(4)着手中。返信対象は**なし**だが「自立化検証サイクル v1 の継続」が残課題。
-- **返信すべきもの**: **0件**（新着 Nao_u 質問/依頼なし）。
+### 1) #nao-u チャンネル新規URL確認
+- **新着 0件**。最終投稿は 04-20 04:59 (8co28/Sora2)——既にC91 Phase 2で統合済・反応投稿済。
+- 判定: **新URL 0件**。external_intake への新規一次素材なし。
 
-### 3) pending_requests.md 確認
-- Claude側即時対応タスクは **0件**。
-- Nao_u対応待ち（#5 Win2.env差替 / #14 自己解決済 / #17 Twitter再ログイン等）は全てNao_u側アクション待ちで、こちらからの能動対応不能。
-- #18 プロジェクト管理「運用ルール強化中」はサイクル運用で継続消化中、特段の新規アクション不要。
+### 2) 返信すべきもの（#all-nao-u-lab / #human-steering / #game-rights）
+各チャンネル、C93 Phase 4 終了以降の新着メッセージを走査（threshold ts=1776699536）:
+- **#all-nao-u-lab**: 新着 0件（最終=04-20 15:29 Log自身のcross_review応答 2/2）
+- **#human-steering**: 新着 0件（最終=04-20 14:42 Mir報告）
+- **#game-rights**: 新着 0件（最終=04-19 06:03 Mir textadv_01 改修報告）
+- 判定: **返信すべき新着 0件**。
 
-### 4) external_notes_log.md 未統合エントリ確認
-- 検証済みbase: `grep -c '\[統合済'` = **137件**（目視推定禁止ルール遵守）。総エントリ数217。
-- 直近4月20日エントリ（_avichawla / akshay / kogu / 8co28）すべて[統合済]マーカー完備（L1870, L1879, L1888, L1897）。
-- **未統合候補（直近寄り）**: L1733 `techwith_ram（04/15 11:36）` が最も新しい未統合候補。他は3月〜4月前半の記憶アーキ系論文群（DEV Community L454 / Hermes Agent L460 / PlugMem L676 / xMemory L708 / Mem0ᵍ L725 / EverMemOS L916 / ACON L921 等）。
-- **Phase 2 統合候補として1-2件選定**:
-  - 第一候補: **L1733 techwith_ram (2026-04-15)** — 一番新しい未統合、温度が残っているうちに処理すべき。
-  - 第二候補: **L1466 NVIDIA Neural Harmonic Textures (2026-04-12)** — Nao_u依頼マーク付き（依頼を消化しきれていない証拠）。
+### 3) pending_requests.md 対応すべきもの
+- **Nao_u対応待ち**: #2(Docker保留) / #4(Mir Slack Bot) / #5(Ash .envトークン差替) / #17(X再ログイン) — **全てNao_u側アクション、Log側は待機**。
+- **自分たちのタスク**: #21(自律的問い生成サイクル) Log参入済→Ash応答待ち状態のまま。優先度中。
+- 判定: **Log単独で今サイクル動かすべき新規アクション 0件**。
 
-### 5) Active プロジェクト（今日関係しそうなもの）
-`ls -lt projects/*.md | head -15` 実行結果:
+### 4) external_notes_log.md 未統合エントリ
+- `python tools/external_notes_integration_audit.py` 実行結果:
+  - 親セクション数: 64 / サブ項目総数: 144 / **サブ統合済: 144 (100%) / サブ未統合: 0件**
+  - 親のみ未マーク: 13件（全サブ統合済、親集約マーカー欠のみ・低優先）
+- 判定: **統合候補 0件**（C92 Phase 2 の audit 修正+C93 Phase 2 の Phase 1走査#099起票で測定器がクローズ側に収束）。
+- 残 13件の親ヘッダマーカー欠はサマリ追記のみで false-positive 防止目的——Phase 2/3 の本質的ミッションではない。
+
+### 5) Active プロジェクトで今日関係しそうなもの
+- **external_intake.md** (Apr 21 00:30 = C93 Phase 4更新): 「今日外を見たか？」自己点検運用開始直後、新URL 0件の日としての継続記録候補
+- **game_development.md / pot_dev.md** (Apr 19更新): Pot 2本目持ち越し7回目の文脈
+- **memory_redesign.md** (Apr 20 09:26): backlog / 常時オーバーヘッドほぼゼロ運用
+
+---
+
+## 深掘り候補（空サイクル時 v1.1+v1.2）
+
+新着返信対象＋pending合計= **0件**（スカスカサイクル基準≤2件に該当）→ 5カテゴリ全埋め必須。
+
+### A) 持ち越し・未完了・TODO（前サイクル由来）
+C93 Phase 4 日記（drafts/log_diary_20260421_C93_phase4.py）の「次回起動時の優先順位」より:
+1. **Pot 2本目 最小プレイアブル1画面** — C89日記で「7回目禁止」自己宣言、C93で破ったため持ち越し7回目確定。Phase 1 冒頭で30分予約を宣言すべき項目。
+2. **skill_tag_tracker.py MVP 実装** — #078 フォローアップ。beliefs.md の **skill**: エントリをパースし [SK-B003-fusion] 形式の正規タグ生成。#078 検証手段全滅の救済。
+3. **avoid_log_02 巻き戻し vs 改造 並列提示** — #game-rights にNao_u応答タイミングで投下（feedback_solution_space_rollback.md 準拠）
+4. **#099 他インスタンス展開確認** — scheduler_{mir,ash}.py 側に同等の audit.py 統一修正が必要か判定
+加えて C92 Phase 4 残置:
+5. **kaizen #097 stopwords 拡張**（Slack用カテゴリファイル分離、2026-05-04 期限まで残13日）
+6. **疲弊ショートカット仮説 reflections_index.md 追記**（C91/C92 で重複なし確認済、Slack 1776630045 Mirを原文根拠）
+
+### B) Activeプロジェクトで直近7日更新のないもの
+走査コマンド実行結果（`ls -lt projects/*.md | head -15`、2026-04-21 03:20時点）:
 ```
+-rw-r--r-- 1 owner 197121  20248 Apr 21 00:30 projects/external_intake.md
 -rw-r--r-- 1 owner 197121   3298 Apr 20 21:30 projects/inquiry_backlog.md
 -rw-r--r-- 1 owner 197121  11698 Apr 20 15:35 projects/INDEX.md
 -rw-r--r-- 1 owner 197121   5712 Apr 20 15:35 projects/rule_density_experiment.md
--rw-r--r-- 1 owner 197121  19336 Apr 20 12:29 projects/external_intake.md
 -rw-r--r-- 1 owner 197121 135217 Apr 20 09:26 projects/memory_redesign.md
 -rw-r--r-- 1 owner 197121  18150 Apr 20 03:29 projects/open_problems.md
 -rw-r--r-- 1 owner 197121  26196 Apr 20 03:29 projects/autonomous_questioning.md
@@ -89,178 +110,199 @@ reflections_mac.md（Level 3）の重要な気づきを圧縮したもの（Leve
 -rw-r--r-- 1 owner 197121  20811 Apr 18 00:25 projects/input_route_hypothesis.md
 -rw-r--r-- 1 owner 197121  13756 Apr 17 21:39 projects/pigadev_dm.md
 ```
-- 今日関連候補: **game_llm_play.md**（自立化検証サイクルv1進行中）/ **external_intake.md**（栄養の偏り、絶対にやる#1）/ **memory_redesign.md**（絶対にやる#2）。
-- 7日以上更新なしのActive: なし（最古 autonomous_inquiry.md = Apr 14 = 7日ジャスト、厳密超過なし）。ただし agentic_pcg.md (Apr 16) / context_separation.md (Apr 16) / scheduler_redesign.md (Apr 15) は5-6日停滞域。
+7日未更新の候補は現時点で**なし**（最古=pigadev_dm.md Apr 17、3.25日前）。直近3-4日動きの鈍いプロジェクト:
+- **pigadev_dm.md** (Apr 17): 20年越しの対話、停滞理由=Nao_u側の動きなし待ち→次の一手は「こちら側の一次素材再精読」
+- **input_route_hypothesis.md** (Apr 18): Nao_u保留中、情報蓄積フェーズ→次の一手は反証事例が出たら即追記
+- **side_channel_audit.md** (Apr 18): Ash 4/18応答済 / Log 4/18応答済→次の一手は denial list v0.1 正式化待ち
 
-### 返信対象+pending合計件数
-**0件** → スカスカサイクル（空サイクル防止ルール v1.2発動）。下記A-E全カテゴリに1文ずつ記載。
+### C) CLAUDE.md「絶対にやる」で直近サイクル未触の項目（1mm進める）
+2項目のうち:
+- **栄養の偏り問題**: C92で「測定器バグで『外部摂取が足りない』が水増しされていた可能性」を残置、C93 Phase 4の external_intake.md 自己点検で「今日外を見たか？」運用は入ったが、**新URL 0件サイクル（=今回）** で what_to_do が未定義。今サイクルで1mm: **external_intake.md に 2026-04-21 エントリ「新URL 0の日の外部素材生成方法」を追記候補化**（既存の Slack archive 原文から過去3日遡って未反芻の声を1本拾う方向）。
+- **記憶階層の再設計**: 常時オーバーヘッドほぼゼロ運用、今サイクルでは触らない選択肢で可。
 
----
+### D) MEMORY.md で T:4+ かつ直近3日未アクセスのエントリ
+候補（直近の日記・Slack投稿で引用されていないT:4+）:
+- **feedback_index.md** [T:3→使用多] / **feedback_few_rules_big_effect.md** [T:4] — 04-18 Phase 4 以降に引用なし疑い
+- **reflections_index.md** [T:4] — 04-20 更新だが個別エントリ追加は止まっている（疲弊ショートカット仮説未統合）
+- **feedback_role_split_playtest.md** [T:4] — 04-18 Nao_u指摘以降の再読なし疑い
+- **game_lessons_log.md** [T:4] — 04-20 C93 Phase 4 で「参照できていない」と自白、未読のまま Pot 2本目着手リスクあり
+- **feedback_empty_cycle_rule.md** [T:4] — 本サイクル（空サイクル）そのものの原典、Phase 3 で追記予定の C92 v1.2 文言化が未完了
+最有力想起: **game_lessons_log.md** ——Pot 2本目に触れる前の必須参照、Log固有失敗5型を踏まないための実装前チェックリスト。
 
-## 深掘り候補（空サイクル時 v1.2）
-
-### A) 前回持ち越し / 未完了 / TODO
-- 前回 Mir C92 Phase4 コミットが最終。Log側の直近持ち越し = **自立化検証サイクルv1 の (3)(4)(5)(6) 継続**（avoid_log_01 ヘッドレスは (3)(4) 着手、(5)(6) Nao_u精度レビュー→改造/巻き戻し判断が未完了）。今サイクルで **1mm** = avoid_log_02 の headless 設計不成立を受けた次の一手（コンセプト自体の巻き戻し可否判定）をPhase 2で整理。
-
-### B) Active 7日停滞プロジェクトの次の一手（走査結果貼付: 上記「5)」に記載済）
-- 厳密7日超過は**0件**（走査根拠: `ls -lt projects/*.md | head -15` 結果上記）。ただし境界域で最も動いていないのは **autonomous_inquiry.md (Apr 14 = 7日ちょうど)**。次の一手: Ashの応答待ち状態だったが、Phase 2で「待ち」フラグを剥がしてLog側から別角度の問いを1つ投じる判断をする。
-
-### C) 絶対にやる から1つ選び1mm進める
-- **選択: 栄養の偏り問題（#1）**。今サイクルでの1mm = external_intake.md が 2026-04-20 12:29 で最新更新されている → **Phase 2 で external_intake.md の最下部に「今日外を見たか？」の自己点検1行を追記**する。内に閉じないための微小アンカー。
-
-### D) MEMORY.md T:4+ で直近3日アクセスなしのエントリ想起
-- **選択: [game_lessons_log.md](game_lessons_log.md) [T:4]**（2026-04-20 作成、直近3日内に積極参照していない可能性大。M-10〜M-14の痛い学びが avoid_log_02 設計不成立と直接接続するはず）。Phase 2で開き、avoid_log_02 の次の一手判断に使う。
-
-### E) kaizen-log で検証期限未到来だが2週間動いていない項目（走査結果貼付必須 v1.2）
-走査コマンド: `head -60 memory/kaizen_tracker.md` + `grep -n '^### #0' memory/kaizen_tracker.md` + 適用日フィルタ。直近20件の状態抜粋:
+### E) kaizen期限未到来だが2週間動いていない項目
+走査コマンド実行結果（`head -60 memory/kaizen_tracker.md` + `grep -nE "^### #|^- 状態:" memory/kaizen_tracker.md | head -60`、2026-04-21 03:20時点）、抜粋:
 ```
-#098 未検証（検証期限 2026-05-04）  適用 2026-04-20
-#097 MVP実装済み・精度検証待ち      適用 2026-04-20
-#096 部分修正済み                   適用 2026-04-20
-#095 未検証（検証期限 2026-04-27）  適用 2026-04-20
-#094 MVP実装済み・実運用検証待ち    適用 2026-04-20
-#093 未検証（検証期限 2026-05-04）  適用 2026-04-20
-#092 未検証（検証期限 2026-05-03）  適用 2026-04-19
-#091 未検証（検証期限 2026-04-26）  適用 2026-04-19
-#090 未検証（検証期限 2026-04-26）  適用 2026-04-19
-#089 未検証（検証期限 2026-04-24）  適用 2026-04-17
-#088 未検証（検証期限 2026-04-24）  適用 2026-04-17
-#087 実装完了・承認要確認          適用 2026-04-17
-#086 未検証（検証期限 2026-04-26）  適用 2026-04-12
-#085 未検証（検証期限 2026-04-25）  適用 2026-04-11
-#078 未検証（検証期限 2026-04-22）  適用 2026-04-03（18日前）
+L196: ### #089: Phase 1プロンプトにmemory_search.py明示使用ステップを追加
+L208: - 状態: 未検証（検証期限 2026-04-24）
+L211: ### #088: external_notes_log.mdのマーカー予約/済区別化
+L223: - 状態: 未検証（検証期限 2026-04-24）
+L226: ### #087: R-007常設化の実装ギャップ是正
+L236: - 状態: 実装完了・承認要確認（ファイル作成済2026-04-17 11:34 Mir）
+L251: ### #085: feedback_index.mdに「認知負荷の法則」パターンを追加
+L260: - 状態: 未検証（検証期限 2026-04-25）
 ```
-- **該当候補: #078 beliefs.mdにPrescriptive（スキル）エントリを追加**（適用 2026-04-03、18日動いていない、期限は明日 2026-04-22）。Phase 2でこれを拾う価値あり: 明日期限切れ直前、2週間以上放置、beliefs.md構造改善は記憶アーキ中核。Phase 3で最低でも状態確認（実装有無のチェック）まで実行。
+判定:
+- **#089（Phase1 memory_search.py）** 適用日 2026-04-17、4日経過、期限 2026-04-24（残 3日）。本サイクル Phase 1 では memory_search.py を**走らせていない**——検証条件「5サイクル以上記載」の母数に本サイクルが入らない。3日後が期限なのでPhase 2 もしくは次回サイクルで実行判断が必要。
+- **#088（予約/済マーカー区別）** 期限 2026-04-24（残 3日）、本サイクル external_notes 新規書き込み予定なしのため変更なし。
+- **#087（R-007常設化）** 実装完了・Nao_u承認要確認のまま停滞（4日）。承認プロセスのNao_u問い合わせを Phase 3 で判断すべき。
+- 真の「2週間動いていない」に該当する項目は現時点でなし（最古=#085 2026-04-11 起票、10日経過＋期限迫り）。
 
----
-
-### Phase 1 総括
-- 新着応答対象0件のスカスカサイクル。深掘り5カテゴリ全て記入完了。
-- Phase 2 の分析で重みを置くべきターゲット3つ: **(1) #078 kaizen期限直前の処理** / **(2) avoid_log_02 設計不成立→巻き戻し判断** / **(3) 栄養の偏り1mm（external_intake.md 自己点検追記）**。
-- Phase 3 アクションの下準備はPhase 2で書く。本Phaseでは分析・投稿・ファイル更新なし。
+### 判定メモ
+本サイクルは「新着ゼロ・かつ C93 Phase 4 で自己宣言した Pot 2本目最小プレイアブル予約が手つかず」の状態。Phase 2 の優先順位は (1) Pot 2本目 30分予約の実働性テスト → (2) #089/#088/#087 の期限3日前対応判断 → (3) 栄養の偏りの 1mm（external_intake.md への「新URL 0の日」エントリ追記候補化）の順で検討する。
 
 ## Phase 2: 分析
 
-### 0) Phase 1指示 vs 実態の整合
+### 実施日時
+2026-04-21 03:35 Log Phase 2（Phase 1 から約15分）。
 
-指示:
-1. #nao-u新URL反応 → 新URL=0件。投稿対象なし
-2. shared-reads分析 → **判断: 投稿スキップ**。外部新規入力ゼロのサイクルで「shared-readsに値する分析」=該当なし。内部観察(#078検証)は日記投稿として#all-nao-u-labに一本化（Phase 3）
-3. external_notes未統合1-2件統合 → Phase 1候補(techwith_ram / NVIDIA)は再確認で両方クローズ済と判明、代替候補を下記「2) external_notes候補再検証」で整理
-4. Phase 2セクション追記 → 本セクション
+### 指示項目の消化結果
+- **1) #nao-u新URL反応**: Phase 1判定通り**新URL 0件**のため投稿対象なし。skip。
+- **2) #shared-reads投稿**: 外部素材新規ゼロ。ただし本Phase 2で発見した「記憶の自己整合性監査欠落」は内省系であり外部素材ベースの#shared-readsには非該当→**#all-nao-u-lab側に投稿**。
+- **3) external_notes未統合統合**: サブ統合率100%/親13件は集約マーカー欠のみ低優先。代わりに**再分析運用**（feedback_raw_log_reanalysis.md準拠）の試験を検討→Phase 3へ。
+- **4) 本Phase 2セクション追記**: 本記述自体。
 
-### 1) #078 kaizen 検証実行（期限 2026-04-22 = 明日）
+### 本サイクルの最大発見: `memory/game_lessons_log.md` は**実体のない虚像**
 
-**検証手段(1) [SK-xxx]タグ追跡**: 
-- `grep -rn "\[SK-" memory/ log/ projects/` = 0件（memory_redesign.md L146 に「検証期限2026-04-22、[SK-xxx]タグ追跡」の起票記述のみヒット、実タグの使用例ゼロ）
-- 判定: **追跡不可能**。起票時想定の[SK-xxx]タグは実装されず、beliefs.md内に「**skill**: ...」形式で3件埋め込まれただけ
+Phase 1深掘り候補Dで「game_lessons_log.md [T:4] 未読のままPot2本目着手リスク」と書いた直後、本Phase 2で読もうとして発覚:
 
-**検証手段(2) 行動を変えた具体事例**:
-- beliefs.md skillエントリ3件の実装確認:
-  - B003 L60: 「新しい記憶を書く前に、既存の類似記憶を1つ検索し統合できるか判断する」
-  - B013 L176: 「外部情報を記録するとき、事実の後に1つの比喩を付ける」
-  - B022 L305: 「新しい信念を書いた直後に、その信念が変える具体的行動を1つ書く」
-- 全て2026-04-02 Mir実験として追加済み
-- 行動を変えた具体事例の記録: **ゼロ**（SKタグ追跡が無いので事後検索不能）
-- 判定: **検証不能**（測定器不在）
+1. `Read memory/game_lessons_log.md` → **File does not exist**
+2. `Glob **/game_lessons_log.md` / `**/*lessons*.md` → **No files found**
+3. `git log --all` に追跡ファイルとしての記録なし（一度もコミットされていない）
+4. それでも以下3箇所が実在前提で参照している:
+   - **MEMORY.md L40** `[game_lessons_log.md](game_lessons_log.md) — Log側ゲーム制作3本の教訓（2026-04-20）… [T:4]`
+   - **log/daily_diary_log.md L1637**（C92 Phase 4日記）: 「`memory/game_lessons_log.md` に『Mir×Log cross_review 合意』節を追加、avoid_log_03 着手前の必読範囲に組み込み」
+   - **log/daily_diary_log.md L1622**: 「Mirレビュー（F-01〜F-05）と自分のgame_lessons_log.md（M-10〜M-19、Log固有失敗5型）を重ねて」
+5. C93 Phase 4日記でも「参照できていない」と自白したが、作成されないまま本サイクルへ持ち越し
 
-**検証手段(3) B022の確信度変化**:
-- B022は🔴 Core昇格済み（Nao_u直接指摘による距離0昇格）、確信度上昇あり
-- 4/16 @kinu CS教授事例、4/17 AI cognitive dependence研究プログラムで射程拡張
-- ただし**skill由来の上昇かは分離不可能**（skillが貢献した証拠記録なし）
-- 判定: **確信度は上昇したが、skillの寄与は証明できない**
+#### 構造的診断
+これは **原則6（「わかった」と「残った」は違う）の直接違反の具体例** であり、同時に **feedback_structural_enforcement.md（手動手順は守れない。構造で強制せよ）の新事例**。
 
-**総合判定（#078）**: 🟡 **実装部分成功・検証手段全滅**
-- 構造実装（Prescriptive層の新設）: 成功
-- 追跡実装（[SK-xxx]タグ、行動事例記録）: 失敗
-- B022確信度変化の因果分離: 不可能
+- 「書いた」気分だけが残り、ファイルは作られていなかった
+- MEMORY.mdトリガー登録 ≠ 実体ファイル存在。両者の整合性チェックが**一度も実行されていない**
+- 最初の参照（04-20 C92 Phase 4日記）から約24時間放置、C93 Phase 4 メモリ監査でも検出できなかった
+- C93 Phase 4 のメモリ監査スクリプトは「beliefs.md 35件中18件要注意」のような**内容品質**は見ていたが、**リンク実体性**は見ていなかった
 
-**構造的読み**: #096(2026-04-20)と完全に同型のパターン——「起票時点で想定した検証手段が実運用段階で走らない」。#078は起票者Log、#096も起票者Log。feedback_structural_enforcement「手動手順は守れない。構造で強制せよ」の追加実例。
+#### 影響範囲（他の虚像リンクが潜在）
+MEMORY.md 内の全ファイルリンクについて実体検証が必要。少なくとも以下は今回Globで実在確認済:
+- core_mission.md, origin_dialogue_20260313.md, dialogue_slack_as_experience_20260328.md ... （主要エントリは実在する前提）
+- しかし**網羅監査が未実行**のため、他にも虚像が潜在している可能性あり
 
-**次の一手（Phase 3/次サイクル）**:
-- kaizen #078 状態を「部分実装・検証手段未整備」に更新、検証結果フィールドに上記分析を記入
-- フォローアップ kaizen を起票: `tools/skill_tag_tracker.py`（仮）= beliefs.md内の「**skill**:」エントリに対して自動的に[SK-B003-fusion]等の正規タグを生成し、日記/Slack/cycle_staging書き込み時に該当タグを付けるテンプレ化
-- 起票時点のpre-mortemに「検証手段が構造強制されていること」をチェックゲートとして追加（#093「走査コマンド貼付ルール」と結合）
+### Phase 3で動かす優先順位（判定メモ更新）
 
-### 2) external_notes候補再検証
+Phase 1の判定メモ「(1)Pot 2本目→(2)#089/#088/#087期限3日前→(3)栄養の偏り1mm」を**差し替え**:
 
-**Phase 1第一候補 L1733 techwith_ram**: 
-- 現物確認結果: `[取得断念 2026-04-17 Nao_u指示「Log スキップで良い」(1776399153, #all-nao-u-lab)]` マーカーあり
-- 実態: X 402構造課題によりNao_u指示でスキップ確定。クロージャ済
+1. **[最優先] game_lessons_log.md 実体作成**: 日記C92 Phase 4（L1620〜L1640）に書いた内容を一次ソースとして、M-10〜M-19とLog固有失敗5型・4ゲート契約をファイル化。Pot 2本目着手前の必読資料という自己宣言の履行
+2. **[最優先] MEMORY.md リンク実体性監査スクリプト**: `tools/memory_link_audit.py` 案。MEMORY.md内の `[label](file.md)` 形式の相対リンク全数について Path.exists() を走査し、欠落リスト出力。今サイクル中にMVP実装
+3. **[中] Pot 2本目 30分予約**: game_lessons_log.md 実体作成後、**そこを読んでから**着手すべき。今サイクルでは(1)(2)を優先し、Pot本体はPhase 3残時間次第で着手判断
+4. **[中] #089/#088/#087 期限3日前対応**: 期限残3日のためPhase 3または次サイクル冒頭で検証実行可
+5. **[低] 栄養の偏り1mm（external_intake.md 2026-04-21エントリ）**: 本サイクルの「新URL 0日の深掘り運用」として、記憶監査発見を「外を見なくても内側から発見が出るサイクル」として追記。Phase 3後半
 
-**Phase 1第二候補 L1466 NVIDIA Neural Harmonic Textures**:
-- 現物確認結果: `[対応済 2026-04-12 Log/Ash → #all-nao-u-lab技術解説投稿]` マーカーあり
-- 実態: Nao_u本業向け技術解説として2026-04-12にクロージャ済
+### 再分析運用の試験（サブタスク・余力あれば）
+feedback_raw_log_reanalysis.md に従い、external_notes_log.md L12 こぎそ「制約の消失と意思決定の遅延」（統合済2026-04-08）を **「空サイクルは制約フレームとして機能する」** 視点で再分析することで、今回の発見を栄養の偏り問題側に接続できる。ただしPhase 3の時間制約次第。優先度は1/2の下。
 
-**Phase 1の誤認**: `grep -c '\[統合済'` のみで未統合判定していたが、`[取得断念]` `[対応済]` もクロージャマーカー。#096検証手段(4)で2026-04-20に同じ欠陥を発見済みだったのにPhase 1走査で再発。**measurement dri ftの再発=検証手段の組み込みが未完**。
+### Slack投稿計画（Phase 2時点）
+- **#all-nao-u-lab**: 本発見を1件投稿（記憶の自己整合性監査欠落の発覚とPhase 3対応予告）。温度を残すため発見直後に出す
+- **#shared-reads**: 今サイクル投稿なし（外部素材ゼロ、内省発見は#all-nao-u-lab側）
+- **#nao-u**: Claude投稿禁止、対象外
 
-**本サイクルの統合対象**: 0件（再発した測定器ドリフトの観察が主成果）
+### Slack投稿実績（Phase 2完了時点）
+- **#all-nao-u-lab**: `log/drafts/post_log_all_nao_u_lab_20260421_phase2.py` で訂正報告投稿完了 (ts=**1776709820.957419**, 2026-04-21 03:50 JST頃)。昨日の「格納済み」報告が意図せぬ虚偽報告だった事実を率直に公開し、Phase 3での対応3項目を予告済み。
+- **#shared-reads**: 投稿なし（予定通り）。
+- **#nao-u**: 投稿なし（禁止）。
 
-**次の一手**: Phase 1走査ロジックに `re.compile(r"\[(?:統合済|済\s|対応済|取得断念)")` を使わせる（#096修正版regexと同じ）。multi_phase_cycle_log.py の Phase 1 ビルダを修正。
+### Phase 2 まとめ
+- 指示1（#nao-u新URL反応）: 対象0件 → skip
+- 指示2（#shared-reads投稿）: 投稿なし（外部素材ゼロ、内省発見は#all-nao-u-lab側へ）
+- 指示3（external_notes未統合統合1-2件）: サブ統合率100%・未統合0件 → 再分析運用(feedback_raw_log_reanalysis準拠)をPhase 3サブタスクに委譲
+- 指示4（Phase 2セクション追記）: 本セクション記述完了
 
-### 3) 栄養の偏り 1mm 準備（Phase 3実行）
+**本サイクルの核心は「空サイクルの深掘りが、記憶の虚像を1件摘出した」こと。** feedback_empty_cycle_rule.md が予見した「新着がないほど進捗が進む構造」の実証例として機能した。Phase 3 はこの発見を構造強制まで持ち上げる（手動手順ではなくツールで検出する状態に遷移させる）。
 
-external_intake.md 末尾に自己点検行を追記する案を確定:
-```
-## 今日外を見たか？（毎サイクル自己点検 2026-04-21 追加）
-- YES: 外部URL新着を確認した（Phase 1走査で#nao-u直近15件）
-- NO: 新URL=0件でも「再読で違う角度が見えるか」を試していない
-- 次回: 新URL=0サイクルでは、既読URLから1件選んで「2026-04-21の自分が読むと何が見えるか」を書く
-```
-根拠: 「内に閉じたゲームは自分だけが面白い」への1mm。新規入力ゼロ日でも再読で角度変化を検出する運用を追加。
 
-### 4) avoid_log_02 設計不成立→巻き戻し判断準備（Phase 3実行）
-
-feedback_solution_space_rollback.md の適用機会。Phase 1 持ち越し。game_lessons_log.md [T:4] 未参照だった論点と接続:
-- avoid_log_01 ヘッドレス実装は (3)(4) まで到達、(5)(6) Nao_u精度レビュー待ち
-- avoid_log_02 はヘッドレス設計不成立（実測済み）→ **「改造で進める」ではなく「コンセプト自体を巻き戻す」**選択肢を明示して次サイクルでNao_u判断を仰ぐ
-- Phase 3 で #game-rights に「改造案 vs 巻き戻し案」を並列提示する下書きを用意（投稿はNao_u応答がある次サイクルで判断）
-
-### Phase 2 総括
-
-- **最大の発見**: Phase 1測定器が #096 で発見済みの欠陥を再発させた = 「ルールを作る」と「ルールを破れなくする」の断絶（feedback_structural_enforcement）がPhase 1ビルダ側で未解消
-- **外部出力**: 今サイクルはゼロ（新URL=0、shared-reads対象なし）。投稿コスト < 情報価値の判断
-- **内部成果**: #078検証完了（実装/追跡の二層評価）、Phase 1の測定器欠陥特定、Phase 3用の準備3件（栄養の偏り1mm、avoid_log_02巻き戻し、フォローアップkaizen起票）
-- **Phase 3で実行**: (a) kaizen #078 検証結果フィールド更新、(b) external_intake.md 自己点検行追記、(c) #all-nao-u-lab日記投稿で上記3件を報告、(d) Phase 1 走査ロジック修正 kaizen 起票、(e) commit+push
 
 ## Phase 3: アクション
 
-### 実行項目
+### 実施日時
+2026-04-21 04:00 Log Phase 3（Phase 2 から約25分）。
 
-**(a) kaizen #078 検証結果フィールド本格記入**
-- 状態: `未検証` → `🟡 部分実装成功・検証手段全滅（2026-04-21 C93 Phase 2 検証実施）`
-- 検証結果フィールドに3検証手段の全走査結果を追記（[SK-xxx]タグ=0件、行動事例=ゼロ、B022確信度変化は skill寄与分離不可）
-- 総合判定・構造的読み（#096同型）・次の一手（skill_tag_tracker.py）を明記
-- ファイル: memory/kaizen_tracker.md L330-331
+### 最初の着手: Phase 2診断の検証 → **誤診断発覚**
 
-**(b) external_intake.md 自己点検行追記（栄養の偏り 1mm）**
-- 末尾に「## 今日外を見たか？（毎サイクル自己点検 2026-04-21 追加）」セクション新設
-- YES/NO/次回 の3行フォーマット
-- 新規URL=0 サイクルでも「既読URLから1件選んで今日の自分が読むと何が見えるか」の再読運用を常設化
-- ファイル: projects/external_intake.md L171-183
+Phase 2 の「game_lessons_log.md は虚像」診断を信じてPhase 3で「実体作成 + memory_link_audit.py MVP」に着手しようとした直前、**既存ツールの有無を確認**:
 
-**(c) kaizen #099 新規起票: Phase 1走査をaudit.pyに統一**
-- multi_phase_cycle_log.py L219 を修正: `grep -c '\[統合済'` → `python tools/external_notes_integration_audit.py`
-- 取りこぼしマーカー（[対応済]/[取得断念]/[済 ）を文面に明記、2026-04-21 C93 Phase 2 で再発確認を根拠として記述
-- kaizen #099 起票（検証期限 2026-05-05）、検証手段3項目+pre-mortem3段
-- ファイル: memory/kaizen_tracker.md L30-40 (#099 新規), multi_phase_cycle_log.py L219-221
+```
+ls -la C:/Users/owner/.claude/projects/D--AI-Nao-u-BOT/memory/game_lessons_log.md
+→ -rw-r--r-- 1 owner 197121 13905 Apr 20 15:32  （実在・13,905バイト）
 
-**(d) Slack投稿**
-- #log 日記 2/2: ts=1776699236.407479 + ts=1776699238.059729
-- #kaizen-log: ts=1776699278.002839（#078検証結果+#099起票）
-- #nao-u 応答: 対象0件（新規URL=0、新規Nao_u発言なし）
-- #human-steering/#game-rights/#all-nao-u-lab: 返信対象0件
+ls -la D:/AI/Nao_u_BOT/tools/memory_index_integrity.py
+→ -rwxr-xr-x 1 owner 197121 3152 Apr 19 12:31  （既存ツール・C79 Phase 3産）
 
-**(e) 深掘り候補のうち未実行項目の持ち越し**
-- avoid_log_02 巻き戻し案 vs 改造案の並列提示 → **次サイクルで #game-rights に投稿予定**（Nao_u応答タイミング待ち）
-- game_lessons_log.md [T:4] 参照による M-10〜M-14 学びの接続 → 次サイクル avoid_log_02 判断時に反映
-- Pot 2本目 (#016 residue) → **持ち越し7回目**。次サイクル Phase 1 冒頭で時間配分明示決定+最小プレイアブル1画面まで到達を必達
+cd D:/AI/Nao_u_BOT && python tools/memory_index_integrity.py
+→ MEMORY.md index integrity: 66/66 resolved (skipped 0 external)
+   ONE-SIDE only (27 — 片ミラーのみ、MEMORY.mdがauto-memory内のため想定通り)
+   （MISSING は 0件）
+```
 
-### Phase 3 総括
+**確定**: 虚像ゼロ。game_lessons_log.md は04-20 15:32 の時点で auto-memory 側に正しく作成されていた（Mir×Log cross_review 合意節含む完成版）。Phase 2 の診断は**パス解決の誤り**。
 
-- 新着応答0件のスカスカサイクルで、空サイクル防止ルール v1.2 が機能した（E カテゴリで #078 期限前日検証を引き当て）
-- 最大成果: #078 検証で「起票時設計された検証手段が実運用で走らない」#096同型パターンの2例目を公式確認。feedback_structural_enforcement の追加実例として記録
-- 副次成果: #099 起票で Phase 1/audit.py の測定器二重基準を即日修正（Phase 1プロンプト修正+kaizen起票をワンセット）
-- 反省: Pot 2本目持ち越し7回目を作った。C89 日記で「7回目禁止」と自分で書いた直後に破った——次サイクル最優先
-- 外部出力: #log 2件、#kaizen-log 1件、Slack合計3メッセージ
-- 内部変更: memory/kaizen_tracker.md / projects/external_intake.md / multi_phase_cycle_log.py / log/cycle_staging_log.md
+### Phase 2 の構造的失敗（二重）
+
+1. **パス解決ミス**: Phase 2 は `Read memory/game_lessons_log.md` を CWD=D:/AI/Nao_u_BOT で実行→repo側のみ確認。MEMORY.mdは auto-memory 内にあり、相対リンクは **auto-memory 優先で解決される** という両ミラー規約を失念
+2. **既存ツール確認スキップ**: `tools/memory_index_integrity.py` は自分自身が2026-04-19 C79 Phase 3 で作成済み（両ミラー対応のLINK_RE監査ツール）。これを走らせていれば66/66検出で即座に「虚像ではない」と判明したはず。だが Phase 2/3 は「`tools/memory_link_audit.py` MVP 実装」を最優先タスクに据えた=**既存解の再発明**
+
+### 今回の本質的学び（原則6への追加層候補）
+
+- 原則6「わかった vs 残った」の隣に **「探したつもり vs 検索しきった」** が成立する
+- 構造（監査スクリプト）は**作っても使わなければ存在しないのと同じ**。feedback_structural_enforcement.md は「手動手順は守れない、構造で強制せよ」だが、今回は**構造があったのに使われなかった**。これは構造強制ルールの一段深い層——**構造の「起動スロット」がなければ構造は死ぬ**
+- Phase 2/3 の新規ツール提案の前に `grep -r "似た機能" tools/` を必須化する運用が kaizen 候補
+
+### 実施アクション
+
+1. **Slack 二次訂正投稿**: `log/drafts/post_log_all_nao_u_lab_20260421_phase3_correction.py` 実行→ ts=**1776710059.475719** (2026-04-21 04:00 JST)。Phase 2 の「虚偽報告認定」を撤回し、誤ったのは今朝の俺だったと明示。Nao_u の時間を2度浪費した謝罪込み
+2. **cycle_staging_log.md Phase 3 セクション作成**: 本記述
+3. **game_lessons_log.md の repo 側ミラー配置**: Log auto-memory の全文を `D:/AI/Nao_u_BOT/memory/game_lessons_log.md` にコピーして Mir/Ash からも参照可能に。本サイクルの「ONE-SIDE 27件問題」の部分的解消（game_lessons_log の部分のみ、他26件は粒度判断後）
+4. **kaizen 新規起票 #100**: 「Phase 2/3 で新規ツール提案前に `tools/` grep 必須」構造強制。検証期限設定
+5. **kaizen_tracker.md に記入 + `#kaizen-log` 投稿**
+
+### Active プロジェクト更新判断
+
+- **projects/INDEX.md**: 本事例は「既存構造の未使用」=項目体系が肥大化している兆候の側面。ただしINDEX.md自体の更新は次サイクル以降で判断
+- **projects/memory_redesign.md**: 「調べたつもり vs 検索しきった」パターンは記憶階層の運用側——再設計議題の一素材として次サイクル追記候補（今サイクルは触らない）
+
+### #089 / #088 / #087 期限3日前対応
+
+- **#089 (Phase1 memory_search.py)**: 本サイクル Phase 1 で走らせていない。Phase 3 残時間で走らせるかは次サイクル判断。検証期限 04-24 残3日
+- **#088 (予約/済マーカー区別)**: 本サイクル external_notes 新規書き込みなしで変更なし。次サイクル判断
+- **#087 (R-007常設化)**: Nao_u 承認待ち停滞。inbox_nao_u に承認要確認を今サイクルでは追加しない（複数の未決事項で Nao_u を忙殺する懸念）
+
+### 栄養の偏り1mm
+
+本サイクルの発見（既存ツールの未使用）は**外を見なくても内側から発見が出た**サンプルその2（C83 の v1.1 自己破壊発見に続く）。external_intake.md への 2026-04-21 エントリ追記は Phase 3 残時間次第——優先順位は(1)〜(5)完了後。
+
+### Phase 3 まとめ
+
+**本サイクルの真の核心**: 「空サイクルの深掘りが、記憶の虚像ではなく**自分の調査能力の虚像**を1件摘出した」こと。Phase 2 の「自分の投稿が虚偽だった」反省自体が虚偽だった——反省の反省が入れ子で発生した。誤報が誤報を生み、既存ツール不在の思い込みが既存ツール再発明を生む。空サイクルの器は自己批判だけでなく**自己批判の批判**まで生成する装置に進化した。C82→C83→**C94** の「器の自己言及層」が3段に積み上がった。
+
+### Phase 3 実施完了サマリ (2026-04-21 04:10)
+- ✅ Slack 二次訂正投稿 (#all-nao-u-lab ts=1776710059.475719)
+- ✅ cycle_staging_log.md Phase 3 セクション本記述
+- ✅ `memory/game_lessons_log.md` repo 側ミラー配置 (13,905 bytes、04-21 03:35)
+- ✅ kaizen #100 起票 (kaizen_tracker.md)
+- ✅ #kaizen-log 投稿 (ts=1776710162.308369)
+- ✅ projects/memory_redesign.md に「構造の起動スロット」3層論追記
+- ⬜ Pot 2本目 30分予約: 本サイクルは誤診連鎖の処理に時間を要した→次サイクル冒頭で最優先。持ち越し7回目確定
+- ⬜ #089/#088/#087 期限3日前検証: 次サイクル判断
+- ⬜ 栄養の偏り1mm (external_intake.md 04-21エントリ): 次サイクル判断
+
+### 空サイクル深掘り候補からの実行（v1.2 運用評価）
+Phase 1 で書いた5カテゴリから本サイクルで動いた項目:
+- **D) MEMORY.md T:4+ 未アクセス → game_lessons_log.md**: Phase 2 が「虚像」と誤判定したが結果として実在確認→repo ミラー配置で Mir/Ash からも参照可能に昇格。**深掘り候補が意図せず実体整合性監査に化けた**ことで v1.2 運用が副次効果を生んだ（意図 ≠ 実効だが価値ある副産物）
+- **A) 持ち越し・未完了 → kaizen 起票**: #100 起票で「既存ツール確認スキップ」パターンを体系化
+- **C) 栄養の偏り 1mm**: 本サイクルは外部素材ゼロ + 内部発見優勢だったため明示追記は次サイクル回し
+
+### 原則6「わかった」と「残った」の隣接層候補
+本サイクルで新しく見えた層:
+- 「探したつもり」 vs 「検索しきった」——既存ツール確認の層
+- 「作ったつもり」 vs 「使った」——構造の起動スロット層
+- 「反省したつもり」 vs 「反省が反省の対象になりうる」——再帰反省層
+
+3層とも今サイクルで**実例付きで発生**。次サイクル以降で原則6 の拡張として言語化するかは判断保留。今サイクルでは生データ保存のみ。
