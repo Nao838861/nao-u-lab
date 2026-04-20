@@ -1,0 +1,47 @@
+{
+  "concept": {
+    "policy": "concept",
+    "runs": 3,
+    "p_survival_avg_s": 18.216666666666665,
+    "a_survival_avg_s": 18.216666666666665,
+    "score_avg": 500.0,
+    "chain_peak_avg": 4.333333333333333,
+    "chain_peak_max": 5,
+    "in_field_ratio_avg": 1.0,
+    "space_presses_avg": 3.6666666666666665,
+    "space_inputs_avg": 3.6666666666666665,
+    "player_death_rate": 1.0,
+    "ai_death_rate": 0.0,
+    "player_outlived_ai": 0.0
+  },
+  "slacker": {
+    "policy": "slacker",
+    "runs": 3,
+    "p_survival_avg_s": 11.977777777777778,
+    "a_survival_avg_s": 11.977777777777778,
+    "score_avg": 233.33333333333334,
+    "chain_peak_avg": 3.0,
+    "chain_peak_max": 6,
+    "in_field_ratio_avg": 1.0,
+    "space_presses_avg": 11.333333333333334,
+    "space_inputs_avg": 718.6666666666666,
+    "player_death_rate": 1.0,
+    "ai_death_rate": 0.0,
+    "player_outlived_ai": 0.0
+  },
+  "dodger": {
+    "policy": "dodger",
+    "runs": 3,
+    "p_survival_avg_s": 9.66111111111111,
+    "a_survival_avg_s": 9.66111111111111,
+    "score_avg": 0.3333333333333333,
+    "chain_peak_avg": 0.3333333333333333,
+    "chain_peak_max": 1,
+    "in_field_ratio_avg": 0.01973636897953811,
+    "space_presses_avg": 0.0,
+    "space_inputs_avg": 0.0,
+    "player_death_rate": 1.0,
+    "ai_death_rate": 0.0,
+    "player_outlived_ai": 0.0
+  }
+}

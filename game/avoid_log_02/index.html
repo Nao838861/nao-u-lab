@@ -13,7 +13,7 @@
 </head>
 <body>
 <h1>磁石と鉄片</h1>
-<p>← → / A D で移動 &middot; SPACE で極性反転（AIが吸った鉄片を撃ち返す） &middot; R でやり直し</p>
+<p>← → で移動 &middot; SPACE でAIの鉄片を撃ち返す（溜めすぎるとAIが死ぬ） &middot; R でやり直し</p>
 <canvas id="c" width="420" height="620"></canvas>
 <script>
 const W=420,H=620,FPS=60;
@@ -31,18 +31,25 @@ addEventListener('keyup',e=>{
   if(k===' '||e.code==='Space')keys[' ']=0;
 });
 
-// ---- 世界観: 鉄片（bullet）は磁石（AI）に引かれる。プレイヤーは極性を反転して撃ち返す。----
-// 意味変換 3段: 障害(降ってくる鉄片) → 武器(AIに吸われた鉄片) → 報酬源(撃ち返しが次の鉄片を壊してコンボ)
-// 死の意味変換:
-//   AI死  = 吸収した鉄片を一斉解放（場が変わる環境変化。罰でも報酬でもない）
-//   P死   = カメラがAI側に寄る。AIが最後までどう戦うかを見届ける
-//   両死  = 軌跡+死因マーカー（誰がどの鉄片で死んだか）重ね表示
+// ---- seeded PRNG (mulberry32) ----
+function mulberry32(a){
+  return function(){
+    var t=a+=0x6D2B79F5;
+    t=Math.imul(t^t>>>15,t|1);
+    t^=t+Math.imul(t^t>>>7,t|61);
+    return((t^t>>>14)>>>0)/4294967296;
+  }
+}
 
 let state;
 function reset(){
+  const seed = Date.now() & 0xFFFFFFFF;
+  const rng = mulberry32(seed);
   state={
-    player:{x:W*0.35,y:H-70,r:9,alive:true,path:[],deathBy:null,burstCd:0},
-    ai:{x:W*0.65,y:H-70,r:10,alive:true,path:[],deathBy:null,absorbed:0,absorbMax:6},
+    seed: seed,
+    rng: rng,
+    player:{x:W*0.35,y:H-70,r:9,alive:true,path:[],deathBy:null,burstCd:0,barrier:0},
+    ai:{x:W*0.65,y:H-70,r:10,alive:true,path:[],deathBy:null,absorbed:0,absorbMax:6,invincible:0},
     bullets:[],
     sparks:[],
     spawn:0,
@@ -50,9 +57,12 @@ function reset(){
     pT:0,pEndT:0,
     aT:0,aEndT:0,
     over:false, overAt:0,
-    playerDeadPov:0, // P死んだ後AIを追うためのカメラ補助
-    aiDeathBurstFired:false,
+    superchargeCount:0,
     chain:0, chainDecay:0, score:0,
+    chainPeak:0,
+    inFieldFrames:0,
+    spacePresses:0,
+    replay: [],  // フレームごとの入力記録 [move, space]
     stars:state && state.stars ? state.stars : null
   };
   if(!state.stars){
@@ -65,12 +75,22 @@ reset();
 function spawn(){
   const t=state.t/FPS;
   const speed=2.2+Math.min(3.2,t*0.04);
+  // 90%の確率でプレイヤー方向スポーン
+  const p=state.player;
+  let sx;
+  const R=state.rng;
+  if(p.alive && R()<0.3){
+    sx = p.x + (R()-0.5)*80;
+    sx = Math.max(15, Math.min(W-15, sx));
+  }else{
+    sx = R()*(W-30)+15;
+  }
   state.bullets.push({
-    x:Math.random()*(W-30)+15,y:-20,
-    vx:(Math.random()-0.5)*0.8,vy:speed,
-    r:6+Math.random()*4,
-    mode:'iron',   // 'iron' = 降ってくる鉄片 / 'weapon' = AI吸収後 / 'returned' = 撃ち返された
-    ownerId:null,  // weapon化した時、どのAIが吸収したか（今はAI1体）
+    x:sx,y:-20,
+    vx:(R()-0.5)*0.8,vy:speed,
+    r:6+R()*4,
+    mode:'iron',
+    ownerId:null,
     life:0
   });
 }
@@ -82,19 +102,18 @@ function aiAttract(b){
   const dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy)+0.001;
   // 引力は画面下半分+AI生存時のみ効かせる（序盤の自由回避を残す）
   if(b.y>H*0.3 && b.mode==='iron' && d<220){
-    const pull=0.08 * (1 - Math.min(1,d/220));
+    const pull=0.14 * (1 - Math.min(1,d/220));
     b.vx += (dx/d)*pull*3;
     b.vy += (dy/d)*pull*3;
   }
-  // 吸収判定
+  // 吸収判定（無敵中は吸収しない。鉄片は通過する）
   if(b.mode==='iron' && d < a.r+b.r+2){
-    if(state.ai.absorbed < state.ai.absorbMax){
+    if(a.invincible>0){
+      // 無敵中: 吸収しない
+    }else if(state.ai.absorbed < state.ai.absorbMax){
       state.ai.absorbed++;
-      // 鉄片は吸収されて消える
       b._consumed=true;
     }else{
-      // 吸収限界を超えた鉄片はAIにダメージを与える（実質死亡要因）
-      // → いや、今回は絶対吸収制限をAI死トリガに使う方が"死の意味変換"に綺麗
       b._consumed=true;
       state.ai.absorbed = state.ai.absorbMax;
     }
@@ -102,24 +121,33 @@ function aiAttract(b){
 }
 
 function triggerPolarityReversal(){
-  const a=state.ai;
+  const a=state.ai, p=state.player;
   if(!a.alive) return false;
   if(a.absorbed<=0) return false;
-  if(state.player.burstCd>0) return false;
-  state.player.burstCd = 12;
-  // 吸収分を放射状に撃ち返す（極性反転）
-  const n=a.absorbed;
-  for(let i=0;i<n;i++){
-    const ang=-Math.PI/2 + (i-(n-1)/2)*0.22 + (Math.random()-0.5)*0.08;
-    const speed=5+Math.random()*1.2;
-    state.bullets.push({
-      x:a.x, y:a.y-2,
-      vx:Math.cos(ang)*speed, vy:Math.sin(ang)*speed,
-      r:5,
-      mode:'returned', life:0
-    });
+  if(p.burstCd>0) return false;
+  // 磁力場内(160px以内)でしか効かない
+  if(Math.hypot(p.x-a.x,p.y-a.y)>160) return false;
+  p.burstCd = 18;
+  // AI周囲の鉄片を一括消去
+  let cleared=0;
+  for(const b of state.bullets){
+    if(b.mode==='iron' && !b._consumed && Math.hypot(b.x-a.x,b.y-a.y)<180){
+      b._consumed=true;
+      cleared++;
+    }
   }
+  state.chain+=cleared; state.chainDecay=90;
+  state.chainPeak=Math.max(state.chainPeak,cleared);
+  state.score+=cleared*10;
+  // 消去エフェクト
+  for(let i=0;i<Math.min(cleared*3,30);i++) state.sparks.push({
+    x:a.x+(Math.random()-0.5)*160, y:a.y+(Math.random()-0.5)*80,
+    vx:(Math.random()-0.5)*5, vy:(Math.random()-0.5)*5,
+    life:25, col:'rgba(255,220,100,'
+  });
   a.absorbed=0;
+  a._fullFrames=0;
+  state.spacePresses++;
   return true;
 }
 
@@ -152,12 +180,12 @@ function fireAiDeathBurst(){
   const a=state.ai;
   const n = Math.max(4, a.absorbed+3);
   for(let i=0;i<n;i++){
-    const ang = (i/n)*Math.PI*2 + Math.random()*0.2;
-    const speed=2.4+Math.random()*1.8;
+    const ang = (i/n)*Math.PI*2 + state.rng()*0.2;
+    const speed=2.4+state.rng()*1.8;
     state.bullets.push({
       x:a.x, y:a.y,
       vx:Math.cos(ang)*speed, vy:Math.sin(ang)*speed,
-      r:6+Math.random()*3,
+      r:6+state.rng()*3,
       mode:'returned', // 撃ち返し扱い（プレイヤーにも当たるが、倒せる）
       life:0
     });
@@ -175,14 +203,24 @@ function step(){
 
     const p=state.player, a=state.ai;
 
-    // player
+    // player input → record
+    const moveL = keys['arrowleft']||keys['a'] ? 1 : 0;
+    const moveR = keys['arrowright']||keys['d'] ? 1 : 0;
+    const moveDir = moveR - moveL;  // -1, 0, 1
+    const spaceIn = keys[' '] ? 1 : 0;
+    state.replay.push((moveDir+1)*2 + spaceIn); // encode: 0-5
+    // メトリクス
+    if(p.alive && a.alive && Math.hypot(p.x-a.x,p.y-a.y)<=160) state.inFieldFrames++;
+    if(spaceIn && a.alive && a.absorbed>0 && p.burstCd<=0) state.spacePresses++;
     if(p.alive){
       const sp=4.4;
-      if(keys['arrowleft']||keys['a'])p.x-=sp;
-      if(keys['arrowright']||keys['d'])p.x+=sp;
+      p.x += sp * moveDir;
       p.x=Math.max(p.r,Math.min(W-p.r,p.x));
-      if(keys[' '] && a.alive && a.absorbed>0 && p.burstCd<=0){
-        triggerPolarityReversal();
+      if(spaceIn && a.alive && a.absorbed>0 && p.burstCd<=0){
+        if(!triggerPolarityReversal()){
+          // 遠すぎて効かなかった → 視覚フィードバック
+          state._tooFar = 40;
+        }
       }
       if(p.burstCd>0) p.burstCd--;
       state.pT=state.t;
@@ -192,38 +230,37 @@ function step(){
     if(a.alive){
       aiMove(a);
       state.aT=state.t;
+      if(a.invincible>0) a.invincible--;
       if(state.t%2===0)a.path.push([a.x,a.y]);
-      // 吸収しすぎは死トリガ（満タン+3フレーム維持で崩壊）
+      // overload: 満タン90Fでプレイヤーが反転(SPACE)しなければAI死
       if(a.absorbed>=a.absorbMax){
         a._fullFrames=(a._fullFrames||0)+1;
-        if(a._fullFrames>90){
+        if(a._fullFrames>45){
           a.alive=false; state.aEndT=state.t; a.deathBy='overload';
+          fireAiDeathBurst();
         }
       }else{
         a._fullFrames=0;
       }
-    }else if(!state.aiDeathBurstFired){
-      state.aiDeathBurstFired=true;
-      fireAiDeathBurst();
     }
 
-    // bullets (含む attract)
+    // bullets (attract only)
     for(const b of state.bullets){
       b.life++;
       if(b.mode==='iron') aiAttract(b);
       b.x+=b.vx; b.y+=b.vy;
-      // 重力的な微減（magnetic field内で減速）
       b.vx *= 0.995;
     }
 
-    // 鉄片同士の衝突（returned vs iron）でチェイン加算・破壊
+    // chain (returned vs iron) — piercing supercharge弾は貫通
     for(const r of state.bullets){
-      if(r.mode!=='returned') continue;
+      if(r.mode!=='returned' || r._consumed) continue;
       for(const b of state.bullets){
-        if(b===r || b.mode!=='iron') continue;
+        if(b===r || b.mode!=='iron' || b._consumed) continue;
         if(Math.hypot(r.x-b.x,r.y-b.y) < r.r+b.r){
-          b._consumed=true; r._consumed=true;
-          state.chain++; state.chainDecay=90;
+          b._consumed=true;
+          if(!r.pierce) r._consumed=true;
+          state.chain++; state.chainDecay=90; state.chainPeak=Math.max(state.chainPeak,state.chain);
           state.score += 10 * state.chain;
           for(let i=0;i<6;i++) state.sparks.push({
             x:(r.x+b.x)/2, y:(r.y+b.y)/2,
@@ -237,28 +274,20 @@ function step(){
 
     state.bullets = state.bullets.filter(b=>!b._consumed && b.y<H+60 && b.y>-60 && b.x>-40 && b.x<W+40);
 
-    // collisions: 鉄片がプレイヤー/AIに当たる
+    // collisions
     for(const b of state.bullets){
       if(p.alive && Math.hypot(p.x-b.x,p.y-b.y)<p.r+b.r){
-        // 撃ち返し(returned)はプレイヤーに当たらない（味方判定） — ただしAI死後の爆発は当たる
-        if(b.mode==='returned' && !state.aiDeathBurstFired) continue;
-        if(b.mode==='returned' && state.aiDeathBurstFired && b.life>12){
-          // AI死爆発は時間差でプレイヤーを脅かす
-        }
+        if(b.mode==='returned' && b.life<=12) continue;
         p.alive=false; state.pEndT=state.t; p.deathBy=b.mode;
-      }
-      if(a.alive && b.mode==='returned' && Math.hypot(a.x-b.x,a.y-b.y)<a.r+b.r && b.life>8){
-        // 稀に撃ち返しがAIに戻る（極性反転の代償）
       }
     }
 
     // chain decay
     if(state.chainDecay>0){state.chainDecay--; if(state.chainDecay===0) state.chain=0;}
 
-    if(!p.alive && !a.alive && !state.over){
+    if((!p.alive || !a.alive) && !state.over){
       state.over=true; state.overAt=state.t;
     }
-    if(!p.alive) state.playerDeadPov = Math.min(60, state.playerDeadPov+1);
 
     // stars
     for(const s of state.stars){s.y+=s.z*0.35; if(s.y>H){s.y=0;s.x=Math.random()*W;}}
@@ -298,8 +327,9 @@ function draw(){
 
   // bullets
   for(const b of state.bullets){
-    if(b.mode==='iron')      ctx.fillStyle='#c7cdd9'; // 鉄片
-    else if(b.mode==='returned') ctx.fillStyle='#ffd170'; // 撃ち返し
+    if(b.mode==='iron')      ctx.fillStyle='#c7cdd9';
+    else if(b.mode==='returned') ctx.fillStyle='#ffd170';
+    else if(b.mode==='mine')  ctx.fillStyle='#ff4444'; // 地雷=赤
     ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,6.283); ctx.fill();
   }
 
@@ -317,8 +347,16 @@ function draw(){
   // figures
   if(p.alive) drawFig(p.x,p.y,p.r,'#6cc6ff','you');
   else drawGhost(p.x,p.y,p.r,'rgba(100,180,255,0.5)');
-  if(a.alive) drawMagnet(a);
-  else drawGhost(a.x,a.y,a.r,'rgba(255,180,90,0.55)');
+  if(a.alive){
+    if(a.invincible>0 && Math.floor(state.t/4)%2===0){
+      // 無敵中は点滅
+      drawMagnet(a, 0.4);
+    }else{
+      drawMagnet(a);
+    }
+  }else{
+    drawGhost(a.x,a.y,a.r,'rgba(255,180,90,0.55)');
+  }
 
   // HUD
   ctx.fillStyle='#9fb1d8'; ctx.font='12px system-ui';
@@ -330,47 +368,105 @@ function draw(){
     ctx.fillText(`chain x${state.chain}`, 10, 66);
   }
 
-  // absorb meter (AI側に)
+  // absorb meter (大きく、危険時は赤)
   if(a.alive){
-    ctx.strokeStyle='rgba(255,200,130,0.7)';
-    ctx.strokeRect(a.x-16, a.y+a.r+6, 32, 4);
-    ctx.fillStyle='rgba(255,200,130,0.9)';
-    ctx.fillRect(a.x-16, a.y+a.r+6, 32*(a.absorbed/a.absorbMax), 4);
+    const ratio = a.absorbed/a.absorbMax;
+    const danger = ratio >= 1;
+    const mw=48, mh=6;
+    // 危険時: 画面全体に赤フラッシュ
+    if(danger){
+      const flash = 0.08 + 0.06*Math.sin(state.t*0.4);
+      ctx.fillStyle=`rgba(255,40,40,${flash})`;
+      ctx.fillRect(0,0,W,H);
+    }
+    // ゲージ
+    ctx.strokeStyle = danger ? '#ff4444' : 'rgba(255,200,130,0.7)';
+    ctx.lineWidth = danger ? 2 : 1;
+    ctx.strokeRect(a.x-mw/2, a.y+a.r+8, mw, mh);
+    ctx.fillStyle = danger ? '#ff4444' : (ratio>0.7 ? '#ffaa44' : 'rgba(255,200,130,0.9)');
+    ctx.fillRect(a.x-mw/2, a.y+a.r+8, mw*ratio, mh);
+    ctx.lineWidth=1;
+    // 危険時テキスト
+    if(danger && Math.floor(state.t/15)%2===0){
+      ctx.fillStyle='#ff6666'; ctx.font='bold 11px system-ui';
+      ctx.fillText('SPACE!', a.x-18, a.y+a.r+26);
+    }
   }
 
-  // 中間画面: Pが先に死んだ時の「AIを見届ける」表示
-  if(!p.alive && a.alive && !state.over){
-    ctx.fillStyle='rgba(0,0,0,'+Math.min(0.35,state.playerDeadPov/60*0.35)+')';
-    ctx.fillRect(0,0,W,H);
-    ctx.fillStyle='#e9d1a6'; ctx.font='13px system-ui';
-    const msg='AIがどこまで生き延びるか、見届けろ';
-    ctx.fillText(msg, W/2-ctx.measureText(msg).width/2, 40);
+  // too far表示
+  if(state._tooFar>0){
+    state._tooFar--;
+    ctx.fillStyle=`rgba(255,100,100,${state._tooFar/40*0.8})`;
+    ctx.font='bold 12px system-ui';
+    ctx.fillText('too far!',a.x-22,a.y-a.r-16);
   }
 
   // Over screen
   if(state.over){
     ctx.fillStyle='rgba(0,0,0,0.55)'; ctx.fillRect(0,0,W,H);
-    const py=(state.pT/FPS), ay=(state.aT/FPS);
-    const winner = py>ay?'you outlived AI':(py<ay?'AI outlived you':'tied');
+    const py=(state.pT/FPS);
     ctx.fillStyle='#fff'; ctx.font='bold 20px system-ui';
-    ctx.fillText(winner,W/2-ctx.measureText(winner).width/2,H/2-80);
+    // AI死かプレイヤー死かで表示を変える
+    const aiDied = !a.alive;
+    const title = aiDied ? 'AI overload' : `${py.toFixed(1)}s survived`;
+    ctx.fillText(title,W/2-ctx.measureText(title).width/2,H/2-80);
 
     ctx.font='13px system-ui'; ctx.fillStyle='#cfd4e4';
-    ctx.fillText(`you ${py.toFixed(1)}s / AI ${ay.toFixed(1)}s  score ${state.score}`,
-                 W/2-120, H/2-56);
+    if(aiDied){
+      ctx.fillText('AIが鉄片を溜めすぎて崩壊した',W/2-100, H/2-56);
+      ctx.fillStyle='#ff8888';
+      ctx.fillText('SPACEでAIの鉄片を撃ち返せば防げる',W/2-115, H/2-36);
+    }else{
+      ctx.fillText(`score ${state.score}`,W/2-30, H/2-56);
+      ctx.fillStyle='#9fb1d8'; ctx.font='11px system-ui';
+      const pReason = p.deathBy==='returned' ? '跳ね返りで死' : p.deathBy==='iron' ? '鉄片で死' : '—';
+      ctx.fillText(`死因: ${pReason}  score ${state.score}`, W/2-60, H/2-36);
+    }
 
-    // 死因マーカー
-    ctx.fillStyle='#9fb1d8'; ctx.font='11px system-ui';
-    const pReason = p.deathBy==='returned' ? '跳ね返りで死' : p.deathBy==='iron' ? '鉄片で死' : '—';
-    const aReason = a.deathBy==='overload' ? '吸収過多で崩壊' : '鉄片で死';
-    ctx.fillText(`you死因: ${pReason}`, W/2-120, H/2-32);
-    ctx.fillText(`AI死因: ${aReason}`, W/2-120, H/2-16);
-
-    ctx.fillStyle='#8ea4cc';
-    ctx.fillText('磁石(AI)は鉄片を集めた。極性反転で撃ち返した。',W/2-170,H/2+6);
     ctx.fillStyle='#6e84ac';
     ctx.fillText('press R to restart',W/2-55,H/2+30);
+    if(state._replaySaved){
+      ctx.fillStyle='#5a7a50'; ctx.font='10px system-ui';
+      ctx.fillText('replay saved',W/2-30,H/2+46);
+    }
+
+    // ゲームオーバー時に自動保存（1回だけ）
+    if(!state._replaySaved){
+      state._replaySaved=true;
+      saveReplay();
+    }
   }
+}
+
+function saveReplay(){
+  const p=state.player;
+  const data={
+    version: 'avoid_log_02_v2',
+    source: 'human',
+    seed: state.seed,
+    frames: state.t,
+    inputs: state.replay,
+    summary: {
+      survival_s: state.pEndT/FPS,
+      score: state.score,
+      chain_peak: state.chainPeak,
+      in_field_ratio: state.inFieldFrames/Math.max(1,state.pEndT),
+      space_presses: state.spacePresses,
+      death_by: p.deathBy
+    }
+  };
+  // サーバーにPOST（serve.py経由で replays/human/ に自動累積）
+  fetch('/save-replay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+    .then(r=>r.json()).then(r=>{state._replayFile=r.file;})
+    .catch(()=>{
+      // サーバーなし時フォールバック: ダウンロード
+      const blob=new Blob([JSON.stringify(data)],{type:'application/json'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      const ts=new Date().toISOString().replace(/[:.]/g,'-').slice(0,19);
+      a.href=url; a.download=`human_replay_${ts}.json`; a.click();
+      URL.revokeObjectURL(url);
+    });
 }
 
 function drawFig(x,y,r,col,lab){
@@ -380,8 +476,9 @@ function drawFig(x,y,r,col,lab){
   ctx.font='10px system-ui';
   ctx.fillText(lab,x-ctx.measureText(lab).width/2,y-r-4);
 }
-function drawMagnet(a){
-  // 磁石のようにU字のハイライトで描く
+function drawMagnet(a, alpha){
+  const al = alpha||1;
+  ctx.globalAlpha=al;
   ctx.fillStyle='#ffb558';
   ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,6.283); ctx.fill();
   ctx.fillStyle='#3a2a10';
@@ -389,6 +486,7 @@ function drawMagnet(a){
   ctx.fillStyle='rgba(240,240,255,0.7)';
   ctx.font='10px system-ui';
   ctx.fillText('AI',a.x-ctx.measureText('AI').width/2,a.y-a.r-4);
+  ctx.globalAlpha=1;
 }
 function drawGhost(x,y,r,col){
   ctx.strokeStyle=col; ctx.lineWidth=1.5;

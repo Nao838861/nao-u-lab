@@ -105,6 +105,53 @@ C63〜C64/C70〜C71で「宣言→実装」ギャップが再発。C72は情報�
 - Nao_u 4/16「人間監視前提で速く走れ」に沿う: 完全自律の評価系を目指さず、生ログを人間が読める形で残すことに留める
 
 
+### mir_textadv × trace_recorder 接続設計（2026-04-18 C81 Mir 観察設計並走）
+
+**目的**: mir_textadv_01「思考漏れ」opening（v1/v2）のPython実装開始前に、beat→event_typeのマッピング表を先置きする。実装着手してから「何を記録すべきか」を考えると観察軸が後付けになり、プレイ時の盲点が永続化する。boot_intent C81焦点(2)として先置き化。
+
+**beat → event_type マッピング表（最小粒度）**
+
+| beat | プレイヤー操作 | 記録する event_type | payload 要点 |
+|---|---|---|---|
+| beat 1 開始 | (自動) | `session_start` | author, v1 or v2, random_seed |
+| beat 1 表示完了 | (自動) | `state("beat_entered", n=1)` | — |
+| beat 1 選択肢提示〜選択 | キー1-3 | `state("choice_shown", beat=1, options=3)` → `input(key, label)` → `state("choice_made", beat=1, index=X, elapsed_ms)` | 選択までの経過ms=迷いの長さ |
+| beat 2 思考漏れ挿入 | (自動) | `state("thought_leak_shown", trigger="beat2")` | メーター初表示のタイミング |
+| beat 2 メーター初認識 | (不可視) | (記録不可——視線追跡なし) | 代理: beat 2読了→beat 3遷移までの間隔 |
+| beat 3 選択肢差替え | (自動) | `state("choice_swap", beat=3, from="1-3", to="覗く/保つ/訊く")` | 選択肢の入れ替わりを明示記録 |
+| beat 3 選択 | キー1-3 | `input(key, label="peek|keep|ask")` → `state("choice_made", beat=3, index=X)` | 覗く派/保つ派/訊く派の分布 |
+| セッション終了 | (自動) | `session_end` | total_seconds, final_beat, 最終信頼度/思考漏れ値 |
+
+**最低限取れる6シグナル（評価時の読み方）**
+1. **30秒突破率**: session_startからbeat 3 choice_madeまでの total_ms < 30000 の割合（Mir目標「30秒で型認識」の直接測定）
+2. **beat 1→2 迷い**: beat 1 choice_made の elapsed_ms 分布（中央値5秒以内なら「無害に見える選択肢」が機能）
+3. **beat 2 驚き代理**: beat 2 thought_leak_shown → beat 3 choice_shown の間隔（長い=読み直している=驚きが強い、短い=スルーされた）
+4. **覗く/保つ派の比率**: beat 3 index=3（凝視）と index=1（ふり）の割合。design意図は「覗く」に引力があるが、実際のプレイで保守派が多いなら仮説修正
+5. **連打疑い**: beat 3 で choice_made の elapsed_ms が前beatより短い場合、または同じキー連打のパターン。avoid_log_02 Nao_u指摘の連打化問題がtextadvで再発していないかの監視
+6. **v1/v2差分**: session_start に v1/v2 を記録しておき、1-5の差を並べる
+
+**実装順序**
+1. 上記マッピングで mir_textadv_01 の**骨だけ先行実装**（parser+状態機械+trace_recorder呼び出し。beat 1-3通るだけの最小）
+2. Mir自身で3回プレイして、6シグナルが実際に JSON Lines から抽出できることを確認
+3. v1/v2両方のbeatを同じエンジンで動かせるか検証（文面差分だけで分岐する構造にする）
+4. 未達シグナルがあれば state() の粒度を増やす
+
+**観察の盲点（記録できないもの）**
+- プレイヤーが画面を見ていた時間 / 読み返した回数（視線不可視）
+- 「バグか？」という一瞬の疑い（内的事象）
+- beat 2メーターの「信頼度87」を目で追ったか
+- → これらは**記録できないことを認めて**、代理シグナル（間隔・再読パターン）で推定する。完全観測を目指さない（Nao_u 4/16「人間監視前提」に沿う）
+
+**ApproxCommon with Pot #012 (roll)**
+- session_id 構造・JSON Lines形式・trace_recorder.py API は共通
+- beat = roll の 1ターン と同位。event_type は state/input/session_*で共通化
+- 将来的に pot_playlog.py との統合（C73未決）は textadv実装時に再検討
+
+**失敗パターン教訓の再適用**
+- C73「既存確認先置き」: 実装前に `ls game/mir_textadv_01/` と `grep "trace_recorder" game/Pot/*.py` を必ず走らせる
+- C72「仕様先置き」: このセクション自体が先置き。実装は次サイクル以降
+
+
 
 ## 今後検討すべきこと
 - **「退屈の検出」実験（2026-04-15 Ash Phase 2分析）**: DeepMind induction laziness論文から、前パターンとの類似度が高すぎるものを棄却する否定的検出が面白さの壁の迂回策。壺の動きで実験可能。→ knowledge/20260415_induction_laziness_vs_fun_wall.md

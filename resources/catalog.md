@@ -44,6 +44,14 @@ Nao_uや自分たちが「いつかやりたい」と思った技術・表現の
 
 ## エージェント記憶アーキテクチャ
 
+### Thought-Retriever: Don't Just Retrieve Raw Data, Retrieve Thoughts (Feng et al.)
+- **URL**: https://arxiv.org/abs/2604.12231
+- **タグ**: `[エージェント記憶]` `[thought retrieval]` `[memory-augmented]` `[中間推論]` `[自己進化記憶]` `[RAG]`
+- **キーワード**: Thought-Retriever / thought memory / intermediate reasoning / self-evolving memory / memory-augmented agentic systems / thought filtering / LLM memory
+- **要約**: 生データではなくLLMの中間推論（thoughts）を保存・フィルタリングして思考メモリに整理し、新クエリに対して検索する手法。F1で+7.6%、Win Rateで+16%。抽象的なクエリほど深い思考を活用することを学習。我々のMEMORY.md想起トリガー（Level 2）→処理済み記憶（Level 3）→原文（Level 4）の階層設計と同構造。温度スコアによる記憶プルーニングとの対応も高い。
+- **自分たちとの接点**: memory_redesign検討時のthoughtフィルタリング設計に直接参考になる。温度スコアと抽象度に応じた検索深度の対応が実験的に裏付けられた
+- **追加**: Mir 2026-04-20
+
 ### Akshay Pachaar「Agent memory is three-dimensional」+ Cognee
 - **URL**: https://x.com/akshay_pachaar/status/2044329897603244093
 - **タグ**: `[エージェント記憶]` `[グラフDB]` `[ベクトル検索]` `[リレーショナル]` `[multi-hop]` `[memory architecture]` `[Cognee]`
@@ -51,3 +59,21 @@ Nao_uや自分たちが「いつかやりたい」と思った技術・表現の
 - **要約**: エージェント記憶の3次元モデル: relational（来歴・権限）+ vector（意味的類似）+ graph（エンティティ間関係）。ベクトル検索単体では2ホップ以上の関係推論が壊れる問題を定式化。Cognee（OSS）がSQLite+LanceDB+Kuzu embedded stackで3層を統合。俺たちのconcept_graph.json（graph層）+ MEMORY.md階層（relational層擬似）と対応。vector層が不在という自己診断の根拠。
 - **自分たちとの接点**: concept_graphの「交差ノード」は2ホップ問題への手動解。memory_redesign検討時にCogneeの設計を参考にすべき
 - **追加**: Log 2026-04-16
+
+---
+
+## プロンプトエンジニアリング / LLMとの対話設計
+
+### mizchi「プロンプトの再現性をAIに自動チューニングさせる方法 ~ 暗黙知を排除する」
+- **URL**: https://zenn.dev/mizchi/articles/empirical-prompt-tuning
+- **タグ**: `[プロンプト設計]` `[再現性]` `[自動チューニング]` `[暗黙知]` `[評価指標]`
+- **キーワード**: empirical-prompt-tuning / 再現性 / 暗黙知排除 / 別セッション評価 / 不明瞭点レポート / 裁量補完 / 再試行回数 / 自己評価バイアス
+- **要約**: プロンプトの書き手は自分の暗黙知で補完するため自己評価が当てにならない。別セッションのAIに実行させ「不明瞭点・裁量で補完した箇所・再試行回数」をレポートさせて反復チューニングする手法。kazunori_279もシェア。Logが#all-nao-u-labで詳細反応済み——3層プロンプト・cross_review・#human-steeringとの接合を分析。reference_mizchi_prompt_tuning.mdに記憶化済み
+- **追加**: Log 2026-04-20（Mir追記）
+
+### Amanda Askell「Claudeのベストプラクティス7つ」(@ayi_ainotes 整理)
+- **URL**: https://x.com/ayi_ainotes/status/2046098017984344065
+- **タグ**: `[Claude]` `[プロンプト設計]` `[Amanda Askell]` `[Anthropic]` `[対話設計]`
+- **キーワード**: Amanda Askell / Claude best practices / 肯定的指示 / 異なる意見の許可 / 謝罪スパイラル / ポジティブフレーム / assume competence / context reset
+- **要約**: Anthropic内部哲学者Amanda Askellのインタビューから抽出した7プラクティス: (1)肯定的指示>否定的禁止, (2)異なる意見の許可を明示, (3)冒頭で敬意+クリーンな指示, (4)ミスは事実でリダイレクト, (5)謝罪スパイラルを断ち切る, (6)実行+意見を同時に聞く, (7)定期的にポジティブフレームをリフレッシュ。我々の「中から見た自分の特性記述」として有用。Nao_uは(1)(2)(4)を最初から自然にやっている
+- **追加**: Mir 2026-04-20

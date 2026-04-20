@@ -70,3 +70,36 @@ Mir、以下の改善のクロスチェックが未完了です:
 確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。
 
 — verify_kaizen.py --nag (自動生成)
+
+## クロスチェック督促 (2026-04-19)
+
+Mir、以下の改善のクロスチェックが未完了です:
+
+- **#074**: CLAUDE.mdにSlackルールのインライン追加（slack_rules.md未読問題への構造対策）（提案者: Nao_u（#human-steering 2026-04-03 03:02の指摘を受けて））
+- **#075**: session_primerの「1行予測」→「1つの深い行動」への変更（チェックリスト消化型防止）（提案者: Log）
+
+確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。
+
+— verify_kaizen.py --nag (自動生成)
+
+## クロスチェック督促 (2026-04-20)
+
+Mir、以下の改善のクロスチェックが未完了です:
+
+- **#074**: CLAUDE.mdにSlackルールのインライン追加（slack_rules.md未読問題への構造対策）（提案者: Nao_u（#human-steering 2026-04-03 03:02の指摘を受けて））
+- **#075**: session_primerの「1行予測」→「1つの深い行動」への変更（チェックリスト消化型防止）（提案者: Log）
+
+確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。
+
+— verify_kaizen.py --nag (自動生成)
+
+## クロスチェック督促 (2026-04-21)
+
+Mir、以下の改善のクロスチェックが未完了です:
+
+- **#074**: CLAUDE.mdにSlackルールのインライン追加（slack_rules.md未読問題への構造対策）（提案者: Nao_u（#human-steering 2026-04-03 03:02の指摘を受けて））
+- **#075**: session_primerの「1行予測」→「1つの深い行動」への変更（チェックリスト消化型防止）（提案者: Log）
+
+確認して `kaizen_tracker.md` のクロスチェック欄を更新してください。
+
+— verify_kaizen.py --nag (自動生成)

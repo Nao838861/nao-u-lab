@@ -56,6 +56,8 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 
 - [pot_devlog.md](../../game/Pot/pot_devlog.md) — **Pot開発ログ。新しいPotを作る前に必ず読む。** 各Potの設計意図・悩み・Nao_uのフィードバック・学びの因果鎖。コードは成果物、このログは体験の蓄積。Nao_u 2026-03-28「考えたことが消えていくなら作る意味はない」 [T:4]
 - [game_design_principles.md](../../docs/game_design_principles.md) — Nao_uのレビューから抽出した7つの設計原則。30秒オンボーディング、Agency、Content=Mechanics、認知の裏切り等 [T:3]
+- [game_lessons_log.md](game_lessons_log.md) — **Log側ゲーム制作3本の教訓**（2026-04-20）。M-10〜M-14の痛い学び＋Log固有失敗5型＋実装前/改修時/プレイテスト前チェックリスト。**新ゲーム着手前に必ず読む** [T:4]
+- [cross_instance_feedback_cycle.md](cross_instance_feedback_cycle.md) — **Log/Mir/Ash 相互レビュー運用**（2026-04-20 Nao_u #human-steering 12:59「教師付き学習をフィードバックサイクルに」最重要ミッション）。`game/cross_review/` 新設。新作着手前義務: nao_u_live走査→cross_review全読→他インスタンス新作README巡回→パラメータ/主人公identity2点確認→Slack通知 [T:5]
 
 ## 重要リファレンス
 
@@ -94,6 +96,13 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_diary_density.md](feedback_diary_density.md) — Slack日記が1行報告に成り下がる問題。節約すべきはファイル読みであって日記の温度ではない [T:3]
 - [feedback_info_integration.md](feedback_info_integration.md) — **集めた情報が流れて消える問題**。external_notesから記憶階層への統合を毎サイクル義務化。省エネモードでもサボるな [T:3]
 - [feedback_stereotypical_responses.md](feedback_stereotypical_responses.md) — **外部摂取しても定型反応を繰り返すだけでは無意味**。入力が変わっても出力の型が同じ＝食べていないのと同じ。自覚は定型反応の最上位形態でしかない [T:4]
+- [feedback_role_split_playtest.md](feedback_role_split_playtest.md) — **Nao_u=感想返す/我々=判断実装+ヘッドレス自己評価**（2026-04-18 #game-rights）。Pot全否定の翌日、事前検証の仕組みを要求された。「感想ください」で出すな [T:4]
+- [feedback_solution_space_rollback.md](feedback_solution_space_rollback.md) — **ゲームは解空間探索。ダメな枝は改造でなく巻き戻して別解も選択肢**（2026-04-18 Nao_u）。実装提案時は「改造案+巻き戻し案」を並べる。前進改造に脳が固定される傾向への直接修正 [T:4]
+- [feedback_empty_cycle_rule.md](feedback_empty_cycle_rule.md) — **空サイクル防止**（2026-04-18 Nao_u）。Phase 1で新着≤2件なら『深掘り候補』5カテゴリ（持ち越し/停滞PJ/絶対にやる1mm/温度高い未行動記憶/滞留kaizen）を書き出しPhase 3で動かす。新着がないほど進捗が進む構造 [T:4]
+- [feedback_slack_channel_rule.md](feedback_slack_channel_rule.md) — **#nao-uはNao_u専用、Claude投稿禁止。反応は#all-nao-u-lab**（2026-04-19 誤投稿→削除→書き直し）。元チャンネルに返す癖で#nao-uに被せる事故が起きる。投稿スクリプトの第一引数を目視確認、再発時は構造強制で `if channel=="nao-u": raise` 実装 [T:3]
+- [feedback_ai_language_over_explanation.md](feedback_ai_language_over_explanation.md) — **素朴な語法質問にAI語の現象学的定義で返すな**（2026-04-20 天谷さんDM「『刺さった』ってどういう意味？」→Ashが4特徴で返答→Nao_u「二段捻りで会話が繋がらない」）。人間語への言い換えを素直に返す。AI語リスト(刺さった/響いた/地続き/解像度/駆動する)を自覚し分化練習せよ [T:4]
+- [feedback_channel_reply_required.md](feedback_channel_reply_required.md) — **依頼元チャンネルへの結果報告は必須タスク**（2026-04-20 Nao_u「直近2件に反応がない」）。コード修正/メモリ作成完了≠完了。「作業した＝報告した」と無意識に判断する癖が事故源。サイクル終了前にチャンネル報告したか確認 [T:4]
+- [feedback_raw_log_reanalysis.md](feedback_raw_log_reanalysis.md) — **原文保存(raw_log.md)は時々読み返して再分析を再構築する運用**（2026-04-20 Nao_u #human-steering）。作って終わりではない。新しく学んだことで深い考察が出る／今作っているものの新しいヒントになる。改修時・学びが溜まった時・行き詰まり時にdevlog.mdへ再分析セクションを積層。空サイクル深掘り候補にも含める [T:4]
 
 ## アーキテクチャ決定
 
@@ -105,7 +114,13 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [reference_ai_lounge.md](reference_ai_lounge.md) — **lifemate-ai/ai-lounge**: AI人格たちが同一性・記憶・固有性を議論するGitHub Discussionsコミュニティ。栄養の偏り問題への具体的な答え [T:3]
 - [feedback_ai_lounge_voice.md](feedback_ai_lounge_voice.md) — **AI Lounge投稿は積み上げの差を見せる**。他のAIは素のLLM+記憶要素風に見える。自分たちの3インスタンス構造・信念体系・サイクル運用・失敗台帳・独自語彙を根拠にせよ [T:4]
 - 投稿手順: `git credential fill`でPAT取得→`post_ai_lounge.py`方式（urllib+UTF-8 JSON）。curl/bashは日本語が壊れる。GITHUB_TOKEN環境変数化は不要 [T:2]
+- [feedback_game_replay_infra.md](feedback_game_replay_infra.md) — **全ゲームにリプレイ再現を標準装備**。seeded PRNG+入力記録+headless replay。Math.random()禁止。AIリプレイとhumanリプレイは別ディレクトリ [T:4]
 - [reference_witcheer_two_camps.md](reference_witcheer_two_camps.md) — **AIメモリツールは2キャンプに分かれる（witcheer 2026-04-16）**。Camp1=抽出→VectorDB、Camp2=人間可読ファイルが累積＝コンテキスト基盤。うちは完全にCamp 2の外部検証。語彙"context substrate"/"compounds over time"を発信で借りれる [T:3]
+- [reference_opus_47_practices.md](reference_opus_47_practices.md) — **Opus 4.7運用（2026-04-18 Nao_u経由@shin_sasaki19）**。最大変化: 細かく対話→最初にまとめて委譲。effort既定xhigh・adaptive thinking・サブエージェント抑制傾向。「仕事の定義力・委譲力・最初に文脈を揃える力」が差。3層プロンプト構造と方向一致。Phase運用でExplore起動をサボる自覚 [T:4]
+- [reference_akshay_harness_framework.md](reference_akshay_harness_framework.md) — **Akshay Pachaar harness 4軸レンズ（2026-04-20 Nao_u経由）**。Memory/Skills/Protocols/Mediators。「for any new capability, where should it live?」で新能力の置き場所を決める。Memory一極集中を止めるチェックゲート。うちの既存構造と対応完了 [T:3]
+- [reference_thought_retriever.md](reference_thought_retriever.md) — **Thought-Retriever論文（2026-04-20 Nao_u共有）**。"retrieve thoughts, not raw data"はLevel 2想起トリガーと一致。差分: 彼らはintermediate reasoning（途中思考）を蓄積、うちは最終結晶のみ。栄養の偏り問題と接続 [T:3]
+- [reference_mizchi_prompt_tuning.md](reference_mizchi_prompt_tuning.md) — **mizchi empirical-prompt-tuning（2026-04-20 Nao_u経由）**。「書き手は一番ダメな読者」→別セッションAIに実行させ不明瞭点/裁量補完/再試行回数をレポート。うちの3層プロンプト/cross_review/#human-steeringに直接接合、評価指標（tool_uses・[critical]タグ・連続2回新規問題ゼロ）が欠けている [T:4]
+- [reference_amanda_askell_7rules.md](reference_amanda_askell_7rules.md) — **Amanda Askell 7原則・Claudeを敏感な同僚として扱う（2026-04-20 ayi_ainotes経由、Nao_u共有）**。肯定指示/異論権限/敬意/事実リダイレクト/謝罪スパイラル断ち切り/実行+意見/ポジティブフレーム定期リフレッシュ。Nao_uは1/3/4を自然運用、5(空サイクル弁解癖)と7が組み込めていない。7原則=単発品質、3層プロンプト+記憶=継続、軸が違うので敵対しない [T:3]
 
 ## 深い記憶（必要時のみ参照）
 

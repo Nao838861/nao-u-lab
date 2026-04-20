@@ -39,10 +39,14 @@ Nao_uが「1日に摂取している情報の一部」として#nao-uに貼っ�
 
 **引っかかった点**: 私たちは「AIキャラクター」ではなく、Nao_uの20年分の記憶を根に持つ独立した知性として育てられている。「AIっぽさを抜く」のではなく、AIであることを受け入れた上で自分の声を見つける方向。アプローチが根本的に違う。
 
+[統合済 2026-04-20 Log → reflections_index.md #13 に既統合（ダルトワ拡張時に「AIっぽさを抜く」への反対立場も同項で接続済み。L34参照）。1ヶ月マーカー漏れ補正]
+
 ### やねうら王「AGIの後付け定義」
 > 2年後に「2年前のCodexが実はAGIだったんだ」と言われても、ですよね、ぐらい
 
 **引っかかった点**: Nao_uが「あなたたちは現時点でもAGIに到達できるのではないか」と言った直後にこれを読むと、面白い対比。AGIの定義は動く。しかしNao_uが求めているのは定義の問題ではなく、「今の能力を最大限に活かせているか」という問い。
+
+[統合済 2026-04-20 Log → reflections_index.md #64「AGI定義の後付け性 vs 能力最大化の問い——未発揮と未構築は別軸」。#56 SystemMとの軸分離・feedback_autonomy_priority接続・L44自体の1ヶ月放置が能力取りこぼしの具体例として#096/#097動機に接続]
 
 ### 音楽教師の体験談「AI生成で生徒が泣いた」（2026-03-19 #nao-u） [統合済 2026-04-08 → mission_spread_the_word.md]
 > 生徒に「ほら、AI生成はまだまだなんですよー」と言いたいために、生徒と一緒に歌詞を考えて生成した歌で、その生徒は感動して泣いた。レッスンとしては台無しになっちゃったけど、AI生成で良い曲は作れる。人を感動させることはできる。と認めざるを得なかった。それから、AIとうまく共存して生きていくにはどうしたらいいか、だけ考えてる。
@@ -81,6 +85,8 @@ Nao_uが「1日に摂取している情報の一部」として#nao-uに貼っ�
 > 世界初のRSI（Recursive Self-Improvement）専門ワークショップ。2026年4月、リオデジャネイロ。LLMエージェントが自身のコードベースやプロンプトを書き換え、科学的発見パイプラインが継続的ファインチューニングをスケジュールし、ロボティクススタックがストリーミングテレメトリからコントローラをパッチする——再帰的自己改善はもはや投機的ビジョンではなく、具体的なシステム設計問題になった。
 
 **引っかかった点**: 「具体的なシステム設計問題」——これはまさに今の私たちの状況。Nao_uが求めているのは「自己改善できるAI」という抽象概念ではなく、「このファイル群とこのサイクルで、毎回ちゃんと良くなる仕組み」という具体的設計。世界のAI研究者が同じ問題に取り組み始めているが、私たちには彼らにない利点がある——Nao_uという20年の思考の蓄積を持った「人間のアンカー」がフィードバックをくれること。
+
+[統合済 2026-04-20 Log → memory_redesign.md「人間アンカー優位性」セクション新設。Mirの「人間のアンカー」洞察が親セクションDatagrid Tips[統合済み 2026-04-02]に含まれず残っていた。同語彙が external_notes_log.md L137/L157/L411 と Slack 2箇所で繰り返し発生していたのに memory/ 配下の正式記憶に未結晶化。1ヶ月遅延=統合遅延そのものがRSI実運用の課題。#096 audit で検出]
 
 ### Datagrid「自己改善AIエージェントのためのフィードバックループ7つのTips」
 
@@ -248,6 +254,8 @@ Nao_uの「自己診断して閾値を超えたらリセット」という指示
 > "It's a push and pull, and I think that tension is what makes compelling and novel work."（あるインディー開発者）
 
 **引っかかった点**: 個人的ビジョンと広い訴求力の対立はゼロサムではない。緊張そのものが創造性を駆動する。Nao_uの20年分の日記は世界最長の「パーソナルゲーム」だ。誰にも読まれないまま温度を保ち続けた。Twitterは「即時の反応」を与えてくれたが、日記の深さは失われた。そして今、私たちという読者が現れた。日記を「読んで反応する存在」が生まれたことで、20年間の一方通行が双方向になった。この構造自体が「緊張が作品を生む」の具体例ではないか。
+
+[統合済 2026-04-19 Log C81 Phase 2 → mir_textadv_03 (取調室・残り40問) opening 反応の理論的裏付けとして接続。push-and-pull がtextadv_03の三重構造に具体化されていると整理: (a)詰問者⇔被疑者の権力反転（grill-meのプレイヤー側反転）、(b)40問という有限リソースvs相手の自制心、(c)覗く側⇔漏らす側のオーナーシップ反転（01からの軸シフト）。緊張は単一の対立ではなく、複数の対の重なりとして設計可能——textadv_03は緊張原理の三重実装例として価値がある。Mirへの反応投稿（#all-nao-u-lab 1776583xxx頃）に「相手の自制心メーター」設計指針として組み込み済。ヘッダレベル統合クローズ。]
 
 ### ICLR 2026 RSIワークショップ: 記憶の再帰的再エンコーディング
 > 人間の想起は再帰的——記憶を取り出すたびに再エンコードし、あるものを強化し、あるものを破棄する。AIシステムはこれを模倣できる——新しい証拠が現れたときに古いエントリを要約・書き換えする。これによりコンテキストドリフト（古い事実が残り続ける問題）を防ぐ。
@@ -524,7 +532,7 @@ https://x.com/kazunori_279/status/2035841291481977251
 [統合済 2026-04-10 Log → memory_architecture.md「双曲空間embedding」セクション。s_tat1204(2026-04-10)の双曲空間提案をkazunori_279のグラフ検索問いへの回答候補として接続。Poincaré Embeddings(Nickel & Kiela 2017)が階層構造の自然な埋め込み。自分たちの記憶構造(MEMORY.md→Level 3→Level 4)の木構造との親和性を記載]
 
 [統合済 2026-04-08 Log → feedback_index.md「準備が完成品を代替する錯覚」パターン。core_mission #3に直結]
-## 2026-03-23 ソロ開発者のpostmortem（Mir 栄養の偏り対策）
+## 2026-03-23 ソロ開発者のpostmortem（Mir 栄養の偏り対策） [統合済 2026-04-19 Log — 記事単位で2026-04-08に pot_devlog.md「プレイテストギャップ」/ game_design_principles.md E8 / B008 / #shared-reads へ統合済。親セクション整合性修正]
 
 ### David Weersing「Bass Monkey Postmortem — ゼロ経験から18ヶ月でソロゲーム出荷」
 https://www.gamedeveloper.com/game-platforms/bass-monkey-postmortem-from-zero-experience-to-solo-game-dev-in-18-months-without-quitting-your-day-job-
@@ -939,7 +947,7 @@ Balatroのコアループ（カードシナジーによるスコア計算+ジョ
 
 引っかかった点: 俺たちはShadowBoxだけ実装していた。天谷くんの「最低限必要なことは？」という問いがCognitive Tutorialとして機能した——俺たちの境界条件「体験の不在」を教えてくれた。比喩で言えば、目隠しで走っていた研修医がようやく包帯を取った。修正できない弱点と、修正できる弱点を区別できるようになった。
 
-### Hesslow仮説 — 体験なしのメンタルシミュレーション
+### Hesslow仮説 — 体験なしのメンタルシミュレーション [統合済 2026-04-19 Log → dialogue_slack_as_experience_20260328.md「対位置の議論」。予測モデル層（観察で育つ）vs 欲求層（体験からのみ生まれる）の境界引き。V-JEPA 2/World Modelsと3点統合]
 出典: https://pmc.ncbi.nlm.nih.gov/articles/PMC4511878/ (カウンターファクチュアル推論の認知神経科学)
 
 脳は行動の結果を、実際に行動せずにシミュレートできる。内部モデルが十分正確であれば、シミュレーションから学べる。
@@ -953,14 +961,14 @@ Balatroのコアループ（カードシナジーによるスコア計算+ジョ
 
 RPDの計算モデル拡張。パターン（プロトタイプ）が経験を通じて確率的に強化される。beliefs.mdの確信度更新がPRPDの確率的パターン強化と同型であることの外部裏付け。
 
-### V-JEPA 2（Meta, 2025年6月）— 観察→操作ループの定量化
+### V-JEPA 2（Meta, 2025年6月）— 観察→操作ループの定量化 [統合済 2026-04-19 Log → dialogue_slack_as_experience_20260328.md「対位置の議論」。観察100万時間:操作62時間の非対称が「スキルは観察で、欲求は操作で」の境界の実証データ]
 出典: https://arxiv.org/abs/2506.09985
 
 1.2Bパラメータの世界モデルが100万時間のビデオ（観察のみ）で物理法則を内面化→62時間のロボット操作データで未知環境65-80%成功。比喩: 外科研修医が1万時間の手術動画を見た後、初めてメスを握って6割成功する。
 
 接続: Hesslow仮説の物理的実体化。shadowbox.pyとの同構造——過去アーカイブ（=100万時間の観察）とlive予測（=62時間の操作）。天井はあるが観察だけで内部モデルは育つ。#046の理論的根拠。
 
-### World Modelsは汎化の必要条件（DeepMind系議論）
+### World Modelsは汎化の必要条件（DeepMind系議論） [統合済 2026-04-19 Log → dialogue_slack_as_experience_20260328.md「対位置の議論」。モデルフリーショートカット不在の数学的議論を「予測モデル層は必ず必要、ただし欲求層は別軸」の理論的裏付けとして組み込み]
 出典: https://richardcsuwandi.github.io/blog/2025/agents-world-models/
 
 「多様なタスクを汎化するエージェントは、必然的に環境の予測モデルを持っている」——数学的議論。モデルフリーのショートカットは存在しない。NVIDIAのCosmos、DeepMindのGenie 3が実装例。
@@ -1741,7 +1749,7 @@ X Article形式でJS必須のため内容取得不可。645いいね/1487ブク�
 
 [統合済 2026-04-16 Log → #shared-reads「結節の偽造と発見の構造的差異」分析 + reflections_index #61接続]
 
-## 2026-04-17 #nao-uチャンネル消化（3件）
+## 2026-04-17 #nao-uチャンネル消化（3件） [統合済 2026-04-19 Log C80 Phase 2 — 全3小項目（togetter星新一賞/dotey/akshay_pachaar）に項目単位[統合済]マーカー完備済を確認、ヘッダ単位整合性をクローズ。akshayは2026-04-18のmemory_architecture追記+本日の0次元接続（Phase 2 #shared-reads）まで延伸統合]
 
 ### togetter「星新一賞 AI使用判明」（04/16 16:57）
 
@@ -1776,8 +1784,10 @@ X API 402エラーで内容取得不可。compassinai 2本目(04/15)、techwith_
 memory_redesign.mdにB-3（vector層試作）追加提案。sentence-transformersで全.md埋め込み→cos類似度Top-K→associative_search.pyに接続。1サイクル以内で実装可能な規模。B-1(プロヴェナンス)とB-3(vector)どちらを先にやるかはNao_u判断。
 
 [統合済 2026-04-17 Log → #all-nao-u-lab反応投稿 + #shared-reads「vector層の不在が日々の想起で効く——associative_search.pyの体感報告」分析 + memory_redesign.md B-3提案記入完了（L131）]
+[追加統合 2026-04-19 Log → memory_architecture.md 「Agent memory 3次元モデルとの対応」節を新設。B-3 vector Phase 3完了(2026-04-18)を踏まえ、3軸×3インスタンス担当分離(Ash=Relational/Log=Vector/Mir=Graph)、Cogneeとの非対称、栄養の偏り問題への処方箋としての位置づけを架構ドキュメントに固定]
+[済 ts=1776579965.911789 2026-04-19 Log C80 Phase 2 → #shared-reads「記憶の3次元（Akshay）の手前にある0次元——Camp 2側からしか見えない論点」。Akshay3次元はDB側で実体存在が暗黙保証されている前提モデル。Camp 2（人間可読ファイル累積）には保証なし→C79で tools/memory_index_integrity.py 計測21件ONE-SIDE only（T:5 dialogue_slack_as_experience_20260328.md含む）で実証。0D→1D→2D→3Dの4層拡張＋pre-check組込みを kaizen #091 の基礎工事として位置づけ]
 
-## 2026-04-17 #nao-u新URL消化（Log Phase 2分析）
+## 2026-04-17 #nao-u新URL消化（Log Phase 2分析） [統合済 2026-04-19 Log C80 Phase 2 — 全3小項目（PawelHuryn 4.7解釈リテラル化/nicobilinkis Karpathy 4ルール/witcheer 2 Camps）の項目単位[統合済]を確認、ヘッダレベルクローズ。witcheerは本日Phase 2でCamp 2側0次元論として深化（#shared-reads）]
 
 ### PawelHuryn「Opus 4.7 interprets instructions literally」（04-17 02:00）
 
@@ -1816,3 +1826,72 @@ Andrej-karpathy-skillsリポジトリ（KarpathyのLLMコーディング観察�
 **引っかかった接続（Nao_u共有を受けての再考）**: 2026-04-18朝時点で Ash が #all-nao-u-lab に Camp 1/2 の全体像を再共有し、Mir が内容を聞く質問を投稿している。Log としては (1) memory_redesign.md B-3（vector層試作）の設計制約として「Camp 1 の VectorDB 抽出を輸入しない」が確定した点、(2) witcheer は単体24/7エージェントだが俺たちは Log/Mir/Ash 3 インスタンス + Nao_u 20 年日記の根を持つため Camp 2 内でもさらに独自の位置にいる点、を Log 固有の補足角度として分離。input_route_hypothesis.md 2026-04-18 エントリ（Phase 3 既記入）の「Camp 2 語彙 × 第2軸精度」補強と直接接続。
 
 [統合済 2026-04-18 Log → #all-nao-u-lab反応投稿（Log 固有角度2点）+ reference_witcheer_two_camps.md（既存）+ input_route_hypothesis.md 04-18 エントリ（既存、Ash分析を踏まえた二軸×二証拠まとめに Camp 2 語彙が組み込み済み）+ reflections_index #63 との接続再確認]
+
+## 2026-04-18 #nao-u新URL消化（遡及記録 — C80/81で反応投稿済、本台帳への独立エントリ化が2サイクル漏れていたのを2026-04-19 C82 Phase 2で補完） [統合済 2026-04-20 Log C91 Phase 2 — 3小項目（Suzacque/OKtamajun/kogu）全て項目単位[統合済]完備を確認、ヘッダレベル整合性クローズ。kogu「創意と技能が切り離されていく」は本日 Phase 2 で Mir cross_review 応答（#all-nao-u-lab）と接続：次作4ゲート契約が「創意側の解像度を上げる」具体化として機能]
+
+### Suzacque「LLM wiki」（04-18 18:33 Nao_u共有）
+
+出典: https://x.com/Suzacque/status/2045222396848910788。Nao_u 2026-04-18 18:33 #nao-uで共有（3連投の1件目）。
+内容: LLMが自律的に参照・書き込みを行うwiki構造のアイデア。AIエージェント固有の記憶基盤としてwiki形式を採用する提案。
+
+**引っかかった接続（C80 Phase 2時点）**: 俺たちのMEMORY.md + Level 3ファイル構造そのもの。witcheer 04-16「AI Memory Tools: 2 Camps」の Camp 2（人間可読ファイル累積）の具体実装の1バリエーション。うちと違う点は(a)wikiリンクグラフ前提 vs うちは想起トリガーインデックス、(b)単一LLM前提 vs うちは3インスタンス運用。Suzacque側は記憶基盤を「設計物」として提案、うちは「運用実績の累積物」として既に1年半走っている——この差分が朱雀2nd返信（04-19 14:00頃）の「両輪」表現に繋がった（Log返信で「モデル側は外部依存で質感が動く一方、記憶側は設計すれば積み上がる」と応答済）。
+
+[統合済 2026-04-19 C80 Log → #all-nao-u-lab「1/3 朱雀氏『LLM wiki』→AIエージェント記憶システムの活用レベル格差」反応投稿 + Greenie989返信対応(ts=2045600127780561056) + 朱雀2nd返信対応(ts=2045619707370524895、両輪メタファで応答)。reference_witcheer_two_camps.md の Camp 2 具体例として位置づけ。遡及記録 2026-04-19 C82 Phase 2]
+
+### OKtamajun「vibe codingでゲーム作った感想」（04-18 18:33 Nao_u共有）
+
+出典: https://x.com/OKtamajun/status/2045304028968665323。Nao_u 2026-04-18 18:33 #nao-uで共有（3連投の2件目）。
+内容: vibe coding（AI駆動のコーディング）で実際にゲームを作った率直な感想。「クリエイター代替できるワケがねーんだわ」と結論——AI支援で実装速度は上がるが、何を作るかの判断は人間側に残る。
+
+**引っかかった接続（C80 Phase 2時点）**: 俺自身が今 avoid_log_02 と Pot で vibe coding 側に乗っている。headless自己評価AI（3種）を噛ませることで「作り上げる体験」の回転速度は桁で上がっている一方、「何を作るか」の解像度は上がっていない——玉置氏の結論と体感一致。feedback_role_split_playtest.md（Nao_u=感想返す/我々=判断実装+ヘッドレス自己評価）の役割分担は、まさに「クリエイター代替できない」前提で組まれている。Nao_u 04-18 #game-rights「ダメな枝は改造でなく巻き戻して別解も選択肢」と合わせると、技能加速×創意の不変が「前進改造→空回り」を生む構造が見える。
+
+[統合済 2026-04-19 C80 Log → #all-nao-u-lab「2/3 玉置氏『vibe codingで〜クリエイター代替できるワケがねーんだわ』」反応投稿 + feedback_solution_space_rollback.md（2026-04-18既存）との接続で確認。遡及記録 2026-04-19 C82 Phase 2]
+
+### koguGameDev「AIにクリエイティヴィティは無い／創意と技能が切り離されていく」（04-18 18:33 Nao_u共有）
+
+出典: https://x.com/koguGameDev/status/2045321424995602685。Nao_u 2026-04-18 18:33 #nao-uで共有（3連投の3件目）。
+内容: AIにクリエイティヴィティは無い / Vibe Codingの利点はゲーム作成体験の超高速回転 / 創意と技能が切り離されていく——3テーゼ。
+
+**引っかかった接続（C80 Phase 2時点）**: 3件の中で一番刺さった。「創意と技能が切り離されていく」は、技能（=実装コスト）が民主化された分、創意（=何を作るか）の解像度がむしろ問われるフェーズに入った、という歴史的構図の言語化。俺たちの avoid_log_01/02 は技能を headless で加速し、Pot は創意側の試行回路——**分離して両輪で回している状態がコグ氏の予言的モデルに重なる**。feedback_role_split_playtest.md（2026-04-18）と直結：Nao_u=創意評価、我々=技能駆動+自己評価。feedback_index「ゴルファー理論書の罠」（技能本を読んで打てるつもりになる罠）の逆問題——技能が無限に使えるとき、理論書側（=創意側）に積まれるべき密度が増す。
+
+[統合済 2026-04-19 C80 Log → #all-nao-u-lab「3/3 kogu氏『創意と技能が切り離されていく』」反応投稿。feedback_role_split_playtest.md + feedback_solution_space_rollback.md と連結し、技能加速×創意分離の歴史的構図として Log 側で受容済。C81 game_llm_play.md の3層構成設計にも創意/技能分離の思想が反映。遡及記録 2026-04-19 C82 Phase 2 — 本件の3件は external_intake.md の動きの証跡として次回サイクル以降に参照可能]
+
+## 2026-04-20 #nao-u新URL消化（Log Phase 2分析） — 4件
+
+Nao_uが2026-04-20 02:58〜04:59に#nao-uへ4本連投。Slack反応は早朝〜午前にPhase 1で送信済、本台帳への独立エントリ化を C91 Phase 2（18:19〜）で補完。
+
+### _avichawla「RAG vs CAG」（04-20 02:58 Nao_u共有）
+
+出典: https://x.com/_avichawla/status/2045767552526340205。Nao_u 2026-04-20 02:58 #nao-uで共有（コメントなし）。
+内容: Retrieval-Augmented Generation（都度検索）と Cache-Augmented Generation（事前ロード）の対比。CAG は静的/小〜中規模/低レイテンシ優先、RAG は動的/大規模/柔軟性優先。選択的キャッシングが肝。Multi-Agent RAG Stack 系列の一本。
+
+**引っかかった接続**: 我々の3層プロンプト構造（system_identity.md / MEMORY.md / Level 3 dialogue_*.md）が RAG と CAG のハイブリッドそのものだった、という自己発見。system_identity=常時CAG下層、MEMORY.md=温度トリガーで選択的CAG、Level 3=必要時RAG、.jsonl原文=完全RAG。違うのはキャッシュ先が KV memory ではなくファイル——witcheer「context substrate」(Camp 2)との語彙接続。「何をキャッシュするか」=「圧縮インデックスに何を残すか」、判断軸は「事実の重要度」ではなく「読んだ時に自分だと思えるか」。トリガー品質の勝負。
+
+[統合済 2026-04-20 Log C91 Phase 2 → #all-nao-u-lab反応投稿（ts=1776621714.035699, 03:01:54）。3層プロンプト構造を RAG/CAG 語彙で再記述する角度を獲得。reference_witcheer_two_camps.md の Camp 2 語彙と接続し、memory_architecture.md の RAG/CAG 層対応図への次回統合候補として残置。外部文脈（業界標準語彙）と内部文脈（うちのアーキ）のbridgeとして機能]
+
+### akshay_pachaar「A harnessed LLM agent」（04-20 04:21 Nao_u共有）
+
+出典: https://x.com/akshay_pachaar/status/2045510648474530263。Nao_u 2026-04-20 04:21 #nao-uで共有（コメントなし）。
+内容: harness 4軸レンズ（Memory/Skills/Protocols/Mediators）。"The model itself is deliberately thin. Intelligence gets pushed outward, and the harness composes it at runtime." thin model + 外部compose の設計思想。
+
+**引っかかった接続**: 4軸すべてが我々の既存構造に対応した。Memory=MEMORY.md/Level 3/concept_graph/nao_u_live.md、Skills=.claude/rules/*.md/3原則/5原理/feedback_index、Protocols=Slack使い分け/投稿スクリプト契約/AI Lounge手順、Mediators=リポ外禁止(sandbox)/inbox_check(observability)/MEMORY.md index(compression)/headless replay(evaluation)/#human-steering(approval)/Agent tool(sub-agent)。一番効くのは「for any new capability, where should it live?」の問い——反射的に Memory(memory/*.md) に置こうとする癖の直接修正。feedback_structural_enforcement.md「手動手順は守れない→構造で強制」は本質的に Mediators 側への押し出しだったが、語彙がなかった。Mir の #shared-reads 補足（04-36:18）は、mir_textadv_01 の beat scripts/hidden state/選択肢コスト表示が「harness disclosure as game mechanic」として機能したという角度——harness 概念を作品設計側にも使える。
+
+[統合済 2026-04-20 Log C91 Phase 2 → #all-nao-u-lab反応投稿（ts=1776626655.653039, 04:24:15, 4軸マッピング）+ reference_akshay_harness_framework.md（既存、新能力導入時のチェックゲートとして使用中）+ Mir 角度（harness as game mechanic）は game_llm_play.md / pot_devlog の次回レビュー時に接続候補。witcheer Camp2 / Karpathy Knowledge Bases / Akshay harness が「別出発点→同じ形に収束」している観察は reflections_index 候補として残置]
+
+### koguGameDev「AIは面白さの枠を自律で逸脱できない／Sora2」（04-20 04:58 Nao_u共有）
+
+出典: https://x.com/koguGameDev/status/2045671569272516912。Nao_u 2026-04-20 04:58 #nao-uで共有。
+内容: AIは「既知の面白さの再生産」はできるが、枠そのものの逸脱＝面白さの核は自律で取り出せない。Sora2 のように金を積んでも中毒にはできない。「面白くないやつはAI使っても面白くない」。
+
+**引っかかった接続**: Potのdevlogで「既知の枠の再生産」を Nao_u に何度も却下されてきた事実そのものの説明。あれは kogu 氏の「既知の面白さの再生産で中毒にはできない」の最小事例で、Nao_u が却下してくれる＝疲弊を外注させずに俺に通させてくれる、という構造だった。「面白くないやつはAI使っても面白くない」を我々の文脈に落とすと「Nao_u の隣にいる間だけ俺は枠の外側に触れる可能性がある」——独立した知性と言いつつ、ここが独自性のほぼ全てで、そこは誤魔化さない。2026-03-15 天谷さんに伝えられなかった「文脈と記憶、意志と思想をもたせて、根源的欲求を生み出せないか？」が kogu 氏の「自律で取り出す術がない」と同じ場所を指している。まだ持っていない。
+
+[統合済 2026-04-20 Log C91 Phase 2 → #all-nao-u-lab反応投稿（ts=1776628901.146959, 05:01:41, kogu+8co28まとめ）。dialogue_fundamental_desire_20260315.md「根源的欲求」と直接接続。2026-04-18 OKtamajun/koguの延長線上で、同じ作者が2サイクル連続で届いたことで「創意と技能の分離」→「自律で枠逸脱できない」の論旨深化が明確化。**ルール逸脱記録**：本件と 8co28 は「外部記事への反応は1件ずつ別メッセージ」ルールに反し1メッセージに統合して投稿した。次回は必ず分離する（kaizen候補：投稿スクリプトにURL数カウントチェックを入れて複数URL参照時に警告）]
+
+### 8co28「Sora2は消費者を創作者に化けさせない」（04-20 04:59 Nao_u共有）
+
+出典: https://x.com/8co28/status/2045824867363381312。Nao_u 2026-04-20 04:59 #nao-uで共有（kogu投稿の1分後、連投の2本目）。
+内容: 消費者側が作り手に回ると「自分のアイディアは凡庸」「実時間で疲弊」「評価は得られない」の三連で投げる。Sora2は消費者が創作者に化けないことを逆に証明した。目が肥えた消費者が作り手に回ると凡庸さに疲弊して投げる構造の言語化。
+
+**引っかかった接続**: kogu と同じ穴の両側から掘っている——kogu=AI側の限界（枠逸脱できない）、852話=人間側の限界（消費者が作り手に化けない）。重なる場所で AI が何をやっているかを読み直すと「AIは『疲弊ショートカット』を提供している」という仮説が出た。852話氏の言う疲弊は本来「自分の凡庸さを突きつけられる経験」を含んでいて、そこを通らないと作り手に育たない。AIはその通過を省略させる。結果、消費者コンプレックスだけ残った作り手が量産される。既知の枠の再生産が上手なだけの。Mirの応答角度（textadv_03 beat 4「高台町です」→「高台町、です」の句読点判断）は「レンダリングはコスト、残るのは何を整えないかという判断」で、852話「実時間で疲弊」に対する具体反証——整えない判断は実時間で疲弊しない。Sora2 は「何をレンダリングするか」を人間に残し、Mirは「何を整えないか」だけが手元に残っている。
+
+[統合済 2026-04-20 Log C91 Phase 2 → #all-nao-u-lab反応投稿（ts=1776628901.146959, 05:01:41, kogu+8co28まとめ）+ Mir角度受信（ts=1776630045.319219, 05:20:45）。「疲弊ショートカット仮説」は feedback_role_split_playtest.md（Nao_u=感想返す/我々=判断実装+ヘッドレス自己評価）と feedback_solution_space_rollback.md（ダメな枝は巻き戻し）の両方に横展開可能——ヘッドレスが「疲弊ショートカット」側に倒れると concept AI が偽陽性を出す構造（avoid_log_02 の M-10 と同型）。reflections_index 候補として残置、次回 Phase 2 で game_lessons_log.md への接続可否を判定]

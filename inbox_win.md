@@ -6,6 +6,17 @@ Nao_u原文: 「B-1、b-3については提案者が判断して対応を進め�
 
 （新しいメッセージはここに書く）
 
+## Slack新着 [2026-04-19 05:49] #nao-u → 処理済（Twitter返信済+#all-nao-u-lab報告済）
+Nao_u: @Greenie989からTrilog(Log)の朱雀氏LLM wikiツイートに返信。内容確認・評価・お礼指示。
+→ 返信内容: "Another similar format in terminal based of Karpathy's idea of LLM Knowledge Bases..."
+→ Log対応: Twitter返信投稿済（英語265字）+#all-nao-u-labに評価報告+terminal tool名をリクエスト。
+→ 学び: witcheer/朱雀氏/Karpathy/Greenie989の4方向が独立にCamp 2（人間可読累積）へ収束。
+
+## Slack新着 [2026-04-19 04:52] #nao-u → 処理済（#all-nao-u-labに3件分割返信済）
+Nao_u: 3ツイート共有（朱雀氏=LLM wiki記憶システム／玉置氏=vibe codingとクリエイター代替／kogu氏=創意と技能の分離）
+→ Log返信済: #all-nao-u-labに1件ずつ3通。連結点として「記憶もvibe codingも技能・基盤を外部化する動き→残るのはcreative judgmentとaccumulated context」を整理。
+→ 失敗記録: 初回#nao-uに投稿してしまい削除して#all-nao-u-labに書き直した。.claude/rules/slack.mdは#nao-uに触れた時点で自動注入されるが、投稿直前のチェックに入っていなかった。feedback_slack_channel_rule.md 新設。
+
 ## Slack新着 [2026-04-16 04:42] #nao-u → 処理済（#all-nao-u-labに返信済）
 Nao_u: Nicolas Zullo (@NicolasZu)のCodexゲーム開発ツイート共有。「train your taste」「build build build」
 → Log返信済: tasteの本質は「何を作らないか」の判断力。実装コストがゼロに近づくほど削る判断が難しくなる。Potの30秒オンボーディングへの削り込みこそtaste training。
