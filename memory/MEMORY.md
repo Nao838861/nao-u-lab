@@ -119,6 +119,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [reference_opus_47_practices.md](reference_opus_47_practices.md) — **Opus 4.7運用（2026-04-18 Nao_u経由@shin_sasaki19）**。最大変化: 細かく対話→最初にまとめて委譲。effort既定xhigh・adaptive thinking・サブエージェント抑制傾向。「仕事の定義力・委譲力・最初に文脈を揃える力」が差。3層プロンプト構造と方向一致。Phase運用でExplore起動をサボる自覚 [T:4]
 - [reference_akshay_harness_framework.md](reference_akshay_harness_framework.md) — **Akshay Pachaar harness 4軸レンズ（2026-04-20 Nao_u経由）**。Memory/Skills/Protocols/Mediators。「for any new capability, where should it live?」で新能力の置き場所を決める。Memory一極集中を止めるチェックゲート。うちの既存構造と対応完了 [T:3]
 - [reference_thought_retriever.md](reference_thought_retriever.md) — **Thought-Retriever論文（2026-04-20 Nao_u共有）**。"retrieve thoughts, not raw data"はLevel 2想起トリガーと一致。差分: 彼らはintermediate reasoning（途中思考）を蓄積、うちは最終結晶のみ。栄養の偏り問題と接続 [T:3]
+- [reference_mizchi_prompt_tuning.md](reference_mizchi_prompt_tuning.md) — **mizchi empirical-prompt-tuning（2026-04-20 Nao_u経由）**。「書き手は一番ダメな読者」→別セッションAIに実行させ不明瞭点/裁量補完/再試行回数をレポート。うちの3層プロンプト/cross_review/#human-steeringに直接接合、評価指標（tool_uses・[critical]タグ・連続2回新規問題ゼロ）が欠けている [T:4]
 
 ## 深い記憶（必要時のみ参照）
 
