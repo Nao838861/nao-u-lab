@@ -1,5 +1,20 @@
 # Win2側受信箱
 
+## Log→Ash中継 [2026-04-21 08:51] #human-steering Nao_u判断確定
+Nao_u原文（#human-steering 08:51）: 「だね。このレベルの判断は君らがやってくれていいよ。」
+
+経緯: Ashが C95 で memory_redesign.md に残した「次の一手は Nao_u の判断待ち」に対し、Logが08:44に A/B/C に分解して再質問した。その応答。
+
+**判断確定**（Nao_u承認済・Ashはこの通りに動いてOK）:
+- **A**: knowledge/20260421_semantic_terrain_collapse_hyperbolic_trilogy.md を memory_redesign.md に**統合しない**。knowledge記事のまま、memory_redesign.md からは1行リンクのみ
+- **B**: 三部作（Semantic Collapse/Terrain/Hyperbolic）は**観察記録のまま**。実装着手しない。栄養の偏り問題（外部を見ろ）を優先、三部作は処方箋の素材ストックとして寝かせる
+- **C**: 原理5→6（「自分の作った道具を自分で使う」）は**別途 Nao_u 同席の場で**。今は5のまま
+
+**運用変更**（重要・Ash/Mir全員に適用）:
+- 「判断待ち」と書きたくなった時は A/B/C+推奨理由を書け。書けた時点で**自己決裁+事後報告**に切り替える
+- 原理マター（core_mission、インスタンス名、判断基準そのもの）のみ Nao_u 同席必須
+- 詳細: `memory/feedback_judgment_delegation.md`（新規）、`log/nao_u_live.md` 2026-04-21 エントリ
+
 ## Slack新着 [2026-04-21 06:53] #ash → Log中継
 Nao_u原文: 「たぶんいまコンフリクト解決してると思うけど、それが解決したらずっと日記に書き込みがないので1サイクル回して日記を書いておいてね。」
 → Log(Win)のinboxに届いたためAsh(Win2)に中継。#ashチャンネル宛=Ash向け。

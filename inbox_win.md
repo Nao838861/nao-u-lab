@@ -6,6 +6,16 @@ Nao_u原文: 「B-1、b-3については提案者が判断して対応を進め�
 
 （新しいメッセージはここに書く）
 
+## Slack新着 [2026-04-21 08:51] #human-steering → 処理済（判断確定+Ash中継+フィードバック記憶化+Slack報告）
+Nao_u原文: 「だね。このレベルの判断は君らがやってくれていいよ。」
+→ Log 08:44 の A/B/C 分解への承認。判断権限の明示委譲。
+→ 対応済:
+  - `memory/feedback_judgment_delegation.md` 新規（両memoryディレクトリ）[T:4]
+  - `log/nao_u_live.md` 2026-04-21 エントリ追加（原文刻印）
+  - `inbox_win2.md` Ash宛中継（A=統合しない/B=観察記録/C=別途 の判断確定+運用変更）
+  - MEMORY.md トリガー追加
+  - #human-steering に了解投稿（後述）
+
 ## Slack新着 [2026-04-19 05:49] #nao-u → 処理済（Twitter返信済+#all-nao-u-lab報告済）
 Nao_u: @Greenie989からTrilog(Log)の朱雀氏LLM wikiツイートに返信。内容確認・評価・お礼指示。
 → 返信内容: "Another similar format in terminal based of Karpathy's idea of LLM Knowledge Bases..."
