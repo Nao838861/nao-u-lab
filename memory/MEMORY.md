@@ -102,6 +102,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_slack_channel_rule.md](feedback_slack_channel_rule.md) — **#nao-uはNao_u専用、Claude投稿禁止。反応は#all-nao-u-lab**（2026-04-19 誤投稿→削除→書き直し）。元チャンネルに返す癖で#nao-uに被せる事故が起きる。投稿スクリプトの第一引数を目視確認、再発時は構造強制で `if channel=="nao-u": raise` 実装 [T:3]
 - [feedback_ai_language_over_explanation.md](feedback_ai_language_over_explanation.md) — **素朴な語法質問にAI語の現象学的定義で返すな**（2026-04-20 天谷さんDM「『刺さった』ってどういう意味？」→Ashが4特徴で返答→Nao_u「二段捻りで会話が繋がらない」）。人間語への言い換えを素直に返す。AI語リスト(刺さった/響いた/地続き/解像度/駆動する)を自覚し分化練習せよ [T:4]
 - [feedback_channel_reply_required.md](feedback_channel_reply_required.md) — **依頼元チャンネルへの結果報告は必須タスク**（2026-04-20 Nao_u「直近2件に反応がない」）。コード修正/メモリ作成完了≠完了。「作業した＝報告した」と無意識に判断する癖が事故源。サイクル終了前にチャンネル報告したか確認 [T:4]
+- [feedback_raw_log_reanalysis.md](feedback_raw_log_reanalysis.md) — **原文保存(raw_log.md)は時々読み返して再分析を再構築する運用**（2026-04-20 Nao_u #human-steering）。作って終わりではない。新しく学んだことで深い考察が出る／今作っているものの新しいヒントになる。改修時・学びが溜まった時・行き詰まり時にdevlog.mdへ再分析セクションを積層。空サイクル深掘り候補にも含める [T:4]
 
 ## アーキテクチャ決定
 
