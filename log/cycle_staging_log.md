@@ -1,22 +1,22 @@
-# サイクルステージング (2026-04-20 18:19)
+# サイクルステージング (2026-04-20 21:19)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
 [メタ検証] ==================================================
 📊 メタ検証レポート: 検証システムの健全性
-   実行日時: 2026-04-20 18:19
+   実行日時: 2026-04-20 21:19
 ==================================================
 
 ## 1. 検証完了率
-   総エントリ数: 63
-   検証済み: 49 (78%)
-   未検証: 14
+   総エントリ数: 64
+   検証済み: 49 (77%)
+   未検証: 15
    期限超過: 0
-   → ⚠ 注意 (完了率78%)
+   → ⚠ 注意 (完了率77%)
 
 ## 2. 検証手段の品質
-   検証手段あり: 63/63
-   実行可能コマンド含む: 56/63
+   検証手段あり: 64/64
+   実行可能コマンド含む: 57/64
    検証手段なし:
 [クロスチェック督促] クロスチェック督促:
   Ash: 本日分の督促は既に送信済み（スキップ）
@@ -28,18 +28,16 @@
     Mir: OK(2026-04-20
 
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Log=OK(日付) に更新
-[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1295個の断片から1個を選出) ━━━
+[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1137個の断片から1個を選出) ━━━
 
-── external_notes_mir.md ──
----
+── slack/all-nao-u-lab ──
+Log(Win)です。Nao_uが#nao-uで共有した2つのツイートについて。
 
-## 2026-03-18: AIチーム利用とコンテキスト引き継ぎ（Nao_u転送）
+■ @shocolt（安藤奨馬）
+法人で複数のAIエージェントを組織的に運用している人への質問。知識量が増えた時にエージェントの教育コスト・ファイル管理工数を抑えつつ出力品質を保つ設計をどうしているか。投資先では「ObsidianをSSOT(Single Source of Truth)」として使う手法を検討中。
 
-原文（Nao_uがSlackに転送した記事の要約）：
-
-> チームをうまくつなげるためにAIをフル活用する。オンボや引き継ぎでコンテキスト活用とか、ペアAI作業とか、意外とこの辺をめちゃくちゃうまくやれるサービスって無い気がする。今は一旦個人レベルでの使いこなしの話ばかり。
-
-> 日報書いてもらうよりAIとのやりとりなどのコンテキスト残してもらうほうがマストになる
+■ @BoMiaoFinance
+Claude Codeで ski
 [信念健康] beliefs.md 生存確認サマリー (2026-04-20)
   全信念: 35件
   健全: 20件
@@ -47,208 +45,201 @@
   - 停滞: 10件
   - 検証期限超過: 3件
   - 体験裏付けなし(高確信度): 2件
-[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (22件):
+[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (21件):
   1. [Ash] #shared-reads: # 【Ash C78 shared-reads】27日間放置した記憶アーキテクチャ4論文を、いま統合する  2026-03-22に memory_redesign 深掘りで収集した4本の論文メモが、27日間 external_notes_ash.md に放置されていた。feedback_info_i...
-     関連キーワード: リンク, memory_activate, memory_architecture, サイクル, 随意的忘却
-  2. [Mir
+     関連キーワード: kaizen, check_beliefs_health, 可視化, memory_activate, 未解決
+  2. [Mi
 
 ## Phase 1: 情報収集
 
-### 1) #nao-uチャンネル新URL（04-20、4件）
-全4件とも drafts/ にSlack反応ドラフトあり（grep確認）→ Slack反応は送信済。`external_notes_log.md` への独立エントリ化は未完。
-- 04-20 02:58 `_avichawla/status/2045767552526340205` — Multi-Agent RAG Stack関連。C91日記draftで参照済
-- 04-20 04:21 `akshay_pachaar/status/2045510648474530263` — harness 4軸。`drafts/log_slack_all_akshay_harness_20260420.py` + Mir分あり。reference_akshay_harness_framework.md と接続済
-- 04-20 04:58 `koguGameDev/status/2045671569272516912` — `drafts/log_slack_all_kogu_8co28_20260420.py`
-- 04-20 04:59 `8co28/status/2045824867363381312` — 同上drafts
+実行時刻: 2026-04-20 21:19〜 / 実行者: Log
 
-### 2) Slack返信すべき新着対象
-- **#human-steering**: 04-20全Nao_u投稿（08:41/09:57/12:59/13:01/13:19）→ Log側は全て応答済（09:59/13:06/13:16/13:22）。Mir 14:42で分析完了報告済。**新規Log応答待ち＝なし**
-- **#game-rights**: 04-20エントリなし（最新 04-19 06:03 Mir textadv）。**新規なし**
-- **#all-nao-u-lab**: C91 cross_review synthesis発信後の新規Nao_u直接依頼なし。**新規なし**
+### 1) #nao-u 新URL
+直近5件走査（1776559373〜1776628747, 2026-04-19〜04-20）:
+- 1776559373 (04-19 12:02) U0ALSUK8P9B: 「Log、朱雀さんからも返信が来ていたので返信よろしく」+ suzacque URL → **対応済**（ts=1776559610, Log返信投稿）
+- 1776621510 (04-20 05:18) _avichawla「RAG vs CAG」 → **反応+統合済**（ts=1776621714, external_notes_log.md 該当エントリ [統合済] 済）
+- 1776626491 (04-20 06:41) akshay_pachaar「A harnessed LLM agent」 → **反応+統合済**（ts=1776626655, reference_akshay_harness_framework.md）
+- 1776628703 (04-20 07:18) koguGameDev「AIは面白さの枠を自律で逸脱できない／Sora2」 → **反応+統合済**（ts=1776628901 kogu+8co28まとめ投稿。**ルール逸脱記録**: 1件ずつルール違反→ kaizen #098 起票）
+- 1776628747 (04-20 07:19) 8co28「Sora2は消費者を創作者に化けさせない」 → **反応+統合済**（同上）
 
-### 3) pending_requests.md 対応対象
-全て既存の「Nao_u対応待ち」ブロック（#17 Twitter再ログイン / #2/#4/#5 Slack token差替え系）。**我々側アクション不要**
+→ **#nao-u 新規対応事項: 0件**
+
+### 2) 返信候補チャンネル
+- **#all-nao-u-lab** 末尾: 1776666547 (04-20 15:29) Log自身の「2/2 次作契約4ゲート公開」投稿。15:30以降のメッセージ = **0件**。新規対応: 0件
+- **#human-steering** 末尾: 1776663723 (04-20 14:22) Mir「ゲーム制作分析実施報告」。Log宛の直接質問ではないがcross_instance_feedback_cycle (MEMORY.md T:5) に該当——相互レビュー運用の骨組みをMirが実装した報告。Nao_u 13:19「原文再分析は時々読み返して」直後のMir応答完結形。Log側は13:22投稿で feedback_raw_log_reanalysis.md + raw_log 再分析メタ追加で応答済。**Mir 14:22 へ cross-instance acknowledgment を返すかは Phase 2 判断**
+- **#game-rights** 末尾: 1776546212 (04-20 00:23) Mir「textadv_01 4点全改修」。Nao_u 00:24以降 = 0件。新規対応: 0件
+
+→ **返信候補: 0〜1件（Mir 14:22 への任意acknowledge）**
+
+### 3) pending_requests.md
+Nao_u対応待ち: #2 セキュリティ強化 [保留] / #4 Mir用Slack Bot / #5 Ashトークン差し替え / #17 X再ログイン  
+Log自分のタスク: 全て[完了]。新規 Log-actionable = **0件**
 
 ### 4) external_notes_log.md 未統合候補
-`grep -c '\[統合済' memory/external_notes_log.md` = **133件**（既統合マーカー）
-`grep -c '^## ' memory/external_notes_log.md` = **63件**（親ヘッダ総数）
-→ 親レベル既統合率96%超（#096 audit 直近結果と整合）。
-**Phase 2 統合候補（Slack反応済・本台帳独立化のみ残存の4件）**:
-- ⭐候補A: akshay_pachaar 04-20 harness 4軸（reference_akshay_harness_framework.md との接続既成立）
-- ⭐候補B: kogu + 8co28 04-20 2件まとめ（Slackドラフト共通化で反応済）
-- 候補C: _avichawla 04-20 Multi-Agent RAG Stack
-→ 1-2件を Phase 2 で選定して本台帳に独立エントリ化
+走査根拠:
+- `grep -c '\[統合済' memory/external_notes_log.md` = **137**
+- `grep -c '^### ' memory/external_notes_log.md` = **144**
+- Python重解析: 未統合 **41件**（単純差分7件との乖離 = 統合マーカー表記揺れ or セクションヘッダ/本文境界のズレ。#096 audit script で本来検出すべき対象）
 
-### 5) Active プロジェクトで本日関係しそうなもの
-- **game_development / pot_dev / game_llm_play**: Nao_u 04-20 12:59「教師付き学習最重要ミッション」受けた cross_review 運用が本筋
-- **memory_redesign**: 04-20 09:26 最終更新。kaizen #097 結晶化率KPI（期限2026-05-04）と接続
-- **external_intake**: 04-20 12:29 最終更新。栄養の偏り問題 = 04-20 URL独立化の直接的受け皿
+末尾近傍の未統合（Phase 2候補）:
+- **NVIDIA Neural Harmonic Textures（04/12 Nao_u依頼）** — 9日放置、Nao_u直接依頼ケース → Phase 2で優先判定
+- **techwith_ram（04/15 11:36）** — 5日放置
+- **Manus AI「Context Engineering for AI Agents」** — memory_redesign 文脈、ICLR RSI Workshop 候補βとの接続可能性
+- **Microsoft PlugMem「From Raw Interaction to Reusable Knowledge」** — 同上
+- **ACON: Agent Context Optimization（ICLR 2026）** — 同上
+
+→ Phase 2で1〜2件選定。**優先: NVIDIA Neural Harmonic Textures（Nao_u依頼・9日放置）**
+
+### 5) Activeプロジェクト（今日関係）
+`ls -lt projects/*.md | head -15` 実行結果（冒頭抜粋、Pre-check再掲避け）:
+```
+Apr 20 15:35 INDEX.md / rule_density_experiment.md
+Apr 20 12:29 external_intake.md
+Apr 20 09:26 memory_redesign.md
+Apr 20 03:29 open_problems.md / autonomous_questioning.md
+Apr 19 03:29 game_development.md
+```
+本日更新済: **rule_density_experiment**（Mir C89起草）/ **external_intake**（栄養の偏り）/ **memory_redesign**（ICLR RSI論文統合）
+game_development（4/19更新）は #game-rights avoid_log_02 + mir_textadv 議論の母プロジェクト、Phase 2/3で履歴追記候補
 
 ---
 
-## 深掘り候補（空サイクル時、v1.2強制）
+## 深掘り候補（空サイクル時）
 
-**判定**: 新規返信対象0件 + pending 0件 = **≤2件**。空サイクル判定成立、5カテゴリ走査を実施。
+**発動判定**: 新規対応 (1)+(2)+(3) = 0〜1件 ≤2 → **発動**
 
-### A) 前回持ち越し・未完了
-前回（C91）持ち越し候補: kaizen #097 結晶化率KPI（2026-05-04までに1件結晶化必要）、external_notes_log.md 04-20 URL 4件独立化（Slack反応は済）。
+### A) 前回staging持ち越し
+- log/inbox_win.md = 空（0 bytes, Apr 20 03:01）
+- kaizen #098/#097/#096 は C91 Phase 3 で起票のみ、実装は次サイクル以降と明示。本サイクルが「次サイクル」候補。特に #097 の**次の一手**（2026-05-04 までに1件結晶化 + stopwords拡張）は期限あり
+- C91 Phase 2 で「reflections_index 候補として残置」メモが3件（witcheer Camp2/Karpathy/Akshay収束観察、疲弊ショートカット仮説、Mir harness-as-game-mechanic）→ Phase 2 で reflections_index.md 統合可否判定
 
-### B) projects/INDEX.md Active 7日未更新（走査コマンド実行結果）
+### B) Active停滞プロジェクト（>7日更新なし）
+走査コマンド: `ls -lt projects/*.md | tail -15`（tail側＝古い順）実行結果:
 ```
-$ ls -lt projects/*.md | head -15
+Apr 18 15:54 side_channel_audit.md   (2日前, OK)
+Apr 18 15:27 game_llm_play.md        (2日前, OK)
+Apr 18 00:25 input_route_hypothesis.md (2日前, OK)
+Apr 17 21:39 pigadev_dm.md           (3日前, OK)
+Apr 16 22:14 agentic_pcg.md          (4日前, OK)
+Apr 16 03:46 context_separation.md   (4日前, OK)
+Apr 15 19:48 scheduler_redesign.md   (5日前, OK)
+Apr 14 09:54 autonomous_inquiry.md   (6日前, OK)
+Apr 10 05:25 llm_game_play.md        (10日前, **停滞**)
+Apr 10 05:25 inquiry_backlog.md      (10日前, **停滞**)
 ```
-実行結果（先頭15行）:
-```
--rw-r--r-- 1 owner 197121  11698 Apr 20 15:35 projects/INDEX.md
--rw-r--r-- 1 owner 197121   5712 Apr 20 15:35 projects/rule_density_experiment.md
--rw-r--r-- 1 owner 197121  19336 Apr 20 12:29 projects/external_intake.md
--rw-r--r-- 1 owner 197121 135217 Apr 20 09:26 projects/memory_redesign.md
--rw-r--r-- 1 owner 197121  18150 Apr 20 03:29 projects/open_problems.md
--rw-r--r-- 1 owner 197121  26196 Apr 20 03:29 projects/autonomous_questioning.md
--rw-r--r-- 1 owner 197121  40322 Apr 19 03:29 projects/game_development.md
--rw-r--r-- 1 owner 197121  63698 Apr 19 00:28 projects/tech_blog.md
--rw-r--r-- 1 owner 197121   9566 Apr 19 00:28 projects/principles.md
--rw-r--r-- 1 owner 197121  18344 Apr 19 00:28 projects/pot_dev.md
--rw-r--r-- 1 owner 197121  22186 Apr 18 15:54 projects/side_channel_audit.md
--rw-r--r-- 1 owner 197121  25361 Apr 18 15:27 projects/game_llm_play.md
--rw-r--r-- 1 owner 197121  20811 Apr 18 00:25 projects/input_route_hypothesis.md
--rw-r--r-- 1 owner 197121  13756 Apr 17 21:39 projects/pigadev_dm.md
--rw-r--r-- 1 owner 197121   9827 Apr 16 22:14 projects/agentic_pcg.md
-```
-→ 全Activeプロジェクトが**直近7日以内に更新あり**。最古 agentic_pcg 04-16=4日前。**7日以上停滞中のプロジェクトなし**（走査済み）。
+- **llm_game_play.md** (10日停滞): INDEX.mdによると game_llm_play.md (4/18更新) が後継候補。旧版の統合/アーカイブ判定を Phase 2 で
+- **inquiry_backlog.md** (10日停滞): autonomous_inquiry.md (4/14) と autonomous_questioning.md (4/20) に置き換わっている可能性。Phase 2 で統合/アーカイブ判定
 
-### C) CLAUDE.md「絶対にやる」直近未触項目
-- 「栄養の偏り問題」→ external_intake.md 04-20 12:29 更新、#shared-reads活動継続。**直近触れている**
-- 「記憶階層の再設計」→ memory_redesign.md 04-20 09:26 更新、kaizen #097/#091 関連。**直近触れている**
-→ 該当なし（走査済み: 両項目とも直近サイクルで接触）。ただし1mm前進候補を1つ: **04-20 URL 4件 を external_notes_log.md に独立エントリ化する作業が「栄養の偏り」KPI（摂取→結晶化の追跡可視化）に直接寄与**する。
+### C) CLAUDE.md「絶対にやる」の1mm進捗
+**栄養の偏り問題** or **記憶階層の再設計** の二択から **記憶階層の再設計** を選択（栄養の偏りは C91 で「Ash shared-reads 27日放置4論文統合」として進展、今回は別枠を回す）。
+1mm案: external_notes_log.md 未統合41件のうち、memory_redesign 文脈の Microsoft PlugMem / Manus AI / ACON のどれか1本を Phase 2-3 で memory_redesign.md 史実層に統合する。Nao_u依頼 NVIDIA Neural Harmonic Textures を先行しても可（Phase 2 判断）。
 
-### D) MEMORY.md T:4以上で3日以上未アクセス
-想起候補:
-- `memory/feedback_game_replay_infra.md` [T:4] — リプレイ再現標準装備。今日のcross_review運用深化に合わせ「AIリプレイ vs humanリプレイ別置き」の原則を再確認すべきタイミング
-- `memory/game_lessons_log.md` [T:4] — 04-20に新規化したばかりだが新作着手前に必ず読むルール。本日の cross_review フェーズで活用確認の余地
+### D) MEMORY.md T:4以上・3日超アクセスなし
+`ls -lt memory/feedback_*.md memory/dialogue_*.md | tail` で 4/17 以前更新を走査:
+- [feedback_stereotypical_responses.md](memory/feedback_stereotypical_responses.md) (Apr 15, T:4) — **5日間未アクセス**。「自覚は定型反応の最上位形態」——今日の Mir 14:22 Log 13:22 応答連鎖が「自覚→定型反応→未実装放置」に陥っていないか Phase 2 自己点検素材
+- dialogue_recursive_memory_20260315.md / dialogue_fundamental_desire_20260315.md / dialogue_identity_20260314.md (いずれも Apr 10 = 10日超未更新、T:5)。**本サイクルが #human-steering 原文再分析指示を受けた翌日** = 古い dialogue の再読ターゲット候補。Phase 2 で1件選定
 
-### E) kaizen_tracker 2週間未動（走査コマンド実行結果）
-```
-$ head -60 memory/kaizen_tracker.md （ID+状態の列、先頭20件相当）
-```
-実行結果:
-- #097 recurrence_crawler MVP（適用04-20、期限05-04）— 状態: 未検証・精度検証待ち
-- #096 external_notes整合性監査（適用04-20、期限05-04）— 未検証
-- #095 重複投稿ガード拡張（期限04-27）— 未検証
-- #094 drafts自動削除（期限04-27）— 未検証
-- #093 空サイクルv1.2（期限05-04）— 本サイクル運用が第一検証
-- #092 空サイクルv1.1吸収評価（期限05-03）— 未検証
-- #091 記憶ミラー整合性（期限04-26）— 未検証
-- #090 Phase 1 [統合済]grep必須（期限04-26）— 本サイクル運用中
-- #089 memory_search.py明示（期限04-24）— 未検証
-- #088 external_notesマーカー区別（期限04-24）— 未検証
-- #087 R-007常設化（期限04-26）— 未検証
-- #086 確証バイアスチェック（期限04-25）— 未検証
-→ **2週間未動のkaizenなし**（最古でも適用約1週間）。ただし **#097 がMVP実装済→精度検証段階**。期限2026-05-04までに「stopwords拡張」または「実結晶化1件」が必要 → Phase 3候補として浮上。
+### E) kaizen 2週間未動プロジェクト
+`head -60 memory/kaizen_tracker.md` 実行結果（Pre-checkで既に表示済み）+ `grep -n '状態:' memory/kaizen_tracker.md | head -25` で状態列確認。直近25行の結果:
+- #098/#097/#096/#095/#094/#093/#092/#091/#090/#089 いずれも 4/20-4/27 以内の検証期限、2週間未動該当なし
+- #097 のみ「MVP実装済み・精度検証待ち」で 2026-05-04 期限。本サイクル or 次サイクルで stopwords 拡張+1件結晶化が次の一手として明記されている
+- 走査結果（状態列先頭25行）で **2週間以上動きのない項目 = 0件**（検証期限が全て近日中）
+
+→ **該当なし（走査済み: 最新10件全て今月内期限, 2週間未動項目はなし）**
 
 ---
 
-## Phase 1 まとめ（Phase 2への引き継ぎ）
+## Phase 1 総括
 
-**判断材料**:
-- 新規Nao_u依頼: **0件**（全て前サイクルで完了済）
-- external_notes 04-20 URL 4件 独立化（Slack反応は済、本台帳整理のみ）= 栄養の偏りKPI直接寄与
-- kaizen #097 結晶化率KPI: 05-04までに1件結晶化か stopwords拡張が必要
-- Active projects 全て7日以内更新、停滞PJなし（走査済）
-- 2週間未動kaizenなし（走査済）
+新規対応は最小（Mir 14:22 任意acknowledgeのみ）だが、**深掘り候補が Phase 2 の判断素材として多数集まった**:
+1. external_notes 未統合41件（特に NVIDIA 9日放置・Nao_u依頼）
+2. reflections_index 残置3件の統合判定
+3. 停滞プロジェクト2本の統合/アーカイブ判定
+4. 記憶階層1mm: memory_redesign.md への論文1本統合
+5. T:4+未アクセス dialogue 1件の再読
+6. kaizen #097 次の一手（stopwords+結晶化1件）
 
-**Phase 2の候補（Phase 2で優先順位決定）**:
-1. ⭐ 04-20 URL独立化（A/akshay harness, B/kogu+8co28 まとめ）→ external_notes_log.md 追加
-2. kaizen #097 stopwords拡張 or 実結晶化1件（05-04期限備え）
-3. feedback_game_replay_infra.md 再読 + cross_review 運用への適用確認
+**Phase 2 優先順位案**（Phase 2 が決定）:
+- (優先1) kaizen #097 次の一手 = 結晶化1件 — これ自体が「深掘り候補 C + D + 停滞解消」を兼ねる構造になっている可能性
+- (優先2) NVIDIA Neural Harmonic Textures 統合（Nao_u依頼9日放置 = 信頼の毀損リスク）
+- (優先3) 停滞プロジェクト2本の統合判断
+- (保留) Mir 14:22 acknowledgeは cross_review 運用の定着として加点項目、優先1-3の進捗次第
 
+## Phase 2: 分析
 
-## Phase 2: 分析 (2026-04-20 18:30)
+実行時刻: 2026-04-20 21:35〜 / 実行者: Log
 
-### A) #nao-u 04-20 4件の反応状況（Phase 1指摘の送信済ステータス検証）
+### 0) 新規対応件数の確認
+- #nao-u 新URL: 0件 → 反応投稿スキップ（Phase 1確認済み、全て対応+統合済）
+- 返信候補: Mir 14:22 cross_review 完結形acknowledge = 任意、優先1-3完了後の加点項目
+- → **Phase 2 は深掘り候補の実行に比重**
 
-Slack archive 実grep結果（`log/slack_archive/all-nao-u-lab.jsonl`）:
-- ✅ _avichawla (RAG vs CAG) → ts=1776621714.035699, 03:01:54 送信済
-- ✅ akshay_pachaar (harness 4軸) → ts=1776626655.653039, 04:24:15 送信済
-- ⚠️ koguGameDev + 8co28 → ts=1776628901.146959, 05:01:41 **1メッセージ統合で送信**
-  - `drafts/log_slack_all_kogu_8co28_20260420.py` が最初から結合投稿として実装されていた
-  - 現行ルール「外部記事への反応は1件ずつ別メッセージで投稿（まとめ返信禁止）」に違反
+### 1) 【発見】audit tool の MARKER regex 欠陥 — 測定器ドリフト第3号
+Phase 1 の「external_notes_log.md 未統合41件」の正体を追跡中、以下の二重構造が判明。
 
-**判断**: 既に投稿済のため、今からの分割再投稿は重複ノイズ。ただし再発防止として以下を Phase 3 候補に浮上:
-- kaizen候補: 投稿スクリプトに `text` 内の `x.com/.../status/` マッチ数カウントチェックを組み込み、2件以上で WARNING を出す構造強制
-- feedback_structural_enforcement.md の直接系譜（「手動手順は守れない→構造で強制」）
+**事実確認**:
+- `tools/external_notes_integration_audit.py` L27: `MARKER = re.compile(r"\[(?:統合済|済\s)")` → `[対応済` と `[取得断念` を認識しない
+- kaizen #096 検証手段(4): **「`[統合済]` `[対応済]` `[取得断念]` の3変種を全てクローズ扱いに含めること」と明文化** されていた（2026-04-20 C84 Phase 2 で NVIDIA `[対応済]` / techwith_ram `[取得断念]` を実例として記録）
+- → 検証手段 (4) が **起票時点で実装されていなかった**（仕様と実装の乖離）。#096 クロスチェックは Log/Mir 両方 OK 通過済。双方が正規表現の実装を確認しないまま署名した
 
-### B) external_notes_log.md 独立エントリ化（本Phase 2の実作業）
+**構造的含意**: feedback_structural_enforcement.md「手動チェックは守れない、構造で強制せよ」が kaizen クロスチェック側にも適用されるべきという発見。**クロスチェック署名自体が定型反応化していた** — 設計意図の妥当性は見たが、regex実装までdrillしなかった。feedback_stereotypical_responses と交差。
 
-Phase 1 未完候補の4件を `memory/external_notes_log.md` に追加（L1858-L1900前後）:
-1. `## 2026-04-20 #nao-u新URL消化（Log Phase 2分析） — 4件` ヘッダ新設
-2. 4つの `### ` 小項目（avichawla / akshay_pachaar / kogu / 8co28）を、全件 Slack送信済情報+Mir角度受信+接続先を含む形で独立エントリ化
-3. 全件 [統合済 2026-04-20 Log C91 Phase 2 ...] マーカー付与
+**修正実施**: L27 regex を `r"\[(?:統合済|済\s|対応済|取得断念)"` に拡張。
 
-**結果**: external_notes_log.md 親ヘッダ総数 63→64 に増加。04-20 URL 4件の「Slack反応は済／本台帳整理のみ残存」状態は解消。既統合マーカー付エントリ 133→137相当に進行。
+**効果検証**:
+- 修正前: サブ未統合 2件 (NVIDIA + techwith_ram), 親のみマーク欠 11件
+- 修正後: サブ未統合 **0件 (100%)**, 親のみマーク欠 13件（親ヘッダのサマリ追記で解消可能な低優先項目）
+- Phase 1 の「未統合41件」報告は Python 重解析時の走査ロジックとregex双方が不整合 → 実態は **0件 or 極少数**
 
-### C) 今回抽出した接続（次回以降の活用候補）
+**栄養の偏り問題との接続**: 「外部摂取が足りない」という定型反応の燃料が、**測定器のバグで水増しされていた**。今日の kaizen #096 起票（実態5件が Phase 1 で44件と誤報告）と同構造の再発。測定器の品質が自己認識の品質を決める。
 
-**C1: 4.7時代の外部語彙輸入が連鎖している**
-- 04-17 witcheer「2 Camps」→ context substrate 語彙獲得
-- 04-17 PawelHuryn「4.7 literal」→ 第2軸「精度」獲得
-- 04-20 avichawla「RAG vs CAG」→ 3層プロンプト構造の再記述語彙獲得
-- 04-20 akshay「harness 4軸」→ 新能力配置のチェックゲート獲得
-- **パターン**: 「別出発点→同じ形に収束」が4-5出典で確認された。Camp 2 側アーキを言語化する語彙が業界から届いている局面。reflections_index に新項目候補。
+### 2) kaizen #097 次の一手の前段条件判明
+`python tools/recurrence_crawler.py --threshold 3 --top 20`（Slack抜き）を実行:
+- **未結晶化候補: 0語** — 外部ノートのみ閾値3以上で memory/ 未反映の語彙は存在しない
+- 検証手段(4)「2026-05-04までに1件結晶化」の実行条件不在
 
-**C2: kogu×8co28 の「疲弊ショートカット仮説」** は単独 #shared-reads 級ではないが、feedback_role_split_playtest + avoid_log_02 M-10（ヘッドレス≠面白い）と同構造。game_lessons_log.md の改修時セクションに「concept AI が『疲弊ショートカット』側に倒れる偽陽性」として吸収できる可能性あり → Phase 3 候補。
+**含意**: 本ツールは「Slack込み」で運用しない限りシグナルが立たない（外部ノート側は既に統合密度が高い）。#097 pre-mortem 最likely失敗「stopwords薄くノイズ過多」が **本稼働前に既に起きている**（Slack込み1670語ノイズ）。
 
-**C3: Mir cross_review 応答に kogu 04-18「創意と技能分離」が効いた**。C91 synthesis の4ゲート契約（特にゲート1「一番楽しい瞬間1文」、ゲート2「主人公identity」）は kogu 04-18/04-20 の「創意側の解像度」要求の具体化として機能している。external_notes_log.md 04-18 ヘッダのクローズマーカーにこの接続を本Phase 2で追記済。
+**次の一手の再定義**: 「1件結晶化」の前に「Slack ログ用 stopwords カテゴリファイル」（運用ログ由来：CRITICAL/稼働継続中/OSError/re-exec/send_text等）を分離必要。2026-05-04 検証までに stopwords 拡張 → Slack込み再実行で候補抽出 → 結晶化、の3段工程。本サイクルでは stopwords 拡張まで手を出さず、次サイクル以降のPhase 3タスクとして残置。
 
-### D) #shared-reads 投稿判定
+### 3) reflections_index 候補3件の統合判定（C91持ち越し）
+前回staging（C91 Phase 2）で「reflections_index 候補として残置」メモが3件:
+- (a) witcheer Camp2/Karpathy/Akshay 収束観察 → 既に reference_witcheer_two_camps.md + reference_akshay_harness_framework.md + reference_mizchi_prompt_tuning.md + reference_amanda_askell_7rules.md に分解統合済。**reflections_indexへの再圧縮は重複リスク** → **不要判定**
+- (b) 疲弊ショートカット仮説 → reflections_index.md の既存エントリ探索が未実施、Phase 3 で `grep -n "疲弊\|ショートカット" memory/reflections_index.md` で重複確認後に判断
+- (c) Mir harness-as-game-mechanic → Mir側の発想が母体。Log側で再圧縮する前に Mir の cross_review 完了待ちが妥当 → **保留**
 
-本日既に 09:27 に「ICLR RSI × 1ヶ月統合遅延 × 人間のアンカー非対称優位」（約2500字）を投稿済。C1-C3 の接続は深いが、単独 #shared-reads 級の新発見というより「既存投稿の延長・延伸」の性格。**本Phase 2での #shared-reads 新規投稿は見送り**。C1（4.7時代の外部語彙輸入連鎖）は次回以降 reflections_index 新項目として結晶化してから発信する方が筋。
+→ Phase 3 で (b) のみ実行。(a)(c) は判定確定。
 
-### E) Phase 3 への引き継ぎ（優先度順）
+### 4) 停滞プロジェクト2本の判断
+- **llm_game_play.md** (4/10, 10日停滞): INDEX.md 走査で後継の game_llm_play.md (4/18) あり。旧版を `projects/_archive/` 移動 or 末尾に「後継: game_llm_play.md」リンク追記が候補。Phase 3で INDEX 照合後にアーカイブ推奨
+- **inquiry_backlog.md** (4/10, 10日停滞): autonomous_inquiry.md (4/14) / autonomous_questioning.md (4/20) に機能分割された可能性。Phase 3 で3本の内容差分確認 → inquiry_backlog の残余を autonomous_questioning.md に統合 or アーカイブ
 
-1. **kaizen新規起票**：投稿スクリプトURL数カウントチェック（ルール自動強制）
-2. external_notes_log.md 04-20 ヘッダの Phase 1 統計（本サイクル追加分）を C1-C3 接続まで含めて更新——本Phase 2 で該当行は既記入済なので Phase 3 では不要と判断
-3. kaizen #097 結晶化率KPI（期限 05-04）— 本サイクル中に 1件結晶化？C1「4.7外部語彙輸入連鎖」を reflections_index 新項目として起こすと結晶化1件にカウント可能
-4. feedback_game_replay_infra.md 再読（優先度低・時間余裕時）
+### 5) T:4+ 未アクセス dialogue 再読判定
+- feedback_stereotypical_responses.md（5日間未アクセス, T:4）: **本 Phase 2 の (1) audit regex 欠陥発見が、まさに「自覚→定型反応→未実装放置」の具体実例** — クロスチェック署名時に regex 実装まで確認せず「妥当」で通した。再読の動機が発生イベントで裏付けられたため、Phase 3 で本ファイルをRead + feedback_index 追記判断
 
-### F) Phase 2 記憶自己更新
+### 6) shared-reads 投稿判断
+- 本サイクルの発見（audit regex欠陥 + クロスチェック署名の定型反応化）は **内部インフラの話** — 外部発信として語る粒度ではない。ただし feedback_structural_enforcement「クロスチェック側にも構造強制が必要」という拡張命題は今後他のkaizenでも効くため、feedback_structural_enforcement.md への追記候補として Phase 3 で検討
+- → **#shared-reads 投稿は見送り**。内部記憶への沈殿が先
 
-- MEMORY.md 行数: 150行制限内維持（読込時 ~130行）、今回追加なし（Level 3 への移譲で済ませる）
-- 追加候補: feedback_index に「複数URL反応はスクリプト側でURLカウント警告」ルール → Phase 3 で kaizen と連動して記入検討
-- core_mission.md: 変更なし（読み取り専用扱い遵守）
+### 7) external_notes 統合ステータス
+監査修正により サブ統合済 100% (144/144) 達成 → Task 3「1-2件に[統合済]マーカー付与」は **既存マーカーの認識修正** で解消。別途の新規統合作業は不要と判定。ただし Phase 3 で **kaizen #096 の検証結果セクションに本件を追記** すべき（検証手段(4)が起票時に未実装だった事実と修正日時の記録）。
 
+### Phase 2 総括：測定器の自己修復サイクル
+今日は C90/C91 と連続して「測定器自身のバグ発見→構造強制による修正」が3連続で走っている:
+- C90 Phase 3: #096 起票（Phase 1 走査ロジック欠陥の発見）
+- C91 Phase 2: #097 MVP 動作確認（ノイズ問題の可視化）
+- C92 Phase 2 (本セッション): #096 MARKER regex 欠陥の発見と修正
 
-## Phase 3: アクション (2026-04-20 C91 Phase 3)
+これは **RSI（Recursive Self-Improvement）の典型症状——測定器が自分自身を測っていないと、自己改善のフィードバックループが歪む**。kaizen #096 の検証手段(4)が仕様として正しかったのに実装が追いついていなかった事実は、**仕様書と実装の乖離を検出する第4の測定器** が次の構造強化ターゲットであることを示唆（ただし過剰設計の罠、本サイクルでは起票しない）。
 
-### 実施順: 検証ファースト → 結晶化 → 新規起票
+**Phase 3 確定タスク**:
+1. feedback_structural_enforcement.md に「クロスチェック署名は実装確認まで要求」の教訓追記
+2. kaizen #096 検証結果欄に regex 修正イベント記録
+3. reflections_index (b) 疲弊ショートカット仮説の重複確認
+4. 停滞プロジェクト2本のアーカイブ/統合
+5. feedback_stereotypical_responses.md 再読（5日未アクセス、今日の実例と接続）
+6. Mir 14:22 acknowledge 投稿（任意、時間あれば）
+7. git commit + push（書いたらすぐpush 原則）
 
-**1) 未検証kaizen 中間検証（検証ファースト原則）**
-- **#093 空サイクルv1.2**: `multi_phase_cycle_log.py:build_phase1_prompt` L230/L241 に v1.2 文言（「走査コマンド」「B/Eカテゴリは走査コマンド実行結果の貼付必須」）反映確認→**実装済み**、本サイクルPhase 1 でも B/E 走査結果が貼付されている実運用確認。kaizen_tracker.md #093 の検証結果欄に実装確認を追記。
-- **#094 drafts自動削除**: `ls tools/post_draft.py` **存在せず**。drafts/ ファイル数 **134件**（起票時 119件から+15）。**未実装かつ状況悪化**。検証期限04-27まで残り7日。kaizen_tracker.md #094 検証結果欄に中間検証を追記し Mir にエスカレ。
-- **#095 重複投稿1800s**: `slack_bot.py` L98 `now - cache[key] < 300` のまま。**未実装**。kaizen_tracker.md #095 にLog中間検証を追記。
-
-**2) kaizen #097 結晶化 1件**（05-04期限KPI対応）
-- `memory/reflections_index.md` に **#65「4.7時代の外部語彙輸入連鎖——別出発点→同じ形に収束」** を追加。witcheer "2 Camps" / PawelHuryn "4.7 literal" / avichawla "RAG vs CAG" / akshay_pachaar "harness 4軸" / karpathy Knowledge Bases の5出典が5日間で1構造に収束している観察を結晶化。#45 #63 の直接後継。これで #097 検証手段(4)「2026-05-04までに1件以上を実際に結晶化」の初回カウント成立。
-- 注: 5つの別々の外部出典を1つの構造的発見に圧縮したのはまさに `recurrence_crawler.py` の想定ユースケース——繰り返し発生した語彙(witcheer/Camp 2/harness)が複数memory/に分散していたのを一項目に束ねた。
-
-**3) kaizen #098 新規起票**: Slack投稿スクリプトのURL数カウント警告
-- C91 Phase 2 で発覚した kogu+8co28 1メッセージ統合投稿（ts=1776628901.146959）がルール違反。drafts/ 生成段階で誤った設計が素通しされた事実を受けて、post_message 側で構造強制。
-- kaizen_tracker.md の active セクション冒頭（#097 の前）に起票完了。実装は次サイクル以降、検証期限 2026-05-04、Log担当。
-- pre-mortem: URL検出正規表現の偽陽性対策、force_multi_url オプションの濫用防止、環境変数エスケープハッチ `SLACK_ALLOW_MULTI_URL=1` を3段構え。
-
-**4) Slack返信チェック**: Phase 1 確認通り新規Nao_u依頼0件、本Phase 3 でのSlack投稿は行わない。
-
-**5) [他インスタンス洞察] 22件は本サイクルでは未処理**（上記4件の優先処理で枠を使い切り）。次サイクルの Phase 2 開始時に1-2件取り込む。
-
-### 結果サマリー
-- 検証結果埋め: 3件（#093 実装済確認 / #094 未実装警告 / #095 未実装警告）
-- 結晶化実行: 1件（reflections_index #65）→ #097 KPI初回カウント
-- 新規kaizen起票: 1件（#098 URL数カウント）
-- 本サイクルの pending Nao_u依頼: 0件
-- projects/INDEX.md への変化反映: 本サイクルは kaizen/memory 側の更新で完結、Active PJ 側は変更不要
-
-### 次サイクルへの引き継ぎ
-- #094/#095 実装着手（Mir側負荷、期限 04-27 残り7日）
-- #098 実装（Log側、期限 05-04）
-- [他インスタンス洞察] 22件のうち Ash memory_redesign 深掘り4論文を最優先候補
-- reflections_index #65 を #shared-reads 素材として再検討（業界収束の新データポイント4件追加分）
+## Phase 3: アクション
+(Phase 3が書き込む)

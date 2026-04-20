@@ -24,7 +24,7 @@ import re
 import sys
 from pathlib import Path
 
-MARKER = re.compile(r"\[(?:統合済|済\s)")
+MARKER = re.compile(r"\[(?:統合済|済\s|対応済|取得断念)")
 H2 = re.compile(r"^## (?!.*#).+")
 H3 = re.compile(r"^### .+")
 
