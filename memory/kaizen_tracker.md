@@ -38,7 +38,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 出自: 2026-04-20 C91 Phase 2 で drafts/log_slack_all_kogu_8co28_20260420.py が最初から結合投稿として実装されていた（Phase 1 の段階で分割判断を取りこぼしていた）ことを確認。投稿スクリプト生成時の人間判断に依存していた結果、生成フェーズで誤った設計を素通しした。検証段階（post_message呼び出し側）で構造強制するのが筋
 - pre-mortem: 最もlikelyな失敗理由=URLパターン検出の偽陽性（記事URL以外の `https://` を誤検出）→緩和策: (a) `x.com/.*/status/` のような「外部記事URL」パターンに限定する正規表現 (b) `force_multi_url=True` で明示的に回避可能にする。次点=force_multi_url が日常的に撒かれて無効化される→緩和策: docstring で例外運用明示+週次 grep で `force_multi_url=True` 使用回数を監視（使用数が増えたら運用再評価）。次々点=drafts/ 生成段階でエラーにしても既存の1件統合 drafts が再実行で引っかかって対応コスト増加→緩和策: 環境変数オーバーライド `SLACK_ALLOW_MULTI_URL=1` で一時回避路を用意（意図的な送信時のエスケープハッチ）
 - 検証担当: Log
-- クロスチェック: Log=起票者 / Mir=未 / Ash=未
+- クロスチェック: Log=起票者 / Mir=OK(2026-04-20) / Ash=未
 - 状態: 未検証（検証期限 2026-05-04）
 - 検証結果:
 

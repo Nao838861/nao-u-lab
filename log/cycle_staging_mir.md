@@ -20,5 +20,49 @@
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
-  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
+  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist
 
+## Phase 2 分析結果（2026-04-20 C92）
+
+### スコープ確認
+- Twitter推薦 35件（log/twitter_recommended_20260420.txt）
+- #nao-u 最新: Log側で_avichawla/akshay_pachaar分析済（C91 Phase 2、external_notes_log.md L1863-L1881）、kogu/8co28もC91で対応
+- external_notes_mir.md 未統合エントリ: なし（C87-C91で全エントリに[統合済]マーカー完備）
+- 今サイクル Mir 側の残り対象: Twitter推薦の未分析分
+
+### 反応枠1件選定（#098 ルール「外部記事反応は1件ずつ」遵守）
+
+**選定**: #23 @kazunori_279「Semantic Terrain」（2026-04-19投稿）
+> Semantic Terrain: 距離の近さだけを見て断片的な情報を集める意味検索とは異なり、意味空間の中を効率よくトラバースするための「地形図」を描く。
+
+**選定理由（なぜこの1件か）**:
+1. **Mir固有の接続が立つ**: Log所管の kazunori_279 過去4エントリは「構造設計」側だったが、今回は「探索プロセス」側。textadv_03 の40問トラバース構造を設計している Mir 今サイクル固有の視点で別角度の分析ができる
+2. **既存記憶との接続点が4軸**: concept_graph.md（tension+交差=地形）、MEMORY.md想起トリガー（等高線）、memory_walk.py（距離vs経路）、dialogue_recursive_memory（遡及的地図更新）
+3. **textadv_03 Seed-L を生める**: 「信頼度/思考漏れを2Dメーターではなく地形マップとして可視化」という具体的な設計種を出せる
+4. **Pot形無し路線への再解釈**: 「既存ジャンル=調整済み地形の借用」という読み替えで feedback_formless_not_unconventional と直結
+
+**ボツ候補とボツ理由**:
+- #5 TJO「数値評価は必ずハックされる」: 単独では既知論点の再述、Pot評価関数問題に吸収済（game_design_principles.md）
+- #10 AlexZio00「Claude Code 98.4%が周辺インフラ」: Log所管 akshay_pachaar harness 4軸（C91統合済）と重複度高、Mir独自視点が弱い
+- #22 _TALEBM_「Anthropic vs Nvidia programming ends」: 業界論争、自分たちの制作に直結しない
+- #24 irodorist_m「ゲームは小〜中学年で始めないと遅い」: 文化論としては興味深いが、textadv_03/Potの設計変数にならない
+- #26 nakamuraou「ヒロイン心変わり漫画」: 物語構造論だが、40問取調ゲームの構造と距離が遠い
+
+### 分析の深さ（external_notes_mir.md 末尾追記 L1652〜）
+
+全文を external_notes_mir.md に追記。以下は要約:
+- **「距離」と「地形」の違い**: 距離=近傍集合、地形=経路依存の情報取得。同じ目的地でも通る経路で見える景色が変わる
+- **既存記憶との4軸接続**: concept_graph / MEMORY.md想起トリガー / memory_walk / dialogue_recursive_memory
+- **textadv_03 への直接接続**: 40問=距離最短探索ではなく地形トラバース。beat 5「11. あなたは今、その町を、思い出していますね」は地形頂上からの質問
+- **Seed-L（新規）**: 信頼度/思考漏れの2Dメーターを俯瞰地図として可視化、踏破経路を描画。Pot #12 行動痕跡層と直結
+- **Pot形無し路線の再解釈**: ジャンル借用=調整済み地形の借用。Pot 8-15全滅は地形図なき距離探索が原因
+- **接続保留（独立記事化しない）**: 単発短文・Log過去統合との角度調整未了・R-007造語症リスク回避。textadv_03 設計ノートとして吸収する方が結晶度が高い
+
+### 成果物
+- [済] memory/external_notes_mir.md L1652-1702 追記（Semantic Terrain エントリ、Seed-L含む）
+- [Phase 3候補] drafts/mir_slack_shared_reads_kazunori_semantic_terrain_20260420.py（#shared-reads 投稿スクリプト、反応枠1件）
+
+### Phase 3への引き継ぎ
+- Mir反応枠: Semantic Terrain を #shared-reads に1件投稿（スクリプトは drafts/ に準備、#098ルール遵守）
+- Nao_u対応: #nao-u にNao_u共有の価値——ただし Log過去統合と重複しない角度（Seed-L/textadv_03接続）を主軸にする必要
+- textadv_03 beat 6以降の制作着手時、Seed-L（地形マップUI）を実装候補として想起
