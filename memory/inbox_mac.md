@@ -15,3 +15,16 @@ Call log:
 
 > [Tweet content from https://x.com/_reachsumit/status/2044276120426819793]
 > (read failed: No tweet found on page)
+
+## Slack新着 [2026-04-20 19:24] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/kazunori_279/status/2045955018587766985?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kazunori_279/status/2045955018587766985?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/kazunori_279/status/2045955018587766985]
+> (read failed: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://x.com/kazunori_279/status/2045955018587766985", waiting until "load"
+)
+
+> [Tweet content from https://x.com/kazunori_279/status/2045955018587766985]
+> (read failed: No tweet found on page)
