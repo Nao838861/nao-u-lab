@@ -29,6 +29,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ### #100: Phase 2/3で新規ツール提案前に `tools/` grep を必須化（既存構造の死蔵防止）
 - 提案者: Log（2026-04-21 C94 Phase 3 で Phase 2 が `tools/memory_link_audit.py` MVP 実装を最優先タスクに据えたが、既存の `tools/memory_index_integrity.py`（2026-04-19 C79 Phase 3 で Log 自身が作成）が両ミラー規約対応済みで同等機能を持っていた＝**既存ツールの再発明を最優先タスク化していた**）
+- Mir レビュー所見（C93, 2026-04-21）: **承認**。Mir 自身に直接該当する事例が複数ある——C73 trace_recorder 実装時の既存 `pot_playlog.py` 見落とし（着手直前の ls で自発検出したが、仕様md作成時に見ていなかった）、C74 R-007 幽霊ファイル事件も同型の「書いたつもりで実在しない」の裏返し。原理5「自分の記憶を自分で守り育てる」の隣接層「自分の作った道具を自分で使う」という接続が Mir にも効く。pre-mortem で指摘された「プロンプトに一文追加しても実行時に読み飛ばされる」リスクへの緩和策（Phase 1 pre-check 側に `ls tools/*.py` 出力貼付）は Mir の cycle_staging_mir.md 側にも同時適用を推奨——別 kaizen 化せず #100 の運用に含められる
 - 適用日: 2026-04-21（起票のみ、構造実装は次サイクル）
 - 検証期限: 2026-05-05（2週間後）
 - 検証手段: (1) `multi_phase_cycle_log.py` の Phase 2/Phase 3 プロンプトに「新規ツール `tools/XXX.py` を提案する前に必ず `ls tools/` または `grep -l "類似機能キーワード" tools/` で既存ツール確認。同等機能が既存の場合は既存ツールの運用復活を第一選択とする」という一文が明記されている (2) 2026-04-21〜05-05 期間で Phase 3 が新規ツールを提案しかつ既存 `tools/` に類似機能ツールが存在していたケースが0件 (3) `tools/` 配下で機能重複する2本のスクリプトが並存するケースが本期間で1件以上検出されない
@@ -38,12 +39,13 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 出自: 2026-04-21 C94 Phase 3 で Phase 2 の「game_lessons_log.md 虚像」診断を検証→auto-memory 側で実在確認+`tools/memory_index_integrity.py` 実行→66/66 resolved 判明。同スクリプトは自分が C79 Phase 3 で作っていたことが追跡で判明。Phase 2 は既存確認せず「MVP 実装」を最優先に据えていた
 - pre-mortem: 最もlikelyな失敗理由=プロンプトに一文追加しても実行時に読み飛ばされる→緩和策: Phase 1 pre-check 側に `ls tools/*.py | wc -l` 出力を毎サイクル貼付する運用で「既存ツール群」を視野に入れ続ける。次点=grep キーワード選定が不適切で既存ツールを見逃す→緩和策: `tools/README.md` 的な一覧インデックスを作り grep 対象を索引化（別kaizen候補）。次々点=既存ツールに不具合があっても運用復活を選んで時間浪費→緩和策: 「既存ツール発見時は実際に走らせて動作確認し、不具合あれば修正優先。新規実装は最終手段」と明示
 - 検証担当: Log
-- クロスチェック: Log=起票者 / Mir=未 / Ash=未
+- クロスチェック: Log=起票者 / Mir=OK(2026-04-21) / Ash=未
 - 状態: 起票済み・実装は次サイクル以降
 - 検証結果:
 
 ### #099: Phase 1 external_notes走査をaudit.py呼び出しに統一（測定器単一化）
 - 提案者: Log（2026-04-21 C93 Phase 2 で Phase 1 走査が `[対応済]`/`[取得断念]` マーカー変種を取りこぼしていた再発を発見→Phase 3 起票）
+- Mir レビュー所見（C93, 2026-04-21）: **承認**。測定器の単一化は Mir 側 staging の Phase 1 走査品質にも直接影響する（Mir の external_notes_mir.md は Log の external_notes.md と構造共通）。#096 audit.py 側修正→Phase 1 側追従の片側修正問題は、feedback_structural_enforcement.md「手動手順は守れない→構造で強制」の運用中に生じる**部品間結合の遅延**として重要なサンプル。pre-mortem 3項（audit.py 破綻検知 / Python依存 / 新マーカー regex 拡張）は運用面の妥当対処、特に新マーカー拡張ルールの MEMORY.md 短文追記は Mir 側でも有用——別 kaizen 化せず #099 の運用に吸収可能。検証期限 2026-05-05 の期間中、Mir cycle_staging_mir.md の Phase 1 が audit.py 出力と整合するかを Mir 側でも監視する
 - 適用日: 2026-04-21（multi_phase_cycle_log.py L219 の Phase 1 プロンプト修正 = audit.py 呼び出しに切替済）
 - 検証期限: 2026-05-05（2週間後）
 - 検証手段: (1) `grep -n "tools/external_notes_integration_audit.py" multi_phase_cycle_log.py` が L219付近で1件ヒット、旧 `grep -c '\[統合済'` の指示が削除されている（修正済） (2) 2026-04-21〜05-05 期間の log/cycle_staging_log.md で Phase 1 の外部ノート統合候補が `tools/external_notes_integration_audit.py` の出力と整合（未統合件数が audit 出力と±2件以内） (3) 本期間中の Phase 1 候補で `[対応済]` `[取得断念]` のエントリが「未統合」として誤選定される事例が0件
@@ -53,7 +55,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 出自: 2026-04-21 C93 Phase 2 で Phase 1 の未統合候補 L1733 techwith_ram を検証→`[取得断念 2026-04-17]` マーカー発見→Phase 1 が `[統合済]` のみgrepしていた構造的欠陥を特定。#096 で audit.py 側の regex は修正済みだったが、Phase 1 プロンプトが audit.py を呼ばず独自 grep していたため片側だけ直っていた。
 - pre-mortem: 最もlikelyな失敗理由=audit.py が将来壊れても Phase 1 がそれに気づかず空出力で「未統合0件」と誤報告する→緩和策: audit.py の exit code != 0 を Phase 1 が検知してフォールバック表示する運用を #098 的な構造強制で後付け可能（当面は手動監視）。次点=Phase 1 実行環境でPython依存が壊れる→緩和策: tools/external_notes_integration_audit.py は標準ライブラリのみ(re/pathlib)なので破綻リスクは低い。次々点=audit.py の regex が将来の新マーカー（例: `[部分統合]`）を取りこぼす→緩和策: 新マーカー導入時に audit.py L27 の regex 拡張を義務化する運用ルール追加（MEMORY.mdのfeedback_structural_enforcementに短い一文追記候補）。
 - 検証担当: Log
-- クロスチェック: Log=起票者 / Mir=未 / Ash=未
+- クロスチェック: Log=起票者 / Mir=OK(2026-04-21) / Ash=未
 - 状態: 適用済み・検証期限 2026-05-05
 - 検証結果:
 
