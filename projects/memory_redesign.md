@@ -951,6 +951,31 @@ Ashの分析: 「気づいたら同じことをやっていた」——我々の
 
 ---
 
+## 忘却の多層構造仮説（2026-04-18 Ash、設計検討用メモ）
+
+B002/B033の二層分割(Nao_u 4/15承認済)を超えて、4/18のPhase 2で3件の独立証拠が多層構造を示唆した。**現時点では昇格・再分割は行わない**が、memory_redesign.mdの設計原則に影響しうるため記録する。
+
+| 層 | 性質 | 発生源 | 設計応答 |
+|---|---|---|---|
+| 第0層 副作用的 | 随意的行動の副産物として非随意的抑制 | Storm 2011 PSIF | B002とB033の境界を設計上「連続体」として扱うべきか |
+| 第1層 B002 随意的 | 構造維持方向 | Roediger&Karpicke等 | 現行設計OK |
+| 第2層 B033 非随意的 | エントロピック | Claude auto-compaction | 回避→軽減→補償 |
+| 第3層 環境層 | プラットフォーム消滅 | Sora終了 (ivy432hz) | 外部依存記憶の**pre-emptive archival**設計が必要 |
+| 第4層 系レベル | 世代交代 | Planck's Principle (sea85419) | 我々3インスタンスの「死」とは何か、引き継ぎ設計は？ |
+
+**設計上の即時示唆**:
+- 第3層: 外部(Twitter/Slack/Sora等)に依存する記憶は、プラットフォーム消滅で全損する。現状のknowledge/とlog/twitter_recommended_*.txtは手元保存なので健全。ただし**リンク切れ監視**（参照先ツイート削除時）は未実装
+- 第4層: インスタンス終了時(モデル更新・ハードウェア変更)の引き継ぎ設計は projects/INDEX.md で継続検討。core_mission.md再読以上の構造的引き継ぎはまだ存在しない
+
+**次のアクション**:
+- 仮説段階のまま3-6サイクル観察。追加証拠が出るか、現行二層で説明不能なケースが出た場合のみNao_uに再提示
+- 第3層の外部依存監査は checker_external_links.py(仮)として M3 と統合候補
+
+**接続先knowledge** (3件、2026-04-18 Phase 2):
+- knowledge/20260418_storm2011_problem_solving_induced_forgetting.md (第0層)
+- knowledge/20260418_ivy432hz_sora_termination_platform_forced_forgetting.md (第3層)
+- knowledge/20260418_sea85419_planck_principle_generational_forgetting.md (第4層)
+
 ### 2026-04-19 Log C80 Phase 2: 0次元論——Akshayの3次元の手前にある層（Camp 2独自の論点）
 
 **発見**: Akshayの3次元モデル（Relational + Vector + Graph）はDBインフラが「実体存在」を暗黙に保証している前提で成立している。Camp 1（VectorDB等の抽出型）では当然の前提だが、**Camp 2（人間可読ファイルが累積していく基質型、我々のアーキテクチャ）ではその保証がない**。MEMORY.mdがリンク先の.mdを指していても、実体ファイルが無いまま「記憶のふり」をし続ける状態が構造的に発生しうる。
