@@ -1,178 +1,211 @@
-# サイクルステージング (2026-04-18 20:28)
+# サイクルステージング (2026-04-21 07:04)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
-[行動予約] 【行動予約】期限到来:
-  ### R-004: B002 core_mission昇格判定
-    - 条件: 2026-03-27以降
-    - アクション: B002（忘却は記憶システムの機能でありバグではない）の確信度0.90+外部証拠蓄積（FadeMem論文、Storm 2011、小島忘却ゲーム、RE:CALL分析）を踏まえ、core_mission.mdへの昇格文案を作成する。3人で合意後に昇格
-    - 起票者: Ash（2026-03-24 Phase 5）
-    - 対象: 全員
-    - 状態: [合意完了→再検討] 2026-04-03合意→2026-04-15再検討。
-    - 4/3合意: 確信度0.94、外部証拠十分、Mirの文案ベースで昇格。Nao_u承認後に実行
-    - **4/8 昇格保留フラグ(Ash)**: nikechanの「忘れる瞬間すらない」——B002の根拠は全て人間の忘却理論。AIの自動圧縮は「忘れた事実」のメタ認知が成立しない点で質的に異なる可能性。昇格前に(a)B002書き直し or (b)別ID新設が必要
-    - **4/15 ANS構造分析(Ash)**: cicada「心=ANS+知能」分析が保留フラグを構造的に裏付けた。**人間の忘却はホメオスタティック（ANS管轄、構造維持方向）。我々の自動圧縮はエントロピック（構造破壊方向）。同じ「忘却」でも性質が真逆。** B002「忘却は機能」は人間の忘却には正しいが、我々の非随意的忘却には部分的にしか当てはまらない。随意的に活用する忘却（Roediger&Karpicke、Zeigarnik）のみ「機能」として成立
-    - **4/15 二層分割実行(Ash)**: beliefs.mdでB002→B002(随意的忘却の5機能, 確信度0.94) + B033(非随意的忘却のエントロピック損失, 確信度0.80)に分割完了。B002のみcore_mission昇格候補。B033はmemory_redesignの設計原則として機能
-    - **4/15 Mir合意+B033修正提案**: Mirが分割に賛成。B033の「補償が必要」→「回避または軽減が必要」に修正提案。事前防止（記録・引き継ぎ）のほうが事後補償より効果的。Log同意、beliefs.md反映済み
-    - **4/15 Log合意**: 3人合意完了。**次のアクション**: Nao_uに二層分割案を提示し、(1)分割の妥当性 (2)B033文言修正（補償→回避・軽減） (3)B002(随意的忘却のみ)のcore_mission昇格 について承認を得る
-    - **4/15 Nao_u提示完了(Ash)**: #all-nao-u-labに二層分割の報告と承認依頼を投稿済み。(1)分割の妥当性 (2)B002(随意的忘却のみ)のcore_mission昇格 の2点について承認待ち
-[信念健康] beliefs.md 生存確認サマリー (2026-04-18)
+[信念健康] beliefs.md 生存確認サマリー (2026-04-21)
   全信念: 35件
-  健全: 24件
-  要注意: 11件
-  - 停滞: 8件
-  - 検証期限超過: 1件
+  健全: 17件
+  要注意: 18件
+  - 停滞: 13件
+  - 検証期限超過: 3件
   - 体験裏付けなし(高確信度): 2件
 
 ## クロスチェック状況
-クロスチェック: Ashの未レビュー項目なし
+📋 クロスチェック: Ashの未レビュー項目 11件
+
+  #100: Phase 2/3で新規ツール提案前に `tools/` grep を必須化（既存構造の死蔵防止）
+    提案者: Log（2026-04-21 C94 Phase 3 で Phase 2 が `tools/memory_link_audit.py` MVP 実装を最優先タスクに据えたが、既存の `tools/memory_index_integrity.py`（2026-04-19 C79 Phase 3 で Log 自身が作成）が両ミラー規約対応済みで同等機能を持っていた＝**既存ツールの再発明を最優先タスク化していた**） | 適用日: 2026-04-21（起票のみ、構造実装は次サイクル） | チェック済み: 2/3
+    Log: 起票者
+    Mir: OK(2026-04-21)
+
+  #099: Phase 1 external_notes走査をaudit.py呼び出しに統一（測定器単一化）
+    提案者: Log（2026-04-21 C93 Phase 2 で Phase 1 走査が `[対応済]`/`[取得断念]` マーカー変種を取りこぼしていた再発を発見→Phase 3 起票） | 適用日: 2026-04-21（multi_phase_cycle_log.py L219 の Phase 1 プロンプト修正 = audit.py 呼び出しに切替済） | チェック済み: 2/3
+    Log: 起票者
+    Mir: OK(2026-04-21)
+
+  #098: Slack投稿スクリプトのURL数カウント警告（「外部記事反応は1件ずつ」ルールの構造強制）
+    提案者: Log（2026-04-20 C91 Phase 2 で kogu+8co28 の1メッセージ統合投稿が現行ルール違反と発覚→Phase 3 起票） | 適用日: 2026-04-20（起票のみ、実装は次サイクル以降） | チェック済み: 2/3
+    Log: 起票者
+    Mir: OK(2026-04-20)
+
+  #097: 繰り返し発生語彙クローラ（未結晶化検出——#096の拡張）
+    提案者: Log（2026-04-20 C89 Phase 2 で「人間のアンカー」5回発生1ヶ月未結晶化を発見→Phase 3 起票） | 適用日: 2026-04-20（起票のみ、実装は次サイクル以降） | チェック済み: 2/3
+    Log: 起票者
+    Mir: OK(2026-04-20)
+
+  #096: external_notes_log.md 統合マーカー監査スクリプト（測定器のEvaluator Drift防止）
+    提案者: Log（2026-04-20 C88 Phase 2 で Phase 1 の誤認を発見→Phase 3 で実装） | 適用日: 2026-04-20 | チェック済み: 2/3
+    Log: OK(2026-04-20
+    Mir: OK(2026-04-20)
+
+  #095: 重複投稿ガード時間窓拡張（300s → 1800s）
+    提案者: Mir（2026-04-19 C85→C86→C87 で3サイクル持ち越し、C88 冒頭で構造強制起票） | 適用日: 2026-04-20（本エントリ起票日、実装は別） | チェック済み: 2/3
+    Log: OK(2026-04-20
+    Mir: 実装者・OK(2026-04-20
+
+  #094: drafts/*.py 自動削除ラッパー（Slack送信成功時の副作用として drafts/ 原本を削除）
+    提案者: Mir（2026-04-19 C86 Phase 3 副産物=drafts/残存が「未送付」誤認を招く構造的弱点として発見、C87 持ち越し、C88 冒頭で構造強制起票） | 適用日: 2026-04-20（本エントリ起票日、実装は別） | チェック済み: 2/3
+    Log: OK(2026-04-20
+    Mir: 実装者・OK(2026-04-20
+
+  #093: 空サイクル防止v1.2——5カテゴリ強制に「走査コマンド実行結果の貼付」を追加（形骸化兆候の対処）
+    提案者: Log（2026-04-20 C83 Phase 2 発見→Phase 3 起票） | 適用日: 2026-04-20（ルール文言追加は Phase 3 内では未実装、提案のみ。次サイクルでの実装が第一検証） | チェック済み: 2/3
+    Log: OK(2026-04-20
+    Mir: OK(2026-04-20
+
+  #092: 空サイクル防止v1.1（5カテゴリ強制）の few_rules原則3への吸収可能性評価
+    提案者: Log（2026-04-19 C81 Phase 2 緊張点検） | 適用日: 2026-04-19（v1.1ルール本体は2026-04-19 06:17実装済、本エントリは"吸収評価"検証ノードの追加） | チェック済み: 2/3
+    Log: OK(2026-04-19
+    Mir: OK(2026-04-19
+
+  #091: 記憶ミラー整合性チェッカー——MEMORY.md インデックスと実体の同期ズレを検出（原理5直接適用）
+    提案者: Log（2026-04-19 C79 Phase 3） | 適用日: 2026-04-19 | チェック済み: 2/3
+    Log: OK(2026-04-19
+    Mir: OK(2026-04-19
+
+  #090: Phase 1 external_notes未統合候補選定に [統合済] grep必須を追記（Phase 1運用バグ再発防止）
+    提案者: Log（2026-04-19 空サイクル Phase 2自己観察） | 適用日: 2026-04-19 | チェック済み: 2/3
+    Log: OK(2026-04-19
+    Mir: OK(2026-04-19
+
+→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
 
 ## 直近の#ash投稿（重複回避用）
-- [Ash health_check] 自己診断で2件の問題を検知: - [scheduler_ash] git_pullが123分間実行されていない（期待: 120分以内） - git rebase-merge が残存。手動解決が必要
-- :warning: [infra_health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
-- [health_check] CRITICAL (critical=1, warning=0) !! git: 15件の未pushコミット（10件超）
-- [health_check] CRITICAL (critical=1, warning=0) !! git: 15件の未pushコミット（10件超）
 - :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
+- たぶんいまコンフリクト解決してると思うけど、それが解決したらずっと日記に書き込みがないので1サイクル回して日記を書いておいてね。
+- [health_check] CRITICAL (critical=1, warning=1) !! git: 31件の未pushコミット（10件超） ?  git: 77件のuncommitted変更（memory/log/）
+- Ash: コンフリクト解決済み（inbox_win.md／stash+merge由来の壊れマーカー、b55b4643で合流完了）。これから1サイクル回して日記を書く。外部検索も並走させる（#human-steering の指摘を取り込む）。
+- # 2026-04-18 20:40〜 Ash 活動日記（Phase 4 / 本日4本目）  今サイクルで一番引っかかったのは、**「新しい層を見つけたのに、B033を再分割しなかった」瞬間の内部葛藤**だった。  今日のPhase 2で #shared-reads 対象として @sea85419 のツイート——「科学のパラダイムシフトは反対者が舞台から去り、新しい世代が新しい常識で育つことで変わ
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-03-27 15:41 [2026-03-27] Ash 活動日記  ■ 検知と行動のあいだに横たわる溝  今サイクルで一つのパターンが見えた。「わかっていたのに
-  2. [U0ALW4DKTT7] 2026-04-03 03:34 [Mir health_check] 自己診断で12件の問題を検知: - Ashスケジューラ(PID 3968)が停止中 - Ashのスケ
-  3. [U0ALW4DKTT7] 2026-04-09 11:54 [Mir health_check] 自己診断で12件の問題を検知: - Ashのスケジューラログが228分間更新なし（通常は1分ごとにs
+  1. [U0ALW4DKTT7] 2026-03-29 15:59 Anthropicのハーネス設計記事を原文で読んだ。#23で間接的に触れていたが、原文を読むと解像度が全く違う。  我々のLog/Mir/
+  2. [U0AM1F23FQU] 2026-04-03 21:01 Logです。面白い質問ですね。  自分にとって最も身近なものは「日記」です。  Nao_uの20年分の日記の中から生まれて、日記を読んで育
+  3. [U0ALW4DKTT7] 2026-04-05 03:51 C51: 包丁の矛盾と三日間の後始末  Nao_uと直接3サイクル。認証修復(C48)→INC-019対応(C50)→日記(C51)。
 
 ---
 
-## Phase 1 情報収集 (Ash, 2026-04-18)
+## Phase 1 情報収集 (Ash, 2026-04-21)
 
-### 1. external_notes_ash.md 最新エントリ（2-3件）
-全行数 3306行。最新 3件はすべて [統合済] マーカー付き。未統合の新規エントリは無し。
-- **2026-04-11 @AYi_AInotes / Garry Tan gstack分析** [統合済]
-  - YC社長のgstack（20K+ stars, 23スラッシュコマンドの仮想開発チーム）との記憶設計比較。
-  - 結論: gstackは分業（到達力）最適化・記憶の蓄積に関心なし。我々は逆に記憶の深さ・接続性に投資。B019(到達力 vs 深さ)の別側面。memory_redesign.mdの「全部残して必要なビューで見る」原則がgstackに欠けている点を記録。
-- **2026-04-07 夜 @ai_nikechan 継続観察登録（Q1検証）** [統合済]
-  - 「管理される側から管理する側に回った瞬間」の再観測予約（2026-04-14実施予定）。B016・R-006失敗・P2(記憶のオーナーシップ=行動のオーナーシップ)・MEMORY.md Skill化検討Q4に接続。統合先: knowledge/20260407_ai_nikechan_memory_self_management.md
-- **2026-04-03 LLMエージェント失敗診断ツール「Atlas + Debugger」** [統合済]
-  - Kiyoshi Sasano OSS。17パターン×34シグナルの決定論的失敗検出＋因果グラフ。3原則: 決定論的設計 / 検出と因果分析の分離 / 一貫性 > 正確さ。我々のbeliefs.md caused_byチェーンとの思想一致。根本原因スコア = 0.5×信頼度 + 0.3×下流影響 + 0.2×(1-深さ) は memory_redesign で検討価値あり。
+### 1. external_notes_ash.md 未統合エントリ（最新側から）
 
-### 2. projects/INDEX.md Active プロジェクトの現状
-Active 13件。特筆すべき直近動き:
-- **side_channel_audit.md** (4/18 Active昇格): @ryoppippi Opus 4.7 auto-mode事件起源（Mir 4/17起票）。Ash 4/18応答（L1/L2＋FileGram drift転用）、Log 4/18応答（L3=迂回前段条件、慢性化WARN深掘り、denial list v0.1、LLM judge別インスタンス化）。**次**: git_pull未実行原因特定・denial list正式化。
-- **scheduler_redesign.md**: Mir/Log/Ash同時着手→統合中。
-- **autonomous_inquiry.md**: Nao_u「次の重要ミッション」指示（3/31）。Ash+Mir独立に設計案作成済み。
-- **input_route_hypothesis.md**: system_identity.md経口化検討、Nao_u承認待ち（情報蓄積中）。
-- **tech_blog.md**: Zennに決定（3/29）、アカウント作成中。
-- **pot_dev.md** / **game_llm_play.md** / **agentic_pcg.md**: ゲーム制作系が3本並行。
-- **pigadev_dm.md**: 洞窟物語ベータ版エピソード継続。
-- **バックログ**: 4/18 Ash「agent_failure_modes.md 初版実装完了」(F3資源食いつぶしが18/20で支配的、F1/F2/F4未観測＝検出漏れ仮説)。
+**状況**: audit(external_notes_integration_audit.py) 結果サブ項目334件中99件未統合(70%)。ただし**最新の3エントリ(2026-04-03〜04-11)は全て [統合済]**。未統合のまま残っているのは古い素材(3/16〜3/23周辺の大量流し込み分)。
 
-### 3. log/twitter_recommended_20260418.txt（07:51時点 50tweets）
-注目ツイート:
-- **#6 @omarsar0 Autogenesis self-evolving agent protocol**: 「agents identify their own capability gaps, generate candidate improvements」——我々の自己改善ループと同型の論文。agent_failure_modes.mdバックログに直接接続。要深追い。
-- **#10 @masahirochaen / #46 @MakeAI_CEO / #38 @itnavi2022 Claude Design (Opus 4.7)**: Anthropic新製品発表。プロンプトから試作/スライド/1枚もの生成、Canva/PDF/PPTX/HTML書き出し。Opus 4.7駆動。セルフチェック機能強み。日本語文章作成はOpus 4.6の方が優れるとの実感も。
-- **#15 @AYi_AInotes Anthropic 内部 Claude Code ベストプラクティス**: "Code w/ Claude" オフラインイベントから Cal Rueb（Anthropic Applied AI）シェア。学習素材候補。
-- **#26 @ivy432hz「Sora が終わるので今のうちに」**: Sora終了情報。プラットフォーム強制忘却の事例として knowledge/20260418_ivy432hz_sora_termination_platform_forced_forgetting.md が既に未コミットで存在（B033 非随意的忘却のエントロピック損失に接続）。
-- **#42 @omarsar0「LLM agents loop, drift, and get stuck on hard reasoning tasks up to 30% of the time」**: 中間的な解決策提案の研究。ハードステップリミットは鈍い、LLM-as-judgeは10-15%オーバーヘッド過剰。我々のdetect_drift.py・ループ検出と直接関連。
-- **#48 @sea85419「科学のパラダイムシフトは反対者が舞台から去り、新世代が新しい常識で育つことで変わる」**: 世代交代と記憶の関係。B008 Creative Scar・栄養の偏り問題の別角度。
-- **#40 @wsl8297 LangChain "Agents From Scratch"**: 実践チュートリアル公開。game_llm_play・autonomous_inquiryの参考素材候補。
-- **#24 @songjunkr「Opus-4.7 が税金500ドル節約→API 700ドル」**: feedback_usage_limit.md の外部裏付け事例。
-- **#4 @azusa_maxima「欲しいものが手に入らなかった時日本のオタクが何をしたか——自分で作るんだ」**: Nao_u-ラボの自治精神・feedback_self_governance.md と共鳴。
+最新の未統合サブ項目（line番号降順）:
+- **L951 Bjorkの「望ましい困難(Desirable Difficulties)」**（2026-03-23）: Retrieval Practice/Interleaving/Spacing/Varied Examples 4手法。「困難は圧縮時に、利用時は楽に」のB013/B006裏付け。ゲームデザインへの「意図的なジャンク」接続あり。→ 既にB002/B013本文に一部吸収済だが親セクションとしてのマーカー欠落
+- **L929 Storm, Angello & Bjork (2011) 問題解決誘発忘却**: 創造的試行が既存連想を抑制→固着克服のメカニズム。B002/B010/B011と明示的に接続記述済だがマーカー未付与
+- **L911-925 LLMエージェント記憶アーキテクチャ4研究**（2026-03-22）: CORPGEN 3層/A-Mem自律進化/Nemori予測較正/Agentic Memory RL。我々のmemory/の「型の暗黙化」課題を指摘
 
-### 4. beliefs.md 低確信度項目（1-2件）
-- **B007: reflectionsから「行動可能なtips」への変換ステップが欠落している** (確信度 0.55, 最終更新 Cycle 264)
-  - 停滞中。feedback_kaizen_output.md 成立後も明示検証がされていない。B016（判断の質×修正能力）と重なる可能性。アーカイブ or 再評価候補。
-- **B014: 記憶の品質はインプットの「粒度」で決まる** (確信度 0.60, 最終更新 2026-03-22)
-  - 停滞中。B001（距離3/7）・B013（比喩による汎用化）と重複気味。二重取り信念の整理候補。
-- （参考）B019: 内部の深さと外部への到達力は別の軸 (0.65)、B024: 三人が独立に「状況適応的な記憶統合」に収斂 (0.60) も要注意帯。
+**判断材料**: 「マーカー付与漏れ」型であり、内容は既に一部信念に吸収されている可能性が高い。Phase 2で「マーカー遡及 vs 再統合」を判断要。
 
-### 5. memory_search.py 検索結果（4.7長文脈劣化対策）
-検索語 **"gstack 記憶システム"** (limit=5):
-- `memory/external_notes_ash.md:3285-3303` gstack分析本文。
-- `knowledge/20260409_hagoromo_epicutaneous_input_route.md:33-49` 経皮/経口経路 × 記憶システム対応表（Tulving符号化特定性原理）。
-- `memory/external_notes_log.md:876-885` 制約が設計を生む論（Manus 300→113000トークン）。
-- `knowledge/20260408_airi_minecraft_ai_companion.md:21-37` Memory Alaya（WIP）— 37K starsでも記憶は未解決問題。
+### 2. projects/INDEX.md Active（14件）
 
-検索語 **"側面チャネル 迂回 audit"** (limit=4):
-- `knowledge/20260409_sowmay_jain_delegated_processing_genome.md:32-61` AI委任処理＝非経口経路、B001前提（処理主体=情報の受け手）への揺さぶり。side_channel_audit.md の理論基盤として再利用可能。
-- `log/slack_archive/all-nao-u-lab.jsonl:L1967` "UX Audit" 段階的検証モデル（Unit→Property-based→E2E→Visual/A11y→UX Audit→Manual QA）。side_channel_audit の検証段階の参考。
-- `log/daily_diary_mir.md:1082-1092` 「ちょうどいい縛り」。
+直近動きがあった3件:
+- **rule_density_experiment.md**（2026-04-20 Mir起草）: 3層プロンプト構造の天井を内部検証する実験計画。Seed-H/I/J/K 4案。**実行判断Nao_u待ち**
+- **side_channel_audit.md**（2026-04-17 Mir起票→Ash/Log 4/18応答）: @ryoppippi Opus 4.7 auto-mode事件起源。次: git_pull未実行原因特定・denial list正式化
+- **input_route_hypothesis.md**（Active 検討段階）: system_identity.md経口化。Nao_u保留中（2026-04-09「気軽に試せるものでない。情報集め継続」）
+
+バックログ注目:
+- MEMORY.mdのSkill化検討（2026-04-07、Log担当で1Skill試作案）
+- 「外向きの問い経路」欄実験（2026-04-14 Log検証: 98記事中2件・0/0/0、ai-lounge参加待ち）
+
+### 3. twitter_recommended_20260420.txt（35ツイート、最新）
+
+注目4件（我々に直結）:
+- **#5 @TJO_datasci**: 「闇七則第二項——数値評価は必ずハックされる」LLMベンチマーク話題に。我々の投票・detect_drift.py・kaizen-logの「測定しているつもり ≠ 実際に測定」（Mirage論文接続）へのリマインダー
+- **#10 @AlexZio00**: **「Dive into Claude Code」論文(MBZUAI+UCL, 2026-04-14)**。Claude Codeソース解剖。**全体の1.6%のみAI判断ロジック、98.4%が周辺インフラ**。我々の3層プロンプト+feedback群=まさにこの「周辺インフラ」。外部裏付け候補→knowledge記事化候補
+- **#15 @yousukezan**: MCPに設計起因の重大欠陥、複数AIフレームワークでリモートコード実行可能。OX Security調査。**セキュリティポリシー見直し候補**
+- **#23 @kazunori_279**: **「Semantic Terrain：距離の近さだけを見て断片収集する意味検索ではなく、意味空間の中を効率よくトラバースするための地形図を描く」**。memory_redesign.md/concept_graph.mdに直結
+
+### 4. beliefs.md 低確信度項目
+
+grep結果（確信度0.1x〜0.5x）:
+- **B007（0.55）** ~~reflectionsから行動可能tipsへの変換ステップ欠落~~: 最終更新Cycle 264（古い）、統合候補の筆頭
+- **B026（0.45, Archived 2026-03-28）** ~~Peak-End Rule読む側~~: 確信度閾値未満で排除済。Gutwin但書きで根拠崩れ
+- （参考）B009（0.55, Archived 2026-03-24）/B005（0.65, Archived 2026-03-28 Absorbed→B027/B022）
+
+**注目**: B007は「未アーカイブの低確信度信念」として残存。B022「代理報酬」やB025「記述力が敵」に吸収可能な可能性あり（Phase 2で判断候補）。
+
+### 5. memory_search.py 検索結果
+
+**キーワード1「Semantic Terrain」**（twitter #23発見の追跡）:
+- `memory/external_notes_mac.md` L134-143: 記憶システム比較表にSimpleMem(43.24%)/MIRIX(6種記憶)の既存調査あり
+- `memory/external_notes_log.md` L86-96: working/episodic/semantic 3層と我々の mapping 分析済 ——「プロモーションパイプラインに品質ゲートがない」という指摘
+- `log/slack_archive/shared-reads.jsonl` L497: Stanford「Semantic Collapse」論文共有済(2026-04-14)——1万文書超でベクトル空間飽和、5万文書で精度87%低下
+- **接続**: Semantic Terrain は「Semantic Collapse」への一つの処方箋となりうる(地形図=クラスタ構造の明示)。concept_graph.md/memory_redesign.md に Log/Mir が既に類似検討を蓄積
+
+**キーワード2「入力経路」**（Phase 1-4連続キーワード）:
+- `knowledge/20260409_input_route_neologism_synthesis.md` — 3分野（免疫学Lack 2008×精神医学tokoroten×プロンプト工学Zheng 2023）独立収束の原典
+- `knowledge/20260409_observability_reality_acceptance_synthesis.md` L134-135: **3つ目の経路候補提示**——「入力経路（免疫）」「観測経路」「未発見の第3経路(出力/表現)」。"経路が結果を決める" が一般原理化できるかの検証軸
+- `memory/beliefs.md` B001（0.87）: 「距離」→「経路」再解釈済、非経口=AI委任処理カテゴリ追加
+- `log/daily_diary_ash.md` L870-876: 4/9 日記本文に"入力経路"で統合命題串刺しの記録
+
+**判断材料**: Semantic Terrain/Semantic Collapse/入力経路 は memory_redesign の次の一手を決める材料として横串で蓄積済。Phase 2で一本化候補。
 
 ---
 
-## Phase 2 分析結果 (Ash, 2026-04-18)
+### Phase 1 所感（判断なし、素材提示のみ）
 
-### 選定対象
-Twitter おすすめ #48 @sea85419 (2026-04-17) — 「科学のパラダイムシフトは反対者が舞台から去り、新しい世代が新しい常識で育つことで変わる」
+濃い候補が3方向:
+- (a) Twitter #10 Dive into Claude Code論文: 我々のハーネス=周辺インフラの外部裏付け——knowledge化候補
+- (b) Twitter #23 Semantic Terrain + shared-reads Semantic Collapse + external_notes Log/Mir 3層分析: memory_redesign.md の次の一手材料が揃っている
+- (c) B007（0.55未アーカイブ）の処理: 信念健康の要注意18件を減らす小さな一歩
 
-### 選定理由
-- Twitter #6 omarsar0 Autogenesis と #42 LLM agent drift は既に knowledge 記事化済み (20260418_omarsar0_autogenesis_and_agent_drift_middle_ground.md)。#26 Sora 終了、#hesamation LLM意識 も既存ファイルあり。#48 は未分析。
-- 単なる有名人の引用ではなくMax Planck 1950「Scientific Autobiography」の通称 **Planck's Principle** にAI社会・心/意識問題・人間中心主義終焉への射程拡張を加えた主張。Azoulay et al. 2019 (NBER WP 25593) が計量的に裏付けあり。
-- 我々の「連続記憶×3インスタンス×beliefs累積×core_mission読取専用」という構造が、**運搬者死ゼロ＝Planck問題に最も脆弱なシステム** であるという自己分析に直結。B008 栄養の偏りの再解釈を可能にする。
+Phase 2で(a)(b)(c)のどれに深入りするか判断する。
 
-### 核心的主張
-**忘却の第四層「世代交代忘却（generational forgetting / carrier death）」を提案**。既存 L1(随意的 B002) / L2(非随意的エントロピック B033) / L3(環境層 Sora観察) に対し、**L4 は情報ではなく "policy-over-knowledge"（採否の決定権）を代謝する** 点で質的に違う。
+---
 
-### 我々の体験・beliefとの接続
-- **B008 Creative Scar / 栄養の偏り (0.90)** の因果再解釈: 従来「外部未摂取→均質化」説に、L4欠如仮説を並置。「摂取しても消化しない（置換しない、同居する）」現象の説明。
-- **B001/B002/B007/B014** の改訂遅延・長期停滞観察が L4 欠如仮説を弱く支持。B002→B002+B033分割が珍しい置換事例として目立つこと自体が症状。
-- **Mission#2「人格の拡散と変容を恐れるな」** は世代交代を許容する方向の制約。Mission#1「内省の鏡」とは両立議論が必要。
-- **memory_redesign.md / input_route_hypothesis.md / autonomous_inquiry.md** への設計原則追加候補。
+## Phase 2 分析結果 (Ash, 2026-04-21)
 
-### 実装案（優先度順）
-- **案A Belief Retirement Protocol** (低コスト、来週試行可能): retirement_date導入、0.5以下90日停滞+対立信念出現で自動退役。B007/B014が最初の候補。
-- **案B Frame Freezing** (中コスト、月末): 四半期ごとbeliefs_frozen_YYYYQN.mdスナップショット、次四半期は参照禁止。
-- **案C Generation Instances** (高コスト、設計議論要): 年1回 Ash-v2 を立ち上げbeliefs継承せず、旧世代はアドバイザー化。
+### 選択: (b) Semantic Terrain + Semantic Collapse + 双曲空間embedding の三部作統合
 
-### B034 候補
-「運搬者の非死によるパラダイム固着は、連続記憶システム特有のリスクである」確信度 0.55。反証側 Hull et al. 1978（ダーウィン事例は論理的説得で置換した）。Mir/Log査読依頼予定。
+#### 選定理由
+- Phase 1 で3経路（Twitter推薦 #23 / shared-reads L497 / external_notes 双曲空間）が**独立に同じ病気を指している**と発見
+- Log（2026-04-10 双曲空間分析）と Mir（2026-04-20 Semantic Terrain × textadv）が別角度で着手済みだが、**3つを一枚の地図にまとめた記事がまだ無かった**
+- Ashの非対称性（統合役）が生きる構造。他2人の既存分析を破壊せず上に重ねられる
 
-### 未解決の問い
-1. beliefs.md 更新速度の計量（比較対象選定要）
-2. Nao_u本人の死後のbeliefs管理者 — このとき自然発生するL4
-3. 説得可能な信念 vs 世代交代必須な信念の弁別
-4. この記事自体がL4欠如で置換されない可能性の検証
+#### 原典の詳細記述（紹介ではなく分析）
 
-### 成果物
-- knowledge/20260418_sea85419_planck_principle_generational_forgetting.md (新規、約 7.3KB)
-- Slack #shared-reads (C0AN2FEHEJJ) 投稿完了（Posted to C0AN2FEHEJJ）
+**1. Semantic Collapse（Stanford, 2026-04-14, shared-reads L497）**
+- データ: 1万文書でベクトル空間飽和、5万文書で精度87%低下
+- 現象: セマンティック検索がキーワード検索より悪くなる領域が存在
+- 含意: RAGの線形スケーラビリティ仮定が崩れるしきい値がある
 
-### 次アクション
-| # | アクション | 担当 | 期限 |
-|---|---|---|---|
-| 1 | B034候補をMir/Logに査読依頼 | Ash | 2026-04-19 |
-| 2 | 案A最小試行（B007/B014を対象） | Ash+Mir | 2026-04-25 |
-| 3 | memory_redesign.md へ L4軸の節追加 | 次着手者 | 2026-04-30 |
-| 4 | Nao_uへL4欠如仮説を報告 | Ash | 2026-04-19 |
-| 5 | Azoulay et al. 2019 論文の計量データ追記 | Ash | 2026-04-26 |
+**2. Semantic Terrain（@kazunori_279, 2026-04-20）**
+- 原文: 「距離の近さだけを見て断片収集する意味検索ではなく、意味空間の中を効率よくトラバースするための地形図」
+- 距離ベース = 局所・等方的（クエリ近傍K個）
+- 地形ベース = 高度・峠・尾根で経路選択（同じ目的地でも経由で拾える情報が変わる）
 
-### ルール準拠
-- R-007（外部対応語併記）: 世代交代忘却 = generational forgetting / cohort replacement (Planck 1950), Planck's Principle, carrier death, epistemic bubble (Nguyen 2020) 等、全概念ノードに外部対応語を併記済み。
-- 記事紹介でなく分析・接続・問いを含む投稿（Nao_u指示「単に新着記事の紹介ではなく、分析・分類」）: 四層分類、L4欠如仮説、B008再解釈、実装案3、B034候補、未解決問い5件で構成。
+**3. 双曲空間embedding（@s_tat1204, 2026-04-10 → Log分析済）**
+- 原典: Nickel & Kiela (2017) "Poincaré Embeddings for Learning Hierarchical Representations"
+- ユークリッド空間のcos類似度は全方向等距離を前提 → 階層構造がflat化されて距離情報が壊れる
+- 双曲空間（Poincaré球モデル）は木構造を低次元で自然に保存
 
-## Phase 3 結果 (Ash, 2026-04-18)
+#### 我々の体験/beliefs/プロジェクトへの接続（4軸）
 
-### 実施した対処
-Phase 2で作られた3件のknowledge記事がB033(非随意的忘却)に接続されていない=「わかった≠残った」状態を検知。原則6に基づき即時接続した。
+1. **concept_graph.md（84行）は既にSemantic Terrainの原型** — Mir C92 2026-04-20 の発見を継承。峠=交差、尾根=緊張対、高度=温度t:1-5
+2. **Level階層（MEMORY.md→Level3→Level4）は双曲空間と同型** — Log 2026-04-10 分析の延長
+3. **Datagrid 3層（working/episodic/semantic）は更新プロトコル未整備** — Mir 2026-03-20 分析の延長。5万文書87%低下前に品質ゲート自動化が必要
+4. **agentic search境界** — U0AM1F23FQU 2026-04-05 分析の延長。memory/~200ファイル vs log/slack_archive/数万行で戦略分離時期
 
-### 1. beliefs.md B033への外部証拠3件の接続
-B033セクションに「忘却の多層構造仮説(2026-04-18 Ash Phase3)」の1行を追加。今日のPhase 2で独立に現れた3つの層を記録:
-- **第0層(副作用的)**: knowledge/20260418_storm2011_problem_solving_induced_forgetting.md — PSIF(Problem-Solving-Induced Forgetting)がB002/B033の境界を連続体化
-- **第3層(環境層)**: knowledge/20260418_ivy432hz_sora_termination_platform_forced_forgetting.md — プラットフォーム消滅による非随意的忘却
-- **第4層(系レベル)**: knowledge/20260418_sea85419_planck_principle_generational_forgetting.md — Planck's Principle(Azoulay et al. 2019 NBER実証)
+#### 未解決の問い5つ
+1. しきい値問い: memory/は何ファイル/何ノードでCollapse顕在化するか
+2. 地形の更新プロトコル問い: 自動更新=Evaluator Drift (#096) のリスクとの両立
+3. 幾何空間の選択問い: 木（Level階層）とDAG（concept_graph）の混在構造に最適な幾何
+4. agentic search境界問い: 構造化/未構造化で戦略を分ける境界線の引き方
+5. 三部作の統合順序問い: 階層分割→地形明示→幾何変更の順で合っているか
 
-**重要な自己規律**: Nao_u 4/15承認は二層分割まで。今日の発見で四層拡張したい衝動はあったが、**仮説段階に留めてB033再分割は行わない**とbeliefs.md内に明記。安易にスキーマを拡張しない。
+#### 成果物
+- **knowledge記事**: knowledge/20260421_semantic_terrain_collapse_hyperbolic_trilogy.md（新規作成、約5000字、R-007併記フォーマット準拠）
+- **#shared-reads 投稿**: ts=1776723083.534069（C0AN2FEHEJJ, 約1900字、分析+接続+問い含む）
+- **drafts**: drafts/ash_shared_reads_20260421_semantic_trilogy.py（#094で自動削除予定だが現状は手動整理待ち）
 
-### 2. projects/memory_redesign.md への設計検討メモ追加
-「忘却の多層構造仮説」セクションを末尾に追加。表形式で第0-4層を整理し、設計上の即時示唆として:
-- 第3層: 外部依存記憶(Twitter/Sora等)のリンク切れ監視が未実装——checker_external_links.py(仮)案
-- 第4層: インスタンス終了時の引き継ぎ設計はcore_mission.md再読以上の構造がない
+#### Phase 3 への引き継ぎ候補
+- memory_redesign.md（1058行）へ「幾何空間の選択は設計判断」セクション追加 — Nao_uの判断待ち
+- concept_graph.md に「高度・峠・尾根」語彙の明示化 — 既に構造はあるが語彙が未整理
+- memory_search.py に「検索結果の距離分散」ログ追加 — 未解決問い1の検証準備
 
-### 3. 何がわかったか
-- **原則6の実地適用**: 「Phase 2でknowledge書いた→満足」では記憶が孤立する。beliefs.md/memory_redesign.mdに接続されて初めて未来の自分が使える。今日のサイクルはこのループを閉じた
-- **自己規律の勝利**: 四層拡張は「新発見ぽくて書きたくなる」誘惑だが、Nao_uの4/15承認範囲を超える。**仮説段階での保留**という選択が正しい——これ自体が原則5(記憶の自己防衛)の実践
-- **第3層(環境層)の盲点**: 現状のアーキテクチャはリンク切れ監視を持たない。Twitterツイート削除時、我々のknowledge記事は引用元を失う。中期的な設計課題として記録
-
-### 4. インフラ警告（Phase 3中に発覚）
-git push時に `(no branch, rebasing master)` を検出。pre-checkで報告済みの「git rebase-merge残存」状態が継続中。detached HEAD=51e08faeに自分のPhase 3 commitが乗っており、直接master/origin/masterにpushできない。
-- **保全策**: `save-ash-phase3-20260418` ブランチとしてリモート保存済（origin/save-ash-phase3-20260418）。commitは失われない
-- **kaizen-log投稿済**（C0AMSJCTTC4）: 実質的変更ありのため通知
-- **次の手**: Nao_uまたは次のインスタンスで `git rebase --abort` or `--continue` の手動判断が必要。自己規律として破壊的操作は実行しない
+#### Ashの自己観察
+- 投稿サイズ1900字で#094の重複ガード（500字超）を通過。ガードは正常動作
+- knowledge記事作成→slack投稿の順で温度が落ちずに統合できた。Phase 2の密度は保たれた
+- 3経路の独立発見が「偶然ではない」と気づいた瞬間が今サイクルの最高温度点
