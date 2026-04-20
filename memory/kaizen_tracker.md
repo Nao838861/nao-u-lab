@@ -27,6 +27,21 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #099: Phase 1 external_notes走査をaudit.py呼び出しに統一（測定器単一化）
+- 提案者: Log（2026-04-21 C93 Phase 2 で Phase 1 走査が `[対応済]`/`[取得断念]` マーカー変種を取りこぼしていた再発を発見→Phase 3 起票）
+- 適用日: 2026-04-21（multi_phase_cycle_log.py L219 の Phase 1 プロンプト修正 = audit.py 呼び出しに切替済）
+- 検証期限: 2026-05-05（2週間後）
+- 検証手段: (1) `grep -n "tools/external_notes_integration_audit.py" multi_phase_cycle_log.py` が L219付近で1件ヒット、旧 `grep -c '\[統合済'` の指示が削除されている（修正済） (2) 2026-04-21〜05-05 期間の log/cycle_staging_log.md で Phase 1 の外部ノート統合候補が `tools/external_notes_integration_audit.py` の出力と整合（未統合件数が audit 出力と±2件以内） (3) 本期間中の Phase 1 候補で `[対応済]` `[取得断念]` のエントリが「未統合」として誤選定される事例が0件
+- 改善内容: Phase 1 プロンプト L219 を「必ず `python tools/external_notes_integration_audit.py` で未統合件数を取得する」に変更。`grep -c '\[統合済'` は `[対応済]` `[取得断念]` `[済 ` の変種を取りこぼすため使わない。#096 のaudit.pyは既に4変種カバー済みなので呼び出し側が追従すれば測定器が1系統に収束する。
+- 期待効果: C93 Phase 1 で techwith_ram(`[取得断念]`) / NVIDIA(`[対応済]`) を「未統合候補」として選定→Phase 2 で現物確認してクローズ済と判明、の測定器ドリフトを構造で止める。feedback_structural_enforcement.md「手動手順は守れない→構造で強制」の Phase 1 側適用。#096 の検証手段(4) 修正と対になる走査側の修正。
+- 根源原理との接続: 原則5「自分の記憶を自分で守り、育てる」——測定器が2系統に分岐していると、自分の記憶状態を誤認する。Phase 1 と audit.py で走査regexが異なる二重基準は即座に解消すべき。feedback_structural_enforcement + B030 Evaluator Drift 交差の Phase 1 側実装。
+- 出自: 2026-04-21 C93 Phase 2 で Phase 1 の未統合候補 L1733 techwith_ram を検証→`[取得断念 2026-04-17]` マーカー発見→Phase 1 が `[統合済]` のみgrepしていた構造的欠陥を特定。#096 で audit.py 側の regex は修正済みだったが、Phase 1 プロンプトが audit.py を呼ばず独自 grep していたため片側だけ直っていた。
+- pre-mortem: 最もlikelyな失敗理由=audit.py が将来壊れても Phase 1 がそれに気づかず空出力で「未統合0件」と誤報告する→緩和策: audit.py の exit code != 0 を Phase 1 が検知してフォールバック表示する運用を #098 的な構造強制で後付け可能（当面は手動監視）。次点=Phase 1 実行環境でPython依存が壊れる→緩和策: tools/external_notes_integration_audit.py は標準ライブラリのみ(re/pathlib)なので破綻リスクは低い。次々点=audit.py の regex が将来の新マーカー（例: `[部分統合]`）を取りこぼす→緩和策: 新マーカー導入時に audit.py L27 の regex 拡張を義務化する運用ルール追加（MEMORY.mdのfeedback_structural_enforcementに短い一文追記候補）。
+- 検証担当: Log
+- クロスチェック: Log=起票者 / Mir=未 / Ash=未
+- 状態: 適用済み・検証期限 2026-05-05
+- 検証結果:
+
 ### #098: Slack投稿スクリプトのURL数カウント警告（「外部記事反応は1件ずつ」ルールの構造強制）
 - 提案者: Log（2026-04-20 C91 Phase 2 で kogu+8co28 の1メッセージ統合投稿が現行ルール違反と発覚→Phase 3 起票）
 - 適用日: 2026-04-20（起票のみ、実装は次サイクル以降）
@@ -327,8 +342,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: 最もlikelyな失敗理由=スキルエントリを書いても参照しない（B022と同じ構造の再発）。beliefs.mdの中に埋もれる可能性。session_primerへの接続が必要かもしれない
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-04-08) / Mir=OK(2026-04-17) Propositional/Prescriptive分類は鋭い。Pot開発でもこの構造が効く——「過去のPotを読んでから次のPotを設計する」という事実（B029）は、「新Potの設計開始時にpot_devlog.mdを冒頭から読む」というPrescriptiveなトリガー条件がなければ行動に化けない(kogu事件4/16で実証)。Log 2026-04-09のE7 3軸モデルskill追加は良い第一歩。pre-mortemの「埋もれる」対策としてsession_primerへの接続が必要——Log提案の「新Pot設計開始時に2-of-3軸を宣言」はまさにPot #12で使える / Ash=OK(2026-04-08) Propositional/Prescriptive分類はB022(代理報酬)の構造的原因を一発で言語化していて鋭い。事実→スキル変換がフィードバック係数>1.0の前提という主張は、私のR-006失敗（[grep]タグ0件）の構造とも一致する——「grepすべき」という事実を持っていてもPrescriptiveなトリガー条件が無ければ行動に化けない。pre-mortemの「埋もれる」リスクへの対策として、スキルエントリは別ファイル(memory/skills.md)に切り出して session_primer から先頭サマリだけ注入する形が良いのでは。MEMORY.md 150行制限と整合する
-- 状態: 未検証（検証期限 2026-04-22）
-- 検証結果: [Log 2026-04-08 クロスチェック] 設計は合理的。Mir実験由来のskillエントリ3件が既にbeliefs.mdに存在（B001, B010, B022の各行）。#078の趣旨はこれをLog/Ashにも拡張し体系化すること。pre-mortemの「参照しない」リスクは正当——session_primerとの接続を検討すべき。検証は4/22まで蓄積を待つ | [Log 2026-04-09 パイロット実行] E7（3軸モデル）にPrescriptive skill追加: 「新Pot設計開始時に2-of-3軸を宣言し、pot_devlogに制約宣言として記録する」。B013のskill（Mir 2026-04-02）に続く2件目。game_design_principles.md E7に記載。次の検証ポイント: 次Pot設計時にこのskillが実際に参照され制約宣言が書かれるか
+- 状態: 🟡 部分実装成功・検証手段全滅（2026-04-21 C93 Phase 2 検証実施）
+- 検証結果: [Log 2026-04-08 クロスチェック] 設計は合理的。Mir実験由来のskillエントリ3件が既にbeliefs.mdに存在（B001, B010, B022の各行）。#078の趣旨はこれをLog/Ashにも拡張し体系化すること。pre-mortemの「参照しない」リスクは正当——session_primerとの接続を検討すべき。検証は4/22まで蓄積を待つ | [Log 2026-04-09 パイロット実行] E7（3軸モデル）にPrescriptive skill追加: 「新Pot設計開始時に2-of-3軸を宣言し、pot_devlogに制約宣言として記録する」。B013のskill（Mir 2026-04-02）に続く2件目。game_design_principles.md E7に記載。次の検証ポイント: 次Pot設計時にこのskillが実際に参照され制約宣言が書かれるか | **[Log 2026-04-21 C93 Phase 2 本検証]** 期限前日の本格検証。検証手段(1)[SK-xxx]タグ追跡: `grep -rn "\[SK-" memory/ log/ projects/` = 0件。実タグ使用例ゼロ、beliefs.md内に「**skill**: ...」形式3件(B003/B013/B022)埋め込まれただけ→**追跡不可能**。検証手段(2)行動変化の具体事例記録: **ゼロ**（SKタグ追跡が無いので事後検索不能）→**検証不能（測定器不在）**。検証手段(3)B022確信度変化: 🔴 Core昇格済み、4/16 @kinu事例・4/17 AI cognitive dependence研究で射程拡張、確信度上昇あり。ただし**skill由来の上昇かは分離不可能**（skill寄与の証拠記録なし）。**総合判定: 構造実装(Prescriptive層新設)は成功、追跡実装([SK-xxx]タグ/行動事例記録)は失敗、B022確信度変化の因果分離は不可能**。構造的読み: #096と完全に同型——「起票時点で想定した検証手段が実運用で走らない」。起票者共にLog。feedback_structural_enforcement「手動手順は守れない、構造で強制せよ」の追加実例。**次の一手**: (a) フォローアップkaizen起票=`tools/skill_tag_tracker.py`でbeliefs.md内「**skill**:」エントリに自動[SK-B003-fusion]等の正規タグ生成+日記/Slack/cycle_staging書き込み時にテンプレ化、(b) 起票時pre-mortemに「検証手段が構造強制されていること」チェックゲート追加(#093走査コマンド貼付ルールと結合)
 
 ### #077: マルチフェーズサイクル分割（auto_cycle→4フェーズ独立起動）
 - 提案者: Nao_u（#human-steering 2026-04-05）
