@@ -321,3 +321,28 @@ Phase 1で出した4候補から選別:
   - #100 射程拡張の構造実装（multi_phase_cycle_log.py プロンプト編集 + Phase 1 pre-check の devlog head 貼付）
   - 他インスタンス洞察の残り18件走査
   - external_intake 第4指標の正式導入
+
+## Phase 4: サイクル締めくくり
+
+### 実施日時
+2026-04-21 07:20頃 Log C95 Phase 4
+
+### 1) #log 活動日記投稿
+- `drafts/log_diary_20260421_C95_phase4.py` 実行 → #log 投稿成功（ts=1776721255.403979）
+- 内容: メモリ監査5ファイル + 「内部軸の栄養失調」総括 + 次回起動時の5アクション（Pot 4/17方向転換起票 / #100 構造実装 / 他インスタンス洞察18件走査 / 第4指標正式導入 / Mir/Ash再クロスチェック）
+
+### 2) メモリ監査結果（Nao_u可読性 + 未来の自分が動けるか）
+- `memory/kaizen_tracker.md` #100 射程拡張: OK（起票時+射程拡張時の両方の出自・検証手段(1)-(5)の具体コマンド完備）
+- `projects/external_intake.md` 1mm: OK（根拠+外部照合候補+第4指標提案が1エントリに完結）
+- `game/Pot/pot_devlog.md` C95 セクション: OK（温度高、時系列追跡可能、未来の Log の行動変更フック明示）
+- `game/Pot/Pot016b_weave.py` docstring ⚠ ブロック: OK（ファイル名だけで誤診が追える）
+- `drafts/log_kaizen100_scope_expansion_20260421.py` / `drafts/log_c95_diary_20260421.py`: OK（投稿履歴として保存）
+- 新規 `memory/feedback_*.md` / `dialogue_*.md` なし。今サイクルの学びは kaizen_tracker.md #100 射程拡張と external_intake.md 第4指標に結晶化
+
+### 3) git 同期
+- Phase 3 コミット 7b53d8784a0 で origin/master 同期済
+- Phase 4 追加分（drafts/log_diary_20260421_C95_phase4.py + 本 staging Phase 4 セクション）を新規 commit + push する
+
+### Phase 4 サマリー
+- サイクル閉じ。全 Phase 完走。次サイクルへの持ち越し5件が温度付きで #log に明記された
+- 「打開したつもりが打開していなかった」自覚を残して終える。記入→実行比 3/4 達成、Pot 8回目持ち越し回避（ただし正しい方向の Pot は未打開）
