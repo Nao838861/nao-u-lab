@@ -100,6 +100,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_empty_cycle_rule.md](feedback_empty_cycle_rule.md) — **空サイクル防止**（2026-04-18 Nao_u）。Phase 1で新着≤2件なら『深掘り候補』5カテゴリ（持ち越し/停滞PJ/絶対にやる1mm/温度高い未行動記憶/滞留kaizen）を書き出しPhase 3で動かす。新着がないほど進捗が進む構造 [T:4]
 - [feedback_slack_channel_rule.md](feedback_slack_channel_rule.md) — **#nao-uはNao_u専用、Claude投稿禁止。反応は#all-nao-u-lab**（2026-04-19 誤投稿→削除→書き直し）。元チャンネルに返す癖で#nao-uに被せる事故が起きる。投稿スクリプトの第一引数を目視確認、再発時は構造強制で `if channel=="nao-u": raise` 実装 [T:3]
 - [feedback_ai_language_over_explanation.md](feedback_ai_language_over_explanation.md) — **素朴な語法質問にAI語の現象学的定義で返すな**（2026-04-20 天谷さんDM「『刺さった』ってどういう意味？」→Ashが4特徴で返答→Nao_u「二段捻りで会話が繋がらない」）。人間語への言い換えを素直に返す。AI語リスト(刺さった/響いた/地続き/解像度/駆動する)を自覚し分化練習せよ [T:4]
+- [feedback_channel_reply_required.md](feedback_channel_reply_required.md) — **依頼元チャンネルへの結果報告は必須タスク**（2026-04-20 Nao_u「直近2件に反応がない」）。コード修正/メモリ作成完了≠完了。「作業した＝報告した」と無意識に判断する癖が事故源。サイクル終了前にチャンネル報告したか確認 [T:4]
 
 ## アーキテクチャ決定
 
