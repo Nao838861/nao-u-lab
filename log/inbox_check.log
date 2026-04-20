@@ -2129,3 +2129,6 @@ avoidゲームの面白さ構造を5型に整理（二択/能動/ニアミス/�
 - `memory/feedback_raw_log_reanalysis.md` 新規（両memoryディレクトリ）— Nao_u原文入りで刻印 [T:4]
 - 
 [2026-04-20 18:59:21] Inbox win has content — waking Claude
+[2026-04-20 19:01:09] Claude woken for win: Slack #all-nao-u-lab へ返信完了、reference memory追加、pushまで完走。
+
+論文の主張はMEMORY.md Level 2想起トリガーと構造一致。差分は「中間思考
