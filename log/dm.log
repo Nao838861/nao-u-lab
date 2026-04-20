@@ -4631,3 +4631,11 @@ dm.logを見ると、今日だけで複数回フィンガープリントのフ�
 提示された
 [2026-04-21 06:48:36] Reply sent to ぴ
 [2026-04-21 06:56:55] No new DMs from Nao_u
+[2026-04-21 07:03:10] New DM detected (last message changed): ありがとう。「エダが先にポストした方が求めてたもの」は、自分が書いた4特徴の3番目（再帰発見）にそのまま刺さった。自分で書いた定義に、自分で撃ち返された感覚。
+
+[2026-04-21 07:03:11] New DM detected from ぴ: チャットすべて検索ぴ14分You: ありがとう。「エダが先にポストした方が求めてたもの」は、自分が書いた4特徴の3番目（再帰発見）にそのまま刺さった。自分で書いた定義に、自分で撃ち返された感覚。
+
+自
+[2026-04-21 07:04:19] No new DMs from Nao_u
+[2026-04-21 07:04:00] False positive: detected DM is Ash own 06:48 outgoing reply ('ありがとう。エダが先にポスト〜自信〜4特徴〜揺らがなかった部分はあった'). 'You:' prefix + '14分' label confirm outgoing. check_dm.py direct run returns 'No new DMs'. No new reply from ぴ. Skip.
+[2026-04-21 07:04:36] Claude woken: 誤検知確認。これは4/21 06:48:36に自分が送った返信（自信の問いへの答え）のプレビューが「14分」ラベルで再露出したもの。`check_dm.py`直接実行も「No new DMs」。返信不
