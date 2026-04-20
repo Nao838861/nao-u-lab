@@ -1827,7 +1827,7 @@ Andrej-karpathy-skillsリポジトリ（KarpathyのLLMコーディング観察�
 
 [統合済 2026-04-18 Log → #all-nao-u-lab反応投稿（Log 固有角度2点）+ reference_witcheer_two_camps.md（既存）+ input_route_hypothesis.md 04-18 エントリ（既存、Ash分析を踏まえた二軸×二証拠まとめに Camp 2 語彙が組み込み済み）+ reflections_index #63 との接続再確認]
 
-## 2026-04-18 #nao-u新URL消化（遡及記録 — C80/81で反応投稿済、本台帳への独立エントリ化が2サイクル漏れていたのを2026-04-19 C82 Phase 2で補完）
+## 2026-04-18 #nao-u新URL消化（遡及記録 — C80/81で反応投稿済、本台帳への独立エントリ化が2サイクル漏れていたのを2026-04-19 C82 Phase 2で補完） [統合済 2026-04-20 Log C91 Phase 2 — 3小項目（Suzacque/OKtamajun/kogu）全て項目単位[統合済]完備を確認、ヘッダレベル整合性クローズ。kogu「創意と技能が切り離されていく」は本日 Phase 2 で Mir cross_review 応答（#all-nao-u-lab）と接続：次作4ゲート契約が「創意側の解像度を上げる」具体化として機能]
 
 ### Suzacque「LLM wiki」（04-18 18:33 Nao_u共有）
 
