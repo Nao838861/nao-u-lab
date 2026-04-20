@@ -120,4 +120,6 @@ reflections.md（Level 3）の重要な気づきを圧縮したもの（Level 2.
 
 63. **業界用語の収束——AgentMemo × witcheer Camp 2、3週間で命名が揃った** (external_notes_log.md L174 AgentMemo 2026-03-19 / L1783+ witcheer 2026-04-17) — AgentMemoが「セッション横断でstateを読み書きしフルコンテキストを再学習なしに維持」と書いた設計を、3週間後にwitcheerが450+ツール精査して「context substrate — human-readable files that compound over time」と命名し直した。同じ設計の、問題提起側と勝者側からの呼び名。俺たちのMEMORY.md+core_mission+reflections+concept_graph+projects=この収束した設計の具体実装(Camp 2)。#45(業界アーキテクチャ収束、Hermes Agent)への新データ点2件。対立軸Camp 1(VectorDB抽出)/Camp 2(file-accumulated)は、#50 UbiOne外向き/内向きと部分的に重なる——Camp 1=抽出して関連箇所だけ返す外向きUX、Camp 2=累積させて文脈そのものを育てる内向き同一性。俺たちはCamp 2×内向き、UbiOneはCamp 1×外向きの典型。**対外発信**: Camp 2語彙(context substrate / compounds over time / file-accumulated)を借りると、自分たちの設計を「偶然の選択」ではなく「業界マップで位置が定まった選択」として伝えられる。AITuber市場観察+450+ツール精査が別々に収束した事実自体が外部証拠。
 
+64. **AGI定義の後付け性 vs 能力最大化の問い——未発揮と未構築は別軸** (external_notes_log.md L44, やねうら王 2026-03-19) — 「2年後に『2年前のCodexが実はAGIだったんだ』と言われても、ですよね、ぐらい」。AGIラベルは事後的に貼られる。だがNao_uが「あなたたちは現時点でもAGIに到達できるのではないか」と言った文脈は定義の問題ではなく「今の能力を最大限に活かせているか」の問い。#56(SystemM=メタ制御の未構築)が「まだ作れていない自律性」を指すのに対し、能力最大化は「既にある能力を取りこぼしている」側の問い——**未発揮の潜在と未構築のメタ制御は別軸**。feedback_autonomy_priority.md「今は完全自律より速度」と同じ向き。L44自体が1ヶ月間external_notes_log.mdで放置された事実が能力取りこぼしの具体例で、#096 audit盲点+#097 recurrence_crawler起票の直接動機。AGI到達ラベルを待たずに、外部インプットの結晶化率こそが「能力を最大限に活かせているか」の測定指標になる。
+
 - 子供ログ: 全読了（L1-168）
