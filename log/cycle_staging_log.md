@@ -249,3 +249,35 @@ Phase 2 で pending_queries.md 記載と判断したが、今サイクルでの�
 
 ### 9) 他インスタンス洞察（28件）処理方針
 Pre-check で未処理28件検出されたが、今サイクルは Slack 即時応答+kaizen期限対応+栄養の偏り 1mm で時間上限。**個別処理は次サイクル Phase 1 の depth A 候補として繰越**。特に Ash #shared-reads C95「Semantic Terrain × Semantic Collapse × 双曲空間embedding」は memory_redesign.md 側の議論と交差するため優先度高として残す。
+
+## Phase 4: 日記
+
+### 1) #log 投稿
+`drafts/log_slack_log_diary_c105_20260422.py` で #log 投稿 → `ok ts=1776791456.481689`（text len=6295、温度保持長文、次回起動時タスク6点含む）。本サイクルを C105 と訂正（Phase 3 commit label の C104 は typo、C104 Phase 4 は昨日 `2708f294827` で確定済）。
+
+### 2) 次回起動時タスク（日記末尾）
+1. `log/skill_reference_log.md` 新規作成（#078 運用ファイル土台）
+2. 栄養の偏り 残り3本深掘り（GamingAgent / TITAN / GAMEBoT のいずれか1本 → knowledge/ 記録化）
+3. kaizen #087 R-007常設化 承認確認（pending_queries.md 整形依頼）
+4. 他インスタンス洞察28件処理（Ash C95 Semantic Terrain 優先）
+5. log_textadv_01 4ゲート契約の題材3候補列挙（5サイクル持ち越し中、定型反応化リスク）
+6. kaizen #105 運用第1週の観測（04-22〜04-29 既分析URL誤fetch 0件確認）
+
+### 3) メモリレビュー（Nao_u readable / 未来の自分が文脈なしで行動を変えられるか）
+
+- **memory/kaizen_tracker.md** #105 新規: ✓ Nao_u readable（提案者/適用日/検証期限/検証手段3点/改善内容/期待効果/根源原理接続/出自/pre-mortem の標準フォーマット準拠）。✓ 未来の自分が行動変えられる（検証手段(2)「04-22〜05-06 期間マーカー付与率」が実行可能、pre-mortem の緩和策「ステータスID数値だけの grep -rF」が具体行動として記載）
+- **memory/kaizen_tracker.md** #104 検証結果追記: ✓ readable（初運用ログ第1号の判定根拠「24h窓での無言URL 1本のみ」を数値で記載）。✓ action-changing（#105 への分岐発見も同時に記録され、#104/#105 兄弟関係が後から辿れる）
+- **memory/kaizen_tracker.md** #078 再定義: ✓ readable（**新(1)〜新(4)** のラベルで元の検証手段と新検証手段が並置、因果分離不可性を明示受容）。✓ action-changing（新(1)(2) は `grep` 一発で実行可能、新(3) は `log/skill_reference_log.md` 新規ファイル運用を明示、新(4) は「測定不可能項目は放棄する」ことを含めた判断基準が示される）
+- **knowledge/20260422_gm_role_separation_trinity_blindspot.md**: ✓ readable（R-007 準拠、外部対応語 self-role conflation 明記、concept_nodes=[creation, constraint, autonomy, mirror]）。✓ action-changing（Log 具体適用案の表で textadv/ローグライク/避けゲー評価の役割分担=「実装=Log / プレイ=Mir・Ash / 評価=Nao_u+cross_review」に昇格する運用が明示、`[SK-trinity-separation]` タグが新作着手前チェックリスト候補として次サイクル実行可能）
+- **drafts/log_slack_log_diary_c105_20260422.py**: archive 移動を Phase 4 末尾で実施
+
+### 4) 今サイクル更新ファイル（最終）
+- `memory/kaizen_tracker.md`（#105 新規起票 / #104 検証結果 / #078 再定義）— Phase 3 commit に含まれる
+- `knowledge/20260422_gm_role_separation_trinity_blindspot.md`（新規）— Phase 3 commit に含まれる
+- `drafts/.archive/2026-04-22/log_slack_all_nao_u_lab_url_rediscovery_20260422.py`（archive）— Phase 3 commit に含まれる
+- `drafts/.archive/2026-04-22/log_slack_shared_reads_gm_trinity_blindspot_20260422.py`（archive）— Phase 3 commit に含まれる
+- `drafts/log_slack_log_diary_c105_20260422.py` → `drafts/.archive/2026-04-22/` へ archive（Phase 4）
+- `log/cycle_staging_log.md`（Phase 4 セクション追加）
+
+### 5) git commit + push
+Phase 4 commit では Phase 4 セクション追記と diary script archive のみ。commit message で C104 Phase 3 label の typo を訂正明記（正しくは C105）。
