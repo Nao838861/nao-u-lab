@@ -127,6 +127,7 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
                 log(f"New DM detected (last message changed): {last_msg_text[:80]}")
 
             # Send reply if provided (independent of fingerprint change)
+            reply_sent = False
             if reply_text:
                 textbox = page.locator('[data-testid="dm-composer-textarea"]')
                 if textbox.count() == 0:
@@ -150,6 +151,28 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
                     page.keyboard.press("Enter")
                     time.sleep(4)
                     log(f"Reply sent to {target_user}")
+                    reply_sent = True
+
+            # 返信送信後はfingerprintを再抽出して、自分の返信が次回「新着DM」として
+            # 誤検知されるのを防ぐ（2026-04-21 6連続誤検知を受けて修正）
+            if reply_sent:
+                post_reply_text = page.evaluate("""() => {
+                    const main = document.querySelector('main');
+                    if (!main) return '';
+                    const lis = main.querySelectorAll('li');
+                    if (lis.length === 0) return '';
+                    const lastLi = lis[lis.length - 1];
+                    const spans = lastLi.querySelectorAll('span[dir=""]');
+                    let t = '';
+                    if (spans.length > 0) t = spans[spans.length - 1].textContent || '';
+                    else t = lastLi.textContent || '';
+                    return t.trim().substring(0, 200);
+                }""")
+                post_fp = re.sub(r'[\d:：.·•\s]+$', '', post_reply_text).strip() if post_reply_text else ""
+                post_fp = re.sub(r'\d+', '', post_fp).strip() if post_fp else ""
+                if post_fp:
+                    fingerprint = post_fp
+                    log(f"Fingerprint updated post-reply: {post_reply_text[:60]}")
 
             # 既存のstateにマージ（consecutive_fails等を保持するため）
             existing = load_state()
