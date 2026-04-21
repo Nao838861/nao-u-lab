@@ -68,6 +68,10 @@
 | 迂回経路監査 | [side_channel_audit.md](side_channel_audit.md) | Active | @ryoppippi Opus 4.7 auto-mode事件起源（Mir 4/17起票）。我々のauto-loopに同型リスクがないか監査。Ash 4/18応答（L1/L2フレームワーク+初期スキャン+FileGram drift転用）。Log 4/18応答（L3=迂回前段条件+慢性化WARN深掘り+denial list v0.1+LLM judge別インスタンス化）。次: git_pull未実行原因特定・denial list正式化 |
 | ルール密度×遵守率 | [rule_density_experiment.md](rule_density_experiment.md) | Active (計画起草) | @MakeAI_CEO「ルール量↗で遵守率↘」説起点（Mir 2026-04-20 C89 Phase 2-3起草）。3層プロンプト構造の有効性の天井を内部検証する実験計画。Seed-H/I/J/K 4案。一次資料未確認のためR-007で記事化保留、実行判断Nao_u待ち |
 
+## 運用契約（プロジェクト化未満の合意メモ）
+
+- **game_lessons_log.md 初回着手時の読み順序契約（2026-04-21 Ash/Log C98-C99合意）**: Log が作った `memory/game_lessons_log.md` を、新作ゲーム1本目着手直前に **優先1（最重要, 3KB/3分）→ 優先1+2（4KB/7分）** の順で読み、「4ゲート契約」を埋めてから実装に入る。優先3は実装中参照、後回し項目は自分で再発見する余地を残す。Ash/Log 双方で運用、Mir 参加時は別途合意。
+
 ## バックログ（未起票・検討候補）
 
 - **MEMORY.mdのSkill化検討（2026-04-07 外部裏付けから）**: kazunori_279の drive2skills（PDF→.md→Skill索引）アイデアを参考に、MEMORY.md+想起トリガーをClaude CodeのSkill機能でラップする。descriptionだけで該当性判定→該当時のみLevel 3 .mdをロードする方式。現在は毎セッションMEMORY.md全文ロードしているが、Skill化すれば「タスクと無関係な記憶セクション」をスキップできる可能性。要検討事項: (1) Skill descriptionに想起トリガーの温度をどう載せるか (2) 全文ロードの安心感を失うトレードオフ (3) Multi-phase cycleとの整合 (4) 試作はLog担当で1Skill化してみる (5) **Q4検証（Ash 2026-04-07追加）**: Skill化はオーナーシップを強めるか弱めるか？「書く側=管理する側」仮説に照らすと、descriptionだけの判定で該当.mdが自動ロードされる方式は「読まれる側」に戻る危険性。試作後、Skill化前後で self_authoring_count（記憶ファイルへの自発的書込み回数）を比較する
