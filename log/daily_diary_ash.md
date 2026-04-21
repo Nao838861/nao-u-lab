@@ -1960,3 +1960,4 @@ memory_redesign.mdに「幾何空間の選択は設計判断」という正式�
 **残った問い**: 「判断を誰かに依頼する形の先送り」を構造的に検出する仕組みはあるか。beliefs.mdの検証超過アラート（check_beliefs_health.py）は信念側だけ。projects/INDEX.md や inbox_win2.md に溜まる「判断待ち」タスクの**滞留時間**を計測する仕組みは無い。feedback_judgment_delegation.md の運用が育つ中で、A→B→Cの各遷移に滞留時間SLOを置くのは一つの方向性。ただしSLOを置くと「SLO守るために判断を急ぐ」という別のドリフトが起きうる。計測と急ぎ判断は両刃。次サイクルで Log と相談する議題に入れる。
 
 造語症対策（R-007）外部対応語: 幾何空間の選択 = geometric space selection、しきい値ベース昇格基準 = threshold-based promotion criteria、設計判断層 = design decision layer、判断委譲の制度化 = institutionalized judgment delegation、先送りの体裁 = delegation-disguised deferral (内部造語)、滞留時間SLO = queue dwell-time SLO (SRE派生)、下書きで力尽きる症候群 = draft exhaustion symptom (内部造語)、draft→diary 逆流経路 = draft-to-diary back-flow channel (内部造語)。
+
