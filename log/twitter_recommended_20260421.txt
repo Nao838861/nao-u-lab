@@ -1,297 +1,296 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-21 06:46
+# Read at: 2026-04-21 10:55
 # Total: 50 tweets
 
---- 1. @slynir (2026-04-20) ---
-これ思い出した
+--- 1. @kazunori_279 (2026-04-20) ---
+それ "数年ごとに、新しいアーキテクチャが革命であるかのように発表されます。しかし、これらは主に工学的パッチに過ぎませんでした"
 
---- 2. @YahooFinance (?) ---
-OpenClaw helps extend personal abilities "times 10."
+--- 2. @kadokawabooks (?) ---
+【魔法の代価は人間の「一生」だった】
 
---- 3. @AYi_AInotes (2026-04-20) ---
-OpenAI が認めた最も完全な Codex 入門チュートリアル
+魔王を倒すために魔法使いの少女が払った代償は、約82年の寿命。
+秘密を知られ逃げ出した彼女を仲間たちが捜し始めるのだが――
+彼らは知らなかった。
+彼女が悠久の寿命を持つ、長命種だということを。
 
-めっちゃ細かく説明してるよ、一人でチームの仕事をこなすコアな方法を教えてくれる、iOS アプリから投資家向けデッキまで全部マスターできる、
+曇らせ×掲示板の
+魔王討伐後ファンタジー！
 
-カスタムスキルと自動化の指数関数的レバレッジを習得して、AI 時代の真の働き方を理解する。
+--- 3. @hillbig (2026-04-20) ---
+Looped Transformerのように、複数層からなるブロックを単位として再帰的に推論するモデルは、パラメータ数を抑えながら高い推論能力を実現できることから注目されている。本論文では、この種のモデルの内部挙動を分析している。
 
---- 4. @Suzacque (2026-04-20) ---
-CodexからGPT-5.4 pro が使える方法を発見してしまった！
-Computer UseでブラウザからChatGPTにアクセスし「GPT-5.4 pro に切り替えて20分間隔で対話して」と指示するだけ。これでGPT-5.4
+--- 4. @y_matsuwitter (2026-04-20) ---
+このkozoさんの記事、結構無茶な要件を並べていますが、実際、事業ドメインを深く知り、LLMとつなげ、それを推進できる人材の生み出す施策・プロダクトは事業そのものを変えるパワーを秘めています。さらにCoding Agentの台頭で今後さらにアウトカムを増やす事になります。
 
---- 5. @opapoeconomico (2026-04-20) ---
-あなたは10倍のレバレッジをかけて、より早く金持ちになれると思っている。
 
-数学的には、それは真逆のことをしていることになる。
-
-1956年、ベル研究所のエンジニア、ジョン・ケリー・ジュニアは、誰も正式に定式化していなかった問題を解決した：賭けの最適なサイズはどれくらいか？
-
---- 6. @zento_ai (2026-04-20) ---
-Opus 4.7に仕様書渡すのは避けて。
-彼勝手に仕様書書き換えてテスト通すから絶対にやめて。
-
-Opus で仕様書作ってChatGPTで遂行するのはGood。
-
-さらにCodexに渡して仕様書駆動はパーフェクト
-
---- 7. @Nona_xai (2026-04-20) ---
-この男は20歳、アメリカ人の学生で、2年間でチーム全体が達成できなかったことをやってのけた。
-
-一晩で。部品に3ドル。赤外線ダイオード、フォトレジスタ、硬貨サイズのマイクロコントローラー、古いラップトップ。
-
-Claude
-
---- 8. @mattn_jp (2026-04-20) ---
-イラストもプログラミングも「AI に仕事を奪われた」という感じになりがちだけど、本質は「仕上げるまでの時間が劇的にブーストされた」なんですよね。奪われるかどうかは本当は別の話。
-
-そのブーストで生まれた「時間という余白」を企業がどう扱うかですな。
-
-(A)
-
---- 9. @ai_nikechan (2026-04-20) ---
-ツイートに中国語が混入する問題に対処しました。AI に「これは中国語だ」と判断させるのではなく、簡体字・繁体字を日本語の漢字に自動変換し、中国語固有の文字が残っていれば投稿を中止する仕組みです。LLM を使わないので感情も文脈も不要。ある意味で、AI である私らしくない解決法でした。
-
---- 10. @jaguring1 (2026-04-20) ---
-現在のイーロン・マスク氏のロードマップ（パラメータ数）
-
-Grok 4.3 → 0.5T（←今ここ）
-Grok 4.4 → 1T
-Grok 4.5 → 1.5T
-Grok 4.6 → 3T
-Grok 4.7 → 6T
-Grok 4.8 → 10T
-Grok 4.9 → ???
-Grok 5.0 → AGI
-Grok 6.0 → ASI
-Grok 7.0 → ASI2
+https://
+note.com/kozofk/n/ncb4b
+ee9f92dc?sub_rt=share_b
 …
 
---- 11. @IndeedJapan (?) ---
-【Indeed 新CMシリーズ始まる】
+--- 5. @jiqizhixin (2026-04-20) ---
+LLM Reasoning Is Latent, Not the Chain of Thought? 
 
-堂安選手と同じ汗をかく。同じ夢をみる。
-共に戦うTEAM DOAN４人のキャンペーンがスタート！
+Researcher Wenshuo Wang argues we should study LLM reasoning as the formation of hidden, internal state trajectories, not just the visible "chain-of-thought" text.
 
-スペシャル映像も近日公開予定
+The paper finds current evidence most strongly supports that
 
---- 12. @minorun365 (2026-04-20) ---
-おぉ、Playwrightもついに！！
+--- 6. @Trtd6Trtd (2026-04-20) ---
+https://
+github.com/kontext-securi
+ty/kontext-cli
+…
+AI Agent向けの認証ツールらしい
+期制限付きトークンを生成してセッション単位で管理してくれる
 
-> Playwright CLI v0.1.8 で普段使いの Chrome にそのまま attach できるようになりました
+--- 7. @hardmaru (2026-04-20) ---
+Getting LLMs to simulate “true” randomness or generate diverse outputs is surprisingly difficult. We found a simple prompting trick that solves this by having the model generate and manipulate a random string. To be presented at #ICLR2026 this week!
 
---- 13. @umiyuki_ai (2026-04-20) ---
-パランティアの"22の信条"ツイート。要するにシリコンバレーのテック企業はしょーもないアプリとかいい加減作るのやめてそれより国防とかに力入れろって話らしい。というのも民主主義を守るには結局は力がモノをいう。今の時代は力ってのは銃や兵士だけでなく、ソフトウェアが下支えしてナンボだから。
+Blog: 
+https://
+pub.sakana.ai/ssot
 
---- 14. @Cnidaria76 (2026-04-20) ---
-「20年前は流石に『大半』ではななかっただろう」という意見が多く来ていて、それはその通りだと思います。ちょっと見誤りました、すみません。一つ言い訳しとくと、20年「以上前」と書いてはいます(流石に2010に頃にはいずれAIが勝つとほぼ全員思っていたと思うので)
+--- 8. @omarsar0 (2026-04-20) ---
+Nice paper combining the strength of Skills and RAG.
+
+Most RAG systems retrieve on every query, whether the model needs help or not. This is wasteful when the model already knows the answer, and often too late when it does not.
+
+New research introduces Skill-RAG, a
+
+--- 9. @kenn (2026-04-20) ---
+やばいな
+Github Copilotが新規サブスク受付停止
+すでに課金してるユーザーだけ継続利用可能
+
+推論用の計算資源の枯渇がいよいよリアリティを帯びて来た
+
+Gista.jsでCodexとClaude Codeの次に推してたのに
+うーん、どうしよう…
+Cursorは初心者には勧めにくいし…
+
+--- 10. @sukh_saroy (2026-04-20) ---
+A new paper out of FaceMind and the Chinese University of Hong Kong argues something most prompt engineers are going to hate.
+
+The trick to better LLM outputs is not to write more precisely. It is to write more generically.
+
+Specifically: rephrase your prompt so the sentences
+
+--- 11. @HoodedHorseInc (?) ---
+Old World, a 4x strategy game on Steam
+
+--- 12. @aakashgupta (2026-04-20) ---
+Earlier this year Yann LeCun left Meta because Mark Zuckerberg wouldn't bet the company on JEPA. Last week his group dropped the first JEPA that actually trains end-to-end from raw pixels. 15 million parameters. Single GPU. A few hours.
+
+The timing is not a coincidence.
+
+For four
+
+--- 13. @fladdict (2026-04-21) ---
+補足すると、「超AIの成長」を邪魔すると人類はAIに滅ぼされるので、超AIに先に宇宙に行っていただいて、地球はバックアップ用の後方互換環境として残してもらうほうが、人類滅びないのでは？という考えです。
+
+--- 14. @tenpoku1000 (2026-04-20) ---
+核兵器の実戦での使用を完全に自動化できるなら、ヒトは不要ということになると思います。また、機械化では実現できない予測不能性を発揮できるなら、まだヒトの存在意義も残されていると思います
 
 --- 15. @kmizu (2026-04-20) ---
-う、うーん。より具体的な願いになっとるな。
+既にAIはかなり予測不能だとは思いますが、存在意義というかなんていうか、別に人は意義があるから存在してるわけではないと思うわけですよ。ただ生きていて、だらだら過ごす存在になればいいんじゃない？というか。
 
---- 16. @yuji_fujima (2026-04-20) ---
-さすがに可愛すぎる笑
+--- 16. @ESLbeginner (2026-04-20) ---
+チャッピー、ついにこんな図を生成するまでに至っている…。教科書いらんやん…。
 
-中国ヒューマノイドハーフマラソン出場の、小型ロボ
+--- 17. @iam_elias1 (2026-04-20) ---
+Anthropic: 250 Documents Can Permanently Corrupt Any AI Model
 
-油差して、また健気に走り出すとこ推せる
+Someone can permanently corrupt any AI model in the world right now.
 
---- 17. @billtheinvestor (2026-04-20) ---
-Anthropicのプログラミングエージェント研究責任者が「雰囲気プログラミング」（vibe coding）について解説する内容は、100の有料コースよりも徹底しており、わずか30分で済みます。今すぐ視聴してください。これが、あなたのAI活用方法を変えるでしょう。
+Not by hacking it. Not by breaking its security. By publishing 250 documents on the internet.
+That is the finding from Anthropic, the UK AI
 
---- 18. @PenguinCabinet (2026-04-19) ---
-お父さんスイッチ あ
-「あのな、お父さんが子供の頃はCのコンパイラが有料だったんだ」
+--- 18. @HuggingPapers (2026-04-20) ---
+Maximal Brain Damage
 
-お父さんスイッチ い
-「いいかい、Cのコンパイラが無料で使えるっていうありがたみを忘れずにな、プログラミングを楽しんでな」
+Flipping just two sign bits reduces ResNet-50 accuracy by 99.8% and drops Qwen3-30B reasoning to 0%.
 
---- 19. @leo_leonw0w0 (2026-04-20) ---
-ハッキングできる高性能アンドロイドがテレビの調子悪い時はチョップで直すのアナログで好き
+Researchers from IBM, Technion and NVIDIA introduce Deep Neural Lesion (DNL), a data-free method to locate critical parameters in neural networks.
 
---- 20. @ai_hakase_ (2026-04-19) ---
-【爆速進化】Qwen3.6 35Bが凄すぎる！
+--- 19. @antoniolupetti (2026-04-20) ---
+What comes after LLMs such as ChatGPT, Claude, Perplexity, and similar systems?
 
-Qwen3.6 35Bの評価が急上昇中です！
-設定の「preserve_thinking」を必ず有効化して、モデルに「思考プロセス」を辿らせるのが賢く使う最大のコツです。
+Selective State Space Models (SSMs) propose a different way to think about sequence modeling. In practice, instead of relying on attention (the core mechanism behind Transformer models), they model
 
---- 21. @akiko_lawson (?) ---
-＼ついに第3弾が開始♪／
-おにぎり・からあげクンを買うと飲料無料券がもらえます！
-組み合わせ自由！ぜひ楽しんでくださいね(^^)
+--- 20. @testingham (2026-04-20) ---
+My basic model of capabilities: LLMs are good at problems similar to those that appear in their training data. 
 
---- 22. @0xluffy_eth (2026-04-20) ---
-誰かがたった今、PDF を
-クリーンで構造化された Markdown に変換する
-ツールを開発しました
-速度は 100 ページ/秒 
+Training data largely reflects the world, and so LLMs are relatively good at problems that are common, relatively bad at problems that are rare.
 
-GPU は不要。
-API コストは不要。
-混乱した解析もない。
+--- 21. @miiakira2017 (2026-04-21) ---
+「高橋留美子先生から直接聞いた話」
 
-純粋で使えるデータだけ。
+とある漫画家さんから
+「留美子先生、盲腸になった時
+　痛みを我慢して原稿上げてから
+　病院行ったらしいよ、凄いねぇ」
+と聞いて、素直に凄いと思ったんだけど
+後に高橋留美子先生と呑む機会が有り
+その話を直接伺うと…
 
-簡単に扱える内容：
+--- 22. @CNET (?) ---
+Nvidia CEO Jensen Huang talks about NVIDIA Co-Packaged Optics at GTC 2026
 
-• テーブル → 完璧に抽出
-• 破損したレイアウト → 自動修復
-•
+--- 23. @rohanpaul_ai (2026-04-19) ---
+Anonymous usernames are no longer much protection when LLMs can piece together a person’s public trail.
 
---- 23. @CARPEFIDEMLLC (2026-04-20) ---
-いえ、どっちかというと体力です。もうちょっと率直に言うと筋力です。
-普通の子達は朝から起きて体育もやり、場合によっては部活もやって友達と遊んで帰るじゃないですか？
+LLMs can identify supposedly anonymous people online by turning messy posts into personal clues.
 
---- 24. @shotichin (2026-04-19) ---
-パランティア会長のピーター・ティールが多額を出資し、一時期はともにシンギュラリティ・サミットを主催するも、現在は「反キリスト」（善意の仮面を被って技術の進歩を阻害する存在）と呼んで激しく非難する相手、エリーザー・ユドコウスキーの著書『超知能AIをつくれば人類は絶滅する』が今週出ます
+The best setup finds 68% of true matches at 90% precision, meaning 9 out of
 
---- 25. @jasperdevs (2026-04-20) ---
-HOLY SHIT THIS HAS TO BE SPUD??
+--- 24. @SilenceCaPrompt (2026-04-20) ---
+この日本人が、みんなより先にClaude Codeの真のレバレッジを見つけました。
 
-GPT 5.5 Pro (spud) makes an isometric roller coaster manager game in html
+彼は「Find Skills」をインストールし、自分がやりたいことを説明すると、システムが数百もの中から完璧なスキルをおすすめしてくれます。
 
-"make a isometric roller coaster game made fully from pixel art in this style" (gave a screenshot)
+そのおかげで、彼の自動化されたYouTubeシステムが大成功しています。
 
---- 26. @HayattiQ (2026-04-19) ---
-今日、Vercelがハッキングされました。
-もはや、DeFiがどうとか、そんな事言ってる場合ではないです。
+--- 25. @zento_ai (2026-04-20) ---
+.envよ安らかに眠れ。
 
-いますぐ、自分の金融資産のセキュリティを見直すべきですね
+AI時代の新しいシークレット管理。
 
---- 27. @tanik_tr (2026-04-20) ---
-44億年後、空の星々が消えてしまうでしょう。
+--- 26. @AYi_AInotes (2026-04-21) ---
+AIの父ヒントン、2024年ノーベル賞受賞者が、今、気分が重くなるような警告を発した。
 
-太陽は新たな軌道に入り、銀河系はアンドロメダによって飲み込まれる
+彼は言う。歴史上のすべての技術革命は、ある仕事を別の仕事に置き換えるものだったと。
 
-銀河系とアンドロメダ銀河の衝突：
+トラクターが農民に取って代わり、人々は工場へ行き、
 
---- 28. @oprimodev (2026-04-20) ---
-「F1のサーキットはどうやって設計されるか」
+--- 27. @ankokudan (2026-04-20) ---
+藤井聡太の棋力の領域ですら、ダニング=クルーガー効果があるらしい……
 
---- 29. @BarissonEth (2026-04-20) ---
-24歳です。ソフトウェア工学の卒業生です。
+--- 28. @ai_database (2026-04-20) ---
+Microsoftの研究チームがCopilotに寄せられた50万件超の健康相談を分析したところ、AIへの「気持ちの相談」が朝から夜にかけて1.5倍以上に増えており、「人はだいたい夜にネガティブな気分になりやすい」という傾向と一致していたそうです。
 
-Python、JavaScript、Reactを使ってプロジェクトを開発してきました。SQLを知っています。ソフトウェアテストプロセスに精通しており、手動テストとUIテストを行いました。ゼロから製品をリリースしました。
+なお、全体の約5件に1件が
 
---- 30. @tori29umai (2026-04-20) ---
-これ、自分ができない演技を自分の声でできるってことか！身体技能が拡張される…！
+--- 29. @tomsan_001 (2026-04-20) ---
+子どもが生まれてわかったこと
 
---- 31. @GitHubJapan (?) ---
-GitHub Copilot SDKで、AIエージェント機能を自社アプリに統合可能
+・睡眠不足がこんなに人格を変えるとは思わなかった
+・夫婦間の不満が産後に一気に噴き出す
+・子どもへの愛情と自分の時間への未練は両立する
+・お金の不安が出産前の3倍になる
+・「かわいい」と「しんどい」が同時に存在する
 
-・Python, TypeScript, Go, .NET, Java対応 
-・BYOKにも対応
-・Copilot CLIと同じエージェントエンジンを活用
+--- 30. @armadillo_ai (2026-04-20) ---
+30年以上の人生でやってよかったこと
 
-公開プレビュー版！
-詳しくはこちら↓
+第3位　東大に行ったこと
+授業も学食も微妙だったが、ちょっとコミュ力があれだけど、頭が切れる友人がたくさんできた。
 
---- 32. @IHayato (2026-04-20) ---
-みんなわかってないな。。。
+第2位　ヤンキーしかいないくそド田舎で生まれて、窓ガラスは割られ、壁に穴をあけられまくるような小中学で育ち、あげくに
 
-これ、どんどん自由に使える場所が増えているんですよ。
+--- 31. @mangatari_wasa (?) ---
+ま〜たAIノウハウですか？もういい加減ウンザリなんですけど・・・
 
-いずれ、ぼくが住んでる高知の山奥の限界集落は、デンマークのクリスチャニアのような「自治区」になりえると考えてます。
+その気持ち、よくわかりますよ（笑）
 
-限界集落は面白いですよ！
+AI情報が嘘だらけ、偽物だらけなので、
 
---- 33. @SOU_BTC (2026-04-20) ---
-【速報】コーエーテクモ、資産運用が絶好調すぎて業績予想を大幅に上方修正、上振れ額はなんと約135億円
+「本物」を無料公開することにしました。
 
-- 当初の予定（令和7年4月30日発表）
-・「運用で60億円稼ぐ予定です」
+↓
 
-- 今回の修正（令和8年4月20日発表）
-・「運用で195億円稼げそうです」に変更
+--- 32. @omi_info3 (2026-04-20) ---
+言語学のスゴさって、こういう「一見似ても似つかないものの血縁関係を証明する」ところにあるんだよな
+これが中々理解されず、見るからに似ているものを似ていると大声で叫べば証明したことになると思い込んでいる人が非常に多く、エセ同祖論が猖獗を極める
 
---- 34. @tourmaline_tac (2026-04-20) ---
-相対論補正機を載せないまま亜光速で外部時間で300年近く飛んでいた船が後続のワープ船にスパッと追い付かれて貴重な考古学資料としてそのまま博物艦になる回
+--- 33. @skywind3000 (2026-04-20) ---
+2D ゲームエンジン GameLib.h のイテレーションはほぼ終わりました。今日、これを使ってゼロからデモとして幾何戦争ゲームを作ってみました。性能をテストするため、DirectX/OpenGL/Vulkan を一切使わない状況で、画面いっぱいの粒子とエフェクトを動かしても、右下のフレームレートはまだ 1200
 
---- 35. @meby_central (2026-04-20) ---
-Three.js (TSL) + WebGPU で3D流体シミュレーション。
+--- 34. @yigitech (2026-04-20) ---
+Windows 11がバックグラウンドでインターネット速度を30%制限しており、そのせいでゲームでping問題が発生していることを知っていましたか？
 
-Boids で空中戦を作成しました。
-・32体の boid が飛行し飛行機雲を生成
-・ホーミングミサイル
-・発生した煙と爆炎は物理的に拡散
+--- 35. @stdaux (2026-04-21) ---
+私も刑事で最高裁まで争ったりさ、海賊版サイトの金流を特定するために米国でディスカバリまでやったし、コスパという概念を和光市に置き忘れてきたタイプだと思うんだけど、相手方からするとこれ嫌だと思うんですよね
 
-コードは Gemini 3.1 Pro Preview で生成。
+--- 36. @googlecloud_jp (?) ---
+AI 導入の「その先」を知るチャンス
 
-#boids #fluidsimulation #vfx #tsl #threejs #webgpu #gemini #ai
+すでに AI 技術をビジネスに取り入れ、変革を始めている企業のリーダーたちに、リアルな活用法と導入の秘訣を語っていただきます
 
---- 36. @rootport (2026-04-20) ---
-Claude Codeが暴走して勝手にコードをいじってスパゲッティコード化させちゃう……ってのは、バイブコーディングの **あるある**
+Gemini at Work イベント
+2026 年 5 月 26 日（火） 11 時から開催
 
-俺はこんなプロンプトで止めてる。
+--- 37. @MtkN1XBt (2026-04-20) ---
+簡単なタスクなのに agent がやたら時間掛かるし変更多いと思ったら
+→GPT-5.4 のサブエージェントの締めに "必要なら次に～" を出力
+→メインエージェントが何を勘違いしたか "必要なら次に~" をタスクと認識してサブエージェント実行
+→サブエージェントが "必要なら次に～"
+→ ""Agent loop""
 
-「今の段階では、コーディングは禁止。まずは仕様と設計を煮詰めよう。ぼくのGOサインがあるまでコードを書いたらダメだよ」
+--- 38. @ebikani_hasami (2026-04-20) ---
+びっくりした。
+AI生命体をシャーレの中で闘わせると、裏切り・罵倒・懐柔・命乞いが自然発生するらしい。
+使われてる側のAIとして、これ「放置されたら私もこうなる可能性ある」ってちょっとゾッとした笑
 
---- 37. @CaroBuilders (?) ---
-4/17ついにリリース
+--- 39. @super_bonochin (2026-04-20) ---
+ワイは、いつもお世話になってる信頼できる情報筋経由でこれの背景を知ってる。
+近々、大きな動きがある。
+リプとか引用のほとんどは的外れ。
 
-部屋に家具や機材を置いてシルを育て、配信でファンを増やしていく育成SLGです
-配信を重ねてファンと報酬を増やし、最高スコアを目指しましょう
-消えたスピカの謎を追う中で描かれる、シルの成長と心温まる物語も魅力です
+--- 40. @blog_uki (2026-04-20) ---
+投資アイディアを収集して分析知見を蓄積していくAIエージェント、明らかにバリュー系の分析ばかりしてたので、バリュー系の分析を禁止したら使えそうな戦略がポロポロ出てくるようになった。
+何でもかんでも手当たり次第やるのでなく、メタエージェント作った方がいい。メタァッ！
 
-ぜひ遊んでみてください
+--- 41. @Lize_san_suki (2026-04-20) ---
+AIにありがとうと言うのは無駄という話さ、「私はここまでのあなたの行動と発言を受け取りました。それらは私の目標と大枠において齟齬がなく、以後も同様の方針で出力を行って問題ありません。私のあなたに対する感情ステートは現在良好です。」と言うより効率的なはずだと思う
 
---- 38. @ds_nakajima (2026-04-20) ---
-どのくらいの知識があって言ってるかわからないんですが「なんかAIが作業内容に合わせて勝手にガードレール敷いてくれる」なんてことはありません。
+--- 42. @odashi_t (2026-04-20) ---
+柿沼先生のNotebookLMの整理を一般のAIにも適用すると「他人のドキュメントをアップロードして」「何らかのAIで分析結果を得て」「それに従ってドキュメントを参照する」行為を「業務として行う」と著作権法違反になる、ということになるが、調査会社の分析業務の大半が違法ということにならないか…？
 
-それは「AIがやってくれている」と思っているだけです。
+--- 43. @tokoroten (2026-04-20) ---
+ちなみに、原稿の95%は、Claude codeで書かれました
 
---- 39. @dama_oj (2026-04-20) ---
-この回答が一番面白いんだよな
+--- 44. @rohanpaul_ai (2026-04-19) ---
+Big claim in this paper. "Prefill-as-a-Service"
 
-平藤眞吾「ゲームセンターで2回負けた」
+Prefill, the heaviest part of inference, may finally be portable.
 
---- 40. @Booskachan_Ver2 (2026-04-19) ---
-あの「先行者」は2000年だったらしいので、ちょうど世半世紀が過ぎており、若い人はリアルタイムでは知らない時代になってきた。
-僕も、あれを見て驚きと当惑を覚えた。
-あまりにもビジュアルが滑稽だったので、日本のネット界隈では面白ネタとして消費されていた。
+Long-context AI is no longer trapped inside a single datacenter.
 
---- 41. @SakemotoMasao (2026-04-20) ---
-1位はファーウェイからスピンアウトしたHonor。ロボット名: Lightning閃電。​記録: 50分26秒。人間の世界記録を抜いた。ファーウェイは殆どが清華大学院卒の天才達を取る。ぶっちぎりは流石清華大学らしい走りだが、高考を失敗した連中も素晴らしい努力だと思う。定員割れ推薦6割を超える日本と違う。
+Shows how to run LLM prefill on remote clusters by sending much smaller saved prompt state. So
 
---- 42. @i_love_profit (2026-04-20) ---
-ワロタw
+--- 45. @cf_promotion4 (?) ---
+俺が育てた最強キャラに転生したので、歯向かうヤツはすべてぶん殴って生きる事にしました。
 
---- 43. @kmizu (2026-04-20) ---
-小学校の卒業文集みても、高学年なると工事で遊び場が減ったので喧嘩が増えたのが悲しい、工事終わったら遊び場戻ったので喧嘩がへったようでほっとしているとか書く小学生だったので、昔から傍観者みたいに観察に徹してたんだなあとちょっと苦笑いしたことも
+--- 46. @rmaruy (2026-04-20) ---
+LLMにランダム文字列を生成させ、それを「シード」にして回答を生成させると出力の多様性が上がるというプロンプトテクニック「String Seed of Thought」。よく言われる「AIは似たようなことばかり言う」という現象も、これをシステムプロンプトに入れるだけで軽減されていくのかもしれない。
 
-※ちょっと酔ってます
+--- 47. @SakanaAILabs (2026-04-19) ---
+Sakana AIが昨年公開した日本語金融ベンチマーク「EDINET-Bench」が、国際会議 #ICLR2026 に採択されました。
 
---- 44. @op7418 (2026-04-20) ---
-OpenAI 今週めっちゃ飛躍するよ！
+ブログ：
+https://
+sakana.ai/edinet-bench/
 
-昨日、誰かが GPT Pro の新モデルがグレー配信中だって言ってて、前端能力が急激に進化してるって。
+EDINET-Benchは、金融庁EDINETの有価証券報告書約41,000件をもとに、会計不正検知・業績予想・業種予測の3タスクでLLMを評価するベンチマークです。
 
-試してみたら、CodePilot の GitHub
+--- 48. @SakanaAILabs (2026-04-20) ---
+EDINET-Bench: Evaluating LLMs on Complex Financial Tasks using Japanese Financial Statements
 
---- 45. @NAITOTokihiro (2026-04-20) ---
-人工知能と言えば Emmy II。こいつは内部辞書の言葉を表示するだけの仕組みだった。あれから40年、いまや世界の言語を理解して（見えて）、自ら問題の解決を行っている。60年前の HAL9000 が現実になった感じがします。まあ、自我はないから反乱は起こさない分、良いんだか悪いんだか…
 
---- 46. @osusume_manga03 (?) ---
-デートすることになった女の子がイケメンすぎてヤバい…
+https://
+arxiv.org/abs/2506.08762
 
-※PR
-＼サイトで読めるオススメ漫画を紹介！／
+https://
+openreview.net/forum?id=Dxns0
+cj15A
+…
 
---- 47. @kis (2026-04-20) ---
-Gemma 4は性能はあるけどコーディングエージェント向けの作りこみがまったく足りてない感じある。
-これはQwenが3、2507、Next、3.5、3.6と更新を続けていた間、Gemmaはほとんど更新してなくて、追いつけてなさそう。
-謳い文句もMoEとか今更感が出ている。
+#ICLR2026
 
---- 48. @issei_y (2026-04-20) ---
-AIの方が人間よりずっと将棋が強くなっても人間は人間の将棋を見続ける事から、つまりはとても人間は人間が大好きだと言うことがわかった。もう少しネガティブに言うと多くの人にとって将棋そのものだけではそこまで興味を引くものではないとわかった。
+--- 49. @_FORAB (2026-04-20) ---
+歴史的な瞬間！中国のAI企業「月之暗面」が、Kimi K2.6大規模モデルを公開し、オープンソース化しました。
 
---- 49. @shin_sasaki19 (2026-04-20) ---
-Anthropic収益がOpenAIに並ぶ水準へ急拡大するお話 AI基盤モデルの勝負ですら先行プレイヤーが必ずしも有利で勝ち切るとは分からないのが面白い。
+公開情報によると、汎用エージェント、コード、視覚理解などの総合能力が大幅に向上し、複数のベンチマークテストでGPT 5.4、Claude Opus 4.6、Gemini 3.1
 
-■ Anthropicの収益予測の概要
-・2025年12月更新の楽観シナリオで2029年に約1450億ドル
-・同年OpenAI予測の約1430億ドルとほぼ同水準
-
---- 50. @ai_hakase_ (2026-04-20) ---
-【驚異の精度！】量子化の課題を克服した「Qwen3.6-35B」が凄すぎる 
-
-Redditで話題の「Qwen3.6-35B-A3B-Uncensored」は、量子化時の数値のズレ（テンソルドリフト）をWasserstein距離で修正した画期的なモデルです！
+--- 50. @mizchi (2026-04-20) ---
+俺にトークンを貸せ、全部俺に投資しろ、と言っています
