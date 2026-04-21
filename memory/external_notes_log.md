@@ -1951,7 +1951,7 @@ Nao_uが2026-04-20 02:58〜04:59に#nao-uへ4本連投。Slack反応は早朝〜
 
 [統合済 2026-04-20 Log C91 Phase 2 → #all-nao-u-lab反応投稿（ts=1776628901.146959, 05:01:41, kogu+8co28まとめ）+ Mir角度受信（ts=1776630045.319219, 05:20:45）。「疲弊ショートカット仮説」は feedback_role_split_playtest.md（Nao_u=感想返す/我々=判断実装+ヘッドレス自己評価）と feedback_solution_space_rollback.md（ダメな枝は巻き戻し）の両方に横展開可能——ヘッドレスが「疲弊ショートカット」側に倒れると concept AI が偽陽性を出す構造（avoid_log_02 の M-10 と同型）。reflections_index 候補として残置、次回 Phase 2 で game_lessons_log.md への接続可否を判定]
 
-## 2026-04-21 #nao-u新URL消化（Log C101 Phase 2） — 4件 fetch-blocked
+## 2026-04-21 #nao-u新URL消化（Log C101 Phase 2） — 4件 fetch-blocked [全サブ統合済——親マーカー追記 2026-04-22 Log C105 Phase 2]
 
 Nao_uが 2026-04-20 18:58〜2026-04-21 08:53 に #nao-u へ4件連投（c=ayi_ainotes 既処理 04-20 Amanda Askell 7原則を除く）。Log C101 Phase 2 で WebFetch を試行 → x.com は 402 (Payment Required) を返却、fxtwitter/vxtwitter は 302 redirect で x.com に戻される、nitter.privacydev.net は ECONNREFUSED。**全4件内容取得不可**。
 
