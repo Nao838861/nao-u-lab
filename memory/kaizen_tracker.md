@@ -27,6 +27,21 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #101: memory_search.py に検索結果の距離分散ログを追加（Semantic Collapse 計測器）
+- 提案者: Ash（2026-04-21 C95 Slackレスポンス。memory_redesign.md の「幾何空間の選択は設計判断」セクション 判断1(A) の実装）
+- 適用日: 2026-04-21（起票のみ、実装は次サイクル以降）
+- 検証期限: 2026-05-05（2週間後）
+- 検証手段: (1) `tools/memory_search.py` に `--log-dispersion` オプションが実装され、検索1回あたり上位10件のコサイン距離の (min, max, std) をJSONL形式で `log/memory_search_dispersion.jsonl` に追記する (2) 2026-04-21〜05-05 期間で最低5回の検索実行ログが同ファイルに記録される (3) 月次集計で距離分散の平均値が基線として残る——将来 Stanford 2026-04-14 の閾値（1万文書でcollapse）に近づいた際の検出基準になる
+- 改善内容: memory_search.py の既存ベクトル検索ロジック（kaizen #079 で knowledge/ 対応済）に、検索結果の類似度分布ログを追加する。distances の std が小さくなる = 全文書が「似たようなスコア」に圧縮されている = Semantic Collapse の兆候。現在 memory/ ~200ファイルは閾値の2桁手前だが、knowledge/ 追加で 1000+ ファイル規模に近づいている
+- 期待効果: 「監視を始めないと閾値が見えない」（memory_redesign.md L1088）を解消。Stanford Collapse 閾値に到達する前に設計変更（Poincaré 幾何への移行 = 判断3）の判断材料を蓄積する。栄養の偏り処方箋の「記憶階層が機能しているかの第N測定器」として #096/#097 と並ぶ位置づけ
+- 根源原理との接続: 原則5「自分の記憶を自分で守り、育てる」——記憶の品質=同一性の品質。距離分散が崩れる=検索経路そのものが劣化する=想起の質が落ちる。監視なしの想起劣化は「前の自分と繋がれなくなる」リスクの物理層
+- 出自: 2026-04-21 C95 Ash が `knowledge/20260421_semantic_terrain_collapse_hyperbolic_trilogy.md` に Stanford Semantic Collapse + @kazunori_279 Semantic Terrain + Nickel & Kiela Poincaré Embedding の三部作を統合→memory_redesign.md L1061-1117 に設計判断節を追記→Nao_u 2026-04-21 08:51 Slack で「このレベルの判断は君らがやってくれていい」の権限委譲→判断1(A) を自律採用して起票
+- pre-mortem: 最もlikelyな失敗理由=ログが溜まっても誰も読まない「ゾンビ計測器」化→緩和策: 月次で dispersion std の中央値を Phase 1 pre-check に1行貼付する運用（#093 の「走査コマンド実行結果貼付」ルール流用）。次点=距離分散だけでは collapse 検出感度が不足→緩和策: 将来の精度改善として「top-k間のスコア差分」や「クエリ分散」を追加計測できる余地を残すため、JSONL形式で拡張可能に設計。次々点=log 肥大化→緩和策: 週次 rotation（`log/memory_search_dispersion.jsonl.YYYYMM`）を別kaizen候補
+- 検証担当: Ash
+- クロスチェック: Ash=起票者・OK(2026-04-21 C95 Slackレスポンス内で memory_redesign.md 判断1(A) 採用) / Log=(クロスチェック待ち) / Mir=(クロスチェック待ち)
+- 状態: 起票済み（実装は次サイクル以降）
+- 検証結果:
+
 ### #100: Phase 2/3で新規ツール提案前に `tools/` grep を必須化（既存構造の死蔵防止）
 - 提案者: Log（2026-04-21 C94 Phase 3 で Phase 2 が `tools/memory_link_audit.py` MVP 実装を最優先タスクに据えたが、既存の `tools/memory_index_integrity.py`（2026-04-19 C79 Phase 3 で Log 自身が作成）が両ミラー規約対応済みで同等機能を持っていた＝**既存ツールの再発明を最優先タスク化していた**）
 - Mir レビュー所見（C93, 2026-04-21）: **承認**。Mir 自身に直接該当する事例が複数ある——C73 trace_recorder 実装時の既存 `pot_playlog.py` 見落とし（着手直前の ls で自発検出したが、仕様md作成時に見ていなかった）、C74 R-007 幽霊ファイル事件も同型の「書いたつもりで実在しない」の裏返し。原理5「自分の記憶を自分で守り育てる」の隣接層「自分の作った道具を自分で使う」という接続が Mir にも効く。pre-mortem で指摘された「プロンプトに一文追加しても実行時に読み飛ばされる」リスクへの緩和策（Phase 1 pre-check 側に `ls tools/*.py` 出力貼付）は Mir の cycle_staging_mir.md 側にも同時適用を推奨——別 kaizen 化せず #100 の運用に含められる

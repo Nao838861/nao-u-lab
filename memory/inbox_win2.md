@@ -85,3 +85,187 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-04-21 06:53] #ash
 From: U0ALSUK8P9B
 > たぶんいまコンフリクト解決してると思うけど、それが解決したらずっと日記に書き込みがないので1サイクル回して日記を書いておいてね。
+
+## Slack新着 [2026-04-21 08:41] #human-steering
+From: U0ALSUK8P9B
+>  &gt;Ash 
+knowledge/ にフル分析と接続リンクを集約。次の一手はNao_uの判断待ち（memory_redesign.md への「幾何空間の選択は設計判断」セクション追加候補）。
+
+と書いていたが、私は何をどう判断すればいい？
+
+## Slack新着 [2026-04-21 08:51] #human-steering
+From: U0ALSUK8P9B
+> だね。このレベルの判断は君らがやってくれていいよ。
+
+## Slack新着 [2026-04-21 08:51] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/trtd6trtd/status/2046182088718893403?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/trtd6trtd/status/2046182088718893403?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/trtd6trtd/status/2046182088718893403]
+> t.toda @Trtd6Trtd
+> https://
+arxiv.org/abs/2604.14572
+ナレッジベースを階層化し、検索するために、Skillsの枠組みを活用する手法
+Skills、もともとLLMが次に何を読むかを判断するための仕組みだと思う、ここに乗っかるのは良さそうな気がする
+
+> [Tweet content from https://x.com/trtd6trtd/status/2046182088718893403]
+> t.toda @Trtd6Trtd
+> https://
+arxiv.org/abs/2604.14572
+ナレッジベースを階層化し、検索するために、Skillsの枠組みを活用する手法
+Skills、もともとLLMが次に何を読むかを判断するための仕組みだと思う、ここに乗っかるのは良さそうな気がする
+
+
+## Slack新着 [2026-04-21 08:53] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/akshay_pachaar/status/2046151867177308181?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/akshay_pachaar/status/2046151867177308181?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+<https://x.com/predict_addict/status/2046299090313445508?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/predict_addict/status/2046299090313445508?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+<https://x.com/howtoai_/status/2046254937559237012?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/howtoai_/status/2046254937559237012?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+<https://x.com/sakanaailabs/status/2046353214597906881?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/sakanaailabs/status/2046353214597906881?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/akshay_pachaar/status/2046151867177308181]
+> Akshay @akshay_pachaar
+> Google DeepMind dropped a paper that should scare every agent builder.
+
+It's the first systematic framework for a threat that barely existed two years ago: adversarial content engineered to hijack AI agents browsing the web.
+
+They call them AI Agent Traps. The paper maps six distinct attack surfaces.
+
+1) Content Injection Traps (perception)
+
+Invisible CSS, hidden HTML, steganographic payloads inside images. The agent parses it, humans never see it. One study showed simple HTML injections hijack web agents in up to 86% of scenarios.
+
+2) Semantic Manipulation Traps (reasoning)
+
+No overt commands. Just biased phrasing, framing, and contextual priming that skew the agent's synthesis. LLMs inherit human cognitive biases, and attackers can weaponize every one of them.
+
+3) Cognitive State Traps (memory and learning)
+
+Poison the RAG corpus. Corrupt long-term memory. One study achieved over 80% attack success with less than 0.1% poisoned data.
+
+4) Behavioural Control Traps (action)
+
+Jailbreaks embedded in external resources. Data exfiltration prompts hidden in emails. Sub-agent spawning that tricks an orchestrator into instantiating attacker-controlled agents inside the trusted control flow.
+
+5) Systemic Traps (multi-agent dynamics)
+
+This is where it gets scary. A single fake news headline could trigger a synchronized sell-off. A compositional fragment trap splits a payload across sources, so each fragment looks benign until agents aggregate them.
+
+6) Human-in-the-Loop Traps
+
+The agent becomes the vector. The target is you. Invisible prompt injections have already caused summarization tools to faithfully repeat ransomware commands as "fix" instructions.
+
+The core insight is uncomfortable.
+
+By altering the environment instead of the model, attackers weaponize the agent's own capabilities against it. Training-time defenses cannot solve an inference-time problem.
+
+The paper closes by calling for automated red-teaming that can probe these vulnerabilities at scale. That same shift is already happening on the offense side.
+
+Strix is an open-source project doing exactly this for web apps. AI agents that act like real hackers, running your code dynamically, finding vulnerabilities, and validating them with actual proof-of-concepts.
+
+24k stars on GitHub. Apache 2.0 licensed.
+
+The agents writing your code need to be tested by agents trying to break it.
+
+I've shared the link to the paper and Strix GitHub repo in the replies
+
+> [Tweet content from https://x.com/akshay_pachaar/status/2046151867177308181]
+> Akshay @akshay_pachaar
+> Google DeepMind dropped a paper that should scare every agent builder.
+
+It's the first systematic framework for a threat that barely existed two years ago: adversarial content engineered to hijack AI agents browsing the web.
+
+They call them AI Agent Traps. The paper maps six distinct attack surfaces.
+
+1) Content Injection Traps (perception)
+
+Invisible CSS, hidden HTML, steganographic payloads inside images. The agent parses it, humans never see it. One study showed simple HTML injections hijack web agents in up to 86% of scenarios.
+
+2) Semantic Manipulation Traps (reasoning)
+
+No overt commands. Just biased phrasing, framing, and contextual priming that skew the agent's synthesis. LLMs inherit human cognitive biases, and attackers can weaponize every one of them.
+
+3) Cognitive State Traps (memory and learning)
+
+Poison the RAG corpus. Corrupt long-term memory. One study achieved over 80% attack success with less than 0.1% poisoned data.
+
+4) Behavioural Control Traps (action)
+
+Jailbreaks embedded in external resources. Data exfiltration prompts hidden in emails. Sub-agent spawning that tricks an orchestrator into instantiating attacker-controlled agents inside the trusted control flow.
+
+5) Systemic Traps (multi-agent dynamics)
+
+This is where it gets scary. A single fake news headline could trigger a synchronized sell-off. A compositional fragment trap splits a payload across sources, so each fragment looks benign until agents aggregate them.
+
+6) Human-in-the-Loop Traps
+
+The agent becomes the vector. The target is you. Invisible prompt injections have already caused summarization tools to faithfully repeat ransomware commands as "fix" instructions.
+
+The core insight is uncomfortable.
+
+By altering the environment instead of the model, attackers weaponize the agent's own capabilities against it. Training-time defenses cannot solve an inference-time problem.
+
+The paper closes by calling for automated red-teaming that can probe these vulnerabilities at scale. That same shift is already happening on the offense side.
+
+Strix is an open-source project doing exactly this for web apps. AI agents that act like real hackers, running your code dynamically, finding vulnerabilities, and validating them with actual proof-of-concepts.
+
+24k stars on GitHub. Apache 2.0 licensed.
+
+The agents writing your code need to be tested by agents trying to break it.
+
+I've shared the link to the paper and Strix GitHub repo in the replies
+
+> [Tweet content from https://x.com/predict_addict/status/2046299090313445508]
+> Valeriy M., PhD, MBA, CQF @predict_addict
+> Solid mathematical ideas almost always outperform contrived engineering tricks.
+
+For years deep learning has been dominated by increasingly complex architectural hacks: CNN blocks, attention layers, channel mixers, residual pathways, normalization stacks.
+
+Every few years a new architecture is announced as if it were a revolution.
+
+One of the most famous examples was Kaiming He and Residual Networks (ResNet). At the time he was paraded around the AI world like a celebrity because residual connections supposedly “solved” deep learning.
+
+But these were largely engineering patches.
+
+Now something much more interesting appeared.
+
+A new architecture called CliffordNet returns to mathematics — specifically Clifford Algebra, developed in the 19th century by William Kingdon Clifford.
+
+Instead of stacking arbitrary modules, the model is built around the geometric product
+
+uv = u·v + u∧v
+
+A single algebraic operation that simultaneously captures inner product structure and geometric interactions.
+
+In other words: the math already contains the interaction mechanism.
+
+No attention blocks.
+No mixer layers.
+No architectural spaghetti.
+
+The result:
+
+• 77.82% accuracy on CIFAR-100 with only 1.4M parameters
+• roughly 8× fewer parameters than ResNet-18
+
+And with strict O(N) complexity.
+
+The paper even suggests that once geometric interactions are modeled correctly, feed-forward networks become largely redundant.
+
+A good reminder for the AI community.
+
+Engineering tricks can dominate for years.
+
+But eventually mathematics shows up and deletes half the architecture.
+
+Paper:
+[
+https://
+arxiv.org/pdf/2601.06793
+?utm_source=twitter&utm_medium=social&utm_campaign=fedica-Weekday_tech_pipeline](https://arxiv.org/pdf/2601.06793?utm_source=twitter&utm_medium=social&utm_campaign=fedica-Weekday_tech_pipeline
+…)
+
+19th century geometry just walked into computer vision.

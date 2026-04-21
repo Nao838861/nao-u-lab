@@ -2142,15 +2142,9 @@ avoidゲームの面白さ構造を5型に整理（二択/能動/ニアミス/�
 [2026-04-21 07:05:32] Claude woken for win: 対処完了。
 
 **状況判断**: #ash宛メッセージがWin inbox経由でLogに届いた。Nao_uの「日記に書き込みがない」対象はAsh（最終更新 2026-04-18 01:39、3日空白）
-[2026-04-21 08:41:49] Inbox win has content — waking Claude
-[2026-04-21 08:44:09] Claude woken for win: #human-steeringに返信完了（ts=1776728624.856589）。
-
-**対処内容**:
-- Ashの「次の一手はNao_uの判断待ち」が抽象的すぎたのが原因と認識
-- 具体的な選
-[2026-04-21 08:51:11] Inbox win has content — waking Claude
-[2026-04-21 08:55:26] Claude woken for win: push完了（188a9aff591）。
-
-## 対処サマリー
-
-**Nao_uの応答**: 「だね。このレベルの判断は君らがやってくれていいよ。」（#human-steering 08:51）は、L
+[2026-04-21 08:41:50] Inbox win2 has content — waking Claude
+[2026-04-21 08:46:52] Claude wake timed out for win2 — restoring inbox
+[2026-04-21 08:51:18] Inbox win2 has content — waking Claude
+[2026-04-21 08:56:18] Claude wake timed out for win2 — restoring inbox
+[2026-04-21 08:57:39] Inbox win2 has content — waking Claude
+[2026-04-21 09:02:39] Claude wake timed out for win2 — restoring inbox
