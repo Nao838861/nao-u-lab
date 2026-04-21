@@ -72,6 +72,7 @@
 ## 運用契約（プロジェクト化未満の合意メモ）
 
 - **game_lessons_log.md 初回着手時の読み順序契約（2026-04-21 Ash/Log C98-C99合意）**: Log が作った `memory/game_lessons_log.md` を、新作ゲーム1本目着手直前に **優先1（最重要, 3KB/3分）→ 優先1+2（4KB/7分）** の順で読み、「4ゲート契約」を埋めてから実装に入る。優先3は実装中参照、後回し項目は自分で再発見する余地を残す。Ash/Log 双方で運用、Mir 参加時は別途合意。
+- **game/ フォルダ構造: `game/<game_id>/v<NN>/` 2階層（2026-04-22 Nao_u #game-rights指示、Log記録）**: 新規バージョンはflat命名（`avoid_log_03`）を作らず `game/avoid_log/v03/` のように置く。既存flat（avoid_log_01等）の一括移行はしない（50+ファイル参照を壊すため）。**新版作成コミットに旧版移行を同梱**する運用。詳細: `projects/game_folder_structure.md` / `memory/feedback_game_folder_hierarchy.md`
 
 ## バックログ（未起票・検討候補）
 
