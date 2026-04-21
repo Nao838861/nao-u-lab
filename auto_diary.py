@@ -111,6 +111,34 @@ def get_slack_experience_recall(recent_topics):
         return ""
 
 
+def get_external_notes_freshness():
+    """external_notes_ash.mdの最新エントリ日付から経過日数を計算してWARN表示を出す。
+    2026-04-21 C93 Phase 1 メタ観察由来: external_notes 10日連続空白が無検出だった反省
+    (twitter_recommended→knowledge直行でexternal_notesを中継しなくなった構造問題)。
+    7日以上空いたらWARN。"""
+    import re
+    from datetime import date
+    path = REPO_DIR / "memory" / "external_notes_ash.md"
+    if not path.exists():
+        return ""
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+        dates = []
+        for m in re.finditer(r"^## (\d{4})-(\d{2})-(\d{2})", text, re.MULTILINE):
+            try:
+                dates.append(date(int(m.group(1)), int(m.group(2)), int(m.group(3))))
+            except ValueError:
+                continue
+        if not dates:
+            return "[外部摂取WARN] external_notes_ash.md に日付エントリなし"
+        latest = max(dates)
+        delta = (date.today() - latest).days
+        tag = "WARN" if delta >= 7 else "OK"
+        return f"[外部摂取{tag}] external_notes_ash.md 最新={latest.isoformat()} 経過={delta}日 (7日以上でWARN)"
+    except Exception as e:
+        return f"[外部摂取ERR] {e}"
+
+
 def run_precheck_scripts():
     """Phase 1用: pre-checkスクリプトを実行して結果を集める"""
     prechecks = []
@@ -130,6 +158,11 @@ def run_precheck_scripts():
                 prechecks.append(f"[{label}] {output}")
         except Exception:
             pass
+
+    freshness = get_external_notes_freshness()
+    if freshness:
+        prechecks.append(freshness)
+
     return "\n".join(prechecks) if prechecks else "(pre-checkからの特記事項なし)"
 
 
