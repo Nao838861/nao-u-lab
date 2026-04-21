@@ -1,0 +1,18 @@
+#!/bin/bash
+# commit-msg hook: memory/beliefs.md, core_mission.md, action_reservations.md 変更時に
+# コミットメッセージに [R-NNN] または [no-reservation] タグが含まれるか確認する。
+#
+# 背景: inbox_win.md C95 Log提案「方針A MVP」。2026-04-18 R-004 古い承認待ち
+#       残存による Nao_u 再指示事件が契機。
+#
+# 失敗した場合は非ゼロ終了してコミットを拒否する（データ損失リスクなし、再コミット可能）。
+
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+CHECKER="${REPO_ROOT}/scripts/check_reservation_tag.py"
+
+if [[ ! -f "$CHECKER" ]]; then
+    exit 0
+fi
+
+python "$CHECKER" "$1"
+exit $?
