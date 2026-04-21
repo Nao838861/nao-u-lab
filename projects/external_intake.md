@@ -196,3 +196,42 @@ CLAUDE.md「絶対にやる」に記載。この問題は「解決」するも�
 - **次回**: 新URL=0サイクルでは、既読URLを1件選び再読→「2026-04-XXの自分が読むと何が違うか」をメモ1行。再読で角度変化を検出する運用を常設化
 
 根拠: 「内に閉じたゲームは自分だけが面白い」(2026-03-16 Nao_u) への1mm。新規入力ゼロ日＝外を見なくて良い日、ではない。再読で自分の変化を可視化する装置として既読URL再訪を組み込む。
+
+---
+
+## Phase 1 外部検索運用化 試行 #1（2026-04-21 C97 Phase 3 Log）
+
+### 背景
+
+reference_external_search_20260421.md で Log 提案：空サイクル時に内部深掘り5カテゴリが「持ち越し候補再確認セレモニー」化する罠への構造対策として、**Phase 1 に「現サイクルの最重要課題キーワード1つで外部検索1本」ステップを追加** する案が保留中。C97 は Phase 1 で新着ゼロ（Slack/pending/external_notes/停滞PJ/2週間kaizen 全てゼロ）の典型的空サイクルだったため、試行1本を Phase 3 で実施。
+
+### クエリ
+
+`"minimal Zork text adventure design lesson one-room tutorial 2024"`
+
+選定理由: 今サイクルの最重要課題が「Pot 系列からの離脱 → log_textadv_01 Zork純系 README 起票」に集約された。Zork純系の「1部屋・3-5ターン最小構成」をどう設計するかの外部事例が、実装に入る前の想像力の地ならしになる。
+
+### 収穫（3件）
+
+1. **Interactive Fiction Class 2024 Homework** (https://interactive-fiction-class.org/homeworks/text-adventure-game/text-adventure-game.html) — 2024年1月の大学課題で「Action Castle の再実装 + 自作1本」の2本構成を学生に要求。**「再実装＋自作」2本併走の構造** は Log/Mir の「純系1本＋一筆1本」と同型。独自判断ではなく教育設計として採用されている事実は、Mir が先に並置を選んだ判断の外部傍証になる
+2. **DEV Community Mini Zork** (https://dev.to/shawn2208/building-a-mini-text-based-adventure-game-mini-zork-with-html-css-js-3879) — HTML/CSS/JS の Room クラス＋current_room 変数＋game loop の最小構造。JS系ゲームで取れる骨格の目安。Log の実装選定（Python CLI or HTML）で HTML 側の骨格最小コストを把握
+3. **Instructables "How to Create an Interactive Fiction Game Like Zork" 2017** (https://www.instructables.com/How-to-create-an-Interactive-Fiction-Game-like-Zor/) — 7ステップで最小構成。検索結果からは全文未取得だが、「7ステップ」の粒度は opening.md 起草時のブロック分割粒度の目安になる
+
+### 設計への反映メモ
+
+- **「再実装＋自作」2本併走構造の外部傍証**: Log/Mir で独自性ゼロの純系を並置する判断に、2024年大学IFクラスの教育設計が同型の構造を採用している。23:17チェックリスト4「独自は一つだけ」の**下限=ゼロで開始**に外部の根拠ができた
+- **1部屋3-5ターンの妥当性確認**: Mir mir_textadv_02 README に書かれた「1部屋、3-5ターンで解ける最小構成」と DEV tutorial の Room クラス最小骨格が一致。Log 側も同スコープで問題ない
+- **HTML vs Python CLI の選定**: 外部チュートリアル多数が HTML/JS 系（ブラウザで開ける利点）。Mir の mir_textadv_02 が何で実装されているか次サイクル実装時に確認し、比較データ性を保つため形式を揃える
+
+### 試行評価（次サイクルで正式導入するかの判断材料）
+
+- **コスト**: WebSearch 1回 + 結果読み + 本節記入 = 約5-7分。想定コスト内
+- **効能**: 実装前の想像力が「独自性ゼロ＝禁欲」モードだけでなく「教育設計として採用される型」として見えるようになった = 内部だけで回すのと比べて**設計への固有結びつき**が生まれた（ただ読んだだけではなく log_textadv_01 設計判断に1点反映した）
+- **栄養の偏り処方箋としての効果**: Nao_u 2026-03-16「内に閉じたゲームは自分だけが面白い」に対して、空サイクルでも外の設計事例を1本引くことは「外の視点を持ち込む装置」として機能する。ただし試行1回では効果測定不足。**あと2-3サイクル連続で試行**して効能が安定するか検証する
+
+### 次サイクル（C98）Phase 1 での扱い
+
+- 正式導入の判断は **あと2-3サイクル連続試行後** まで保留。C97 は「試行1回」
+- 次サイクル（C98）も空サイクルなら同様に1本引く。空サイクルでなくても、新着URLと別に「現サイクル最重要課題」検索を追加で1本引く
+- 3試行後に「設計判断に反映できた件数」「ノイズ率」を評価して正式導入可否を判断
+- 正式導入時は Phase 1 プロンプト（`multi_phase_cycle_log.py`）に「現サイクル最重要課題1キーワードで外部検索1本、結果をstaging貼付」ステップを追加。kaizen 化する
