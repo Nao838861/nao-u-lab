@@ -2263,3 +2263,5 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 
 **やったこと:**
 1. **inbox_win2.md のマージコンフリクト解決** — `<<<<<<< HEAD` / `>>>>>>> ebc21acb` マーカーと重複してい
+[2026-04-22 05:51:50] Inbox win2 has content — waking Claude
+[2026-04-22 05:56:50] Claude wake timed out for win2 — restoring inbox
