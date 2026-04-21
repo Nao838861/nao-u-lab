@@ -283,7 +283,7 @@ Billy Basso。7年、C++カスタムエンジン、外部ライブラリゼロ�
 
 ---
 
-## 2026-03-27: Apophenia設計 / Memory-Driven Role-Playing / Procedural Rhetoric——「クイズ→ゲーム」変換の具体手法
+## 2026-03-27: Apophenia設計 / Memory-Driven Role-Playing / Procedural Rhetoric——「クイズ→ゲーム」変換の具体手法 [統合済 2026-04-21 → knowledge/20260421_apophenia_mrprompt_textadv03_beat8_integration.md — textadv_03 beat 8「糸が通る」で無意識に全3知見を使用していた事後解剖]
 
 ### 発見の文脈
 
