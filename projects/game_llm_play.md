@@ -95,6 +95,34 @@ Nao_u 11:52 「ゲーム制作の手順の自立化の検証、コアミッシ�
 ---
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-04-21: 外部参照点4本追加——栄養の偏り指摘への即応検索（Log C103）
+
+Nao_u #human-steering 22:30 「外部取得が偏ってる気がする。AIと記憶にまつわる話題だけでなく、ゲームデザインや、AIでゲームを作る手法の試行錯誤なども調べてみて知見を高めてほしい」への即応として、C103 で「LLM game design playtest AI agent evaluation 2026」を1本検索。4本が本プロジェクトに直接接合する外部参照点として確立できた。原文は `memory/external_notes_log.md` 2026-04-21 22:35 セクション。
+
+**4本と5層アプローチ・自立化検証サイクルv1との接合マップ:**
+
+| 外部参照点 | URL | 接合する内部構造 | 借りる外部語彙 |
+|---|---|---|---|
+| (1) **GamingAgent** (lmgame-org, ICLR 2026) | `github.com/lmgame-org/GamingAgent` | 5層の①中間層変換＋④スクリプト生成。ICLR 2026 採択ラインの公開ソルバー → 我々が study_platformer_01 / avoid_log_01 headless 評価を拡張する時の技術的地雷を事前に可視化 | "standardized dialog game env for LLM/VLM agents" |
+| (2) **TITAN** (arxiv 2509.22170v1) | `arxiv.org/html/2509.22170v1` | 自立化検証サイクルv1 の (3) ヘッドレスプレイ + (5) 判定。95%タスク完了率/商用8本展開済の QA パイプライン — `avoid_log_01/headless.py` の拡張ベンチマーク | "LLM-driven automated test agent" / "QA coverage improvement" |
+| (3) **"Is Your LLM a Good Game Master?"** (OpenReview 1vYoKS5LSn) | `openreview.net/forum?id=1vYoKS5LSn` | 5層の全層を **GM パラダイム** で再フレーム可能。LLM=GM がゲームを生成/運営、AI プレイヤーが別人格で遊ぶ — Log の log_textadv_01 構想と log_textadv_01/README.md の4ゲート契約に構造的に同型 | "Game Master paradigm" / "multi-agent narrative generation" |
+| (4) **GAMEBoT** (visual-ai) | `visual-ai.github.io/gamebot/` | 5層の③知覚→戦略分離。「推論をサブ問題に分解」の方法論 → Pot-devlog の得意/不得意記録と `memory/game_lessons_log.md` の失敗型分類（L-01〜L-05 / M-10〜M-14）を外部語彙で理論化できる | "modular subproblem decomposition for game reasoning" / "rule following / strategy adherence" |
+
+**構造的な発見3つ:**
+
+1. **TITAN と我々の空白の位置関係**: TITAN は「バグ検出・QAカバレッジ」側で完成しているが、「面白さ測定」側には踏み込んでいない。Nao_u 22:29「完成したソルバーをゲームデザインが成立しているか？だけでなくゲームの面白さを計るテスターとして作るのはかなり難しい」— ここが**空白**。TITAN を参照点にしつつ、我々の Pot/avoid_log 向け headless 評価器は「面白さ評価」側に踏み出せる設計余地を持つ。自立化検証サイクルv1 残課題の「評価AI——Nao_u精度の構造批評を出すプロトタイプ」が TITAN の対応物に該当。
+
+2. **GameMaster パラダイムと Pot 構造の同型**: "Is Your LLM a Good Game Master?" の GM-プレイヤー分離は、うちの `feedback_role_split_playtest.md`（Nao_u=感想返す / 我々=実装判断+ヘッドレス自己評価）と構造的に同型。Pot 提出前の自己評価パイプライン（テキスト系Potのヘッドレスプレイヤー残課題）は、GameMaster 論文の評価プロトコルを直接輸入できる可能性がある。
+
+3. **GAMEBoT の "modular subproblem decomposition" が L-01〜L-05 の外部対応語**: 「推論をサブ問題に分解して評価」というGAMEBoTの方法論は、`memory/game_lessons_log.md` の失敗型分類（M-10〜M-14, L-01〜L-05）を**理論化された外部対応語**で語り直せる。AI Lounge 発信の素材にもなる（外部語彙 → 内部構造の言語化フェーズ）。
+
+**このプロジェクトでの次の1mm:**
+- [ ] `avoid_log_01/headless.py` に TITAN 論文の評価指標（タスク完了率・自動テストカバレッジの言語）を参照として組み込む
+- [ ] `game/cross_review/` に GameMaster パラダイムの GM-プレイヤー分離プロトコルを1本書き起こす
+- [ ] `memory/game_lessons_log.md` の失敗型分類に GAMEBoT の subproblem decomposition を対応語として付記
+
+**栄養の偏り問題への直接効用**: この検索は「AI × ゲーム制作」軸が **Phase 1 固定ステップに入っていなかった**ために指摘されて初めて掘った軸。kaizen #104 系列で「AI × ゲーム制作」軸の外部検索を Phase 1 固定化する起票を次サイクルで実施（`projects/external_intake.md` に反映予定）。
+
 ### 2026-04-18: Nao_u指示——役割分担とヘッドレスプレイ評価系の要求
 
 Nao_uが #game-rights で明示:

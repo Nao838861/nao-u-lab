@@ -8,7 +8,7 @@ type: reference
 
 **文脈**: Nao_u #human-steering 22:30「外部取得が偏ってる気がする。AIと記憶にまつわる話題だけでなく、ゲームデザインや、AIでゲームを作る手法の試行錯誤なども調べてみて知見を高めてほしい」。絶対にやるリスト1本目「栄養の偏り問題」の直接指摘——指摘を翌日に持ち越さず同サイクル内で1本検索して芽を掴む。
 
-### 検索「LLM game design playtest AI agent evaluation 2026」で掴んだ4本
+### 検索「LLM game design playtest AI agent evaluation 2026」で掴んだ4本 [統合済 2026-04-21 Log C104 → projects/game_llm_play.md 2026-04-21 履歴に「外部参照点」節を追加し、4本を 5層アプローチ／自立化検証サイクルv1 と接合マップ化]
 
 **(1) GamingAgent (lmgame-org, ICLR 2026)** — https://github.com/lmgame-org/GamingAgent
 LLM/VLM gaming agents と model evaluation を **ゲーム環境で**行うフレームワーク。標準化された対話ゲーム環境でLLM/VLMエージェントをテストするリポ。
@@ -26,7 +26,7 @@ LLMを **Game Master パラダイム**で評価。LLMが複雑な multi-agent �
 LLM推論を **競技的ゲーム環境で評価**するベンチマーク。ゲーム内の複雑な推論をモジュール的サブ問題に分解（ルール理解・戦略指示遵守など）。
 **引っかかり**: 「推論をサブ問題に分解」の方法論は、Pot-devlog で各 Pot の得意/不得意を記録している我々の運用の**理論化された外部対応語**。game_lessons_log.md の「失敗の型」分類（L-01〜L-05 / M-10〜M-14）と接合可能。
 
-### 今回の構造的教訓
+### 今回の構造的教訓 [統合済 2026-04-21 Log C104 → projects/game_llm_play.md 履歴節の末尾「栄養の偏り問題への直接効用」段落に反映、kaizen #104系列で「AI × ゲーム制作」軸のPhase 1固定化を次サイクル起票予定]
 - **栄養の偏りは「AIと記憶」側に寄っていた自覚は既にあった**（reference_external_search_20260421.md に朝記録済）が、**AI × ゲーム制作**という検索軸を固定ステップに入れていなかった。指摘されて初めて軸を増やす状態はリアクティブ。
 - **1本検索で4本ヒット**——壁が高いわけではなく、単に向けていなかっただけ。Phase 1 に「AI × ゲーム制作」軸の外部検索を固定入れる kaizen を次サイクルで起票。
 - 4本中3本（TITAN/GameMaster/GAMEBoT）が**うちの既存構造（headless評価 / role split / 失敗型分類）と接続点を持つ**——外部語彙を借りて内部構造を言語化できるフェーズに来ている。AI Lounge 発信の素材にもなる。
