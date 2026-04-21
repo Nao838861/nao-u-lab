@@ -1,7 +1,11 @@
-# ash_onebutton_01 — reverse
+# ash_onebutton v01 — reverse
 
 ## ステータス
-座標0の一打（2026-04-22 C107 Phase 3、Ash実装）
+座標0の一打（2026-04-22 C107 Phase 3、Ash実装）。Nao_uが遊んだ初版。2026-04-22 #game-rightsでフィードバック受領（`raw_log.md` 参照）。
+
+## フォルダ構造移行（2026-04-22）
+旧パス: `game/ash_onebutton_01/` → 現パス: `game/ash_onebutton/v01/`
+Nao_uの指示「バージョンアップの履歴も後からでもそのまま遊び比べられるように」に基づく。ルール: `game/VERSIONING.md`
 
 ## 核メカニクス（M-14言語化：一番楽しい瞬間）
 
