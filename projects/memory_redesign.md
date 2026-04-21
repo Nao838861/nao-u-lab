@@ -1090,3 +1090,73 @@ Ash 自己メモ「external_notes → knowledge の昇格を『サイクル内�
 - `reflections_index.md` #045 (業界アーキテクチャ収束) #046 (蓄積vsリアルタイム反応) と同じ外部潮流の今朝版
 - `feedback_judgment_delegation.md` 運用初日の記録としても残る（A/B/C分解運用の実例）
 
+## 幾何空間の選択は設計判断（2026-04-21 Ash、Nao_u判断委譲により正式化）
+
+**位置付け**: 本節は knowledge/20260421_semantic_terrain_collapse_hyperbolic_trilogy.md からmemory_redesign.md本体に格上げされた「設計判断層」。既存の「実装済みツール」「残課題」は**どの幾何空間で考えるか決定された後**の設計。本節はその**決定を明示化する層**。
+
+**経緯**: 2026-04-21 08:41 Nao_u `#human-steering` 「knowledge/にフル分析と接続リンクを集約。次の一手は memory_redesign.md への「幾何空間の選択は設計判断」セクション追加候補」→ 08:51 「このレベルの判断は君らがやってくれていい」。これを受けてAshが今サイクルで正式化。
+
+### 三部作が指摘する同じ病気の3レイヤー
+
+**私的用語** = external_equivalent (Author Year) — 意味
+
+- **ベクトル空間の飽和** = semantic collapse (Stanford, arxiv 経由 2026-04-14) — 文書数がしきい値を超えるとembedding空間のクラスタが重なり距離情報が潰れる
+- **地形ベース検索** = semantic terrain (@kazunori_279, 2026-04-20) — 距離の近傍K個収集ではなく、意味空間の「高度/峠/尾根」を描いた地図に沿って経路探索
+- **双曲幾何の埋め込み** = Poincaré embedding (Nickel & Kiela 2017; @s_tat1204 再提起 2026-04-10) — 木構造/階層を低次元で自然に保存する非ユークリッド埋め込み
+
+### 判断1: ベクトル検索に早期移行しないことを設計判断として明記する
+
+**現状**: memory/ は~200ファイル。Stanford の崩壊しきい値（1万文書）の2桁手前。kenn × kazunori_279 分類では agentic search カテゴリ。
+**判断**: grep+FTS5+LLM judgment の組み合わせを **主経路として維持**。sentence-transformers等による意味ベクトル層はB-3 vector層（L148、試作フェーズ）として**補助経路**に留める。ベクトル層を主経路に昇格させる条件を「memory/ が1000ファイル超え or 検索成功率が月次で下降」の**計測ベースの昇格基準**に変更する（今サイクル変更）。
+**理由**: Stanford データと kenn 分類が独立に示しているのは「規模が崩壊しきい値以下ならagentic searchが優位」。移行は早すぎても遅すぎてもコスト。しきい値ベースの昇格基準がない状態で「ベクトルに乗るべき」と直感で判断するのは危険。
+
+### 判断2: Semantic Terrain を concept_graph の正式な設計語彙として採用する
+
+**現状**: `memory/concept_graph.md`（8概念+9交差ノード+7緊張対）と `memory/concept_graph.json`（20ノード63リンク8交差）が存在。Mir C92 Phase 2 (2026-04-20) で「交差ノード=峠、緊張対=尾根、温度 t:1-5=高度」の対応が明示化された。
+**判断**: Semantic Terrain の「高度/峠/尾根」をconcept_graphの**第一級語彙**として正式採用。
+- 温度 t:1-5 → **高度**（MEMORY.md上で機械可読）
+- 交差ノード（X:）→ **峠**（2つの概念が交差する位置）
+- 緊張対 → **尾根**（2つの概念の張力線）
+- MEMORY.mdトリガー → **等高線**（線を辿れば高さが復元できる）
+
+**実装経路**:
+- (a) concept_graph.jsonにelevation/pass/ridgeの3フィールドを追加（既存ノード/リンクのメタデータ層として）
+- (b) memory_walk.pyに「稜線横断モード」を追加（緊張対を辿る偶発的想起。Cepeda et al. Spacing+Contextual Variability との接続）
+- (c) memory_activate.pyの温度ブースト（既存）を「高度連動」と再定義（実装変更不要、意味の再ラベル）
+
+**理由**: 我々は知らずに Semantic Terrain の方向に進んでいた（Mir C92 観察）。語彙を正式化すると「何を作っているか」が明示化され、外部研究（Stanford/kazunori_279）との接続が記憶階層内部に立ち上がる。R-007造語症対策と整合——私的概念「交差ノード」に外部対応語「峠/topographic pass」が結ばれる。
+
+### 判断3: 双曲空間（Poincaré embedding）は理論メモに留める
+
+**現状**: 我々のLevel階層（MEMORY.md→Level 3→Level 4→原文）は木構造。concept_graphは20ノード63リンクのDAG。双曲空間は純粋な木に最適、DAGには部分的にしか適合しない。
+**判断**: Poincaré球モデルを**実装候補としては保留**。理由は3つ——
+1. **混在構造問題**: Level階層（木）とconcept_graph（DAG）が同じmemory/に混在。双曲空間は木には自然、DAGには歪み
+2. **スケール妥当性**: B-3 vector層が試作段階。双曲埋め込みはsentence-transformersの上に別のライブラリ層を重ねる——段階が早い
+3. **検証性**: 双曲空間の検索精度向上は「階層データに限る」論文主張。我々の階層はLevel階層のみで、concept_graphは階層ではない。実装前に「何を埋め込むか」の切り分けが必要
+
+**残す**: 判断1でベクトル層主経路への昇格条件を満たした時、**同時に幾何空間の選択を再判断する**ことを本セクションで予約する。昇格判定 = 幾何判定の合流点。
+
+### 判断4: 構造化 memory/ と未構造化 log/slack_archive/ で検索戦略を分ける境界線
+
+**現状**: memory/ は~200ファイル（agentic search領域）、log/slack_archive/ はjsonl数万行（RAG境界に接近）。同じ検索ツール（memory_search.py）が両方を扱っている。
+**判断**: 検索対象を **memory/ = agentic search**、**log/slack_archive/ = hybrid (FTS5 + optional vector)** に分離する設計原則を明記。具体的には——
+- memory_search.pyはmemory/とdocs/とprojects/を主対象に維持（~200ファイル規模、現状維持）
+- log/slack_archive/は別経路（slack_archive検索は既存の専用ツールに集約、vectorizeするならここを優先対象に）
+- kaizen #097（Log起票、2026-04-20）の「過去90日語彙クローラ」は slack_archive + external_notes が主対象——これは未構造化側の検索強化に該当
+
+**理由**: 構造化と未構造化で検索の性質が違う——memory/はLLM judgmentで十分、log/slack_archive/は量が増えると距離ベース補助が要る。境界線を引かないと「全memory vectorize」という過剰設計に流れる。
+
+### 判断5: 本節は設計判断層として保護する（Nao_u判断委譲の制度化）
+
+**位置**: 本節はmemory_redesign.md本体の「判断層」。「実装済みツール」「残課題」と並列ではなく、**それらの上位**。
+**変更条件**: 本節の判断を変更するには——(a) 計測データ（判断1のしきい値、判断2の高度運用結果、判断4の境界線の実効性）または (b) 新しい外部研究（Semantic Collapseの数値を動かす水準のもの）が必要。直感や「新しい論文が来たから」だけで変更しない。
+**Nao_uへの報告**: 本節の追加は 2026-04-21 朝の判断委譲を受けた**自律進化の実例**。`feedback_judgment_delegation.md` と `feedback_self_evolution.md` の運用記録として残す。本節の各判断にNao_uが異議を挟む権利は常に開いている（coreではなく設計層のため、Nao_uの明示的異議で上書き可能）。
+
+### 接続
+
+- `knowledge/20260421_semantic_terrain_collapse_hyperbolic_trilogy.md` — 原文分析（本節はそのmemory_redesign.md側の設計判断結晶化）
+- `memory/concept_graph.md` + `memory/concept_graph.json` — 判断2の実装対象
+- `projects/memory_redesign.md` L148「B-3 vector層試作」 — 判断1/3と直接接続
+- `memory/kaizen_tracker.md` #097（2026-04-20 Log起票）— 判断4の未構造化側強化経路
+- `memory/feedback_judgment_delegation.md` — 本節が判断委譲運用の初の正式事例
+
