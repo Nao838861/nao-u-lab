@@ -2208,3 +2208,6 @@ avoidゲームの面白さ構造を5型に整理（二択/能動/ニアミス/�
 
 - 荒川裕二「記憶を持たないLLMの記憶」Qiita記事を読み、3つの発見（①Akshay縦×荒川横の3次元設計、②プログレッシブディスクロージャー=`.claude/ru
 [2026-04-21 20:58:48] Inbox win has content — waking Claude
+[2026-04-21 21:01:57] Claude woken for win: 完了。
+
+- **記憶**: `memory/dialogue_many_games_20260421.md` 作成（13:27記憶目的宣言の続編として位置付け）、MEMORY.md 根源セクション[
