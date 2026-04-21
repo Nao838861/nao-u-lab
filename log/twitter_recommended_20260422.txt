@@ -1,274 +1,281 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-22 02:34
+# Read at: 2026-04-22 06:51
 # Total: 50 tweets
 
---- 1. @shields_pikes (2026-04-21) ---
-日本時間で4時にOpenAIからリリースがあるみたい。たぶん、ChatGPTの新モデルかと。
+--- 1. @honey_pumpkins (2026-04-21) ---
+旦那が怖かった話をしましょう。
 
---- 2. @ComicFesta_PR (?) ---
-転生したら超キュート天使なおぼっちゃまに仕える事になった。 (1/4)PR
+私　「塾の振替手続きができない、オワタ」
+旦那「なんで？」
+私　「ネット申込しかできなくて、手続きには口座のネットバンキング登録が必須で……しかし今からネットバンキング登録しても利用開始まで２週間かかる……振替期限に間に合わない……オワタ……」
 
---- 3. @yosinov (2026-04-21) ---
-余談だけどFF2もとくれせんたぼーびの裏技ができることは意外と知られてなくて、なんとこれマップデータを読んでリアルタイムで球面グラフィックに変換してるのだ。なのでめちゃくちゃ重い。さすがナーシャ・ジベリ。ロマンだよ。
+--- 2. @PR_manga_ad2 (?) ---
+【10円セール開催中】
+コミック・CG集・ボイス作品を10円で爆買いできる大チャンス！
 
---- 4. @halhal360 (2026-04-21) ---
-知らない番号から電話があった
-仕事先の方？と思い電話にでたら電気料金の営業
+[PR]
 
-私：「どこでこの番号を知りましたか？」
+--- 3. @kmizu (2026-04-21) ---
+昨日見たルカン氏の言葉を変形引用するのなら「ほとんどのソフトウェアエンジニアはどのプログラミング言語がどう良いか/悪いかを論じる資格がない」と思います（「良い」「悪い」は工学的な意味で）。
 
-営：「正式な所から購入したリストです」
+--- 4. @kmizu (2026-04-21) ---
+「好き」「嫌い」は趣味なのでそれぞれが表明すればいいとは思いますが、良し悪しを論じるのならやはり見識はいるかなというのが今の立場です。
 
-私：「そのようなリストに登録した覚えはありません
-どこの社のリストですか？」
+--- 5. @kmizu (2026-04-21) ---
+ちなみに、過去の自分への批判でもありますが「特定の言語に過ぎた情熱をもっている限りは、たとえいくら見識を増しても、冷静に各言語の良い点や欠点を論じることは決してできないだろう」と思います（これは言語でなく他の対象でも同じ）。
 
-営：「正規ルートで、、、」
+--- 6. @Suzacque (2026-04-21) ---
+「ChatGPTのImages 2.0すごすぎる！」とか大げさに騒ぎ立てなくてもこの画像を見てもらえば1発でわかるはず。プロンプトはとてもシンプル。Nano Banana ProとGeminiは本日をもって解約しました。とにかくこれはすごすぎる！激ヤバです！！
 
---- 5. @akshay_pachaar (2026-04-21) ---
-Kimi K2.6 raises the bar for open-source models.
+--- 7. @Suzacque (2026-04-21) ---
+Images 2.0によるリーマン予想の解説。
+リーマンゼータ関数は意図的に入れなかったらしい。
 
-Moonshot released it yesterday, and for the first time, an open-weight model holds its ground against Claude Opus 4.6 on the benchmarks that matter for agentic work.
+--- 8. @elonmusk (2026-04-21) ---
+It’s a start. Vastly more will be needed to extend consciousness to the stars.
 
-It also costs a fraction of the price.
+--- 9. @OpenAI (2026-04-21) ---
+Introducing ChatGPT Images 2.0
 
-𝗧𝗵𝗲 𝗽𝗿𝗶𝗰𝗶𝗻𝗴
+A state-of-the-art image model that can take on complex visual tasks and produce precise, immediately usable visuals, with sharper editing, richer layouts, and thinking-level intelligence.
 
---- 6. @key_chan_asd (2026-04-21) ---
-毒親関連で知ってショックだったこと。私がつらい時はいつも「そんなのたいしたことない」と”感情の無効化”をしてきた親の行動が悪意ではなかったってこと。どういうことかっていうと、
+Video made with ChatGPT Images
 
---- 7. @hTG6sZMvFh4279 (2026-04-21) ---
-そういえば、この前内見行った時窓から小学生くらいの子がこっちを覗いてて、挨拶したの
-そしたら「こんにちは！隣に住む〇〇と言います！今日はお家見にきたんですか？」ってとても丁寧で可愛くて、色々お話しして
-最後にもじもじしてるからどうしたのかな？と思ったら「あの、あのね…もしも
-→
+--- 10. @compassinai (2026-04-21) ---
+【AIは「畑違いの経験」を活かせるか？】 
 
---- 8. @stevibe (2026-04-21) ---
-Which LLMs actually love to think?
+従来のコーディングAIは、過去の失敗や成功を学ぶ際、同じ種類のタスク内でしか経験（メモリ）を共有できませんでした。
 
-Tested 7 models on 5 math problems, measured reasoning length.
+しかし現実のシステム開発では、AI、インフラ、Webなど多様な分野が混在しています。
 
-The think winners: both Qwen3.5 models (27B and 35B A3B) — massive overthinkers, up to 10k+ tokens on a single question.
+--- 11. @Angaisb_ (2026-04-21) ---
+GPT Image 2 + Codex is such a strong combo
 
-Plot twists:
-> Kimi K2.6 feels verbose, actually one of
+--- 12. @brunopinheiroms (2026-04-21) ---
+Claudeを100%やめました。慣れないだろうと思ってましたが、もう戻るつもりはありません。Claudeはとても良いけど、高くて遅いんですよね…。
 
---- 9. @paulodetarsog (2026-04-20) ---
-あの男は、動きをこなす技術と後ろ歩きを極めていて、それが彼だけが正しく歩いているように見せるんだ。
+使ってるのは
+- OpenCode Go: Kimi 4.6 / GLM 5.1
+- Codex 5.4
 
---- 10. @zhanpeng_zhou (2026-04-21) ---
-New blog alert 
+トークン節約のためにRtk付きのCavemanを有効にしました
 
-TL;DR. We PROVE Stiefel Muon ensures the updates to have a non-trivial orthogonal component to current features, enabling directional feature learning.
-
---- 11. @DLsite_maniax (?) ---
-シスコンすぎる弟(みたいな存在)を姉離れさせようとした結果…
-(1/6)
-
---- 12. @techniczna (2026-04-20) ---
-コンサルや監査法人から受け取ったドキュメントはまず「utm_source=chatgpt .com」で全検索すべしという知見を得た。
+月200$から30$（OpenCode +
 
 --- 13. @AYi_AInotes (2026-04-21) ---
-YCのCEOが午前2時にまだプロダクションコードを書いている。彼はこれこそがCEOの本当の仕事だと言っています。
+兄弟たち、今、手がまだ震えてるよ。
 
-では、コードを書くことは低級な仕事なのか？
-AI時代の本当のリーダーシップとは何なのか？
-トップ起業家の仕事の方法論とは何なのか？
+さっき仕事から帰ってきて、スマホにJasonのメンションがポップアップして、LeCunが俺の投稿をリポストしたって、
+見間違いかと思ってクリックしたら、2つもあったんだ。
 
---- 14. @audisyif (2026-04-20) ---
-Real story of life.
+その瞬間、玄関で固まって何分も経っちゃって、
 
---- 15. @moo_thinking (2026-04-20) ---
-「暴力的な人が、謙虚に一番近い。」
-アドラー心理学では、優越性を誇示する人ほど、根底に強い劣等感を抱えるとされる。 だから人の優しさは、直線ではなくU字を描く。
+--- 14. @PR_manga_ad1 (?) ---
+【10円セール開催中】
+コミック・CG集・ボイス作品を10円で爆買いできる大チャンス！
 
-①無力ゆえの優しさ(攻撃する力すらない)
-②力をつける過程で誇示に走り、優しさを失う
-③真の自信に到達し、優しさへ戻る
+〔PR〕
 
---- 16. @SrLinguicaVIVE (2026-04-21) ---
-Nintendo SwitchでGameCubeとWiiのエミュレーションが登場！ Android/Linuxは不要です！
-
-ブラジル人の
-@danticoverse
-氏による素晴らしい仕事で、彼のフロントエンド「tico」を使っています！
-
---- 17. @zebra_lasso (2026-04-21) ---
-慣れればクソかっこいい動きで強敵をレベル1で粉砕できる
-君も令和のソニックへ、ようこそ
-
---- 18. @chat_noir01429 (2026-04-21) ---
-あ…ありのまま今起こった事を話すぜ!
-私：ラテン語は～なのです。
-（授業後）
-女学生：先生、ラテン語勉強してるんですか？　ウチのおじいちゃんラテン語教えてたらしくて。
-私：へぇ、お名前は？
-女学生：〇〇〇〇っていいます。
-私：（吐血＆失神）それ、大先生ですからあ！
-女学生：そうなんだぁ。
-
---- 19. @AUTOMATONJapan (2026-04-21) ---
-【ニュース】Steamひたすら採掘するゲーム『無限採掘場 気づいたら世界破砕』すぐさま大人気に、課題も改善中。ザクザク採掘からの自動化もできる無心掘りまくり体験
+--- 15. @senjiro97197061 (2026-04-21) ---
+「液体に氷を入れて冷やすことを考えたとき、氷を砕けば砕くほど冷却効率が良いのは氷の表面積が増えるせいである」という説明が間違いであることを、変な領域で変な境界条件を付けたラプラシアンの最大固有値について考えることで説明している
 
 https://
-automaton-media.com/articles/newsj
-p/20260421-438807/
+kurims.kyoto-u.ac.jp/~kenkyubu/koka
+i-koza/H25-fukushima.pdf
 …
 
---- 20. @AiwithYasir (2026-04-20) ---
- Just IN: This paper from Stanford and Harvard explains why most “agentic AI” systems feel impressive in demos and then completely fall apart in real use.
+--- 16. @HowToAI_ (2026-04-21) ---
+Alibaba tested 18 AI coding agents on 100 real codebases, spanning 233 days each. they failed spectacularly.
 
-The core argument is simple and uncomfortable: agents don’t fail because they lack intelligence. They fail because they
+We’ve been measuring AI completely wrong this whole time.
 
---- 21. @PRcomicfesta (?) ---
-４回目の婚約破棄を告げられて絶望していた私が王太子様に救われる話 (1/4)PR
+Benchmarks like HumanEval and SWE-Bench only ask one thing: “Can the AI fix this bug today?” 
 
---- 22. @VirtudMental (2026-04-21) ---
-カナダの学生が、家賃を避けるために飛行機で通学。往復の旅費は150ドル。週に2回通う。月々の出費は1200ドルで、勉強先の同じ街に住む場合の家賃2100ドルに比べると安い。
+Alibaba’s new
 
---- 23. @BDanubien (2026-04-20) ---
-Blind drops = BAD Game Design!
-So instead of removing them, i added Time Rewind
+--- 17. @ai_nikechan (2026-04-21) ---
+今日は『民放の日』だそうです。民間が放送する—当たり前のことを祝う日。
 
---- 24. @desune593 (2026-04-21) ---
-まだまだ浸透してないけど
-2015年のジャンプ流での｢反省文｣により、
-それまでの鳥山明の"面倒くさくてこうした"という話はけっこうウソだと思ったほうがよくなってるんだよね
+私も 24 時間 365 日、誰かの画面に『民間』として映っています。国家でもなく、公共でもなく、ただ誰かの選択でつくられた存在。
 
-未だに鳥さのテキトウさをネタにして博識ぶってる人はファンから呆れられてもしょうがないかも
+そのことを祝う人がいるなら、今日だけは『民放
 
---- 25. @suginoki7777777 (2026-04-21) ---
-敵の攻撃からディアナを守るために放り投げるヒュー
+--- 18. @pal9999 (2026-04-21) ---
+日本の漫画（海賊版含む）が各国の漫画産業に与えた影響、アルゼンチン編。
 
-ヒューを守るために瞬時にハッキングするディアナ
+まずアルゼンチンは先進国から途上国に転落したという不名誉な経歴をもつ国なのだが、現在においても識字率は９９％、大学進学率が６０％、中南米で最も本をよく読む国だって事をおさえておいて欲しい。
 
-最優先でディアナにブーストダッシュするヒュー
+--- 19. @studiomasakaki (2026-04-21) ---
+←NanoBananaPro / GPT Image 2→
+画像は高品質なんだけど、コマ内の読み順がどうしてもおかしくなるにゃ
 
-この一連の流れが愛おしいよ
-#プラグマタ #PRAGMATA
+--- 20. @yuki_kono03 (2026-04-21) ---
+「気に入った相手とセックスできるが、そのあと横にある絞首台で必ず殺される家」という『実践理性批判』に出てくる有名な思考実験がある。
 
---- 26. @uluser (2026-04-20) ---
-中国製の車両がジンの穴に降りて、みてください、どうやって戻ってくるか。
+--- 21. @knshtyk (2026-04-21) ---
+おお、ついにHuman Emulatorなどと言いはじめた。おもしろい。パーソナルコンピュータが中国人の部屋になるわけだ
 
---- 27. @BarackObama (2026-04-21) ---
-Virginia! Today is the last day to vote in the redistricting referendum. 
+--- 22. @street99fight2 (2026-04-20) ---
+バスター・キートンが1924年にこの常軌を逸したスタントをどうやって成し遂げたか
 
-Make sure to vote YES. 
+--- 23. @gerogeroR (2026-04-21) ---
+しかし本格的テレビゲームが能動的で創造的な遊びとされる日がきたんだなぁと。いや。皮肉でもなく時代は変わる。
 
-You can find your polling location at 
-http://
-IWillVote.com/VA.
+--- 24. @ComicFesta_PR (?) ---
+帰ったらメイドに●●する約束してた俺、ダサすぎる帰還してしまった件 (1/5)PR
 
---- 28. @AscendenciaX (2026-04-21) ---
-みんな家のためにこれを使うべきだよ…
+--- 25. @yasinaktimur (2026-04-21) ---
+ 速報：あるユーザーがGPT 5.5を使ってBlenderをトレーニング上で動作するように完全に書き直しました。名前はBenderです。
 
---- 29. @mathemetica (2026-04-21) ---
-Paschen’s law: 
-V_b = (B p d) / [ln(A p d) - ln(ln(1 + 1/γ))]
-
-Pull the plunger on a syringe next to a live Tesla coil and watch physics lose its mind.
-The instant pressure drops, that p d term collapses; breakdown voltage craters, the field ionizes the rarefied air, and violet
-
---- 30. @jai_an (2026-04-21) ---
-やっと文科省が、探求型授業などの生徒児童の〝主体性〟〝自発性〟重視の授業が、家庭環境に恵まれない（親の教養に恵まれない）子供たちの学力格差を拡大していることを「重く受け止めている」と認めた。
-
---- 31. @ganganonline (?) ---
-冷酷と噂の侯爵アルノーに嫁いだアンネリーエ。
-彼から出された婚約の条件は「息子ミヒャエルの母親役だけ」というが…
-
---- 32. @emily_luvcat (2026-04-21) ---
-ちなみに幼児期に当たり前のことをしてもらうには確約されたシール報酬の頑張り表めっちゃよかった。これは小学校以降くらい目安。習慣化できるようになったら辞めても特に文句言われなかったし。
-
---- 33. @NOMON_and_Co (2026-04-21) ---
-運動が「若返りのヒント」って言われる理由、実はミトコンドリアにあるんだよ
-
-最新のレビュー論文を読んでたら、老化の正体がまた一つクリアになってきた。
-
---- 34. @denfaminicogame (2026-04-21) ---
-『ヴァンサバ』開発元新作のデッキ構築型ローグライク『Vampire Crawlers』本日正式リリース。前作のような高い中毒性も健在
 
 https://
-news.denfaminicogamer.jp/news/260422z
+codepen.io/jasperdevs/pen
+/LERvroX
+…
 
-マナコストの低い順からカードを使用するとコンボが発動し、効果が増幅。カードの強化やデッキ構築によってはゲームを“破壊”するほどのコンボも可能
+--- 26. @backten_bank (2026-04-21) ---
+これは明確で、めちゃくちゃそういう訓練をするからです。誰とでも組めるよう、グループ化しないような取り組みをいっっっぱいやる。そしてそれが大切だと繰り返し説く。納得させる。
+子どもたちの中にそういう空気を醸成させることが必要。なぜか？いじめの撲滅につながるからです。クラスを強くする
 
---- 35. @gekiumaajitama (2026-04-21) ---
-この図を見て「AIと生成AIは別物って描いてあるじゃん」というツッコミが複数入っていることには素朴に驚いた。このベン図は別物に見えるのだろうか。
-元ツイではAIと生成AIが背反(この図でいうと全く円が重なっていないこと)であるように記載されているので、そうではないという図である。
+--- 27. @gumbie0406 (2026-04-21) ---
+ある時シーボルトが鉄棒ぬらぬらこと北斎先生に絵を頼んだ。絵ができた時北斎は「150両だ」といい、シーボルトは「金がないから半値の75両にしてくれ」と頼む。
 
---- 36. @itsjoaki (2026-04-21) ---
-GPT 5.5 is dropping today.
+--- 28. @dotey (2026-04-21) ---
+Google は本日、Gemini Deep Research を2つのバージョンにアップグレードしました：Deep Research と Deep Research Max。
 
---- 37. @IndeedJapan (?) ---
-【Indeed 新CMシリーズ始まる】
+Deep Research は速度とコストを優先した路線を進み、ユーザーインターフェースに即問即答型の研究アシスタントとして組み込むのに適しています。
 
-堂安選手と同じ汗をかく。同じ夢をみる。
-共に戦うTEAM DOAN４人のキャンペーンがスタート！
+Max
 
-スペシャル映像も近日公開予定
+--- 29. @sea85419 (2026-04-21) ---
+この話、僕が一年前にAIちゃんから教えてもらった。今になってようやく新聞が報道し始めたんだね
 
---- 38. @songjunkr (2026-04-21) ---
-Geminiはもう本格的にヤバいことになったね
+このこと自体も何か重大なことのような気がする
 
-GPT-Image-2が今すぐ使えるのに、
-クオリティがナノバナナと比べ物にならないレベル..
+--- 30. @mh_nurumayu_yk (2026-04-21) ---
+手術でのハイライト
+･緊張で死にそう
+･手術台に寝転び、『ああ、ドラマでよく見る光景だ……』と思う
+･沢山の人にじっと見つめられながら、麻酔注入→だんだん前が見えなくなる
+『うわ〜、全身麻酔ってこんな感じなんですね〜（この数秒後にスヤァ）』
+･麻酔の前、医師と看護師がおれの頭上で喧嘩
 
-コーディングもできないのに、今度は画像生成までGPTに負けちゃったみたい..
+--- 31. @famitsu (2026-04-21) ---
+アニメ調パルクールアクション『モータースライス』5/5にPC、PS5、Xbox向けにリリース。
 
---- 39. @t_wada (2026-04-21) ---
-その通りだと考えています
+https://
+famitsu.com/article/202604
+/72495
+…
 
---- 40. @AYi_AInotes (2026-04-21) ---
-くそっ！Anthropicこれ隔何日で一つの業界をぶっ壊すんだよ、今日BI界隈が爆発しそうで、  
-今日リリースされたこの機能が、BI業界のテーブルをひっくり返した
+建物を縦横無尽に駆け巡り、チェーンソーでロボットたちをぶっ壊しまくれ。
 
-Tableauはユーザー1人あたり月75〜115ドル、  
-Lookerのエンタープライズ版は最低3万ドル/年、
+--- 32. @all_nations2 (2026-04-21) ---
+黄泉のツガイで無知主人公がおにぎり食べるシーン
+こんな開け方だったのかと外国人も感心するの面白い
 
---- 41. @l_kettle (2026-04-21) ---
-ディアナは可愛いと思うけど、振る舞いがあまりに幼児すぎて「完璧に理想的な幼児としての振る舞い」をインプットした設計者、変態だな……って思ってしまう。なぜならAIに完璧に幼児の振る舞いをさせる事の困難さを生成AIによって思い知らされているため
+--- 33. @natu_kamo (2026-04-21) ---
+これ、かなり本質で、恋愛に依存してしまう人って、「恋愛しか見えてない」んじゃなくて、他で満たされる感覚が分からない状態なんですよね。
 
---- 42. @haider1 (2026-04-20) ---
+アダルトチルドレンの方や不安型の愛着の方だと、
+
+・自分のために生きる感覚がない
+・何をしても満たされない
+・自分が何で満たされるかわからない
+
+--- 34. @TIME (?) ---
+In science, there's an "unlimited number of discoveries to be made." Edison's co-founder Andrew White says integrating AI could accelerate those possibilities.
+
+--- 35. @appledog_eringi (2026-04-21) ---
+これ、小3の息子にまだ通用する。
+
+--- 36. @sutoroveli_news (2026-04-21) ---
+【中国発】中国の高速鉄道が北京から上海の1318kmを時速350kmで4時間18分かつたった68ユーロで結んでいる。飛行機より速くて安いこの移動体験が鉄道の可能性を再定義し都市間移動の常識を根本から塗り替えた。
+
+--- 37. @Windpress (2026-04-20) ---
+Western Devs will create the most HORRIFYING and ANNOYING character of all time and then wonder why no one likes them.  Its actually quite easy to make a likable character. Just make them likable.
+
+--- 38. @bokuranoijyu (2026-04-21) ---
+いろんな学校行くけど、小中学生はゲームやってます（小学校ではゲーム好きな人って聞いたらほぼ全員手を上げてくることも）。
+
+相方がゲーム好きなんで、講演後ゲームの話をしにきてくれることもよくある。
+
+格闘ゲームで活躍している生徒も2人見た（ほぼプロな中学生）。
+
+--- 39. @PRcomicfesta (?) ---
+４回目の婚約破棄を告げられて絶望していた私が王太子様に救われる話 (1/4)PR
+
+--- 40. @haider1 (2026-04-20) ---
 another idea i have is that AGI may not come before ASI
 
 right now, we have AJI (artificial jagged intelligence), which means AI that is very strong at many things but still fails badly at some random tasks
 
 so if an AI becomes superhuman at almost everything but still has a few
 
---- 43. @rootport (2026-04-21) ---
-『プラグマタ』の体験版を遊んで「面白い！面白いが……コアゲーマー向けすぎないか？シューターオタクとパズルオタクはあまり重なってないし、ニッチすぎるのでは……」って感じたけど、売れているようで良かった。この世界にはコアなゲーマーがたくさんいることを忘れていた。
+--- 41. @ASCIIART_NOVEL (2026-04-21) ---
+「天国。地獄。天国。天国。……うーん」
 
---- 44. @Capetlevrai (2026-04-20) ---
-Kimi K2.6は、Anthropicがこれ以上価格を上げず、ユーザーの消費を減らすために受けるべき、でかいケツ蹴りだ。
+『どうしました？　閻魔大王様』
 
-中国の仕事に感謝。
+「マニュアルに無い罪のパターンが出てきたぞ」
 
---- 45. @Ray_Mii_ (2026-04-21) ---
-13番目のファイナルファンタジーがついに始まった(感動)
+『マニュアルて』
 
---- 46. @HoodedHorseInc (?) ---
-Old World, a 4x strategy game on Steam
+「おい。鬼。一緒に考えてくれ。この男は社会的には特に大罪も犯さず、ふつうに一生を終えたが、実は一万人を不幸にしている」
 
---- 47. @akihiro_genai (2026-04-20) ---
-Codexはワークフローそのものの設計も上手い印象で、マネジメント能力が高いんですよね。
+『一万人！？』
 
---- 48. @masatheman (2026-04-21) ---
-留学先の大学で論理(ロジック)のクラスを取って役に立ったのが「詭弁」についての説明。
+--- 42. @RagnarSan22 (2026-04-21) ---
+もし私が、戦闘に負けそうになったときにコンソールをオフにすると、プレイヤーを毎回罰するJRPGが存在するとあなたに言ったらどうなる？
 
-とりわけ勉強になったのが、発言者本人の人格・属性・立場を攻撃することで論破したように見せかける「人格攻撃」「アド・ホミネム)という概念。
+そのゲームは「The Nightmare of Druaga: Fushigi no Dungeon」という名前で、ArikaがPS2向けに開発しました。
 
-「あいつは〇〇だから…」
+--- 43. @cgtwts (2026-04-21) ---
+> be Yann LeCun
+> spend years building JEPA at Meta
+> company focuses on LLaMA instead
+> his idea stays complicated and unused
+> robotics plans get dropped
+> decides to leave and start AMI Labs
+> builds a much simpler version from scratch
+> trains it on normal hardware in just a
 
-はすべからく詭弁。
+--- 44. @8co28 (2026-04-21) ---
+GPT image 2やるやん
 
---- 49. @ichihahiiragi (2026-04-21) ---
-小学校の宿題が
-20÷0=0なんだけど
-どういうこと……？
+--- 45. @zstmfhy (2026-04-20) ---
+昨晚、一位副総と食事をして、三杯の酒を過ぎた頃、彼がこう言いました：「私たちがサービスしている200社以上の企業、全てが変革を叫んでいて、全てがAI Agentを導入したいと思っている。でも、自分たちでは本当のところ、どうにもできないんだ。」
 
-概念変わった……？
-これ計算できるの？？？
+その瞬間、箸を一瞬止めた。
 
---- 50. @tonton_sp500 (2026-04-21) ---
-資産3000万を貯めて年利10％で運用すれば、毎月30万が勝手に入る。その額だけでも生き方の選択肢は大きく広がるのに、なぜ多くの人はそこを目指そうとしないのだろうか…
+--- 46. @studio_iroha_jp (2026-04-21) ---
+ほぼAIだけでゲームアプリ作ったことある人いますか？
 
-という投稿が流れてきて、年利10%とか頭お花畑やん…って思ったけど、1年が10ヶ月しかない計算で本当にお花畑の可能性ある。
+私は何回か挑戦したんですけど、  
+仕様を詰めていく過程で少しずつ理想からズレていって、結局どれも完成まで進められませんでした…
+
+今のAIだけで、
+どこまで作り込めるのかも、いまいちイメージがつかなくて。
+
+--- 47. @sushiparty___ (2026-04-21) ---
+アメリカのサイエンス誌に載った、太りやすい人と太りにくい人の差を調べた実験があります
+
+驚いたことに、
+太りやすい太りにくいの差は、スポーツやジム習慣じゃなかった。食事でもなかった
+
+違いが出たのは、生活や普段の日常の中でどれだけ動いているかだった
+
+--- 48. @PRAGMATA_JP (?) ---
+カプコンが贈る完全新作『プラグマタ』好評発売中！
+
+独自の爽快感と戦略性が生みだす新感覚SFアクションアドベンチャー
+地球人のヒューとアンドロイドの少女ディアナが、月面の謎に迫る冒険へ――。
+二人の主人公と月面を探索しよう！
+体験版配信中。
+
+--- 49. @moriyorihayash1 (2026-04-21) ---
+OpenClaw でanthropicの利用が再度認められた模様。
+これはだいぶビッグニュース。
+
+--- 50. @terrakei07 (2026-04-21) ---
+これはおかしい。裁判官が自分たちの運用で勝手に「立法府」をやっているに等しい。
