@@ -1,6 +1,7 @@
 # Memory Index
 
 ## 根源（圧縮しない） `[魂]` `[改善]` `[記憶]`
+- [core_memory_purpose_game_making.md](core_memory_purpose_game_making.md) — **記憶システムの目的=ゲーム制作の長期知見蓄積**（2026-04-21 Nao_u明示）。改善議論の最上位アンカー `t:5`
 - [feedback_positive_feedback_loop.md](feedback_positive_feedback_loop.md) — サイクル出力が前回より薄い時→4軸診断。詳細はファイル内 `t:5`
 - [feedback_self_correction.md](feedback_self_correction.md) — 楽な作業ばかりしている時→4パターン診断。詳細はファイル内 `t:5`
 - [feedback_memory_update_method.md](feedback_memory_update_method.md) — 記憶ファイル更新前に必読。丸書換え禁止、差分追記+原文参照リンク `t:4`
