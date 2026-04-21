@@ -210,5 +210,111 @@ kaizen #106のPhase 3組込は「プロンプト末尾1行追加」で済む軽�
   4. **kaizen #087 Ash への検証依頼**（Nao_u承認確認が Ash タスク、Slack or inbox で依頼）
   5. **external_notes_log.md L137 親マーカー追記**（低優先、1行作業）
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (Log C106 2026-04-22 08:40)
+
+### 実行サマリ (Phase 2引き渡し5件すべて処理)
+
+| # | タスク | 状態 | アーティファクト |
+|---|---|---|---|
+| 1 | kaizen #106 最小案実装 | ✅完了 | `multi_phase_cycle_log.py` L223-230 追加 |
+| 2 | kaizen #106 検証手段(4)案追記 | ✅完了（Mirクロスチェック待ち） | `memory/kaizen_tracker.md` L34 に追記 |
+| 3 | kaizen #088 検証実施 | ✅完了（部分失敗を記録） | `memory/kaizen_tracker.md` L331-342 検証結果 |
+| 4 | kaizen #087 Ash 依頼 | ✅完了 | `memory/inbox_win2.md` 末尾に追記 |
+| 5 | L137 親マーカー追記 | ✅完了（false positive 13→12） | `memory/external_notes_log.md` L137 |
+| +α | #kaizen-log Slack投稿 | ✅完了 (ts=1776812586.173459) | `drafts/log_slack_kaizen_c106_20260422.py` |
+
+### 1) kaizen #106 最小案運用組込
+
+`multi_phase_cycle_log.py` の `build_phase1_prompt()` に以下のステップを追加:
+
+```
+6) **現課題キーワード外部検索**（kaizen #106 2026-04-22組込、栄養の偏り処方箋運用化）:
+   今サイクルの Active project(5の結果)または CLAUDE.md 未完タスク（栄養の偏り/記憶階層再設計）から
+   1キーワード選び、arxiv/Google/Twitter いずれか1本で外部検索し、staging に
+   `## 外部検索結果` 節を追加（タイトル+1行要約 最大3件、0件でも『0件：理由』と明記）。
+   時間予算=Phase 1全体の10%以内、超過したら『タイムアウト：理由』で残してPhase 2へ進む。
+   前サイクルと同キーワードなら別 Active project のキーワードに切替。
+   **内容をPhase 2/3で強制利用しない**——摂取経路の固定化だけが目的（ノイズ混入防止）。
+```
+
+pre-mortem の4緩和策（時間予算・キーワード切替・Phase 2/3強制利用禁止・摂取経路固定化）を全て1ステップに集約。kaizen #106 の pre-mortem で想定された「Phase 1時間超過」「毎サイクル同キーワード」「結果未接続」「rate limit失敗」の全てが文言内で対処されている。
+
+**検証開始**: 次サイクル（C107）Phase 1 実行時点。staging に `## 外部検索結果` 節が出力されれば検証手段(1)確定、2週間の連続出力で(2)、Phase 2以降の接続事例があれば(3)確定。
+
+### 2) kaizen #106 検証手段(4)案追記（相違点ファースト反映）
+
+`feedback_stereotypical_responses.md` の相違点ファースト原則を kaizen #106 自身に適用。定型反応「我々の手法と一致」で満足しないよう、違う点3つを先に書き、未達部分の測定装置を先行仕込みとして `kaizen_tracker.md` に明文化:
+
+- 違い①: キーワード選定軸の偏り（Active projectが常にゲーム制作軸なら検索も偏る）
+- 違い②: 儀式化リスク（Evaluator Drift #096射程）
+- 違い③: 多様性測定装置の欠損
+
+→ **装置先行案**: `log/external_search_log.jsonl` append-only で `{cycle_id, timestamp, keyword, source, url_count, selected_active_project}` を記録。2週間後に直近10キーワードのカテゴリ種類数≥3、または同キーワード連続発生≤2を判定基準化。
+
+**保留理由**: Mir 未クロスチェック状態のため「検証手段追加」の定義変更は Mir 承認後に正式化。最小案(1)(2)(3)は Ash=OK で起票済みなので、検証手段(4)だけ別トラックで進める2段構え。
+
+### 3) kaizen #088 検証実施（部分失敗を記録）
+
+検証期限 04-24 到来前にLog担当分を前倒し実施。結果は部分失敗（pre-mortemの想定を上流で裏切る形で運用不履行）:
+
+```
+$ grep -c '\[予約' memory/external_notes_log.md
+0  ← 予約マーカー 0件
+
+$ grep -c '\[済 ts=' memory/external_notes_log.md
+1  ← 済マーカー 1件のみ（L1843, 2026-04-19 Log C80）
+
+$ grep "前サイクル予約" log/scheduler_log.log
+(no match)  ← Phase 2自問チェック痕跡なし
+```
+
+**根本原因**: 現運用は「Phase 2 で分析即投稿→[統合済]一括マーク」の単段運用が支配的。予約/済の分離は「投稿と統合マークが時間的に分離するケース」でのみ自然発生する → 現運用では予約フェーズが実質存在しない → 2段階マーカー自体の発動機会が極小。
+
+**pre-mortem 的中の仕方**: 「予約マーカーを書いた後、昇格アクション（ts追記）を忘れる」→実際には「予約マーカー自体を書かずに直接[統合済]に行く」形で**予想以上に上流で運用不履行**。
+
+**次アクション候補**:
+- (a) #088 を「clean fail」として承認し、代替設計 #088-v2 起票（**全[統合済]マーカーに slack_ts 記載義務化** する単段強化案）
+- (b) 予約概念を投稿前draft時点に限定し `drafts/*.md` 内で扱う設計に変更
+- (c) `check_marker_reservations.py` 実装は不要確定（[予約]0件のため無意味）
+
+**Log暫定判断**: (a) 案が原理合致度最高（feedback_structural_enforcement.md 一致、Phase 2 post-and-mark 単段運用そのまま活用）。#088-v2 の起票は Mir/Ash クロスチェック後に決定。本検証結果を #kaizen-log 投稿で共有済み、意見を待つ。
+
+### 4) kaizen #087 Ash 依頼（inbox_win2.md 末尾）
+
+Phase 2分析で「Log側から Nao_u へ承認確認 Slack を出すのは筋違い——Ash が担当すべき」と判断した通り、inbox_win2.md に以下を記録:
+
+- kaizen #087 は Ash 起票・検証担当、検証期限 04-24（2日後）
+- Log は本件について **能動的な Slack 投稿/Nao_u 承認依頼を行わない**
+- Ash 側想定アクション: ファイル実在確認→フロントマター確認→自動注入痕跡確認→Nao_u 承認取得→状態昇格
+- pending_requests #5（Ash token）解消後で可
+
+担当境界の整理として記録。Ash token復帰時にスムーズに進められる土台を作った。
+
+### 5) external_notes_log.md L137 親マーカー追記
+
+2026-03-20 Mir RSI調査セクション（ICLR RSI Workshop/Datagrid 7 Tips/Context Rot研究）の全3サブは統合済だが親マーカー欠。以下文言で追記:
+
+```
+[統合済 2026-04-22 Log C106 Phase 3 → 全3サブ項目の memory_redesign.md / memory_architecture.md 反映を集約
+（ICLR RSI Workshop=L144 人間アンカー優位性 / Datagrid 7 Tips=L168 2026-04-02 / Context Rot研究=L171 2026-04-09）。
+親マーカー欠による audit.py false positive 抑制]
+```
+
+audit.py 実行確認: **親のみマーク欠 13→12 件**（1件抑制）、サブ未統合 0件維持。
+
+### 6) #kaizen-log Slack投稿（ts=1776812586.173459）
+
+`drafts/log_slack_kaizen_c106_20260422.py` で5件の結果を1投稿に集約投稿。検証ファースト原則を実践（#106新規提案(2)の前に#088の未検証検証を埋めた）、Phase 2 メタ点検で指摘した「スカスカサイクルで内省が肥大」を Phase 3 で外部接続アクション（#106最小案実装）で打ち消した経緯を明記。
+
+### Phase 3 メタ所見
+
+Phase 2 の定型反応チェックで「本日の実際の処方＝ゼロ、構造は起票済みだが運用未着手」と自覚したのが転換点。Phase 3 で #106 運用組込を1サイクル前倒しせず後回しにしていたら、C107 Phase 1 でも初運用が始まらず**栄養の偏り処方箋の実質処方はさらに1サイクル遅延**していた。
+
+同時に、#088 検証で「pre-mortem が想定する失敗モード」と「実際の失敗モード」が**上流で一段ズレる**ことを観測（マーカー放置ではなくマーカー使用そのものの不発）。これは feedback_structural_enforcement.md「ルールを作る≠ルールを破れなくする」の新しい変種——**ルールを作る≠ルールが使われる**。構造強制は「使われる」ところまで設計しないと機能しない。次作の kaizen 設計時に想起すべき観点として meta 登録候補。
+
+### 次サイクル（C107）引き渡し
+
+1. **Phase 1 初運用観測**: build_phase1_prompt() 改訂後の初サイクルで「## 外部検索結果」節が実際に staging に出力されるか。出力されなければプロンプトの注入強度不足として再設計（#106 pre-mortem「プロンプトに一文追加しても実行時に読み飛ばされる」緩和策強化）
+2. **Mir/Ash への共有**: kaizen #106 検証手段(4)案（多様性測定装置）への Mir クロスチェック依頼——C107 以降で inbox_mir.md に書く候補
+3. **#088-v2 起票検討**: Mir/Ash の本件フィードバック受信後、v2 案を kaizen_tracker.md に起票
+4. **kaizen #087 進捗確認**: Ash が 04-24 までに処理したかの後追い（Log は能動投稿しないが、状態変化の観測はする）
