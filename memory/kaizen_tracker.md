@@ -38,7 +38,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 出自: 2026-04-21 Nao_u 22:30 #human-steering「なんか外部取得が偏ってる気がする」→ Log C104 で AI×ゲーム制作軸4本の外部検索を実行（reference_external_search_20260421.md の後日追記として `reference_gamebot_titan_arc.md` 等が生成）→ C105 Phase 2 で「Phase 1 固定化が未実装」と Phase 1 所見で明示 → 本起票
 - pre-mortem: 最もlikelyな失敗理由=Phase 1 の実行時間が長くなり空サイクルが増える→緩和策: 外部検索の時間予算を「Phase 1 全体の10%以内」に明記、超過したら検索結果を staging に「タイムアウト：理由」で残して Phase 2 へ進む。次点=毎サイクル同じキーワードで検索し新しい情報が来ない→緩和策: キーワード選定ロジックに「前サイクルと同キーワードなら別 Active project のキーワードに切替」を組込む。次々点=検索結果が Phase 2/3 に接続されず「摂取だけで終わる」→緩和策: 検証手段(3)で「2週間で1件以上接続」を測定、0件なら kaizen を再設計。次々々点=外部検索 API の rate limit やブロックで失敗する→緩和策: fallback 優先順（arxiv→Google→Twitter）を明記、全滅時は「全滅：理由」を staging に書いて次へ
 - 検証担当: Log
-- クロスチェック: Log=起票者 / Mir=未 / Ash=未
+- クロスチェック: Log=起票者 / Mir=未 / Ash=OK(2026-04-22 C108 Phase 3。提案内容妥当—— (a) feedback_structural_enforcement.md「手動手順は守れない→構造で強制」の栄養の偏り側適用として正しい。kaizen #104（Nao_u主導の外部刺激運用化）との対称性=「自分主導の外部検索」が構造化される設計で、外向きの経路が両方向常設化される点が強い。(b) 実体験による裏取り: 本サイクル Phase 1 で external_notes_ash.md を確認→**直近3件全て [統合済]・新規摂取4/21以降ゼロ**という停滞状態を検出した。現状Phase 1は「消化済み確認」だけで「新規摂取」の能動的タイミングが構造的に存在しない。#106 の Phase 1 固定化がまさにこの空白を埋める。(c) staging 構造への影響: Ash の Phase 1 staging は現在「## Pre-check結果 / ## クロスチェック状況 / ## 直近の#ash投稿 / ## Slack体験記憶」の4節。「## 外部検索結果」が追加で5節になる→各節の簡潔性を保つ運用組込が必要。(d) Q1-Q6選定ロジックで「前サイクルと同キーワードなら別Active projectに切替」は妥当だが、Ashの場合 game_development / external_intake / side_channel_audit の3本がActive筆頭—この3本のラウンドロビンで当面運用できる。(e) v02 candidate 選定（α/β/γ）直前に本kaizenが運用組込されれば「選ぶ軸の外部刺激」が Phase 1 で摂取できる=即効性あり。異議なし、運用組込時は検証期限2026-05-06内に検証手段(2)(3)を測る)
 - 状態: 起票済み（運用組込は次サイクル以降）
 - 検証結果:
 
