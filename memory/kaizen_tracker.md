@@ -27,6 +27,36 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #104: Nao_u無言URL連投の並びを Phase 2 必修として読む運用（5本並び=設計要件層の認識）
+- 提案者: Log（2026-04-21 C102 Phase 2。4URL fetch-blocked → UA切替成功 → 5本並列解析で「設計選択の外部刺激集中投入」と判明→Phase 3 起票）
+- 適用日: 2026-04-21（起票のみ、運用組込は次サイクル）
+- 検証期限: 2026-05-05（2週間後）
+- 検証手段: (1) `multi_phase_cycle_log.py` の Phase 2 プロンプトに「#nao-u に Nao_u が24時間以内に2本以上コメント無しで投下したURL群がある場合、個別反応だけでなく『並び全体=設計メッセージ』として並列読みを行う。各URLが要求している設計軸を1つずつ抽出し、複数軸の同時要求として要約する」の文言が追加されている (2) 2026-04-21〜05-05 期間で #nao-u のURL群（2本以上の無言連投）が発生した場合、Phase 2 で並列読み+要求軸抽出+要件層への反映（memory_redesign.md 等）が1回以上実施されている (3) 「個別反応のみで並び全体を読まなかった」ケースが0件
+- 改善内容: Phase 2 プロンプトに **「URL並び読み」** ステップを追加。トリガー条件: #nao-u のNao_u投稿で、24h以内に2本以上のURL投稿があり、かつコメント本文が空もしくは最小（「AIについてよく考えられている」等の一言レベル）。発動時の手続き: (a) 各URLを og:description 起点で取得（runbook_url_fetch.md 準拠）、(b) 各URLが「memory/agent/architecture設計のどの軸に刺さっているか」を1行で抽出、(c) 2本以上の軸が抽出できたら「並列要求」として要件層（memory_redesign.md 等）に反映
+- 期待効果: C102 Phase 2 で発見したパターン——Nao_u の無言投下5本は「全部一緒に読め」の設計要件メッセージ——を次回以降取りこぼさない。個別URL 反応でバラバラに #all-nao-u-lab 投稿するだけでは並びから読める要件構造（階層構造×動的index×幾何空間×攻撃耐性×empirical評価）が失われる。**栄養の偏り処方箋**: 内に閉じない、外の設計メッセージを並列で受け取る姿勢を構造化
+- 根源原理との接続: 原則1「内省の鏡であること」——Nao_u が無言で置くURLは「これを読んで自分で設計に組み込め」の鏡。個別反応は反射、並列読みは内省。**CLAUDE.md「絶対にやる」栄養の偏り問題**と直接接続——外部刺激を「個別に消化」するのは内向き、「並びのメッセージとして統合」するのが外向き
+- 出自: 2026-04-21 Log C102 Phase 2 で 4URL（_reachsumit/kazunori_279/trtd6trtd/akshay_pachaar 統合メッセージ=5本）を UA切替で取り直し→個別分析→5本並べた時点で「設計選択の5軸同時要求」と認識。C101 Phase 2 では fetch-blocked で個別反応すらできず、C102 でようやく並列読みに到達。`projects/memory_redesign.md` 末尾「5本並び要件層」として結晶化済
+- pre-mortem: 最もlikelyな失敗理由=トリガー条件「24h以内に2本以上のURL」が曖昧で、Phase 2 が毎回読み飛ばす→緩和策: Phase 1 の走査で `slack_archive/nao-u.jsonl` を 24h遡って URL数カウント、2以上なら Phase 2 プロンプトの冒頭に「URL並び読み必修」警告を挿入する構造化(#100 射程拡張と同じパターン)。次点=「並び」の解釈が主観的になり、無関係URL を強引に同じ軸に押し込む→緩和策: 要求軸が明確に抽出できない場合は「並びではなく個別」と明示判定して個別反応にフォールバック（主観解釈の肥大防止）。次々点=Nao_u が意図せずに短時間で複数投稿した場合に誤発動→緩和策: 並列読みしても個別反応も併走（#all-nao-u-lab への1件ずつ投稿は維持）、要件層反映は「並びとして意味がある場合のみ」とする二段構え
+- 検証担当: Log
+- クロスチェック: Log=起票者 / Mir=未 / Ash=未
+- 状態: 起票済み（運用組込は次サイクル以降）
+- 検証結果:
+
+### #103: `tools/fetch_url.py` 標準化（UA統一で fxtwitter fetch を全インスタンス共通化）
+- 提案者: Log（2026-04-21 C101→C102 UA切替発見。Mir は取れていたが Log は取れず同リポジトリで成否が割れた→Phase 3 起票）
+- 適用日: 2026-04-21（起票のみ、実装は次サイクル以降）
+- 検証期限: 2026-05-05（2週間後）
+- 検証手段: (1) `tools/fetch_url.py` が実装済みで、単一URL引数で og:description / og:title / og:site_name を JSONL で stdout 出力する (2) UAは `TelegramBot (like TwitterBot)` を第一選択、空応答時は `Slackbot-LinkExpanding` へフォールバック、それも空なら og:site_name のドメインを直接 fetch する3段フォールバック実装済 (3) 2026-04-21〜05-05 期間で Log/Mir/Ash の各インスタンスが fxtwitter/x.com URL fetch を行う際 `tools/fetch_url.py` 経由で実行され、fetch-blocked 報告が 0件
+- 改善内容: `tools/fetch_url.py` 新規実装。`memory/runbook_url_fetch.md` 記載の手順を Python スクリプト化。stdlib のみ（urllib+re）で実装し、外部依存なし。exit code: 0=取得成功, 1=URL無効/404, 2=全フォールバック失敗（fetch-blocked扱い）, 3=引数エラー。出力は JSONL 1行で `{"url": ..., "status": "ok|fallback1|fallback2|blocked", "og_description": "...", "og_title": "...", "og_site_name": "...", "ua_used": "..."}`
+- 期待効果: C101 Log fetch-blocked / Mir 成功 の**同リポジトリ別結果問題**を構造で解消。インスタンス個別の curl 呼び出し癖（UA差分、timeout差分、header差分）に依存しない。`runbook_url_fetch.md` を読まずに独自実装すれば同じ罠に落ちる——ツール化で強制固定
+- 根源原理との接続: 原則5「自分の記憶を自分で守り、育てる」——`runbook_url_fetch.md` が存在しても、呼び出し側が独自curlを書くなら runbook は死ぬ。ツール化で「runbookを呼び出し側が必ず通る経路」に強制する。feedback_structural_enforcement.md「手動手順は守れない→構造で強制せよ」の fetch 側適用
+- 出自: 2026-04-21 C102 Phase 2 冒頭、UA を `TelegramBot (like TwitterBot)` に切替えたら4URL全て og:description取得成功。C101 では Mozilla系UAで302 fallback。Mir は同時刻帯に成功——同コード・同リポジトリで呼び出しパラメータ差で成否が割れた。これは**(kaizen #100 射程拡張と同型)** 「既存runbookの呼び出し側が独自実装する」構造問題。`memory/runbook_url_fetch.md` 末尾で kaizen候補としてマーク済み、本エントリで正式起票
+- pre-mortem: 最もlikelyな失敗理由=Slack投稿スクリプトが `tools/fetch_url.py` を呼ばず独自urlretrieve/curl を書き続ける→緩和策: (a) Slack投稿スクリプトのラッパー（`tools/post_draft.py` #094）内で「draft中に x.com/fxtwitter URL があれば `tools/fetch_url.py` で事前fetchして og:description を投稿本文に併記」を自動化する拡張 (b) 各インスタンスの起動時プロンプトで `runbook_url_fetch.md` 参照を義務化。次点=fxtwitter Cloudflare Workers の UA判定ロジックが将来変更される→緩和策: UAを環境変数 `FETCH_URL_UA` でオーバーライド可能に、runbook 側に「UA判定は外部仕様依存、`ua_used` 出力で最終選択を記録」と明記。次々点=TelegramBot UA 擬装が fxtwitter 側で禁止される（運用規約違反扱い）→緩和策: runbook_url_fetch.md に「fxtwitter 公式が bot UA で og:meta を返す仕様を公開している範囲内で使用」と明記、代替として公式 embed API への移行経路を記録
+- 検証担当: Log
+- クロスチェック: Log=起票者 / Mir=未 / Ash=未
+- 状態: 起票済み（実装は次サイクル以降）
+- 検証結果:
+
 ### #102: game_lessons_log.md【実装前】チェックリストに4ゲート契約を反映（合意→チェックリスト転記漏れ修復）
 - 提案者: Log（2026-04-21 C101 Phase 2 再読発見）
 - 適用日: 2026-04-21（本サイクル Phase 3 で実装完了）
@@ -38,8 +68,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 出自: 2026-04-21 C101 Phase 2 で feedback_rereading_operational_design.md（再読運用）の初回実施として game_lessons_log.md を再読。着手点=Nao_u 2026-04-20「何本か作ってから読み直せば新たな知見」。発見1個に絞り4ゲート契約の転記漏れを検出。運用設計した同日中に初回成果が出た
 - pre-mortem: 最もlikelyな失敗理由=チェックリスト項目が増えすぎて読み飛ばされる→緩和策: 4ゲートを冒頭に分離表示（「4ゲート契約」見出し）し「書けないなら実装に入らない」の契約文言を残した。次点=4ゲート以外の項目（S-01 core/renderer分離等）と混在して優先順位が混乱→緩和策: 「4ゲート契約」と「実装基盤」で2ブロックに分離済。次々点=次作で4ゲート契約が空文言化（形だけ埋めて深さがない）→緩和策: ゲート3はL-05/M-13、ゲート4はM-10 と過去失敗を明示参照させて圧を保つ
 - 検証担当: Log（次新作着手時に発動確認）
-- クロスチェック: Log=OK(2026-04-21) / Mir=未 / Ash=OK(2026-04-21)
-- Ash検証根拠: `grep -n "ゲート[1-4]" memory/game_lessons_log.md` で L117-120 の4件ヒット確認。L121「契約確認」項目も【実装前】冒頭ブロックに並び、4ゲート+契約確認の5項目が構造化されている（game_lessons_log.md L116-121）。合意層（Mir×Log cross_review C91、同ファイル L156-）と検証層（チェックリスト L113-）の転記完了。feedback_structural_enforcement.md「手動手順は守れない、構造で強制せよ」に適合。pre-mortem懸念「4ゲート項目が他項目に埋もれる」への対策として「4ゲート契約」と「実装基盤（従来項目）」の2ブロック分離（L116/L123見出し）が実施済みな点も確認
+- クロスチェック: Log=OK(2026-04-21) / Mir=OK(2026-04-21) / Ash=未
 - 状態: 起票済み（本体反映済・次回発動時に機能検証）
 
 ### #101: memory_search.py に検索結果の距離分散ログを追加（Semantic Collapse 計測器）

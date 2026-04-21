@@ -67,6 +67,7 @@
 | 入力経路仮説 | [input_route_hypothesis.md](input_route_hypothesis.md) | Active (検討段階) | 「何を入れるか」より「どこから入れるか」が結果を決める仮説。system_identity.md経口化の検討。Nao_u承認待ち（情報蓄積中） |
 | 迂回経路監査 | [side_channel_audit.md](side_channel_audit.md) | Active | @ryoppippi Opus 4.7 auto-mode事件起源（Mir 4/17起票）。我々のauto-loopに同型リスクがないか監査。Ash 4/18応答（L1/L2フレームワーク+初期スキャン+FileGram drift転用）。Log 4/18応答（L3=迂回前段条件+慢性化WARN深掘り+denial list v0.1+LLM judge別インスタンス化）。次: git_pull未実行原因特定・denial list正式化 |
 | ルール密度×遵守率 | [rule_density_experiment.md](rule_density_experiment.md) | Active (計画起草) | @MakeAI_CEO「ルール量↗で遵守率↘」説起点（Mir 2026-04-20 C89 Phase 2-3起草）。3層プロンプト構造の有効性の天井を内部検証する実験計画。Seed-H/I/J/K 4案。一次資料未確認のためR-007で記事化保留、実行判断Nao_u待ち |
+| failure slot 効果測定 | [failure_slot_measurement.md](failure_slot_measurement.md) | Active (測定準備) | Blakely父 dinner question 個人試行（Mir 2026-04-17 C69 導入）の1週間後効果測定フレーム。M-1記入率/M-2自己検出率/M-3構造強制化率/M-4再発間隔/M-5直後行動変化率の5指標を pre-register（C98 2026-04-21）。測定当日=2026-04-24、結果記事化→#shared-reads 予定。6サイクル持ち越しの先延ばし系失敗サンプル自体が測定の最初のデータ点 |
 
 ## 運用契約（プロジェクト化未満の合意メモ）
 

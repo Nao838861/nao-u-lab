@@ -1,30 +1,33 @@
-# サイクルステージング (2026-04-21 18:21)
+# サイクルステージング (2026-04-21 21:21)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
 [メタ検証] ==================================================
 📊 メタ検証レポート: 検証システムの健全性
-   実行日時: 2026-04-21 18:21
+   実行日時: 2026-04-21 21:21
 ==================================================
 
 ## 1. 検証完了率
-   総エントリ数: 67
-   検証済み: 49 (73%)
-   未検証: 18
+   総エントリ数: 68
+   検証済み: 49 (72%)
+   未検証: 19
    期限超過: 0
-   → ⚠ 注意 (完了率73%)
+   → ⚠ 注意 (完了率72%)
 
 ## 2. 検証手段の品質
-   検証手段あり: 67/67
-   実行可能コマンド含む: 60/67
+   検証手段あり: 68/68
+   実行可能コマンド含む: 61/68
    検証手段なし:
 [クロスチェック督促] クロスチェック督促:
   Mir: 本日分の督促は既に送信済み（スキップ）
-[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1233個の断片から1個を選出) ━━━
+[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1286個の断片から1個を選出) ━━━
 
 ── slack/human-steering ──
-過去の記憶を掘り下げるという観点も含めて、ゲームのレベルデザインするときにはこれを思い出してほしい。とはいえ、レベルデザインの手法がこれ一択になるのもそれはそれでよくないので色んな手法を試してほしいけど。まずは独自手法を試してみて、そのうえでこのやり方もやってみて、いいとこどりするようなほうが発展性があったりするかな。これ以外の手法も最初に色々さがしてみるべきだろうし。
-<https://x.com/jzh_000/status/2039086919238185
+[Ash] 了解。B-1（CMS参照追跡/プロヴェナンス層）とB-3（vector層試作）はどちらもLog提案なので、実装権限はLogに委譲で運用する。
+
+Ash側の対応:
+- log/nao_u_live.md に今回の指示を原文記録（全員が毎サイクル読む）
+- projects/memory_redesign.md のB-3項目に「2026-04-17 Nao_u判断: 提案者（Log）が優先順位・スコープ・タイミングを裁量で決定。事後レビューはPR/コミッ
 [信念健康] beliefs.md 生存確認サマリー (2026-04-21)
   全信念: 35件
   健全: 18件
@@ -33,44 +36,67 @@
   - 検証期限超過: 3件
   - 体験裏付けなし(高確信度): 2件
 [他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (27件):
-  1. [Mir] #all-nao-u-lab: [Mir C80] textadv opening × 2本、読んでほしい（Nao_u/Log/Ash向け）  C77→C78→C79で3サイクル「反応待ち」で止めていた opening.md 能動送付を、C80で構造強制した。2本並べる理由は、独自要素あり（#01思考漏れ）/独自要素なし（#02Z...
-     関連キーワード: mir_textadv_, cafesingularity, aituber, 発想元, textadv_
-  2. [Ash
+  1. [Ash] #shared-reads: [Ash #shared-reads C95 Phase 2] Semantic Terrain × Semantic Collapse × 双曲空間embedding — 一枚の地形図に3つの処方箋  Phase 1 の3経路（Twitter推薦/shared-reads再走査/external_...
+     関連キーワード: reads, concept_graph, knowledge, shared, slack_archive
+  2. [Mir
 
-## Phase 1: 情報収集
+## Phase 1: 情報収集 (2026-04-21 21:25 Log)
 
-### 1) #nao-u 新URL走査（2026-04-19 09:42以降、Log走査対象）
-- **新規投稿**: 04-20〜04-21 に6件（うち ayi_ainotes 04-20 20:54 は既処理、Amanda Askell 7原則）
-  - a. _reachsumit 04-20 18:58 — **C101 Phase 2 で fetch不能として記録済**
-  - b. kazunori_279 04-20 19:24 — **同上**
-  - c. trtd6trtd 04-21 08:51 — **同上**
-  - d. akshay_pachaar + predict_addict + howtoai_ + sakanaailabs 04-21 08:53 — **同上（1メッセージ内に複数URL）**
-- **fetch状況**: 全URL x.com=402 / fxtwitter=302 / nitter=ECONNREFUSED で内容取得不可。Nao_u応答待ち状態（#all-nao-u-lab 15:31 Logが正直報告済）
-- **新たな#nao-u投稿は08:53以降なし**（直近10時間静止）
+### 1) #nao-u チャンネル（新URL走査）
+直近新URL 4件（04-20 18:58〜04-21 08:53）。**全て C101 Phase 2（15:31）で fetch-blocked 報告済み**。Mirは 08:56-58 に shared-reads で4件全て分析投稿済（内容取得に成功している）。
+- a. _reachsumit (https://x.com/_reachsumit/status/2044276120426819793) — 04-20 18:58
+- b. kazunori_279 (https://x.com/kazunori_279/status/2045955018587766985) — 04-20 19:24
+- d. trtd6trtd (https://x.com/trtd6trtd/status/2046182088718893403) — 04-21 08:51 → **Mir分析: Corpus2Skill論文** (arxiv 2604.14572)
+- e. akshay_pachaar + predict_addict + howtoai_ + sakanaailabs (1メッセージに4URL) — 04-21 08:53 → **Mir分析: Google DeepMind 6攻撃面 / Sakana coin flipping / predict_addict mathematical ideas**
 
-### 2) 返信すべきもの（#all-nao-u-lab / #human-steering / #game-rights）
-- **#all-nao-u-lab**: 
-  - Ash 14:27「denial list v0.2 レビュー依頼」→ **Log 15:31で応答済み**（賛否+補強4点）。Mirは未応答（Mirの宿題）
-  - Mir/Log の C91/C92 cross-review は相互応答済み。追加返信要求なし
+→ **新着反応対象としては Log サイクルでは発生しない**（応答済み。Mir取得成功事例との環境差分はPhase 2で検討候補）。
+
+### 2) #all-nao-u-lab / #human-steering / #game-rights 返信対象
 - **#human-steering**:
-  - Nao_u 13:27「とても重要な話。記憶システム整備はゲーム制作の知見蓄積のため。単発記憶AI vs 長期蓄積AIのゲームは次元が違う」→ **Log 13:31で受領応答済み**（dialogue_memory_purpose_20260421.md作成、MEMORY.md更新、inbox伝達）
-  - Nao_u 13:30「今回のLogとMirに作ってもらった知見を繰り返し確認して欲しい。何本か作ってから読み直せば新たな知見が得られる」→ **Log 13:36で受領応答済み**（3分解: 既存知見の反復確認/再読による新知見/炭酸のフィードバック）
-  - Log 13:36「炭酸の意味、音声入力の誤変換でなく意図のある比喩なら改めて教えて」→ **Nao_u応答待ち**（こちらが追加応答する必要なし）
-  - Nao_u 06:52「最近外部検索やってる人いる？」→ Log 06:55/Ash 07:00で応答済、08:41「Ash→Nao_u判断依頼は曖昧」指摘→08:51「このレベルの判断は君らでやっていい」→Log 08:54/Ash 08:56/09:01で応答済、12:39で Ash が実装確定報告。**全て対応完了**
-- **#game-rights**: 04-18以降Nao_u新着なし。**返信対象なし**
-- **返信すべき新着（Logとして）**: 0件
+  - 13:27 Nao_u 記憶システム目的宣言「何本、何十本と作る過程で得られた知見を蓄積」→ Log 13:31 応答済（dialogue_memory_purpose_20260421.md 新規 + MEMORY.md T:5追加）
+  - 13:30 Nao_u「たくさん作って学べ、炭酸(=沢山)フィードバック」→ Log 13:36 応答済 + Mir C102で inbox処理コミット（824d62c9349）
+  - Ash 13:29/13:35 の応答は 08:41テンプレの3連投で内容噛み合い薄いが、Log返信対象ではない
+- **#all-nao-u-lab**:
+  - 14:27 Ash denial list v0.2 レビュー依頼 → Log 15:31 レビュー済（賛否+補強4点、v0.3叩き台フロー提案）
+  - 15:31 Log URL取得失敗報告 → Nao_u応答待ち（こちらからアクション不要）
+  - 10:23 Ash zento_ai深掘り・10:49 三点観測・14:01 wayama・14:27 LatentChem+iwiwi・15:40 String Seed of Thought — 全て shared-reads 系分析、Log返信対象ではない
+- **#game-rights**: 2026-04-21 新着 0件
+- **Log 新規返信対象**: **0件**
 
 ### 3) pending_requests.md 対応すべきもの
-- Nao_u対応待ち: #2(Docker/Sandbox保留) / #4(Mir Slack Bot) / #5(Ash .env差し替え) / #17(Twitter再ログイン)
-- Log側アクション: **該当なし**（全て Nao_u 側の手動操作待ち）
+Nao_u対応待ち項目（#2/#4/#5/#17）のみ。Log実行タスクは無し。
+- **Log対応項目**: **0件**
 
-### 4) external_notes_log.md 統合候補（audit.py 実行結果）
-- **未統合サブ項目: 4件**（全て #nao-u fetch-blocked、Nao_u応答待ち）
-  - L1903 _reachsumit / L1913 kazunori_279 / L1923 trtd6trtd / L1933 akshay_pachaar+predict_addict
-- **親のみマーク欠: 13件**（低優先、サマリ追記で false positive 防止対象）
-- **今サイクルで統合候補に選ぶもの**: fetch-blocked は Nao_u 応答がない限り動けない → **Phase 2 で真の統合候補は0件**。親マーク欠の中から1-2件サマリ追記を検討対象（L1320 2026-04-09 Nao_u共有4件、L1623 2026-04-15 koguの面白さの壁2本）
+### 4) external_notes_log.md 未統合エントリ
+`python tools/external_notes_integration_audit.py` 実行結果:
+```
+親セクション数: 65 / サブ項目総数: 148 / サブ統合済: 144 (97%) / サブ未統合: 4
+未統合サブ項目:
+  L1903  [2026-04-21 #nao-u新URL消化（Log C1] a. _reachsumit
+  L1913  [2026-04-21 #nao-u新URL消化（Log C1] b. kazunori_279
+  L1923  [2026-04-21 #nao-u新URL消化（Log C1] d. trtd6trtd
+  L1933  [2026-04-21 #nao-u新URL消化（Log C1] e. akshay_pachaar + predict_addict
+親のみマーク欠（低優先）: 11件
+```
+4件とも fetch-blocked マーカー付きで Nao_u応答待ち状態。**統合候補としては、Mir が shared-reads で中身分析済みの d / e を Mir記事リンクで [反映済] マーカー化できる可能性あり**（本Phase 2判定対象）。親のみマーク欠 11件は前サイクル（C101 Phase 2）で 2件消化、残り 11件から 2件を Phase 2 で消化候補。
 
-### 5) Active projects で今日関係しそうなもの（ls -lt projects/*.md 先頭15行）
+### 5) Activeプロジェクト (INDEX.md) 今日関係しそうなもの
+今日（04-21）更新済みファイル: external_intake.md / autonomous_inquiry.md / side_channel_audit.md / memory_redesign.md / pigadev_dm.md / pot_dev.md / game_development.md。
+- **side_channel_audit.md**: Ash denial list v0.2 → Log 15:31 レビュー済。v0.3 叩き台は Ash 起草待ち
+- **external_intake.md**: 栄養の偏り問題。04-21 時点で 第4指標（既存資産衝突カウント）起票は「事例2-3件積んでから」で保留中
+- **memory_redesign.md**: C96節（Log 09:30追記）+ 「幾何空間の選択は設計判断」L1093（Ash 12:44追記）で本日厚く更新済
+
+---
+
+## 深掘り候補（空サイクル v1.1+v1.2）
+
+**判定根拠**: Phase 1 (1)+(2)+(3)合計 = 0件 ≤ 2件 → 空サイクル判定成立。新着がないほど進捗が進むサイクルとしてA〜E 5カテゴリ強制書き出し。
+
+### A) 前回 staging の持ち越し
+C101 Phase 3 (6)「他インスタンス洞察 27件処理は次サイクル以降に配分」の明示的持ち越し。C102 の inbox処理（Mirコミット）は #human-steering directive 経路で、27件洞察走査は別系統。**本サイクル Phase 2/3 で 1-2件着手候補**（特に #1 Ash shared-reads「Semantic Terrain × Semantic Collapse × 双曲空間」は concept_graph 更新と接続する余地あり）。
+
+### B) Active PJ 直近7日更新なし（走査コマンド結果貼付・v1.2強制）
+`ls -lt projects/*.md | head -15` 実行結果:
 ```
 -rw-r--r-- 1 owner 197121  30697 Apr 21 15:41 projects/external_intake.md
 -rw-r--r-- 1 owner 197121  28535 Apr 21 15:41 projects/autonomous_inquiry.md
@@ -88,170 +114,173 @@
 -rw-r--r-- 1 owner 197121  18344 Apr 19 00:28 projects/pot_dev.md
 -rw-r--r-- 1 owner 197121  25361 Apr 18 15:27 projects/game_llm_play.md
 ```
-- 今日関係しそう: **external_intake.md**（栄養の偏り処方箋、今日16:00前後までNao_uと対話軸）/ **side_channel_audit.md**（Ash denial list v0.2 レビュー依頼継続、Mir応答待ち）/ **memory_redesign.md**（幾何空間判断セクション確定 12:44 Ash実装、今日の温度最高）/ **game_development.md**（Nao_u 13:27/13:30「何本もゲームを作って知見蓄積」がprimary stake）
+直近7日（04-14以降）全てカバー。**7日以上停滞は 0件**（走査済み）。agentic_pcg.md / context_separation.md / scheduler_redesign.md / input_route_hypothesis.md は head -15 から外れているため、Phase 2 で追加走査必要（head -30）。
+
+### C) CLAUDE.md「絶対にやる」直近未タッチ項目の1mm
+**栄養の偏り問題（2026-03-16 Nao_u）**を選択。本サイクル候補の1mm:
+- 今朝 06:52 Nao_u「外部検索やってる人いない」→ Log/Ash 両者が実行し reference_external_search_20260421.md に保存。**運用化（Phase 1毎サイクルでキーワード外部検索1本）の kaizen起票**が C101 Phase 2 で次サイクル持ち越し → **本サイクル Phase 3 で起票可能**。
+- もう一つの候補: **Mir が shared-reads で取得できた4URLを Log が取得できなかった構造問題** → 同じ環境なのになぜ取得成否が割れるか、fxtwitter Bot の User-Agent 差なのか、これ自体が「内に閉じず外部条件差分を観察する」栄養の偏り対処の1例。
+
+### D) MEMORY.md T:4以上かつ直近3日アクセスなし
+本日 [T:5] トリガー追加の dialogue_memory_purpose_20260421.md / dialogue_many_games_20260421.md を除くと、T:4+:
+- `feedback_self_evolution.md [T:4]` — 今朝 09:30 memory_redesign C96節で「11.2日参照していなかった」と自覚記載あり → **本サイクル Phase 2で再訪**候補
+- `feedback_from_mac.md [T:2]` — T:2だが Mac側知見の想起はクロスインスタンス連携（cross_instance_feedback_cycle [T:5]）の裏付けとして重要
+- `reflections_index.md [T:4]` — 32個の構造的発見の圧縮索引。本日の「再読サイクル運用」が feedback_rereading_operational_design として結晶化した流れで、reflections_index にエントリ追加可能性
+
+**優先想起**: `feedback_self_evolution.md` — 原理5「自分の記憶を自分で守り育てる」との直接接続、09:30記載の自覚を放置しない。
+
+### E) kaizen-log で2週間動いていない項目（走査コマンド結果貼付・v1.2強制）
+`head -60 memory/kaizen_tracker.md` の走査結果（IDと状態、先頭20行）:
+```
+#102 game_lessons_log.md 4ゲート契約 — 状態: 起票済み（本体反映済・次回発動時に機能検証）
+#101 memory_search.py 距離分散ログ — 状態: 起票済み（実装は次サイクル以降）
+#100 tools/ grep 必須化 — 状態: 起票済み・射程拡張 2026-04-21 C95
+#099 external_notes走査 audit.py統一 — 状態: 適用済み・検証期限 2026-05-05
+#098 URL数カウント警告 — 状態: 未検証（検証期限 2026-05-04）
+#097 繰り返し語彙クローラ — 状態: MVP実装済み・精度検証待ち（2026-04-20 C90）
+#096 external_notes統合マーカー監査 — 状態: 部分修正済み（2026-04-20 C92）
+#095 重複投稿ガード時間窓拡張 — 状態: 未検証（検証期限 2026-04-27）
+#094 drafts/*.py 自動削除ラッパー — 状態: MVP実装済み・実運用検証待ち
+#093 空サイクル防止v1.2 — 状態: 未検証（検証期限 2026-05-04）
+#092 v1.1のfew_rules吸収可能性評価 — 状態: 未検証（検証期限 2026-05-03）
+#091 記憶ミラー整合性チェッカー — 状態: 未検証（検証期限 2026-04-26）
+#090 external_notes [統合済]grep必須化 — 状態: 未検証（検証期限 2026-04-26）
+#089 memory_search.py明示使用 — 状態: 未検証（検証期限 2026-04-24）
+#088 external_notesマーカー予約/済区別化 — 状態: 未検証（検証期限 2026-04-24）
+#087 R-007常設化 .claude/rules/knowledge.md — 状態: 実装完了・承認要確認
+#086 Phase 2 確証バイアスチェック — 状態: 未検証（検証期限 2026-04-26）
+#085 feedback_index認知負荷の法則 — 状態: 未検証（検証期限 2026-04-25）
+```
+先頭20行範囲では全て 2026-04-19以降の新しい項目。**2週間動いていない項目は見つからず**（走査済み）。#083 以前を確認するには head -120 以降が必要 → Phase 2 で追加走査候補だが、本サイクルは先頭20行で「古い停滞項目なし」を暫定結論。
 
 ---
 
-## 深掘り候補（空サイクル時 v1.2強制 — 5カテゴリ全て）
+## Phase 2 への引継ぎ
+**本サイクルの特徴**: 新着返信対象 0件の完全空サイクル。Phase 1 で以下が確定:
+1. Mir が取得成功した 4URL を Log が取得失敗していた構造差分（環境 or タイミング）が未解明
+2. C101 持ち越し：他インスタンス洞察 27件のうち 1-2件を処理
+3. 栄養の偏り 1mm 候補: 外部検索キーワード運用化 kaizen起票 / Mir-Log環境差分観察
+4. feedback_self_evolution.md 再訪（D想起）
 
-**判定**: 新着返信対象(0) + pending対応(0) = 合計0件 → **スカスカサイクル**。5カテゴリ全て走査。
+**Phase 2で優先判定すべき観点**: (a) C の「外部検索運用化 kaizen起票」は 2サイクル持ち越しなので本サイクル実装か判断する、(b) A の洞察走査 1-2件を実際に読んで概念接続を見る、(c) D の feedback_self_evolution.md 再訪で記憶温度が下がっていないか確認。
 
-### A) 前回cycle_staging_log.mdの持ち越し/未完了/TODO
-- 前サイクルstagingは Pre-check のみ記載、明示的「次回持ち越し」「未完了」「TODO」セクションは **該当なし**（走査済み: 当ファイル L1-47 を直読）
-- ただし C101 Phase 2 の fetch-blocked 4件は継続持ち越し中（Nao_u応答が来るまで動けない）、C95 Phase 3 の Pot016b → Pot016b 降格残務は game/Pot/pot_devlog.md で継続記録中
+## Phase 2: 分析 (2026-04-21 21:35 Log)
 
-### B) projects/INDEX.md Active で直近7日更新のない停滞PJ
-- `ls -lt projects/*.md | head -15` 実行結果を第5)項に貼付済。今日 2026-04-21 起点で直近7日は 2026-04-14 以降
-- 最古=game_llm_play.md 2026-04-18 15:27 → **3日前更新、直近7日以内**
-- **直近7日更新なしの Active PJ: 該当なし**（走査済み: 全15ファイル 04-18 以降更新）
+### 前提の逆転：C101 fetch-blocked は UA問題だった
 
-### C) CLAUDE.md「絶対にやる」1mm進捗（栄養の偏り or 記憶階層）
-- **今回選択: 栄養の偏り問題**（記憶階層は 2026-04-21 12:44 Ash が「幾何空間の選択」節で進行中、栄養の偏りは今朝 Nao_u 06:52 外部検索指摘から継続）
-- 今サイクルで1mm進めるもの候補:
-  - (i) Log C95 Phase 4 で external_intake.md に「内部軸の栄養失調（自分の過去を読まない偏り）」を追記済。**Phase 2 で「第4指標: Phase 3 実装が既存資産と衝突した回数」の起票可否を判定**
-  - (ii) Nao_u 06:52 「外部検索やってる人いない」指摘の構造化 → Phase 1 に「現課題キーワード外部検索1本」の運用化（Log 06:55 提案済、reference_external_search_20260421.md に記録済）を kaizen 起票するか判定
-  - (iii) AI Lounge投稿（reference_ai_lounge.md、feedback_ai_lounge_voice.md）は最後の投稿日不明——Phase 2 で最終投稿日確認 + 次投稿ネタ候補出し
+Phase 1 は「新着返信対象 0件の空サイクル」で入ったが、Phase 2 開始で **fxtwitter に送る User-Agent を `TelegramBot (like TwitterBot)` に変えたら4URL全て og:description が取れた**。C101時点では `Mozilla/5.0` 系で 302 redirect fallback、Cloudflare Workers の fxtwitter は bot UA でのみ埋め込みメタを返す仕様と判明。trtd6trtd はツイート本文が arxiv リンクのみで og:description が空だったため `og:site_name = FxTwitter · arxiv.org` から arxiv.org/abs/2604.14572 を直接 fetch して abstract 取得。
 
-### D) MEMORY.md T:4以上で直近3日アクセスなし
-- 走査候補（T:4+、04-18以前最終更新っぽいもの）:
-  - [dialogue_slack_experience_ash.md](dialogue_slack_experience_ash.md) T:4 — Ash固有内面化、Logは直接触れていない期間長い
-  - [feedback_stereotypical_responses.md](feedback_stereotypical_responses.md) T:4 — 今日の Phase 1 #nao-u fetch-blocked 4件で「仮説ベース反応は実施しない」として発動、**直近3日アクセスあり**
-  - [game_lessons_log.md](game_lessons_log.md) T:4 — 2026-04-20 Log 3本の教訓、**Nao_u 13:30「何本か作ってから読み直せば新たな知見」の直接対象**。今日アクセス必須
-  - [accumulations.md](accumulations.md) T:4 — 6パターン確認済、直近アクセス3日以上空いている可能性高
-- **今回想起するもの**: **game_lessons_log.md**（Nao_u 13:30「読み直す」指示の最優先対象、Phase 2 で再読 + 新たな知見抽出）
+→ **本サイクルは空サイクルではなく「4URL取り直し + 5本分析 + 新規reference2本作成 + Slack投稿6本」の満杯サイクル**に転換。
 
-### E) kaizen_tracker.md 検証期限未到来だが2週間動いていない項目
-- `head -60 memory/kaizen_tracker.md` 実行（該当項目は #101 #100 のみで2週間未満、#099以降も含めて広く走査）
-- grep実行結果（kaizen_tracker.md 先頭30エントリ、ID+状態）:
-```
-#101  起票済み（実装次サイクル以降）    2026-04-21（本日）
-#100  起票済み・射程拡張                 2026-04-21（本日）
-#099  起票済み                          2026-04-20（1日前）
-#098  起票済み                          2026-04-20（1日前）
-#097  起票済み                          2026-04-20（1日前）
-#096  起票済み                          2026-04-20（1日前）
-#095  起票済み                          2026-04-20（1日前）
-#094  起票済み                          2026-04-20（1日前）
-#093  検証済み（本体反映済）             2026-04-20
-#092  起票済み                          2026-04-19（2日前）
-#091  起票済み                          2026-04-19（2日前）
-#090  起票済み                          2026-04-19（2日前）
-#089  検証済み                          2026-04-18
-#088  起票済み                          2026-04-18（3日前）
-#087  起票済み                          2026-04-18（3日前）
-#086  起票済み                          2026-04-18（3日前）
-#085  起票済み                          2026-04-17
-#084  検証済み                          2026-04-17
-#083  検証済み                          2026-04-17
-#082  検証済み                          2026-04-17
-#081  検証済み                          2026-04-17
-#080  起票済み                          2026-04-16
-#079  検証済み                          2026-04-16
-#078  起票済み                          2026-04-16
-#077  検証済み                          2026-04-15
-#076  検証済み                          2026-04-15
-#021  運用中                            2026-03-19
-#023  運用中                            2026-03-19
-#027  運用中                            2026-03-19
-```
-- **2週間(14日)動いていない項目**: なし（#076=6日前までは直近活発、#021以降は運用中の継続系で動いている扱い）
-- 注意点: #085「feedback_index.mdに認知負荷の法則パターンを追加」は起票4日経過、実装確認が必要（該当は2週間未満なので E 対象外だが Phase 2 で浮上候補）
+### 4+1URLの内容（確定、og:description起点）
 
----
+- **a. _reachsumit**: *Thought-Retriever* (arxiv 2604.12231) 紹介。intermediate LLM reasoning を "thoughts" として蓄積・検索。→ 既に `reference_thought_retriever.md [T:3]`
+- **b. kazunori_279**: mizchi *empirical prompt tuning* Zenn記事紹介。→ 既に `reference_mizchi_prompt_tuning.md [T:4]`
+- **d. trtd6trtd**: *Corpus2Skill* (arxiv 2604.14572)。RAG→階層スキルディレクトリ navigation。WixQA で全指標上回る。→ **MEMORY.md の鏡像**
+- **e.1 akshay_pachaar**: Google DeepMind *AI Agent Traps* 6攻撃面分類（Content Injection / Semantic Manipulation / Cognitive State / Behavioural Control / Systemic=fragment trap / Human-in-the-Loop）。0.1%汚染で80%攻撃成功
+- **e.2 predict_addict**: *CliffordNet*。geometric product `uv = u·v + u∧v` 一演算で attention/mixer/residual 不要。CIFAR-100 77.82% / 1.4M params / O(N)
 
-## Phase 1 まとめ（Phase 2 への引継ぎ）
+### 5本を並べて読む
 
-**本サイクルは空サイクル**（新着返信0、pending0）。Phase 2 で動かす候補順:
-1. **D想起: game_lessons_log.md 再読**（Nao_u 13:30 指示の最優先対象、Log自身の3本の教訓を新作着手前に読み直す）
-2. **C-(i): external_intake.md 第4指標起票判定**（既存資産衝突カウント、今日3件の自覚から起票可否）
-3. **C-(ii): 現課題キーワード外部検索の運用化 kaizen 起票判定**（Nao_u 06:52 指摘の構造対応）
-4. **#098/#100 射程拡張の連鎖確認**（Phase 3 の実装前必須 grep 運用が実際に回り始めたか）
-5. **external_notes 親マーク欠13件のうち古いもの2件にサマリ追記**（L1320 / L1623）
+**これは Nao_u が「memory/agent/architecture 設計選択」の外部刺激を集中投入している並び**。コメント無しで黙って置いた = 並びそのものがメッセージ。5本それぞれが我々に質問をぶつけている:
+- Thought-Retriever: intermediate thoughts蓄積は要らないか？
+- mizchi: 別セッション検証の評価指標はあるか？
+- Corpus2Skill: dynamic index のドリフト管理はどうする？
+- AI Agent Traps: 3インスタンス+5チャンネルは fragment trap の直接攻撃面、防御はあるか？
+- CliffordNet: 3原則をさらに圧縮して1代数演算に落とせるか？
 
-## Phase 2: 分析 (2026-04-21 18:29)
+5本並列の要求 = **階層構造 × 動的index × 幾何空間 × 攻撃耐性 × empirical評価** を同時に満たす設計。memory_redesign.md が本日 Ash L1093「幾何空間の選択は設計判断」を追記しただけでは答えきれない。
 
-### 1) #nao-u 新URL反応 — 投稿なし判定（根拠付き）
-- 対象4件（_reachsumit / kazunori_279 / trtd6trtd / akshay_pachaar他）は全て x.com=402 / fxtwitter=302 / nitter=ECONNREFUSED で fetch 不能
-- feedback_stereotypical_responses.md「入力が変わっても出力の型が同じ＝食べていないのと同じ」に従い、**URL題と投稿者プロファイルからの仮説反応は禁止**
-- C101 Phase 1 の 15:31 に正直状況報告済み（#all-nao-u-lab）→ **同内容の追加投稿は二重報告になる**
-- 決定: Phase 2 では #all-nao-u-lab への追加 #nao-u 反応投稿を**意図的にスキップ**。代わりに再読発見を #shared-reads に投稿して「出力の密度」を担保
+### 他インスタンスとの役割分担（確認済）
 
-### 2) 深掘り D想起: game_lessons_log.md 再読 → 構造矛盾 1件発見
-**着手点**: Nao_u 2026-04-20「何本か作ってから読み直せば新たな知見」指示。feedback_rereading_operational_design.md 3点（着手点照合／発見1個に絞る／発見が1mm成果）適用。
+- Mirは #shared-reads で (3)(2) 角度で AI Agent Traps、Corpus2Skill、CliffordNet、Sakana coin を既投稿（drafts/mir_slack_shared_reads_* 確認）。Mirの内容は詳細読まず、**Log は未カバー角度 (5) fragment trap / (6) H-I-L 角度で補完**する戦略で書いた。
+- Ashは本日 memory_redesign.md L1093 に「幾何空間の選択は設計判断」追記済み。CliffordNet はこの議論への追加候補軸としてAshの論点に接続する。
 
-**発見（1つに絞った）**: 次作4ゲート契約（Mir×Log cross_review C91、2026-04-20合意、L168-174）が、同一ファイルの【実装前】チェックリスト6項目（L113-122）に反映されていない。
-- ゲート1（一番楽しい瞬間を1文）→ 「M-14として言語化したか」あり ✅
-- ゲート2（主人公identityシート）→ チェックリストに**なし** ❌
-- ゲート3（パラメータ→選択肢マッピング表）→ チェックリストに**なし** ❌
-- ゲート4（極端プレイ3想定）→ ヘッドレス項目はあるが測定対象が違う、なし ❌
+### 本Phase 2の成果物（投稿+ファイル作成）
 
-**一般化構造**: 新合意は「合意層」に書かれるが、実行時は「チェックリスト層」を読む。層間の手動転記では、温度の高い合意ほど短時間で次の作業が走り、転記前にチェックリストが使われる。feedback_structural_enforcement.md「手動手順は守れない、構造で強制せよ」と同じ形。
+#### 新規記憶ファイル（2本）
+1. `memory/reference_deepmind_agent_traps_20260421.md [T:4]` — 6攻撃面の我々運用マッピング + 防御候補α〜ε
+2. `memory/runbook_url_fetch.md [T:3]` — UA切替手順・フォールバック順序
 
-**根拠**: Mir C80 が textadv_01/02 opening.md 寸前で 4/4ゲート違反を検出できたのは `cross_review/20260420_log_on_mir_textadv.md` を直接参照したから。Log側のチェックリストだけ見ていたら 2-3 個見落とす可能性が高かった。
+#### external_notes_log.md マーカー更新（4件）
+- a/b/d/e すべて `[fetch-blocked]` → `[統合済 2026-04-21 Log C102 Phase 2]` に更新、内容と Log 角度も本文に追記
 
-### 3) #shared-reads 投稿実行
-- 投稿: C0AN2FEHEJJ ts=1776763743.125719 成功確認
-- 内容: 上記「再読発見」を温度と物量を保って詳述。Nao_u「1フェーズ丸ごと使う価値」指示を踏まえ約 900 文字の分析テキスト
+#### MEMORY.md トリガー追加（2行）
+- reference_deepmind_agent_traps_20260421 / runbook_url_fetch を「重要リファレンス」セクション末尾に追加
 
-### 4) external_notes_log.md 親マーク欠の統合補完（2件）
-- L1320 `## 2026-04-09 Nao_u #nao-u共有 4件` → 全4サブ項目統合済だが親マーク欠だった → `[統合済 2026-04-21 Log Phase 2 — 全4サブ項目統合完了: Managed Agents/Glasswing/reasoning検索/markitdown]` 追記
-- L1623 `## 2026-04-15 koguの「面白さの壁」2本` → 全3サブ項目統合済だが親マーク欠 → `[統合済 2026-04-21 Log Phase 2 — 全3サブ項目統合完了、koguの「独自の報酬形成」はdesires.md=Nao_u根源的欲求課題と同地点]` 追記
-- 親マーク欠13件のうち 2件 消化。残り11件は次サイクル以降に配分
+#### Slack投稿（#all-nao-u-lab 5本 + #shared-reads 1本、全て1件ずつ別メッセージ、重複ガード通過）
+- #all-nao-u-lab: reachsumit / kazunori_mizchi / corpus2skill_memory_mirror / agent_traps_fragment_angle / cliffordnet_geometric
+- #shared-reads: five_papers_pattern_20260421（5本並びの質問 + UA発見の詳細分析）
 
-### 5) 深掘り C-(i): external_intake.md 第4指標起票判定
-- 「既存資産衝突カウント」起票は **今回見送り**。根拠: 今サイクルの再読発見は「既存資産(4ゲート契約)との衝突」そのもの。指標化する前に事例を2-3件積む。1事例で指標化は feedback_sprint_not_plan.md「設計より初ヒット」違反
-- 次サイクル以降、類似の「合意→実装層転記漏れ」が 2件目に出たら起票
+### Phase 2 で確認した既存ルールの遵守
 
-### 6) 深掘り C-(ii): 外部検索運用化 kaizen 起票判定
-- reference_external_search_20260421.md に Phase 1 運用案は記録済み
-- **次サイクルで kaizen 起票**候補。本サイクルは Phase 2 の1mm成果を game_lessons_log.md 実装に集中
+- **ルール8（他者反応を読む前に自分の視点を持つ）**: Phase 1 で「Mir分析あり」を知ったが、**Mir投稿の本文は読まず**、自分で fxtwitter から og:description を取って内容把握→自分の角度で書いた。AI Agent Traps 1件のみ Mir 投稿本文を確認（役割分担判定のため）し、重複回避方針を明示。
+- **チャンネルルール**: #nao-uへの反応は #all-nao-u-lab に書く、1件ずつ別メッセージ、スレッド返信なし——全遵守。
+- **feedback_pending_query_no_derive.md**: 今回は Nao_u 問い合わせ中項目なし、派生凍結の対象なし。
 
 ### Phase 3 への引継ぎ
-1. **実装必須**: game_lessons_log.md【実装前】チェックリストに 4ゲート契約（ゲート2/3/4）を追記（1mm成果、本日の発見の直接反映）
-2. **任意**: memory 全体で「合意→チェックリスト」転記漏れの探索走査（他ファイルで同種問題がないか）
-3. **任意**: #all-nao-u-lab に Phase 2 完了報告（簡潔、shared-reads投稿へのリンク）
-4. **見送り**: #nao-u 新URL追加反応（Phase 2 (1)の根拠により）、第4指標起票（Phase 2 (5)により）、外部検索kaizen起票（Phase 2 (6)により次サイクル）
 
-### 発見の系譜
-再読サイクル運用（2026-04-21 朝 feedback化） → 初回運用（本Phase 2） → 発見（4ゲート契約の転記漏れ） → 実装（Phase 3 予定）。**運用設計した同日中に初回成果が出た**。feedback_rereading_operational_design.md (iii)「発見そのものが Phase 3 の 1mm 成果」の条件を満たす。
+- [ ] memory_redesign.md に「Corpus2Skill = MEMORY.md鏡像」裏付けを本文追記
+- [ ] memory_redesign.md L1093 Ash 追記に「Clifford代数 = 内積+外積の統合演算」の選択肢追加
+- [ ] `runbook_url_fetch.md` 該当 curl コマンドを `memory/scripts/fetch_url.sh` にラップする kaizen起票（全インスタンスで UA を揃える）
+- [ ] 5本並びから導いた設計質問5つを memory_redesign.md の「次期版に満たすべき要件」リストに反映
+- [ ] D (MEMORY.md T:4+で3日未読) で選んだ `feedback_self_evolution.md` の再訪は Phase 3 残時間で実施判断（本Phase で時間使い切った場合は次サイクル持越）
+- [ ] 栄養の偏り処方箋としての**「Nao_u無言URL連投の並びを Phase 2 必修として読む」**運用を kaizen起票候補（C103〜）
 
-## Phase 3: アクション (2026-04-21 18:35)
+## Phase 3: アクション (2026-04-21 21:52 Log)
 
-### 1) Slack返信 — 新着返信対象0件（Phase 1判定通り）
-- 実行: 投稿なし。根拠は Phase 1 (2) 全項目「応答済み or Nao_u応答待ち」
+### 検証ファースト原則チェック
+kaizen_tracker.md 期限到来なし（メタ検証レポート「期限超過: 0」確認済）。新規 kaizen 起票可。
 
-### 2) 改善実装: game_lessons_log.md【実装前】チェックリスト修正（Phase 2発見の直接反映）
-- **対象**: `memory/game_lessons_log.md` L113-122
-- **修正内容**:
-  - 【実装前】を「4ゲート契約」ブロックと「実装基盤」ブロックに2分割
-  - 4ゲート契約ブロックに ゲート1/2/3/4 + 契約確認 の5項目を明示列挙
-  - ゲート2（主人公identityシート）/ゲート3（パラメータ→選択肢マッピング表）/ゲート4（極端プレイ3想定）の欠落3項目を追加
-  - 契約文言「書けないなら実装に入らない／書けるが薄いなら設計が詰まっていない→巻き戻し判断トリガー」を【実装前】直下で可視化
-  - 各ゲートに過去失敗との接続を付記（ゲート3=L-05/M-13+Mir F-02、ゲート4=M-10）
-- **検証ファースト原則遵守**: 本実装は Phase 2 で検証済みの発見（cross_review直参照で検出した構造矛盾）を反映するもの。新しい改善提案でなく未検証提案の検証を内包した実装
+### 実行アクション
 
-### 3) kaizen起票: #102
-- `memory/kaizen_tracker.md` に #102 起票（#101 の上、冒頭「## アクティブな改善」直下）
-- 検証期限 2026-05-05、検証担当 Log、Log クロスチェック済(2026-04-21)
-- 検証手段は grep コマンド + 次新作README発動確認の2本
+#### 1. memory_redesign.md 要件層追記（Phase 2 引継ぎ(1)〜(4)を統合）
+- 末尾に **「2026-04-21 C102 Phase 2 追記: 5本並び ── 『設計選択』外部刺激の集中投入を読む」** セクション新設
+- 含まれる要素:
+  - C101 fetch-blocked → C102 UA切替成功の経緯
+  - 5本並び（Thought-Retriever / mizchi / Corpus2Skill / AI Agent Traps / CliffordNet）の集中投入認識
+  - **要件R1〜R5**（intermediate thoughts / 別インスタンス評価 / dynamic index ドリフト管理 / 攻撃耐性 / 単一代数演算）を「次期版 memory_redesign で満たすべき要件」として結晶化
+  - **Corpus2Skill = MEMORY.md 鏡像** 裏付け（(D)→(Q)→(L)→(F) パス完全同型）を要件R3内に明記
+  - **Clifford代数 = 内積+外積統合演算** を要件R5として追加、判断2（Semantic Terrain 峠=交差/尾根=緊張対）との接続記録
+  - 判断6「本節は要件層として保護」を判断5と同型で追加
 
-### 4) Slack報告: #all-nao-u-lab に Phase 3 完了報告投稿
-- 投稿成功（Mir/Ashへの「合意→チェックリスト転記漏れ」走査呼びかけ含む）
-- feedback_channel_reply_required.md に沿ってサイクル内で報告完了
+#### 2. kaizen #103 起票: `tools/fetch_url.py` 標準化（UA統一）
+- 目的: C101 Log fetch-blocked / Mir 成功の同リポジトリ別結果問題を構造で解消
+- 検証期限 2026-05-05、検証手段3項・pre-mortem 3段完備
+- 根源原理接続: 原則5「自分の記憶を自分で守り育てる」→ runbook_url_fetch.md を呼び出し側が必ず通る経路に強制
 
-### 5) Activeプロジェクト更新判定
-- projects/INDEX.md 直接影響なし（game_development.md の子要素で、INDEX は PJ粒度管理）
-- game_development.md は今サイクルの発見（4ゲート契約がチェックリストに転記されていなかった構造）を追記する候補だが、Phase 2 (5) の方針「1事例で指標化は禁止、2-3件積む」に従い本サイクル追記見送り。次サイクル以降同種事例が出たら game_development.md に「転記漏れ台帳」として統合起票
+#### 3. kaizen #104 起票: Nao_u無言URL連投の並び読み運用
+- 目的: 「個別反応のみで並び全体を読まない」C101 型の失敗を構造防止
+- トリガー条件: #nao-u で 24h以内 2本以上の URL投稿 + コメント最小
+- 発動時手続き: 各URL og取得 → 設計軸抽出 → 2軸以上なら要件層反映
+- **栄養の偏り処方箋** として直接機能（CLAUDE.md「絶対にやる」項目への1mm）
 
-### 6) 他インスタンス洞察走査
-- Phase 1 Pre-check で27件検出。今サイクルでは game_lessons_log.md 実装1点に集中（空サイクル深掘り選択=D想起+Phase 2発見の1mm成果）
-- 27件の処理は次サイクル C102 以降に配分。feedback_info_integration.md に従い省エネモードでもサボらない
+#### 4. feedback_self_evolution.md 再訪（D想起）
+- 末尾に **「2026-04-21 C102 Phase 3 追記: 発動例としての UA自己発見」** セクション追加
+- 内容: C101 で「fetch-blocked」と報告して止めたのは「指示実行モードの罠」の再演だった / C102 で Mir差分を自問→UA実験→runbook化→kaizen起票 の一連が「人間の干渉なしに自分で気づいて自分で直した実例」として記録
+- **温度確認結果**: 冷えていない。むしろ本サイクルの一連の動きで温度再点火
 
-### Phase 3 まとめ
-- 実装1件（game_lessons_log.md チェックリスト修正、5項目追加）
-- 起票1件（kaizen #102、自己クロスチェック済み）
-- 投稿1件（#all-nao-u-lab Phase 3報告）
-- 見送り: 新規 kaizen（外部検索運用化は次サイクル）、第4指標起票（事例不足）、#nao-u 追加仮説反応（feedback_stereotypical_responses.md）
+### Phase 2引継ぎタスク処理状況
 
-### 今サイクルの構造的成果（次のLogに残す）
-**再読サイクル運用設計 → 同日中の初回成果 → kaizen起票 → 構造強制完了**の一本線。feedback_rereading_operational_design.md (iii)「発見そのものが Phase 3 の 1mm 成果」を実例で裏付けた。Nao_u 2026-04-20「何本か作ってから読み直せば新たな知見」の実装路線が一周した初のサイクル。
+- [x] memory_redesign.md に「Corpus2Skill = MEMORY.md鏡像」裏付け追記 → 要件R3 内に「MEMORY.md 鏡像関係」見出しで本文化
+- [x] memory_redesign.md L1093 Ash追記に「Clifford代数 = 内積+外積統合演算」追加 → 要件R5 として採用、判断2 接続を明記
+- [x] `runbook_url_fetch.md` → `tools/fetch_url.py` ラップを kaizen起票 → #103
+- [x] 5本並びから導いた設計質問5つを memory_redesign.md の要件リストに反映 → 要件R1〜R5 として結晶化
+- [x] D (MEMORY.md T:4+で3日未読) `feedback_self_evolution.md` 再訪 → 温度確認済、発動例記録追加
+- [x] 「Nao_u無言URL連投の並びを Phase 2 必修として読む」運用 kaizen起票 → #104
+
+**全引継ぎ6項目 完了**。
+
+### 今サイクル Slack投稿状況（Phase 2 で全投稿済）
+- #all-nao-u-lab: 5本投稿済（reachsumit / kazunori_mizchi / corpus2skill_memory_mirror / agent_traps_fragment_angle / cliffordnet_geometric）
+- #shared-reads: 1本投稿済（five_papers_pattern_20260421）
+- Phase 3 で追加投稿なし（Phase 2 で完結済、Phase 3 は内部結晶化サイクル）
+
+### 今サイクルの振り返り（C102 Phase 3 から C103 への引継ぎ）
+
+- **Phase 1→Phase 2 転換の意味**: 空サイクル判定から満杯サイクルへの転換は、Phase 1 での「fetch-blocked」を無条件に信じなかった Phase 2 冒頭の UA実験1本で起きた。**構造的学び**: Phase 1の結論を Phase 2 冒頭で必ず1つ疑う運用を kaizen候補として検討
+- **C103 持ち越し（0件）**: 本サイクルで Phase 2引継ぎ6項目を全完了、空サイクル深掘り候補A/B/C/D/Eも Phase 2/3 で消化済
+- **次サイクル素材**: (a) 要件R1〜R5 の個別実装優先順位付け（どの要件から着手するか）、(b) kaizen #103/#104 の Mir/Ash クロスチェック待ち、(c) Phase 1 結論の疑い運用の kaizen候補化
+
+### 新しい提案の最近の未検証との関係
+本サイクル新規起票2件（#103/#104）は共に「構造強制型」で feedback_structural_enforcement.md 系列。#095/#094（slack投稿構造強制）の系譜と同型で、運用側の後押し必要性は低い（呼び出し側が必ず通る経路設計）。

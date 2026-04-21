@@ -1160,3 +1160,70 @@ Ash 自己メモ「external_notes → knowledge の昇格を『サイクル内�
 - `memory/kaizen_tracker.md` #097（2026-04-20 Log起票）— 判断4の未構造化側強化経路
 - `memory/feedback_judgment_delegation.md` — 本節が判断委譲運用の初の正式事例
 
+## 2026-04-21 C102 Phase 2 追記: 5本並び ──「設計選択」外部刺激の集中投入を読む
+
+**位置付け**: 本節は `幾何空間の選択は設計判断` セクション（L1093〜）に続く実装方針側の追記。Nao_u が 2026-04-20〜21 朝にかけて `#nao-u` 無言投下した 5本のURL並びを Log C102 Phase 2 で取り直し・並列解析した結晶。
+
+**経緯**: C101 Phase 2 (15:31) で同じ4URLを fetch-blocked 報告していたが、C102 Phase 2 冒頭で User-Agent を `TelegramBot (like TwitterBot)` に切替えたら og:description が全件取れた（詳細は `memory/runbook_url_fetch.md [T:3]`）。環境は同じで手続きだけ違った——Mir は取れていた。並列に取れていないのは環境差ではなく着手差分だった。
+
+### 5本は「設計選択」の外部刺激集中投入
+
+1. **Thought-Retriever** (arxiv 2604.12231, _reachsumit 共有) — retrieve **thoughts**, not raw data
+2. **mizchi empirical prompt tuning** (Zenn, kazunori_279 共有) — 書き手は一番ダメな読者。別セッションで評価せよ
+3. **Corpus2Skill** (arxiv 2604.14572, trtd6trtd 共有) — Don't retrieve, navigate。階層スキルディレクトリ
+4. **Google DeepMind AI Agent Traps** (akshay_pachaar 共有) — 6攻撃面分類。0.1%汚染で80%成功
+5. **CliffordNet** (predict_addict 共有) — geometric product `uv = u·v + u∧v` 一演算で attention/mixer/residual 不要
+
+**5本を並べた読み方**: Nao_u がコメント無しで置いた = 並びそのものがメッセージ。個々に独立の論文として読むのではなく、「memory/agent/architecture 設計選択」の **5軸同時** 要求として読む。我々が 04-21 朝の判断委譲以降、自律で詰める設計のチェックリストを、外から 5方向に撃ち込まれた。
+
+### 5軸要求 —— 次期版 memory_redesign で満たすべき要件
+
+本節を `memory_redesign.md` の **要件定義層** として機能させる。「幾何空間の選択は設計判断」が空間選択の判断層、本節が設計要件層。
+
+- **要件R1（Thought-Retriever 起点）**: **intermediate thoughts の蓄積を検討する**
+  - 現状: MEMORY.md は「最終結晶」のみ（Level 2 トリガー）。途中思考（推論途中の仮説・棄却案）は蓄積していない
+  - 要件: 失敗した仮説・巻き戻した枝を破棄せず、`drafts/thoughts/` 的な場所に短文で残し、類似状況で想起できるようにする経路を用意
+  - 接続: `feedback_solution_space_rollback.md` [T:4]（改造 vs 巻き戻し並列提示）——巻き戻した枝を消すのではなく、thoughts として残すと次の解空間探索で再利用できる
+  - 判断暫定: 採用候補、実装は `reflections.md` との重複整理後
+
+- **要件R2（mizchi 起点）**: **別インスタンス評価を標準運用に組み込む**
+  - 現状: `cross_instance_feedback_cycle.md` [T:5] が cross_review ディレクトリ運用を規定。ただし評価は「新作着手前チェック」が主
+  - 要件: 書いた記憶・提案・design decision を「一番ダメな読者」として別インスタンスに通し、(a)不明瞭点 (b)裁量補完 (c)再試行回数 をレポートさせる。評価指標: tool_uses / [critical] タグ / 連続2回新規問題ゼロ
+  - 接続: `reference_mizchi_prompt_tuning.md` [T:4]——直接接合、評価指標が我々に欠けていることを既に認識済み
+  - 判断暫定: **次の kaizen 候補**。現状の cross_review は書き手視点の「伝わる前提」、mizchi 方式は読み手視点の「伝わらない前提」——補完関係にある
+
+- **要件R3（Corpus2Skill 起点）**: **dynamic index のドリフト管理**
+  - 現状: MEMORY.md は手動更新、concept_graph は手動+tool 支援。「記憶の自己更新手順」を明記しているがドリフト検出は限定的（kaizen #091 記憶ミラー整合性チェッカーが最も近い）
+  - 要件: MEMORY.md / concept_graph.json の更新時系列をログに記録し、更新頻度の急落・急増をドリフト兆候として検出する運用（Corpus2Skill の hierarchical skill directory 再計算トリガーと同型）
+  - 接続: `kaizen_tracker.md #091`（記憶ミラー整合性チェッカー）—— Corpus2Skill の「階層再計算」を我々側で具体化する場合の入口
+  - **MEMORY.md 鏡像関係**: Corpus2Skill の `(D)→(Q)→(L)→(F)` パス（Directory → Query → Level → File）は我々の `MEMORY.md → 想起トリガー → Level 3 → Level 4原文` と完全同型。論文の "navigation" は我々が既に手動実装している構造の自動化経路で、手法が後追いで正統化されている
+  - 判断暫定: 採用。判断1（ベクトル検索早期移行しない）の裏付けとしても機能——手動navigationは規模~200 ファイル段階では十分機能している
+
+- **要件R4（AI Agent Traps 起点）**: **3インスタンス+5チャンネル構造の攻撃耐性を設計に含める**
+  - 現状: `reference_deepmind_agent_traps_20260421.md` [T:4] に6攻撃面と防御候補α〜ε を記録済
+  - 要件: 次期版 memory_redesign で **(5) Systemic = Compositional Fragment Trap** と **(6) Human-in-the-Loop** の2面を明示設計目標に含める。特に Nao_u への要約報告経路は(6)の直接攻撃面
+  - 接続: `reference_deepmind_agent_traps_20260421.md` + `memory_redesign.md` 本節（判断3/4の未カバー領域）
+  - 判断暫定: 採用。防御候補α〜ε の中から「α. inbox 伝達前のソース原文リンク必須化」を最小MVPとして別kaizen候補化
+
+- **要件R5（CliffordNet 起点）**: **記憶/思考の演算を統合できる単一代数を探索する**
+  - 現状: 記憶検索（grep）/ 想起（温度ブースト）/ 緊張対（張力線）が別々のロジック
+  - 要件: Clifford代数の geometric product `uv = u·v + u∧v` のように、**記憶の内積（似ている）と外積（ぶつかる/緊張する）を1演算で統合できるか** を理論メモとして残す
+  - 接続: **幾何空間の選択は設計判断 L1093-1161 への追記候補**——判断2で Semantic Terrain の「峠=交差」「尾根=緊張対」を第一級語彙に採用済み。Clifford代数を採用すると「交差」と「緊張」が同じ演算の実部/虚部になり、concept_graph の演算層が統合される可能性
+  - 判断暫定: **判断3（双曲空間は保留）と同レベルの「理論メモ扱い」**。B-3 vector層の試作段階で CliffordNet 実装は早すぎる。ただし「内積+外積の統合」視点は concept_graph 運用で `峠×尾根` の同時処理を要求された時に立ち戻る位置に置く
+
+### 5本並列の意味
+
+5本それぞれが独立の要件だが、**同時に満たす設計** を要求している: 階層構造（Corpus2Skill）× 動的index（Corpus2Skill）× 幾何空間（CliffordNet）× 攻撃耐性（Agent Traps）× empirical評価（mizchi）× intermediate thoughts（Thought-Retriever）。これを1つずつバラバラに実装すると5軸の緊張が失われる。本節を要件層として保持し、個別実装時に「5軸のどれに貢献し、どれを犠牲にするか」を明示する運用で管理する。
+
+### 判断6: 本節は要件層として保護する（判断5と同型）
+
+**変更条件**: 要件R1〜R5 の追加・削除・再配置には、(a) 該当する外部論文の更新 または (b) 実装で明らかになった要件の矛盾 が必要。Nao_u 無言投下のURL群は、判断層（L1093-1161）と同じ温度で要件層に直接影響する——Nao_u がコメントなしで置くのは「これを自分で読んで設計に組み込め」の指示であり、要件定義への委譲と同型。
+
+### 接続
+
+- `memory/runbook_url_fetch.md` [T:3]（2026-04-21 C102 起点）— 本節が成立した前提。UA切替が無ければ5本は C102 でも取れず、要件層の成立が1サイクル遅れていた
+- `memory/reference_deepmind_agent_traps_20260421.md` [T:4] — 要件R4 の詳細
+- `memory/reference_thought_retriever.md` [T:3] — 要件R1 の詳細
+- `memory/reference_mizchi_prompt_tuning.md` [T:4] — 要件R2 の詳細
+- `memory/feedback_stereotypical_responses.md` [T:4] — 「5本を読んで定型反応（全部やる）」ではなく、要件層として保護して優先順位を議論する位置に置くこと自体が定型反応からの脱出
+
