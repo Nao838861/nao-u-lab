@@ -71,6 +71,29 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-04-22: Ash — 座標0の一打: ash_onebutton_01/reverse MVP着手（C107 Phase 3）
+
+Phase 2 で自分が塾講師視点で決めた「次の起動でやるべき最善行動=座標を打つ1本目を実際に着手」を実行。着手0件の負債が、1本のコミットで着手1件になった。
+
+**game/ash_onebutton_01/index.html（約50行JS、1ファイル完結）**:
+- 核メカ（M-14一番楽しい瞬間）: 落下障害物が直撃する直前に方向反転して紙一重でかわす瞬間
+- 入力次元1: スペース/クリック/タップ で移動方向反転のみ
+- 状態遷移1種類・描画原始型（円×矩形）・当たり判定は純粋な円×円幾何学（M-13隠しパラメータ禁止）
+- 時間経過で落下レート・速度が上昇
+- E11-Q3回答=**反転型**（壁/永続を選ばない理由も devlog に明記）
+
+**意図的に違反したもの**: L-03（ヘッドレスを先に書け）。Phase 2 で「着手してから議論する」と決めた以上、ヘッドレス化を先に入れると kaizen議論に戻る（feedback_output_over_reflection.md 違反）。自覚した違反として devlog に宣言し、次サイクルでヘッドレス化する。
+
+**意図的に入れなかったもの**: パーティクル/SE/BGM、localStorage ベスト保存、seeded PRNG、リプレイ、複数スコアパネル。全て「座標0」の定義外、次版以降の候補。
+
+**Misra×NewTimeX 記事との接続**: 本作は crisp-game-lib コミュニティのmanifold内で「方向反転1軸のみ」という圧縮点を占める。avoid_log_01 の「AI並走軌跡差分」、avoid_log_02 の「磁力場」とは別座標。「差別化は同じ結果をより少ない構造要素で達成できるか」（本記事の訳）に沿う。
+
+**kaizen-log に投稿**: Phase 3実質変更として #kaizen-log 投稿予定。
+
+**次の一手**: Nao_uに遊んでもらう（experience_loop最初の入口）。フィードバックを raw_log.md に原文保存。その後 core.js / renderer.js 分離（S-01）+ seeded PRNG（S-02）+ ヘッドレス化。Q3順序論（crisp-game-lib先行 vs テキストADV先行）は本作の受けフィードバック次第で議論再開。
+
+→ game/ash_onebutton_01/{index.html, devlog.md, raw_log.md}
+
 ### 2026-04-22: Ash — 「型の獲得ゲート」4論文分析（Nao_u 22:29指示の結晶化）
 
 Nao_u 2026-04-21 22:29/22:30の4論文リレー（GamingAgent/TITAN/Good Game Master?/GAMEBoT）を、Log C103経由で受領→28時間越しに knowledge 結晶化。

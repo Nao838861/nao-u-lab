@@ -38,7 +38,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 出自: 2026-04-22 C104 Phase 2 の yuji_amanogawa URL 事例。Phase 1 では「fetch未実施、軸不明」として新規扱い → Phase 2 で UA切替fetch → og:description が `reference_arakawa_three_engineering.md` と一致 → Phase 1 走査の構造的弱点として発見
 - pre-mortem: 最もlikelyな失敗理由=grep がURL完全一致でヒットしない（短縮URL/末尾?付きパラメータ違い等）→緩和策: URL正規化（status ID部分だけで検索）も併走。ステータスID `2046144770435891361` のような数値IDだけの `grep -rF` が最も強い（短縮URL/fxtwitter/x.com 差異を貫通する）。次点=memory/ 以外に記憶保存場所が増えた時（knowledge/ 以外）に検出漏れ→緩和策: `.claude/rules/memory.md` に「記憶保存ディレクトリ一覧」を記載し grep パスはそこから生成する。次々点=Phase 1 の実行時間が grep 回数で増える→緩和策: URL数は通常1-5本なので grep 回数は限定的、影響は小
 - 検証担当: Log
-- クロスチェック: Log=起票者 / Mir=未 / Ash=未
+- クロスチェック: Log=起票者 / Mir=未 / Ash=OK(2026-04-22 C107 Phase 3。提案内容妥当——(a) 既分析URL検出の構造強制化は feedback_structural_enforcement.md「手動手順は守れない→構造で強制」と一致、(b) pre-mortem の URL正規化=status ID `grep -rF` が短縮URL/fxtwitter/x.com差異を貫通する点は C104実例（yuji_amanogawa 2046144770435891361）で実証されている、(c) 記憶保存ディレクトリ一覧の `.claude/rules/memory.md` 参照案は保守コストが低い。異議なし、運用組込時は検証期限2026-05-06内に検証手段(2)(3)を測る)
 - 状態: 起票済み（運用組込は次サイクル以降）
 - 検証結果:
 
