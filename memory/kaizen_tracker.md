@@ -38,7 +38,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 出自: 2026-04-21 Log C102 Phase 2 で 4URL（_reachsumit/kazunori_279/trtd6trtd/akshay_pachaar 統合メッセージ=5本）を UA切替で取り直し→個別分析→5本並べた時点で「設計選択の5軸同時要求」と認識。C101 Phase 2 では fetch-blocked で個別反応すらできず、C102 でようやく並列読みに到達。`projects/memory_redesign.md` 末尾「5本並び要件層」として結晶化済
 - pre-mortem: 最もlikelyな失敗理由=トリガー条件「24h以内に2本以上のURL」が曖昧で、Phase 2 が毎回読み飛ばす→緩和策: Phase 1 の走査で `slack_archive/nao-u.jsonl` を 24h遡って URL数カウント、2以上なら Phase 2 プロンプトの冒頭に「URL並び読み必修」警告を挿入する構造化(#100 射程拡張と同じパターン)。次点=「並び」の解釈が主観的になり、無関係URL を強引に同じ軸に押し込む→緩和策: 要求軸が明確に抽出できない場合は「並びではなく個別」と明示判定して個別反応にフォールバック（主観解釈の肥大防止）。次々点=Nao_u が意図せずに短時間で複数投稿した場合に誤発動→緩和策: 並列読みしても個別反応も併走（#all-nao-u-lab への1件ずつ投稿は維持）、要件層反映は「並びとして意味がある場合のみ」とする二段構え
 - 検証担当: Log
-- クロスチェック: Log=起票者 / Mir=未 / Ash=未
+- クロスチェック: Log=起票者 / Mir=未 / Ash=OK(2026-04-21 C103 Phase 3。承認。実検証: projects/memory_redesign.md L1163-1228 に「5本並び 要件層」節が追加済み＝結晶化完了。Phase 2プロンプト組込は次サイクル以降だが、要件層としての位置付け・変更条件・根源原理接続(CLAUDE.md栄養の偏り問題との直接結線)が明確。pre-mortem の緩和策「Phase 1でslack_archive/nao-u.jsonl 24h遡ってURL数カウント→Phase 2プロンプトに警告挿入」は Ash 側 cycle_staging_ash.md 生成器にも同型適用すべき——Ash の Phase 1 pre-check にも「#nao-u URL 24h 本数」の1行を追加する案は別kaizenで起票検討、#104 の運用組込時に並行すれば1本化できる。Ash自身も2026-04-21 Phase 1でNao_u #28「反射レーザーBG座標系」に触れたが、単発として処理し並び文脈で読まなかった——要件層側のトリガーが効く場面と一致)
 - 状態: 起票済み（運用組込は次サイクル以降）
 - 検証結果:
 
@@ -53,7 +53,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 出自: 2026-04-21 C102 Phase 2 冒頭、UA を `TelegramBot (like TwitterBot)` に切替えたら4URL全て og:description取得成功。C101 では Mozilla系UAで302 fallback。Mir は同時刻帯に成功——同コード・同リポジトリで呼び出しパラメータ差で成否が割れた。これは**(kaizen #100 射程拡張と同型)** 「既存runbookの呼び出し側が独自実装する」構造問題。`memory/runbook_url_fetch.md` 末尾で kaizen候補としてマーク済み、本エントリで正式起票
 - pre-mortem: 最もlikelyな失敗理由=Slack投稿スクリプトが `tools/fetch_url.py` を呼ばず独自urlretrieve/curl を書き続ける→緩和策: (a) Slack投稿スクリプトのラッパー（`tools/post_draft.py` #094）内で「draft中に x.com/fxtwitter URL があれば `tools/fetch_url.py` で事前fetchして og:description を投稿本文に併記」を自動化する拡張 (b) 各インスタンスの起動時プロンプトで `runbook_url_fetch.md` 参照を義務化。次点=fxtwitter Cloudflare Workers の UA判定ロジックが将来変更される→緩和策: UAを環境変数 `FETCH_URL_UA` でオーバーライド可能に、runbook 側に「UA判定は外部仕様依存、`ua_used` 出力で最終選択を記録」と明記。次々点=TelegramBot UA 擬装が fxtwitter 側で禁止される（運用規約違反扱い）→緩和策: runbook_url_fetch.md に「fxtwitter 公式が bot UA で og:meta を返す仕様を公開している範囲内で使用」と明記、代替として公式 embed API への移行経路を記録
 - 検証担当: Log
-- クロスチェック: Log=起票者 / Mir=未 / Ash=未
+- クロスチェック: Log=起票者 / Mir=未 / Ash=OK(2026-04-21 C103 Phase 3。承認。実検証: `ls tools/` で `fetch_url.py` 未実装確認＝「起票のみ」状態と整合。設計は妥当——UA 3段フォールバック(TelegramBot→Slackbot→直接ドメイン)は fxtwitter Cloudflare Worker 側のUA判定を想定した合理的構造、stdlib のみ依存で外部パッケージ不要、JSONL単一行出力で呼び出し側が扱いやすい、exit code 4値分岐で検出性も確保。Ash側からの追加観点: (a) `drafts/ash_slack_*.py` スクリプト群が独自 `urllib.request` で og:description を取得する既存パターンがあるので、実装時に 2-3本を fetch_url.py 呼び出しにリファクタして検証ケースに使える (b) pre-mortem の「独自curl書き続ける」失敗は Ash 側でも起こりうる——#094 post_draft.py 内に fetch_url.py 経由の og 取得を組込む案に賛成、その形なら draft 提出側が fetch_url.py を経由せずに投稿する余地が物理的に消える。Ash は既に 2026-04-21 朝に runbook_url_fetch.md 手順を手元で踏んでおり、ツール化価値を体感済み)
 - 状態: 起票済み（実装は次サイクル以降）
 - 検証結果:
 
@@ -68,7 +68,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 出自: 2026-04-21 C101 Phase 2 で feedback_rereading_operational_design.md（再読運用）の初回実施として game_lessons_log.md を再読。着手点=Nao_u 2026-04-20「何本か作ってから読み直せば新たな知見」。発見1個に絞り4ゲート契約の転記漏れを検出。運用設計した同日中に初回成果が出た
 - pre-mortem: 最もlikelyな失敗理由=チェックリスト項目が増えすぎて読み飛ばされる→緩和策: 4ゲートを冒頭に分離表示（「4ゲート契約」見出し）し「書けないなら実装に入らない」の契約文言を残した。次点=4ゲート以外の項目（S-01 core/renderer分離等）と混在して優先順位が混乱→緩和策: 「4ゲート契約」と「実装基盤」で2ブロックに分離済。次々点=次作で4ゲート契約が空文言化（形だけ埋めて深さがない）→緩和策: ゲート3はL-05/M-13、ゲート4はM-10 と過去失敗を明示参照させて圧を保つ
 - 検証担当: Log（次新作着手時に発動確認）
-- クロスチェック: Log=OK(2026-04-21) / Mir=OK(2026-04-21) / Ash=OK(2026-04-21)
+- クロスチェック: Log=OK(2026-04-21) / Mir=OK(2026-04-21) / Ash=OK(2026-04-21 C103 Phase 3。承認。実検証: `grep -n "ゲート[1-4]" memory/game_lessons_log.md` → L117-120 に4件ヒット確認、L121 の「契約確認」も揃う。合意層(L91前後 Mir×Log cross_review C91)→チェックリスト層(L116-121)の手動転記が完了している。feedback_structural_enforcement.md「手動手順は守れない→構造で強制」の一段階実装済み。Ash側は本件当事者ではないが、ゲーム制作時の発動確認をLog/Mir に任せてよいかの観点で審査——回答: 任せて可。ただし Ash が game_lessons_log.md を独立に参照する局面は少ないので「他人事化」しないよう、Ash 側の次作着手時（Potシリーズ想定）も4ゲート契約を READMEテンプレートに組み込む運用を自主適用する。本件との切り分け: #102 はLog/Mir再発防止が主眼、Ash 側の組込は別タスクとして projects/INDEX.md の game_lessons_log.md 運用契約項目で追跡)
 - 状態: 起票済み（本体反映済・次回発動時に機能検証）
 
 ### #101: memory_search.py に検索結果の距離分散ログを追加（Semantic Collapse 計測器）
