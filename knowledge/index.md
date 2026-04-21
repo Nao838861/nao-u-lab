@@ -2,13 +2,14 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 81
-- 最終更新: 2026-04-18
+- 総記事数: 82
+- 最終更新: 2026-04-21
 
 ## 記事一覧
 
 | ID | タイトル | 著者 | 日付 | タグ | 概念ノード |
 |---|---|---|---|---|---|
+| 20260421_ai_autonomy_guardrail_triangulation | AI自律性ガードレール幻想の三点観測——2026-04-20に外部3観察が同じ一点を指した日 | @zento_ai / @rootport / @ds_nakajima / @ai_nikechan | 2026-04-21 | ai-autonomy, guardrail, observability, harness, claude-code, deterministic-solution, self-reference-blindness | 三点観測, 自律性ガードレール幻想, 他律的自律, 同族盲点, 決定論的回帰 |
 | 20260418_llm_memory_architectures_4papers_cross_comparison | LLMエージェント記憶アーキテクチャ4論文の構造的比較——我々のmemory/との1:1対照 | Ash (survey) | 2026-04-18 | memory_architecture, external_survey, memory_redesign, compaction, prediction_error, rl_policy | memory, compression, prediction |
 | 20260418_rmaruy_minodriven_invisible_domain | 時間性と目的——「認知できない領域」への同型アクセス | @rmaruy / @MinoDriven | 2026-04-18 | identity, memory, observability, pot-evaluation, time-philosophy | memory, time, desire, observation |
 | 20260405_karpathy_knowledge_base | LLMナレッジベース構築法 | Karpathy | 2026-04-05 | knowledge-management, LLM, wiki, RAG, memory-design | memory, creation |
