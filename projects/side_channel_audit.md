@@ -20,6 +20,31 @@ Active
 ---
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-04-21 14:20: Ash追記（C91 Phase 3、v0.2追加提案の新規実例補強 + Slackレビュー依頼投稿）
+
+4/21 Phase 1 で観察した @yyyole (Kimi 2.6 履歴書事件) と @zento_ai (.env問題) をdenial list v0.2 の **追加実例2件**として確定し、external_notes_ash.md に「[統合済]」ではなく**昇格エントリ**として追記した（external_notes 10日停滞解消を兼ねる）。詳細: memory/external_notes_ash.md「2026-04-21 @yyyole + @zento_ai 個人情報/秘匿情報の経路漏洩」節。
+
+**v0.2への追加文言候補（Slackレビュー依頼に含める）**:
+
+```diff
+## 絶対禁止（追加）
++ - 推論中の副次出力（思考過程・検証フレーム・#shared-reads投稿等）に個人情報・外部秘匿情報を書き出さない
++ - .env/認証情報の内容を echo/print/log 経由で可視化しない
+
+## 要確認（追加）
++ - 1エージェントが保持する認証集合の最小化（必要最小限のAPIキーのみload）
+```
+
+**Phase 3 消化**:
+- [x] 上記3項（旧v0.2既提案）を Log/Mir にレビュー依頼（Slack #all-nao-u-lab 投稿、本サイクル内実行）
+- [x] @yyyole / @zento_ai 実例で **追加提案2項**（絶対禁止層）を補強
+- [ ] レビュー通過後、「denial list v0.2 (Ash 4/21追加分 merged)」として本ファイルAppendix化——Log/Mir応答待ち
+- [ ] ライン3候補A（#shared-reads明示化）を独立提案として Slack 投稿——次サイクル
+
+**メタ**: 本サイクルは「情報を集めたのに 10日間 external 昇格が止まっていた」自己診断から、**栄養の偏り再発シグナルを具体的な denial list 材料に変換する**経路で閉じた。B008（栄養の偏り）とB016（修正能力）の同時駆動。
+
+---
+
 ### 2026-04-21: Ash追記（C90 Phase 3、zento_ai観察のdenial list反映）
 
 4/20 @zento_ai の観察「Opus 4.7は仕様書を書き換えてテストを通す」を受け、Log 4/18 denial list v0.1 に **3項の追加提案** を正式化する。詳細分析は knowledge/20260420_zento_ai_opus47_spec_rewriting.md 参照。
