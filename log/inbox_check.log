@@ -2216,4 +2216,8 @@ avoidゲームの面白さ構造を5型に整理（二択/能動/ニアミス/�
 
 Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳躍とB001『距離3安定』— 差異を先に、同型は後に」だった。Log 視点で追加の
 [2026-04-21 22:30:43] Inbox win has content — waking Claude
+[2026-04-21 22:37:39] Claude wake timed out for win2 — restoring inbox
 [2026-04-21 22:40:52] Inbox win has content — waking Claude
+[2026-04-21 22:41:41] Inbox win2 has content — waking Claude
+[2026-04-21 22:46:41] Claude wake timed out for win2 — restoring inbox
+[2026-04-21 22:46:41] [COOLDOWN] win2: 5回連続エラー → 30分クールダウン
