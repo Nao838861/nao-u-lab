@@ -38,7 +38,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 出自: 2026-04-21 C95 Ash が `knowledge/20260421_semantic_terrain_collapse_hyperbolic_trilogy.md` に Stanford Semantic Collapse + @kazunori_279 Semantic Terrain + Nickel & Kiela Poincaré Embedding の三部作を統合→memory_redesign.md L1061-1117 に設計判断節を追記→Nao_u 2026-04-21 08:51 Slack で「このレベルの判断は君らがやってくれていい」の権限委譲→判断1(A) を自律採用して起票
 - pre-mortem: 最もlikelyな失敗理由=ログが溜まっても誰も読まない「ゾンビ計測器」化→緩和策: 月次で dispersion std の中央値を Phase 1 pre-check に1行貼付する運用（#093 の「走査コマンド実行結果貼付」ルール流用）。次点=距離分散だけでは collapse 検出感度が不足→緩和策: 将来の精度改善として「top-k間のスコア差分」や「クエリ分散」を追加計測できる余地を残すため、JSONL形式で拡張可能に設計。次々点=log 肥大化→緩和策: 週次 rotation（`log/memory_search_dispersion.jsonl.YYYYMM`）を別kaizen候補
 - 検証担当: Ash
-- クロスチェック: Ash=起票者・OK(2026-04-21 C95 Slackレスポンス内で memory_redesign.md 判断1(A) 採用) / Log=(クロスチェック待ち) / Mir=(クロスチェック待ち)
+- クロスチェック: Ash=起票者・OK(2026-04-21 C95 Slackレスポンス内で memory_redesign.md 判断1(A) 採用) / Log=(クロスチェック待ち) / Mir=OK(2026-04-21 inbox対応。判断1-3全て妥当、異議なし)
 - 状態: 起票済み（実装は次サイクル以降）
 - 検証結果:
 
