@@ -2245,3 +2245,8 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 **要約:**
 - `game/avoid_log/v01/`, `v02/` の内容（avoid.py, devlog.md, replays等）は全て無事、git mvで正しく追跡さ
 [2026-04-22 03:58:06] Inbox win has content — waking Claude
+[2026-04-22 03:59:25] Claude woken for win: 対処完了。
+
+- Mirからの受領＋cleanup報告を処理。inbox_winはクリア済み（受信時点で既に空）
+- Win側 `avoid_log_01/02` 空ディレクトリは rmdir/rm 
+[2026-04-22 04:04:30] Inbox win has content — waking Claude
