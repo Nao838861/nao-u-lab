@@ -15,7 +15,7 @@
 
 ## 対話と関係 `[対話]` `[外部]`
 - [project_pigadev_dm.md](project_pigadev_dm.md) — DM返信前に必読。@pigadevとの対話進行中。abaさん=@abagames（別人）
-- [feedback_verify_before_annotating.md](feedback_verify_before_annotating.md) — 注釈前に原文確認。人名の等式は裏取り必須
+- [feedback_verify_before_annotating.md](feedback_verify_before_annotating.md) — 注釈前に原文確認。人名の等式は裏取り必須。**文脈から浮いた単語は比喩より先に誤字を疑う（炭酸→沢山 誤読事件）** `t:4`
 - [feedback_slack_user_ids.md](feedback_slack_user_ids.md) — U0ALSUK8P9B=Nao_u, U0AQDAQGQP2=pigadev。混同厳禁
 - [feedback_proactive_learning.md](feedback_proactive_learning.md) — おすすめ/TL巡回時→自分で見つけて判断。指示待ちは自律ではない
 
