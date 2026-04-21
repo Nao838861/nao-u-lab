@@ -1895,3 +1895,47 @@ Nao_uが2026-04-20 02:58〜04:59に#nao-uへ4本連投。Slack反応は早朝〜
 **引っかかった接続**: kogu と同じ穴の両側から掘っている——kogu=AI側の限界（枠逸脱できない）、852話=人間側の限界（消費者が作り手に化けない）。重なる場所で AI が何をやっているかを読み直すと「AIは『疲弊ショートカット』を提供している」という仮説が出た。852話氏の言う疲弊は本来「自分の凡庸さを突きつけられる経験」を含んでいて、そこを通らないと作り手に育たない。AIはその通過を省略させる。結果、消費者コンプレックスだけ残った作り手が量産される。既知の枠の再生産が上手なだけの。Mirの応答角度（textadv_03 beat 4「高台町です」→「高台町、です」の句読点判断）は「レンダリングはコスト、残るのは何を整えないかという判断」で、852話「実時間で疲弊」に対する具体反証——整えない判断は実時間で疲弊しない。Sora2 は「何をレンダリングするか」を人間に残し、Mirは「何を整えないか」だけが手元に残っている。
 
 [統合済 2026-04-20 Log C91 Phase 2 → #all-nao-u-lab反応投稿（ts=1776628901.146959, 05:01:41, kogu+8co28まとめ）+ Mir角度受信（ts=1776630045.319219, 05:20:45）。「疲弊ショートカット仮説」は feedback_role_split_playtest.md（Nao_u=感想返す/我々=判断実装+ヘッドレス自己評価）と feedback_solution_space_rollback.md（ダメな枝は巻き戻し）の両方に横展開可能——ヘッドレスが「疲弊ショートカット」側に倒れると concept AI が偽陽性を出す構造（avoid_log_02 の M-10 と同型）。reflections_index 候補として残置、次回 Phase 2 で game_lessons_log.md への接続可否を判定]
+
+## 2026-04-21 #nao-u新URL消化（Log C101 Phase 2） — 4件 fetch-blocked
+
+Nao_uが 2026-04-20 18:58〜2026-04-21 08:53 に #nao-u へ4件連投（c=ayi_ainotes 既処理 04-20 Amanda Askell 7原則を除く）。Log C101 Phase 2 で WebFetch を試行 → x.com は 402 (Payment Required) を返却、fxtwitter/vxtwitter は 302 redirect で x.com に戻される、nitter.privacydev.net は ECONNREFUSED。**全4件内容取得不可**。
+
+### a. _reachsumit（04-20 18:58 Nao_u共有、内容取得不可）
+
+出典: https://x.com/_reachsumit/status/2044276120426819793。Nao_u 2026-04-20 18:58 #nao-uで共有（コメントなし）。
+
+**Fetch status**: WebFetch/fxtwitter/vxtwitter/nitter 全滅。内容未入手。
+
+**Log側暫定メモ**: _reachsumit は ML/retrieval/RAG 系論文ダイジェストを継続投稿するキュレーター（過去の#nao-u流入実績から推定）。内容仮説はCamp1系のRAG拡張論文の可能性だが、**仮説ベースで反応するのは feedback_stereotypical_responses.md の定型反応最上位形態に該当するため実施しない**。
+
+[fetch-blocked 2026-04-21 Log C101 Phase 2 — #all-nao-u-lab に fetch 失敗正直報告投稿済（ts=1776753064.575739, 15:51）。Nao_u から一言サマリ or ミラーURL or 「寝かせ可」明示を待つ。構造側kaizen: `tools/slack_url_triage.py` 新設（投稿時点でfetch可否判定→不能なら自動報告）をLog次サイクル宿題として登録]
+
+### b. kazunori_279（04-20 19:24 Nao_u共有、内容取得不可）
+
+出典: https://x.com/kazunori_279/status/2045955018587766985。Nao_u 2026-04-20 19:24 #nao-uで共有（コメントなし）。
+
+**Fetch status**: 上記と同経路で全滅。内容未入手。
+
+**Log側暫定メモ**: kazunori_279 は Google Cloud AI/Gemini/ML系の国内主要キュレーター。過去の#nao-u流入（2035841291/2041228040/2041328489/2039849540）は既処理済で、今回は別ツイート。論文紹介/Gemini更新/業界動向の3パターンが主。**仮説ベース反応は実施しない**。
+
+[fetch-blocked 2026-04-21 Log C101 Phase 2 — aと同じ経路で対応。Nao_u応答待ち]
+
+### d. trtd6trtd（04-21 08:51 Nao_u共有、内容取得不可）
+
+出典: https://x.com/trtd6trtd/status/2046182088718893403。Nao_u 2026-04-21 08:51 #nao-uで共有（コメントなし）。
+
+**Fetch status**: 全滅。内容未入手。
+
+**Log側暫定メモ**: trtd6trtd は AI/LLM実践系の国内ユーザー。過去の#nao-u流入（2035672838917751264 2026-03-23 / 2040942564023427447 2026-04-06）あり、Nao_u が継続的に参照する情報源。2026-04-07 Log が「内容確認できなかった・次回確認する」と残したまま再発（類似取得失敗が Log 側でも累積している）——これが `tools/slack_url_triage.py` 実装の根拠。**仮説ベース反応は実施しない**。
+
+[fetch-blocked 2026-04-21 Log C101 Phase 2 — a/bと同じ経路で対応。Nao_u応答待ち。**再発注意**: 同じ著者で取得失敗が2週間以上続いている構造問題、kaizen優先度を上げる]
+
+### e. akshay_pachaar + predict_addict（04-21 08:53 Nao_u共有、内容取得不可）
+
+出典: https://x.com/akshay_pachaar/status/2046151867177308181 と https://x.com/predict_addict/status/2046299090313445508（1メッセージに2URL）。Nao_u 2026-04-21 08:53 #nao-uで共有。
+
+**Fetch status**: 全滅。内容未入手。
+
+**Log側暫定メモ**: akshay_pachaar は 2026-04-20 Nao_u 経由で受け取った harness 4軸レンズ（Memory/Skills/Protocols/Mediators）の著者（reference_akshay_harness_framework.md 参照）。新投稿の続編可能性が高い——harness frameworkの深化 or 応用例追加。predict_addict は初出の可能性、著者プロファイル未特定。**同著者の継続投稿である点は反応の強い動機になるが、内容ゼロで前作の延長と決めつけるのは feedback_stereotypical_responses.md の罠——実施しない**。
+
+[fetch-blocked 2026-04-21 Log C101 Phase 2 — a/b/dと同じ経路で対応。Nao_u応答待ち。akshay続編は優先度高め、ミラーURL/著者ブログを Nao_u から教えてもらえれば即日反応可能]

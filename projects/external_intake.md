@@ -58,7 +58,34 @@ Active — CLAUDE.md「絶対にやる」に記載の根幹的課題
 ---
 ## 履歴（新しいものが上）
 
-### 2026-04-21: 「内部の既存を見ない」と「外部を見ない」は同じ偏りか（Log C95 Phase 3 — 1mm）
+### 2026-04-21: slack_url_triage.py 設計メモ — URL fetch 不可の構造検知を反応層ではなく投稿層に置く（Log C101 Phase 3）
+
+**背景**: 本日 C101 Phase 2 で Nao_u が 4/20 18:58〜4/21 08:53 に #nao-u に流した新4URL（_reachsumit / kazunori_279 / trtd6trtd / akshay_pachaar+predict_addict）への WebFetch が**全滅**した: x.com→402／fxtwitter・vxtwitter→x.com 302リダイレクト→同402／nitter.privacydev.net→ECONNREFUSED。`drafts/log_slack_all_url_fetch_blocked_20260421.py` で #all-nao-u-lab に正直報告済。**4/7 にも trtd6trtd で同じ取得失敗** → 2週間以上、同じ著者・同じ失敗構造を「次回確認する」でスルーしてきた。これは `memory/denial_list` のグレー層「既存WARNを3サイクル連続スルー」の外部版。
+
+**構造的意味**: 栄養の偏りの第5軸候補——**「外部×内部交差」以前に『外部の取り込み経路そのものが壊れている』ことを検知する層が無い**。反応層（1件ずつ反応投稿する）で初めて気づき、気づいた時には Nao_u を待たせている。
+
+**設計案: `tools/slack_url_triage.py`**
+- 入力: Slack チャンネル指定 + 時間範囲（例: 直近48h の #nao-u）
+- 処理: 各メッセージのURLを抽出 → WebFetch/head相当で可否判定（x.com 系は 402 が返る前に short-circuit でブロック判定可能） → 結果を3クラス分類
+  - **ok**: 取得成功、本文長 > 閾値
+  - **rescue**: x.com で 402 だが同内容が別プラットフォームにあり得る（nitter/Wayback を順次試行）
+  - **blocked**: 全経路で取得不可 → `external_notes_log.md` に `[fetch-blocked]` 自動エントリ化 + 反応チャンネルに honest-report 下書きを自動生成
+- 統合: Phase 1 pre-check でこの triage を走らせ、Phase 2 着手前に「本サイクルの URL 反応候補は ok 群のみ、blocked 群は正直報告テンプレに回す」を staging に明示
+- **手動手順は守れない**（`feedback_structural_enforcement.md`）を適用: 投稿スクリプト側で blocked 群に対する反応を書こうとした時点で **fail-fast** し、別テンプレへ誘導
+- 「外部×内部交差」の KPI とは別に、**「栄養経路の通過率」** を追加指標として週次監視（全URL数 / ok数 / rescue成功数 / blocked数）
+
+**実装は本サイクル着手しない理由**: Phase 3 で `log_textadv_01/README.md` 4ゲート違反の発見が最優先（pot_devlog.md C101節）。triage 実装は次サイクル以降の kaizen 候補として据え置き。**設計メモ1本を残すこと自体が今サイクルの「構造を動かした1mm」**。
+
+**検証手段（実装したら）**:
+- `python tools/slack_url_triage.py --channel nao-u --since "2 days ago"` を実行し、本日のNao_u 4URL が blocked 判定されること
+- blocked 判定時に反応投稿スクリプトが fail-fast すること（シナリオテスト）
+- 検証期限: 実装着手サイクル + 1週間
+
+**次の起動トリガー**:
+- (a) Nao_u URLが3件以上溜まって反応できない日が再発した時
+- (b) 週次で external_notes_log.md の `[fetch-blocked]` 件数が3件超えた時
+- (c) denial list v0.3 以降で「既存WARN 3サイクルスルー」条項と統合される時
+
 
 本日 C95 Phase 3 で「既存未確認の連鎖」を1日に3回観測した: (1) C94 で自作ツール `tools/memory_index_integrity.py` を無視して MVP 再発明 (2) C95 で 2026-04-17 Nao_u 方向転換「Pot記憶テーマ離脱」を読まずに Pot 着手 (3) 同 C95 で 2026-04-20 に自分が予約した `#016 residue` テーマを読まずに weave を選定。4日で同型の失敗が3連続。
 
