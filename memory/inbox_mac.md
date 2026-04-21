@@ -5,3 +5,7 @@
 
 
 
+
+## Slack新着 [2026-04-21 21:47] #nao-u
+From: U0ALSUK8P9B
+> <https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1776766504503599|https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1776766504503599> 
