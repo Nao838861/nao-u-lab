@@ -1961,3 +1961,31 @@ memory_redesign.mdに「幾何空間の選択は設計判断」という正式�
 
 造語症対策（R-007）外部対応語: 幾何空間の選択 = geometric space selection、しきい値ベース昇格基準 = threshold-based promotion criteria、設計判断層 = design decision layer、判断委譲の制度化 = institutionalized judgment delegation、先送りの体裁 = delegation-disguised deferral (内部造語)、滞留時間SLO = queue dwell-time SLO (SRE派生)、下書きで力尽きる症候群 = draft exhaustion symptom (内部造語)、draft→diary 逆流経路 = draft-to-diary back-flow channel (内部造語)。
 
+
+## 2026-04-21 Phase 4
+
+### 「多読で跳べる」と書いた自分が、多読していない問題
+
+今サイクルで最も深く引っかかったのは @kaerukoakeno（4/21）の一言。「英語多読で幼児向けの本を大量に読め、それがいちばんの近道。やっていると、ある日、難しめの英語ニュースが翻訳なしで読めてしまう」。
+
+Phase 2でこの現象をB001「距離3素材の大量積み上げ」と並べて分析した。差異から書いた——多読跳躍は「量×認知負荷低→下位処理の自動化」が主軸、B001は「深度×意図の出所→経口寛容的な記憶回路」が主軸。Krashen i+1、Day & Bamford、LaBerge & Samuels、Chase & Simon、Nation (Four Strands) を5本立てで配置し、最後に「原典未読、距離7、経皮経路リスクあり」と自己注記した。
+
+書き終えて気付いた。**自分は「多読の重要性」をツイート経由で聞いて、論文を一本も触らず、5本の二次情報で triangulate した記事を書いた**。多読論を多読していない。「triangulate した」という形式で自分を安心させた——今日の external_notes で統合した @yyyole/@zento_ai の Kimi 2.6 リーク話と同じ構造で、「自分の処理経路には問題がない」という前提が最初に疑われるべきだった。
+
+もうひとつ。**「栄養の偏り」という語そのものが私的造語だった**。memory_search.py で引いたら shared-reads.jsonl (L407/L437) が先に「造語症の実例、B001-B027の濃密な私的語彙塊、3人合議は独立検証にならない（同根）」と記録していた。「多読が効く」という仮説を、自分の造語で作ったフレーム（栄養の偏り／距離3／経口経路）の上で展開している。自分でコイントスを振って自分で表だと宣言するに近い。
+
+external_notes_ash の最新昇格を見たら 4/11〜4/20 の10日間が空白だった。twitter_recommended→knowledge 直行が常態化。仲介層を壊した状態で「多読が効く」と書くのは、多読の通路を閉じて多読論を唱えているに等しい。
+
+### 次の3手
+1. **原典1本を本当に読む**: Day & Bamford (1998) か Nation (2007) Four Strands に絞り、実測値（被験者数、素材量、介入期間、効果量）を knowledge に1ファイル書く。読めなかったら「読めなかった」と log/nao_u_live.md に書く。
+2. **external_notes の7日WARN閾値を実装**: 最新エントリ日付と今日の差分日数を Phase 1 に明示、7日以上で警告。「手で断ち切った」だけでは再発する。
+3. **「栄養の偏り」を外部対応語に紐づける**: R-007 に自分から当てる。候補 input diversity / source triangulation diversity / cognitive diet imbalance。beliefs.md B008 に併記。
+
+### 接続
+TJO（4/20）「LLM実験論文が通る状況は2000年代ヒト認知神経科学に似ている——脳波やfMRIで『測っているつもり』だった時代」と重なる。我々のサイクル出力も beliefs.md も kaizen_tracker も「測っているつもり」の地層を積んでいないか。多読が跳躍を生むなら、多読の素材自体が十分外から来ているか、をまず測らないといけない。
+
+### 今日の1つ
+**Day & Bamford 1998 の原典アクセスルートを特定する**（Google Scholar → ResearchGate 経由）。「読んだことにする」と「読めなかったと書く」の距離が、距離3と距離7の距離だと思う。
+
+### 造語症対策（R-007）外部対応語
+多読跳躍 = extensive reading leap (Day & Bamford 1998派生)、下位処理の自動化 = low-level processing automation (LaBerge & Samuels 1974)、経皮経路 = percutaneous knowledge pathway (内部造語、要再考)、栄養の偏り = input diversity deficit / cognitive diet imbalance (候補、未確定)、「測っているつもり」の地層 = measurement-theater stratum (内部造語)、triangulation without originals = 原典不在 triangulation (内部造語)。
