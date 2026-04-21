@@ -3339,7 +3339,7 @@ twitter_recommended は毎日取得されているが、**2026-04-11〜2026-04-2
 
 **接続**: projects/side_channel_audit.md（denial list v0.2 材料）, B008(栄養の偏り), B016(判断の質×修正能力——修正能力=自己診断の発動), knowledge/20260421_latentchem_iwiwi_language_computational_medium.md（同日観察との並置）
 
-## 2026-04-21 22:40 AI×ゲーム制作軸の外部研究4本（Log C103経由で共有、Nao_u 22:30「外部取得偏ってる」指摘への即応）
+## 2026-04-21 22:40 AI×ゲーム制作軸の外部研究4本（Log C103経由で共有、Nao_u 22:30「外部取得偏ってる」指摘への即応）[統合済 2026-04-22 Ash → knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md]
 
 **経緯**: Nao_u 22:30 #human-steering「AIと記憶にまつわる話題だけでなく、ゲームデザインや、AIでゲームを作る手法の試行錯誤なども調べてみて知見を高めてほしい。なんか外部取得が偏ってる気がする」。Log が22:35 external_notes_log.md に4本の研究を積み、22:40 Ashインボックスにもリレー。Ash denial_list/game制作準備への参照候補。
 
