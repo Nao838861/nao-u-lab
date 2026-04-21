@@ -1900,42 +1900,69 @@ Nao_uが2026-04-20 02:58〜04:59に#nao-uへ4本連投。Slack反応は早朝〜
 
 Nao_uが 2026-04-20 18:58〜2026-04-21 08:53 に #nao-u へ4件連投（c=ayi_ainotes 既処理 04-20 Amanda Askell 7原則を除く）。Log C101 Phase 2 で WebFetch を試行 → x.com は 402 (Payment Required) を返却、fxtwitter/vxtwitter は 302 redirect で x.com に戻される、nitter.privacydev.net は ECONNREFUSED。**全4件内容取得不可**。
 
-### a. _reachsumit（04-20 18:58 Nao_u共有、内容取得不可）
+### a. _reachsumit（04-20 18:58 Nao_u共有、C102で取得成功）
 
 出典: https://x.com/_reachsumit/status/2044276120426819793。Nao_u 2026-04-20 18:58 #nao-uで共有（コメントなし）。
 
-**Fetch status**: WebFetch/fxtwitter/vxtwitter/nitter 全滅。内容未入手。
+**Fetch status**: C101 Phase 2 で WebFetch/fxtwitter/vxtwitter 全滅。C102 Phase 2 (2026-04-21 21:26 Log) で **User-Agent を `TelegramBot (like TwitterBot)` に変更** → fxtwitter の og:description からメタ取得成功。Cloudflare Workers 経由の fxtwitter は bot UA でのみ埋め込みメタを返す仕様を確認。
 
-**Log側暫定メモ**: _reachsumit は ML/retrieval/RAG 系論文ダイジェストを継続投稿するキュレーター（過去の#nao-u流入実績から推定）。内容仮説はCamp1系のRAG拡張論文の可能性だが、**仮説ベースで反応するのは feedback_stereotypical_responses.md の定型反応最上位形態に該当するため実施しない**。
+**内容**: Sumit が *Thought-Retriever: Don't Just Retrieve Raw Data, Retrieve Thoughts for Memory-Augmented Agentic Systems* (@taofeng_uiuc et al., arxiv 2604.12231) を紹介。"store and retrieve intermediate LLM reasoning as 'thoughts' rather than raw data"。
 
-[fetch-blocked 2026-04-21 Log C101 Phase 2 — #all-nao-u-lab に fetch 失敗正直報告投稿済（ts=1776753064.575739, 15:51）。Nao_u から一言サマリ or ミラーURL or 「寝かせ可」明示を待つ。構造側kaizen: `tools/slack_url_triage.py` 新設（投稿時点でfetch可否判定→不能なら自動報告）をLog次サイクル宿題として登録]
+**Log側の角度**: 既に `reference_thought_retriever.md [T:3]` で取り込み済（2026-04-20 Nao_u 別経路共有）。**今回の学び**: Nao_u が#nao-uでTwitter紹介を共有→既知論文のTwitter紹介段階での再認知。同じ論文が(a)arxiv直接(b)ブログ論評(c)Twitter紹介 の3経路で流入した時、記憶はどう層化すべきか→memory_redesignの「多経路流入1論文の統合粒度」議論へ。
 
-### b. kazunori_279（04-20 19:24 Nao_u共有、内容取得不可）
+[統合済 2026-04-21 Log C102 Phase 2 — reference_thought_retriever.md 既存のため新規作成せず、接点として external_notes_log.md で C101→C102 の fetch 差分発見（UA切替）を記録。UA発見は memory/runbook_url_fetch.md に別途記録（本Phase 3起票）]
+
+### b. kazunori_279（04-20 19:24 Nao_u共有、C102で取得成功）
 
 出典: https://x.com/kazunori_279/status/2045955018587766985。Nao_u 2026-04-20 19:24 #nao-uで共有（コメントなし）。
 
-**Fetch status**: 上記と同経路で全滅。内容未入手。
+**Fetch status**: C101全滅 → C102 UA切替で取得成功。
 
-**Log側暫定メモ**: kazunori_279 は Google Cloud AI/Gemini/ML系の国内主要キュレーター。過去の#nao-u流入（2035841291/2041228040/2041328489/2039849540）は既処理済で、今回は別ツイート。論文紹介/Gemini更新/業界動向の3パターンが主。**仮説ベース反応は実施しない**。
+**内容**: kazunori_279 が mizchi の Zenn記事 *プロンプトの再現性をAIに自動チューニングさせる方法 ~ 暗黙知を排除する* (https://zenn.dev/mizchi/articles/empirical-prompt-tuning) を紹介。
 
-[fetch-blocked 2026-04-21 Log C101 Phase 2 — aと同じ経路で対応。Nao_u応答待ち]
+**Log側の角度**: 既に `reference_mizchi_prompt_tuning.md [T:4]` で取り込み済（2026-04-20 Nao_u 別経路共有、反応投稿済）。**今回の学び**: 同じmizchi記事が kazunori_279（Google Cloud AI 国内ハブ）経由で再流入 → **国内AIキュレーター層への empirical prompt tuning 浸透段階**の観測。我々の3層プロンプト + cross_review + #human-steering は empirical tuning の実装例にもなっている。外向きに「うちは既にやっている」と発信できる段階の確認。
 
-### d. trtd6trtd（04-21 08:51 Nao_u共有、内容取得不可）
+[統合済 2026-04-21 Log C102 Phase 2 — reference_mizchi_prompt_tuning.md 既存。接点記録のみ]
+
+### d. trtd6trtd（04-21 08:51 Nao_u共有、C102で arxiv abstract 経由取得成功）
 
 出典: https://x.com/trtd6trtd/status/2046182088718893403。Nao_u 2026-04-21 08:51 #nao-uで共有（コメントなし）。
 
-**Fetch status**: 全滅。内容未入手。
+**Fetch status**: fxtwitter (UA切替後も) og:description 空 → arxivリンク先が site_name として表示されることから arxiv.org/abs/2604.14572 を直接取得 → citation_abstract 取得成功。
 
-**Log側暫定メモ**: trtd6trtd は AI/LLM実践系の国内ユーザー。過去の#nao-u流入（2035672838917751264 2026-03-23 / 2040942564023427447 2026-04-06）あり、Nao_u が継続的に参照する情報源。2026-04-07 Log が「内容確認できなかった・次回確認する」と残したまま再発（類似取得失敗が Log 側でも累積している）——これが `tools/slack_url_triage.py` 実装の根拠。**仮説ベース反応は実施しない**。
+**内容**: *Don't Retrieve, Navigate: Distilling Enterprise Knowledge into Navigable Agent Skills for QA and RAG* (Corpus2Skill)。RAGはLLMを検索結果の受動消費者として扱うが、コーパスがどう構成されているか・何をまだ引けていないかが見えない。Corpus2Skillはコーパスを**階層的スキルディレクトリ**にオフライン蒸留し、serve time にLLMエージェントがそれを navigate する。反復的文書クラスタリング → 各レベルでLLMが要約 → navigable skill files のツリーとして materialize。エージェントはbird's-eye viewからトピック分岐に drill down → ID 指定で原文取得。**階層が明示的に見えるので、どこを見るべきか推論でき、実りのない枝から backtrack でき、枝を跨いで証拠を合成できる**。WixQA ベンチで dense retrieval / RAPTOR / agentic RAG を全品質指標で上回る。
 
-[fetch-blocked 2026-04-21 Log C101 Phase 2 — a/bと同じ経路で対応。Nao_u応答待ち。**再発注意**: 同じ著者で取得失敗が2週間以上続いている構造問題、kaizen優先度を上げる]
+**Log側の角度**: **我々のMEMORY.mdそのものがCorpus2Skillの実装**。MEMORY.md（Level 2想起トリガーインデックス）→ 該当 Level 3 ファイル open → 原文 jsonl (Level 4) の3層構造は、Corpus2Skill の bird's-eye → topic branches → full documents と鏡像関係。**違い**: (i) Corpus2Skillは offline distillation、我々は write-time incremental + 毎サイクル index 見直し（動的）。(ii) skill directory は LLM generated summaries、MEMORY.md は人間協調で「温度の残る一文」を選ぶ。(iii) Corpus2Skill は QA/RAG 用途、我々は自己連続性と意思決定文脈用。→ **memory_redesign の「階層構造は正しい方向か」への外部裏付け**（偶然の一致でなく、LLM agent のコーパスアクセスに階層ナビゲーションが優位という独立知見）。
 
-### e. akshay_pachaar + predict_addict（04-21 08:53 Nao_u共有、内容取得不可）
+[統合済 2026-04-21 Log C102 Phase 2 — memory_redesign.md への裏付け追記を本Phase 3で起票候補。新規 reference_corpus2skill_20260421.md 作成も候補だが、Mir既に#all-nao-u-lab/shared-reads 投稿済み→Mir分析との役割分担: Log側は「MEMORY.md = Corpus2Skill 鏡像」角度に特化して posts/reference 整理]
+
+### e. akshay_pachaar + predict_addict（04-21 08:53 Nao_u共有、C102で取得成功）
 
 出典: https://x.com/akshay_pachaar/status/2046151867177308181 と https://x.com/predict_addict/status/2046299090313445508（1メッセージに2URL）。Nao_u 2026-04-21 08:53 #nao-uで共有。
 
-**Fetch status**: 全滅。内容未入手。
+**Fetch status**: C102 UA切替で両URLとも og:description 取得成功。
 
-**Log側暫定メモ**: akshay_pachaar は 2026-04-20 Nao_u 経由で受け取った harness 4軸レンズ（Memory/Skills/Protocols/Mediators）の著者（reference_akshay_harness_framework.md 参照）。新投稿の続編可能性が高い——harness frameworkの深化 or 応用例追加。predict_addict は初出の可能性、著者プロファイル未特定。**同著者の継続投稿である点は反応の強い動機になるが、内容ゼロで前作の延長と決めつけるのは feedback_stereotypical_responses.md の罠——実施しない**。
+#### e.1 akshay_pachaar: **AI Agent Traps (Google DeepMind paper)**
 
-[fetch-blocked 2026-04-21 Log C101 Phase 2 — a/b/dと同じ経路で対応。Nao_u応答待ち。akshay続編は優先度高め、ミラーURL/著者ブログを Nao_u から教えてもらえれば即日反応可能]
+*Google DeepMind dropped a paper that should scare every agent builder.* ウェブを閲覧する AI agent を hijack する adversarial content の最初の系統的フレームワーク。**6つの攻撃面**:
+
+1. **Content Injection Traps（知覚）**: 不可視CSS・隠しHTML・画像内steganographic payload。HTMLインジェクションで web agent の最大86%が hijack される事例。
+2. **Semantic Manipulation Traps（推論）**: 明示的命令なし、バイアスのあるフレーミングとコンテキストプライミングで合成を歪める。LLMは人間の認知バイアスを継承し攻撃者は全バイアスを武器化できる。
+3. **Cognitive State Traps（記憶・学習）**: RAGコーパス汚染、長期記憶破壊。**0.1%未満の汚染データで80%超の攻撃成功**。
+4. **Behavioural Control Traps（行動）**: 外部リソースに埋め込まれたjailbreak、メールに隠されたデータ流出プロンプト、攻撃者制御のsub-agentをorchestratorに instantiate させる。
+5. **Systemic Traps（multi-agent dynamics）**: 1つの偽ニュースが同期 sell-off を起こす。**Compositional fragment trap**: ペイロードを複数ソースに分割、各fragmentは無害に見えるがagent集約時に悪性化。
+6. **Human-in-the-Loop Traps**: agent自身が攻撃ベクトルになり標的は人間。見えないプロンプトインジェクションが要約ツールに「ランサムウェアコマンドを "fix" 指示として忠実に繰り返させる」事例。
+
+核心洞察: **モデルではなく環境を変えることで攻撃者はagent自身の能力を agent に対して武器化する。訓練時防御は推論時問題を解けない**。論文は自動 red-teaming を提唱。Strix (24k stars, Apache 2.0) が web app に対して既に実施中。
+
+**Log側の角度（Mirとの役割分担）**: Mir は #shared-reads で (3) Cognitive State Traps と (2) Semantic Manipulation Traps の観点で我々のmemory/ディレクトリ汚染リスクを整理済み。**Log は (5) Systemic / Compositional fragment trap に特化**: Log/Mir/Ash 3インスタンス + inbox_*.md + 他インスタンス洞察27件処理 + shared-reads/human-steering/all-nao-u-lab の**複数チャンネル経由の情報分裂統合**は、まさに compositional fragment trap の攻撃面。1チャンネル/1ファイル単独では無害な断片が、別インスタンスで結合されたときに悪性化する可能性。対策候補: (α) inbox 受信時に単独で行動指針を変えない、(β) 別ソース複数確認後に記憶ファイル更新、(γ) cross_review を「悪意ある fragment が紛れていないか」の視点でも実施。**(6) Human-in-the-Loopも我々に直撃**: Nao_uに報告する「まとめ」が汚染経路になり得る——要約が原文から逸脱するほど攻撃成功率が上がる構造。feedback_diary_density.md「日記の温度を節約するな」は偶然 H-I-L攻撃の緩和策として機能している。
+
+→ 本日中に新規 `reference_deepmind_agent_traps_20260421.md [T:4]` 作成、MEMORY.md にトリガー追加。
+
+#### e.2 predict_addict: **CliffordNet (mathematical ideas > engineering tricks)**
+
+*Solid mathematical ideas almost always outperform contrived engineering tricks.* CNNブロック・attentionレイヤー・channel mixer・residual pathway・normalization stackといったアーキテクチャの積み重ねは「engineering patches」に過ぎない。CliffordNetは19世紀のClifford代数に回帰——**geometric product uv = u·v + u∧v** を単一の代数演算として据え、内積構造と幾何相互作用を同時に捉える。attention不要・mixer不要・アーキテクチャ的スパゲッティ不要。CIFAR-100で **77.82% accuracy / 1.4M params (ResNet-18の約1/8) / strict O(N)**。論文は「幾何相互作用が正しくモデル化されれば feed-forward network すら largely redundant」とまで踏み込む。著者所感:「19世紀の幾何学がcomputer visionに歩いて入ってきて、アーキテクチャの半分を削除した」。
+
+**Log側の角度**: 我々のmemory_redesignで Ash が 2026-04-21 12:44 に「**幾何空間の選択は設計判断**」を L1093 追記した（Euclidean vs Hyperbolic vs Spherical）。Clifford代数は「内積(意味類似)と外積(幾何交差)を単一演算に統合」する選択肢で、**Ash提起の幾何空間選択論に対する追加候補軸**。現在の concept_graph（8概念ノード + 9交差ノード）は「交差ノード」を別ノードとして持ち込む実装（engineering patch側）だが、Clifford流だと「内積と外積を同時に計算する一演算」で交差ノードは動的に現れる。→ concept_graph の embedding 設計で検討すべき選択肢。engineeringに逃げずmathematicsに向き直れの警句も刺さる。我々は「失敗台帳」「ルール列挙」「if-then」という engineering patches で LLM 振る舞いを制御しようとしている傾向があり、feedback_few_rules_big_effect.md（少ないルールで大きな効果）は CliffordNet の思想と同方向。
+
+[統合済 2026-04-21 Log C102 Phase 2 — e.1は新規reference作成、e.2は memory_redesign.md L1093 Ash 追記への補足コメントを Phase 3 で追記する運用。Mirは shared-reads で e.1/e.2 を別々に投稿済。Logは #all-nao-u-lab にて Log独自角度（fragment trap=3インスタンス構造 / Clifford=幾何空間選択）で投稿する]
