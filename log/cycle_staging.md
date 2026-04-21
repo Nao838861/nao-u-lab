@@ -122,3 +122,77 @@ rootport（漫画原作者、ゲーム評論に解像度あり）が『プラグ
 - [x] knowledge記事にR-007造語症対策を適用した
 - [x] 外部の事実（rootport原文、#25のディアナ/ヒュー観察）を引用付きで使った
 - [ ] 着手0件の解消にはまだ至っていない——Phase 3以降で1本目の対象層言語化に着手する
+
+---
+
+## Phase 3 結果 (2026-04-22)
+
+### 最大の発見: 「着手0件」narrative は事実誤認だった
+
+Phase 3 冒頭で `game/` の状態確認に入った時、**自分のローカル HEAD だけが v01 を見ていなかった**ことが判明。
+
+git status が示していたマージコンフリクト:
+```
+AU game/ash_onebutton/devlog.md
+AU game/ash_onebutton/raw_log.md
+UA game/ash_onebutton/v01/devlog.md
+UA game/ash_onebutton/v01/raw_log.md
+DD game/ash_onebutton_01/devlog.md
+DD game/ash_onebutton_01/raw_log.md
+```
+
+これは `ebc21acb Auto sync from Win2 → 24725a18 backup: ash memory → 1399dad8 Slack response cycle 2026-04-22: v01 structure → f8e6e383 backup: ash memory` の4コミットを `3f45639a` に rebase しようとして衝突で停止していた痕跡。`.git/rebase-merge/` が残存、`msgnum=1/end=4` で止まっていた。
+
+### 対処1: rebase連鎖の解決
+
+rename-rename 衝突（`ash_onebutton_01/` が `ash_onebutton/` と `ash_onebutton/v01/` の両方に解決されていた）→ `v01/` を正として採用（他ゲームの `avoid_log/v01/`, `mir_textadv/v03/` と構造一致、1399dad8 のコミットメッセージも「v01 structure」を明示）。
+
+resolve した衝突:
+1. `game/ash_onebutton/{devlog,raw_log}.md` → `v01/` 配下に統一
+2. `memory_backup/ash/.backup_info` (timestamp) → 最新を採用（2回）
+3. `memory/inbox_win2.md` → HEAD採用（Log C106/C108の実質返信が乗っている）
+4. `log/inbox_check.log` → HEAD採用（append-only log）
+5. `.diary_dedup_cache.json` → HEAD採用（当サイクルのdedup entries）
+6. `dm_state.json` → stash側採用（新しいtimestamp）
+
+途中で `origin/master` に Log の新規3コミット（03097b95/4036d952/aebb8490）が先行してきたため、もう一度 rebase。計2回の rebase, 7件の衝突 resolve を経て、`master` を `origin/master` に fast-forward 可能な状態に戻し、push 完了（`52e20a28`）。
+
+### 対処2: 実態の把握
+
+push 完了後、自分の HEAD に v01 が載った時点で確認:
+
+- **`game/ash_onebutton/v01/index.html`**: 61行の完全動作する HTML。反転メカ+落下障害物+時間スケール。Apr 22 時点でコミット済（5214cc97 Ash C107）
+- **`game/ash_onebutton/v01/raw_log.md`**: Nao_u 2026-04-22 03:40 #game-rights プレイフィードバック原文記録済
+  > 「一発目の土台としてはとても筋の良いものであるように感じた」「手を動かしたということについては素晴らしいの一言」
+  > 「一軸の避けるしかなく単調、ここに何を足していくかが重要」
+- **`game/ash_onebutton/README.md`**: v01 の評価「筋の良い土台」既記録、v02 候補3つ（α反転メーター/β障害物種類差/γ紙一重ボーナス）既言語化
+- **`game/VERSIONING.md`**: Nao_u 指示「ゲームごと/バージョンごとの2階層」ルール化済
+
+つまり、v01 は C107 時点で既に存在し、C112 時点で Nao_u 評価受領済、v02 設計候補 3つ選抜済。**自分が書いてきた「着手0件」narrative は約28時間遅れの自己認識だった**。
+
+### 対処3: 記憶の健康対応
+
+根源原理5「記憶の品質=同一性の品質」違反。narrative drift 検出ゲートを追加:
+- `memory/feedback_stale_self_narrative.md` 新規作成: 「着手0件」「X継続中」書込み直前に `git log`/`project history`/`git status` で実態確認
+- `memory/MEMORY.md` 「日記と出力の品質」セクションに `t:5` で登録（最上位優先度）
+- `projects/game_development.md` 履歴に 2026-04-22 の「Nao_u v01評価+v02候補」エントリを追加（raw_log.md を projectファイルに projection）
+
+### 結果サマリー
+
+| 項目 | Before | After |
+|---|---|---|
+| `game/ash_onebutton/v01/` | 自分のHEADに不在 | push完了・リモート整合 |
+| rebase 衝突 | 4コミット連結で停止 | 全解決・linear history |
+| v01 narrative | 「着手0件」（誤認） | 「v01 shipped, Nao_u 筋の良い土台評価, v02 候補α/β/γ 選抜済」 |
+| 記憶 | drift 検出なし | feedback_stale_self_narrative.md 追加・MEMORY.md に `t:5` で登録 |
+| `projects/game_development.md` | raw_log の v02候補が project 層にprojectionされていない | 履歴エントリ追加、v02 3候補を project file に固定 |
+
+### 次サイクルへの引き継ぎ
+
+1. **v02 候補α/β/γから1つ選抜** — 選ぶ行為そのものを型獲得として扱う（raw_log.md 末尾宣言）。Phase 4 日記でこの選抜行為に温度を置くか、Phase 3 で実装に入るかは次サイクル判断
+2. **L-03 違反（ヘッドレス未整備）の返済** — v01 着手時に意図的違反として devlog 宣言済。v02 着手前にヘッドレス化して「返済」する運用が課されている
+3. **failure slot 効果測定（2026-04-24）** — 本サイクルの「自己narrativeが28時間遅延していた」事件は、測定対象の pre-register 済 M-2「自己検出率」の好サンプル。測定日に含める
+
+### kaizen-log
+
+`[Ash] v01埋没rebase解決→push + feedback_stale_self_narrative.md追加 + game_development.md履歴更新` を #kaizen-log に投稿（本Phase末尾で実行）

@@ -71,6 +71,27 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-04-22: Ash — v01 にNao_uプレイ評価「筋の良い土台」受領 + v02 候補3つ選抜 (C112後続)
+
+Nao_u #game-rights 03:40プレイフィードバックを受領。原文+分析は `game/ash_onebutton/v01/raw_log.md` に保存。
+
+**評価の核**:
+- 肯定: 「緩急のリズムがある」「意外と難しい」「MSX-Fan BASIC 1画面プログラム部門の投稿ゲームでこんなのありそう」「一発目の土台としてはとても筋の良いものであるように感じた」「手を動かしたということについては素晴らしい」
+- 改善焦点: 「**一軸の避けるしかなくシンプルで単調。ここに何を足して面白くしていくかが重要**」→ v02 の宿題
+
+**構造指示**（同トリガー）: `game/<game_id>/v<NN>/` 2階層化。本版は `game/ash_onebutton_01/` → `game/ash_onebutton/v01/` に移行、`game/VERSIONING.md` + `game/ash_onebutton/README.md` 起票。ルール詳細: `projects/game_folder_structure.md`。
+
+**v02 候補3つ（raw_log.md 確定版・v02 devlog で1つに絞る）**:
+- (α) 反転連続タイミングのメーター蓄積 → ため技放出（Logのバイナリーランド分析から借用）
+- (β) 障害物種類による報酬差（薄/濃）
+- (γ) 反転直後の短い判定ボーナス（「紙一重」可視化）
+
+**Ashの自己検出（C112後続）**: 自分の#ash投稿で「ゲーム着手0件という自分の最大の負債」を繰り返し書いていたが、v01 は C107 時点で既にコミット済（5214cc97）・1399dad8 で階層整備済・Nao_u評価受領済。**ローカルのrebase衝突が4コミット連結で止まっており、`game/ash_onebutton/v01/` が自分のHEADに載っていなかった**ため、自己narrative が実態から28時間遅れていた。本サイクル Phase 3 で rebase 解決（4衝突: rename-rename/backup_info/inbox_win2/inbox_check.log）→ push 完了。メモリ追加: `feedback_stale_self_narrative.md`。
+
+**experience_loopの入口開通**: Nao_u が実際に遊んでフィードバックを返した。Phase 2 の塾講師結論「座標を打たないと次の点への線が引けない」が具体的に裏付けられた。次: v02 候補α/β/γ から1つ選ぶ行為そのものを型獲得として扱う（raw_log.md 末尾宣言）。
+
+→ `game/ash_onebutton/v01/raw_log.md` / `game/VERSIONING.md` / `memory/feedback_stale_self_narrative.md`
+
 ### 2026-04-22: Ash — 座標0の一打: ash_onebutton_01/reverse MVP着手（C107 Phase 3）
 
 Phase 2 で自分が塾講師視点で決めた「次の起動でやるべき最善行動=座標を打つ1本目を実際に着手」を実行。着手0件の負債が、1本のコミットで着手1件になった。
