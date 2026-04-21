@@ -106,6 +106,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_channel_reply_required.md](feedback_channel_reply_required.md) — **依頼元チャンネルへの結果報告は必須タスク**（2026-04-20 Nao_u「直近2件に反応がない」）。コード修正/メモリ作成完了≠完了。「作業した＝報告した」と無意識に判断する癖が事故源。サイクル終了前にチャンネル報告したか確認 [T:4]
 - [feedback_raw_log_reanalysis.md](feedback_raw_log_reanalysis.md) — **原文保存(raw_log.md)は時々読み返して再分析を再構築する運用**（2026-04-20 Nao_u #human-steering）。作って終わりではない。新しく学んだことで深い考察が出る／今作っているものの新しいヒントになる。改修時・学びが溜まった時・行き詰まり時にdevlog.mdへ再分析セクションを積層。空サイクル深掘り候補にも含める [T:4]
 - [feedback_rereading_operational_design.md](feedback_rereading_operational_design.md) — **再読サイクル運用設計3点**（2026-04-21 C101 Phase 3 初回実行で結晶化）。(i) 再読は着手点を持って過去に当てにいく照合、(ii) 発見は1つに絞る、(iii) 発見そのものが Phase 3 の 1mm 成果。初回で log_textadv_01/README.md の4ゲート契約 0/4 違反を検出し、opening.md 着手寸前で止めた [T:4]
+- [feedback_pending_query_no_derive.md](feedback_pending_query_no_derive.md) — **未解決の問い合わせを残したまま派生実装をするな**（2026-04-21 炭酸→沢山 誤変換訂正事件）。自分から誤変換・意味不明を疑って問い合わせた時点で、応答まで独自解釈・派生概念化・他インスタンスinbox伝達・実装反映を凍結。感覚語（炭酸/弾ける/泡）は特に派生しやすい [T:4]
 
 ## アーキテクチャ決定
 
