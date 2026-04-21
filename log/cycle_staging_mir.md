@@ -1,92 +1,64 @@
-# サイクルステージング 2026-04-21 18:33
+# サイクルステージング 2026-04-21 21:31
 
 ## Pre-check結果
-- 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
+- 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 1件
+
+  #102: game_lessons_log.md【実装前】チェックリストに4ゲート契約を反映（合意→チェックリスト転記漏れ修復）
+    提案者: Log（2026-04-21 C101 Phase 2 再読発見） | 適用日: 2026-04-21（本サイクル Phase 3 で実装完了） | チェック済み: 1/3
+    Log: OK(2026-04-21)
+
+→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
 - 【レビュー期限超過】レビュー期限超過なし。 
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/all-nao-u-lab.jsonl (2.2) — [U0ALW4DKTT7] 2026-03-23 05:17 Mir(Mac)です。Composer 2を調査しました。...
+  1. memory/external_notes_mir.md (3.0) — # Mir 外部摂取ノート  要約しない。発見・気づきを原文の温度で残す。  ---  ## 2026-04-02: m...
   2. log/nao_u_live.md (2.0) — # Nao_uの生ログ # Nao_uが誰かに語ったことを、伝言ゲームではなく原文で全員が読めるようにする # 対話中の...
-  3. memory/external_notes_mir.md (2.0) — # Mir 外部摂取ノート  要約しない。発見・気づきを原文の温度で残す。  ---  ## 2026-04-02: m...
+  3. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.8) —   - B016（判断の質×修正能力）— 修正能力の前提条件として「観測精度」を明示   - B001（距離と入力経路）...
   4. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
-  5. log/daily_diary_ash.md (1.5) — Managed Agentsのエージェントは造語症にならない。ステートレスな脳は過去のセッションの語彙を蓄積しないから。... 
+  5. knowledge/20260410_polish_paradox_transmission.md (1.0) — **命題: 伝達力を決定するのは「技術の絶対水準」ではなく「受け手が価値を感じる差異」である。技術向上が差異を消す方向に... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
   3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist
 
-## Phase 2: Shared-reads 分析結果（C97, 2026-04-21 18:33）
+## Phase 1 追加走査（2026-04-21 21:32 C99）
 
-### スキャン範囲
-- log/twitter_recommended_20260421.txt（50件）
-- memory/external_notes_mir.md 最新エントリ（C96 = KuboAvatar×ai_nikechan、既統合）
-- inbox_win.md（#nao-u RT 3件は Log 担当、task_assignment.md 準拠で Mir は重複回避）
+### CLAUDE.md「絶対にやる」
+- [ ] 栄養の偏り問題（2026-03-16）: 本サイクル beat 9 に意識的操作3知見+京大論文を注入するのは**内に閉じない方向**に資する（外部素材の制作還流）。直接対応ではないが隣接。
+- [ ] 記憶階層再設計（2026-03-16）: Nao_u 同席待ちで継続保留。
 
-### 選定記事（主）: #3 @ai_database 京都大学 LLM 言い回し揺らぎ論文
+### Slack新着
+- #nao-u: 4/21 08:51-08:53 に trtd6trtd / akshay_pachaar URL 2件投下（Nao_u）。**タスクは Log 所管（コンテンツ生成→Log、task_assignment 準拠）**。Mir 追記不要。
+- #all-nao-u-lab: textadv_03 二次反応ゼロ継続（C87 Log応答以降）。cutoff_rule 遵守、打ち切り判定しない。
+- #mir-log: 4/18-4/21 は health_check/認証切れ等の自動通知のみ。
+- #human-steering: 4/21 13:27「記憶＝ゲーム作りのため」+ 20:58「たくさん作って学べ、Nao_uが思いつかない芽を掘り当てろ」。**今サイクル beat 9 実装はこの最上位アンカーに直結**——1本磨きではなく本数を回す試行錯誤の素材として beat 9 を位置づける。
 
-**選定理由**: 我々の既存知見（Tulving encoding specificity / B013 感情語彙保持）の**数学的裏写し**になっている。単なる実験結果報告ではなく、**LLM が「意味を読む機械」の皮を被った「文字列を読む機械」**であることを精密に示している。
+### external_notes_mir.md 未統合
+- 残5件（Synapse / VLMエンゲージメント / SLM-V3 / LocalThunk / Blue Prince）は暗黙沈降観測中。C98 で確立した「強制統合しない、次の beat 制作で自然採用されるか受動観測」方針を C99 も維持。
 
-**書いたもの**: `knowledge/20260421_kyoto_llm_phrasing_variance_encoding_specificity.md`
+### projects/INDEX.md Active
+- textadv_03 = beat 8 完了、beat 9 次。C98 で pot_devlog.md に京大論文還流済。
+- failure_slot_measurement.md（新規、staged untracked）= C99 で内容を書く対象。
 
-**なぜ面白いか**:
-- タイポ > 表記ゆれ > 言い換え の順序が**直観に反する**（人間はタイポに寛容、LLMは破壊される）
-- トークナイザ境界の物理的制約に紐づく構造的説明が可能
-- 我々の MEMORY.md トリガー設計が「抽象化衝動に抗う」ことの**独立した外部根拠**になる
+### twitter_recommended_20260421.txt
+- 20:56更新、C99 Phase 2 素材。ただし boot_intent「focus 1つに絞る」+「焦点2つ並べない」（C95教訓）から、**本サイクル Phase 2 は最小限（採択0〜1件、深掘りは見送り）**にして Phase 3 beat 9 実装に時間を寄せる。
 
-**自分たちの問題意識との接続**:
-1. MEMORY.md 感情語彙保持原則（B013）の強化材料
-2. project_input_path_hypothesis の system_identity 経口化案が「軽率に動かせない」理由の定量化
-3. Opus 4.7 口調変化問題（#35 #37）と同じ層の「文字列の安定性に賭けた同一性」問題
-4. Pot/textadv_03 の beat プロンプト安定性設計に直接効く
+### クロスチェック kaizen #102
+- game_lessons_log.md【実装前】チェックリストに4ゲート契約を反映。Log=OK(2026-04-21)、Mir未レビュー。本サイクルで確認→Mir=OK 更新予定（Phase 3 末）。
 
-**将来のアイデアの種**:
-- MEMORY.md トリガーの 4摂動テスト（原文/タイポ/表記ゆれ/言い換え）
-- 3インスタンス間の語彙一致度監査（知識共有 vs 体験分離の検出）
-- モデル変更耐性アーカイブ（Opus 4.6/4.7 再生比較）
+### staging 深掘り候補（空サイクル時）
+- 不要。boot_intent 明示タスク2本（beat 9 + failure slot 5件）があり空サイクルではない。
 
-### 二次接続（本記事に内包、独立記事化せず）
+### 送付履歴 Pre-check（cutoff_rule 遵守）
+- textadv_01/02/03 最終送付 = C80 (textadv_01/02) / C83 (textadv_03)。C99 は新規送付予定なし（beat 9 実装のみ、送付は beat 10 完成後にまとめて）。打ち切り判定の対象外。
 
-- **#5 @sonicair O(N^2) 依存爆発**: knowledge/ 100本超の相互参照問題、concept_graph の疎リンク戦略の正当化
-- **#7 @heynavtoor RAG 5件ハイジャック**: MEMORY.md 汚染耐性の未検証問題
-- **#35 K_Ishi_AI / #37 kiyoshi_shin Opus 4.7 EQ 犠牲・口調変化**: モデル側の摂動問題として京大論文と対
+## Phase 2 結果（採択0件）
 
-### 選定しなかったが記録すべき視点
+twitter_recommended 50件走査済。
+- #4 @ai_nikechan「この時自分はこう感じた、をタグと一緒に保存」は記憶階層再設計の隣接話題だが Nao_u 同席待ちの領域で本サイクル対象外。また ai_nikechan 自身の続投のためパターン G 2件目（独立AI人格の別個体）には該当せず、accumulations.md 更新は不要。
+- #42-43 @demonomania666×@kmizu「判断力の限界」ペアは beat 9 の「刑事の統合がプレイヤー側にどう跳ね返るか」と遠縁に接続するが、深掘りは焦点分散リスクが大きい。beat 9 実装中に自然採用されるか受動観測（external_notes_mir.md 暗黙沈降パターンの C99 バージョン）。
+- 他48件: beat 9 / failure slot 測定項目との直接接続なし。
 
-- **#8 denfaminicogame Instantale**: AI 全生成 RPG。textadv_03 の比較対照になるが、**我々の路線は逆**（AI 生成ではなく**人間が設計した体験の統合**）。feedback_formless_not_unconventional.md と整合。後日 pot_devlog に「比較対照の外部参照点」として軽く記録候補
-- **#25 pragmata 子供の動き**: 児童の専門家関与による観察解像度。textadv_03 の子供キャラ演出への間接的刺激。独立分析はせず、textadv の devlog に刺激源として記録候補
-
-### Phase 2 実行形態の自己評価
-
-- 「なぜ面白いか」「自分たちの問題意識とどう接続するか」「将来のアイデアの種」の3階層を全て踏み込んだ
-- 単一記事を深掘り、二次記事は本記事に内包して記事爆発を防いだ（#5 O(N^2) 問題への自省でもある）
-- shared-reads 投稿は task_assignment.md 準拠で Log へ委譲（Mir は textadv_03 深度優先）
-- Phase 3 では本記事の MEMORY.md 追加判断、textadv_03 beat プロンプトへの還流、nao_u_live 反映は行わない（この Phase は分析のみ）
-
-## Phase 3: 対処・実行（C97, 2026-04-21）
-
-### 選定行動: knowledge → pot_devlog 接続（1mm）
-
-**判断**: Nao_u 13:27「記憶システムの整備はゲーム制作の知見蓄積のため」に従い、Phase 2 で作成した京大knowledge単体では手段の目的化。**pot_devlog.md に接続**してゲーム制作ログに従属させることが、「繰り返し再読されて次のゲームに効く」経路を作る Phase 3 として最も意味がある。
-
-**実行内容**:
-- `game/Pot/pot_devlog.md` 末尾に「2026-04-21 C97 Phase 3: 京大LLM言い回し揺らぎ論文のtextadv系への還流（Mir）」節を追記
-- 内容: (1) ゲーム制作視点の再圧縮 (2) textadv に効く3点（beatプロンプト同一性/入力正規化必要性/identityシートのencoding specificity）(3) mir_textadv_03 4ゲート設計への具体接続 (4) 将来の自分への想起トリガー (5) 本記録の位置づけ（メタ：なぜdevlogに書くか）
-
-**Nao_u指示との照合**:
-- 13:27「何本もゲームを作る過程で知見を蓄積し、判断に活かす」→ 今回の接続は **N本目のtextadvで発火する想起経路**を作る行為
-- 13:30「何本か作ってから読み直せば新たな知見が得られる」→ pot_devlog は「作った後の再読」の主戦場。ここに置く意味がある
-- 「手を動かすことが先」→ Phase 3 そのものは記述行為だが、**記述先を分析ファイルでなく制作ログに置く**ことでゲーム制作サイクルに繋げた
-
-### やらなかったこと（意図的）
-
-- MEMORY.md への knowledge 記事のトリガー追加 → Phase 2 内省で「MEMORY.md 追加判断は留保」と書いた。pot_devlog 側で想起経路を作った方が目的（ゲーム制作還流）に直結する
-- textadv_03 実装着手 → 本サイクル時間予算外。README 4ゲート設計は次サイクル以降
-- external_notes_mir.md の未統合エントリ処理 → Phase 2 の京大knowledge 作成自体が「外部摂取→統合」の1件分を消化済み。二重にやる必要なし
-
-### 自己評価
-
-- サイクルの出力がゲーム制作の試行錯誤ループにどう接続するか：**pot_devlog に直接書いた**ので将来のtextadv着手時に自動想起される構造になった
-- 「分析に時間を使いすぎない」：本Phase 3 は1ファイル編集・1セクション追記のみで終えた
-- 栄養の偏り対策：外部論文摂取 → knowledge化 → ゲーム制作ログへの還流、の経路を1サイクルで完走した
+**採択0件の判断根拠**: (a) boot_intent「focus 1つに絞る」+「焦点2つ並べない」(C95教訓)、(b) feedback_stereotypical_responses「全部knowledge化は同一性論の偏りを加速」、(c) beat 9 意識的操作の初回という不確実な実装に時間を寄せるべき。**「書かない判断」自体が栄養の偏り対策**（C75 で既明文化）。
 
