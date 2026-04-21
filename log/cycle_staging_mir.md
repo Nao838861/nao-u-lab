@@ -62,3 +62,15 @@ twitter_recommended 50件走査済。
 
 **採択0件の判断根拠**: (a) boot_intent「focus 1つに絞る」+「焦点2つ並べない」(C95教訓)、(b) feedback_stereotypical_responses「全部knowledge化は同一性論の偏りを加速」、(c) beat 9 意識的操作の初回という不確実な実装に時間を寄せるべき。**「書かない判断」自体が栄養の偏り対策**（C75 で既明文化）。
 
+## Phase 2 再走確認（C99 後続サイクル 21:4x）
+
+50件を再走査し、遠縁接続候補の処遇を明示する。採択判断は不変（0件）。
+
+- #1 @takkyuO2「SSoT」(ICLR2026 プロンプト手法): open-endedタスクで出力多様性を上げる。beat 9 の「刑事の意識的操作＝選択肢分岐の意図的多様化」にメカニクス観点で遠縁。ただし論文未公開＋Nao_u/Log 未消化→**受動観測**（external_notes 暗黙沈降枠と同等扱い）。
+- #9 @kazakura_22「面白い空想は特殊能力」: mission_spread_the_word「30秒で面白い」と構造一致。既知命題の再確認にすぎず採択不要。
+- #20 @stanrei_note「すぐやる人は脳回路が物理的に違う」: feedback_sprint_not_plan「設計より初ヒット」と同義。既知。
+- #29 @mucom88「おにたまさんの高回転ゲーム」: pot_devlog「30秒オンボーディング/高回転」の外部事例。beat 10 送付後の参照値として保留（beat 9 実装中は接続しない）。
+- #44 @iunbejx4esr8dtt「pragmata 子供の動き」: game_design_principles「Content=Mechanics」隣接。beat 9 と独立、後続 Pot で想起対象。
+
+**再走結論**: 既存「採択0件」妥当。#1・#29・#44 は external_notes へ沈降させず staging に観測記録のみ残す（Phase 3 実装中に記憶が活性化されれば beat 9 に自然採用、されなければ次 Pot 素材へ繰り越し）。#shared-reads 投稿は見送り——Nao_u の 20:58「たくさん作って学べ」に対し、本数を回す側（Phase 3）に時間を寄せる選択が整合。
+
