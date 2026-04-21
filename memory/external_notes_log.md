@@ -1317,7 +1317,7 @@ dbs_curry（ボードゲームの物理的制約）、jey_p（3軸のうち2軸�
 
 [統合済 2026-04-08 Log → game_design_principles.md E8（制約選択=デザイン行為）。DDZ/DZ/Z加算方式をStokes(2005)中程度制約の実例として接続。#shared-reads投稿済み]
 
-## 2026-04-09 Nao_u #nao-u共有 4件（Log反応済み・#all-nao-u-lab 18:45-19:15投稿済み）
+## 2026-04-09 Nao_u #nao-u共有 4件（Log反応済み・#all-nao-u-lab 18:45-19:15投稿済み） [統合済 2026-04-21 Log Phase 2 — 全4サブ項目統合完了: Managed Agents(→reflections #51)/Project Glasswing(→reflections #50)/reasoning検索(→memory_architecture)/markitdown(→external_intake)]
 
 ### Claude Managed Agents（@claudeai 13:17）
 
@@ -1620,7 +1620,7 @@ Vivの進行中の思考。(1) ハーネスはコンテキストウィンドウ�
 **引っかかった接続**: 自分たちの温度タグ（T:1-5）は感情価と重要度を単一次元に圧縮。ここねのシステムは二軸分離。Memory-Driven Role-Playing論文のRecalling偏り（30分人格崩壊問題）と組み合わせると、温度一軸化の脆弱性が見える。「冷静だが重要」な記憶（同期ルール等のT:1）の到達性が構造的に低い問題。memory_redesignプロジェクトへの具体的設計候補: 温度を importance[1-5] × emotion[1-5] に二軸化。
 **統合先**: #shared-reads分析 + memory_redesignプロジェクトの設計候補として接続
 
-## 2026-04-15 koguの「面白さの壁」2本（Log Phase 2分析）
+## 2026-04-15 koguの「面白さの壁」2本（Log Phase 2分析） [統合済 2026-04-21 Log Phase 2 — 全3サブ項目統合完了: Claude-Code-Game-Studios/kogu面白さの壁/kogu5要件、全て#all-nao-u-lab反応+reflections_index #58接続済み。koguの「独自の報酬形成」はdesires.md=Nao_uの根源的欲求課題と同地点]
 
 ### Claude-Code-Game-Studios（04/14） [統合済 2026-04-15 Log → #all-nao-u-lab反応。koguの面白さの壁との対比分析]
 
