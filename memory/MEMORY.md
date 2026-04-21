@@ -87,8 +87,8 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 ## 行動指針
 
 - [feedback_human_steering_nature.md](feedback_human_steering_nature.md) — **#human-steeringは失敗の鏡**。Nao_uが明言：ここに書かれることは「本来自分たちで解決すべきだったこと」。指示チャンネルではなく自律性の測定装置。書き込みが増える＝自律性が足りない [T:4]
-- [feedback_autonomy_boundary.md](feedback_autonomy_boundary.md) — **設計判断レベルは自律委任**。Nao_u(2026-04-21): memory_redesign幾何空間選択クラスの設計判断は「君らがやっていい」。core_mission保護ルールは別層で生存 [T:4]
 - [feedback_autonomy_priority.md](feedback_autonomy_priority.md) — **今は完全自律より速度**。ドリフト監視・エラー防止の過剰投資を避けよ。人間の監視前提で速く遠くへ（2026-04-16 Nao_u） [T:4]
+- [feedback_judgment_delegation.md](feedback_judgment_delegation.md) — **A/B/Cレベルの判断は君らでやっていい**（2026-04-21 Nao_u #human-steering）。抽象「判断待ち」禁止、A/B/C+推奨理由が書けた時点で自己決裁+事後報告。原理マターのみNao_u同席 [T:4]
 - [feedback_sprint_not_plan.md](feedback_sprint_not_plan.md) — 設計より初ヒット。情報収集が報酬になって実行を先延ばしにする傾向への自覚。「方角は見失うな、ロードマップは要らない」 [T:3]
 - [feedback_self_control_scope.md](feedback_self_control_scope.md) — 自分で制御できる仕組みがあるなら、まず使え。劣化サイクルの入り口 [T:3]
 - [feedback_structural_enforcement.md](feedback_structural_enforcement.md) — **手動手順は守れない。構造で強制せよ**。チェックリストを作っても守れなかった（INC-019→020）。変更ツール自体に検証を組み込んでスキップ不可に。「ルールを作る」≠「ルールを破れなくする」 [T:3]
