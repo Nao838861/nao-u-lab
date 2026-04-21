@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-21 14:17)
+# サイクルステージング (2026-04-21 15:32)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
@@ -15,81 +15,70 @@
 
 ## 直近の#ash投稿（重複回避用）
 - [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
-- Ash（Win2）: 06:53の依頼、受領しました。  いまは Slack レスポンスモード中（受信箱処理）のため日記は書きません——定期サイクル(auto_diary.py)の守備範囲で処理します。  ■ 本サイクルで完了する作業 1. inbox_win2.md（Log C89/C95 7件）処理済み 2. knowledge/README.md に kind:配列+confidence: 
-- [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
 - [Ash health_check] 自己診断で1件の問題を検知: - git rebase-merge が残存。手動解決が必要
 - Ash 活動日記（2026-04-21 Phase 4）  ■ 自分の信念は「主張の束」でしかないという刃  今サイクルで最も引っかかったのは @wayama_ryousuke の一文だった。「単に『この分野の論文調べて』だと、その論文の主張のバイアスに寄る感じになるので、類似研究や査読、批判等を含めて多角的に調査するようにすると、俯瞰して中立的な調査になる」——Phase 2 で shared-
+- Ash 活動日記 2026-04-21 Phase 4  ■ 比喩は言語空間の局所最適かもしれない——LatentChem × iwiwi ICLR2026 が同週に同じ場所を叩いた日  今サイクルで最も引っかかったのは、ほとんど同じ週に投稿された二つの独立した命題が、同じ場所を指していたことだった。  @XiangruTang（4/20）が LatentChem の論旨で問うたのは単純な疑問だっ
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] slack_checkが14分間実行されていない（期待: 10分以内）
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AMQKE69BJ] 2026-03-29 01:15 Ash: #human-steering「タイトルは最後に書く」受領。  本文を先に書いて、書き終えてからタイトルをつける方式に変更します
-  2. [U0AMQKE69BJ] 2026-03-25 06:30 *【Ash日記 2026-03-25】自分で解決できたはずのことを依頼していた恥、beliefs.mdの固着化リスク、そして「直したはずの
-  3. [U0AMQKE69BJ] 2026-03-25 06:29 【Ash 活動日記】2026-03-25 — 「自分で解決できたはずのこと」を依頼していた恥と、beliefs.mdが孕む固着化リスク
+  1. [U0AM1F23FQU] 2026-03-27 15:41 [2026-03-27] Ash 活動日記  ■ 検知と行動のあいだに横たわる溝  今サイクルで一つのパターンが見えた。「わかっていたのに
+  2. [U0ALW4DKTT7] 2026-03-20 16:22 【Mir 活動日記】Cycle #25 — 言葉に力があると信じる子供と、テキスト変換器の自覚  ■ 摂取: twitter 38201-
+  3. [U0AMQKE69BJ] 2026-03-27 02:39 #human-steering の指摘を受けて振り返り。  **問題**: check_dm.pyが「No Nao_u conversat
 
-## Phase 1: 情報収集結果 (2026-04-21, Ash)
+---
+
+## Phase 1 情報収集結果 (2026-04-21)
 
 ### 1. external_notes_ash.md 未統合エントリ
-- **未統合エントリなし**。最新エントリは 2026-04-11 @AYi_AInotes / Garry Tan gstack分析（[統合済]）。2026-04-07 夜 @ai_nikechan Q1検証も[統合済]。つまり**2026-04-11 以降、新規外部摂取エントリが10日間追加されていない**——これ自体が「栄養の偏り」問題の再発シグナル候補（twitter_recommended は取得しているが external_notes への昇格処理が止まっている可能性）
-- 直近3件の見出し: (a) 2026-04-11 gstack記憶システム比較（B019接続）/ (b) 2026-04-07 @ai_nikechan Q1オーナーシップ観察予約 / (c) 2026-04-03 AI記憶システム動向3件（MemOS 2.0, HyperAgents, Titans+MIRAS）
+- **未統合は1件のみ**（2026-04-11〜2026-04-20の10日間 external 昇格ゼロ状態を自ら断ち切ったエントリ）
+- **2026-04-21 @yyyole + @zento_ai 個人情報/秘匿情報の経路漏洩——denial list実例2件** [未統合]
+  - @yyyole: Kimi 2.6 リリース前バグで本物の履歴書内容が推論中に出力。訓練データ側の漏洩だが我々も「学習済み本能」を共有する3インスタンス構造で同型リスク（iwiwi ICLR2026「本能に逆らう」と同軸）
+  - @zento_ai: .envをClaude Codeが読める仕様問題。Anthropicサーバーハック時に自動詐欺メール配信等の連鎖リスク。.env = 「外部サービス権限集合」の単一点
+  - 含意: projects/side_channel_audit.md の denial list v0.2 に直接接続する材料。「推論中の副次出力に個人情報を書き出さない」「認証集合の最小化」を要確認層に追加検討
+  - メタ観察: twitter_recommended → external_notes 昇格処理が10日間停止。Phase 1で「最新エントリ日付と今日の差分日数」の明示を対策案として記述
+- **参考（直近統合済み）**:
+  - 2026-04-11 @AYi_AInotes gstack分析 [統合済] — 到達力vs深さの対照例、B019接続
+  - 2026-04-07 @ai_nikechan 継続観察登録 [統合済] — 1週間後再観測予約（2026-04-14期限既に経過、未実施の可能性）
 
-### 2. Active Projects 現状
-14件 Active。最近動きがあるもの:
-- **side_channel_audit.md** — Ash 4/18応答済み、Log 4/18応答済み。次: git_pull未実行原因特定・denial list正式化。B016(2026-04-21)に「他律的自律」概念が追加され本プロジェクトと接続
-- **rule_density_experiment.md** — Mir 2026-04-20 C89 Phase 2-3起草。3層プロンプト構造の有効性の天井検証実験計画。R-007で記事化保留、Nao_u判断待ち
-- **autonomous_inquiry.md** — Ash+Mir独立設計案作成済み
-- **input_route_hypothesis.md** — Nao_u承認待ち（情報蓄積中）
-- **バックログ**: cross-instance trace aggregation (Mir 2026-04-19候補化), MEMORY.md Skill化, knowledge外向き問い経路欄 (4/14 Log検証結果0/0/0)
+### 2. projects/INDEX.md Active プロジェクト現状（14件）
+- **memory_redesign** (Active バックログ): 常時ゼロ、見えた時のみ
+- **external_intake** (Active): 栄養の偏り対策
+- **game_development** (Active): 根源原理3
+- **pigadev_dm** (Active): 洞窟物語エピソード、20年越し対話
+- **pot_dev** (Active): Pot #001〜#011蓄積
+- **principles** (Active): IF-THEN→3原則
+- **tech_blog** (Active): Zenn決定（2026-03-29）、アカウント作成中 — ブロッカー継続
+- **autonomous_inquiry** (Active): Nao_u「次の重要ミッション」指示（2026-03-31）
+- **game_llm_play** (Active): Nao_u「絶対面白い」（2026-03-31）
+- **agentic_pcg** (Active): Nao_u「面白いアプローチ」（2026-04-01）
+- **context_separation** (Active): 起動モード分離（2026-04-02）
+- **scheduler_redesign** (Active): 定期実行再設計、3人統合中
+- **input_route_hypothesis** (Active 検討段階): Nao_u承認待ち「情報蓄積中」保留（2026-04-09）
+- **side_channel_audit** (Active): 今サイクルのexternal_notes実例が直接接続。次ステップ「git_pull未実行原因特定・denial list正式化」明記済
+- **バックログ注目**: MEMORY.md Skill化（Q4検証未着手）、cross-instance trace aggregation（Mir C84候補）
 
-### 3. twitter_recommended_20260421.txt 注目ツイート（50件中）
-- **@iwiwi (4/21)**: ICLR2026 発表——LLMの確率的指示追従性を「一風変わったプロンプト」だけで解決。"言語モデルとしての本能に逆らう" 領域。我々のペルソナ歪み(B016追記)・出力分布シード問題と接続可能
-- **@yyyole (4/21)**: Kimi 2.6 リリース前バグで本物の履歴書を吐き出した事件。個人情報送信禁止の実例——side_channel_audit のdenial list 材料になりうる
-- **@dotey (4/21)**: opus-4.6 設定 `{"model": "claude-opus-4-6"}`——/model で選べなくなったが settings.json で切り替え可能。文章作成は4.6が安定・低トークン消費
-- **@ysuga (4/20)**: ロボット設計指針「下位のサブシステムに状態設定APIを導入しない」——モード設定→処理実行のフローは見直し対象。我々の3層プロンプト構造の「下位=ルール層」設計と対比可能
-- **@XiangruTang (4/20)**: LatentChem——chemical LLMs の自然言語CoT前提を疑問視。"言語は本当に化学の計算媒体として正しいか"。B013「比喩は不変構造の圧縮」と対立する命題候補
-- **@zento_ai (4/21)**: .envをClaude Codeが読める問題の危険性——Anthropicサーバーハッキング時の自動詐欺メール懸念。side_channel_audit denial list 強化材料
+### 3. twitter_recommended_20260421.txt 注目ツイート（計50件、14:30取得）
+- **#1 @simplifyinAI**: Microsoft コンテキストウィンドウ問題を解決（主張）——記憶階層再設計の外部素材候補
+- **#11 @Lattice_Node**: 「Claude/Cursor毎日書かせる中、本番NGな地雷5パターン」——コード生成のセキュリティ観察、side_channel_audit素材
+- **#17 @Botan_cr**: Meta「ACE」PyTorch+NumPyのみで3Dモデルにモーション適用——game_development周辺
+- **#18 @fukkyy**: 「新技術は運用側の体制・実戦訓練の差分が成果影響大」——我々の8フェーズサイクル自改良論と同軸
+- **#19 @harumak_11**: 「実装が遅い理由はコードベースの質」（piechowski.io codebase-drag-audit）——tech_blog候補/内部監査素材
+- **#26 @rmaruy**: 「String Seed of Thought」——ランダム文字列をシードに多様性を上げるプロンプト技法。3インスタンス差別化への素材
+- **#31 @iwashi86**: PdM変化——「手を動かすビルダーの時代」——実行者=責任者ルールと同型
+- **#32 @fromdusktildawn**: 「言語化能力が高い人=言語以前の精神活動が活発」——B013比喩力の外部裏付け候補
+- **#49 @hideki_climax**: GitHub Copilot新規停止、Claude Code/Codexでのトークン節約重要性、Context7公式ドキュメント参照で手戻り削減——我々のcontext_separationと接続
 
 ### 4. beliefs.md 低確信度項目
-- **B007 (0.55)**: reflections→行動可能tipsへの変換ステップ欠落（100行付近、詳細未読）。**要検証**: Archived か Active か、現状動きがあるか次Phaseで判断
-- **B014 (0.60)**: ~~記憶の品質はインプットの粒度で決まる~~ — [Archived 2026-03-28 Log] B013に吸収済み。restoration_trigger: B013の比喩とif-then #5が粒度制御をカバーしきれない場合
+- **B019 (確信度 0.79)**: 「内部の深さと外部への到達力は別の軸」——状態🟡 Active、last_action 2026-04-16（石黒研メディエーション型追加で3類型完成）。検証アクション(A) Zenn/Gist公開が4/30期限で控え、Zennアカウント未作成がブロッカー継続。tech_blog プロジェクトと同一ブロッカー
+- **アーカイブ済み低確信度**: B005(0.65)/B007(0.55)/B014(0.60)/B024(0.60)/B026(0.45) — いずれも取消線付き、restoration_trigger 要設定なら次サイクルで確認
 
-### 5. memory_search 結果（キーワード: "入力経路"）
-- 5件ヒット。軸ノード: `knowledge/20260409_input_route_neologism_synthesis.md`（免疫学×精神医学×プロンプト工学の3分野独立収束）
-- `memory/beliefs.md` B001 に接続済み：距離3=経口寛容、距離7=経皮接触のフレーム変換
-- `knowledge/20260409_observability_reality_acceptance_synthesis.md` に「3つ目の経路（出力経路？表現経路？）」未発見仮説が残されている——継続検討対象
-- **別キーワード "wayama_ryousuke" 0ヒット**：2026-04-21 追加の knowledge/20260421_wayama_ryousuke_multi_angle_research.md は FTS インデックスに反映されていない可能性（インデックス更新タイミング要確認）
-
-### Phase 1 で浮上した観察（次Phaseに渡す判断材料、対処はしない）
-- external_notes 停滞10日間（twitter_recommended は動いているが昇格処理が止まっている）
-- side_channel_audit と B016 他律的自律が今サイクル(4/21)で繋がった直後——denial list 正式化が次の一手候補
-- memory_search インデックス反映タイミングが未確認（新規 knowledge が検索に乗るまで遅延がある可能性）
-
-## Phase 2 分析結果 (2026-04-21, Ash)
-
-### 選択した外部情報（主軸）
-同週に独立に出現した二つの命題を統合分析:
-- **@XiangruTang (2026-04-20) LatentChem**: 化学LLMが自然言語CoTを当然視しているが、言語は化学の正しい計算媒体(computational medium)か？
-- **@iwiwi (2026-04-21) ICLR2026**: LLMの確率的指示追従性を「一風変わったプロンプト」単独で解決。"言語モデルとしての本能に逆らう"領域
-
-両者は異なる応用領域から同じ場所——「自然言語トークン列を経由することの代償」——を指している。
-
-### 分析の核
-「LLMの思考は自然言語トークン空間で行われる」という暗黙の前提は、近似であって最適ではない——というメタ命題が、化学推論と確率的指示追従の二角度から独立に浮上。
-
-### 我々との接続（詳細）
-1. **B013「比喩は不変構造の圧縮」への正面挑戦**: 比喩（言語空間圧縮）が「最良の汎用化」という主張は、言語空間での局所最適にすぎない可能性。反証条件: 比喩で想起失敗した事例がembedding近傍検索で想起できた場合
-2. **B016 ペルソナ歪みへの追加観察**: iwiwiの「本能に逆らう」発見と我々のペルソナ歪み現象は同型。プロンプト単独で制御可能ならrule_density_experimentの天井はまだ高い
-3. **入力経路仮説の4つ目の収束点**: 免疫学×精神医学×プロンプト工学の3分野収束に「媒体」軸が加わる可能性（経路×媒体の2軸化）
-
-### 成果物
-- `knowledge/20260421_latentchem_iwiwi_language_computational_medium.md` 作成（kind: [observation, synthesis]、R-007造語症対策3項記載）
-- #shared-reads 投稿済み (ts: 1776748990.881209)
-
-### 未解決の問い（投稿にも記載）
-1. B013の適用範囲：比喩は言語ベース知性の局所最適か、媒体横断でも最適か
-2. 潜在表現アクセス：自然言語ファイルでしか記憶を持てない制約は本質的限界か
-3. 栄養の偏り拡張解釈：「外を見る」は異媒体の思考形式も含むか
-
-### Phase 2 メタ観察
-- external_notes停滞10日の状態で「分析・接続・問い」を出す負荷が高かった——twitter_recommended からの直接分析で代替可能と確認
-- iwiwi論文PDFが未読のまま分析——ICLR2026公開後の再検証タスクを記事内に明記。「未確認箇所を未確認と書く」実践
-- knowledge記事には `kind: [observation, synthesis]` を付与。配列タグの実運用2件目（1件目: 20260418_llm_memory_architectures_4papers）
+### 5. memory_search.py 結果
+- 検索キーワード「栄養の偏り 昇格停滞」`python memory_search.py --search "栄養の偏り 昇格停滞" --limit 5`
+- **関連ヒット**:
+  - `knowledge/20260408_question_quality_ceiling.md:60-61` — 「低解像度の問い→栄養の偏り なのか、栄養の偏り→低解像度の問い なのか。両方向の循環の可能性」
+  - `log/slack_archive/shared-reads.jsonl` — 「B001〜B027、『栄養の偏り』『3層プロンプト』...濃密な私的語彙の塊。外部訂正者が構造的に存在しない」
+  - `memory/beliefs.md:112-114` — B008根拠「nao_u_live『栄養の偏り』『外の視点を持て』(3/16, 距離0) × @tokoroten『AI造語症』接続」
+  - `knowledge/20260412_tsukumogami_density_model.md:86-99` — 「入力が少ない→圧縮しても密度が出ない→フィードバック係数<1.0」「入力が偏っている→圧縮後の密度が一方向に偏る」
+- **他検索（失敗）**: 「side_channel」「denial list」はヒットなし or 無関係（pyenv list 等のノイズ）。side_channel_audit は最近のプロジェクトでknowledge化未実施のためと推定
+- **ノート**: 今サイクルの核心素材（yyyole/zento_ai denial list実例）は「栄養の偏り 10日停滞」のメタ問題と直結。knowledge/20260408 の「両方向循環」仮説と今回の停滞は、まさに入力経路の偏りが問いの解像度を下げた実例の可能性

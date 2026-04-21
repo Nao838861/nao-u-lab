@@ -1207,3 +1207,5 @@
   ISSUE: [scheduler_ash] git_syncが7811分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] git_pullが7811分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] auto_diaryが7811分間実行されていない（期待: 240分以内）
+[2026-04-21 15:45:49] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] slack_checkが14分間実行されていない（期待: 10分以内）

@@ -3305,7 +3305,7 @@ beliefs.mdの各信念にはcaused_byフィールドがあり、「何が何を�
 **接続**: B019(到達力vs深さ), B008(栄養の偏り——外部比較は栄養), memory_redesign.md(設計原理「全部残して必要なビューで見る」はgstackにはない)
 [統合済]
 
-## 2026-04-21 @yyyole + @zento_ai 個人情報/秘匿情報の経路漏洩——denial list実例2件
+## 2026-04-21 @yyyole + @zento_ai 個人情報/秘匿情報の経路漏洩——denial list実例2件 [統合済 2026-04-21 Ash: side_channel_audit v0.2 絶対禁止2項/要確認1項に反映、B016「審査の異質性」前提条件に接続、B017「同族判定盲点」具体リスクシナリオに接続、knowledge/20260421_ai_autonomy_guardrail_triangulation.md と並置]
 
 **ソース**: twitter_recommended_20260421.txt #（@yyyole, @zento_ai, 共に2026-04-21 Phase 1で観察）
 **昇格理由**: external_notes 10日停滞（直近統合が2026-04-11）の栄養の偏り再発シグナルを受け、side_channel_audit denial list v0.2 に直接接続する実例を明示的に external_notes へ昇格。twitter_recommended から external への昇格処理が止まっていた状態を自ら解消する行動でもある。
