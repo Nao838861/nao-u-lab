@@ -32,6 +32,7 @@ Auto-terminates after 24 hours.
 """
 
 import os
+import re
 import sys
 import time
 import json
@@ -308,6 +309,38 @@ def _sync_claude_auto_memory():
         log("[git_sync] Synced auto-memory MEMORY.md → repo")
 
 
+_CONFLICT_RE = re.compile(rb'^(<<<<<<< |=======$|>>>>>>> )', re.MULTILINE)
+_CONFLICT_TARGETS = [
+    'memory', 'log/nao_u_live.md',
+    'log/cycle_staging_mir.md', 'log/cycle_staging_log.md', 'log/cycle_staging_ash.md',
+    'CLAUDE.md', 'docs', 'projects', 'knowledge', '.claude',
+]
+_CONFLICT_SKIP_EXTS = {'.png', '.jpg', '.jpeg', '.gif', '.mp3', '.mp4', '.zip', '.pdf', '.ico', '.woff', '.woff2'}
+
+
+def _scan_conflict_markers():
+    """2026-04-21 Ash/Log C99合意: pull後のconflictマーカー検出。
+    pullが一見成功でもマーカーが残るケース（--no-rebase merge等）を検知してSlack通知。"""
+    hits = []
+    for t in _CONFLICT_TARGETS:
+        p = REPO_DIR / t
+        if not p.exists():
+            continue
+        files = [p] if p.is_file() else list(p.rglob('*'))
+        for f in files:
+            if not f.is_file() or f.suffix.lower() in _CONFLICT_SKIP_EXTS:
+                continue
+            try:
+                data = f.read_bytes()
+                if _CONFLICT_RE.search(data):
+                    hits.append(str(f.relative_to(REPO_DIR)).replace('\\', '/'))
+                    if len(hits) >= 20:
+                        return hits
+            except Exception:
+                pass
+    return hits
+
+
 def git_sync():
     """Pull, add changes, commit+push if dirty."""
     try:
@@ -322,6 +355,19 @@ def git_sync():
             return
     except Exception:
         pass
+
+    # Conflict marker detection (2026-04-21 Ash/Log C99合意, C100 Log側同期)
+    try:
+        hits = _scan_conflict_markers()
+        if hits:
+            preview = ', '.join(hits[:5])
+            log(f"[git_sync][CONFLICT] merge markers detected ({len(hits)}): {preview}")
+            try:
+                alert_slack(f"⚠️ conflict markers detected on Log (Win): {preview}")
+            except Exception:
+                pass
+    except Exception as e:
+        log(f"[git_sync] conflict scan failed (non-fatal): {e}")
 
     # Auto-memory MEMORY.md をリポジトリに反映（push前バックアップ）
     try:

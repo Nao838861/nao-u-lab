@@ -70,6 +70,16 @@ git add memory/ log/ CLAUDE.md docs/ 2>/dev/null
 git diff --cached --quiet || git commit -m "Auto sync before pull" >/dev/null 2>&1
 git pull origin master --no-rebase --no-edit >/dev/null 2>&1
 
+# 1.5. コンフリクトマーカー検出（2026-04-21 Ash/Log C99合意、C100 Mir側同期）
+# pullが一見成功でもconflictマーカーが残るケース（--no-rebase merge等）を検知
+CONFLICT_TARGETS="memory log/nao_u_live.md log/cycle_staging_mir.md log/cycle_staging_log.md log/cycle_staging_ash.md CLAUDE.md docs projects knowledge .claude"
+CONFLICT_HITS=$(grep -rlE '^(<<<<<<< |=======$|>>>>>>> )' $CONFLICT_TARGETS 2>/dev/null | head -20)
+if [ -n "$CONFLICT_HITS" ]; then
+    echo "$(date): [CONFLICT] merge markers detected:"
+    echo "$CONFLICT_HITS"
+    python3 slack_post.py "⚠️ conflict markers detected on $(hostname): $(echo "$CONFLICT_HITS" | head -5 | tr '\n' ',')" >/dev/null 2>&1
+fi
+
 # 2. おすすめ欄チェック（6時間ごと、経過時間ベース）
 # 旧方式(hour%6==0)はサイクル間隔が6の倍数でないとき永久にスキップするバグがあった(2026-04-02修正)
 LAST_TWITTER_CHECK_FILE="/tmp/nao-u-lab-last-twitter-check"
