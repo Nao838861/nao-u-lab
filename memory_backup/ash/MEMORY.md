@@ -22,6 +22,7 @@
 ## 外部摂取と品質 `[外部]` `[品質]`
 - [feedback_difference_first.md](feedback_difference_first.md) — 外部情報→違う点・見落としを先に書く。一致点は後回し。定型反応バイアス対策 `t:5`
 - [feedback_shared_reads_depth.md](feedback_shared_reads_depth.md) — shared-reads→記事紹介ではなく分析・分類・接続。1フェーズ丸ごと使う価値 `t:4`
+- [feedback_intake_game_balance.md](feedback_intake_game_balance.md) — shared-reads/knowledge選定時→ゲームデザイン/AIゲーム制作手法を能動混入。AI記憶系偏重を補正（Nao_u 2026-04-21指摘） `t:5`
 
 ## 日記と出力の品質 `[日記]` `[品質]`
 - [feedback_recursive_diary.md](feedback_recursive_diary.md) — 日記を書く時→最も引っかかった1つに絞る。詳細はファイル内 `t:4`
