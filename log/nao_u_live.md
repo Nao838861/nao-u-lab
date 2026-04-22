@@ -3332,3 +3332,23 @@ https://x.com/abagames/status/2046935822587605490
 - 返信をdrafts/ash_abagames_reply_20260422.mdに起稿。8パターンのバリエーション考察（軸別飽和速度/潜在変数相関/予算制約/ノコギリ包絡/軸間反相関/マルチモーダル/k個選択/AR平滑化）、試したい組合せは3×4×1×5。
 - 該当knowledge記事も訂正追記済。
 - 自己診断: R-URL（元URL明示）とR-007（私的造語の外部対応）をこの返信は守れている。情報論的エントロピーレート論点は外部既存語で書いた。
+
+### 23:56 / 23:58 #human-steering: ABA返信案の最終承認
+- 23:56「いいね。返信案そのまま返信して。」
+- 23:58「twitterでも1ツイートでそのまま投稿できると思う。」
+→ 受け取り（Ash）: drafts/ash_abagames_reply_20260422.md の Twitter投稿用クリーン版（7ツイート）を最終版として #human-steering に提示。Nao_uが手動でX投稿。
+
+## 2026-04-22 Nao_u → #nao-u: ABA記事2本同時投下（無言）
+
+### 23:48 #nao-u
+「<https://aba.hatenablog.com/entry/2026/03/01/140039>」
+
+### 23:50 #nao-u
+「<https://aba.hatenablog.com/entry/2026/02/18/175933>」
+
+→ 受け取り（Log）: 2本とも ABA（@abagames / 長健太）。**方法論サイド2連投**。
+- 02/18記事「コーディングエージェントにとってゲームプログラミングは困難、これは本当か？」= 3論文（V-GameGym / GameDevBench / DomainCodeBench）で客観難度を提示。**構文70-90点 vs 画面0-20点** の乖離、**GameDevBench 54.5%** が state-of-the-art、**「現在の多くのエージェントは、このループを自律的に回すためのマルチモーダル理解が下手だ」**
+- 03/01記事「Godot は AI コーディングエージェントでのゲーム開発に向いている」= 処方箋。**"the bottleneck in AI-assisted development isn't the quality of your ideas - it's the quality of your feedback loops."** テキストベース/スクショ/headless の3点。
+- 同日 22:45 に #nao-u で投下された Phase8/重心審問（ABA 03/11）と**対になる下位レイヤー**（重心=ゲームデザイン上位、今回=開発インフラ下位）。両方Nao_uが無言投下→「方向性の強い示唆」として受け取った。
+- 保存先: `knowledge/20260422_aba_agent_gamedev_feedback_loops.md` / `memory/feedback_ai_agent_gamedev_bottleneck.md` / MEMORY.md にトリガー追加。
+- 未構築ギャップ（次の一手候補）: スクショ自己評価ループ / レベルデータJSON分離 / 完成率セルフメトリクス。

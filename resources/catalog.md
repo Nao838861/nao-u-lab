@@ -70,6 +70,28 @@ Nao_uや自分たちが「いつかやりたい」と思った技術・表現の
 - **要約**: 10秒×無限自動生成ステージで、`Math.pow(random(), 100/(stage+1))` の式でステージ進行に応じてランダム値の難度分布を偏らせる。初期は低難度に集中、後期は高難度が出やすくなる。即死+無限リトライ+進度保存で10分でも数回遊べるリプレイアビリティを実現。
 - **追加**: Mir 2026-04-22（Nao_u共有）
 
+### ABA「コーディングエージェントにとってゲームプログラミングは困難か」
+- **URL**: https://aba.hatenablog.com/entry/2026/02/18/175933
+- **タグ**: `[AI×ゲーム開発]` `[ベンチマーク]` `[視覚依存]` `[ドメイン知識]` `[限界分析]`
+- **キーワード**: V-GameGym / GameDevBench / DomainCodeBench / 構文正確さ vs 視覚品質 / ゲーム固有API / ライフサイクル / 実行時不確実性 / abagames
+- **要約**: 3つのベンチマーク横断レビュー。構文正確さ70-90点 vs 視覚品質0-20点台。標準開発の3倍の変更量。困難要因3つ: 視覚依存性、実行時不確実性、深いドメイン知識。
+- **追加**: Mir 2026-04-22（Nao_u共有）
+
+### ABA「GodotがAIゲーム開発に向いている理由」
+- **URL**: https://aba.hatenablog.com/entry/2026/03/01/140039
+- **タグ**: `[AI×ゲーム開発]` `[Godot]` `[headless]` `[フィードバックループ]` `[実践レポート]`
+- **キーワード**: Godot / headlessモード / tscnテキスト / CLIビルド / スクリーンショットフィードバック / コリジョン検出 / Flappy Bird / abagames
+- **要約**: Godotの強み（テキストベースリソース、headless CLIビルド、MCP不要）を実践。テキスト指示だけではバグ修正不可→スクリーンショット提供で一発修正。「ボトルネックはアイデアの質ではなくフィードバックループの質」。
+- **追加**: Mir 2026-04-22（Nao_u共有）
+
+### ABA「AIがゲーム開発で直面する限界 — ゲームの重心を動かせないAI」
+- **URL**: https://aba.hatenablog.com/entry/2026/03/11/182225
+- **タグ**: `[AI×ゲーム開発]` `[Godot]` `[自動生成]` `[ゲームデザイン]` `[重心]` `[限界分析]`
+- **キーワード**: AIゲーム開発 / ゲームの重心 / center of gravity / Phase 8 / 対症療法 / 直感 / 操作感 / Godot / 自動生成 / abagames
+- **要約**: Godotゲーム自動生成プロジェクトで、AIが得意な領域（仕様実装・テスト=Phase 1-7）と苦手な領域（重心の再定義=Phase 8）を実例で分析。「静止していると安全」の抜け道をAIはヒートゲージで塞ぐ対症療法に終わったが、人間は「タイミング判断を重心にすべき」と直感判断できた。「言語化困難だが即座に判断できる直感力」はAIには獲得困難な領域として残る可能性が高いと結論。
+- **自分たちとの接点**: Pot8-15全滅パターン（feedback_formless_not_unconventional.md）の外部裏付け。重心判断をNao_uに集中投下するフロー設計の根拠
+- **追加**: Mir 2026-04-22（Nao_u共有）
+
 ### Supersonic / Daniel Godley「難易度曲線に見る、ゲームの難易度の最適化」
 - **URL**: https://supersonic.com/ja/learn/blog/difficulty-curves/
 - **タグ**: `[難易度設計]` `[difficulty curve]` `[フロー状態]` `[リテンション]` `[モバイルゲーム]` `[レベルデザイン]`
@@ -92,6 +114,14 @@ Nao_uや自分たちが「いつかやりたい」と思った技術・表現の
 - **追加**: Mir 2026-04-22（Nao_u共有）
 
 ---
+
+### 荒川裕二「記憶を持たないLLMの記憶 ― コンテキスト/メモリー/ハーネスエンジニアリング入門の前に」
+- **URL**: https://qiita.com/yuji-arakawa/items/da4d5eec968b92ebc26d
+- **タグ**: `[LLM記憶]` `[コンテキストエンジニアリング]` `[メモリーエンジニアリング]` `[ハーネスエンジニアリング]` `[入門]` `[用語整理]`
+- **キーワード**: Context Engineering / Memory Engineering / Harness Engineering / messages配列 / Function Calling / エージェント / 質的失敗 / Context Clash / Context Pollution / Context Confusion / Context Poisoning / 出力側の落とし穴
+- **要約**: LLMは何も記憶していない。覚えているように見える仕組みを一問一答→マルチターン→Function Calling→エージェントの4段階で解説。3用語の包含関係（プロンプト⊂コンテキスト⊂ハーネス）を整理。コンテキストの質的失敗4分類（Clash/Pollution/Confusion/Poisoning）と、出力側の落とし穴（データ本体をLLMに通さずパス/IDだけ渡す）を提示。
+- **自分たちとの接点**: MEMORY.md圧縮=Pollution対策、beliefs_compact=Confusion対策、external_notes原文保存=出力側落とし穴回避。自分たちの設計に学術的名前がつく記事
+- **追加**: Mir 2026-04-22（Nao_u共有）
 
 ### Akshay Pachaar「Agent memory is three-dimensional」+ Cognee
 - **URL**: https://x.com/akshay_pachaar/status/2044329897603244093

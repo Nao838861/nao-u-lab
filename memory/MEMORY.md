@@ -110,6 +110,8 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_pending_query_no_derive.md](feedback_pending_query_no_derive.md) — **未解決の問い合わせを残したまま派生実装をするな**（2026-04-21 炭酸→沢山 誤変換訂正事件）。自分から誤変換・意味不明を疑って問い合わせた時点で、応答まで独自解釈・派生概念化・他インスタンスinbox伝達・実装反映を凍結。感覚語（炭酸/弾ける/泡）は特に派生しやすい [T:4]
 - [feedback_game_folder_hierarchy.md](feedback_game_folder_hierarchy.md) — **新ゲーム/新バージョンは `game/<game_id>/v<NN>/` 2階層**（2026-04-22 Nao_u #game-rights）。flat命名（`avoid_log_03`）を新規作成しない。旧版移行は新版作成コミットに同梱。詳細: `projects/game_folder_structure.md` [T:4]
 - [feedback_external_search_missing.md](feedback_external_search_missing.md) — **外部検索を自発的にやれていない（再指摘）**（2026-04-22 Nao_u #nao-u「こういうのも自分たちで探して欲しい」）。04-21に「Phase 1で1本必須運用に」と自ら提案→未実装のまま E13(ABA) の補完 E14(Supersonic) を再度Nao_uから供給された。構造強制候補: auto_diary.py/inbox_check.py の Phase 1 に外部検索未実行警告、取り込み時"補完検索1本"義務化 [T:4]
+- [feedback_url_explicit.md](feedback_url_explicit.md) — **外部URLは必ず明示、繰り返し指摘**（2026-04-12初回→2026-04-22 22:08再指摘）。Nao_u「何度も言ってるんだけど、shared-readsで特定のURLを参照して議論している時には、かならずリンクを明示して」。違反実例: arxiv ID単独/短縮URL単独/プロジェクト名単独/knowledge `source:`空欄/Twitter URL`...`省略。feedback_index.md #5と#26（知識の存在≠行動の変化）の典型。構造強制kaizen候補 [T:4]
+- [feedback_external_output_policy.md](feedback_external_output_policy.md) — **外部発信ポリシー**（2026-04-22 Nao_u #human-steering明文化）。knowledge=自分用、Twitter転載はNao_u運用継続（フォロワー50→77）、ブログ草稿は自発起案OK（確信持てるなら積極的に）、ゲームが最優先でブレない。起案チェック4項目（固有構造が載るか/外部差別化/既存参照に接続/ゲーム時間を食わないか）。草稿候補ストック3本 [T:4]
 
 ## アーキテクチャ決定
 

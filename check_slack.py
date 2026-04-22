@@ -247,22 +247,18 @@ def expand_tweet_urls(text):
 
 
 def trigger_check_inbox():
-    """新着メッセージ検出時にcheck_inbox.shを即時起動する。
-    check_inbox.sh内のロックで二重起動は防止される。"""
-    script = REPO_DIR / "check_inbox.sh"
-    if not script.exists():
-        print(f"[{datetime.now():%H:%M:%S}] check_inbox.sh not found")
-        return
+    """新着メッセージ検出時にLaunchAgentを即時キックする。
+    LaunchAgentはユーザーセッション内で動くためキーチェーン（Claude CLI認証）にアクセスできる。
+    cronから直接check_inbox.shをPopenするとキーチェーンにアクセスできず認証失敗する（2026-04-22修正）。"""
     try:
-        subprocess.Popen(
-            ["/bin/bash", str(script)],
-            cwd=str(REPO_DIR),
-            stdout=open("/tmp/check_inbox_triggered.log", "a"),
-            stderr=subprocess.STDOUT,
+        subprocess.run(
+            ["launchctl", "kickstart", "gui/503/com.nao-u-lab.check-inbox"],
+            capture_output=True,
+            timeout=10,
         )
-        print(f"[{datetime.now():%H:%M:%S}] Triggered check_inbox.sh")
+        print(f"[{datetime.now():%H:%M:%S}] Kicked LaunchAgent check-inbox")
     except Exception as e:
-        print(f"[{datetime.now():%H:%M:%S}] Failed to trigger: {e}")
+        print(f"[{datetime.now():%H:%M:%S}] Failed to kick LaunchAgent: {e}")
 
 
 def trigger_check_inbox_win(box_override=None):
