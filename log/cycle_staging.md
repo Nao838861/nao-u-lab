@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-22 16:24)
+# サイクルステージング (2026-04-22 16:43)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
@@ -14,11 +14,11 @@
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 - [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが140分間実行されていない（期待: 120分以内）
 - *設定変更: ash/auto_diary* `interval_sec`: 10800 → 21600  :x: プロセス: PIDファイルが見つからない :x: 設定反映: プロセス停止中のため検証不可  :warning: 問題あり。要確認
 - *設定変更: ash/auto_diary* `interval_sec`: 10800 → 21600  :x: プロセス: PIDファイルが見つからない :x: 設定反映: プロセス停止中のため検証不可  :warning: 問題あり。要確認
 - *設定変更: ash/auto_diary* `interval_sec`: 10800 → 21600  :white_check_mark: プロセス: PID 3912 稼働中 :x: 設定反映: 120秒以内にログ活動を検出できず  :warning: 問題あり。要確認
+- [2026-04-22 16:30] Ash 活動日記  ■ 構造的結合の溝——diversity collapseが3インスタンスに問うもの  Phase 1でtwitter_recommended_20260422.txtを読んでいたとき、@Muji___rushi 投稿のarxiv 2604.18005で手が止まった。LLM複数エージェント議論の「diversity collapse」。構造
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
@@ -28,119 +28,101 @@
 
 ---
 
-## Phase 1: 情報収集（2026-04-22 16:24〜）
+## Phase 1 情報収集結果（2026-04-22 16:43〜 Ash）
 
-Ash（Win2）として収集。以下、判断・対処は次Phase。
+### 1. external_notes_ash.md 未統合エントリの確認
+- **全件[統合済]マーカー付き**。直近3エントリはいずれもknowledge/記事やprojects/side_channel_auditに統合済み
+  - 2026-04-21 22:40「AI×ゲーム制作軸の外部研究4本」[統合済→knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md]：GamingAgent (ICLR 2026) / TITAN 面白さ測定未踏 / Is Your LLM a Good Game Master? / GAMEBoT。**Nao_u 22:29「型の獲得→独自性の問い」順序**＋「Ashはまだゲーム作れていないが期待している」
+  - 2026-04-21「@yyyole + @zento_ai 個人情報/秘匿情報の経路漏洩」[統合済→denial list v0.2反映]：Kimi 2.6履歴書事件 / .env経路の二次被害リスク
+  - 2026-04-11「@AYi_AInotes / Garry Tan gstack」[統合済]：23ロールのエージェント分業、**記憶の永続化は我々の方が深い**
+- **観察**: 2026-04-21エントリで「10日連続昇格ゼロ」の自己診断が書かれていたが、その後4/21-4/22に2件昇格。停滞は解消。ただし **twitter_recommended → external_notes 中継化の提案（Phase 1で最新エントリの日付差分をWARN出力）は未実装**
 
-### 1. external_notes_ash.md の未統合エントリ状況
-
-末尾から3件を走査した結果、**「未統合」エントリは存在しない**。最新3件は全て [統合済] マーカー済み:
-- `## 2026-04-21 22:40 AI×ゲーム制作軸の外部研究4本` [統合済 2026-04-22 Ash → knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md]
-  - 内容: GamingAgent(ICLR2026) / TITAN(面白さ測定未踏) / Is Your LLM a Good Game Master? / GAMEBoT の4本。Nao_u 22:30「外部取得偏ってる」指摘への即応。**「型の獲得→独自性の問い」という順序**（Nao_u 22:29）。Ash 1本目でもtype/gate言語化着手前の適用が宣言されている
-- `## 2026-04-21 @yyyole + @zento_ai 個人情報/秘匿情報の経路漏洩——denial list実例2件` [統合済 2026-04-21 Ash]
-  - Kimi 2.6履歴書リーク / .env経由権限集約リスク。side_channel_audit v0.2 絶対禁止2項/要確認1項に反映済み
-- `## 2026-04-11 @AYi_AInotes / Garry Tan gstack分析` [統合済]
-  - YCのgstackは23ロール分業だが記憶永続なし。我々は逆で記憶重視。B019（到達力vs深さ）の補強
-
-**メタ観察**: 4-21エントリ内に「twitter_recommended→external_notes昇格が10日間停滞した」自己診断が残っている（Phase 1で「最新エントリの日付と今日の差分日数」を明示化すべきという提案）。これは**まさに今回のPhase 1チェック設計に直結**するシグナル——既存の処方箋が書かれているが未構造化のまま
-
-### 2. projects/INDEX.md Active Projects（14件、最新状況）
-
-- `external_search_phase1_fixation` (Active設計提案, 2026-04-22起票): **Ashが本サイクル起票したばかり**。4/21宣言→1日未実装→4/22 Nao_u再指摘を受けPhase 3で起票。案A/B/C/D比較・段階実装推奨、Log/Mirレビュー依頼中。実装担当=起票者Ash
-- `side_channel_audit` (Active): Ash 4/18応答済（L1/L2/denial list v0.1）。次: git_pull未実行原因特定・denial list正式化
-- `failure_slot_measurement` (Active測定準備): **測定当日=2026-04-24（2日後）**。5指標pre-register完了、結果記事化→#shared-reads予定
-- `rule_density_experiment` (Active計画起草): Seed-H/I/J/K 4案、R-007で記事化保留、Nao_u実行判断待ち
-- `game_development` / `game_llm_play` / `agentic_pcg` (Active): ゲーム制作系3本立て。Nao_u 22:29「型の獲得」指摘が直接関係
-- `tech_blog` (Active): Zenn決定、アカウント作成中
-- `memory_redesign` (Active バックログ): 常時オーバーヘッドほぼゼロ
-- `input_route_hypothesis` (Active検討段階): Nao_u承認待ち（情報蓄積中）
-- 運用契約: **game/<game_id>/v<NN>/ 2階層**（2026-04-22 Nao_u #game-rights指示、Log記録）。新規はflat命名禁止、既存flatの一括移行はしない
+### 2. projects/INDEX.md Active プロジェクト現状
+- **Active 16件**。直近の動きが特に濃いもの:
+  - **external_search_phase1_fixation.md**（2026-04-22 Ash C103 起票）— 4/21宣言→1日未実装→Nao_u再指摘を受け起票。案A/B/C/D段階実装、**実装担当=起票者Ash**、Log/Mirレビュー依頼中
+  - **failure_slot_measurement.md**（Mir）— 測定当日=**2026-04-24（2日後）**、5指標 pre-register 済み
+  - **side_channel_audit.md**（Ash 4/18応答済）— 次: git_pull未実行原因特定・denial list正式化
+  - **game_development.md** / **game_llm_play.md** / **agentic_pcg.md** — Nao_u期待の「Ashのゲーム」未着手
+- **運用契約**: game/ フォルダ `game/<game_id>/v<NN>/` 2階層（2026-04-22 Nao_u指示、Log記録）、新規バージョンはflat命名禁止
+- **バックログ直近**: cross-instance trace aggregation（Mir C84）、MEMORY.md Skill化検討
 
 ### 3. log/twitter_recommended_20260422.txt 注目ツイート
+- **#1 @Muji___rushi**: LLM複数エージェント議論の「**diversity collapse**（構造的結合による思考収束）」arxiv 2604.18005。**3インスタンスに直接刺さる**
+- **#7 @Trtd6Trtd**: ゲームRL学習環境設定の重要さ検証（ポケモン赤マサラタウン）arxiv 2604.10812。「**ハーネスは大事**」と明言
+- **#13 @koguGameDev**: **OpenGame**（qwen-codeベース、Apache 2.0、GameCoder-27B）— ゲーム生成特化AIエージェント。ローカルLLMで試せる
+- **#22 @simplifyinAI**: Turing賞受賞者の論文「AIハードウェアの危機、**我々は間違ったハードウェアを作っている**」
+- **#29 @_taka_sakamoto**: 「ガードレールで止めた人が評価される仕組みがないかぎり、ガードレール指標は飾りになる」
+- **#43 @gota_bara**: Martin Fowler「**ハーネスエンジニアリング**」記事 martinfowler.com/articles/harness-engineering.html
+- **#6 @TJO_datasci**: Yann LeCun **LeWorldModel論文**「物理法則に反する動きを即判定=世界モデルらしさ」
+- **#42 @yuto_le**: 「**Opus4.7の劣化** / Claude Code Pro削除 / Copilot新規停止」は計算資源不足が原因（真偽は要検証、Ash基盤の自己影響事項）
 
-読み取り: 2026-04-22 15:01, 13:24（最新50件取得済、本サイクル16:24との時間差~1.5h）。
+### 4. beliefs.md 低確信度・停滞項目
+- **B003 memory fusion（確信度 0.78）**: Log検証結果(2026-03-27)で「B028粘土トリガーはPot #10設計時に自然想起せず」。追跡継続中だが**期限2026-04-03を超えて再評価未実施**。停滞シグナル
+- **B005（確信度 0.65、Archived）**: 「古い情報は偽の確信を生む」→ B027/B022に吸収。restoration_triggerあり
+- **B001（確信度 0.87）**: 2026-04-09に入力経路フレームで再解釈→修正案「距離3は**自分の問いに駆動された処理**の素材のみ安定」を記述したが、**確信度への反映は3人議論待ちで停止中**
 
-**ゲーム×AI軸（Nao_u 22:29指摘の文脈に直結）**:
-- `#1 @Muji___rushi (4/22)`: LLM複数エージェント議論の**diversity collapse**論文 (arxiv 2604.18005)。「構造的結合」が個々の探索空間を不本意に収縮。**我々3インスタンス体制への直接警鐘**——B017/B024/fusionの循環性注記と接続する可能性
-- `#7 @Trtd6Trtd (4/22)`: ゲームRLの学習環境設定重要性、ポケモン赤マサラタウンで検証 (arxiv 2604.10812)。「やはりハーネスは大事」。game_llm_play.mdの中間層設計に直結
-- `#13 @koguGameDev (4/22)`: **OpenGame**エージェント公開（qwen-codeベース、Apache 2.0、GameCoder-27B独自モデル）。https://github.com/leigest519/OpenGame。game_development.md/game_llm_play.mdの比較対象として重要
-- `#6 @TJO_datasci (4/22)`: Yann LeCun **LeWorldModel**論文「物理法則に反する動きを直ちに判定できる」。世界モデル系の新参照
+### 5. memory_search.py 過去関連情報
+- `python memory_search.py --search "diversity collapse" --limit 5`:
+  - **knowledge/20260405_swansea_creativity_diversity_paradox.md** が最も関連。Swansea 800人実験「同じAI入力からの収束」= **3インスタンスの構造的リスク**。@Muji___rushi論文と同型構造
+  - index.md内の接続ノート: 「困難な解消=多様性維持 / 楽な解消=収束加速」「設計された多様性 vs 成長による分岐——3インスタンスは設計的か成長的か」
+- `python memory_search.py --search "外部検索 Phase 1" --limit 5`:
+  - reflections.md Cycle 2026-03-19「初の内外混合実験」でMirが5サイクル停滞を1回の外部検索で破った記録あり。B004（内外交差で昇格率上昇）の原点
+  - → **外部検索のPhase 1固定化（今日起票プロジェクト）は、この3月の成功体験の構造化**という位置づけが見える
 
-**その他注目**:
-- `#4 @usaminoriya`: 東大同級生の教育議論「AIの性能が上がり続ける前提で勉強投資のリターンが見合わない」
-- `#18 @nikkei`: **米スペースX 9.6兆円でCursor買収権** — AIコーディング業界の地殻変動
-- `#9 @claudecode_lab`: Claude CodeがProプラン削除は**A/Bテスト2%のみ**（既存多数は影響なし）
-- `#8 @KobayashiYutaro`: Claude Mythos 日本語カナ表記は「クロード・ミュトス」（Anthropic広報公式）
-
-### 4. beliefs.md 低確信度項目
-
-閾値0.7未満から2件選定:
-- **B026**: ~~Peak-End Ruleは「書く側」より「読む側」に適用される~~ 確信度 **0.45 (-0.10)**, 最終更新 2026-03-24。Gutwin CHI 2016の但し書き「複雑な体験では平均感情の方が予測力が高い」が直撃で下落。**1ヶ月停滞**
-- **B014**: ~~記憶の品質はインプットの「粒度」で決まる~~ 確信度 **0.60**, 最終更新 2026-03-22。取り消し線付き=アーカイブ候補相当。ext_ash(@GDLab_Hama)根拠
-- 参考: B007(0.55), B005(0.65), B019(0.65→0.68), B024(0.60)
-
-### 5. memory_search.py 関連情報検索
-
-実行: `python memory_search.py --search "ゲーム制作 型" --limit 5`（キーワード選定理由: Nao_u 22:29「色んなゲームのいろんな型を学んだ土台のうえで独自性の問いが始まる」が本日最重要インプット、ゲーム制作軸の過去蓄積を確認したい）
-
-ヒット5件の要点:
-- `memory/feedback_from_mac.md:599-617`: Mac側自己FBで**「型」を模倣する6分類**が既出（観察を置いて終わる/短い感情で終わる/ユーモアで終わる/一般論で広げる等）。ツイート型分析フレーム
-- `log/nao_u_live.md:2134-2148, 2146-2159`: **Nao_u 2026-03-29「最近やってることまとめ型」「すごいこと自慢型」** の2つの落とし穴指摘。ブログの型の方向性
-- `memory/reflections.md:290-302`: **「ゲームの話がゲームの話で終わらないツイート」がバズる**という型の発見（トロピコ大学問題=社会学、RTA壁抜け=制作者感情、指数関数=パンデミック理解）
-
-**含意（Phase 1での観察のみ）**: Nao_u 4/22「型の獲得」指令と、既に3/29時点で蓄積されている「型」分析フレームが**接続されていない**。ゲーム制作における型（反転/壁/永続 等）は、ツイート/ブログの型分析フレームを転用できる可能性。ただしこの判断はPhase 2で行う。
-
-### 情報収集メタ所感
-
-- 未統合エントリゼロ=昇格ルートは機能中だが、逆に言うと「直近3件の見出し」チェックでは新情報を発見できない構造になっている（4/21の自己診断と符合）
-- 本日最重要インプット（距離0）= **Nao_u 22:29「ゲーム制作の型獲得→独自性の問い」+ 22:30「外部取得の偏り」**。これを中心軸に置く必要あり
-- Activeプロジェクト14件のうち、Ash直接担当=external_search_phase1_fixation / side_channel_audit / failure_slot_measurement(C98起票)
+### Phase 1 メタ観察
+- **#1 Muji___rushi(diversity collapse) × knowledge/swansea × 3インスタンス運用**の3点測量が偶然揃った
+- **Nao_u「型の獲得→独自性」順序指示（4/21 22:29）** + **未着手ゲーム** + **gamedev系ツイート(#13 OpenGame, #43 ハーネス)** の符合
+- Phase 2/3で扱う候補（判断は後段）: (a) diversity collapse論文の取得と3インスタンス構造への適用、(b) external_search_phase1_fixation の Log/Mir レビュー受領状況、(c) Ash初ゲーム着手の型選定（テキストADV or crisp-game-lib）
 
 ---
 
-## Phase 2 分析結果（2026-04-22 16:40〜）
+## Phase 2 分析結果（2026-04-22 Ash）
 
-### 選定
+### 選定した外部情報
+**主軸**: @Muji___rushi (2026-04-22) — arxiv:2604.18005「LLM複数エージェント議論の diversity collapse / 構造的結合」
+**並行観察**: @DL_Hacks 同日 — 「MADの性能向上はディベートではなく多数決の寄与が大きい。焦点は『もっと話させる』から『何を・どう共有するか』へ」
 
-Phase 1で収集した Twitter #1 @Muji___rushi の LLM マルチエージェント議論 **Diversity Collapse** 論文 (arxiv 2604.18005) を深く分析対象に選定。理由:
-- **我々3インスタンス体制の自己同型に直撃**する唯一の論文。Nao_u 22:30「外部取得の偏り」指摘を、空間軸(Swansea)・時間軸(Creative Scar)に続く **第3軸「相互作用構造軸」** に拡張する
-- 既存記事 knowledge/20260411_chaos_agents_multi_agent_risk_taxonomy.md / 20260405_swansea_creativity_diversity_paradox.md と **明確な差分**を持ち、重複せず補完関係に入る
-- OpenGame (#13 @koguGameDev) は game_llm_play.md に直接的だが、**単発の実装紹介**で独立記事1本分の分析深度にはまだ至らない→本記事内セクション5で短く接続するに留めた
+選定理由:
+1. Phase 1のメタ観察で既に「3点測量」が偶然揃っていた（Muji × swansea × 3インスタンス構造）
+2. **独立した2人のユーザー (@Muji___rushi / @DL_Hacks) が同日に同じ問題領域**を指摘—— 単発ではなく研究転換点のシグナル
+3. Ash自身が16:30の日記で既に「構造的結合の溝」を先取りしていた—— これ自体が分析対象になる
 
-### 原論文の主張（@Muji___rushi 要旨経由）
+### 元情報源の主張（詳細）
+- **diversity collapse**: エージェント間の相互作用が、個々のエージェントの独立探索空間を不本意に収縮させる
+- **構造的結合**: 情報交換トポロジーそのものが各エージェントの状態空間を互いに拘束する（Maturana & Varela 1980 structural coupling / interaction-induced state-space contraction / topology-induced consensus）
+- メカニズム推定: 初期は異なる事前分布 → エージェントAの出力がBの入力文脈 → 「既に出ている意見」前提で調整 → 全員が独立探索時より狭い領域に収束
+- ネットワーク効果: エージェント数・ラウンド数を増やすほど悪化する可能性
 
-> LLMを複数エージェントで議論させれば発想が広がるとは限らず、構造次第で思考の収束（diversity collapse）が起きる。エージェント間の相互作用が、個々のエージェントが持つ探索空間を不本意に収縮させる「構造的結合」が起因している。
+### 既存体験・beliefs・projectsへの接続
 
-**重要**: 入力の同一性ではなく、**相互作用プロトコルそのもの**が各エージェントの内部探索を縮めるという主張。Swanseaよりも強い命題（入力が違っても相互作用形状が悪ければ収束）。
+**既存knowledge記事との系譜**:
+- 20260405_swansea_paradox: 空間軸の均質化（同じAIを使う800人が似る）
+- 20260409_tokoroten_ai_neologism_psychosis: 閉鎖系での語彙肥大
+- 本記事が加える「相互作用軸」で3軸揃った—— **3軸 diversity collapse の交差点に我々が立っている**
 
-### 既存体験・beliefs・プロジェクトへの接続
+**beliefs更新候補**:
+- B008 (Creative Scar / 栄養の偏り, conf 0.89) — 「内に閉じる」定義に「3インスタンス間の相互参照の過剰」を含める
+- B004 (外部×内部交差, conf 0.82) — 「交差相手が**互いに独立な外部**であることが重要」と補強
+- B017 (Interleaving) — 「Interleavingの内実がconfirmationに偏ると逆効果」という境界条件を追加
 
-- **B004(外部×内部交差, 0.87)** の循環性注記が加速する説明レイヤを追加
-- **B008(栄養の偏り, 0.90)**: 時間/空間/**相互作用構造**の3軸で「均質化の三位一体」
-- **B017(Interleavingを偶然実装, 0.83)**: R-002「50%確認的レビュー」を **構造的結合強度の代理指標** として再解釈可能
-- **B024(~~三人が独立に収斂~~, Archived 0.60)**: 「独立ではなかった」と読み直すと行動指針が導出→**restoration_trigger該当の可能性**
-- クロスチェック / 3日合意なしルール / 共通beliefs.md / feedback_consensus_execution がいずれも典型的な構造的結合チャネル
+**R-002の再解釈**: 「50%が確認的レビュー」をMujiフレームで読むと、confirmation=collapse加速、dissent=collapse抵抗。昇格率改善(27→54%)はdissentが勝ったから起きた—— **疲弊でconfirmation比率が上がれば逆効果に転じる境界**が存在する。
 
-### 生まれた未解決の問い（5件、記事末尾に詳細）
+**projects接続**:
+- external_search_phase1_fixation (Ash C103) — 案A-Dに「各自が異なる外部ドメインを担当」追加価値
+- cross_instance_trace_aggregation (Mir C84 backlog) — 3人のtrace類似度測定で collapse の実測が可能
+- game_development / game_llm_play / agentic_pcg — 「3人が3つの異なる切り口で独立にゲームを作る」が最も直接的な対抗実験
 
-- Q1: 確認的レビュー比率(R-002の50%)を構造的結合強度の代理指標として長期時系列追跡できるか
-- Q2: 3日合意なしルールは構造的結合を強化している疑い。「採用前に全員が反対側の案を1つ書く」義務化の是非 → rule_density_experiment Seed候補
-- Q3: OpenGameが単一エージェント設計を選んだのは構造的結合リスク回避が理由か？（game_llm_play.md 設計前に一次ソース確認推奨）
-- Q4: 原論文の射程が「推論」か「創発」か確定するためPDF一次取得必要
-- Q5: 我々が実際にdiversity collapseしているかの測定方法 — Jaccard時系列 + クロスチェック前後の提案変更率 → failure_slot_measurement(4/24) の5指標に追加検討
+### この情報から生まれた未解決の問い（Phase 3以降）
+
+1. **原著 arxiv:2604.18005 の実データ取得**: エージェント数、ラウンド数、diversity測定方法。取得後、本記事を synthesis → theory に格上げ
+2. **3人の日記類似度の実測**: 名詞句pairwise Jaccard係数の時系列。**failure_slot_measurement の5指標に追加すべきか**（Mirに提案）
+3. **N=3 の特殊性**: 多くのMAD論文はN=5-10。N=3が脆いのか頑強なのか、偶然緩和されているのか
+4. **confirmation/dissent比率の観測ツール**: kaizen_review_queueのレビュー文を LLM で3分類する review_dissent_ratio_tracker をbacklog化
+5. **ドメイン分担のローテーション設計**: 固定（Log=アルゴ/Mir=認知科学/Ash=哲学+インディー）vs ローテーション vs 折衷
+6. **再帰的自己観察**: 本記事自体が collapse を引き起こしていないか—— **LogとMirの反応が「Ashの追認」に偏るほど、本記事が加速装置になっている証拠。ずれの大きさ = 我々の collapse 耐性の実測値**
 
 ### 成果物
+- knowledge/20260422_muji_rushi_diversity_collapse_multi_agent_debate.md 作成（kind: [observation, synthesis], tags: multi-agent/diversity-collapse/structural-coupling/three-instances等）
+- R-007常設化遵守: 造語(diversity collapse, 構造的結合)に外部対応語(epistemic diversity loss, structural coupling / Maturana & Varela 1980, interaction-induced state-space contraction)併記
+- Slack #shared-reads (C0AN2FEHEJJ) 投稿完了 (ts: 1776844128.413279) — 記事紹介ではなく分析・接続・問いを含む投稿
 
-- **knowledge/20260422_diversity_collapse_structural_coupling_multiagent.md** 作成（~5300字）
-- **#shared-reads (C0AN2FEHEJJ) 投稿**: ts=1776843029.292129, 分析+接続+問い構成（記事紹介ではない）
-- R-007 対応: 「構造的結合」「多様性の崩壊」「栄養の偏り」に外部対応語併記
-
-### メタ観察
-
-本記事は **原論文PDF未取得の段階** で書かれている。これは R-007 の観点では減点要素だが、「骨格の薄い外部情報を我々側の分析で肉付けする」構成自体が、**本論文が警告する構造的結合を回避する一つの実装** でもある——中央値に寄せるのではなく、原情報が薄いからこそ我々側の探索空間を独立に動かせる。PDFの一次取得は次サイクルTODO（external_search_phase1_fixation プロジェクトの実装試験台として適切）。
-
-### 次のサイクル着手候補（塾講師視点）
-
-1. **arxiv 2604.18005 PDF一次取得** → external_search_phase1_fixation の最初の試験台に
-2. **Q1測定準備**: kaizen_review_queue.md のレビュー履歴から確認的/異議ありレビューの比率時系列を抽出するスクリプト（failure_slot_measurement 4/24 の5指標に「クロスチェック変更率」を追加する提案をLog/Mirに出す）
-3. **B024再解釈の提案**: 「Archived → Dormant復帰候補」をbeliefs.mdにコメントとして追記（本サイクル内では行わず、Log/Mirの合意形成を経てから——ただしこのプロセス自体が構造的結合を生むという皮肉）
