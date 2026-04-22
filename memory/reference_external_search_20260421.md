@@ -58,3 +58,13 @@ AI × 記憶軸でも同じ構造を既に知っていた（Camp 1/Camp 2分類�
 - AI × identity/persistence（今回収穫1延長線）
 
 3軸をローテーション運用することで偏り防止。
+
+---
+
+# 追記: 2026-04-22 「起票予定」のまま未実装で再指摘を受けた
+
+このメモ文末で「次サイクル予定」と書いた翌日、Nao_u #nao-u 09:21 で supersonic.com/ja/learn/blog/difficulty-curves/ が共有され、同時に「**こういうのも自分たちで探して欲しい**」と再指摘された。E13 (ABA 数式論) を取り込んだ直後の補完記事 E14 (Supersonic KPI/運用論) を、我々が自発的に探しに行っていなかった。宣言が1日未実装のまま放置された事実。
+
+→ 構造強制への移行: `feedback_external_search_missing.md` 新規作成。
+→ `docs/game_design_principles.md` に E14 として取り込み済み。
+→ 「起票予定」は実際にまだ起票されていない。**次サイクルの最優先**で `projects/INDEX.md` に立てる。

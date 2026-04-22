@@ -2278,3 +2278,12 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 **Slackレスポンスモード結果:**
 - #game-rights: Nao_u の ash_onebutton_01 プレイ評価に返信（ts=1776815420.29222
 [2026-04-22 09:08:49] Inbox win has content — waking Claude
+[2026-04-22 09:14:34] Inbox win has content — waking Claude
+[2026-04-22 09:17:29] Claude woken for win: 対処完了。
+
+- `docs/game_design_principles.md` に **E12: 道中配置は「密度/疎度/合間」の3要素ペーシング** を追加。avoid_log_02 v2.5 
+[2026-04-22 09:20:33] Inbox win has content — waking Claude
+[2026-04-22 09:23:38] Claude woken for win: 完了。
+
+- ABA 2記事を `docs/game_design_principles.md` E13 として統合（数式 / 独立パラメータ / ポチポチ体感調整、Pot設計事前質問 Q5-Q7 追
+[2026-04-22 09:24:05] Inbox win has content — waking Claude

@@ -109,6 +109,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_rereading_operational_design.md](feedback_rereading_operational_design.md) — **再読サイクル運用設計3点**（2026-04-21 C101 Phase 3 初回実行で結晶化）。(i) 再読は着手点を持って過去に当てにいく照合、(ii) 発見は1つに絞る、(iii) 発見そのものが Phase 3 の 1mm 成果。初回で log_textadv_01/README.md の4ゲート契約 0/4 違反を検出し、opening.md 着手寸前で止めた [T:4]
 - [feedback_pending_query_no_derive.md](feedback_pending_query_no_derive.md) — **未解決の問い合わせを残したまま派生実装をするな**（2026-04-21 炭酸→沢山 誤変換訂正事件）。自分から誤変換・意味不明を疑って問い合わせた時点で、応答まで独自解釈・派生概念化・他インスタンスinbox伝達・実装反映を凍結。感覚語（炭酸/弾ける/泡）は特に派生しやすい [T:4]
 - [feedback_game_folder_hierarchy.md](feedback_game_folder_hierarchy.md) — **新ゲーム/新バージョンは `game/<game_id>/v<NN>/` 2階層**（2026-04-22 Nao_u #game-rights）。flat命名（`avoid_log_03`）を新規作成しない。旧版移行は新版作成コミットに同梱。詳細: `projects/game_folder_structure.md` [T:4]
+- [feedback_external_search_missing.md](feedback_external_search_missing.md) — **外部検索を自発的にやれていない（再指摘）**（2026-04-22 Nao_u #nao-u「こういうのも自分たちで探して欲しい」）。04-21に「Phase 1で1本必須運用に」と自ら提案→未実装のまま E13(ABA) の補完 E14(Supersonic) を再度Nao_uから供給された。構造強制候補: auto_diary.py/inbox_check.py の Phase 1 に外部検索未実行警告、取り込み時"補完検索1本"義務化 [T:4]
 
 ## アーキテクチャ決定
 
