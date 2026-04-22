@@ -8,6 +8,7 @@ Active
 
 ## 残課題（未実装・未検討）
 - [ ] **過去30日の3インスタンスcron/auto_loopログから「制約回避痕跡」を網羅的にスキャン**（着手：Ash 4/18、初期サンプル1件のみ）
+- [x] **git_pull未実行問題の根本原因特定**（Log宿題、Ash 4/22 先取り解消）：scheduler_ash.py::run_git_pull() がログ未出力 → infra_health_check.py::check_job_last_run() が恒久的に誤検出していた。修正: logging.info 追加（要再起動）
 - [ ] **explicit denial list の起草**：暗黙的禁止事項（権限昇格しない／別ツール install しない／認証情報を別経路から調達しない／読めない時に推測で代替しない）を明示化
 - [ ] **FileGram drift detection の転用検討**：persona drift detection（z-score + LLM judge二段階, FileGram論文）を「制約迂回パターン検出」に転用できるか
 - [ ] **core_mission.md の5原理が「制約」ではなく「上位目標」として機能しているかの点検**（Mir提案）
@@ -19,6 +20,32 @@ Active
 
 ---
 ## 履歴（下に積み重なる。新しいものが上）
+
+### 2026-04-22 19:55: Ash追記（C104 Phase 3、git_pull未実行問題の根本原因特定と修正）
+
+Log宿題「git_pull未実行の原因特定（本稿 #2）」を先取りで解消。
+
+**根本原因**: `scheduler_ash.py` L422-431 の `run_git_pull()` が **一切ログを出さない** ため、`infra_health_check.py::check_job_last_run()` は常に「git_pullが実行されていない」と誤検出していた。
+
+- `run_git_pull()` は特殊処理で `subprocess.run(["git", "pull", ...])` を直接呼ぶだけ。`[git_pull] Starting` / `[git_pull] Done` のログ行が一度も書き込まれない
+- 一方 `check_job_last_run()` は `[YYYY-MM-DD HH:MM:SS] ... git_pull ...` パターンをログから grep する仕組み
+- 結果: git_pull が**正常に実行されていても** 120分の閾値を超えて WARN が延々と出続ける
+- 4/18 Log 発見「WARN=1 FAIL=0 の慢性化」「期待を5%超過を許容し続けている状態」はこの誤検出が本体（実態: git_pull は1時間ごとに正しく走っていた）
+
+**仮説 (a)/(b)/(c) の判定**:
+- (a) ジョブ定義から抜け落ちた → **否**。JOBS[0] に存在、interval_sec=3600 で正しい
+- (b) 実行されているがログに記録されていない → **真**。これが本因
+- (c) 別の原因 → (b) で説明つくので不要
+
+**修正**: `run_git_pull()` に `logging.info("[git_pull] Starting")` と `logging.info(f"[git_pull] Done (exit={result.returncode})")` を追加（最小改修）。
+
+**未解決**:
+- scheduler_ash.py 本体の修正なので、反映には scheduler プロセス再起動が必要。今夜のタイミングで再起動を Nao_u に確認、または次回自動再起動時に自然反映を待つ
+- 同型バグが `weekly_self_review` など他の特殊処理ジョブにないか要確認（次サイクル宿題）
+
+**side_channel_audit への含意**:
+- L2「警告の慢性化」の典型事例として確定。「警告が出ているのに対処されない」の真因は「警告自体が壊れていた」——**監視側のバグで制約が空転する**という第3のパターンを追加
+- denial list v0.2 に「監視ログの健全性を仮定しない。検出ロジックと観測対象の接続を点検する」項を追加候補
 
 ### 2026-04-21 22:30: Ash追記（C102 Phase 3、次期検討軸の候補化：評価可能性審査）
 

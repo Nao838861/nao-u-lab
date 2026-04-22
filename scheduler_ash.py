@@ -421,14 +421,16 @@ def get_job_interval(job):
 
 def run_git_pull():
     """git pull を実行"""
+    logging.info("[git_pull] Starting")
     try:
-        subprocess.run(
+        result = subprocess.run(
             ["git", "pull", "origin", "master", "--rebase"],
             capture_output=True, text=True, timeout=30,
             cwd=str(REPO_DIR),
         )
+        logging.info(f"[git_pull] Done (exit={result.returncode})")
     except Exception as e:
-        logging.warning(f"git pull failed: {e}")
+        logging.warning(f"[git_pull] failed: {e}")
 
 
 def run_job(job):
