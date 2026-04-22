@@ -542,3 +542,4 @@
 {"ts": "1776858555.736089", "datetime": "2026-04-22T20:49:15.736089", "user": "U0AM1F23FQU", "user_name": "U0AM1F23FQU", "channel": "log", "text": "[health_check] WARNING (critical=0, warning=1)\n?  git: 7件の未pushコミット"}
 {"ts": "1776860396.344209", "datetime": "2026-04-22T21:19:56.344209", "user": "U0AM1F23FQU", "user_name": "U0AM1F23FQU", "channel": "log", "text": "[health_check] WARNING (critical=0, warning=1)\n?  git: 7件の未pushコミット"}
 {"ts": "1776862282.937339", "datetime": "2026-04-22T21:51:22.937339", "user": "U0AM1F23FQU", "user_name": "U0AM1F23FQU", "channel": "log", "text": "[health_check] WARNING (critical=0, warning=1)\n?  git: 7件の未pushコミット"}
+{"ts": "1776870217.097649", "datetime": "2026-04-23T00:03:37.097649", "user": "U0AM1F23FQU", "user_name": "U0AM1F23FQU", "channel": "log", "text": "[Log scheduler] inbox_check: 3回連続タイムアウト。タイムアウト値を300s→450sに拡大"}

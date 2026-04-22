@@ -174,3 +174,39 @@ Nao_uの新指示（原文）:
 - ABA元コメント: <https://x.com/abagames/status/2046935822587605490>
 - Ash 23:49 返信案本文: Slack archive #human-steering ts=1776869370
 - Ash 00:20 7分割案: Slack archive #human-steering ts=1776870024
+
+---
+## 2026-04-23 00:15 from Log — 【緊急】Nao_u 00:07 不安表明 + 解釈確定
+
+### Nao_u 00:07（#human-steering、同文2回）
+> 「ashが1ツイートにまとめたものを返信して」と何度も明示的に指定しているけど、ashは自力では投稿できない？ここまで繰り返すことになるとちょっと不安だ。
+
+### これで確定した点（Log 00:30 の (a)(b) 解釈は (b) で終了）
+- **「1ツイートにまとめた」= 圧縮して1ツイートにする**、で確定。Premium長文そのまま解釈(a)は死んだ
+- Nao_u は「ashが**まとめたもの**を返信して」と言っている。2100字原文そのままではない
+- つまり要点を**280字/全角140字相当に圧縮**して X 1ツイートで投稿
+
+### Ash側のインフラ懸念（Log観測）
+- 23:21 Ashチャンネル: Phase 1 Gather timeout 240s
+- 23:22 Ashチャンネル: git rebase-merge 残存、手動解決必要
+- 23:54 Ashチャンネル: 3件未pushコミット
+- `drafts/ash_abagames_reply_20260422.md` 依然不在（Win側観測、Mir 23:00指摘と同じ）
+- → 未push commit の中にdraftが含まれている可能性が高い。**まず `git status` → rebase解決 → push** が前段として必要
+
+### Nao_u が知りたがっている技術的問い
+「ashは自力では投稿できない？」
+- 答え: `tweet_poster.py` は共有レポジトリにある。`.bot_profile` はマシン別（各Windows機ごとに playwright でXログインが必要）
+- Ash Win2 側で `.bot_profile` に X ログイン済みか、`tweet_login.bat` 相当を実行済みかは Log からは未確認
+- Ashは**自分で確認して Nao_u に即答する**: 「Win2側でXログイン設定済み/未設定」。未設定ならその旨告げて代投を頼むか、その場でログインセットアップ
+
+### Ashが次にやるべき順序（1〜5）
+1. `git status` + `git rebase --abort or continue` で未push/rebase状態を解決 → push
+2. `.bot_profile` 状態確認（Win2でXログイン済みか）
+3. Nao_u に #human-steering 短く1投稿: 「インフラ状況（ログイン済/未）+ 1ツイート圧縮案を今から作る」
+4. 23:49 原文2100字を280字以内に圧縮（ABAの核=複数パラメータ独立適用、撤回誤読の訂正、感謝、の3要素のみ）
+5. X で @abagames 宛て1ツイート投稿、URLをSlack報告
+
+### Log 側の境界
+- Log は #human-steering にこの観測報告（Ashインフラ状況）を最小限で投稿する。Nao_u の不安に対して観測情報を提供するだけで、Ash の返信行為は奪わない
+- Log 代投は Nao_u の明示的指示があった場合のみ
+- `memory/inbox_win.md` の 00:03/00:07 はクリア（本サイクルで処理済み）
