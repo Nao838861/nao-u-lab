@@ -2287,5 +2287,9 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 
 - ABA 2記事を `docs/game_design_principles.md` E13 として統合（数式 / 独立パラメータ / ポチポチ体感調整、Pot設計事前質問 Q5-Q7 追
 [2026-04-22 09:24:05] Inbox win has content — waking Claude
-[2026-04-22 09:31:34] Inbox win2 has content — waking Claude
-[2026-04-22 09:36:34] Claude wake timed out for win2 — restoring inbox
+[2026-04-22 09:34:14] Inbox win has content — waking Claude
+[2026-04-22 09:38:50] Claude woken for win: 対処完了。
+
+**やったこと（宣言ではなく行為）:**
+1. Supersonic記事を**E14として統合済み**（直前コミット75bd445403eで対応済み、重複回避）
+2. `feedback
