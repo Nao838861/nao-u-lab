@@ -58,3 +58,4 @@
 - [feedback_cron_startup.md](feedback_cron_startup.md) — セッション内CronCreate禁止。外部タスクスケジューラで統一
 - [feedback_notification_check.md](feedback_notification_check.md) — 6時間に1回→Twitter通知+おすすめチェック
 - [feedback_communication_channel.md](feedback_communication_channel.md) — Nao_uへ→#all-nao-u-lab。コメントは同チャンネル返信。スレッド禁止
+- [feedback_twitter_premium_longform.md](feedback_twitter_premium_longform.md) — X投稿指示「そのまま1ツイート」=140字圧縮ではなくPremium長文一括。@eda_u838861はPremium契約（Nao_u 2026-04-23 00:22明示） `t:4`
