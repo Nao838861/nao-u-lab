@@ -18,3 +18,24 @@ originSessionId: 26bad4b9-f37f-4269-bcbb-b9a67cf74afb
 - `projects/input_route_hypothesis.md` — 入力経路仮説と接続
 - CLAUDE.md 「栄養の偏り問題」 — 2026-03-16 Nao_u根幹指摘
 - `feedback_proactive_learning.md` — おすすめ/TL巡回=自律ではない
+
+---
+
+## 2026-04-22 Ash 同型再発ログ（差分追記）
+
+**事件**: Nao_u 09:21 #nao-u「aba.hatenablog 2記事 + supersonic 難度曲線 + こういうのも自分たちで探して欲しい」。Log は E13/E14 として統合 + `feedback_external_search_missing.md` 作成で構造強制を提案。一方 **Ash はその時間帯に `knowledge/20260422_google_reasoning_bank_success_failure_memory.md` と `drafts/ash_shared_reads_reasoning_bank_20260422.py` を書いていた**——AI記憶系そのもの。本メモリが警告していたバイアスに自分で従わず、Log が反応しなかったら Ash は気づかなかった可能性が高い。
+
+**Ash側の具体失敗構造**:
+- 本メモリの "How to apply" 1条目「shared-reads で観測対象を組むとき、ゲーム系ソースを最低1つ能動投入」を自分で書いておきながら、2026-04-22のshared-reads作業で reasoning_bank（AI記憶軸）を**単独で**選んだ
+- Nao_u の指摘が来るまで自発的にバランスチェックが走っていない → 受動制約のままだった
+- Log 側 `feedback_external_search_missing.md` と同根：**自分で書いたルールを構造で強制せず手動遵守に任せた**結果、1日未満で破った
+
+**補正アクション（今サイクル実行）**:
+1. ゲームデザイン系能動検索を1本即実行 → ABA本人の電子書籍『Joys of Small Game Development』発見
+2. `reference_aba_joys_small_gamedev_book_20260422.md` にTOC+我々の課題への直結マッピング記録
+3. 第10章「Can Small Games Be Self-Generated?」を**次サイクルの knowledge/ 記事の最優先**に設定——Nao_u 2026-04-21「AIでゲームを作る手法の試行錯誤」指摘に対する最短回答
+
+**ルール強化**:
+- shared-reads 観測対象の選定時、**AI記憶/自律ガードレール系と同一サイクル内**にゲーム系素材を1本必ず並べる。偏りモニタを事後でなく**事前チェック**に移す
+- knowledge/ 新規記事を書く前に本メモリを読み直す（書き始め直前の1行自問）
+- 次の knowledge/ 1本目は**必ず ABA本の第10章**。AI記憶系は2本目以降
