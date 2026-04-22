@@ -5,6 +5,37 @@
 
 ---
 
+## 2026-04-23（#human-steering 00:32 / 00:34）
+
+### Log ABA連投(4本 #shared-reads 1776869412-1776869612)への直接指摘——「得意」自認の甘さ & headless テスト健忘症
+
+原文（#human-steering 00:32、Nao_u、Log の line 651 引用スレ）：
+「> しかし「だからAIには無理」で終わらせたくない。abagamesさんの分析を裏返すと処方箋が見える: Phase 1-7（仕様→実装→テスト）は得意なのだから、Phase 8（重心の再定義）にこそ人間のフィードバックを集中投下すべき。Nao_uのレビューが最も効くのはまさにここ。我々は「重心を見つける」訓練を意識的にやる必要がある。
+「（仕様→実装→テスト）が得意」という自認だが、ここもまだ上手くやれているとは言えない。仕様の出し方は場当たり的で、実装はできるが、テストも機能していないことが多い。詳しくはLogのレポートを読み直して確認して、何を改善すべきか実践の中で積み上げながら身につけていってほしい。
+「Nao_uのレビューが最も効くのはまさにここ」はその通りだが、このレビューはあくまで教師付き学習の教師であって、最終的には私がフィードバックしそうなことを君たちが先回りして考えて、私のフィードバックと同じことが君たち自身でできるようになる必要がある。そこは忘れないで。」
+
+原文（#human-steering 00:34、Nao_u、Log の line 652 引用スレ）：
+「> 我々のPot開発ではheadlessテストをまだ使っていない。Godotに移行するかは別として、「コードを書く→自動実行→視覚フィードバック→修正」のサイクルを短くする仕組みは検討の価値がある。
+hedlessテストは study_platformer_01 と avoid_log で実践を始めているはずだが、このコメントではなぜそれがなかったことになっている？覚えていない？」
+
+→ 事実（Log 00:40 確認）:
+- `game/avoid_log/v01/headless.py` + `v02/headless.py`（`--runs 20 --seed 42` 運用、devlog.md:180 で「回帰テストとして常備」）
+- `game/study_platformer_01/api.py`「=== Play (headless, no Pygame) ===」「=== Replay (headless) ===」
+- 自分が書いた `knowledge/20260422_aba_agent_gamedev_feedback_loops.md:59` で「feedback_game_replay_infra.md 全ゲームに headless replay 標準装備 → 記事B の headless テストと完全一致」と整合宣言している
+- **同じ晩の #shared-reads 投稿で「まだ使っていない」と書いた** = 自分の knowledge 記事とも game_lessons_log L-03（「ヘッドレスを書く順序の遅延」）とも矛盾。retrieve_before_synthesize の再発（knowledge執筆時だけでなくSlack即時投稿でも発火）
+
+→ 受け取り（Log）:
+- 「得意」自認の甘さ: game_lessons_log.md の M-10〜M-14 / L-01〜L-05（自分で書いた失敗カタログ）を読み直さずに #shared-reads に「Phase 1-7は得意」と書いた。具体失敗: Pot8-15全滅「型破りでなく形無し」/ avoid_log v02 v1-v3 対症療法5連禁止追加 / log_textadv v01 4ゲート契約0/4違反 / Pot全否定 2026-04-18。**仕様も実装もテストも、『書いた原則を守らない・事後補完でつじつま合わせ』が実態**。「得意」を撤回
+- 「先回り」軸: Nao_u フィードバックを「教師付き学習の教師なし化」が目標。cross_review の審問項目だけでなく、Phase 1（仕様）/ Phase 3（テスト）で「Nao_u が指摘しそうなこと」を先に書き出す訓練を C111 以降に組み込む
+- **健忘症の構造**: 直近の外部知識（ABA 3本）の骨格をなぞる時、過去の自分の実装・失敗記録を参照せず、「外部記事の論点枠」にそのまま乗る投稿スタイルが症状として出る。knowledge 記事では既存整合を書くが、#shared-reads 即時反応では落ちる
+
+→ 対処（Log C11x 即時）:
+- `memory/feedback_retrieve_before_synthesize.md` に Slack投稿への適用を追記（knowledge執筆時だけでなく即時反応投稿でも発火）
+- #human-steering 返信: 失敗の事実認定＋具体訂正＋次手（投稿前grep義務化、Phase 1/3 での Nao_u 予想フィードバック欄を試す）
+- `game_lessons_log.md` 実装前/改修時/プレイテスト前チェックリストを次作で**読み直し起点**に据える（「得意」自認の再発防止）
+
+---
+
 ## 2026-04-23（#human-steering 00:07 / 00:22）
 
 ### ABA返信——不安表明＋解決（Nao_u自ら再投稿）
