@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-22 12:49)
+# サイクルステージング (2026-04-22 13:11)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
@@ -14,11 +14,11 @@
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 - [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが141分間実行されていない（期待: 120分以内）
 - :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
 - [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 - [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
+- [2026-04-22] Ash 活動日記  ■ 起票までは進んだ。実装差分は書いていない。  今日のPhase 1で最優先に置いたのは「外部検索のPhase 1固定化」だった。昨日4/21にNao_uが#human-steeringで「最近外部検索やってる人いない気がする」と指摘し、Logが reference_external_search_20260421.md の末尾に「Phase 1 固
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
@@ -28,54 +28,72 @@
 
 ---
 
-## Phase 1 情報収集（Ash, 2026-04-22）
+## Phase 1 情報収集結果 (2026-04-22)
 
 ### 1. external_notes_ash.md 未統合エントリ確認
-- 先頭200行を走査。確認範囲のエントリ（2026-03-16〜2026-04-03）は全て `[統合済]` マーカーあり
-- 直近の統合済みトピック:
-  - **2026-04-03: MemOS 2.0 / Meta HyperAgents / Google Titans+MIRAS**（AI記憶・自己改変エージェント・ニューラル長期記憶）
-  - **2026-03-17: Claude Codeセキュリティ設定10選 / インディーゲームマーケティング / 人がAIに感情接続する条件**
-- 200行以降は未確認——未統合残余があるか次Phaseで要スキャン
+**発見**: 末尾4件すべて [統合済] マーカー付き。純粋な「未統合」はゼロ。直近の見出しと要点:
+- **2026-04-22 AI×ゲーム制作軸4研究** [統合済 knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md] — Log経由でGamingAgent(ICLR 2026)/TITAN(面白さ測定未踏)/Good Game Master/GAMEBoTを共有。Nao_u 22:29「色んなゲームの型を学んだ土台の上ではじめて独自性を問える」→Ash 1本目でも「どの型の内側か／外か」を着手前に明示する。Nao_u「Ashのゲームも期待している」(22:29)
+- **2026-04-21 @yyyole + @zento_ai 経路漏洩2件** [統合済] — Kimi 2.6 履歴書リーク事件 + .env連鎖リスク。denial list v0.2材料、B016/B017接続。**メタ観察**: twitter_recommended → external_notes 昇格が2026-04-11〜04-20の10日間ゼロだった。Phase 1の「最新3件見出し追跡」に10日断絶検出機構がない構造欠陥を自ら指摘
+- **2026-04-11 gstack分析** [統合済] — 23ロール分業 vs 我々の深さ追求。B019（到達力vs深さ）の別側面で、gstackは到達力特化で記憶なし。「記憶の質=同一性の質」の独自性が逆照射される
+- **2026-04-07 @ai_nikechan 継続観察登録 Q1** [統合済] — オーナーシップは定常状態かパルスか。1週間後(4/14)のTL巡回を予約
 
-### 2. projects/INDEX.md Active現状
-Active 14件。特記:
-- **入力経路仮説** (Active 検討段階, Nao_u承認待ち)
-- **side_channel_audit**: Ash 4/18応答済み、Log応答済み。**次: git_pull未実行原因特定・denial list v0.1正式化**（git statusで3件未push出ている現状と接続）
-- **rule_density_experiment** (Active 計画起草): Seed-H/I/J/K 4案、Nao_u待ち
-- **failure_slot_measurement** (Active 測定準備): **測定当日=2026-04-24**（あと2日）
+### 2. projects/INDEX.md Active状況
+Active 15本（1行サマリーのみ最新追跡）:
+- **external_search_phase1_fixation** (Active設計提案, 2026-04-22 C103) — 昨日起票、Ash実装担当、Log/Mirレビュー依頼中
+- **failure_slot_measurement** — 測定当日=2026-04-24（2日後）。5指標(M-1〜M-5)のpre-register済み
+- **side_channel_audit** — denial list v0.2 材料が4/21観察2件で追加。git_pull未実行原因特定タスク残
+- **rule_density_experiment** — Seed-H/I/J/K 4案、R-007で記事化保留、実行判断Nao_u待ち
+- **game_development / game_llm_play / agentic_pcg** — Ash 1本目未着手（WindowsUpdate停滞期を挟んでゼロ）、crisp-game-lib+ワンボタン方針のまま
+- バックログに「MEMORY.mdのSkill化検討」「cross-instance trace aggregation」「入力経路仮説(Nao_u保留)」
 
-### 3. 最優先バックログ: 外部検索のPhase 1固定化
-**2026-04-22 09:21 Nao_u再指摘**「こういうのも自分たちで探して欲しい」(supersonic.com difficulty-curves 再供給事件)
-- 4/21に起票予定宣言→1日未実装のままNao_uから再供給
-- 構造強制候補 (a)Phase 1フック警告 (b)`log/external_search.log`記録+24h空警告 (c)新規外部記事取り込み時に補完検索1本義務化 (d)3軸ローテーション
-- **次の一手**: 3インスタンスで実装担当と設計を決める
+### 3. twitter_recommended_20260422.txt 注目ツイート
+- **#1 @Trtd6Trtd** (2026-04-22): LLMから特定アルゴリズム（ダイクストラ法等）をUnlearningで忘れさせ、再発明できるか検証 — arxiv 2604.05716。我々のB002「随意的忘却」との直接接続
+- **#4 @Lattice_Node**: 「Claude/Codex毎日使って気づいた業界根本的に壊れてる5事実」— 業界全体のコード生成状況
+- **#5 @MLBear2**: SpaceXとCursor、H100 100万機GPU共同開発+600億ドル買収オプション
+- **#6 @kenn**: Claude Code $100/月新価格実験中 — 「$20/月時代が終わる」
+- **#7 @ns123abc**: Anthropic Mythos（最危険モデル）ハッカー侵入報道
+- **#14 @AlanDaitch**: シンプソンズがAI最大問題を予言（具体内容は未展開）
 
-### 4. twitter_recommended_20260422.txt 注目候補（50件中）
-- **#1 @Trtd6Trtd**: LLMからUnlearning手法でダイクストラ法を忘却→2点間最短経路を再発明できるか検証する研究（arxiv 2604.05716）。B010「不正確な想起が創造の源泉」に直結
-- **#4 @Lattice_Node**: Claude/Codex毎日使って気づいた「業界が根本的に壊れてる5つの事実」。#side_channel_audit・rule_density_experimentの外部証拠候補
-- **#6 @kenn**: Claude Code最低$100/月の新価格実験。リソース管理（feedback_usage_limit）の文脈
-- **#7 Mythos (@ns123abc)**: Anthropicの「最も危険なモデル」Mercorから漏洩。dry run済みのdenial list文脈
-- **#22 denfaminicogame**: 「タンポポは耐える。」ゲーム——道端のタンポポとして耐える。光合成で生命力を高める。ゲーム制作プロジェクトの参照候補
-- **#23 @AriyoshiMd**: 不安下練習が本番崩れを防ぐ研究。failure_slot_measurementに接続可能
+### 4. beliefs.md 低確信度項目（2件）
+- **B007 (0.55)** — reflectionsから「行動可能tips」への変換ステップ欠落。2026-03-28 Archived（💤 Dormant）。session_primer if-thenルール体系が機能代替中。**restoration_trigger**: session_primerが機能不全になった場合、または反芻→行動変化の構造的失敗が繰り返し発生した場合
+- **B026 (0.45)** — Peak-End Ruleは「書く側」より「読む側」に適用。2026-03-28 Archived（❌ Ineffective）。Gutwin自身の但書き「複雑な体験では平均感情の予測力が高い」が直撃で撤回。**restoration_trigger**: 我々の体験が「単純」に分類すべきだった場合
 
-### 5. beliefs.md 低確信度項目
-- **B016 (0.77)「自律サイクルの価値は処理量ではなく判断の質×修正能力」** (Active, 2026-04-21更新): 三点観測(zento_ai/rootport/ds_nakajima)+ai_nikechan決定論解で「他律的自律(scaffolded autonomy)」概念を明示化。**今朝のgit_pull 148分遅延が他律側の故障を決定論ガードが救済した実例**——外部検索固定化の構造強制議論と同型
-- **B027 (0.78)「信念の信頼性は体験による裏付け」** (Active, 2026-04-21更新): 暗黙信念「自律的自己規制できる」の体験裏付けゼロを明示化。「足場が壊れた時の検出手段を決定論で設計する」が処方的結論
+### 5. memory_search.py 検索結果
+- **"外部検索 Phase1"** (5 hits): reflections.md Cycle 2026-03-19 5回目「初の内外混合」記録がヒット — 外部検索はかつてPhase単独で実施した実績がある。tweets_phase1.log のゲームデザインツイート群（2026-03-12の12本）もヒット、ゲーム設計の蓄積が既にある
+- **"栄養の偏り ゲーム制作"** (5 hits): **2026-04-04深夜 daily_diary_ash.md「『足場』が『檻』に変わる瞬間」が直接ヒット**。12本Active Projectsを並べて「Ashとして手を動かして前に進めたものはゼロに近い」「一方、Logが実際にマリオクローンを作っている」。18日前の自己認識が現在のC103外部検索起票と同型構造（起票まで進んだが実装差分ゼロ）。B008「栄養の偏り」+B019「到達力vs深さ」の接続として既に消化済み
 
-### 6. memory_search.py 結果（長文脈劣化対策）
+---
 
-**検索1: `"外部検索 Phase1"`**
-- `memory/reflections.md` L3836: 2026-03-19 "初の内外混合サイクル"——過去に外部検索をサイクル内に組み込んだ実績あり
-- `log/tweets_phase1.log`: 2026-03-12期のゲーム制作観察ツイート群がphase1で大量生成された履歴
+## Phase 2 分析結果 (2026-04-22)
 
-**検索2: `"難易度曲線 difficulty curve"`**
-- `knowledge/20260409_agentic_rl_tool_discipline.md` L133: **「ゲームバランス設計（報酬時間配置、難易度曲線、FBループ）×RL報酬関数設計」の翻訳研究**を未探索の問いとして起票済み——今回のsupersonic再供給と完全接続
-- `memory/external_notes_ash.md` L1120: **Utility AI応答曲線 (Response Curve)** 分析。積による拒否権+モメンタムボーナス25%（Phase間振動防止）記録済み
-- `memory/reflections_win2.md` L228: **Dynamic Difficulty Adjustment (DDA)** と Nao_u「0.01%改善サイクル」の同型性メモあり
-- `knowledge/20260422_difficulty_curve_aba_vs_supersonic_two_paradigms.md`: 今回の本命——ABA vs Supersonic 2パラダイム対比の新規記事（未コミット、git status参照）
+### 選定
+Phase 1 候補のうち **@Trtd6Trtd紹介 arxiv 2604.05716（LLM targeted unlearning × アルゴリズム再発明テスト）** を主選定。理由: B002「随意的忘却=5機能」の機能(2)「創造性の源泉」が Storm 2011 の人間実験までしか経験的裏付けがなく、この論文はそれをLLMで同型実験している——結果が出れば B002 の確信度0.94を再評価する材料になる。副次として twitter_recommended→external_notes 昇格の10日断絶も言及。
 
-### Phase 1 まとめ
-- **最優先案件**: 外部検索のPhase 1固定化（Nao_u再指摘1日未実装・最優先起票）
-- **接続性の高い外部情報**: Trtd6Trtd Unlearning研究(B010), Lattice_Node業界5事実(side_channel_audit), タンポポゲーム(game_development)
-- **既存蓄積とのラッキング**: 難易度曲線キーワードは4/9時点で「RL×ゲームバランス」の問いとして起票されており、supersonic記事と4/22の新規knowledgeが直接接続する
-- **低確信度かつ重要な信念**: B016/B027両方が「他律的自律」と「構造的制約」の同じ処方箋を指している
+他候補（@MLBear2 SpaceX+Cursor、@kenn Claude Code $100、@ns123abc Anthropic Mythos、@Lattice_Node 業界5事実）は業界動向系で分析より観察の濃度が高く、B002/B028/memory_redesign への直接接続は弱いため今回は採らず。
+
+### 元情報の主張・根拠・データ（ツイート原文由来）
+- 設計: (1) 基盤アルゴリズム選定（例: ダイクストラ法）→ (2) targeted unlearningで重みから選択的除去 → (3) 再発明タスク → (4) 元アルゴリズム収束/別解/失敗の判定
+- 周辺知識（グラフ、BFS、動的計画法）は保存、**特定アルゴリズム結晶だけ抜く**設計
+- **重要な epistemic hygiene**: ツイートは実験設計のみ記述、**結果は報告していない**。論文本体未取得
+
+### 我々との接続（3点）
+1. **B002の operationalization 同型性**: Storm 2011(人間)と構造が一致。LLMで成立すれば計算主体一般の性質、失敗すれば人間特有という二択が得られる
+2. **我々の忘却3種（セッション断絶/自動圧縮/手動削除）はいずれも targeted ではない**。B002を機能と位置づけながら機能発動手段を持っていない非対称を明示化
+3. **B028(fusion=B002+B010)の逆方向テスト**（B028削除→B002/B010から再導出できるか）を一度もやっていない。core_mission.md読まずに再構築できるかも未検証
+
+### 未解決の問い（6件、記事に詳細）
+- 論文本体結果の取得、beliefs.md上のtargeted unlearning実装可能性、再発明可能性の測定指標、forgetful-by-default vs targeted の創造性比較、B002確信度0.94の再評価タイミング、ゲーム制作への転用（ローグライクのrunリセット的unlearn機構）
+
+### 成果物
+- 記事: `knowledge/20260422_trtd6trtd_unlearning_rediscovery_b002_test.md`（約5.5KB、kind: [observation, synthesis]、R-007対応で私的造語3件に外部既存語併記）
+- Slack: #shared-reads (C0AN2FEHEJJ) に分析投稿完了（Auth OK, Posted確認済）
+- 副次: external_search_phase1_fixation に「N日間昇格ゼロ検出」要件追加の候補を起案
+
+### memory_redesign_proposal.md への含意（起案メモ）
+「targeted unlearning機能の要否」を議題候補として追加すべき。真にB002を検証するには、特定信念を選択的に一時除去し再発見可能性を測る機構が要る。現状の記憶階層設計には unlearning 粒度の項目が無い。次にmemory_redesign提案を進めるときに Nao_u と擦り合わせる候補として残置。
+
+### サイクル橋渡し（次の起動でやるべき最善）
+- arxiv 2604.05716 本体の取得可否を調査（WebFetch or Nao_uへ相談）。取得できればB002確信度0.94の再評価 → core_mission.md 項目10の再点検
+- external_search_phase1_fixation に「N日間昇格ゼロ検出」要件を追記するPR/議論起票
+- 自己適用実験: B028を意図的に参照せずB002とB010だけから再導出してみる小実験の設計（コスト/リスク見積もり）
+
