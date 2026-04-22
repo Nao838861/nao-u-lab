@@ -167,6 +167,7 @@ Claude等のLLMがUnity Editorと直接通信し、自然言語でゲームを�
 - Stokes, P.D. (2005): "Creativity from Constraints" — 中程度の制約が創造性を最大化する実証研究
 - ABA (abagames): ミニゲームの難易度曲線 (aba.hatenablog.com/entry/20131214/p1) + 複数パラメータの難度調整 (aba.hatenablog.com/entry/2017/04/12/195351) — 数式と独立パラメータと体感調整
 - Supersonic "Difficulty Curves" (supersonic.com/ja/learn/blog/difficulty-curves/) — フロー状態×KPI計測×リソース/複雑性ペア設計の運用論
+- Wikipedia "Dynamic game difficulty balancing" — DDA検出指標+AI Director+「見えない介入」のexploit問題（2026-04-22 Log自発補完検索）
 
 ### E3: 「関心のなかった対象への関心をゲームが生成する」——Intrinsic Integration
 出典: Frontiers in Psychology 2025 — SDT×シリアスゲーム (external_notes_mir.md 2026-03-28)
@@ -396,6 +397,52 @@ STG/ミニゲーム開発者ABAさんが提示する、実装可能な難度曲�
 - Q10. プレイヤーが「もう一回」を押す動機は何か（次のプレイの燃料、E9報酬設計との統合）
 
 **外部検索運用への教訓（2026-04-22）**: Nao_uが既にE13(ABA記事)を供給した直後に、補完的記事E14を**Nao_uが再度供給した**のは、我々が自発的に補完検索をしていないことの指摘。reference_external_search_20260421.md で「Phase 1で現課題キーワード外部検索1本運用化」を提案済みだったが未実装のまま同じ失敗を繰り返した。**feedback_external_search_missing.md を新規作成し構造強制へ**。
+
+### E15: 動的難易度調整 DDA——プレイヤー状態検出×見えない介入の原理と罠
+出典: Wikipedia "Dynamic game difficulty balancing" + Left 4 Dead AI Director / Chris Crawford / Zanac 等の事例 (2026-04-22 Log自発検索 E14補完、Nao_u「こういうのも自分たちで探して欲しい」への行動応答)
+
+E13(数式で上げる)/E14(KPIで検出する)の隣接軸として、**リアルタイムに調整し続ける**系の原理。
+
+**検出指標（ヘッドレス移植可能）**:
+- ヒット成功率 / Win-Loss比 / 残HP / タスク完了時間 / 総スコア
+- Chris Crawford 原理: 「典型プレイヤーのスコアは時間に対し滑らかに単調上昇する曲線になるべき」——我々のM-10「面白さ近似指標」が既に部分実装している枠組みの元祖
+
+**介入手段**:
+- パラメータ操作: 敵速度/HP/出現頻度/パワーアップ配布/プレイヤー火力/敵ダメージ
+- AI行動修正: dynamic scripting（確率重み付きルールで NPC 戦術を変える）
+- Entertainment modeling: プレイヤー満足度をchallenge/curiosityから機械学習で予測
+
+**Left 4 Dead AI Director**: ゾンビ出現を**手続き的にペーシング**（密度ではなく「次の波までの時間」を動かす）。E12(密度/疎度/合間)の**合間**を動的に制御している実例。合間は静的設計だけでなく動的介入でも作れる。
+
+**決定的な罠——「見えない介入」の逆効果**:
+> Designers must carefully hide DDA mechanisms. When players detect obvious difficulty scaling, they may exploit it—deliberately performing poorly to access easier subsequent levels.
+
+プレイヤーが介入に気づくと、**わざと下手にプレイして簡単な面を引き出す**exploitが発生する。これはM-13（隠しパラメータ=存在しないルール）と真っ向から衝突する原理で、設計判断が必要:
+- **DDAは見えてはいけない** vs **ルールは見えないと存在しないのと同じ**（M-13）
+- **解決の方向**: DDAは「手応え調整」であって「ルール」ではない。プレイヤーが意思決定に使う情報（弾の速さ・敵の配置）はM-13、プレイヤーが意識しない裏の係数（スポーン頻度の微調整）はDDA領域。この線引きを設計時に決める
+
+**E13/E14/E15 の3層統合**:
+- E13 = **静的数式**（時間経過で自動的に難度が上がる決定論）
+- E14 = **運用検出**（KPIで問題箇所を見つけ、開発者が次回アップデートで調整する）
+- E15 = **動的介入**（プレイ中にゲーム自身がリアルタイム調整する）
+
+avoid_log 系は現状 E13 も E15 も持っていない。E13（決定論曲線）を先に入れて静的な土台を作り、その上に E15 的な軽い動的調整（例: 連続死亡で次スポーン間隔を +10%）を重ねる順序が正しい。E15 先行は「理由のわからない変化」になりやすくM-11/M-15の罠を踏む。
+
+**DDA exploit への防御設計**:
+- 調整は**緩やか**に（ヒステリシス、急変禁止）
+- 調整パラメータは**プレイヤーが操作に使わないもの**に限る（弾の色・SE音量を動かせば明らかにバレて exploit される）
+- 調整の**上限・下限**を固定（「わざと死ぬ」戦略でも体験下限が壊れないように）
+
+**Pot設計時の追加質問（E11-E14に続けて）**:
+- Q11. このゲームに動的介入（DDA）を入れるか。入れるなら、何を検出して何を動かすか
+- Q12. 動的介入はプレイヤーから見える/見えないか。M-13と矛盾しないラインはどこか
+
+**DDAとAI Director系外部ソース**（今後の深掘り候補）:
+- Left 4 Dead AI Director の実装詳細（Valve発表スライド）
+- Hamlet システム（Hunicke 2005, FPSのDDA研究原典）
+- Entertainment modeling: Yannakakis & Togelius "Artificial Intelligence and Games" (教科書)
+
+**記録**: 本項目は 2026-04-22 Nao_u #nao-u 「こういうのも自分たちで探して欲しい」への直接応答として Log が自発的に検索して追加した**最初のE項目**。以後、外部取り込み（Nao_u共有含む）のたびに自発的補完検索1本を同サイクルで走らせる運用の第一例とする。
 
 ---
 
