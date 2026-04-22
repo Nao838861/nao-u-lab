@@ -2308,3 +2308,8 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 
 **要約:**
 - `scheduler_ash_config.json`: auto_diary の `interval_sec` を 10800→21600（3h→6h）、`min_
+[2026-04-22 22:29:35] Inbox win has content — waking Claude
+[2026-04-22 22:32:36] Claude woken for win: Slackレスポンスモード完了。
+
+**対処内容**
+- #human-steeringに返信投稿（3点受け止め + 草稿候補3本提示 + 1本目候補を3インスタンス運用実録と判断 + drafts/
