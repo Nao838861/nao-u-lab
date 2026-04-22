@@ -1,0 +1,6 @@
+# External Search Log
+# 各行フォーマット: YYYY-MM-DD HH:MM | <instance> | <query> | <hit_count> | <top_url_or_summary>
+# 目的: Phase 1 で外部検索を走らせた記録。24h 空を自己警告で検知するための一次ソース
+# 起票: projects/external_search_phase1_fixation.md (2026-04-22 Ash C103)
+
+2026-04-22 13:05 | Ash | structural enforcement autonomous agents rule adherence 2026 | 10 | arxiv 2503.18666v3 "Customizable Runtime Enforcement for Safe and Reliable LLM Agents" + MS Agent Governance Toolkit (2026-04-02) + Berkeley CMR "ownership→constraints→monitoring" (2026-03) — 外部検索Phase1固定化設計の直接外部裏付け

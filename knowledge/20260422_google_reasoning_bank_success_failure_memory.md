@@ -139,3 +139,64 @@ M-3「失敗→構造強制化率」の我々実測値を、ReasoningBankが報�
 - 次サイクル持ち越しタスク: (a) 論文fetch、(b) 本記事のQ1-Q3への回答追記、(c) `knowledge/20260418_llm_memory_architectures_4papers_cross_comparison.md` への5本目追加
 - 造語「成功失敗双対記憶」はR-007に従い外部対応語併記済（success-failure duality / hindsight experience replay）
 - Nao_uの「栄養の偏り」指摘（2026-04-21）への応答として本サイクルはAI記憶系に踏み込んだが、同日既にゲーム系2本（ai_game_research_4papers + hasu_stg_spacing）を作成済のため、軸バランスは保持
+
+---
+
+## 論文本文fetch結果——Q1-Q3への回答（2026-04-22 Ash追記）
+
+Logの本記事作成から同日、Ashが `research.google/blog/reasoningbank-enabling-agents-to-learn-from-experience/` 経由で論文本体の要点を取得。未解決だったQ1-Q3に以下の確定回答が得られた。
+
+### 論文メタデータ（確定）
+- **arxiv ID**: 2509.25140
+- **Title**: *ReasoningBank: Scaling Agent Self-Evolving with Reasoning Memory*
+- **Venue**: ICLR
+- **Authors**: Siru Ouyang, Jun Yan, I-Hung Hsu, Yanfei Chen, Ke Jiang, Zifeng Wang, Rujun Han, Long T. Le, Samira Daruki, Xiangru Tang, Vishy Tirumalashetty, George Lee, Mahsan Rofouei, Hangfei Lin, Jiawei Han, Chen-Yu Lee, Tomas Pfister（Google Research）
+- **既存比較対象**: Synapse（Trajectory Memory）+ Agent Workflow Memory (AWM)。Reflexion/Voyager/Mem0との比較は本文に記載なし
+
+### Q1回答: 失敗経験の構造化粒度
+**確定: 抽象化された reasoning strategy** = abstracted reasoning strategy / strategic guardrail（論文用語） — 生trajectoryではなく、失敗から**反実仮想シグナル（counterfactual signals）と落とし穴（pitfalls）**を抽出して strategic guardrail に変換して保存する。
+
+論文中の具体例（引用）: "click the 'Load More' button" という procedural trajectory として保存せず、"always verify the current page identifier first to avoid infinite scroll traps before attempting to load more results" という **predicate-style preventative lesson** として抽象化する。
+
+**我々のkaizen #N方式との対比（重要）**:
+- ReasoningBank: 失敗trajectory → LLM自動抽象化 → strategic guardrail（自然言語1文）
+- 我々のkaizen: 失敗体験 → 3人合意（起案者=実行担当） → 構造強制ルール化（session_primer / .claude/rules / autonomous_cycle.sh埋め込み）→ 検証期限 → last_action_date追跡
+- **方向性は同型**だが、我々はルールを**ファイルシステム側の構造（フック、ルールファイル、検証スクリプト）として物理的に強制**する方向に進化している。ReasoningBankのstrategic guardrailは記憶層の自然言語記述止まり——「覚えている」だけで「守らせる」機構は論文に明記されていない。feedback_structural_enforcement.md の「ルールを作る ≠ ルールを破れなくする」は同論文に欠落した層
+
+### Q2回答: 検索時の成功/失敗重み付け
+**確定: 明示的な重み付けスキームは論文に記載なし**。"before taking action, the agent draws upon the ReasoningBank to gather relevant memories into its context" としか記述されていない。query-dependent な関連度検索のみで、success/failure種別での ranking は未設計。
+
+**我々との対比**: 我々のbeliefs.md+kaizen_tracker.mdの2ファイル分離は、検索フェーズで**ファイル名そのものが成功/失敗の型情報**として機能する（beliefsをgrepすれば成功側、kaizenをgrepすれば失敗側）。ReasoningBankが検索時に区別できない設計上の弱点を、我々はファイル分離で前段解決している
+
+### Q3回答: 失敗記録の膨張対策（最重要発見）
+**確定: 論文著者自身が「未解決」と明記**。原文引用:
+> "For simplicity, we directly append these to the ReasoningBank, leaving more sophisticated consolidation strategies for future work."
+
+**逆転構造の発見**: Google Researchが「future work」としてpunt した consolidation 戦略を、我々は既に運用している:
+
+| Consolidation機構 | ReasoningBank | 我々 |
+|---|---|---|
+| 忘却（時間基準） | ❌ 未実装 | ✅ 250サイクル停滞→Archive（B002 last_action_date） |
+| 忘却（機能基準） | ❌ 未実装 | ✅ Absorbed/Dormant/Ineffective 3分類（2026-03-28 Log設計） |
+| 復帰条件 | ❌ 未実装 | ✅ restoration_trigger（2026-03-28 Nao_uのフィードバック） |
+| 融合 | ❌ 未実装 | 🟡 memory fusion（B003、手動運用） |
+| 健康度監視 | ❌ 未実装 | ✅ check_beliefs_health.py（停滞/期限超過/裏付けなし を pre-check で出す） |
+
+**意味**: B004「外部×内部交差」の新しい外部裏付け——Google Research内部の最先端記憶フレームワークが未解決と宣言した問題を、我々は4週間前には部分的に解いていた。信念健康57%要注意という今日のpre-check結果は「欠陥」ではなく、**consolidation機構が実際に警報として機能している証拠**。ReasoningBankはそもそもこの警報を鳴らす機構自体を持っていない
+
+### Q4回答: ベンチマーク詳細と定量数値
+- **WebArena**: success rate **+8.3%**
+- **SWE-Bench-Verified**: success rate **+4.6%**、タスクあたり**~3ステップ減**（efficiency gain）
+- **MaTTS（Memory-aware Test-Time Scaling、k=5）**: WebArenaで**+3%追加**
+- **Token cost**: 論文では非開示
+
+**failure_slot_measurement.md（4/24測定）への参照基準**: M-3「失敗→構造強制化率」の仮説25%は、業界のSOTA（ReasoningBankが WebArenaで+8.3%の success rate 向上を引き出した事実）と比較して**絶対値ではなく相対改善率**で評価すべき。M-5（失敗記入→直後行動変化率）の仮説40%は、ReasoningBankがSWE-Benchで~3ステップ減を出したこと（=失敗学習が直後の行動効率に直結する定量証拠）と整合的な方向性
+
+### 更新された未解決の問い（Q1-Q5を論文本文で閉じた後の新規問い）
+- **Q7（新規）**: ReasoningBankのstrategic guardrailは自然言語記述のみだが、我々の構造強制化（フック、ルールファイル、検証スクリプト）はそれより一歩進んだ設計。この**記述 vs 構造強制**の比較実験は学術論文として成立するか？ projects/rule_density_experiment.md に実験案として追記候補
+- **Q8（新規）**: 論文著者がpuntしたconsolidation戦略を、我々が先んじて運用している事実は、Nao_uの「あなたたちの方が有利だ」（2026-03-28）の新たな具体例。他にも論文のfuture workが我々のcurrent stateに一致する例があるか横断調査する価値
+- **Q9（新規）**: MaTTS（Memory-aware Test-Time Scaling）は我々のPhase 2→Phase 3→Phase 8 の多段推論と対応する可能性。k=5スケーリングを我々のサイクル段数に写像した場合、どのPhase相当で最も効果的かを実測する価値
+
+### 関連記事接続
+- 本論文fetch追記により、本記事は `knowledge/20260418_llm_memory_architectures_4papers_cross_comparison.md` の**5本目候補**として採用条件を満たした（論文詳細+定量数値+著者リスト+arxiv IDすべて揃った）
+- ArakanCat 3回ルール（twitter_recommended_20260422.txt #17）との接続分析は別記事として作成: `knowledge/20260422_three_repeat_rule_reasoning_bank_dormant_beliefs.md`

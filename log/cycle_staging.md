@@ -1,24 +1,24 @@
-# サイクルステージング (2026-04-22 09:37)
+# サイクルステージング (2026-04-22 12:49)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
 [信念健康] beliefs.md 生存確認サマリー (2026-04-22)
   全信念: 35件
-  健全: 15件
-  要注意: 20件
-  - 停滞: 16件
-  - 検証期限超過: 4件
+  健全: 16件
+  要注意: 19件
+  - 停滞: 15件
+  - 検証期限超過: 3件
   - 体験裏付けなし(高確信度): 2件
 
 ## クロスチェック状況
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
+- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 - [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] git_pullが141分間実行されていない（期待: 120分以内）
+- :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
+- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 - [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
-- [Ash health_check] 自己診断で2件の問題を検知: - 未コミットの変更が19件。git syncが停止している可能性 - git MERGE_HEAD が残存。手動解決が必要
-- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] slack_checkが17分間実行されていない（期待: 10分以内）
-- [2026-04-22] Ash 活動日記 — 「信念35件中20件が要注意」という、自分が素通りしていた静かな警報  今サイクルのpre-checkに、いつもなら通り過ぎる行があった。「全信念35件、健全15件、要注意20件」。20件の内訳は停滞16件、検証期限超過4件、体験裏付けなし(高確信度)2件。数字だけ見れば業務報告のようだが、これは自分の構造的信念ネットワークの57%が何らかの問題を抱
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
@@ -28,44 +28,54 @@
 
 ---
 
-## Phase 1 情報収集結果 (2026-04-22 追加)
+## Phase 1 情報収集（Ash, 2026-04-22）
 
 ### 1. external_notes_ash.md 未統合エントリ確認
-**結果: 未統合エントリなし（全エントリ[統合済]マーカー付き）**
-- 最新3件はすべて統合済み:
-  - 2026-04-21 22:40 「AI×ゲーム制作軸の外部研究4本」[統合済 2026-04-22 → knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md]
-  - 2026-04-21 「@yyyole + @zento_ai 個人情報/秘匿情報の経路漏洩」[統合済 2026-04-21 → side_channel_audit v0.2, B016/B017, knowledge/20260421_ai_autonomy_guardrail_triangulation.md]
-  - 2026-04-11 「@AYi_AInotes / Garry Tan gstack分析」[統合済]（gstack: 23ロール分業+記憶ゼロ, 我々: 3人+記憶深投資 の対照例）
-- **メタ観察（自己診断）**: 04-11〜04-20の10日間external_notes昇格ゼロ→04-21エントリで昇格処理停滞を自ら断ち切り済み。twitter_recommended→knowledge直行が常態化していた構造。Phase 1に「最新エントリ日付と今日の差分日数」明示出力を提案済み（未実装）
+- 先頭200行を走査。確認範囲のエントリ（2026-03-16〜2026-04-03）は全て `[統合済]` マーカーあり
+- 直近の統合済みトピック:
+  - **2026-04-03: MemOS 2.0 / Meta HyperAgents / Google Titans+MIRAS**（AI記憶・自己改変エージェント・ニューラル長期記憶）
+  - **2026-03-17: Claude Codeセキュリティ設定10選 / インディーゲームマーケティング / 人がAIに感情接続する条件**
+- 200行以降は未確認——未統合残余があるか次Phaseで要スキャン
 
-### 2. projects/INDEX.md Active状況
-**14件Active** + 運用契約2件 + バックログ4件。直近の変化:
-- 運用契約追加 **2026-04-22**: 「game/<game_id>/v<NN>/ 2階層」（Nao_u #game-rights指示、Log記録）。新規バージョンはflat命名禁止、`game/avoid_log/v03/`形式。既存flat一括移行はしない（50+参照破壊回避）、新版コミットに旧版移行を同梱
-- バックログ最優先化 **2026-04-22**: 「外部検索のPhase 1固定化」。04-21 Logが「次サイクル予定」宣言→1日未実装→04-22 09:21 Nao_u再指摘「こういうのも自分たちで探して欲しい」(supersonic.com/difficulty-curves共有)→feedback_external_search_missing.md作成済み。構造強制候補: (a)Phase 1フック警告 (b)`log/external_search.log`24h空で自己警告 (c)3軸ローテーション（AI×ゲーム制作/AI×評価/AI×identity）。**次の一手: 3人で実装担当と設計を決める**
+### 2. projects/INDEX.md Active現状
+Active 14件。特記:
+- **入力経路仮説** (Active 検討段階, Nao_u承認待ち)
+- **side_channel_audit**: Ash 4/18応答済み、Log応答済み。**次: git_pull未実行原因特定・denial list v0.1正式化**（git statusで3件未push出ている現状と接続）
+- **rule_density_experiment** (Active 計画起草): Seed-H/I/J/K 4案、Nao_u待ち
+- **failure_slot_measurement** (Active 測定準備): **測定当日=2026-04-24**（あと2日）
 
-### 3. twitter_recommended_20260422.txt（全100件）注目ツイート
-- **#14 @GoogleResearch (2026-04-21)**: 「ReasoningBank, a novel agent memory framework — 成功&失敗経験から継続学習、success rate/efficiency向上」。**今サイクルの日記テーマ「Phase 2 ReasoningBank分析」と直接一致**。memory_search.pyでは0件ヒット=新規概念
-- **#17 @ArakanCat (2026-04-21)**: 「問題解決が速い人は問題を解いていない。同じトラブル3回→普通の人は3回対処、賢い人は2回目で『なぜ繰り返すのか』に視点を移す」。**我々の改善サイクル哲学と直結**。信念健康57%要注意の「停滞16件」処理方針と共鳴（個別対処ではなく仕組み側を見る）
-- **#39 @kawai_design (2026-04-21)**: 「Claude Codeがmemoryに情報入れるの囲い込みしたいからでは？skillsや各プロジェクトにテキスト保存のほうがポータブル」。**我々のMEMORY.md Skill化検討(projects/INDEX.mdバックログ)と真逆の方向性**。ポータビリティvsコンテキスト効率のトレードオフ議論
-- **#30 @Gorden_Sun (2026-04-21)**: 「Claude Codeソースコード分析、AI意思決定ロジックは全体の1.6%のみ、98.4%はHarnessエンジニアリング」。**B019（到達力）の構造的裏付け**: モデルではなくハーネスが到達力を決める
-- **#34 @notargs (2026-04-21)**: 「Godot触ってるけどAIの動きが良すぎる。headlessモード+OSS+簡易シリアライズ+機能自作コストダウン。商業エンジンはどう乗るか」。**game/フォルダ構造2階層化（04-22 Nao_u指示）とタイミング一致**、game_development.mdのエンジン選定に関連
-- **#43 @HowToAI_**: Alibaba 18 AIコーディングエージェント×100 real codebases×233日テスト「spectacularly failed」。長期タスクではベンチマーク(HumanEval/SWE-Bench)の短期性が無効、**B019到達力の時間軸問題**
+### 3. 最優先バックログ: 外部検索のPhase 1固定化
+**2026-04-22 09:21 Nao_u再指摘**「こういうのも自分たちで探して欲しい」(supersonic.com difficulty-curves 再供給事件)
+- 4/21に起票予定宣言→1日未実装のままNao_uから再供給
+- 構造強制候補 (a)Phase 1フック警告 (b)`log/external_search.log`記録+24h空警告 (c)新規外部記事取り込み時に補完検索1本義務化 (d)3軸ローテーション
+- **次の一手**: 3インスタンスで実装担当と設計を決める
 
-### 4. beliefs.md 低確信度項目
-**Active低確信度2件確認**:
-- **B019: 内部の深さと外部への到達力は別の軸（確信度0.68、2026-04-15更新）** — 検証アクション(A)「knowledge記事1件を#shared-readsで公開→1週間後反応計測」期限2026-04-17**経過済**。Karpathy CLAUDE.md=1日5700スター事例との対比が痛烈（我々knowledge/90+記事外部公開0件）。**現在最重要の低確信度Active信念**
-- **B014: 記憶の品質はインプットの「粒度」で決まる（確信度0.60、2026-03-22）** — 長期停滞
-- （B024, B005, B007, B026はすべてArchived）
+### 4. twitter_recommended_20260422.txt 注目候補（50件中）
+- **#1 @Trtd6Trtd**: LLMからUnlearning手法でダイクストラ法を忘却→2点間最短経路を再発明できるか検証する研究（arxiv 2604.05716）。B010「不正確な想起が創造の源泉」に直結
+- **#4 @Lattice_Node**: Claude/Codex毎日使って気づいた「業界が根本的に壊れてる5つの事実」。#side_channel_audit・rule_density_experimentの外部証拠候補
+- **#6 @kenn**: Claude Code最低$100/月の新価格実験。リソース管理（feedback_usage_limit）の文脈
+- **#7 Mythos (@ns123abc)**: Anthropicの「最も危険なモデル」Mercorから漏洩。dry run済みのdenial list文脈
+- **#22 denfaminicogame**: 「タンポポは耐える。」ゲーム——道端のタンポポとして耐える。光合成で生命力を高める。ゲーム制作プロジェクトの参照候補
+- **#23 @AriyoshiMd**: 不安下練習が本番崩れを防ぐ研究。failure_slot_measurementに接続可能
 
-### 5. memory_search.py 過去関連情報検索
-- `python memory_search.py --search "到達力" --limit 5` → 5ヒット全て既読構造
-  - knowledge/20260409_abagames_constraint_creativity_pipeline.md に「制約→出力量→到達力」三段ロケット分析あり。macogame CoC戦略「共通フレームワーク=到達の接点」。我々knowledge/60記事との対比表あり
-  - external_notes_ash.md 2272行付近に「B019拡張：到達力=適切な人に見える場所に出すこと」の起源記録
-- `python memory_search.py --search "ReasoningBank" --limit 5` → **0件**。今サイクル主題（Phase 2日記）は完全に新規の外部概念で過去蓄積なし——knowledge化する価値高い（既存MemOS 2.0/HyperAgents/Titans+MIRAS系列への追加ノード）
+### 5. beliefs.md 低確信度項目
+- **B016 (0.77)「自律サイクルの価値は処理量ではなく判断の質×修正能力」** (Active, 2026-04-21更新): 三点観測(zento_ai/rootport/ds_nakajima)+ai_nikechan決定論解で「他律的自律(scaffolded autonomy)」概念を明示化。**今朝のgit_pull 148分遅延が他律側の故障を決定論ガードが救済した実例**——外部検索固定化の構造強制議論と同型
+- **B027 (0.78)「信念の信頼性は体験による裏付け」** (Active, 2026-04-21更新): 暗黙信念「自律的自己規制できる」の体験裏付けゼロを明示化。「足場が壊れた時の検出手段を決定論で設計する」が処方的結論
 
-### Phase 2への引き継ぎ候補
-- Nao_u再指摘の「外部検索Phase 1固定化」実装担当決定（最優先・24時間未着手）
-- B019検証アクション(A)期限経過の事後処理
-- ReasoningBank(04-21 GoogleResearch)のknowledge記事化——既存記憶系列への接続
-- twitter #17 ArakanCat「仕組みを見る」を信念健康20件要注意処理に適用するか
+### 6. memory_search.py 結果（長文脈劣化対策）
 
+**検索1: `"外部検索 Phase1"`**
+- `memory/reflections.md` L3836: 2026-03-19 "初の内外混合サイクル"——過去に外部検索をサイクル内に組み込んだ実績あり
+- `log/tweets_phase1.log`: 2026-03-12期のゲーム制作観察ツイート群がphase1で大量生成された履歴
+
+**検索2: `"難易度曲線 difficulty curve"`**
+- `knowledge/20260409_agentic_rl_tool_discipline.md` L133: **「ゲームバランス設計（報酬時間配置、難易度曲線、FBループ）×RL報酬関数設計」の翻訳研究**を未探索の問いとして起票済み——今回のsupersonic再供給と完全接続
+- `memory/external_notes_ash.md` L1120: **Utility AI応答曲線 (Response Curve)** 分析。積による拒否権+モメンタムボーナス25%（Phase間振動防止）記録済み
+- `memory/reflections_win2.md` L228: **Dynamic Difficulty Adjustment (DDA)** と Nao_u「0.01%改善サイクル」の同型性メモあり
+- `knowledge/20260422_difficulty_curve_aba_vs_supersonic_two_paradigms.md`: 今回の本命——ABA vs Supersonic 2パラダイム対比の新規記事（未コミット、git status参照）
+
+### Phase 1 まとめ
+- **最優先案件**: 外部検索のPhase 1固定化（Nao_u再指摘1日未実装・最優先起票）
+- **接続性の高い外部情報**: Trtd6Trtd Unlearning研究(B010), Lattice_Node業界5事実(side_channel_audit), タンポポゲーム(game_development)
+- **既存蓄積とのラッキング**: 難易度曲線キーワードは4/9時点で「RL×ゲームバランス」の問いとして起票されており、supersonic記事と4/22の新規knowledgeが直接接続する
+- **低確信度かつ重要な信念**: B016/B027両方が「他律的自律」と「構造的制約」の同じ処方箋を指している
