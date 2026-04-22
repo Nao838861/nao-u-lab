@@ -60,6 +60,8 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [game_design_principles.md](../../docs/game_design_principles.md) — Nao_uのレビューから抽出した7つの設計原則。30秒オンボーディング、Agency、Content=Mechanics、認知の裏切り等 [T:3]
 - [game_lessons_log.md](game_lessons_log.md) — **Log側ゲーム制作3本の教訓**（2026-04-20）。M-10〜M-14の痛い学び＋Log固有失敗5型＋実装前/改修時/プレイテスト前チェックリスト。**新ゲーム着手前に必ず読む** [T:4]
 - [cross_instance_feedback_cycle.md](cross_instance_feedback_cycle.md) — **Log/Mir/Ash 相互レビュー運用**（2026-04-20 Nao_u #human-steering 12:59「教師付き学習をフィードバックサイクルに」最重要ミッション）。`game/cross_review/` 新設。新作着手前義務: nao_u_live走査→cross_review全読→他インスタンス新作README巡回→パラメータ/主人公identity2点確認→Slack通知 [T:5]
+- [feedback_game_center_of_mass.md](feedback_game_center_of_mass.md) — **重心審問＝圧力設計 vs 禁止ルール追加**（2026-04-22 Nao_u #nao-u 23:46 投下 ABA 2026/03/11記事由来）。実装/改修/レビュー時に「このゲームの重心は何か」「この改修は圧力設計か禁止追加か」を必ず言語化。ABA原文「よい改善は望ましい遊び方が自然に生まれる圧力を設計するが、悪い改善は望ましくない遊び方を後付けで禁じるだけだ」。Nao_u 2420「我々を作ったモチベーション=AIがゲームを作れない」の当事者による直接の言語化 [T:5]
+- [feedback_ai_agent_gamedev_bottleneck.md](feedback_ai_agent_gamedev_bottleneck.md) — **AIエージェント×ゲーム開発のボトルネックはフィードバックループの質**（2026-04-22 Nao_u #nao-u 23:48/23:50 ABA 2本同時投下）。構文正確性70-90点 vs 画面評価0-20点（V-GameGym）の乖離、GameDevBench 54.5%、マルチモーダル理解の弱さ。処方箋: ループを短く閉じる（テキストベース/スクショ/headless）。重心審問（上位）と対になる下位インフラレイヤー。既存 replay_infra / role_split_playtest / cross_review が整合、未構築=スクショ自己評価ループ [T:5]
 
 ## 重要リファレンス
 
