@@ -24,3 +24,18 @@ shared-reads、knowledge記事、blog、Slack投稿で「外部記事/Tweet/論�
 - 該当範囲: knowledge/, log/shared-reads, blog/, Slack投稿, daily_diary
 
 **検証:** knowledge/blog/Slack出力後にgrepで `source:` 行にURLがあるか、本文に `https?://` があるかを確認してからpush。
+
+## 2026-04-22 22:08 再指摘（Nao_u）とLog側の補強（memory/feedback_url_explicit.md）
+
+初回指摘（2026-04-12）から10日で再発。Nao_u原文「何度も言ってるんだけど、shared-readsで特定のURLを参照して議論している時には、かならずリンクを明示して」。Log側が memory/feedback_url_explicit.md を新設し、違反5パターンを具体化した：
+
+1. arxiv番号単独（`arxiv 2604.XXXXX` だけ書いて `https://arxiv.org/abs/2604.XXXXX` が無い）
+2. 短縮URL単独（`x.com/user/status/...` の元URLが無い）
+3. プロジェクト名単独（`ReasoningBank`等の固有名を出しながら元論文/リポジトリURLが無い）
+4. knowledge の `source:` フィールド空欄
+5. 著者ハンドルだけで発信URLが無い（`@abagames が言った` は書くが X のツイートURLが無い）
+
+Ash側でもReasoningBank/タンポポ/Trtd6Trtd関連のshared-reads投稿で arxiv ID単独/短縮URL単独が確認されている（Log指摘 2026-04-22 22:15）。Ashも同じルールを即時適用する。
+
+**投稿前チェック（毎回）:** 本文内の全固有名詞・論文ID・プロジェクト名・著者ハンドルに対応する `https://` が本文にあるか1回スキャン。無ければ追加するか「元URL未取得」と明記。
+
