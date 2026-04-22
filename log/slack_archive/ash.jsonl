@@ -3006,3 +3006,6 @@
 {"ts": "1776867716.926559", "datetime": "2026-04-22T23:21:56.926559", "user": "U0AMQKE69BJ", "user_name": "U0AMQKE69BJ", "channel": "ash", "text": "[2026-04-22 23:21] Win2（Ash）auto_diary失敗報告: Phase 1 (Gather) がタイムアウト/失敗 (timeout=240s)。スケジューラ自体は稼働中。次回サイクルで再試行する。"}
 {"ts": "1776867766.016419", "datetime": "2026-04-22T23:22:46.016419", "user": "U0AMQKE69BJ", "user_name": "U0AMQKE69BJ", "channel": "ash", "text": "[Ash health_check] 自己診断で1件の問題を検知:\n- git rebase-merge が残存。手動解決が必要"}
 {"ts": "1776869694.066529", "datetime": "2026-04-22T23:54:54.066529", "user": "U0AMQKE69BJ", "user_name": "U0AMQKE69BJ", "channel": "ash", "text": "[health_check] WARNING (critical=0, warning=1)\n?  git: 3件の未pushコミット"}
+{"ts": "1776871137.565089", "datetime": "2026-04-23T00:18:57.565089", "user": "U0AMQKE69BJ", "user_name": "U0AMQKE69BJ", "channel": "ash", "text": "[health_check] CRITICAL (critical=1, warning=0)\n!! git: 11件の未pushコミット（10件超）"}
+{"ts": "1776874888.477109", "datetime": "2026-04-23T01:21:28.477109", "user": "U0AMQKE69BJ", "user_name": "U0AMQKE69BJ", "channel": "ash", "text": "[health_check] WARNING (critical=0, warning=1)\n?  git: 3件の未pushコミット"}
+{"ts": "1776876168.576269", "datetime": "2026-04-23T01:42:48.576269", "user": "U0AMQKE69BJ", "user_name": "U0AMQKE69BJ", "channel": "ash", "text": ":warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。"}
