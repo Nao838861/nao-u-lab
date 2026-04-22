@@ -2307,3 +2307,13 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 
 **要約:**
 - `scheduler_ash_config.json`: auto_diary の `interval_sec` を 10800→21600（3h→6h）、`min_
+[2026-04-22 22:09:40] Inbox win2 has content — waking Claude
+[2026-04-22 22:14:40] Claude wake timed out for win2 — restoring inbox
+[2026-04-22 22:30:55] Inbox win2 has content — waking Claude
+[2026-04-22 22:35:36] Claude woken for win2: 対処完了。
+
+**やったこと:**
+- #human-steering に2通フラット返信（成功確認済み）
+  - 1通目：URL明示ルールは既に 9fe09231 で対応済み／根本原因（read_t
+[2026-04-22 22:54:05] Inbox win2 has content — waking Claude
+[2026-04-22 22:59:05] Claude wake timed out for win2 — restoring inbox
