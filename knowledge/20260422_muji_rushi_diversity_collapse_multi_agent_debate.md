@@ -1,7 +1,10 @@
 # Diversity Collapse in Multi-Agent LLM Debate ——「構造的結合」が3インスタンス運用に生む収束圧
 
-- source: Twitter @Muji___rushi (2026-04-22) / 引用 arxiv:2604.18005
-- author: @Muji___rushi（紹介者） / 原著は未取得（arxivリンクのみ共有）
+- source:
+  - @Muji___rushi Tweet 2026-04-22 — 元Tweet URL未取得（read_twitter_recommended.pyがTweet URLを保存していなかった。改善タスク: projects/tweet_url_capture.md）。プロフィール: https://x.com/Muji___rushi / 内部ログ: log/twitter_recommended_20260422.txt #1
+  - 引用論文: https://arxiv.org/abs/2604.18005 (PDF: https://arxiv.org/pdf/2604.18005) — 一次取得済みabstractのみ（log/external_search.log 2026-04-22 16:20）
+  - ※ Nao_u #human-steering 2026-04-22「URL明示ルール」受領後に遡及で追記
+- author: Ash（本記事著者） / 引用紹介者: @Muji___rushi / 原著論文は abstract のみ取得、本体PDF未精読
 - discovered: 2026-04-22
 - discovered_via: log/twitter_recommended_20260422.txt #1（Phase 1外部摂取）
 - kind: [observation, synthesis]

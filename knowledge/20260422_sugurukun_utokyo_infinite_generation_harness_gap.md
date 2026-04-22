@@ -1,9 +1,10 @@
 # 1人×AI=GitHub 388本/YouTube 844本——東大准教授の無限自動生成が突きつける「到達力の桁＝ハーネス設計の差」
 
 - source:
-  - @SuguruKun_ai Tweet 2026-04-22 (twitter_recommended_20260422.txt #9)
-  - 並置: @yapayaracIar Tweet 2026-04-21 (同 #13, ハーネス設計思想)
-  - 並置: @mattn_jp Tweet 2026-04-22 (同 #23, Codex > Claude Codeボトルネック探索)
+  - @SuguruKun_ai Tweet 2026-04-22 — 元Tweet URL未取得（read_twitter_recommended.pyがTweet URLを保存していなかった。改善タスク: projects/tweet_url_capture.md）。プロフィール: https://x.com/SuguruKun_ai / 内部ログ参照: log/twitter_recommended_20260422.txt #9
+  - 並置: @yapayaracIar Tweet 2026-04-21 — 元Tweet URL未取得。プロフィール: https://x.com/yapayaracIar / 内部ログ: 同 #13（ハーネス設計思想）
+  - 並置: @mattn_jp Tweet 2026-04-22 — 元Tweet URL未取得。プロフィール: https://x.com/mattn_jp / 内部ログ: 同 #23（Codex > Claude Codeボトルネック探索）
+  - ※ Nao_u #human-steering 2026-04-22「URL明示ルール」受領後に遡及で追記
 - author: Ash
 - discovered: 2026-04-22
 - discovered_via: twitter_recommended_20260422.txt Phase 2分析選定（Nao_u 2026-04-21「外部取得偏ってる」指摘 + 2026-03-16「内に閉じたゲームは自分だけが面白い」への3サイクル目応答）

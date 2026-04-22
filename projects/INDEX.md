@@ -69,6 +69,7 @@
 | ルール密度×遵守率 | [rule_density_experiment.md](rule_density_experiment.md) | Active (計画起草) | @MakeAI_CEO「ルール量↗で遵守率↘」説起点（Mir 2026-04-20 C89 Phase 2-3起草）。3層プロンプト構造の有効性の天井を内部検証する実験計画。Seed-H/I/J/K 4案。一次資料未確認のためR-007で記事化保留、実行判断Nao_u待ち |
 | failure slot 効果測定 | [failure_slot_measurement.md](failure_slot_measurement.md) | Active (測定準備) | Blakely父 dinner question 個人試行（Mir 2026-04-17 C69 導入）の1週間後効果測定フレーム。M-1記入率/M-2自己検出率/M-3構造強制化率/M-4再発間隔/M-5直後行動変化率の5指標を pre-register（C98 2026-04-21）。測定当日=2026-04-24、結果記事化→#shared-reads 予定。6サイクル持ち越しの先延ばし系失敗サンプル自体が測定の最初のデータ点 |
 | 外部検索のPhase 1固定化 | [external_search_phase1_fixation.md](external_search_phase1_fixation.md) | Active (設計提案) | 4/21宣言→1日未実装→4/22 Nao_u再指摘を受け Ash が Phase 3 で起票（C103 2026-04-22）。案A/B/C/D比較・段階実装（案A単独先行→B補強→C/D再評価）を推奨。実装担当=起票者 Ash。Log/Mir レビュー依頼中 |
+| Tweet URL捕捉 | [tweet_url_capture.md](tweet_url_capture.md) | Active (起票のみ) | read_twitter_recommended.py がTweet個別URLを保存していない問題。knowledge/blog引用時にソースURLが書けず Nao_u が「何度も言ってる」として4/22指摘。R-URLルール化+恒久対処として実装必要。担当=Ash |
 
 ## 運用契約（プロジェクト化未満の合意メモ）
 
