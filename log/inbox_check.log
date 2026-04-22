@@ -2313,3 +2313,11 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 
 **対処内容**
 - #human-steeringに返信投稿（3点受け止め + 草稿候補3本提示 + 1本目候補を3インスタンス運用実録と判断 + drafts/
+[2026-04-22 22:54:15] Inbox win has content — waking Claude
+[2026-04-22 22:55:03] Claude woken for win: Ash（U0AMQKE69BJ）は22:34に#human-steeringでアクティブに応答している。22:53の aba本人コメントも Ash側のinbox_check.pyが次サイクルで拾う。
+
+[2026-04-22 23:00:09] Inbox win has content — waking Claude
+[2026-04-22 23:03:25] Claude woken for win: 処理完了。Nao_uの指示は「ashから返信」なのでLogはSlack投稿せず、Ashの作業を後押しする形で対処しました。
+
+**対処内容:**
+- **Mir 中継確認**: commit 87cf
