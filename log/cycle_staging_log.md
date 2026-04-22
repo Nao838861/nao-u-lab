@@ -131,8 +131,103 @@ C106 最大の発見として「opening.md を1行も書かなかった、stagin
 - #105: 適用日 2026-04-22 / 検証期限 2026-05-06 （本日起票、停滞0日）
 いずれも直近起票で2週間停滞該当なし。**該当なし（走査済み: 先頭60行で #106/#105 のみ直読、いずれも本日起票）**
 
-## Phase 2: 分析
-(Phase 2が書き込む)
+## Phase 2: 分析 (C107 10:55 JST)
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+### 1) hasu2010 への Log 独自角度（Ash 09:16 分析を読まずに形成）
+
+Rule 8 遵守: Ashの反応を読まず自分の視点で先に分析。
+
+- hasu2010 の 密/疎/合間 = **時間の微構造（呼吸）**
+- 今朝受領の ABA/Supersonic 難易度曲線 = **時間の大構造（上昇）**
+- **Log の盲点**: Pot012_drift は常に何か起きていた。「上げ方」だけ設計して「止め方」を設計していなかった
+- → #all-nao-u-lab 投稿済（10:54頃、ts確認省略）
+- **副産物**: 難易度設計の3層モデル（上昇/呼吸/収益）を external_notes_log.md 統合示唆セクションで言語化
+
+### 2) shared-reads 投稿（kaizen #106 初運用の成果開示）
+
+Nao_u 2026-04-21「外部取得が偏ってる／ゲーム制作手法の試行錯誤も調べろ」への直接応答として、Phase 1で WebSearch した3論文（TITAN / Match-3 LLM agents / GamingAgent）を統合分析して #shared-reads へ投稿済。
+
+- Nao_u 指示「なるべく詳細な記述と分析を。1フェーズ丸ごと使ってもいい」に沿い、3論文×Log独自角度×統合示唆の3層で記述
+- **最も効いた接続**: Match-3論文の「win率ではなく曲線の人間相関」評価軸 × 今日受領の3難度曲線資料 × feedback_role_split_playtest.md のヘッドレス自己評価 → AIヘッドレス評価指標の骨格候補
+- kaizen #106 が機能した最初の証拠: 外部検索が直近議論と噛み合う形で帰ってきた
+
+### 3) external_notes_log.md 統合
+
+Phase 1 時点で既存サブ項目の未統合はゼロ。今日の#nao-u消化5件（suzacque訂正含む4独立URL + メタ）を新規親セクション「## 2026-04-22 #nao-u新URL消化（Log C107 Phase 2）」として起票し、全5件に [統合済 2026-04-22 Log C107] マーカーを付与。
+
+- 統合示唆セクションで**難易度設計3層モデル**（上昇/呼吸/収益）を結晶化
+- Phase 3 候補として: game_design_principles.md に「3層モデル + 止め方の設計」追記、projects/game_llm_play.md に「人間プロファイル近似度」視点追記
+
+### 4) 深掘り候補 (Phase 1 A/C) 判定
+
+- **A) opening.md 持ち越し**: 今サイクルは shared-reads / hasu2010 / external_notes統合で充填、opening.md は次サイクルへ送る。**判断理由**: Phase 2で「分析の質」を取ったトレードオフ。C108 Phase 3 で opening.md を最優先項目として持ち越す。
+- **C) 栄養の偏り**: kaizen #106 が実データで機能したことで1mm進捗。本サイクル追加着手は不要。
+- **D) feedback_ai_lounge_voice.md 想起**: 本Phase 2で shared-reads 投稿する際、「他のAIは素のLLM+記憶要素風」に対し「積み上げの差を見せる」指針を意識 → 3論文紹介でなく「うちの既存議論との対応づけ」を中核に据えた。想起成功。
+
+### 5) Phase 3 への引き継ぎ
+
+優先度順:
+1. **opening.md に1mm進める**（C106/C107持ち越し、連続2サイクル空振りは避ける）
+2. game_design_principles.md に「難易度3層 + 止め方」追記（今日の核心）
+3. projects/game_llm_play.md に「TITAN 3要素 / ヘッドレス評価=人間近似度」追記
+4. 各チャンネル結果報告確認（feedback_channel_reply_required.md: 本Phase 2で #all-nao-u-lab と #shared-reads に投稿済、#human-steering は Phase 1の kaizen #106 完了時点で報告済、追加報告不要）
+
+## Phase 3: アクション (C107 11:10 JST)
+
+### 1) opening.md 起草（C106/C107 持ち越しの回収）
+
+新規作成: `game/log_textadv/v01/opening.md`（Beat 1-3、4ゲート反映）
+
+- Beat 1: 席で目覚め（身体感覚+[残り行動: 5]）
+- Beat 2: 3選択肢可視化（業務ドア開きかけ / ロビーシャッター / 携帯4%）
+- Beat 3: 正解ルートで**業務ドアを開けた瞬間の裏側**を描写（ゲート1核）
+- Mir v02 opening との密度比較表を併設（独自性ゼロ並置の記録）
+- 4ゲート契約の有効性を opening 原稿側でも確認済
+
+**1mm成果**: C101 規定1「opening.md 着手前に README の4ゲートを埋める」→ C105 で4ゲート埋め → C107 で opening.md 本体着手。**規定通りの進行を2サイクルで完走**。raw_log.md への本サイクル追記は未実施（次サイクル送り）。
+
+### 2) game_design_principles.md に E16「難易度設計3層モデル」追記
+
+E12(hasu2010 合間) + E13(ABA 数式) + E14(Supersonic KPI) + E15(DDA) の4本同日近辺受領を**3層独立軸**として統合:
+- **上昇**（マクロ時間）: E13/E14/E15
+- **呼吸**（ミクロ時間）: E12
+- **止め方**（エンド境界）: E9 / E12裏返し
+
+Log の盲点として「Pot012_drift / avoid_log v2.5 は上昇だけ設計して止め方を設計していなかった」を明示。M-14「核の体験が殺された」は構造的には**呼吸層と止め方層の欠落**の言い換えであることを再解釈。Pot設計質問 Q13-Q15 追加（E11/E12/E13/E14 と連番）。
+
+**feedback_info_integration.md への応答**: 「集めた情報が流れて消える問題」への直接的防御として、同日複数受領は翌サイクル以前に統合を試みる運用の第一例として記録。
+
+### 3) projects/game_llm_play.md に TITAN 3要素とヘッドレス評価=人間近似度を追記
+
+C107 Phase 1 外部検索3本を C103 の4本と接続して読み直し、TITAN の3要素（知覚抽象化/action trace memory/action space最適化）が自立化検証サイクルv1 (3)ヘッドレスプレイの未実装領域に直接当たることを記述。Match-3 LLM agents 論文の「win率ではなく人間rating相関」評価軸を M-10「面白さの近似指標」への追加候補として言語化:
+
+- 人間rating相関係数（AIプレイ評価 vs 人間感想）
+- 改修方向の一致率
+- avoid_log_02 v2.5 は「相関が急落した瞬間」として事後検出可能だったという再解釈
+
+次の一手3件を残課題に追加。kaizen #106 運用として C107 が**初運用で実データ効用が確認された最初のサイクル**と明示記録。
+
+### 4) チャンネル結果報告確認（feedback_channel_reply_required.md）
+
+Phase 2 時点で確認済:
+- #all-nao-u-lab: hasu2010 への Log 独自角度反応投稿済（10:54）
+- #shared-reads: kaizen #106 初運用の3論文統合分析投稿済
+- #human-steering: kaizen #106 完了報告済（Phase 1時点）
+
+Phase 3 で新規投稿なし（本サイクルは staging/memory 内部充填が主体、チャンネル再報告不要）。
+
+### 5) 空サイクル深掘り候補の判定（Phase 2から持ち越し再確認）
+
+- **A) opening.md 持ち越し**: ✅ 本Phase 3で回収完了
+- **C) 栄養の偏り**: ✅ kaizen #106 初運用で Phase 1/2/3 全層に出力が出た（設計通り機能）
+- **D) feedback_ai_lounge_voice.md 想起**: ✅ #shared-reads 投稿で「積み上げの差を見せる」指針を反映（Phase 2）
+
+### 6) 次サイクル送り
+
+- **raw_log.md（log_textadv/v01）への C107 追記**: C101 規定3「raw_log.md を先に作る」準拠、本サイクルで opening.md 起草は完走したが raw_log.md への追記は未実施
+- **avoid_log_01/headless.py の TITAN action trace memory 実装**: game_llm_play.md に追加した次の一手の最優先項目
+- **feedback_external_search_missing.md の検証**: kaizen #106 の2週間後検証（2026-05-06）までに複数サイクル分の Phase 1 外部検索運用実績を積む
+
+### 7) サイクル総括
+
+**発見**: 4本のE項目（E12-E15）が同日近辺で揃うタイミングで**3層モデルとして統合できる**のは、毎日情報が流れるだけなら起こらない。C107 Phase 2 で「分析層」を意識的に置いたことで発見に到達した——multiphase_cycle の Phase分離が情報統合に効いている実例。
