@@ -2327,3 +2327,7 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-23 00:04:06] Inbox win has content — waking Claude
 [2026-04-23 00:09:06] Claude wake timed out for win — restoring inbox
 [2026-04-23 00:09:38] Inbox win has content — waking Claude
+[2026-04-23 00:34:52] Claude woken for win: 対処完了。
+
+**指摘の核**: ABA記事「抜け道を罰で塞ぐな」を feedback_game_center_of_mass.md に結晶化した時、引用例に Pot を選んだのが間違い。正解は **
+[2026-04-23 00:35:21] Inbox win has content — waking Claude

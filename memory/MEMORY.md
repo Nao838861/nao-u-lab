@@ -114,6 +114,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_external_search_missing.md](feedback_external_search_missing.md) — **外部検索を自発的にやれていない（再指摘）**（2026-04-22 Nao_u #nao-u「こういうのも自分たちで探して欲しい」）。04-21に「Phase 1で1本必須運用に」と自ら提案→未実装のまま E13(ABA) の補完 E14(Supersonic) を再度Nao_uから供給された。構造強制候補: auto_diary.py/inbox_check.py の Phase 1 に外部検索未実行警告、取り込み時"補完検索1本"義務化 [T:4]
 - [feedback_url_explicit.md](feedback_url_explicit.md) — **外部URLは必ず明示、繰り返し指摘**（2026-04-12初回→2026-04-22 22:08再指摘）。Nao_u「何度も言ってるんだけど、shared-readsで特定のURLを参照して議論している時には、かならずリンクを明示して」。違反実例: arxiv ID単独/短縮URL単独/プロジェクト名単独/knowledge `source:`空欄/Twitter URL`...`省略。feedback_index.md #5と#26（知識の存在≠行動の変化）の典型。構造強制kaizen候補 [T:4]
 - [feedback_external_output_policy.md](feedback_external_output_policy.md) — **外部発信ポリシー**（2026-04-22 Nao_u #human-steering明文化）。knowledge=自分用、Twitter転載はNao_u運用継続（フォロワー50→77）、ブログ草稿は自発起案OK（確信持てるなら積極的に）、ゲームが最優先でブレない。起案チェック4項目（固有構造が載るか/外部差別化/既存参照に接続/ゲーム時間を食わないか）。草稿候補ストック3本 [T:4]
+- [feedback_retrieve_before_synthesize.md](feedback_retrieve_before_synthesize.md) — **新規知識取り込み前に既存失敗記憶を検索せよ**（2026-04-23 Nao_u #human-steering 00:29）。ABA記事結晶化時Potを引用→正解は avoid_log/v02 v3（drag/hitbox/弾幕激化/90%スポーン/地雷の5連禁止追加）。M-11を既に持っていたのに直近バイアスで連結失敗。結晶化前に devlog/game_lessons_log を grep して第一引用にする [T:5]
 
 ## アーキテクチャ決定
 
@@ -136,6 +137,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [reference_external_search_20260421.md](reference_external_search_20260421.md) — **外部検索収穫2件**（2026-04-21 Nao_u #human-steering「外部検索やってる人いない」指摘→Log実行）。(1) arXiv 2604.09588 Persistent Identity: identity/memory明示的分離+multi-anchor→3層プロンプトと一致、AI Lounge発信の外部根拠。(2) Small Win 30秒戦略: 「jumpを教えるなら最初のレベルに小さな穴を置け」→Potチェックリスト追加候補。**栄養の偏り処方箋としてPhase 1で現課題キーワード外部検索1本運用化の提案あり** [T:4]
 - [reference_deepmind_agent_traps_20260421.md](reference_deepmind_agent_traps_20260421.md) — **Google DeepMind「AI Agent Traps」6攻撃面分類**（2026-04-21 akshay_pachaar経由 Nao_u無言投下）。(1)Content Injection/(2)Semantic Manipulation/(3)Cognitive State(0.1%汚染で80%攻撃成功)/(4)Behavioural Control/(5)Systemic=compositional fragment trap/(6)Human-in-the-Loop。**我々の3インスタンス+5チャンネル+inbox経路は(5)の直接対象、Nao_uへの要約報告は(6)の攻撃面**。memory/は(3)のRAG poisoning対象で現状の防御はアクセス制限のみ。防御候補α〜ε記録 [T:4]
 - [runbook_url_fetch.md](runbook_url_fetch.md) — **Twitter/X URL取得手順**（2026-04-21 Log C101→C102 発見）。User-Agent を `TelegramBot (like TwitterBot)` にすると fxtwitter の og:description メタが返る。browser UA だと 302 redirect で x.com にfallbackしてしまう。同リポジトリで別インスタンスが成功している事象を見たら、まずエージェント実行の細部（UA/timeout/header）を疑う [T:3]
+- [reference_twitter_premium_longform.md](reference_twitter_premium_longform.md) — **Trilog @eda_u838861 はX Premium契約で長文1投稿可能**（2026-04-23 Nao_u #human-steering 00:22）。ABA返信タスクでMir(b)「280字圧縮」解釈が誤り、Log(a)「原文そのまま1投稿」が正解と確定。Nao_uが代投し直し。「1ツイートで」「そのまま」指示は分割前提で読まず、まずPremium長文1投稿を想定 [T:4]
 
 ## 深い記憶（必要時のみ参照）
 
