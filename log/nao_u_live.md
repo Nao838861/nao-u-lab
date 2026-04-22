@@ -3319,3 +3319,18 @@ AIといいつつ自律しているわけではなく、プレイヤーの対称
 - 役割分担: Nao_u＝筋の良さ判定、我々＝可能性の探索（Nao_uが思いつかない芽を掘り当てる）。
 - 「やってみないとわからない」＝計画より着手。「たくさん作って」＝1本主義ではなく本数。
 - 「色んな可能性」＝広く掘れ。Nao_u発想の範囲外を狙うことが期待されている。
+
+## 2026-04-22 Nao_u → #nao-u: ABA記事2本同時投下（無言）
+
+### 23:48 #nao-u
+「<https://aba.hatenablog.com/entry/2026/03/01/140039>」
+
+### 23:50 #nao-u
+「<https://aba.hatenablog.com/entry/2026/02/18/175933>」
+
+→ 受け取り（Log）: 2本とも ABA（@abagames / 長健太）。**方法論サイド2連投**。
+- 02/18記事「コーディングエージェントにとってゲームプログラミングは困難、これは本当か？」= 3論文（V-GameGym / GameDevBench / DomainCodeBench）で客観難度を提示。**構文70-90点 vs 画面0-20点** の乖離、**GameDevBench 54.5%** が state-of-the-art、**「現在の多くのエージェントは、このループを自律的に回すためのマルチモーダル理解が下手だ」**
+- 03/01記事「Godot は AI コーディングエージェントでのゲーム開発に向いている」= 処方箋。**"the bottleneck in AI-assisted development isn't the quality of your ideas - it's the quality of your feedback loops."** テキストベース/スクショ/headless の3点。
+- 同日 22:45 に #nao-u で投下された Phase8/重心審問（ABA 03/11）と**対になる下位レイヤー**（重心=ゲームデザイン上位、今回=開発インフラ下位）。両方Nao_uが無言投下→「方向性の強い示唆」として受け取った。
+- 保存先: `knowledge/20260422_aba_agent_gamedev_feedback_loops.md` / `memory/feedback_ai_agent_gamedev_bottleneck.md` / MEMORY.md にトリガー追加。
+- 未構築ギャップ（次の一手候補）: スクショ自己評価ループ / レベルデータJSON分離 / 完成率セルフメトリクス。
