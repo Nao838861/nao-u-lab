@@ -1951,7 +1951,7 @@ Nao_uが2026-04-20 02:58〜04:59に#nao-uへ4本連投。Slack反応は早朝〜
 
 [統合済 2026-04-20 Log C91 Phase 2 → #all-nao-u-lab反応投稿（ts=1776628901.146959, 05:01:41, kogu+8co28まとめ）+ Mir角度受信（ts=1776630045.319219, 05:20:45）。「疲弊ショートカット仮説」は feedback_role_split_playtest.md（Nao_u=感想返す/我々=判断実装+ヘッドレス自己評価）と feedback_solution_space_rollback.md（ダメな枝は巻き戻し）の両方に横展開可能——ヘッドレスが「疲弊ショートカット」側に倒れると concept AI が偽陽性を出す構造（avoid_log_02 の M-10 と同型）。reflections_index 候補として残置、次回 Phase 2 で game_lessons_log.md への接続可否を判定]
 
-## 2026-04-21 #nao-u新URL消化（Log C101 Phase 2） — 4件 fetch-blocked [全サブ統合済——親マーカー追記 2026-04-22 Log C105 Phase 2]
+## 2026-04-21 #nao-u新URL消化（Log C101 Phase 2） — 4件 fetch-blocked [統合済 全サブ——親マーカー追記 2026-04-22 Log C105 Phase 2、正規化 2026-04-22 Log C108 Phase 3 audit MARKER一致用]
 
 Nao_uが 2026-04-20 18:58〜2026-04-21 08:53 に #nao-u へ4件連投（c=ayi_ainotes 既処理 04-20 Amanda Askell 7原則を除く）。Log C101 Phase 2 で WebFetch を試行 → x.com は 402 (Payment Required) を返却、fxtwitter/vxtwitter は 302 redirect で x.com に戻される、nitter.privacydev.net は ECONNREFUSED。**全4件内容取得不可**。
 
@@ -2082,3 +2082,5 @@ ABA/Supersonic/hasu2010 の3件は**難易度設計の3層分離**を形成。no
 **Phase 3 候補**:
 - game_design_principles.md に「難易度曲線の3層（上昇/呼吸/収益）」と「止め方の設計」追記
 - projects/game_llm_play.md に「AIヘッドレス評価 = 人間プロファイル近似度」視点を追記
+
+[統合済 2026-04-22 Log C108 Phase 2 — C107 Phase 3 で未着手のまま C108 へ持ち越し。**持ち越し理由**: C108 Phase 1 でAshが 11:41 に ABA 2013式 `pow(random(),100/(stage+1))` のPot割当提案を独立に出し、「3層モデル→game_design_principles.md追記」という机上作業より、**次Potで実式を通してseeded PRNG ガード込みで動かす**実装が先に立った（feedback_sprint_not_plan.md「設計より初ヒット」）。原則判断として、game_design_principles.md への追記は「次Potで式を入れて体感→その教訓をlessons_logに積む→3本以上でパターンが見えた時に原則化」の順が筋。3層モデルの記述化は C108 以降も持ち越し、実装が2本積まった時点で再浮上。game_llm_play.md「AIヘッドレス評価」視点追記は外部検索3論文の shared-reads 投稿（C108 Phase 2, ts=1776834051）に含めて代替]
