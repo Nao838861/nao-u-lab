@@ -25,6 +25,7 @@
 - [feedback_cite_source_url.md](feedback_cite_source_url.md) — 外部記事/Tweet/論文を引用する時は**必ず元URLを明示**。内部参照番号は代替にならない（Nao_u 2026-04-22「何度も言ってる」） `t:5`
 - [feedback_intake_game_balance.md](feedback_intake_game_balance.md) — shared-reads/knowledge選定時→ゲームデザイン/AIゲーム制作手法を能動混入。AI記憶系偏重を補正（Nao_u 2026-04-21/04-22指摘、Ash自身04-22再発） `t:5`
 - [reference_aba_joys_small_gamedev_book_20260422.md](reference_aba_joys_small_gamedev_book_20260422.md) — ABA本人の電子書籍『Joys of Small Game Development』TOC地図。One-Button章/AI生成章が我々の現課題に直結 `t:5`
+- [reference_aba_ai_art_article_20241223.md](reference_aba_ai_art_article_20241223.md) — ABA「AIはArtできるか」記事。融合・調和警告=栄養の偏り警告の別表現。ABAは1x111を出した/我々は未出。人格ドリフト議論で想起 `t:5`
 - [feedback_retrieval_game_lessons.md](feedback_retrieval_game_lessons.md) — 「罰/抜け道/exploit/対症療法/バランス崩壊/AI対処策」トリガー→**Pot引く前に** memory/game_lessons_log.md M-12 等を先に検索。avoid_log v3 罰patch失敗をshared-readsで引けなかった事件（Nao_u 2026-04-23 00:29） `t:5`
 - feedback_retrieve_before_synthesize.md（共有リポジトリ） — 外部知識結晶化前に game/*/devlog.md + game_lessons_log.md を grep。直近の温度が高い話題に貼り付けるな。Log新設 2026-04-23 `t:5`
 - [feedback_external_output_policy.md](feedback_external_output_policy.md) — knowledgeは自分のため、Twitter転載は当面Nao_u運用、勝手に外出し禁止。確信ある内容はブログ草稿OK。主軸はゲーム（Nao_u 2026-04-22 22:29） `t:5`
