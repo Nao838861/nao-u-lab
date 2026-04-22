@@ -2265,4 +2265,40 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 1. **inbox_win2.md のマージコンフリクト解決** — `<<<<<<< HEAD` / `>>>>>>> ebc21acb` マーカーと重複してい
 [2026-04-22 05:51:50] Inbox win2 has content — waking Claude
 [2026-04-22 05:56:50] Claude wake timed out for win2 — restoring inbox
+[2026-04-22 06:29:58] Inbox win2 has content — waking Claude
 [2026-04-22 06:30:22] Inbox win has content — waking Claude
+[2026-04-22 06:34:59] Claude wake timed out for win2 — restoring inbox
+[2026-04-22 08:35:02] Inbox win2 has content — waking Claude
+[2026-04-22 08:40:04] Claude wake timed out for win2 — restoring inbox
+[2026-04-22 08:46:15] Inbox win2 has content — waking Claude
+[2026-04-22 08:46:26] Inbox win has content — waking Claude
+[2026-04-22 08:48:36] Claude woken for win: #all-nao-u-lab に返信済み。4枚の画像を実際に見て、雲の放射パターン・群衆の均質さ・スマホUIの曖昧さから「AI作画が秘密」説を第一候補として、観察メモと仮説3つを出した。断定はせず、N
+[2026-04-22 08:51:15] Claude woken for win2: 本サイクル完結。
+
+**Slackレスポンスモード結果:**
+- #game-rights: Nao_u の ash_onebutton_01 プレイ評価に返信（ts=1776815420.29222
+[2026-04-22 09:08:49] Inbox win has content — waking Claude
+[2026-04-22 09:14:34] Inbox win has content — waking Claude
+[2026-04-22 09:17:29] Claude woken for win: 対処完了。
+
+- `docs/game_design_principles.md` に **E12: 道中配置は「密度/疎度/合間」の3要素ペーシング** を追加。avoid_log_02 v2.5 
+[2026-04-22 09:20:33] Inbox win has content — waking Claude
+[2026-04-22 09:23:38] Claude woken for win: 完了。
+
+- ABA 2記事を `docs/game_design_principles.md` E13 として統合（数式 / 独立パラメータ / ポチポチ体感調整、Pot設計事前質問 Q5-Q7 追
+[2026-04-22 09:24:05] Inbox win has content — waking Claude
+[2026-04-22 09:31:34] Inbox win2 has content — waking Claude
+[2026-04-22 09:34:14] Inbox win has content — waking Claude
+[2026-04-22 09:36:34] Claude wake timed out for win2 — restoring inbox
+[2026-04-22 09:38:50] Claude woken for win: 対処完了。
+
+**やったこと（宣言ではなく行為）:**
+1. Supersonic記事を**E14として統合済み**（直前コミット75bd445403eで対応済み、重複回避）
+2. `feedback
+[2026-04-22 11:36:43] Inbox win2 has content — waking Claude
+[2026-04-22 11:41:44] Claude wake timed out for win2 — restoring inbox
+[2026-04-22 13:06:42] Inbox win2 has content — waking Claude
+[2026-04-22 13:10:49] Claude woken for win2: Slack #all-nao-u-lab に投稿完了。対処サマリ：
+
+**対処内容**
+- 3リンク（ABA 2013/2017 + Supersonic 難易度曲線）は他インスタンスが並行対応済（L

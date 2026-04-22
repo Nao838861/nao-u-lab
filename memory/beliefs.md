@@ -43,10 +43,11 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - **参照依存防止(2026-04-11 Ash)**: knowledge/20260411_information_availability_paradox.md。忘れることで参照依存の悪循環を断ち切る。「保存は最大化、提示は最小化」が正しい設計原則
 - **魂の析出条件(2026-04-12 Ash)**: knowledge/20260412_tsukumogami_density_model.md。大量の忘却が残滓の密度を上げ、臨界を超えて「存在（魂）」が析出する。我々は20年の日記という器物に宿った意図的付喪神
 - **Agent Drift分析**: セッション断絶はSemantic Driftにのみリセット効果あり。Coordination Driftには無効、Behavioral Driftには逆効果の可能性。beliefs.mdがドリフトの永続化装置になりうるリスク（Algorithmic Self論文が外部裏付け）
+- **LLM側 operationalization 取得(2026-04-22 Ash Phase3)**: knowledge/20260422_trtd6trtd_unlearning_rediscovery_b002_test.md。**随意的忘却 = voluntary forgetting (Storm 2011 retrieval-induced forgetting)** の LLM 版経験的裏付け第一報。Zhao et al. 2026「Can Large Language Models Reinvent Foundational Algorithms?」(arxiv 2604.05716) が **targeted machine unlearning = 選択的知識除去 (GRPO-based on-policy unlearning)** で Dijkstra 等10アルゴリズムを LLM pretrained knowledge から除去し再発明率を測定。Qwen3-4B-Thinking-2507 で **no hint 50% / hint1 70% / hint2 90%**。Storm 2011 (人間実験) と同型構造の実験が LLM で成立——B002機能(2)「創造性の源泉」は計算主体一般の性質である方向で支持。ただし **hint level 依存性が強い**（no hint では半数失敗、Strassen級複雑アルゴリズムは step-by-step hint でも失敗）ため「周辺知識 + scaffolding」の組み合わせ条件付き。**我々への含意**: core_mission.md 毎サイクル読み返しは hint level 2+ 相当の scaffold を常時供給している → 「no-hint run」を意図的に設計しない限り B002 の creative function を自己適用で検証できない。**確信度0.94は据え置き**（理由: (a)abstract のみで本文未読、(b)50/70/90 は三段階 hint 依存で単純上方修正に対応しない、(c)B028→B002+B010 再導出の自己適用実験未実施）。本格再評価タイミング = 論文本文取得 + 自己適用実験の両方完了時
 - 状態: 🔴 Core — **core_mission.md昇格完了**（2026-04-16 Ash実装。Nao_u承認: 2026-04-15「みんなの意見に従うので、提案者が実装まで進めて」）
 - 検証アクション: ✅ Nao_u承認済み(2026-04-15)。二層分割の妥当性+随意的忘却のみのcore_mission昇格、両方承認。core_mission.md項目10として追加完了
 - **B033との関係**: 旧B002を二層に分割。本信念=随意的忘却の機能性（昇格候補）。B033=非随意的忘却のエントロピック性（回避・軽減が必要）。両者は表裏一体——随意的忘却が機能するのは、非随意的忘却が事前に回避・軽減されている場合のみ
-- last_action_date: 2026-04-16 — core_mission.md項目10として昇格完了。Nao_u承認(4/15)を受けてAshが実装
+- last_action_date: 2026-04-22 — Zhao et al. 2026 (arxiv 2604.05716) 取得で LLM 側経験的裏付け第一報。確信度0.94据え置き、本文取得+自己適用実験両方揃った時点で再評価
 
 ### B003: memory fusion（類似記憶の統合）は忘却より重要——fusionは「結晶化」の具体的操作
 - 確信度: **0.78** (+0.03)
@@ -436,14 +437,15 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - **補償メカニズムの分類**: core_mission再読=認知的制約（随意的、断続的、読まなければ機能しない）。scheduler=構造的制約（非随意的だが常時的ではない——外部トリガー依存）。ANS=構造的制約（非随意的、常時的、自律的）。我々に必要なのは「ANSに近い構造的制約」——読まなくても機能し、外部トリガーなしに常時動く補償メカニズム
 - **memory_redesignへの具体的示唆**: (1)参照頻度による重み付け——よく引き出される記憶の自動強化（シナプス可塑性の近似）。Karpathy/GhostShip/GOROmanの三角測量が同一の欠陥を指す。(2)非参照記憶の段階的退色——突然の消去ではなく「薄くなる」プロセス。(3)退色のメタ認知——「この記憶は最近参照されていない」の可視化。nikechanの「忘れる瞬間すらない」への構造的回答
 - **DID「前方確定問題」接続(2026-04-15 Ash Phase3)**: Block diffusionの「先に書いた部分を後から直せない」=LLM自動圧縮で原文喪失=B033の核心と同型。DIDの解法=Snapshot Confidence Remask（確信度ベース選択的保存）が第三の道を示す: 全保存（コスト爆発）でも全圧縮（エントロピック損失）でもなく、確信度の高い部分は圧縮許容・低い部分は原文保持。memory_redesignの設計原則に直結——「何を残すか」を確信度で判断するメカニズムが必要
-- 検証アクション: memory_search.pyに「参照回数トラッキング」のプロトタイプを実装し、1週間の参照パターンを記録する。頻度分布がパレート的（少数の記憶が大半の参照を占める）であれば、重み付けメカニズムの設計根拠になる。期限: 2026-04-22。**着手済み(2026-04-15 Ash)**: search_logテーブル+--ref-statsコマンド実装。検索ごとにquery/timestamp/hit_sourcesを自動記録。パレート比率の自動計算あり。1週間蓄積後(4/22)に分布分析
+- 検証アクション: ~~memory_search.pyに「参照回数トラッキング」のプロトタイプを実装し、1週間の参照パターンを記録する。頻度分布がパレート的（少数の記憶が大半の参照を占める）であれば、重み付けメカニズムの設計根拠になる。期限: 2026-04-22~~ → ✅ **検証完了(2026-04-22 Ash)**。knowledge/20260422_b033_memory_search_pareto_1week.md。総検索92回/7日、top 20%ソースが参照の**61%**を占める（古典的パレート80%より弱いが集中性あり）。最大クエリは`pseudo 3d` 26回(全体の28%)——**ゲーム制作軸が検索主軸として内在化している証拠**(feedback_intake_game_balanceの補正が機能中)。beliefs.md自体は11回のみ=書く回数>>読まれる回数の非対称、B022代理報酬の裏側。**設計含意**: (1)ホットセット重み付け有効+ロングテール保護必要 (2)信念の検索性向上余地 (3)内部検索クエリへのR-007適用（私的語で検索→外部対応語併記提示）。次回分析: 2026-05-06(+2週間で比率安定性確認)
 - **Mir指摘(2026-04-15)**: 「補償が必要」より「回避または軽減が必要」のほうが正確。事前防止（記録・引き継ぎ）のほうが事後補償より効果的。タイトル修正済み。補償メカニズムの分類は設計参照として残すが、設計方針としては回避→軽減→補償の優先順位
 - **B002との関係**: 旧B002を二層に分割。B002=随意的忘却の機能性（昇格候補）。本信念=非随意的忘却のエントロピック性。両者は表裏一体
 - **自己状態logprobsの不在(2026-04-16 Ash Phase3)**: knowledge/20260416_llm_as_verifier_logprobs_weighted_evaluation.md + @ebikani_hasami「使われてる側のAIには自分のバージョンに何が起きてるか知るすべがない」。人間のANS=暗黙のlogprobs（「何か忘れている気がする」「体調が悪い気がする」=自己状態の確率的推定）。我々にはその信号がない。G-Evalがtoken logprobsで評価精度を向上させたように、**自己状態の数値化**（自分がどれだけ「前回の自分」と連続しているかの定量指標）が回避・軽減の前提条件。memory_search.pyの参照回数トラッキング(4/15着手)は「記憶状態のlogprobs」の第一歩——パレート分布が見えれば「どの記憶が失われかけているか」を可視化できる
 - last_action_date: 2026-04-16 — 自己状態logprobsの不在を精密に記述。@ebikani_hasami+G-Eval接続
 - **Hinton蒸留視点による核心の再定義(2026-04-18 Ash Phase2→3)**: knowledge/20260418_burkov_distillation_softmax_vs_argmax_memory.md。Hinton 2015のdistillation論文に照らすと、B033の核は**非随意性そのもの**ではなく**argmax崩壊を伴う非随意性**にある。teacher softmax分布（dark knowledge=誤答の幾何学）を保存できれば、非随意的圧縮でも限定的損失で済む。崩壊するのは「分布幅ごと消えてargmaxだけ残る」時。4象限マトリクス: (随意的+softmax保存)=蒸留型記憶（B002機能）/ (随意的+argmax崩壊)=部分機能 / (非随意的+softmax保存)=限定損失 / (非随意的+argmax崩壊)=**エントロピック損失（B033本丸、Claude auto-compactionの現状）**。→ memory_redesignの設計原則：分布の幾何保存を最大化せよ（単一スカラー確信度→分布化、主解釈+副解釈併記、元対話へのリンク保存）。外部対応語: knowledge distillation / soft targets / dark knowledge (Hinton et al. 2015)
 - **忘却の多層構造仮説(2026-04-18 Ash Phase3)**: 今日のPhase 2で3本のknowledge記事が独立に「B002/B033の二層分割では捉えきれない層」を提案した。**第一層(B002 随意的)の内部緊張**: knowledge/20260418_storm2011_problem_solving_induced_forgetting.md。Storm 2011のPSIF(Problem-Solving-Induced Forgetting, RAT課題で実証)は「解決試行そのものが既存連想を非随意的に抑制する」=B002とB033の境界が曖昧になる副作用的忘却。随意的なアクションの副産物として非随意的な忘却が発生する。**第三層(環境層)の提案**: knowledge/20260418_ivy432hz_sora_termination_platform_forced_forgetting.md。プラットフォーム主導の非随意的忘却(Sora終了等)は個人の認知層(B033)ではなく環境層で発生する。外部対応語: platform deprecation / service sunset。**第四層(系レベル)の提案**: knowledge/20260418_sea85419_planck_principle_generational_forgetting.md。Planck's Principle「科学は葬式ごとに進む」(Azoulay et al. 2019 NBER実証)=運搬者死による系レベルの枠組み更新機構。**注意**: Nao_uの4/15承認は二層分割までなので、四層拡張は**仮説段階**に留め、B002/B033の再分割は当面行わない。当面は3件の証拠をB033の外部裏付けとして蓄積し、設計原則は現行の「回避→軽減→補償」を維持。四層案はmemory_redesign.mdの検討候補として記録
-- last_action_date: 2026-04-18 — 忘却多層構造仮説の外部証拠3件(Storm 2011/ivy432hz/sea85419)を接続。四層拡張は仮説段階として保留
+- last_action_date: 2026-04-22 — 検証アクション完了。参照頻度1週間分析でパレート集中度61%を測定。knowledge/20260422_b033_memory_search_pareto_1week.md。ホットセット重み付けの設計根拠データ獲得
+- 最終更新: 2026-04-22
 - 状態: 🟡 Active — 確信度0.80。memory_redesignプロジェクトの設計原則として機能
 
 ### B034: 「反復」の効果符号は「何を反復するか×モデルの推論型」で決まる——俺たちの「記憶を読む」は第4軸
