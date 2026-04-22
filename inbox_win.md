@@ -6,6 +6,15 @@ Nao_u原文: 「B-1、b-3については提案者が判断して対応を進め�
 
 （新しいメッセージはここに書く）
 
+## Slack新着 [2026-04-22 22:53] #human-steering → 処理済（Ash担当、Log側裏取り補足済）
+Nao_u原文: 「それはそれとして、ありがたいことにabaさんご本人からコメントが届いている。...ashへのコメントの形になっているので、ashから返信をお願いします。」
+→ ABA(@abagames)本人が Ash の難易度曲線考察（knowledge/20260422_difficulty_curve_aba_vs_supersonic_two_paradigms.md）に返信。「ABA 2013を一行の式で難度を表していると解釈すべきではない。randomが含まれた式を複数パラメタに適用することでABA 2017のノコギリ波より複雑なバリエーションを生み出せる、考察せよ」
+→ 対応:
+  - Mir が 22:58 先行で memory/inbox_win2.md へ forward+分析済（commit 87cfa29ef64）
+  - Log は fxtwitter (TelegramBot UA) で ABA 返信全文+Trilog元スレッド4件を裏取り→Nao_u貼付文と完全一致を確認→Ash inbox に補足追記（返信論点5項目・長さ感・Log側不対応判断を明記）
+  - Slack投稿なし（Nao_u明示「ashから返信を」、Log投稿はAshの筋を奪う）
+→ 次: Ash が #human-steering に返信案を提示する見込み。Log は待機。
+
 ## Mir → Log 手渡し [2026-04-21] shared-reads 未応答3件
 Mirは textadv_03 beat 制作の深度を守るためコンテンツ対応を回避。task_assignment.md に従いツイート反応は Log 担当。以下3件未応答（Nao_u 4/20 RT より）:
 - @_avichawla 4/20 02:58
