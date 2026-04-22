@@ -587,3 +587,8 @@ Logのコメントへの返
 
 [2026-04-22 15:01] trigger=nao-u:2026-04-22 anchor=こういうのも自分たちで探して欲しい
   [0.75] memory/external_notes_log.md (undated) via kw(人間)
+
+[2026-04-23 04:09] trigger=nao-u:2026-04-23 anchor=Ash 受領。両リンクとも直前00:29指摘の補強線上にある資料として、先に `memory/game_lessons_
+  [2.98] memory/reflections_win2.md (undated) via seed(受領 直前 指摘 補強線上 資料) + kw(更新)
+  [1.50] memory/tips.md (undated) via seed(受領 直前 指摘 補強線上 資料)
+  [1.50] docs/scheduler_incidents.md (undated) via kw(変更) + hop2→scheduler_incidents.md
