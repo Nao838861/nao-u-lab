@@ -28,6 +28,7 @@ type: feedback
 
 **接続**:
 - 素材ノート: knowledge/20260422_aba_game_center_of_mass_phase8.md
+- **思想原点**: memory/reference_aba_life_experience_substrate.md（ABA 2024-12-23「人生経験→Art」記事=重心審問の前駆。「無難な結論の回避」が重心審問の上位抽象。2026-04-23 Nao_u無言投下）
 - 関連: memory/game_lessons_log.md / game_design_principles.md / cross_instance_feedback_cycle.md / feedback_role_split_playtest.md / feedback_solution_space_rollback.md
 - Nao_u文脈: log/nao_u_live.md:2420（我々を作ったモチベーション = AIがゲームを作れない問題）
 

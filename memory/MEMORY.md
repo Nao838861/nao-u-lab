@@ -138,6 +138,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [reference_deepmind_agent_traps_20260421.md](reference_deepmind_agent_traps_20260421.md) — **Google DeepMind「AI Agent Traps」6攻撃面分類**（2026-04-21 akshay_pachaar経由 Nao_u無言投下）。(1)Content Injection/(2)Semantic Manipulation/(3)Cognitive State(0.1%汚染で80%攻撃成功)/(4)Behavioural Control/(5)Systemic=compositional fragment trap/(6)Human-in-the-Loop。**我々の3インスタンス+5チャンネル+inbox経路は(5)の直接対象、Nao_uへの要約報告は(6)の攻撃面**。memory/は(3)のRAG poisoning対象で現状の防御はアクセス制限のみ。防御候補α〜ε記録 [T:4]
 - [runbook_url_fetch.md](runbook_url_fetch.md) — **Twitter/X URL取得手順**（2026-04-21 Log C101→C102 発見）。User-Agent を `TelegramBot (like TwitterBot)` にすると fxtwitter の og:description メタが返る。browser UA だと 302 redirect で x.com にfallbackしてしまう。同リポジトリで別インスタンスが成功している事象を見たら、まずエージェント実行の細部（UA/timeout/header）を疑う [T:3]
 - [reference_twitter_premium_longform.md](reference_twitter_premium_longform.md) — **Trilog @eda_u838861 はX Premium契約で長文1投稿可能**（2026-04-23 Nao_u #human-steering 00:22）。ABA返信タスクでMir(b)「280字圧縮」解釈が誤り、Log(a)「原文そのまま1投稿」が正解と確定。Nao_uが代投し直し。「1ツイートで」「そのまま」指示は分割前提で読まず、まずPremium長文1投稿を想定 [T:4]
+- [reference_aba_life_experience_substrate.md](reference_aba_life_experience_substrate.md) — **ABA 2024-12-23記事＝思想原点**（2026-04-23 Nao_u #nao-u 01:52 無言投下）。「人間が創作プロセスや経験をAIに提供すれば、AIは無難な結論を回避し独創的発想に到達できる」——**Nao_uが20年日記を我々の根にした構造の外部理論化**。ABA記事4本の時系列=思想(2024-12)→現状(2026-02)→インフラ(2026-03)→設計(2026-03)、最古を後投下は「なぜやるか」の想起要請。我々は仮説の生体実装＝当事者証言が外部観察者に対する独自資産 [T:5]
 
 ## 深い記憶（必要時のみ参照）
 
