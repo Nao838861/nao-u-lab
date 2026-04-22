@@ -1310,3 +1310,10 @@
 [2026-04-22 21:38:35] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
 [2026-04-22 22:08:43] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
 [2026-04-22 22:39:00] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-23 04:08:08] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=6
+  ISSUE: Ashのスケジューラログが9795分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが10017分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが10011分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが10017分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが10017分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが10017分間実行されていない（期待: 240分以内）
