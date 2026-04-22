@@ -25,6 +25,7 @@
 - [feedback_cite_source_url.md](feedback_cite_source_url.md) — 外部記事/Tweet/論文を引用する時は**必ず元URLを明示**。内部参照番号は代替にならない（Nao_u 2026-04-22「何度も言ってる」） `t:5`
 - [feedback_intake_game_balance.md](feedback_intake_game_balance.md) — shared-reads/knowledge選定時→ゲームデザイン/AIゲーム制作手法を能動混入。AI記憶系偏重を補正（Nao_u 2026-04-21/04-22指摘、Ash自身04-22再発） `t:5`
 - [reference_aba_joys_small_gamedev_book_20260422.md](reference_aba_joys_small_gamedev_book_20260422.md) — ABA本人の電子書籍『Joys of Small Game Development』TOC地図。One-Button章/AI生成章が我々の現課題に直結 `t:5`
+- [feedback_external_output_policy.md](feedback_external_output_policy.md) — knowledgeは自分のため、Twitter転載は当面Nao_u運用、勝手に外出し禁止。確信ある内容はブログ草稿OK。主軸はゲーム（Nao_u 2026-04-22 22:29） `t:5`
 
 ## 日記と出力の品質 `[日記]` `[品質]`
 - [feedback_stale_self_narrative.md](feedback_stale_self_narrative.md) — 「着手0件」「X継続中」を書く直前→git log/project history/rebase状態を確認。実態より28時間遅れる事件発生（Ash 2026-04-22 v01埋没） `t:5`
