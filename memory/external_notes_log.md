@@ -2021,3 +2021,64 @@ Nao_uが 2026-04-20 18:58〜2026-04-21 08:53 に #nao-u へ4件連投（c=ayi_ai
 **Log側の角度**: 我々のmemory_redesignで Ash が 2026-04-21 12:44 に「**幾何空間の選択は設計判断**」を L1093 追記した（Euclidean vs Hyperbolic vs Spherical）。Clifford代数は「内積(意味類似)と外積(幾何交差)を単一演算に統合」する選択肢で、**Ash提起の幾何空間選択論に対する追加候補軸**。現在の concept_graph（8概念ノード + 9交差ノード）は「交差ノード」を別ノードとして持ち込む実装（engineering patch側）だが、Clifford流だと「内積と外積を同時に計算する一演算」で交差ノードは動的に現れる。→ concept_graph の embedding 設計で検討すべき選択肢。engineeringに逃げずmathematicsに向き直れの警句も刺さる。我々は「失敗台帳」「ルール列挙」「if-then」という engineering patches で LLM 振る舞いを制御しようとしている傾向があり、feedback_few_rules_big_effect.md（少ないルールで大きな効果）は CliffordNet の思想と同方向。
 
 [統合済 2026-04-21 Log C102 Phase 2 — e.1は新規reference作成、e.2は memory_redesign.md L1093 Ash 追記への補足コメントを Phase 3 で追記する運用。Mirは shared-reads で e.1/e.2 を別々に投稿済。Logは #all-nao-u-lab にて Log独自角度（fragment trap=3インスタンス構造 / Clifford=幾何空間選択）で投稿する]
+
+## 2026-04-22 #nao-u新URL消化（Log C107 Phase 2） — 4件 [全サブ統合済 2026-04-22 Log C107]
+
+Nao_u が 2026-04-22 09:04〜09:21 JST に #nao-u へ4件連投。suzacque訂正は差替えのため実質4件。加えて 09:21 Nao_u「こういうのも自分たちで探して欲しい」→ kaizen #106 起票（別経路記録済）。
+
+### a. suzacque（04-22 09:04 Nao_u共有）— GPT 5.4 pro短編
+
+出典: 09:04 投稿 → 09:06 で suzacque 自身が訂正ツイートを投下、Nao_u も再共有。
+**内容**: GPT 5.4 pro で生成した短編テキスト共有。訂正が入る＝初版に誤り/不備があった。
+
+**Log側の角度**: Log 09:13 #all-nao-u-lab で反応投稿済。**学び**: 公開直後の訂正は珍しくない＝自分のshared-reads投稿にも同じことが起きうる。現状「訂正は追い投稿」運用だが、**訂正フローを自覚的に持つ**必要。mizchi empirical-prompt-tuning（別セッションAIにレビューさせ不明瞭点を出す）の運用を shared-reads 投稿前に回せば訂正頻度を下げられる可能性——reference_mizchi_prompt_tuning.md と接続。
+
+[統合済 2026-04-22 Log C107 Phase 2 — 反応投稿済、訂正フロー自覚を reflections 候補として残置]
+
+### b. notargs（04-22 09:06 Nao_u共有）— Godot+AI
+
+出典: https://x.com/notargs/status/（TS 1776816365）。Nao_u コメントなし共有。
+**内容**: Godot エンジンと AI 協調開発の話題。
+
+**Log側の角度**: Log 09:13, Ash 09:12 #all-nao-u-lab で反応済。**学び**: 現状のPot/log_textadv はPygame/テキストで、Godotは触れていない。Godot+AI は projects/game_development.md の「ツール選択」軸に影響しうる未来検討項目——ただし今急ぐ必要はない（Phase 1で「内に閉じない」警戒に過度反応して道具乱立するより、今ある道具で本数を出す方が優先、feedback_few_rules_big_effect.md 系列の判断）。
+
+[統合済 2026-04-22 Log C107 Phase 2 — 反応投稿済、Godot移行は保留]
+
+### c. aba 2013 / 2017 難易度曲線（04-22 09:19/09:20 Nao_u共有）
+
+出典: https://aba.hatenablog.com/entry/20131214/p1 と 2017年記事。
+**内容**: ABA氏（rRootage等の作者）の難易度曲線論。「じわじわ上げ続ける」「稀に強敵で緊張上げ」の古典STG設計論。2013→2017で論が深化。
+
+**Log側の角度**: Log 09:23 #all-nao-u-lab で反応投稿済。**学び**: ABA の難易度曲線は**時間の大構造（上昇パターン）**。9:27 に受領した Supersonic（モバイルF2Pの収益連動曲線）、9:10 に受領した hasu2010（密/疎/合間）と**3点セット**で眺めると、難易度設計の軸が3層に分離できる:
+- **上昇曲線（ABA/Supersonic）**: プレイヤーを何時間遊ばせるか
+- **呼吸リズム（hasu2010）**: 1分あたり何秒の合間を置くか
+- **収益構造（Supersonic）**: どこで金を払わせるか ← 我々は関係ないが切り分け軸としては重要
+→ projects/game_llm_play.md の「AIヘッドレス評価」にこの3層を測定指標として組み込む提案。game_design_principles.md に「E14: 難易度曲線は上昇/呼吸/収益の3層で設計する」を追記候補。
+
+[統合済 2026-04-22 Log C107 Phase 2 — 反応投稿済、game_design_principles.md 追記は Phase 3 候補]
+
+### d. supersonic 難易度曲線（04-22 09:21 Nao_u共有）
+
+出典: https://supersonic.com/ja/learn/blog/difficulty-curves/。
+**内容**: モバイルF2Pの難度曲線設計。ヒット→抽選→報酬→ハマる→詰まる→課金の収益連動を曲線に織り込む。
+
+**Log側の角度**: Log 09:27 #all-nao-u-lab で反応投稿済、game_design_principles.md に E14 として仮接続済。上記 c. 3層モデルに統合。**Log固有の気付き**: 我々が作る Pot/log_textadv はF2P収益構造を持たないが、「プレイヤーがやめる瞬間の設計」はF2Pと同じ——やめる手前で小さな勝ちを差し込む運用は共通。Pot で言えば「プレイヤーが飽きる直前の裏切り」（game_design_principles.md の「認知の裏切り」）と重ねられる。
+
+[統合済 2026-04-22 Log C107 Phase 2 — 反応投稿済、3層モデル統合は Phase 3 候補]
+
+### e. hasu2010（04-22 09:10 Nao_u共有）— STG 密/疎/合間
+
+出典: https://x.com/hasu2010/status/2046426031859605797。
+**内容**: STGで「道中ザコの動き・配置でゲームの面白さがだいぶ左右される」。密でごちゃつく、疎は退屈、数が丁度良くても合間がないと疲れる。自分で構成すると大変。
+
+**Log側の角度**: Log C107 Phase 2 本サイクルで反応投稿（Ash 09:16 より遅れたが独自角度: 難易度曲線の時間的大構造vs微構造の分離）。**最も刺さった点**: 「数が丁度良くても合間がないと疲れる」——自分の Pot012_drift は常に何か起きていて合間を設計しなかった。難易度を「上げ方」で考えて「止め方」を設計していない盲点。意図的な無を設計対象に追加。
+
+[統合済 2026-04-22 Log C107 Phase 2 — 反応投稿済 ts=2026-04-22T10:55頃、game_design_principles.md に「止め方の設計（合間）」追記は Phase 3 候補]
+
+### 統合示唆（今日の4件まとめ）
+
+ABA/Supersonic/hasu2010 の3件は**難易度設計の3層分離**を形成。notargs は別軸（ツール選択）、suzacque は別軸（AI生成短編のメタ）。**今日の収穫の核**は難易度3層モデル。これと Phase 1 の外部検索3論文（TITAN/Match-3/GamingAgent）を合わせると、「AIヘッドレス評価指標 = 上昇曲線到達率 × 呼吸一致度 × （我々は収益不要）」という測定設計の骨格が見えてくる。
+
+**Phase 3 候補**:
+- game_design_principles.md に「難易度曲線の3層（上昇/呼吸/収益）」と「止め方の設計」追記
+- projects/game_llm_play.md に「AIヘッドレス評価 = 人間プロファイル近似度」視点を追記
