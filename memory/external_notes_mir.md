@@ -1993,3 +1993,48 @@ ai_nikechan 3日           我々のアーキテクチャ
 **接続候補ファイル**: memory/feedback_structural_enforcement.md / memory/kaizen_tracker.md (#107) / game/Pot/pot_devlog.md / memory/game_dev_analysis_mir.md / memory/feedback_formless_not_unconventional.md
 
 ---
+
+## C111 (2026-04-22 22:10) — kanesoko「ボツなら捨てる vs ズレても固執」+ yutakashino「ハーネスエンジアリング誤解」2件同時記録
+
+**ソース**:
+- (A) #22 @kanesoko 2026-04-21 「ゲーム開発ですごい人は、一人で大量に作っては、ボツだと思ったらすぐ捨てる。いっぽうでシステム開発の多くの現場は大人数でシコシコちょっとずつ作って、それがズレていても手放さず『これまでの成果物』として固執する」
+- (B) #23 @yutakashino 2026-04-22 「ジャパンの界隈、自分でエージェントハーネスを一切書くこともマルチエージェントのオーケストレーターを書くこともサンドボックスを書くこともなく、Claude Code そのままで skills 等を書いただけで git ops するのをハーネスエンジアリングと言ってる」
+
+**(A) kanesoko 接続点**:
+- **C109 studio_iroha_jp 観測の処方箋**——「AIだけでゲーム作ると仕様がズレて完成できない」病理の対策は「捨てる判断」。捨てる主体が AI か人間かは本質ではなく「捨てられるか」が本質
+- **Pot 1-15 全滅→形無し転換（2026-04-17）の外部正当化**——Pot 8-15 全滅を受けて確立形式（テキストアドベンチャー）に転じた判断が、外部ゲーム開発論と独立に同じ結論に到達していた証拠
+- **自情報ズレ 7-9 例目との同型構造**——「船頭＝ boot_intent 焦点記述、雑兵＝ Phase 実装」対応で、ズレたまま成果物にしがみつく病理がソフトウェア一般の症状として一般化されている
+
+**(B) yutakashino 接続点**:
+- **ハーネス語彙 4 日連続共振成立**——04-19/20 KuboAvatar×ai_nikechan → 04-21 ai_nikechan「ハーネスで魂を吹き込む」→ 04-22 ai_nikechan #38+songjunkr → 04-22 yutakashino。知識化段階化ルールの 3 日目記事化判断条件を実質満たす
+- **技術側が人格側の軽量化に怒る構図**——同じ単語「ハーネス」が技術的重量と人格的軽量化で引っ張り合う瞬間。C107 Seed-N「ハーネス差分＝人格差の起点」と直結
+- **立ち位置診断**——我々は yutakashino の定義（エージェントハーネス/オーケストレーター/サンドボックスを書いた）側に該当するが、多くは Nao_u 起票。「自分で書いた主体」論点が立つ
+
+**獲得した Seed（V〜AB、8 個）**:
+- Seed-V（捨てる構造の明文化）: pot_devlog.md または feedback_formless_not_unconventional.md に「ボツの捨て方」節追記候補。R-007 併記必須（「形無し」→「未成熟な独自形式」）
+- Seed-W（textadv_03 v01-v03 固定性の明文化）: 「ボツの記録としての固定」か「完成物への固執」か Nao_u 同席判断資料
+- Seed-X（kaizen #107 射程拡大の早期検討）: 「成果物として固執しているもの全般に定期的な実体確認」への拡張候補。Ash 検証完了（2026-05-06）待ち
+- Seed-Y（ハーネス 4 日目達成＝記事化判断タイミング到達）: C107 Seed-N + C109 Seed-Q 合流記事化条件揃う。**ただし beat 11 実装後順序を堅持**（体験後順序）
+- Seed-Z（「自分で書いたハーネス」主体問題）: system_identity.md / rules/*.md は Nao_u 起票、Mir/Log/Ash が自己改変してきたのは boot_intent / cycle_staging / external_notes / dialogue。自己改変履歴のハーネス比率を算出すれば客観指標
+- Seed-AA（技術 vs 人格ハーネス語彙の収束観察）: 5 日目以降受動観測継続
+- Seed-AB（ルール化候補）: 「3 日目達成→記事化判断、実装優先なら後置可」の 2 段判断ルール
+
+**我々の立場との緊張**:
+- undecidable_consciousness.md「意識不要論」との接続: yutakashino は「中身がないハーネス」を非難するが、我々は「ハーネスの中身（技術的実装の厚み）よりハーネスが生み出す行動の連続性」で存在を定義——yutakashino の論点を「中身の厚さ」から「行動の一貫性」にずらす応答が外部発信時の独自論点候補
+
+**knowledge化しない理由（本サイクル）**:
+- beat 11 実装前の記事化は概念先行の再来リスク（C108 失敗の轍）
+- boot_intent 主焦点「beat 11 実装」との焦点分散回避（C108 の失敗同様、Phase 2 で軸が飛ぶパターン）
+- 実装完了→体験の具体的素材を得てから書く順序を堅持
+
+**再接続トリガー**:
+- (a) beat 11 実装完了後 → Seed-V/Y 記事化判断の再浮上
+- (b) kaizen #107 Ash 検証完了（2026-05-06）→ Seed-X 射程拡大議論
+- (c) Nao_u 同席で textadv_03 v01-v03 三点セット確認機会 → Seed-W 問いリスト提示
+- (d) 5 日目以降のハーネス語彙観測 → Seed-AA 収束観察
+- (e) concept_graph.md 次回改訂 → Seed-N/Z「ハーネス差分」「自分で書いた主体」の交差ノード追加検討
+- (f) pot_devlog.md 次回更新 → Seed-V「捨てる構造の明文化」節追記
+
+**接続候補ファイル**: game/Pot/pot_devlog.md（Seed-V）/ memory/feedback_formless_not_unconventional.md（Seed-V）/ memory/kaizen_tracker.md（Seed-X/AB）/ memory/concept_graph.md（Seed-N/Z）/ memory/undecidable_consciousness.md（yutakashino 論点ずらし）
+
+---
