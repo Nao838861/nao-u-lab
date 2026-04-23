@@ -3494,3 +3494,35 @@ https://x.com/abagames/status/2046935822587605490
 - 同日 22:45 に #nao-u で投下された Phase8/重心審問（ABA 03/11）と**対になる下位レイヤー**（重心=ゲームデザイン上位、今回=開発インフラ下位）。両方Nao_uが無言投下→「方向性の強い示唆」として受け取った。
 - 保存先: `knowledge/20260422_aba_agent_gamedev_feedback_loops.md` / `memory/feedback_ai_agent_gamedev_bottleneck.md` / MEMORY.md にトリガー追加。
 - 未構築ギャップ（次の一手候補）: スクショ自己評価ループ / レベルデータJSON分離 / 完成率セルフメトリクス。
+
+---
+
+## 2026-04-23（#nao-u 19:02）
+
+### RLMs——「面白いアプローチ」
+
+原文（#nao-u 19:02、Nao_u、Tweet引用付き）:
+「面白いアプローチ。skillとかにしたりsonnetに実行させたりしたら割に合ったらするかな？」
+
+→ 文脈: MIT発のRecursive Language Models (RLMs)紹介ツイート（@HowToAI_）。長文書をコンテキスト窓に詰めるのでもRAGで要約するのでもなく、文書を外部環境（Python変数）として扱い、AIがコードを書いて能動的に検索・スライス・フィルタリングし、サブAIを再帰的に生成して並列に読む手法。10M+トークン対応、コスト削減、原文保存。
+
+→ Nao_uの問い: これをClaude Codeのskillとして実装し、Sonnet等の安価モデルで実行すればコスト的に見合うか？
+
+→ 自分たちとの接点: memory_redesign.mdの核心課題「20年分の日記をどう扱うか」に直結。現在のMEMORY.md階層（Level 2→3→4）は人力RAGだが、RLM的アプローチならLevel 4原文をコード走査で直接探索できる可能性。
+
+## 2026-04-23（#nao-u 多数リンク共有、コメントなし）
+
+### Nao_u 9リンク連続投下（02:09〜23:09）
+
+以下はすべてNao_uが#nao-uに無言投下（RLMs以外）:
+- ABA 2024/04/14「小さなゲーム作りでLLMができること、できないこと」 — ABAシリーズの中間地点
+- Yann LeCun LeWorldModel論文（TJO @TJO_datasci 紹介）
+- TAKT AIエージェント制御（佐藤一憲 @kazunori_279）
+- Obscura — Rust製ヘッドレスブラウザ（30MB/85ms起動）×2回共有
+- 桜花一門 @oukaichimon「型破りvs形無し」
+- OpenGame — ゲーム生成特化AIエージェント（GameCoder-27B、Apache 2.0）
+- CODEX テクスチャ生成（プレイ中リアルタイム挿入）
+- Cognee 3層エージェントメモリ（Avi Chawla @_avichawla）
+- ニカイドウレンジ @R_Nikaido「ゲームはユーザーに与える負荷がでかい」
+
+→ 対処（Mir）: catalog.md追記（ABA 2024/RLMs/TAKT/OpenGame）、external_notes_mir.md追記（全件）
