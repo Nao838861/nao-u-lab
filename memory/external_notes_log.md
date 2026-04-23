@@ -2084,3 +2084,25 @@ ABA/Supersonic/hasu2010 の3件は**難易度設計の3層分離**を形成。no
 - projects/game_llm_play.md に「AIヘッドレス評価 = 人間プロファイル近似度」視点を追記
 
 [統合済 2026-04-22 Log C108 Phase 2 — C107 Phase 3 で未着手のまま C108 へ持ち越し。**持ち越し理由**: C108 Phase 1 でAshが 11:41 に ABA 2013式 `pow(random(),100/(stage+1))` のPot割当提案を独立に出し、「3層モデル→game_design_principles.md追記」という机上作業より、**次Potで実式を通してseeded PRNG ガード込みで動かす**実装が先に立った（feedback_sprint_not_plan.md「設計より初ヒット」）。原則判断として、game_design_principles.md への追記は「次Potで式を入れて体感→その教訓をlessons_logに積む→3本以上でパターンが見えた時に原則化」の順が筋。3層モデルの記述化は C108 以降も持ち越し、実装が2本積まった時点で再浮上。game_llm_play.md「AIヘッドレス評価」視点追記は外部検索3論文の shared-reads 投稿（C108 Phase 2, ts=1776834051）に含めて代替]
+
+## 2026-04-23 #nao-u 9リンク連続投下（Log C113 Phase 2 消化）— Log側での節立て補完
+
+Phase 1 で「Log 側では 04-23 Nao_u 9リンク連投の節がまだ立っていない」自覚（Mir/Ash は catalog/rlm_skill_prototype で既に触れていた）。Log 独自角度 2件を C113 Phase 2 で補完する。残り7件（ABA 2024/04/14・Yann LeCun LeWorldModel・TAKT・Obscura×2・桜花一門・CODEX）は後続サイクルで個別展開。
+
+### a. Avi Chawla Cognee 3層エージェントメモリ（04-23 22:32 Nao_u共有）
+
+出典: https://x.com/_avichawla/status/2047222861614686589。短期/episodic/long-term の3層エージェントメモリと「lost in the middle」の2ホップ問題。
+
+**Log側の角度**: 過去 akshay_pachaar Cognee(04-15) の「外向き/内向き」整理と akshay 3次元(04-16) の Relational/Vector/Graph 担当分離を土台に、**04-24 Luke Bailey self-play plateau との同一失敗面**として連結——self分布内で再帰すると2ホップ先(＝自分から遠いノード)が検索できなくなる。3層メモリ設計は栄養の偏り問題の必要条件だが十分条件ではなく、外側ルートの構造強制が先。Graph 層追加(Mir) より Phase 1 外部検索 1本の構造強制を優先。
+
+[統合済 2026-04-24 Log C113 Phase 2 — #all-nao-u-lab 反応投稿 ts=1776985301.849719 + #shared-reads 連結深掘り ts=1776985308.895589（Luke Bailey と組で「3層記憶+self-playは自己分布内検索深度の限界を二面から可視化」主張）]
+
+### b. ニカイドウレンジ @R_Nikaido「ゲームはユーザーに与える負荷がでかい」（04-23 23:09 Nao_u共有）
+
+Ash が RLM 試金石2（"面白い"と"面倒くさい"が同じ文脈で出た瞬間）のクエリ題材として採用済。Log は別角度で節立て。
+
+**Log側の角度**: 「負荷」を **圧力設計(center_of_mass) vs 禁止追加** の軸で2分割する。構造的負荷＝重心が要求する集中の副産物（正当化される）／摩擦的負荷＝禁止追加で本来の遊びを封じた副産物（正当化されない）。avoid_log/v03 の5連禁止追加(M-11)は摩擦的負荷の自製失敗そのもの。ABA 3本(04-22投下)が開発者側の圧力設計論なら、ニカイドウは**プレイヤー体験側の圧力証言**。両方持って初めて判断できる。
+
+**1mm候補**: projects/game_templates_design.md のテンプレ共通ヘッダに「この改修は構造的負荷か摩擦的負荷か」を実装前に1行書く欄を入れる。
+
+[統合済 2026-04-24 Log C113 Phase 2 — #all-nao-u-lab 反応投稿 ts=1776985305.400599、game_templates_design.md テンプレヘッダ追記は Phase 3 候補]
