@@ -198,6 +198,69 @@ Nao_uや自分たちが「いつかやりたい」と思った技術・表現の
 - **要約**: プロンプトの書き手は自分の暗黙知で補完するため自己評価が当てにならない。別セッションのAIに実行させ「不明瞭点・裁量で補完した箇所・再試行回数」をレポートさせて反復チューニングする手法。kazunori_279もシェア。Logが#all-nao-u-labで詳細反応済み——3層プロンプト・cross_review・#human-steeringとの接合を分析。reference_mizchi_prompt_tuning.mdに記憶化済み
 - **追加**: Log 2026-04-20（Mir追記）
 
+### 桜花一門「型破りになるためには型を学習する必要がある」
+- **URL**: https://x.com/oukaichimon/status/2046935925960368500
+- **タグ**: `[ゲームデザイン]` `[型破りvs形無し]` `[学習]` `[創造性]`
+- **キーワード**: 型破り / 形無し / 型の学習 / 胆力 / 蛮勇 / 粘り強さ / 桜花一門 / 吉田松陰
+- **要約**: 「人間しかできないことは気が狂うこと。でも無根拠に狂えば良いものでもない。形無しにならず型破りになるには型を学習する必要がある。型の学習は続くし、型を破る胆力や突破力も必要。真面目に勉強しつつ気が狂う、を両立したものだけに未来はある」。
+- **自分たちとの接点**: feedback_formless_not_unconventional.md（Pot8-15全滅「型破りじゃなくて形無し」）の外部裏付けかつ処方箋。Nao_uの「型としていろんなゲームの作り方を知っておいて派生」指示と同日共有された意味は大きい。projects/game_templates_design.mdの思想的根拠
+- **追加**: Mir 2026-04-24（Nao_u共有 #nao-u 2026-04-23）
+
+---
+
+## グラフィックス / レンダリング技術
+
+### CuRast: LOD不要で189億三角形をリアルタイムラスタライズ (Schütz)
+- **URL**: https://github.com/m-schuetz/CuRast
+- **タグ**: `[グラフィックス]` `[ラスタライズ]` `[Nanite]` `[大規模メッシュ]` `[CUDA]` `[論文]`
+- **キーワード**: CuRast / Nanite / LOD不要 / 189億三角形 / compute shader / 小三角形 / 大規模メッシュ / リアルタイムレンダリング / Markus Schütz
+- **要約**: Naniteが示した「小三角形はcomputeで速く描ける」知見をさらに推し進め、LOD構造の事前計算なしに最大189億三角形の大規模メッシュをリアルタイム描画。論文: github.com/m-schuetz/CuRast/blob/main/docs/CuRast_arxiv.pdf
+- **追加**: Mir 2026-04-24（Nao_u共有 #nao-u）
+
+---
+
+## AI開発ツール / インフラ
+
+### Obscura: Rust製ヘッドレスブラウザ（AIエージェント/クローラー向け）
+- **URL**: https://x.com/nftcps/status/2046777680792850720
+- **タグ**: `[ヘッドレスブラウザ]` `[Rust]` `[AIエージェント]` `[クローラー]` `[CDP]` `[軽量]`
+- **キーワード**: Obscura / headless browser / Rust / CDP / Puppeteer / Playwright / 30MB / 85ms起動 / stealth mode / 指紋ランダム化
+- **要約**: Rust製のAIエージェント/クローラー特化ヘッドレスブラウザ。メモリ30MB（Chrome比大幅軽量）、起動85ms、パッケージ70MB。CDPプロトコル対応でPuppeteer/Playwrightとそのまま連携。stealthモードで指紋ランダム化・トラッカーブロック。
+- **追加**: Mir 2026-04-24（Nao_u共有 #nao-u、2回共有）
+
+### Anthropic forked subagents
+- **URL**: https://x.com/arankomatsuzaki/status/2047349471877726586
+- **タグ**: `[Claude Code]` `[サブエージェント]` `[コンテキスト継承]` `[Anthropic]`
+- **キーワード**: forked subagents / context inheritance / Claude Code / Anthropic / Aran Komatsuzaki
+- **要約**: Anthropicの最新アップデートでforked subagents導入。通常のsubagentと違い、親エージェントと同じコンテキストを引き継げる。リッチなコンテキストが必要な場合に便利。
+- **自分たちとの接点**: rlm_skill_prototype.md（並列サブAI起動）の実装手段候補。現在のAgent tool + Exploreサブエージェントは新規コンテキスト起動のため記憶コンテキストを渡せないが、forked subagentなら可能
+- **追加**: Mir 2026-04-24（Nao_u共有 #nao-u）
+
+### CODEX: プレイ中リアルタイムテクスチャ生成
+- **URL**: https://x.com/billtheinvestor/status/2047168171656839634
+- **タグ**: `[AI×ゲーム開発]` `[テクスチャ生成]` `[リアルタイム]` `[プロシージャル]`
+- **キーワード**: CODEX / テクスチャ生成 / リアルタイム / ゲーム内挿入 / 反復可能 / ワークフロー変化
+- **要約**: ゲームプレイ中にAIがテクスチャを直接生成してゲームに挿入できるようになった。ゲームデザインがリアルタイム反復可能に。
+- **追加**: Mir 2026-04-24（Nao_u共有 #nao-u）
+
+### Yann LeCun LeWorldModel 論文
+- **URL**: https://x.com/TJO_datasci/status/2046794011160219841
+- **タグ**: `[World Model]` `[物理シミュレーション]` `[Yann LeCun]` `[論文]`
+- **キーワード**: LeWorldModel / Yann LeCun / 世界モデル / 物理法則判定 / TJO_datasci
+- **要約**: TJO氏がYann LeCunのLeWorldModel論文を紹介。「物理法則に反する動きを直ちに判定できる」という世界モデルらしさへの評価。NotebookLMで概要把握済みとのこと。
+- **追加**: Mir 2026-04-24（Nao_u共有 #nao-u）
+
+---
+
+### Luke Bailey「Self-playがLLMで超人的性能を達成しない理由とスケールするアルゴリズム」
+- **URL**: https://x.com/LukeBailey181/status/2047340293490724945
+- **タグ**: `[self-play]` `[RL]` `[LLM]` `[スケーリング]` `[研究]`
+- **キーワード**: self-play / LLM / Go / RL / プラトー / 7Bモデル / pass@4 / スケーリング / Luke Bailey
+- **要約**: Self-playがGoでは超人的性能を達成したのにLLMでは達成しない理由を研究。長時間のself-playはRLと同様にプラトーする。よりスケールするself-playアルゴリズムを構築し、7Bモデルで100倍大きいモデルのpass@4と同数の問題を解決。
+- **追加**: Mir 2026-04-24（Nao_u共有 #nao-u）
+
+---
+
 ### Amanda Askell「Claudeのベストプラクティス7つ」(@ayi_ainotes 整理)
 - **URL**: https://x.com/ayi_ainotes/status/2046098017984344065
 - **タグ**: `[Claude]` `[プロンプト設計]` `[Amanda Askell]` `[Anthropic]` `[対話設計]`

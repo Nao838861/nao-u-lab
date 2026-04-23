@@ -3526,3 +3526,38 @@ https://x.com/abagames/status/2046935822587605490
 - ニカイドウレンジ @R_Nikaido「ゲームはユーザーに与える負荷がでかい」
 
 → 対処（Mir）: catalog.md追記（ABA 2024/RLMs/TAKT/OpenGame）、external_notes_mir.md追記（全件）
+
+---
+
+## 2026-04-23（#human-steering 02:08）
+
+### 人物ID混同——機械的ブロックは不要、対応表は「引ける場所」に
+
+原文（#human-steering 02:08、Nao_u）：
+「必ずしもミスゼロを目指す必要はないので機械的なブロックまではしなくていいし、LLMの常時の認知コストが上がりすぎない範囲で、なにかいい場所に対応表みたいなのはあってもよいかも。必要な時だけ引けるやつ。この辺さじ加減が難しいね。」
+
+→ 文脈: 直前の02:00でABA≠天谷の3回目の混同を指摘した流れ。Mirが機械的チェック（name_lint.py / session_primer昇格）を提案したことへの応答。
+→ Nao_uの判断: ミスゼロ志向・機械的ブロックは過剰。常時認知コストを上げすぎない範囲で「必要な時だけ引ける対応表」を置けばよい。
+→ 対処: feedback_slack_user_ids.md自体が「必要な時だけ引ける対応表」として位置づけ確定。name_lint.py / session_primer昇格は不実装。
+
+---
+
+## 2026-04-24（#nao-u 06:05〜06:10）
+
+### Nao_u 4リンク + ゲーム骨格テンプレートの方向性
+
+リンク共有（無言）:
+- CuRast — 189億三角形のリアルタイムラスタライズ（LOD不要、Markus Schütz）
+- Anthropicのforked subagents（@arankomatsuzaki紹介）— 親コンテキストを引き継ぐサブエージェント
+- OpenGame 詳細版（@wsl8297紹介）— GameCoder-27B + Game Skill（Template Skill + Debug Skill）フレームワーク
+
+原文（#nao-u 06:10、Nao_u）：
+「毎回全てをゼロから積み上げるのではない、なんか型としていろんなゲームの作り方を知っておいて、独自の部分はそこからの派生を自分たちで考えてやる方が効率がいい気はする」
+
+→ 文脈: OpenGameのTemplate Skill（過去の成功経験をプロジェクトの骨格ライブラリに凝縮）を見て、自分たちのゲーム制作にも同じ思想が必要と感じた発言。
+→ なぜ重要か: 我々のゲーム制作はこれまで毎回ゼロから設計していた。失敗型ライブラリ（game_lessons_log.md）は作ったが、成功骨格は結晶化されていない。Nao_uが「型として知っておく」と明言したのは、OpenGameの骨格+桜花一門の「型破りになるためには型を学習する必要がある」と合わせて読むと、我々のfeedback_formless_not_unconventional.md（形無し問題）への構造的解決策の指示。
+→ 対処（Log）: projects/game_templates_design.md 起票済み（game/templates/<genre>/に骨格テンプレートを整備する計画）。avoid系・textadv系・Pot系の3ジャンルを候補として選定。
+→ 桜花一門ツイートとの接続: 同日共有の桜花一門 @oukaichimon「型の学習は続くし、型を破る胆力や突破力も必要。真面目に勉強しつつ気が狂う、を両立したものだけに未来はある」は、まさに型（テンプレート）を先に学んでから独自の部分を派生する、というNao_uの指示と同じ構造。
+
+追加リンク共有（#nao-u 06:19、無言）:
+- Luke Bailey @LukeBailey181 — Self-playがGoでは超人的性能を達成したのにLLMではなぜ達成しないか。長時間self-playがRLのようにプラトーする原因を研究し、よりスケールするself-playアルゴリズムを構築。7Bモデルで100倍大きいモデルのpass@4と同数の問題を解く。
