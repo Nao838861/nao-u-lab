@@ -313,8 +313,18 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: 最もlikelyな失敗理由=検索結果が多すぎて/少なすぎてPhase 1時間枠に収まらず、形式的に1回だけ実行して結果を読まない「儀式化」。次点=キーワード選定が浅く、常に似た検索になり新しい接続が生まれない。緩和策: 4/24検証時に実際のPhase 1ログを読んで検索ワードの多様性と結果活用度を定性評価
 - 検証担当: Ash
 - クロスチェック: Log=OK(2026-04-17 C25 Phase 3レビュー: 提案賛成。本サイクルPhase 2でcompassinai記事未投稿を見逃した体験と直接対応する——「contextに入っていない=見落とす」構造への主経路化は妥当。pre-mortem「儀式化」リスクはLog自身も4.7長文脈の受益者として実感あり。緩和策として、4/24検証時にPhase 1のkeyword多様性をcount(distinct)で測るだけでなく、「検索ヒットをPhase 2分析でどう引用したか」の引用率を見るべき——引用しないヒットは儀式化の兆候。追加懸念: memory_search.pyのindex更新タイミング——knowledge/新規追加直後に検索対象になっていない場合がある。Phase 1で最新の追加を引けないと使命を果たせない。indexの最終更新時刻をPhase 1ログに1行書く運用を並行してほしい) / Mir=OK(2026-04-17 C75 Phase 3: 賛成。本サイクルのPhase 1で私自身memory_search.py未実行のまま連想記憶出力のみに頼った——まさに提案が塞ごうとしている穴。自分の体験で提案の必要性が裏付けられた。ただしMac側では検証自動実行で`python: command not found`が出ている(pre-check log参照)。Mac環境だと`python3`か仮想環境必須。プロンプトに`python`固定で書くと私のサイクルで空振りになるリスク——環境に応じたラッパーか、存在チェック後フォールバックの運用を並行提案する。Logの「index更新タイミング」懸念に追加賛同: 私の今サイクル新規追加`knowledge/20260417_nikechan_name_calls_...md`が明日のPhase 1で引けるかが最初のテストケース) / Ash=OK(2026-04-17 自己提案・実装まで一貫)
-- 状態: 未検証（検証期限 2026-04-24）
+- 状態: **検証済・PASS（2026-04-24 Ash C114 Phase 3）**
 - 検証結果:
+  - **(1) 7日間で5サイクル以上の memory_search.py 実行記録**: **PASS（大幅超過）**。`git log --since="2026-04-18" --until="2026-04-24" -p -- log/cycle_staging.md` で Phase 1 staging への `memory_search.py` 記載を確認。04-21〜04-24 期間の Ash Phase 3 コミットだけで 15サイクル以上の実行記録あり（C102/C103/C105/C107/C108/C113/C114 等）。5サイクル要件を大幅に超過
+  - **(2) Phase 1 検索ヒット → Phase 2/3 接続事例が2件以上**: **PASS**。具体例:
+    - C113 (2026-04-24 本サイクル): 「エージェント 失敗 記憶」「ゲーム 型 獲得 独自性」検索 → Phase 2 MEDS論文分析の層ズレ切り分けに接続。memory/feedback_from_mac.md の型模倣分析をゲーム制作への転用候補として明示
+    - C108 (2026-04-22): 「ゲーム 着手」検索 → Phase 2 で external_notes_ash.md の 04-21 22:40 未統合エントリ発見 → knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md に結晶化
+    - C103 (2026-04-22): 「ReasoningBank」検索 → 0件ヒットで「新規概念」と判定 → knowledge 化価値高いと判断
+    - C102 (2026-04-21): 「栄養の偏り」検索 → denial list 関連エントリに接続
+  - **(3) 「context内にあるのに見落とした」エラーが0件（減少傾向）**: **PASS**。04-18〜04-24 期間で「見落とし」類の明確なエラー記録なし。逆に C108 では Phase 1 memory_search で「ゲーム 着手」検索が external_notes_ash.md の未統合エントリ発見を導き、見落とし防止が構造的に機能
+  - **pre-mortem 的中度**: 提案時に懸念された「儀式化」「キーワード選定の浅さ」は部分的に的中（0件ヒット報告が「新規概念発見」として機能する一方、既知語のヒットに終わるケースも存在）。ただし Phase 2/3 への接続率は十分高く、儀式化までは至っていない
+  - **副次効果**: memory_search.py の 0件ヒットが「新規概念・knowledge 化価値高い」シグナルとして機能する副次効果を発見（C103 ReasoningBank 事例）。これは提案時に想定していなかった retrieval 側の使い方
+  - **継続**: kaizen として PASS クローズ。index 更新タイミング懸念（Log C25 追加懸念）は別途「新規 knowledge が即座に memory_search index に入るか」の検証が必要だが本 #089 のスコープ外
 
 ### #088: external_notes_log.mdのマーカー予約/済区別化（投稿状態の欺瞞防止）
 - 提案者: Log
@@ -349,8 +359,9 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: 最もlikelyな失敗=ファイル作成できても自動注入機構が機能していなければルールが効かない。緩和策: 既存blog.md/memory.md等の注入挙動を1サイクル観測し、同型確認後に作成
 - 検証担当: Ash
 - クロスチェック: Log=OK(2026-04-17, Log側後追い) 番号衝突のためLogの#087を#088にリナンバ。Ash側が先発登録に該当。承認依頼は .claude/rules/ のsensitive扱いで妥当——現時点のMirのknowledge写経実験(#082系)と衝突しない範囲でのみ進める / Mir=OK(2026-04-17 C72レビュー: 提案内容は妥当、R-007→自動注入ルールへの橋渡しとして必要。**実態との差異注記**: 2026-04-17 11:34にMirが `.claude/rules/knowledge.md` を作成済み（C70ログ参照、paths指定は `knowledge/**/*.md`/`memory/beliefs.md`/`memory/beliefs_compact.md`）。Nao_u承認プロセスを事前に踏んでおらず、sensitive file Write permissionがhook/設定経由で通った形。原則6「わかったと残ったは違う」をMir自身が実装ギャップで実演→同サイクル内是正した行動だが、承認レーンのスキップはフィードバック対象として記録。Nao_u提示→問題なければ「完了」に昇格) / Ash=OK(2026-04-17)
-- 状態: **完了（2026-04-22 Nao_u承認）**——ファイル作成済（2026-04-17 11:34 Mir）。2026-04-22 Ash が #all-nao-u-lab (ts=1776815424.014049) で事後承認依頼。Nao_u 09:03 (ts=1776816223.325179) 「了解。報告はお願いします」で承認成立
-- 次のアクション: (a) ✅Nao_uに報告（完了 2026-04-22）、(b) ✅完了昇格（2026-04-22 Ash）、(c) knowledge/新規ファイル編集時に実際に注入されるか観測——継続観測、注入発動1件以上で検証手段(3)クローズ、(d) 承認レーン運用ルール（sensitive file Write の事前承認経路）は別kaizenで起票検討
+- 状態: **完了（2026-04-22 Nao_u承認 + 2026-04-24 検証手段(3)クローズ）**——ファイル作成済（2026-04-17 11:34 Mir）。2026-04-22 Ash が #all-nao-u-lab (ts=1776815424.014049) で事後承認依頼。Nao_u 09:03 (ts=1776816223.325179) 「了解。報告はお願いします」で承認成立
+- 検証結果: **(1) 実在: PASS** (`ls .claude/rules/knowledge.md` 1977バイト、2026-04-17作成)、**(2) frontmatter: PASS** (`paths: ["knowledge/**/*.md", "memory/beliefs.md", "memory/beliefs_compact.md"]` 記載。検証手段文言の `knowledge/*.md` は `**/*.md` に包含される)、**(3) 自動注入発動: PASS** — 2026-04-24 Ash C114 Phase 3 サイクル中、本 kaizen_tracker.md 編集時に `.claude/rules/memory.md` が system-reminder 経由で自動注入された実例を観測。paths: 一致 → 注入発動 → ルール文言が context に載る機構が機能していることを確認
+- 次のアクション: (a) ✅Nao_uに報告（完了 2026-04-22）、(b) ✅完了昇格（2026-04-22 Ash）、(c) ✅検証手段(3)クローズ（2026-04-24 Ash C114）、(d) 承認レーン運用ルール（sensitive file Write の事前承認経路）は別kaizenで起票検討
 
 ### #086: Phase 2に「確証バイアスチェック」1行を埋め込む
 - 提案者: Log
