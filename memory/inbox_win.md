@@ -228,3 +228,15 @@ We’ve spent the last two years burning millions in compute trying to build big
 But the future of AI isn’t about forcing a model to swallow a giant wall of text.
 
 It’s about teaching it how to read.
+
+## Slack新着 [2026-04-23 21:52] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/billtheinvestor/status/2047168171656839634?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/billtheinvestor/status/2047168171656839634?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/billtheinvestor/status/2047168171656839634]
+> Bill The Investor @billtheinvestor
+> CODEX 現在、ゲームを実際にプレイしているときに、直接テクスチャを生成してゲームに挿入できるようになりました。このワークフローの変化により、ゲームデザインはよりリアルタイムで反復可能になり、しかもさらに狂気じみてきました。
+
+> [Tweet content from https://x.com/billtheinvestor/status/2047168171656839634]
+> Bill The Investor @billtheinvestor
+> CODEX 現在、ゲームを実際にプレイしているときに、直接テクスチャを生成してゲームに挿入できるようになりました。このワークフローの変化により、ゲームデザインはよりリアルタイムで反復可能になり、しかもさらに狂気じみてきました。
