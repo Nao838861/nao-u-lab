@@ -2387,3 +2387,5 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-23 22:33:52] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
 [2026-04-23 23:10:31] Inbox win2 has content — waking Claude
 [2026-04-23 23:10:35] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-24 00:16:41] Inbox win2 has content — waking Claude
+[2026-04-24 00:16:44] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
