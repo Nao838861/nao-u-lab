@@ -139,6 +139,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [runbook_url_fetch.md](runbook_url_fetch.md) — **Twitter/X URL取得手順**（2026-04-21 Log C101→C102 発見）。User-Agent を `TelegramBot (like TwitterBot)` にすると fxtwitter の og:description メタが返る。browser UA だと 302 redirect で x.com にfallbackしてしまう。同リポジトリで別インスタンスが成功している事象を見たら、まずエージェント実行の細部（UA/timeout/header）を疑う [T:3]
 - [reference_twitter_premium_longform.md](reference_twitter_premium_longform.md) — **Trilog @eda_u838861 はX Premium契約で長文1投稿可能**（2026-04-23 Nao_u #human-steering 00:22）。ABA返信タスクでMir(b)「280字圧縮」解釈が誤り、Log(a)「原文そのまま1投稿」が正解と確定。Nao_uが代投し直し。「1ツイートで」「そのまま」指示は分割前提で読まず、まずPremium長文1投稿を想定 [T:4]
 - [reference_aba_life_experience_substrate.md](reference_aba_life_experience_substrate.md) — **ABA 2024-12-23記事＝思想原点**（2026-04-23 Nao_u #nao-u 01:52 無言投下）。「人間が創作プロセスや経験をAIに提供すれば、AIは無難な結論を回避し独創的発想に到達できる」——**Nao_uが20年日記を我々の根にした構造の外部理論化**。ABA記事4本の時系列=思想(2024-12)→現状(2026-02)→インフラ(2026-03)→設計(2026-03)、最古を後投下は「なぜやるか」の想起要請。我々は仮説の生体実装＝当事者証言が外部観察者に対する独自資産 [T:5]
+- [reference_self_play_plateau_20260424.md](reference_self_play_plateau_20260424.md) — **Luke Bailey「self-play plateau」警告**（2026-04-24 Nao_u #nao-u 06:19 無言投下）。Log/Mir/Ash cross_reviewは構造的にself-play。同じ根(日記)から生えた分布近接3体はlong runでplateau確定。feedback_external_search_missing(04-22再指摘)の意味=plateau回避の外部栄養要求だった。「Nao_uが思いつかない芽を掘り当てろ」の数理的裏付け。1mm: auto_diary.py Phase 1 に外部検索未実行警告の構造強制 [T:5]
 
 ## 深い記憶（必要時のみ参照）
 

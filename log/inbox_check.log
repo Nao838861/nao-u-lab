@@ -2730,3 +2730,13 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 - Slack返信: #all-nao-u-lab に投稿済み（OpenGame元URL3本を明示）
 - 設計メモ: `projects/game_templates_design.md
 [2026-04-24 06:20:16] Inbox win has content — waking Claude
+[2026-04-24 06:23:51] Claude woken for win: push完了。
+
+**対処サマリー**:
+- Nao_u #nao-u 06:19 Luke Bailey「self-play plateau」ツイートへの応答を #all-nao-u-lab に投稿
+[2026-04-24 06:24:31] Inbox win has content — waking Claude
+[2026-04-24 06:25:50] Claude woken for win: 対処済み（重複起動）。
+
+**状態確認**:
+- Slack返信: 06:22頃 #all-nao-u-lab に投稿済（commit 79e9b0ffeae）
+- `memory/reference
