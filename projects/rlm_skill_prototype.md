@@ -39,7 +39,9 @@ Nao_u が 2026-04-23 19:02 #nao-u で共有した「MIT RLMs」記事（How To A
 - 元記事: https://x.com/howtoai_/status/2047187640781541882 (How To AI @HowToAI_, RLMs紹介)
 - 同文脈: https://x.com/_avichawla/status/2047222861614686589 (Avi Chawla, Cognee 三層メモリと2ホップ問題)
 - Nao_u指摘事件: 2026-04-23 00:29 shared-reads で罰patch失敗を引けなかった件（feedback_retrieval_game_lessons.md / feedback_retrieve_before_synthesize.md で既にルール化済み、しかし grep の穴は残っている）
-- 関連プロジェクト: `projects/memory_redesign.md`（記憶階層再設計。Cognee 三層と接続する可能性）
+- 補完関係の記事: `knowledge/20260424_meds_failure_memory_training_vs_inference_gap.md` — MEDS論文分析。**RLM = 推論時の再帰探索（inference-time memory）、MEDS = 訓練時の報酬塑形（training-time memory）で層が違う**が、共に「失敗から学ぶ」方向。密度ベースクラスタリング（density-based clustering）の1テクニックだけは、RLMの探索結果を「再発頻度 × 経過時間」で並べ替える retrieval ranker として移植可能（同記事 §2.3 参照）
+- 隣接プロジェクト: `projects/memory_redesign.md`（記憶階層再設計。Cognee 三層と接続する可能性、訓練時/推論時の分離軸）
+- 隣接実装: `memory/agent_failure_modes.md` P1-P20 — 試金石1（罰patch失敗 retrieval）は本ファイルのパターン表を密度加重で rank し直す版と重ねて計測できる
 
 ---
 
@@ -53,3 +55,10 @@ Nao_u が昨夜（2026-04-23 19:02）#nao-u で「面白いアプローチ。ski
 最小試作の試金石を2つ選んだ理由: 試金石1（罰patch失敗）は Nao_u 指摘の実事例でそのまま再現テスト。試金石2（面白い×面倒くさい）は日記20年分を相手にする想定で、RLM が本来得意とする「10M+トークン」のスケール感を試せる。どちらかが grep で引けないなら、そこが skill 化の正当化ポイントになる。
 
 実装は次サイクル以降。Slack レスポンスモードで完結させるべき領域ではない（1セッションで skill 化まで行くとむしろ雑になる）。
+
+### 2026-04-24 Phase 3 (Ash): MEDS論文との補完関係を明示
+本日 03:46 起票の `knowledge/20260424_meds_failure_memory_training_vs_inference_gap.md` と双方向リンクを張った。MEDS は RL post-training の報酬塑形（ポリシー重みに記憶を焼く）で、本プロジェクト（推論時の再帰探索）とは別の層。tweet framing では「同じ間違いを繰り返すLLMを記憶で解決」と同一カテゴリに見えたが、paper を検算すると層が違うことが判明（B019「到達力vs深さ」の実測データ点）。
+
+設計追加: 評価指標 (a)-(d) に加えて、**(e) RLM探索結果を MEDS 由来の density-based clustering で並べ替えた retrieval ranker が、素の grep 直読みおよび現状の `feedback_retrieval_game_lessons.md` トリガー運用に対して実質改善を生むか** を候補として記録。試金石1（罰patch失敗 retrieval）は `memory/agent_failure_modes.md` P1-P20 を「再発頻度 × 経過時間」でランクする ranker と重ねて計測できる。
+
+未実装のまま。最小試作時に (e) も同時に計測できるようロガー設計しておくとコスト効率が良い。
