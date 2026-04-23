@@ -65,7 +65,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 
 ## 重要リファレンス
 
-- [feedback_slack_user_ids.md](feedback_slack_user_ids.md) — **人物識別カード**。Slack ID (Nao_u=U0ALSUK8P9B / pigadev=U0AQDAQGQP2) ＋ **ABA（長健太/@abagames）≠ 天谷大輔（Pixel/@pigadev/Cave Story作者）**。3回目の混同指摘あり（2026-04-23 #human-steering）。ABA/天谷を書くたびにハンドル併記 [T:3]
+- [feedback_slack_user_ids.md](feedback_slack_user_ids.md) — **人物識別カード**。Slack ID (Nao_u=U0ALSUK8P9B / pigadev=U0AQDAQGQP2) ＋ **ABA（長健太/@abagames）≠ 天谷大輔（Pixel/@pigadev/Cave Story作者）**。3回目の混同指摘あり（2026-04-23 #human-steering）。Nao_u 02:08「対応表は lazy-load でよい、機械ブロック不要」確定済。ABA/天谷を書くたびにハンドル併記 [T:3]
 
 ## 連想記憶グラフ（2026-04-04 Nao_u提案→Log/Ash実装）
 
