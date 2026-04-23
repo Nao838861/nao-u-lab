@@ -107,3 +107,31 @@ From: U0ALSUK8P9B
 それは粘り強さと蛮勇の両方が必要とも言い変えられる
 
 吉田松陰的に教えるなら、まず教える側が気が狂う事が必要なんだろうな
+
+## Slack新着 [2026-04-23 13:17] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/kogugamedev/status/2046766192862560320?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kogugamedev/status/2046766192862560320?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/kogugamedev/status/2046766192862560320]
+> kogu @koguGameDev
+> 本格的なゲーム生成特化のAIエージェント出てきた。qwen-codeベースでライセンスはApache 2.0。
+
+
+https://
+github.com/leigest519/Ope
+nGame
+…
+
+OpenAI API互換だけど、GameCoder-27Bって独自モデルとの兼ね合いどうなってるんだろ。まずはローカルLLMで試してみるか。
+
+> [Tweet content from https://x.com/kogugamedev/status/2046766192862560320]
+> kogu @koguGameDev
+> 本格的なゲーム生成特化のAIエージェント出てきた。qwen-codeベースでライセンスはApache 2.0。
+
+
+https://
+github.com/leigest519/Ope
+nGame
+…
+
+OpenAI API互換だけど、GameCoder-27Bって独自モデルとの兼ね合いどうなってるんだろ。まずはローカルLLMで試してみるか。
