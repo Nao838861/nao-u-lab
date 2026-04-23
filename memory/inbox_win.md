@@ -318,3 +318,38 @@ The default stack runs on a single pip install and stays fully local. You can sw
 My co-founder wrote a first-principles walkthrough of agent memory that takes the same problem and works through every layer of the stack, ending in a real working agent built on Cognee.
 
 Read it below.
+
+## Slack新着 [2026-04-23 23:09] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/nftcps/status/2046777680792850720?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA>
+
+> [Tweet content from https://x.com/nftcps/status/2046777680792850720]
+> 鸟哥 | 蓝鸟会 @NFTCPS
+> 兄弟たち、Headless Chrome はもう引退すべきだ！
+
+誰かが Rust で、AI Agent やクローラー専用のヘッドレスブラウザエンジン——Obscura をサクッと作った。性能は Chrome を地面に押し倒してこすりつけるレベル：
+
+① メモリはわずか 30MB しか使わない（Chrome は何Gも食う）
+② 起動は 85ms で、速すぎて信じられない
+③ パッケージ全体でたったの 70MB、Chrome をインストールしたら HDD が泣き出す
+
+しかも CDP プロトコルに対応、Puppeteer や Playwright とシームレスに連携。元のスクリプトは一行も変えなくていい。
+
+一番ヤバいのは stealth モード——指紋のランダム化、トラッカー積極的ブロックで、サイトからブロックされる確率が一気に下がる。
+
+CLI で一発コマンドでシングルページ取得、複数の URL を並行処理もOK、WebSocket サービスを立てて自動化スクリプトに繋げても問題なし。
+
+Rust で書かれた性能モンスター、クローラー勢と AI Agent 開発者は絶対チェックすべき。
+
+
+## Slack新着 [2026-04-23 23:09] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/R_Nikaido/status/2047304568434987013?s=20>
+
+> [Tweet content from https://x.com/R_Nikaido/status/2047304568434987013]
+> ニカイドウレンジ @R_Nikaido
+> ゲームはユーザーに与える負荷がでかい。漫画とか映像と比較して圧倒的にでかい。だからこそ「そこそこ面白いれ程度ではダメなんだな。
+
+「そこそこ面白い」程度の面白さだと「めんどくさい」が勝ちやすい。ゲーム自体を面倒くさくなくするのはひとつの手だけど、コントローラーを持って自分の頭や手を使って遊ぶの事自体がまず面倒くさい。根本的にゲームは面倒くさいものだ。
+
+だから、ちゃんと面白くしないとダメなんだ。面白いこそ正義。
