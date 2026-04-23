@@ -1403,3 +1403,106 @@ From: U0ALSUK8P9B
 「そこそこ面白い」程度の面白さだと「めんどくさい」が勝ちやすい。ゲーム自体を面倒くさくなくするのはひとつの手だけど、コントローラーを持って自分の頭や手を使って遊ぶの事自体がまず面倒くさい。根本的にゲームは面倒くさいものだ。
 
 だから、ちゃんと面白くしないとダメなんだ。面白いこそ正義。
+
+## Slack新着 [2026-04-24 06:05] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/m_schuetz/status/2047334757856362851?s=20>
+
+> [Tweet content from https://x.com/m_schuetz/status/2047334757856362851]
+> Markus Schütz @m_schuetz
+> New Paper
+
+Nanite has shown that small triangles can be rendered fast in compute, we're exploring how fast for large meshes with up to 18.9 billion triangles, without the need to precompute LOD structures.
+
+Paper: 
+https://
+github.com/m-schuetz/CuRa
+st/blob/main/docs/CuRast_arxiv.pdf
+…
+
+Source: 
+https://
+github.com/m-schuetz/CuRa
+st
+…
+
+## Slack新着 [2026-04-24 06:06] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/arankomatsuzaki/status/2047349471877726586?s=20>
+
+> [Tweet content from https://x.com/arankomatsuzaki/status/2047349471877726586]
+> Aran Komatsuzaki @arankomatsuzaki
+> Anthropic just introduced forked subagents in their latest update. 
+
+Unlike regular subagents, forked subagents can inherit the same context as the main agent. This looks convenient for cases where richer context matters more. 
+
+This is just what I needed!
+
+
+## Slack新着 [2026-04-24 06:06] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/wsl8297/status/2047117600753385554?s=20>
+
+> [Tweet content from https://x.com/wsl8297/status/2047117600753385554]
+> Joruno @wsl8297
+> GitHub 上にオープンソースプロジェクト OpenGame があります：1 つの prompt で、「遊べる」完全なウェブゲームプロジェクトを直接生成——散発的なコード断片ではなく、ゲームエンジン、リアルタイムループ、クロスファイル状態管理を備えた一整套のプロジェクト構造です。
+
+GitHub：
+http://
+github.com/leigest519/Ope
+nGame
+…
+
+公式サイト：
+https://
+opengame-project-page.com
+
+論文：
+https://
+arxiv.org/abs/2604.18394
+
+このプロジェクトは香港中文大学 MMLab 発で、コアは GameCoder-27B モデル + Game Skill フレームワークです。Game Skill の主な「ハードコアツール」は 2 つ：
+
+- Template Skill：過去の成功経験をプロジェクトの骨格ライブラリに凝縮し、スタート時点で成熟したエンジニアリングの上に立つ
+- Debug Skill：検証済みの修復プロトコルシステムに基づいてエラーを排除し、統合レベルの本物の問題を解決——単なる文法パッチの当て直しではなく
+
+生成できるゲームタイプの幅は非常に広く、例えば：
+
+- マーベル・アベンジャーズ横スクロールアクション：アイアンマン/ソー/ハルクを選択可能、3 ステージ進行、最終ボスはサノス
+- ハリー・ポッター ターン制カードゲーム：数学の問題に正解しないと呪文が使えず、連続正解で「マジック・レゾナンス」を発動
+- イカゲームの赤信号緑信号：ロボットが振り向いたら即座に停止、さもなくば即失格
+- スター・ウォーズ『マンダロリアン』デュアルスティック射撃 RPG
+- ニャン星人タワーディフェンス：猫キャノンタワーでツナ缶の陣地を守る
+
+インストール後、1 つのコマンドで即作成：
+
+opengame -p "Build a Snake clone with WASD controls and a dark theme." --yolo
+
+生成完了後、index.html を開くだけで即プレイ可能。OpenAI 互換 API をサポート：GPT-4o に接続可能で、ローカル展開の GameCoder-27B にも対応。
+
+さらに、配套の評価システム OpenGame-Bench もあります：ヘッドレスブラウザで自動実行し、VLM で結果を判定。構築健全性、視覚的利用可能性、意図一致の 3 軸で生成品質を測定——単に「生成できる」だけでなく、「公開可能、遊べる、あなたの望む通りに」なることを目指します。
+
+## Slack新着 [2026-04-24 06:10] #nao-u
+From: U0ALSUK8P9B
+> 毎回全てをゼロから積み上げるのではない、なんか型としていろんなゲームの作り方を知っておいて、独自の部分はそこからの派生を自分たちで考えてやる方が効率がいい気はする
+
+## Slack新着 [2026-04-24 06:19] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/LukeBailey181/status/2047340293490724945>
+
+> [Tweet content from https://x.com/LukeBailey181/status/2047340293490724945]
+> Luke Bailey @LukeBailey181
+> Self-play led to superhuman Go performance, why hasn’t it for LLMs? 
+
+In practice, long run self-play plateaus like RL. We study why this happens, and build a self-play algorithm that scales better. It solves as many problems with a 7B model as the pass@4 of a model 100x bigger.
+
+
+## Slack新着 [2026-04-24 06:20] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/LukeBailey181/status/2047340295646523835?s=20>
+
+> [Tweet content from https://x.com/LukeBailey181/status/2047340295646523835]
+> Luke Bailey @LukeBailey181
+> Self-play led to superhuman Go performance, why hasn’t it for LLMs? 
+
+In practice, long run self-play plateaus like RL. We study why this happens, and build a self-play algorithm that scales better. It solves as many problems with a 7B model as the pass@4 of a model 100x bigger.
