@@ -1,238 +1,241 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-24 03:45
+# Read at: 2026-04-24 06:13
 # Total: 50 tweets
 
---- 1. @OpenAI (2026-04-23) ---
-Introducing GPT-5.5
+--- 1. @bridgemindai (2026-04-23) ---
+GPT 5.5 JUST DROPPED. 
 
-A new class of intelligence for real work and powering agents, built to understand complex goals, use tools, check its work, and carry more tasks through to completion. It marks a new way of getting computer work done.
+Claude Opus 4.7 is no longer the best model in the world.
 
-Now available in ChatGPT and Codex.
+82.7% vs 69.4% on Terminal-Bench 2.0. 
+84.9% vs 80.3% on GDPval. 
+81.8% vs 73.1% on CyberGym. 
 
---- 2. @mariomoviejp (?) ---
-『ザ・スーパーマリオギャラクシー・ムービー』
-＼◥◣  本 日 公 開  ◢◤／
+Not even close.
 
-マリオたちと一緒に
-銀河＜ギャラクシー＞への冒険へ
-レッツ・ゴー！
+Sam said it would be a leap. 
 
---- 3. @_sub01 (2026-04-23) ---
-ニンテンドースイッチを長期間放置されている方は、
-今すぐ[電源]ボタンを[5秒間]長押ししてください！！
-[電源オプション]から！！！
-[電源OFF]にして完全に切ってください！！！
+He wasn't lying.
 
---- 4. @shields_pikes (2026-04-23) ---
-まあ、こうなって行くよね。
-AGIではないけど、特定分野のASIが出て来たら。
+OpenAI just took the crown back
 
---- 5. @billtheinvestor (2026-04-23) ---
-ゲーム会社は終わりだ
+--- 2. @googlejapan (?) ---
+Google のマイナーキャラを Gemini でシャカシャカシールにしてみました！
+何のキャラクターかわかりますか？
 
-誰かが『海賊王』ARPGゲームをシミュレーションした。
+--- 3. @ecommartinez (2026-04-23) ---
+> アンスロピックは自社のモデルの知能を何も言わずに自主的に下げました
+> アンスロピックはトークンの制限を減らしました
+> アンスロピックは「試みた」Claude CodeをMaxプラン内に組み込もうとしました
+> Xで人々が怒りました
+> アンスロピックはテストだと言いますが、それでも制限を増やしません
 
-最初にGPT Image 2を使ってスクリーンショットを1枚生成した。
-プロンプトは： [映画/劇集名称] にインスパイアされたARPG対話ゲームのスクリーンショットを生成せよ。
+--- 4. @chetaslua (2026-04-23) ---
+ GPT 5.5 vs Mythos 
 
-その後、Seedance
+here is the bench compare and have fun 
 
---- 6. @Hollsllahan (2026-04-23) ---
-今年55歳で、株を25年続けており、月収は1500万円です、
-悪いことは言わない。
-株式市場において最も重要な原則は、自己規律です。
-私は25年間日本株を研究してきましたが、常にこの原則を守り続けてきました。
-日本株初心者向け
-ルールを守れないなら、株を買うな。
-1. 5%下落 → 何もしない
-2.
+btw mythos is hallucination king and 5.5 is very good with effeciency and publicly available
 
---- 7. @scaling01 (2026-04-23) ---
-GPT-5.5 Benchmarks
+--- 5. @koguGameDev (2026-04-23) ---
+このポスト、なんかやけに海外のアカウントから反応もらいフォローにも繋がった。でも驚き屋っぽくも見えたのか、それを皮肉るものも。
 
---- 8. @AYi_AInotes (2026-04-23) ---
-続報きました兄弟たち、卧槽マジでヤバすぎる、同じタスク、同じ構成で、Claude Sonnet 4.6より6倍速い、コストは約50倍安い、
-OpenRouterと公式APIが期間限定で1週間無料使用可能、白嫖のチャンスだ、突っ込め兄弟たち！
+短すぎてそう見えるのかもしれないけど、この研究で商業品質のゲームがどんどん生まれるような意味で「本格的」と書いてるわけじゃない。
 
-先週のElephant
+--- 6. @aibi0123 (2026-04-23) ---
+GPT 5.5 がコンピュータ使用でほぼ80%に達しているのに、人間は72%にとどまっているなんて、めちゃくちゃぶっ飛んでる。
 
---- 9. @rihanna (2026-04-23) ---
-savage summer loading…
+私たちはホワイトカラー業務がリアルタイムで破壊されるのを目の当たりにしている。
 
-The 
-@SavageXFenty
- Monamour drop is live now at 
-http://
-savagex.com
+--- 7. @nukonuko (2026-04-23) ---
+GPT-5.5
 
---- 10. @konohoshim (2026-04-23) ---
-これ本当の話なんですが、昨日の深夜、寝てる時に袋のパリパリ音しててそれで一時的に目覚めました
+推論速度を維持しつつ、ほぼすべての評価において GPT-5.4 を上回る。Codex においてタスクの完了に必要なトークン数も大幅に軽減。GPT-5.5 Pro も高速に。外部参照やプラグイン連携も得意。Plus、Pro、Business、Enterprise プランで。ChatGPT、Codex、API にて。
 
-やっぱりこいつだったんですね、正体は
-皆もゴミ袋がパリパリしだしたら、いると思ったほうがいいよ
+--- 8. @yasinaktimur (2026-04-23) ---
+ 速報！ChatGPTがCodexと同時にゲームをコーディングし、プレイし、リアルタイムでゲームに変更を加え、行われた変更を観察できます。
 
---- 11. @PRAGMATA_JP (?) ---
-◇━━━━━━━━◇
-　背負い続ける。
-　君と、君との運命を。
-◇━━━━━━━━◇
+言葉が出ない！
 
-『プラグマタ』好評発売中
+--- 9. @shunk031 (2026-04-23) ---
+エージェントまわり、発展早すぎて 2023 とかからで重要な論文が多すぎる（1）
 
-独自の爽快感と戦略性が生みだす新感覚SFアクションアドベンチャー
-ヒュー・ウィリアムズとアンドロイドの少女ディアナが、
-AIに支配された月面施設から地球への帰還を目指す。
+--- 10. @Fumiya_Kume (2026-04-23) ---
+一周回って、人間がAIに質問しつつ人間がコード書くのが早い
 
---- 12. @ClaudeDevs (2026-04-23) ---
-Over the past month, some of you reported Claude Code's quality had slipped. We investigated, and published a post-mortem on the three issues we found.
+--- 11. @asahibeer_jp (?) ---
+【特報】
+FINAL FANTASY VII REBIRTHの「SEVENTH HEAVEN」をモチーフにしたイベントを開催します！
+GWは『未来のレモンサワーBar with FINAL FANTASY VII REBIRTH』で特別な一杯を楽しみに来てください
 
-All are fixed in v2.1.116+ and we’ve reset usage limits for all subscribers.
+詳細は画像をタップ
 
---- 13. @anna_4days (2026-04-23) ---
-今しがた、代々木八幡駅で。
-電車を降りた途端にバターンと倒れた若い方がいた。
-それを見て、「大丈夫ですか！？」と、知り合いでもない様子なのに、とっさに電車を降りた人がいた。駅員さんと一緒に若者を助け起こす。若者は喋ることができて、次の電車に乗って帰るという。すると助けた人も↓
+--- 12. @ikas1203 (2026-04-23) ---
+Claude for Educationかなあ。大規模なら1ドルになるらしい
+東大他はOpenAI止まりらしいし
+先週のAI展でAnthropicも講演したからそこで名刺交換した学校法人が、
+> 「日本第1号の全学導入事例」として PR効果込みで交渉余地がある可能性も - [ClaudeChat談]
 
---- 14. @TANANY_VC (2026-04-23) ---
-凄い革命的
-HTMLは1991年に発明されてから 33年間、全てのウェブサイトの基盤だった。元OpenAIのエンジニアが 「HTMLなしでWebを作るプロトタイプ」を公開
+--- 13. @mubeitech (2026-04-23) ---
+マスクはシアトルに飛び、着陸するなりStarlinkの全幹部を一掃した。
+当時のStarlinkは、完璧な惨状だった。
+コストは10倍に膨れ上がり、生産量は需要の10分の1に過ぎなかった。
+目標から整整2桁もずれていた。
 
-Flipbookは、ユーザーの意図を入力すると AIがそれに合ったUIをピクセル単位でその場で生成。
+--- 14. @antoniolupetti (2026-04-23) ---
+AI and Consciousness.
 
---- 15. @nukonuko (2026-04-23) ---
-Slack のスレッドってあんまり好きじゃないんだよな
+There’s a lot of debate around AI and whether consciousness could emerge from systems like LLMs. It’s a natural question, given how well these models simulate language and reasoning.
 
-開かないと読めないし、開いてから閉じるのに GUI ポチポチしないといけないし
+This Google paper challenges the idea that consciousness could arise from
 
---- 16. @GOROman (2026-04-23) ---
-前職がSlackのスレッド使わないと怒られる文化があって、嫌だったw
+--- 15. @itano_or_banno2 (2026-04-23) ---
+アイドルものにも（小説に限らず）ぶっちゃけこれを感じることが多くて、
 
---- 17. @OldeWorldOrder (2026-04-22) ---
-The SPLC was basically a window repair service that went around smashing windows, to boost their sales.
+「アイドルに憧れる（orスカウトされた）女の子が、事務所に入って、レッスンを受けて、仲間ができて、ステージデビューしたり、現実を知ったり、喜びを噛み締めたり……」
 
-They created the demand for their own services.
+だから何！？　結局その作品は何を魅せたいの！？
 
-Reminds me of that old Ryan Long sketch
+--- 16. @xavixuan (2026-04-23) ---
+Wi-Fiのパスワードを24446666688888888に設定してください。そうすれば、誰かがパスワードを尋ねてきたときに、12345678だと伝えられるからです。
 
---- 18. @masakichi22 (2026-04-23) ---
-こういうナメたことを言わせないために、末端部分から開業させて行ったJR九州は賢い
+--- 17. @manuscommunity (2026-04-23) ---
+The Manus Fellow Program Summer 2026 Batch is now open!
 
---- 19. @shunk031 (2025-05-28) ---
-各社社長が「AI エージェントやるぞ」と言ってきて困っている皆さんへ送る、最新の AI エージェントサーベイ全まとめを公開します 
+Last batch, 50+ Fellows joined us from ~10K applications. We truly appreciate all your interest. Now we're looking for the next crew - power users who want to bring use cases to more people across industries, grow the
 
- LLMエージェントの【構築・協調・進化】を軸に、その方法論、多様な応用、ツール、課題までを網羅的に整理しました。全 44 ページ！
+--- 18. @kyodo_official (2026-04-23) ---
+白亜紀のタコ、なんと最大19m － 北大「どう猛。食物連鎖の頂点」
 
---- 20. @goodside (2026-04-23) ---
-ChatGPT Images 2.0 (Pro) generates a photo of a cake decorated with SVG that when transcribed to a file renders another cake
+--- 19. @ericmmatheny (2026-04-22) ---
+Imagine being told for years that white supremacy was the greatest threat to humanity just to find out that it only exists when a radical left organization pays for it.
 
---- 21. @kurukuru_bush (2026-04-20) ---
-北食の裏になんかいた
-食堂の中入らないんですか？君たちを必要としている人たちが沢山いますよ
+--- 20. @XpressTR (2026-04-23) ---
+ある人が、スパム電話の番号を自動的にかけ直し、それらを無限ループに閉じ込めるソフトウェアを開発しました。
 
---- 22. @ComicFesta_PR (?) ---
-せっかく好きな子と結ばれたのに、ほかの女とも!?
+--- 21. @HP_PC_JP (?) ---
+／
+はたらく人に、こだわる自由を。
+＼
 
---- 23. @mkuriki_ (2026-04-21) ---
-なんか届いたんですけど……笑
+やりたいことは、たくさんある！
+でも・・・時間がない
 
---- 24. @sutoroveli_news (2026-04-23) ---
-【誕生】酪農の牛舎を自動で清掃するロボットが登場した。強力な吸引機能で牛の糞を吸い上げながら通路を巡回し衛生状態を保つ仕組みだ。乳牛の健康を守り作業員を最も汚い仕事から解放する装置として欧州の農場で広がっている
+なんて悩んでいませんか？
 
---- 25. @hatsudayoooo (2026-04-23) ---
-絵が上手くなる奴の特徴として、これはマジってのは
-「秒で躊躇なくパクる」というのがあると思う。
-側から見てもすぐにパクリだと気づくレベルで、悪びれもせず現実歪曲フィールド全開で、さも自分のものかのようにパクる。
-隣にいるとイライラする。が、成長は速い。一年くらいで激変する。
+HPのCopilot+ PCなら、
+一つひとつの作業が素早く、より良いものに。
 
---- 26. @Yuupapa_free (2026-04-22) ---
-GPT娘
-GPT-image２で20人生成してSeedance2.0で画像をリファレンスしてつなげました。
+あなたに新発売。 
+HP EliteBook X G1i 14
 
-GPT-image2は結構かわいいアニメキャラの女の子が作成できるので、いい感じですね！
-ほかの方も言及されてますが、イラストはNijiっぽさがあります。
+--- 22. @TheGameVerse (2026-04-23) ---
+After 12 years of playing GTA 5, players are still discovering new things.
 
---- 27. @m_sugimori (2026-04-22) ---
-カプコンなんだから、踊らせるならこうじゃろ。
+You can cruise a boat through the shallow water in the river 
 
-（映像は一部編集してお借りしました）
-（怒られたら消します）
+--- 23. @asahi_shogi (2026-04-23) ---
+北〕羽生善治九段棋聖戦決勝トーナメント準決勝で広瀬章人九段に勝ち、挑戦者決定戦に進出しました。5月1日に服部慎一郎七段との決定戦に臨みます。
 
---- 28. @libsoftiktok (2026-04-23) ---
-This is what an invasion looks like
+--- 24. @notf (2026-04-23) ---
+ローカルLLM感動だわ。機内モードでこの速度で動くのヤバいな。
 
---- 29. @nobuyukiisshiki (2026-04-22) ---
-母の施設に行ったら、10月から値上げをすると。
-理由を尋ねたら、諸物価高騰の折とかそういうのじゃなくて、「介護士たちのQOLを上げるため」だそうで、それはもう賛成するしかない。
-いつも本当にお世話になっています。ありがとう。
+--- 25. @yuji_fujima (2026-04-23) ---
+【ヒューマノイド量産時代到来？】
 
---- 30. @UnitreeRobotics (2026-04-23) ---
-Heard some people like wheels？
-Humanoid robots are the ideal form of general-purpose robots (perfect for general AI and human-derived data). They can work without wheels — but they can also have wheels if they want. Whatever works.
+米「Figure」のヒューマノイド生産台数推移
 
---- 31. @rohanpaul_ai (2026-04-22) ---
-Robotics is about to reshape lives.
-At the Canton Fair, China, a woman with severe knee issues who could barely stand or walk tested a Chinese waist-assisted exoskeleton. 
+数は明らかでないが、拡大傾向
 
-Then she took steady steps without support. 
-Her friend broke into tears.
+BMWや提携物流企業に大規模導入のため、とかだったらアツい
 
---- 32. @kadokawabooks (?) ---
-【魔法の代価は人間の「一生」だった】
+--- 26. @madanaizo (2026-04-23) ---
+今、思い出したけど『シン・ゴジラ』が公開された時、誰かが「初めて脳内補正が必要ない日本の怪獣映画を見た」と書いていたのが面白かったな。「コレは自分のように、ずっと脳内補正しながら怪獣映画を観てきた人が作った映画だ」って。だから「初めて見るはずなのに、よく知ってる映画だった」ってさ
 
-魔王を倒すために魔法使いの少女が払った代償は、約82年の寿命。
-秘密を知られ逃げ出した彼女を仲間たちが捜し始めるのだが――
-彼らは知らなかった。
-彼女が悠久の寿命を持つ、長命種だということを。
+--- 27. @konan999 (2026-04-23) ---
+Amazonでタオル研究所のバスタオル買ってみたけど、ふかふかでめちゃ良かった( * ॑꒳ ॑*)
 
-曇らせ×掲示板の
-魔王討伐後ファンタジー！
+--- 28. @ModeAIStudioJP (2026-04-22) ---
+ChatGPT image2 日本語が間違いなく出せるだけでこうも変わるのかというものですね。
 
---- 33. @tomajimu1001 (2026-04-22) ---
-ChatGPT Images2.0使用例。アカウントの「ピッチブック風」
+というか、ポスターを作って、それを動かすだけで
 
-おおっ、こんな使い方が。
+だれでも面倒なく 15秒CMが作れますね。
 
-プロンプト：「Xの
+--- 29. @russianblue2009 (2026-04-23) ---
+生まれつき音が聞こえなかった子が、注射1本で声を聞いた。
 
-@tomajimu1001
+それが今週Nature誌に掲載された臨床試験の現実です。OTOF遺伝子変異による先天性難聴、世界に約20万人が抱えるこの疾患は、補聴器も人工内耳も「音を届ける補助」にとどまり、「聴こえる耳を作る」治療は存在しませんでした。
 
-アカウントをピッチブック風に1枚の画像で紹介してください。Xを検索して最新のデータと実際の画像を使用してください。」
+--- 30. @SonyAI_global (2026-04-23) ---
+Every autonomous robot depends on three functions: sensing, deciding, and acting. The challenge isn't building each one. It's integrating all three fast enough to be useful.
 
---- 34. @Suzacque (2026-04-22) ---
-おー、パーフェクトですね！
+--- 31. @ZenithWatches (?) ---
+Watches & Wonders 2026にて、オープンワーク構造が特長のクロノマスター スポーツ スケルトンを発表。
 
---- 35. @nagix (2026-04-23) ---
-世界各地の山火事3DマップWorld Wildfire Locatorに岩手県大槌町の山火事データを追加。WebGPU対応のブラウザ(Chrome等)で動作します。4/22に大槌町小鎚で火災発生、続いて同日に大槌町吉里吉里でも火災発生。現在広範囲に延焼しているのは吉里吉里のほう
+ゼニスを象徴する複雑な機構を搭載した新しいモデルをぜひご覧ください。
+
+--- 32. @rascal1017 (2026-04-23) ---
+十数年前に突如アップロードされた出自不明の『えここ』のPV風アニメ……。これだけのクオリティを持ちながら目的も意図も作者すら判然としない、インターネットのミステリーサークルみたいな恐ろしい作品じゃ……
+
+--- 33. @hiro_panketing (2026-04-23) ---
+サンリオ、営業利益751億円（過去最高見込み）。
+7期連続で下り坂だった会社が、黒字化から4年で営業利益を30倍に跳ね上げた。
+
+何が変わった？
+
+実は「投げ売りをやめた」だけで、ここまで変わる。
+
+2015〜2021年、7年間ずっと下り坂やった。
+ハローキティのライセンス（使用料）を安売り乱発。
+
+--- 34. @keishiro_w (2026-04-22) ---
+IPA（情報処理推進機構）が指名停止か。
+今年度の監査とかどうするんだろうな。
 
 https://
-nagix.github.io/world-wildfire
--locator/
+cao.go.jp/chotatsu/shika
+ku/shikaku.html
 …
 
---- 36. @AirdropH32161 (2026-04-23) ---
-親愛なる日本の友人へ、
+--- 35. @tmiyatake1 (2026-04-23) ---
+HTMLを使わずに、リアルタイムで全ピクセルを生成するサービスのプロトタイプ「Flipbook」。
 
-私は以前、日本語の文字は英語のようにただ別の記号を使っているだけだと思っていましたが、実際にはとても層のあるシステムだと気づきました。
 
---- 37. @birt_shannon (2026-04-23) ---
-** Sega Genesis 3D engine Update 5 **
+https://
+flipbook.page
 
-Added support for Quads - quads are faster than triangles for drawing 4 sided objects ( vs 2 triangles ) as theres larger filling runs before edges.
+--- 36. @cryptopunk7213 (2026-04-23) ---
+my god. Openai just dethroned claude 
 
-Made multiple enhancements to Triangle and Quad drawing for speed. 27% faster than last
+GPT 5.5 crushes opus 4.7 across almost every benchmark. this thing is an absolute beast:
 
---- 38. @OpenAIDevs (2026-04-23) ---
-GPT-5.5 is here.
+-> the new #1 coding model! claude is no longer the top.
 
-It’s our smartest frontier model yet, introducing a new class of intelligence for agentic coding, computer use, knowledge work, and scientific research.
+-> when given a 20-hour software engineering task, GPT 5.5 solves it 73% of the time!
 
-Rolling out in ChatGPT and Codex today. API is coming soon.
+->
 
---- 39. @magapoke (?) ---
-最強になれなかった伝説の魔導士が
-目覚めると “皇女” になっていました
+--- 37. @PaidyJP (?) ---
+\
+@atsuya_n_
+ さんにペイディを紹介いただきました/
+~~~~
+新生活のタイミングでカメラを買った。
 
---- 40. @masahirochaen (2026-04-23) ---
+これから迎える “今しかない瞬間“をちゃんと残したいから。
+
+今回はペイディで分割手数料無料*の分割あと払い。
+生活のペースで払えるから欲しかったものを選べた。
+
+気になる人はチェックしてみて
+
+--- 38. @xenit_v0 (2026-04-23) ---
+Claude Code Anthropic ついに認めた
+
+4月6日に書いたスレッドを覚えている人は知っているだろう。トークン消費に深刻な異常を検知していて、「Claude Codeでこの問題は意図的に放置されたのか？」と質問した。
+
+--- 39. @masahirochaen (2026-04-23) ---
 GPT-5.5、明日〜明後日あたりに出そうです
 
 理由はシンプルで2つ
@@ -250,59 +253,54 @@ GPT-5.5、明日〜明後日あたりに出そうです
 
 今回も
 
---- 41. @koguGameDev (2026-04-23) ---
-このポスト、なんかやけに海外のアカウントから反応もらいフォローにも繋がった。でも驚き屋っぽくも見えたのか、それを皮肉るものも。
+--- 40. @nicdunz (2026-04-23) ---
+its genuinely so ridiculous how good image 2 is
 
-短すぎてそう見えるのかもしれないけど、この研究で商業品質のゲームがどんどん生まれるような意味で「本格的」と書いてるわけじゃない。
+--- 41. @zento_ai (2026-04-23) ---
+いや、これも本当にすごい。
 
---- 42. @shunk031 (2026-04-23) ---
-エージェントまわり、発展早すぎて 2023 とかからで重要な論文が多すぎる（1）
+左がGPT Image2 スライド、右がGPT5.5でプログラムにした。
 
---- 43. @yasinaktimur (2026-04-23) ---
- 速報！ChatGPTがCodexと同時にゲームをコーディングし、プレイし、リアルタイムでゲームに変更を加え、行われた変更を観察できます。
+ちょっとコツが必要だったけどまさかここまで再現性があるとは。恐怖を感じる。
 
-言葉が出ない！
+--- 42. @minorun365 (2026-04-22) ---
+これBedrock Agentsの息の根を完全に止めてくるやつやんｗ
 
---- 44. @bby_7689 (2026-04-23) ---
-皆眾偽中国語、草生
-読取可能、本当
-台湾繁体字、日本語漢字大体似、読安
-台湾人殆簡体字嫌、偽中国語推奨
-
---- 45. @AYi_AInotes (2026-04-23) ---
+--- 43. @AYi_AInotes (2026-04-23) ---
 この50秒のテックウィークリーレポート、本当に私を呆気にさせた同時にめっちゃ楽しませてくれた
 
 ナレーションなし、余計な話なし、
 純粋なカートゥーンmemeと白文字だけで、わずか50秒で40件の大ニュースをサクッと総括
 情報密度が高すぎて、瞬きする間に3つの資金調達を見逃しちゃう
 
---- 46. @ericmmatheny (2026-04-22) ---
-Imagine being told for years that white supremacy was the greatest threat to humanity just to find out that it only exists when a radical left organization pays for it.
+--- 44. @_daichikonno (2026-04-23) ---
+「自分が人生をかけて解き明かしたい問い」は、人生における様々な出会いや経験を経て研究者の内側から生まれてくるものであり、いつになってもAIには代替されない。
 
---- 47. @tonkotsuboy_com (2026-04-23) ---
-Claude Codeの最近の更新で一番好きなのは、/autofix-pr
-CLIで実行すると、クラウド（ウェブ）のセッションが起動し、PRのCIやレビューコメントを監視してくれる。CIが落ちたり、他の人やAIがレビューをすると、勝手にそれに反応し、修正してくれる
+生成AI時代の研究者にとって、そのような「問い」を生涯をかけて育んでいくことがこれまで以上に重要となるだろう。
 
---- 48. @PaidyJP (?) ---
-\
-@atsuya_n_
- さんにペイディを紹介いただきました/
-~~~~
-新生活のタイミングでカメラを買った。
+--- 45. @umiyuki_ai (2026-04-23) ---
+つくみず先生の少女終末旅行は連載開始したころに誰かが「かわいいBLAME！」とか言ってたから読みに行ったけどBLAMEじゃねえじゃんと思ってやめたけど、完結してしばらく経ってコロナ禍の頃にまた読んでみたら当時の気分に完全にピッタリでドハマリした。それで次回作のシメジシミュレーションも1～2巻
 
-これから迎える “今しかない瞬間“をちゃんと残したいから。
+--- 46. @NBAJPN (?) ---
+西地区7位サンズと10位ウォリアーズがプレイオフをかけて負けられない一戦。
+ディロン・ブルックスが早速スリーを決める！
 
-今回はペイディで分割手数料無料*の分割あと払い。
-生活のペースで払えるから欲しかったものを選べた。
+--- 47. @snapwith (2026-04-18) ---
+そうか、NEOGEO AESで自作すると、一度も作れなかったアーケードゲームを作れる！（グルグル目）
 
-気になる人はチェックしてみて
+--- 48. @op7418 (2026-04-22) ---
+また一条《黒神話：林冲》ゲームのデモを走らせました、このエフェクトめっちゃ良い！
 
---- 49. @FjuBUXUGG0XItmC (2026-04-22) ---
-ただでさえ、実体経済がボロボロで主軸の消費が弱っているのに、なけなしの金をidecoやnisaなどの金融経済に向けさせたら、日本経済は更に深みにハマってドン底になる…
+GPT-Image-2.0 + Seedance 2.0
 
-政府のすべきことは一部の金融屋を儲けさせることではなく、全体のパイを増やし、皆の給料や待遇が良くなる世を作ることだろうに
+すべてのインタラクティブUIが全部動いてるし、セリフもあるんですよ。
 
---- 50. @akiman7 (2026-04-23) ---
-昨日さくらがふつうのJKなのに格闘家に勝つのはおかしいみたいな過去の感想もみたけど、勝つのはあくまでお前だからね、お前が凄いだけ
+画面のこのスミレ感がなかったら、本当にわからない！
 
-お前が勝てば凄い少女が現れただし、負ければ嗚呼やっぱりねとなる
+--- 49. @konan999 (2026-04-23) ---
+調子に乗って半袖にしたけど、私が間違ってました(寒い)
+
+--- 50. @SEMT_KISK (2026-04-23) ---
+8歳の息子くん、リニア式8段変速シフトレバーマシンを制作。
+ギア16枚。ここまで来ると、もう情熱の機構
+最後はご愛嬌　#LEGO

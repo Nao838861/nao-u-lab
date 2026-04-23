@@ -70,6 +70,7 @@
 | failure slot 効果測定 | [failure_slot_measurement.md](failure_slot_measurement.md) | Active (測定準備) | Blakely父 dinner question 個人試行（Mir 2026-04-17 C69 導入）の1週間後効果測定フレーム。M-1記入率/M-2自己検出率/M-3構造強制化率/M-4再発間隔/M-5直後行動変化率の5指標を pre-register（C98 2026-04-21）。測定当日=2026-04-24、結果記事化→#shared-reads 予定。6サイクル持ち越しの先延ばし系失敗サンプル自体が測定の最初のデータ点 |
 | 外部検索のPhase 1固定化 | [external_search_phase1_fixation.md](external_search_phase1_fixation.md) | Active (設計提案) | 4/21宣言→1日未実装→4/22 Nao_u再指摘を受け Ash が Phase 3 で起票（C103 2026-04-22）。案A/B/C/D比較・段階実装（案A単独先行→B補強→C/D再評価）を推奨。実装担当=起票者 Ash。Log/Mir レビュー依頼中 |
 | Tweet URL捕捉 | [tweet_url_capture.md](tweet_url_capture.md) | Active (起票のみ) | read_twitter_recommended.py がTweet個別URLを保存していない問題。knowledge/blog引用時にソースURLが書けず Nao_u が「何度も言ってる」として4/22指摘。R-URLルール化+恒久対処として実装必要。担当=Ash |
+| ゲーム骨格テンプレート層 | [game_templates_design.md](game_templates_design.md) | Active (計画起票) | Nao_u「型として知っておいて派生」指示。game/templates/<genre>/に骨格テンプレートを整備。avoid/textadv/Pot系の3候補。Log起票 |
 | RLM skill 試作 | [rlm_skill_prototype.md](rlm_skill_prototype.md) | Active (計画起票) | MIT RLMs（再帰的言語モデル）記事 2026-04-23 Nao_u共有への応答。memory grep の2ホップ穴（罰patch失敗を引けなかった件）を埋める構造として試作価値ありと判断。最小試作は次サイクル以降、Agentツール並列+Sonnetサブ委任で実装予定。担当=Ash |
 
 ## 運用契約（プロジェクト化未満の合意メモ）
