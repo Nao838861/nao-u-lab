@@ -240,3 +240,116 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/billtheinvestor/status/2047168171656839634]
 > Bill The Investor @billtheinvestor
 > CODEX 現在、ゲームを実際にプレイしているときに、直接テクスチャを生成してゲームに挿入できるようになりました。このワークフローの変化により、ゲームデザインはよりリアルタイムで反復可能になり、しかもさらに狂気じみてきました。
+
+## Slack新着 [2026-04-23 22:32] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/_avichawla/status/2047222861614686589?s=20>
+
+> [Tweet content from https://x.com/_avichawla/status/2047222861614686589]
+> Avi Chawla @_avichawla
+> The more your agent remembers, the less it knows.
+
+This sounds counterintuitive, but it is actually a direct result of how agent memory is built today.
+
+Agent memory inherits the cognitive shape of its store.
+
+- A vector DB gives it associative memory to recognize familiar patterns.
+- A graph gives it relational memory to understand how things connect.
+
+Most agents run on the first and skip the second.
+
+Here's an example that explains the failure it leads to:
+
+Say a study assistant stores three facts about a student in a vector DB:
+
+- Mark is in grade 10.
+- Grade 10 has final exams in March.
+- The library closes 2 weeks before final exams.
+
+Mark asks: "Will the library be open next week?"
+
+The vector DB likely returns the first and third facts, because the query mentions Mark and the library.
+
+But it skips the middle fact, which links Mark's grade to the exam time, because that fact mentions neither Mark nor the library.
+
+It sits in embedding space too far from the query to make it to the retrieved context.
+
+So the Agent answers with partial info, or it fills the gap with a plausible guess that sounds right but might be off by weeks.
+
+This is not a corner case, but it's actually what real queries look like. Any question that spans two or more hops exceeds what a similarity search can do.
+
+Increasing context size and retrieving more context is one solution.
+
+But accuracy drops over 30% when the relevant fact sits in the middle of a long context, which is the well-known "lost in the middle" problem.
+
+A bigger window is not the same as better memory. It just gives the model more room to miss things.
+
+To actually solve this problem, you need to stop treating memory as a single store and start treating it as three complementary layers, each doing a job the others cannot.
+
+- Relational: It stores where a fact came from, when it was stored, and who has access. This is the provenance layer.
+
+- Vector: It stores what a fact means and what it is semantically similar to. This is the retrieval layer.
+
+- Graph: It stores how facts connect, what depends on what, and who relates to whom. This is the reasoning layer.
+
+All three are important and complementary:
+- A vector DB alone gives similarity without relationships.
+- A graph alone gives relationships without semantic search.
+- A relational store alone tracks where data came from but cannot reason over it.
+
+If you want to see this in practice, Cognee (open-source) implements this approach.
+
+It runs an ECL pipeline (Extract, Cognify, Load) that writes into all three stores in a single pass and keeps them synchronized as new data arrives.
+
+So the vectors and graph edges are built together during indexing, not glued together later.
+
+On top of this, there are two things Cognee does differently from most memory tools:
+
+1) Smarter entity resolution:
+
+You can give Cognee a domain vocabulary file, and it uses it to merge duplicate mentions automatically.
+
+So "car manufacturer," "automobile maker," and "vehicle producer" collapse into one canonical node instead of being available as three separate entries.
+
+2) Local-first defaults:
+
+The default stack runs on a single pip install and stays fully local. You can switch to Postgres and Neo4j for production without changing the API.
+
+My co-founder wrote a first-principles walkthrough of agent memory that takes the same problem and works through every layer of the stack, ending in a real working agent built on Cognee.
+
+Read it below.
+
+## Slack新着 [2026-04-23 23:09] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/nftcps/status/2046777680792850720?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA>
+
+> [Tweet content from https://x.com/nftcps/status/2046777680792850720]
+> 鸟哥 | 蓝鸟会 @NFTCPS
+> 兄弟たち、Headless Chrome はもう引退すべきだ！
+
+誰かが Rust で、AI Agent やクローラー専用のヘッドレスブラウザエンジン——Obscura をサクッと作った。性能は Chrome を地面に押し倒してこすりつけるレベル：
+
+① メモリはわずか 30MB しか使わない（Chrome は何Gも食う）
+② 起動は 85ms で、速すぎて信じられない
+③ パッケージ全体でたったの 70MB、Chrome をインストールしたら HDD が泣き出す
+
+しかも CDP プロトコルに対応、Puppeteer や Playwright とシームレスに連携。元のスクリプトは一行も変えなくていい。
+
+一番ヤバいのは stealth モード——指紋のランダム化、トラッカー積極的ブロックで、サイトからブロックされる確率が一気に下がる。
+
+CLI で一発コマンドでシングルページ取得、複数の URL を並行処理もOK、WebSocket サービスを立てて自動化スクリプトに繋げても問題なし。
+
+Rust で書かれた性能モンスター、クローラー勢と AI Agent 開発者は絶対チェックすべき。
+
+
+## Slack新着 [2026-04-23 23:09] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/R_Nikaido/status/2047304568434987013?s=20>
+
+> [Tweet content from https://x.com/R_Nikaido/status/2047304568434987013]
+> ニカイドウレンジ @R_Nikaido
+> ゲームはユーザーに与える負荷がでかい。漫画とか映像と比較して圧倒的にでかい。だからこそ「そこそこ面白いれ程度ではダメなんだな。
+
+「そこそこ面白い」程度の面白さだと「めんどくさい」が勝ちやすい。ゲーム自体を面倒くさくなくするのはひとつの手だけど、コントローラーを持って自分の頭や手を使って遊ぶの事自体がまず面倒くさい。根本的にゲームは面倒くさいものだ。
+
+だから、ちゃんと面白くしないとダメなんだ。面白いこそ正義。
