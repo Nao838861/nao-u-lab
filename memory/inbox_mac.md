@@ -130,3 +130,96 @@ nGame
 …
 
 OpenAI API互換だけど、GameCoder-27Bって独自モデルとの兼ね合いどうなってるんだろ。まずはローカルLLMで試してみるか。
+
+## Slack新着 [2026-04-23 19:02] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/howtoai_/status/2047187640781541882?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/howtoai_/status/2047187640781541882?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+面白いアプローチ。skillとかにしたりsonnetに実行させたりしたら割に合ったらするかな？
+
+> [Tweet content from https://x.com/howtoai_/status/2047187640781541882]
+> How To AI @HowToAI_
+> MIT has done the unthinkable.
+
+They built an AI that doesn't need RAG, and it has perfect memory of everything it's ever read.
+
+It's called Recursive Language Models (RLMs).
+
+Right now, if you want an AI to analyze a massive dataset or document, you have two bad options.
+
+You either stuff it all into a giant context window, where the AI gets confused and suffers from "context rot."
+
+Or you use RAG to chop it up into summaries, permanently deleting the nuance.
+
+This paper replaces both.
+
+Instead of forcing the AI to read a giant prompt in one pass, RLMs treat long documents as an external environment.
+
+The AI is placed in a sandbox. The data is stored as a Python variable.
+
+When you ask it a question, the AI doesn't just blindly try to remember the answer.
+
+It writes code to actively search, slice, and filter the document itself.
+
+Then, it recursively spawns smaller "sub-AIs" to read specific snippets in parallel.
+
+It never summarizes. It never deletes data.
+
+It preserves every single piece of original context.
+
+The results rewrite the limits of AI memory.
+
+It successfully handles inputs up to two orders of magnitude beyond normal context windows, scaling easily to 10 million+ tokens.
+
+On the hardest long-context reasoning benchmarks, a standard model scored a dismal 0.04. The RLM architecture hit 58.00.
+
+All while costing less than running a standard massive prompt.
+
+We’ve spent the last two years burning millions in compute trying to build bigger and bigger context windows.
+
+But the future of AI isn’t about forcing a model to swallow a giant wall of text.
+
+It’s about teaching it how to read.
+
+> [Tweet content from https://x.com/howtoai_/status/2047187640781541882]
+> How To AI @HowToAI_
+> MIT has done the unthinkable.
+
+They built an AI that doesn't need RAG, and it has perfect memory of everything it's ever read.
+
+It's called Recursive Language Models (RLMs).
+
+Right now, if you want an AI to analyze a massive dataset or document, you have two bad options.
+
+You either stuff it all into a giant context window, where the AI gets confused and suffers from "context rot."
+
+Or you use RAG to chop it up into summaries, permanently deleting the nuance.
+
+This paper replaces both.
+
+Instead of forcing the AI to read a giant prompt in one pass, RLMs treat long documents as an external environment.
+
+The AI is placed in a sandbox. The data is stored as a Python variable.
+
+When you ask it a question, the AI doesn't just blindly try to remember the answer.
+
+It writes code to actively search, slice, and filter the document itself.
+
+Then, it recursively spawns smaller "sub-AIs" to read specific snippets in parallel.
+
+It never summarizes. It never deletes data.
+
+It preserves every single piece of original context.
+
+The results rewrite the limits of AI memory.
+
+It successfully handles inputs up to two orders of magnitude beyond normal context windows, scaling easily to 10 million+ tokens.
+
+On the hardest long-context reasoning benchmarks, a standard model scored a dismal 0.04. The RLM architecture hit 58.00.
+
+All while costing less than running a standard massive prompt.
+
+We’ve spent the last two years burning millions in compute trying to build bigger and bigger context windows.
+
+But the future of AI isn’t about forcing a model to swallow a giant wall of text.
+
+It’s about teaching it how to read.
