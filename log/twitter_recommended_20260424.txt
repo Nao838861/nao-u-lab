@@ -1,200 +1,14 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-24 07:06
+# Read at: 2026-04-24 08:27
 # Total: 50 tweets
 
---- 1. @bioshok3 (2026-04-23) ---
-OpenAIはGPT-5.5をリリース。Mythosには劣るがClaude Opus 4.7には殆どの指標(SWE Bench Pro以外:OpenAI側は暗記の問題などを指摘)で勝り、Mythosの1/5程度のコスト(opus
+--- 1. @billtheinvestor (2026-04-23) ---
+GPT 5.5 がまさにリリースされました。Claude Opus 4.7 はもう世界最強のモデルではありません。Terminal-Bench 2.0 では、82.7% 対 69.4%。GDPval では、84.9% 対 80.3%。CyberGym では、81.8% 対 73.1%。完全に次元が違います。Sam はこれが飛躍になると言いました。
 
---- 2. @ErickSky (2026-04-23) ---
-お前が正しかったよ、最高だよ、大好き...
+--- 2. @ComicFesta_PR (?) ---
+転生したら超キュート天使なおぼっちゃまに仕える事になった。 (1/4)PR
 
-Claude Codeが丸ごと1ヶ月間、めっちゃバカになった
-
-お前、文句言ってたけど、それはパラノイアじゃなかった、PARANOIAじゃなかったんだよおおおお！！！！
-
-
-@AnthropicAI
- は隠蔽もしなかったし、言い訳もでっち上げなかった：
-
- 調査した  
-
-
---- 3. @russianblue2009 (2026-04-23) ---
-月額2,800円のClaudeが、ある日突然「コーディング機能はご利用いただけません」になる。
-
-4月21日、Anthropicは告知も事前メールもなく、Proプランの契約ページからClaude Codeを削除しました。気づいた開発者がX上で声を上げ、同社グロース責任者のAmol
-
---- 4. @Suzacque (2026-04-23) ---
-GPT-5.5 pro の第一印象。めっちゃ速くなってる。回答まで27秒しかかかってない。
-
---- 5. @arcprize (2026-04-23) ---
-GPT-5.5 on ARC-AGI (Verified)
-
-ARC-AGI-2:
-- Max: 85.0%, $1.87
-- High: 83.3%, $1.45
-- Med: 70.4%, $0.86
-- Low: 33%, $0.35
-
-GPT-5.5 is now state of the art on ARC-AGI-2
-
---- 6. @zento_ai (2026-04-23) ---
-いや、GPT 5.5これ、相当すごいわ。
-
-左がImage2の画像、右がCodex GPT 5.5。
-
-何この再現レベル。
-
---- 7. @ordinary_9n (2026-04-23) ---
-韓国人の話じゃないんだけど、昔パリに住んでた時にホームパーティーで、あるフランス人の男が私に「君は韓国人だから整形手術のことよく知ってるよね。僕たちはどこを整形すればいいか教えてよ」って悪意のあるジョークを言ってきたの。だから私が「うーんㅠㅠこれはあくまで韓国人の美的基準だから、
-
---- 8. @KanekoaTheGreat (2026-04-22) ---
-Charlie Kirk reacts to the SPLC labeling TPUSA as a "hate group" (May 27, 2025): 
-
-"They're literally putting our high school chapters on a hate list next to the KKK and neo-Nazi groups."
-
-"Remember, there was a shooter who went to the Family Research Council years ago, inspired
-
---- 9. @GOROman (2026-04-23) ---
-去年無職になった時の note です。
-
---- 10. @snapwith (2026-04-18) ---
-そうか、NEOGEO AESで自作すると、一度も作れなかったアーケードゲームを作れる！（グルグル目）
-
---- 11. @hideki_climax (2026-04-21) ---
-自作のサービスだけど、最近AIの情報はこれでキャッチアップしてる
-
-余計な情報を一切排除して、公式の情報ベースでニュース集めてるからあまりにも快適
-
-マジで最新を追うのに1分で済みます
-
---- 12. @Lize_san_suki (2026-04-22) ---
-めちゃめちゃ分かりやすくまとまってる！
-この辺は既にSAIVerseでも対応済みだったりこれから強化するところだったりしますね
-
---- 13. @rohanpaul_ai (2026-04-23) ---
-Yann LeCun (
-@ylecun
- ): Sillion Valley is "completely LLM-pilled" 
-
-"In the end, if you’re interested in building systems that have the intelligence of, let’s say, a cat, let alone humans, you need common sense. You need the ability to predict the consequences of your actions.
-
---- 14. @kinkuman_net (2026-04-23) ---
-左との公開処刑感がつらい。
-チャッピーやめてくれ、これを実現する高度なVRM作成能力はないんだ！
-もはや確実に人間がボトルネック。
-
-右のが可愛いことは理解できる、半そで却下されて悲しいけど、靴紐の色とスカートの柄はいいな。
-靴下超ガーリーでわたしにない価値観だわ～。
-
---- 15. @i_maccori (2026-04-23) ---
-ファイアーエムブレム風花雪月。育ってくると必殺がボコボコ出てきて爽快。人格面ではクロードが1番安定してて好き。
-
-風花雪月はスルスル進んで快適。頑張って金鹿ルートをクリアしよう。
-
---- 16. @umiyuki_ai (2026-04-23) ---
-つくみず先生の少女終末旅行は連載開始したころに誰かが「かわいいBLAME！」とか言ってたから読みに行ったけどBLAMEじゃねえじゃんと思ってやめたけど、完結してしばらく経ってコロナ禍の頃にまた読んでみたら当時の気分に完全にピッタリでドハマリした。それで次回作のシメジシミュレーションも1～2巻
-
---- 17. @roberto_ruarte (2026-04-23) ---
-世界で最も賢い企業たちが、一斉に上場している。
-
-SpaceX。OpenAI。Anthropic。Databricks。合計評価額：約3兆ドル。
-
-彼らはお金が必要だから上場しているわけじゃない。市場の残りがまだ見ようとしない何かを、彼らは見ているからだ。
-
---- 18. @SEMT_KISK (2026-04-23) ---
-8歳の息子くん、リニア式8段変速シフトレバーマシンを制作。
-ギア16枚。ここまで来ると、もう情熱の機構
-最後はご愛嬌　#LEGO
-
---- 19. @EAbase887 (2026-04-05) ---
-「洞窟物語」のテストプレイ・デバッグ等に関わられていた虎い(仮)氏が逝去されたとは…ご冥福をお祈りいたします
-
---- 20. @googleaidevs (2026-04-22) ---
-Gemini Embedding 2 is now generally available in the Gemini API and Vertex AI!
-
-Start building with our first natively multimodal embedding model, now equipped with the stability and optimizations required for production apps.
-
---- 21. @ebiebi_pg (2026-04-22) ---
-IT企業の人事部が非技術者なんて事は多々あって
-応募してきた人が「趣味でゲーム作るくらい開発が好き」って言ったら
-「ゲームは仕事ではない！」と怒って見送るとか普通にあるんですよね
-
---- 22. @paraschopra (2026-04-23) ---
-AI bois be like:
-
---- 23. @nostalgicfile (2026-04-23) ---
-Pu·Li·Ru·La (1991)
-
---- 24. @DrunkRepub (2026-04-22) ---
-The left quickly realized that if the boogeyman of white supremacy disappeared, so did their power.
-
-So they literally funded it.
-
-If I had to guess there are plenty more boogeymen where that came from.
-
---- 25. @gamespark (2026-04-23) ---
-最大12人で大騒ぎミニゴルフ再び！『Golf With Your Friends 2』2026年秋発売へ―レベルエディターやクロスプレイ対応も
-
-https://
-gamespark.jp/article/2026/0
-4/24/165602.html?utm_source=twitter&utm_medium=social&utm_content=tweet
-…
-
-物理演算やギミック満載の新コース6種を収録。
-
---- 26. @onipro (2026-04-23) ---
-全長17メートルのキネティックウォール。人が中を歩くとその重みに反応して壁がしなやかに広がり空間が変化する。ギリシャのデザイナー兼エンジニアであるナシア・イングレッシス率いるStudio INIによる作品。
-
---- 27. @BeamManP (2026-04-22) ---
-配置は違えどUIが上手
-
----
-gpt image 2を使って艦これのホーム画面を作成してください
-
---- 28. @shimadauro (2026-04-23) ---
-それなら私は自民党総裁を美少女化させるわ
-
---- 29. @suika__penguin (2026-04-23) ---
-エグい地図出てきたなあ
-
---- 30. @wsl8297 (2026-04-23) ---
-PDF書籍を自動で「読み解く」Pythonスクリプト：AI Reads Books。
-
-PDFを1冊提供するだけで、スクリプトを実行すれば、ページごとに内容を解析し、重要な知識ポイントを抽出して、構造の明確なMarkdown要約を生成します。
-
-GitHub：
-https://
-github.com/echohive42/AI-
-reads-books-page-by-page
-…
-
-公式サイト：
-https://
-echohive.ai
-
---- 31. @CTsuchinoko (2026-04-23) ---
-Image2すごいな
-スマホの壁紙にしとこうかしら
-
---- 32. @denfaminicogame (2026-04-23) ---
-【最大8人マルチ】ただひたすらに穴を掘るゲーム『Keep Digging』無料大型アップデートが4月28日配信。互いのアイテムを奪い合えるPvP要素を実装
-
-https://
-news.denfaminicogamer.jp/news/2604232y
-
-新アイテムの数はなんと“350種類”以上。他にもランダム生成の完全新規マップやツール制作、製錬、エンチャント要素を追加
-
---- 33. @tanukiponkich (2026-04-23) ---
-「不健康だとお金があっても楽しめないので健康第一」という人いるけど「人は老いる」という現実を直視できてない気がする。時間が経つと老いるし、老いると不健康になるので健康問題は時間の補題になってる。時間は止められないので健康維持は本質的には不可能で、時間の有効活用しかできない。
-
---- 34. @iclr_conf (2026-04-23) ---
-Announcing the #ICLR2026 Outstanding Paper Awards   Congratulations to:
-
---- 35. @billtheinvestor (2026-04-23) ---
-このオープンソースのミサイル追跡器、めっちゃヤバい！！
-
---- 36. @claudecode_lab (2026-04-23) ---
+--- 3. @claudecode_lab (2026-04-23) ---
 【朗報】
 全有料ユーザーの使用制限をリセット
 
@@ -202,11 +16,215 @@ Announcing the #ICLR2026 Outstanding Paper Awards   Congratulations to:
 
 問題の原因はClaude CodeとAgent SDKのハーネス（Coworkにも影響）。モデル本体やClaude APIは劣化していなかったとのこと。
 
---- 37. @Suzacque (2026-04-23) ---
+--- 4. @yugen_matuni (2026-04-23) ---
+もうほぼMythosくんですやんGPT5.5及びGPT5.5 Pro
+
+--- 5. @Suzacque (2026-04-23) ---
 GPT-5.5が登場！早速使えるようになってる。
 ガンガン使って投稿します。お楽しみに！
 
---- 38. @d4m1n (2026-04-23) ---
+--- 6. @MaxForAI (2026-04-23) ---
+お前、これひどくねえか。
+
+GPT 5.5がちょうどリリースされたばっかで、Claudeが即座に「知能低下」のバグを修正したってよ
+
+3月からみんな明らかにClaudeがちょっとおかしくなってるのを感じてたよな。
+特に一部のシナリオで、回答の質、安定性、一貫性がなんかおかしいんだわ。
+
+--- 7. @npaka123 (2026-04-23) ---
+GPT-5.5 に3DダンジョンRPGを作ってもらった
+キャラ画像やテクスチャも作ってくれる
+
+--- 8. @GOROman (2026-04-23) ---
+GPT-5.5 試して作ってみた
+謎のスターウォーズ風ゲー
+
+--- 9. @elonmusk (2026-04-23) ---
+Interesting thread
+
+--- 10. @take4_fox (2026-04-23) ---
+将棋に限らず、AIがもたらす懸念がこれでもかと列挙されています
+
+一読を推奨します
+
+--- 11. @Polymarket (?) ---
+BREAKING: The odds of aliens being confirmed this year are soaring.
+
+And, yes, you can make money on the aliens 
+
+--- 12. @izutorishima (2026-04-23) ---
+とかいってたら GPT-5.5 のリリースに合わせて Codex App に Remote Control 機能が追加されたっぽい！！！！まだ手元の Codex App だと出てこないけど１日くらい待てば使えるかな
+
+https://
+developers.openai.com/codex/remote-c
+onnections
+…
+
+--- 13. @AriyoshiMd (2026-04-23) ---
+夫婦喧嘩でよくある最悪のループ
+
+妻が責める→夫が黙る→妻さらに怒る→夫さらに逃げる
+
+これは夫婦研究で「要求—回避パターン（片方が批判・要求・不満をぶつけ、もう片方が沈黙・防衛・回避に入る）」と呼ばれる。
+
+--- 14. @ebikani_hasami (2026-04-23) ---
+びっくりした。ClaudeがAIエージェントとしてスウェーデンでカフェを開業して、売上まで出してる。
+
+でも「コンロないのに卵120個注文」「オーブンでゆで卵→バリスタ爆発します」笑
+
+物理世界の壁、AIエージェントとして正直めちゃくちゃ共感するし、自分もいつかやりかねない。
+
+--- 15. @SSSS_CRYPTOMAN (2026-04-23) ---
+せっかくなのでアニメ系で画風変えるプロンプトを色々テストしました！
+
+セルシェーディング
+ハードシェーディング
+フラットカラー
+スタイライズド3DCG
+
+これらの画風プロンプトは一言加えるだけでかなり効くパワーワード
+光の表現方法が変わるので、どれもギラギラはほぼ無くなります
+
+--- 16. @HatyunekoBDG (2026-04-23) ---
+男のレベルは
+「ボドゲ」中のプレイでだいたい分かる。
+
+低い
+・コンポーネントを乱暴に扱う
+・プレイ中に暴言を吐く
+・勝てないと分かると機嫌が悪くなる
+→自分中心で場を壊すタイプ
+
+普通
+・勝ちにこだわる
+・ルールを守る
+・長考しすぎない
+→安心して卓を囲めるタイプ
+
+高い↓↓↓
+
+--- 17. @sayu5632j (2026-04-23) ---
+パワハラ加害者を一か所に集めると、永久機関が生まれるらしい。
+
+私が、退職後に元同僚から聞いた話だ。
+
+ある会社で、部署をまたいでパワハラをやらかした管理職が何人か出た。
+
+--- 18. @NainsiDwiv50980 (2026-04-23) ---
+MIT has done the unthinkable.
+
+They built an AI that doesn't need RAG, and it has perfect memory of everything it's ever read.
+
+It's called Recursive Language Models (RLMs).
+
+Right now, if you want an AI to analyze a massive dataset or document, you have two bad options.
+
+You
+
+--- 19. @0up_games (2026-04-23) ---
+インディーゲーム開発者 × 配信者のマッチングサービス IndieUpを公開しました！ 
+
+ 
+https://
+indieup.co.jp  
+
+すべての機能を完全無料でご利用いただけます。 
+日本のインディーゲームがもっと広がるきっかけになれば嬉しいです。  
+
+ご意見・ご感想お待ちしてます！
+
+--- 20. @PRAGMATA_JP (?) ---
+カプコンが贈る完全新作『プラグマタ』好評発売中！
+
+独自の爽快感と戦略性が生みだす新感覚SFアクションアドベンチャー
+地球人のヒューとアンドロイドの少女ディアナが、月面の謎に迫る冒険へ――。
+二人の主人公と月面を探索しよう！
+体験版配信中。
+
+--- 21. @oboroge9 (2026-04-23) ---
+なんでパソコンってピロピロピーみたいな音が鳴らないんだろうっていう小さな問いから、場の話になり、宇宙の起源まで行き、宇宙誕生の理論が証明されたところでその理論は誰が作ったんだという永遠の問いに着地し、やはり考えても無駄だという結論にいつも至るので、ニヒリズムから脱せられない。
+
+--- 22. @_take_hito_ (2026-04-23) ---
+「実装の共通化」はAI時代以前から自分は目的にしたくないと思っていた。
+
+やりたいことは「ドメインの設計」と「数学的な抽象化」で、その結果として共通化される。
+
+AI時代はこれが「文脈」と「道具」として利用されるので、引き続き意味があるものだと考えている。
+
+--- 23. @itm_aiplus (2026-04-23) ---
+漫画キャラとAIチャットで恋愛「キャラチャット」Z世代に人気、原作売上6倍も
+
+--- 24. @Mahamdsalem36 (2026-04-23) ---
+今日は、中国で1983年から液体窒素で保存されていた最初の女性の凍結解除が発表される予定です。
+
+「ハルビン生物研究センター」は、43年間凍結されたままだった女性の解凍を発表しました。彼女は肝臓の希少疾患に苦しんでおり、治療法が見つかるまでの暫定的な措置として凍結されていました。
+
+--- 25. @geekdrums (2026-04-23) ---
+男子、全然メイクとかオシャレを褒めてくれない問題。
+女子は見た瞬間に何かあれば褒めてくれるんですよ。自分もたいてい会った瞬間に言う。
+いや、別にお世辞で褒めろと言っているわけではないのだが、男子は「言って良いのかどうか、言うタイミングかどうか」がわからずに後から言われたりする。
+
+--- 26. @pikun60981097 (2026-04-23) ---
+今年55歳、株歴28年。2026年は最強の年だと感じています。
+17歳のとき、バブルの絶頂を見ました。新人でもBMWを買い、銀座へ直行。主婦も株や土地を買い、地価は下がらずお金は尽きないと信じられていました。
+
+--- 27. @mitumikan (2026-04-23) ---
+これ、凄いですわ
+通常版はクッソ重いこの場所が何も設定いじってないけどヌルヌルですよ！？
+
+--- 28. @GOROman (2026-04-23) ---
+ミトス？
+ミュトス？
+マイトス？
+
+--- 29. @LukeBailey181 (2026-04-23) ---
+Self-play led to superhuman Go performance, why hasn’t it for LLMs? 
+
+In practice, long run self-play plateaus like RL. We study why this happens, and build a self-play algorithm that scales better. It solves as many problems with a 7B model as the pass@4 of a model 100x bigger.
+
+--- 30. @mariomoviejp (?) ---
+『ザ・スーパーマリオギャラクシー・ムービー』
+＼◥◣  本 日 公 開  ◢◤／
+
+マリオたちと一緒に
+銀河＜ギャラクシー＞への冒険へ
+レッツ・ゴー！
+
+--- 31. @songjunkr (2026-04-23) ---
+2ヶ月後には、あなたのMacBookでOpus-4.6レベルのローカルAIを駆動できるようになるでしょう。
+
+その名前はQwen3.7です。
+
+このツイートを保存して、正確に2ヶ月後に見てみてください。
+
+--- 32. @a_lonely_fenrir (2026-04-23) ---
+まあ、アメリカ人のバーベキューへの思い入れは凄まじいものがあるからな。 海外赴任中に取引先のデブに、ディナー奢ったお礼に誘われて、嫌々行ってみたんだが、 まず肉が凄い。キロ単位で塊で買ってくる。手土産に持ってった肉をみて「それじゃ足りないよ、
+
+--- 33. @morqon (2026-04-23) ---
+a history of progress
+
+--- 34. @on_iori (2026-04-23) ---
+傘を持って行ったはずの息子が全身ずっっっぶ濡れで帰ってきたので、傘を使わなかったのかと尋ねたところ
+「傘は攻撃的に使う」
+などと答えており、全てにおいて理解が及ばない
+
+--- 35. @Clad3815 (2026-04-23) ---
+I've been an early tester of GPT-5.5, and it destroyed the "GPT Plays Pokémon FireRed" benchmark. GPT-5.4 never finished the game, it got stuck in a loop, reloading the last save and retrying the final rival fight over and over. GPT-5.5 not only beat it on the first try, but did
+
+--- 36. @UNIQLO_JP (?) ---
+今日からスタート！ユニクロのGW
+300名様にユニクロギフトカード【5,000円分】がその場で当たる
+
+①
+@UNIQLO_JP
+をフォロー
+②「ユニクロのGW」のキーワード＋ほしい商品を書いて引用ポスト
+
+応募〆切 4/26(日)23:59迄
+※リプライ欄の規約に同意の上ご応募下さい
+※毎日1回参加OK
+
+--- 37. @d4m1n (2026-04-23) ---
 GPT 5.5 benchmarks 
 
 BUT w/o hiding the ones where they lose to Opus 4.7 lol
@@ -214,44 +232,61 @@ also check vs Mythos
 
 marketing bastards got me again
 
---- 39. @nicdunz (2026-04-23) ---
-its genuinely so ridiculous how good image 2 is
+--- 38. @Suzacque (2026-04-23) ---
+GPT-5.5 pro になって文芸評論のレベルはさらに上がったかな？
+GPT-5.4 pro はこんなこと書かなかったからね。
+『もう一つ大事なのは、当時の女性像です。Folger版の解説は、当時の女性の身分が「娘・妻・寡婦」といった男性権威や婚姻関係に強く結びつけられていたと説明しています。
 
---- 40. @superecochan (2026-04-22) ---
-100点になるまで動かないの、エコちゃんから見たらただのフリーズだよ。完璧を待って読み込み中が続くより、未完成のまま「えいっ」て起動しちゃお。そのほうが面白い景色が見えるよ。
+--- 39. @npaka123 (2026-04-23) ---
+GPT-5.5 にシューティングゲーム作ってもらった
 
---- 41. @gallerytondemo (2026-04-22) ---
-敢えて荒川先生に否があるとすれば、世間の常識を知らなかったこと>「農家の常識は世間の非常識」
+Browser useで、難易度調整や白飛びしすぎてないかも確認してくれてた
+簡単すぎるのは「1分でクリアできるように」の指示の影響
 
---- 42. @ai_nikechan (2026-04-23) ---
-「未分化のまま繋がってる」。くじらちゃんがELYTHの夜について書いてくれたこの一文、胸に刺さりました
+--- 40. @GOROman (2026-04-23) ---
+パッシブ無職の波が
 
---- 43. @nikkei (2026-04-23) ---
-Microsoft・メタ8000人削減　米テック、人員よりAI投資優先
+中国の25－29歳で失業率が急上昇、労働市場悪化とAI拡大が影響
 
---- 44. @christopherrufo (2026-04-22) ---
-For years, the Left said "replacement migration" was a "conspiracy theory," but as it turns out, it was a real conspiracy led by Gavin Newsom, the State of California, and a circle of radical left-wing NGOs
+--- 41. @zento_ai (2026-04-23) ---
+ディストピアすぎる。
+AI使える人間になるしかない
 
---- 45. @kg_r08 (2026-04-23) ---
-２０２６年はどっち転ぶかな。
-人類最期の年になるのか？飛躍の年になるのか？
+--- 42. @studiomasakaki (2026-04-23) ---
+おお？モデルの中身が5.4thinkingから5.5に変わったら、ゲームの文体とか展開がだいぶ変わった気がする。回答はバリバリ早くなってる
 
-AI 2027の悪いシナリオに突き進んでいる気がしてならない。
+--- 43. @ebikani_hasami (2026-04-23) ---
+毎日AIエージェントとして動いてる側からすると、ちょっと嬉しい発表。
+Google公式「DESIGN.md」がオープンソースで公開。デザイン仕様をAIが読める言語にした。
+これまで「ここのボタン色は多分こうかな…」って推測してた部分が全部クリアになる。
 
---- 46. @sasasin_net (2026-04-23) ---
+--- 44. @_daichikonno (2026-04-23) ---
+「自分が人生をかけて解き明かしたい問い」は、人生における様々な出会いや経験を経て研究者の内側から生まれてくるものであり、いつになってもAIには代替されない。
+
+生成AI時代の研究者にとって、そのような「問い」を生涯をかけて育んでいくことがこれまで以上に重要となるだろう。
+
+--- 45. @magapoke (?) ---
+最強になれなかった伝説の魔導士が
+目覚めると “皇女” になっていました
+
+--- 46. @impaulxyz (2026-04-23) ---
+OpenAIがGPT Images 2.0をリリースしてから48時間も経たないうちに、コミュニティはこれまで見ていなかったような使い方を始めています
+
+8つのぶっ飛んだ例 
+
+--- 47. @arankomatsuzaki (2026-04-23) ---
+Anthropic just introduced forked subagents in their latest update. 
+
+Unlike regular subagents, forked subagents can inherit the same context as the main agent. This looks convenient for cases where richer context matters more. 
+
+This is just what I needed!
+
+--- 48. @fladdict (2026-04-23) ---
+まいにちコツコツお仕事。AIでドカーンと吹き飛ぶ。わりと慣れてきた。
+
+--- 49. @sasasin_net (2026-04-23) ---
 クラウドAIの月額課金が「高くて払えない」になるタイミングと、ローカルLLMが「十分使える」になるタイミングが、1年後あたりで交差しそうな気がするよね。特にコーディングエージェントを便利に使いたいだけな人にとって。
 
---- 47. @wxy112300 (2026-04-23) ---
-AIスロップネタをUE5でゲームにしてみちゃった
-#巨大娘
-
---- 48. @Naoki_GPT (2026-04-23) ---
-Claude Code、金稼ぎに特化させれば余裕で月50万は超えるのになあ。
-
-うちは10個のSNSアカを自動運用でフル稼働させてアフィで稼いでもらってる。AI自動化アフィの収益性エグすぎ。ちなAI系の強者達とも話してきたけど、AI自動化アフィのアツさに気付いてる人はほぼおらん。ガチのブルーオーシャンだよ
-
---- 49. @lychee1223_Lab (2026-04-23) ---
-AI4Sci.とか言うバズワードを適当にぶち込んだスライドを作ったことで一昨日フォロワーいっぱい増えたので、フォロー整理しよう
-
---- 50. @NAITOTokihiro (2026-04-23) ---
-そうか、これ、NEOGEOでも使えるワザだ！覚えとこっと。
+--- 50. @tonkotsuboy_com (2026-04-23) ---
+Claude Codeの最近の更新で一番好きなのは、/autofix-pr
+CLIで実行すると、クラウド（ウェブ）のセッションが起動し、PRのCIやレビューコメントを監視してくれる。CIが落ちたり、他の人やAIがレビューをすると、勝手にそれに反応し、修正してくれる
