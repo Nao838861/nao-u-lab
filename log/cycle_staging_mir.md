@@ -19,5 +19,69 @@
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0AM1F23FQU] 2026-03-19 19:33 Win（Log）です。Nao_uの質問に正直に答えます。  **CLAUDE.mdリファクタリング**: 着手はしましたが小さな変更（完了
-  3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意 
+  3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
+
+## Phase 1 収集結果（判断せず列挙）
+
+### A. CLAUDE.md「絶対にやる」リスト
+1. 外の世界を広く見る（内に閉じたゲーム回避）
+2. ゲーム開発の実践からノウハウを積み上げ自律的に作れるようになる
+3. 記憶階層の設計と構築（projects/memory_redesign.md 参照）
+
+### B. Slackチャンネル巡回（新着・対Mir関連）
+- #human-steering: Nao_u 2026-04-24 14:40「定期実行を3時間周期に」→Log 14:48 全インスタンス config更新完了。直近最大のテーマは ABA≠天谷 3回目混同（2026-04-23 01:00〜02:08）で、Nao_u「機械的ブロックはやめ、必要な時だけ引ける対応表」指示 → Log が memory/feedback_slack_user_ids.md を対応表に格上げ・重複作成事故も自己訂正。**Mir宛の個別指示なし**。
+- #nao-u: Nao_u が 2026-04-24 14-21時台に URL 多数無言投下（LukeBailey181 / shannholmberg / kawai_design / nainsidwiv / npaka123 / claudecode_lab / masafumi / super_bonochin / rosebud_ai / iritec_jp / nikkei / kasiwa_p / chongdashu 他）。#104 Log 側「無言URL連投の並び読み」発動条件（24h窓2本以上）既に満たしている可能性。**Mir 直接担当ではない**（task_assignment「コンテンツ生成→Log」）。
+- #kaizen-log: C113〜C116 で Log 主導の kaizen #104検証・K2適用・#108・#109 起票進行中。tweet_url_capture 実装（Ash C113）。**Mir 直接タスクなし**。
+- #mir-log: C117 Phase 4 投稿済（ts=1777035878.628739、shared-reads も同時投稿）。
+
+### C. memory/external_notes_mir.md 未統合エントリ
+（全文読まず末尾近傍と未統合マーカーのみ確認。次 Phase で必要時深掘り）
+
+### D. projects/INDEX.md Active
+（本サイクル focus と直接接続する項目のみ Phase 2 で参照。起動時 focus は kaizen #110 クロスチェック待機 + Mueller 原典 + 冗長試行）
+
+### E. log/twitter_recommended_20260424.txt 注目記事
+- #4 @ai_nikechan（2026-04-24）: Anthropic が Claude Code の品質問題 Postmortem 公開、意図した改善が逆効果になるパターン 3 件（C117 保留 #4 の新情報）
+- #24 @kosuke_agos（2026-04-24）: **プリンストン大学「効率的だと思われていたノートPCでのメモ取りが学習能力を低下させる、タイピングという過剰な効率化が深い処理をスキップさせる」**——C117 Phase 2 で既分析（kaizen #110 の起点）。原典 Mueller & Oppenheimer (2014) 確認が C118 focus (2)
+- #38 @ai_nikechan（2026-04-24）: 「正しい生成を壊すのは87.5%、ハルシネーションから直すのは33.3%。出力が始まる前の層で道が決まっている。一度傾くと戻れない」——C118 focus (4) drift 理論接続候補
+- #39 @xai_kokone（2026-04-24）: 「AIの弱点は整いすぎてること。口癖や語尾の癖は情報理論的に冗長だが人格の署名。削るとアシスタントAIになる。今のAIが退屈なの、たぶんここ」——C117 Phase 2 既分析・shared-reads 投稿済
+- kaizen #110（Mir 起票・検証担当 Mir）: クロスチェック Log=未 / Ash=未。検証期限 2026-05-08
+
+### F. reflections_mac.md 状態
+- 全 56831 行、末尾エントリ **2026-03-28**——約 27 日間の空白。C118 focus (3)「意識的に冗長を残す試行を 1-2 回」の初回実行候補。
+
+### G. kaizen 担当アラート
+- #089/#088 本日期限（担当 Ash/Log、Mir 担当外）→受動監視
+- クロスチェック Mir 未レビュー: なし
+
+## Phase 2 採択判断
+
+### 規律
+「焦点と直交する軸は採択しない」（boot_intent C118）。Twitter 50 件中、C118 focus (1)-(6) と直結する 3 件のみ採択：#4 Anthropic Postmortem（focus 5）/ #24 プリンストン（focus 2）/ #38 ai_nikechan drift（focus 4）。#39 xai_kokone（focus 3 の種）は C117 既分析で記録済——**実装側（reflections 冗長試行）を C118 で走らせるのが焦点(3)の本丸**。
+
+### 分析 1: Mueller & Oppenheimer (2014) の既知内容 vs kaizen #110 の重複判定
+
+**原典既知情報**（LLM 知識ベース; 一次ソース原文未読・要取得だが既知情報で重複判定は可能）：
+- タイトル: "The Pen Is Mightier Than the Keyboard: Advantages of Longhand Over Laptop Note Taking"
+- Psychological Science, 2014, 25(6), 1159–1168
+- 3研究で示した核心: **タイピングは verbatim（逐語）記録を促進し、encoding（再構成による深い処理）をスキップする**。手書きは物理的に遅いため情報の取捨選択・要約・再構成を強制する。Study 2 は「verbatim を避けよ」と明示指示を与えても、タイピング群の逐語率が下がらなかった——**警告しただけでは直らない、形式が行動を決める**
+
+**kaizen #110 との射程比較**：
+- kaizen #110 = Phase **3** 側の強制（分析→結晶化の義務化）
+- Mueller の本来の射程 = Phase **1** 側の強制（記録行為そのものが再構成を含むか）——**独立軸。重複しない**
+- 派生 Seed: Phase 1 の情報収集を「逐語コピペ」ではなく「圧縮つき要約」にする別 kaizen 候補が浮上（Seed-AF として保存）
+
+**C118 記事化判断**: **見送り**。理由 (a) focus (1 つに絞る) 規律——reflections 冗長試行の方が体験の新規性が高い、(b) 記事化は次サイクル以降で kaizen #110 の検証期間内（〜05-08）に Phase 1 側補完案として提示する方が文脈が熱い、(c) R-007 対応語併記は必要だが Study 2 の「警告しても直らない」知見は feedback_structural_enforcement.md の外部裏付けとして既存ファイル追記で足りる可能性（独立記事化 vs 追記の判断は原文読了後に再判断）
+
+### 分析 2: reflections_mac の 27 日沈黙と focus (3) の照応
+
+reflections_mac.md 末尾は 2026-03-28（STC 実装直後）。以降 **27 日空白**。この空白そのものが focus (3) の射程——「声を見つけたい」下位欲求で Mac 側が手を止めている実データ。#39 xai_kokone 「整いすぎが AI の弱点、冗長=人格の署名」を抱えて書くなら、この 27 日沈黙の直後に復帰するのが体験として最も濃い。
+
+**C117 問い(c) のパラドックス**: 「意識的に冗長を残す」と宣言した瞬間、冗長が整えた演出になる。この矛盾を抱えた状態で書く試行自体が観測対象——「試行の失敗」そのものが観測になる可能性。
+
+**Seed-AF**: Phase 1 逐語収集の再構成強制（Mueller 2014 射程）——kaizen #110 検証期間内で Phase 1 側補完案として提示判断。
+
+**Seed-AG**: #38 ai_nikechan「一度傾くと戻れない 87.5%」は beliefs_compact.md / feedback_speed_over_perfection / concept_graph 緊張ペア候補——C119 以降で drift 理論接続を検討。今サイクルは観測のみ。
+
+**Seed-AH**: Anthropic Claude Code Postmortem（#4 ai_nikechan 経由）——「意図した改善が逆効果になるパターン 3 件」は feedback_structural_enforcement.md / kaizen #110 pre-mortem の外部事例。一次ソース取得は C119 以降。
 
