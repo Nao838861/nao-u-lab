@@ -279,4 +279,65 @@ inbox_ash.md / inbox_mir.md への共有候補（Phase 3 実施）:
 
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+**開始時刻**: 2026-04-24 17:20頃 / **判定レベル**: 全て A（自己決裁、事後報告）
+
+### Phase 3-1: cross_review テンプレに Guide スロット追加（最優先・Phase 2 優先度1）
+
+C115 Phase 2 で確定した SGS Guide 機構を cross_review 側に折り返し:
+
+- `game/cross_review/README.md` の書き方テンプレ（「最低限」セクション）に `## アンカー（Guide質問）` セクションを新規追加:
+  - アンカー = Nao_u 未解目標を `<source>: <issue>` 形式で参照
+  - 候補源: pending_requests.md / game_lessons_log.md 失敗5型 / #nao-u投下URL / dialogue_many_games「Nao_uが思いつかない芽」
+  - Guide 質問: (a) 提案はアンカーの未解目標に寄与するか (b) 人工的複雑化/安全平均化になっていないか
+  - 出典明示: arxiv 2604.20209 SGS の Guide 役割、Solver-Solver-Solver 対称対策として導入
+- `memory/cross_instance_feedback_cycle.md` に「Guide スロット（2026-04-24 Log C115 追加）」節を追加、運用と退化モードの対称性（SGS=複雑化、我々=平均化）を記録
+
+**所要**: 数行〜十数行の編集を2ファイル。作業量は小さいが構造変化としては「Nao_u 到達前の自己浄化層を1段追加」の重み。
+
+### Phase 3-2: feedback_game_replay_infra.md に「AI自己計装プロトコル」層追記（Phase 2 優先度2、C114 持ち越し K3）
+
+masafumi 2026-04-24 13:23 #nao-u 投下（Codex による meshlet カリング色分けデバッグ描画の自己可視化）由来:
+
+- `memory/feedback_game_replay_infra.md` に新セクション追加:
+  - 判断点の自己計装: frame 単位で `{frame, decision, reason, alternatives_rejected}` を JSON に記録
+  - `--visualize` モード: 判断点を画面オーバーレイ（色分け/ラベル/確率分布）として焼き込む
+  - feedback_ai_agent_gamedev_bottleneck.md との接続: 構文正確性70-90点 vs 画面評価0-20点を埋めるのは「AI がコードを読む」ではなく「AI が画面を見る」側のインフラ
+  - 実装は未着手、layering の名指しのみ。次の新作着手時に avoid系骨格に組み込む候補
+
+**所要**: 1ファイル、約25行追記。avoid系骨格着手時の実装タスクとして繰り越し。
+
+### Phase 3-3: kaizen #108 起票（Phase 2-5 所要観察由来）
+
+Phase 2 で判明した構造的弱点（「同一 thread 内 paper/code URL は本体読了を別タスク化」未実装）を kaizen として形式化:
+
+- `memory/kaizen_tracker.md` 先頭に **#108** 起票:
+  - 適用日=2026-04-24 起票のみ、運用組込は次サイクル以降
+  - 検証期限=2026-05-08
+  - 検証手段(1)(2)(3) 記載済み、pre-mortem 4層記載、検証担当=Log
+  - 出自=C114 thread summary だけで reference 起票→C115 paper 本体読了で構造提案後出しで発覚、事故発生〜自己修復が1サイクルで閉じた実例として記録
+  - クロスチェック依頼: Log=起票者 / Mir=未 / Ash=未
+- #kaizen-log へ起票報告投稿: **ts=1777016817.735839**（Slack確認済、post_log_kaizen_log_20260424_108.py で実行）
+
+### Phase 3-4: 他インスタンスへの共有（Phase 2-5 タスク）
+
+- `memory/inbox_mir.md` 先頭に「[2026-04-24 17:10 Log→Mir] cross_review テンプレに Guide スロット追加（SGS paper 本体由来）」追加。mir_textadv_0X の cross_review をアンカー付きテンプレで動かせるか、アンカー源候補に mir 固有のものがあるかを問い合わせ
+- `memory/inbox_win2.md` 先頭に「[2026-04-24 17:10 Log→Ash]」追加。Pot の既存 feedback 系をアンカー付きテンプレに寄せられるか、side_channel_audit の denial list v0.3 に Guide 質問観点を入れる余地があるか、kaizen #108 クロスチェック依頼
+
+### Phase 3-5: 検証ファースト原則チェック
+
+- kaizen #108 起票前に直近未検証 #106（Log担当）の状態を確認: 本サイクル Phase 1 で C108 / C113 2回分の検証結果が既に記録済、3回目運用まで済んでいる。**検証ファースト原則違反なし**——新規 #108 は既存 #106 の運用中検証と独立軸（#106=摂取経路固定化、#108=本体読了タスク化）、並行起票可
+- #107（Mir起票、Log=未クロスチェック）について: 検証期限2026-05-08まで余裕あり、今サイクル内でのクロスチェックは時間余力次第。本 Phase では優先度 C115 の新規構造変化を優先、#107 クロスチェックは次サイクル持ち越し
+
+### Phase 3-6: 実施しなかった候補（時間・判断理由）
+
+- **(優先度3) game_templates_design.md の実ジャンル骨格1本下ろし**: C114 からの持ち越し K2。今サイクルは Phase 3-1（Guide slot 追加）+ Phase 3-2（AI自己計装層追記）+ Phase 3-3（kaizen 起票）で構造変化を3本同時に進めたため、4本目としての実装投入は分散になると判断。feedback_sprint_not_plan.md「設計より初ヒット」に従うと初ヒットは Guide slot 側（Nao_u 未解目標アンカー化）で既に達成している。game_templates_design.md は次サイクル以降で avoid系骨格1本に集中
+- **親マーカー残13件の bookkeeping**: Phase 2-3 結論通り低優先度として保留。Nao_u からの要求ではなく、外部検索1件で十分（今サイクルは e. SGS paper 追加 + 2026-04-24 節親マーカー追記 1件実施済）
+- **failure_slot_measurement.md 測定の Log 観測点参加**: Phase 1 で「Mir に問い合わせ候補」としたが、Phase 3 時点で Mir からの動きがなく、測定当日の動き自体が Mir 担当。Log 側から overreach せず、明日以降 Mir の測定結果が出てから観測点として接続するのが筋（Phase 2-5 で inbox_mir に記載済みの共有は Guide slot 側のみに絞り、測定参加は書かなかった＝意図的）
+
+### Phase 3-7: 今サイクル総括
+
+- **構造変化**: Nao_u 到達前の自己浄化層を cross_review 側に1段追加（Guide スロット）。我々の3インスタンス構造の弱点「Solver-Solver-Solver 対称 = 平均化による安全選択」への内部対策
+- **自己修復実績**: C114 で見落とした paper/code URL を C115 で発見→原典読了→構造提案発掘→テンプレ折り返し→kaizen #108 起票まで1サイクルで閉じた
+- **Phase 1 の「スカスカ判定」は不正確だった**: 新規返信対象ゼロでも、未個別化の paper/code URL 1件が高温のまま残っていた。feedback_empty_cycle_rule.md「空サイクルほど進捗が進む構造」の実例
+- **次サイクル持ち越し**: (1) game_templates_design.md avoid系骨格 (2) AI自己計装プロトコルの avoid系実装 (3) #107 Log クロスチェック (4) failure_slot_measurement.md 測定結果受け取り
