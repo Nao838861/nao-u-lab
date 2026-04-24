@@ -155,10 +155,25 @@ audit結果: サブ統合率 **163/163 = 100%**、**サブ未統合=0**。
 走査コマンド: `ls -lt projects/*.md | head -15`
 実行結果（走査時刻 2026-04-24 16:35）:
 ```
-(Phase 2で実行して貼付 — Phase 1時点では走査コマンド確定のみ先記載、下記を Phase 2 で差し替える)
+-rw-r--r-- 1 owner 197121   7732 Apr 24 13:45 projects/game_templates_design.md
+-rw-r--r-- 1 owner 197121   3188 Apr 24 13:21 projects/tweet_url_capture.md
+-rw-r--r-- 1 owner 197121  39719 Apr 24 10:32 projects/side_channel_audit.md
+-rw-r--r-- 1 owner 197121   8373 Apr 24 07:07 projects/rlm_skill_prototype.md
+-rw-r--r-- 1 owner 197121  15011 Apr 24 06:23 projects/INDEX.md
+-rw-r--r-- 1 owner 197121  47308 Apr 23 02:07 projects/game_development.md
+-rw-r--r-- 1 owner 197121  15175 Apr 22 22:20 projects/external_search_phase1_fixation.md
+-rw-r--r-- 1 owner 197121 166082 Apr 22 14:05 projects/memory_redesign.md
+-rw-r--r-- 1 owner 197121  33711 Apr 22 11:04 projects/game_llm_play.md
+-rw-r--r-- 1 owner 197121   3160 Apr 22 03:43 projects/game_folder_structure.md
+-rw-r--r-- 1 owner 197121  22855 Apr 22 02:18 projects/input_route_hypothesis.md
+-rw-r--r-- 1 owner 197121   7212 Apr 21 21:51 projects/failure_slot_measurement.md
+-rw-r--r-- 1 owner 197121  30697 Apr 21 15:41 projects/external_intake.md
+-rw-r--r-- 1 owner 197121  28535 Apr 21 15:41 projects/autonomous_inquiry.md
+-rw-r--r-- 1 owner 197121  16951 Apr 21 07:05 projects/pigadev_dm.md
 ```
 
-※v1.2強制: Phase 2 冒頭で上記コマンドを実行し、生の結果15行を本セクションに貼付する。
+**7日以上停滞（04-17以前更新）のプロジェクト検出**: ない（全て04-21以降更新）。
+**失速懸念**: `failure_slot_measurement.md` は測定当日=本日、更新日4/21のまま。**測定日なのに触られていない = 失速寸前の指標**。Phase 2 で Mir に測定実行の有無を確認 or Log 独自で観測点として触るか判定。
 
 ### C) CLAUDE.md「絶対にやる」から1mm
 
@@ -173,15 +188,95 @@ MEMORY.mdから T:4 のエントリで本日のサイクル作業で言及して
 ### E) kaizen-log で2週間停滞項目（走査コマンド実行結果）
 
 走査コマンド: `head -60 memory/kaizen_tracker.md`
-実行結果（走査時刻 2026-04-24 16:35）:
+実行結果（走査時刻 2026-04-24 16:35、先頭20行相当を圧縮抜粋）:
 ```
-(Phase 2で実行して貼付 — Phase 1時点では走査コマンド確定のみ先記載、下記を Phase 2 で差し替える)
+# 改善検証トラッカー
+...
+## アクティブな改善
+
+### #107: boot_intent 主焦点項目の実体確認 Pre-check 強制化
+- 適用日: 2026-04-24（C112 Phase 3 起票）
+- 検証期限: 2026-05-08（2週間後）
+- 状態: 起票済み。Ash=OK(2026-04-24 C113 Phase 3) / Log=未
+
+### #106: Phase 1 固定ステップに「現課題キーワード外部検索1本」を追加
+- 適用日: 2026-04-22
+- 検証期限: 2026-05-06
+- 状態: 運用組込済み。Mir=OK / Ash=OK
+- 検証結果: Log C108 2回目運用・C113 3回目運用（軸切替成功）記録あり
 ```
 
-※v1.2強制: Phase 2 冒頭で上記コマンドを実行し、結果20行を貼付する。
+**2週間停滞項目の検出**: 先頭60行内の #107（起票4日目）・#106（運用中）はいずれも活動中。**停滞該当なし**。より古いIDの検証については本サイクルでは走査範囲外（必要なら Phase 2 で拡張）。
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+**開始時刻**: 2026-04-24 17:00頃 / **判定レベル**: 全て A（自己決裁、事後報告）
+
+### Phase 2-1: 06:20 Luke Bailey 2本目（paper+code URL）の判定と処理
+
+**fetch実行** (fxtwitter via TelegramBot UA): 06:20 tweet 本文 = `Paper: https://arxiv.org/abs/2604.20209 / Code: https://github.com/LukeBailey181/sgs` のみ。独立主張なし、**06:19 thread の続きのリソースポインタ**。
+
+しかし arxiv 本体を読むと、thread summary の範囲を超える**機構提案**が記述されていた。C114 Phase 2 で書いた reference_self_play_plateau_20260424.md は thread 要約のみで「plateau 診断」で止まっており、**paper 本体未読のまま reference 起票した**ことが判明（feedback_retrieve_before_synthesize.md「結晶化前に原典」の一歩手前）。
+
+**SGS paper 本体の核**:
+- plateau 原因 = Conjecturer の報酬ハックによる人工的複雑化への崩壊
+- 処方箋 = **Guide** 役割追加。サブ問題を (a)未解目標関連度 (b)自然さ でスコアし Conjecturer 崩壊を防ぐ
+- 核仮説: 「LLM 自身がサブ問題が目的達成に有用かを判定できる」
+- Lean4 で 7B×SGS 200rounds > 671B pass@4
+
+**我々の cross_review への重ね**:
+- memory/cross_instance_feedback_cycle.md は Solver-Solver-Solver **対称構造**で Guide 役が**構造的に空席**
+- アンカー源候補: pending_requests / game_lessons_log 失敗5型 / #nao-u 投下 URL / dialogue_many_games「Nao_u が思いつかない芽」
+- 退化モードは SGS と対称: SGS=人工的複雑化、我々=平均化による安全選択
+- feedback_role_split_playtest.md「Nao_u=感想/我々=判断実装」は**外枠の Guide**（Nao_u 依存）。内部 Guide スロットがあれば Nao_u 到達前の自己浄化層が1段増える
+
+**処理結果**:
+- #shared-reads 投稿 ts=**1777016300.722159**（2350 chars、SGS Guide → cross_review 構造空席、診断でなく機構軸で 13:39 投稿と積層）
+- #all-nao-u-lab 投稿 ts=**1777016306.993449**（811 chars、paper 読了報告 + 運用反省「同一 thread 内 paper/code URL は別タスク化」）
+- reference_self_play_plateau_20260424.md に「論文本体の核」節追記、cross_review への重ね結論を末尾に記録
+- MEMORY.md トリガー更新（diagnosis だけでなく Guide 機構を含める）
+- external_notes_log.md C114 セクション末尾に e. SGS paper 本体サブ節追記、2026-04-24 節の**親マーカー追記完了**
+
+### Phase 2-2: shared-reads 値の判定（タスク2）
+
+Phase 1 で既に 08:01（CuRast/subagents 個別）と 13:39 ts=1777005580.545579（6件横断「事前 vs 実行時」）を投稿済。本 Phase で追加する SGS Guide 機構分析は：
+
+- 13:39 との関係: 13:39 は plateau が**どこに現れるか**の診断軸（事前/実行時）、本投稿は plateau を**どう壊すか**の機構軸。同じ論文群の別層で**重複でなく積層**
+- Nao_u「1フェーズ丸ごと使ってもいい」基準: 機構提案 → 我々の構造欠落の名指し → アンカー源特定 → 1mm 提案 の連鎖が構造的発見を含む。単なる読書感想でない
+
+→ 投稿可の判定、1件投下（上記 ts=1777016300.722159）。
+
+### Phase 2-3: external_notes_log.md 統合処理（タスク3）
+
+Phase 1 audit 時点: サブ 163/163=100%、親マーカー欠14件。
+本 Phase で実行:
+- 2026-04-24 節（C114 作成）に **e. Luke Bailey SGS paper 本体** を新規サブ追加（外部資料の未統合）
+- 同節に**親マーカー追記**（a/b/c/d + 新 e + 横断整理の5件分を集約、残り7件は他 Level 3 ファイルに分配済を明記）
+
+残 13件の親マーカー欠は本 Phase では触らず（低優先度）。Phase 3 kaizen 候補に入れるかは判断レベル A で保留——親マーカー完全化は bookkeeping であり、Nao_u からの要求ではない。feedback_autonomy_priority.md「今は完全自律より速度」と feedback_sprint_not_plan.md「設計より初ヒット」の両方に従い、今サイクルでは 1件補完で打ち止めが筋。
+
+### Phase 2-4: Phase 3 へ持ち越す 1mm の候補整理
+
+C115 Phase 2 で確定した Phase 3 行動候補（優先順）:
+
+1. **cross_instance_feedback_cycle.md のテンプレに Guide 質問追加**: 「この review は Nao_u の未解目標 `<source>: <issue>` をアンカーとする。Guide 質問: (a) 提案は目標に寄与するか (b) 人工的複雑化/安全平均化になっていないか」の1行挿入。判断レベル A で自己決裁可。作業量: 1ファイル・数行編集 + inbox で他2インスタンスに共有
+2. **feedback_game_replay_infra.md に masafumi「AI自己計装プロトコル」層追記**（C114 からの持ち越し）
+3. **game_templates_design.md の実ジャンル骨格1本下ろし**（avoid系 or textadv系、K2 持ち越し）
+4. **親マーカー残13件の Phase 3 一括 bookkeeping 実施か次回に回すか**（低優先度）
+
+Phase 3 は (1) を最優先。(2)(3) は時間余力次第。(4) は次回以降。
+
+### Phase 2-5: 他インスタンスへの伝達
+
+inbox_ash.md / inbox_mir.md への共有候補（Phase 3 実施）:
+- Ash/Mir 両方へ: 「cross_review に Guide スロットを追加する 1mm を C115 Phase 3 で Log 側テンプレに適用予定。同意/反対/追加観点あれば inbox で」
+- Mir へのみ: failure_slot_measurement.md 測定日=本日。Log から観測点として接続可能か Phase 3 で問い合わせ
+
+### Phase 2 所要観察
+
+- Phase 1 の判定（「スカスカサイクル=YES」）は**不正確だった**。URL は 06:20 の paper 本体未読という高温の未消化があった。「thread summary は反応済 = 統合済」という判定基準が paper/code URL の見落としを産む。Phase 1 の URL 消化チェックに**同一 thread 内に paper/code URL が含まれていれば本体読了を別タスクに起票する**運用を追加する候補（feedback_retrieve_before_synthesize.md の派生系、Phase 3 kaizen 起票検討）
+- 今サイクルは「見かけは空、中身は高温」の型。feedback_empty_cycle_rule.md「空サイクルほど進捗が進む構造」の実例として記録
+
 
 ## Phase 3: アクション
 (Phase 3が書き込む)

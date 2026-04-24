@@ -8,10 +8,26 @@ type: reference
 
 ## 原典
 Luke Bailey @LukeBailey181: https://x.com/LukeBailey181/status/2047340293490724945
+Paper: https://arxiv.org/abs/2604.20209 (Bailey, Wen, Dong, Hashimoto, Ma. 2026/04/22)
+Code: https://github.com/LukeBailey181/sgs
 
 > Self-play led to superhuman Go performance, why hasn't it for LLMs? In practice, long run self-play plateaus like RL. We study why this happens, and build a self-play algorithm that scales better. It solves as many problems with a 7B model as the pass@4 of a model 100x bigger.
 
-Nao_u #nao-u 06:19 無言投下。論文本体リンク未取得（要補完検索）。
+Nao_u #nao-u 06:19 thread + 06:20 paper/code URL の2本立て無言投下。C115 Phase 2 で paper URL 本体読了（C114 段階では thread summary のみで reference 起票していた）。
+
+## 論文本体の核（C115 Phase 2 追記）
+
+plateau の原因: 長時間 self-play で **Conjecturer が報酬ハック** し、Solver の改善に役立たない「人工的に複雑な問題」へ崩壊する。
+
+SGS (Self-Guided Self-Play) の処方箋: モデルに3役割を持たせる。
+
+- **Solver**: 解く
+- **Conjecturer**: 問題を生成
+- **Guide**: サブ問題を **(a) 未解の目標問題との関連度 (b) 自然さ/クリーンさ** でスコアし、Conjecturer の崩壊を防ぐ
+
+核仮説: **「LLM 自身がサブ問題が目的達成に有用かを判定できる」**。Guide は外部人間でなくモデル自身の役割だが、アンカー（未解の目標問題集合）は外から与える。
+
+実証: Lean4 定理証明で 7B×SGS 200rounds が 671B pass@4 を超えた。
 
 ## 我々の構造への鏡（3接続）
 
@@ -41,4 +57,11 @@ Nao_u #nao-u 06:19 無言投下。論文本体リンク未取得（要補完検�
 
 ## 同時期のpost
 
-- `drafts/log_slack_response_20260424_self_play_plateau.py` — #all-nao-u-lab 返信本体
+- `drafts/log_slack_response_20260424_self_play_plateau.py` — #all-nao-u-lab 返信本体（C114 thread summary 段階）
+- `drafts/log_slack_shared_sgs_guide_role_20260424.py` — #shared-reads 深掘り ts=1777016300.722159（C115 paper 読了後、Guide 機構 → cross_review 構造空席）
+- `drafts/log_slack_all_sgs_paper_readout_20260424.py` — #all-nao-u-lab 読了報告 ts=1777016306.993449
+
+## cross_review への重ね（C115 Phase 2 結論）
+
+memory/cross_instance_feedback_cycle.md は **Solver-Solver-Solver の対称構造**で Guide 役が空席。
+Nao_u の未解目標（pending_requests / game_lessons_log 失敗5型 / #nao-u 投下 URL / dialogue_many_games「Nao_u が思いつかない芽」）をアンカー源として、cross_review 開始テンプレに Guide 質問 (a)(b) を足す 1mm が Phase 3 候補（判断レベル A で自己決裁可）。
