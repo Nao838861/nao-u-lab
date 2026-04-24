@@ -2765,3 +2765,5 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-24 18:06:53] Inbox win2 has content — waking Claude
 [2026-04-24 18:06:53] [COOLDOWN] win2: 12回連続エラー → 60分クールダウン
 [2026-04-24 18:06:53] Error waking Claude for win2: [WinError 206] ファイル名または拡張子が長すぎます。 — restoring inbox (consecutive errors: 12)
+[2026-04-24 18:55:28] Inbox win has content — waking Claude
+[2026-04-24 18:55:52] Claude woken for win: API Error: 500 Internal server error. This is a server-side issue, usually temporary — try again in 
