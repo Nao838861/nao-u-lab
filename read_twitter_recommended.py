@@ -111,6 +111,14 @@ def _read_inner(count, dry_run):
                                 time_elem.first.get_attribute("datetime") or ""
                             )
 
+                        # Tweet個別URL (Permalink) — time要素を内包する a要素のhref
+                        permalink = ""
+                        permalink_links = elem.locator('a:has(time)')
+                        if permalink_links.count() > 0:
+                            href = permalink_links.first.get_attribute("href") or ""
+                            if href and "/status/" in href:
+                                permalink = "https://x.com" + href
+
                         # 引用ツイート
                         quote_text = ""
                         quote_tweet = elem.locator('[data-testid="quoteTweet"]')
@@ -126,6 +134,7 @@ def _read_inner(count, dry_run):
                             "text": tweet_text,
                             "quote": quote_text,
                             "time": timestamp,
+                            "url": permalink,
                         }
                         tweets.append(entry)
 
@@ -182,6 +191,8 @@ def save_recommended(tweets):
     for i, t in enumerate(tweets, 1):
         date = t["time"][:10] if t["time"] else "?"
         lines.append(f"--- {i}. @{t['user']} ({date}) ---")
+        if t.get("url"):
+            lines.append(f"URL: {t['url']}")
         lines.append(t["text"])
         if t["quote"]:
             lines.append(f"  [引用] {t['quote']}")

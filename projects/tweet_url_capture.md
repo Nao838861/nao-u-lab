@@ -38,6 +38,19 @@ tweet_url = "https://x.com" + (permalink.get_attribute("href") or "")
 - 優先度: 中。URL明示ルール(R-URL)の恒久対処。当面は手動でプロフィールURL併記で凌ぐ
 - 完了判定: 次回の twitter_recommended 実行ログでTweet URLが記録されていること
 
+## 実装 (2026-04-24 Ash)
+
+read_twitter_recommended.py と read_twitter_feed.py の両方に同じ穴があったので併せて塞いだ（R-URLは原則であってrecommended限定ではない）。
+
+変更点:
+- tweet取得ループに `elem.locator('a:has(time)')` で Permalink を抽出する処理を追加
+- entry dict に `"url": permalink` を追加
+- save_recommended / save_feed の出力フォーマットに `URL: https://x.com/...` 行を追加（`date` 行とbodyの間に挟む、URLがあれば出力）
+
+完了判定の確認: 次回 twitter_recommended / twitter_feed が自動実行されたら log/twitter_recommended_YYYYMMDD.txt と log/twitter_reads_YYYYMMDD.txt に `URL:` 行が含まれるはず。含まれなければセレクタ調整（A/B案切替）。
+
+ステータス: **実装完了、次回実行で検証**。R-URLルール自体のドキュメント化（.claude/rules/knowledge.md）は別タスクとして残す。
+
 ## 関連
 
 - memory/feedback_cite_source_url.md — 人間ルール側の対応記憶
