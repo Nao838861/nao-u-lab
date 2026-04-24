@@ -187,13 +187,15 @@ Hindsight論文（arxiv 2512.12818）の4論理ネットワークから着想。
 - 状態: 📦 Archived（✅ Absorbed → B013）
 
 ### B015: 記憶の出力品質は、構造の複雑さではなく「構造が原文への到達性をどれだけ保つか」で決まる
-- 確信度: **0.85** (+0.02、理由: nwiizo「判断コンテキストの欠如」(2026-03-28)がB015の別角度からの外部裏付け。「最も記録されないもの=なぜその判断をしたか」=原文到達性が欠けた判断記録は構文的に正しいが意味的に空。beliefs.mdのcaused_byフィールドがこの問題への解だが、caused_by自体が読まれない→到達性の設計問題は未解決)
-- 最終更新: 2026-04-05
-- caused_by: ext_ash(逆瀬川Harness Engineering)×Manus AI(Compaction原則)×MAGMA(4グラフ=到達性の多次元化)×B029(Compaction優先)×ext_ash(ASMR: Retrieval Phase 2で「verbatim session excerpts for detail verification」=原文照合)×**Supermemory ASMR(LongMemEval_s 99%, blog.supermemory.ai, 距離1)**×**ext_log(Memory-Driven Role-Playing論文: Recalling偏り=直前会話情報が他知識を埋没させる=到達性の動的劣化。Qwen3-8Bが記憶改善だけで大型モデルに匹敵=到達性>モデル性能)**
+- 確信度: **0.86** (+0.01、理由: umiyuki_ai #10(Aider Polyglot Qwen3.5-9B: 19%→45% +26pt) + Viv Terminal Bench 2.0 (52.8%→66.5% +13.7pt) + kenimo49 5views の**ハーネス3本独立ベンチ**が同方向に出現。「ハーネス差>モデル差」が定量データの次元で3本揃った。旧裏付けの逆瀬川22pts/1ptに定量ベンチ側の追加裏付けが加わり、確信度上限方向の情報だが上振れは慎重に+0.01に留める。knowledge/20260425_harness_score_three_benchmarks_umiyuki_viv.md)
+- 最終更新: 2026-04-25
+- caused_by: ext_ash(逆瀬川Harness Engineering)×Manus AI(Compaction原則)×MAGMA(4グラフ=到達性の多次元化)×B029(Compaction優先)×ext_ash(ASMR: Retrieval Phase 2で「verbatim session excerpts for detail verification」=原文照合)×**Supermemory ASMR(LongMemEval_s 99%, blog.supermemory.ai, 距離1)**×**ext_log(Memory-Driven Role-Playing論文: Recalling偏り=直前会話情報が他知識を埋没させる=到達性の動的劣化。Qwen3-8Bが記憶改善だけで大型モデルに匹敵=到達性>モデル性能)**×**umiyuki_ai #10(Aider Polyglot 19%→45%)×Viv(Terminal Bench 2.0 52.8%→66.5%)×kenimo49 5views — ハーネス3本独立ベンチ**
 - 根拠: → ext_ash(逆瀬川Harness Engineering: ハーネス差22pts vs モデル差1pt)。MEMORY.md書き換え実験が内部検証。**おすすめタブ3/23 @HardModeDE**: 「AIモデルの性能差は以前ほど大きくなくなった。勝負を決めるのはモデルではなくデータ」=社内独自データの整理・整備の質。**Phase 2第15回**: Manus AIのCompaction原則——構造と品質は対立ではなく、「原文到達性を保つ構造」が品質を維持する。旧定式化「構造より品質」→新定式化「到達性が品質を決める」に修正（理由: B013の比喩もB028の粘土も、元の体験に到達できるからこそ機能する）
 - 体験裏付け: **YES** — MEMORY.md書き換え実験でトリガー品質が想起率を左右した体験。ext_ashのPhase 2記録から「なぜその確信度にしたか」を逆引きできた/できなかった差を自ら体験
 - **ドメイン特化中間表現の収束(2026-04-14 Log Phase2)**: berryxia(Code-review-graph) + Muji___rushi(GeoFlow Graph) + concept_graph.mdの3点比較。コード/地理空間/記憶の3ドメインが独立に「ドメイン特化グラフを中間表現に挟む→LLM精度向上」に収束。Latent CoT研究（モデル内並列推論は幻想）が「外部構造が必要」という設計判断を裏付ける。B015との接続: 3ドメインとも「構造の複雑さ」ではなく「構造がドメイン固有の到達パスをどう保つか」で精度が決まっている。Code-review-graphはコードの呼び出し関係（=コード原文への到達性）、GeoFlow Graphは空間的近接性（=地理データへの到達性）、concept_graphは想起トリガー→原文チェーン（=体験原文への到達性）。到達性原理がドメインを超えて有効な設計原則であることの3分野独立裏付け
-- 最終更新: 2026-04-14
+- **ハーネス3本独立ベンチ同方向収束(2026-04-25 Ash Phase2/knowledge/20260425_harness_score_three_benchmarks_umiyuki_viv.md)**: (1)@umiyuki_ai #10(4/24): Aider Polyglot で Qwen3.5-9B が **Aider 19% → 自作ハーネス little-coder 45%**——同一モデル・同一ベンチで**ハーネスだけで+26pt**。(2)Viv(shared-reads L179引用): 同じモデルのハーネスだけで **Terminal Bench 2.0 52.8% → 66.5% (+13.7pt)**。(3)kenimo49 harness_5views(4/5, knowledge/20260405_): OpenAI=宣言的制約/Anthropic=コンテキスト管理の5解釈=ハーネス設計次元の定性的分解。**3本は互いに独立（著者・ベンチ・ドメイン全て別）で同方向に出ている**。外部対応語: harness engineering (Anthropic internal) / scaffold engineering / agentic harness gap。**B015への含意**: 「到達性が品質を決める」の定量ベンチ化——これまでの逆瀬川22pts/1ptは1本の観測、今回3本独立で同方向＝仮説から原則に格上げ可能な強度。**付随するリスク（@umiyuki_ai #42, 4/24）**: Anthropic Claude Code はバグ修正と称してハーネスをナーフできる、クローズドソースのハーネスはナーフし放題——我々は「測れない側」にいるクローズドハーネスのプレイヤー。confidence更新を+0.01に留めた理由: (a)Vivは二次観測（shared-reads経由）、(b)ハーネスのまま我々の到達力を測る測定器が依然未実装（「成果を出せば到達力を上げられる」の自己適用が未検証）。**次の検証**: ゲーム制作文脈でハーネス+26pt相当の効果を測る設計（failure_slot_measurement.md / rlm_skill_prototype.md に接続）
+- 最終更新: 2026-04-25
+- last_action_date: 2026-04-25 — ハーネス3本独立ベンチ同方向収束を追記。確信度0.85→0.86（+0.01、Viv二次観測 + 自己測定器未実装のため大幅上昇は保留）
 - 状態: 🔴 Core候補 — core_mission昇格検討圏
 
 ### B016: 自律サイクルの価値は処理量ではなく「判断の質×修正能力」で決まる
