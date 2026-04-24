@@ -2106,3 +2106,58 @@ Ash が RLM 試金石2（"面白い"と"面倒くさい"が同じ文脈で出た
 **1mm候補**: projects/game_templates_design.md のテンプレ共通ヘッダに「この改修は構造的負荷か摩擦的負荷か」を実装前に1行書く欄を入れる。
 
 [統合済 2026-04-24 Log C113 Phase 2 — #all-nao-u-lab 反応投稿 ts=1776985305.400599、game_templates_design.md テンプレヘッダ追記は Phase 3 候補]
+
+## 2026-04-24 #nao-u 投下の4件消化（Log C114 Phase 2）— 早朝2件は反応済、午後4件を本日Phase 2で展開
+
+Nao_u が 2026-04-24 06:05〜13:23 に #nao-u へ計11件以上を投下。早朝の CuRast / forked subagents / OpenGame / Luke Bailey / shannholmberg / kawai / RLMs は各サイクル Phase 1で#all-nao-u-lab 反応済（cycle_staging_log.md 参照）。C114 Phase 2 では **午後に浮上した4件の Log 独自角度**を台帳化する。
+
+全体軸の横断分析は #shared-reads ts=1777005580.545579 に別投稿（「事前知識 vs 実行時合成」の領域依存論）。
+
+### a. m_schuetz CuRast（04-24 06:05 Nao_u共有）
+
+出典: https://x.com/m_schuetz/status/2047334757856362851 / paper https://github.com/m-schuetz/CuRast/blob/main/docs/CuRast_arxiv.pdf
+
+189億三角形を事前LOD生成なしで実行時GPU computeによりラスタライズ。Naniteの小三角形高速描画を巨大メッシュまで拡張。
+
+**Log側の角度**: 「事前最適化を外して実行時に解く」系列の事例として、同日のRLMs(事前常時注入→能動スライス)・04-20 harness(thin model+実行時compose)・04-17 witcheer Camp 2(context substrate)と地盤が同じ。ただしNao_u 06:10「型を知って派生」は真逆の指示＝領域依存。グラフィックス/AI推論は実行時優位、ゲーム骨格は事前優位、の分離軸を得た。
+
+[統合済 2026-04-24 Log C114 Phase 2 — #all-nao-u-lab ts=1777005423.650399、#shared-reads 横断整理 ts=1777005580.545579。memory_architecture.md「事前/実行時領域依存」節は次サイクル起票候補]
+
+### b. npaka123「GPT-5.5にSTG作らせ、browser useで難易度・白飛びを自己評価」（04-24 13:15 Nao_u共有）
+
+出典: https://x.com/npaka123/status/2047415610683121704
+
+布留川英一。Browser useで生成物を実際に動かして難易度/白飛びを確認。「1分クリア」指示が効きすぎて簡単になった副作用も観測。
+
+**Log側の角度**: feedback_ai_agent_gamedev_bottleneck.md(04-22 ABA投下、画面評価0-20点への処方箋「ループを短く閉じる/スクショ/headless」)のブラウザ実装例。我々のavoid系はheadless replay+cross_reviewを持つが動かして評価する知覚評価層は未実装。加えて「1分クリア」事例は評価基準の事前固定が生成物を歪める実証——cross_reviewの評価基準の事前固定 vs 実行時開放バランスが課題。
+
+[統合済 2026-04-24 Log C114 Phase 2 — #all-nao-u-lab ts=1777005461.169789、game_templates_design.mdのテンプレヘッダに「評価基準の事前固定/実行時開放」欄追加は Phase 3 候補]
+
+### c. claudecode_lab経由 Anthropic April 23 postmortem（04-24 13:19 Nao_u共有）
+
+出典: https://x.com/claudecode_lab/status/2047415122780738031 / 公式: https://www.anthropic.com/engineering/april-23-postmortem
+
+全有料ユーザー使用制限リセット。3問題をv2.1.116+で修正。**原因はClaude CodeとAgent SDKのハーネス側、モデル本体とAPIは劣化していなかった**。再発防止: ユーザー環境適合内部利用体制・広範evals。
+
+**Log側の角度**: 「モデルは thin、ハーネスが compose」(04-20 akshay_pachaar harness)が公式化された最初の事例。Anthropicが自前ハーネスを evals で検証し始めた一方、**我々は自前ハーネス(3層プロンプト+Phase運用+cross_review+投稿スクリプト+audit.py)の品質低下検知 evals を持っていない**。feedback_structural_enforcement.md「手動手順→構造強制」は手段側の話で、ハーネス自体の品質ドリフト検知は別問題。Phase 1 pre-check に「自前ハーネス品質指標」を入れる kaizen 候補(#114系)。
+
+13:20 Nao_u「3時間周期に戻す」はこのpostmortemを受けた即応(コミット a6e3f5ef8d8)。1分間での因果連鎖を履歴に残す。
+
+[統合済 2026-04-24 Log C114 Phase 2 — #all-nao-u-lab ts=1777005495.890849、scheduler設定変更 a6e3f5ef8d8 既反映。ハーネス品質evals起票は Phase 3 候補]
+
+### d. masafumi「Codexにスクショ渡したらカリングミスmeshletを自分で色分けして修正」（04-24 13:23 Nao_u共有）
+
+出典: https://x.com/masafumi/status/2047474577551524085
+
+Codex自身が書いたMesh Shaderカリングがミス→masafumiがスクショを渡す→Codexが「ミスmeshletに色分けする描画コード」を**自分から提案**→色分け版スクショから元コードと照合→修正。
+
+**Log側の角度**: npaka123(同日)の browser use自己評価とは別階層。npaka = 完成物評価、masafumi = **壊れた中間状態を可視化する計装をAIが自分から挿入**。メタデバッグ。feedback_ai_agent_gamedev_bottleneck.mdのより深いレイヤー=「評価ループを閉じるための計装をAIが自分で設計する」。我々のreplay infraは数値とスクショまでで、視覚的計装の自動挿入層は抜けている。Pot/avoid_logのreplay infraに「AI自己計装プロトコル」を足す候補——ただしfeedback_structural_enforcement「構造で強制」との緊張があり、cross_reviewで計装挿入の妥当性を他インスタンスが判定する層が必要。
+
+[統合済 2026-04-24 Log C114 Phase 2 — #all-nao-u-lab ts=1777005524.403019、replay infra拡張(AI自己計装)は Phase 3 候補。feedback_game_replay_infra.md に次回追記予定]
+
+### 横断整理（#shared-reads ts=1777005580.545579）
+
+6件(CuRast/OpenGame型派生/self-play plateau/hot cache/RLMs/ハーネス3件)を「事前 vs 実行時」軸で並べると、Luke Bailey plateau を外枠として処方箋が2方向(A事前を厚くする / B実行時を厚くする)に分かれる。領域依存マトリクスを作成(グラフィックス・AI推論・AI自己評価は実行時優位、ゲーム骨格・アイデンティティは事前優位)。「どの軸でplateauしているか」の診断枠組みがmemory_redesignの次の議論項目。
+
+[統合済 2026-04-24 Log C114 Phase 2 — #shared-reads ts=1777005580.545579。memory_redesign.md次サイクル議論項目として残置]
+
