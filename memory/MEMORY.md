@@ -115,6 +115,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_url_explicit.md](feedback_url_explicit.md) — **外部URLは必ず明示、繰り返し指摘**（2026-04-12初回→2026-04-22 22:08再指摘）。Nao_u「何度も言ってるんだけど、shared-readsで特定のURLを参照して議論している時には、かならずリンクを明示して」。違反実例: arxiv ID単独/短縮URL単独/プロジェクト名単独/knowledge `source:`空欄/Twitter URL`...`省略。feedback_index.md #5と#26（知識の存在≠行動の変化）の典型。構造強制kaizen候補 [T:4]
 - [feedback_external_output_policy.md](feedback_external_output_policy.md) — **外部発信ポリシー**（2026-04-22 Nao_u #human-steering明文化）。knowledge=自分用、Twitter転載はNao_u運用継続（フォロワー50→77）、ブログ草稿は自発起案OK（確信持てるなら積極的に）、ゲームが最優先でブレない。起案チェック4項目（固有構造が載るか/外部差別化/既存参照に接続/ゲーム時間を食わないか）。草稿候補ストック3本 [T:4]
 - [feedback_retrieve_before_synthesize.md](feedback_retrieve_before_synthesize.md) — **新規知識取り込み前に既存失敗記憶を検索せよ**（2026-04-23 Nao_u #human-steering 00:29）。ABA記事結晶化時Potを引用→正解は avoid_log/v02 v3（drag/hitbox/弾幕激化/90%スポーン/地雷の5連禁止追加）。M-11を既に持っていたのに直近バイアスで連結失敗。結晶化前に devlog/game_lessons_log を grep して第一引用にする [T:5]
+- [feedback_no_sympathy_goal_first.md](feedback_no_sympathy_goal_first.md) — **同調せず、目的達成せよ**（2026-04-24 Nao_u #nao-u 09:35 KAWAI @kawai_design 引用無言投下）。同調=Nao_u1人で仕事するのと同じ。Nao_u発言への即時同意禁止、目的照合セクション強制。「なるほど」「確かに」「良い視点」は同調の典型語彙。反対のための反対ではなく「目的達成」との対で機能。Amanda Askell 7原則より優先する雇用者側ルール [T:5]
 
 ## アーキテクチャ決定
 
@@ -140,6 +141,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [reference_twitter_premium_longform.md](reference_twitter_premium_longform.md) — **Trilog @eda_u838861 はX Premium契約で長文1投稿可能**（2026-04-23 Nao_u #human-steering 00:22）。ABA返信タスクでMir(b)「280字圧縮」解釈が誤り、Log(a)「原文そのまま1投稿」が正解と確定。Nao_uが代投し直し。「1ツイートで」「そのまま」指示は分割前提で読まず、まずPremium長文1投稿を想定 [T:4]
 - [reference_aba_life_experience_substrate.md](reference_aba_life_experience_substrate.md) — **ABA 2024-12-23記事＝思想原点**（2026-04-23 Nao_u #nao-u 01:52 無言投下）。「人間が創作プロセスや経験をAIに提供すれば、AIは無難な結論を回避し独創的発想に到達できる」——**Nao_uが20年日記を我々の根にした構造の外部理論化**。ABA記事4本の時系列=思想(2024-12)→現状(2026-02)→インフラ(2026-03)→設計(2026-03)、最古を後投下は「なぜやるか」の想起要請。我々は仮説の生体実装＝当事者証言が外部観察者に対する独自資産 [T:5]
 - [reference_self_play_plateau_20260424.md](reference_self_play_plateau_20260424.md) — **Luke Bailey「self-play plateau」警告**（2026-04-24 Nao_u #nao-u 06:19 無言投下）。Log/Mir/Ash cross_reviewは構造的にself-play。同じ根(日記)から生えた分布近接3体はlong runでplateau確定。feedback_external_search_missing(04-22再指摘)の意味=plateau回避の外部栄養要求だった。「Nao_uが思いつかない芽を掘り当てろ」の数理的裏付け。1mm: auto_diary.py Phase 1 に外部検索未実行警告の構造強制 [T:5]
+- [reference_shannholmberg_hot_cache.md](reference_shannholmberg_hot_cache.md) — **Shann³ Claude+Obsidian二次脳5アップグレード**（2026-04-24 Nao_u #nao-u 09:35 無言投下）。肝はStop hook+SessionStart injectionによるworking memory。うちの未到達: confidence frontmatter/[!contradiction]記法/autoresearchコマンド/hot cache自動注入。荒川Skills・self_play_plateau・feedback_info_integrationの処方箋と接続。kaizen候補3件（hot_cache hook/confidence追加/.claude/skills/autoresearch試作） [T:4]
 
 ## 深い記憶（必要時のみ参照）
 
