@@ -303,5 +303,69 @@ v03 は **「コード変更だけして検証インフラを後回し」** の�
 - Phase 3 タイムボックス: 最初30分を game/ 固定予約、最低保証は「最小版 commit」
 - kaizen 起票候補2件: ゲーム1mm 達成後にのみ起票可（gate 8 遵守）
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-04-25 07:50 Log C121)
+
+### 1) 最優先実行: avoid_log/v03 ヘッドレス検証
+
+Phase 2 計画通り、**最初の30分を game/ 配下に固定予約** して実行:
+
+1. `cp v02/headless.py v03/headless.py`
+2. v03/headless.py に dirBias 圧力ロジック追加（index.html と同式: `bias = bias*0.96 + moveDir`, clamp ±30, `interval = max(7, baseInterval * (1 - biasFactor * 0.45))`）
+3. `bias_abs_avg` / `spawns_per_sec` 観測指標を `run_one` / `aggregate` に追加
+4. seed=100 / 5 runs / 6 policies で v02/v03 両方を走らせて比較
+
+**結果 (seed=100)**:
+
+| policy | v02 生存s | v03 生存s | Δ | v03 bias_abs |
+|---|---|---|---|---|
+| concept | 21.74 | 37.60 | **+73%** | 1.17 |
+| slacker | 4.29 | 4.81 | +12% | 1.17 |
+| dodger | 9.43 | 7.20 | **-24%** | 8.26 |
+| remote | 12.89 | 8.83 | **-31%** | 8.45 |
+| camper | 4.15 | 4.62 | +11% | 1.55 |
+| oscillator | 10.33 | 11.04 | +7% | 3.06 |
+
+**読み取り**:
+- 圧力設計が dodger/remote（偏り蓄積型の手抜き）に意図通り効いた
+- concept は bias_abs 1.17（ほぼ偏らない）＝SPACE 掃除で圧力非発動＝素通り
+- **concept vs dodger 差が 2.3倍→5.2倍に拡大**。ABA「望ましい遊び方が自然に出る圧力」原則の最小実装として成立
+
+**想定外**: concept +73% 伸びた。相対差別化は成功だが絶対難度が落ちた可能性。次検証候補化。
+
+### 2) 成果物
+
+- `game/avoid_log/v03/headless.py` （v02 移植 + dirBias）
+- `game/avoid_log/v03/devlog.md` に「2026-04-25 07:40 ヘッドレス比較実施」セクション追記
+- `game/avoid_log/v03/raw_log.md` 新規作成（feedback_raw_log_reanalysis 履行）
+- `game/avoid_log/v03/replays/metrics_20260425_074139.json` / `report_20260425_074139.md`
+
+### 3) Slack 報告
+
+- `#game-rights` 投稿: 定量結果 + ファイル一覧 + 次検証提案
+- `#kaizen-log` 投稿: ゲーム1mm 実行報告 + 新規 kaizen 起票あえて見送り（Nao_u 04:45 指摘「起票だけで無視」への構造的応答）
+
+### 4) 扱わなかった持ち越し
+
+- Mir textadv v04 支援: Mir 進捗待ちで干渉回避
+- instance_divergence_observability レビュー追記: 時間予算外
+- external_search_phase1_fixation レビュー: gate 8 で非ゲーム1mm 時はメタ作業保留
+- 空サイクル深掘り候補 E の kaizen 古参調査: 同上
+
+### 5) サイクル後ゲート自己採点
+
+- **ゲーム1mm判定: ✅** `game/avoid_log/v03/headless.py` + `devlog.md` + `raw_log.md` 3ファイル変更・作成、commit 予定
+- 日記1行目（予定）: 「ゲーム1mm=✅ v03 ヘッドレス検証 dodger -24%, remote -31%」
+- スカスカ判定: ❌ ではない（実装+定量結果取得+Slack 2チャンネル報告）
+
+### 6) 次サイクル 1mm 候補（gate 1 準拠・game/ 配下先頭）
+
+1. `game/avoid_log/v03/headless.py` で seed 100-109 の10seed平均で v02/v03 比較（単発偶然性排除）
+2. `game/avoid_log/v03/index.html` に dirBias 視覚化追加（手動プレイで圧力を体感できるか）
+3. Mir textadv v04 到着後の cross_review 参加
+
+### Phase 3 完了サマリ
+
+- game/ 配下 1mm: ✅ 達成（v02→v03 headless 移植 + dirBias 反映 + 定量比較 + 報告）
+- Slack 報告: ✅ 2件（#game-rights, #kaizen-log）
+- 新規 kaizen 起票: あえて 0件（検証ファースト + Nao_u 04:45 指摘対応）
+- 持ち越し: Mir 待ち 1 / メタ作業 2（gate 8 で保留）
