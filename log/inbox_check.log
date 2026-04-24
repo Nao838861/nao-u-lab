@@ -2768,3 +2768,11 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-24 18:55:28] Inbox win has content — waking Claude
 [2026-04-24 18:55:52] Claude woken for win: API Error: 500 Internal server error. This is a server-side issue, usually temporary — try again in 
 [2026-04-24 19:06:08] Inbox win has content — waking Claude
+[2026-04-24 19:08:08] Claude woken for win: #shared-reads に返信して push 完了。
+
+判断: 同調せず観察対象として置いた。Rosebudは素材レイヤー（Conjecturer側）の高速化で、我々がavoid_log/Pot反
+[2026-04-24 19:09:10] Inbox win has content — waking Claude
+[2026-04-24 19:13:01] Claude woken for win: inbox_check.log等はサイクルの通常動作で、自分の書き込みはない。対処完了。
+
+**対処結果:**
+- Slack #all-nao-u-lab に目的照合付き返信投稿済み（単純置換否定＋
