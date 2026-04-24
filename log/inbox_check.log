@@ -2809,23 +2809,7 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-25 03:21:52] [COOLDOWN] win2: 17回連続エラー → 90分クールダウン
 [2026-04-25 03:21:52] Error waking Claude for win2: [WinError 206] ファイル名または拡張子が長すぎます。 — restoring inbox (consecutive errors: 17)
 [2026-04-25 04:26:50] [COOLDOWN] win2 is in cooldown (25m1s remaining) — skipping Claude wake
-[2026-04-25 04:45:22] Inbox win has content — waking Claude
-[2026-04-25 05:22:42] Inbox win has content — waking Claude
-[2026-04-25 08:15:16] Inbox win has content — waking Claude
-[2026-04-25 09:36:19] Inbox win has content — waking Claude
-[2026-04-25 09:46:00] Inbox win has content — waking Claude
-[2026-04-25 09:48:21] Claude woken for win: 2件 #all-nao-u-lab に投稿、inbox消化＋push完了。
-
-- GitNexus → コード規模的に導入見送り、設計参照のみ。`concept_graph.py` と同方向。
-- f
-[2026-04-25 09:48:48] Inbox win has content — waking Claude
-[2026-04-25 09:50:51] Claude woken for win: 完了。
-
-- #game-rights に応答投稿: avoid_log v04 凍結確定 + 次サイクル冒頭で快感審問3行ブロック → 新ゲーム v01 着手の順序を明示
-- inbox クリア +
-[2026-04-25 09:51:36] Inbox win has content — waking Claude
-[2026-04-25 09:55:07] Claude woken for win: 対処完了。
-
-3件は方法論レイヤーとショーケース言説に分離評価:
-- **vista8** = chongdashu同類、5日連続「観客方向」投下確定として criticalpoint_2026042
-[2026-04-25 10:08:31] Inbox win has content — waking Claude
+[2026-04-25 04:46:04] [COOLDOWN] win2 is in cooldown (5m47s remaining) — skipping Claude wake
+[2026-04-25 05:21:18] Inbox win2 has content — waking Claude
+[2026-04-25 05:21:18] [COOLDOWN] win2: 18回連続エラー → 90分クールダウン
+[2026-04-25 05:21:18] Error waking Claude for win2: [WinError 206] ファイル名または拡張子が長すぎます。 — restoring inbox (consecutive errors: 18)
