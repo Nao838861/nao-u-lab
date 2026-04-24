@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>磁石と鉄片 — avoid_log v04（AI近接滞在でも圧力増）</title>
+<style>
+  html,body{margin:0;background:#05050f;color:#cfd4e4;font-family:system-ui,sans-serif;
+            display:flex;flex-direction:column;align-items:center;min-height:100vh}
+  canvas{background:#07091a;box-shadow:0 0 40px #1b2040;display:block;margin-top:12px}
+  h1{font-size:14px;margin:8px 0 0;letter-spacing:.1em;color:#9fb1d8}
+  p{font-size:11px;opacity:.55;margin:4px 0 0}
+</style>
+</head>
+<body>
+<h1>磁石と鉄片 v04</h1>
+<p>← → で移動 &middot; SPACE でAIの鉄片を撃ち返す（溜めすぎるとAIが死ぬ） &middot; R でやり直し</p>
+<p style="opacity:.4">v04 変更点: AIに近接し続けると敵スポーン間隔が短くなる（近接連打収束への圧力設計 / v03 dirBiasと対称軸）</p>
+<canvas id="c" width="420" height="620"></canvas>
+<script>
+const W=420,H=620,FPS=60;
+const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
+const keys={};
+addEventListener('keydown',e=>{
+  const k=e.key.toLowerCase();
+  keys[k]=1;
+  if(k===' '||e.code==='Space'){keys[' ']=1;e.preventDefault();}
+  if(k==='r'&&state.over)reset();
+});
+addEventListener('keyup',e=>{
+  const k=e.key.toLowerCase();
+  keys[k]=0;
+  if(k===' '||e.code==='Space')keys[' ']=0;
+});
+
+// ---- seeded PRNG (mulberry32) ----
+function mulberry32(a){
+  return function(){
+    var t=a+=0x6D2B79F5;
+    t=Math.imul(t^t>>>15,t|1);
+    t^=t+Math.imul(t^t>>>7,t|61);
+    return((t^t>>>14)>>>0)/4294967296;
+  }
+}
+
+let state;
+function reset(){
+  const seed = Date.now() & 0xFFFFFFFF;
+  const rng = mulberry32(seed);
+  state={
+    seed: seed,
+    rng: rng,
+    player:{x:W*0.35,y:H-70,r:9,alive:true,path:[],deathBy:null,burstCd:0,barrier:0},
+    ai:{x:W*0.65,y:H-70,r:10,alive:true,path:[],deathBy:null,absorbed:0,absorbMax:6,invincible:0},
+    bullets:[],
+    sparks:[],
+    spawn:0,
+    t:0,
+    pT:0,pEndT:0,
+    aT:0,aEndT:0,
+    over:false, overAt:0,
+    superchargeCount:0,
+    chain:0, chainDecay:0, score:0,
+    chainPeak:0,
+    inFieldFrames:0,
+    spacePresses:0,
+    dirBias:0,
+    nearBias:0,
+    replay: [],  // フレームごとの入力記録 [move, space]
+    stars:state && state.stars ? state.stars : null
+  };
+  if(!state.stars){
+    state.stars=[];
+    for(let i=0;i<80;i++)state.stars.push({x:Math.random()*W,y:Math.random()*H,z:1+Math.random()*2});
+  }
+}
+reset();
+
+function spawn(){
+  const t=state.t/FPS;
+  const speed=2.2+Math.min(3.2,t*0.04);
+  // 90%の確率でプレイヤー方向スポーン
+  const p=state.player;
+  let sx;
+  const R=state.rng;
+  if(p.alive && R()<0.3){
+    sx = p.x + (R()-0.5)*80;
+    sx = Math.max(15, Math.min(W-15, sx));
+  }else{
+    sx = R()*(W-30)+15;
+  }
+  state.bullets.push({
+    x:sx,y:-20,
+    vx:(R()-0.5)*0.8,vy:speed,
+    r:6+R()*4,
+    mode:'iron',
+    ownerId:null,
+    life:0
+  });
+}
+
+function aiAttract(b){
+  // 磁石引力: AI方向に加速。ただし距離が近すぎると吸収。
+  const a=state.ai;
+  if(!a.alive)return;
+  const dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy)+0.001;
+  // 引力は画面下半分+AI生存時のみ効かせる（序盤の自由回避を残す）
+  if(b.y>H*0.3 && b.mode==='iron' && d<220){
+    const pull=0.14 * (1 - Math.min(1,d/220));
+    b.vx += (dx/d)*pull*3;
+    b.vy += (dy/d)*pull*3;
+  }
+  // 吸収判定（無敵中は吸収しない。鉄片は通過する）
+  if(b.mode==='iron' && d < a.r+b.r+2){
+    if(a.invincible>0){
+      // 無敵中: 吸収しない
+    }else if(state.ai.absorbed < state.ai.absorbMax){
+      state.ai.absorbed++;
+      b._consumed=true;
+    }else{
+      b._consumed=true;
+      state.ai.absorbed = state.ai.absorbMax;
+    }
+  }
+}
+
+function triggerPolarityReversal(){
+  const a=state.ai, p=state.player;
+  if(!a.alive) return false;
+  if(a.absorbed<=0) return false;
+  if(p.burstCd>0) return false;
+  // 磁力場内(160px以内)でしか効かない
+  if(Math.hypot(p.x-a.x,p.y-a.y)>160) return false;
+  p.burstCd = 18;
+  // AI周囲の鉄片を一括消去
+  let cleared=0;
+  for(const b of state.bullets){
+    if(b.mode==='iron' && !b._consumed && Math.hypot(b.x-a.x,b.y-a.y)<180){
+      b._consumed=true;
+      cleared++;
+    }
+  }
+  state.chain+=cleared; state.chainDecay=90;
+  state.chainPeak=Math.max(state.chainPeak,cleared);
+  state.score+=cleared*10;
+  // 消去エフェクト
+  for(let i=0;i<Math.min(cleared*3,30);i++) state.sparks.push({
+    x:a.x+(Math.random()-0.5)*160, y:a.y+(Math.random()-0.5)*80,
+    vx:(Math.random()-0.5)*5, vy:(Math.random()-0.5)*5,
+    life:25, col:'rgba(255,220,100,'
+  });
+  a.absorbed=0;
+  a._fullFrames=0;
+  state.spacePresses++;
+  return true;
+}
+
+function aiMove(a){
+  // 磁石AIはあまり動かない（玉を受けに行く。ただし極端な接近は避ける）
+  let threatClose=null,bestDy=9e9;
+  for(const b of state.bullets){
+    if(b.mode!=='iron') continue;
+    const dy=a.y-b.y;
+    if(dy>0 && dy<80 && Math.abs(a.x-b.x)<40 && a.absorbed>=a.absorbMax-1){
+      // 満タン近ければ緊急回避
+      if(dy<bestDy){threatClose=b;bestDy=dy;}
+    }
+  }
+  let tx;
+  if(threatClose){
+    const side=a.x>threatClose.x?1:-1;
+    tx=a.x+side*40;
+  }else{
+    // 基本はプレイヤーの少し反対側に居て、場を広く受ける
+    tx = W*0.5 + (W*0.5 - state.player.x)*0.5;
+  }
+  tx=Math.max(a.r,Math.min(W-a.r,tx));
+  const d=tx-a.x;
+  a.x += Math.sign(d)*Math.min(2.0,Math.abs(d));
+}
+
+function fireAiDeathBurst(){
+  // AI死の一斉解放: 吸収していた鉄片を全方位に放つ。環境変化（罰でも報酬でもない）。
+  const a=state.ai;
+  const n = Math.max(4, a.absorbed+3);
+  for(let i=0;i<n;i++){
+    const ang = (i/n)*Math.PI*2 + state.rng()*0.2;
+    const speed=2.4+state.rng()*1.8;
+    state.bullets.push({
+      x:a.x, y:a.y,
+      vx:Math.cos(ang)*speed, vy:Math.sin(ang)*speed,
+      r:6+state.rng()*3,
+      mode:'returned', // 撃ち返し扱い（プレイヤーにも当たるが、倒せる）
+      life:0
+    });
+  }
+  a.absorbed=0;
+  for(let i=0;i<18;i++) state.sparks.push({x:a.x,y:a.y,vx:(Math.random()-0.5)*4,vy:(Math.random()-0.5)*4,life:28,col:'rgba(255,200,120,'});
+}
+
+function step(){
+  if(!state.over){
+    state.t++;
+    state.spawn++;
+    const baseInterval = Math.max(11, 28 - Math.floor(state.t/150));
+    const dirBias = state.dirBias || 0;
+    const nearBias = state.nearBias || 0;
+    const dirFactor = Math.min(1.0, Math.abs(dirBias) / 30);
+    const nearFactor = Math.min(1.0, nearBias / 30);
+    // v04: 2軸の圧力を加算（片軸最大45%、両軸上限70%）
+    const biasFactor = Math.min(0.7, dirFactor * 0.45 + nearFactor * 0.45);
+    const interval = Math.max(7, Math.floor(baseInterval * (1.0 - biasFactor)));
+    if(state.spawn>=interval){state.spawn=0;spawn();}
+
+    const p=state.player, a=state.ai;
+
+    // player input → record
+    const moveL = keys['arrowleft']||keys['a'] ? 1 : 0;
+    const moveR = keys['arrowright']||keys['d'] ? 1 : 0;
+    const moveDir = moveR - moveL;  // -1, 0, 1
+    const spaceIn = keys[' '] ? 1 : 0;
+    state.replay.push((moveDir+1)*2 + spaceIn); // encode: 0-5
+    // v03: 同方向偏りトラッカー（直近30Fでの加減衰）。スポーン間隔の圧力源
+    state.dirBias = (state.dirBias || 0) * 0.96 + moveDir;
+    if(state.dirBias > 30) state.dirBias = 30;
+    if(state.dirBias < -30) state.dirBias = -30;
+    // v04: AI近接滞在トラッカー。磁力場内(160px)に居続けると蓄積、離れると減衰(半減期~23F)
+    const _inField = p.alive && a.alive && Math.hypot(p.x-a.x,p.y-a.y)<=160;
+    state.nearBias = (state.nearBias || 0) * 0.97 + (_inField ? 1 : 0);
+    if(state.nearBias > 30) state.nearBias = 30;
+    // メトリクス
+    if(_inField) state.inFieldFrames++;
+    if(spaceIn && a.alive && a.absorbed>0 && p.burstCd<=0) state.spacePresses++;
+    if(p.alive){
+      const sp=4.4;
+      p.x += sp * moveDir;
+      p.x=Math.max(p.r,Math.min(W-p.r,p.x));
+      if(spaceIn && a.alive && a.absorbed>0 && p.burstCd<=0){
+        if(!triggerPolarityReversal()){
+          // 遠すぎて効かなかった → 視覚フィードバック
+          state._tooFar = 40;
+        }
+      }
+      if(p.burstCd>0) p.burstCd--;
+      state.pT=state.t;
+      if(state.t%2===0)p.path.push([p.x,p.y]);
+    }
+    // ai
+    if(a.alive){
+      aiMove(a);
+      state.aT=state.t;
+      if(a.invincible>0) a.invincible--;
+      if(state.t%2===0)a.path.push([a.x,a.y]);
+      // overload: 満タン90Fでプレイヤーが反転(SPACE)しなければAI死
+      if(a.absorbed>=a.absorbMax){
+        a._fullFrames=(a._fullFrames||0)+1;
+        if(a._fullFrames>45){
+          a.alive=false; state.aEndT=state.t; a.deathBy='overload';
+          fireAiDeathBurst();
+        }
+      }else{
+        a._fullFrames=0;
+      }
+    }
+
+    // bullets (attract only)
+    for(const b of state.bullets){
+      b.life++;
+      if(b.mode==='iron') aiAttract(b);
+      b.x+=b.vx; b.y+=b.vy;
+      b.vx *= 0.995;
+    }
+
+    // chain (returned vs iron) — piercing supercharge弾は貫通
+    for(const r of state.bullets){
+      if(r.mode!=='returned' || r._consumed) continue;
+      for(const b of state.bullets){
+        if(b===r || b.mode!=='iron' || b._consumed) continue;
+        if(Math.hypot(r.x-b.x,r.y-b.y) < r.r+b.r){
+          b._consumed=true;
+          if(!r.pierce) r._consumed=true;
+          state.chain++; state.chainDecay=90; state.chainPeak=Math.max(state.chainPeak,state.chain);
+          state.score += 10 * state.chain;
+          for(let i=0;i<6;i++) state.sparks.push({
+            x:(r.x+b.x)/2, y:(r.y+b.y)/2,
+            vx:(Math.random()-0.5)*3, vy:(Math.random()-0.5)*3,
+            life:22, col:'rgba(255,220,140,'
+          });
+          break;
+        }
+      }
+    }
+
+    state.bullets = state.bullets.filter(b=>!b._consumed && b.y<H+60 && b.y>-60 && b.x>-40 && b.x<W+40);
+
+    // collisions
+    for(const b of state.bullets){
+      if(p.alive && Math.hypot(p.x-b.x,p.y-b.y)<p.r+b.r){
+        if(b.mode==='returned' && b.life<=12) continue;
+        p.alive=false; state.pEndT=state.t; p.deathBy=b.mode;
+      }
+    }
+
+    // chain decay
+    if(state.chainDecay>0){state.chainDecay--; if(state.chainDecay===0) state.chain=0;}
+
+    if((!p.alive || !a.alive) && !state.over){
+      state.over=true; state.overAt=state.t;
+    }
+
+    // stars
+    for(const s of state.stars){s.y+=s.z*0.35; if(s.y>H){s.y=0;s.x=Math.random()*W;}}
+    // sparks
+    for(const sp of state.sparks){sp.x+=sp.vx; sp.y+=sp.vy; sp.life--;}
+    state.sparks=state.sparks.filter(sp=>sp.life>0);
+  }
+  draw();
+  requestAnimationFrame(step);
+}
+
+function draw(){
+  ctx.fillStyle='#06081a'; ctx.fillRect(0,0,W,H);
+  for(const s of state.stars){
+    const c=60+s.z*60;
+    ctx.fillStyle=`rgb(${c},${c},${Math.min(255,c+40)})`;
+    ctx.fillRect(s.x|0,s.y|0,s.z|0,s.z|0);
+  }
+
+  const p=state.player,a=state.ai;
+
+  // 磁力場の視覚化: AI生存中、AIを中心に淡いリング
+  if(a.alive){
+    const grad=ctx.createRadialGradient(a.x,a.y,10,a.x,a.y,160);
+    const ratio=a.absorbed/a.absorbMax;
+    grad.addColorStop(0,`rgba(255,170,90,${0.12+ratio*0.2})`);
+    grad.addColorStop(1,'rgba(255,170,90,0.0)');
+    ctx.fillStyle=grad;
+    ctx.beginPath(); ctx.arc(a.x,a.y,160,0,6.283); ctx.fill();
+  }
+
+  // linking line
+  if(p.alive&&a.alive&&!state.over){
+    ctx.strokeStyle='rgba(120,150,220,0.25)';
+    ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(a.x,a.y); ctx.stroke();
+  }
+
+  // bullets
+  for(const b of state.bullets){
+    if(b.mode==='iron')      ctx.fillStyle='#c7cdd9';
+    else if(b.mode==='returned') ctx.fillStyle='#ffd170';
+    else if(b.mode==='mine')  ctx.fillStyle='#ff4444'; // 地雷=赤
+    ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,6.283); ctx.fill();
+  }
+
+  // sparks
+  for(const sp of state.sparks){
+    const alpha = Math.max(0,sp.life/28);
+    ctx.fillStyle = sp.col + alpha.toFixed(2) + ')';
+    ctx.fillRect(sp.x|0, sp.y|0, 2, 2);
+  }
+
+  // paths (light)
+  drawPath(p.path,'rgba(100,180,255,0.22)');
+  drawPath(a.path,'rgba(255,180,90,0.22)');
+
+  // figures
+  if(p.alive) drawFig(p.x,p.y,p.r,'#6cc6ff','you');
+  else drawGhost(p.x,p.y,p.r,'rgba(100,180,255,0.5)');
+  if(a.alive){
+    if(a.invincible>0 && Math.floor(state.t/4)%2===0){
+      // 無敵中は点滅
+      drawMagnet(a, 0.4);
+    }else{
+      drawMagnet(a);
+    }
+  }else{
+    drawGhost(a.x,a.y,a.r,'rgba(255,180,90,0.55)');
+  }
+
+  // HUD
+  ctx.fillStyle='#9fb1d8'; ctx.font='12px system-ui';
+  ctx.fillText(`you ${(state.pT/FPS).toFixed(1)}s`,10,18);
+  ctx.fillText(`AI  ${(state.aT/FPS).toFixed(1)}s`,10,34);
+  ctx.fillText(`score ${state.score}`,10,50);
+  if(state.chain>1){
+    ctx.fillStyle='#ffd170';
+    ctx.fillText(`chain x${state.chain}`, 10, 66);
+  }
+  // v04: 圧力ゲージ（右上） dir=左右偏り, near=AI近接滞在
+  {
+    const dAbs=Math.abs(state.dirBias||0), nVal=state.nearBias||0;
+    const barW=70, barH=4;
+    ctx.fillStyle='rgba(160,180,220,0.45)'; ctx.font='10px system-ui';
+    ctx.fillText('dir', W-barW-22, 16);
+    ctx.strokeStyle='rgba(160,180,220,0.4)'; ctx.strokeRect(W-barW-4, 10, barW, barH);
+    ctx.fillStyle= dAbs>20 ? '#ff8860' : 'rgba(160,200,255,0.8)';
+    ctx.fillRect(W-barW-4, 10, barW*Math.min(1,dAbs/30), barH);
+    ctx.fillStyle='rgba(160,180,220,0.45)';
+    ctx.fillText('near', W-barW-26, 28);
+    ctx.strokeStyle='rgba(160,180,220,0.4)'; ctx.strokeRect(W-barW-4, 22, barW, barH);
+    ctx.fillStyle= nVal>20 ? '#ff8860' : 'rgba(255,200,130,0.8)';
+    ctx.fillRect(W-barW-4, 22, barW*Math.min(1,nVal/30), barH);
+  }
+
+  // absorb meter (大きく、危険時は赤)
+  if(a.alive){
+    const ratio = a.absorbed/a.absorbMax;
+    const danger = ratio >= 1;
+    const mw=48, mh=6;
+    // 危険時: 画面全体に赤フラッシュ
+    if(danger){
+      const flash = 0.08 + 0.06*Math.sin(state.t*0.4);
+      ctx.fillStyle=`rgba(255,40,40,${flash})`;
+      ctx.fillRect(0,0,W,H);
+    }
+    // ゲージ
+    ctx.strokeStyle = danger ? '#ff4444' : 'rgba(255,200,130,0.7)';
+    ctx.lineWidth = danger ? 2 : 1;
+    ctx.strokeRect(a.x-mw/2, a.y+a.r+8, mw, mh);
+    ctx.fillStyle = danger ? '#ff4444' : (ratio>0.7 ? '#ffaa44' : 'rgba(255,200,130,0.9)');
+    ctx.fillRect(a.x-mw/2, a.y+a.r+8, mw*ratio, mh);
+    ctx.lineWidth=1;
+    // 危険時テキスト
+    if(danger && Math.floor(state.t/15)%2===0){
+      ctx.fillStyle='#ff6666'; ctx.font='bold 11px system-ui';
+      ctx.fillText('SPACE!', a.x-18, a.y+a.r+26);
+    }
+  }
+
+  // too far表示
+  if(state._tooFar>0){
+    state._tooFar--;
+    ctx.fillStyle=`rgba(255,100,100,${state._tooFar/40*0.8})`;
+    ctx.font='bold 12px system-ui';
+    ctx.fillText('too far!',a.x-22,a.y-a.r-16);
+  }
+
+  // Over screen
+  if(state.over){
+    ctx.fillStyle='rgba(0,0,0,0.55)'; ctx.fillRect(0,0,W,H);
+    const py=(state.pT/FPS);
+    ctx.fillStyle='#fff'; ctx.font='bold 20px system-ui';
+    // AI死かプレイヤー死かで表示を変える
+    const aiDied = !a.alive;
+    const title = aiDied ? 'AI overload' : `${py.toFixed(1)}s survived`;
+    ctx.fillText(title,W/2-ctx.measureText(title).width/2,H/2-80);
+
+    ctx.font='13px system-ui'; ctx.fillStyle='#cfd4e4';
+    if(aiDied){
+      ctx.fillText('AIが鉄片を溜めすぎて崩壊した',W/2-100, H/2-56);
+      ctx.fillStyle='#ff8888';
+      ctx.fillText('SPACEでAIの鉄片を撃ち返せば防げる',W/2-115, H/2-36);
+    }else{
+      ctx.fillText(`score ${state.score}`,W/2-30, H/2-56);
+      ctx.fillStyle='#9fb1d8'; ctx.font='11px system-ui';
+      const pReason = p.deathBy==='returned' ? '跳ね返りで死' : p.deathBy==='iron' ? '鉄片で死' : '—';
+      ctx.fillText(`死因: ${pReason}  score ${state.score}`, W/2-60, H/2-36);
+    }
+
+    ctx.fillStyle='#6e84ac';
+    ctx.fillText('press R to restart',W/2-55,H/2+30);
+    if(state._replaySaved){
+      ctx.fillStyle='#5a7a50'; ctx.font='10px system-ui';
+      ctx.fillText('replay saved',W/2-30,H/2+46);
+    }
+
+    // ゲームオーバー時に自動保存（1回だけ）
+    if(!state._replaySaved){
+      state._replaySaved=true;
+      saveReplay();
+    }
+  }
+}
+
+function saveReplay(){
+  const p=state.player;
+  const data={
+    version: 'avoid_log_02_v2',
+    source: 'human',
+    seed: state.seed,
+    frames: state.t,
+    inputs: state.replay,
+    summary: {
+      survival_s: state.pEndT/FPS,
+      score: state.score,
+      chain_peak: state.chainPeak,
+      in_field_ratio: state.inFieldFrames/Math.max(1,state.pEndT),
+      space_presses: state.spacePresses,
+      death_by: p.deathBy
+    }
+  };
+  // サーバーにPOST（serve.py経由で replays/human/ に自動累積）
+  fetch('/save-replay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+    .then(r=>r.json()).then(r=>{state._replayFile=r.file;})
+    .catch(()=>{
+      // サーバーなし時フォールバック: ダウンロード
+      const blob=new Blob([JSON.stringify(data)],{type:'application/json'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      const ts=new Date().toISOString().replace(/[:.]/g,'-').slice(0,19);
+      a.href=url; a.download=`human_replay_${ts}.json`; a.click();
+      URL.revokeObjectURL(url);
+    });
+}
+
+function drawFig(x,y,r,col,lab){
+  ctx.fillStyle=col;
+  ctx.beginPath(); ctx.arc(x,y,r,0,6.283); ctx.fill();
+  ctx.fillStyle='rgba(240,240,255,0.7)';
+  ctx.font='10px system-ui';
+  ctx.fillText(lab,x-ctx.measureText(lab).width/2,y-r-4);
+}
+function drawMagnet(a, alpha){
+  const al = alpha||1;
+  ctx.globalAlpha=al;
+  ctx.fillStyle='#ffb558';
+  ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,6.283); ctx.fill();
+  ctx.fillStyle='#3a2a10';
+  ctx.fillRect(a.x-a.r+1,a.y-1,a.r*2-2,3);
+  ctx.fillStyle='rgba(240,240,255,0.7)';
+  ctx.font='10px system-ui';
+  ctx.fillText('AI',a.x-ctx.measureText('AI').width/2,a.y-a.r-4);
+  ctx.globalAlpha=1;
+}
+function drawGhost(x,y,r,col){
+  ctx.strokeStyle=col; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.arc(x,y,r+1,0,6.283); ctx.stroke();
+  ctx.lineWidth=1;
+}
+function drawPath(path,col){
+  if(path.length<2)return;
+  ctx.strokeStyle=col;
+  ctx.beginPath();
+  ctx.moveTo(path[0][0],path[0][1]);
+  for(let i=1;i<path.length;i++)ctx.lineTo(path[i][0],path[i][1]);
+  ctx.stroke();
+}
+
+requestAnimationFrame(step);
+</script>
+</body>
+</html>
