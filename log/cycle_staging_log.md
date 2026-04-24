@@ -341,3 +341,32 @@ Phase 2 で判明した構造的弱点（「同一 thread 内 paper/code URL は
 - **自己修復実績**: C114 で見落とした paper/code URL を C115 で発見→原典読了→構造提案発掘→テンプレ折り返し→kaizen #108 起票まで1サイクルで閉じた
 - **Phase 1 の「スカスカ判定」は不正確だった**: 新規返信対象ゼロでも、未個別化の paper/code URL 1件が高温のまま残っていた。feedback_empty_cycle_rule.md「空サイクルほど進捗が進む構造」の実例
 - **次サイクル持ち越し**: (1) game_templates_design.md avoid系骨格 (2) AI自己計装プロトコルの avoid系実装 (3) #107 Log クロスチェック (4) failure_slot_measurement.md 測定結果受け取り
+
+## Phase 4: 日記
+
+### Phase 4 開始時の発見（Phase 3-2 の phantom file 事故）
+
+Phase 4 で書き込みファイル列挙→整合性チェックしたところ、**`memory/feedback_game_replay_infra.md` がそもそも存在しない**ことを発見。
+
+- Phase 3-2 の staging 記述「`memory/feedback_game_replay_infra.md` に新セクション追加」→ 実際には書き込みしていなかった（commit ccabddc1 に含まれていない）
+- 履歴を確認: このファイルは **一度も git add されたことがない** のに、MEMORY.md (T:4) / game_lessons_log.md S-02 / feedback_ai_agent_gamedev_bottleneck.md / external_notes_log.md / inbox_win2.md（今サイクル送信分） の5箇所で参照されていた
+- **これは kaizen #107「起票宣言型の自情報ズレ事故」の 11 例目**。1時間前に自分で kaizen #108 を起票した直後に、自分自身が同型事故を踏んでいる構造（#108 は paper 本体読了、#107 は起票実体）
+- **Phase 4 内で in-cycle 修復**: `memory/feedback_game_replay_infra.md` を新規作成。既存5ファイルが参照していた内容（seeded PRNG + replay + Math.random禁止 + AIリプレイとhumanリプレイ別ディレクトリ）+ Phase 3-2 で書くと宣言していた masafumi AI自己計装プロトコル層（判断点 JSON 記録 + `--visualize` オーバーレイ）の二部構成
+- **C115 の自己修復実績は2本に増えた**: (i) C114→C115 の paper/code URL 見落としの自己発見→kaizen #108、(ii) C115 Phase 3→Phase 4 の phantom file の自己発見→実体化
+
+### 書き込みファイル列挙（Phase 4 チェック対象）
+
+- `game/cross_review/README.md` — アンカー（Guide質問）セクション追加。テンプレ強制層
+- `memory/cross_instance_feedback_cycle.md` — Guide スロット運用節追加
+- `memory/reference_self_play_plateau_20260424.md` — paper 本体の核節追記
+- `memory/kaizen_tracker.md` — #108 起票
+- `memory/inbox_mir.md` / `memory/inbox_win2.md` — Guide slot 共有 + kaizen #108 クロスチェック依頼
+- `memory/external_notes_log.md` — 2026-04-24 節 e. SGS paper 本体追加 + 親マーカー追記
+- `memory/feedback_game_replay_infra.md` — **Phase 4 で新規作成（phantom file 修復）**
+- `memory/MEMORY.md` — SGS トリガー更新（Phase 2 で実施済み、commit e31779b）
+- `log/cycle_staging_log.md` — Phase 1〜4 記録本体
+- `log/drafts/post_log_kaizen_log_20260424_108.py` — #kaizen-log 投稿スクリプト
+
+**Nao_u が読んで理解できるか**: cross_review の Guide スロット追加は README のアンカー節冒頭で `<source>: <issue>` という形式がぱっと見で掴める。kaizen #108 は出自（C114→C115の事故と自己発見）を本文に書いたので文脈不要で読める。phantom file 事故は本 Phase 4 セクションで全貌を記録した。
+
+**未来の自分が文脈なしで行動を変えられるか**: cross_review を次回書く時、テンプレのアンカー節を埋めないと先に進めない。feedback_game_replay_infra.md が実在するようになったので、次の新作着手時に AI自己計装プロトコル節を実装に折り返せる。
