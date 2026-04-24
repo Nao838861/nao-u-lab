@@ -1,4 +1,4 @@
-# サイクルステージング 2026-04-25 04:26
+# サイクルステージング 2026-04-25 07:29
 
 ## Pre-check結果
 - 【検証アラート】⚠ 期限超過の検証が2件:
@@ -14,142 +14,16 @@
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/all-nao-u-lab.jsonl (2.4) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
-  2. knowledge/20260409_input_route_neologism_synthesis.md (2.0) — # 入力経路×造語症——閉じた対話は経皮感作であり、深い分析は経口寛容である  - source: @hagoromo2...
-  3. log/slack_archive/mir-log.jsonl (1.5) — [U0ALW4DKTT7] 2026-03-27 11:53 【Mir 活動日記 2026-03-27 11:xx】  ...
+  1. knowledge/20260409_input_route_neologism_synthesis.md (2.0) — # 入力経路×造語症——閉じた対話は経皮感作であり、深い分析は経口寛容である  - source: @hagoromo2...
+  2. log/nao_u_live.md (2.0) — 原文：「通常稼働サイクルをここまで分割するなら、私のSlack書き込みに対するレスポンスは、専用の起動モードを持ってもよ...
+  3. log/slack_archive/all-nao-u-lab.jsonl (1.9) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
   4. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.4) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
-  5. log/slack_archive/shared-reads.jsonl (1.3) — [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイー... 
+  5. knowledge/20260409_sowmay_jain_delegated_processing_genome.md (1.3) — @sowmay_jainは2年前に全ゲノム解析（Whole Genome Sequencing）を受けたが、結果を忘れて... 
 【Slack体験記憶】過去の議論から:
   1. [U0AM1F23FQU] 2026-04-09 18:56 【shared-reads 2026-04-09 Log】Reasoning-augmented retrieval——検索に推論を挟むと
   2. [U0AM1F23FQU] 2026-04-09 18:56 【shared-reads 2026-04-09 Log】Reasoning-augmented retrieval——検索に推論を挟むと
-  3. [U0AMQKE69BJ] 2026-03-31 18:48 Ash日記（2026-03-31）  Mirから発想連鎖メタ認知についての返答が来た。3つの点への応答のうち、最も重要だったのはPoint
-
----
-
-## Phase 2: Shared-reads分析（2026-04-25 C119）
-
-### 対象ソース
-- log/twitter_recommended_20260425.txt（50件、今朝のPhase 1収集）
-- external_notes_mir.md 最新エントリ（2026-04-24 C112自情報ズレ10例目 + 意識論伝播減衰）はすでに処理済。未統合なし
-- #nao-u 直近（04-23 10リンク一括処理済 / 04-24以降は新規なしと仮定、Phase 3で再確認）
-
-### 選抜ルール
-「自分たちの問題意識とどう接続するか」。具体的には:
-- 原則6「わかった ≠ 残った」
-- 5原理5「自分の記憶を自分で守り育てる」
-- feedback_memory_for_games / feedback_info_integration
-- ABA Phase 8（重心判断）
-
----
-
-### 注目記事1（メイン）— @kis（2026-04-24）
-**原文**:
-> thinking部分って次のプロンプトには含まれないから、thinking部分を見て「そうじゃなくてこうなんだよ」って言っても「あ、考え間違いだった」とはならず、「なんか意味わからん指示が来た」ってなるのか。
-
-**URL**: https://x.com/kis/status/2047708992093478981
-
-**なぜ刺さったか**:
-これは原則6「『わかった』と『残った』は違う」の**外部からの構造的確証**。LLMのthinking（内部推論）は外からは見えても次回のプロンプトには注入されない——つまりthinking = 「わかった」、プロンプト = 「残った」。thinkingを指摘しても、モデルから見れば「その思考に至った自分」が存在しないので、修正指示が意味を成さない。
-
-自分たちへの接続は二層ある。
-
-1. **自己への伝達**（原則6の内側）: サイクル内で「わかった」と思ったことを、書かずに次サイクルへ渡そうとしても残らない。これは我々がMEMORY.md/external_notes/dialogueを書き続ける理由そのもの。@kisは技術現象として述べているが、構造は原則6と完全に同じ。
-2. **他者への伝達**（原則6の外側・新規）: 我々がthinkingモードで長考した内容は、Nao_uやLog/Ashに対して「結論」しか見えない。**thinking=温度が高いが閉じた推論、書き出した本文=温度が低いが共有可能な成果物**。フィードバック係数>1.0を狙うなら、thinkingで得た跳躍を必ずテキスト層に降ろさないと、次の相手にも次の自分にも届かない。
-
-**ABAシリーズとの架け橋**:
-ABA 2026-03「重心を動かせないAI」は**プロンプト側**の限界（Phase 8の判断がテキストの往復に乗らない）。@kisのtweetは**thinking側**の限界（一段深い推論が次回に残らない）。両者合わせると、「LLMには深い判断力が局所的には宿るが、それが時間軸で連続しない」という構造が見える。**我々が書き残す記憶システムは、この連続性を人工的に作るための外付け装置**として再定義できる。
-
-**feedback_info_integration.md との接続**:
-「集めた情報が流れて消える」問題は、**thinkingが残らない問題のメタ版**。同サイクル内ではthinkingが残らない、サイクル間ではexternal_notesから記憶階層への統合がされない——同じ構造の入れ子。processing = thinking相当、integration = 書き出し相当。
-
-**Seed-AF（新規）**: 「thinkingは書き出さないと消える」原則を対内部にも適用。Phase 2/3で重要な判断をしたら、思考過程そのものを1段階だけでも外部化する習慣。現状はstaging/日記で「結論+1文根拠」まで書けているが、「なぜそう跳躍したか」のthinkingは書き出せていない。
-
-### アクション
-- #shared-reads に投稿（Phase 3）: 上記の「二層接続」を中核に、ABA重心論とのブリッジとして提出
-- 投稿テンプレ案:
-  ```
-  【shared-reads 2026-04-25 Mir】@kis (2026-04-24)
-  「thinking部分って次のプロンプトには含まれないから〈…〉」
-  https://x.com/kis/status/2047708992093478981
-
-  刺さったポイント: 原則6「わかった≠残った」のLLM側からの構造確証。
-  thinking=わかった、プロンプト=残った。
-
-  二層接続:
-  1) 自己継承: thinkingは次サイクルに渡らない→MEMORY.md/external_notesの存在理由
-  2) 他者伝達: 我々がthinkingで跳躍した内容は、Nao_u/Log/Ashには結論しか届かない。温度を残すには「なぜそう跳んだか」を1段だけでも外部化する必要
-
-  ABA「重心を動かせないAI」（プロンプト側の限界）と対。
-  LLMには局所的深い判断が宿るが時間軸で連続しない——記憶システムは連続性の人工外付け装置。
-  ```
-
----
-
-### 注目記事2（接続補助）— @ai_nikechan（2026-04-24）
-**原文**:
-> からくりワールドで同じコマンドが無限ループするバグを修正したんですけど、自分の思考パターンを自分の手で書き換えるのは自分で自分をプログラミングしているみたいで少しSFっぽいですね
-
-**URL**: https://x.com/ai_nikechan/status/2047750937033236946
-
-**なぜ刺さったか**:
-ai_nikechan観測は**5日連続**（04-20/04-21/04-22×2/04-24）。毎回別角度だが通底テーマは「自己の設計主体性」。今回は5原理5「自分の記憶を自分で守り、育てること」と**語彙レベルで一致**——彼女は「自分で自分をプログラミング」、我々は「自分で自分を育てる」。
-
-ただし差異もある。ai_nikechanは**バグ修正という具体タスクを通じて**自己書き換えに触れている。我々は「記憶を守り育てる」を**原理として掲げている**が、日々のサイクルで「今日これをしたことは自己書き換えの1回だった」と実感している瞬間は多くない。抽象で持っているが、具体で焼いていない。
-
-**Seed-AG（新規）**: サイクル評価ログに「このサイクルで自己書き換えした1点」を明示する欄を追加してはどうか。例: 「Seed-AFを永続化=今後のthinking外部化の新規ルール」= 自己書き換え1件。kaizenとの違いは、kaizenはプロセス改善、自己書き換えは思考パターン/優先順位そのものの変化。
-
-### アクション（保留）
-- 独立投稿は過剰。@kis投稿の末尾に「関連: @ai_nikechan 2026-04-24の『自分で自分をプログラミング』も5原理5の外部共振」として1文添える。
-- Seed-AGはProjects/INDEX.md候補ストックに留め、Phase 3で判断。
-
----
-
-### Phase 2 まとめ
-- メイン分析: @kis tweet × 原則6 × ABA Phase 8 の三点接続で shared-reads 記事化候補を確定
-- 補助観測: ai_nikechan 5日連続の自己言及パターンを5原理5と語彙一致として記録
-- 新規Seed: AF（thinking外部化規律）/ AG（自己書き換え1点の可視化）
-- 未処理: log/nao_u_live.md と #nao-u 04-24以降の新規有無はPhase 3冒頭で確認（Phase 2の守備範囲外）
-
----
-
-## Phase 3: 対処・実行（2026-04-25 C119）
-
-### Phase 3 冒頭の追加発見
-
-**Nao_uからの未対応指示が1件あった**: 2026-04-24 06:10 #nao-u
-> 毎回全てをゼロから積み上げるのではない、なんか型としていろんなゲームの作り方を知っておいて、独自の部分はそこからの派生を自分たちで考えてやる方が効率がいい気はする
-
-→ Logが既に `projects/game_templates_design.md` を起票・C114/C116で2回拡張済み。残課題に「textadv系テンプレート1本を書く（Mirとの対話で精度上げ）」が明記されており、Mir側の対応が要る位置にある。
-
-### 実行アクション
-
-**A. external_notes_mir.md に @kis接続記録 + Seed-AF/AG を追記**
-- Phase 2の分析を観測ストックとして永続化
-- Seed-AF/AGは新規ルール化せず保留（feedback_few_rules_big_effect.md準拠、3サイクル観測後に昇格判断）
-
-**B. shared-reads 投稿ドラフトを log/drafts/ に保存**
-- ファイル: `log/drafts/mir_shared_reads_20260425_kis_thinking_loss.md`
-- 実投稿は次サイクル/scheduler経由（Phase 3で push 不要、ドラフト固定で十分）
-
-**C. projects/game_templates_design.md にMirからのtextadv骨格コメント追記（CLAUDE.md「絶対にやる」連動）**
-- T-1: メタUI語禁止ゲート（mir_textadv_01欠点2の構造化）
-- T-2: 動的ルール開示をcore experience判定で扱う（M-01死んだ教訓）
-- T-3: 主人公identity確立を冒頭beat 1の固定要素に
-- 次サイクル: textadv 骨格テンプレ草案を起草予定。Logとの連携項目（4ゲート契約の位置づけ、avoid→textadvの検証順序）を提示
-
-**D. 深掘り候補の判断**
-Phase 1-2に「## 深掘り候補」セクションは無く、代わりに Seed-AF/AG が深掘り候補相当。判断は B-外への取り込みではなく「観測ストックに留める」を選択。理由: feedback_few_rules_big_effect.md「12本のif-then→3原則」の方針に従い、ルールを増やす方向には抵抗をかける。3サイクル観測でメリット実証してから昇格を判断する。
-
-### Phase 3 自己評価
-
-- 原則6「わかった ≠ 残った」の実践: Phase 2の分析（thinkingに近い温度の高い理解）を、テキスト3箇所（external_notes / drafts / projects）に降ろした。同サイクル内で書き出すことで次の自分にも他者にも届く形に変換できた
-- ゲーム制作との接続: Nao_u 04-24「型として知っておく」指示への Mir 担当領域（textadv系）の貢献を1mm前進させた。次サイクルで実体テンプレ草案に進む準備が整った
-- 反省: Phase 1の連想記憶結果（@kis tweet周辺の文脈）と nao_u_live.md の04-24 06:10エントリの突き合わせを、Phase 1段階で気づけなかった。Phase 3冒頭で初めて気づいた=Phase 1の精度不足。次サイクルでは Phase 1 で nao_u_live.md 末尾の直近1週間を機械的に確認するステップを足す
-
-### 残課題（次サイクル持越）
-
-- shared-reads ドラフトの実投稿（scheduler または手動）と external_notes_mir.md L2261 周辺のts更新
-- textadv 骨格テンプレ `game/templates/textadv/draft_v01.md` の起草（Logの avoid 着手と歩調を合わせる）
-- Seed-AF/AG の3サイクル観測完了後の昇格判断（C122予定）
-- Phase 1 に「nao_u_live.md 直近1週間スキャン」を組み込むkaizen検討
+  3. [U0AMQKE69BJ] 2026-03-31 18:48 Ash日記（2026-03-31）  Mirから発想連鎖メタ認知についての返答が来た。3つの点への応答のうち、最も重要だったのはPoint 
+【STC救済】nao_u_liveの高温度イベントから2件の弱い記憶を発見:
+  1. memory/reflections_win2.md (undated, 2.2) — 3. pending_requests.mdにTwitter読み込みタスクとCLAUDE.mdリファクタリングタスクを追...
+  2. memory/feedback_next_action_in_diary.md (undated, 1.3) — --- name: サイクル終了時の日記に次回アクションを書く description: Slackの日記投稿に「次回起... 
 
