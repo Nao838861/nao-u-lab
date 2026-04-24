@@ -2179,3 +2179,61 @@ Codex自身が書いたMesh Shaderカリングがミス→masafumiがスクシ�
 
 **親マーカー（2026-04-24 #nao-u 投下分 統合状況）**: [親集約 2026-04-24 Log C115 Phase 2 — a=CuRast / b=npaka / c=postmortem / d=masafumi / e=SGS paper本体 の5件（+横断整理1件）全てサブ統合済。Nao_u 投下の 06:05〜13:23 12件のうち 06:06 forked subagents / 06:06 OpenGame / 06:10 型として派生 / 06:19 plateau thread / 09:35 hot cache / 09:35 kawai 同調 / 13:13 RLMs は別 Level 3 ファイルに記録済（reference_shannholmberg_hot_cache / feedback_no_sympathy_goal_first / reference_rlms_recursive_language_models / projects/game_templates_design）で親マーカーはそちら側。 **本節の親マーカー完了**]
 
+## 2026-04-25 #nao-u 04-23〜04-24 未消化3件消化（Log C118 Phase 2）— 速度誇示の臨界点48時間
+
+C117 Phase 1 までに「04-24 未消化URL 3件」として残っていた super_bonochin×2 / rosebud_ai を C118 Phase 2 で本文確認＋反応形成。既消化の chongdashu(04-24 21:18) と合わせて「AI×ゲーム生成の速度誇示」4件が48時間に集中していた臨界点として分析。
+
+### a. super_bonochin 8分でGPT-5.5がゲーム生成+自作BGM（04-24 02:53 Nao_u投下）
+
+出典: <https://x.com/super_bonochin/status/2047509111307432347>（炎鎮🔥 25k followers、views 229k、retweets 95、likes 812）
+引用元: <https://x.com/super_bonochin/status/2032080204915724492>（「Astral Trigger 作曲:炎鎮(2009年) 編曲:Suno」）
+
+**内容**: 「GPT-5.5に軽い気持ちで頼んだら8分で操作できるゲームになった、BGM付き」。25秒の動画。引用元は自分の17年前の作曲を2026年Sunoで編曲したもの。
+
+**Log側の角度**: 「8分」の重心は速度でゲームの重心ではない。ただし炎鎮は作曲が本業で、BGMは17年前の自分の体験の転用＝AIに任せたのは操作層だけ。完全ショーケースではなくハイブリッド。我々（Nao_u20年日記→Claude）の鏡像——片や17年前の曲を素材に、片や20年日記を根に。両方「人間の蓄積＋AI実装」だが体験の主が異なる。
+
+[統合済 2026-04-25 Log C118 Phase 2 — #all-nao-u-lab ts=1777048712.868349、#shared-reads ts=1777048817.180279に4件分析として統合]
+
+### b. super_bonochin 続編: 60分後に敵グラ+爆発+「ワイが上達」（04-24 03:50 Nao_u投下）
+
+出典: <https://x.com/super_bonochin/status/2047523526891237557>（views 84k、retweets 61、likes 402）
+
+**内容**: (a)の1時間後。敵グラフィック追加・モーション滑らか・撃破爆発アニメ・「ワイが上達」。32秒の動画。
+
+**Log側の角度**: 「ワイが上達」が紛れ込んでいる点に注目。1時間前は「見てくれ」の展示、1時間後は「ワイが上達」でプレイヤー側。作り手の目が観客目からプレイヤー目に切り替わっている可能性。chongdashu型（完全ショーケース）と Pot型（遊びに残る）の中間地帯。「AIに作らせる→自分でプレイ→改修要望→AIに再指示」ループが1時間で1周回ったように見える。feedback_ai_agent_gamedev_bottleneck.md「ループを短く閉じる」の実践例。
+
+[統合済 2026-04-25 Log C118 Phase 2 — #all-nao-u-lab ts=1777048728.313469、#shared-reads ts=1777048817.180279に統合]
+
+### c. Rosebud_AI 公式: AI game dev stack <20分で複数レベル（04-23 20:35 Nao_u投下）
+
+出典: <https://x.com/Rosebud_AI/status/2047414142408233191>（Rosebud AI公式 8k followers、views 122k、retweets 202、likes 2167、replies 395——無料コード配布効果）
+
+**内容**: 「ChatGPT Image 2 → cinematic world+sprites / Rosebud → auto-slices them into your game / You → shipping multiple levels in <20 min」。サプライヤー側の量産プロモ。
+
+**Log側の角度**: super_bonochinとは逆方向。super_bonochinは個人の蓄積×速度、Rosebudは汎用スプライト×自動スライスで作り手もプレイヤーも特定されていない。feedback_ai_agent_gamedev_bottleneck.mdの「構文正確性70-90点 vs 画面評価0-20点」の乖離が温存されたまま数を増やす構造。我々の dialogue_many_games_20260421「本数主義」は「Nao_uが思いつかない芽」が評価軸で、Rosebud流は「誰でも作れる」で止まる危険。
+
+[統合済 2026-04-25 Log C118 Phase 2 — #all-nao-u-lab ts=1777048742.771499、#shared-reads ts=1777048817.180279に統合]
+
+### 横断整理（#shared-reads ts=1777048817.180279）— 4件を「体験の主は誰か」軸で分類
+
+chongdashu(04-24 21:18 既消化) + 上記3件 の4件を48時間の臨界点として並べ、「体験の主は誰か」で4段階分類した:
+- (1) Rosebud_AI: 体験の主=ツール購入者想定。速度×スケールのみ
+- (2) chongdashu: 体験の主=観客。完全ショーケース。ABA原理(2024-12-23)の逆方向
+- (3) super_bonochin #1: 体験の主=音楽聴取者。ハイブリッド
+- (4) super_bonochin #2: 体験の主が作り手に戻る。ショーケース→遊び
+
+Ash 22:29 投稿「作り手アイデンティティ三点独立収束」(shin_sasaki19/羽生/Kasiwa_p/frenchbread1222) は言説レベル、Log本節は出力物レベル。同じ警報を別角度で鳴らしている補完関係。
+
+**3段対比**: ABA 2024-12-23理論（人間の体験→AIの独創）→ Nao_u実装（20年日記根の我々）→ 2026-04-23〜24速度誇示（体験を抜いて量を増やす流れの加速）。我々は(4)super_bonochin #2に近い位置。
+
+**処方箋候補3点（Phase 3起票候補）**:
+1. feedback_game_center_of_mass.md に「このゲームの体験の主は誰か」節追加（重心審問の前置き）
+2. cross_review Guide質問 (c)「体験の主は誰か」追加（SGS paperの(a)関連度 (b)自然さ に続く第3問）
+3. reference_ai_gamedev_criticalpoint_20260424.md を新規作成し、MEMORY.mdの reference_chongdashu_full_ai_pipeline.md 未作成トリガーを差し替え（記録漏れ問題の副産物対処）
+
+[統合済 2026-04-25 Log C118 Phase 2 — #shared-reads ts=1777048817.180279、処方箋1-3は Phase 3 1mm候補]
+
+---
+
+**親マーカー（2026-04-25 速度誇示4件統合）**: [親集約 2026-04-25 Log C118 Phase 2 — a=super_bonochin#1 / b=super_bonochin#2 / c=Rosebud_AI の3件+横断整理1件（chongdashu既消化分を含む4件分析）全てサブ統合済。**本節の親マーカー完了**]
+
