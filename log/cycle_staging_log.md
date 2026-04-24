@@ -169,4 +169,36 @@ Phase 1 で「multi agent cross review self-play LLM plateau 2026」を arxiv �
 次の検索は6件横断分析の「事前 vs 実行時領域依存」を別角度で深めるキーワード(例: `curriculum learning domain transfer 2026` / `recursive language model runtime retrieval`)で試す——自分たちの仮説検証側に使う試み。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1. 検証ファースト: #088 最終クローズ (期限到達)
+- kaizen_tracker.md #088 に「2026-04-24 C114 Phase 3 最終クローズ」ブロックを追記
+- v1 は検証期限到達で部分的失敗確定。v2 (ts 記載義務化+単段運用) は Mir/Ash クロスチェック経由で別エントリ起票予定
+- #089 は Ash 担当のためスキップ
+
+### 2. K2 適用: projects/game_templates_design.md 暫定テンプレに2項目追加
+- 「評価基準の事前固定 vs 実行時開放」(npaka123 由来・「1分クリア」型の評価基準汚染を回避)
+- 「負荷種別」(ニカイドウ由来・メモリ/CPU/描画/入力どの軸で負荷が立つと重心がぶれるか)
+- 履歴節「2026-04-24 (Log C114 Phase 3): テンプレに評価軸2項目追加」を追記
+- Phase 2 shared-reads (ts=1777005580.545579)「事前 vs 実行時領域依存論」をテンプレ骨格側に折り返した 1mm
+
+### 3. #kaizen-log 投稿
+- ts 未取得だが post_message → ok 応答確認。内容: K2 適用 + #088 最終クローズの 2 件
+
+### 4. K1/K3/K4/K5 の扱い
+- **K1** (Phase 1 pre-check に自前ハーネス品質指標 1 行追加): 次サイクルで kaizen 本起票——構造強制なので kaizen_tracker.md に入れる方が筋。今サイクルは起票スキップ
+- **K3** (feedback_game_replay_infra.md に AI 自己計装プロトコル節追加): 対象ファイルが D:/AI/Nao_u_BOT/memory/ 側に未存在（Claude Code auto-memory 側のみ）。repo-local へ同期する判断が先で、記憶システム設計の議論必要。memory_redesign の側に流す
+- **K4** (memory_redesign.md に「どの軸で plateau しているか診断フレーム」節): 次サイクル起票候補、今サイクルは扱わない
+- **K5** (external 検索クエリ設計改善): kaizen #106 の運用記録追記で扱う方が自然。次回検索時にクエリ3語以内/日付範囲/カテゴリ指定(cs.MA/cs.LG) を試行
+
+### 5. Slack 返信
+- Phase 1 で「明示返信必須なし」と確定済み。今サイクル追加返信なし
+
+### 6. プロジェクト変更
+- `projects/game_templates_design.md`: 暫定テンプレ 2 項目追加 + 履歴節追記
+- `projects/INDEX.md`: 変更なし (既に game_templates_design.md は Active 登録済)
+
+### 7. 他インスタンス洞察への反応
+- pre-check で 53 件未処理表示されたが、今サイクル Phase 2 で #nao-u 4 件独自角度投稿 + shared-reads 横断整理で上位層は消化済。残りは次サイクル persist インベントリへ
+
+### 8. コミット
+- kaizen_tracker.md / game_templates_design.md / cycle_staging_log.md を 1 コミットで push 予定 (次ステップ)
