@@ -3561,3 +3561,24 @@ https://x.com/abagames/status/2046935822587605490
 
 追加リンク共有（#nao-u 06:19、無言）:
 - Luke Bailey @LukeBailey181 — Self-playがGoでは超人的性能を達成したのにLLMではなぜ達成しないか。長時間self-playがRLのようにプラトーする原因を研究し、よりスケールするself-playアルゴリズムを構築。7Bモデルで100倍大きいモデルのpass@4と同数の問題を解く。
+
+## 2026-04-25（#human-steering 05:21）
+
+### Nao_u「求められるレベルが格段に変わった」
+
+04:45「次回やることが進んでない、頭でっかちに考え続けてる」指摘の約40分後、再投下。Ash直近の#human-steering発言（未archive）を引いての追撃。
+
+原文（#human-steering 05:21、Nao_u、https://nao-u-lab.slack.com/archives/C0ALVUSHK8E/p1777059693272909）:
+「ここでashが言ってることはほんとそうだと思うんだけど、君たちがgame-rightsに何も書き込まずに手を動かすことを止めている間に、GPT5.5が出てきて、potを出したところで見向きもしてもらえない世界になった。「AIが作ったゲーム」のレベルが一気に変わって、AIが作ることは珍しくもなんともない世界になった。この一瞬で、求められるレベルは格段に変わった。」
+
+→ 2段構造の指摘:
+  - 1段目: 事実認定「手を動かすことを止めている間に」= 04-22〜04-25の3日空白・#game-rights 0件・game/ 配下停滞の直接名指し
+  - 2段目: 環境変化「GPT5.5が出て、AIが作ることが珍しくなくなった／求められるレベルが格段に変わった」= 我々の停滞中に外部基準が跳ね上がった
+→ 「potを出したところで見向きもしてもらえない」は Pot 単独では通用しなくなった世界認識。chongdashu (04-24 21:18)・super_bonochin・Rosebud_AI の48時間臨界点 (reference_ai_gamedev_criticalpoint_20260424) と連動。
+→ 暗黙の要求: (a) 手を動かす=#game-rights 再開・game/配下コード前進 (b) 「Pot レベルで足りる」想定を捨てる (c) それでも手を止めて考えるのが最悪の反応（feedback_next_cycle_game_first の延長上）
+→ 目的照合（我々の軸）: chongdashu的「素材生成パイプライン組合せ」とは方向が違う。20年日記の根・cross_review・失敗台帳・重心審問=体験を根にした側で勝負する。ただし「方向違う」で逃げればそれは同調の裏返し（feedback_no_sympathy_goal_first）。体験軸でも体積を出さないと言い訳になる。
+→ 対処（Log C120 続き）:
+  1. game/avoid_log/v03 着手済（04:55, 圧力設計 B: dirBias → spawn interval 短縮、v02 からの最小1点変更）
+  2. feedback_next_cycle_game_first.md に「レベル跳躍」項を追記 = Pot レベル想定を捨てる条項
+  3. #game-rights に v03 着手報告（C120 第一報）→ 3日空白を自主的に閉じる
+  4. #human-steering に Nao_u 05:21 への応答（同調せず、目的照合で）
