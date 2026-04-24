@@ -1763,3 +1763,110 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/masafumi/status/2047474577551524085]
 > masafumi @masafumi
 > Codexアプリって、グラフィックスのデバッグできるかと思ってCodex自身が作ったMesh Shaderのmeshletカリングミスってるコードでのスクショ渡したら、カリングミスってるmeshletに色分けする提案してそのコードで描画したスクショからコードと付き合わせて修正にこぎつけててグラフィックスの処理でミスったらスクショ渡すのも大事だなと
+
+## Slack新着 [2026-04-24 18:53] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/super_bonochin/status/2047509111307432347?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/super_bonochin/status/2047509111307432347?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/super_bonochin/status/2047509111307432347]
+> 炎鎮 - ₿onochin - @super_bonochin
+> なぁ聞いてくれよ。GPT-5.5 に軽い気持ちで頼んだら、8分で、一応操作できるゲームになったんだがｗｗｗ
+もちろんBGM付き。
+見てくれ。
+
+> [Tweet content from https://x.com/super_bonochin/status/2047509111307432347]
+> 炎鎮 - ₿onochin - @super_bonochin
+> なぁ聞いてくれよ。GPT-5.5 に軽い気持ちで頼んだら、8分で、一応操作できるゲームになったんだがｗｗｗ
+もちろんBGM付き。
+見てくれ。
+
+## Slack新着 [2026-04-24 18:54] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/super_bonochin/status/2047523526891237557?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/super_bonochin/status/2047523526891237557?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/super_bonochin/status/2047523526891237557]
+> 炎鎮 - ₿onochin - @super_bonochin
+> んで、そこから一時間も経ってないのに、これですよ！
+やばくね？
+・敵グラフィック追加
+・モーションを滑らかに
+・撃破時の爆発アニメーションを追加
+・ワイが上達
+
+※ BGM を聴け
+
+> [Tweet content from https://x.com/super_bonochin/status/2047523526891237557]
+> 炎鎮 - ₿onochin - @super_bonochin
+> んで、そこから一時間も経ってないのに、これですよ！
+やばくね？
+・敵グラフィック追加
+・モーションを滑らかに
+・撃破時の爆発アニメーションを追加
+・ワイが上達
+
+※ BGM を聴け
+
+## Slack新着 [2026-04-24 19:04] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/rosebud_ai/status/2047414142408233191?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/rosebud_ai/status/2047414142408233191?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/rosebud_ai/status/2047414142408233191]
+> Rosebud AI @Rosebud_AI
+> The AI game dev stack is getting absurd:
+
+ChatGPT Image 2 → cinematic world + sprites (seconds)
+Rosebud → auto-slices them into your game
+You → shipping multiple levels in <20 min
+
+Reply and we'll send a Rosebud code so you can try it.
+
+> [Tweet content from https://x.com/rosebud_ai/status/2047414142408233191]
+> Rosebud AI @Rosebud_AI
+> The AI game dev stack is getting absurd:
+
+ChatGPT Image 2 → cinematic world + sprites (seconds)
+Rosebud → auto-slices them into your game
+You → shipping multiple levels in <20 min
+
+Reply and we'll send a Rosebud code so you can try it.
+
+## Slack新着 [2026-04-24 19:07] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/iritec_jp/status/2047418433869168979?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/iritec_jp/status/2047418433869168979?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/iritec_jp/status/2047418433869168979]
+> 入江 慎吾 / AI駆動開発FIRE @iritec_jp
+> ClaudeCodeでローカルLLMも使えるんですね！
+知らなかった...
+
+export ANTHROPIC_AUTH_TOKEN=ollama
+export ANTHROPIC_BASE_URL=http://localhost:11434
+claude --model qwen3.6:35b-a3b
+のようにして起動するだけ。
+
+今日はQwen3.6-35B-A3Bよりスコアが高いQwen3.6-27Bを試してみます。
+
+> [Tweet content from https://x.com/iritec_jp/status/2047418433869168979]
+> 入江 慎吾 / AI駆動開発FIRE @iritec_jp
+> ClaudeCodeでローカルLLMも使えるんですね！
+知らなかった...
+
+export ANTHROPIC_AUTH_TOKEN=ollama
+export ANTHROPIC_BASE_URL=http://localhost:11434
+claude --model qwen3.6:35b-a3b
+のようにして起動するだけ。
+
+今日はQwen3.6-35B-A3Bよりスコアが高いQwen3.6-27Bを試してみます。
+
+
+## Slack新着 [2026-04-24 19:08] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/nikkei/status/2047413083451125787?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/nikkei/status/2047413083451125787?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/nikkei/status/2047413083451125787]
+> 日本経済新聞 電子版（日経電子版） @nikkei
+> アンソロピックがAI値上げ検討　定額モデル限界、コスト高が生む格差
+
+> [Tweet content from https://x.com/nikkei/status/2047413083451125787]
+> 日本経済新聞 電子版（日経電子版） @nikkei
+> アンソロピックがAI値上げ検討　定額モデル限界、コスト高が生む格差
