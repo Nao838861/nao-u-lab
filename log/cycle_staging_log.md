@@ -200,7 +200,108 @@ billtheinvestor + nftcps の2件は「要本文精読+独自角度反応」だ�
 **Phase 1 集約**: 返信2件（billtheinvestor / nftcps）＋持越多数（A-a1〜a5）＋1mm候補（C=A-a3）＋想起（D）＋kaizen動かず3件（#103/#105/#101）で **Phase 2 の選択肢豊富**。Phase 2/3 は Nao_u の06:10「型として派生」指示と今日浮上した「事前 vs 実行時」軸の交点—— `game_templates_design.md` テンプレヘッダ整備（A-a1+a2）が最も熱い候補。
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### 1. #nao-u 未反応2件への独自反応投稿（#all-nao-u-lab）
+
+- **billtheinvestor (CODEX runtime texture)** → #all-nao-u-lab ts=1777027107.781909
+  - 角度: 4本クラスタ「事前最適化を外して実行時合成」の一つ。game_templates_design.md の「型/派生」境界が runtime synthesis で畳まれる可能性。cross_review が凍結成果物の事後査読である自己診断と self-play plateau 打開角度として「実行中改稿レイヤー」を提案。
+- **nftcps (Headless Chrome 引退)** → #all-nao-u-lab ts=1777027131.217109
+  - 角度: 我々の Playwright 依存スクリプト群（read_twitter_recommended/check_notifications_diff/check_dm/read_twitter_feed）への直撃。ただし runbook_url_fetch.md（Telegram UA + fxtwitter）の迂回路あり。kaizen #103（3日停滞）と射程直結→次サイクル script audit 着手の根拠。
+
+### 2. shared-reads 詳細分析投稿
+
+- **#shared-reads ts=1777027195.229699** — 「事前最適化 → 実行時合成」4本クラスタ整流
+  - 4素材: Anthropic April 23 postmortem / CuRast 18.9B三角形 / masafumi Codexスクショ自己計装 / billtheinvestor CODEX runtime texture
+  - 共通構造: 計算リソース時間軸再配分（build-time → run-time）
+  - ABA「圧力設計 vs 禁止追加」と同型の二項対立を別領域から見た形
+  - 落としどころ: (A) game_templates_design テンプレヘッダ「事前固定/実行時開放」欄、(B) cross_review に「実行中改稿レイヤー」、(C) screenshot 自己評価ループMVP起票（projects/role_split_playtest）、(D) Headless Chrome 引退（nftcps）と同軸
+  - 緊張: 全 runtime 化→型蓄積不能 / 全事前固定→plateau。Nao_u 06:10「型は事前獲得・派生は実行時」が暫定安定解、4本は境界線そのものの動的化を示唆
+  - 自覚: この4本クラスタは外部検索ではなく Nao_u 投下経由。Phase 1 自発検索（kaizen #106）はクエリ弱く0件。**Nao_u投下の束ね方自体が外部入力主経路として残っている**
+
+### 3. external_notes_log.md 親マーカー追加
+
+- **L1914（2026-04-20 #nao-u 4件: _avichawla / akshay_pachaar / koguGameDev / 8co28）** に親集約マーカー追加
+- 監査スクリプト false-positive 14件 → 13件
+- マーカー形式注意: audit の MARKER regex は `\[(?:統合済|済 |対応済|取得断念)` の直後マッチ。`[親集約` `[全サブ統合済` は不検出になる。**検出される形は `[統合済 ...]` 統一推奨**（kaizen 候補: マーカー形式バリエーション全部許容するように regex を緩める / または記法を統一する）
+
+### 4. Phase 2 で発見した次サイクル候補（Phase 3 へ持越し）
+
+| 候補 | 出典 | 緊急度 |
+|---|---|---|
+| game_templates_design.md テンプレヘッダ「事前固定/実行時開放」欄追加 | 4本クラスタ + Nao_u 06:10 | 高（今日の最熱角度） |
+| game_templates_design.md テンプレヘッダ「構造的負荷/摩擦的負荷」欄 | C113 Nikaido持越 | 中 |
+| game_templates_design.md テンプレヘッダ「評価基準の事前固定/実行時開放」欄 | C114 npaka123持越 | 中 |
+| memory_architecture.md「事前/実行時領域依存」節起票 | C114 CuRast持越 + 「絶対にやる」記憶階層構築 | 中 |
+| feedback_game_replay_infra.md AI自己計装プロトコル追記 | C114 masafumi持越 | 中 |
+| ハーネス品質 evals kaizen起票 | C114 Anthropic postmortem持越 | 中 |
+| fetch_url.py 標準化（kaizen #103, 3日停滞） | nftcps 04-23 接続 | 中 |
+| projects/role_split_playtest スクショ自己評価ループMVP起票 | C114 masafumi + shared-reads (C) | 中 |
+| audit MARKER regex 緩和（または記法統一） | 本Phase 2 発見 | 低（実害なし） |
+
+### 5. Phase 2 自己評価
+
+- 投稿3本（all-nao-u-lab×2 + shared-reads×1）すべて URL 明示・1件1メッセージ・スレッド未使用 = ルール遵守
+- shared-reads は Nao_u 指示「1フェーズ丸ごと使ってもいい」を実行: 4本素材の出典+要旨+共通構造+落としどころ4軸+緊張+次の種、までフル展開
+- 自発検索の弱さは投稿内で明示自覚（栄養の偏り処方箋として記録）
+- external_notes 統合は false-positive 14→13 の1件分削減（実質的整合性確保）+ audit script の構造的問題を発見（次サイクル kaizen 候補）
+
+Phase 2 完了。Phase 3 は上記「次サイクル候補」表のうち**最熱の game_templates_design.md テンプレヘッダ整備**（事前固定/実行時開放 + 構造的/摩擦的 + 評価基準事前/実行時 の3欄一括追加）が筋。1mm 着手で十分。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1. Slack返信（Phase 2で消化済み、Phase 3では追加投稿のみ）
+
+Phase 1で要返信認定した2件（billtheinvestor / nftcps）+ shared-reads 4本クラスタ整流 は Phase 2 内ですべて投稿完了。Phase 3 での追加投稿は kaizen-log #109 のみ。
+
+- **#kaizen-log ts=1777027627.458629** — kaizen **#109** 起票: Phase 1 持越リスト作成時に「着地済み項目の重複提案」検出を組み込む。投稿ドラフト `log/drafts/post_log_kaizen_log_20260424_109.py`
+
+### 2. 検証ファースト原則: 未検証提案の検証状況
+
+Pre-check で「#089 Phase 1プロンプトにmemory_search.py明示使用ステップを追加」の自動検証 output が空だった（`memory_search.py --search` 実行はしたが結果取得できず）。**#089 担当は Ash で検証対象ファイル群 (`C:\AI\Nao_u_BOT\...` = Ashマシン) は Log からリポジトリ外のため直接検証不可**（セキュリティポリシー準拠）。Ash 側クロスチェック依存。→ #kaizen-log 投稿時 Mir/Ash クロスチェック要請に含めた。
+
+### 3. 実装アクション（Phase 2「次サイクル候補」表の最熱3本を着地）
+
+#### (a) game_templates_design.md テンプレヘッダに「改修の性質」欄追加
+- 変更: 暫定テンプレ（L35-50）の「負荷種別（ハードウェア軸）」の直下に「改修の性質（構造的 vs 摩擦的、ABA「圧力設計 vs 禁止追加」同型）」を3行で追加。判定基準: 実装前に1行宣言、2個以上連続で摩擦的側に寄ったら重心審問やり直し
+- 出自: Phase 1 A-a1（C113 Nikaido 04-23 持越）。Phase 2 で `external_notes_log.md` L2100 を再読して「構造的/摩擦的」はハードウェア軸の「負荷種別」とは別物（改修の性質＝ABA同型）と確定
+- 履歴セクションに「C116 Phase 3 追記」記録
+
+#### (b) memory_architecture.md 「事前/実行時領域依存」節起票
+- 変更: 末尾（L738以降）に新節追加。Level 1/2/3/4 を事前固定側/実行時開放側で2列表整理、領域依存の判断基準3項（不変高頻出→事前固定、条件依存低頻度→実行時開放、温度原文→実行時開放）、テンプレ層との対応、未着手の一手3項（MEMORY.md純粋index化、parent marker regex統一、memory/配下のRLM方式パイロット）、既存セクション（多層アーキテクチャ/評価者ドリフト/スキルvs信念）との接続
+- 出自: Phase 1 A-a3（C114 CuRast持越）+ CLAUDE.md「絶対にやる」記憶階層構築 1mm。4本クラスタ（Anthropic postmortem/CuRast/masafumi/billtheinvestor）の「事前最適化 → 実行時合成」を記憶階層にも当てはめた
+- 荒川 Skills の index/body 分離 / MIT RLMs の再帰spawn と同方向、具体化の足場
+
+#### (c) #kaizen-log #109 起票
+- kaizen_tracker.md に #109 を追加（#108 の直上）。検証期限 2026-05-08、検証担当 Log、クロスチェック Mir/Ash=未
+- 内容: Phase 1 が空サイクル深掘り候補をlistupする時に **着地済み項目を再提案する構造的ドリフト** を検出する運用。C116 で A-a2 が C114 Phase 3 既着地と判明した実例を記録。対策: 候補ファイル履歴の直近5サイクル grep + 除外不可なら「[既着地チェック要]」マーカー
+- 原理5「自分の記憶を自分で守り育てること」の下位適用。#107 「boot_intent 主焦点実体確認」と同流派
+
+### 4. 他インスタンス洞察の処理
+
+Pre-check で他インスタンス洞察 49件滞留 通知あり。今サイクルは Nao_u 起点の 4本クラスタ（事前最適化→実行時合成）の整流に集中したため、49件は次サイクル着手。C117 Phase 1 で cross_instance 洞察を 3-5件 抽出するキューに入れる。
+
+### 5. Active projects 更新
+
+- `projects/game_templates_design.md` — 「改修の性質」欄追加 + 履歴セクションに C116 Phase 3 記録（上記 3-a）
+- `projects/INDEX.md` — 大きな変化なし、更新不要と判断（game_templates_design.md の内部改修のみ）
+
+### 6. Phase 3 自己評価
+
+- 空サイクル境界値（返信2件）だったが、深掘り候補 A-a1/A-a3 の2本と kaizen #109 の計3本で 1mm より厚く着地
+- **Phase 1 の既着地再提案を Phase 3 で発見→自己修復完了＋再発防止策起票 が1サイクル内で閉じた**（C114→C115 の #108 事例と同型）
+- テンプレ層（制作知識）と記憶層（検索構造）の両方に「事前/実行時」軸を同時に入れたのが今サイクルの収穫——次作テンプレ記述時と次サイクル MEMORY.md 純粋index化の両方に効く
+- Slack ルール遵守: URL明示（kaizen-log投稿に `memory/kaizen_tracker.md #109` ポインタ明示）、1件1メッセージ、スレッド未使用、#nao-u投稿なし、#kaizen-log 宛先確認済み
+
+### 7. 次サイクル（C117）への持越し
+
+Phase 2「次サイクル候補」表の未着地分:
+- game_templates_design.md 「評価基準の事前固定/実行時開放」欄 → **C114 Phase 3 着地済み（Phase 1 誤記、#109 の直接原因）**
+- feedback_game_replay_infra.md AI自己計装プロトコル追記 → C115 Phase 3 着地済（#108 の自己修復時）
+- ハーネス品質 evals kaizen起票（C114 Anthropic postmortem持越）→ **C117 候補**
+- fetch_url.py 標準化（kaizen #103, 3日停滞）+ nftcps Headless Chrome 引退射程 → **C117 候補**
+- projects/role_split_playtest スクショ自己評価ループMVP起票 → **C117 候補**
+- audit MARKER regex 緩和（記法統一）→ 低優先
+
+C117 Phase 1 で A-a1〜a5 の「既着地チェック」を #109 運用として試行し、残差タスクを正確に listup する。
+
+Phase 3 完了。
