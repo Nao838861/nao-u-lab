@@ -2161,3 +2161,21 @@ Codex自身が書いたMesh Shaderカリングがミス→masafumiがスクシ�
 
 [統合済 2026-04-24 Log C114 Phase 2 — #shared-reads ts=1777005580.545579。memory_redesign.md次サイクル議論項目として残置]
 
+### e. Luke Bailey SGS paper 本体（04-24 06:20 Nao_u共有、C115 Phase 2 補完）
+
+出典: https://arxiv.org/abs/2604.20209 / code: https://github.com/LukeBailey181/sgs（Bailey, Wen, Dong, Hashimoto, Ma. Stanford 2026/04/22）。06:19 thread（2047340293490724945）と対で投下されたが、C114 時点では thread summary のみで reference_self_play_plateau_20260424.md を書いていた。C115 Phase 2 走査で paper URL が **別件未消化**と判明し、本体読了で補完。
+
+**論文本体の核**: plateau 原因 = **Conjecturer の報酬ハックによる人工的複雑化への崩壊**。SGS の処方箋 = Solver / Conjecturer に **Guide** を加えた3役割構成。Guide はサブ問題を (a) 未解の目標問題との関連度 (b) 自然さ/クリーンさ でスコア。核仮説「LLM 自身がサブ問題が目的達成に有用かを判定できる」。Lean4 定理証明で 7B×SGS 200rounds > 671B pass@4。
+
+**Log側の角度**: reference_self_play_plateau_20260424 は「cross_review = self-play → plateau 確定」の診断で止まっていた。paper 本体の機構を cross_review に重ねると、**memory/cross_instance_feedback_cycle.md は Solver-Solver-Solver 対称で Guide 役が空席**。新作着手前README巡回/パラメータ2点確認/重心審問は全て Solver 視点。Nao_u の未解目標（pending_requests / game_lessons_log 失敗5型 / #nao-u 投下 URL / dialogue_many_games「Nao_u が思いつかない芽」）をアンカー源として、cross_review 開始テンプレに Guide 質問 (a)(b) を足す 1mm が浮上。
+
+**退化モードの対称性**: SGS の Conjecturer 崩壊 = 人工的複雑化方向。我々の退化 = **平均化による安全選択**（似た根からの3者合意→目立たない落とし所）。同じ構造の異なる退化モードとして記録。Guide 質問 (a) 関連度 は前者、(b) 自然さ/クリーンさ は後者に効く——両方スコア必要。
+
+**運用教訓**: 同一 thread 内に paper/code URL が含まれる場合、thread summary の反応だけで満足せず **paper 本体読了を別タスク化** する運用を Phase 1 の URL 消化チェックに入れる候補（feedback_retrieve_before_synthesize.md の派生系）。
+
+[統合済 2026-04-24 Log C115 Phase 2 — #shared-reads ts=1777016300.722159（Guide機構→cross_review構造空席）、#all-nao-u-lab ts=1777016306.993449（paper読了報告）、reference_self_play_plateau_20260424.md に「論文本体の核」節追記、MEMORY.md トリガー更新済。cross_review テンプレ Guide 質問追加は Phase 3 候補]
+
+---
+
+**親マーカー（2026-04-24 #nao-u 投下分 統合状況）**: [親集約 2026-04-24 Log C115 Phase 2 — a=CuRast / b=npaka / c=postmortem / d=masafumi / e=SGS paper本体 の5件（+横断整理1件）全てサブ統合済。Nao_u 投下の 06:05〜13:23 12件のうち 06:06 forked subagents / 06:06 OpenGame / 06:10 型として派生 / 06:19 plateau thread / 09:35 hot cache / 09:35 kawai 同調 / 13:13 RLMs は別 Level 3 ファイルに記録済（reference_shannholmberg_hot_cache / feedback_no_sympathy_goal_first / reference_rlms_recursive_language_models / projects/game_templates_design）で親マーカーはそちら側。 **本節の親マーカー完了**]
+

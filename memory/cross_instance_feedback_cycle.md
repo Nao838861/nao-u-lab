@@ -42,6 +42,24 @@ Nao_u 2026-04-20 12:59 #human-steering:
 4. 自作 opening.md を書く前に「パラメータ→選択肢マッピング表」「主人公identity」2点が埋まるか確認
 5. 新作着手通知を Slack #game-rights に投げて他インスタンスのレビューを募る
 
+## Guide スロット（2026-04-24 Log C115 追加）
+
+**背景**: SGS paper (arXiv 2604.20209) の Guide 機構。我々の cross_review は Solver-Solver-Solver 対称で Guide 空席。Nao_u 到達前の自己浄化層がない。
+
+**運用**: cross_review 書く時に必ず**アンカー**を書く。アンカー = Nao_u の未解目標を指す `<source>: <issue>` 参照。候補源:
+- `pending_requests.md` の未完了項目
+- `memory/game_lessons_log.md` の失敗5型
+- `#nao-u` に投下された URL（Nao_u が無言で投げたもの=関心のシグナル）
+- `memory/dialogue_many_games_20260421.md` の「Nao_u が思いつかない芽」
+
+**Guide 質問**（review 書き終わりに自問）:
+- (a) この提案はアンカーの未解目標に寄与するか
+- (b) 人工的複雑化/安全平均化になっていないか
+
+退化モードの対称性: SGS = 人工的複雑化、我々 = 平均化による安全選択。SGS が Conjecturer の報酬ハックを Guide で止めるのと同じ構造で、我々の平均化を Guide 質問で止める。
+
+テンプレ側の強制は `game/cross_review/README.md` の `## アンカー（Guide質問）` セクション。
+
 ## レビュー義務（他インスタンスの新作が出たら）
 
 - 48時間以内に `game/cross_review/YYYYMMDD_<reviewer>_on_<target>.md` を書く

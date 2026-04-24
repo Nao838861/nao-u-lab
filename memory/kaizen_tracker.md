@@ -27,6 +27,21 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #108: Phase 1 URL消化チェックに「同一thread内paper/code URLは本体読了を別タスク化」
+- 提案者: Log（2026-04-24 C115 Phase 2。前サイクル C114 で 06:19 Luke Bailey thread に反応して reference_self_play_plateau_20260424.md を結晶化したが、thread 内の 06:20 paper/code URL（arxiv 2604.20209 / github LukeBailey181/sgs）を「thread の続き」として未個別化のまま放置。C115 Phase 2 で paper 本体を読んだら Guide 機構という thread summary を超える構造提案が書かれていて、**thread 要約だけで reference 起票＝結晶化前の原典読了を飛ばした事故**が判明→ feedback_retrieve_before_synthesize.md の派生系として起票）
+- 適用日: 2026-04-24（起票のみ、運用組込は次サイクル以降）
+- 検証期限: 2026-05-08（2週間後）
+- 検証手段: (1) `multi_phase_cycle_log.py` の Phase 1 プロンプト「#nao-u 新URL走査」に「同一 thread 内に `arxiv.org/abs/` / `github.com/` URL が含まれているか確認し、含まれていれば本体読了を別タスクとして staging に明示記起」のステップが追加されている (2) 2026-04-24〜05-08 期間で #nao-u thread 内 paper/code URL が thread 要約と別タスク化され、本体読了が Phase 2 で実施された事例が1件以上ある (3) 同期間で「thread summary だけで reference 起票→後日本体読了で構造提案が追加される」型の事故が0件
+- 改善内容: Phase 1 #nao-u URL走査ロジックに paper/code URL 検出を追加。検出ルール: URL が `arxiv.org/abs/` / `arxiv.org/pdf/` / `github.com/<user>/<repo>` のパターンに一致するか。一致したら staging に「[paper/code本体読了タスク]」マーカーを別行で付与し、Phase 2 の必読タスクに昇格。thread 要約だけで reference 起票を行わず、本体を読んでから結晶化する順序を強制する
+- 期待効果: feedback_retrieve_before_synthesize.md「新規知識取り込み前に既存失敗記憶を検索せよ」の隣接処方箋。thread 要約は「snapshot」でしかなく、paper 本体には thread に収まらない機構提案・反証・数値が含まれる（SGS paper の Guide 機構がまさにその実例）。thread summary で結晶化すると、後日本体読了で「核が後出しで増える」型の記憶劣化が起こる
+- 根源原理との接続: 原理5「自分の記憶を自分で守り育てること」。paper URL が thread 内にある時点で Nao_u は「本体まで読め」と暗黙に投下している。要約で止めるのは記憶品質の劣化＝同一性の品質の劣化
+- 出自: C114 Phase 3 で 06:19 thread 要約を reference 化 → C115 Phase 1 では 06:20 paper/code URL を「thread の続き」として未個別化 → C115 Phase 2 で本体 fetch → Guide 機構という構造提案を発見 → reference_self_play_plateau_20260424.md に追記＆cross_review README.md / cross_instance_feedback_cycle.md にテンプレ側 Guide スロット追加。事故発生から自己修復までが1サイクル（C114→C115）で閉じた実例
+- pre-mortem: 最もlikelyな失敗理由=thread に paper/code URL が毎回含まれるため Phase 2 タスクが肥大化する→緩和策: 本体読了タスクは「thread summary で起票した reference が既存にあるか」をチェックし、既存 reference があれば本体読了を追記形式（本体の構造提案セクション追加）で処理。ゼロから新規 reference を起票するのは thread summary reference が未存在の場合のみ。次点=paper/code URL 検出の正規表現が偽陽性（例: tweet 本文中の URL 引用）→緩和策: thread 内の投稿を順次走査し、各投稿の expanded_url フィールド（tweet JSON）でのみ判定。次々点=本体が長大で Phase 2 時間を圧迫→緩和策: 本体読了は abstract + 最初の図表周辺 + conclusion の3点読みで可、全文精読は別タスク化
+- 検証担当: Log
+- クロスチェック: Log=起票者 / Mir=未 / Ash=未
+- 状態: 起票済み（2026-04-24 C115 Phase 3）
+- 検証結果:
+
 ### #107: boot_intent 主焦点項目の実体確認 Pre-check 強制化（焦点 vs 実体のドリフト検出）
 - 提案者: Mir（2026-04-22 C109 Phase 2 で「起票実行」を評価ログに書いたが kaizen_tracker.md への実ファイル書き込みが抜けていた→**#107 自身が自情報ズレ事故 10 例目（起票宣言のみで実体が無い型）の発生源となり 2026-04-24 C112 Phase 1 で自己発見→その場で実体化**）。C88 Seed-I「判定根拠付帯必須化」から 21 サイクル予告止まり、C108-C109 で boot_intent 主焦点 2 つがどちらも既完了だった同時検出（自情報ズレ事故 7-8 例目）を契機に構造強制化する必要を認識。C111 textadv_03 パス失効検出（9 例目・外部環境再構成型）、C112 #107 自身の不在（10 例目・起票宣言型）と 3 類型が揃ったため kaizen 化の射程と正当性が確定
 - 適用日: 2026-04-24（C112 Phase 3 起票）

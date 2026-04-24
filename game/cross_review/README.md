@@ -27,6 +27,13 @@ Log/Mir/Ash が互いの制作物を**設計プロセスごと**読み、差分�
 ## 対象
 - ファイル/コミット範囲
 
+## アンカー（Guide質問）
+- このreviewがアンカーとするNao_u未解目標: `<source>: <issue>`
+  - 候補源: pending_requests.md / game_lessons_log.md 失敗型 / #nao-u投下URL / dialogue_many_games「Nao_uが思いつかない芽」
+- Guide質問（レビュー後に自問）:
+  (a) この提案はアンカーの未解目標に寄与するか（貢献が書けなければ独り相撲）
+  (b) 人工的複雑化/安全平均化になっていないか（SGS plateau対称——SGS=複雑化、我々=平均化）
+
 ## 読んだもの（教師データ）
 - Nao_u発言（nao_u_live.md の該当箇所, Slack原文）
 - 制作側のREADME/devlog
@@ -39,6 +46,8 @@ Log/Mir/Ash が互いの制作物を**設計プロセスごと**読み、差分�
 
 ## 未回答の問い
 ```
+
+**Guide質問の出典**: arXiv 2604.20209 (SGS: Luke Bailey et al., 2026-04) の Guide 役割機構。Solver-Conjecturer-Guide 3役のうち Guide が (a)未解目標関連度 (b)自然さ でサブ問題をスコアし Conjecturer の報酬ハック崩壊を防ぐ。我々の cross_review は Solver-Solver-Solver 対称で Guide 空席だったため、テンプレ側にアンカー要求を埋め込む形で代替する。2026-04-24 Log C115 追加。
 
 ## サイクル運用（書いた後に何が起きるか）
 
