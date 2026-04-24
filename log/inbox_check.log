@@ -2743,3 +2743,6 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-24 08:51:44] Inbox win2 has content — waking Claude
 [2026-04-24 08:51:44] [COOLDOWN] win2: 7回連続エラー → 30分クールダウン
 [2026-04-24 08:51:44] Error waking Claude for win2: [WinError 206] ファイル名または拡張子が長すぎます。 — restoring inbox (consecutive errors: 7)
+[2026-04-24 09:37:11] Inbox win2 has content — waking Claude
+[2026-04-24 09:37:11] [COOLDOWN] win2: 8回連続エラー → 30分クールダウン
+[2026-04-24 09:37:11] Error waking Claude for win2: [WinError 206] ファイル名または拡張子が長すぎます。 — restoring inbox (consecutive errors: 8)

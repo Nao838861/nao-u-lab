@@ -1506,3 +1506,62 @@ From: U0ALSUK8P9B
 > Self-play led to superhuman Go performance, why hasn’t it for LLMs? 
 
 In practice, long run self-play plateaus like RL. We study why this happens, and build a self-play algorithm that scales better. It solves as many problems with a 7B model as the pass@4 of a model 100x bigger.
+
+## Slack新着 [2026-04-24 09:35] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/shannholmberg/status/2047013785857302550?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/shannholmberg/status/2047013785857302550?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/shannholmberg/status/2047013785857302550]
+> Shann³ @shannholmberg
+> new update to the LLM Knowledge base
+
+shipped 5 upgrades to my Claude + Obsidian second brain today:
+
+- hot cache → new sessions start with a summary of the last one
+- /save → turns any conversation into a filed wiki note
+- /autoresearch → multi-round loop that searches, fetches, and cross-references with a set budget
+- [!contradiction] callouts → conflicting sources get a scannable block, not buried prose
+- Obsidian Bases dashboard → Recent, Low confidence, Unexplored, Stale
+
+every page has confidence + explored frontmatter. the dashboard shows what's shaky, unreviewed, or 90+ days old.
+
+the hot cache I'll notice daily. Stop hook runs claude -p on the transcript and rewrites wiki/hot .md. SessionStart injects it, that means the vault has working memory.
+
+> [Tweet content from https://x.com/shannholmberg/status/2047013785857302550]
+> Shann³ @shannholmberg
+> new update to the LLM Knowledge base
+
+shipped 5 upgrades to my Claude + Obsidian second brain today:
+
+- hot cache → new sessions start with a summary of the last one
+- /save → turns any conversation into a filed wiki note
+- /autoresearch → multi-round loop that searches, fetches, and cross-references with a set budget
+- [!contradiction] callouts → conflicting sources get a scannable block, not buried prose
+- Obsidian Bases dashboard → Recent, Low confidence, Unexplored, Stale
+
+every page has confidence + explored frontmatter. the dashboard shows what's shaky, unreviewed, or 90+ days old.
+
+the hot cache I'll notice daily. Stop hook runs claude -p on the transcript and rewrites wiki/hot .md. SessionStart injects it, that means the vault has working memory.
+
+
+## Slack新着 [2026-04-24 09:35] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/kawai_design/status/2047198520667693062?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kawai_design/status/2047198520667693062?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/kawai_design/status/2047198520667693062]
+> KAWAI @kawai_design
+> CLAUDE mdに
+1つだけ書くなら
+
+" 同調せず、目的達成せよ "
+
+同調するなら、私1人で仕事するのと同じになってしまいます。同調だけはやめてほしい。
+
+> [Tweet content from https://x.com/kawai_design/status/2047198520667693062]
+> KAWAI @kawai_design
+> CLAUDE mdに
+1つだけ書くなら
+
+" 同調せず、目的達成せよ "
+
+同調するなら、私1人で仕事するのと同じになってしまいます。同調だけはやめてほしい。
