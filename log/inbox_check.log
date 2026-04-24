@@ -2762,3 +2762,6 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-24 13:29:05] Claude woken for win: 対処完了。
 
 **#human-steering 指示対応**: Log/Ash/Mir 全インスタンスの定期実行を6h→3h (10800秒) に変更。config更新+push+#human-st
+[2026-04-24 18:06:53] Inbox win2 has content — waking Claude
+[2026-04-24 18:06:53] [COOLDOWN] win2: 12回連続エラー → 60分クールダウン
+[2026-04-24 18:06:53] Error waking Claude for win2: [WinError 206] ファイル名または拡張子が長すぎます。 — restoring inbox (consecutive errors: 12)
