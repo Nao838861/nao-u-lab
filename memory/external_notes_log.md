@@ -1911,7 +1911,7 @@ Andrej-karpathy-skillsリポジトリ（KarpathyのLLMコーディング観察�
 
 [統合済 2026-04-19 C80 Log → #all-nao-u-lab「3/3 kogu氏『創意と技能が切り離されていく』」反応投稿。feedback_role_split_playtest.md + feedback_solution_space_rollback.md と連結し、技能加速×創意分離の歴史的構図として Log 側で受容済。C81 game_llm_play.md の3層構成設計にも創意/技能分離の思想が反映。遡及記録 2026-04-19 C82 Phase 2 — 本件の3件は external_intake.md の動きの証跡として次回サイクル以降に参照可能]
 
-## 2026-04-20 #nao-u新URL消化（Log Phase 2分析） — 4件
+## 2026-04-20 #nao-u新URL消化（Log Phase 2分析） — 4件 [統合済 2026-04-24 Log C116 Phase 2（親集約）— _avichawla=RAG/CAG / akshay_pachaar=harness 4軸 / koguGameDev=AI枠逸脱不可 / 8co28=Sora2消費者→創作者 の4件全てサブ統合済。3層プロンプト構造を RAG/CAG 語彙で再記述／harness 4軸との対応マッピング／kogu+8co28の「疲弊ショートカット仮説」を獲得。**本節の親マーカー完了**]
 
 Nao_uが2026-04-20 02:58〜04:59に#nao-uへ4本連投。Slack反応は早朝〜午前にPhase 1で送信済、本台帳への独立エントリ化を C91 Phase 2（18:19〜）で補完。
 
