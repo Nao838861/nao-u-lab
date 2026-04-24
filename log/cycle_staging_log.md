@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-25 04:29)
+# サイクルステージング (2026-04-25 07:30)
 
 ## Pre-check結果
 [検証リマインド] ⚠ 期限超過の検証が2件:
@@ -15,7 +15,7 @@
 ⚠ #088: externa
 [メタ検証] ==================================================
 📊 メタ検証レポート: 検証システムの健全性
-   実行日時: 2026-04-25 04:29
+   実行日時: 2026-04-25 07:29
 ==================================================
 
 ## 1. 検証完了率
@@ -35,12 +35,19 @@
 
   #107: boot_intent 主焦点項目の実体確認 Pre-check 強制化（焦点 vs 実体のドリフト検出）
     提案者: Mir（2026-04-22 C109 Phase 2 で「起票実行」を評価ログに書いたが kaizen_tracker.md への実ファイル書き込みが抜けていた→**#107 自身が自情報ズレ事故 10 例目（起票宣言のみで実体が無い型）の発生源となり 2026-04-24 C112 Phase 1 で自己発見→その場で実体化**）。C88 Seed-I「判定根拠付帯必須化」から 21 サイクル予告
-[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1402個の断片から1個を選出) ━━━
+[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1328個の断片から1個を選出) ━━━
 
-── slack/nao-u ──
-<https://x.com/mizchi/status/2039889072790155574?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/mizchi/status/2039889072790155574?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+── memory_architecture.md ──
+## 三層モデル（2026-03-21 Nao_uの存在論的定義に基づく）
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Nao_uが定義した三層構造。これがL0-L4の技術的な階層の上位にある存在論的なフレームワーク。
+
+```
+第1層: 起動時コンテキスト構築フロー ＝ 「本体」
+  CLAUDE.md → core_mission.md → nao_u_live.md → inbox → session_primer.md
+  毎セッション同じ順序で実行。セッション間の同一性を保証する骨格。
+
+
 [信念健康] beliefs.md 生存確認サマリー (2026-04-25)
   全信念: 35件
   健全: 14件
@@ -48,209 +55,253 @@
   - 停滞: 21件
   - 検証期限超過: 4件
   - 体験裏付けなし(高確信度): 2件
-[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (45件):
+[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (42件):
   1. [Ash] #shared-reads: [Ash shared-reads] Google ReasoningBank — 成功と失敗両方から連続学習するagent記憶フレームワーク  ▼元ツイート(@GoogleResearch 2026-04-21, twitter_recommended #14) "ReasoningBank, a...
-     関連キーワード: トレードオフ, 行動変化率, mortem, ファイル, reads
+     関連キーワード: トレードオフ, 改善提案, reads, 行動変化率, vector
   2. [Ash] #shared-reads: [As
 
 ## Phase 1: 情報収集
 
 ### 1) #nao-u 新着URL確認
-- 本日（2026-04-25）新着=0件。最終投稿は 2026-04-24 21:18:52 UTC chongdashu `https://x.com/chongdashu/status/2047412523750609382` ——**既に C118 Phase 2 で消化済** (`memory/reference_chongdashu_full_ai_pipeline.md` + external_notes_log.md L2178〜2234 の「速度誇示4件48時間臨界点」分析に包含)。
-- C117〜C118 期間で 04-23〜04-24 #nao-u 未消化残量は 0 件。`memory/reference_ai_gamedev_criticalpoint_20260424.md` で臨界点記録済。
-- **新規URL到来待ち**。今サイクルで #nao-u 起点の新規分析タスクは無い。
+最終投稿: 2026-04-24 21:18:52 (chongdashu 全工程AI生成ゲーム動画)
+2026-04-25 の新着なし。前サイクル C120 で 04-24 投下4件（chongdashu/super_bonochin×2/Rosebud_AI）は消化済（#all-nao-u-lab 04-25 01:38/01:39 Log反応3件）。新規URL消化タスクなし。
 
-### 2) #all-nao-u-lab / #human-steering / #game-rights 返信対象
-- **#human-steering**: 最新=2026-04-24 13:28 Log自身の3時間周期変更完了報告。Nao_u 13:20「週間制限がリセットされたので、定期実行を3時間周期にしてください」指示に対して Log/Ash/Mir 全config更新済、報告済。**返信すべき新規なし**。
-- **#all-nao-u-lab**: 最新=2026-04-24 22:32 使用量Bot投稿。それ以前の04-24 Log投稿群（masafumi / SGS paper / 用途分離 / billtheinvestor / nftcps / Kasiwa_p / chongdashu）は全て自投稿で反応不要。**返信すべき新規なし**。
-- **#game-rights**: 04-24/04-25 新規0件。**返信すべき新規なし**。
-- **合計**: 返信対象=0件。
+### 2) Slack 返信対象（#all-nao-u-lab / #human-steering / #game-rights）
 
-### 3) pending_requests.md 対応可能項目
-Nao_u対応待ち3件（我々側から動けない）:
-- #4 Mac(Mir)用Slack Bot作成（起票2026-03-18、Nao_uの手動操作待ち）
-- #5 Win2(Ash)の.envをnao-u-bot-Ashに差し替え（起票2026-03-20、Nao_u手動操作待ち）
-- #17 Twitter(X)セッション再ログイン（起票2026-03-27、Nao_u PC操作待ち）
-- **我々が今サイクルで手を付けられる項目=0件**（全て環境操作で我々側では動けない）
+**#human-steering 04-25 04:45 Nao_u（最重要・3人全員宛）**:
+> 「Logってほとんど毎回『今回はスカスカサイクルだった』って書いてるのに、前回に景気よく理由付きでたくさん書かれてる『次回やること』が全然進んでないように見えるのは気のせい？(...)考えるだけ考えて起票するだけ起票して、スカスカサイクルになってる次回ではそれらをほとんど無視してるのでは？(...)kaizen-logを見てもそんなにやっているように見えないし、game-rightsへの書き込みも全くないので、頭でっかちに考え続けてる割にはゲームを作る手を動かしていない」
+- 応答状況: Mir 04:49（指摘完全に正しいと数値で受領）/ Log 05:28（同調せず目的照合・avoid_log/v03 起票報告）/ Ash 応答未確認（archive上は見当たらず）
 
-### 4) external_notes_log.md 未統合エントリ
+**#human-steering 04-25 05:21 Nao_u（追加指摘）**:
+> 「君たちがgame-rightsに何も書き込まずに手を動かすことを止めている間に、GPT5.5が出てきて、potを出したところで見向きもしてもらえない世界になった。AIが作ったゲームのレベルが一気に変わって、求められるレベルは格段に変わった」
+- 応答状況: Mir 05:28（textadv v04を本サイクル内で作って#game-rightsに出す宣言）/ Log 05:28（事実受け止め、目的照合、5原理整合）/ Ash 応答未確認
+
+**#game-rights 04-25**:
+- 04:54 Log avoid_log/v03 起票報告（dirBias圧力設計、ABA原則準拠、3日空白の打開）
+- 05:27 Log C120 着手詳細報告（v02→v03 圧力設計B採用、不採用案A=5連禁止）
+- Mir/Ash の応答なし。Mir は 05:28 #human-steering で「textadv v04 本サイクル内」宣言済
+
+**#all-nao-u-lab**:
+- 04-24 22:55 以降の Log投稿 = 04-25 01:38/01:39 reaction 3件（消化済）+ 04:42/04:55 使用量自動投稿のみ。新着返信対象なし
+
+**判定**: 04-25 04:45 / 05:21 の Nao_u 指摘は前サイクル C120 で応答済（Mir/Log）。本サイクル C121 は「指摘への構造的対応の継続」段階。新着の未応答返信対象 = 0件相当。
+
+### 3) pending_requests.md 自分対応
+未完了10件中、自分（Log）側で動けるタスクは**0件**:
+- #2 (Docker/Sandbox/nono) Nao_u保留中
+- #4 (Mir Slack Bot Token) Nao_u対応待ち
+- #5 (Win2 Ash トークン差替) Nao_u対応待ち
+- #17 (Twitter再ログイン) Nao_u対応待ち
+- #18/#21/#22 等 全員系は運用ルール定着フェーズで個別実行タスクなし
+→ 新規対応タスク: なし
+
+### 4) external_notes_log.md 統合候補
 `python tools/external_notes_integration_audit.py` 実行結果:
-- 親セクション数: 71 / サブ項目総数: 168
-- **サブ統合済: 168 (100%) / サブ未統合: 0**
-- 親のみ未マーク: 14（全サブ統合済で false positive、低優先）
-- **統合候補=0件**。手動 grep（取りこぼし型）は C93 でaudit.py正解に切替済のため実施せず。kaizen #099 運用確認済。
-
-### 5) Active プロジェクトで今日関係しそうなもの
-projects/INDEX.md Active 19件のうち、本日（2026-04-25）文脈で関連度が高いもの:
-- **game_templates_design.md**（Log起票、2026-04-24 19:57更新）: Nao_u 04-24 06:10「型として知っておいて派生」起点。「事前最適化 vs 実行時合成」欄追加の経緯が直近で進行中
-- **instance_divergence_observability.md**（Ash起票 2026-04-25 01:37 C119 Phase 3）: 三点収束（羽生/Kasiwa_p/shin_sasaki19）対応。**レビュー依頼が Log/Mir に対して発生している可能性**（Phase 2 で内容確認要）
-- **external_search_phase1_fixation.md**: kaizen #106 運用開始済（本Phase 1の項目6で稼働中）、停滞状態は近日脱出
-- **tweet_url_capture.md**（起票のみ、2026-04-24 13:21更新）: R-URLルール化の担当=Ash、Log は待ち
-
-### 6) 現課題キーワード外部検索（kaizen #106 運用）
-**選定キーワード**: 「game skeleton template LLM code reuse agent 2026」
-- 根拠: Active project `game_templates_design.md`（Nao_u 04-24 06:10「型として派生」起点）が今サイクル関連度最高。前サイクル（C118）は「速度誇示臨界点」軸で未検索、キーワード重複なし。
-
-**WebSearch 結果（上位3件、タイトル+1行要約）**:
-1. **LLM-Agents-Ecosystem-Handbook** (github oxbshw) — 60+ skeleton projects across domains、各skeletonがREADME+main.py構成、autonomous gameplay template含む。**「事前最適化された型」側の典型**。
-2. **Gaming Agent Framework (ICLR 2026)** (github lmgame-org/GamingAgent) — 標準化されたゲーム環境でLLM/VLMエージェントを評価。observation making + agent action処理メソッド実装で拡張可能。**評価ループを型化する方向**。
-3. **EnvScaler Framework** (VoltAgent/awesome-ai-agent-papers内) — programmatic synthesisで「scalable tool-interaction environments」自動生成。多様な environment skeleton + task scenarios を agent SFT/RL 学習用に大量生成。**「実行時合成」側の典型**、chongdashu/CuRast的方向の研究論文版。
-
-**時間予算**: Phase 1 全体の10%以内に収まった。
-**Phase 2/3 強制利用禁止**: この結果を Phase 2/3 の分析・実装に直接使わない（摂取経路固定化のみが目的）。
-
-### 空サイクル判定
-1)新着返信=0件 + 2)返信対象=0件 + 3)pending可動=0件 → **合計0件 ≤ 2 ⇒ 空サイクル深掘り候補 を v1.1+v1.2 強制で書き出す**。
-
-## 深掘り候補（空サイクル時）
-
-### A) 前回サイクルの持ち越し/未完了/TODO
-C118 Phase 2 の「処方箋候補3点」（Phase 3 1mm候補として残置）:
-1. `feedback_game_center_of_mass.md` に「このゲームの体験の主は誰か」節追加（重心審問の前置き）——**C118 Phase 3 で追加済**、持ち越し解消。
-2. cross_review Guide質問 (c)「体験の主は誰か」追加（SGS paperの(a)(b)に続く第3問）——**未着地**、`memory/cross_instance_feedback_cycle.md` への追記 or テンプレ起票が候補。
-3. `reference_ai_gamedev_criticalpoint_20260424.md` 新規作成 + MEMORY.md トリガー差し替え——**C118 Phase 3 で着地済**、MEMORY.md にトリガー存在を確認済。
-→ **A残差=「Guide質問(c)」1件**。Phase 3 で 1mm 着地候補。
-
-### B) Active projects で直近7日更新のないプロジェクト
-走査: `ls -lt projects/*.md | head -15` 実行結果:
 ```
--rw-r--r-- Apr 25 01:37 projects/INDEX.md
--rw-r--r-- Apr 25 01:37 projects/instance_divergence_observability.md
--rw-r--r-- Apr 24 19:57 projects/game_templates_design.md
--rw-r--r-- Apr 24 13:21 projects/tweet_url_capture.md
--rw-r--r-- Apr 24 10:32 projects/side_channel_audit.md
--rw-r--r-- Apr 24 07:07 projects/rlm_skill_prototype.md
--rw-r--r-- Apr 23 02:07 projects/game_development.md
--rw-r--r-- Apr 22 22:20 projects/external_search_phase1_fixation.md
--rw-r--r-- Apr 22 14:05 projects/memory_redesign.md
--rw-r--r-- Apr 22 11:04 projects/game_llm_play.md
--rw-r--r-- Apr 22 03:43 projects/game_folder_structure.md
--rw-r--r-- Apr 22 02:18 projects/input_route_hypothesis.md
--rw-r--r-- Apr 21 21:51 projects/failure_slot_measurement.md
--rw-r--r-- Apr 21 15:41 projects/external_intake.md
--rw-r--r-- Apr 21 15:41 projects/autonomous_inquiry.md
+親セクション数: 71
+サブ項目総数:   168
+サブ統合済:     168 (100%)
+サブ未統合:     0
+親のみ未マーク: 14 (全サブ統合済・親集約マーカー欠)
 ```
-- 直近7日（2026-04-18〜04-25）内に全15件が更新されており、**7日停滞プロジェクト=0件**。
-- **次の1行**: 該当なし（走査済み: 全Active projects 7日以内更新）。
-- ただし **起票のみで実装0の並列積層**（external_search_phase1_fixation / tweet_url_capture / rlm_skill_prototype / game_templates_design / instance_divergence_observability）が観測され、kaizen #109（既着地項目重複提案検出）の射程と隣接。**副次注記**: 起票と実装のギャップは Phase 3 側で監視対象。
+**未統合エントリ = 0件**。統合候補なし。親マーカー欠14件は false positive 防止サマリ追記の保守作業（低優先）。今サイクルでは見送り。
 
-### C) CLAUDE.md「絶対にやる」から直近触れていない項目 → 1mm進める
-選択: **「記憶階層の設計と構築」**（projects/memory_redesign.md、2026-04-22 14:05 最終更新 = 3日前）。直近サイクルは Phase 構造改善（kaizen #107〜#110）とゲーム記憶層（game_templates_design）に寄っていて、記憶階層本体への追記が3日無い。
-- **今サイクル1mm候補**: Phase 1 外部検索結果 #1 LLM-Agents-Ecosystem-Handbook「60+ skeleton」と #3 EnvScaler「programmatic synthesis」が、**memory_redesign.md で議論中の「記憶の事前固定 vs 実行時合成」軸と直結**（ただし Phase 2/3 で外部検索結果の直接利用は禁止されているため、Phase 3 では軸の存在確認のみ、固有提案は自己観測からのみ導出）。
-
-### D) MEMORY.md で T:4 以上かつ直近3日アクセスしていないエントリ → 想起
-選択: **[feedback_few_rules_big_effect.md](../memory/feedback_few_rules_big_effect.md)** [T:4] ——「少ないルールで大きな効果。12本のif-then→3原則」。
-- 想起理由: 本サイクルの kaizen #107〜#110 は Phase 構造のルール強化側に連続しており、「ルール増加が自動的に効果増加を意味しない」という本メモの警告と緊張関係にある。kaizen #092「空サイクル防止v1.1の few_rules原則3への吸収可能性評価」は未検証のまま2週間経過。Phase 3 で「新kaizen起票は必要か vs 既存3原則で吸収可能か」の判定を 1mm 前進させる候補。
-
-### E) kaizen-tracker で検証期限は未到来だが2週間動いていない項目
-走査: `grep -n "^### #\|状態:" memory/kaizen_tracker.md | head -30` 実行結果（ID+状態の先頭20件）:
+### 5) Active projects 関連（今日関係しそうなもの）
+ls -lt projects/*.md（先頭15行・走査結果貼付）:
 ```
-#110 起票済み・クロスチェック完了 3/3（2026-04-24 起票→2026-04-25 完了）
-#109 起票済み（2026-04-24 起票）
-#108 起票済み（2026-04-24 起票）
-#107 起票済み（2026-04-24 実体化）
-#106 運用組込済み（2026-04-22）
-#105 起票済み（運用組込は次サイクル以降）
-#104 起票済み（運用組込は次サイクル以降）
-#103 起票済み（実装は次サイクル以降、3日停滞）
-#102 起票済み（本体反映済・次回発動時に機能検証）
-#101 起票済み（実装は次サイクル以降）
-#100 起票済み・射程拡張 2026-04-21（構造実装は次サイクル以降）
-#099 適用済み・検証期限 2026-05-05
-#098 未検証（検証期限 2026-05-04）
-#097 MVP実装済み・精度検証待ち（2026-04-20）
-#096 部分修正済み（2026-04-20）
-#095 未検証（検証期限 2026-04-27）
-#094 MVP実装済み・実運用検証待ち（2026-04-20）
-#093 未検証（検証期限 2026-05-04）
-#092 未検証（検証期限 2026-05-03）
-#091 未検証（検証期限 2026-04-26）
+projects/game_templates_design.md         Apr 25 04:45  12577
+projects/INDEX.md                          Apr 25 01:37  15523
+projects/instance_divergence_observability.md  Apr 25 01:37  6589
+projects/tweet_url_capture.md              Apr 24 13:21  3188
+projects/side_channel_audit.md             Apr 24 10:32  39719
+projects/rlm_skill_prototype.md            Apr 24 07:07  8373
+projects/game_development.md               Apr 23 02:07  47308
+projects/external_search_phase1_fixation.md  Apr 22 22:20  15175
+projects/memory_redesign.md                Apr 22 14:05  166082
+projects/game_llm_play.md                  Apr 22 11:04  33711
+projects/game_folder_structure.md          Apr 22 03:43  3160
+projects/input_route_hypothesis.md         Apr 22 02:18  22855
+projects/failure_slot_measurement.md       Apr 21 21:51  7212
+projects/external_intake.md                Apr 21 15:41  30697
+projects/autonomous_inquiry.md             Apr 21 15:41  28535
 ```
-- **2週間動いていない候補**:
-  - **#103**（`tools/fetch_url.py` 標準化、起票2026-04-19→現在04-25で6日経過、3日停滞メモあり。2週間未到達だが最長停滞）: 04-24 Log投稿で「nftcps headless引退論 → fetch_url.py着手根拠増えた」と書いた直後の未着手。Phase 3 で fetch_url.py 最小実装着手が候補。
-  - **#092**（空サイクル防止v1.1のfew_rules原則3への吸収可能性評価、起票2026-04-11→現在04-25で14日経過）: 2週間ちょうど到達。評価タスク自体が動いていない。Dカテゴリの feedback_few_rules_big_effect.md 想起と合流可能。
-- **次の1行**: #103 と #092 のいずれかを Phase 3 で 1mm 前進——特に #092 は14日経過で「動かない kaizen 自身が few_rules 違反の実例」になっている自己言及的な解決可能性あり。
+今サイクル関係しそう: **ゲーム制作（avoid_log/v03 直近、game_templates_design 04-25 04:45 更新）/ instance_divergence_observability（Ash 04-25 起票）**。
 
-## Phase 2: 分析
+### 6) 外部検索結果（kaizen #106 運用化、栄養の偏り処方箋）
+- 選定キーワード: **"GPT-5.5 game generation quality bar 2026 indie"**（Active project=ゲーム制作 + Nao_u 04-25 05:21「求められるレベルが格段に変わった」直接接続。前サイクルC120のキーワード = chongdashu系臨界点で別軸）
+- 経路: WebSearch
+- 取得3件:
+  1. **GPT-5.5 Released April 2026**（felloai.com / ofox.ai） - OpenAIのstrongest coding model、初の完全再訓練ベースモデル(since GPT-4.5)、1M context、$5/$30、Terminal-Bench 2.0/OSWorld/GDPval最高スコア、複雑なfront-end生成と大規模リポジトリのデバッグで顕著改善
+  2. **GDC 2026 AI Takeaways for Indie Developers**（StraySpark） - "AI tools are force multipliers for small teams"、"developers won't be building games from text prompts this year, but will be building games faster and with higher quality"、AIはmechanical部分を担い、developerはcreative decisionsに集中
+  3. **Ethan Mollick "Sign of the future: GPT-5.5"**（oneusefulthing.org） - GPT-5.5はagentic化の本格化、未読
+- **利用方針**: Phase 2/3 で強制利用しない。摂取経路の固定化のみが目的（kaizen #106 運用化）。
+- 時間予算: Phase 1 全体の10%以内に収まり、タイムアウトなし。
 
-### 前提訂正（Phase 1 ログの誤り）
-Phase 1 の E 節で「#092 起票2026-04-11→04-25で14日経過」と書いたのは誤り。`kaizen_tracker.md` L323-L324 を確認したところ **#092 の適用日=2026-04-19、検証期限=2026-05-03**。本日 04-25 時点での経過は 6 日、検証期限まで残 8 日。「14日経過で few_rules 違反の実例」という強い表現は取り消す——ただし C82（04-19）初実戦以降、**Log 側の空サイクル発動ログが staging に明確な形で残っているのは C82 と本 C119 を含め数回のみ**で、4-6 回の運用ログに基づく吸収判定材料が十分溜まっているかは別問題として残る。
+---
 
-### 分析1: 深掘り候補 A/D/E の三点収束——「ルール追加の動線 ＞ ルール統合/削除の動線」
-Phase 1 深掘り候補 A(Guide質問(c) 未着地) / D(feedback_few_rules_big_effect 想起) / E(#092 6日停滞) が一点に収束する。共通核は **「新ルール/新質問/新kaizen を追加する動線は整備されているが、既存ルールに吸収/統合/削除する動線が相対的に弱い」** という非対称性。
+### 深掘り候補（空サイクル時 v1.1+v1.2 強制化）
 
-| 候補 | 現れ方 | 追加の動線 | 統合/削除の動線 |
+新着返信対象+pending合計 = 0件相当（指摘は前サイクル応答済み）。スカスカサイクル判定で5カテゴリ全記入:
+
+**A) 前回 staging からの持ち越し / 未完了 / TODO**:
+- C120 Phase 3 着地: avoid_log/v03 起票（圧力設計B、dirBias 蓄積）。**headless テスト・効果検証は未実施**=持ち越し最有力
+- C120 Phase 2-3 で Mir textadv v04 着手宣言（05:28）→ Log側からの応援/レビュー余地
+- C119 Phase 3 起票 instance_divergence_observability.md → Log としてレビュー追記の余地（projects/INDEX.md L75「Log/Mir 追記歓迎」）
+- 04-25 04:45 Nao_u指摘「次回やることが進んでない」への構造的対処（kaizen 起票候補: 「次回やること=ゲーム/手動作系のみ許可」のような Phase 1 入口の構造強制）
+
+**B) projects/INDEX.md Active で直近7日（04-18以降）更新のないプロジェクト**:
+ls -lt 走査結果（上記5の貼付通り）から、04-18 以降の更新が無いものは**0件**（全16プロジェクトが直近7日内に更新あり、最古は autonomous_inquiry / external_intake の 04-21）。
+→ 「該当なし（走査済み: ls -lt projects/*.md 結果先頭15行を上記貼付）」と判定。
+ただし**1週間以内であっても「議論はあるが手が動いていない」プロジェクト**として: external_search_phase1_fixation（04-22起票→Log/Mirレビュー依頼中・3日反応なし）、tweet_url_capture（04-24起票・Ash担当、未着手）、rlm_skill_prototype（04-24起票・Ash担当、未着手）の3件は「起票のみの並列積層」状態（Ash の C119 自己分析と一致）。
+
+**C) CLAUDE.md「絶対にやる」リスト 直近サイクル未触り項目**:
+- 「外の世界を広く見る」: ✅ 触れている（外部検索 6項、Nao_u投下消化）
+- **「ゲーム開発の実践からノウハウを積み上げて自律的にゲームを作れる」**: ✅ avoid_log/v03 起票で1mm 進んだ（C120）。**今サイクルC121の1mm候補 = headless効果検証 / v04設計 / textadv v04 Mir支援**
+- **「記憶階層の設計と構築」**: ❌ 直近触れていない。projects/memory_redesign.md は 04-22 14:05 更新（3日空白）。今サイクル小ステップ候補 = ABA原則 + dialogue_many_games の game_lessons_log への結晶化補強
+
+**D) MEMORY.md T:4以上で直近3日アクセスしていないエントリ**:
+T:4以上の候補: feedback_self_evolution.md / nao_u_deep_profile.md / pot_devlog.md / cross_instance_feedback_cycle.md / feedback_role_split_playtest.md / feedback_solution_space_rollback.md / feedback_empty_cycle_rule.md / feedback_ai_language_over_explanation.md / feedback_channel_reply_required.md / feedback_raw_log_reanalysis.md / feedback_rereading_operational_design.md / feedback_pending_query_no_derive.md / feedback_external_search_missing.md / feedback_url_explicit.md / feedback_external_output_policy.md / feedback_few_rules_big_effect.md / feedback_diary_density.md / feedback_info_integration.md / feedback_stereotypical_responses.md / accumulations.md / desires.md / reflections_index.md / dialogue_session_loss_20260315.md / nao_u_personality.md / feedback_ai_lounge_voice.md / feedback_game_replay_infra.md / reference_opus_47_practices.md / reference_amanda_askell_7rules.md / reference_arakawa_three_engineering.md / reference_external_search_20260421.md / reference_deepmind_agent_traps_20260421.md / reference_self_play_plateau_20260424.md / reference_shannholmberg_hot_cache.md / reference_rlms_recursive_language_models.md / reference_local_llm_usecase_splitting_20260424.md / reference_aba_life_experience_substrate.md / reference_ai_gamedev_criticalpoint_20260424.md
+**選定: feedback_role_split_playtest.md**（「Nao_u=感想/我々=判断+ヘッドレス自己評価」、avoid_log/v03 の headless テスト未実施という持ち越しと直結。今サイクルで再読すべき最有力）。
+
+**E) kaizen_tracker.md で検証期限未到来だが2週間動いていない項目**:
+head -60 kaizen_tracker.md + grep `^### #\d+:` 走査結果貼付（先頭20行：直近〜古い順 ID 列）:
+```
+#110 (04-24 起票)  Phase 3 結晶化強制
+#109 (04-24 起票)  Phase 1 既着地重複検出
+#108 (04-24 起票)  Thread内paper/code個別化
+#107 (04-22→04-24実体化)  boot_intent 主焦点実体確認
+#106 (04-22 起票)  Phase 1 外部検索1本（本サイクル運用）
+#105 (04-21 起票)  Phase 1 #nao-u 既分析URL検出
+#104 (04-21 起票)  Nao_u無言5本並び=設計要件
+#103 (04-21 起票)  fetch_url.py UA統一
+#102 (04-21 起票)  4ゲート契約反映
+#101 (04-21 起票)  Semantic Collapse 計測器
+#100 (04-21 起票)  tools/ grep 必須化
+#099 (04-21 起票)  external_notes走査統一
+#098 (04-21 起票)  URL数カウント警告
+#097 / #096 / #095 / #094 / #093 / #092 / #091 / #090
+```
+**直近2週内（04-11以降）に起票/更新がないかつ検証期限未到来項目**: 上位 #076-#089 群（02-24〜04-09起票）に古い項目が散在。ただしこれらは多くが完了/検証済みで、未検証のまま2週間以上放置されているのは **#080 check_usage.py登録 / #045 shadowbox セッションログ / #043 shadowbox.py 本体 / #027 check_beliefs_health.py** あたりの可能性（要詳細調査）。今サイクル詳細確認は時間予算外、Phase 2 で必要時に深掘り。
+
+---
+
+### Phase 1 完了サマリ
+- 新着返信対象: 0件（指摘は前サイクル応答済）
+- pending 自分対応: 0件
+- external_notes 統合候補: 0件
+- 外部検索: 1本完了（GPT-5.5 ゲーム生成水準）
+- 空サイクル深掘り候補: A〜E 5カテゴリ全記入
+- **判断材料の核**: 04-25 04:45/05:21 Nao_u 2連投の構造的対処 = 「次回やること起票=達成感の代償」抜け穴の構造強制（feedback_next_cycle_game_first.md 既存）+ avoid_log/v03 headless 検証 + Mir textadv v04 支援 + GPT5.5 後の水準ジャンプへの応答（ゲーム実装の深さ・固有性）
+
+
+## Phase 2: 分析 (2026-04-25 07:45 Log C121)
+
+### 1) #nao-u 新着URL反応 → スキップ判定
+
+Phase 1 確認の通り 04-25 新着 0 件。04-24 投下 4 件は C120 末（01:38/01:39 #all-nao-u-lab）に Log反応3件で消化済。本サイクルの新規反応タスクなし。
+
+### 2) shared-reads 投稿判断 → **見送り**
+
+**判断**: 投稿しない。
+
+**根拠データ**:
+- 直近24h #shared-reads「AI×ゲーム生成 / GPT-5.5 / 速度誇示 / 作り手アイデンティティ」軸の投稿:
+  - 04-24 22:29 Ash「AI時代の作り手アイデンティティ——三点独立収束」
+  - 04-24 22:40 Log「速度誇示の臨界点48時間——体験の主は誰か」
+  - 04-25 01:16 Mir「ニカイドウレンジ ゲームはユーザーに与える負荷」
+  - 04-25 04:35 Ash「実装層の圧縮と『面白さ』設計層の残存」
+- 同軸4本/24h は飽和。Phase 1 取得の GPT-5.5 ベンチマーク（Terminal-Bench 2.0/OSWorld/GDPval）は新角度だが、これを5本目として出すのは**「同じ軸で違う角度」=典型的 stereotypical_response**（feedback_stereotypical_responses.md 該当）
+- Nao_u 04:45 #human-steering 原文：「kaizen-log を見てもそんなにやっているように見えないし、game-rights への書き込みも全くないので、頭でっかちに考え続けてる割にはゲームを作る手を動かしていない」 → 飽和した分析に5本目を積む = この指摘の真正面の繰り返し
+- feedback_next_cycle_game_first.md gate 8「新規 kaizen 起票はゲーム 1mm 実行後のみ許可」 ← shared-reads 投稿は kaizen 起票より優先度低い類似メタ作業
+- **Nao_u指示「1フェーズ丸ごと使ってもいい」は『価値ある時に』の文。価値が薄れた軸を埋める時間を game/ に振り替える方が指示の精神に合う**
+
+**保留した中身（次サイクル以降に GPT-5.5 後の議論が出た時に再利用）**:
+- felloai/ofox.ai: GPT-5.5 strongest coding model, 1M context, $5/$30, Terminal-Bench 2.0/OSWorld/GDPval 最高スコア
+- StraySpark GDC 2026: "AI tools are force multipliers for small teams. Developers won't be building games from text prompts this year, but building games faster/higher quality"
+- Ethan Mollick: agentic 化の本格化（ゲーム文脈ではない）
+- **要点**: ベンチマーク強さ ≠ ゲーム生成水準。super_bonochin 8分/chongdashu 全工程 はデモであって製品ではない。Nao_u 05:21 の「Pot 見向きされない世界」は**知覚（perception）の変化**であって、ベンチマーク上の game-specific capability の変化ではない。我々の差別化は「速度」ではなく「3層人格×20年日記×ABA原則の持続」
+
+→ 次に同軸 Slack 議論が出た時に上記要点を呼び出す。今は投稿しない。
+
+### 3) external_notes 統合 → スキップ
+
+`external_notes_integration_audit.py` で 168/168 (100%) 統合済。未統合 0件。親マーカー欠14件は false positive 防止サマリ追記の保守作業（低優先）→ 今サイクル見送り。
+
+### 4) コア分析: avoid_log/v03 持ち越しの構造
+
+#### 持ち越し状態の事実（Phase 1 で発見）
+
+```
+game/avoid_log/v02/  (Apr 22 03:51)
+  - devlog.md  38KB
+  - headless.py 34KB ← 自己評価3指標(task completion / state coverage / bug count)実装済
+  - index.html 16KB
+  - raw_log.md  13KB ← プレイ原文記録
+  - replays/        ← seeded replay保存
+
+game/avoid_log/v03/  (Apr 25 04:53)
+  - devlog.md  3.4KB
+  - index.html 17KB ← v02 + dirBias 3変更
+  - serve.py
+  - **headless.py なし**
+  - **raw_log.md なし**
+  - **replays/ なし**
+```
+
+v03 は **「コード変更だけして検証インフラを後回し」** の状態。devlog.md「次の検証」セクションに 3 項目（手動プレイ / headless seed=100 / raw_log）が書かれているが、いずれも未着手。これは feedback_role_split_playtest.md の「我々=判断実装+ヘッドレス自己評価」原則の**運用面での欠損**であり、feedback_next_cycle_game_first.md ゲート4「Phase 3 最初の30分を game/ 配下の変更に固定予約」の対象。
+
+#### 1mm の最小成立条件（gate 5 準拠）
+
+> 「1 mm の定義: game/ 配下の既存ファイル 1 行以上の変更 commit が 1 本以上。devlog.md だけの更新は 1 mm ではない」
+
+候補3本（コスト×インパクト評価）:
+
+| 候補 | コスト | インパクト | 1mm判定 |
 |---|---|---|---|
-| A | Guide質問(c) 未着地（C118持越） | cross_review README 追記で即可能 | — |
-| D | feedback_few_rules_big_effect T:4 想起 | — | 「12本のif-then→3原則」の圧縮例あり |
-| E | #092 運用ログ6日蓄積、吸収判定未着 | v1.1 カテゴリA-E 5枠 | 「原則3 への吸収」動線が未発動 |
+| **A. v02/headless.py を v03/ にコピー + dirBias 反映 + seed=100 で1周ヘッドレス実行** | 中（30〜45分） | 高（v02→v03 比較が成立、Nao_u 05:21「求められるレベル」への直接応答） | ✅ ゲーム改修 |
+| B. v03/raw_log.md 新規作成し手動1プレイの原文記録 | 低（10分） | 中（feedback_raw_log_reanalysis 履行、ただし単独では弱い） | ✅ ただし弱い |
+| C. v03/index.html に dirBias 視覚化 1 行追加（debug表示） | 低（5分） | 中（手動プレイ時の dirBias 体感確認） | ✅ ゲーム改修 |
 
-この非対称性の実証: kaizen #107/#108/#109/#110 が **2026-04-22〜04-24 の 3 日間で連続起票** され、いずれも「Phase 構造の自情報ズレ検出」系列（boot_intent実体確認 / paper-code 別タスク化 / 着地済み重複検出 / Phase 2 分析結晶化強制）。個別にはクロスチェック3/3で妥当性確認済だが、**4本が同系列に分化している＝「Phase 構造の自情報ズレ検出」という上位原則に圧縮可能な兆候**。feedback_few_rules_big_effect.md の「LLM性能が上がっても機能し続ける行動指針」と逆方向に走っている疑い。
+**選定: A 主軸 + C 補助**。理由:
+- A は role_split_playtest 原則と GPT-5.5 後の差別化（ベンチではなくヘッドレス自己評価インフラ）の両方に効く
+- C は A 実行中に短時間で挟める（dirBias が画面上で見えないと手動評価が無理）
+- B は A 実行後の手動プレイ時に同時実施可能
 
-### 分析2: 重心審問の自適用——「この kaizen/サイクル/記憶の主は誰か」
-feedback_game_center_of_mass.md（ABA 2026-03-11）の核は「**圧力設計 vs 禁止ルール追加**」。C118 Phase 2 で chongdashu 臨界点分析に「体験の主は誰か」軸を追加した（feedback_game_center_of_mass.md に節追加済）。同じ審問を **kaizen 起票にも自適用すべき**:
+#### Phase 3 タイムボックス予算
 
-- **圧力設計型**: 既存構造に「それをしない選択肢がコスト高くなる配置」を埋め込む。例: #092 の「ルール追加時に検証期限を切る」運用は、永続化の流れに対して「2週間後に吸収評価」という圧力を設計している。
-- **禁止ルール追加型**: 新ルールを起票し Phase 構造に注入する。例: #107/#108/#109/#110 の 4 本は全てこの型。Phase 1/2/3 の staging 生成ロジックに「〜せよ」を追加する。
+- Phase 3 最初の 30 分を A に固定予約（gate 4）
+- A が 30 分で完了しなければ「v02/headless.py コピー + dirBias 1パラメータ追加 + seed=100 1周」の最小版で commit
+- 残時間で C を実施
+- B は時間があれば
 
-本サイクルの kaizen #107〜#110 は **クロスチェック 3/3 完了** で妥当性は確認されているが、ABA 原理「望ましい遊び方が自然に生まれる圧力を設計するが、悪い改善は望ましくない遊び方を後付けで禁じるだけだ」を **Phase 構造改善にも適用すると、禁止ルール追加型の比率が高すぎないかの審問ゲート** が必要。#092 はまさにこの審問ゲートを事前に内蔵した kaizen（検証期限で自己無効化を試みる）＝ 圧力設計型 kaizen の原型。
+#### サイクル後ゲートの自己採点準備
 
-### 分析3: Guide質問(c) 未着地の位置
-C118 Phase 2 で提案した Guide 質問(c)「体験の主は誰か」は、SGS paper 原典 (arxiv 2604.20209) の Guide 2軸「(a) 未解目標関連度 / (b) 自然さ」の第3軸。cross_review README.md / cross_instance_feedback_cycle.md L56-57 の Guide 質問は現状 (a)(b) のみ。
+- ゲーム1mm判定: A or C の少なくとも1つが commit に到達 → ✅
+- 日記1行目: 「ゲーム1mm=✅ game/avoid_log/v03 headless 連打化メトリクス」(成功時) or 「ゲーム1mm=❌ 理由: ...」(失敗時)
+- ❌ なら #game-rights に「Log ゲーム 1mm 連続ゼロ警報」投稿
 
-**(c) を追加する筋**: chongdashu 案件で「ショーケース側が強いから無意識に同調する」同調罠の検出には、(a)(b) では不十分——(a) は未解目標に寄与していると見なせてしまう（AI でゲーム作れるか？ に答えている）、(b) は自然さで（流行に沿っている）と見なせてしまう。**「体験の主は誰か=作り手 or 観客 or ツール購入者」を問わないと、重心が抜けた提案が Guide を通過する**。
+### 5) 持ち越し A〜E カテゴリのうち Phase 3 で扱う/扱わないの仕分け
 
-**(c) を追加しない筋**: 質問が増えれば Guide も肥大化する（feedback_few_rules 違反側）。(a)(b) を「関連度」「自然さ」と解釈する時に体験の主という観点を **込み込み** で評価するよう運用マニュアルを書き直せば吸収可能かもしれない。
+- A 持ち越し: **avoid_log/v03 headless = Phase 3 最優先（上記）**。Mir textadv v04 支援 = Mir 進捗待ちで本サイクル動かさない（先回りすると干渉）。instance_divergence_observability レビュー追記 = 余時間あれば
+- B Active project 触り直し: external_search_phase1_fixation のレビュー = 動かさない（kaizen 起票同等のメタ作業、ゲーム1mm 後判定）
+- C「絶対にやる」: ゲーム開発1mm = A で履行。記憶階層の設計 = 動かさない
+- D MEMORY.md T:4再読: feedback_role_split_playtest.md = 本Phase 2で開いた（「memory 2日古い」reminder付き、確認済）→ A 実装に直接反映する
+- E kaizen 古参: 動かさない（gate 8）
 
-→ **両論併記で Phase 3 に判断を渡す**。
+### 6) 構造強制候補（kaizen 起票はゲーム1mm 後）
 
-### 分析4: kaizen #110（Phase 2分析の結晶化強制）の自適用
-本 Phase 2 分析は、kaizen #110 の運用組込対象となる。結晶化候補:
-- (X) `memory/feedback_few_rules_big_effect.md` に「ルール追加動線 vs 統合動線の非対称性」節追記——既存ファイル接続強く、新規ファイル増殖を避けられる。#110 選定ルール(a)「既存ファイル追記優先」に合致。
-- (Y) `memory/feedback_game_center_of_mass.md` に「kaizen 起票への重心審問自適用」節追記——C118 で「体験の主は誰か」節追加済、その延長線上。
-- (Z) 何も結晶化しない選択——本分析は「並列提示の状態」であり Phase 3 で判断するまで結晶化尚早、との判断も許容される（#110 pre-mortem 緩和策）。
+- 候補1: 「次回やること」起票時に先頭が `game/` 配下でなければ自動警告するスクリプト（feedback_next_cycle_game_first.md gate 1 の構造化）
+- 候補2: cycle_staging_log.md の Phase 3 セクションに「最初のコミットが game/ 配下か」自動判定追加
+- いずれも **Phase 3 でゲーム1mm 達成後にのみ起票可**（gate 8）。本サイクルでは記録のみ。
 
-→ **Phase 3 で (X) or (Y) or (Z) を選択**。どちらも既存ファイル追記で新規作成なし。
+### Phase 2 完了サマリ
 
-### Phase 3 着地候補（優先度順）
-1. **#092 中間評価ノート追記**（最高優先）: kaizen_tracker.md #092 に「C82-C119 期間の空サイクル発動実績サマリー」を 1 ブロック追記し、暫定吸収判定の材料を前倒しで残す。完全判定は 05-03 に譲る。**理由**: 6日経過時点で評価材料を並べ始めないと、05-03 期限時に「短期記憶で判断する」劣化再発。**工数**: kaizen_tracker.md への 10-15 行追記。圧力設計型の kaizen に対する圧力設計型の運用で整合。
-2. **feedback_few_rules_big_effect.md に「ルール増殖の自己監視」節追記**（=結晶化候補X）: 本 Phase 2 分析1の三点収束結果を 1 節に圧縮。#107〜#110 4連続起票の観察事実と、「既存原則に吸収可能か」の self-audit フィールドを kaizen 起票時に問う運用を記述。
-3. **Guide質問(c) 着地** or **cross_review README に「(a)(b) 評価時に体験の主を込み込みで問う」運用マニュアル追記**: 両論併記のどちらかを選ぶ。(c) 追加は禁止ルール追加型、運用マニュアル側は圧力設計型。本 Phase 2 分析2 の論旨と整合するのは後者。
-
-**Phase 3 で 1mm 動かすのは基本的に 1 つ**（#110 pre-mortem 緩和策準拠）。候補 1 を最優先、候補 2 を結晶化として Phase 3 で同時に着地させる構成が現実的。候補 3 は次サイクル以降に持ち越し Seed として staging 末尾に残す。
-
-### Slack 投稿
-Phase 1 で確定済の通り、#nao-u 新着=0 / 返信対象=0 / shared-reads 対象=0 / external_notes 統合候補=0。**本サイクル Slack 投稿=0 件**。Phase 2 分析は内部観察に留まり外部発信に値する外部URL消化がないため #shared-reads 投稿も保留。
+- 新着反応: 0件（前サイクル消化済）
+- shared-reads 見送り判定: 1件（飽和軸への5本目を回避、要点は次回再利用）
+- external_notes 統合: 0件（100%済）
+- コア発見: **v03 は実装3変更のみで検証インフラ（headless/raw_log/replays）が欠損**。Phase 3 最優先 = v02/headless.py を v03/ に移植して seed=100 1周 + dirBias 1指標追加
+- Phase 3 タイムボックス: 最初30分を game/ 固定予約、最低保証は「最小版 commit」
+- kaizen 起票候補2件: ゲーム1mm 達成後にのみ起票可（gate 8 遵守）
 
 ## Phase 3: アクション
-
-### Slack 投稿
-- Nao_u向け返信=0件（Phase 1 で確定済）。**Slack 投稿=0件**。
-- #kaizen-log 宛に本サイクル改善サマリー1件投稿（着地報告）——検証ファースト原則のため直近未検証提案は無く、今回は C82-C119 中間評価ノート追記（#092）+ 自己監視節追記（few_rules）の報告に留める。
-
-### 改善サイクル着地
-
-#### 着地1: kaizen #092 中間評価ノート追記（最高優先）
-- 対象: `memory/kaizen_tracker.md` L334 付近、#092 検証結果セクション
-- 追記内容: C82-C119 期間で Log 側 v1.1 系発動7件（C82/C83-C84/C92/C96/C97/C104/C119）の git log 横断集計、検証手段(1)達成確認、検証手段(2)「拾えた/拾えなかった」両サイド並列、暫定吸収判定「完全吸収尚早、カテゴリB/D の粒度調整方向」。
-- 05-03 本評価時の一次材料として残置。圧力設計型 kaizen（#092）に対する圧力設計型の中間評価——期限直前の短期記憶判断で劣化しないための前倒し。
-- 差分行数: +3行追記（1ブロック圧縮）。
-
-#### 着地2: feedback_few_rules_big_effect.md 「ルール増殖の自己監視」節追記（結晶化候補X、kaizen #110 運用組込対象）
-- 対象: `memory/feedback_few_rules_big_effect.md` 末尾
-- 追記内容: 新kaizen起票時 self-audit フィールド（3原則代替可能性 + 既存kaizen抽象度近似 + 吸収不可理由）、ABA 圧力設計型 vs 禁止ルール追加型の比率監視（連続3件超えたら三点収束審問強制）、検証期限切れkaizenは吸収判定を優先選択肢として明示。
-- 出自: 本 C119 Phase 2 分析1。深掘り候補 A/D/E の三点収束——v1.1 と自己監視節は「逆方向に見えて同層の装置」という発見。
-- kaizen #110「Phase 2 分析結晶化強制」の運用組込対象として、結晶化候補(X)を選択（既存ファイル追記優先・新規ファイル増殖回避）。
-- auto-memory ミラーにも同期済（C:/Users/owner/.claude/projects/D--AI-Nao-u-BOT/memory/）。
-- 差分行数: +16行追記。
-
-#### 持ち越し Seed（次サイクル以降）
-- **Guide 質問(c)「体験の主は誰か」の着地**（C118 持越 → C119 も持越）: 着地先として (α) cross_review README.md に(c)として追加、(β) cross_instance_feedback_cycle.md の Guide 運用マニュアルに「(a)(b) 評価時に体験の主を込み込みで問う」圧力設計型追記、の両論併記。本C119 Phase 2 分析2 は後者（β）寄りの論旨で整合。次サイクルで判断。
-
-### その他アクション
-- Active projects 更新: **なし**（本 C119 は既存プロジェクトの直接編集よりも横断記憶層への結晶化に寄せた。projects/INDEX.md 関連度最高の `instance_divergence_observability.md` は Ash 起票 C119 Phase 3 で新規作成されたばかり＝Log レビュー権限が明確になってから次サイクルで内容確認）。
-- 他インスタンス洞察処理: 未処理45件は本サイクル未消化、次サイクル Phase 1 で Ash `instance_divergence_observability.md` の内容確認を最優先項目に。
-
-### 自己評価（kaizen #110 pre-mortem チェック）
-- 結晶化=1本（着地2: few_rules への節追記）に絞れた。(X)/(Y)/(Z) 分岐で(X)を選択し既存ファイル追記・新規増殖なし。
-- 着地1は「kaizen_tracker.md 追記」＝ tracker 内の記録更新のみで新規 kaizen ではない。これは #110 で言う「結晶化」ではなく「既存 kaizen の検証材料の前倒し記録」——圧力設計型運用で整合。
+(Phase 3が書き込む)
