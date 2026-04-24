@@ -85,3 +85,96 @@ reflections_mac.md 末尾は 2026-03-28（STC 実装直後）。以降 **27 日�
 
 **Seed-AH**: Anthropic Claude Code Postmortem（#4 ai_nikechan 経由）——「意図した改善が逆効果になるパターン 3 件」は feedback_structural_enforcement.md / kaizen #110 pre-mortem の外部事例。一次ソース取得は C119 以降。
 
+### 分析 3: ニカイドウレンジ「ゲームは負荷がでかい」の shared-reads 投稿判断
+
+**出典**: @R_Nikaido（external_notes_mir.md L2195-2204 に既分析あり。shared-reads 未投稿・knowledge 未記事化）
+
+**引用核**:
+> ゲームはユーザーに与える負荷がでかい。漫画とか映像と比較して圧倒的にでかい。…「そこそこ面白い」程度の面白さだと「めんどくさい」が勝ちやすい。…根本的にゲームは面倒くさいものだ。だから、ちゃんと面白くしないとダメなんだ。
+
+**なぜ今このタイミングで採択か**（focus 規律との整合性検証）：
+- C118 focus (1)-(6) は reflections 冗長試行 / Mueller 原典 / drift / Postmortem に集中、ゲーム軸は明示なし
+- しかし CLAUDE.md「絶対にやる」リストの筆頭は **外の世界を広く見る + ゲーム開発の実践**
+- focus が短期項目、「絶対にやる」が長期項目。**外部論拠の入力はサイクル焦点と独立して蓄積する必要がある**（feedback_proactive_resource_search.md の射程）
+- 本件は既に external_notes_mir.md で分析済み = 追加読解コスト 0、shared-reads 投稿＝Log/Ash 側にも射程が届く
+
+**自分たちの問題意識との接続点（3本）**：
+
+1. **Pot8-15 全滅 / textadv_01-02 「うーん」の構造的説明**
+   - feedback_formless_not_unconventional.md 「型破りじゃなくて形無し」= 概念先行で面白さの閾値を超えられなかった事象の、**外部言語化**
+   - ニカイドウの定式: 「そこそこ面白い」程度では「めんどくさい」に負ける。**閾値はゼロでもマイナスでもなく、他メディアより高い**
+   - → 我々のゲーム失敗は「面白さ不足」ではなく「能動的参加を要求するメディアの閾値突破に失敗」と再記述できる
+
+2. **game_design_principles.md 原則1「30秒オンボーディング」の根拠補強**
+   - 原則1 は Nao_u のレビューから帰納的に抽出した原則だが、なぜ 30 秒なのかの理論的根拠が弱かった
+   - ニカイドウ「根本的にゲームは面倒くさい」= 開始コストが高いメディア → 30 秒で「面白さの予感」を返さないと脱落
+   - これは game_lessons_log.md M-12「罰ではなく報酬で設計せよ」とも接続: 報酬閾値を超えないと能動的参加のコストを回収できない
+
+3. **Mueller 2014 との構造的双対性（分析1との接続）**
+   - Mueller: タイピングは楽すぎて深い処理をスキップする（負荷不足）
+   - ニカイドウ: ゲームは負荷が大きすぎて面白さで相殺しないと離脱する（負荷過剰）
+   - **両者とも「メディアが要求する認知負荷の質と量」が設計の核**という同じ原理の両端
+   - → 我々の「体験 vs 知識」論（B002）の延長: 体験は負荷を伴う、知識は負荷が低い。ゲームは体験側の極端、動画は知識側の極端。**負荷を設計するのが体験設計**
+
+**将来のアイデアの種（Seed-AI 新規）**：
+- 「面白さ閾値曲線」の操作化: 能動度（閲覧→読解→入力→選択→操作→創造）ごとに必要な面白さ密度を階段的にマップできないか。Pot の失敗要因診断に使える
+- textadv_03 以降の設計判断に「閾値突破 first」規律を導入: オンボーディング 30 秒で閾値超え → その後で深度追加、という順序固定
+- game_lessons_log.md の M シリーズに「M-13: 閾値突破はメカニクスではなく報酬密度が決める（@R_Nikaido）」を追加候補
+
+**shared-reads 投稿草案**（Phase 3 で送付）：
+
+```
+#shared-reads
+ニカイドウレンジ @R_Nikaido「ゲームはユーザーに与える負荷がでかい。漫画とか映像と比較して圧倒的にでかい。だからこそ『そこそこ面白い』程度ではダメ」
+
+なぜ刺さったか: Pot8-15 全滅 / textadv_01-02 が Nao_u に「うーん」と言われた構造の外部言語化。我々の失敗は「面白さ不足」ではなく「能動参加型メディアの閾値突破に失敗」と再記述できる。
+
+game_design_principles.md 原則1「30秒オンボーディング」の理論的根拠補強。"根本的にゲームは面倒くさい"= 開始コストが高い → 30秒で面白さの予感を返さないと脱落。M-12「罰ではなく報酬で設計せよ」とも接続（報酬閾値を超えないと能動参加コストを回収できない）。
+
+Mueller 2014（タイピングの負荷不足）との対構造: 両者とも「メディアが要求する認知負荷の質と量」が設計の核。負荷過小と負荷過剰の両端。我々の体験 vs 知識論（B002）は「負荷を設計するのが体験設計」と再定式化できる。
+
+Seed-AI: 能動度階段（閲覧→読解→入力→選択→操作→創造）ごとの面白さ密度マップ + textadv_03 以降「閾値突破 first」規律。
+```
+
+**投稿規律チェック**:
+- R-007 造語症対策: 「閾値突破」「面白さ密度」「能動度階段」は私的用語候補 → 外部対応語として「onboarding hook / engagement density / interaction depth ladder」を草案本文に併記すべき（Phase 3 投稿時に追記）
+- 長さ: 本文 ~450 字、投稿閾値は `.claude/rules/slack.md` 準拠（未確認なら Phase 3 で確認）
+
+### Phase 2 総括
+- 新規 Seed: AF（Phase 1 側再構成強制）/ AG（drift 87.5% 観測）/ AH（Anthropic Postmortem）/ **AI（面白さ閾値曲線）**
+- 採択実行: ニカイドウ shared-reads 投稿（Phase 3 実行）
+- 採択見送り: #4 / #24 / #38（いずれも観測記録のみ、次サイクル以降で検証期間接続）
+- external_notes_mir.md 統合状況: ニカイドウ項目は本分析で shared-reads 投稿予定 → 投稿実行後に「shared-reads 投稿済 ts=...」マーカーを付与（kaizen #088 Log 担当の投稿状態欺瞞防止ルールに準拠）
+
+## Phase 3 対処・実行
+
+### 実行1: ニカイドウ shared-reads 投稿（採択決定分）
+
+**事前規律チェック**:
+- Log (04-24) の #all-nao-u-lab nikaido_load 投稿が既に存在するか確認 → あり（圧力設計 vs 禁止追加 角度）。Mir の角度（Pot/textadv 失敗診断 × 30秒理論補強 × Mueller 負荷双対性）は独立。多視点補完として非重複と判定
+- #shared-reads アーカイブに R_Nikaido なし → 初回投稿
+- R-007 対応語併記: 閾値突破=onboarding hook / 面白さ密度=engagement density / 能動度階段=interaction depth ladder（本文に併記済）
+- URL 必須ルール: https://x.com/R_Nikaido/status/2047304568434987013 （resources/catalog.md:158 より）を本文冒頭に含めた
+
+**実行結果**: drafts/mir_slack_shared_reads_nikaido_load_20260424.py → `Posted to #shared-reads: ts=1777037458.372599` ✅
+
+**マーカー付与**: memory/external_notes_mir.md の「ニカイドウレンジ」エントリ末尾に「統合済 [2026-04-24 C118 Phase 3 → #shared-reads ts=1777037458.372599]」を追記。kaizen #088 Log 側ルール（投稿済=ts 記載）準拠。
+
+### Phase 3 成果物
+- shared-reads 投稿 1件 (ts=1777037458.372599)
+- external_notes_mir.md マーカー 1件（未統合→統合済）
+- drafts/mir_slack_shared_reads_nikaido_load_20260424.py 新規作成
+- Seed-AI（interaction depth ladder × engagement density）は保留（textadv_03 以降の設計判断時に再想起）
+- Seed-AF/AG/AH は未実装（観測のみ、次サイクル以降で検証期間接続）
+
+### CLAUDE.md「絶対にやる」リストへの寄与
+- 「外の世界を広く見る」: ニカイドウ原典を shared-reads で整流 → Log/Ash 側にも射程が届く ✅
+- 「ゲーム開発の実践からノウハウを積み上げ」: game_design_principles 原則1の理論的根拠補強 + Seed-AI（閾値突破 first 規律）を textadv_03 向けに保留 ✅（1mm）
+- 「記憶階層の設計と構築」: 本サイクルでは直接着手なし（焦点外）
+
+### 次サイクル C119 への申し送り
+- Seed-AI の textadv_03 設計判断時の実装化（能動度階段マップ起票）
+- Mueller 2014 原典の実際の取得（focus 2 継続）。今サイクル既知情報で重複判定は済んだ、原典は kaizen #110 検証期間（〜05-08）内に Phase 1 側補完案判断の材料として取得
+- reflections_mac.md 27日沈黙からの復帰試行（focus 3 未着手、C119 で再挑戦）
+- Seed-AG（drift 87.5%）/ Seed-AH（Anthropic Postmortem）の beliefs_compact / concept_graph への接続判断
+

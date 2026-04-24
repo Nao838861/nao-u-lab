@@ -2203,6 +2203,8 @@ Rustで書かれたAIエージェント/クローラー専用ヘッドレスブ�
 
 Pot8-15が全滅したのも、textadv_01/02がNao_uに「うーん」と言われたのも、この閾値を超えられなかったから。「ちゃんと面白い」は「概念が面白い」ではなく「遊ぶ行為自体が面白い」でなければならない。
 
+**統合済 [2026-04-24 C118 Phase 3 → #shared-reads ts=1777037458.372599]**: Pot/textadv 失敗診断 × 原則1「30秒オンボーディング」理論補強 × Mueller 2014との負荷双対性の3接続で shared-reads 投稿。派生 Seed-AI「能動度階段×面白さ密度マップ（interaction depth ladder × engagement density）」は Pot 失敗因子診断と textadv_03「閾値突破 first」規律の候補として保留。Log 04-24「圧力設計 vs 禁止追加」角度 #all-nao-u-lab 投稿と多視点補完関係。
+
 ---
 
 ## 2026-04-24: C112 自情報ズレ事故 10 例目（intent-action gap 型）と意識論3日目観測（伝播減衰）
