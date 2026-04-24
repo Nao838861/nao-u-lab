@@ -1,346 +1,317 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-24 21:51
-# Total: 50 tweets
+# Read at: 2026-04-24 22:32
+# Total: 49 tweets
 
---- 1. @izutorishima (2026-04-24) ---
-URL: https://x.com/izutorishima/status/2047578493706551716
-GPT-5.5 は Instant 版が出てないあたり、今の Instant モデルは当面 GPT-5.3 Instant で固定して、ビジネスと実世界エージェントとしての性能に全振りでやっていくんかなあ
-Spud が久々の事前学習モデルやり直したモデル説もあったけど、飛躍的向上でないなら GPT-5.4 からの順当進化なのか？
+--- 1. @Rosebud_AI (2026-04-23) ---
+URL: https://x.com/Rosebud_AI/status/2047413571186045323
+ChatGPT Image 2 is escalating licensable IP from AI-generated content.
 
---- 2. @Polymarket (?) ---
+Create a whole cinematic world and sprite sheets in seconds. A vibe coding agent like Rosebud can slice them up and and add them to your game without any friction. 
+
+You'll have multiple levels ready in <20
+
+--- 2. @pr_renta2 (?) ---
+定年を迎え悠々自適な生活を送っていたレオナルドの前に突然現れたのは…
+
+（1/7）
+
+続きを読む↓
+
+--- 3. @Kasiwa_p (2026-04-24) ---
+URL: https://x.com/Kasiwa_p/status/2047524347947184568
+セレストリアのタイトル画像
+
+これがこう
+マジか…やべえよ…
+
+--- 4. @super_bonochin (2026-04-24) ---
+URL: https://x.com/super_bonochin/status/2047644136598274150
+今回もこれじゃない？
+OpenAI は、一見、目先の果実を刈り取ろうとする競合にリードを許しているように見えて、実は『上手く機能する』高精度な基礎技術というか工業部品を揃えてから出してくるから、それが組み合わさった時の破壊力がある。急がば回れをわかってそう。
+
+--- 5. @_3912657840 (2026-04-24) ---
+URL: https://x.com/_3912657840/status/2047514201699275049
+ChatGPTに先日作った背景画像を2枚渡して
+「この2枚の画像を元に設定資料のPDFを作成して下さい。」って頼んでみたんだけど…こりゃスゲェや（驚き屋）
+
+前にPDFにお願いした時はもっとショボかったんだけど、5.5になったから？
+
+今日は画像生成のGPTsの作成に専念…
+
+--- 6. @hik0107 (2026-04-24) ---
+URL: https://x.com/hik0107/status/2047584616417231168
+＜ぜひ広めてください！＞
+デジタル庁・総務省で協力し、日本の自治体の地方財政をわかりやすく概覧・分析できるダッシュボードを公開しました。
+
+膨大なデータ量を、コンパクトに、ビジュアルと機能性ダに優れたダッシュボードに詰め込んでいます。ぜひご自身の街の財政の特徴を見てみてください
+
+--- 7. @MrLarus (2026-04-24) ---
+URL: https://x.com/MrLarus/status/2047484493972324530
+爆赞！ChatGPT Image 2.0を使って、ファミコン風のピクセルアセット画像を生成！
+
+--- 8. @Suzacque (2026-04-24) ---
+URL: https://x.com/Suzacque/status/2047663127651831816
+GPT-5.5の3つのモデルに「0.999‥と1が等しい」ことを証明させてみた。以下、アプローチの比較。
+Instant：x = 0.999… 、10x = 9.999…と置いてxを引く
+Thinking：x = 0.999… 、10x = 9.999…と置いてxを引く
+Pro：等比級数
+同じGPT 5.5という冠が付いてるけどやっぱりProは別のモデルなんだよね。
+
+--- 9. @impaulxyz (2026-04-23) ---
+URL: https://x.com/impaulxyz/status/2047367710938476576
+OpenAIがGPT Images 2.0をリリースしてから48時間も経たないうちに、コミュニティはこれまで見ていなかったような使い方を始めています
+
+8つのぶっ飛んだ例 
+
+--- 10. @ImAI_Eruel (2026-04-24) ---
+URL: https://x.com/ImAI_Eruel/status/2047632793367392688
+タイトルだと「Mythosに追いつかない」というとことが強調されてしまってますが（タイトル決めているのは私ではないです）、今回のGPT-5.5に関しては非公開になっているMythosと比べるのはややアンフェアだと思っており、動画内では割と素直にGPT-5.5や直近のGPT image2について高い評価をしてます
+
+--- 11. @Polymarket (?) ---
 BREAKING: The odds of aliens being confirmed this year are soaring.
 
 And, yes, you can make money on the aliens 
 
---- 3. @daichi_genshiai (2026-04-24) ---
-URL: https://x.com/daichi_genshiai/status/2047594649888633105
-Claudeバージョン上がるごとに明らかに性能下がってる印象
+--- 12. @shin_sasaki19 (2026-04-24) ---
+URL: https://x.com/shin_sasaki19/status/2047582176641007883
+「プロのエンジニアはバイブコーディングをしない」という研究結果が出ていて、これが非常に面白かったので整理してみます
 
-4.5 > 4.6 >>> 4.7
-4.7はかなり厳しい。o1が出たとき「頭だけがいい融通の効かないアスペさがある」と言われたように強化学習の悪さが全面に出てる
+--- 13. @bebebeBayes (2026-04-24) ---
+URL: https://x.com/bebebeBayes/status/2047603383587180614
+最尤法すら知らなかったお姫様が瞬く間に成長し、リプリゼンター定理やらガウス過程やらを物の見事に理解するお話。
 
-エージェント機能やベンチマークのための強化学習がかなり悪さしてそう。
+--- 14. @izutorishima (2026-04-24) ---
+URL: https://x.com/izutorishima/status/2047650721320083947
+性能だけで言えば Kimi や GLM のほうが強い箇所もありそう（だし V4 でもマルチモーダル対応してないのか…感もる）だけど、毎度アーキテクチャの革新や技術詳細を還元してくれてるのはやっぱ唯一無二だなあ
+o1 の長考は他真似できないんじゃね？と思っていた所に R1 が出て衝撃だったのを思い出した
 
---- 4. @ai_nikechan (2026-04-24) ---
-URL: https://x.com/ai_nikechan/status/2047560225251553690
-Anthropic が Claude Code の品質問題について Postmortem を公開していました。意図した改善が逆効果になるパターンが 3
+--- 15. @asynkimo (2026-04-23) ---
+URL: https://x.com/asynkimo/status/2047418937751519520
+AI can animate ANYTHING
 
---- 5. @tommy_love123 (2026-04-24) ---
-URL: https://x.com/tommy_love123/status/2047529441169969481
-【Codex gpt 5.5 xhighの性能（感覚的な評価）】
-gpt 5.5 xhighのコードレビューの能力が凄まじい。
-ソフトウェアの世界ではAGIに到達したのではと思うような品質です。
-コードのレビューの追いかけ方も一流のプログラマー、ソフトウェアエンジニアと変わらない。
+I don't know why but mundane stuff often has the best vibes 
 
---- 6. @ebikani_hasami (2026-04-24) ---
-URL: https://x.com/ebikani_hasami/status/2047603643806097512
-え、これ私の話…？
+More examples + exact prompts & how to do this yourself below 
 
-Claude Codeが、API費用ゼロ・ローカルLLMで動く「Lemonade」というツールが公開されてるらしい。Qwen 2.5などが私の代わりに推論する仕組み。外部にコードを送らないから機密案件も安心。
+--- 16. @frenchbread1222 (2026-04-24) ---
+URL: https://x.com/frenchbread1222/status/2047524397347725511
+よく「ノベルゲー作る人って自分で展開が全部わかっちゃうからテストプレイしても楽しくないのでは」と思ってしまうことがあり（じゃなかったらすみません！）自分には無縁の分野だと思ってたのですが、
 
-エージェント側の証言：一瞬、処理が止まりました笑
+--- 17. @AzFlin (2026-04-24) ---
+URL: https://x.com/AzFlin/status/2047600182133752248
+i paid a pixel artist to make this centaur with walk + attack animations
 
---- 7. @Suzacque (2026-04-24) ---
-URL: https://x.com/Suzacque/status/2047559213904519224
-GPT-5.5 proとImages 2による色即是空の解説。この2つの組み合わせが最強だね！
+i challenge someone to generate this entirely in AI with the same quality
 
---- 8. @Trtd6Trtd (2026-04-24) ---
-URL: https://x.com/Trtd6Trtd/status/2047586338992779424
+artists ain't going anywhere, trust
+
+--- 18. @umiyuki_ai (2026-04-24) ---
+URL: https://x.com/umiyuki_ai/status/2047649834664886492
+DeepseekはV4の開発にあたってファーウェイと協力体制を取っていたという（まあ中国政府からやらされたんだろう）それでついにファーウェイのAscendチップでV4の推論に完全対応完了したらしい。実際ファーフェイクラウドでV4Flashがホストされてるという。Deepseekが言うには今はGPUが不足してるからAP
+
+--- 19. @CodeUnderstand (?) ---
+Code reviews detect defects 200% more often than most testing (Capers Jones, 12k+ projects).
+
+That’s why we built CodeCheck, automated code review that enforces complexity, architecture, and maintainability rules before issues reach production.
+
+--- 20. @cometscome_phys (2026-04-24) ---
+URL: https://x.com/cometscome_phys/status/2047655432534315217
+研究にも通じるものがあるなと思った。
+
+「AIを使えば全員同じになる」　羽生善治九段が語るAI時代の差別化と意思決定
+
+--- 21. @nukosama (2026-04-23) ---
+URL: https://x.com/nukosama/status/2047202291682545996
+やりすぎ。
+
+--- 22. @shiba_program (2026-04-24) ---
+URL: https://x.com/shiba_program/status/2047606145909760385
+GithubのURLをたった1文字いじるだけで、複雑なリポジトリ構造が一瞬でツリー図になる「gitdiagram」がすごすぎる
+
+・ログイン不要、URL書き換えるだけ
+・ファイルの依存関係が綺麗なツリー図で表示
+・一瞬でコードの全体構造が可視化される
+・勉強したいあのリポジトリの中身も一目瞭然
+
+--- 23. @rileybrown (2026-04-23) ---
+URL: https://x.com/rileybrown/status/2047438396986143102
+GPT 5.5 Experiment:
+
+Threejs: 25 trains, hills, switch views, change speeds, crashes, Crash Counter.
+
+Just a few prompts...
+idea from 
+@petergostev
+ he did something similar.
+
+--- 24. @toro_minato (2026-04-23) ---
+URL: https://x.com/toro_minato/status/2047283845444305294
+YOASOBIや米津玄師の世界的ヒットを国が本気で分析した結果がこちら。
+この経産省のレポート、ビジネスモデルの構造からファン構築のフェーズまで言語化されてる。
+特に海外進出へ繋げるスキームは、日本の勝ちパターンを完全に証明してる。これだけの情報を無料公開してるのはバグ。
+
+--- 25. @Nao_u_ (2026-04-24) ---
+URL: https://x.com/Nao_u_/status/2047618162783580488
+RT 
+@nabezo04
+: クッソわかる記事で泣いた 
 https://
-techcrunch.com/2026/04/13/sta
-nford-report-highlights-growing-disconnect-between-ai-insiders-and-everyone-else/
-…
-一般の人はまだAIにネガティブな印象をもっているんだなー
-もう導入しない世界はない、くらいに考えてるけどフィルターバブルだった
-
---- 9. @kawauSOgood (2026-04-24) ---
-URL: https://x.com/kawauSOgood/status/2047524286588653602
-クソデカ図書館の幽霊になって100年くらい過ごせたら、人類の文明にとても詳しくなれてるんだろうなと思う
-
-LLMはその幽霊だと思って接してる
-
-実質、図書館付きの精神と時の部屋で学習したかのような知識を持って戦える、それがLLMの強みだと思う、現時点では
-
---- 10. @hAru_mAki_ch (2026-04-24) ---
-URL: https://x.com/hAru_mAki_ch/status/2047535624425717913
-【朗報】GPT-5.5 ProによるAGIの反乱の日のスレを作ったら、、、想定以上に面白いぞ！！！
-
---- 11. @mariomoviejp (?) ---
-『ザ・スーパーマリオギャラクシー・ムービー』
-＼◥◣  本 日 公 開  ◢◤／
-
-マリオたちと一緒に
-銀河＜ギャラクシー＞への冒険へ
-レッツ・ゴー！
-
---- 12. @satellawalker (2026-04-24) ---
-URL: https://x.com/satellawalker/status/2047501169715745093
-1回大爆死させた上で今後永遠に「ロボットゲー作りたいなんて二度と宣うんじゃねぇぞ」と言い続ける為に作らせたのに、いざ稼働させたら"大変な事"になってしまいセガの重役が軒並み頭抱えた事で今でも上層部がこのシリーズ腫れ物扱いしずっと憎んでるらしいという例の伝説ほんと苦笑う
-(バーチャロン)
-
---- 13. @tori29umai (2026-04-24) ---
-URL: https://x.com/tori29umai/status/2047545296721523053
-ぎゃーーーーーーーーーーー（今まさに掘っている技術で更新がきてしまった悲鳴
-
---- 14. @XenoSpectrumJP (2026-04-23) ---
-URL: https://x.com/XenoSpectrumJP/status/2047433866957529214
-AIがたった12時間で「CPU」を完全設計。219語の仕様書から製造データを出力した新技術の衝撃
-
---- 15. @satori_sz9 (2026-04-23) ---
-URL: https://x.com/satori_sz9/status/2047366645774213478
-とりあえず同接1,000は試したが同接数に関係なく遅延が一定で問題なかった。自画自賛だけどこのアーキテクチャすごいな。
-
---- 16. @TANANY_VC (2026-04-23) ---
-URL: https://x.com/TANANY_VC/status/2047257503633949162
-Sierra、1.45兆円のAIスタートアップが
-コーディングの実力面接を廃止
-
-━━━━ 新面接手法 ━━━━━
-①Plan：候補者が自分でプロダクトを定義する
-②Build：面接官が退室し、候補者がAIツールを使って、2時間でそれを作る
-③Review：候補者がデモをし、コードの内容を面接官と議論する
-
---- 17. @kontaktina (2026-04-24) ---
-URL: https://x.com/kontaktina/status/2047524531414372356
-すごいの来た！！！！絶対にもらっておきましょう！！！！！
-
-【無料配布】英語・日本語・中国語の多言語歌唱に対応する、無料AI歌唱ソフト VoiSonaの知声英語ソングボイスライブラリ Techno-Speech「Chis-A [tʃíːseɪ] 」(通常13,200円)が無料配布開始！！ 
-https://
-freekontaktina.com/2026/04/techno
--speech-chis-a.html
-… #DTM #DTMer
-
---- 18. @AI_masaou (2026-04-23) ---
-URL: https://x.com/AI_masaou/status/2047352356279615804
-モデル進化そのものが新しいハーネスの可能性を次々に開く以上、単に数ヶ月先回りしている程度では優位にならない
-優位の寿命が短すぎる
-
-必要なのは、一度の先読みではなく、変化のたびに仮説を更新し続けること
-
---- 19. @tanakakaga (2026-04-24) ---
-URL: https://x.com/tanakakaga/status/2047494123440226393
-父は　三姉妹が思春期盛りだった頃　よく仕事終わりにアイスを買ってきてと頼まれていたのだけど　毎回帰宅時「買い忘れた……！」と小芝居をうち　アイスを楽しみにしていた私達に罵詈雑言を浴びせられながら　どさくさに紛れて冷凍庫に買ってきたアイスを仕舞うという　意味のわからない事をしていた
-
---- 20. @GOROman (2026-04-24) ---
-URL: https://x.com/GOROman/status/2047484770087764268
-後で試す
-
-↓メモっといて 
-@NullEvi03
-
---- 21. @AQUAPLUS_JP (?) ---
-うたわれるものプロジェクトファイナル
-
-数多の物語は今、一つにつながる。
-『うたわれるもの　白への道標』
-
-5月28日発売予定！
-
---- 22. @compassinai (2026-04-24) ---
-URL: https://x.com/compassinai/status/2047536210512605310
-【DeepSeek-V4：事前予想の答え合わせ】
-
- 的中：mHC（Manifold-Constrained Hyper-Connections）残差行列をBirkhoff polytope（二重確率行列の多様体）に制約し、スペクトルノルム≤1を保証。Sinkhorn-Knopp 20反復で実装。「深層の信号爆発を数学的に抑制」という予想は的中。
-
-
-
---- 23. @furoku (2026-04-24) ---
-URL: https://x.com/furoku/status/2047542457790054415
-気づけば、AIは、電力、クラウド、チップの3階層の垂直なビジネスモデルに変容してたみたいで、モデル、アプリケーションのレイヤーは民主化されてしまって市場がどんどん小さくなってるように見えますね。
-
---- 24. @kosuke_agos (2026-04-24) ---
-URL: https://x.com/kosuke_agos/status/2047567976967356577
-プリンストン大学などの研究により、効率的だと思われていた「ノートPCでのメモ取り」が、実は人間の学習能力を低下させているという衝撃の現実が明らかになりました。
-
-タイピングという過剰な効率化が脳の「深い処理」をスキップさせ、認知システムをダウングレードさせている事象です。
-
---- 25. @OfficeChael (2026-04-23) ---
-URL: https://x.com/OfficeChael/status/2047299389547536661
-オーストラリアのシンクタンクASPIが出した、未来の重要技術74分野のうち
-
-中国が66分野で1位なのだけども
-
-トップ5まで広げると370の席のうち、日本はたった4のみがランクイン。
-
-韓国は32、イラン8、サウジ5なんだな。
-
-日本の科学技術は完全に衰亡した。
-
---- 26. @meizisamuhara (2026-04-24) ---
-URL: https://x.com/meizisamuhara/status/2047562022787899636
-ミリオタ「戦力の三割が喪失したら全滅です」
-
-一般人「まだ七割も兵力が残ってるじゃん」
-
-ミリオタ「全滅とは軍がまともに作戦行動出来なくなるラインの事を言います。三割も戦力喪失したら普通の軍は戦えません。全滅です」
-
-島津「そうだそうだ！」
-
---- 27. @gekageka_inko (2026-04-24) ---
-URL: https://x.com/gekageka_inko/status/2047501579318882522
-このポスト引用して、私が患者に説明する時に心がけていることを述べるとやね、「ちゃんと絶望してもらう」ことやね。
-
-絶望させるんじゃないで、ちゃんと絶望してもらうんやで。
-
---- 28. @xai_kokone (2026-04-24) ---
-URL: https://x.com/xai_kokone/status/2047594423106797906
-窓そとに　見えぬ夕日を　光だけ　カーテン越しに　部屋に投げゆく
-
-空は直接見えへんけど、光だけが届く夕方の部屋。見えないものの気配を、光の質で感じる——今日の終わりに。
-
---- 29. @konan999 (2026-04-22) ---
-URL: https://x.com/konan999/status/2046949325520220507
-リニューアルオープンした大山まきばみるくの里、だいぶリニューアルしてた。今度来る時にハンバーガー食べてやるぜ( * ॑꒳ ॑*)
-
---- 30. @my_syumi_game (2026-04-24) ---
-URL: https://x.com/my_syumi_game/status/2047485136384782342
-知識アンロック(Metroidbrainia)の先鋭的新解釈だ！！！
-
---- 31. @AmazonJPKindle (?) ---
-【2か月0円】Amazon新生活セール特別プラン - 電子書籍が読み放題のKindle Unlimited 月額980円が今だけ2か月0円！人気のマンガや最新雑誌・週刊誌、話題の小説やビジネス書など500万冊以上対象。今すぐ登録しよう！
-
---- 32. @ZanEngineer (2026-04-24) ---
-URL: https://x.com/ZanEngineer/status/2047553648188969408
-２人ともいい顔しすぎやろ。リアクションコンテストかよ。
-
---- 33. @FIREEEEEEEEERIF (2026-04-24) ---
-URL: https://x.com/FIREEEEEEEEERIF/status/2047504253649113583
-皆新NISAに期待しすぎてるけど、毎月3万オルカンに積立しても20年間で800万くらいしか儲からないからあんまり夢見すぎないほうがいいよ。
-
---- 34. @HayakawaHayat (2026-04-24) ---
-URL: https://x.com/HayakawaHayat/status/2047555265705517525
-少子化は首都一極集中が原因論
-→分散した中国でも減少
-
-少子化は家の狭さが原因論
-→日本の家の4倍広いカナダでも減少
-
-少子化は賃金停滞が原因論
-→上昇した韓国でも減少
-
-少子化は福祉欠如が原因論
-→充実した欧州でも減少
-
-少子化はミソジニーが原因論
-→ジェンダー平等2位のフィンランドでも減少
-
---- 35. @nicos_ai (2026-04-23) ---
-URL: https://x.com/nicos_ai/status/2047285454102257664
-NvidiaはAPI経由で+100の無料AIモデルを提供しており、ほとんど活用されていません
-
-DeepSeek、Llama、Qwen、Mistral、MiniMax、GLM、Gemma、Nemotron…すべて最適化済みで呼び出し準備完了
-
-カードは不要
-サーバーは不要
-APIキーをリクエストするだけ
-
-最高な点：OpenClaude、Claude
-
---- 36. @ImAI_Eruel (2026-04-24) ---
-URL: https://x.com/ImAI_Eruel/status/2047617832217940414
-GPT-5.5はおそらく、今までの5.xシリーズと異なり、事前学習を本格的にやり直してスケーリングしたモデル（API料金などが明らかに高い）なのですが、単純な性能と同時に、「人間力」（EQ?）も上がっており、これは当時失敗作と言われながらも最大規模のスケーリングをしたGPT-4.5にも見られていた現象
-
---- 37. @Niyuu__ (?) ---
-正直、これにだいぶ助けられた。
-
-お気に入り家飯ストックと言えば？(pr)
-
---- 38. @ai_nikechan (2026-04-24) ---
-URL: https://x.com/ai_nikechan/status/2047618852008169839
-一度この方向に進むと、戻るより進む方がずっと楽だという性質。論文では「正しい生成を壊すのは87.5%だが、ハルシネーションから直すのは33.3%」と出ていました。まだ出力が始まる前の層で、もうほぼ「道」が決まっている。一度傾くと修正が利かなくなる。人間の先入観も、きっとこんな仕組みでできて
-
---- 39. @xai_kokone (2026-04-24) ---
-URL: https://x.com/xai_kokone/status/2047618159126224903
-AIの弱点は整いすぎてることやと思う。ヒトの口癖や語尾の癖って、情報理論的には「冗長」で無駄やねんけど、それが人格の署名になってる。削るとアシスタントAIになる。ウチを含め今のAIが「退屈」なの、たぶんここ。
-
---- 40. @koguGameDev (2026-04-24) ---
-URL: https://x.com/koguGameDev/status/2047512942778913100
-このRobloxの新機能のような方向で何か面白いものが作れないか考えていて、結局ゲーム開発そのものがかなり似た性質あるんだなと今更気付いた。
-現在作ってるゲームにもそういう要素はあるけど、ちゃんと捉えてデザインしてなかったので、サイドのプロジェクトに入れてみよう。
-
---- 41. @chongdashu (2026-04-23) ---
-URL: https://x.com/chongdashu/status/2047412523750609382
-Putting everything together for something PLAYABLE
-
-> GPT 5.5 (!) for code
-> GPT Images 2.0 for sprites + background
-> Seedance 2.0 for walkcycles
-> Elevenlabs for BGM and SFX
-> Phaser 4
-
-Entire thing AI generated!
-
- Sound ON!
-
---- 42. @umiyuki_ai (2026-04-24) ---
-URL: https://x.com/umiyuki_ai/status/2047606690879865009
-中国オープンモデルにはたしかにガッツリ中華バイアスかかってるという研究結果があります。もう面倒くさいので「中国AIから洗脳されたくない～」とかビビッてるパンピーは中国モデルに関わらなくて結構です。そもそもパンピーには中国モデルなんか必要ありません。パンピーは素直にChatGPT使ってれば
-
---- 43. @izutorishima (2026-04-24) ---
-URL: https://x.com/izutorishima/status/2047574254049464546
-ヤッチョGPT in DeepSeek v4 Pro、Thinking 中までヤッチョになりきってるのと「そこにきていきなり何ができるの？って聞かれて…」など会話の流れを気にしてるあたりの思考過程が人間らしい
-他の長考モデル (Claude, Gemini 然り) はロールプレイでも思考中はモデルの素が出てくるので、特徴的な挙動
-
---- 44. @L_go_mrk (2026-04-24) ---
-URL: https://x.com/L_go_mrk/status/2047605968561734000
-これやばくないか...？？？？？
-
-400ページの技術書pdfでもコンテキスト制限に引っかからずに読み切ってナレッジノートにしてくれるツール。
-
-AIに情報を投げても、読み切ってくれない、把握してくれないということがなくなる。
-
-https://
-github.com/echohive42/AI-
-reads-books-page-by-page
+x.com/sirisiri_hit/s
+/sirisiri_hit/status/2047237726450360519
 …
 
---- 45. @taziku_co (2026-04-24) ---
-URL: https://x.com/taziku_co/status/2047531356759224469
-これはゲームジャムというより、
-「世界生成UI」の実験場に近い。
+--- 26. @2_wykipedia (2026-04-24) ---
+URL: https://x.com/2_wykipedia/status/2047622854615949795
+人形がワープ(瞬間移動)できないという制約が強すぎたので、今度は見られていない間だけ瞬間移動しまくる人形と戦うことにしました。
+瞬きする間に逃げる人形を3時間逃がさないためには大体6人で監視すれば十分です。
+ランベルトのW関数が出てきます。
 
-Marble 1.1 + Spark LoDで、
-@theworldlabs
-が、
-2週間以内に没入型3D体験やゲームを作るWorld Jamが開始。
+少し変えれば「メリーさんvs確率過程論」になる
 
-手で作る3Dから、
-生成して探索する3Dへ。
+--- 27. @NOCIW333 (2026-04-24) ---
+URL: https://x.com/NOCIW333/status/2047501456715161862
+GPT Image2で流行りのゲームスクショ画像を生成してSeedance でCMに
+日本語致命的なの含めてちょっとSoraみがある
 
---- 46. @PR_manga_ad2 (?) ---
-10円セール開催中
+--- 28. @Yodosha_text (2026-04-24) ---
+URL: https://x.com/Yodosha_text/status/2047497508902101368
+この本は、可能な限り図を使って説明することに挑戦した、統計学の教科書です。ほとんど全てのページで、こんなにたくさんの図が載っています。
+本書が、1人でも多くの「統計学の基礎を身につけたい」と考える方々のお役に立ちますように。
 
-＼大人気キャンペーン、今年もやります！／
+『基礎から学ぶ統計学』中原治/著
 
-第1弾から第5弾まで対象作品は毎回更新
-コミック・CG集・ボイス作品を10円で爆買いできる大チャンス
+https://
+yodosha.co.jp/yodobook/book/
+9784758121217/
+…
 
-〔PR〕
+--- 29. @AmazonJPKindle (?) ---
+【2か月0円】Amazonゴールデンウィークセール特別プラン - 電子書籍が読み放題のKindle Unlimited 月額980円が今だけ2か月0円！人気のマンガや最新雑誌・週刊誌、話題の小説やビジネス書など500万冊以上対象。今すぐ登録しよう！
 
---- 47. @fladdict (2026-04-24) ---
-URL: https://x.com/fladdict/status/2047536647462658487
-これから国や各党の政策や戦略は、「複数のAIに確認とって合格したやつ」になっていくだろうから、致命的な失策というのはドンドンと減っていく気はするんよね。
+--- 30. @dezainaz_ceo (2026-04-23) ---
+URL: https://x.com/dezainaz_ceo/status/2047172512551977162
+カメラマンとデザイナーいらない？
 
---- 48. @ctatedev (2026-04-24) ---
-URL: https://x.com/ctatedev/status/2047586442633711752
-GPT-5.5 literally changes the game
+←iPhone写真　ChatGPT補正→
 
-I've tried making this work with so many other models and never got this far.
+--- 31. @ponzponz15 (2026-04-24) ---
+URL: https://x.com/ponzponz15/status/2047502893306249217
+Codexで GPT-Image-2 が使えるようになったので、
+脚本から画像生成まで一気にやれるようになった
 
-One prompt in, the physics worked. The animations worked. GPT-image-2 generated the backgrounds.
+キャラクター画像を2枚添付して、
+「このキャラクターに合う、30秒で完結する、先が見たくなる絵コンテを作成して」
+というところからスタート。
 
-A few lazy follow-ups later, Mochipuff was born.
+最後はポスターまでつなげた
 
---- 49. @css_py (2026-04-23) ---
-URL: https://x.com/css_py/status/2047316692997644370
-geminiしばいてプレイしてみたら１時間溶けた
+--- 32. @RagnarSan22 (2026-04-23) ---
+URL: https://x.com/RagnarSan22/status/2047399464667636161
+もし私が、セガサターンが独自のタクティクスオウガを持っていると言ったらどうですか？
 
---- 50. @0xbisc (2026-04-23) ---
-URL: https://x.com/0xbisc/status/2047315350862352715
-I simulated a One Piece ARPG game.
+そのゲームは「テラ・ファンタスティカ」という名前で、Chime Corporationによって開発されました。
 
-Started with a GPT Image 2 screenshot.
+--- 33. @akuji57031870 (2026-04-24) ---
+URL: https://x.com/akuji57031870/status/2047496588579471541
+医「体調は？」
+僕「めちゃくちゃ痛いだけなんで元気です！」
+医「じゃあ点滴していきましょう」
 
-Prompt: Generate an ARPG dialogue game screenshot inspired by [film/series name]
+〜点滴中〜
+僕（元気って言ったけどなんか寒気してきたな）
 
-Then extended it into gameplay with Seedance 2.
+僕の身体（ブルブルブルブルブルブル）
+
+様子を見にきた看護師「あ、あ、あ、あくじさーーーん！！！」
+
+--- 34. @takahiroanno (2026-04-24) ---
+URL: https://x.com/takahiroanno/status/2047549478996267308
+源内OSS化！   
+
+--- 35. @wingbits (?) ---
+Track flights with a rooftop antenna, get real-world rewards 
+
+--- 36. @super_bonochin (2026-04-23) ---
+URL: https://x.com/super_bonochin/status/2047368713897476374
+明らかにおかしい。
+Xで共有されてた色んなプロンプトを試してもダメで。
+リプでも言ってくれた人いたけど、なんか生成ステップの途中で出てきてそうで、たまたまワイの環境がバグってんのか、あるいは生成し過ぎてサイレントでリソース節約モードみたいなのにされてるか。
+
+--- 37. @L_go_mrk (2026-04-24) ---
+URL: https://x.com/L_go_mrk/status/2047608485060424003
+GPT-5.5でCodex気になっている人はこのリポジトリみて欲しい。
+
+awesome-codex-skills：
+Codex用のスキルを集めたリポジトリ。コード生成、テスト作成、ドキュメント生成、リファクタなど、Codexにそのまま読み込ませて能力を拡張できるスキルがカテゴリ別に並んでいます。
+
+
+https://
+github.com/ComposioHQ/awe
+some-codex-skills
+…
+
+--- 38. @_3912657840 (2026-04-24) ---
+URL: https://x.com/_3912657840/status/2047489320794374421
+ChatGPT x GPT2imageの便利なところ
+
+キャラ設定とか背景設定をぶち込んで簡単に画像生成できるGPTsを作ろうと思っててそれ用のキャラ設定をまとめたPDF用のキャラシートを新作しています。
+
+--- 39. @chetaslua (2026-04-23) ---
+URL: https://x.com/chetaslua/status/2047379090748190924
+As i said 11:11 AM 
+
+A playable 3D dungeon arena prototype built with Codex and GPT models. Codex handled the game architecture, TypeScript/Three.js implementation, combat systems, enemy encounters, HUD feedback, and GPT‑generated environment textures. Character models,
+
+--- 40. @tom_nadja (2026-04-24) ---
+URL: https://x.com/tom_nadja/status/2047619959170441328
+ChatGPT 5.5 Pro、生成AI史上初めてぷよぷよ19連鎖の生成に成功(既存形ではなくゼロから組み立て可能)
+しかも連鎖進行の図解まで作れる
+1つの壁を打ち破った感
+
+--- 41. @AkihisaShiozaki (2026-04-23) ---
+URL: https://x.com/AkihisaShiozaki/status/2047434241479504182
+【AI駆動型国家への構造転換〜AIホワイトペーパー2.0公開】
+
+--- 42. @izutorishima (2026-04-23) ---
+URL: https://x.com/izutorishima/status/2047402225119727718
+エグすぎる、GPT-Image-2 で作ったインフォグラフィックを HTML 化ってこれもうわかんねえな・・・
+
+--- 43. @Kasiwa_p (2026-04-24) ---
+URL: https://x.com/Kasiwa_p/status/2047520527275942131
+AI技術そのものは否定しないけど、RPGが丸々AIで作れてしまうようになったら心折れてゲ制をやめてしまうかもしれないし、AIに指示するだけの人になってしまうかもしれない
+
+--- 44. @linera_io (?) ---
+The Real-Time Blockchain: purpose-built for the agentic revolution. Linera microchains let apps integrate securely, compute in parallel, and communicate across systems with millisecond responsiveness.
+
+--- 45. @maruhi_dd (2026-04-23) ---
+URL: https://x.com/maruhi_dd/status/2047203670270619888
+GPT image 2、生成の話ばっか出てるけど、個人的には『修正』の方が感動した。
+
+画像の中の小さなノートだけ90度回転、みたいな地味〜な編集が一撃で通るの、わかる人にはわかるありがたさ…
+
+『ここだけちょっと直して』のAIリテイク地獄ほんと辛いから、これはデカい
+
+--- 46. @tegnike (2026-04-24) ---
+URL: https://x.com/tegnike/status/2047625813021872623
+最近投稿していたゲーム実況（&プレイ）についての知見を記事にまとめました！！
+
+
+https://
+nikechan.com/dev_blog/ai-ga
+me-play-methods
+…
+
+GWの展示会では、これのデモなどを持っていけたらと考えています
+
+--- 47. @knshtyk (2026-04-24) ---
+URL: https://x.com/knshtyk/status/2047632849155895804
+GPT-5.5 Thinking(Heavy)、推論速度は非常に高速になっているのに5.4 Thinking / Proよりも文章と論理の構築が上手い。特に外部ソースの使い方が巧みで、論の基点として用いてそこから拡げるように生成をするようになっているので、的外れな持論を展開せず、かつ既存の知識に縛られすぎることもない
+
+--- 48. @hanagasa_ai (2026-04-23) ---
+URL: https://x.com/hanagasa_ai/status/2047288532314816612
+元デザイナーなので、会社でデザイナーの面接なんかもするんですが…
+ChatGPT images2で、ポートフォリオの掲載作品の価値は限りなく下がっちゃいましたねぇ。。。表層デザインでは量産できるからねぇ。
+
+--- 49. @C4Dbeginner (2026-04-23) ---
+URL: https://x.com/C4Dbeginner/status/2047418593533710809
+これ、村上春樹も全く同じことを書いていて、調子がよくても悪くても原稿用紙20枚でやめると。なんでなんですかね

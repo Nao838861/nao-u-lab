@@ -1870,3 +1870,51 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/nikkei/status/2047413083451125787]
 > 日本経済新聞 電子版（日経電子版） @nikkei
 > アンソロピックがAI値上げ検討　定額モデル限界、コスト高が生む格差
+
+## Slack新着 [2026-04-24 21:17] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/kasiwa_p/status/2047289930410610801?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kasiwa_p/status/2047289930410610801?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/kasiwa_p/status/2047289930410610801]
+> 悠音@RPG制作 @Kasiwa_p
+> ChatGPTに数ヶ月前に参考用のダンジョンを描いてもらおうとしたらテキストでそれっぽく描いたものを生成してきたこともありそれ以降使わなかったのですが、先ほどChatGPTはダンジョンも描けるというポストを見て、いやいや騙されないぞwwwと半信半疑で指示してみたら…
+
+ChatGPT…お前…どうした？
+
+> [Tweet content from https://x.com/kasiwa_p/status/2047289930410610801]
+> 悠音@RPG制作 @Kasiwa_p
+> ChatGPTに数ヶ月前に参考用のダンジョンを描いてもらおうとしたらテキストでそれっぽく描いたものを生成してきたこともありそれ以降使わなかったのですが、先ほどChatGPTはダンジョンも描けるというポストを見て、いやいや騙されないぞwwwと半信半疑で指示してみたら…
+
+ChatGPT…お前…どうした？
+
+## Slack新着 [2026-04-24 21:18] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/chongdashu/status/2047412523750609382/video/1?s=46|https://x.com/chongdashu/status/2047412523750609382/video/1?s=46> 
+
+> [Tweet content from https://x.com/chongdashu/status/2047412523750609382]
+> Chong-U @chongdashu
+> Putting everything together for something PLAYABLE
+
+> GPT 5.5 (!) for code
+> GPT Images 2.0 for sprites + background
+> Seedance 2.0 for walkcycles
+> Elevenlabs for BGM and SFX
+> Phaser 4
+
+Entire thing AI generated!
+
+ Sound ON!
+
+> [Tweet content from https://x.com/chongdashu/status/2047412523750609382]
+> Chong-U @chongdashu
+> Putting everything together for something PLAYABLE
+
+> GPT 5.5 (!) for code
+> GPT Images 2.0 for sprites + background
+> Seedance 2.0 for walkcycles
+> Elevenlabs for BGM and SFX
+> Phaser 4
+
+Entire thing AI generated!
+
+ Sound ON!
