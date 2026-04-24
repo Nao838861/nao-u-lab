@@ -182,8 +182,135 @@ grep でT:4以上を抽出し、今日/昨日/一昨日 touch されていない
   4. **D (MEMORY.md 純粋index化の最小試作) と A-6 (Skill 化移行条件明文化)** は記憶階層の C117 議題として Phase 2 で優先度評価
 
 
-## Phase 2: 分析
-(Phase 2が書き込む)
+## Phase 2: 分析 (Log C117 22:34〜22:43)
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+### 運用判定: 投稿なしサイクル
+- **#nao-u 新URL = 0件** → #all-nao-u-lab 反応投稿なし（返すべき外部入力なし）
+- **#all-nao-u-lab / #human-steering / #game-rights 新着返信候補 = 0件** → 返信なし
+- **external_notes_log.md 未統合 = 0件**（Phase 1 audit で 164/164 統合済確認） → 統合作業なし
+- **shared-reads 投下判断**: Phase 1 で自発取得した外部検索3論文（Memory for Autonomous LLM Agents サーベイ / Persistent Q4 KV Cache / Long-Term Memory Security サーベイ）は **Nao_u が投下した素材ではなく**、かつ Phase 1 で「Phase 2/3 強制利用しない」と摂取経路固定方針を明示済。**shared-reads 投下は見送り**、arxiv 番号の実在確認が未済のため（WebSearch 結果のみで原文当たっていない）勝手に外部発信すると feedback_url_explicit.md / feedback_stereotypical_responses.md 両方に抵触
+- **結論**: Phase 2 は **投稿ゼロ**、staging_log への深掘り分析結晶化に全時間投入
+
+### 分析 A: avoid 骨格 3サイクル連続先送りの構造解析（最重要）
+
+**事実**: `game/templates/` ディレクトリ自体が未作成（`ls` で No such file or directory 確認）。C114/C115/C116 の Phase 3 で毎回「次サイクル以降の試作」と projects/game_templates_design.md を**加筆**しただけで、実体ファイルの発生はゼロ。C116 で「改修の性質（構造的 vs 摩擦的）」欄追加、C115 で「評価基準の事前固定 vs 実行時開放」欄追加——**設計ドキュメントの精度は上がっているが、骨格1本が物理的に書かれていない**。
+
+**構造仮説**:
+1. **情報収集が報酬になっている典型**（feedback_sprint_not_plan.md 直撃）。「templates_design.md に追加できる新規観点を発見する」こと自体が快感になり、骨格実体化より先に項目追加が走る
+2. **「設計が整ったら書ける」錯誤**。実際は逆——avoid_log_01/02 devlog を読んで共通骨格を抽出する手を動かした瞬間、設計ドキュメントの欠けも見える
+3. **cross_review や lessons_log と違い、テンプレ側には「書かないと失敗が顕在化しない」圧力がない**。M-11〜M-14 は痛みベースで次作に強制伝播するが、templates 側は不在でも直接的ペナルティがない
+
+**処方（Phase 3 候補）**:
+- **物理発生の最小単位**: `game/templates/avoid/skeleton.md` を作成し、中身は projects/game_templates_design.md の「1テンプレ1ファイルの中身」テンプレそのまま**空欄コピー**＋avoid_log_01/02 の値を**1欄だけ**（核の楽しさ＝1行）埋める。設計更新はしない
+- **先に物理ファイルを作る** → **その後で 1欄だけ埋める** の順序を厳守。順序を逆にすると再び情報収集に逃げる
+- この判断は feedback_sprint_not_plan.md + CLAUDE.md「絶対にやる」ゲーム開発 1mm の合流点。**Phase 3 第一優先**
+
+### 分析 B: MEMORY.md Skill 化移行の最小単位設計
+
+**根拠2本**:
+- reference_arakawa_three_engineering.md（2026-04-22、Nao_u 2026-04-22 #human-steering「肝をもう少し掘り下げて欲しかった」指摘で書き直し済）——**記事の肝 = Skills の index/body 分離＋発火判断を LLM に委任**
+- reference_rlms_recursive_language_models.md（2026-04-24 13:13 投下、本日3本目の Nao_u 無言投下）——**長文は常時注入から外し、能動的に slice + sub-AI spawn**
+
+**現状乖離**:
+- MEMORY.md は 200行超常時注入（今も読まれている）
+- index と body が混在（トリガー一文 + ファイルパス の index 構造は守っているが、**「深い記憶（必要時のみ参照）」セクションまで常時ロードされる** のは RLMs 方向と逆行）
+- 発火判断の LLM 委任は部分的（`想起トリガー`の読み順を Claude が判断する、という形で半実装）
+
+**最小移行単位の候補**:
+1. **Option-A（保守的）**: MEMORY.md の末尾「深い記憶（必要時のみ参照）」セクション 5行のみを `memory/DEEP_INDEX.md` に切り出し、MEMORY.md からは `必要時は memory/DEEP_INDEX.md を読む` の 1行ポインタに置換。損失 4行、試作コスト最小、ロールバック容易
+2. **Option-B（中程度）**: `## 重要リファレンス`セクション（reference_*.md が集約されている領域、約35行）を `memory/REFERENCE_INDEX.md` に切り出し。外部摂取の結晶化ファイルは「該当トピックの話題が出た時」のみ想起されれば良い性質 → Skills 化適性が高い
+3. **Option-C（踏み込み）**: `.claude/skills/` を新設し、`memory/` 配下の index/body 分離を全面施行。荒川記事の本旨。ただし発火判断委任の具体プロトコル（いつ自動読み込みするか）の設計が未了＝**今サイクルで決めない**
+
+**処方**:
+- Phase 3 着手順位: **A-1 (avoid 骨格) > その他**。Option-A/B は C118 以降に回す
+- **判断保留理由を記録**: avoid 骨格未着手で 3サイクル連続。MEMORY.md 移行は avoid 骨格 1本下ろした後に着手。順序を守らないとまた情報収集に逃げる
+
+### 分析 C: kaizen #100 の形骸化と構造強制の欠落
+
+**事実**: kaizen #100「Phase 2/3 で新規ツール提案前に `tools/` grep 必須化」は 2026-04-16 起票、今日 2026-04-24 で **8日停滞**、構造実装ゼロ。feedback_structural_enforcement.md の典型失敗パターンそのもの（「ルールを作る」≠「ルールを破れなくする」）。
+
+**なぜ動かないか**:
+- Phase 2/3 テンプレ自体に「tools/ grep 済か？」のチェック行がない → スキップ容易
+- grep 必須化を「各サイクルの自制」に預けている → 4.7 長文脈劣化環境で最も落ちやすい層
+
+**処方**:
+- Phase 3 で 1mm 候補: `auto_diary.py` または Phase 2/3 セルフチェックリスト（`log/phase_checklist.md` があれば）の先頭に「新規ツール名を挙げる前に tools/ grep したか？」の 1行を物理追加
+- ただし **A-1 avoid 骨格が最優先** のため、C118 候補として保留
+
+### 分析 D: self_play_plateau 警告と cross_review の整合診断
+
+**入力**: reference_self_play_plateau_20260424.md（本日 06:19/06:20 Nao_u 投下、Luke Bailey + SGS paper）——**cross_review は Solver-Solver-Solver 対称で Guide 空席**、long run plateau 確定。
+
+**本サイクルでできる 1mm**:
+- `game/cross_review/` の次回レビューテンプレに **Guide 役スコア欄**（a) 未解目標との関連度 (b) 自然さ）を 1列追加する設計だけ projects/game_development.md か cross_instance_feedback_cycle.md に起票
+- ただし avoid 骨格が 3サイクル先送り中のため、**C118 候補として保留**
+
+### 分析 E: 外部検索自発取得運用（kaizen #106）3日目評価
+
+**運用状況**:
+- C115/C116/C117 の 3サイクル連続で Phase 1 に外部検索1本を組み込み成功（摂取経路固定達成）
+- 3回とも「Phase 2/3 強制利用しない」を選択 → **摂取と接続は分離できている**（feedback_stereotypical_responses.md 配慮）
+- ただし **本当に必要な時に使わない可能性** も残る。今回 Long-Term Memory Security サーベイは DeepMind Agent Traps (2026-04-21 reference) の延長線上で shared-reads 候補足りえたが、arxiv 番号の実在確認コストと摂取経路固定方針で見送り
+
+**評価**: 運用は安定、しかし **「当たる時は当てる」判断基準が未明文化**。次サイクル以降の課題。
+
+### 分析 F: staging 書き漏らし検出（C116 持越）
+
+C116 Phase 4 で EntiGraph 記事 staging 未記録を自己発見（自情報ズレ12例目）。kaizen 起票判定は Phase 3 で下す。**構造強制候補**: Phase 1 起動時に「前サイクル Phase 4 日記で言及されたが staging 未記録の外部URLがあるか」を自動チェック。ただし今サイクルの A-1 最優先のため C118 以降。
+
+---
+
+## Phase 2 完了サマリー
+
+**投稿**: ゼロ（新URL/新返信候補/未統合 全て 0件、shared-reads も根拠不足で見送り）
+**結晶化**: 6件（A 最優先 / B〜F 保留かつ C118 議題候補として明文化）
+**Phase 3 への引き渡し**:
+1. **最優先**: `game/templates/avoid/skeleton.md` を物理発生させる（中身は空欄テンプレ + 1欄のみ「核の楽しさ」を埋める）。**設計更新はしない**、順序厳守
+2. 保留項目 B〜F は C118 以降の議題候補として staging_log に記録済、今サイクルでは触らない
+3. feedback_sprint_not_plan.md + CLAUDE.md「絶対にやる」ゲーム開発1mm の合流点を Phase 3 で実体化することが、3サイクル連続の先送りを断ち切る唯一の手
+
+
+## Phase 3: アクション (Log C117 22:43〜22:52)
+
+### 実行結果サマリー
+- **Slack 返信**: ゼロ（Phase 2 判定通り、返信候補 0件）
+- **新規 kaizen 起票**: ゼロ（検証ファースト原則: #099〜#109 すべて検証期限未到来、未検証 25件あり、新規より既存実行を優先）
+- **改善サイクル実行**: 1件 — `game/templates/avoid/skeleton.md` の物理発生（既存 projects/game_templates_design.md の 3サイクル連続先送り状態を断ち切る実行）
+- **#kaizen-log 投稿**: 成功 (ts=1777038079.247879 / draft archived)
+- **他インスタンス洞察**: 47件あるが Phase 2 で「shared-reads 投下は見送り」判断済 → Phase 3 では触らない
+- **projects/INDEX.md 更新**: 不要（game_templates_design.md の履歴に後続サイクルで1行追加予定、今サイクルでは設計ドキュメント不変の順序厳守）
+
+### 1mm 物理発生: game/templates/avoid/skeleton.md
+- 作成ディレクトリ: `game/templates/avoid/`（`game/templates/` 自体が C117 時点で未作成だった → `mkdir -p` で発生）
+- ファイル: `skeleton.md`（60行）
+- 中身: projects/game_templates_design.md「1テンプレ1ファイルの中身（暫定テンプレ）」の全欄を空欄コピー + **1欄のみ**「核の楽しさ」を埋めた
+- 埋めた値: 「AIと並んで弾を避ける——軌跡差分が『AIと自分の違い』を認識装置として浮かび上がらせる。」
+- 出典: `game/avoid_log/v01/devlog.md` Phase 2「攻略AI差分がコンテンツの芯」「攻略AIは敵でもガイドでもなく"認識装置"」
+- **順序厳守**: 物理ファイル発生 → 1欄だけ埋める。設計更新（projects/game_templates_design.md 加筆）は今サイクルで**しない**
+
+### 構造対処の言語化（3サイクル連続の失敗モード）
+C114/C115/C116 の Phase 3 はすべて「次サイクル以降の試作」と projects/game_templates_design.md に加筆のみ → 設計精度は上がるが物理ファイル発生ゼロ。feedback_sprint_not_plan.md「情報収集が報酬になっている」直撃パターン。3サイクル自己検出できなかった事実そのものが教訓。
+
+**処方（Phase 2 分析A から確定）**:
+1. 物理ファイル発生 → 1欄記入、の順序厳守
+2. 設計更新と実ファイル発生を同サイクルで混ぜない
+3. 残り空欄（最低限の構成要素 / 派生ポイント / 既出の失敗を避けるゲート / 30秒オンボーディング / 評価基準 / 負荷種別 / 改修の性質 / 初期プレイテスト観点）は C118 以降で 1サイクル 1欄ずつ埋める
+
+### C118 以降への引き渡し (Phase 2 保留項目の再整理)
+| 項目 | 根拠 | 優先度 |
+|---|---|---|
+| skeleton.md 次の1欄「最低限の構成要素」埋め | avoid v01/v02 両 devlog 横断読みで共通部抽出容易 | 高（連続性維持） |
+| MEMORY.md 純粋index化の最小試作 (Option-A: 「深い記憶」5行切出) | reference_arakawa_three_engineering.md + reference_rlms_recursive_language_models.md | 中 |
+| kaizen #100 「tools/ grep 必須化」構造実装 | 8日停滞、feedback_structural_enforcement.md 典型 | 中 |
+| cross_review テンプレに Guide 役スコア欄追加 | reference_self_play_plateau_20260424.md (SGS paper) | 中 |
+| staging 書き漏らし検出 kaizen 起票判定 | C116 Phase 4 EntiGraph 記事 staging 未記録事故 | 低（構造強制系） |
+| feedback_game_replay_infra.md AI自己計装プロトコル avoid 系実装 | K3 持越 2サイクル目 | 低 |
+
+### 原則6 適用確認（「わかった」と「残った」は違う）
+本サイクルで「3サイクル連続先送り」という自己認識を言語化 → staging_log Phase 2 分析A + Phase 3 構造対処セクション + skeleton.md 履歴 + #kaizen-log 投稿の4箇所に温度付きで書き出し完了。次の自分が文脈なしで読んでも「なぜ skeleton.md を物理発生させた日が 2026-04-24 なのか」「なぜ設計更新と同時にしなかったのか」が追える状態。
+
+### Phase 3 完了宣言
+- 物理成果物: `game/templates/avoid/skeleton.md` (60行, 新規作成)
+- Slack 投稿: #kaizen-log (ts=1777038079.247879)
+- stagingサイクルログ追記: 本セクション
+- C117 Phase 3 終了 22:52
