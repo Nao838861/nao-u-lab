@@ -79,7 +79,11 @@ def scrape_usage(dry_run=False, screenshot=False):
                 headless=False,
                 viewport={"width": 1280, "height": 900},
                 locale="ja-JP",
-                args=["--disable-blink-features=AutomationControlled", "--start-minimized"],
+                args=[
+                    "--disable-blink-features=AutomationControlled",
+                    "--start-minimized",
+                    "--window-position=-32000,-32000",
+                ],
             )
 
             page = context.new_page()

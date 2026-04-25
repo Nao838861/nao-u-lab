@@ -49,7 +49,11 @@ def _read_inner(url):
             headless=False,
             viewport={"width": 800, "height": 900},
             locale="ja-JP",
-            args=["--disable-blink-features=AutomationControlled", "--start-minimized"],
+            args=[
+                "--disable-blink-features=AutomationControlled",
+                "--start-minimized",
+                "--window-position=-32000,-32000",
+            ],
         )
         page = context.new_page()
 
