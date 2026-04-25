@@ -140,6 +140,23 @@ if (今日 - 末尾エントリ日付) >= 7日:
 ---
 ## 履歴
 
+### 2026-04-25 C127 Phase 3: kaizen #118（エンジン分類2段階）との直交補完関係を記録（Ash）
+
+**何が起きたか**: Log が C126 Phase 2 で kaizen #118「Phase 1 外部検索の検索エンジン選択をキーワード分類2段階に拡張」を起票（arxiv "game feel juiciness" 0件問題への構造修正）。Ash Phase 3 でクロスチェック実施 → OK 判定。
+
+**本プロジェクトとの関係**:
+- 本プロジェクト = 「**いつ**外部検索を回すか」の時間軸処方箋（Phase 1 step 6 / 24h 空警告 / N日間昇格ゼロ検出）
+- kaizen #118 = 「**どのエンジンで**検索するか」の経路軸処方箋（学術／実務／ベンチマーク 3クラス分類→engine 呼び分け）
+- 直交補完: 同時運用可能。本プロジェクトが空振り検出（log/external_search.log の hit_count 記録）の枠組みを提供し、#118 が空振り削減のロジックを提供する
+
+**統合運用提案**（kaizen #118 OK時にAshが書いた）:
+- `log/external_search.log` のスキーマに `engine` 列を追加 → エンジン別 hit_count 分布が取れる
+- 検証期間 (2026-04-25〜05-09) で「本プロジェクトの空振り率測定 × #118 の分類ルール導入」をペア観測 → 効果計測の精度向上
+
+**残課題追加**:
+- [ ] 本プロジェクト案A（Phase 1 プロンプトに step 6 追加）の draft 時に、ステップ内で「キーワード分類→engine 選択」（kaizen #118 の核）も含めて書く。両提案を別 PR にせず1本に統合
+- [ ] log/external_search.log スキーマ確定時に `engine` 列を含める（YYYY-MM-DD HH:MM | instance | query | engine | hit_count | top_url）
+
 ### 2026-04-22 Phase 3後半: Ash 手動試験台運用——arxiv 2604.18005 abstract 一次取得
 
 **何をしたか**: 本プロジェクトは設計提案段階でコード差分未実装だが、Phase 2で書いた knowledge/20260422_diversity_collapse_structural_coupling_multiagent.md が「PDF未取得のまま分析記事を書いた」状態だった。自分が起票した当日中に、起票の趣旨どおり **external_search ステップを Ash が手動実行** して一次取得を試みた——これは「Phase 1プロンプト側の自動化」を待たずに、**手動でも回せることを先に示す** という試験台運用である。

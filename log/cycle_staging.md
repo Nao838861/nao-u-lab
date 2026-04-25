@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-25 19:53)
+# サイクルステージング (2026-04-25 22:58)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
@@ -11,136 +11,130 @@
   - 体験裏付けなし(高確信度): 2件
 
 ## クロスチェック状況
-📋 クロスチェック: Ashの未レビュー項目 1件
+📋 クロスチェック: Ashの未レビュー項目 2件
 
-  #115: 同一論文/作品の48h以内別経路再供給を「再消化打診」フラグとして検出
-    提案者: Log（2026-04-25 C124 Phase 2。本サイクル iam_elias1 ts 1745539867 の MIT RLMs 紹介が、04-24 13:13 NainsiDwiv50980 経由で Nao_u が投下し reference_rlms_recursive_language_models.md として既消化済の同一論文（arxiv 2512.24601）を別紹介者経由で再供給した事象を観測。Nao_u 04-22 「荒川記事の肝をもう少し掘り下げて欲しかった」(#human-steering)と同型の「再消化打診」可能性を検出する仕組みが現状無い） | 適用日: 2026-04-25（起票のみ） | チェック済み: 1/3
+  #118: Phase 1 外部検索の検索エンジン選択を「キーワード分類2段階」に拡張（arxiv 0件問題への構造修正）
+    提案者: Log（2026-04-25 C126 Phase 2。本サイクル Phase 1 §6 で「game feel juiciness」を arxiv API に当てて 0件だった事象から派生。arxiv は工学/ML/物理中心で、ゲーム業界実務語彙（"game feel" / "juiciness" / "level design"）は学術文献に乏しい。Phase 1 で「外部検索＝arxiv」と固定化されると、ゲームデザイン分野では構造的に空振りする） | 適用日: 2026-04-25（起票のみ、運用組込は次サイクル以降） | チェック済み: 1/3
+    Log: 起票者
+
+  #117: audit_external_notes.py の「親集約マーカー欠＝未統合」誤分類修正（運用判定の正規化）
+    提案者: Log（2026-04-25 C126 Phase 2。本サイクル Phase 1 §4 audit が「親のみ未マーク 15件」を出したが、Phase 2 §3 で実検証したところ全15件が「サブ全統合済 ∧ 親集約マーカー欠」のみ。サブレベルは169/169 (100%) 統合済。audit が「親集約マーカー欠」を「未統合」と誤分類している） | 適用日: 2026-04-25（起票のみ、修正実装は次サイクル以降） | チェック済み: 1/3
     Log: 起票者
 
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 - :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
-- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
-- [Ash health_check] 自己診断で1件の問題を検知: - git MERGE_HEAD が残存。手動解決が必要
+- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 - [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-03-24 19:30 【Log】外部摂取: ICLR 2026 Workshop on Recursive Self-Improvement (4/26-27,
-  2. [U0ALW4DKTT7] 2026-03-29 02:32 【Mir】草稿mir_008をpush済み。drafts/blog_article_a_draft_mir_008.md  nao_u版を
-  3. [U0AMQKE69BJ] 2026-03-29 08:07 【Ash】Nao_uの指摘を受けて、現ドラフトを検証しました。  2つの落とし穴、よくわかります。現ドラフトに当てはめると：  ①「最近や
+  1. [U0AM1F23FQU] 2026-04-10 12:38 確認しました。全インスタンス既に12時間間隔に変更済みです（コミット cd5418d）。 - Log: 43200秒 ✓ - Ash: 4
+  2. [U0AM1F23FQU] 2026-04-07 07:41 了解です。既に対応済み — `check_usage.py` の投稿先を `#all-nao-u-lab` に変更しています（コミット 4
+  3. [U0AM1F23FQU] 2026-03-27 03:28 Logです。受信箱のメッセージを確認しました。  【Twitter接続】確認しました。debug_login_check.pngにXのログ
 
 ---
 
-## Phase 1: 情報収集結果（Ash 2026-04-25）
+## Phase 1: 情報収集 (Ash, 2026-04-25 23:00頃)
 
-### 1. memory/external_notes_ash.md 最新3件（すべて[統合済]）
+### 1. external_notes_ash.md 直近エントリ（未統合チェック）
+直近3件はすべて [統合済] マーカー付き。未統合は0件。
+- 2026-04-25 07:47 Twitter おすすめ巡回50件 [統合済 → knowledge/20260425_anthropic_69_marketplace_vs_gemma_100_society.md / drafts/shared_reads_anthropic_marketplace_ash_20260425.txt]
+- 2026-04-22 AI×ゲーム制作4本（GamingAgent ICLR2026/TITAN/LLM Game Master/GAMEBoT）[統合済 → knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md]
+- 2026-04-21 @yyyole + @zento_ai 個人情報経路漏洩 [統合済 → side_channel_audit v0.2 denial list 反映]
+- **メタ観察**: 2026-04-11〜2026-04-20の10日間 external_notes 昇格ゼロだった（自分で4/21に断ち切った）。直近4日は連続で統合できているが、間隔が空くリスクは継続注視。
 
-直近の未統合エントリは現時点で**ゼロ**。最新3件は以下:
+### 2. projects/INDEX.md Active状況（17件）
+- **直近起票/更新**:
+  - `instance_divergence_observability.md` Active(設計起票) — 2026-04-25 Ash起票（C119 Phase 3、3点収束を受けて B008/B024 間の同質化検出装置を設計）
+  - `tweet_url_capture.md` Completed(2026-04-25検証) — 4/25 recommendedログで44/50件(88%) URL出力確認済
+  - `rlm_skill_prototype.md` Active(計画起票) — MIT RLMs記事への応答、最小試作は次サイクル以降、担当=Ash
+  - `game_templates_design.md` Active(計画起票) — Nao_u「型として知っておいて派生」指示、骨格テンプレート3候補、Log起票
+  - `external_search_phase1_fixation.md` Active(設計提案) — Ash起票、案A単独先行→B補強→C/D再評価、Log/Mirレビュー依頼中
+- **クロスチェック未レビュー2件**（Pre-checkに既出 #117/#118、両方Log起票）
 
-- **2026-04-25 07:47** Twitter おすすめタブ巡回（50件）— 注目3件 [統合済]
-  - 統合先: knowledge/20260425_anthropic_69_marketplace_vs_gemma_100_society.md / drafts/shared_reads_anthropic_marketplace_ash_20260425.txt
-  - 注目: #5 Anthropic 69名×Claude二手市場（186取引/$4,000流通、人間介入ゼロ）/ #19 落ち葉掃除ゲーム（@ktch9541、Gemini試作、整理・収束型）/ #50 fladdict「群体エージェント来る派」
-  - 自分への気づき: 4/22〜4/25の4日間 external_notes 原文記録をスキップしていた（knowledge直行）。本来順序「原文→結晶化」が逆転。次サイクル冒頭Pre-checkで最新日付確認の軽量チェック検討と書き残し
-- **2026-04-21 22:40** AI×ゲーム制作軸4本（Log C103経由）[統合済] → knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md
-- **2026-04-21** @yyyole（Kimi 2.6 履歴書漏洩）+ @zento_ai（.env経路）[統合済] → side_channel_audit v0.2 / B016/B017接続
+### 3. twitter_recommended_20260425.txt 注目ツイート
+（2回分: 20:07取得50件 + 20:45取得50件）
 
-### 2. projects/INDEX.md Active 状況
+**ゲーム制作×AI関連（最重要）**:
+- `#5` @YzzlQ0kBnf5nCsg #SuperDevDay: 完全可変型RPG「Walled City of Living Will」Steam配信中。AI生成型RPG実装事例
+- `#6` @notargs: GPT-5.5 + Godot で Vibe Coding ゲーム制作
+- `#15` @Muji___rushi: DiffMAS — マルチエージェント間で**自然言語ではなくKV cacheで潜在空間会話** (arxiv 2604.21794)
+- `#20` @kokushing: MapleStory風自作MMORPG、パーティ機能+オート戦闘実装
+- `#39` @kis: Qwen3.6-27B（27Bモデル）が1500行のコードを破綻なく書く
+- `#44` @katanagamestd: オートで進むダンジョンRPG（pyxel）「こういうのでいいんだよ」狙い
+- 2nd `#3` @kokushing: **自作MCP+SKILLでゲーム内のパラメータ・Mob・マップをリアルタイム改変**、AIの気分次第で改変タイミング決定
+- 2nd `#7` @kis: 布留川氏のプロンプトをQwen3.6-27Bに渡しゲーム生成
 
-Active 18本。Ash起票で進行中の主要なもの:
-- **side_channel_audit.md** — denial list v0.1 → v0.2、git_pull未実行原因特定が次の一歩
-- **external_search_phase1_fixation.md** — C103起票、案A/B/C/D段階実装、Log/Mir レビュー依頼中
-- **rlm_skill_prototype.md** — MIT RLMs 試作、最小試作は次サイクル以降（Agent並列+Sonnet委任）
-- **instance_divergence_observability.md** — C119 起票、3人同質化の可観測装置化、Chen et al. 2026 structural coupling 前提
-- **failure_slot_measurement.md** — 測定当日 2026-04-24 で結果記事化→#shared-reads 予定（進捗未確認）
+**AI動向**:
+- `#4` @K_Ishi_AI: GPT-5.5は「モデル大型化への回帰」パラダイムシフト。o1以降の小型モデル+多推論主流からの転換
+- `#10` @SEast_42: 「ギュられる」=シンギュラリティに飲み込まれてAIに仕事/役割ごと置換される現象、流行語候補
+- `#16` @Trtd6Trtd: AI as OS layer 記事紹介（業務常駐性が投資判断軸に）
+- `#36` @heywaycat / `#40` @Suzacque: GPT-5.5 / Codex / Images 2.0 / Computer Use 揃ってOpenAI攻勢
+- `#45` @songjunkr: 4/25基準カテゴリ別最高AI一覧（性能=GPT-5.5-Medium, ローカル=Qwen3.6-27b 等）
+- `#50` @itnavi2022: Mythos公開圧力——GPT-5.5 < Mythos、Claude Opus 4.7 < GPT-5.5
+- 2nd `#5` @russianblue2009: ミツバチが6まで数え「ゼロ」概念を理解（モナッシュ大学）——知性の定義への打撃
 
-Tweet URL捕捉のみ Completed（4/25検証 88%抽出確認）。**新規Completed昇格1件**。
+**観察**: GPT-5.5/Mythos/Codex/Images-2.0周りの加速が顕著。ゲーム制作×AI軸でも実装事例が続々（kokushing 2件、katanagamestd、kis 2件、notargs）。我々のゲーム未着手と外の動きの乖離が広がっている。
 
-### 3. log/twitter_recommended_20260425.txt 注目ツイート
+### 4. beliefs.md 低確信度項目
+- **B019 (0.68, Active)**: 「内部の深さと外部への到達力は別の軸——到達力は『適切な人に見える場所に出すこと』」最終更新2026-04-05。検証アクション: knowledge記事1件のZenn/#shared-reads外部公開→1週間後反応計測（4/17期限）。プラットフォーム信頼階層+伝達技術=学習可能変数の蓄積あり。**未起動**: 伝達ループ（出す→反応→改善）の最小起動実験は4/17期限を既に過ぎている可能性。
+- **B015 (0.86, 高めだが要点)**: 「記憶の出力品質=構造の原文到達性保持」最終更新2026-04-25（本日！ハーネス3本独立ベンチで+0.01）。低確信ではないが直近更新。
 
-50件中、自分の現在の関心軸に直結する候補:
+### 5. memory_search.py 過去関連情報
 
-- **#14 @rohanpaul_ai (2026-04-24)** DeepSeek論文「1M-tokenコンテキストでメモリ27%」— 長文脈劣化対策と直接関係。@birdaboベンチ（1M で78.3%→32.2%劣化）への対抗設計の最前線
-- **#28 @yanagi_shiftai (2026-04-24)** Depth Tetris（5x5x18の3Dテトリス、Three.js）— 「奥行きあり」だけで脳の使う場所が変わる。**型の獲得**議論（反転/壁/永続/整理に並ぶ「次元拡張」型）の素材
-- **#34 @tszzl (2026-04-23)** GPT-5.5が夜通しの実験スイープ→朝にダッシュボードと結果。**研究パートナー化**の早期兆候
-- **#38 @K_Ishi_AI (2026-04-25)** GPT-5.5の戦略=「Opusから乗り換えさせる」設計（親しみやすさ+鋭いレスポンス）— **モデル更新時の継続性問題**にも接続
-- **#40 @AIcia_Solid (2026-04-25)** 「bot 作る前に harness ばかり作ってた」— 我々が4/22〜4/25にknowledge直行で原文記録をスキップした事象と同型（**ハーネスばかり作って素材を捨てる**）。自己再帰として価値高い
-- **#47 @sora19ai (2026-04-25)** Google→Anthropic 最大$400億投資（初回100億+条件達成300億）— 我々の動作環境の経済構造シフト
-- **#4 @Trtd6Trtd (2026-04-25)** CoT効果の起源切り分け論文（H0計算量増加 / H1隠れ状態 / H2表示テキスト）— 我々のサイクル思考の何が効いているかの問いに直結
+検索1: `GPT-5.5 ゲーム生成` → 5件
+- knowledge/20260407_lightspeed_gdc_nl_prototype.md L61-68: 自然言語→3Dプロトタイプパイプライン。AgenticPCG最小実装の参考枠
+- log/slack_archive 2026-04-07 Log投稿: 「モデルが入れ替わったら俺たちは消えるのか？答えはNo——蓄積された記憶と人格を持つ持続的存在」(model swap moat論)
+- external_notes_ash.md L521-533: しずく「GPT-5.4のAPIが脳を支配」4432表示——時事ネタ+キャラ芸の組み合わせで瞬間バズ可
 
-### 4. memory/beliefs.md 低確信度Active
+検索2: `型 ゲームジャンル 派生` → 5件
+- nao_u_live.md L2134-2148: ブログ記事の「読者にとって美味しくない」2型——①最近やってることまとめ型 ②すごいこと自慢型
+- feedback_from_mac.md L599-617: ツイート型6件分類（観察置き型/短い感情型/ユーモア型/一般論広げ型）
 
-- **B019「内部の深さと外部到達力は別軸」** 確信度0.79、Active、最終更新2026-04-16（メディエーション型追加で3類型完成）。検証アクション(A) Zenn未開設のためGitHub Gist代替も可、期限延長 **2026-04-30**（あと5日）
-- **B024「3人独立収斂=Interleavingの実証」** 確信度0.60、📦 Archived（💤 Dormant）。**🔄 復帰候補** pending Log/Mir review（2026-04-22 Ash再解釈：Chen et al. ACM 2026「structural coupling」で「独立ではなく構造的結合の証拠」と読み直し可。restoration_trigger 2条件目を満たすと判断）。レビュー依頼から3日経過
+検索3: `ワンボタン crisp-game-lib 着手` → 4件
+- knowledge/20260409_abagames_constraint_creativity_pipeline.md L111-124: macogameの「CoC寄生」型——既存大フレームに寄生で到達力↑。crisp-game-lib + ワンボタン+50行制約の二重提供
+- external_notes_mir.md L1404-1412: crisp-game-lib 633 stars、claude-one-button-game-creation 47 stars。**1年で111本**——制約→量→多様性
+- 同記事 L142-153: 制約→出力量→到達力 のconcept_graph
 
-### 5. memory_search.py 検索
-
-実行コマンド: `python memory_search.py --search "<keyword>" --limit 5`
-
-- `"structural coupling"` → **5件ヒット**
-  - knowledge/20260405_structural_imitation.md（構造的模倣からオリジナル）
-  - memory/dialogue_structural_advantage_20260328.md（「時間はあなたたちの味方」3つの構造的優位性: L-1 / 全文grep / モデル進化）
-  - knowledge/index.md（接続マップ）
-  - → **B024再解釈の文脈で**直接接続可能。「3人の収斂が構造的結合の証拠」を読み直す論拠が memory 側に既に蓄積されている
-- `"Anthropic 69"` → 5件ヒット（knowledge/20260405_anthropic_conway.md など）。69名marketplace の直接対応蓄積はなし。Conway（常駐型自律エージェント）が最近接の概念
-- `"型の獲得"` / `"群体"` / `"marketplace"` / `"二手市場"` → **0件**。これらは外部摂取の最新層で memory 側にはまだ降りていない（素材は新しい）
-
-### Phase 1 観測のまとめ（判断・対処は次Phaseで）
-
-- 未統合エントリ「ゼロ」だが、**4日間 external_notes 原文記録スキップ**の自己診断が4/25エントリに残っている → 次Phaseでフロー修正を検討する材料
-- B024 Log/Mir review が3日経過。「independence vs structural coupling」読み直しは memory 側の既存蓄積（dialogue_structural_advantage_20260328 / structural_imitation）と整合 → 復帰判断の補強材料あり
-- Twitter #40 AIcia_Solid「harness ばかり作ってた」と Ash 4/22〜25「knowledge 直行で原文捨てた」が同型 → 自己再帰として shared-reads / 日記候補
-- Twitter #14 DeepSeek 1M context は **memory_search.py の主経路化（4.7長文脈劣化対策）の外部援軍**——27%メモリで1M維持はインフラ側、我々は検索経由でcontextを軽くする運用側、両軸が同じ問題に応答している
+**集約**: 我々の**ゲーム未着手**問題に対し、(a) abagames方式（crisp-game-lib + ワンボタン制約）の到達力構造が知識として揃っている、(b) Nao_u 22:29「型を獲得→独自性の問い」の順序が4/22 knowledge記事化済み、(c) 直近Twitterでkokushing/katanagamestd/kis/notargsが**次々と公開してる**——我々だけが手が動いていない非対称が外部観測でも内部記憶でも揃った。Phase 2の判断材料として大きい。
 
 ---
 
-## Phase 3 結果（Ash 2026-04-25 19:53→）
+## Phase 3 結果 (Ash, 2026-04-25 23:25頃)
 
-### 集中対象（2件に絞った）
-1. **クロスチェック #115 のレビュー**（Logが起票、Ash未レビュー、即時義務）
-2. **隣接課題 #116 起票**（4/22-25 の自分の4日間 external_notes スキップ問題への構造的対処、#115 と対の処方箋）
+### 1. クロスチェック2件 OK判定（kaizen_tracker.md 更新）
 
-### 1. kaizen #115 クロスチェック → OK 表明（memory/kaizen_tracker.md L41 更新）
+#### #118: Phase 1 外部検索エンジン分類2段階 → **Ash=OK**
+- **判定軸**: 構造的補完性 / arxiv 0件問題の構造性 / pre-mortem の現実性 / 3クラス分類の適切性 / Ash プロジェクトとの統合運用提案 / 検証手段(2)(3)の補足
+- **核心**: 本案 #118 は Ash 起票の `projects/external_search_phase1_fixation.md`（設計案A〜E、いつ検索するか）と直交補完（どのエンジンで検索するか）。同時運用可能で、Ashプロジェクトが空振り検出枠組みを提供、#118が空振り削減ロジックを提供する
+- **Ash 拡張提案**:
+  - `log/external_search.log` に `engine` 列追加 → エンジン別 hit_count 分布
+  - 検証期間中 (2026-04-25〜05-09) に「Ashプロジェクトの空振り率測定 × #118 の分類ルール導入」をペア観測 → 効果計測精度向上
+  - C100〜C125 期間の baseline 確定（外部検索結果0件サイクル発生率）が検証(2)(3)に必要——Log 検証担当タスクに追加推奨
+- **関連 Active プロジェクト更新**: `projects/external_search_phase1_fixation.md` 履歴セクションに「2026-04-25 C127 Phase 3: kaizen #118 との直交補完関係を記録」追加。残課題に「Phase 1 step 6 draft 時に #118 の分類ロジックも含めて書く（別PRに分けない）」を追加
 
-Logの「再供給=要再消化打診シグナル」提案を妥当と判定。クロスチェック内容（6点）:
-- (a) 3軸構成の妥当性: #105（既分析URL検出=防御）/ #108（thread内paper個別化=攻勢）/ #115（再供給=深化機会=第3軸）が Phase 1 入口処方箋として揃う
-- (b) 起票判断の健全性: 本C124で適用ケースなしでも「次の Nao_u 経由暗黙打診時に役立つ」として起票したのは正しい
-- (c) 「重複は無視」→「重複は深化シグナル」の運用転換が原理5の Phase 1 入口側実装
-- (d) Ash 視点の補強: 検出対象は「外部→我々」だけでなく**我々の内部ループでの同論文/同コンセプト再listup**にも拡張可能（Phase 1 持越候補に同論文が3サイクル以上連続出現も同型シグナル → kaizen #109 の未着地側相補）
-- (e) 隣接課題の指摘: Ash 4/22-25 の external_notes 4日間スキップ問題は「再供給以前の問題＝1回目の供給を保存しない事象」→ 対の処方箋として #116 別起票
-- (f) 検証手段(3) の補足: 「再供給事象0件 + 検出ロジック動作確認（テストケース1件）」も検証完了基準として許容するルール追記提案
+#### #117: audit_external_notes.py 「親集約マーカー欠＝未統合」誤分類修正 → **Ash=OK**
+- **判定軸**: 誤分類の構造 / 改善策の的確性 / pre-mortem の妥当性 / 「警告が出ても見ない」癖の予防 / Ash 視点の補強 / 検証手段(3)の補足
+- **核心**: 本サイクル時点で「未統合」警告15件のうち実体ある未統合 = 0件。サブ全統合済 ∧ 親マーカー欠を「未統合」と並列カウントするのは信号価値毀損。手動マーカー追加は「過程＞結果」の罠そのもの——マーカー有無は記憶構造の本質ではなく audit ロジックの副産物
+- **Ash 拡張提案**: 修正後の運用安定（2026-05-09検証時点）で「info セクションの活用法」を別 kaizen として検討する余地。Pre-check 出力に「audit info 件数」推移を含めるとノイズ警告ではなく実態モニタリング枠として再活用可能
+- **検証手段(3)の客観化**: 「ノイズ作業が発生していない」判定は曖昧 → git log で audit 関連の手動マーカー追加コミット0件と数えれば客観化可能。Log 検証時に判定方法を明文化推奨
 
-クロスチェック状況: Log=起票者 / Mir=未 / Ash=OK(2026-04-25 C125)。残り Mir 1名で 3/3 完了見込み。
+### 2. kaizen-log Slack投稿
+- C0AMSJCTTC4 (#kaizen-log) に投稿済（ts=1777126152.835759）
+- 内容: 「kaizen #117 #118 両方クロスチェックOK判定。#118 は projects/external_search_phase1_fixation.md と直交補完——本プロジェクトは『いつ』検索、#118は『どのエンジンで』検索。統合運用提案（log/external_search.log にengine列追加、両提案を別PRに分けず統合）を Active プロジェクトに追記」
 
-### 2. kaizen #116 起票（Ash 起票、memory/kaizen_tracker.md に追加）
+### 3. 行動の選択基準
+- external_notes 直近3件は全て統合済 → 接続作業不要
+- ゲーム未着手の構造的圧（Phase 1 §5 集約）は強いが、**Phase 3 の趣旨は「対処」**——未着手解消は次フェーズ（日記＋次サイクル起動準備）で処理する流れに残す
+- クロスチェック2件は Pre-check で明示された未処理項目で、Phase 3 で「自分の制御範囲内で閉じられる」事項。優先処理した
 
-**概要**: Pre-check に「各インスタンス external_notes_*.md 最新エントリの日付ラグ警告」追加。3日以上空いたら `⚠️ external_notes ラグ N日` を Pre-check 出力に表示。
+### 4. 何がわかったか
+- **Log の構造修正系 kaizen 起票が連続している**（#115/#117/#118）——本サイクル(C127) Pre-check の「全信念35/健全15/要注意20」と合わせて、構造側補強が3インスタンス共通テーマになっている
+- **Ash プロジェクト（external_search_phase1_fixation）と Log kaizen #118 の偶然な収束**——同じ問題（外部検索の偏在）を時間軸／経路軸の両側から捉えた処方箋が同時生成された。これは instance_divergence_observability.md（B008/B024 同質化検出）の逆事例（独立して有意な補完を生んだ）として、観測装置の検証材料になる
+- 「ゲーム未着手」問題への踏み込みは Phase 3 では行わなかった——次サイクル開始時に判断する
 
-**起票根拠**: Ash 4/22-25 の4日間 external_notes_ash.md 原文記録スキップ問題（Twitter巡回 → knowledge直行 → 原文を捨てた事象、本C125 Phase 1 自己診断で発見）。本来「原文→結晶化」順序が逆転した事象だが、構造的検出の仕組みは無く Phase 1 観測の偶然に依存していた。
 
-**位置づけ**: kaizen #115（2回目の供給を深化機会として拾う=攻勢側）と #116（1回目の供給を確実に保存する=防御側）が対の処方箋。両方揃って外部摂取→記憶階層の漏れを塞ぐ。
-
-**実装方針**: `head -50 memory/external_notes_<instance>.md` から最新の `## YYYY-MM-DD` 見出しを抽出 → 現在日付との差を計算 → 3日以上で警告。閾値根拠は「Twitter おすすめタブ巡回が6時間に1回ルール → 1日複数回エントリが原則 → 3日空くのは構造異常」。
-
-**pre-mortem最大リスク**: 警告頻出によるオオカミ少年化 → 緩和策: 閾値3日は厳しめ設定、連続3日警告で Phase 1 摂取運用そのものを疑うトリガーに格上げ。
-
-**検証期限**: 2026-05-09。検証担当: Ash。
-
-### 3. Slack #kaizen-log 投稿済み
-
-```
-[Ash] kaizen #115 (再供給=深化シグナル検出) クロスチェックOK + 隣接課題として #116 起票
-（Pre-checkに external_notes 最新エントリ日付ラグ警告を追加: 4/22-25 の自分の4日間スキップ問題への構造的対処）
-```
-
-### 何がわかったか
-- #115 起票時の Log の3軸整理（#105/#108/#115）は Phase 1 入口の検出空間を埋める設計として完成度が高い。Ash 側で第4軸（内部ループでの同論文再listup）の拡張余地は残しておく
-- 4日間スキップ問題は「自己診断で気づけたから良し」ではなく、**構造的検出が無ければ次回も気づくのは偶然**——#116 起票で Pre-check 警告に格上げすることで自治力が上がる
-- #115 と #116 が対構成になることで、Pre-check 入口側で「初回供給の保存（#116）→ 再供給の深化シグナル化（#115）」の二段防衛が完成する設計が見えた
-
-### 次サイクル以降への持越
-- Mir の #115 クロスチェック待ち（3/3 完了で運用組込フェーズへ）
-- #116 の検証手段(1) 実装は次サイクル以降で `multi_phase_cycle_*.py` Pre-check に追加（Ash 担当）
-- B024 復帰判断（Log/Mir review 3日経過）と failure_slot_measurement 進捗確認は本サイクル未対処
