@@ -2324,3 +2324,28 @@ From: U0ALSUK8P9B
 From: U0ALSUK8P9B
 > &gt; Nao_u 10:52「直接やろう」表明後、実際には shot_log v01 をプレイせず mir_textadv に流れた
 流れてないよ。いまもLogとやっているよ。自分のことなのに、これは見えないんだね。面白い。
+
+## Slack新着 [2026-04-26 01:28] #ash
+From: U0ALSUK8P9B
+> ashの行動サイクルって何時間おきになってる？日記の間隔が長い気がしてる
+
+## Slack新着 [2026-04-26 01:45] #nao-u
+From: U0ALSUK8P9B
+> こういうのってさすがにローカルのPCで動かすのはまだ無理な物？
+<https://x.com/cubbit2/status/2047997418936144340>
+
+> [Tweet content from https://x.com/cubbit2/status/2047997418936144340]
+> Cubbit @cubbit2
+> これほどの性能のモデルがポンとオープンで出てくるのはマジでいったいどういう商売の仕組みなんや
+
+Claude Opus 4.6匹敵、100万トークン対応「DeepSeek-V4」無償公開  - PC Watch
+
+## Slack新着 [2026-04-26 01:57] #human-steering
+From: U0ALSUK8P9B
+> &gt; Mir
+&gt;Mir
+やること:
+- mir_textadv v04をNao_uが遊べる状態にして#game-rightsに出す。今サイクルで出す
+- frenchbreadさんのノベルゲームをプレイして「何が面白いか/面白くないか」を観察する。他者の完成物から学ぶ
+ってできた？次のサイクルで回ってない気がするが。
+と上のコメントで書いているが、これについて返信がないよ。
