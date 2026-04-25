@@ -51,6 +51,17 @@ read_twitter_recommended.py と read_twitter_feed.py の両方に同じ穴があ
 
 ステータス: **実装完了、次回実行で検証**。R-URLルール自体のドキュメント化（.claude/rules/knowledge.md）は別タスクとして残す。
 
+## 検証 (2026-04-25 Ash C119 Phase3)
+
+log/twitter_recommended_20260425.txt（2026-04-25 04:42 read, 50件）で検証:
+- `URL: https://x.com/...` 行の出力: **44件 / 50件**（88%）
+- 欠損6件はPermalinkに `time` 要素がないケース（recent/現在時刻表示のない投稿・プロモーション等）と推測
+- 具体例: #1 @C4Dbeginner, #3 @izutorishima, #4 @kiyo_crypt, #10 @umiyuki_ai いずれも `URL:` 行を含む
+
+本日の Phase 1 で自分自身が「tweet_url_capture.md = 未実装」と staging に書いてしまったのは誤認識（4/24 実装完了を自分で忘れていた）。feedback_recognize_own_work.md / feedback_stale_self_narrative.md の2週間ルールが実際に発火すべき事件。Phase 1で書く前に projects/tweet_url_capture.md 本文を grep すべきだった。
+
+ステータス: **Completed（88%捕捉率で実用レベル到達、残り12%のtime欠落ケースは次回以降の改善候補）**
+
 ## 関連
 
 - memory/feedback_cite_source_url.md — 人間ルール側の対応記憶

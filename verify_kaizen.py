@@ -101,9 +101,13 @@ def parse_tracker():
         elif line.startswith("- 状態:"):
             raw_status = line.split(":", 1)[1].strip()
             # "検証済み（Ash代行 2026-03-24）" や "検証済み 2026-03-24" も正しくパース
-            # 装飾プレフィクス（✅/📦/⚠️/❌ + 半角/全角空白）を剥がしてから判定する
-            stripped = re.sub(r"^[✅📦⚠️❌🟡🔴🟢]+\s*", "", raw_status)
-            if stripped.startswith("検証済み") or stripped.startswith("検証完了"):
+            # 装飾プレフィクス（markdown bold `**` / 絵文字 + 半角/全角空白）を剥がしてから判定
+            # 2026-04-25 Ash: `**検証済・PASS**` `**検証済・部分的失敗**` `**完了**` 形式が
+            # false-positive期限超過を出していた(#089/#088/#087)ので拡張
+            stripped = re.sub(r"^[\*✅📦⚠️❌🟡🔴🟢]+\s*", "", raw_status)
+            if (stripped.startswith("検証済")  # 「検証済み」「検証済・PASS」「検証済・部分的失敗」全て
+                    or stripped.startswith("検証完了")
+                    or stripped.startswith("完了")):
                 current["status"] = "検証済み"
             elif stripped.startswith("クローズ") or "クローズ" in stripped or "部分達成" in stripped:
                 # 部分達成でクローズされたエントリは「検証完了」扱い（再オープン時は明示的に状態を戻す）
