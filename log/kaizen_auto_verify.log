@@ -8713,11 +8713,13 @@
         [auto] [feedback_no_passive_punishment.md](feedback_no_passive_punishment.md)
   → 総合: 全コマンド成功
 === 自動検証実行 [2026-04-26 01:49:47] ===
+=== 自動検証実行 [2026-04-26 02:02:07] ===
 
 ### #091: 記憶ミラー整合性チェッカー——MEMORY.md インデックスと実体の同期ズレを検出（原理5直接適用）
   状態: 未検証（検証期限 2026-04-26） / 期限: 2026-04-26
   ❌ `python tools/memory_index_integrity.py`
       /bin/sh: python: command not found
+      NG: index not found: C:\Users\owner\.claude\projects\D--AI-Nao-u-BOT\memory\MEMORY.md
   → 総合: 一部失敗あり
 
 ### #090: Phase 1 external_notes未統合候補選定に [統合済] grep必須を追記（Phase 1運用バグ再発防止）
