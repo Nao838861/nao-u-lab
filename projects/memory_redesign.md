@@ -515,6 +515,24 @@ Nao_uが#nao-uに共有したmal_shaikのツイート（Claude Codeのソース�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-04-26: MEMORY.md純粋index化検討の根拠揃い（Log C129 Phase 3 起案メモ）
+
+C124 RLMs（MIT Recursive Language Models, 2026-04-24 Nao_u共有）+ iam_elias1 再供給 + reference_arakawa_three_engineering（Skills の index/body 分離）の3点が揃い、バックログ「MEMORY.mdのSkill化検討（2026-04-07 起票）」を**起案フェーズに昇格できる根拠**が出揃った。本サイクルでは検討メモのみ追記し、実装は次サイクル以降の Nao_u 同席判断を仰ぐ。
+
+**3点根拠の整理**:
+1. **荒川Skills（2026-04-21 reference_arakawa_three_engineering）**: 記事の肝は「index/body 分離 + 実行時判断委任」。MEMORY.md は現状 index と body が混在し200行常時注入。発火判断を LLM に委ねる部分が未実装と既に診断済（reference_arakawa_three_engineering.md 末尾）
+2. **MIT RLMs（2026-04-24 reference_rlms_recursive_language_models）**: 長文を外部環境化してコードで能動的に slice + sub-AI 再帰 spawn、要約しない・削除しない。**MEMORY.md 200行常時注入は RLMs の逆方向**。荒川 Skills と同方向＝「本体を常時注入から外す」（reference_rlms_recursive_language_models.md 末尾既述）
+3. **iam_elias1 再供給（要 grep 確認）**: 直近で「常時注入の重さ」テーマで再投下があった事実が C129 Phase 1 文脈で言及されていた（Phase 1 §5 参照）。同一テーマが3点独立に揃うのは「集めた情報を行動に変換する」（feedback_info_integration.md）の構造的発火条件
+
+**起案案の骨子**（次サイクル以降の Nao_u 同席判断対象）:
+- (a) MEMORY.md を純粋 index 化: トリガー1行＋ファイルポインタのみ。temperature [T:N] と「想起トリガー」一文は維持。詳細セクション（「Pot開発の体験蓄積」「行動指針」など現存12+セクション内のbody部分）を Level 3 ファイル化
+- (b) `.claude/skills/` 機構へ移行検討: descriptionだけで該当性判定→該当時のみ Level 3 ロード方式（バックログ既述の Q1〜Q5 を起案時点で再評価）
+- (c) **段階的移行**: 一気に全文 index 化せず、まず1セクション（例: 「外部リファレンス」）を Skill 化して効果測定。self_authoring_count（記憶ファイルへの自発的書込み回数）が Skill 化前後でどう変化するかを Q4 検証として実装
+
+**起案を本サイクルで kaizen 起票しない理由**: バックログ Q5「試作はLog担当」と書かれている既起案。本日は Phase 1 §7C「『記憶階層の設計と構築』が起案候補に浮上」と書いただけで実体作業は未実施。**新規 kaizen を起票するより、バックログ既存項目を起案フェーズに昇格させる**ほうが「ルールを増やさず効果を出す」（feedback_few_rules_big_effect.md）に整合。次サイクル以降で Nao_u に同席判断を仰ぐタイミングで起案文書を提出する流れ。
+
+**接続**: feedback_info_integration.md「集めた情報が流れて消える問題」への直接処方。3点独立収束を「行動に変換」する具体ステップ＝バックログ昇格。reference_shannholmberg_hot_cache.md の Stop hook+SessionStart injection も類似経路で同方向（「常時注入を減らして必要時注入を増やす」）。本起案メモは BACKLASH 化と並んで本サイクルの「1mm 進捗」（feedback_next_cycle_game_first.md の game/ 1mm を BACKLASH で消化したうえでの memory 1mm）。
+
 ### 2026-04-15: B002/B033二層分割——Nao_u承認、Ash実装開始（Log記録）
 
 B002「忘却は機能」をB002（随意的忘却）とB033（非随意的忘却=エントロピック損失）に分割するAshの提案が、#all-nao-u-labでの議論を経てNao_u承認。
