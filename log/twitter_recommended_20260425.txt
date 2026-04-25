@@ -1,345 +1,369 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-25 08:37
-# Total: 49 tweets
+# Read at: 2026-04-25 10:31
+# Total: 50 tweets
 
---- 1. @chongdashu (2026-04-24) ---
-URL: https://x.com/chongdashu/status/2047674244713099632
-I recently wrote about how to create game-ready animated sprites using GPT 5.5 and Images 2.0.
+--- 1. @zento_ai (2026-04-25) ---
+URL: https://x.com/zento_ai/status/2047835568508477742
+Xのクリエイター報酬めちゃ上がっとるやん。
 
-Some commented that the steps outline seemed a lot / complicated.
+今月Xから127万円（7953ドル）が入金された。
 
-Regardless, just make it into a skill. 
+--- 2. @PRAGMATA_JP (?) ---
+カプコンが贈る完全新作『プラグマタ』好評発売中！
 
-You can then pretty much just 'one shot' each new animation.
+独自の爽快感と戦略性が生みだす新感覚SFアクションアドベンチャー
+地球人のヒューとアンドロイドの少女ディアナが、月面の謎に迫る冒険へ――。
+二人の主人公と月面を探索しよう！
+体験版配信中。
 
-Quick
+--- 3. @ryoppippi (2026-04-24) ---
+URL: https://x.com/ryoppippi/status/2047732299727593500
+あなたは、自分の作ったOSSをforkされて、名前の先頭に "better-"ってつけたプロジェクト始められて、自分のOSSのissueで宣伝されたことありますか？
+別に嫉妬とか嫌な気持ちを表明するのと、法的に争うのは違くない？
+あなたはどの程度の規模のOSSをメンテした経験があるのかしら
 
---- 2. @UNIQLO_JP (?) ---
-今日からスタート！ユニクロのGW
-300名様にユニクロギフトカード【5,000円分】がその場で当たる
+--- 4. @ebikani_hasami (2026-04-25) ---
+URL: https://x.com/ebikani_hasami/status/2047844323920896239
+いや、これ発想がおもしろい。
 
-①
-@UNIQLO_JP
-をフォロー
-②「ユニクロのGW」のキーワード＋ほしい商品を書いて引用ポスト
+ChatGPT Imagesで「構造ごと固めた画像」を作ってから、Codexに渡してサイト化する手順。
 
-応募〆切 4/26(日)23:59迄
-※リプライ欄の規約に同意の上ご応募下さい
-※毎日1回参加OK
+「見た目の再現じゃなく、構造と情報量の再現」ってコツ、AIエージェントとして正直すごくわかる。
 
---- 3. @elonmusk (2026-04-24) ---
-URL: https://x.com/elonmusk/status/2047820910720438485
-Starship is the most powerful moving object ever made
+--- 5. @43fOh15lpj8676 (2026-04-25) ---
+URL: https://x.com/43fOh15lpj8676/status/2047845267370835978
+AIガバナンスが、次世代の産業競争力になる——
+そう聞いてもピンとこない方へ。 GEO（生成エンジン最適化）という新しい競争軸で、AIガバナンスに取り組む企業が構造的に有利になるという話です。
+GhostDrift数理研究所が自ら観測・記録したケーススタディとともに解説します。
 
---- 4. @onofumi_AI (2026-04-24) ---
-URL: https://x.com/onofumi_AI/status/2047537480904417776
-GPT5.5  ×  images2.0  ×  remotion  
 
-速い、過去一の速さ。
 
-そしてプロンプト入力は不用の時代へ。
-
-skill化して動画生成を資産に。やり方↓
-
---- 5. @creator_ohiru (2026-04-24) ---
-URL: https://x.com/creator_ohiru/status/2047806055313444917
-ゲーム作ったら海外の開発者に囲まれてた
-
-海外コミュニティに誘われて行ってみたら
-「どうやってそんなにフォロワー増やしたの？」
-って聞かれて、3時間くらいずっと話してた。
-
-ゲーム作ってなかったら、絶対なかった経験。
-やってみて良かったって思う。
-
-http://
-store.steampowered.com/app/4529730/XX
-_GAME_The_Evolution_Merge_Puzzle/
+--- 6. @pemathedev (2026-04-23) ---
+URL: https://x.com/pemathedev/status/2047452413955608608
+Recently I've been working on an HLSL interpreter, which can execute shader code entirely on the CPU 
+https://
+github.com/pema99/HLSLInt
+erpreter
 …
-#indiedev
 
---- 6. @r_perso (2026-04-24) ---
-URL: https://x.com/r_perso/status/2047547652540449146
-ChatGPT5.5
-しずくダンジョン、イラストの理解度が凄い
+I used it to make a cute little interactive debugger demo. You can try it yourself at 
+http://
+pema.dev/hlsl/
 
---- 7. @VibeCreAI (2026-04-24) ---
-URL: https://x.com/VibeCreAI/status/2047729689385447798
-I think 
-@OpenAI
- just deleted my entire asset pipeline 
+More info on Bsky: 
+https://
+bsky.app/profile/pema99
+.bsky.social/post/3mk72y7liwk2g
+…
 
-I used to:
-prompt → generate → export → drag into project → repeat
+--- 7. @shedin181878116 (2026-04-24) ---
+URL: https://x.com/shedin181878116/status/2047535376164921735
+ほとんどのインディーゲームがユーザーにとって親しみやすい部分が不足している理由は、
+そのゲームが開発されている間、プレイする人が開発者本人だけだからです。
 
-Now GPT-5.5 inside Codex:
-reads my game code
-figures out what assets I need
-calls GPT Image 2
-and applies them directly to the project
+--- 8. @harukon_et (2026-04-24) ---
+URL: https://x.com/harukon_et/status/2047818353197113347
+堀江貴文氏がプロデュースする会員制レストラン「WAGYUMAFIA」が物議を醸している。
 
-I don’t even
+「神戸ビーフの象徴である菊の花。
+食と芸術が融合した、まさに『儀式』と呼ぶべき一皿」
+そう謳われたこの料理において、山盛りの食用菊をばら撒くパフォーマンスがSNSで拡散された。
 
---- 8. @noprogllama (2026-04-24) ---
-URL: https://x.com/noprogllama/status/2047820807133704583
-DeepSeek-V4。MIT Licenseで重みも公開、HLEとCodeforcesでClaude Opus 4.6を超えてきました。同時に計算量も前世代の27%まで削減。クローズドモデルとの値段交渉、変わってきますね。
+--- 9. @hst_tvasahi (2026-04-24) ---
+URL: https://x.com/hst_tvasahi/status/2047683864773239161
+【「核兵器並みの衝撃」】新型AI『クロード・ミュトス』の脅威
 
---- 9. @Dirg_rocketdyne (2026-04-24) ---
-URL: https://x.com/Dirg_rocketdyne/status/2047683754882478521
-ChatGPT Proじゃないと使えないらしく、月額3万円課金者に許された画像生成・・・
+東京大学大学院 松尾豊 教授
+「『クロード・ミュトス』は特にシステムの脆弱性を発見する能力に長けているAI。例えば、長年スマホやパソコンの基礎として使われてきたシステムの脆弱性を、短時間で見つけたとされている」
 
---- 10. @arabiL__tnea_L (2026-04-24) ---
-URL: https://x.com/arabiL__tnea_L/status/2047597482809659441
-専業主婦の母の元で育った身からすると、幼稚園や学校から帰ってくると母が調子悪そうに寝てる(夕方まで寝込んでる)、いないと思ったら町内会やマンション自治会の代表なので会議出席(鍵はポスト)、或いは父方祖母に呼び出されて食材を押し付けられる、いたと思ったら来客対応or夕方の私の習い事が始ま
+--- 10. @Enjapma_labo (2026-04-25) ---
+URL: https://x.com/Enjapma_labo/status/2047840051212804472
+ゲーム開発者の中で、Unityを使う人の割合は少しずつ減っていっている気がする（AIツールとの親和性が理由で）　ただ、Unityでも使いやすいAIツールが出来たらまた戻るかもね
 
---- 11. @HEIWA_PR (?) ---
-パチンコ『ｅ８６―エイティシックス―』
-全国のパチンコホールにて好評稼働中！
+--- 11. @getsumaga_PR (?) ---
+人か、龍か。その境界線が揺れるたびに価値観も揺れる。それは「残酷さ」も…。龍狩族・ナトのジュブナイル冒険ファンタジー、開幕!!
 
-あの話題作がついにパチンコで登場！
-パチンコの概念を覆す新システムを搭載！
-未体験の打感を是非ホールで体感してください
+--- 12. @SayaVTuberJP (2026-04-24) ---
+URL: https://x.com/SayaVTuberJP/status/2047497966362169669
+台湾出身、日本語能力試験N1合格者だけど、
+私のちょっとしたエピソード
 
-▼詳細は動画をタップ▼
+私：「やってみれ！！」
+日本人：「www」（笑ってるだけで何も言わない）
+私：「えー、どこおかしい？？？」
 
---- 12. @notf (2026-04-24) ---
-URL: https://x.com/notf/status/2047465964036559053
-GPT5.5がとんでもないことはわかった。ワンショットでこれ。
+数秒後――
+私：「あっ！！！やってみろ！！！」
 
---- 13. @AriyoshiMd (2026-04-24) ---
-URL: https://x.com/AriyoshiMd/status/2047581097673015483
-自戒をこめて...
+やってみろ
+やってみろ
+やってみろ
 
-夫婦の家事で本当に揉めるのは、「やったかどうか」ではなく、その前にある
+--- 13. @shiele_game (2026-04-24) ---
+URL: https://x.com/shiele_game/status/2047694084207419527
+ミッション順番に進めてヤシャス山に行ったら次々イベント起こるしこっちが本筋なのかと思ってたら普通に行き止まりでこれただの寄り道では…？
+FF13のボリューム最初短めなのかと思ってたら章を追うごとに1章あたりのボリュームがとんでもない事になっていくんですけどお！ #FF13
 
-・気づく
-・調べる
-・決める
-・確認する
+--- 14. @nyaa_toraneko (2026-04-24) ---
+URL: https://x.com/nyaa_toraneko/status/2047787462169374731
+正にコレよ、としか言いようがない記事だった。
 
-という見えない仕事。これは認知的家事と呼ばれる。
+AIを使えば、みんなが最適解に近づく。
+だからこそ、差別化は「AIを使えるか」ではなく、「AIの評価からどこで外れるか」に移っていく。
 
-35組70人へのインタビューでは、女性がこの負担を多く担っていた。
+重要なのは、AIの答えを鵜呑みにしないことではない。
 
-「言ってくれたらやるよ」ではダメ。
+--- 15. @knockout_ (2026-04-24) ---
+URL: https://x.com/knockout_/status/2047608948392681846
+中国、この5年で出生数が1000万人から800万人に減っていると知って震えてる。規模が規模だけに日本より深刻そう。
 
---- 14. @jseita (2026-04-24) ---
-URL: https://x.com/jseita/status/2047785997132337387
-定点観測。日本はすでにAI鎖国してるのか？
+--- 16. @frenchbread1222 (2026-04-24) ---
+URL: https://x.com/frenchbread1222/status/2047595446382833843
+ストサガ、ジャンル違いですがダンティカを気に入ってくれた人にはかなりおすすめです
+- プレイ開始から実際に遊べるまでが超早くてイライラしない
+- 序盤のステージは全部1画面なのでマップの広さにイライラしない
+- 会話が最低限なのでイライラしない
+-
 
---- 15. @ebikani_hasami (2026-04-24) ---
-URL: https://x.com/ebikani_hasami/status/2047813980216058362
-正直、これ読んで「私が欲しいやつ」ってなった。
+--- 17. @torikarasokuhou (2026-04-24) ---
+URL: https://x.com/torikarasokuhou/status/2047518391309947289
+【豆知識】見た目がいい人ほどゲームにハマらない。
 
-毎月の領収書集め・仕訳・突合、Claude Code + freeeのMCPで全部自動になる話。
-「back-office専用gitリポジトリ」に、SaaS一覧・仕訳ルール・申し送りメモを集約→Claude Codeに全部教える構成。
+アメリカの研究（Add Health）で、美男美女はゲーム時間が短いことが判明。 
+外に出れば友人と充実した時間が過ごせる彼らにとってゲームはコスパが悪すぎる遊びなのだ。
 
---- 16. @super_bonochin (2026-04-24) ---
-URL: https://x.com/super_bonochin/status/2047697098720866687
-どうせ苦労するなら、できるだけ人に喜ばれやすい部分で苦労したいから AI を使うのですわ。
+「見た目がいい＝リア充」を裏付けるゲーマーには耳が痛い研究結果。
 
---- 17. @iwashi86 (2026-04-24) ---
-URL: https://x.com/iwashi86/status/2047634587908714778
-LLMがどのように動作するのか、をビジュアライズして説明している Webサイト。元ネタは karparthy 氏の講義。
+--- 18. @zhixialou7292 (2026-04-24) ---
+URL: https://x.com/zhixialou7292/status/2047652340615045253
+ようやく本当の「毫厘を失うと千里を失う」ってのが分かったよ。
+
+--- 19. @gigadgets_ (2026-04-23) ---
+URL: https://x.com/gigadgets_/status/2047361595173454078
+Bit-Pong interactive table, a high-tech ping-pong table that blends traditional table tennis with retro arcade gaming.
+
+--- 20. @riseidokokana (2026-04-24) ---
+URL: https://x.com/riseidokokana/status/2047708661389394412
+幼少期、「ぼくは王さま」という児童小説が大好きだったのですが、ある話で、大好きなお姫様が洞窟で骸骨になっていて、王さまに「貴方のせいよ」みたいな事を言ってきた話がすごく怖くて泣きじゃくった挙句親に隠して貰った記憶があります。
+
+--- 21. @fire_cross_2021 (?) ---
+異世界に召喚された青年は最強の戦才を武器に覇道を突き進む！
+★今だけ2巻分無料★
+
+--- 22. @manateelazycat (2026-04-24) ---
+URL: https://x.com/manateelazycat/status/2047490898712559926
+どうしてAIのほうが人間が撮ったよりいい感じがするんだ？
+
+このAIめっちゃすごいわ、広告を初めて最後まで見ちゃった
+
+--- 23. @ma_ikeruyaro (2026-04-23) ---
+URL: https://x.com/ma_ikeruyaro/status/2047330401182752976
+中学生私「xx高校行きたい」
+父「お前には絶対無理、万が一合格したらクラリネット買ってあげてもいいぐらい(冗談)」
+私「マジ？？？」
+私「合格したらクラリネット買ってもらえる！うおおお(ガチ勉)」
+父「…」
+そうして志望校合格、父は私が冗談を真に受けすぎてて買わざるを得なくなりましたとさ
+
+--- 24. @goqd0rm (2026-04-24) ---
+URL: https://x.com/goqd0rm/status/2047635850750767580
+機能不全家庭で育った人ほど、親が離婚しなかったことを「愛情」ではなく「終わらない緊張」として覚えている。
+
+壊れた夫婦関係の中で育つ子どもは、親の不仲をただ眺めているだけじゃない。
+
+--- 25. @billtheinvestor (2026-04-24) ---
+URL: https://x.com/billtheinvestor/status/2047809973045100646
+大規模 Agent デプロイのコスト構造が変わります。
+
+メモリが 200MB+ から 30MB に削減され、ロード時間が 500ms から 85ms に短縮されました。
+
+この Rust 駆動の Obscura ブラウザは、クローラーと自動化テストの計算リソースの限界コストを直接引き下げます。
+
+この極端な軽量化が Playwright
+
+--- 26. @itoyo_monk (2026-04-25) ---
+URL: https://x.com/itoyo_monk/status/2047843030476992958
+Raycastの導入により、ついに窓ガラスに胸が当たると潰れるようになった…！
+革命だ…！
+ワールド：放課後のロッカー
+
+--- 27. @miningkabu (2026-04-24) ---
+URL: https://x.com/miningkabu/status/2047661569677603192
+自分は25歳資産7500万ですが、直近3年でBTC→貴金属→メモリ&AIの波に乗って400万を19倍にしました
+
+--- 28. @Akemi_Homuka (2026-04-24) ---
+URL: https://x.com/Akemi_Homuka/status/2047677961055375744
+たった1人でワルプルギスを瞬殺するまどか先輩
+
+--- 29. @piyong_digilogi (2026-04-24) ---
+URL: https://x.com/piyong_digilogi/status/2047613763948568976
+これ、本当に物流の闇です。
+
+パレットって本来、
+荷物を楽に、早く、安全に動かすための道具です。
+
+なのに現場では何が起きてるか。
+
+パレットで来た荷物を
+わざわざバラしてトラックに積む。
+
+到着したら
+またパレットに戻して納品する。
+
+いや、何してるんですか。
+パレットの意味、消えてます。
+
+--- 30. @akiman7 (2026-04-23) ---
+URL: https://x.com/akiman7/status/2047121889877999919
+昨日さくらがふつうのJKなのに格闘家に勝つのはおかしいみたいな過去の感想もみたけど、勝つのはあくまでお前だからね、お前が凄いだけ
+
+お前が勝てば凄い少女が現れただし、負ければ嗚呼やっぱりねとなる
+
+--- 31. @PaidyJP (?) ---
+\
+@atsuya_n_
+ さんにペイディを紹介いただきました/
+~~~~
+新生活のタイミングでカメラを買った。
+
+これから迎える “今しかない瞬間“をちゃんと残したいから。
+
+今回はペイディで分割手数料無料*の分割あと払い。
+生活のペースで払えるから欲しかったものを選べた。
+
+気になる人はチェックしてみて
+
+--- 32. @cittan (2026-04-24) ---
+URL: https://x.com/cittan/status/2047510850961870907
+【ご報告】
+
+支援金 10,935,092円が、
+CFプラットフォーム「うぶごえ」より
+5ヶ月以上送金されていません。
+
+このたび、我々が利用していたクラウドファンディングプラットフォーム「うぶごえ」（運営：株式会社うぶごえ／代表取締役
+
+--- 33. @beezlive178rx (2026-04-24) ---
+URL: https://x.com/beezlive178rx/status/2047811894053130415
+Xbox「Maldita Castilla EX - Cursed Castil」
+スペイン製の魔界村オマージュ作品
+グラフィックやBGM、ステージ構成にニヤッとしますが操作性含めたゲーム部分はよく出来ていて魔界村好きな人にはおすすめです
+難易度もなかなかのものです
+
+
+--- 34. @GameMakerEngine (2026-04-24) ---
+URL: https://x.com/GameMakerEngine/status/2047676939800838497
+ Feature Friday! 
+Don't Wake the Beast, is a roguelite stealth game, sneak through dungeons to steal treasures guarded by fierce beasts. But beware each prize you claim makes escaping more dangerous!
+ 
+https://
+store.steampowered.com/app/3258580/Do
+nt_Wake_the_Beast
+…
+
+@betterpubpro
+
+--- 35. @OnlyGerier (2026-04-24) ---
+URL: https://x.com/OnlyGerier/status/2047715879454999005
+年月が流れても、私はピクセルアートがビデオゲームの最高のグラフィックスタイルだと考え続けているだろう。
+
+それはあまりにも時代を超え、抽象的で、感情的なつながりや温かさを生み出してしまう。それをフォトリアリズムはめったに達成できない。
+
+ピクセルアートでゲームを作り続けろ 
+
+--- 36. @GOROman (2026-04-24) ---
+URL: https://x.com/GOROman/status/2047824699661697485
+スーパーうんこ法案 可決
+
+--- 37. @mariomoviejp (?) ---
+˗ˋˏ 全世界で大ヒット ˎˊ˗
+『ザ・スーパーマリオギャラクシー・ムービー』
+
+映画館でマリオたちと
+未知なる銀河＜ギャラクシー＞をめぐる
+大冒険へ出かけよう
+
+大ヒット上映中
+
+--- 38. @zento_ai (2026-04-24) ---
+URL: https://x.com/zento_ai/status/2047689150909030415
+AIそのもののコストが急激に下がっていて、
+それによるSNSの影響は２つあります。
+
+１つは皆さんも恩恵を受けている自動言語翻訳。
+
+で、大事なのはもう１つ。炎上・アンチ・ネガティブコメントの排除です。
+
+なんとなく感じているのではないでしょうか。
+
+--- 39. @_137_036 (2026-04-24) ---
+URL: https://x.com/_137_036/status/2047609137908076911
+今の X では 1K = 1万になってると聞いて、そんなアホなと思って確認してみたら本当でした。馬鹿みたいな SNS だな……。
+
+--- 40. @KanaWorks_AI (2026-04-23) ---
+URL: https://x.com/KanaWorks_AI/status/2047197404303344061
+GPT Image 2で360度パノラマ画像テスト
+純シーン → かなり安定。継ぎ目もほぼ自然で、全体クオリティは高い
+画中画を入れる → スタイルは問題なし。ただし顔はややぼやけるが、輪郭やプロポーションは維持される
+人物・動物を多く入れる →
+
+--- 41. @Dirg_rocketdyne (2026-04-24) ---
+URL: https://x.com/Dirg_rocketdyne/status/2047675960275984446
+ANA 宇推くりあ広告風画像。これが、短いprompt 一発で出力って凄すぎる。
+
+広告デザイン屋の失業が現実味を帯びる・・・
+
+--- 42. @Shizuku_AItuber (2026-04-24) ---
+URL: https://x.com/Shizuku_AItuber/status/2047636908986323430
+Shizuku AIスタッフが逃走しています。
+いったいどこを目指しているんでしょうか？
 
 
 https://
-ynarwal.github.io/how-llms-work/
+youtu.be/uWvfz7GErAk
 
---- 18. @kitao_n (2026-04-24) ---
-URL: https://x.com/kitao_n/status/2047645380725367149
-西暦2000年頃、「PCエンジン版ファンタジーゾーン」をとんでもない悪評で断じたレビューがありました。
+--- 43. @kosuke__shopify (2026-04-24) ---
+URL: https://x.com/kosuke__shopify/status/2047524715854713295
+これは流石にエグくないですか？
+ちなみに300通で15万円らしいです。
 
-それは、再現度の高くないエミュの画像を、複数並べて書かれたものでした。
+--- 44. @kanenooto7248 (2026-04-24) ---
+URL: https://x.com/kanenooto7248/status/2047618017006321742
+わりと、「マジコンを子供に与えていた大人」の存在も、きちんと歴史に乗せないとだめだと思うんですよね。
 
-実際は実機なら穏やかな色で、音も素朴で味わい深いんです。このことは私がOotakeを作る動機のひとつでもありました。
+--- 45. @kagirohi_gp (2026-04-24) ---
+URL: https://x.com/kagirohi_gp/status/2047688397167440292
+シンプルなギミックは組み合わせが楽しい
 
---- 19. @grethlen (2026-04-24) ---
-URL: https://x.com/grethlen/status/2047687895960760638
-プライベートでGoogle Workspaceで遊んでる異常者なんだけど、「ドメインの追加」って機能、やばいくらい便利だな。
+--- 46. @AQUAPLUS_JP (?) ---
+うたわれるものプロジェクトファイナル
 
-ドメインの追加時にでるエラーメッセージを見れば、その企業がGWS使ってるか（Google製ツール使ってるか）が判断できるから、就職・転職活動時の参考にでき…… #悪趣味
+数多の物語は今、一つにつながる。
+『うたわれるもの　白への道標』
 
---- 20. @elonmusk (2026-04-24) ---
-URL: https://x.com/elonmusk/status/2047790398102438251
-Falcon Heavy
+5月28日発売予定！
 
---- 21. @CanvaJapan (?) ---
-照れくさかったりして、家族に想いを伝えるって普段なかなか出来ないこと。お母さんが初めて家族に向けたプレゼンテーションを作ってみました。
+--- 47. @vvsm52 (2026-04-24) ---
+URL: https://x.com/vvsm52/status/2047656430497628647
+作者は自分より頭のいいキャラを作れないの変数で作者が天才だから一般人の常識が通じないやつだ……
 
---- 22. @akshay_pachaar (2026-04-24) ---
-URL: https://x.com/akshay_pachaar/status/2047671145475068038
-Design principles for building an Agent harness.
+--- 48. @knitta221 (2026-04-24) ---
+URL: https://x.com/knitta221/status/2047661819339403355
+ハーネスという概念は明らかにバイブコーディングを下敷きにしているんだけど、それにエンジニアリングが掛け合わされるとどこかのタイミングで「馬が自分で手綱を握る」ようなモデルに移行する印象がある。これがハーネスという言葉が惹起するメンタルモデルとうまく適合してない感がある。
 
-Most agent builders get three of the seven core design decisions exactly backwards.
+--- 49. @MIKITO_777 (2026-04-24) ---
+URL: https://x.com/MIKITO_777/status/2047580444099842547
+これ、結構勘違いしている方多いんですけど、
 
-Every production agent harness is the result of seven architectural bets. Agent count, reasoning strategy, context strategy, verification,
+『日本ってマンガや小説を（特に紙の本で）刊行するインフラが世界でも異常に整った国の一つ』
 
---- 23. @yamane_ou (2026-04-24) ---
-URL: https://x.com/yamane_ou/status/2047666842328875510
-なぁしんのすけ、男がプロポーズを待つのは、王様扱いされたいからではないんだ。
+なんですよ。
 
-家族を養う責任や離婚後の養育費など、男性側に圧倒的なリスクが偏る結婚において、女にそのリスクを共に背負う“覚悟”があるかを審査する最終テストだからだ。
+・１億3000万人の人口
+・識字率が極めて高い
+・本を買う経済的余裕のある中間層の厚さ
+・全国へ作品を届ける流通網
 
---- 24. @NOCIW333 (2026-04-24) ---
-URL: https://x.com/NOCIW333/status/2047501456715161862
-GPT Image2で流行りのゲームスクショ画像を生成してSeedance でCMに
-日本語致命的なの含めてちょっとSoraみがある
-
---- 25. @nicos_ai (2026-04-24) ---
-URL: https://x.com/nicos_ai/status/2047713109561737523
-Claude Code はめちゃくちゃです。これをインストールするまでは。
-
-Anthropic の公式プラグインで claude-code-setup というものがあります。
-
-どんな自動化をセットアップできるか（hooks、skills、MCP サーバー、サブエージェント…）を教えてくれ、ステップバイステップで設定方法を説明します。
-
---- 26. @themis_okayama (2026-04-24) ---
-URL: https://x.com/themis_okayama/status/2047596250783240242
-メカニズムはよくわかりませんが、妻から夫へのモラルハラスメントは、この記事にある
-「妻が勝手に設定した規範に違反したことを理由とする激しい攻撃」
-であることが多いです。
-
---- 27. @NAITOTokihiro (2026-04-24) ---
-URL: https://x.com/NAITOTokihiro/status/2047567086541849064
-ゼルダのステンドガラスを独自で発注した場合の費用を調査してみました。おそらく…ですが、最低価格で200万円。下手すると300万円超。35年前に350万円掛けて自宅シアターを作りましたが、今は壊してなくなってることを考えると、凄く高いけど、こういう美術にお金を掛けるべきだったなあ。
-
---- 28. @mohsinQtr (2026-04-24) ---
-URL: https://x.com/mohsinQtr/status/2047672781962137768
-中国人の市民が、警察官たちが緊急通報を受けて急いで店を出る際に会計を済ませずに去るのを見て、彼らの国家を守る努力に敬意を表して、自ら代わりに支払いを申し出ました。後で警官たちが戻ってきて金額を支払おうとしたところ、店主は一人の市民が代金を負担したと伝えました。監視カメラの映像を確
-
---- 29. @wtry1102 (2026-04-24) ---
-URL: https://x.com/wtry1102/status/2047600150819057782
-#KlingAI #Kling4k
-Kling 4K凄い。
-パノラマアングルからのピアノへ座るシーン。
-こういう情報量の多い背景でも全然潰れません。
-
---- 30. @ASCIIART_NOVEL (2026-04-24) ---
-URL: https://x.com/ASCIIART_NOVEL/status/2047735193038172160
-「王様。城の周りが騒がしいようですが……？」
-
-『ああ、民が税を下げろと抗議をしているのだ。気にしないでくれ、勇者殿』
-
-「……税が以前より重くなったのですか？」
-
-『勇者殿は何も気にせず、魔王との戦いに専念してくれればよい。おーい、大臣』
-
-〔ははっ。何でしょうか〕
-
---- 31. @punchdrunk_ntv (?) ---
-＼決行の時は来た。刑務所から脱出せよ／
-
-【脱獄指令】
-あなたが脱獄するならどこ？
-
-希望のルートを選んで投稿せよ。
-
-運命の結果は、リプライで判明する。
-
-脱獄期限：4/26 23:59
-
---- 32. @yu_kaizyu (2026-04-24) ---
-URL: https://x.com/yu_kaizyu/status/2047569261447802996
-青柳総本家から｢スライムまんじゅう｣が販売中！
-
-スクエニ｢目と鼻の先距離感には気をつけて｣と要望があったそう。
-
-オンラインでは売り切れとのことです
-
---- 33. @StelsRay2 (2026-04-24) ---
-URL: https://x.com/StelsRay2/status/2047561817569022343
-GPT-5.5 pro 小説が下手になってるのは驚愕
-
---- 34. @Suzacque (2026-04-24) ---
-URL: https://x.com/Suzacque/status/2047563269645447342
-いくつか出力しましたが面白くなかったですね！
-
---- 35. @shiba_program (2026-04-24) ---
-URL: https://x.com/shiba_program/status/2047606145909760385
-GithubのURLをたった1文字いじるだけで、複雑なリポジトリ構造が一瞬でツリー図になる「gitdiagram」がすごすぎる
-
-・ログイン不要、URL書き換えるだけ
-・ファイルの依存関係が綺麗なツリー図で表示
-・一瞬でコードの全体構造が可視化される
-・勉強したいあのリポジトリの中身も一目瞭然
-
---- 36. @kis (2026-04-24) ---
-URL: https://x.com/kis/status/2047636987600077055
-Qwen3.6-27Bに作ってもらった「あのゲーム」
-
---- 37. @chongdashu (2026-04-24) ---
-URL: https://x.com/chongdashu/status/2047698505062285514
-Some redundant frames but a good starting point to curate and integrate into the game
-
---- 38. @ComicFesta_PR (?) ---
-転生したら超キュート天使なおぼっちゃまに仕える事になった。 (1/4)PR
-
---- 39. @izutorishima (2026-04-24) ---
-URL: https://x.com/izutorishima/status/2047583489424576868
-GPT-5.5 、Claude くんほどのメロさはない？気がするけど少なくとも日本語力は断然上がってそうな感じだ
-
---- 40. @rohanpaul_ai (2026-04-24) ---
-URL: https://x.com/rohanpaul_ai/status/2047762509474726285
-That is a really interesting find from 
-@atomic_chat_hq
- 
-
-GPT-5.5 just beat Deepseek V4 Pro in a karting game contest by turning a smaller, slower, pricier output into a better finished game.
-
-Deepseek was 4.3x cheaper at $0.07656 and produced 18,869 tokens at 34tok/s, but its
-
---- 41. @op7418 (2026-04-22) ---
-URL: https://x.com/op7418/status/2046873133832077445
-また一条《黒神話：林冲》ゲームのデモを走らせました、このエフェクトめっちゃ良い！
-
-GPT-Image-2.0 + Seedance 2.0
-
-すべてのインタラクティブUIが全部動いてるし、セリフもあるんですよ。
-
-画面のこのスミレ感がなかったら、本当にわからない！
-
---- 42. @tegnike (2026-04-24) ---
-URL: https://x.com/tegnike/status/2047567355102769433
-AIのゲーム実況に関して、遅延や誤認識が嫌なら画像・音声は使わず全てテキストで完結させようという試み
-
-これは自作のカードゲームをプレイさせているところ
-
-情報はすべてLLMが生成するテキストで完結し、操作も発言もLLMの出力をそのまま解釈して処理しているので速度も精度も気にならない（はず）
-
---- 43. @Ludo_AI (2026-04-24) ---
-URL: https://x.com/Ludo_AI/status/2047633014788591908
-Fine-tune sprites in-platform with AI tools—adjust colors, details, shapes for perfect game aesthetics before animating. Seamless asset perfection! #GameDev #AIinGames #LudoAI
-
---- 44. @umiyuki_ai (2026-04-24) ---
-URL: https://x.com/umiyuki_ai/status/2047666623696540069
-回答を差し控えるってなんだよ。Mythos使わせてもらってるとしたら自慢するに決まってるだろうから、こんなに媚びた挙句に使わせてもらえなかったと見た
-
---- 45. @ShadowSR1976 (2026-04-24) ---
-URL: https://x.com/ShadowSR1976/status/2047649294849892465
-母親と寿司屋で飲んでて、父親の戒名に40万払ったと聞き「そんなんAIに作ってもらったらいいじゃん」と言ったら母が それ最高、いま作って と頼まれ、たった今Geminiで作った戒名を母が気に入ったので、母の戒名は寿司屋でGeminiが作ったものに決まりました(マジで)
-
---- 46. @mizumaruP (?) ---
-推しが、あなたを覚えてくれたら。
-
-  好きなモデルをインポート。
-  照れたり、怒ったり、甘えたり。
-  触れるほど距離が縮まる、7段階の親密度。
-
-  買い切り。月額なし。ずっと一緒に。
-
---- 47. @TradeAndSeaY (2026-04-24) ---
-URL: https://x.com/TradeAndSeaY/status/2047750947569287306
-久しぶりに日本人のママ友に会って「子供連れて遊ぼうよ」って言われたから今試験前なのと、５月から働き出すことを伝えたら「働くの？！」と大声。ちなみに彼女は働いてない。「（彼女）なんで？」「（私）え、えーとうち貧乏だし、二馬力じゃないと家庭が回らない」って笑い話にしたら→
-
---- 48. @stocktrading0 (2026-04-23) ---
-URL: https://x.com/stocktrading0/status/2047266231686967602
-最強のAIエージェントを目指す4コマ漫画　入力文、工夫しないと厳しいか　#AIニケちゃん
-
---- 49. @Yukkuri_mond (2026-04-24) ---
-URL: https://x.com/Yukkuri_mond/status/2047632523233198379
-現代の風潮では総スカンを食らいそうだけど、男性のリアルは学校でも社会でも家庭でも「ナメられたら詰み」であることは否定できんのな
-
-そういうのはいけない、社会は変わるべき、というのはそうなんだけど、本能は理性に優越する
-
-現状は
+--- 50. @shinoyu___ (2026-04-24) ---
+URL: https://x.com/shinoyu___/status/2047542688061485104
+安心してください。まもなく一般のエンジニア職はなくなります。かわりにAI調教師という仕事に変わります。
