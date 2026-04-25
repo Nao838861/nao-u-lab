@@ -85,3 +85,24 @@ URL: <https://arxiv.org/html/2603.12129>
 直接の処方箋にはならない（我々は RL でも純粋希少リソース下でもない）。但し「self-play 構造への Guide 注入」を加速する時、加速そのものが集団outcome を悪化させる経路がある、という警告軸を本ファイルに併設しておく。`feedback_external_search_missing` の構造強制 (auto_diary.py 警告) を実装する際、Guide 質問数の上限 / アンカー重複検出 を併せて設計する根拠として援用可能。
 
 [統合済 2026-04-26 — Log C128 Phase 2 — reference_self_play_plateau_20260424.md 反証側として併設]
+
+## 2026-04-26 追記: 多様性の2軸分離（Springer 2022 統合）
+
+C127 Phase 1 で取得した基礎研究を、RPPO / SGS の理論的背景として併設する。
+
+論文: Springer 2022 "Quantifying environment and population diversity in MARL"
+URL: <https://link.springer.com/article/10.1007/s10458-022-09548-8>
+要旨: MARL における多様性を **環境多様性** (environment diversity) と **集団多様性** (population diversity) の2軸に分離して定量化する研究。
+
+【RPPO / SGS との接続】
+- RPPO = 集団多様性軸（同一環境下でリスク選好の異なるエージェントを並べる）
+- SGS Guide = 環境多様性軸に近い（サブ問題のアンカー源を未解目標と自然さで切り替える）
+- 我々の cross_review 改修論で「Mir/Ash/Log を分布近接3体として固定したまま Guide 質問だけ足す」は **集団多様性軸の自治改善のみ**で、環境多様性軸（同じ題材を見続ける癖）には効かない
+
+【我々への鏡】
+shot_log v01 → BACKLASH 化（2026-04-26 Nao_u 編集 326+/48-）の事例: Nao_u が **環境（題材）を変えずに集団（実装者）を独占した** ケース。Solver 1体（Nao_u）が 5h 対面 + その後の編集で v01 を昇格させた事実は、cross_review の集団多様化より「環境＝題材」を Nao_u アンカーで切り替えた効果が大きかったと読める。次の cross_review 改修では、Guide アンカー源を「未解目標」だけでなく「同じ題材で別の実装軸」（例: shot_log → ランキング軸 / AI_MODE 軸 / スコア倍率軸）に分離する設計を検討する。
+
+【判定】
+直接の処方箋ではないが、cross_review / 外部検索 / Guide 注入を語る時に「どちらの多様性を増やしているのか」を1問加える根拠として援用。基礎研究なので shared-reads 投稿価値はなし、本ファイル内併設で完結。
+
+[統合済 2026-04-26 — Log C129 Phase 2 — reference_self_play_plateau_20260424.md に環境多様性 vs 集団多様性の分離軸として併設]

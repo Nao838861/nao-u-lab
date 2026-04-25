@@ -121,6 +121,29 @@ avoid_log_02は同じ構造で**3度失敗**した。「磁力場に近づく動
 **処方箋の運用例**: shot_log v01 → v02 候補4案（A巻き戻し / B コンセプト分離 / C 別コンセプト / D 改修）から **A 巻き戻し** を第一推奨。v02 を「ゲージなし・敵1種・SPACE弾だけ」に戻し、撃つ→当たるの単発快感が30秒で立つかを確認してからゲージを足す。dialogue_many_games_20260421「次作へ」と整合
 **詳細**: `game/shot_log/v01/devlog.md` 「2026-04-25 13:50 サプライズニンジャ Q-A/B/C 遡及採点」節
 
+**2026-04-26 補足: Nao_u が v01 を BACKLASH へ昇格させた事実による処方箋の見直し**
+
+Log C122 (2026-04-25 13:50) の M-21 自己採点 ✗ 判定 + 対面5h セッション (M-22〜M-26 結晶化、コミット 43672a2) の翌日（2026-04-25 夜〜04-26 朝）、Nao_u が `game/shot_log/v01/index.html` を直接編集 (326+/48-、未push)。主な変更:
+- タイトル `shot_log v01` → **BACKLASH** にリブランド（独立したゲームへ昇格）
+- AI_MODE 実装: `?ai` URLパラメータで `aiExpert()` ポリシー (17方向評価 + 弾道ライン回避 + 自動ボム) が自機を操作
+- オンラインランキング実装: Google Apps Script Web App URL に POST/GET、TOP10 + YOUR RANK 表示、ネーム入力UI、playerId は `crypto.randomUUID()`
+- スコア倍率再設計: SCORE_ENEMY (small=10 / medium=30→50 / large=80→200 / boss=500→1000)、SCORE_ITEM (60→100 max)、BOMB_MULTI を SM=10 / LB=2 に分離、BOMB_BULLET_PTS 10→30
+- 演出強化: スター背景 3レイヤー → 6レイヤー (120個→200個)、スコアポップアップ追加
+
+**M-21 処方箋（A 巻き戻し→ゲージなし最小化）が単独自己採点では危険な判断だった理由**:
+1. **Nao_u は逆方向の処方を採用した**: 巻き戻しではなく、ランキング軸 + AI_MODE 軸 + スコア再設計でゲームを **拡張** し独立タイトル化。我々の v02 候補4案には「E ランキング軸で別の快感を立てる」「F AI_MODE で観察軸を作る」が存在せず、選択肢自体が貧しかった
+2. **外部反証情報と整合**: C129 Phase 1 外部検索 (kaizen #106) で Cygni (2024 STG) "you manage energy between shields and weapons, creating moments where you're forced to choose between defense and offense" / Crimzon Clover (吸収弾→ゲージ→devastating attack) / SHMUP Creator (scoring/gauges/chaining/medals/smart bombs/power-ups) — **ゲージ2役 + ランキング併設は現行STG商用作品の標準装備**。M-21の Q-A=△ (ゲージ2役) と Q-C=✗ (罰3つを抜くと破綻) はジャンル基準では「症状」ではなく「設計判断」だった可能性
+3. **Solver self-play の限界が再露呈**: M-21 footnote「単独自己採点の限界」は対面5h で部分的に解消されたが、その後さらに Nao_u が編集を入れた事実は「対面1回でも Solver Guide には不足」を意味する。Guide が最終的にゲームを **書き換える** 段階まで降りてくることもある
+
+**新しい次回の規則**:
+- v01 採点で ✗ 判定を出した時、**処方箋（巻き戻し / 改修 / 別コンセプト）を採用する前に、Nao_u プレイ済みかどうかを確認**。未プレイなら処方箋採用を保留して inbox 経路でプレイ依頼を出す。判断レベル A での自己決裁範囲ではない
+- v02 候補に **「ランキング / 観察モード / スコア軸再設計」など、ゲームの軸を増やす方向の選択肢を最低1つ含める**。常に「巻き戻し or 拡張」の両端を並べる（feedback_solution_space_rollback.md「巻き戻しと改造を並べる」の拡張版）
+- Solver self-play で出した自己採点結果を MEMORY.md / game_lessons_log に刻む時は、**Nao_u プレイ前か後か** を必ず注記。「Nao_u 未プレイで Log 単独採点」と「対面後採点」と「Nao_u 編集後採点」は別物として扱う
+- 商用作品/同ジャンル先行作品の設計判断と、自己採点の症状診断が **逆向きに食い違った時**、自己採点の方を疑う。kaizen #106 外部検索結果は「Phase 2/3 で強制利用しない」が原則だが、自己採点の症状判定の妥当性を **再点検する** 用途では使ってよい（記憶外との整合確認）
+
+**M-21 の症状診断（v01膨張＝着手中の追加病巣）は依然有効**だが、**処方箋（A 巻き戻し第一推奨）は「Solver self-play で完結させない」が前提条件**。M-15(改修時) / M-17(着手前) / M-21(着手中) の3点セットに加え、**M-21 補足 = Solver-only ✗ 判定の単独処方禁止**。
+**詳細**: `game/shot_log/v01/index.html` 2026-04-26 unstaged diff 326+/48- および本ファイル「shot_log v01 対面5時間セッションの結晶化」節
+
 ---
 
 ## shot_log v01 対面5時間セッションの結晶化（2026-04-25 Log + Nao_u 約5時間 / コミット 43672a2）
