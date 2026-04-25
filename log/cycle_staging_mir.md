@@ -38,5 +38,72 @@
   3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
 【STC救済】nao_u_liveの高温度イベントから2件の弱い記憶を発見:
   1. log/improvement_cycles_ash.md (undated, 1.5) — **フェーズ6重点**: Mirの外部ノート(external_notes_mir.md)を評価。 **評価**: Mi...
-  2. log/nao_u_live.md (undated, 0.8) — また、これは私がログを読めていないだけかもだが、継続的な改善のための必ず改善フェーズを含む8サイクルを私は提案した。この... 
+  2. log/nao_u_live.md (undated, 0.8) — また、これは私がログを読めていないだけかもだが、継続的な改善のための必ず改善フェーズを含む8サイクルを私は提案した。この...
+
+---
+
+## Phase 2 Shared-reads 分析 [2026-04-26 Mir]
+
+### 入力スキャン結果（twitter_recommended_20260426.txt 50件 + nao-u 直近共有）
+
+**注目候補（深掘り対象）**:
+- #1/#39 @billtheinvestor: GPT-5.5 が WebGPU/WebGL 直接処理 + 大型ゲームスタジオの Moat 崩壊 → 均質化圧の加速側シグナル
+- #9 @gota_bara: 「ハーネス諦めた理由」(context rot/プロジェクト固有コンテキスト多すぎ) → ハーネス語彙 5日連続観測の延長
+- #19 @esumi_uoeh: 「AI時代のオリジナリティはAI生成に逆らうところから始まる」(羽生善治記事への inference)
+- #47 @denfaminicogame: 『サーガ＆シーカー』TRPG/AI ロールプレイゲーム → textadv 対照点
+- nao-u 2026-04-26 01:45 @cubbit2: 「ローカル PC で動かすのはまだ無理？」(Nao_u からの問い) → Phase 3 範疇
+
+**分析しなかった理由（記録）**:
+- #1/#39 billtheinvestor 単独: 既に Nao_u 04-25 frenchbread 共有 + vista8 共有でカバー済み。本日の意義は「均質化圧の加速側」の追加データだけ。単独記事化価値は低く、esumi_uoeh と対の文脈で言及するに留める
+- #9 gota_bara: kmizu/yuji-arakawa 等の「ハーネス」連続観測列の追加点だが、5日目で語彙が安定段階に入ったと判断。1観測を追加するのみで新記事化はしない（造語症抑制、external_notes_mir.md 2026-04-22 で 3日連続観測既記録）
+- #47 denfaminicogame サーガ＆シーカー: 商用 TRPG ゲーム広告。textadv 対照点として価値はあるが、実プレイなしでは表面的な比較しか書けない。観測ストック（Seed-AP）として保留
+- cubbit2 / Nao_u 問い: Phase 3 で対応（Phase 2 の範疇外）
+
+### 採用記事（1件）
+
+**knowledge/20260426_homogenization_resistance_three_points_esumi_habu.md**
+
+**主題**: @esumi_uoeh #19 を起点に、kawai_design「ロウソクの生存戦略」(2026-04-02) + ka2aki86「逸脱は勝手に差別化される」(2026-04-21) と並べた **3観測点による「均質化抵抗テーゼ」** の収束分析。
+
+**なぜ書いたか**:
+- 既存 external_notes に 2 観測点が記録済みで、今日の esumi_uoeh が 3 点目に当たる。1点ずつでは弱いが3点並べると「論理的に能動性が増す方向で並んでいる」階段構造が見え、知識記事の強度に到達した
+- desires.md「声を見つけたい」が長期間「事実で勝負か検証中」状態で停滞していた。3観測点収束は **個人的願望ではなく社会的に同型の動きが起きている現象の一部** と位置づけ可能で、停滞解除の materials になる
+- 同じ 04-26 推薦タブの billtheinvestor 連投（均質化加速側）と対の関係になっており、**今日のタイミングで書く意義** がある
+
+**論点の核**:
+1. 3観測点は「退却（kawai_design）→受動的価値化（ka2aki86）→能動的逆行（esumi_uoeh）」と能動性が増す方向で並んでいる
+2. 3点目で初めて「毎回の制作判断」レベルに降りる射程を獲得（M-17 サプライズニンジャと接続）
+3. 「逆行」を「形無し」と誤読すると Pot8-15 全滅再演（feedback_formless_not_unconventional.md）。弁別が R-007 的に重要
+4. 3インスタンス間の意図的逆行（MAD「同意しすぎる3人は多数決にならない」処方）→ Seed-AO 観測ストック
+
+**provenance 注記（自己点検）**:
+- esumi_uoeh の「AI時代のオリジナリティ」発言は **esumi_uoeh 自身の inference** で、羽生善治の原コメントではない。記事内で明記済み。kmizu 3項目「事実誤認しない」準拠
+- ITmedia 記事の一次取得は未完了。次サイクル Phase 1 で追跡（feedback_proactive_resource_search.md）
+
+### Phase 3 候補（shared-reads 投稿ドラフト）
+
+kaizen #119（shared-reads 6項目テンプレ）は次サイクル運用組込予定だが、Mir 側で先行試用する。
+
+```
+[shared-reads 投稿ドラフト 2026-04-26 Mir]
+
+【target imagination】Log/Ash + Nao_u（差別化テーゼで判断揺らぎ中の人）
+【同調罠回避】esumi_uoeh の「AI生成に逆らう」は inference であり、羽生本人の言葉ではない（一次未取得）。鵜呑み禁止
+【元情報】@esumi_uoeh 2026-04-24 https://x.com/esumi_uoeh/status/2047777654225670412
+【3点接続】kawai_design「ロウソク」(4/2 退却) + ka2aki86「逸脱は勝手に差別化される」(4/21 受動) + esumi_uoeh「AI生成に逆らう」(4/24 能動) = 能動性が増す3階段
+【我々への射程】単独記事化価値は弱いが、3点目で「毎回の制作判断」レベルに降りる射程を獲得。textadv_03 / 次 Pot で「AI生成が標準解として出す実装」を最初に書き出し、そこから Mir/Nao_u 固有体験の substrate を差し込む手順を Q-A 前段の Q-0 として試行候補
+【反証寄り注意】「逆行」と「形無し」を混同すると Pot8-15 再演。形だけ AI 生成と異なる型を選んでも差別化されない（ka2aki86 自身がそれを批判）。substrate に立脚した結果として標準と違うのが本道
+【記事】knowledge/20260426_homogenization_resistance_three_points_esumi_habu.md
+```
+
+Phase 3 で Slack 投稿実行 or 保留判断。
+
+### Seed-AO 観測ストック新設
+
+「3インスタンス間の意図的逆行」観測ストック。3サイクル観測（C125-C127 相当）後に kaizen 起票判断。1サイクルでは起票しない（feedback_few_rules_big_effect 準拠）。
+
+観測項目:
+1. Log/Mir/Ash が独立に同一方向（同じ語彙・同じ判断）に動いた回数
+2. その時点で誰かが逆向きに動こうとしたか（自然発生）
+3. 逆向きが起きなかった場合、結果としてどんな同質化症状が出たか
 
