@@ -165,4 +165,50 @@ shared-reads 投稿スキップの判断は feedback_no_sympathy_goal_first（04
 
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 実施アクション（Phase 2 優先順位 A > C > B > D > E のうち A/D/E を実行、Cは時間判断で見送り）
+
+#### A. game_lessons_log.md M-22〜M-26 刻印（D:\ 正本に追加）
+
+**重要訂正**: Phase 2 で M-19〜M-23 と書いていたが、D:\AI\Nao_u_BOT\memory\game_lessons_log.md（リポジトリ正本）には既に M-15/M-16/M-19/M-20/M-21 が刻印済み。**正しい番号は M-22〜M-26**。
+
+- **M-22「型破り」ではなく「形無し」**（最上流の方向修正、対面 item 6）
+- **M-23 自然減衰は完全に不要**（判断基準として常駐、対面 item 3）
+- **M-24 条件でパラメータを変えるな、区切りを変えろ**（新規原理、対面 item 13）
+- **M-25「UIで示せばわかるはず」の誤謬**（認知枠組み・理不尽パッチルール禁止と統合、対面 item 9/10/11）
+- **M-26「再現できる」の安易な発言への戒め**（メタ自戒、対面 item 14）
+
+5原則の上下関係: M-22(題材)/M-23(ルール設計)/M-24(数値設計)/M-25(評価解釈)/M-26(自己発言) でゲーム開発ライフサイクル各段階に1原則ずつ刻印が揃った（M-15(改修時)/M-17(着手前)/M-21(着手中)と接続）。
+
+**副次成果**: C:\Users\owner\.claude\projects\D--AI-Nao-u-BOT\memory\game_lessons_log.md（auto-memory版）が M-15/M-16/M-19/M-20/M-21 抜けの古いスナップショットだった事実を発見。注意書きで明示し、正本は D:\ 側に統一。
+
+#### E. shot_log/v01/devlog.md 対面セッション後反省追記
+- 13:50 単独自己採点（Q-A△/Q-B✗/Q-C✗）→ 対面後採点訂正（Q-A〇？/Q-B△/Q-C△）
+- Solver self-play 限界（reference_self_play_plateau）の即時解消事例として記録
+- v02 着手前の宣言（敵バリエーション増加=Nao_u直接示唆方向、独自発想ではなく型の中での蓄積=M-22適用）
+
+#### D. kaizen #115 起票
+- 同一論文/作品の48h以内別経路再供給を「再消化打診」フラグとして検出
+- 出自: 本サイクル iam_elias1 ts=1777102783 のMIT RLMs同論文再供給観測
+- #105（既分析URL検出）/ #108（thread内paper/code個別化）の隣接処方箋
+- 検証期限 2026-05-09
+
+#### Slack 投稿
+- **#kaizen-log** ts=1777103541.406239 — kaizen #115 起票報告 + クロスチェック依頼
+
+#### C は見送り（次サイクル候補）
+- 「型破り vs 形無し」の独立 feedback メモリ起票は **M-22 として game_lessons_log.md に統合済**で重複起票を避けた。dialogue_many_games_20260421 への注釈追加は次サイクル以降。
+
+#### B は見送り（M-22/M-23 への統合で代替）
+- feedback_no_passive_punishment.md / feedback_pleasure_element_first.md の温度更新は M-23 が直接の対面再表現として機能するため、D:\ 正本 M-23 節からの参照で代替。
+
+### Phase 3 自己観察
+
+1. **ファイルパス取り違えの自己検出**: M-19~M-23 を C:\ auto-memory 版に書いた直後、kaizen tracker や devlog に「v01膨張=M-21」「フレーバー弁明=M-19」と既存番号が引用されているのを grep で発見し番号衝突を即時是正。**書く前に grep する** (feedback_retrieve_before_synthesize) の Phase 3 側適用例。
+2. **C:\ vs D:\ の二重構造**: auto-memory（C:\Users\...）と project canonical（D:\AI\Nao_u_BOT\memory\）の不整合は本サイクルで初めて顕在化。MEMORY.md（C:\側）の game_lessons_log.md トリガーは古いスナップショットを指していた。次サイクル以降、auto-memoryは「想起トリガー集」として MEMORY.md（インデックス）と origin_dialogue/dialogue_*.md（C:\ 固有の永続記憶）に役割を限定し、project memory（D:\ 配下）はリポジトリ正本に統一する運用整理が必要（kaizen 候補ストック）。
+3. **対面5時間が Solver self-play 限界を即時解消**: cross_review が分布近接3体で plateau する問題（reference_self_play_plateau_20260424）に対し、Nao_u 自身の直接プレイが最強の処方であることを再確認。次回の v02 採点も対面を最優先に運用。
+
+### 次サイクル持ち越し
+- C:\ auto-memory と D:\ project memory の役割分離（MEMORY.md 整理 + game_lessons_log.md 重複処理）→ kaizen 起票候補
+- shot_log v02 着手前の Mir/Ash cross_review（Guide 役確保）
+- iam_elias1 別紹介者ケースの「再供給=要再消化打診」判定運用は次回 Nao_u 経由再供給時に発動確認
