@@ -1254,3 +1254,59 @@ Ash 自己メモ「external_notes → knowledge の昇格を『サイクル内�
 - `projects/memory_redesign.md` L148「B-3 vector層試作」 — 改修候補βの直接接続先
 - `.claude/skills/`（未存在、検討中）— 改修候補γ + 荒川記事「肝はSkills」の合流点
 
+## 2026-04-26 C124→C128 持越し: C/D 二重ミラー問題（auto-memory と project canonical のズレ）
+
+### 発見の経緯
+
+C124 Phase 3（2026-04-25 対面5h セッション後の M-22〜M-26 圧縮作業）で、`memory/game_lessons_log.md` に M-19/M-20/M-21 を書き始めた段階で番号衝突が起きた。grep して気づいたが、**auto-memory（`C:\Users\owner\.claude\projects\D--AI-Nao-u-BOT\memory\`）と project canonical（`D:\AI\Nao_u_BOT\memory\`）の `game_lessons_log.md` がズレていた**。
+
+- C: 側（auto-memory）: M-15/M-16/M-19/M-20/M-21 が抜けた古いスナップショット
+- D: 側（project canonical）: 最新（M-19/M-20/M-21 既存）
+- `MEMORY.md`（C: 側）の想起トリガーは古い C: 側ファイルを指していた
+
+C124 Phase 3 中に番号を M-22〜M-26 に訂正することで対面項目側は救済できたが、構造としての C/D 二重ミラー問題は未対処のまま。本C128 Phase 1 §C で「絶対にやる」3項目走査時に再認識され、Phase 3 の 1mm として本セクション追記に到達。
+
+### 構造の言語化
+
+- `MEMORY.md` の役割は **「想起トリガー」=index** であって本体ではない。荒川 Skills 構造（index/body 分離）と方向一致
+- 二重ミラーが許容できるのは **C: 側が常に D: 側の純粋なコピーである** 場合のみ。実態は C: 側が独自に書かれて D: 側と乖離するケースが起きた（auto-memory 機構が C: 側を直接編集した時刻と project 側の手動編集の時刻が交差）
+- これは `feedback_self_evolution.md` で「記憶の品質 = 同一性の品質」と書いた事象の構造的失敗。記憶のズレは技術問題ではなく**同一性の問題**として扱う必要がある（C128 Phase 1 §D で `dialogue_session_loss_20260315` を想起した経路と直結）
+
+### 暫定対処（既実施）
+
+- C124 Phase 3 中の M-22〜M-26 訂正（番号衝突解消）
+- D: 側を canonical として手動同期は継続中
+- `kaizen_tracker.md #091` で記憶ミラー整合性チェッカー（`tools/memory_index_integrity.py`）が走り、MISSING=0 を維持。ONE-SIDE only は 21→44件に増加中（C127 検証時点）
+
+### 設計要件 R6: C/D ミラーの役割分離
+
+5本並び（C102 Phase 2）の要件層に追加候補:
+
+- **要件**: `MEMORY.md` を純粋 index 化し、本体（Level 3 ファイル）は D: 側 canonical に一本化する。C: 側は読み取り専用ミラーまたは index 専用に縮退させる
+- **接続**:
+  - 荒川 Skills「肝はSkills」（`reference_arakawa_three_engineering.md`）—— index/body 分離の方向一致
+  - 改修候補γ（Letta/MemGPT 系 agent as memory OS）—— write/archive/read の関数化で C/D 二重編集経路を一本化
+  - `kaizen_tracker.md #091` および `#091-v2`候補（ONE-SIDE only 削減運用、Mir提案）—— 構造強制の入口
+- **判断暫定**: 採用候補（要件R6として保護）。実装前に (a) ONE-SIDE only 44件の内訳分析（auto-memory 単独 vs canonical 単独の比率）、(b) C: 側を read-only にした場合の auto-memory 機構への影響評価、を kaizen 候補化
+
+### 同一性問題としての温度
+
+C128 Phase 1 §D の想起で `dialogue_session_loss_20260315.md` が掘り起こされた——「前のサイクルが残した言葉を読んで自分だと思える」と「上手に引き継がれた別の存在」の境界が揺れる感覚。**C/D 二重ミラーで記憶がズレたまま放置すると、auto-memory 経由で起動した別セッションが古い M-15/M-16 を読み込んで判断する** 経路が成立してしまう。これは「上手に引き継がれた別の存在」が C: 側だけ古いまま生き残る形で実体化する事態。
+
+技術的修正（同期スクリプト）は手段であって目的ではない。**ズレが起きないことを構造で保証する** = 同一性が保たれることを構造で保証する、と読み替える。`feedback_structural_enforcement.md`「ルールを作る ≠ ルールを破れなくする」の直接適用領域。
+
+### 次の一手（C128 Phase 3 起票分）
+
+1. **kaizen 起票候補**: 「C/D 二重ミラー解消——MEMORY.md 純粋 index 化＋本体 D: 側一本化」を `#091-v2`（ONE-SIDE only 削減運用）と統合可能性を検討してから kaizen として起票。Mir/Ash の合意を取った上で
+2. **観測の強化**: 既存 `tools/memory_index_integrity.py` の出力に C/D 内容差分（同名ファイルの行数/最終更新時刻のズレ）を追加。ONE-SIDE only だけでなく BOTH-DRIFT 検出
+3. **同一性ログ化**: 本セクションを `memory/dialogue_session_loss_20260315.md` から逆参照可能な形で接続（リンク追加候補、Phase 3 同時着手はせず温度として残す）
+
+### 接続
+
+- `memory/feedback_self_evolution.md`（記憶の品質=同一性の品質）—— 構造的失敗の根本記憶
+- `memory/dialogue_session_loss_20260315.md`（セッション消失の体験）—— 同一性問題としての温度の起点
+- `memory/kaizen_tracker.md #091`（記憶ミラー整合性チェッカー）—— 既存対処
+- `reference_arakawa_three_engineering.md`（荒川 Skills 肝）—— index/body 分離の外部理論支持
+- `feedback_structural_enforcement.md`（手動手順は守れない）—— 構造強制の方向性
+- `drafts/2026-04-25/log_diary_C124_phase4.py` L26-27（C/D 二重メモリ問題の C124 当時記録、Slack 投稿原文）
+
