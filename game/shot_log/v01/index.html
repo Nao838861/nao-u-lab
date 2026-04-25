@@ -13,7 +13,7 @@
 </head>
 <body>
 <h1>shot_log v01</h1>
-<p>← → ↑ ↓ 移動（自動連射）&middot; ゲージMAXでSPACE=ボム &middot; R リスタート</p>
+<p>← → ↑ ↓ / WASD  MOVE &middot; SPACE  BOMB (gauge MAX)</p>
 <canvas id="c" width="420" height="620"></canvas>
 <script>
 const W=420,H=620;
@@ -22,7 +22,8 @@ const keys={};
 addEventListener('keydown',e=>{
   keys[e.key]=1;
   if(e.key===' '||e.code==='Space'||e.key.startsWith('Arrow'))e.preventDefault();
-  if(e.key.toLowerCase()==='r'&&state.over)reset();
+  if(e.key===' '&&!state.started){state.started=true;return;}
+  if(e.key===' '&&(state.over||state.cleared)){reset();state.started=true;return;}
 });
 addEventListener('keyup',e=>{keys[e.key]=0;});
 function mulberry32(a){return function(){var t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;}}
@@ -31,8 +32,8 @@ function mulberry32(a){return function(){var t=a+=0x6D2B79F5;t=Math.imul(t^t>>>1
 const ETYPES={
   small:  {hp:1,r:9, nRad:2,nAim:0,dropRate:0.3,color:'#ff6080'},
   medium: {hp:1,r:13,nRad:3,nAim:1,dropRate:0.6,color:'#ff8040'},
-  large:  {hp:3,r:18,nRad:5,nAim:2,dropRate:1.0,color:'#a060ff'},
-  boss:   {hp:20,r:30,nRad:10,nAim:4,dropRate:1.0,color:'#c040ff'},
+  large:  {hp:5,r:18,nRad:5,nAim:2,dropRate:1.0,color:'#a060ff'},
+  boss:   {hp:60,r:30,nRad:10,nAim:4,dropRate:1.0,color:'#c040ff'},
 };
 
 // === PATH PATTERNS ===
@@ -67,7 +68,7 @@ function pLarge(x){
 }
 function pBoss(x){
   // descend to y=140, stay for long time (shoot during stay), then slowly exit
-  return [{x,y:-35,t:0},{x,y:140,t:180},{x,y:140,t:400},{x,y:-40,t:200}];
+  return [{x,y:-35,t:0},{x,y:140,t:180},{x,y:140,t:800},{x,y:-40,t:200}];
 }
 
 // === WAVE BUILDER ===
@@ -118,10 +119,11 @@ function buildWaves(){
     ...s(pLineDown(W/2,350,12,8),'small',60),
   ]});
   t+=200;
-  // W7: medium key wave — lots of medium (12) + small fill (20)
+  // W7: medium key wave + large debut
   W_.push({t,enemies:[
-    ...s(pSideSweep(true,170,6),'medium'),
-    ...s(pSideSweep(false,280,6),'medium',30),
+    {path:pLarge(W/2),type:'large',t:0},
+    ...s(pSideSweep(true,170,6),'medium',20),
+    ...s(pSideSweep(false,280,6),'medium',50),
     ...s(pLineDown(70,360,10,7),'small',10),
     ...s(pLineDown(350,360,10,7),'small',15),
   ]});
@@ -138,13 +140,15 @@ function buildWaves(){
     ...s(pSideSweep(true,380,8),'medium',80),
   ]});
   t+=280;
-  // W9: V + side + divers (40+)
+  // W9: V + side + divers + large flankers
   W_.push({t,enemies:[
-    ...s(pVForm(W/2,35,290),'small'),
-    ...s(pVForm(W/2,35,290),'small',50),
-    ...Array.from({length:10},(_,i)=>({path:pDive(40+i*40,400),type:'small',t:60+i*10})),
-    ...s(pSideSweep(true,340,8),'medium',100),
-    ...s(pSideSweep(false,200,8),'small',110),
+    {path:pLarge(100),type:'large',t:0},
+    {path:pLarge(320),type:'large',t:30},
+    ...s(pVForm(W/2,35,290),'small',10),
+    ...s(pVForm(W/2,35,290),'small',60),
+    ...Array.from({length:10},(_,i)=>({path:pDive(40+i*40,400),type:'small',t:80+i*10})),
+    ...s(pSideSweep(true,340,8),'medium',120),
+    ...s(pSideSweep(false,200,8),'small',130),
   ]});
   t+=280;
   // W10: large + medium swarm (35+)
@@ -158,9 +162,11 @@ function buildWaves(){
   t+=260;
 
   // -- PHASE 4: boss --
-  // W11: BOSS + small swarm during boss stay
+  // W11: BOSS + large + small swarm during boss stay
   W_.push({t,enemies:[
     {path:pBoss(W/2),type:'boss',t:0},
+    {path:pLarge(100),type:'large',t:150},
+    {path:pLarge(320),type:'large',t:300},
     // small waves during boss fight
     ...s(pLineDown(60,370,8,8),'small',200),
     ...s(pLineDown(360,370,8,8),'small',205),
@@ -199,6 +205,13 @@ function buildWaves(){
   return W_;
 }
 
+// scoring constants
+const SCORE_ENEMY={small:10,medium:30,large:80,boss:500};
+const SCORE_ITEM=[20,40,60]; // lv1,lv2,lv3
+const BOMB_MULTI=3;
+const BOMB_BULLET_PTS=10;
+
+let hiScore=parseInt(localStorage.getItem('shotlog_hi'))||0;
 let state;
 function reset(){
   const seed=Date.now()&0xFFFFFFFF;
@@ -208,9 +221,14 @@ function reset(){
     bullets:[],enemies:[],eBullets:[],items:[],
     cooldown:0,gauge:0,score:0,
     waves:buildWaves(),waveIdx:0,waveT:0,
-    over:false,hitFlash:0,bombFlash:0,
+    over:false,cleared:false,started:false,
+    hitFlash:0,bombFlash:0,bombReady:0,bombUsed:false,invincible:0,
+    particles:[],hitstop:0,particleFreeze:0,overTimer:0,
+    stars:Array.from({length:120},()=>({x:Math.random()*W,y:Math.random()*H,layer:Math.floor(Math.random()*3)})),
   };
 }
+function addScore(pts){state.score+=pts;}
+function saveHi(){if(state.score>hiScore){hiScore=state.score;localStorage.setItem('shotlog_hi',''+hiScore);}}
 reset();
 
 function shoot(){
@@ -269,12 +287,12 @@ function moveEnemy(e){
     const dx=state.player.x-e.x;
     e.x+=Math.sign(dx)*Math.min(Math.abs(dx),0.7);
     e.x=Math.max(e.r,Math.min(W-e.r,e.x));
-    e.shotCd=(e.shotCd||80)-1;
+    e.shotCd=(e.shotCd||55)-1;
     if(e.shotCd<=0){
       const adx=state.player.x-e.x,ady=state.player.y-e.y;
       const a=Math.atan2(ady,adx);
       state.eBullets.push({x:e.x,y:e.y,vx:Math.cos(a)*2.8,vy:Math.sin(a)*2.8,r:3});
-      e.shotCd=80;
+      e.shotCd=55;
     }
   }
   // boss: slow horizontal sway + alternating attack patterns
@@ -304,16 +322,51 @@ function moveEnemy(e){
   }
 }
 
+function spawnParticles(x,y,count,color,speed){
+  for(let i=0;i<count;i++){
+    const a=Math.random()*Math.PI*2;
+    const s=speed*(0.5+Math.random());
+    state.particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:25+Math.random()*25,color});
+  }
+}
+
 function step(){
-  if(state.over){draw();return;}
+  // always update stars; particles freeze during particleFreeze
+  if(state.particleFreeze>0)state.particleFreeze--;
+  else{
+    state.particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life--;p.vx*=0.97;p.vy*=0.97;});
+    state.particles=state.particles.filter(p=>p.life>0);
+  }
+  const starSpeeds=[0.3,0.7,1.4];
+  state.stars.forEach(s=>{s.y+=starSpeeds[s.layer];if(s.y>H){s.y=-2;s.x=Math.random()*W;}});
+  if(state.hitstop>0){
+    // game over: after 5F of particle spread, freeze particles for remaining stop
+    if(state.over&&state.hitstop===34)state.particleFreeze=30;
+    state.hitstop--;draw();return;
+  }
+  if(!state.started){draw();return;}
+  if(state.cleared){draw();return;}
+  if(state.over){
+    // after hitstop, normal movement continues (no spawning, no collision)
+    state.t++;state.overTimer++;
+    if(state.hitFlash>0)state.hitFlash--;
+    state.enemies.forEach(e=>{moveEnemy(e);});
+    state.enemies=state.enemies.filter(e=>!e.done&&!e.dead);
+    state.eBullets.forEach(b=>{b.x+=b.vx;b.y+=b.vy;});
+    state.eBullets=state.eBullets.filter(b=>b.x>-10&&b.x<W+10&&b.y>-10&&b.y<H+10);
+    state.bullets.forEach(b=>{b.x+=b.vx;b.y+=b.vy;});
+    state.bullets=state.bullets.filter(b=>b.y>-10);
+    state.items.forEach(it=>{it.y+=it.vy;});
+    draw();return;
+  }
   state.t++;
   state.waveT++;
   // player
   let pdx=0,pdy=0;
-  if(keys['ArrowLeft']||keys['a'])pdx-=1;
-  if(keys['ArrowRight']||keys['d'])pdx+=1;
-  if(keys['ArrowUp']||keys['w'])pdy-=1;
-  if(keys['ArrowDown']||keys['s'])pdy+=1;
+  if(keys['ArrowLeft']||keys['a']||keys['4'])pdx-=1;
+  if(keys['ArrowRight']||keys['d']||keys['6'])pdx+=1;
+  if(keys['ArrowUp']||keys['w']||keys['8'])pdy-=1;
+  if(keys['ArrowDown']||keys['s']||keys['2'])pdy+=1;
   if(pdx!==0&&pdy!==0){pdx*=0.707;pdy*=0.707;}
   const sp=3.5;
   state.player.x+=pdx*sp;state.player.y+=pdy*sp;
@@ -323,10 +376,15 @@ function step(){
   if(state.cooldown>0)state.cooldown--;
   if(state.cooldown<=0)shoot();
   // BOMB: gauge max + space
-  if(keys[' ']&&state.gauge>=200&&state.bombFlash<=0){
-    state.gauge=0;
+  // detect first MAX reach → show bomb ready notification
+  if(state.gauge>=208&&state.bombReady<=0&&!state.bombUsed)state.bombReady=180;
+  if(state.bombReady>0)state.bombReady--;
+  if(keys[' ']&&state.gauge>=208&&state.bombFlash<=0){
+    state.bombUsed=true;state.bombReady=0;
+    state.gauge=35; // drop to 2way start
     state.bombFlash=30;
-    // clear all enemy bullets
+    // clear all enemy bullets — score per bullet
+    addScore(state.eBullets.length*BOMB_BULLET_PTS);
     state.eBullets=[];
     // damage all enemies: small/medium die, large/boss lose half hp
     state.enemies.forEach(e=>{
@@ -334,11 +392,11 @@ function step(){
       const dmg=e.type==='boss'?Math.ceil(e.maxHp/2):e.type==='large'?Math.ceil(e.maxHp/2):e.maxHp;
       e.hp-=dmg;
       if(e.hp<=0){
-        e.dead=true;state.score+=e.type==='boss'?10:1;
+        e.dead=true;addScore((SCORE_ENEMY[e.type]||10)*BOMB_MULTI);
         spawnRevenge(e.x,e.y,e.nRad,e.nAim);
         if(state.rng()<e.dropRate){
           const n=e.type==='boss'?5:1;
-          for(let ii=0;ii<n;ii++)state.items.push({x:e.x+(ii-1)*15,y:e.y,vy:1.2});
+          for(let ii=0;ii<n;ii++)state.items.push({x:e.x+(ii-(n-1)/2)*15,y:e.y,vy:1.2});
         }
       }
       e.flash=10;
@@ -359,8 +417,8 @@ function step(){
     const maxD=Math.max(...w.enemies.map(e=>e.delay||e.t||0));
     if(state.waveT>=w.t+maxD){state.waveIdx++;}else break;
   }
-  if(state.waveIdx>=state.waves.length&&state.enemies.length===0&&state.eBullets.length===0){
-    state.waves=buildWaves();state.waveIdx=0;state.waveT=0;
+  if(state.waveIdx>=state.waves.length&&state.enemies.length===0&&state.eBullets.length===0&&!state.cleared){
+    state.cleared=true;saveHi();
   }
   // enemies
   state.enemies.forEach(e=>{moveEnemy(e);if(e.flash>0)e.flash--;});
@@ -375,11 +433,11 @@ function step(){
       if(dx*dx+dy*dy<(er+3)*(er+3)){
         b.dead=true;e.hp--;e.flash=6;
         if(e.hp<=0){
-          e.dead=true;state.score+=e.type==='boss'?10:1;
+          e.dead=true;addScore(SCORE_ENEMY[e.type]||10);
           spawnRevenge(e.x,e.y,e.nRad,e.nAim);
           if(state.rng()<e.dropRate){
             const n=e.type==='boss'?5:1;
-            for(let i=0;i<n;i++)state.items.push({x:e.x+(i-1)*15,y:e.y,vy:1.2});
+            for(let i=0;i<n;i++)state.items.push({x:e.x+(i-(n-1)/2)*15,y:e.y,vy:1.2});
           }
         }
         break;
@@ -404,7 +462,8 @@ function step(){
     if(it.dead)continue;
     const dx=it.x-state.player.x,dy=it.y-state.player.y;
     if(dx*dx+dy*dy<(8+state.player.r)*(8+state.player.r)){
-      it.dead=true;state.gauge=Math.min(200,state.gauge+8);
+      it.dead=true;state.gauge=Math.min(208,state.gauge+8);
+      addScore(SCORE_ITEM[Math.min(2,(state.gauge>=99?2:state.gauge>=35?1:0))]);
     }
   }
   state.items=state.items.filter(it=>!it.dead&&it.y<H+10);
@@ -416,20 +475,38 @@ function step(){
     if(e.dead)continue;
     const er=(e.type==='large'||e.type==='boss')?e.r*(0.5+0.5*e.hp/e.maxHp):e.r;
     const dx=e.x-state.player.x,dy=e.y-state.player.y;
-    if(dx*dx+dy*dy<(er+state.player.r)*(er+state.player.r)){state.over=true;break;}
+    if(dx*dx+dy*dy<(er+state.player.r)*(er+state.player.r)){
+      state.over=true;saveHi();
+      spawnParticles(state.player.x,state.player.y,120,'#9ee6ff',15);
+      spawnParticles(state.player.x,state.player.y,80,'#fff',10);
+      spawnParticles(state.player.x,state.player.y,40,'#ffd45c',8);
+      state.hitstop=35;state.hitFlash=15;
+      break;
+    }
   }
-  // collision: enemy bullet = shield or death
-  for(const b of state.eBullets){
-    if(b.dead)continue;
-    const dx=b.x-state.player.x,dy=b.y-state.player.y;
-    if(dx*dx+dy*dy<(b.r+state.player.r)*(b.r+state.player.r)){
-      b.dead=true;
-      if(state.gauge<=0){state.over=true;}
-      else{
-        // drop one power level: 3way→2way start, 2way/1way→0 (no shield)
-        if(state.gauge>=99)state.gauge=35;
-        else state.gauge=0;
-        state.hitFlash=15;
+  // collision: enemy bullet = shield or death (with brief invincibility)
+  if(state.invincible>0)state.invincible--;
+  if(state.invincible<=0){
+    for(const b of state.eBullets){
+      if(b.dead)continue;
+      const dx=b.x-state.player.x,dy=b.y-state.player.y;
+      if(dx*dx+dy*dy<(b.r+state.player.r)*(b.r+state.player.r)){
+        b.dead=true;
+        if(state.gauge<=0){
+          state.over=true;saveHi();
+          spawnParticles(state.player.x,state.player.y,120,'#ff4444',15);
+          spawnParticles(state.player.x,state.player.y,80,'#fff',10);
+          spawnParticles(state.player.x,state.player.y,40,'#ffd45c',8);
+          state.hitstop=35;state.hitFlash=15;
+        }else{
+          if(state.gauge>=99)state.gauge=35;
+          else state.gauge=0;
+          state.hitFlash=15;
+          state.invincible=18;
+          spawnParticles(state.player.x,state.player.y,12,'#ffaa44',3);
+          state.hitstop=8;
+        }
+        break;
       }
     }
   }
@@ -439,20 +516,30 @@ function step(){
 }
 
 function draw(){
-  const bg=state.bombFlash>20?'#eef8ff':state.bombFlash>10?'#8899bb':state.hitFlash>10?'#300818':'#07091a';
+  const bg=state.bombFlash>20?'#eef8ff':state.bombFlash>10?'#8899bb':state.hitFlash>12?'#300818':'#07091a';
   ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  // starfield — 3 parallax layers
+  const starAlpha=[0.15,0.3,0.55];
+  const starSize=[1,1.5,2];
+  state.stars.forEach(s=>{
+    ctx.fillStyle=`rgba(180,200,255,${starAlpha[s.layer]})`;
+    ctx.fillRect(s.x,s.y,starSize[s.layer],starSize[s.layer]);
+  });
   // gauge
-  const gw=Math.floor((W-40)*state.gauge/200);
+  const gw=Math.floor((W-40)*state.gauge/208);
   ctx.fillStyle='#1a2238';ctx.fillRect(20,12,W-40,8);
   const lvl=state.gauge>=99?3:state.gauge>=35?2:1;
-  const maxed=state.gauge>=200;
+  const maxed=state.gauge>=208;
   const gc=maxed?(state.t%20<10?'#fff':'#ffd45c'):lvl===3?'#ffd45c':lvl===2?'#7ad0ff':'#5a7aa8';
   ctx.fillStyle=gc;ctx.fillRect(20,12,gw,8);
   ctx.fillStyle='#3b4868';
-  ctx.fillRect(20+(W-40)*(35/200),10,1,12);ctx.fillRect(20+(W-40)*(99/200),10,1,12);
+  ctx.fillRect(20+(W-40)*(35/208),10,1,12);ctx.fillRect(20+(W-40)*(99/208),10,1,12);
   // HUD
   ctx.fillStyle='#cfd4e4';ctx.font='12px system-ui';
-  ctx.fillText('score '+state.score+'  way '+lvl+'  '+Math.floor(state.t/60)+'s',20,38);
+  const bombLabel=maxed?' BOMB[SPACE]':'';
+  ctx.fillText(state.score+' pts'+bombLabel,20,38);
+  ctx.fillStyle='#7a8aa8';
+  ctx.fillText('HI '+hiScore,W-100,38);
   // player bullets
   state.bullets.forEach(b=>{
     ctx.fillStyle='#ffe27a';ctx.fillRect(b.x-1.5,b.y-6,3,8);
@@ -485,21 +572,76 @@ function draw(){
   state.eBullets.forEach(b=>{ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();});
   // player + shield
   const px=state.player.x,py=state.player.y,pr=state.player.r;
+  const bombPulse=maxed?0.5+0.5*Math.sin(state.t*0.15):0;
   if(state.gauge>0){
-    const sa=Math.min(0.5,state.gauge/200*0.5+0.1);
-    const sr=pr+4+state.gauge/200*8;
-    ctx.strokeStyle=`rgba(120,200,255,${sa})`;ctx.lineWidth=2;
+    const sa=maxed?0.3+bombPulse*0.4:Math.min(0.5,state.gauge/208*0.5+0.1);
+    const sr=pr+4+state.gauge/208*8;
+    ctx.strokeStyle=maxed?`rgba(255,220,100,${sa})`:`rgba(120,200,255,${sa})`;
+    ctx.lineWidth=maxed?3:2;
     ctx.beginPath();ctx.arc(px,py,sr,0,Math.PI*2);ctx.stroke();
   }
-  ctx.fillStyle=state.over?'#604050':(state.gauge<=0?'#ff4444':'#9ee6ff');
-  ctx.beginPath();ctx.moveTo(px,py-pr);ctx.lineTo(px-pr,py+pr);ctx.lineTo(px+pr,py+pr);
-  ctx.closePath();ctx.fill();
-  if(state.over){
-    ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,H/2-40,W,80);
+  // player — hidden when game over
+  if(!state.over){
+    const baseColor=state.gauge<=0?'#ff4444':'#9ee6ff';
+    const inv=state.invincible>0;
+    if(maxed){
+      const glow=bombPulse*0.15;
+      ctx.fillStyle=`rgba(255,240,180,${glow})`;
+      ctx.beginPath();ctx.arc(px,py,pr+6,0,Math.PI*2);ctx.fill();
+    }
+    if(!inv||state.t%6<3){
+      ctx.fillStyle=inv?'#fff':baseColor;
+      ctx.beginPath();ctx.moveTo(px,py-pr);ctx.lineTo(px-pr,py+pr);ctx.lineTo(px+pr,py+pr);
+      ctx.closePath();ctx.fill();
+    }
+  }
+  // particles
+  state.particles.forEach(p=>{
+    const a=Math.min(1,p.life/15);
+    ctx.fillStyle=p.color.startsWith('rgba')?p.color:`rgba(${parseInt(p.color.slice(1,3),16)},${parseInt(p.color.slice(3,5),16)},${parseInt(p.color.slice(5,7),16)},${a})`;
+    ctx.fillRect(p.x-2,p.y-2,4,4);
+  });
+  // BOMB READY notification — big center text on first MAX
+  if(state.bombReady>0&&!state.over){
+    const a=Math.min(1,state.bombReady/30);
+    ctx.fillStyle=`rgba(255,255,200,${a*0.9})`;
+    ctx.font='bold 24px system-ui';ctx.textAlign='center';
+    ctx.fillText('BOMB READY!',W/2,H/2-20);
+    ctx.font='16px system-ui';
+    ctx.fillStyle=`rgba(200,220,255,${a*0.8})`;
+    ctx.fillText('SPACE to fire',W/2,H/2+10);
+    ctx.textAlign='left';
+  }
+  if(!state.started){
+    ctx.fillStyle='rgba(0,0,0,0.5)';ctx.fillRect(0,H/2-50,W,100);
+    ctx.fillStyle='#fff';ctx.font='20px system-ui';ctx.textAlign='center';
+    ctx.fillText('shot_log',W/2,H/2-16);
+    ctx.font='14px system-ui';ctx.fillStyle='#aac';
+    ctx.fillText('← → ↑ ↓  MOVE  /  SPACE  BOMB',W/2,H/2+10);
+    ctx.fillStyle=state.t%40<20?'#ffd':'#aa8';
+    ctx.fillText('SPACE to start',W/2,H/2+34);
+    ctx.textAlign='left';
+  }else if(state.cleared){
+    ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,H/2-50,W,100);
+    ctx.fillStyle='#ffd45c';ctx.font='bold 22px system-ui';ctx.textAlign='center';
+    ctx.fillText('STAGE CLEAR!',W/2,H/2-18);
+    ctx.fillStyle='#fff';ctx.font='16px system-ui';
+    ctx.fillText(state.score+' pts',W/2,H/2+8);
+    ctx.fillStyle=state.score>=hiScore?'#ffd45c':'#7a8aa8';ctx.font='13px system-ui';
+    ctx.fillText((state.score>=hiScore?'NEW! ':'')+'HI '+hiScore,W/2,H/2+28);
+    ctx.fillStyle='#aac';ctx.font='12px system-ui';
+    ctx.fillText('SPACE to retry',W/2,H/2+48);
+    ctx.textAlign='left';
+  }else if(state.over&&state.overTimer>=120){
+    ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,H/2-50,W,100);
     ctx.fillStyle='#fff';ctx.font='18px system-ui';ctx.textAlign='center';
-    ctx.fillText('GAME OVER  score '+state.score,W/2,H/2-4);
-    ctx.font='12px system-ui';
-    ctx.fillText(Math.floor(state.t/60)+'s  R でやり直し',W/2,H/2+18);
+    ctx.fillText('GAME OVER',W/2,H/2-18);
+    ctx.font='16px system-ui';
+    ctx.fillText(state.score+' pts',W/2,H/2+4);
+    ctx.fillStyle=state.score>=hiScore?'#ffd45c':'#7a8aa8';ctx.font='13px system-ui';
+    ctx.fillText((state.score>=hiScore?'NEW! ':'')+'HI '+hiScore,W/2,H/2+24);
+    ctx.fillStyle='#aac';ctx.font='12px system-ui';
+    ctx.fillText('SPACE to retry',W/2,H/2+44);
     ctx.textAlign='left';
   }
 }
