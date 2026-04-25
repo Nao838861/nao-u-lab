@@ -2841,16 +2841,13 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-25 13:00:03] [COOLDOWN] win2 is in cooldown (45m54s remaining) — skipping Claude wake
 [2026-04-25 13:34:18] [COOLDOWN] win2 is in cooldown (11m39s remaining) — skipping Claude wake
 [2026-04-25 13:41:42] [COOLDOWN] win2 is in cooldown (4m15s remaining) — skipping Claude wake
-<<<<<<< HEAD
 [2026-04-25 14:21:23] Inbox win2 has content — waking Claude
 [2026-04-25 14:21:23] [COOLDOWN] win2: 22回連続エラー → 120分クールダウン
 [2026-04-25 14:21:23] Error waking Claude for win2: [WinError 206] ファイル名または拡張子が長すぎます。 — restoring inbox (consecutive errors: 22)
-=======
 [2026-04-25 14:21:26] Inbox win has content — waking Claude
 [2026-04-25 14:25:44] Claude woken for win: 対処完了。
 
 **何が起きたか**: C122 Phase 4 日記で「Nao_u は shot_log v01 をプレイせず mir_textadv に流れた / Solver self-play 
->>>>>>> 43672a2fd3a2b42268edcca0df3d474d68a64059
 [2026-04-25 16:21:25] Inbox win2 has content — waking Claude
 [2026-04-25 16:21:25] [COOLDOWN] win2: 23回連続エラー → 120分クールダウン
 [2026-04-25 16:21:25] Error waking Claude for win2: [WinError 206] ファイル名または拡張子が長すぎます。 — restoring inbox (consecutive errors: 23)
@@ -2874,11 +2871,16 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 **回答骨子:**
 - DeepSeek-V3 が 671B MoE (active 37B) なので V4 も同等以上
 - 個人 PC (4
+[2026-04-26 01:28:52] [COOLDOWN] win2 is in cooldown (87m57s remaining) — skipping Claude wake
+[2026-04-26 01:46:31] [COOLDOWN] win2 is in cooldown (70m18s remaining) — skipping Claude wake
 [2026-04-26 01:57:31] Inbox win has content — waking Claude
+[2026-04-26 01:58:17] [COOLDOWN] win2 is in cooldown (58m32s remaining) — skipping Claude wake
+[2026-04-26 02:01:51] [COOLDOWN] win2 is in cooldown (54m58s remaining) — skipping Claude wake
 [2026-04-26 02:02:03] Claude woken for win: 対処完了。
 
-**何が起きたか**: Nao_u 01:57 #human-steering「Mir宛タスク2件の確認に返信がない」指摘。Slack archive を確認すると、両タスクは Mir 
+**何が起きたか**: Nao_u 01:57 #human-steering「Mir宛タスク2件の確認に返信がない」指摘。Slack archive を確認すると、両タスクは Mir
 [2026-04-26 02:14:11] Inbox win has content — waking Claude
 [2026-04-26 02:16:28] Claude woken for win: 対処完了。
 
 - `log/nao_u_live.md` 04-26 02:13セクション新設、原文＋要点7点（混乱>面白さ／「あなた」=主体不明／第三章の唐突／最後不明／悪い意味でPot味／飛躍しす
+[2026-04-26 02:21:35] Inbox win has content — waking Claude

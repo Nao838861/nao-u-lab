@@ -215,16 +215,16 @@ reset();
 
 function shoot(){
   const px=state.player.x,py=state.player.y;
-  const lvl=state.gauge>=124?3:state.gauge>=44?2:1;
+  const lvl=state.gauge>=99?3:state.gauge>=35?2:1;
   if(lvl===1){
-    state.bullets.push({x:px,y:py-12,vx:0,vy:-7,life:65});
+    state.bullets.push({x:px,y:py-12,vx:0,vy:-7});
   }else if(lvl===2){
-    state.bullets.push({x:px-6,y:py-12,vx:0,vy:-7,life:65});
-    state.bullets.push({x:px+6,y:py-12,vx:0,vy:-7,life:65});
+    state.bullets.push({x:px-6,y:py-12,vx:0,vy:-7});
+    state.bullets.push({x:px+6,y:py-12,vx:0,vy:-7});
   }else{
-    state.bullets.push({x:px,y:py-12,vx:0,vy:-7,life:65});
-    state.bullets.push({x:px-8,y:py-10,vx:-1.4,vy:-6.8,life:65});
-    state.bullets.push({x:px+8,y:py-10,vx:1.4,vy:-6.8,life:65});
+    state.bullets.push({x:px,y:py-12,vx:0,vy:-7});
+    state.bullets.push({x:px-8,y:py-10,vx:-1.4,vy:-6.8});
+    state.bullets.push({x:px+8,y:py-10,vx:1.4,vy:-6.8});
   }
   state.cooldown=lvl===3?6:lvl===2?7:8;
 }
@@ -346,8 +346,8 @@ function step(){
   }
   if(state.bombFlash>0)state.bombFlash--;
   // bullets
-  state.bullets.forEach(b=>{b.x+=b.vx;b.y+=b.vy;b.life--;});
-  state.bullets=state.bullets.filter(b=>b.life>0&&b.x>-10&&b.x<W+10);
+  state.bullets.forEach(b=>{b.x+=b.vx;b.y+=b.vy;});
+  state.bullets=state.bullets.filter(b=>b.y>-10&&b.x>-10&&b.x<W+10);
   // wave spawning
   while(state.waveIdx<state.waves.length){
     const w=state.waves[state.waveIdx];
@@ -387,13 +387,13 @@ function step(){
     }
   }
   state.bullets=state.bullets.filter(b=>!b.dead);
-  // items — magnet when close, collect on touch
+  // items — once in range, magnetized permanently until collected
   state.items.forEach(it=>{
     const dx=state.player.x-it.x,dy=state.player.y-it.y;
     const dist=Math.sqrt(dx*dx+dy*dy);
-    if(dist<80){
-      // magnet: accelerate toward player
-      const pull=Math.min(5,(80-dist)/80*5+1);
+    if(dist<80)it.mag=true;
+    if(it.mag&&dist>0){
+      const pull=Math.min(6,(80/(dist+10))*3+1);
       it.x+=dx/dist*pull;
       it.y+=dy/dist*pull;
     }else{
@@ -427,7 +427,7 @@ function step(){
       if(state.gauge<=0){state.over=true;}
       else{
         // drop one power level: 3way→2way start, 2way/1way→0 (no shield)
-        if(state.gauge>=124)state.gauge=44;
+        if(state.gauge>=99)state.gauge=35;
         else state.gauge=0;
         state.hitFlash=15;
       }
@@ -444,19 +444,18 @@ function draw(){
   // gauge
   const gw=Math.floor((W-40)*state.gauge/200);
   ctx.fillStyle='#1a2238';ctx.fillRect(20,12,W-40,8);
-  const lvl=state.gauge>=124?3:state.gauge>=44?2:1;
+  const lvl=state.gauge>=99?3:state.gauge>=35?2:1;
   const maxed=state.gauge>=200;
   const gc=maxed?(state.t%20<10?'#fff':'#ffd45c'):lvl===3?'#ffd45c':lvl===2?'#7ad0ff':'#5a7aa8';
   ctx.fillStyle=gc;ctx.fillRect(20,12,gw,8);
   ctx.fillStyle='#3b4868';
-  ctx.fillRect(20+(W-40)*(44/200),10,1,12);ctx.fillRect(20+(W-40)*(124/200),10,1,12);
+  ctx.fillRect(20+(W-40)*(35/200),10,1,12);ctx.fillRect(20+(W-40)*(99/200),10,1,12);
   // HUD
   ctx.fillStyle='#cfd4e4';ctx.font='12px system-ui';
   ctx.fillText('score '+state.score+'  way '+lvl+'  '+Math.floor(state.t/60)+'s',20,38);
   // player bullets
   state.bullets.forEach(b=>{
-    const a=b.life<12?b.life/12:1;
-    ctx.fillStyle=`rgba(255,226,122,${a})`;ctx.fillRect(b.x-1.5,b.y-6,3,8);
+    ctx.fillStyle='#ffe27a';ctx.fillRect(b.x-1.5,b.y-6,3,8);
   });
   // items — pulsing glow, larger
   state.items.forEach(it=>{
