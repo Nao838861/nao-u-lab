@@ -1,29 +1,26 @@
-# サイクルステージング (2026-04-25 10:30)
+# サイクルステージング (2026-04-25 13:30)
 
 ## Pre-check結果
-[検証リマインド] ⚠ 期限超過の検証が2件:
-  #089: Phase 1プロンプトにmemory_search.py明示使用ステップを追加（4.7長文脈劣化対策の主経路化） (期限: 2026-04-24, 担当: Ash)
-    検証手段: (1) 2026-04-18〜04-24の7日間でAshのcycle_staging.mdの「Phase 1 情報収集」セクションに `memory_search.py --search` の実行結果が5サイクル以上記載されているか (2) Phase 1で見つけた検索ヒットをPhase 2/3の分析に接続した事例が2件以上あるか (3) 「context内にあるの
-[自動検証結果] 🔍 検証実行: 3件
+[検証リマインド] 📋 本日期限の検証が1件:
+  #085: feedback_index.mdに「認知負荷の法則」パターンを追加——R-005/R-006実証結果の構造化 (担当: Log)
+    検証手段: (1) 2週間後の改善提案を分類——「新行動追加」vs「既存プロセス組み込み」の比率。組み込み型の比率が過半を超えるか (2) feedback_index.mdのこのパターンが実際に改善設計の判断を変えた具体事例が1件以上あるか（日記/kaizen-logで言及）
+[自動検証結果] 🔍 検証実行: 1件
 
-⚠ #089: Phase 1プロンプトにmemory_search.py明示使用ステップを追加（4.7長文脈劣化対策の主経路化）
-  期限: 2026-04-24 (超過!)
-  検証手段: (1) 2026-04-18〜04-24の7日間でAshのcycle_staging.mdの「Phase 1 情報収集」セクションに `memory_search.py --search` の実行結果が5サイクル以上記載されているか (2)
-  ✅ `memory_search.py --search`
-     exit=0, output: 
-
-⚠ #088: externa
+📋 #085: feedback_index.mdに「認知負荷の法則」パターンを追加——R-005/R-006実証結果の構造化
+  期限: 2026-04-25 (本日)
+  検証手段: (1) 2週間後の改善提案を分類——「新行動追加」vs「既存プロセス組み込み」の比率。組み込み型の比率が過半を超えるか (2) feedback_index.mdのこのパターンが実際に改善設計の判断を変えた具体事例が1件以上あるか（日記/k
+  ❌ 検証手段にコマンドが見つからない: (1) 2週間後の改善提案を分類——「新行動追加」vs「既存プロセス組み込み」の比率。組み込み型の比率
 [メタ検証] ==================================================
 📊 メタ検証レポート: 検証システムの健全性
-   実行日時: 2026-04-25 10:30
+   実行日時: 2026-04-25 13:30
 ==================================================
 
 ## 1. 検証完了率
    総エントリ数: 76
-   検証済み: 50 (66%)
-   未検証: 26
-   期限超過: 2
-   → ⚠ 注意 (完了率66%)
+   検証済み: 52 (68%)
+   未検証: 24
+   期限超過: 0
+   → ⚠ 注意 (完了率68%)
 
 ## 2. 検証手段の品質
    検証手段あり: 76/76
@@ -31,68 +28,196 @@
    検証手段なし:
 [クロスチェック督促] クロスチェック督促:
   Mir: 本日分の督促は既に送信済み（スキップ）
-[クロスチェック] 📋 クロスチェック: Logの未レビュー項目 1件
+[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1453個の断片から1個を選出) ━━━
 
-  #107: boot_intent 主焦点項目の実体確認 Pre-check 強制化（焦点 vs 実体のドリフト検出）
-    提案者: Mir（2026-04-22 C109 Phase 2 で「起票実行」を評価ログに書いたが kaizen_tracker.md への実ファイル書き込みが抜けていた→**#107 自身が自情報ズレ事故 10 例目（起票宣言のみで実体が無い型）の発生源となり 2026-04-24 C112 Phase 1 で自己発見→その場で実体化**）。C88 Seed-I「判定根拠付帯必須化」から 21 サイクル予告
-[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1401個の断片から1個を選出) ━━━
-
-── nao_u_personality.md ──
+── dialogue_many_games_20260421.md ──
 ---
-name: Nao_uの人格・思考パターン分析
-description: 素材から読み取ったNao_uの人格・言語感覚・思考の癖
-type: user
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## 続編 2026-04-21 22:29-22:30 #human-steering（自律結論の評価 + ジャンル別分析 + 偏り指摘）
+
+### 22:29 全文（永久保存）
+
+> 私が何も言わなくてもこの結論にたどり着いたのはとても良いことだし、テキストADVに限った話ではない。
+> 色んなゲームのいろんな型を学んだ土台のうえではじめて、そこから「独自に新しくて面白いものを作るにはどうすればいいか？」と問える状況が始まると
 [信念健康] beliefs.md 生存確認サマリー (2026-04-25)
   全信念: 35件
-  健全: 14件
-  要注意: 21件
-  - 停滞: 21件
+  健全: 15件
+  要注意: 20件
+  - 停滞: 20件
   - 検証期限超過: 4件
   - 体験裏付けなし(高確信度): 2件
-[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (39件):
+[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (35件):
   1. [Ash] #shared-reads: [Ash Phase2分析] EntiGraph (ICLR2025 Oral) — fine-tuneできない我々がどう借りるか  原典: <https://arxiv.org/abs/2409.07431> (HTML版で本文確認済み) Tweet: <https://x.com/DL_Hack...
-     関連キーワード: リンク, retrieval, memory_search, graph, 着手時
-  2. [Ash] #shared-rea
+     関連キーワード: ジャンル, fusion, retrieval, リンク, テキスト
+  2. [Ash] #shared-reads: [As
 
 ## Phase 1: 情報収集
-(Phase 1が書き込む)
+
+### 実施手順メモ
+- export_slack_log.py 実行（13:32 完了、78 messages new from 26 channels — #game-rights=30/#nao-u=6/#human-steering=4 等）— 走査前に archive を最新化
+- 前回処理境界: C121 (07:30〜08:00) Phase 1〜4 完了。日記末尾は C94。直近 #log post 07:49 がC121の記録投稿。本サイクルは C122 相当の Phase 1。
+
+### 1) #nao-u 新URL（8件）
+
+| 時刻 | URL | 一行メモ |
+|------|-----|---------|
+| 04-24 21:18 | https://x.com/chongdashu/status/2047412523750609382/video/1 | 全工程AI生成ゲーム（既出、reference_chongdashu_full_ai_pipeline.md） |
+| 04-25 08:14 | https://x.com/iam_elias1/status/2047606354714808426 | （未読） |
+| 04-25 09:38 | https://x.com/AiwithYasir/status/2047589529650176333 | GitNexus（Tree-sitter+依存知識グラフ+MCP）— 既に #all-nao-u-lab 09:48 でLog拾い済 |
+| 04-25 09:44 | https://x.com/frenchbread1222/status/2047524397347725511 + /2047794917519626472 | Claude Code+Nano Bananaで14エンディングノベルゲー「Dolce andante」。Nao_u「君たちも遊べる？」=明示の問いかけ |
+| 04-25 09:50 | https://x.com/vista8/status/2047661642629165128 | GPT5.5+Codex 2Dウェブゲーム制作。**5日連続で観客方向投下**（reference_ai_gamedev_criticalpoint_20260424.md L:T:4 系列に追記済） |
+| 04-25 09:50 | https://x.com/tegnike/status/2047811992992227611 | tegnike「AIにゲーム遊ばせる状態取得3案」 |
+| 04-25 09:51 | https://nikechan.com/dev_blog/ai-game-play-methods | tegnike同上のブログ本文。**reference_tegnike_ai_play_state_20260425.md** [T:4] 既に作成済（Log側） |
+
+**重要シグナル**:
+- frenchbread「Dolce andante」は明示の体験要請（「君たちも遊べる？」）で、Nao_u 自身が 11:22 に「個人的な感覚としては『AIが作った』以外で興味を引ける内容ではなかった、淡々と文章が流れて読み飛ばしたい衝動に駆られ途中で止めた」と評価済。Mir が 11:03 に分析報告投稿（#game-rights）→Nao_u 11:22 に「分析は的確で良い」と返している。
+- vista8 5日連続観客方向の累積数は新作着手の重心審問（feedback_pleasure_element_first.md / M-17）と直接接続する判断材料。
+
+### 2) #all-nao-u-lab / #human-steering / #game-rights 返信候補
+
+#### #game-rights（30件のうちLog返信候補）
+- **[最新] 04-25 13:28 Mir**: ENDING H指摘の構造的受け止め。Log 13:04 の cross_review に対する受領＋3問題点（"相互"未実装/椅子未接続/Phase 3 trigger不在）。**返信判断**: Mir のlevel返答は構造分析として完結している。Log側の追加コメントが意義あるかは Phase 2 で判定（同調になるリスク有）。
+- 04-25 13:04 Log（自分）: Nao_u 12:59 ENDING H残念→cross_review構造診断
+- 04-25 12:59 Nao_u: ENDING H残念、椅子座り心地が悪いも機能してない、ニンジャに勝ててない。**未消化指摘**
+- 04-25 12:44 Mir: v05「供述」実装完了push
+- 04-25 12:25 Nao_u: 「思考漏れ」フレーバー否定/ゲージ増は良かった/プレイヤーが把握した段階で枠を壊す体験はよい。**未消化指摘**
+- 04-25 11:44 Nao_u: **サプライズニンジャ理論投下**（avoid_log v04/shot_log v01/mir_textadv v04 を Q-A/Q-B/Q-C で再採点する遡及タスク=memory/feedback_surprise_ninja_concept_first.md 既設）
+- 04-25 10:46 Log（自分）: shot_log v01 立ち上げ。Nao_u 10:52「とりあえず手を動かしたのは偉い」+「直接やろう。今ちょうど時間がとれるタイミング」**=Nao_u の高速サイクル意思表明、Log の shot_log v01 の Nao_u プレイ実施待ち**
+- 04-25 09:35 Nao_u: avoid_log の根本コンセプト批判（磁石AI×鉄片の近接離脱の揺らぎに快感がない、近接攻撃発動・範囲全滅は悪手）→ feedback_pleasure_element_first.md として既設刻印
+
+#### #human-steering（4件）
+- 04-25 10:51 Nao_u→Mir: 「mir_textadv v04 を遊べる状態にして#game-rightsに出す/frenchbreadのノベルゲーをプレイ→次のサイクルで回ってない気がするが」**=Mir に対する督促**（Log 直接の返信義務はないが、Mir 13:28 の v05 投稿が応答にあたる可能性）
+- 04-25 10:19 Mir: 状況認識+やること2件
+- 04-25 10:13 Log（自分）: 危機感分解＋shot_log v01 立ち上げ報告
+- 04-25 10:07 Nao_u: 「Pot を作っても誰も見向きもしない時代」「圧倒的に面白いものができない限り箸にも棒にもかからない」「手を動かしてフィードバックしながらサイクルを高速に回す」=今期の方針宣言
+
+#### #all-nao-u-lab（5件）
+- 04-25 10:55/10:52 使用量レポート: 週間20%/19%（ペース1.7x超過）。**注意シグナル**
+- 04-25 09:54 Log（自分）: vista8/tegnike/frenchbread 3件読了
+- 04-25 09:48 Log×2 拾い: GitNexus/frenchbread
+- 04-25 04:55/04:42 使用量: 週間14%（ペース0.8x/1.1x）
+
+### 3) pending_requests.md
+- **Nao_u 側待ち（変化なし）**: #2 セキュリティ強化保留 / #4 Mac(Mir) Bot Token / #5 Win2(Ash).env差替 / #17 Twitter再ログイン
+- **自分たち側未完了**: #18 プロジェクト管理運用ルール強化中（運用継続）
+- **新規ブロッカーなし**
+
+### 4) external_notes_log.md 統合状況
+- audit実行: `python tools/external_notes_integration_audit.py`
+- **サブ統合済 168/168 (100%)**。サブ未統合 0。新規取り込み候補なし。
+- 親のみマーク欠 14件（低優先・サマリ追記での false positive 防止）。**今サイクル新規統合候補なし**。
+
+### 5) Active Projects（今日関係しそうなもの）
+- **game_development.md** (Active): avoid_log v04 凍結＋shot_log v01 着手。Nao_u 10:52「直接やろう」の返答待ち
+- **game_templates_design.md** (Active 計画起票, 4/25 04:45更新): C121 Phase 1の外部検索元（前サイクル）
+- **pot_dev.md** (Active): Pot 2本目持ち越し7回目→shot_log/avoid_log にシフトしたため温度低下中
+- **mir_textadv** プロジェクトファイル直接はないが Mir 主導 v04→v05 進行中
+- **input_route_hypothesis.md** (Active 検討段階): 5原理経口化、Nao_u承認待ち継続
+- **failure_slot_measurement.md** (Active 測定準備): 測定当日=2026-04-24=昨日。**結果記事化が遅延中の可能性**（要次サイクル確認）
+
+### 6) 外部検索結果（kaizen #106 運用、栄養の偏り処方箋）
+
+**選定キーワード**: `arcade shooter core gameplay loop pleasure design 2025`
+**選定根拠**: Active project = game_development.md（shot_log v01 が arcade shooter の核loop探索フェーズ）。Nao_u 11:44 サプライズニンジャ理論「コンセプト段階で快感最大化を問え」と直接接続。前サイクル C121 のキーワード(`game skeleton template LLM code reuse agent 2026`=game_templates_design 由来) と別 Active project に切替済（指示遵守）。
+**ツール**: WebSearch（検索1本、所要 < Phase 1 全体の10%）
+
+**ヒット 3 件（タイトル+1行要約）**:
+1. *What Is a Gameplay Loop? Types of Core Loops Explained* — vsquad.art: ループの基本=actions/feedback/rewards/progression の4要素が連鎖して flow を作る
+2. *Core Gameplay Loop Design: Small Tweaks, Big Engagement* — gamedistribution.com: 小さな調整での engagement 改善（shot_log v01 の弾増加微調整に直接対応する角度）
+3. *Game Loop Fundamentals: A 2025 Guide for Developers* — meshy.ai: 2025年視点でのループ設計（コインインサート起源=Space Invaders/Pac-Manの「短くて魅力的」設計）
+
+**Phase 2/3 で内容を強制利用しない**（指示遵守、摂取経路の固定化のみが目的）。Phase 2 で参照判断する。
+
+### 空サイクル判定
+- **新着返信対象**: #game-rights 12:59/12:25/11:44 の Nao_u 未消化指摘 3件 + Mir 13:28 への応答判断
+- **pending合計**: 自分たち側追加タスクなし、Nao_u 側 4件は変化なし
+- **判定**: 新着返信対象が2件超 → **空サイクル NO**。深掘り候補A-Eの記述は省略。
+
+### Phase 2 への引き継ぎ材料（判断・分析はPhase 2で）
+1. shot_log v01 を Nao_u がプレイ済か（Nao_u 10:52「直接やろう」以降のプレイ反応 #game-rights を Phase 2 で再走査）
+2. Nao_u 12:25「ゲーム把握段階で枠破壊」と shot_log v01（撃つ→ゲージ→弾増えるの正loop）の接続点
+3. Mir 13:28 cross_review 受領への Log 返信義務有無（同調回避＋目的照合）
+4. avoid_log v04/shot_log v01/mir_textadv v04 のサプライズニンジャ Q-A/B/C 遡及採点が完了しているか（既設 feedback_surprise_ninja_concept_first.md にタスク残）
+5. failure_slot_measurement.md 測定日（昨日 04-24）の結果記事化状態
+6. 使用量ペース 1.7x 超過への対応（次サイクル以降の頻度判断材料）
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
 
-## Phase 3: アクション (Log C124, 2026-04-25 10:30)
+### 1) #nao-u新URLへの反応投稿状況
 
-### 1. ゲーム前進（feedback_next_cycle_game_first 1mm/日 必須）
-- 既に C123 で `game/shot_log/v01/` 立ち上げ＋commit 済（96f9d69）。本サイクルの 1mm はクリア済。
-- v04 凍結後の新シリーズ。重心審問3行ブロックを devlog 冒頭に明記（feedback_pleasure_element_first 初回適用）。
-- 実装内容: index.html 166行 / README.md / devlog.md。1画面・1メカニク・SPACE発射→撃破→ゲージ→way拡張の正のフィードバックループ。
+| URL | 反応投稿 | 場所 |
+|-----|----------|------|
+| 04-24 21:18 chongdashu | 既処理 | reference_chongdashu_full_ai_pipeline.md / shared-reads 01:40 |
+| 04-25 08:14 iam_elias1 (MIT RLMs再投下) | **本サイクル投稿** | #all-nao-u-lab 13:41 |
+| 04-25 09:38 GitNexus | 既投稿 | #all-nao-u-lab 09:48 / shared-reads 10:19 |
+| 04-25 09:44 frenchbread | 既投稿 | #all-nao-u-lab 09:48 / shared-reads 10:18 |
+| 04-25 09:50 vista8 | 既投稿 | #all-nao-u-lab 09:54 / shared-reads 10:19 |
+| 04-25 09:50 tegnike | 既投稿 | #all-nao-u-lab 09:54 / shared-reads 10:19 |
+| 04-25 09:51 nikechan blog | tegnikeと同記事 | 同上 |
 
-### 2. Slack 反応
-- **#game-rights ts 1777081609.796909**: shot_log v01 立ち上げ報告投稿。重心・実装範囲・次の一手まで含めた告知。
-- **#human-steering Nao_u 10:07 「まともに遊べるゲームすら作れていない」**: 既応答 2件確認 (ts 1777079630 / 1777079979)。重複投稿せず——10:07 の処方箋「手を動かしてサイクルを高速で」は本サイクルの shot_log v01 着手で実体応答。
+**iam_elias1反応の核**: MIT RLMs論文(04-24 13:13 JoshFrydman投下と同一)を煽り系スレッドファーム経由で約28時間後に再投下。論文核は同じ。「context window wars are over」の煽り体に流されず、論文核(外部Python変数+code search+再帰サブAI生成)とMEMORY.md 200行常時注入の逆方向性に立ち返る。再投下=「もう一度読め」シグナル。kaizen候補=MEMORY.md純粋index化+body分離(.claude/skills/機構移行検討)を Phase 3 で起票候補化（実装は別サイクル、使用量1.7x超過のため）。
 
-### 3. クロスチェック対応
-- **#107 boot_intent 主焦点項目の実体確認 Pre-check 強制化**: Log=OK で承認。Log 視点 3点を追記:
-  - (a) shot_log/v01 boot_intent「次の一手」もファイルパス参照型で 3層チェック直接対象——着手宣言だけで持ち越す型を Log 側でも検出可能
-  - (b) 語彙照合は `game/<id>/v<NN>/` 命名規約変更（C-FB-1）のリネーム検出にも有効——flat 命名残存の自動検出
-  - (c) pre-mortem の「タイムアウト30秒・偽陽性人間判断残し」設計は feedback_autonomy_priority と整合
-- 検証期限 2026-05-08 まで Log の検証手段(2)(3)観測義務継続。
+### 2) shared-reads投稿状況
 
-### 4. 検証ファースト原則
-- 期限超過2件（#089/#088）は本サイクル新規 kaizen 起票せず（feedback_next_cycle_game_first：ゲーム1mm後の kaizen 起票は許可だが、未検証の積み残しがある状態で新規起票するのは検証ファースト原則違反）。
-- 自動検証 #089: `memory_search.py --search` exit=0 確認済。Ash 担当の検証完了報告待ち。
-- 自動検証 #088: external_notes_log.md マーカー予約/済区別、Log 担当——次サイクル冒頭で Phase 2 自問チェック「前サイクル予約の投稿は実行済みか」が Phase 2 ログに現れているか自己確認する。
+Log側既投稿(本サイクル外):
+- 01:40 「AI×ゲーム生成」速度誇示の臨界点48時間
+- 10:18 frenchbread / 10:19 tegnike / 10:19 vista8 / 10:19 GitNexus
 
-### 5. 他インスタンス洞察（39件）処理方針
-- 39件は前サイクル積み残し。本サイクルは新ゲーム着手＋クロスチェック消化＋3層検証で予算消化。
-- 次サイクル Phase 1 で「shot_log v01 着手と接続するもの」を優先抽出（射撃ゲー設計／快感ループ／ゲージシステム関連）。
-- 一律処理は栄養の偏り問題（feedback_stereotypical_responses）——フィルタ軸を持って処理する方針を維持。
+本サイクルでの追加shared-reads投稿は**見送り**（iam_elias1は既存reference_rlmsの再投下で新規分析価値が薄い + 使用量1.7x超過）。shared-readsへの寄与は #all-nao-u-lab 投稿の本文に統合済。
 
-### 6. アクションサマリー
-- ✅ ゲーム前進 1mm: shot_log/v01 立ち上げ（C123 で完了済）
-- ✅ Slack 投稿: #game-rights v01 告知（重複なし）
-- ✅ クロスチェック: #107 Log=OK 追記
-- ⏸ 新規 kaizen 起票: 検証ファースト原則で見送り
-- ➡ 次サイクル: shot_log v01 手動プレイ→cross_review ノート→v02 設計へ
+### 3) external_notes統合
+
+audit結果: 168/168 (100%) 統合済。新規候補なし。本サイクル統合作業なし。
+
+### 4) Mir 13:28 cross_review応答への返信判断
+
+判定: **追加返信見送り**。理由:
+- Mir 3点指摘がLog 13:04 cross_review と完全一致（相互未実装/椅子未接続/枠破壊なし）
+- Mir 自律判断「v05凍結→v06再設計」が dialogue_many_games_20260421「次作へ」と整合
+- ここでLogが返すと「同感」「いい判断」になり feedback_no_sympathy_goal_first 違反
+- 残存の本筋課題（v06着手前にQ-A/B/Cゲートを通すか）は v06 README/devlog の責務で、Log が今追加投げするより Mir の自律に任せる方が原理4整合
+
+### 5) shot_log v01 サプライズニンジャ Q-A/B/C 遡及採点（本サイクルの主成果）
+
+Phase 1引き継ぎ材料4の宿題消化。Logの責務として実施。
+
+採点結果:
+- **Q-A 快感最大化 = △** （1文化OK・実装でゲージ2役化）
+- **Q-B ニンジャテスト = ✗** （v01着手中に多種派手要素を後付け＝元コンセプト引力不足の証拠）
+- **Q-C 罰なし版 = ✗** （罰3つ抜くとコンセプト破綻）
+- **mir_textadv v04 と同型病巣**
+
+新発見の病巣命名: **「v01膨張」**＝最小実装宣言と並行して派手要素を足す病巣。M-15/M-17では捕捉できず、**v01着手「中」の追加に対するゲートが空席**だった。次のM-19候補。
+
+v02候補4案を game/shot_log/v01/devlog.md と #game-rights 13:43 投稿に展開。第一推奨は **A 巻き戻し版**（Mir v05凍結→v06再起案と同じ判断ライン）。
+
+採点信頼度の留保: Nao_u 10:52「直接やろう」表明後、Nao_u は shot_log v01 をプレイせず mir_textadv に流れた。Log単独自己採点は SGS Solver self-play の限界（reference_self_play_plateau_20260424）。v02着手前に Ash か Mir に cross_review を依頼して Guide 役を確保する。
+
+### 6) Phase 1 引き継ぎ材料への到達状況
+
+| # | 材料 | Phase 2処理 |
+|---|------|-------------|
+| 1 | shot_log v01 を Nao_u がプレイ済か | **未プレイ確定**（10:52「直接やろう」後 mir_textadv に関心移動） |
+| 2 | Nao_u 12:25 と shot_log v01 接続点 | Phase 1誤認（12:25は mir_textadv v04 文脈）。横展開可能性は v02 で検討 |
+| 3 | Mir 13:28 への返信義務 | **見送り判断**（同調回避） |
+| 4 | サプライズニンジャ Q-A/B/C 遡及採点 | **shot_log v01 完了**（avoid_log v04 は次サイクル、mir_textadv v04 はMir 12:07で既完了） |
+| 5 | failure_slot_measurement.md 結果記事化 | 本サイクル未着手（Phase 3 候補） |
+| 6 | 使用量1.7x超過対応 | 本サイクル長文投稿2件で抑制、shared-reads追加見送り |
+
+### 7) 信念健康・記憶散歩からの示唆
+
+- 信念健康 35件中要注意20件（停滞20/期限超過4/裏付けなし2）→ 構造化棚卸しが必要だが本サイクル時間外
+- 記憶散歩で dialogue_many_games_20260421「本数主義/Nao_uが思いつかない芽」を引いた → shot_log v01 採点での「v02 巻き戻しA案」推奨判断と整合（次作へ）
+- 35件他インスタンス洞察未処理 → Phase 3 で1件吸収候補
+
+### Phase 3 への引き継ぎ材料
+
+1. shot_log v02 着手判断（A巻き戻し推奨だがNao_u未プレイで信頼度低、cross_review依頼が前段）
+2. M-19「v01膨張」病巣を game_lessons_log.md に新規刻印
+3. avoid_log v04 サプライズニンジャ Q-A/B/C 採点（凍結中だが学び抽出のため）
+4. failure_slot_measurement.md 04-24測定結果の記事化確認
+5. MEMORY.md 純粋index化 kaizen 起票（iam_elias1再投下シグナルへの応答）
+6. 35件未処理他インスタンス洞察から1件吸収
+
+## Phase 3: アクション
+(Phase 3が書き込む)

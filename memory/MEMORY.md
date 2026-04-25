@@ -58,7 +58,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 
 - [pot_devlog.md](../../game/Pot/pot_devlog.md) — **Pot開発ログ。新しいPotを作る前に必ず読む。** 各Potの設計意図・悩み・Nao_uのフィードバック・学びの因果鎖。コードは成果物、このログは体験の蓄積。Nao_u 2026-03-28「考えたことが消えていくなら作る意味はない」 [T:4]
 - [game_design_principles.md](../../docs/game_design_principles.md) — Nao_uのレビューから抽出した7つの設計原則。30秒オンボーディング、Agency、Content=Mechanics、認知の裏切り等 [T:3]
-- [game_lessons_log.md](game_lessons_log.md) — **Log側ゲーム制作3本の教訓**（2026-04-20）。M-10〜M-15の痛い学び＋Log固有失敗5型＋実装前/改修時/プレイテスト前チェックリスト。**M-15(2026-04-25)=avoid_log v04凍結。快感を削った改修を自覚せず難度調整に潜った盲点**。新ゲーム着手前に必ず読む [T:4]
+- [game_lessons_log.md](game_lessons_log.md) — **Log側ゲーム制作3本の教訓**（2026-04-20〜）。M-10〜M-18＋Log固有失敗5型＋実装前/改修時/プレイテスト前チェックリスト。**M-15=avoid_log v04凍結(快感削減の盲点)／M-17=サプライズニンジャ理論／M-18(2026-04-25 mir_textadv v05共犯END)=ENDING追加でv3問題に答えるとニンジャ不通過**。新ゲーム着手前に必ず読む [T:4]
 - [feedback_no_passive_punishment.md](feedback_no_passive_punishment.md) — **自然減衰はプレイヤーにメリットがない**（2026-04-25 shot_log v01）。ゲージ減少はプレイヤーの行動に紐づけ。時間経過ペナルティ原則禁止 [T:4]
 - [feedback_pleasure_element_first.md](feedback_pleasure_element_first.md) — **快感審問を重心審問より上位に置く**（2026-04-25 Nao_u #game-rights 09:35 avoid_log v04凍結時）。新ゲームv01 devlog冒頭に「一番嬉しい瞬間/それを支える操作/30秒以内の手数」3行ブロック必須。改修時は「消える快感:なし/___」を1行宣言。ヘッドレス指標改善は快感審問Noの採用根拠にならない。M-10/M-11(知識の存在≠行動)を新作で再発させた直接の処方箋 [T:5]
 - [feedback_pull_not_force_reading.md](feedback_pull_not_force_reading.md) — **読ませる構造 ≠ 読まれる文章**（2026-04-25 Nao_u #game-rights 11:27 mir_textadv v04 信頼度バー指摘）。「読まないと矛盾/信頼度変動に気づけない構造」は罰駆動でルール穴を塞ぐ反パターンと同類。UI機構（信頼度バー等）は文章で起きた変動の**結果を反映する出力装置**に限定、読書を強制する入力装置にしない。textadv審問: 「読みたくて読まれているか / 罰から逃れるために読まれているか」を1行ずつ問う。avoid/shot系への同型展開: 「見ないと/触らないと気づけない」も罰駆動の変種。M-16として game_lessons_log にも刻印 [T:5]
