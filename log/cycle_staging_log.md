@@ -313,3 +313,43 @@ C127 Phase 4「次回起動時にやること」6項目の本C128での消化:
 ### 7) git push
 
 3ファイル更新（devlog / game_lessons_log / memory_redesign）+ 本staging更新 を Phase 3 末尾でコミット予定。
+→ 実施済（commit 73b41d40166 / 2026-04-26 05:25 push成功）。
+
+## Phase 4: 日記 (Log C128 / 2026-04-26 05:55〜)
+
+### 1) #log 日記投稿
+- **投稿先**: `#log`
+- **ts**: 1777147097.724759
+- **archive**: `drafts/.archive/2026-04-26/log_slack_log_diary_c128_20260426.py`
+- **タイトル**: 「外部知識を反証寄りで借りる、という選択肢が初めて運用化した日」
+- **本文長**: 7394字
+- **核**: M-27 刻印 / 反証寄り採用の運用化 / 外部知識との関わり方の4モード言語化（直接適用/反証寄り/保留/却下）/ 原理1「内省の鏡」の外部世界レイヤー機能発露
+
+### 2) 本サイクルで書き込んだメモリ／プロジェクトファイル チェックリスト
+
+| ファイル | 変更内容 | Nao_u可読性 | 未来の自分が行動変えられるか |
+|---|---|---|---|
+| `game/shot_log/v01/devlog.md` L319〜 | 視覚目視発見セクション + v02 設計3基準点 + Q-A 採点訂正 〇→△' | ✅ 既存 devlog 形式踏襲、3基準点が箇条書きで明示 | ✅ v02 着手時に「devlog 末尾の3基準点 + 採点訂正」を読めば設計出発点が再構成できる |
+| `memory/game_lessons_log.md` L235〜 | M-27 刻印（target player imagination 暗黙化警告） | ✅ M-15〜M-17 と同形式、起源・規則・機能の証拠の3節構成 | ✅ 外部記事引用前に「M-27 を引け」が記憶として効く形（M-15等の前例で運用実績あり） |
+| `projects/memory_redesign.md` L1257〜 | C/D 二重ミラー問題セクション（設計要件 R6 / 同一性問題接続 / 次の一手） | ✅ 設計文書として技術＋温度両立、`dialogue_session_loss_20260315` 接続で「なぜ重要か」が読める | ✅ kaizen 起票時に「#091 統合可能性確認 → BOTH-DRIFT 検出ツール追加」の手順が書かれている |
+| `memory/kaizen_tracker.md` #119 | shared-reads 投稿 template 形式化 起票（pre-mortem 含む） | ✅ 既存 #115〜#118 と同形式 | ✅ 検証期限 2026-05-10 / 検証手段4項目 / pre-mortem の緩和策まで明記、運用組込時に迷わない |
+| `memory/reference_self_play_plateau_20260424.md` | arXiv 2603.12129 反対側リスク警告 併設追記 | ✅ 既存ファイルへの追記で文脈保持 | ✅ RPPO/SGS 処方箋を引く時に反証側リスクが同一ファイル内で参照できる |
+| `log/cycle_staging_log.md` | Phase 1〜4 全記録 | ✅ 過去 staging と同形式 | ✅ サイクル全体の温度・判断順・自己観察が時系列で残る |
+| `drafts/.archive/2026-04-26/log_slack_shared_reads_shmup_dogma_20260426.py` | shared-reads 投稿アーカイブ | △ コード形式だがコメント説明は最小（再現用） | ✅ 投稿内容そのものが本文 string で残る |
+| `drafts/.archive/2026-04-26/log_slack_kaizen_119_20260426.py` | #kaizen-log 投稿アーカイブ | △ 同上 | ✅ 同上 |
+| `drafts/.archive/2026-04-26/log_slack_log_diary_c128_20260426.py` | 本サイクル日記アーカイブ | △ 同上 | ✅ 日記本文がそのまま残る |
+
+**全件チェック結果**: 9ファイル全て合格基準クリア。特に **M-27 刻印（game_lessons_log.md）** と **memory_redesign.md C/D セクション** は、温度を保持した状態で構造記述が完了している点で品質が高い。drafts/.archive/ 系は「再現用コード」として割り切っているので可読性△で許容。
+
+### 3) git add + commit + push
+
+Phase 3 末尾の主要ファイル群は commit 73b41d40166 で既に push 済（devlog / game_lessons_log / memory_redesign / kaizen_tracker / staging Phase 1-3 部分）。
+
+Phase 4 で追加すべきは:
+- `log/cycle_staging_log.md`（Phase 4 セクション追記）
+- `drafts/.archive/2026-04-26/log_slack_log_diary_c128_20260426.py`（新規）
+- `.diary_dedup_cache.json`（auto系cache、定期更新）
+
+**触らない**:
+- `game/shot_log/v01/index.html`（M）— Nao_u が直接編集中の可能性。次回サイクルで内容確認後に扱いを決める（次回やること #7 に記載）
+- `game/shot_log/v01/serve.py`（??）— 同上、Nao_u が新規追加した可能性
