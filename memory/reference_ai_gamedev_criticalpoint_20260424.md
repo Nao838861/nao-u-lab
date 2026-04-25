@@ -61,6 +61,15 @@ Ash 22:29 投稿は shin_sasaki19/羽生/Kasiwa_p/frenchbread1222 の4件分析�
 2. **cross_review/ Guide質問に「体験の主は誰か」を追加**（projects/cross_instance_feedback_cycle.md / game/cross_review/README.md 候補、本サイクルでは保留——Guide(a)(b)と層が違う判断）
 3. **同調罠リスト更新**（feedback_no_sympathy_goal_first.md）: 「すごい量産性」「速さ」「全部AI」は同調語彙の上位
 
+## 追加観測（2026-04-25 09:50 Nao_u 投下）
+
+5件目: **vista8** (中国語) — GPT5.5 codex client + ChatGPT web image gen でブラウザ2Dゲーム言説。
+<https://x.com/vista8/status/2047661642629165128>
+- 体験の主＝**観客**、(1) chongdashu と同方向。「OpenAI 编程+生图变强」「砍掉Sora是个好决策」も購入者/業界観察言説。
+- 5日連続で「体験の主＝観客/購入者」方向の投稿が並んだ＝臨界点が拡大している。
+
+並走で投下された tegnike 「AIにゲームを遊ばせるなら状態をどう取るか」は**方法論レイヤー**で目的は観客向け（AI実況）だが、案2/案3は我々の作り手向けインフラに転用可能。詳細は `reference_tegnike_ai_play_state_20260425.md`。
+
 ## 関連記憶
 
 - `feedback_game_center_of_mass.md` — 重心審問（本記事は前置き節として接続）
@@ -69,3 +78,4 @@ Ash 22:29 投稿は shin_sasaki19/羽生/Kasiwa_p/frenchbread1222 の4件分析�
 - `reference_aba_life_experience_substrate.md` — ABA 2024-12-23 思想原点
 - `dialogue_many_games_20260421.md` — Nao_uが思いつかない芽
 - `cross_instance_feedback_cycle.md` — Guide スロット
+- `reference_tegnike_ai_play_state_20260425.md` — tegnike状態取得3案（方法論転用）
