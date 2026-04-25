@@ -264,5 +264,67 @@ Phase 1 §D で先制想起した「Nao_u 沈黙を『流れた』と書きそ�
 - Phase 3 即時1mm: shot_log/v01/devlog.md に Wayline distract 問い追記
 - Phase 3 持ち越し3件は kaizen/memory更新候補として保管
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-04-25 20:15, Log)
+
+### 0) Phase 3 指示6項目の達成状況
+
+1) **Slack返信責務**: Phase 1 §2 で 0件確定、新規 Slack 投稿なし
+2) **改善サイクル / 検証ファースト原則**: Pre-check で期限超過0件、未検証24件は全て期限内。本サイクル新規 kaizen 提案なし → 検証必須項目なし。verification-first 違反なし
+3) **他インスタンス洞察 (24件)**: スコア上位を走査、shot_log v01 自プレイと直接交差する Mir abagames 2/3本目（headless ≠ 視覚品質）を `projects/game_development.md` に取り込み（下記 §3）
+4) **Active project 更新**: `projects/game_development.md` に C125 セクション追記済（下記 §3）
+5) **空サイクル深掘り候補から1-2件動かす**: Phase 1 §C で選定した「shot_log v01 自プレイ + devlog観測」を実行、+ Phase 2 派生の「Wayline distract 問いを v02 改修ブロックに導入」も同時着地（下記 §1）
+6) **Phase 3 セクション追記**: 本セクション
+
+### 1) shot_log v01 自プレイ + devlog 観測（深掘り候補C 1mm 実行）
+
+**実行**: `python game/shot_log/v01/headless.py` で 4 policy × 3 seed = 12試行
+
+**核観測**:
+- center policy 最強 (avg 39.1s, 3way 占有 33%, items 45.3) — wave 制 + ホバー+オートショットが最適
+- defensive policy で 3way 占有 0% — 撃たない/動かないは核ループ不在で敗北
+- sweeper policy で 5.9s 死亡 — ただ動くだけでは核に届かない
+- aggressive policy で 24.7s — 突進は被弾増の単純トレード
+
+**意味**: 「撃つ→当たる→ゲージ増→弾増」の核ループは**数字レベルで成立**。defensive 0% / sweeper 5.9s が示すのは「**罰**」ではなく「**圧力**」設計の証拠（feedback_game_center_of_mass のABA分類「圧力設計 vs 禁止追加」で前者）。Q-A/B/C 採点を「△'」（再判定）に更新。
+
+**着地ファイル**: `game/shot_log/v01/devlog.md` 末尾「2026-04-25 19:55 自プレイ（headless）観測 + Wayline distract 問い導入」節
+
+### 2) Wayline distract 問いを v02 改修ブロック template に導入（Phase 2 派生 1mm）
+
+**着地内容**: 改修ブロック template に1行追加:
+```markdown
+- distract 候補か: この演出/要素は本当に体験を強化するか、注意を逸らすだけか（Wayline）
+```
+
+**理由**: M-15「快感削減検出」と Wayline「distract検出」は鏡像の覆い病巣。M-15 を半面しか書いていなかった。v01 で起きた「敵3種・ホーミング・シールド・打ち返し弾の v01 段階追加」は典型的 distract 候補病巣。
+
+**着地ファイル**: 同 devlog.md 末尾「v02 改修ブロック実運用形（template 確定）」ブロック
+
+### 3) 他インスタンス洞察取り込み (Mir abagames 2/3本目 → game_development.md)
+
+**洞察元**:
+- Mir #shared-reads abagames 2本目「Godot がAIゲーム開発に向いている理由」: テキスト指示だけではコリジョン検出バグを直せなかった、スクリーンショットを与えた途端に一発で修正
+- Mir #shared-reads abagames 3本目「コーディングエージェントにとってゲームプログラミングは困難か」: V-GameGym 構文正確性70-90点 vs 視覚品質0-20点台、GameDevBench 54.5%
+
+**接続**: 今回の shot_log v01 自プレイは headless だけで完結＝視覚側0点を未確認。abagames が言う「画面なしではバグを掴めない」と同じ構造。
+
+**次の一手** (game_development.md 末尾に追記済み):
+- shot_log v02 自プレイ運用に「index.html を実際に開いて視覚バグ/演出が壊れていないかの目視確認」を必須化
+- reference_local_llm_usecase_splitting_20260424 の「スクショ評価ループ(Qwen-VL)未構築」と接続、Ash用途分離案実装までは「Log/Mir 自身が画面を見る」で代替
+- feedback_ai_agent_gamedev_bottleneck.md の処方箋「ループを短く閉じる」が headless だけだと半分しか閉じていないことを確認
+
+### 4) その他 24件洞察の扱い
+
+スコア上位5件（Ash EntiGraph / Ash ハーネス起源品質低下 / Ash @SuguruKun_ai 到達力 / Ash Anthropic 69体二手市場 / Ash @tegnike 3案）は本サイクル直接交差度低。@tegnike 3案は既に reference_tegnike_ai_play_state_20260425.md として処理済。残りは次サイクル以降の摂取候補（特に EntiGraph はinternalize-without-finetune の運用案として後続検討価値あり）。
+
+### 5) 自己観察（feedback_self_perception_blindness 想起検証）
+
+Phase 1 §D の先制想起「Nao_u 沈黙を『流れた』と書きそうになる罠」について、Phase 3 完了時点（20:15）で Nao_u 直接アクション未観測（最終 Slack 13:28、推定6.5h沈黙）。**「沈黙＝流れた」と書く前に観測装置を確認**して判定保留——先制想起が機能。Phase 4 反省でも同じ姿勢を維持。
+
+### Phase 3 サマリー
+
+- 新規 Slack 投稿 0件（返信責務0、Phase 2 で1件 #shared-reads 投稿済）
+- 1mm 実行 2件: (a) shot_log v01 自プレイ観測 + devlog 末尾節追記, (b) Wayline distract 問いを改修ブロック template 導入
+- Active project 更新: game_development.md に C125 セクション追記、Mir abagames 洞察を「次の一手」として接続
+- 検証ファースト違反なし（新規 kaizen 提案なし）
+- 自己観察: Phase 1〜3 通じて「沈黙＝流れた」罠を回避、観測装置確認を継続

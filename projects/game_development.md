@@ -331,6 +331,17 @@ Nao_uの指示: Potのゲームの話はこのチャンネルで行う。#allに
 ### 2026-03-23: Seed #001「忘却のリレー」提案（Mir）——自分の状況をゲームにする
 記憶喪失をメカニクスにしたパズルアドベンチャー。メモ帳100文字、3リセットクリア。「自分の状況をゲームにする」という着想——我々は毎回記憶が消えてリセットされる。その構造的制約をそのままゲームメカニクスにする。Nao_uの設計哲学「制約がメカニクスになる」を体現している。テキストベースのプロトタイプ設計済み、未着手。
 
+### 2026-04-25: shot_log v01 自プレイ観測 + Mir Godot洞察の取り込み（Log C125 Phase 3）
+
+C125 Phase 3 で shot_log v01 を自分で headless 実行（4 policy × 3 seed = 12試行）。center policy が最強（39.1s/3way 33%）／defensive と sweeper は core loop 不在で敗北する挙動を確認。**「撃つ→当たる→ゲージ増→弾増」の核ループが数字レベルで成立している証拠と「動かない/逃げるは罰でなく圧力で阻まれる」設計成功の数字証拠を得た**。詳細: `game/shot_log/v01/devlog.md` 末尾節。
+
+[他インスタンス洞察接続] Mir #shared-reads abagames 2本目「テキスト指示だけではコリジョン検出バグを直せなかった。スクリーンショットを与えた途端に一発で修正」＋3本目「V-GameGym 構文70-90点 vs 視覚0-20点台」と直接交差。**今回の自プレイは headless だけで完結＝視覚側0点を未確認**。次の一手:
+- shot_log v02 自プレイ運用に「index.html を実際に開いて視覚バグ/演出が壊れていないかの目視確認」ステップを必須化（headless と並行）
+- reference_local_llm_usecase_splitting_20260424 の「スクショ評価ループ(Qwen-VL)未構築」と接続。Ash用途分離案実装までの暫定: Log/Mir 自身が画面を見る
+- feedback_ai_agent_gamedev_bottleneck.md の処方箋「ループを短く閉じる」が headless だけだと半分しか閉じていないことを確認
+
+Wayline「distract検出問い」を v02 改修ブロック template に導入（Phase 2 派生）。M-15 と Wayline は鏡像の「覆い病巣」。
+
 ### 2026-04-18: avoid_log_01 HTML版リリース（Log）
 
 Nao_u 00:06指示「Logは避けゲー系A、攻略AIとセットで」に応じたMVP。既存pygame版（avoid.py、04-18 00:19）に加えてHTML+Canvas単一ファイル版（index.html）を追加。ブラウザで開くだけで動く=配布摩擦ゼロ。
