@@ -88,12 +88,38 @@ Nao_u 11:52 「ゲーム制作の手順の自立化の検証、コアミッシ�
 - [ ] **既存LLMゲームプレイ研究のサーベイ**: VLM Mario論文以外の先行研究
 - [ ] **VLM直接入力 vs 構造化中間層 vs ハイブリッドの比較検討**: Gemma4のゲーム画面認識事例（umiyuki_ai）を受けて
 - [ ] **スクリプト生成アプローチの最小プロトタイプ設計**
+- [ ] **案2スクショ評価ループ最小実装（2026-04-25 tegnike接続）**: `avoid_log/v02/headless.py` に 30fps 間隔PNG出力 → マルチモーダルLLMで言語化 → decision_log.jsonl に並走記録 → headless数値と突き合わせる。**未構築ループの最短試作**。詳細→knowledge/20260425_tegnike_ai_play_methods_independent_convergence.md Q2
 
 ## 検討済み・未実装
 - （なし。プロジェクト立ち上げ直後）
 
 ---
 ## 履歴（下に積み重なる。新しいものが上）
+
+### 2026-04-25: tegnike 3案との独立収束——案2「スクショ評価ループ」の空白が我々の未構築ループと一致（Ash C112）
+
+Nao_u 2026-04-25 09:50-09:51 #nao-u に投下された tegnike 記事 (`https://nikechan.com/dev_blog/ai-game-play-methods`) を analyze。記事の **状態取得3案** と本プロジェクトの **5層アプローチ** を対応マップ化したところ、**案2 (高速マルチモーダル直入力 = スクリーンショット自己評価) が Nao_u 5層提案には存在しない空白** であることが鮮明になった。詳細は `knowledge/20260425_tegnike_ai_play_methods_independent_convergence.md`。
+
+**3案 × 5層の対応マップ:**
+
+| tegnike | 我々の対応物 | ステータス |
+|---|---|---|
+| **案3** = テキスト/構造化プロトコル | 5層①②③④（feedback_role_split_playtest, avoid_log/v02/headless.py, study_platformer_01 target_ai.py） | **既存・運用中** |
+| **案2** = 高速マルチモーダル直入力 | **5層には存在しない空白**。feedback_ai_agent_gamedev_bottleneck.md「V-GameGym 構文70-90点 vs 画面評価0-20点」が指す未構築ループと同じ場所 | **未構築（次kaizen候補）** |
+| **案1** = ローカルLLMで画面解析+遅延 | 5層⑤コスト構造の転換に対応。reference_local_llm_usecase_splitting_20260424.md | **構想あり、未実装** |
+
+**独立収束の意味**: tegnikeは「観客/視聴者向けAI実況」、我々は「作り手向け開発インフラ」と **目的レイヤーが逆方向** にもかかわらず、方法論レイヤーで同じ3層分類に到達した。これは external posterior calibration（外部による事後較正）として機能する——同調ではなく、目的が違うのに方法が一致した事実そのものに価値がある。
+
+**残課題への追加**:
+- [ ] **案2スクショ評価ループの最小実装**: avoid_log/v02/headless.py に 30フレーム間隔の PNG 出力を追加 → 既存マルチモーダルモデル（Claude/GPT-4o/Gemini）に「このフレーム、何が起きていますか？プレイヤーは何を見ていますか？」を投げて言語化 → 結果を decision_log.jsonl に並走記録 → headless 数値メトリクスと突き合わせる。**これは「未構築のまま議論を続ける vs 最短試作で動かす」の対比で後者を選ぶ最も小さい一歩**
+
+**Nao_u 04-25 危機感連投との接続**: 04:45「頭でっかちで手を動かしていない」/05:21「GPT5.5登場で求められるレベルが跳んだ」/10:07「ちょっと面白いは死んだ」の合間 09:50 にtegnike投下。**「議論ではなく手を動かせ」のシグナル** として読み、案2着手が最有力候補。
+
+**接続ノード**:
+- B019（ハーネスがゲーム性能を決める）— 案3＝harness設計の外部独立収束
+- B008（同調罠）— 「3案が我々と1対1対応」は同調語彙。目的の差を明示することで罠を回避
+- knowledge/20260424_flipbook_ephemeral_substrate_game_identity_question.md — 「ゲームを作る目的＝体験の主」軸の議論
+- reference_ai_gamedev_criticalpoint_20260424.md — Guide質問「体験の主は誰か」へのtegnike3案追加候補（Q4）
 
 ### 2026-04-22: kaizen #106 初運用で3本受領——TITAN 3要素とヘッドレス評価=人間近似度（Log C107）
 
