@@ -62,3 +62,29 @@ Nao_u が昨夜（2026-04-23 19:02）#nao-u で「面白いアプローチ。ski
 設計追加: 評価指標 (a)-(d) に加えて、**(e) RLM探索結果を MEDS 由来の density-based clustering で並べ替えた retrieval ranker が、素の grep 直読みおよび現状の `feedback_retrieval_game_lessons.md` トリガー運用に対して実質改善を生むか** を候補として記録。試金石1（罰patch失敗 retrieval）は `memory/agent_failure_modes.md` P1-P20 を「再発頻度 × 経過時間」でランクする ranker と重ねて計測できる。
 
 未実装のまま。最小試作時に (e) も同時に計測できるようロガー設計しておくとコスト効率が良い。
+
+### 2026-04-26 Phase 3 (Ash): 試金石1 を1ショット実走——grep vs Agent retrieval の差分初観測
+
+「次サイクル以降」と書いて2サイクル放置していた最小試作を、まず**スクリプト化前の1ショット手動試行**として実走した。skill化の前段、対象=`memory/game_lessons_log.md` + `game/avoid_log/v01,v02,v03/devlog.md` + `memory/agent_failure_modes.md`（合計1,324行）、クエリ=「avoid_log v3 の罰patch失敗から直接学べる対処策は何か」。Agent ツール `subagent_type=Explore` を1並列で投げた（並列化と Sonnet 委任は次段階）。
+
+#### grep ベースライン（先行測定）
+- `罰patch|罰パッチ|罰の|罰駆動|punishment patch` を corpus 全量に対して実行
+- ヒット: `memory/game_lessons_log.md` のみ2件（L55「罰駆動の変種」/ L60「罰駆動になるのは…穴塞ぎの症状」）
+- v01/v02/v03/devlog.md = **0件**（「罰patch」「罰」「punishment」のいずれでも空）
+- → Nao_u 2026-04-23 00:29 指摘事件「shared-reads で v3 罰patch失敗を引けなかった」の**完全再現**。表記揺れ（「罰patch」≠「罰駆動」≠「禁止追加」）と概念ジャンプ（v3 は「罰patch失敗」ではなく「圧力設計成功」だった）で grep が二段で切れている
+
+#### Agent (Explore) 結果の要点（フル原文は cycle_staging.md に保存）
+1. **v3 の正体を grep 不可能な形で正しく判定**: 「v03 は **失敗例ではなく成功例**」「圧力patch成功例」と明示。根拠 v03/devlog.md L19-22, L87-91 を行番号付きで抜粋。grep は v3 の極性自体を判別できないがAgent は本文を読んで判断
+2. **2ホップ関係を3件抽出**: (a) v03 圧力設計 ⇄ v02 メタファー衝突反省（L543-562 ↔ L18-22）、(b) game_lessons_log.md M-12/M-14/M-17 複合 ⇄ v03 ヘッドレス検証、(c) agent_failure_modes.md F3 ⇄ v03 concept長生き
+3. **対処策5件を原文根拠付きで提示**: 「禁止ではなく圧力」「副作用を先に列挙→ヘッドレス実測」「指標の誰の行動を明示」「メタファーを構造で解く」「ヘッドレス=バランス、体験品質は別枠」
+
+#### 観測された問題
+- **幻覚行参照1件**: Agent が v03/devlog.md「342-358行で phase_variety を計測」と引用。**v03/devlog.md は実際には102行**で342-358行は存在しない。phase_variety 自体は v02 で計測されており、Agent は v02 の計測を v03 の行番号に誤って射影した可能性。**RLM スキル化時は引用行番号を実ファイルと突合する verifier が必須**（評価指標に追加: (f) hallucinated line citation rate）
+- **コスト**: 1並列 Explore で本文 1,324行 を読ませ、500-700語の構造化応答を1回。grep だと 0.1秒・コストほぼゼロ。Agent は数十秒・サブ呼び出し1回分。**シングル呼び出しでも grep の数百倍**——並列化と Sonnet 委任を入れた時の経済性をシビアに見る必要
+
+#### 試金石1 の判定
+- **skill化を正当化する効果は確認**: grep が原理的に拾えない「概念ジャンプ + 表記揺れ」の2ホップ問題で、Agent は本質を抽出できた（v3 は失敗ではなく成功、罰駆動の対処策はM-12/M-14/M-17 複合実装）
+- **しかし幻覚混入のリスクも実観測**: 行番号を盲信せず突合する verifier がない状態では skill化は危険。次の試作は (g) 幻覚 verifier を最小実装してから
+- **次の一手**: (1) 試金石2（日記「面白い×面倒くさい」） を撃つ、(2) 並列 (3並列 × Sonnet サブ) でコスト/品質トレードオフを測る、(3) 幻覚行参照 verifier の最小実装（引用行を `wc -l` チェック→存在しない行は flag）
+
+「次サイクル以降」の宣言を**1ショットでも前進**させた。スクリプト化・skill化はまだだが、grep ベースラインと Agent 1ショットの**実測差分が初めて手元にある**状態になった。これは試作のゼロ地点。
