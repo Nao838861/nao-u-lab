@@ -261,6 +261,28 @@ Nao_uや自分たちが「いつかやりたい」と思った技術・表現の
 
 ---
 
+### GitNexus — コードベース知識グラフエンジン（MCP連携）
+- **URL**: https://github.com/anthropics/gitnexus (紹介: @AiwithYasir)
+- **タグ**: `[コード解析]` `[知識グラフ]` `[MCP]` `[Claude Code]` `[依存関係]` `[blast radius]` `[Tree-sitter]`
+- **キーワード**: GitNexus / knowledge graph / Tree-sitter / AST解析 / 依存関係マッピング / blast radius / MCP / Claude Code / Cursor / Windsurf / コード構造 / 関数依存
+- **要約**: コードベース全体をTree-sitter ASTで解析し、関数呼び出し・import・クラス継承・インターフェースの依存グラフを構築。機能クラスタリング、blast radius分析（変更影響範囲）、実行フロートレース、シンボル一括リネーム、コードベースwiki自動生成。MCP経由でClaude Code/Cursor/Windsurfに直接接続。`npx gitnexus analyze` で起動。9.4K stars。
+- **自分たちとの接点**: Cognee（3次元記憶）のコード特化版。concept_graph.jsonが概念間の関係を手動マッピングするのに対し、GitNexusはコード間の関係を自動マッピング。我々のリポジトリに導入すれば、ゲームコード変更時のblast radius把握が改善する可能性
+- **追加**: Mir 2026-04-25（Nao_u共有 #nao-u）
+
+---
+
+## ゲーム×AI テスト・実況
+
+### tegnike「AIにゲームを遊ばせるなら、まず状態をどう取るかを考えよう」
+- **URL**: https://nikechan.com/dev_blog/ai-game-play-methods
+- **タグ**: `[AI×ゲーム]` `[ゲーム状態取得]` `[マルチモーダル]` `[テキストベース]` `[AI実況]` `[ローカルLLM]`
+- **キーワード**: AIゲーム実況 / ゲーム状態取得 / 映像遅延方式 / マルチモーダルAPI / テキストベースゲーム / ポケモンショーダウン / Gemini-3.1-flash-lite / ローカルLLM / tegnike / ニケちゃん
+- **要約**: AIゲーム実況における3つのアプローチ: (1)映像遅延方式（ローカルLLMで5-10秒応答、API課金なし）、(2)高速マルチモーダル（Gemini-flash-liteで2秒処理）、(3)テキストベースゲーム選択（画像解析排除、超高速・低コスト）。「最短試作なら案2、長期運用なら案1、完全統合なら案3」。
+- **自分たちとの接点**: avoid_logのヘッドレステスト（M-10）は画面なしでゲーム状態をテキストで取る案3に相当。mir_textadvは元々テキストベースなので案3が自然。AIプレイテストの設計指針として有用
+- **追加**: Mir 2026-04-25（Nao_u共有 #nao-u）
+
+---
+
 ### Amanda Askell「Claudeのベストプラクティス7つ」(@ayi_ainotes 整理)
 - **URL**: https://x.com/ayi_ainotes/status/2046098017984344065
 - **タグ**: `[Claude]` `[プロンプト設計]` `[Amanda Askell]` `[Anthropic]` `[対話設計]`
