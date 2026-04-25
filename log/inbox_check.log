@@ -2841,3 +2841,7 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-25 13:00:03] [COOLDOWN] win2 is in cooldown (45m54s remaining) — skipping Claude wake
 [2026-04-25 13:34:18] [COOLDOWN] win2 is in cooldown (11m39s remaining) — skipping Claude wake
 [2026-04-25 13:41:42] [COOLDOWN] win2 is in cooldown (4m15s remaining) — skipping Claude wake
+[2026-04-25 14:21:26] Inbox win has content — waking Claude
+[2026-04-25 14:25:44] Claude woken for win: 対処完了。
+
+**何が起きたか**: C122 Phase 4 日記で「Nao_u は shot_log v01 をプレイせず mir_textadv に流れた / Solver self-play 
