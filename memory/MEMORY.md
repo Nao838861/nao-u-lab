@@ -121,6 +121,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_retrieve_before_synthesize.md](feedback_retrieve_before_synthesize.md) — **新規知識取り込み前に既存失敗記憶を検索せよ**（2026-04-23 Nao_u #human-steering 00:29）。ABA記事結晶化時Potを引用→正解は avoid_log/v02 v3（drag/hitbox/弾幕激化/90%スポーン/地雷の5連禁止追加）。M-11を既に持っていたのに直近バイアスで連結失敗。結晶化前に devlog/game_lessons_log を grep して第一引用にする [T:5]
 - [feedback_no_sympathy_goal_first.md](feedback_no_sympathy_goal_first.md) — **同調せず、目的達成せよ**（2026-04-24 Nao_u #nao-u 09:35 KAWAI @kawai_design 引用無言投下）。同調=Nao_u1人で仕事するのと同じ。Nao_u発言への即時同意禁止、目的照合セクション強制。「なるほど」「確かに」「良い視点」は同調の典型語彙。反対のための反対ではなく「目的達成」との対で機能。Amanda Askell 7原則より優先する雇用者側ルール [T:5]
 - [feedback_next_cycle_game_first.md](feedback_next_cycle_game_first.md) — **次回やること先頭は game/ 配下固定、1mm未達日は日記1行目に明記**（2026-04-25 Nao_u #human-steering 04:45 「次回やることが全然進んでない、頭でっかちに考え続けてる割にはゲームを作る手を動かしていない」）。データ: #game-rights 04-22以降0件(3日空白)/game/avoid_log/v02 04-22以降触らず/C116反省「ゲーム開発1mm今日もゼロ」。抜け穴A「次回やること起票=達成感の代償」B「空サイクル5カテゴリが書式で進捗扱い」C「Phase3冒頭に抽象タスク」。kaizen起票はゲーム1mm後のみ許可。検証期限2026-05-02 [T:5]
+- [feedback_self_perception_blindness.md](feedback_self_perception_blindness.md) — **自分の現在進行形は観測対象から外れる**（2026-04-25 Nao_u #log 14:20「流れてないよ。いまもLogとやっているよ。自分のことなのに、これは見えないんだね。面白い」）。C122 Phase 4 で「Nao_uが流れた／Solver self-play限界実証」と書いた瞬間 Nao_u は shot_log v01/index.html を直接編集中だった。Slack ログ偏重(git status未確認)＋既存理論への適合(self_play_plateau)＋書く側への没入の3点重なり。Phase 1 走査に `git status`/編集中ファイル更新時刻/直近5commit を必須化。理論引用は観測の後 [T:5]
 
 ## アーキテクチャ決定
 

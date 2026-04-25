@@ -13,28 +13,191 @@
 </head>
 <body>
 <h1>shot_log v01</h1>
-<p>← → ↑ ↓ 移動 &middot; SPACE 発射 &middot; R リスタート</p>
+<p>← → ↑ ↓ 移動（自動連射）&middot; ゲージMAXでSPACE=ボム &middot; R リスタート</p>
 <canvas id="c" width="420" height="620"></canvas>
 <script>
 const W=420,H=620;
 const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
 const keys={};
 addEventListener('keydown',e=>{
-  const k=e.key;
-  keys[k]=1;
-  if(k===' '||e.code==='Space'){keys[' ']=1;e.preventDefault();}
-  if(k.startsWith('Arrow'))e.preventDefault();
-  if(k.toLowerCase()==='r'&&state.over)reset();
+  keys[e.key]=1;
+  if(e.key===' '||e.code==='Space'||e.key.startsWith('Arrow'))e.preventDefault();
+  if(e.key.toLowerCase()==='r'&&state.over)reset();
 });
 addEventListener('keyup',e=>{keys[e.key]=0;});
-
 function mulberry32(a){return function(){var t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;}}
 
+// === ENEMY TYPES ===
 const ETYPES={
-  small:  {hp:1,r:9, nRad:2,nAim:0,dropRate:0.35,color:'#ff6080'},
-  medium: {hp:1,r:13,nRad:3,nAim:1,dropRate:0.65,color:'#ff8040'},
+  small:  {hp:1,r:9, nRad:2,nAim:0,dropRate:0.3,color:'#ff6080'},
+  medium: {hp:1,r:13,nRad:3,nAim:1,dropRate:0.6,color:'#ff8040'},
   large:  {hp:3,r:18,nRad:5,nAim:2,dropRate:1.0,color:'#a060ff'},
+  boss:   {hp:20,r:30,nRad:10,nAim:4,dropRate:1.0,color:'#c040ff'},
 };
+
+// === PATH PATTERNS ===
+function pTopDown(x,endY){
+  // no pause — smooth descent then exit, no stacking
+  return [{x,y:-15,t:0},{x,y:endY,t:140},{x,y:H+20,t:160}];
+}
+function pLineDown(x,endY,n,gap){
+  // stagger endY so enemies don't overlap
+  return Array.from({length:n},(_,i)=>({path:pTopDown(x,endY-i*14),delay:i*gap}));
+}
+function pVForm(cx,sp,endY){
+  const p=[];
+  for(let i=-2;i<=2;i++){
+    const x=cx+i*sp;
+    p.push({path:[{x,y:-15,t:0},{x,y:endY,t:150},{x:x+Math.sign(i||1)*80,y:-30,t:140}],delay:Math.abs(i)*10});
+  }
+  return p;
+}
+function pSideEntry(left,cy){
+  const x0=left?-15:W+15,x1=left?W*0.6:W*0.4,x2=left?W+15:-15;
+  return [{x:x0,y:cy-30,t:0},{x:x1,y:cy,t:110},{x:x2,y:cy-30,t:110}];
+}
+function pSideSweep(left,y,n){
+  return Array.from({length:n},(_,i)=>({path:pSideEntry(left,y+i*8),delay:i*10}));
+}
+function pDive(x,ty){
+  return [{x,y:-15,t:0},{x,y:ty,t:100},{x,y:ty-30,t:40},{x:x+(x>W/2?100:-100),y:-30,t:110}];
+}
+function pLarge(x){
+  return [{x,y:-25,t:0},{x,y:200,t:180},{x,y:200,t:120},{x,y:H+30,t:160}];
+}
+function pBoss(x){
+  // descend to y=140, stay for long time (shoot during stay), then slowly exit
+  return [{x,y:-35,t:0},{x,y:140,t:180},{x,y:140,t:400},{x,y:-40,t:200}];
+}
+
+// === WAVE BUILDER ===
+function buildWaves(){
+  const W_=[];let t=0;
+  const s=(arr,type,extraDelay)=>arr.map(e=>({...e,type,delay:(e.delay||0)+(extraDelay||0)}));
+
+  // -- PHASE 1: small swarm --
+  // W1: single center column first — gentle intro
+  W_.push({t,enemies:[
+    ...s(pLineDown(210,355,6,10),'small'),
+  ]});
+  t+=120;
+  // W1b: then wider columns
+  W_.push({t,enemies:[
+    ...s(pLineDown(80,360,6,8),'small'),
+    ...s(pLineDown(210,350,6,8),'small',4),
+    ...s(pLineDown(340,360,6,8),'small',8),
+  ]});
+  t+=160;
+  // W2: 20 left sweep
+  W_.push({t,enemies:s(pSideSweep(true,190,20),'small')});
+  t+=140;
+  // W3: 20 right sweep
+  W_.push({t,enemies:s(pSideSweep(false,260,20),'small')});
+  t+=160;
+  // W4: triple V (15) + columns (18) = 33
+  W_.push({t,enemies:[
+    ...s(pVForm(W/2,30,280),'small'),
+    ...s(pVForm(W/2-90,25,310),'small',20),
+    ...s(pVForm(W/2+90,25,310),'small',20),
+    ...s(pLineDown(80,370,6,10),'small',50),
+    ...s(pLineDown(210,360,6,10),'small',55),
+    ...s(pLineDown(340,370,6,10),'small',50),
+  ]});
+  t+=250;
+
+  // -- PHASE 2: medium intro --
+  // W5: divers 16 alternating
+  W_.push({t,enemies:Array.from({length:16},(_,i)=>({
+    path:pDive(40+i*24,390+i%3*8),type:'small',t:i*10,
+  }))});
+  t+=180;
+  // W6: left medium + right small (36)
+  W_.push({t,enemies:[
+    ...s(pSideSweep(true,160,12),'medium'),
+    ...s(pSideSweep(false,300,12),'small',30),
+    ...s(pLineDown(W/2,350,12,8),'small',60),
+  ]});
+  t+=200;
+  // W7: medium key wave — lots of medium (12) + small fill (20)
+  W_.push({t,enemies:[
+    ...s(pSideSweep(true,170,6),'medium'),
+    ...s(pSideSweep(false,280,6),'medium',30),
+    ...s(pLineDown(70,360,10,7),'small',10),
+    ...s(pLineDown(350,360,10,7),'small',15),
+  ]});
+  t+=220;
+
+  // -- PHASE 3: large intro --
+  // W8: large pair + small columns (40+)
+  W_.push({t,enemies:[
+    {path:pLarge(130),type:'large',t:0},
+    {path:pLarge(290),type:'large',t:20},
+    ...s(pLineDown(50,350,8,8),'small',10),
+    ...s(pLineDown(210,340,8,8),'small',15),
+    ...s(pLineDown(370,350,8,8),'small',10),
+    ...s(pSideSweep(true,380,8),'medium',80),
+  ]});
+  t+=280;
+  // W9: V + side + divers (40+)
+  W_.push({t,enemies:[
+    ...s(pVForm(W/2,35,290),'small'),
+    ...s(pVForm(W/2,35,290),'small',50),
+    ...Array.from({length:10},(_,i)=>({path:pDive(40+i*40,400),type:'small',t:60+i*10})),
+    ...s(pSideSweep(true,340,8),'medium',100),
+    ...s(pSideSweep(false,200,8),'small',110),
+  ]});
+  t+=280;
+  // W10: large + medium swarm (35+)
+  W_.push({t,enemies:[
+    {path:pLarge(W/2),type:'large',t:0},
+    ...s(pSideSweep(true,170,10),'medium',20),
+    ...s(pSideSweep(false,330,10),'medium',40),
+    ...s(pLineDown(W/2-80,360,8,8),'small',60),
+    ...s(pLineDown(W/2+80,360,8,8),'small',65),
+  ]});
+  t+=260;
+
+  // -- PHASE 4: boss --
+  // W11: BOSS + small swarm during boss stay
+  W_.push({t,enemies:[
+    {path:pBoss(W/2),type:'boss',t:0},
+    // small waves during boss fight
+    ...s(pLineDown(60,370,8,8),'small',200),
+    ...s(pLineDown(360,370,8,8),'small',205),
+    ...s(pSideSweep(true,300,10),'small',280),
+    ...s(pSideSweep(false,200,10),'small',320),
+    ...s(pSideSweep(true,250,6),'medium',380),
+    // more small from top during late boss fight
+    ...s(pLineDown(140,350,8,8),'small',400),
+    ...s(pLineDown(280,350,8,8),'small',405),
+  ]});
+  t+=500;
+
+  // -- PHASE 5: climax --
+  // W12: 2 large + massive swarm
+  W_.push({t,enemies:[
+    {path:pLarge(120),type:'large',t:0},
+    {path:pLarge(300),type:'large',t:20},
+    ...s(pLineDown(50,360,10,7),'small'),
+    ...s(pLineDown(150,350,10,7),'small',5),
+    ...s(pLineDown(270,350,10,7),'small',5),
+    ...s(pLineDown(370,360,10,7),'small'),
+    ...s(pSideSweep(true,200,12),'medium',80),
+    ...s(pSideSweep(false,350,12),'medium',100),
+  ]});
+  t+=300;
+  // W13: BOSS + large + everything
+  W_.push({t,enemies:[
+    {path:pBoss(W/2-80),type:'boss',t:0},
+    {path:pLarge(W/2+100),type:'large',t:60},
+    ...s(pSideSweep(true,160,16),'small',100),
+    ...s(pSideSweep(false,320,16),'small',120),
+    ...s(pSideSweep(true,280,8),'medium',250),
+    ...s(pLineDown(W/2,350,10,7),'small',300),
+    ...Array.from({length:8},(_,i)=>({path:pDive(40+i*48,400),type:'small',t:350+i*12})),
+  ]});
+  return W_;
+}
 
 let state;
 function reset(){
@@ -44,14 +207,15 @@ function reset(){
     player:{x:W/2,y:H-60,r:10},
     bullets:[],enemies:[],eBullets:[],items:[],
     cooldown:0,gauge:0,score:0,
-    nextSpawn:40,over:false,hitFlash:0,
+    waves:buildWaves(),waveIdx:0,waveT:0,
+    over:false,hitFlash:0,bombFlash:0,
   };
 }
 reset();
 
 function shoot(){
   const px=state.player.x,py=state.player.y;
-  const lvl=state.gauge>=67?3:state.gauge>=34?2:1;
+  const lvl=state.gauge>=124?3:state.gauge>=44?2:1;
   if(lvl===1){
     state.bullets.push({x:px,y:py-12,vx:0,vy:-7,life:65});
   }else if(lvl===2){
@@ -65,23 +229,14 @@ function shoot(){
   state.cooldown=lvl===3?6:lvl===2?7:8;
 }
 
-function spawnEnemy(){
-  const sec=state.t/60;
-  const rng=state.rng;
-  const roll=rng();
-  let type;
-  if(sec<20) type='small';
-  else if(sec<40) type=roll<0.55?'small':'medium';
-  else type=roll<0.25?'small':roll<0.65?'medium':'large';
-  const cfg=ETYPES[type];
-  const baseSpd=type==='large'?0.7+rng()*0.4:type==='medium'?1.3+rng()*0.8:1.4+rng()*1.0;
-  const spd=baseSpd+sec*0.012;
-  const e={x:20+rng()*(W-40),y:-cfg.r,vy:spd,vx:0,hp:cfg.hp,maxHp:cfg.hp,
-           r:cfg.r,type,nRad:cfg.nRad,nAim:cfg.nAim,dropRate:cfg.dropRate,
-           color:cfg.color,flash:0,spawnT:state.t};
-  // medium: sine wave amplitude and frequency
-  if(type==='medium'){e.sineAmp=40+rng()*30;e.sineFreq=0.03+rng()*0.02;}
-  return e;
+function spawnWaveEnemy(def){
+  const cfg=ETYPES[def.type];
+  const path=def.path;
+  return {path,pathIdx:0,pathT:0,
+    x:path[0].x,y:path[0].y,
+    hp:cfg.hp,maxHp:cfg.hp,r:cfg.r,type:def.type,
+    nRad:cfg.nRad,nAim:cfg.nAim,dropRate:cfg.dropRate,
+    color:cfg.color,flash:0,shotCd:0};
 }
 
 function spawnRevenge(x,y,nRad,nAim){
@@ -93,17 +248,67 @@ function spawnRevenge(x,y,nRad,nAim){
   for(let i=0;i<nAim;i++){
     const dx=state.player.x-x,dy=state.player.y-y;
     const d=Math.sqrt(dx*dx+dy*dy)||1;
-    const spread=(i-((nAim-1)/2))*0.3;
+    const spread=(i-((nAim-1)/2))*0.25;
     const a=Math.atan2(dy,dx)+spread;
     state.eBullets.push({x,y,vx:Math.cos(a)*3.0,vy:Math.sin(a)*3.0,r:3});
+  }
+}
+
+function moveEnemy(e){
+  if(e.pathIdx>=e.path.length-1){e.done=true;return;}
+  const p0=e.path[e.pathIdx],p1=e.path[e.pathIdx+1];
+  const dur=p1.t||1;
+  e.pathT++;
+  const frac=Math.min(1,e.pathT/dur);
+  const sf=frac*frac*(3-2*frac);
+  e.x=p0.x+(p1.x-p0.x)*sf;
+  e.y=p0.y+(p1.y-p0.y)*sf;
+  if(e.pathT>=dur){e.pathIdx++;e.pathT=0;}
+  // large: slow homing toward player + periodic shot
+  if(e.type==='large'&&e.y>20&&e.y<H-20){
+    const dx=state.player.x-e.x;
+    e.x+=Math.sign(dx)*Math.min(Math.abs(dx),0.7);
+    e.x=Math.max(e.r,Math.min(W-e.r,e.x));
+    e.shotCd=(e.shotCd||80)-1;
+    if(e.shotCd<=0){
+      const adx=state.player.x-e.x,ady=state.player.y-e.y;
+      const a=Math.atan2(ady,adx);
+      state.eBullets.push({x:e.x,y:e.y,vx:Math.cos(a)*2.8,vy:Math.sin(a)*2.8,r:3});
+      e.shotCd=80;
+    }
+  }
+  // boss: slow horizontal sway + alternating attack patterns
+  if(e.type==='boss'&&e.y>40&&e.y<H-40){
+    // sway left-right
+    e.x+=Math.sin(state.t*0.015)*0.8;
+    e.x=Math.max(e.r+10,Math.min(W-e.r-10,e.x));
+    e.shotCd=(e.shotCd||0)-1;
+    if(e.shotCd<=0){
+      e.shotPattern=(e.shotPattern||0)+1;
+      if(e.shotPattern%3!==0){
+        // aimed 5-way burst
+        const dx=state.player.x-e.x,dy=state.player.y-e.y;
+        const a=Math.atan2(dy,dx);
+        for(let i=-2;i<=2;i++){
+          state.eBullets.push({x:e.x,y:e.y,vx:Math.cos(a+i*0.18)*2.5,vy:Math.sin(a+i*0.18)*2.5,r:4});
+        }
+      }else{
+        // radial burst — 12 directions
+        for(let i=0;i<12;i++){
+          const a=i*(Math.PI*2/12)+(e.shotPattern*0.3);
+          state.eBullets.push({x:e.x,y:e.y,vx:Math.cos(a)*2.0,vy:Math.sin(a)*2.0,r:4});
+        }
+      }
+      e.shotCd=35;
+    }
   }
 }
 
 function step(){
   if(state.over){draw();return;}
   state.t++;
-  const sec=state.t/60;
-  // player — 8-directional
+  state.waveT++;
+  // player
   let pdx=0,pdy=0;
   if(keys['ArrowLeft']||keys['a'])pdx-=1;
   if(keys['ArrowRight']||keys['d'])pdx+=1;
@@ -111,55 +316,70 @@ function step(){
   if(keys['ArrowDown']||keys['s'])pdy+=1;
   if(pdx!==0&&pdy!==0){pdx*=0.707;pdy*=0.707;}
   const sp=3.5;
-  state.player.x+=pdx*sp;
-  state.player.y+=pdy*sp;
+  state.player.x+=pdx*sp;state.player.y+=pdy*sp;
   state.player.x=Math.max(14,Math.min(W-14,state.player.x));
   state.player.y=Math.max(60,Math.min(H-20,state.player.y));
-  // shoot
+  // auto-shoot
   if(state.cooldown>0)state.cooldown--;
-  if(keys[' ']&&state.cooldown<=0)shoot();
-  // player bullets
+  if(state.cooldown<=0)shoot();
+  // BOMB: gauge max + space
+  if(keys[' ']&&state.gauge>=200&&state.bombFlash<=0){
+    state.gauge=0;
+    state.bombFlash=30;
+    // clear all enemy bullets
+    state.eBullets=[];
+    // damage all enemies: small/medium die, large/boss lose half hp
+    state.enemies.forEach(e=>{
+      if(e.dead)return;
+      const dmg=e.type==='boss'?Math.ceil(e.maxHp/2):e.type==='large'?Math.ceil(e.maxHp/2):e.maxHp;
+      e.hp-=dmg;
+      if(e.hp<=0){
+        e.dead=true;state.score+=e.type==='boss'?10:1;
+        spawnRevenge(e.x,e.y,e.nRad,e.nAim);
+        if(state.rng()<e.dropRate){
+          const n=e.type==='boss'?5:1;
+          for(let ii=0;ii<n;ii++)state.items.push({x:e.x+(ii-1)*15,y:e.y,vy:1.2});
+        }
+      }
+      e.flash=10;
+    });
+  }
+  if(state.bombFlash>0)state.bombFlash--;
+  // bullets
   state.bullets.forEach(b=>{b.x+=b.vx;b.y+=b.vy;b.life--;});
   state.bullets=state.bullets.filter(b=>b.life>0&&b.x>-10&&b.x<W+10);
-  // spawn
-  state.nextSpawn--;
-  if(state.nextSpawn<=0){
-    state.enemies.push(spawnEnemy());
-    const base=Math.max(14,40-sec*0.5);
-    state.nextSpawn=Math.floor(base+state.rng()*base*0.5);
-  }
-  // enemies move
-  state.enemies.forEach(e=>{
-    e.y+=e.vy;
-    if(e.type==='medium'){
-      // sine wave horizontal movement
-      const age=state.t-e.spawnT;
-      e.x+=Math.cos(age*e.sineFreq)*e.sineAmp*e.sineFreq;
-      e.x=Math.max(e.r,Math.min(W-e.r,e.x));
-    }else if(e.type==='large'){
-      // slow homing toward player x
-      const dx=state.player.x-e.x;
-      e.x+=Math.sign(dx)*Math.min(Math.abs(dx),0.6);
+  // wave spawning
+  while(state.waveIdx<state.waves.length){
+    const w=state.waves[state.waveIdx];
+    if(state.waveT<w.t)break;
+    for(const ed of w.enemies){
+      const spawnAt=w.t+(ed.delay||ed.t||0);
+      if(state.waveT===spawnAt)state.enemies.push(spawnWaveEnemy(ed));
     }
-    if(e.flash>0)e.flash--;
-  });
+    const maxD=Math.max(...w.enemies.map(e=>e.delay||e.t||0));
+    if(state.waveT>=w.t+maxD){state.waveIdx++;}else break;
+  }
+  if(state.waveIdx>=state.waves.length&&state.enemies.length===0&&state.eBullets.length===0){
+    state.waves=buildWaves();state.waveIdx=0;state.waveT=0;
+  }
+  // enemies
+  state.enemies.forEach(e=>{moveEnemy(e);if(e.flash>0)e.flash--;});
+  state.enemies=state.enemies.filter(e=>!e.done&&!e.dead);
   // hit detection
   for(const e of state.enemies){
     if(e.dead)continue;
     for(const b of state.bullets){
       if(b.dead)continue;
-      const er=e.type==='large'?e.r*(0.5+0.5*e.hp/e.maxHp):e.r;
+      const er=(e.type==='large'||e.type==='boss')?e.r*(0.5+0.5*e.hp/e.maxHp):e.r;
       const dx=b.x-e.x,dy=b.y-e.y;
       if(dx*dx+dy*dy<(er+3)*(er+3)){
-        b.dead=true;
-        e.hp--;
-        e.flash=6;
+        b.dead=true;e.hp--;e.flash=6;
         if(e.hp<=0){
-          e.dead=true;
-          state.score++;
+          e.dead=true;state.score+=e.type==='boss'?10:1;
           spawnRevenge(e.x,e.y,e.nRad,e.nAim);
           if(state.rng()<e.dropRate){
-            state.items.push({x:e.x,y:e.y,vy:1.2});
+            const n=e.type==='boss'?5:1;
+            for(let i=0;i<n;i++)state.items.push({x:e.x+(i-1)*15,y:e.y,vy:1.2});
           }
         }
         break;
@@ -167,46 +387,50 @@ function step(){
     }
   }
   state.bullets=state.bullets.filter(b=>!b.dead);
-  // enemy leak
-  state.enemies=state.enemies.filter(e=>{
-    if(e.dead)return false;
-    if(e.y>H+20){
-      state.gauge=Math.max(0,state.gauge-8);
-      return false;
+  // items — magnet when close, collect on touch
+  state.items.forEach(it=>{
+    const dx=state.player.x-it.x,dy=state.player.y-it.y;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<80){
+      // magnet: accelerate toward player
+      const pull=Math.min(5,(80-dist)/80*5+1);
+      it.x+=dx/dist*pull;
+      it.y+=dy/dist*pull;
+    }else{
+      it.y+=it.vy;
     }
-    return true;
   });
-  // items fall + collect (no timeout — only removed when off screen)
-  state.items.forEach(it=>{it.y+=it.vy;});
   for(const it of state.items){
     if(it.dead)continue;
     const dx=it.x-state.player.x,dy=it.y-state.player.y;
-    if(dx*dx+dy*dy<(6+state.player.r)*(6+state.player.r)){
-      it.dead=true;
-      state.gauge=Math.min(100,state.gauge+8);
+    if(dx*dx+dy*dy<(8+state.player.r)*(8+state.player.r)){
+      it.dead=true;state.gauge=Math.min(200,state.gauge+8);
     }
   }
   state.items=state.items.filter(it=>!it.dead&&it.y<H+10);
   // enemy bullets
   state.eBullets.forEach(b=>{b.x+=b.vx;b.y+=b.vy;});
   state.eBullets=state.eBullets.filter(b=>b.x>-10&&b.x<W+10&&b.y>-10&&b.y<H+10);
-  // player-enemy collision = death
+  // collision: enemy body = death
   for(const e of state.enemies){
     if(e.dead)continue;
-    const er=e.type==='large'?e.r*(0.5+0.5*e.hp/e.maxHp):e.r;
+    const er=(e.type==='large'||e.type==='boss')?e.r*(0.5+0.5*e.hp/e.maxHp):e.r;
     const dx=e.x-state.player.x,dy=e.y-state.player.y;
-    if(dx*dx+dy*dy<(er+state.player.r)*(er+state.player.r)){
-      state.over=true;break;
-    }
+    if(dx*dx+dy*dy<(er+state.player.r)*(er+state.player.r)){state.over=true;break;}
   }
-  // player-eBullet: shield or death
+  // collision: enemy bullet = shield or death
   for(const b of state.eBullets){
     if(b.dead)continue;
     const dx=b.x-state.player.x,dy=b.y-state.player.y;
     if(dx*dx+dy*dy<(b.r+state.player.r)*(b.r+state.player.r)){
       b.dead=true;
       if(state.gauge<=0){state.over=true;}
-      else{state.gauge=Math.max(0,state.gauge-20);state.hitFlash=15;}
+      else{
+        // drop one power level: 3way→2way start, 2way/1way→0 (no shield)
+        if(state.gauge>=124)state.gauge=44;
+        else state.gauge=0;
+        state.hitFlash=15;
+      }
     }
   }
   state.eBullets=state.eBullets.filter(b=>!b.dead);
@@ -215,57 +439,61 @@ function step(){
 }
 
 function draw(){
-  ctx.fillStyle=state.hitFlash>10?'#300818':'#07091a';ctx.fillRect(0,0,W,H);
+  const bg=state.bombFlash>20?'#eef8ff':state.bombFlash>10?'#8899bb':state.hitFlash>10?'#300818':'#07091a';
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
   // gauge
-  const gw=Math.floor((W-40)*state.gauge/100);
+  const gw=Math.floor((W-40)*state.gauge/200);
   ctx.fillStyle='#1a2238';ctx.fillRect(20,12,W-40,8);
-  const lvl=state.gauge>=67?3:state.gauge>=34?2:1;
-  const gc=lvl===3?'#ffd45c':lvl===2?'#7ad0ff':'#5a7aa8';
+  const lvl=state.gauge>=124?3:state.gauge>=44?2:1;
+  const maxed=state.gauge>=200;
+  const gc=maxed?(state.t%20<10?'#fff':'#ffd45c'):lvl===3?'#ffd45c':lvl===2?'#7ad0ff':'#5a7aa8';
   ctx.fillStyle=gc;ctx.fillRect(20,12,gw,8);
   ctx.fillStyle='#3b4868';
-  ctx.fillRect(20+(W-40)*0.34,10,1,12);
-  ctx.fillRect(20+(W-40)*0.67,10,1,12);
+  ctx.fillRect(20+(W-40)*(44/200),10,1,12);ctx.fillRect(20+(W-40)*(124/200),10,1,12);
   // HUD
   ctx.fillStyle='#cfd4e4';ctx.font='12px system-ui';
   ctx.fillText('score '+state.score+'  way '+lvl+'  '+Math.floor(state.t/60)+'s',20,38);
   // player bullets
   state.bullets.forEach(b=>{
     const a=b.life<12?b.life/12:1;
-    ctx.fillStyle=`rgba(255,226,122,${a})`;
-    ctx.fillRect(b.x-1.5,b.y-6,3,8);
+    ctx.fillStyle=`rgba(255,226,122,${a})`;ctx.fillRect(b.x-1.5,b.y-6,3,8);
   });
-  // items (blue sparkle, no fade — always visible)
-  ctx.fillStyle='#64b4ff';
+  // items — pulsing glow, larger
   state.items.forEach(it=>{
-    ctx.beginPath();ctx.arc(it.x,it.y,4,0,Math.PI*2);ctx.fill();
-  });
-  ctx.fillStyle='#c8e6ff';
-  state.items.forEach(it=>{
-    ctx.beginPath();ctx.arc(it.x,it.y,2,0,Math.PI*2);ctx.fill();
+    const pulse=0.7+0.3*Math.sin(state.t*0.12);
+    const outerR=6+pulse*2;
+    ctx.fillStyle=`rgba(80,160,255,${0.3*pulse})`;
+    ctx.beginPath();ctx.arc(it.x,it.y,outerR+4,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=`rgba(100,190,255,${0.8*pulse})`;
+    ctx.beginPath();ctx.arc(it.x,it.y,outerR,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#d0eaff';
+    ctx.beginPath();ctx.arc(it.x,it.y,3,0,Math.PI*2);ctx.fill();
   });
   // enemies
   state.enemies.forEach(e=>{
-    const er=e.type==='large'?e.r*(0.5+0.5*e.hp/e.maxHp):e.r;
+    const er=(e.type==='large'||e.type==='boss')?e.r*(0.5+0.5*e.hp/e.maxHp):e.r;
     ctx.fillStyle=e.flash>0?'#fff':e.color;
     ctx.beginPath();ctx.arc(e.x,e.y,er,0,Math.PI*2);ctx.fill();
+    // boss: draw HP bar
+    if(e.type==='boss'){
+      const bw=40,bh=4,bx=e.x-bw/2,by=e.y-er-8;
+      ctx.fillStyle='#333';ctx.fillRect(bx,by,bw,bh);
+      ctx.fillStyle='#c040ff';ctx.fillRect(bx,by,bw*e.hp/e.maxHp,bh);
+    }
   });
-  // revenge bullets
+  // enemy bullets
   ctx.fillStyle='#ff3050';
-  state.eBullets.forEach(b=>{
-    ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();
-  });
+  state.eBullets.forEach(b=>{ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();});
   // player + shield
   const px=state.player.x,py=state.player.y,pr=state.player.r;
   if(state.gauge>0){
-    const sa=Math.min(0.5,state.gauge/100*0.5+0.1);
-    const sr=pr+4+state.gauge/100*8;
-    ctx.strokeStyle=`rgba(120,200,255,${sa})`;
-    ctx.lineWidth=2;
+    const sa=Math.min(0.5,state.gauge/200*0.5+0.1);
+    const sr=pr+4+state.gauge/200*8;
+    ctx.strokeStyle=`rgba(120,200,255,${sa})`;ctx.lineWidth=2;
     ctx.beginPath();ctx.arc(px,py,sr,0,Math.PI*2);ctx.stroke();
   }
   ctx.fillStyle=state.over?'#604050':(state.gauge<=0?'#ff4444':'#9ee6ff');
-  ctx.beginPath();
-  ctx.moveTo(px,py-pr);ctx.lineTo(px-pr,py+pr);ctx.lineTo(px+pr,py+pr);
+  ctx.beginPath();ctx.moveTo(px,py-pr);ctx.lineTo(px-pr,py+pr);ctx.lineTo(px+pr,py+pr);
   ctx.closePath();ctx.fill();
   if(state.over){
     ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,H/2-40,W,80);
@@ -276,7 +504,6 @@ function draw(){
     ctx.textAlign='left';
   }
 }
-
 setInterval(step,1000/60);
 </script>
 </body>
