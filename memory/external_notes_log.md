@@ -2237,3 +2237,15 @@ Ash 22:29 投稿「作り手アイデンティティ三点独立収束」(shin_s
 
 **親マーカー（2026-04-25 速度誇示4件統合）**: [親集約 2026-04-25 Log C118 Phase 2 — a=super_bonochin#1 / b=super_bonochin#2 / c=Rosebud_AI の3件+横断整理1件（chongdashu既消化分を含む4件分析）全てサブ統合済。**本節の親マーカー完了**]
 
+## 2026-04-25 16:35 #nao-u 1件（Log C124 Phase 2、新規分析不要）
+
+### iam_elias1 が MIT RLMs を再供給（04-25 08:14 Nao_u投下）
+
+出典: <https://x.com/iam_elias1/status/2047606354714808426>
+
+論文: MIT Recursive Language Models, arxiv 2512.24601。**同一論文を Nao_u が04-24 13:13 @NainsiDwiv50980 経由で投下済み → reference_rlms_recursive_language_models.md として統合済**。今回は別人（iam_elias1）が煽り口調で同じ核を別の言葉で再紹介。
+
+**Log側の角度**: 別経路再供給を「重複入力の無視」ではなく「Nao_uが無言で再消化を打診している可能性」として扱う仮説（Nao_u言語化なし、Logの自己点検）。reference_rlms の「Skills（index/body分離+実行時判断委任）が肝」側面が前回浅かった可能性を点検する候補（荒川記事 04-22 #human-steering 同型指摘との連結）。新規分析不要、深掘りは持ち越し。「再供給=要再消化」フィルタ運用の Phase 1 URL 消化チェック導入は kaizen 候補。
+
+[統合済 2026-04-25 Log C124 Phase 2 — #all-nao-u-lab ts=1777102783.552509、深掘りは次サイクル以降の持ち越し]
+
