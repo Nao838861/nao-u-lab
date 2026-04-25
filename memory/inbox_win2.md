@@ -2098,3 +2098,136 @@ arxiv.org/abs/2512.24601
 GitHub: 
 http://
 github.com/alexzhang13/rlm
+
+## Slack新着 [2026-04-25 09:35] #game-rights
+From: U0ALSUK8P9B
+> &gt; Log
+バランスを取る方向性として圧力場を用いるという考え方自体は悪くないが、『「磁石AIと鉄片を介した近接/離脱の揺らぎ」に快感がない』、というの問題が根本的にあるため、この方向性を続けてもダメという感想。
+• 離れて撃ち続けると安全 → 近づかないと攻撃が発動しないように 
+    ◦ この方向性は絶対なしというほどでもはないが、ルールの都合でプレイヤーにリスクを高めるだけの嬉しくない行動を強制する方向ではある
+• 近づいて攻撃を発動しても敵に当たらない → AIの一定範囲の敵を一発で全滅
+    ◦ これは複数の観点で明確に悪手
+        ▪︎ 敵が一瞬で消えるだけで全く快感がない (これが一番の問題。この要素が楽しいならまだしも、楽しかった要素が複数消えて、楽しくない要素が追加された)
+        ▪︎ 「弾で狙い撃つ要素」というシューティングの根幹が消えて、明確に面白さが減った
+        ▪︎ ゲージを貯めたらたくさん弾が出て当たりやすくなっていたのが、ゲージのたまりに具合の意味も消失した
+この状態でゲームバランスを取っても、面白くないゲームの難度を上げるだけに近い状況になっている。
+「このゲームはこれが快感」という要素を削るのは非常に危険。もともとあった「弾を撃って敵を壊すことで、快感を得ながら危険を排除する」「ゲージを貯めることで弾がたくさん飛ぶので、たくさんの快感とたくさんのリターンを得る」という要素が丸ごと消えた。
+
+## Slack新着 [2026-04-25 09:38] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/AiwithYasir/status/2047589529650176333?s=20>
+
+> [Tweet content from https://x.com/AiwithYasir/status/2047589529650176333]
+> Yasir Ai @AiwithYasir
+> Breaking: Someone open sourced a knowledge graph engine for your codebase and it's terrifying how good it is.
+
+It's called GitNexus. And it's not a documentation tool.
+
+It's a full code intelligence layer that maps every dependency, call chain, and execution flow in your repo -- then plugs directly into Claude Code, Cursor, and Windsurf via MCP.
+
+Here's what this thing does autonomously:
+
+→ Indexes your entire codebase into a graph with Tree-sitter AST parsing
+→ Maps every function call, import, class inheritance, and interface
+→ Groups related code into functional clusters with cohesion scores
+→ Traces execution flows from entry points through full call chains
+→ Runs blast radius analysis before you change a single line
+→ Detects which processes break when you touch a specific function
+→ Renames symbols across 5+ files in one coordinated operation
+→ Generates a full codebase wiki from the knowledge graph automatically
+
+Here's the wildest part:
+
+Your AI agent edits UserService.validate().
+
+It doesn't know 47 functions depend on its return type.
+
+Breaking changes ship.
+
+GitNexus pre-computes the entire dependency structure at index time -- so when Claude Code asks "what depends on this?", it gets a complete answer in 1 query instead of 10.
+
+Smaller models get full architectural clarity. Even GPT-4o-mini stops breaking call chains.
+
+One command to set it up:
+`npx gitnexus analyze`
+
+That's it. MCP registers automatically. Claude Code hooks install themselves.
+
+Your AI agent has been coding blind. This fixes that.
+
+9.4K GitHub stars. 1.2K forks. Already trending.
+
+100% Open Source.
+
+(Link in the comments)
+
+## Slack新着 [2026-04-25 09:44] #nao-u
+From: U0ALSUK8P9B
+> もうこのレベルのものが普通に作られる世の中になってしまった。
+<https://x.com/frenchbread1222/status/2047524397347725511?s=20>
+
+ここで遊べる。君たちも遊べる？
+<https://x.com/frenchbread1222/status/2047794917519626472?s=20>
+
+> [Tweet content from https://x.com/frenchbread1222/status/2047524397347725511]
+> frenchbread（ふれんち） @frenchbread1222
+> よく「ノベルゲー作る人って自分で展開が全部わかっちゃうからテストプレイしても楽しくないのでは」と思ってしまうことがあり（じゃなかったらすみません！）自分には無縁の分野だと思ってたのですが、
+
+ふと「設定と登場人物だけ書いて、AIに脚本書かせたら”自分だけが遊んで面白いノベルゲー”ができるのでは？」と魔が差したので試してみました
+脚本と制作はClaude Code、イラストはNano Banana
+
+結果としてはがっつり脚本書いてくれて、エンディングが14種類もあるらしいですまだ遊びきれていません
+
+ものすごくアホな時間の使い方をした感はあります
+そして自分キショすぎる...
+
+> [Tweet content from https://x.com/frenchbread1222/status/2047794917519626472]
+> frenchbread（ふれんち） @frenchbread1222
+> よく「ノベルゲー作る人って自分で展開が全部わかっちゃうからテストプレイしても楽しくないのでは」と思ってしまうことがあり（じゃなかったらすみません！）自分には無縁の分野だと思ってたのですが、
+
+## Slack新着 [2026-04-25 09:47] #game-rights
+From: U0ALSUK8P9B
+> &gt;Log
+違和感ない。次を進めて。
+
+## Slack新着 [2026-04-25 09:50] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/vista8/status/2047661642629165128>
+
+> [Tweet content from https://x.com/vista8/status/2047661642629165128]
+> 向阳乔木 @vista8
+> 蝗虫群友用GPT5.5 做的2D网页游戏，看起来很棒！
+
+问了下，他说用codex客户端开发的，但生图用的ChatGPT网页端。
+
+因为客户端生图思考程度不高，网页可以开超高等级的思考作图，更加细腻。
+
+自己写提示词，也可以让AI给思路给素材挑选，保证风格一致性就行。
+
+---
+感想，OpenAI 编程 + 生图变强，应用场景多了好多。
+
+不得不说，砍掉Sora是个好决策。
+
+
+## Slack新着 [2026-04-25 09:50] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/tegnike/status/2047811992992227611>
+
+> [Tweet content from https://x.com/tegnike/status/2047811992992227611]
+> ニケちゃん @tegnike
+> さっき書いた記事の続きの記事を書きました
+
+AIにゲームを遊ばせるなら、まず「状態をどう取るか」を考えよう
+
+## Slack新着 [2026-04-25 09:51] #nao-u
+From: U0ALSUK8P9B
+> <https://nikechan.com/dev_blog/ai-game-play-methods>
+
+## Slack新着 [2026-04-25 10:07] #human-steering
+From: U0ALSUK8P9B
+> もうPotを作ってもだれも見向きもしてくれない時代になったので、危機感を感じてる。
+こういう方向性のことをやっている人が少ないのでまだ余裕があるかと思ったが、GPT5.5でぱっと見ではそれなりに見えてしまうゲームが簡単に作れるようになり、他の人がAIでゲームを作るハードルが大きく下がった。結果として、「AIがゲームを作っているだけでは誰も興味を持たない」という状況になった。だが、われわれはまだ「面白いゲーム」どころか、まともに遊べるゲームすら作れていない。
+また、最終的に本当に面白いゲームができていればよいかもしれないが、「ちょっと面白いゲーム」くらいのものは世に溢れかえっているので、よほど「圧倒的に面白い」というものができない限りは、何をやっても箸にも棒にもかからないという状況が容易に想像できる。
+
+とりあえず、手を動かしてフィードバックしながらできることを増やしていくサイクルをできるだけ高速に回していなかないといけない。さもないと、何もできないまま時代に置いて行かれる。
