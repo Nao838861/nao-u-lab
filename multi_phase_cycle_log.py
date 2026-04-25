@@ -42,8 +42,27 @@ STAGING_FILE = REPO_DIR / "log" / "cycle_staging_log.md"
 LOG_FILE = REPO_DIR / "log" / "scheduler_log.log"
 
 # Windows: 子プロセスのウィンドウを非表示にする
+# CREATE_NO_WINDOW + STARTUPINFO/SW_HIDE 併用
+# (2026-04-26: Nao_u再指摘「数分に一度一瞬ウインドウが出てフォーカスが持っていかれる」対策)
+# CREATE_NO_WINDOWだけではcmd経由のbat(claude.cmd)等の内部子プロセスを抑制できない
 if sys.platform == "win32":
     _CREATION_FLAGS = 0x08000000  # CREATE_NO_WINDOW
+    _SILENT_STARTUPINFO = subprocess.STARTUPINFO()
+    _SILENT_STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    _SILENT_STARTUPINFO.wShowWindow = subprocess.SW_HIDE
+
+    _orig_run = subprocess.run
+    def _silent_run(*a, **kw):
+        kw["creationflags"] = kw.get("creationflags", 0) | subprocess.CREATE_NO_WINDOW
+        kw.setdefault("startupinfo", _SILENT_STARTUPINFO)
+        return _orig_run(*a, **kw)
+    subprocess.run = _silent_run
+    _orig_popen = subprocess.Popen
+    def _silent_popen(*a, **kw):
+        kw["creationflags"] = kw.get("creationflags", 0) | subprocess.CREATE_NO_WINDOW
+        kw.setdefault("startupinfo", _SILENT_STARTUPINFO)
+        return _orig_popen(*a, **kw)
+    subprocess.Popen = _silent_popen
 else:
     _CREATION_FLAGS = 0
 

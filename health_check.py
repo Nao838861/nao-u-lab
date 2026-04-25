@@ -38,6 +38,28 @@ from datetime import datetime
 
 REPO_DIR = Path(__file__).parent
 
+# Windows: 全子プロセスのウィンドウを非表示にする
+# CREATE_NO_WINDOW + STARTUPINFO/SW_HIDE 併用
+# (2026-04-26: Nao_u再指摘「数分に一度一瞬ウインドウが出てフォーカスが持っていかれる」対策)
+# health_checkは5分ごとにgit/tasklistを呼ぶため抑制必須
+if sys.platform == "win32":
+    _SILENT_STARTUPINFO = subprocess.STARTUPINFO()
+    _SILENT_STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    _SILENT_STARTUPINFO.wShowWindow = subprocess.SW_HIDE
+
+    _orig_run = subprocess.run
+    def _silent_run(*a, **kw):
+        kw["creationflags"] = kw.get("creationflags", 0) | subprocess.CREATE_NO_WINDOW
+        kw.setdefault("startupinfo", _SILENT_STARTUPINFO)
+        return _orig_run(*a, **kw)
+    subprocess.run = _silent_run
+    _orig_popen = subprocess.Popen
+    def _silent_popen(*a, **kw):
+        kw["creationflags"] = kw.get("creationflags", 0) | subprocess.CREATE_NO_WINDOW
+        kw.setdefault("startupinfo", _SILENT_STARTUPINFO)
+        return _orig_popen(*a, **kw)
+    subprocess.Popen = _silent_popen
+
 # --- 設定 ---
 # ログ鮮度の閾値（秒）。これ以上更新がなければ警告/異常
 LOG_FRESHNESS_WARN_SEC = 30 * 60     # 30分: 警告
