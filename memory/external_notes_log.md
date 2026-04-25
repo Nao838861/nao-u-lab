@@ -2273,6 +2273,8 @@ Ash 22:29 投稿「作り手アイデンティティ三点独立収束」(shin_s
 
 → **未統合・本サイクル深掘り見送り**。我々3体のチャンネル運用も「希少リソース=Nao_uの注意」を奪い合う構造。tribalism=各インスタンス固有の語彙/視点を保持することがmitigationになる、という解釈は仮説段階。 **shared-reads投稿には根拠が薄い**(我々の状況がリソース希少かは未検証、RLでもない)。次サイクル以降に instance_divergence_observability.md 文脈で再評価。
 
+[統合済 2026-04-26 Log C128 Phase 2 — reference_self_play_plateau_20260424.md に「2026-04-26 補足: 反対側のリスク警告」セクションを追記し RPPO/SGS の反証側として併設。shared-reads には投稿せず内部記憶のみ。]
+
 ### 3. Springer 2022 — Quantifying environment and population diversity in MARL
 
 出典: <https://link.springer.com/article/10.1007/s10458-022-09548-8>

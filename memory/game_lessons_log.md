@@ -232,6 +232,34 @@ M-21 の遡及採点（13:50）直後、Nao_u が直接 shot_log v01 をプレ�
 - 「圧力設計 vs 禁止追加」の重心審問の**前**に「快感審問」を置く（上位ゲート）
 - ヘッドレス指標が改善しても、快感審問でNoが出たら採用しない
 
+### M-27: target player imagination の暗黙化警告——外部知識は target が違うと反証寄りでしか使えない（2026-04-26 Log C128 Phase 2、shmup dogma 記事との対立から）
+
+**事象**: shot_log v01 のオートボムは Nao_u の対面5h 再設計で導入されて Q-A 〇 評価を得た機構。C128 Phase 1 で外部検索した gamedeveloper.com の Leonardo Ferreira「(Breaking) The Shmup Dogma」記事を Phase 2 で精読すると、Ferreira は smartbomb（自機を守るためのボム）を **"engineer cowardice"** と批判し、Drive system（攻撃強化＋一時シールド両用1本）を代替案として提示していた。**shot_log オートボムは Ferreira 視点では smartbomb 同型 = 直接対立**する評価が立つ。
+
+しかし Ferreira を採用しても shot_log を否定する材料にはならない。両者は **暗黙の target player imagination が異なる**:
+- Ferreira: shmup core fan（personal daring を求める熟練層）
+- shot_log: 30秒オンボーディング casual（Pichlmair&Johansen の「最初の小さい穴」型）
+
+**根本原因**:
+- 外部知識を引用するとき、その知識が前提する **target player imagination（誰のための設計か）** を暗黙にしたまま自作に当てこむと、矛盾の理由が見えず採用/不採用の判断が罠化する
+- 同調罠（feedback_no_sympathy_goal_first）の変種——「いい記事だ→自作にも適用しよう」の流れが、暗黙 target の不一致で破綻する
+- M-22「形無し」の上流症状の一つ。型が違う target を混ぜると形が崩れる
+
+**次回の規則**:
+- 外部記事を **shared-reads / devlog / cross_review** で引用するとき、必ず1行で「この記事の暗黙 target player imagination は誰か」を書く
+- 自作の target と一致する場合のみ「直接適用候補」、不一致の場合は **反証寄り**（「もし自分が core fan 向けに作るならこの罠に注意」）でしか引用しない
+- v02 着手前の Q-A 再採点フォーマットに「**target player imagination 1文**」を必須項目で追加（feedback_surprise_ninja_concept_first.md の Q-A/B/C と並列）
+- shared-reads 投稿の template に「同調罠回避ノート」を明示節として継続。Phase 2 で運用化したものを kaizen 候補で形式化する
+
+**機能の証拠**:
+- C128 で Ferreira 引用を **反証寄りで投稿**できた（ts=1777146100.434579）。直接適用していたら Q-A 〇 評価と矛盾する v02 改修ブロックを書いていた
+- Phase 1 で chaotik.co.za 記事に Drive bar 等を誤帰属した混同が Phase 2 で訂正された（記事ごとの引用分離不足）。これも target 不明確の派生症状
+
+**関連**:
+- `memory/feedback_no_sympathy_goal_first.md`（同調禁止の上位原則）
+- `memory/feedback_surprise_ninja_concept_first.md`（Q-A/B/C ゲートに target 1文追加）
+- C128 Phase 2 §2 shared-reads 投稿（gamedeveloper.com Ferreira "(Breaking) The Shmup Dogma"）
+
 ---
 
 ## Log固有の失敗傾向（記憶に刻む）

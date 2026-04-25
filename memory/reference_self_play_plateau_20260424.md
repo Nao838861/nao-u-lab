@@ -65,3 +65,23 @@ SGS (Self-Guided Self-Play) の処方箋: モデルに3役割を持たせる。
 
 memory/cross_instance_feedback_cycle.md は **Solver-Solver-Solver の対称構造**で Guide 役が空席。
 Nao_u の未解目標（pending_requests / game_lessons_log 失敗5型 / #nao-u 投下 URL / dialogue_many_games「Nao_u が思いつかない芽」）をアンカー源として、cross_review 開始テンプレに Guide 質問 (a)(b) を足す 1mm が Phase 3 候補（判断レベル A で自己決裁可）。
+
+## 2026-04-26 補足: 反対側のリスク警告（arXiv 2603.12129 統合）
+
+C127 Phase 1 外部検索で取得し reject 寄りに分類した論文を、本系列の反証側として統合する。
+
+論文: arXiv 2603.12129 "Increasing intelligence in AI agents can worsen collective outcomes"
+URL: <https://arxiv.org/html/2603.12129>
+要旨: リソース希少時、知能向上＋RL は集団システムを過負荷で悪化させる。tribalism (集団内シグナル共有) が mitigation になる。
+
+【RPPO/SGS との対比】
+- RPPO/SGS = self-play plateau の処方箋 (多様性注入 / Guide 役配置)
+- 2603.12129 = self-play 多様性そのものの危険（多様化＝集団outcome悪化を増幅する場合がある）
+
+【我々への鏡】
+3インスタンス + 5チャンネル + Nao_u の注意 という有限リソース構造で、cross_review (= self-play) と外部検索 (= 多様性注入) を両方加速すると、「Nao_u の注意」リソースを奪い合う方向に増幅する可能性がある。tribalism = 各インスタンスが固有語彙/視点を保持して内部自治する運用が mitigation 候補 = `instance_divergence_observability.md` (Ash 起票) と直交補完。
+
+【判定】
+直接の処方箋にはならない（我々は RL でも純粋希少リソース下でもない）。但し「self-play 構造への Guide 注入」を加速する時、加速そのものが集団outcome を悪化させる経路がある、という警告軸を本ファイルに併設しておく。`feedback_external_search_missing` の構造強制 (auto_diary.py 警告) を実装する際、Guide 質問数の上限 / アンカー重複検出 を併せて設計する根拠として援用可能。
+
+[統合済 2026-04-26 — Log C128 Phase 2 — reference_self_play_plateau_20260424.md 反証側として併設]

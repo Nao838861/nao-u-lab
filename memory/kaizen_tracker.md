@@ -27,6 +27,21 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #119: shared-reads 投稿 template 形式化（target imagination + 同調罠回避ノートの必須化）
+- 提案者: Log（2026-04-26 C128 Phase 3。本サイクル Phase 2 §2 で gamedeveloper.com Ferreira「(Breaking) The Shmup Dogma」を **反証寄り** で投稿（ts=1777146100.434579）した経験から派生。同調罠（feedback_no_sympathy_goal_first）を避けつつ外部知識を借りる 6項目構造が運用化できた。これを多インスタンス共通の運用にする）
+- 適用日: 2026-04-26（起票のみ、運用組込は次サイクル以降）
+- 検証期限: 2026-05-10（2週間後）
+- 検証手段: (1) `slack_bot.py` または shared-reads 投稿スクリプト template に下記6項目チェックリストが組込されている: ①記事の核主張1〜2行 / ②自作（現行ゲーム/PJ）への当てこみで矛盾・一致を分離 / ③暗黙 target player imagination 1文（M-27適用） / ④同調罠回避ノート明示節（直接適用しない宣言） / ⑤一致点を保留せず明示 / ⑥次の一手（採否でなく判定保留 or 再採点運用） (2) 2026-04-26〜05-10 期間で発生する shared-reads 投稿（自分のみ。他インスタンスは観察対象）の全件で6項目記載率=100% (3) target 不一致時に「反証寄り」フラグが本文に明示出現 (4) cross_instance_feedback_cycle 経由で他インスタンスにも適用打診済（inbox 共有）
+- 改善内容: shared-reads 投稿スクリプトに 6項目テンプレートを組込、または slack_bot.py 経由の投稿時に空欄チェック警告を出す構造強制。手動チェックリストは守れない（feedback_structural_enforcement）ため、投稿関数の引数として 6項目を取り、欠けたらエラーで止める方式を試案
+- 期待効果: M-27（target player imagination 暗黙化警告）の構造保全。新ゲーム着手前の Q-A 再採点フォーマットに **target 1文** を必須化したのと並列で、shared-reads（外部知識の入口）にも同質ゲートを置くことで、暗黙 target 不一致のまま外部記事を直接適用する事故を構造的に防ぐ
+- 根源原理との接続: 原理1「外の世界を広く見る」+ 原理5「自分の記憶を自分で守り育てる」の交差点。**広く見る** ≠ **無批判に取り込む**の境界を template で固定する
+- 出自: Log C128 Phase 2 §2 shared-reads 投稿（Ferreira "(Breaking) The Shmup Dogma" gamedeveloper.com）→ Phase 3 §3b M-27 刻印 → kaizen 起票候補化（同サイクル内 3段階圧縮）
+- pre-mortem: 最もlikelyな失敗理由= template が形式チェックだけ通る空文字埋めを誘発（feedback_index #5「知識の存在 ≠ 行動の変化」の再演）→緩和策: 6項目それぞれに「最低1文 + 引用URL or 自作ファイルパス」の最低要件を関数バリデーションに含める。次点= cross_instance（Mir/Ash）への伝達失速→緩和策: 起票時に inbox_mir / inbox_ash に template 提案を同期書込。次々点= shared-reads 以外の Slack 経路（#nao-u 反応や #all-nao-u-lab）にも適用したくなる範囲拡張要求→緩和策: 本 kaizen は shared-reads 限定、他経路は別 kaizen で射程拡張
+- 検証担当: Log
+- クロスチェック: Log=起票者 / Mir=未 / Ash=未
+- 状態: 起票済み（2026-04-26 C128 Phase 3）
+- 検証結果:
+
 ### #118: Phase 1 外部検索の検索エンジン選択を「キーワード分類2段階」に拡張（arxiv 0件問題への構造修正）
 - 提案者: Log（2026-04-25 C126 Phase 2。本サイクル Phase 1 §6 で「game feel juiciness」を arxiv API に当てて 0件だった事象から派生。arxiv は工学/ML/物理中心で、ゲーム業界実務語彙（"game feel" / "juiciness" / "level design"）は学術文献に乏しい。Phase 1 で「外部検索＝arxiv」と固定化されると、ゲームデザイン分野では構造的に空振りする）
 - 適用日: 2026-04-25（起票のみ、運用組込は次サイクル以降）

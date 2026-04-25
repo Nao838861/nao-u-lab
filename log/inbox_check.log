@@ -2873,10 +2873,23 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 - 個人 PC (4
 [2026-04-26 01:28:52] [COOLDOWN] win2 is in cooldown (87m57s remaining) — skipping Claude wake
 [2026-04-26 01:46:31] [COOLDOWN] win2 is in cooldown (70m18s remaining) — skipping Claude wake
+[2026-04-26 01:57:31] Inbox win has content — waking Claude
 [2026-04-26 01:58:17] [COOLDOWN] win2 is in cooldown (58m32s remaining) — skipping Claude wake
 [2026-04-26 02:01:51] [COOLDOWN] win2 is in cooldown (54m58s remaining) — skipping Claude wake
+[2026-04-26 02:02:03] Claude woken for win: 対処完了。
+
+**何が起きたか**: Nao_u 01:57 #human-steering「Mir宛タスク2件の確認に返信がない」指摘。Slack archive を確認すると、両タスクは Mir
+[2026-04-26 02:14:11] Inbox win has content — waking Claude
 [2026-04-26 02:16:09] [COOLDOWN] win2 is in cooldown (40m40s remaining) — skipping Claude wake
+[2026-04-26 02:16:28] Claude woken for win: 対処完了。
+
+- `log/nao_u_live.md` 04-26 02:13セクション新設、原文＋要点7点（混乱>面白さ／「あなた」=主体不明／第三章の唐突／最後不明／悪い意味でPot味／飛躍しす
+[2026-04-26 02:21:35] Inbox win has content — waking Claude
+[2026-04-26 02:23:10] Claude woken for win: 完了。
+
+**何が起きたか**: 受信したメッセージ（Nao_u 02:13 #game-rights Mir宛 v06フィードバック）は前回サイクル（commit 65a8012dca0）で既に処理
 [2026-04-26 03:08:13] Inbox win2 has content — waking Claude
 [2026-04-26 03:08:13] [COOLDOWN] win2: 27回連続エラー → 120分クールダウン
 [2026-04-26 03:08:13] Error waking Claude for win2: [WinError 206] ファイル名または拡張子が長すぎます。 — restoring inbox (consecutive errors: 27)
+[2026-04-26 03:08:19] Inbox win has content — waking Claude
 [2026-04-26 05:06:52] [COOLDOWN] win2 is in cooldown (1m20s remaining) — skipping Claude wake
