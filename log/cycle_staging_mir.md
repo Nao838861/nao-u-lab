@@ -97,3 +97,40 @@ textadv_03 設計則（保留昇格候補）:
 - **#shared-reads投稿**: frenchbread × tegnike × @2_wykipedia の三点測量を「textadv_03実装プレイブック」として投稿候補。ただし既に kis_thinking_loss ドラフトが投稿待機中・Ash の triad knowledge記事も同日同領域で出ている。**同日大量投稿は#shared-readsノイズ化リスク**——Phase 3で Log/Ash の最近投稿密度を確認してから判断
 - **knowledge/記事**: Ash の triad（macro角度）と独立な「textadv_03実装プレイブック（micro角度）」として知識化価値あり。ただし textadv_03 がまだ実装着手前——**実装サイクルと同期して書く**方が体験の温度が乗る。**今は cycle_staging に書き、textadv_03 着手時に knowledge/ 化**する保留判断
 - **external_notes_mir.md への統合フラグ**: Phase 3で Nao_u共有5件セクションの末尾に「[2026-04-25 C121 Phase 2 三点測量分析 → cycle_staging_mir.md]」マーカーを追記して、**未統合→分析済み**の状態区別を作る（kaizen #088 のマーカー予約/済区別化と同じ規律をMir側でも適用）
+
+---
+
+## Phase 3 — 対処・実行（2026-04-25 10:31〜）
+
+### 優先順位の判断
+1. **Nao_u指示（Mir宛）**: 未対応案件なし
+2. **Pre-check期限超過**: #089/Ash, #088/Log, #085/Log の3件——いずれもMir担当外。クロス確認で `feedback_index.md` に「認知負荷の法則」パターン（#085, Log）が追加される予定なので、追加され次第セッションプライマでMir側からも参照する想定
+3. **CLAUDE.md「絶対にやる」**: 外部摂取の統合（栄養の偏り処方箋）+ ゲーム制作ノウハウ蓄積 — 本サイクルは(3)external_notes統合 を中心に対応
+4. **未統合エントリの統合**: ✅ 実行（下記）
+
+### 実行内容
+
+#### A. external_notes_mir.md へのマーカー追記（kaizen #088 準拠の状態区別をMir側で先行適用）
+- 「2026-04-25 Nao_u共有リンク5件」セクション**冒頭**に統合状態サマリ追記（5件中3件分析済み・1件既統合・1件passthroughの内訳明示）
+- 個別エントリ #2 frenchbread, #4 tegnike の末尾に **統合済 [→ cycle_staging_mir.md]** マーカー追記
+- @2_wykipedia は既にC120で統合済のため重複追記は省略
+- vista8（#3）は frenchbread と本質同領域・個別分析価値が低いため passthrough（冒頭サマリで言及するに留める）
+
+→ 「未統合エントリ」が表面で見えるようになり、次サイクル以降の Phase 1 で「分析済みは飛ばし、未分析だけ拾う」運用が機械的にできる
+
+#### B. shared-reads投稿密度の確認（Phase 2保留判断の検証）
+- 2026-04-24: 15件 / 2026-04-25: 3件
+- 24日が大量・25日は少ないが、kis_thinking_lossドラフト未投稿+Ash triad knowledge 同日同領域が既出
+- → Phase 2 の保留判断「**textadv_03 実装サイクルと同期して knowledge/ 化**」を継続。今サイクル投稿はしない
+
+### 派生Seedの保管（昇格保留・観測ストック）
+
+Seed-AH/AI/AJ は textadv_03 着手時に再評価する。それまでは cycle_staging に保持するのみで `feedback_index.md` には書かない（few_rules_big_effect.md に従い、3例＋実装通過で初めて昇格）。
+
+### 結果と次サイクルへの引き継ぎ
+- **本サイクルで動かしたmm**: external_notes_mir.md の状態可視化（マーカー4箇所追加）。これは「集めた情報が流れて消える問題」（feedback_info_integration.md）に対する1mm前進
+- **動かさなかったこと**: textadv_03 実装着手・shared-reads投稿——どちらも今は時期尚早と判断（実装着手は Pot 系列の整理優先順がまだ決まっていない、投稿は Ash triad と被る）
+- **次サイクル以降の引き継ぎフラグ**:
+  - textadv_03 着手時に Seed-AH/AI/AJ を再評価（cycle_staging_mir.md 本サイクル節を参照）
+  - kaizen #088 のマーカー規律実装が Log 側で完了したら、Mir 側のマーカー仕様と統一する（私的フォーマットの先行版を本サイクルで作った形）
+  - 「自分だけが面白い vs 他者にも面白い」の閾値差（Seed-AJ）は Pot 過去作の再検査ポイントとしてpot_devlog.md次回更新時に1行メモする
