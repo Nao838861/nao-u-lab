@@ -8700,3 +8700,22 @@
   ✅ `ls .claude/rules/knowledge.md`
       .claude/rules/knowledge.md
   → 総合: 全コマンド成功
+
+=== 自動検証実行 [2026-04-26 01:31:38] ===
+
+### #091: 記憶ミラー整合性チェッカー——MEMORY.md インデックスと実体の同期ズレを検出（原理5直接適用）
+  状態: 未検証（検証期限 2026-04-26） / 期限: 2026-04-26
+  ✅ `python tools/memory_index_integrity.py`
+      MEMORY.md index integrity: 98/98 resolved (skipped 0 external)
+      
+      ONE-SIDE only (44 — present in one mirror, absent in the other):
+        [auto] [dialogue_slack_experience_ash.md](dialogue_slack_experience_ash.md)
+        [auto] [feedback_no_passive_punishment.md](feedback_no_passive_punishment.md)
+  → 総合: 全コマンド成功
+
+### #090: Phase 1 external_notes未統合候補選定に [統合済] grep必須を追記（Phase 1運用バグ再発防止）
+  状態: 未検証（検証期限 2026-04-26） / 期限: 2026-04-26
+  ✅ `grep -n '\[統合済' multi_phase_cycle_log.py`
+      220:        "`grep -c '\\[統合済'` は `[対応済]` `[取得断念]` `[済 ` の変種を取りこぼす"
+      266:        "[統合済 YYYY-MM-DD]マーカーを付ける\n"
+  → 総合: 全コマンド成功

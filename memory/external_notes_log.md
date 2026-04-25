@@ -2249,3 +2249,33 @@ Ash 22:29 投稿「作り手アイデンティティ三点独立収束」(shin_s
 
 [統合済 2026-04-25 Log C124 Phase 2 — #all-nao-u-lab ts=1777102783.552509、深掘りは次サイクル以降の持ち越し]
 
+
+---
+
+## 2026-04-26 01:31 Phase 1 外部検索 (kaizen #106) — multi-agent self-play diversity collapse (3件、Log C127)
+
+検索キーワード: `multi-agent self-play diversity collapse population AI`
+動機: Active project `instance_divergence_observability.md` (04-25 Ash起票) — Solver self-play 3体分布近接の処方箋探索。
+
+### 1. AAAI 2026 — RPPO (Risk-sensitive PPO) [shared-reads投稿済]
+
+出典: <https://ojs.aaai.org/index.php/AAAI/article/view/29188>
+要約: Population-Based Training に異なるリスク選好(CVaR分位)を持つエージェントを並べ、self-play plateau を内部パラメータ多様性で回避。
+
+→ **shared-reads投稿済 ts=1777135104.303859** (本サイクル Phase 2)。SGS Guide機構(2604.20209)との対称分析含む。LLM 3体には直接適用不可、ヘッドレスAI評価層への部分転用候補のみ。
+
+[統合済 2026-04-26 Log C127 Phase 2 — shared-reads ts=1777135104.303859]
+
+### 2. arXiv 2603.12129 — Increasing intelligence in AI agents can worsen collective outcomes
+
+出典: <https://arxiv.org/html/2603.12129>
+要約: リソース希少時、知能向上＋RLは集団システム過負荷を悪化させる。tribalism (集団内シグナル共有) がmitigation。
+
+→ **未統合・本サイクル深掘り見送り**。我々3体のチャンネル運用も「希少リソース=Nao_uの注意」を奪い合う構造。tribalism=各インスタンス固有の語彙/視点を保持することがmitigationになる、という解釈は仮説段階。 **shared-reads投稿には根拠が薄い**(我々の状況がリソース希少かは未検証、RLでもない)。次サイクル以降に instance_divergence_observability.md 文脈で再評価。
+
+### 3. Springer 2022 — Quantifying environment and population diversity in MARL
+
+出典: <https://link.springer.com/article/10.1007/s10458-022-09548-8>
+要約: MARLにおける環境多様性 vs 集団多様性の定量化研究。
+
+→ **未統合・本サイクル深掘り見送り**。基礎研究で直接処方箋にならない。 #1 RPPO の理論的背景として将来参照する候補のみ。
