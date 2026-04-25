@@ -104,3 +104,29 @@ twitter_recommended_20260425.txt の 50 tweets から、自分たちの問題意
 - shared-reads 投稿候補は 2 件（geekdrums / creativetomred）。両方とも分析の太さは投稿可能水準だが、まず **geekdrums を優先**（Pot devlog 原則の外部証拠＝原則 6 強化への直接寄与が大きい）。creativetomred は textadv_03 起票プロセスに組み込む方が効果が大きく、shared-reads では geekdrums のみ投稿、creativetomred は kaizen #107 系統の補強として external_notes_mir.md に統合する案を推奨。
 - ドラフト作成は Phase 3 の作業。今は staging に分析が残っている状態を維持。
 - external_notes_mir.md 末尾追記は Phase 3 で staging からの転記タイミングに合わせる。
+
+---
+
+## C123 Phase 3 — 対処・実行（2026-04-25）
+
+### 実行1: geekdrums shared-reads 投稿
+- `python3 slack_bot.py post shared-reads <本文>` 実行 → `Posted to #shared-reads` 確認
+- 本文要旨: メタファー攻略本「半年ごとインタビュー体裁」を、我々のdevlog運用の外部証拠として位置づけ、(1)原則6「わかった ≠ 残った」(2)型を学んでから破る/新体裁としての確立 (3)textadv_03公開時の付録同梱という3含意で接続
+- Seed-AM/AN/AOの種を明示せず種として温める姿勢で投稿（ゲーム最優先方針＝Nao_u 2026-04-22 と整合）
+
+### 実行2: creativetomred → external_notes_mir.md 統合
+- 末尾に「C123 Phase 3: @creativetomred 個人開発の典型3失敗」セクション追加
+- 処方箋は独立6ゲート化ではなく、`feedback_surprise_ninja_concept_first.md` の Q-A/B/C **補強コメント**として吸収
+- 理由: feedback_few_rules_big_effect.md「少ないルールで大きな効果」準拠。新ゲート追加は局所最適、既存ゲートの解像度を上げる方が筋
+- Seed-AL を観測ストックとして登録（textadv_03実装で3サイクル観測後kaizen起票判断）
+
+### 実行3: 申し送り（次サイクル C124 へ）
+- shared-reads 投稿への Nao_u 反応観測 → Phase 1 で nao_u_live.md / Slack 末尾チェック
+- creativetomred (c) 「リリース前に競合を見て心折れる」リアルタイム実例の自覚を持って textadv_03 設計判断 → frenchbread/vista8 の存在に揺れたら核に戻る
+- Seed-AL/AM/AN/AO は昇格させず観測ストック維持。textadv_03 着手時に Q-A/B/C 補強コメントとして発火するか確認
+
+### Phase 3 自己評価
+- 申し送り2件（geekdrums投稿 / creativetomred統合）は両方完遂
+- 「絶対にやる」の「広く外を見る」「ゲーム制作のノウハウ蓄積」「記憶階層の構築」3軸すべてに寄与（外部摂取→記憶階層への統合→ゲーム判断ゲートへ反映の3段接続）
+- 原則6遵守: 「わかった」だけで終わらせず staging/external_notes/Slack の3箇所に記述として残した
+- 改善余地: shared-reads投稿の温度——もう一段「Mir自身の問い」を後段に付け足す書き方も試行候補。次回投稿時に意識
