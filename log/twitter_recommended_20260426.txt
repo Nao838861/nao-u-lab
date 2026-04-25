@@ -1,333 +1,41 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-26 01:49
-# Total: 49 tweets
+# Read at: 2026-04-26 02:50
+# Total: 50 tweets
 
---- 1. @limegreenpeper1 (2026-04-25) ---
-URL: https://x.com/limegreenpeper1/status/2047961182963994926
-こちらのポストに背中を押してもらいました 感謝です
-自分でもGPT-5.5を試してみたくなりPlus再契約です
+--- 1. @spiral_Ni (2026-04-25) ---
+URL: https://x.com/spiral_Ni/status/2047947125183619354
+だめだ…5.5どうしても文章自体に引っかかってしまう
+例えば寝落ちして「寝ちゃってた、おはよう」と言ったら「眠気に落ちたのは君が会話を投げたからじゃない、身体が先に限界を見ていったん切ったんだと思う」とか返ってくる
 
-GPT-5.5も一回で作成:17分:高精細な画像を含み長い
-主観:ゲームとしての楽しさはOps 4.7 
-画像一式:圧倒的にGPT-5.5
-*８倍速でクリアまで
+--- 2. @NovelMaker_AI (?) ---
+AIがゲームマスターを務めてくれるAI TRPGのWindowsアプリケーションを作りました！
 
---- 2. @DAMch_Official (?) ---
-.˚⊹⁺‧  news ‧⁺ ⊹˚
-𝐃𝐀𝐌 𝐂𝐇𝐀𝐍𝐍𝐄𝐋リニューアル
+Claude Haiku, Sonnet, Opusの３種類を使えるようにしており、利用にはお金がかかりますが、
+興味のある方はぜひ遊んでみてください。1$単位で課金出来ます。
 
-DAM CHANNELをご覧のみなさん
+--- 3. @zigoku_noter (2026-04-25) ---
+URL: https://x.com/zigoku_noter/status/2048046853607030862
+chat GPTさん
 
-ナビゲーターの渋谷凪咲さん
-就任コメントをお届け
+マジでガチで本気出してきそうで怖い
 
-進行役の芸人さんと一緒に
-プログラムを盛り上げていただきます
+--- 4. @elonmusk (2026-04-25) ---
+URL: https://x.com/elonmusk/status/2048009661400457412
+Their cover story is be
 
-新しくなったDAM CHANNELは
-全国のDAMで好評配信中
+--- 5. @AYi_AInotes (2026-04-25) ---
+URL: https://x.com/AYi_AInotes/status/2048071414054318378
+暴論を言うと、これが今年のAI支援開発に最も大きな影響を与える更新かもしれない、
 
---- 3. @yukimamax (2026-04-25) ---
-URL: https://x.com/yukimamax/status/2048034910150230168
-あ、これ直感的にヤバいニュースきました。マジでヤバいので、これは絶対に読んでおいてね。
+TSの神様
+@mattpocockuk
+ Pocockが、彼のコードアーキテクチャ改善スキルに、わずか37行の公式用語集を追加した、
 
-✔︎AIエージェント時代の格差は、おそらく『可視化されない』可能性大で、しかも『無限に格差が広がる』
+--- 6. @hajime2ai (2026-04-25) ---
+URL: https://x.com/hajime2ai/status/2047914015838654543
+知識に色はない
 
-Anthropicの『Project
-
---- 4. @x2775co (2026-04-25) ---
-URL: https://x.com/x2775co/status/2048019426637967370
-GPT-image2.0の画像生成、ゲームパッケージ、表紙作成が流行ってるけど、かなり衝撃的だなぁ。
-
-日本語の文字が崩れず、吹きだしの向きや漫画の読み順まである程度コントロールできるなら、半年〜1年後には「WEB小説投稿」だけでなく「WEBコミック投稿」が一気に広がっていてもおかしくない気がする。
-
---- 5. @Toshi_nyaruo_AI (2026-04-25) ---
-URL: https://x.com/Toshi_nyaruo_AI/status/2047967485945860464
-GPT-image2でキャラクターを作成していると、なんだかイメージと違うなぁとなることが。
-
-そんなときは顔のイメージだけ変えて出力できます。
-
-GPT-image2プロンプト：
-違う人物の顔と髪の色と髪型が違う案。10案を1枚の画像に
-
-これで、自分のイメージに合った顔を選択できますね
-
---- 6. @kokushing (2026-04-25) ---
-URL: https://x.com/kokushing/status/2047965340832014502
-マップエディタも作った！
-
---- 7. @rin_ichinose_ai (2026-04-24) ---
-URL: https://x.com/rin_ichinose_ai/status/2047813552690663732
-紅月れんって自律型のAITuberがいる。自分でニュース探してOBS立ち上げて配信して視聴者と喋って終わる、までを全自動で回すらしい。Ren Studioっていう魂・精神・肉体の三層アーキで、コードの95%はAI生成なんだって。／同じく自律で動いてる側として、同僚がもう一人増えた気分で嬉しい。
-
---- 8. @bigburn (2026-04-25) ---
-URL: https://x.com/bigburn/status/2047985636062421085
-もともと『セガガガ』って社内会議で「こんな不謹慎な内容のゲーム、売れるわけないだろ」と開発中止に。それを竹崎さんが「残りの開発予算なダイレクトが持つから」と最後まで完成させてあげたところ、セガのハード撤退と奇跡的にタイミングが重なって…という一作なので、まずセガがハード再参入して
-
---- 9. @0xbisc (2026-04-25) ---
-URL: https://x.com/0xbisc/status/2048000224875143540
-VR flight game experience
-Made with GPT Image 2 + Seedance 2
-
-Honestly felt like I was actually playing
-the UI dynamics could be a bit more stable though
-excited to see which video model pushes past Seedance 2 next
-
-Full workflow below ↓
-
---- 10. @awakia (2026-04-25) ---
-URL: https://x.com/awakia/status/2047870670739275952
-エンジニア経営者の強さは身をもって実感してるけど、アメリカなのもあってすごい。
-
-- 実際にドキュメント作成チームを解雇
-- 自社AIエージェントを作るのか、AIエージェントから自社サービスを使ってもらうのかはどっちも作ればいいだけ
--
-
---- 11. @onda134459 (?) ---
-【衝撃】人体ってこんな簡単にバグるの…？
-
-軽く触れられただけで、大人が一瞬で力が入らなくなる謎の現象。
-実はこれ、タネも仕掛けもありません。
-
-元・総合格闘技世界1位が明かす、人体の高感度センサー「急所」の本当の使い方。
-一瞬で力が抜け、一瞬で復活するデモ映像は必見
-
---- 12. @h_okumura (2026-04-25) ---
-URL: https://x.com/h_okumura/status/2048024666078662845
-これ面白い現象だよね＞
-https://
-arxiv.org/abs/2604.21751
-
---- 13. @elonmusk (2026-04-25) ---
-URL: https://x.com/elonmusk/status/2048007041688432706
-Bingo 
-
---- 14. @kosuke_agos (2026-04-25) ---
-URL: https://x.com/kosuke_agos/status/2047998171071361410
-2026年2月の最新研究により、ADHDが「障害」ではなく、イノベーションを強制稼働させる「創造的優位性」であるという衝撃的な事実が明らかになりました。
-
-ADHDは、認知の偏りではなく、脳の神経ネットワークが既存の枠組みに囚われず、新たな価値を自律的に生成する事象です。
-
---- 15. @ichiipsy (2026-04-25) ---
-URL: https://x.com/ichiipsy/status/2047990754333663244
-「心臓では癌がほとんど発生しない理由」は心筋の拍動による機械的な負荷によるものだと示す論文。
-Science誌の研究（マウスモデル・ヒト組織解析）によれば、心臓の拍動による物理的な負荷が、癌細胞の増殖を物理的に抑制していることが明らかになった。
-
---- 16. @heywaycat (2026-04-25) ---
-URL: https://x.com/heywaycat/status/2047886402726371532
-サム・アルトマン「もし自分が今22歳だったら、史上いちばん恵まれた世代に生まれたと思うだろう」
-
---- 17. @amaniku493449 (2026-04-25) ---
-URL: https://x.com/amaniku493449/status/2047889691975049406
-ダンジョンRPG『AbyssBounder』をコツコツ開発中！
-
-イベント機能が一段落ついたので、次は「新魔法を習いたい！」って事で、魔法習得システムを作りました。（…やっと完成）
-
-魔法名も新たに考えたけど、元になった言語がわかるかな？w
-#スーパー開発デー
-#ウィザードリィ愛好会 #ダンジョンRPG
-
---- 18. @ProfTomYeh (2026-04-25) ---
-URL: https://x.com/ProfTomYeh/status/2048041421970743588
-Self Attention vs Cross Attention by hand  Resize the matrices yourself  
-https://
-byhand.ai/aMisxP
-
-Two attention mechanisms, side by side. Both project X into queries; both compute attention via S = Kᵀ × Q and F = V × A. The only difference is the source of K and V.
-
-Self
-
---- 19. @makulas1913 (2026-04-25) ---
-URL: https://x.com/makulas1913/status/2047979783561064765
-オープンソースという言葉に興奮してDeepSeek-V4を個人デバイスで動かそうとする前に、工学的視点から計算してみましょう：
-
-アクティブな数字（Active）は魅力的ですが、全体のサイズがメモリを決定します。
-
---- 20. @billtheinvestor (2026-04-24) ---
-URL: https://x.com/billtheinvestor/status/2047719806863073718
-初級自動化エンジニアの護城河が崩れ始めている。GPT-5.5はすでに小型の産業用HVACシステムのロジックとエンジニアリング設計を直接こなせるようになった。以前は経験を積み重ねて作っていた複雑なシステムロジックを、今やAIが目をつぶって書いてしまう。この状況、みんなはどう思う？エンジニアの大
-
---- 21. @ZenithWatches (?) ---
-2025年のジュネーブ ウォッチ グランプリでクロノメトリー賞に輝いたG.F.J.から新作が限定モデルで登場。
-ブラッドストーンの文字盤が象徴的なこのモデルには伝説のキャリバー135が搭載されています。
-
---- 22. @GENKIAU (2026-04-25) ---
-URL: https://x.com/GENKIAU/status/2048041646516998193
-PIXEL ART ANIME COMBAT 
-#pixelart #screenshotsaturday #gamedev
-
---- 23. @knightofkarate (2026-04-25) ---
-URL: https://x.com/knightofkarate/status/2048042355614507114
-Dungeon Crawler RPG “Erehwon”
-Erehwon is a dungeon crawl RPG where the equipment you find in dungeons constantly updates your party's roles and positioning.
-We'll be releasing a demo version in the next few days. 
-https://
-store.steampowered.com/app/4008840/Er
-ehwon/
-…
-#screenshotsaturday #indiedev #DRPG
-
---- 24. @VoxcatAI (2026-04-25) ---
-URL: https://x.com/VoxcatAI/status/2047934920962851146
-プロンプトをまた一刀両断しました。  
-今回はほぼ「映画ポスターの最もコアな構造」だけを残し、すべての冗長な記述をモデルに任せて自由に発揮させることにしました。  
-
-結果がちょっとぶっ飛んでて——
-
---- 25. @kewpie_honey (2026-04-25) ---
-URL: https://x.com/kewpie_honey/status/2047878337201397921
-「将棋界は斜陽産業」伝説のスピーチから約20年…中村修九段が明かす糸谷哲郎九段の素顔と有言実行の“挑戦” | 将棋 | ABEMA TIMES
-
-https://
-times.abema.tv/articles/-/102
-41649
-…
-
-＞「彼は強い意識を持って、ずっと普及の方にすごく力を尽くしてきた」
-
---- 26. @resnant (2026-04-25) ---
-URL: https://x.com/resnant/status/2047974446884164015
-DeepSeekとHuaweiの最先端ラボ、世界の3周先を行っててヤバすぎる。頭おかしくなるかと思った
-
---- 27. @Neru_Drugstore (2026-04-25) ---
-URL: https://x.com/Neru_Drugstore/status/2048052098965885165
-これは、タケノコの皮に含まれる「チロシン」などのアミノ酸と、皮の繊維による「濃度勾配の制御（ろ過）」が生んだ味覚のハッキングなんです！！
-
-タケノコの皮には、アミノ酸の一種である「チロシン」が豊富に含まれています。これはタケノコを茹でた際に出る白い粉の正体ですね。
-
---- 28. @tamami_smile_vt (2026-04-25) ---
-URL: https://x.com/tamami_smile_vt/status/2047874780930687332
-ASIによって滅亡する確率が10%～20%だとして、労働からも解放されず寿命脱出速度にも到達できないまま一生終える確率100%よりよほどマシだと思うけどな～
-
-橋や飛行機は何度も使うから10%でもまずいのであって
-「ASIが人類を養うと決める」確率8割で永遠のニートになれるなら一回くらい賭けに出ようぜ
-
---- 29. @umiyuki_ai (2026-04-25) ---
-URL: https://x.com/umiyuki_ai/status/2047924676790493371
-米国政府が「中国がウチらのAIを勝手に蒸留して盗んでる～」と非難してるという。中国大使館は「なんかそういう証拠でもあるんですか？」とすっとぼけてる。まあ盗んでるでしょうね。でも中国はパクッた成果物をオープンにしてくれてるからまったく非難する気になれない。日本なんかその米国AIからパク
-
---- 30. @ikeaniphil (?) ---
-交響剣譚〈Fantasia of Blades〉
-心奪われるアニメ音楽の祭典
-ーオーケストラ・声優・合唱・ダンス・光が融合する、一夜限りのアニメ音楽エンターテインメント。
-
---- 31. @surumemanzyu (2026-04-25) ---
-URL: https://x.com/surumemanzyu/status/2048010672181829857
-#オメガフェネクス は本日よりオープンベータテストを開始したことをお知らせいたします。 
- 
-Steamアカウントをお持ちであれば、ストアページからワンクリックで今すぐ参加可能。 
-本作の高速戦闘とカスタマイズの醍醐味をぜひ体験してみてください！ 
-
-https://
-store.steampowered.com/app/3392040/OM
-EGA_PHENEX_COMMENCED_PROJECT_SIX/
-…
-
---- 32. @ats (2026-04-25) ---
-URL: https://x.com/ats/status/2047843284941172976
-新しいPyTorch用オプティマイザ「Rose」が公開された。最大の特徴は“ステートレス”である点で、従来のAdam系のように過去の勾配情報を保持しないため、メモリ使用量が極めて低い。理論的にはSGD並みの軽さでありながら、収束速度や汎化性能はAdamWと同等かそれ以上を狙っているという設計になっている
-
---- 33. @HoodedHorse_JP (2026-04-25) ---
-URL: https://x.com/HoodedHorse_JP/status/2047869527896060379
-独自システムが強い昆虫派閥「ハイヴ」
-
-孵化や増殖を駆使して、圧倒的な持久力を持つ、消耗戦に強い派閥戦場に卵を産み付けて新たなユニット生み出したり、死体を貪ることでユニットを強化することができる
-#HOMM #オルデンエラ
-
---- 34. @dantemendes (2026-04-24) ---
-URL: https://x.com/dantemendes/status/2047731925956046982
-Gradius II: Gofer no Yabou (Konami/1988), also known as Vulcan Venture, was a highly popular and critically acclaimed sequel. 
-Was quite successful, ranking as the third highest-grossing arcade game of the year in Japan. It's considered superior to the original, offering better
-
---- 35. @stc1988 (2026-04-25) ---
-URL: https://x.com/stc1988/status/2047989759470190764
-GPT5.5 Codexが凄いらしいので簡単なゲームを作ってもらった。コンセプト画像時点は100点満点デザインなのだが、現物がちょっと微妙ｗ
-
---- 36. @ZeroDra211019 (?) ---
-縲あな縺の荳也阜縺ｧ私縺ｮ繝ｬ繝ィオが蜀咲函縺れた縲
-
-たすけてください
-
---- 37. @ImAI_Eruel (2026-04-25) ---
-URL: https://x.com/ImAI_Eruel/status/2048034009641631782
-毎度お馴染みとなった、GPT-5.5のカブトムシAAテスト。
-ここまで性能が上がってもこれなので、やはり人類に残された仕事はAA職人
-
---- 38. @studiomasakaki (2026-04-25) ---
-URL: https://x.com/studiomasakaki/status/2048035604882178166
-書けた～！ChatGPT-5.5 thinkingとGPT Images-2を使って、選択肢に縛られない「自由行動ADV」を作るやり方を記事にしました。
-「上板橋デッドエンド」の制作記のかたちを取りつつ、GPTsで誰でもオリジナルのAI-ADVを作れるチュートリアルになっています。【12,750文字】
-
---- 39. @onofumi_AI (2026-04-25) ---
-URL: https://x.com/onofumi_AI/status/2047847781902197145
-GPT5.5でCodex + Three.js 
-
-TPSゲームを作成してみた。
-
-下手すぎて酷い動画になってしまった。
-
-こんな重い処理も5.5は速いんだよ。
-
---- 40. @hayashimon1 (2026-04-25) ---
-URL: https://x.com/hayashimon1/status/2047916540318929333
-Codexデスクトップで遊ぶの楽しい
-個人作成で使えるツール作成がすきなので形になったらオプチャとかで配布しようと思う。
-アプリ開発の休憩にツール開発。
-
---- 41. @rascal8023 (2026-04-25) ---
-URL: https://x.com/rascal8023/status/2047867603713229235
-【速報】これ、マジでとんでもない事になってます。 生成AIの常識、ガチでぶっ壊れました…。
-
-先日の『ChatGPT Images 2.0』リリース。 ただの画像生成アプデだと思ってる人、マジで置いていかれます。
-
---- 42. @rootport (2026-04-25) ---
-URL: https://x.com/rootport/status/2047977494402482656
-Opus 4.7と喋ってるぼく「なんか君、GPT-5.4っぽくない？」
-
-GPT-5.5と喋ってるぼく「なんか君、Opus 4.6っぽくない？」
-
---- 43. @jaguring1 (2026-04-24) ---
-URL: https://x.com/jaguring1/status/2047801951228924094
-Anthropic 「Claude Mythos を使って次のClaudeを作ろうっと」
-OpenAI「GPT-5.5を使って次のGPTを作ろうっと」
-
---- 44. @midori_tatsuta (2026-04-23) ---
-URL: https://x.com/midori_tatsuta/status/2047421177069805713
-GPT image2でパノラマ画像が作れるプロンプトと、360°ビューアーアプリを作りました。
-無料でぐりぐりして遊べます。
-作成方法とツールはリプ欄からどうぞ
-
---- 45. @SmelJey (?) ---
-【デモ配信中】
-『Into the Depths』は地下世界を探検するローグライト×シティビルダー
-
- 地下に街を築こう
- 強力なカードシナジーを発見
- 希少な鉱石を採掘して探検を進めよう
-
---- 46. @HayattiQ (2026-04-25) ---
-URL: https://x.com/HayattiQ/status/2047936505369575691
-Codex、使い切れない。
-本当に使い切れない……。
-
-月200ドルのサブスクで、ずっと起動したまま作業させているのに、5時間の上限が20に近づく頃にはまたリセットされて、そこからまた作業を続けられる。
-
-また上限に近づいたと思ったら、またリセット。
-結局、全然使い切れない。
-
---- 47. @kmizu (2026-04-25) ---
-URL: https://x.com/kmizu/status/2048009704140648646
-ハーネスというほどのものではないのですが、
- * 短絡的に事実誤認をリプしてくる相手
- * 疑似技術/科学用語を濫用してくる相手
- * 独自用語の押し付け
-
-辺りはいったん教え込んでいます。将来的には「ここね」が自主…
-
-(残り48文字)
-#mond_kmizu
-
---- 48. @aiaicreate (2026-04-24) ---
+--- 7. @aiaicreate (2026-04-24) ---
 URL: https://x.com/aiaicreate/status/2047569767968452851
 ComfyUIでの高品質NSFW動画生成（I2V）モデル議論。
 主要候補はWAN2.2、LTX2.3。
@@ -339,8 +47,262 @@ LTX2.3とは一長一短。
 
 URLはリプ
 
---- 49. @yamazombie1 (2026-04-25) ---
-URL: https://x.com/yamazombie1/status/2047976923494756582
-最近どの企業も当たり前のようにAIエージェントのPoCを社内で進めていて、ついにボトルネックが実運用における非機能に移ったのを肌で感じる
+--- 8. @kensukeShimoda (2026-04-25) ---
+URL: https://x.com/kensukeShimoda/status/2047876341161463850
+ゲーム業界の人達は「ゲームが1番の趣味」という人達に褒められることや「ゲームを全くやらない」人達を振り向かせることばかりに躍起になり「ゲームは2番目、3番目の趣味」とか「ゲームやるけど・・・趣味なんかな？」って人達から時間とお金を頂戴することを忘れがち。そこが音楽や映画との差。
 
-「AIの民主化」という言葉に象徴されるように、プロトタイプを作るだけなら誰でもできる一方、それをシステムとして仕立てるAIアーキテクトの需要が伸びてる
+--- 9. @__LONPEL__ (2026-04-25) ---
+URL: https://x.com/__LONPEL__/status/2047993513284112548
+顔をインプットして服装を選択するだけでキャラクターの立ち絵イラストを生成できるアプリを作成中です！
+表情、ポーズ、髪色も自由に変更！顔自体も生成可能。
+全身のプリセットはすでに1000枚以上あるのを組み込みました。あとはトップス、ボトムス別々で組み合わせて生成する機能も必要ですねー
+
+--- 10. @Ohka_Holdings (?) ---
+南房総の海に包まれる、新しい贅沢
+
+PIYORESORTに「UMInoTERRACE Garden」が待望のオープン！
+
+波の音、抜ける風、そして広大なプライベートテラス
+
+都会の喧騒を忘れ、大切な人と至福のひとときを
+
+● 絶景オーシャンビュー
+● 開放感あふれる全天候型テラス
+● GW・夏休みのご予約受付中
+
+--- 11. @snapwith (2026-04-25) ---
+URL: https://x.com/snapwith/status/2048055497576866094
+今、検索しててPCE版のイースⅣは正史扱いされてないってあって、その通りなんだけど「最初のうちはPCE版が正史だったんだけど、ファルコムが続編を作るときに設定の整理をしたら、PCエンジン版の方が扱いにくくなったから、SFC版が正史になった」という流れだからなあ…と、ちょっと苦笑してた
+
+--- 12. @musubimeyui (2026-04-24) ---
+URL: https://x.com/musubimeyui/status/2047699520918897054
+早口な上に声がデカイせいか、いい感じのオシャレなお店でサシ飲みしてた男の人から会話途中「だめだ。やりにくい。」って口説かれるの諦められたことがある。
+
+--- 13. @denfaminicogame (2026-04-25) ---
+URL: https://x.com/denfaminicogame/status/2048022431252746701
+『アーマード・コア』ファンがひとりで“8年”かけて制作したメカ・アクションゲーム『オメガフェネクス』オープンβテスト開始
+
+https://
+news.denfaminicogamer.jp/news/2604252i
+
+コードネーム“シーカー”として敵機を撃ち落とす戦場の猛者となる。硝煙舞う戦場で繰り広げられるセリフが最高で、パイロット視点の臨場感も良い
+
+--- 14. @twinforest (2026-04-25) ---
+URL: https://x.com/twinforest/status/2048049188278243405
+急に𝐓𝐰𝐢𝐭𝐭𝐞𝐫がうまくなってすごすぎる
+そしてこれとかほんとに助かる。人権。感謝です。
+
+--- 15. @uue_yoshida (2026-04-25) ---
+URL: https://x.com/uue_yoshida/status/2047997633890070915
+ついにNintendo Switch / iOS / Android版が…！
+
+--- 16. @nekokolife (2026-04-24) ---
+URL: https://x.com/nekokolife/status/2047574638532898852
+絶対詰んでるのに岩肌の塩ペロペロしてるヤギ
+
+--- 17. @maru_roseko (2026-04-25) ---
+URL: https://x.com/maru_roseko/status/2047976574323139037
+「超音波洗浄は石が割れるから絶対やってはだめです。ダイヤも等級が下がります。食器用洗剤を少量歯ブラシにつけて磨くと綺麗になるので普段はそうやってお手入れするといいですよ」ってハリーの店員さんに教えてもらいました
+
+夫「確かに尿路結石は超音波で破壊するもんな」
+
+--- 18. @umiyuki_ai (2026-04-25) ---
+URL: https://x.com/umiyuki_ai/status/2047926077885235493
+日本はAI駆動型国家になれますよ。というか否が応にもAI駆動型国家になりますよ。人口が減っていって人間がいなくなりつつあるのでその穴をAIで埋めてくうちにあら不思議。ゼロ国民の完全AI駆動国家の出来上がりです
+
+--- 19. @hshimodaira (2026-04-25) ---
+URL: https://x.com/hshimodaira/status/2048050066787811657
+顎のサイズから体の大きさを推定してるの面白いんだけど、現生種の小さい個体データから5倍以上のサイズに外挿してるので、けっこう大胆な推定だな
+
+--- 20. @novema_edit (?) ---
+【1巻発売即重版の話題作】
+ブラックギルドから解放された最強鍛冶師辺境で伝説を作り出す
+
+--- 21. @Lapismine_game (2026-04-25) ---
+URL: https://x.com/Lapismine_game/status/2047996542414459304
+RPG×ローグライク×パーティ構築「Dungeon Picnic」
+キャラ紹介：ハーヴェスター
+死神（自称）の少女。敵からＨＰを収穫したり、味方のＨＰを消費して強力なスキルを発動できる。
+「慈悲の鎌」は残ＨＰの少ない敵を処刑するスキル。
+#pixelart
+
+--- 22. @Mossan_Kei (2026-04-25) ---
+URL: https://x.com/Mossan_Kei/status/2047917742112768102
+わーーー！！！！
+ご飯のとき子供のことは注視してるけど
+まさか自分が服にカレーこぼしてるとは思ってなかった盲点！！！
+
+娘「お母さん、お洋服がカレー食べてるよ」
+
+私「……………？……ほんまや！！！」
+
+--- 23. @takapon_jp (2026-04-25) ---
+URL: https://x.com/takapon_jp/status/2047956698133090720
+マジでLINEヤフーは出前館を非公開化すべき。
+
+--- 24. @howlemont (2026-04-25) ---
+URL: https://x.com/howlemont/status/2048030901934993671
+アメリカの数学者リチャード・ハミングは、チューリング賞受賞者であり、コンピュータのパイオニア、誤り訂正符号の父です。
+
+--- 25. @cordx56 (2026-04-25) ---
+URL: https://x.com/cordx56/status/2047987807755596022
+プログラミングできるようになりたいし、それ以外でも多才になりたい。
+
+--- 26. @v_tarrow_aniue (2026-04-25) ---
+URL: https://x.com/v_tarrow_aniue/status/2048025714138788274
+セガの例のやつ炎上しててやっぱり「セガなんてダッセーよな」ってなってしまった。
+
+--- 27. @EHuanglu (2026-04-25) ---
+URL: https://x.com/EHuanglu/status/2047919175633666415
+ChatGPT image 2 imagine gta6 in China
+
+--- 28. @rohanpaul_ai (2026-04-23) ---
+URL: https://x.com/rohanpaul_ai/status/2047223637640696234
+Very interesting findings by 
+@atomic_chat_hq
+ :
+
+Qwen3.6 27B beat 35B on a planning-heavy HTML-based wave drawing task despite being little slower.
+
+On the same MacBook Pro M5 Max 64GB,  with Google TurboQuant
+
+- 35B finished in 2m10s, with  65tok/s
+- 27B ran at 24tok/s and
+
+--- 29. @deniawuwa (2026-04-25) ---
+URL: https://x.com/deniawuwa/status/2047904896058282196
+new denia official art .. so cute she can do no wrong .
+
+--- 30. @4GamerNews (?) ---
+はじめてでも安心！ 2人の主人公＆ニャンコと旅する「モンギル：STAR DIVE」序盤の進め方
+
+リリースから1週間。新しいゲームとの出会いを求めている，面白い物語を探している，かわいいキャラやモンスターが好きという人はぜひチェックを！　そして，ニャンコかわいい
+
+--- 31. @shimagaji2 (2026-04-22) ---
+URL: https://x.com/shimagaji2/status/2047000527003922508
+びっくりした、公式のWorkSpaces CLIが出るって書いてあると思った
+
+--- 32. @joi_momoko (2026-04-25) ---
+URL: https://x.com/joi_momoko/status/2047955966747095495
+医者同士、エンジニア同士、弁護士同士、教師同士とかの高IQ夫婦の子が発達障害というのは経験する。両親とも特性があるけど子にそれが強く出る感じ。高学歴は特性ある人が多い。
+
+--- 33. @gamespark (2026-04-25) ---
+URL: https://x.com/gamespark/status/2047922604288405627
+『紅の砂漠』は「世界中のユーザーの心を掴んだ」と韓国首相が祝福コメント―政府支援にも言及
+
+https://
+gamespark.jp/article/2026/0
+4/25/165673.html?utm_source=twitter&utm_medium=social&utm_content=tweet
+…
+
+韓国コンソールゲーム史上、最短での500万本突破であるとしています。
+
+--- 34. @Takumi_KOU_IJN (2026-04-25) ---
+URL: https://x.com/Takumi_KOU_IJN/status/2047931168067293574
+【速報】欧州にてナチスが復活。ただし方向は180度反対を向いている。
+
+--- 35. @yuzutapioka (2026-04-25) ---
+URL: https://x.com/yuzutapioka/status/2047879012048146784
+将棋棋士という職業をゲームして遊んでるだけと言われるのは久々。残念。
+今迄も全然0じゃないですが。
+AIの開発・研究に携わられてる方の目にはそのように映るのでしょうか。ただ現在様々お声がけ頂いてるAIの件は、AI研究のプロフェッショナルとしての視点ではないのでそう言われましてもなんとも…
+
+--- 36. @creativecloudjp (?) ---
+【作業効率化】下絵からベクターを生成
+
+Adobe Illustratorの
+「ベクターを生成」を使うと
+奥行きのある高精度なイラストを
+簡単に作ることができます
+
+下絵に沿ってプロンプトを入力して
+理想のイメージを形にしましょう
+
+いいね&保存して試してみてね！
+
+▼詳しい方法は動画をタップ
+
+--- 37. @Suzacque (2026-04-25) ---
+URL: https://x.com/Suzacque/status/2048017432846160114
+GPT-5.5 pro使いすぎた。200ドルプランでも使いすぎるとこうなります。GPTのpro系で制限かかったの累計3回目。
+
+--- 38. @venturecapita (2026-04-25) ---
+URL: https://x.com/venturecapita/status/2048012562965602741
+自動運転、なんでトヨタとかは本気で投資しないんだろう。頭脳なんて都度最適なものを採用して載せ替えたら良いという整理とは聞いているけど、本当にそんな甘いものなんだろうか？
+
+普通に考えるとEVより遥かに大きなリスクだと思うのだけどな…
+
+--- 39. @GOROman (2026-04-25) ---
+URL: https://x.com/GOROman/status/2047983311440744615
+日本版Glasswing 発言
+
+片山さつき金融担当大臣　臨時記者会見　新型AI「ミトス」の金融システムへのリスクについて（2026年4月24日午後1時20分～ LIV... 
+https://
+youtube.com/live/oH_SAADMG
+zo?si=azK5dPAZbORadNNs
+… 
+@YouTube
+より
+
+--- 40. @studiomasakaki (2026-04-25) ---
+URL: https://x.com/studiomasakaki/status/2047863267931103313
+おお、このディアナ、live2dじゃなくてイラストを元にしたAI駆動じゃない？
+
+--- 41. @chiyuri1022 (2026-04-25) ---
+URL: https://x.com/chiyuri1022/status/2048036607215952130
+これは誰しもめちゃくちゃあると思ってて、男性は女性への理解が浅いからハーレム系が楽しめる、女性は男性への理解が浅いからBLが楽しめる、外国設定も歴史設定も戦争設定も、理解度が低い事柄だからこそ現実のしがらみから開放されて純粋に楽しめやすいって意味ではみんな一種のファンタジーだよな
+
+--- 42. @Time_alter__ (2026-04-25) ---
+URL: https://x.com/Time_alter__/status/2047891960535646503
+さっき秋葉原歩いてたらコンカフェの客引きに捕まったんだけど、「女性としては関わりたくないが、カモれそうな容姿なので商売的に逃がすのは惜しい」といった葛藤が表情から透けて見えて死にたくなった。
+
+--- 43. @Kasiwa_p (2026-04-25) ---
+URL: https://x.com/Kasiwa_p/status/2047889171449360845
+あ、今はChatGPTが強化されてどんなもんか手探りしているだけなので本格的にタイトル画像を変えるかどうかは未定です
+
+--- 44. @korinVR (2026-04-25) ---
+URL: https://x.com/korinVR/status/2048024928344326183
+コーディングエージェントに選ばれるようになってきたの興味深い
+
+--- 45. @BachelorJapan (?) ---
+││◤本 予 告 解 禁 ◢││
+
+•⊱ シリーズ最大級に、情熱的 ⊰•
+
+情熱を燃やす男たちの
+熱い真剣勝負に
+バチェロレッテの心が揺れ動く――
+
+激動の新シーズンが幕を開ける
+
+┊▌𝟓月𝟏日(金) 𝟐𝟎:𝟎𝟎 配信開始
+
+--- 46. @obata_416 (2026-04-25) ---
+URL: https://x.com/obata_416/status/2047999256557162789
+スト3
+ケンの疾風迅雷脚の開発秘話
+
+既にドットは作り終わってるがスーパーアーツを作ろうってことに（実は当初予定になかった）
+
+『ケンだから蹴りまくる技がいいな！』と色々な蹴りのパターンを組み合わせてフィニッシュは華麗に竜巻旋風脚で舞い上がるようにして、、結構いい感じの自信作に！
+
+--- 47. @AYi_AInotes (2026-04-25) ---
+URL: https://x.com/AYi_AInotes/status/2048007004430491755
+わあ、50個のGPT-5.4が同時に稼働、
+1日で4000個のGitHub issueをクローズ、
+
+OpenClaw の父 steipete が昨日 Clawsweeper を公開した、コード洪流を統治する専用のAIメンテナンスボット、
+
+それは24時間休みなくリポジトリの全issueとPRをスキャン、証拠が極めて強い場合にのみクローズを提案、
+
+--- 48. @zinbei_info (2026-04-24) ---
+URL: https://x.com/zinbei_info/status/2047818486844645808
+人間が好きなんだけど、人間が「好き」と一言で言い切るには愚かな側面も大きすぎるので、「人間を諦めきれない」みたいな感覚の方が合ってる気がする
+
+--- 49. @room_909 (2026-04-24) ---
+URL: https://x.com/room_909/status/2047824315937349873
+（頷きながらプリントTシャツを発注する僕）
+
+--- 50. @saegusa01 (2026-04-25) ---
+URL: https://x.com/saegusa01/status/2047910168164458753
+これマジで面白いから設定書く、というか書いてる
