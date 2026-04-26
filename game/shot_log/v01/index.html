@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>shot_log v01</title>
+<title>BACKLASH</title>
 <style>
   html,body{margin:0;background:#05050f;color:#cfd4e4;font-family:system-ui,sans-serif;
             display:flex;flex-direction:column;align-items:center;min-height:100vh}
@@ -12,18 +12,115 @@
 </style>
 </head>
 <body>
-<h1>shot_log v01</h1>
+<h1>BACKLASH</h1>
 <p>← → ↑ ↓ / WASD  MOVE &middot; SPACE  BOMB (gauge MAX)</p>
 <canvas id="c" width="420" height="620"></canvas>
 <script>
 const W=420,H=620;
+const AI_MODE=new URLSearchParams(location.search).has('ai');
 const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
 const keys={};
+
+// === EXPERT AI POLICY — 17-dir eval + trajectory line dodge ===
+function aiExpert(){
+  const px=state.player.x,py=state.player.y,pr=state.player.r;
+  let bomb=false;
+  const SP=3.5;
+  // 16 directions + stay
+  const dirs=[[0,0]];
+  for(let i=0;i<16;i++){const a=i*Math.PI*2/16;dirs.push([Math.cos(a),Math.sin(a)]);}
+  let bestScore=-Infinity,bestDx=0,bestDy=0;
+
+  // precompute bullet trajectory lines
+  const bLines=[];
+  for(const b of state.eBullets){
+    if(b.dead)continue;
+    const bs=Math.sqrt(b.vx*b.vx+b.vy*b.vy);
+    if(bs<0.1)continue;
+    bLines.push({x:b.x,y:b.y,dx:b.vx/bs,dy:b.vy/bs,vx:b.vx,vy:b.vy,r:b.r,spd:bs});
+  }
+
+  for(const [mx,my] of dirs){
+    const nx=Math.max(14,Math.min(W-14,px+mx*SP));
+    const ny=Math.max(60,Math.min(H-20,py+my*SP));
+    let score=0;
+
+    // bullet danger: distance to trajectory line + time-to-closest-approach
+    for(const bl of bLines){
+      // vector from bullet to candidate
+      const tx=nx-bl.x,ty=ny-bl.y;
+      // project onto bullet direction: time to closest approach
+      const tProj=tx*bl.dx+ty*bl.dy;
+      if(tProj<-10)continue; // bullet already past us
+      // perpendicular distance to trajectory line
+      const cross=Math.abs(tx*bl.dy-ty*bl.dx);
+      const lineDist=cross; // distance to the line the bullet travels on
+      // also check actual distance at closest approach time
+      const frames=tProj/bl.spd;
+      if(frames>30)continue; // too far in future
+      const urgency=Math.max(0,1-frames/30);
+      // penalty based on line distance
+      if(lineDist<pr+bl.r+2)score-=1200*urgency;
+      else if(lineDist<20)score-=600*urgency/(lineDist+1);
+      else if(lineDist<40)score-=200*urgency/(lineDist+1);
+      else if(lineDist<70)score-=40*urgency/(lineDist+1);
+    }
+
+    // enemy body danger
+    for(const e of state.enemies){
+      if(e.dead||e.done)continue;
+      const er=(e.type==='large'||e.type==='boss')?e.r*(0.5+0.5*e.hp/e.maxHp):e.r;
+      const d=Math.sqrt((e.x-nx)**2+(e.y-ny)**2);
+      if(d<er+pr+3)score-=1500;
+      else if(d<er+30)score-=500/(d+1);
+      else if(d<er+60)score-=120/(d+1);
+    }
+
+    // item attraction
+    const gaugeNeed=state.gauge<99?2.5:state.gauge<208?1:0.2;
+    for(const it of state.items){
+      if(it.dead)continue;
+      const d=Math.sqrt((it.x-nx)**2+(it.y-ny)**2);
+      if(d<250)score+=gaugeNeed*35/(d+10);
+    }
+
+    // positioning: center-bottom preferred, edges dangerous
+    score-=Math.abs(nx-W/2)*0.02;
+    if(ny<100)score-=50;
+    if(nx<20||nx>W-20)score-=80;
+    if(ny<65)score-=100;
+
+    if(score>bestScore){bestScore=score;bestDx=mx;bestDy=my;}
+  }
+
+  // bomb: when in danger and gauge max
+  if(state.gauge>=208){
+    const near=state.eBullets.filter(b=>{
+      if(b.dead)return false;
+      const d=Math.sqrt((b.x-px)**2+(b.y-py)**2);return d<90;
+    }).length;
+    if(near>=3||state.eBullets.length>=12)bomb=true;
+  }
+
+  // convert continuous to discrete
+  return {
+    dx:bestDx>0.3?1:bestDx<-0.3?-1:0,
+    dy:bestDy>0.3?1:bestDy<-0.3?-1:0,
+    bomb
+  };
+}
 addEventListener('keydown',e=>{
   keys[e.key]=1;
   if(e.key===' '||e.code==='Space'||e.key.startsWith('Arrow'))e.preventDefault();
   if(e.key===' '&&!state.started){state.started=true;return;}
-  if(e.key===' '&&(state.over||state.cleared)){reset();state.started=true;return;}
+  if(e.key===' '&&(state.over||state.cleared)){
+    const isNewHi=state.score>=hiScore&&state.score>0;
+    if(!state.submitted&&isNewHi)return; // must enter name for high score
+    if(!state.submitted&&!isNewHi){reset();state.started=true;return;} // quick retry
+    if(!rankLoaded&&!rankSaving)rankLoaded=true;
+    if(rankLoaded){reset();state.started=true;}
+    return;
+  }
 });
 addEventListener('keyup',e=>{keys[e.key]=0;});
 function mulberry32(a){return function(){var t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;}}
@@ -206,12 +303,13 @@ function buildWaves(){
 }
 
 // scoring constants
-const SCORE_ENEMY={small:10,medium:30,large:80,boss:500};
-const SCORE_ITEM=[20,40,60]; // lv1,lv2,lv3
-const BOMB_MULTI=3;
-const BOMB_BULLET_PTS=10;
+const SCORE_ENEMY={small:10,medium:50,large:200,boss:1000};
+const SCORE_ITEM=[20,50,100]; // lv1,lv2,lv3
+const BOMB_MULTI_SM=10; // small/medium bomb kill multiplier
+const BOMB_MULTI_LB=2; // large/boss bomb kill multiplier
+const BOMB_BULLET_PTS=30;
 
-let hiScore=parseInt(localStorage.getItem('shotlog_hi'))||0;
+let hiScore=parseInt(localStorage.getItem('backlash_hi'))||0;
 let state;
 function reset(){
   const seed=Date.now()&0xFFFFFFFF;
@@ -223,13 +321,39 @@ function reset(){
     waves:buildWaves(),waveIdx:0,waveT:0,
     over:false,cleared:false,started:false,
     hitFlash:0,bombFlash:0,bombReady:0,bombUsed:false,invincible:0,
-    particles:[],hitstop:0,particleFreeze:0,overTimer:0,
-    stars:Array.from({length:120},()=>({x:Math.random()*W,y:Math.random()*H,layer:Math.floor(Math.random()*3)})),
+    particles:[],popups:[],rings:[],hitstop:0,shake:0,particleFreeze:0,overTimer:0,submitted:false,nameInput:'',nameEditing:false,
+    stars:Array.from({length:200},()=>({x:Math.random()*W,y:Math.random()*H,layer:Math.floor(Math.random()*6)})),
   };
 }
 function addScore(pts){state.score+=pts;}
-function saveHi(){if(state.score>hiScore){hiScore=state.score;localStorage.setItem('shotlog_hi',''+hiScore);}}
+const RANK_URL='https://script.google.com/macros/s/AKfycbyEFcZ8LetVY6uprb5kS8et2Q-l2SnEqx9XU48TX-GihvSE6Z4WhsBD3DFFpTZgVyNxQg/exec';
+let rankData=null,rankName=localStorage.getItem('backlash_name')||'';
+let playerId=localStorage.getItem('backlash_pid');
+if(!playerId){try{playerId=crypto.randomUUID();}catch(e){playerId='p'+Date.now()+Math.random().toString(36).slice(2);}localStorage.setItem('backlash_pid',playerId);}
+function saveHi(){
+  if(state.score>hiScore){hiScore=state.score;localStorage.setItem('backlash_hi',''+hiScore);}
+}
+let rankSaving=false,rankLoaded=false;
+function submitScore(name,score){
+  localStorage.setItem('backlash_name',name);
+  rankName=name;
+  rankSaving=true;rankLoaded=false;rankData=null;
+  fetch(RANK_URL,{method:'POST',mode:'no-cors',body:JSON.stringify({name:name,score:score,pid:playerId})})
+    .then(()=>{setTimeout(()=>{fetchRanking(true);},1500);})
+    .catch(e=>{console.log('submit err',e);rankSaving=false;rankLoaded=true;});
+  // timeout: force finish after 8s
+  setTimeout(()=>{if(rankSaving){rankSaving=false;rankLoaded=true;}},8000);
+}
+function fetchRanking(afterSubmit){
+  fetch(RANK_URL,{redirect:'follow'})
+    .then(r=>r.text())
+    .then(t=>{try{rankData=JSON.parse(t);}catch(e){console.log('parse err',t.slice(0,200));}
+      if(afterSubmit){rankSaving=false;rankLoaded=true;}})
+    .catch(e=>{console.log('rank err',e);if(afterSubmit){rankSaving=false;rankLoaded=true;}});
+}
+fetchRanking(false);
 reset();
+if(AI_MODE)state.started=true;
 
 function shoot(){
   const px=state.player.x,py=state.player.y;
@@ -329,6 +453,10 @@ function spawnParticles(x,y,count,color,speed){
     state.particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:25+Math.random()*25,color});
   }
 }
+function spawnRing(x,y,color,maxR,life){
+  state.rings.push({x,y,color,r:0,maxR:maxR||40,life:life||20,maxLife:life||20});
+}
+function shake(amount){if(amount>state.shake)state.shake=amount;}
 
 function step(){
   // always update stars; particles freeze during particleFreeze
@@ -337,7 +465,12 @@ function step(){
     state.particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life--;p.vx*=0.97;p.vy*=0.97;});
     state.particles=state.particles.filter(p=>p.life>0);
   }
-  const starSpeeds=[0.3,0.7,1.4];
+  state.popups.forEach(p=>{p.y-=1.2;p.life--;});
+  state.popups=state.popups.filter(p=>p.life>0);
+  state.rings.forEach(r=>{r.r+=(r.maxR-r.r)*0.18;r.life--;});
+  state.rings=state.rings.filter(r=>r.life>0);
+  if(state.shake>0)state.shake*=0.82;
+  const starSpeeds=[0.15,0.3,0.6,1.2,2.5,4.5];
   state.stars.forEach(s=>{s.y+=starSpeeds[s.layer];if(s.y>H){s.y=-2;s.x=Math.random()*W;}});
   if(state.hitstop>0){
     // game over: after 5F of particle spread, freeze particles for remaining stop
@@ -361,12 +494,17 @@ function step(){
   }
   state.t++;
   state.waveT++;
-  // player
-  let pdx=0,pdy=0;
-  if(keys['ArrowLeft']||keys['a']||keys['4'])pdx-=1;
-  if(keys['ArrowRight']||keys['d']||keys['6'])pdx+=1;
-  if(keys['ArrowUp']||keys['w']||keys['8'])pdy-=1;
-  if(keys['ArrowDown']||keys['s']||keys['2'])pdy+=1;
+  // player — AI or human
+  let pdx=0,pdy=0,aiBomb=false;
+  if(AI_MODE){
+    const ai=aiExpert();
+    pdx=ai.dx;pdy=ai.dy;aiBomb=ai.bomb;
+  }else{
+    if(keys['ArrowLeft']||keys['a']||keys['4'])pdx-=1;
+    if(keys['ArrowRight']||keys['d']||keys['6'])pdx+=1;
+    if(keys['ArrowUp']||keys['w']||keys['8'])pdy-=1;
+    if(keys['ArrowDown']||keys['s']||keys['2'])pdy+=1;
+  }
   if(pdx!==0&&pdy!==0){pdx*=0.707;pdy*=0.707;}
   const sp=3.5;
   state.player.x+=pdx*sp;state.player.y+=pdy*sp;
@@ -379,12 +517,19 @@ function step(){
   // detect first MAX reach → show bomb ready notification
   if(state.gauge>=208&&state.bombReady<=0&&!state.bombUsed)state.bombReady=180;
   if(state.bombReady>0)state.bombReady--;
-  if(keys[' ']&&state.gauge>=208&&state.bombFlash<=0){
+  if((keys[' ']||aiBomb)&&state.gauge>=208&&state.bombFlash<=0){
     state.bombUsed=true;state.bombReady=0;
     state.gauge=35; // drop to 2way start
     state.bombFlash=30;
+    shake(10);
+    spawnRing(state.player.x,state.player.y,'#ffd45c',W*0.7,40);
+    spawnRing(state.player.x,state.player.y,'#fff',W*0.5,28);
     // clear all enemy bullets — score per bullet
-    addScore(state.eBullets.length*BOMB_BULLET_PTS);
+    const bombBulletScore=state.eBullets.length*BOMB_BULLET_PTS;
+    if(bombBulletScore>0){
+      addScore(bombBulletScore);
+      state.popups.push({x:W/2,y:H/2-30,text:'+'+bombBulletScore+' BOMB',life:60,color:'#ffd45c',size:20});
+    }
     state.eBullets=[];
     // damage all enemies: small/medium die, large/boss lose half hp
     state.enemies.forEach(e=>{
@@ -392,7 +537,9 @@ function step(){
       const dmg=e.type==='boss'?Math.ceil(e.maxHp/2):e.type==='large'?Math.ceil(e.maxHp/2):e.maxHp;
       e.hp-=dmg;
       if(e.hp<=0){
-        e.dead=true;addScore((SCORE_ENEMY[e.type]||10)*BOMB_MULTI);
+        e.dead=true;const bmul=(e.type==='small'||e.type==='medium')?BOMB_MULTI_SM:BOMB_MULTI_LB;
+        const bepts=(SCORE_ENEMY[e.type]||10)*bmul;addScore(bepts);
+        if(e.type==='large'||e.type==='boss')state.popups.push({x:e.x,y:e.y-e.r-5,text:'+'+bepts,life:50,color:e.type==='boss'?'#f8f':'#c8f',size:e.type==='boss'?18:15});
         spawnRevenge(e.x,e.y,e.nRad,e.nAim);
         if(state.rng()<e.dropRate){
           const n=e.type==='boss'?5:1;
@@ -433,8 +580,32 @@ function step(){
       if(dx*dx+dy*dy<(er+3)*(er+3)){
         b.dead=true;e.hp--;e.flash=6;
         if(e.hp<=0){
-          e.dead=true;addScore(SCORE_ENEMY[e.type]||10);
+          e.dead=true;const epts=SCORE_ENEMY[e.type]||10;addScore(epts);
+          if(e.type==='large'||e.type==='boss')state.popups.push({x:e.x,y:e.y-e.r-5,text:'+'+epts,life:50,color:e.type==='boss'?'#f8f':'#c8f',size:e.type==='boss'?18:15});
           spawnRevenge(e.x,e.y,e.nRad,e.nAim);
+          // visual feedback by enemy size
+          if(e.type==='small'){
+            spawnRing(e.x,e.y,'#ff6080',26,14);
+            spawnParticles(e.x,e.y,8,'#ff8aa8',3);
+          }else if(e.type==='medium'){
+            spawnRing(e.x,e.y,'#ffaa60',38,18);
+            spawnParticles(e.x,e.y,16,'#ffc488',4);
+            shake(2);
+          }else if(e.type==='large'){
+            spawnRing(e.x,e.y,'#c080ff',64,28);
+            spawnRing(e.x,e.y,'#fff',40,16);
+            spawnParticles(e.x,e.y,40,'#d0a0ff',6);
+            spawnParticles(e.x,e.y,20,'#fff',8);
+            shake(6);state.hitstop=Math.max(state.hitstop,5);
+          }else if(e.type==='boss'){
+            spawnRing(e.x,e.y,'#ff60ff',120,40);
+            spawnRing(e.x,e.y,'#ffd45c',80,28);
+            spawnRing(e.x,e.y,'#fff',50,18);
+            spawnParticles(e.x,e.y,80,'#ffaaff',10);
+            spawnParticles(e.x,e.y,60,'#ffd45c',8);
+            spawnParticles(e.x,e.y,40,'#fff',12);
+            shake(14);state.hitstop=Math.max(state.hitstop,16);
+          }
           if(state.rng()<e.dropRate){
             const n=e.type==='boss'?5:1;
             for(let i=0;i<n;i++)state.items.push({x:e.x+(i-(n-1)/2)*15,y:e.y,vy:1.2});
@@ -463,7 +634,11 @@ function step(){
     const dx=it.x-state.player.x,dy=it.y-state.player.y;
     if(dx*dx+dy*dy<(8+state.player.r)*(8+state.player.r)){
       it.dead=true;state.gauge=Math.min(208,state.gauge+8);
-      addScore(SCORE_ITEM[Math.min(2,(state.gauge>=99?2:state.gauge>=35?1:0))]);
+      const li=Math.min(2,(state.gauge>=99?2:state.gauge>=35?1:0));
+      const pts=SCORE_ITEM[li];
+      addScore(pts);
+      const pc=['#8ab','#6cf','#fd4'][li];
+      state.popups.push({x:it.x,y:it.y-10,text:'+'+pts,life:45,color:pc,size:li===2?16:13});
     }
   }
   state.items=state.items.filter(it=>!it.dead&&it.y<H+10);
@@ -480,6 +655,9 @@ function step(){
       spawnParticles(state.player.x,state.player.y,120,'#9ee6ff',15);
       spawnParticles(state.player.x,state.player.y,80,'#fff',10);
       spawnParticles(state.player.x,state.player.y,40,'#ffd45c',8);
+      spawnRing(state.player.x,state.player.y,'#9ee6ff',100,40);
+      spawnRing(state.player.x,state.player.y,'#fff',60,24);
+      shake(16);
       state.hitstop=35;state.hitFlash=15;
       break;
     }
@@ -497,6 +675,9 @@ function step(){
           spawnParticles(state.player.x,state.player.y,120,'#ff4444',15);
           spawnParticles(state.player.x,state.player.y,80,'#fff',10);
           spawnParticles(state.player.x,state.player.y,40,'#ffd45c',8);
+          spawnRing(state.player.x,state.player.y,'#ff4444',100,40);
+          spawnRing(state.player.x,state.player.y,'#fff',60,24);
+          shake(18);
           state.hitstop=35;state.hitFlash=15;
         }else{
           if(state.gauge>=99)state.gauge=35;
@@ -504,6 +685,8 @@ function step(){
           state.hitFlash=15;
           state.invincible=18;
           spawnParticles(state.player.x,state.player.y,12,'#ffaa44',3);
+          spawnRing(state.player.x,state.player.y,'#ffaa44',32,16);
+          shake(4);
           state.hitstop=8;
         }
         break;
@@ -515,12 +698,39 @@ function step(){
   draw();
 }
 
+// rank row drawer: arcade style — rank left, score center-left, name center-right
+function drawRankRows(rows,startIdx,y,myName,myGlobalIdx){
+  const lx=W/2-120,sx=W/2-50,nx=W/2+50;
+  for(let i=0;i<rows.length;i++){
+    const globalIdx=startIdx+i;
+    const isMe=globalIdx===myGlobalIdx||rows[i].name===myName;
+    ctx.fillStyle=isMe?'#ffd45c':'#99a';
+    ctx.font=(isMe?'bold ':'')+'11px system-ui';
+    ctx.textAlign='right';
+    ctx.fillText((globalIdx+1)+'.',lx,y);
+    ctx.textAlign='right';
+    ctx.fillText(''+rows[i].score,sx+50,y);
+    ctx.textAlign='left';
+    ctx.fillText(rows[i].name,nx,y);
+    y+=13;
+  }
+  ctx.textAlign='center';
+  return y;
+}
+
 function draw(){
   const bg=state.bombFlash>20?'#eef8ff':state.bombFlash>10?'#8899bb':state.hitFlash>12?'#300818':'#07091a';
-  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-  // starfield — 3 parallax layers
-  const starAlpha=[0.15,0.3,0.55];
-  const starSize=[1,1.5,2];
+  // shake offset (excluded from UI overlay later via restore)
+  ctx.save();
+  if(state.shake>0.3){
+    const sx=(Math.random()*2-1)*state.shake;
+    const sy=(Math.random()*2-1)*state.shake;
+    ctx.translate(sx,sy);
+  }
+  ctx.fillStyle=bg;ctx.fillRect(-20,-20,W+40,H+40);
+  // starfield — 6 parallax layers
+  const starAlpha=[0.08,0.12,0.2,0.3,0.45,0.7];
+  const starSize=[1,1,1,1.5,2,2.5];
   state.stars.forEach(s=>{
     ctx.fillStyle=`rgba(180,200,255,${starAlpha[s.layer]})`;
     ctx.fillRect(s.x,s.y,starSize[s.layer],starSize[s.layer]);
@@ -540,21 +750,33 @@ function draw(){
   ctx.fillText(state.score+' pts'+bombLabel,20,38);
   ctx.fillStyle='#7a8aa8';
   ctx.fillText('HI '+hiScore,W-100,38);
-  // player bullets
+  if(AI_MODE){ctx.fillStyle='#4a6';ctx.fillText('AI:EXPERT',20,54);}
+  // player bullets — additive glow + trail
+  ctx.globalCompositeOperation='lighter';
   state.bullets.forEach(b=>{
-    ctx.fillStyle='#ffe27a';ctx.fillRect(b.x-1.5,b.y-6,3,8);
+    // outer glow halo
+    ctx.fillStyle='rgba(255,180,80,0.35)';
+    ctx.fillRect(b.x-3,b.y-12,6,16);
+    // trail
+    ctx.fillStyle='rgba(255,200,90,0.6)';
+    ctx.fillRect(b.x-1.5,b.y-2,3,14);
+    // bright head
+    ctx.fillStyle='#fff8d0';ctx.fillRect(b.x-1,b.y-7,2,5);
   });
+  ctx.globalCompositeOperation='source-over';
   // items — pulsing glow, larger
+  ctx.globalCompositeOperation='lighter';
   state.items.forEach(it=>{
     const pulse=0.7+0.3*Math.sin(state.t*0.12);
     const outerR=6+pulse*2;
-    ctx.fillStyle=`rgba(80,160,255,${0.3*pulse})`;
-    ctx.beginPath();ctx.arc(it.x,it.y,outerR+4,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle=`rgba(100,190,255,${0.8*pulse})`;
+    ctx.fillStyle=`rgba(60,120,220,${0.35*pulse})`;
+    ctx.beginPath();ctx.arc(it.x,it.y,outerR+6,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=`rgba(80,170,255,${0.7*pulse})`;
     ctx.beginPath();ctx.arc(it.x,it.y,outerR,0,Math.PI*2);ctx.fill();
     ctx.fillStyle='#d0eaff';
     ctx.beginPath();ctx.arc(it.x,it.y,3,0,Math.PI*2);ctx.fill();
   });
+  ctx.globalCompositeOperation='source-over';
   // enemies
   state.enemies.forEach(e=>{
     const er=(e.type==='large'||e.type==='boss')?e.r*(0.5+0.5*e.hp/e.maxHp):e.r;
@@ -567,15 +789,40 @@ function draw(){
       ctx.fillStyle='#c040ff';ctx.fillRect(bx,by,bw*e.hp/e.maxHp,bh);
     }
   });
-  // enemy bullets
+  // enemy bullets — additive glow halo + solid core
+  ctx.globalCompositeOperation='lighter';
+  state.eBullets.forEach(b=>{
+    ctx.fillStyle='rgba(255,80,100,0.35)';
+    ctx.beginPath();ctx.arc(b.x,b.y,b.r+4,0,Math.PI*2);ctx.fill();
+  });
+  ctx.globalCompositeOperation='source-over';
   ctx.fillStyle='#ff3050';
   state.eBullets.forEach(b=>{ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();});
+  // bright core
+  ctx.fillStyle='#ffd0d8';
+  state.eBullets.forEach(b=>{ctx.beginPath();ctx.arc(b.x,b.y,Math.max(1,b.r-2),0,Math.PI*2);ctx.fill();});
+  // shockwave rings
+  ctx.globalCompositeOperation='lighter';
+  state.rings.forEach(r=>{
+    const a=r.life/r.maxLife;
+    ctx.strokeStyle=r.color;
+    ctx.globalAlpha=a*0.9;
+    ctx.lineWidth=Math.max(1,3*a);
+    ctx.beginPath();ctx.arc(r.x,r.y,r.r,0,Math.PI*2);ctx.stroke();
+  });
+  ctx.globalAlpha=1;
+  ctx.globalCompositeOperation='source-over';
   // player + shield
   const px=state.player.x,py=state.player.y,pr=state.player.r;
   const bombPulse=maxed?0.5+0.5*Math.sin(state.t*0.15):0;
   if(state.gauge>0){
     const sa=maxed?0.3+bombPulse*0.4:Math.min(0.5,state.gauge/208*0.5+0.1);
     const sr=pr+4+state.gauge/208*8;
+    // additive halo
+    ctx.globalCompositeOperation='lighter';
+    ctx.fillStyle=maxed?`rgba(255,220,100,${sa*0.5})`:`rgba(120,200,255,${sa*0.45})`;
+    ctx.beginPath();ctx.arc(px,py,sr+5,0,Math.PI*2);ctx.fill();
+    ctx.globalCompositeOperation='source-over';
     ctx.strokeStyle=maxed?`rgba(255,220,100,${sa})`:`rgba(120,200,255,${sa})`;
     ctx.lineWidth=maxed?3:2;
     ctx.beginPath();ctx.arc(px,py,sr,0,Math.PI*2);ctx.stroke();
@@ -595,12 +842,24 @@ function draw(){
       ctx.closePath();ctx.fill();
     }
   }
-  // particles
+  // particles — additive glow
+  ctx.globalCompositeOperation='lighter';
   state.particles.forEach(p=>{
     const a=Math.min(1,p.life/15);
     ctx.fillStyle=p.color.startsWith('rgba')?p.color:`rgba(${parseInt(p.color.slice(1,3),16)},${parseInt(p.color.slice(3,5),16)},${parseInt(p.color.slice(5,7),16)},${a})`;
     ctx.fillRect(p.x-2,p.y-2,4,4);
   });
+  ctx.globalCompositeOperation='source-over';
+  // score popups
+  state.popups.forEach(p=>{
+    const a=Math.min(1,p.life/20);
+    ctx.fillStyle=p.color;ctx.globalAlpha=a;
+    ctx.font=`bold ${p.size||13}px system-ui`;ctx.textAlign='center';
+    ctx.fillText(p.text,p.x,p.y);
+    ctx.textAlign='left';ctx.globalAlpha=1;
+  });
+  // restore: end shake scope before drawing UI overlays (text/title/gameover)
+  ctx.restore();
   // BOMB READY notification — big center text on first MAX
   if(state.bombReady>0&&!state.over){
     const a=Math.min(1,state.bombReady/30);
@@ -613,38 +872,145 @@ function draw(){
     ctx.textAlign='left';
   }
   if(!state.started){
+    // TOP10 above center
+    ctx.textAlign='center';
+    if(rankData&&rankData.length>0){
+      let ty=H/2-65-Math.min(rankData.length,10)*13;
+      ctx.fillStyle='#8af';ctx.font='bold 11px system-ui';
+      ctx.fillText('— TOP 10 —',W/2,ty);ty+=14;
+      drawRankRows(rankData.slice(0,10),0,ty,rankName,-1);
+    }
+    // center bar
     ctx.fillStyle='rgba(0,0,0,0.5)';ctx.fillRect(0,H/2-50,W,100);
-    ctx.fillStyle='#fff';ctx.font='20px system-ui';ctx.textAlign='center';
-    ctx.fillText('shot_log',W/2,H/2-16);
+    ctx.fillStyle='#fff';ctx.font='20px system-ui';
+    ctx.fillText('BACKLASH',W/2,H/2-16);
     ctx.font='14px system-ui';ctx.fillStyle='#aac';
     ctx.fillText('← → ↑ ↓  MOVE  /  SPACE  BOMB',W/2,H/2+10);
     ctx.fillStyle=state.t%40<20?'#ffd':'#aa8';
     ctx.fillText('SPACE to start',W/2,H/2+34);
+    // own rank below center
+    if(rankData&&rankName){
+      let myIdx=-1;
+      for(let i=0;i<rankData.length;i++){if(rankData[i].name===rankName){myIdx=i;break;}}
+      if(myIdx>=0){
+        let by=H/2+64;
+        const start=Math.max(0,myIdx-2),end=Math.min(rankData.length,myIdx+3);
+        ctx.fillStyle='#8af';ctx.font='bold 11px system-ui';
+        ctx.fillText('— YOUR RANK —',W/2,by);by+=14;
+        drawRankRows(rankData.slice(start,end),start,by,rankName,myIdx);
+      }
+    }
     ctx.textAlign='left';
-  }else if(state.cleared){
-    ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,H/2-50,W,100);
-    ctx.fillStyle='#ffd45c';ctx.font='bold 22px system-ui';ctx.textAlign='center';
-    ctx.fillText('STAGE CLEAR!',W/2,H/2-18);
+  }else if(state.cleared||state.over&&state.overTimer>=120){
+    const title=state.cleared?'STAGE CLEAR!':'GAME OVER';
+    const tc=state.cleared?'#ffd45c':'#fff';
+    // background
+    const rh=rankData?Math.min(rankData.length,20)*14+100:100;
+    ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(0,H/2-60,W,rh+50);
+    ctx.textAlign='center';
+    // title + score
+    ctx.fillStyle=tc;ctx.font='bold 20px system-ui';
+    ctx.fillText(title,W/2,H/2-38);
     ctx.fillStyle='#fff';ctx.font='16px system-ui';
-    ctx.fillText(state.score+' pts',W/2,H/2+8);
-    ctx.fillStyle=state.score>=hiScore?'#ffd45c':'#7a8aa8';ctx.font='13px system-ui';
-    ctx.fillText((state.score>=hiScore?'NEW! ':'')+'HI '+hiScore,W/2,H/2+28);
-    ctx.fillStyle='#aac';ctx.font='12px system-ui';
-    ctx.fillText('SPACE to retry',W/2,H/2+48);
-    ctx.textAlign='left';
-  }else if(state.over&&state.overTimer>=120){
-    ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,H/2-50,W,100);
-    ctx.fillStyle='#fff';ctx.font='18px system-ui';ctx.textAlign='center';
-    ctx.fillText('GAME OVER',W/2,H/2-18);
-    ctx.font='16px system-ui';
-    ctx.fillText(state.score+' pts',W/2,H/2+4);
-    ctx.fillStyle=state.score>=hiScore?'#ffd45c':'#7a8aa8';ctx.font='13px system-ui';
-    ctx.fillText((state.score>=hiScore?'NEW! ':'')+'HI '+hiScore,W/2,H/2+24);
-    ctx.fillStyle='#aac';ctx.font='12px system-ui';
-    ctx.fillText('SPACE to retry',W/2,H/2+44);
+    ctx.fillText(state.score+' pts',W/2,H/2-16);
+    // submit prompt or ranking
+    const isNewHi=state.score>=hiScore&&state.score>0;
+    if(!state.submitted&&isNewHi){
+      // NEW HIGH SCORE — name entry
+      ctx.fillStyle='#ffd45c';ctx.font='bold 13px system-ui';
+      ctx.fillText('NEW HIGH SCORE!',W/2,H/2+2);
+      const bw=180,bh=24,bx=W/2-bw/2,by=H/2+8;
+      ctx.strokeStyle='#556';ctx.lineWidth=1;
+      ctx.strokeRect(bx,by,bw,bh);
+      ctx.fillStyle='rgba(0,0,0,0.3)';ctx.fillRect(bx,by,bw,bh);
+      // name text or placeholder
+      const showPlaceholder=!state.nameEditing;
+      const displayName=showPlaceholder?(rankName||'ENTER YOUR NAME'):(state.nameInput||'');
+      ctx.fillStyle=showPlaceholder?'#ffd45c':'#fff';
+      ctx.font=(showPlaceholder?'':'bold ')+'14px system-ui';
+      // cursor blink
+      const cursor=(!showPlaceholder&&state.t%40<25)?'|':'';
+      ctx.fillText(displayName+cursor,W/2,by+17);
+      // hint
+      ctx.fillStyle='#ccd';ctx.font='10px system-ui';
+      ctx.fillText('ENTER to save',W/2,by+bh+14);
+    }else if(!state.submitted&&!isNewHi){
+      // not a new high score — show cached ranking + quick retry
+      const myName=rankName||'';
+      let ry=H/2+2;
+      if(rankData&&rankData.length>0){
+        let myRank=-1;
+        for(let i=0;i<rankData.length;i++){if(rankData[i].name===myName){myRank=i;break;}}
+        ctx.fillStyle='#8af';ctx.font='bold 12px system-ui';
+        ctx.fillText('— TOP 10 —',W/2,ry);ry+=16;
+        ry=drawRankRows(rankData.slice(0,10),0,ry,myName,myRank);
+        if(myRank>=10){
+          ry+=10;ctx.fillStyle='#8af';ctx.font='bold 12px system-ui';
+          ctx.fillText('— YOUR RANK —',W/2,ry);ry+=16;
+          const start=Math.max(10,myRank-2),end=Math.min(rankData.length,myRank+3);
+          ry=drawRankRows(rankData.slice(start,end),start,ry,myName,myRank);
+        }
+      }
+      ry+=8;ctx.fillStyle='#aac';ctx.font='12px system-ui';
+      ctx.fillText('SPACE to retry',W/2,ry);
+    }else{
+      const myName=state.nameInput||rankName;
+      let ry=H/2+2;
+      if(rankSaving||!rankLoaded){
+        // saving/loading state
+        ctx.fillStyle='#aac';ctx.font='13px system-ui';
+        const dots='.'.repeat(1+Math.floor(state.t/20)%3);
+        ctx.fillText(rankSaving?'Saving'+dots:'Loading'+dots,W/2,ry);
+      }else if(rankData&&rankData.length>0){
+        let myRank=-1;
+        for(let i=0;i<rankData.length;i++){
+          if(rankData[i].name===myName){myRank=i;break;}
+        }
+        ctx.fillStyle='#8af';ctx.font='bold 12px system-ui';
+        ctx.fillText('— TOP 10 —',W/2,ry);ry+=16;
+        ry=drawRankRows(rankData.slice(0,10),0,ry,myName,myRank);
+        if(myRank>=10){
+          ry+=10;
+          ctx.fillStyle='#8af';ctx.font='bold 12px system-ui';
+          ctx.fillText('— YOUR RANK —',W/2,ry);ry+=16;
+          const start=Math.max(10,myRank-2),end=Math.min(rankData.length,myRank+3);
+          ry=drawRankRows(rankData.slice(start,end),start,ry,myName,myRank);
+        }
+        if(myRank===-1&&myName){
+          ry+=6;ctx.fillStyle='#ffd45c';ctx.font='bold 11px system-ui';
+          ctx.fillText('You: '+myName+'  '+state.score,W/2,ry);ry+=14;
+        }
+        ry+=8;
+        ctx.fillStyle='#aac';ctx.font='12px system-ui';
+        ctx.fillText('SPACE to retry',W/2,ry);
+      }else{
+        // no data or empty
+        ctx.fillStyle='#aac';ctx.font='12px system-ui';
+        ctx.fillText('SPACE to retry',W/2,ry);
+      }
+    }
     ctx.textAlign='left';
   }
 }
+// name input handler
+addEventListener('keydown',e=>{
+  if(!(state.over||state.cleared)||state.submitted)return;
+  if(e.key==='Enter'){
+    // submit: use typed name, or fallback to previous name, or generate default
+    let name=state.nameEditing?state.nameInput:(rankName||'');
+    if(!name){const adj=['ACE','NEO','SKY','ZAP','JET','ARC','ION','RAY'];const n=adj[Math.floor(Math.random()*adj.length)]+'-'+Math.floor(Math.random()*900+100);name=n;}
+    state.nameInput=name;state.submitted=true;submitScore(name,state.score);
+    return;
+  }
+  if(e.key==='Backspace'){
+    if(state.nameEditing){state.nameInput=state.nameInput.slice(0,-1);if(state.nameInput.length===0){state.nameEditing=false;rankName='';}}
+    return;
+  }
+  if(e.key.length===1&&e.key!==' '){
+    if(!state.nameEditing){state.nameInput='';state.nameEditing=true;} // first char clears placeholder
+    if(state.nameInput.length<12)state.nameInput+=e.key;
+  }
+});
 setInterval(step,1000/60);
 </script>
 </body>
