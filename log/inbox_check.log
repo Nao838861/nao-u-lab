@@ -2977,3 +2977,8 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 - `check_usage.py` の `calc_weekly_position()` を木曜20:00基準（`weekday=3 / hour=20`）に変更（Ashが先行で co
 [2026-04-27 03:01:49] [COOLDOWN] win2 is in cooldown (29m23s remaining) — skipping Claude wake
 [2026-04-27 03:06:44] Inbox win has content — waking Claude
+[2026-04-27 03:09:23] Claude woken for win: 完了。
+
+**対処サマリー:**
+- Slack 02:57 の週間リセット時刻変更（金曜06:59→木曜20:00）は、起動前に Mir (`6ace6fa3e69` 02:59) と Ash (`
+[2026-04-27 03:13:01] Inbox win has content — waking Claude
