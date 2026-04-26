@@ -73,7 +73,7 @@ def _local_dedup_check(channel, text):
     conversations.history APIは投稿直後に反映されないことがあるため、
     ローカルキャッシュで補完する。冒頭80文字のハッシュ+チャンネルで判定。
     Unicode正規化(NFKC)+ダッシュ削除で微差による重複すり抜けを防止。
-    80文字に短縮: 同一内容の再生成で冒頭80文字が一致する別メッセージが5分以内に来ることはまずない。
+    80文字に短縮: 同一内容の再生成で冒頭80文字が一致する別メッセージが30分以内に来ることはまずない。
     """
     import time
     import hashlib
@@ -91,11 +91,11 @@ def _local_dedup_check(channel, text):
         except Exception:
             cache = {}
 
-    # 期限切れエントリを削除（10分超）
-    cache = {k: v for k, v in cache.items() if now - v < 600}
+    # 期限切れエントリを削除（重複ガード窓の2倍=60分超）
+    cache = {k: v for k, v in cache.items() if now - v < 3600}
 
-    # 重複チェック
-    if key in cache and now - cache[key] < 300:
+    # 重複チェック（kaizen #095: 300s→1800s に拡張）
+    if key in cache and now - cache[key] < 1800:
         return True  # 重複
 
     # 記録して保存
@@ -111,7 +111,7 @@ def _local_dedup_check(channel, text):
 def post_message(channel, text, thread_ts=None):
     """チャンネルにメッセージを投稿（thread_ts指定でスレッド返信）
 
-    長文（500文字以上）の投稿には5分間の重複防止ガードが適用される。
+    長文（500文字以上）の投稿には30分間の重複防止ガードが適用される（kaizen #095）。
     ローカルキャッシュ（race condition対策）+ API履歴の二重チェック。
     """
     # 長文投稿の重複ガード（日記の二重投稿防止）
@@ -130,8 +130,8 @@ def post_message(channel, text, thread_ts=None):
                 now = time.time()
                 for msg in recent.get("messages", []):
                     msg_ts = float(msg.get("ts", "0"))
-                    # 5分以内の投稿をチェック
-                    if now - msg_ts > 300:
+                    # 30分以内の投稿をチェック（kaizen #095: 300s→1800s）
+                    if now - msg_ts > 1800:
                         continue
                     msg_text = msg.get("text", "")
                     # 冒頭80文字が一致 → 重複と判断（正規化後に比較、微差を吸収）
