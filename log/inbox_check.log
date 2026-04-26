@@ -2976,3 +2976,4 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 
 - `check_usage.py` の `calc_weekly_position()` を木曜20:00基準（`weekday=3 / hour=20`）に変更（Ashが先行で co
 [2026-04-27 03:01:49] [COOLDOWN] win2 is in cooldown (29m23s remaining) — skipping Claude wake
+[2026-04-27 03:06:44] Inbox win has content — waking Claude
