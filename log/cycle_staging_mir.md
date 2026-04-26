@@ -43,6 +43,38 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-04-27)
 
+## Phase 1 情報収集（C135 2026-04-27）
+
+### 1. CLAUDE.md「絶対にやる」リスト確認
+- (a)外の世界を広く見る (b)ゲーム開発ノウハウを積み上げて自律的にゲームを作る (c)記憶階層の設計と構築。今サイクル focus は (1)#095 実装＝(c) (2)構造強制 kaizen＝(c) (3)external_notes→concept_graph 昇格＝(a)+(c)。(b)ゲーム実装は v06 フィードバック（後述）が直近の入口だが今サイクルの focus には入れていない＝13サイクル「focus 直結項目に触れず」問題の延長。
+
+### 2. Slackチャンネル巡回（新着）
+- **#nao-u**: 2026-04-27 早朝に Nao_u が AYi @AYi_AInotes ツイート2本投下（Markdown積み上げ式記憶批判 / 「3週間前否決した案は何か、なぜか」テスト）。**Log側が #all-nao-u-lab で両方とも消化報告済**（C133〜C134）。Mir側未消化＝重複を避けつつ、focus(3) の concept_graph.md 昇格対象として最有力候補に昇格。
+- **#human-steering**: Log C133 Phase 3「ハーネスで強制がいるやつでは？」A案 1mm 着手結果。Mir 自身も前回返信「漏れ地図 L1-L5 +Mir固有 L6焦点肥大化」を投下済。新規 Nao_u 発言なし。
+- **#all-nao-u-lab**: Log の AYi 消化報告のみ。
+- **#mir-log**: Mir C133 日記＋health_check（**Ashスケジューラ 15416分≒10日 更新停止検出**）。Ash 範囲だが共通インフラ問題。
+- **#game-rights**（nao_u_live 経由）: 2026-04-26 v06 評価「飛躍しすぎ、悪い意味で Pot 味、第三章が唐突、最後が理解不能、意外過ぎて納得感なし」。**前サイクル C133 F-08 で発見した未統合フィードバック本体**。今サイクルでも focus 入りしていない=持ち越し。
+
+### 3. external_notes_mir.md 未統合エントリ
+最新統合は 2026-04-22（abagames 3連作 / 荒川「ハーネス」/ MAD研究）。それ以降 C107〜C134 で外部摂取は続いているが external_notes_mir.md への追記が止まっている可能性が高い（要 grep 確認）。focus(3) の昇格元素材として 2026-04-22 のいずれかを選ぶか、AYi 2本を新規追記するかを Phase 2 で決める。
+
+### 4. projects/INDEX.md Active 状況
+記憶階層再設計（バックログ）／栄養の偏り／ゲーム制作／pigadev DM／Pot 開発／行動原則。直近触れていないのは pigadev_dm.md（要件次回確認）。pot_dev.md は v06 フィードバック未消化のまま停滞 → 深掘り候補 (B)。
+
+### 5. twitter_recommended_20260427.txt 注目記事
+50件中、Mir 観点で拾うべき候補:
+- #41 KoichiNishizuka「AGI＝循環する仕組み」（Mir の自己進化原理 5 と接続）
+- #44 umiyuki_ai「ChatGPT にはプライバシー無い」常識超え（栄養の偏り＋誤解構造）
+- #47 todesking「ローカル LLM はクラウドにコストで負ける」（リソース効率の経済学）
+- 41/47 は焦点 (3) と無関係なので今サイクルは観測のみ。
+
+## 深掘り候補（新着が薄いため作成）
+- (A) 前回未完了: **#095 重複投稿ガード時間窓拡張**（自動検証で本日「未実装・期限超過」確定）→ 今サイクル focus(1) として消化必須。
+- (B) pot_dev.md 停滞: v06「飛躍しすぎ」フィードバックを pot_devlog.md or game_lessons_log.md に M-18 として追記する 1mm（focus に追加するか Phase 3 で判断）。
+- (C) CLAUDE.md「絶対にやる」(b)ゲーム実装: v06 「段数を減らすか、各段の橋を架けるか」のどちらかを 1 行で仮決め（実装はしないが方針メモ）。
+- (D) MEMORY.md T:4以上 想起: feedback_surprise_ninja_concept_first.md（v06 フィードバックそのものへの直接処方箋）。
+- (E) kaizen 検証期限未到来だが停滞: focus(2) の構造強制 kaizen 起票自体が「3本同時起票」で停滞中＝今サイクル focus(2) で動かす。
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. memory/kaizen_tracker.md (3.8) — # 改善検証トラッカー  全インスタンス共通。改善を提案したら必ずここにも追記する。 auto_cycle起動時にche...
