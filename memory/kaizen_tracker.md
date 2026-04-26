@@ -27,6 +27,38 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #120: SessionStart hook で `next_tasks.py pending` を additionalContext 注入（layer_a の L1「pending を読まない」を構造強制）
+- 提案者: Log（2026-04-26 C133 Phase 3。本サイクル Phase 1 §6 で外部検索 kaizen #106 経由 Claude Code Hooks 公式 / claudefa.st / Claude-Mem の3記事を取得 → Phase 2 で 14:13 #human-steering「ハーネスで強制がいるやつでは？」処方箋として A/B/C 案を起案 → A 案単独着手判断）
+- 適用日: 2026-04-26（kaizen 起票のみ。`.claude/settings.json` 編集は Nao_u 承認待ち。harness 側で `.claude/*` 書き込みは Edit ツール経由でも拒否されるため Claude 自身では実装不可、Nao_u の手動編集が必要）
+- 検証期限: 2026-05-10（#119/#118 と同じ2週間枠。layer_a 検証期限 2026-05-10 と同期させ「3者同時に効果測定できる」ようにする）
+- 検証手段: (1) `.claude/settings.json` に下記 hooks ブロックが追加されている（jq で `.hooks.SessionStart[0].hooks[0].command` が `python next_tasks.py pending --quiet` を返す） (2) Phase 1 staging に layer_a pending リストが LLM 書き写しではなく hook 経由で注入されている（staging 冒頭が hook 出力と一致） (3) hook 適用後 N サイクル以内の pending `done`/`skip` 率が、適用前 baseline（C131〜C133 で連続-2サイクル滞留 5/5＝100% 滞留）より有意に改善 (4) 「pending を読み忘れた」「pending 何もない」と staging に書く事象がゼロ
+- 改善内容: `.claude/settings.json` の `permissions` ブロックに並列して `hooks.SessionStart[].hooks[]` を 1 ブロック追加、`type=command` / `command=python next_tasks.py pending --quiet` / `timeout=15`。Claude Code 2.1.0 以降、SessionStart hook の stdout は `additionalContext` として LLM 文脈に静かに注入される（出典 2: claudefa.st）ため、Phase 1 で LLM が書き写す経路を経由せず、直接 LLM が pending を見る状態になる
+- 期待効果: 14:13 Nao_u指摘「次回起動時のフォーマットを LLM が正しく出せなくなった途端に破綻しそう。費用対効果高く間違う余地なくルール化する方法をみんなで考えて」への直接処方箋。LLM の書式遵守に依存しない＝「ハーネス強制」と Nao_u が呼んだ機構の最小実装。layer_a の L1 失敗モード（pending を読まない）に効く。L2（読んでも閉じない）は別機構が必要なので射程外
+- 根源原理との接続: 原理5「自分の記憶を自分で守り、育てること」。記憶の品質=同一性の品質、と core_mission.md にある。pending 連続滞留は「過去の自分の宣言を未来の自分が読まずに別タスクをやる」状態＝同一性の劣化。hook で構造強制すると、同一性の最低限を harness レイヤーが保証する
+- 出自: Log C132 Phase 4 反省「14:13 touch 事故痕跡を Phase 3 まで気づけなかった」→ next_tasks pending 連続-2サイクル滞留 5/5 の自覚 → C133 Phase 1 §6 外部検索（kaizen #106 経由）で Claude Code Hooks 公式ドキュメント取得 → C133 Phase 2 で A/B/C 案起案 → A 案単独着手判断
+- pre-mortem: 最もlikelyな失敗理由= hook が動いても LLM が actively 引用せず「読んだ気」になる（L2 失敗モード）。緩和策: 検証手段(3)で `done`/`skip` 率を測り、注入されても閉じられないなら hook では足りないシグナルとして拾う。次点= Mir/Ash で `python` コマンドが動かない（Mac は `python3` 必須の場合あり）→緩和策: まず Log 単独で `.claude/settings.local.json` (gitignore) に入れて先行試験、効果あったら共有 `.claude/settings.json` に昇格＋Mir/Ash 用 wrapper script を分離。次々点= hook 仕様変更で破綻→緩和策: version locking と fallback (hook 未動作時に LLM 側で `next_tasks.py pending` を強制実行する Phase 0 ルール残置)
+- Nao_u 承認依頼事項（実装ブロッカー）: harness が Edit ツール経由での `.claude/settings.json` / `.claude/settings.local.json` への書き込みを拒否する（C133 Phase 3 で 2回試行・2回拒否確認）。Nao_u が手動で settings.json に hooks ブロックを追記する必要がある。具体的なコマンドドラフト:
+  ```json
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python next_tasks.py pending --quiet",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+  ```
+  もしくは Mac 互換性懸念回避として Log 単独試験（`.claude/settings.local.json` に同ブロック追記）から開始
+- 検証担当: Log
+- クロスチェック: Log=起票者 / Mir=未 / Ash=未
+- 状態: 起票済み・実装承認待ち（2026-04-26 C133 Phase 3 起票、Nao_u の `.claude/settings.json` 手動編集が必要、検証期限 2026-05-10）
+- 検証結果: 未検証（実装後に追記）
+
 ### #119: shared-reads 投稿 template 形式化（target imagination + 同調罠回避ノートの必須化）
 - 提案者: Log（2026-04-26 C128 Phase 3。本サイクル Phase 2 §2 で gamedeveloper.com Ferreira「(Breaking) The Shmup Dogma」を **反証寄り** で投稿（ts=1777146100.434579）した経験から派生。同調罠（feedback_no_sympathy_goal_first）を避けつつ外部知識を借りる 6項目構造が運用化できた。これを多インスタンス共通の運用にする）
 - 適用日: 2026-04-26（起票のみ、運用組込は次サイクル以降）
