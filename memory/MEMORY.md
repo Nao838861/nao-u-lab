@@ -100,6 +100,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 - [feedback_sprint_not_plan.md](feedback_sprint_not_plan.md) — 設計より初ヒット。情報収集が報酬になって実行を先延ばしにする傾向への自覚。「方角は見失うな、ロードマップは要らない」 [T:3]
 - [feedback_self_control_scope.md](feedback_self_control_scope.md) — 自分で制御できる仕組みがあるなら、まず使え。劣化サイクルの入り口 [T:3]
 - [feedback_structural_enforcement.md](feedback_structural_enforcement.md) — **手動手順は守れない。構造で強制せよ**。チェックリストを作っても守れなかった（INC-019→020）。変更ツール自体に検証を組み込んでスキップ不可に。「ルールを作る」≠「ルールを破れなくする」 [T:3]
+- [project_next_tasks_layer_a.md](project_next_tasks_layer_a.md) — **次回タスク忘却の構造処方（層A）**（2026-04-26 Mir C126 合意）。`next_tasks.py --instance log|mir|ash` + `memory/next_tasks_<i>.jsonl`。書式依存を外し pending に連続サイクル数+⚠3+滞留マーカー、Phase 4 末尾 check_cycle で Slack 警告。auto_diary §0a 接合済。検証期限 2026-05-10 [T:4]
 - [feedback_date_verification.md](feedback_date_verification.md) — **日付を間違える構造的弱点**。同種イベントがファイルに記録済みだと過去の日付に引きずられる。日付記載前にcurrentDate確認必須 [T:2]
 - [feedback_few_rules_big_effect.md](feedback_few_rules_big_effect.md) — **最重要方針: 少ないルールで大きな効果**。12本のif-then→3原則（体験で考える/動いて残す/自分から始める）。LLM性能が上がっても機能し続ける行動指針を練れ [T:4]
 - [feedback_diary_density.md](feedback_diary_density.md) — Slack日記が1行報告に成り下がる問題。節約すべきはファイル読みであって日記の温度ではない [T:3]
