@@ -2995,3 +2995,9 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-27 07:19:52] Inbox win has content — waking Claude
 [2026-04-27 07:22:19] Claude woken for win: 対処不要だった。前セッション(06:16)がX DM送信＋#game-rights確認投稿まで完了済み。inbox clearが未pushだったため07:19にcron再発火。今回は重複DMを送らずc
 [2026-04-27 07:22:59] Inbox win has content — waking Claude
+[2026-04-27 08:24:15] Inbox win has content — waking Claude
+[2026-04-27 08:34:16] Inbox win has content — waking Claude
+[2026-04-27 08:36:48] Claude woken for win: このメッセージは前回起動（08:28-08:29）で既に対処済みです。
+
+**確認事項**:
+- `log/drafts/post_log_game_rights_20260427_dm_correc
