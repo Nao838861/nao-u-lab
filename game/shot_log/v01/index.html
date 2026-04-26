@@ -618,11 +618,13 @@ function step(){
           spawnRevenge(e.x,e.y,e.nRad,e.nAim,e.type);
           // visual feedback by enemy size
           if(e.type==='small'){
-            spawnRing(e.x,e.y,'#ff6080',26,14);
-            spawnParticles(e.x,e.y,8,'#ff8aa8',3);
+            // Nao_u 2026-04-26: 打ち返し弾(赤)と同系統色で爆発が紛れる問題
+            // → 暗色・色相変更(青灰)・短寿命・パーティクル数も削減
+            spawnRing(e.x,e.y,'#4a5468',18,8);
+            spawnParticles(e.x,e.y,5,'#6a7488',2.2);
           }else if(e.type==='medium'){
-            spawnRing(e.x,e.y,'#ffaa60',38,18);
-            spawnParticles(e.x,e.y,16,'#ffc488',4);
+            spawnRing(e.x,e.y,'#5a6478',26,11);
+            spawnParticles(e.x,e.y,9,'#7a8498',3);
             shake(2);
           }else if(e.type==='large'){
             spawnRing(e.x,e.y,'#c080ff',64,28);
@@ -1000,10 +1002,15 @@ function draw(){
       const myName=state.nameInput||rankName;
       let ry=H/2+2;
       if(rankSaving||!rankLoaded){
-        // saving/loading state
+        // saving/loading state — keep base text fixed, only dots animate
+        // (Nao_u 2026-04-26: centered text length変化で位置がガクガク動く問題)
         ctx.fillStyle='#aac';ctx.font='13px system-ui';
-        const dots='.'.repeat(1+Math.floor(state.t/20)%3);
-        ctx.fillText(rankSaving?'Saving'+dots:'Loading'+dots,W/2,ry);
+        const baseText=rankSaving?'Saving':'Loading';
+        const dotCount=1+Math.floor(state.t/20)%3;
+        const fullW=ctx.measureText(baseText+'...').width;
+        ctx.textAlign='left';
+        ctx.fillText(baseText+'.'.repeat(dotCount),W/2-fullW/2,ry);
+        ctx.textAlign='center';
       }else if(rankData&&rankData.length>0){
         let myRank=-1;
         for(let i=0;i<rankData.length;i++){

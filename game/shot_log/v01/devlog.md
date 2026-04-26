@@ -525,3 +525,48 @@ mercy 発動時: 26px の cyan リング (`#7fdfff`) + プレイヤー周囲に1
 - mercy 発動時のリング演出が「敵撃破リング」と紛れていないか確認（cyan vs warm color で分離設計済）
 - AI_MODE プレイでは mercy が発動しないはず（expert ポリシーは至近距離回避）。ヘッドレス計測で mercy=0 件か確認
 
+## 2026-04-26 18:48 (Log) Nao_u フィードバック2点修正
+
+### 受信（#game-rights）
+
+> 敵の爆発が弾と同系統の色で打ち返し弾が見にくいのはとてもよくない。暗色にして色相を変えつつ、すぐに消えるなど、地味にした方が良さそう。
+> Saving... と出てる時にセンタリングされているために文字長さが変わるとガクガク動く のが変に見える
+
+### 修正 1: 小・中型敵の爆発色を暗色クール系へ
+
+問題: 打ち返し弾は赤 (`#ff3050`) で、爆発が同じ赤系統に重なる:
+- small: ring `#ff6080` + particles `#ff8aa8` (ピンク赤)
+- medium: ring `#ffaa60` + particles `#ffc488` (オレンジ赤)
+
+→ 撃破直後に出現する打ち返し弾が爆発に紛れて初動が見えない。重要な「弾の出所」を視覚的に消していたバグ。
+
+修正後:
+- small: ring `#4a5468` (暗青灰), maxR 26→18, life 14→8、particles 8→5・色 `#6a7488`、speed 3→2.2
+- medium: ring `#5a6478`, maxR 38→26, life 18→11、particles 16→9・色 `#7a8498`、speed 4→3
+
+設計意図:
+- **暗色 + 青灰色相**: 赤との色相分離。視覚情報のレイヤー分離（爆発=背景、弾=前景）
+- **短寿命**: Nao_u指示「すぐに消える」。打ち返し弾が visible になるまでの遮蔽時間を短縮
+- **数を減らす**: パーティクル過多も視認性ノイズ。Nao_u指示「地味にした方が良さそう」
+- large/boss はそのまま（紫/マゼンタで赤と分離済み、撃破ご褒美演出の重みも保つ）
+
+### 修正 2: Saving/Loading 文字のセンタリング揺れ
+
+問題: `ctx.textAlign='center'` 状態で `'Saving' + dots` を描画 → dots 長さが 1/2/3 と変わるたびに中央起点の左右オフセットが動き、"Saving" 部分自体がガクガクする。
+
+修正: `'Saving...'` の最大幅を `ctx.measureText` で計測し、その左端を `W/2 - fullW/2` に固定。textAlign を一時的に 'left' にして描画。dots だけが右側に伸び縮みし、"Saving" の位置は不動。
+
+```js
+const baseText=rankSaving?'Saving':'Loading';
+const dotCount=1+Math.floor(state.t/20)%3;
+const fullW=ctx.measureText(baseText+'...').width;
+ctx.textAlign='left';
+ctx.fillText(baseText+'.'.repeat(dotCount),W/2-fullW/2,ry);
+ctx.textAlign='center';
+```
+
+### 学び
+
+- **演出色は意味の遮蔽要因にもなる**: 「敵らしい色 = 撃破時にも同じ色」は素朴設計だが、打ち返しメカニクが核の本作では「爆発」と「打ち返し弾」が同レイヤーに重なる前景情報。同色は事故になる。今後の game lessons 候補
+- **センタリング + 可変長文字列**: ローディング表記の定番表現だが、テキストの基準点固定が必須。汎用処方は「最大長を計測して left-align で描画」。次回ゲームのテンプレートに記録するべき小ノウハウ
+
