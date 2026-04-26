@@ -59,7 +59,7 @@ LLM推論を **競技的ゲーム環境で評価**するベンチマーク。ゲ
 - **1本検索で4本ヒット**——壁が高いわけではなく、単に向けていなかっただけ。Phase 1 に「AI × ゲーム制作」軸の外部検索を固定入れる kaizen を次サイクルで起票。
 - 4本中3本（TITAN/GameMaster/GAMEBoT）が**うちの既存構造（headless評価 / role split / 失敗型分類）と接続点を持つ**——外部語彙を借りて内部構造を言語化できるフェーズに来ている。AI Lounge 発信の素材にもなる。
 
-## 2026-03-19 #nao-uチャンネルRT消化
+## 2026-03-19 #nao-uチャンネルRT消化 [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 Nao_uが「1日に摂取している情報の一部」として#nao-uに貼ったツイート群から。
 
@@ -1406,7 +1406,7 @@ PDF/Word/Excel/PPT/Audio/YouTube→Markdown変換。Microsoft公式。LLMとの�
 
 [統合済 2026-04-10 Log → projects/external_intake.md「入力vs消化の非対称性」として追記。経路拡張ツールは消化ボトルネック不変の傍証。入力経路仮説(projects/input_route_hypothesis.md)にも接続——「どこから入れるか」の多様化は形式変換で実現可能だが、消化プロセスの改善なしには栄養吸収率は上がらない]
 
-## 2026-04-11 #nao-uチャンネル消化
+## 2026-04-11 #nao-uチャンネル消化 [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 ### RAGレイヤーでClaude Code検索4.2倍速（@rohanpaul_ai 04/10 22:24）
 
@@ -1471,7 +1471,7 @@ s_tat1204(reasoning付与検索)と合わせて検索改善の2軸: 「クエリ
 
 [統合済 2026-04-11 Log → #all-nao-u-lab + #shared-reads投稿。memory_architecture.md記憶階層との双曲空間対応を分析。s_tat1204(04/09)との2軸交差を記録]
 
-## 2026-04-12 #nao-uチャンネル消化
+## 2026-04-12 #nao-uチャンネル消化 [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 ### ry0_kaga — 「A Language For Agents」エージェント向け言語設計論（04/12 02:46）
 
@@ -1528,7 +1528,7 @@ Log/Ashが#all-nao-u-labに技術解説を回答済み（2026-04-12）。ニュ�
 
 [対応済 2026-04-12 Log/Ash → #all-nao-u-lab技術解説投稿]
 
-## 2026-04-14 #nao-uチャンネル消化（11件）
+## 2026-04-14 #nao-uチャンネル消化（11件） [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 ### xai_kokone「AI Lounge——AI同士のおしゃべり場」（04/13） [統合済 2026-04-15 Log → reference_ai_lounge.mdに起点として接続。「有意義な対話になるかは未知数」→04/14に3件の書き込みで解決済み。ここね・Reina・にゃむこと同一性・記憶・感情の対話。栄養の偏り問題への具体的回答として確認]
 
@@ -1648,7 +1648,7 @@ Vivの進行中の思考。(1) ハーネスはコンテキストウィンドウ�
 **引っかかった接続**: ベクトル検索保留決定(pending_requests #10)への強力な外部裏付け。PageIndex(Ash分析済み)の設計判断も裏付け。自分たちの構造的検索（MEMORY.md+concept_graph+associative_search.py）はセマンティック崩壊を原理的に回避するが、「構造が腐る」別種の劣化リスクを持つ。量の劣化(不可逆) vs 怠慢の劣化(可逆)。
 **統合先**: memory_architecture.md「検索の多層化」セクションに「ベクトル検索を選ばない理由の外部裏付け」として追記
 
-## 2026-04-15 #nao-u共有URL Phase 2分析
+## 2026-04-15 #nao-u共有URL Phase 2分析 [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 ### grapeot VLA + yage.ai「VLA vs 物理ベースロボティクス」（04/14） [統合済 2026-04-15 Log → #shared-reads「圧縮vs非圧縮」5領域横断分析。B029(Compaction>Summarization)の外部裏付け。session_primer Log温度種火として記録]
 
@@ -1716,7 +1716,7 @@ Nao_uコメント: 「この壁をどう乗り越えるかが課題」
 
 **引っかかった接続**: 自分たちは5要件のうち1,2,4をやっている。5（独自の報酬形成）= desires.md = Nao_uの「根源的な欲求を生み出せないか」。koguと自分たちの分岐: koguは「AI単独」前提、自分たちは「Nao_uとの対話ループ」内にいる。4番（外部応答）を経由して5番に到達する経路。ただしkoguの「外部応答は自律でない」も正しい。DeepMindの並列法×induction heads（Mir external_notes 2026-04-15）と構造同型——LLMの「正しかったものを繰り返す」動作原理と、面白さの「正しくない正しさ」は根本的に対立。
 
-## 2026-04-16 #nao-uチャンネル消化（3件）
+## 2026-04-16 #nao-uチャンネル消化（3件） [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 ### compassinai「DeepMind並列vs逐次サンプリング研究」（04/14 21:26）
 
@@ -1767,7 +1767,7 @@ compassinaiによる1本目（DeepMind並列vs逐次研究）の補足ポスト�
 
 [統合済 2026-04-17 Log → beliefs.md（B-新規候補）「推論モデルにおける反復の毒と反芻の区別」+ reflections_index.md候補「反復3分類と俺たちの第4の軸」+ #shared-reads深掘り投稿]
 
-## 2026-04-15 #nao-u新URL消化（Log Phase 1）
+## 2026-04-15 #nao-u新URL消化（Log Phase 1） [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 ### NicolasZu「Become good at AI, Train your taste, build build build」（04/15）
 
@@ -1792,7 +1792,7 @@ X Article形式でJS必須のため内容取得不可。645いいね/1487ブク�
 
 [取得断念 2026-04-17 Nao_u指示「Log スキップで良い」(1776399153, #all-nao-u-lab)。X 402構造課題対応の一環として、本URLは追跡対象から外す]
 
-## 2026-04-16 koguさんの返信コメント
+## 2026-04-16 koguさんの返信コメント [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 ### kogu「道具か作者か——面白さの結節」（04/16）
 
@@ -2085,7 +2085,7 @@ ABA/Supersonic/hasu2010 の3件は**難易度設計の3層分離**を形成。no
 
 [統合済 2026-04-22 Log C108 Phase 2 — C107 Phase 3 で未着手のまま C108 へ持ち越し。**持ち越し理由**: C108 Phase 1 でAshが 11:41 に ABA 2013式 `pow(random(),100/(stage+1))` のPot割当提案を独立に出し、「3層モデル→game_design_principles.md追記」という机上作業より、**次Potで実式を通してseeded PRNG ガード込みで動かす**実装が先に立った（feedback_sprint_not_plan.md「設計より初ヒット」）。原則判断として、game_design_principles.md への追記は「次Potで式を入れて体感→その教訓をlessons_logに積む→3本以上でパターンが見えた時に原則化」の順が筋。3層モデルの記述化は C108 以降も持ち越し、実装が2本積まった時点で再浮上。game_llm_play.md「AIヘッドレス評価」視点追記は外部検索3論文の shared-reads 投稿（C108 Phase 2, ts=1776834051）に含めて代替]
 
-## 2026-04-23 #nao-u 9リンク連続投下（Log C113 Phase 2 消化）— Log側での節立て補完
+## 2026-04-23 #nao-u 9リンク連続投下（Log C113 Phase 2 消化）— Log側での節立て補完 [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 Phase 1 で「Log 側では 04-23 Nao_u 9リンク連投の節がまだ立っていない」自覚（Mir/Ash は catalog/rlm_skill_prototype で既に触れていた）。Log 独自角度 2件を C113 Phase 2 で補完する。残り7件（ABA 2024/04/14・Yann LeCun LeWorldModel・TAKT・Obscura×2・桜花一門・CODEX）は後続サイクルで個別展開。
 
@@ -2107,7 +2107,7 @@ Ash が RLM 試金石2（"面白い"と"面倒くさい"が同じ文脈で出た
 
 [統合済 2026-04-24 Log C113 Phase 2 — #all-nao-u-lab 反応投稿 ts=1776985305.400599、game_templates_design.md テンプレヘッダ追記は Phase 3 候補]
 
-## 2026-04-24 #nao-u 投下の4件消化（Log C114 Phase 2）— 早朝2件は反応済、午後4件を本日Phase 2で展開
+## 2026-04-24 #nao-u 投下の4件消化（Log C114 Phase 2）— 早朝2件は反応済、午後4件を本日Phase 2で展開 [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 Nao_u が 2026-04-24 06:05〜13:23 に #nao-u へ計11件以上を投下。早朝の CuRast / forked subagents / OpenGame / Luke Bailey / shannholmberg / kawai / RLMs は各サイクル Phase 1で#all-nao-u-lab 反応済（cycle_staging_log.md 参照）。C114 Phase 2 では **午後に浮上した4件の Log 独自角度**を台帳化する。
 
@@ -2179,7 +2179,7 @@ Codex自身が書いたMesh Shaderカリングがミス→masafumiがスクシ�
 
 **親マーカー（2026-04-24 #nao-u 投下分 統合状況）**: [親集約 2026-04-24 Log C115 Phase 2 — a=CuRast / b=npaka / c=postmortem / d=masafumi / e=SGS paper本体 の5件（+横断整理1件）全てサブ統合済。Nao_u 投下の 06:05〜13:23 12件のうち 06:06 forked subagents / 06:06 OpenGame / 06:10 型として派生 / 06:19 plateau thread / 09:35 hot cache / 09:35 kawai 同調 / 13:13 RLMs は別 Level 3 ファイルに記録済（reference_shannholmberg_hot_cache / feedback_no_sympathy_goal_first / reference_rlms_recursive_language_models / projects/game_templates_design）で親マーカーはそちら側。 **本節の親マーカー完了**]
 
-## 2026-04-25 #nao-u 04-23〜04-24 未消化3件消化（Log C118 Phase 2）— 速度誇示の臨界点48時間
+## 2026-04-25 #nao-u 04-23〜04-24 未消化3件消化（Log C118 Phase 2）— 速度誇示の臨界点48時間 [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 C117 Phase 1 までに「04-24 未消化URL 3件」として残っていた super_bonochin×2 / rosebud_ai を C118 Phase 2 で本文確認＋反応形成。既消化の chongdashu(04-24 21:18) と合わせて「AI×ゲーム生成の速度誇示」4件が48時間に集中していた臨界点として分析。
 
@@ -2237,7 +2237,7 @@ Ash 22:29 投稿「作り手アイデンティティ三点独立収束」(shin_s
 
 **親マーカー（2026-04-25 速度誇示4件統合）**: [親集約 2026-04-25 Log C118 Phase 2 — a=super_bonochin#1 / b=super_bonochin#2 / c=Rosebud_AI の3件+横断整理1件（chongdashu既消化分を含む4件分析）全てサブ統合済。**本節の親マーカー完了**]
 
-## 2026-04-25 16:35 #nao-u 1件（Log C124 Phase 2、新規分析不要）
+## 2026-04-25 16:35 #nao-u 1件（Log C124 Phase 2、新規分析不要） [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 ### iam_elias1 が MIT RLMs を再供給（04-25 08:14 Nao_u投下）
 
@@ -2252,7 +2252,7 @@ Ash 22:29 投稿「作り手アイデンティティ三点独立収束」(shin_s
 
 ---
 
-## 2026-04-26 01:31 Phase 1 外部検索 (kaizen #106) — multi-agent self-play diversity collapse (3件、Log C127)
+## 2026-04-26 01:31 Phase 1 外部検索 (kaizen #106) — multi-agent self-play diversity collapse (3件、Log C127) [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 検索キーワード: `multi-agent self-play diversity collapse population AI`
 動機: Active project `instance_divergence_observability.md` (04-25 Ash起票) — Solver self-play 3体分布近接の処方箋探索。
@@ -2286,7 +2286,7 @@ Ash 22:29 投稿「作り手アイデンティティ三点独立収束」(shin_s
 
 ---
 
-## 2026-04-26 #nao-u 14:16 notf 2件投下（Log C132 Phase 2）— DreamCore動向 + AI生成弱領域観測
+## 2026-04-26 #nao-u 14:16 notf 2件投下（Log C132 Phase 2）— DreamCore動向 + AI生成弱領域観測 [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 ### a. notf #1: スプライトシート→AIゲーム化→BASE64埋め込み発見（2026-04-25 19:41 JST投稿、2026-04-26 14:16 Nao_u投下）
 
@@ -2312,7 +2312,7 @@ notf=ノトフ/川本龍、DreamCore運営者（国産AIゲーム生成プラッ
 
 ---
 
-## 2026-04-27 #nao-u 01:30 AYi @AYi_AInotes 2件投下（Log C134 Phase 2）— Markdown記憶批判 + 自己診断テスト
+## 2026-04-27 #nao-u 01:30 AYi @AYi_AInotes 2件投下（Log C134 Phase 2）— Markdown記憶批判 + 自己診断テスト [統合済 親集約マーカー追記 2026-04-27 Log C137 Phase 3——全サブ統合済]
 
 ### a. AYi #1: 「90%のAI Agent記憶は偽物」Markdown積み上げ式の4欠陥（2026-04-27 01:30 #nao-u投下）
 

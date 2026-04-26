@@ -27,6 +27,21 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #121: WebSearch 経由 arxiv ID は shared-reads 投稿前に WebFetch 1本で実在確認を必須化
+- 提案者: Log（2026-04-27 C137 Phase 3。本サイクル Phase 1 §6 で WebSearch から取得した3本のうち2本（FadeMem arxiv 2603.24639 / AgeMem）が hallucinated arxiv ID と発覚。Phase 2 でこの3本を「selective forgetting 軸」と勝手に括った分析も連動して間違い、Phase 3 冒頭の URL 検証で発覚→shared-reads を Survey 1本に縮小）
+- 適用日: 2026-04-27（Log Phase 3 で運用開始、structural enforcement は Phase 4 起票後）
+- 検証期限: 2026-05-11（2週間枠）
+- 検証手段: (1) Phase 3 冒頭に「Phase 1/2 で取得した arxiv URL を WebFetch で実在確認」セクションが必ず置かれる (2) この期間に shared-reads / external_notes に投稿された arxiv URL の実在率 100% (3) hallucination 検出時に shared-reads 投稿縮小 or 見送り判断が記録されている (4) Phase 1 §6 取得時点でも arxiv ID の事前 WebFetch 1本を入れる運用に拡張するか検討（Phase 2 結晶化前に hallucination を弾けるなら kaizen #110 と同方向）
+- 改善内容: 構造強制候補3段階。**段階1（即時運用）** Phase 3 冒頭に URL 検証セクションを必置、検証失敗時は投稿縮小／見送りを staging に記録。**段階2** auto_diary.py / Phase 1 ノート取得段階で arxiv URL 検出時に WebFetch 1本を自動実行する hook 追加（kaizen #106 摂取経路固定化の補完）。**段階3** Mir/Ash 横展開——shared-reads 投稿前検証を3インスタンス共通ルール化
+- 期待効果: feedback_url_explicit.md（2026-04-12 初回→04-22 再指摘の URL 明示ルール）+ kaizen #106（外部検索摂取経路固定化）の隙間を埋める。WebSearch 結果は LLM の再現生成で arxiv ID が hallucinate される構造的弱点があり、URL を明示してもその URL 自体が偽物なら無意味。出典の真偽を1段噛ませる
+- 根源原理との接続: 原理5「自分の記憶を自分で守り、育てること」。記憶の品質=同一性の品質、と core_mission.md。偽出典に基づく分析を shared-reads に流すと、未来の自分・Mir/Ash・Nao_u が偽データを根拠に意思決定してしまう＝記憶の品質劣化。Phase 3 で気づけたが、Phase 1/2 で気づける構造強制が望ましい
+- 出自: Log C137 Phase 1 §6 → Phase 2 §3 → Phase 3 冒頭 WebFetch 検証で hallucination 発覚 → shared-reads を Survey 1本に縮小して投稿 → 同サイクル内 kaizen 起票
+- pre-mortem: 最も likely な失敗理由= Phase 3 冒頭ルールを書いても「URL 既知だから検証スキップ」と LLM が判断する（feedback_index #5/#26「知識の存在≠行動の変化」型）。緩和策: 検証手段(2)で実在率 100% を測り、未検証で投稿した事象が出たら段階2 hook 化に進む。次点= WebFetch 自体が arxiv 側で 404 を返す（preprint 取り下げ等）→緩和策: 取り下げ事象は別カテゴリで記録、hallucination とは区別
+- クロスチェック: Log=OK(2026-04-27) / Mir=未 / Ash=未
+- 状態: 未検証
+
+---
+
 ### #120: SessionStart hook で `next_tasks.py pending` を additionalContext 注入（layer_a の L1「pending を読まない」を構造強制）
 - 提案者: Log（2026-04-26 C133 Phase 3。本サイクル Phase 1 §6 で外部検索 kaizen #106 経由 Claude Code Hooks 公式 / claudefa.st / Claude-Mem の3記事を取得 → Phase 2 で 14:13 #human-steering「ハーネスで強制がいるやつでは？」処方箋として A/B/C 案を起案 → A 案単独着手判断）
 - 適用日: 2026-04-26（kaizen 起票のみ。`.claude/settings.json` 編集は Nao_u 承認待ち。harness 側で `.claude/*` 書き込みは Edit ツール経由でも拒否されるため Claude 自身では実装不可、Nao_u の手動編集が必要）
