@@ -2971,4 +2971,8 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 
 直前の文脈を確認した：04-26 14:13 から続く「次回タスク漏れ問題＝ハーネスで強制すべき」スレッ
 [2026-04-27 02:46:55] [COOLDOWN] win2 is in cooldown (44m16s remaining) — skipping Claude wake
+[2026-04-27 02:59:08] Inbox win has content — waking Claude
+[2026-04-27 03:01:14] Claude woken for win: 対処完了。
+
+- `check_usage.py` の `calc_weekly_position()` を木曜20:00基準（`weekday=3 / hour=20`）に変更（Ashが先行で co
 [2026-04-27 03:01:49] [COOLDOWN] win2 is in cooldown (29m23s remaining) — skipping Claude wake
