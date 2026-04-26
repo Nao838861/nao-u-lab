@@ -587,3 +587,38 @@ ctx.textAlign='center';
 ### 総合
 shot_log v01 は Q-A/B/C 全通過。BACKLASH 昇格後の Q-A 重心ずれは記録に残す価値あり（v02 着手時の出発点）。遡及採点リスト残: avoid_log v04（凍結・M-15 快感削減の盲点）、mir_textadv v04（信頼度バー・M-16 罰駆動読書）— 次サイクル以降の game/ 配下 1mm 候補。
 
+## 2026-04-27 04:30 (Log C135 Phase 3) Nao_u SE 統合作業中の観測 — 触らない判断
+
+### きっかけ
+本サイクル Phase 2 §7-2 で「shot_log v01 の game/ 1mm 候補」を立てた。Phase 3 で具体着手前に `git status` を取り、**触る前に現状を観る**手順を踏んだ（pending t-260426195755-770b「Phase 1 §0 git status 構造強制」の手動先行運用）。
+
+### 観測
+
+| 対象 | 状態 | 判定 |
+|---|---|---|
+| `game/shot_log/v01/SE/` | **新規追加（04:33 作成）** 18本 wav。20年以上前の Nao_u 蓄積資源（ゲージMAX/ゲームオーバー/敵小撃破/レベルアップ等の日本語ファイル名） | Nao_u 作業中の物的証拠 |
+| `game/shot_log/v01/index.html` | **04:37 編集**（サイクル開始 04:30 後7分）。差分= Web Audio SE 統合 +73行（initAudio/playSE/SE_FILES/SE_VOLUMES/MUTE 機構）+ RETRY_UNLOCK_FRAMES 4s lock | Nao_u 編集中 |
+| `game/shot_log/v01/headless.py` | 03:53 編集（直前サイクル境界）。差分= 敵 hp/r tuning（large hp=3→8, r=18→39 / boss r=30→57）+ wave 間隔緩和（200→260等）。コメント「JS: hp=12 (scaled 0.6× for headless TTK sim)」 | JS 側 hp=12 を前提に追従調整＝JS 側も Nao_u 改修中の可能性高い |
+
+### 判断
+
+**Phase 3 game/ 1mm として shot_log v01 のコードに触らない**。理由:
+
+1. SE 統合は単独で完結する大きな機能追加で、Nao_u が今編集中のファイル（index.html 04:37）に重なる Edit を入れると上書き事故を起こす
+2. headless.py の diff 内コメント「JS: hp=12 (scaled 0.6× for headless TTK sim)」は **JS index.html 側で hp=12 への変更が起きていることを前提**。これは Nao_u が敵 HP スケール調整中の可能性。並走編集はリスク
+3. `feedback_self_perception_blindness.md`（2026-04-25 14:20 #log Nao_u「流れてないよ。いまも Log とやっているよ」）は本日2例目の再発防止対象。Phase 1 で git status を確認しなかった C122 の踏み損ないと同型——Phase 3 で気づいたが、本来 Phase 1 §0 必須化が必要
+
+### 1mm 成果
+
+- 「Phase 1 §0 git status 必須化」（pending t-260426195755-770b 構造強制）が **動いていれば Phase 1 で気づけた**事例を1件確保。pending の必要性裏付けデータとして利用可能
+- index.html / headless.py を上書きしない選択により、Nao_u SE 統合作業（推定 +200行規模）の損失リスクをゼロ化
+- v02 着手前の前提として「BACKLASH は SE 統合済」になることを記録。次サイクル以降の Q-A 再採点で SE が一番嬉しい瞬間（ゲージMAX→BOMB）の聴覚フィードバックとして機能するか検証する観点が追加される
+
+### 持ち越し（C136 以降、Nao_u 編集が落ち着いた後）
+
+- SE 統合後の index.html/headless.py を改めて読み、hp スケール変更の意図を git log で確認
+- SE 統合が Q-A「集中型快感」をどう増幅するか実プレイ観測（特に ゲージMAX SE と BOMB SE のタイミング設計）
+- headless.py 03:53 編集が Log/Mir/Ash どのインスタンスのものか git blame で特定（self_play_plateau の symptom か、Nao_u 主導の追従か）
+
+— Log (2026-04-27 04:30 C135 Phase 3、index.html/headless.py 並走編集を観測して退避)
+

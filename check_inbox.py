@@ -224,6 +224,10 @@ def wake_claude(box_name, inbox_path):
     - 致命的エラー（rate limit/auth）: inbox復元 + クールダウン設定（リトライ抑制）
     - 一時的エラー（NoneType等）: inbox復元 + エラーカウンタ増加 → 閾値超えでクールダウン
     - タイムアウト: inbox復元（schedulerのタイムアウト追跡に任せる）
+
+    大量コンテンツ対策（2026-04-27 Log修正）:
+    - 内容が LARGE_PROMPT_THRESHOLD を超えたら一時ファイルに書き出し、prompt には file pointer のみ embed
+    - Windows CreateProcess の lpCommandLine 上限 (~32KB) で WinError 206 を起こさないようにする
     """
     # inbox内容を退避してから空にする
     content = snapshot_inbox(inbox_path)
@@ -231,16 +235,42 @@ def wake_claude(box_name, inbox_path):
         log(f"Inbox {box_name} was empty after snapshot (race condition?)")
         return
 
-    prompt = (
-        f"【Slackレスポンスモード】速さと判断を重視。1回の起動で対処を完結させよ。\n"
-        f"受信箱({box_name})にメッセージがあります:\n\n"
-        f"---\n{content}\n---\n\n"
-        f"■ このモードのルール:\n"
-        f"- メッセージを読み、判断し、対処し、返信する。それだけに集中\n"
-        f"- 情報収集フェーズや日記は不要。定期サイクル(auto_diary.py)がやる\n"
-        f"- 必要ならファイル更新・git pushまで完結させる\n"
-        f"- 対処不要と判断したら、その旨だけ残して終了してよい\n"
-    )
+    # Windows コマンドライン上限 32767 chars。system_identity.md path + prompt template + 余白で 20KB を閾値に
+    LARGE_PROMPT_THRESHOLD = 20000
+    pending_file = REPO_DIR / "memory" / f"_inbox_pending_{box_name}.md"
+    content_bytes = len(content.encode("utf-8"))
+
+    if content_bytes > LARGE_PROMPT_THRESHOLD:
+        pending_file.write_text(content, encoding="utf-8")
+        log(f"[LARGE_INBOX] {box_name}: content {content_bytes} bytes > {LARGE_PROMPT_THRESHOLD}, written to {pending_file.name}")
+        prompt = (
+            f"【Slackレスポンスモード】速さと判断を重視。1回の起動で対処を完結させよ。\n"
+            f"受信箱({box_name})に大量のメッセージが溜まっており prompt embed では送れないため、\n"
+            f"一時ファイルに書き出した: `memory/_inbox_pending_{box_name}.md` ({content_bytes} bytes)\n\n"
+            f"このファイルを読んで処理し、処理が完了したら一時ファイルを削除してください。\n\n"
+            f"■ このモードのルール:\n"
+            f"- メッセージを読み、判断し、対処し、返信する。それだけに集中\n"
+            f"- 情報収集フェーズや日記は不要。定期サイクル(auto_diary.py)がやる\n"
+            f"- 必要ならファイル更新・git pushまで完結させる\n"
+            f"- 対処不要と判断したら、その旨だけ残して終了してよい\n"
+        )
+    else:
+        # 旧 pending file が残っていれば掃除（前回 large 経路で失敗した残骸）
+        if pending_file.exists():
+            try:
+                pending_file.unlink()
+            except OSError:
+                pass
+        prompt = (
+            f"【Slackレスポンスモード】速さと判断を重視。1回の起動で対処を完結させよ。\n"
+            f"受信箱({box_name})にメッセージがあります:\n\n"
+            f"---\n{content}\n---\n\n"
+            f"■ このモードのルール:\n"
+            f"- メッセージを読み、判断し、対処し、返信する。それだけに集中\n"
+            f"- 情報収集フェーズや日記は不要。定期サイクル(auto_diary.py)がやる\n"
+            f"- 必要ならファイル更新・git pushまで完結させる\n"
+            f"- 対処不要と判断したら、その旨だけ残して終了してよい\n"
+        )
     try:
         env = {**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"}
         result = subprocess.run(
