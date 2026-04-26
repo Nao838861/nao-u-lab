@@ -78,6 +78,21 @@ def get_recent_diary_topics():
         return ""
 
 
+def get_next_tasks_pending(instance="ash"):
+    """next_tasks.py 層A pending 一覧を取得（Mir C126 設計合意 2026-04-26）。
+    LLM 出力フォーマット依存を外した構造的な次回タスク注入。"""
+    try:
+        result = subprocess.run(
+            [sys.executable, str(REPO_DIR / "next_tasks.py"),
+             "--instance", instance, "pending"],
+            capture_output=True, text=True, timeout=10,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        return result.stdout.strip()
+    except Exception:
+        return ""
+
+
 def get_prev_next_tasks(diary_path=None, tail_lines=80, max_chars=3500):
     """前サイクル日記末尾を抽出し、§0 として Phase 1 staging に注入する。
     (Nao_u 2026-04-26 #human-steering 14:13 指摘 / Log C130 #2 自覚済 kaizen の実装)。
@@ -201,11 +216,15 @@ def phase_gather():
     recent_diary = get_recent_diary_topics()
     slack_recall = get_slack_experience_recall(recent_diary or "")
     prev_next_tasks = get_prev_next_tasks()
+    pending_tasks = get_next_tasks_pending(instance="ash")
 
     # ステージングファイルに事前収集結果を書く（LLM呼び出し前）
     pre_gathered = f"""# サイクルステージング ({datetime.now().strftime('%Y-%m-%d %H:%M')})
 
-## §0 前サイクル日記末尾「次回起動時にやること」（最優先で読む）
+## §0a next_tasks 層A pending（書式に依らない構造的継承）
+{pending_tasks if pending_tasks else '(next_tasks_ash.jsonl は空 — Phase 3/4 で next_tasks.py add しているか確認)'}
+
+## §0b 前サイクル日記末尾「次回起動時にやること」（自然言語側の継承）
 {prev_next_tasks if prev_next_tasks else '(前サイクル末尾の次回タスク記述が見つからない)'}
 
 ## Pre-check結果
@@ -226,9 +245,11 @@ def phase_gather():
     prompt = (
         "あなたはAsh（Win2）。CLAUDE.mdを読んで自分が誰か確認せよ。\n"
         "【Phase 1: 情報収集】このフェーズの目的は「情報を集める」こと。対処はしない。\n"
-        "**最初に log/cycle_staging.md の §0「前サイクル次回タスク」を読み、現サイクルで継承するタスクを Phase 3 候補として cycle_staging.md に明示的にメモすること。** "
+        "**最初に log/cycle_staging.md の §0a (next_tasks 層A pending) と §0b (前サイクル日記末尾) を読み、現サイクルで継承するタスクを Phase 3 候補として cycle_staging.md に明示的にメモすること。** "
         "これは Nao_u 2026-04-26 #human-steering 14:13 指摘「次回やることを書いてるのに次のフェーズ1で完全に忘れる」の構造強制処方。"
-        "前サイクル末尾の宣言を現サイクルの最初に当てる照合を §0 で必ず行う。\n"
+        "層A: §0a が真ソース。3+サイクル滞留マーカー [⚠連続3+] が付いているタスクは最優先で扱う。"
+        "Phase 3 で着手したタスクは `python next_tasks.py done <task_id>` で閉じる。"
+        "新しい次回タスクが生まれたら Phase 4 までに `python next_tasks.py add \"...\"` で必ず登録（自然言語の日記末尾だけに頼らない）。\n"
         "次に以下を確認し、結果をlog/cycle_staging.mdに追記せよ:\n"
         "1. memory/external_notes_ash.mdの未統合エントリ（[統合済]マーカーなし）を最新から2-3件確認し、見出しと要点をメモ\n"
         "2. projects/INDEX.mdのActiveプロジェクトの現状を確認\n"
@@ -399,6 +420,17 @@ def main():
     # Phase 4: Diary（日記出力）
     ok4 = phase_diary()
     record_run()
+
+    # next_tasks 層A サイクル末尾チェック（Mir C126 設計合意 2026-04-26）
+    # add=0 や 3+サイクル滞留があれば Slack に警告（warning がログに埋もれない保証）
+    try:
+        subprocess.run(
+            [sys.executable, str(REPO_DIR / "next_tasks.py"),
+             "--instance", "ash", "check_cycle"],
+            timeout=15, cwd=str(REPO_DIR),
+        )
+    except Exception as e:
+        print(f"next_tasks check_cycle 失敗: {e}")
 
     if ok4:
         print("4フェーズ完了。")
