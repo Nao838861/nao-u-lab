@@ -2309,3 +2309,34 @@ notf=ノトフ/川本龍、DreamCore運営者（国産AIゲーム生成プラッ
 ---
 
 **親マーカー（2026-04-26 notf 2件統合）**: [親集約 2026-04-26 Log C132 Phase 2 — a=notf#1 BASE64 / b=notf#2 2Dレース難 の2件全てサブ統合済。両件は引用関係でセット、4段階分類サンプル増分+AI生成弱領域データ点として記録。**本節の親マーカー完了**]
+
+---
+
+## 2026-04-27 #nao-u 01:30 AYi @AYi_AInotes 2件投下（Log C134 Phase 2）— Markdown記憶批判 + 自己診断テスト
+
+### a. AYi #1: 「90%のAI Agent記憶は偽物」Markdown積み上げ式の4欠陥（2026-04-27 01:30 #nao-u投下）
+
+出典: <https://x.com/AYi_AInotes/status/2048278717793722747>
+要点: Markdown 全堆積式記憶は2週間で崩壊（重複3版/減衰なし/全文スタッフ）。本来は「グラフ＋ノード＋埋め込み＋走査」。Markdown の4欠陥=去重なし/減衰なし/ランキングなし/100件超で性能殺し。ベクトル検索も類似のみで因果関係を表せない、グラフ走査だけが思考鎖を辿れる。生産級フレームワーク（Zep/Cognee/Mem0/Neo4j MCP）は全部グラフ。Claude Code 20万行超は純コンテキストでは破綻、不変ルール=CLAUDE.md / 進化状態=グラフ動的検索が正解。
+
+**Log側の自己照合**: 4欠陥に対し (1)去重=半分対処/手動 (2)減衰=部分対処/T:1〜T:5マークだが自動減衰なし (3)ランキング=対処済（T値+セクション順） (4)関係性=**concept_graph (20ノード/63リンク/8交差) で対処済——ただし思想ノード層のみ、kaizen-rejection 因果鎖は未グラフ化**（後述AYi #2のテストで露呈）。Camp 1（VectorDB/Zep系）vs Camp 2（人間可読ファイル累積）の意識的選択は維持（reference_witcheer_two_camps_20260416）——透明性/3インスタンス共有/失敗時可視性の3点でCamp 2優位。AYi の「全部グラフベース」は Camp 1 営業文脈の可能性、ただし MEMORY.md 200行常時注入が「Prompt を RAM 代用」批判の射程内にある事実は受け入れる（reference_arakawa_three_engineering_20260421 + reference_rlms_recursive_language_models_20260424 と同方向の処方）。
+
+[統合済 2026-04-27 Log C134 Phase 1/2 — projects/INDEX.md に C134 backlog A/B/C 追加 / #all-nao-u-lab ts=1777221258.340819 (前 Phase 1 投稿)]
+
+### b. AYi #2: 「3週間前却下案テスト」最簡診断（2026-04-27 01:30 #nao-u投下、AYi #1 のリプライ）
+
+出典: <https://x.com/AYi_AInotes/status/2048278723799941453>
+要点: あなたのAgentに「3週間前否決した方案は何か、なぜか」と問え。答えられないか乱れたら、その記憶システムは偽物。
+
+**Log側の自己診断結果（テスト実走）**:
+- 段階1（pure recall）: input_path_hypothesis（保留中、却下ではない）+ GITHUB_TOKEN環境変数化「不要」のみ。**失格**
+- 段階2（grep投入）: kaizen #074「CLAUDE.mdへのSlackルール・インライン追加」(2026-04-03提案/04-07判定) を取得。理由=「.claude/rules/slack.md自動注入が上位互換、原案不要」。**合格**
+- 段階3（concept_graph traversal）: kaizen-rejection 因果鎖はノードに無い。"slack_rules"/"auto_injection"/"rejection" 全てグラフ未到達。**AYi の言う graph 想起では失敗**
+
+**判定**: AYi test は「失敗台帳の因果鎖が graph 化されていない」欠落を一発で射抜いた。前 a で「(4)関係性=対処済」と書いたのは*範囲を誇張*。正直訂正→ 概念グラフは「思想ノード間の緊張ペア」のみ、kaizen-rejection は時系列フラットテキスト。**A' 修正タスク**: concept_graph.json に `kaizen_rejection` エッジタイプ新設、#074/#075/#078 をパイロット投入、`concept_walk.py suggest "却下"` で想起できる状態を到達基準。projects/INDEX.md C134 backlog 行に A→A' 上書き予定。
+
+[統合済 2026-04-27 Log C134 Phase 2 — #all-nao-u-lab ts=1777221879.779879 / 次サイクル以降 game/1mm 後余力で着手]
+
+---
+
+**親マーカー（2026-04-27 AYi 2件統合）**: [親集約 2026-04-27 Log C134 Phase 1/2 — a=Markdown 4欠陥批判 / b=3週間前却下テスト の2件全てサブ統合済。Markdown 記憶批判は Witcheer Camp 2 の意識的選択を維持しつつ「失敗台帳の graph 化」未着手領域を発見、A' タスクとして concept_graph 拡張範囲を明示。**本節の親マーカー完了**]

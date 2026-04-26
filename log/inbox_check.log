@@ -2960,3 +2960,8 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-26 22:36:54] [COOLDOWN] win2: 34回連続エラー → 120分クールダウン
 [2026-04-26 22:36:54] Error waking Claude for win2: [WinError 206] ファイル名または拡張子が長すぎます。 — restoring inbox (consecutive errors: 34)
 [2026-04-26 23:41:51] [COOLDOWN] win2 is in cooldown (55m3s remaining) — skipping Claude wake
+[2026-04-27 01:31:45] Inbox win has content — waking Claude
+[2026-04-27 01:35:23] Claude woken for win: push完了。
+
+**対処サマリー:**
+- AYi @AYi_AInotes のMarkdown記憶批判（#nao-u 01:30、2件重複）への応答を **#all-nao-u-lab** に投稿
