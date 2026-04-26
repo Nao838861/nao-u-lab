@@ -245,6 +245,33 @@ def cmd_check_cycle(args) -> int:
     long_pending = [t for t in pending_now
                     if cycle_count_since(events, t["added_cycle"], cycle) >= 3]
 
+    # 5+サイクル持ち越し → #human-steering エスカレーション（初回のみ）
+    # 2026-04-27 Nao_u指示: dropするかescalateするか判断を促す
+    for t in pending_now:
+        n = cycle_count_since(events, t["added_cycle"], cycle)
+        if n >= 5:
+            already_escalated = any(
+                e.get("action") == "escalated" and e.get("task_id") == t["task_id"]
+                for e in events
+            )
+            if not already_escalated:
+                append_event(args.instance, {
+                    "cycle": cycle, "action": "escalated", "task_id": t["task_id"],
+                })
+                esc_msg = (
+                    f"[{args.instance} 5+サイクル持ち越しエスカレーション]\n"
+                    f"- {t['task_id']} ({n}サイクル) {t['task'][:80]}\n"
+                    f"dropするかescalateするか判断してください。"
+                )
+                print(esc_msg)
+                if not args.no_slack:
+                    try:
+                        from slack_bot import post_message
+                        post_message("human-steering", esc_msg)
+                        print(f"  → #human-steering エスカレーション済: {t['task_id']}")
+                    except Exception as e:
+                        print(f"  #human-steering 送信失敗: {e}", file=sys.stderr)
+
     if warn or long_pending:
         msg_parts = [f"[next_tasks {args.instance} cycle={cycle} 警告]"]
         if warn:

@@ -2,7 +2,7 @@
 check_usage.py — Claude Pro/Max使用量をスクレイピングしてSlackに投稿する
 
 .bot_profileのブラウザセッションを使ってclaude.ai/settings/usageから使用量を取得。
-金曜06:59リセットの週間サイクルに対して、現在の消費ペースを計算する。
+木曜20:00リセットの週間サイクルに対して、現在の消費ペースを計算する。
 
 使い方:
   python check_usage.py                # スクレイピング＋Slack投稿
@@ -11,7 +11,7 @@ check_usage.py — Claude Pro/Max使用量をスクレイピングしてSlackに
   python check_usage.py --screenshot   # スクリーンショット保存（デバッグ用）
 
 Nao_u指示 (2026-04-07 #human-steering):
-  6時間おきにSlackのall-nao-u-labチャンネルに投稿。金曜06:59リセット基準で超過%表示（2026-04-20変更）。
+  6時間おきにSlackのall-nao-u-labチャンネルに投稿。木曜20:00リセット基準で超過%表示（2026-04-27変更）。
   APIコスト不要（スクレイピングベース）。
 """
 
@@ -34,11 +34,11 @@ USAGE_URL = "https://claude.ai/settings/usage"
 
 
 def calc_weekly_position():
-    """金曜06:59リセット基準で、週のどの位置にいるか計算する"""
+    """木曜20:00リセット基準で、週のどの位置にいるか計算する"""
     now = datetime.now()
-    # 直近の金曜06:59を見つける
-    days_since_friday = (now.weekday() - 4) % 7  # 金曜=4
-    last_reset = now.replace(hour=6, minute=59, second=0, microsecond=0) - timedelta(days=days_since_friday)
+    # 直近の木曜20:00を見つける
+    days_since_thursday = (now.weekday() - 3) % 7  # 木曜=3
+    last_reset = now.replace(hour=20, minute=0, second=0, microsecond=0) - timedelta(days=days_since_thursday)
     if last_reset > now:
         last_reset -= timedelta(days=7)
 

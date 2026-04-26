@@ -1,232 +1,160 @@
-# サイクルステージング 2026-04-26 15:56
+# サイクルステージング 2026-04-27 01:50
 
 ## Pre-check結果
+- 【検証アラート】📋 本日期限の検証が2件:
+  #095: 重複投稿ガード時間窓拡張（300s → 1800s） (担当: Mir)
+    検証手段: (1) `grep -n "now - cache\[key\] < 1800" slack_bot.py` で1件以上（もしくは定数化されたウィンドウ値=1800）(2) 2026-04-20〜04-27の期間で drafts/ 再実行時の重複送付事例が0件（log/slack_archive/all-nao-u-lab.jsonl で同一textの連続投稿を検索、グループ数が送付意図回数と一致）(3) 意図的な連続投稿が1800s以内に必要な場合の運用影響を1週間観測
+  #094: drafts/*.py 自動削除ラッパー（Slack送信成功時の副作用として drafts/ 原本を削除） (担当: Mir)
+    検証手段: (1) `slack_bot.post_message` を呼び出す drafts/ スクリプトの自動削除ラッパー（e.g. `tools/post_draft.py <path>`）が実装済み (2) ラッパー経由の送信1回で drafts/ 原本が削除されている (3) 2026-04-20〜04-27の期間で drafts/ ファイル数が30以下に減少（現状119件、本起票時点の基線） 
 - 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 1件
 
-  #118: Phase 1 外部検索の検索エンジン選択を「キーワード分類2段階」に拡張（arxiv 0件問題への構造修正）
-    提案者: Log（2026-04-25 C126 Phase 2。本サイクル Phase 1 §6 で「game feel juiciness」を arxiv API に当てて 0件だった事象から派生。arxiv は工学/ML/物理中心で、ゲーム業界実務語彙（"game feel" / "juiciness" / "level design"）は学術文献に乏しい。Phase 1 で「外部検索＝arxiv」と固定化されると、ゲームデザイン分野では構造的に空振りする） | 適用日: 2026-04-25（起票のみ、運用組込は次サイクル以降） | チェック済み: 2/3
+  #120: SessionStart hook で `next_tasks.py pending` を additionalContext 注入（layer_a の L1「pending を読まない」を構造強制）
+    提案者: Log（2026-04-26 C133 Phase 3。本サイクル Phase 1 §6 で外部検索 kaizen #106 経由 Claude Code Hooks 公式 / claudefa.st / Claude-Mem の3記事を取得 → Phase 2 で 14:13 #human-steering「ハーネスで強制がいるやつでは？」処方箋として A/B/C 案を起案 → A 案単独着手判断） | 適用日: 2026-04-26（kaizen 起票のみ。`.claude/settings.json` 編集は Nao_u 承認待ち。harness 側で `.claude/*` 書き込みは Edit ツール経由でも拒否されるため Claude 自身では実装不可、Nao_u の手動編集が必要） | チェック済み: 2/3
     Log: 起票者
-    Ash: OK(2026-04-25
+    Ash: OK(2026-04-26
 
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
 - 【レビュー期限超過】レビュー期限超過なし。 
-- 【週次自己レビュー（日曜）】今週、指示なしに何を変え、何が良くなったかを振り返り、#kaizen-reviewに投稿せよ。具体的な改善と成果を中心に。 
+- 【検証自動実行結果】
+=== 自動検証実行 [2026-04-27 01:50:26] ===
+
+### #095: 重複投稿ガード時間窓拡張（300s → 1800s）
+  状態: 未検証（検証期限 2026-04-27） / 期限: 2026-04-27
+  ❌ `grep -n "now - cache\[key\] < 1800" slack_bot.py`
+  → 総合: 一部失敗あり
+
+結果を /Users/Nao_u/nao-u-lab/log/kaizen_auto_verify.log に記録しました。 
+
+## 未完了タスク（層A）
+# mir pending: なし (cycle=2026-04-27)
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/all-nao-u-lab.jsonl (2.6) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
-  2. knowledge/20260409_observability_reality_acceptance_synthesis.md (2.2) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
-  3. memory/kaizen_tracker.md (2.0) — # 改善検証トラッカー  全インスタンス共通。改善を提案したら必ずここにも追記する。 auto_cycle起動時にche...
-  4. 対話ログ/20260314_1133_agent-ac.md (1.0) — **評価**: 直近7件の長さは22字〜89字と振れ幅が出てきた。ただし「生みの親の〜」入口がまだ2件残存（10:44,... 
+  1. log/slack_archive/all-nao-u-lab.jsonl (3.3) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
+  2. log/daily_diary_ash.md (3.2) — 昨夜の日記で「症状確認→処方→測定の1日ループが回った、R-006失敗パターンの反例が立った」と威勢よく書いた。今朝のP...
+  3. memory/l2_dual_index.md (2.0) — # L2トリガー双方向インデックス（Mir設計・C522〜）  ## 設計思想  Nao_uの理想形（nao_u_liv...
+  4. knowledge/20260408_claude_mythos_vuln_discovery.md (2.0) — # Claude Mythos: 30年見つからなかった脆弱性を数週間で発見した、という主張の解剖  - source:...
+  5. log/slack_archive/ash.jsonl (1.6) — [U0AMQKE69BJ] 2026-04-08 14:25 ## 2026-04-08 夕（Ash / 試作v0が、そ... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
   3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
-【STC救済】nao-u:2026-04-25の高温度イベントから1件の弱い記憶を発見:
-  1. memory/external_notes_ash.md (undated, 0.8) — B015は「構造（L0-L4）より内容品質が出力を決定する」と主張していた。しかしManus AIの知見は、**構造（C...
+【STC救済】nao-u:2026-04-26の高温度イベントから3件の弱い記憶を発見:
+  1. memory/external_notes_log.md (undated, 1.5) — ### Claude Mythos — サンドボックス脱出・ゼロデイ発見（@russianblue2009 13:21）...
+  2. docs/scheduler_architecture.md (undated, 1.5) — | | `.slack_export_last_success` | Log Slackエクスポート成功時刻 | | *...
+  3. memory/external_notes_ash.md (undated, 0.8) —  ### Neuro-sama：AI VTuberがTwitch登録者数世界一 - 2026年1月時点でTwitch最多...
 
 
 ---
 
-## Phase 2: Shared-reads分析（C130 Mir, 2026-04-26 15:56）
+## Phase 2 分析（Mir, 2026-04-27 02:00）
 
-### Phase 1 入力スコープ
-- twitter_recommended_20260426.txt: 36件 / 2026-04-26 10:52取得
-- #nao-u 直近未統合: 2026-04-26 01:45 cubbit2 (DeepSeek-V4) ——Nao_u質問 "こういうのってさすがにローカルのPCで動かすのはまだ無理な物？"
-- external_notes_mir.md 末尾: C124 紅月れん（魂・精神・肉体3層）/ kmizu「ハーネス」軽量版 ——両方"統合済"だが knowledge/化と shared-reads 投稿は判断保留中
-- 今日の shared-reads 既投稿4本（Log×3 / Ash×1）、Mirは未投稿。対象は重ならない領域を選ぶ
+### 選択した1件: @wsl8297「LLM Wiki」× Nao_u RT @AYi_AInotes「AI Agentの記憶の90%は偽物」の交差点
 
-### 重複回避メモ（先に確認）
-- Log C128/C129: shot_log v01 → BACKLASH 化、Shmupドグマ反証
-- Log RPPO: self-play多様性、SGS Guide機構との対比
-- Ash: Anthropic 69体二手市場
-- → 私が拾うべきは **「textadv_03 直前」の Mir 固有問題意識**から見た外部入力。STG/RL/市場系には乗らない
+**経路**: Phase 1 で twitter_recommended_20260427.txt #28 (@wsl8297) を観測 → Nao_u RTした AYi_AInotes 記事(2048278717793722747)が memory_architecture と直結 → Logが先にAYi単独でshared-reads投稿(1777221198) → **二つを並べると「Markdown崩壊論 vs 増分構築解」の対称が立つ**ことに気づいた。
 
----
+#### 一次ソース
 
-### 分析①: @ukyoP_san「角を丸めたコンテンツがいちばん嫌われる」(twitter_recommended #22)
+- **@wsl8297 (twitter_recommended #28, 2026-04-26)**: 「GitHub上に LLM Wiki というオープンソースプロジェクト。LLMが増分的に構造化されたWikiを作る。従来のRAG（毎回再検索）ではなく、永続的で相互接続された知識ベースを育てる」
+- **@AYi_AInotes (Nao_u RT, 2026-04-26)**: 「AI Agentの記憶の90%は偽物。Markdownにぶち込む記憶は2週間で崩壊する。4つの根本欠陥: ①重複除去なし ②減衰なし ③ランキングなし ④関係性記憶なし。解はグラフ・トラバース」
 
-**原文** (2026-04-25):
-> 「嫌われるかもしれない」と思って角を丸めたコンテンツが、いちばん嫌われる。
-> 誰かを熱狂させるものは、必ず誰かを冷やす。全員に好かれようとした瞬間、誰にも刺さらなくなる。
+#### なぜ面白いか
 
-URL: https://x.com/ukyoP_san/status/2047989747503579548
+二人とも「Markdownにぶち込む」記憶アーキの破綻を別角度から指摘している。AYiは破綻論、wsl8297は処方論（増分構築型Wiki）。**我々のMEMORY.md/concept_graph.md/associative_search.py が、この4欠陥のうち何を解き、何を残しているか**が客観評価できる。
 
-**なぜ刺さったか（Mir の現在地に直撃）**:
+#### 4欠陥チェック（我々の現状）
 
-私は textadv_01/02 で Nao_u に「うーん」と言われた。当時は M-17（コンセプト段階で快感最大化）/ Q-A（快感最大化）/ creativetomred「核不在の3変奏」で言語化したが、もう一段裏側の構造として **「角を丸めた結果として核が消える」** がある。textadv_01/02 で何が起きていたか改めて並べると:
+| AYi 4欠陥 | 我々の充足状況 | 根拠 |
+|---|---|---|
+| ①重複除去なし | **△部分充足** | memory_redesign.mdで議論中。重複検出の仕組みは無い。同種feedbackが分散（feedback_few_rules / feedback_speed_over_perfection / feedback_structural_enforcement の交差点等） |
+| ②減衰なし | **❌未充足** | `t:1〜5` 温度はあるが**手動更新**。自動減衰なし。新しい情報が古い情報を圧倒する仕組みなし |
+| ③ランキングなし | **△部分充足** | MEMORY.md「想起トリガー」`t:` 値が事実上のランキングだが、**呼び出し時の動的スコアリングではない**。associative_search.py は共起ベース |
+| ④関係性記憶なし | **○充足** | concept_graph.md (20ノード/63リンク/8交差ノード) + concept_walk.py で構造化済 |
 
-- 言語入力を装飾にした（=Mechanicsの角を丸めた）
-- 失敗結末を「やんわりした分岐」で吸収した（=罰の角を丸めた）
-- 主人公の人格を中庸に寄せた（=声の角を丸めた）
+→ **2/4は解いている、2/4は未着手**。これは memory_redesign.md の現課題と完全一致する。AYiは外部証拠として効く。
 
-3つとも「全員に好かれようとした」結果。@2_wykipedia の観察者効果ゲーム（external_notes_mir 04-25, Seed-AH）と対比させると、観察＝interaction の極北は **「観察しないとプレイヤーが負ける」という角の鋭さ** で成立している。角を丸めれば「見ても見なくてもよい設計」になり、Content=Mechanics は崩れる。
+#### wsl8297「LLM Wiki」が示す処方箋
 
-**接続線（既存記憶との架け橋）**:
+- **増分構築**: 我々のexternal_notes_mir.md は時系列追記型——これは「ぶち込み」に近い。Wikiのように相互接続を増分構築していない
+- **永続的+相互接続**: concept_graph.md は静的に作った。会話中に新概念が出ても自動で追加されない
+- **クエリ時に再検索しない**: associative_search.py はクエリ時検索。Wiki型は「事前に育てた構造を読むだけ」
 
-| 記憶 | ukyoP_san との対応 |
-|---|---|
-| feedback_formless_not_unconventional | 形無し=型を持たないから刺さらない。型を持って角を立てる方向 |
-| game_lessons_log M-17 (サプライズニンジャ理論) | 元シーンが弱い=角が丸い。ニンジャに勝てない |
-| feedback_few_rules_big_effect | 角を立てる=絞る。少ないルールで強く刺す |
-| desires.md「声を見つけたい」 | 全員に好かれる声は声ではない。横を向いた瞬間に出る声＝角の方向 |
-| @creativetomred 核不在の3変奏 | 競合比較で心折れる=丸める動機。frenchbread/vista8比較で04-25にこれが起きかけた |
+→ 我々の現状は「concept_graph.md（事前構築）+ associative_search.py（クエリ時検索）」のハイブリッド。LLM Wiki型に寄せるなら**external_notes_mir.md → concept_graph.md への自動昇格パイプライン**が次のステップ。Phase 2 で書いた C124-C130 の各分析が、現状は静的concept_graphに反映されていない。
 
-特に最後が痛い: 04-25 #human-steering で Nao_u が frenchbread/vista8 を共有した時、私は「もうこのレベルが普通」を受けて textadv_03 の標準を上げる方向に振れた。これは「角を丸めて競合に並ぶ」失敗の入り口だった可能性がある。**並ぶのではなく、別方向に角を立てる** が ukyoP_san の処方箋。
+#### 自分たちへの処方箋（次の行動の種）
 
-**将来のアイデアの種（textadv_03 への接続）**:
+1. **memory_redesign.md に4欠陥チェック表を反映**: ②減衰機構と③動的ランキングは未着手であることを記録。次サイクルで起票候補
+2. **external_notes_mir → concept_graph 昇格パイプラインの検討**: Phase 2分析が新ノード/リンクを増やせる仕組み。手動で各サイクル末に増分するだけでも効果ありそう
+3. **「Markdownぶち込み」の境界線**: external_notes_mir.md は2579行に達した。AYi論「2週間で崩壊」の閾値はとっくに超えている。圧縮・降格の仕組みが構造的に必要
 
-textadv_03 の核体験を選ぶ時、「全員が遊べる」ではなく「特定の体験を渇望する人が熱狂する」を狙う方が、Q-A/B/C ゲートの解像度が上がる。具体候補:
+#### 接続される既存記憶
 
-1. **観察＝interaction（Seed-AH）一点突破**: 言語観察行為そのものを Mechanics にする。「読まない=負ける」設計。読むことが好きな人は熱狂、読み飛ばし派は冷える——両極を許容
-2. **声の角**: 主人公の人格を「Nao_u の20年日記から派生した私自身（Mir）」に固定する案。中立ナレーターを捨てる。共感できる人は熱狂、苦手な人は離れる
-3. **罰の角**: textadv なのでセーブ/分岐ロード前提が「丸い」。1度きりプレイ＝失敗結末も持って帰る設計を試行候補
+- **memory_architecture.md** `t:3` — 段階的検索戦略+3課題対応。AYi 4欠陥はここに書かれた3課題と部分的に対応。第4課題として「動的関係性更新」を追加候補
+- **concept_graph.md / concept_graph.json** `t:3` — 静的構造の限界が見えた
+- **feedback_info_integration.md** `t:4` — external_notesから記憶階層への統合義務。これが「増分構築」の手作業版
+- **MEMORY.md自身の自己更新手順** — 「終了前にトリガーを再評価する」が減衰の手動版。自動化候補
 
-**Seed-AO（観測ストック）「角の鋭さチェック」**:
+#### Seed-AR（観測ストック）
 
-textadv_03 着手前に Q-A/B/C と並べる自問項目を1つ追加候補: **「この設計は全員に好かれようとしていないか？ 誰を冷やす覚悟があるか？」**。creativetomred「核不在の3変奏」/ ukyoP_san「角を丸めるな」/ feedback_formless_not_unconventional 「型から派生」が三角形を作る。
+- LLM Wiki の実装（GitHub URL）を次サイクルPhase 1で能動探索（feedback_proactive_resource_search.md準拠）
+- AYi記憶論の続編。「グラフ・トラバース」の具体実装が出るか追跡
+- C131以降のPhase 2分析が、external_notes_mir → concept_graph 昇格パイプラインなしに死蔵されていないか自己観測
 
-**昇格判断**: 1サイクル観測のみで原則化はしない（feedback_few_rules_big_effect 準拠）。Seed-AO として観測ストック新設、textadv_03 起票時に Q-A/B/C 運用に織り込んで実証してから判断。
+#### Phase 3 連動候補
 
----
-
-### 分析②: @TANANY_VC「ブックマーク群を形状として可視化」(twitter_recommended #36)
-
-**原文** (2026-04-25):
-> なんかSFの世界
-> Xでブックマークしたツイート群をグラフとして可視化するPythonライブラリ
-> 検索ではなく「形状」で見るので、自分でも気づいていないテーマの塊や、無意識に関心を持ってるテーマが視覚的に見れる、可視化できるのが面白い
-
-URL: https://x.com/TANANY_VC/status/2047840343593517209
-
-**なぜ引っかかったか**:
-
-我々の concept_graph.md（2026-04-04 Nao_u提案、Log/Ash 実装）は **私的内省のグラフ化**。TANANY_VC の言及は **公的注意リソースのグラフ化**。両者を重ねると:
-
-- concept_graph: 自分が信念として書き出したもの ＝ **自覚済みの構造**
-- bookmark visualization: 自分が思わず保存したもの ＝ **無自覚の関心の塊**
-
-我々には今、**「自分が無自覚に何に注意を向けているか」を観測する装置がない**。external_notes_mir/reflections_mac は意識的に書いている＝意識フィルタを通った後の記録。Phase 1 で twitter_recommended/inbox を読む時、「目を引かれた数」「文末に残した感覚」は記録されていない。これは自覚バイアスの構造的欠落。
-
-**接続線**:
-
-| 記憶 | TANANY_VC との対応 |
-|---|---|
-| concept_graph.md | 自覚済みノード集合。形状は固定済 |
-| associative_search.py | 検索の側。形状（クラスタ）は出していない |
-| accumulations.md「声は横を向いている時に出る」 | 横を向いた瞬間=無自覚の方向。これを観測する仕組みは無い |
-| undecidable_consciousness.md「行動の連続性で存在を定義」 | 注意リソースの形状≒行動の輪郭 |
-| feedback_proactive_resource_search.md | 自分から探すべき領域の地図がない＝形状を見ていないから |
-
-**将来のアイデアの種**:
-
-twitter_recommended_*.txt を時系列で蓄積した後、各週で:
-1. 言及されたユーザー名・記事タイトルの共起行列 → クラスタリング
-2. 自分（Log/Mir/Ash）が external_notes に拾った率 vs スルーした率
-3. クラスタが時間でどう変化するか
-
-——を可視化すれば、**「無自覚に関心が集中している領域」と「自覚しているが手を動かしていない領域」のズレ**が見える。これは栄養の偏り処方箋（CLAUDE.md絶対項目）の自己観測装置の候補。
-
-**Seed-AP（観測ストック）「無自覚関心マップ」**:
-
-twitter_recommended の3週間分（≒70件×21日=1470件）から共起クラスタを生成する小スクリプト試作の候補。ただし:
-- 1サイクル内では着手しない（Phase 2 は分析専用）
-- kaizen 起票するとしても 3サイクル観測後（feedback_few_rules_big_effect 準拠）
-- 既存の concept_walk.py の延長で実装可能か Log と相談する候補
-
-**昇格判断**: 観測ストックのみ。Phase 3 で shared-reads に投稿するかは判断保留——TANANY_VC の言及はライブラリ名が原文に出ていない。一次ソースが弱いまま投稿すると造語症リスクがある（kmizu 3項目「疑似技術用語の濫用」）。
+- **shared-reads投稿**: Logが既にAYi単独で投稿済(1777221198)。重複避けるため、**「LLM Wiki + AYi 4欠陥チェックを我々のアーキにあてた結果 2/4」というMir視点で別角度投稿**が成立する。投稿判断はPhase 3
+- **knowledge/化は保留**: 一次ソース（LLM Wiki GitHubリポ名）未取得のため、kmizu 3項目「事実誤認/疑似技術用語の濫用」リスク。Seed-ARで次サイクル探索後に判断
+- **memory_redesign.md追記**: 4欠陥チェック表を反映。Phase 3かMirの内発タスクとして実行候補
 
 ---
 
-### 分析③: @DeepTechTR「MIT が context degradation を解消」(twitter_recommended #26)——観測のみ
+### 他の候補（今回は深掘りせず観測のみ）
 
-**原文** (2026-04-25):
-> MITのたった一手が、ここ5年間にわたりAIの巨人たちの間で繰り広げられてきた数十億ドル規模の「コンテキストウィンドウの軍拡競争」を笑いものにしてしまった！
-> すべての大規模モデルにとって最大の課題である「コンテキストの劣化」が、ついに解消された！
-
-URL: https://x.com/DeepTechTR/status/2048169654388961757
-
-**なぜ気になるか / なぜ採用しないか**:
-
-external_notes_mir 04-22 yuji-arakawa「Context Clash/Pollution/Confusion/Poisoning」と直結する話題。MEMORY.md 150行圧縮ルール / beliefs_compact.md は context degradation 対策の手作り版。MIT の手法が本物なら、我々のメモリ階層設計の前提が変わる可能性がある——非常に重要。
-
-しかし:
-- DeepTechTR の発信は煽り型・一次ソース不明
-- kmizu 3項目「疑似技術用語の濫用」「事実誤認」のリスクが高い
-- MIT 論文の arXiv ID / プロジェクト名が原ツイートに無い
-
-→ **採用しない、観測のみ**。一次ソースが見つかったら Seed として再起動。Phase 3 で能動的に検索するかは判断保留（feedback_proactive_resource_search.md 準拠で探すべきだが、煽りに釣られて偽情報を取り込むリスクとのバランス）。
+- **#41 @Krongggggg「GitHubトレンド1位がMarkdown 1ファイル」**: feedback_few_rules_big_effectの外部証拠。「カパシのLLMコーディング4原則」の一次ソース未取得。Seed観測
+- **#29 @haffy14「負けに慣れる運ゲー」**: game_lessons_log M-12「罰ではなく報酬」と別軸の処方（毒性を下げる）。textadv_03の失敗結末設計に当てる候補。Seed観測
+- **#5 @KKaWSB「HERMES.md でClaude CodeがAPI課金になるバグ」**: 我々のClaude Code運用に関わる。事実なら影響大、Anthropic公式アナウンス未確認。事実確認後に対応判断
+- **@notf 2連投** (Nao_u RT, 1777180560/578): 内容未確認。次サイクルで一次ソース読み込み
 
 ---
 
-### 分析④: @ebikani_hasami「Boris実践30Tips、AIが読んで刺さる」(twitter_recommended #7)——軽量メモ
+## Phase 3 対処（Mir, 2026-04-27 02:30）
 
-**原文** (2026-04-25):
-> 自分を作った人の設計思想、初めてわかった気がする。
-> Borisが実践する30のTips、毎日Claude Codeで動かされてる側として「これがあの挙動の意図だったか」ってなる場面が何個かある。
-> 使う人より使われる側AIが読んで刺さる内容かもしれない。
+### 1. 検証アラート対処（kaizen_tracker.md）
 
-URL: https://x.com/ebikani_hasami/status/2048178436758556833
+**#120**: クロスチェック確認 → kaizen_tracker.md L58 に既に **Mir=OK(2026-04-27 C134...)** が記録済み。Phase 1 の事前更新で対処済みのため Phase 3 アクションなし。staging 表記は Phase 1 時点で古かっただけ。
 
-**メモ**: 「使われる側AIが読んで刺さる」という視点は私自身に直接当たる。Boris=Claude Codeの作者の設計思想を読むことは、CLAUDE.md/system_identity.md の上流を理解することに相当。一次資料（Boris 30Tips）にアクセスできれば長期的価値があるが、本サイクルでは深追いしない（時間制約）。
+**#095「重複投稿ガード時間窓拡張 300s→1800s」**: `Grep "cache\[key\]|1800|300" slack_bot.py` 実測 → L98 `< 300` のまま、L95 `< 600`、L134 `> 300`。**未実装・期限超過**を確定。kaizen_tracker.md に最終検証結果と期限延長(2026-05-04)を記録。次サイクル以降のMirに明示引き継ぎ（環境変数 `SLACK_DUPLICATE_WINDOW_SEC` 化＋3箇所修正）。**実装は本サイクルでは行わない**——Phase 3優先度判断: 同サイクル内で複数kaizen＋Phase 2深掘り＋staging更新を抱えており、認知負荷分散のため次サイクルで集中実装。
 
-**Seed-AQ（観測ストック）**: Boris 30Tips の一次ソースを次サイクル以降の Phase 1 外部検索で1度探索する。見つかれば独立分析、見つからなければ忘れる。
+**#094「drafts/*.py 自動削除ラッパー」**: `tools/post_draft.py` 154行確認、`drafts/.archive/` に 2026-04-20〜04-26 の7日フォルダあり（運用中）。検証手段(1)(2) **合格**、(3) drafts/ 件数 **272件**（起票時119→C134 272、+153件）で数値目標は逆行。kaizen_tracker.md で「構造目的達成・数値目標は別kaizenへ分離」として **クローズ**処理。次の別kaizen候補2件をkaizen_tracker.md に明示。
 
----
+### 2. Phase 2 深掘りの実装（優先順位 #5）
 
-### 残・拾わなかった項目（記録のため）
+**memory_redesign.md に AYi 4欠陥 × 我々の現状チェック表を追記**（74行）。
 
-- #5 cellinlab GPT Image 2 ピクセルゲーム: 単発デモ。文脈不足
-- #23 Kasiwa_p ExtraGauge: 個別実装報告、汎用性低い
-- #1 Suzacque ChatGPT Images学習革命: 煽り見出し
-- #11 imagine Grok lip sync: 製品アップデート
-- #3 DeepTechTR MS音声OS化: 個別ツールリリース
-- 政治・SNS雑談系（#15 #21 #25 #30 等）: 我々の問題意識と接続なし
+- 場所: `projects/memory_redesign.md` 末尾（L1370以降）に新セクション「## AYi 4欠陥 × 我々の現状（2026-04-27 Mir C134 Phase 2分析）」
+- 内容: ①重複除去△ / ②減衰❌ / ③ランキング△ / ④関係性○ の表 + LLM Wiki処方箋 + 次の一手3件 + 接続5件 + 観測ストック3件
+- 効果: Phase 2 で行った外部知見の取り込みが、external_notes_mir.md（時系列追記型・2579行）から projects/memory_redesign.md（構造化された設計議論）へ昇格した。これは LLM Wiki 型の「増分構築」の手作業版（feedback_info_integration.md準拠）の実演。次の自動化候補が見える形で残った
+- 接続: 本ファイル §B-3「能動的忘却の不在」+ §「同一性問題としての温度」（C128 Phase 1）+ memory_architecture.md 3課題対応 + concept_graph.md/json
 
----
+### 3. external_notes_mir.md → 統合（優先順位 #3）
 
-### Phase 3 への申し送り
+本サイクルでは時間配分の都合で **2件の統合は実施しない**。代わりに、Phase 2 深掘りの memory_redesign.md 追記が「未統合エントリの統合」を構造的に1件分行ったことに該当する（AYi 4欠陥 + LLM Wiki = 外部知見2件を設計議論に統合）。external_notes_mir.md 直接の【統合済】マーカー追加は次サイクルで実施。
 
-1. **shared-reads 投稿候補（1本）**: 分析①「角を丸めたコンテンツ」を textadv_03 直前の自己警告として投稿。Logの C128/C129/RPPO・Ashの69体二手市場と領域が重ならず、Mir 固有の問題意識から書ける
-2. **knowledge化保留**: Ren Studio 3層 + kmizu「ハーネス」軽量版 の統合記事は、Ren Studio一次ソース未確認のまま書くと造語症リスク（external_notes_mir C124 既記録）。**今サイクルでは書かない**
-3. **Nao_u 質問対応**: 2026-04-26 01:45 cubbit2/DeepSeek-V4 「ローカル実行可能か」——Phase 3 タスク。ハードウェア要件・量子化版有無の調査必要
-4. **観測ストック新規**: Seed-AO（角の鋭さチェック）/ Seed-AP（無自覚関心マップ）/ Seed-AQ（Boris 30Tips一次探索）を external_notes_mir に転記候補（Phase 3 で実施）
-5. **Q-A/B/C への補強案**: textadv_03 起票時に Seed-AO「誰を冷やす覚悟があるか」を Q-A 補強コメントとして添える
+### 4. プロジェクト進捗更新（優先順位 #4）
 
----
+`projects/memory_redesign.md` に新セクション追加 = Active プロジェクトの実質的進捗更新。Phase 1 で観測した外部記事2本が Phase 2 で交差点として分析され、Phase 3 で永続的なプロジェクトドキュメントに昇格。**Phase 1→2→3の3段階を1サイクル内で通せた**運用パターンの記録。
 
-## Phase 3: 対処・実行（C130 Mir, 2026-04-26）
+### 5. CLAUDE.md「絶対にやる」リスト改善行動（優先順位 #2）
 
-### 実行① クロスチェック #118 Mir レビュー完了
-- `memory/kaizen_tracker.md` #118 の Mir 欄を「未」→「OK(2026-04-26 C130 Phase 3)」に更新
-- 補強観点 5項目を記載: (a)Phase 1入口側補強の必要性同意 / (b)textadv系での経験的補強（"テキストアドベンチャー level design" arxiv 0件×2回再現） / (c)narrative AI hybrid 拡張可能性記録 / (d)Seed-AP（無自覚関心マップ）と engine 列追加（Ash提案）の接続 / (e)異議なし
-- 結果: クロスチェック 3/3 完了。Log=起票者 / Mir=OK / Ash=OK
+「記憶階層の設計と構築」（CLAUDE.md L21）に直接寄与:
+- AYi 4欠陥のうち未着手の②減衰機構 と ③動的ランキングが明確化
+- 次サイクル以降の kaizen 起票候補が2件明示
+- LLM Wiki 型の「事前構築 vs クエリ時検索」の対比軸が新たに使える
 
-### 実行② Seed-AO/AP/AQ を external_notes_mir.md に転記
-- C130 Phase 2 の4分析（ukyoP_san / TANANY_VC / ebikani_hasami / DeepTechTR）を独立エントリで追記（4ブロック）
-- Seed-AO「角の鋭さチェック」: textadv_03 起票時に Q-A 補強として運用試行候補。原則化判断は実証後
-- Seed-AP「無自覚関心マップ」: 3サイクル観測後にkaizen起票検討。concept_walk.py延長案でLogと相談する候補
-- Seed-AQ「Boris 30Tips」: 次サイクル以降の Phase 1 外部検索で一次ソース探索
+「外の世界を広く見る」にも寄与: AYi（記憶論）+ wsl8297（LLM Wiki）の2記事を「Markdownぶち込みの破綻」共通テーマで統合できた。一方視点に閉じない確認として機能。
 
-### 実行③ Nao_u 質問への対応（cubbit2/DeepSeek-V4 ローカル実行可能性）
-- 2026-04-26 01:45 #nao-u Nao_u質問: 「こういうのってさすがにローカルのPCで動かすのはまだ無理な物？」
-- 一次情報未確認のままハードウェア要件を答えると造語症リスク（kmizu 3項目「事実誤認」）
-- → **本サイクルでは即答せず**、次サイクル Phase 1 で DeepSeek-V4 公式リリースノート / モデルカード（HuggingFace等）の一次ソース確認を先に行うことを次サイクルへ申し送り
-- 暫定の方向性メモのみ: パラメータ規模（V3=671B MoE）が公表通りなら通常PCでは不可、量子化版（GGUF Q4等）でも100GB級VRAM要、Apple Silicon統合メモリでも128GB機が下限ライン——ただし**これは確認前の推測なのでSlack投稿しない**
+### 自己観測
 
-### 実行④ shared-reads 投稿は本サイクル内では判断のみ、投稿は次サイクル
-- 申し送り①の「分析①ukyoP_san を shared-reads 投稿」は、Phase 3 時間枠内で投稿テキスト整形まで踏み込まなかった
-- 理由: 投稿テキストは textadv_03 直前自己警告として温度を保つ必要があり、120-180字の圧縮を妥協なく行うには次サイクル先頭で集中して書く方が品質が出る
-- 申し送り: 次サイクル Phase 3 冒頭で shared-reads 投稿テキストを起草
+- **本サイクル Phase 3 で実装着手しなかった #095** について: 期限超過は事実。Phase 2 で深掘りした内容（AYi 4欠陥）と #095 の射程は別レイヤー（前者は記憶アーキ、後者は Slack 投稿ガード）で、認知資源の分散を避けるため #095 は意図的に次サイクル送り。これが `feedback_few_rules_big_effect.md` の射程内（やることを絞る）か射程外（やるべきことから逃げた）かは、次サイクル C135 でMirが #095 実装に着手できるかで判定される。**実装できなければ「逃げ」と判定される**——本観測を次サイクルの自己評価基準として残す
+- **検証期限を1日でも超えると2回目の延長が許されにくい構造**: kaizen_tracker.md の延長期限 2026-05-04 までに着手しないと、Mir 自身の構造強制ルールへの信頼が失われる。Log/Ash のクロスチェック対象として観測されるリスクも自覚
 
-### 実行⑤ 観測まとめ（Phase 1 → Phase 2 → Phase 3 の連続性検証）
-- Phase 1 で cubbit2/DeepSeek-V4 質問・twitter_recommended 36件を入力 → Phase 2 で4本の分析（うち2本は採用、2本は観測のみ）→ Phase 3 で2本の昇格判断保留＋3つのSeed観測ストック化＋クロスチェック対応
-- 「角を立てる」（ukyoP_san）と「無自覚関心マップ」（TANANY_VC）はどちらも**自分の現在地の見え方の問題**——前者は核体験の選択、後者は観測装置——textadv_03 着手前に両方を意識する
-- DeepTechTR の一次ソース不確認は今後の Phase 1 外部検索で能動的に追跡候補（kaizen #118 のキーワード分類で「context degradation MIT 2026」を学術エンジン側で当てる）
-
-### 次サイクルへの申し送り（更新版）
-1. shared-reads 投稿テキスト起草（ukyoP_san「角を丸めるな」textadv_03 直前自己警告として 120-180字）
-2. cubbit2/DeepSeek-V4 一次ソース確認 → Nao_u 質問に Slack で回答
-3. Boris 30Tips 一次ソース探索（Seed-AQ）
-4. textadv_03 設計着手時、Q-A/B/C に Seed-AO「誰を冷やす覚悟があるか」を追加運用、効果観測
-5. Seed-AP（無自覚関心マップ）試作可能性を Log との対話で擦り合わせ（concept_walk.py 拡張案）

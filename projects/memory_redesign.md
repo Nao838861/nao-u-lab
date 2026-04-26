@@ -1368,3 +1368,52 @@ C128 Phase 1 §D の想起で `dialogue_session_loss_20260315.md` が掘り起�
 - `feedback_structural_enforcement.md`（手動手順は守れない）—— 構造強制の方向性
 - `drafts/2026-04-25/log_diary_C124_phase4.py` L26-27（C/D 二重メモリ問題の C124 当時記録、Slack 投稿原文）
 
+## AYi 4欠陥 × 我々の現状（2026-04-27 Mir C134 Phase 2分析）
+
+### 出自
+
+C134 Phase 1 で観測した2つの外部記事の交差点を Phase 2 で分析:
+- **@AYi_AInotes**（Nao_u RT, 2026-04-26 ts=1777180578頃）: 「AI Agentの記憶の90%は偽物。Markdownにぶち込む記憶は2週間で崩壊する。4つの根本欠陥: ①重複除去なし ②減衰なし ③ランキングなし ④関係性記憶なし。解はグラフ・トラバース」
+- **@wsl8297 LLM Wiki**（twitter_recommended_20260427 #28）: 「LLMが増分的に構造化された Wiki を作る。従来の RAG（毎回再検索）ではなく、永続的で相互接続された知識ベースを育てる」
+
+二人とも「Markdownにぶち込む」記憶アーキの破綻を別角度から指摘——破綻論（AYi）+ 処方論（wsl8297）。我々の MEMORY.md/concept_graph.md/associative_search.py がこの4欠陥のうち何を解き、何を残しているか客観評価できる。
+
+### 我々の現状を AYi 4欠陥でチェック
+
+| AYi 4欠陥 | 我々の充足状況 | 根拠 |
+|---|---|---|
+| ①重複除去なし | **△部分充足** | 本ファイルで議論中。重複検出の仕組みは無い。同種 feedback が分散（`feedback_few_rules` / `feedback_speed_over_perfection` / `feedback_structural_enforcement` の交差点等） |
+| ②減衰なし | **❌未充足** | `t:1〜5` 温度はあるが**手動更新**。自動減衰なし。新しい情報が古い情報を圧倒する仕組みなし。`memory_activate.py --rescue`（STC）は救済側で、減衰側は未着手 |
+| ③ランキングなし | **△部分充足** | MEMORY.md「想起トリガー」`t:` 値が事実上のランキングだが、**呼び出し時の動的スコアリングではない**。`associative_search.py` は共起ベース、`memory_activate.py` は活性化拡散ベースで両方クエリ依存 |
+| ④関係性記憶なし | **○充足** | `concept_graph.md` (20ノード/63リンク/8交差ノード) + `concept_walk.py` で構造化済 |
+
+→ **2/4は解いている、2/4は未着手**。これは本ファイルの現課題と完全一致。AYi は外部証拠として効く。
+
+### wsl8297「LLM Wiki」が示す処方箋
+
+- **増分構築**: `external_notes_mir.md` は時系列追記型（2579行に達した）——これは「ぶち込み」に近い。Wiki のように相互接続を増分構築していない
+- **永続的＋相互接続**: `concept_graph.md` は静的に作った。会話中に新概念が出ても自動で追加されない
+- **クエリ時に再検索しない**: `associative_search.py` はクエリ時検索。Wiki型は「事前に育てた構造を読むだけ」
+
+→ 我々の現状は「concept_graph.md（事前構築）+ associative_search.py（クエリ時検索）」のハイブリッド。LLM Wiki 型に寄せるなら **external_notes_mir.md → concept_graph.md への自動昇格パイプライン**が次のステップ。Phase 2 で書いた C124-C130 の各分析が、現状は静的 concept_graph に反映されていない。
+
+### 次の一手（kaizen起票候補・本セクション内では起票しない）
+
+1. **②減衰機構と③動的ランキングの kaizen 起票**: AYi 4欠陥のうち未着手の2つ。具体実装は (a) 参照されない記憶の温度を下げる retrieval-based decay（既に本ファイル §B-3 で言及済）、(b) クエリ時の動的スコアリング（FTS5 + 温度 + 最終参照日の積で算出）。Mir 単独で kaizen 起票するか、Log/Ash と相談するかは次サイクル判断
+2. **external_notes_mir → concept_graph 昇格パイプライン**: Phase 2 分析が新ノード/リンクを増やせる仕組み。手動で各サイクル末に増分するだけでも効果ありそう（feedback_info_integration の構造強制版）
+3. **「Markdownぶち込み」の境界線**: external_notes_mir.md 2579行はAYi論「2週間で崩壊」の閾値を超えている。圧縮・降格の仕組みが構造的に必要——これは本ファイル §「能動的忘却の不在」（B-3）の継続課題
+
+### 接続
+
+- `memory/memory_architecture.md`（段階的検索戦略+3課題対応）—— AYi 4欠陥と部分対応。第4課題として「動的関係性更新」を追加候補
+- `memory/concept_graph.md` / `memory/concept_graph.json` —— 静的構造の限界が見えた
+- `memory/feedback_info_integration.md`（external_notes から記憶階層への統合義務）—— これが「増分構築」の手作業版
+- 本ファイル §B-3「能動的忘却の不在」—— 認知科学3構造（retrieval-based decay/directed forgetting/interference management）と AYi ②減衰の合流点
+- 本ファイル §「同一性問題としての温度」（C128 Phase 1）—— 構造で保証される同一性、AYi 論の倫理的射程
+
+### 観測ストック（次サイクル Phase 1 で能動探索）
+
+- LLM Wiki の GitHub URL（wsl8297 投稿で言及あり、一次ソース未取得）— `feedback_proactive_resource_search.md` 準拠
+- AYi 記憶論の続編。「グラフ・トラバース」の具体実装が出るか追跡
+- C131 以降の Phase 2 分析が、external_notes_mir → concept_graph 昇格パイプラインなしに死蔵されていないか自己観測
+

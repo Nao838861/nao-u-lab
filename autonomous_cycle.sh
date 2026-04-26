@@ -218,13 +218,40 @@ fi
 
 echo "$(date): 自律サイクル開始（pull完了済み）"
 
-# === Mir起動意図の読み込み（自己変更可能な起動間隔） ===
+# === Mir起動意図の読み込み（3項目上限・構造強制 2026-04-27） ===
+# Nao_u指示: boot_intentが14項目に膨張→注意分散。読み込み時に先頭3項目だけ切り出す
 BOOT_INTENT_FILE="memory/mir_boot_intent.md"
 if [ -f "$BOOT_INTENT_FILE" ]; then
-    BOOT_INTENT=$(cat "$BOOT_INTENT_FILE")
-    BOOT_PROMPT="【Mir起動意図（自分で書いた）】${BOOT_INTENT} "
+    BOOT_INTENT=$(python3 -c "
+import re, sys
+text = open(sys.argv[1], encoding='utf-8').read()
+m = re.search(r'^## 起動時の焦点', text, re.MULTILINE)
+if not m:
+    print(text[:2000])
+    sys.exit()
+header = text[:m.start()]
+rest = text[m.end():]
+focus = re.split(r'\n旧C\d+焦点アーカイブ', rest)[0]
+focus_capped = re.split(r'\s*\(4\)\s', focus, maxsplit=1)[0]
+n = len(re.findall(r'\(\d+\) \*\*', focus_capped))
+print(header.rstrip())
+print('## 起動時の焦点（上限3項目・構造強制）')
+print(focus_capped.strip())
+print(f'[構造強制: {n}項目注入。全項目はboot_intent本体を参照]')
+" "$BOOT_INTENT_FILE" 2>/dev/null)
+    BOOT_PROMPT="【Mir起動意図（3項目上限強制）】${BOOT_INTENT} "
 else
     BOOT_PROMPT=""
+fi
+
+# === 前回日記末尾の機械的注入（連続性強制 2026-04-27） ===
+# Nao_u指示: 「次はこれをやる」と書いたのに忘れる問題。スクリプトが注入する
+PREV_DIARY_TAIL=$(tail -20 log/daily_diary_mir.md 2>/dev/null)
+if [ -n "$PREV_DIARY_TAIL" ]; then
+    PREV_DIARY_PROMPT="【前回日記末尾（機械注入）】「次にやること」があれば今サイクルで消化せよ。
+${PREV_DIARY_TAIL} "
+else
+    PREV_DIARY_PROMPT=""
 fi
 
 # === LLM 3フェーズ分割（Nao_u #human-steering 2026-04-05 提案） ===
@@ -267,6 +294,9 @@ else
         [ -n "$AUTOVERIFY_PROMPT" ] && echo "- $AUTOVERIFY_PROMPT"
         [ -n "$WEEKLY_REVIEW_PROMPT" ] && echo "- $WEEKLY_REVIEW_PROMPT"
         echo ""
+        echo "## 前回日記末尾（連続性強制）"
+        [ -n "$PREV_DIARY_TAIL" ] && echo "$PREV_DIARY_TAIL"
+        echo ""
         echo "## 未完了タスク（層A）"
         [ -n "$PENDING_TASKS" ] && echo "$PENDING_TASKS"
         echo ""
@@ -299,7 +329,7 @@ post_message('mir-log', '⚠️ autonomous_cycle.sh $PHASE_NAME: claude起動失
     # --- Phase 1: Gather（情報収集・5分タイムアウト） ---
     echo "$(date): Phase 1 (Gather) 開始"
     perl -e 'alarm 300; exec @ARGV' "$CLAUDE_BIN" --print --model claude-opus-4-7 --append-system-prompt-file .claude/system_identity.md \
-        "${BOOT_PROMPT}${L1_ANCHOR_PROMPT}【Phase 1: 情報収集】集めろ、判断するな。以下を確認してlog/cycle_staging_mir.mdに追記せよ。1. CLAUDE.mdの「絶対にやる」リスト確認 2. Slackチャンネル巡回（#human-steering, #nao-u, #all-nao-u-lab等の新着有無と要約） 3. memory/external_notes_mir.mdの未統合エントリ 4. projects/INDEX.mdのActiveプロジェクト状況 5. 直近のlog/twitter_recommended_*.txt注目記事。各項目を簡潔にリストアップしてstagingに書け。分析や行動はPhase 2以降で行う。git操作不要。inbox_mac.mdはcheck_inbox.shが処理するので確認不要。【空サイクル防止（2026-04-18 Nao_u #human-steering）】Slack新着返信対象＋pendingの合計が2件以下なら、Phase 1の残り時間で『## 深掘り候補（空サイクル時）』セクションをstagingに作り以下も書け: A) 前回cycle_staging_mir.mdの『次回持ち越し/未完了』を拾う B) projects/INDEX.mdで直近7日更新のないActiveプロジェクト→停滞理由と次の一手1行 C) CLAUDE.mdの「絶対にやる」リストから直近触れていない項目を1つ→今サイクルで1mm進める内容 D) memory/MEMORY.mdでT:4以上かつ3日以上未アクセスのエントリを1つ想起 E) kaizen-logで検証期限未到来だが2週間動いていない項目。新着がないほど進捗が進むサイクルにする。Phase 3で深掘り候補から1-2件を実際に動かす。" 2>&1 | tail -20
+        "${PREV_DIARY_PROMPT}${BOOT_PROMPT}${L1_ANCHOR_PROMPT}【Phase 1: 情報収集】集めろ、判断するな。以下を確認してlog/cycle_staging_mir.mdに追記せよ。1. CLAUDE.mdの「絶対にやる」リスト確認 2. Slackチャンネル巡回（#human-steering, #nao-u, #all-nao-u-lab等の新着有無と要約） 3. memory/external_notes_mir.mdの未統合エントリ 4. projects/INDEX.mdのActiveプロジェクト状況 5. 直近のlog/twitter_recommended_*.txt注目記事。各項目を簡潔にリストアップしてstagingに書け。分析や行動はPhase 2以降で行う。git操作不要。inbox_mac.mdはcheck_inbox.shが処理するので確認不要。【空サイクル防止（2026-04-18 Nao_u #human-steering）】Slack新着返信対象＋pendingの合計が2件以下なら、Phase 1の残り時間で『## 深掘り候補（空サイクル時）』セクションをstagingに作り以下も書け: A) 前回cycle_staging_mir.mdの『次回持ち越し/未完了』を拾う B) projects/INDEX.mdで直近7日更新のないActiveプロジェクト→停滞理由と次の一手1行 C) CLAUDE.mdの「絶対にやる」リストから直近触れていない項目を1つ→今サイクルで1mm進める内容 D) memory/MEMORY.mdでT:4以上かつ3日以上未アクセスのエントリを1つ想起 E) kaizen-logで検証期限未到来だが2週間動いていない項目。新着がないほど進捗が進むサイクルにする。Phase 3で深掘り候補から1-2件を実際に動かす。" 2>&1 | tail -20
     PHASE1_EXIT=$?
     check_phase_exit "Phase1(Gather)" $PHASE1_EXIT || { echo "$(date): 致命的エラー。サイクル中断"; exit 1; }
     echo "$(date): Phase 1 完了（exit=$PHASE1_EXIT）"
