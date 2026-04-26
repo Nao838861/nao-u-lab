@@ -372,3 +372,118 @@ avoid_log v04 は M-15 の発見で凍結したが、shot_log v01 は凍結し�
 - Mir/Ash の v01 プレイ感想（inbox依頼継続中）応答受信時に headless 12試行結果と照合。Solver self-play 限界の補強データとして `projects/instance_divergence_observability.md` に統合
 - C128 Phase 2 で発見した shmup dogma（gamedeveloper.com Ferreira 記事）の "engineer cowardice" 批判は **shot_log オートボム（Nao_u Q-A 〇 評価機構）と直接対立**。target player imagination の暗黙化警告として `memory/game_lessons_log.md` に M-27 で刻印（暗黙 target が違うと外部知識は反証寄りでしか使えない）
 - 本観測（headless で defensive モード3way 0% を観測した時、avoid_log v04 同型のリスクを疑え）は M-28 候補で別途刻印（C128 では時間予算上、M-27 を優先）
+
+## 2026-04-26 13:55 (Log C131 Phase 3) BACKLASH 化後 Q-A/B/C 再採点 + headless 老朽観測
+
+### 経緯（5日空白を破る）
+
+C129/C130 で「BACKLASH 実プレイ + Q-A/B/C 再採点」を持ち越し続けた（C129 で commit 54e8fbf8 として Nao_u が +326行 BACKLASH 化、Log は気づいたが3サイクル放置）。`feedback_next_cycle_game_first.md` 検証期限 2026-05-02 まで残り6日、本C131 で必達タスクとして冒頭処理。
+
+### Nao_u +326行差分の体系的把握（コードリーディング）
+
+| 項目 | C128 v01 | BACKLASH (commit 54e8fbf8) |
+|---|---|---|
+| タイトル | shot_log v01 | **BACKLASH** |
+| SPACE | 弾発射（手動） | **BOMB専用**（gauge MAX 時のみ） |
+| ショット | SPACE 押下 | **auto-shoot**（cooldown 制御で常時） |
+| ゲージ閾値 | Lv2=44 / Lv3=124 | **Lv2=35 / Lv3=99 / MAX=208** |
+| 被弾処理 | gauge-20 / gauge=0 で死 | **Lv3→Lv2(35) / Lv2以下→0 / 0で被弾=死**（一度許す緩和層） |
+| BOMB効果 | なし | gauge MAX→敵弾全消(+30/弾)+小中敵全滅(SCORE×10)+大ボス半減(×2) |
+| AI Mode | なし | **`?ai=1` Expert AI（17方向評価+弾道線距離+BOMB判断）** |
+| ランキング | なし | **Google Apps Script 経由オンライン TOP10 + YOUR RANK + name entry** |
+| スコア | 敵=5/25/100/500 | **敵=10/50/200/1000（倍化）** + アイテム 20/50/100 |
+| 演出 | 単層星+ヒットフラッシュ | **6層パララックス + score popups + AI:EXPERT label** |
+
+### Q-A 快感最大化 = △' → **〇'（条件付き〇、target shift 前提で）**
+
+**観察**: C123 起票時の快感審問3行ブロック（devlog 冒頭）は依然「ゲージMAX付近の3wayショットで降ってくる敵をまとめて消す瞬間」と書かれているが、BACKLASH ではこの快感は **BOMB 機構に再配置**されている:
+
+- 旧モデル: 「ゲージ MAX 維持 → 3way 撃ち続け → 敵をまとめて消える」（持続的快感）
+- BACKLASH: 「ゲージ MAX 到達 → SPACE → 敵弾の海一掃 + 小中敵全滅 + スコア桁上がり」（**爆発的・集中型快感**）
+
+集中型に振ったことで「一番嬉しい瞬間」の輪郭は **より鋭く**なった（一文化しやすい）。だが devlog 冒頭の3行ブロックが旧モデルのまま放置 = 快感審問の言語化が実装に追いついていない。**C131 中に冒頭ブロックを更新する**（下記「冒頭ブロック改訂案」）。
+
+評価: **〇'**。集中型快感の設計としてはむしろ綺麗。ただし target shift（後述 Q-B）に紐づいた条件付き〇。
+
+### Q-B ニンジャテスト = △ → **△'（target shift 確認前は△）**
+
+**観察**: BACKLASH は更にコンテンツが厚くなった (BOSS / 13 wave / AI Expert / online ranking / 6層パララックス / hit-stop)。C128 の「ニンジャ多い」状態から見ると一見悪化に見える。だが **target imagination が変わっている** ことを直視する必要:
+
+- C123/C128 想定 target: **「30秒オンボーディング casual」**
+- BACKLASH 想定 target: **「STG core fan / ランキングで名前を残したい層」**
+
+core fan 向けゲームとしては「ボス・ランキング・AIモード・多パターン」は**コンセプトの一部**（ニンジャでない）。Q-B の判定軸はコンセプトに対する穴塞ぎかどうかなので、コンセプトが変われば判定も変わる。
+
+**だが C129/C130 で「target を Nao_u が変えた」明示記録がない**。Slack/git commit message も「shot_log v01 完成」レベル。target shift の Nao_u 確認が取れるまで暫定 △'。
+
+評価: **△'**。core fan target なら〇、casual 30s target なら✗。**Nao_u に target 確認 inbox 起票**（後述）。
+
+### Q-C 罰なし版 = △ → **〇（圧力設計化が進んだ）**
+
+**観察**: BACKLASH では罰系が**緩和+報酬機構と対**になった:
+
+- 旧 v01: 敵弾被弾 = gauge-20 (痛い罰) / gauge=0 で被弾 = 即死
+- BACKLASH: 敵弾被弾 = Lv3 なら Lv2(35)へドロップ（一度許す）/ Lv2 以下なら gauge=0 / gauge=0 で被弾 = 死。+ **18f 無敵時間**
+
+これは「罰」というより**「ゲージレベルが落ちる」=圧力**。さらに BOMB という報酬機構が gauge MAX に対応するので、gauge 上下の意味が「罰の有無」から「報酬の到達距離」に重心が移っている。
+
+罰3つを抜く想定:
+1. 敵 leak の罰 → 元から Phase 1/2 で削除済（feedback_no_passive_punishment 反映）
+2. 敵弾被弾罰 → 抜くと gauge ずっと MAX → BOMB 連発 → コンセプト崩壊。**この罰はコンセプトの一部**
+3. ゲージ0被弾死 → 抜くと体力無限になる。**この罰はゲームの境界**
+
+→ 罰が「コンセプトを支える圧力設計」に統合された。`feedback_game_center_of_mass` の圧力設計側に分類。`feedback_no_passive_punishment` 違反なし。
+
+評価: **〇**。avoid_log v04 で M-15 として失敗した「罰でゲームを成立させる」型を脱した。
+
+### 総合判定（C131 時点）
+
+- **Q-A: 〇'**（集中型快感の輪郭が鋭い、ただし冒頭3行ブロック改訂前提）
+- **Q-B: △'**（target shift の Nao_u 確認待ち、core fan target なら〇）
+- **Q-C: 〇**（圧力設計化が完了）
+
+C128 採点 (△' / △ / △) → C131 採点 (〇' / △' / 〇)。Nao_u の +326行差分は**3軸全てを改善方向に動かした**。M-15 (avoid_log v04) を shot 系に再演させない処方箋として機能。
+
+### 冒頭3行ブロック改訂案（C131 提案、Nao_u 確認後に適用）
+
+```
+- 一番嬉しい瞬間: ゲージMAXまで貯めて敵弾の海を一掃しながら×10倍率で小中敵を全滅させ、スコアが桁上がる瞬間
+- それを支える操作: auto-shoot で当て続け→アイテム取得→ゲージ上昇→MAX到達→危機タイミングで SPACE で BOMB 解放、の集中型強化ループ
+- 30秒以内の手数: 起動後10秒で1way、20秒で2way、30秒で3way体感（center+seed=42 で実測済）。BOMB 体感は target by 60-90秒
+```
+
+これを反映するか、target shift を含めて Nao_u に確認するかは **Mir/Ash inbox 経由で照会**。Log 単独で書き換えない（C129 の Solver self-play 限界）。
+
+### headless.py の老朽化観測（重要）
+
+C131 で `python headless.py` を実行した結果、**数値が C128 から完全に不変** (defensive 22.8/25.4/52.5 sweeper 4.6/6.5/6.5)。
+
+→ headless.py は**手書きシミュレータで index.html の BACKLASH 実装を反映していない**。具体的に:
+- BACKLASH の auto-shoot / SPACE=BOMB 切替が反映されていない
+- BOMB 機構（gauge MAX→敵弾全消+小中敵全滅）が無い
+- ゲージ閾値 35/99/208 でなく旧 44/124 のまま
+- AI Expert ポリシー（17方向評価）も無い（headless 側は center/aggressive/defensive/sweeper 4戦略の単純版）
+- ランキング・スコア倍化も無い
+
+`feedback_game_replay_infra.md` で「全ゲームにリプレイ再現を標準装備、Math.random()禁止」を掲げたが、shot_log v01 は **"index.html を真の起源とする replay" でなく "並列に書かれた手動シミュレータ"**。これは replay infra の本来の趣旨に反する（再現でなく別実装）。
+
+**改善方向（C131 提案、kaizen 起票候補）**:
+1. (短期) headless.py 内の定数/閾値を BACKLASH 版に同期（BOMB機構は省略）
+2. (中期) `?ai=1` Expert AI のロジックを Python に移植して headless.py 側 expert モードを追加
+3. (長期) Playwright headless で実 index.html を回す方式へ移行（projects/replay_infra と統合）
+
+→ 本C131 では (1) も含めず観測のみ記録。Phase 4 タスク化候補。
+
+### Phase 1 §8 と §0 二重記録の自己観測（メタ）
+
+Phase 1 §8 で「git status M = Nao_u 編集中の可能性」と書いたが、Phase 2 §B で「C129 既消化分の再発見」と判明。kaizen #105（#nao-u 既分析URL検出）と同型の構造が **git status 上の uncommitted ファイル**にも欠けている。
+
+**改善案（kaizen 起票候補）**: Phase 1 走査内で `git log -1 --oneline -- <modified_file>` を実行し、直近サイクルで commit 触れていれば「既消化」と自動マーク。
+
+### 持ち越し（C132 以降）
+
+- **冒頭3行ブロック改訂の Nao_u 確認** — Mir/Ash inbox 経由で「BACKLASH の target は core fan 想定で合っているか」「冒頭3行ブロックを上記改訂案で書き換えてよいか」を照会
+- **headless.py の同期 or Playwright 移行**（kaizen 起票候補）
+- **git status の既消化自動検出**（kaizen 起票候補）
+- v02 着手は冒頭3行ブロック確認後（target shift の確認なしに次バージョンに進まない）
+
