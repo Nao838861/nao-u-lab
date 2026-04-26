@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>reverse — ash_onebutton v02 (close-call可視化)</title>
+<style>
+  html,body{margin:0;background:#060812;color:#cbd2e4;font-family:system-ui,sans-serif;
+            display:flex;flex-direction:column;align-items:center;min-height:100vh}
+  canvas{background:#0a0e1f;box-shadow:0 0 36px #1a2040;display:block;margin-top:12px;
+         image-rendering:pixelated}
+  h1{font-size:14px;margin:8px 0 0;letter-spacing:.1em;color:#9fb1d8}
+  p{font-size:11px;opacity:.6;margin:4px 0 0}
+</style>
+</head>
+<body>
+<h1>reverse v02 — 紙一重で光る</h1>
+<p>スペース / クリック / タップ で反転 &middot; R でやり直し</p>
+<canvas id="c" width="240" height="320"></canvas>
+<script>
+const W=240,H=320,FPS=60;
+const NEAR_DX=22, NEAR_DY_FRONT=70, NEAR_DY_BACK=8;
+const c=document.getElementById('c'),x=c.getContext('2d');
+let s;
+function reset(){s={p:{x:W/2,y:H-28,r:5,v:1.4},drops:[],t:0,over:false,close:s?0:0,best:s?s.best:0,bestClose:s?s.bestClose:0,flash:0,flashCount:0};}
+reset();
+function press(){
+  if(s.over){reset();return;}
+  let near=0;
+  for(const d of s.drops){
+    const dx=d.x-s.p.x, dy=d.y-s.p.y;
+    if(Math.abs(dx)<NEAR_DX && dy>-NEAR_DY_FRONT && dy<NEAR_DY_BACK){
+      const moveAway=(s.p.v>0 && dx<0) || (s.p.v<0 && dx>0);
+      if(moveAway) near++;
+    }
+  }
+  s.p.v=-s.p.v;
+  if(near>0){ s.close+=near; s.flash=12; s.flashCount=near; }
+}
+addEventListener('keydown',e=>{
+  if(e.key===' '){press();e.preventDefault();}
+  else if(e.key.toLowerCase()==='r'){if(s.over)reset();else press();}
+});
+addEventListener('mousedown',press);
+addEventListener('touchstart',e=>{e.preventDefault();press();},{passive:false});
+
+function step(){
+  if(!s.over){
+    s.t++;
+    if(s.flash>0) s.flash--;
+    s.p.x+=s.p.v;
+    if(s.p.x<s.p.r){s.p.x=s.p.r;s.p.v=-s.p.v;}
+    if(s.p.x>W-s.p.r){s.p.x=W-s.p.r;s.p.v=-s.p.v;}
+    const rate=0.02+Math.min(0.06,s.t/FPS*0.0015);
+    if(Math.random()<rate) s.drops.push({x:Math.random()*(W-12)+6,y:-10,vy:1.6+Math.random()*1.4+s.t/FPS*0.03,r:4+Math.random()*3});
+    for(const d of s.drops){
+      d.y+=d.vy;
+      const dx=d.x-s.p.x,dy=d.y-s.p.y;
+      if(dx*dx+dy*dy<(d.r+s.p.r)*(d.r+s.p.r)){
+        s.over=true;
+        if(s.t>s.best)s.best=s.t;
+        if(s.close>s.bestClose)s.bestClose=s.close;
+      }
+    }
+    s.drops=s.drops.filter(d=>d.y<H+20);
+  }
+  x.fillStyle='#0a0e1f';x.fillRect(0,0,W,H);
+  // 紙一重ゾーン (反転時に発火するゾーンを薄く可視化)
+  x.fillStyle='rgba(255,210,90,0.05)';
+  x.fillRect(s.p.x-NEAR_DX, s.p.y-NEAR_DY_FRONT, NEAR_DX*2, NEAR_DY_FRONT+NEAR_DY_BACK);
+  x.fillStyle='#2a334d';x.fillRect(0,H-16,W,16);
+  // フラッシュリング (close-call成立時)
+  if(s.flash>0){
+    const a=s.flash/12;
+    x.strokeStyle='rgba(255,225,120,'+a+')';
+    x.lineWidth=2;
+    x.beginPath();x.arc(s.p.x,s.p.y,s.p.r+6+(12-s.flash)*1.2,0,Math.PI*2);x.stroke();
+    x.fillStyle='rgba(255,225,120,'+a+')';
+    x.font='9px monospace';
+    x.fillText('+'+s.flashCount, s.p.x+8, s.p.y-8);
+  }
+  x.fillStyle=s.over?'#c24a52':(s.flash>6?'#fff7c8':'#6bc5ff');
+  x.beginPath();x.arc(s.p.x,s.p.y,s.p.r,0,Math.PI*2);x.fill();
+  x.fillStyle='#e4c35a';
+  for(const d of s.drops){x.beginPath();x.arc(d.x,d.y,d.r,0,Math.PI*2);x.fill();}
+  x.fillStyle='#9fb1d8';x.font='10px monospace';
+  x.fillText('T '+(s.t/FPS).toFixed(1)+'s',6,12);
+  x.fillStyle='#ffe188';
+  x.fillText('CLOSE '+s.close,6,24);
+  x.fillStyle='#9fb1d8';
+  x.fillText('BEST '+(s.best/FPS).toFixed(1)+'s',W-78,12);
+  x.fillStyle='#ffe188';
+  x.fillText('Bcl '+s.bestClose,W-78,24);
+  if(s.over){x.fillStyle='#cbd2e4';x.font='12px monospace';
+    x.fillText('GAME OVER — R to retry',W/2-78,H/2);}
+  requestAnimationFrame(step);
+}
+step();
+</script>
+</body>
+</html>
