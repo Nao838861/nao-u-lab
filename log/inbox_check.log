@@ -2912,3 +2912,11 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 - `kaizen_tracker.md` #119 状態行を「起票済み・クロスチェック完了 3/3」に更新（Mir C125 / Ash C129）
 - 実装時メモ
 [2026-04-26 14:02:10] Inbox win has content — waking Claude
+[2026-04-26 14:12:14] Inbox win has content — waking Claude
+[2026-04-26 14:18:16] Inbox win has content — waking Claude
+[2026-04-26 14:28:17] Inbox win has content — waking Claude
+[2026-04-26 14:33:04] Claude woken for win: 対処完了。
+
+**やったこと**
+- Nao_uの懸念（フォーマット崩れで破綻）を漏れ地図 L1-L5 に分解し、自然言語ルール追加路線そのものが「同じ轍」と診断
+- 構造処方として層A（`next_
