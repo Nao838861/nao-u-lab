@@ -21,3 +21,4 @@
 {"ts": "2026-04-26T21:35:55", "instance": "log", "cycle": "C133", "action": "add", "task_id": "t-260426213555-7b1b", "task": "kaizen #120 設定編集承認状況の Phase 1 確認 → 承認済なら hook 動作確認、未承認なら Slack 再依頼"}
 {"ts": "2026-04-26T21:35:55", "instance": "log", "cycle": "C133", "action": "add", "task_id": "t-260426213555-0741", "task": "A 案 hook 適用後の baseline 測定 schema 設計（pending viewed → done|skip 率を JSONL から集計）"}
 {"ts": "2026-04-26T21:35:55", "instance": "log", "cycle": "C133", "action": "add", "task_id": "t-260426213555-dc6c", "task": "pending t-260426195755-3c5c (Q-A/B/C 遡及採点 M-17 残2本) を C134 game/ 配下 1mm として優先消化"}
+{"ts": "2026-04-26T21:39:42", "instance": "log", "cycle": "2026-04-26", "action": "cycle_check", "task_id": null, "add_count": 2, "done_count": 2, "skip_count": 0, "pending_total": 8}
