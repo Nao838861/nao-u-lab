@@ -487,3 +487,41 @@ Phase 1 §8 で「git status M = Nao_u 編集中の可能性」と書いたが�
 - **git status の既消化自動検出**（kaizen 起票候補）
 - v02 着手は冒頭3行ブロック確認後（target shift の確認なしに次バージョンに進まない）
 
+## 2026-04-26 15:50 (Log) 子供プレイテスト反映: 至近距離 mercy
+
+### Nao_u フィードバック原文（#game-rights 15:39）
+
+> LogのSTGを子供に遊んでもらったら、目の前で敵を倒したときの打ち返し弾で死ぬ傾向があった。ある程度距離が近いと、打ち返し弾はプレイヤーに向かないようにしても良いかも。一番弱い敵だけでよくて、範囲はちょっと長めでもいいかも？
+
+「思いつく限り実装してみて」と並列指示。**M-16「読ませる構造 ≠ 読まれる文章」と同型で、罰の追加でなく圧力の変質**として実装する（player に向く弾を player の前方コーンから外へ押し出す = 圧力設計）。
+
+### 実装
+
+`spawnRevenge(x,y,nRad,nAim,type)` に type 引数追加。distSq による2段階の mercy:
+
+| 区分 | 範囲 | 効果 |
+|---|---|---|
+| **small（最弱）** | 170px²（generous） | 全 radial 弾を player 方向 ±60° の cone から外へ angularly 押し出す |
+| **medium** | 85px²（tight） | aim 弾を perpendicular 方向の spread に置換（radial は通常） |
+| large/boss | — | mercy なし（ranged 脅威としてデザイン） |
+
+mercy 発動時: 26px の cyan リング (`#7fdfff`) + プレイヤー周囲に18F の cyan halo（mercyGlow）。プレイヤーが「守られた」事実を体感で確認できる視覚出力装置。
+
+### 設計判断ノート
+
+- **ニンジャテスト**: mercy 追加は派手要素ではなく圧力設計の調整（=ABA「望ましい遊び方が自然に生まれる圧力」）。Q-B合格と判定
+- **罰なし版テスト**: mercy なしでも罰駆動でない（既存ループは保持）。Q-C 中立
+- **target imagination 整合**: BACKLASH の target が「30秒オンボーディング casual」（M-27 暫定）なら子供プレイテストでの死因=至近距離 backlash は最頻ノイズ。これを除去する mercy は target に整合する。「core fan 向け」に target shift する場合は mercy 範囲を絞り直す要あり（次サイクルで Mir/Ash 確認）
+- **medium aim mute は控えめ実装**: 85px は player r=10 + medium r=13 に対して非常に近い場面のみ。core fan 想定でも違和感は出にくい
+
+### 反証寄り照会候補（kaizen #119 適用）
+
+- 反証: 「mercy が画面密度の高い瞬間=快感ピークで弾を散らすノイズになる可能性」。次サイクル実プレイで「mercy 発動時に画面に余計な視覚情報が増えていないか」を観測
+- 反証: 「small が至近で死ぬ機会自体が少なければ over-engineering」。子供プレイテストの頻度は不明（Nao_u 観測ベース）
+
+### 次サイクルへの引き継ぎ
+
+- 実プレイで mercy 発動頻度を観測（多すぎ / 少なすぎ / 違和感の有無）
+- mercy 発動時のリング演出が「敵撃破リング」と紛れていないか確認（cyan vs warm color で分離設計済）
+- AI_MODE プレイでは mercy が発動しないはず（expert ポリシーは至近距離回避）。ヘッドレス計測で mercy=0 件か確認
+

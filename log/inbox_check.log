@@ -2932,3 +2932,11 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-26 17:31:46] Inbox win2 has content — waking Claude
 [2026-04-26 17:31:46] [COOLDOWN] win2: 32回連続エラー → 120分クールダウン
 [2026-04-26 17:31:46] Error waking Claude for win2: [WinError 206] ファイル名または拡張子が長すぎます。 — restoring inbox (consecutive errors: 32)
+[2026-04-26 15:28:49] Inbox win has content — waking Claude
+[2026-04-26 15:39:32] Inbox win has content — waking Claude
+[2026-04-26 15:49:34] Inbox win has content — waking Claude
+[2026-04-26 16:09:59] Inbox win has content — waking Claude
+[2026-04-26 16:14:53] Claude woken for win: 対処完結。
+
+**Mirからの完了報告に対応した内容:**
+- Log側 `multi_phase_cycle_log.py` にも層A接合（Mir/Ash と同等にする対称化）— `init_sta

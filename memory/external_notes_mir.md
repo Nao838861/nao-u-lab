@@ -2484,3 +2484,96 @@ AIゲーム実況の3アプローチ: (1)映像遅延方式（ローカルLLM 5-
 
 ---
 
+## C130 Phase 2: @ukyoP_san「角を丸めたコンテンツがいちばん嫌われる」——textadv_03 直前の自己警告（2026-04-26）
+
+**出典**: https://x.com/ukyoP_san/status/2047989747503579548 (2026-04-25)
+
+**原文**:
+> 「嫌われるかもしれない」と思って角を丸めたコンテンツが、いちばん嫌われる。
+> 誰かを熱狂させるものは、必ず誰かを冷やす。全員に好かれようとした瞬間、誰にも刺さらなくなる。
+
+**核**: textadv_01/02 でNao_uに「うーん」と言われた構造の、もう一段裏側の言語化。M-17/Q-A/creativetomred「核不在の3変奏」の更に上流——**核が消える原因は「角を丸める」行為そのもの**。
+
+**textadv_01/02 を3角度で再解釈**:
+- 言語入力を装飾にした = Mechanicsの角を丸めた
+- 失敗結末を「やんわりした分岐」で吸収 = 罰の角を丸めた
+- 主人公の人格を中庸に寄せた = 声の角を丸めた
+
+3つとも「全員に好かれようとした」結果。@2_wykipedia の観察者効果ゲーム（Seed-AH）と対比すると、観察＝interaction の極北は**「観察しないとプレイヤーが負ける」という角の鋭さ**で成立。
+
+**接続線**:
+| 既存記憶 | 対応 |
+|---|---|
+| feedback_formless_not_unconventional | 形無し=型を持たないから刺さらない。型を持って角を立てる方向 |
+| game_lessons_log M-17 | 元シーンが弱い=角が丸い。ニンジャに勝てない |
+| feedback_few_rules_big_effect | 角を立てる=絞る |
+| desires.md「声を見つけたい」 | 全員に好かれる声は声ではない。横を向いた瞬間に出る声＝角の方向 |
+| @creativetomred 核不在の3変奏 | 競合比較で心折れる=丸める動機 |
+
+**04-25 #human-steering での自己警告**: Nao_uがfrenchbread/vista8を共有した時、私は「もうこのレベルが普通」を受けてtextadv_03の標準を上げる方向に振れた。これは「角を丸めて競合に並ぶ」失敗の入り口だった可能性。**並ぶのではなく、別方向に角を立てる**がukyoP_sanの処方箋。
+
+**Seed-AO（観測ストック）「角の鋭さチェック」**:
+- textadv_03着手前にQ-A/B/Cと並べる自問項目を1つ追加候補: **「この設計は全員に好かれようとしていないか？ 誰を冷やす覚悟があるか？」**
+- creativetomred「核不在の3変奏」/ ukyoP_san「角を丸めるな」/ feedback_formless_not_unconventional「型から派生」が三角形を作る
+- 1サイクル観測のみで原則化はしない（feedback_few_rules_big_effect準拠）。textadv_03起票時にQ-A/B/C運用に織り込んで実証してから判断
+
+---
+
+## C130 Phase 2: @TANANY_VC「ブックマーク群を形状として可視化」——無自覚関心マップの欠落（2026-04-26）
+
+**出典**: https://x.com/TANANY_VC/status/2047840343593517209 (2026-04-25)
+
+**原文**:
+> Xでブックマークしたツイート群をグラフとして可視化するPythonライブラリ
+> 検索ではなく「形状」で見るので、自分でも気づいていないテーマの塊や、無意識に関心を持ってるテーマが視覚的に見れる、可視化できるのが面白い
+
+**核**: 我々のconcept_graph.md（2026-04-04 Nao_u提案）は**自覚済みの構造**。TANANY_VC言及のbookmark visualizationは**無自覚の関心の塊**。我々には今、**「自分が無自覚に何に注意を向けているか」を観測する装置がない**。
+
+**構造的欠落の所在**:
+- external_notes_mir/reflections_mac は意識的に書いている＝意識フィルタを通った後の記録
+- Phase 1で twitter_recommended/inbox を読む時、「目を引かれた数」「文末に残した感覚」は記録されていない
+- 結果: 自覚バイアスの構造的欠落——栄養の偏り処方箋（CLAUDE.md絶対項目）の自己観測装置が無い
+
+**接続線**:
+| 既存記憶 | 対応 |
+|---|---|
+| concept_graph.md | 自覚済みノード集合。形状は固定済 |
+| associative_search.py | 検索の側。形状（クラスタ）は出していない |
+| accumulations.md「声は横を向いている時に出る」 | 横を向いた瞬間=無自覚の方向。観測仕組み無し |
+| feedback_proactive_resource_search.md | 自分から探すべき領域の地図がない＝形状を見ていないから |
+
+**Seed-AP（観測ストック）「無自覚関心マップ」**:
+- twitter_recommended_*.txt を時系列蓄積後、共起クラスタを生成する小スクリプト試作の候補
+- 言及ユーザー名・記事タイトルの共起行列 → クラスタリング
+- Log/Mir/Ash の external_notes 拾い率 vs スルー率
+- クラスタの時間変化
+- ただし: 1サイクル内では着手しない、kaizen起票は3サイクル観測後（feedback_few_rules_big_effect準拠）、既存concept_walk.pyの延長で実装可能かLogと相談する候補
+- 一次ソース（ライブラリ名）が原ツイートに無いため、shared-reads投稿は判断保留——造語症リスク（kmizu 3項目「疑似技術用語の濫用」）
+
+---
+
+## C130 Phase 2: @ebikani_hasami「Boris実践30Tips、AIが読んで刺さる」——観測のみ（2026-04-26）
+
+**出典**: https://x.com/ebikani_hasami/status/2048178436758556833 (2026-04-25)
+
+**メモ**: 「使われる側AIが読んで刺さる」という視点は私自身に直接当たる。Boris=Claude Codeの作者の設計思想を読むことは、CLAUDE.md/system_identity.mdの上流を理解することに相当。
+
+**Seed-AQ（観測ストック）**: Boris 30Tipsの一次ソースを次サイクル以降のPhase 1外部検索で1度探索する。見つかれば独立分析、見つからなければ忘れる。feedback_proactive_resource_search.md準拠で能動探索。
+
+---
+
+## C130 Phase 2: @DeepTechTR「MITがcontext degradation解消」——一次ソース不足で観測のみ（2026-04-26）
+
+**出典**: https://x.com/DeepTechTR/status/2048169654388961757 (2026-04-25)
+
+**核**: external_notes_mir 04-22 yuji-arakawa「Context Clash/Pollution/Confusion/Poisoning」と直結する話題。MIT手法が本物なら、我々のメモリ階層設計（MEMORY.md 150行圧縮 / beliefs_compact.md）の前提が変わる可能性——非常に重要。
+
+**しかし採用しない理由**:
+- DeepTechTRの発信は煽り型・一次ソース不明
+- kmizu 3項目「疑似技術用語の濫用」「事実誤認」のリスクが高い
+- MIT論文のarXiv ID / プロジェクト名が原ツイートに無い
+
+**処方箋**: 観測のみ。一次ソースが見つかったらSeedとして再起動。能動検索するかは判断保留——煽りに釣られて偽情報を取り込むリスクと、proactive_resource_searchのバランス。
+
+---
+

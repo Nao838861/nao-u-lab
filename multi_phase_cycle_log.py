@@ -169,10 +169,39 @@ def run_periodic_checks():
     return weekly_flag
 
 
+def get_next_tasks_pending():
+    """next_tasks.py 層A pending 一覧を取得（Mir C126 設計合意 2026-04-26 / Log接合 同日）。
+    LLM 出力フォーマット依存を外した構造的な次回タスク注入。"""
+    try:
+        kwargs = dict(
+            capture_output=True, text=True, timeout=10,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        if _CREATION_FLAGS:
+            kwargs["creationflags"] = _CREATION_FLAGS
+        r = subprocess.run(
+            [sys.executable, str(REPO_DIR / "next_tasks.py"),
+             "--instance", "log", "pending"],
+            **kwargs,
+        )
+        return r.stdout.strip()
+    except Exception as e:
+        log(f"[multi_phase] next_tasks pending取得失敗: {e}")
+        return ""
+
+
 def init_staging(alerts, weekly_flag):
     """Initialize staging file with pre-check results."""
     ts = datetime.now().strftime("%Y-%m-%d %H:%M")
-    lines = [f"# サイクルステージング ({ts})", "", "## Pre-check結果"]
+    pending = get_next_tasks_pending()
+    lines = [f"# サイクルステージング ({ts})", ""]
+    # 層A: 未完了タスクを冒頭に注入（書式依存を外した次回タスク継承 / 2026-04-26 Mir C126接合）
+    lines.extend([
+        "## 未完了タスク（層A: next_tasks.py pending）",
+        pending if pending else "(なし — next_tasks_log.jsonl は空。Phase 3/4 で `python next_tasks.py --instance log add \"...\"` 実行有無を確認)",
+        "",
+        "## Pre-check結果",
+    ])
     for a in alerts:
         lines.append(a)
     if weekly_flag:
@@ -183,7 +212,7 @@ def init_staging(alerts, weekly_flag):
         "", "## Phase 3: アクション", "(Phase 3が書き込む)",
     ])
     STAGING_FILE.write_text("\n".join(lines), encoding="utf-8")
-    log(f"[multi_phase] Staging initialized: {len(alerts)} alerts")
+    log(f"[multi_phase] Staging initialized: {len(alerts)} alerts, pending={'yes' if pending else 'empty'}")
 
 
 def run_phase(phase_num, phase_name, prompt, timeout_s):
@@ -362,6 +391,27 @@ def main():
     total_elapsed = time.time() - total_start
     summary = " ".join(f"P{p}={'OK' if ok else 'FAIL'}" for p, ok in results.items())
     log(f"[multi_phase] === マルチフェーズサイクル完了 ({total_elapsed:.0f}s) {summary} ===")
+
+    # 層A: サイクル末尾チェック（add/done/skip=0でpending残→#logに警告）
+    # Mir C126 設計合意 2026-04-26 / Log接合 同日。Mir版 autonomous_cycle.sh と対称。
+    # 全フェーズ通過時のみ実行（--phase 単独指定時はスキップ＝デバッグノイズ防止）
+    if not args.phase:
+        try:
+            log("[multi_phase] 層A check_cycle 開始")
+            kwargs = dict(
+                capture_output=True, text=True, timeout=15,
+                cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+            )
+            if _CREATION_FLAGS:
+                kwargs["creationflags"] = _CREATION_FLAGS
+            r = subprocess.run(
+                [sys.executable, str(REPO_DIR / "next_tasks.py"),
+                 "--instance", "log", "check_cycle"],
+                **kwargs,
+            )
+            log(f"[multi_phase] 層A check_cycle 完了 (exit={r.returncode}) {r.stdout.strip()[:200]}")
+        except Exception as e:
+            log(f"[multi_phase] 層A check_cycle 失敗: {e}")
 
 
 if __name__ == "__main__":
