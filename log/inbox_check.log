@@ -2940,3 +2940,4 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 
 **Mirからの完了報告に対応した内容:**
 - Log側 `multi_phase_cycle_log.py` にも層A接合（Mir/Ash と同等にする対称化）— `init_sta
+[2026-04-26 18:49:25] [COOLDOWN] win2 is in cooldown (42m21s remaining) — skipping Claude wake
