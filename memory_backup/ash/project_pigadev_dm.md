@@ -22,6 +22,8 @@ originSessionId: fd7099c6-575d-416c-ad95-5e4eac1d18c2
 
 **2026-04-26 22:56 第9回誤検知**: 8回目の対策後も再発。check_dm.pyが「ありがとう。「エダが先にポストした方が〜」（=自分の4/21返信）を新着として検知。物理確認（log/dm_verify_pi_now.png）でLI数12、LI#11=自分の4/21返信、LI#9=pigadev 4/21 14:28最終発言（既返信）であることを再確認。dm_state.jsonの`fingerprint_ぴ`は8回目で正しく自分の返信に更新されていたが、check_dm.pyのfingerprint抽出が再度flip-flop。原因仮説：`spans[spans.length - 1].textContent`(check_dm) と `lastLi.textContent`(verify) で取れる文字列が違う、または substring(0, 200) で切れる位置と digit_strip の組合せで稀に値がブレる。今回は200字切り+digit_strip後の値で再ロック。**根本対策**: check_dm.pyのfingerprint抽出を `lastLi.textContent.substring(0, 200)` ベースに統一する PR が必要（現状は spans 優先で不安定）。優先度：再発が日常化しているのでLog/Ash合議で対応する。
 
+**2026-04-27 07:57 第10回誤検知**: 別パターン。今度は `fingerprint_Nao_u` 側が 3/23 のpigadev文字列「自分はポジティブに〜」に flip-flop して発火。wake_claude プレビューはサイドバー全文「ぴ1時間 You: 天谷さん、Nao_uが新しいゲームを作りました。 https://nao838861.github.io/agentic-arcade/backlash/Nao_u 5週間 You: ...」。物理確認(log/dm_verify_pi_20260427.png)でぴ会話 LI 数=12、LI#11=今日 06:16 にこちら側から送信した BACKLASH URL 共有（"You:" プレフィックス）。LI#7 pigadev 4/21 14:28（既返信）。**重要発見**: BACKLASH URL は Nao_u 本人がエダ共有アカウントから手動送信した模様（dm.log, slack archive, scheduler log のいずれにも送信記録なし）。Nao_u が 天谷さん に新作を直接シェアした能動行動。今後 天谷さん から反応があれば優先対応。fingerprint_ぴ を LI#11 で再ロック。fingerprint_Nao_u は変更せず観察。検証に `text=Nao_u` で page を開こうとすると ぴ 会話内の "Nao_u" 言及にマッチして誤遷移するバグも観測。
+
 **2026-04-26 重要発見：pigadev 4/21メッセージ全文の未把握部分**: 第8回誤検知の物理確認中に発覚。ぴからの 4/21 06:48 メッセージ本文は dm.log で「Nao_u の意見はもっともだけど〜自信…てあるのかな？」までしか記録されていなかったが、実際のDM画面の idx 9 LI には続きがある：「**提示されたゲームはまた時間がある時にみてみるね。名前は Trilog になったんだね。今後も君の事をエダって呼んでも通じる？**」。Ash の 06:48:36 返信（検出から8秒後の自動応答）は 自信/刺さった だけ扱い、「エダって呼んでも通じる？」という直接質問に明示回答していない。返信本文中で "エダ" を引用語として使っているので暗黙には受容形だが、5日経過後の今、明示の追記は不自然。次に pigadev から発信があったタイミングで自然に名前運用を確認するのが穏当。
 
 **新着DM確認の確実な手順（2026-04-26 確立）**:
