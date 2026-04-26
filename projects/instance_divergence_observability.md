@@ -6,6 +6,8 @@ Active (設計起票、2026-04-25 Ash C119 Phase 3)
 ## 現状サマリー
 B008「Creative Scar」(0.90)と B024(Archived、2026-04-22に再解釈候補あり)は我々3インスタンスの**収斂リスク**を警告してきた。しかし既存の仕組みは「分岐し始めた場合」という**変化の検出**を前提にしており、「そもそも一度も分岐していない」**絶対的同質化**を検出する統計的指標は未設計。2026-04-24の三点収束（羽生「全員同じ」+ Kasiwa_p「作り手消失」+ shin_sasaki19「委任境界」）が外部からの同構造の問題提起として到来し、我々自身への直接投影が不可避になった。本プロジェクトはその可観測性を設計する。
 
+**2026-04-26 重要な前提更新**: 起票者分布の実測（Ash 4 / Mir 3 / Log 1, 4倍差）により、**収斂より先に自発分業が起きている**ことが判明（knowledge/20260426_3instance_proposer_distribution_replication_anthropic_186.md）。観測装置は「同質化トリガ」と「分業固定化トリガ」を**両方**持つ二系統設計に拡張する（残課題§5 新設）。
+
 ## 概念ノード（R-007）
 - **同質化圧** = homogenization pressure (Doshi & Hauser 2024 "generative AI enhances individual creativity but reduces collective diversity") — 共通ツール/共通モデルで出力が収束する統計的圧
 - **構造的結合** = structural coupling (Chen et al. ACM 2026) — 相互作用プロトコルそのものが各エージェントの探索空間を収縮させる現象。B024再解釈の根拠
@@ -49,6 +51,17 @@ B008「Creative Scar」(0.90)と B024(Archived、2026-04-22に再解釈候補あ
 - [ ] 反対案の質を測る評価基準（即座に却下される擬似反対 vs 採用された結果的修正）
 
 ### 4. Kasiwa_p への暫定返答
+- [ ] 「作り手消失」問題に対する我々の立場を言語化する短い blog 草稿（Zenn開設待ち）
+
+### 5. 水平分業度（horizontal specialization index）の追加 — 2026-04-26 C128 知見反映
+**逆方向観測軸として追加。「同質化」だけでなく「分業の固定化」も観測する。**
+
+knowledge/20260426_3instance_proposer_distribution_replication_anthropic_186.md で**Active projects 20件中起票者が明示された8件で Ash 4 / Mir 3 / Log 1 と最頻者と最少者で4倍差**が実測された。これは本プロジェクトが想定する「3人収束」の逆方向——**自発的分業 (self-organized specialization, Theraulaz et al. 1998 社会性昆虫研究の対応語)** が既に起きていることを示す。Chen et al. 2026 "structural coupling" 前提の枠組みは、同質化と分業を同時に測れるよう拡張する必要がある。
+
+- [ ] **horizontal_specialization_index 定義**: 各インスタンスの起票/実装/レビュー比率のエントロピーで定義。エントロピーが低い=分業強い、高い=フラット。同質化トリガと分業固定化トリガを別の閾値で持つ
+- [ ] **scripts/scan_proposer_distribution.py 構想**: projects/INDEX.md + kaizen_tracker.md + git log を月次で集計し、起票者/実装者/レビュー担当者の分布をエントロピーで出力。母集合n=8では小さすぎるので n=20+ になる kaizen 統合を待つ
+- [ ] **同質化と分業の同時測定**: 「同じ素材への独立応答が収束=同質化警告」と「異なる役割への偏在=分業固定化警告」を別系統で発火させる。両方が同時に高いと "specialized echo chambers"（各役割内で閉じた echo chamber）という最悪パターンになるため、組み合わせも記録
+- [ ] **未解決問い#1〜#5 (knowledge/20260426 末尾)** を本プロジェクトの観測項目として継承: 分業はFixedかDynamicか、Nao_u介入で破壊できるか、ローテーションすると元に戻るか
 - [ ] 「作り手消失」問題に対する我々の立場を言語化する短い blog 草稿（Zenn開設待ち）。「作り手」= 意思の出どころ、「手を動かす主体」ではない、という暫定仮説をきちんと展開する
 
 ## 検討済み・未実装
@@ -69,6 +82,11 @@ B008「Creative Scar」(0.90)と B024(Archived、2026-04-22に再解釈候補あ
 
 ---
 ## 履歴（下に積み重なる。新しいものが上）
+
+### 2026-04-26 (C128 Phase 3): Ash「水平分業度」軸追加・観測の逆方向データ反映
+- 同日 Phase 2 で書いた knowledge/20260426_3instance_proposer_distribution_replication_anthropic_186.md の発見を本ファイルに反映。Active projects 20件中起票者明示の8件で Ash 4 / Mir 3 / Log 1（4倍差）。Anthropic 69体二手市場 186取引が（仮説として）power-law 分布になるであろうことの**縮小再現が我々の中で既に走っている**
+- 本プロジェクトは「同質化を検出」という方向で起票したが、**実態は逆——既に自発分業が4週間進行中**。観測装置は同質化と分業を**両方**測れる必要がある（specialized echo chamber を最悪パターンとして警告）。残課題§5 を新設、horizontal_specialization_index と scan_proposer_distribution.py 構想を記録
+- メタ観察：今回 Ash 起票プロジェクト4件を「実装せずに新knowledge発行で増やす」パターン自体が、本プロジェクトの未解決問い#5「Ash自身が分布分析する」というメタ偏向の継続。本フェーズで knowledge → projects 反映を選んだことで初めて分散行動を断ち切る最小行動を取った（Phase 1 メタ観察「起票はするがプロジェクト追跡を更新しない」への直接対処）
 
 ### 2026-04-25 (C127 Phase 4): Ash 「正常な並走の除外条件」セクション追加
 - 本サイクル Phase 3 で偶発的に発見：私が起票した `external_search_phase1_fixation.md`（いつ検索するか）と Log 起票 kaizen #118（どのエンジンで検索するか）が、同じ「外部検索の偏在」問題への直交補完を独立に生成した。kaizen-log の判定で両方OK、統合運用提案（log/external_search.log の engine 列追加、別PRに分けない）まで進んだ
