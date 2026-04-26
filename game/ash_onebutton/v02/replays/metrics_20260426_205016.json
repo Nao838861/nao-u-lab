@@ -1,0 +1,46 @@
+{
+  "intended_dodger": {
+    "policy": "intended_dodger",
+    "runs": 8,
+    "survival_avg_s": 37.57083333333334,
+    "survival_max_s": 69.5,
+    "close_avg": 12.625,
+    "close_max": 29,
+    "press_avg": 41.125,
+    "close_press_ratio": 0.3069908814589666,
+    "close_per_sec": 0.33603193966951306
+  },
+  "random_mash": {
+    "policy": "random_mash",
+    "runs": 8,
+    "survival_avg_s": 5.2375,
+    "survival_max_s": 6.9,
+    "close_avg": 0.875,
+    "close_max": 4,
+    "press_avg": 12.875,
+    "close_press_ratio": 0.05825242718446602,
+    "close_per_sec": 0.16706443914081145
+  },
+  "never_press": {
+    "policy": "never_press",
+    "runs": 8,
+    "survival_avg_s": 7.541666666666667,
+    "survival_max_s": 12.483333333333333,
+    "close_avg": 0.0,
+    "close_max": 0,
+    "press_avg": 0.0,
+    "close_press_ratio": 0.0,
+    "close_per_sec": 0.0
+  },
+  "close_call_seeker": {
+    "policy": "close_call_seeker",
+    "runs": 8,
+    "survival_avg_s": 2.672916666666667,
+    "survival_max_s": 3.5,
+    "close_avg": 10.125,
+    "close_max": 24,
+    "press_avg": 9.875,
+    "close_press_ratio": 1.0,
+    "close_per_sec": 3.7879968823070924
+  }
+}

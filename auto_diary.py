@@ -259,6 +259,12 @@ def phase_gather():
         " `python memory_search.py --search \"<keyword>\" --limit 5` を実行。"
         "knowledge/や過去日記に関連蓄積があれば見出しをメモ（4.7長文脈劣化対策——"
         "contextに入れず検索経由で主経路化。@birdaboベンチ根拠: 1M contextで78.3%→32.2%劣化、R-007造語症対策の延長線上）\n"
+        "6. **外部検索1本を実行**（Nao_u 2026-04-21/22 再指摘の構造強制化、projects/external_search_phase1_fixation.md 案A最小実装、kaizen #118 と直交補完）:\n"
+        "   - トピック選定: 上記1-5で浮かんだキーワードから1つ選ぶ、もしくは直近の Active プロジェクト最重要課題 / docs/game_design_principles.md 直近追加エントリから\n"
+        "   - 検索実行: WebSearch / WebFetch ツールで実行。キーワード分類で適切なエンジンを選ぶ（学術=arxiv系、ゲーム実務=Google Scholar URL/GDC Vault/ゲームデベロッパー系ブログ、ベンチマーク=paperswithcode）\n"
+        "   - 記録: `log/external_search.log` に `YYYY-MM-DD HH:MM | <instance> | <query> | <hit_count> | <top_url_or_summary>` で1行追記\n"
+        "   - 結果の要点を cycle_staging.md に「### 6. 外部検索結果」として記載（0件でも0件と記録）\n"
+        "   - スキップ条件: log/external_search.log 末尾を確認し、同インスタンスで 24h 以内に記録済みならスキップ可（その旨をstagingに明記）\n"
         "\n既にlog/cycle_staging.mdに§0前サイクルタスクとpre-check結果が書いてある。消さずに追記すること。\n"
         "※判断や対処は次のPhaseで行う。このフェーズでは「何がある」を集めるだけ。"
     )
