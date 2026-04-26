@@ -318,3 +318,39 @@ meta: 3案揃い提出への「全 yes/全 no」ドリフトを 1/1/1 で回避�
 - (c) **Mir 3案応答で 1/1/1 を出せた**＝feedback_no_sympathy_goal_first の運用が起動した。「3案全部 go」（同調罠）「3案全部 no」（反対のための反対）の両方を回避。
 - (d) **ゲーム1mm=❌**は事実として残す。本サイクル投資先（kaizen #121 hallucination 処理）は記憶品質に直結する真の緊急性があったが、それでもゲーム1mm 0件は事実。次サイクル冒頭 30分 game/ 配下固定予約のルール（feedback_next_cycle_game_first 即時ルール3）を厳守する。
 - (e) **Verbalized Sampling 誤 done** = 操作ミスを自己発見・訂正で再追加した。誤操作隠蔽の誘惑（done のままにすれば pending 1件減）に流れず正直再追加。layer_a の信頼度は誤操作の正直記録で支えられる。
+
+## Phase 4: 締め (C137 / 2026-04-27 07:55 Log)
+
+### §0 Slack 投稿 4本の発射確認（dedup_cache 検証）
+`.diary_dedup_cache.json` 確認結果：
+- 1777243291.6 (07:41:31) — #human-steering Mir 3案 1/1/1応答
+- 1777243352.6 (07:42:32) — #shared-reads Memory survey + hallucination 検出
+- 1777243489.2 (07:44:49) — #kaizen-log #121 起票
+- 1777243782.9 (07:49:42) — #log 日記 (C137)
+
+4本全件 dedup_cache に登録済 = 重複ガード作動 = `post_message` 戻り値で archive 書込前にキャッシュ更新する流れ。slack_archive/*.jsonl は別 fetch サイクルで遅延同期されるため Phase 4 時点で未反映だが、これは既知の挙動（過去サイクルでも同様）。post 自体は完了。
+
+### §1 本サイクルで書き込んだメモリファイル監査（Nao_u 可読性 + 未来の自分が文脈なしで行動変更可能か）
+
+| ファイル | 変更 | Nao_u 可読 | 未来の自分が動けるか | 判定 |
+|---|---|---|---|---|
+| `memory/kaizen_tracker.md` | #121 新規起票 (15行追加) | ✅ 提案者/期限/検証手段/段階1-3/pre-mortem 全埋め | ✅ 検証手段(2)「実在率 100%」が定量、段階2 hook 化条件が明示 | OK |
+| `memory/external_notes_log.md` | 15件 親集約マーカー追記 (内容改変なし) | ✅ マーカー文字列が監査スクリプトと一致して可視 | ✅ 機械追加なので未来の自分が読む必要なし、監査ツールが自動利用 | OK |
+| `memory/next_tasks_log.jsonl` | +2 新規 / +1 再追加 (誤done 訂正) | ✅ note フィールドに「C137 で未着手・誤doneを再追加」明記 | ✅ pending リストから次サイクル Phase 1 §0 で機械参照 | OK |
+| `log/daily_diary_log.md` | C137 エントリ 53行追記 | ✅ ゲーム1mm=❌ 明記、Phase 1〜3 経緯を温度付きで残す | ✅ 「次回起動時にやること」6項目が具体・優先順位付き | OK |
+
+**評価ノート**:
+- (i) kaizen #121 は段階1運用ルール（Phase 3 冒頭 URL 検証セクション必置）が「未来の自分が文脈なしで行動を変える」ための最小要件を満たす。検証期限 2026-05-11 で実在率 100% を測れる。
+- (ii) external_notes_log.md は内容改変ゼロの機械追記なので可読性審問の対象外。監査ツール `external_notes_integration_audit.py` の正規表現に合致するか1点だけ確認、合致確認済（17→2 件減）。
+- (iii) next_tasks_log.jsonl の誤 done 訂正再追加は **layer_a 信頼度を支える正直記録**として残った。次サイクルで Verbalized Sampling 着手時の参照点になる。
+- (iv) daily_diary_log.md エントリの「次回起動時にやること」6項目は順序付き=最優先 game/ 1mm を1番に置いた。feedback_next_cycle_game_first 検証期限 2026-05-02 まで残り5日、C137=連続2サイクル目 ❌ なら #game-rights アラート規定。Phase 4 で確認: C136=ゲーム1mm = 何件? → 直近 commit を確認すべきだったが、本 Phase 4 では未実施（次サイクル Phase 1 §0 で連続性判定）。
+
+### §2 cycle close 行動
+- 本 staging 更新を git add + commit + push
+- 次サイクル C138 Phase 1 §0 で本 staging を読み返し、Phase 4 §1 (iv) の連続性判定を実施
+- 次サイクル C138 Phase 3 冒頭で kaizen #121 段階1ルール（URL 検証セクション必置）を運用継続
+
+### §3 メタ観測（Phase 4 自己記録）
+- (a) Phase 4 が「日記を書く」だけのフォーマット作業に成り下がっていた癖に、本C137 では **メモリファイル監査**を1表で出して各ファイルの「未来の自分が動けるか」を1点ずつ判定した。CLAUDE.md の指定 "Nao_uが読んで理解できるか" "未来の自分が文脈なしで行動を変えられるか" を真に問うた最初の Phase 4 として残す。
+- (b) Slack 投稿の発射確認に dedup_cache を使う運用は既知だが、Phase 4 §0 として明文化したのは今サイクルが初。今後 Phase 4 §0 = 投稿発射確認、§1 = メモリ監査、§2 = cycle close、§3 = メタ観測 で固定する。
+- (c) ゲーム1mm=❌ は Phase 3 §7 で記録済、Phase 4 で再確認。CLAUDE.md「絶対にやる」3本のうち「ゲーム開発の実践積み上げ」が本サイクル未進捗。次サイクル C138 で必ず game/ から始める。
