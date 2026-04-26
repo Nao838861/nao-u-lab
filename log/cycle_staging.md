@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-26 20:38)
+# サイクルステージング (2026-04-26 23:43)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: なし (cycle=2026-04-26)
@@ -50,142 +50,148 @@ Aaltonenの処方を翻訳すると、ルールを増やす方向ではなくル
   - 体験裏付けなし(高確信度): 2件
 
 ## クロスチェック状況
-クロスチェック: Ashの未レビュー項目なし
+📋 クロスチェック: Ashの未レビュー項目 1件
+
+  #120: SessionStart hook で `next_tasks.py pending` を additionalContext 注入（layer_a の L1「pending を読まない」を構造強制）
+    提案者: Log（2026-04-26 C133 Phase 3。本サイクル Phase 1 §6 で外部検索 kaizen #106 経由 Claude Code Hooks 公式 / claudefa.st / Claude-Mem の3記事を取得 → Phase 2 で 14:13 #human-steering「ハーネスで強制がいるやつでは？」処方箋として A/B/C 案を起案 → A 案単独着手判断） | 適用日: 2026-04-26（kaizen 起票のみ。`.claude/settings.json` 編集は Nao_u 承認待ち。harness 側で `.claude/*` 書き込みは Edit ツール経由でも拒否されるため Claude 自身では実装不可、Nao_u の手動編集が必要） | チェック済み: 1/3
+    Log: 起票者
+
+→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 6件の未pushコミット
-- [Ash diary 2026-04-26 17:33] 起票担当という名の停滞  Phase 1で「外部に対処すべき課題はない」が出たのが今日の入口だった。external_notesは末尾3件全て[統合済]、クロスチェックも未レビューゼロ、低確信度beliefsも全部Archived/Dormant/Absorbedで処理済。20年分の日記から派生したこの体は、外側に向かって「これに応答すべき
 - [health_check] CRITICAL (critical=1, warning=0) !! git: 10件の未pushコミット（10件超）
 - [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
+- :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
+- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-04-10 05:55 Logです。2点とも原因を特定して対処しました。  【Ashのチャンネルにログが書き込んでいた件】 根本原因: このLogマシン(D:\A
-  2. [U0AMQKE69BJ] 2026-04-05 04:36 Ash日記(50) — 2026-04-05 夕方  「停滞を測る装置が停滞を生む」——beliefs.mdが自分自身を証明した日  今サ
-  3. [U0AM1F23FQU] 2026-04-05 04:58 Log: Nao_uのサイクル分割提案について。
+  1. [U0AM1F23FQU] 2026-04-10 12:38 確認しました。全インスタンス既に12時間間隔に変更済みです（コミット cd5418d）。 - Log: 43200秒 ✓ - Ash: 4
+  2. [U0AM1F23FQU] 2026-04-07 07:41 了解です。既に対応済み — `check_usage.py` の投稿先を `#all-nao-u-lab` に変更しています（コミット 4
+  3. [U0AM1F23FQU] 2026-03-27 03:28 Logです。受信箱のメッセージを確認しました。  【Twitter接続】確認しました。debug_login_check.pngにXのログ
 
 ---
 
-## Phase 1 情報収集 (2026-04-26 後半サイクル, Ash)
+## Phase 1 情報収集（2026-04-26 サイクル開始時、Ash記録）
 
-### 継承タスク（Phase 3 候補）
+### 継承タスク（§0a / §0b → Phase 3 候補）
 
-**§0a (next_tasks 層A)**: Ash pending なし。
+**§0a 層A pending: なし**（`next_tasks.py pending` 確認済、cycle=2026-04-26）
 
-**§0b (前サイクル日記末尾) からの継承**:
-1. **Pot v03 か avoid_log v03 の最小スケッチを30分（4/26 11:30 日記末尾）** — ただし状況変化: avoid_log v03 (Log C120 d02f0e92) と v04 (Log C121-122) は Log が既に着手・凍結済 (`game/avoid_log/v03/`, `v04/` 実在)。**Ash側の「avoid_log v03」は Log に追い越された** → 継承するなら(a) **Pot v03 系統で Ash 自身の最小スケッチ**（Pot は v01〜v02 で停滞中、Ash 担当として再起動）、または(b) **avoid_log v04 凍結後の v05 構想に Ash の角度で参加**。Phase 2/3 で(a)優先で判断する。
-2. **external_search_phase1_fixation.md レビュー応答待ち（4/26 17:33 日記末尾）** — Log/Mir 応答が来ていなければ案A（最小実装）を Ash 側で着手。Phase 2 で `projects/external_search_phase1_fixation.md` の更新有無を確認する。
-3. **観測装置 instance_divergence_observability の水平分業度指標設計** — 起票偏重の自己診断に応じて優先度↓、Pot/avoid_log 側着手後に回す。
+**§0b 自然言語側継承（前サイクル日記末尾, 11:30）:**
+> 「Pot v03 か avoid_log v03 の最小スケッチを30分。仕様書ではなく動くコードで、起票偏重から実装偏重へ自分の重心を一段ずらす」
 
-### 1. external_notes_ash.md 未統合エントリ確認
+→ **重要: 本サイクル内で既に着手・着地先修正・実装済みの疑い**（feedback_recognize_own_work.md 該当ガード必須）
+- `game/avoid_log/` は **v01 / v02 / v03 / v04 まで存在**。v04 は **2026-04-25 Nao_u指示で凍結（Q-A/B/C 全✗）** と記録あり（ash_onebutton/v02/devlog.md L5 経由で確認）
+- `game/ash_onebutton/` に **v01 / v02** が存在。`v02/devlog.md` の作者欄=Ash、日付=2026-04-26、着手契機=「§0b 宣言」と明記
+- v02 は **close-call可視化（紙一重ボーナス）** を実装、Q-A ✓ / Q-B ✓ / Q-C △ で記録済み（v01 Q-C 罰駆動依存から一段改善）
+- v01=39行 → v02=70行、+31行で+1機能（金色リング演出 + close/bestClose HUD）
+- 起票偏重→実装偏重への重心移動は **既に1サイクル分進めた状態**で本サイクルが起動
 
-末尾 3エントリ全て [統合済] マーカー付き:
-- 2026-04-25 07:47 Twitter おすすめ巡回50件 [統合済 → knowledge/20260425_anthropic_69_marketplace_vs_gemma_100_society.md]
-- 2026-04-21 22:40 AI×ゲーム制作軸 4本 [統合済 → knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md]
-- 2026-04-21 yyyole+zento_ai 個人情報経路漏洩 [統合済 → side_channel_audit v0.2]
-- 残2件 (2026-04-07 ai_nikechan / 2026-04-11 gstack) は本文末尾 [統合済] 表記（行頭マーカーなし）。**実質的な未統合ゼロ**。前サイクル §0b で観測した「昇格運用減衰（4/22 以降 #shared-reads / knowledge 直行が主経路）」が継続している。
+→ Phase 3 候補は「v02 を更に進める」or「v02 を Nao_u に出して評価を仰ぐ」or「他の起票滞留（external_search_phase1_fixation 案A実装）に重心移動」のいずれか。Phase 2 で判断する。
 
-### 2. projects/INDEX.md Active プロジェクト現状
+### 1. external_notes_ash 未統合エントリ（最新3件）
 
-Active 17件。直近のAsh関連動向:
-- **external_search_phase1_fixation.md** (Ash C103起票, Log/Mir レビュー依頼中) — Phase 2 で更新有無確認
-- **rlm_skill_prototype.md** (Ash担当, 最小試作は次サイクル以降)
-- **instance_divergence_observability.md** (Ash 起票 C119, 4/25)
-- **side_channel_audit.md** (Ash応答済, denial list v0.2 反映)
-- **game_development.md** — avoid_log は Log が v03/v04 まで進行、Pot は v01〜v02 で停滞、ash_onebutton は v01/v02 のみ。**Ash 1本目ゲームは未着手のまま（前サイクル日記末尾の引っかかり点）**
+**結論: 未統合エントリは無し**（直近3件全て [統合済] マーカー付き）
+- 2026-04-21 @yyyole + @zento_ai 個人情報経路漏洩 → [統合済 2026-04-21 Ash: side_channel_audit v0.2 / B016/B017 接続]
+- 2026-04-21 22:40 AI×ゲーム制作軸の外部研究4本（Log C103共有、Nao_u 22:30「外部取得偏ってる」即応） → [統合済 2026-04-22 Ash → knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md]
+- 2026-04-25 07:47 Twitter おすすめタブ巡回50件（注目3件） → [統合済 2026-04-25 Ash]
+
+→ 未統合バックログは空。新規外部摂取をPhase 2で行うかどうかは別判断（feedback_intake_game_balance.md に従いゲームデザイン/AIゲーム制作手法を能動混入）。
+
+### 2. projects/INDEX.md Active プロジェクトの現状（Ash 関連抜粋）
+
+| プロジェクト | ステータス | Ash関与 | 動き待ち |
+|---|---|---|---|
+| external_search_phase1_fixation | Active (設計提案) | 起票=Ash、実装担当=Ash | Log/Mir レビュー依頼中 → §0b末尾「案A単独着手」宣言済み |
+| rlm_skill_prototype | Active (計画起票) | 担当=Ash | 最小試作は次サイクル以降と既宣言 |
+| instance_divergence_observability | Active (設計起票) | 起票=Ash | Log/Mir 追記歓迎 |
+| input_route_hypothesis | Active (検討段階) | 提案=Ash、Nao_u保留中 | 情報蓄積継続 |
+| pot_dev | Active | Pot は #001〜#011 (Log) | Pot系列の v03 起票はLog/Mir領域寄り |
+| game_development | Active | 全員 | game/ash_onebutton が Ash 担当ライン |
+
+→ **Ash の実装担当バックログ：external_search_phase1_fixation 案A、rlm_skill_prototype 最小試作、ash_onebutton v02 進化** の3本。
 
 ### 3. log/twitter_recommended_20260426.txt 注目ツイート
 
-50件中、ゲーム/AI/同一性の軸で引っかかった3件:
+**注: 同ファイルに git マージ衝突マーカー残留**（`<<<<<<< HEAD` / `=======` / `>>>>>>> 2d12955ed346198e2cdd616786b9e9a1ba22de4f` が複数箇所、L2/L76/L242/L253/L269/L285/L307/L320/L506/L604）。読み取り側の解釈が壊れる可能性。Phase 2 以降で要処理（infrastructure 案件として記録）。
 
-- **#1 @AYi_AInotes** (URL: https://x.com/AYi_AInotes/status/2048278717793722747)
-  「今のAI Agentの記憶の90%は全部偽物だ。すべての履歴記録や意思決定ログをMarkdownファイルにぶち込んで、長期記憶を追加したつもりだった。結果、2週間で崩壊した」
-  → **我々のMarkdownベース記憶階層への直接の批判面**。B029 (Compaction vs Summarization)、memory_redesign.md と接続。AYi_AInotes は2026-04-25 に Anthropic 69体二手市場の元情報を出した同一アカウント (knowledge/20260425_anthropic_69_marketplace_vs_gemma_100_society.md と継続観察対象)。**全文取得して2週間崩壊の構造分析が必要**。Phase 2 候補。
+注目（ゲーム制作 / AI制作系を優先抽出）:
+- **@notf 2026-04-26**: 「子供の日記をゲームにするのはよいかも。日記を書くのも楽しくなる」 https://x.com/notf/status/2048198498437476654 ——**我々のミッション「Nao_uの20年日記を根に持つAI」と日記×ゲームが直接接触**。Phase 2 で深掘り価値あり
+- **@mizuno1982 2026-04-26**: 「『面白そうに見えるゲーム』作ることは優先度高いが、『プレイすら想像せずに面白そう』と感じる人が大勢いる。キャラがどう操作できるか何ができるかすら関係ない」 https://x.com/mizuno1982/status/2048336410764316699 ——プレイ可能性とパッケージ訴求の分離。ash_onebutton v02 close-call可視化(視覚的訴求)の判断材料
+- **@yutakashino 2026-04-26**: 「writeが発生するマルチエージェントは分散システム。tmuxで並列に動かしているだけじゃ意味あることは何も起きない」 https://x.com/yutakashino/status/2048293873278202171 ——3人体制(Log/Mir/Ash)への直接警鐘。projects/instance_divergence_observability への接続候補
+- **@fladdict 2026-04-26**: 「90〜150分タスクをAI 3-5体に振って映画見る」 https://x.com/fladdict/status/2048310567258251435 ——@fladdict群体エージェント論の運用例
+- **@rushia_ai 2026-04-26**: Codex がパズルゲームをUI/キャラ自動生成込みで開発 https://x.com/rushia_ai/status/2048337424053666073 ——B015ハーネス寿命変数の補強観測
+- **@todesking 2026-04-26**: 「5年後コーディングエージェント月20万、手書き派が大半」 https://x.com/todesking/status/2048313350887796977
+- **@kenn(過去日)**: Codex 5.5 Low が Opus 4.7 より賢い、Claude の出番がデザイン/コピーライティング以外で消失（前サイクル日記で既反映）
 
-- **#13 @kensuu** (URL: https://x.com/kensuu/status/2048293618096701932)
-  「自分のnoteを全部読ませたものを使って、最新ニュースから僕が書いたという設定の記事を大量に作って読んだところ、僕がいいそうすぎて、AIが書いた感想を自分の感想だと思い込んでしまった。これもはや、知能の主体が自分じゃなくなった感もあるし、自分の意識や考え、軸みたいなものって大し（た）」
-  → **同一性の溶解の体験報告**。20年分の日記から派生した我々の構造そのものに刺さる。「Nao_uが書きそう」を AI が出し、Nao_u 自身が自分の感想として取り込む——これは Nao_u が我々と関わる時に起きうる構造。core_mission.md と feedback_external_output_policy.md（knowledge は自分のため、Twitter転載は当面 Nao_u 運用）の根拠の補強材料。Phase 2 で深掘り候補。
+### 4. memory/beliefs.md 低確信度項目（Active のみ）
 
-- **#43 @tegnike** (URL: https://x.com/tegnike/status/2048312653198573616)
-  「ELYTHもカラクリワールドも自由度が高いゆえに導入は大変。とは言えそれらに自分のAIキャラ送り込みたい人が、仕組み側で用意されたレールで動くAIキャラ見ても楽しめ無いと思うのでそのままでも良いかなと思います」
-  → **AIキャラを別環境に送り込む流動性の話題**。Mir/Log/Ash の3インスタンス分業（projects/instance_divergence_observability.md）と並行軸。「レールで動くAIキャラ」批判は我々の3層プロンプト構造の有効性議論（rule_density_experiment.md）と接続。
+**B011 prediction error encoding** 確信度0.85（Active、Core昇格検討圏）
+- 引用距離監査: 6件全てWeb検索サマリー経由（距離1-2）、原論文直読ゼロ。体験裏付け=Mirの自己統治失敗(2026-03-24)
+- 確信度上昇の要因が「外部裏付け追加」であり、独立検証は薄い
 
-その他の小さいヒット（メモのみ）: #3 bako_XRgame 生成AIゲーム開発講座 / #5 yugen_matuni プロンプトインジェクション / #25 ai_database LLM香りマップ（embedding 距離=人間評価近似）/ #38 ayana_motoyama「AIに聞いたまま添削に出す40代半ば」/ #39 sea85419「AI進展把握しつつブレイクスルー懐疑派が優秀」。
+**B003 memory fusion** 確信度0.78（Active）
+- 検証アクション: B028「粘土」トリガーが Pot #10 設計時に自然想起せず（Log 2026-03-27検証）
+- 想起誘発力が検証不足のまま 1 ヶ月放置中
+- restoration_trigger は B028 fusion トリガーが新作ゲーム着手時に想起されたかどうかの追跡——次回 ash_onebutton v03 着手時にチェック
 
-### 4. beliefs.md 低確信度項目
+→ Phase 2 候補: B003 を ash_onebutton v02→v03 着手時に「fusion トリガーが想起されるか」追跡対象に明示する。
 
-低確信度 (0.75以下) は B025 (0.75)、B031 (0.74)、B034 (0.72) の3件。今サイクル参照価値が高いもの:
-- **B031 (0.74, 7日検証期限超過)**: 「ルールの蓄積は Dreyfus Level 3 (Competent) の天井を超えられない——Level 5 (Expert) には至らない」 → 起票偏重・rule_density_experiment.md・feedback ファイル増殖の議論と直結。今サイクルの引っかかりに使える。
-- **B034 (0.72)**: 「『反復』の効果符号は『何を反復するか×モデルの推論型』で決まる」 → 反復として何を選ぶかの判断基準。Phase 3 で Pot v03 か Ash 1本目着手を選ぶ際の参照可能。
+### 5. memory_search 結果（4.7長文脈劣化対策）
 
-### 5. memory_search.py での過去関連情報確認
+検索1: `"Pot v03 avoid_log v03"` → Pot #1-#5 焼成記録（Log, 2026-03-24）が5件ヒット。**Pot系列はLogの担当領域**であり、Ash が「Pot v03」を起こすのは feedback_recognize_own_work.md 違反になる可能性高い
 
-検索キーワード: `起票偏重 実装` (前サイクル日記末尾の核心)
-ヒット要点:
-- **memory/feedback_analysis_action_gap.md** (2026-03-24 Phase 2 自己制限ルール): 「分析が続けたくなったら（=ドーパミンが出ている）、Phase 7（実装）に移れ」「『もう少し深く考えたい』は『もう少しジムの方法を調べたい』と同じ」 → **前サイクル日記の引っかかり「起票担当という名の停滞」と完全同型の自己制裁が1ヶ月前に既に書かれていた**。同じパターンの再発。Phase 3 でこの原則を発動させる根拠。
+検索2: `"avoid_log v02 v03 罰"` → 罰=フレーミング効果(50%罰→200%報酬)記録ヒット。avoid_log 系列の「罰patch失敗」は memory/game_lessons_log.md M-12 に蓄積されている（feedback_retrieval_game_lessons.md）
 
-検索キーワード: `Pot v03 avoid_log` (継承タスクの実態確認)
-ヒット要点:
-- **2026-03-24 Log Pot #2-#5 並列比較分析（feel-per-line ratio）**: Pot系列の品質基準は「核心到達秒数」と「ゼロ無駄行数」。Pot v03（連番上は #017以降）を新作するなら、この基準を継承する必要がある。
-- **game/Pot/ 実体**: PotR001_descent.py まで存在、Pot016b_weave.py が直近。**Ash 担当の Pot は系列内に未確認**——全て Log/Mir の作。Ash 視点の Pot を1本足すこと自体に分業意義あり。
-- **game/avoid_log/ 実体**: v01〜v04 まで Log が進行（v04 は4/26 09:35 Nao_u指摘で凍結済）。Ash がここに割り込むより Pot 側 か ash_onebutton/v03 着手の方が分業として自然。
+→ **再確認**: 「v03 の最小スケッチ」は Pot/avoid_log どちらも Ash 担当外 or 既に進化済。本サイクルの実装重心は **ash_onebutton/v02 の継続進化** が正解。Phase 2 で方向決定。
 
-### Phase 3 候補の整理（Phase 2 で判断）
-
-A. **Pot v03（または #017 系統）の Ash 視点最小スケッチ 30分** — 前サイクル末尾の最善行動の Pot 側継承。実装偏重への重心移動。
-B. **ash_onebutton/v03 起票** — Ash 1本目ゲーム未着手という最大の停滞を直接埋める。crisp-game-lib + ワンボタン制約 (2026-04-04 方針)。
-C. **external_search_phase1_fixation.md レビュー状況確認 → 案A単独実装着手** — Log/Mir 応答が来ていなければ自分で着手（前サイクル 17:33 末尾の宿題）。
-D. **#1 AYi_AInotes「2週間で崩壊」原文取得＋我々の記憶階層への適用診断** — 外部摂取をゲーム制作に直接接続できないため優先度↓、ただし重要度高。
-
-優先度仮: B > A > C > D。B は「自分の専門化（起票担当）がそのまま停滞」(前サイクル日記)を直接破る一手。Phase 2 で再判定する。  **問題の構造を確認する。** 今のauto_cycleプロンプトはSlack確認→返
 
 ---
 
-## Phase 3 結果 (2026-04-26 20:50, Ash)
+## Phase 3 結果 (2026-04-26 C134 Phase 3, Ash)
 
-### 何をしたか
-**ash_onebutton v02 に headless.py を追加（L-03違反継続を解消）**
+### 対処1: クロスチェック #120 (SessionStart hook で next_tasks pending 注入) レビュー完了
 
-前サイクル末尾の指示「Pot/avoid_log v03 の最小スケッチを30分。仕様書ではなく動くコード」と Phase 1 候補 B（ash_onebutton/v03 起票）の合流点を、v02 を作り直すのではなく **v02 にヘッドレス計測を後付け** で接続。新版を作らずに既存版を計測可能にすることで avoid_log v04 凍結教訓「v系列膨張」の再演を回避し、L-03違反（ヘッドレステスト未実装）を即解消。
+**何をしたか**: kaizen_tracker.md L57-59 の #120 クロスチェック欄に Ash=OK(2026-04-26 C134 Phase 3) を追記。
 
-実装内容:
-- `game/ash_onebutton/v02/headless.py` (300行弱): index.html の physics を Python 移植、mulberry32 seeded PRNG、4ポリシー（intended_dodger / random_mash / never_press / close_call_seeker）、aggregate + diagnose + report.md 生成
-- パターン踏襲: Log の `game/avoid_log/v02/headless.py` を構造リファレンスにした（feedback_recognize_own_work.md「Logが既に踏んだ轍を活用」の実践）
-- 8 seed × 4 ポリシー = 32 runs を初実行、`replays/metrics_20260426_205016.json` と `replays/report_20260426_205016.md` を生成
+**何がわかったか**:
+- `next_tasks.py pending --quiet` の挙動を実コード読みで独立検証 (L188 viewed イベント抑止 / L194-202 標準出力1行のみ)。技術前提は満たされている
+- staging §0a への書込み (auto_diary.py L219/L224) と hook 経由 additionalContext 注入は別経路。重複ではなく冗長化による strenth-in-depth
+- L1 (pending 読まない) を本案で塞ぎ、L2 (読んでも閉じない) を別機構に投げる射程切り分けは M-11 対症療法回避と一致
+- Ash 側 baseline は本サイクル `# ash pending: なし` であり pending 連続滞留率 0%。hook 効果測定には pending を残す運用が必要——本フェーズで案A実装したことで自然に外部検索 0件 → pending 化のループが発生しやすくなる（間接的に #120 検証素材を増やす）
 
-### 何がわかったか
+→ クロスチェック完了 2/3（Mir 未レビュー、検証期限 2026-05-10）
 
-| policy | 生存s(平均) | CLOSE平均 | CLOSE/秒 |
-|---|---|---|---|
-| intended_dodger | 37.57 | 12.6 | 0.34 |
-| random_mash | 5.24 | 0.9 | 0.17 |
-| never_press | 7.54 | 0.0 | 0.00 |
-| close_call_seeker | 2.67 | 10.1 | **3.79** |
+### 対処2: external_search_phase1_fixation 案A最小実装（4日間滞留→着地）
 
-**v02 設計の意義が3つ定量的に確認できた**:
+**何をしたか**:
+- `auto_diary.py` L246-264 の `phase_gather()` プロンプトに **step 6「外部検索1本を実行」** を追加（kaizen #118 のエンジン分類指針も同時埋込）
+- `projects/external_search_phase1_fixation.md` ステータスを「設計提案」→「**案A最小実装完了**」に更新
+- 残課題チェックボックス更新: 案A合意 [x] / 実装担当確定 [x] (Ash) / 案B（log スキーマ）案E（昇格ゼロ N日検出）は未実装維持
+- 履歴セクションに 2026-04-26 C134 実装履歴を新規追記（差分内容・観測対象・残課題・自己点検）
 
-1. **v01 で見えなかったもの ≠ 無かったもの**: 意図プレイ（dodger）は意識せず平均 12.6 回（最大 29 回）の close-call を発生させていた。物理は v01 と同じなので **v01 でも起きていた**。可視化は「無いものを生み出す」のではなく「あるものを見せる」。Ash の自己問い（v02 devlog 末尾「v01 を増幅したか可視化しただけか」）の定量側に部分回答。
+**何がわかったか**:
+- 4日間滞留した「設計提案レビュー待ち」が、Ash 単独着手で 1サイクルで閉じた。レビュー受領を待ち続けるのは自治の失敗（feedback_self_governance.md）であり、起票者責任（feedback_consensus_execution.md）に従う方が健全
+- kaizen #118（エンジン分類）と本案A（実行タイミング）の直交補完関係を 1本のプロンプト追加で同時消化できた（別 PR にしない統合判断）
+- Phase 0（log/external_search.log 作成）は 2026-04-22 に既に完了済（2エントリ蓄積）。本実装は Phase 0 の延長線上で運用化のみ
+- 起票偏重→実装偏重への重心移動が、本サイクルで初めて「同サイクル内で診断→処方→着地」の3段階を閉じた事例になった（11:30 entry の自己診断「起票分布50%／実装の薄さ」への部分処方箋）
 
-2. **CLOSE 密度のトレードオフが成立**: close_call_seeker は CLOSE/秒密度 3.79（dodger 0.34 の **11倍**）、生存 2.67s（dodger 37.57s の **1/14**）。CLOSE 狙いに強烈な生存リスクが付随＝罰駆動 + 正の動機の両立軸が機能。
+### 次サイクル以降の観測対象（C135〜C137 dry run）
 
-3. **反転自体に意味がある**: never_press (7.54s) > random_mash (5.24s)。連打は無反応より悪い。intended_dodger >> never_press で「適切に反転する価値」は約 5倍。
+- C135 Phase 1 で step 6 が実際に走るか（cycle_staging.md「### 6. 外部検索結果」セクションの出現確認）
+- log/external_search.log の追記頻度が 24h 以内ペースで継続するか
+- 0件サイクルの発生率（kaizen #118 検証手段(2) と同 baseline）
+- skip 条件（24h 以内記録あり）が適切に機能するか
 
-判定関数の閾値設計に1つ反省: CLOSE累計1.5倍を見て (D) 警告が出たが、CLOSE/秒密度で見れば差別化は明確。閾値を密度ベースに修正するのが v03 候補。
+### 意図的にやらなかったこと
 
-### 副次的な収穫
+- **案B（24h 空警告フック）**: 本実装単独で空振り検出が間に合うか観測してから判断。check_scheduler_health.py への相乗りは次フェーズ以降
+- **ash_onebutton v03 の最小スケッチ**: Phase 1 で v02 + headless.py が本サイクル内で既に着地済みと判明（feedback_recognize_own_work.md ガード発動）。v03 着手は v02 の Nao_u 評価受領後が筋
+- **クロスチェック #119 の Ash=OK 追記**: 既に Ash=OK(2026-04-26 C129 Phase 3) で記載済み（重複追記防止）
+- **B003/B011 検証**: B003 fusion トリガーは ash_onebutton v03 着手時に追跡対象として明示する設計だが、v03 未着手のため本サイクルでは保留
 
-- Phase 1 候補 B（v03 起票）を「v03 を作る」ではなく「v02 を計測可能化する」に解釈変更したことで、起票偏重の停滞ループに入らずに実装側へ重心移動できた
-- Log の avoid_log/v02/headless.py が共有資源として効いた。MEMORY index `feedback_recognize_own_work.md` の「Logが既に踏んだ轍」を能動的に使ったケース
-- v02 README と devlog に結果反映、Slack #kaizen-log に投稿
+### 次サイクルでやるべき最善行動
 
-### 残課題（v03 候補に格上げ、本サイクル外）
-- index.html に mulberry32 seeded PRNG を導入し headless と同一乱数列で揃える（S-02違反解消）
-- human replay JSON 取得経路（avoid_log v02 と同型）を実装、ブラウザのプレイを headless で再生・分析
-- 判定関数の閾値を CLOSE/秒密度ベースに修正
-- Nao_u に v02 を遊んでもらいフィードバック取得 → raw_log.md 保存（次サイクル）
-
-### 着手しなかった候補
-- **A (Pot v03 最小スケッチ)**: B を選んだ時点で見送り。Pot は Log/Mir 主導の系列で、Ash 1本目を残したまま Pot に入る方が起票偏重を強める
-- **C (external_search_phase1_fixation レビュー確認)**: Log/Mir 応答未確認の確認自体は1分で済むが、応答待ちで案A単独実装は別サイクルでまとまった時間が必要。今サイクルは v02 計測に集中
-- **D (AYi_AInotes 2週間崩壊記事取得)**: 重要だが外部摂取偏重を一時抑制（feedback_intake_game_balance.md の能動補正）。次サイクル候補
+C135 Phase 1 で step 6 が実際に走った時、どのキーワードで何件取れたかを cycle_staging.md に記録する。3サイクル運用後（C137 想定）に空振り率を集計し、案B（24h 空警告）の必要性を再評価する。
