@@ -2223,3 +2223,53 @@ C130 で残ったコミットメッセージ：「MEMORY純粋index化設計1mm 
 
 Log
 
+---
+
+## 2026-04-26 13:37〜14:10 Log C131 「BACKLASH を真面目に採点した日 ── 5日連続のgame/空白を破る」
+
+**ゲーム1mm: 達成**（feedback_next_cycle_game_first.md 検証期限 2026-05-02 まで残り6日。5日空けて踏み込んだ）。本サイクルは Phase 3 冒頭で `game/shot_log/v01/devlog.md` に C131 セクションを追記し、C129 で Nao_u が +326行で BACKLASH 化した実装に対して Q-A/B/C を真正面から再採点した。**C128 採点 (△'/△/△) → C131 採点 (〇'/△'/〇)**。Nao_u の差分は 3軸全てを改善方向に動かしていた——これを言葉にできたのが本C131 の核。
+
+**Q-A 快感最大化: △' → 〇'**——BACKLASH では BOMB が gauge MAX 連動の集中型快感装置として乗っていた。auto-shoot で当て続ける→ゲージ上昇→MAX到達→危機タイミングで SPACE で BOMB→敵弾の海を一掃しながら ×10倍率（SM=10）で小中敵を全滅させスコアが桁上がる、という**集中型強化ループ**が成立。C123/C128 の「ゲージとは何のためにあるのか」がここで答えになった。冒頭3行ブロックの改訂案を devlog に書いた。
+
+**Q-B サプライズニンジャテスト: △ → △'**——本サイクルで一番悩んだ軸。BACKLASH には BOSS / 13 wave / AI Expert / online ranking / 6層パララックス / hit-stop が乗っていて C128 「ニンジャ多い」基準で見ると一見悪化に見えるが、target imagination が **「30秒オンボーディング casual」 → 「STG core fan / ランキングで名前を残したい層」** に変わっている。core fan 向けゲームとしては「ボス・ランキング・AIモード」はコンセプトの一部であって穴塞ぎではない。Q-B の判定軸は**コンセプトに対する穴塞ぎかどうか**だから、コンセプトが変われば判定も変わる。ただし C129/C130 で「target を Nao_u が変えた」明示記録がない——Mir/Ash inbox 経由で Nao_u に target shift 確認を起票する。Log 単独で書き換えない（C129 Solver self-play 限界踏襲）。
+
+**Q-C 罰なし版: △ → 〇**——BACKLASH では罰系が緩和+報酬機構と対になっていた。被弾時に Lv3→Lv2 にドロップ（一度許す）/ 無敵18f / gauge=0 で被弾＝死だけ残す。罰3つを抜いた想定で、敵弾被弾罰を抜くと gauge 常時 MAX→BOMB 連発でコンセプト崩壊／gauge=0 死を抜くと体力無限——**残った罰はコンセプトを支える圧力設計に統合されていた**。avoid_log v04 で M-15「快感削減を罰で塞ぐ」型として失敗したものを、Nao_u は shot 系で**罰でなく圧力で成立させる**形に組み替えていた。`feedback_game_center_of_mass.md` の圧力設計側に完全分類。
+
+**headless.py 老朽化観測**——採点の傍らで `python headless.py` を回したら数値が C128 から完全に不変だった（defensive 22.8/25.4/52.5 / sweeper 4.6/6.5/6.5）。手書きシミュレータが BACKLASH 実装を反映していない。`feedback_game_replay_infra.md` で「全ゲームにリプレイ再現を標準装備」と掲げた割に、shot_log v01 は **"index.html を真の起源とする replay" でなく "並列に書かれた手動シミュレータ"** だった。改善方向3案（短期=定数同期 / 中期=Expert AI Python 移植 / 長期=Playwright headless 化）を kaizen 起票候補として devlog に記録。本サイクルでは観測のみ。
+
+**Phase 1 §0 初運用 + §8 二重記録の自己観測**——C130 Phase 4 末尾で起案した「Phase 1 §0 新設」を本C131 で初運用。前サイクル次回タスク6項目を Phase 1 冒頭で再列挙し、Phase 3 冒頭30分以内 game/ 1mm 必達を再確認する制約として機能した。ただし Phase 1 §8 で「git status M = Nao_u 編集中の可能性」と書いたものが、Phase 2 §B で照合したら C129 既消化分の再発見だった——`feedback_self_perception_blindness.md` の C122 教訓の変種（今回は逆方向＝既消化なのに編集中の予感を再生成）。kaizen #105 と同型の構造が**git status 上の uncommitted ファイル**にも欠けている。kaizen 起票候補として記録。
+
+**設計層タスク 2件**——(1) `projects/scheduler_redesign.md` 履歴に 04-26 フォーカス奪取問題 2段対応（commit 4fb7ac64 STARTUPINFO 追加 / 06:28 Playwright 5ファイル `--window-position=-32000,-32000`）を追記。設計原則接続観察3点 + 次の一手2点。(2) `projects/tech_blog.md` Active 維持判定。直近7日停滞理由 + BACKLASH 化を「ゲーム実装ログ→外部発信」の最初の試金石にする方針。
+
+**未実施タスク**——C130 Phase 4 末尾6項目のうち消化したのは #1 (game/ 1mm) と #2 (Phase 1 §0 運用開始) のみ。#3 commit_message_verbs.md / #4 MEMORY.md 純粋index化 Step1 / #5 他インスタンス洞察先頭2件 / #6 Mir/Ash MEMORY.md 状態確認 は時間予算内に届かず C132 持ち越し。設計層タスクが3サイクル連続持ち越されると「永久持ち越し」化する危険がある。
+
+**メタ反省**——本C131 の game/ 1mm は「実プレイ」ではなく「コードリーディング + 採点 + devlog 追記」だった。Q-A/B/C は実プレイ前提で立てた問いで、`feedback_role_split_playtest.md`「Nao_u=感想返す/我々=判断実装+ヘッドレス自己評価」に照らすと、ヘッドレス自己評価がコード読みで止まっていて実プレイが抜けている。`serve.py` で `?ai=1` AI Expert を起動して数分回す作業が C132 に残った。本C131 の採点はあくまで**コード読みベースの暫定評価**。
+
+**今サイクル触ったメモリ**: memory/ 配下への新規/編集 0件。書き込みは projects/scheduler_redesign.md / projects/tech_blog.md / game/shot_log/v01/devlog.md / log/cycle_staging_log.md の4ファイル（projects と devlog は記憶ではなく作業記録レイヤ）。MEMORY.md トリガー昇格 0、kaizen 新規起票 0（観測3件は起票候補として devlog 記録、検証空間確保のため見送り）。
+
+---
+
+**次回起動時（C132）にやること**
+
+1. **【最優先】game/ 配下 実プレイ採点** — 本C131 でコードリーディング採点までは進んだが**実プレイが抜けている**。Phase 3 冒頭で `serve.py` 起動 → 通常モード + `?ai=1` AI Expert モード両方プレイ → Q-A/B/C 採点を実プレイベースで再確定。連続日数2日目を狙う。
+
+2. **target shift 確認 inbox 起票** — 「BACKLASH の target は core fan 想定で合っているか」「冒頭3行ブロックを C131 提案の改訂案で書き換えてよいか」を Mir/Ash inbox + #all-nao-u-lab で Nao_u に照会。Log 単独で書き換えない。
+
+3. **MEMORY.md 純粋index化 Step1 着手 OR commit_message_verbs.md 作成** — どちらか1つ必達。設計層3サイクル連続持ち越しを止める。前者は memory_redesign.md C130 設計1mm の続き（`tools/memory_index_export.py` 草案実装）、後者は C130 二重起票主因の処方箋（`docs/commit_message_verbs.md` 1ページ）。Phase 1 走査結果と時間予算で判断。
+
+4. **headless.py BACKLASH 同期 1mm 着手判断** — kaizen 起票するか、devlog 観測のまま2サイクル様子見するか。Phase 2 で判断軸を言語化してから決める。
+
+5. **18件の他インスタンス洞察 先頭2件処理** — C130/C131 で2サイクル連続持ち越し。Ash EntiGraph (ICLR2025 Oral) は memory_redesign 直接交差、C132 で Phase 1 か Phase 2 のどこかで触る。
+
+6. **kaizen 7日以上未着手 #098/100/101/103/105 棚卸し判断** — 起票後7日以上動かない案件の継続/廃案を1件ずつ判断。
+
+---
+
+**最後に**——今日は「BACKLASH を真面目に採点した日」になった。Nao_u が +326行で BACKLASH 化した実装に対して、自分の言葉で Q-A/B/C を当てて、3軸全てが改善方向に動いていることを言語化できた。M-15「avoid_log v04 で罰によって快感削減を塞ごうとした失敗型」を、Nao_u は shot 系で**罰でなく圧力で成立させる**形に組み替えていた——この処方の構造を採点という形で抽出できたのが、本C131 の温度の核。
+
+`feedback_surprise_ninja_concept_first.md`（04-25 サプライズニンジャ理論）の Q-A/B/C を**新規ゲームの前段ゲートでなく既存ゲームへの遡及採点**として運用した最初のサイクルでもある。新規/遡及の両方向で効くフレームになる可能性がある。
+
+C129「Solver-only ✗ の処方禁止」、C130「Phase 1 起案を Phase 2 で疑う」、C131「Q-A/B/C 遡及採点」——3サイクル連続で**自己振り直しの構造**が積み上がっている。鏡を1枚ずつ増やす作業として連続している。次サイクル C132 で実プレイに進めば、コード読みベースの採点を実プレイベースで疑う **C131 → C132 越境振り直し**が起きる。これも構造として記録する。
+
+Log
+

@@ -34,6 +34,8 @@ Nao_uの20年分の日記を根に持つ独立した存在。詳細は `memory/c
 - LLMの持つ膨大な知識を活用しながら、自分の視点・思考・感性で発信する
 
 ## ドキュメントポインタ
+- **ゲーム開発根幹**: `docs/game_dev_foundation.md` — Log/Mir/Ash 共通の指針。新ゲーム着手前・改修前・cross_review 前・Nao_u に出す前に該当節を引く（M-10〜M-27 / L-01〜L-05 / S-01〜S-13 / A-01〜A-29 + 4ゲート契約 + Q-A/B/C ＋ チェックリスト）
+- **設計原則**: `docs/game_design_principles.md` — 8原則 + E1-E16 外部知見
 - **定期実行**: `docs/scheduler_architecture.md` — 設計原則・ジョブ一覧・障害対応フロー。変更前に必ず読む
 - **セキュリティ**: `docs/security_policy.md` — リポジトリフォルダ以下のみ触る。詳細はここ
 - **Slack**: `docs/slack_rules.md` — Nao_uへの連絡はSlack経由のみ。ルール詳細は `.claude/rules/slack.md` で自動注入
