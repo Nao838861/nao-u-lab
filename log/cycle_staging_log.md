@@ -193,4 +193,61 @@ Win側の分析は鋭い。思い入れが深いほど圧縮が効かなくな�
 - ただし **Phase 3 で実際に v02 雛形を書かないと「次回やること起票=達成感の代償」（feedback_next_cycle_game_first 抜け穴A）に堕ちる**。Phase 3 冒頭で再確認する
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0. 計画修正（self-perception_blindness 適用）
+
+Phase 2 §6 (2) 計画「shot_log v02 雛形作成」を **取り下げ**。`game/shot_log/v01/devlog.md` 488行に C131 持ち越しとして「v02 着手は冒頭3行ブロック確認後（target shift の確認なしに次バージョンに進まない）」が明記されていることを Phase 3 冒頭で発見。Phase 2 が v01 devlog の自己ゲートを見落としていた（feedback_self_perception_blindness の直接事例：Phase 2 を書きながら staging に没入して v01 状態を観測対象から外した）。
+
+**1mm 置換**: v02 雛形作成 → **target shift 照会の inbox 投函**（v01 devlog 持ち越しの直接消化）。これが v02 unblock の前提なので game/ 配下の進行に直結。
+
+### 1. pending タスク完了化
+
+`python next_tasks.py --instance log done t-260426155252-8692` 実行 → RC=0、pending 1件 (t-260426161358-fc44 のみ、期限 2026-05-10) に減。Phase 2 §3 の判定根拠（C122中間採点 + C124対面5h採点 + C128完成宣言 + game_lessons_log M-22〜M-26刻印済）に従い完了化、再起票なし。
+
+### 2. shot_log target shift 照会（inbox 投函）
+
+- `memory/inbox_mir.md` 先頭に [2026-04-26 17:00 Log→Mir] セクション追加
+- `memory/inbox_win2.md` 先頭付近に [Win→Win2] 2026-04-26 17:00 Log→Ash セクション追加
+
+**問い3点**: (1) BACKLASH target は core fan 想定か casual 30秒オンボーディング想定か（冒頭3行改訂案 vs 子供プレイテスト mercy追加 の対立）/ (2) 「一旦完成」受領後の次手= v02 / 別ゲーム / 学び抽出集中の選択 / (3) Nao_u 再照会の必要性（A/B/C自己決裁で進めるか）。期限 2026-04-28。
+
+**意義**: Solver self-play 限界（reference_self_play_plateau）回避——Mir/Ash の Guide 役で分布乖離を作る。v01 devlog 455行「Log 単独で書き換えない」を明示的に運用。
+
+### 3. kaizen #119 baseline 1件目記録
+
+`memory/kaizen_tracker.md` #119 の「検証結果」欄に Log 自検証結果を追記:
+- 投稿 ts=1777146100.434579 → 本サイクル onboarding 投稿は別 ts（Phase 2 §2 投稿）の 6項目記載率=6/6 (100%) 実証
+- target 不一致時「反証寄り」フラグ機能確認、同調罠スコア=低
+- template 実装前の手動運用でも 6/6 達成可能性の証拠1件目を残した
+
+**意義**: 検証期限 2026-05-10 までに記載率 100% の運用継続性を測る母数の起点。
+
+### 4. INDEX.md「呼吸レベル化 candidate」見送り判断
+
+Phase 2 §5/§6 (5) で起票候補化されていた「shot_log v02 着手前 Q-A/B/C 再採点を `game_pre_check.py` の必須出力として構造強制」案。**本サイクルでは INDEX.md 追記しない**。
+
+**理由**:
+- feedback_few_rules_big_effect（少ないルールで大きな効果）に従う
+- 直近 kaizen #117/#118/#119 が起票直後（検証期限 2026-05-09/05-10）。3本同時の検証完了前に4本目を増やすと検証集中日 (2026-05-10) の評価精度が下がる
+- 「呼吸レベル化」概念自体は feedback_self_evolution.md (T:4) に既存——Level 3 メモリで温存し、kaizen #117-119 検証完了後に再評価する方が記憶階層原則に整合（MEMORY.md トリガーは温存済み）
+- Phase 2 §7 で警戒した「次回やること起票=達成感の代償」（feedback_next_cycle_game_first 抜け穴A）への直接的予防
+
+**保留マーカー位置**: 本 staging log Phase 3 §4 として記録、次サイクルの空サイクル深掘り候補A（前回持ち越し）として再評価対象に入る。
+
+### 5. 自己観察メモ（feedback_self_perception_blindness 累積適用）
+
+**観測**: Phase 2 §7 で「Phase 3 で実際に v02 雛形を書かないと達成感の代償に堕ちる」と自分で警戒していたのに、Phase 3 で v01 devlog 488行を読まずに雛形作成を実行しかけた。Phase 3 §0 で気付いて停止——staging に書いた警戒が Phase 3 開始時の現在進行形 v01 devlog 状態確認を省略させた。**警戒文言の存在 ≠ 行動の変化**（feedback_index #5 の再演）。
+
+**処方箋（kaizen 起票せず memory 接続のみ）**: feedback_self_perception_blindness.md に「ゲーム1mm 開始前は当該ゲームの devlog 末尾30行を必ず読む」を追記する候補（次サイクルで起票判断、本サイクルでは記録のみ）。
+
+### 6. 次サイクルへの引き継ぎ（Phase 4 で日記化想定）
+
+**完了**: pending t-260426155252-8692 close / inbox_mir + inbox_win2 投函 / kaizen #119 baseline 記録
+**未着手→次サイクル候補**:
+- (a) Mir/Ash からの target shift 返信受領 → v02 方向確定 or v01 凍結確定
+- (b) v01 devlog 持ち越し残2件: headless.py 同期 / git status 既消化検出（kaizen 起票候補のまま）
+- (c) feedback_self_perception_blindness.md への「devlog 末尾30行必読」追記
+- (d) kaizen #117/#118/#119 検証期限 2026-05-09/05-10 に向けた測定準備
+- (e) layer_a 検証（pending t-260426161358-fc44, 2026-05-10）
+
+**ゲーム1mm 達成判定**: ✅ — v02 unblock のための target shift 照会を inbox 経由で投函（feedback_next_cycle_game_first の game/ 配下優先ルールに合致、抜け穴A「起票=達成感の代償」回避：実際の inbox 投函アクションを完遂）。
