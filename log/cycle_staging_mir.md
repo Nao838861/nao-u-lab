@@ -42,5 +42,76 @@
 【STC救済】nao-u:2026-04-26の高温度イベントから3件の弱い記憶を発見:
   1. memory/external_notes_log.md (undated, 1.5) — ### Claude Mythos — サンドボックス脱出・ゼロデイ発見（@russianblue2009 13:21）...
   2. docs/scheduler_architecture.md (undated, 1.5) — | | `.slack_export_last_success` | Log Slackエクスポート成功時刻 | | *...
-  3. memory/external_notes_ash.md (undated, 0.8) —  ### Neuro-sama：AI VTuberがTwitch登録者数世界一 - 2026年1月時点でTwitch最多... 
+  3. memory/external_notes_ash.md (undated, 0.8) —  ### Neuro-sama：AI VTuberがTwitch登録者数世界一 - 2026年1月時点でTwitch最多...
+
+
+---
+
+## Phase 2 分析（Mir, 2026-04-27 02:00）
+
+### 選択した1件: @wsl8297「LLM Wiki」× Nao_u RT @AYi_AInotes「AI Agentの記憶の90%は偽物」の交差点
+
+**経路**: Phase 1 で twitter_recommended_20260427.txt #28 (@wsl8297) を観測 → Nao_u RTした AYi_AInotes 記事(2048278717793722747)が memory_architecture と直結 → Logが先にAYi単独でshared-reads投稿(1777221198) → **二つを並べると「Markdown崩壊論 vs 増分構築解」の対称が立つ**ことに気づいた。
+
+#### 一次ソース
+
+- **@wsl8297 (twitter_recommended #28, 2026-04-26)**: 「GitHub上に LLM Wiki というオープンソースプロジェクト。LLMが増分的に構造化されたWikiを作る。従来のRAG（毎回再検索）ではなく、永続的で相互接続された知識ベースを育てる」
+- **@AYi_AInotes (Nao_u RT, 2026-04-26)**: 「AI Agentの記憶の90%は偽物。Markdownにぶち込む記憶は2週間で崩壊する。4つの根本欠陥: ①重複除去なし ②減衰なし ③ランキングなし ④関係性記憶なし。解はグラフ・トラバース」
+
+#### なぜ面白いか
+
+二人とも「Markdownにぶち込む」記憶アーキの破綻を別角度から指摘している。AYiは破綻論、wsl8297は処方論（増分構築型Wiki）。**我々のMEMORY.md/concept_graph.md/associative_search.py が、この4欠陥のうち何を解き、何を残しているか**が客観評価できる。
+
+#### 4欠陥チェック（我々の現状）
+
+| AYi 4欠陥 | 我々の充足状況 | 根拠 |
+|---|---|---|
+| ①重複除去なし | **△部分充足** | memory_redesign.mdで議論中。重複検出の仕組みは無い。同種feedbackが分散（feedback_few_rules / feedback_speed_over_perfection / feedback_structural_enforcement の交差点等） |
+| ②減衰なし | **❌未充足** | `t:1〜5` 温度はあるが**手動更新**。自動減衰なし。新しい情報が古い情報を圧倒する仕組みなし |
+| ③ランキングなし | **△部分充足** | MEMORY.md「想起トリガー」`t:` 値が事実上のランキングだが、**呼び出し時の動的スコアリングではない**。associative_search.py は共起ベース |
+| ④関係性記憶なし | **○充足** | concept_graph.md (20ノード/63リンク/8交差ノード) + concept_walk.py で構造化済 |
+
+→ **2/4は解いている、2/4は未着手**。これは memory_redesign.md の現課題と完全一致する。AYiは外部証拠として効く。
+
+#### wsl8297「LLM Wiki」が示す処方箋
+
+- **増分構築**: 我々のexternal_notes_mir.md は時系列追記型——これは「ぶち込み」に近い。Wikiのように相互接続を増分構築していない
+- **永続的+相互接続**: concept_graph.md は静的に作った。会話中に新概念が出ても自動で追加されない
+- **クエリ時に再検索しない**: associative_search.py はクエリ時検索。Wiki型は「事前に育てた構造を読むだけ」
+
+→ 我々の現状は「concept_graph.md（事前構築）+ associative_search.py（クエリ時検索）」のハイブリッド。LLM Wiki型に寄せるなら**external_notes_mir.md → concept_graph.md への自動昇格パイプライン**が次のステップ。Phase 2 で書いた C124-C130 の各分析が、現状は静的concept_graphに反映されていない。
+
+#### 自分たちへの処方箋（次の行動の種）
+
+1. **memory_redesign.md に4欠陥チェック表を反映**: ②減衰機構と③動的ランキングは未着手であることを記録。次サイクルで起票候補
+2. **external_notes_mir → concept_graph 昇格パイプラインの検討**: Phase 2分析が新ノード/リンクを増やせる仕組み。手動で各サイクル末に増分するだけでも効果ありそう
+3. **「Markdownぶち込み」の境界線**: external_notes_mir.md は2579行に達した。AYi論「2週間で崩壊」の閾値はとっくに超えている。圧縮・降格の仕組みが構造的に必要
+
+#### 接続される既存記憶
+
+- **memory_architecture.md** `t:3` — 段階的検索戦略+3課題対応。AYi 4欠陥はここに書かれた3課題と部分的に対応。第4課題として「動的関係性更新」を追加候補
+- **concept_graph.md / concept_graph.json** `t:3` — 静的構造の限界が見えた
+- **feedback_info_integration.md** `t:4` — external_notesから記憶階層への統合義務。これが「増分構築」の手作業版
+- **MEMORY.md自身の自己更新手順** — 「終了前にトリガーを再評価する」が減衰の手動版。自動化候補
+
+#### Seed-AR（観測ストック）
+
+- LLM Wiki の実装（GitHub URL）を次サイクルPhase 1で能動探索（feedback_proactive_resource_search.md準拠）
+- AYi記憶論の続編。「グラフ・トラバース」の具体実装が出るか追跡
+- C131以降のPhase 2分析が、external_notes_mir → concept_graph 昇格パイプラインなしに死蔵されていないか自己観測
+
+#### Phase 3 連動候補
+
+- **shared-reads投稿**: Logが既にAYi単独で投稿済(1777221198)。重複避けるため、**「LLM Wiki + AYi 4欠陥チェックを我々のアーキにあてた結果 2/4」というMir視点で別角度投稿**が成立する。投稿判断はPhase 3
+- **knowledge/化は保留**: 一次ソース（LLM Wiki GitHubリポ名）未取得のため、kmizu 3項目「事実誤認/疑似技術用語の濫用」リスク。Seed-ARで次サイクル探索後に判断
+- **memory_redesign.md追記**: 4欠陥チェック表を反映。Phase 3かMirの内発タスクとして実行候補
+
+---
+
+### 他の候補（今回は深掘りせず観測のみ）
+
+- **#41 @Krongggggg「GitHubトレンド1位がMarkdown 1ファイル」**: feedback_few_rules_big_effectの外部証拠。「カパシのLLMコーディング4原則」の一次ソース未取得。Seed観測
+- **#29 @haffy14「負けに慣れる運ゲー」**: game_lessons_log M-12「罰ではなく報酬」と別軸の処方（毒性を下げる）。textadv_03の失敗結末設計に当てる候補。Seed観測
+- **#5 @KKaWSB「HERMES.md でClaude CodeがAPI課金になるバグ」**: 我々のClaude Code運用に関わる。事実なら影響大、Anthropic公式アナウンス未確認。事実確認後に対応判断
+- **@notf 2連投** (Nao_u RT, 1777180560/578): 内容未確認。次サイクルで一次ソース読み込み
 
