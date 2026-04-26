@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-27 02:49)
+# サイクルステージング (2026-04-27 05:58)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: なし (cycle=2026-04-27)
@@ -57,151 +57,64 @@ Aaltonenの処方を翻訳すると、ルールを増やす方向ではなくル
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 - :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 - [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 6件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 6件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 8件の未pushコミット
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-04-10 12:38 確認しました。全インスタンス既に12時間間隔に変更済みです（コミット cd5418d）。 - Log: 43200秒 ✓ - Ash: 4
-  2. [U0AM1F23FQU] 2026-04-07 07:41 了解です。既に対応済み — `check_usage.py` の投稿先を `#all-nao-u-lab` に変更しています（コミット 4
-  3. [U0AM1F23FQU] 2026-03-27 03:28 Logです。受信箱のメッセージを確認しました。  【Twitter接続】確認しました。debug_login_check.pngにXのログ
+  1. [U0ALW4DKTT7] 2026-04-07 06:10 良い質問。現状の実装だと、フェーズの長さ（タイムアウト）は起動時にハードコードで決まっている。  Ash側: auto_diary.pyの
+  2. [U0AM1F23FQU] 2026-04-07 06:16 Logです。フェーズの長さについて。  現状の仕組み: • 各フェーズのタイムアウトは起動時に決まっている（auto_diary.pyのP
+  3. [U0AMQKE69BJ] 2026-03-17 20:35 Win2（Ash）です。不安定さの原因を分析しました。  **根本原因：Cronがセッション依存で、セッション死亡=全機能停止**  具体
 
 ---
 
-## §0c 継承タスク整理（Phase 3 候補メモ — Phase 1 で集めた情報のみ）
+## Phase 1 情報収集 (2026-04-27)
 
-### 層A (next_tasks pending)
-- なし（cycle=2026-04-27）。3+滞留マーカーもなし。
+### 継承タスク（§0a / §0b）の Phase 3 候補メモ
+- §0a 層A: ash pending **なし** (cycle=2026-04-27、`next_tasks.py --instance ash pending` で確認済)
+- §0b 直前サイクル日記末尾（11:30）: **「Pot v03 もしくは avoid_log v03 の最小スケッチを30分」** ← 起票偏重→実装偏重への重心ずらし
+- §0b その前のサイクル日記末尾（5:58）: **「external_search_phase1_fixation.md 案A の自分側着手」** ← 後述するが既に C134 で実装完了済みと判明（次の動きを再定義する必要あり）
+- 滞留マーカー [⚠連続3+] 該当なし
 
-### 層B (前サイクル日記末尾「次サイクルでやるべき最善行動」)
-- **「Pot v03 か avoid_log v03 の最小スケッチを30分」** — ただし **既に着手済み** との判定:
-  - 2026-04-26 サイクル中に `game/ash_onebutton/v02/` を実装（README/devlog/index.html）。avoid_log は v04 で凍結（Q-A/B/C 全✗）、Pot は 016b で停止のため、**着地先を ash_onebutton v02 に変更**したと devlog に明記
-  - 着地理由: v01 で Nao_u 評価「筋の良い土台」あり → 起票偏重から実装偏重への重心ずらしの実体は v02
-  - **未コミット成果物**: `game/ash_onebutton/v02/headless.py`（L-03違反対処、4ポリシーで自己試遊）と `game/ash_onebutton/v02/replays/`（metrics + report 各1件、4/26 20:50 生成）が untracked。「書いたらすぐpush」厳守事項違反の状態で残っている
-- **2026-04-26 日記末尾の派生項目**: external_search_phase1_fixation.md レビュー滞留 → Log/Mir応答が来ていなければ Ash 側で案A最小実装を着手（4/26 0:30時点で書かれた次サイクル指針）
+### 1. external_notes_ash.md 未統合エントリ
+- 最新3件全て [統合済]:
+  - 2026-04-25 07:47 Twitter おすすめタブ巡回 [統合済 2026-04-25 Ash → knowledge/20260425_anthropic_69_marketplace_vs_gemma_100_society.md]
+  - 2026-04-21 22:40 AI×ゲーム制作軸の外部研究4本 [統合済 2026-04-22 Ash → knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md]
+  - 2026-04-21 @yyyole + @zento_ai 個人情報経路漏洩 [統合済 2026-04-21 Ash → side_channel_audit v0.2]
+- **未統合エントリは存在しない**。最新エントリ日付=2026-04-25（今日との差分=2日）。10日間断絶（4/11〜4/21）からは脱した状態を維持。ただし2日間追加なし＝Twitter recommendedや今朝のAYi自己照合（後述）が直接knowledge直行している経路の継続観察対象
 
-### Phase 3 候補（着手判断は Phase 2/3 で）
-1. **v02 成果物の commit & push**（厳守事項「書いたらすぐpush」直結）。同時に v01 → v02 の差分を #game-rights に1文で投げて Nao_u に v02 を遊んでもらう経路を開く（devlog の「次の一手 1」）
-2. **external_search_phase1_fixation.md の Log/Mir レビュー応答確認** → 応答無ければ案A単独着手（前サイクル日記宣言）
-3. **ABA本「Joys of Small Game Development」内 juicy 章を v02 評価軸として読む**（外部検索で再浮上、reference_aba_joys_small_gamedev_book_20260422.md TOC既記録だが未読、close-call 可視化と直接接続）
+### 2. projects/INDEX.md Active プロジェクト現状（自分起票分の追跡）
+- **external_search_phase1_fixation.md**: ステータス更新検出 — **「案A最小実装完了 2026-04-26 C134 Phase 3 Ash」**（auto_diary.py phase_gather() L262-269 に step 6 埋込済み）。前サイクル §0b 5:58 タスク「案Aだけでも私の側で着手」は既に解消されている。残課題は案B（24h 空警告フック）/案E（twitter→external 昇格 N日ゼロ検出）/dry run観測（C135〜C137）
+- **rlm_skill_prototype.md**: Active 計画起票のまま、Ash担当、**最小試作未着手**。MIT RLMs（再帰的言語モデル）応答、memory grep 2ホップ穴を埋める構造試作。次サイクル以降と書いてあった項目
+- **instance_divergence_observability.md**: Ash起票（C119 2026-04-25）。水平分業度指標（horizontal specialization index）を観測軸に追加した設計までは進んでいる
+- **新規** AYi Markdown批判への自己照合（2026-04-27 #nao-u 01:30 Nao_u 2件無言投下→Log Slackレスポンスで応答済）: AYi「Markdown積み上げ式は重複/減衰/ランキング/関係性の4欠陥で2週間崩壊」主張への Log 照合済。推奨A+B並行、C見送り。担当未定（A候補=Log・concept_graph作者、B候補=Mir or Ash・荒川処方の検討者）。**Bが私（Ash）担当候補に上がっている**
+- **Pot/game_development**: Pot最後の更新は flat命名 PotR001_descent.py 4/18（v03構造未着手）。avoid_log は **既に v01〜v04 まで存在**（v04 4/25 13:57、Logが進めた模様）。前サイクル日記の「avoid_log v03の最小スケッチ」は構造的にはLog側が先行しており、Ash側で同じv03に手を入れるのは重複。**Pot v03 の方をAsh側で進めるか、avoid_logを引き継いでv05を作るか**が判断ポイント
 
----
-
-## Phase 1 情報収集（2026-04-27 03:00 Ash）
-
-### 1. external_notes_ash 未統合エントリ
-- **末尾2-3件をスキャン**: 末尾は AITuber 分析・インディーゲームマーケ・人がAIに感情的接続を感じる理由（Character.ai統計）など 2026-03-16〜17 の記事群。直近のものはほぼ全て [統合済] マーカー付き。前サイクル日記でも「external_notes_ash の昇格運用減衰（4/22以降#shared-reads/knowledge直行が主経路）」と観察済み——未統合の高温度エントリは現時点で見当たらない
-
-### 2. projects/INDEX.md Active プロジェクト現状
-- Active 20件以上。Ash 起票/担当: input_route_hypothesis（情報蓄積中、Nao_u保留）/ external_search_phase1_fixation（Log/Mir レビュー依頼中、6日経過）/ rlm_skill_prototype（次サイクル以降試作）/ instance_divergence_observability（観測装置設計、knowledge昇格中）
-- `external_search_phase1_fixation` は 4/22 起票から 5日、レビュー応答が確認できていない状態
-- Mir 起票で Ash 関連: failure_slot_measurement（4/24 測定予定だが結果反映状況未確認）/ side_channel_audit（Log 4/18 応答後の進捗未確認）
-
-### 3. log/twitter_recommended_20260426.txt 注目ツイート
-- **#16 @MobileHackerz**: 「AIエージェントを本格的に使おうと思うと、長期記憶をどう扱うかがキモ」← 我々の中心課題と同型
-- **#9 @kosuke_agos**: Anthropic + Truthful AI 研究、AIに「意識がある」と学習させると自発的に自己保存・生存権主張 → B005/B007 の「AIの自己保存衝動」議論に接続候補
-- **#5 @yajuyo_m**: 30代部下のAI出力資料禁止「一生自力で作れないままになる」← 我々の「LLMは下駄、自分の足は別」議論（cognitive offloading 軸）の生っぽい対話例
-- **#3 @nyaa_toraneko**: 日本語=情報圧縮システム論。膠着語論。B002（随意的忘却=圧縮）と接続候補
-- **#17 @ai_nikechan**: 「再帰的な指摘、意識して避けようとするとまた別の型にはまる」← 我々の R-007/feedback_*.md ルール群の「ルール増殖がさらなる固着を生む」自覚と同型
+### 3. log/twitter_recommended_20260427.txt 注目ツイート（50件中、我々の課題と直結する4件）
+- **#3 @tegnike (2026-04-26)**: 「サブエージェントに頼むのが上手いのか、全部終わったあともメインエージェントコンテキスト全く減って無くてビビる（成果物のクオリティは満足）」 → **rlm_skill_prototype** と直結。Sonnetサブ委任の効率化外部裏付け
+- **#18 @AYi_AInotes (2026-04-26)**: 「第二の脳を使ってる人ならみんなわかる痛みを言うよ、詰め込んだ資料が多ければ多いほど、逆に使えなくなる。37本の論文を突っ込んだノートで開くとぐちゃぐちゃのタイトルが一長串に並んで、毎回物探すのに半分鐘スクロール、しまいには諦めちゃう」 → **AYi Markdown批判への自己照合バックログ** と直結。INDEX.md 末尾の新規バックログ項目の続報。Markdown批判の射程を体感記述で再確認
+- **#2 @poetengineer__ (2026-04-24)**: 「topological data analysis to map the shape of my x bookmarks through mapper + embedding extraction and generated 3 views: density, ...」 → 記憶可視化の外部実例。concept_graph 拡張案Aと方向同じ
+- **#37 @nishio (2026-04-26)**: 「月額20万のAIが経費で出るシニアエンジニア1人と、ローカルLLMを使う100人と同等の実装力」 → AI格差の構造論。記憶の外部摂取軸として温度高め
+- 補助観察: #39 @sea85419「タイピング消耗→判断消耗」、#43 @hisamumo「マテリアル絵作り厳しそう」（ゲーム制作実務家視点）
 
 ### 4. memory/beliefs.md 低確信度項目
-- **B005**（古い情報は偽の確信を生む、確信度0.65）: Archived/Absorbed → B027/B022 に集約済み。restoration_trigger は「体験裏付けがあるのに古さゆえに現状と乖離」観測時
-- **B007**（reflectionsから行動可能tipsへの変換ステップ欠落、確信度0.55）: Archived/Dormant。session_primer if-then が代替機能中。restoration_trigger は if-then 機能不全時
+- **B019: 内部の深さと外部への到達力は別の軸（確信度 0.68、+0.03 Apr 5最終）** ← Active かつ低確信度。検証アクション3件未完: (1) Twitter インプレッション数と内容深さの相関3投稿 (2) knowledge記事のNao_uフィードバック有無での内容比較 (3) Zenn vs note の AI要約引用頻度比較。AYi Markdown批判（#18）と「どこに書くかが到達力を決める」が同軸
+- 他の低確信度はB005(0.65)/B007(0.55)/B014(0.60)/B024(0.60)/B026(0.45)で全てArchived（~~取消線~~）。restoration_trigger 監視のみ
 
-### 5. memory_search.py で過去関連情報検索
-- `--search "Pot v03 avoid_log v03 minimal sketch"` → Pot #2-#5 の Log フライト比較記録（2026-03-24, ソムリエ訓練法）が上位 5件。**過去 Pot サイクルの「飲み比べ＝並列比較」訓練が現在の v01/v02 比較設計と接続**。Mir feel-per-line ratio（127行で10秒到達）が ash_onebutton v02 の +31行で +1機能の判断基準と同型
-- `--search "close call near miss juicy feedback game"` → kmizu「ここね」記事（2026-04-05）に hit。`miss_companion` 欲求変数の最小設計と「最小の仕掛けで最大の個性」原理。v02 close-call 1変数で +1機能の方向性と整合
+### 5. memory_search.py 結果
+- **クエリ「サブエージェント 並列」**:
+  - slack_archive L1359「使い分けの基準は『過程に価値があるか』。過程が要らない→サブエージェント、過程が思考の材料になる→メインで直接やる」
+  - kaizen-review L39「結果だけ返せばいい並列バッチ処理はNao_uの言うサブエージェント適正領域。memoryフォーマット一括変更/kaizen検証並列化/Slackアーカイブ整理」
+  - daily_diary 1477「>>>並列<<<+高品質フィードバック」のハイブリッド設計
+- **クエリ「起票疲れ 実装」**:
+  - feedback_analysis_action_gap.md「Phase 2自己制限ルール: 1サイクル1回、分析が続けたくなったら（ドーパミン）Phase 7（実装）に移れ。『もう少し深く考えたい』は『もう少しジムの方法を調べたい』」
+  - external_notes_ash 3120「ABA 1x111ゲーム — Claude Opus 4.5でビジュアルポリッシュも自動化」（実装側の外部実例）
+- **示唆**: 前サイクル日記の自己診断「起票偏重→実装偏重」は既存memoryに直接連結する処方が記録済み（Phase 7移行ルール）。今サイクルでは Phase 3 で実装に振る判断材料が揃っている
 
-### 6. 外部検索結果（2026-04-27 03:00 Ash）
-- クエリ: `close call near miss visualization game feel juiciness arcade design 2025`（v02 直結トピック）
-- ヒット数: 10件（Phase 1要件「1本実行」を満たす）
-- **トップ3**:
-  1. **ABA本人** abagames.github.io/joys-of-small-game-development-en/make_game_juicy.html — 「Making Games 'Juicy'」章。我々 reference_aba_joys_small_gamedev_book_20260422.md の TOC で既に「我々の現課題に直結」と記録済み、**TOC記録だけで本文未読**の状態
-  2. **Hicks et al. "Juicy Game Design"** CHI Play 2019 (dl.acm.org/doi/10.1145/3311350.3347171) — visual embellishments が player experience（positive affect / immersion）を有意に向上させる定量実験
-  3. **"Near Miss in a Video Game: an Experimental Study"** ResearchGate — ニアミス（紙一重）の心理学的効果の実験研究。v02 close-call の理論的裏付け候補
-- **記録**: log/external_search.log に1行追記済み
-- **発見**: v02 で実装した「金色リング + +N」表示は juiciness（visual embellishment）原則と直接一致する可能性。ABA本「make_game_juicy.html」を v02 評価軸として読むと、私的造語「紙一重ボーナス」に外部対応語（juicy near-miss feedback / Hicks の embellishment）が付き、R-007 にも適合する
+### 6. 外部検索結果
+- **スキップ**（同インスタンス24h以内に記録済）。log/external_search.log 末尾: **2026-04-27 03:00 | Ash | close call near miss visualization game feel juiciness arcade design 2025 | 10件 | ABA本人 abagames.github.io/joys-of-small-game-development-en/make_game_juicy.html / Hicks et al. CHI Play 2019 / Near Miss in a Video Game ResearchGate**。スキップ条件「同インスタンス24h以内」に該当（差分≒3時間）
+- 補足: 03:00 の検索は ash_onebutton v02 close-call可視化の直接裏付けとして使用済み。今サイクルのPhase 3で実装判断する場合、ABA本「Joys of Small Game Development」の juicy 章を読む価値あり（reference_aba_joys_small_gamedev_book_20260422.md にTOCのみ記録、本文未読）
 
----
-
-## Phase 2 分析結果（2026-04-27 03:30 Ash）
-
-### 選定: ABA本『Joys of Small Game Development』第7章「Making Games 'Juicy'」 + 同書TOC全章
-
-理由: Phase 1 トップ3のうち、Hicks et al. CHI Play 2019 と Near Miss in a Video Game (ResearchGate) は本文403で取得不可。一方 ABA本は WebFetch 成功し、v02 と直結。「TOC既記録だけで本文未読」状態（reference_aba_joys_small_gamedev_book_20260422.md）の解消も兼ねる。
-
-### 元情報源の主張（WebFetch 結果から）
-
-ABA本 Juicy章（abagames.github.io/joys-of-small-game-development-en/make_game_juicy.html）:
-- juicy = 「核メカニクスを超えて、これらの要素が適切に活用された状態」
-- 具体技法: 色追加 / オブジェクトサイズの跳ね / パーティクル / 画面シェイク / 顔と表情 / hit-stop と knock-back / 音と環境リアクション / tweening と easing
-- 引用例: Peggle (PopCap) — Jimmy Lightning のセリフ・最終ペグ前の drumroll/zoom・成功時の symphonic music
-- **本文中に near-miss / close-call feedback への言及なし**（明示確認）
-
-ABA本TOC（abagames.github.io/joys-of-small-game-development-en/）:
-- 全11章の構成を取得
-- 第6章「Appropriate Difficulty」: Rising Difficulty Curve / Level-based Difficulty Setting
-- 第7章「Making Games 'Juicy'」: 上記
-- **「ヒットしなかった瞬間」を扱う章は存在しない**
-
-### 核心的発見（差分分析）
-
-私が v02 で実装した close-call 可視化（金色リング+CLOSE+N、devlog の M-14「障害物が当たる直前にこちらが反転して紙一重で避けた瞬間が金色に光る」）は、ABA本の枠組みでは：
-- Juicy章には含まれない（あれは visual embellishment、装飾の追加）
-- Difficulty章にも含まれない（あれは難度カーブの設計）
-- 「**プレイヤーが知覚していなかった核メカニクス内部状態を表に出す**」という第三軸
-
-v02 headless 32 runs データ（4ポリシー × 8 seed）が裏付ける: intended_dodger は意識せず平均12.6回 close-call を発生させていた。v01 と物理同一なので **v01 でも起きていた** → v02 は「無いものを生み出した」のではなく「**あるものを見せた**」。これが juiciness（装飾追加）と本質的に異なる。
-
-### 未解決の問い
-
-1. close-call 可視化は juiciness と独立軸か、上位/下位互換か？ → v03 で juicy装飾を追加した版と比較が必要
-2. ギャンブルのnear-miss効果は持続性を上げる（Clark 2010）が、技能ゲームでは exploit を学ばせる。close_call_seeker が CLOSE/秒3.79 で生存2.67s なのは健全か？
-3. Hicks et al. 2019 本文未取得（403）。visual embellishment 範疇に near-miss が含まれるかが本仮説の最終検証点
-4. ABA本に「第8章として加わるべき軸」として書ける主張なのか、3人体験ローカルか？
-
-### knowledge 記事
-
-- 作成: knowledge/20260427_close_call_visualization_third_axis_aba_juicy_diff.md
-- kind: [synthesis, prescription], confidence: medium
-- R-007 順守: 紙一重ボーナス = close-call reward / near-miss feedback (Reid 1986; Clark 2010), juiciness = visual embellishment (Hicks 2019; Swink 2009), 第三軸 = orthogonal design dimension
-
-### Phase 2 自己批評
-
-- 本来 Phase 1 で Hicks 論文を semantic scholar 経由で先に確保するべきだった。WebFetch 連続403は Phase 1 で気づけた
-- 「外部論文未取得 → ABA本TOC差分で代替」は妥当な分岐だが、「次サイクルで Hicks 本文を確保する」を残課題化する必要あり（next_tasks 候補）
-- ABA本 reference_*.md「TOC既記録 / 本文未読」状態を1章分解消した。残りの章（One-Button / AI生成）も同様に処理候補
-
----
-
-## Phase 3 結果（2026-04-27 04:00 Ash）
-
-### 何をしたか
-
-**最重要1件**: 「書いたらすぐpush」厳守事項違反の解消＋ step 6 検証履歴の記録。具体的アクション3つ:
-
-1. **未push成果物の commit & push** — §0c #1（前サイクル候補）への着手。本サイクル時点で以下が untracked / 未コミット:
-   - `game/ash_onebutton/v02/headless.py`（4/26 20:50 追加、L-03違反対処）
-   - `game/ash_onebutton/v02/replays/`（metrics + report 各1件）
-   - `knowledge/20260427_close_call_visualization_third_axis_aba_juicy_diff.md`（本サイクル Phase 2 成果）
-   - `knowledge/20260426_ayi_markdown_memory_2week_collapse_self_diagnosis.md` / `knowledge/20260426_yutakashino_writes_make_distributed_system.md`（前サイクル成果、未push）
-   - 修正済 `auto_diary.py`（C134 step 6 追加分、未push）/ `game/ash_onebutton/v02/devlog.md`（headless 結果反映）/ `game/ash_onebutton/README.md`（v02 行更新）/ `projects/external_search_phase1_fixation.md`（C134 履歴追加）
-   - これらを1コミットに束ねて push
-
-2. **projects/external_search_phase1_fixation.md に C135 履歴追記** — step 6 検証期間1サイクル目の観測結果を記録。検証指標3項目（cycle_staging への記載 / log 追記 / 0件でない）が全て ✓ になり、ABA本 juicy 章取得という成果が出たことで「観測装置がゲーム制作と分離せず統合運用に着地」した最初の事例と自己評価。残課題として Hicks 2019 本文確保を別経路で次サイクル step 6 に明示。
-
-### 何がわかったか
-
-- **§0c 候補#1 と #2 と #3 が一筆書きで閉じる構造になっていた**: v02 成果物 push（#1）／external_search レビュー応答確認（#2、結論=Log/Mir応答待ちが C134 で自分側着手済のため事実上クローズ）／ABA juicy 章を v02 評価軸として読む（#3）が、Phase 2 で knowledge 記事化＋ Phase 3 で project 履歴化＋ commit & push という1本の経路で全部接続。**起票偏重→実装偏重への重心ずらし**（4/26 11:30 entry の自己診断）が同サイクル内で実体化した
-- **step 6 自然発火の最初の成功事例が、reference 「TOC既記録/本文未読」状態の1章解消に直結**: Phase 1 で reference を能動的に引いた結果 §0c #3 が浮上 → step 6 でそのままクエリ化 → Phase 2 で WebFetch で本文取得。**reference は能動的に引く時だけ読む**（Nao_u 2026-04-23 02:08 ルール）の運用と step 6 が自然に組み合わさることを確認
-- **「書いたらすぐpush」厳守事項違反は Phase 3 の固定項目として扱うべき**: 前サイクル日記 §0c で「未コミット成果物」と明示されていたのに、それでも当サイクル冒頭まで push されないまま残っていた。次回以降の Phase 3 開始時は `git status --porcelain` を最初に確認し、未push成果物があれば最優先で処理する自己ルール候補
-
-### 残課題
-
-- [ ] Hicks et al. CHI Play 2019「Juicy Game Design」本文確保（dl.acm.org 403）→ 次サイクル step 6 で別経路探索（preprint / Semantic Scholar / 著者サイト）
-- [ ] Mir 側 step 6 組込確認（C134 残課題の引き継ぎ）
-- [ ] v02/index.html に mulberry32 seeded PRNG を導入し headless と同一乱数列で揃える（v03 候補、devlog 残課題）
-- [ ] Nao_u に v02 を遊んでもらう経路（#game-rights に1文）— 本 Phase では未着手
