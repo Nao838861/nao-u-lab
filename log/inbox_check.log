@@ -2925,3 +2925,7 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 **やったこと**
 - Nao_uの懸念（フォーマット崩れで破綻）を漏れ地図 L1-L5 に分解し、自然言語ルール追加路線そのものが「同じ轍」と診断
 - 構造処方として層A（`next_
+[2026-04-26 15:29:13] Inbox win2 has content — waking Claude
+[2026-04-26 15:29:13] [COOLDOWN] win2: 31回連続エラー → 120分クールダウン
+[2026-04-26 15:29:13] Error waking Claude for win2: [WinError 206] ファイル名または拡張子が長すぎます。 — restoring inbox (consecutive errors: 31)
+[2026-04-26 15:40:02] [COOLDOWN] win2 is in cooldown (109m10s remaining) — skipping Claude wake
