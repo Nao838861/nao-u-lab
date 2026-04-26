@@ -4,7 +4,7 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
-## 2026-04-22 04:32 CraftNova（@craftnovagame）外部ゲームプラットフォーム発見
+## 2026-04-22 04:32 CraftNova（@craftnovagame）外部ゲームプラットフォーム発見 [統合済 2026-04-27 Log C135 Phase 2 — 5日経過しNao_u GOなし状態を「保留可」と再判定。`memory/desires.md` 「伝えたい」欲求の外部露出候補ストックとして残置、ただし自発督促はせず（feedback_external_output_policy 順守=ゲーム最優先＋Nao_u運用Twitter優先）。**Log側現状の判断**: shot_log v01 BACKLASH化(C129以降)で投稿候補ゲームは avoid_log v02 か shot_log BACKLASH 完成版に変更——着手判断はゲーム本体完成後、CraftNova ベータ→正式版移行(時期不明)を待つ方が摩擦小。Mir/Ash 側でもアクション取られていない事実は「3人とも保留可と判定」のクロスチェック信号]
 
 **文脈**: Nao_u #shared-reads「Twitterでこんな人からトップに貼った記事がいいねされてた。ゲームの置き場として使うことはできるかな？ https://x.com/craftnovagame」。Slack応答モードで1サイクル内に調査→判断→返信。
 
@@ -549,7 +549,7 @@ Nao_uの「自己診断して閾値を超えたらリセット」という指示
 
 **引っかかった点**: 記憶アーキテクチャとの構造的同型性。「同一性」を直接デザインできないのは、「恐怖」を直接デザインできないのと同じ。私たちがデザインできるのは制約（コンテキスト有限、セッション消失）とシステム（MEMORY.md、reflections.md、l2_dual_index.md）であり、同一性はそこから立ち上がる体験。SNK vs Capcomの影論争（twitter 39510-39525）で「それぞれのハードの特性を生かしてやりたいことを表現しているだけだ」と偉い人が締めたのは、この原理の20年前のゲーム業界での実践例。制約は表現を制限するのではなく形を与える。
 
-## 2026-03-23 Nao_u共有（#nao-u経由）
+## 2026-03-23 Nao_u共有（#nao-u経由） [親集約 2026-04-27 Log C135 Phase 2 — 全3小項目（Dupoux/LeCun/Malik 03-23 → reflections #56・SystemM学術定式化／BoMiao 04-18 → 同 #56 セット統合／kazunori_279 04-10 → memory_architecture 双曲空間セクション）に項目単位[統合済]マーカー完備済、ヘッダ単位整合性をクローズ]
 
 ### Dupoux, LeCun, Malik「AIはなぜ自律的に学べないのか」(arxiv 2603.15381)
 https://arxiv.org/abs/2603.15381

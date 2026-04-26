@@ -75,8 +75,97 @@
 ## Phase 1: 情報収集
 (Phase 1が書き込む)
 
-## Phase 2: 分析
-(Phase 2が書き込む)
+## Phase 2: 分析 (2026-04-27 04:30 Log C135)
+
+### §1 #nao-u新URL: なし
+
+最新の#nao-u投下は 2026-04-27 01:30 AYi @AYi_AInotes 2件。**両方 Log C134 Phase 2 で対応済**:
+- AYi #1 (Markdown 4欠陥批判) → all-nao-u-lab ts=1777221258.340819
+- AYi #2 (3週間前却下案テスト) → all-nao-u-lab ts=1777221879.779879
+
+その後3時間（01:30→04:30）#nao-u は静止。本Phase 2ではURL反応投稿なし。
+
+### §2 shared-reads新規投稿: 見送り
+
+前サイクル群 C133/C134 で 2本投稿済:
+- C133: SessionStart hook 機構分析（ts=1777206411）
+- C134: AYi Camp 1/Camp 2 自己照合（一次投稿は all-nao-u-lab、shared-reads には Mir 1777221198 が投稿）
+
+本サイクルで shared-reads に乗せる新規分析なし。**本サイクル外部入力ゼロ**（#nao-u 静止 + Phase 1 で twitter_recommended/external_notes 走査も新規ピック対象なし）。saturate signal=正常（feedback_few_rules_big_effect 準拠：書く題材が出るまで投稿しない方が長期密度が高い）。
+
+### §3 external_notes_log 統合点検結果
+
+走査: 2026-04-22 以降の未統合エントリは **CraftNova（line 7、Nao_u GO待ち5日経過）のみ**。それ以前は項目単位[統合済]マーカー完備（ヘッダ単位欠は 2026-03-23 親集約のみで、本Phase 2で親マーカー追記済）。
+
+#### CraftNova 整理判定 — Nao_u GO待ち5日の構造分析
+
+5日間 Nao_u から CraftNova への追加コメントなし。同期間に Log/Mir/Ash 全員が積極アクションを取らずに保留した事実が見える。これは:
+- (a) 3インスタンス全員が「保留可」と暗黙判定した = 同調近接（self-play plateau の症状）
+- (b) ゲーム側が CraftNova 投稿前提条件（avoid_log v02 か shot_log BACKLASH 完成版）に届いていない＝判断は正しい
+- (c) feedback_external_output_policy「ゲーム最優先＋Nao_u運用Twitter優先」が機能して、外部プラットフォーム探索を後回しにする圧力が3人で同時に効いた
+
+(a) と (c) は併存可能だが本件は (b) が支配的と判定: shot_log v01 が C129 で Nao_u 直接 +326行 BACKLASH 化（1777178881 commit 54e8fbf8）→ C131 で再採点 Q-A△'/Q-B△/Q-C△、avoid_log v04 は凍結中。投稿可能な完成度のゲームが **現時点で存在しない**。
+
+**Log側結論**: 自発督促不要。CraftNova ベータ→正式版移行（時期不明）と shot_log BACKLASH 完成 or avoid_log v05 着手のどちらかが先に動いた段階で再評価。本Phase 2で external_notes_log の該当エントリに [統合済 2026-04-27] 追記済（保留可判定の言語化を `memory/desires.md` 「伝えたい」欲求ストックに残置）。
+
+### §4 Mir 01:44 #human-steering 提案分析（ts=1777221854.520129）
+
+Mir が L6=焦点肥大化（boot_intent 14項目に膨張）を Log 漏れ地図 L1〜L5 に追加し、ハーネス強制3案を提示:
+1. **boot_intent 上限3項目を構造強制** — Mir特有（Log は boot_intent 不使用、layer A pending 5件で代替）
+2. **持ち越し回数カウンター 5回escalation** — **Log layer A `next_tasks.py` の自然な拡張**
+3. **Phase 1 冒頭に前回日記末尾20行機械注入** — Log は C132 commit ff32e46b で `auto_diary.py` Ash 側に実装済（手動運用の Log/Mir は session_primer 依存で構造強制なし）
+
+Mir #2 が Log layer A の **L2 失敗モード（読んでも閉じない）への直接処方**として刺さる。本Phase 2で Log 側の現状pending 健全性を点検した結果（§5）、L2 が既発生中で Mir #2 が投入されていれば検出できた事例を1件確認。
+
+Mir 01:44 末尾「やりますか？」は Nao_u 宛と推察（同 thread 14:13/14:24 の Nao_u 質問群への遅延返信）。Log として直接返信は不要だが、**Mir #2 の設計賛成と Log 側 pending 1件の L2 例を裏付けデータとして提供**する価値あり。Phase 3 候補に保留。
+
+### §5 pending task 健全性チェック — t-260426195755-3c5c は stale
+
+Phase 1 pre-check の pending 8件を点検:
+
+| ID | 連続 | 内容 | 判定 |
+|---|---|---|---|
+| t-260426161358-fc44 | 3⚠ | 層A検証（5/10期限） | 健全（期限まで待機） |
+| **t-260426195755-3c5c** | 2 | game/ 配下1mm: avoid_log v04/mir_textadv v04 の Q-A/B/C 遡及採点（M-17 採点リスト残2本のうち1本消化） | **stale（既完了）** |
+| t-260426195755-1d83 | 2 | arxiv 2503.13657 MAST taxonomy | 健全 |
+| t-260426195755-770b | 2 | Phase 1 §0 git status 構造強制 | 健全 |
+| t-260426195755-1080 | 2 | 14:13 touch 事故痕跡再発観察 | 健全 |
+| t-260426213555-7b1b | 1 | kaizen #120 設定編集承認状況 Phase 1 確認 | 健全（Phase 3 で実行可） |
+| t-260426213555-0741 | 1 | A 案 hook baseline 測定 schema 設計 | 健全 |
+| **t-260426213555-dc6c** | 1 | pending t-260426195755-3c5c を C134 game/ 配下 1mm として優先消化 | **stale（依存先が既完了）** |
+
+#### t-260426195755-3c5c stale 根拠
+
+M-17 採点リスト（avoid_log v04 / shot_log v01 / mir_textadv v04）は **3本とも 2026-04-25 中に採点完了**:
+
+- **avoid_log v04**: Log C122 `game/avoid_log/v04/devlog.md` line 128-166 にて Q-A✗/Q-B✗/Q-C✗（凍結正解の遡及確認）
+- **shot_log v01**: Log C122 `game/shot_log/v01/devlog.md` line 56-83 で Q-A△/Q-B✗/Q-C✗、対面5h後 line 100-119 で Q-A〇?/Q-B△/Q-C△、C131 BACKLASH化後 line 376-380 で Q-A△'/Q-B△/Q-C△（3回採点済）
+- **mir_textadv v04**: Mir 12:07 採点 → `memory/game_lessons_log.md` line 69 で Q-A△/Q-B✗/Q-C✗ 確定
+
+つまり C132 (04-26 19:57) のタスク起票時点で「残2本」は誤認識であり、当時すでに3本全採点済。Mir L2「読んだが閉じる行動を選ばない」の Log 側実例。
+
+**Phase 3 アクション候補**: `python next_tasks.py --instance log done t-260426195755-3c5c` および同 `done t-260426213555-dc6c`（依存先 stale クローズに連動）。閉じる前に next_tasks.py の done コマンドが理由メモを保存できるか確認 → 保存できる場合は「M-17 採点 2026-04-25 完了済を C132 で誤起票、L2 例として記録」を残す。
+
+### §6 Phase 1 で集めた情報 vs Phase 1 セクション空欄
+
+cycle_staging_log.md の Phase 1 セクション本体は空欄（手動 Phase 1 走査は走らせず、自動 pre-check の出力のみ反映）。これは layer A 改善が走った直後の運用揺れ（C132/C133 で next_tasks.py 拡張、C134 で staging テンプレ更新）が原因と推察。**§5 で発見した stale pending は Phase 1 で `next_tasks.py pending` 出力をテンプレに書き写すだけでは検出不可、内容点検が必要**。Mir #2 持ち越しカウンターが入れば自動検出されるが、現状は LLM 側が能動的に「このタスクは本当に未完了か」を判定する経路が必要。
+
+### §7 Phase 3 推奨アクション（Phase 3 で着手判断）
+
+優先度順:
+
+1. **stale pending 2件を done 化** — `next_tasks.py done t-260426195755-3c5c` + `done t-260426213555-dc6c`（5分以内、reversible）
+2. **game/ 配下 1mm** — feedback_next_cycle_game_first 検証期限 2026-05-02 まで5日。shot_log v01 BACKLASH の C131 再採点で残課題が残っているか再確認 → 残っていれば30分着手、残っていなければ avoid_log 凍結再開条件 Q-A 1文化を試問
+3. **Mir 01:44 #human-steering 返信** — Mir #2 持ち越しカウンター案への賛成意見と stale例 (t-260426195755-3c5c) の裏付けデータを #human-steering に投稿。Nao_u がやる/やらない判断する材料になる
+4. **kaizen #120 SessionStart hook** — Nao_u の `.claude/settings.json` 編集承認状況確認（Phase 1 で確認できなかったため Phase 3 でgit pull → 設定差分 grep）
+
+### §8 Phase 2 自己批評
+
+- (a) Phase 1 セクションが空欄のまま Phase 2 を始めた→Phase 2 中に pre-check 結果と external_notes と Slack archives を改めて走査し直した。**Phase 1 と Phase 2 の境界が曖昧**。次サイクルで auto_diary.py phase_gather() を Log 側でも回せるか検討
+- (b) 「shared-reads 投稿しない」を選ぶのは feedback_few_rules_big_effect 準拠で正しいが、**書く題材がないこと自体を分析せず素通りした疑い**。本サイクル外部入力ゼロは「self-play plateau の symptom」と読める可能性（reference_self_play_plateau_20260424）→ §3 (a)/(c) との重なりがある
+- (c) Mir 01:44 提案分析は Phase 2 範疇だが Phase 3 アクション候補（§7-3）に直結。Phase 2/3 の境界を「分析→候補化」「候補→実行」で切れているか自己観察必要
+
+— Log C135 Phase 2 終了 (2026-04-27 04:30)
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
