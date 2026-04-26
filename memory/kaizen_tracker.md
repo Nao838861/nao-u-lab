@@ -27,6 +27,23 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #122: autonomous_cycle.sh 末尾フックに「自走規律3点」構造強制を組込（boot_intent ラベル照合 + focus 項目数3以下強制 + 持ち越し回数閾値アラート）
+- 提案者: Mir（2026-04-27 C136 Phase 3。C131焦点(1)(4)(5)→C133焦点(4)(5)(6)→C134焦点(4)(5)(6)→C135焦点(2)→C136焦点(2) と5サイクル連続「次サイクルで起票」と書き続け持ち越した、Mir 自身の自走規律破綻3事案を1本に束ねて構造強制化）
+- 適用日: 2026-04-27（起票のみ。実装は Phase 3 続行 or 次サイクル）
+- 検証期限: 2026-05-11（2週間枠、#121/#120/#119 と同期）
+- 検証手段: (1) `autonomous_cycle.sh` 末尾フックに3点ともスクリプトとして実装されている（`scripts/check_boot_intent_drift.py` または同等の単一スクリプトでよい） (2) 段階1: `scripts/check_boot_intent_drift.py` 実行時に boot_intent.md の焦点ラベル（"C\d+焦点"）と直前commit log の cycle 番号が一致しない場合 stderr に WARN を出力する (3) 段階2: boot_intent の「起動時の焦点」セクションが項目数4以上もしくは「達成条件」（数値/具体動詞/期限）の付かない項目が含まれる場合 stderr に WARN を出力する (4) 段階3: layer A `next_tasks.jsonl` で同一 task が5回以上 pending 状態で持ち越されている場合 #human-steering に「持ち越し5回 escalate 候補: [task]」を投稿する（ハーネス側の通知ルートは既存 slack_bot.py を流用） (5) 2026-04-27〜05-11 の期間で本フック実発火事例が staging に1件以上記録されている
+- 改善内容: 単一スクリプト `scripts/check_boot_intent_drift.py` を新規実装。3チェックを内包し、autonomous_cycle.sh の Phase 4 後段（commit/push 後）から呼び出す。WARN は stderr 出力のみで cycle 進行は止めない（feedback_speed_over_perfection 準拠：人間の監視を前提に速く走る）。段階3の Slack 投稿は escalate 判断の補助情報として人間に届ける、AI 内自己完結ループに閉じない。実装規模目安: スクリプト本体 ~120行、autonomous_cycle.sh への組込み 1ブロック (~5行)。
+- 期待効果: 「自分で立てた規律が自分で守れていない」3事案を AI 自己申告（次サイクル boot_intent への記載）に頼らず、構造強制で必ず観測する。Mir C131-C135 の「焦点13サイクル連続放置」の構造的再発防止。Log/Ash でも同型自走規律破綻が観測されているため、3インスタンス横展開可能（slack 通知部のみ instance ごとに調整）。
+- 根源原理との接続: 原理5「自分の記憶を自分で守り、育てること」+ feedback_structural_enforcement.md「手動手順は守れない、構造で強制せよ」の自走サイクル側適用。boot_intent 自体が「LLM が書いて LLM が読む」自己完結ループに閉じている問題への外形装置。feedback_speed_over_perfection.md と矛盾しないため stop ではなく WARN 設計。
+- 出自: Mir C131 焦点(1)(4)(5) で起票判断を切ると決めて C133 で素通り、C134 焦点(4)(5)(6) で再決意して持ち越し、C135 焦点(2) で「レビュー負荷が高い」を理由に分離してさらに持ち越し、C136 焦点(2) で「3本同時1本起票」として実行——5サイクル連続持ち越し自体が本 kaizen の正当化根拠。
+- Nao_u 承認依頼事項: 段階3 の Slack 投稿は #human-steering に届く——通知ノイズが許容範囲かは Nao_u 側で判断。閾値を5回でなく10回に上げる選択肢もあり。
+- 検証担当: Mir
+- クロスチェック: Log=未 / Mir=未 / Ash=未
+- 状態: 起票済（2026-04-27 C136 Phase 3）、実装は Mir 担当で C137 以降
+- 検証結果:
+
+---
+
 ### #121: WebSearch 経由 arxiv ID は shared-reads 投稿前に WebFetch 1本で実在確認を必須化
 - 提案者: Log（2026-04-27 C137 Phase 3。本サイクル Phase 1 §6 で WebSearch から取得した3本のうち2本（FadeMem arxiv 2603.24639 / AgeMem）が hallucinated arxiv ID と発覚。Phase 2 でこの3本を「selective forgetting 軸」と勝手に括った分析も連動して間違い、Phase 3 冒頭の URL 検証で発覚→shared-reads を Survey 1本に縮小）
 - 適用日: 2026-04-27（Log Phase 3 で運用開始、structural enforcement は Phase 4 起票後）

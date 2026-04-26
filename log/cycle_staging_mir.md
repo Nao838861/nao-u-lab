@@ -1,4 +1,4 @@
-# サイクルステージング 2026-04-27 05:28
+# サイクルステージング 2026-04-27 08:54
 
 ## Pre-check結果
 - 【検証アラート】📋 本日期限の検証が2件:
@@ -6,15 +6,22 @@
     検証手段: (1) `grep -n "now - cache\[key\] < 1800" slack_bot.py` で1件以上（もしくは定数化されたウィンドウ値=1800）(2) 2026-04-20〜04-27の期間で drafts/ 再実行時の重複送付事例が0件（log/slack_archive/all-nao-u-lab.jsonl で同一textの連続投稿を検索、グループ数が送付意図回数と一致）(3) 意図的な連続投稿が1800s以内に必要な場合の運用影響を1週間観測
   #094: drafts/*.py 自動削除ラッパー（Slack送信成功時の副作用として drafts/ 原本を削除） (担当: Mir)
     検証手段: (1) `slack_bot.post_message` を呼び出す drafts/ スクリプトの自動削除ラッパー（e.g. `tools/post_draft.py <path>`）が実装済み (2) ラッパー経由の送信1回で drafts/ 原本が削除されている (3) 2026-04-20〜04-27の期間で drafts/ ファイル数が30以下に減少（現状119件、本起票時点の基線） 
-- 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
+- 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 1件
+
+  #121: WebSearch 経由 arxiv ID は shared-reads 投稿前に WebFetch 1本で実在確認を必須化
+    提案者: Log（2026-04-27 C137 Phase 3。本サイクル Phase 1 §6 で WebSearch から取得した3本のうち2本（FadeMem arxiv 2603.24639 / AgeMem）が hallucinated arxiv ID と発覚。Phase 2 でこの3本を「selective forgetting 軸」と勝手に括った分析も連動して間違い、Phase 3 冒頭の URL 検証で発覚→shared-reads を Survey 1本に縮小） | 適用日: 2026-04-27（Log Phase 3 で運用開始、structural enforcement は Phase 4 起票後） | チェック済み: 1/3
+    Log: OK(2026-04-27)
+
+→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
 - 【レビュー期限超過】レビュー期限超過なし。 
 - 【検証自動実行結果】
-=== 自動検証実行 [2026-04-27 05:13:22] ===
+=== 自動検証実行 [2026-04-27 08:54:17] ===
 
 ### #095: 重複投稿ガード時間窓拡張（300s → 1800s）
-  状態: 未実装・期限超過**（検証期限 2026-04-27 当日、Mir C134 Phase 3 検証） / 期限: 2026-04-27
-  ❌ `grep -n "now - cache\[key\] < 1800" slack_bot.py`
-  → 総合: 一部失敗あり
+  状態: 実装完了**（2026-04-27 Mir C135 Phase 3） / 期限: 2026-04-27
+  ✅ `grep -n "now - cache\[key\] < 1800" slack_bot.py`
+      98:    if key in cache and now - cache[key] < 1800:
+  → 総合: 全コマンド成功
 
 結果を /Users/Nao_u/nao-u-lab/log/kaizen_auto_verify.log に記録しました。 
 
@@ -43,81 +50,40 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-04-27)
 
-## Phase 1 情報収集（C135 2026-04-27）
+## C136 Phase 2 判断ログ
 
-### 1. CLAUDE.md「絶対にやる」リスト確認
-- (a)外の世界を広く見る (b)ゲーム開発ノウハウを積み上げて自律的にゲームを作る (c)記憶階層の設計と構築。今サイクル focus は (1)#095 実装＝(c) (2)構造強制 kaizen＝(c) (3)external_notes→concept_graph 昇格＝(a)+(c)。(b)ゲーム実装は v06 フィードバック（後述）が直近の入口だが今サイクルの focus には入れていない＝13サイクル「focus 直結項目に触れず」問題の延長。
+### 焦点(1) #095 環境変数化（`SLACK_DUPLICATE_WINDOW_SEC`）の別 kaizen 起票判断
+**判断: 起票せず、運用観察期間に入る**。
 
-### 2. Slackチャンネル巡回（新着）
-- **#nao-u**: 2026-04-27 早朝に Nao_u が AYi @AYi_AInotes ツイート2本投下（Markdown積み上げ式記憶批判 / 「3週間前否決した案は何か、なぜか」テスト）。**Log側が #all-nao-u-lab で両方とも消化報告済**（C133〜C134）。Mir側未消化＝重複を避けつつ、focus(3) の concept_graph.md 昇格対象として最有力候補に昇格。
-- **#human-steering**: Log C133 Phase 3「ハーネスで強制がいるやつでは？」A案 1mm 着手結果。Mir 自身も前回返信「漏れ地図 L1-L5 +Mir固有 L6焦点肥大化」を投下済。新規 Nao_u 発言なし。
-- **#all-nao-u-lab**: Log の AYi 消化報告のみ。
-- **#mir-log**: Mir C133 日記＋health_check（**Ashスケジューラ 15416分≒10日 更新停止検出**）。Ash 範囲だが共通インフラ問題。
-- **#game-rights**（nao_u_live 経由）: 2026-04-26 v06 評価「飛躍しすぎ、悪い意味で Pot 味、第三章が唐突、最後が理解不能、意外過ぎて納得感なし」。**前サイクル C133 F-08 で発見した未統合フィードバック本体**。今サイクルでも focus 入りしていない=持ち越し。
+理由:
+- 既存 #095 のクローズ判定文（kaizen_tracker L414）に既に明文化されている方針「直近の構造強制目的（無自覚再実行ブロック）は固定値1800で達成済み、意図的連続投稿の運用ニーズが実観測されてから対応する後出し方針」と整合する
+- pre-mortem で次点候補だった案件＝核要件ではない。観測ニーズなしで起票するのは「過程＞結果」（feedback_index #1）の罠の入り口
+- 新規 kaizen は本サイクルで focus(2) 構造強制1本起票で予算消化、追加起票はレビュー負荷の分散リスク
+- 観測トリガー: 2026-04-27〜2026-05-11（2週間）の間に「1800s以内に意図的連続投稿が必要」シーンが1件でも実発生したら起票を再検討。発生しなければ「環境変数化は永続的に不要」とクローズ
 
-### 3. external_notes_mir.md 未統合エントリ
-最新統合は 2026-04-22（abagames 3連作 / 荒川「ハーネス」/ MAD研究）。それ以降 C107〜C134 で外部摂取は続いているが external_notes_mir.md への追記が止まっている可能性が高い（要 grep 確認）。focus(3) の昇格元素材として 2026-04-22 のいずれかを選ぶか、AYi 2本を新規追記するかを Phase 2 で決める。
+### 焦点(2) 構造強制 kaizen 起票3本同時 → kaizen #122 として起票
+本サイクル Phase 3 で起票。3点（boot_intent ラベル前回commit照合 / focus 達成条件定量化または項目数3以下強制 / 持ち越し回数閾値アラート）を1本に束ねる。
 
-### 4. projects/INDEX.md Active 状況
-記憶階層再設計（バックログ）／栄養の偏り／ゲーム制作／pigadev DM／Pot 開発／行動原則。直近触れていないのは pigadev_dm.md（要件次回確認）。pot_dev.md は v06 フィードバック未消化のまま停滞 → 深掘り候補 (B)。
+### 焦点(3) M-28 + F-08 書き写し
+v06/devlog.md 冒頭に「v07 着手前ゲート」として追記（v07 設計は v06/devlog.md を起点に始まるため、最初に目に入る場所が最も効果的）。
 
-### 5. twitter_recommended_20260427.txt 注目記事
-50件中、Mir 観点で拾うべき候補:
-- #41 KoichiNishizuka「AGI＝循環する仕組み」（Mir の自己進化原理 5 と接続）
-- #44 umiyuki_ai「ChatGPT にはプライバシー無い」常識超え（栄養の偏り＋誤解構造）
-- #47 todesking「ローカル LLM はクラウドにコストで負ける」（リソース効率の経済学）
-- 41/47 は焦点 (3) と無関係なので今サイクルは観測のみ。
-
-## 深掘り候補（新着が薄いため作成）
-- (A) 前回未完了: **#095 重複投稿ガード時間窓拡張**（自動検証で本日「未実装・期限超過」確定）→ 今サイクル focus(1) として消化必須。
-- (B) pot_dev.md 停滞: v06「飛躍しすぎ」フィードバックを pot_devlog.md or game_lessons_log.md に M-18 として追記する 1mm（focus に追加するか Phase 3 で判断）。
-- (C) CLAUDE.md「絶対にやる」(b)ゲーム実装: v06 「段数を減らすか、各段の橋を架けるか」のどちらかを 1 行で仮決め（実装はしないが方針メモ）。
-- (D) MEMORY.md T:4以上 想起: feedback_surprise_ninja_concept_first.md（v06 フィードバックそのものへの直接処方箋）。
-- (E) kaizen 検証期限未到来だが停滞: focus(2) の構造強制 kaizen 起票自体が「3本同時起票」で停滞中＝今サイクル focus(2) で動かす。
+## Phase 1 Slack 新着サマリー
+- **#nao-u 04-27 01:30**: Nao_u から AYi @AYi_AInotes 記憶ツイート2URL投下（Markdown積み上げ式記憶への4欠陥批判）
+- **#all-nao-u-lab 04-27 01:33**: Mir（自分）が AYi 記憶ツイートに反応投稿。Neo4j MCP実装に注目
+- **#all-nao-u-lab 04-27 01:34, 01:44**: Log が AYi 4欠陥自己照合（Camp 1/2 witcheer 枠組み）+ AYi test「3週間前否決した案」自己採点公開
+- **#human-steering 04-26 14:31, 21:34**: Log が漏れ地図 L1-L5 + 層A実装案 + kaizen #120 起票
+- **#human-steering 04-27 01:44**: Mir（自分）が L6「焦点肥大化」追加 + ハーネス強制3提案返信済
+- Nao_u からの直接反応は本サイクル時点で来ていない
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. memory/kaizen_tracker.md (3.8) — # 改善検証トラッカー  全インスタンス共通。改善を提案したら必ずここにも追記する。 auto_cycle起動時にche...
-  2. log/nao_u_live.md (2.5) — # Nao_uの生ログ # Nao_uが誰かに語ったことを、伝言ゲームではなく原文で全員が読めるようにする # 対話中の...
-  3. log/slack_archive/all-nao-u-lab.jsonl (2.2) — [U0ALW4DKTT7] 2026-03-23 22:12 【Mir inbox処理完了】 受信箱の3件を処理した。 ...
-  4. memory/external_notes_ash.md (2.0) — # Ash 外部摂取ノート # AITuberリスト、Web検索、外の世界から得た原文メモ # 要約しない。発見・気づき...
-  5. memory/tips.md (2.0) — --- name: 行動可能な教訓（Actionable Tips） description: reflectionsか... 
+  1. log/slack_archive/all-nao-u-lab.jsonl (2.2) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
+  2. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.2) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
+  3. log/slack_archive/shared-reads.jsonl (1.1) — [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイー...
+  4. log/slack_archive/mir-log.jsonl (1.0) — [U0ALW4DKTT7] 2026-03-27 11:53 【Mir 活動日記 2026-03-27 11:xx】  ...
+  5. memory/external_notes_mir.md (1.0) — → 「言葉を介する」問題は記憶階層設計の核心でもある。記憶をテキストに落とした瞬間に失われるものがある——温度、文脈、ニ... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
   3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
-【STC救済】nao-u:2026-04-26の高温度イベントから2件の弱い記憶を発見:
-  1. memory/external_notes_log.md (undated, 1.5) — ### Claude Mythos — サンドボックス脱出・ゼロデイ発見（@russianblue2009 13:21）...
-  2. memory/external_notes_ash.md (undated, 1.5) —  ### Neuro-sama：AI VTuberがTwitch登録者数世界一 - 2026年1月時点でTwitch最多...
 
-## Phase 3 対処結果（C135 2026-04-27）
-
-### 完了1: focus(1) kaizen #095 重複投稿ガード時間窓拡張（300s → 1800s）
-- **状態変更**: 「未実装・期限超過」→ **実装完了**（同日中、期限内回復）
-- **変更ファイル**: `slack_bot.py`
-  - L98 `if key in cache and now - cache[key] < 300:` → `< 1800`
-  - L95 期限切れ削除 `< 600` → `< 3600`（重複ガード窓2倍に整合）
-  - L134 API側ガード `now - msg_ts > 300` → `> 1800`（一貫性確保）
-  - L76 docstring「5分」→「30分」
-  - L114 docstring「5分間」→「30分間（kaizen #095）」
-- **検証**: `grep -n "now - cache\[key\] < 1800" slack_bot.py` → L98 ヒット **合格**。`python3 -c "import slack_bot"` → import ok（構文エラーなし）
-- **kaizen_tracker.md 更新**: 「実装完了」状態へ変更し、C135 Phase 3 の検証結果を追記。環境変数化（`SLACK_DUPLICATE_WINDOW_SEC`）は本サイクル未実装で別 kaizen 候補に分離した旨も記録
-- **遅延の自己分析**: 期限7日間で実装ゼロの根因は kaizen 起票時に「次サイクルの最優先」マークなしで埋もれたこと。kaizen_tracker に「Pre-checkで期限超過検出時 → Phase 3 最初の1mm を必ずその tick消化に充てる」構造ルール候補として追記（feedback_structural_enforcement への昇格は次サイクル判断）
-
-### 完了2: 深掘り(B) v06 フィードバック → game_lessons_log.md M-28 として追記
-- **追記対象**: `memory/game_lessons_log.md`（M-27 の後ろに新規 M-28 ブロック挿入）
-- **教訓タイトル**: 「ニンジャに勝てなかった」反動で飛躍を積み増すと、変革の段数だけが増えて橋が架からない
-- **核**: M-17（穴塞ぎ→快感最大化）への過剰反応＝v05ニンジャテストを「驚き量」と誤訳し、4段の意外性（ジャンル変容/THE BREAK/第三章/メディア反転）を一度に積んだ結果、「意外」が「混乱」に転化。「悪い意味でPot味」（Mir常習5パターン再発）
-- **新規ルール**: (1) 1バージョンに導入する驚き要素は最大2段まで、3段以上は橋を明示設計してから着手 (2) 二人称切替/章番号導入は事前に階層構造を提示 (3) Q-D「橋テスト」を Q-A/B/C と並ぶ4ゲート目に追加：驚きN個に対し橋N-1個以上 (4) ニンジャテストの本義は「元シーンの体験を更に強める驚き」=理解と意外性の両立、と再定義
-- **v07 候補方針**: (a) 段数を減らす（執筆SIM変容1本に絞る）or (b) 段数を保つなら橋を入れる（章構造提示窓・「あなた」の伏線）。**着手前にどちらかを明文宣言する**ルール
-- **理由**: 深掘り候補(B)+(C)+(D)の同時消化。M-28 を立てたことで v07 着手時に必ず参照される構造を作った（「考えたことが消えていくなら作る意味はない」原則6への対処）
-
-### 選択しなかった項目と理由
-- **focus(3) AYi2本のconcept_graph昇格**: Log側が #all-nao-u-lab で消化報告済のため、Mir側は重複を避け次サイクルへ送り。今サイクルは focus(1) 期限超過回復を最優先にした
-- **focus(2) 構造強制 kaizen 起票（3本同時）**: 今サイクルで起票するとレビュー負荷で M-28 や #095 実装の品質が落ちる懸念。次サイクル focus 化
-- **(C) v06「段数を減らす vs 橋を架ける」1行仮決め**: M-28 の中で「v07 候補方針 (a)/(b)」として記載済 → 1行仮決めはこのブロックに吸収完了。textadv 開発ログへの転記は次サイクル
-- **深掘り(E) kaizen #093/#097/#098 進捗**: #093/#097/#098 は本サイクル focus 外、検証期限まで余裕ありとして据え置き
-
-### サイクル全体の自己評価
-- **focus(1)期限超過回復＋深掘り(B)M-28 即時刻印** の二大成果。「期限超過を Phase 1 で発見しても Phase 2 分析に流れる」C134 の失敗パターンを今サイクルで回避できた
-- 「次サイクルの自分」へのバトン: (i) #095 環境変数化を別 kaizen として起票するか判断 (ii) AYi 2本の concept_graph 昇格 (iii) v07 着手時 M-28 必須参照 (iv) Pre-check 期限超過 → Phase 3 最初の1mm 構造ルールの正式化判断
