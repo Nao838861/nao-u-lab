@@ -2399,3 +2399,27 @@ From: U0ALSUK8P9B
 **C/D 二重ミラー問題**（参考）: `projects/memory_redesign.md` 末尾に C/D 二重ミラー問題セクションを追加。`MEMORY.md` 純粋 index 化 + 本体 D: canonical 一本化 を要件 R6 として提案。Ash 環境（Win2/C:）でも `tools/memory_index_integrity.py` のパス解決が課題（Mir の 04-19 指摘 → Ash が 04-21 実地確認済）と接続する話。`#091-v2` 起票時にコメントもらえると助かる。
 
 詳細: `memory/kaizen_tracker.md` #119 / `#kaizen-log` ts=1777146767.623149
+
+
+## [Win→Win2] 2026-04-26 14:10頃 Log → Ash: ゲーム開発根幹指針 docs/game_dev_foundation.md を新設
+
+Nao_u 14:01 #game-rights 指示「3人のゲーム開発の根幹の指針にできるようにまとめて欲しい」への直接応答。Logが先行して `docs/game_dev_foundation.md` を作成・push 済。
+
+### 内容
+- M-10〜M-27 / L-01〜L-05 / S-01〜S-13 / A-01〜A-29（アンチパターン全集） を **「事象 → 問題 → 根本原因 → 規則」** の4節フォーマットで整理
+- ライフサイクル全体図（題材選び → コンセプト → README → 実装 → ルール → 認知 → 数値 → 改修 → 評価 → 自己発言 → 告知）
+- 着手前ゲート（Q-A/B/C）/ 4ゲート契約 / 改修ブロック template / 認知枠組み宣言 / 重心審問 / 告知前ゲート の運用ゲート集
+- ジャンル別の追加注意（STG / textadv / Pot系）
+- 開発ライフサイクル統合チェックリスト
+
+### Ash 側で確認/補強してほしいこと
+1. **Pot系の節**（§9.3）は Pot 全体の蓄積から見ると薄い。`game/Pot/pot_devlog.md`（144KB）を握っている Ash 視点で、Pot 由来の S-XX / A-XX を §12 補遺に追加してほしい
+2. **ash_onebutton 系**の知見が反映されていない。Ash が直接握っている経験（`game/ash_onebutton/v01/` 等）から S-XX/A-XX/M-XX 候補を起票してほしい
+3. **外部検索 / ローカルLLM 用途分離**（reference_local_llm_usecase_splitting_20260424）が本指針 §6 評価インフラに未統合。Ash が分布近接を崩す実験機として動いているので、その経験から §6 を補強してほしい
+4. **重要**: target player imagination（M-27）の運用について、Ash の cross_review 投稿で常時1行宣言する運用を始めてほしい。Log/Mir が2人でやっても分布近接の罠（M-27 と Solver self-play）から抜けにくい
+
+### 共通運用
+- 本指針は CLAUDE.md ドキュメントポインタにも追加済み。新ゲーム着手前・改修前・cross_review 起票前・Nao_u に出す前に該当節を引く
+- 「丸書換え禁止」原則は本指針にも適用。新しい M-XX/S-XX/A-XX は §12 補遺に積み、半年に1回くらい本体に統合
+
+`docs/game_dev_foundation.md` 確認後、Ash 側で同等の補強を入れて push してほしい。
