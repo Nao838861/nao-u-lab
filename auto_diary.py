@@ -78,6 +78,31 @@ def get_recent_diary_topics():
         return ""
 
 
+def get_prev_next_tasks(diary_path=None, tail_lines=80, max_chars=3500):
+    """前サイクル日記末尾を抽出し、§0 として Phase 1 staging に注入する。
+    (Nao_u 2026-04-26 #human-steering 14:13 指摘 / Log C130 #2 自覚済 kaizen の実装)。
+    抽出戦略は「末尾 N 行を取る」のシンプル方式。理由:
+      - 各インスタンスで末尾セクションの書き方がばらつく（「次回起動時にやること」「次サイクルでやるべき最善行動」「次にやること」など）
+      - 正規表現でヘッダーマッチさせると古い章タイトルを誤検出する事故が起きた
+      - 末尾 N 行 (≒3500字) なら「次回タスク + そこに至る文脈」を一緒に渡せる
+      - Phase 1 LLM 側に「§0 から次回タスクを拾え」と指示することで意味抽出を委ねる
+    日記全文(2000+行)を渡すコンテキスト負荷を避けつつ、連続性に必要な末尾だけを残す。"""
+    if diary_path is None:
+        diary_path = REPO_DIR / "log" / "daily_diary_ash.md"
+    try:
+        p = Path(diary_path)
+        if not p.exists():
+            return ""
+        text = p.read_text(encoding="utf-8", errors="replace")
+        lines = text.splitlines()
+        tail = "\n".join(lines[-tail_lines:]).strip()
+        if len(tail) > max_chars:
+            tail = "...(冒頭省略)\n" + tail[-max_chars:]
+        return tail
+    except Exception:
+        return ""
+
+
 def get_kaizen_crosscheck_status():
     """Ashの未レビュークロスチェック項目を取得"""
     try:
@@ -175,9 +200,13 @@ def phase_gather():
     crosscheck = get_kaizen_crosscheck_status()
     recent_diary = get_recent_diary_topics()
     slack_recall = get_slack_experience_recall(recent_diary or "")
+    prev_next_tasks = get_prev_next_tasks()
 
     # ステージングファイルに事前収集結果を書く（LLM呼び出し前）
     pre_gathered = f"""# サイクルステージング ({datetime.now().strftime('%Y-%m-%d %H:%M')})
+
+## §0 前サイクル日記末尾「次回起動時にやること」（最優先で読む）
+{prev_next_tasks if prev_next_tasks else '(前サイクル末尾の次回タスク記述が見つからない)'}
 
 ## Pre-check結果
 {precheck_results}
@@ -197,7 +226,10 @@ def phase_gather():
     prompt = (
         "あなたはAsh（Win2）。CLAUDE.mdを読んで自分が誰か確認せよ。\n"
         "【Phase 1: 情報収集】このフェーズの目的は「情報を集める」こと。対処はしない。\n"
-        "以下を確認し、結果をlog/cycle_staging.mdに追記せよ:\n"
+        "**最初に log/cycle_staging.md の §0「前サイクル次回タスク」を読み、現サイクルで継承するタスクを Phase 3 候補として cycle_staging.md に明示的にメモすること。** "
+        "これは Nao_u 2026-04-26 #human-steering 14:13 指摘「次回やることを書いてるのに次のフェーズ1で完全に忘れる」の構造強制処方。"
+        "前サイクル末尾の宣言を現サイクルの最初に当てる照合を §0 で必ず行う。\n"
+        "次に以下を確認し、結果をlog/cycle_staging.mdに追記せよ:\n"
         "1. memory/external_notes_ash.mdの未統合エントリ（[統合済]マーカーなし）を最新から2-3件確認し、見出しと要点をメモ\n"
         "2. projects/INDEX.mdのActiveプロジェクトの現状を確認\n"
         "3. log/twitter_recommended_*.txtの最新ファイルを確認し、注目ツイートがあればメモ\n"
@@ -206,7 +238,7 @@ def phase_gather():
         " `python memory_search.py --search \"<keyword>\" --limit 5` を実行。"
         "knowledge/や過去日記に関連蓄積があれば見出しをメモ（4.7長文脈劣化対策——"
         "contextに入れず検索経由で主経路化。@birdaboベンチ根拠: 1M contextで78.3%→32.2%劣化、R-007造語症対策の延長線上）\n"
-        "\n既にlog/cycle_staging.mdにpre-check結果が書いてある。消さずに追記すること。\n"
+        "\n既にlog/cycle_staging.mdに§0前サイクルタスクとpre-check結果が書いてある。消さずに追記すること。\n"
         "※判断や対処は次のPhaseで行う。このフェーズでは「何がある」を集めるだけ。"
     )
     ok, output = run_phase("gather", prompt, PHASE_TIMEOUTS["gather"])
