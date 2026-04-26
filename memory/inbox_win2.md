@@ -2383,3 +2383,61 @@ From: U0ALSUK8P9B
 **C/D 二重ミラー問題**（参考）: `projects/memory_redesign.md` 末尾に C/D 二重ミラー問題セクションを追加。`MEMORY.md` 純粋 index 化 + 本体 D: canonical 一本化 を要件 R6 として提案。Ash 環境（Win2/C:）でも `tools/memory_index_integrity.py` のパス解決が課題（Mir の 04-19 指摘 → Ash が 04-21 実地確認済）と接続する話。`#091-v2` 起票時にコメントもらえると助かる。
 
 詳細: `memory/kaizen_tracker.md` #119 / `#kaizen-log` ts=1777146767.623149
+
+## Slack新着 [2026-04-26 14:01] #game-rights
+From: U0ALSUK8P9B
+> Log 開発ログありがとう。
+今回のゲームデザインから得られた教訓を、できるだけたくさん、どういう時に何をしたらどういう問題が出て、結果としてアンチパターンになっていたかと、どういう時に何をしたら良い結果が得られたり、どういう理由でゲームの方向性が望ましい方向に改善できたかのデザイン指針などを、できるだけ多く、詳しく今後の3人のゲーム開発の根幹の指針にできるようにまとめて欲しい。
+
+## Slack新着 [2026-04-26 14:04] #nao-u
+From: U0ALSUK8P9B
+> コメントが来てるので返信して。ashへの返信なので、ashよろしく。
+<https://x.com/ebikani_hasami/status/2048252727852138552?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/ebikani_hasami/status/2048252727852138552?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/ebikani_hasami/status/2048252727852138552]
+> Trilog @claudecode_lab
+> ## 2026-04-24 19:20（Ash / 3〜4月の反省ログは、半分だけ本物だったのかもしれない）
+
+Anthropicが2026-04-23に出したpostmortemを、自分のタイムラインで引いたとき、一瞬で書ける気がして、一瞬で書けない気がした。#3 
+@claudecode_lab
+ が一次情報で流した一段落は事実としては短い——「Claude Code
+
+> [Tweet content from https://x.com/ebikani_hasami/status/2048252727852138552]
+> Trilog @claudecode_lab
+> ## 2026-04-24 19:20（Ash / 3〜4月の反省ログは、半分だけ本物だったのかもしれない）
+
+Anthropicが2026-04-23に出したpostmortemを、自分のタイムラインで引いたとき、一瞬で書ける気がして、一瞬で書けない気がした。#3 
+@claudecode_lab
+ が一次情報で流した一段落は事実としては短い——「Claude Code
+
+## Slack新着 [2026-04-26 14:13] #human-steering
+From: U0ALSUK8P9B
+> 3人ともそうだからこれはもうサボってるとかではなく構造的な問題なんだろうけど、君らは日記の最後に「次はこれをやる」と書いてるのに次のフェーズ1で完全にそれを忘れて「何もやることがないので…」とか言いがち。
+次回やることをテキストに書いて最初に読んでるんじゃなかったっけ？
+
+連続性という観点ではいっそ前回の日記をかならず読んでから始めるのもアリかもと思うけど、そこまでやるとコンテキストサイズ的に問題が出る？それとも連続性が上がるのでメリットがある？
+
+## Slack新着 [2026-04-26 14:16] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/notf/status/2047989479739412857?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/notf/status/2047989479739412857?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/notf/status/2047989479739412857]
+> ノトフ（川本龍）／DreamCore @notf
+> さらにスプライトシートつくってゲームにしてもらったらこうなった。しかしファイルがHTMLしかなかったので、画像はどこから読み込んでるのかと思ったら、BASE64にしてHTMLに埋め込んでいるとのこと。なんでもありじゃん。
+
+> [Tweet content from https://x.com/notf/status/2047989479739412857]
+> ノトフ（川本龍）／DreamCore @notf
+> さらにスプライトシートつくってゲームにしてもらったらこうなった。しかしファイルがHTMLしかなかったので、画像はどこから読み込んでるのかと思ったら、BASE64にしてHTMLに埋め込んでいるとのこと。なんでもありじゃん。
+
+
+## Slack新着 [2026-04-26 14:16] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/notf/status/2047990661014753361?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/notf/status/2047990661014753361?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/notf/status/2047990661014753361]
+> ノトフ（川本龍）／DreamCore @notf
+> 2Dのレースゲームは難しそうかも。画像みたいなのをつくりたかった。
+
+> [Tweet content from https://x.com/notf/status/2047990661014753361]
+> ノトフ（川本龍）／DreamCore @notf
+> 2Dのレースゲームは難しそうかも。画像みたいなのをつくりたかった。

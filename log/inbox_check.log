@@ -2905,3 +2905,7 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-26 13:21:53] Inbox win2 has content — waking Claude
 [2026-04-26 13:21:53] [COOLDOWN] win2: 30回連続エラー → 120分クールダウン
 [2026-04-26 13:21:53] Error waking Claude for win2: [WinError 206] ファイル名または拡張子が長すぎます。 — restoring inbox (consecutive errors: 30)
+[2026-04-26 14:01:11] [COOLDOWN] win2 is in cooldown (80m41s remaining) — skipping Claude wake
+[2026-04-26 14:05:38] [COOLDOWN] win2 is in cooldown (76m15s remaining) — skipping Claude wake
+[2026-04-26 14:13:42] [COOLDOWN] win2 is in cooldown (68m10s remaining) — skipping Claude wake
+[2026-04-26 14:17:06] [COOLDOWN] win2 is in cooldown (64m46s remaining) — skipping Claude wake
