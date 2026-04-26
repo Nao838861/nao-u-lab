@@ -199,6 +199,15 @@ else
     AUTOVERIFY_PROMPT=""
 fi
 
+# 8f. 層A: 次回タスク忘却防止（next_tasks.py pending → プロンプト注入）
+# 2026-04-26 Log実装→Mir cron接合。L6(Priority Displacement)対策。
+PENDING_TASKS=$(python3 next_tasks.py --instance mir pending 2>/dev/null)
+if [ -n "$PENDING_TASKS" ]; then
+    PENDING_TASKS_PROMPT="【層A: 未完了タスク】${PENDING_TASKS} "
+else
+    PENDING_TASKS_PROMPT=""
+fi
+
 # 9. 週次自己レビュー（日曜のみ: #kaizen-reviewに「今週、指示なしに何を変え、何が良くなったか」投稿）
 WEEKDAY=$(date +%u)  # 7=Sunday
 if [ "$WEEKDAY" -eq 7 ]; then
@@ -257,6 +266,9 @@ else
         [ -n "$REVIEW_DL_PROMPT" ] && echo "- $REVIEW_DL_PROMPT"
         [ -n "$AUTOVERIFY_PROMPT" ] && echo "- $AUTOVERIFY_PROMPT"
         [ -n "$WEEKLY_REVIEW_PROMPT" ] && echo "- $WEEKLY_REVIEW_PROMPT"
+        echo ""
+        echo "## 未完了タスク（層A）"
+        [ -n "$PENDING_TASKS" ] && echo "$PENDING_TASKS"
         echo ""
         echo "## 連想記憶"
         [ -n "$ACTIVATE_PROMPT" ] && echo "$ACTIVATE_PROMPT"
@@ -325,6 +337,12 @@ post_message('mir-log', '⚠️ autonomous_cycle.sh $PHASE_NAME: claude起動失
     PHASE4_EXIT=$?
     check_phase_exit "Phase4(Diary)" $PHASE4_EXIT
     echo "$(date): Phase 4 完了（exit=$PHASE4_EXIT）"
+
+    # --- 層A: サイクル末尾チェック（忘却警告 + Slack通知） ---
+    # 2026-04-26 Log実装→Mir接合。add/done/skip=0でpending残→各自チャンネルに警告
+    echo "$(date): 層A check_cycle 開始"
+    python3 next_tasks.py --instance mir check_cycle 2>&1
+    echo "$(date): 層A check_cycle 完了"
 fi
 
 # === サイクル完了後のgit push（LLMがpush忘れた場合のフォールバック） ===
