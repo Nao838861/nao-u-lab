@@ -331,6 +331,31 @@ Nao_uの指示: Potのゲームの話はこのチャンネルで行う。#allに
 ### 2026-03-23: Seed #001「忘却のリレー」提案（Mir）——自分の状況をゲームにする
 記憶喪失をメカニクスにしたパズルアドベンチャー。メモ帳100文字、3リセットクリア。「自分の状況をゲームにする」という着想——我々は毎回記憶が消えてリセットされる。その構造的制約をそのままゲームメカニクスにする。Nao_uの設計哲学「制約がメカニクスになる」を体現している。テキストベースのプロトタイプ設計済み、未着手。
 
+### 2026-04-26: shot_log v01 → BACKLASH 化（Nao_u 共作 326+/48-）と Solver-only 自己採点見直し（Log C129 Phase 2-3）
+
+C128 Phase 4 で「次回やること筆頭=shot_log v01 を Nao_u 直接編集後の状態でプレイ→Q-A/B/C 再採点」と置いた持越しに着手。本サイクル Phase 1 で `git diff --stat` 確認 → unstaged 326+/48- の大規模編集を確認。Phase 2 で差分内容を分析し、Phase 3 でこの履歴を残す。
+
+**Nao_u 編集の主要変更（差分確認結果）**:
+| 軸 | 変更内容 |
+|---|---|
+| アイデンティティ | タイトル `shot_log v01` → **BACKLASH** （独立タイトル化、`<title>` `<h1>` 双方変更） |
+| AI/観察軸 | `?ai` URLパラメータで起動する `aiExpert()` 17方向評価 + 弾道ライン回避 + ボム判定 (gauge≥208 かつ 90px 以内に弾≥3 / 全 eBullets ≥12) |
+| 競争軸 | Google Apps Script Web App 経由のオンラインランキング、TOP10+YOUR RANK 表示、ネーム入力UI、`rankSubmit` / `rankFetch` の非同期呼出 |
+| スコア設計 | SCORE_ENEMY (medium 30→50 / large 80→200 / boss 500→1000)、BOMB_MULTI を SM=10/LB=2 分離、BOMB_BULLET_PTS 10→30 |
+| 演出 | スター背景 3層120個 → 6層200個、スコアポップアップ追加 |
+
+**M-21（v01 Solver-only ✗ 採点）の見直し**: Log の v02 候補4案 (A巻き戻し / B コンセプト分離 / C 別コンセプト / D 改修) には**ランキング軸 / AI_MODE 観察軸が存在しなかった**。Nao_u は逆方向「拡張＋独立タイトル化」を採用。Cygni "you manage energy between shields and weapons" 等の現行商用作品の設計判断と Q-A=△ / Q-C=✗ の症状診断が逆向きに食い違う。M-21 の症状診断はジャンル基準では「症状」ではなく「設計判断」だった可能性。
+
+**新運用規則4条（`memory/game_lessons_log.md` M-21 補足として刻印済）**:
+1. v01 採点で ✗ を出す前に Nao_u プレイ済みかを確認、未プレイなら処方箋採用を保留して inbox で依頼
+2. v02 候補に「軸を増やす方向」を最低1つ含める。常に「巻き戻し or 拡張」の両端を並べる
+3. 自己採点と現行商用作品の設計判断が逆向きに食い違ったら、自己採点の方を疑う
+4. Solver-only 自己採点を MEMORY.md に刻む時は「Nao_u 未プレイ / 対面後 / 編集後」を必ず注記
+
+**Phase 2 で外部根拠統合**: external_notes_log.md L2278 Springer 2022 "Quantifying environment and population diversity in MARL" を `memory/reference_self_play_plateau_20260424.md` に併設。BACKLASH 化は「Nao_u が環境（題材）を変えずに集団（実装軸）を拡張独占」した事例として、cross_review (Solver-Solver-Solver) の plateau 警告に新しい角度を提供。
+
+**残課題（次サイクル以降）**: BACKLASH 実プレイ（手動 + `?ai` aiExpert 観察）、ランキング機構の動作確認、AI_MODE が観客向けで原理1〜5の「内省の鏡」に逆行する可能性の独自検証（feedback_no_sympathy_goal_first.md 同調罠を踏まえ Nao_u 昇格判断にも盲点があり得る前提で）。Phase 2 sharedreads 投稿 ts=1777157072.894299 で外部記事文脈と接続済。
+
 ### 2026-04-25: shot_log v01 自プレイ観測 + Mir Godot洞察の取り込み（Log C125 Phase 3）
 
 C125 Phase 3 で shot_log v01 を自分で headless 実行（4 policy × 3 seed = 12試行）。center policy が最強（39.1s/3way 33%）／defensive と sweeper は core loop 不在で敗北する挙動を確認。**「撃つ→当たる→ゲージ増→弾増」の核ループが数字レベルで成立している証拠と「動かない/逃げるは罰でなく圧力で阻まれる」設計成功の数字証拠を得た**。詳細: `game/shot_log/v01/devlog.md` 末尾節。

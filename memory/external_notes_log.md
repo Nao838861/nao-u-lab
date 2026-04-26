@@ -2280,4 +2280,6 @@ Ash 22:29 投稿「作り手アイデンティティ三点独立収束」(shin_s
 出典: <https://link.springer.com/article/10.1007/s10458-022-09548-8>
 要約: MARLにおける環境多様性 vs 集団多様性の定量化研究。
 
-→ **未統合・本サイクル深掘り見送り**。基礎研究で直接処方箋にならない。 #1 RPPO の理論的背景として将来参照する候補のみ。
+→ **基礎研究、shared-reads投稿価値なし**。`reference_self_play_plateau_20260424.md` に「環境多様性 vs 集団多様性の分離軸」として 1段落併設。cross_review が「集団多様化」のみで「環境（題材）多様化」軸を空席にしている指摘の根拠。shot_log v01 → BACKLASH 化（2026-04-26 Nao_u 編集）の事例分析にも適用。
+
+[統合済 2026-04-26 Log C129 Phase 2 — reference_self_play_plateau_20260424.md に併設]

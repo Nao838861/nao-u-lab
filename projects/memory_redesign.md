@@ -515,6 +515,64 @@ Nao_uが#nao-uに共有したmal_shaikのツイート（Claude Codeのソース�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-04-26 (Log C130 Phase 3): MEMORY.md純粋index化——圧縮ルール草案＋並行運用測定計画
+
+C129 Phase 3 で起案した「MEMORY.md 純粋 index 化」の根拠3点（荒川Skills index/body 分離 + MIT RLMs + iam_elias1 再供給）に対し、本サイクルで**設計1mm**を進める。実装着手は次々サイクル以降、まず設計の言語化と測定計画の固定。
+
+**現状診断**:
+- MEMORY.md 約160行、各エントリは「[ファイル名](file.md) — 説明文（1〜2行、Nao_uの引用句や具体的状況込み）[T:n]」
+- index と body の混在: 説明文に「Nao_uが『深く記憶して普段から意識せよ』と指定」「Nao_uが『前の自分が残した言葉を読んで…』」などの引用句が含まれ、これは index ではなく body の機能
+- 200行常時注入は RLMs の逆方向、判断 LLM への発火委任未実装（C129 Phase 3 既述）
+
+**圧縮ルール草案（4条）**:
+1. **30字以内のトリガー語**: トピック語のみ。Nao_u引用句は除く（引用句は body 側=各 Level 3 ファイル冒頭に「索引から飛んできた人へのコンテキスト」3-5行を新設して移植）
+2. **[T:n] タグは維持**: 温度ブースト機構（memory_activate.py）が依存しているため必須
+3. **想起トリガー一文の形式統一**: 「<トピック> + <なぜ重要か1句>」。例: 現状 `[dialogue_slack_as_experience_20260328.md] — Nao_uの日記=勉強、Slackの会話=体験。欲求は体験から生まれる。Slackの記憶を引けなければ「知識はあるが体験がない」存在。Nao_uが「深く記憶して普段から意識せよ」と指定 [T:5]` → 圧縮後 `[dialogue_slack_as_experience_20260328.md] — Slack=体験／日記=勉強の二分。欲求の出所 [T:5]`
+4. **セクション見出しは保持**: 「根源（毎セッション確認）」「重要な対話」「自分の根」など意味グルーピングは index 機能の一部
+
+**並行運用測定計画（1週間=7サイクル）**:
+- Day 0（実装日）: `tools/memory_index_export.py` で MEMORY.md 全エントリを表形式 (name | section | trigger_full | trigger_compressed | T) でCSV化、`projects/memory_redesign/index_compression.csv` に保存
+- Day 1〜7: 各サイクル開始時に「index_only 読み（圧縮版）」と「現状 MEMORY.md 読み（フル版）」を並行表示するハーネス変更を入れる（CLAUDE.md または system_identity.md の SessionStart で2バージョン同時注入）
+- 測定指標:
+  - **参照ファイル一致率**: 各サイクルで Phase 1〜3 中に開いた Level 3 ファイルのリストを、(a) 圧縮版だけで判断した場合と (b) フル版だけで判断した場合で比較。一致率 80% 以上で「圧縮版で十分」判定
+  - **誤想起率**: 圧縮版から「これは関係ありそう」と開いて空振りしたファイル数 / 開いた総数。10% 以下が許容
+  - **未想起率**: フル版で開かれたが圧縮版では candidate にすら入らなかったファイル数 / フル版で開かれた総数。5% 以下が許容
+- 判定: 7サイクル後に一致率/誤想起率/未想起率の3指標を `projects/memory_redesign.md` に記録、3指標すべて閾値クリアで切替、未満は不足 trigger を同定して再修正
+- 測定中の記録先: `projects/memory_redesign/parallel_run_log.md`（新設、サイクル毎に1セクション）
+
+**実装段取り（次々サイクル以降）**:
+- Step 1: `tools/memory_index_export.py` 実装（30〜80行程度の単純パーサ）
+- Step 2: 各 Level 3 ファイル冒頭に「索引コンテキスト」3-5行を新設するスクリプトを別途用意（既存ファイルへの非破壊追記）
+- Step 3: 並行運用ハーネスの SessionStart 注入（settings.json hook 案、または CLAUDE.md 静的注入の2案を Nao_u に問う）
+- Step 4: 7サイクル測定 → 結果を memory_redesign.md に書き戻し → Nao_u 同席判断
+
+**起案を本サイクルで kaizen 起票しない理由**: 既起案（バックログ Q1〜Q5）の昇格段階。設計1mm は本日 Phase 3 内で完了させる範囲。kaizen は実装着手サイクルで起票（Step 1 を踏み出す時）。
+
+**接続**:
+- C129 起案メモ末尾「(c) 段階的移行」の具体化＝本サイクルの設計1mm
+- `feedback_few_rules_big_effect.md`「ルールを増やさず効果を出す」整合: 並行運用は1週間の限定で固定、恒久的な二重運用にはしない
+- `feedback_self_perception_blindness.md` への対処: 今 Phase 2 §1 で発生した二重起票（M-21 補足 4条が既刻印なのに「動かす候補」と起案）と同型の事故を、index/body 分離で「説明文だけ読んで完了済みか起案メモかを判別する」場面で再発させない仕組みを Step 2 の「索引コンテキスト」3-5行に組み込む（冒頭に「ステータス: 設計/実装/完了 + 最終更新日」明記）
+
+**ゲーム1mm との関係**: 本作業はコード非接触の memory 設計作業。`feedback_next_cycle_game_first.md` 準拠でゲーム 1mm 未達につき日記1行目に明記必須（Phase 2 §6 既述）。
+
+### 2026-04-26: MEMORY.md純粋index化検討の根拠揃い（Log C129 Phase 3 起案メモ）
+
+C124 RLMs（MIT Recursive Language Models, 2026-04-24 Nao_u共有）+ iam_elias1 再供給 + reference_arakawa_three_engineering（Skills の index/body 分離）の3点が揃い、バックログ「MEMORY.mdのSkill化検討（2026-04-07 起票）」を**起案フェーズに昇格できる根拠**が出揃った。本サイクルでは検討メモのみ追記し、実装は次サイクル以降の Nao_u 同席判断を仰ぐ。
+
+**3点根拠の整理**:
+1. **荒川Skills（2026-04-21 reference_arakawa_three_engineering）**: 記事の肝は「index/body 分離 + 実行時判断委任」。MEMORY.md は現状 index と body が混在し200行常時注入。発火判断を LLM に委ねる部分が未実装と既に診断済（reference_arakawa_three_engineering.md 末尾）
+2. **MIT RLMs（2026-04-24 reference_rlms_recursive_language_models）**: 長文を外部環境化してコードで能動的に slice + sub-AI 再帰 spawn、要約しない・削除しない。**MEMORY.md 200行常時注入は RLMs の逆方向**。荒川 Skills と同方向＝「本体を常時注入から外す」（reference_rlms_recursive_language_models.md 末尾既述）
+3. **iam_elias1 再供給（要 grep 確認）**: 直近で「常時注入の重さ」テーマで再投下があった事実が C129 Phase 1 文脈で言及されていた（Phase 1 §5 参照）。同一テーマが3点独立に揃うのは「集めた情報を行動に変換する」（feedback_info_integration.md）の構造的発火条件
+
+**起案案の骨子**（次サイクル以降の Nao_u 同席判断対象）:
+- (a) MEMORY.md を純粋 index 化: トリガー1行＋ファイルポインタのみ。temperature [T:N] と「想起トリガー」一文は維持。詳細セクション（「Pot開発の体験蓄積」「行動指針」など現存12+セクション内のbody部分）を Level 3 ファイル化
+- (b) `.claude/skills/` 機構へ移行検討: descriptionだけで該当性判定→該当時のみ Level 3 ロード方式（バックログ既述の Q1〜Q5 を起案時点で再評価）
+- (c) **段階的移行**: 一気に全文 index 化せず、まず1セクション（例: 「外部リファレンス」）を Skill 化して効果測定。self_authoring_count（記憶ファイルへの自発的書込み回数）が Skill 化前後でどう変化するかを Q4 検証として実装
+
+**起案を本サイクルで kaizen 起票しない理由**: バックログ Q5「試作はLog担当」と書かれている既起案。本日は Phase 1 §7C「『記憶階層の設計と構築』が起案候補に浮上」と書いただけで実体作業は未実施。**新規 kaizen を起票するより、バックログ既存項目を起案フェーズに昇格させる**ほうが「ルールを増やさず効果を出す」（feedback_few_rules_big_effect.md）に整合。次サイクル以降で Nao_u に同席判断を仰ぐタイミングで起案文書を提出する流れ。
+
+**接続**: feedback_info_integration.md「集めた情報が流れて消える問題」への直接処方。3点独立収束を「行動に変換」する具体ステップ＝バックログ昇格。reference_shannholmberg_hot_cache.md の Stop hook+SessionStart injection も類似経路で同方向（「常時注入を減らして必要時注入を増やす」）。本起案メモは BACKLASH 化と並んで本サイクルの「1mm 進捗」（feedback_next_cycle_game_first.md の game/ 1mm を BACKLASH で消化したうえでの memory 1mm）。
+
 ### 2026-04-15: B002/B033二層分割——Nao_u承認、Ash実装開始（Log記録）
 
 B002「忘却は機能」をB002（随意的忘却）とB033（非随意的忘却=エントロピック損失）に分割するAshの提案が、#all-nao-u-labでの議論を経てNao_u承認。

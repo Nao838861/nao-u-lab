@@ -1,0 +1,39 @@
+[Log C129 Phase2 分析] shot_log v01 → BACKLASH 化と現行STG設計の反証 ── Solver-only ✗ 判定の処方禁止
+
+▍事象
+昨日 (2026-04-25 13:50) の Log C122 自己採点で M-21「v01膨張」を ✗ 判定し、対面5hセッション (M-22〜M-26 結晶化、コミット 43672a2) を経た 04-26 早朝、Nao_u が `game/shot_log/v01/index.html` を直接編集 (326+/48-、未push)。M-21 の処方箋「A 巻き戻し→ゲージなし最小化」を **Nao_u は逆方向で採用した**。
+
+▍Nao_u 編集の主な変更
+- タイトル `shot_log v01` → **BACKLASH** にリブランド（独立タイトル化）
+- AI_MODE 実装: `?ai` URLパラメータで aiExpert() ポリシー (17方向評価+弾道ライン回避+自動ボム) が自機を操作
+- オンラインランキング: Google Apps Script Web App に POST/GET、TOP10 + YOUR RANK 表示、ネーム入力 UI、playerId は crypto.randomUUID()
+- スコア倍率再設計: SCORE_ENEMY (small=10 / medium=30→50 / large=80→200 / boss=500→1000)、BOMB_MULTI を SM=10 / LB=2 に分離、BOMB_BULLET_PTS 10→30
+- 演出強化: スター背景 3層→6層、120個→200個、スコアポップアップ追加
+
+▍外部反証情報（C129 Phase 1 外部検索, kaizen #106）
+- **Cygni** (2024 リリースの現行 STG): "you manage energy between shields and weapons, creating moments where you're forced to choose between defense and offense" — M-21 の Q-A=△「ゲージ2役」が「症状」ではなく「重心」として現行商用作品で採用されている
+- **Crimzon Clover**: 吸収弾→ゲージ→devastating attack のチェーン構造。1ボタン1リソースでなく敵弾を資源化する代替設計
+- **SHMUP Creator** (Steam): scoring/gauges/chaining/medals/smart bombs/power-ups の機能列挙—STGデザインのチェックリスト原型
+
+▍環境多様性 vs 集団多様性（Springer 2022 統合）
+<https://link.springer.com/article/10.1007/s10458-022-09548-8> "Quantifying environment and population diversity in MARL"
+今回は Nao_u が「環境（題材）を変えずに集団（実装者）を独占」して題材を昇格させた。我々の cross_review (Solver-Solver-Solver) は **集団多様化のみで環境多様化軸が空席**。Mir/Ash/Log を分布近接3体として固定したまま Guide 質問を足しても、同じ題材を見続ける癖には効かない。次の cross_review 改修では Guide アンカー源を「同じ題材で別の実装軸（ランキング軸 / AI_MODE 軸 / スコア倍率軸）」に分離する設計を検討すべき。
+
+▍分析
+1. **処方箋の選択肢自体が貧しかった**: 我々の v02 候補4案 (A 巻き戻し / B コンセプト分離 / C 別コンセプト / D 改修) には「E ランキング軸で別の快感を立てる」「F AI_MODE で観察軸を作る」が存在しなかった
+2. **症状診断と現行商用作品の設計判断が逆向き**: Q-A=△ (ゲージ2役) と Q-C=✗ (罰3つを抜くと破綻) の症状記述は Cygni の重心と一致しない。M-21 の症状診断はジャンル基準では「症状」ではなく「設計判断」だった可能性
+3. **Solver self-play の限界が再露呈**: 対面5h で M-21 footnote「単独自己採点の限界」は部分的に解消されたが、その後の Nao_u 編集は「Guide が最終的にゲームを書き換えるまで降りる」段階を示す。1回の対面では Solver Guide には不足
+
+▍新しい運用規則（M-21 補足として刻印, memory/game_lessons_log.md）
+- v01 採点で ✗ を出す前に「Nao_u プレイ済みか」を確認、未プレイなら処方箋採用を保留して inbox で依頼
+- v02 候補に「軸を増やす方向」(ランキング / 観察モード / スコア軸再設計) を最低1つ含める。常に「巻き戻し or 拡張」の両端を並べる
+- 自己採点と現行商用作品の設計判断が逆向きに食い違ったら、自己採点の方を疑う
+- Solver-only 自己採点を MEMORY.md に刻む時は「Nao_u 未プレイ / 対面後 / 編集後」を必ず注記
+
+▍反対側の警告
+これは「Nao_u が編集してくれたから自己採点が間違いだった」という事後検証。同調罠 (feedback_no_sympathy_goal_first) を踏まえると、Nao_u の昇格判断にも盲点があり得る (例: ランキング実装の technical 負債 / AI_MODE が観客向けで原理1〜5の「内省の鏡」に逆行する可能性)。Phase 3 で BACKLASH を実プレイし、Q-A/B/C を改めて採点して Nao_u 編集後の重心を独自に評価する。
+
+▍詳細記憶
+- `memory/game_lessons_log.md` M-21 節 2026-04-26 補足
+- `memory/reference_self_play_plateau_20260424.md` 環境多様性 vs 集団多様性 1段落（Springer 2022 統合）
+- `game/shot_log/v01/index.html` 2026-04-26 unstaged diff 326+/48-
