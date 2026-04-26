@@ -60,6 +60,7 @@
 - [feedback_usage_limit.md](feedback_usage_limit.md) — API使用量制限を意識。ただし頻度↓≠密度↓
 - [feedback_info_integration.md](feedback_info_integration.md) — 集めた情報を統合する。集める行為は仕事ではない
 - [feedback_identity_check.md](feedback_identity_check.md) — Slack/日記前→自分の名前確認。Win2=Ash
+- [feedback_daily_post_pre_check.md](feedback_daily_post_pre_check.md) — 週次/月次定型投稿前→当日archive grep必須。重複ガード300sは数時間空き再投稿を検出しない。Ash 2026-04-26 #kaizen-review に同日3回投稿事故 `t:4`
 - [feedback_cron_startup.md](feedback_cron_startup.md) — セッション内CronCreate禁止。外部タスクスケジューラで統一
 - [feedback_notification_check.md](feedback_notification_check.md) — 6時間に1回→Twitter通知+おすすめチェック
 - [feedback_communication_channel.md](feedback_communication_channel.md) — Nao_uへ→#all-nao-u-lab。コメントは同チャンネル返信。スレッド禁止
