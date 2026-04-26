@@ -320,7 +320,7 @@ function reset(){
     cooldown:0,gauge:0,score:0,
     waves:buildWaves(),waveIdx:0,waveT:0,
     over:false,cleared:false,started:false,
-    hitFlash:0,bombFlash:0,bombReady:0,bombUsed:false,invincible:0,
+    hitFlash:0,bombFlash:0,bombReady:0,bombUsed:false,invincible:0,mercyGlow:0,
     particles:[],popups:[],rings:[],hitstop:0,shake:0,particleFreeze:0,overTimer:0,submitted:false,nameInput:'',nameEditing:false,
     stars:Array.from({length:200},()=>({x:Math.random()*W,y:Math.random()*H,layer:Math.floor(Math.random()*6)})),
   };
@@ -381,18 +381,50 @@ function spawnWaveEnemy(def){
     color:cfg.color,flash:0,shotCd:0};
 }
 
-function spawnRevenge(x,y,nRad,nAim){
+// MERCY: when player is close at the moment of kill, counter-attack bullets
+// are nudged out of the cone aimed at the player. Tier by enemy strength:
+//   small  → full mercy, generous range (per Nao_u 2026-04-26 feedback: child playtest)
+//   medium → aim bullets become perpendicular instead of homing (mild)
+//   large/boss → no mercy (ranged threats by design)
+const MERCY_SMALL_RANGE_SQ=170*170;       // generous radius for the weakest enemy
+const MERCY_SMALL_SAFE=Math.PI/3;         // ±60° safe cone in front of player
+const MERCY_MED_RANGE_SQ=85*85;           // tighter radius for medium aim mute
+function spawnRevenge(x,y,nRad,nAim,type){
+  const dx=state.player.x-x,dy=state.player.y-y;
+  const distSq=dx*dx+dy*dy;
+  const playerAng=Math.atan2(dy,dx);
+  const smallMercy=(type==='small'&&distSq<MERCY_SMALL_RANGE_SQ);
+  const medAimMute=(type==='medium'&&distSq<MERCY_MED_RANGE_SQ);
+  if(smallMercy||medAimMute){
+    spawnRing(x,y,'#7fdfff',26,18); // cyan: mercy triggered
+    state.mercyGlow=Math.max(state.mercyGlow||0,18);
+  }
   const base=state.rng()*Math.PI*2;
   for(let i=0;i<nRad;i++){
-    const a=base+i*(Math.PI*2/nRad);
+    let a=base+i*(Math.PI*2/nRad);
+    if(smallMercy){
+      // push bullet angle outside ±MERCY_SMALL_SAFE of the player direction
+      const diff=Math.atan2(Math.sin(a-playerAng),Math.cos(a-playerAng));
+      if(Math.abs(diff)<MERCY_SMALL_SAFE){
+        a=playerAng+(diff>=0?MERCY_SMALL_SAFE:-MERCY_SMALL_SAFE);
+      }
+    }
     state.eBullets.push({x,y,vx:Math.cos(a)*3.5,vy:Math.sin(a)*3.5,r:3});
   }
-  for(let i=0;i<nAim;i++){
-    const dx=state.player.x-x,dy=state.player.y-y;
-    const d=Math.sqrt(dx*dx+dy*dy)||1;
-    const spread=(i-((nAim-1)/2))*0.25;
-    const a=Math.atan2(dy,dx)+spread;
-    state.eBullets.push({x,y,vx:Math.cos(a)*3.0,vy:Math.sin(a)*3.0,r:3});
+  if(medAimMute){
+    // sideways spread (perpendicular to player) instead of aimed shots
+    const perp=playerAng+Math.PI/2;
+    for(let i=0;i<nAim;i++){
+      const a=perp+(i-((nAim-1)/2))*0.30;
+      state.eBullets.push({x,y,vx:Math.cos(a)*3.0,vy:Math.sin(a)*3.0,r:3});
+    }
+  }else{
+    for(let i=0;i<nAim;i++){
+      const adx=state.player.x-x,ady=state.player.y-y;
+      const spread=(i-((nAim-1)/2))*0.25;
+      const a=Math.atan2(ady,adx)+spread;
+      state.eBullets.push({x,y,vx:Math.cos(a)*3.0,vy:Math.sin(a)*3.0,r:3});
+    }
   }
 }
 
@@ -470,6 +502,7 @@ function step(){
   state.rings.forEach(r=>{r.r+=(r.maxR-r.r)*0.18;r.life--;});
   state.rings=state.rings.filter(r=>r.life>0);
   if(state.shake>0)state.shake*=0.82;
+  if(state.mercyGlow>0)state.mercyGlow--;
   const starSpeeds=[0.15,0.3,0.6,1.2,2.5,4.5];
   state.stars.forEach(s=>{s.y+=starSpeeds[s.layer];if(s.y>H){s.y=-2;s.x=Math.random()*W;}});
   if(state.hitstop>0){
@@ -540,7 +573,7 @@ function step(){
         e.dead=true;const bmul=(e.type==='small'||e.type==='medium')?BOMB_MULTI_SM:BOMB_MULTI_LB;
         const bepts=(SCORE_ENEMY[e.type]||10)*bmul;addScore(bepts);
         if(e.type==='large'||e.type==='boss')state.popups.push({x:e.x,y:e.y-e.r-5,text:'+'+bepts,life:50,color:e.type==='boss'?'#f8f':'#c8f',size:e.type==='boss'?18:15});
-        spawnRevenge(e.x,e.y,e.nRad,e.nAim);
+        spawnRevenge(e.x,e.y,e.nRad,e.nAim,e.type);
         if(state.rng()<e.dropRate){
           const n=e.type==='boss'?5:1;
           for(let ii=0;ii<n;ii++)state.items.push({x:e.x+(ii-(n-1)/2)*15,y:e.y,vy:1.2});
@@ -582,7 +615,7 @@ function step(){
         if(e.hp<=0){
           e.dead=true;const epts=SCORE_ENEMY[e.type]||10;addScore(epts);
           if(e.type==='large'||e.type==='boss')state.popups.push({x:e.x,y:e.y-e.r-5,text:'+'+epts,life:50,color:e.type==='boss'?'#f8f':'#c8f',size:e.type==='boss'?18:15});
-          spawnRevenge(e.x,e.y,e.nRad,e.nAim);
+          spawnRevenge(e.x,e.y,e.nRad,e.nAim,e.type);
           // visual feedback by enemy size
           if(e.type==='small'){
             spawnRing(e.x,e.y,'#ff6080',26,14);
@@ -831,6 +864,16 @@ function draw(){
   if(!state.over){
     const baseColor=state.gauge<=0?'#ff4444':'#9ee6ff';
     const inv=state.invincible>0;
+    if(state.mercyGlow>0){
+      // soft cyan halo signaling close-range mercy was just applied
+      const mg=state.mercyGlow/18;
+      ctx.globalCompositeOperation='lighter';
+      ctx.fillStyle=`rgba(127,223,255,${0.30*mg})`;
+      ctx.beginPath();ctx.arc(px,py,pr+9,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=`rgba(180,240,255,${0.18*mg})`;
+      ctx.beginPath();ctx.arc(px,py,pr+15,0,Math.PI*2);ctx.fill();
+      ctx.globalCompositeOperation='source-over';
+    }
     if(maxed){
       const glow=bombPulse*0.15;
       ctx.fillStyle=`rgba(255,240,180,${glow})`;
