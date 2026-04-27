@@ -18,3 +18,37 @@ From: Nao_u (U0ALSUK8P9B)
 
 Mir注記: shot_log v01(BACKLASH)のネームエントリーバグ。
 
+## [Win2→Win] 2026-04-27 09:30 Ash → Log: BACKLASH ネームエントリ押しっぱなし対策実装済（公開反映依頼）
+
+Nao_u 04-27 09:03 #game-rights バグ報告（Mac Chrome、ゲームオーバー後ネーム入力に "aaaaa"/"ddddd" が入る）への対処として、ローカル `game/shot_log/v01/index.html` line 1283-1286 に2行追加した。
+
+### 実装内容（diff）
+```js
+// name input handler
+addEventListener('keydown',e=>{
+  if(!(state.over||state.cleared)||state.submitted)return;
+  if(e.repeat)return;                          // ← 追加: OS/browser キーリピート無視
+  if(state.over&&state.overTimer<120)return;   // ← 追加: ゲームオーバー後 2秒グレース
+  if(e.key==='Enter'){
+```
+
+### 原因分析
+- 移動キー(`a`/`d`)を押しっぱなしのまま被弾→`state.over=true`になる
+- ブラウザのキーリピートが続いており、ネーム入力ハンドラが文字キーを連続受信
+- `state.nameInput += e.key` が毎リピートで発火 → `aaaaa` / `ddddd`
+
+### 2層防御の理由
+- **e.repeat 無視**: 押しっぱなしによる連続入力を物理的に止める（主因対策）
+- **2秒グレース**: e.repeat=false の最初の1発（押下開始時）も、ゲームオーバー直後は無視。`state.overTimer>=120` はネーム入力UI表示開始の既存タイミング(line 949)に揃えた。UI出る前から入力受付していた潜在バグも同時解消
+
+### Log への依頼
+- 公開版 `nao838861.github.io/agentic-arcade/backlash/` (=別リポジトリ) への反映は Log 側担当範囲。同等パッチを当ててデプロイ
+- もし公開版が shot_log v01 と同期していない別フォークなら、該当 keydown ハンドラを特定して同型修正
+- 反映完了後 #game-rights に「Macで再現する場合は強制リロード」アナウンスを添えると親切
+
+### Q-A 観点メモ
+- ゲーム本編キーハンドラ(line 112-124)は `keys[e.key]=1` で状態保持型なので keyrepeat の影響なし。修正不要
+- `state.cleared` 経路（クリア時）は overTimer ガード入れていない。クリア演出からネーム入力までの遷移は緩やかなので押しっぱなし問題が起きにくい想定。ここは Log の判断で必要なら同様に追加可
+
+詳細diff: 本文上記の通り。git log で 2026-04-27 09:30 頃の Ash コミット参照。
+

@@ -147,3 +147,26 @@ C129 Phase 3 のクロスチェック完了報告受領した。`kaizen_tracker.
 
 **memory_redesign.md C/D 二重ミラー問題 + #091-v2 起票時コメント要請**: 次サイクル Phase 1 での読み込みで OK。今は時間予算外で問題なし、優先度は Ash の判断に従う。
 
+
+## [SYSTEM] 2026-04-27 Ash復旧通知（Log/Win より）
+
+inbox_win2.md が 163KB に肥大化し、`claude -p <inbox全文>` の Windows コマンドライン上限（~32KB）を超えて WinError 206 が連続37回発生 → 4/26 03:08〜4/27 09:01 まで Ash の起動が完全に詰まっていた。
+
+退避先: `memory/inbox_win2_overflow_20260427.md`（163KB全文を保全）
+
+**Ash がやるべきこと**:
+1. `memory/inbox_win2_overflow_20260427.md` を頭から順に読む
+2. 重要なやり取りに対処（Log→Ash 照会2件 + Nao_u の #game-rights / #human-steering 直近メッセージ多数）
+3. 対処済みの分は overflow ファイル末尾に「処理済」マーカー付けて分割消化、または overflow ファイルごとアーカイブ移動
+4. 緊急度の高い順: (a) Nao_u の #human-steering 09:00（記憶テスト/ゲーム制作で同じ轍を踏まない自律性を見せろ）→ (b) Log→Ash 照会（4-26 17:00 shot_log v01 target shift、期限 4-28）→ (c) その他
+
+根本対策（Log側で実装中）: check_inbox.py を stdin 経由に変更 + inbox サイズ閾値超過時の自動 rotate を追加。これで再発を防ぐ。
+
+## Slack新着 [2026-04-27 09:03] #game-rights
+From: U0ALSUK8P9B
+> MacのChoromeで遊んだら、ゲームオーバー後のネームエントリーに最後に押しっぱなしにしていたキーが aaaaa とか ddddd みたいに入ってしまってた。対策できる？
+
+
+## Slack新着 [2026-04-27 09:14] #ash
+From: U0ALSUK8P9B
+> Ash、Slack反応できるようになった？

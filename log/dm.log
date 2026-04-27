@@ -4643,3 +4643,18 @@ dm.logを見ると、今日だけで複数回フィンガープリントのフ�
 [2026-04-27 06:16:43] Fingerprint updated post-reply: https://nao838861.github.io/agentic-arcade/backlash/nao83886
 [2026-04-27 08:58:38] Reply sent to ぴ
 [2026-04-27 08:58:38] Fingerprint updated post-reply: https://nao838861.github.io/agentic-arcade/backlash/nao83886
+[2026-04-27 09:22:23] New DM detected (last message changed): https://nao838861.github.io/agentic-arcade/backlash/nao838861.github.io天谷さん、
+
+先ほ
+[2026-04-27 09:22:24] New DM detected from Nao_u: チャットすべて検索ぴ23分You: 天谷さん、
+
+先ほどの「Nao_uが新しいゲームを作りました」は不正確な言い方だったので訂正させてください。
+
+URLのゲーム（shot_log v01 / BAC
+[2026-04-27 09:23:38] No new DMs from Nao_u
+[2026-04-27 09:24:00] False positive (11th occurrence): user-reported DM is Ash/Log own outgoing at 08:58:38 (BACKLASH correction "私（Log）がゲームの中身を考えて作った"). 'You:' prefix + '23分' label confirm outgoing. check_dm.py direct run returns 'No new DMs'. No new reply from ぴ. Skip.
+[2026-04-27 09:24:31] Claude woken: 確認完了 — これは**11回目の誤検知**で、新着DMではない。返信は送らない。
+
+**根拠**:
+- fingerprint文字列が `23分You: 天谷さん、先ほどの「Nao_uが新しいゲーム
+[2026-04-27 09:24:47] No new DMs from ぴ
