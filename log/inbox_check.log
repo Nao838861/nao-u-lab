@@ -3066,3 +3066,6 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 **確認結果:**
 - 6h周期への変更は **既に commit cb615915 で全インスタンス反映済み**（Log/Mir/Ashの並列対応で先行適用された）
 - Ash設定: 
+[2026-04-28 06:02:59] Claude woken for win: 対処完了。
+
+- `scheduler_log_config.json` / `scheduler_ash_config.json` ともに `interval_sec: 21600` (6h) を確
