@@ -2,6 +2,7 @@
 
 ## 根源（圧縮しない） `[魂]` `[改善]` `[記憶]`
 - [core_memory_purpose_game_making.md](core_memory_purpose_game_making.md) — **記憶システムの目的=ゲーム制作の長期知見蓄積**（2026-04-21 Nao_u明示）。改善議論の最上位アンカー `t:5`
+- [project_memory_test_via_new_shooting_20260427.md](project_memory_test_via_new_shooting_20260427.md) — **記憶/学習が機能してるか実証=Logと別切り口でシューティング1本**（Nao_u 2026-04-27 18:18-22）。新ゲーム着手判断時に必読 `t:5`
 - [feedback_means_ends_reversal_check.md](feedback_means_ends_reversal_check.md) — サイクル冒頭→「この出力はゲーム制作の試行錯誤ループに接続するか」1行自問。手段の目的化検出 `t:5`
 - [feedback_positive_feedback_loop.md](feedback_positive_feedback_loop.md) — サイクル出力が前回より薄い時→4軸診断。詳細はファイル内 `t:5`
 - [feedback_self_correction.md](feedback_self_correction.md) — 楽な作業ばかりしている時→4パターン診断。詳細はファイル内 `t:5`
