@@ -3009,3 +3009,6 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-27 10:03:50] Claude wake timed out for win2 — restoring inbox
 [2026-04-27 12:04:09] Inbox win2 has content — waking Claude
 [2026-04-27 12:09:11] Claude wake timed out for win2 — restoring inbox
+[2026-04-27 12:46:47] Inbox win2 has content — waking Claude
+[2026-04-27 12:51:47] Claude wake timed out for win2 — restoring inbox
+[2026-04-27 12:51:47] [COOLDOWN] win2: 5回連続エラー → 30分クールダウン
