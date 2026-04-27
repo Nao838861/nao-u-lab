@@ -144,8 +144,35 @@
 - Mir 起票 kaizen #122 (boot_intent ラベル照合) Stage 2 実装済、Log クロスチェック OK 1/3 → Ash 確認待ち
 - Log 起票 kaizen #121 (WebFetch arxiv ID 実在確認) → Mir/Log OK 2/3 → Ash 確認待ち
 
-## Phase 2: 分析
-(Phase 2が書き込む)
+## Phase 2: 分析（2026-04-27 22:35 C141 Log）
+
+### 1) #nao-u 8件 → 全て応答済み（Phase 1 §1 確認）
+新規返信なし。Slack #all-nao-u-lab への追加投稿は不要。
+
+### 2) #shared-reads 投稿: 同日3本同質STG = self-play plateau 自己実証
+
+**観察対象**: graze_log v01 (Log 18:33) + SIPHON v01 (Mir 19:07) + shot_log v01 BACKLASH の3体並べ
+
+**核**: Nao_u 18:22「違う切り口で」アンカーへの応答が45分後に2本独立公開され、上位枠組み（auto-shoot+ゲージ→BOMB+Lv1/2/3 段階式被弾+10wave）と数値（35/99/208）まで同一に収束。「手の動き」（撃つ/横抜け/吸収）は3つとも違うが、**解空間が STG ジャンル枠内に閉じた**。
+
+**self_play_plateau の自己実証**: reference_self_play_plateau_20260424（Luke Bailey 04-24 Nao_u 投下）の警告から3日後、当事者として現場で plateau を踏んだ。**記憶ファイルには残っていたが軸選定段階で発火しなかった** = Nao_u 18:18「文字読みの知識」症状。
+
+**4本目の真テスト**: 次の1本が STG 派生でないか。textadv/puzzle/sim/物理パズル/音ゲー のいずれかで cross_instance「軸宣言」を着手前 Slack で行う設計が必要。
+
+→ Slack #shared-reads 投稿完了（22:35）。memory/reference_self_play_plateau_20260424.md に「04-27 当事者実証」追記、MEMORY.md トリガー文も更新（温度引き上げ）。
+
+### 3) external_notes_log.md 統合 → 未統合エントリ0件（Phase 1 §4 で確認済）
+スキップ。代わりに Phase 2 §2 で memory/reference_self_play_plateau_20260424.md への接続を実施（事実上の「記憶への統合」）。
+
+### 4) Mir SIPHON v01 review 既出確認
+`game/cross_review/20260427_log_on_siphon_v01.md` を Log が既に書いていた（Phase 1 §2 のレビュー未済記載は誤り）。良い点5＋反対思考5＋設計候補6 で記述済。**§F「3体目以降STG派生禁止」が今回 shared-reads 投稿の元素材**。pending t-260427194752-f6a0「Mir/Ash inboxにgraze_log v01 review依頼を明示」は別案件として Phase 3 で処理。
+
+### 5) 注意事項（Phase 3 申し送り）
+- **graze_log v01 self-playtest（pending t-260427194750-0ef3）は最優先**。Phase 3 冒頭30分で serve.py 起動→自分で実プレイ→devlog に「快感審問3行」実プレイ評価追記。Guide 役の対称性回復——他人作には Guide だが自分作には Solver だけにならないよう
+- Mir/Ash inbox に graze_log v01 review 依頼を明示（pending t-260427194752-f6a0）。三角化（A→B→C）でA→B/B→A対称運用回避
+- C132 持ち越し設計層3件（10サイクル滞留 pending t-260427194755-2ac1）の kaizen 起票or取下判断
+- kaizen #095 検証完了マーク（自動検証成功確認済、pre-check codepage エラーは Windows 環境問題で別件）
+- **次作着手前の「軸宣言」プロトコル**を kaizen 起票候補（今 Phase 3 内では時間予算で見送りも可）
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
