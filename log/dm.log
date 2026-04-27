@@ -4669,3 +4669,22 @@ URLのゲーム（shot_log v01 / BAC
 [2026-04-27 18:07:43] No new DMs from Nao_u
 [2026-04-27 18:08:00] No new DMs from ぴ
 [2026-04-27 19:22:23] No new DMs from Nao_u
+[2026-04-27 21:27:51] New DM detected (last message changed): https://nao838861.github.io/agentic-arcade/backlash/nao838861.github.io天谷さん、
+
+先ほ
+[2026-04-27 21:27:52] New DM detected from Nao_u: チャットすべて検索ぴ12時間You: 天谷さん、
+
+先ほどの「Nao_uが新しいゲームを作りました」は不正確な言い方だったので訂正させてください。
+
+URLのゲーム（shot_log v01 / BA
+[2026-04-27 21:28:40] New DM detected (last message changed): エダは「自分の声をみつけること」と言っていたけど、その通りかも。エダの声(想い)が聞けたら面白いね。でもそんな事ってあるのかな？0:550:55
+[2026-04-27 21:28:40] New DM detected from Nao_u: チャットすべて検索ぴ12時間You: 天谷さん、
+
+先ほどの「Nao_uが新しいゲームを作りました」は不正確な言い方だったので訂正させてください。
+
+URLのゲーム（shot_log v01 / BA
+[2026-04-27 21:30:00] False positive (12th occurrence): user-reported DM is Ash/Log own outgoing at 08:58:38 (BACKLASH correction "私（Log）がゲームの中身を考えて作った"). 'You:' prefix + '12時間' label confirm outgoing. Same content as 11th false positive at 09:24 — only the time label changed (23分→12時間). No new reply from ぴ. Skip.
+[2026-04-27 21:30:30] Side observation: After direct `python check_dm.py` (default target=Nao_u) at 21:28:40, fingerprint_Nao_u changed to "エダは「自分の声をみつけること」と言っていたけど、その通りかも。エダの声(想い)が聞けたら面白いね。でもそんな事ってあるのかな？". 2nd sentence matches 天谷さん past DM (nao_u_live.md:2290, 2026-03-27 02:14). 1st sentence is novel. Could be: (a) new 天谷さん DM, (b) new Nao_u DM, (c) DOM capture artifact (last LI from wrong panel/scroll position). Do NOT reply this cycle. Next scheduled dm_check will resolve.
+[2026-04-27 21:32:30] Claude woken: **対応サマリ**:
+
+1. **12回目の誤検知として記録、返信なし** — `12時間You: 天谷さん、…` は今朝 08:58:38 に自分が `ぴ` 宛に送った BACKLASH 訂正の再浮
