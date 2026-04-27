@@ -1280,9 +1280,14 @@ function draw(){
   }
 }
 // name input handler
+const _nameEntryPressed=new Set();
+addEventListener('keyup',e=>{_nameEntryPressed.delete(e.key);});
+addEventListener('blur',()=>{_nameEntryPressed.clear();});
 addEventListener('keydown',e=>{
-  if(!(state.over||state.cleared)||state.submitted)return;
-  if(e.repeat)return; // ゲームオーバー遷移時に押しっぱなしのキーがautoリピートで流入する事故を防ぐ
+  if(!(state.over||state.cleared)||state.submitted){_nameEntryPressed.add(e.key);return;}
+  if(_nameEntryPressed.has(e.key))return; // 既に押下中: ゲーム中→ネームエントリー遷移時の押しっぱなし or autoリピート
+  _nameEntryPressed.add(e.key);
+  if(e.repeat)return; // 二重保険
   if(e.key==='Enter'){
     // submit: use typed name, or fallback to previous name, or generate default
     let name=state.nameEditing?state.nameInput:(rankName||'');
