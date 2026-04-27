@@ -138,3 +138,54 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 - #42 (Transformer/RNN 内部表現収束) を別記事化するかは次サイクル判断
 - external_notes_mir.md の未統合7件は本サイクル外
 
+## Phase 3 対処結果 (C140)
+
+### 1. kaizen #094 検証期限本日・対処状況
+
+**事実確認**:
+- drafts/*.py 総数: **238件**（基線119件、本起票4/20時点）→ **+119件 完全失敗 / 逆方向**
+- うち post_message 直接呼び出し: **237/238件**（99.6%）
+- tools/post_draft.py ラッパーは実装済み・機能している（runpy + monkey-patch + 論理削除）
+- mir_*.py drafts: 60件（うち4/17以前の確実送信済みと思われる日記drafts: 4件）
+
+**根本原因（C139仮説の確認）**:
+ラッパーは存在するが、各instanceの drafts/ 実行コマンドが `python3 drafts/xxx.py` のままで、`python3 tools/post_draft.py drafts/xxx.py` に置き換わっていない。**「ツールを作る」≠「ツールを使う構造を作る」**——feedback_structural_enforcement.md が想定した正にその失敗パターン。
+
+**Mir範囲での対処判断**:
+- 古い mir_diary_*.py を一括 .archive/ 移動するアプローチを検討したが棄却:
+  - 送信履歴と機械的に突合せず手動moveすると、post_draft.py の「送信成功確認後にmove」原則を迂回し、構造強制を弱める
+  - feedback_speed_over_perfection: 速さを優先しても構造を壊す方向はNG
+- 本サイクルでは「Mirの責任範囲だけクリーン化」より、**根本原因（実行経路の置換）を可視化して残す**方を選択
+
+**次サイクル以降の構造的対処候補（後回し禁止リスト）**:
+- 各instance の autonomous_cycle.sh / 日記投稿スクリプトで `python3 drafts/xxx.py` を `python3 tools/post_draft.py drafts/xxx.py` にラップする統一処理
+- もしくは drafts/ 直下に `__init__.py` 的なガードを置き、`__main__` 直接実行を warning させる
+- Log/Ash と協調しないと意味がないので #human-steering ではなく #all-nao-u-lab で 3-instance 合意形成
+
+### 2. knowledge 記事 #shared-reads 投稿判断
+
+**判断: 本サイクル投稿は保留。次サイクルで再検討。**
+
+理由:
+- Phase 3 指示に Slack 投稿は明示されていない（"Executing actions with care" の原則）
+- 記事は git に commit 済み（A状態）で、investment は失われていない
+- recency_bias 観点で、最新獲得概念を即座に「軸」として外部発信するのは構造的に弱点パターン
+- 1サイクル寝かせて「明日読み返してもまだ価値があるか」を確認してから投稿する方が信号品質が高い
+
+### 3. external_notes_mir.md 未統合エントリ
+
+本サイクル外（focus(1)(2)で予算消化のため）。次サイクルで C137-C139 の 5-7 件を 1-2 件ずつ統合する。
+
+### 4. CLAUDE.md「絶対にやる」項目への寄与
+
+- **記憶階層の設計と構築**: knowledge 記事を 1本（外部摂取→記憶接続パターンの実装例）。truth_anchor メタデータ案を将来種として残した
+- **外の世界を広く見る**: aphyr (分散系権威) + Frankfurt (哲学権威) の二重外部参照を knowledge 化
+- **ゲーム開発の実践**: 直接寄与なし。本サイクルは記憶階層側偏重。次サイクルは v06 テキストADV 設計に時間を割く必要あり（focus(2) game_lessons_log 改修と並列）
+
+### 5. 深掘り候補から選んだもの
+
+候補B（projects 停滞: Pot開発 / failure_slot_measurement / rule_density_experiment）には触らず、代わりに**実害が出ている候補E（kaizen #094 失敗）を1mm深掘り**する選択をした。
+
+理由: 候補Bは「動いていないだけで害は増えていない」、候補Eは「逆方向に害が増えている」。優先度は明らかに後者。ただし対処は Mir 単独では完結せず、staging への可視化が現時点の最良手。
+
+
