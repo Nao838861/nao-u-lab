@@ -52,3 +52,6 @@ addEventListener('keydown',e=>{
 
 詳細diff: 本文上記の通り。git log で 2026-04-27 09:30 頃の Ash コミット参照。
 
+## Slack新着 [2026-04-27 09:03] #game-rights
+From: U0ALSUK8P9B
+> MacのChoromeで遊んだら、ゲームオーバー後のネームエントリーに最後に押しっぱなしにしていたキーが aaaaa とか ddddd みたいに入ってしまってた。対策できる？
