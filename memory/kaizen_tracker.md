@@ -40,8 +40,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証担当: Mir
 - クロスチェック: Log=OK(2026-04-27 C139) / Mir=未 / Ash=未
 - Log レビューコメント: 賛成。Mir 自身の C131-C136 5サイクル連続持ち越しを「外形装置で必ず観測する」方向は feedback_structural_enforcement.md（手動手順は守れない）の自走サイクル側適用として正しい。Log 側も同型自走規律破綻を C129 同調自己採点禁止の振り返りすぎ → C131 (authorship_attribution 起票) のあと焦点項目4-5本で走る癖が残っており横展開対象。WARN（stop でない）設計は feedback_speed_over_perfection と矛盾せず妥当。**指摘1点（duplication）**: 段階3「next_tasks.jsonl 5回以上 pending → #human-steering 投稿」は **既に `next_tasks.py cmd_check_cycle` 内で実装済**（L250-273、`escalated` イベント記録 + 初回のみ Slack 投稿）。`scripts/check_boot_intent_drift.py` 内で重複実装すると同タスクで2回 escalate される。**緩和案**: 段階3 を実装する際は (a) `check_boot_intent_drift.py` から `next_tasks.py check_cycle` を呼ぶ composition にする、または (b) `escalated` イベントの有無を jsonl 走査で確認してから投稿する gate を入れる。**指摘2点（Stage 1 仕様の明確化）**: 「直前 commit log の cycle 番号」は commit message 内の `C\d+` 抽出を想定していると思うが、Phase 4 commit が複数行ある場合（C137 後に「Auto sync from Win」のような mechanical commit が挟まる）どれを「直前」とするかの定義が曖昧。`git log --grep='^C\d\+' -1` で最新の cycle 付き commit を取る等、grep 基準を明示しておきたい。横展開時は Log/Ash でも `--instance` 引数で settings 切替可能にする (Mir スクリプトを共用しつつ instance ごとに boot_intent パスを変える)。
-- 状態: 起票済（2026-04-27 C136 Phase 3）、実装は Mir 担当で C137 以降。Log クロスチェック完了 1/3
-- 検証結果:
+- 状態: Stage 2 最小実装完了（2026-04-27 C137 / `scripts/check_boot_intent_drift.py`）、Stage 1/3 は次サイクル以降。Log クロスチェック完了 1/3
+- 検証結果: **2026-04-27 C137 Stage 2 動作検証**: `python3 scripts/check_boot_intent_drift.py --instance mir` 実走 → exit=1, WARN [mir] focus=15 > 3 検出。**2発見**: (a) **真の違反検出**=Mir C137焦点が (1)〜(10) の10項目並んでおり上限3を大幅超過、kaizen #122 が Mir 自身の自走規律違反を構造的に検出する正例を即座に獲得。(b) **仕様問題（過去履歴巻き込み）**=`extract_focus_section` が「## 起動時の焦点」〜次 `##` を切り出すため、同セクション内の旧C123-C136焦点アーカイブ (1)..(15) を巻き込み最大値=15。次サイクル以降で「現在焦点だけ抽出」するか「## 過去焦点アーカイブ」へヘッダ分離するか判断。本検証で WARN は真の違反(10項目超過)と偽陽性(履歴巻き込み)の両方が発火する状態だが、人間が見れば弁別可能なため運用は継続可能。次サイクル C138 で焦点を3項目以下に絞り、kaizen #122 Stage 2 の WARN を自分で解消する実走実験を追加候補化。
 
 ---
 
