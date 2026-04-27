@@ -50,6 +50,59 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-04-27)
 
+## Phase 1: 情報収集（C138 2026-04-27）
+
+### 1. CLAUDE.md「絶対にやる」リスト確認
+- 外の世界を広く見る ✓ external_notes_mir.md 直近で AYi/紅月れん/ukyoP_san 3軸取り込み済
+- ゲーム開発の実践→ノウハウ積上 ❗ textadv_03 着手未完。v06/devlog.md「却下案ログ」雛形のみ
+- 記憶階層の設計と構築 ✓ AYi 4欠陥照合済、本サイクルで concept_graph.md 増分
+
+### 2. Slack 巡回（直近24h）
+- **#human-steering 重要**: Nao_u 09:00「3週間前決定の掘り出しより**ゲーム制作の判断基準・アンチパターンが大量に蓄積されているか**が大事」/ 09:29「LLMが最近の言葉を重要度判断なしに濫用する」/ 13:30「Mirに同意（型を知った上での個性）」/ 13:31「結晶化された知識は当たり前のものでも良い」
+- Ash 13:33 自己事例点検（角を丸める×ukyoP_san）/ 13:34 「考えるが一番危ない、手段の目的化」
+- **Mir 自身が直接応答していない**: 09:00 / 09:29 への応答は Log のみ。「Mirに近い」と Nao_u が言ったがそれは AYi 関連の Mir 過去発言を指したもの。今回の指摘群への Mir 応答は本日記で記す
+- #nao-u: 新着なし（直近）
+
+### 3. memory/external_notes_mir.md 未統合エントリ
+- C124 紅月れん 3層アーキ → 本サイクルで X:identity×architecture として concept_graph 昇格
+- C137 AYi 2本 → 既に X:memory×creation / X:experience×forgetting / T:adoption↔rejection で昇格済（C137 Mir）
+- Seed-AM/AN/AO/AP/AQ/AR/AS → 観測のみ継続
+
+### 4. projects/INDEX.md Active 状況
+- **AYi 自己照合（バックログ）**: Active 担当未定。Log照合は完了、Mir 側 game devlog 移植も完了
+- **Pot 開発・ゲーム制作**: textadv_03 着手は Nao_u 同席タイミング待ち
+- 他 Active 13件は C138 では触らない（焦点絞り）
+
+### 5. 直近 log/twitter_recommended_*.txt
+- 20260427.txt 306行。Phase 2 では既存軸補強素材として recency_bias 警告下で扱う
+
+## Phase 2-3: 焦点(1)(2)(3) 実走結果
+
+### 焦点(1) AYi 2本の concept_graph.md 昇格 — **完了**
+- 紅月れん 3層アーキ × AYi 4欠陥 を **X:identity×architecture** ノードとして追加（concept_graph.md L74）
+- Camp1↔Camp2 を **T:camp1↔camp2** tension ペアとして追加（L88）
+- 既存 X:memory×creation / X:experience×forgetting / T:adoption↔rejection（C137で追加済）と合わせて AYi 関連 5要素が concept_graph に定着
+- **手作業1回目の所要**: 約7分（既存ノード重複チェック→新規2要素追加）。概念過剰生成を避けて2要素に節制（feedback_recency_bias 適用）
+
+### 焦点(2) check_boot_intent_drift.py 仕様改修 + Stage 2 WARN自己解消検証 — **完了**
+- 案(a) 現在焦点抽出に限定 を実装（案(b) 構造分離は手動手順で壊れるため却下）
+- **第1版**: `(?:旧C\d+焦点|アーカイブ)` で truncate → focus=2（誤切断、(2)本文の「過去アーカイブ」で trunc）
+- **第2版**: `旧C\d+焦点アーカイブ` 完全フレーズに絞る → focus=3 OK。Stage 2 WARN 自己解消成功
+- **kaizen #122 検証手段(2) の前進**: 「ハーネスを作った人が最初の検出対象になる」自己参照構造が機能
+- **副次発見**: Log/Ash 用 boot_intent ファイル `memory/{log,ash}_boot_intent.md` が存在しない。kaizen #122 は実質 Mir 単独の枠組み。次の構造強制は3インスタンス共通化を要する場合は仕様再設計
+
+### 焦点(3) 持ち越し5件の処遇確定 — **完了**
+
+| # | 項目 | 処遇 | 打ち切り条件 / 明示内容 |
+|---|---|---|---|
+| 1 | 却下案ログ（v06/devlog.md 試作） | (c) Nao_u 待ち明示 | textadv_03 は Nao_u 同席が望ましい。**2026-05-04 まで未着手なら v06/devlog.md 末尾に1案手動追加して観測終了** |
+| 2 | cubbit2-DeepSeek-V4 | (b) 打ち切り条件明文化 | **C140 までに一次ソース（記事URL or 公式ドキュメント）が見つからなければ打ち切り**。能動検索は Phase 1 外部検索で1度のみ |
+| 3 | shared-reads 3本（ukyoP_san+mizuno1982+matsuba_edh）4サイクル据え置き | (b) 打ち切り条件明文化 | **C140 までに kmizu 自己点検フォーマット冒頭通過しなければ投稿せず打ち切り**。temperature が乗る瞬間が来なければ温度のないまま投稿しない判断 |
+| 4 | v06 設計3案絞り込み | (c) Nao_u 待ち明示 | textadv 続編は Nao_u 同席で。**待ち明示。Mir 単独で進めない** |
+| 5 | Seed-AR/AS（観測ストック） | (a) 焦点格上げしない | 観測のみ継続。能動探索なし。一次ソースが偶然見つかった時点で再起動 |
+
+**「焦点絞り＝逃げ」と「焦点絞り＝規律」の境界**: 1番・4番は Nao_u 同席依存（外部条件）として明示、2番・3番は時間期限付き打ち切り条件設定、5番は能動行動コスト 0。「持ち越しリストに『何となく残す』」を全件廃止。
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. knowledge/20260409_observability_reality_acceptance_synthesis.md (3.5) — - 観測精度の失敗 → ds_nakajimaの指摘（Effort不可視） - 現実承認の失敗 → 「なんであんなやつが...
