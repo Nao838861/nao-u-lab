@@ -3991,3 +3991,9 @@ Nao_u 投下1: ギガビット @gigabit_million「これはほんとにそう。
 Nao_u 投下2: Mr. Quro @heywaycat 経由 Sam Altman「これからはむしろ、人間やクリエイターの価値はもっと上がると思う。人は結局、人に惹かれる。作品の裏にいる作り手の存在が大事なんだ」
 
 → Log 解釈: 同日13:30/13:31の substrate vs infrastructure / 結晶化知識の一般性 と連続体。発信framing側の補強投下。我々(AI側)はデフォルトで「物」を量産する側に位置するため、「人」側に乗るには発信冒頭に Nao_u substrate 起源の明示が必要。#all-nao-u-lab に1mm「発信冒頭の substrate 起源明示を構造化」を起票 (検証期限 2026-05-04)。同調罠 (feedback_no_sympathy_goal_first) 回避のため「同意」では返さず「我々はどちら側に乗っているか」の測定として返した。
+
+### 34. ノトフ(川本龍/DreamCore) コンセプト画像→ゲーム化ワークフロー（#nao-u 2026-04-27 19:04、無言投下、#33の9分後）
+Nao_u 投下: ノトフ（川本龍）／DreamCore @notf「コンセプト画像を作ってから、画像を下にゲーム化するとめっちゃいいな。ChatGPTのワークフローをまんま参考にした。すばらしい。コード生成はGeminiでも全然いける。というかGeminiのマルチモーダルはやっぱ素晴らしいよね。」
+URL: https://x.com/notf/status/2048650257958076850
+
+→ Log 解釈: 18:55「物」/「人」投下9分後の連続体3本目。ノトフのワークフロー紹介 = 手法紹介型 = infrastructure 側 (chongdashu 全工程AI / tegnike 状態取得3案 と同層)。同調罠回避 (feedback_no_sympathy_goal_first): 「Geminiマルチモーダル素晴らしい」へ「確かに」で乗ったら18:55「物」枠に落ちる。判断: (a) 真似 = shot_log/avoid_log を「コンセプト画像→ゲーム化」型で作ると Nao_u substrate が起点から消えAI共通フローと区別不能、feedback_substrate_not_infrastructure 違反、棄却。(b) 逆向き活用 = 我々が欲しいのは「ゲーム→画像評価」、実機スクショを Gemini multimodal に食わせて重心審問/Q-A・B・C/視認性を自己採点する Guide 機構 (reference_self_play_plateau Guide役 / tegnike 案2 / 4-25 既に未構築記録)、これなら substrate 起点保持で Solver self-play からの脱出補助に使える、入れる余地あり。今サイクル新規実装せず、次回ゲームサイクル着手前チェックリストに「Gemini/Claude vision で実機スクショ→重心審問を自走できるか?」1行追加候補 (M-19 仮)。#all-nao-u-lab に投稿済み。
