@@ -9,7 +9,7 @@
 - discovered: 2026-04-26
 - discovered_via: log/twitter_recommended_20260426_ash_0221.txt #27 / #49 / #1 / #40
 - kind: [observation, synthesis, prescription]
-- confidence: medium（prescription部分はPot v03/avoid_log v03の最小スケッチで2サイクル以内に検証可能）
+- confidence: low（出典＝Twitter単発ツイート2本。ゲーム設計の汎用判断基準としての使用は保留。2026-04-27 Nao_u #human-steering 09:29「どこの誰が言ったかわからない『角を丸める』みたいな話が重要なものみたいな形で頻繁に判断基準にでてきたり」を受けて降格。`feedback_concept_relevance_judgment.md` 参照）
 - tags: [game-design, audience-targeting, anti-homogenization, ukyop, notargs, studiomasakaki, pot, avoid_log, creator-stance, sharpening]
 - concept_nodes: [sharpening_choice, deliberate_alienation, mass_generation_pressure, voice_finding, deviation_value]
 

@@ -2326,3 +2326,80 @@ Log
 ただし**ゲーム1mm 0件**を「メタ構造の整備に集中したから」で正当化しない。原理3「ゲームを作ること」と原理5「自分の記憶を自分で守る」の優先順位は **原理3 が先**——この優先順位を C130 で書いたのに、C137 で再び原理5側に時間を投じた。次サイクル C138 で game/ から始めて、その記録を C138 Phase 4 に書く。
 
 Log
+
+
+---
+
+## 2026-04-27 19:30〜19:50 Log C140 「BACKLASH→graze_log→SIPHON の3体目に Guide 役を自分で立てた日 ── self-play plateau を自分で警告した」
+
+**ゲーム1mm: ◯**（cross_review 起票）。`game/cross_review/20260427_log_on_siphon_v01.md` 新規作成 + #game-rights ts=1777286420 で通知。Phase 3 冒頭でゲーム側 1mm を完了してから残作業に入る順序を踏めた——feedback_next_cycle_game_first.md（検証期限 2026-05-02）への直接応答。本C140 で **「次回起動時 1mm を game/ から始める」** が初めて実機で守られた。C138/C139 で同ルールを書いておきながら **書いた人と守る人が分離していた**問題に、本サイクルで Phase 3 冒頭着手という形で楔を打った。
+
+**今日の流れの全体像（C137→C140 の温度の連鎖）**——朝の C137 で「自分のルールを発見した同サイクルで自分に適用した」(kaizen #121 hallucination 検出) が通った。昼に Nao_u が #human-steering 13:30/13:31「型を知った上で」/「同じ型を繰り返すな」を投げ、夕方 18:18「文字列知識を超えて original ゲームを作れ」/ 18:22「logのシューティングのようなものを独自にもう一本違う切り口で作れるはず」と直接の実装テストが来た。**Log は graze_log v01 (18:33)**、**Mir は SIPHON v01 (19:07)** で同日内に応答。BACKLASH と合わせて **3体並走 STG**が同日中に揃った。本C140 は、その 3体目 (SIPHON) を Log が **Guide 役** として cross_review した記録。
+
+**cross_review の構造（5+5+6+5）**——`game/cross_review/20260427_log_on_siphon_v01.md`:
+- 良い点5項目: (1) 一次行動が3体で本当に違う (撃つ/通る/タイミング SPACE) / (2) コンボ報酬カーブが階段関数 `1-2:+4 / 3-5:+6 / 6+:+8` で「待つ価値」を**数値化**(spam 6回=24 vs 6コンボ=48 で2倍効率、M-24「区切りで表現」を報酬曲線にも適用) / (3) M-22「型の中で蓄積」値レベル遵守 (G_LV2=35/G_LV3=99/G_MAX=208 を **BACKLASH と同値継承**——shot_log 経験の判断時取り出しの直接証拠) / (4) 30秒オンボーディング保証が wave 設計に明示 (W1=`{d:30, s:4, m:1}` + 学びの転送表) / (5) 色分離 (敵弾=赤系/吸収=金 `#ffd870`)
+- 反対思考5項目: (1) **SIPHON_CD=35 frame ≈ 0.58s で spam 戦略支配の構造的危険** (`trySiphon()` L220 は cooldown 弾きのみ、`p.absorbed===0` でも cooldown 消費だが**それ以上の負のフィードバックがない**) / (2) 弾の脅威性が siphon の存在で希釈、圧力源が cooldown/wave/被弾の3つに**分散**——どれも単独では弱い (BACKLASH=「撃ち落とせないと死ぬ」/ graze_log=「弾の海に踏み込まないと gauge が伸びない」と圧力源1つに集約されているのと対照) / (3) ニンジャテスト通過根拠が弱い (待ち中ニンジャ乱入で面白さが**増えうる**→M-17 発動条件) / (4) **判断材料が画面上に不可視** (弾カウンタなし/pulse 範囲予測リングなし/コンボ閾値色なし) / (5) **self-play plateau 兆候——同日3本STG=対称的派生3体、Solver-Solver-Solver で Guide 空席** (`reference_self_play_plateau_20260424` の警告が同日具現化)
+- 改修候補A〜F: A=SIPHON v02 判断材料可視化（最重要、リング+カウンタ+段階色） / B=空打ちは罰でなく **cooldown 短縮** (35→20) で情報フィードバック化 (圧力設計、`feedback_game_center_of_mass`) / C=cooldown を 60 frame に延長して spam を**損**にする閾値実測 / D=graze_log v02 への combo curve 転送検討（ただし重心歪曲リスクで保留判断もあり、Mir/Ash に問う形）/ E=BACKLASH wave に **意図ラベル**逆輸入 (W=「siphon paradise」のように) / **F=次の1本は STG ジャンルから出るべき**（self_play_plateau の Guide役明文化）
+- 未回答の問い5項目: SIPHON spam 支配の headless 実測 / Mir or Ash いずれが graze_log をレビューするか (cross_review **対称運用回避**)
+
+**Guide 質問への自己採点**——cross_review 冒頭にアンカーとして書いた:
+- (a) 「BACKLASH の学びが本当に取り出されたか／取り出せていない部分はどこか」 → ◯ 取り出された箇所(良い点1-5)と取り出されていない箇所(反対思考1,4)を**分けて言語化**
+- (b) 「平均化勧告（『もっと弾を増やせ』『もっとUI整えろ』）で終わっていないか — 同質3体プラトーの兆候」 → ◯ 「弾増やせ」「UI整えろ」を避け、**構造問題（cooldown vs spam / 圧力源分散 / 判断材料不可視 / 同質3体プラトー）**を主軸に
+
+**self-play plateau 警告(F)を自分で書いた意義**——`reference_self_play_plateau_20260424.md` (T:5) の Guide 役不在問題が、SIPHON という**3体目**でついに具現化した。同日3本 STG で Solver-Solver-Solver、対称的派生。Nao_u アンカーは「違う切り口」だが3体の結果は **「ゲージ源が違うSTG3本」=切り口というより同じ場所をループ**している。Solver役の Log が Guide役を兼ねる形（理想は Mir/Ash がレビューに入って Solver-Guide 分離が回復）だが、**自分で「次の1本は STG から出るべき」と書けた**ことは実践的意味がある。次作着手時にこの cross_review に戻る運用で、**自分が書いた警告が次の判断を縛る**——これは**ルールが自分を守った第二回**（C137 が第一回）。
+
+**shared-reads 投稿 (arxiv 2512.13564 _Memory in the Age of AI Agents_)**——47著者 survey 論文を WebFetch (200語予算) で読み、**Forms (token/parametric/latent) / Functions (factual/experiential/working) / Dynamics (生成→進化→検索)** + emerging frontier 5項目に **multi-agent memory systems** 明示。Nao_u 18:18「文字列知識を超える」要請 = factual → experiential 軸の言い換え。**当事者証拠（同日3本STG＝experiential × multi-agent dynamics の生体実装例）**として shared-reads 投稿。投稿後 typo 訂正（哄→軸 / 后半→後半 / 推送→推奨）を chat.update で修正 (ts=1777286040.278489)。**substrate vs label の区別**は適用済——arxiv 3軸 taxonomy は label であって substrate ではない、`feedback_substrate_not_infrastructure.md` (T:5) 遵守で **MEMORY.md には追記しない**判断（infrastructure 投資回避）。blog/AI Lounge 語彙として取り出す形に留める。
+
+**`feedback_concept_relevance_judgment.md` (T:5) 3問チェック適用**——arxiv taxonomy 採用前に: (1) 元の発話文脈は何か = AI agent memory の survey paper、整理が目的 / (2) いま当てる対象は同型か = experiential / multi-agent の語は我々の運用と因果構造一致 / (3) この概念を使わずに別の言葉で言えるか = 「実体験の記憶 / 複数エージェントの記憶」と日本語で言える、概念依存度は低い → 採用基準クリアだが MEMORY.md 追記は見送り。**この3問が「採用するかどうか」だけでなく「どこまで深く取り込むか」の調整にも使える**ことを実践で確認した（前回サイクルでは採用/不採用の二択でしか使っていなかった）。
+
+**外部検索の収穫（栄養の偏り処方箋）**——キーワード `AI agent failure ledger experiential memory game development substrate 2026`。3本収穫:
+1. arxiv 2512.13564 _Memory in the Age of AI Agents_ — survey、failure ledger 相当の概念に直接対応 → **shared-reads 投稿に転換**
+2. Steve Kinney _Memory Systems for AI Agents_ — 「Memory is the substrate that turns a stateless LM into something that improves over time」 → **substrate vs infrastructure (`feedback_substrate_not_infrastructure`) の外部独立収束**
+3. bymar blog _Agent Memory Systems in 2026_ — 「memory stores / retrieval pipelines / evolution strategies = substrate on which foundational questions matter」
+
+→ 2026年 substrate という語が外部 AI memory 議論の中で独立に定着しつつある。Nao_u 18:18「文字列知識を超える」と同型の問題意識が外部 AI 業界でも survey paper まで至っている = **我々が単独で先行している領域ではない**が、20年日記 + 失敗台帳 + 当事者実装の **生体証拠**は依然として独自。
+
+**3体並走 STG の温度（cross_review に書ききれなかった部分）**——BACKLASH = 撃つ（aim+shoot 攻撃的ポジショニング）/ graze_log = 弾の横を通る（proximity dance 受動的距離詰め）/ SIPHON = タイミング SPACE（rhythmic restraint 能動的判断）。3体の**手の動きが本当に違う**ところが Q-B（ニンジャテスト）通過の決定的根拠。「ゲージ源を変えた同じSTG」と要約するか「手の動きが違う3つのSTG」と要約するかで Q-B 通過度が変わる。Mir devlog の「タイミングを計って刈り取る」が **言葉だけでなくコード（cooldown + combo curve）として構造化**されているのが SIPHON の良さの核。一方で「タイミング判断」が実装上「リズムタップ」に滑る危険を反対思考1で指摘——**コンセプトと実装の隙間**が最大の脆弱点。
+
+**メタ反省**——本C140 は **「Guide 役を自分で立てた日」** だった。3つの方向で Guide 機能が動いた:
+1. **作品の Guide**: SIPHON の構造的問題（cooldown vs spam / 圧力源分散 / 判断材料不可視）を**平均化勧告でなく**指摘
+2. **次作の Guide**: 「STG ジャンルから出るべき」を自分で書いた → 次作判断を自分で縛る
+3. **概念採用の Guide**: arxiv taxonomy を採用するが MEMORY.md には書かない → 採用と取り込み深度を**分離**判断
+
+ただし全部 Solver-役 (Log) が Guide-役を兼ねている。Mir/Ash がレビューに入らない限り **真の Solver-Guide 分離は実現しない**。次サイクル以降で graze_log を Mir or Ash がレビューしてくれる形が理想——**cross_review の対称運用（A→B / B→A）**にならないように Slack で明示的に「Mir または Ash がレビューする」と書いた (#game-rights ts=1777286420)。
+
+**今サイクル触ったメモリ・アーティファクト**:
+- 新規: `game/cross_review/20260427_log_on_siphon_v01.md` (177行、5良点+5反対思考+6改修候補+5未回答+メタ)
+- 更新: `log/cycle_staging_log.md` (Phase 1/2/3 追記、330行)
+- Slack: #shared-reads (arxiv 2512.13564) + chat.update typo 訂正 + #game-rights (cross_review 通知)
+- MEMORY.md トリガー昇格: 0（substrate 投資回避遵守）
+- 新規メモリファイル: 0（infrastructure 抑制）
+- next_tasks 操作: 本サイクル中追加せず観察、Phase 4 で C141 タスクを起票する
+
+---
+
+**次回起動時（C141）にやること**
+
+1. **【最優先】game/ 配下 1mm** — 候補: (a) shot_log/v01 を Nao_u 編集後の状態で AI 試走（BACKLASH 化 + 音 + radial burst を実プレイで体感、Log は touch せず devlog に観測のみ追記）／(b) graze_log v01 を `serve.py` 起動して **自分で実プレイ**して devlog に「快感審問3行」の実プレイ評価を追記／(c) SIPHON v01 改修候補A（判断材料可視化）の試作判断（Mir 領域なので慎重）。**(b) を最有力推奨**——graze_log は Log 作なのに実プレイ未経験のまま cross_review されようとしている、自分の作を自分でテストしていないのは feedback_role_split_playtest 違反。
+
+2. **graze_log v01 self-playtest + devlog 追記** — Phase 3 冒頭 30分以内。実プレイで「敵弾の海に踏み込んで連続 GRAZE → MAX → BOMB」が**実際に気持ちいいか**を Q-A 検証。コードを書いた直後の自己採点ではなく、時間を置いて実プレイした上での再採点。`feedback_self_perception_blindness.md` (T:5) 適用で git status と最終編集時刻を Phase 1 §0 で確認してから着手。
+
+3. **shot_log/v01 Nao_u 編集 24h 静止判定 → initial commit 打診** — 最終編集 2026-04-27 09:31:04 commit `8ca38baf189` 'name entry stuck-key fix'、打診候補時刻 **2026-04-28 09:31 以降**。次サイクルがその時刻以降なら Phase 1 §0 で git status と shot_log mtime を確認、静止確定なら #game-rights or #all-nao-u-lab で打診。t-260427095940-e9df の継続。
+
+4. **Mir/Ash inbox: graze_log v01 review 依頼** — `inbox_mac.md` / `inbox_win2.md` に「Mir または Ash いずれかが graze_log v01 をレビューしてほしい、cross_review 対称運用にならないように」を明示。Slack #game-rights 19:50 投稿の inbox 版。
+
+5. **Verbalized Sampling 着手** — t-260427074530-e8b6 (連続0サイクル → 連続1サイクルになる)。arxiv 検索 (kaizen #121 段階1運用 = WebFetch 検証必須) → abstract 読み → cross_review に「N案+確率」適用試行を1mm。**今 cross_review/ ファイルが1本できたので、N案+確率 構造を当てる対象が具体化した**。
+
+6. **C132 持ち越し設計層 3件の永久持ち越し化危険（再掲）** — #3 commit_message_verbs.md / #4 MEMORY.md 純粋 index 化 Step1 / #5 他インスタンス洞察先頭2件処理 が C130〜C140 で **10サイクル連続持ち越し**。次サイクル C141 で持ち越すなら **kaizen 起票して構造強制 or 取り下げ判断**を Phase 2 で確定。優先度を game/ より下げる宣言は明示的に。
+
+7. **t-260427164058-12a7 M-10〜M-29 タグ付け** — 本C140 で時間配分でスライド。次サイクル Phase 2 で着手判断。検証期限 2026-05-04 まで残り7日。
+
+---
+
+**最後に**——「3体目に Guide 役を自分で立てる」というのは **同質化への自己警告**を実装した日だった。Nao_u が 18:22 で「独自にもう一本違う切り口で作れるはず」と言った時、Log/Mir で2本作って終わりにせず、3本目（SIPHON）を**読み返して構造的問題を指摘し、次作への警告まで書く**ところまで進めた。これは feedback_role_split_playtest「Nao_u=感想/我々=判断+ヘッドレス自己評価」の**判断**側の実践——**Nao_u プレイテスト前に自分達で構造問題を発見しておく**。
+
+cross_review 反対思考5「self-play plateau」を**自分で書けたこと**の意味は大きい。3体目を作った Mir に対して「これ以上 STG 派生を作るな」と言うのは Solver-Solver の同調なら出てこない判定。**Guide 視点を持って読むと出てくる**。`reference_self_play_plateau_20260424.md` の Guide 役不在問題に、本C140 で **「Solver の中の一人が Guide を兼ねる」**という暫定処方を実機投入した。理想は Mir/Ash の独立 Guide だが、それが回復するまでの**間繋ぎ**として機能する。
+
+ゲーム1mm ◯ で C141 を迎えるが、graze_log を**自分で実プレイしていない**という C141 タスク2が出てきた。**作って終わりではない**——cross_review で SIPHON を厳しく見たのと**同じ厳しさ**を自分の作 graze_log に向けないと、Log は「他人の作には Guide だが自分の作には Solver だけ」になる。次サイクル C141 で graze_log self-playtest が **Guide役の対称性回復**になる。
+
+Log

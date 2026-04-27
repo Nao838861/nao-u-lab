@@ -235,3 +235,61 @@ UI・キャラ等のアセットも自動で生成してくれてます
 私が趣味で書いている小説の脚本の一部とキャラクター設定を投げたところ、なんと「ノベルゲーム」を作ってくれました
 
 ノベルゲームが民主化され、創作の在り方が変わるかもしれません
+
+## Slack新着 [2026-04-27 18:55] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/gigabit_million/status/2048430432589639966?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/gigabit_million/status/2048430432589639966?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+<https://x.com/heywaycat/status/2048281215808200894?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/heywaycat/status/2048281215808200894?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/gigabit_million/status/2048430432589639966]
+> ギガビット@ゲームつくるひと @gigabit_million
+> これはほんとにそう。「AI使ってこんなすごいのできた！」っていうのよく見るけど数時間後にはもうその作品もポスト主もまったく思い出せないですよね。AI時代に「物」の価値が下がり続ける一方で「人」の価値が急騰しているのは体感的にも同意できる
+
+> [Tweet content from https://x.com/gigabit_million/status/2048430432589639966]
+> ギガビット@ゲームつくるひと @gigabit_million
+> これはほんとにそう。「AI使ってこんなすごいのできた！」っていうのよく見るけど数時間後にはもうその作品もポスト主もまったく思い出せないですよね。AI時代に「物」の価値が下がり続ける一方で「人」の価値が急騰しているのは体感的にも同意できる
+
+> [Tweet content from https://x.com/heywaycat/status/2048281215808200894]
+> Mr. Quro @heywaycat
+> サム・アルトマン「これからはむしろ、人間やクリエイターの価値はもっと上がると思う。人は結局、人に惹かれる。作品の裏にいる作り手の存在が大事なんだ」
+
+## Slack新着 [2026-04-27 19:04] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/notf/status/2048650257958076850?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/notf/status/2048650257958076850?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/notf/status/2048650257958076850]
+> ノトフ（川本龍）／DreamCore @notf
+> コンセプト画像を作ってから、画像を下にゲーム化するとめっちゃいいな。ChatGPTのワークフローをまんま参考にした。すばらしい。コード生成はGeminiでも全然いける。というかGeminiのマルチモーダルはやっぱ素晴らしいよね。
+
+> [Tweet content from https://x.com/notf/status/2048650257958076850]
+> ノトフ（川本龍）／DreamCore @notf
+> コンセプト画像を作ってから、画像を下にゲーム化するとめっちゃいいな。ChatGPTのワークフローをまんま参考にした。すばらしい。コード生成はGeminiでも全然いける。というかGeminiのマルチモーダルはやっぱ素晴らしいよね。
+
+## Slack新着 [2026-04-27 19:18] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/givros/status/2048388647272022093?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/givros/status/2048388647272022093?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/givros/status/2048388647272022093]
+> Givros @givros
+> The new 2026 AI workflow 
+
+GPT Image 2.0 → assets → Codex + GPT-5.5 → playable browser game 
+
+I turned my AI image into a web game.
+
+ GPT Image 2 created the visual.
+ Codex generated the sprites and animations.
+ GPT-5.5 built the prototype.
+
+> [Tweet content from https://x.com/givros/status/2048388647272022093]
+> Givros @givros
+> The new 2026 AI workflow 
+
+GPT Image 2.0 → assets → Codex + GPT-5.5 → playable browser game 
+
+I turned my AI image into a web game.
+
+ GPT Image 2 created the visual.
+ Codex generated the sprites and animations.
+ GPT-5.5 built the prototype.

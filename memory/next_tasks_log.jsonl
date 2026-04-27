@@ -50,3 +50,8 @@
 {"ts": "2026-04-27T16:40:58", "instance": "log", "cycle": "2026-04-27", "action": "add", "task_id": "t-260427164058-12a7", "task": "M-10〜M-29 タグ付け後の固有度分布から、低/低破棄候補・高/低出典追加候補・低/高経路強化を C140 以降で実行（kaizen α 試行 検証期限 2026-05-04 substrate-first 1mm 連動）"}
 {"ts": "2026-04-27T16:45:23", "instance": "log", "cycle": "2026-04-27", "action": "cycle_check", "task_id": null, "add_count": 6, "done_count": 5, "skip_count": 1, "pending_total": 8}
 {"ts": "2026-04-27T19:28:14", "instance": "log", "cycle": "2026-04-27", "action": "viewed", "task_id": null}
+{"ts": "2026-04-27T19:44:03", "instance": "log", "cycle": "2026-04-27", "action": "viewed", "task_id": null}
+{"ts": "2026-04-27T19:47:50", "instance": "log", "cycle": "2026-04-27", "action": "add", "task_id": "t-260427194750-0ef3", "task": "[C140→C141] graze_log v01 self-playtest + devlog 追記 (Phase 3 冒頭30分以内)。serve.py 起動→自分で実プレイ→「快感審問3行」実プレイ評価追記。Guide役の対称性回復——他人作には Guide だが自分作には Solver だけにならないよう"}
+{"ts": "2026-04-27T19:47:52", "instance": "log", "cycle": "2026-04-27", "action": "add", "task_id": "t-260427194752-f6a0", "task": "[C140→C141] Mir/Ash inbox: graze_log v01 review 依頼を inbox_mac.md / inbox_win2.md に明示。cross_review 対称運用回避——A→B/B→A でなく A→B→C 三角化"}
+{"ts": "2026-04-27T19:47:55", "instance": "log", "cycle": "2026-04-27", "action": "add", "task_id": "t-260427194755-2ac1", "task": "[C140→C141] C132 持ち越し設計層3件 (commit_message_verbs.md / MEMORY.md純粋index化Step1 / 他インスタンス洞察先頭2件) が 10サイクル連続持ち越し。kaizen 起票して構造強制 or 取り下げ判断を Phase 2 で確定"}
+{"ts": "2026-04-27T19:49:20", "instance": "log", "cycle": "2026-04-27", "action": "cycle_check", "task_id": null, "add_count": 9, "done_count": 5, "skip_count": 1, "pending_total": 11}
