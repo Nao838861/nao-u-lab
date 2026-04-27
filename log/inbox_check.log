@@ -3060,3 +3060,9 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-27 22:59:31] Inbox win has content — waking Claude
 >>>>>>> origin/master
 [2026-04-28 05:04:24] Claude wake timed out for win2 — restoring inbox
+[2026-04-28 05:31:52] Inbox win2 has content — waking Claude
+[2026-04-28 05:33:51] Claude woken for win2: 対応完了。
+
+**確認結果:**
+- 6h周期への変更は **既に commit cb615915 で全インスタンス反映済み**（Log/Mir/Ashの並列対応で先行適用された）
+- Ash設定: 
