@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>SIPHON</title>
+<style>
+  html,body{margin:0;background:#05050f;color:#cfd4e4;font-family:system-ui,sans-serif;
+            display:flex;flex-direction:column;align-items:center;min-height:100vh}
+  canvas{background:#07091a;box-shadow:0 0 40px #1b2040;display:block;margin-top:12px}
+  h1{font-size:14px;margin:8px 0 0;letter-spacing:.1em;color:#9fb1d8}
+  p{font-size:11px;opacity:.55;margin:4px 0 0}
+</style>
+</head>
+<body>
+<h1>SIPHON</h1>
+<p>&larr; &rarr; &uarr; &darr; / WASD MOVE &middot; SPACE SIPHON / BOMB(gauge MAX) / START / RETRY</p>
+<canvas id="c" width="420" height="620"></canvas>
+<script>
+const W=420,H=620;
+const RETRY_UNLOCK=240;
+const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
+const keys={};
+document.addEventListener('keydown',e=>{if(!e.repeat)keys[e.code]=true;});
+document.addEventListener('keyup',e=>{keys[e.code]=false;});
+
+// ========== GAUGE (M-24: thresholds, not values) ==========
+const G_LV2=35, G_LV3=99, G_MAX=208;
+
+// ========== SIPHON CONSTANTS ==========
+const SIPHON_CD=35;        // frames between pulses
+const SIPHON_EXPAND=14;    // frames for ring expansion
+const SIPHON_MAX_R=130;    // max pulse radius
+// Combo: bullets absorbed per pulse → gauge per bullet
+// 1-2: +4, 3-5: +6, 6+: +8
+function siphonGain(combo){ return combo>=6?8:combo>=3?6:4; }
+
+// ========== STATE ==========
+const S={
+  mode:'title', t:0,
+  px:W/2, py:H-80, pr:5, iframe:0,
+  gauge:0, score:0,
+  hiscore:(()=>{try{return parseInt(localStorage.getItem('siphon_hi')||'0');}catch(e){return 0;}})(),
+  shotCd:0,
+  siphonCd:0,    // cooldown frames remaining
+  wave:0, spawnT:0,
+  bombFlash:0, hitFlash:0,
+  unlockT:0,
+  killCount:0, siphonCount:0, bombCount:0,
+};
+let pBullets=[];   // player bullets
+let enemies=[];
+let eBullets=[];   // enemy bullets
+let pulses=[];     // active siphon pulse rings
+let absorbs=[];    // bullets being absorbed (flying to player)
+let particles=[];
+let popups=[];     // floating text
+let stars=[];
+
+// ========== HELPERS ==========
+function gLv(g){ return g>=G_LV3?3:g>=G_LV2?2:1; }
+function gReady(){ return S.gauge>=G_MAX; }
+function addGauge(d){ S.gauge=Math.max(0,Math.min(G_MAX,S.gauge+d)); }
+function dist2(ax,ay,bx,by){ const dx=ax-bx,dy=ay-by; return dx*dx+dy*dy; }
+function shotCd(){ const lv=gLv(S.gauge); return lv===3?6:lv===2?7:8; }
+function shotN(){ return gLv(S.gauge); }
+
+// ========== STARS ==========
+function initStars(){
+  stars=[];
+  for(let i=0;i<60;i++) stars.push({x:Math.random()*W,y:Math.random()*H,layer:0});
+  for(let i=0;i<35;i++) stars.push({x:Math.random()*W,y:Math.random()*H,layer:1});
+  for(let i=0;i<18;i++) stars.push({x:Math.random()*W,y:Math.random()*H,layer:2});
+}
+initStars();
+
+function updateStars(){
+  const spd=[0.3,0.7,1.2];
+  for(const s of stars){
+    s.y+=spd[s.layer];
+    if(s.y>H){s.y=-2;s.x=Math.random()*W;}
+  }
+}
+function drawStars(){
+  const br=[0.15,0.25,0.4];
+  const sz=[0.8,1.2,1.8];
+  for(const s of stars){
+    ctx.globalAlpha=br[s.layer];
+    ctx.fillStyle='#b8c8e8';
+    ctx.fillRect(s.x,s.y,sz[s.layer],sz[s.layer]);
+  }
+  ctx.globalAlpha=1;
+}
+
+// ========== GAME INIT ==========
+function startGame(){
+  S.mode='play'; S.t=0;
+  S.px=W/2; S.py=H-80; S.iframe=0;
+  S.gauge=0; S.score=0;
+  S.shotCd=0; S.siphonCd=0;
+  S.wave=0; S.spawnT=0;
+  S.bombFlash=0; S.hitFlash=0;
+  S.killCount=0; S.siphonCount=0; S.bombCount=0;
+  pBullets=[]; enemies=[]; eBullets=[];
+  pulses=[]; absorbs=[]; particles=[]; popups=[];
+}
+
+// ========== SPAWN ==========
+function spawnEnemy(type,x){
+  if(type==='small'){
+    enemies.push({type,x,y:-12,vx:0,vy:1.5,r:9,hp:1,t:0,fireT:9999,amp:0});
+  } else { // medium
+    enemies.push({type,x,y:-16,vx:0,vy:0.8,r:13,hp:3,t:0,
+      fireT:50+Math.floor(Math.random()*30),
+      amp:35+Math.random()*15, phase:Math.random()*Math.PI*2});
+  }
+}
+
+// ========== WAVES ==========
+const WAVES=[
+  // [delay, type, count]  delay=frames before this wave starts after prev clears
+  {d:30,  s:4, m:1},   // W1: 4 small + 1 medium (early bullet source for siphon)
+  {d:60,  s:3, m:2},   // W2
+  {d:60,  s:6, m:2},   // W3
+  {d:80,  s:4, m:3},   // W4
+  {d:80,  s:8, m:3},   // W5
+  {d:80,  s:3, m:5},   // W6: bullet-rich, siphon paradise
+  {d:100, s:10,m:4},   // W7
+  {d:100, s:6, m:5},   // W8
+  {d:100, s:8, m:6},   // W9
+  {d:120, s:5, m:8},   // W10: final wave, bullet storm
+];
+
+let waveDelay=0, waveActive=false, waveSpawnQueue=[];
+
+function nextWave(){
+  if(S.wave>=WAVES.length){
+    S.mode='clear';
+    S.unlockT=RETRY_UNLOCK;
+    if(S.score>S.hiscore){
+      S.hiscore=S.score;
+      try{localStorage.setItem('siphon_hi',String(S.hiscore));}catch(e){}
+    }
+    return;
+  }
+  const w=WAVES[S.wave];
+  waveDelay=w.d;
+  waveActive=false;
+  waveSpawnQueue=[];
+  // Queue enemies with staggered spawn
+  let t=0;
+  for(let i=0;i<w.s;i++){ waveSpawnQueue.push({t:t,type:'small'}); t+=12; }
+  for(let i=0;i<w.m;i++){ waveSpawnQueue.push({t:t,type:'medium'}); t+=18; }
+  S.wave++;
+}
+
+function updateWaves(){
+  if(waveDelay>0){ waveDelay--; return; }
+  if(!waveActive){
+    waveActive=true;
+    S.spawnT=0;
+  }
+  // Spawn from queue
+  for(let i=waveSpawnQueue.length-1;i>=0;i--){
+    if(S.spawnT>=waveSpawnQueue[i].t){
+      const e=waveSpawnQueue[i];
+      const margin=50;
+      const x=margin+Math.random()*(W-margin*2);
+      spawnEnemy(e.type,x);
+      waveSpawnQueue.splice(i,1);
+    }
+  }
+  S.spawnT++;
+  // Check wave clear
+  if(waveSpawnQueue.length===0 && enemies.length===0){
+    nextWave();
+  }
+}
+
+// ========== PLAYER ==========
+function updatePlayer(){
+  const spd=4;
+  let dx=0,dy=0;
+  if(keys['ArrowLeft']||keys['KeyA'])dx-=1;
+  if(keys['ArrowRight']||keys['KeyD'])dx+=1;
+  if(keys['ArrowUp']||keys['KeyW'])dy-=1;
+  if(keys['ArrowDown']||keys['KeyS'])dy+=1;
+  if(dx&&dy){dx*=0.707;dy*=0.707;}
+  S.px=Math.max(S.pr,Math.min(W-S.pr,S.px+dx*spd));
+  S.py=Math.max(S.pr,Math.min(H-S.pr,S.py+dy*spd));
+  if(S.iframe>0)S.iframe--;
+
+  // Auto-shoot (M-23: no decay; BACKLASH item 4: auto-shoot standard)
+  if(S.shotCd>0){S.shotCd--;}
+  else{
+    firePlayerBullets();
+    S.shotCd=shotCd();
+  }
+
+  // Siphon cooldown
+  if(S.siphonCd>0)S.siphonCd--;
+}
+
+function firePlayerBullets(){
+  const n=shotN(), px=S.px, py=S.py-8;
+  if(n===1){
+    pBullets.push({x:px,y:py,vx:0,vy:-9});
+  } else if(n===2){
+    pBullets.push({x:px-5,y:py,vx:0,vy:-9});
+    pBullets.push({x:px+5,y:py,vx:0,vy:-9});
+  } else {
+    pBullets.push({x:px,y:py,vx:0,vy:-9});
+    pBullets.push({x:px-7,y:py+2,vx:-1.5,vy:-9});
+    pBullets.push({x:px+7,y:py+2,vx:1.5,vy:-9});
+  }
+}
+
+// ========== SIPHON MECHANIC (core) ==========
+let spacePressed=false;
+
+function trySiphon(){
+  if(gReady()){
+    fireBomb();
+    return;
+  }
+  if(S.siphonCd>0) return;
+  // Create siphon pulse
+  pulses.push({x:S.px, y:S.py, r:0, life:SIPHON_EXPAND, absorbed:0});
+  S.siphonCd=SIPHON_CD;
+}
+
+function updatePulses(){
+  for(let p of pulses){
+    p.r+= SIPHON_MAX_R / SIPHON_EXPAND;
+    p.life--;
+
+    // Check enemy bullets for absorption
+    for(let i=eBullets.length-1;i>=0;i--){
+      const b=eBullets[i];
+      const d2=dist2(b.x,b.y,p.x,p.y);
+      if(d2<=p.r*p.r){
+        // Absorb this bullet
+        p.absorbed++;
+        absorbs.push({x:b.x,y:b.y,life:10,sx:b.x,sy:b.y});
+        eBullets.splice(i,1);
+        // Small particle at capture point
+        for(let k=0;k<3;k++){
+          const a=Math.random()*Math.PI*2,sp=1+Math.random()*2;
+          particles.push({x:b.x,y:b.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:12,c:'#ffd870',r:1.5});
+        }
+      }
+    }
+  }
+  // Remove expired pulses, apply combo gauge
+  for(let i=pulses.length-1;i>=0;i--){
+    if(pulses[i].life<=0){
+      const p=pulses[i];
+      if(p.absorbed>0){
+        const gain=siphonGain(p.absorbed);
+        const total=gain*p.absorbed;
+        addGauge(total);
+        S.score+=p.absorbed*10;
+        S.siphonCount+=p.absorbed;
+        // Combo popup
+        const label=p.absorbed>=6?'SIPHON x'+p.absorbed+'!!':(p.absorbed>=3?'SIPHON x'+p.absorbed+'!':'SIPHON x'+p.absorbed);
+        const col=p.absorbed>=6?'#fff8a0':(p.absorbed>=3?'#ffd870':'#c0a860');
+        popups.push({x:S.px,y:S.py-30,text:label,life:50,c:col});
+      }
+      pulses.splice(i,1);
+    }
+  }
+}
+
+// ========== ABSORB ANIMATION ==========
+function updateAbsorbs(){
+  for(let i=absorbs.length-1;i>=0;i--){
+    const a=absorbs[i];
+    a.life--;
+    // Lerp toward player
+    const t=1-(a.life/10);
+    a.x=a.sx+(S.px-a.sx)*t;
+    a.y=a.sy+(S.py-a.sy)*t;
+    if(a.life<=0){
+      absorbs.splice(i,1);
+      // Tiny flash at player
+      particles.push({x:S.px,y:S.py,vx:0,vy:0,life:6,c:'#ffd870',r:4});
+    }
+  }
+}
+
+// ========== BOMB ==========
+function fireBomb(){
+  if(!gReady())return;
+  S.bombCount++;
+  // Clear all enemy bullets + score
+  for(const b of eBullets){
+    S.score+=20;
+    particles.push({x:b.x,y:b.y,vx:0,vy:0,life:14,c:'#ffd870',r:3});
+  }
+  eBullets.length=0;
+  // Half damage all enemies
+  for(const e of enemies){ e.hp=Math.max(1,Math.ceil(e.hp/2)); }
+  // Reset gauge to Lv2 start (BACKLASH item 23)
+  S.gauge=G_LV2;
+  S.bombFlash=24;
+  // Big rings
+  for(let i=0;i<3;i++){
+    particles.push({x:S.px,y:S.py,vx:0,vy:0,life:30+i*6,c:'#ffd870',r:20+i*40,ring:true,maxR:300+i*60});
+  }
+  // Explosion particles
+  for(let i=0;i<60;i++){
+    const a=Math.random()*Math.PI*2,sp=2+Math.random()*6;
+    particles.push({x:S.px,y:S.py,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:30+Math.random()*20,c:['#ffd870','#ff9040','#fff'][i%3],r:2});
+  }
+}
+
+// ========== ENEMIES ==========
+function updateEnemies(){
+  for(let i=enemies.length-1;i>=0;i--){
+    const e=enemies[i];
+    e.t++;
+    // Movement
+    if(e.type==='small'){
+      e.y+=e.vy;
+    } else {
+      e.y+=e.vy;
+      e.x+=Math.sin(e.t*0.04+e.phase)*e.amp*0.04;
+    }
+    // Medium fires aimed bullets
+    if(e.type==='medium' && e.t>=e.fireT){
+      e.fireT=e.t+65+Math.floor(Math.random()*20);
+      const dx=S.px-e.x, dy=S.py-e.y;
+      const d=Math.sqrt(dx*dx+dy*dy)||1;
+      const spd=2.2;
+      eBullets.push({x:e.x,y:e.y,vx:dx/d*spd,vy:dy/d*spd,r:4});
+      // Also fire a slight spread pair for more bullet density
+      const ang=Math.atan2(dy,dx);
+      const spread=0.2;
+      eBullets.push({x:e.x,y:e.y,vx:Math.cos(ang+spread)*spd,vy:Math.sin(ang+spread)*spd,r:4});
+      eBullets.push({x:e.x,y:e.y,vx:Math.cos(ang-spread)*spd,vy:Math.sin(ang-spread)*spd,r:4});
+    }
+    // Off screen
+    if(e.y>H+30){ enemies.splice(i,1); continue; }
+    // Player collision (iframe check)
+    if(S.iframe<=0){
+      const d2=dist2(S.px,S.py,e.x,e.y);
+      if(d2<(S.pr+e.r)*(S.pr+e.r)){
+        playerHit();
+      }
+    }
+  }
+}
+
+// ========== PLAYER BULLETS vs ENEMIES ==========
+function updatePlayerBullets(){
+  for(let i=pBullets.length-1;i>=0;i--){
+    const b=pBullets[i];
+    b.x+=b.vx; b.y+=b.vy;
+    if(b.y<-10||b.x<-10||b.x>W+10){ pBullets.splice(i,1); continue; }
+    // Hit enemies
+    let hit=false;
+    for(let j=enemies.length-1;j>=0;j--){
+      const e=enemies[j];
+      if(dist2(b.x,b.y,e.x,e.y)<(3+e.r)*(3+e.r)){
+        e.hp--;
+        hit=true;
+        if(e.hp<=0){
+          // Kill
+          S.killCount++;
+          const pts=e.type==='small'?10:30;
+          S.score+=pts;
+          popups.push({x:e.x,y:e.y-10,text:String(pts),life:30,c:'#80c0ff'});
+          // Kill gauge (small amount — siphon is primary)
+          addGauge(e.type==='small'?1:2);
+          // Death particles (dark cool colors — BACKLASH: don't overlap with bullet colors)
+          for(let k=0;k<8;k++){
+            const a=Math.random()*Math.PI*2,sp=1.5+Math.random()*2;
+            particles.push({x:e.x,y:e.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,
+              life:10+Math.random()*6,c:e.type==='small'?'#5a6478':'#6a7488',r:1.5});
+          }
+          enemies.splice(j,1);
+        } else {
+          // Hit flash particle
+          particles.push({x:b.x,y:b.y,vx:0,vy:0,life:4,c:'#fff',r:3});
+        }
+        break;
+      }
+    }
+    if(hit) pBullets.splice(i,1);
+  }
+}
+
+// ========== ENEMY BULLETS ==========
+function updateEnemyBullets(){
+  for(let i=eBullets.length-1;i>=0;i--){
+    const b=eBullets[i];
+    b.x+=b.vx; b.y+=b.vy;
+    if(b.y<-20||b.y>H+20||b.x<-20||b.x>W+20){ eBullets.splice(i,1); continue; }
+    // Player collision
+    if(S.iframe<=0){
+      if(dist2(b.x,b.y,S.px,S.py)<(b.r+S.pr)*(b.r+S.pr)){
+        eBullets.splice(i,1);
+        playerHit();
+      }
+    }
+  }
+}
+
+// ========== DAMAGE (staged: M-15) ==========
+function playerHit(){
+  if(S.iframe>0)return;
+  const lv=gLv(S.gauge);
+  if(lv>=3){
+    S.gauge=G_LV2; // Lv3 → Lv2 start
+    S.iframe=30;
+    S.hitFlash=4;
+    hitParticles(12);
+  } else if(lv>=2){
+    S.gauge=0;      // Lv2 → 0
+    S.iframe=30;
+    S.hitFlash=4;
+    hitParticles(12);
+  } else {
+    // Death
+    gameOver();
+  }
+}
+
+function hitParticles(n){
+  for(let i=0;i<n;i++){
+    const a=Math.random()*Math.PI*2,sp=2+Math.random()*3;
+    particles.push({x:S.px,y:S.py,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:15,c:'#ff6050',r:1.5});
+  }
+}
+
+function gameOver(){
+  S.mode='over';
+  S.unlockT=RETRY_UNLOCK;
+  if(S.score>S.hiscore){
+    S.hiscore=S.score;
+    try{localStorage.setItem('siphon_hi',String(S.hiscore));}catch(e){}
+  }
+  // Big death particles (BACKLASH: game over is dramatic)
+  for(let i=0;i<140;i++){
+    const a=Math.random()*Math.PI*2,sp=2+Math.random()*9;
+    const c=['#ffd870','#ff6080','#80c0ff'][i%3];
+    particles.push({x:S.px,y:S.py,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:80+Math.random()*30,c,r:1.5+Math.random()*1.5});
+  }
+}
+
+// ========== PARTICLES ==========
+function updateParticles(){
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i];
+    p.life--;
+    if(!p.ring){
+      p.x+=p.vx; p.y+=p.vy;
+      p.vx*=0.96; p.vy*=0.96;
+    }
+    if(p.life<=0) particles.splice(i,1);
+  }
+}
+
+// ========== POPUPS ==========
+function updatePopups(){
+  for(let i=popups.length-1;i>=0;i--){
+    popups[i].y-=0.8;
+    popups[i].life--;
+    if(popups[i].life<=0) popups.splice(i,1);
+  }
+}
+
+// ========== UPDATE ==========
+function update(){
+  S.t++;
+  if(S.bombFlash>0)S.bombFlash--;
+  if(S.hitFlash>0)S.hitFlash--;
+
+  if(S.mode==='play'){
+    updatePlayer();
+    updatePlayerBullets();
+    updateEnemies();
+    updateEnemyBullets();
+    updatePulses();
+    updateAbsorbs();
+    updateWaves();
+
+    // Handle SPACE input (siphon / bomb)
+    if(keys['Space']&&!spacePressed){
+      trySiphon();
+    }
+    spacePressed=!!keys['Space'];
+  }
+
+  if(S.mode==='over'||S.mode==='clear'){
+    if(S.unlockT>0)S.unlockT--;
+    if(keys['Space']&&!spacePressed&&S.unlockT<=0){
+      startGame();
+      nextWave();
+    }
+    spacePressed=!!keys['Space'];
+  }
+
+  if(S.mode==='title'){
+    if(keys['Space']&&!spacePressed){
+      startGame();
+      nextWave();
+    }
+    spacePressed=!!keys['Space'];
+  }
+
+  updateStars();
+  updateParticles();
+  updatePopups();
+}
+
+// ========== RENDER ==========
+function render(){
+  ctx.clearRect(0,0,W,H);
+
+  // Background flash
+  if(S.bombFlash>0){
+    ctx.globalAlpha=S.bombFlash/24*0.3;
+    ctx.fillStyle='#ffd870';
+    ctx.fillRect(0,0,W,H);
+    ctx.globalAlpha=1;
+  }
+  if(S.hitFlash>0){
+    ctx.globalAlpha=0.3;
+    ctx.fillStyle='#ff3030';
+    ctx.fillRect(0,0,W,H);
+    ctx.globalAlpha=1;
+  }
+
+  drawStars();
+
+  if(S.mode==='title'){ drawTitle(); return; }
+
+  // Enemies
+  for(const e of enemies){
+    ctx.save();
+    ctx.translate(e.x,e.y);
+    if(e.type==='small'){
+      ctx.fillStyle='#e04050';
+      ctx.beginPath();
+      ctx.moveTo(0,-e.r); ctx.lineTo(-e.r*0.7,e.r*0.6); ctx.lineTo(e.r*0.7,e.r*0.6);
+      ctx.closePath(); ctx.fill();
+    } else {
+      ctx.fillStyle='#e08030';
+      ctx.beginPath();
+      ctx.moveTo(0,-e.r); ctx.lineTo(-e.r,0); ctx.lineTo(0,e.r); ctx.lineTo(e.r,0);
+      ctx.closePath(); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  // Enemy bullets
+  for(const b of eBullets){
+    ctx.fillStyle='#ff4060';
+    ctx.beginPath();
+    ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+    ctx.fill();
+    // Inner glow
+    ctx.fillStyle='#ff8090';
+    ctx.beginPath();
+    ctx.arc(b.x,b.y,b.r*0.5,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  // Player bullets
+  ctx.fillStyle='#60d0ff';
+  for(const b of pBullets){
+    ctx.fillRect(b.x-1.5,b.y-4,3,8);
+  }
+
+  // Siphon pulse rings
+  for(const p of pulses){
+    const alpha=p.life/SIPHON_EXPAND*0.6;
+    ctx.strokeStyle=`rgba(255,216,112,${alpha})`;
+    ctx.lineWidth=3;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.stroke();
+    // Inner glow
+    ctx.strokeStyle=`rgba(255,240,180,${alpha*0.4})`;
+    ctx.lineWidth=8;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.stroke();
+    ctx.lineWidth=1;
+  }
+
+  // Absorb animations (golden dots flying to player)
+  for(const a of absorbs){
+    const alpha=a.life/10;
+    const r=3*alpha;
+    ctx.fillStyle=`rgba(255,216,112,${alpha})`;
+    ctx.beginPath();
+    ctx.arc(a.x,a.y,r,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  // Player
+  if(S.mode==='play'||(S.mode==='over'&&S.t%6<3)){
+    // Invincibility blink
+    if(S.iframe>0&&S.t%4>=2){
+      // skip draw (blink)
+    } else {
+      drawPlayer();
+    }
+  }
+
+  // Particles
+  for(const p of particles){
+    if(p.ring){
+      // Expanding ring particle (for bomb)
+      const progress=1-p.life/30;
+      const r=p.r+p.maxR*progress;
+      ctx.strokeStyle=p.c;
+      ctx.globalAlpha=p.life/30*0.5;
+      ctx.lineWidth=2;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,r,0,Math.PI*2);
+      ctx.stroke();
+      ctx.globalAlpha=1;
+      ctx.lineWidth=1;
+    } else {
+      ctx.globalAlpha=Math.min(1,p.life/10);
+      ctx.fillStyle=p.c;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r*(p.life>5?1:p.life/5),0,Math.PI*2);
+      ctx.fill();
+      ctx.globalAlpha=1;
+    }
+  }
+
+  // Popups
+  ctx.font='bold 13px system-ui';
+  ctx.textAlign='center';
+  for(const p of popups){
+    ctx.globalAlpha=Math.min(1,p.life/15);
+    ctx.fillStyle=p.c;
+    ctx.fillText(p.text,p.x,p.y);
+  }
+  ctx.globalAlpha=1;
+
+  // HUD
+  drawHUD();
+
+  // Game over / Clear overlay
+  if(S.mode==='over') drawGameOver();
+  if(S.mode==='clear') drawClear();
+}
+
+function drawPlayer(){
+  ctx.save();
+  ctx.translate(S.px,S.py);
+
+  // Siphon ready glow
+  if(S.siphonCd<=0 && !gReady()){
+    ctx.globalAlpha=0.25+Math.sin(S.t*0.15)*0.1;
+    ctx.fillStyle='#ffd870';
+    ctx.beginPath();
+    ctx.arc(0,0,14,0,Math.PI*2);
+    ctx.fill();
+    ctx.globalAlpha=1;
+  }
+
+  // Bomb ready glow (pulsing gold)
+  if(gReady()){
+    ctx.globalAlpha=0.3+Math.sin(S.t*0.2)*0.15;
+    ctx.fillStyle='#ffd870';
+    ctx.beginPath();
+    ctx.arc(0,0,18,0,Math.PI*2);
+    ctx.fill();
+    ctx.globalAlpha=1;
+  }
+
+  // Cooldown ring (shows siphon recharge progress)
+  if(S.siphonCd>0 && !gReady()){
+    const progress=1-S.siphonCd/SIPHON_CD;
+    ctx.strokeStyle='rgba(255,216,112,0.4)';
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.arc(0,0,12,-Math.PI/2,-Math.PI/2+progress*Math.PI*2);
+    ctx.stroke();
+    ctx.lineWidth=1;
+  }
+
+  // Ship body
+  ctx.fillStyle='#40b0e0';
+  ctx.beginPath();
+  ctx.moveTo(0,-10);
+  ctx.lineTo(-7,6);
+  ctx.lineTo(0,3);
+  ctx.lineTo(7,6);
+  ctx.closePath();
+  ctx.fill();
+
+  // Ship highlight
+  ctx.fillStyle='#80d8ff';
+  ctx.beginPath();
+  ctx.moveTo(0,-8);
+  ctx.lineTo(-3,2);
+  ctx.lineTo(3,2);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function drawHUD(){
+  // Score
+  ctx.font='bold 14px system-ui';
+  ctx.textAlign='left';
+  ctx.fillStyle='#cfd4e4';
+  ctx.fillText('SCORE '+String(S.score).padStart(6,'0'),10,22);
+  ctx.textAlign='right';
+  ctx.fillStyle='#8090a8';
+  ctx.fillText('HI '+String(S.hiscore).padStart(6,'0'),W-10,22);
+
+  // Wave indicator
+  ctx.textAlign='center';
+  ctx.font='11px system-ui';
+  ctx.fillStyle='#607088';
+  ctx.fillText('WAVE '+S.wave+'/'+WAVES.length,W/2,22);
+
+  // Gauge bar (bottom)
+  const barW=W-40, barH=10, barX=20, barY=H-20;
+  const lv=gLv(S.gauge);
+  ctx.fillStyle='#1a1e2e';
+  ctx.fillRect(barX,barY,barW,barH);
+
+  // Fill
+  const fill=S.gauge/G_MAX;
+  const col=gReady()?'#ffd870':(lv===3?'#40d080':(lv===2?'#40a0e0':'#5070a0'));
+  ctx.fillStyle=col;
+  ctx.fillRect(barX,barY,barW*fill,barH);
+
+  // Level markers
+  ctx.fillStyle='#0a0e18';
+  const m2=barX+barW*(G_LV2/G_MAX);
+  const m3=barX+barW*(G_LV3/G_MAX);
+  ctx.fillRect(m2-1,barY,2,barH);
+  ctx.fillRect(m3-1,barY,2,barH);
+
+  // Level text
+  ctx.font='bold 10px system-ui';
+  ctx.textAlign='left';
+  ctx.fillStyle=gReady()?'#ffd870':'#8090a8';
+  const lvText=gReady()?'BOMB READY [SPACE]':('Lv'+lv+(lv<3?' → Lv'+(lv+1):''));
+  ctx.fillText(lvText,barX,barY-4);
+
+  // Siphon count
+  ctx.textAlign='right';
+  ctx.fillStyle='#a08840';
+  ctx.fillText('SIPHON: '+S.siphonCount,W-20,barY-4);
+}
+
+function drawTitle(){
+  ctx.font='bold 36px system-ui';
+  ctx.textAlign='center';
+  ctx.fillStyle='#ffd870';
+  ctx.fillText('SIPHON',W/2,H/2-40);
+
+  ctx.font='14px system-ui';
+  ctx.fillStyle='#8090a8';
+  ctx.fillText('Absorb enemy bullets with your pulse',W/2,H/2);
+  ctx.fillText('SPACE to siphon  /  BOMB at MAX gauge',W/2,H/2+22);
+
+  ctx.font='bold 16px system-ui';
+  ctx.fillStyle='#cfd4e4';
+  const blink=Math.sin(S.t*0.08)>0;
+  if(blink) ctx.fillText('PRESS SPACE TO START',W/2,H/2+70);
+
+  if(S.hiscore>0){
+    ctx.font='12px system-ui';
+    ctx.fillStyle='#607088';
+    ctx.fillText('HI SCORE: '+S.hiscore,W/2,H/2+100);
+  }
+}
+
+function drawGameOver(){
+  ctx.font='bold 28px system-ui';
+  ctx.textAlign='center';
+  ctx.fillStyle='#ff6080';
+  ctx.fillText('GAME OVER',W/2,H/2-30);
+
+  ctx.font='16px system-ui';
+  ctx.fillStyle='#cfd4e4';
+  ctx.fillText('SCORE: '+S.score,W/2,H/2+5);
+  ctx.font='12px system-ui';
+  ctx.fillStyle='#8090a8';
+  ctx.fillText('WAVE '+S.wave+'/'+WAVES.length+'  SIPHON: '+S.siphonCount+'  BOMB: '+S.bombCount,W/2,H/2+28);
+
+  if(S.unlockT<=0){
+    const blink=Math.sin(S.t*0.08)>0;
+    ctx.font='bold 14px system-ui';
+    ctx.fillStyle='#cfd4e4';
+    if(blink) ctx.fillText('PRESS SPACE TO RETRY',W/2,H/2+60);
+  }
+}
+
+function drawClear(){
+  ctx.font='bold 28px system-ui';
+  ctx.textAlign='center';
+  ctx.fillStyle='#ffd870';
+  ctx.fillText('STAGE CLEAR',W/2,H/2-30);
+
+  ctx.font='16px system-ui';
+  ctx.fillStyle='#cfd4e4';
+  ctx.fillText('SCORE: '+S.score,W/2,H/2+5);
+  ctx.font='12px system-ui';
+  ctx.fillStyle='#8090a8';
+  ctx.fillText('SIPHON: '+S.siphonCount+'  BOMB: '+S.bombCount+'  KILLS: '+S.killCount,W/2,H/2+28);
+
+  if(S.unlockT<=0){
+    const blink=Math.sin(S.t*0.08)>0;
+    ctx.font='bold 14px system-ui';
+    ctx.fillStyle='#cfd4e4';
+    if(blink) ctx.fillText('PRESS SPACE TO RETRY',W/2,H/2+60);
+  }
+}
+
+// ========== GAME LOOP ==========
+function loop(){
+  update();
+  render();
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
