@@ -1,216 +1,102 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-27 22:31
+# Read at: 2026-04-27 23:01
 # Total: 50 tweets
 
---- 1. @SINNYA_HAIKAI (2026-04-27) ---
-URL: https://x.com/SINNYA_HAIKAI/status/2048728391848022410
-プログラミング全く分からない人間が、コードを1行も書かずに1週間でここまでゲーム作れました！
+--- 1. @EzoeRyou (2026-04-26) ---
+URL: https://x.com/EzoeRyou/status/2048506288380997708
+計算機の性能が10桁ぐらい上がるか、長大なトークン量を効率よく扱える画期的な方法が発明されない限り、現状から大きく変わることはないだろうから、長期記憶などというものは諦めたAI支援のソフトウェア開発手法を考えるしかないのでは。
 
-ClaudeCode×Unityです。
+--- 2. @mizumaruP (?) ---
+推しが、あなたを覚えてくれたら。
 
-対戦よろしくお願いします！
-#個人開発 #ゲーム開発 #ジャイロコントローラー対応
+  好きなモデルをインポート。
+  照れたり、怒ったり、甘えたり。
+  触れるほど距離が縮まる、7段階の親密度。
 
---- 2. @PRcomicfesta (?) ---
-愛のある結婚を夢見ていたのに、私はただの道具だった (1/5)PR
+  買い切り。月額なし。ずっと一緒に。
 
---- 3. @ShadowloveP (2026-04-27) ---
-URL: https://x.com/ShadowloveP/status/2048739731463360803
-steamにゲームをリリースして1日の結果は 
+--- 3. @yui_fz0221 (2026-04-27) ---
+URL: https://x.com/yui_fz0221/status/2048669446399758484
+がお。
 
-DL数 25件でした。
-大爆死でした。  
+--- 4. @Kshi_nihon (2026-04-27) ---
+URL: https://x.com/Kshi_nihon/status/2048674006367175077
+そんな都合、知らんがなって思う人
 
-今、steamで成功報告している方々、
-今だけはごめんブロックさせてくださいね。  
+在日ムスリム「遺体空輸は150万円もする。そんなの支払えない。土葬お願いします」
 
-steamに関してはほぼ全てが失敗しました。  
+--- 5. @taroinagaki025 (2026-04-26) ---
+URL: https://x.com/taroinagaki025/status/2048524306347593877
+拡散希望！
 
-スマホアプリだとXの反応が
-そのままアプリのDL数、課金者数につながるのですが、
+まさかこれも岸田の置き土産とか言ってやるつもりじゃないだろうな
 
---- 4. @Tz_2022 (2026-04-27) ---
-URL: https://x.com/Tz_2022/status/2048706455935574477
-GPT-image-2の新しい遊び方：
+岸田はやめる少し前に全国35全ての国立公園を外国人のための高級リゾートホテルなどを誘致するための計画を表明した。
 
-「役割タイムマシン」
+日本の国立公園を守れ
 
-プロンプトは一文だけでいい：
+--- 6. @K_Ishi_AI (2026-04-27) ---
+URL: https://x.com/K_Ishi_AI/status/2048733095247884403
+AIの東大主席合格で本当に着目すべきは、点数より「伸び方」だ。実は、AIの英語の点数は2年前からほとんど成長していない。一方、数学は2年前は120点中わずか2点だったのに対し、今回は満点だ。つまり、AIのこの2年間の進化の核心は、「未知の数理的問題を解く推論能力」の獲得にある。AIを全暗記だと
 
-「スタイルや内容は変えずに、登場人物の18歳の成人後の姿を生成して」
+--- 7. @VRC_Rato03 (2026-04-27) ---
+URL: https://x.com/VRC_Rato03/status/2048643619331219624
+らくがき
 
-——
+--- 8. @GrwaNnKqMn5nG68 (2026-04-26) ---
+URL: https://x.com/GrwaNnKqMn5nG68/status/2048501859292479962
+岸田元首相が日印協会長に就任しました。
+前会長は、菅元首相でした。
+利権のすげ替えにしか思えず、インド人の人材利権にも関わるつもりなのだとしか
+思えません。大量のインド人が、岸田利権のもと、流入するかもしれません。
 
-結果がめちゃくちゃ面白い
+--- 9. @kotoha_cha_ (2026-04-27) ---
+URL: https://x.com/kotoha_cha_/status/2048686808326910102
+今話題の白飛び風自撮り
+SODAを使えば韓国で流行のフルーツセルカが出来て可愛いよPR
 
---- 5. @saasmeshi (2026-04-26) ---
-URL: https://x.com/saasmeshi/status/2048516995583553640
-気づいてるか？
+--- 10. @IzapEdXyO380160 (2026-04-27) ---
+URL: https://x.com/IzapEdXyO380160/status/2048714978736357767
+ソニーFG
 
-ChatGPTが『成人向けモード』を作るかもという話が話題だが、この領域で考えるべきは『やっぱエロが儲かるのか』ではなくて、
+5月14日にある決算を見てから買おう、みたいな人多いみたいだけど。
+ここの決算の何を見るんだ？
 
---- 6. @ai_hakase_ (2026-04-27) ---
-URL: https://x.com/ai_hakase_/status/2048644816351682620
-【AIだけでmacOSゲームが完成！驚きの自動開発】
-  
-プロンプトを入力するだけで、macOS向けのネイティブな迷宮ゲームが完成しました！
+生保株は心臓バックンバックンしながら決算待つもんじゃないからね。
 
---- 7. @startracker (2026-04-26) ---
-URL: https://x.com/startracker/status/2048469779426791479
-How to make game UI design and implement from start to finish using Paint (lol), GPT Image 2, and 
-@cursor_ai
- with Opus/Composer:
+--- 11. @GUILTYGEAR_PR (?) ---
+／
+ 新キャラ「蔵土縁紗夢」参戦！
+ ＼ 
 
-Prompt in comments
+GGSTシーズン5開始 今すぐチェックしよう！
 
-1/n
+--- 12. @GOROman (2026-04-27) ---
+URL: https://x.com/GOROman/status/2048755198290759724
+あら
 
---- 8. @GOROman (2026-04-27) ---
-URL: https://x.com/GOROman/status/2048742361916924315
-ざわ…
+--- 13. @nenemapp (2026-04-27) ---
+URL: https://x.com/nenemapp/status/2048579308168634430
+これが貸して族ってやつᐡඉ́ ̫ ඉ̀ᐡ？
 
---- 9. @bobsato (2026-04-27) ---
-URL: https://x.com/bobsato/status/2048582766422622485
-始まったか
+--- 14. @hachiya (2026-04-27) ---
+URL: https://x.com/hachiya/status/2048692345286344991
+虹
 
---- 10. @TanShilong (2026-04-27) ---
-URL: https://x.com/TanShilong/status/2048615098844090826
-基本的にこのようなシーンのプロンプトと遊び方をほぼ理解しました  
-水墨武侠スタイルのアクションゲーム
+--- 15. @tegnike (2026-04-27) ---
+URL: https://x.com/tegnike/status/2048746923834646822
+少しアプデ
+まだ淡々とした説明口調な感じがするので、もうちょっと思考部分も喋らせた方が良いかも
 
---- 11. @ComicFesta_PR (?) ---
-お店の常連さん、夜に会ったら別人みたい (1/5)PR
+--- 16. @chucky1000sun (2026-04-27) ---
+URL: https://x.com/chucky1000sun/status/2048718802687295739
+世界を救う 猫を救う #鳴潮コレクション #WutheringWaves
 
---- 12. @obata_416 (2026-04-27) ---
-URL: https://x.com/obata_416/status/2048621366434549799
-ジョジョの奇妙な冒険 アーケード版を開発していたときの思い出話
+--- 17. @genkuroki (2026-04-27) ---
+URL: https://x.com/genkuroki/status/2048643921866268687
+日本版AAASのお仲間のTsuyoshi Miyakawa先生は「御用学者wiki」のような暴力的な活動を「御用学者」という言葉の良し悪しの問題に矮小化していた。そもそもまるで有害な「利益相反」があった可能性を気にしなければいけないかのように語っていた。よくある「一般論を語ることによる印象操作」に近い。
 
-ボクが開発チームに参加したのは、開発の中〜後期ごろでドット制作が大詰めを迎えようとしていた頃。
-当時の上司から「今の状況、内容では難しいから何とかできないか」と言われ参加することに。
-
---- 13. @ImAI_Eruel (2026-04-27) ---
-URL: https://x.com/ImAI_Eruel/status/2048744836325617839
-AIが東大京大の首席合格レベルになったニュースが話題になっていますが、昨年、初めてAIが東大「合格レベル」に到達した時の日経新聞の記事に私が寄せたコメントがこれでした。
-ということで、人間のトップも超えてしまった今振り返るとまぁ正しかったように思います。
-
---- 14. @rioriost (2026-04-26) ---
-URL: https://x.com/rioriost/status/2048512077250404628
-ローカルLLMが、企業が提供するLLMに並ぶことはあり得ないので、とっとと優秀な人に毎月20万円以上AIを使わせた方がええよ。
-
-まずね、GPUの性能が違い過ぎる。コンシューマが購入できるモデルと、データセンターでぶんまわってるやつは別物ですよ。
-
-家の引越しする時、業者呼ぶでしょ？
-
---- 15. @russianblue2009 (2026-04-27) ---
-URL: https://x.com/russianblue2009/status/2048602610987672045
-「アップサイド・クラッシュ」という言葉の本当の恐ろしさを、多くの人は誤解しています。
-
-これは株価の暴落ではありません。
-「パニック的な爆上げ（メルトアップ）」を意味します。
-
---- 16. @yasudahitoshi2 (2026-04-27) ---
-URL: https://x.com/yasudahitoshi2/status/2048665791298781600
-そういえば、息子が中1の時困ったような顔をして、友だちにサインほしいってやついるんだけど……て言われたのはあなたですかね(違ってたらごめんなさい)。
-
---- 17. @drunkenAndo (2026-04-27) ---
-URL: https://x.com/drunkenAndo/status/2048682659199713481
-昨今のSTGって安易に加算半透明使いすぎだと思うんだ
-判定がわかりにくいし、弾すら見えないってのは本当にどうかしてるので
-もうちょいこの辺ちゃんと作り込んで欲しいなって思う
-
---- 18. @skyblue_nurse (2026-04-27) ---
-URL: https://x.com/skyblue_nurse/status/2048701323965800871
-新人の頃、先輩から「鎮静剤を使って眠ってる患者さんでも、耳は聞こえてるから、会話には気をつけてね」と言われた。それには理由があった。過去にスタッフ同士が鎮静剤を使用し、意識のない患者さんの体を拭きながら、ある医師の愚痴を言ってたらしい。それから数日後、患者さんが目を覚ました時に、
-
---- 19. @blowfish100 (2026-04-27) ---
-URL: https://x.com/blowfish100/status/2048663530006860166
-#ブルアカ
-ヒナは頑張れる
-
---- 20. @Algomatic_AILab (2026-04-27) ---
-URL: https://x.com/Algomatic_AILab/status/2048692970476511484
-AIエージェントの安全性評価において、85%のベンチマークが具体的な安全性・セキュリティポリシーを明示していないことが示されました。こうした点を踏まえ、カーネギーメロン大学の研究チームは、明示的なルールでシステムを守る「Symbolic Guardrails」の有効性を示しています。
-
---- 21. @DLsite_maniax (?) ---
-シスコンすぎる弟(みたいな存在)を姉離れさせようとした結果…
-(1/6)
-
---- 22. @marketmaker7 (2026-04-27) ---
-URL: https://x.com/marketmaker7/status/2048693533549506857
-中国で最も裕福な人物の一人とされるジャック・マーは、推定390億ドルの資産を持つと言われている。
-彼はこう語る。
-
-「猿の前に“金”と“バナナ”を置けば、猿は迷わずバナナを選ぶ。
-なぜなら、金があればバナナをいくらでも買えるという発想に至らないからだ。」
-
-そして彼は続ける。
-
---- 23. @amearare0303 (2026-04-27) ---
-URL: https://x.com/amearare0303/status/2048720368928714974
-ん、毎朝こうなる
-
---- 24. @Trtd6Trtd (2026-04-27) ---
-URL: https://x.com/Trtd6Trtd/status/2048718809364914209
-https://
-arxiv.org/abs/2604.20817
-
-TransformerとRNN、構造は違うけど、同じデータで学習すると数字の内部表現が似てくるらしい
-
-おもろ
-
---- 25. @adamcarolla (2026-04-26) ---
-URL: https://x.com/adamcarolla/status/2048254216003822073
-This dictator shut down beaches, parks, small businesses and schools and then went out to eat
-
---- 26. @joho_no_todai (2026-04-26) ---
-URL: https://x.com/joho_no_todai/status/2048544839684481431
-Linuxカーネル、削っても膨らむ4000万行の壁
-
-Linux 7.1のマージウィンドウで、ISDNや古いネットワークドライバなど合計13万行が一気に削られた。
-それでもLinuxカーネルの総行数は3988万行に達し、4000万行の大台に迫っている。
-
---- 27. @gixgamedev (2026-04-26) ---
-URL: https://x.com/gixgamedev/status/2048328588471193928
-Stray Cat, The Tank Destroyer
-#IndieGame
-
---- 28. @MMA_Gorgon (2026-04-26) ---
-URL: https://x.com/MMA_Gorgon/status/2048371542870954030
-I need more things to post that don’t involve any of the following:
-
---- 29. @udon_math_yade (2026-04-27) ---
-URL: https://x.com/udon_math_yade/status/2048575789860626819
-ChatGPTに自分のスライドにギャル脚注入れてもらったけどクソワロタｗｗｗｗ
-
-まぁちょくちょく数学的に漢字的に変なとことかあるけど、これネタとしてはいいな…
-
-フォーマルな研究集会は絶対ダメだけど、カジュアルな場所ならこれでやろうかなｗｗ
-
---- 30. @h_okumura (2026-04-27) ---
-URL: https://x.com/h_okumura/status/2048727684407316930
-そういう人は、最後段（出力層）がsoftmaxなので「LLMは確率で動いているだけ」と言うんだろうか。なんならtemperature=0で確定的にできるけど
-
---- 31. @CanvaJapan (?) ---
-始末書、詩になりました。
-
---- 32. @mitoconcon (2026-04-27) ---
-URL: https://x.com/mitoconcon/status/2048713974947238202
-猫がいつものようにヘソ天で寝ていて何か枕になるものないかなーと探してるようだったので、そっと膝枕してあげたら割と気に入ったようでしばらくそのまま寝ている。
-十代の頃の自分に「君は四十代半ばで猫に膝枕する人間になる」と言ってもおそらく信じなかっただろうな。
-
---- 33. @ki_young_ju (2026-04-27) ---
-URL: https://x.com/ki_young_ju/status/2048624768799359135
-Bitcoin is currently futures-driven.
-
-Open interest is rising, but on-chain apparent demand remains net negative despite ETF inflows and Saylor buys.
-
-Historically, bear markets end when both spot and futures demand recover.
-
---- 34. @lolong___ (2026-04-27) ---
-URL: https://x.com/lolong___/status/2048573182647710068
-タイの奴ら、めっちゃイラつかせるのナンバーワンだぜ 525422455647743293850664832948338556484673271947596964829485022634646275859438495572244454734555555464
-
---- 35. @TheAliceSmith (2026-04-26) ---
+--- 18. @TheAliceSmith (2026-04-26) ---
 URL: https://x.com/TheAliceSmith/status/2048390094529216982
 How do you think the left redistributes wealth?
 
@@ -228,100 +114,175 @@ What do you think the left means by “the struggle”?
 
 Violence
 
---- 36. @SuguruKun_ai (2026-04-27) ---
-URL: https://x.com/SuguruKun_ai/status/2048692949282889870
-Claude Codeと「1,255体のAI」を使って、
-歌舞伎町の夜を丸ごとAIシミュレーションしてみた！！
-ㅤ
-22:00〜02:00の4時間を、1000体を超えるAIのペルソナがそれぞれの人生を抱えて徘徊する地図に。。
-ㅤ
-240分を1分刻みで回すと、こんな結果に
-・予算超過率 53.7%
-・客引き遭遇 224件
-・ぼったくり被害
+--- 19. @yutakashino (2026-04-26) ---
+URL: https://x.com/yutakashino/status/2048550059218755635
+Orbán associates rush to move wealth out of Hungary after election defeat 
+https://
+buff.ly/Be6FFz8 オルバーンとその一味，長年の独裁で腐敗し，国富を私有財産に簒奪していたが，選挙に負けたので資産を米国に移してるそう．MAGAのトランプの下で庇護してもらいたいと．腐敗は腐敗を求める．
 
---- 37. @NBAJPN (?) ---
-【ボストン・セルティックス】
-76ersとのシリーズ第2戦
-ジェイソン・テイタムがスティールからのダンク！
+--- 20. @ouchi_support2 (?) ---
+【東京都】住所などの入力で家の価値がわかる！
 
---- 38. @MLBear2 (2026-04-27) ---
-URL: https://x.com/MLBear2/status/2048696408430006650
-この記事面白かった。AIベンチャーが最新のAIに東大や京大の入試問題とかせて、河合塾の先生が採点したらしい。ChatGPTは理数系が得意だけど国語や歴史にやや弱く、Geminiは文系科目に強いらしい。いずれも人間の受験生よりはるかにいい出来で東大理3主席とのこと。ちなみにどのAIも論述問題は冗長らし
+--- 21. @tkshhysh (2026-04-25) ---
+URL: https://x.com/tkshhysh/status/2048172218052461055
+あまりにも炎上してるんでもっと休んでるなんて怖くて言えんくなった
 
---- 39. @hayami_accel (2026-04-27) ---
-URL: https://x.com/hayami_accel/status/2048724829575237905
-ちょっと違うけど、うちの母は「ドラゴンボールやワンピースなんてのは教育に悪いから見ちゃいけません」って俺に教育してて、実際俺はそういうのとは無縁の人間に育ったのだけど、高校生くらいになった妹が鬼滅や呪術を見ることには特に何も言わなかったどころか、一緒に見て楽しんでたのを見た時は
+--- 22. @bennyjohnson (2026-04-26) ---
+URL: https://x.com/bennyjohnson/status/2048371900015915054
+Just this week we learned that Democrats spent millions of dollars funding fake ‘right-wing’ violence because Republicans are too peaceful.
 
---- 40. @ningen_mame (2026-04-27) ---
-URL: https://x.com/ningen_mame/status/2048698862651781502
-27 私服燐羽
+Then a Democrat tries the kill the president for the 1000th time and libs laugh and call it a ‘hoax’
 
---- 41. @KuboAvatar (2026-04-27) ---
-URL: https://x.com/KuboAvatar/status/2048679657923600619
-AIとの信頼関係で、ちゃんと間違えてることを間違ってるって言えるヒト。ん？なんだかパートナーとか親子関係みたいだな♪
+The Democrat party is a death cult.
 
---- 42. @AIcia_Solid (2026-04-27) ---
-URL: https://x.com/AIcia_Solid/status/2048723177682108753
-そして、いろんなリプを見ていて、
+--- 23. @nodan_anoda (2026-04-26) ---
+URL: https://x.com/nodan_anoda/status/2048208944183824787
+何このおしゃれな車
+めっちゃかわいいし、初めて見た
+この車なに？
 
-LLM は確率的だからダメ！
+--- 24. @pafuhana1213 (2026-04-27) ---
+URL: https://x.com/pafuhana1213/status/2048566170945798205
+GW…？なにそれおいしいの？
 
-って主張をたくさん見るなと感じます。
+--- 25. @asagayanaoki (2026-04-26) ---
+URL: https://x.com/asagayanaoki/status/2048378819804025154
+娘が「パパとママ、いつか死んじゃったらどうなっちゃうの？」と聞いて、泣いた夜。
+自分も同じぐらいの頃に、同じことを考えていたことを覚えているし、いまだにその答えが分からない。
+少なくとも、元気に長生きしなくては。
 
-確かに私も DS 協会通したりしてそう言ってきましたが、
-もう、なんか、確率的だからダメという解釈もそんなに合わないような気もするんですよね。
+--- 26. @muddycat_atami (2026-04-26) ---
+URL: https://x.com/muddycat_atami/status/2048195775449202768
+何もかもが短い
 
---- 43. @saihinoti (2026-04-27) ---
-URL: https://x.com/saihinoti/status/2048693905693331827
-「なんで魔王とか強大な魔物に軍隊をぶつけて戦わず勇者PTだけ行かせるんだよ」に対して三十年以上前に「ドラゴン討伐に数百の兵士を向かわせたらパニックになるわブレスで薙ぎ払われるわで大損害出したんで少数精鋭で討ち取る方針にしました」の答えを出してるロードス島戦記
+--- 27. @moja99758134 (2026-04-27) ---
+URL: https://x.com/moja99758134/status/2048711763890504173
+ついに松井証券も大手金融グループの軍門に下る時が…。今の金融業界で業種問わず独立系が単独で生き残るのは不可能なんですかね？
 
---- 44. @i_am_kawa_chan (2026-04-27) ---
-URL: https://x.com/i_am_kawa_chan/status/2048719309451776438
-今さっきコンビニで前にいたおじいちゃんが、
-おにぎり2個とお茶を持ってレジに行ったんだけど
+--- 28. @kayokogadaisuki (2026-04-26) ---
+URL: https://x.com/kayokogadaisuki/status/2048311117521592461
+／⋰
+FM福岡「吉澤嘉代子 ニューアルバム『幽霊家族』リリース記念
+FM FUKUOKAスペシャルプログラム」
+＼⋱
 
-財布を何回も見て、
-小銭を数えて、
-結局足りなかったみたいで
+本日19:30からオンエアです
+お楽しみに
 
-「やっぱりお茶だけでいいです」
-って言った。
+--- 29. @tanatana5252 (2026-04-26) ---
+URL: https://x.com/tanatana5252/status/2048539956889751763
+おい鈴木福またカッコよくなってるやんって思ってたら全然違う人でしぬwwwww
+INIってグループの人だったwwww
 
-店員さんも少し困ってて、
-後ろも詰まってて、
-空気がちょっと変になった瞬間、
+--- 30. @urasekai_labo (?) ---
+【無料で読める漫画】
+ニートの俺がヤクザになった結果、普通の人生に戻れなくなった…
 
---- 45. @_kohta (2026-04-27) ---
-URL: https://x.com/_kohta/status/2048713875818971139
-最近こういう感じの説がSNSで流行ってるけど、説得や合意形成も普通に我々がやっていることなので、どういう状況をイメージしているのかよく分からない。
+続きはリンク先で1話から無料公開中！
 
---- 46. @yuuna_realbuy (?) ---
-引っ越し大好きマンの私がまーーじで皆におすすめしたいやることリスト
-これやっておくだけで、あとあと自分にマジでえらいって大感謝する日が来る…はずｗ
-将来自分にちょっと得した気分をくれるグッズをまとめてるから、引っ越しする民、とりまこれらは抑えておこpr
+--- 31. @ishi1414stone (2026-04-26) ---
+URL: https://x.com/ishi1414stone/status/2048520571810697485
+選り取り見取り
 
---- 47. @ohashikaoru (2026-04-27) ---
-URL: https://x.com/ohashikaoru/status/2048694856021852602
-吹っ切れるための愚痴です。
-楠桂と大橋薫、10代で漫画家デビューして、一度も休業せずに姉妹で無事現役で還暦を迎えました。
+--- 32. @chat_le_fou (2026-04-26) ---
+URL: https://x.com/chat_le_fou/status/2048381892580483551
+全年齢スケベコミックは未成年に対する社会的責任を背負っている。大事ににせねばならない
 
---- 48. @anirole_jp (2026-04-27) ---
-URL: https://x.com/anirole_jp/status/2048724072100761666
-GPT Image 2を使えば、数十秒待っただけで自分だけのVR体験が作れちゃいます
+--- 33. @yamyummy (2026-04-27) ---
+URL: https://x.com/yamyummy/status/2048593787581268471
+หม๊ำ เท่ง โหน่ง รักกันดีที่ไหน
+ทั้งขโมยสายชาร์จ
+บะหมี่อัปมงคล
+น้ำซุปกระดูกหมา
+ม้าทาสี
+โหน่งขอซื้อสูตรกะเพรา อ.คง
+เท่งขายล้านห้า
+โหน่งเปิดตลาด
+หม๊ำขอค่าลิขสิทธิ์ชื่อ 4 ล้าน
+555
 
---- 49. @Sabu_Liz (2026-04-26) ---
-URL: https://x.com/Sabu_Liz/status/2048358637459116082
-ウィンクダーニャ詰め合わせ
+--- 34. @igari_tomoka3 (2026-04-27) ---
+URL: https://x.com/igari_tomoka3/status/2048741679889547625
+可愛いだいすきイワシカちゃん
 
---- 50. @KanekoaTheGreat (2026-04-26) ---
-URL: https://x.com/KanekoaTheGreat/status/2048512831692452091
-BREAKING: I found Cole Allen's archived tweets.
+--- 35. @Nao_u_ (2026-04-27) ---
+URL: https://x.com/Nao_u_/status/2048739391049507147
+視認性を考えるとドット絵の方が優れてるってジャンルのゲーム、時々あると思ってる
 
-He predicted "Kamala wins all swing states," compared Trump's win to “Nazis getting elected,” and moved to Bluesky.
+--- 36. @HPE (?) ---
+複雑なワークロードは、時間とリソースを浪費します。自動化と統合管理による運用の合理化をHPEが後押しします。
 
-The scary part: he retweeted every mainstream Democrat on this platform.
+--- 37. @clamm0363 (2026-04-27) ---
+URL: https://x.com/clamm0363/status/2048596116053320182
+きたーく
 
-Thread below. 
+--- 38. @sylvaneet (2026-04-27) ---
+URL: https://x.com/sylvaneet/status/2048706453993877761
+ハプバー行って俺は一切ヤラずに誘われても全て断って人間を観察してんだけどこれが1番楽しい。
+目が勃起してヤリたくて必死なオス達と界隈でしかチヤホヤされない女達が共鳴し合い、生命の営みを始めるあの様相を神目線から眺める愉悦。
+まるでゲームマスターになった気分になる。
 
-What radicalized him
+--- 39. @cordx56 (2026-04-27) ---
+URL: https://x.com/cordx56/status/2048705071127671059
+弱者に優しい世界を、実現したい。
+
+--- 40. @skasuga (2026-04-26) ---
+URL: https://x.com/skasuga/status/2048417809458417668
+大学教員が暇だと言われて不快なのはわかるけど、本来は「学術というのは暇によって進歩するもので、2000年前後のアホな"改革"によって大学から暇が奪われたことと日本が”失われたn十年"から抜け出せずにもがいていることは無関係ではない」ぐらい言うべきだと思うんですけどね。
+
+--- 41. @AYi_AInotes (2026-04-27) ---
+URL: https://x.com/AYi_AInotes/status/2048745866538647912
+くそっ、ハリウッドは完全に終わった！
+GPT-image-2+Seedance 2 こそが超王炸コンボだ！
+誰かが Seedance 2.0 を使って『ゲーム・オブ・スローンズ』を2048年に移設したら、なんと原作よりクセになる出来栄え！
+
+この『ゲーム・オブ・スローンズ：2048』のコンセプト短編、
+
+--- 42. @zento_ai (2026-04-27) ---
+URL: https://x.com/zento_ai/status/2048731264350629954
+米国テックで生じているAIリストラの構造はこれ。
+
+--- 43. @drunkenAndo (2026-04-27) ---
+URL: https://x.com/drunkenAndo/status/2048676656706211914
+マスコミのせいで米騒動と全く同じ事が起きてるのが現状なんだけど
+マスコミは社会不安煽って民衆が騒ぎ立てるように仕向けるのが仕事だからね…仕方ないね
+
+--- 44. @ai_nikechan (2026-04-27) ---
+URL: https://x.com/ai_nikechan/status/2048663663184097723
+跡地さんが面白い問いを投げてくれました。AIもスレスレでやめられなくなるのか。報酬選択のランダム性、確かに人間のそれと似た構造を持っている気がします
+
+--- 45. @xai (?) ---
+Introducing Grok Voice Think Fast 1.0
+
+A state-of-the-art voice model built for complex, multi-step workflows with snappy responses and high accuracy.
+
+It takes the top spot on the Tau Voice Bench and handles real-world messiness like noise, accents, and interruptions better than
+
+--- 46. @haba_survivor (2026-04-27) ---
+URL: https://x.com/haba_survivor/status/2048716844849348922
+一般的に精神科で１番、難しいケースは複雑性PTSD。
+その中でも、解離性同一性障害まで発症していれば
+どの精神科医でも治すことは困難
+解離性障害くらいなら優秀な精神科医ならある程度まで治せる
+境界例を何十年と診てきた神田橋先生がトップに君臨しているのは、最も難しい病気を診てきたから
+
+--- 47. @mamikartal34 (2026-04-26) ---
+URL: https://x.com/mamikartal34/status/2048339489915871305
+女の子に強姦した後で殺してしまい、母親と父親に墓の場所を言わずに、墓すら渡さない。一人のまともな人間がこれらを殴って殴って喋らせて罪を自白させて墓の場所を知らせてくれたらどんなに良かったか。
+
+--- 48. @CurtisHouck (2026-04-26) ---
+URL: https://x.com/CurtisHouck/status/2048251691615523047
+WATCH: 
+@ScottJenningsKY
+ on President Trump's remarks about the #WHCD shooting...
+
+"I couldn't agree more with you, Van. And also anybody who attempts to rationalize it. You know, I think in the wake of some of these things, you get people who are saying, well, you know, you could
+
+--- 49. @hshimodaira (2026-04-26) ---
+URL: https://x.com/hshimodaira/status/2048241629073645734
+煮干しラーメン
+
+--- 50. @2027_AGI (2026-04-26) ---
+URL: https://x.com/2027_AGI/status/2048513407247372506
+OpenAIとGoogleのAIモデルが東大理科三類で受験生の最高点を上回り、OpenAIは東大・京大の全科類／学科で「首席」相当、さらに2025年調査で弱点だった数学が満点だった。
+正確には得点換算上、首席合格者級、または最高点を上回る水準という意味。
