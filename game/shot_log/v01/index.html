@@ -13,11 +13,77 @@
 </head>
 <body>
 <h1>BACKLASH</h1>
-<p>← → ↑ ↓ / WASD  MOVE &middot; SPACE  BOMB (gauge MAX)</p>
+<p>← → ↑ ↓ / WASD  MOVE &middot; SPACE  BOMB (gauge MAX) &middot; M  MUTE</p>
 <canvas id="c" width="420" height="620"></canvas>
 <script>
 const W=420,H=620;
+const RETRY_UNLOCK_FRAMES=240; // 4s lock after death — let player read final score
 const AI_MODE=new URLSearchParams(location.search).has('ai');
+
+// === SE (Web Audio + WAV files in SE/) ===
+const AUDIO_ON=!AI_MODE;
+const SE_FILES={
+  start:       'ゲーム開始Spaceを押した.wav',
+  shoot:       'push17.wav',                  // 仮: 短い punchy音 → ショットSE想定
+  hitHard:     '硬い敵に撃ち込んだ時.wav',
+  killSmall:   '敵小撃破.wav',
+  killMed:     '敵中撃破.wav',
+  killLarge:   '敵大撃破.wav',
+  item:        'itenget.wav',                  // 短い版（頻繁取得向き）。長尺版は'アイテム取得.wav'
+  levelUp:     'レベルアップ.wav',
+  gaugeMax:    'ゲージ MAX .wav',
+  bomb:        'ボム発動.wav',
+  damage:      'プレイヤー被弾.wav',           // 生存時の被弾
+  playerDeath: 'プレイヤー死亡.wav',           // 致命傷の瞬間
+  gameOver:    'ゲームオーバー.wav',           // GAME OVER 表記出現時
+  clear:       'ステージクリア.wav',
+};
+const SE_VOLUMES={
+  start:0.7, shoot:0.10, hitHard:0.28,
+  killSmall:0.45, killMed:0.55, killLarge:0.7,
+  item:0.4, levelUp:0.65, gaugeMax:0.75,
+  bomb:0.9, damage:0.7, playerDeath:0.8, gameOver:0.8, clear:0.9,
+};
+let audioCtx=null;
+const seBuffers={};
+const seLast={};
+let muted=(function(){try{return localStorage.getItem('shotlog_muted')==='1';}catch(e){return false;}})();
+
+async function initAudio(){
+  if(!AUDIO_ON)return;
+  try{audioCtx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){console.warn('audio unavailable',e);return;}
+  await Promise.all(Object.entries(SE_FILES).map(async([key,fname])=>{
+    try{
+      const url='SE/'+encodeURIComponent(fname);
+      const res=await fetch(url);
+      const ab=await res.arrayBuffer();
+      seBuffers[key]=await audioCtx.decodeAudioData(ab);
+    }catch(e){console.warn('SE load failed',fname,e);}
+  }));
+}
+initAudio();
+
+// playSE(key) — fire SE; throttleMs prevents stacking when many fire same frame
+function playSE(key,throttleMs){
+  if(!AUDIO_ON||muted||!audioCtx)return;
+  const buf=seBuffers[key];if(!buf)return;
+  if(throttleMs){
+    const now=performance.now();
+    if(seLast[key]&&now-seLast[key]<throttleMs)return;
+    seLast[key]=now;
+  }
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  const src=audioCtx.createBufferSource();
+  src.buffer=buf;
+  const gain=audioCtx.createGain();
+  gain.gain.value=SE_VOLUMES[key]??0.6;
+  src.connect(gain).connect(audioCtx.destination);
+  try{src.start(0);}catch(e){}
+}
+function toggleMute(){
+  muted=!muted;
+  try{localStorage.setItem('shotlog_muted',muted?'1':'0');}catch(e){}
+}
 const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
 const keys={};
 
@@ -110,15 +176,20 @@ function aiExpert(){
   };
 }
 addEventListener('keydown',e=>{
+  // resume audio on first user gesture (autoplay policy)
+  if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();
+  if(e.key==='m'||e.key==='M'){toggleMute();return;}
   keys[e.key]=1;
   if(e.key===' '||e.code==='Space'||e.key.startsWith('Arrow'))e.preventDefault();
-  if(e.key===' '&&!state.started){state.started=true;return;}
+  if(e.key===' '&&!state.started){state.started=true;playSE('start');return;}
   if(e.key===' '&&(state.over||state.cleared)){
+    // retry lock: prevent accidental skip before player can read the score
+    if(state.over&&state.overTimer<RETRY_UNLOCK_FRAMES)return;
     const isNewHi=state.score>=hiScore&&state.score>0;
     if(!state.submitted&&isNewHi)return; // must enter name for high score
-    if(!state.submitted&&!isNewHi){reset();state.started=true;return;} // quick retry
+    if(!state.submitted&&!isNewHi){reset();state.started=true;playSE('start');return;} // quick retry
     if(!rankLoaded&&!rankSaving)rankLoaded=true;
-    if(rankLoaded){reset();state.started=true;}
+    if(rankLoaded){reset();state.started=true;playSE('start');}
     return;
   }
 });
@@ -129,8 +200,8 @@ function mulberry32(a){return function(){var t=a+=0x6D2B79F5;t=Math.imul(t^t>>>1
 const ETYPES={
   small:  {hp:1,r:9, nRad:2,nAim:0,dropRate:0.3,color:'#ff6080'},
   medium: {hp:1,r:13,nRad:3,nAim:1,dropRate:0.6,color:'#ff8040'},
-  large:  {hp:5,r:18,nRad:5,nAim:2,dropRate:1.0,color:'#a060ff'},
-  boss:   {hp:60,r:30,nRad:10,nAim:4,dropRate:1.0,color:'#c040ff'},
+  large:  {hp:12,r:39,nRad:8,nAim:0,dropRate:1.0,color:'#2dd4bf'},
+  boss:   {hp:60,r:57,nRad:10,nAim:4,dropRate:1.0,color:'#ff40c0'},
 };
 
 // === PATH PATTERNS ===
@@ -161,7 +232,8 @@ function pDive(x,ty){
   return [{x,y:-15,t:0},{x,y:ty,t:100},{x,y:ty-30,t:40},{x:x+(x>W/2?100:-100),y:-30,t:110}];
 }
 function pLarge(x){
-  return [{x,y:-25,t:0},{x,y:200,t:180},{x,y:200,t:120},{x,y:H+30,t:160}];
+  // descend → short hover → flee back upward (escape if not killed in time)
+  return [{x,y:-25,t:0},{x,y:200,t:160},{x,y:200,t:80},{x,y:-40,t:140}];
 }
 function pBoss(x){
   // descend to y=140, stay for long time (shoot during stay), then slowly exit
@@ -215,7 +287,7 @@ function buildWaves(){
     ...s(pSideSweep(false,300,12),'small',30),
     ...s(pLineDown(W/2,350,12,8),'small',60),
   ]});
-  t+=200;
+  t+=260;
   // W7: medium key wave + large debut
   W_.push({t,enemies:[
     {path:pLarge(W/2),type:'large',t:0},
@@ -224,7 +296,7 @@ function buildWaves(){
     ...s(pLineDown(70,360,10,7),'small',10),
     ...s(pLineDown(350,360,10,7),'small',15),
   ]});
-  t+=220;
+  t+=280;
 
   // -- PHASE 3: large intro --
   // W8: large pair + small columns (40+)
@@ -236,7 +308,7 @@ function buildWaves(){
     ...s(pLineDown(370,350,8,8),'small',10),
     ...s(pSideSweep(true,380,8),'medium',80),
   ]});
-  t+=280;
+  t+=330;
   // W9: V + side + divers + large flankers
   W_.push({t,enemies:[
     {path:pLarge(100),type:'large',t:0},
@@ -247,7 +319,7 @@ function buildWaves(){
     ...s(pSideSweep(true,340,8),'medium',120),
     ...s(pSideSweep(false,200,8),'small',130),
   ]});
-  t+=280;
+  t+=330;
   // W10: large + medium swarm (35+)
   W_.push({t,enemies:[
     {path:pLarge(W/2),type:'large',t:0},
@@ -256,7 +328,7 @@ function buildWaves(){
     ...s(pLineDown(W/2-80,360,8,8),'small',60),
     ...s(pLineDown(W/2+80,360,8,8),'small',65),
   ]});
-  t+=260;
+  t+=320;
 
   // -- PHASE 4: boss --
   // W11: BOSS + large + small swarm during boss stay
@@ -303,7 +375,7 @@ function buildWaves(){
 }
 
 // scoring constants
-const SCORE_ENEMY={small:10,medium:50,large:200,boss:1000};
+const SCORE_ENEMY={small:10,medium:50,large:500,boss:1000};
 const SCORE_ITEM=[20,50,100]; // lv1,lv2,lv3
 const BOMB_MULTI_SM=10; // small/medium bomb kill multiplier
 const BOMB_MULTI_LB=2; // large/boss bomb kill multiplier
@@ -320,7 +392,7 @@ function reset(){
     cooldown:0,gauge:0,score:0,
     waves:buildWaves(),waveIdx:0,waveT:0,
     over:false,cleared:false,started:false,
-    hitFlash:0,bombFlash:0,bombReady:0,bombUsed:false,invincible:0,mercyGlow:0,
+    hitFlash:0,bombFlash:0,bombReady:0,bombUsed:false,invincible:0,mercyGlow:0,maxFlash:0,maxFlashed:false,retryShownT:undefined,gameOverSEPlayed:false,
     particles:[],popups:[],rings:[],hitstop:0,shake:0,particleFreeze:0,overTimer:0,submitted:false,nameInput:'',nameEditing:false,
     stars:Array.from({length:200},()=>({x:Math.random()*W,y:Math.random()*H,layer:Math.floor(Math.random()*6)})),
   };
@@ -369,6 +441,7 @@ function shoot(){
     state.bullets.push({x:px+8,y:py-10,vx:1.4,vy:-6.8});
   }
   state.cooldown=lvl===3?6:lvl===2?7:8;
+  playSE('shoot');
 }
 
 function spawnWaveEnemy(def){
@@ -389,29 +462,38 @@ function spawnWaveEnemy(def){
 const MERCY_SMALL_RANGE_SQ=170*170;       // generous radius for the weakest enemy
 const MERCY_SMALL_SAFE=Math.PI/3;         // ±60° safe cone in front of player
 const MERCY_MED_RANGE_SQ=85*85;           // tighter radius for medium aim mute
-function spawnRevenge(x,y,nRad,nAim,type){
+const BOMB_MERCY_RANGE_SQ=250*250;        // bomb-kill: divert player-aimed bullets within range
+function spawnRevenge(x,y,nRad,nAim,type,bombKill){
   const dx=state.player.x-x,dy=state.player.y-y;
   const distSq=dx*dx+dy*dy;
   const playerAng=Math.atan2(dy,dx);
   const smallMercy=(type==='small'&&distSq<MERCY_SMALL_RANGE_SQ);
   const medAimMute=(type==='medium'&&distSq<MERCY_MED_RANGE_SQ);
-  if(smallMercy||medAimMute){
+  const bombMercy=(bombKill&&distSq<BOMB_MERCY_RANGE_SQ);
+  const divertCone=smallMercy||bombMercy;
+  const muteAim=medAimMute||bombMercy;
+  // large: pretty bigger warm-red bullets; not aimed (already nAim=0)
+  const isLarge=type==='large';
+  const radSpd=3.5;
+  const radR=isLarge?5:3;
+  const radKind=isLarge?'large':undefined;
+  if(smallMercy||medAimMute||bombMercy){
     spawnRing(x,y,'#7fdfff',26,18); // cyan: mercy triggered
     state.mercyGlow=Math.max(state.mercyGlow||0,18);
   }
   const base=state.rng()*Math.PI*2;
   for(let i=0;i<nRad;i++){
     let a=base+i*(Math.PI*2/nRad);
-    if(smallMercy){
+    if(divertCone){
       // push bullet angle outside ±MERCY_SMALL_SAFE of the player direction
       const diff=Math.atan2(Math.sin(a-playerAng),Math.cos(a-playerAng));
       if(Math.abs(diff)<MERCY_SMALL_SAFE){
         a=playerAng+(diff>=0?MERCY_SMALL_SAFE:-MERCY_SMALL_SAFE);
       }
     }
-    state.eBullets.push({x,y,vx:Math.cos(a)*3.5,vy:Math.sin(a)*3.5,r:3});
+    state.eBullets.push({x,y,vx:Math.cos(a)*radSpd,vy:Math.sin(a)*radSpd,r:radR,kind:radKind});
   }
-  if(medAimMute){
+  if(muteAim){
     // sideways spread (perpendicular to player) instead of aimed shots
     const perp=playerAng+Math.PI/2;
     for(let i=0;i<nAim;i++){
@@ -438,17 +520,21 @@ function moveEnemy(e){
   e.x=p0.x+(p1.x-p0.x)*sf;
   e.y=p0.y+(p1.y-p0.y)*sf;
   if(e.pathT>=dur){e.pathIdx++;e.pathT=0;}
-  // large: slow homing toward player + periodic shot
+  // large: slow drift + geometric radial bursts (spectacle, NOT aimed)
   if(e.type==='large'&&e.y>20&&e.y<H-20){
     const dx=state.player.x-e.x;
-    e.x+=Math.sign(dx)*Math.min(Math.abs(dx),0.7);
+    e.x+=Math.sign(dx)*Math.min(Math.abs(dx),0.4);
     e.x=Math.max(e.r,Math.min(W-e.r,e.x));
-    e.shotCd=(e.shotCd||55)-1;
+    e.shotCd=(e.shotCd||80)-1;
     if(e.shotCd<=0){
-      const adx=state.player.x-e.x,ady=state.player.y-e.y;
-      const a=Math.atan2(ady,adx);
-      state.eBullets.push({x:e.x,y:e.y,vx:Math.cos(a)*2.8,vy:Math.sin(a)*2.8,r:3});
-      e.shotCd=55;
+      e.shotN=(e.shotN||0)+1;
+      const N=12;
+      const baseAng=e.shotN*0.13; // gentle rotation each volley
+      for(let i=0;i<N;i++){
+        const a=baseAng+i*Math.PI*2/N;
+        state.eBullets.push({x:e.x,y:e.y,vx:Math.cos(a)*2.8,vy:Math.sin(a)*2.8,r:5,kind:'large'});
+      }
+      e.shotCd=80;
     }
   }
   // boss: slow horizontal sway + alternating attack patterns
@@ -511,10 +597,15 @@ function step(){
     state.hitstop--;draw();return;
   }
   if(!state.started){draw();return;}
-  if(state.cleared){draw();return;}
+  if(state.cleared){state.t++;draw();return;}  // tick t so retry/saving animations advance
   if(state.over){
     // after hitstop, normal movement continues (no spawning, no collision)
     state.t++;state.overTimer++;
+    // GAME OVER 表記が出るタイミング(overTimer>=120)で一度だけ gameOver SE
+    if(!state.gameOverSEPlayed&&state.overTimer>=120){
+      state.gameOverSEPlayed=true;
+      playSE('gameOver');
+    }
     if(state.hitFlash>0)state.hitFlash--;
     state.enemies.forEach(e=>{moveEnemy(e);});
     state.enemies=state.enemies.filter(e=>!e.done&&!e.dead);
@@ -550,32 +641,79 @@ function step(){
   // detect first MAX reach → show bomb ready notification
   if(state.gauge>=208&&state.bombReady<=0&&!state.bombUsed)state.bombReady=180;
   if(state.bombReady>0)state.bombReady--;
+  // detect MAX gauge transition (every refill) → yellow energy concentration + tiny flash
+  if(state.gauge>=208){
+    if(!state.maxFlashed){
+      state.maxFlashed=true;
+      state.maxFlash=18;
+      playSE('gaugeMax');
+      state.hitstop=Math.max(state.hitstop,3); // ごく短い punctuation
+      spawnRing(state.player.x,state.player.y,'#ffd45c',56,22);
+      spawnRing(state.player.x,state.player.y,'#fff8d0',36,16);
+      for(let i=0;i<22;i++){
+        const a=i*(Math.PI*2/22)+Math.random()*0.25;
+        const r0=68+Math.random()*22;
+        const sp=2.4+Math.random()*1.4;
+        state.particles.push({
+          x:state.player.x+Math.cos(a)*r0,
+          y:state.player.y+Math.sin(a)*r0,
+          vx:-Math.cos(a)*sp,vy:-Math.sin(a)*sp,
+          life:26,color:'#ffe066'
+        });
+      }
+    }
+  }else{
+    state.maxFlashed=false;
+  }
+  if(state.maxFlash>0)state.maxFlash--;
   if((keys[' ']||aiBomb)&&state.gauge>=208&&state.bombFlash<=0){
     state.bombUsed=true;state.bombReady=0;
     state.gauge=35; // drop to 2way start
     state.bombFlash=30;
+    playSE('bomb');
     shake(10);
-    spawnRing(state.player.x,state.player.y,'#ffd45c',W*0.7,40);
+    state.hitstop=Math.max(state.hitstop,2); // ごく短いパンチのみ
+    // visual rings (unchanged)
+    const visR=W*0.7;
+    spawnRing(state.player.x,state.player.y,'#ffd45c',visR,40);
     spawnRing(state.player.x,state.player.y,'#fff',W*0.5,28);
-    // clear all enemy bullets — score per bullet
-    const bombBulletScore=state.eBullets.length*BOMB_BULLET_PTS;
+    // effect range = 1.3× the outer visible ring (slight grace beyond what you see)
+    const BOMB_R=visR*1.3, BOMB_R_SQ=BOMB_R*BOMB_R;
+    const px=state.player.x, py=state.player.y;
+    // partition bullets: in-range cleared, out-of-range survive
+    const cleared=[], surviving=[];
+    for(const b of state.eBullets){
+      const dx=b.x-px, dy=b.y-py;
+      (dx*dx+dy*dy<=BOMB_R_SQ?cleared:surviving).push(b);
+    }
+    const bombBulletScore=cleared.length*BOMB_BULLET_PTS;
     if(bombBulletScore>0){
       addScore(bombBulletScore);
       state.popups.push({x:W/2,y:H/2-30,text:'+'+bombBulletScore+' BOMB',life:60,color:'#ffd45c',size:20});
     }
-    state.eBullets=[];
-    // damage all enemies: small/medium die, large/boss lose half hp
+    for(const b of cleared){
+      for(let i=0;i<6;i++){
+        const a=Math.random()*Math.PI*2;
+        const sp=1.4+Math.random()*1.8;
+        state.particles.push({x:b.x,y:b.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:9+Math.random()*7,color:'#fff0d0'});
+      }
+    }
+    state.eBullets=surviving;
+    // damage enemies in range only: small/medium die, large/boss lose half hp
     state.enemies.forEach(e=>{
       if(e.dead)return;
+      const dx=e.x-px, dy=e.y-py;
+      if(dx*dx+dy*dy>BOMB_R_SQ)return;
       const dmg=e.type==='boss'?Math.ceil(e.maxHp/2):e.type==='large'?Math.ceil(e.maxHp/2):e.maxHp;
       e.hp-=dmg;
       if(e.hp<=0){
         e.dead=true;const bmul=(e.type==='small'||e.type==='medium')?BOMB_MULTI_SM:BOMB_MULTI_LB;
         const bepts=(SCORE_ENEMY[e.type]||10)*bmul;addScore(bepts);
-        if(e.type==='large'||e.type==='boss')state.popups.push({x:e.x,y:e.y-e.r-5,text:'+'+bepts,life:50,color:e.type==='boss'?'#f8f':'#c8f',size:e.type==='boss'?18:15});
-        spawnRevenge(e.x,e.y,e.nRad,e.nAim,e.type);
+        if(e.type==='large'||e.type==='boss')state.popups.push({x:e.x,y:e.y-e.r-5,text:'+'+bepts,life:50,color:e.type==='boss'?'#ffb0e8':'#9ff0e0',size:e.type==='boss'?18:15});
+        // bomb kill: revenge with mercy diversion within BOMB_MERCY_RANGE
+        spawnRevenge(e.x,e.y,e.nRad,e.nAim,e.type,true);
         if(state.rng()<e.dropRate){
-          const n=e.type==='boss'?5:1;
+          const n=e.type==='boss'?5:e.type==='large'?3:1;
           for(let ii=0;ii<n;ii++)state.items.push({x:e.x+(ii-(n-1)/2)*15,y:e.y,vy:1.2});
         }
       }
@@ -598,7 +736,7 @@ function step(){
     if(state.waveT>=w.t+maxD){state.waveIdx++;}else break;
   }
   if(state.waveIdx>=state.waves.length&&state.enemies.length===0&&state.eBullets.length===0&&!state.cleared){
-    state.cleared=true;saveHi();
+    state.cleared=true;saveHi();playSE('clear');
   }
   // enemies
   state.enemies.forEach(e=>{moveEnemy(e);if(e.flash>0)e.flash--;});
@@ -614,8 +752,13 @@ function step(){
         b.dead=true;e.hp--;e.flash=6;
         if(e.hp<=0){
           e.dead=true;const epts=SCORE_ENEMY[e.type]||10;addScore(epts);
-          if(e.type==='large'||e.type==='boss')state.popups.push({x:e.x,y:e.y-e.r-5,text:'+'+epts,life:50,color:e.type==='boss'?'#f8f':'#c8f',size:e.type==='boss'?18:15});
+          if(e.type==='large'||e.type==='boss')state.popups.push({x:e.x,y:e.y-e.r-5,text:'+'+epts,life:50,color:e.type==='boss'?'#ffb0e8':'#9ff0e0',size:e.type==='boss'?18:15});
           spawnRevenge(e.x,e.y,e.nRad,e.nAim,e.type);
+          // SE: kill-by-type (boss reuses killLarge for now)
+          if(e.type==='small')playSE('killSmall',20);
+          else if(e.type==='medium')playSE('killMed',20);
+          else if(e.type==='large')playSE('killLarge');
+          else if(e.type==='boss')playSE('killLarge');
           // visual feedback by enemy size
           if(e.type==='small'){
             // Nao_u 2026-04-26: 打ち返し弾(赤)と同系統色で爆発が紛れる問題
@@ -627,24 +770,27 @@ function step(){
             spawnParticles(e.x,e.y,9,'#7a8498',3);
             shake(2);
           }else if(e.type==='large'){
-            spawnRing(e.x,e.y,'#c080ff',64,28);
-            spawnRing(e.x,e.y,'#fff',40,16);
-            spawnParticles(e.x,e.y,40,'#d0a0ff',6);
-            spawnParticles(e.x,e.y,20,'#fff',8);
-            shake(6);state.hitstop=Math.max(state.hitstop,5);
+            spawnRing(e.x,e.y,'#5eead4',72,30);
+            spawnRing(e.x,e.y,'#fff',46,18);
+            spawnParticles(e.x,e.y,48,'#7eecd4',6);
+            spawnParticles(e.x,e.y,24,'#fff',8);
+            shake(7);state.hitstop=Math.max(state.hitstop,6);
           }else if(e.type==='boss'){
-            spawnRing(e.x,e.y,'#ff60ff',120,40);
-            spawnRing(e.x,e.y,'#ffd45c',80,28);
-            spawnRing(e.x,e.y,'#fff',50,18);
-            spawnParticles(e.x,e.y,80,'#ffaaff',10);
-            spawnParticles(e.x,e.y,60,'#ffd45c',8);
-            spawnParticles(e.x,e.y,40,'#fff',12);
-            shake(14);state.hitstop=Math.max(state.hitstop,16);
+            spawnRing(e.x,e.y,'#ff60d0',140,42);
+            spawnRing(e.x,e.y,'#ffd45c',90,30);
+            spawnRing(e.x,e.y,'#fff',56,20);
+            spawnParticles(e.x,e.y,100,'#ffaae0',11);
+            spawnParticles(e.x,e.y,70,'#ffd45c',9);
+            spawnParticles(e.x,e.y,46,'#fff',13);
+            shake(16);state.hitstop=Math.max(state.hitstop,18);
           }
           if(state.rng()<e.dropRate){
-            const n=e.type==='boss'?5:1;
+            const n=e.type==='boss'?5:e.type==='large'?3:1;
             for(let i=0;i<n;i++)state.items.push({x:e.x+(i-(n-1)/2)*15,y:e.y,vy:1.2});
           }
+        }else if(e.type==='large'||e.type==='boss'){
+          // hard enemy hit but not killed — light "tink" feedback (throttle to avoid stacking)
+          playSE('hitHard',40);
         }
         break;
       }
@@ -668,12 +814,16 @@ function step(){
     if(it.dead)continue;
     const dx=it.x-state.player.x,dy=it.y-state.player.y;
     if(dx*dx+dy*dy<(8+state.player.r)*(8+state.player.r)){
+      const gaugeBefore=state.gauge;
       it.dead=true;state.gauge=Math.min(208,state.gauge+8);
       const li=Math.min(2,(state.gauge>=99?2:state.gauge>=35?1:0));
       const pts=SCORE_ITEM[li];
       addScore(pts);
       const pc=['#8ab','#6cf','#fd4'][li];
       state.popups.push({x:it.x,y:it.y-10,text:'+'+pts,life:45,color:pc,size:li===2?16:13});
+      // SE: level up first (overrides item), else normal item pickup
+      if((gaugeBefore<35&&state.gauge>=35)||(gaugeBefore<99&&state.gauge>=99)) playSE('levelUp');
+      else playSE('item',30);
     }
   }
   state.items=state.items.filter(it=>!it.dead&&it.y<H+10);
@@ -686,7 +836,7 @@ function step(){
     const er=(e.type==='large'||e.type==='boss')?e.r*(0.5+0.5*e.hp/e.maxHp):e.r;
     const dx=e.x-state.player.x,dy=e.y-state.player.y;
     if(dx*dx+dy*dy<(er+state.player.r)*(er+state.player.r)){
-      state.over=true;saveHi();
+      state.over=true;saveHi();playSE('playerDeath'); // 死亡瞬間。ゲームオーバーSEは表記出現時
       spawnParticles(state.player.x,state.player.y,120,'#9ee6ff',15);
       spawnParticles(state.player.x,state.player.y,80,'#fff',10);
       spawnParticles(state.player.x,state.player.y,40,'#ffd45c',8);
@@ -706,7 +856,7 @@ function step(){
       if(dx*dx+dy*dy<(b.r+state.player.r)*(b.r+state.player.r)){
         b.dead=true;
         if(state.gauge<=0){
-          state.over=true;saveHi();
+          state.over=true;saveHi();playSE('playerDeath'); // 同上
           spawnParticles(state.player.x,state.player.y,120,'#ff4444',15);
           spawnParticles(state.player.x,state.player.y,80,'#fff',10);
           spawnParticles(state.player.x,state.player.y,40,'#ffd45c',8);
@@ -719,6 +869,7 @@ function step(){
           else state.gauge=0;
           state.hitFlash=15;
           state.invincible=18;
+          playSE('damage');
           spawnParticles(state.player.x,state.player.y,12,'#ffaa44',3);
           spawnRing(state.player.x,state.player.y,'#ffaa44',32,16);
           shake(4);
@@ -751,6 +902,32 @@ function drawRankRows(rows,startIdx,y,myName,myGlobalIdx){
   }
   ctx.textAlign='center';
   return y;
+}
+
+// retry prompt — appears from nothing with yellow glow burst, then settles into permanent yellow
+// works for both paths: (a) over→retry-lock expires, (b) high-score→submit→ranking-loaded
+// animation starts on FIRST frame the prompt is visible (latched in state.retryShownT)
+function drawRetryPrompt(ry){
+  // hide entirely during initial retry lock for game over (let player read score)
+  if(state.over&&state.overTimer<RETRY_UNLOCK_FRAMES)return;
+  // latch first visible frame — same fade-in regardless of path
+  if(state.retryShownT===undefined)state.retryShownT=state.t;
+  const since=state.t-state.retryShownT;
+  const fadeIn=Math.min(1,since/22);                // 22F fade-in (alpha 0→1)
+  const glow=Math.max(0,1-since/70);                // 70F glow burst decay (then steady)
+  ctx.textAlign='center';
+  ctx.globalAlpha=fadeIn;
+  if(glow>0){
+    ctx.shadowColor=`rgba(255,212,92,${glow*0.85})`;
+    ctx.shadowBlur=12*glow;
+  }
+  ctx.fillStyle='#ffd45c';                          // permanent yellow (always highlight)
+  ctx.font='bold 13px system-ui';                   // permanent bold
+  ctx.fillText('SPACE to retry',W/2,ry);
+  ctx.shadowBlur=0;
+  ctx.shadowColor='transparent';
+  ctx.globalAlpha=1;
+  ctx.font='12px system-ui';
 }
 
 function draw(){
@@ -815,27 +992,75 @@ function draw(){
   // enemies
   state.enemies.forEach(e=>{
     const er=(e.type==='large'||e.type==='boss')?e.r*(0.5+0.5*e.hp/e.maxHp):e.r;
-    ctx.fillStyle=e.flash>0?'#fff':e.color;
-    ctx.beginPath();ctx.arc(e.x,e.y,er,0,Math.PI*2);ctx.fill();
-    // boss: draw HP bar
-    if(e.type==='boss'){
-      const bw=40,bh=4,bx=e.x-bw/2,by=e.y-er-8;
+    if(e.type==='large'){
+      // hexagon body + counter-rotating inner triangle
+      const rot=state.t*0.020;
+      ctx.fillStyle=e.flash>0?'#fff':e.color;
+      ctx.beginPath();
+      for(let i=0;i<6;i++){
+        const a=rot+i*Math.PI/3;
+        const px=e.x+Math.cos(a)*er,py=e.y+Math.sin(a)*er;
+        if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+      }
+      ctx.closePath();ctx.fill();
+      ctx.fillStyle=e.flash>0?'#fff':'#0a584c';
+      ctx.beginPath();
+      for(let i=0;i<3;i++){
+        const a=-rot*1.6+i*Math.PI*2/3;
+        const px=e.x+Math.cos(a)*er*0.5,py=e.y+Math.sin(a)*er*0.5;
+        if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+      }
+      ctx.closePath();ctx.fill();
+    }else if(e.type==='boss'){
+      // gear-spike outer ring + octagonal body + bright core
+      const rot=state.t*0.012;
+      ctx.fillStyle=e.flash>0?'#fff':'#a02080';
+      ctx.beginPath();
+      for(let i=0;i<16;i++){
+        const a=rot+i*Math.PI/8;
+        const r2=(i%2===0)?er*1.12:er*0.92;
+        const px=e.x+Math.cos(a)*r2,py=e.y+Math.sin(a)*r2;
+        if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+      }
+      ctx.closePath();ctx.fill();
+      ctx.fillStyle=e.flash>0?'#fff':e.color;
+      ctx.beginPath();
+      for(let i=0;i<8;i++){
+        const a=-rot*0.6+i*Math.PI/4+Math.PI/8;
+        const px=e.x+Math.cos(a)*er*0.85,py=e.y+Math.sin(a)*er*0.85;
+        if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+      }
+      ctx.closePath();ctx.fill();
+      ctx.fillStyle=e.flash>0?'#fff':'#5a0050';
+      ctx.beginPath();ctx.arc(e.x,e.y,er*0.36,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=e.flash>0?'#fff':'#ffb0e8';
+      ctx.beginPath();ctx.arc(e.x,e.y,er*0.18,0,Math.PI*2);ctx.fill();
+      // HP bar
+      const bw=Math.max(60,e.r*1.6),bh=5,bx=e.x-bw/2,by=e.y-er-12;
       ctx.fillStyle='#333';ctx.fillRect(bx,by,bw,bh);
-      ctx.fillStyle='#c040ff';ctx.fillRect(bx,by,bw*e.hp/e.maxHp,bh);
+      ctx.fillStyle='#ff40c0';ctx.fillRect(bx,by,bw*e.hp/e.maxHp,bh);
+    }else{
+      // small/medium: simple circle
+      ctx.fillStyle=e.flash>0?'#fff':e.color;
+      ctx.beginPath();ctx.arc(e.x,e.y,er,0,Math.PI*2);ctx.fill();
     }
   });
-  // enemy bullets — additive glow halo + solid core
+  // enemy bullets — additive glow halo + solid core (kind:'large' = warm red, big)
   ctx.globalCompositeOperation='lighter';
   state.eBullets.forEach(b=>{
-    ctx.fillStyle='rgba(255,80,100,0.35)';
+    ctx.fillStyle=b.kind==='large'?'rgba(255,140,60,0.4)':'rgba(255,80,100,0.35)';
     ctx.beginPath();ctx.arc(b.x,b.y,b.r+4,0,Math.PI*2);ctx.fill();
   });
   ctx.globalCompositeOperation='source-over';
-  ctx.fillStyle='#ff3050';
-  state.eBullets.forEach(b=>{ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();});
+  state.eBullets.forEach(b=>{
+    ctx.fillStyle=b.kind==='large'?'#ff6030':'#ff3050';
+    ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();
+  });
   // bright core
-  ctx.fillStyle='#ffd0d8';
-  state.eBullets.forEach(b=>{ctx.beginPath();ctx.arc(b.x,b.y,Math.max(1,b.r-2),0,Math.PI*2);ctx.fill();});
+  state.eBullets.forEach(b=>{
+    ctx.fillStyle=b.kind==='large'?'#ffe0a0':'#ffd0d8';
+    ctx.beginPath();ctx.arc(b.x,b.y,Math.max(1,b.r-2),0,Math.PI*2);ctx.fill();
+  });
   // shockwave rings
   ctx.globalCompositeOperation='lighter';
   state.rings.forEach(r=>{
@@ -905,8 +1130,15 @@ function draw(){
   });
   // restore: end shake scope before drawing UI overlays (text/title/gameover)
   ctx.restore();
+  // gauge MAX flash — tiny yellow screen overlay (一瞬)
+  if(state.maxFlash>0){
+    const a=(state.maxFlash/18)*0.18;
+    ctx.fillStyle=`rgba(255,224,140,${a})`;
+    ctx.fillRect(0,0,W,H);
+  }
   // BOMB READY notification — big center text on first MAX
-  if(state.bombReady>0&&!state.over){
+  // gauge>=208 必須: ダメージで権利を失った瞬間に消す（押しても発動しない理不尽の防止）
+  if(state.bombReady>0&&state.gauge>=208&&!state.over){
     const a=Math.min(1,state.bombReady/30);
     ctx.fillStyle=`rgba(255,255,200,${a*0.9})`;
     ctx.font='bold 24px system-ui';ctx.textAlign='center';
@@ -996,20 +1228,28 @@ function draw(){
           ry=drawRankRows(rankData.slice(start,end),start,ry,myName,myRank);
         }
       }
-      ry+=8;ctx.fillStyle='#aac';ctx.font='12px system-ui';
-      ctx.fillText('SPACE to retry',W/2,ry);
+      ry+=8;drawRetryPrompt(ry);
     }else{
       const myName=state.nameInput||rankName;
       let ry=H/2+2;
       if(rankSaving||!rankLoaded){
-        // saving/loading state — keep base text fixed, only dots animate
-        // (Nao_u 2026-04-26: centered text length変化で位置がガクガク動く問題)
-        ctx.fillStyle='#aac';ctx.font='13px system-ui';
+        // saving/loading state — fixed-position base text + three dots with phased alpha
+        // 位置は完全固定（2026-04-26: ガクガク禁止）／3点のドットは sin 位相ずらしで波打たせる
+        // （2026-04-27: ...アニメは残す — 待ち時間の重要シグナル）
+        ctx.font='13px system-ui';
         const baseText=rankSaving?'Saving':'Loading';
-        const dotCount=1+Math.floor(state.t/20)%3;
-        const fullW=ctx.measureText(baseText+'...').width;
+        const baseW=ctx.measureText(baseText).width;
+        const dotW=ctx.measureText('.').width;
+        const totalW=baseW+dotW*3;
+        const baseX=W/2-totalW/2;
+        ctx.fillStyle='#aac';
         ctx.textAlign='left';
-        ctx.fillText(baseText+'.'.repeat(dotCount),W/2-fullW/2,ry);
+        ctx.fillText(baseText,baseX,ry);
+        for(let i=0;i<3;i++){
+          const a=0.20+0.80*(0.5+0.5*Math.sin(state.t*0.18-i*0.9));
+          ctx.fillStyle=`rgba(170,170,204,${a})`;
+          ctx.fillText('.',baseX+baseW+dotW*i,ry);
+        }
         ctx.textAlign='center';
       }else if(rankData&&rankData.length>0){
         let myRank=-1;
@@ -1030,13 +1270,10 @@ function draw(){
           ry+=6;ctx.fillStyle='#ffd45c';ctx.font='bold 11px system-ui';
           ctx.fillText('You: '+myName+'  '+state.score,W/2,ry);ry+=14;
         }
-        ry+=8;
-        ctx.fillStyle='#aac';ctx.font='12px system-ui';
-        ctx.fillText('SPACE to retry',W/2,ry);
+        ry+=8;drawRetryPrompt(ry);
       }else{
         // no data or empty
-        ctx.fillStyle='#aac';ctx.font='12px system-ui';
-        ctx.fillText('SPACE to retry',W/2,ry);
+        drawRetryPrompt(ry);
       }
     }
     ctx.textAlign='left';

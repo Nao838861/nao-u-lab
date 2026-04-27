@@ -19,8 +19,8 @@ def mulberry32(seed):
 ETYPES = {
     'small':  dict(hp=1, r=9,  nRad=2, nAim=0, dropRate=0.3),
     'medium': dict(hp=1, r=13, nRad=3, nAim=1, dropRate=0.6),
-    'large':  dict(hp=3, r=18, nRad=5, nAim=2, dropRate=1.0),
-    'boss':   dict(hp=20,r=30, nRad=10,nAim=4, dropRate=1.0),
+    'large':  dict(hp=8, r=39, nRad=8, nAim=0, dropRate=1.0),  # JS: hp=12 (scaled 0.6× for headless TTK sim)
+    'boss':   dict(hp=20,r=57, nRad=10,nAim=4, dropRate=1.0),
 }
 
 # === Path patterns (match JS exactly) ===
@@ -53,7 +53,7 @@ def pDive(x, ty):
     return [{'x':x,'y':-15,'t':0},{'x':x,'y':ty,'t':100},{'x':x,'y':ty-30,'t':40},{'x':x+xoff,'y':-30,'t':110}]
 
 def pLarge(x):
-    return [{'x':x,'y':-25,'t':0},{'x':x,'y':200,'t':180},{'x':x,'y':200,'t':120},{'x':x,'y':H+30,'t':160}]
+    return [{'x':x,'y':-25,'t':0},{'x':x,'y':200,'t':160},{'x':x,'y':200,'t':80},{'x':x,'y':-40,'t':140}]
 
 def pBoss(x):
     return [{'x':x,'y':-35,'t':0},{'x':x,'y':140,'t':180},{'x':x,'y':140,'t':400},{'x':x,'y':-40,'t':200}]
@@ -78,16 +78,16 @@ def build_waves():
     waves.append({'t':t,'enemies':[{'path':pDive(40+i*24,390+i%3*8),'type':'small','t':i*10} for i in range(16)]})
     t+=180
     waves.append({'t':t,'enemies':s(pSideSweep(True,160,12),'medium')+s(pSideSweep(False,300,12),'small',30)+s(pLineDown(W/2,350,12,8),'small',60)})
-    t+=200
+    t+=260
     waves.append({'t':t,'enemies':s(pSideSweep(True,170,6),'medium')+s(pSideSweep(False,280,6),'medium',30)+s(pLineDown(70,360,10,7),'small',10)+s(pLineDown(350,360,10,7),'small',15)})
-    t+=220
+    t+=280
     # Phase 3
     waves.append({'t':t,'enemies':[{'path':pLarge(130),'type':'large','t':0},{'path':pLarge(290),'type':'large','t':20}]+s(pLineDown(50,350,8,8),'small',10)+s(pLineDown(210,340,8,8),'small',15)+s(pLineDown(370,350,8,8),'small',10)+s(pSideSweep(True,380,8),'medium',80)})
-    t+=280
+    t+=330
     waves.append({'t':t,'enemies':s(pVForm(W/2,35,290),'small')+s(pVForm(W/2,35,290),'small',50)+[{'path':pDive(40+i*40,400),'type':'small','t':60+i*10} for i in range(10)]+s(pSideSweep(True,340,8),'medium',100)+s(pSideSweep(False,200,8),'small',110)})
-    t+=280
+    t+=330
     waves.append({'t':t,'enemies':[{'path':pLarge(W/2),'type':'large','t':0}]+s(pSideSweep(True,170,10),'medium',20)+s(pSideSweep(False,330,10),'medium',40)+s(pLineDown(W/2-80,360,8,8),'small',60)+s(pLineDown(W/2+80,360,8,8),'small',65)})
-    t+=260
+    t+=320
     # Phase 4: boss
     waves.append({'t':t,'enemies':[{'path':pBoss(W/2),'type':'boss','t':0}]+s(pLineDown(60,370,8,8),'small',200)+s(pLineDown(360,370,8,8),'small',205)+s(pSideSweep(True,300,10),'small',280)+s(pSideSweep(False,200,10),'small',320)+s(pSideSweep(True,250,6),'medium',380)+s(pLineDown(140,350,8,8),'small',400)+s(pLineDown(280,350,8,8),'small',405)})
     t+=500
@@ -167,15 +167,18 @@ class Game:
         e['y'] = p0['y'] + (p1['y']-p0['y'])*sf
         if e['pathT'] >= dur:
             e['pathIdx'] += 1; e['pathT'] = 0
-        # large: homing + shot
+        # large: slow drift + 12-way radial burst (NOT aimed; spectacle)
         if e['type'] == 'large' and 20 < e['y'] < H-20:
             dx = self.px - e['x']
-            e['x'] += (1 if dx>0 else -1) * min(abs(dx), 0.7)
+            e['x'] += (1 if dx>0 else -1) * min(abs(dx), 0.4)
             e['x'] = max(e['r'], min(W-e['r'], e['x']))
             e['shotCd'] = (e.get('shotCd',80)) - 1
             if e['shotCd'] <= 0:
-                a = math.atan2(self.py-e['y'], self.px-e['x'])
-                self.ebullets.append({'x':e['x'],'y':e['y'],'vx':math.cos(a)*2.8,'vy':math.sin(a)*2.8,'r':3,'dead':False})
+                e['shotN'] = e.get('shotN',0) + 1
+                base = e['shotN'] * 0.13
+                for i in range(12):
+                    a = base + i * (math.pi*2/12)
+                    self.ebullets.append({'x':e['x'],'y':e['y'],'vx':math.cos(a)*2.8,'vy':math.sin(a)*2.8,'r':5,'dead':False})
                 e['shotCd'] = 80
         # boss: 5-way burst
         if e['type'] == 'boss' and 40 < e['y'] < H-40:
