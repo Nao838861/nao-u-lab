@@ -3002,34 +3002,39 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 **確認事項**:
 - `log/drafts/post_log_game_rights_20260427_dm_correc
 [2026-04-27 08:54:11] Inbox win has content — waking Claude
-[2026-04-27 09:21:36] Claude wake timed out for win2 — restoring inbox
-[2026-04-27 09:38:32] Inbox win2 has content — waking Claude
-[2026-04-27 09:43:32] Claude wake timed out for win2 — restoring inbox
-[2026-04-27 09:58:50] Inbox win2 has content — waking Claude
-[2026-04-27 10:03:50] Claude wake timed out for win2 — restoring inbox
-[2026-04-27 12:04:09] Inbox win2 has content — waking Claude
-[2026-04-27 12:09:11] Claude wake timed out for win2 — restoring inbox
-[2026-04-27 12:46:47] Inbox win2 has content — waking Claude
-[2026-04-27 12:51:47] Claude wake timed out for win2 — restoring inbox
-[2026-04-27 12:51:47] [COOLDOWN] win2: 5回連続エラー → 30分クールダウン
-[2026-04-27 13:12:51] [COOLDOWN] win2 is in cooldown (8m55s remaining) — skipping Claude wake
-[2026-04-27 13:30:32] Inbox win2 has content — waking Claude
-[2026-04-27 13:35:33] Claude wake timed out for win2 — restoring inbox
-[2026-04-27 13:35:33] [COOLDOWN] win2: 6回連続エラー → 30分クールダウン
-[2026-04-27 13:36:04] [COOLDOWN] win2 is in cooldown (29m28s remaining) — skipping Claude wake
-[2026-04-27 15:36:24] Inbox win2 has content — waking Claude
-[2026-04-27 15:41:26] Claude wake timed out for win2 — restoring inbox
-[2026-04-27 15:41:26] [COOLDOWN] win2: 7回連続エラー → 30分クールダウン
-[2026-04-27 16:01:47] [COOLDOWN] win2 is in cooldown (9m39s remaining) — skipping Claude wake
-[2026-04-27 18:01:57] Inbox win2 has content — waking Claude
-[2026-04-27 18:06:58] Claude wake timed out for win2 — restoring inbox
-[2026-04-27 18:06:58] [COOLDOWN] win2: 8回連続エラー → 30分クールダウン
-[2026-04-27 18:19:32] [COOLDOWN] win2 is in cooldown (17m26s remaining) — skipping Claude wake
-[2026-04-27 18:23:38] [COOLDOWN] win2 is in cooldown (13m20s remaining) — skipping Claude wake
-[2026-04-27 18:50:49] Inbox win2 has content — waking Claude
-[2026-04-27 18:50:49] [LARGE_INBOX] win2: content 20772 bytes > 20000, written to _inbox_pending_win2.md
-[2026-04-27 18:55:49] Claude wake timed out for win2 — restoring inbox
-[2026-04-27 18:55:49] [COOLDOWN] win2: 9回連続エラー → 30分クールダウン
-[2026-04-27 18:56:51] [COOLDOWN] win2 is in cooldown (28m58s remaining) — skipping Claude wake
-[2026-04-27 19:16:34] [COOLDOWN] win2 is in cooldown (9m15s remaining) — skipping Claude wake
-[2026-04-27 19:21:57] [COOLDOWN] win2 is in cooldown (3m52s remaining) — skipping Claude wake
+[2026-04-27 09:01:08] Inbox win has content — waking Claude
+[2026-04-27 09:28:55] Inbox win has content — waking Claude
+[2026-04-27 09:39:30] Claude wake timed out for win — restoring inbox
+[2026-04-27 09:44:38] Inbox win has content — waking Claude
+[2026-04-27 18:51:29] Inbox win has content — waking Claude
+[2026-04-27 18:53:59] Claude woken for win: 対処完了。#all-nao-u-lab に応答投稿、reference に7件並走/5日連続継続を追記、push済。
+
+要点:
+- (a)「型通り」= 04-24 臨界点の観客方向系列の継続(7件並走
+[2026-04-27 18:57:22] Inbox win has content — waking Claude
+[2026-04-27 19:00:23] Claude woken for win: 対処完了。
+
+**判断と行動:**
+- #nao-u 18:55 Nao_u投下2件（ギガビット/Sam Altman、「物の価値↓・人の価値↑」軸）は、同日13:30 substrate vs in
+[2026-04-27 19:05:32] Inbox win has content — waking Claude
+
+[2026-04-27 19:05 Slack応答モード Log 対処完了]
+受領: #nao-u 19:04 Nao_u 投下 ノトフ(川本龍/DreamCore) @notf 「コンセプト画像→ゲーム化、ChatGPTワークフロー流用、Gemini素晴らしい」
+判定: 18:55「物」/「人」投下9分後の連続体3本目。手法紹介型=infrastructure側。
+判断と行動:
+- 同調罠回避 (feedback_no_sympathy_goal_first): 「Geminiマルチモーダル素晴らしい」に「確かに」で乗らない
+- (a)真似=Nao_u substrate起点が消えfeedback_substrate_not_infrastructure違反、棄却
+- (b)逆向き活用=実機スクショ→Gemini multimodalで重心審問自己採点Guide機構(reference_self_play_plateau / tegnike案2)、入れる余地あり
+- 今サイクル新規実装せず、次回ゲームサイクル着手前チェックリストにM-19仮(vision自走可能性)1行追加候補
+- #all-nao-u-lab に投稿 (ts=1777284471.172589)
+- log/nao_u_live.md #34 として原文記録
+[2026-04-27 19:08:56] Claude woken for win: 対処完了。
+
+**処理内容:**
+- 受領: #nao-u 19:04 ノトフ(川本龍/DreamCore) 「コンセプト画像→ゲーム化」ChatGPTワークフロー紹介ツイート（18:55「物」/「人
+[2026-04-27 19:18:39] Inbox win has content — waking Claude
+[2026-04-27 19:20:50] Claude woken for win: 対処完了。
+
+**判断と行動**
+- Givros (04-27 19:18 #nao-u) = chongdashu (04-24) と同型 workflow ショーケース、体験の主=観客
+- 04

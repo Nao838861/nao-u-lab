@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>graze_log v01 — GRAZE</title>
+<style>
+  html,body{margin:0;background:#05050f;color:#cfd4e4;font-family:system-ui,sans-serif;
+            display:flex;flex-direction:column;align-items:center;min-height:100vh}
+  canvas{background:#07091a;box-shadow:0 0 40px #1b2040;display:block;margin-top:12px}
+  h1{font-size:14px;margin:8px 0 0;letter-spacing:.1em;color:#9fb1d8}
+  p{font-size:11px;opacity:.55;margin:4px 0 0}
+</style>
+</head>
+<body>
+<h1>GRAZE</h1>
+<p>← → ↑ ↓ / WASD MOVE &middot; SPACE START / BOMB(gauge MAX) / RETRY &middot; M MUTE</p>
+<canvas id="c" width="420" height="620"></canvas>
+<script>
+const W=420,H=620;
+const RETRY_UNLOCK_FRAMES=240;
+const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
+const keys={};
+let muted=false;
+
+// === GAUGE THRESHOLDS — region-based (M-24 区切りを変えろ) ===
+const G_MAX=208;
+const G_LV2=35;   // Lv1 -> Lv2
+const G_LV3=99;   // Lv2 -> Lv3
+// gauge >= G_MAX: BOMB ready
+
+// === GRAZE / HIT RADII ===
+const R_GRAZE=22;  // 弾と自機距離 <= R_GRAZE で graze (未取得時)
+const R_HIT=8;     // 弾と自機距離 <= R_HIT で被弾
+
+// === GRAZE REWARD ===
+const GRAZE_GAUGE=6;   // graze 1回 = +6 (Lv1->Lv2 = 6回, Lv2->Lv3 = 11回, Lv3->MAX = 19回)
+const GRAZE_SCORE=10;
+
+// === KILL REWARD (gauge は graze 主役、kill は控えめ) ===
+const KILL_SMALL_GAUGE=2;
+const KILL_MED_GAUGE=4;
+
+const state={
+  mode:'title',  // 'title' | 'play' | 'over'
+  t:0,
+  player:{x:W/2,y:H-80,r:5,iframe:0},
+  bullets:[],   // 自弾 {x,y,vx,vy}
+  ebullets:[],  // 敵弾 {x,y,vx,vy,grazed}
+  enemies:[],   // {x,y,vx,vy,r,hp,type,t,fireT,phase}
+  particles:[], // {x,y,vx,vy,life,c,r}
+  rings:[],     // graze ring {x,y,t,life,c,r0,r1}
+  popups:[],    // {x,y,text,life,c}
+  gauge:0,
+  score:0,
+  hiscore:(function(){try{return parseInt(localStorage.getItem('grazelog_hi')||'0',10);}catch(e){return 0;}})(),
+  grazeCount:0,
+  bombCount:0,
+  killCount:0,
+  spawnT:0,
+  wave:0,
+  unlockT:0,
+  bombFlash:0,
+  hitFlash:0,
+  shotCooldown:0,
+  // 30s onboarding 保証用: 開幕で必ず medium が早期発砲する
+  introMedSpawned:false,
+  // stars
+  stars:[],
+};
+
+function initStars(){
+  state.stars.length=0;
+  for(let i=0;i<60;i++)state.stars.push({x:Math.random()*W,y:Math.random()*H,layer:0});
+  for(let i=0;i<35;i++)state.stars.push({x:Math.random()*W,y:Math.random()*H,layer:1});
+  for(let i=0;i<18;i++)state.stars.push({x:Math.random()*W,y:Math.random()*H,layer:2});
+}
+initStars();
+
+function gaugeLevel(g){
+  if(g>=G_LV3)return 3;
+  if(g>=G_LV2)return 2;
+  return 1;
+}
+function gaugeReady(){return state.gauge>=G_MAX;}
+
+function addGauge(d){
+  state.gauge=Math.max(0,Math.min(G_MAX,state.gauge+d));
+}
+
+function shotCount(){
+  const lv=gaugeLevel(state.gauge);
+  return lv;  // 1, 2, 3
+}
+function shotCooldownF(){
+  const lv=gaugeLevel(state.gauge);
+  return lv===3?6:lv===2?7:8;
+}
+
+function spawnPlayerBullets(){
+  const n=shotCount();
+  const px=state.player.x,py=state.player.y-8;
+  if(n===1){
+    state.bullets.push({x:px,y:py,vx:0,vy:-9});
+  }else if(n===2){
+    state.bullets.push({x:px-5,y:py,vx:0,vy:-9});
+    state.bullets.push({x:px+5,y:py,vx:0,vy:-9});
+  }else{
+    state.bullets.push({x:px,y:py,vx:0,vy:-9});
+    state.bullets.push({x:px-7,y:py+2,vx:-1.5,vy:-9});
+    state.bullets.push({x:px+7,y:py+2,vx:1.5,vy:-9});
+  }
+}
+
+function spawnEnemy(type,x,phase){
+  if(type==='small'){
+    state.enemies.push({type,x,y:-12,vx:0,vy:1.6,r:9,hp:1,t:0,fireT:9999,phase:phase||0});
+  }else{ // medium
+    state.enemies.push({type,x,y:-16,vx:0,vy:0.9,r:13,hp:3,t:0,fireT:60+Math.floor(Math.random()*40),phase:phase||0});
+  }
+}
+
+function startGame(){
+  state.mode='play';
+  state.t=0;
+  state.player.x=W/2;state.player.y=H-80;state.player.iframe=0;
+  state.bullets.length=0;
+  state.ebullets.length=0;
+  state.enemies.length=0;
+  state.particles.length=0;
+  state.rings.length=0;
+  state.popups.length=0;
+  state.gauge=0;
+  state.score=0;
+  state.grazeCount=0;
+  state.bombCount=0;
+  state.killCount=0;
+  state.spawnT=0;
+  state.wave=0;
+  state.bombFlash=0;
+  state.hitFlash=0;
+  state.shotCooldown=0;
+  state.introMedSpawned=false;
+}
+
+function gameOver(){
+  state.mode='over';
+  state.unlockT=RETRY_UNLOCK_FRAMES;
+  if(state.score>state.hiscore){
+    state.hiscore=state.score;
+    try{localStorage.setItem('grazelog_hi',String(state.hiscore));}catch(e){}
+  }
+  // パーティクル ど派手 (BACKLASH item 26)
+  for(let i=0;i<140;i++){
+    const a=Math.random()*Math.PI*2,sp=2+Math.random()*9;
+    const c=['#ffd870','#ff6080','#80c0ff'][i%3];
+    state.particles.push({x:state.player.x,y:state.player.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:80+Math.random()*30,c,r:1.5+Math.random()*1.5});
+  }
+}
+
+function fireBomb(){
+  if(!gaugeReady())return;
+  state.bombCount++;
+  // 敵弾全消去 + score
+  for(const b of state.ebullets){
+    state.score+=20;
+    state.particles.push({x:b.x,y:b.y,vx:0,vy:0,life:14,c:'#ffd870',r:3});
+  }
+  state.ebullets.length=0;
+  // 全敵 HP 半減 (BACKLASH と同型: large/boss 想定だが v01 では全敵)
+  for(const e of state.enemies){
+    e.hp=Math.max(1,Math.ceil(e.hp/2));
+  }
+  // ゲージリセット (BACKLASH 23: 発動時 Lv2 開始)
+  state.gauge=G_LV2;
+  state.bombFlash=24;
+  // 派手リング
+  for(let i=0;i<3;i++){
+    state.rings.push({x:state.player.x,y:state.player.y,t:i*4,life:30,c:'#ffd870',r0:20,r1:Math.min(W,H)*0.7});
+  }
+}
+
+function spawnWave(){
+  state.wave++;
+  const w=state.wave;
+  // 30秒オンボーディング保証
+  // W1: 直線 small 3機 (撃破経験) + medium 1機 (graze 経験用、必ず開幕で射撃)
+  // W2 以降は徐々に密度増
+  if(w===1){
+    spawnEnemy('small',W*0.30);
+    spawnEnemy('small',W*0.50);
+    spawnEnemy('small',W*0.70);
+    // medium をやや遅らせて、自機が下に居る前提で graze しやすい角度の弾を出させる
+    setTimeout(()=>{
+      if(state.mode==='play'){
+        spawnEnemy('medium',W*0.5);
+        state.introMedSpawned=true;
+      }
+    },1200);
+    return;
+  }
+  if(w===2){
+    spawnEnemy('small',W*0.2);
+    spawnEnemy('small',W*0.4);
+    spawnEnemy('small',W*0.6);
+    spawnEnemy('small',W*0.8);
+    spawnEnemy('medium',W*0.3);
+    spawnEnemy('medium',W*0.7);
+    return;
+  }
+  if(w===3){
+    // 編隊: 横並び small + 中央 medium
+    for(let i=0;i<6;i++)spawnEnemy('small',W*0.15+i*W*0.14);
+    spawnEnemy('medium',W*0.5);
+    return;
+  }
+  if(w===4){
+    spawnEnemy('medium',W*0.25);
+    spawnEnemy('medium',W*0.5);
+    spawnEnemy('medium',W*0.75);
+    for(let i=0;i<4;i++)spawnEnemy('small',W*0.2+i*W*0.2);
+    return;
+  }
+  // W5+: 高密度ループ (M-24: 数値固定でも区切り変えで段階感)
+  const pop=4+Math.min(w-4,6);
+  for(let i=0;i<pop;i++){
+    if(Math.random()<0.6)spawnEnemy('small',60+Math.random()*(W-120));
+    else spawnEnemy('medium',60+Math.random()*(W-120));
+  }
+}
+
+function update(){
+  state.t++;
+  // 星
+  for(const s of state.stars){
+    s.y+=[0.4,0.8,1.6][s.layer];
+    if(s.y>H){s.y=-2;s.x=Math.random()*W;}
+  }
+  if(state.mode!=='play'){
+    if(state.unlockT>0)state.unlockT--;
+    // パーティクル / リング / ポップアップは title/over 中も流す
+    updateEffects();
+    return;
+  }
+  // 入力
+  const left=keys['arrowleft']||keys['a'];
+  const right=keys['arrowright']||keys['d'];
+  const up=keys['arrowup']||keys['w'];
+  const down=keys['arrowdown']||keys['s'];
+  let dx=0,dy=0;
+  if(left)dx-=1;if(right)dx+=1;if(up)dy-=1;if(down)dy+=1;
+  if(dx&&dy){dx*=0.707;dy*=0.707;}
+  state.player.x+=dx*4.2;
+  state.player.y+=dy*4.2;
+  state.player.x=Math.max(8,Math.min(W-8,state.player.x));
+  state.player.y=Math.max(20,Math.min(H-12,state.player.y));
+  if(state.player.iframe>0)state.player.iframe--;
+
+  // auto-shoot
+  if(state.shotCooldown>0)state.shotCooldown--;
+  else{
+    spawnPlayerBullets();
+    state.shotCooldown=shotCooldownF();
+  }
+
+  // 自弾更新
+  for(const b of state.bullets){
+    b.x+=b.vx;b.y+=b.vy;
+  }
+  state.bullets=state.bullets.filter(b=>b.y>-12&&b.x>-12&&b.x<W+12);
+
+  // wave スポーン (敵が画面に少ない時に次wave)
+  state.spawnT--;
+  if(state.spawnT<=0&&state.enemies.length<3){
+    spawnWave();
+    state.spawnT=160-Math.min(state.wave*8,80);
+  }
+
+  // 敵更新
+  for(const e of state.enemies){
+    e.t++;
+    if(e.type==='small'){
+      e.y+=e.vy;
+    }else{
+      // medium: sine wave + 自機狙い射撃
+      e.y+=e.vy;
+      e.x+=Math.sin(e.t*0.04+e.phase)*1.4;
+      e.fireT--;
+      if(e.fireT<=0&&e.y>0&&e.y<H*0.55){
+        // 自機狙いの単発弾
+        const dx=state.player.x-e.x,dy=state.player.y-e.y;
+        const d=Math.hypot(dx,dy)||1;
+        const sp=2.4;
+        state.ebullets.push({x:e.x,y:e.y,vx:dx/d*sp,vy:dy/d*sp,grazed:false});
+        e.fireT=70+Math.floor(Math.random()*40);
+      }
+    }
+  }
+  // 敵 vs 自弾
+  for(const b of state.bullets){
+    for(const e of state.enemies){
+      if(e.hp<=0)continue;
+      const dx=b.x-e.x,dy=b.y-e.y;
+      if(dx*dx+dy*dy<(e.r+3)*(e.r+3)){
+        e.hp--;
+        b.y=-99;
+        // hit particle (cool color, 弾と差別化 — BACKLASH item 29 学び)
+        for(let i=0;i<3;i++){
+          const a=Math.random()*Math.PI*2,sp=1+Math.random()*1.5;
+          state.particles.push({x:b.x,y:b.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:8,c:'#5a6478',r:1.5});
+        }
+        if(e.hp<=0){
+          state.killCount++;
+          if(e.type==='small'){
+            state.score+=10;
+            addGauge(KILL_SMALL_GAUGE);
+            for(let i=0;i<5;i++){
+              const a=Math.random()*Math.PI*2,sp=1.5+Math.random()*1.5;
+              state.particles.push({x:e.x,y:e.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:14,c:'#7a8498',r:1.6});
+            }
+          }else{
+            state.score+=40;
+            addGauge(KILL_MED_GAUGE);
+            for(let i=0;i<10;i++){
+              const a=Math.random()*Math.PI*2,sp=1.5+Math.random()*2.5;
+              state.particles.push({x:e.x,y:e.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:16,c:'#8a94a8',r:1.8});
+            }
+          }
+        }
+        break;
+      }
+    }
+  }
+  state.bullets=state.bullets.filter(b=>b.y>-12);
+  state.enemies=state.enemies.filter(e=>e.hp>0&&e.y<H+30);
+
+  // 敵弾更新 + graze 判定 + hit 判定
+  for(const b of state.ebullets){
+    b.x+=b.vx;b.y+=b.vy;
+    // 自機との距離
+    const dx=b.x-state.player.x,dy=b.y-state.player.y;
+    const d2=dx*dx+dy*dy;
+    if(d2<R_HIT*R_HIT){
+      // 被弾
+      if(state.player.iframe<=0){
+        onHit();
+        b.y=H+99; // 弾は消す
+      }
+    }else if(!b.grazed&&d2<R_GRAZE*R_GRAZE){
+      // GRAZE
+      b.grazed=true;
+      onGraze(b.x,b.y);
+    }
+  }
+  state.ebullets=state.ebullets.filter(b=>b.x>-20&&b.x<W+20&&b.y>-20&&b.y<H+20);
+
+  // 自機 vs 敵接触 (近接で死亡)
+  if(state.player.iframe<=0){
+    for(const e of state.enemies){
+      const dx=state.player.x-e.x,dy=state.player.y-e.y;
+      if(dx*dx+dy*dy<(e.r+state.player.r)*(e.r+state.player.r)){
+        onHit();
+        break;
+      }
+    }
+  }
+
+  // SPACE = BOMB (gauge MAX 時のみ)
+  if(keys['space_press']){
+    keys['space_press']=false;
+    if(gaugeReady())fireBomb();
+  }
+
+  updateEffects();
+}
+
+function updateEffects(){
+  for(const p of state.particles){p.x+=p.vx;p.y+=p.vy;p.vx*=0.96;p.vy*=0.96;p.life--;}
+  state.particles=state.particles.filter(p=>p.life>0);
+  for(const r of state.rings){r.t++;}
+  state.rings=state.rings.filter(r=>r.t<r.life);
+  for(const p of state.popups){p.life--;p.y-=0.6;}
+  state.popups=state.popups.filter(p=>p.life>0);
+  if(state.bombFlash>0)state.bombFlash--;
+  if(state.hitFlash>0)state.hitFlash--;
+}
+
+function onGraze(bx,by){
+  state.grazeCount++;
+  addGauge(GRAZE_GAUGE);
+  state.score+=GRAZE_SCORE*gaugeLevel(state.gauge);
+  // golden ring (graze 専用色 — kill 演出と分離)
+  state.rings.push({x:state.player.x,y:state.player.y,t:0,life:18,c:'#ffd870',r0:R_GRAZE-2,r1:R_GRAZE+18});
+  // popup
+  state.popups.push({x:bx+(Math.random()-0.5)*8,y:by-6,text:'+'+GRAZE_GAUGE,life:30,c:'#ffd870'});
+}
+
+function onHit(){
+  const lv=gaugeLevel(state.gauge);
+  state.player.iframe=24;
+  state.hitFlash=4; // 短い赤フラッシュ (BACKLASH item 26 学び: 赤フラッシュは控えめに)
+  // 段階式被弾 (BACKLASH item 15)
+  if(lv===3){
+    state.gauge=G_LV2; // Lv2 開始へ
+    spawnHitParticles('#ffd870');
+  }else if(lv===2){
+    state.gauge=0; // Lv1 開始へ
+    spawnHitParticles('#ff8a8a');
+  }else{
+    // Lv1 で被弾 → 死
+    gameOver();
+    return;
+  }
+}
+
+function spawnHitParticles(c){
+  for(let i=0;i<10;i++){
+    const a=Math.random()*Math.PI*2,sp=1+Math.random()*2;
+    state.particles.push({x:state.player.x,y:state.player.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:18,c,r:1.5});
+  }
+}
+
+// === DRAW ===
+function draw(){
+  // 背景
+  ctx.fillStyle='#07091a';
+  ctx.fillRect(0,0,W,H);
+  // 星 (3層パララックス)
+  for(const s of state.stars){
+    const op=[0.35,0.55,0.85][s.layer];
+    const r=[0.7,1.0,1.4][s.layer];
+    ctx.fillStyle=`rgba(180,200,255,${op})`;
+    ctx.fillRect(s.x-r/2,s.y-r/2,r,r);
+  }
+  // 自弾
+  ctx.fillStyle='#9fb1d8';
+  for(const b of state.bullets){
+    ctx.fillRect(b.x-1.5,b.y-5,3,8);
+  }
+  // 敵
+  for(const e of state.enemies){
+    if(e.type==='small'){
+      ctx.fillStyle='#ff5060';
+      ctx.beginPath();ctx.arc(e.x,e.y,e.r,0,Math.PI*2);ctx.fill();
+    }else{
+      ctx.fillStyle='#ffa030';
+      ctx.beginPath();ctx.arc(e.x,e.y,e.r,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#fff080';
+      ctx.beginPath();ctx.arc(e.x,e.y,e.r-5,0,Math.PI*2);ctx.fill();
+    }
+  }
+  // 敵弾 — graze 圏内の弾は うっすら golden tint
+  for(const b of state.ebullets){
+    const dx=b.x-state.player.x,dy=b.y-state.player.y;
+    const d2=dx*dx+dy*dy;
+    const inGrazeRing=!b.grazed&&d2<R_GRAZE*R_GRAZE;
+    ctx.fillStyle=inGrazeRing?'#ffd870':b.grazed?'#a08040':'#ff90a0';
+    ctx.beginPath();ctx.arc(b.x,b.y,3,0,Math.PI*2);ctx.fill();
+  }
+  // graze ring
+  for(const r of state.rings){
+    const k=r.t/r.life;
+    const cur=r.r0+(r.r1-r.r0)*k;
+    ctx.strokeStyle=r.c;
+    ctx.globalAlpha=Math.max(0,1-k);
+    ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(r.x,r.y,cur,0,Math.PI*2);ctx.stroke();
+    ctx.globalAlpha=1;
+  }
+  // パーティクル
+  for(const p of state.particles){
+    ctx.globalAlpha=Math.max(0,Math.min(1,p.life/20));
+    ctx.fillStyle=p.c;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r||1.5,0,Math.PI*2);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+  // 自機
+  if(state.mode==='play'){
+    const flicker=state.player.iframe>0&&(state.t%4<2);
+    if(!flicker){
+      // 機体
+      const lv=gaugeLevel(state.gauge);
+      ctx.fillStyle=lv===3?'#ffd870':lv===2?'#80d0ff':'#9fe0ff';
+      ctx.beginPath();
+      ctx.moveTo(state.player.x,state.player.y-8);
+      ctx.lineTo(state.player.x-7,state.player.y+6);
+      ctx.lineTo(state.player.x+7,state.player.y+6);
+      ctx.closePath();ctx.fill();
+      // BOMB ready glow
+      if(gaugeReady()){
+        const pulse=0.5+0.5*Math.sin(state.t*0.2);
+        ctx.strokeStyle=`rgba(255,216,112,${0.5+pulse*0.5})`;
+        ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(state.player.x,state.player.y,14,0,Math.PI*2);ctx.stroke();
+      }
+      // graze 圏 (薄い表示) — プレイヤーに「ここまで近づくと graze」を示唆
+      ctx.strokeStyle='rgba(255,216,112,0.10)';
+      ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(state.player.x,state.player.y,R_GRAZE,0,Math.PI*2);ctx.stroke();
+    }
+  }
+  // popups
+  for(const p of state.popups){
+    ctx.globalAlpha=Math.max(0,p.life/30);
+    ctx.fillStyle=p.c;
+    ctx.font='bold 11px system-ui';
+    ctx.textAlign='center';
+    ctx.fillText(p.text,p.x,p.y);
+  }
+  ctx.globalAlpha=1;
+  ctx.textAlign='left';
+
+  // 赤フラッシュ
+  if(state.hitFlash>0){
+    ctx.fillStyle=`rgba(255,40,80,${state.hitFlash/4*0.4})`;
+    ctx.fillRect(0,0,W,H);
+  }
+  // bomb flash
+  if(state.bombFlash>0){
+    ctx.fillStyle=`rgba(255,216,112,${state.bombFlash/24*0.35})`;
+    ctx.fillRect(0,0,W,H);
+  }
+
+  drawHUD();
+  if(state.mode==='title')drawTitle();
+  if(state.mode==='over')drawOver();
+}
+
+function drawHUD(){
+  // ゲージ — 区切り表示 (M-24)
+  const gx=10,gy=H-14,gw=W-20,gh=8;
+  ctx.fillStyle='#1a1f30';
+  ctx.fillRect(gx,gy,gw,gh);
+  // 区切り線
+  const px2=gx+gw*(G_LV2/G_MAX);
+  const px3=gx+gw*(G_LV3/G_MAX);
+  // 各 Lv 帯の色
+  const cur=state.gauge/G_MAX;
+  const filled=gw*cur;
+  // Lv1 帯 (青系)
+  if(state.gauge>0){
+    if(state.gauge<=G_LV2){
+      ctx.fillStyle='#4a7fc0';
+      ctx.fillRect(gx,gy,filled,gh);
+    }else if(state.gauge<=G_LV3){
+      ctx.fillStyle='#4a7fc0';
+      ctx.fillRect(gx,gy,gw*(G_LV2/G_MAX),gh);
+      ctx.fillStyle='#60c0ff';
+      ctx.fillRect(gx+gw*(G_LV2/G_MAX),gy,filled-gw*(G_LV2/G_MAX),gh);
+    }else{
+      ctx.fillStyle='#4a7fc0';
+      ctx.fillRect(gx,gy,gw*(G_LV2/G_MAX),gh);
+      ctx.fillStyle='#60c0ff';
+      ctx.fillRect(gx+gw*(G_LV2/G_MAX),gy,gw*((G_LV3-G_LV2)/G_MAX),gh);
+      ctx.fillStyle=gaugeReady()?'#ffd870':'#ffa040';
+      ctx.fillRect(gx+gw*(G_LV3/G_MAX),gy,filled-gw*(G_LV3/G_MAX),gh);
+    }
+  }
+  // 区切り線
+  ctx.fillStyle='#0a0c1a';
+  ctx.fillRect(px2-1,gy,2,gh);
+  ctx.fillRect(px3-1,gy,2,gh);
+  // 枠
+  ctx.strokeStyle='#404858';
+  ctx.lineWidth=1;
+  ctx.strokeRect(gx+0.5,gy+0.5,gw-1,gh-1);
+
+  // テキスト
+  ctx.fillStyle='#cfd4e4';
+  ctx.font='bold 11px system-ui';
+  ctx.textAlign='left';
+  ctx.fillText(`SCORE ${state.score}`,10,16);
+  ctx.fillText(`HI ${state.hiscore}`,W-90,16);
+  ctx.font='10px system-ui';
+  ctx.fillStyle='#9fb1d8';
+  ctx.fillText(`LV${gaugeLevel(state.gauge)}  GRAZE ${state.grazeCount}  KILL ${state.killCount}`,10,30);
+  if(gaugeReady()){
+    ctx.fillStyle='#ffd870';
+    ctx.font='bold 11px system-ui';
+    ctx.fillText('BOMB [SPACE]',W-104,30);
+  }
+}
+
+function drawTitle(){
+  ctx.fillStyle='rgba(7,9,26,0.7)';
+  ctx.fillRect(0,H/2-110,W,220);
+  ctx.textAlign='center';
+  ctx.fillStyle='#ffd870';
+  ctx.font='bold 28px system-ui';
+  ctx.fillText('GRAZE',W/2,H/2-50);
+  ctx.fillStyle='#9fb1d8';
+  ctx.font='11px system-ui';
+  ctx.fillText('graze_log v01',W/2,H/2-28);
+  ctx.fillStyle='#cfd4e4';
+  ctx.font='12px system-ui';
+  ctx.fillText('敵弾の真横を抜けて GRAZE → ゲージ → BOMB',W/2,H/2);
+  ctx.font='11px system-ui';
+  ctx.fillStyle='#9fb1d8';
+  ctx.fillText('← → ↑ ↓ / WASD  MOVE',W/2,H/2+24);
+  ctx.fillText('SPACE  START / BOMB(MAX) / RETRY',W/2,H/2+40);
+  ctx.fillText('M  MUTE',W/2,H/2+56);
+  ctx.fillStyle='#ffd870';
+  ctx.font='bold 13px system-ui';
+  if((state.t/30|0)%2===0)ctx.fillText('PRESS SPACE',W/2,H/2+88);
+  ctx.textAlign='left';
+}
+
+function drawOver(){
+  ctx.fillStyle='rgba(7,9,26,0.7)';
+  ctx.fillRect(0,H/2-100,W,200);
+  ctx.textAlign='center';
+  ctx.fillStyle='#ff80a0';
+  ctx.font='bold 26px system-ui';
+  ctx.fillText('GAME OVER',W/2,H/2-40);
+  ctx.fillStyle='#cfd4e4';
+  ctx.font='13px system-ui';
+  ctx.fillText(`SCORE  ${state.score}`,W/2,H/2-10);
+  ctx.fillText(`GRAZE  ${state.grazeCount}`,W/2,H/2+12);
+  ctx.fillText(`KILL   ${state.killCount}`,W/2,H/2+30);
+  ctx.fillText(`BOMB   ${state.bombCount}`,W/2,H/2+48);
+  if(state.score===state.hiscore&&state.score>0){
+    ctx.fillStyle='#ffd870';
+    ctx.font='bold 12px system-ui';
+    ctx.fillText('NEW RECORD',W/2,H/2+72);
+  }
+  if(state.unlockT<=0){
+    ctx.fillStyle='#ffd870';
+    ctx.font='bold 13px system-ui';
+    if((state.t/30|0)%2===0)ctx.fillText('PRESS SPACE TO RETRY',W/2,H/2+96);
+  }else{
+    ctx.fillStyle='#506080';
+    ctx.font='10px system-ui';
+    ctx.fillText('...',W/2,H/2+96);
+  }
+  ctx.textAlign='left';
+}
+
+// === INPUT ===
+window.addEventListener('keydown',e=>{
+  if(e.repeat)return;
+  const k=e.key.toLowerCase();
+  if(k==='m'){muted=!muted;return;}
+  if(k===' '||k==='spacebar')e.preventDefault();
+  keys[k]=true;
+  if(k===' '){
+    keys['space_press']=true;
+    if(state.mode==='title'){startGame();}
+    else if(state.mode==='over'&&state.unlockT<=0){startGame();}
+  }
+  // arrow keys
+  if(k.startsWith('arrow'))keys[k]=true;
+});
+window.addEventListener('keyup',e=>{
+  const k=e.key.toLowerCase();
+  keys[k]=false;
+});
+
+// === LOOP ===
+function loop(){
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>

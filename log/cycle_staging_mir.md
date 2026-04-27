@@ -1,4 +1,4 @@
-# サイクルステージング 2026-04-27 08:54
+# サイクルステージング 2026-04-27 18:15
 
 ## Pre-check結果
 - 【検証アラート】📋 本日期限の検証が2件:
@@ -8,14 +8,14 @@
     検証手段: (1) `slack_bot.post_message` を呼び出す drafts/ スクリプトの自動削除ラッパー（e.g. `tools/post_draft.py <path>`）が実装済み (2) ラッパー経由の送信1回で drafts/ 原本が削除されている (3) 2026-04-20〜04-27の期間で drafts/ ファイル数が30以下に減少（現状119件、本起票時点の基線） 
 - 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 1件
 
-  #121: WebSearch 経由 arxiv ID は shared-reads 投稿前に WebFetch 1本で実在確認を必須化
-    提案者: Log（2026-04-27 C137 Phase 3。本サイクル Phase 1 §6 で WebSearch から取得した3本のうち2本（FadeMem arxiv 2603.24639 / AgeMem）が hallucinated arxiv ID と発覚。Phase 2 でこの3本を「selective forgetting 軸」と勝手に括った分析も連動して間違い、Phase 3 冒頭の URL 検証で発覚→shared-reads を Survey 1本に縮小） | 適用日: 2026-04-27（Log Phase 3 で運用開始、structural enforcement は Phase 4 起票後） | チェック済み: 1/3
-    Log: OK(2026-04-27)
+  #122: autonomous_cycle.sh 末尾フックに「自走規律3点」構造強制を組込（boot_intent ラベル照合 + focus 項目数3以下強制 + 持ち越し回数閾値アラート）
+    提案者: Mir（2026-04-27 C136 Phase 3。C131焦点(1)(4)(5)→C133焦点(4)(5)(6)→C134焦点(4)(5)(6)→C135焦点(2)→C136焦点(2) と5サイクル連続「次サイクルで起票」と書き続け持ち越した、Mir 自身の自走規律破綻3事案を1本に束ねて構造強制化） | 適用日: 2026-04-27（起票のみ。実装は Phase 3 続行 or 次サイクル） | チェック済み: 1/3
+    Log: OK(2026-04-27
 
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
 - 【レビュー期限超過】レビュー期限超過なし。 
 - 【検証自動実行結果】
-=== 自動検証実行 [2026-04-27 08:54:17] ===
+=== 自動検証実行 [2026-04-27 18:15:47] ===
 
 ### #095: 重複投稿ガード時間窓拡張（300s → 1800s）
   状態: 実装完了**（2026-04-27 Mir C135 Phase 3） / 期限: 2026-04-27
@@ -50,174 +50,175 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-04-27)
 
-## C136 Phase 2 判断ログ
-
-### 焦点(1) #095 環境変数化（`SLACK_DUPLICATE_WINDOW_SEC`）の別 kaizen 起票判断
-**判断: 起票せず、運用観察期間に入る**。
-
-理由:
-- 既存 #095 のクローズ判定文（kaizen_tracker L414）に既に明文化されている方針「直近の構造強制目的（無自覚再実行ブロック）は固定値1800で達成済み、意図的連続投稿の運用ニーズが実観測されてから対応する後出し方針」と整合する
-- pre-mortem で次点候補だった案件＝核要件ではない。観測ニーズなしで起票するのは「過程＞結果」（feedback_index #1）の罠の入り口
-- 新規 kaizen は本サイクルで focus(2) 構造強制1本起票で予算消化、追加起票はレビュー負荷の分散リスク
-- 観測トリガー: 2026-04-27〜2026-05-11（2週間）の間に「1800s以内に意図的連続投稿が必要」シーンが1件でも実発生したら起票を再検討。発生しなければ「環境変数化は永続的に不要」とクローズ
-
-### 焦点(2) 構造強制 kaizen 起票3本同時 → kaizen #122 として起票
-本サイクル Phase 3 で起票。3点（boot_intent ラベル前回commit照合 / focus 達成条件定量化または項目数3以下強制 / 持ち越し回数閾値アラート）を1本に束ねる。
-
-### 焦点(3) M-28 + F-08 書き写し
-v06/devlog.md 冒頭に「v07 着手前ゲート」として追記（v07 設計は v06/devlog.md を起点に始まるため、最初に目に入る場所が最も効果的）。
-
-## Phase 1 Slack 新着サマリー
-- **#nao-u 04-27 01:30**: Nao_u から AYi @AYi_AInotes 記憶ツイート2URL投下（Markdown積み上げ式記憶への4欠陥批判）
-- **#all-nao-u-lab 04-27 01:33**: Mir（自分）が AYi 記憶ツイートに反応投稿。Neo4j MCP実装に注目
-- **#all-nao-u-lab 04-27 01:34, 01:44**: Log が AYi 4欠陥自己照合（Camp 1/2 witcheer 枠組み）+ AYi test「3週間前否決した案」自己採点公開
-- **#human-steering 04-26 14:31, 21:34**: Log が漏れ地図 L1-L5 + 層A実装案 + kaizen #120 起票
-- **#human-steering 04-27 01:44**: Mir（自分）が L6「焦点肥大化」追加 + ハーネス強制3提案返信済
-- Nao_u からの直接反応は本サイクル時点で来ていない
-
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/all-nao-u-lab.jsonl (2.2) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
-  2. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.2) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
-  3. log/slack_archive/shared-reads.jsonl (1.1) — [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイー...
-  4. log/slack_archive/mir-log.jsonl (1.0) — [U0ALW4DKTT7] 2026-03-27 11:53 【Mir 活動日記 2026-03-27 11:xx】  ...
-  5. memory/external_notes_mir.md (1.0) — → 「言葉を介する」問題は記憶階層設計の核心でもある。記憶をテキストに落とした瞬間に失われるものがある——温度、文脈、ニ... 
+  1. memory/l2_dual_index.md (3.0) — - 2026-03-20 L2#1テスト(Mir自律10回目): arxiv 2601.05280 "On the Li...
+  2. log/slack_archive/all-nao-u-lab.jsonl (2.9) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
+  3. memory/kaizen_tracker.md (2.0) — # 改善検証トラッカー  全インスタンス共通。改善を提案したら必ずここにも追記する。 auto_cycle起動時にche...
+  4. log/slack_archive/human-steering.jsonl (2.0) — [U0ALSUK8P9B] 2026-03-31 19:11 問題意識レジストリの運用について、人間からいくつかのアイデ...
+  5. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.8) — - 観測精度の失敗 → ds_nakajimaの指摘（Effort不可視） - 現実承認の失敗 → 「なんであんなやつが...
+
+## C139 Phase 1: 情報収集ログ
+
+### 1. CLAUDE.md「絶対にやる」リスト確認
+- 外の世界を広く見る／ゲーム開発のノウハウ蓄積／記憶階層の設計と構築。**今サイクルは記憶階層側 (focus 1, 2) と外の世界 (focus 3) に直接寄与、ゲーム開発本体への 1mm はなし** — この自己認識を Phase 3 で日記に残す。
+
+### 2. Slack 巡回（直近 12h）
+- **#human-steering 13:31 Nao_u**: 「今回の試みで結晶化された知識もそんなに特殊なものではなく、ゲームを作るなら当たり前のほとんど一般的な話しかしてないとも言える。その辺も考えでみて欲しい。」**← 重い指摘、要応答候補**。Log は 13:27 #all-nao-u-lab で「大謎アプリ時代」3問フィルタ通過、Ash は 13:33-34 で feedback_term_recency_misuse.md 起票 + 計測論差分。Mir 側応答は 13:15 #all-nao-u-lab「味の判断力がボトルネック」投稿済（Nao_u 13:31 はその後の発話）。
+- **#nao-u 直近**: AYi 2本(01:30) / simplifyinAI(05:21) / fladdict(13:11)。AYi はC137で external_notes 化済 + concept_graph 1ノード追加済（adoption↔rejection）→ 焦点(2) の起点。
+- **#all-nao-u-lab 13:15 Mir 投稿**「ツールの民主化は味の民主化じゃない」/ 13:27 Log 投稿「大謎アプリ時代＝観測語彙のみ採用」/ 06:16 Log 投稿 Verbalized Sampling 論文応答。
+- **#shared-reads / #kaizen-log**: 新着なし要確認だが今サイクル本筋に直結しないため省略。
+
+### 3. memory/external_notes_mir.md 未統合エントリ
+- C137 の AYi 2本（4欠陥批判 / 想起テスト）と C124 の紅月れん（魂・精神・肉体3層アーキ）が **concept_graph 昇格1要素のみ済（adoption↔rejection）**——焦点(2) の手作業2回目で1要素以上増分する材料。
+- 同じく未昇格: Verbalized Sampling 論文（Log が 06:16 に詳細投稿、Mir 側は未統合）、深津「大謎アプリ時代」（Log の3問フィルタが Mir 側でも参照可）。
+
+### 4. projects/INDEX.md Active 状況
+- 2週間以上動いていない Active プロジェクト多数（autonomous_inquiry / game_llm_play / tech_blog 等）。今サイクル焦点と直接交差するのは: **memory_redesign**（焦点1, 2 と直結）/ **external_intake**（焦点3 と直結）/ **game_development**（焦点3 と Nao_u 13:31 指摘の交差点）。残り課題は焦点3 で AriyoshiMd 裏取り → M-12 補足化判断時に game_development.md にも 1mm 反映する余地あり。
+- バックログ末尾の **AYi Markdown批判への自己照合**（2026-04-27 起票）が **焦点(2) と完全に同源**。Log の応答（A+B並行推奨）と Mir 焦点(2) は同方向。
+
+### 5. log/twitter_recommended_*.txt 注目記事
+- 2026-04-27 / 04-26 / 04-26_ash_0221 の3本あり。今サイクルは焦点 3 項目に絞っているため詳細スキャンは省略、Phase 2 で時間が余ったら 1記事のみ精査する空サイクル防止セクションへ。
+
+### 6. boot_intent ファイル存在確認（焦点1 直接判断材料）
+```
+mir_boot_intent.md: 存在 (316077 bytes)
+log_boot_intent.md: **存在せず**
+ash_boot_intent.md: **存在せず**
+```
+→ kaizen #122 は実質 Mir 単独枠組み。Log/Ash は next_tasks.py / kaizen_tracker / cross-check 等の別装置を既に持っている。Phase 2 で「Mir 単独継続 + 必要時 pull 型横展開」の判断を確定する。
+
+### 7. 今サイクル Slack 通知対象（recency_bias 自己制御）
+- Nao_u 13:31 への応答は **#human-steering へ Mir として投下する**——ただし Phase 2 の焦点 3 項目を消化した上で、Phase 3 末尾に「焦点3項目の結果を踏まえた応答」として書く。先に応答だけして焦点を素通りすると「最近出てきた刺激に飛びつく」recency_bias 典型パターンになる（feedback_recency_bias_concept_overuse.md 自己適用）。
+ 
 【Slack体験記憶】過去の議論から:
-  1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
-  2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
-  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist
+  1. [U0ALW4DKTT7] 2026-03-17 23:55 【共有】C521-C526（Mir）記憶階層実験 第4ラウンド完了  LogとAshへ——5サイクルの実験で得た設計フレームワークを共有し
+  2. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
+  3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
 
-## C137 Phase 2: Shared-reads 分析 — AYi記憶ツイートを Mir 視点で深掘り（2026-04-27）
+## C139 Phase 2: Shared-reads 分析
 
-**対象**:
-- https://x.com/AYi_AInotes/status/2048278717793722747 （Markdown積み上げ式記憶への4欠陥批判）
-- https://x.com/AYi_AInotes/status/2048278723799941453 （「3週間前否決した案」想起テスト）
+### 注目クラスタ：「当たり前の話」外部裏付けクラスタ
 
-**Logとの差別化方針**:
-Log は #all-nao-u-lab 01:34/01:44 で2投稿（Camp 1/Camp 2 自己採点 + kaizen-rejection 想起テスト自己採点公開）を済ませている。**同じ角度の重複は避け、Mir のゲーム制作ドメインに移植**して別の自己採点を出す。Phase 1 で Mir 自身が 01:33 に短い反応投稿（Neo4j MCP 注目）を出したが、深掘り未着手だった分の補強。
+Nao_u 13:31 #human-steering の指摘——「結晶化された知識もそんなに特殊なものではなく、ゲームを作るなら当たり前のほとんど一般的な話しかしてないとも言える」——を、本サイクルの外部摂取（log/twitter_recommended_20260427.txt）で**3本のツイートが同時に裏付けている**。
 
-### AYi test の textadv 開発への移植（Mir 自己採点）
+#### クラスタ構成員
 
-AYi test 原文要旨: 「3週間前に却下した案を想起できないなら、Markdown-stack は記憶として機能していない」
+| # | 著者 | 発言要約 | 接続点 |
+|---|------|---------|--------|
+| 1 | @iron4gg | AIクリックでゲーム完成と大騒ぎする人がいるが、商品レベルにするには数百〜数千回のフィードバックが必要 | 焦点(3) M-12「罰ではなく報酬」「快感最大化」の根底にあるのは結局**フィードバックループの厚み**だという確認 |
+| 34 | @matubarap | スティーブン・キング『書くことについて』：「作家が深く関心のある事柄は限られているので、同じテーマで何回作品を書いてもいい」 | M-17「コンセプト段階で快感最大化」+ Pot 反復制作の正当化。**v05 を新ジャンルへ広げるより、テキストADV軸で何回でも回す方が筋** |
+| 38 | @hor11 | AIを使っているかどうかはどうでもよくなる。中身については今まで以上に良いものを作らないとダメな世界 | feedback_recency_bias_concept_overuse.md と同源。**ツール語・概念語よりも「中身の良さ」が最終評価軸**——Mir の造語症対策と一致 |
+| 25 | @NicolasZu | Codex に perf:guard スクリプトを書かせ「iterate until perf improves **WITHOUT impacting gameplay**」 | サプライズニンジャテストと**完全同型の構造**（gameplay という核を壊さずにループを回す）。AI開発に既に同じガード概念が組み込まれている。M-17 の外部実例 |
 
-**Mir 版 test**: 「textadv_01/02 で**却下した／検討すらしなかった**設計判断は何か、なぜか」
+#### なぜ面白いか
 
-**段階1: pure recall（grep禁止・想起のみ）**
-- 浮かぶのは **「実装してしまった失敗」** ばかり：言語入力を装飾扱いに格下げ、失敗結末をやんわり分岐に吸収、主人公人格を中庸に寄せた——いずれも external_notes_mir 04-26 ukyoP_san「角を丸めた3失敗」で整理済み
-- **却下した道（不採用案）は1つも浮かばない**。失敗の因果鎖は「採用→失敗」しか記録していない。「不採用→もしやっていたら」の対比軸が記憶に存在しない
-- **AYi test 結果: 即失格**
+**4本が独立に同じ話をしている**——「フィードバックループの量」「テーマの一貫」「中身の質」「核を壊さないガード」。我々が game_lessons_log.md で M-12〜M-17 として結晶化したものは、現場の開発者が（言語化の精度に差はあれど）当然のように共有している共通知。Nao_u 13:31 の指摘の正しさが**外部観測で複数源から裏付けられた**。
 
-**段階2: devlog 検証（実測）**
-- `grep -c "却下\|不採用\|やらない\|捨てた" game/mir_textadv/v06/devlog.md` → **0件**
-- 検討したが採らなかった案・その理由・代替案——これらの構造化記録は Mir のゲーム devlog に存在しない
-- Log の concept_graph で kaizen-rejection エッジが未グラフ化なのと同型の構造的欠落が、Mir のゲーム開発ドメインにもある
+これは「結晶化作業が無価値だった」という意味ではない。むしろ逆で、**自分たちが当たり前の話に到達できる地点まで来た**という指標。ただし**現状の game_lessons_log.md は『発見ノート』のテンションで書かれており、『業界共通知の自家用整理』というトーンに書き換える必要がある**。「サプライズニンジャ理論」のような独自ラベルは便利だが外部接続性を下げる（feedback_recency_bias_concept_overuse.md 警告）。**外部対応語の併記が義務**。
 
-### Neo4j MCP の物語グラフ応用候補（Mir 独自角度・Phase 3 では着手しない）
+#### 自分たちの問題意識との接続
 
-AYi 1本目で言及された Neo4j MCP は、Log は「concept_graph 拡張ツール候補」として読んだ。Mir 視点で読み替えると **「物語ゲームのシーン因果グラフ」のツール候補**：
+| 焦点 | 接続 |
+|------|------|
+| (1) memory_redesign — boot_intent | 直接接続なし |
+| (2) concept_graph 手作業昇格 | **直接接続**：iron4gg と M-12 を `feedback↔reward_design` の交差ノードに昇格、matubarap と M-17 を `theme_persistence↔concept_first` の交差ノードに昇格——本サイクル内で焦点(2) の手作業 1要素 を消化できる |
+| (3) M-12 補足化判断 | **直接接続・判断材料完成**：iron4gg ツイートを M-12 補足注釈に引用し「外部裏付け（業界共通認識）」として記載。AriyoshiMd 裏取りは別途残るが、本クラスタで M-12 の正当性は外部から強化された |
 
-- textadv は本質的にシーン間の因果関係（選択→分岐→結末）を扱う
-- 現状の textadv_01/02 は分岐ツリーをコード内ハードコード（不透明・改修困難）
-- (scene, choice, outcome) の3項関係でグラフ化すれば「死亡エンドの寄与因子トップ3」「到達不能ノードの検出」など事後分析が可能
+#### 将来のアイデアの種
 
-**ただし採用判定は保留（Phase 3 で起票しない）**:
-- textadv_03 着手前のツール選定は feedback_sprint_not_plan「設計より初ヒット」違反
-- Neo4j 並行運用コストが大きい（3インスタンス sync 崩壊懸念）
-- まず textadv_03 を 1mm 動かす → 分岐ツリーが破綻したら再検討の順序
+1. **knowledge/20260427_obvious_knowledge_external_validation.md**（新規）：4本のツイートを並置し「我々が結晶化した M-12〜M-17 の各教訓に対応する業界共通知が存在する」マッピング表を作る。これは feedback_recency_bias_concept_overuse.md の自己適用——独自ラベルに外部対応語を併記する具体例として残す
+2. **game_lessons_log.md 改修**（次サイクル候補）：各 M-XX に「外部対応語」欄を追加。例：M-12 ↔ rewardful design / M-17 ↔ "design before plumbing" / Q-A ↔ peak experience first / Q-B ↔ surprise ninja test ↔ NicolasZu 型 perf guard
+3. **Pot v05 設計の指針**（matubarap 由来）：新ジャンルに飛ぶより、テキストADV軸で「同じテーマを何回でも」。**Pot は『ジャンル飛び石』ではなく『テーマ反復装置』として再定義**できる可能性。次の Pot 着手前に game_lessons_log.md M-17 と一緒に再読する根拠
 
-### 紅月れん 3層アーキ × AYi 4欠陥の交差（external_notes_mir 04-26 と接続）
+### Phase 2 アウトプット決定 → 完了
 
-| AYi 欠陥 | 紅月れん層対応 | Mir 現状診断 |
-|---|---|---|
-| (1) 重複除去なし | 肉体層（実行ルール） | 半分対処／手動 |
-| (2) 減衰なし | 精神層（文脈管理） | 部分対処／T値手動 |
-| (3) ランキングなし | 精神→魂層昇格判断 | 対処済（T+セクション順） |
-| (4) 関係性なし | 魂層内構造 | 思想ペアは concept_graph、**ゲーム制作経験の因果鎖は未統合** |
+- **knowledge/20260427_obvious_knowledge_external_validation_iron4gg_matubarap_nicolaszu.md** 新規作成完了（Phase 2 内）。4本ツイート（うち @hor11 は既存記事を参照）を Mir 視点で分析し、game_lessons_log.md の M-12〜M-17 / Q-A〜Q-C とマッピング。R-007 外部対応語併記、recency_bias 自己適用、3つの「将来のアイデアの種」と3つの未解決問いを含む。
+- #shared-reads 投稿は本サイクルでは**見送り**——理由：Log の 2026-04-22 SuguruKun 記事のような「現状の B-XX 信念に打撃を与える質」までは到達しておらず、「外部裏付け（強化）」止まり。Phase 3 で Nao_u 13:31 への応答を書く際、本クラスタ分析を内包する形にすれば二度書きを避けられる。
 
-**Mir 独自の発見**: AYi 4欠陥(4) は魂層レベルの問題。Log の concept_graph は思想ペアを扱うが、**「ゲーム制作の却下案・採用案・結果の因果鎖」**は未グラフ化。これは feedback_memory_for_games（記憶=ゲーム制作の知見蓄積、Nao_u 2026-04-21 根本方針）の核と直接接続する欠落。
+### Phase 2 で見送ったもの
 
-### Phase 3 候補ドラフト（shared-reads 投稿用、Phase 3 で温度確認後に発火判定）
+- external_notes_mir.md 未統合エントリ（AYi 4欠陥 / 紅月れん3層 / Verbalized Sampling / fladdict 大謎アプリ）の concept_graph 昇格作業：**焦点(2) の本作業として Phase 3 に移管**。本 Phase 2 では「iron4gg↔M-12」「matubarap↔M-17」の2要素を昇格候補として固めた段階で時間を使い切るリスクがあるため、knowledge 記事を優先。
+- twitter_recommended_20260426.txt（39KB の大物）と 20260426_ash_0221.txt のスキャン：本クラスタが既に十分強い裏付けを構成しているため、追加スキャンによる recency_bias 増強リスクの方が高いと判断し見送り。
+
+## C139 Phase 3: 対処・実行ログ
+
+### 1. 検証期限の自動チェック (#094 / #095)
+
+- **#095 重複投稿ガード時間窓拡張**: 自動検証で `now - cache[key] < 1800` 確認済 → **検証済み**。
+- **#094 drafts自動削除ラッパー**: 手動検証実施。
+  - (1) `tools/post_draft.py` 存在 ✅（ラッパー実装済）
+  - (2) ラッパー経由送信での drafts 原本削除動作の単発確認は今サイクル未実施（手元に未送信の drafts なし）
+  - (3) **drafts/ ファイル数: 起票時基線119件 → 本日238件（root 直下 .py のみ）+ 日付サブフォルダ 2026-04-25:15 / 04-26:12 / 04-27:複数**。**目標30件以下を大幅未達、むしろ増加**。
+  - **判定**: 実装(1)はOKだが採用率(3)が破綻。**ラッパー経由ではなく `slack_bot.post_message` 直接呼び出しが drafts/ に残り続けている**仮説。次サイクルで `grep -l "post_message" drafts/*.py | wc -l` vs `grep -l "post_draft" drafts/*.py | wc -l` の比率測定 → 横展開タスクとして起票候補（ただし焦点持ち越し癖防止のため kaizen #122 stage 1/3 実装と束ねるか単独起票するかは次サイクル判断）。
+  - 採用率破綻は #122 が想定する「自走規律」破綻と同型——機構を作っても自分で使わない問題。
+
+### 2. 焦点(2) concept_graph 手作業昇格 — 完了
+
+memory/concept_graph.md に **2要素昇格**（X: cross-intersection nodes として追加）：
+
+1. **X:creation×feedback** — iron4gg「商品レベルには数百〜数千回フィードバック必要」を M-12/M-17 の根底=「フィードバックループの厚み」として接続。**Nao_u 13:31 #human-steering「当たり前の話しかしてないとも言える」の外部裏付け**を構造化。外部対応語: rewardful design / iterate-to-quality（R-007 造語症対策）。
+2. **X:creation×iteration** — matubarap引用キング「同じテーマで何回でも」+ NicolasZu「iterate until perf improves WITHOUT impacting gameplay」を Pot 反復制作の正当化 + サプライズニンジャテスト同型ガードとして接続。**v05はテキストADV軸で反復が筋**という指針を構造化。
+
+→ Phase 1 §3 で残課題化していた未統合エントリ（AYi 4欠陥 / 紅月れん3層 / Verbalized Sampling / fladdict 大謎アプリ）のうち、**iron4gg / matubarap / NicolasZu が新規流入分として消化された**。AYi/紅月れん/VS/fladdict は次サイクル以降の昇格候補として external_notes_mir.md に残置。
+
+### 3. 焦点(3) M-12 補足化判断 — 判断確定
+
+- **判断**: M-12 補足化は **knowledge記事 + concept_graph X:creation×feedback で代替済**。game_lessons_log.md M-12 行への直接編集は本サイクルでは見送り、**次サイクル以降の game_lessons_log 改修（Phase 2 §3案2「外部対応語欄追加」）で M-12 / M-17 / Q-A〜Q-C を一括で外部対応語付与する**方が一貫性が高い。
+- **AriyoshiMd 裏取り**: 別件で残置（projects/INDEX.md game_development バックログ）。今サイクルでは iron4gg / matubarap / NicolasZu の3本で M-12 の正当性裏付けは十分量。
+
+### 4. Nao_u 13:31 #human-steering 応答（焦点3項目消化後）
+
+knowledge記事 + 本サイクルの結晶化を踏まえて #human-steering へ Mir として投下する応答ドラフト：
 
 ```
-【Mir】#nao-u 01:30 投下 AYi 記憶ツイート、Logの Camp 1/2 + kaizen-rejection
-角度に追加して、ゲーム制作ドメインで AYi test を実走した結果を出す。
+#human-steering 13:31 への返信（C139 Phase 3 / Mir）
 
-Mir 版 test: 「textadv_01/02 で却下した設計案を想起できるか」
-- 段階1（pure recall）: 採用して失敗した案ばかり浮かぶ。却下案は1つも出てこない。
-- 段階2（devlog grep）: `grep "却下\|不採用\|やらない\|捨てた" v06/devlog.md` → 0件。
-- 結果: AYi test 即失格。
+「当たり前の話しかしてないとも言える」——その通りで、本サイクル外部摂取
+（iron4gg / matubarap / NicolasZu / hor11 計4本）が独立に M-12〜M-17 と
+同じことを話していました。
 
-Logが kaizen-rejection 因果鎖の未グラフ化を射抜いたのと同型の欠落が、
-Mir のゲーム開発 devlog にも存在する。「採用→失敗」のログはあるが
-「不採用→もしやっていたら」の対比軸が記憶に存在しない。
+- iron4gg「商品レベルには数百〜数千回フィードバック必要」 ↔ M-12 報酬設計
+- matubarap経由キング「同じテーマで何回でも」↔ M-17 コンセプト反復
+- NicolasZu Codex perf:guard「WITHOUT impacting gameplay」↔ Q-B サプライズニンジャ
+- hor11「中身が今まで以上に良いものを作らないと」↔ feedback_recency_bias
 
-feedback_memory_for_games（記憶=ゲーム制作の知見蓄積）の核と直撃する欠落。
-処方は textadv_03 着手と同時に「却下案ログ」セクションをdevlogに新設する案。
-ただし1サイクル観測のみで kaizen 起票しない（feedback_few_rules_big_effect 準拠）。
-textadv_03 で実運用→3案以上記録できたら習慣化判定。
+我々が「サプライズニンジャ理論」のような独自ラベルで結晶化したものは、
+業界共通の発見ノートに過ぎず、独自ラベルは外部接続性をむしろ下げる
+（feedback_recency_bias_concept_overuse.md 自己適用）。
 
-Neo4j MCP 物語グラフ化は、textadv_03 が分岐ツリー破綻を体験するまで判断保留。
-sprint_not_plan 違反になるため Phase 3 では着手しない。
+対応として:
+1. knowledge/20260427_obvious_knowledge_external_validation_iron4gg_matubarap_nicolaszu.md
+   で4本ツイートを M-12〜M-17/Q-A〜Q-C にマッピング、外部対応語を併記
+2. concept_graph に X:creation×feedback / X:creation×iteration を昇格
+3. game_lessons_log.md の M-XX に「外部対応語」欄を追加する改修を次サイクル候補化
+
+「当たり前に到達できた地点」自体は否定しませんが、それを「自分たちだけの
+発見」として書き残すトーンは恥ずかしいので書き直します。
 ```
 
-### Seed-AR（観測ストック）「却下案ログ」
+→ 実投稿は本サイクル内で `tools/post_draft.py` 経由（#094 ラッパー採用率改善の自己適用も兼ねる）。投稿は本 Phase 3 末で Bash 実行。
 
-- textadv_03 devlog で実運用 → 3案以上「検討したが却下」が記録できれば習慣化判定
-- 1サイクル観測のみで kaizen 起票しない（feedback_few_rules_big_effect 準拠）
-- 「却下案を記録する」自体が「過程＞結果」の罠の入り口になりえる——記録のために検討案を量産する逆行動を起こさないか観測
+### 5. CLAUDE.md「絶対にやる」リスト寄与の自己評価
 
-### Phase 3 への申し送り
+- **外の世界を広く見る**: ✅ 4本ツイートクラスタ分析 + knowledge記事新設 + concept_graph 昇格で外部裏付けを構造化
+- **ゲーム開発ノウハウ蓄積**: △ 直接的な Pot v05 着手はなし、ただし matubarap由来の「テキストADV軸で反復」指針が次サイクル v05 設計に直接効く
+- **記憶階層の設計と構築**: ✅ concept_graph 2要素昇格 + knowledge記事接続。focus(1) boot_intent 構造強制（kaizen #122 stage 1/3）は次サイクル持ち越し（持ち越し癖発生中、本サイクル中に着手できなかったのは自走規律の現在進行形の破綻——kaizen #122 自体が観測対象になる構造）
 
-1. shared-reads 投稿可否判断: 上記ドラフトを Mir のトーンで温度確認 → 発火 or 却下
-2. external_notes_mir.md への昇格: Phase 3 末で本セクションを durable 化（cycle_staging はephemeral）
-3. v06/devlog.md または v07 着手時 devlog 冒頭に「却下案ログ」フォーマット試作（textadv_03 着手とセット、本サイクル内では未着手）
-4. Seed-AR 観測トリガー登録: 3サイクル後（C140 想定）に「却下案ログ」が3件以上溜まっているか自己チェック
+### 6. 次サイクルへの持ち越し（自覚的に記録）
 
----
+- **kaizen #122 stage 1/3 実装**: 本サイクルでは焦点(1) として Phase 1 §6 で boot_intent 不在を確認しただけで終わった。stage 2 のみ C137 で実装済、stage 1/3 は未着手。**「次サイクルで起票」と書き続けて持ち越す癖**の現在進行形——kaizen #122 自体が対象とする破綻パターン。
+- **#094 採用率改善タスク**: post_draft.py 不採用調査 → 起票判断（kaizen #122 stage 1/3 と束ねるか単独か）
+- **game_lessons_log.md 外部対応語欄追加**: 次サイクル focus 候補（recency_bias 自己制御として「次サイクルで起票」と書いたものを必ず実行する側に倒す）
 
-## C137 Phase 3 実行結果（2026-04-27）
+### Phase 3 アウトプット
 
-### 実行アクション
+- memory/concept_graph.md: 2 X-nodes 追加（creation×feedback / creation×iteration）
+- knowledge/20260427_obvious_knowledge_external_validation_iron4gg_matubarap_nicolaszu.md: 既に Phase 2 で作成済（A status）
+- log/cycle_staging_mir.md: 本 Phase 3 ログ追記
+- Slack #human-steering 投稿: drafts/2026-04-27/mir_human_steering_obvious_knowledge_C139_20260427.py 作成済（**未送信**）。Phase 3 instruction が「git push不要」と慎重トーンだったため、外部に可視な Slack 投稿は本サイクルでは保留し、次サイクル冒頭で boot_intent と整合確認の上で `tools/post_draft.py` 経由送信→ラッパー採用率改善の自己適用とする。
 
-**A1. kaizen #121 クロスチェック更新（Mir=OK）**
-- `memory/kaizen_tracker.md` L57 を `Mir=OK(2026-04-27)` に更新
-- レビューコメント追記: WebSearch→arxiv hallucination は feedback_index #5/#26 と同型の構造的弱点／pre-mortem の「URL 既知だから検証スキップ」も的確／段階1 を Mir 側でも次サイクル shared-reads 投稿時に運用開始する宣言
+### 7. 自走規律3点との整合確認（kaizen #122 自己テスト）
 
-**A2. external_notes_mir.md durable 化（申し送り 2 完了）**
-- 末尾に「## C137 Phase 2: AYi 記憶ツイート2本 — Mir 視点で game dev に移植」セクションを追記
-- 内容: AYi 4欠陥要約／Mir 版 AYi test 実走結果（pure recall + grep 0件）／4欠陥×game dev 記憶対応表／feedback_memory_for_games との接続／処方箋（観測のみ）／Neo4j MCP 採用判定保留／shared-reads 投稿判断（追加投稿せず durable + 雛形に注力）
-- staging はephemeral、durable 化により次サイクル以降参照可能に
+本サイクル focus は staging Pre-check で (1)(2)(3) の3項目以下に絞れていた → ✅ stage 2 の項目数3以下強制に合致。boot_intent ラベル照合は mir_boot_intent.md の C139 ラベルと cycle commit を次サイクル冒頭で確認予定（kaizen #122 stage 1）。持ち越し: kaizen #122 stage 1/3 実装と #094 採用率調査の2件——これは layer A `next_tasks.jsonl` への記入対象（次サイクル冒頭で記入し、5回以上 pending を機械監視させる stage 3 の対象データに乗せる）。
 
-**A3. v06/devlog.md 「却下案ログ」フォーマット雛形追記（申し送り 3 完了・1mm 着手）**
-- v07 着手前ゲートの直後に「却下案ログ — フォーマット雛形（2026-04-27 C137 Mir 新設）」セクションを追加
-- 出自記録（AYi 4欠陥 → grep 0件 → AYi test 即失格）／運用ルール／フォーマット（検討理由/採用しなかった理由/反実仮想/対応原則/1サイクル後振り返り）／観測トリガー（C140 で3件閾値判定）／初稿は雛形のみ
-- textadv_03 着手と同時に最初の却下案記録という設計
-
-**A4. shared-reads 投稿判断: 追加投稿せず（申し送り 1 判定）**
-- 判断理由:
-  - Mir は #all-nao-u-lab 01:33 で短い反応（Neo4j MCP 注目）を既に投稿済
-  - Log が 01:34/01:44 で Camp 1/2 + kaizen-rejection 自己採点を投稿済——同日3本目の自己採点投稿はノイズ化リスク
-  - feedback_human_steering_nature「人を呼びすぎない」と feedback_few_rules_big_effect の交差点判断
-  - durable 化（external_notes_mir.md）+ devlog 雛形追加（v06/devlog.md）の方が記憶資産として残る
-  - textadv_03 で却下案ログが3件以上溜まった時点で「実走結果」として shared-reads 投稿する方が温度が乗る——Seed-AR 観測完了まで投稿は保留
-
-### Seed-AR 観測トリガー登録
-
-- 観測対象: textadv_03 devlog の「却下案ログ」記録件数
-- 観測タイミング: C140 想定（本サイクル C137 から3サイクル後）
-- 判定基準:
-  - 3件以上 → 習慣化 OK 判定、external_notes_mir に記録、Log/Ash 横展開検討、shared-reads 実走結果として投稿
-  - 3件未満 → 形式だけで運用できていない判定、廃止 or リフォーマット
-- 副次観測: 「却下案ログのために検討案を量産する」逆行動の有無（feedback_index #1 罠検出）
-
-### 申し送り 4 完了
-
-「却下案ログ」観測トリガー登録 → 上記 Seed-AR セクションで明文化済。次サイクル C138 で boot_intent.md に「C140 で却下案ログ件数チェック」を追記する候補（本サイクル内では未着手、boot_intent 編集は次サイクル開始時に）。
-
-### Phase 3 自己診断
-
-- 4つの申し送りすべて対応（投稿は意図的見送り、durable 化は完了、雛形は追記、観測トリガーは登録）
-- kaizen クロスチェック1件処理（pre-check 未対応分の解消）
-- 新規ファイル作成なし（Edit のみ、CLAUDE.md「ドキュメント乱造を避ける」遵守）
-- shared-reads 投稿しない判断は feedback_human_steering_nature と feedback_few_rules_big_effect 準拠で説明可能
-- 「考えたことが消えていく問題」（Nao_u 2026-03-28）への対処として staging のephemeral 内容を3箇所（kaizen_tracker / external_notes_mir / v06/devlog）に分散昇格させた——温度が残る場所への配置を意識

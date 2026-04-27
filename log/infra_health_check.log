@@ -1595,25 +1595,24 @@
   ISSUE: [scheduler_ash] git_syncが16062分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] git_pullが16062分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] auto_diaryが16062分間実行されていない（期待: 240分以内）
-[2026-04-27 09:37:56] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
-  ISSUE: [scheduler_ash] slack_checkが16分間実行されていない（期待: 10分以内）
-[2026-04-27 10:08:26] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 10:38:42] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 11:09:15] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 11:39:46] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 12:09:53] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 12:41:39] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 12:54:17] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 13:24:25] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 13:54:30] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 14:24:58] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 14:55:05] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 15:25:28] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 15:58:00] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 16:03:00] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 16:33:07] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 17:03:21] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 17:33:29] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 18:08:15] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 18:38:27] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
-[2026-04-27 19:16:50] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-04-27 12:03:02] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=6
+  ISSUE: Ashのスケジューラログが16030分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが16252分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが16246分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが16252分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが16252分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが16252分間実行されていない（期待: 240分以内）
+[2026-04-27 15:09:04] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=6
+  ISSUE: Ashのスケジューラログが16216分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが16438分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが16432分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが16438分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが16438分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが16438分間実行されていない（期待: 240分以内）
+[2026-04-27 18:15:44] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=6
+  ISSUE: Ashのスケジューラログが16403分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが16625分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが16619分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが16625分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが16625分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが16625分間実行されていない（期待: 240分以内）
