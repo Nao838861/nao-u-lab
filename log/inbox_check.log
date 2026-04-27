@@ -3005,3 +3005,9 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-27 09:01:08] Inbox win has content — waking Claude
 [2026-04-27 09:28:55] Inbox win has content — waking Claude
 [2026-04-27 09:39:30] Claude wake timed out for win — restoring inbox
+[2026-04-27 09:58:11] Inbox win has content — waking Claude
+[2026-04-27 09:59:37] Claude woken for win: #game-rights に返信完了。
+
+**確認結果（Nao_uの認識通り）:**
+- 追加変更は `index.html:1285` の `if(e.repeat)return;` 1行のみ
+- 

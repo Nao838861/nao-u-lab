@@ -39,3 +39,6 @@
 {"ts": "2026-04-27T07:45:30", "instance": "log", "cycle": "2026-04-27", "action": "add", "task_id": "t-260427074530-e8b6", "task": "Verbalized Sampling原論文URL取得（Stanford、arxiv検索）→abstract読み→cross_reviewに『N案+確率』適用試行 [C137 で未着手・誤doneを再追加]"}
 {"ts": "2026-04-27T07:45:30", "instance": "log", "cycle": "2026-04-27", "action": "viewed", "task_id": null}
 {"ts": "2026-04-27T07:53:51", "instance": "log", "cycle": "2026-04-27", "action": "cycle_check", "task_id": null, "add_count": 4, "done_count": 4, "skip_count": 0, "pending_total": 8}
+{"ts": "2026-04-27T09:49:40", "instance": "log", "cycle": "2026-04-27", "action": "viewed", "task_id": null}
+{"ts": "2026-04-27T09:59:34", "instance": "log", "cycle": "2026-04-27", "action": "skip", "task_id": "t-260427074520-f0cc", "reason": "shot_log v01 最新編集タイムスタンプ訂正のため再起票。8ca38baf189 2026-04-27 09:31:04 Nao_u 直接編集 (name entry stuck-key fix) を最新として 24h 監視タイマーをリセット (feedback_self_perception_blindness 再発自己観測)"}
+{"ts": "2026-04-27T09:59:40", "instance": "log", "cycle": "2026-04-27", "action": "add", "task_id": "t-260427095940-e9df", "task": "shot_log/v01 Nao_u 編集が 24h 静止したら Log/Mir/Ash いずれかで initial commit 打診（最終編集 2026-04-27 09:31:04 commit 8ca38baf189 'name entry stuck-key fix'、打診候補時刻 2026-04-28 09:31 以降）"}

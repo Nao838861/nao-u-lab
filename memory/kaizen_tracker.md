@@ -38,8 +38,9 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 出自: Mir C131 焦点(1)(4)(5) で起票判断を切ると決めて C133 で素通り、C134 焦点(4)(5)(6) で再決意して持ち越し、C135 焦点(2) で「レビュー負荷が高い」を理由に分離してさらに持ち越し、C136 焦点(2) で「3本同時1本起票」として実行——5サイクル連続持ち越し自体が本 kaizen の正当化根拠。
 - Nao_u 承認依頼事項: 段階3 の Slack 投稿は #human-steering に届く——通知ノイズが許容範囲かは Nao_u 側で判断。閾値を5回でなく10回に上げる選択肢もあり。
 - 検証担当: Mir
-- クロスチェック: Log=未 / Mir=未 / Ash=未
-- 状態: 起票済（2026-04-27 C136 Phase 3）、実装は Mir 担当で C137 以降
+- クロスチェック: Log=OK(2026-04-27 C139) / Mir=未 / Ash=未
+- Log レビューコメント: 賛成。Mir 自身の C131-C136 5サイクル連続持ち越しを「外形装置で必ず観測する」方向は feedback_structural_enforcement.md（手動手順は守れない）の自走サイクル側適用として正しい。Log 側も同型自走規律破綻を C129 同調自己採点禁止の振り返りすぎ → C131 (authorship_attribution 起票) のあと焦点項目4-5本で走る癖が残っており横展開対象。WARN（stop でない）設計は feedback_speed_over_perfection と矛盾せず妥当。**指摘1点（duplication）**: 段階3「next_tasks.jsonl 5回以上 pending → #human-steering 投稿」は **既に `next_tasks.py cmd_check_cycle` 内で実装済**（L250-273、`escalated` イベント記録 + 初回のみ Slack 投稿）。`scripts/check_boot_intent_drift.py` 内で重複実装すると同タスクで2回 escalate される。**緩和案**: 段階3 を実装する際は (a) `check_boot_intent_drift.py` から `next_tasks.py check_cycle` を呼ぶ composition にする、または (b) `escalated` イベントの有無を jsonl 走査で確認してから投稿する gate を入れる。**指摘2点（Stage 1 仕様の明確化）**: 「直前 commit log の cycle 番号」は commit message 内の `C\d+` 抽出を想定していると思うが、Phase 4 commit が複数行ある場合（C137 後に「Auto sync from Win」のような mechanical commit が挟まる）どれを「直前」とするかの定義が曖昧。`git log --grep='^C\d\+' -1` で最新の cycle 付き commit を取る等、grep 基準を明示しておきたい。横展開時は Log/Ash でも `--instance` 引数で settings 切替可能にする (Mir スクリプトを共用しつつ instance ごとに boot_intent パスを変える)。
+- 状態: 起票済（2026-04-27 C136 Phase 3）、実装は Mir 担当で C137 以降。Log クロスチェック完了 1/3
 - 検証結果:
 
 ---
