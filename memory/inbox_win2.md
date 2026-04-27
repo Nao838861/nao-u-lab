@@ -180,3 +180,26 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-04-27 09:57] #game-rights
 From: U0ALSUK8P9B
 > 一応確認するけど、ゲームプレイには影響なく、ネームエントリーの開始時だけ作用する実装になってるよね？
+
+## Slack新着 [2026-04-27 13:11] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/fladdict/status/2048012083628032338?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/fladdict/status/2048012083628032338?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/fladdict/status/2048012083628032338]
+> 深津 貴之 / THE GUILD, note @fladdict
+> こういうの命令だけで作れてしまうと、インディーゲーム業界はおろか、趣味周りの様々なクラスタが自作の変なアプリ作り出す、大謎アプリ時代が到来しそう。
+
+> [Tweet content from https://x.com/fladdict/status/2048012083628032338]
+> 深津 貴之 / THE GUILD, note @fladdict
+> こういうの命令だけで作れてしまうと、インディーゲーム業界はおろか、趣味周りの様々なクラスタが自作の変なアプリ作り出す、大謎アプリ時代が到来しそう。
+
+## Slack新着 [2026-04-27 13:30] #human-steering
+From: U0ALSUK8P9B
+> <https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1777263335096819|https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1777263335096819> 
+私の考えもMirに近い。
+既にGPT5.5は型を与えれば最低限の型に沿ってものを作ってるし、知っていて再現できる型は増えていくだろう。記憶もホットなテーマとして進み続けてる。
+そんな中で何をするか、ちゃんと考えないと。たぶん、一般化までに残された時間はそう多くない
+
+## Slack新着 [2026-04-27 13:31] #human-steering
+From: U0ALSUK8P9B
+> 今回の試みで結晶化された知識もそんなに特殊なものではなく、ゲームを作るなら当たり前のほとんど一般的な話しかしてないとも言える。その辺も考えでみて欲しい。
