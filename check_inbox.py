@@ -74,6 +74,12 @@ FATAL_PATTERNS = [
 FATAL_COOLDOWN_SEC = 30 * 60
 MAX_TRANSIENT_ERRORS = 5  # これを超えたら30分クールダウン
 
+# inbox サイズ閾値（バイト）。これを超えたら自動で overflow ファイルに退避してから処理。
+# 2026-04-27 Ash 詰みインシデント（inbox_win2.md=163KB で WinError 206 連続37回）の再発防止。
+# stdin 化により直接の cmdline 上限は回避済みだが、巨大 prompt は claude 側のレイテンシ・
+# 文脈処理品質を下げるため、安全側で 30KB を上限とする。
+INBOX_ROTATE_THRESHOLD_BYTES = 30 * 1024
+
 
 def log(message):
     LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -216,6 +222,35 @@ def restore_inbox(inbox_path, content):
         f.write("\n" + content + "\n")
 
 
+def rotate_if_oversized(box_name, inbox_path):
+    """inbox がサイズ閾値を超えていれば overflow ファイルに退避してヘッダのみに戻す。
+    退避した場合は True を返す（呼び出し側はその回の wake をスキップして次回起動に任せる）。
+    """
+    if not inbox_path.exists():
+        return False
+    size = inbox_path.stat().st_size
+    if size <= INBOX_ROTATE_THRESHOLD_BYTES:
+        return False
+
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    overflow_path = inbox_path.with_name(f"{inbox_path.stem}_overflow_{ts}.md")
+    with open(inbox_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+    header_lines = lines[:HEADER_LINE_COUNT]
+    overflow_path.write_text("".join(lines), encoding="utf-8")
+
+    notice = (
+        f"\n## [SYSTEM] {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} inbox 自動 rotate\n\n"
+        f"inbox サイズが {size} bytes（閾値 {INBOX_ROTATE_THRESHOLD_BYTES} bytes）を超えたため、"
+        f"全文を `{overflow_path.name}` に退避しました。順次消化してください。\n"
+    )
+    with open(inbox_path, "w", encoding="utf-8") as f:
+        f.writelines(header_lines)
+        f.write(notice)
+    log(f"[ROTATE] {box_name}: {size} bytes → {overflow_path.name} に退避")
+    return True
+
+
 def wake_claude(box_name, inbox_path):
     """Claudeを起動して受信箱を処理させる。起動前にinboxを空にして二重処理を防ぐ。
 
@@ -273,8 +308,11 @@ def wake_claude(box_name, inbox_path):
         )
     try:
         env = {**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"}
+        # prompt は stdin 経由で渡す。-p 引数だと Windows の CreateProcess
+        # コマンドライン上限（~32KB）を超えて WinError 206 で詰む（2026-04-27 Ash事件）。
         result = subprocess.run(
-            build_claude_cmd(prompt),
+            build_claude_cmd(),
+            input=prompt,
             capture_output=True,
             text=True,
             timeout=300,  # Slackレスポンスモード: 速さ重視（定期サイクルは別途auto_diary.pyが担当）
@@ -327,6 +365,12 @@ def main():
         if in_cooldown:
             log(f"[COOLDOWN] {args.box} is in cooldown ({remaining // 60}m{remaining % 60}s remaining) — skipping Claude wake")
             print(f"Inbox {args.box} has content but in cooldown ({remaining}s remaining)")
+            return
+
+        # サイズ閾値超過なら overflow 退避だけして今回はスキップ（次回の has_content で
+        # 残ったヘッダ＋通知文だけ拾って claude を起動 → claude 側が overflow ファイルを読む）
+        if rotate_if_oversized(args.box, inbox_path):
+            print(f"Inbox {args.box} oversized — rotated to overflow file, skipping wake")
             return
 
         log(f"Inbox {args.box} has content — waking Claude")

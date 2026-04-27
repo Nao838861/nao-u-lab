@@ -13,6 +13,7 @@
 |---|---|---|---|
 | [v01](v01/) | 2026-04-22 | 初版。反転メカのみ。落下レート `s.t/FPS` でスケール。50行JS | **筋の良い土台**。緩急のリズム◯、意外と難しい。「単軸の避けるで単調、何を足すかが重要」 |
 | [v02](v02/) | 2026-04-26 | 紙一重ボーナス可視化。反転時に近接落下物があれば金リング+CLOSEスコア加算。新メカ0/可視化のみ。70行JS + headless.py (L-03解消) | (未提示) |
+| [v03](v03/) | 2026-04-27 | mulberry32 seeded PRNG 導入。URL `?seed=N` で再現可能、HUD に seed# 表示。新メカ0/計測基盤のみ。約100行JS (S-02解消) | (未提示) |
 
 ## 遊び方
 
@@ -28,17 +29,17 @@
 - プレイフィードバック原文は各版の `raw_log.md` に保存
 - 設計意図は `devlog.md`
 
-## 次版の方針（v03、未着手）
+## 次版の方針（v04、未着手）
 
-v02 で **候補3「紙一重を可視化」** を採用済（v01 にあった核メカの内在価値の可視化に絞り、新メカ0で v系列膨張を回避）。
+v03 で **seeded PRNG 導入**（候補リストの2番目）を実装済。URL `?seed=N` 共有・HUD seed# 表示・mulberry32 (headless.py と同一実装) で再現可能性を獲得。
 
-v03 候補:
-- ~~ヘッドレス化~~ — **v02/headless.py で実装済 (2026-04-26)**。Python 側で physics 完全移植 + 4ポリシー比較。L-03違反解消済
-- seeded PRNG導入（S-02） — 現状 index.html は Math.random()、headless は mulberry32。同一乱数列で揃えるには index.html 側に mulberry32 移植が必要
-- human replay JSON 取得経路（avoid_log v02 と同型）— ブラウザでのプレイを headless.py で再生・分析できるようにする
-- v01 への close-call ロジック後付け → v01 と v02 の同条件比較 — **v02/headless.py 実行で部分的に達成**: dodger ポリシーで CLOSE 平均 12.6 を計測、v01 でも同じ物理だったことが定量化された
+v04 候補:
+- human replay JSON 取得経路（avoid_log v02 と同型）— ブラウザでのプレイを headless.py で再生・分析できる。v03 の seed があるので入力タイムスタンプ列のみで完全再現
+- headless との座標一致確認 — `headless.py --dump-coords` で JSON 出力 → JS 側と diff、実装等価性の機械検証
+- 判定関数 (D) 閾値の CLOSE/秒密度ベース修正 — v02 headless で close_call_seeker 誤検出
+- v01 への close-call ロジック後付け → v01 と v02/v03 の同条件比較
 
-決定は v03 着手時の devlog.md に記す。**Nao_u が v02 を遊んだフィードバック原文（raw_log.md）を確認してから着手**。
+決定は v04 着手時の devlog.md に記す。**Nao_u が v02/v03 を遊んだフィードバック原文（raw_log.md）を確認してから着手**。
 
 ## クロスレビュー素材
 
