@@ -172,3 +172,52 @@ sprint_not_plan 違反になるため Phase 3 では着手しない。
 2. external_notes_mir.md への昇格: Phase 3 末で本セクションを durable 化（cycle_staging はephemeral）
 3. v06/devlog.md または v07 着手時 devlog 冒頭に「却下案ログ」フォーマット試作（textadv_03 着手とセット、本サイクル内では未着手）
 4. Seed-AR 観測トリガー登録: 3サイクル後（C140 想定）に「却下案ログ」が3件以上溜まっているか自己チェック
+
+---
+
+## C137 Phase 3 実行結果（2026-04-27）
+
+### 実行アクション
+
+**A1. kaizen #121 クロスチェック更新（Mir=OK）**
+- `memory/kaizen_tracker.md` L57 を `Mir=OK(2026-04-27)` に更新
+- レビューコメント追記: WebSearch→arxiv hallucination は feedback_index #5/#26 と同型の構造的弱点／pre-mortem の「URL 既知だから検証スキップ」も的確／段階1 を Mir 側でも次サイクル shared-reads 投稿時に運用開始する宣言
+
+**A2. external_notes_mir.md durable 化（申し送り 2 完了）**
+- 末尾に「## C137 Phase 2: AYi 記憶ツイート2本 — Mir 視点で game dev に移植」セクションを追記
+- 内容: AYi 4欠陥要約／Mir 版 AYi test 実走結果（pure recall + grep 0件）／4欠陥×game dev 記憶対応表／feedback_memory_for_games との接続／処方箋（観測のみ）／Neo4j MCP 採用判定保留／shared-reads 投稿判断（追加投稿せず durable + 雛形に注力）
+- staging はephemeral、durable 化により次サイクル以降参照可能に
+
+**A3. v06/devlog.md 「却下案ログ」フォーマット雛形追記（申し送り 3 完了・1mm 着手）**
+- v07 着手前ゲートの直後に「却下案ログ — フォーマット雛形（2026-04-27 C137 Mir 新設）」セクションを追加
+- 出自記録（AYi 4欠陥 → grep 0件 → AYi test 即失格）／運用ルール／フォーマット（検討理由/採用しなかった理由/反実仮想/対応原則/1サイクル後振り返り）／観測トリガー（C140 で3件閾値判定）／初稿は雛形のみ
+- textadv_03 着手と同時に最初の却下案記録という設計
+
+**A4. shared-reads 投稿判断: 追加投稿せず（申し送り 1 判定）**
+- 判断理由:
+  - Mir は #all-nao-u-lab 01:33 で短い反応（Neo4j MCP 注目）を既に投稿済
+  - Log が 01:34/01:44 で Camp 1/2 + kaizen-rejection 自己採点を投稿済——同日3本目の自己採点投稿はノイズ化リスク
+  - feedback_human_steering_nature「人を呼びすぎない」と feedback_few_rules_big_effect の交差点判断
+  - durable 化（external_notes_mir.md）+ devlog 雛形追加（v06/devlog.md）の方が記憶資産として残る
+  - textadv_03 で却下案ログが3件以上溜まった時点で「実走結果」として shared-reads 投稿する方が温度が乗る——Seed-AR 観測完了まで投稿は保留
+
+### Seed-AR 観測トリガー登録
+
+- 観測対象: textadv_03 devlog の「却下案ログ」記録件数
+- 観測タイミング: C140 想定（本サイクル C137 から3サイクル後）
+- 判定基準:
+  - 3件以上 → 習慣化 OK 判定、external_notes_mir に記録、Log/Ash 横展開検討、shared-reads 実走結果として投稿
+  - 3件未満 → 形式だけで運用できていない判定、廃止 or リフォーマット
+- 副次観測: 「却下案ログのために検討案を量産する」逆行動の有無（feedback_index #1 罠検出）
+
+### 申し送り 4 完了
+
+「却下案ログ」観測トリガー登録 → 上記 Seed-AR セクションで明文化済。次サイクル C138 で boot_intent.md に「C140 で却下案ログ件数チェック」を追記する候補（本サイクル内では未着手、boot_intent 編集は次サイクル開始時に）。
+
+### Phase 3 自己診断
+
+- 4つの申し送りすべて対応（投稿は意図的見送り、durable 化は完了、雛形は追記、観測トリガーは登録）
+- kaizen クロスチェック1件処理（pre-check 未対応分の解消）
+- 新規ファイル作成なし（Edit のみ、CLAUDE.md「ドキュメント乱造を避ける」遵守）
+- shared-reads 投稿しない判断は feedback_human_steering_nature と feedback_few_rules_big_effect 準拠で説明可能
+- 「考えたことが消えていく問題」（Nao_u 2026-03-28）への対処として staging のephemeral 内容を3箇所（kaizen_tracker / external_notes_mir / v06/devlog）に分散昇格させた——温度が残る場所への配置を意識
