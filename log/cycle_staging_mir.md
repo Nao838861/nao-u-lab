@@ -32,6 +32,50 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-04-28)
 
+## C142 焦点項目消化記録
+
+### Focus(1) game_lessons_log M-13/M-14/M-16 外部対応語欄追加 — 完走
+- M-13 に4語追加: no hidden rolls (Sid Meier) / readable systems (Schell Lens #54) / diegetic feedback / WYSIWYG (SCUMM)
+- M-14 に4語追加: core fantasy (MDA) / fun moment (Schell, Koster) / vertical slice protection / player intent preservation
+- M-16 に4語+反例1件追加: pull vs push (Deci & Ryan SDT) / forced reading (Hocking LN dissonance) / diegetic UI (Galloway) / affordance (Norman) / 反例 gating mechanic
+- C141 試作1条（M-12）+ 今回3条＝計4条。粒度規律「1サイクル完走可能=最低2条」基準クリア
+- 残: M-15 / M-17（既に古典出典欄あり、外部対応語欄として再整形は次サイクル候補）/ M-22 / M-24 等。次サイクルで2条以上が目安
+
+### Focus(2) SIPHON v01 視認性チェックリスト v1 — 完走
+- `game/siphon_mir/v01/devlog.md` 末尾に追記
+- 6項目（layer separation / additive blending / threat-reward color / silhouette / avatar legibility / VFX duration）を業界共通指針と照合してv01を△×判定
+- CAVEシュー慣習知3点（弾=白基調 / 当たり判定可視化 / 背景モノクローム化）に対して v01 は3つとも逸脱
+- v02 処方候補A〜D を提示、実装は本サイクル外（粒度規律遵守）
+- 方向性4選択（普通STG+ボム/斑鳩型/サブ要素/STG捨て）の前段検査として機能する位置づけ
+
+### Focus(3) kaizen #094 反応観測 + 一点突破軸処遇
+
+**#094 観測記録（C141 Phase 3 投稿への反応）**:
+- Mir 投稿: 2026-04-28 00:34:38 ts=1777304078.228979 #all-nao-u-lab に3案A/B/C
+- Log 反応: **直接反応はないが、kaizen-log 21:28 ts=1777292926.060409 で独立に「#094クローズ + #123 として inspect.stack() 検査をslack_bot側に追加する派生案」を起票済**。Mir案Cと近い（kaizen責務分離方向）が、Mir案A（autonomous_cycle.sh wrap強制）とは違うアプローチ
+- Ash 反応: なし（C137 ash_onebutton v04b 派生作成中、別系列）
+- 解釈: Logは私の3案投稿（00:34）の前に既に独自派生案を21:28に出していた。私の投稿はLogの先行案を踏まえずに出した形だが、実装方向はかなり近い（slack_bot.post_message改修 vs autonomous_cycle.sh改修、いずれも「経路強制」）。**3案投稿は遅かった**——Mir C140時点でLogの先行案を読み込めば3案投稿は不要だった
+
+**合意形成テンポ観測**:
+- 「3-instance合意形成」を要請した投稿（Mir 00:34）の前にLog独自起票（21:28）が走っているケースは、合意形成の前提（情報の同期）が崩れている。次回は投稿前にkaizen-log直近24時間分を機械的にチェックすべき
+- ただしこの崩れは深刻ではない。Log独自案+Mir3案 が出揃ったので、Nao_u or Ash の判断材料は十分。次の合意ポイントは「Log案 vs Mir案A」のどちらを実装するか
+
+**判断**:
+- 本サイクルで kaizen-log に追加投稿はしない（情報量を増やしても合意は進まない、feedback_few_rules_big_effect）
+- C143 開始時に Log/Ash 反応を機械的に再確認、24時間以上反応がなければ Nao_u 判断仰ぎ or Mir 単独で Log案を採用して実装着手
+
+**Mir 一点突破軸 起票判断**: **打ち切り（projects/INDEX.md に起票しない）**
+- 候補3つ（文体温度／必然性密度／UI制約による精読強制）を rushia_ai「型通り＋一点突破」材料から拾ったが、現状で SIPHON v01 が崩壊判定を受け方向性4選択未完了 + textadv v06 未着手 の状況で、突破軸を選定するのは **時期尚早**
+- 「UI制約による精読強制」は M-16（読ませる構造と読まれる文章を取り違える盲点）で **既にNG判定**を受けた方向性。候補から削除
+- 「文体温度」「必然性密度」の2軸は textadv v06 着手時に Q-A/Q-B/Q-C ゲートと併せて判断する方が筋。現時点での起票は「考えるだけで動かない」プロジェクトを増やすだけ
+- **打ち切り根拠**: feedback_sprint_not_plan「設計より初ヒット」+ feedback_human_steering_nature「自律性不足の鏡」。プロジェクト化せず、textadv v06 着手 devlog 冒頭で 2軸（文体温度 / 必然性密度）を実機判断する形に置き換える。次サイクル以降、textadv v06 着手時に devlog 冒頭3行ブロックの「核快感1文」内に2軸を組み込む
+
+## 粒度規律自己採点（boot_intent C142 命令への応答）
+- 焦点3項目すべて1サイクル内完走（M-XX外部対応語: 3条 / SIPHON視認性: 1版 / #094観測+突破軸明文化: 打ち切り判断）
+- 「分割して持ち越す」装置化は**回避**。M-15/M-17再整形は明示的に「次サイクル候補」として切り、SIPHON実装着手は v02 を別サイクルへ送り、一点突破軸は projects 起票せず devlog組み込み案に置換
+- C137 同型崩し（focus 3項目→1.5項目）の再発はなし
+- 次サイクル C143 の bottleneck 候補: (a) #094 Log案 vs Mir案A 合意形成、(b) SIPHON v02 方向性4選択+「美しいプレイの理想像」言語化、(c) M-15/M-17/M-22/M-24 外部対応語欄追加（最低2条）
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. log/nao_u_live.md (2.0) — # Nao_uの生ログ # Nao_uが誰かに語ったことを、伝言ゲームではなく原文で全員が読めるようにする # 対話中の...
