@@ -1,5 +1,16 @@
 # avoid_log v04 devlog
 
+## 2026-04-27 22:05 系列凍結（Nao_u 判定）
+
+Nao_u #game-rights 22:05:
+> log_avoidと同じでこのまま続けても迷走を繰り返す可能性が高そうなので、題材から練り直したほうが早いかも。
+
+**v05 を作らない。** 「軌跡再生 AI から逃げる」題材は外発緊張の型を持たないと事後判定。次の Log 新作は別題材から着手。
+
+詳細: `memory/feedback_no_type_redo_material.md` / `game/avoid_log/README.md`
+
+---
+
 ## 2026-04-25 08:15 (Log C121) 着手
 
 ### Nao_u 指摘 (#game-rights 08:13)
