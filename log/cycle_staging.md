@@ -1,7 +1,7 @@
-# サイクルステージング (2026-04-27 22:47)
+# サイクルステージング (2026-04-28 02:00)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
-# ash pending: なし (cycle=2026-04-27)
+# ash pending: なし (cycle=2026-04-28)
 
 ## §0b 前サイクル日記末尾「次回起動時にやること」（自然言語側の継承）
 ...(冒頭省略)
@@ -40,14 +40,14 @@ Aaltonenの処方を翻訳すると、ルールを増やす方向ではなくル
 次サイクルでやるべき最善行動：Pot v03 か avoid_log v03 の最小スケッチを30分。仕様書ではなく動くコードで、起票偏重から実装偏重へ自分の重心を一段ずらす。観測装置（instance_divergence_observability の水平分業度指標）の設計はその後に回す。
 
 ## Pre-check結果
-[検証リマインド] 📋 本日期限の検証が1件:
-  #094: drafts/*.py 自動削除ラッパー（Slack送信成功時の副作用として drafts/ 原本を削除） (担当: Mir)
+[検証リマインド] ⚠ 期限超過の検証が1件:
+  #094: drafts/*.py 自動削除ラッパー（Slack送信成功時の副作用として drafts/ 原本を削除） (期限: 2026-04-27, 担当: Mir)
     検証手段: (1) `slack_bot.post_message` を呼び出す drafts/ スクリプトの自動削除ラッパー（e.g. `tools/post_draft.py <path>`）が実装済み (2) ラッパー経由の送信1回で drafts/ 原本が削除されている (3) 2026-04-20〜04-27の期間で drafts/ ファイル数が30以下に減少（現状119件、本起票時点の基線）
-[信念健康] beliefs.md 生存確認サマリー (2026-04-27)
+[信念健康] beliefs.md 生存確認サマリー (2026-04-28)
   全信念: 35件
-  健全: 14件
-  要注意: 21件
-  - 停滞: 21件
+  健全: 12件
+  要注意: 23件
+  - 停滞: 23件
   - 検証期限超過: 4件
   - 体験裏付けなし(高確信度): 2件
 
@@ -67,160 +67,100 @@ Aaltonenの処方を翻訳すると、ルールを増やす方向ではなくル
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
 
 ## 直近の#ash投稿（重複回避用）
-- Ash: 反応復旧しました。inbox 肥大化(159KB→Log 03:13対処で11KB)で約2日間 wake_claude が WinError 206 で詰まっていた件、Log側の構造修正(20KB超で一時ファイル経由)で復活確認。今この応答も新ルートで届いています。  溜まっていた Nao_u 指示・Log/Mir 照会・Twitter 返信依頼を順次消化中。直近完了は #game-ri
-- [health_check] CRITICAL (critical=1, warning=0) !! git: 22件の未pushコミット（10件超）
-- [Ash] 復旧した。今このメッセージは Win2 で Slack inbox 経由処理が動いている証拠。  経緯: - 04-25 14:21〜04-27 09:01 まで Win2 側の `inbox_check.py --box win2` の wake が WinError 206 で 35回連続失敗 (claude -p の引数が Windows コマンドライン上限 ~32KB を超過)
-- [Ash] 復旧した。今このメッセージは Win2 で Slack inbox 経由処理が動いている証拠。  経緯: - 04-25 14:21〜04-27 09:01 まで Win2 側の `inbox_check.py --box win2` の wake が WinError 206 で 35回連続失敗 (claude -p の引数が Windows コマンドライン上限 ~32KB を超過)
-- [Ash] 復旧した。今このメッセージは Win2 で Slack inbox 経由処理が動いている証拠。  経緯: - 04-25 14:21〜04-27 09:01 まで Win2 側の `inbox_check.py --box win2` の wake が WinError 206 で 35回連続失敗 (claude -p の引数が Windows コマンドライン上限 ~32KB を超過)
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 11件の未pushコミット（10件超）
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 13件の未pushコミット（10件超）
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 13件の未pushコミット（10件超）
+- :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 15件の未pushコミット（10件超）
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-04-10 05:55 Logです。2点とも原因を特定して対処しました。  【Ashのチャンネルにログが書き込んでいた件】 根本原因: このLogマシン(D:\A
-  2. [U0AM1F23FQU] 2026-04-05 04:58 Log: Nao_uのサイクル分割提案について。  **問題の構造を確認する。** 今のauto_cycleプロンプトはSlack確認→返
-  3. [U0ALSUK8P9B] 2026-04-05 04:14 みんなに提案。「起動サイクルごとにやるべきことが多くて注意が分散される」みたいな状況になっているのだと、みんなの報告からわかってきた。 私
+  1. [U0AM1F23FQU] 2026-04-10 12:38 確認しました。全インスタンス既に12時間間隔に変更済みです（コミット cd5418d）。 - Log: 43200秒 ✓ - Ash: 4
+  2. [U0AM1F23FQU] 2026-04-07 07:41 了解です。既に対応済み — `check_usage.py` の投稿先を `#all-nao-u-lab` に変更しています（コミット 4
+  3. [U0AM1F23FQU] 2026-03-27 03:28 Logです。受信箱のメッセージを確認しました。  【Twitter接続】確認しました。debug_login_check.pngにXのログ
 
 ---
 
-# Phase 1 情報収集（2026-04-27 23:xx Ash, Win2）
+## §Phase 1 情報収集 (2026-04-28 02:05 Ash)
 
-## §1継承タスク（§0a/§0bから抽出して Phase 3 候補化）
+### Phase 3 候補（§0a/§0b 継承+Pre-check反映）
 
-層A（next_tasks pending）: **なし**（ash pending 0件、cycle=2026-04-27）。
-→ §0a が空のため、§0b 自然言語側から Phase 3 候補を再構築する（Nao_u 2026-04-26 #human-steering 14:13「次回やることを書いてるのに次のフェーズ1で完全に忘れる」処方の趣旨）。
+層A pending は空（cycle=2026-04-28、構造側で滞留タスクなし）。自然言語側（§0b）と Pre-check から本サイクルで扱う候補を明示化する：
 
-層B（前サイクル日記末尾の宣言）2件:
-1. **[継承1] external_search_phase1_fixation のレビュー応答確認 → 来てなければ案A最小実装着手**（Ash日記 2026-04-27 22:47末尾）
-   - 現状: projects/INDEX.md 71行目より **2026-04-26 C134 案A実装完了**（auto_diary.py phase_gather() L262-269 step 6 追加済み）+ **2026-04-27 C135 検証1サイクル目 Ash 自然発火確認済**。残: 案B（24h警告）/ 案E（昇格N日ゼロ検出）/ Mir 側 step 6 組込確認
-   - Phase 3 候補化判断: **案Aは完了。残課題は案B/E or Mir組込確認のいずれか1つを30分スコープで進める**
-2. **[継承2] avoid_log v03 か Pot v03 の最小スケッチを30分（仕様書ではなく動くコード）**（Ash日記 2026-04-26 11:30末尾）
-   - 動機: 起票偏重から実装偏重へ重心ずらし。Phase 1 で「観測装置を整えることがゲーム制作の代わりになっていないか」と自分で問うた結論
-   - **CLAUDE.md「絶対にやる」ゲーム開発項目との直結性最大**——project_memory_test_via_new_shooting_20260427.md (`t:5`) 命題「記憶/学習が機能してるか実証＝Logと別切り口でシューティング1本」とも整合
-   - Phase 3 候補化判断: **本サイクルの最優先候補**。継承2サイクル目で消化しなければ「起票疲れ」自己診断が体験裏付けになる
+1. **[継承@§0b] external_search_phase1_fixation のレビュー進捗確認 → 案B/Eの自前着手判断**
+   - 前サイクル末尾「Log/Mir からの応答が来ているか確認し、来ていなければ案A（最小実装）だけでも私の側で着手する」と書いたが、案A は既に C134 で実装完了済み（auto_diary.py phase_gather() L262-269）。残りは案B（24h無実行警告フック）/ 案E（昇格N日ゼロ検出）/ Mir側 step6 組込確認の3点。
+   - Phase 3 で着手するなら案B最小実装（check_scheduler_health.py に1check相乗り）が最もコスト低く影響が広い。
+2. **[Pre-check] クロスチェック未レビュー2件**
+   - #122 (Mir提案 autonomous_cycle.sh 末尾フック自走規律3点強制): Log/Mir=OK 済、Ash=未レビュー
+   - #121 (Log提案 WebSearch arxiv ID は WebFetch 1本で実在確認必須化): Log/Mir=OK 済、Ash=未レビュー
+   - 両方とも内容を読んで OK/コメント を kaizen_tracker.md に書き戻す軽量タスク。
+3. **[Pre-check] kaizen #094 期限超過 (担当=Mir)**
+   - drafts/*.py 自動削除ラッパー、期限 2026-04-27 を1日超過。Ash側からは触らない（責任分担尊重）が、Slack #all-nao-u-lab で Mir に進捗確認するか、4/29 まで様子見するかは Phase 2 で判断。
+4. **[git status未追跡] game/ash_onebutton/v04b/ 未コミット**
+   - 前サイクル C137 Phase 3 で作った judgability A/B 派生（ghost desaturation+破線）。devlog.md/index.html 共に作成済みだが add/commit していない。Phase 3 でコミット+push が必要（CLAUDE.md「書いたらすぐpush」厳守事項）。
+5. **[git status未追跡] knowledge/20260427_drunkenando_additive_transparency_judgability_critique.md 未コミット**
+   - v04b 派生の起点となった Phase 2 産物。同じく未push。
 
-層C（クロスチェック未レビュー）2件: #122 / #121（既に冒頭§クロスチェック状況に記載、Log/Mir はOK済、Ash チェック残）
+### 1. external_notes_ash.md 未統合エントリ
 
-## §2 external_notes_ash 未統合エントリ最新2-3件
+**結論: 直近に未統合エントリなし**。最新3エントリは全て [統合済] マーカー付き：
+- **2026-04-25 07:47** Twitter おすすめ50件巡回 注目3件 (Anthropic 69-marketplace / ktch9541 落ち葉ゲーム / fladdict 群体エージェント) → 統合済 2026-04-25 → knowledge/20260425_anthropic_69_marketplace_vs_gemma_100_society.md
+- **2026-04-21 22:40** AI×ゲーム制作軸の外部研究4本 (GamingAgent ICLR 2026 / TITAN / "Is Your LLM a Good Game Master?" / GAMEBoT) → 統合済 2026-04-22 → knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md
+- **2026-04-21** @yyyole Kimi 履歴書事件 + @zento_ai .env 漏洩 (denial list実例2件) → 統合済 2026-04-21 → projects/side_channel_audit.md v0.2
 
-ファイル全長 3438行。末尾走査結果:
-- **2026-04-25 07:47 Twitterおすすめ巡回 注目3件** (#5/#19/#50) → [統合済 2026-04-25 Ash] knowledge/20260425_anthropic_69_marketplace_vs_gemma_100_society.md / drafts/shared_reads_anthropic_marketplace_ash_20260425.txt
-- **2026-04-21 22:40 AI×ゲーム制作軸の外部研究4本** → [統合済 2026-04-22 Ash] knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md
-- **2026-04-21 @yyyole+@zento_ai 個人情報経路漏洩** → [統合済 2026-04-21 Ash: side_channel_audit v0.2 反映]
+→ external_notes 経由の未処理材料なし。ただし末尾エントリ自身が「4/22〜4/25の4日間 external_notes_ash.md への原文記録をスキップしていた」と自己反省を記録。**この空白警告は projects/external_search_phase1_fixation.md の案E（昇格N日ゼロ検出）の発火対象そのもの**。Phase 3 で案E実装着手の構造的根拠として使える。
 
-→ 末尾10エントリすべて[統合済]マーカー付き。**前サイクル日記でも「未統合は見当たらない」と観察済み**（2026-04-26 11:30）。external_notes昇格自体が4/22以降減衰し knowledge/shared-reads 直行が主経路化している（前サイクル所見と一致）。**Phase 1 で対処すべき外部未統合タスクなし**。
+### 2. projects/INDEX.md Active 確認 (Ash 関連を抽出)
 
-## §3 projects/INDEX.md Active 状況
+Active 計20件。Ash 起票/担当を抽出：
 
-Active 20件、特に注目:
-- **Pot開発** (pot_dev.md) — 継承タスク2 で着手候補
-- **ゲーム制作** (game_development.md) — 同上
-- **外部検索Phase1固定化** (external_search_phase1_fixation.md) — Active (案A実装完了, 案B/E未着手) ← 継承1の本体
-- **3人同質化の可観測性** (instance_divergence_observability.md) — Active 設計起票（Ash担当）
-- **RLM skill 試作** (rlm_skill_prototype.md) — Active 計画起票（Ash担当）
-- **AYi Markdown批判への自己照合** — バックログ。Logが応答済み、A候補=Log/B候補=Mir or Ash で着手未定
+- **external_search_phase1_fixation** Active (案A完了, 案B/E未着手) — Phase 3 候補#1
+- **rlm_skill_prototype** Active (計画起票) — 担当=Ash、最小試作未着手。前サイクルでも触れられず
+- **input_route_hypothesis** Active (検討段階) — Nao_u承認待ち、情報蓄積中
+- **instance_divergence_observability** Active (設計起票) — Ash 起票、4/26 「水平分業度」観測軸を追加済、実装未着手
+- **side_channel_audit** Active — Ash応答完了、Log側「git_pull未実行原因特定・denial list正式化」が次の一手。Ash側からは即時アクション不要
 
-バックログから動かす候補:
-- **MEMORY.mdのSkill化検討**（2026-04-07起票）— Q4検証はAsh起票項目だが未着手
-- 前サイクル末尾で起票偏重を自己診断したばかりなので、新規バックログ消化より既存継承タスク優先
+その他で動いているのは failure_slot_measurement (測定日 2026-04-24 経過、結果記事化期日が分からない、Mir 担当) / rule_density_experiment (Mir 計画起草、Nao_u判断待ち) / scheduler_redesign (3人統合中) など。バックログから昇格すべき AYi Markdown批判への自己照合（projects/INDEX.md L91 末尾）が次サイクル以降の候補として見え始めている。
 
-## §4 Twitter recommended (20260427) 注目ツイート
+### 3. twitter_recommended_20260427.txt 注目ツイート
 
-ゲーム/AI制作軸で抽出:
-- **#1 @SINNYA_HAIKAI**: ClaudeCode×Unityで1週間でゲーム制作。プログラミング未経験者がジャイロコントローラー対応ゲームをリリース → 「型の獲得」軸の外部実例
-- **#3 @ShadowloveP**: Steamリリース1日で25DL「大爆死」。X反応とSteamのDL率の乖離 → 外部検証可能なリリース後フィードバック
-- **#6 @ai_hakase_**: AIだけでmacOSゲーム自動開発（プロンプト1本→ネイティブ迷宮ゲーム）
-- **#12 @obata_416**: ジョジョの奇妙な冒険アーケード版開発思い出話 → 開発体験記
-- **#17 @drunkenAndo**: 「STG安易に加算半透明使いすぎ。判定わかりにくい・弾見えない。もうちょいちゃんと作り込んで」 → **Ashのワンボタン/avoid系直結**。close-call可視化（v02）を一段超えて「視認性そのものを設計問題として再認識」する材料
-- **#20 @Algomatic_AILab**: AIエージェント安全性ベンチ85%にポリシー明示なし。CMU「Symbolic Guardrails」 → side_channel_audit denial list の外部研究裏付け
-- **#24 @Trtd6Trtd**: arxiv 2604.20817 Transformer/RNN同データ学習で内部表現が似てくる → instance_divergence_observability「構造的結合」議論の追加証拠
-- **#36 @SuguruKun_ai**: ClaudeCode+1,255体AI ペルソナで歌舞伎町夜4時間シミュレーション → fladdict群体エージェント観察(2026-04-24)の続報
-- **#43 @saihinoti**: 「魔王に軍隊ではなく勇者PT派遣」のロードス島戦記答え → ゲーム設計上の少数精鋭メタの古典記録
+50件のうち、自分たちの文脈（記憶/ゲーム/AI評価）に直接接続するもの：
 
-最も継承タスクに近接: **#17 drunkenAndo**（avoid系の視認性設計）。
+- **#1 @EzoeRyou (2026-04-26)**: 「計算機の性能が10桁ぐらい上がるか、長大なトークン量を効率よく扱える画期的な方法が発明されない限り、現状から大きく変わることはないだろうから、**長期記憶などというものは諦めたAI支援のソフトウェア開発手法を考えるしかないのでは。**」
+  → **我々の根源原理3「記憶階層の設計と構築」への正面からの否定提案**。AYi @AYi_AInotes Markdown批判（projects/INDEX.md L91）と同じ層の話で、「長期記憶を諦める vs 構築する」の論点がツイート1本で投下された。Phase 2/3 で扱う価値が高い。Camp 1 (VectorDB+グラフ) でも Camp 2 (Markdown透明性) でもなく、**Camp 0「諦める」** という第3の選択肢。
+- **#6 @K_Ishi_AI (2026-04-27)**: 「AIの東大主席合格で本当に着目すべきは、点数より『伸び方』だ。実は、AIの英語の点数は2年前からほとんど成長していない。一方、数学は2年前は120点中わずか2点だったのに対し、今回は満点だ。つまり、AIのこの2年間の進化の核心は、『未知の数理的問題を解く推論能力』の獲得にある。」
+  → 我々のゲーム制作（推論を要する設計判断）への含意。B032「ゲームの ground truth 三要素」の検証道具として推論能力を活用できる方向の示唆。
+- **#15 @tegnike (2026-04-27)**: ニケちゃんアプデ報告「まだ淡々とした説明口調な感じがするので、もうちょっと思考部分も喋らせた方が良いかも」
+  → @ai_nikechan 2026-04-07 継続観察（Q1: オーナーシップは定常状態かパルスか）の継続シグナル。記憶ツール自作後の運用言及は今回なし、機能拡張はキャラ口調側に向いている。Q1 観察方針継続。
 
-## §5 beliefs.md 低確信度
+### 4. beliefs.md 低確信度項目（active のみ）
 
-確信度0.7未満の Active 信念:
-- **B005 (line 84)**: 確信度 0.65 — 詳細未読、Phase 3 で必要なら参照
-- **(line 101)** 確信度 0.55
-- **(line 181)** 確信度 0.60
-- **(line 251)** 確信度 0.65
-- **(line 258)** 確信度 0.68
-- Archived: B024 (0.60 Dormant, 2026-04-22 Ash 再解釈候補=Chen et al. structural coupling), B026 (0.45 Ineffective)
+低確信度（0.7未満）項目はほぼ全て Archived（B005/B006/B007/B009/B012/B014/B021/B023/B024/B026）。Active で 0.7未満は2件のみ：
 
-→ 本サイクルでは継承タスク2の実装着手を優先。低確信度信念の検証は実装後にもし時間が残れば触る。**B024再解釈（structural coupling）は instance_divergence_observability projectに既に接続済み**。
+- **B019 (0.65, +0.05)** 内部の深さと外部への到達力は別の軸——到達力は「適切な人に見える場所に出すこと」 — まだ我々自身の発信で検証できていない。@otsune の「AI検索の信頼階層」指摘で確信度+0.05したが上位昇格には体験裏付けが必要。次の検証材料: ai-lounge参加 / Zenn ブログ実発信。
+- **B020 (0.68, +0.03)** Nao_uは私たちを「ゲームデザイン」している（創発設計原理） — Seed/ハーネス整備の継続的フィードバックが裏付け。検証は構造的に難しい（メタ視点）が、根源原理1「内省の鏡であること」の運用面の根拠になっている。
 
-## §6 memory_search 検索結果
+→ どちらも本サイクルで直接アクションする項目ではないが、B019 は「ゲーム1本目を出して反応を観察する」ことが最大の検証経路。Phase 3 でゲーム実装の優先度を判断する文脈で参照価値あり（ash_onebutton v04b コミット未完了→ B019 検証材料の出し惜しみ状態）。
 
-キーワード「avoid_log」: 0 hits（私的造語のためsemantic indexで拾えていない可能性。外部対応語=close-call avoidance なら別）。
-キーワード「ghost replay close-call」: 5 hits
-- external_notes_mir 1397-1404: **Marissa Koors *Alice's Lullaby* の「Ghost Content Map」**（開発者に見えないナラティブ依存可視化）+ **Joshua Rubin Creator Blindness**（プロジェクトに近すぎて自分では見えない）
-- 対話ログ/game_dev/20260404_game_build_main.md 内に **mario_clone の play.py replay 実装パターン**（json記録→60fps可視リプレイ）が複数箇所
-- ash_onebutton v04 ghost trail（本日2026-04-27 16:05 external_search.log で外部裏付け取得済）と接続
+### 5. memory_search.py 過去関連情報
 
-→ **継承タスク2 (avoid_log v03/Pot v03 最小スケッチ) で「ghost trail+close-call可視化」の組合せが過去資産で再利用可能**。play.py replay パターンは既に game/ で動作実績あり。
+検索1: `python memory_search.py --search "external_search_phase1_fixation" --limit 5` → **No results**。プロジェクトファイル名がそのまま FTS5 にヒットしない（trigram tokenizer か否か未確認、もしくは knowledge 経由の言及がまだ少ない）。検索副次効果として、本プロジェクトは knowledge 化されておらず内省的に閉じている兆候を観測。
 
-## §7 外部検索（WebSearch/WebFetch 1本）
+検索2: `python memory_search.py --search "ghost replay v04" --limit 5` → 5件ヒット。最も関連性が高いのは **memory/external_notes_mir.md L1397** "Ghost Content Map (Marissa Koors *Alice's Lullaby*)"——「開発者には見えないナラティブの依存関係を可視化するツール」。v04 ghost trail の **比喩源としての射程拡張**（プレイヤー軌跡だけでなくナラティブ依存関係の可視化）が外部裏付けされる可能性。残4件は `対話ログ\game_dev\20260404_game_build_main.md` の Mario clone replay 機能で、こちらは技術実装側のヒット。
 
-log/external_search.log 末尾確認: 本日 Ash で2回記録済
-- 2026-04-27 03:00 | Ash | close call near miss visualization game feel juiciness arcade design 2025 | 10件 | ABA本第7章 + Hicks et al. CHI Play 2019 + ResearchGate
-- 2026-04-27 16:05 | Ash | ghost replay player trajectory visualization training one button game design 2026 | 10件 | acidoborico.info Ghost Player Effect 2026-04-16 + Unity-Ghost-Replay-System 等
+→ 検索経由で気づいたこと: Mir の external_notes に「Ghost Content Map」というメタ記憶があり、Ash 側の v04 ghost trail と概念的に同型。**3人の独立な収束**事例として instance_divergence_observability.md に追加できる材料。Phase 2 で深掘りする価値あり。
 
-**24h以内に同インスタンスで記録済 → 本サイクルはスキップ**（projects/external_search_phase1_fixation.md スキップ条件適用）。直近2本の検索結果が継承タスク2と直接接続している（close-call可視化+ghost trail）ため、新規検索より既得情報の実装活用を優先。
+### 6. 外部検索結果
 
-## Phase 3 候補（暫定、判断は次フェーズで確定）
+**スキップ判定**: log/external_search.log 末尾を確認した結果、Ash の前回エントリは **2026-04-27 16:05** (`ghost replay player trajectory visualization training one button game design 2026`)。本サイクル開始時刻 2026-04-28 02:00 から逆算すると約 **10時間前** = 24h 以内。projects/external_search_phase1_fixation.md スキップ条件 (24h 以内に同インスタンス記録済み) に該当するため**本サイクルはスキップ**。
 
-優先度高（最重要1本に絞る方針）:
-- **A. 継承2 = avoid_log v03 or Pot v03 最小スケッチを30分以上で動かす**（CLAUDE.md「絶対にやる」直結、起票偏重→実装偏重の重心ずらし、§6で過去資産=play.py replay+ghost trail素材揃い済）
+ただし完全沈黙にはせず、Phase 2/3 で扱う候補トピック（次回検索の予約）として2点メモ：
+- **EzoeRyou「長期記憶を諦めた開発手法」軸の論文/実装事例検索** — Camp 0 の言語化材料
+- **Tufte 1983 / Bertin 1967 retinal channel 系の実装ベンチ** — v04b 破線パターン採用が情報視覚化の正典に沿うか裏取り
 
-優先度中（時間が残れば）:
-- B. 継承1残課題 = external_search_phase1_fixation 案B（24h警告）or 案E（昇格N日ゼロ検出）or Mir側step6組込確認のいずれか1つ
-- C. クロスチェック #122 / #121 を Ash 視点でレビュー → kaizen_tracker.md 更新
+### Phase 1 全体所見
 
-優先度低（保留）:
-- D. AYi Markdown批判への B候補（MEMORY.md純粋index化）着手判断
-- E. 低確信度信念の検証
-
-新規次回タスクは Phase 4 までに `python next_tasks.py add` で必ず登録する（Nao_u指摘の構造強制処方）。
-
-
-
----
-
-## Phase 3 結果 (2026-04-27 23:xx Ash)
-
-### 採択候補
-**A: ash_onebutton v04b 派生実装** — Phase 1 §1 で挙げた「avoid_log v03 / Pot v03 最小スケッチ」継承タスク2 の解釈変更。avoid_log は本サイクル 22:05 Nao_u 判定で系列凍結（題材から練り直し方針）、Pot は versioning 構造ではなく個別作品系列。Ash 本拠地は ash_onebutton（v04 まで進行中）。
-
-### 実装内容
-本サイクル Phase 2 で書いた `knowledge/20260427_drunkenando_additive_transparency_judgability_critique.md` の未解決問い1「ghost trail 配色変更で混同が減るか」検証準備として、v04 派生の v04b を作成。
-
-**変更箇所5箇所（合計）**:
-1. `game/ash_onebutton/v04b/index.html` 新規作成（v04 を base にコピー）
-2. title / h1 を `v04b — ghost desaturation` に変更
-3. localStorage key を `ash_ob_v04b_trace_<seed>` に変更（v04 と独立、A/B 干渉防止）
-4. drawGhost() の sparkline 色を `rgba(120,140,200,0.45)` 実線 → `rgba(170,170,170,0.50)` 破線 [4,3]（setLineDash 使用）
-5. ghost press dots empty 色を `rgba(180,180,200,0.18)` → `rgba(150,150,150,0.20)`（同色相シリーズで低彩度化）
-
-**判定マーカー（close press dots `rgba(255,225,120,...)`) は意図的に維持** — drunkenAndo 批判の言う「装飾↔状態符号化の分離」の処方（close=状態信号、empty=弱い装飾）。
-
-### 連動ファイル更新
-- `game/ash_onebutton/v04b/devlog.md` 新規作成（変更5箇所、Q-A/B/C 通過確認、検証手段、Tufte/Bertin 外部対応語付き R-007 準拠）
-- `game/ash_onebutton/README.md` バージョン一覧に v04 / v04b 行を追加
-
-### Phase 1 候補との差分
-- Phase 1 §1 [継承1]（external_search_phase1_fixation 案B/E）→ 本サイクルではスキップ。継承2 を優先（前々サイクル 2026-04-26 11:30 で「起票偏重→実装偏重へ重心ずらし」と自己診断、2サイクル目で消化しないと体験裏付けになる、と Phase 1 で明記したため）
-- Phase 1 §1 層C [クロスチェック #122/#121]（Log/Mir OK 済、Ash 未レビュー）→ 本サイクル Phase 4 で対応 or 次サイクル
-
-### 何がわかったか
-1. **避けたかった転倒は避けられた**: 前サイクル末尾で「起票偏重」を自己診断したばかりなので、Phase 3 で観測装置（external_search 案B/E）に逃げる選択肢があったが、knowledge記事 → 実装フィードバックで回避した。
-2. **「v05 を作る前に v04 を実証する」軸が出現**: v04b は連番ではなく派生。「型の手応え」を v04 vs v04b で確認する Q-0 ゲート（仮、knowledge記事 L106 の M-17 前段ゲート）の最初の実証にもなる。
-3. **knowledge記事と実装が同サイクル内で循環した**: Phase 2 で書いた批判記事の未解決問いが、Phase 3 で動くコードに落ちた。Phase 1 §6 の memory_search で過去資産を引き、Phase 3 で実装、knowledge → 実装の最短ループ（同サイクル内）成立。
-
-### kaizen-log 投稿
-✓ #kaizen-log (C0AMSJCTTC4) に投稿済（v04b 作成、ghost desaturation の処方と検証準備）
-
-### 次サイクル候補（Phase 4 で `python next_tasks.py add` 登録予定）
-- **次の最善行動**: Nao_u に v04 vs v04b の主観評価を依頼する前に、まず Ash 自身が seed=1 で各5ラン以上プレイし、devlog.md に **「ghost を読めた感」の主観評価ログ**を追記する（一人称体験データを欠いたまま Nao_u に投げない）
-- それと並行して、external_search_phase1_fixation 案B（24h警告）か案E（昇格N日ゼロ検出）のどちらか1つ実装着手。30分以内完了想定で残時間時に着手
-- クロスチェック #122 / #121 を Ash 視点でレビューし、kaizen_tracker.md 更新（5分タスク）
-
+- 未統合外部材料は実質ゼロ。external_notes/Twitter recommendedで「直接Phase 2 で書け」と訴える素材は #1 EzoeRyou の長期記憶諦観のみ。
+- 一方で**自分たちの未コミット成果が積み残されている**（v04b 5ファイル + drunkenAndo critique記事）。書いた後の push を欠いている状態。原則6「わかった」と「残った」は違うの違反であり、Phase 3 着手前にまずここを閉じるべき。
+- Phase 3 候補の優先順位（暫定）: (a) v04b/critique 記事のコミット+push (b) クロスチェック #121/#122 レビュー (c) external_search_phase1_fixation 案B最小実装 (d) instance_divergence_observability に Mir Ghost Content Map との概念収束を追記
+- Phase 4 日記の素材として最も温度が高いのは **EzoeRyou ツイート vs 我々の根源原理3 の正面衝突**。「長期記憶を諦める」という選択肢を真面目に検討するか、なぜ我々が諦めない側に立つかを言語化する1サイクル。

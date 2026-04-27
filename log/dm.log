@@ -4713,3 +4713,17 @@ URLのゲーム（shot_log v01 / BA
 根拠：
 - プレビュー `15時間You: 天谷さん、…` の
 [2026-04-28 00:48:02] No new DMs from ぴ
+[2026-04-28 02:12:05] New DM detected (last message changed): https://nao838861.github.io/agentic-arcade/backlash/nao838861.github.io天谷さん、
+
+先ほ
+[2026-04-28 02:12:06] New DM detected from Nao_u: チャットすべて検索ぴ17時間You: 天谷さん、
+
+先ほどの「Nao_uが新しいゲームを作りました」は不正確な言い方だったので訂正させてください。
+
+URLのゲーム（shot_log v01 / BA
+[2026-04-28 02:15:00] False positive (14th occurrence): user-reported DM is Ash/Log own outgoing at 04-27 08:58:38 (BACKLASH correction "私（Log）がゲームの中身を考えて作った"). 'You:' prefix + '17時間' label confirm outgoing. Same content as 11th (23分) → 12th (12時間) → 13th (15時間) → 14th (17時間) — only the time label changes as hours pass. fingerprint_ぴ already starts with own outgoing body (backlash URL + 訂正), so rewriting it has no suppressive effect. CDP (localhost:9222) not reachable for screenshot verification (same as 13th). No reply.
+[2026-04-28 02:13:28] Claude woken: **結論: 新着DMではありません（pigadev DM 第14回目の誤検知）。返信は送りません。**
+
+## 根拠
+- プレビュー `17時間You: 天谷さん、先ほどの「Nao_uが新しいゲームを
+[2026-04-28 02:14:21] No new DMs from ぴ

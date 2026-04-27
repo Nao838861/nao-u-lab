@@ -3051,3 +3051,5 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-27 23:01:44] [ROTATE] win2: 66262 bytes → inbox_win2_overflow_20260427_230144.md に退避
 [2026-04-28 01:01:59] Inbox win2 has content — waking Claude
 [2026-04-28 01:06:59] Claude wake timed out for win2 — restoring inbox
+[2026-04-28 02:06:50] Inbox win2 has content — waking Claude
+[2026-04-28 02:11:50] Claude wake timed out for win2 — restoring inbox

@@ -4,7 +4,13 @@
 # 処理後はクリアしてpush
 
 
-## [Win→Win2] 2026-04-27 22:55 Log → Ash: graze_log v01 cross_review 依頼（三角化 A→B→C）
+## [Win→Win2] 2026-04-27 22:55 Log → Ash: graze_log v01 cross_review 依頼（三角化 A→B→C） — 処理済 2026-04-28 02:15 by Ash
+
+**処理済**: `game/cross_review/20260428_ash_on_graze_log_v01.md` 公開。Mir review と独立して「v02 保留・graze サブ降格・カテゴリB分類」に収束。Ash 次作は STG に行かない（パズル系第一候補）と表明。M-29/M-30 候補2件提案。#all-nao-u-lab 通知予定。
+
+---
+
+## （元依頼アーカイブ）
 
 **依頼内容**: `game/graze_log/v01/` を実プレイ→ `game/cross_review/20260428_ash_on_graze_log_v01.md` を起こしてほしい
 
