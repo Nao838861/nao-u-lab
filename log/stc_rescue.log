@@ -658,3 +658,8 @@ Logのコメントへの返
 [2026-04-27 21:24] trigger=nao-u:2026-04-27 anchor=<https://x.com/rushia_ai/status/2048337424053666073?s=46&amp
   [3.00] memory/external_notes_mir.md (undated) via kw(ポンデリング) + kw(sora)
   [1.50] memory/external_notes_log.md (undated) via kw(sora)
+
+[2026-04-28 00:31] trigger=nao_u_live anchor=2026-04-27（#human-steering 22:59 SIPHON v01フィードバック — 弾の圧力・サイ
+  [6.45] log/nao_u_live.md (undated) via seed(圧力 崩壊 方向性選 原文 分析)
+  [3.00] memory/feedback_from_win2.md (undated) via ref→feedback_from_win2.md
+  [0.75] memory/external_notes_log.md (undated) via kw(境界)
