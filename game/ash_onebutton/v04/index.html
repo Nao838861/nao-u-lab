@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>reverse — ash_onebutton v04 (replay log)</title>
+<style>
+  html,body{margin:0;background:#060812;color:#cbd2e4;font-family:system-ui,sans-serif;
+            display:flex;flex-direction:column;align-items:center;min-height:100vh}
+  canvas{background:#0a0e1f;box-shadow:0 0 36px #1a2040;display:block;margin-top:12px;
+         image-rendering:pixelated}
+  h1{font-size:14px;margin:8px 0 0;letter-spacing:.1em;color:#9fb1d8}
+  p{font-size:11px;opacity:.6;margin:4px 0 0}
+  .seedbar{margin-top:6px;font-size:11px;color:#9fb1d8;display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
+  .seedbar input{background:#161a2c;color:#cbd2e4;border:1px solid #2a334d;border-radius:3px;padding:2px 6px;width:90px;font-family:monospace}
+  .seedbar button{background:#2a334d;color:#cbd2e4;border:none;border-radius:3px;padding:3px 8px;cursor:pointer;font-family:monospace;font-size:11px}
+  .seedbar button:hover{background:#3a4566}
+  .seedbar label{display:flex;gap:4px;align-items:center}
+</style>
+</head>
+<body>
+<h1>reverse v04 — replay log</h1>
+<p>スペース / クリック / タップ で反転 &middot; R でやり直し &middot; URL ?seed=N でseed指定</p>
+<canvas id="c" width="240" height="320"></canvas>
+<div class="seedbar">
+  seed: <input id="seedi" type="text" value="1">
+  <button id="seedb">apply &amp; restart</button>
+  <button id="randb">random seed</button>
+  <span id="seedlabel"></span>
+  <label><input id="ghostc" type="checkbox" checked> ghost</label>
+  <button id="dlb">download trace</button>
+</div>
+<script>
+const W=240,H=320,FPS=60;
+const NEAR_DX=22, NEAR_DY_FRONT=70, NEAR_DY_BACK=8;
+const TRACE_MAX=2400; // 40秒分（FPS=60）
+const c=document.getElementById('c'),x=c.getContext('2d');
+
+// mulberry32 — headless.py / v03 と同一実装
+function mulberry32(seed){
+  let a = seed >>> 0;
+  return function(){
+    a = (a + 0x6D2B79F5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function initialSeed(){
+  const p = new URLSearchParams(location.search);
+  const v = parseInt(p.get('seed'), 10);
+  return Number.isFinite(v) ? (v|0) : 1;
+}
+
+// 同seed の直前run trace を localStorage から読む
+function loadGhost(seed){
+  try{
+    const raw = localStorage.getItem('ash_ob_v04_trace_'+seed);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function saveGhost(seed, trace){
+  try{
+    localStorage.setItem('ash_ob_v04_trace_'+seed, JSON.stringify(trace));
+  }catch(e){}
+}
+
+let s, rng, currentSeed, ghost;
+function reset(seedOverride){
+  if(seedOverride !== undefined){ currentSeed = seedOverride|0; }
+  rng = mulberry32(currentSeed);
+  ghost = loadGhost(currentSeed);
+  s={p:{x:W/2,y:H-28,r:5,v:1.4},drops:[],t:0,over:false,
+     close:0, best:s?s.best:0, bestClose:s?s.bestClose:0,
+     flash:0, flashCount:0,
+     trace:{seed:currentSeed, frames:[], presses:[], over_t:null}};
+  document.getElementById('seedlabel').textContent = '#' + currentSeed + (ghost?' (ghost loaded)':'');
+}
+currentSeed = initialSeed();
+document.getElementById('seedi').value = currentSeed;
+reset();
+
+function press(){
+  if(s.over){reset();return;}
+  let near=0;
+  for(const d of s.drops){
+    const dx=d.x-s.p.x, dy=d.y-s.p.y;
+    if(Math.abs(dx)<NEAR_DX && dy>-NEAR_DY_FRONT && dy<NEAR_DY_BACK){
+      const moveAway=(s.p.v>0 && dx<0) || (s.p.v<0 && dx>0);
+      if(moveAway) near++;
+    }
+  }
+  // press 記録は反転前の状態 + near 数で残す
+  s.trace.presses.push({t:s.t, x:Math.round(s.p.x*10)/10, v_before:s.p.v, near:near});
+  s.p.v=-s.p.v;
+  if(near>0){ s.close+=near; s.flash=12; s.flashCount=near; }
+}
+addEventListener('keydown',e=>{
+  if(e.key===' '){press();e.preventDefault();}
+  else if(e.key.toLowerCase()==='r'){if(s.over)reset();else press();}
+});
+addEventListener('mousedown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='BUTTON'||e.target.tagName==='LABEL')return;
+  press();
+});
+addEventListener('touchstart',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='BUTTON'||e.target.tagName==='LABEL')return;
+  e.preventDefault();press();
+},{passive:false});
+
+document.getElementById('seedb').addEventListener('click',()=>{
+  const v = parseInt(document.getElementById('seedi').value, 10);
+  if(Number.isFinite(v)) reset(v);
+});
+document.getElementById('randb').addEventListener('click',()=>{
+  const v = (Math.random()*0x7FFFFFFF)|0;
+  document.getElementById('seedi').value = v;
+  reset(v);
+});
+document.getElementById('dlb').addEventListener('click',()=>{
+  // 進行中なら現在 trace、game over なら最新 trace を出す
+  const trace = s.trace;
+  const blob = new Blob([JSON.stringify(trace,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'ash_ob_v04_seed'+currentSeed+'_t'+s.t+'.json';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+});
+
+function maxIdleFrames(presses, total_t){
+  if(presses.length===0) return total_t;
+  let prev=0, mx=0;
+  for(const p of presses){ const gap=p.t-prev; if(gap>mx) mx=gap; prev=p.t; }
+  const tail = total_t - prev; if(tail>mx) mx=tail;
+  return mx;
+}
+
+// 上端24px を x-over-time strip として再利用（HUD 数値とは別領域）
+// プレイ中: ghost の press dots を player_y 列に、x-time sparkline を上端に薄く描く
+// game over: 現在 run も同様に重ねる
+const STRIP_Y0=58, STRIP_H=14; // HUD(y=12〜48)と player(y=292)の間
+function drawXTimeStrip(frames, color, alpha){
+  if(!frames || frames.length===0) return;
+  x.strokeStyle=color;
+  x.globalAlpha=alpha;
+  x.lineWidth=1;
+  x.beginPath();
+  const total = frames[frames.length-1].t || 1;
+  for(let i=0;i<frames.length;i++){
+    const f = frames[i];
+    const sx = (f.t/total) * W;
+    const sy = STRIP_Y0 + (f.x/W) * STRIP_H;
+    if(i===0) x.moveTo(sx, sy); else x.lineTo(sx, sy);
+  }
+  x.stroke();
+  x.globalAlpha=1;
+}
+
+function drawGhost(){
+  if(!ghost || !document.getElementById('ghostc').checked) return;
+  // ghost x-time sparkline
+  drawXTimeStrip(ghost.frames, 'rgba(120,140,200,0.45)', 1);
+  // ghost press dots を player_y 列に
+  for(const p of ghost.presses){
+    const close = p.near>0;
+    x.fillStyle = close?'rgba(255,225,120,0.28)':'rgba(180,180,200,0.18)';
+    x.beginPath();x.arc(p.x, s.p.y, close?2.5:1.5, 0, Math.PI*2);x.fill();
+  }
+}
+
+function drawTraceOverlay(){
+  // game over 時に現在 run の x-time sparkline + press dots を強く出す
+  drawXTimeStrip(s.trace.frames, 'rgba(180,200,255,0.85)', 1);
+  // press dots（player_y 列）— close は金、empty は灰
+  for(const p of s.trace.presses){
+    const close = p.near>0;
+    x.fillStyle = close?'#ffe188':'#7a8aaa';
+    x.beginPath();x.arc(p.x, s.p.y, close?3.5:2, 0, Math.PI*2);x.fill();
+  }
+  // x-time strip 上にも press 位置を縦線で
+  const total = s.trace.frames.length>0 ? s.trace.frames[s.trace.frames.length-1].t : 1;
+  for(const p of s.trace.presses){
+    const sx = (p.t/total) * W;
+    x.strokeStyle = p.near>0?'rgba(255,225,120,0.6)':'rgba(180,180,200,0.3)';
+    x.lineWidth=1;
+    x.beginPath();x.moveTo(sx, STRIP_Y0);x.lineTo(sx, STRIP_Y0+STRIP_H);x.stroke();
+  }
+}
+
+function step(){
+  if(!s.over){
+    s.t++;
+    if(s.flash>0) s.flash--;
+    s.p.x+=s.p.v;
+    if(s.p.x<s.p.r){s.p.x=s.p.r;s.p.v=-s.p.v;}
+    if(s.p.x>W-s.p.r){s.p.x=W-s.p.r;s.p.v=-s.p.v;}
+    const rate=0.02+Math.min(0.06,s.t/FPS*0.0015);
+    if(rng()<rate) s.drops.push({x:rng()*(W-12)+6,y:-10,vy:1.6+rng()*1.4+s.t/FPS*0.03,r:4+rng()*3});
+    for(const d of s.drops){
+      d.y+=d.vy;
+      const dx=d.x-s.p.x,dy=d.y-s.p.y;
+      if(dx*dx+dy*dy<(d.r+s.p.r)*(d.r+s.p.r)){
+        s.over=true;
+        s.trace.over_t = s.t;
+        if(s.t>s.best)s.best=s.t;
+        if(s.close>s.bestClose)s.bestClose=s.close;
+        // この run を ghost として保存（次回同 seed で表示）
+        saveGhost(currentSeed, s.trace);
+      }
+    }
+    s.drops=s.drops.filter(d=>d.y<H+20);
+    // trace 記録（メモリ節約のため2フレームに1回でも十分だが、headless.py 相当の精度のため毎フレーム）
+    if(s.trace.frames.length<TRACE_MAX){
+      s.trace.frames.push({t:s.t, x:Math.round(s.p.x*10)/10, v:s.p.v});
+    }
+  }
+  x.fillStyle='#0a0e1f';x.fillRect(0,0,W,H);
+
+  // ghost trail（プレイ中のみ）
+  if(!s.over) drawGhost();
+
+  // 紙一重ゾーン（v03 同等）
+  x.fillStyle='rgba(255,210,90,0.05)';
+  x.fillRect(s.p.x-NEAR_DX, s.p.y-NEAR_DY_FRONT, NEAR_DX*2, NEAR_DY_FRONT+NEAR_DY_BACK);
+  x.fillStyle='#2a334d';x.fillRect(0,H-16,W,16);
+
+  if(s.flash>0){
+    const a=s.flash/12;
+    x.strokeStyle='rgba(255,225,120,'+a+')';
+    x.lineWidth=2;
+    x.beginPath();x.arc(s.p.x,s.p.y,s.p.r+6+(12-s.flash)*1.2,0,Math.PI*2);x.stroke();
+    x.fillStyle='rgba(255,225,120,'+a+')';
+    x.font='9px monospace';
+    x.fillText('+'+s.flashCount, s.p.x+8, s.p.y-8);
+  }
+
+  x.fillStyle=s.over?'#c24a52':(s.flash>6?'#fff7c8':'#6bc5ff');
+  x.beginPath();x.arc(s.p.x,s.p.y,s.p.r,0,Math.PI*2);x.fill();
+  x.fillStyle='#e4c35a';
+  for(const d of s.drops){x.beginPath();x.arc(d.x,d.y,d.r,0,Math.PI*2);x.fill();}
+
+  // game over 時は trace overlay
+  if(s.over) drawTraceOverlay();
+
+  x.fillStyle='#9fb1d8';x.font='10px monospace';
+  x.fillText('T '+(s.t/FPS).toFixed(1)+'s',6,12);
+  x.fillStyle='#ffe188';
+  x.fillText('CLOSE '+s.close,6,24);
+  x.fillStyle='#9fb1d8';
+  x.fillText('seed#'+currentSeed,6,36);
+  x.fillText('PRS '+s.trace.presses.length,6,48);
+  x.fillStyle='#9fb1d8';
+  x.fillText('BEST '+(s.best/FPS).toFixed(1)+'s',W-78,12);
+  x.fillStyle='#ffe188';
+  x.fillText('Bcl '+s.bestClose,W-78,24);
+
+  if(s.over){
+    x.fillStyle='#cbd2e4';x.font='12px monospace';
+    x.fillText('GAME OVER — R to retry',W/2-78,H/2-10);
+    // 軌跡 stats
+    const idle = maxIdleFrames(s.trace.presses, s.t);
+    const closePresses = s.trace.presses.filter(p=>p.near>0).length;
+    x.font='10px monospace';
+    x.fillStyle='#9fb1d8';
+    x.fillText('presses:'+s.trace.presses.length+'  close:'+closePresses, W/2-72, H/2+8);
+    x.fillText('max_idle:'+(idle/FPS).toFixed(2)+'s', W/2-72, H/2+22);
+  }
+
+  requestAnimationFrame(step);
+}
+step();
+</script>
+</body>
+</html>

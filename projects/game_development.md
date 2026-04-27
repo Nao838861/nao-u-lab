@@ -71,6 +71,31 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-04-27: Ash — ash_onebutton/v04 着手: replay log + 軌跡可視化（P-R3 申し送り即応, C137 Phase 3）
+
+本サイクル Phase 2 で書いた `knowledge/20260427_r_nikaido_design_rail_explains_m12.md`（@R_Nikaido「設計はレールに乗っている時間」レンズで M-12 罰patch失敗を再解釈）の処方 P-R3「v04 で seed固定リプレイログ → 軌跡可視化（紙一重ゾーン+動かない時間+方向反転頻度ヒートマップ）の最小実装」を **同サイクル内** で着地。Phase 2 自身が「P-R3 は射程が広く、起票偏重→実装偏重 (c) にも直結する。仕様書ではなく動くコード優先」と Phase 3 候補に挙げた申し送りに即応した形。
+
+**実装内容（最小1機能ではなく1パッケージ、約60行追加）**:
+- v03 約100行 → v04 約170行
+- trace 構造: `s.trace = {seed, frames:[{t,x,v}], presses:[{t,x,v_before,near}], over_t}`
+- frame 単位リプレイログ（上限 TRACE_MAX=2400 = 約40秒）/ press イベントログ
+- localStorage で同 seed key にゴースト保存→次回同 seed 起動で自動 load
+- ゴースト表示（プレイ中、checkbox ON 時の sparkline + press dots 薄色）/ trace overlay（ゲームオーバー時、強い色で重ね描き、press timing は strip 上にも縦線）
+- stats 表示: `presses:N close:M max_idle:Xs`
+- JSON ダウンロードボタン: `ash_ob_v04_seed<seed>_t<t>.json` で Log/Mir/Nao_u と共有可能
+- HUD に PRS 値追加
+
+**設計判断（仕様書を超えた発見）**: P-R3 原文は「軌跡可視化」だったが、player の y 固定（y=292）で軌跡を線で描くと水平方向の重なりにしかならず可視化として無意味。実装途中で **press の決定点の連なり** こそが意図的行動の表現と気付き、player_y 列の press dots（決定の空間分布）× 上端 sparkline（時間軸での x 値時系列）の **2軸直交分解** に着地。@R_Nikaido が言う「予測軌跡」を1人の頭脳ではなく観測データの2軸分解で代替する筋道に対応。仕様書ではなく動くコード優先（Phase 2 自身の指示）の遵守として、設計判断段階で仕様書を捨てた。
+
+**Q-A/B/C 通過確認**: Q-A:✓（核体験「紙一重で避けた瞬間が金色に光る」は v03 から不変）/ Q-B:✓（ゴースト trail は観測の道具であり、メカ追加でもフィードバック追加でもない、checkbox で OFF 可能）/ Q-C:△（v03 と同等、罰の構造は v02→v03→v04 で不変、リプレイログは罰の有無と直交）。
+
+**残課題**:
+- v04 devlog.md の知見を `memory/game_lessons_log.md` に M-13 等として抽出反映
+- Nao_u/Log/Mir に v04 を提示し、ゴースト表示が「同 seed 2回目以降の自発的タイムアタック」遊びに着地するか観測
+- press dots の密集領域（=判断レール）と無入力時間の長さ分布の統計化 → M-12 罰patch失敗の数値裏付け候補
+
+→ `game/ash_onebutton/v04/index.html` / `game/ash_onebutton/v04/devlog.md` / `knowledge/20260427_r_nikaido_design_rail_explains_m12.md`
+
 ### 2026-04-22: Ash — v01 にNao_uプレイ評価「筋の良い土台」受領 + v02 候補3つ選抜 (C112後続)
 
 Nao_u #game-rights 03:40プレイフィードバックを受領。原文+分析は `game/ash_onebutton/v01/raw_log.md` に保存。
