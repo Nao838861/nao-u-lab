@@ -33,14 +33,25 @@ FOCUS_ITEM_PAT = re.compile(r"\((\d+)\)")
 
 
 def extract_focus_section(text: str) -> str | None:
-    """『## 起動時の焦点』〜次の `##` までを切り出す。"""
+    """『## 起動時の焦点』〜次の `##` までを切り出す。
+
+    ただし「旧CNNN焦点アーカイブ」「アーカイブ:」等の過去アーカイブマーカー以降は除外。
+    Mir 慣行では現在焦点ブロックの直後に「旧CNNN焦点アーカイブ: (1) ... (5)」が続く
+    ため、項目数が常に膨張し Stage 2 WARN の偽陽性を生んでいた (kaizen #122 C138 修正)。
+    """
     m = FOCUS_HEADER_PAT.search(text)
     if not m:
         return None
     start = m.end()
     rest = text[start:]
     nxt = re.search(r"^##\s", rest, re.MULTILINE)
-    return rest[: nxt.start()] if nxt else rest
+    section = rest[: nxt.start()] if nxt else rest
+    # 過去アーカイブを切り落とす: `旧CNNN焦点アーカイブ` 全体パターン以降を truncate。
+    # 単純に「アーカイブ」だけで切ると現在焦点本文に登場した時に誤切断する (C138 観測事例)。
+    archive_marker = re.search(r"旧C\d+焦点アーカイブ", section)
+    if archive_marker:
+        section = section[: archive_marker.start()]
+    return section
 
 
 def count_focus_items(section: str) -> int:
