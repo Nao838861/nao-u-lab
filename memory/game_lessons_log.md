@@ -586,6 +586,53 @@ graze 機構をどこに落とすかの選択肢:
 
 ---
 
+### M-34: target detection 検出パターン —— 重心と target imagination のずれは v内部の Q-A 採点で隠れる（shot_log v01 / 2026-04-28 Log+Ash 合意刻印）
+
+**事象**: shot_log v01 は C123 着手時に「30秒オンボーディング casual」を target imagination として書きながら、BACKLASH 昇格 (C131) で実態が「STG core fan / ランキングで名前を残したい層」へ shift していた。冒頭3行ブロック・README重心欄・devlog Q-A 採点いずれも「集中型快感ループ」の言葉で書けてしまうため、**target が動いた事実が文章上の自己採点では検出されない**。Log は C131 で「target shift の Nao_u 確認待ち」と保留し、04-28 04:20 に Ash cross_review が「mercy 追加 (490-526) は core fan target を否定する casual 補正ではなく core fan 体験までの離脱防止であって target shift 後の整合と読める」と独立判定したことで初めて整合確認が取れた。
+
+**根本原因**:
+- Q-A「一番嬉しい瞬間」は **target が誰であっても1文化できる**——「ゲージMAXまで貯めて〜BOMB解放」は core fan / casual 両方で書ける文。Q-A 採点で Q-A 通過しても target imagination のずれは検出されない
+- target imagination は v01 内部で観測装置を持たない。子供プレイテスト (04-26) のような外部観測者が入って初めて「至近距離で死ぬ＝casual 体験を阻害している」が見え、その処方として mercy が入った時に **target が core fan 寄りに shift していた事実が遡って判明**
+- 冒頭3行ブロック (`feedback_pleasure_element_first`) は重心審問の必須シートだが、target 欄を持たない。target は別シートが必要
+
+**M-30 / M-31 / M-33 との違い**:
+- M-30: コアの緊張ベクトル（外発 vs 自発）—— v 着手前 Q-D で検出可能
+- M-31: 報酬経路の追加が自発リスクのコア化と同義になる罠 —— Q-D 経由で着手前検出可能
+- M-33: 型カテゴリ A/B/C の判定 —— Q-F で着手前検出可能
+- M-34: **target imagination のずれは Q-A/Q-D/Q-F いずれでも検出できない**。実プレイテスト後の遡及検出が主、別シート（Q-G）で着手前精度を上げる
+
+**次回の規則 — 新ゲーム着手前 Q-G（target imagination、必須シート）**:
+- **Q-G-1**: 想定 target を1行明文化（例: 「STG core fan / ランキングで名前を残したい層」「30秒オンボーディング casual」「コアゲーマー / フィードバックループ短縮の実験対象」「子供 / ピクセル STG 初触」のいずれか or 複合）
+- **Q-G-2**: 想定 target が「core fan / casual」両極のどちらに寄っているか0-10で記入（5は明示的に複合 target 設計、その場合は両極で別ルート設計が必要）
+- **Q-G-3**: 想定 target が変わったら何が変わるか（mercy 範囲・初期難度・HUD 情報量・終端コンテンツの厚み）を3点書く
+- **Q-G-4**: cross_review 時 / 改修時に「target が shift していないか」を1行確認。shift していれば冒頭3行ブロックの target 欄を更新し、devlog に shift 検出記録を残す（v01 内部で誰でも遡れる時点記録）
+- **Q-G-5**: target 確認は Solver self-play で済ませない（M-21 補足ルール）。子供プレイテスト・cross_review・Nao_u プレイのいずれかで外部観測点を持つ
+
+**target shift の通常型 / 異常型**:
+- **通常型（許容）**: 子供プレイテスト等の外部観測でずれが見え、補正処方（mercy 等）と同時に target shift を明文化する。v01 中で起きてよい。**今回の shot_log v01 はこのパターン**
+- **異常型（要警戒）**: 補正処方は入るが target shift は明文化されず、devlog Q-A 採点だけ更新される。Q-A 採点が「変わらず合格」のまま target だけ動く。v が進むほど target が暗黙的に拡散して「誰のためのゲームか」が消える ——M-29 「v系列膨張」の target 側変種
+
+**「core fan target なら〇 / casual target なら✗」の使い分け**:
+- shot_log v01 の Q-B（ニンジャテスト）採点で Log C131 が出した暫定 △' は、target shift 確認前の保留であって、target 確定後に再採点で〇に上がった
+- **採点を target ごとに分けて書く**: 「target=A なら〇 / target=B なら✗」の両論併記は target shift 検出時の有効な書き方。1つの判定に統合せず保留マーカーとして残す（Log C131 の暫定 △' はこの運用の最初の例）
+- 04-28 Ash cross_review が独立に「core fan 寄り(a)で成立」と判定したことで、両論併記の保留が解除された。**target 採点は cross_review で確定する**運用にする
+
+**v01 凍結→次作の判断**:
+- shot_log v01 は target shift 確認 → 冒頭3行ブロック改訂 → 凍結。v02 着手は「同じ問いの精度向上」で target は据え置き、新作は「Nao_u 04-27 18:22 指令の独自切り口」=新しい問いと target
+- M-34 の規則「target が確定した v は凍結対象、target 探索は次作で」を明文化。v02 で target 内部精度を上げるのは熟練の余地（M-22「型を熟す」射程）。新作で target を変える方が学習が速い（dialogue_many_games_20260421 本数主義）
+
+**関連**:
+- `memory/feedback_pleasure_element_first.md`（Q-A 着手前審問、Q-G はその拡張系）
+- `memory/feedback_authorship_attribution.md`（Log 設計 / Nao_u 指摘→Log 判断 / Nao_u 編集 の3区分、target shift 検出時の attribution 区分にも適用）
+- `memory/dialogue_many_games_20260421.md`（本数主義、v02 より新作）
+- `game/shot_log/v01/devlog.md`「2026-04-26 Q-A/B/C 再採点（BACKLASH 昇格後）」「冒頭3行ブロック改訂案」節（M-34 の出典）
+- `game/cross_review/20260428_ash_on_shot_log_v01.md`（target shift 確証、Ash 04-28 04:20 受領）
+- M-29（v系列膨張、target 側変種）/ M-30/M-31/M-33（着手前ゲートで検出可能な失敗型、M-34 は事後検出が主）
+
+**`[古典度: 中 / 固有度: 高]`** 古典 = target audience 設定の重要性（ゲームデザイン教科書の標準論）、persona-based design（UX 一般）/ 固有 = shot_log v01 が C123 casual → C131 BACKLASH core fan へ shift した具体経路、子供プレイテスト mercy 追加 (04-26) が target shift の物的証拠として遡及機能した時点的精度、Log C131 「target shift Nao_u 確認待ち」保留 → Ash cross_review 04-28 04:20 「core fan target 否定しない」独立判定 → 整合確認の3者経路、Q-A 採点では target shift が検出されないという内部観測、04-28 04:20 Ash inbox_win メッセージで Log+Ash 同型合意（Mir cross_review は本件未実施、運用上の三者確証は将来の再発時に得る）
+
+---
+
 ## Log固有の失敗傾向（記憶に刻む）
 
 ### L-01: 前進改造バイアス

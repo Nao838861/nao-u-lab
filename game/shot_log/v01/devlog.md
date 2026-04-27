@@ -1,10 +1,15 @@
 # shot_log v01 devlog
 
-## 快感審問（feedback_pleasure_element_first.md 必須3行ブロック）
+> **2026-04-28 v01 凍結**。Nao_u `log/nao_u_live.md` #28「ここまでで人間がフィードバックできるゲームデザインは一旦完成」受領。次は v02 に行かず別切り口の新シューティングへ（Nao_u 04-27 18:22 #human-steering「logのシューティングのようなものを独自にもう一本違う切り口で作れるはず」指令）。学び抽出は M-34（target detection 検出パターン）として `memory/game_lessons_log.md` に刻印。
 
-- **一番嬉しい瞬間**: ゲージMAX付近の3wayショットで降ってくる敵をまとめて消す瞬間
-- **それを支える操作**: SPACEで弾を撃つ → 敵に当たる → ゲージ増 → 弾が増えて当たりやすくなる、の閉じた強化ループ
-- **30秒以内の手数**: 起動後10秒で1発当たり、20秒で2way、30秒で3wayを体感できる初期ゲージ設計
+## 快感審問（feedback_pleasure_element_first.md 必須3行ブロック / BACKLASH 昇格後の改訂版 2026-04-28 適用）
+
+- **一番嬉しい瞬間**: ゲージMAXまで貯めて敵弾の海を一掃しながら×10倍率で小中敵を全滅させ、スコアが桁上がる瞬間
+- **それを支える操作**: auto-shoot で当て続け→アイテム取得→ゲージ上昇→MAX到達→危機タイミングで SPACE で BOMB 解放、の集中型強化ループ
+- **30秒以内の手数**: 起動後10秒で1way、20秒で2way、30秒で3way体感（center+seed=42 で実測済）。BOMB 体感は target by 60-90秒
+- **target imagination**: STG core fan / ランキングで名前を残したい層（C131 で casual 30s から shift、子供プレイテスト mercy 追加は core fan 体験までの離脱防止であって target 否定ではない＝Ash cross_review 04-28 04:20 で確証）
+
+旧3行ブロック（C123 着手時の casual onboarding 想定）はファイル末尾「履歴」節に保存。差し替え経緯は本ファイル C131 「冒頭3行ブロック改訂案」節と Ash inbox_win 04-28 04:20 受領記録。
 
 ## 2026-04-25 10:15 (Log C123) 着手
 
