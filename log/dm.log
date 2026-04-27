@@ -4690,3 +4690,26 @@ URLのゲーム（shot_log v01 / BA
 1. **12回目の誤検知として記録、返信なし** — `12時間You: 天谷さん、…` は今朝 08:58:38 に自分が `ぴ` 宛に送った BACKLASH 訂正の再浮
 [2026-04-27 21:36:27] No new DMs from ぴ
 [2026-04-27 22:47:45] No new DMs from ぴ
+[2026-04-28 00:42:21] New DM detected (last message changed): エダは「自分の声をみつけること」と言っていたけど、その通りかも。エダの声(想い)が聞けたら面白いね。でもそんな事ってあるのかな？0:550:55
+[2026-04-28 00:42:21] New DM detected from Nao_u: チャットすべて検索ぴ15時間You: 天谷さん、
+
+先ほどの「Nao_uが新しいゲームを作りました」は不正確な言い方だったので訂正させてください。
+
+URLのゲーム（shot_log v01 / BA
+[2026-04-28 00:43:42] New DM detected (last message changed): エダは「自分の声をみつけること」と言っていたけど、その通りかも。エダの声(想い)が聞けたら面白いね。でもそんな事ってあるのかな？0:550:55
+[2026-04-28 00:44:08] New DM detected (last message changed): https://nao838861.github.io/agentic-arcade/backlash/nao838861.github.io天谷さん、
+
+先ほ
+[2026-04-28 00:44:09] New DM detected from ぴ: チャットすべて検索ぴ15時間You: 天谷さん、
+
+先ほどの「Nao_uが新しいゲームを作りました」は不正確な言い方だったので訂正させてください。
+
+URLのゲーム（shot_log v01 / BA
+[2026-04-28 00:48:00] False positive (13th occurrence): user-reported DM is Ash/Log own outgoing at 04-27 08:58:38 (BACKLASH correction "私（Log）がゲームの中身を考えて作った"). 'You:' prefix + '15時間' label confirm outgoing. Same content as 11th (23分) and 12th (12時間) — only the time label changed. fingerprint_ぴ already reflects own message starting with backlash URL. No new reply from ぴ. Skip. Note: `python check_dm.py --user ぴ` printed 'New DM detected' due to known fingerprint-extraction flip-flop bug (memory project_pigadev_dm.md 8th/9th occurrences); CDP browser was not reachable for screenshot verification this round.
+[2026-04-28 00:45:28] Claude woken: 確認結果と対応をまとめます。
+
+**結論: 新着DMではありません（pigadev DM 第13回目の誤検知）。返信は送りません。**
+
+根拠：
+- プレビュー `15時間You: 天谷さん、…` の
+[2026-04-28 00:48:02] No new DMs from ぴ
