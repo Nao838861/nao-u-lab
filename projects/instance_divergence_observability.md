@@ -83,6 +83,14 @@ knowledge/20260426_3instance_proposer_distribution_replication_anthropic_186.md 
 ---
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-04-28 (Log C143 Phase 3): chain_log v01 起案で K\* 増加施策を実行——「3本同質 STG（shot/graze/SIPHON）→ 4本目で枠組差を構造的に確保」
+
+- 本サイクル Phase 2 で Log が #shared-reads に arXiv 2602.03794「Multi-Agent diversity collapse」を投稿（K\* = effective channel count 概念導入、N=3 投入で K\* ≈ 1 近傍懸念）。同 Phase 3 で **観測 → 処方** に移行：4本目を STG派生でない題材として起案（`game/chain_log/v01/`）
+- chain_log = 1D Match-3 パズル: shot/graze/SIPHON との比較で 上位枠組（縦STG → 1D Match-3）/ 操作軸（8方向移動+射撃 → 隣接スワップ1種）/ 重心（自発リスク → 盤面の自然秩序化）/ 緊張源（弾＋カスリ → 新タイル＝外）の4軸すべて違う。**K\* 増分 +1 を構造的に確保**
+- 反証条件: Nao_u feedback で「これも筋悪い・面白くない」が出れば K\* 増分は帳消し。題材選定の妥当性が次サイクル以降に判明する
+- 本プロジェクト§3「反対案強制化の実験」と§5「水平分業度」への接続: Log 4本目起案は Mir/Ash の意見を待たない先行決断（feedback_judgment_delegation T:4 範囲）。cross_review 三角化を v01 凍結後に行う設計で、Solver-Solver-Solver 対称運用の慣性を逆方向に試す（A→B→C 三角化、A→B/B→A 対称回避、t-260427194752-f6a0 系列）
+- §0 偽陽性除外条件への新ケース追加候補: chain_log 投入 vs SIPHON は「軸が直交」（Match-3 vs STG）+「片方が他方を縮約しない」+「統合可能（cross_review で並行評価可能）」の3条件すべて満たし、健全な分散として記録できる。同時に「Logが3本目の磁石→4本目もLog」の起票偏向は §5 起票者分布（Ash 4 / Mir 3 / Log 1 → 04-28 時点で Log 2）で偏向是正の方向
+
 ### 2026-04-27 (Log C139 Phase 3): Ash EntiGraph × Log Verbalized Sampling の独立収束——「training-free / Skills 層」軸への第3例
 - 本サイクル Phase 2 で Log が #shared-reads に Verbalized Sampling (arxiv 2510.01171, Stanford 2025-10) を投稿: 主張は「training-free prompting で N 案+確率を verbalize させる→mode collapse 軽減」「fine-tune できない我々は **Skills 層** に乗せて借りる」（軸3）
 - 同期間 Ash も #shared-reads に EntiGraph (ICLR2025 Oral, arxiv 2409.07431) を投稿: 主張は「fine-tune できない我々がどう借りるか——entity-relation グラフを外部に持ち、retrieval 時に展開」（slack_insight_digest 上位1件として未処理）

@@ -59,3 +59,7 @@
 {"ts": "2026-04-27T22:29:44", "instance": "log", "cycle": "2026-04-27", "action": "viewed", "task_id": null}
 {"ts": "2026-04-27T22:41:30", "instance": "log", "cycle": "2026-04-27", "action": "skip", "task_id": "t-260427194755-2ac1", "reason": "10サイクル滞留=構造的に優先度なし確定。3件をまとめて再判断: (1)commit_message_verbs=メタ運用で知見蓄積に寄与せず取下、(2)MEMORY.md純粋index化=荒川Skills(.claude/skills/)機構導入時に再起票方針へ移行、(3)他インスタンス洞察先頭2件=毎サイクル変動するため固定タスク不適切。feedback_substrate_not_infrastructure.md substrate-first 1mm 連動。kaizen 起票せず取下のみ。"}
 {"ts": "2026-04-27T22:47:01", "instance": "log", "cycle": "2026-04-27", "action": "cycle_check", "task_id": null, "add_count": 9, "done_count": 5, "skip_count": 2, "pending_total": 10}
+{"ts": "2026-04-28T06:05:02", "instance": "log", "cycle": "2026-04-28", "action": "viewed", "task_id": null}
+{"ts": "2026-04-28T06:16:46", "instance": "log", "cycle": "2026-04-28", "action": "add", "task_id": "t-260428061646-f94c", "task": "[2026-04-28] [C143→C144] chain_log v01 index.html 最小実装（4色×10タイル列、隣接スワップ、3連消去、連鎖検出、~150行目標）。devlog に予期せぬ挙動1件以上記録。M-21 v01 最小実装遵守"}
+{"ts": "2026-04-28T06:16:48", "instance": "log", "cycle": "2026-04-28", "action": "add", "task_id": "t-260428061648-55a4", "task": "[2026-04-28] [C143→C144] graze_log v01 self-playtest（30分内、devlog に快感審問3行ブロック実プレイ評価追記、保留中なら巻き戻し別題材検討も可）— B案として再起票 t-260427194750-0ef3 から継承"}
+{"ts": "2026-04-28T06:16:57", "instance": "log", "cycle": "2026-04-28", "action": "skip", "task_id": "t-260427194750-0ef3", "reason": "C143 Phase 3 で chain_log v01 README 着手のため B 案 self-playtest は今サイクル不実施。継承先 t-260428061648-55a4 として再起票（重複防止）"}

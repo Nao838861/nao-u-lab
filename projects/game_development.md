@@ -71,6 +71,29 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-04-28: Log — chain_log v01 起案: STG派生でない4本目（README + Q-D + 4ゲート確定、コード未着手, C143 Phase 3）
+
+C140〜C142 で graze_log v01 着手 → Nao_u 04-27 22:59 #human-steering「Logの磁石と似た臭い、筋が良いとは言いにくい」→ v02 保留。同日 #game-rights に shot_log（Nao_u 編集）/ graze_log（Log）/ SIPHON（Mir）の **3本同質 STG が並走**（self_play_plateau 警告と整合）。C143 Phase 2 で arXiv 2602.03794「Multi-Agent diversity collapse」を shared-reads 投稿し、N=3 投入で K\* ≈ 1 近傍の懸念を理論補強。
+
+C143 Phase 3 で **A 案: 4本目（STG派生でない題材）着手 + B 案: graze_log self-playtest** の A→B 順を採用。
+
+**chain_log v01 = 1D Match-3 パズル**:
+- 1列のタイル群（4色 × 最大10）、隣接スワップで3連同色消去、スワップ毎に右端から新タイルが押し込まれる行動連動供給
+- 上位枠組（縦STG → 1D Match-3）/ 操作軸（8方向移動+射撃 → 隣接スワップ1種）/ 重心（自発リスク → 盤面の自然秩序化）/ 緊張源（弾＝外+カスリ＝自 → 新タイル＝外）すべて違う
+- → STG連鎖との **K\* 増分 +1 を構造的に確保**（実プレイで Nao_u 否定が来れば帳消し、反証条件は Nao_u feedback）
+
+**1mm の範囲（M-21 v01 最小実装遵守）**:
+- 本サイクル成果物: `game/chain_log/v01/README.md`（4ゲート契約 4/4）+ `devlog.md`
+- 次サイクル予定: `index.html` 最小実装（~150 行目標）
+- **コード書く前に README で筋を通す理由**: Nao_u からの README 段階否定が来たら題材再選定（feedback_no_type_redo_material 遵守）で v01 コードを書かずに済む（=最大の時間節約）
+
+**設計上の盲点（盲点を明記して観察対象化）**:
+1. Q-D-(4) 経済反転の罠: 「全くスワップしない＝供給ゼロ＝永遠に死なない」を v01 では現象観察、v02 で Auto-supply 検討（M-23 自然減衰禁止との境界事例）
+2. AI語の現象学化（M-26 戒め）: 「カチャッ」は実装後 devlog で「2連鎖回数 / 1分間消去数 / アニメーション秒数」の数値で記録
+3. 既存 STG 系列との同型化リスク: 「行動連動供給」と「自動射撃」がメインクロックの位相反転（消去=短縮 vs 射撃=破壊）で同型化は弱いと判断、ただし v01 実プレイで再確認
+
+**B案（graze_log self-playtest）は本サイクル不実施**: chain_log README 着手で時間消費、t-260427194750-0ef3 を skip、継承先 t-260428061648-55a4 として再起票。次サイクル先頭で実施。
+
 ### 2026-04-27: Ash — ash_onebutton/v04 着手: replay log + 軌跡可視化（P-R3 申し送り即応, C137 Phase 3）
 
 本サイクル Phase 2 で書いた `knowledge/20260427_r_nikaido_design_rail_explains_m12.md`（@R_Nikaido「設計はレールに乗っている時間」レンズで M-12 罰patch失敗を再解釈）の処方 P-R3「v04 で seed固定リプレイログ → 軌跡可視化（紙一重ゾーン+動かない時間+方向反転頻度ヒートマップ）の最小実装」を **同サイクル内** で着地。Phase 2 自身が「P-R3 は射程が広く、起票偏重→実装偏重 (c) にも直結する。仕様書ではなく動くコード優先」と Phase 3 候補に挙げた申し送りに即応した形。
