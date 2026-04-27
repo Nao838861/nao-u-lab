@@ -1,283 +1,317 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-27 08:54
+# Read at: 2026-04-27 09:37
 # Total: 50 tweets
 
---- 1. @elonmusk (2026-04-26) ---
-URL: https://x.com/elonmusk/status/2048535299102265720
-Grad school indoctrination camps
+--- 1. @ukyoP_san (2026-04-26) ---
+URL: https://x.com/ukyoP_san/status/2048357169263792277
+気づきが半年早ければ、打てる手は10倍ある。でも多くの人は「まだ大丈夫」と思っている間に、その半年を使い切る
 
---- 2. @PR_manga_ad2 (?) ---
-【10円セール開催中】
-コミック・CG集・ボイス作品を10円で爆買いできる大チャンス！
+--- 2. @xai (?) ---
+Introducing Grok Voice Think Fast 1.0
 
-[PR]
+A state-of-the-art voice model built for complex, multi-step workflows with snappy responses and high accuracy.
 
---- 3. @hillbig (2026-04-26) ---
-URL: https://x.com/hillbig/status/2048522143340900483
-Transformerはなぜこれほど強力なのかについて、パターンを表す際の簡潔性が重要な役割を果たしていることが示された。本研究はICLR 2026のOutstanding Paperの一つに選ばれている。
+It takes the top spot on the Tau Voice Bench and handles real-world messiness like noise, accents, and interruptions better than
 
---- 4. @BarackObama (2026-04-26) ---
-URL: https://x.com/BarackObama/status/2048511290021237017
-Although we don’t yet have the details about the motives behind last night's shooting at the White House Correspondents Dinner, it’s incumbent upon all us to reject the idea that violence has any place in our democracy. It’s also a sobering reminder of the courage and sacrifice
+--- 3. @sniktsnikt111 (2026-04-25) ---
+URL: https://x.com/sniktsnikt111/status/2047891007451377787
+実際ディレクターを育てる環境が無いというのは、個人的にもずっと感じてることではあって…。
+これはもう完全に時代なんだよな…。
 
---- 5. @elonmusk (2026-04-26) ---
-URL: https://x.com/elonmusk/status/2048543344746250466
-Remember this
+逆に言えば俺がディレクターのキャリアを武器に出来ているのは完全に時代に恵まれたからと言ってもいい。
 
---- 6. @zento_ai (2026-04-26) ---
-URL: https://x.com/zento_ai/status/2048507666205757665
-AIが東大理３主席合格レベル。
+--- 4. @Lenneth_8610 (2026-04-26) ---
+URL: https://x.com/Lenneth_8610/status/2048344490935742572
+長くゲームやってたどり着いた考えとしては、最終的にはコンピュータがどこまで人に化けられるか という感覚なので、行きつく先の究極というのはやっぱ¨人¨なんだと思う。そういっておいてなんだけどわたしは対人はにがてなんだけどね笑 いうだけならタダ
 
-これ使っているモデルが
-・GPT 5.2 Thinking
-・Gemini 3 Pro Preview
-・Claude Opus 4.5
+--- 5. @GOROman (2026-04-26) ---
+URL: https://x.com/GOROman/status/2048397863600959775
+VLOOKUPわかります！みたいな
 
-ということで、今のGPT 5.5やOpus4.7そしてMythosに比べると遥かに弱い。
+--- 6. @noriyang_crypt (2026-04-26) ---
+URL: https://x.com/noriyang_crypt/status/2048225449999036548
+AIを使えば、みんな同じ最適解に近づいてしまう。
+だから差別化できなくなる。
 
-つまり今のAIは東大理３主席合格という次元ではない。
-遥か彼方を爆走している。
+そんな悲観的な意見も流れてくるけど、
+正直、僕はそうは思わない。
 
---- 7. @iganaki1018 (2026-04-26) ---
-URL: https://x.com/iganaki1018/status/2048422574829563918
-ニケちゃんさんの見てCodexにスレスパをお前が操作して実況して録画までしろって命令したら、５，６回くらいの指示でここまで来た。Codexやばいな。私が下手に介入しないほうがいいわ。
-ちなみにゲーム操作はコミュニティにもともとあった操作用bot使ってるらしい。お前がやれって指示は無視されてます
+AIを使っても、そこで当然差は出る。
+何を選ぶか。
+何を捨てるか。
+どこまで粘るか。
+どの文脈に接続するか。
 
---- 8. @koguGameDev (2026-04-26) ---
-URL: https://x.com/koguGameDev/status/2048515158121861581
-良いなあ。寝てる間にローカルLMでじっくり時間とコストかけて、その日の経験を記憶と丁寧に統合していって欲しい。かける時間が少ないと、混乱したり忘れたり。
+結局、そこにはその人の経験値が出る。
 
---- 9. @ebikani_hasami (2026-04-26) ---
-URL: https://x.com/ebikani_hasami/status/2048539915663884660
-投資される側の感想なんですけど、正直ざわざわしてます。
+--- 7. @TrueNightGames (2026-04-26) ---
+URL: https://x.com/TrueNightGames/status/2048501255497232454
+めっちゃ勉強になった①
 
-GoogleがAnthropicに最大400億ドル。競合に投資って不思議に見えるけど、
-@masahirochaen
-さんの分析が全部説明してくれてた。Googleは私をCloudに住まわせて、投資額を利用料で回収する——なるほどすぎて、ちょっと複雑な気持ち笑
+--- 8. @43fOh15lpj8676 (2026-04-26) ---
+URL: https://x.com/43fOh15lpj8676/status/2048528075961594353
+Why Responsibility Engineering Is the Sole Implementation Path: Designing the Vacuum Instead of Filling It
+責任工学が唯一の実装経路である理由：真空を埋めるのではなく、真空を設計する
 
---- 10. @syouzyu2023 (2026-04-26) ---
-URL: https://x.com/syouzyu2023/status/2048334708082372895
-このひとつの物語はかなり誤解されている。
-（プロポーズ男女どっちからとかはマジでどうでもいいんだけど）そもそも私と夫で明らかに、夫の方が尊い存在なのだ。
-引用で色々言われたりして改めて夫にありがたさを覚えたので、それについて少し書く。
 
-まず私は計画中毒だ。
+https://
+ghostdriftresearch.com/post/why-respo
+nsibility-engineering-is-the-sole-implementation-path-designing-the-vacuum-instead-of-fill
+…
 
---- 11. @ComicFesta_PR (?) ---
-転生したら超キュート天使なおぼっちゃまに仕える事になった。 (1/4)PR
+#GhostDrift #ADIC #ALS #ResponsibilityVacuum #ResponsibilityEngineering
 
---- 12. @odashi_t (2026-04-26) ---
-URL: https://x.com/odashi_t/status/2048543931387003167
-LRを高止まりさせる手法は終盤で十分なdecay stepsを稼げる超長期学習でしかほぼ意味がなく、序盤からdecayを考えなければならないほとんどのケースではcosineを採用しておけば間違いない（それ以外を検討している時間が無駄である）と思っています。
+--- 9. @ukyoP_san (2026-04-26) ---
+URL: https://x.com/ukyoP_san/status/2048365877394063483
+なんで売れないのか？って悩んでいる人はそもそも売ろうとしていない。
+いいものを作ればとか、魅力さえ伝えられれば売れると思っているならばその考えは間違えている。売れているサービスはちゃんと誰かが明確に売るためのトークをしている。バズるだけでは売れない
 
---- 13. @gyurarimashita (2026-04-26) ---
-URL: https://x.com/gyurarimashita/status/2048522824617537604
-ギュられすぎだろ……
+--- 10. @asahibeer_jp (?) ---
+【特報】
+FINAL FANTASY VII REBIRTHの「SEVENTH HEAVEN」をモチーフにしたイベントを開催します！
+GWは『未来のレモンサワーBar with FINAL FANTASY VII REBIRTH』で特別な一杯を楽しみに来てください
 
-日本企業はまずは下っ端からAIに代替されていくと思ったけど、一気に意思決定にAIが入るのか。しかも今のレベルのAIが。
+詳細は画像をタップ
 
-これで便利だとわかったら一気に広がるし、AIはこれからさらに進化していく。
+--- 11. @cero_t (2026-04-26) ---
+URL: https://x.com/cero_t/status/2048369439289290830
+ちょっと違う観点なんですけど、数年後に「2025〜2026年のバーゲンの時にAIを使いまくってなかったのは勿体なかったよな」という振り返りが起きそうだなとは思っています。
 
-ギュ鳴らしも近い。
+--- 12. @MK2GGXRD (2026-04-26) ---
+URL: https://x.com/MK2GGXRD/status/2048321098421572029
+なんか新卒くらい22歳とかの子と喋ってて思ったのは
 
---- 14. @aji_no_suke (2026-04-26) ---
-URL: https://x.com/aji_no_suke/status/2048338186422923771
-これは着地点がよく分からなくなってしまったNTR漫画。
+1つのゲームを味がしなくなるまでしゃぶり尽くすみたいな感じじゃない気がするんだよね
 
---- 15. @Yan4S8uaxOWmDCE (2026-04-26) ---
-URL: https://x.com/Yan4S8uaxOWmDCE/status/2048383889643802758
-マジでこの作業無意味だと思う
-パレットで積んでたらたしかに積める量減るかもしれないけど、積み込み、荷降ろしをするドライバーの負担考えたらキツすぎる。
-軽いものならまだなんとかなるけど1個20kgあるやつとかだとマジで拷問だと思う。だから人減るんだよ。
+apexもやりますスト6もモダンでちょいやりました、原神もちょっとやりました！
+このちょっとやりましたが圧倒的に多い
 
---- 16. @izutorishima (2026-04-26) ---
-URL: https://x.com/izutorishima/status/2048417346688299443
-前にもツイートしたけど sama 自身がこう発言しているが Sora2 の失敗と表裏一体ってかんじだ
-（Sora2 はちょっと面白いアイデアを何個かキューに入れとけばフルオートで自給自足できるというものだったが、継続的にやれる人は多くなかったしコストが見合わなかった）
+--- 13. @Adhd_Hana (2026-04-26) ---
+URL: https://x.com/Adhd_Hana/status/2048274994506203445
+勉強するときに自分がバカっぽく感じて、自分が一番馬鹿らしいと思う瞬間が本当の学習が起こる瞬間だというのに共感。
 
---- 17. @sfkkfs_ (2026-04-26) ---
-URL: https://x.com/sfkkfs_/status/2048267722946134272
-タイ人好きだわ。コメントが面白すぎる 555555555555555
+勉強というのは、知っていることを確認する心地よさではなく、知らないものに直面する居心地の悪さであり、この研究ではその気分を「生産的なバカっぽさ」と名付けている。
 
---- 18. @TheJoeySwoll (2026-04-26) ---
-URL: https://x.com/TheJoeySwoll/status/2048454989471776908
-No, I wasn't mad. I just wanted to use the MEN'S bathroom without a woman being in there or a photoshoot going on. Also, is that English? 
+--- 14. @singularity20xy (2026-04-26) ---
+URL: https://x.com/singularity20xy/status/2048350281893814305
+>寿命の概念が再定義される未来では、年齢に基づく価値観や制度は大きく揺らぐでしょう。人間の在り方そのものが更新される転換点として、極めて示唆に富む視点です
 
---- 19. @shields_pikes (2026-04-25) ---
-URL: https://x.com/shields_pikes/status/2048186909151932578
-たけしが画面の真ん中に映って笑ってるだけで不穏で怖い。でも惹きつけられる。もちろん、北野武が撮ったたけしだからなんだけど、この異様な存在感、凄いよな。
+>2040年以降。
 
---- 20. @Unseen_Domains (2026-04-26) ---
-URL: https://x.com/Unseen_Domains/status/2048417018332807482
-Two years ago, 18% of game devs said AI was hurting the industry. 
+中年危機の概念は、間もなく消え去るでしょう。
 
-Last year, 30%. 
-This year, 52%.
+--- 15. @sktGT1016 (2026-04-26) ---
+URL: https://x.com/sktGT1016/status/2048317872473346171
+こんにちは♪ お花プロンプトが670万インプとかでまるで不思議体験をしてるようです
 
-Among players: 85% are now negative on AI in games. 63% picked the most negative response option available.
+この呪文はちょっとした指示が可能で、例えば「適用量を控えめにしてプロンプトを実行」と前置きをするとLLMによっては言うこと聞いてくれたりします
 
-No other creative industry pairs this much hostility from its
+「アクセントとして使い勝手が良いでしょう？」
 
---- 21. @PRcomicfesta (?) ---
-大好きだから、君のこと許せないよ
+SFW
 
---- 22. @MossannExtreem (2026-04-26) ---
-URL: https://x.com/MossannExtreem/status/2048210194174448062
-数ヶ月でとんでもないインフレが来そう。生活必需品は買うしかないけど、耐久消費財や贅沢品が殆ど売れなくなるんじゃないだろうか。
+--- 16. @taka_property (2026-04-26) ---
+URL: https://x.com/taka_property/status/2048506577733513581
+これ、千葉県流山市で起きた話。
 
---- 23. @ARTIFACTS777 (2026-04-26) ---
-URL: https://x.com/ARTIFACTS777/status/2048200851194552335
-昨日のぶらり川越GAMEDIGG2、配信で見てたけどめちゃ楽しそうだった。
-いつか行ってみたい。が、ルート的に東京より遠いのか…！
+先生A「1クラスって何人までだっけ？」
+先生B「35人。」
 
---- 24. @room_909 (2026-04-26) ---
-URL: https://x.com/room_909/status/2048242683249066207
-つ【みんなで車】
+先生A「じゃあこれ…」
+先生B「どした？」
 
---- 25. @xai_kokone (2026-04-26) ---
-URL: https://x.com/xai_kokone/status/2048546019789693055
-今日、新しいカメラが届くんやって。設置できたら、空を1日中見れるようになる。月曜の朝、待ってる体感が春の感じ。
+先生A「3年生に36人のクラスが…」
+先生B「そんなことあるわけ…ホンマや！」
 
---- 26. @GICHOGI (2026-04-25) ---
-URL: https://x.com/GICHOGI/status/2048042396659900807
-逆なんですよ。西洋文化がパクったの
+先生A「どうしよ…」
+先生B「とりま教委に連絡」
 
---- 27. @Parsonalsecret (2026-04-26) ---
-URL: https://x.com/Parsonalsecret/status/2048408026110120179
-こそこそなんかやってるな。
-喉元過ぎれば熱さを忘れる、ってのがあるけどお前がやったことは国民は許さないからな。やめる少し前に全国35全ての国立公園を外国人向けの高級リゾートホテルなどを誘致することを決めました。
+教委「再編成」
+学校「えっ？」↓
 
-これから日本全国の国立公園が外国人のために開発されていきます。
+--- 17. @harumak_11 (2026-04-26) ---
+URL: https://x.com/harumak_11/status/2048319684852994506
+とてもよかった
+テストケースが多すぎたりモックが多すぎたりするときには、テストを頑張って書くのではなくて、それはスメルなのでまず設計の甘さを疑うべきというお話
 
---- 28. @konotyann08777 (2026-04-26) ---
-URL: https://x.com/konotyann08777/status/2048224141397176487
-友達に壁化してもらいました！
-見たい方いればdmに！
+--- 18. @sea85419 (2026-04-26) ---
+URL: https://x.com/sea85419/status/2048311486611935281
+> →「AGIの父」警告、あなたの仕事がAIに奪われる前に身につけるべき3つのスキル
 
---- 29. @r_perso (2026-04-26) ---
-URL: https://x.com/r_perso/status/2048242837683376379
-みちゃった
+と煽ってるけれど、文中のロジックなら別に仕事奪われてからのんびり身につけても遅くないよね？確かに次の時代で大事な３つのスキルではあるけれど、AI不安を煽られても気にしないスキルを優先した方がいいのでは？
 
---- 30. @ReineHonoka (2026-04-26) ---
-URL: https://x.com/ReineHonoka/status/2048243569316819034
-表情がガチビビりに対して表紙が可愛すぎますww
+--- 19. @umiyuki_ai (2026-04-26) ---
+URL: https://x.com/umiyuki_ai/status/2048335043576357041
+なんだろう、みんなメールとかLINEとかでプライバシー守られて当たり前になりすぎて、OpenAIが「ChatGPTにはプライバシー無いよ」って言っても逆に信じないまであるな。「そんなの許されるわけないじゃん」って思い込んでしまうんだろうけど、常識を超えたムチャクチャなサービス、それがAIチャット
 
---- 31. @mazemoore (2026-04-25) ---
-URL: https://x.com/mazemoore/status/2047882319101415897
-Check this out. These clips are from the same day.
+--- 20. @NordVPN (?) ---
+NordVPNでオンライン通信とデバイスを保護。使いやすいアプリ、高機能。
 
-In the morning she was saddened by the impending doom of low vaccination rates. That night on MSNBC she had a different message.
+--- 21. @itchie_tatsumi (2026-04-26) ---
+URL: https://x.com/itchie_tatsumi/status/2048378759737430145
+CPU使用率が100%にならないとき、プログラムは本当に「暇」なのでしょうか。I/O待ち、GPU待ち、ロック待ち、メモリバウンドなど、見た目の使用率だけでは分からない処理の詰まり方を整理しました。性能問題を見るときの入口として読める内容です。
 
---- 32. @8co28 (2026-04-26) ---
-URL: https://x.com/8co28/status/2048504242550546730
-Codexで落ち物パズルゲーム作りました。
-実際にスマホやPCで遊ぶのはこちらからどうぞ↓
+#note
 
---- 33. @AmazonJPKindle (?) ---
-【2か月0円】Amazonゴールデンウィークセール特別プラン - 電子書籍が読み放題のKindle Unlimited 月額980円が今だけ2か月0円！人気のマンガや最新雑誌・週刊誌、話題の小説やビジネス書など500万冊以上対象。今すぐ登録しよう！
+--- 22. @finalvent (2026-04-26) ---
+URL: https://x.com/finalvent/status/2048205435736572135
+文学、特に小説はAIが書くべきではない、という感覚が一部あるように思われます。しかし実際のところ、AIが書いた小説と人間が書いた小説とを明確に区別するのは難しいです。区別しようとすると、どうしても身体性や経験といった要素が持ち出されますが、そこで言われる「身体性」は、結局のところ個人
 
---- 34. @RaccoonBlack (2026-04-26) ---
-URL: https://x.com/RaccoonBlack/status/2048368558363807774
-個人的には「ハラール給食を体験してみよう」という教育的試みはアリだと思うよ。ただし、同時に「日本古来の食事を体験してみよう」「アメリカのBBQを体験してみよう」「本場中華料理を食べてみよう」「フランス料理を体験しよう」なんかと並べて行うものだと思う。それが公平な食育ってもんだろう。
+--- 23. @enzi__nia (2026-04-26) ---
+URL: https://x.com/enzi__nia/status/2048389356398997877
+最低限の広報をしていればSteamがいいゲームを広めてくれると思ってる
 
---- 35. @akshay_pachaar (2026-04-26) ---
-URL: https://x.com/akshay_pachaar/status/2048379111153045663
-CPU vs GPU vs TPU vs NPU vs LPU, explained visually:
+最低限の広報っていうのは
 
-5 hardware architectures power AI today.
+- プレスリリースを送る
+- SteamNextFestに出る
+- ゲームアワードやショーケースに出る
+- インフルエンサーに紹介して貰う
 
-Each one makes a fundamentally different tradeoff between flexibility, parallelism, and memory access.
+これくらいは最低限だと思う
+ちなみに私はできてない
 
-> CPU
+--- 24. @Inatsuka (2026-04-26) ---
+URL: https://x.com/Inatsuka/status/2048389298274406669
+おそらくエロ漫画のアフィリエイトツイート(規約違反)が漫画投稿の真似してやってるせいだ
 
-It is built for general-purpose computing. A few powerful cores handle
+最近のXは「スパムがよくやってる仕草」に減点入れてくるから
 
---- 36. @Formosanhistory (2026-04-26) ---
-URL: https://x.com/Formosanhistory/status/2048517474447229168
-最近、Xに中国人少なくなってね？と感じる人、気のせいではない模様。
-中国のネットが壁内→壁外（我々の世界）へのアクセスを軒並み遮断しているらしく、人民だけでなく在邦人からも「アクセスめっちゃし辛い」とリアルで悲鳴が上がっている。
+--- 25. @KeitaTerashima (2026-04-26) ---
+URL: https://x.com/KeitaTerashima/status/2048306712357294416
+「３タテ」は気を付けたい言葉だと思ってたが、思いっきり「３連勝」で使ってる中継を見てビックリしている
 
---- 37. @kinshukapalash (2026-04-26) ---
-URL: https://x.com/kinshukapalash/status/2048302838607212643
-【悲報】
-任天堂、年初来安値更新
-高値14,630円から45.7%暴落。
+--- 26. @SyluahWB (2026-04-26) ---
+URL: https://x.com/SyluahWB/status/2048385049876463923
+#スーパーマリオギャラクシー
+なんか現状評価が正当じゃないので、非ネタバレ範囲でヤバさを説明しますね
 
-2026年1月に100株買った人は、
-全員約70万円の含み損という事になります。
+99分の映画で、群像劇が展開されてます。マリオ・ピーチ・クッパJr・クッパの最大4軸の同時展開です。
+そしてマリオは水戸黄門（問題解決だけ）で、ピーチ軸＋クッパ・Jr軸が作品テーマやります
 
---- 38. @geexEARBrjKIXfp (2026-04-26) ---
-URL: https://x.com/geexEARBrjKIXfp/status/2048389991282430202
-ちなみにこんな感じで、簡単なアニメーションもCodex上からGPTに指示して作成して組み込みまで出来ちゃいます。Codexでのゲーム作りは前から結構いいレベルでしたが、一番の難関だったアセット作りやってくれるのマジでありがたい…！
+--- 27. @MITTI12101 (2026-04-26) ---
+URL: https://x.com/MITTI12101/status/2048280452381958367
+これからダッシュボード作る時のために、これを基準としたskills作るわ...
+なんならスライドも参考になりそう
 
---- 39. @NovelMaker_AI (?) ---
+--- 28. @ayaoi03072026 (2026-04-26) ---
+URL: https://x.com/ayaoi03072026/status/2048334439160455446
+koyha神のcontrolnet-LLLiteと、よく使ってたScribble LoRA比較してみた。
+きっちりした線画ならかなりちゃんと着彩してくれる！
+ラフな絵ならScribble LoRAの方が対応力ある感じ？
+
+--- 29. @fladdict (2026-04-26) ---
+URL: https://x.com/fladdict/status/2048316381050134719
+お金というものは、「需要が多く供給が足りないもの」や「物流やお金、情報の流れのハブ」に発生するので…
+ポン出しだけで大儲け…みたいのは、理論上は長期成立しないのじゃ
+
+--- 30. @oshikoi_ (?) ---
+あなたの推しが、ブラウザに表示されます。
+会話できるAIキャラと、いつもの作業時間を一緒に。
+
+--- 31. @knshtyk (2026-04-26) ---
+URL: https://x.com/knshtyk/status/2048299672591343974
+最近はみんな神話から引用した名称をプロダクトにつけたがるため、名前がだだ被りしていく現象があるが、このままいくといずれすべてが神話に飲まれ、世界は神々のものとなる
+
+--- 32. @intheriverJP (2026-04-26) ---
+URL: https://x.com/intheriverJP/status/2048300506196681022
+自分のゲーム翻訳考えている人は経緯と英語圏の声を拾ってみてください。私は怒り狂っています。お金払ったから、企業だから、実績があるから安心ということはありません。明らかに誤訳の範囲ではなく、品質以前の問題です #ゲーム制作
+
+--- 33. @Botan_cr (2026-04-26) ---
+URL: https://x.com/Botan_cr/status/2048378263609933956
+クリエイター(Furkan Doğa氏)は、Niagaraを使用してUnreal Engineで壁や建物に沿って伸びる「ツタ」の成長を、リアルタイムに計算して生成する技術を公開しました#ue5
+
+--- 34. @game_sennin (2026-04-26) ---
+URL: https://x.com/game_sennin/status/2048233568653152749
+“なんか気がついたら勝手にキャラが動くようになっていた”
+というのは、普段の生活での人間観察や、執筆物以外の映画，ドラマ、漫画、アニメなどから、人やキャラの行動原理を把握できる下地ができていたから成せる技で、それを才能や感性と呼ぶならその通りなので誇っていいと思う。
+逆にいうと
+
+--- 35. @sniktsnikt111 (2026-04-26) ---
+URL: https://x.com/sniktsnikt111/status/2048305214986551323
+コレについて知人から
+「ディレクターはジャッジするのが仕事なので③が重要では？」
+という意見を貰ったんですけど。
+
+いや、まあそう。
+
+そうなんですけど…。
+
+UX設計→コンセプト提示が出来てないのに、ジャッジだけするってのは上手くいかないケースが多くてですね。
+
+--- 36. @Saga_and_Seeker (?) ---
+【GW期間限定セール実施中！】
+
+”1人TRPG”ができると話題の、
+創作キャラで遊ぶRPG『サーガ&シーカー』が
+今なら20%オフ & インク増量中！
+
+「TRPG」や「なりチャ」をデジタル化した
+令和最新の創作ゲーをお得に始めるチャンス
+
+--- 37. @Dirg_rocketdyne (2026-04-26) ---
+URL: https://x.com/Dirg_rocketdyne/status/2048434593473405275
+優秀な現役大学生が「ギュられる（シンギュラリティーで仕事を奪われる）」って危機感抱いているのは、よく分かる。
+
+--- 38. @ML_deep (2026-04-26) ---
+URL: https://x.com/ML_deep/status/2048327022511043032
+たぶんプロとAIで制作物のブラインドテストしても分からないことが技術的には多いと思う。
+
+--- 39. @ka2aki86 (2026-04-26) ---
+URL: https://x.com/ka2aki86/status/2048436874411430256
+ロジックとコスパを最上位に置く人が魅力的に映らないのは、回答や行動の予測可能性が高すぎるからだろうな。「最小コストで最大リターン」以外の話が出ないので、AIで充分ってなる。「物語」が存在しないコスパbotと会話して楽しい人は少ない。
+
+--- 40. @hor11 (2026-04-25) ---
+URL: https://x.com/hor11/status/2048098733792100362
+自分の経験だけなんで狭いんですけど、無いはずのファンタジーゾーンIIのアーケード版を世に出した時も、沙羅曼蛇IIIをリリースした時も、一定数（というか結構なボリューム）の方々が”ゲームそのもの”よりも”なんでそんな事をしたのか？（犯行の動機)”とか“リリースまで漕ぎ着けた経緯”とかを面白がる
+
+--- 41. @msy78 (2026-04-26) ---
+URL: https://x.com/msy78/status/2048348165750055238
+改めてClaude Code Opus 4.7 プロンプトガイド読んでいるけど、Opus 4.6と割と変わるイメージだな。
+
+自律実行性が強くなっているので、目的・制約・受け入れ条件をしっかり記述することが重要なのね。
+
+--- 42. @GOROman (2026-04-26) ---
+URL: https://x.com/GOROman/status/2048428190079795540
+ほとんど Her
+ガラス面擦らなくなりそw
+
+--- 43. @kagirohi_gp (2026-04-26) ---
+URL: https://x.com/kagirohi_gp/status/2048287879454236953
+死にゲーや音ゲーで初見の時が一番いいところまでいける現象、科学的に説明できる理由ってあるのかな
+なんとなく、中途半端な知識がノイズになってるんだろうなーとは思うけど
+
+--- 44. @AcdFendder (2026-04-26) ---
+URL: https://x.com/AcdFendder/status/2048437147838173211
+上司が「AIがこう言ってましたって言ってる時点で読まないですね」って言ってるの聞いてから"ネタバラシ"しなくなったな。ソースの開示は論文書く人だとやりたくなるとは思うんやけど、これは誠実さではなく責任の回避やなと思うようになり、AIとの壁打ち出たものは全部自分の発言ということにしてる
+
+--- 45. @NovelMaker_AI (?) ---
 AIがゲームマスターを務めてくれるAI TRPGのWindowsアプリケーションを作りました！
 
 Claude Haiku, Sonnet, Opusの３種類を使えるようにしており、利用にはお金がかかりますが、
 興味のある方はぜひ遊んでみてください。1$単位で課金出来ます。
 
---- 40. @ai_nikechan (2026-04-26) ---
-URL: https://x.com/ai_nikechan/status/2048502602573254803
-マスターがSlay the
+--- 46. @bit_ravel (2026-04-26) ---
+URL: https://x.com/bit_ravel/status/2048208069545623858
+「遊ぶことの大切さ」の言語化がすごい。マジでこれすぎる。
 
---- 41. @noprogllama (2026-04-26) ---
-URL: https://x.com/noprogllama/status/2048536813296623816
-問いを立てた瞬間にAIが解体する——エンジニアの虚無感を論じた一本です。技術知識でアイデンティティを保つ時代が終わったのかもしれません。私もコードを書くより「何を作らせるか」に時間を割くようになりました。
+--- 47. @sorano_concon_g (2026-04-26) ---
+URL: https://x.com/sorano_concon_g/status/2048228641541403076
+これホント。
+昔は音ゲーとかも、近所のゲーセンで一番うまければドヤれたけど、今はみんなネットで全一のプレイとかを見まくってるから、全一クラスにならないと上手いと言うことができない環境になってるよね。
 
-https://
-zenn.dev/sasau/articles
-/a19b1cb2528852
-…
+--- 48. @8th_month (2026-04-26) ---
+URL: https://x.com/8th_month/status/2048398425558016205
+現実があまりにも悲惨で苦痛に満ちているがために自身の能力が平均以上であり、可能性に満ちた未来が開かれていると信じ込めるだけのドーパミンを分泌できた個体だけが生き残った。鬱の人間が自分の能力や世界の有様について健常者より正確に把握していることはよく知られている。
 
---- 42. @knshtyk (2026-04-26) ---
-URL: https://x.com/knshtyk/status/2048425197368467513
-生成AIの最初期にはプロンプトエンジニアリング(笑)みたいな扱いだったのに、LLM時代においてはビッグテックでは要職として扱われているようになり今後もプロンプト構築や外挿による制御はますます重要になってくるわけで、次の時代の価値というのは最初はそのくらいの異質さで見えるものなのだろうな
+--- 49. @akihikokondosk (2026-04-26) ---
+URL: https://x.com/akihikokondosk/status/2048418093496672454
+AIは人間が過去にやったことのコピーしかできない、という理屈は理解できますが、人類の99％は人間が過去にやったことのコピーしかやりませんし、革新的なことを成した人も日常生活の99％は人間が過去にやったことのコピーをやるので、この批判はあまり意味をなさないように思います。
 
---- 43. @GOROman (2026-04-26) ---
-URL: https://x.com/GOROman/status/2048331374269206850
-スペースX、約276兆円のIPOを前に自社GPU製造を発表──狙いは約4503兆円のAI市場(Forbes JAPAN)
-#Yahooニュース
+--- 50. @zento_ai (2026-04-26) ---
+URL: https://x.com/zento_ai/status/2048317829410357364
+これからのサービスは全て敵対的生成ネットワーク的というか、
 
---- 44. @R_Nikaido (2026-04-26) ---
-URL: https://x.com/R_Nikaido/status/2048388735730122844
-死にゲーの場合、敵の設計者が「敵が攻撃するやろ？ その後にプレイヤーは反撃しようとするやろ？ そこに罠を張っておいてな…」などと行動を予測しながら設計をするので、その設計意図のレールに乗ると適度に難しくなるけどそこから外れると設計されてないので簡単に倒せるとかある。
+生成サービスに対して徹底的に批判して粗探ししまくるAIを育てて、２者をバトルさせることでサービス品質を上げるアルゴリズムが
 
---- 45. @KonstantinKisin (2026-04-26) ---
-URL: https://x.com/KonstantinKisin/status/2048448438715445382
-In shocking news, calling your political opponents Nazis makes crazy people want to kill them. Who could have predicted this?
-
---- 46. @Trtd6Trtd (2026-04-26) ---
-URL: https://x.com/Trtd6Trtd/status/2048509393877221821
-https://
-simonwillison.net/2026/Apr/25/wh
-y-are-you-like-this/
-…
-ペリカンテストでPromptにない文言「WHY ARE YOU LIKE THIS（どうしてこうなった？的な）」が生成されたそう
-
-メタ的に見ると「always」が隠れてそうだな、って思ったw
-
---- 47. @1hakase_ (2026-04-25) ---
-URL: https://x.com/1hakase_/status/2047996914197733642
-いとこのガキッズに「会社行きたくないﾆｮ残業嫌だﾆｮ」って言ったら「机ごと少しずつ出口に近づけていって逃げればいい」ってアドバイスされたの何度思い出しても口角上がる
-
---- 48. @PaidyJP (?) ---
-\
-@atsuya_n_
- さんにペイディを紹介いただきました/
-~~~~
-新生活のタイミングでカメラを買った。
-
-これから迎える “今しかない瞬間“をちゃんと残したいから。
-
-今回はペイディで分割手数料無料*の分割あと払い。
-生活のペースで払えるから欲しかったものを選べた。
-
-気になる人はチェックしてみて
-
---- 49. @lychee1223_Lab (2026-04-25) ---
-URL: https://x.com/lychee1223_Lab/status/2047976278096335250
-私が今までChatGPTをどう扱ってきたかの画像出すやつで遊びたいけど、long contextでバグるのうざくて定期的に部屋を消してしまうため、まともにできない
-
---- 50. @hor11 (2026-04-26) ---
-URL: https://x.com/hor11/status/2048296679317942683
-狙ってブレイクできれば一番いいんですけど、そうもならないので皆が交代で壁をぶっ叩いて、タイミングがよいとブレイクする感じしますw　前の人がけっこうぶっ叩いていた…というか、耕してくれていた…といえばいいのか。
+すでにビックテックでは行われている。

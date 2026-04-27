@@ -86,6 +86,9 @@ function toggleMute(){
 }
 const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
 const keys={};
+// Physically-held keys (by e.code). Snapshotted on death/clear so name entry
+// rejects keys that were held at game-over until the player releases them.
+const heldNow=new Set();
 
 // === EXPERT AI POLICY — 17-dir eval + trajectory line dodge ===
 function aiExpert(){
@@ -180,6 +183,7 @@ addEventListener('keydown',e=>{
   if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();
   if(e.key==='m'||e.key==='M'){toggleMute();return;}
   keys[e.key]=1;
+  if(!e.repeat)heldNow.add(e.code);
   if(e.key===' '||e.code==='Space'||e.key.startsWith('Arrow'))e.preventDefault();
   if(e.key===' '&&!state.started){state.started=true;playSE('start');return;}
   if(e.key===' '&&(state.over||state.cleared)){
@@ -193,7 +197,7 @@ addEventListener('keydown',e=>{
     return;
   }
 });
-addEventListener('keyup',e=>{keys[e.key]=0;});
+addEventListener('keyup',e=>{keys[e.key]=0;heldNow.delete(e.code);if(state&&state.nameEntryLocks)state.nameEntryLocks.delete(e.code);});
 function mulberry32(a){return function(){var t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;}}
 
 // === ENEMY TYPES ===
@@ -393,7 +397,7 @@ function reset(){
     waves:buildWaves(),waveIdx:0,waveT:0,
     over:false,cleared:false,started:false,
     hitFlash:0,bombFlash:0,bombReady:0,bombUsed:false,invincible:0,mercyGlow:0,maxFlash:0,maxFlashed:false,retryShownT:undefined,gameOverSEPlayed:false,
-    particles:[],popups:[],rings:[],hitstop:0,shake:0,particleFreeze:0,overTimer:0,submitted:false,nameInput:'',nameEditing:false,
+    particles:[],popups:[],rings:[],hitstop:0,shake:0,particleFreeze:0,overTimer:0,submitted:false,nameInput:'',nameEditing:false,nameEntryLocks:null,
     stars:Array.from({length:200},()=>({x:Math.random()*W,y:Math.random()*H,layer:Math.floor(Math.random()*6)})),
   };
 }
@@ -736,7 +740,7 @@ function step(){
     if(state.waveT>=w.t+maxD){state.waveIdx++;}else break;
   }
   if(state.waveIdx>=state.waves.length&&state.enemies.length===0&&state.eBullets.length===0&&!state.cleared){
-    state.cleared=true;saveHi();playSE('clear');
+    state.cleared=true;state.nameEntryLocks=new Set(heldNow);saveHi();playSE('clear');
   }
   // enemies
   state.enemies.forEach(e=>{moveEnemy(e);if(e.flash>0)e.flash--;});
@@ -836,7 +840,7 @@ function step(){
     const er=(e.type==='large'||e.type==='boss')?e.r*(0.5+0.5*e.hp/e.maxHp):e.r;
     const dx=e.x-state.player.x,dy=e.y-state.player.y;
     if(dx*dx+dy*dy<(er+state.player.r)*(er+state.player.r)){
-      state.over=true;saveHi();playSE('playerDeath'); // 死亡瞬間。ゲームオーバーSEは表記出現時
+      state.over=true;state.nameEntryLocks=new Set(heldNow);saveHi();playSE('playerDeath'); // 死亡瞬間。ゲームオーバーSEは表記出現時
       spawnParticles(state.player.x,state.player.y,120,'#9ee6ff',15);
       spawnParticles(state.player.x,state.player.y,80,'#fff',10);
       spawnParticles(state.player.x,state.player.y,40,'#ffd45c',8);
@@ -856,7 +860,7 @@ function step(){
       if(dx*dx+dy*dy<(b.r+state.player.r)*(b.r+state.player.r)){
         b.dead=true;
         if(state.gauge<=0){
-          state.over=true;saveHi();playSE('playerDeath'); // 同上
+          state.over=true;state.nameEntryLocks=new Set(heldNow);saveHi();playSE('playerDeath'); // 同上
           spawnParticles(state.player.x,state.player.y,120,'#ff4444',15);
           spawnParticles(state.player.x,state.player.y,80,'#fff',10);
           spawnParticles(state.player.x,state.player.y,40,'#ffd45c',8);
@@ -1282,6 +1286,10 @@ function draw(){
 // name input handler
 addEventListener('keydown',e=>{
   if(!(state.over||state.cleared)||state.submitted)return;
+  if(e.repeat)return;
+  if(state.over&&state.overTimer<120)return;
+  // ゲームオーバー/クリア突入時に押されていたキーは離されるまで無視（aaaaa防止）
+  if(state.nameEntryLocks&&state.nameEntryLocks.has(e.code))return;
   if(e.key==='Enter'){
     // submit: use typed name, or fallback to previous name, or generate default
     let name=state.nameEditing?state.nameInput:(rankName||'');
