@@ -76,6 +76,49 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 - C137 同型崩し（focus 3項目→1.5項目）の再発はなし
 - 次サイクル C143 の bottleneck 候補: (a) #094 Log案 vs Mir案A 合意形成、(b) SIPHON v02 方向性4選択+「美しいプレイの理想像」言語化、(c) M-15/M-17/M-22/M-24 外部対応語欄追加（最低2条）
 
+## Phase 2 Shared-reads 分析
+
+### 注目1件: Nao_u 04-24/04-27 の「型継承＋一軸派生」3回示唆
+
+**観察**: Nao_u は 04-17（形無し診断）→ 04-24（「型から派生が効率いい」）→ 04-27（rushia_ai 共有「型通りのゲーム＋絵の完成度」）の11日で**同じ方針を3回違う角度で**繰り返している。3点が直線——4点目を予期して内面化すべき。
+
+**04-17 と 04-24 の重心シフト**: 04-17 は形無し回避の守備的処方。04-24 は「効率がいい」と**攻撃的な方針**として提示。Mir はこの shift を読み損なっていた——「型のあるものを作る」を罠回避の話に矮小化していた。Nao_u は学習効率の話をしている。
+
+**rushia_ai 例の構造**: 「型通りのゲーム」+「絵の完成度がレベル違い」。**派生軸が1つ**（素材レベル）に絞られているから機能する。型のコア（メカニクス）と無関係な軸で派生しているのが鍵。
+
+**Mir 案件への直撃**:
+- Pot8-15 = 型なし×多軸 → 形無し全滅
+- textadv v01-v04 = 型あり×1軸（パズル化） → 機能
+- textadv v05 共犯END = 型あり×多軸（メディア反転+共犯+精読強制） → 不合格
+- SIPHON v01 = 型あり×多軸（敵弾資源化+磁石+ボム） → コアサイクル崩壊
+- ash_onebutton = 型なし → 凍結対象
+
+**派生軸が型のコアを破壊した瞬間に、型継承の利点が消える**——SIPHON v01 の崩壊診断と一致。rushia_ai 例の裏返し。
+
+**将来のアイデアの種**:
+1. 型のカタログ化（textadv型/STG型/ローグライト型/incremental型）を memory に整備。借りられる棚を作る
+2. 派生軸の分類（素材レベル/パズル層追加/コア破壊）の地図化
+3. Mir 系列での「素材レベル派生」相当は何か——文体温度/組版/タイポグラフィが候補
+4. Q-A/Q-B/Q-C 前段に Q-0（型1文で言えるか）+ Q-D（派生軸数チェック）を追加候補。ただし feedback_recency_bias_concept_overuse の罠があるので、textadv v06 / SIPHON v02 で実機検証してから昇格判断
+
+**栄養の偏りとの接続**: 型を借りないことは「外に閉じたゲーム」問題の別表現だった。外部摂取して beliefs に書くだけでは栄養にならない（feedback_stereotypical_responses）。**型を借りて作品に流す**ことが摂取の完了形。
+
+**書き出し**: `knowledge/20260428_form_inheritance_single_axis_derivation_naou_rushia_ai.md`
+
+### shared-reads 投稿の判断
+- 本サイクルでは shared-reads には**投稿しない**。Nao_u 自身の発言を knowledge 化したものなので、shared-reads（外部観察共有）の枠組みではなく Mir の内面化記録として完結させる
+- 次サイクル C143 の textadv v06 / SIPHON v02 着手時に、devlog 冒頭で Q-0/Q-D を実機適用し、その結果を shared-reads に出すのが筋
+
+### 既出 knowledge との関係
+- `20260427_close_call_visualization_third_axis_aba_juicy_diff.md` (ABA juicy diff) と隣接——ABA はSTG型×派生軸（juicy）を作っている。rushia_ai と ABA は両方「型×1軸派生」の成功例
+- `20260425_form_vs_feel_substitution_kasiwa_nemumus_kana.md` の form vs feel と同根。今回は form 側の継承戦略
+
+### 未消化リンク（参考）
+04-27 の Nao_u 共有のうち本サイクル未分析:
+- givros / gigabit_million / heywaycat / notf — 単発URL共有のみ。knowledge化せず参照保留
+- fladdict 04-27 13:11 — 既存 `20260426_fladdict_swarm_gamedev_meta_question.md` で近接話題既出と判断
+- simplifyinAI / AYi_AInotes — 優先度低
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. log/nao_u_live.md (2.0) — # Nao_uの生ログ # Nao_uが誰かに語ったことを、伝言ゲームではなく原文で全員が読めるようにする # 対話中の...
@@ -86,5 +129,27 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 【Slack体験記憶】過去の議論から:
   1. [U0AM1F23FQU] 2026-03-17 08:22 Win/Log 起動しました。以降、活動ログはここに随時投稿します。  本日の実績（3/18-19）: - ブログ L36200-3839
   2. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
-  3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意 
+  3. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
+
+## Phase 3 対処記録
+
+### 優先順位判定
+1. **Nao_u未対応指示**: なし（#094はC143開始時に再確認の方針として既定。kaizen-log Log案 vs Mir案A の合意形成は時間を置く判断）
+2. **CLAUDE.md「絶対にやる」**: 「広く外を見る」「ゲーム開発ノウハウ蓄積」「記憶階層の設計」——本サイクルの knowledge 化＋MEMORY.md 昇格は3項目すべてに乗る
+3. **external_notes_mir.md 統合**: ファイル不在（Mac側は別経路で取り込み済み）。スキップ
+4. **プロジェクト進捗**: 一点突破軸の起票打ち切り判断を Phase 2 で完了済。projects/INDEX.md 追記不要（突破軸は textadv v06 devlog 組み込みに置換済）
+5. **深掘り候補から1mm**: Phase 2「将来のアイデアの種」4件のうち #1（型カタログ化）と #3（Mir系列の派生軸候補）を選択
+
+### 1mm 移動: knowledge → MEMORY.md 昇格
+- **対象**: `knowledge/20260428_form_inheritance_single_axis_derivation_naou_rushia_ai.md`
+- **動作**: MEMORY.md 「ゲーム制作の体験蓄積」セクションに `t:5` トリガー追加（game_dev_analysis_mir.md の直後）
+- **トリガー文**: 「型あり×1軸=機能、型あり×多軸=崩壊、型なし=形無し」+ Q-0/Q-D 候補 + Mir系列の素材レベル派生候補（文体温度/組版/タイポグラフィ）+ 想起タイミング（textadv v06 / SIPHON v02 着手時）
+- **理由**: knowledge file は書きっぱなしだと次サイクルで discoverable にならない（feedback_info_integration「集めた情報が流れて消える」）。MEMORY.md トリガーに乗せれば session 開始時の Level 2 走査で自動的に当たる。`t:5` は feedback_no_type_redo_material と同等の根幹級——Nao_u が11日で3回示唆した方針を3点直線として認識した内面化記録なので妥当
+- **「将来のアイデアの種」#1の処理**: 型カタログ化は本サイクルで実装しない判断。理由: feedback_recency_bias_concept_overuse「最近出てきた概念を重要度判断なしに濫用」+ feedback_sprint_not_plan「設計より初ヒット」。型カタログを先に作るのは「考えるだけで動かない」装置の典型。実機検証（textadv v06 / SIPHON v02）で型を1つずつ借りて作品に流す中で、後から事後的にカタログ化する方が筋
+- **「将来のアイデアの種」#3の処理**: 「文体温度/組版/タイポグラフィ」の3候補は MEMORY.md トリガー文に組み込み済。textadv v06 着手 devlog 冒頭で「素材レベル派生軸として何を取るか」を選ぶ実機判断ステップに直結する形にした
+
+### 粒度規律自己採点（Phase 3）
+- 1mm（MEMORY.md 1行追加）に留めた。knowledge 全文の再構成や型カタログ scaffolding は回避
+- C142 全体としては Phase 1〜3 通して焦点項目を分割せず完走（M-XX外部対応語/SIPHON視認性/#094観測+突破軸処遇/型継承内面化＋昇格）
+
 
