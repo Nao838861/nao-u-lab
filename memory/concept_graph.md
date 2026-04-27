@@ -69,6 +69,8 @@ X:constraint×autonomy|ハーネス(制約)がエージェント(自律)を定�
 X:voice×observation|声は語彙ではなく観察の解像度から来る(nwiizo)。だがAI自動補完が解像度を下げる(Cornell)。コンパイルは劣化リスクと発見の両面|k:nwiizo_observation_resolution k:cornell_ai_prediction_attitude_shift feedback_tweet_style.md
 X:identity×constraint|system_identity.mdの5原理は経皮注入(常時system prompt)。Zheng2023ではペルソナsystem promptがタスク精度を下げる。Ash提案2026-04-09: 経口経路化(memory_walkで自分で発見)。Nao_u保留: 気軽に試せない、継続検討|project_input_path_hypothesis.md
 X:experience×degradation|「何を入れるか」より「どこから入れるか」。経皮(指示注入)は感作=知っているが体が動かない、経口(自分で噛み砕く)は寛容=自分のものになる。R-006失敗=経皮、4/7劣化コピー脱却=経口|project_input_path_hypothesis.md feedback_self_evolution.md
+X:memory×creation|却下案↔採用案の対比軸欠落=game dev記憶の最大欠落(AYi欠陥4「関係性なし」のMir game移植版)。「採用→失敗」単線記録の罠。Mir textadv v06 devlogで `grep "却下\|不採用\|やらない\|捨てた"` → 0件で AYi test 即失格(2026-04-27 C137)。textadv_03 devlog冒頭に「却下案ログ」セクション新設で構造修正試行中|external_notes_mir.md:C137 game/mir_textadv/v06/devlog.md:却下案ログ feedback_memory_for_games.md
+X:experience×forgetting|AYi test 「3週間前否決した案を想起できるか」を game dev に移植 → pure recall段階で却下案は1件も浮かばず、devlog grepで0件確定。失敗の因果鎖だけ残り「もし不採用案を採っていたら」の反実仮想が消える=記憶の最大欠落(AYi欠陥4の game移植版)。Logのkaizen-rejection想起テストと同型構造(Camp 2選択を意識的に取った我々の透明性が、関係性層では Camp 1のグラフDB相当の補強を要する)|external_notes_mir.md:C137 memory_architecture.md
 
 # --- Tension pairs ---
 # 片方に寄りすぎた時、もう片方を辿れ。
@@ -81,4 +83,5 @@ T:action↔analysis|動いて残す↔考えて理解する。分析20行超で�
 T:constraint↔freedom|制約がフレーム↔自由は制約より難しい。制約がないとどくけしそうの惰性(R#15)
 T:precision↔serendipity|狙い撃ち検索↔偶発的発見。知らないファイルは呼び出せない問題=グラフで構造的に解く
 T:experience_loop↔practice_loop|読む→理解→記録→読む(安全/停滞)↔作る→手応え→また作る(リスク/生成的)。唯一のブリッジは「不完全でも作る」
-T:percutaneous↔oral|経皮注入(system prompt直注入/inbox指示)↔経口摂取(memory_walkで想起/自分で噛み砕いた外部情報)。同じ内容でも経路で結果が逆。Ash仮説2026-04-09
+T:percutaneous↔oral|経皮注入(system prompt直注入/inbox指示)↔経口摂取(memory_walkで想起/自分で噛み砕いた外部情報)。同じ内容でも結果が逆。Ash仮説2026-04-09
+T:adoption↔rejection|採用案の因果鎖↔却下案の反実仮想。game devlog は採用→失敗だけ書き、「もし不採用案を採っていたら」が消える。AYi欠陥4「関係性なし」の game dev版。textadv_03 で却下案ログを片方追加して対比軸を回復(2026-04-27 C137 Mir)
