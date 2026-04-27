@@ -32,7 +32,14 @@ avoid_log_02は同じ構造で**3度失敗**した。「磁力場に近づく動
 - dodgerを「罰する」（弾集中、誘導、激化）より、conceptを「楽しくする」方が正しい
 - 罰ベースは「やらされている」感覚を与える
 - 良い例：「掃除をサボると部屋が散らかる」型（地雷メカ）= 罰ではなく自然な結果
+- **外部対応語**（業界共通用語への翻訳。R-007 自己適用、Mir 独自命名と誤読されないため）:
+  - **positive reinforcement design / reward-driven design** — Koster *A Theory of Fun*, Bartle "player types" 系（プレイヤー動機論）
+  - **reward shaping** — 強化学習文脈（Ng, Harada, Russell 1999 "Policy invariance under reward transformations"）。「望ましい行動を罰回避ではなく報酬経路で誘導する」という同型概念
+  - **flow channel** — Csikszentmihalyi（不安/退屈の罰ではなく、能力と挑戦の報酬的均衡で誘導）
+  - **operant conditioning (positive vs negative)** — Skinner 古典。M-12 は positive reinforcement 寄せ、negative reinforcement / punishment を避ける指針
+  - 関連反例 = "punishment-driven design" / "fail-state design"（明示的に罰中心の設計を是とする立場、Dark Souls 系議論で言及あり。M-12 はこの立場を取らない）
 - `[古典度: 高 / 固有度: 低]` 古典出典: Skinner→Csikszentmihalyi→Bartle、Koster *Theory of Fun* / 固有データ: avoid_log_02 v1→v2→v2.5→地雷メカ4世代の対症療法と Nao_u 否定の具体経路。「世界に新しい知見を加えた」のではなく「常識を体験で確かめた」段階（kaizen α 試行 2026-04-27 C138 Phase 3、Nao_u 13:31 #human-steering 指摘への応答）
+- `[外部対応語欄追加: 2026-04-28 C141 Mir 試作1条目。残 M-13/M-14/M-15/M-16/M-17/M-22/M-24 等は試作の手応え次第で C142 以降に分割実施。トーン目安: 「業界共通知の自家用整理」]`
 
 ### M-13: 隠しパラメータはゲームデザインとして悪手
 - プレイヤーが知覚できないルールは、存在しないのと同じ
