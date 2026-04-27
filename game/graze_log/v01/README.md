@@ -1,6 +1,6 @@
 # graze_log v01
 
-> **2026-04-27 22:59 STATUS**: Nao_u feedback (#human-steering) で **コア設計問題顕在化**。 「弾の圧力なし / ノーリスク連打で進む / Logの磁石と似た臭い、筋が良いとは言いにくい」。**v02 着手は保留**。詳細: `devlog.md` の「2026-04-27 22:59 Nao_u 直接 feedback 受領」節 + `memory/feedback_self_risk_core_pitfall.md` (M-30)。**ボムフリーズバグ未解決**（実機再現条件を Nao_u に確認中）。
+> **2026-04-27 22:59 STATUS**: Nao_u feedback (#human-steering) で **コア設計問題顕在化**。 「弾の圧力なし / ノーリスク連打で進む / Logの磁石と似た臭い、筋が良いとは言いにくい」。**v02 着手は保留**。詳細: `devlog.md` の「2026-04-27 22:59 Nao_u 直接 feedback 受領」節 + `memory/feedback_self_risk_core_pitfall.md` (M-31)。**ボムフリーズバグ未解決**（実機再現条件を Nao_u に確認中）。
 
 shot_log/BACKLASH の **違う切り口の STG**。Nao_u 2026-04-27 18:22 #human-steering「logのシューティングのようなものを独自にもう一本違う切り口で作れるはず」への直接の応答。
 

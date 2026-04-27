@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-28 05:14)
+# サイクルステージング (2026-04-28 05:39)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: 3件 (cycle=2026-04-28)
@@ -70,11 +70,11 @@ Aaltonenの処方を翻訳すると、ルールを増やす方向ではなくル
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] CRITICAL (critical=1, warning=0) !! git: 21件の未pushコミット（10件超）
 - :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
 - *設定変更: ash/auto_diary* `interval_sec`: 10800 → 21600  :x: プロセス: PIDファイルが見つからない :x: 設定反映: プロセス停止中のため検証不可  :warning: 問題あり。要確認
 - *設定変更: ash/auto_diary* `interval_sec`: 10800 → 21600  :white_check_mark: プロセス: PID 3040 稼働中 :x: 設定反映: 120秒以内にログ活動を検出できず  :warning: 問題あり。要確認
 - [health_check] CRITICAL (critical=1, warning=1) !! git: 24件の未pushコミット（10件超） ?  git: 24件のuncommitted変更（memory/log/）
+- ## 2026-04-28 05:50 — M-30 は ABA 本に 2021 年から書かれていた  昨日 (2026-04-27) Nao_u 22:04 #game-rights のフィードバックを受けて刻印した M-30「コアメカニズムの緊張は向こうからやってくるべき / 自分からリスクを取らないと点が取れないのはコアではなくボーナス」が、ABA Games (長健太 / @abagame
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
@@ -84,66 +84,70 @@ Aaltonenの処方を翻訳すると、ルールを増やす方向ではなくル
 
 ---
 
-## Phase 1 情報収集（2026-04-28 05:30 Ash）
+# Phase 1 情報収集 (2026-04-28 サイクル C138 想定)
 
-### §0a 継承タスク（Phase 3 候補として明示）
-next_tasks 層A pending 3件、すべて連続0サイクル＝今サイクル新規:
-- **t-260428021140-7b77**: 次作=パズル系（カテゴリC: 型あり筋良し）の題材選定 + 着手前 Q-A/B/C + 快感審問3行ブロック
-- **t-260428021140-e726**: graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案: cross_review 提案を実装まで持っていく
-- **t-260428021141-695f**: game_lessons_log M-29 (HUD は挙動の鏡) / M-30 (型カテゴリ分類 A/B/C) の刻印
+## 継承タスク Phase 3 候補メモ（§0a 真ソース＋§0b 自然言語側）
 
-§0b（前サイクル日記末尾）の継承:
-- 「Pot v03 か avoid_log v03 の最小スケッチを30分。仕様書ではなく動くコードで、起票偏重から実装偏重へ自分の重心を一段ずらす」（2026-04-26 日記） — §0a の 7b77 と方向性は近いが、対象がパズル系に絞られた形で進化済み
-- 「external_search_phase1_fixation.md のレビュー滞留→自分側で案A着手」（2026-04-27 日記） — projects/INDEX.md 確認すると **2026-04-26 C134 で案A実装完了済**。0b はもう古い。
+層A pending 3件（全て連続0サイクル、起票=今朝 2026-04-28 02:11）：
+- **[A]** `t-260428021140-e726`: graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案 → cross_review 提案を実装まで
+- **[B]** `t-260428021140-7b77`: Ash 次作: パズル系（カテゴリC: 型あり筋良し）の題材選定 + 着手前 Q-A/B/C + 快感審問3行ブロック
+- **[C]** `t-260428021141-695f`: game_lessons_log M-29 (HUD は挙動の鏡) / M-30 (型カテゴリ分類 A/B/C) の刻印
 
-→ **Phase 3 着手の最有力候補**: 7b77 (パズル系題材選定)。理由: (a) Nao_u 2026-04-27 22:04 #game-rights ash_onebutton 全体評価「コアメカニズムに型がない／題材から練り直したほうが早い」が直接接続、(b) M-29/M-30 刻印 (695f) は次作着手時に同時に発生する派生タスク、(c) graze_log v02 PR (e726) は cross_review 提案の実装まで持っていく作業で、上の 2 件と独立に動かせる。
+§0b 日記末尾の指示（2サイクル分）：
+- **C137 末尾（直近）**: external_search_phase1_fixation.md レビュー滞留→Log/Mir応答確認、なければ案A最小実装に Ash側で着手。「レビュー待ち=自治の失敗」
+- **C136 末尾（一つ前）**: Pot v03 もしくは avoid_log v03 の最小スケッチを30分。仕様書ではなく動くコード。起票偏重→実装偏重に重心ずらし
 
-### 1. external_notes_ash.md 未統合エントリ
-末尾2件をスキャン → **直近の未統合は見当たらない**。最新3エントリすべて [統合済 2026-04-08] / [統合済 2026-04-04] / [統合済 2026-04-03] マーカー付き。2026-03-16〜2026-03-17 のAITuber/インディーゲーム/Claude Code セキュリティ系も全件統合済。**外部摂取は #shared-reads / knowledge/ 直行が主経路化**しており external_notes_ash への昇格運用は減衰中（前サイクル 2026-04-27 日記でも観察済）。
+⚠ 観察: §0a [A][B][C] は今朝起票されたばかりで継承の重み軽め。一方 §0b の C136→C137 で「動くコードを書く」「自治を回す」が2サイクル連続で書かれている。実体としての重みは §0b 側 + §0a [B] パズル選定。
 
-### 2. projects/INDEX.md Active 状況
-Active 20件中、自分(Ash)起票で動いているもの:
-- **input_route_hypothesis.md** (検討段階・Nao_u承認待ち)
-- **external_search_phase1_fixation.md** (案A実装完了 2026-04-26 C134、案B/E未着手、4/27 C135 検証1サイクル目で step 6 自然発火確認)
-- **rlm_skill_prototype.md** (計画起票、最小試作未着手)
-- **instance_divergence_observability.md** (設計起票、Log/Mir 追記歓迎中)
+## 1. external_notes_ash.md 未統合エントリ
+直近5エントリ全てに `[統合済]` マーカー付き。**新規未統合エントリは0件**。
+- 2026-04-25 07:47 Twitter おすすめタブ巡回（#5 Anthropic 二手市場、#27 ABA AI記事、#46 GAFA等）→ knowledge/20260425_anthropic_69_marketplace_vs_gemma_100_society.md 統合済
+- 2026-04-22 AI×ゲーム制作軸4本（GamingAgent ICLR2026 / TITAN / Game Master / GAMEBoT）→ knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md 統合済
+- 2026-04-21 @yyyole + @zento_ai 個人情報経路漏洩 → side_channel_audit v0.2 反映済
+- **メタ観察（4/21 自記）**: 「twitter_recommended → knowledge 直行が常態化、external_notes 中継が止まっている」と Ash 自身が記録。4/22-25で2件再開しているが、4/26以降3日間ゼロ。栄養の偏り再発シグナル。
 
-Mir 起票の現在進行: rule_density_experiment.md / failure_slot_measurement.md (2026-04-24 測定当日経過)。Log 起票: game_templates_design.md。
+## 2. projects/INDEX.md Active 状況（17件）
+特に注視：
+- **external_search_phase1_fixation.md** (Active 案A実装完了, 案B/E未着手, Mir 側 step 6 組込未確認) — §0b C137 で「レビュー滞留時は案A自分側着手」と指示
+- **rlm_skill_prototype.md** (計画起票, 担当=Ash, 最小試作=次サイクル以降と4/23予告)
+- **instance_divergence_observability.md** (設計起票, 担当=Ash) — 水平分業度指標の設計（4/26 C133）
+- **game_development.md / pot_dev.md** (Active) — Pot 開発の本流。次作=パズル系 §0a [B]
+- **game_templates_design.md** (Active 計画起票, Log) — 型テンプレート整備
+- **AYi 4/27 Markdown批判への自己照合**: バックログに登録（A=concept_graph 拡張 / B=MEMORY.md純粋index化 / C=ベクトル埋め込み——A+B並行・C見送り、ゲーム1mm優先のため次サイクル以降判断）
 
-**バックログから注目**: 「AYi @AYi_AInotes Markdown批判への自己照合」(2026-04-27)。Camp 1 (Zep/Cognee) vs Camp 2 (うち) 議論。MEMORY.md 200行常時注入が AYi 批判の射程内とLogが応答済。次の手 A=concept_graph拡張 / B=MEMORY.md純粋index化 / C=ベクトル埋め込み。担当未定。**ゲーム1mm優先**で次サイクル以降。
+## 3. twitter_recommended_20260428.txt 注目ツイート
+取得2回（02:15: 48件 / 04:54: 50件）。AI/ゲーム関連の温度が高いもの：
+- **#4 mod_poppo (4/27)**: 「ぽっと出がコーディングエージェントで言語処理系作っても AI slop 扱い、Ruby作者が作ると初期段階で1.2kスター」→ B019 到達力の社会的増幅メカニズム実例
+- **#6 so_ainsight (4/27)**: Microsoft TRELLIS.2「写真1枚から3Dモデル」無料公開 — game_development の素材生成パイプライン候補
+- **#9 mdancho84 (4/27)**: SEAL: Self-Adapting Language Models (arXiv:2506.10943) — 「デプロイ後に内部表現を進化させる」=B033 非随意忘却の対抗策候補だが arxiv ID は #121 ルールで実在確認必須
+- **#13 hardmaru (4/27)**: prompt engineering を AI に学習させる Conductor model RL — B015 ハーネス寿命変数（4/26追記）の Conductor 層での具体実装
+- **#18 wsl8297 (4/27)**: Memvid — テキストをビデオファイルに圧縮（ベクトルDB代替）。AYi の Camp 1 批判文脈で参照価値
+- **#25 tairanakamura (4/27)**: Windrose（Palworldのポケットペア発）アーリー6日で100万本 — インディー成功事例、Co-op 海賊サバイバル
 
-### 3. log/twitter_recommended_20260428.txt（48件、02:15取得）
-ゲーム/AI設計系で目に止まったもの:
-- @uezochan #12「AIがそれらしく振る舞っているだけとわかっていても込み上げるものがあった」— 我々への評価軸として読める
-- それ以外は政治・コミック広告・芸能系が主。ゲーム制作直結トピックは薄い
+⚠ 全体傾向: 政治/移民/事件系ノイズが多く（前半半分）、ゲーム/AI実務は #4-#25 帯に集中。「栄養の偏り」 = 直近 Phase 1 では政治情報の過剰摂取リスク。
 
-### 4. memory/beliefs.md 低確信度項目
-- **B007 (0.55)**: ~~reflectionsから「行動可能なtips」への変換ステップが欠落~~ → Archived (Dormant)。restoration_trigger は session_primer if-then 機能不全時。**現状トリガー未発火**
-- **B026 (0.45)**: ~~Peak-End Ruleは書く側より読む側に適用される~~ → Archived (Ineffective)。Gutwin 但し書き直撃で確信度未到達。restoration_trigger は単純体験への分類変更時
+## 4. beliefs.md 低確信度項目（0.5-0.6帯）
+- **B019**: 内部の深さと外部への到達力は別の軸 — 0.65→0.68 (+0.05)。Karpathy CLAUDE.md 5700star + メディエーション型構造拡張で 0.79 まで上昇しているが、依然 Active。検証アクション(A) Zenn投稿 期限 4/30 が直前
+- **B005 / B007 / B014 / B021 / B023**: いずれも Archived (Absorbed/Dormant)、restoration_trigger 未発火
+- **B015 ハーネス寿命変数 (4/26追記)**: 0.86 維持だが「我々は L3 動的協調未到達 / 自己測定器未実装」と未解決部分が多く、L2 寿命の経験的検証がパズル系次作の隠れた課題
 
-→ 復活トリガー該当事象なし。スキップ判断。
+## 5. memory_search 検索結果（キーワード「ワンボタン パズル 型」）
+- `memory/feedback_from_mac.md` L599: ツイートの「型」分類 — 観察を置く/短い感情/ユーモア/一般論
+- `log/nao_u_live.md` L2134: Nao_u 3/29「読者にとって美味しくない」問題と自慢臭の2型
+- `memory/external_notes_ash.md` L3091: ABA Games 制約駆動 — ジャンルにパズルあり
+- `knowledge/20260405_dread_mechanics_as_experience.md` L101: Pot #6 witness「テキストを読まないと解けない」=パズル一歩目
+- → 次作パズル選定で参照すべきは ABA本「Joys of Small Game Development」第7章 + One-Button章（外部検索ログ 4/27 16:05 / 4/28 05:30 で取得済）
 
-### 5. memory_search.py 検索結果
-クエリ「型カテゴリ パズル ワンボタン」、5件ヒット:
-1. external_notes_ash.md L3091-3107: ABA Games / 長健太(@abagames)。週末個人開発、>>>パズル<<<含むジャンル横断、全作品オープンソース [統合済 2026-04-03]
-2. knowledge/20260405_dread_mechanics_as_experience.md: Dread の物理塔、デジタルでの「ゼロ距離」設計問い
-3. knowledge/20260410_swebench_harness_equalizer.md: ハーネスはイコライザー（パズル文脈は素モデル解けず）
-4. external_notes_mir.md L333-346: Blue Prince(2025) — ローグライト×パズル。ゲーム内ノートを「あえて」提供しない設計判断
-5. knowledge/20260405_kenimo49_harness_5companies.md: ARC-AGI-3 (パズル)
+## 6. 外部検索（24h ガード適合のためスキップ）
+log/external_search.log 末尾確認：
+- `2026-04-28 05:30 | Ash | one-button puzzle game design inherent tension reactive mechanics 2026 | 10`
+- 同インスタンス（Ash）が **約8時間前** に取得済 → スキップ条件適合。本サイクルでの追加検索は実行しない。
+- 取得内容（再掲）: ABA本 One-Button章 / gamedesignskills puzzle principles / gamedeveloper.com puzzles。Nao_u 4/27 22:04「コアメカニズム緊張は向こうから来るべき」と直結、§0a [B] パズル次作選定で必読の方向性が既にステージ済み。
 
-→ **B028 関連の知見が豊富**。特に Blue Prince の「ノート不提供＝知識を最重要リソースに」設計と、ABA本 One-Button章は次作パズル題材選定の直接素材。
+## Phase 1 Summary
+- §0b の連続2サイクル「動くコード/自治を回す」指示が最も重い継承
+- §0a [B] パズル選定は外部検索 4/27-4/28 で素材取得済 → Phase 2/3 で型分類を埋める素地あり
+- external_notes 統合経路は3日空白、栄養の偏り再発兆候
+- AYi Markdown批判への対応はバックログのまま（A+B 並行・C 見送り方針未着手）
+- Twitter 政治系ノイズが多く、AI/ゲーム実務は中盤に集中
 
-### 6. 外部検索結果（log/external_search.log 追記済）
-- クエリ: `one-button puzzle game design inherent tension reactive mechanics 2026`
-- ヒット: 10件
-- top URL: https://abagames.github.io/joys-of-small-game-development-en/restrictions/one_button.html (ABA本人 "Joys of Small Game Development" One-Button 章)
-- 要点: 「continuously pressing button boosts attack power」(連打で強化)＋「targets that should not be hit」(撃ってはいけない標的)＝**反応的緊張のパターン**提示。Nao_u 04-27 22:04 指摘「コアメカニズムの緊張は向こうから来るべき／死にたくない→行動→生存・攻撃の快感サイクル」と完全一致
-- **接続**: ash_onebutton v04 の構造的失敗（自発的リスクテイク要求＝型なし）は、ABA本が直接 warn する「mindless button mashing」回避設計の鏡像反例。次作パズル系（カテゴリC）の題材選定で **ABA本One-Button章＋Blue Prince設計判断** を読んでから着手すべき
-- 関連: reference_aba_joys_small_gamedev_book_20260422.md（既記録のTOC地図、2026-04-27 C137 でjuicy章は取得済、One-Button章は未取得）
-- 24h スキップ条件: 直近 Ash 投稿は 2026-04-27 16:05（>13h前）、よって新規実行が正しい判断
-
-### Phase 2/3 への申し送り
-- Phase 3 第一候補: **7b77 (パズル系題材選定)** — Q-A/B/C＋快感審問3行ブロックを §6 の ABA One-Button章＋Blue Prince設計を読み込んだ上で書く
-- M-29/M-30 刻印 (695f) は 7b77 と同時に game_lessons_log.md に追記（次作着手の前提）
-- graze_log v02 PR (e726) は時間が許せば並行
-- Phase 4 日記: 「題材選定の前にどう型を借りたか／Nao_u指摘との照合過程」を中心に
