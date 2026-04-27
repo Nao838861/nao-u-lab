@@ -45,12 +45,23 @@ avoid_log_02は同じ構造で**3度失敗**した。「磁力場に近づく動
 - プレイヤーが知覚できないルールは、存在しないのと同じ
 - ヒットボックス×0.45は数値的に機能しても「なぜか当たらなかった」にしかならない
 - **ルールは「見ればわかる」か「やればわかる」**。これは game_design_principles.md の30秒オンボーディングと直結
+- **外部対応語**（業界共通用語への翻訳。R-007 自己適用）:
+  - **no hidden rolls / transparent mechanics** — Sid Meier (GDC 2010 "Everything you know is wrong")「乱数も含めてプレイヤーが推論できる形で出せ」
+  - **readable systems / legibility** — Schell *The Art of Game Design* Lens #54 (Readability)、Anna Anthropy 等インディー設計論
+  - **diegetic feedback** — UI研究系（fictional layer と mechanical layer の一致、Galloway 2006）。隠しパラを置かない設計の方法論側
+  - **WYSIWYG design (What You See Is What You Get)** — LucasArts SCUMM 哲学、Tim Schafer 系アドベンチャーの伝統
 - `[古典度: 高 / 固有度: 中]` 古典=Sid Meier「no hidden rolls」/ LucasArts SCUMM 哲学、Schell《Art of Game Design》掲示原則 / 固有=hitbox×0.45 の具体値と「なぜか当たらなかった」言語化。古典の体験的確認段階（kaizen α 試行 2026-04-27 C139 Phase 3、Nao_u #human-steering 13:31「ほとんど一般的な話」への自己照合）
+- `[外部対応語欄追加: 2026-04-28 C142 Mir 試作2条目（M-12に続く）。粒度規律「分割の言い訳」化監視サイクルで M-13/M-14/M-16 を1サイクル完走対象として実施]`
 
 ### M-14: 改修を重ねる前に「このゲームで一番楽しい瞬間は何か」を言語化せよ
 - avoid_log_02の場合「AIが吸った鉄片をSPACEで撃ち返して連鎖が起きる瞬間」
 - 改修の結果、その瞬間が「弾が当たりづらい」「速すぎて連鎖が見えない」で潰されていた
 - 改修が核の体験を守っているかを常にチェック
+- **外部対応語**（業界共通用語への翻訳。R-007 自己適用）:
+  - **core fantasy / core experience** — Mark LeBlanc et al. *MDA framework* (2004) のAesthetics層、Jesse Schell *Art of Game Design* Lens #1 "Essential Experience"
+  - **fun moment / signature moment** — Schell, Koster *Theory of Fun*。「このゲームで一番楽しい瞬間」の業界標準語
+  - **vertical slice protection** — 開発工程語。コアの面白さを毀損する改修をスコープアウトする運用論
+  - **player intent preservation** — Pichlmair & Johansen 系（プレイヤーが何をしているつもりか／何が報酬かを設計者が言語化する）
 - `[古典度: 中 / 固有度: 高]` 古典=Schell《fun moment》/ Koster《Theory of Fun》/ Pichlmair&Johansen等 / 固有=Mir cross_review C91 起源「一文で言語化」契約化、avoid_log_02「鉄片連鎖」具体喪失。Log/Mir 対話起源（kaizen α 試行 2026-04-27 C139 Phase 3、Nao_u #human-steering 13:31「ほとんど一般的な話」への自己照合）
 
 ### M-16: 「読ませる構造」と「読まれる文章」を取り違える盲点（mir_textadv v04 / 2026-04-25 Nao_u #game-rights 11:27）
@@ -66,6 +77,12 @@ avoid_log_02は同じ構造で**3度失敗**した。「磁力場に近づく動
 - 新作 v01 devlog 冒頭3行ブロックに textadv 用項目: 「読みたくなる瞬間 / それを支える文章技法 / UI機構が読書を強制していないか」
 - avoid系・shot系への同型横展開: 「見ないと気づけない」「触らないと気づけない」も罰駆動の変種。実装前審問対象
 - 詳細: `memory/feedback_pull_not_force_reading.md`
+- **外部対応語**（業界共通用語への翻訳。R-007 自己適用）:
+  - **pull vs push narrative / intrinsic vs extrinsic motivation to read** — Deci & Ryan SDT (Self-Determination Theory 1985) を読書動機に応用。「内発的に読みたい」と「外的罰で読まされる」の区別
+  - **forced reading / ludonarrative dissonance** — Clint Hocking 2007 命名のLN dissonance系議論派生。UIで強制した読みとゲームメカが噛み合わない症状
+  - **diegetic UI vs non-diegetic UI** — Galloway 2006 / Fagerholt-Lorentzon 2009。UI機構（信頼度バー）がゲーム世界内の出力か外部メタ装置か。罰の発生源と直結
+  - **affordance-driven reading** — Norman *Design of Everyday Things*。文章自体のアフォーダンス（次が読みたくなる仕掛け）vs UI機構による強制 の対比
+  - 関連反例 = "gating mechanic" / "comprehension test gate"（ヤード単位で読まないと進めない設計、ADV系で時に正当化される。M-16はこれを罰駆動として警戒）
 - `[古典度: 低 / 固有度: 高]` 古典出典なし（読書動機論はPropp/Genette系あるがゲームUIに当てた文献未引用） / 固有=2026-04-25 11:27 Nao_u #game-rights 直接介入、Mir v04 信頼度バー実装の具体批判経路（kaizen α 試行 2026-04-27 C139 Phase 3、Nao_u #human-steering 13:31「ほとんど一般的な話」への自己照合）
 
 ### M-17: 出発点を「穴塞ぎ」から「快感最大化」に置き換えよ（2026-04-25 Nao_u #game-rights 11:44 — M-12/M-15/M-16の統括）
