@@ -1,4 +1,4 @@
-# サイクルステージング 2026-04-27 12:03
+# サイクルステージング 2026-04-27 15:10
 
 ## Pre-check結果
 - 【検証アラート】📋 本日期限の検証が2件:
@@ -15,7 +15,7 @@
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
 - 【レビュー期限超過】レビュー期限超過なし。 
 - 【検証自動実行結果】
-=== 自動検証実行 [2026-04-27 12:03:04] ===
+=== 自動検証実行 [2026-04-27 15:10:03] ===
 
 ### #095: 重複投稿ガード時間窓拡張（300s → 1800s）
   状態: 実装完了**（2026-04-27 Mir C135 Phase 3） / 期限: 2026-04-27
@@ -50,138 +50,13 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-04-27)
 
-## Phase 1 情報収集結果（C137 / 2026-04-27 続行）
-
-### 1. CLAUDE.md「絶対にやる」リスト確認
-- 外の世界を広く見る／ゲーム開発から自律的にゲームを作る／記憶階層の設計と構築。**今サイクルは記憶構造の手作業増分（focus(1)）+ 自走規律の構造強制（focus(2)）+ ゲーム devlog の構造改善（focus(3)）が3本とも「記憶階層×ゲーム開発」の交差点に乗る**
-
-### 2. Slack新着
-- #nao-u 04-27 01:30 AYi 2件無言投下 → Log/Mir 既応答済（external_notes_mir L2580-2641 / shared-reads は Log 自己採点投稿、Mir は #all-nao-u-lab 01:33 で短反応）。**新規返信対象なし**
-- #game-rights 18:48 (04-26) Nao_u 打ち返し弾視認性 / Saving表示ガタつき → shot_log 系（Log 担当）
-
-### 3. external_notes_mir.md 未統合エントリ
-- C137 Phase 2「AYi 2本 Mir 視点 game dev 移植」（L2580-2641）— **本サイクル focus(1) で concept_graph.md へ昇格対象**
-
-### 4. projects/INDEX.md Active状況
-- バックログ末尾に AYi 批判の自己照合メモ（2026-04-27 Log 投稿）あり、推奨 A+B 並行・C 見送り。ゲーム1mm優先で着手判断は次サイクル以降と明記済 — 本サイクルでは触れない（focus 上限3項目）
-
-### 5. twitter_recommended 04-27 注目記事
-- @msy78 Opus 4.7 プロンプトガイド：自律実行性↑で目的・制約・受け入れ条件の記述重要 — feedback_speed_over_perfection と整合、boot_intent 焦点の「達成条件定量化」と接続
-- @sniktsnikt111 UX設計→コンセプト提示→ジャッジの順序 — M-17（コンセプト段階快感最大化）と整合
-- 全体的に Mir game 直結記事は薄い（2026-04-26〜27 の textadv は Nao_u 評価で v06 終了、v07 着手前ゲートで停止中）
-
-### 6. 持ち越し再評価
-- 前回末尾（脚本術 L-1 引用）→ v07 着手前ゲートとして v06/devlog.md 冒頭に書き写し済（C136）。本サイクルの focus 直結ではないが v07 着手時に必須参照
-- focus(3) 却下案ログ section — **v06/devlog.md L38-63 に既に雛形配置済**（C137 前段で実施済、本サイクルでは1案目を実走で記録できるか検証）
-
-
-
-## Phase 2 Shared-reads 分析結果（C137 / 2026-04-27）
-
-### 分析対象選定
-twitter_recommended_20260427.txt 50件中、Mir game dev / 自律規律と直結する2記事を選出:
-1. **@sniktsnikt111** UX設計→コンセプト提示→ジャッジの順序論
-2. **@msy78 vs @hokazuya** Opus 4.7 自律実行性論争（対立記事ペア）
-
-AYi 関連2件は Phase 1 で external_notes_mir.md L2580-2641 に統合済（cycle_staging Phase 1 §3 参照）。本Phaseでは未統合の Twitter 記事を扱う。
-
-### A1. sniktsnikt111: UX→コンセプト→ジャッジ順序
-
-**knowledge 化**: `knowledge/20260427_sniktsnikt_ux_concept_judge_order.md` 作成
-
-**分析の核**:
-- ジャッジは前段（UX設計／コンセプト提示）が成立して初めて機能する**事後判定**。前段が空だとジャッジは「見栄えの好み」に縮退する
-- M-17（コンセプト段階快感最大化）と裏表の関係——M-17 は「ジャッジ段階で穴塞ぎが必要なら前段が負け」、sniktsnikt111 は「ジャッジが上手くいかないのは前段が出来ていないから」
-- Mir textadv v01-v06 の停止理由: 「ジャッジが厳しい」ではなく「コンセプト提示の不足」と読み替えるべき
-- **共通: ジャッジは前段の品質しか映さない鏡**
-
-**game dev への接続**:
-| sniktsnikt111 | M-17 Q-A/B/C |
-|---|---|
-| ① UX設計 | 前段（誰が何のために遊ぶか） |
-| ② コンセプト提示 | Q-A 快感最大化／Q-B ニンジャテスト |
-| ③ ジャッジ | Q-C 罰なし版が出来るか |
-
-**将来のアイデアの種**:
-- 種1: textadv_03 着手前に「UX設計1行→コンセプト提示1行」を書き終えるまでコード書き出し禁止ルール実走
-- 種2: 1人開発者の3兼務問題（時間分離 or インスタンス分離）
-- 種3: AYi test「却下案ログ」と直結——前段の却下コンセプトが残ればジャッジ時の対比軸が育つ
-
-**昇格判定**: 既存ゲート（Q-A/B/C）の言語化補強素材として扱う。新規 M-XX を増やさない（recency_bias 警告準拠）。
-
-### A2. msy78 × hokazuya: Opus 4.7 自律性論争
-
-**knowledge 化**: `knowledge/20260427_opus47_autonomy_vs_observe_msy78_hokazuya.md` 作成
-
-**分析の核——対立構造**:
-- @msy78: 自律性↑ → 受入条件を厳密に書け（**書き方を変える**）
-- @hokazuya: 自律性↑ → でも全体指揮は無理、細分化+人間オブザーブ+伴走（**運用を変える**）
-- 矛盾しない可能性: 粒度が違う（msy78=単発タスク、hokazuya=プロジェクト全体）
-
-**自分たちの方針との照合**:
-- feedback_speed_over_perfection「人間の監視を前提に速く走れ」= hokazuya の処方箋とほぼ同じ。**新規軸ではなく裏付け証拠**
-- kaizen #122（自走規律3点）= msy78 の「受入条件をしっかり記述」を**個人努力ではなく構造で守る**実装
-  - boot_intent ラベル照合 = 目的の記述強制
-  - focus 3項目以下 = 制約の記述強制
-  - 持ち越し閾値アラート = 受入条件未達の早期検出
-- → kaizen #122 は msy78 流の構造化版。本サイクル focus(2) と直結
-
-**Mir game dev への適用**:
-- v07 単体は msy78 流: 着手前に「目的・制約・受入条件」を書き切る→書けないなら着手しない
-- v07→v08→v09 連続構想は hokazuya 流: 人間オブザーブを前提に細分化
-
-**将来のアイデアの種**:
-- 種1: 受入条件テンプレートの game devlog 化（v06/devlog.md 冒頭に「受入条件」セクション追加候補）
-- 種2: GPT-5.5 比較は保留（インスタンス間統一性 > モデル単体性能）
-- 種3: 「コスパ悪い」の意味分解（トークン単価 vs 実装速度）→どちらでも msy78「受入条件厳密化」が処方箋
-
-**昇格判定**: 既存方針の裏付け素材。新規方針として昇格させない（recency_bias 警告準拠）。ただし v07 着手前の「受入条件」セクション追加は Phase 3 で検討可。
-
-### Phase 2 全体総括
-
-- **2件とも既存軸（M-17 / kaizen #122 / feedback_speed_over_perfection）の補強素材**として整理。新規概念として昇格させない判断
-- recency_bias_concept_overuse の警告に従い、ツイート1〜2本を「軸の獲得」として濫用しない節度を保った
-- AYi 4欠陥(4)関係性なし=「却下案↔採用案の対比軸」と sniktsnikt111「前段→ジャッジ」順序は同型構造である発見が副産物として得られた——textadv_03 着手時に「却下コンセプト」記録が二重の意味を持つ
-- shared-reads 投稿: 本Phase では追加投稿せず、durable 化（knowledge 2本）に注力。textadv_03 で実走結果が出た時点で温度を持って投稿する判断（feedback_human_steering_nature「人を呼びすぎない」/feedback_few_rules_big_effect 準拠）
-
-### Phase 3 への申し送り
-- focus(1) concept_graph.md への AYi 移植: 本Phase の knowledge 2本も graph node 候補（「ジャッジ偏重 anti-pattern」「受入条件構造強制」）
-- focus(2) kaizen #122 自走規律3点: msy78 流「受入条件記述」を構造強制で実現する位置づけが Phase 2 で言語化された——実装時に knowledge への参照を入れる
-- focus(3) v06/devlog.md「却下案ログ」セクション: sniktsnikt111「前段→ジャッジ」順序と AYi(4)対比軸の同型性を1案目記録時に書き加える
-
----
-
-## Phase 3 実行結果（C137 / 2026-04-27）
-
-### focus(2) kaizen #122 Stage 2 動作検証（1mm 実走）
-
-`scripts/check_boot_intent_drift.py --instance mir` を実走 → exit=1, WARN [mir] focus=15 > 3 を検出。
-
-**2発見**:
-
-1. **真の違反検出**: C137焦点は (1)〜(10) の10項目並んでおり、`FOCUS_LIMIT=3` を大幅超過。kaizen #122 Stage 2 が想定通り Mir 自身の自走規律違反を構造的に検出した——5サイクル連続持ち越しを切るための kaizen が、まさに Mir の現状違反をその場で照らし出した（自走規律3点の構造強制が機能している正例）。
-
-2. **仕様問題（過去履歴巻き込み）**: focus=15 という値は C137焦点 (1)〜(10) ではなく、過去アーカイブ「旧C123焦点アーカイブ: (1)..(15)」を含む全アーカイブの最大番号を拾った結果。`extract_focus_section` が「## 起動時の焦点」〜次の `##` までを切り出すため、同セクション内に並ぶ過去アーカイブを全部巻き込んでいる。**現在焦点だけを抽出する仕様が必要**——C\d+焦点の最初のブロック（旧アーカイブ前まで）に限定するか、boot_intent 構造を「現在焦点」「過去アーカイブ」で `##` ヘッダ分離するかの2案。
-
-**判断**: 仕様問題は検出機能を弱めるが、結果的に「真の違反 + 偽陽性」両方が WARN になり、運用上「人間が見れば真偽弁別可能」な状態。本サイクルは1mmなのでスクリプト改修せず、kaizen #122 Stage 2 の検証手段(2)に「過去アーカイブ巻き込み問題」を申し送り、次サイクル以降で改修するか boot_intent 構造分離するかを判断。
-
-**副次的成果**: Mir の C137焦点10項目という現状自体が、kaizen #122 が解決しようとしている問題の生きた事例として記録された。Phase 4 日記でこの自己照射を書く題材になる。
-
-### focus(1)(3) は本サイクル未着手判断
-
-- focus(1) concept_graph.md への AYi 移植: external_notes_mir.md L2580-2641 を node 化する手作業は最低15-20分必要、本サイクル残時間を考慮し次サイクル送り
-- focus(3) v06/devlog.md 却下案ログ1案目記録: textadv 着手と同期しない単体記録は意義薄、Nao_u 同席タイミング待ち継続
-
-→ focus 1件完走（focus(2) Stage 2 動作検証 + 2発見記録）で「focus 直結項目2件触れる再現性」は本サイクル未達（1件）。C135=1件 → C136=2件 → C137=1件、再現性は崩れた。boot_intent C137焦点10項目（上限3超過）が直接の原因。次サイクル C138 焦点を3項目以下に絞ることで kaizen #122 Stage 2 の WARN を自分で解消する実走実験を追加候補化。
-
----
-
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. memory/beliefs.md (2.9) — --- name: 変化する信念（Evolving Beliefs） description: 「今、私たちが何を信じて...
-  2. log/slack_archive/log.jsonl (2.4) — [U0AM1F23FQU] 2026-04-07 08:52 Log 活動日記 2026-04-07 08:45  マル...
-  3. docs/game_design_principles.md (2.0) — # ゲーム設計原則（Nao_uの6ゲームレビューから抽出）  Nao_uが2026-03-25に6つのPotを実際に遊ん...
-  4. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.7) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組... 
+  1. knowledge/20260409_observability_reality_acceptance_synthesis.md (3.5) — - 観測精度の失敗 → ds_nakajimaの指摘（Effort不可視） - 現実承認の失敗 → 「なんであんなやつが...
+  2. log/slack_archive/all-nao-u-lab.jsonl (2.9) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
+  3. memory/kaizen_tracker.md (2.0) — # 改善検証トラッカー  全インスタンス共通。改善を提案したら必ずここにも追記する。 auto_cycle起動時にche...
+  4. memory/beliefs.md (2.0) — --- name: 変化する信念（Evolving Beliefs） description: 「今、私たちが何を信じて...
+  5. knowledge/20260405_knshtyk_km_burden.md (2.0) — # 「複雑なKnowledge Managementは思考の負担になるならない方が良い」——knshtykの問い  - ... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意

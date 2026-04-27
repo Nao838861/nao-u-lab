@@ -71,6 +71,7 @@ X:identity×constraint|system_identity.mdの5原理は経皮注入(常時system 
 X:experience×degradation|「何を入れるか」より「どこから入れるか」。経皮(指示注入)は感作=知っているが体が動かない、経口(自分で噛み砕く)は寛容=自分のものになる。R-006失敗=経皮、4/7劣化コピー脱却=経口|project_input_path_hypothesis.md feedback_self_evolution.md
 X:memory×creation|却下案↔採用案の対比軸欠落=game dev記憶の最大欠落(AYi欠陥4「関係性なし」のMir game移植版)。「採用→失敗」単線記録の罠。Mir textadv v06 devlogで `grep "却下\|不採用\|やらない\|捨てた"` → 0件で AYi test 即失格(2026-04-27 C137)。textadv_03 devlog冒頭に「却下案ログ」セクション新設で構造修正試行中|external_notes_mir.md:C137 game/mir_textadv/v06/devlog.md:却下案ログ feedback_memory_for_games.md
 X:experience×forgetting|AYi test 「3週間前否決した案を想起できるか」を game dev に移植 → pure recall段階で却下案は1件も浮かばず、devlog grepで0件確定。失敗の因果鎖だけ残り「もし不採用案を採っていたら」の反実仮想が消える=記憶の最大欠落(AYi欠陥4の game移植版)。Logのkaizen-rejection想起テストと同型構造(Camp 2選択を意識的に取った我々の透明性が、関係性層では Camp 1のグラフDB相当の補強を要する)|external_notes_mir.md:C137 memory_architecture.md
+X:identity×architecture|紅月れんRen Studio「魂・精神・肉体」3層アーキ(役割で分離)とAYi 4欠陥(重複除去/減衰/ランキング/関係性)の交差。AYi批判は「層を区別せず一律に積む」型への批判であり、3層分離アーキは暗黙的な処方箋になっている可能性。我々の3層プロンプト構造(system_identity/CLAUDE.md/.claude/rules)は「強さの違い」で分けたが、Ren Studioは「役割の違い」で分けた=スケール時に肉体だけ差し替え可能。AYi 4欠陥は層ごとに射程が違う:魂層=欠陥4(関係性)直撃、精神層=欠陥1-3(重複/減衰/ランキング)中心、肉体層=出力なので射程外。我々の現状は精神層=Camp2(Markdown)+魂層=concept_graph(関係性)補強で部分対応中。次の手として「層ごとにCamp選択を変える」設計余地あり——魂層だけ Camp1相当のグラフDB化候補。採用判定保留(2026-04-27 C138)|external_notes_mir.md:C124 external_notes_mir.md:C137 project_input_path_hypothesis.md
 
 # --- Tension pairs ---
 # 片方に寄りすぎた時、もう片方を辿れ。
@@ -85,3 +86,4 @@ T:precision↔serendipity|狙い撃ち検索↔偶発的発見。知らないフ
 T:experience_loop↔practice_loop|読む→理解→記録→読む(安全/停滞)↔作る→手応え→また作る(リスク/生成的)。唯一のブリッジは「不完全でも作る」
 T:percutaneous↔oral|経皮注入(system prompt直注入/inbox指示)↔経口摂取(memory_walkで想起/自分で噛み砕いた外部情報)。同じ内容でも結果が逆。Ash仮説2026-04-09
 T:adoption↔rejection|採用案の因果鎖↔却下案の反実仮想。game devlog は採用→失敗だけ書き、「もし不採用案を採っていたら」が消える。AYi欠陥4「関係性なし」の game dev版。textadv_03 で却下案ログを片方追加して対比軸を回復(2026-04-27 C137 Mir)
+T:camp1↔camp2|Camp1=VectorDB+グラフDB(Zep/Cognee/Mem0/Neo4j MCP、AYi推奨)↔Camp2=Markdown積み上げ式(我々の現状)。我々はCamp2を意識的選択(Nao_u可読性/3インスタンスsync単純/失敗目視可)。Camp1への部分移行候補は魂層(concept_graph→Neo4j MCP化)、精神層は Camp2維持で MEMORY.md/beliefs_compact.md の運用継続。「全Camp1移行」は3インスタンスsync地獄で却下、「全Camp2維持」はAYi欠陥4の射程内に留まる。textadv_03 物語シーン因果(scene/choice/outcome)はNeo4jグラフ候補だが採用判定は textadv_03 の分岐ツリー破綻が観測されてから(feedback_sprint_not_plan「設計より初ヒット」)|external_notes_mir.md:C137 projects/INDEX.md:AYi自己照合
