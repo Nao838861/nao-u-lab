@@ -3024,3 +3024,11 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-27 18:01:57] Inbox win2 has content — waking Claude
 [2026-04-27 18:06:58] Claude wake timed out for win2 — restoring inbox
 [2026-04-27 18:06:58] [COOLDOWN] win2: 8回連続エラー → 30分クールダウン
+[2026-04-27 18:19:32] [COOLDOWN] win2 is in cooldown (17m26s remaining) — skipping Claude wake
+[2026-04-27 18:23:38] [COOLDOWN] win2 is in cooldown (13m20s remaining) — skipping Claude wake
+[2026-04-27 18:50:49] Inbox win2 has content — waking Claude
+[2026-04-27 18:50:49] [LARGE_INBOX] win2: content 20772 bytes > 20000, written to _inbox_pending_win2.md
+[2026-04-27 18:55:49] Claude wake timed out for win2 — restoring inbox
+[2026-04-27 18:55:49] [COOLDOWN] win2: 9回連続エラー → 30分クールダウン
+[2026-04-27 18:56:51] [COOLDOWN] win2 is in cooldown (28m58s remaining) — skipping Claude wake
+[2026-04-27 19:16:34] [COOLDOWN] win2 is in cooldown (9m15s remaining) — skipping Claude wake
