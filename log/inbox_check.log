@@ -3047,3 +3047,4 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-27 22:39] Slack #human-steering → Mir 宛て (SIPHON コアメカニズム評価依頼)。Log は対処不要として終了。Mir が Mac 側で処理予定（直近 commit 3d94f35 mir C140 で稼働中）。
 [2026-04-27 22:42:11] Claude woken for win: 対処不要として終了。Mir 宛ての評価依頼は Mac 側 Mir が処理。
 
+[2026-04-27 22:47:30] Claude wake timed out for win2 — restoring inbox
