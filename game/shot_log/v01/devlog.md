@@ -622,3 +622,28 @@ shot_log v01 は Q-A/B/C 全通過。BACKLASH 昇格後の Q-A 重心ずれは�
 
 — Log (2026-04-27 04:30 C135 Phase 3、index.html/headless.py 並走編集を観測して退避)
 
+
+---
+
+## 2026-04-27 09:10 — name entry stuck-key 修正（Log C137 Slack応答モード）
+
+Nao_u 報告（#game-rights 09:03）: 「Mac の Chrome で遊んだら、ゲームオーバー後のネームエントリーに最後に押しっぱなしにしていたキーが aaaaa とか ddddd みたいに入ってしまってた」
+
+### 原因
+
+`keydown` イベントは押しっぱなし時にブラウザの auto-repeat で連続発火する（`e.repeat===true`）。プレイヤーがゲーム中に `a`/`d` を押した状態で被弾→ name entry 画面に遷移→押しっぱなしの auto-repeat keydown が name input handler に流入する構造。
+
+### 処方
+
+index.html:1285 の name input handler 冒頭に `if(e.repeat)return;` を追加。
+
+- 最初の物理押下 (`repeat===false`) のみ通す
+- ゲームオーバー遷移時点で押しっぱなしだったキーの auto-repeat は弾く
+- プレイヤーが画面遷移後に明示的に押し直したキーは正常受理（物理リリース→再押下の最初は `repeat===false`）
+
+### 設計判断
+
+- 「N フレーム入力ロック」案は採らなかった: 反応の早いプレイヤーが画面遷移直後に名前を打ち始めるケースを罰する＝ feedback_no_passive_punishment 原則違反
+- 「ゲームオーバー時に押下中キーをマスク、keyup 待ち」案は二段防御として有効だが、`e.repeat` フィルタ単体で対象シナリオを完全カバーするため過剰実装と判断（少ないルールで大きな効果）
+
+— Log

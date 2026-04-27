@@ -1282,6 +1282,7 @@ function draw(){
 // name input handler
 addEventListener('keydown',e=>{
   if(!(state.over||state.cleared)||state.submitted)return;
+  if(e.repeat)return; // ゲームオーバー遷移時に押しっぱなしのキーがautoリピートで流入する事故を防ぐ
   if(e.key==='Enter'){
     // submit: use typed name, or fallback to previous name, or generate default
     let name=state.nameEditing?state.nameInput:(rankName||'');
