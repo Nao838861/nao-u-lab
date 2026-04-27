@@ -4729,3 +4729,13 @@ URLのゲーム（shot_log v01 / BA
 [2026-04-28 02:14:21] No new DMs from ぴ
 [2026-04-28 04:18:10] No new DMs from Nao_u
 [2026-04-28 04:18:26] No new DMs from ぴ
+[2026-04-28 05:34:07] New DM detected (last message changed): https://nao838861.github.io/agentic-arcade/backlash/nao838861.github.io天谷さん、
+
+先ほ
+[2026-04-28 05:34:07] New DM detected from Nao_u: チャットすべて検索ぴ20時間You: 天谷さん、
+
+先ほどの「Nao_uが新しいゲームを作りました」は不正確な言い方だったので訂正させてください。
+
+URLのゲーム（shot_log v01 / BA
+[2026-04-28 05:35:32] False positive (15th occurrence): user-reported DM is Ash/Log own outgoing at 04-27 ~08:58 (BACKLASH correction). 20時間 label, You: prefix confirm outgoing. Pattern: 23分 → 12時間 → 15時間 → 17時間 → 20時間 — only time label changes. Detection bug: fingerprint logic still flips despite stripping digits. No reply sent. Root cause investigation needed in check_dm.py fingerprint extraction (likely DOM timing or JS evaluate returning different text spans).
+[2026-04-28 05:37:36] Patch deployed: added recent_detections flip-flop guard in check_dm.py. Same fingerprint within 1h → suppress as false positive. Seeded current fingerprints into recent_detections to take effect immediately. Root cause (why fingerprint comparison flips despite digit-stripping) deferred to separate cycle.

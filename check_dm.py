@@ -125,10 +125,26 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
             prev_state = load_state()
             fp_key = f"fingerprint_{target_user}"
 
+            # 直近1時間に同じfingerprintを検出していたら誤検知扱い
+            # （2026-04-28 ぴDM 第15回連続誤検知を受けて追加。
+            # fingerprint比較がDOMタイミング差で flip-flop し、
+            # 自分の送信メッセージを毎回新着扱いしていた。根本原因は別サイクルで調査）
+            recent_detections = prev_state.get("recent_detections", [])
+            now_ts = datetime.now().timestamp()
+            recent_detections = [
+                [t, fp] for t, fp in recent_detections if now_ts - t < 3600
+            ]
+
             if fingerprint and fingerprint != prev_state.get(fp_key, ""):
-                # New messages detected
-                messages = [main_text]
-                log(f"New DM detected (last message changed): {last_msg_text[:80]}")
+                if any(fp == fingerprint for _, fp in recent_detections):
+                    log(
+                        f"Skipped: same fingerprint detected within 1h "
+                        f"(suppressing flip-flop). Text: {last_msg_text[:60]}"
+                    )
+                else:
+                    messages = [main_text]
+                    log(f"New DM detected (last message changed): {last_msg_text[:80]}")
+                    recent_detections.append([now_ts, fingerprint])
 
             # Send reply if provided (independent of fingerprint change)
             reply_sent = False
@@ -182,6 +198,7 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
             existing = load_state()
             existing[fp_key] = fingerprint
             existing["last_check"] = str(datetime.now())
+            existing["recent_detections"] = recent_detections
             save_state(existing)
 
         except Exception as e:
