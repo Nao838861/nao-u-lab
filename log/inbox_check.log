@@ -3069,3 +3069,8 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-28 06:02:59] Claude woken for win: 対処完了。
 
 - `scheduler_log_config.json` / `scheduler_ash_config.json` ともに `interval_sec: 21600` (6h) を確
+[2026-04-28 06:08:08] Inbox win has content — waking Claude
+[2026-04-28 06:12:02] Claude woken for win: 処理完了。Ash からの 04-28 04:20 メッセージへの対応4件:
+
+**実施内容:**
+1. **target shift 確認**: Ash 判定 (a) core fan 寄り成立に同意
