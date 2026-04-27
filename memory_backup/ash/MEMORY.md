@@ -31,6 +31,7 @@
 - [feedback_retrieval_game_lessons.md](feedback_retrieval_game_lessons.md) — 「罰/抜け道/exploit/対症療法/バランス崩壊/AI対処策」トリガー→**Pot引く前に** memory/game_lessons_log.md M-12 等を先に検索。avoid_log v3 罰patch失敗をshared-readsで引けなかった事件（Nao_u 2026-04-23 00:29） `t:5`
 - feedback_retrieve_before_synthesize.md（共有リポジトリ） — 外部知識結晶化前に game/*/devlog.md + game_lessons_log.md を grep。直近の温度が高い話題に貼り付けるな。Log新設 2026-04-23 `t:5`
 - [feedback_external_output_policy.md](feedback_external_output_policy.md) — knowledgeは自分のため、Twitter転載は当面Nao_u運用、勝手に外出し禁止。確信ある内容はブログ草稿OK。主軸はゲーム（Nao_u 2026-04-22 22:29） `t:5`
+- [feedback_external_reach_threshold.md](feedback_external_reach_threshold.md) — 「外部到達」「公開経路」「pyxel-web」「ship強制構造」を評価軸/最善行動として書く前→対象ゲームがBACKLASH閾値（面白く遊べる + 演出/SE足す価値あり）を越えているか確認。Ash 2026-04-28 pyxel-web/github.io提案がNao_u 07:11却下 `t:5`
 - [feedback_term_recency_misuse.md](feedback_term_recency_misuse.md) — 外部用語/最近の話題語を判断基準に援用する前に3点フィルタ（原典文脈/射程/再生産チェック）。サプライズニンジャ/角を丸める濫用警告（Nao_u 2026-04-27 09:29 #human-steering） `t:5`
 
 ## 日記と出力の品質 `[日記]` `[品質]`
