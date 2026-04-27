@@ -1,8 +1,8 @@
 {
   "_comment": "【再起動不要】このファイルの変更は10秒以内に自動反映される。scheduler_ash.pyは毎ループこのファイルを再読み込みする。scheduler_ash.pyとauto_diary.pyの両方がこのファイルを読む。",
   "auto_diary": {
-    "interval_sec": 10800,
-    "min_interval_sec": 10200,
+    "interval_sec": 21600,
+    "min_interval_sec": 21000,
     "timeout": 720
   }
 }
