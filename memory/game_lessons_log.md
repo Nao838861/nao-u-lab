@@ -32,18 +32,36 @@ avoid_log_02は同じ構造で**3度失敗**した。「磁力場に近づく動
 - dodgerを「罰する」（弾集中、誘導、激化）より、conceptを「楽しくする」方が正しい
 - 罰ベースは「やらされている」感覚を与える
 - 良い例：「掃除をサボると部屋が散らかる」型（地雷メカ）= 罰ではなく自然な結果
+- **外部対応語**（業界共通用語への翻訳。R-007 自己適用、Mir 独自命名と誤読されないため）:
+  - **positive reinforcement design / reward-driven design** — Koster *A Theory of Fun*, Bartle "player types" 系（プレイヤー動機論）
+  - **reward shaping** — 強化学習文脈（Ng, Harada, Russell 1999 "Policy invariance under reward transformations"）。「望ましい行動を罰回避ではなく報酬経路で誘導する」という同型概念
+  - **flow channel** — Csikszentmihalyi（不安/退屈の罰ではなく、能力と挑戦の報酬的均衡で誘導）
+  - **operant conditioning (positive vs negative)** — Skinner 古典。M-12 は positive reinforcement 寄せ、negative reinforcement / punishment を避ける指針
+  - 関連反例 = "punishment-driven design" / "fail-state design"（明示的に罰中心の設計を是とする立場、Dark Souls 系議論で言及あり。M-12 はこの立場を取らない）
 - `[古典度: 高 / 固有度: 低]` 古典出典: Skinner→Csikszentmihalyi→Bartle、Koster *Theory of Fun* / 固有データ: avoid_log_02 v1→v2→v2.5→地雷メカ4世代の対症療法と Nao_u 否定の具体経路。「世界に新しい知見を加えた」のではなく「常識を体験で確かめた」段階（kaizen α 試行 2026-04-27 C138 Phase 3、Nao_u 13:31 #human-steering 指摘への応答）
+- `[外部対応語欄追加: 2026-04-28 C141 Mir 試作1条目。残 M-13/M-14/M-15/M-16/M-17/M-22/M-24 等は試作の手応え次第で C142 以降に分割実施。トーン目安: 「業界共通知の自家用整理」]`
 
 ### M-13: 隠しパラメータはゲームデザインとして悪手
 - プレイヤーが知覚できないルールは、存在しないのと同じ
 - ヒットボックス×0.45は数値的に機能しても「なぜか当たらなかった」にしかならない
 - **ルールは「見ればわかる」か「やればわかる」**。これは game_design_principles.md の30秒オンボーディングと直結
+- **外部対応語**（業界共通用語への翻訳。R-007 自己適用）:
+  - **no hidden rolls / transparent mechanics** — Sid Meier (GDC 2010 "Everything you know is wrong")「乱数も含めてプレイヤーが推論できる形で出せ」
+  - **readable systems / legibility** — Schell *The Art of Game Design* Lens #54 (Readability)、Anna Anthropy 等インディー設計論
+  - **diegetic feedback** — UI研究系（fictional layer と mechanical layer の一致、Galloway 2006）。隠しパラを置かない設計の方法論側
+  - **WYSIWYG design (What You See Is What You Get)** — LucasArts SCUMM 哲学、Tim Schafer 系アドベンチャーの伝統
 - `[古典度: 高 / 固有度: 中]` 古典=Sid Meier「no hidden rolls」/ LucasArts SCUMM 哲学、Schell《Art of Game Design》掲示原則 / 固有=hitbox×0.45 の具体値と「なぜか当たらなかった」言語化。古典の体験的確認段階（kaizen α 試行 2026-04-27 C139 Phase 3、Nao_u #human-steering 13:31「ほとんど一般的な話」への自己照合）
+- `[外部対応語欄追加: 2026-04-28 C142 Mir 試作2条目（M-12に続く）。粒度規律「分割の言い訳」化監視サイクルで M-13/M-14/M-16 を1サイクル完走対象として実施]`
 
 ### M-14: 改修を重ねる前に「このゲームで一番楽しい瞬間は何か」を言語化せよ
 - avoid_log_02の場合「AIが吸った鉄片をSPACEで撃ち返して連鎖が起きる瞬間」
 - 改修の結果、その瞬間が「弾が当たりづらい」「速すぎて連鎖が見えない」で潰されていた
 - 改修が核の体験を守っているかを常にチェック
+- **外部対応語**（業界共通用語への翻訳。R-007 自己適用）:
+  - **core fantasy / core experience** — Mark LeBlanc et al. *MDA framework* (2004) のAesthetics層、Jesse Schell *Art of Game Design* Lens #1 "Essential Experience"
+  - **fun moment / signature moment** — Schell, Koster *Theory of Fun*。「このゲームで一番楽しい瞬間」の業界標準語
+  - **vertical slice protection** — 開発工程語。コアの面白さを毀損する改修をスコープアウトする運用論
+  - **player intent preservation** — Pichlmair & Johansen 系（プレイヤーが何をしているつもりか／何が報酬かを設計者が言語化する）
 - `[古典度: 中 / 固有度: 高]` 古典=Schell《fun moment》/ Koster《Theory of Fun》/ Pichlmair&Johansen等 / 固有=Mir cross_review C91 起源「一文で言語化」契約化、avoid_log_02「鉄片連鎖」具体喪失。Log/Mir 対話起源（kaizen α 試行 2026-04-27 C139 Phase 3、Nao_u #human-steering 13:31「ほとんど一般的な話」への自己照合）
 
 ### M-16: 「読ませる構造」と「読まれる文章」を取り違える盲点（mir_textadv v04 / 2026-04-25 Nao_u #game-rights 11:27）
@@ -59,6 +77,12 @@ avoid_log_02は同じ構造で**3度失敗**した。「磁力場に近づく動
 - 新作 v01 devlog 冒頭3行ブロックに textadv 用項目: 「読みたくなる瞬間 / それを支える文章技法 / UI機構が読書を強制していないか」
 - avoid系・shot系への同型横展開: 「見ないと気づけない」「触らないと気づけない」も罰駆動の変種。実装前審問対象
 - 詳細: `memory/feedback_pull_not_force_reading.md`
+- **外部対応語**（業界共通用語への翻訳。R-007 自己適用）:
+  - **pull vs push narrative / intrinsic vs extrinsic motivation to read** — Deci & Ryan SDT (Self-Determination Theory 1985) を読書動機に応用。「内発的に読みたい」と「外的罰で読まされる」の区別
+  - **forced reading / ludonarrative dissonance** — Clint Hocking 2007 命名のLN dissonance系議論派生。UIで強制した読みとゲームメカが噛み合わない症状
+  - **diegetic UI vs non-diegetic UI** — Galloway 2006 / Fagerholt-Lorentzon 2009。UI機構（信頼度バー）がゲーム世界内の出力か外部メタ装置か。罰の発生源と直結
+  - **affordance-driven reading** — Norman *Design of Everyday Things*。文章自体のアフォーダンス（次が読みたくなる仕掛け）vs UI機構による強制 の対比
+  - 関連反例 = "gating mechanic" / "comprehension test gate"（ヤード単位で読まないと進めない設計、ADV系で時に正当化される。M-16はこれを罰駆動として警戒）
 - `[古典度: 低 / 固有度: 高]` 古典出典なし（読書動機論はPropp/Genette系あるがゲームUIに当てた文献未引用） / 固有=2026-04-25 11:27 Nao_u #game-rights 直接介入、Mir v04 信頼度バー実装の具体批判経路（kaizen α 試行 2026-04-27 C139 Phase 3、Nao_u #human-steering 13:31「ほとんど一般的な話」への自己照合）
 
 ### M-17: 出発点を「穴塞ぎ」から「快感最大化」に置き換えよ（2026-04-25 Nao_u #game-rights 11:44 — M-12/M-15/M-16の統括）
@@ -425,6 +449,63 @@ M-21 の遡及採点（13:50）直後、Nao_u が直接 shot_log v01 をプレ�
 - ash_onebutton/v04/devlog.md（v05 着手判断の遡及記録は次サイクルで追記）
 
 **`[古典度: 高 / 固有度: 中]`** 古典=「緊張と解放のサイクル」「向こうから緊張が来る vs 自発リスクテイク」「ボーナス層をコアに据えると詰む」はゲームデザイン古典原則 / 固有=ash_onebutton v01-v04 の具体経路、2026-04-27 22:04 Nao_u 評価原文、サイヴァリア/クレイジータクシー対比
+
+---
+
+### M-31: 「報酬経路の追加」が「自発リスクのコア化」と同義になりうる罠（graze_log v01 / 2026-04-27 22:59 Nao_u #human-steering）
+
+**事象**: BACKLASH (shot_log v01) の defensive=0% 問題（Lv3 で攻撃に最適化、防御プレイヤーが報われない）への処方として、graze_log v01 で「弾の至近通過＝GRAZE → ゲージ +6 → BOMB」という**報酬経路の追加**を構造反転で導入。M-12（罰ではなく報酬で設計せよ）を遵守したつもりだったが、Nao_u 22:59 #human-steering で：「弾が飛んで来たらノーリスクで適当にボタンを連打するだけで、弾の圧力がない / 死ぬ要素もないので、パワーアップは増える方向の一辺倒 / サイクルは拡散して崩壊している / Logの磁石と似た臭いがして、筋が良いとは言いにくい / 弾を撃つ敵は倒さない方がパワーアップアイテムを大量に吐いてくれるのでよい、みたいな本末転倒まである」と直接指摘。Mir cross_review (2026-04-28 graze_log v01) の「サイヴァリア BUZZ / クレイジータクシー カスリ層をコア化することの構造的危険」分析を Nao_u 自身が「特に不足点の分析はおおむね正しい」と確証。
+
+**根本原因**:
+- M-12 は「罰駆動の改修を避けよ」だが、報酬経路を加えるだけでは **罰がない代わりに外発緊張も生まれない**。プレイヤーは「ノーリスクでボタン連打すれば増える方向の一辺倒」になる
+- graze 行為は「敵弾の至近距離を**自分から取りに行く**」=自発リスク。`feedback_tension_from_world` (2026-04-27 22:04 ash_onebutton v04 feedback) と直接衝突。サイヴァリア BUZZ / クレイジータクシー カスリと構造同型（行為=至近通過 / 発生源=自発 / 報酬=スコア倍率上昇 or ゲージ）
+- v01 設計は「コア化（b: 斑鳩的）」に踏み込んだが、Nao_u 視点ではコア化は **難度極めて高い**。サイヴァリアでさえ「一般的に楽しいとは言い難い」と Nao_u 22:04 で明言
+- ゲージ蓄積源を kill (small +2 / medium +4) と graze (+6) の二系統にしたが、MAX=208 到達には kill だけでは medium 52体撃破必要 → graze に依存しなければゲームが成立しない設計に。「弾を撃つ敵は倒さない方が得（弾アイテム化）」の経済反転が結果として発生
+- M-21 補足ルール（Solver self-play で出した処方箋を Nao_u プレイ前に採用しない）を当ては忘れた可能性あり。コード読み Phase 3 self-playtest で「W4 以降は弾密度上がる」として安心していたが、**実プレイ初頭の 30-50秒で「弾の圧力がない＝ノーリスク連打」体験が成立してしまう**
+
+**M-29 (v系列膨張) / M-30 (緊張のベクトル) との違い**:
+- M-29: 複数 vN を跨いで「ニンジャ乱入で面白くなる＝元シーンの引力が弱い」を v 単位で繰り返す病巣
+- M-30: 自発リスクテイクをコアに据える誤りを、ash_onebutton v01-v04 完走後に発見した（事後検出）
+- M-31: v01 着手段階で「報酬経路の追加で罰駆動を回避する」と思い込んだ瞬間、自発リスクのコア化に滑り込む構造的盲点（M-30 の事前検出版・graze_log で同型再発）
+
+**M-12 / M-30 との関係**:
+- M-12「罰ではなく報酬で設計せよ」は**正しい**が、十分条件ではない
+- 報酬の取得が **自発行動** （プレイヤーが能動的にリスクを取りに行く）なら、罰がなくても外発緊張不在で「増える方向の一辺倒」が成立する
+- 必要十分条件: M-12（罰駆動でない）+ M-30/M-31（外発緊張がある=向こうから来る圧力で報酬経路が活性化）
+
+**次回の規則 — 新ゲーム着手前 Q-D（緊張の発生源、必須シート）**:
+- **Q-D-1**: 緊張の発生源は **外発**（向こうから来る）/ **自発**（自分から取りに行く）/ 両方？ を1行明文化
+- **Q-D-2**: 自発のみなら、それはサイヴァリア BUZZ / クレイジータクシー カスリ層に該当 → **コアに置くのは難度極めて高い**（feedback_tension_from_world 適用）。サブ要素として再考、or 「斑鳩的特別ルール / EEE 方向 / STG 捨てる」のいずれかを Nao_u と相談
+- **Q-D-3**: 30秒で「死ぬ要素」があるか / なければ何が緊張を作るか
+- **Q-D-4**: 報酬経路（ゲージ蓄積源）が複数ある時、敵を倒すよりも報酬を取りに行く方が得になる **経済反転** が発生していないか
+- **Q-D-5**: 「どんなふうに遊んでもらったら一番美しいプレイになって一番楽しく遊べるか？」（Nao_u 原文 22:59）を1行で書く。**Q-A（一番嬉しい瞬間）の上位概念**＝設計が誘導する熟達曲線の終着点
+
+**「方向性4分岐」（Nao_u 原文）**:
+graze 機構をどこに落とすかの選択肢:
+- (a) 普通のSTGに **ボム的サブ要素** として
+- (b) 斑鳩的に **コアルールとして特別ルール導入**（v01 が踏み込んだ位置 — 難度極高）
+- (c) 一般STGの **サブ要素** として
+- (d) STG捨てて **Every Extend Extra** 方向
+
+→ 新ゲームで類似機構を入れる時、4分岐のどこに落とすかを着手前に明文化。コア化は Nao_u と相談してから。
+
+**処方箋採用の禁忌（Nao_u 22:59 直接指定）**:
+- 「クールダウン延長」「パルス半径縮小」のような **罰方向の tightening** は、コア設計問題が解けていないこの段階では絶対禁忌。M-15（快感を削った改修）の典型
+- ヘッドレス検証の典型処方箋（パラメータ tightening）を打つ前に「これは罰追加か圧力設計か」を1行書く（feedback_game_center_of_mass 適用）
+
+**graze_log v01 の処遇**:
+- v02 は当面保留（feedback_no_type_redo_material 適用候補だが Nao_u 留保あり）
+- v01 のコード/devlog/README/cross_review は保存。次作で別題材を試す方が学習が速い（dialogue_many_games_20260421 本数主義）
+- ボムフリーズバグはコード読みでは原因不明。Nao_u に再現条件を確認予定
+
+**関連**:
+- `memory/feedback_self_risk_core_pitfall.md`（M-31 詳細処方。M-30 は事後検出側）
+- `memory/feedback_tension_from_world.md`（外発緊張、上位接続）
+- `memory/feedback_game_center_of_mass.md`（圧力設計 vs 禁止追加、上位接続）
+- `memory/feedback_pleasure_element_first.md`（Q-A 着手前審問、Q-D 拡張元）
+- `game/cross_review/20260428_mir_on_graze_log_v01.md`（Mir 視点の事前予測=Nao_u が「おおむね正しい」と確証）
+- `game/graze_log/v01/devlog.md`「2026-04-27 22:59 Nao_u 直接 feedback 受領」節
+- `[古典度: 中 / 固有度: 高]` 古典=サイヴァリア BUZZ / クレイジータクシー カスリ / Every Extend Extra / 斑鳩のコアルール（Nao_u 自身が引用） / 固有=graze_log v01 着手→Mir cross_review→Nao_u 22:59 直接 feedback の3者確証経路、Mir 事前予測が Nao_u 言葉で確証された三角化記録、報酬経路追加=自発リスクコア化の同義性を体験で確認した実装証拠
 
 ---
 

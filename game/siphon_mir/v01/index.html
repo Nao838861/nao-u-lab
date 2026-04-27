@@ -304,7 +304,8 @@ function fireBomb(){
   S.bombFlash=24;
   // Big rings
   for(let i=0;i<3;i++){
-    particles.push({x:S.px,y:S.py,vx:0,vy:0,life:30+i*6,c:'#ffd870',r:20+i*40,ring:true,maxR:300+i*60});
+    const l=30+i*6;
+    particles.push({x:S.px,y:S.py,vx:0,vy:0,life:l,maxLife:l,c:'#ffd870',r:20+i*40,ring:true,maxR:300+i*60});
   }
   // Explosion particles
   for(let i=0;i<60;i++){
@@ -613,7 +614,7 @@ function render(){
   for(const p of particles){
     if(p.ring){
       // Expanding ring particle (for bomb)
-      const progress=1-p.life/30;
+      const progress=1-p.life/(p.maxLife||30);
       const r=p.r+p.maxR*progress;
       ctx.strokeStyle=p.c;
       ctx.globalAlpha=p.life/30*0.5;
