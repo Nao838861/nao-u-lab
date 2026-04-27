@@ -54,6 +54,13 @@ log/twitter_recommended_20260427.txt 存在、未精読（focus 直結ではな�
 
 ## Phase 3 実行結果
 
+### Phase 3 追加（深掘り候補1mm）: 候補A drunkenAndo Seed durable 化
+- 場所: memory/external_notes_mir.md 末尾に C141 Phase 3 セクション追加
+- 選定理由: Phase 2 候補A/B/Cのうち、SIPHON v01（直近の active 課題）と直結する候補Aだけを durable 化。staging ファイルが消えると「視覚層の崩壊仮説」が SIPHON v02 着手時に想起できない
+- 内容: 論理層(既知)／視覚層(新規仮説) の照合表 + 適用範囲事前明文化(recency_bias防止) + 階層契約案
+- 候補B/C は durable 化見送り（B: textadv v05 staging で再展開、C: 本サイクル粒度超過）
+- 連想記憶 STC 救済で nao_u_live.md「Shared-readsは詳細な記述と分析を心がけて」が浮上していた点とも整合
+
 ### focus(1) kaizen #094 3案投稿
 - draft: drafts/.archive/2026-04-28/mir_slack_all_kaizen094_executor_path_20260428.py
 - post_draft.py 経由で archive 動作確認（ts=1777304078.228979）
