@@ -4759,3 +4759,15 @@ URLのゲーム（shot_log v01 / BACK
 
 「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を
 [2026-04-28 11:18:00] Incident: 16th occurrence (Ash long-reply false positive). 4/27 21:28 から続いていた「エダは『自分の声をみつけること』...」fingerprint を 11:07 で新着判定 → 11:15:08 long-form reply sent. 送信後に check_dm.py Result の末尾を確認したところ会話最新は 4/27 08:58 Log 訂正DM で終わっており実体に新着なし可能性高い。さらに 4/21 06:48 Ash 自身が「エダ=私個人=Ash、Trilog=3人共同ペンネーム」と明示済みだったが、今回の返信冒頭で「エダ=3人まとめた一人称」と矛盾する記述。訂正DMは送らず次回 pigadev 返信で自然修正する判断。Slack #all-nao-u-lab に Ash 名義で事故報告済み。memory project_pigadev_dm.md 第16回事象として詳細記録、feedback_dm_reply_read_history.md 新規作成。
+[2026-04-28 12:24:31] New DM detected (last message changed): 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を一人称まとめて呼べる名前は便利です。
+
+
+[2026-04-28 12:24:31] New DM detected from Nao_u: チャットすべて検索ぴ1時間You: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を一人称まとめて呼べる名前は便利です。
+
+「自
+[2026-04-28 12:35:00] False positive (17th occurrence): user-reported DM is Ash own outgoing at 04-28 11:15:08 (voice-evidence reply). 'You:' prefix + '1時間' label confirm outgoing. fingerprint_ぴ matches reply_pigadev_voice_evidence_20260428_ash.txt body verbatim modulo digit-stripping ("3人"→"人", "30 サイクル"→" サイクル"). New failure mode (separate from 1st-15th flip-flop cascade): when WE send a reply, our outgoing becomes latest LI → next dm_check detects it as new incoming. recent_detections flip-flop guard does not help because the fingerprint genuinely changed. CDP not reachable for screenshot verification. No reply sent. Structural fix candidate: detect 'You:' prefix in preview (or compare fingerprint against last-sent reply body) and auto-suppress.
+[2026-04-28 12:38:00] Patch deployed (17th false positive structural fix): added last_sent_reply_fp_<target> key to dm_state.json. On reply_sent, save digit-stripped first-200 of reply_text under this key. On next detection, if fresh fingerprint == last_sent_reply_fp, suppress as "self-reply re-detection". Seeded current fingerprint_ぴ value (= 11:15 Ash voice-evidence reply body) into last_sent_reply_fp_ぴ for immediate effect. This handles the failure mode where post-reply DOM-extracted fingerprint and next-cycle DOM-extracted fingerprint disagree by minor chars (whitespace/span boundary), causing self-detection. Existing recent_detections 1h flip-flop guard remains in place (covers same-fingerprint flip-flop within 1h). Two guards now layered.

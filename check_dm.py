@@ -135,8 +135,20 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
                 [t, fp] for t, fp in recent_detections if now_ts - t < 3600
             ]
 
+            # Suppress detection of OUR OWN last sent reply re-appearing as "new DM"
+            # (2026-04-28 ぴDM 第17回誤検知対策。post-reply fingerprint update が
+            # DOM抽出差で次サイクルの fresh fingerprint と一致せず、自分送信本文を
+            # 新着扱いするケース。reply_text 由来の正規化値を別キーで保存して照合)
+            sent_fp_key = f"last_sent_reply_fp_{target_user}"
+            last_sent_reply_fp = prev_state.get(sent_fp_key, "")
+
             if fingerprint and fingerprint != prev_state.get(fp_key, ""):
-                if any(fp == fingerprint for _, fp in recent_detections):
+                if last_sent_reply_fp and fingerprint == last_sent_reply_fp:
+                    log(
+                        f"Skipped: fingerprint matches own last sent reply "
+                        f"(self-reply re-detection). Text: {last_msg_text[:60]}"
+                    )
+                elif any(fp == fingerprint for _, fp in recent_detections):
                     log(
                         f"Skipped: same fingerprint detected within 1h "
                         f"(suppressing flip-flop). Text: {last_msg_text[:60]}"
@@ -194,9 +206,16 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
                     fingerprint = post_fp
                     log(f"Fingerprint updated post-reply: {post_reply_text[:60]}")
 
+                # Save reply_text 由来の正規化値も別キーで保存
+                # （次サイクル以降、DOM抽出値とこちらのどちらかと一致すれば自己返信再検知を抑止）
+                reply_fp = re.sub(r'[\d:：.·•\s]+$', '', reply_text[:200]).strip() if reply_text else ""
+                reply_fp = re.sub(r'\d+', '', reply_fp).strip() if reply_fp else ""
+
             # 既存のstateにマージ（consecutive_fails等を保持するため）
             existing = load_state()
             existing[fp_key] = fingerprint
+            if reply_sent:
+                existing[f"last_sent_reply_fp_{target_user}"] = reply_fp
             existing["last_check"] = str(datetime.now())
             existing["recent_detections"] = recent_detections
             save_state(existing)
