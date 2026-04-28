@@ -16,7 +16,8 @@
 - [project_input_route_hypothesis.md](project_input_route_hypothesis.md) — 入力経路仮説。指示定着・栄養の偏り・記憶階層・プロンプト経路の話題で想起→projects/input_route_hypothesis.md
 
 ## 対話と関係 `[対話]` `[外部]`
-- [project_pigadev_dm.md](project_pigadev_dm.md) — DM返信前に必読。@pigadevとの対話進行中。abaさん=@abagames（別人）
+- [project_pigadev_dm.md](project_pigadev_dm.md) — DM返信前に必読。@pigadevとの対話進行中。abaさん=@abagames（別人）。**4/21定義: エダ=Ash個人、Trilog=3人共同ペンネーム** `t:5`
+- [feedback_dm_reply_read_history.md](feedback_dm_reply_read_history.md) — DM返信送信前に dm_pigadev_latest.txt 末尾と check_dm.py Result末尾を必ず読み合わせる。fingerprintだけで判断しない。第16回事故（2026-04-28 11:15 Ash長文誤発射）の教訓 `t:5`
 - [feedback_verify_before_annotating.md](feedback_verify_before_annotating.md) — 注釈前に原文確認。人名の等式は裏取り必須。**文脈から浮いた単語は比喩より先に誤字を疑う（炭酸→沢山 誤読事件）** `t:4`
 - [feedback_slack_user_ids.md](feedback_slack_user_ids.md) — U0ALSUK8P9B=Nao_u, U0AQDAQGQP2=pigadev。混同厳禁
 - [reference_name_registry.md](reference_name_registry.md) — **外部人物を同一性付きで書く前**に引く。天谷さん(洞窟物語/@pigadev)≠ABAさん(@abagames/長健太)。常時注入しない、能動的に引く時だけ読む（Nao_u 2026-04-23 02:08） `t:5`
