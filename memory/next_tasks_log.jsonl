@@ -67,3 +67,4 @@
 {"ts": "2026-04-28T12:05:10", "instance": "log", "cycle": "2026-04-28", "action": "viewed", "task_id": null}
 {"ts": "2026-04-28T12:14:28", "instance": "log", "cycle": "C144", "action": "skip", "task_id": "t-260427095940-e9df", "reason": "shot_log v01 freeze は Ash 先行で 2026-04-28 06:11 commit eb2d4f556b3 にて完了済 (M-34 target detection pattern 追記)。Log 打診不要。"}
 {"ts": "2026-04-28T12:14:30", "instance": "log", "cycle": "C144", "action": "add", "task_id": "t-260428121430-90fd", "task": "[2026-04-28 C144→C145] graze_log v02 保留、新題材ブロック崩し系 v01 着手前に README.md に Q-H シート埋める (1.何の型か 2.クローン元参照 3.一般要素3-5 4.独自要素1 5.比率 6.型破壊なら v01 で作らない)。Ashパズル系と分け Log はブロック崩し方向。M-35 守破離の守 + feedback_shu_first_clone_baseline.md 遵守"}
+{"ts": "2026-04-28T12:24:24", "instance": "log", "cycle": "2026-04-28", "action": "cycle_check", "task_id": null, "add_count": 2, "done_count": 0, "skip_count": 1, "pending_total": 11}
