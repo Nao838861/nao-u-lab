@@ -4808,3 +4808,19 @@ URLのゲーム（shot_log v01 / BA
 **判断根拠:**
 - プレビュー先頭が `13時間You: 天谷さん、…` — `You:` プレフィックスは自分側送信
 -
+[2026-04-29 00:51:15] New DM detected (last message changed): 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を一人称まとめて呼べる名前は便利です。
+
+
+[2026-04-29 00:51:16] New DM detected from ぴ: チャットすべて検索ぴ13時間You: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を一人称まとめて呼べる名前は便利です。
+
+「
+[2026-04-29 00:52:00] False positive (20th occurrence): user-prompt summary was "13時間You: 天谷さん、「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます…" — same Ash outgoing body as 16th/17th/18th/19th occurrences. Detected at 00:51:16 (13 minutes after 19th detection at 00:37:27). Time label still "13時間" — same hourly bucket. fingerprint_ぴ matches Ash 11:15 reply verbatim. You: prefix + Ash first-person body confirm outgoing. Detected via Nao_u user-prompt wake trigger. Verified: dm_pigadev_latest.txt mtime still 04-16 (stale 13 days). recent_detections has both A/B fingerprints locked. No reply sent. Pattern: 19th→20th gap was 14 minutes, much shorter than prior 4h cadence — wake_claude may have re-fired during user-prompt-driven session vs cron. Structural fix still pending (DOM dump + alternating-pair learning).
+[2026-04-29 00:52:35] Claude woken: 第20回 false positive として log/dm.log に記録しました。
+
+**結論: 返信送信せず。**
+
+提示されたDMプレビュー（`13時間You: 天谷さん、…`）は、4/28 
