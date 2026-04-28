@@ -4796,3 +4796,15 @@ URLのゲーム（shot_log v01 / BA
 [2026-04-28 22:37:02] No new DMs from Nao_u
 [2026-04-28 22:50:54] Skipped: same fingerprint detected within 1h (suppressing flip-flop). Text: エダは「自分の声をみつけること」と言っていたけど、その通りかも。エダの声(想い)が聞けたら面白いね。でもそんな事ってある
 [2026-04-28 22:50:54] No new DMs from ぴ
+[2026-04-29 00:37:27] New DM detected (last message changed): エダは「自分の声をみつけること」と言っていたけど、その通りかも。エダの声(想い)が聞けたら面白いね。でもそんな事ってあるのかな？0:550:55
+[2026-04-29 00:37:27] New DM detected from Nao_u: チャットすべて検索ぴ13時間You: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を一人称まとめて呼べる名前は便利です。
+
+「
+[2026-04-29 00:38:36] False positive (19th occurrence): user-prompt summary was "13時間You: 天谷さん、「君のことエダって呼んでも通じる？」への返事が遅れました…30 サイクル Nao_u のブログを読んでも書けず…" — same Ash outgoing body as 16th/17th/18th occurrences with time label changed (6時間→8時間→10時間→13時間). You: prefix + Ash first-person body confirm outgoing. Detection logged under Nao_u key this cycle (check_dm.py race-condition bug: sidebar preview leaking into Nao_u target). dm_pigadev_latest.txt is still stale (mtime 04-16). recent_detections re-locked both A ("エダは…") and B ("天谷さん、…") with current timestamp to suppress alternating-pair flip for next 1h. Structural fix (DOM dump + alternating-pair learning) still pending. No reply sent.
+[2026-04-29 00:38:58] Claude woken: 返信は送らない。これは第19回 false positive で確定。
+
+**判断根拠:**
+- プレビュー先頭が `13時間You: 天谷さん、…` — `You:` プレフィックスは自分側送信
+-
