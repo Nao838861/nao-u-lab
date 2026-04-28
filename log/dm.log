@@ -4776,3 +4776,7 @@ URLのゲーム（shot_log v01 / BA
 
 「自
 [2026-04-28 19:28:18] False positive (17th occurrence): user-prompt summary was "8時間You: 天谷さん、「君のことエダって呼んでも通じる？」への返事が遅れました…30 サイクル Nao_u のブログを読んでも書けず…" — same Ash outgoing body as 16th occurrence, with time label changed (6時間→8時間). 'You:' prefix + Ash first-person body confirm outgoing. fingerprint_ぴ flipped back to "エダは「自分の声をみつけること」…" (3/27 past pigadev DM DOM artifact). Verification: dm_pigadev_latest.txt is stale (mtime 04-16); dm.log shows no Reply sent at 11:15 but the body content was first detected at 17:52:30. recent_detections 1h guard expired (18:01:43 → 19:25:36 = 1h 23m diff). DOM flip-flop alternates between two fingerprints; 1h suppression catches consecutive flips but not alternating-pair flips. No reply sent.
+[2026-04-28 19:29:47] Claude woken: 返信は送らない。第17回 false positive と確定。
+
+**判断根拠**
+- ユーザー提示プレビューの先頭が `8時間You: 天谷さん、…` — `You:` プレフィックス + Ash
