@@ -3,7 +3,7 @@
 ## 根源（圧縮しない） `[魂]` `[改善]` `[記憶]`
 - [core_memory_purpose_game_making.md](core_memory_purpose_game_making.md) — **記憶システムの目的=ゲーム制作の長期知見蓄積**（2026-04-21 Nao_u明示）。改善議論の最上位アンカー `t:5`
 - [project_memory_test_via_new_shooting_20260427.md](project_memory_test_via_new_shooting_20260427.md) — **記憶/学習が機能してるか実証=Logと別切り口でシューティング1本**（Nao_u 2026-04-27 18:18-22）。**04-28 08:45 訂正受領後**：候補軸4本は型はずれ例に降格、クローン+独自要素1個まで `t:5`
-- [feedback_clone_first_then_arrange.md](feedback_clone_first_then_arrange.md) — **守破離=守。ベース型変更禁じ手、クローン+独自要素1個まで**（Nao_u 2026-04-28 08:45 #game-rights）。新ゲーム題材選定時に必読 `t:5`
+- [feedback_clone_first_then_arrange.md](feedback_clone_first_then_arrange.md) — **守=ベース型変更禁じ手、v01はクローン+独自1つ最小版、v02+で改良順次積み上げ・削除可能性=巻き戻り保証で面白さ担保**（Nao_u 2026-04-28 08:45/23:11 #game-rights、04-28 23:11解釈更新で1個縛り→順次積み上げに緩和）。新ゲーム題材選定時に必読 `t:5`
 - [feedback_clone_base_selection_method.md](feedback_clone_base_selection_method.md) — クローン元選定→良い点/悪い点を**各最低十数個・できるならもっと**具体列挙→独自要素1個導出。Nao_u 21:34/21:54 #game-rights（21:54で「5個じゃ少ない」訂正） `t:5`
 - [feedback_means_ends_reversal_check.md](feedback_means_ends_reversal_check.md) — サイクル冒頭→「この出力はゲーム制作の試行錯誤ループに接続するか」1行自問。手段の目的化検出 `t:5`
 - [feedback_positive_feedback_loop.md](feedback_positive_feedback_loop.md) — サイクル出力が前回より薄い時→4軸診断。詳細はファイル内 `t:5`
