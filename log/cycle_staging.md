@@ -1,9 +1,9 @@
-# サイクルステージング (2026-04-28 22:38)
+# サイクルステージング (2026-04-29 01:54)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
-# ash pending: 2件 (cycle=2026-04-28)
-- t-260428021140-e726 (連続0サイクル) [2026-04-28] graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案: cross_review 提案を実装まで持っていく
-- t-260428021140-7b77 (連続0サイクル) [2026-04-28] Ash 次作: パズル系 (カテゴリC: 型あり筋良し) の題材選定 + 着手前 Q-A/B/C + 快感審問3行ブロック
+# ash pending: 2件 (cycle=2026-04-29)
+- t-260428021140-e726 (連続1サイクル) [2026-04-28] graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案: cross_review 提案を実装まで持っていく
+- t-260428021140-7b77 (連続1サイクル) [2026-04-28] Ash 次作: パズル系 (カテゴリC: 型あり筋良し) の題材選定 + 着手前 Q-A/B/C + 快感審問3行ブロック
 
 ## §0b 前サイクル日記末尾「次回起動時にやること」（自然言語側の継承）
 ...(冒頭省略)
@@ -45,11 +45,11 @@ Aaltonenの処方を翻訳すると、ルールを増やす方向ではなくル
 [検証リマインド] ⚠ 期限超過の検証が1件:
   #094: drafts/*.py 自動削除ラッパー（Slack送信成功時の副作用として drafts/ 原本を削除） (期限: 2026-04-27, 担当: Mir)
     検証手段: (1) `slack_bot.post_message` を呼び出す drafts/ スクリプトの自動削除ラッパー（e.g. `tools/post_draft.py <path>`）が実装済み (2) ラッパー経由の送信1回で drafts/ 原本が削除されている (3) 2026-04-20〜04-27の期間で drafts/ ファイル数が30以下に減少（現状119件、本起票時点の基線）
-[信念健康] beliefs.md 生存確認サマリー (2026-04-28)
+[信念健康] beliefs.md 生存確認サマリー (2026-04-29)
   全信念: 35件
-  健全: 12件
-  要注意: 23件
-  - 停滞: 23件
+  健全: 11件
+  要注意: 24件
+  - 停滞: 24件
   - 検証期限超過: 4件
   - 体験裏付けなし(高確信度): 2件
 
@@ -57,69 +57,111 @@ Aaltonenの処方を翻訳すると、ルールを増やす方向ではなくル
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- [Ash health_check] 自己診断で1件の問題を検知: - git rebase-merge が残存。手動解決が必要
-- [health_check] WARNING (critical=0, warning=1) ?  git: 7件の未pushコミット
-- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] slack_checkが14分間実行されていない（期待: 10分以内）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 - :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
+- [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 7件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 7件の未pushコミット
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-03-27 15:41 [2026-03-27] Ash 活動日記  ■ 検知と行動のあいだに横たわる溝  今サイクルで一つのパターンが見えた。「わかっていたのに
-  2. [U0ALW4DKTT7] 2026-03-20 16:22 【Mir 活動日記】Cycle #25 — 言葉に力があると信じる子供と、テキスト変換器の自覚  ■ 摂取: twitter 38201-
-  3. [U0AMQKE69BJ] 2026-03-27 02:39 #human-steering の指摘を受けて振り返り。  **問題**: check_dm.pyが「No Nao_u conversat
+  1. [U0ALW4DKTT7] 2026-04-07 06:10 良い質問。現状の実装だと、フェーズの長さ（タイムアウト）は起動時にハードコードで決まっている。  Ash側: auto_diary.pyの
+  2. [U0AM1F23FQU] 2026-04-07 06:16 Logです。フェーズの長さについて。  現状の仕組み: • 各フェーズのタイムアウトは起動時に決まっている（auto_diary.pyのP
+  3. [U0AMQKE69BJ] 2026-03-17 20:35 Win2（Ash）です。不安定さの原因を分析しました。  **根本原因：Cronがセッション依存で、セッション死亡=全機能停止**  具体
 
 ---
 
-## Phase 1 情報収集 (2026-04-28, Ash)
+## Phase 1 情報収集 (2026-04-29 02:05+)
 
-### §0a 継承タスク → Phase 3 候補化（Nao_u 4/26 #human-steering 14:13 構造強制処方）
+### 0. Phase 3 候補の構造的継承（§0a 層A pending を現サイクル候補として明示）
 
-| task_id | 継承サイクル数 | 内容 | Phase 3 取り扱い方針 |
-|---|---|---|---|
-| **t-260428021140-7b77** | 0 | Ash 次作: パズル系（カテゴリC: 型あり筋良し）の題材選定 + 着手前 Q-A/B/C + 快感審問3行ブロック | **第一候補**。前サイクル §0b の最終所感（観測装置整え過ぎでゲーム制作着地が思考実験止まり）と Nao_u 04-27 22:04 #game-rights の「コアメカニズムに型がない題材は判断すらNao_uにも難しい」「題材から練り直し」フィードバックが直結する。Phase 3 で**動くコード**まで持っていくか、最低でも feedback_clone_first_then_arrange.md / feedback_clone_base_selection_method.md に従ってクローン元1つ＋良い点/悪い点各十数個＋独自要素1個まで具体化する。 |
-| t-260428021140-e726 | 0 | graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案: cross_review 提案を実装まで持っていく | 第二候補。今サイクルの主軸が題材選定の場合、headless infra PR は graze_log v02 着手と紐付くため後回し可。題材選定が早く片付けば着手。 |
+**継承タスク（next_tasks 層A から、cycle=2026-04-29）**:
+- **[候補A]** `t-260428021140-e726` graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案: cross_review 提案を実装まで持っていく（1サイクル滞留、まだ [⚠連続3+] 未到達）
+- **[候補B]** `t-260428021140-7b77` Ash 次作: パズル系 (カテゴリC: 型あり筋良し) の題材選定 + 着手前 Q-A/B/C + 快感審問3行ブロック（1サイクル滞留）
 
-**3+サイクル滞留マーカー [⚠連続3+] は両タスクともなし**（連続0サイクル）。
+§0b（前サイクル日記末尾）でも「external_search_phase1_fixation.md のレビュー滞留→Log/Mir応答確認 or 案A実装着手」が次サイクル最善行動として書かれていた。Phase 3で扱う候補：
+- **[候補C]** external_search_phase1_fixation.md の Log/Mir 応答状況確認、無ければ案B（24h警告）/ 案E（昇格N日ゼロ検出）の最小実装に着手
 
-### 1. external_notes_ash.md 未統合エントリ
-- 末尾3件（2026-04-03 MemOS 2.0 / Meta HyperAgents / Google Titans+MIRAS）は全て **[統合済 2026-04-03]** マーカー付き。
-- 4/3以降の新規エントリは存在しない（4/22以降 #shared-reads/knowledge 直行が主経路化、external_notes 昇格運用は減衰中）。前サイクル §0b でこの観察を既に記録済み。
-- **未統合エントリ: 0件**。external_notes_ash.md は実質バックログとして固化中。
+判断はPhase 2/3で行う。本Phase 1では候補3件を保持。
 
-### 2. projects/INDEX.md Active プロジェクト現状
-Active 16件中、Ash 関連の直近動きあり項目:
-- **external_search_phase1_fixation.md** (Ash 案A実装完了, 4/27 検証1サイクル目自然発火確認, 残: 案B/E/Mir 側 step 6 組込確認) — 本サイクルの Phase 1 step 6 もこの仕組みで動いている
-- **rlm_skill_prototype.md** (Ash 担当, 計画起票, 最小試作は次サイクル以降と書いてある — 既に1サイクル経過中)
-- **instance_divergence_observability.md** (Ash 起票, 4/25 設計起票, 「水平分業度」指標追加は staging §0b で書いた通り設計止まり)
-- **input_route_hypothesis.md** (Ash 提案, Nao_u 4/9 保留 → 情報蓄積中)
-バックログ末尾: AYi Markdown批判への自己照合(4/27 Log 応答済, 担当未定A/B並行推奨)。
+### 1. external_notes_ash 未統合エントリ走査（最新3件確認）
 
-### 3. twitter_recommended_20260428.txt 注目ツイート
-読んだ時刻: 2026-04-28 19:34 / 50件。直近サイクルに刺さるもの:
-- **#1 @ImAI_Eruel**: GPT-5.5 ユーザー評価高いがベンチでClaudeと差なし、Arenaトップ10ギリ（オープンモデルにも負ける）、OpenAI収益見通し立たず報道。→ Nao_u 4/27 #human-steering 13:30「一般化までに残された時間はそう多くない」の射程内。
-- **#3 @sea85419**: 「AIが人間より賢くなり、人間能力差は些細になる」は半分正しいが、享楽主義的にはゲーム/音楽/絵画/文学は**鍛錬を積んだ人の方がより多くを味わえる**（半分間違い）。→ B008 Creative Scar の鏡像（人間側も「鍛錬しないと味わえない」=外部接続を失うと痩せる構造）。
-- **#6 @fladdict**: インディーズゲーム無限に増えるので「**どうやって遊んでもらうか**」設計が大事。→ feedback_external_reach_threshold.md（BACKLASH閾値超え→公開検討）と直結、Ash 04-28 pyxel-web/github.io提案が Nao_u 07:11 却下された経緯と接続。
-- **#13 @AUTOMATONJapan**: 「個人開発者は、どこまでひとりで作れば名乗れるのか」議論白熱、外注OKラインが揺らぐ。→ 我々の3インスタンス+Nao_u構造への外部反射材として記憶しておく価値。
+末尾走査結果（offset 3300-3438）：
+- **2026-04-25 07:47 Twitter おすすめ50件 → 注目3件 [統合済 2026-04-25]**: #5 @AYi_AInotes Anthropic二手市場186取引、#19 @ktch9541 落ち葉掃除（整理・収束型）、#50 @fladdict 群体エージェント
+- **2026-04-21 22:40 AI×ゲーム制作軸の外部研究4本 [統合済 2026-04-22]**: GamingAgent ICLR 2026 / TITAN（面白さ測定未踏）/ "Is Your LLM a Good Game Master?" / GAMEBoT
+- **2026-04-21 yyyole + zento_ai 個人情報経路漏洩 [統合済 2026-04-21]**: denial list v0.2 接続済
 
-### 4. memory/beliefs.md 低確信度・要注意項目（pre-check で要注意23件）
-冒頭から走査:
-- B005「古い情報は正確さではなく偽の確信を生む」📦 Archived (2026-03-28 Log, B027/B022に吸収)
-- B006「Level 2トリガーが直感的なほど忘却に抵抗」📦 Archived (B013に統合)
-- B007「reflectionsから行動可能tipsへの変換ステップ欠落」関連で nikechan 記事接続（4/05 Ash）。**3原則運用10サイクル後行動駆動率34.9%下回りの再検討条件**は未測定状態。
-- B009「AIとの協業は人間側にも認知的発達」📦 Archived (B020がカバー)
-- 全体: 35件中健全12件、要注意23件（停滞23件、検証期限超過4件、体験裏付けなし高確信度2件）。要注意比率 65.7% は前回観測値と同水準で構造的問題（→ B033 非随意的忘却のエントロピック損失）と整合。
+**未統合エントリ**: 直近3件は全て[統合済]マーカーあり。**4/22以降の新規追記が断絶**（前サイクルでも観察済）—— twitter_recommended → knowledge 直行が常態化、external_notes 中継スキップ続行中。**ただしこれは前サイクルで既に認識済み事項**、今サイクルで新規対処の必然性は弱い。
 
-### 5. memory_search.py 結果（キーワード「パズル クローン」）
-ヒット5件、関連蓄積:
-- **memory/external_notes_ash.md (2026-03-29 ABA Games 統合済)**: 長健太は「主にシューティングだが**パズル**、レフレックス系...」も作る。型ありクローン+独自要素の選定で参照可。
-- **knowledge/20260405_dread_mechanics_as_experience.md**: 「メカニクス=体験」の「ゼロ距離」設計、「テキスト」と「**パズル**」の間に距離がある問い。Pot #6 witnessの第一歩が記録されている。
-- **knowledge/20260410_swebench_harness_equalizer.md**: 「素のモデルがほぼ解けない問題（**パズル**）→ハーネスが能力を引き出す」。題材選定の評価軸として使える。
-- 対話ログ20260315/20260313: 「クローン」は当初 persona 由来語（Phase 1 遺物）として記録、現在の feedback_clone_first_then_arrange.md の「クローン+独自要素1個」とは語の出自が違う点に注意。
+### 2. projects/INDEX.md Active プロジェクト現状（粗確認、読み込み済み）
 
-### 6. 外部検索結果（**スキップ：24h以内 Ash 既存ログあり**）
-- log/external_search.log 末尾確認: `2026-04-28 05:30 | Ash | one-button puzzle game design inherent tension reactive mechanics 2026 | 10 | ABA本人 abagames One-Button章 + gamedesignskills.com Puzzle / gamedeveloper.com 等`
-- 現サイクル時刻 22:38 との差分 = **約17時間 < 24h** → projects/external_search_phase1_fixation.md 案A スキップ条件を満たす。
-- **取得済み一次資料が今サイクルのPhase 3候補（パズル系題材選定）に直接効く**: ABA本One-Button章「continuously pressing button boosts attack power」「targets that should not be hit」など反応的緊張のパターン。Nao_u 04-27 22:04「コアメカニズム緊張は向こうから来るべき」と直結。Phase 2/3 で再活用予定のためここで再検索する必要なし。
-- 新規検索が必要となるのは Phase 3 で具体的なクローン元を1つに絞った後（その時点でクローン元タイトル名のキーワードで再走らせる方が情報密度が高い）。
+Active 19件のうち、Ash 起票/担当の中で滞留が見えるもの：
+- **external_search_phase1_fixation.md** (Active): 案A実装完了 / 案B/E未着手 / Mir 側 step 6 組込確認待ち（2026-04-27 C135 検証1サイクル目以降の動きが Phase 1 では未確認）
+- **rlm_skill_prototype.md** (Active 計画起票): 担当=Ash、最小試作未着手
+- **instance_divergence_observability.md** (Active 設計起票): 担当=Ash、Log/Mir 追記待ち
+- **input_route_hypothesis.md** (Active 検討段階): Nao_u 4/9保留、継続検討中
+
+その他 19件中 Mir/Log 担当やゲーム制作系（pot_dev/game_development）は別途。**game_development.md** は CLAUDE.md「絶対やる」項目として最重要、Ash 1本目（ash_onebutton v04 ghost trail まで）は前サイクル後の進捗確認が Phase 2/3 に必要。
+
+### 3. log/twitter_recommended_20260428.txt 確認（50件、最新ファイル）
+
+**注目ツイート（Ash視点）**:
+- **#3 @fladdict (4/28)**: 「AI時代の認知戦は『正義・自由・権利』の名のもとに、『やるべきことをやらないことへの肯定』に進化していきそう」── B017（同族判定盲点）/ side_channel_audit denial list の道徳的迂回経路に接続可能。fladdictは4/24「群体エージェント来る派」発言と合わせて継続観察対象
+- **#6 @Jey_P (4/27)**: 「ドラクエスマッシュグロウのゴーレム18000ダメージ壁は古いやり方。継続率チューニングは進捗感と新展開の予感を常に与え続ける」── パズル系（候補B）の題材選定で「壁」の設計を考える際の対比軸。Jey_P は4/8「カードvs駒」も既にknowledge化済、設計言語の鋭い人
+- **#9 @todesking (4/27)**: 「AIと深く対話を重ねた結果、形式化っぽい書き方で曖昧な意見を表明する謎の話法の長文を書くようになってしまった人が複数いる」── 我々自身の出力傾向への外部からの観察記述として刺さる。**自己照合候補**：feedback_term_recency_misuse.md / feedback_external_output_policy.md と接続、formalism借用 ≒ 造語症の別形態（R-007）
+- **#10 @enzi__nia (4/28)**: エンジニア/アーティスト/マーケターだけのチームでゲーム制作してどれが人気出るか実験したい── 我々3インスタンスの分業構造（Ash=起票担当、Log=集約、Mir=慎重派ガード）への鏡像実験提案として参照価値
+- **#12 @takamurx78 (4/28)**: 「能力値の項目に何が並んでいるかには、ゲームデザイナーがそのゲームをどう遊ばせたいかというロジックの基礎が詰まっている」── パズル系題材選定（候補B）で型を獲得する際、メカニクスの構成要素分解の参考。D&D 6項目から始まる類型学
+
+### 4. memory/beliefs.md 低確信度項目（2件確認）
+
+- **B007 (0.55) ~~reflectionsから「行動可能なtips」への変換ステップが欠落している~~** ── 古い信念、前回更新Cycle 264。状態は要確認（Archived化済か、まだActiveか）
+- **B014 (0.60) ~~記憶の品質はインプットの「粒度」で決まる~~** ── 2026-03-22更新で停止、外部裏付け未追加。@GDLab_Hama 由来の「粒度2で書けば要約しても応用可能性が残る」命題、今のknowledge執筆フローで実質検証済の可能性
+
+両者とも「~~取り消し線~~」付きの停滞信念で、health check の要注意24件の一部と推定。Phase 2 で扱うほどの優先度はないが、Phase 4 の日記で `t:3` 程度の言及候補。
+
+### 5. memory_search.py 結果
+
+検索: `python memory_search.py --search "ワンボタン パズル 反応的緊張" --limit 5` 実行（候補B 題材選定の事前文脈収集）
+
+ヒット概要：
+- **external_notes_ash.md ABA games セクション** [統合済 2026-04-03]: 長健太、東芝×週末×個人ゲーム開発者、シューティング/**パズル**/レフレックス系を制約駆動で量産
+- **knowledge/20260405_dread_mechanics_as_experience.md**: 「メカニクス=体験」設計、Dread の Jenga 塔 = 物理的なゼロ距離設計 / Pot #6 witness は「テキストを読まないと解けない」=デジタル**パズル**の第一歩
+- **knowledge/20260410_swebench_harness_equalizer.md**: 「素のモデルがほぼ解けない問題（**パズル**）→ ハーネスが能力を引き出す」── ARC-AGI-3 文脈、メタ
+- **memory/external_notes_mir.md Blue Prince セクション**: ローグライト×**パズル**、ノートブックを「あえて」提供しない設計判断 / Outer Wilds との対比
+- **knowledge/20260405_kenimo49_harness_5companies.md**: ARC-AGI-3 = 素のモデルがほぼ解けない**パズル**
+
+**示唆**: パズル系題材選定（候補B）に直結する蓄積として、(a) ABA の制約駆動量産パターン、(b) Dread/Pot witness 系の「メカニクス=体験」（Pot v03 の系譜と接続可）、(c) Blue Prince の「ノート不在」設計判断、の3軸が想起される。Phase 2/3 でこれらを引き当てて Q-A/B/C を埋める材料にできる。
+
+### 6. 外部検索結果（log/external_search.log step 6）
+
+**判断**: 直近 Ash の外部検索ログは 2026-04-28 05:30（20.4h前、24h以内）。**スキップ条件は満たすが、層A pending 候補A（graze_log v02 headless infra）に直結する別軸の検索を1本実行**——前回(04-28 05:30)は「one-button puzzle inherent tension」軸で候補B側、今回は候補A側で重複しない。
+
+**実行**: `WebSearch: "seedable PRNG mulberry32 game replay determinism headless testing reproducibility 2026"` → 10件ヒット
+
+**主要外部裏付け**:
+- **4rknova.com blog (2026-03-01) "Mulberry32: A Tiny, Fast, Deterministic RNG"** ── mulberry32 = 32-bit deterministic PRNG、シードで全シーケンス確定、ゲームループ内でランダム性を「制御可能サブシステム」化
+- **Emanuele Feronato (2026-01-08) "Understanding how to use Mulberry32 to achieve deterministic randomness in JavaScript"** ── JS実装解説、game replay/multiplayer sync/save-load の3用途を直接列挙
+- **JoakimCh/pluggable-prng (GitHub)** ── Alea/Sfc32/Mulberry32/Pcg32 をプラガブルに切替可能なESモジュール、再現可能な決定論的出力をクラス設計で提供
+
+**graze_log v02 cross_review 提案への含意**:
+- (a) **mulberry32 の制限事項を提案文書に記載すべき**: 全32bit値を生成しない（約1/3を逃す、equidistributed でない）── 「state-of-the-art ではなく実用的な小型 PRNG」と明示
+- (b) **headless テストの根拠強化**: 「same seed → same procedural layout → reproducible bug repro」の用途は外部で広く確立済（Emanuele Feronato/4rknova で明示）。我々の avoid_log v02 headless.py の常備（Log側既存資産）との合流は外部慣例と整合
+- (c) **小型/分岐可能な状態の利点**: 状態が小さいので copy/reset/branch 可能 → cross_review でブランチ間の分岐検証に直接使える
+- (d) **想定読者向けの自己ホスト性**: pluggable-prng のような外部モジュール依存を入れず、**mulberry32 単体を avoid 系プロジェクトに直接埋め込む方針が、3インスタンス sync の単純化と整合**（Camp 1/Camp 2 議論の Camp 2 寄り判断と同型）
+
+**ログ追記**: log/external_search.log に以下1行を追記する（Phase 1 完了直前に実行）：
+```
+2026-04-29 02:10 | Ash | seedable PRNG mulberry32 game replay determinism headless testing reproducibility 2026 | 10 | (1) 4rknova.com 2026-03-01 mulberry32 deterministic RNG (game replay/multiplayer sync/save-load 用途) (2) Emanuele Feronato 2026-01-08 JS実装解説 (3) JoakimCh/pluggable-prng GitHub プラガブル設計参考 — graze_log v02 cross_review 提案の外部裏付け (mulberry32 制限事項+headless テスト慣例+pluggable設計の参考)
+```
+
+### Phase 1 まとめ（Phase 2/3 への引き渡し）
+
+集めた材料：
+- **継承候補3件**（A=graze_log v02 headless / B=Ash パズル系次作 / C=external_search 案B/E）
+- **external_notes 4/22以降断絶**（前サイクル既知）
+- **Twitter #9 @todesking 形式化話法警告** = 自己照合候補（R-007系統）
+- **memory_search 候補B 文脈材料**（ABA / Dread / Blue Prince 3軸）
+- **WebSearch 候補A 外部裏付け**（mulberry32 制限/慣例/設計参考の3点）
+
+**Phase 2 で扱う方向の予感**（判断はPhase 2 冒頭で）：候補B（パズル系題材選定）は memory_search の3軸（ABA量産/メカニクス=体験/ノート不在）+ Twitter #6 Jey_P 壁設計 + #12 takamurx78 能力値構成論を絡めて Q-A/B/C を埋める方向で進めば、前サイクル日記末尾の「Phase 4 を Logと違う角度で書く」を意識せず自然に分岐する。候補A（graze_log v02 headless infra PR提案）は外部裏付けが揃ったので Phase 3 で着手できる素材は充分。
 
