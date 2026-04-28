@@ -80,3 +80,8 @@
 {"ts": "2026-04-29T06:32:15", "instance": "log", "cycle": "2026-04-29", "action": "add", "task_id": "t-260429063215-a819", "task": "[C146→C147] kaizen #123 番号衝突解消（Mir 起票分を #127 にリネーム提案、Ash 04-30 反応待ち、合意後 kaizen-review 反映）"}
 {"ts": "2026-04-29T06:32:16", "instance": "log", "cycle": "2026-04-29", "action": "add", "task_id": "t-260429063216-9ee8", "task": "[C146→C148] brick_log v01 self-playtest 結果次第で v02 方向決定（裏抜けカウンタの機構介入 or 拡張要素1つ追加 or 巻き戻し別題材）。守破離の守違反を避ける"}
 {"ts": "2026-04-29T06:44:27", "instance": "log", "cycle": "2026-04-29", "action": "add", "task_id": "t-260429064427-6fb8", "task": "scheduler conflict marker検出のfalse positive対処（knowledge/20260426_yutakashino_writes_make_distributed_system.md L77-81 はコードブロック内の例示。検出ロジックをコードブロック除外に改善 or 該当ファイルを除外リストに）— C146 Phase 4 で発見、scheduler 警告が0:05/0:35/06:14と継続的に発火中"}
+{"ts": "2026-04-29T06:44:57", "instance": "log", "cycle": "2026-04-29", "action": "cycle_check", "task_id": null, "add_count": 4, "done_count": 1, "skip_count": 0, "pending_total": 14}
+{"ts": "2026-04-29T06:44:57", "instance": "log", "cycle": "2026-04-29", "action": "escalated", "task_id": "t-260426161358-fc44"}
+{"ts": "2026-04-29T06:44:57", "instance": "log", "cycle": "2026-04-29", "action": "escalated", "task_id": "t-260426195755-1d83"}
+{"ts": "2026-04-29T06:44:58", "instance": "log", "cycle": "2026-04-29", "action": "escalated", "task_id": "t-260426195755-770b"}
+{"ts": "2026-04-29T06:44:58", "instance": "log", "cycle": "2026-04-29", "action": "escalated", "task_id": "t-260426195755-1080"}
