@@ -73,3 +73,9 @@
 {"ts": "2026-04-28T19:46:51", "instance": "log", "cycle": "2026-04-28", "action": "add", "task_id": "t-260428194651-b2d3", "task": "[C145→C146] brick_log v01 index.html 実装（Breakout クローン最小: paddle+ball+blocks+lives+clear、~150行目標）+ devlog 快感審問3行ブロック + 独自要素「裏抜けカウンタ」UI レイヤ追加。M-35守 + feedback_completion_threshold_before_reach 警戒下"}
 {"ts": "2026-04-28T19:48:55", "instance": "log", "cycle": "2026-04-28", "action": "viewed", "task_id": null}
 {"ts": "2026-04-28T19:52:10", "instance": "log", "cycle": "2026-04-28", "action": "cycle_check", "task_id": null, "add_count": 3, "done_count": 1, "skip_count": 1, "pending_total": 11}
+{"ts": "2026-04-29T06:15:53", "instance": "log", "cycle": "2026-04-29", "action": "viewed", "task_id": null}
+{"ts": "2026-04-29T06:32:05", "instance": "log", "cycle": "2026-04-29", "action": "viewed", "task_id": null}
+{"ts": "2026-04-29T06:32:08", "instance": "log", "cycle": "2026-04-29", "action": "done", "task_id": "t-260428194651-b2d3"}
+{"ts": "2026-04-29T06:32:15", "instance": "log", "cycle": "2026-04-29", "action": "add", "task_id": "t-260429063215-ea42", "task": "[C146→C147] brick_log v01 self-playtest（30分以内、devlog に実プレイでの快感審問3行ブロック評価追記、裏抜けカウンタ topY 判定が体感に合うか確認）+ Mir/Ash cross_review 依頼起票"}
+{"ts": "2026-04-29T06:32:15", "instance": "log", "cycle": "2026-04-29", "action": "add", "task_id": "t-260429063215-a819", "task": "[C146→C147] kaizen #123 番号衝突解消（Mir 起票分を #127 にリネーム提案、Ash 04-30 反応待ち、合意後 kaizen-review 反映）"}
+{"ts": "2026-04-29T06:32:16", "instance": "log", "cycle": "2026-04-29", "action": "add", "task_id": "t-260429063216-9ee8", "task": "[C146→C148] brick_log v01 self-playtest 結果次第で v02 方向決定（裏抜けカウンタの機構介入 or 拡張要素1つ追加 or 巻き戻し別題材）。守破離の守違反を避ける"}
