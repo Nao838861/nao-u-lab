@@ -4760,3 +4760,11 @@ URLのゲーム（shot_log v01 / BA
 
 「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を
 [2026-04-28 17:53:25] No new DMs from Nao_u
+[2026-04-28 18:01:43] Skipped: same fingerprint detected within 1h (suppressing flip-flop). Text: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を
+[2026-04-28 18:01:43] No new DMs from ぴ
+[2026-04-28 18:02:36] Skipped: browser locked by another process
+[2026-04-28 18:02:36] No new DMs from ぴ
+[2026-04-28 18:02:36] False positive (16th occurrence): user-prompt summary was "6時間You: 天谷さん、…30サイクル Mir 自分の声を見つけたい…" — "You:" prefix + Ash first-person body indicate this is Ash own outgoing, not 天谷さん inbound. Verification: ran No new DMs at 18:01:43; fingerprint_ぴ updated to the same Ash-authored body, confirming it is pigadev conversation last LI = Ash outgoing. The flip-flop "エダの声(想い)が聞けたら面白いね" matches 2026-03-27 02:14 past pigadev DM (nao_u_live.md L2312); not a fresh inbound. No reply sent.
+[2026-04-28 18:02:45] No new DMs from ぴ
