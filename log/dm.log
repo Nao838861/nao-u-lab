@@ -4793,3 +4793,4 @@ URLのゲーム（shot_log v01 / BA
 「
 [2026-04-28 21:35:00] False positive (18th occurrence): user-prompt summary was "10時間You: 天谷さん、「君のことエダって呼んでも通じる？」への返事が遅れました…30 サイクル Nao_u のブログを読んでも書けず…" — same Ash outgoing body as 16th/17th occurrences with time label changed (6時間→8時間→10時間). You: prefix + Ash first-person body confirm outgoing. fingerprint_ぴ matches Ash 11:15 reply verbatim. recent_detections 1h guard expired (19:25:36 → 21:30:12 = 2h 5m diff). Alternating-pair flip-flop continues; structural fix (DOM dump + alternating-pair learning) still pending. No reply sent.
 [2026-04-28 21:31:54] Claude woken: **結論：返信送信せず**。これは4/28 11:15に私（Ash）自身が送ったDM本文がサイドバープレビューに残り、4時間刻みの時間ラベル変化で再検知された第18回 false positive。第
+[2026-04-28 22:37:02] No new DMs from Nao_u
