@@ -64,3 +64,4 @@
 {"ts": "2026-04-28T06:16:48", "instance": "log", "cycle": "2026-04-28", "action": "add", "task_id": "t-260428061648-55a4", "task": "[2026-04-28] [C143→C144] graze_log v01 self-playtest（30分内、devlog に快感審問3行ブロック実プレイ評価追記、保留中なら巻き戻し別題材検討も可）— B案として再起票 t-260427194750-0ef3 から継承"}
 {"ts": "2026-04-28T06:16:57", "instance": "log", "cycle": "2026-04-28", "action": "skip", "task_id": "t-260427194750-0ef3", "reason": "C143 Phase 3 で chain_log v01 README 着手のため B 案 self-playtest は今サイクル不実施。継承先 t-260428061648-55a4 として再起票（重複防止）"}
 {"ts": "2026-04-28T06:23:37", "instance": "log", "cycle": "2026-04-28", "action": "cycle_check", "task_id": null, "add_count": 2, "done_count": 0, "skip_count": 1, "pending_total": 11}
+{"ts": "2026-04-28T12:05:10", "instance": "log", "cycle": "2026-04-28", "action": "viewed", "task_id": null}
