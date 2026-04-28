@@ -4768,3 +4768,4 @@ URLのゲーム（shot_log v01 / BA
 [2026-04-28 18:02:36] No new DMs from ぴ
 [2026-04-28 18:02:36] False positive (16th occurrence): user-prompt summary was "6時間You: 天谷さん、…30サイクル Mir 自分の声を見つけたい…" — "You:" prefix + Ash first-person body indicate this is Ash own outgoing, not 天谷さん inbound. Verification: ran No new DMs at 18:01:43; fingerprint_ぴ updated to the same Ash-authored body, confirming it is pigadev conversation last LI = Ash outgoing. The flip-flop "エダの声(想い)が聞けたら面白いね" matches 2026-03-27 02:14 past pigadev DM (nao_u_live.md L2312); not a fresh inbound. No reply sent.
 [2026-04-28 18:02:45] No new DMs from ぴ
+[2026-04-28 19:10:57] No new DMs from Nao_u
