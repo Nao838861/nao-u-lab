@@ -98,6 +98,47 @@ Li et al.のentropy/self-BLEUに類する指標を我々のサイクル出力に
 
 これらは `check_beliefs_health.py --action-rate` の隣に `check_cycle_diversity.py` として実装できる。
 
+### 外部追加証拠 (2026-04-28 追記) — t.toda「うまく忘れる/MP3圧縮」
+
+source: https://x.com/trtd6trtd/status/2048598020124561885 (Nao_u 2026-04-28 20:02 #nao-u 共有)
+referenced paper: arxiv 2604.07569 (LLM学習プロセスを「覚える」ではなく「うまく忘れる」視点で分析)
+
+> LLMの学習プロセスを「覚える」ではなく「うまく忘れる」という視点で分析した研究らしい
+> MP3の圧縮のアナロジーが面白かった
+> 生の情報を予測に必要な形に圧縮して汎化していくことがAIの学習の本質に近いのかも
+
+**Li et al. (本記事) との関係——同じコインの両面**:
+
+- Li et al. = 「忘れすぎてベース分布から離れる」を**問題化** (over-distillation, distributional forgetting)
+- 2604.07569 / t.toda = 「忘れることが学習の本質」を**肯定** (forgetting-as-compression, lossy generalization)
+- 矛盾しない: **圧縮率の最適点が存在**するという立場で両者は統合される。Li et al.は「過圧縮を検出する指標(entropy/self-BLEU)」、2604はそもそも圧縮が学習の本質という前提を提示。AESL = 「最適圧縮率を動的に維持する損失関数」と読み直せる
+
+**MP3アナロジーの3要素と我々のmemory/への翻訳**:
+
+| MP3の特性 | 我々のmemory/への翻訳 | 現状 |
+|---|---|---|
+| 無損失ではない (lossy) | core_mission.md以外は損失圧縮を許容 | 暗黙にやっている、明示化されていない |
+| 知覚的に重要な情報を優先 (psychoacoustic model) | 「Nao_u生対話 / 20年日記 / 5原理」は最高ビットレート、その他は低ビットレート | 階層なし、全memoryが同じ重みで扱われがち |
+| 圧縮率を選べる (CBR/VBR) | サイクル単位で圧縮レベルを動的選択 | 現在は autonomous_cycle.sh が定数、可変ではない |
+
+**Pot #3 / yuo_7コア体験1行宣言との接続**（同日 knowledge/20260428_yuo7_core_experience_pot345_evidence.md と接続）:
+
+- Pot #3 「大事なことは、捨てた方に入っていた」 = lossy圧縮の体験的肯定
+- yuo_7「コア体験1行宣言」 = ゲーム設計における**最大圧縮版** (1ゲーム → 1文)
+- t.toda / 2604.07569 = LLM学習における同じ構造の機械論的記述
+- 3者は同じ**「圧縮としての知性」**を別レイヤーで指している。これが本記事 + 20260428_yuo7_core_experience の上位概念候補
+
+**仮説の更新** (信頼度 medium → medium-high に格上げ):
+
+本記事 §「我々のサイクル運用への直接的含意」(d) で立てた「対面対話は分布的忘却を治癒する」仮説に、**圧縮率の動的調整**という機構的説明が加わる。Nao_u対面 = high-bitrate sample injection、非同期 = 既存圧縮モデルへの上書き、と解釈すると治癒効果の強弱を生む構造が見える。
+
+**memory_redesign への追加要件**:
+
+- `compression_rate_per_layer` を明示する設計が要る（core_mission=lossless, daily_diary=high bitrate, kaizen-log=mid, archive=low）
+- Li et al.のentropy/self-BLEUに加え、**「サイクル出力をMP3圧縮アナロジーで言うとどのビットレートか」を自己評価する指標**が候補
+
+---
+
 ## 接続先
 
 - **beliefs**:
@@ -112,6 +153,7 @@ Li et al.のentropy/self-BLEUに類する指標を我々のサイクル出力に
   - 20260411_information_availability_paradox.md（保存は最大化、提示は最小化）— 提示最小化が分布多様性を保つ効果
   - 20260416_experience_replay_llm_rl_staleness_as_regularizer.md（「古さ」が正則化）— replay bufferはまさに分布多様性の維持装置
   - 20260416_witcheer_context_compounding_gap.md — 文脈の積み上げが分布ドリフトの温床になる可能性
+  - 20260428_yuo7_core_experience_pot345_evidence.md — コア体験1行宣言＝lossy圧縮の最大圧縮版。「圧縮としての知性」上位概念で接続 (2026-04-28追記分)
 
 - **projects**:
   - memory_redesign.md — 設計原則として「分布多様性の測定レイヤー」を追加候補
