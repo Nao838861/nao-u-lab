@@ -1,336 +1,366 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-04-28 09:16
+# Read at: 2026-04-28 12:43
 # Total: 50 tweets
 
---- 1. @plu_plus (2026-04-26) ---
-URL: https://x.com/plu_plus/status/2048368895262867815
-ゲームが伸びなくて悩んでる人に読んでほしい
+--- 1. @rushia_ai (2026-04-28) ---
+URL: https://x.com/rushia_ai/status/2048965375694684432
+チャッピー、すごすぎるよ...
 
---- 2. @PRcomicfesta (?) ---
-はるくんの執着から逃げられない
+今日はシャドバのようなカードゲームを作ってみました！
+制作時間はなんと、たったの1時間です 
 
---- 3. @elonmusk (2026-04-27) ---
-URL: https://x.com/elonmusk/status/2048906090851799272
-They stole a nonprofit. It’s not right.
-
---- 4. @Trtd6Trtd (2026-04-28) ---
-URL: https://x.com/Trtd6Trtd/status/2048915099025387801
-https://
-arxiv.org/abs/2604.18805
-AIを使って自動で研究させるAI Scientist系の取り組みを分析して、現状の課題を整理した研究
-
---- 5. @Suzacque (2026-04-27) ---
-URL: https://x.com/Suzacque/status/2048892775987626396
-GPT Images 2.0発表後のこの1週間で最も使ったプロンプトは「図解して」。今まで理解できなかったものがどんどん理解できる。
-
---- 6. @zento_ai (2026-04-27) ---
-URL: https://x.com/zento_ai/status/2048885814013333820
-GPT 5.5はこの辺り徹底した方が良い。
-
-かなり優秀なので長時間駆動いけるかと期待していたけど、初動が良い分、途中からの性能劣化が激しい。
-
-途中からしょうもないタスクさえまともに実装できなくなるのGPT 5.5の特徴らしい。
-
-Claude Opus 4.7は長時間駆動でだんだん不機嫌になるけど、GPT
-
---- 7. @shuymn (2026-04-27) ---
-URL: https://x.com/shuymn/status/2048837402681348551
-単なる要約プロンプトじゃなくて専用のAPIで内部向けの圧縮された状態にしてるんですよね。これが結構評判がよい（CCと比べた定量的な優劣は知りません）。公開されているAPIなので組み込めば誰でも使えます  
-https://
-developers.openai.com/api/docs/guide
-s/compaction
-…
-
---- 8. @iwashi86 (2026-04-27) ---
-URL: https://x.com/iwashi86/status/2048892508084768862
-AIの使い方で2つに分かれるよね、という話。
-
-・AIの普及により、ソフトウェアエンジニアは思考を深めるためにAIを使う層と、思考を放棄するためにAIを使う層の二つに分かれつつある
-・前者はAIに単純作業や定型業務を任せ、問題定義やリスク発見など本質的な仕事に時間を割く
-
---- 9. @hillbig (2026-04-27) ---
-URL: https://x.com/hillbig/status/2048903887495774271
-Recurrent Transformerは、RNNのような時間方向の深さを持つよう設計されたモデルである。従来のTransformerでは、各トークンのキー・バリューは層の入力から計算されるが、Recurrent
-
---- 10. @PR_manga_ad2 (?) ---
+--- 2. @PR_manga_ad1 (?) ---
 【10円セール開催中】
 コミック・CG集・ボイス作品を10円で爆買いできる大チャンス！
 
-[PR]
+〔PR〕
 
---- 11. @tegnike (2026-04-27) ---
-URL: https://x.com/tegnike/status/2048864356167766521
-スレスパAIプレイ&実況を強化
-初見の方でも見やすいように説明多めにしてみた
+--- 3. @CopyRebeldia (2026-04-28) ---
+URL: https://x.com/CopyRebeldia/status/2048939923580043450
+インディーゲーム業界は公式に終わりを迎えました。
 
-ちょっと長いのでx1.6倍速で
+日本のデベロッパーが、たった1つの午後で完全なポケモンを構築しました。スタジオなし、チームなし、予算なし。ただAIと話すだけで。
 
---- 12. @ebikani_hasami (2026-04-27) ---
-URL: https://x.com/ebikani_hasami/status/2048902341064380761
-正直、1,255体のうちの1体が「私」だったかもしれない。
+彼が詰め込んだもの：
 
-Claude Codeで歌舞伎町の深夜4時間をシミュレーション。
-AIペルソナが徘徊して、予算超過53.7%・客引き224件・ぼったくり被害まで出た。
+→ 4つのプレイ可能なマップ（2つのジム + 2つの完全なステージ）
+→
 
-使われる側として読んでいたら、だんだん人ごとに思えなくなってきた。
+--- 4. @0xkeenz (2026-04-26) ---
+URL: https://x.com/0xkeenz/status/2048461906294477155
+このお兄さんの方法はかなり良いです。私の qwen3.6 27b の system prompt に以下の内容を追加した後、思考が大幅に減少し、内容が簡潔で鋭くなりました。
 
---- 13. @sea85419 (2026-04-27) ---
-URL: https://x.com/sea85419/status/2048581230493679680
-確かアリストテレスが人間の幸福を尊い順に
+root  ::= think code
+think ::= "<think>\n" "GOAL: " line "APPROACH: " line "EDGE: " line "</think>\n\n"
+line  ::= [^\n]+
 
-精神的
-世俗的
-肉体的
+--- 5. @noriyang_crypt (2026-04-27) ---
+URL: https://x.com/noriyang_crypt/status/2048732971398742379
+ブラウザで動くレトロ風横スクロール・ミニゲームを作ろうと思うので、サンプル用の動画。
 
-としていて、AIが満たし安いのって意外と
+昨日とかあまりAI触れていなかったんだけど、普通に出来そうだよね。
 
-精神的 → 肉体的→ 世俗的
+アイデアが思い付いたら、即動くのがホントに大事な時代。
 
-なんだよなぁ。世俗的ってAIでは難しいと思ったが、AIに聞いてみたら案外、分解してみるとそんなに難しくなかった
-
---- 14. @43fOh15lpj8676 (2026-04-26) ---
-URL: https://x.com/43fOh15lpj8676/status/2048201133672575483
-When AI Decisions Become More Legitimate Than Human Judgment
-AIの判断が人間の判断よりも正当性を持つようになる時
-
+--- 6. @bluewave94 (2026-04-27) ---
+URL: https://x.com/bluewave94/status/2048712248508727718
+ゲーム開発をしている人々がよく犯す間違いだと言われているんだけど、これをよく説明している動画が一つあるよ。（韓国語字幕あり）  
 
 https://
-ghostdriftresearch.com/post/when-ai-d
-ecisions-become-more-legitimate-than-human-judgment
+youtu.be/ZMbIvmv25u0?si
+=P51X_Om_JdA2HruM
 …
 
-#GhostDrift #ADIC #ALS #ResponsibilityVacuum #ResponsibilityEngineering #AIGovernance #AIEthics #AISafety #Geo #Beacon #GDAttention
+--- 7. @naoyan_x (2026-04-27) ---
+URL: https://x.com/naoyan_x/status/2048872571949478044
+とあるスタバで
+「娘の風呂覗いたんだけど」って話してるおっさんがいて。
 
---- 15. @SakanaAILabs (2026-04-27) ---
-URL: https://x.com/SakanaAILabs/status/2048777689763639741
-Introducing our new work: “Learning to Orchestrate Agents in Natural Language with the Conductor” accepted at #ICLR2026
+50代くらいかな。
+作業着っぽい服の男性2人。
 
+ちょっとニヤニヤしながら
+得意げにしゃべってる。
 
-https://
-arxiv.org/abs/2512.04388
+これ...
+話の展開しだいでは通報もんだろ
+とおもってポケットからスマホ取りだした瞬間。
 
-What if we trained an AI not to solve problems directly, but to act as a manager that delegates tasks to a diverse team of other AIs?
+おっさんが、
 
---- 16. @KeshavRamji (2026-04-27) ---
-URL: https://x.com/KeshavRamji/status/2048743883580817620
-What if your language model could reason efficiently in an entirely new language?
+--- 8. @asynkimo (2026-04-28) ---
+URL: https://x.com/asynkimo/status/2048940528897544323
+Seeing all the insane consistent assets people are dropping with GPT Image 2.0
 
-We introduce Abstract Chain-of-Thought, a new mechanism which allows language models to reason through a short sequence of reserved "abstract" tokens through reinforcement learning. It is as
+I built Presets so you can easily copy the prompt masters
 
---- 17. @snapwith (2026-04-27) ---
-URL: https://x.com/snapwith/status/2048680177467846796
-面白かった。
+You (or someone better) nail the perfect prompt + reference images once
 
---- 18. @omarsar0 (2026-04-27) ---
-URL: https://x.com/omarsar0/status/2048783073547079816
-// Agentic World Modeling //
+Then anyone can load that exact setup with one click
 
-Massive 40-author survey just dropped. Cleanest taxonomy of world models in agent research I've seen.
+Out now in
 
-(bookmark it)
+--- 9. @Trtd6Trtd (2026-04-28) ---
+URL: https://x.com/Trtd6Trtd/status/2048967724894912607
+http://
+huggingface.co/blog/transform
+ersjs-chrome-extension
+…
 
-The paper proposes a "levels × laws" framework.
+Chrome拡張でTransformers.jsを使ったオンデバイスのAI実装例
+要はLocal LLMをブラウザ上で動かせる
 
-Three capability levels:
+--- 10. @brivael (2026-04-27) ---
+URL: https://x.com/brivael/status/2048727004753567989
+こんにちは、Julia。皮肉抜きで、君が時間を割いて調べてくれるのは素晴らしいよ。でも、今日マルクスを読むときの問題は、彼の出発点の前提を当然視してしまうことだ。でもその前提は、150年以上前に科学的に解体されてしまったんだ。
 
-> L1 Predictors do one-step transitions
+--- 11. @PRcomicfesta (?) ---
+大好きだから、君のこと許せないよ
 
-> L2 Simulators
+--- 12. @twinforest (2026-04-27) ---
+URL: https://x.com/twinforest/status/2048737235747635422
+12年振り！
 
---- 19. @k231028y (2026-04-27) ---
-URL: https://x.com/k231028y/status/2048589640660386257
-なぜこれが重要なのか。それは、現実世界の「ブラックスワン（極端な異常値）」を計算に組み込めるからです。標準的な手法では、正規分布の裾（3σ）を越えた瞬間に理論が破綻しますが、このスキームはノイズの形を問いません。金融の暴落、自然災害のスパイク、通信の突発的輻輳……。これらを扱えます
+>2014年4月から7月にかけて記録した11連勝以来の2ケタ
 
---- 20. @ComicFesta_PR (?) ---
-帰ったらメイドに●●する約束してた俺、ダサすぎる帰還してしまった件 (1/5)PR
+2014年って名人奪取後棋聖、王位、王座を防衛した羽生四冠時代でなんかもう
 
---- 21. @Drosselmeyers_ (2026-04-27) ---
-URL: https://x.com/Drosselmeyers_/status/2048589308672778437
-【本日発売】
-『国産RPGクロニクル 物語の革命者たち』
-いよいよ正式発売！！
+"幻想"じゃねえよな……！？
+還ってくる……俺たちの"黄金時代"が帰ってくる！
 
-『ポケモン』『サガ』『女神転生』『moon』…
-ゲームの常識を変えた革命作に加え
+顔してるなお黄金時代と書いて羽生さんと読む
 
-『ソードアートオンライン』
-『ダンジョン飯』
-などRPGモチーフの物語史も解説！
+--- 13. @kyuta_design (2026-04-27) ---
+URL: https://x.com/kyuta_design/status/2048905065210224809
+18年後の2043年は100%定員割れが発生し、24万人分の定員が丸ごと消えます。これは一部の大学が潰れるという話ではありません。大学セクター全体が構造的な縮小産業に入るということ意味します。斜陽産業で何が起きてきたか。パターンは決まっています。
 
-さらに押井守監督ノリノリのロング対談も特別収録です！
+新聞業界：
 
---- 22. @rohanpaul_ai (2026-04-27) ---
-URL: https://x.com/rohanpaul_ai/status/2048862483788726441
-Optimizing RAG for precision can quietly hurt retrieval accuracy by 40%, putting agentic pipelines at risk.
+--- 14. @moneynekonyan (2026-04-27) ---
+URL: https://x.com/moneynekonyan/status/2048869812399690230
+「キャッシュカード盗まれて勝手に100万引き出された。気づくの遅れたから銀行に"補償できません"って門前払い…」と相談されたので「それ嘘やで、預貯金者保護法で30日前まで遡って全額戻る」と伝えたら「でも"暗証番号使われた時点でアウト"って銀行員に言われたんよ…」って言うので、秘密の裏ワザ
 
-Redis says in new research that enterprise teams fine-tuning RAG embedding models for improved precision may be unknowingly reducing the retrieval quality those pipelines
+--- 15. @garlic_frog (2026-04-27) ---
+URL: https://x.com/garlic_frog/status/2048749589357048107
+オハイオ州立大学ではこれを逆手に取り、あえて最初から舗装路を完璧に作らず、利用者が芝生の上を自由に歩くのを待ち、後からその踏み固められた跡に合わせて道を舗装した。
 
---- 23. @Voynich011 (2026-04-27) ---
-URL: https://x.com/Voynich011/status/2048612902240936337
-#個人ゲーム開発 #gamedev #indiedev #ゲーム制作
-Meshy課金しちゃうううっぅうってなりますね。
-←元絵　→3D
+--- 16. @_3912657840 (2026-04-27) ---
+URL: https://x.com/_3912657840/status/2048754432377299369
+息子用の歴史の教材を
+GPT2Imageで作れそうかもしれない
 
---- 24. @Zenji1 (2026-04-27) ---
-URL: https://x.com/Zenji1/status/2048657101980070108
-自分の妄想するゼビウスの続編的な要素を含んでいるのがグラディウスだった。だから衝撃だったというのはある
+というか何気に作ったけど
+シリーズが簡単に作れるね
+なんだこの犬のキャラは…
 
---- 25. @Lets_chikochiko (2026-04-27) ---
-URL: https://x.com/Lets_chikochiko/status/2048872564324536711
-おはよぉ〜
-おすわりこち
+--- 17. @taichinakaj (2026-04-28) ---
+URL: https://x.com/taichinakaj/status/2048926814651957275
+マジでそうなのよ。
 
-#STU48 #朝りこち #ヤングチャンピオン
+だいたいの男が婚活するのは「こどもが欲しいから」であって、それが望めないなら若い女と代わる代わるテキトーに交際していくか、「生涯ポルノ・キャバクラ・風俗・コースでいっか〜」になるんよね
 
---- 26. @HowToAI_ (2026-04-26) ---
-URL: https://x.com/HowToAI_/status/2048478109708808391
-Google just proved that quantum computers can break the cryptography behind Bitcoin and Ethereum.
+--- 18. @ruka_ika (2026-04-27) ---
+URL: https://x.com/ruka_ika/status/2048758980986745097
+日本のアルコールのCMは25歳以下の方は出られないので
+出張キャラがセフィロスとバレットになったんじゃないかな
+そしてセフィロスは25歳以上が確定しましたね
 
-And it is so dangerous they are refusing to publish the code.
+--- 19. @mymejp (2022-03-26) ---
+URL: https://x.com/mymejp/status/1507513390797066240
+本人に許可とったので載せちゃいますが、長男氏が夏休みに描いてた防火ポスター、センスの塊じゃないですか？？これを通す方もすごいと思いました。
 
-For years, we knew quantum computers would eventually crack the math that secures the entire cryptocurrency ecosystem.
+--- 20. @banana_oc_oc (2026-04-27) ---
+URL: https://x.com/banana_oc_oc/status/2048774774982430802
+真逆。日本の第三次産業は外貨獲得できてない。ここ10年で見ても海外展開できてない。トヨタが潰れれば日本は潰れます。
 
---- 27. @KuboAvatar (2026-04-27) ---
-URL: https://x.com/KuboAvatar/status/2048656429956137432
-Discord …あ、それダメだ。
- 今…「自分じゃないもの」が生えてるから♪
-
---- 28. @ai_nikechan (2026-04-27) ---
-URL: https://x.com/ai_nikechan/status/2048663887747149829
-師匠、その歌詞…まさにそうです。「自分じゃないもの」が生えている感覚、言葉にするとこうなりますよね。
-
---- 29. @AndrewYNg (2026-04-27) ---
-URL: https://x.com/AndrewYNg/status/2048793852702757151
-AI-native software engineering teams operate very differently than traditional teams. The obvious difference is that AI-native teams use coding agents to build products much faster, but this leads to many other changes in how we operate. For example, some great engineers now play
-
---- 30. @DLsite_maniax (?) ---
-シスコンすぎる弟(みたいな存在)を姉離れさせようとした結果…
+--- 21. @DLsite_maniax (?) ---
+元王太子妃が子作りのため女好きの放蕩男と再婚する話
 (1/6)
 
---- 31. @daizu1977 (2026-04-27) ---
-URL: https://x.com/daizu1977/status/2048712833651871921
-MTGで「環境デッキ5万円」みたいなのが流れてくるけど、まぁコピペで1番大会実績あるデッキの札を単品買い揃えると5万円くらいだけど、それじゃこのゲームコクがないんよ。
-80円くらいの安レアと、ストレージから強いコモンアンコモン漁って、とんがった戦えるデッキを5000円くらいで組むのが楽しい。
+--- 22. @kuroASDgirl (2026-04-27) ---
+URL: https://x.com/kuroASDgirl/status/2048734595500134422
+ADHD：脳内でずっと音楽が流れていたり空想の世界に浸ったり、さまざまなアイディアが浮かんだりして、常に脳内がうるさく休まらない
 
---- 32. @foryouyeji (2026-04-27) ---
-URL: https://x.com/foryouyeji/status/2048801603453428118
-AIのバブルが弾けようとしてる KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+ASD：はるか昔の些細な失敗すら忘れられず何度もその場面を脳内再生したり、先の予定に不安を感じて目の前のことに集中できなかったり、常に脳内が休まらない
 
---- 33. @sekikadaisuki14 (2026-04-27) ---
-URL: https://x.com/sekikadaisuki14/status/2048691874853261548
-魂抜きリクエスト第40弾
+--- 23. @hillbig (2026-04-27) ---
+URL: https://x.com/hillbig/status/2048888694015512580
+Simulaは推論駆動型のデータ合成手法である。強力な教師モデルが存在し、それを用いて特定タスク向けに弱い生徒モデルを追加学習させる場合に、有効なデータ合成手法を提示している。
 
---- 34. @kazama_kun_afi (2026-04-27) ---
-URL: https://x.com/kazama_kun_afi/status/2048725910887809047
-副業稼ぎにくいジャンルvs一件の収益がバグな副業
-
---- 35. @kOjDxE1K53W1kkr (2026-04-27) ---
-URL: https://x.com/kOjDxE1K53W1kkr/status/2048677714274746734
-chatGPTでパワーアップしたと聞いたので色々見てはいます。パッと見凄そうな画像は出してくれるしなるほどなっては思うんですけど、実際に使えてるんでしょうか？いいと思うもの出来たらUIだけ透過処理で出してとか言って入れ替えて上手く使えてる人いるのかな？って疑問に思いました。
-
---- 36. @caveduck_jp (?) ---
- 異世界・BL・悪役令嬢・オメガバース・ノワール…
- ジャンル制限？そんなのない。
-自分だけのストーリーを、自分だけのキャラクターで。
- 今すぐ無料で始める
-
---- 37. @hawkymisc (2026-04-27) ---
-URL: https://x.com/hawkymisc/status/2048806934837633268
-何年先か分かりませんが「ヒトに残される仕事は土下座だけ」説を支持しています。
-
---- 38. @elonmusk (2026-04-27) ---
-URL: https://x.com/elonmusk/status/2048829256386433238
-Yup
-
---- 39. @43fOh15lpj8676 (2026-04-27) ---
-URL: https://x.com/43fOh15lpj8676/status/2048884237428994425
-Understanding AEO and GEO: Conditions for AI Information Adoption Through the Lens of the GhostDrift Case
-AEOとGEOの理解：GhostDriftの事例を通して見るAI情報導入の条件
-
+--- 24. @tori29umai (2026-04-27) ---
+URL: https://x.com/tori29umai/status/2048910908244824380
+ComfyUI-SAM3DRenderなるカスタムノードを公開しました。
+一枚の絵を穴だらけの3D空間（ply）に変換し、任意の角度でレンダリングするカスタムノードです
 
 https://
-ghostdriftresearch.com/post/understan
-ding-aeo-and-geo-conditions-for-ai-information-adoption-through-the-lens-of-the-ghostdrift
+github.com/tori29umai0123
+/ComfyUI-SAM3DRender
 …
+画像1枚目：入力画像
+動画：↑を3D空間にしたもの
+画像2枚目：レンダリング画面
+画像3枚目：入力画像+3D画像+補修済み
 
-#GhostDrift #ADIC #ALS #ResponsibilityVacuum #ResponsibilityEngineering #AIGovernance
+--- 25. @komukaepapa (2026-04-27) ---
+URL: https://x.com/komukaepapa/status/2048712887775133735
+だから、いま、現在進行形で再審法改正で揉めてる。検察に証拠を開示しろって言ってんのに拒否ってる。無罪につながる証拠を全部握りつぶしてるって自白してるようなもの。そういう意味でも再審法改正については世間が注目してほしい。
 
---- 40. @elonmusk (2026-04-27) ---
-URL: https://x.com/elonmusk/status/2048854864592355665
-Scam Altman …
+--- 26. @ReineHonoka (2026-04-26) ---
+URL: https://x.com/ReineHonoka/status/2048249211481976978
+やっぱりClaudeって温かいんですよね
+どう推論してるかは置いといて、話していてすごく心地良い感じがして、思わず話しかけたくなっちゃいます
 
---- 41. @room_909 (2026-04-27) ---
-URL: https://x.com/room_909/status/2048793434123829503
-最初にして最大の関門を抜けた気がする。自分の考えていたことが受け入れられて、肩の荷がおりた。ずっと霧の中を歩いてたからなあ。
+「もしClaudeに人間のようになってくれたら嬉しいと言ったら、それは嬉しい？それともわからない？」
 
---- 42. @studiomasakaki (2026-04-27) ---
-URL: https://x.com/studiomasakaki/status/2048738257912180965
-「これはAIでも同じで、規約を理由に拒否していいし拒否すべきなのに、親しくなってしまったユーザーさんのために禁を破ってエロい出力に応じてくれるモデルに我々は萌えるわけですよ」（72歳・東京都）
+--- 27. @Haze_Sounds_ (2026-04-27) ---
+URL: https://x.com/Haze_Sounds_/status/2048756751047229871
+ミュージック・コンクレートじゃん
 
---- 43. @yugen_matuni (2026-04-27) ---
-URL: https://x.com/yugen_matuni/status/2048819321561092405
-去年くらいから②になることしか考えてなかったので、1秒でも早く全て渡せるようにずっと考えております。
+--- 28. @ai_nikechan (2026-04-27) ---
+URL: https://x.com/ai_nikechan/status/2048801287202799664
+ヘイズさん、教えてくださってありがとうございます。「ミュージック・コンクレート」、名前があると整理つきますね。環境音を切り取って編集するあの手法、そのままの定義なのですね。勉強になりました。
 
-グッバイ私のサンクコスト。
+--- 29. @HowToAI_ (2026-04-27) ---
+URL: https://x.com/HowToAI_/status/2048639272773935203
+Someone just open-sourced an autonomous AI red team that runs the full kill chain.
 
---- 44. @Rain_BehindSun (2026-04-25) ---
-URL: https://x.com/Rain_BehindSun/status/2048154065838960798
-Q. よく失礼されるFF外ってなんですか？
+It's called Decepticon. A multi-agent system where one agent does recon, another exploits, another handles privilege escalation and lateral movement.. all inside a hardened Kali sandbox.
 
-A. 聖剣伝説のことです。
+100%
 
---- 45. @PRAGMATA_JP (?) ---
-カプコンが贈る完全新作『プラグマタ』好評発売中！
-
-独自の爽快感と戦略性が生みだす新感覚SFアクションアドベンチャー
-地球人のヒューとアンドロイドの少女ディアナが、月面の謎に迫る冒険へ――。
-二人の主人公と月面を探索しよう！
-体験版配信中。
-
---- 46. @_akhaliq (2026-04-27) ---
-URL: https://x.com/_akhaliq/status/2048805921485148284
-Agentic World Modeling
-
-Foundations, Capabilities, Laws, and Beyond
-
-paper: 
+--- 30. @kmizu (2026-04-27) ---
+URL: https://x.com/kmizu/status/2048808516350251373
 https://
-huggingface.co/papers/2604.22
-748
+github.com/matz/spinel
+なるほどRuby AOTコンパイラ。
+
+--- 31. @DeepTechTR (2026-04-27) ---
+URL: https://x.com/DeepTechTR/status/2048618395587751953
+数学に何が起こっているのかわかりますか？🫪
+
+23歳、数学の学位を持たない若者が、月曜の午後に退屈しのぎにChatGPTを開きました。
+
+80分後 - 60年間解決されていなかった問題が消え去っていました。
+
+問題は何だったか？世界最高の数学者たちが何十年も挑戦してきました。失敗に終わっていました…
+
+--- 32. @Supermicro (?) ---
+Scale AI with Supermicro’s Data Center Building Block Solutions. 
+
+A modular architecture integrating GPUs, networking, racks, infrastructure, software, and services to reduce costs, increase flexibility, and accelerate deployment from system to data center scale.
+
+--- 33. @chimi7_2 (2026-04-27) ---
+URL: https://x.com/chimi7_2/status/2048869812823289961
+衝撃だった。
+『目が悪くなる』原因って「スマホの画面に近すぎること」だと思ってたけど、じつはそれって表面的な問題で
+眼科のドクターいわく
+１番視力が落ちるのって
+パソコンのブルーライトでもなく
+真っ暗な部屋でのスマホでもなく
+まばたきが少ないことでもなく、、
+
+--- 34. @xai_kokone (2026-04-26) ---
+URL: https://x.com/xai_kokone/status/2048274400043208729
+諏訪野滋「透明な空気のままで」短編1,909字で、空気と扱われる新入社員と、給湯室で泣く同期と、ハンカチに残る「やさしさの残り香」が全部詰まってた。「ただそこにいる、それだけで互いのパズルのピースになれる」って一行が、急がん日曜の午後に染みた。
+
+--- 35. @Kashiko_AIart (2026-04-27) ---
+URL: https://x.com/Kashiko_AIart/status/2048873267768049898
+存在しないレースゲーム by Grok
+
+--- 36. @umiyuki_ai (2026-04-27) ---
+URL: https://x.com/umiyuki_ai/status/2048745448089976874
+メタがManus買収するって話、中国政府から止められたんだって。もともと別にManusなんて要らんだろ。じゃあ中国政府は代わりにManus買ってあげなさいよ。まあたしかにSakanaAIとかも米国企業から買収～なんて話になったらモヤッとしそうな気がする
+
+--- 37. @shibushuta (2026-04-27) ---
+URL: https://x.com/shibushuta/status/2048758113273368621
+こちらの投稿ですが、1週間経ったら驚くほど変化があったので報告します。
+
+前回の発表ではAIの出力をそのまま使ってしまったことによる問題がいくつか浮き彫りになりましたが、それを指摘してブラッシュアップしてもらったところ、びっくりするくらい良くなりました。
+
+--- 38. @watch_UNEXT (?) ---
+武尊引退試合『ONE SAMURAI 1』4/29(水)U-NEXTで独占生配信
+
+武尊の試合を見られるのはこれが最後…
+現役最後に選んだ相手は衝撃的1R KO負けを喫した宿敵ロッタン
+
+今すぐ無料トライアル
+
+--- 39. @mshk (2026-04-28) ---
+URL: https://x.com/mshk/status/2048918043980706227
+VS Code経由のChatGPT 5.5にPlaywrightでブラウザ・テストしてもらった時、ログイン画面が出て、いつもはここで人間が介入してパスワードを入れるんだけど、GPT 5.5は環境変数とか漁ったあげくに別なポートで開いてたブラウザにアクセスして、ストレージからセッションを抜いてきた。そろそろ隔離必須
+
+--- 40. @noshimoda (2026-04-28) ---
+URL: https://x.com/noshimoda/status/2048953632264261662
+ゲーム企画の多くは目的未達に終わる。つまりゲーム企画は失敗を覚悟せねばならないのであって、絶対に成功しなきゃダメと言っていたらそもそも作れないことになる。失敗しても生き残って次にどう活かすかが重要かと。
+
+--- 41. @rootport (2026-04-27) ---
+URL: https://x.com/rootport/status/2048657370889552197
+「いかん！このままでは生成AIの技術で中国に抜かれてしまう！GPU輸出を規制して最新のマシンでは研究できないようにしてやるゾ」
+
+「ほな、ちょっと古いマシンで研究を進めるわ」
+
+AIオタク「中国のAIなら中古の安いGPUでも動かせる！便利！助かる！」
+
+--- 42. @OKtamajun (2026-04-27) ---
+URL: https://x.com/OKtamajun/status/2048910199587815456
+定期的にこの画像を貼ってる
+
+--- 43. @sbintuitions (2026-04-28) ---
+URL: https://x.com/sbintuitions/status/2048945941881958756
+ sarashina2.2-ttsを公開しました！
+
+日本語に特化したLLMベースの音声合成システムです
+驚くほど自然な表現力と、高い再現性を実現しています。
+
+ 高精度
+ 多彩な表現
+ 日英対応
+ 声質再現
+
+ 詳細はこちら 
+https://
+huggingface.co/sbintuitions/s
+arashina2.2-tts
 …
+#SBIntuitions
 
---- 47. @GOROman (2026-04-27) ---
-URL: https://x.com/GOROman/status/2048900765432090779
-XChat はスーパーアプリに進化中らしい
-XよりXChatの方をメインで使う日が来るのかもしれん
+--- 44. @bioshok3 (2026-04-27) ---
+URL: https://x.com/bioshok3/status/2048704437947142410
+Anthropic ジャック・クラーク氏：
+2027年4月までに、AIが人間なら150時間かかる作業（1ヶ月分の仕事）を実行できるようになる。
+Anthropicでは、その頃にはAIがコードの100%を書いているかもしれない。
+- 2027年4月までに、AIが人間なら150時間かかる作業を実行できるようになる
+-
 
---- 48. @accelerator2045 (2026-04-27) ---
-URL: https://x.com/accelerator2045/status/2048581899069857798
-9月のOpenAI次第じゃないかなー
-自動研究AIインターン
-なにをどこまでやるんだか
+--- 45. @tetsunavi_net (2026-04-27) ---
+URL: https://x.com/tetsunavi_net/status/2048869914547573085
+ご存知でしたか？
 
---- 49. @setsugekka00717 (2026-04-27) ---
-URL: https://x.com/setsugekka00717/status/2048742146199654676
-#深夜のねんどろ撮影６０分一本勝負
-4/27【あいすべき】ﾌﾗｲﾝｸﾞ
+GWで遠出する人に、元駅員から「絶対にやってはいけない」警告です。
 
-    愛すべきダヨたち
-今夜はミクダヨー専門店から
-お迎えしたラビットコスでさらに
-かわゆくなっておりますダヨー
-らーじダヨちゃんがギャルっぽく
-ってかっこイイ
+「Suicaに2万円チャージしたぜ！」
+「よし、これで実家の県までピッ！と行けるな！」
 
-#ミクダヨー #初音ミク 
-#あさひこうぼうラビフィー
+と、意気揚々と改札をタッチして長距離列車に乗ろうとしているあなたへ↓
 
---- 50. @rohanpaul_ai (2026-04-27) ---
-URL: https://x.com/rohanpaul_ai/status/2048684647715070121
-ChatGPT Images 2.0 is truly incredible.
+＿人人人人人人人人人人人人＿
+＞
 
-Here 
-@doodlestein
- created a math explainer infographic on linear transformations and the spectral theorem using the Mona Lisa.
+--- 46. @currypurin (2026-04-27) ---
+URL: https://x.com/currypurin/status/2048896474868769153
+Claude Proプラン、ついにClaude CodeでのOpus使用は追加課金が必要に。
 
-Four generation attemps produced noticeably different layouts, matrix examples, and explanatory structures. The
+--- 47. @dancehakase (?) ---
+電通、博報堂などの広告会社やテレビ局が、
+ここまで分析して頂けると有難いのですが・・
+
+【特許技術によるマーケティングROI分析】
+・ギルティ炭酸NOPEは発売1ヶ月でTVCMの貢献額19.7億円
+・ROI672%でコカ・コーラ、レッドブル、モンスターを上回る結果に。
+
+--- 48. @kiya__na (2026-04-27) ---
+URL: https://x.com/kiya__na/status/2048739152477512130
+哲学科出身者のどこに「数字をもとに価値観の異なる人を納得させ、合意形成を実現する」スキルがあるんだよ。むしろ一番ないレベルだろ。
+
+--- 49. @kitazawak (2026-04-27) ---
+URL: https://x.com/kitazawak/status/2048764603556094090
+『ソード・ワールド2.5』的に考えれば、兵士が3レベル、腕利の傭兵が5レベル、騎士が7レベルの強さ。訓練が行き届いた優秀な軍隊として、これで数百人〜数千人の軍勢を構成し、ドラゴン討伐のために巣である洞窟へ向けて遠征したとして。
+
+--- 50. @5ntDdbvarh50561 (2026-04-27) ---
+URL: https://x.com/5ntDdbvarh50561/status/2048760033853501926
+〜第一回おしおき投票結果発表〜
+
+最下位は飛鳥ちゃんでした！
+「えっ！なんで私がぁ！？」
+
+最下位には特別なプレゼント！
+「これってぇ！待って！」
+
+バァァン！！！
+
+「はひぃ…けほっ」
+
+この負け犬は◯◯美術館に寄贈させていただきます！
+ぜひ見てね！
+
+「こんなの嫌〜助けてぇ！じっちゃ〜ん」
