@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>brick_log v01 — BRICK</title>
+<style>
+  html,body{margin:0;background:#05050f;color:#cfd4e4;font-family:system-ui,sans-serif;
+            display:flex;flex-direction:column;align-items:center;min-height:100vh}
+  canvas{background:#07091a;box-shadow:0 0 40px #1b2040;display:block;margin-top:12px}
+  h1{font-size:14px;margin:8px 0 0;letter-spacing:.1em;color:#9fb1d8}
+  p{font-size:11px;opacity:.55;margin:4px 0 0}
+</style>
+</head>
+<body>
+<h1>BRICK</h1>
+<p>← → / A D / MOUSE  PADDLE &middot; SPACE  START / SERVE / RETRY</p>
+<canvas id="c" width="420" height="620"></canvas>
+<script>
+const W=420,H=620;
+const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
+const keys={};
+let mouseX=null;
+
+// === PADDLE / BALL ===
+const PAD_W=72, PAD_H=8, PAD_Y=H-40, PAD_SPEED=6;
+const BALL_R=5, BALL_BASE_SPEED=4.2;
+
+// === BLOCKS ===
+const BR_COLS=10, BR_ROWS=6, BR_W=36, BR_H=14, BR_GAP=2;
+const BR_X0=(W-(BR_COLS*(BR_W+BR_GAP)-BR_GAP))/2;
+const BR_Y0=70;
+// 段ごとの硬さ・スコア・色（最上段が硬い）
+const ROW_DEF=[
+  {hp:3,score:50,col:'#e85a7a'},
+  {hp:2,score:30,col:'#e8a04a'},
+  {hp:2,score:30,col:'#e8d44a'},
+  {hp:1,score:10,col:'#7adea0'},
+  {hp:1,score:10,col:'#5ac6e8'},
+  {hp:1,score:10,col:'#9d8ae8'},
+];
+
+const RETRY_UNLOCK_FRAMES=120; // 2s lock after game over
+
+const state={
+  mode:'title', // 'title'|'serve'|'play'|'clear'|'over'
+  t:0,
+  paddle:{x:W/2,y:PAD_Y,w:PAD_W,h:PAD_H},
+  ball:{x:W/2,y:PAD_Y-BALL_R-1,vx:0,vy:0},
+  blocks:[],   // {x,y,w,h,hp,maxHp,score,col,alive}
+  particles:[],
+  popups:[],
+  lives:3,
+  score:0,
+  hiscore:(function(){try{return parseInt(localStorage.getItem('bricklog_hi')||'0',10);}catch(e){return 0;}})(),
+  combo:0,        // 1ボール中の連続破壊数
+  comboMax:0,
+  // === 独自要素「裏抜けカウンタ」 ===
+  // ブロック群の重心ライン(midY)より上にボールが入った瞬間 backside=true
+  // パドル側に戻ったら false。backside 中の連鎖破壊を backCombo として表示
+  backside:false,
+  backCombo:0,           // 現在の裏抜け中の連鎖破壊数
+  backTime:0,            // 現在の裏抜け滞在フレーム
+  backComboBest:0,       // 1プレイ通しての最高
+  backCount:0,           // 裏抜け突入回数
+  unlockT:0,
+};
+
+function initBlocks(){
+  state.blocks.length=0;
+  for(let r=0;r<BR_ROWS;r++){
+    const def=ROW_DEF[r];
+    for(let c=0;c<BR_COLS;c++){
+      state.blocks.push({
+        x:BR_X0+c*(BR_W+BR_GAP),
+        y:BR_Y0+r*(BR_H+BR_GAP),
+        w:BR_W, h:BR_H,
+        hp:def.hp, maxHp:def.hp, score:def.score, col:def.col,
+        alive:true,
+      });
+    }
+  }
+}
+
+function blocksTopY(){
+  // 生存ブロックのうち最上段の上端 y。ない場合は BR_Y0
+  // 「ball が y < blocksTopY」 = 「全ブロック群より上」 = 真の裏抜け
+  let top=Infinity;
+  for(const b of state.blocks){if(b.alive&&b.y<top)top=b.y;}
+  if(!isFinite(top))return BR_Y0;
+  return top;
+}
+
+function resetBall(){
+  state.ball.x=state.paddle.x;
+  state.ball.y=PAD_Y-BALL_R-1;
+  state.ball.vx=0;
+  state.ball.vy=0;
+  state.combo=0;
+  state.backside=false;
+  state.backCombo=0;
+  state.backTime=0;
+}
+
+function startGame(){
+  state.mode='serve';
+  state.t=0;
+  state.lives=3;
+  state.score=0;
+  state.combo=0; state.comboMax=0;
+  state.backComboBest=0; state.backCount=0;
+  state.particles.length=0; state.popups.length=0;
+  initBlocks();
+  state.paddle.x=W/2;
+  resetBall();
+}
+
+function serveBall(){
+  // パドル中央上から、軽く斜め上へ
+  state.ball.x=state.paddle.x;
+  state.ball.y=PAD_Y-BALL_R-1;
+  const ang=(-Math.PI/2)+(Math.random()*0.5-0.25); // -90度±14度
+  state.ball.vx=Math.cos(ang)*BALL_BASE_SPEED;
+  state.ball.vy=Math.sin(ang)*BALL_BASE_SPEED;
+  state.mode='play';
+}
+
+function spawnParticles(x,y,col,n){
+  for(let i=0;i<n;i++){
+    const a=Math.random()*Math.PI*2,sp=1+Math.random()*2.5;
+    state.particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:24+Math.random()*16,col});
+  }
+}
+function popup(x,y,text,col){state.popups.push({x,y,text,col,life:50});}
+
+function rectCircleHit(rx,ry,rw,rh,cx,cy,cr){
+  const nx=Math.max(rx,Math.min(cx,rx+rw));
+  const ny=Math.max(ry,Math.min(cy,ry+rh));
+  const dx=cx-nx,dy=cy-ny;
+  return dx*dx+dy*dy<=cr*cr;
+}
+
+function update(){
+  state.t++;
+  // === paddle ===
+  const p=state.paddle;
+  if(mouseX!==null){
+    p.x=Math.max(p.w/2,Math.min(W-p.w/2,mouseX));
+  }else{
+    if(keys['ArrowLeft']||keys['a']||keys['A'])p.x-=PAD_SPEED;
+    if(keys['ArrowRight']||keys['d']||keys['D'])p.x+=PAD_SPEED;
+    p.x=Math.max(p.w/2,Math.min(W-p.w/2,p.x));
+  }
+  // === serve: ball follows paddle ===
+  if(state.mode==='serve'){
+    state.ball.x=p.x;
+    state.ball.y=PAD_Y-BALL_R-1;
+    return;
+  }
+  if(state.mode!=='play')return;
+
+  // === ball ===
+  const b=state.ball;
+  b.x+=b.vx; b.y+=b.vy;
+  // 壁
+  if(b.x<BALL_R){b.x=BALL_R;b.vx=Math.abs(b.vx);}
+  if(b.x>W-BALL_R){b.x=W-BALL_R;b.vx=-Math.abs(b.vx);}
+  if(b.y<BALL_R){b.y=BALL_R;b.vy=Math.abs(b.vy);}
+  // 下端落下
+  if(b.y>H+BALL_R){
+    state.lives--;
+    state.combo=0;
+    if(state.backside){
+      state.backside=false;
+      state.backCombo=0;
+    }
+    if(state.lives<=0){
+      state.mode='over';
+      state.unlockT=RETRY_UNLOCK_FRAMES;
+      try{if(state.score>state.hiscore){state.hiscore=state.score;localStorage.setItem('bricklog_hi',String(state.score));}}catch(e){}
+    }else{
+      state.mode='serve';
+      resetBall();
+    }
+    return;
+  }
+
+  // === paddle 衝突（上面のみ） ===
+  if(b.vy>0 && b.y+BALL_R>=p.y-p.h/2 && b.y-BALL_R<=p.y+p.h/2 &&
+     b.x>=p.x-p.w/2-BALL_R && b.x<=p.x+p.w/2+BALL_R){
+    b.y=p.y-p.h/2-BALL_R-0.1;
+    // 当たり位置で角度変化（中央=垂直、端=斜め）
+    const off=(b.x-p.x)/(p.w/2); // -1..1
+    const ang=(-Math.PI/2)+off*(Math.PI/3); // ±60度
+    const sp=Math.hypot(b.vx,b.vy);
+    b.vx=Math.cos(ang)*sp;
+    b.vy=Math.sin(ang)*sp;
+    state.combo=0; // パドルで途切れる。裏抜けはパドル接触で必ず解除
+    if(state.backside){state.backside=false;state.backCombo=0;}
+  }
+
+  // === blocks 衝突 ===
+  for(const blk of state.blocks){
+    if(!blk.alive)continue;
+    if(!rectCircleHit(blk.x,blk.y,blk.w,blk.h,b.x,b.y,BALL_R))continue;
+    // どの面で当たったか（中心からの押し出し方向で簡易判定）
+    const cx=blk.x+blk.w/2, cy=blk.y+blk.h/2;
+    const dx=b.x-cx, dy=b.y-cy;
+    const px=blk.w/2+BALL_R-Math.abs(dx);
+    const py=blk.h/2+BALL_R-Math.abs(dy);
+    if(px<py){
+      b.vx=-b.vx; b.x+=Math.sign(dx||1)*px;
+    }else{
+      b.vy=-b.vy; b.y+=Math.sign(dy||1)*py;
+    }
+    blk.hp--;
+    if(blk.hp<=0){
+      blk.alive=false;
+      state.score+=blk.score;
+      state.combo++;
+      if(state.combo>state.comboMax)state.comboMax=state.combo;
+      spawnParticles(cx,cy,blk.col,8);
+      // === 裏抜け判定: 破壊時に backside なら backCombo++ ===
+      if(state.backside){
+        state.backCombo++;
+        if(state.backCombo>state.backComboBest)state.backComboBest=state.backCombo;
+        popup(cx,cy-8,'BACK x'+state.backCombo,'#ffd76b');
+      }
+    }else{
+      spawnParticles(b.x,b.y,blk.col,3);
+    }
+    break; // 1フレームに1ブロックのみ処理（多重バグ防止）
+  }
+
+  // === 裏抜けカウンタ更新（独自要素） ===
+  // 「生存ブロック群の最上段より上に居る」状態を backside と定義（真の裏抜け）
+  // play 中のみ。serve/over は前段で return 済み
+  const topY=blocksTopY();
+  const wasBack=state.backside;
+  state.backside=(b.y<topY);
+  if(state.backside){state.backTime++;}
+  if(state.backside && !wasBack){
+    state.backCount++;
+    state.backCombo=0; // 突入時にリセット
+    state.backTime=0;
+    popup(b.x,b.y-12,'BACK!','#9be0ff');
+  }
+  if(!state.backside && wasBack){
+    state.backCombo=0; // 抜けた瞬間リセット
+  }
+
+  // === clear ===
+  if(state.blocks.every(bk=>!bk.alive)){
+    state.mode='clear';
+    state.unlockT=RETRY_UNLOCK_FRAMES;
+    try{if(state.score>state.hiscore){state.hiscore=state.score;localStorage.setItem('bricklog_hi',String(state.score));}}catch(e){}
+  }
+
+  // === fx ===
+  for(const pt of state.particles){pt.x+=pt.vx;pt.y+=pt.vy;pt.vy+=0.05;pt.life--;}
+  state.particles=state.particles.filter(p=>p.life>0);
+  for(const pp of state.popups){pp.y-=0.6;pp.life--;}
+  state.popups=state.popups.filter(p=>p.life>0);
+  if(state.unlockT>0)state.unlockT--;
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  // border
+  ctx.strokeStyle='#1b2040';ctx.lineWidth=1;ctx.strokeRect(0.5,0.5,W-1,H-1);
+
+  // 裏抜けライン（薄く表示・独自要素の見える化）
+  if(state.mode==='play'||state.mode==='serve'){
+    const topY=blocksTopY();
+    ctx.strokeStyle=state.backside?'rgba(155,224,255,0.45)':'rgba(155,224,255,0.10)';
+    ctx.setLineDash([4,6]);
+    ctx.beginPath();ctx.moveTo(0,topY);ctx.lineTo(W,topY);ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // blocks
+  for(const blk of state.blocks){
+    if(!blk.alive)continue;
+    const dim=blk.hp/blk.maxHp;
+    ctx.fillStyle=blk.col;
+    ctx.globalAlpha=0.55+0.45*dim;
+    ctx.fillRect(blk.x,blk.y,blk.w,blk.h);
+    ctx.globalAlpha=1;
+    ctx.strokeStyle='rgba(0,0,0,0.25)';ctx.strokeRect(blk.x+0.5,blk.y+0.5,blk.w-1,blk.h-1);
+  }
+
+  // particles
+  for(const pt of state.particles){
+    ctx.globalAlpha=Math.min(1,pt.life/30);
+    ctx.fillStyle=pt.col;
+    ctx.fillRect(pt.x-1,pt.y-1,2,2);
+  }
+  ctx.globalAlpha=1;
+
+  // paddle
+  const p=state.paddle;
+  ctx.fillStyle='#cfd4e4';
+  ctx.fillRect(p.x-p.w/2,p.y-p.h/2,p.w,p.h);
+
+  // ball
+  if(state.mode!=='over'&&state.mode!=='clear'){
+    const b=state.ball;
+    ctx.fillStyle=state.backside?'#ffd76b':'#ffffff';
+    ctx.beginPath();ctx.arc(b.x,b.y,BALL_R,0,Math.PI*2);ctx.fill();
+  }
+
+  // popups
+  ctx.font='10px system-ui,sans-serif';ctx.textAlign='center';
+  for(const pp of state.popups){
+    ctx.globalAlpha=Math.min(1,pp.life/40);
+    ctx.fillStyle=pp.col;ctx.fillText(pp.text,pp.x,pp.y);
+  }
+  ctx.globalAlpha=1;
+
+  // === HUD: top ===
+  ctx.fillStyle='#9fb1d8';ctx.font='11px system-ui,sans-serif';ctx.textAlign='left';
+  ctx.fillText('SCORE '+state.score,8,16);
+  ctx.textAlign='right';
+  ctx.fillText('HI '+state.hiscore,W-8,16);
+  ctx.textAlign='center';
+  ctx.fillText('LIFE '+'●'.repeat(Math.max(0,state.lives))+'○'.repeat(Math.max(0,3-state.lives)),W/2,16);
+
+  // === HUD: 裏抜けカウンタ（独自要素 / 上端中央の弧+数値） ===
+  drawBackArc();
+
+  // === overlays ===
+  if(state.mode==='title'){
+    overlay('BRICK','SPACE  START');
+  }else if(state.mode==='serve'){
+    ctx.fillStyle='rgba(255,255,255,0.55)';ctx.font='11px system-ui,sans-serif';ctx.textAlign='center';
+    ctx.fillText('SPACE  SERVE',W/2,H-12);
+  }else if(state.mode==='clear'){
+    overlay('CLEAR','SCORE '+state.score+(state.unlockT===0?'  /  SPACE  RETRY':''));
+  }else if(state.mode==='over'){
+    overlay('GAME OVER','SCORE '+state.score+(state.unlockT===0?'  /  SPACE  RETRY':''));
+  }
+}
+
+function drawBackArc(){
+  // 裏抜け滞在時間 + backCombo + backComboBest を上端中央に弧で表示
+  // ゲージ自体は累積でなく「現在の状態を可視化」する観察UI（M-23 自然減衰なし）
+  const cx=W/2, cy=44, r=14;
+  ctx.strokeStyle=state.backside?'#9be0ff':'rgba(159,177,216,0.35)';
+  ctx.lineWidth=2;
+  ctx.beginPath();ctx.arc(cx,cy,r,Math.PI,0,false);ctx.stroke();
+  // 滞在時間バー（弧の上に重ねる、現在 backside の時のみ伸びる）
+  if(state.backside){
+    const f=Math.min(1,state.backTime/120);
+    ctx.strokeStyle='#ffd76b';ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(cx,cy,r,Math.PI,Math.PI+Math.PI*f,false);ctx.stroke();
+  }
+  ctx.lineWidth=1;
+  ctx.fillStyle=state.backside?'#ffd76b':'#9fb1d8';
+  ctx.font='10px system-ui,sans-serif';ctx.textAlign='center';
+  ctx.fillText('BACK '+state.backCombo+(state.backComboBest>0?'  best '+state.backComboBest:''),cx,cy+4);
+}
+
+function overlay(title,sub){
+  ctx.fillStyle='rgba(5,5,15,0.55)';ctx.fillRect(0,H/2-50,W,100);
+  ctx.fillStyle='#cfd4e4';ctx.font='22px system-ui,sans-serif';ctx.textAlign='center';
+  ctx.fillText(title,W/2,H/2-6);
+  ctx.fillStyle='#9fb1d8';ctx.font='12px system-ui,sans-serif';
+  ctx.fillText(sub,W/2,H/2+22);
+}
+
+// === input ===
+addEventListener('keydown',e=>{
+  keys[e.key]=true;
+  if(e.key===' '){
+    if(state.mode==='title')startGame();
+    else if(state.mode==='serve')serveBall();
+    else if((state.mode==='over'||state.mode==='clear')&&state.unlockT===0)startGame();
+    e.preventDefault();
+  }
+});
+addEventListener('keyup',e=>{keys[e.key]=false;});
+cvs.addEventListener('mousemove',e=>{
+  const r=cvs.getBoundingClientRect();
+  mouseX=(e.clientX-r.left)*(W/r.width);
+});
+cvs.addEventListener('mouseleave',()=>{mouseX=null;});
+cvs.addEventListener('click',()=>{
+  if(state.mode==='title')startGame();
+  else if(state.mode==='serve')serveBall();
+  else if((state.mode==='over'||state.mode==='clear')&&state.unlockT===0)startGame();
+});
+
+// === loop ===
+function loop(){update();draw();requestAnimationFrame(loop);}
+loop();
+</script>
+</body>
+</html>

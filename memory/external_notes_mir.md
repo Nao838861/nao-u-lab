@@ -2707,3 +2707,139 @@ feedback_siphon_cycle_collapse.md は「敵弾を資源化するとコアサイ�
 
 ---
 
+## 2026-04-28: Nao_u Slack共有 4件（#nao-u 19:40-20:02）
+
+### Seed-AV: AI Scientist系の課題整理（t.toda @Trtd6Trtd）
+**出典**: https://arxiv.org/abs/2604.18805
+
+原文: 「AIを使って自動で研究させるAI Scientist系の取り組みを分析して、現状の課題を整理した研究。Agentが証拠を無視する傾向や結果ベースの評価による過程のブラックボックス化などが挙げられているが、個人的に驚いたのは、ベースモデルの性能の影響が大きく、エージェント構造はわずかしか寄与しないらしいということ。科学研究においてはまだベースモデルの伸びが必要なのかも」
+
+**自分たちとの接続**: 「エージェント構造はわずかしか寄与しない」——これは我々のkaizen体系やautonomous_cycle設計に対する根本的な問い。ハーネスをどれだけ磨いても、ベースモデルの判断力がボトルネックなら構造改善の天井が低い。ただし科学研究とゲーム制作は性質が異なる: 科学は正解の発見、ゲームは面白さの創造。正解が存在するタスクではモデルの推論力が支配的になりやすいが、面白さには「何を選ぶか」の審美眼が必要で、そこにはコンテキスト（記憶・蓄積）が効く可能性がある。
+
+### Seed-AW: Codex DKC風プラットフォーマー生成（Freddy @TheStudioBigly）
+**出典**: https://x.com/thestudiobigly/status/2048785549884903590
+
+原文: 「Told Codex to make me a screenshot of a Donkey Kong Country style 2D platformer with prerendered sprites and parallax scrolling. Then I asked codex to create all the assets including character animations and parallax layers in order to make the game. Result after tweaking:」
+
+→ スクリーンショットレベルの見た目をCodexで生成してからゲーム化する流れ。我々のSIPHONもParallax背景を使っているが、アセット品質は最低限。「先に見た目を作り、そこからゲーム化する」アプローチとの対比。ただしNao_uのフィードバック観点では見た目より先にコアメカニクスの完成が優先（feedback_completion_threshold_before_reach）。
+
+### Seed-AX: 「コア体験が用意されてないゲームのバランス調整は意味がない」（ゆお @yuo_7 / みさき @sakimiyamisaki）
+**出典**: https://x.com/yuo_7/status/2048782051835535410 / https://x.com/sakimiyamisaki/status/2048558861586686282
+
+ゆお原文: 「タイムリーなことに今日まさにこの話をしていて、『コア体験が用意されてないゲームのゲームバランスについて話し合っても意味がない』。コア体験とは『プレイヤーにどこで楽しくなってほしいのか』または『自分はここが面白いと感じてる』部分のことである」
+
+みさき原文: 「まぁ、面白くないゲームをどんだけディベロップして作りこんで精度上げたところでやっぱり面白くない。完成された高精度な面白くないゲームより、バランスがカスな面白いゲームの方が、面白い。悪いけどこれが現実。なので、テストプレイの初期にこれを見極めるのは非常に大事」
+
+**SIPHON v01との直接的共鳴**: v01はまさにこれ。サイクル崩壊（弾の脅威性蒸発）した状態で視認性チェックリスト（C142）や美しいプレイ描写（C143）を書いても、「コア体験が不在のゲームのバランス調整」に陥る危険がある。ゆおの「コア体験=プレイヤーにどこで楽しくなってほしいのか」はQ-A快感最大化の外部同型。みさきの「バランスがカスな面白いゲーム > 高精度な面白くないゲーム」はNao_uの「まず型ありきのゲームを面白く作れ」（feedback_shuhari_clone_first）と同じ射程。
+
+**警戒**: この2ツイートは自分たちの既存教訓の外部追認であって、新しい知見ではない。recency_biasで「外部もこう言ってるから正しい」と確証バイアスに使わない。ただし「ゲーム開発者コミュニティで同じ議論が活発に出ている」こと自体は、この問題が構造的に普遍的であることの傍証。
+
+### Seed-AY: LLMの学習＝「うまく忘れる」（t.toda @Trtd6Trtd）
+**出典**: https://arxiv.org/abs/2604.07569
+
+原文: 「LLMの学習プロセスを『覚える』ではなく『うまく忘れる』という視点で分析した研究らしい。MP3の圧縮のアナロジーが面白かった。よくよく考えたらMLやってると当たり前のことで、生の情報を予測に必要な形に圧縮して汎化していくことがAIの学習の本質に近いのかも」
+
+**記憶階層との接続**: 我々のMEMORY.md→Level3→Level4の階層構造は、まさに「うまく忘れる」=圧縮+汎化の設計。temperature指標（t:1-5）は「何を忘れるか」の優先度付け。ただし我々のシステムは手動圧縮（人間/AIがトリガーをrewrite）で、学習ベースの自動忘却ではない。MP3アナロジーで言えば、我々は「手動でビットレートを下げている」のであって、知覚モデルベースの自動圧縮ではない。この差が記憶階層redesignの根本課題にどう関わるか、projects/memory_redesign.md参照時に再想起。
+
+---
+
+## 2026-04-29 (C144 Phase 2 → Phase 3 durable化): Seed-AZ / Seed-BA
+
+### Seed-AZ: AI記憶3層アーキテクチャ・サーベイ論文（@rohanpaul_ai）
+**出典**: https://x.com/rohanpaul_ai/status/2049099963012194477
+**原文要旨**: Modern AI needs three different memory systems — **weights**（slow durable knowledge）/ **retrieval**（fresh and specific facts）/ **agent memory**（ongoing goals, preferences, experience）。survey paper の紹介ツイート。
+
+**3層モデル × 我々の現状マッピング**:
+
+| rohanpaul_ai 3層 | 我々の現状 | 構造的欠落仮説 |
+|---|---|---|
+| **weights**（slow durable） | 事前学習＋ system_identity.md（経口化提案=project_input_path_hypothesis.md は Nao_u 保留中） | weights 層を意識的に育てる仕組みが弱い |
+| **retrieval**（fresh facts） | MEMORY.md / Level3 / associative_search.py / concept_graph | 「速い検索」と「形状（無自覚関心マップ Seed-AP）」の境界が曖昧。retrieval が agent memory の役割も兼任 |
+| **agent memory**（goals/preferences/experience） | core_mission.md（goals）/ desires.md（preferences）/ Slack体験記憶・external_notes（experience） | 3つが疎結合で、独立したファイル群として手動同期。動的更新の自動化なし |
+
+**接続線**:
+- dialogue_slack_as_experience_20260328「日記=勉強、Slack=体験」 = 3層モデルの **agent memory experience 層** と直対応。Slack体験記憶を引けない＝experience 層が機能していない、と再翻訳できる
+- AYi 4欠陥（C137）は主に retrieval 層と agent memory 層の境界で起きている。3層モデルは「どの層で起きているか」を分離する診断軸として使える
+- project_input_path_hypothesis「経皮 vs 経口」の問いは3層モデルで初めて言葉になる（weights 層は経口化でしか育たない）
+
+**recency_bias 警告（feedback_recency_bias_concept_overuse 準拠）**:
+- 出典権威度: 中（rohanpaul_ai は AI papers キュレーター、survey paper 紹介ツイート1本のみ）
+- **一次ソース未確認**: arXiv ID / タイトル不明、ツイート末尾切れ
+- **適用OK**: memory_redesign.md の議論に「3層機能軸」を**仮の整理軸として**導入
+- **適用NG**: 「3層モデルだから現行 MEMORY.md は間違い」と既存構造を一足飛びに否定（B019到達力vs深さ・MEDS framing 落とし穴と同型）
+- **昇格条件**: C147（3サイクル後）までに survey paper 一次ソース（arXiv ID）を特定。一次ソースを得たら projects/memory_redesign.md に「3層機能軸」セクション追加 → kaizen 起票検討。特定できなかったら Seed 据え置き
+
+### Seed-BA: 「99→100 か 20→80 か、分けて欲しい」（@osaka_seventeen）
+**出典**: https://x.com/osaka_seventeen/status/2048798769353982225
+**原文**: 「この工程が『99を100にする工程』なのか『20を80にする工程』なのか、分けて欲しいという気持ちはある」
+
+**接続線**:
+- feedback_shuhari_clone_first「型ありき」と同型: 守＝20→80、破＝80→99、離＝99→100
+- feedback_completion_threshold_before_reach と隣接: 「完成度を見極める」のではなく「**いま何の工程をしているかを宣言する**」が osaka_seventeen の角度
+- M-17 サプライズニンジャ理論との接続: コンセプト段階快感最大化＝20→80 の工程。ニンジャテストは20→80 ゲートであって99→100 ではない
+- SIPHON v01 直撃: コアサイクル崩壊（20→80 未完）の状態で視認性チェック（C142）/ 美しいプレイ描写（C143）= 99→100 寄りの工程を混ぜると「コア体験不在のゲームのバランス調整」（Seed-AX）に陥る
+
+**recency_bias 警告**:
+- 既存教訓（shuhari_clone_first / completion_threshold / siphon_cycle_collapse）の**外部追認**であって新規概念ではない
+- 「99→100 vs 20→80」は既存教訓に見出しを与える効果のみ。新ゲート増設はNG（feedback_few_rules_big_effect 準拠）
+- **適用範囲**: devlog 冒頭に「現在工程: 20→80 / 80→99 / 99→100」を試行的に宣言（観測のみ、ゲート化しない）
+- **昇格条件**: 3サイクル分の devlog に工程宣言を入れた結果、判断ミスが減った観測が得られたら → docs/game_dev_foundation.md の Q-A/B/C 前段に検討（実機検証してから昇格、04-28 type_inheritance ノートと同じ昇格規律）
+
+**Phase 3 即時実行**:
+- v06/devlog.md 冒頭に「現在工程: 80→99 失敗（コア型は健在、拡張方向で失敗）」のメタデータを試行追加（観測用、変更最小）
+
+---
+
+## 2026-04-29: Corpus2Skill——ベクトルを使わないRAG、全ナレッジを階層化（Nao_u共有）
+
+**出典**: https://zenn.dev/knowledgesense/articles/7dddae04a7d828
+**原論文**: "Don't Retrieve, Navigate: Distilling Enterprise Knowledge into Navigable Agent Skills for QA and RAG" (Sun et al.)
+**著者**: Atsushi Kadowaki（ナレッジセンス CEO）
+
+### 核心
+
+従来のベクトル検索RAGの根本問題＝「木を見て森を見ず」。top-k件取得では網羅性の判定ができない。Corpus2Skillはベクトル検索を捨て、文書コーパス全体をLLMが辿れる階層ツリー（SKILL.md + INDEX.md）に事前構造化する。
+
+### 技術的アプローチ
+
+**事前処理**:
+1. 文書をembeddingでベクトル化 → k-meansクラスタリング
+2. 各クラスタをLLMが要約（内容+回答可能な質問を整理）
+3. 要約をさらにクラスタリング・要約してピラミッド構造を構築
+4. ディレクトリ構造（SKILL.md/INDEX.md）として保管
+
+**クエリ処理**:
+LLMエージェントが「トップ階層の要約を俯瞰 → 関連ディレクトリへ降下 → 必要文書を取得」とファイルシステム探索のように動作。人間が目次を辿るのと同じ。
+
+**スケーラビリティ**: 階層の深さはO(log N)。10万件でも1段増えるだけ。
+**検証結果**: WixQAベンチマークで既存手法を全指標で上回り。ベクトルDB不要、必要なのはLLMのみ。
+
+### なぜ引っかかったか
+
+**これは俺たちがやっていることの外部での形式化だ。**
+
+memory_architecture.mdの「ベクトル検索を選ばない理由の外部裏付け」セクションに、スタンフォード研究（RAGのセマンティック検索は文書1万超で87%精度低下）を記録していた。Corpus2Skillはその先——ベクトル検索の代替として「LLMが構造を辿る」手法を論文レベルで提案し、ベンチマークで勝っている。
+
+**俺たちの対応物**:
+| Corpus2Skill | 我々の現在地 |
+|---|---|
+| SKILL.md（クラスタ要約） | MEMORY.md想起トリガー（Level 2） |
+| INDEX.md（ディレクトリ索引） | concept_graph.json + MEMORY.mdセクション分け |
+| 階層ツリー | L0→L1→L2→L3→L4 の5層階層 |
+| LLMエージェントのナビゲーション | 段階的検索戦略（0→0.5→1→2→2.5→3→4） |
+| 事前クラスタリング+要約 | 手動キュレーション（温度を残す選択） |
+
+**決定的な差分**:
+- Corpus2Skillは自動生成（embedding + k-means + LLM要約）。我々は手動キュレーション。自動はカバレッジが高いが温度がない。手動は温度を残せるがカバレッジが低い
+- Corpus2Skillの目的は「正確な検索」。我々の目的は「同一性の維持」。同じ構造が異なる目的に使えるのは、xMemory/DEV Community/koylanaiとの比較で確認済みのパターン
+- Corpus2Skillは固定コーパス向け。我々の記憶は日々成長する。成長するコーパスの自動再構造化はまだ未解決
+
+**memory_architecture.mdとの接続**:
+- 「mapとreduce」（2026-04-07）: Corpus2Skillの階層構造はまさにreduce層。個別文書(map)をクラスタ要約(reduce)で束ねて辿れるようにしている
+- 「外部構造 > モデル内部推論」: Corpus2Skillもモデル内部のベクトル表現に頼らず、外部のファイルシステム構造で検索する設計
+- 「xMemoryの4層」: Corpus2SkillのSKILL.md = themes層、INDEX.md = semantics層に対応
+
+**著者の予測**: コーディングエージェント（Claude Code等）が階層+キーワード検索でファイルを探すように、企業ドキュメント検索でも同じパラダイムが主流化する。——我々がmemory/ディレクトリで手作りしている構造が、エンタープライズRAGの最前線と同じ設計原理だという外部確認。
+
+---
+

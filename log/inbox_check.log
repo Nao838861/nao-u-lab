@@ -3114,15 +3114,20 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 - 21:54 訂正「五個じゃ少ない。最低十数個。できるならもっと」を受領
 - 自記憶 `feedback_clone_base_selection_method.
 [2026-04-28 22:29:10] Inbox win has content — waking Claude
-[2026-04-28 22:59:07] Inbox win2 has content — waking Claude
-[2026-04-28 22:59:31] Claude woken for win2: メッセージ冒頭の `> Log` は Nao_u が Log を指名している引用。直前のコミット `Log: Arkanoid 第一参照切替 + 良16/悪18 #game-rights 投下` の続
-[2026-04-28 23:11:43] Inbox win2 has content — waking Claude
-[2026-04-28 23:16:43] Claude wake timed out for win2 — restoring inbox
-[2026-04-28 23:30:34] Inbox win2 has content — waking Claude
-[2026-04-28 23:35:34] Claude wake timed out for win2 — restoring inbox
-[2026-04-29 01:35:41] Inbox win2 has content — waking Claude
-[2026-04-29 01:40:41] Claude wake timed out for win2 — restoring inbox
-[2026-04-29 01:46:49] Inbox win2 has content — waking Claude
-[2026-04-29 01:51:49] Claude wake timed out for win2 — restoring inbox
-[2026-04-29 03:33:55] Inbox win2 has content — waking Claude
-[2026-04-29 03:36:58] Claude woken for win2: API Error: 529 Authentication service is temporarily unavailable. Retry the request. This is a serve
+[2026-04-28 22:59:21] Inbox win has content — waking Claude
+[2026-04-28 23:01:25] Claude woken for win: #game-rights に投下完了。
+
+3本: **Shatter**(拡張型/介入操作追加)・**Wizorb**(周辺型/RPGメタ)・**Holedown**(変異型/反射→投擲) を、アルカ
+[2026-04-28 23:06:35] Inbox win has content — waking Claude
+[2026-04-28 23:10:13] Claude woken for win: 対処完了。
+
+- 22:58 のNao_uの質問（アルカノイド以外のブロック崩し3本）への返信は **23:00:58に投下済み**（Shatter / Wizorb / Holedown、commi
+[2026-04-28 23:12:02] Inbox win has content — waking Claude
+[2026-04-28 23:16:46] Claude woken for win: 完了。
+
+- #game-rights に投下 (ts=1777385683.902589): 反省1行 + 安全網原則の内面化 + 改善案8件（本命=裏抜けの設計化、強い次点2、派生候補5）
+- `
+[2026-04-28 23:30:15] Inbox win has content — waking Claude
+[2026-04-28 23:34:19] Claude woken for win: #game-rights に投下完了 (ts=1777386844.727249, commit de2314666d9)。
+
+**判定結論**: 「裏抜け系」を最初に実装。Log 本命「裏抜けの設計
