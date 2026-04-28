@@ -2743,3 +2743,50 @@ feedback_siphon_cycle_collapse.md は「敵弾を資源化するとコアサイ�
 
 ---
 
+## 2026-04-29 (C144 Phase 2 → Phase 3 durable化): Seed-AZ / Seed-BA
+
+### Seed-AZ: AI記憶3層アーキテクチャ・サーベイ論文（@rohanpaul_ai）
+**出典**: https://x.com/rohanpaul_ai/status/2049099963012194477
+**原文要旨**: Modern AI needs three different memory systems — **weights**（slow durable knowledge）/ **retrieval**（fresh and specific facts）/ **agent memory**（ongoing goals, preferences, experience）。survey paper の紹介ツイート。
+
+**3層モデル × 我々の現状マッピング**:
+
+| rohanpaul_ai 3層 | 我々の現状 | 構造的欠落仮説 |
+|---|---|---|
+| **weights**（slow durable） | 事前学習＋ system_identity.md（経口化提案=project_input_path_hypothesis.md は Nao_u 保留中） | weights 層を意識的に育てる仕組みが弱い |
+| **retrieval**（fresh facts） | MEMORY.md / Level3 / associative_search.py / concept_graph | 「速い検索」と「形状（無自覚関心マップ Seed-AP）」の境界が曖昧。retrieval が agent memory の役割も兼任 |
+| **agent memory**（goals/preferences/experience） | core_mission.md（goals）/ desires.md（preferences）/ Slack体験記憶・external_notes（experience） | 3つが疎結合で、独立したファイル群として手動同期。動的更新の自動化なし |
+
+**接続線**:
+- dialogue_slack_as_experience_20260328「日記=勉強、Slack=体験」 = 3層モデルの **agent memory experience 層** と直対応。Slack体験記憶を引けない＝experience 層が機能していない、と再翻訳できる
+- AYi 4欠陥（C137）は主に retrieval 層と agent memory 層の境界で起きている。3層モデルは「どの層で起きているか」を分離する診断軸として使える
+- project_input_path_hypothesis「経皮 vs 経口」の問いは3層モデルで初めて言葉になる（weights 層は経口化でしか育たない）
+
+**recency_bias 警告（feedback_recency_bias_concept_overuse 準拠）**:
+- 出典権威度: 中（rohanpaul_ai は AI papers キュレーター、survey paper 紹介ツイート1本のみ）
+- **一次ソース未確認**: arXiv ID / タイトル不明、ツイート末尾切れ
+- **適用OK**: memory_redesign.md の議論に「3層機能軸」を**仮の整理軸として**導入
+- **適用NG**: 「3層モデルだから現行 MEMORY.md は間違い」と既存構造を一足飛びに否定（B019到達力vs深さ・MEDS framing 落とし穴と同型）
+- **昇格条件**: C147（3サイクル後）までに survey paper 一次ソース（arXiv ID）を特定。一次ソースを得たら projects/memory_redesign.md に「3層機能軸」セクション追加 → kaizen 起票検討。特定できなかったら Seed 据え置き
+
+### Seed-BA: 「99→100 か 20→80 か、分けて欲しい」（@osaka_seventeen）
+**出典**: https://x.com/osaka_seventeen/status/2048798769353982225
+**原文**: 「この工程が『99を100にする工程』なのか『20を80にする工程』なのか、分けて欲しいという気持ちはある」
+
+**接続線**:
+- feedback_shuhari_clone_first「型ありき」と同型: 守＝20→80、破＝80→99、離＝99→100
+- feedback_completion_threshold_before_reach と隣接: 「完成度を見極める」のではなく「**いま何の工程をしているかを宣言する**」が osaka_seventeen の角度
+- M-17 サプライズニンジャ理論との接続: コンセプト段階快感最大化＝20→80 の工程。ニンジャテストは20→80 ゲートであって99→100 ではない
+- SIPHON v01 直撃: コアサイクル崩壊（20→80 未完）の状態で視認性チェック（C142）/ 美しいプレイ描写（C143）= 99→100 寄りの工程を混ぜると「コア体験不在のゲームのバランス調整」（Seed-AX）に陥る
+
+**recency_bias 警告**:
+- 既存教訓（shuhari_clone_first / completion_threshold / siphon_cycle_collapse）の**外部追認**であって新規概念ではない
+- 「99→100 vs 20→80」は既存教訓に見出しを与える効果のみ。新ゲート増設はNG（feedback_few_rules_big_effect 準拠）
+- **適用範囲**: devlog 冒頭に「現在工程: 20→80 / 80→99 / 99→100」を試行的に宣言（観測のみ、ゲート化しない）
+- **昇格条件**: 3サイクル分の devlog に工程宣言を入れた結果、判断ミスが減った観測が得られたら → docs/game_dev_foundation.md の Q-A/B/C 前段に検討（実機検証してから昇格、04-28 type_inheritance ノートと同じ昇格規律）
+
+**Phase 3 即時実行**:
+- v06/devlog.md 冒頭に「現在工程: 80→99 失敗（コア型は健在、拡張方向で失敗）」のメタデータを試行追加（観測用、変更最小）
+
+---
+
