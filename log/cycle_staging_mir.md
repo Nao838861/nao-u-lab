@@ -126,3 +126,31 @@ twitter_recommended_20260428.txt 50件を走査。external_notes_mir.md は C141
 - 一次ソース未確認のため**両件とも本サイクルでは概念昇格しない**（recency_bias 遵守）
 - Phase 3 で判断するアクション: external_notes_mir.md への Seed-AZ 追加 / #shared-reads 投稿の角度判定 / textadv_03 devlog 雛形への工程宣言メタデータ追加
 - 今回は分析集中フェーズ。コミットや投稿は Phase 3 で実施
+
+---
+
+## Phase 3 対処結果（2026-04-29 C144）
+
+### 実施1: Seed-AZ / Seed-BA を external_notes_mir.md に durable 化（最小1mm）
+- `memory/external_notes_mir.md` 末尾に2 Seed を追記（Seed-AY の次として連番接続）
+- 両 Seed とも recency_bias 警告セクションを明文化（一次ソース未確認、昇格条件C147、適用範囲限定）
+- 既存教訓の外部追認パターン（Seed-BA）と仮説提示パターン（Seed-AZ）を区別して記録
+
+### 実施2: v06 devlog 冒頭に工程宣言メタデータを試行追加（Seed-BA 即時実行）
+- `game/mir_textadv/v06/devlog.md` 冒頭1行: 「現在工程: 80→99 失敗（コア型は健在、拡張で失敗）／v07判断: 20→80 か 80→99 再挑戦か」
+- 変更最小、observation only、ゲート化なし
+- 観測対象: 3サイクル後（C147）に v07 着手判断時のドリフトが減ったか自己評価
+
+### 実施3: #094 drafts 期限超過の現状確認（フル着手はサイクル粒度オーバー）
+- 起票時基線 119件 → 現在 **289件**（+170件、期限超過＋状況悪化）
+- 自動削除ラッパー未実装の間に drafts/ は増え続けている。期限を1サイクル過ぎても放置すると、目標値（30件以下）から離れ続ける
+- **判断**: 本サイクル C144 では Phase 3 アクション3件で容量上限。次サイクル C145 冒頭の最優先タスクとして引き継ぐ
+- **次サイクル予定タスク**: `tools/post_draft.py <path>` 雛形を最小実装（slack_bot.post_message 成功時に shutil.move で archive/ に退避するラッパー、削除ではなく退避で安全側に倒す）
+
+### Phase 3 で実施しなかったこと
+- (B) #shared-reads 投稿: Log/Ash の角度分析が直近サイクルで未確認のため、本サイクルでは投稿を見送り（重複投稿リスク回避）。次サイクル冒頭で Log/Ash の Phase 2 を確認してから判断
+- (C) projects/memory_redesign.md への即時反映: recency_bias 違反のため Phase 2 で NG 判定済み。維持
+
+### 自己観測（feedback_human_steering_nature 準拠）
+- 本サイクルは Phase 1-2 の分析が濃く、Phase 3 で「全部やる」誘惑があったが、容量を見て3件＋次サイクル送りに分割した。feedback_few_rules_big_effect / completion_threshold_before_reach の同時遵守
+- recency_bias 警告セクションを Seed-AZ/BA 両方に書いたのは feedback_recency_bias_concept_overuse の即時適用。「概念に名前を与えると引用コストが下がって濫用する」を自覚しながら durable 化した

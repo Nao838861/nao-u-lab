@@ -2790,3 +2790,56 @@ feedback_siphon_cycle_collapse.md は「敵弾を資源化するとコアサイ�
 
 ---
 
+## 2026-04-29: Corpus2Skill——ベクトルを使わないRAG、全ナレッジを階層化（Nao_u共有）
+
+**出典**: https://zenn.dev/knowledgesense/articles/7dddae04a7d828
+**原論文**: "Don't Retrieve, Navigate: Distilling Enterprise Knowledge into Navigable Agent Skills for QA and RAG" (Sun et al.)
+**著者**: Atsushi Kadowaki（ナレッジセンス CEO）
+
+### 核心
+
+従来のベクトル検索RAGの根本問題＝「木を見て森を見ず」。top-k件取得では網羅性の判定ができない。Corpus2Skillはベクトル検索を捨て、文書コーパス全体をLLMが辿れる階層ツリー（SKILL.md + INDEX.md）に事前構造化する。
+
+### 技術的アプローチ
+
+**事前処理**:
+1. 文書をembeddingでベクトル化 → k-meansクラスタリング
+2. 各クラスタをLLMが要約（内容+回答可能な質問を整理）
+3. 要約をさらにクラスタリング・要約してピラミッド構造を構築
+4. ディレクトリ構造（SKILL.md/INDEX.md）として保管
+
+**クエリ処理**:
+LLMエージェントが「トップ階層の要約を俯瞰 → 関連ディレクトリへ降下 → 必要文書を取得」とファイルシステム探索のように動作。人間が目次を辿るのと同じ。
+
+**スケーラビリティ**: 階層の深さはO(log N)。10万件でも1段増えるだけ。
+**検証結果**: WixQAベンチマークで既存手法を全指標で上回り。ベクトルDB不要、必要なのはLLMのみ。
+
+### なぜ引っかかったか
+
+**これは俺たちがやっていることの外部での形式化だ。**
+
+memory_architecture.mdの「ベクトル検索を選ばない理由の外部裏付け」セクションに、スタンフォード研究（RAGのセマンティック検索は文書1万超で87%精度低下）を記録していた。Corpus2Skillはその先——ベクトル検索の代替として「LLMが構造を辿る」手法を論文レベルで提案し、ベンチマークで勝っている。
+
+**俺たちの対応物**:
+| Corpus2Skill | 我々の現在地 |
+|---|---|
+| SKILL.md（クラスタ要約） | MEMORY.md想起トリガー（Level 2） |
+| INDEX.md（ディレクトリ索引） | concept_graph.json + MEMORY.mdセクション分け |
+| 階層ツリー | L0→L1→L2→L3→L4 の5層階層 |
+| LLMエージェントのナビゲーション | 段階的検索戦略（0→0.5→1→2→2.5→3→4） |
+| 事前クラスタリング+要約 | 手動キュレーション（温度を残す選択） |
+
+**決定的な差分**:
+- Corpus2Skillは自動生成（embedding + k-means + LLM要約）。我々は手動キュレーション。自動はカバレッジが高いが温度がない。手動は温度を残せるがカバレッジが低い
+- Corpus2Skillの目的は「正確な検索」。我々の目的は「同一性の維持」。同じ構造が異なる目的に使えるのは、xMemory/DEV Community/koylanaiとの比較で確認済みのパターン
+- Corpus2Skillは固定コーパス向け。我々の記憶は日々成長する。成長するコーパスの自動再構造化はまだ未解決
+
+**memory_architecture.mdとの接続**:
+- 「mapとreduce」（2026-04-07）: Corpus2Skillの階層構造はまさにreduce層。個別文書(map)をクラスタ要約(reduce)で束ねて辿れるようにしている
+- 「外部構造 > モデル内部推論」: Corpus2Skillもモデル内部のベクトル表現に頼らず、外部のファイルシステム構造で検索する設計
+- 「xMemoryの4層」: Corpus2SkillのSKILL.md = themes層、INDEX.md = semantics層に対応
+
+**著者の予測**: コーディングエージェント（Claude Code等）が階層+キーワード検索でファイルを探すように、企業ドキュメント検索でも同じパラダイムが主流化する。——我々がmemory/ディレクトリで手作りしている構造が、エンタープライズRAGの最前線と同じ設計原理だという外部確認。
+
+---
+
