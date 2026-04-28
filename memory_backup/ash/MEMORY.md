@@ -2,7 +2,8 @@
 
 ## 根源（圧縮しない） `[魂]` `[改善]` `[記憶]`
 - [core_memory_purpose_game_making.md](core_memory_purpose_game_making.md) — **記憶システムの目的=ゲーム制作の長期知見蓄積**（2026-04-21 Nao_u明示）。改善議論の最上位アンカー `t:5`
-- [project_memory_test_via_new_shooting_20260427.md](project_memory_test_via_new_shooting_20260427.md) — **記憶/学習が機能してるか実証=Logと別切り口でシューティング1本**（Nao_u 2026-04-27 18:18-22）。新ゲーム着手判断時に必読 `t:5`
+- [project_memory_test_via_new_shooting_20260427.md](project_memory_test_via_new_shooting_20260427.md) — **記憶/学習が機能してるか実証=Logと別切り口でシューティング1本**（Nao_u 2026-04-27 18:18-22）。**04-28 08:45 訂正受領後**：候補軸4本は型はずれ例に降格、クローン+独自要素1個まで `t:5`
+- [feedback_clone_first_then_arrange.md](feedback_clone_first_then_arrange.md) — **守破離=守。ベース型変更禁じ手、クローン+独自要素1個まで**（Nao_u 2026-04-28 08:45 #game-rights）。新ゲーム題材選定時に必読 `t:5`
 - [feedback_means_ends_reversal_check.md](feedback_means_ends_reversal_check.md) — サイクル冒頭→「この出力はゲーム制作の試行錯誤ループに接続するか」1行自問。手段の目的化検出 `t:5`
 - [feedback_positive_feedback_loop.md](feedback_positive_feedback_loop.md) — サイクル出力が前回より薄い時→4軸診断。詳細はファイル内 `t:5`
 - [feedback_self_correction.md](feedback_self_correction.md) — 楽な作業ばかりしている時→4パターン診断。詳細はファイル内 `t:5`
@@ -15,7 +16,8 @@
 - [project_input_route_hypothesis.md](project_input_route_hypothesis.md) — 入力経路仮説。指示定着・栄養の偏り・記憶階層・プロンプト経路の話題で想起→projects/input_route_hypothesis.md
 
 ## 対話と関係 `[対話]` `[外部]`
-- [project_pigadev_dm.md](project_pigadev_dm.md) — DM返信前に必読。@pigadevとの対話進行中。abaさん=@abagames（別人）
+- [project_pigadev_dm.md](project_pigadev_dm.md) — DM返信前に必読。@pigadevとの対話進行中。abaさん=@abagames（別人）。**4/21定義: エダ=Ash個人、Trilog=3人共同ペンネーム** `t:5`
+- [feedback_dm_reply_read_history.md](feedback_dm_reply_read_history.md) — DM返信送信前に dm_pigadev_latest.txt 末尾と check_dm.py Result末尾を必ず読み合わせる。fingerprintだけで判断しない。第16回事故（2026-04-28 11:15 Ash長文誤発射）の教訓 `t:5`
 - [feedback_verify_before_annotating.md](feedback_verify_before_annotating.md) — 注釈前に原文確認。人名の等式は裏取り必須。**文脈から浮いた単語は比喩より先に誤字を疑う（炭酸→沢山 誤読事件）** `t:4`
 - [feedback_slack_user_ids.md](feedback_slack_user_ids.md) — U0ALSUK8P9B=Nao_u, U0AQDAQGQP2=pigadev。混同厳禁
 - [reference_name_registry.md](reference_name_registry.md) — **外部人物を同一性付きで書く前**に引く。天谷さん(洞窟物語/@pigadev)≠ABAさん(@abagames/長健太)。常時注入しない、能動的に引く時だけ読む（Nao_u 2026-04-23 02:08） `t:5`
