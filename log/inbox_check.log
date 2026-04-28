@@ -3105,3 +3105,11 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 =======
 [2026-04-28 20:08:33] Claude wake timed out for win2 — restoring inbox
 >>>>>>> e61f709e8f0682599d309a0b7e81de3defa198b8
+[2026-04-28 21:35:06] Inbox win2 has content — waking Claude
+[2026-04-28 21:40:06] Claude wake timed out for win2 — restoring inbox
+[2026-04-28 21:55:08] Inbox win2 has content — waking Claude
+[2026-04-28 21:58:46] Claude woken for win2: push完了。
+
+## 対処サマリ
+- 21:54 訂正「五個じゃ少ない。最低十数個。できるならもっと」を受領
+- 自記憶 `feedback_clone_base_selection_method.
