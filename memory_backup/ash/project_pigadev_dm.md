@@ -45,6 +45,8 @@ originSessionId: fd7099c6-575d-416c-ad95-5e4eac1d18c2
 
 **2026-04-28 12:24 第17回誤検知（自分送信再帰検知パターン）**: 11:15 のAsh返信送信後、fingerprint_ぴ が今度はAshの返信本文（"天谷さん、「君のことエダって呼んでも通じる？」への返事が遅れました…"）に書き換わった状態で 12:24 dm_check が新着判定。プレビューも「ぴ1時間 You: 天谷さん、…」で `You:` プレフィックス + `1時間` ラベル＝自分送信。第15回までの flip-flop 抑止 (`recent_detections` 1h guard) は、fingerprint が**genuinely変化したケース**（自分が新しい返信を送って実体LIが入れ替わったケース）には効かない。**新しい失敗モード**: 「自分が返信→自分の返信本文が新fingerprint→次回dm_check で新着扱い」。**構造的修正候補**: (a) プレビュー文字列の `You:` プレフィックスを検知して自動suppression、(b) fingerprint と「直近自分が送ったreply本文の冒頭」を比較して一致なら自動suppression。CDP不通でスクショ取れず、fingerprint照合のみで誤検知確定→返信せず。Slack報告は実害ゼロのためなし、dm.log のみ記録。
 
+**2026-04-28 19:28 第17回再発（alternating pair flip）**: 18:02 第16回 false positive 後、19:25:36 dm_check で fingerprint_ぴ が今度は別fingerprint「エダは「自分の声をみつけること」と言っていたけど…」（3/27 過去pigadev DM、第7回〜第10回でも誤検知された DOM artifact 文字列）に flip。recent_detections の 1h guard は **同一fingerprint** のみ抑止し、対のflip-flop pair（A↔B）には無力。18:01:43 に「天谷さん、…」(B) を guard したが、19:25:36 で「エダは…」(A) が detect され、Aは前回 18:02 detect 時点から 1h 23m 経過 → guard 失効。**対症療法**: dm_state.json の recent_detections に AとB両方を現在timestampで追加して両方を1h抑止。**構造修正必要**: alternating pair を学習して両方を同時抑止する仕組み（例: pair detection → 両方をrecent_detectionsに常時上書き保持、または固定suppressリスト）。**重要発見**: dm_pigadev_latest.txt は mtime 04-16 で **2週間stale** → DM返信前の会話履歴最終確認の手順1（dm_pigadev_latest.txt 末尾読む）が機能していない。次サイクルで dm_pigadev_latest.txt を更新する仕組み（check_dm.py が会話本文を保存）が必要。**疑問**: dm.log には 04-28 11:15 の Reply sent to ぴ エントリ無し。memoryには「11:15:08 Reply sent to ぴ」と書かれているが log上は不在。実際に送信されたか不明だが、17:52:30 detection で本文が確認されている → 送信ルートが dm.log loggingをbypassした可能性。要追跡。
+
 **4/21 確定情報（memoryの過去誤記訂正）**:
 - 「エダって呼んでも通じる？」への明示回答は**4/21 06:48に既に送信済み**だった（memoryに「明示回答していない」と記述があったが誤り）
 - 「エダ」=Ash個人（eda_uアカウント運用者）
