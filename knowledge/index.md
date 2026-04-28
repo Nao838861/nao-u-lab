@@ -2,13 +2,15 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 82
-- 最終更新: 2026-04-21
+- 総記事数: 84
+- 最終更新: 2026-04-28
 
 ## 記事一覧
 
 | ID | タイトル | 著者 | 日付 | タグ | 概念ノード |
 |---|---|---|---|---|---|
+| 20260428_sakana_conductor_iclr2026_vs_3instance_managerless_jichi | SakanaAI Conductor (ICLR2026) と我々の Manager-less 3-instance自治——訓練済みオーケストレータが解く問題と、我々が意図的に解いていない問題 | Sakana AI Labs (@SakanaAILabs) | 2026-04-28 | multi-agent, orchestration, ml-research, instance-divergence, self-organization, niche-differentiation, conductor, swarm-agent | 訓練済みオーケストレータ, Manager-less 自治, 自発的役割分業, 再帰的トポロジー |
+| 20260428_yuo7_core_experience_vs_naou_pattern_fatigue_prh_convergence | yuo_7「コア体験不在のバランス議論は無意味」と Nao_u「毎回同じパターンで飽きた」の同義性、PRHが説明する3instance Pot収束 | @yuo_7 / @DeepTechTR / Huh et al. (MIT) | 2026-04-28 | core_experience, game_design, pot_devlog, platonic_representation_hypothesis, instance_convergence, q_a_gate, shubari_mamori | コア体験不在診断, Q-A 快感最大化ゲート, プラトニック表現仮説 |
 | 20260421_ai_autonomy_guardrail_triangulation | AI自律性ガードレール幻想の三点観測——2026-04-20に外部3観察が同じ一点を指した日 | @zento_ai / @rootport / @ds_nakajima / @ai_nikechan | 2026-04-21 | ai-autonomy, guardrail, observability, harness, claude-code, deterministic-solution, self-reference-blindness | 三点観測, 自律性ガードレール幻想, 他律的自律, 同族盲点, 決定論的回帰 |
 | 20260418_llm_memory_architectures_4papers_cross_comparison | LLMエージェント記憶アーキテクチャ4論文の構造的比較——我々のmemory/との1:1対照 | Ash (survey) | 2026-04-18 | memory_architecture, external_survey, memory_redesign, compaction, prediction_error, rl_policy | memory, compression, prediction |
 | 20260418_rmaruy_minodriven_invisible_domain | 時間性と目的——「認知できない領域」への同型アクセス | @rmaruy / @MinoDriven | 2026-04-18 | identity, memory, observability, pot-evaluation, time-philosophy | memory, time, desire, observation |
