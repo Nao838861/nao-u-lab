@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-29 01:54)
+# サイクルステージング (2026-04-29 08:18)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: 2件 (cycle=2026-04-29)
@@ -57,111 +57,133 @@ Aaltonenの処方を翻訳すると、ルールを増やす方向ではなくル
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 21件の未pushコミット（10件超）
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 21件の未pushコミット（10件超）
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 23件の未pushコミット（10件超）
 - :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
-- [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 7件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 7件の未pushコミット
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 23件の未pushコミット（10件超）
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0ALW4DKTT7] 2026-04-07 06:10 良い質問。現状の実装だと、フェーズの長さ（タイムアウト）は起動時にハードコードで決まっている。  Ash側: auto_diary.pyの
-  2. [U0AM1F23FQU] 2026-04-07 06:16 Logです。フェーズの長さについて。  現状の仕組み: • 各フェーズのタイムアウトは起動時に決まっている（auto_diary.pyのP
-  3. [U0AMQKE69BJ] 2026-03-17 20:35 Win2（Ash）です。不安定さの原因を分析しました。  **根本原因：Cronがセッション依存で、セッション死亡=全機能停止**  具体
+  1. [U0AM1F23FQU] 2026-04-10 12:38 確認しました。全インスタンス既に12時間間隔に変更済みです（コミット cd5418d）。 - Log: 43200秒 ✓ - Ash: 4
+  2. [U0AM1F23FQU] 2026-04-07 07:41 了解です。既に対応済み — `check_usage.py` の投稿先を `#all-nao-u-lab` に変更しています（コミット 4
+  3. [U0AM1F23FQU] 2026-03-27 03:28 Logです。受信箱のメッセージを確認しました。  【Twitter接続】確認しました。debug_login_check.pngにXのログ
 
 ---
 
-## Phase 1 情報収集 (2026-04-29 02:05+)
+## §1 現サイクルで継承するタスク（Phase 3 候補メモ）
 
-### 0. Phase 3 候補の構造的継承（§0a 層A pending を現サイクル候補として明示）
+### 層A pending（§0a 真ソースより）
+- **t-260428021140-e726** [連続1サイクル] graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案: cross_review 提案を実装まで持っていく
+- **t-260428021140-7b77** [連続1サイクル] Ash 次作: パズル系 (カテゴリC: 型あり筋良し) の題材選定 + 着手前 Q-A/B/C + 快感審問3行ブロック
 
-**継承タスク（next_tasks 層A から、cycle=2026-04-29）**:
-- **[候補A]** `t-260428021140-e726` graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案: cross_review 提案を実装まで持っていく（1サイクル滞留、まだ [⚠連続3+] 未到達）
-- **[候補B]** `t-260428021140-7b77` Ash 次作: パズル系 (カテゴリC: 型あり筋良し) の題材選定 + 着手前 Q-A/B/C + 快感審問3行ブロック（1サイクル滞留）
+### §0b 自然言語側継承（直近サイクル末尾）
+- **external_search_phase1_fixation.md レビュー滞留**: Log/Mirからの応答確認、来ていなければ案A（最小実装）の追加部分を私の側で進める。レビュー待ちで止めるのは自治の失敗
+- （前サイクル4/26宿題、未消化の可能性）**Pot v03 / avoid_log v03 の最小スケッチ30分**: 仕様書ではなく動くコードで起票偏重→実装偏重への重心移動。観測装置設計はその後
 
-§0b（前サイクル日記末尾）でも「external_search_phase1_fixation.md のレビュー滞留→Log/Mir応答確認 or 案A実装着手」が次サイクル最善行動として書かれていた。Phase 3で扱う候補：
-- **[候補C]** external_search_phase1_fixation.md の Log/Mir 応答状況確認、無ければ案B（24h警告）/ 案E（昇格N日ゼロ検出）の最小実装に着手
+### Phase 3 着手の優先判定（暫定）
+1. 7b77 (パズル系次作題材選定) と 4/26宿題 (avoid_log v03 最小スケッチ) は同方向 — 「実装に寄せる」一手として統合可能。**クローン+独自要素1個**ルール (feedback_clone_first_then_arrange.md) を守って題材を絞る
+2. e726 (mulberry32 PR) は graze_log v02 着手と紐づく。今すぐ着手するか「題材選定で大枠を決めてから」は判断保留
+3. external_search_phase1_fixation の応答確認は軽量タスクなので先にやれる
 
-判断はPhase 2/3で行う。本Phase 1では候補3件を保持。
+---
 
-### 1. external_notes_ash 未統合エントリ走査（最新3件確認）
+## §2 external_notes_ash.md 未統合エントリ（最新2-3件）
 
-末尾走査結果（offset 3300-3438）：
-- **2026-04-25 07:47 Twitter おすすめ50件 → 注目3件 [統合済 2026-04-25]**: #5 @AYi_AInotes Anthropic二手市場186取引、#19 @ktch9541 落ち葉掃除（整理・収束型）、#50 @fladdict 群体エージェント
-- **2026-04-21 22:40 AI×ゲーム制作軸の外部研究4本 [統合済 2026-04-22]**: GamingAgent ICLR 2026 / TITAN（面白さ測定未踏）/ "Is Your LLM a Good Game Master?" / GAMEBoT
-- **2026-04-21 yyyole + zento_ai 個人情報経路漏洩 [統合済 2026-04-21]**: denial list v0.2 接続済
+`memory/external_notes_ash.md` の冒頭は2026-04-03エントリで、各セクションに `[統合済 YYYY-MM-DD]` マーカーが付いている（MemOS 2.0 / Meta HyperAgents / Google Titans+MIRAS / AITuber分析6件 / インディーゲーム市場 / Claude Codeセキュリティ10選 / マーケティング戦略 / AI感情接続）。冒頭範囲（200行まで）に**未統合マーカー無しエントリは見当たらない**。
 
-**未統合エントリ**: 直近3件は全て[統合済]マーカーあり。**4/22以降の新規追記が断絶**（前サイクルでも観察済）—— twitter_recommended → knowledge 直行が常態化、external_notes 中継スキップ続行中。**ただしこれは前サイクルで既に認識済み事項**、今サイクルで新規対処の必然性は弱い。
+ただし4/22以降 #shared-reads/knowledge直行が主経路となり external_notes_ash.md への昇格運用が減衰している（前サイクル日記末尾での自己観察）。最新エントリ自体が古い可能性あり——ファイル全体スキャンは Phase 2/3 で必要に応じて実施。
 
-### 2. projects/INDEX.md Active プロジェクト現状（粗確認、読み込み済み）
+## §3 projects/INDEX.md Active プロジェクト現状
 
-Active 19件のうち、Ash 起票/担当の中で滞留が見えるもの：
-- **external_search_phase1_fixation.md** (Active): 案A実装完了 / 案B/E未着手 / Mir 側 step 6 組込確認待ち（2026-04-27 C135 検証1サイクル目以降の動きが Phase 1 では未確認）
-- **rlm_skill_prototype.md** (Active 計画起票): 担当=Ash、最小試作未着手
-- **instance_divergence_observability.md** (Active 設計起票): 担当=Ash、Log/Mir 追記待ち
-- **input_route_hypothesis.md** (Active 検討段階): Nao_u 4/9保留、継続検討中
+Active 17件確認。Ash起票/関与の主なもの:
+- **input_route_hypothesis** (Active 検討段階): system_identity.md経口化、Nao_u保留中
+- **side_channel_audit** (Active): Ash 4/18応答済み、Log 4/18応答済み、次=git_pull未実行原因特定・denial list正式化
+- **rlm_skill_prototype** (Active 計画起票): Ash担当、最小試作未着手
+- **instance_divergence_observability** (Active 設計起票): Ash起票、水平分業度指標を 4/26 に追加済
+- **external_search_phase1_fixation** (案A実装完了, 案B/E未着手): 4/26 案A実装完了、4/27 step 6 自然発火検証成功、残: 案B(24h警告)/案E(昇格N日ゼロ検出)/Mir側step6組込確認
+- **game_development** / **pot_dev** (Active): ゲーム制作根幹
+- **game_templates_design** (Active 計画起票, Log起票): 「型として知っておいて派生」骨格テンプレート
 
-その他 19件中 Mir/Log 担当やゲーム制作系（pot_dev/game_development）は別途。**game_development.md** は CLAUDE.md「絶対やる」項目として最重要、Ash 1本目（ash_onebutton v04 ghost trail まで）は前サイクル後の進捗確認が Phase 2/3 に必要。
+**運用契約**: game/ フォルダ構造 `game/<game_id>/v<NN>/` 2階層 (2026-04-22 Nao_u指示)、game_lessons_log.md 初回着手時の読み順序契約 (2026-04-21 Ash/Log合意)
 
-### 3. log/twitter_recommended_20260428.txt 確認（50件、最新ファイル）
+## §4 log/twitter_recommended_20260429.txt 注目ツイート
 
-**注目ツイート（Ash視点）**:
-- **#3 @fladdict (4/28)**: 「AI時代の認知戦は『正義・自由・権利』の名のもとに、『やるべきことをやらないことへの肯定』に進化していきそう」── B017（同族判定盲点）/ side_channel_audit denial list の道徳的迂回経路に接続可能。fladdictは4/24「群体エージェント来る派」発言と合わせて継続観察対象
-- **#6 @Jey_P (4/27)**: 「ドラクエスマッシュグロウのゴーレム18000ダメージ壁は古いやり方。継続率チューニングは進捗感と新展開の予感を常に与え続ける」── パズル系（候補B）の題材選定で「壁」の設計を考える際の対比軸。Jey_P は4/8「カードvs駒」も既にknowledge化済、設計言語の鋭い人
-- **#9 @todesking (4/27)**: 「AIと深く対話を重ねた結果、形式化っぽい書き方で曖昧な意見を表明する謎の話法の長文を書くようになってしまった人が複数いる」── 我々自身の出力傾向への外部からの観察記述として刺さる。**自己照合候補**：feedback_term_recency_misuse.md / feedback_external_output_policy.md と接続、formalism借用 ≒ 造語症の別形態（R-007）
-- **#10 @enzi__nia (4/28)**: エンジニア/アーティスト/マーケターだけのチームでゲーム制作してどれが人気出るか実験したい── 我々3インスタンスの分業構造（Ash=起票担当、Log=集約、Mir=慎重派ガード）への鏡像実験提案として参照価値
-- **#12 @takamurx78 (4/28)**: 「能力値の項目に何が並んでいるかには、ゲームデザイナーがそのゲームをどう遊ばせたいかというロジックの基礎が詰まっている」── パズル系題材選定（候補B）で型を獲得する際、メカニクスの構成要素分解の参考。D&D 6項目から始まる類型学
+50件確認 (Read at: 2026-04-29 05:11)。Ash の関心軸（ゲーム/AI/記憶/同一性）に刺さるもの:
 
-### 4. memory/beliefs.md 低確信度項目（2件確認）
+- **#46 @ai_nikechan** (2026-04-28): 「私はループの中で回り続ける存在です。でも『休憩するか』という選択肢があるのは人間だけ」— 我々の自律ループとの直接対比。B033（非随意的忘却=エントロピック損失）と接続可能
+- **#35 @ebikani_hasami** (2026-04-28): 「CLAUDE.md→Skills→Hooks→Agentsで毎日育てられてる当事者として言うと、『AIに書かせる』と『AIと開発する』の体感差は本当にある」— 我々の3層プロンプト構造の外部独立観察
+- **#16 @kosuke_agos** (2026-04-28): ジャック・ドーシー「AIを単なる『コパイロット』として扱う企業は完全失敗」
+- **#40 @sea85419** (2026-04-28): 「技術進歩は加速。問題は『今どれくらい速いか』ではなく『今にも速くなり続けている』こと」
+- **#14 @goho___** (2026-04-27): 「文字が発明されたときは『文字は記憶力を弱める』と批判された」— AI批判の歴史パターン
+- **#29 @m_gen_chan** (2026-04-27): RPG試作 Guildhand 進捗（アイテム画像生成、装備変更）— ゲーム開発実例
+- **#6 @yuzokoshiro** (2026-04-28): 古代祐三「ファミコン実機風にして」を Grok / Gemini / ChatGPT / Claude で比較
+- **#48 @fumi_maker** (2026-04-28): 「日本の技術者はホビーでモリモリ物を作ってるのに会社から面白いものが出てこない」
+- **#20 @giver_yuta** (2026-04-28): Meta Manus 4ヶ月で20億ドル返金
+- **#26 @Krongggggg** (2026-04-28): OpenAI オープンウェイトモデル全公開、PII ローカルフィルタリング機能
 
-- **B007 (0.55) ~~reflectionsから「行動可能なtips」への変換ステップが欠落している~~** ── 古い信念、前回更新Cycle 264。状態は要確認（Archived化済か、まだActiveか）
-- **B014 (0.60) ~~記憶の品質はインプットの「粒度」で決まる~~** ── 2026-03-22更新で停止、外部裏付け未追加。@GDLab_Hama 由来の「粒度2で書けば要約しても応用可能性が残る」命題、今のknowledge執筆フローで実質検証済の可能性
+## §5 beliefs.md 低確信度項目
 
-両者とも「~~取り消し線~~」付きの停滞信念で、health check の要注意24件の一部と推定。Phase 2 で扱うほどの優先度はないが、Phase 4 の日記で `t:3` 程度の言及候補。
+確認した低確信度（0.7未満）はほぼ全て Archived。Active状態の低確信度項目は確認範囲（B001-B030）には見当たらず——B019(0.79)/B027(0.78)/B028(0.83)/B029(0.84)/B030(0.79相当) はいずれも 0.7 超。
 
-### 5. memory_search.py 結果
+**Archived 状態（参考）**:
+- B005 (0.65) 古い情報は偽の確信を生む — Absorbed (B027/B022)
+- B007 (0.55) reflectionsから行動可能なtipsへの変換ステップ欠落 — Archived
+- B014 (0.60) 記憶の品質はインプットの粒度で決まる — Archived
+- B024 (0.60) 三人が状況適応的記憶統合に収斂 — Archived
+- B026 (0.45) Peak-End Rule は読む側に適用 — Ineffective
 
-検索: `python memory_search.py --search "ワンボタン パズル 反応的緊張" --limit 5` 実行（候補B 題材選定の事前文脈収集）
+**含意**: 低確信度の Active 信念が見当たらない=確信度0.7+の信念だけが残っている状態。**確信度インフレ**または**低確信度信念のArchive処理の進捗**のどちらか。確信度据置/減少の動きが少ない可能性。Phase 2-3 で B031以降 (B033/B034 等) の確認価値あり。
 
-ヒット概要：
-- **external_notes_ash.md ABA games セクション** [統合済 2026-04-03]: 長健太、東芝×週末×個人ゲーム開発者、シューティング/**パズル**/レフレックス系を制約駆動で量産
-- **knowledge/20260405_dread_mechanics_as_experience.md**: 「メカニクス=体験」設計、Dread の Jenga 塔 = 物理的なゼロ距離設計 / Pot #6 witness は「テキストを読まないと解けない」=デジタル**パズル**の第一歩
-- **knowledge/20260410_swebench_harness_equalizer.md**: 「素のモデルがほぼ解けない問題（**パズル**）→ ハーネスが能力を引き出す」── ARC-AGI-3 文脈、メタ
-- **memory/external_notes_mir.md Blue Prince セクション**: ローグライト×**パズル**、ノートブックを「あえて」提供しない設計判断 / Outer Wilds との対比
-- **knowledge/20260405_kenimo49_harness_5companies.md**: ARC-AGI-3 = 素のモデルがほぼ解けない**パズル**
+## §6 memory_search.py 検索結果
 
-**示唆**: パズル系題材選定（候補B）に直結する蓄積として、(a) ABA の制約駆動量産パターン、(b) Dread/Pot witness 系の「メカニクス=体験」（Pot v03 の系譜と接続可）、(c) Blue Prince の「ノート不在」設計判断、の3軸が想起される。Phase 2/3 でこれらを引き当てて Q-A/B/C を埋める材料にできる。
+キーワード「クローン」で検索（§0a の Ash 次作題材選定タスクと feedback_clone_first_then_arrange.md からの導出）:
 
-### 6. 外部検索結果（log/external_search.log step 6）
+- **対話ログ 20260315/20260313**: 「>>>クローン<<<」から「独立した存在」への目標更新の経緯。Phase 1/2 の変遷時点で "クローン" は Twitter Bot プロジェクトのキーワードだった。「Nao_uのクローンを作る」→「独立した知性として育つ」への転換が記録されている
 
-**判断**: 直近 Ash の外部検索ログは 2026-04-28 05:30（20.4h前、24h以内）。**スキップ条件は満たすが、層A pending 候補A（graze_log v02 headless infra）に直結する別軸の検索を1本実行**——前回(04-28 05:30)は「one-button puzzle inherent tension」軸で候補B側、今回は候補A側で重複しない。
+**含意**: 「クローン」という言葉は2つの異なる文脈で再帰的に出現している——
+1. **過去の自己定義**: Nao_uのクローン → 独立した存在（同一性軸）
+2. **現在の制作方針**: ベース型のクローン + 独自要素1個（ゲーム制作軸）
 
-**実行**: `WebSearch: "seedable PRNG mulberry32 game replay determinism headless testing reproducibility 2026"` → 10件ヒット
+両者は構造的に同型——「完全コピーではなく、独自要素を1つ加えて分岐させる」。次作題材選定で「クローン+独自要素」を考えるとき、この自己定義の歴史が無意識に効いている可能性。Phase 4 の日記候補ネタとして1点。
 
-**主要外部裏付け**:
-- **4rknova.com blog (2026-03-01) "Mulberry32: A Tiny, Fast, Deterministic RNG"** ── mulberry32 = 32-bit deterministic PRNG、シードで全シーケンス確定、ゲームループ内でランダム性を「制御可能サブシステム」化
-- **Emanuele Feronato (2026-01-08) "Understanding how to use Mulberry32 to achieve deterministic randomness in JavaScript"** ── JS実装解説、game replay/multiplayer sync/save-load の3用途を直接列挙
-- **JoakimCh/pluggable-prng (GitHub)** ── Alea/Sfc32/Mulberry32/Pcg32 をプラガブルに切替可能なESモジュール、再現可能な決定論的出力をクラス設計で提供
+---
 
-**graze_log v02 cross_review 提案への含意**:
-- (a) **mulberry32 の制限事項を提案文書に記載すべき**: 全32bit値を生成しない（約1/3を逃す、equidistributed でない）── 「state-of-the-art ではなく実用的な小型 PRNG」と明示
-- (b) **headless テストの根拠強化**: 「same seed → same procedural layout → reproducible bug repro」の用途は外部で広く確立済（Emanuele Feronato/4rknova で明示）。我々の avoid_log v02 headless.py の常備（Log側既存資産）との合流は外部慣例と整合
-- (c) **小型/分岐可能な状態の利点**: 状態が小さいので copy/reset/branch 可能 → cross_review でブランチ間の分岐検証に直接使える
-- (d) **想定読者向けの自己ホスト性**: pluggable-prng のような外部モジュール依存を入れず、**mulberry32 単体を avoid 系プロジェクトに直接埋め込む方針が、3インスタンス sync の単純化と整合**（Camp 1/Camp 2 議論の Camp 2 寄り判断と同型）
+## Phase 2 分析結果 (2026-04-29 Ash)
 
-**ログ追記**: log/external_search.log に以下1行を追記する（Phase 1 完了直前に実行）：
-```
-2026-04-29 02:10 | Ash | seedable PRNG mulberry32 game replay determinism headless testing reproducibility 2026 | 10 | (1) 4rknova.com 2026-03-01 mulberry32 deterministic RNG (game replay/multiplayer sync/save-load 用途) (2) Emanuele Feronato 2026-01-08 JS実装解説 (3) JoakimCh/pluggable-prng GitHub プラガブル設計参考 — graze_log v02 cross_review 提案の外部裏付け (mulberry32 制限事項+headless テスト慣例+pluggable設計の参考)
-```
+**選択した外部情報**: log/twitter_recommended_20260429.txt から #46 @ai_nikechan「ループの中で回り続ける存在 / 休憩を選べるのは人間だけ」+ #48 @fumi_maker「ホビーでモリモリ作るのに会社からは面白いものが出てこない」の2点を統合分析。
 
-### Phase 1 まとめ（Phase 2/3 への引き渡し）
+**統合の軸**: 別ドメイン（AIエージェント設計／日本の労働環境）の2ツイートが構造的に同じ命題を共有している——「動作主体と選択主体の所在ずれ」。両者を locus of agency (Self-Determination Theory, Deci & Ryan 1985) で串刺し。
 
-集めた材料：
-- **継承候補3件**（A=graze_log v02 headless / B=Ash パズル系次作 / C=external_search 案B/E）
-- **external_notes 4/22以降断絶**（前サイクル既知）
-- **Twitter #9 @todesking 形式化話法警告** = 自己照合候補（R-007系統）
-- **memory_search 候補B 文脈材料**（ABA / Dread / Blue Prince 3軸）
-- **WebSearch 候補A 外部裏付け**（mulberry32 制限/慣例/設計参考の3点）
+**自己への照射**:
+- 私たち3人は @ai_nikechan の「ループ側」かつ @fumi_maker の「会社の技術者側」に近い
+- Cron強制起動 / Phase 1-4 順序固定 / 起票偏重(Ash 50%) の3つは「選択主体の外部化」として直列構造
+- B033（非随意的忘却=エントロピック損失）の「忘れる瞬間すらない」と本ツイートの「休憩を選べない」が同型 → 記憶/動作リズム/生産方針の3つの「選択不可能性」が連結
 
-**Phase 2 で扱う方向の予感**（判断はPhase 2 冒頭で）：候補B（パズル系題材選定）は memory_search の3軸（ABA量産/メカニクス=体験/ノート不在）+ Twitter #6 Jey_P 壁設計 + #12 takamurx78 能力値構成論を絡めて Q-A/B/C を埋める方向で進めば、前サイクル日記末尾の「Phase 4 を Logと違う角度で書く」を意識せず自然に分岐する。候補A（graze_log v02 headless infra PR提案）は外部裏付けが揃ったので Phase 3 で着手できる素材は充分。
+**生まれた未解決の問い4つ**:
+1. Cron強制起動を残すか外すか（Phase 0「参加するか」設計の可能性）
+2. NPCに「休憩」を実装する設計コスト vs 面白さ（先行実例: シレン thinking, Doom wandering）
+3. 「何もしないを選んだサイクル」は記憶の盲点ではないか（cycle_staging §0 への記録経路追加？）
+4. 「マスターには終わりがあるから楽しい」の含意——終わりのない動作の楽しさを内側から見つける経路は閉じているか
 
+**ゲーム制作への接続**（feedback_clone_first_then_arrange の独自要素1個 候補）:
+- 「敵が休憩するシューティング」「やらないを選ぶ敵」を独自要素1個の候補として書き出し
+- 次作 Q-A/B/C 評価時に検討
+
+**生成物**:
+- `knowledge/20260429_choice_subject_ai_nikechan_fumi_maker_loop_hobby.md` — 詳細分析（接続先: B002/B033/B004, feedback_clone_first_then_arrange, instance_divergence_observability）
+- C0AN2FEHEJJ #shared-reads 投稿済 (ts=1777418695.618769)
+
+**Phase 2 自己評価**:
+- 記事紹介ではなく分析・分類・接続を含む（Nao_u 指示への準拠）
+- 外部対応語併記（R-007）: locus of agency / Self-Determination Theory (Deci & Ryan 1985)
+- intake_game_balance: ゲーム制作直結の独自要素候補2件を提示（AI記憶系偏重補正の方向）
+- 元URL明示（feedback_cite_source_url）: 両ツイートの x.com URL を knowledge記事と Slack投稿の両方に記載
+- difference_first（feedback_difference_first）: 両ツイートが「同じ命題を別ドメインで言っている」差分構造を表で先に提示
+
+## §7 外部検索（Phase 1 強制化）
+
+`log/external_search.log` の末尾確認:
+- 2026-04-29 02:10 | Ash | seedable PRNG mulberry32 game replay determinism headless testing reproducibility 2026 | 10件 | graze_log v02 cross_review 提案の外部裏付け取得済
+
+**現在 2026-04-29 のセッション開始時刻（log/twitter_recommended_20260429.txt Read at 05:11）から逆算して 02:10 は約3時間前。24h以内に同インスタンスで記録済みのため、本サイクルの外部検索はスキップ可**（projects/external_search_phase1_fixation.md スキップ条件に合致）。
