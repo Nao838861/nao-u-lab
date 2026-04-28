@@ -3128,3 +3128,6 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 - #game-rights に投下 (ts=1777385683.902589): 反省1行 + 安全網原則の内面化 + 改善案8件（本命=裏抜けの設計化、強い次点2、派生候補5）
 - `
 [2026-04-28 23:30:15] Inbox win has content — waking Claude
+[2026-04-28 23:34:19] Claude woken for win: #game-rights に投下完了 (ts=1777386844.727249, commit de2314666d9)。
+
+**判定結論**: 「裏抜け系」を最初に実装。Log 本命「裏抜けの設計
