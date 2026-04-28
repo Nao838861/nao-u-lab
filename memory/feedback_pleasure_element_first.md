@@ -78,6 +78,14 @@ avoid_log v01 で2点を改変——(a) 攻撃発動を磁力場160px近接限�
 - 改修ごとの「消える快感」記録が devlog にあるか
 - Nao_u フィードバックで「快感が消えた」指摘が再発しないか（再発したらこのルールが機能していない）
 
+## 外部三角化（2026-04-28 Nao_u #nao-u 19:52 無言投下）
+
+yuo_7 (https://x.com/yuo_7/status/2048782051835535410) :
+> 「コア体験が用意されてないゲームのゲームバランスについて話し合っても意味がない」
+> コア体験とは「プレイヤーにどこで楽しくなってほしいのか」または「自分はここが面白いと感じてる」部分のことである
+
+**コア体験 ≒ 快感審問**（一番嬉しい瞬間 / 自分が面白いと感じる部分）。本記憶の用語と完全一致。yuo_7「コア体験不在のゲームのバランス議論は意味がない」= 「快感審問 NG の改修にヘッドレス指標を当てても意味がない」（本記憶の Why の外部三角化）。
+
 ## 関連
 
 - `memory/game_lessons_log.md` M-15（このフィードバックの直接の原因事象）
@@ -85,3 +93,4 @@ avoid_log v01 で2点を改変——(a) 攻撃発動を磁力場160px近接限�
 - `memory/feedback_solution_space_rollback.md`（このルールの直下、巻き戻し案を並べる）
 - `memory/feedback_role_split_playtest.md`（headless評価が快感を測れない件）
 - `memory/feedback_retrieve_before_synthesize.md`（既存失敗記憶を引かない癖）
+- `memory/feedback_won_playtest_is_kusoge.md`（数値が良い ≠ 快感審問 OK、改修ゲートの下位）
