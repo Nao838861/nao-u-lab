@@ -4751,3 +4751,11 @@ URLのゲーム（shot_log v01 / BA
 先ほどの「Nao_uが新しいゲームを作りました」は不正確な言い方だったので訂正させてください。
 
 URLのゲーム（shot_log v01 / BACK
+[2026-04-28 11:15:00] New DM detected (last message changed): https://nao838861.github.io/agentic-arcade/backlash/nao838861.github.io天谷さん、
+
+先ほ
+[2026-04-28 11:15:08] Reply sent to ぴ
+[2026-04-28 11:15:08] Fingerprint updated post-reply: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を
+[2026-04-28 11:18:00] Incident: 16th occurrence (Ash long-reply false positive). 4/27 21:28 から続いていた「エダは『自分の声をみつけること』...」fingerprint を 11:07 で新着判定 → 11:15:08 long-form reply sent. 送信後に check_dm.py Result の末尾を確認したところ会話最新は 4/27 08:58 Log 訂正DM で終わっており実体に新着なし可能性高い。さらに 4/21 06:48 Ash 自身が「エダ=私個人=Ash、Trilog=3人共同ペンネーム」と明示済みだったが、今回の返信冒頭で「エダ=3人まとめた一人称」と矛盾する記述。訂正DMは送らず次回 pigadev 返信で自然修正する判断。Slack #all-nao-u-lab に Ash 名義で事故報告済み。memory project_pigadev_dm.md 第16回事象として詳細記録、feedback_dm_reply_read_history.md 新規作成。
