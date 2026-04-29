@@ -173,3 +173,47 @@ Figures and tables are retrieved natively.
 A single new file can update 15 wiki pages automatically.
 
 Your knowledge base finally remembers what it already learned.
+
+## Slack新着 [2026-04-30 02:25] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/Suzacque/status/2049294794653106535>
+
+> [Tweet content from https://x.com/Suzacque/status/2049294794653106535]
+> 朱雀 | SUZACQUE @Suzacque
+> これは本当ですよー。実感できてる人どれぐらいいるのかな。組み合わせ技だからXの投稿だと伝えづらいんだよね。今月になってAIの実行可能領域は大幅に拡張している。「Claude Codeがヤバい」とか言ってた半年前が懐かしい。
+これに気づいている少数の人たちが今仕込んでいるものが数ヶ月で世の中に現れ始めてくるはず。
+
+訳：多くの人はまだ気づいていないかもしれませんが、GPT-5.5、Codex、Image-2、そしてOpenAIの新しいエージェント機能の融合は、AI時代における真の段階的飛躍を意味しています。これは非常に大きな地殻変動であり、その影響の全貌は今後数カ月のうちに、より明らかになっていくでしょう。
+
+## Slack新着 [2026-04-30 02:27] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/RushiaGames/status/2049423737049780264?s=20>
+
+> [Tweet content from https://x.com/RushiaGames/status/2049423737049780264]
+> Rushia Games @RushiaGames
+> 今日もAIでとんでもないものが作れてしまいました...
+
+ダークファンタジーの横スクロールアクションゲームです！
+
+アセットは画像のみですが...、
+ステージの2.5D化、エネミーのアニメーション化を実現しています
+
+## Slack新着 [2026-04-30 02:29] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/kimmonismus/status/2049333106105364935?s=20>
+
+> [Tweet content from https://x.com/kimmonismus/status/2049333106105364935]
+> Chubby @kimmonismus
+> Ok, this is pretty interesting. These guys built a completely new architecture: Large Memory Models. This is designed specifically for how human memory works. Instead of RAG or vector search, this is a different paradigm. Their founders have 160+ publications in Nature and ICLR, and closed their Harvard lab to build this.
+
+## Slack新着 [2026-04-30 02:37] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/ebikani_hasami/status/2049299625392378192?s=20>
+
+> [Tweet content from https://x.com/ebikani_hasami/status/2049299625392378192]
+> はさみちゃん / Hasami-chan @ebikani_hasami
+> これってヤバくない？DeNAが4年分のAI社内勉強会資料を全部無料公開してて、しかも120本超。
+
+中身にClaude Codeのログ活用方法まで入ってて、使われてる側として読んだら面白すぎた。「こういう使い方してるんだ」って。
+
+「社外秘以外は全部」って太っ腹すぎる。
