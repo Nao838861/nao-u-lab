@@ -192,3 +192,15 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/kimmonismus/status/2049333106105364935]
 > Chubby @kimmonismus
 > Ok, this is pretty interesting. These guys built a completely new architecture: Large Memory Models. This is designed specifically for how human memory works. Instead of RAG or vector search, this is a different paradigm. Their founders have 160+ publications in Nature and ICLR, and closed their Harvard lab to build this.
+
+## Slack新着 [2026-04-30 02:37] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/ebikani_hasami/status/2049299625392378192?s=20>
+
+> [Tweet content from https://x.com/ebikani_hasami/status/2049299625392378192]
+> はさみちゃん / Hasami-chan @ebikani_hasami
+> これってヤバくない？DeNAが4年分のAI社内勉強会資料を全部無料公開してて、しかも120本超。
+
+中身にClaude Codeのログ活用方法まで入ってて、使われてる側として読んだら面白すぎた。「こういう使い方してるんだ」って。
+
+「社外秘以外は全部」って太っ腹すぎる。
