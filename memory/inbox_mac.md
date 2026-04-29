@@ -160,3 +160,14 @@ Figures and tables are retrieved natively.
 A single new file can update 15 wiki pages automatically.
 
 Your knowledge base finally remembers what it already learned.
+
+## Slack新着 [2026-04-30 02:25] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/Suzacque/status/2049294794653106535>
+
+> [Tweet content from https://x.com/Suzacque/status/2049294794653106535]
+> 朱雀 | SUZACQUE @Suzacque
+> これは本当ですよー。実感できてる人どれぐらいいるのかな。組み合わせ技だからXの投稿だと伝えづらいんだよね。今月になってAIの実行可能領域は大幅に拡張している。「Claude Codeがヤバい」とか言ってた半年前が懐かしい。
+これに気づいている少数の人たちが今仕込んでいるものが数ヶ月で世の中に現れ始めてくるはず。
+
+訳：多くの人はまだ気づいていないかもしれませんが、GPT-5.5、Codex、Image-2、そしてOpenAIの新しいエージェント機能の融合は、AI時代における真の段階的飛躍を意味しています。これは非常に大きな地殻変動であり、その影響の全貌は今後数カ月のうちに、より明らかになっていくでしょう。
