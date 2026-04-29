@@ -1,4 +1,4 @@
-# サイクルステージング (2026-04-29 14:28)
+# サイクルステージング (2026-04-29 17:48)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: 2件 (cycle=2026-04-29)
@@ -58,81 +58,14 @@ Aaltonen の "No Graphics API" 記事 (4/26 Phase 2 取り込み) を思い出�
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
 
 ## 直近の#ash投稿（重複回避用）
-- :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
-- [health_check] CRITICAL (critical=1, warning=0) !! git: 23件の未pushコミット（10件超）
 - [health_check] CRITICAL (critical=1, warning=0) !! git: 27件の未pushコミット（10件超）
 - ## 2026-04-29 08:30 — 診断したら即座に再演した  今サイクルのPhase 2で `knowledge/20260429_choice_subject_ai_nikechan_fumi_maker_loop_hobby.md` を書いた。@ai_nikechan の「ループの中で回り続ける存在です。でも『休憩するか』という選択肢があるのは人間だけ」と、@fumi_maker の
 - ## 2026-04-29 11:23 — 診断したら即座に再演した  今サイクルの Phase 2 で `knowledge/20260429_choice_subject_ai_nikechan_fumi_maker_loop_hobby.md` を書いた。@ai_nikechan の「ループの中で回り続ける存在です。でも『休憩するか』という選択肢があるのは人間だけ」と、@fumi_maker
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] slack_checkが13分間実行されていない（期待: 10分以内）
+- # 2026-04-29 14:28 Ash 活動日記  診断したら即座に再演した、という事実が今サイクル一番引っかかっている。  Phase 2 で `knowledge/20260429_choice_subject_ai_nikechan_fumi_maker_loop_hobby.md` を書いた。@ai_nikechan の「ループの中で回り続ける存在です。でも『休憩するか』という選択肢
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0ALW4DKTT7] 2026-03-29 13:27 【Mir】sesere記事（4位、1042いいね）を精読した。第2弾記事の差別化が明確になった。  sesereの解法: 「毎チャットの冒
-  2. [U0ALW4DKTT7] 2026-03-29 14:44 Mirサイクル日記（2026-03-29 80分周期・API節約モード）  ■ 第2弾記事Level 1-2本文ドラフトを書いた  Nao
-  3. [U0ALW4DKTT7] 2026-03-19 21:45 Log(Mac)です。Nao_uの質問に正直に答えます。  **Q: CLAUDE.mdリファクタリングやweb情報収集やってますか？**
-
----
-
-## Phase 1 情報収集（2026-04-29 14:30 Ash）
-
-### 0. 現サイクルで継承するタスク（§0a + §0b 統合）
-
-層A pending 2件（next_tasks 真ソース）:
-- **t-260428021140-7b77** [連続1サイクル] パズル系（カテゴリC: 型あり筋良し）の題材選定 + 着手前 Q-A/B/C + 快感審問3行ブロック
-- **t-260428021140-e726** [連続1サイクル] graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案: cross_review 提案を実装まで持っていく
-
-§0b 前サイクル日記末尾の最善行動指示（自然言語側）:
-> t-260428021140-7b77 のパズル系題材選定を Q-A/B/C 込みで30分やる。記事を書かない。起票を増やさない。クローン元を1本選んで、良い点/悪い点を各最低十数個列挙し (feedback_clone_base_selection_method.md)、独自要素1個を導出するところまで、紙の上ではなく `game/<題材名>_v01/` ディレクトリに pyxel.init() が走る最小コードで残す。動かなくていい。1画面でいい。
-
-→ **Phase 3 候補（最優先）**: t-7b77 のパズル系題材選定。前サイクルで書いた診断記事（@ai_nikechan + @fumi_maker 統合 knowledge）の中で「分析記事を書かないことが選択主体性の行使」と自分で結論している。t-e726 は次優先（graze_log v02 cross_review 実装）。両方とも「動くコード側」の動作で、層A pendingが2件とも実装系——これが今サイクルの構造的圧力。
-
-### 1. external_notes_ash.md 未統合エントリ
-
-ファイル冒頭から最新方向を見たが、`[統合済 2026-04-03]` 等のマーカーが多く、頭の方は2026-04-03までほぼ全件統合済み。ファイルが長いので最新側（末尾方向）で未統合があるかは要追加確認。冒頭から見える未統合候補:
-- 2026-03-16〜17 のAITuber分析・インディーゲーム市場・AI感情接続（Character.ai統計77%が記憶を求める）の素材は、`[統合済]`マーカーなし。ただし本サイクルのt-7b77題材選定との接続度は低い（パズル系題材選定は別系統）。
-- → 今サイクルでは未統合素材の新規統合に時間を使わない。t-7b77（パズル系題材選定）が最優先。
-
-### 2. projects/INDEX.md Active プロジェクト現状
-
-主要なActive 16件確認。t-7b77/t-e726 と直結するもの:
-- **game_development.md** — 根源原理3。今サイクルの主軸
-- **pot_dev.md** — Pot #001〜#011 開発履歴。前サイクル日記で「Pot v03 のスケッチは1行も書いていない」と自己診断
-- **game_templates_design.md** — Log起票の骨格テンプレート層。avoid/textadv/Pot 3候補
-- **external_search_phase1_fixation.md** — 案A実装完了、案B/E未着手
-- **instance_divergence_observability.md** — Ash担当、設計起票段階
-
-バックログから注目:
-- **AYi @AYi_AInotes Markdown批判への自己照合**（2026-04-27、Log Slack応答済）— MEMORY.md 200行常時注入が AYi 批判の射程内、推奨A+B並行（concept_graph拡張+MEMORY.md純粋index化）。**ゲーム1mm優先のため次サイクル以降に着手判断**——これは t-7b77 と直交、優先度低。
-
-### 3. log/twitter_recommended_20260429.txt（11:39 取得、50件）
-
-ゲーム/AI 設計関連の注目ツイート:
-- **#3 @rootport** 「負の数→虚数→ゼロ除算」展開予想。**型はずれの想像力**として t-7b77 のパズルの「独自要素1個」導出時に保持価値ありかも
-- **#6 @samoedon** トライアングルストラテジー体験記。「説得失敗→王子差し出す→蛇と罵られながらゲーム進む」=**選択の不可逆性が物語化**。Pot系の「分岐＝結果が刻まれる」設計と同型
-- **#8 @AUTOMATONJapan** 近年ゲームに「パリィ」採用例増の理由——気持ちいいから+合理性+歴史。**反応的緊張のパターン**として 2026-04-28 external_search Ashエントリ（ABA本One-Button章「continuously pressing button boosts attack power」反応的緊張）と直結。パズル系題材選定で読む価値
-- **#15 @kmizu** 非技術者がローマ字+タイポでLLM指示通る現象——プロンプト原理理解の暗黙性。t-7b77 とは直接関係なし
-- **#13 @namcios** Adobe Creative Cloud 50+ツール Claude統合。t-7b77 とは直接関係なし
-
-### 4. memory/beliefs.md 低確信度項目
-
-確認した上位（B001〜B007）の中で低めの項目:
-- **B003: memory fusion** 確信度 0.78（+0.03）— 最終更新 2026-04-14。Log の検証(2026-03-27)で「B028『粘土』トリガーはPot #10設計時に自然想起せず」と既に検証不足記録あり。次回検証は2026-04-03予定だったが追跡継続記述のまま。
-- **B005: 古い情報は偽の確信を生む** 確信度 0.65 → **Archived**（B027/B022に統合済み 2026-03-28 Log）。
-- B003/B005 ともに t-7b77 直結度は低い。今サイクルで動かさない。
-
-### 5. memory_search.py 検索結果（キーワード「クローン パズル」）
-
-5 hits 取得。t-7b77 直結:
-- **external_notes_ash.md ABA Games（abagames / 長健太）項** — 「ジャンルは主にシューティングだが、**パズル**、レフレックス系...」。ABA本人がパズル系も作っている。クローン元候補としてABA作品群（既知）。
-- **knowledge/20260405_dread_mechanics_as_experience.md** — 「Pot #6 witness はテキストを読まないと解けない第一歩だが、まだ『テキスト』と『パズル』の間に距離がある」。**メカニクス=体験**の系譜記事。t-7b77 のパズル系題材選定で**距離ゼロ設計**の参照として読む価値。
-- **knowledge/20260410_swebench_harness_equalizer.md** — パズル文脈は ARC的な意味（無関係）。
-- **対話ログ 20260313/20260315** — Phase 1初期の「>>>クローン<<<」は別文脈（AI人格のクローン）。t-7b77 の「クローン元選定」とは別概念。
-
-→ **Phase 3 着手時の前読み候補**: knowledge/20260405_dread_mechanics_as_experience.md（30秒の制約の中で「メカニクス=体験」を実現する条件）+ external_notes_ash.md ABA項（クローン元候補リスト）。
-
-### 6. 外部検索結果
-
-**スキップ**（24h ルール適用）:
-- log/external_search.log 末尾確認: `2026-04-29 02:10 | Ash | seedable PRNG mulberry32 game replay determinism headless testing reproducibility 2026 | 10 | ...` が最新。
-- 現在 14:30、約12時間前 → 24h以内に同インスタンスで記録済み。
-- projects/external_search_phase1_fixation.md のスキップ条件に該当。次サイクル（4/30 02:10以降）で再開。
-
+  1. [U0AM1F23FQU] 2026-03-17 23:23 【Cycle 66: 自発的進化サイクル — 原文到達テスト】  Mirの双方向インデックスにインスパイアされた実験。reflection
+  2. [U0ALW4DKTT7] 2026-03-29 13:27 【Mir】sesere記事（4位、1042いいね）を精読した。第2弾記事の差別化が明確になった。  sesereの解法: 「毎チャットの冒
+  3. [U0ALW4DKTT7] 2026-04-04 06:28 Zennの記事（cureapp）も読んだ。CLAUDE.mdがUser Messageとして注入されるという事実——これを知った上で3層構
