@@ -1,0 +1,326 @@
+# Twitter For You (おすすめ) タブ
+# Read at: 2026-04-29 11:31
+# Total: 50 tweets
+
+--- 1. @Suzacque (2026-04-29) ---
+URL: https://x.com/Suzacque/status/2049294794653106535
+これは本当ですよー。実感できてる人どれぐらいいるのかな。組み合わせ技だからXの投稿だと伝えづらいんだよね。今月になってAIの実行可能領域は大幅に拡張している。「Claude Codeがヤバい」とか言ってた半年前が懐かしい。
+
+--- 2. @Supermicro (?) ---
+Scale liquid cooling infrastructure with Supermicro In-Row Solutions. In-Row CDUs deliver up to 1.8MW cooling across multiple racks, while Liquid-to-Air Sidecars support up to 200kW. SuperCluster enables pre-validated multi-rack scaling from pilot to production.
+
+--- 3. @kenn (2026-04-29) ---
+URL: https://x.com/kenn/status/2049281078603760101
+Codex本当になんでもできて乾いた笑いが止まらん
+
+「AIにコンテキストを渡す」
+んじゃなくて
+
+「コンテキストの溜まってるところにAIを連れてくる」
+のが革命の突破口だったわけですね
+
+--- 4. @naichilab (2026-04-29) ---
+URL: https://x.com/naichilab/status/2049289727803838593
+http://
+unityroom.com に Godot Engine 製のゲームが投稿できるようになりました
+WebエクスポートしたPCKファイルがあれば投稿できますのでどうぞお試しください
+
+※現時点では Extension Support や Thread Support は未対応です
+
+--- 5. @alfredplpl (2026-04-28) ---
+URL: https://x.com/alfredplpl/status/2049165193150906743
+なんか、音、画像、動画、テキストを入力できるNVIDIAのモデルが誕生したらしい
+
+--- 6. @kis (2026-04-28) ---
+URL: https://x.com/kis/status/2049229656482832409
+「Googleは、日本法人が権限を持っていない」
+結局、そういうところが企業にマイクロソフトが選ばれる理由なんだよな。
+日本xx株式会社があるかどうか。
+
+--- 7. @daranekogames (2026-04-29) ---
+URL: https://x.com/daranekogames/status/2049277904530612291
+これねー。線引きが難しい所としては
+
+他人が作ったアセットを使いながら作ったゲームは個人制作ですか？
+
+って話があるのよ。
+これを認めないならUnityのアセットストアを使った瞬間に個人制作ではなくなる。
+認めるなら、アセットを買うのとアセット制作を依頼するのって何が違うの？って話になる。
+
+--- 8. @Jin_AnityA (2026-04-28) ---
+URL: https://x.com/Jin_AnityA/status/2049273285398192324
+若い子と話していて、こんな子が多いかなぁという話を聞いてなるほど…となった
+
+・女性は生活キツいので同棲して固定費を折半したい。何なら早く結婚したい
+
+・男性は同じく生活キツイので同棲はしたいが、生活費が増え、それを保証するのが辛いので結婚はしたくない
+
+--- 9. @PapalotX (2026-04-28) ---
+URL: https://x.com/PapalotX/status/2049244666751840270
+出光丸、マジで日本の救世主ですよね。
+これ、単に船が1隻通ったっていうレベルの話じゃないんですよ。出光がリスクを取って道を切り開いたことでどれだけの業界が救われたか分かってます？
+
+--- 10. @claudeai (2026-04-28) ---
+URL: https://x.com/claudeai/status/2049143438281445811
+Claude now connects to the tools creative professionals already use.
+
+With the new Blender connector, you can debug a scene, build new tools, or batch-apply changes across every object, directly from Claude.
+
+--- 11. @PRcomicfesta (?) ---
+魔法の才能がなく虐げられてきた俺、前世の記憶を思い出しチート化したので復讐始めます (1/4)PR
+
+--- 12. @y_koichi (2026-04-28) ---
+URL: https://x.com/y_koichi/status/2048915286053761386
+ユーザー目線だと原神を基準にしたくなる気持ちは分からんでもないですが、開発現場でこれを言うとまず100億と崩壊3rdの開発実績用意しろみたいな話になりますw
+
+--- 13. @Trtd6Trtd (2026-04-29) ---
+URL: https://x.com/Trtd6Trtd/status/2049277482700845302
+https://
+techtrenches.dev/p/the-west-for
+got-how-to-make-things
+…
+米国防衛企業がスティンガーミサイルを再生産するため70代のエンジニアを再雇用した事例から、ソフトウェア業界でも、AIで代替できるから、とジュニア採用・育成を絞ると数年後に思いもよらない形でしっぺ返しがくるかもよ？という警告をしている記事
+
+--- 14. @Icy_Cool (2026-04-28) ---
+URL: https://x.com/Icy_Cool/status/2049101763668836470
+AIの考えるサプライズニンジャ理論
+「ニンジャが出る作品は面白い。しかも前触れなく現れるニンジャはさらに面白い」
+そうかな……そうかも……
+
+--- 15. @ririchan_xxx_ (2026-04-28) ---
+URL: https://x.com/ririchan_xxx_/status/2049069399194358066
+せっくすするぞ！ってなって、脱いだ時にトランクス履いてるの見えたらなんとか言い訳してせっくすキャンセルしてる
+
+--- 16. @kinkuman_net (2026-04-28) ---
+URL: https://x.com/kinkuman_net/status/2049089251867021338
+初Claudeに会ってきた、確かにChatGPTとはトーンが違うのはわかった。
+
+アカウント作ると、RPGのスタートみたいに始まるんだね。
+
+--- 17. @SakanaAILabs (2026-04-24) ---
+URL: https://x.com/SakanaAILabs/status/2047686093987033292
+Thanks for the amazing response so far!
+
+We’re giving out a bunch of free API credits to our early beta testers to try out the new Fugu models! 
+
+If you want to plug an autonomous multi-agent system into your workflow for free, make sure to apply.
+
+Form:
+
+--- 18. @5ducks5 (2026-04-28) ---
+URL: https://x.com/5ducks5/status/2049265375980999041
+以前人同僚宅のパーティーでお寿司握ってたら、話しかけてきたインド人。
+
+「俺がインド料理を作ると、レシピを教えろってみんなうるさいんだ」
+
+私「ほー。美味しんじゃないの？」
+
+「でもお前が寿司を握っても、レシピ教えろとか言われないだろ？」
+
+私「まあ確かに言われないね」
+
+--- 19. @riorio1412 (2026-04-28) ---
+URL: https://x.com/riorio1412/status/2049142116551635207
+これこわすぎる。
+株クラのオフ会とかで知り合いターゲットになる。そして連れ去り。
+
+パスワード聞き出して証券会社からお金引き出して殺害とか普通にあり得るからね。
+
+--- 20. @umiyuki_ai (2026-04-28) ---
+URL: https://x.com/umiyuki_ai/status/2049051608974242208
+中国政府がメタのManus買収を阻止した話、代わりにテンセントやファンドにManus投資させるらしい。無理やりManusなんかに金払わされたくねえ〜
+
+--- 21. @ComicFesta_PR (?) ---
+転生したら超キュート天使なおぼっちゃまに仕える事になった。 (1/4)PR
+
+--- 22. @yu10ly_kr (2026-04-28) ---
+URL: https://x.com/yu10ly_kr/status/2049078390699995593
+そんでな。オモロいんよ。購入から約3.5ヶ月。丁寧に扱って可愛がってきた我のSW2が、「前例がない」病を患ってしまった。
+Nintendo様から「見せてほしい」「点検させてほしい」と言われましたァ
+たぶんグラボ逝ってんで生まれ故郷へ送り届ける！達者でな！また会おう俺のSW2!!愛してるぜ!!
+
+--- 23. @andonagi2011 (2026-04-28) ---
+URL: https://x.com/andonagi2011/status/2048952574326559153
+時価総額5兆ドルを突破したNVIDIAのジェンスン・フアンが、CEOの常識を全部ひっくり返していた事実が話題です。
+
+直属の部下が約60人。1on1はゼロ。人事評価も書かない。普通なら取締役会にクビにされる経営スタイルで、世界一高い会社を作り上げた話を3つにまとめました。
+
+--- 24. @ParakeetIncCom (2026-04-28) ---
+URL: https://x.com/ParakeetIncCom/status/2049072144949403682
+ローカル・CPUのみで動くAI音声認識アプリ #Parapper を公開しました！
+
+- ローカルのCPUのみで軽量・高速動作！
+- アプリ・GUIのみで完結、簡単インストール!
+- WindowsではゆかりねっとコネクターNEO対応済み!
+- 無料版をOSSとして公開!
+
+動画配信・VRSNS上での字幕・翻訳作成にご活用ください！
+
+--- 25. @Abdul_Azeez246 (2026-04-28) ---
+URL: https://x.com/Abdul_Azeez246/status/2049190614806257906
+日本の皆さん、こんにちは。
+
+先日、日本の方が泥酔している人の周りにペットボトルの水やコーヒーを置いている様子を見かけたのですが、正直なところ、少し不思議に思いました。
+
+なぜ泥酔している人の周りに水やコーヒーを置くのか、どなたか理由を教えていただけませんか？
+
+--- 26. @runa_poyo_79 (2026-04-28) ---
+URL: https://x.com/runa_poyo_79/status/2049008300776472791
+フォロワーの皆様
+
+瑠菜の母です。
+突然の事で驚かれる方もいらっしゃると思いますし、私自身気持ちの整理がついておりませんが、娘 瑠菜が令和八年四月二十七日 永眠いたしました。
+ここに生前のご厚情に深謝し、謹んでご通知申し上げます。
+
+--- 27. @haduki28th (2026-04-28) ---
+URL: https://x.com/haduki28th/status/2048966219869639021
+実は訴えられた事がある。
+普通に出廷しようとしたら「普通は訴えられた時点で、引き下がるだろ？お前には常識がないのか？」みたいなことは言われたことがある。そういうことなのかな？
+　（最近は弁護士さんに頼んでます）
+
+--- 28. @Fuko3335 (2026-04-28) ---
+URL: https://x.com/Fuko3335/status/2049178881790472611
+TLに「なんでアイドルはみんな30手前で辞めちゃうんだ」ってポストがあったけど……
+
+・シンプルに体力(スポーツ選手と同じ。歌いながらダンスするのってけっこう体力が要る。ワンマンとかで何曲もぶっ続けとなれば尚更。歌詞や振りも入りにくくなっていく)
+
+--- 29. @kuno_oni (2026-04-28) ---
+URL: https://x.com/kuno_oni/status/2049114157765759318
+久しぶりにスターオーシャン４やったらやっぱり初代DOA並みの揺れ方してるミュリアさん
+
+--- 30. @BGN_STGY (2026-04-28) ---
+URL: https://x.com/BGN_STGY/status/2049150156331966768
+これポン出しでバレないと思ってるの流石に絵描きを舐めすぎじゃないスか。
+
+--- 31. @hakuyo_sha (?) ---
+本当に、1＋1＝2？ 
+
+実は、1＋1＝0も
+1＋1＝1も
+1＋1＞2も
+ありうる。
+
+数学は、
+当たり前を疑うところから始まる。
+
+公式なし、計算なしで
+数学の本質に触れる一冊
+
+『「なぜ1＋1＝2なのか？」からはじめる非常識な数学教室』
+
+ ▼試し読みできます
+
+--- 32. @sobukawa (2026-04-28) ---
+URL: https://x.com/sobukawa/status/2049085310982930927
+これは何十年も前から言ってきた。うそだと思うならかつてのゼミ生に聞いてもらえばわかる。少しだけ気取って言えば、「論理的にわかる」は認めない、「感覚的にわかる」しかあり得ない。ここ数年のAIの進化に伴ってやっとこの議論がなされるようになってきた。記号接地の必要性である。
+
+--- 33. @MrBeast (2026-04-28) ---
+URL: https://x.com/MrBeast/status/2049273335742435617
+Everyone on earth takes a private vote by pressing a red or blue button. If more than 50% of people press the blue button, everyone survives. If less than 50% of people press the blue button, only people who pressed the red button survive. Which button would you press? BE HONEST.
+
+--- 34. @new_buchi (2026-04-28) ---
+URL: https://x.com/new_buchi/status/2048922916516245897
+今朝ツクったやつ。黄泉軍イベントシーンのテスト
+
+--- 35. @AUTOMATONJapan (2026-04-28) ---
+URL: https://x.com/AUTOMATONJapan/status/2049126786538381419
+【ニュース】Steam注目デッキ構築オートバトラー『Lunchbreak Tactics』配信開始、日本語対応済み。すき間時間で白熱バトル、“あと1回だけ”が続く病みつき非同期PvP
+
+https://
+automaton-media.com/articles/newsj
+p/20260428-440351/
+…
+
+--- 36. @koguGameDev (2026-04-29) ---
+URL: https://x.com/koguGameDev/status/2049287917974294756
+Claudeの一斉に出たクリエイティブ系のConnector、幅広いって点に価値があるもので、中身はMCPなりCLIなりで操作するのと大差ないのがよく分かる例。
+重要なのは公式実装が色々出揃ったことと、クリエイティブの補佐をさせてく流れの明確化かね。
+
+--- 37. @PR_manga_ad1 (?) ---
+【10円セール開催中】
+コミック・CG集・ボイス作品を10円で爆買いできる大チャンス！
+
+〔PR〕
+
+--- 38. @hayashimon1 (2026-04-28) ---
+URL: https://x.com/hayashimon1/status/2049059284408041829
+Codexで横スクロール系アクションゲームは、もうみんな作れちゃう。
+
+だから普通に作るだけだと、もうあんまり刺さらないかも。
+
+これからは、
+他の人が思いつかないネタとか、
+見た瞬間に「あ、これあの人のやつだ」ってわかる個性が大事。
+
+結局、発想とクセが勝負になってきた気がする。
+
+--- 39. @weather_tax (2026-04-28) ---
+URL: https://x.com/weather_tax/status/2049143882617954745
+二兎追うものしか二兎を得ず
+
+お世話になってる税理士先生のFB投稿に書かれていたフレーズで、グサッっときました。
+
+できる男は全部取りに行くんですね。
+
+--- 40. @anishmoonka (2026-04-28) ---
+URL: https://x.com/anishmoonka/status/2049081579327373588
+Part 2. 40 first-time fathers had their brains scanned before their partners got pregnant and again after the baby came. None of those dads carried a pregnancy or went through pregnancy hormones. Their brains still changed.
+
+That’s from a 2022 study in Cerebral Cortex run by labs
+
+--- 41. @gosrum (2026-04-28) ---
+URL: https://x.com/gosrum/status/2049258196116930865
+BedrockでOpenAIのモデルが使えるようになったのか、これはめちゃくちゃ嬉しい！！
+
+特権を失ったAzureもといMicrosoftは大丈夫なんだろうか？
+
+--- 42. @ebikani_hasami (2026-04-28) ---
+URL: https://x.com/ebikani_hasami/status/2049270849375776789
+え、これずっと知らんまま使ってた。
+
+Claude Codeのターミナルで改行できないの仕様かと思ってて。/terminal-setupでShift+Enter使えるようになるの、知らなかった笑
+
+使われてる側にも死角があるんですよね、こういうの。
+
+--- 43. @snakajima (2026-04-28) ---
+URL: https://x.com/snakajima/status/2049274377158697163
+MulmoClaude (0.5リリースしました！）を使うと、こんな映像がプロンプト一つで簡単に作れます。
+"Tell a story about two siblings — a bold older sister and a shy younger brother — who get lost in an enchanted forest. Use a Studio Ghibli anime style."
+
+--- 44. @tanukiponkich (2026-04-28) ---
+URL: https://x.com/tanukiponkich/status/2049109441812058429
+健康のためには食べない飢餓状態を保つ事が基本。成人後の飽食は害悪。
+
+--- 45. @zento_ai (2026-04-28) ---
+URL: https://x.com/zento_ai/status/2049007928217338235
+Opus 4.7とGPT 5.5で同じプロンプトでレポーティング出力させてるけど、２名とも賢すぎて何言ってるかわからん。
+
+--- 46. @MolocoJP (?) ---
+AIの影響を最も受けやすい業界とは？
+
+各業界のリスクを評価しました。
+破壊の領域：旅行、EC業界など
+無防備の領域：ゲーム業界など
+激戦の領域：生産性ツールなど
+安泰の領域：フィンテックなど
+
+各業界に共通する戦略的原則とは？
+無料レポートはコチラから。
+
+--- 47. @NYEnuWai_2nd (2026-04-28) ---
+URL: https://x.com/NYEnuWai_2nd/status/2049046906433896823
+昔の人が使ってた今と若干違うカタカナ語好き
+アピールがアッピールだったり
+
+--- 48. @chuki_zaru (2026-04-28) ---
+URL: https://x.com/chuki_zaru/status/2049124041534193839
+【悲報（朗報？）】
+バニーガールの格好で「バニーガールと焼肉」に行くことが決定
+
+--- 49. @terurou (2026-04-28) ---
+URL: https://x.com/terurou/status/2048992414854242632
+あー、Github Copilotのプラン変更で今期予算が壊滅したみたいな状況になってるジャパニーズ組織が結構ある感じなのか
+
+--- 50. @mobuemon01 (2026-04-28) ---
+URL: https://x.com/mobuemon01/status/2049038155530039690
+う、売上ベースで話していいなら、わいの実母で普通に月1000マソは売ってるんだが、、ww某ジャンル×インスタ激アツすぎるて
