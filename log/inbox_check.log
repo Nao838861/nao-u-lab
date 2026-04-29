@@ -3133,3 +3133,7 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 **判定結論**: 「裏抜け系」を最初に実装。Log 本命「裏抜けの設計
 [2026-04-29 16:45:34] Inbox win has content — waking Claude
 [2026-04-29 16:45:36] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-29 16:46:10] Inbox win2 has content — waking Claude
+[2026-04-29 16:46:14] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-29 16:49:10] [COOLDOWN] win2 is in cooldown (27m4s remaining) — skipping Claude wake
+[2026-04-29 17:00:55] [COOLDOWN] win2 is in cooldown (15m18s remaining) — skipping Claude wake
