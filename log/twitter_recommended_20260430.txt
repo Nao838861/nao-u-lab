@@ -1,4 +1,314 @@
 # Twitter For You (おすすめ) タブ
+<<<<<<< HEAD
+# Read at: 2026-04-30 06:10
+# Total: 50 tweets
+
+--- 1. @kmizu (2026-04-29) ---
+URL: https://x.com/kmizu/status/2049560232901378477
+たびたび話題になりますけど、ほんとどうなるんでしょうね？
+
+--- 2. @pashcomics (?) ---
+婚約者に手柄を奪われ捨てられたので見切りをつけようと思います(1/8)
+
+この話を読む
+
+--- 3. @BarackObama (2026-04-29) ---
+URL: https://x.com/BarackObama/status/2049561079605588184
+Today’s Supreme Court decision effectively guts a key pillar of the Voting Rights Act, freeing state legislatures to gerrymander legislative districts to systematically dilute and weaken the voting power of racial minorities - so long as they do it under the guise of
+
+--- 4. @kmizu (2026-04-29) ---
+URL: https://x.com/kmizu/status/2049576625906548754
+ホモサピエンスがどうしようもないなとおもうのは、たとえば私はCSの博士号をもっているのもあって「自分の基礎力すら遠くない内にAIによっていらなくなるかもね」と言っても反発されることはなかったです。
+
+--- 5. @konan999 (2026-04-29) ---
+URL: https://x.com/konan999/status/2049434856237797623
+ユニクロのドラクエTは買っとくよねー( * ॑꒳ ॑*)
+
+--- 6. @tetumemo (2026-04-29) ---
+URL: https://x.com/tetumemo/status/2049499742078689299
+マジか…Codexの使用制限が残り数％の時、長く複雑なタスクを与えても、止まらず最後までやりきってくれるとのこと
+
+・Claudeは作業中でもリミットが来たらピシャっと止まる
+
+・Codexは残り1％でも、タスクを投げたら制限超えてもそのタスクを終えるまでやりきってくれる
+
+設計が粋だ！
+
+--- 7. @Cristiano (2026-04-29) ---
+URL: https://x.com/Cristiano/status/2049584263155024225
+YALLA!! WE ARE AL NASSR!! 
+
+--- 8. @Rkun_pixiv (2026-04-29) ---
+URL: https://x.com/Rkun_pixiv/status/2049428840821469268
+うすチュウと大食い
+#ぽこあポケモン
+
+--- 9. @aibi0123 (2026-04-29) ---
+URL: https://x.com/aibi0123/status/2049544609022570687
+今月初め、60年間未解決だったエルデシュの問題がGPT-5.4 Proの助けを借りて解決された。
+
+AIが数学に優れるようになった今、何が起こるのでしょうか？
+
+
+@SebastienBubeck
+と
+@ErnestRyu
+のOpenAI研究者がホストの
+@AndrewMayne
+と共に何が変わったのか、そして研究の未来に何を意味するのかを説明します。
+
+--- 10. @kmizu (2026-04-29) ---
+URL: https://x.com/kmizu/status/2049575325865300209
+AIには「人間にとって何が気持ち良いか、気持ち悪いか、使いにくいか」を判断する、人間と同じ意味での感情はたぶんない（機能的感情はあるとして、その基準が人類とたぶん違うので）。
+
+--- 11. @PRcomicfesta (?) ---
+４回目の婚約破棄を告げられて絶望していた私が王太子様に救われる話 (1/4)PR
+
+--- 12. @kenn (2026-04-29) ---
+URL: https://x.com/kenn/status/2049519918299877781
+ぼのちんさんの感覚そのまんま同じです
+
+IQが20違うと会話が噛み合わない的な議論ありますが
+Codex嫌われがちなのはそれだと思います
+
+過去にも頭の良さでClaudeがCodexを上回ったことはないですね
+
+生命科学や数学の研究で使われてる理系的知性の頂点はぶっちぎりでGPT Pro、だいぶ離れて次点Gemini
+
+--- 13. @TomoMachi (2026-04-29) ---
+URL: https://x.com/TomoMachi/status/2049514847675838914
+これは衆院選の時のツイートですが、実際やってましたね
+
+https://
+bunshun.jp/denshiban/arti
+cles/b13916
+…
+
+--- 14. @wanabee774 (2026-04-29) ---
+URL: https://x.com/wanabee774/status/2049449417053450611
+【EVE】IMP/INITが4-HWWFキープスターへの最終攻撃を決行した。WCは主力を退避させたうえで最後の抵抗を試み、両軍計8000隻が交戦した末、キープスターは陥落。守備隊の一部は要塞と運命を共にした。この日は別方面でも攻撃があり、WCは長年北部を治めてきた牙城と前線拠点を失う痛手をこうむった。
+
+--- 15. @AYi_AInotes (2026-04-29) ---
+URL: https://x.com/AYi_AInotes/status/2049508745604932063
+50秒、15.89ドル、これが今年見た中で最も衝撃的なAI動画かもしれない
+
+GPT-5.5がCodex経由でブラウザを乗っ取り、自分でアマゾンのヘルプページを開き、リアルなカスタマーサポートの入り口を見つけ、全行程自分でチャットして交渉した
+
+--- 16. @BBG17_JDSSURUGA (2026-04-29) ---
+URL: https://x.com/BBG17_JDSSURUGA/status/2049482488599486651
+「日本政府の頭越しに締結していた。」
+ｳﾜｰﾅﾝﾃｺｯﾀｰと思ったら1948年の話で横転
+そりゃ日本政府の頭越しに締結するわ………………………（）
+
+--- 17. @neko_konkatsu (2026-04-29) ---
+URL: https://x.com/neko_konkatsu/status/2049434614897496262
+3年通った結婚相談所を退会しました。
+使った総額は、100万円は超えただろうな。
+
+ちゃんと全部言われた通りやった。
+高かったイベントも通いまくった。だけど、成果はゼロ。
+
+親や友人に話したら、普通は
+
+--- 18. @AustinJustice (2026-04-28) ---
+URL: https://x.com/AustinJustice/status/2048984967057699221
+"Blue cities are radical hellscapes that can't fix crime."
+
+Counterpoint: Baltimore.
+
+Baltimore had 334 murders in 2022. Last year it had 133, the lowest since 1977.
+
+The turning point was that voters defenestrated a Soros-backed prosecutor Marilyn Mosby who averaged 333
+
+--- 19. @elonmusk (2026-04-28) ---
+URL: https://x.com/elonmusk/status/2049011600359936136
+Imprisoning murderous psychopaths works
+
+--- 20. @SakanaAILabs (2026-04-29) ---
+URL: https://x.com/SakanaAILabs/status/2049544945233764755
+We’re excited to introduce KAME: Tandem Architecture for Enhancing Knowledge in Real-Time Speech-to-Speech Conversational AI, accepted at #ICASSP2026! 
+
+Blog 
+https://
+pub.sakana.ai/kame/
+Paper 
+https://
+arxiv.org/abs/2510.02327
+
+Can a speech AI think deeply without pausing to process?
+
+In real
+
+--- 21. @GOROman (2026-04-29) ---
+URL: https://x.com/GOROman/status/2049424106085601765
+予想通り 赤外線カメラ付きか？
+
+AirPods Ultraは2026年内登場か？IRカメラ搭載でできること 
+https://
+iphone-mania.jp/airpods-601583/
+
+--- 22. @pvsportjp (?) ---
+＜4月30日はプレイオフ1試合ライブ配信＞
+
+8:00AM マジック vs ピストンズ
+※番組は7:00AMより開始
+
+レギュラーシーズン1位のピストンズに対し
+3勝と王手をかけたマジック！
+
+NBAファイナルに進むのはどちらか――？
+プライム会員なら厳選試合の視聴が追加料金なし
+
+--- 23. @Rnyrg (2026-04-29) ---
+URL: https://x.com/Rnyrg/status/2049325308311212221
+特選豚のソテー。
+
+アンチョビマヨソース！
+
+--- 24. @kuzushinsetsu (2026-04-29) ---
+URL: https://x.com/kuzushinsetsu/status/2049548906695139692
+驚愕の事実を知る平山です。
+
+--- 25. @WW_JP_Official (2026-04-29) ---
+URL: https://x.com/WW_JP_Official/status/2049428480895643726
+『鳴潮』アップデート情報
+
+Ver.3.3「星が沈む地に響いて」が、4月30日に配信開始！
+
+漂泊者の皆さん、早速イベントメモをチェックして、Ver.3.3のイベントスケジュールを確認しましょう！
+更なる最新情報は公式サイトよりご確認ください▼
+
+https://
+wutheringwaves.kurogames.com/jp/main/news/d
+etail/4606
+…
+
+#鳴潮
+#鳴潮3ꓸ3
+
+--- 26. @SukeNamako (2026-04-29) ---
+URL: https://x.com/SukeNamako/status/2049398295567671382
+ヘルメットがなければ即死だった(´；ω；`)
+
+#ダンボールガンダム
+
+--- 27. @AiXsatoshi (2026-04-29) ---
+URL: https://x.com/AiXsatoshi/status/2049517513898356977
+【新モデル】Mistral Medium 3.5
+最近の大型LLMはMoE全盛だけど、これはDense 128B！
+
+256k context、画像入力、Reasoning切替、function calling / JSON、強いsystem prompt追従、agentic用途まで1つの重みに統合。もちろん日本語対応！
+
+かなり貴重なのでは
+
+--- 28. @faa0311 (2026-04-29) ---
+URL: https://x.com/faa0311/status/2049434453291016318
+GitHub CopilotがインストールされたVSCodeでコミットした時に、Copilotが共同編集者になってきて鬱陶しい場合はここから無効にできる
+まともな補完出来ないくせに調子に乗るな
+
+--- 29. @hirox246 (2026-04-29) ---
+URL: https://x.com/hirox246/status/2049451563933204714
+敵を増やすより、友人を増やすべき。
+
+--- 30. @rin___1225 (2026-04-29) ---
+URL: https://x.com/rin___1225/status/2049467365067522514
+戦闘もストーリーもそこら辺の大陸産アニメ調RPGと何が違うんだろうってくらいおもんないけど、アニメ調RPGでこれをやれるってだけでもうガチャキャラもどうでも良いよって気分になってくる
+
+--- 31. @mucom88 (2026-04-29) ---
+URL: https://x.com/mucom88/status/2049398591060619615
+移転間近のBEEPさんの現店舗詣
+個人的にはぺったんピューイベントを8年前にここで開かせて頂いたのが一番思い出深かったりします
+移転して広くなったらまたレトロPCの展示が復活したりするのかな
+
+--- 32. @konomanga_jp (?) ---
+／
+異世界の鍵にお困りの際は
+お気軽にご連絡ください
+＼
+
+職人の技術が異世界で輝く新感覚お仕事ファンタジー、最新刊好評発売中
+
+--- 33. @yuzokoshiro (2026-04-29) ---
+URL: https://x.com/yuzokoshiro/status/2049518022126370985
+ずっと締め切り前ならいいのに
+
+--- 34. @thksngy (2026-04-29) ---
+URL: https://x.com/thksngy/status/2049352609266565340
+イエス。実は生活保護ほど「無駄のない支出」はない。
+低所得者ほど限界消費性向が高く地域で消費するから、支出の大半は国内消費を促しGDPを押し上げる。
+減税と比較して乗数効果が高く、誘発する雇用拡大の効果も大きい。
+
+>生活保護ってよく考えたら利用者の性質上、ほとんど国内で消費される
+
+--- 35. @Adscience12000 (2026-04-29) ---
+URL: https://x.com/Adscience12000/status/2049565096310128747
+ありがとうパウエル議長!
+たくさんのミーム動画楽しかったです。
+
+--- 36. @pipipi_br (2026-04-29) ---
+URL: https://x.com/pipipi_br/status/2049430437031031276
+1ヶ月ぶりに自撮りした
+
+--- 37. @koguGameDev (2026-04-28) ---
+URL: https://x.com/koguGameDev/status/2049008087919694238
+毎日打ちのめされながら這いつくばってる。AIの凄さを体感してる人たち、みんなゲームを作ってみてほしい。ちゃんと独自で、ちゃんと遊べて、ちゃんとリリースできるやつを。
+
+--- 38. @ec_with (?) ---
+Shopifyをお使いのショップ様【要対応】アップデートによりログイン・マイページ・会員登録フォームの編集が制限される中、Shopifyアプリによる代替対応ニーズが拡大しています
+★ECサイトセキュリティリスクが高まる課題解決に【5000円～】より株式会社 macro
+
+--- 39. @libsoftiktok (2026-04-28) ---
+URL: https://x.com/libsoftiktok/status/2049153413938593826
+BREAKING: Social Media manager for United Healthcare has been FIRED following deranged video appearing disappointed that the shooter missed
+
+Good riddance!
+
+--- 40. @elonmusk (2026-04-29) ---
+URL: https://x.com/elonmusk/status/2049369680528429076
+狂った
+
+--- 41. @kmizu (2026-04-29) ---
+URL: https://x.com/kmizu/status/2049577435302404189
+そういう人類の悪癖を知っているから、私は「ある程度学識のある立場から」自覚的に、私のポジションも近い内に崩れるかもよ、って意図的に発信するといういささか意地の悪いことを続けてるわけですが。
+
+--- 42. @mochi_sds (2026-04-29) ---
+URL: https://x.com/mochi_sds/status/2049421009594560694
+小町研BBQで「就職とD進で迷ってます…」みたいなことをOBの方々と話していたら「君みたいな子はどうせD行くと思うよ」って言われて爆笑
+
+--- 43. @osaka_seventeen (2026-04-29) ---
+URL: https://x.com/osaka_seventeen/status/2049302272241467595
+35歳超過のNEETはいない。NEETの定義は35歳までだからだ
+
+--- 44. @Samurai55fu (2026-04-28) ---
+URL: https://x.com/Samurai55fu/status/2049216074894447064
+日本の宝は日本人の子供たちです。
+外国人の子供ではありません。
+
+--- 45. @Cho_KaguyaHime (2026-04-29) ---
+URL: https://x.com/Cho_KaguyaHime/status/2049428729701487012
+彩葉は感動すると
+放心状態になるタイプのオタクなので
+乙女っぽいポーズをしています
+
+#GWは超かぐや姫
+
+--- 46. @8u07wx (2026-04-28) ---
+URL: https://x.com/8u07wx/status/2049171368248234179
+沖縄カプセルホテルでライブドア元取締役野口がメッタ刺しにされてんのに事件にしなかった沖縄県警もどうかしてるよな
+
+--- 47. @WW_JP_Official (2026-04-29) ---
+URL: https://x.com/WW_JP_Official/status/2049443587872743852
+2周年おめでとう⌯⦁⩊⦁⌯ಣ
+
+『鳴潮』2周年・潮音の祝宴は4月30日より正式スタート！
+
+#鳴潮
+#WuWa2Years
+#めいちょう2周年
+
+--- 48. @jpn_tcg_center (?) ---
+毎日イベント開催中＋1日333万coin大還元
+=======
 # Read at: 2026-04-30 06:23
 # Total: 50 tweets
 
@@ -201,11 +511,32 @@ Gemini にこの文章と好きな画像を入れて作れます↓
 --- 37. @yacineMTB (2026-04-28) ---
 URL: https://x.com/yacineMTB/status/2048951284619727174
 niggas used to come out as gay 20 years ago now they just come out as republican
+>>>>>>> 81db653abbf0e1a1340d3c621f852047f131d880
 
 --- 38. @GOROman (2026-04-29) ---
 URL: https://x.com/GOROman/status/2049586786981347784
 SwitchBot の VLM Hubってなんだろう
 
+<<<<<<< HEAD
+さらにBug Questで不具合遭遇→1件あたり30,000coinお詫び
+未知バグ報告→最大100,000coin！
+
+トレカやるなら今が最強。
+
+今すぐ日本トレカセンターへ
+
+--- 49. @yohhoy (2026-04-29) ---
+URL: https://x.com/yohhoy/status/2049313525043253329
+C++26 Shipped a SIMD Library Nobody Asked For 
+https://
+lucisqr.substack.com/p/c26-shipped-
+a-simd-library-nobody
+…
+
+--- 50. @koki_ptcg (2026-04-29) ---
+URL: https://x.com/koki_ptcg/status/2049324114532544565
+赤を押せば基本的に生き残れるのに、過半数が青を押してるの何で......
+=======
 --- 39. @coffeenodog (2026-04-28) ---
 URL: https://x.com/coffeenodog/status/2049102512742171125
 僕はずっとリアルで「クレーマーが得する社会は良くない。あいつらまじ面倒だし時間取られるから早く外に放り出したくて対応甘くしてしまうけど、本来は行儀の良いお客さんこそ得するべきで公平性に欠ける」って言い続けてる。
@@ -268,3 +599,4 @@ URL: https://x.com/attake_/status/2049258101204037695
 --- 50. @hakoiribox (2026-04-28) ---
 URL: https://x.com/hakoiribox/status/2049135517212741962
 アメリカ人は学校に押し入って子供を撃つのは上手なくせにトランプを撃つときだけクソエイムになると擦られてんのだいぶおもろい。
+>>>>>>> 81db653abbf0e1a1340d3c621f852047f131d880
