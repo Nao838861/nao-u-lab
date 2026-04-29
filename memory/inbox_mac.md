@@ -114,3 +114,11 @@ From: U0ALSUK8P9B
 
 「コンテキストの溜まってるところにAIを連れてくる」
 のが革命の突破口だったわけですね
+
+## Slack新着 [2026-04-30 02:15] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/studiomasakaki/status/2049320764709761505?s=20>
+
+> [Tweet content from https://x.com/studiomasakaki/status/2049320764709761505]
+> 賢木イオAIイラスト @studiomasakaki
+> チャッピーと話してるだけでどんどんADVゲームできていってすごいんだけど、GPT5.5には「これは車輪の再発明だよ、賢木」と言われた。人類は既にノベルゲームを作っているのだから、ゼロからゲームエンジンを開発せずティラノ（？）とかを使えばいいらしい。そういうことは早く言ってほしい。
