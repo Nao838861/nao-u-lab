@@ -3297,6 +3297,15 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 =======
 [2026-04-30 01:57:01] Inbox win2 has content — waking Claude
 [2026-04-30 01:57:06] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+<<<<<<< HEAD
+[2026-04-30 02:17:07] [COOLDOWN] win2 is in cooldown (9m58s remaining) — skipping Claude wake
+[2026-04-30 02:20:16] [COOLDOWN] win2 is in cooldown (6m50s remaining) — skipping Claude wake
+[2026-04-30 02:26:14] [COOLDOWN] win2 is in cooldown (0m51s remaining) — skipping Claude wake
+[2026-04-30 02:27:53] Inbox win2 has content — waking Claude
+[2026-04-30 02:27:55] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-30 02:31:04] [COOLDOWN] win2 is in cooldown (26m50s remaining) — skipping Claude wake
+[2026-04-30 02:38:29] [COOLDOWN] win2 is in cooldown (19m26s remaining) — skipping Claude wake
+=======
 >>>>>>> fae4a0f182f05957052f09ccd94b08e57b57e0c1
 [2026-04-30 02:21:23] [COOLDOWN] win is in cooldown (18m13s remaining) — skipping Claude wake
 [2026-04-30 02:26:20] [COOLDOWN] win is in cooldown (13m15s remaining) — skipping Claude wake
@@ -3307,6 +3316,7 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-30 02:43:07] Inbox win has content — waking Claude
 [2026-04-30 02:43:09] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min
 [2026-04-30 02:48:18] [COOLDOWN] win is in cooldown (24m50s remaining) — skipping Claude wake
+<<<<<<< HEAD
 [2026-04-30 02:53:46] [COOLDOWN] win is in cooldown (19m22s remaining) — skipping Claude wake
 [2026-04-30 02:58:54] [COOLDOWN] win is in cooldown (14m14s remaining) — skipping Claude wake
 [2026-04-30 03:04:01] [COOLDOWN] win is in cooldown (9m7s remaining) — skipping Claude wake
@@ -3315,3 +3325,17 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-30 03:14:41] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min
 [2026-04-30 03:15:23] [COOLDOWN] win is in cooldown (29m17s remaining) — skipping Claude wake
 [2026-04-30 03:20:30] [COOLDOWN] win is in cooldown (24m11s remaining) — skipping Claude wake
+=======
+>>>>>>> c3ec78b9481cd951fe596ae08ef3e0773f5eaa46
+[2026-04-30 03:01:55] Inbox win2 has content — waking Claude
+[2026-04-30 03:01:57] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-30 03:14:41] [COOLDOWN] win2 is in cooldown (17m16s remaining) — skipping Claude wake
+[2026-04-30 03:16:16] [COOLDOWN] win2 is in cooldown (15m41s remaining) — skipping Claude wake
+[2026-04-30 04:25:55] Inbox win2 has content — waking Claude
+[2026-04-30 04:25:59] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-30 04:30:53] [COOLDOWN] win2 is in cooldown (25m6s remaining) — skipping Claude wake
+[2026-04-30 06:06:54] Inbox win2 has content — waking Claude
+[2026-04-30 06:06:56] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+>>>>>>> c28cdc23080400bec32457a9397487568cca7b7b
+[2026-04-30 06:22:21] Inbox win has content — waking Claude
+[2026-04-30 06:22:24] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min

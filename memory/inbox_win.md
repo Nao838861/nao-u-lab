@@ -250,3 +250,48 @@ This was all done inside Codex in couple prompts...
 Should I roll this out and apply to all 10 biomes?
 
 #gamedev #ai #vibejam
+
+## Slack新着 [2026-04-30 04:25] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/Codestudiopjbk/status/2049413420378997029>
+
+> [Tweet content from https://x.com/Codestudiopjbk/status/2049413420378997029]
+> Codex Studio @Codestudiopjbk
+> 【速報｜Codex が大幅アップデート】
+
+ついに来ました！
+Codexにネイティブブラウザ機能が統合されました！
+
+https://
+x.com/WesRoth/status
+/2047737334096134481/video/1
+…
+
+これ、地味に見えて
+開発体験が一段階変わるアップデートです
+
+どう変わったか？解説していきます
+
+これまで
+「Codex＝コード生成だけ」
+でしたが──
+
+その前提、崩れました。
+
+【今回のアップデートで何が変わった？】
+
+Codexから
+そのままWebブラウザを操作可能になっています。
+
+つまり
+・Web情報の取得が自動化
+・ブラウザ操作→コード生成が1ステップ
+・「調べてからコード書く」が完全自動
+・競合ツールとの最大の差別化ポイント
+
+Codexが「完全自律型開発エージェント」に進化。
+
+
+## Slack新着 [2026-04-30 04:29] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/home>
