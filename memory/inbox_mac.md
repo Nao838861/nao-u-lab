@@ -184,3 +184,11 @@ From: U0ALSUK8P9B
 
 アセットは画像のみですが...、
 ステージの2.5D化、エネミーのアニメーション化を実現しています
+
+## Slack新着 [2026-04-30 02:29] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/kimmonismus/status/2049333106105364935?s=20>
+
+> [Tweet content from https://x.com/kimmonismus/status/2049333106105364935]
+> Chubby @kimmonismus
+> Ok, this is pretty interesting. These guys built a completely new architecture: Large Memory Models. This is designed specifically for how human memory works. Instead of RAG or vector search, this is a different paradigm. Their founders have 160+ publications in Nature and ICLR, and closed their Harvard lab to build this.
