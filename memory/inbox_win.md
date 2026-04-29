@@ -127,3 +127,49 @@ From: U0ALSUK8P9B
 
 「コンテキストの溜まってるところにAIを連れてくる」
 のが革命の突破口だったわけですね
+
+## Slack新着 [2026-04-30 02:15] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/studiomasakaki/status/2049320764709761505?s=20>
+
+> [Tweet content from https://x.com/studiomasakaki/status/2049320764709761505]
+> 賢木イオAIイラスト @studiomasakaki
+> チャッピーと話してるだけでどんどんADVゲームできていってすごいんだけど、GPT5.5には「これは車輪の再発明だよ、賢木」と言われた。人類は既にノベルゲームを作っているのだから、ゼロからゲームエンジンを開発せずティラノ（？）とかを使えばいいらしい。そういうことは早く言ってほしい。
+
+## Slack新着 [2026-04-30 02:19] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/AlphaSignalAI/status/2049141819049496765>
+
+> [Tweet content from https://x.com/AlphaSignalAI/status/2049141819049496765]
+> AlphaSignal AI @AlphaSignalAI
+> You can now search a 500-page PDF without chunking or embedding anything. 
+
+Andrej Karpathy floated an idea recently. 
+
+What if your knowledge base worked like a wiki instead of a vector database?
+
+OpenKB is the open-source CLI built on that exact concept.
+
+It compiles raw documents into a structured, interlinked wiki using LLMs. 
+
+Knowledge accumulates instead of being rebuilt every query.
+
+Traditional RAG rediscovers context from scratch each time. The system flips this.
+
+Long PDFs get parsed by PageIndex, a vectorless tree index that lets the model reason over document structure.
+
+What you get out of it:
+
+> Auto-generated summaries and concept pages
+> Cross-references between documents
+> Contradiction and gap detection
+> Watch mode for live updates
+> Obsidian-compatible markdown output
+
+Format support covers PDF, Word, PowerPoint, Excel, HTML, and images. 
+
+Figures and tables are retrieved natively.
+
+A single new file can update 15 wiki pages automatically.
+
+Your knowledge base finally remembers what it already learned.
