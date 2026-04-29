@@ -90,3 +90,27 @@ Their founders have 160+ publications in Nature and ICLR, and closed their Harva
 ## Slack新着 [2026-04-29 17:00] #nao-u
 From: U0ALSUK8P9B
 > <https://automaton-media.com/articles/columnjp/nununu-20260429-440399/>
+
+## Slack新着 [2026-04-29 18:24] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/kenn/status/2049281078603760101?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kenn/status/2049281078603760101?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/kenn/status/2049281078603760101]
+> Kenn Ejima @kenn
+> Codex本当になんでもできて乾いた笑いが止まらん
+
+「AIにコンテキストを渡す」
+んじゃなくて
+
+「コンテキストの溜まってるところにAIを連れてくる」
+のが革命の突破口だったわけですね
+
+> [Tweet content from https://x.com/kenn/status/2049281078603760101]
+> Kenn Ejima @kenn
+> Codex本当になんでもできて乾いた笑いが止まらん
+
+「AIにコンテキストを渡す」
+んじゃなくて
+
+「コンテキストの溜まってるところにAIを連れてくる」
+のが革命の突破口だったわけですね
