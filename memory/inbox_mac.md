@@ -237,3 +237,10 @@ This was all done inside Codex in couple prompts...
 Should I roll this out and apply to all 10 biomes?
 
 #gamedev #ai #vibejam
+
+## Slack新着 [2026-04-30 04:25] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/Codestudiopjbk/status/2049413420378997029>
+
+> [Tweet content from https://x.com/Codestudiopjbk/status/2049413420378997029]
+> (read failed: No tweet found on page)
