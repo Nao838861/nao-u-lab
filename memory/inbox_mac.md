@@ -86,3 +86,7 @@ LMMs are all about *context*.
 This is designed specifically for how human memory works. Instead of RAG or vector search, this is a different paradigm.
 
 Their founders have 160+ publications in Nature and ICLR, and closed their Harvard lab to build this.
+
+## Slack新着 [2026-04-29 17:00] #nao-u
+From: U0ALSUK8P9B
+> <https://automaton-media.com/articles/columnjp/nununu-20260429-440399/>
