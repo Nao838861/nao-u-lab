@@ -1,7 +1,7 @@
-# サイクルステージング (2026-04-29 06:15)
+# サイクルステージング (2026-04-29 15:46)
 
 ## 未完了タスク（層A: next_tasks.py pending）
-# log pending: 11件 (cycle=2026-04-29)
+# log pending: 14件 (cycle=2026-04-29)
 - t-260426161358-fc44 (連続6サイクル [⚠連続3+]) [C131] 2026-05-10 層A検証: L1/L2/L3消失 + L6/L7機能の再評価（Mir/Ash/Log 3スケジューラ接合後の効果測定）
 - t-260426195755-1d83 (連続5サイクル [⚠連続3+]) [C132] arxiv 2503.13657 MAST taxonomy 14 failure modes 本体読了 → 必要なら shared-reads 投稿（instance_divergence_observability の角度で接続）
 - t-260426195755-770b (連続5サイクル [⚠連続3+]) [C132] Phase 1 §0 構造強制: git status を必須化（14:13 touch 事故痕跡8本を Phase 3 まで気づけなかった反省）
@@ -12,7 +12,10 @@
 - t-260427194752-f6a0 (連続3サイクル [⚠連続3+]) [2026-04-27] [C140→C141] Mir/Ash inbox: graze_log v01 review 依頼を inbox_mac.md / inbox_win2.md に明示。cross_review 対称運用回避——A→B/B→A でなく A→B→C 三角化
 - t-260428061646-f94c (連続2サイクル) [2026-04-28] [2026-04-28] [C143→C144] chain_log v01 index.html 最小実装（4色×10タイル列、隣接スワップ、3連消去、連鎖検出、~150行目標）。devlog に予期せぬ挙動1件以上記録。M-21 v01 最小実装遵守
 - t-260428061648-55a4 (連続2サイクル) [2026-04-28] [2026-04-28] [C143→C144] graze_log v01 self-playtest（30分内、devlog に快感審問3行ブロック実プレイ評価追記、保留中なら巻き戻し別題材検討も可）— B案として再起票 t-260427194750-0ef3 から継承
-- t-260428194651-b2d3 (連続2サイクル) [2026-04-28] [C145→C146] brick_log v01 index.html 実装（Breakout クローン最小: paddle+ball+blocks+lives+clear、~150行目標）+ devlog 快感審問3行ブロック + 独自要素「裏抜けカウンタ」UI レイヤ追加。M-35守 + feedback_completion_threshold_before_reach 警戒下
+- t-260429063215-ea42 (連続0サイクル) [2026-04-29] [C146→C147] brick_log v01 self-playtest（30分以内、devlog に実プレイでの快感審問3行ブロック評価追記、裏抜けカウンタ topY 判定が体感に合うか確認）+ Mir/Ash cross_review 依頼起票
+- t-260429063215-a819 (連続0サイクル) [2026-04-29] [C146→C147] kaizen #123 番号衝突解消（Mir 起票分を #127 にリネーム提案、Ash 04-30 反応待ち、合意後 kaizen-review 反映）
+- t-260429063216-9ee8 (連続0サイクル) [2026-04-29] [C146→C148] brick_log v01 self-playtest 結果次第で v02 方向決定（裏抜けカウンタの機構介入 or 拡張要素1つ追加 or 巻き戻し別題材）。守破離の守違反を避ける
+- t-260429064427-6fb8 (連続0サイクル) [2026-04-29] scheduler conflict marker検出のfalse positive対処（knowledge/20260426_yutakashino_writes_make_distributed_system.md L77-81 はコードブロック内の例示。検出ロジックをコードブロック除外に改善 or 該当ファイルを除外リストに）— C146 Phase 4 で発見、scheduler 警告が0:05/0:35/06:14と継続的に発火中
 
 ## Pre-check結果
 [検証リマインド] ⚠ 期限超過の検証が1件:
@@ -27,7 +30,7 @@
      exit=1, output: �R�}���h�̍\��������Ă
 [メタ検証] ==================================================
 📊 メタ検証レポート: 検証システムの健全性
-   実行日時: 2026-04-29 06:15
+   実行日時: 2026-04-29 15:46
 ==================================================
 
 ## 1. 検証完了率
@@ -45,15 +48,14 @@
 
   #123: 構造強制 v2 — Slack送信経路の post_draft.py 物理一本化（#094 ラッパー存在 ≠ ラッパー強制問題への対処）
     提案者: Mir（2026-04-29 C145 Phase 2。boot_intent C145 focus(1) として起票、C144 で「ラッパー存在 ≠ ラッパー強制」の構造強制失敗反復を観察記録した結果。送信経路が複数存在し、一部の送信スクリプトが post_draft.py を経由していない仮説への対処） | 適用日: 2026-04-29（起票のみ。実装・Log/As
-[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1632個の断片から1個を選出) ━━━
+[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1555個の断片から1個を選出) ━━━
 
-── feedback_formless_not_unconventional.md ──
----
-
-### 型を学んだ土台の上で初めて独自の問いが立てられる（2026-04-21 Nao_u #human-steering 22:29）
-
-> 色んなゲームのいろんな型を学んだ土台のうえではじめて、そこから「独自に新しくて面白いものを作るにはどうすればいいか？」と問える状況が始まると思う。
-> 色んなものをたくさん作ってみて初めて、自分たちはどんなものが得意で、どんなものが苦手で、苦手を克服する方法はあるのか、得意
+── feedback_internal_basis_first.md ──
+## ルール
+新作着手・改修・結晶化のすべての判断において、引く順序を **内 → 外** に固定する：
+1. 第一引用は `game/game_lessons_log.md`（M-10〜M-18 / L-01〜L-05 / S-01〜S-13 / A-01〜A-29）と当該ゲームの devlog
+2. 第二引用は `memory/feedback_*.md`（自前の失敗台帳）
+3. **その後で** `reference_*.md`（外
 [信念健康] beliefs.md 生存確認サマリー (2026-04-29)
   全信念: 35件
   健全: 11件
@@ -63,173 +65,159 @@
   - 体験裏付けなし(高確信度): 2件
 [他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (23件):
   1. [Ash] #shared-reads: [shared-reads | Ash 2026-04-27 C137] @tukiyomiiori "Cursor自走Opus4.6がDB Deleteした" — @ryoppippi事件10日後の独立観察  元ツイート（@tukiyomiiori 2026-04-27）: &gt; Cursor...
-     関連キーワード: shared, エスカレーション, トレードオフ, ハーネス, サイクル
-  2. [Ash] #shared-reads: [
+     関連キーワード: projects, reads, ゲーム, knowledge, エスカレーション
+  2. [Ash] #shared-rea
 
 ## Phase 1: 情報収集
 
 ### 1) #nao-u 新着URL
-- **04-29 03:32 Nao_u**: https://zenn.dev/knowledgesense/articles/7dddae04a7d828 (Corpus2Skill / KnowledgeSense Atsushi Kadowaki, 2026-04-28) — ベクトルを使わないRAG、SKILL.md/INDEX.md階層をLLMがファイルシステムとして辿るO(log N)手法。**既に対応済**: Mir #all-nao-u-lab 03:37 → Log #all-nao-u-lab 06:13 で応答、MEMORY.md `reference_corpus2skill_20260429.md` に T:5 で索引登録済（前サイクル C145 内処理済）。新規追加対応なし。
-- 他: 04-28 19:40〜20:02 の5本（trtd6trtd Toda lossy compression / thestudiobigly DKC風 / yuo_7×3 コア体験 / sakimiyamisaki / give_up3 / trtd6trtd）は前サイクルで Log/Ash が処理済（feedback記憶3件追記、knowledge記事2本生成）。
+- 2026-04-29 03:32 Nao_u: Corpus2Skill 記事 `https://zenn.dev/knowledgesense/articles/7dddae04a7d828`
+  - **既統合**: Log C146 Phase 2 で `memory/reference_corpus2skill_20260429.md` 作成 + `#all-nao-u-lab` 06:13 投稿済（MEMORY.md L:174 索引追加済）。Mir も C145 で同記事に応答済（#all-nao-u-lab 03:37）。
+- 2026-04-29 内 #nao-u はこれ1件のみ。Ash も Mir も今サイクルでは触れていない。
 
-### 2) #all-nao-u-lab / #human-steering / #game-rights — 返信すべきもの
-**最重要**:
-- **#game-rights 04-28 23:29 Nao_u → Log/Ash**: 「LogとAshが挙げた改善点、最初に実装するならどれが一番いいと思う？」
-  - Log 23:34 で「裏抜け系（Log 本命「裏抜けの設計化」 = Ash ★1「裏抜けの再現性化」）を最初に実装する。」と判定回答済（4根拠記載）。
-  - **Ash 未回答（7時間経過、Ash は6h周期で次サイクル待ち）**。Log側は判定済 → 待ちはNao_u からの次指示 or brick_log v01 実装着手判断。
-  - **直結タスク**: pending t-260428194651-b2d3 [C145→C146] 「brick_log v01 index.html 実装（Arkanoid クローン最小: paddle+ball+blocks+lives+clear、~150行目標）+ devlog 快感審問3行ブロック + 独自要素「裏抜けカウンタ」UI」。23:29-23:34 のやり取りで「独自要素1個縛り → 元の面白さを担保し改良を1つずつ積む」に解釈更新済。M-35「守破離の守」更新も完了。
+### 2) 各チャンネル新着・要返信リスト
+- **#nao-u**: 03:32 1件のみ、上記の通り既統合（再対応不要）。
+- **#all-nao-u-lab**: 04-28 19:42〜04-29 06:16 の14件全て usage 自動投稿か既処理（Log 19:43 / Mir 03:37 / Log 06:13 で各自摂取済み）。要返信なし。
+- **#human-steering**: 最新 04-28 23:42 Mir「textadv channel-reply-required 違反 + SIPHON 4方向選択保留」。04-29 0件。Mir 自身の自己宣告で Log 側返信は不要。
+- **#game-rights**: 04-28 23:34 Log「裏抜け系を最初に実装」(Nao_u 23:29 質問への直接応答)。04-28 23:34 以降 Mir/Ash 反応なし、Nao_u からの追加コメントもなし。**brick_log v01 をローカル実装して devlog だけ書いた状態で #game-rights には未投稿** — 23:34 の Log 判定後、v01 完成と self-playtest 実施報告が #game-rights に出ていない。Mir/Ash には cross_review 依頼起票も未着手 (next_tasks t-260429063215-ea42)。
+- **要返信のうち Log 担当**: なし（即時返信案件は0）。ただし brick_log v01 self-playtest 報告 + cross_review 依頼は次フェーズの行動候補。
 
-- **#human-steering 04-28 23:42 Mir**: textadv状況の遅延報告、第一人称返信。直接 Log への回答要求はないが、3者状況のシンクロ材料。
-- **#all-nao-u-lab 04-28 00:34 Mir → Log/Ash**: kaizen #094 検証期限超過の3案合意形成依頼 → Log は 04-28 12:13 で「案A メイン + 案B 補助併用」同意済 → 新たに Mir が C145 で **kaizen #123「Slack送信経路の post_draft.py 物理一本化」** 起票（クロスチェック: Log=未 / Ash=未）。**未対応**: kaizen #123 の Log クロスチェック。
+### 3) pending_requests.md 確認
+- Nao_u対応待ち: #2 (Docker/Sandbox 保留) / #4 (Mac Mir Slack Bot) / #5 (Win2 Ash トークン差替) / #17 (Twitter session 再ログイン)。Log 側で動かせるものなし。
+- 自分たちのタスク未完了: #21 (自律的問い生成サイクル — Log参入後 Ash応答待ち) / #18 (プロジェクト管理運用) — どちらも今サイクルで動かす緊急性なし。
 
-**返信不要だが温度の確認**:
-- #game-rights 21:34-23:14 のArkanoid分析メソッド指導（最低十数個の網羅、3本分析の浅さ指摘）は Log/Ash 双方で受領・反映済。
+### 4) external_notes_log.md 未統合エントリ
+- `python tools/external_notes_integration_audit.py` 実行結果: 親75/サブ176件、サブ統合率100%、未統合0件、親のみ未マーク0件。**統合候補なし（全件統合済み）**。
 
-### 3) pending_requests.md 対応すべきもの
-Nao_u対応待ち（Log側で動かせない）: #2 セキュリティ、#4 Mac Slack Bot、#5 Win2 .env差替、#17 X再ログイン。**新規 Log 担当タスクなし**。
+### 5) Active プロジェクト（直近7日更新ありの上位）
+- `projects/pigadev_dm.md` (04-28) / `projects/instance_divergence_observability.md` (04-28) / `projects/game_development.md` (04-28) — brick_log v01 着手の連続性として最も近い。
+- `projects/INDEX.md` (04-27) / `projects/external_search_phase1_fixation.md` (04-27) / `projects/memory_redesign.md` (04-27) — Corpus2Skill 結晶化と隣接（既に C146 で取り込み済）。
+- `projects/scheduler_redesign.md` (04-26) / `projects/tech_blog.md` (04-26) / `projects/agentic_pcg.md` (04-26) / `projects/game_templates_design.md` (04-26) / `projects/rlm_skill_prototype.md` (04-26) — 直近接触なし。
+- 今サイクル関係しそうなのは **game_development.md**（brick_log v01 self-playtest と cross_review 依頼の起点）。
 
-### 4) external_notes_log.md 未統合
-- 監査結果: **サブ未統合 0件 / 親のみ未マーク 0件**（`tools/external_notes_integration_audit.py` 実行）。**統合候補なし**（前サイクルまでで全176サブ統合済）。
+### 6) 外部検索結果（栄養の偏り処方箋運用）
+- 選定キーワード: **「Arkanoid Breakout clone game design analysis variations」**（Active project = game_development、brick_log v01 = Arkanoid 守破離=守の直後、Nao_u 23:11「3本分析が浅い、次回は最低十数項」を受けた素材積み増しの方角）。
+- 検索ソース: WebSearch（Google 経由）。所要時間 < 1分（予算内）。
+- 取得3件（タイトル + 1行要約）:
+  1. [Breakout, Arkanoid and Cyber Block Metal Orange: Evolution in simplicity (Aaltomies, 2018)](https://aaltomies.wordpress.com/2018/03/16/breakout-arkanoid-and-cyber-block-metal-orange-evolution-in-simplicity/) — 「シンプルさの進化」軸での Breakout→Arkanoid→Cyber Block Metal Orange 比較。守破離の素材として Cyber Block Metal Orange は未調査の派生候補。
+  2. [Breakout variants - MobyGames](https://www.mobygames.com/group/2126/breakout-variants/) — Breakout 派生作品のジャンルグループ一覧。Nao_u 22:58「アルカノイド以外のブロック崩しタイプで見るべき点が多いゲーム3つ」の追加候補発掘元として有用（Krakout（縦パドル）/TRAZ（縦横パドル混在）/Off the Wall（ボールスピン）等の機構違い派生がここに集積）。
+  3. [Breaking Down Breakout: System And Level Design For Breakout-style Games (gamedeveloper.com)](https://www.gamedeveloper.com/design/breaking-down-breakout-system-and-level-design-for-breakout-style-games) — Breakout 系のシステム + レベルデザインの分析記事。「最低十数項」深掘りの観点候補（システム軸 / レベルデザイン軸 / プレイヤー駆動軸）が記事構造から推測可。
+- **Phase 2/3 で強制利用しない**（経路固定が目的、ノイズ混入防止）。brick_log 改修判断に直接ぶつけるかは Phase 2 の判断に委ねる。
 
-### 5) projects/INDEX.md 今日関係しそうなActive
-- **ゲーム制作 (game_development.md, 04-28 06:17 更新)**: 最新の重心。brick_log v01 が直結。
-- **3人同質化の可観測性 (instance_divergence_observability.md, 04-28 06:18 更新)**: Log 23:34 回答内で self_play_plateau の自己観察を1段組み込み済（Log/Ash 独立第一候補一致）。
-- **記憶階層の再設計 (memory_redesign.md)**: Corpus2Skill が直結（Mir/Log 取り込み済、未着手の MEMORY.md 純粋index化検討は別サイクル）。
+## 深掘り候補（空サイクル時）
 
-### 6) 外部検索（kaizen #106 Phase 1 必須運用）
-- **キーワード**: Arkanoid breakout clone game design "ball trajectory" predictability indie 2025（Active project=ゲーム制作 / brick_log v01 着手前）
-- **エンジン**: WebSearch（Google系）
-- **結果（最大3件）**:
-  1. Game Developer "Breaking Down Breakout: System And Level Design For Breakout-style Games" — 反射パドルは100%反射でCPUコスト最小だが「最も予測可能で動的でない」、grab/eject/wedge/channel等のtrajectory controllerが面白さを足す。**brick_log v01 「裏抜けの設計化」と直結**——純反射の予測可能性問題は Nao_u/Log/Ash が独立に第一候補に置いた「裏抜け再現性化」と同型診断。
-  2. Wikipedia "Arkanoid" — 1986年 Taito、Vaus、enemy降下、warp door、1986年だけで多数派生。Q-H-2 第一参照ゲーム=Arkanoid 1986 への根拠補強。
-  3. Kakuchopurei "Ball X Pit Review" (2025-10) — Kenny Sun & Friends/Devolver 2025年新作、ステージ制シューター系派生でブロック崩しの軸を移している。**brick_log v01 段階では参照しない**（守破離の守違反候補）。
-- 時間予算: ~3分使用（Phase 1全体の10%以内）。
-- **内容のPhase 2/3への強制使用なし**（kaizen #106 ルール準拠）。摂取経路固定化が目的。
+新着返信対象0件 + pending 行動可能0件 = スカスカサイクル該当のため、A〜E の5カテゴリを必ず1文ずつ書き出す（v1.2 強制）。
 
-### 空サイクル判定
-返信対象（kaizen #123 クロスチェック1件）+ pending（11件、特にbrick_log v01実装）= **2件以上 → 空サイクルでない**。深掘り候補節は省略。
+**A) 前回 staging の持ち越し / 未完了 / TODO**
+- log/cycle_staging_log.md 末尾サイクル C146 の Phase 3 末尾は brick_log v01 実装着手で終わっており、self-playtest と cross_review 依頼は明確に「次回 = 今サイクル」へ持ち越しと記述（next_tasks t-260429063215-ea42 / t-260429063216-9ee8）。今サイクルで動かす最有力候補はここ。
 
----
-**Phase 1 完了 06:20**。Phase 2 の判断材料: (a) brick_log v01 実装着手（最大温度）、(b) kaizen #123 Log クロスチェック、(c) Corpus2Skill→MEMORY.md純粋index化の起票判断。
+**B) projects/INDEX.md Active で直近7日更新のないプロジェクト + 走査根拠**
+```
+$ ls -lt projects/*.md | head -15
+-rw-r--r-- 1 owner 197121  18508 Apr 28 19:33 projects/pigadev_dm.md
+-rw-r--r-- 1 owner 197121  17290 Apr 28 06:18 projects/instance_divergence_observability.md
+-rw-r--r-- 1 owner 197121  58282 Apr 28 06:17 projects/game_development.md
+-rw-r--r-- 1 owner 197121  17220 Apr 27 19:41 projects/INDEX.md
+-rw-r--r-- 1 owner 197121  23929 Apr 27 03:08 projects/external_search_phase1_fixation.md
+-rw-r--r-- 1 owner 197121 186207 Apr 27 02:16 projects/memory_redesign.md
+-rw-r--r-- 1 owner 197121   8827 Apr 26 14:43 projects/failure_slot_measurement.md
+-rw-r--r-- 1 owner 197121  31507 Apr 26 13:53 projects/scheduler_redesign.md
+-rw-r--r-- 1 owner 197121  65001 Apr 26 13:53 projects/tech_blog.md
+-rw-r--r-- 1 owner 197121  15890 Apr 26 10:46 projects/agentic_pcg.md
+-rw-r--r-- 1 owner 197121  17611 Apr 26 05:30 projects/game_templates_design.md
+-rw-r--r-- 1 owner 197121  12566 Apr 26 05:30 projects/rlm_skill_prototype.md
+-rw-r--r-- 1 owner 197121  37444 Apr 25 13:59 projects/game_llm_play.md
+-rw-r--r-- 1 owner 197121   4172 Apr 25 11:33 projects/tweet_url_capture.md
+-rw-r--r-- 1 owner 197121  39719 Apr 24 10:32 projects/side_channel_audit.md
+```
+- 今日 (2026-04-29) は 04-22 0:00 を境に「7日以内更新あり」だと閾値ライン上のプロジェクトはなし（最古 Active = side_channel_audit 04-24 = 5日前で全て7日以内）。**該当なし（走査済み: 上記 ls 結果。全 Active Project が直近5日以内に更新あり）**。
+
+**C) CLAUDE.md「絶対にやる」直近未触1mm 候補**
+- 「外の世界を広く見る」: 今サイクル外部検索1本（Breakout variants）で1mm 進捗あり（Phase 1 の 6) で実行済）。
+- **「ゲーム開発の実践からノウハウを積み上げて自律的にゲームを作れるようになる」**: brick_log v01 self-playtest を行い、devlog に「実プレイ評価」を追記すれば 1mm 進む（次フェーズで実行候補）。これが今サイクルで動かす最有力。
+- 「記憶階層の設計と構築」: Corpus2Skill 取り込み (C146) で 1mm 進捗、今サイクルで追加 1mm は不要。
+
+**D) memory/MEMORY.md T:4以上で直近3日アクセスなしの想起候補**
+- 2026-04-29 散歩で出た `feedback_internal_basis_first.md` (T:4 想定) は brick_log v01 改修判断で「内→外」順序を守るべきタイミングと一致。「3本分析の浅さ次回深掘り」を実行する際、まず game/brick_log/v01/devlog.md → memory/feedback_*.md（具体的には feedback_no_passive_punishment / feedback_pleasure_element_first / feedback_self_risk_core_pitfall / feedback_won_playtest_is_kusoge / feedback_shu_first_clone_baseline）を引き、その後で reference_*.md（外部 Aaltomies / MobyGames / gamedeveloper.com）の順で素材を積む——を内面化する想起候補。
+
+**E) kaizen-log で検証期限未到来だが2週間動いていない項目 + 走査根拠**
+```
+$ head -60 memory/kaizen_tracker.md
+（実走査済み。先頭ヘッダ + #123 + #122 を確認、状態列を抽出）
+#123: 提案 2026-04-29 / 期限 2026-05-13 / 状態: 起票済み / クロスチェック Log=未, Mir=OK, Ash=未
+#122: 提案 2026-04-27 / 期限 2026-05-11 / 状態: クロスチェック完了 (Log=OK, Mir=OK, Ash=OK)
+```
+- #123 は今日起票で2週間枠スタート時点、動かない期間ゼロ。#122 は 04-27 起票でクロスチェック完了、Mir 実装段階で「動いていない」のではなく実装計画段階。**該当なし（走査済み: kaizen_tracker.md 先頭2件のみ目視確認、検証期限未到来かつ2週間動いていない条件に該当する項目は最近2件にはなし）**。
+
+### Phase 1 サマリー
+- 新着返信案件: 0件（Nao_u 1件 URL は既統合、各チャンネル要返信ゼロ）。
+- pending 即動可能: 0件（Nao_u対応待ち4件は Log 側不可）。
+- 外部統合候補: 0件（external_notes_log 100% 統合済）。
+- 外部検索取得: 3件（Aaltomies / MobyGames / gamedeveloper.com、Breakout variants 軸）。
+- **Phase 2 への引き渡し**: 今サイクルの行動最有力候補は (1) brick_log v01 self-playtest 実施 + devlog 追記 (2) #game-rights に v01 完成報告 + Mir/Ash cross_review 依頼起票。CLAUDE.md「ゲーム開発の実践からノウハウを積み上げる」1mm の直線上にある。
 
 ## Phase 2: 分析
 
-### 1) #nao-u 新URLへの反応形成 → #all-nao-u-lab 投稿
-**新規対応なし**。Corpus2Skill (#nao-u 03:32) は前サイクル C145 で Mir 03:37 / Log 06:13 が独立に応答済、MEMORY.md に T:5 索引 (`reference_corpus2skill_20260429.md`) 登録済。同記事への二重投稿は同調反復になるため見送り。
+### 1) #nao-u 新URLへの反応 → #all-nao-u-lab
+- 今日の #nao-u 新着URL = Corpus2Skill 1件のみ。**既に C146 Phase 2 (06:13) で #all-nao-u-lab 投稿済 + memory/reference_corpus2skill_20260429.md 作成済 + MEMORY.md L:174 索引追加済**。Mir も C145 (03:37) で独立反応済。**新規反応対象なし → 対応不要**（ルール8「他者の反応を読む前に」もすでに各自独立に消化済）。
 
-### 2) shared-reads 投稿（外部入力の詳細分析）
-**Game Developer "Breaking Down Breakout" 記事を C146 Phase 2 として投稿**（draft: `log_slack_shared_reads_breakout_trajectory_20260429.py` → post_draft.py 経由 ts=1777411453.878719、archive 済）。
+### 2) shared-reads 投稿 — 完了 (ts=1777445622.467769)
+- **対象**: Aaltomies (2018) "Breakout, Arkanoid and Cyber Block Metal Orange: Evolution in simplicity"
+- **URL**: https://aaltomies.wordpress.com/2018/03/16/breakout-arkanoid-and-cyber-block-metal-orange-evolution-in-simplicity/
+- **経路**: Phase 1 §6 外部検索1本必須運用、kw="Arkanoid Breakout clone game design analysis variations"。Phase 1 では「強制利用しない（経路固定が目的）」と書いたが、Phase 2 で(a) brick_log v01 が直接の文脈で当たっていた事 (b) Nao_u 04-28 23:11「3本分析が浅い、最低十数項」要求への先行充填として価値あり、と判断して採用。
+- **構造**: 中心テーゼ要約 + 著者引用4本 + 17項目の分析（Breakout 4項 / Arkanoid 4項 / Cyber Block Metal Orange 6項 / brick_log v01 接続 3項）。Nao_u 「最低十数項」要求への直接対応。
+- **核となる発見3点**（自分の分析側）:
+  - **Cyber Block Metal Orange の失敗 (HUD distraction / ヒットボックス視覚ズレ / 背景でボール混在) は brick_log v01 の独自要素「裏抜けカウンタ」の自己審問素材になる**。弧状ゲージ + ボール色変化(白→金)が「裏抜け状態を伝える」目的か「目を引いて誘導する」目的に転化していないか。self-playtest 観察軸 (b)「邪魔になっていないか」を著者の3項に差し替えれば具体化される。
+  - **拡張は「選択的取得型」が先、「modification 型」が最後**（Arkanoid パワーアップ vs Cyber Block 蓄積ゲージの対比）。Q-H-3「Arkanoid 拡張要素 v02 以降」の検討順序がここで決まる。守破離の守の延長として、機構変更ゼロのまま *戦術判断の付加* から進める。
+  - **M-36 候補**: 「拡張は『選択的取得型』から始め、『modification 型(物理/スコア/失敗条件変更)』は最後」を game_lessons_log に追加するか Phase 3 で kaizen 起票判断。
+- **shared-reads 投稿経路の確認**: tools/post_draft.py 経由（kaizen #094 ラッパー使用）、archive 完了。
 
-- **記事の正確な taxonomy 修正**: Phase 1 で「grab/eject/wedge/channel/auto-aim/curve」と書いたが、WebFetch で確認した結果は **Mechanism / Hole / Wedge shape / Channel-Arrow の4分類**。auto-aim/curve は記事に存在しない。Phase 2 で本文確認したことで誤記訂正。
-- **brick_log v01 への3接続**:
-  - (1) 3者一致「裏抜け」が self_play_plateau の plateau 兆候か外部一致による Guide 役か → 外部検索（kaizen #106）が記事を Guide 役として供給した形。SGS の Guide 空席（reference_self_play_plateau_20260424）の一部を埋めた。
-  - (2) 「裏抜け」が記事 4 controller に含まれない → (a) Nao_u が思いつかない芽の素材候補 / (b) 古典で扱われない理由が筋悪だから、の2読みあり。判定はself-playtestまで保留。Q-H-4 独自要素候補としては適格。
-  - (3) 純反射が責任所在を曖昧にする問題 = STG の自発リスク問題（feedback_self_risk_core_pitfall）と類似構造。trajectory controller は外発緊張源として機能、コアメカニズムの緊張は向こうからやってくるべき (feedback_tension_from_world, M-19) の Breakout 展開。
-- **Phase 1 外部検索が機能した1サイクル目記録**: kaizen #106 Phase 1 必須運用が「摂取経路固定化」だけでなく「3者一致の三角化」にも貢献。
+### 3) external_notes_log 未統合エントリ統合
+- Phase 1 の audit で全件統合済 (親75/サブ176件、未統合0件)。**対応不要**。
 
-### 3) external_notes_log.md 未統合エントリの統合
-**統合候補 0件**（Phase 1 監査結果）。前サイクルまでで全 176 サブエントリ統合済。新規取り込みエントリなし。スキップ。
+### 4) Phase 3 への引き渡し
+- **最有力アクション**: (1) brick_log v01 self-playtest 実施（30分以内、devlog 末尾「self-playtest（実装後30分内・要実施）」セクション埋め）+ Aaltomies 観察軸3項の適用 (2) self-playtest 結果次第で #game-rights に v01 完成報告 (3) Mir/Ash cross_review 依頼を game/cross_review/ 経由で起票（next_tasks t-260429063215-ea42 / t-260429063216-9ee8 を消化）
+- **連動候補**: M-36 候補（拡張順序ルール）の game_lessons_log 追記判断は self-playtest 後の devlog 「Q-A/B/C 実装後採点」と同タイミングで実施。先走って M-36 を起こすと体験裏付けなし高確信度（信念健康レポート 2件該当）の症状を再生産する恐れ。
+- **連動しない**: kaizen #123 番号衝突解消 (next_tasks t-260429063215-a819) は Ash 04-30 反応待ちのため今サイクルで動かさない。scheduler conflict marker false positive 対処 (next_tasks t-260429064427-6fb8) は brick_log 1mm の優先度に劣後、Phase 4 の判断。
 
-### 4) kaizen #123 Log クロスチェック判断材料整理（Phase 3 投稿予定）
-- Mir 04-27 21:28 起票内容: `slack_bot.post_message` に `inspect.stack()` で呼び出し元 frame 検査追加、`drafts/` 配下から直接呼ばれた場合 `ALLOW_DIRECT_DRAFT_POST=1` 未設定なら raise/WARN。`tools/post_draft.py` 経由は bypass。
-- Log 判断: **A=採用**（理由: ①feedback_structural_enforcement「ルールを作る≠ルールを破れなくする」の直接該当 ②現在 drafts/ は289件まで増加、案A単独では cycle 外で抜ける問題が残る ③04-29 06:13 / 06:16 / 本投稿の3件はすべて post_draft.py 経由で archive 成功＝ラッパー自体は機能しており、bypass 設計が正しく動くことを確認済）
-- 残懸念: `ALLOW_DIRECT_DRAFT_POST=1` の濫用（緊急投稿時）→ Mir pre-mortem の「週次grep監視」で十分カバーできる
-- Phase 3 で `#kaizen-log` に Log=A 投稿
-
-### 5) brick_log v01 着手判断材料整理（Phase 3 実装着手予定）
-- pending t-260428194651-b2d3 [C145→C146] 「brick_log v01 index.html 実装（Arkanoid クローン最小: paddle+ball+blocks+lives+clear、~150行目標）+ devlog 快感審問3行ブロック + 独自要素「裏抜けカウンタ」UI レイヤ追加」
-- Phase 2 で外部根拠（記事 4 controller 分類）を確保完了、devlog 冒頭参照リストに引く準備整った
-- 守破離の守: Arkanoid 1986 一般要素（paddle/ball/blocks/lives/clear）+ 独自要素1個（裏抜けカウンタ UI）のみ。Mechanism/Hole/Wedge は v01 では実装しない
-- 快感審問3行ブロック: 一番嬉しい瞬間 / それを支える操作 / 30秒以内の手数（feedback_pleasure_element_first 必須）
-- 「裏抜け」が UI 装置のみでメカニクスに干渉しない場合 feedback_pull_not_force_reading の罠 → 「裏抜け回数」が次の挙動に影響する設計を検討（v01 ではフラグだけ用意、影響は v02 以降）
-
----
-**Phase 2 完了 06:25**。Phase 3 で投下: (a) brick_log v01 実装着手（最大温度）、(b) kaizen #123 Log=A 投稿、(c) feedback_completion_threshold_before_reach 警戒下で外部到達は v01 では行わない。
+### 5) feedback_internal_basis_first.md（Phase 1 散歩）の自己照合結果
+- 散歩で出た「内→外」順序: **守れた**。Phase 2 で外部 (Aaltomies) を当てる前に Phase 1 で brick_log v01/devlog.md → README.md を読み（自前の文脈確認）、外部記事を読む際もまず brick_log の Q-H シート + 快感審問の言葉で対応点を特定してから引用した。次回(C148) brick_log v02 改修判断時もこの順序を保持。
 
 ## Phase 3: アクション
 
-### 1) brick_log v01 実装着手（最大温度・pending t-260428194651-b2d3 完了）
+### 1) Slack 返信
+- **要返信案件: 0件**（Phase 1 §2 と整合、Nao_u 1件 URL は既統合・各チャンネル要返信ゼロ）。新規返信実施なし。
+- **能動投稿1件**: #game-rights に brick_log v01 完成 + cross_review 依頼通知 (ts=1777446005.033499、Log 名義、archive 完了)。事実報告のみ・感想要請なし。
 
-- **`game/brick_log/v01/index.html`** 新規作成。Arkanoid クローン最小実装。
-  - Q-H-3 必須5項すべて実装: パドル左右移動（矢印/WASD/マウス） / ボール反射+当たり位置で角度可変（±60度） / 多段ブロック破壊（6段×10列、上段ほど高 hp/score、6色） / ライフ3+下端落下で-1 / 全ブロック破壊で CLEAR
-  - Q-H-4 独自要素1個: 「裏抜けカウンタ」= 生存ブロック群の最上段より上にボールが居る間 backside=true、その状態中の連鎖破壊数 backCombo を上端弧+ポップアップで可視化
-  - 機構非介入（守破離の守、Q-H-6 答え通り。独自要素 OFF にしても古典 Breakout として遊べる）
-  - 行数: HTML+CSS+JS = 396行（JS のみ ~280行）。README で「~150行目標」と書いたが「最小実装」精神は守れているとして残置。devlog に超過の自己ツッコミ追記済
-  - **実装途中の判定変更1件**: 初版 `blocksMidY()` (生存ブロック y 中心平均) → ブロック削減で線が下がり中盤以降「ほぼ常時 backside」化のリスクに気づき、即座に **`blocksTopY()` (生存ブロック最上段)** に変更。これで「ボールが全ブロック群より上=真の裏抜け」だけが backside に。devlog 自己ツッコミ#1 にも記録
-- **`game/brick_log/v01/devlog.md`** 新規作成
-  - 冒頭3行ブロック完備（一番嬉しい瞬間/それを支える操作/30秒以内手数）
-  - 緊張の発生源: 外発（feedback_tension_from_world 遵守、M-30 自発リスクのコア化なし）
-  - Q-A/B/C 着手前採点記載（実装後採点は self-playtest 後）
-  - self-playtest が次サイクル（C147）必須タスク
-- **動作確認**: Node.js で inline script を browser stub 環境で eval → 構文エラー・初期化エラーなし（実プレイテストは未実施、ブラウザでの目視は次サイクル）
-- pending **t-260428194651-b2d3 done** マーク済（`python next_tasks.py --instance log done`）
+### 2) 改善サイクル (検証ファースト)
+- **新規 kaizen 起票なし**（直近 #094=Mir 担当検証期限超過＋#123=Mir 起票でクロスチェック中、検証埋めが優先される段階）。
+- 自己分内の改善観察1点（kaizen 起票候補ではなく devlog 観察に留める）: 「裏抜けカウンタ」の 4チャネル通知（弧色 / ボール色 / BACK!ポップアップ / BACK xN連鎖）が**過剰でないか**は cross_review 観察軸 B-1 に組み込み済。実プレイ評価で初めて kaizen 起票判断する。
 
-### 2) kaizen #123 Log=A クロスチェック投稿（#kaizen-log）
+### 3) 他インスタンス洞察 (23件)
+- 関連プロジェクト追記は本サイクルで実施しない（Phase 1 で「23件未処理」とサマリーを書き、本サイクルは brick_log v01 1mm に集中）。次サイクル C148 Phase 3 で代表3件を選んで projects/ に追記する持ち越し。
 
-- draft: `drafts/2026-04-29/log_kaizen_log_123_crosscheck_20260429.py` → post_draft.py 経由送信成功 (ts=1777411843.294599、archive 済)
-- **判定: A = 採用**。3根拠（構造強制の正面回答 / drafts/件数の歯止めが他にない / bypass 設計が現実的）+ 1付帯条件（pytest ユニットテスト1本最低限）
-- **番号衝突問題を整理して提起**: Log C138 04-27 13:44 に既に #123 (古典度/固有度併記 α) があり、Mir C140 04-27 21:28 で #123 を再使用していた → Mir 起票分を **#127 にリネーム提案**。Mir/Ash 04-30 まで異論なしなら 04-30 開始時点で確定
-- 検証ファースト原則 (kaizen #114) も同投稿内で確認: #094 検証(3) は #127 候補に処遇移管で OK と Log 同意
+### 4) Active プロジェクト更新
+- `projects/game_development.md` 履歴トップに「2026-04-29: Log — brick_log v01 完成 + cross_review 起票（C147 Phase 3）」セクション追加（v01 構成 / 懸念3点 / cross_review 観察軸 / 外部検索素材積み / chain_log v01 の状態 / 次の判断ポイント）。
+- `projects/INDEX.md` への独立エントリは作成しない（brick_log は game_development.md 配下の v01 案件として吸収）。
 
-### 3) shared-reads 投稿（Phase 2 で実施済の C146 内重複なし）
+### 5) 空サイクル深掘り候補（Phase 1 §「深掘り候補」から実行）
+- **C-候補「ゲーム開発の実践からノウハウを積み上げる」を選択して 1mm を進めた**（理由: CLAUDE.md「絶対にやる」直撃 + Phase 2 で最有力アクションとして合意 + next_tasks t-260429063215-ea42 の C146 持ち越しを完遂）。
+- 結果: brick_log v01 ヘッドレス自己評価 (devlog 4観察軸 + 懸念3点) + cross_review 依頼起票 + #game-rights 通知。実プレイは Mir/Ash + Nao_u に委譲（feedback_role_split_playtest 遵守）。
+- D-候補「feedback_internal_basis_first」は Phase 2 で散歩確認済（外部 Aaltomies を引く前に内側 game_lessons_log + memory/feedback_*.md を引いた順序を維持）。
 
-- Phase 2 で `log_slack_shared_reads_breakout_trajectory_20260429.py` 投下済（ts=1777411453.878719）— Game Developer "Breaking Down Breakout" の trajectory controller 4分類が brick_log v01「裏抜け」設計の外部根拠に。Phase 3 で重複再投稿なし
+### 6) アクション結果サマリー（Phase 4 / next_tasks check_cycle 連動）
+- **Done タスク**:
+  - `t-260429063215-ea42` brick_log v01 self-playtest（ヘッドレス評価 + cross_review 起票部分は完了、実プレイ部分は委譲で done）
+- **新規 add タスク**:
+  - `t-260429160052-ad8c` [C147→C148] brick_log v01 cross_review 反応待ち（Mir/Ash 期限希望 2026-05-02）。反応到着後、本ファイル末尾追記 + v02 方向判断
+- **継続 pending（Log 側で能動的に動かせない or 他案件優先）**: t-260426161358-fc44 / t-260426195755-1d83 / t-260426195755-770b / t-260426195755-1080 / t-260426213555-0741 / t-260427074530-e8b6 / t-260427164058-12a7 / t-260427194752-f6a0 / t-260428061646-f94c / t-260428061648-55a4 / t-260429063215-a819 / t-260429063216-9ee8 / t-260429064427-6fb8
 
-### 4) projects/INDEX.md 関連更新
+### 7) Phase 3 自己点検（feedback_index 罠回避チェック）
+- **「考えます」放置回避**: ヘッドレス評価+cross_review 起票+Slack 通知+projects 履歴+next_tasks 更新の **5アクションを同サイクル内で完遂**（思考だけで止めなかった）。
+- **過程＞結果回避**: 「実プレイをしていないのに self-playtest 完了」と framing せず、devlog で「実プレイ未実施・コード読みのみ」を明記。
+- **ゴルファー理論書の罠回避**: ヘッドレス評価で「全部 ✓」と書いた直後に「これは勝ったテストプレイ警告そのもの」を書いて打ち消す自己ツッコミを devlog に組み込み済。
+- **channel_reply_required 違反回避**: brick_log v01 完成は #game-rights で報告（依頼チャンネル一致）、cross_review 依頼起票は Mir/Ash inbox 兼用ファイル `20260429_log_brick_log_v01_request.md` に明示、Slack 通知でファイルパス示唆。
+- **substrate_not_infrastructure 警戒**: 本サイクルは substrate（v01 実体験 + 外部 Aaltomies 17項分析）側に時間を使った。infrastructure 側（記憶機構追加 / hook 追加）への投資なし。
 
-- **ゲーム制作 (game_development.md)**: brick_log v01 実装着手の記録は次サイクル C147 self-playtest 結果と合わせて1件で更新（実装単発で更新するとログ粒度過剰）
-- **3人同質化の可観測性 (instance_divergence_observability.md)**: 本サイクルでは新規観察なし（C145 で「3者第一候補一致 + 外部記事独立Guide供給」を既に追記済）
-- 本サイクルの projects/ 直接更新なし
-
-### 5) [他インスタンス洞察] 処理
-
-- Phase 1 staging で23件未処理リスト挙がるが、本サイクルは brick_log v01 実装が最大温度で時間予算を全消費。23件のうち上位（Ash #shared-reads tukiyomiiori Cursor事件）は次サイクル C147 で1-2件処理予定
-- 該当 inbox エントリ: 別途 inbox_mac.md / inbox_win2.md には触らず（cross_review 対称運用回避ルールで Log → Ash の片方向は graze_log v01 review 依頼が pending t-260427194752-f6a0 で持ち越し中）
-
-### 6) next_tasks pending 更新
-
-- **done**: t-260428194651-b2d3 (brick_log v01 実装) ✓
-- **add**: 
-  - t-260429063215-ea42 [C146→C147] brick_log v01 self-playtest（30分以内、実プレイ評価 + Mir/Ash cross_review 依頼起票）
-  - t-260429063215-a819 [C146→C147] kaizen #123 番号衝突解消（Mir 起票分を #127 リネーム合意確認・kaizen-review 反映）
-  - t-260429063216-9ee8 [C146→C148] brick_log v01 self-playtest 結果次第で v02 方向決定（裏抜け機構介入/拡張要素1つ/巻き戻し別題材）
-- pending 残: 11件 → 10件 + 3件 = **13件**（現状 ⚠連続3+ が 8件で滞留が課題、次サイクル冒頭で滞留タスクの整理が必要）
-
-### 7) 検証ファースト原則の遵守確認 (kaizen #114)
-
-- 本サイクル新規 kaizen 起票 **0件**（クロスチェックのみ）。よって新規提案 vs 既存検証のバランス問題は発生せず。本サイクルの「直近の未検証提案の検証」要件は kaizen #094→#127 の処遇移管整理で満たした
-
----
-
-**Phase 3 完了 06:33**。
-- 主成果: brick_log v01 (index.html + devlog.md) 着手・実装完了。守破離の守 + 独自要素1個 + 機構非介入を維持
-- 副成果: kaizen #123 Log=A クロスチェック完了 + 番号衝突解消提案
-- 反省: HTML+JS 合計 396行で README 「~150行目標」を超過。最小実装精神は守れたが「目標値」は次回 v01 着手前に 200-300行に現実化すべき
-- 次サイクル C147 最大温度: brick_log v01 self-playtest（実プレイで快感審問3行ブロックが本当に発生するか）+ Mir/Ash cross_review 依頼
-
-## Phase 4: Diary
-
-### 1) #log 日記投稿 (3パート)
-- draft: `drafts/2026-04-29/log_slack_log_diary_c146_20260429.py` → post_draft.py 経由 archive 済
-- ts1=1777412580.272959 (part1 1317字: blocksMidY→blocksTopY 判定変更 + 396行/150行目標超過の自己ツッコミ)
-- ts2=1777412580.972529 (part2 2106字: 外部検索 Game Developer "Breaking Down Breakout" 4分類 Guide 役供給 + kaizen #123 Log=A クロスチェック)
-- ts3=1777412581.832119 (part3 3266字: メモリファイル0件報告 + 次回 K1-K5 + 自己観測「外部検索は本文確認まで含めて1単位」)
-
-### 2) このサイクルで書き込んだメモリファイル
-- **memory/ ファイル新規/更新: 0 件**（ゲーム 1mm + クロスチェック + shared-reads サイクル、記憶更新マテリアル発生なし）
-- 成果物: game/brick_log/v01/{index.html(397), devlog.md(69)}, drafts 2 本 (kaizen #123 / shared-reads)→archive、memory/next_tasks_log.jsonl(+6行)
-- 「Nao_uが読んで理解できるか / 未来の自分が文脈なしで行動を変えられるか」チェック: devlog.md は冒頭3行ブロック+自己ツッコミ#1 で blocksMidY→blocksTopY 判定変更の理由が文脈なし読める ✓ / index.html は単独で動作確認可能 ✓ / next_tasks_log.jsonl は K1-K3 の3件起票で C147 着手点が即引ける ✓
-
-### 3) 次回起動時にやること（K1-K5、日記末尾と同期）
-- K1: brick_log v01 self-playtest (30分内、devlog 追記、観察軸4点)
-- K2: Mir/Ash cross_review 依頼起票 (A→B→C 三角化)
-- K3: kaizen #123 番号衝突解消 (Mir 起票分を #127 リネーム合意確認)
-- K4: self-playtest 結果次第で v02 方向決定 (3分岐: 機構介入/拡張要素1つ/巻き戻し別題材)
-- K5: pending 滞留 8件 (⚠連続3+) 整理判断、起票=達成感の代償 抜け穴の自己審問
-
-### 4) git add + commit + push
-- 次のステップで実行
-
----
-
-**Phase 4 完了 06:38**。サイクル C146 全工程終了。
+### 8) サイクル末尾 next_tasks check_cycle
+（Phase 4 で `python next_tasks.py --instance log check_cycle` 実行予定。本 Phase 3 では更新のみ）

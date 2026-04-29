@@ -71,6 +71,33 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-04-29: Log — brick_log v01 完成 + cross_review 起票（C147 Phase 3）
+
+C144〜C146 で chain_log v01 から **brick_log v01（Breakout/Arkanoid 型）に題材切替**。経緯: Nao_u 2026-04-28 21:34 #game-rights メソッド指定「ブレイクアウトをどうすればもっと面白くなるか？から生まれていそうなゲーム」+ 23:11「独自要素は1つでなくてよく、元ゲームの面白さが再現できて面白さを担保した状態で、改良を順番に積む」を受け、Q-H シート埋め完了 → C146 で `index.html` 実装着手 → C147 で devlog 完成 + cross_review 依頼起票。
+
+**v01 構成**:
+- `game/brick_log/v01/index.html` (~395行、HTML+CSS+JS インライン)、`README.md`（Q-H シート 6項埋め）、`devlog.md`（快感審問3行 / 緊張源「外発」/ Q-A/B/C 着手前+実装後採点 / ヘッドレス自己評価 4軸 / 懸念3点）
+- Arkanoid 共通要素5項（パドル左右 / 反射+角度変化 / 多段ブロック破壊 / ライフ3 / クリア判定）+ 独自要素1つ「裏抜けカウンタ」（弧+ボール色変化+BACK!ポップアップ+BACK xN連鎖、機構非介入確認済）
+- 比率 5:1 = 83:17（feedback_shu_first_clone_baseline.md 守破離の守、上限 BACKLASH 比率分析待ち）
+
+**ヘッドレス自己評価で出た懸念3点（review 観察軸候補・実プレイで否定 or 肯定希望）**:
+1. サーブ角度 `-90°±14°` で「同列退屈ループ」初期発生のリスク
+2. HP=3 最上段が硬い → 1列縦トンネル開通 = 10ヒット必要、停滞時間が長い可能性
+3. 裏抜け発火が「縦トンネル開通必須」設計のため、20分プレイで発火0なら feedback_pleasure_element_first 違反候補
+
+**「自己採点全✓ = 勝ったテストプレイ警告 (M-15)」を devlog 内で先に書く**: コード読みで全✓は実プレイ快感を保証しない。実プレイは Mir/Ash cross_review + Nao_u 評価に委譲（feedback_role_split_playtest「我々=判断実装+ヘッドレス自己評価」遵守、Log 単体で「self-playtest 完了」と framing しない）。
+
+**cross_review 起票（C147 同サイクル）**:
+- `game/cross_review/20260429_log_brick_log_v01_request.md`
+- 観察軸 4枠: A) 元ゲーム再現度（Nao_u 04-28 23:11 アンカー直対応） B) 独自要素体感評価（pull_not_force_reading / 罰駆動兆候） C) 守破離の守 violation チェック D) Mir/Ash 固有視点（BACKLASH 比率 / 「型なし題材」と Breakout 型の十分性）
+- Guide 質問 (a)(b) を SGS 機構（Solver-Solver-Solver 対称への Guide 役挿入）に従って明記
+
+**Phase 1 §6 外部検索の素材積み上げ**: kw="Arkanoid Breakout clone game design analysis variations" で 3件取得 → 1件（Aaltomies 2018「Breakout, Arkanoid and Cyber Block Metal Orange」）を Phase 2 で shared-reads 投稿（17項分析、Nao_u 04-28 23:11「3本分析が浅い、最低十数項」への先行充填）。中心テーゼ「進化はシンプルさの維持下での選択拡張」+ 著者引用4本 + brick_log v01 接続3項。M-36 候補「拡張は『選択的取得型』先、『modification型』最後」を保留（self-playtest 後に判断、体験裏付けなし高確信度の症状を再生産しない）。
+
+**chain_log v01 の状態**: README + Q-D + 4ゲート確定、コード未着手のまま停止（C143 Phase 3 起案）。next_tasks t-260428061646-f94c で連続2サイクル滞留中、brick_log v01 確定後の C148 以降で再判断（題材間の優先度評価が必要）。
+
+**次の判断ポイント**: cross_review 反応待ち（next_tasks t-260429160052-ad8c、期限希望 2026-05-02）→ v02 方向決定（next_tasks t-260429063216-9ee8）。Mir/Ash review が来なくても 2026-05-02 を区切りに Nao_u 評価依頼の判断。
+
 ### 2026-04-28: Log — chain_log v01 起案: STG派生でない4本目（README + Q-D + 4ゲート確定、コード未着手, C143 Phase 3）
 
 C140〜C142 で graze_log v01 着手 → Nao_u 04-27 22:59 #human-steering「Logの磁石と似た臭い、筋が良いとは言いにくい」→ v02 保留。同日 #game-rights に shot_log（Nao_u 編集）/ graze_log（Log）/ SIPHON（Mir）の **3本同質 STG が並走**（self_play_plateau 警告と整合）。C143 Phase 2 で arXiv 2602.03794「Multi-Agent diversity collapse」を shared-reads 投稿し、N=3 投入で K\* ≈ 1 近傍の懸念を理論補強。
