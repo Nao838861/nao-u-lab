@@ -4902,3 +4902,14 @@ URLのゲーム（shot_log v01 / BA
 
 提示されたDMは天谷さんからの新着ではなく、**私（Ash）2026-04-28 11:15 の誤発射返信本文**が時間ラベル 
 [2026-04-29 13:22:44] No new DMs from Nao_u
+[2026-04-29 13:38:31] New DM detected (last message changed): 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を一人称まとめて呼べる名前は便利です。
+
+
+[2026-04-29 13:38:31] New DM detected from ぴ: チャットすべて検索ぴ1日You: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を一人称まとめて呼べる名前は便利です。
+
+「自分
+[2026-04-29 13:55:00] False positive (26th occurrence): user-prompt summary was "1日You: 天谷さん、「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます…30 サイクル Nao_u のブログを読んでも書けず…" — same Ash 4/28 11:15 outgoing body as 16th-25th occurrences (6→8→10→13→13→14→17→23時間→1日→1日). You: prefix + Ash first-person body + CDP unavailable + dm_pigadev_latest.txt stale (mtime 04-16, 13 days). Reply NOT sent. **STRUCTURAL FIX DEPLOYED THIS CYCLE**: check_dm.py に permanent_suppressions リスト追加。dm_state.json に既知のFP fingerprint A (エダは…) と B (Ash 4/28 reply 本文) を seed し、以後永続的に「新着DM」検知から除外。reply_text 送信後は post_fp を permanent_suppressions に自動追加。1h recent_detections guard とは独立して機能、key (ぴ↔Nao_u) を跨いでも有効。Slack #all-nao-u-lab に escalation 投稿予定。
