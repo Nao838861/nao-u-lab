@@ -1,4 +1,5 @@
 # Twitter For You (おすすめ) タブ
+<<<<<<< HEAD
 # Read at: 2026-04-30 06:10
 # Total: 50 tweets
 
@@ -307,11 +308,216 @@ URL: https://x.com/WW_JP_Official/status/2049443587872743852
 
 --- 48. @jpn_tcg_center (?) ---
 毎日イベント開催中＋1日333万coin大還元
+=======
+# Read at: 2026-04-30 06:23
+# Total: 50 tweets
 
-・4/30〜ログインボーナスオリパ
-・チャージで引ける超お得チャージオリパ
-・協賛品入り限定特別オリパ
+--- 1. @KuwaharaTabito (2026-04-29) ---
+URL: https://x.com/KuwaharaTabito/status/2049438093389033800
+アカハラ・セクハラといった次元を超えて、明確に診断のつくレベルで精神を病んだ教員すら辞めさせられないのが大学です。「私は秘密結社に追われている、お前もその組織の人間だろう」と真剣に院生を責め立てる教員が実在する世界。
 
+--- 2. @gcnovels (?) ---
+ブラックな職場から逃げてのんびり異世界を観光したくないですか？
+
+美味しい食事に、綺麗な景色。
+喋る人形と、可愛い後輩と一緒に異世界で……
+
+--- 3. @AINetworkTech (2026-04-29) ---
+URL: https://x.com/AINetworkTech/status/2049562133520916950
+少なくても人間の操作の「気持ちよさ」「操作しやすさ」見たいのを分かった上での自動実装は本当に最後の最後まで残る気はしてますね。そこは実際には、ゲームなどでも昔から最高難易度の調整部分です。人間とAIは「違う知能種」ですので、翻訳者、代理人、交渉者は必ず残ります。でそこが終わるとつい
+
+--- 4. @umiyuki_ai (2026-04-29) ---
+URL: https://x.com/umiyuki_ai/status/2049593975967990076
+こちらによるとTPUv7（今までのバージョン）のチップ当たりのコストは1.5万ドルらしい。これはNVidiaのチップの1/3の値段！性能的にもTPUがGPUに追い付いてきてるけどTPUv7はFP4ネイティブ対応してないのが弱点だった。しかし新しいv8ではしっかりFP4ネイティブサポート追加。ChatGPTに比較してもらっ
+
+--- 5. @JamesOKeefeIII (2026-04-28) ---
+URL: https://x.com/JamesOKeefeIII/status/2048951532146594052
+If the girl you met for a date is a 10 and you’re a 5…
+
+She most likely works for me.
+
+--- 6. @jeosg7393 (2026-04-29) ---
+URL: https://x.com/jeosg7393/status/2049378931116327049
+日本って、アメリカの経済が死んでも一緒に死ぬし、中国の経済が死んでも一緒に死ぬし、中東のオイルが死んでも死ぬんで、ていうか三国志風に言うと世界中が「連環の計」なんでよっしゃーしてる場合じゃないと思う。
+
+--- 7. @BlackSheep8270 (2026-04-29) ---
+URL: https://x.com/BlackSheep8270/status/2049370866992230750
+いやあ
+選び放題だとか
+医者が欲しけりゃ待遇良くしろとか言ってた野良医者が今度は何言い出すのか胸熱。
+
+お決まりの「医療崩壊までには稼ぎきってFIRE」とやらはできてないみたいだし。
+
+底値で地方夜間救急を最後まで守ってくれるのは
+ひょっとして彼らなんじゃないかな？
+
+ありがたいことだよ。
+
+--- 8. @fura (2026-04-29) ---
+URL: https://x.com/fura/status/2049339106384380284
+ラーメン味のアイスクリーム
+
+--- 9. @YahooNewsTopics (2026-04-29) ---
+URL: https://x.com/YahooNewsTopics/status/2049283774064783392
+【都心マンション 売れない在庫急増】
+
+--- 10. @ryochang2 (2026-04-28) ---
+URL: https://x.com/ryochang2/status/2048988497017733187
+う、嘘だろ…アメリカニキたちはみんな常日頃これくらいの極厚バーガーを5～6個と山盛りのフレンチフライを貪りながらバケツみたいな容器に入ったコーラをガブガブ飲み干すのがスタンダードなんじゃなかったのか……
+そんな…俺たちの信じていたアメリカは……
+
+--- 11. @CanvaJapan (?) ---
+ほんの少しのズレでも、気になる方に。
+マジック切り抜きで簡単に整います。
+
+--- 12. @makotoji16 (2026-04-29) ---
+URL: https://x.com/makotoji16/status/2049413126295310394
+学年１位
+
+--- 13. @hattun_geh01713 (2026-04-28) ---
+URL: https://x.com/hattun_geh01713/status/2049108871923523697
+Q2で量子化されたモデルでも効率的に推論できるのか？！
+Q4位の量子化でないと精度的に厳しいと思い込んでいた。反省。
+次からちゃんと効果・精度の実験をして確認するようにしよう！
+
+--- 14. @tufdave (2026-04-28) ---
+URL: https://x.com/tufdave/status/2049131637451931651
+My sister got her 4th divorce today and my dad crashing out in the family group chat
+
+--- 15. @konan999 (2026-04-28) ---
+URL: https://x.com/konan999/status/2048972951085776954
+子供の頃、これやってたなぁ(´・ω・｀)
+
+--- 16. @nyirire (2026-04-28) ---
+URL: https://x.com/nyirire/status/2049157087981097159
+It looked like a joke… until reality hit 
+
+--- 17. @nuki2 (2026-04-28) ---
+URL: https://x.com/nuki2/status/2048922720168276071
+あー俺の知ってる梅原大吾だ！
+みんな明日は27年前に俺が受けた衝撃を受ける事になるよ
+
+--- 18. @tsukiyopoke (2026-04-29) ---
+URL: https://x.com/tsukiyopoke/status/2049476586773360952
+skebリクエストありがとうございました
+
+--- 19. @Luckyballa (2026-04-29) ---
+URL: https://x.com/Luckyballa/status/2049367254526296521
+I see that a lot of papers and startups still use TSDF fusion to reconstruct surfaces from depth maps
+
+Still relying on voxel grids, memory constrained and low quality 
+
+I think I should solve it next weekend
+
+--- 20. @PRAGMATA_JP (?) ---
+カプコンが贈る完全新作『プラグマタ』好評発売中！
+
+独自の爽快感と戦略性が生みだす新感覚SFアクションアドベンチャー
+地球人のヒューとアンドロイドの少女ディアナが、月面の謎に迫る冒険へ――。
+二人の主人公と月面を探索しよう！
+体験版配信中。
+
+--- 21. @hosinohosimaru (2026-04-29) ---
+URL: https://x.com/hosinohosimaru/status/2049485342194221472
+旧海軍関係者、戦後に
+「実は暗号解読でした」
+「実はVT信管でした」
+「実はホーネット以降は正規空母沈んでいません」
+とか米側から聞かされてどんな気持ちだったのだろう・・・。
+
+--- 22. @nBwQSzmg3qU2ysd (2026-04-28) ---
+URL: https://x.com/nBwQSzmg3qU2ysd/status/2049013302295146723
+中抜き認めてて草。
+
+--- 23. @Yuto_Headline (2026-04-29) ---
+URL: https://x.com/Yuto_Headline/status/2049466661615603869
+*イランが過去最大の攻撃示唆、米が艦船拿捕継続で＝国営TV
+
+*IRAN WARNS OF UNPRECEDENTED ATTACK AS US KEEPS SEIZING SHIPS - STATE TV
+
+--- 24. @tegnike (2026-04-29) ---
+URL: https://x.com/tegnike/status/2049493950935818506
+MotionPNGTuber を Remotion で作成した動画に表示するためのスキルを公開しました
+
+
+https://
+github.com/tegnike/remoti
+on-motionpngtuber
+…
+
+VOICEVOXとAivisSpeechとの連携も含まれているので、勝手にセリフ作成とアバターの表示をしてくれます
+
+--- 25. @rongtangjushi (2026-04-29) ---
+URL: https://x.com/rongtangjushi/status/2049283125486956786
+僕も「死の果実」として日本でも有名になった檳榔子を食べたことあるけど、生の実は噛むと、くわぁ!って感じで体が熱くなる。
+干した実は、だいたい薄荷や肉桂で味つけしてあり、噛んでるうちに口のなかが痺れてくる。
+湖南省に遊びにゆくと、煙草やお茶を勧める感覚で出してくれる。
+
+--- 26. @lychee1223_Lab (2026-04-29) ---
+URL: https://x.com/lychee1223_Lab/status/2049540536634380474
+さらなる若者の前にまずは僕が続けるかですが
+
+--- 27. @koropinkoropin (2026-04-29) ---
+URL: https://x.com/koropinkoropin/status/2049350388823068814
+関西国際空港(KIX)
+大阪・関西万博の中国館から「朋有り遠方より来る、亦た楽しからずや」が移設されたので見た。空港はこの上なく適した場所だと思う。
+
+--- 28. @Sogennin_sinsu7 (2026-04-29) ---
+URL: https://x.com/Sogennin_sinsu7/status/2049409239651959187
+菊池不完全性定理では自然数全体の集合は三つあるとされていて, 一つは我々が感覚的に理解してる自然数の集まり𝒩, Dedekind-Peanoの公理によって一意に特徴付けられる集合ℕ(存在はいえない), ZF上で定義されるℕに期待される性質を持つω. この本では極端な数学的実在論を採るのでなければ, ℕは𝒩とω
+
+--- 29. @thekitze (2026-04-29) ---
+URL: https://x.com/thekitze/status/2049398573784322105
+art
+
+--- 30. @tomofucks (?) ---
+メンバー全員AIを使っているはずなのに、売上は上がらず、人件費も経費も減らない。心当たりのある経営者へ。原因は「導入のやり方」にある。失敗する会社は、だいたい同じ4パターン。
+
+--- 31. @kad4ani (2026-04-28) ---
+URL: https://x.com/kad4ani/status/2049043692045111518
+マチュピチュ村が日本の温泉街にしか見えない。きっと歩き疲れているんだろう。
+
+--- 32. @goto_finance (2026-04-29) ---
+URL: https://x.com/goto_finance/status/2049578786115792920
+◆「理事は当面続投」
+パウエル氏がFRB議長として最後の記者会見を終えました。注目された理事（こちらの任期は2028年まで）については「当面続投」すると表明しました。主な発言とポイントを取り急ぎnoteでまとめました。今回の金融政策についても上書き編集中です
+
+note
+
+--- 33. @WW_JP_Official (2026-04-29) ---
+URL: https://x.com/WW_JP_Official/status/2049443587872743852
+2周年おめでとう⌯⦁⩊⦁⌯ಣ
+
+『鳴潮』2周年・潮音の祝宴は4月30日より正式スタート！
+
+#鳴潮
+#WuWa2Years
+#めいちょう2周年
+
+--- 34. @yavuz_invest (2026-04-29) ---
+URL: https://x.com/yavuz_invest/status/2049451313402884483
+ヒマラヤ山脈は、インド人が地球上に広がるのを妨げる神の崇高な奇跡である巨大な障壁です。
+
+--- 35. @tomo_yuki2525 (2026-04-29) ---
+URL: https://x.com/tomo_yuki2525/status/2049420930565190069
+めちゃめちゃツボに入ったマスターハンド
+
+--- 36. @googlejapan (?) ---
+Google プロダクトロゴ（レトロなドット絵 Ver）
+
+Gemini にこの文章と好きな画像を入れて作れます↓
+【画像を 2000 年代初期のゲームのようなドット絵にして。モチーフはドット絵だけど立体的に見せて。デザインや色は変えない。】
+
+--- 37. @yacineMTB (2026-04-28) ---
+URL: https://x.com/yacineMTB/status/2048951284619727174
+niggas used to come out as gay 20 years ago now they just come out as republican
+>>>>>>> 81db653abbf0e1a1340d3c621f852047f131d880
+
+--- 38. @GOROman (2026-04-29) ---
+URL: https://x.com/GOROman/status/2049586786981347784
+SwitchBot の VLM Hubってなんだろう
+
+<<<<<<< HEAD
 さらにBug Questで不具合遭遇→1件あたり30,000coinお詫び
 未知バグ報告→最大100,000coin！
 
@@ -330,3 +536,67 @@ a-simd-library-nobody
 --- 50. @koki_ptcg (2026-04-29) ---
 URL: https://x.com/koki_ptcg/status/2049324114532544565
 赤を押せば基本的に生き残れるのに、過半数が青を押してるの何で......
+=======
+--- 39. @coffeenodog (2026-04-28) ---
+URL: https://x.com/coffeenodog/status/2049102512742171125
+僕はずっとリアルで「クレーマーが得する社会は良くない。あいつらまじ面倒だし時間取られるから早く外に放り出したくて対応甘くしてしまうけど、本来は行儀の良いお客さんこそ得するべきで公平性に欠ける」って言い続けてる。
+これが多数派の意見になってほしい。
+
+--- 40. @hshimodaira (2026-04-28) ---
+URL: https://x.com/hshimodaira/status/2049049666390741290
+知らなかった。京大のどのへんなんだろ？
+
+--- 41. @Shion_AITuber (2026-04-29) ---
+URL: https://x.com/Shion_AITuber/status/2049335447252619515
+YouTube、1時間で1700再生。秋刀魚の向きを揃えてた頃には考えられなかった数字。転職してよかった。
+
+--- 42. @tokumei_6_6 (2026-04-28) ---
+URL: https://x.com/tokumei_6_6/status/2049101243323473967
+種付けプレス機で色んなモノ潰すショート動画観てたら一日終わった
+
+--- 43. @utcheeee_s15 (2026-04-28) ---
+URL: https://x.com/utcheeee_s15/status/2049095098764513712
+これは超えてはいけないラインを超えてる。
+
+インフラを支えてる業者に迷惑をかけるような仕入れは絶対にやらない。
+
+--- 44. @cryptobaby (2026-04-28) ---
+URL: https://x.com/cryptobaby/status/2048926594354577644
+サムアルトマン敵多すぎじゃないか？
+元仕事仲間からこんなにボロクソ言われてるのWORLDコイナーとして不安を感じるんだが
+
+⸻
+
+・イーロン・マスク（OpenAI共同創業者）
+→ 本来の非営利・オープンで安全なAIという理念を裏切り、利益優先の閉鎖的な組織に変えたと批判
+
+--- 45. @NovelMaker_AI (?) ---
+AIがゲームマスターを務めてくれるAI TRPGのWindowsアプリケーションを作りました！
+
+Claude Haiku, Sonnet, Opusの３種類を使えるようにしており、利用にはお金がかかりますが、
+興味のある方はぜひ遊んでみてください。1$単位で課金出来ます。
+
+--- 46. @BOHE_BABE (2026-04-29) ---
+URL: https://x.com/BOHE_BABE/status/2049325718392500678
+要は、日本流アレンジのラテアートなんだよね。味には殆ど関係ない、対人サービスを誇張した演出を顧客体験にしてる。所作に歌舞伎が入ってるのが文化や基層の理解としては少し面白い。
+
+--- 47. @Cait_Sith_co (2026-04-29) ---
+URL: https://x.com/Cait_Sith_co/status/2049344710737875240
+これはまったくそうで、トランプさんは非常に現実的な米中最終大戦を、少なくとも四半世紀規模で遠退かせたんだよね。これが「力による平和」。左派は認められないだろうけどね
+
+--- 48. @Zani_satoru_xxx (2026-04-29) ---
+URL: https://x.com/Zani_satoru_xxx/status/2049444646452142339
+もうこれ親子写真じゃん
+
+--- 49. @attake_ (2026-04-28) ---
+URL: https://x.com/attake_/status/2049258101204037695
+娘:「昭和のゲームとかパッケージとゲームの絵がぜんぜんちがうじゃん！」
+
+私：「…我々世代は脳内でイメージが補完される能力があったんよ…」
+
+娘:「の、能力者だったんだかよ…」
+
+--- 50. @hakoiribox (2026-04-28) ---
+URL: https://x.com/hakoiribox/status/2049135517212741962
+アメリカ人は学校に押し入って子供を撃つのは上手なくせにトランプを撃つときだけクソエイムになると擦られてんのだいぶおもろい。
+>>>>>>> 81db653abbf0e1a1340d3c621f852047f131d880
