@@ -3254,3 +3254,10 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-29 23:35:21] [COOLDOWN] win is in cooldown (24m41s remaining) — skipping Claude wake
 [2026-04-29 23:40:39] [COOLDOWN] win is in cooldown (19m23s remaining) — skipping Claude wake
 [2026-04-29 23:45:56] [COOLDOWN] win is in cooldown (14m6s remaining) — skipping Claude wake
+[2026-04-29 23:51:23] [COOLDOWN] win is in cooldown (8m39s remaining) — skipping Claude wake
+[2026-04-29 23:56:41] [COOLDOWN] win is in cooldown (3m20s remaining) — skipping Claude wake
+[2026-04-30 00:02:04] Inbox win has content — waking Claude
+[2026-04-30 00:02:08] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-30 00:07:29] [COOLDOWN] win is in cooldown (24m39s remaining) — skipping Claude wake
+[2026-04-30 00:12:30] [COOLDOWN] win is in cooldown (19m37s remaining) — skipping Claude wake
+[2026-04-30 00:17:37] [COOLDOWN] win is in cooldown (14m31s remaining) — skipping Claude wake
