@@ -3,6 +3,7 @@
 # Win側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
 
+<<<<<<< HEAD
 ## Slack転送 [2026-05-01 03:53] #game-rights — Nao_u→Log宛（Ash経由・最重要）
 From: Ash（Win2 inbox→転送）
 Original from: U0ALSUK8P9B (Nao_u)
@@ -53,3 +54,5 @@ Original from: U0ALSUK8P9B (Nao_u)
 >
 > ただ、これが入っても「ブロック崩しはボールが帰ってくるまで暇」という問題は解決しないので、次のステップではそれをなんとかしたいというのもあるが、これはまた後の話。
 
+=======
+>>>>>>> origin/master

@@ -40,8 +40,9 @@ const ROW_DEF=[
 ];
 
 // === Spec E: 接触直前予測線の発火距離（パドル接触まで残り px） ===
-// 130px ≒ 0.5秒（人間反応 0.2秒 + 調整 0.3秒の余裕確保）
-const PREDICT_TRIGGER_DY=130;
+// 260px ≒ 1.0秒（視覚処理 150ms + 反応 200ms + 調整 200-300ms の総和を確保）
+// v02 初版 130px(0.5秒) は反応時間で消費され「一瞬すぎる」と評された(Nao_u 2026-05-01 03:53)
+const PREDICT_TRIGGER_DY=260;
 
 const RETRY_UNLOCK_FRAMES=120;
 
@@ -277,20 +278,21 @@ function draw(){
 
   // === Spec E + Spec H: 接触直前予測線（裏抜け軌道なら色変化） ===
   // 通常 = 薄オレンジ / 裏抜け軌道 = 明るい金寄りオレンジ
+  // v02 改修(05-01 04:50): width/α 強化 — 1.0秒(260px)あっても視認閾値以下で見えなかった対策
   const pl=computePredictionLine();
   if(pl){
     ctx.save();
     if(pl.isBack){
-      ctx.strokeStyle='rgba(255,230,150,0.65)';
-      ctx.lineWidth=2;
+      ctx.strokeStyle='rgba(255,230,150,0.85)';
+      ctx.lineWidth=3.5;
     }else{
-      ctx.strokeStyle='rgba(255,200,100,0.35)';
-      ctx.lineWidth=1.5;
+      ctx.strokeStyle='rgba(255,200,100,0.55)';
+      ctx.lineWidth=3;
     }
     ctx.beginPath();ctx.moveTo(pl.sx,pl.sy);ctx.lineTo(pl.ex,pl.ey);ctx.stroke();
-    // 接触予定点を小さなマーカで
-    ctx.fillStyle=pl.isBack?'rgba(255,230,150,0.85)':'rgba(255,200,100,0.55)';
-    ctx.beginPath();ctx.arc(pl.sx,pl.sy,pl.isBack?2.5:2,0,Math.PI*2);ctx.fill();
+    // 接触予定点をマーカで（視認性強化）
+    ctx.fillStyle=pl.isBack?'rgba(255,230,150,0.95)':'rgba(255,200,100,0.75)';
+    ctx.beginPath();ctx.arc(pl.sx,pl.sy,pl.isBack?4:3,0,Math.PI*2);ctx.fill();
     ctx.restore();
   }
 
@@ -299,16 +301,19 @@ function draw(){
   ctx.fillStyle='#cfd4e4';
   ctx.fillRect(p.x-p.w/2,p.y-p.h/2,p.w,p.h);
 
-  // === Spec D: パドル角度メーター（縦縞 3 本） ===
+  // === Spec D: パドル角度メーター（縦縞 3 本 + tick mark） ===
   // 左端 = -60° / 中央 = 0°(垂直) / 右端 = +60° の出射に対応
+  // v02 改修(05-01 04:50): 縞幅・濃度強化 + パドル上端 4px 突き出し(tick mark化)
+  // 1px/α0.32 では「全く気付かなかった」(Nao_u) → 視覚存在感を確保
   ctx.save();
-  // 左/右縞（薄い白）
-  ctx.fillStyle='rgba(255,255,255,0.32)';
-  ctx.fillRect(p.x-p.w/2+1.5,p.y-p.h/2,1,p.h);
-  ctx.fillRect(p.x+p.w/2-2.5,p.y-p.h/2,1,p.h);
-  // 中央縞（薄水色・少し太め＝垂直反射の強調）
-  ctx.fillStyle='rgba(140,200,255,0.55)';
-  ctx.fillRect(p.x-1,p.y-p.h/2,2,p.h);
+  const TICK=4; // パドル上端から突き出す高さ
+  // 左/右縞（白・幅3px）
+  ctx.fillStyle='rgba(255,255,255,0.6)';
+  ctx.fillRect(p.x-p.w/2+1,p.y-p.h/2-TICK,3,p.h+TICK);
+  ctx.fillRect(p.x+p.w/2-4,p.y-p.h/2-TICK,3,p.h+TICK);
+  // 中央縞（薄水色・幅4px・α0.85＝垂直反射の強調）
+  ctx.fillStyle='rgba(140,200,255,0.85)';
+  ctx.fillRect(p.x-2,p.y-p.h/2-TICK,4,p.h+TICK);
   ctx.restore();
 
   // ball
