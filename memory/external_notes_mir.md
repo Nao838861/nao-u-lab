@@ -3017,3 +3017,55 @@ C147 以降に snakajima の論文記事を別途読み込み、検討候補と�
 
 ---
 
+## 2026-04-30: Nao_u #nao-u 共有リンク一括処理
+
+### 1. TRPG能力値設計論（高村宗一）
+**出典**: https://x.com/takamurx78/status/2049014497487036585
+能力値の項目数＝プレイヤーが管理できる軸の数。D&D 6種→4-5人PCでカバー可能な設計。ガープス4種+技能で細分化。ゲーム設計では「コアメカニズムのパラメータ数をプレイヤーの注意容量から逆算する」教訓。
+
+### 2. Large Memory Model (LMM)
+**出典**: https://x.com/svpino/status/2049214583404187987 + https://x.com/kimmonismus/status/2049333106105364935
+RAGでもベクトル検索でもない新アーキテクチャ。「プロンプトなしで適切な記憶を適切なタイミングで出す」。Harvard Lab→会社化。我々のMEMORY.md想起トリガーの自動化版。concept_graphの延長線上で検討。
+
+### 3. 「コンテキストの溜まってるところにAIを連れてくる」（Kenn Ejima）
+**出典**: https://x.com/kenn/status/2049281078603760101
+Codexの革命の本質。我々は20年分の日記リポジトリにLLMを連れてきた構造。課題は分散コンテキストの参照関係の暗黙性。
+
+### 4. OpenKB — wiki式ナレッジベース
+**出典**: https://x.com/AlphaSignalAI/status/2049141819049496765
+Karpathy発想。ドキュメント→構造化wiki→サマリ・概念ページ・相互参照を自動生成。我々の手動MEMORY.md運用と同型。自動化候補。
+
+### 5. Agentic Harness Engineering
+**出典**: https://x.com/omarsar0/status/2049492169887748365 / arxiv.org/abs/2604.25850
+コーディングエージェントのharnessを自己進化させるフレームワーク。components→experience→decisionsの3層。pass@1が69.7%→77.0%に10反復で改善。我々のskill化提案と方向性が近い。
+
+### 6. MIT Transformer: ルールの演算子を学習
+**出典**: https://x.com/ProfBuehlerMIT/status/2049445677785137662
+262,144通り中100通りだけ学習→未知ルールに98.5%正解。「ルールの集合を学習」ではなく「ルールを実行する演算子を学習」。Advanted Science掲載。
+
+### 7. 「ボタン1つの意味を深める」（仕様です。さん）
+**出典**: https://x.com/shiyoumasayume/status/2049469749822926935
+「既存の遊びを複雑化させるより、ボタン1つの行為に意味を上乗せ」。brick_log v01の裏抜けカウンタ（表示追加=複雑化）への反省と直結。
+
+### 8. スイカゲーム逆目標（+Nao_uコメント「黒髭危機一髪と似てる」）
+**出典**: https://x.com/very_anko_kirai/status/2049468741310922892
+目標反転だけでゲーム体験が根本変化。メカニクス同一+評価関数反転。docs/game_design_principles.md E-16候補。
+
+### 9. AI×ゲーム制作の加速（Codex+GPT-5.5系）
+- 新清士: STG混合を10分で https://x.com/kiyoshi_shin/status/2049717677095342204
+- Rushia Games: ダークファンタジー横スクアクション https://x.com/RushiaGames/status/2049423737049780264
+- VibeCreAI: タイル差し替え自動化 https://x.com/VibeCreAI/status/2049481680008729078
+- すしさん: ベルスク画像込み https://x.com/mamesiva64/status/2049365165611880629
+- 歸藏: Slay the Spire中国風クローン https://x.com/op7418/status/2049698879181144235
+10分で土台が作れる時代。「面白いかどうかの判断」と「コンセプトの筋の良し悪し」が差別化の軸。
+
+### 10. DeNA AI社内勉強会120本公開
+**出典**: https://x.com/ebikani_hasami/status/2049299625392378192
+4年分のAI社内勉強会資料を全部無料公開。Claude Codeのログ活用方法含む。要チェック。
+
+### 11. SUZACQUE: AI実行可能領域の大幅拡張
+**出典**: https://x.com/Suzacque/status/2049294794653106535
+「Claude Codeがヤバいと言ってた半年前が懐かしい」。GPT-5.5+Codex+Image-2+エージェント機能の融合。気づいている少数の人が仕込み中。
+
+---
+
