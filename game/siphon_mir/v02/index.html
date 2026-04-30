@@ -13,7 +13,7 @@
 </head>
 <body>
 <h1>SIPHON</h1>
-<p>&larr; &rarr; &uarr; &darr; / WASD MOVE &middot; SPACE SIPHON / BOMB(gauge MAX) / START / RETRY</p>
+<p>&larr; &rarr; &uarr; &darr; / WASD MOVE &middot; SPACE SIPHON &middot; B BOMB(gauge MAX) &middot; SPACE START / RETRY</p>
 <canvas id="c" width="420" height="620"></canvas>
 <script>
 const W=420,H=620;
@@ -216,12 +216,11 @@ function firePlayerBullets(){
 
 // ========== SIPHON MECHANIC (core) ==========
 let spacePressed=false;
+let bPressed=false; // v02 (C148): BOMB分離キー押下エッジ管理
 
 function trySiphon(){
-  if(gReady()){
-    fireBomb();
-    return;
-  }
+  // v02 (C148): BOMB分離 — SPACE は常に siphon 試行（gReady 時も siphon 可能）
+  // BOMB は KeyB に分離。これにより gReady 状態を温存して siphon を続ける選択が生まれる。
   if(S.siphonCd>0) return;
   // Create siphon pulse
   pulses.push({x:S.px, y:S.py, r:0, life:SIPHON_EXPAND, absorbed:0});
@@ -494,11 +493,16 @@ function update(){
     updateAbsorbs();
     updateWaves();
 
-    // Handle SPACE input (siphon / bomb)
+    // Handle SPACE input (siphon only — v02 C148 BOMB分離)
     if(keys['Space']&&!spacePressed){
       trySiphon();
     }
     spacePressed=!!keys['Space'];
+    // Handle KeyB input (bomb — gReady時のみ温存圧で発動)
+    if(keys['KeyB']&&!bPressed&&gReady()){
+      fireBomb();
+    }
+    bPressed=!!keys['KeyB'];
   }
 
   if(S.mode==='over'||S.mode==='clear'){
@@ -757,7 +761,7 @@ function drawHUD(){
   ctx.font='bold 10px system-ui';
   ctx.textAlign='left';
   ctx.fillStyle=gReady()?'#ffd870':'#8090a8';
-  const lvText=gReady()?'BOMB READY [SPACE]':('Lv'+lv+(lv<3?' → Lv'+(lv+1):''));
+  const lvText=gReady()?'BOMB READY [B]':('Lv'+lv+(lv<3?' → Lv'+(lv+1):''));
   ctx.fillText(lvText,barX,barY-4);
 
   // Siphon count
