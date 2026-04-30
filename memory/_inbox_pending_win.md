@@ -389,3 +389,16 @@ arxiv.org/abs/2604.25850
 Learn to build effective AI agents in our academy: 
 https://
 academy.dair.ai
+
+## Slack新着 [2026-04-30 09:40] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/sumika45379/status/2048681621432549402?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/sumika45379/status/2048681621432549402?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+僕らこれできてる？
+
+> [Tweet content from https://x.com/sumika45379/status/2048681621432549402]
+> すみか@ClaudeCodeガチ勢 @sumika45379
+> 
+
+> [Tweet content from https://x.com/sumika45379/status/2048681621432549402]
+> すみか@ClaudeCodeガチ勢 @sumika45379
+>
