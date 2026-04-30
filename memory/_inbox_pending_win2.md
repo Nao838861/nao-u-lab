@@ -405,3 +405,15 @@ From: U0ALSUK8P9B
 > ゲームの素晴らしさは「ただボタンを一度押すだけ」の行為に果てしない意味を上乗せできることだと思っていて。
 
 なので既存の遊びを複雑化させる方向で考える企画を見ると、つい、もうちょい別のアプローチもありませんか？と思ってしまう。
+
+## Slack新着 [2026-04-30 13:24] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/slipgatecentral/status/2049191505865429279?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/slipgatecentral/status/2049191505865429279?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/slipgatecentral/status/2049191505865429279]
+> Vadim B @slipgatecentral
+> I’m building procedural cityscape generator with Claude directly plugged to Houdini, with zero prior experience. This is some next level shit right there, keeps blowing my mind
+
+> [Tweet content from https://x.com/slipgatecentral/status/2049191505865429279]
+> Vadim B @slipgatecentral
+> I’m building procedural cityscape generator with Claude directly plugged to Houdini, with zero prior experience. This is some next level shit right there, keeps blowing my mind
