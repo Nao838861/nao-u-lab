@@ -5,6 +5,7 @@
 !.claude/settings.json
 !.claude/system_identity.md
 !.claude/rules/
+!.claude/commands/
 .env
 .health_check_last_alert.json
 .infra_health_state.json
