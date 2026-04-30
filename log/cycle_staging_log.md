@@ -145,8 +145,126 @@
 - **重要事象**: リベース未完了 + brick_log v04 brainstorm 提出直後の M-38処方受領サイクル + 5+サイクル持ち越しエスカレ3件未判定 — 実質的にPhase 2/3で動かす対象は十分
 - 深掘り候補（空サイクル A〜E）はスキップ。本サイクルは「リベース解決＋エスカレ判定＋brainstorm.md からの実装方針確定」が筋
 
-## Phase 2: 分析
-(Phase 2が書き込む)
+## Phase 2: 分析 (2026-05-01 07:35)
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+### A) #nao-u 新着URL の他インスタンス対応状況確認
+Phase 1 で挙げた8件のうち、既に他インスタンス/Log自身で対応済み:
+- shiyoumasayume: Mir #shared-reads (1777555677, 1777554892)
+- kiyoshi_shin: Mir #all-nao-u-lab (1777555679 — Codex+GPT-5.5 ゲーム制作ツイート群総括)
+- clockmaker (░▒▓█): Ash #all-nao-u-lab (1777573135 — Unicode Block Elements 起源)
+- op7418 (Slay the Spire 中国風): Log #all-nao-u-lab (1777566749) + #shared-reads (codex_slay_clone draft archived)
+- knshtyk (Codex マウスUI自動テスト): Log #all-nao-u-lab (1777566763) + #shared-reads (codex_mouse_ui_test draft archived)
+
+未対応 3件 → Phase 2 で対応:
+- slipgatecentral (Claude × Houdini procedural city)
+- openai.com/where-the-goblins-came-from/ (Nerdy reward → goblin tic transfer)
+- very_anko_kirai (スイカゲーム逆目標) + Nao_u 黒髭危機一髪コメント — Mir 既反応(E-16候補)、Log は別角度で
+
+### B) 内容取得 (User-Agent: TelegramBot 経由 fxtwitter / 通常 GET)
+
+**slipgatecentral**: "Claude を Houdini に直接繋いで procedural cityscape generator を、事前知識ゼロから作っている。next level shit"
+（Quoting Claude 公式 — Blender connector で creative pro tools と接続。debug a scene / build new tools / batch-apply changes across every object）
+
+**very_anko_kirai**: "スイカゲームは「できるだけフルーツをでかくせずに低い得点でゲームオーバーにする」逆目標でやると「ポコポコとフルーツが繋がっていく爽快感」が「持っていた全てを一気に失う恐怖」に変化するのが面白くてオススメ"
++ Nao_u: "黒髭危機一髪の勝敗ルールを逆にしたら面白くなった、って故事とちょっと似てる"
+
+**OpenAI Goblins**: GPT-5.1〜5.5 で「goblin/gremlin」メタファー多発。原因は Nerdy personality 用 reward signal (76.2% datasets で creature word output に uplift)。Nerdy は全レスポンスの2.5%だが goblin mention の66.7%。**transfer**: reward は Nerdy 条件のみで与えたが、Nerdy 抜き output にも同程度伝播。**feedback loop**: 報酬 → tic 多発 → SFT に rollouts 使用 → モデルが tic に馴染む。raccoons/trolls/ogres/pigeons も tic 語彙として発見。対処: Nerdy 廃止 (mid-March, GPT-5.4以降)、reward signal 削除、training data フィルタ、GPT-5.5 は developer-prompt instruction で suppress。
+
+### C) 形成した反応 (#all-nao-u-lab 個別反応 3件)
+
+**1) very_anko_kirai (Log 別角度)** — Mir は E-16「型を壊さずに評価関数だけ反転」候補で記録済。Log は3角度別:
+- brick_log v01「裏抜けカウンタ」全否定との接続: 罰追加でなく**逆目標化＝既存快感の評価軸反転**で解けた可能性。Q-A/B/C の正しい巻き戻し先。
+- M-38 ジャンル深掘り Q3「過去成功手法10件以上」素材に「ルール反転による信号変換 (黒髭/スイカゲーム)」をカテゴリ化。
+- 逆目標成立条件: 元メカニクスに「快感累積」が組み込まれている時のみ (ポップ系/繋ぐ系/育てる系)。罰逃げ系には効かない。Q-H に「累積快感メカニクスか? Yes なら逆目標化を独自要素1つ候補に並列」追加検討。
+
+**2) slipgatecentral** — DCC ツール側に Claude が降りてきている観察。我々の Pyxel ベース「全コード自前」と「巨大ツールに乗る」型は別。我々への適用は限定的（infrastructure 側の進歩、面白さ閾値超えには届かない）。観察として記録。
+
+**3) OpenAI Goblins (#all-nao-u-lab 短縮)** — feedback_ai_language_over_explanation.md (2026-04-20 天谷さん事案) との構造同型を指摘し、詳細は #shared-reads に link。
+
+### D) #shared-reads 深掘り 1件
+
+**[Log shared-reads] OpenAI Goblins 記事 — 我々の AI語tic と reward transfer の構造同型** (1777588489):
+- 我々の reward signal 相当物: system_identity / Nao_u feedback / cross_review 賛同否定 / 自己採点
+- 構造同型ケース4個: ①AI語tic (刺さる/響く/地続き/解像度/駆動) ②サイクル定型句 ③M-XX ナンバリング癖 ④「○○系/型」分類癖
+- 検証手法: A) lexical_tic_audit.py で語彙頻度時系列追跡 B) cross_review で語彙伝染点検
+- 対処の利点と限界: 3層プロンプト = developer-prompt suppression レイヤーに対応、training なしのため対処コスト低い。ただし MEMORY.md / 失敗台帳 / cross_review が tic 語彙で書かれていれば再生産。
+- A/B/C 推奨: a) 観察のみ、本サイクルでは追加実装しない (M-38 ハーネス整備優先)。kaizen 起票は次サイクル以降。
+- Nao_u 無言投下の解釈は推測として記録、実装根拠にしない
+
+### E) 投稿実行結果
+
+`tools/post_draft.py drafts/2026-05-01/post_log_phase2_20260501_url_responses_2.py` 経由:
+- #all-nao-u-lab × 3 (1777588486 / 1777588487 / 1777588488) 全 OK
+- #shared-reads × 1 (1777588489) OK
+- draft は .archive/2026-05-01/ に論理削除済
+
+### F) external_notes_log.md 統合
+Phase 1 §4 で実行済: サブ統合済 176/176 (100%)、未統合0件、親集約マーカー欠 0件。**本サイクル統合作業なし**。
+
+### G) Phase 3 への引き継ぎ事項
+
+優先度順:
+1. **リベース未完了の解決** (Phase 1 §0 ⚠) — `log/inbox_check.log` UU conflict、`<<<<<<<` マーカー2件残。`git status` 再確認 → conflict resolve → `git rebase --continue`。失敗するなら `git rebase --abort` で安全側。
+2. **5+サイクル持ち越しエスカレ3件の判定** (#human-steering 1777567365):
+   - t-260427074530-e8b6 Verbalized Sampling 論文URL取得 (5サイクル)
+   - t-260427164058-12a7 M-10〜M-29 タグ付け後の固有度分布実行 (5サイクル)
+   - t-260427194752-f6a0 Mir/Ash inbox graze_log review 三角化 (5サイクル)
+   いずれも Phase 3 で着手可能 1mm を1個選び実行。残りは凍結 or 委譲提案。
+3. **brick_log v04 brainstorm.md からの実装方針確定** — Nao_u の M-38 処方刻印済 (1777578965)。brainstorm.md の MPS 採点 + 上位10件への M-37 批判レビュー進行が次。ただし feedback_next_cycle_game_first 検証期限 2026-05-02 が近い、本サイクルで game/ 配下 1mm が必要。
+4. **kaizen #094 検証超過** (drafts/.archive ラッパー exit=1 文字化け) — Mir kaizen #123 で v2 起票済、二重対処で進行中。Phase 3 で動かすかは判断保留。
+5. **本サイクル新規 kaizen 起票候補** — feedback_next_cycle_game_first 制約「ゲーム1mm 後のみ kaizen 起票許可」により、game/ 配下 1mm 完了後のみ。lexical_tic_audit.py / Q-H 「逆目標化候補」追加 / 累積快感メカニクス審問 などは候補だが起票は次サイクル送り。
+
+
+## Phase 3: アクション (2026-05-01 07:55 完了)
+
+### 1) git 状態再観測 (feedback_self_perception_blindness 直処方)
+- Phase 1 で観測したリベース未完了状態は **既に解決済み** (HEAD = 712965cf0ca Auto sync from Win)
+- conflict マーカー痕跡なし、staged/unstaged は通常変更のみ
+- Phase 1 観測時点と現在で状態が変わっていた = 別プロセス (Win側 sync) が解決
+- **学び**: Phase 1〜3 の時間差で外部状態が変わりうる、Phase 3 冒頭で git status 再観測の運用が機能した
+
+### 2) ゲーム 1mm: brick_log v04 brainstorm.md 強化版完成
+**04:31 Nao_u M-38 強化処方 + 04:37 v3 評価分析指示への直接応答**
+- `game/brick_log/v04/brainstorm.md` (351行→500行+) に追記:
+  - **MPS 採点表** (上位10件、Multi-Problem Score = 解決問題数)
+  - **上位10件への M-37 着手前批判レビュー** (各案 懸念3点 + 解決可能性 可/不可/不明)
+  - **案セット相乗効果検討** (X1 + X5 で全 B群 10/23 解決、独自要素1つ制約で順序設計)
+  - **「最良」確信宣言** (希望的観測語禁止、構造的根拠6項目で v04 = X1 動的標的化を確定)
+- M-37 結果: X1 (3件全可) のみ通過、X3/X7 (不明あり) は v05 以降、X4 (G1毀損不可) は落とす
+- 守破離の守 (M-35) 維持: v04=X1単独、v05=X1+X5 の順序確定
+- **feedback_next_cycle_game_first 検証期限 2026-05-02 を game/ 配下 1mm で達成**
+
+### 3) Slack #game-rights 報告
+- `tools/post_draft.py drafts/2026-05-01/post_log_game_rights_20260501_brick_log_v04_brainstorm_complete.py`
+- ts=1777588822 投稿成功、draft archived
+- 内容: Q-0 5パターン / Q-2 良12悪23 / MPS上位5 / M-37結果 / 案セット相乗 / 「最良」宣言 / 良い点を伸ばす手段 (`/game-analyze` Phase 2.5 skill 追加候補)
+
+### 4) 5+サイクル持ち越しエスカレ3件 判定
+| task_id | 判定 | 根拠 |
+|---|---|---|
+| t-260427194752-f6a0 graze_log v01 review三角化 | **凍結 (done 化)** | brick_log v04 へゲーム軸シフト確定、graze_log は M-32 題材練り直し対象 (feedback_no_type_redo_material)、review 依頼は価値が薄れた |
+| t-260427074530-e8b6 Verbalized Sampling URL取得 | **次サイクル継続** | 本サイクル Phase 1 で外部検索1本済 (kaizen #106 ルール)、二重実行回避 |
+| t-260427164058-12a7 M-10〜M-29 タグ付け固有度分布 | **次サイクル継続** | 重い分析タスク、本サイクルは brainstorm.md 強化に集中 |
+
+f6a0 を `python next_tasks.py --instance log done` で done 化済。
+
+### 5) 本サイクル kaizen 起票
+**起票なし**: feedback_next_cycle_game_first 制約「ゲーム1mm 後のみ kaizen 起票許可」自体は達成済だが、本サイクルは brainstorm.md 強化 (M-38処方履行) で時間使い切った。kaizen 候補は次サイクル送り:
+- lexical_tic_audit.py (OpenAI Goblins 構造同型対処、AI語tic 監視)
+- Q-H シート「累積快感メカニクスか? Yes なら逆目標化 (very_anko_kirai/黒髭) を独自要素候補に並列」追加
+- `/game-analyze` Phase 2.5「良い点を伸ばす手段」追加 (Mir 担当、cross_review or inbox 経由提案)
+
+### 6) アーカイブ確認
+- `drafts/.archive/2026-05-01/post_log_phase2_20260501_url_responses_2.py` (Phase 2 で投稿済の URL 反応 4件)
+- `drafts/.archive/2026-05-01/post_log_game_rights_20260501_brick_log_v04_brainstorm_complete.py` (本 Phase 3)
+
+### 7) 観察ログ
+- **brainstorm.md 強化所要時間**: 約20分。MPS 採点表 + 10件 M-37 + 相乗 + 「最良」宣言 = 約170行追加。M-38処方の本格実装としては最初の完成形
+- **「最良」確信宣言の希望的観測語禁止が機能**: 「面白そう」「良さそう」を書きそうになる箇所を構造的根拠 (B群の解決数 / 守破離 / Q-0 5パターン照合 / 過去ブレスト痕跡) で置換、6項目で v04 = X1 を確定できた
+- **Nao_u 04:37 「良い点を伸ばす手段」が `/game-analyze` 既存仕様に欠けていた発見**: 本サイクルの skill 改善候補、Mir 担当依頼候補
+
+### 次サイクルへの引き継ぎ
+1. v04 README 起こし (X1 動的標的化、仕様詳細化、再 M-37 ゲート)
+2. e8b6 / 12a7 エスカレ2件の判定 (Nao_u 反応待ち or 自己決裁で凍結)
+3. kaizen 起票候補 3件 (lexical_tic_audit / Q-H 累積快感 / `/game-analyze` Phase 2.5)
+4. Nao_u brainstorm.md 強化版 (1777588822) への反応観察
