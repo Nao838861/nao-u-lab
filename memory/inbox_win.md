@@ -295,3 +295,43 @@ Codexが「完全自律型開発エージェント」に進化。
 ## Slack新着 [2026-04-30 04:29] #nao-u
 From: U0ALSUK8P9B
 > <https://x.com/home>
+
+## Slack新着 [2026-04-30 08:42] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/TheStudioBigly/status/2049524119813718454>
+
+<https://x.com/umiyuki_ai/status/2049386132731994606>
+
+> [Tweet content from https://x.com/TheStudioBigly/status/2049524119813718454]
+> Freddy @TheStudioBigly
+> Since I had the assets from the browser version, I told codex to make a windows native app (not a port) of the game from the ground up. 
+It ran after the first prompt. This is after a few prompts and with added sound. 
+Pretty darn impressive.
+
+> [Tweet content from https://x.com/umiyuki_ai/status/2049386132731994606]
+> うみゆき@AI研究 @umiyuki_ai
+> NVidiaの人が「現在AIは人間を雇うよりも高くつく」とぶっちゃけてしまう。ただしこれからまだまだAIの推論コストは下がっていく。4年で1/10になってるだろうからその頃には安く付くかもという話。あり得ない話じゃない。Deepseek-V4はV3.2よりパラ数多いのに推論負荷は1/4。あと50%くらい効率化できれば1/10くらいになる
+
+## Slack新着 [2026-04-30 08:52] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/ProfBuehlerMIT/status/2049445677785137662>
+
+> [Tweet content from https://x.com/ProfBuehlerMIT/status/2049445677785137662]
+> Markus J. Buehler @AdvPortfolio
+> A transformer can learn not just the outcomes of dynamics, but the operator that executes the rules. To show this we trained a transformer on roughly 0.04% of a discrete rule space - 100 of 262,144 possible rules - and it learned to apply unseen rules from the same rule class. The model does not simply memorize specific rules. It learns the operator that maps a supplied rule plus an initial state, including unseen rules from this class, to the correct next state. This is relevant because it is a shift from “neural networks approximate dynamics” to “neural networks can learn to execute symbolic programs within a defined rule class”. The rule itself is supplied at inference time, as data, and the network has internalized how rules act, not which rules to apply. On previously unseen rules, the model achieves 98.5% perfect one-step forecasts and reconstructs governing rules with up to 96% functional accuracy.
+
+Two results make this hold up under scrutiny. First, inductive bias decay. As we scaled training rule diversity, the correlation between functional inference accuracy and distance-from-nearest-training-rule collapsed to R² = 0.00. At the largest tested training-rule diversity, the model’s performance on a new rule shows no measurable dependence on how similar that rule is to anything it was trained on. The bias toward training data (the thing we worry most about in compositional generalization claims) is something we can measure decaying, and we find that at scale it is gone.
+
+Second, an identifiability theory. We derive a closed-form expression for the number of rules consistent with a single observation. This reframes the inverse problem: failure to recover ground truth is not necessarily a model defect, but can be correct behavior when the data underdetermine the rule. The model is sampling the equivalence class; and identifiability is governed by coverage, not capacity.
+
+The methodological move underneath both results is amortization. Classical work on rule inference (e.g. the Santa Fe EVCA program, evolutionary search over CA rule space) was per-instance: search the rule space for each new system. We replace that with a single forward pass of a transformer trained across many instantiations of the rule class. That is what makes symbolic rule inference scalable as a research direction rather than a curiosity.
+
+We show that this works in a tightly constrained domain: binary, deterministic, local cellular automata on small grids. The locality-break experiment shows the model fails sharply when target systems violate its structural priors (which is itself a useful diagnostic, but it bounds the operator class). We don't yet know how this scales to multistate, higher-dimensional, or stochastic CA, or whether it transfers cleanly to non-CA systems whose coarse-grained dynamics admit local surrogates. The identifiability framework - what can be inferred from observation, given a hypothesis class - should transfer wherever finite local rules meet sparse data. The amortization argument transfers wherever per-instance symbolic search has been the bottleneck. Those are the pieces I expect to outlive the cellular automata setting.
+
+Led by 
+@JaimeBerkovich
+ with Noah David, at 
+@LAMM_MIT
+. Out now in Advanced Science 
+@AdvPortfolio
+ (link to paper & code below).
