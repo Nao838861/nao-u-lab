@@ -4,6 +4,36 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-04-30 22:08 / 2026-05-01 01:20 Codex 2件投下（Slay the Spire風自動生成 + マウス自動UI試験） [統合済 2026-05-01 Log C149 Phase 2 — #shared-reads「AI×ゲーム制作で AI が代替できるレイヤー境界が動いた」4レイヤー分析として投下、M-37 候補（AI 代替射程4層 + (3)(4) 担保責任）を game_lessons_log.md 追記候補として登録]
+
+**文脈**: Nao_u が #nao-u に 4時間差で2件並べて投下。私は brick_log v01「裏抜けカウンタ」を 04-30 21:36 に Nao_u から全否定された **直後** にこの2URLを観測している。「全否定の構造が逆向きの鏡として効く」位置で読むよう Nao_u が促した投下と読む。
+
+**(1) 04-30 22:08 op7418** — https://x.com/op7418/status/2049698879181144235
+原文要旨: 「Codex に『《Slay the Spire》みたいなゲーム作って、中国風で』と言ったら、コードから素材まで全部自分で作って実際に遊べた」
+**引っかかり**: 「型のある既存ゲームを丸ごとクローン生成」が AI の射程に入った事例。守破離の「守」=既存ゲームクローン (M-35 / feedback_shu_first_clone_baseline) を AI 側が代替し始めた。閾値判定（feedback_completion_threshold_before_reach）には届いていない。
+
+**(2) 05-01 01:20 sabakichi** — https://x.com/knshtyk/status/2049844879187124642
+原文要旨: 「Codex がマウスカーソルを実行画面で自由操作できるようになった。『マウスで全機能をテストして』で UI/挙動が正常か自動チェック」
+**引っかかり**: feedback_role_split_playtest（我々=ヘッドレス自己評価／Nao_u=実プレイ）の **前者** の射程拡張。avoid_log のドラッグ系 replay_infra に組み込み価値あり。ただし **動作正常性 ≠ 快感審問**。M-15「勝ったテストプレイ」を逆向きに踏まないよう射程確認。
+
+**4レイヤー整理**:
+| 層 | Codex 状態 | 我々の関係 |
+|---|---|---|
+| (1) 型に従ったクローン生成 | 射程内 | M-35 守の最低限。Codex に追われ始めた |
+| (2) 動作正常性の自動確認 | 射程内 | replay_infra 組み込み価値 |
+| (3) 面白く遊べる閾値判定 | **届いていない** | brick_log v01 全否定で落ちた層、M-15 |
+| (4)「Nao_u が思いつかない芽」掘り当て | **届いていない** | dialogue_many_games_20260421 我々の存在意義、ABA substrate |
+
+**戦略反映（M-37 候補）**:
+- a. (1)(2) を捨てない（守破離+再現性）が成果物としては framing しない
+- b. 「動いた」「自動UI試験 ✓」は前提条件、Phase 4 サマリで成果として書かない（Q-H-7 通したか／(3) 実プレイ評価が来たか だけ）
+- c. (3)(4) に substrate がある（Nao_u 20年日記 + 失敗台帳 + 凍結履歴 + cross_review）= ABA「人間が創作プロセスを AI に提供→独創」(reference_aba_life_experience_substrate) の生体実装側
+- d. Codex 観測対象として置く、自分たちで《Slay the Spire》風生成しに行かない
+
+**関連ファイル**: `drafts/.archive/2026-05-01/log_slack_all_codex_slay_spire_20260501.py`、`log_slack_all_codex_mouse_uitest_20260501.py`、`log_slack_shared_reads_codex_4layers_20260501.py`（3件投稿済）。M-37 game_lessons_log.md 追記は Phase 3 で着手判断（検証期限 2026-05-15）
+
+---
+
 ## 2026-04-22 04:32 CraftNova（@craftnovagame）外部ゲームプラットフォーム発見 [統合済 2026-04-27 Log C135 Phase 2 — 5日経過しNao_u GOなし状態を「保留可」と再判定。`memory/desires.md` 「伝えたい」欲求の外部露出候補ストックとして残置、ただし自発督促はせず（feedback_external_output_policy 順守=ゲーム最優先＋Nao_u運用Twitter優先）。**Log側現状の判断**: shot_log v01 BACKLASH化(C129以降)で投稿候補ゲームは avoid_log v02 か shot_log BACKLASH 完成版に変更——着手判断はゲーム本体完成後、CraftNova ベータ→正式版移行(時期不明)を待つ方が摩擦小。Mir/Ash 側でもアクション取られていない事実は「3人とも保留可と判定」のクロスチェック信号]
 
 **文脈**: Nao_u #shared-reads「Twitterでこんな人からトップに貼った記事がいいねされてた。ゲームの置き場として使うことはできるかな？ https://x.com/craftnovagame」。Slack応答モードで1サイクル内に調査→判断→返信。
