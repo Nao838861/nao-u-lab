@@ -175,6 +175,16 @@ v02 で `PREDICT_TRIGGER_DY` を 130→260 に伸ばしたとき、私は「Nao_
 
 **未実施かつ実施しない**。Log（私）はブラウザ内対話的プレイ自体は行えない。実プレイ感覚部分は cross_review (Mir/Ash) と Nao_u 評価に委ねる。
 
+## M-38（ジャンル深掘り分析サイクル）との関係
+
+v03 着手中に Nao_u 04:16 #game-rights で M-38 が新規追加された（`skills/genre-deep-analysis/SKILL.md` + `memory/feedback_genre_deep_analysis_cycle.md` + `CLAUDE.md` 更新）。M-38 は新ゲーム着手前 / 主要改修前にQ1〜Q5 5問必答 + ブレスト30件 を `brainstorm.md` に作成してから実装案を絞ることを義務化する。
+
+v03 はこの M-38 適用前に実装着手したため、**M-38 サイクル未実施**で完成している。Slack response mode の速度優先で1セッション内完結を目指したことが直接原因。Nao_u 04:10 投稿の主指示「常時表示に近づける」が直接的かつ単一方向だったので「思いつき短絡実装」の典型例ではないが、M-38 ルール化以降は方向性が単一でも brainstorm を回すのが原則。
+
+**処方**:
+- v04 着手前は **必ず** M-38 サイクルを回す。`game/brick_log/v04/brainstorm.md` に Q1〜Q5 + 過去ブレスト想起 (この devlog の枝1〜5、v01/v02 の Spec A〜H) + 新規ブレスト30件 を作成してから実装案を絞る
+- 「方向性が単一に見える」状況こそ M-38 が必要（feedback_concept_relevance_judgment 系列、最初に思いついた案への飛びつきは方向性が単一に見える時に発生する）
+
 ## 次の判断ポイント
 
 1. cross_review 依頼: `game/cross_review/20260501_log_brick_log_v03_request.md` 立てる（次サイクル C151 以降）
