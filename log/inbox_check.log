@@ -3394,6 +3394,11 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 =======
 >>>>>>> 9de0a1c4f64090b5f9f3255c0339c005e76aa5ac
 [2026-04-30 09:11:43] [COOLDOWN] win2 is in cooldown (1m25s remaining) — skipping Claude wake
+<<<<<<< HEAD
+[2026-04-30 09:42:21] Inbox win2 has content — waking Claude
+[2026-04-30 09:42:21] [LARGE_INBOX] win2: content 21373 bytes > 20000, written to _inbox_pending_win2.md
+[2026-04-30 09:42:23] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+=======
 >>>>>>> 649a3c43ccc850d54ec98d96691cb1bd1088c826
 [2026-04-30 09:29:11] Inbox win has content — waking Claude
 [2026-04-30 09:29:11] [LARGE_INBOX] win: content 21285 bytes > 20000, written to _inbox_pending_win.md
@@ -3426,6 +3431,12 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-30 11:11:16] [COOLDOWN] win is in cooldown (24m49s remaining) — skipping Claude wake
 [2026-04-30 11:16:26] [COOLDOWN] win is in cooldown (19m38s remaining) — skipping Claude wake
 [2026-04-30 11:21:35] [COOLDOWN] win is in cooldown (14m29s remaining) — skipping Claude wake
+<<<<<<< HEAD
+>>>>>>> 5189ba18f3fae4205fb6f84b23b0959614fe63f2
+[2026-04-30 11:42:31] Inbox win2 has content — waking Claude
+[2026-04-30 11:42:31] [LARGE_INBOX] win2: content 21373 bytes > 20000, written to _inbox_pending_win2.md
+[2026-04-30 11:42:36] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+=======
 [2026-04-30 11:26:46] [COOLDOWN] win is in cooldown (9m18s remaining) — skipping Claude wake
 [2026-04-30 11:31:56] [COOLDOWN] win is in cooldown (4m9s remaining) — skipping Claude wake
 [2026-04-30 11:37:03] Inbox win has content — waking Claude
@@ -3434,6 +3445,7 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-30 11:42:12] [COOLDOWN] win is in cooldown (24m53s remaining) — skipping Claude wake
 [2026-04-30 11:47:20] [COOLDOWN] win is in cooldown (19m45s remaining) — skipping Claude wake
 [2026-04-30 11:52:29] [COOLDOWN] win is in cooldown (14m36s remaining) — skipping Claude wake
+<<<<<<< HEAD
 [2026-04-30 11:57:40] [COOLDOWN] win is in cooldown (9m25s remaining) — skipping Claude wake
 [2026-04-30 12:02:48] [COOLDOWN] win is in cooldown (4m16s remaining) — skipping Claude wake
 [2026-04-30 12:07:55] Inbox win has content — waking Claude
@@ -3442,3 +3454,17 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-30 12:13:04] [COOLDOWN] win is in cooldown (24m52s remaining) — skipping Claude wake
 [2026-04-30 12:18:13] [COOLDOWN] win is in cooldown (19m44s remaining) — skipping Claude wake
 [2026-04-30 12:23:21] [COOLDOWN] win is in cooldown (14m36s remaining) — skipping Claude wake
+=======
+>>>>>>> af0b95b8430fbd48b0a08541ced23a18276f0123
+[2026-04-30 12:16:44] Inbox win2 has content — waking Claude
+[2026-04-30 12:16:44] [LARGE_INBOX] win2: content 21373 bytes > 20000, written to _inbox_pending_win2.md
+[2026-04-30 12:16:46] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+>>>>>>> 13e82b7fb52a913984436e601a18b4d17dd96db8
+[2026-04-30 12:28:23] [COOLDOWN] win is in cooldown (9m33s remaining) — skipping Claude wake
+[2026-04-30 12:33:31] [COOLDOWN] win is in cooldown (4m25s remaining) — skipping Claude wake
+[2026-04-30 12:38:39] Inbox win has content — waking Claude
+[2026-04-30 12:38:39] [LARGE_INBOX] win: content 21801 bytes > 20000, written to _inbox_pending_win.md
+[2026-04-30 12:38:41] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-30 12:43:49] [COOLDOWN] win is in cooldown (24m51s remaining) — skipping Claude wake
+[2026-04-30 12:48:57] [COOLDOWN] win is in cooldown (19m43s remaining) — skipping Claude wake
+[2026-04-30 12:54:06] [COOLDOWN] win is in cooldown (14m34s remaining) — skipping Claude wake

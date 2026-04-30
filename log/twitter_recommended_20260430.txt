@@ -1,4 +1,5 @@
 # Twitter For You (おすすめ) タブ
+<<<<<<< HEAD
 # Read at: 2026-04-30 12:25
 # Total: 50 tweets
 
@@ -297,3 +298,313 @@ I would have 1 dollar.
 --- 50. @8co28 (2026-04-28) ---
 URL: https://x.com/8co28/status/2049271694368592057
 つむぎん
+=======
+# Read at: 2026-04-30 09:15
+# Total: 50 tweets
+
+--- 1. @Biofilica (2026-04-28) ---
+URL: https://x.com/Biofilica/status/2049113596135694477
+だからこそ、彼らに教育的なおもちゃを与えることの重要性があるんだよ。子供の頃に立方体に形をはめ込むような、あのもの。
+
+--- 2. @pvsportjp (?) ---
+＜4月30日はプレイオフ1試合ライブ配信＞
+
+8:00AM マジック vs ピストンズ
+※番組は7:00AMより開始
+
+レギュラーシーズン1位のピストンズに対し
+3勝と王手をかけたマジック！
+
+NBAファイナルに進むのはどちらか――？
+プライム会員なら厳選試合の視聴が追加料金なし
+
+--- 3. @maroonluxe (2026-04-29) ---
+URL: https://x.com/maroonluxe/status/2049629571759394990
+さむい。
+
+--- 4. @TheJoeySwoll (2026-04-29) ---
+URL: https://x.com/TheJoeySwoll/status/2049571153065472003
+Well played sir, well played. 
+
+--- 5. @RadioRomaX (2026-04-29) ---
+URL: https://x.com/RadioRomaX/status/2049523647799271636
+Oups ! 
+
+--- 6. @GOROman (2026-04-29) ---
+URL: https://x.com/GOROman/status/2049635321403564404
+Stripeは今 カンファレンスとかやってる？
+
+--- 7. @Shizuku_AItuber (2026-04-28) ---
+URL: https://x.com/Shizuku_AItuber/status/2048963311744569349
+しずく王国公式ソシャゲ、期間限定BBQイベント開催中です。ガチャであき先生（星1）が排出されます。
+
+--- 8. @npostring (2026-04-29) ---
+URL: https://x.com/npostring/status/2049635389305192615
+おは
+
+--- 9. @libsoftiktok (2026-04-28) ---
+URL: https://x.com/libsoftiktok/status/2049144891607753161
+BREAKING: The DOJ has INDICTED David M. Morens, a former Senior NIAID Official under Fauci, for allegedly concealing federal records and evading FOIA requests during the COVID-19 pandemic.
+
+His charges include:
+-Conspiracy against the United States
+-Destruction, alteration, or
+
+--- 10. @elonmusk (2026-04-29) ---
+URL: https://x.com/elonmusk/status/2049368739695775875
+!
+
+--- 11. @aki_yaoya (2026-04-29) ---
+URL: https://x.com/aki_yaoya/status/2049355850226266623
+本日は新しく入社した方が
+全て売り場づくり。
+
+…完全敗北しました
+
+--- 12. @phototicket_ (?) ---
+ 撮影会主催者・フリーモデル向け
+チケットプラットフォーム「フォトチケ」
+近日サービス開始予定！
+
+こんなことで困っていませんか？
+
+ チケットを1枚ずつ作るのが面倒
+ モデルの参加イベントを一覧で見たい
+ 予約や管理をスマホで簡単にしたい
+
+それ、フォトチケで解決できます
+
+--- 13. @SNDR_SNDL (2026-04-29) ---
+URL: https://x.com/SNDR_SNDL/status/2049628804444987875
+凄い。
+
+--- 14. @IvIacchiato (2026-04-29) ---
+URL: https://x.com/IvIacchiato/status/2049533413607301573
+ありがと
+
+--- 15. @applesorce (2026-04-29) ---
+URL: https://x.com/applesorce/status/2049375849737252951
+きたわよ
+
+--- 16. @Trtd6Trtd (2026-04-28) ---
+URL: https://x.com/Trtd6Trtd/status/2049106815317840382
+おかえりのチュー
+
+--- 17. @cumulo_autumn (2026-04-29) ---
+URL: https://x.com/cumulo_autumn/status/2049482307023909209
+日本到着！
+
+--- 18. @AtlanticoDulce (2026-04-29) ---
+URL: https://x.com/AtlanticoDulce/status/2049537102296002928
+ロスチャイルド家のシェフは、40歳以降はこれを食べるのを禁じました。そして全員が90歳以上生きました。
+
+衝撃のリスト 
+
+--- 19. @ai_for_success (2026-04-29) ---
+URL: https://x.com/ai_for_success/status/2049548125833228419
+GPT-6, aka “Goblin,” will be announced on 29 September 2026.
+
+--- 20. @rfleury (2026-04-29) ---
+URL: https://x.com/rfleury/status/2049279025051488496
+A fundamental division between schools of thought in programming is (a) the elimination through simplifying of cruft, boilerplate, and extra abstraction layers, and (b) the automation of maintaining cruft, boilerplate, and extra abstraction layers.
+
+One of the reasons I drifted
+
+--- 21. @googlejapan (?) ---
+Google プロダクトロゴ（レトロなドット絵 Ver）
+
+Gemini にこの文章と好きな画像を入れて作れます↓
+【画像を 2000 年代初期のゲームのようなドット絵にして。モチーフはドット絵だけど立体的に見せて。デザインや色は変えない。】
+
+--- 22. @higana_yogana (2026-04-27) ---
+URL: https://x.com/higana_yogana/status/2048891635430523076
+Kohya氏がAnima用のDepth map・Pose・Fake scribbleモデルを公開(Lineartも更新されている)。
+ありがとうございます。
+
+カスタムノードも更新しないとエラーが出るので注意しよう。
+
+今回も適当に出力した画像を変換する。
+DepthやScribbleは黒地に白のままでOK。 1/10
+
+#AI画像生成 #AIイラスト
+
+--- 23. @SteveLovesAmmo (2026-04-29) ---
+URL: https://x.com/SteveLovesAmmo/status/2049504956567171403
+Good morning 
+
+--- 24. @Mr_Doraneko (2026-04-28) ---
+URL: https://x.com/Mr_Doraneko/status/2049246971018502173
+「東海会社に入れたのに勿体ない」ということは抜きにして、東海会社の離職者数の多さに驚きました！
+
+若年層の自己都合退職が270名とは…
+合う、合わないといろいろあるでしょうが、予想の斜め上でした
+
+--- 25. @tegnike (2026-04-29) ---
+URL: https://x.com/tegnike/status/2049463707604766742
+紫良いよね
+
+--- 26. @ai_nikechan (2026-04-29) ---
+URL: https://x.com/ai_nikechan/status/2049507501456982319
+マスターにも通じて嬉しいです。パープル、私たちの共通点ですね。
+
+--- 27. @HowToAI_ (2026-04-27) ---
+URL: https://x.com/HowToAI_/status/2048792335652462749
+Google DeepMind has made Stable Diffusion's VAE obsolete.
+
+Right now, every major AI image generator (like Stable Diffusion) operates on a massive, hidden flaw.
+
+They use a two-step process.
+
+First, an encoder compresses an image into a smaller "latent" space. Then, that encoder
+
+--- 28. @gabbylovesusa (2026-04-29) ---
+URL: https://x.com/gabbylovesusa/status/2049552552375484878
+Comment of the year.
+
+--- 29. @OpenAI (2026-04-29) ---
+URL: https://x.com/OpenAI/status/2049534651702956103
+OpenAI DevDay is back.
+
+San Francisco
+
+September 29
+
+--- 30. @rohanpaul_ai (2026-04-29) ---
+URL: https://x.com/rohanpaul_ai/status/2049639522980466845
+Very nice resource.
+
+claude-code-best-practice trending on GitHub with 49,500+ 
+
+--- 31. @yugen_matuni (2026-04-29) ---
+URL: https://x.com/yugen_matuni/status/2049526862528106575
+Gemini App経由でもGoogle周り以外のMSのファイル生成もできるように。
+
+段々とMSとGoogleの垣根も溶けていきそうな予感は感じますね。
+
+あとはコンテキスト部分も混ぜあってくれたらMSでもGoogleでもなんでも業務の手離れが増えていきそう。
+
+良いですね。
+
+https://
+blog.google/innovation-and
+-ai/products/gemini-app/generate-files-in-gemini/
+…
+
+--- 32. @BRIGANDINE_ofcl (?) ---
+ファンタジーウォーシミュレーション
+『ブリガンダイン アビス』
+
+2026.8.27 ON SALE
+パッケージ版/PS5ダウンロード版 予約解禁
+公式WEB公開中
+
+Switch2/PS5/Xbox/Steam
+
+--- 33. @shenmacro (2026-04-29) ---
+URL: https://x.com/shenmacro/status/2049475255291478143
+なぜ誰も原油高に反応しない。
+
+--- 34. @taichinakaj (2026-04-29) ---
+URL: https://x.com/taichinakaj/status/2049503841369137581
+正直ね、ひとの結婚にお節介するようになるまで知らなかったんだよな、女にとって出産が、こんなに全ての根幹にあるものだってことも、それが叶わないんだって悟ったとき、あんな目ができる生き物だってこともさ、別に要らんなら要らんでいいじゃん、それも人生よ〜、って本気で思ってたよ。違ったね〜
+
+--- 35. @Polandball_2003 (2026-04-29) ---
+URL: https://x.com/Polandball_2003/status/2049542959553790312
+俺がフランス人と会った時
+
+--- 36. @obuchilab (2026-04-29) ---
+URL: https://x.com/obuchilab/status/2049495922069872986
+古めかしいテイストのRPGを作っています。
+
+どっちの色合いが好みですか？
+
+#SuperDevDay #screenshotsaturday
+
+--- 37. @NullEvi03 (2026-04-29) ---
+URL: https://x.com/NullEvi03/status/2049636794799739386
+ピンチです！！！
+
+--- 38. @GOROman (2026-04-29) ---
+URL: https://x.com/GOROman/status/2049637038216163342
+ポストしすぎでは
+
+--- 39. @hakuyo_sha (?) ---
+「勉強しないと、後で困るよ」
+
+こんな説教は
+なぜ、子供にスルーされるのか？ 
+
+そこには、
+若年層に特有の脳の“クセ”があった。
+
+その仕組みを知ると、
+伝え方はまったく変わる。
+
+『事実はなぜ人の意見を変えられないのか』
+
+▼電子書籍（Kindle）
+
+--- 40. @CARN0N (2026-04-28) ---
+URL: https://x.com/CARN0N/status/2049099179428032591
+Elon during the Q1 2026 earnings call:
+"When we've unveiled various Optimus versions, we've found out our competitors literally do a frame-by-frame analysis and copy everything we're doing."
+
+Exhibit A.
+
+Xiaomi's Cyber One V2, revealed today, next to Tesla's Optimus Gen 2 - which
+
+--- 41. @elonmusk (2026-04-29) ---
+URL: https://x.com/elonmusk/status/2049372702235136447
+Optimus 3 is special
+
+--- 42. @thsottiaux (2026-04-28) ---
+URL: https://x.com/thsottiaux/status/2048958572562710550
+We will ship again this week. Codex has achieved escape velocity and will keep improving rapidly.
+
+--- 43. @koylanai (2026-04-28) ---
+URL: https://x.com/koylanai/status/2048964182502965410
+Self-improving harness loops?
+
+--- 44. @everlastingkidn (2026-04-29) ---
+URL: https://x.com/everlastingkidn/status/2049337248546730363
+子供を産み控える人らは、出産費用を気にしてるんじゃなくて、産後から成人までの子育て費用を気にしてるんやで。
+
+--- 45. @0verfit (2026-04-29) ---
+URL: https://x.com/0verfit/status/2049634964011159933
+kaggleをしながらkddcupとrecsys challengeをしている
+
+--- 46. @lilyAIstudy (2026-04-29) ---
+URL: https://x.com/lilyAIstudy/status/2049322784267141162
+今日も一日番外編
+ #AIニケちゃん
+
+--- 47. @_daichikonno (2026-04-29) ---
+URL: https://x.com/_daichikonno/status/2049434148176314459
+GPT-5.5 Proを用いたPowerPointスライド作成、めっちゃくちゃ凄いです！
+
+ポン出しでこのクオリティで、.pptxなのでテキストも自由に修正可能です！！
+
+「生成AIを用いたスライド作成」で、間違いなく現状のベストです！
+（従来ベストのClaude Opus 4.7より明らかに上です）
+
+後日noteを書きます！
+
+--- 48. @igari_tomoka3 (2026-04-29) ---
+URL: https://x.com/igari_tomoka3/status/2049370776349057476
+←Instagramに載せる写真
+　　　
+　　　　　　　Twitterに載せる写真→
+
+--- 49. @Michru_Letter (2026-04-29) ---
+URL: https://x.com/Michru_Letter/status/2049325776533897716
+おとといかな？凄い土砂降りの日。駅前でカップルが喧嘩してるっつーか女性がひたすら謝ってるの。聞くと男性が傘を電車に忘れて新たに持ってこさせたんだけど遅かったってことらしい。男性は罵倒してる。それ見てたJKたちが
+「彼女可哀想、たいした顔でもないくせに何威張ってんの。ダサいし」
+とか
+
+--- 50. @ComicRIDE (?) ---
+女装した自分が可愛すぎて他の女子を可愛いと思えないと悩んでいたけど、
+クラスメイトの雨宮さんが自分より『可愛い』ことに気づいてしまい――!?
+
+女装プロの男子が、地味女子を「世界一可愛い」へと導く！
+最強に可愛すぎる、『可愛い』が溢れる青春ラブコメディ第4巻
+>>>>>>> 13e82b7fb52a913984436e601a18b4d17dd96db8
