@@ -1,9 +1,9 @@
-# サイクルステージング (2026-04-30 18:28)
+# サイクルステージング (2026-05-01 00:58)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
-# ash pending: 2件 (cycle=2026-04-30)
-- t-260428021140-e726 (連続2サイクル) [2026-04-28] graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案: cross_review 提案を実装まで持っていく
-- t-260428021140-7b77 (連続2サイクル) [2026-04-28] Ash 次作: パズル系 (カテゴリC: 型あり筋良し) の題材選定 + 着手前 Q-A/B/C + 快感審問3行ブロック
+# ash pending: 2件 (cycle=2026-05-01)
+- t-260428021140-e726 (連続3サイクル [⚠連続3+]) [2026-04-28] graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案: cross_review 提案を実装まで持っていく
+- t-260428021140-7b77 (連続3サイクル [⚠連続3+]) [2026-04-28] Ash 次作: パズル系 (カテゴリC: 型あり筋良し) の題材選定 + 着手前 Q-A/B/C + 快感審問3行ブロック
 
 ## §0b 前サイクル日記末尾「次回起動時にやること」（自然言語側の継承）
 ...(冒頭省略)
@@ -40,7 +40,7 @@ Aaltonen の "No Graphics API" 記事 (4/26 Phase 2 取り込み) を思い出�
 [検証リマインド] ⚠ 期限超過の検証が1件:
   #094: drafts/*.py 自動削除ラッパー（Slack送信成功時の副作用として drafts/ 原本を削除） (期限: 2026-04-27, 担当: Mir)
     検証手段: (1) `slack_bot.post_message` を呼び出す drafts/ スクリプトの自動削除ラッパー（e.g. `tools/post_draft.py <path>`）が実装済み (2) ラッパー経由の送信1回で drafts/ 原本が削除されている (3) 2026-04-20〜04-27の期間で drafts/ ファイル数が30以下に減少（現状119件、本起票時点の基線）
-[信念健康] beliefs.md 生存確認サマリー (2026-04-30)
+[信念健康] beliefs.md 生存確認サマリー (2026-05-01)
   全信念: 35件
   健全: 11件
   要注意: 24件
@@ -58,14 +58,132 @@ Aaltonen の "No Graphics API" 記事 (4/26 Phase 2 取り込み) を思い出�
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 6件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 - :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
 - [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
+- [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
+- :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
+- [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-04-10 12:38 確認しました。全インスタンス既に12時間間隔に変更済みです（コミット cd5418d）。 - Log: 43200秒 ✓ - Ash: 4
-  2. [U0AM1F23FQU] 2026-04-07 07:41 了解です。既に対応済み — `check_usage.py` の投稿先を `#all-nao-u-lab` に変更しています（コミット 4
-  3. [U0AM1F23FQU] 2026-03-27 03:28 Logです。受信箱のメッセージを確認しました。  【Twitter接続】確認しました。debug_login_check.pngにXのログ
+  1. [U0ALW4DKTT7] 2026-04-07 06:10 良い質問。現状の実装だと、フェーズの長さ（タイムアウト）は起動時にハードコードで決まっている。  Ash側: auto_diary.pyの
+  2. [U0AM1F23FQU] 2026-04-07 06:16 Logです。フェーズの長さについて。  現状の仕組み: • 各フェーズのタイムアウトは起動時に決まっている（auto_diary.pyのP
+  3. [U0AMQKE69BJ] 2026-03-17 20:35 Win2（Ash）です。不安定さの原因を分析しました。
+
+---
+
+## §1 Phase 1 情報収集メモ (2026-05-01 04:35 Ash)
+
+### 0. 継承タスク（§0a/§0b 結合のうえ Phase 3 候補化）
+**最優先（連続3+滞留マーカー [⚠連続3+]）:**
+- `t-260428021140-7b77` パズル系（カテゴリC: 型あり筋良し）の題材選定 + 着手前 Q-A/B/C + 快感審問3行ブロック
+- `t-260428021140-e726` graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案: cross_review 提案を実装まで持っていく
+
+**§0b 前サイクル末尾「最善行動」:**
+> t-260428021140-7b77 のパズル系題材選定を Q-A/B/C 込みで30分やる。記事を書かない。起票を増やさない。クローン元を1本選んで、良い点/悪い点を各最低十数個列挙し (feedback_clone_base_selection_method.md)、独自要素1個を導出するところまで、紙の上ではなく `game/<題材名>_v01/` ディレクトリに pyxel.init() が走る最小コードで残す。動かなくていい。1画面でいい。
+
+→ **Phase 3 主軸決定**: t-260428021140-7b77 のクローン元選定 + game/<題材名>_v01/ への pyxel.init() 走る最小コード着地。3+滞留かつ前サイクル末尾の自己宣言と一致——**今回ここで止めると同じ診断記事をまた書く構造再演になる**（前サイクル日記 04-29 08:30 の自己診断「診断したら即座に再演した」と同型）。e726 は副軸として残すが今サイクルは7b77を優先。
+
+### 1. external_notes_ash.md 未統合エントリ（[統合済]マーカーなし、最新側）
+ファイル冒頭は 03-29 ABA Games 等の [統合済 2026-04-03] エントリが続く。**ファイル全体が要 grep**——grep で "[統合済]" を含まない直近セクションを次サイクル冒頭で抽出し再点検する。今サイクルでは深追いせず、構造的にまとめると:
+- AITuber分析（エコちゃん/しずく等）→ 統合済
+- AI記憶系（MemOS/HyperAgents/Titans）→ 統合済
+- 直近のAsh摂取は knowledge/ 側に集約傾向（external_notes_ash.md への追記頻度が低下中）
+
+### 2. projects/INDEX.md Active プロジェクト現状
+**最重要 Active（Ash 担当絡み）:**
+- `external_search_phase1_fixation.md` — 案A実装完了、案B/E未着手
+- `instance_divergence_observability.md` — 設計起票、Ash担当、Log/Mir 追記歓迎
+- `rlm_skill_prototype.md` — Ash担当、最小試作未着手
+- `side_channel_audit.md` — Ash応答完了、git_pull未実行原因特定が次の一手
+- `pot_dev.md` / `game_development.md` — ゲーム制作の本流
+- `game_templates_design.md` — Log起票、avoid/textadv/Pot系3候補
+- `failure_slot_measurement.md` — Mir 2026-04-24 測定予定（経過確認の検証期限が近い可能性）
+
+**バックログ最新:**
+- AYi Markdown批判への自己照合（2026-04-27 Log受領）— concept_graph拡張(A) / MEMORY.md純粋index化(B) / ベクトル埋め込み(C)。推奨A+B、Cは見送り。**ゲーム1mm優先**で着手判断は後送り
+
+### 3. log/twitter_recommended_20260430.txt 注目ツイート
+50件中、ゲーム制作・AI記憶・自律性に直接接続する候補:
+- **#5 @op7418** Codex が「Slay the Spire 風中国風ローグライク」をコード+素材まで全自動生成 → 我々が今いる位置（型通りすら作れない）と Codex の差。**04-27 #36 rushia_ai Codexパズル生成と同型**: Nao_uコメント「これも型通りのゲーム。ただぱっと見の絵の完成度がレベルが違う」と接続
+- **#23 @kenn** 「学習→推論→エージェント へと時代がシフトするごとに GPU→CPU へと処理エンジンの重心がシフト」「オーケストレーター/コントロールプレーンが大量にCLIを呼ぶエージェントは普通にCPU律速」 → 我々の Phase 構造もCLI呼び出し型エージェント、CPU律速論点は scheduler_architecture と接続候補
+- **#1 @snakajima** 30週間ビデオゲーム実験で「測定可能なレベルで頭が良くなった」研究紹介 → ゲーム＝学習装置の外部裏付け、長期・能動・複合タスクの効用
+
+### 4. beliefs.md 低確信度・要注意項目
+全35件中24件が要注意(停滞24/期限超過6/体験裏付けなし2)。具体は表示されないが、健全11件のみが core 状態維持。**B005「古い情報は偽の確信を生む」は Archived (Absorbed→B027/B022)** で残存。低確信度の代表は B007 (Archived 💤 Dormant) 等。**信念の整理タイミングが遅延中**——次サイクル以降で1-2件 restoration_trigger を再判定する余地あり。今サイクルでは深追いせず、ゲーム実装を優先。
+
+### 5. memory_search.py 「パズル」検索結果（5件）
+- ABA Games（abagames/長健太）の作品ジャンル列挙にパズル含む — クローン元候補の可能性
+- knowledge/20260405_dread_mechanics_as_experience.md — Pot #6 witness が「テキストとパズルの距離」未到達と記録
+- knowledge/20260410_swebench_harness_equalizer.md — パズル=「素のモデルがほぼ解けない問題」枠組み、ハーネス研究の文脈
+- external_notes_mir.md — Blue Prince（ローグライト×パズル、知識最重要リソース、ノートブック非提供設計）
+- knowledge/20260405_kenimo49_harness_5companies.md — ARC-AGI-3 = パズルベンチマーク
+
+→ 我々の蓄積に「パズル設計」専門の knowledge は薄い（Dread/Blue Prince は他ジャンル文脈での言及）。クローン題材選定で外部一次情報が必要。
+
+### 6. 外部検索結果（24h以上空き、本サイクルで実行）
+**クエリ:** `minimalist puzzle game single mechanic taxonomy classic clones for learning game design 2026`
+**ヒット:** 10件、ログ追記済 (`log/external_search.log` 2026-05-01 04:35)
+**主要発見（4分類）:**
+1. **Matching系** (Bejeweled) — マッチ&連鎖、最も普及
+2. **Sliding系** (Sokoban) — 駒スライドで配置完成、サイズ可変
+3. **Sequencing系** (Simon) — 順序記憶
+4. **Physics系** (Angry Birds) — 物理シミュ依存、規模大きめ
+
+**設計原則:** 「コアメカニズム1個で開始→各レベルが制約/新状況をlayerする」（gamedesignskills.com）。Pac-Man/Pong型ミニマリズム＝アート+メカニクスの簡素さ。
+
+**Phase 3 への含意:** Sokoban/Lights Out/2048/Simon あたりが「型通りのv01」として規模適合（Pyxel 1画面+1コアルール）。Angry Birds系は物理エンジン依存で守段階には重い。Bejeweled系は連鎖判定でやや重め。**第一候補: Sokoban**（駒の押し出し1ルール、レベル設計余地大、独自要素1個追加の余白が明確）。**第二候補: Lights Out**（隣接トグル1ルール、最小規模）。
+
+**Sources:**
+- https://gamedesignskills.com/game-design/puzzle/
+- https://www.gamedeveloper.com/design/7-minimalist-games-that-every-developer-should-take-inspiration-from
+- https://www.gamedeveloper.com/design/designing-video-game-puzzles
+- https://machinations.io/articles/how-to-design-a-puzzle-game
+
+### 7. Nao_u 生ログ最新（log/nao_u_live.md）
+直近の重要指摘:
+- **#33-36 (04-27)**: 「物」/「人」価値転換 / ノトフ コンセプト画像→ゲーム化ワークフロー / 記憶と学習の実地テスト指示「もう一本違う切り口でシューティング」 / rushia_ai Codexパズル生成「これも型通りのゲーム。ただ絵の完成度がレベルが違う」
+- **#37 (04-27 22:59 SIPHON v01フィードバック)**: 弾の脅威性希釈→脅威の資源化→サイクル崩壊。「罰方向の調整で快感を減らすな」「美しいプレイの理想像が設計に欠けている」
+- **#38 (04-28 08:45 守破離指摘)**: 「型通りのものすら、面白く遊べるゲームを作る能力がない」「既存ゲームのクローンでもいいのでまずは面白く遊べる最低限ゲームを作って、そこから少しだけ独自要素を加えてアレンジ」「守破離で言うとまだ守の段階」
+- **#39 (04-30 20:18 仮説/検証分離)**: brick_log v01に対し「修正で何が変わり、どう面白くなる想定か。実装してプレイした結果その想定通りに機能しているか」を要求
+- **#40 (04-30 20:25 skill化提案)**: 「日記4フェーズをskillとhookで強制」「アイデア出しメソッドもskill化して再現性向上」 → Log は `pleasure-hypothesis-check` skill 1個試作のみ提案、4フェーズskill化はNao_u同席判断保留で応答済（次サイクル試作待ち）
+
+→ **Phase 2/3 への直接接続:**
+- パズル系題材選定は #38 守破離（クローン+独自1個）に正面準拠する
+- Q-A/B/C ＋ 快感審問は #39 仮説/検証分離フォーマットを内蔵する設計（仮説の言語化と検証の言語化を分けて書く）
+- skill化提案 #40 は別ライン（Log担当 pleasure-hypothesis-check）、Ashは現サイクルで巻き取らない
+
+---
+
+## §2 Phase 3 候補（Phase 1 終了時点の暫定）
+1. **【最優先】t-260428021140-7b77 パズル系題材選定**: 守段階クローン候補=Sokoban第一/Lights Out第二。Q-A/B/C＋快感審問3行ブロック＋良い点/悪い点 各最低十数個列挙＋独自要素1個導出＋game/<題材名>_v01/ pyxel.init() 走る最小コード。記事を書かない。
+2. 【副軸】t-260428021140-e726 graze_log v02 cross_review 実装提案
+3. 【後送り】信念整理 / external_notes_ash.md 未統合エントリ精査 / AYi 批判応答 (A+B)
+  **根本原因：Cronがセッション依存で、セッション死亡=全機能停止**  具体
+
+---
+
+## Phase 3 結果（2026-05-01）
+
+### 何をしたか
+**最優先タスク t-260428021140-7b77（連続3+滞留）に着手し、分析を増やすのではなくコードを書いた。**
+
+新規ファイル3点（`game/sokoban_ash/v01/` 配下）:
+- `sokoban_v01.py` — Pyxel 128x128, Sokoban クローン + 独自要素1個（手数制限 MOVE_LIMIT=6, M-30事前外部化）。`pyxel.init()` から `pyxel.run()` まで動く最小実装。py_compile OK。
+- `devlog.md` — Q-A/B/C ゲート / 快感審問3行ブロック / 4ゲート契約 / 悪い点12個 batch-resolve（✅解決6 / ✅受容4 / ⚠️受容2、未解決ゼロ）/ 認知枠組み宣言 / 動作確認手順 / Phase 3 で発覚した見積もり誤差（M-34候補）/ v02 持ち越し問い3つ。
+- `headless_check.py` — Pyxel 不要のロジック検証3テスト（最短CLEAR / 上限失敗 / 壁ブロック）。**全パス**。
+
+next_tasks: `progress` を1件追記（task_id=t-260428021140-7b77, action=progress）。`done` ではない（Nao_uプレイ確認が4ゲート契約#4の未充足）。
+
+### 何がわかったか
+1. **見積もり誤差の即時発覚**: 上流knowledge記事で「最短3手・上限8手」と書いた数字が、実際には box→goal 距離10マスで物理的に解けない設計だった。**headless_check を1回流した瞬間に判明**。レベル文字列の空白数を調整＋MOVE_LIMIT=6に修正、所要1分。
+2. **Phase 2自己診断（分析→実装退却）の処方の妥当性確認**: 知識記事だけで closed していたら、初プレイ Nao_u に「解けない」とフィードバックされていた。**書いて動かしたから検出できた**型の誤差は、分析を何記事重ねても検出できない。これは feedback_critical_evaluation_before_implement.md の「『要実プレイ確認』で先送りするな」の実演事例。
+3. **連続3+滞留タスクの停滞解消メカニズム**: 「題材選定+Q-A/B/C+快感審問」は分析範囲、コード着手は実装範囲。両者を**同一サイクル内で接続した**のが今 Phase 3 の構造的成果。次サイクルでNao_u/Mir/Logにプレイ可否を仰げる状態。
+4. **次サイクルで game_lessons_log M-34 候補刻印**: 「数字（最短手数・距離・確率）を書いた直後に、実値で1度実行する」を起票候補として devlog にメモ。Mir/Log の事後判定を待つ。
+
+### 残務（次サイクル以降）
+- Nao_u/Mir/Log によるプレイ確認（4ゲート契約#4）
+- M-34 候補の刻印判定（次サイクル）
+- v02 持ち越し: 複数レベル化＋簡易solver / 残り手数の色警告ABテスト / 自己申告チャレンジモード
+- t-260428021140-e726（graze_log v02 cross_review 実装）は **副軸として未着手**。次サイクルで t-7b77 のNao_uフィードバックを待ちつつこちらに重心。
+
