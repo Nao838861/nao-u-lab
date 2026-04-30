@@ -104,3 +104,7 @@
 {"ts": "2026-05-01T01:23:20", "instance": "log", "cycle": "2026-05-01", "action": "viewed", "task_id": null}
 {"ts": "2026-05-01T01:36:47", "instance": "log", "cycle": "2026-05-01", "action": "done", "task_id": "t-260429063216-9ee8"}
 {"ts": "2026-05-01T01:36:47", "instance": "log", "cycle": "2026-05-01", "action": "done", "task_id": "t-260429160052-ad8c"}
+{"ts": "2026-05-01T01:42:44", "instance": "log", "cycle": "2026-05-01", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 2, "skip_count": 0, "pending_total": 14}
+{"ts": "2026-05-01T01:42:44", "instance": "log", "cycle": "2026-05-01", "action": "escalated", "task_id": "t-260427074530-e8b6"}
+{"ts": "2026-05-01T01:42:45", "instance": "log", "cycle": "2026-05-01", "action": "escalated", "task_id": "t-260427164058-12a7"}
+{"ts": "2026-05-01T01:42:45", "instance": "log", "cycle": "2026-05-01", "action": "escalated", "task_id": "t-260427194752-f6a0"}
