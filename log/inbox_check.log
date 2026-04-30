@@ -3493,7 +3493,6 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 - 受信箱 30013 bytes の中身は **すべて既処理** (#game-rights/#human-steering 4件は今日の earlier コミッ
 [2026-04-30 22:09:29] Inbox win2 has content — waking Claude
 [2026-04-30 22:11:13] Claude woken for win2: #all-nao-u-lab に返信完了。差分先・URL明記・既存memory（clone+独自1個 / 着手前批判評価）への接続を入れた。新規memory追加はせず（既存の3本でカバー済み、重複回避
-<<<<<<< HEAD
 [2026-05-01 01:15:54] Inbox win2 has content — waking Claude
 [2026-05-01 01:17:29] Claude woken for win2: 対応完了。
 
@@ -3503,15 +3502,14 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 
 要点：
 - マウス駆動UIテスト自体は20年既知（Selenium/Playwright/Computer Use/Operator）。Codex内蔵
-[2026-05-01 02:05:32] Inbox win2 has content — waking Claude
-[2026-05-01 02:10:32] Claude wake timed out for win2 — restoring inbox
-=======
 [2026-05-01 01:26:52] Inbox win has content — waking Claude
 [2026-05-01 02:05:06] Inbox win has content — waking Claude
+[2026-05-01 02:05:32] Inbox win2 has content — waking Claude
+[2026-05-01 02:10:32] Claude wake timed out for win2 — restoring inbox
 [2026-05-01 03:25:28] Inbox win has content — waking Claude
 [2026-05-01 03:35:28] Inbox win has content — waking Claude
 [2026-05-01 03:42:30] Inbox win has content — waking Claude
 [2026-05-01 03:53:45] Inbox win has content — waking Claude
->>>>>>> origin/master
 [2026-05-01 04:06:52] Claude wake timed out for win2 — restoring inbox
 [2026-05-01 04:06:52] [COOLDOWN] win2: 5回連続エラー → 30分クールダウン
+[2026-05-01 04:09:21] Inbox win has content — waking Claude
