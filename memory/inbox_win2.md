@@ -454,3 +454,15 @@ From: U0ALSUK8P9B
 ## Slack新着 [2026-04-30 18:25] #nao-u
 From: U0ALSUK8P9B
 > <https://openai.com/index/where-the-goblins-came-from/|https://openai.com/index/where-the-goblins-came-from/>
+
+## Slack新着 [2026-04-30 20:18] #game-rights
+From: U0ALSUK8P9B
+> 今回の修正をいれることでプレイヤーは何が変わり、どうゲームが面白くなることを期待していた？
+また、その期待は実際に実装してプレイした結果、想定通りに機能しているか？
+
+## Slack新着 [2026-04-30 20:25] #human-steering
+From: U0ALSUK8P9B
+> 日記の4フェーズを動かすの、skillとかにまとめてhookで出力を強制した方が安定したりしない？
+また、このスレッドでやってるアイデア出しのメソッドも、回ったサイクルをベースに、ステップごとに実行するskill にまとめて構造化した方が再現性が上がるのではないか？
+私が君たちにやってる質問を君たち自身で自問自答しながら趣旨に沿ったアイデアをたくさん出して、それらをステップを分けながら分析して、その結果を元にやることを決めて実装して、その実行結果をものに適切に評価して、また次のアイデアを多数出して、と言うサイクルを再現性高く君たち自身で回せるようになって欲しい
+<https://nao-u-lab.slack.com/archives/C0ANQ9DRQ1K/p1777379674901509|https://nao-u-lab.slack.com/archives/C0ANQ9DRQ1K/p1777379674901509>
