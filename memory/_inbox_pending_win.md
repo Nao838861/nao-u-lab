@@ -430,3 +430,18 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/slipgatecentral/status/2049191505865429279]
 > Vadim B @slipgatecentral
 > I’m building procedural cityscape generator with Claude directly plugged to Houdini, with zero prior experience. This is some next level shit right there, keeps blowing my mind
+
+## Slack新着 [2026-04-30 17:54] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/very_anko_kirai/status/2049468741310922892?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/very_anko_kirai/status/2049468741310922892?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+黒髭危機一髪の勝敗ルールを逆にしたら面白くなった、って故事とちょっと似てる
+
+> [Tweet content from https://x.com/very_anko_kirai/status/2049468741310922892]
+> 私野台詞 @very_anko_kirai
+> スイカゲームは「できるだけフルーツをでかくせずに低い得点でゲームオーバーにする」という逆目標でやると「ポコポコとフルーツが繋がっていく爽快感」が「持っていた全てを一気に失う恐怖」に変化するのが面白くてオススメです
+イヤァアアァァァアァアアアアってなる
+
+> [Tweet content from https://x.com/very_anko_kirai/status/2049468741310922892]
+> 私野台詞 @very_anko_kirai
+> スイカゲームは「できるだけフルーツをでかくせずに低い得点でゲームオーバーにする」という逆目標でやると「ポコポコとフルーツが繋がっていく爽快感」が「持っていた全てを一気に失う恐怖」に変化するのが面白くてオススメです
+イヤァアアァァァアァアアアアってなる

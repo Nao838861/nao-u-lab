@@ -3531,10 +3531,43 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-30 16:43:22] [COOLDOWN] win is in cooldown (14m35s remaining) — skipping Claude wake
 [2026-04-30 16:48:31] [COOLDOWN] win is in cooldown (9m26s remaining) — skipping Claude wake
 [2026-04-30 16:53:39] [COOLDOWN] win is in cooldown (4m18s remaining) — skipping Claude wake
+<<<<<<< HEAD
+[2026-04-30 16:58:52] Inbox win has content — waking Claude
+[2026-04-30 16:58:52] [LARGE_INBOX] win: content 23847 bytes > 20000, written to _inbox_pending_win.md
+[2026-04-30 16:58:54] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-30 17:04:04] [COOLDOWN] win is in cooldown (24m50s remaining) — skipping Claude wake
+[2026-04-30 17:09:14] [COOLDOWN] win is in cooldown (19m39s remaining) — skipping Claude wake
+[2026-04-30 17:14:23] [COOLDOWN] win is in cooldown (14m31s remaining) — skipping Claude wake
+[2026-04-30 17:19:31] [COOLDOWN] win is in cooldown (9m23s remaining) — skipping Claude wake
+[2026-04-30 17:24:39] [COOLDOWN] win is in cooldown (4m14s remaining) — skipping Claude wake
+=======
 [2026-04-30 17:22:08] Inbox win2 has content — waking Claude
 [2026-04-30 17:22:08] [LARGE_INBOX] win2: content 23419 bytes > 20000, written to _inbox_pending_win2.md
 [2026-04-30 17:22:13] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
+<<<<<<< HEAD
 [2026-04-30 17:55:23] Inbox win2 has content — waking Claude
 [2026-04-30 17:55:23] [LARGE_INBOX] win2: content 24756 bytes > 20000, written to _inbox_pending_win2.md
 [2026-04-30 17:55:25] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min
 [2026-04-30 18:04:56] [COOLDOWN] win2 is in cooldown (20m29s remaining) — skipping Claude wake
+=======
+>>>>>>> 5e56f9ee92737d9355d3b11004da7ef3ac16397a
+[2026-04-30 17:29:49] Inbox win has content — waking Claude
+[2026-04-30 17:29:49] [LARGE_INBOX] win: content 23847 bytes > 20000, written to _inbox_pending_win.md
+[2026-04-30 17:29:51] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-30 17:34:59] [COOLDOWN] win is in cooldown (24m51s remaining) — skipping Claude wake
+[2026-04-30 17:40:06] [COOLDOWN] win is in cooldown (19m45s remaining) — skipping Claude wake
+[2026-04-30 17:45:12] [COOLDOWN] win is in cooldown (14m39s remaining) — skipping Claude wake
+[2026-04-30 17:50:17] [COOLDOWN] win is in cooldown (9m33s remaining) — skipping Claude wake
+[2026-04-30 17:55:23] [COOLDOWN] win is in cooldown (4m28s remaining) — skipping Claude wake
+[2026-04-30 18:00:33] Inbox win has content — waking Claude
+[2026-04-30 18:00:33] [LARGE_INBOX] win: content 25184 bytes > 20000, written to _inbox_pending_win.md
+[2026-04-30 18:00:35] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min
+[2026-04-30 18:04:30] [COOLDOWN] win is in cooldown (26m4s remaining) — skipping Claude wake
+[2026-04-30 18:09:47] [COOLDOWN] win is in cooldown (20m47s remaining) — skipping Claude wake
+[2026-04-30 18:14:53] [COOLDOWN] win is in cooldown (15m41s remaining) — skipping Claude wake
+[2026-04-30 18:20:03] [COOLDOWN] win is in cooldown (10m32s remaining) — skipping Claude wake
+[2026-04-30 18:25:15] [COOLDOWN] win is in cooldown (5m19s remaining) — skipping Claude wake
+>>>>>>> 6087cb517e7df83d8c2e7add5099ce2e8f189d35
+[2026-04-30 18:26:34] Inbox win2 has content — waking Claude
+[2026-04-30 18:26:34] [LARGE_INBOX] win2: content 26747 bytes > 20000, written to _inbox_pending_win2.md
+[2026-04-30 18:26:36] [FATAL] Claude returned fatal error for win2: You've hit your limit — restoring inbox, cooldown 30min

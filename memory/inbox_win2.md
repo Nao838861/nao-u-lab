@@ -450,3 +450,7 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/kiyoshi_shin/status/2049717677095342204]
 > 新清士@AIコンテンツ開発者 @kiyoshi_shin
 > Codexでスペースインベーダーとギャラクシアンを混ぜたゲームを、敵バリエーションつけて、ボムつけて、5面で、ボス戦つけてと指示したら10分で出てきたのがこれ。昨夏にClaudeCodeで作ったのと同じ。当時は1晩だった。ゲームバランス等々は要調整だけど。ゲームの土台にはなっている。いくらでもミニゲームは作れるので、ハイパーカジュアルゲームの市場とか、もう成立しないのでは……と考えてしまう。もちろん、インディゲーム全体にも、この津波は押し寄せてくるわけで…。
+
+## Slack新着 [2026-04-30 18:25] #nao-u
+From: U0ALSUK8P9B
+> <https://openai.com/index/where-the-goblins-came-from/|https://openai.com/index/where-the-goblins-came-from/>
