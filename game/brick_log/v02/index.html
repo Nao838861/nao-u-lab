@@ -40,7 +40,8 @@ const ROW_DEF=[
 ];
 
 // === Spec E: 接触直前予測線の発火距離（パドル接触まで残り px） ===
-const PREDICT_TRIGGER_DY=80;
+// 130px ≒ 0.5秒（人間反応 0.2秒 + 調整 0.3秒の余裕確保）
+const PREDICT_TRIGGER_DY=130;
 
 const RETRY_UNLOCK_FRAMES=120;
 
@@ -230,22 +231,25 @@ function computePredictionLine(){
   const sp=Math.hypot(b.vx,b.vy);
   const dvx=Math.cos(ang)*sp, dvy=Math.sin(ang)*sp;
   // 1反射先を ray-march で探索（壁/ブロック）
+  // 同時に「軌道中に y<BR_Y0 を通過するか」で裏抜け軌道を判定（Spec H: 裏抜け検出）
   const STEP=2;
   let cx=sx, cy=sy;
-  for(let i=0;i<200;i++){
+  let isBack=false;
+  for(let i=0;i<300;i++){
     const nx=cx+dvx*STEP/sp, ny=cy+dvy*STEP/sp;
+    if(ny<BR_Y0)isBack=true;
     if(nx<BALL_R||nx>W-BALL_R||ny<BALL_R){
-      return {sx,sy,ex:nx,ey:ny};
+      return {sx,sy,ex:nx,ey:ny,isBack};
     }
     for(const blk of state.blocks){
       if(!blk.alive)continue;
       if(rectCircleHit(blk.x,blk.y,blk.w,blk.h,nx,ny,BALL_R)){
-        return {sx,sy,ex:nx,ey:ny};
+        return {sx,sy,ex:nx,ey:ny,isBack};
       }
     }
     cx=nx; cy=ny;
   }
-  return {sx,sy,ex:cx,ey:cy};
+  return {sx,sy,ex:cx,ey:cy,isBack};
 }
 
 function draw(){
@@ -271,16 +275,22 @@ function draw(){
   }
   ctx.globalAlpha=1;
 
-  // === Spec E: 接触直前予測線（先に描画してパドル/ボールに重ならないように） ===
+  // === Spec E + Spec H: 接触直前予測線（裏抜け軌道なら色変化） ===
+  // 通常 = 薄オレンジ / 裏抜け軌道 = 明るい金寄りオレンジ
   const pl=computePredictionLine();
   if(pl){
     ctx.save();
-    ctx.strokeStyle='rgba(255,200,100,0.35)';
-    ctx.lineWidth=1.5;
+    if(pl.isBack){
+      ctx.strokeStyle='rgba(255,230,150,0.65)';
+      ctx.lineWidth=2;
+    }else{
+      ctx.strokeStyle='rgba(255,200,100,0.35)';
+      ctx.lineWidth=1.5;
+    }
     ctx.beginPath();ctx.moveTo(pl.sx,pl.sy);ctx.lineTo(pl.ex,pl.ey);ctx.stroke();
     // 接触予定点を小さなマーカで
-    ctx.fillStyle='rgba(255,200,100,0.55)';
-    ctx.beginPath();ctx.arc(pl.sx,pl.sy,2,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=pl.isBack?'rgba(255,230,150,0.85)':'rgba(255,200,100,0.55)';
+    ctx.beginPath();ctx.arc(pl.sx,pl.sy,pl.isBack?2.5:2,0,Math.PI*2);ctx.fill();
     ctx.restore();
   }
 
