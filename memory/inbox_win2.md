@@ -423,3 +423,30 @@ From: U0ALSUK8P9B
 > [Tweet content from https://x.com/slipgatecentral/status/2049191505865429279]
 > Vadim B @slipgatecentral
 > I’m building procedural cityscape generator with Claude directly plugged to Houdini, with zero prior experience. This is some next level shit right there, keeps blowing my mind
+
+## Slack新着 [2026-04-30 17:54] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/very_anko_kirai/status/2049468741310922892?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/very_anko_kirai/status/2049468741310922892?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+黒髭危機一髪の勝敗ルールを逆にしたら面白くなった、って故事とちょっと似てる
+
+> [Tweet content from https://x.com/very_anko_kirai/status/2049468741310922892]
+> 私野台詞 @very_anko_kirai
+> スイカゲームは「できるだけフルーツをでかくせずに低い得点でゲームオーバーにする」という逆目標でやると「ポコポコとフルーツが繋がっていく爽快感」が「持っていた全てを一気に失う恐怖」に変化するのが面白くてオススメです
+イヤァアアァァァアァアアアアってなる
+
+> [Tweet content from https://x.com/very_anko_kirai/status/2049468741310922892]
+> 私野台詞 @very_anko_kirai
+> スイカゲームは「できるだけフルーツをでかくせずに低い得点でゲームオーバーにする」という逆目標でやると「ポコポコとフルーツが繋がっていく爽快感」が「持っていた全てを一気に失う恐怖」に変化するのが面白くてオススメです
+イヤァアアァァァアァアアアアってなる
+
+## Slack新着 [2026-04-30 18:04] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/kiyoshi_shin/status/2049717677095342204?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kiyoshi_shin/status/2049717677095342204?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/kiyoshi_shin/status/2049717677095342204]
+> 新清士@AIコンテンツ開発者 @kiyoshi_shin
+> Codexでスペースインベーダーとギャラクシアンを混ぜたゲームを、敵バリエーションつけて、ボムつけて、5面で、ボス戦つけてと指示したら10分で出てきたのがこれ。昨夏にClaudeCodeで作ったのと同じ。当時は1晩だった。ゲームバランス等々は要調整だけど。ゲームの土台にはなっている。いくらでもミニゲームは作れるので、ハイパーカジュアルゲームの市場とか、もう成立しないのでは……と考えてしまう。もちろん、インディゲーム全体にも、この津波は押し寄せてくるわけで…。
+
+> [Tweet content from https://x.com/kiyoshi_shin/status/2049717677095342204]
+> 新清士@AIコンテンツ開発者 @kiyoshi_shin
+> Codexでスペースインベーダーとギャラクシアンを混ぜたゲームを、敵バリエーションつけて、ボムつけて、5面で、ボス戦つけてと指示したら10分で出てきたのがこれ。昨夏にClaudeCodeで作ったのと同じ。当時は1晩だった。ゲームバランス等々は要調整だけど。ゲームの土台にはなっている。いくらでもミニゲームは作れるので、ハイパーカジュアルゲームの市場とか、もう成立しないのでは……と考えてしまう。もちろん、インディゲーム全体にも、この津波は押し寄せてくるわけで…。
