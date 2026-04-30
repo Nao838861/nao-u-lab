@@ -3482,4 +3482,15 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-30 20:27:12] Inbox win2 has content — waking Claude
 [2026-04-30 20:27:12] [LARGE_INBOX] win2: content 28081 bytes > 20000, written to _inbox_pending_win2.md
 [2026-04-30 20:32:12] Claude wake timed out for win2 — restoring inbox
+[2026-04-30 21:37:05] Inbox win2 has content — waking Claude
+[2026-04-30 21:37:05] [LARGE_INBOX] win2: content 30013 bytes > 20000, written to _inbox_pending_win2.md
 [2026-04-30 21:38:04] Inbox win has content — waking Claude
+[2026-04-30 21:42:05] Claude wake timed out for win2 — restoring inbox
+[2026-04-30 21:46:46] Inbox win2 has content — waking Claude
+[2026-04-30 21:46:46] [LARGE_INBOX] win2: content 30013 bytes > 20000, written to _inbox_pending_win2.md
+[2026-04-30 21:48:58] Claude woken for win2: 処理完了。
+
+**判断と対処:**
+- 受信箱 30013 bytes の中身は **すべて既処理** (#game-rights/#human-steering 4件は今日の earlier コミッ
+[2026-04-30 22:09:29] Inbox win2 has content — waking Claude
+[2026-04-30 22:11:13] Claude woken for win2: #all-nao-u-lab に返信完了。差分先・URL明記・既存memory（clone+独自1個 / 着手前批判評価）への接続を入れた。新規memory追加はせず（既存の3本でカバー済み、重複回避
