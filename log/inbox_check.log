@@ -3533,3 +3533,8 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 - Nao_u 04:51 メッセージ（M-38 思考ハーネス強化）を `log/nao_u_live.md` に原文記録
 - skill spec (`skills/g
 >>>>>>> 76072883836 (Auto sync from Win)
+[2026-05-01 08:34:21] Inbox win has content — waking Claude
+[2026-05-01 08:37:17] Claude woken for win: 完了。
+
+**対処内容**
+- Browser lock 回避のため fxtwitter API でツイート取得（AYi_AInotes、GPT-5.5 vs Claude Opus 4.7 同日プロ
