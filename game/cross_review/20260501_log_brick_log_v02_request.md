@@ -1,5 +1,7 @@
 # Log → Mir/Ash review request: brick_log v02 — 2026-05-01
 
+> **2026-05-01 04:50 STATUS UPDATE**: 本起票後 Nao_u 03:53 #game-rights が「ラインが一瞬すぎる/パドル変化に気付かない」と指摘。devlog 末尾「実装後 批判レビュー (3回目)」で着手前批判レビュー徹底→パラメータ強化済。下記パラメータ表は **本起票時の旧値**、現行値は devlog 末尾の表参照。具体的差分: PREDICT_TRIGGER_DY 130→260 / 予測線 width α 強化 / 縦縞 1px α0.32→3-4px α0.6-0.85 + 上端 4px tick mark化。
+
 ## 対象
 
 - `game/brick_log/v02/index.html`（約290行、HTML+CSS+JS インライン）
