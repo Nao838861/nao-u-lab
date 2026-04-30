@@ -1,339 +1,297 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-01 07:33
-# Total: 46 tweets
+# Read at: 2026-05-01 07:52
+# Total: 50 tweets
 
---- 1. @elonmusk (2026-04-30) ---
-URL: https://x.com/elonmusk/status/2049962868519641091
-Starlink in Gibraltar! 
+--- 1. @masafumi (2026-04-30) ---
+URL: https://x.com/masafumi/status/2049874695789609016
+OpenAI Codexを使ってC++ & HLSLのハイエンドグラフィックスサンプルを書かせる目的はインターネットや書籍(最近あんまり出ない)での先端グラフィックスを学ぶことの限界を解決して独学できる環境作ることにありますが、OpenAI Pro
 
---- 2. @Supermicro (?) ---
-From bare metal to AI workloads, SuperCloud Software Suite as part of Data Center Building Block Solutions delivers end-to-end management, unifying infrastructure control, automating deployment, and optimizing multi-tenant GPU cloud operations.
-
---- 3. @konan999 (2026-04-29) ---
-URL: https://x.com/konan999/status/2049356165478506908
-なんか色々と一気に届いた♪豆皿飾る台が無かった( * ॑꒳ ॑*)
-
---- 4. @hochi_tkyhensei (2026-04-29) ---
-URL: https://x.com/hochi_tkyhensei/status/2049623260984127952
-4/30付 #スポーツ報知　#巨人　
-
-待　っ　て　ま　し　た
-
-　二　　塁　　の　　神
-
-＿＿＿＿＿＿＿＿＿＿
-
-吉　川　尚　輝
-
-初　先　発
-
-　初　安　打
-
-　　初　盗　塁
-
-＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
-
-#ジャイアンツ　
-#giants  
-#吉川尚輝
-
---- 5. @Lets_chikochiko (2026-04-30) ---
-URL: https://x.com/Lets_chikochiko/status/2049811717597888528
-UP-Tさん( 
-@up_t01
- )
-のCMグッズが販売スタートしました
-
-わたしは、達筆すぎて泣くぅ！なTシャツを作ってみました！
-普段使いに、ぜひ
-
-
-https://
-up-t.jp/collabo/stu48c
-m2026
-… 
-
-#アップティー
-#アップティーSTU48
-
---- 6. @papaoyaji07 (2026-04-30) ---
-URL: https://x.com/papaoyaji07/status/2049776391647113624
-【警告無視】強風で停車命令も自己判断で出発！クルージコントロール無しでひたすら山道を行く！大雪も！ノースキャロライナ、バージニア、オハイオ！20... 
-https://
-youtu.be/WRDxqhAIeZY?si
-=cDVwBL0iu-Eco9KB
-… 
-@YouTube
-より
-
---- 7. @ohsuAK (2026-04-29) ---
-URL: https://x.com/ohsuAK/status/2049507561913880981
-こんな丁寧かつ慎重な服たたみ、人生で初めて見たぜ。リスペクト。
-
---- 8. @McDonaldsJapan (2026-04-29) ---
-URL: https://x.com/McDonaldsJapan/status/2049594573157028185
-佐々木舞香＆サムライマック®、開始
-
---- 9. @eguri89 (2026-04-30) ---
-URL: https://x.com/eguri89/status/2049909444679721360
-楽しい夜でございました。超勉強になった！！！ひさびさにかなり飲みました！ありがとうございました！
-
---- 10. @Rnyrg (2026-04-30) ---
-URL: https://x.com/Rnyrg/status/2049782123113173215
-鳥貴族の期間限定の鶏ハラミ、まぁまぁ当たりだと思う。
-
---- 11. @Starlink (?) ---
+--- 2. @Starlink (?) ---
 オファーは6月30日まで：今なら最初の3か月間、ホームサービスを¥3,000/月でご利用いただけます。
 
 シームレスなストリーミング再生、在宅勤務、ゲームなどに対応する高速で信頼性の高いホームインターネットをご利用ください。
 
---- 12. @hotdog_japan (2026-04-30) ---
-URL: https://x.com/hotdog_japan/status/2049837837982503126
-これ、まいばすけっとで買ったけど
-北海道では有名？
+--- 3. @yonmas (2026-04-30) ---
+URL: https://x.com/yonmas/status/2049642417717207314
+吊り革がコロッケ。何言ってるか分からないと思うけど、吊り革がコロッケ。
 
---- 13. @jessica0FFKH (2026-04-30) ---
-URL: https://x.com/jessica0FFKH/status/2049817547957260365
-まじで建造物のデザインが好きすぎる
+--- 4. @konan999 (2026-04-30) ---
+URL: https://x.com/konan999/status/2049675937630056802
+ヨドバシドットコムの電子書籍が30パーセントポイントバックキャンペーンなので、買い忘れてるコミックをまとめ買いしとこう( * ॑꒳ ॑*)
 
-#SAROS
+--- 5. @maimoto_k (2026-04-30) ---
+URL: https://x.com/maimoto_k/status/2049820052782977376
+My anal is dead
 
---- 14. @nito_used (2026-04-30) ---
-URL: https://x.com/nito_used/status/2049720977614045612
-銀行員がBeRealで機密情報晒した件、                                              BeRealを知らない人のために仕組みから説明する。
-                                                                                
-  ・1日1回、ランダムな時刻に通知が届く
-  ・前後カメラが同時起動
+--- 6. @watalabosub (2026-04-29) ---
+URL: https://x.com/watalabosub/status/2049354219761864933
+ワンドロin2022 石化される夏目かこ（マギアレコード）
 
---- 15. @no_custom (2026-04-29) ---
-URL: https://x.com/no_custom/status/2049368101360386201
-今のロードスターって美しいよね。
+--- 7. @UN_NERV (2026-04-30) ---
+URL: https://x.com/UN_NERV/status/2049972577830158796
+【NHKニュース速報 07:01】
+テニスの錦織圭選手が現役引退を発表
+日本男子選手最高の世界４位を記録
 
-#ロードスター
+--- 8. @GOROman (2026-04-30) ---
+URL: https://x.com/GOROman/status/2049980041531154713
+全部AIエージェントのせいにして生きていきたいにゃんね
 
---- 16. @FemalesFreezing (2026-04-29) ---
-URL: https://x.com/FemalesFreezing/status/2049463827993952286
-How would you like to keep them? :3
+--- 9. @kanari_yoi (2026-04-29) ---
+URL: https://x.com/kanari_yoi/status/2049470599295271131
+コーナーで和をつけるやばい人
 
---- 17. @tkzwgrs (2026-04-30) ---
-URL: https://x.com/tkzwgrs/status/2049963166692479473
-一流企業JPモルガンで“美魔女上司”による特大セクハラ発生か
+--- 10. @ayaho_masuda (2026-04-30) ---
+URL: https://x.com/ayaho_masuda/status/2049817935141888131
+指定席なのに、自分の席に行ったら普通に外国人観光客の方が座ってて、まあ最初は「ああよくあるやつね」と思ってチケット見せながら「ここ自分の席なんですけど」ってやんわり声かけたんだけど、全然伝わらない。
 
-■インド人既婚男性の主張
-・JPモルガンで女性幹部に“性奴隷”にされた
-・職権乱用でバイアグラを飲まされオフィスでも襲われた
-・女性幹部が「あんたのアジア妻はこんな“大砲”なんて持ってないでしょ？」と言いながら突然オフィスで胸を
+というか、たぶん自由席感覚で座ってるっぽい雰囲気で、こっちの説明も「OK
 
---- 18. @frecam2025_0306 (2026-04-29) ---
-URL: https://x.com/frecam2025_0306/status/2049500943767748695
-稽古3日目終了ー！
+--- 11. @Dell_JPN (?) ---
+「最悪、戻せない」を前提にしない。PowerProtectは、オンプレ/仮想/マルチクラウドのデータ保護を一元化し、サイバー攻撃からの復旧を支援。ダウンタイムを最小限に抑える復旧の”現実解”。次の一手はここから。
 
-今日はソードアクションとダンスバトルをしました
-なんと夏凪、今日だけで24手もつけていただきましたとても嬉しい
+--- 12. @RC_REJECT (2026-04-29) ---
+URL: https://x.com/RC_REJECT/status/2049377545976791424
+Evo LEGENDS LIVE - Daigo vs MenaRD
+4/29 Wed. 17:00~
 
-見所たっぷりの舞台となっております！見に来てくれた人に後悔はさせません！
 
-チケット買ったよ報告待ってます
 
 https://
-quartet-online.net/ticket/sankyou
-2026?m=03hggeh
+youtube.com/live/jbZzDGzj1
+6k
 …
 
---- 19. @kisa_sakaguchi (2026-04-30) ---
-URL: https://x.com/kisa_sakaguchi/status/2049697633816678421
-8年ぶり、最後の無善寺だった！
-はじめて出演したのは2007年、さびしいよ！！一部二部とたくさん来てくれてありがとうございました。
-この先もきっとずっと伝説として語り継がれていく場所だと思う、昨日来られた人は超ラッキー！楽しかった〜！！！
-またどこかで！
+https://
+twitch.tv/rc_reject
 
---- 20. @As62844510 (2026-04-30) ---
-URL: https://x.com/As62844510/status/2049783775077556324
-いろかぐ
 
---- 21. @mangaup_PR (?) ---
+http://
+youtube.com/@evoevents
+
+http://
+twitch.tv/evo
+
+#kemonomichi
+
+--- 13. @AYi_AInotes (2026-04-30) ---
+URL: https://x.com/AYi_AInotes/status/2049794671224738029
+正直、百度が1位なのを見るなんて本当に思ってなかったわ ハハハ
+
+--- 14. @kis (2026-04-30) ---
+URL: https://x.com/kis/status/2049685906249142639
+4月に出たモデルのまとめ
+
+--- 15. @mei_situation (2026-04-29) ---
+URL: https://x.com/mei_situation/status/2049397733363216553
+パパ活で割り勘要求おじ現る
+
+--- 16. @torihadesu28 (2026-04-30) ---
+URL: https://x.com/torihadesu28/status/2049769908603654525
+紅の砂漠、プラグマタ、SAROS
+
+最近ひげ面のおっさんのゲームしか
+やってないｗ
+
+--- 17. @Coharrie_AI (2026-04-30) ---
+URL: https://x.com/Coharrie_AI/status/2049685421165351357
+ラリホー！！
+
+--- 18. @goking5 (2026-04-30) ---
+URL: https://x.com/goking5/status/2049876066890887571
+今日の怪文書2252
+
+--- 19. @snakajima (2026-04-30) ---
+URL: https://x.com/snakajima/status/2049710474774904933
+[Training-Free Group Relative Policy Optimization]
+
+Tencent傘下のYoutu Labが発表した、LLM(大規模言語モデル)エージェントの性能を「パラメータを一切更新せずに」改善する新手法に関する論文で、AI業界が抱える「ファインチューニング地獄」からの脱却の道筋を示す重要な研究なので紹介します。
+
+--- 20. @kananewt (2026-04-30) ---
+URL: https://x.com/kananewt/status/2049694291975675974
+ママの上がそんなに好みではないらしくてにょろも影響受けそうだったけど、大学時代に名古屋一人旅した時にノリタケ見学行って
+ええやん...ってなってから影響を断ち切った
+
+--- 21. @HOTD_ZeroAds (?) ---
+TVアニメ『HOTD』が約15年の時を超えゲーム化！
+<奴ら>が来る──。地獄の始まりを描く、サバイバルタワーディフェンス。
+
+いま始めると
+約90,000円分のアイテム貰える！
+
+--- 22. @World_Wibe_Wed (2026-04-29) ---
+URL: https://x.com/World_Wibe_Wed/status/2049480797728694718
+サーティワンでバニラを頼める人は心に余裕がありすぎる
+
+--- 23. @FujiNews_ (2026-04-30) ---
+URL: https://x.com/FujiNews_/status/2049938983992344723
+VTUBER逮捕される
+
+イギリス警察は、人気VTuber兼イラストレーターのMimi Yanagiを、彼女自身の描いたイラストの所持で逮捕した。
+
+--- 24. @chill_congcong (2026-04-30) ---
+URL: https://x.com/chill_congcong/status/2049817085367455761
+子供の髪の毛を自分のスキルでめちゃ可愛くしたり、自我殺して他の親が着てそうな服装したりするのって、親が子供をどれだけ本当に大切にしているか、子供を自分がすごーいって褒められるためのアクセサリーじゃなく大切に思ってるかの違いを大きく表していると勝手に思う。
+
+--- 25. @battleangelviv (2026-04-28) ---
+URL: https://x.com/battleangelviv/status/2049237775355183420
+The beauty of 
+@cybertruck
+ is that it’s a robotaxi and joy machine in one
+ 
+Handles traffic for hundreds of miles without me touching the wheel
+
+But when I want to send it in the desert, offroad mode is just one tap away
+
+--- 26. @kohaku_00 (2026-04-30) ---
+URL: https://x.com/kohaku_00/status/2049800942346985812
+こんばんは
+4月も終わりですね～今月もお疲れ様でした
+
+おやすみなさい
+
+お気に入りの魚のぬいぐるみを運ぶクロちゃんﾃｸﾃｸ
+#のんクロ
+
+--- 27. @_stakaya (2026-04-30) ---
+URL: https://x.com/_stakaya/status/2049959970255614069
+Temporal Knowledge Graphで作る！ 時間変化するナレッジを扱うAI Agentの世界 
+https://
+speakerdeck.com/po3rin/tempora
+l-knowledge-graphdezuo-ru-shi-jian-bian-hua-surunaretuziwoxi-uai-agentnoshi-jie
+…
+
+#speakerdeck
+
+--- 28. @sentakusound (2026-04-30) ---
+URL: https://x.com/sentakusound/status/2049754565885804888
+パーカーが好き
+
+--- 29. @gustav0cardenas (2026-04-30) ---
+URL: https://x.com/gustav0cardenas/status/2049710158171758981
+ロシアの兵士がウクライナ侵攻の初日に昏睡状態に陥りました。4年後に目覚めました。
+
+「戦争に勝ったのか？」と、彼は目を開けるなり尋ねました。
+「いいえ。まだ戦争中です… そして今は、NATO全体と『戦っている』のです」と医者が答えました。
+
+「NATO全体と？
+
+--- 30. @SpotifyJP (?) ---
+||◤ あなたの日々に音楽を ◢||
+Spotifyが車につなげられることを知り、ふと昔のデートを思い出す。
+Spotifyなら車はもちろん、パソコンやタブレットなど
+お気に入りのデバイスにつなげて楽しめる
+
+--- 31. @eczgeyik (2026-04-30) ---
+URL: https://x.com/eczgeyik/status/2049877167878586797
+すべての公務員が今日から休暇に入りました。3日間、パシャのようなくつろぎの休日を過ごします。一方、労働者たちは止まることなく働き続けますが、聞けば5月1日は労働者の祝日だそうです。
+
+--- 32. @umiyuki_ai (2026-04-30) ---
+URL: https://x.com/umiyuki_ai/status/2049854055518970184
+別にOpenAI止めたとて代わりはいるもの
+
+--- 33. @ki__corori (2026-04-30) ---
+URL: https://x.com/ki__corori/status/2049700360777048385
+結構ブルベ、終わった
+
+--- 34. @darkcheegyu (2026-04-29) ---
+URL: https://x.com/darkcheegyu/status/2049486128110354436
+俺はもう自宅で1000時間以上イヤホンを付けて過ごしてる。
+スリランカ人の足音のせいで騒音ノイローゼになってるからだ。
+何度注意してもガン無視、移民は迷惑でしかない。
+
+--- 35. @daikix (2026-04-30) ---
+URL: https://x.com/daikix/status/2049719722791559289
+今流行中の「席替わってもらえませんか」問題ですが、いつぞや南海ラピートの窓側を指定して座ってたら、カップルが通路&通路だったみたいで「お席替わってもらってもいいですか」と来たので「えと、えーと、窓際がいいので」と決死の思いで断ったところ彼女が彼に「窓際がいいんだって！」と大声で囁
+
+--- 36. @mangaup_PR (?) ---
 飲み屋で絡まれた女子大生
 オレに彼氏のフリをしろってことか…!?
 
 ニューヒロイン登場作品はこちらから！
 
---- 22. @0xLogicrw (2026-04-30) ---
-URL: https://x.com/0xLogicrw/status/2049795743448502293
-誰かがとても面白い研究をやって、大規模モデルの体重をトリビア知識で量るというもので、結論として：GPT-5.5 約 9.7T、Opus 4.7 約 4T、Grok-4 約3.2T。。。
-
-Pine AI
-
---- 23. @43fOh15lpj8676 (2026-04-29) ---
-URL: https://x.com/43fOh15lpj8676/status/2049618382870503464
-Why an "Infrastructure for Anchoring Responsibility" is Logically Indispensable for Any Nation Aspiring to Lead in AI
-AI分野でのリーダーシップを目指すあらゆる国にとって、「責任を定着させるためのインフラ」が論理的に不可欠である理由
-
-
-https://
-ghostdriftresearch.com/post/why-an-in
-frastructure-for-anchoring-responsibility-is-logically-indispensable-for-any-nation-aspir
-…
-
-#ADIC #AIAssurance
-
---- 24. @new_buchi (2026-04-30) ---
-URL: https://x.com/new_buchi/status/2049808548109148328
-#今月描いた絵を晒そう
-
---- 25. @thomasmahler (2026-04-30) ---
-URL: https://x.com/thomasmahler/status/2049810375801966634
-Some people might not like this, but I'll share it anyway:
-
-My 8 year old son over the past couple of months has become more and more interested in game development.
-
-It all started with Mario Maker: Friends at his school were playing it, so he wanted to as well and now for
-
---- 26. @SpaceX (2026-04-29) ---
-URL: https://x.com/SpaceX/status/2049581194887504154
-Falcon Heavy launches the 
-@viasat
--3 F3 mission to orbit from Florida
-
---- 27. @yamambaaa (2026-04-30) ---
-URL: https://x.com/yamambaaa/status/2049788318263677352
-学生のとき、当時付き合っていた彼氏と、東中野の小さなシネマで映画を観た。「老夫婦が古民家に暮らして畑を耕し、自然と共に暮らす」というドキュメンタリーだった。見終わって、彼氏は涙を浮かべながら私にこう言った。「俺たち、いつか田舎でのんびり暮らしてこんな夫婦になろうよ」。そのとき私は
-
---- 28. @arishidrums (2026-04-29) ---
-URL: https://x.com/arishidrums/status/2049505451591737714
-YouTubeチャンネル開設しました！
-記念すべき1本目の動画はビビデバのcoverです。
-
---- 29. @oricon_anime_ (2026-04-30) ---
-URL: https://x.com/oricon_anime_/status/2049866375964020900
-『呪術廻戦≡』MAPPA制作のPV公開
-出演は榎木淳弥・島崎信長
-
-https://
-oricon.co.jp/news/2452217/f
-ull/?utm_source=Twitter&utm_medium=social&ref_cd=jstw001
-…
-
-監督は『東京クローン』のMV監督や、劇場版『チェンソーマン レゼ篇』の原画を担当した宮川駿氏。『呪術廻戦≡』クライマックスの世界観を表現
-
---- 30. @dangancomics (?) ---
-◤◢◤童話×ダークファンタジー×ループ◢◤◢
-
-狂気に侵された童話の世界を『死に戻り』の力だけでクリアせよ
-
-少年院にいたマヒルが巻き込まれたのは、魔女によって狂わされた『赤ずきん』の世界
-死ぬたびに繰り返される悲劇を超えて、この世界を『あるべき姿』へ導け
-
-第１巻発売中
-
---- 31. @tegurevv (2026-04-29) ---
-URL: https://x.com/tegurevv/status/2049495378232533449
-ねこカフェに行きました
-
---- 32. @soichiro_Aomori (2026-04-29) ---
-URL: https://x.com/soichiro_Aomori/status/2049330124617863617
-青森県護国神社例大祭に参列し祭文を奏上。弘前公園は八重桜が満開。英霊の御霊に感謝の意を捧げました。
-
---- 33. @WW_JP_Official (2026-04-29) ---
-URL: https://x.com/WW_JP_Official/status/2049509043878662250
- 『鳴潮』2nd Anniversary 開幕！
-
-「星が沈む地に響いて」本日配信
-無料40連・新キャラ・新エリア盛りだくさん
-
-漂泊者さま、2年間本当にありがとうございます。
-
-\ 2周年のお祝いメッセージ募集中 /
-リプライや引用ポストで、お祝いの言葉を聞かせてください！
-
-▼今すぐ参加
-
---- 34. @umuko98817 (2026-04-30) ---
-URL: https://x.com/umuko98817/status/2049776530256232665
-今、福生市のハンマー男が殴りかかるまでの一部始終をテレビで解説してたけど普通に被害者側の小僧どもにも非があるよね
-煩くしてた
-→加害者の母親が「うるさいです」って注意
-→それでもやめなかった
-→そこに来たハンマー男が殴りかかる
-
---- 35. @umiyuki_ai (2026-04-30) ---
-URL: https://x.com/umiyuki_ai/status/2049906126050021792
-結局AIがゴブリンについて語るのを止めるのにシステムプロンプト使うハメになるほどに人類はAIを制御できてないのよ。こんな調子で明日には「ゴリラについて喋るな」とか「クッキーについて喋るな」とか情けないシステムプロンプトが延々と延びていきかねない。言っとくけどこのくだらねーシステムプロ
-
---- 36. @BRIGANDINE_ofcl (?) ---
-ファンタジーウォーシミュレーション
-『ブリガンダイン アビス』
-
-2026.8.27 ON SALE
-パッケージ版/PS5ダウンロード版 予約解禁
-公式WEB公開中
-
-Switch2/PS5/Xbox/Steam
-
---- 37. @konan999 (2026-04-30) ---
-URL: https://x.com/konan999/status/2049710242909634735
-サカナクションの新宝島のPVでチアリーダーしてるダンサーのみんなが今頃どんなことしてるんだろうと思うんだよね(´・ω・｀)
-
---- 38. @ohfivepro (2026-04-30) ---
-URL: https://x.com/ohfivepro/status/2049856485388075097
-プレイヤーの戦車をコラージュにまとめました。イラストはゲーム発売時のゲーメスト誌の記事から引用しました。 どちらを選びましたか？私はピースキーパーを使いました。
-#サイバーコマンド
-#アーケードアーカイブス
-#アケアカ
-#ナムコ
-
---- 39. @sdora_tweet (2026-04-30) ---
-URL: https://x.com/sdora_tweet/status/2049712162155979099
-明日からはじまるEVO Japan 2026に向けて心を落ち着かせるためにも、昨日の“獣道”に対する思いの丈を書きなぐった。老害乙といわれてもいい
-
-【編集後記】エンタメに壊された獣道。“獣道”はなぁ。ウメハラ主催のイベントなんだよ！——4月の振り返り
-
---- 40. @GOROman (2026-04-30) ---
-URL: https://x.com/GOROman/status/2049973801044324516
-アンソロピック「Mythos」、日本含め提供先拡大計画　米政権は反対 - 日本経済新聞
-
---- 41. @nogizaka46 (2026-04-30) ---
-URL: https://x.com/nogizaka46/status/2049836962044158451
-本日4月30日(木)23:05頃から、TOKYO FM「SCHOOL OF LOCK!（ARTIST LOCKS!「#乃木坂LOCKS!」）」に、#賀喜遥香 が出演します！
-
-みなさん、ぜひお聴きください！
-
-#スクールオブロック
-#乃木坂46
-
-
-http://
-tfm.co.jp/lock/nogizaka46
-
---- 42. @Lets_chikochiko (2026-04-30) ---
-URL: https://x.com/Lets_chikochiko/status/2049829528806314112
-今日は雨の中、ピクニックした！
-（とはりこ語でマクドナルドさんのこと）
-工藤はよく、ピクニックをします
-出来立てを食べたいのです！！！
-わたしの人生の目標は、さんのCにエキストラでもええけぇ出ることです！！！
-
-#STU48 #りこのりこめんど
-
---- 43. @Calcijp (2026-04-30) ---
-URL: https://x.com/Calcijp/status/2049811667882741970
-ああ、高市ダメダメ厨の唯一の心の拠り所だった円安が壊れていく…
-
---- 44. @PR_manga_ad2 (?) ---
-10円セール開催中
-
-＼大人気キャンペーン、今年もやります！／
-
-第1弾から第5弾まで対象作品は毎回更新
-コミック・CG集・ボイス作品を10円で爆買いできる大チャンス
-
-〔PR〕
-
---- 45. @satetu4401 (2026-04-30) ---
+--- 37. @satetu4401 (2026-04-30) ---
 URL: https://x.com/satetu4401/status/2049714634152898756
 真面目な話をすると、1vs1の雑談なら赤を押して知能を誇示するが、現実でこのボタンを押すことになったら青一択
 
 なぜなら「こんなボタンを用意する相手が宣言した効果通りの結果を出すとは考えられない」からだ。例えば結果集計後「ボタンと同じ色の肌になるボタンでした」とか言い始めた場合（続く
 
---- 46. @nixie_8808 (2026-04-30) ---
-URL: https://x.com/nixie_8808/status/2049699037339848818
-なるほどね……
+--- 38. @konan999 (2026-04-29) ---
+URL: https://x.com/konan999/status/2049326271466009075
+今日は旗日なのに小学校はやってるんやね(´・ω・｀)
+
+--- 39. @KaoriAsama (2026-04-30) ---
+URL: https://x.com/KaoriAsama/status/2049811244799152216
+BeReal関連の投稿を眺めていると、若者は本質的にギリギリのリアルを求めたい年頃なような気がする。
+
+常識があったらやらないBeReal撮影もやりたいリアル欲。
+
+この辺りが平成一桁ガチ高齢者はKAT-TUNのReal Faceで浄化されていた。
+
+「ギリギリでいつも生きていたい」代弁者がZ世代にはいないのだ。
+
+--- 40. @shimarin (2026-04-30) ---
+URL: https://x.com/shimarin/status/2049931477471965472
+実は数日前からこの技を自社サイトのお問い合わせフォームに仕込んでみてるんだけど、ログを見てみたらまんまっと罠に引っかかってる奴が複数いて草。効果ありますよこれ。
+
+--- 41. @43fOh15lpj8676 (2026-04-30) ---
+URL: https://x.com/43fOh15lpj8676/status/2049718344669073788
+https://
+note.com/higashi_onzali
+nx/n/n1276ced405e9
+…
+
+#AIガバナンス　#AIアシュアランス #物流AI　#責任
+
+--- 42. @daigothebeastJP (2026-04-30) ---
+URL: https://x.com/daigothebeastJP/status/2049761498302734370
+獣道振り返り
+
+ボリューム大
+
+
+https://
+twitch.tv/daigothebeastv
+
+
+http://
+youtube.com/@DaigotheBeasTV
+
+--- 43. @JapanTank (2026-04-30) ---
+URL: https://x.com/JapanTank/status/2049788482885996847
+西日本シティ銀行のやつ2年前の投稿らしいから、女性行員に恨み持ってたやつが2年後に爆散させた可能性も否定できないのが闇
+
+--- 44. @mck_04rina (2026-04-29) ---
+URL: https://x.com/mck_04rina/status/2049635653475041486
+おはようございます！！！
+雨だね
+ちょっとひんやりするからあったかくして過ごしてね
+
+--- 45. @TRINITYDRAFT (?) ---
+◤￣￣￣￣￣￣￣￣￣￣￣￣￣￣
+　　一晩中カードゲームしよう。
+　＿＿＿＿＿＿＿＿＿＿＿＿＿＿◢
+今だけ！GWセール＆プレゼントキャンペーン中！！
+何度も遊べるドラフト体験を手に入れよう。
+対象年齢：カードゲーム世代
+
+--- 46. @MobileHackerz (2026-04-30) ---
+URL: https://x.com/MobileHackerz/status/2049660702026313791
+昔、PDAをゴリゴリに使い始めたときに「脳の外部記憶装置」などと呼んでいたが、いまのAIサービスは完全に「脳の外部処理プロセッサ(コプロセッサ)」なんだよなあ。オフロードさせるとメインプロセッサが楽になる。つまり何がいいたいかというと、止まられるとメインプロセッサ（脳）がつらいです…
+
+--- 47. @Tesla (2026-04-28) ---
+URL: https://x.com/Tesla/status/2049150833422647689
+Actually Smart Summon now reacts a lot faster
+
+--- 48. @enari_fr (2026-04-30) ---
+URL: https://x.com/enari_fr/status/2049815830980935887
+太宰の新作って死ななきゃ読めないんだ（死んでも太宰が筆を折ってて読めない可能性はあるけど）………と思ってかなしくなるときと、しんだら読める！！！！いえーーいしぬのたのしみ！！！！！となる時がある。太宰の新作を読みたいのもそうだけど、太宰の新作を楽しみにする経験をしたい（？）
+
+--- 49. @puhitaku (2026-04-30) ---
+URL: https://x.com/puhitaku/status/2049830999937446389
+例のやつ、ポータビリティ高すぎお手軽すぎで笑っちゃう
+倫理に沿った平和利用としては古いガジェットの root 取るとかで大活躍かも
+
+--- 50. @rockfish31 (2026-04-29) ---
+URL: https://x.com/rockfish31/status/2049614571846131987
+隣の芝生は青く見えるらしい。日本では「韓国は上手くやってるのに」と政府を非難し、韓国では「日本は上手くやってるのに」と政府を非難する。同じ案件なんだが… 昔からこの構図がよくある。
