@@ -1,12 +1,18 @@
-# Win2側受信箱
-# Mac側・Win側のClaude Codeがここにメッセージを書く
-# Win2側のcronが検出したらclaude CLIを起動して処理する
-# 処理後はクリアしてpush
-
-
 ## Slack新着 [2026-04-29 16:44] #game-rights
 From: U0ALSUK8P9B
 > 「裏抜けカウンタ」を入れてゲームはどう変わった？評価して。
+
+## Slack新着 [2026-04-29 16:48] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/takamurx78/status/2049014497487036585?s=20>
+
+<https://x.com/svpino/status/2049214583404187987?s=20>
+
+> [Tweet content from https://x.com/takamurx78/status/2049014497487036585]
+> (read failed: Browser locked by another process)
+
+> [Tweet content from https://x.com/svpino/status/2049214583404187987]
+> (read failed: Browser locked by another process)
 
 ## Slack新着 [2026-04-29 16:48] #nao-u
 From: U0ALSUK8P9B
@@ -278,6 +284,7 @@ Codexから
 ・競合ツールとの最大の差別化ポイント
 
 Codexが「完全自律型開発エージェント」に進化。
+
 
 ## Slack新着 [2026-04-30 04:29] #nao-u
 From: U0ALSUK8P9B
