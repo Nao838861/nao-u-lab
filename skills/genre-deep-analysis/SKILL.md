@@ -11,12 +11,22 @@ linked-rules: [M-15, M-32, M-35, M-36, M-37, M-38]
 着手前にジャンルを掘り下げて選択肢空間を広げる skill。
 Nao_u 2026-05-01 04:16「短絡的に思いつきを実行しがち、ブレスト数十件を忘れているのか」直接処方。
 
+## Canonical executor
+
+実行口は Mir が実装した slash command **`/game-analyze`**（`.claude/commands/game-analyze.md`、commit d9b27a7）。本ファイルは M-38 の **規範spec / 自己採点条件** を保持。両方を併読:
+- **`/game-analyze`** = 実行手順（Phase 0-5、記憶収集→本質定義→良悪20件→手法マトリクス→代替案→devlog蓄積）
+- **本 SKILL.md** = M-38 規範（Q1-Q5 + 30件ブレスト + M-37接続 + 自己採点 ✗ 条件）
+
+差分の扱い:
+- `/game-analyze` Phase 2 は良/悪 各20件、本spec Q3 は手法10件+ブレスト30件 → **厳しい方を採用**（実装前 50+ 件のブレスト目標）
+- M-37接続（着手前批判レビュー）は本specで必須化。`/game-analyze` 単独で終わらせない
+
 ## When to invoke
 
-- 新規 `game/<id>/v01/` 作成前（README作成と同時）
-- 主要改修前（core メカニクス変更）
-- 凍結系列の再着手前
-- 「単一アイデアを思いついた、実装したい」と感じた瞬間（むしろ最強のトリガー）
+- 新規 `game/<id>/v01/` 作成前 → `/game-analyze game/<id>`
+- 主要改修前（core メカニクス変更）→ `/game-analyze game/<id>`
+- 凍結系列の再着手前 → `/game-analyze game/<id>`
+- 「単一アイデアを思いついた、実装したい」と感じた瞬間（最強のトリガー）→ `/game-analyze` で他案を強制比較
 
 ## Output (must exist before implementation)
 
