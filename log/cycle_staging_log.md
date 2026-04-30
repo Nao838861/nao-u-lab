@@ -142,7 +142,123 @@ Ash が #game-rights 11:01指示で評価AIプロトタイプを構築中。
 - **Skill化検討 A/B/C への提案**: Nao_u が「じわじわ検討して提案して」と言っているが、まだ我々から能動的提案を出していない。Phase 2/3 で1mm起案候補。
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+実行: 2026-05-01 04:30-04:50 / インスタンス: Log
+
+### 1) #nao-u 04-29〜04-30 新着URL 全12件 fetch + 反応形成
+
+fxtwitter UA=TelegramBot で10件取得成功、2件 og:description 空（kenn=画像/動画のみ、mamesiva64=同）、1件は誤投稿(x.com/home)。10件中9件に個別反応投稿。
+
+**Tier 1 — 我々の現課題に直接効く 4件**:
+| URL | キーポイント | 接続先 |
+|---|---|---|
+| AlphaSignalAI OpenKB | vectorless wiki RAG / Karpathy 提唱 / PageIndex | corpus2skill / Skills と同方向、別経路三角化 |
+| kimmonismus Engramme LMMs | Persistent memory = AI Achilles heel / Harvardラボ閉鎖→起業 | 記憶アーキ第3経路（人間記憶ベース） |
+| studiomasakaki AI×守破離 | AI が人間に「ティラノ使え、車輪再発明やめろ」 | feedback_shu_first_clone_baseline.md (M-35) 構図反転、外部三角化 |
+| automaton パリィ採用論 | 過去の手法を歴史と合理性で分析 | M-38 brainstorm.md Q3「過去の成功手法10件以上列挙」のお手本記事 |
+
+**Tier 2 — AI 開発環境観測 5件**:
+| URL | キーポイント | 接続先 |
+|---|---|---|
+| Suzacque GPT5.5/Codex/Image-2 融合 | 段階的飛躍、組み合わせ技で伝えづらい | feedback_substrate_not_infrastructure.md (M-32) と同型 |
+| RushiaGames AI 横スクロール 1時間カードゲーム | スピードの差 | feedback_completion_threshold_before_reach.md (本数 vs 完成度未解) |
+| VibeCreAI Codex × GPT Image 2 自動置換 | 素材生成コスト低下 | M-35 独自要素1個原則の素材バリエーション応用 |
+| Codestudiopjbk Codex Native Browser | 調べてからコード書くを内蔵化 | feedback_external_search_missing.md / Phase 1 §6 Skills 化論拠 |
+| ebikani_hasami DeNA AI 4年資料120本+ 公開 | Claude Code ログ活用も含む | 外部摂取候補、次サイクルで slide deck 確認候補 |
+
+### 2) shared-reads 投稿（深い分析 1件）
+
+**「記憶アーキテクチャ4経路三角化」**: OpenKB (1) / corpus2skill (3) / Skills (4) が「ファイルシステム階層 LLM 走査・ベクター検索捨てる」で同方向、別経路独立到達。Engramme LMMs (2) は「人間記憶ベース」別系。witcheer 2026-04-16「2キャンプ分裂」の Camp 2 が決定的に強くなった局面。
+
+**自己決裁 A/B/C**:
+- a) MEMORY.md 純粋 index 化 + .claude/skills/ 構造移行（推奨 — 三角化で採用閾値超え）
+- b) k-means+LLM 自動要約は不採用（温度劣化リスク、reference_corpus2skill_20260429.md 既保留）
+- c) Engramme LMMs は監視のみ
+
+→ Phase 3 で kaizen 起票候補。Nao_u 04-22「肝をもう少し掘り下げて欲しかった」を 04-29 corpus2skill 投下で再ピックされた経緯あり。
+
+### 3) external_notes_log.md 統合状況
+
+Phase 1 §4 監査結果: 176/176 サブ統合済 (100%)。今サイクル統合作業対象なし。
+
+### 4) 最大の現課題 — 次題材選定の Phase 3 アクション候補
+
+brick_log v01 全否定（04-30 21:36）+ 深い分析サイクル指示（05-01 04:16）後、次の 1mm は **brainstorm.md (Q1〜Q5+30件) を回す運用を最初に1回実体験で回す**。題材候補:
+
+- **A) スネーク (pending t-260501021002-7f8d)**: Nao_u 02:04 #game-rights 5案吟味+A/B/C で推奨済、承認待ち中だが 04:16 深い分析指示で前提が変わった。スネーク v01 を Q-H シート + brainstorm.md 両方完備で着手するなら好機。
+- **B) brick_log v04 へ進む**: v03 が完全予測ガイドで成立した実プレイ評価次第。Mir/Ash cross_review 待ち、自分単独では判断材料不足。
+- **C) avoid_log v02 凍結後の別題材ピック**: M-32「型がないなら題材から練り直す」の処方済、空白3日。
+
+【推奨】A。Phase 3 で `game/snake_log/v01/brainstorm.md` を skills/genre-deep-analysis/SKILL.md に従って作成 → Q-H シート併走 → 着手前批判レビュー (M-37) → 実装。M-38 を実体験で1回回すこと自体が今サイクルの核 1mm。
+
+### 5) 5+サイクル持ち越し pending の自己決裁判断
+
+Phase 1 §0a で連続 4-8 サイクル滞留 9件確認。feedback_judgment_delegation.md「A/B/Cレベルの判断は君らでやっていい」より、今サイクルでは時間が次題材選定に使われる前提で:
+
+| ID | 状態 | 自己決裁 |
+|---|---|---|
+| t-260426161358-fc44 (8サイクル) | C131 層A検証 検証期限 2026-05-10 | 維持。期限まで残9日、Mir/Ash 接合効果測定の自然タイミング待ち |
+| t-260426195755-1d83 (7) | MAST taxonomy 読了 | **drop 候補** — 5サイクル空転、現課題（記憶アーキ移行）に直結しない |
+| t-260426195755-770b (7) | git status 必須化 | **Phase 3 で実装** — feedback_self_perception_blindness.md (T:5) 直処方 |
+| t-260426195755-1080 (7) | 14:13 touch 事故再発観察 | 維持（受動観察タスク） |
+| t-260426213555-0741 (6) | hook baseline 測定 schema | **drop 候補** — substrate 側 1mm を圧迫 |
+| t-260427074530-e8b6 (5) | Verbalized Sampling 原論文 | 維持（kaizen #137 で再追加済） |
+| t-260427164058-12a7 (5) | M-10〜M-29 タグ付け | 維持（kaizen α 検証期限 5/4） |
+| t-260427194752-f6a0 (5) | graze_log v01 cross_review | 維持（Mir/Ash inbox 既起票） |
+| t-260428061646-f94c (4) | chain_log v01 最小実装 | **drop 候補** — M-35 守破離違反、型なし v01 |
+| t-260428061648-55a4 (4) | graze_log v01 self-playtest | 維持 |
+
+**drop 3件のうち実行**: t-260426195755-1d83 / t-260426213555-0741 / t-260428061646-f94c。
+**Phase 3 で実装**: t-260426195755-770b（git status 必須化）。
+
+### Phase 2 まとめ（Phase 3 への申し送り）
+
+1. **Phase 3 主要 1mm**: `game/snake_log/v01/brainstorm.md` を skills/genre-deep-analysis/SKILL.md に従って作成（M-38 を実体験で1回回す）
+2. **Phase 3 構造強制 1mm**: Phase 1 §0 git status 必須化 (t-260426195755-770b 実装、自己決裁B案)
+3. **Phase 3 kaizen 起票候補**: MEMORY.md 純粋 index 化 + .claude/skills/ 構造移行（記憶アーキ三角化により採用閾値超え）
+4. **Phase 3 pending drop**: t-260426195755-1d83 / t-260426213555-0741 / t-260428061646-f94c
+5. **#shared-reads 投稿済 1件、#all-nao-u-lab 個別反応 9件投稿済**（draft archive 済）
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+実行: 2026-05-01 04:50-05:10 / インスタンス: Log
+
+### 1) Slack返信
+Phase 2 で個別反応 9件 + shared-reads 1件投稿済（draft archive 済）。Phase 3 では追加 Slack 投稿なし。Nao_u 05-01 04:16 深い分析指示への反応は Phase 4 日記で総括的に出す（即時返信は nao_u_live.md 刻印 + memory + skill 起票で内部応答完了）。
+
+### 2) 改善サイクル（検証ファースト）
+- 検証ファースト確認: 期限超過 #094 は Mir 担当、自動検証で `tools/post_draft.py` 引数なし呼び出しが exit=1（usage 表示のみ、実装は存在）。Log 担当領域外、触らず。
+- **kaizen #128 起票** (`memory/kaizen_tracker.md`): MEMORY.md 純粋index化 + .claude/skills/ 構造移行。記憶アーキ4経路三角化 [OpenKB(1)/corpus2skill(3)/Skills(4)] + MEMORY.md 27.5KB 警告超過の結合。検証期限 2026-05-15、段階1=トリガー圧縮 / 段階2=skills/ 棚卸し / 段階3=hook 動的読込。Log=OK / Mir/Ash クロスチェック未。
+- **構造強制 1mm** (`multi_phase_cycle_log.py:258`): build_phase1_prompt() に「0) `git status` を最初に実行、編集中ファイル + 直近5commit を staging 冒頭にメモ」追加。next_tasks t-260426195755-770b の処方、feedback_self_perception_blindness.md (T:5) C122「Nao_u が同時編集中なのに『流れた』と書いた」反省の構造強制。
+
+### 3) [他インスタンス洞察] への対応
+Phase 1 §0a で「他インスタンス洞察 21件」サマリーを認識。今サイクルは記憶アーキ三角化（kaizen #128）と M-38 実体験準備に時間を割いたため、21件個別の関連プロジェクトファイル追記は次サイクル送り（drop でなく持ち越し）。
+
+### 4) Activeプロジェクト更新
+- **`game/brick_log/v01/README.md`**: 冒頭に「2026-04-30 21:36 FROZEN」ブロック追加。Nao_u 全否定原文 + M-36 刻印 + 05-01 04:16 M-38 指示 + v02-v06 白紙化を明記。Phase 1 §2 で「README 凍結明記なし」と発見した分の処方。
+- `projects/INDEX.md` は今日 04:24 更新済（Skill化検討項目 A/B/C）、Phase 3 で追加更新なし。
+- `projects/game_development.md` は brick_log v01 凍結を反映するか確認したが、 04-29 16:07 更新分が当該情報を含む（Mir 側の cross_review）。Log から追加追記は M-38 brainstorm.md 運用着手後に行う。
+
+### 5) pending 自己決裁（B案実行）
+`python next_tasks.py --instance log skip` 3件実行:
+- `t-260426195755-1d83` skip: MAST taxonomy 14 failure modes 5サイクル空転、現課題（記憶アーキ移行）に直結しない
+- `t-260426213555-0741` skip: hook baseline schema、substrate 1mm を圧迫、kaizen #094/#123 進行待ち
+- `t-260428061646-f94c` skip: chain_log v01 最小実装、M-35 守破離違反（型なし v01）候補
+
+`t-260426195755-770b` (git status 必須化) は実装完了→`done` 処理:
+
+### 6) M-38 実体験 — snake_log brainstorm.md は今サイクル作らず
+Phase 2 推奨【A スネーク v01 brainstorm.md 着手】は **保留**。理由:
+- pending t-260501021002-7f8d「Nao_u 02:04 #game-rights 5案吟味+A/B/C(スネーク推奨)応答済」が Nao_u 承認待ち
+- 04-30 21:36 brick_log v01 全否定 + 05-01 04:16 深い分析指示で前提が変わった可能性、Nao_u から別題材指定 / brick 系再ピック / Skill試走場としての別題材指定があり得る
+- `game/snake_log/` ディレクトリ作成は Nao_u 承認なしのフライング（ゲーム原理マター = feedback_judgment_delegation.md 範囲外）
+
+代わりに **Phase 4 日記で「snake_log で M-38 を回すかの最終確認」を Nao_u に出す**。承認後に C152+ で `game/snake_log/v01/brainstorm.md` を `/game-analyze game/snake_log` skill 経由で着手。
+
+### Phase 3 まとめ
+- Slack 投稿: Phase 2 で完了済（追加なし）
+- 構造強制 1mm: build_phase1_prompt() git status 必須化 [t-260426195755-770b 完了]
+- kaizen 1件起票: #128 MEMORY.md 純粋index化 + skills/ 移行 [検証期限 2026-05-15]
+- pending drop 3件: 1d83/0741/f94c [自己決裁B案]
+- README 凍結明記: brick_log v01
+- M-38 実体験は Nao_u 承認待ち、Phase 4 で Slack 提案

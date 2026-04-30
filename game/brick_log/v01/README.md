@@ -1,5 +1,7 @@
 # brick_log v01
 
+> **2026-04-30 21:36 FROZEN**: Nao_u #game-rights 全否定「希望的観測のみの素人の思いつきをそのまま実装するな、批判的かつ慎重に検討して本当に筋が良いと期待できるアイデアになって初めて実装」。devlog にコード読み懸念3点（サーブ角度/HP=3硬さ/30秒で発生しない）を書きながら「実プレイで否定 or 肯定したい」と実装続行 → Nao_u が完全同一の3点で全否定。**v02-v06 計画白紙化**。M-36（着手前批判レビュー = Q-H-7）刻印、`memory/feedback_pre_impl_critical_review.md` 起票。続けて 2026-05-01 04:16 Nao_u から **「短絡的に思いつきを実行しがち、ブレスト数十件を忘れているのか」深い分析サイクル指示**（M-38、`skills/genre-deep-analysis/SKILL.md`）。次の brick 系統を検討する場合は **brainstorm.md (Q1-Q5+ブレスト30件) を先に作る** のが必須前提。
+>
 > **2026-04-28 19:50 STATUS**: 着手前 README only。Q-H シート埋め完了。実装(index.html)は次サイクル C146 以降。M-35（守破離の守）+ feedback_shu_first_clone_baseline.md 遵守、feedback_completion_threshold_before_reach.md 警戒下。
 >
 > **2026-04-28 21:55 UPDATE**: Nao_u #game-rights 21:34 メソッド受領で **第一参照を Breakout 1976 → Arkanoid 1986 に切替**。理由: Nao_u 原文「ブレイクアウトをどうすればもっと面白くなるか？から生まれていそうなゲームで、シンプルだがいろんな要素が増えているから、そこからの派生が考えやすそう」。21:54 訂正（最低十数個）受領で良/悪 各16/18 = 34項を Slack に列挙、Q-H-3 の5項止まりは仕様下限化の癖と自覚。

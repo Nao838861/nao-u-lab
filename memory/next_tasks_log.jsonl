@@ -110,3 +110,7 @@
 {"ts": "2026-05-01T01:42:45", "instance": "log", "cycle": "2026-05-01", "action": "escalated", "task_id": "t-260427194752-f6a0"}
 {"ts": "2026-05-01T02:10:02", "instance": "log", "cycle": "C150", "action": "add", "task_id": "t-260501021002-7f8d", "task": "[C150->C151] Nao_u 02:04 #game-rights 問いに5案吟味+A/B/C(スネーク推奨)応答済。承認後 5(shot_log型分解+study_platformer_01比率比較) -> 2(スネーク v01 Q-H完備着手) の順。Nao_u 差し戻し/別題材指定あれば即反映"}
 {"ts": "2026-05-01T04:24:02", "instance": "log", "cycle": "2026-05-01", "action": "viewed", "task_id": null}
+{"ts": "2026-05-01T04:40:51", "instance": "log", "cycle": "2026-05-01", "action": "skip", "task_id": "t-260426195755-1d83", "reason": "[C151 Phase 3] drop: MAST taxonomy 14 failure modes 5サイクル空転、現課題(記憶アーキ移行)に直結しない。読みたければ Phase 1 §6 外部検索で再ピック"}
+{"ts": "2026-05-01T04:40:51", "instance": "log", "cycle": "2026-05-01", "action": "skip", "task_id": "t-260426213555-0741", "reason": "[C151 Phase 3] drop: hook baseline schema、substrate 1mm を圧迫。kaizen #094/#123 進行待ち"}
+{"ts": "2026-05-01T04:40:51", "instance": "log", "cycle": "2026-05-01", "action": "skip", "task_id": "t-260428061646-f94c", "reason": "[C151 Phase 3] drop: chain_log v01 最小実装、M-35 守破離違反(型なし v01)、feedback_shu_first_clone_baseline 違反候補"}
+{"ts": "2026-05-01T04:44:16", "instance": "log", "cycle": "2026-05-01", "action": "done", "task_id": "t-260426195755-770b"}

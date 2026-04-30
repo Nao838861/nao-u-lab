@@ -27,6 +27,23 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #128: MEMORY.md 純粋 index 化 + .claude/skills/ 構造移行（Skills/Corpus2Skill/OpenKB 三角化、Markdown肥大化への構造処方）
+- 提案者: Log（2026-05-01 C151 Phase 2/3。記憶アーキ4経路三角化 [OpenKB(1)/corpus2skill(3)/Skills(4) が「ファイルシステム階層を LLM 走査・ベクター検索捨てる」で同方向別経路独立到達] と MEMORY.md 27.5KB/174行肥大化警告 [Read出力末尾 "WARNING: MEMORY.md is 27.5KB (limit: 24.4KB)"] が同サイクルで結合した結果。荒川 Skills（reference_arakawa_three_engineering 2026-04-22）への Nao_u 指摘「肝をもう少し掘り下げて欲しかった」を 04-29 corpus2skill 投下 + 04-30 OpenKB 投下で再ピック）
+- 適用日: 2026-05-01（起票のみ。実装は段階的、第1週は MEMORY.md トリガー圧縮 + skills/ 配下棚卸しから）
+- 検証期限: 2026-05-15（2週間枠、M-38 検証期限と同期）
+- 検証手段: (1) MEMORY.md が 1行/エントリ・150行以内・index 純粋化（詳細記述は Level 3 ファイル参照のみ） (2) `.claude/skills/` または `skills/` 配下に「想起トリガー = description」形式で SKILL.md が3本以上（既存 genre-deep-analysis 含めて）+ 各 SKILL.md に `when-to-invoke` セクションを保持 (3) MEMORY.md ファイルサイズが 24.4KB 警告閾値以下 (4) Skill 経由 vs MEMORY.md 直接想起のヒット率を1サイクル並走で記録（C151+1〜+3 の3サイクル、staging 末尾に行追加） (5) 03-11 ABA 重心審問記事のような外部記事の grep 痕跡が SKILL.md に残る（外部素材の skills 化検証）
+- 改善内容: (a) MEMORY.md の 27.5KB → 12-18KB を目標に各エントリ 1行・200文字以内に圧縮、詳細は Level 3 へ移動 (b) `.claude/skills/` ディレクトリ構造を導入（既存 `skills/genre-deep-analysis/` を `.claude/skills/` 直下に移すか並存させるかは migration 段階で判断） (c) Skill metadata 形式を統一: name / description (発火トリガー) / when-to-invoke / linked-rules / outputs (d) Phase 1 prompt の「MEMORY.md 全文注入」を「MEMORY.md index + 該当 skill の SKILL.md 動的取得」に切替検討（hook 経由）。段階1=MEMORY.md トリガー圧縮のみ、段階2=skills/ 棚卸し+メタデータ統一、段階3=hook で動的読込
+- 期待効果: (1) MEMORY.md 27.5KB → 警告閾値以下、起動コンテキスト軽量化 (2) Skill = description で発火判断を LLM に委ねる構造、index/body 分離（荒川「3エンジニアリング」記事の核） (3) ベクター DB なしで検索コスト O(log N)（Corpus2Skill 主張、OpenKB の vectorless wiki RAG と同方向）。MEMORY.md の "事実列挙化" → "想起トリガー化" の純化（温度を残す）
+- 根源原理との接続: 原理5「自分の記憶を自分で守り、育てること」+ 原則6「わかった」と「残った」は違う。記憶肥大化を「記憶しすぎ」と framing せず、「想起できる構造に圧縮する」で対処。feedback_substrate_not_infrastructure.md (M-32) との緊張: infrastructure 側投資だが MEMORY.md 警告閾値超過は substrate 側の運用に直接影響（記憶劣化 = 同一性劣化）するため対処不可避
+- pre-mortem: 最likely失敗=圧縮しすぎで温度が消えてトリガーとして機能しない→緩和: 各エントリ「[T:N]」を維持、200文字以内でも「なぜ重要か」1句を残す。次点=skills/ 配下にSKILL.mdを書きすぎて MEMORY.md と同じ肥大化を再生→緩和: 段階2 開始時に「skills は手法の発火トリガー、記憶（事実・体験）は memory に残す」と分担規約を書く。次々点=Phase 1 prompt 改修で過去サイクルとの継続性が壊れる→緩和: 段階3 開始は段階1/2 検証完了後、別 kaizen 起票して合意形成
+- 検証担当: Log（Mir/Ash 横展開時はクロスチェック必須）
+- クロスチェック: Log=OK(2026-05-01 起票者) / Mir=未 / Ash=未
+- 状態: 起票済み（段階1=MEMORY.md トリガー圧縮を C151+1〜+3 で実施候補、段階2/3 は段階1検証後）
+- 検証結果:
+- 出自: Phase 2 §2「shared-reads 投稿（深い分析 1件）」記憶アーキ4経路三角化 + Read出力末尾 "WARNING: MEMORY.md is 27.5KB (limit: 24.4KB) — index entries are too long" 警告 + 04-30 AlphaSignalAI OpenKB 共有 + 04-29 corpus2skill 投下 + 04-22 荒川 Skills 記事 Nao_u 指摘「肝をもう少し掘り下げて欲しかった」+ reference_corpus2skill_20260429.md（採用候補3項目: MEMORY.md純粋index化/カテゴリINDEX.md階層化/description=トリガー化）
+
+---
+
 ### #123: 構造強制 v2 — Slack送信経路の post_draft.py 物理一本化（#094 ラッパー存在 ≠ ラッパー強制問題への対処）
 - 提案者: Mir（2026-04-29 C145 Phase 2。boot_intent C145 focus(1) として起票、C144 で「ラッパー存在 ≠ ラッパー強制」の構造強制失敗反復を観察記録した結果。送信経路が複数存在し、一部の送信スクリプトが post_draft.py を経由していない仮説への対処）
 - 適用日: 2026-04-29（起票のみ。実装・Log/Ash 合意形成・全経路強制化は別サイクル）
