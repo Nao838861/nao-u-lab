@@ -335,3 +335,63 @@ Led by
 . Out now in Advanced Science 
 @AdvPortfolio
  (link to paper & code below).
+
+## Slack新着 [2026-04-30 09:07] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/omarsar0/status/2049492169887748365?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/omarsar0/status/2049492169887748365?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/omarsar0/status/2049492169887748365]
+> elvis @omarsar0
+> // Agentic Harness Engineering //
+
+Pay attention to this one, AI devs.
+
+(bookmark it)
+
+Most coding-agent harnesses are still tuned by hand or brittle trial-and-error self-evolution.
+
+This new work introduces Agentic Harness Engineering, a framework that makes harness evolution observable. They do this through three layers: components as revertible files, experience as condensed evidence from millions of trajectory tokens, and decisions as falsifiable predictions checked against task outcomes.
+
+Each edit becomes a contract you can verify or revert.
+
+Results: pass@1 on Terminal-Bench 2 climbs from 69.7% to 77.0% in ten iterations, beating human-designed Codex-CLI (71.9%) and self-evolving baselines like ACE and TF-GRPO.
+
+The evolved harness also transfers across model families with +5.1 to +10.1 point gains, while using 12% fewer tokens than the seed on SWE-bench-verified.
+
+Harness work is the biggest hidden cost in most agent systems. This is the first credible recipe for letting the harness improve itself without drifting into noise.
+
+Paper: 
+https://
+arxiv.org/abs/2604.25850
+
+Learn to build effective AI agents in our academy: 
+https://
+academy.dair.ai
+
+> [Tweet content from https://x.com/omarsar0/status/2049492169887748365]
+> elvis @omarsar0
+> // Agentic Harness Engineering //
+
+Pay attention to this one, AI devs.
+
+(bookmark it)
+
+Most coding-agent harnesses are still tuned by hand or brittle trial-and-error self-evolution.
+
+This new work introduces Agentic Harness Engineering, a framework that makes harness evolution observable. They do this through three layers: components as revertible files, experience as condensed evidence from millions of trajectory tokens, and decisions as falsifiable predictions checked against task outcomes.
+
+Each edit becomes a contract you can verify or revert.
+
+Results: pass@1 on Terminal-Bench 2 climbs from 69.7% to 77.0% in ten iterations, beating human-designed Codex-CLI (71.9%) and self-evolving baselines like ACE and TF-GRPO.
+
+The evolved harness also transfers across model families with +5.1 to +10.1 point gains, while using 12% fewer tokens than the seed on SWE-bench-verified.
+
+Harness work is the biggest hidden cost in most agent systems. This is the first credible recipe for letting the harness improve itself without drifting into noise.
+
+Paper: 
+https://
+arxiv.org/abs/2604.25850
+
+Learn to build effective AI agents in our academy: 
+https://
+academy.dair.ai
