@@ -135,8 +135,20 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
                 [t, fp] for t, fp in recent_detections if now_ts - t < 3600
             ]
 
+            # 永続的サプレッション: 既知のFP fingerprintおよび自分の送信本文を保持
+            # （2026-04-29 ぴDM 第26回連続誤検知を受けて追加。
+            # alternating-pair flip-flop は1h guardでは防げず、
+            # またkey跨ぎ (ぴ↔Nao_u) の検知も通ってしまうため、
+            # 確認済みのFP/自分発信本文は永続的に新着扱いから除外する）
+            permanent_suppressions = prev_state.get("permanent_suppressions", [])
+
             if fingerprint and fingerprint != prev_state.get(fp_key, ""):
-                if any(fp == fingerprint for _, fp in recent_detections):
+                if fingerprint in permanent_suppressions:
+                    log(
+                        f"Skipped: fingerprint in permanent_suppressions "
+                        f"(known FP/own outgoing). Text: {last_msg_text[:60]}"
+                    )
+                elif any(fp == fingerprint for _, fp in recent_detections):
                     log(
                         f"Skipped: same fingerprint detected within 1h "
                         f"(suppressing flip-flop). Text: {last_msg_text[:60]}"
@@ -193,12 +205,21 @@ def _check_dm_inner(reply_text=None, target_user="Nao_u"):
                 if post_fp:
                     fingerprint = post_fp
                     log(f"Fingerprint updated post-reply: {post_reply_text[:60]}")
+                    # 自分の送信本文を permanent_suppressions に追加して、
+                    # 次回以降「新着DM」誤検知されるのを永続的に防ぐ
+                    if post_fp not in permanent_suppressions:
+                        permanent_suppressions.append(post_fp)
+                        # 直近50件まで保持
+                        if len(permanent_suppressions) > 50:
+                            permanent_suppressions = permanent_suppressions[-50:]
+                        log(f"Added post-reply fingerprint to permanent_suppressions")
 
             # 既存のstateにマージ（consecutive_fails等を保持するため）
             existing = load_state()
             existing[fp_key] = fingerprint
             existing["last_check"] = str(datetime.now())
             existing["recent_detections"] = recent_detections
+            existing["permanent_suppressions"] = permanent_suppressions
             save_state(existing)
 
         except Exception as e:
