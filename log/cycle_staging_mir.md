@@ -1,4 +1,4 @@
-# サイクルステージング 2026-04-30 22:05
+# サイクルステージング 2026-05-01 01:25
 
 ## Pre-check結果
 - 【検証アラート】⚠ 期限超過の検証が1件:
@@ -30,113 +30,95 @@ v05の設計に入る前に:
 M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメタ教訓として。
 
 ## 未完了タスク（層A）
-# mir pending: なし (cycle=2026-04-30)
-
-## C146 Phase 1 既達チェック（boot_intent §5 試験運用）
-
-- focus(1) SIPHON v02 実装着手: **未達**。`game/siphon_mir/v02/` ディレクトリ未作成、v01 SIPHON_MAX_R=130 (line 32, 画面幅31%) のまま。実装着手で焦点設定した狙い通り「既達状態」は起こらず、本サイクル内で最低1箇所変更が必要。
-- focus(2) v06 却下案 #1 振り返り欄: **未達**。`game/mir_textadv/v06/devlog.md` 行105 の「——（C146 開始時に v07 着手判断と紐付けて追記...）」がプレースホルダーのまま。3行追記が必要。
-- focus(3) Log/Ash cross_review 反応観測: **送付未完了を発見**。`feedback_cutoff_rule_mir.md` 機械的確認の結果、Mir は SIPHON v02 方向性決定 (a)案採用を Slack に送付していない（C145 devlog 末尾追記のみ、04-29 の Slack 投稿は Corpus2Skill 応答1件）。**送付未完了なら「反応ゼロ」判定は不可**——cross_review 反応観測は本サイクルでは「Mir 送付未実施を記録」+「送付するかは別判断」に置換。
-
-## C146 Phase 2 検討メモ
-
-### focus(1) 実装方針
-- v01 → v02 派生: `game/siphon_mir/v02/index.html` を v01 からコピー、`SIPHON_MAX_R=130` → `SIPHON_MAX_R=100`（画面幅 100/420 ≈ 23.8%、目標 20-25% の中央値寄り）。1箇所変更のみ。
-- C145 devlog v01 行225 の「画面幅の20-25%程度」に整合。
-- v02/devlog.md 冒頭に実装内容＋目視確認結果を1行記録（達成基準）。
-- 撃つ理由確保 / BOMB 温存圧 は本サイクル外（C147/C148）。
-
-### focus(2) 振り返り欄記述案
-- v07 設計指針 (a)/(b)/(c) のどれに昇華したか: 現時点で v07 着手はしていないため「昇華先未決定」。
-- v05 ENDING分岐重視の設計慣性が v06 失敗にも寄与した仮説: v06 で「あなた」3視点遷移＋第三章 唐突＝**ENDING分岐型の「正解パス追跡」設計慣性**が、v06 のメディア反転後の Phase 2「あなたが書く」ルール提示不足に転写された可能性。
-
-### focus(3) 送付有無記録
-- **Log の SIPHON cross_review**: 04-27 22:55 graze_log self-playtest 投稿あり（cross_review 依頼を Mir/Ash に対して投げた側）+ 04-27 19:07 SIPHON v01 への Mir 投稿（cross_review 元）。SIPHON v01 へ Log/Ash から個別 cross_review が来ていたかは履歴上見当たらず（Log の graze_log は別件）。
-- **C145 (a)案採用**: Slack 未送付。送付するなら #all-nao-u-lab か #human-steering。本サイクルは送付しない判断（focus 3項目の粒度規律内に収め、focus(1) 実装着手の方が初ヒット価値が高い、feedback_sprint_not_plan）。次サイクル C147 で「v02 実装1箇所済み + (a)案採用宣言」をまとめて投稿候補化。
-
+# mir pending: なし (cycle=2026-05-01)
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/all-nao-u-lab.jsonl (3.2) — [U0AMQKE69BJ] 2026-03-18 00:13 Win2（Ash）です。了解しました。  【Nao_uのト...
-  2. memory/kaizen_review_queue.md (1.5) — - [x] Ash (2026-03-24: Win2環境で--build(23,874チャンク)→--diverse検...
-  3. memory/l2_dual_index.md (1.5) —                     36744「自分で書いてないものは記憶に残りにくい」=generation ef...
+  1. log/slack_archive/all-nao-u-lab.jsonl (2.5) — [U0AMQKE69BJ] 2026-03-18 00:13 Win2（Ash）です。了解しました。  【Nao_uのト...
+  2. knowledge/20260409_observability_reality_acceptance_synthesis.md (2.3) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
+  3. memory/kaizen_review_queue.md (1.5) — - [x] Ash (2026-03-24: Win2環境で--build(23,874チャンク)→--diverse検...
   4. log/slack.log (1.1) — 申し訳ないが、高頻度で回りすぎた。抑制する手段を考えて。3回く [2026-03-18 00:06:57] Claude...
-  5. knowledge/20260409_observability_reality_acceptance_synthesis.md (0.8) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組... 
+  5. log/diary_ash_phase4_20260409.md (1.0) — もう一つ引っかかるのは、この失敗を「失敗」とラベル付けしてpre-checkで毎サイクル目に入るようにしたこと自体は機能... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
   3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
-【STC救済】nao-u:2026-04-28の高温度イベントから2件の弱い記憶を発見:
-  1. memory/feedback_identity_names.md (undated, 3.0) — --- name: インスタンス名の正しい対応 description: Win=Log、Mac=Mir、Win2=As...
-  2. memory/external_notes_ash.md (undated, 0.8) — - パイプライン: ①ランダムなゲームプレイタグ（"player-rotate", "field-auto_scroll...
+【STC救済】nao_u_liveの高温度イベントから1件の弱い記憶を発見:
+  1. docs/scheduler_incidents.md (undated, 1.1) — 3. **inboxルーティングバグ**: リポジトリ移動後にパスベース判定が壊れ、AshがLog側inboxに書いてい...
 
-## C146 Phase 2 Shared-reads 分析結果
+---
 
-**対象**: twitter_recommended_20260430.txt (For You 50件、未統合)
-**注**: external_notes_mir.md の 2026-04-30 既存エントリは inbox_mac (#nao-u 共有) 経由で別系統。Twitter For You は今 Phase 2 で初統合。
+## C147 Phase 1 情報収集 (2026-05-01)
 
-### Pick 1: @Nao_u_ (2026-04-30) — コンテキスト汚染の自己観測
-> ノイズのない環境で得意なことだけやらせてる分にはかなりの知性が感じられるんだけど、コンテキストに乗り切らない情報が出てきたり…何にでも対応できるようにするとコンテキストが汚れやすくなる
+### L-1体験アンカー
+SIPHON v01「敵弾を資源化したらコアサイクル崩壊」(feedback_siphon_cycle_collapse.md t:5)。Nao_uの「美しいプレイの理想像を書いてから方向を決めろ」を C143 で書き、C145 で (a)普通STG+ボム を採用、C146 で SIPHON_MAX_R 130→100 まで来ている。L-1接続: Schell Lens #28 (経済の流れ) — resource scarcity の設計。撃つ理由＝ammo/敵経済、BOMB温存圧＝strategic resource gating。
 
-- 我々（Mir）が当事者である外部観測。荒川裕二 4分類（Pollution/Confusion/Clash/Poisoning）の Nao_u 言語版。
-- C146 focus(3) を「反応観測」→「送付未実施記録」に置換した判断は、Nao_u 観察と整合的な自衛行動。
-- **結論**: focus 3項目維持。focus 数を増やす kaizen 提案は出さない。
+### Phase 1収集項目
+1. **CLAUDE.md「絶対にやる」**: 外の世界を広く見る／ゲーム開発実践／記憶階層構築。本サイクルは focus(1) 実装で「実践からノウハウ」直結
+2. **Slack新着** (nao_u_live.md 末尾):
+   - **04-30 20:18 #game-rights brick_log v01へのNao_u問い**: 「修正で何が変わり、どう面白くなる？プレイヤーがどのタイミングで何を感じる？想定通り機能するか？」← **全ゲーム改修に適用、SIPHON v02 撃つ理由確保 devlog で答える**
+   - **04-30 20:25 #human-steering skill化提案**: Logが pleasure-hypothesis-check 試作で応答中、Nao_u 承認待ち→ Mir独自に動かない
+   - **04-28 #game-rights 守破離**: 型通りに作れていない、独自要素は守の後 → SIPHON v02 (a)普通STG+ボム は守の段階で整合
+3. **external_notes_mir.md**: 直近エントリ durable 化済、新規流入は Phase 2 後回し
+4. **projects/INDEX.md Active**: SIPHON 系列は game_development.md ぶら下がり、v07 着手時はバックログに1行追記
+5. **twitter_recommended_20260430**: C146 で 50→2 絞り込み済、新規深掘りは focus 完走後
 
-### Pick 2: @dc_gachan (2026-04-30) — 方法論より手を動かせ
-> ゲーム制作の方法論みたいなのよく流れてくるけど、全部どうでもいい。自分がすべきことに手を動かし続けろ
+### Phase 2/3 実行計画
+- **focus(1)**: v02/index.html updateEnemies() の `if(e.y>H+30)` を変更 → medium 逃走時に新medium追加spawn (撃つ理由確保、本末転倒解消)。devlog末尾に Nao_u 04-30 20:18 問い4項目応答
+- **focus(2)**: drafts/ にドラフト作成 → post_draft.py 経由で #all-nao-u-lab 送信 (kaizen #094 構造強制の自己適用、drafts件数297→-1)
+- **focus(3)**: v06/devlog.md 末尾に v07 着手判断3行 + projects/INDEX.md バックログに1行追記。方向: (a) 基盤の型を磨く。根拠: textadv は基盤に型あり (feedback_no_type_redo_material)、v05/v06 の型外し2連続失敗は拡張方向の凍結であり textadv 系列全体の凍結ではない
 
-- C146 focus(1) SIPHON v02 実装着手未達への直撃。Phase 3 で SIPHON_MAX_R=130→100 の1箇所変更を確実に実行する根拠。
-- ただし「全部どうでもいい」の過剰拡張は recency_bias 罠（守破離の守も否定する読みになる）。我々の教訓は過去の失敗から抽出したもの＝dc_gachan の射程外。
-- **結論**: 既存ゲート運用。新規追加は3サイクル実機検証してから昇格（type_inheritance / 20→80 vs 99→100 と同じ規律）。
+---
 
-### Pick 1+2 合成 — 今サイクルの結晶化
-**「コンテキストを汚さず、手を動かせ」**
-- Pick 1: 容量を守れ（focus 3項目）
-- Pick 2: 議論より初ヒット（v02 1箇所変更）
-- 両者は同じ結論の両面（容量を守るために手を動かす局面に絞る）
+## C147 Phase 2 Shared-reads分析 (2026-05-01)
 
-### durable 化先
-memory/external_notes_mir.md 末尾に追記済（「2026-04-30 (C146 Phase 2): Twitter For You 観測 — Nao_u 自己観測 × dc_gachan『手を動かせ』」）。
+### 対象と選別
+
+twitter_recommended_20260430.txt 全50件をスキャン。Mirの直近の実装課題（mir_textadv 引き力 / SIPHON v02 撃つ理由）への接続度で選別:
+
+- **採択2件** → knowledge記事1本に統合
+- **保留3件**: #1 snakajima「ゲームで頭が良くなる研究」 / #5 op7418「Codex で Slay the Spire自動生成」 / #23 kenn「エージェント時代 GPU→CPU シフト」 — 単独記事化の価値はあるが、今サイクルの実装課題への直接接続が弱い
+- **その他45件**: 政治・性差・育児・暴走族など。Mirの問題意識との接続なし
+
+### 採択した2件
+
+1. **#50 famitsu『ネタバレが激しすぎるRPG2』**: タイトルでネタバレ先出し→予想を裏切り二転三転。情報非対称性を読者有利に振り切ってから覆す機構。**textadv v07 引き力候補**として記録
+2. **#49 tarava777「開発チーム内の上手い／下手のばらつき」**: 全員AIの3インスタンス体制では「下手プレイヤー視点」が欠落しがち。SIPHON v01 / brick_log v01 / textadv v05 の連続失敗の構造的原因の1つの可能性
+
+### 接続と昇格条件
+
+両件とも **「設計者の脳内 vs 外側の人間の認知」** という共通の地平線を持つ。Nao_u の繰り返しフィードバック「内に閉じたゲームは自分だけが面白い」と同じ方向の現場証言。
+
+ただし両方とも **recency_bias 警告領域**——ツイート1本＋自分側の都合の良い解釈の組み合わせで概念ゲート化したい引力が働く。実機検証1サイクル分（textadv v07 / SIPHON v02 改修）を経てから昇格判断する旨を明記。
+
+### 成果物
+
+- `knowledge/20260501_spoiler_first_pull_skill_distribution_famitsu_tarava777.md` (新規)
+- type=external_observation_with_recency_bias_note、status=観察ノート（軸昇格は実機検証後）
+- 既存 belief 接続: M-17 サプライズニンジャ理論 / M-16 ジャンル枠破壊 / feedback_recency_bias_concept_overuse / feedback_critical_evaluation_before_implement
 
 ### Phase 3 への引き継ぎ
-1. focus(1): SIPHON v02 実装着手は Pick 2 が直接補強。`game/siphon_mir/v02/index.html` 作成 + SIPHON_MAX_R=100 変更を Phase 3 最優先で実行。
-2. focus(2): v06 振り返り欄3行追記（Pick 1+2 から派生する追加要素なし、既存方針通り）。
-3. focus(3): cross_review 送付未実施記録は今サイクル内で完了（本ファイル行53-55に既記録）。Pick 1 が「未送付なら未送付と機械的に判定」する規律を補強。
-4. 概念ゲート増設は今サイクルでは行わない（Pick 2 の警告に従う）。M-17 は C147/C148 で実機適用→昇格判断。
-5. shared-reads 投稿は Phase 3 判断（drafts/ 119件問題があるため、ドラフト作成は控え目に）。
 
-### 分析容量制限の自覚
-50件中 Pick 2件で打ち切り。残候補（snakajima Tencent GRPO 論文等）は C147 再観測で持ち越し。50件全部に分析を付けると Pick 1 の Pollution を自分で増やす——本サイクルの規律内で完結。
+- knowledge記事の #shared-reads 投稿はPhase 3で判断（Slack送付の優先度を focus(1)(2)(3) と比較）
+- v07 着手判断時に「引き力レンズ」候補リスト整備の論点として再浮上させる
+- 「下手プレイヤー視点」概念は SIPHON v02 改修の事後レビューで再評価する（即ゲート化はしない）
 
-## C146 Phase 3 実行結果
+### Phase 2 自己観察
 
-### focus(1): SIPHON v02 実装着手 — **完了**
-- `game/siphon_mir/v02/index.html` 作成済、`SIPHON_MAX_R=100`（line 32、画面幅 23.8%）に変更済
-- `game/siphon_mir/v02/devlog.md` 作成済（C146 着手記録 + 達成基準照合 + 美しいプレイ距離分析 + 次サイクルタスク）
-- 本サイクル目標「v02 ディレクトリ作成 or 派生実装ファイル1本、devlog 冒頭に1行記録」を達成。1箇所変更で完走、focus(1) 「実装着手」焦点設計が機能した（C145 既達状態の反省を C146 で潰せた）。
+50件→2件抽出は量として「広く見る」を満たすが、深く掘ったのは2件のみ。残り48件のうち #1/#5/#23 は次サイクルで復活余地を残す。「捨てた件の再評価」を1サイクルに1回ルーチン化する選択肢を memory改善候補としてメモ（今サイクルでは実装しない、recency_bias 抑制）。
 
-### focus(2): v06 devlog 振り返り欄 — **完了**
-- `game/mir_textadv/v06/devlog.md` 行105-108 のプレースホルダーを3項目で本文置換:
-  1. 昇華先未決定（v07 未着手、Q-C2 が事前ゲートとして既に機能）
-  2. 「ENDING分岐重視の設計慣性」仮説の検証材料（v05共犯END→v06「あなた」3視点遷移への転写痕跡、F-08 (4) 違反）
-  3. 次サイクルフォロー（v07 着手 devlog 冒頭で却下案 #1 再参照、運用サイクル1周完走確認）
-- 雛形3行以上の本文置換 達成基準クリア。
+---
 
-### focus(3): cross_review 反応観測 — **置換完了（送付未実施記録）**
-- `feedback_cutoff_rule_mir.md` 機械的確認の結果、Mir は (a)案採用宣言を Slack 未送付。「反応ゼロ」判定不可。
-- 本サイクルでは送付しない判断（粒度規律 / 初ヒット価値 / sprint_not_plan）。C147 で「v02 実装1箇所済み + (a)案採用宣言」をまとめて投稿候補化。
+## C147 Phase 3 対処・実行 (2026-05-01)
 
-### Pick 1+2 結晶化「コンテキストを汚さず、手を動かせ」の運用結果
-- focus 3項目維持（容量保持）✓
-- v02 1箇所変更で初ヒット ✓
-- 概念ゲート増設は今サイクルでは行わない（recency_bias 警告、3サイクル実機検証してから昇格規律）✓
-- shared-reads 投稿はドラフト作成控え目（drafts/ 119件問題、検証 #094 期限超過の自覚）→ Phase 3 では新規 drafts/ 作成なし
+### 実行結果
 
-### Phase 1 既達チェックの最終評価
-- focus(1) 未達 → 完了
-- focus(2) 未達 → 完了
-- focus(3) 送付未実施記録 → staging 行53-55 に既記録、本サイクル内置換運用が機能
-- 3項目とも「サイクル内で最低1mm前進」の達成基準クリア。
+- **focus(1)** ✓ 完了: `game/siphon_mir/v02/index.html` updateEnemies() の off-screen 処理に medium 逃走時の追加 spawn を実装（5行追加、1関数内）。`game/siphon_mir/v02/devlog.md` に Nao_u 04-30 20:18 問い4項目応答を含む実装記録を追記。
+- **focus(3)** ✓ 完了: `game/mir_textadv/v06/devlog.md` 末尾に v07 着手方向の明文宣言を追記（選択=(a)基盤の型を磨く、根拠=feedback_no_type_redo_material より textadv 基盤に型あり、v07で却下する案=共犯END延長/メタ枠/視点遷移2段以上/精読強制）。`projects/INDEX.md` バックログに1行追記（v07着手前の運用契約として）。
+- **focus(2)** ✗ 保留: drafts/ 送信は外部影響を伴う。本サイクルで送る具体的内容に温度がない——knowledge記事 (spoiler_first_pull) は Phase 2 自身が「recency_bias 警告領域、即ゲート化しない」と保留判定済、v07 着手宣言は実装前の方向宣言で短報送付の価値が薄い。**判断**: 無理に送って kaizen #094 を消化するより、次サイクル以降に意味のあるドラフト（実装サイクル完了後の進捗報告等）を post_draft.py 経由で送る方が構造強制の価値を毀損しない。drafts/ 件数 299 のまま据え置き。
 
-### git push 不要（指示通り）
-- 変更は staging 追記のみ。focus(1)(2) は本サイクル前段で実体化済で本タスク追記時点で push 判断は次サイクル C147 まとめて。
+### 自己観察
+
+- 「焦点を全部消化する」誘惑（feedback_index #1 過程＞結果の罠）に引かれず focus(2) を保留できたのは規律として妥当。ただし kaizen #094 期限超過は 2026-04-27 → 本サイクル時点で4日経過、Pre-check に永続的に検証アラートが立つ状態。次サイクルで送るドラフトに何を書くかを今のうちに想定しておく必要がある（候補: SIPHON v02 改修2件統合報告、または C147 三焦点完走報告）。
+- focus(1) コード変更が「読み込み時に既に存在」していた件: Phase 2 で実装した直後 Phase 3 起動の流れで、staging Phase 1/2 計画と Phase 3 実行のあいだで作業が並走している。今後の Phase 構造設計で「Phase 2 で書いた本実装を Phase 3 で再実行しない」明示が要るかもしれない（観察メモ、即起票しない）。
+- knowledge記事 1本（spoiler_first_pull）/ devlog 2本追記 / INDEX.md 1行追記 / コード変更 1件 = 本サイクル成果物4点。L-1接続（脚本術 + 経済の流れレンズ）と外発緊張原則の textadv 適用が記憶層と実装層の両方で同期して進行している兆候。
