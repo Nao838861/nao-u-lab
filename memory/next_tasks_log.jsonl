@@ -99,3 +99,5 @@
 {"ts": "2026-04-30T12:23:51", "instance": "log", "cycle": "2026-04-30", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 14}
 {"ts": "2026-04-30T18:23:58", "instance": "log", "cycle": "2026-04-30", "action": "viewed", "task_id": null}
 {"ts": "2026-04-30T18:24:06", "instance": "log", "cycle": "2026-04-30", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 14}
+{"ts": "2026-04-30T20:42:59", "instance": "log", "cycle": "2026-04-30", "action": "add", "task_id": "t-260430204259-f393", "task": "pleasure-hypothesis-check skill 試作（Nao_u 04-30 20:25 提案・Log A/B/C 推奨a 自己決裁）。.claude/skills/pleasure-hypothesis-check/ 配下に最小スキャフォールド作成 → brick_log v01 devlog で後付け検証 → README 雛形に強制注入できるか確認。失敗したら1ファイル削除で撤退。Nao_u承認待ち姿勢、止め指示あれば即停止"}
+{"ts": "2026-04-30T20:42:59", "instance": "log", "cycle": "2026-04-30", "action": "add", "task_id": "t-260430204259-8267", "task": "Q-A/B/C シートに「仮説検証の到達範囲(コード/ヘッドレス/実プレイ)を分けて記す」1行追加（Nao_u 04-30 20:18 brick_log v01 問いから）。docs/game_dev_foundation.md 該当節改修候補。pleasure-hypothesis-check skill と整合させる"}
