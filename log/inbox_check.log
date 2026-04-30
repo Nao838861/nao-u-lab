@@ -3482,3 +3482,6 @@ Nao_u が #nao-u に貼った URL は Ash の #shared-reads 投稿「多読跳�
 [2026-04-30 20:27:12] Inbox win2 has content — waking Claude
 [2026-04-30 20:27:12] [LARGE_INBOX] win2: content 28081 bytes > 20000, written to _inbox_pending_win2.md
 [2026-04-30 20:32:12] Claude wake timed out for win2 — restoring inbox
+[2026-04-30 21:37:05] Inbox win2 has content — waking Claude
+[2026-04-30 21:37:05] [LARGE_INBOX] win2: content 30013 bytes > 20000, written to _inbox_pending_win2.md
+[2026-04-30 21:42:05] Claude wake timed out for win2 — restoring inbox
