@@ -340,7 +340,16 @@ function updateEnemies(){
       eBullets.push({x:e.x,y:e.y,vx:Math.cos(ang-spread)*spd,vy:Math.sin(ang-spread)*spd,r:4});
     }
     // Off screen
-    if(e.y>H+30){ enemies.splice(i,1); continue; }
+    if(e.y>H+30){
+      // v02 (C147): medium逃走ペナルティ — 撃ち落とさないと弾源が増え続ける
+      // 本末転倒（撃たない方がパワーアップアイテムを大量に吐く）の発生源を消す
+      if(e.type==='medium'){
+        const margin=50;
+        const nx=margin+Math.random()*(W-margin*2);
+        spawnEnemy('medium', nx);
+      }
+      enemies.splice(i,1); continue;
+    }
     // Player collision (iframe check)
     if(S.iframe<=0){
       const d2=dist2(S.px,S.py,e.x,e.y);
