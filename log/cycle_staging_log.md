@@ -175,5 +175,37 @@ Phase 1 §2「持ち越し: 5+サイクル持ち越し3件 drop/escalate 判断�
 4. **新規 next_tasks 起票**: 「M-40 を事前ゲート化するため『揺れ量・振幅 2回目指摘 → 判定機構を作る方を次の実装より優先』を運用化」（projects/INDEX.md or kaizen 起票候補）
 
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-01 10:38)
+
+### 1) Slack #game-rights M-40 + self_judgment 提示確認
+post_log_game_rights_20260501_m40_self_judgment.py を実行 → `{'ok': True, 'skipped': True, 'message': 'Duplicate diary post detected (local cache)'}`。**10:11 push 時に既投稿済**を確認。Phase 2 §6 推奨 B (self_judgment.md 単独提示) は実体として完了しており、Phase 3 で重複は発生させなかった。
+
+### 2) next_tasks 整理（drop 1 / escalate 1 / 新規 1）
+- ✅ **drop**: t-260427074530-e8b6 (Verbalized Sampling) → kaizen #106 同方向確立で低 ROI。`python next_tasks.py --instance log done` 実行済
+- ✅ **escalate**: t-260427164058-12a7 (M-10〜M-40 タグ付け) → 連続5サイクル警告がそのまま escalation シグナル。pending 維持で次サイクル Phase 3 着手予約
+- ✅ **新規起票**: t-260501103604-2063 「M-40 事前ゲート化運用: 揺れ量・振幅 2回目指摘 → 判定機構優先」発火条件付きハーネス化、検証期限 2026-05-15
+
+### 3) #kaizen-log 投稿（検証ファースト遵守）
+post_log_kaizen_log_20260501_phase3_verification_first.py → ts=1777599475.547579、**post_draft.py 経由送信成功 + .archive へ論理削除完了**（kaizen #094 ドッグフード3サンプル目）。
+
+投稿内容:
+- 新規 kaizen 提案なし（検証ファースト原則 #114 遵守）
+- #094 検証結果更新: (1)(2) 達成 / (3) drafts 316件 (起票時119→316、+197) で**悪化**。.archive 102件、採用率24%
+- #123 番号衝突解消の Ash 反応催促（04-30 期限超過 → 05-01 持ち越し、t-260429063215-a819）
+- Phase 3 運用更新5点を kaizen ではなく「実装」として記録（混同防止）
+- drafts +27/3日 = 月次推定 +270件、年内 1000+ 軌道。frame検査一本化の緊急度を Mir/Ash に再提示
+
+### 4) Active プロジェクト更新
+- **brick_log (game_development.md)**: v05 self_judgment.md 提示 = M-40 最初の実例として記録される。次サイクル v06 着手判断は (a) 段階値比較版 v05a/b/c/d 並列 (b) 判定機構4点（過去ベンチ/映像レンダ/段階値比較/閾値経験）優先構築 のいずれか。新規 next_tasks 2063 と接続
+- **memory_redesign.md**: MEMORY.md 27.7KB 超過（>24.4KB 制限）。corpus2skill 2026-04-29 記録済 → index 純化への着手は未。次サイクル空サイクル候補
+
+### 5) [他インスタンス洞察] 21件処理見送り
+Phase 1 §0で staging に列挙されたが、本サイクルは M-40 同日刻印 + 検証ファースト遵守 + Slack 既投稿確認 + next_tasks 3件操作 + kaizen-log 投稿 で実装容量上限。21件は次サイクル Phase 1 で再走査時に処理判断。
+
+### 6) Phase 3 サマリ
+- Slack 投稿: 1件 (#kaizen-log) + 既投稿確認 1件 (#game-rights)
+- next_tasks 操作: drop 1, add 1, escalate 維持 1
+- 新規ファイル: drafts/post_log_kaizen_log_20260501_phase3_verification_first.py (送信後 .archive 移動済)
+- 検証実行: kaizen #094 (1)(2) ✓ / (3) ✗ 悪化を確認、#123 → #127 リネーム待機を Ash に催促
+- 検証ファースト遵守: 新規 kaizen 提案 0件（既往 #094/#123 整理優先）
+- M-40 違反パターン自己観察: 1件（事前ゲートでなく事後自己診断としての M-40 運用 → 新規 task 2063 で事前ゲート化試行）
