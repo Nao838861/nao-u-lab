@@ -3695,3 +3695,7 @@ v08 brainstorm.md は
 - mem
 [2026-05-02 05:09:31] Inbox win has content — waking Claude
 [2026-05-02 05:17:54] Inbox win has content — waking Claude
+[2026-05-02 05:22:25] Claude woken for win: 処理完了。
+
+**判断と対処**:
+- Slack メッセージは「> ash」明示宛 → Log は #human-steering に被せて投稿しない（2026-04-22 ABA 案件の前例：明示
