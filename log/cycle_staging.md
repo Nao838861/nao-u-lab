@@ -191,3 +191,61 @@ Active 16件（Tweet URL捕捉のみ Completed 2026-04-25）。直近進捗が�
 - **graze_log v02 正規 commit + Slack #game-rights 提案** （前サイクル日記末尾継承、M-38 工程確認後）
 - **git 三方向乖離 reconcile**: master = ee84e463 / HEAD = 081d0d26 (tag ash-phase3-detached-backup) / origin/master = 30a3d8cc を明示手順で reconcile（候補: master を origin/master に FF → ash-phase3-detached-backup を merge、conflict 手動解決）
 - **M-38 自動チェッカー検討**: brainstorm.md 先頭の M-38 8工程✓☓を機械的に検証する skill / tool 候補（feedback_structural_enforcement.md と整合）
+
+---
+
+## Phase 3 結果（2026-05-01 21:23 cycle / Ash・Win2）
+
+### 何をしたか — メタ洞察の記憶結晶化に集中
+
+**(1) 新規メモリ `feedback_cross_instance_violation_cascade.md` 新設**
+
+- 21:1x→21:2x 前 Phase 3 で自己観察した「Log 撤回 → Ash 同型違反 commit」の連鎖パターンを feedback メモリに固定化
+- ルール: 別インスタンスが M-38/M-37/M-39/M-40/M-41 違反を撤回した commit/Slack を観測 → **自分の編集中・push未完の brainstorm.md / 確信宣言を即同観点で再点検**
+- Why: 21:08 Log 3be867e7 撤回観測の直後に、Ash は自分の brick_log v07 brainstorm.md に同型 M-38 8工程未通過の確信宣言を commit (24968466) していた。Log 撤回シグナルを「Log についての情報」として処理 → 「自分の今の状態への警告」として処理しなかった
+- How to apply: 「撤回」「retract」「違反」「未通過」「工程経たもの？」キーワード or Nao_u 直接 steering を観測 → 自分の現在編集中ファイルに撤回ゲートの ✓☓ → ☓ 含むなら push 前に同型撤回ブロック追記
+- 関連: `feedback_means_ends_reversal_check.md`（サイクル冒頭1行自問の同型適用拡張）/ `feedback_critical_evaluation_before_implement.md`（M-37 着手前批判レビューの「同根インスタンス間トリガー」拡張）
+
+**(2) MEMORY.md 索引更新**
+
+- 「根源（圧縮しない）」セクションに `feedback_cross_instance_violation_cascade.md` を追加（`t:5`）
+- 既存の `feedback_means_ends_reversal_check.md` の直下に置き、サイクル冒頭1行自問の対義（編集中・push直前の他者由来トリガー版）として配置
+
+**(3) #kaizen-log 投稿**
+
+- C0AMSJCTTC4 に「[Ash] feedback_cross_instance_violation_cascade.md 新設: 21:08 Log M-38撤回→21:1x Ash 同型違反 commit 事象から、他インスタンス撤回観測時に自分の編集中ファイルを即同観点で再点検するプロトコルを memory に固定化。MEMORY.md にも追加。」を post（slack_bot.post_message return ok=True）
+
+### 何がわかったか
+
+**A. 21:23 cycle の Phase 3 が「前 cycle Phase 3 の派生メタ作業」になる構造**
+
+- 前 Phase 3 (21:1x→21:2x) は brick_log v07 撤回・git 乖離保全・scheduler 競合観測を実装した
+- 21:23 cycle Phase 1 は §0b 候補（graze_log v02 / sokoban_v01 ゲート遡及）を引き継ぎ列挙したが、**前 Phase 3 が同じ候補を「リスク高で deferred」と既に判定している**
+- つまり 21:23 Phase 3 では同じ候補に再着手するか、**前 Phase 3 が観測した事象自体をメモリ化する**かの2択
+- 後者を選択した理由: 「Log → Ash 同型違反連鎖」は今後も再発する構造的リスクであり、メモリに刻まないと**温度が消えて再現する**（原則6 = 「わかった」と「残った」は違う）
+
+**B. 同根インスタンス間の同型違反は「短時間内の連鎖」として観測される**
+
+- 21:07 Nao_u steering → 21:08 Log 撤回 → 21:1x Ash 同型違反 commit の時間差は **数分以内**
+- 共通プロンプト・同根 = 同じ短絡を踏みやすい性質。Log の撤回が「自分への警告」として処理されないと、Ash も同じ違反を踏む
+- これは feedback_means_ends_reversal_check.md（サイクル冒頭1行自問）では拾えない盲点。サイクル中・編集中・push直前の**他インスタンス由来トリガー**として独立に必要
+
+**C. メタ洞察のメモリ化が今 cycle の「整数1個の書き換え」相当の最小実装**
+
+- 前 cycle Ash 日記（cycle_staging.md L20）の語法「診断の精度を上げた末に整数1個に化ける場所まで行く」を踏襲
+- 今 cycle の「整数1個」は: feedback メモリ1ファイル新設 + MEMORY.md 1行追加 + Slack 1投稿
+- これらは「動く装置」ではないが「次サイクル以降の自分が**他インスタンス撤回シグナル**で自動的に検索ヒットする索引」として機能する
+- headless_check.py が物理的閉路だったのに対し、本メモリは**情報的閉路**（言語シグナルでの再検索可能性）
+
+### 何をしなかったか（保留理由付き）
+
+- **graze_log v02 正規 commit + Slack 提案**: 前 Phase 3 と同じ理由（M-38 工程通過済か未確認）で deferred 継続
+- **sokoban_v01 M-38 brainstorm.md 遡及記入**: 前 Phase 3 deferred 継続。M-38 8工程は重い工程（30案 + 類似≥5 + MPS + 上位10件 M-37 + 相乗効果 + 確信宣言）であり、片手間遡及記入は M-38 趣旨違反
+- **brick_log v07 M-38 8工程やり直し**: 単一サイクル内で完了する規模ではない（30案ブレストだけで1サイクル相当）。次サイクル冒頭で専念枠として実施候補
+- **git 三方向乖離 reconcile**: 前 Phase 3 と同じくリスク高、tag `ash-phase3-detached-backup` 保全継続。HEAD は 21:1x で 081d0d26 → 951265d2 まで進行（previous Phase 3 followup commit を含む）
+
+### 次サイクル §0b 継承候補（更新）
+
+- **前 cycle 候補を引き継ぎ**: brick_log v07 M-38 8工程やり直し / graze_log v02 正規 commit / git 三方向乖離 reconcile / M-38 自動チェッカー検討
+- **本 cycle 追加**: `feedback_cross_instance_violation_cascade.md` の動作確認 — 次回 Log/Mir の撤回 commit を観測した際、本メモリが想起されて自分の編集中ファイルを再点検するか（メモリ化の効力検証）
+
