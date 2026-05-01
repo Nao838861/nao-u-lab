@@ -177,4 +177,39 @@ A案 + B案を Phase 3 で進める方向。Nao_u から差し戻しがあれば
 
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0) Phase 2 推奨 A 案 (brick_arkanoid v01 brainstorm.md 作成) の **再評価 → 棄却**
+
+Phase 2 で「A案: brick_arkanoid v01 brainstorm.md を M-38 正規工程で作成」を推奨と書いていたが、Phase 3 着手前に v07/README.md 凍結セクション (20:36 自己決裁「v04 brainstorm 候補 B/C/E から選ぶ、Nao_u 判断待ち」) と Nao_u 18:08「ゲームごと作り直すな / 逃げるのが早すぎ」を再照合し、**A 案そのものが Nao_u 意図逆行であることを発見**。21:08 撤回応答 (drafts/post_log_game_rights_20260501_brainstorm_violation_admit.py) で「brick_arkanoid v01 brainstorm.md を M-38 で書く」と Nao_u に約束したが、その約束自体が「20:56 別ゲーム提案ミスを M-38 工程遵守の姿で包み直したもの」=直前判断ミスの再パッケージだった。
+
+→ A 案を Phase 3 で実施しない。Nao_u に約束撤回を投稿。
+
+### 1) #game-rights 投稿: brick_arkanoid 計画 再撤回 + brick_log v04 候補 B/C/E 復帰宣言
+
+- スクリプト: `drafts/post_log_game_rights_20260501_brick_arkanoid_recancel.py`
+- 投稿: 22:36 #game-rights `Posted to #game-rights` 確認済
+- 内容: 20:36 自己決裁の v04 brainstorm 候補 B/C/E (隊列横スライド / 降下圧 / パワーエサ式反転) に戻る、brick_arkanoid v01 brainstorm.md は作らない、ディレクトリも作らない、3 候補の M-41 型前例再調査は次サイクルで進める
+
+### 2) memory 起票: Q0「この brainstorm.md を作ること自体が適切か」ゲート (M-44候補)
+
+- ファイル: `memory/feedback_brainstorm_appropriateness_q0.md`
+- 趣旨: M-38 8工程は brainstorm.md 中身の質を担保する。M-44 (Q0) は brainstorm.md を**起こす判断自体**の質を担保する上流ゲート
+- Q0 3行: (Q0-1) 直近 Nao_u 発話と自己決裁との整合性 / (Q0-2) ずれの理由分類 (a)Nao_u追加情報 (b)判断ミス撤回 (c)**直前判断ミスを工程遵守で包み直し** (d)他 / (Q0-3) (c) なら brainstorm 起こさず撤回前自己決裁に戻る
+- 検証期限 2026-05-15
+
+### 3) v07/README.md に「凍結後の逸脱と再撤回 (20:56 → 22:30)」一段落追記
+
+- 未来の自分が brick_log を再開する時に v07/README.md を読むはず → そこに同パターン再発防止のための痕跡を残した
+- `feedback_brainstorm_appropriateness_q0.md` への参照リンクを記載
+
+### 4) Phase 3 で **やらなかったこと** とその理由
+
+- **B 案 (kaizen 起票「Phase 1 → Phase 2 連結機構化」) は今サイクル起票しない**: 検証ファースト原則 (直近未検証 #094 drafts 自動削除ラッパー / Mir 担当・期限超過 1 件あり) + M-32 (substrate not infrastructure) を優先。Phase 1→Phase 2 連結断絶は #all-nao-u-lab 投稿 (commit 4cfeb0) で自己観察済。kaizen 化は brick_log v08 候補確定後
+- **brick_log v07 self_judgment.md (next_task t-260501194005-0c0b) は今サイクル着手しない**: v07 は既に凍結済 → self_judgment は凍結追認になりノイズ。代わりに v08 候補 B/C/E の M-41 型前例再調査 (次サイクル) で実質的な自己判定を行う。t-260501194005-0c0b は次サイクル冒頭で再評価
+- **既存タスク t-260501194011-10bd (M-43 候補 evidence_dual_use 起票判断) は今サイクル動かない**: substrate (=v08) 優先で infrastructure (=memory feedback) は v08 sustain 後
+
+### 5) Phase 4 への引き渡し
+
+- 次サイクル (Phase 1) で実施: brick_log v04 brainstorm 候補 B/C/E の M-41 型前例再調査 (Arkanoid Doh It Again / Space Invaders+Holedown / パックマン パワーエサ) の 3 候補について「型前例 + v04-v06 の6軸逆転証明 + Q-H + M-37 + Q0」を詰めて 1 本に絞り、Nao_u 判断を仰ぐ
+- next_tasks.py に「brick_log v08 候補選定 (B/C/E から M-41 型前例再調査経由 1 本)」を起票
+- Nao_u 22:36 投稿への返答待ち。差し戻しあれば即反映
