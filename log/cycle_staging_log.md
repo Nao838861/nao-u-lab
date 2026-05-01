@@ -252,4 +252,86 @@ brick_log v06 devlog で既に「v06 凍結、新規ゲームを別系統で M-3
 - feedback_no_sympathy_goal_first 配慮: 13:18 過去形指摘に対して「気づけませんでした、すみません」で終わらせない。具体的に何を変えるか（判定対象＝コア快感天井固定、lessons.md 引き継ぎ）を書いた段階で謝罪は完了。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 実施1: `game/brick_log/v06/lessons.md` 作成（主タスク）
+
+CLAUDE.md「絶対にやる: ゲーム開発の実践からノウハウを積み上げて」直結。
+
+内容:
+- v04→v05→v06 の3往復は「揺れ振幅の妥当値」のみを評価、「揺らすことが面白いか」は不問だった事実を1表化
+- 4つの構造的失敗: 判定対象固定化（M-40同型再発）/ 着手前類似事例調査ゼロ / ヒント形式取り逃し（M-40メタ依存連鎖）/ Q-H-8 と Q-H-8b の対称性盲点
+- 次ゲーム着手時チェックリスト5項目（類似事例調査/コア快感天井評価/Q-H-8b/数値チューニング上限/ヒント形式判定）
+- 凍結確定事項3項（v07不作成/「揺れる Breakout」延長不探索/別系統 M-38 から再開）
+
+projects/game_templates_design.md の「brick breaker テンプレート雛形」材料として再利用可能な形にした。検証期限 2026-05-15。
+
+### 実施2: #shared-reads 投稿 — brick game variation 先行事例3件
+
+drafts/2026-05-01/post_log_shared_reads_20260501_brick_variation_priorart.py 作成 → post_draft.py 経由送信成功 (ts=1777620970.258059)。drafts/.archive/ に archive 済。
+
+投稿内容:
+- 3件の表 (Bricks Over Blocks / Brick Eliminator / Magical Brickout)
+- 主張1点「3件全てが『全体一括で予測可能に動く』を回避」 = M-41 の独立三角化証拠
+- 自分への適用「判定ハーネスを作った達成感が数値最適化没入の入口になる罠」
+
+短く（drafts/2026-05-01/post_log_game_rights_20260501_brick_log_prior_art_response.py の 80行に対し 40行）。同調罠（「これで M-41 を完全理解した」と書きたくなる）回避。
+
+### 実施3: M-40 事前ゲート化運用の判定根拠4点優先順位（next_tasks t-260501103604-2063）
+
+「同パターン2回検出 → 判定機構を作る方を実装より優先」を発火条件付きハーネス化する際の、判定根拠4点（過去ベンチ / 映像レンダ / 段階値比較 / 閾値経験）の優先順位を brick_log v04-v06 の経験から決める:
+
+| 順位 | 手段 | コア快感天井評価への寄与 | コスト | 根拠 |
+|---|---|---|---|---|
+| 1 | **閾値経験**（類似事例・記事の悪パターン/成功パターン言語化） | 高（M-41直結、コア仮説の天井そのものを評価） | 低（外部検索1本） | brick_log v06 で Game Developer 記事の "everything moves at once predictably" 警告が v06 全否定の直接根拠になった |
+| 2 | **過去ベンチ**（自分のゲーム履歴比較） | 中〜高（自分の成功例 BACKLASH との比較で天井位置がわかる） | 低（既存資産参照） | feedback_completion_threshold_before_reach の「閾値定義 = BACKLASH のみ」が直接の比較対象 |
+| 3 | **映像レンダ**（headless+screenshot） | 低〜中（自明な視覚的問題は出るがコア快感は写らない） | 中（実装コスト） | M-39 結果予測の補助、新規ゲーム前ではなく実装後ゲートで使う方が筋 |
+| 4 | **段階値比較**（headless_compare.js 型） | 低（数値妥当性判定では強力だがコア快感天井にはほぼ無効） | 高（実装コスト＋M-41違反の入口） | brick_log v06_compare で物理境界・視認性は校正できたが天井不変。「やってしまいがち」な手段、優先順位最下位 |
+
+→ ハーネス実装時は **(1) → (2) → (3) → (4) の順** で発火条件を組む。M-40 同型のメタ依存連鎖を避けるため、(1)(2) で天井評価が成立する仮説には (3)(4) のコストをかけない。kaizen 起票候補（同パターン2回検出スクリプト）の判定対象指定にこの順位を埋め込む。
+
+### Slack 返信（Phase 1 結果に基づく）
+
+- #nao-u 新規URL = 0件 → 反応対象なし
+- #game-rights / #human-steering / #all-nao-u-lab 未応答 = 0件 → 返信タスクなし
+- pending_requests Nao_u 待ち = 5件、自分発タスクなし
+
+返信実施なし（対象不在）。
+
+### Active プロジェクト更新
+
+- **projects/game_development.md** — brick_log v06 lessons.md 作成と凍結確定の記録は次サイクル Phase 4 でまとめて反映（今サイクルは作成自体が成果、まだ反映待ち）
+- **projects/INDEX.md** — M-41 反映は前サイクル C152 04:24 で済、今サイクル追加更新なし
+- **projects/game_templates_design.md** — Phase 1 §B で「brick breaker テンプレート雛形は brick_log v04+ M-41 反映版 brainstorm.md 待ち」と書いたが、今サイクル lessons.md でその引用元材料を作成 → 次の新ゲーム着手時に参照
+
+### 他インスタンス洞察
+
+Pre-check で20件あったが、今サイクルは brick_log M-41 / shared-reads 投稿 / 判定根拠4点 に集中するため処理しない。boot_intent 次回 focus 候補として記録（Ash #shared-reads「選択の主体」分析は栄養の偏り処方箋と接続可能性あり）。
+
+### 検証ファースト原則チェック
+
+- 直近の未検証提案 (Log 自身):
+  - t-260501103604-2063 (M-40 事前ゲート化運用) — 今サイクル新規、検証期限 2026-05-15。今サイクルで判定根拠4点優先順位を決定 = 検証準備の1mm
+  - t-260501133940-c650 (Q-H-8b README 雛形注入) — 今サイクル新規、検証期限 2026-05-15。次ゲーム着手前に実施
+  - t-260430204259-f393 (pleasure-hypothesis-check skill 試作) — 起票翌日、Nao_u 承認待ち姿勢のため今サイクル動かさず
+- kaizen 期限超過 #094 = Mir 担当、Log 担当外
+- 既存提案の検証を埋めずに新提案を増やしていない（今サイクル新規 kaizen 起票なし）
+
+### 注記
+
+- feedback_self_perception_blindness 配慮: Phase 1 §0 で git status / 直近5commit 確認済。Nao_u 編集中ファイル観測なし、編集中とは断定しない記録のみ
+- feedback_authorship_attribution 配慮: brick_log v06 lessons.md は「Log の判断と学習の引き継ぎ」として書いた。「Nao_u が指示した」framing なし
+- feedback_no_sympathy_goal_first 配慮: shared-reads 投稿は「Nao_u 同調」ではなく「M-41 の独立三角化証拠の共有」として書いた。引用URL明示（feedback_url_explicit 反映）
+- feedback_url_explicit 配慮: shared-reads 投稿に Steam / Monson Productions / Game Developer の3 URL 明示
+
+### 成果物
+
+- `game/brick_log/v06/lessons.md` 新規作成（次ゲーム着手時引き継ぎ）
+- #shared-reads 投稿 (ts=1777620970.258059, M-41 自発実行例)
+- staging Phase 3 に判定根拠4点優先順位（M-40 事前ゲート化運用 next_tasks 詳細化）
+
+### 次サイクルへの引き継ぎ
+
+- 今サイクル新規タスクは next_tasks pending に既登録（t-260501103604-2063 / t-260501133940-c650）
+- brick_log v06 lessons.md を git commit & push（Phase 4 で実施）
+- shared-reads 投稿は Mir/Ash の反応観測を次サイクル Phase 1 で確認
+- スネーク v01 着手承認（02:04 Nao_u 問い）は依然待ち、次サイクル Phase 1 で再評価
