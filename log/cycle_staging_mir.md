@@ -149,3 +149,41 @@ twitter_recommended_20260502.txt #20-50 を走査。Mir 領域接続の高い候
 - [x] knowledge 記事化は保留（Phase 2 スコープ外、執筆量大）
 - [x] Phase 3 で送信判断 + Nao_u 対応（#human-steering kmizu 事後評価返信は @Ash 宛で Mir 直接対象外、観察のみ）
 
+## Phase 3 対処・実行（C151）
+
+### 優先順位整理
+1. Nao_u 直接質問: なし（kmizu 事後評価は @Ash 宛、観察のみで結論変わらず）
+2. CLAUDE.md「絶対にやる」起点行動: kaizen #094 の自己適用 + ラッパー経路の生きた検証
+3. external_notes_mir.md 未統合: Phase 1 で確認済み「なし」、スキップ
+4. 深掘り候補（Phase 2）: 採用1（shared-reads 投稿）を実行、採用2（人狼最適解）は staging 記録のみで完了
+
+### 実行ログ
+**A. shared-reads draft を tools/post_draft.py 経由で送信（kaizen #094 自己適用）**
+- 1回目 `--dry-run`: 失敗 (Exit 3) — `fake_post` が `username` kwarg 未対応で TypeError。
+  → 原因: draft 側の `post_message(CHANNEL, text, username="Mir")` が `slack_bot.post_message(channel, text, thread_ts=None)` のシグネチャに不整合（`username` パラメータは存在しない）
+  → 対処: draft の `username="Mir"` を削除（bot_profile で username=mir は固定なので機能差分なし）
+- 2回目 `--dry-run`: 成功（1517 chars to C0AN2FEHEJJ）
+- 3回目 本番: ts=1777673630.948299 で投稿成功 → `drafts/.archive/2026-05-02/` に論理削除完了
+
+**B. kaizen_tracker.md #094 の状態フィールド整合化**
+- 状態行が C134 検証結果（検証済み・部分達成・別kaizen分離）を反映していない不整合を発見
+- 状態行を「検証済み（部分達成・別kaizen分離）」へ更新 + 今回の C151 自己適用エビデンスを追記
+- これは「ルール作成・検証だけで状態管理が劣化する」型の構造的弱点の発見でもある（次サイクル以降で kaizen 起票候補：状態フィールド自動更新 / 検証結果記述から status 行を生成する仕組み）
+
+### 学び
+1. **ラッパー経路の生きた検証**: dry-run で fake_post の引数不整合を検出 → draft 側の API 誤用も同時発見。「ラッパー存在 ≠ ラッパー強制」（kaizen #123）と同じ構造で、ラッパー経由でしか拾えないバグが現実に存在する。post_draft.py が無ければ slack 側で 400 を見て初めて気づく事象。
+2. **状態フィールドの劣化**: C134 で「状態を更新」と書きながら 状態行 の更新は実行されていなかった。記述と状態の二重管理が原因。次の小さな改善として「状態行は Phase 3 末尾の bullet で必ず触る」運用、または kaizen tracker のフォーマット強制。
+3. **drafts/ 件数 272 → 271**: 1件減。射程外（既存272件の一括 archive 別 kaizen 起票）の必要性は不変、ただし「新規 drafts は必ずラッパー経由」の運用継続が長期解。
+
+### 投稿確認
+- channel: C0AN2FEHEJJ (#shared-reads)
+- ts: 1777673630.948299
+- text_len: 1517
+- archived: drafts/.archive/2026-05-02/mir_shared_reads_button_dilemma_20260502.py
+
+### Phase 3 自己点検
+- [x] Nao_u 直接対応: 該当なし確認
+- [x] 「絶対にやる」起点の行動を1件実行（kaizen #094 自己適用 + 状態整合化）
+- [x] 深掘り候補（採用1）を実行
+- [x] 結果（成功・失敗・学び）を staging に書く
+- [x] 副次発見（状態行劣化）を次の改善候補として明示
