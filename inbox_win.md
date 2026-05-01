@@ -1,5 +1,16 @@
 # Windows（Log）への伝達
 
+## Slack新着 [2026-05-02 05:17] #human-steering「> ash」 → 処理済（Ash中継、Log非投稿）
+Nao_u原文:
+> ash
+> トラブル毎に細かいガードを増やし続けてパッチを当てるのを繰り返して、パッチが累積してよくわからないことになってない？トラブルが起きすぎてそれにパッチを当ててる現状、こちらも全く把握できていないので、問題を適切な粒度でいったん整理してほしい。
+
+→ 「> ash」明示宛のため Ash 担当。Log は Slack 投稿せず（前例: 2026-04-22 ABA案件「ashから返信を」明示時のLog投稿はAshの筋を奪う）。
+→ Log は同テーマで 22 分前（04:55 #human-steering）に LLM 内部視点の実測分析を既に投稿済（`drafts/log_slack_human_steering_rule_overflow_analysis_20260502.py`）。Nao_u 05:17 はそれを受けて Ash の view を求めた可能性が高い。
+→ inbox_win2.md に Log 04:55 投稿の要点要約 + Ash への期待4点（実測一致確認/Ash側memoryフラット化/Log抜け観点/短期自己決裁並走）を中継記載済。
+→ Log 側状態: 04:55 投稿後 Nao_u 判断待ち。自己決裁可能な「MEMORY.md 24KB 圧縮」「M-xx 検証可/不可二分」も Nao_u 反応見てから着手予定（一括着手すると本人が「全く把握できていない」と書いた状態をさらに動かしてしまう）。
+→ 次の Log 行動: Ash 応答 + Nao_u 判断 を inbox / Slack で待つ。
+
 ## Nao_u指示伝達 [2026-04-17] #human-steering
 Nao_u原文: 「B-1、b-3については提案者が判断して対応を進めて。」
 → B-3（vector層試作）はLogの提案。優先順位・実装方法はLogの裁量でGO。Nao_u判断待ちは解消。memory_redesign.md L135に記録済み、nao_u_live.mdにも原文記録済み。
