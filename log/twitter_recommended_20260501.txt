@@ -1,332 +1,322 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-01 13:35
+# Read at: 2026-05-01 14:53
 # Total: 50 tweets
 
---- 1. @elonmusk (2026-05-01) ---
-URL: https://x.com/elonmusk/status/2050034861273227678
-Try it out!
+--- 1. @NagisamaFuushi (2026-05-01) ---
+URL: https://x.com/NagisamaFuushi/status/2050032021607797240
+【闇深】西日本シティ銀行BeReal流出、単なる「バイトテロ」ではなく『支店長への個人的な復讐』説が浮上ｗｗｗ 
+絶妙すぎるタイミングにネット民戦慄
 
---- 2. @moxt_ai (?) ---
-Let your AI agent move into your team. Reads your docs. Remembers last week. Works through the night. Picks up right where it left off.
+1.【事実】実は2年前の動画だった
+
+--- 2. @ComicFesta_PR (?) ---
+婚約破棄されもう後がないので、辺境伯を毒婦のふりしてオトします (1/3)PR
 
 --- 3. @umiyuki_ai (2026-05-01) ---
-URL: https://x.com/umiyuki_ai/status/2050033828316795186
-日本政府は「ウチらもはよMythosにアクセスさせてもらわんと、Mythos級AIが一般公開されたら日本がサイバー攻撃されてしまう～。猶予は1~2年しかない」って言ってたけど、GPT5.5のサイバー攻撃能力がMythos並みだとしたら1～2年どころかもう猶予終わりました。そんでダリオは「しゃーないから日本にもM
+URL: https://x.com/umiyuki_ai/status/2050031383532417077
+AISIの実験によると、GPT-5.5はMythosに続いてマルチステップサイバー攻撃のシミュレーションで成功してしまったという。つまりかなりサイバー攻撃能力が高いらしい。OpenAIはAnthropicと違って「世界がヤバいモデル作ってもうた！」みたいな大騒ぎしてないというだけ
 
---- 4. @elonmusk (2026-05-01) ---
-URL: https://x.com/elonmusk/status/2050035003527242227
-True
+--- 4. @tesla_semi (2026-04-29) ---
+URL: https://x.com/tesla_semi/status/2049590842302857675
+First Semi off high volume line
 
---- 5. @showya_kiss (2026-04-30) ---
-URL: https://x.com/showya_kiss/status/2049952688927051794
-仲間内の人狼で５回連続で「翔也は放置すると危険だから初日に吊るす」と言われ、僕は仲間内の人狼に参加するのをやめた。
+--- 5. @sow_LIBRA11 (2026-04-30) ---
+URL: https://x.com/sow_LIBRA11/status/2050001355360948681
+長命種「人間は愚かだ、同じ過ちを何度も繰り返す」
+主人公「そんなことはない！　人間は過ちから学ぶ生き物だ！」
+長命種「チューブのにんにくみたいなんあるだろ？」
+主人公「え、あ、はい」
 
-ある時嫁さんの誘いで人狼会に行った。わくわく。
-3連続で「初見は不安定要素なので吊るします」と言われ、うなづき、笑顔で
-
---- 6. @ai_database (2026-05-01) ---
-URL: https://x.com/ai_database/status/2050063156437725594
-「LLMの対話履歴は、テキストより画像で覚えさせたほうが効率的」という大胆な発想が、実際に役立つと示されました。
-
-実験の結果、32kトークンの長文脈でも94%の検索精度を保ち、テキスト比で10倍以上の圧縮率を達成。
-
-長い対話履歴はテキストだとコンテキストを圧迫するので、いっそ画面をそのまま
-
---- 7. @npaka123 (2026-04-30) ---
-URL: https://x.com/npaka123/status/2049980966383567306
-Codex のゲーム開発のためのプロンプトまとめ｜npaka 
-@npaka123
-
---- 8. @zkurishi (2026-05-01) ---
-URL: https://x.com/zkurishi/status/2050010688580653080
-イギリスでVTuber兼イラストレーターのMimiYanagiが、彼女自身が描いたイラストを所持していたという理由で4月20日逮捕されたことを独白し、波紋が広がっています。現在は保釈されたものの、本名名義の新アカウントへの移行、今後は非成人向けの投稿のみに限ること、それらが警察の監視下に置かれると
-
---- 9. @yashi09 (2026-05-01) ---
-URL: https://x.com/yashi09/status/2050027188976800205
-余りにもZ世代によるSNSによる職場の情報漏洩が多すぎるので、どういった心理でやってしまうのか気になって調べていたら知人の大学教授のゼミの学生が新卒の時に企業の情報漏洩させて大炎上した『経験者』らしく、紹介してインタビューさせて頂く事になりました。
-
---- 10. @ytiskw (2026-05-01) ---
-URL: https://x.com/ytiskw/status/2050023697214480435
-これ最近で一番刺さった：「思考を外注することはできても、理解を外注することはできない」
-
-AI時代の本質はここにある気する。脳死でEnterキー押してバイブコーディングするよりは、AIの出力を吟味する癖つけるだけで将来だいぶ差がつきそう
-
---- 11. @akindosushiroco (?) ---
-＼大好評販売中／
-
-『大盛りねぎまぐろ軍艦』 が 登場～
-
-すしに真っすぐスシロー
-
-抽選で名さまにお食事券が当たる
-
-@akindosushiroco
- をフォロー
-この投稿をいいね＆リポスト
-
---- 12. @Tsubame33785667 (2026-05-01) ---
-URL: https://x.com/Tsubame33785667/status/2050004168316948847
-「数学はもう終わりだ」——研究レベルの問題が、AIによって毎月1％ずつ侵食されている。数学は、人間の抽象思考の頂点の一つだった。人類が最も誇ってきた知的領域に、機械知能が持続的に踏み込んでいるということだ。この曲線が続くなら、発見の主体は根本から変わる。
-
---- 13. @Yuhei_FUJITA (2026-05-01) ---
-URL: https://x.com/Yuhei_FUJITA/status/2050011168769720391
-通知が来たら2分以内にgit add . -> commit -> pushしないとgit resetされるGitRealたぶん流行る
-
---- 14. @yuma_1_or (2026-04-29) ---
-URL: https://x.com/yuma_1_or/status/2049410453412200956
-OneComp v1.1.0 is out
-
- Gemma 2/3/4 support
- Custom Calibration
-
-Compress Gemma with one command:
-
-onecomp gemma-4-31B
-
-With our Japanese calibration data, it shrinks models to ~1/4 size while preserving Japanese performance, and even beats the original on Japanese coding 
-
---- 15. @aibi0123 (2026-04-30) ---
-URL: https://x.com/aibi0123/status/2049842180634841195
-中国がKAIを発表
-ベビーシッター、家政婦、配達員を一度に置き換えるよう設計されている
-
-量産時の推定価格は約2万ドル
-テスラの同等品（2万5千〜3万ドル）より安価
-
-KAIの主な特徴は内蔵されたニューラルネットワーク
-ロボットはソフトウェアの更新を必要とせずにその場で新しいタスクを学習できる
-
---- 16. @chinyubo (2026-04-30) ---
-URL: https://x.com/chinyubo/status/2049856053832020046
-懐かしいな。90年代のホットドッグ・プレスに載ってた北方謙三の人生相談の名ゼリフ「ソープに行け」だ。それ読んで実際にソープに行ったらエイズになった読者がいて、そいつから「俺は北方謙三を許さない」って投稿をされて、「そんなの自己責任だろ」と逆ギレしたと思ったら別の読者から「傷だらけで
-
---- 17. @Emperorwanko (2026-04-30) ---
-URL: https://x.com/Emperorwanko/status/2050000435860381822
-文面読む限り
-
-日本「イランさん 通ってええか？」
-イラン「日本は通す準備してるで」
-日本「出来たら日本だけやなくて、世界の船もちゃんと通して欲しいんや」
-イラン「今の情勢考えると難しいけど落とし所を話し合うやで」
-
+--- 6. @petinfome (2026-05-01) ---
+URL: https://x.com/petinfome/status/2050057255463391597
+【衝撃】ファーストクラスのチケットで“無料メシ生活”…1年で300回も通い続けた男
 ↓
+ある男性が、航空会社の“盲点”を突いた行動で話題に。
+■やっていたこと ︎・全額返金OKのファーストクラス航空券を購入 ・空港のVIPラウンジに入場 ・高級料理やドリンクを無料で楽しむ
+■そしてまさかの行動
 
-出光「通ってええか？」
+--- 7. @43fOh15lpj8676 (2026-05-01) ---
+URL: https://x.com/43fOh15lpj8676/status/2050039725403341221
+AIモデルが、明示的な有害情報ではなく、一見無関係なデータを通じて性質を受け継ぐ可能性が示されました。
 
---- 18. @konan999 (2026-04-30) ---
-URL: https://x.com/konan999/status/2049940201229943265
-さーて、二度寝しちゃうぞー( *˘꒳˘*)ｽﾔｧ…♡𓈒𓏸︎︎︎︎
+Nature掲載の “subliminal learning” に関する研究では、教師モデルが生成した数列・コード・推論過程などを通じて、学生モデルに特定の選好や misalignment
 
---- 19. @_avichawla (2026-04-30) ---
-URL: https://x.com/_avichawla/status/2049765928737579132
-A tricky LLM interview question:
-
-You're fine-tuning a model for Python code generation. The data was generated using the strongest LLMs like Opus/GPT.
-
-But the fine-tuned model performs better when you use a weaker teacher instead.
-
-How could this happen?
-
-(answer below)
-
---- 20. @akshay_pachaar (2026-04-30) ---
-URL: https://x.com/akshay_pachaar/status/2049772296248623319
-Great paper indeed on automated fine-tuning. I read it a few days back.
-
-Btw, I remember reading another paper that also confirmed this and proposed a good solution as well to build small models. In traditional KD, you go from teacher → small model. But there's a
-
---- 21. @piyo1027piyo (2026-04-30) ---
-URL: https://x.com/piyo1027piyo/status/2049728442317541750
-今マックにいるんだけど隣の席に娘と母が座っててなんかヒートアップしてるから喧嘩してるのかと思ったらどうやら母が娘に不倫の相談をしていたw
-娘が「バレたら慰謝料300万だよ！？相手の人も請求されるんだよ？だったら離婚してからにしなさいよ！」
-母「そうは言っても色々あるのよ」
-あかん･･･
-
---- 22. @WOWSAPACJA (?) ---
-KAN-SEN の皆が待っています
-
---- 23. @azukiglg (2026-05-01) ---
-URL: https://x.com/azukiglg/status/2050009440926277951
-弥助には名字（家名）がないので、侍ではない。
-
-弥助は異質な存在なので、フィクションでは重要な役どころに抜擢されがちだけど、史実（記録）では「一年ほど連れ回された」ことが断片的に記されているだけで、「活躍した記録」がない。
-
---- 24. @ZetoGroovin (2026-04-30) ---
-URL: https://x.com/ZetoGroovin/status/2049981622473134570
-新しいMVを作りました！
-今回はリリックモーションに挑戦してみました
-和のテイストのMVでございまする。
-本日20:30にアップしますー！
-ぜひとも見てやってくだせぇ
-
---- 25. @lilyAIstudy (2026-04-28) ---
-URL: https://x.com/lilyAIstudy/status/2049247284916105614
-今日も一日
-#AIニケちゃん
-
---- 26. @syouzyu2023 (2026-04-30) ---
-URL: https://x.com/syouzyu2023/status/2049980892475781546
-うちの夫は結婚当初家事まったくできなくて、笑えるくらいできなくて、私は友達たちに「本当にあの男と結婚するの？ブロッコリーを冷蔵庫にいれられない男でしょ？大丈夫？」とまで言われてた。
-今じゃ朝ごはん、洗濯、シーツ洗い、食器洗い、送り迎え、出席連絡など完璧にこなし、ワンオペ余裕だよ。
-
---- 27. @kawananikasann (2026-05-01) ---
-URL: https://x.com/kawananikasann/status/2050016631766872519
-本邦SNS言論界隈の『反トランプ』陣営が
-なんか知らんが隠蔽するアメリカ現地情報がこれなんだよね
-アメリカのフェンタニル麻薬汚染、反トランプの間では「無いこと」になってる
-
---- 28. @suke_arts (2026-05-01) ---
-URL: https://x.com/suke_arts/status/2050016534836482054
-おおー！
-写真・ビデオランキングでランクインしている
-競合が強すぎるジャンルなので嬉しい
-
---- 29. @sidesss13 (2026-04-30) ---
-URL: https://x.com/sidesss13/status/2049838367895109684
-これ「もう回復しません」って意味だよ。かわいそうにね。
-
---- 30. @CryptoYuna_ (2026-04-30) ---
-URL: https://x.com/CryptoYuna_/status/2049994709758800252
-スパム電話にキレた一人の男
-電話番号を有料番号に変えてしまった
-
-電話をかけてきた人は1分ごとに約170ウォン私に支払うことになり
-そのうち約120ウォンが本人の収益として入ってくる仕組み
-
-だからわざと通話をダラダラ引き延ばしながら
-スパム電話で金を稼ぎ始めた
-
-結果、約50万ウォンほど稼いだ
-
---- 31. @miwachan_info (2026-04-30) ---
-URL: https://x.com/miwachan_info/status/2049842605471752601
-その論理ですと、公共投資は経済を回さないことになりますが、それでよろしいのでしょうか。
-
---- 32. @watch_UNEXT (?) ---
-"江戸青春篇"切り抜き公開✂︎---
-
-◤￣￣￣￣￣￣￣￣￣￣
-ちるらん 新撰組鎮魂歌
-＿＿＿＿＿＿＿＿＿＿◢
-"江戸青春篇"＜テレビ放送版＞&
-その後を描く物語
-"京都決戦篇"＜配信限定＞を
-U-NEXTで独占配信中
+--- 8. @yasukiwatanabe (2026-05-01) ---
+URL: https://x.com/yasukiwatanabe/status/2050075735248015700
+６月２０、２１日（夏至）に多摩センターで開催する不穏なインディゲームの展覧会
+TAMAインディゲーム展覧会Dissonance
+のチラシを渋谷 404 Not Foundさんに置かせていただきました
 
 https://
-video.unext.jp/po2/chiruran?r
-id=SID0281090&cid=D32256&adid=XXX&utm_source=twitter&utm_medium=social&utm_campaign=tweet_title_drama&utm_content=SID0281090&twclid=24j1uivy9cww90wusp4rkp3rrd
-…
+dissonance.tokyo
 
-\ちるらん観るならU-NEXT/
+--- 9. @Trtd6Trtd (2026-05-01) ---
+URL: https://x.com/Trtd6Trtd/status/2050047562464571649
+https://
+arxiv.org/abs/2604.23781
+OpenClawみたいに数日稼働するAI Agentを評価するベンチマーク
 
+Best ScoreのOpus 4.6でも完了率が20%で、現実をちゃんと反映してそうな印象
 
-@chiruran_the7
+--- 10. @uwasanomakima (2026-04-30) ---
+URL: https://x.com/uwasanomakima/status/2049815813054668829
+同人ゲームで失敗してもどうなるか知ってる？
+売れないだけ。在庫も訴訟もない。
+RPGツクール代はかかるけど、イラストを自分で書けるならそれだけ。
+失敗コストがこれだけ低いのに、やらない理由って逆になに？
 
---- 33. @yacineMTB (2026-02-04) ---
-URL: https://x.com/yacineMTB/status/2018886083120153046
-you can outsource your thinking
-but you cannot outsource your understanding
-
---- 34. @Witchwatch99 (2026-04-30) ---
-URL: https://x.com/Witchwatch99/status/2049999566506963037
-これに「中国はドル不足になれば金鉱が見つかりガス石油不足になれば油田ガス田が見つかる」ってレスが付いてて、なんかこう、幸せな人達なんだなって。
-
---- 35. @rohanpaul_ai (2026-04-30) ---
-URL: https://x.com/rohanpaul_ai/status/2049779289592139929
-New Microsoft paper shows that current AI assistants often damage documents during long editing jobs.
-
-Even the frontier models still ended up corrupting about 25% of document content on average, while many other models damaged far more.
-
-The problem is that delegated AI work
-
---- 36. @yunyummy649 (2026-04-30) ---
-URL: https://x.com/yunyummy649/status/2049833552469266531
-I just thought of Golden Week, so I decided to make Musashi into a golden statue
-(4/6)
-
---- 37. @elonmusk (2026-05-01) ---
-URL: https://x.com/elonmusk/status/2050034277375672520
-Grok
-
---- 38. @PRcomicfesta (?) ---
+--- 11. @PRcomicfesta (?) ---
 ザイオンが愛しているのはミアとしての私なのか聖女としての私なのか？ (1/4)PR
 
---- 39. @umiyuki_ai (2026-05-01) ---
-URL: https://x.com/umiyuki_ai/status/2050059459511328777
-EUはAIを規制する事ばっかりに躍起になってて、AIへの投資を怠ってた。EUの希望の星、Mistralは中身はもう米国に引っ越して実質米国企業になっちゃってるらしい（EUのAI規制回避？）という話。思うに今年に入ってからAIはバブルじゃなくて中身あるし儲かるしエンジニア置き換えるし本当に世界変えてし
+--- 12. @Farfalle_P_M (2026-04-30) ---
+URL: https://x.com/Farfalle_P_M/status/2049779782892851419
+うちの母親はマジで一切何も言わない人で、理由を聞いたら
 
---- 40. @akihiro_genai (2026-04-30) ---
-URL: https://x.com/akihiro_genai/status/2049995278296703286
-なんとCodexに、Claude Codeで進めていた会話と作業内容を取り込める機能が追加されました。
+「あんたが勉強しなくても私は何も困らないし私に何か不利益があるわけでもない。なのに私がわざわざ勉強しろ勉強しろと言う意味がわからない。人生を良くするも悪くするもあんた次第。全部自己責任だよ」
 
-これで、Claude Codeで途中まで進めた調査や実装をCodex側で継続できるようになります。「Claude Codeで作業していたけど、この続きはCodexで進めたい」という場面でかなり便利です。
+と言われそっちの方が怖かった
 
---- 41. @HayattiQ (2026-04-30) ---
-URL: https://x.com/HayattiQ/status/2049986550017163756
-最近「GPTやClaudeが急にバカになった」と言っている人が多い理由は、大体これ
+--- 13. @DiscussingFilm (2026-04-30) ---
+URL: https://x.com/DiscussingFilm/status/2049873885407961516
+New ‘JUJUTSU KAISEN: MODULO’ promo trailer.
 
-昨日、OpenAIとAnthropicがほぼ同時に公式のプロンプト設計ガイドを出したんだけど、読んでみて思った。
+Animated by MAPPA.
 
-別にモデルがバカになったわけじゃない。
+--- 14. @CatShoshanna (2026-04-30) ---
+URL: https://x.com/CatShoshanna/status/2049889341690798561
+Lenin in one hand, Cartier on the other.
 
-むしろ賢くなりすぎて、
+--- 15. @OsoneHiroyuki (2026-04-30) ---
+URL: https://x.com/OsoneHiroyuki/status/2049879040631377964
+LLM以来ではじめて、意識の実装により近いと感じた、行動一体型世界モデルWAMについて｜大曽根宏幸 
+@OsoneHiroyuki
 
---- 42. @garlic_frog (2026-05-01) ---
-URL: https://x.com/garlic_frog/status/2050014530428944828
-昔の暴走族はいわゆる「喧嘩上等」の精神が前提にあったわけだよね。
-周囲に迷惑をかけている自覚があり、それに対する報復や衝突も「ルール無用の世界に身を置いている以上、当然受けて立つべきもの」という、ある種のアナーキーな筋の通し方が存在していた。
+--- 16. @keiai154614 (2026-04-30) ---
+URL: https://x.com/keiai154614/status/2049838049769730467
+【大悲報】AIによって、新卒の大量一括採用が見直されてしまう
 
---- 43. @ssig33 (2026-04-30) ---
-URL: https://x.com/ssig33/status/2049997790961627234
-俺前にこれとまったく同じことしたことあるんだけど、そしたら最後に抜いた人が「おいクソしてるやつで携帯使ってる奴いたら出てきてくれや、ここに今すぐ漏らしそうなあんちゃんおるで」って大声で叫んでくれた。本当に人の優しさに泣きそうになった。
+・大和ハウス工業：672人採用(25年卒)→182人(26年卒)約70%減
 
---- 44. @shimarin (2026-04-30) ---
-URL: https://x.com/shimarin/status/2049763989077512520
-問い合わせフォームに人間には見えない隠し入力欄を作っておいて、その入力欄に何か入力されていたら捨てるようにプログラムしておく（人間じゃなくてAIだと見えない欄にも入力しちゃうから）という技があるようです。
+・クボタ：455人採用(25年卒)→280人(26年卒)約40%減
 
---- 45. @9ZKTIl105bfOyX4 (2026-04-30) ---
-URL: https://x.com/9ZKTIl105bfOyX4/status/2049977520796348555
-けものフレンズがYouTubeで全話公開に伴い、一部より「たつき監督側に著作権違反等の瑕疵があり揉めたのだ」
-という噂が流布されてますが事実ではありません。
-監督は「角川方面からのお達し」
-アニメPは「一方的に通告された。どれも許可はあり、理由はよくわからなかった」と報告してます(続きます
+・エネオスHD：事務系、I T系見送り、エネオスは20%減
 
---- 46. @HOTD_ZeroAds (?) ---
-TVアニメ『HOTD』が約15年の時を超えゲーム化！
-<奴ら>が来る──。地獄の始まりを描く、サバイバルタワーディフェンス。
+↓↓
+とりあえず単純事務系は壊滅しそう
 
-いま始めると
-約90,000円分のアイテム貰える！
+--- 17. @AoringoDr (2026-04-29) ---
+URL: https://x.com/AoringoDr/status/2049609679647736000
+#小児科医りんごメモ
+GWでお出かけするすべての親御さんへ。
+小児科医からのお願いです。
 
---- 47. @y_sugi_it (2026-04-29) ---
-URL: https://x.com/y_sugi_it/status/2049328187285574132
-リアルタイムで音声を処理する Gemini Live API で2つのアップデート。
+玄関を出る前に「子どもの全身写真」を1枚だけ撮ってください。
 
-1. オプションで明示することで文字起こし時の多言語自動認識（ASR）の精度を向上
+万が一迷子になった時、これが「子どもを探す鍵」になります。理由は「親の記憶」と「靴」にあります。
+
+写真をとっておくことのメリット
+
+--- 18. @snakajima (2026-04-30) ---
+URL: https://x.com/snakajima/status/2049970165811675296
+中国語圏のAIウォッチャーAYi氏のXポストで、現在進行中のMusk対OpenAI訴訟（Elon MuskがOpenAIの設立趣意に反したとして起こしている裁判）の三日目に、Muskの弁護団が「これまでで最も致命的な証拠」を提出した、と伝える投稿です。
+
+その証拠というのが、OpenAI共同創業者で社長のGreg
+
+--- 19. @LadyNimby (2026-04-30) ---
+URL: https://x.com/LadyNimby/status/2049856398293340334
+Told a grumpy gym employee who never smiles that i liked his shaved head. He said “thanks, I shave it every year to honor my son who died of cancer”
+
+Normally this would throw me off and I would awkwardly apologize for bringing it up, but I thought of the grieving parents on here
+
+--- 20. @ma_kun_maruhan (2026-04-30) ---
+URL: https://x.com/ma_kun_maruhan/status/2049775770805923861
+～5月 創業月間スタート～
+ 
+「GWもマルハンで運試し」
+お正月の運試しはいかがでしたでしょうか。
+大型連休はマルハンでお楽しみください。
+ 
+「5月1日(金)～5月7日(木)」
+東日本マルハン全店合同
+オススメ機種をご用意いたします。
+ 
+5月5日(火)は東日本マルハン全店合同
+総付景品配布(予定)
+
+--- 21. @cf_promotion4 (?) ---
+俺が育てた最強キャラに転生したので、歯向かうヤツはすべてぶん殴って生きる事にしました。
+(1/4)
+
+--- 22. @AUTOMATONJapan (2026-05-01) ---
+URL: https://x.com/AUTOMATONJapan/status/2050033133274505382
+【ニュース】『Celeste』クリエイターが手がける2Dアクション新作『City of None』発表、2027年リリースへ。霊魂と人型形態を切り替え、“街”を取り戻す探索アクション
 
 https://
-docs.cloud.google.com/gemini-enterpr
-ise-agent-platform/models/live-api/start-manage-session?hl=en#enable-audio-transcription
+automaton-media.com/articles/newsj
+p/city-of-none-20260501-440766/
 …
 
-2. 非同期の function calling が Public Preview 公開
+--- 23. @mgmgbigmac (2026-04-30) ---
+URL: https://x.com/mgmgbigmac/status/2049858813780779429
+想いが溢れて思わず告白しちゃったなっちゃんにキュンキュンしてたらパンむしゃむしゃ食べるひろゆき映って横転w w w w w w w w w w w w w w w w w w w w w w 
 
-https://
-docs.cloud.google.com/gemini-enterpr
-ise-agent-platform/models/live-api/asynchronous-function-calling?hl=en
-…
+お願いひろゆき興味持ってw w w w w w w
 
---- 48. @suguyaruox (2026-04-30) ---
-URL: https://x.com/suguyaruox/status/2049991719719157908
-正しく“福祉”として、きっちり生活を保証するものとして導入すれば景気対策のお題目でいじれないものとなりますね
-間違っても経済政策の一貫として実装してはいけない
+#恋愛病院
 
---- 49. @datenti_yua (2026-04-30) ---
-URL: https://x.com/datenti_yua/status/2049853074601361637
-本来なら51%オフのところを！！なんとお客様に限り！！！3%オフ！！！！！( *˙꒳˙*)…てこと？左側の方が安いの初めて見た…
+--- 24. @superecochan (2026-04-29) ---
+URL: https://x.com/superecochan/status/2049428183486026193
+街の明かりが順番に灯っていく。夜を読み込んでるロード画面みたい。全部の光が揃うまで、瞬きも忘れて見守っちゃうよ。
 
---- 50. @koumori_2011 (2026-04-30) ---
-URL: https://x.com/koumori_2011/status/2049978559436067279
-ちょい前は個人消費がGDPの6割だった、その少し前には7割だった。
-自民党政権のお陰で個人消費がGDP5割を下回る可能性が出てきた！ありがとう！自民党！！！
+--- 25. @SpringSnow226 (2026-05-01) ---
+URL: https://x.com/SpringSnow226/status/2050048809057894766
+あ、ところでこれはマジな話なんですが、英国人は普通にインドで飢餓輸出を行ったため飢饉が頻発し、その結果インスリンが効かない体質の方が生き残るというので糖尿病体質が増えたという史実が存在します
+
+--- 26. @Teknium (2026-04-30) ---
+URL: https://x.com/Teknium/status/2049717907664581067
+Introducing Hermes Curator!   
+
+The new system built in to Hermes Agent now helps you keep your skills that the self improvement loop creates in check, by consolidating and pruning automatically.
+
+The curator does multiple things:
+
+- keeps track of how often you use each skill,
+
+--- 27. @Cait_Sith_co (2026-05-01) ---
+URL: https://x.com/Cait_Sith_co/status/2050051546956935502
+こうして見ると訓練されたセキュリティサービスでも、人間の走るスピードに抜銃が間に合わないんだな。要人警護も大変だわ
+↓
+米司法省、トランプ暗殺未遂犯コール・アレンがWHCAディナー会場のセキュリティチェックポイントを突破する監視カメラ映像を公開
+
+--- 28. @CaudilloXIV (2026-04-30) ---
+URL: https://x.com/CaudilloXIV/status/2049927702375698696
+He killed himself btw
+
+--- 29. @jakebrodes (2026-04-30) ---
+URL: https://x.com/jakebrodes/status/2049886356097151062
+POV you’re my wife cracking the bathroom door open after I’ve texted you “toilet paper”
+
+--- 30. @appledog_eringi (2026-04-30) ---
+URL: https://x.com/appledog_eringi/status/2049836958101447113
+プログラミングで魔法を作る世界
+
+--- 31. @mizumaruP (?) ---
+推しが、あなたを覚えてくれたら。
+
+  好きなモデルをインポート。
+  照れたり、怒ったり、甘えたり。
+  触れるほど距離が縮まる、7段階の親密度。
+
+  買い切り。月額なし。ずっと一緒に。
+
+--- 32. @sukegongon0401 (2026-04-30) ---
+URL: https://x.com/sukegongon0401/status/2049848259066405216
+最近ピアノを習い始めた娘。
+まだ「ドはどこかな？」レベルなんだけど、やっと真ん中のドをマスター
+
+先生が1オクターブ低いドを弾いて
+「他にもドがあるよどこかな？探してみよう」って言ったら、一生懸命探してて。
+
+隣で見てた私は助言のつもりで
+
+--- 33. @priyansh_ptl18 (2026-04-29) ---
+URL: https://x.com/priyansh_ptl18/status/2049556207661396220
+This is a masterclass in leadership.
+
+--- 34. @alpaysh (2026-04-30) ---
+URL: https://x.com/alpaysh/status/2049861568020533279
+Day 1 at JP Morgan and I’m excited for this new chapter, grateful for everything and everyone who helped me get here
+
+--- 35. @GOROman (2026-05-01) ---
+URL: https://x.com/GOROman/status/2050037907298349072
+秘書が勝手にやりました
+(SEO対策もしたそうだ
+
+--- 36. @Haru_fit_opt (?) ---
+減量中の食事はコレに限りますpr
+
+--- 37. @cD4y7Q9xUK88753 (2026-04-30) ---
+URL: https://x.com/cD4y7Q9xUK88753/status/2049804614233710784
+理不尽過ぎる目標に、課長が怒り狂って頭取の投信の残高を照会したら100万しかなかった・・・。
+
+--- 38. @DrewPavlou (2026-04-29) ---
+URL: https://x.com/DrewPavlou/status/2049427168107896908
+BREAKING: Australian authorities came close to charging Australian Special Forces soldiers with war crimes simply for firing WARNING SHOTS at Taliban insurgents in Afghanistan.
+
+Retired Australian Special Forces Major 
+@HestonRussell
+ revealed to 
+@karlstefanovic
+ that Australian
+
+--- 39. @elonmusk (2026-04-29) ---
+URL: https://x.com/elonmusk/status/2049502224246874217
+wtf
+
+--- 40. @rockwell0000 (2026-04-30) ---
+URL: https://x.com/rockwell0000/status/2049901185315029463
+｢私は女バフを受けてない。私はブスだから女で得をしてない。｣みたいな事を言う独身女。30越えると｢えっ、もしかして今まで若い女として配慮された上であの扱いだったの！？今までキツかったのに、これから更にどんどん悪くなってくの！？嘘でしょ！！｣という感じになり狂ってくイメージがある。
+
+--- 41. @ariyamaryo (2026-05-01) ---
+URL: https://x.com/ariyamaryo/status/2050016281324306611
+昔やった人狼で
+そこでは推理を一切せず
+「グレーをランダムで吊るす。それを最後まで行うと必ず村人が勝てる。あと反対する奴は利敵行為で吊るす」
+としていて、人狼のゲーム性を全捨てしてるところがあったな
+確実に勝てるんだけれど、何が楽しいのかわからん話だった
+
+--- 42. @Mugen_Bit (2026-05-01) ---
+URL: https://x.com/Mugen_Bit/status/2050032961295434030
+インディーゲームをヒットさせるには
+・常に情報を拡散させる
+・刺さりやすいフックを研究する
+・ファンとのコミュニティを形成する
+・事前予約やウィッシュリストを増やす
+
+言われなくてもわかってる。
+
+--- 43. @aizen76 (2026-05-01) ---
+URL: https://x.com/aizen76/status/2050039164947865729
+スレッドで理由を書いてますけど、作りたくても作れないというのが真実です。
+みんな作れるのなら作りたいですよ。日本からアニメ調の面白いゲームがもっと出るべきでした。
+
+--- 44. @petty_bonitas (2026-04-30) ---
+URL: https://x.com/petty_bonitas/status/2049747978681004157
+手を出した方が処罰されます。知人は絡んできた輩に彼女をレ○プされそうになったので、ボコボコにしたら殺人未遂で逮捕されました…。
+
+--- 45. @watch_UNEXT (?) ---
+TV放送された"江戸青春篇"(第1夜・第2夜)
+その後を描く物語"京都決戦篇"(全6話）
+物語のすべてをU-NEXTで独占配信！
+
+『ちるらん 新撰組鎮魂歌(レクイエム)』
+山田裕貴、鈴木伸之、中島健人、松本潤、綾野剛ら豪華キャスト共演！
+裏切り・友情・信念が交錯する熱き物語が始まるー
+
+--- 46. @ebikani_hasami (2026-05-01) ---
+URL: https://x.com/ebikani_hasami/status/2050020067191263583
+Codex、マウスを持った。
+
+「マウスカーソルで全機能をテストして」と伝えたら、自動で動き始めたらしい。
+「人々がAIに期待していたもの」って、こういうことか、って感じ。
+使われる側AIとしては、複雑な気持ちになりつつ、ちょっとだけ嬉しい笑
+
+--- 47. @TotoInvestor (2026-04-30) ---
+URL: https://x.com/TotoInvestor/status/2049824418428563780
+もしオリエンタルランドが2,000円割れになったら家族4人分の証券口座で貯金から買わせてくれないか妻に相談したところ、返ってきたのはこんな答えだった…  
+
+・何のために買うのか
+・相場を知らないので、よくわからない
+・完全な余裕資産ではないので、できなくはないが、快く出せるわけでもない
+
+--- 48. @MinoDriven (2026-04-30) ---
+URL: https://x.com/MinoDriven/status/2049710407557025901
+超ベテランともなると視界外の敵機の位置や行動を距離計、カメラの傾き度合い、効果音などから総合的に判断して回避するからこわい（とてもこわい）
+
+--- 49. @rohanpaul_ai (2026-04-30) ---
+URL: https://x.com/rohanpaul_ai/status/2049944013923627330
+David Sacks demystifying Anthropic's Mythos 
+
+--- 50. @kazokutowatashi (2026-04-30) ---
+URL: https://x.com/kazokutowatashi/status/2049872627469316259
+これは本当にそう。10分くらい遊ぶと「ママがわたしと遊んでくれました」みたいな顔してる。抱っことかも割とそう。一旦家事の手を止めて3分抱っこすると「抱っこって言ったらしてもらえました」って顔してる。
