@@ -89,16 +89,18 @@ Nao_u #game-rights 2026-05-02 05:08 直接指示:
 |---|---|---|---|
 | Arkanoid | Taito 1986 | ◎ 敵キャラ本家 | https://en.wikipedia.org/wiki/Arkanoid |
 | Arkanoid: Revenge of Doh | Taito 1987 | ◎ 多種敵 + 個別ブロック移動 | https://en.wikipedia.org/wiki/Arkanoid:_Revenge_of_Doh |
-| Arkanoid: Doh It Again | Taito SFC 1997 | ◎ ボス Doh | https://en.wikipedia.org/wiki/Arkanoid:_Doh_It_Again |
+| Arkanoid: Doh It Again | Taito SFC 1997 | ◎ ボス Doh の存在（**静止ボディ**、動くボスではない） | https://en.wikipedia.org/wiki/Arkanoid:_Doh_It_Again |
 | Galaxian / Galaga | Namco 1979/1981 | ○ 敵編隊 | https://en.wikipedia.org/wiki/Galaga |
-| Wizorb | Tribute Games 2011 | ○ 動くボス + 敵 | https://en.wikipedia.org/wiki/Wizorb |
-| Shatter | Sidhe 2009 | ○ 動くボス | https://en.wikipedia.org/wiki/Shatter_(video_game) |
+| **Wizorb** | Tribute Games 2011 | ◎ **動くボスの直接前例**（HP制パターン移動） | https://en.wikipedia.org/wiki/Wizorb |
+| **Shatter** | Sidhe 2009 | ◎ **動くボスの直接前例**（章末動くボス、HP・パターン移動） | https://en.wikipedia.org/wiki/Shatter_(video_game) |
+
+※ 2026-05-02 自己訂正: Doh It Again は SFC ボスが静止ボディのため「動くボス」前例ではない。動くボスの真の前例は Wizorb (2011) + Shatter (2009)。Doh It Again は「ボスの存在」型として残置（Nao_u 05:08「SFC のボスは動かないが、動くボスを出すのではだめ？」が出発点）。
 
 ## Q-H シート (守破離の守)
 
 - Q-H-1 何の型か: ブロック崩し / Arkanoid 型
-- Q-H-2 クローン元: Arkanoid (1986), Arkanoid: Doh It Again (1997)
-- Q-H-3 一般要素: パドル / ボール反射 / 多段ブロック / ライフ / 全破壊クリア / **敵キャラ降下** / **動くボス**（全て本家系列にあり）
+- Q-H-2 クローン元: Arkanoid (1986, 敵キャラ), Arkanoid: Doh It Again (1997, ボスの存在), Wizorb (2011) + Shatter (2009)（動くボスの直接前例）
+- Q-H-3 一般要素: パドル / ボール反射 / 多段ブロック / ライフ / 全破壊クリア / **敵キャラ降下** (Arkanoid 1986 直接) / **動くボス** (Wizorb 2011 + Shatter 2009 直接、Doh It Again 1997 は静止ボディなので動くボスの前例ではない)
 - Q-H-4 独自要素: **無し**
 - Q-H-5 比率: 一般要素 7 : 独自要素 0
 - Q-H-6 型を破壊しないか: ◎

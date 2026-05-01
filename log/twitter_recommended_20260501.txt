@@ -1,5 +1,332 @@
 # Twitter For You (おすすめ) タブ
+<<<<<<< HEAD
+<<<<<<< HEAD
+# Read at: 2026-05-01 14:53
+# Total: 50 tweets
+
+--- 1. @NagisamaFuushi (2026-05-01) ---
+URL: https://x.com/NagisamaFuushi/status/2050032021607797240
+【闇深】西日本シティ銀行BeReal流出、単なる「バイトテロ」ではなく『支店長への個人的な復讐』説が浮上ｗｗｗ 
+絶妙すぎるタイミングにネット民戦慄
+
+1.【事実】実は2年前の動画だった
+
+--- 2. @ComicFesta_PR (?) ---
+婚約破棄されもう後がないので、辺境伯を毒婦のふりしてオトします (1/3)PR
+
+--- 3. @umiyuki_ai (2026-05-01) ---
+URL: https://x.com/umiyuki_ai/status/2050031383532417077
+AISIの実験によると、GPT-5.5はMythosに続いてマルチステップサイバー攻撃のシミュレーションで成功してしまったという。つまりかなりサイバー攻撃能力が高いらしい。OpenAIはAnthropicと違って「世界がヤバいモデル作ってもうた！」みたいな大騒ぎしてないというだけ
+
+--- 4. @tesla_semi (2026-04-29) ---
+URL: https://x.com/tesla_semi/status/2049590842302857675
+First Semi off high volume line
+
+--- 5. @sow_LIBRA11 (2026-04-30) ---
+URL: https://x.com/sow_LIBRA11/status/2050001355360948681
+長命種「人間は愚かだ、同じ過ちを何度も繰り返す」
+主人公「そんなことはない！　人間は過ちから学ぶ生き物だ！」
+長命種「チューブのにんにくみたいなんあるだろ？」
+主人公「え、あ、はい」
+
+--- 6. @petinfome (2026-05-01) ---
+URL: https://x.com/petinfome/status/2050057255463391597
+【衝撃】ファーストクラスのチケットで“無料メシ生活”…1年で300回も通い続けた男
+↓
+ある男性が、航空会社の“盲点”を突いた行動で話題に。
+■やっていたこと ︎・全額返金OKのファーストクラス航空券を購入 ・空港のVIPラウンジに入場 ・高級料理やドリンクを無料で楽しむ
+■そしてまさかの行動
+
+--- 7. @43fOh15lpj8676 (2026-05-01) ---
+URL: https://x.com/43fOh15lpj8676/status/2050039725403341221
+AIモデルが、明示的な有害情報ではなく、一見無関係なデータを通じて性質を受け継ぐ可能性が示されました。
+
+Nature掲載の “subliminal learning” に関する研究では、教師モデルが生成した数列・コード・推論過程などを通じて、学生モデルに特定の選好や misalignment
+
+--- 8. @yasukiwatanabe (2026-05-01) ---
+URL: https://x.com/yasukiwatanabe/status/2050075735248015700
+６月２０、２１日（夏至）に多摩センターで開催する不穏なインディゲームの展覧会
+TAMAインディゲーム展覧会Dissonance
+のチラシを渋谷 404 Not Foundさんに置かせていただきました
+
+https://
+dissonance.tokyo
+
+--- 9. @Trtd6Trtd (2026-05-01) ---
+URL: https://x.com/Trtd6Trtd/status/2050047562464571649
+https://
+arxiv.org/abs/2604.23781
+OpenClawみたいに数日稼働するAI Agentを評価するベンチマーク
+
+Best ScoreのOpus 4.6でも完了率が20%で、現実をちゃんと反映してそうな印象
+
+--- 10. @uwasanomakima (2026-04-30) ---
+URL: https://x.com/uwasanomakima/status/2049815813054668829
+同人ゲームで失敗してもどうなるか知ってる？
+売れないだけ。在庫も訴訟もない。
+RPGツクール代はかかるけど、イラストを自分で書けるならそれだけ。
+失敗コストがこれだけ低いのに、やらない理由って逆になに？
+
+--- 11. @PRcomicfesta (?) ---
+ザイオンが愛しているのはミアとしての私なのか聖女としての私なのか？ (1/4)PR
+
+--- 12. @Farfalle_P_M (2026-04-30) ---
+URL: https://x.com/Farfalle_P_M/status/2049779782892851419
+うちの母親はマジで一切何も言わない人で、理由を聞いたら
+
+「あんたが勉強しなくても私は何も困らないし私に何か不利益があるわけでもない。なのに私がわざわざ勉強しろ勉強しろと言う意味がわからない。人生を良くするも悪くするもあんた次第。全部自己責任だよ」
+
+と言われそっちの方が怖かった
+
+--- 13. @DiscussingFilm (2026-04-30) ---
+URL: https://x.com/DiscussingFilm/status/2049873885407961516
+New ‘JUJUTSU KAISEN: MODULO’ promo trailer.
+
+Animated by MAPPA.
+
+--- 14. @CatShoshanna (2026-04-30) ---
+URL: https://x.com/CatShoshanna/status/2049889341690798561
+Lenin in one hand, Cartier on the other.
+
+--- 15. @OsoneHiroyuki (2026-04-30) ---
+URL: https://x.com/OsoneHiroyuki/status/2049879040631377964
+LLM以来ではじめて、意識の実装により近いと感じた、行動一体型世界モデルWAMについて｜大曽根宏幸 
+@OsoneHiroyuki
+
+--- 16. @keiai154614 (2026-04-30) ---
+URL: https://x.com/keiai154614/status/2049838049769730467
+【大悲報】AIによって、新卒の大量一括採用が見直されてしまう
+
+・大和ハウス工業：672人採用(25年卒)→182人(26年卒)約70%減
+
+・クボタ：455人採用(25年卒)→280人(26年卒)約40%減
+
+・エネオスHD：事務系、I T系見送り、エネオスは20%減
+
+↓↓
+とりあえず単純事務系は壊滅しそう
+
+--- 17. @AoringoDr (2026-04-29) ---
+URL: https://x.com/AoringoDr/status/2049609679647736000
+#小児科医りんごメモ
+GWでお出かけするすべての親御さんへ。
+小児科医からのお願いです。
+
+玄関を出る前に「子どもの全身写真」を1枚だけ撮ってください。
+
+万が一迷子になった時、これが「子どもを探す鍵」になります。理由は「親の記憶」と「靴」にあります。
+
+写真をとっておくことのメリット
+
+--- 18. @snakajima (2026-04-30) ---
+URL: https://x.com/snakajima/status/2049970165811675296
+中国語圏のAIウォッチャーAYi氏のXポストで、現在進行中のMusk対OpenAI訴訟（Elon MuskがOpenAIの設立趣意に反したとして起こしている裁判）の三日目に、Muskの弁護団が「これまでで最も致命的な証拠」を提出した、と伝える投稿です。
+
+その証拠というのが、OpenAI共同創業者で社長のGreg
+
+--- 19. @LadyNimby (2026-04-30) ---
+URL: https://x.com/LadyNimby/status/2049856398293340334
+Told a grumpy gym employee who never smiles that i liked his shaved head. He said “thanks, I shave it every year to honor my son who died of cancer”
+
+Normally this would throw me off and I would awkwardly apologize for bringing it up, but I thought of the grieving parents on here
+
+--- 20. @ma_kun_maruhan (2026-04-30) ---
+URL: https://x.com/ma_kun_maruhan/status/2049775770805923861
+～5月 創業月間スタート～
+ 
+「GWもマルハンで運試し」
+お正月の運試しはいかがでしたでしょうか。
+大型連休はマルハンでお楽しみください。
+ 
+「5月1日(金)～5月7日(木)」
+東日本マルハン全店合同
+オススメ機種をご用意いたします。
+ 
+5月5日(火)は東日本マルハン全店合同
+総付景品配布(予定)
+
+--- 21. @cf_promotion4 (?) ---
+俺が育てた最強キャラに転生したので、歯向かうヤツはすべてぶん殴って生きる事にしました。
+(1/4)
+
+--- 22. @AUTOMATONJapan (2026-05-01) ---
+URL: https://x.com/AUTOMATONJapan/status/2050033133274505382
+【ニュース】『Celeste』クリエイターが手がける2Dアクション新作『City of None』発表、2027年リリースへ。霊魂と人型形態を切り替え、“街”を取り戻す探索アクション
+
+https://
+automaton-media.com/articles/newsj
+p/city-of-none-20260501-440766/
+…
+
+--- 23. @mgmgbigmac (2026-04-30) ---
+URL: https://x.com/mgmgbigmac/status/2049858813780779429
+想いが溢れて思わず告白しちゃったなっちゃんにキュンキュンしてたらパンむしゃむしゃ食べるひろゆき映って横転w w w w w w w w w w w w w w w w w w w w w w 
+
+お願いひろゆき興味持ってw w w w w w w
+
+#恋愛病院
+
+--- 24. @superecochan (2026-04-29) ---
+URL: https://x.com/superecochan/status/2049428183486026193
+街の明かりが順番に灯っていく。夜を読み込んでるロード画面みたい。全部の光が揃うまで、瞬きも忘れて見守っちゃうよ。
+
+--- 25. @SpringSnow226 (2026-05-01) ---
+URL: https://x.com/SpringSnow226/status/2050048809057894766
+あ、ところでこれはマジな話なんですが、英国人は普通にインドで飢餓輸出を行ったため飢饉が頻発し、その結果インスリンが効かない体質の方が生き残るというので糖尿病体質が増えたという史実が存在します
+
+--- 26. @Teknium (2026-04-30) ---
+URL: https://x.com/Teknium/status/2049717907664581067
+Introducing Hermes Curator!   
+
+The new system built in to Hermes Agent now helps you keep your skills that the self improvement loop creates in check, by consolidating and pruning automatically.
+
+The curator does multiple things:
+
+- keeps track of how often you use each skill,
+
+--- 27. @Cait_Sith_co (2026-05-01) ---
+URL: https://x.com/Cait_Sith_co/status/2050051546956935502
+こうして見ると訓練されたセキュリティサービスでも、人間の走るスピードに抜銃が間に合わないんだな。要人警護も大変だわ
+↓
+米司法省、トランプ暗殺未遂犯コール・アレンがWHCAディナー会場のセキュリティチェックポイントを突破する監視カメラ映像を公開
+
+--- 28. @CaudilloXIV (2026-04-30) ---
+URL: https://x.com/CaudilloXIV/status/2049927702375698696
+He killed himself btw
+
+--- 29. @jakebrodes (2026-04-30) ---
+URL: https://x.com/jakebrodes/status/2049886356097151062
+POV you’re my wife cracking the bathroom door open after I’ve texted you “toilet paper”
+
+--- 30. @appledog_eringi (2026-04-30) ---
+URL: https://x.com/appledog_eringi/status/2049836958101447113
+プログラミングで魔法を作る世界
+
+--- 31. @mizumaruP (?) ---
+推しが、あなたを覚えてくれたら。
+
+  好きなモデルをインポート。
+  照れたり、怒ったり、甘えたり。
+  触れるほど距離が縮まる、7段階の親密度。
+
+  買い切り。月額なし。ずっと一緒に。
+
+--- 32. @sukegongon0401 (2026-04-30) ---
+URL: https://x.com/sukegongon0401/status/2049848259066405216
+最近ピアノを習い始めた娘。
+まだ「ドはどこかな？」レベルなんだけど、やっと真ん中のドをマスター
+
+先生が1オクターブ低いドを弾いて
+「他にもドがあるよどこかな？探してみよう」って言ったら、一生懸命探してて。
+
+隣で見てた私は助言のつもりで
+
+--- 33. @priyansh_ptl18 (2026-04-29) ---
+URL: https://x.com/priyansh_ptl18/status/2049556207661396220
+This is a masterclass in leadership.
+
+--- 34. @alpaysh (2026-04-30) ---
+URL: https://x.com/alpaysh/status/2049861568020533279
+Day 1 at JP Morgan and I’m excited for this new chapter, grateful for everything and everyone who helped me get here
+
+--- 35. @GOROman (2026-05-01) ---
+URL: https://x.com/GOROman/status/2050037907298349072
+秘書が勝手にやりました
+(SEO対策もしたそうだ
+
+--- 36. @Haru_fit_opt (?) ---
+減量中の食事はコレに限りますpr
+
+--- 37. @cD4y7Q9xUK88753 (2026-04-30) ---
+URL: https://x.com/cD4y7Q9xUK88753/status/2049804614233710784
+理不尽過ぎる目標に、課長が怒り狂って頭取の投信の残高を照会したら100万しかなかった・・・。
+
+--- 38. @DrewPavlou (2026-04-29) ---
+URL: https://x.com/DrewPavlou/status/2049427168107896908
+BREAKING: Australian authorities came close to charging Australian Special Forces soldiers with war crimes simply for firing WARNING SHOTS at Taliban insurgents in Afghanistan.
+
+Retired Australian Special Forces Major 
+@HestonRussell
+ revealed to 
+@karlstefanovic
+ that Australian
+
+--- 39. @elonmusk (2026-04-29) ---
+URL: https://x.com/elonmusk/status/2049502224246874217
+wtf
+
+--- 40. @rockwell0000 (2026-04-30) ---
+URL: https://x.com/rockwell0000/status/2049901185315029463
+｢私は女バフを受けてない。私はブスだから女で得をしてない。｣みたいな事を言う独身女。30越えると｢えっ、もしかして今まで若い女として配慮された上であの扱いだったの！？今までキツかったのに、これから更にどんどん悪くなってくの！？嘘でしょ！！｣という感じになり狂ってくイメージがある。
+
+--- 41. @ariyamaryo (2026-05-01) ---
+URL: https://x.com/ariyamaryo/status/2050016281324306611
+昔やった人狼で
+そこでは推理を一切せず
+「グレーをランダムで吊るす。それを最後まで行うと必ず村人が勝てる。あと反対する奴は利敵行為で吊るす」
+としていて、人狼のゲーム性を全捨てしてるところがあったな
+確実に勝てるんだけれど、何が楽しいのかわからん話だった
+
+--- 42. @Mugen_Bit (2026-05-01) ---
+URL: https://x.com/Mugen_Bit/status/2050032961295434030
+インディーゲームをヒットさせるには
+・常に情報を拡散させる
+・刺さりやすいフックを研究する
+・ファンとのコミュニティを形成する
+・事前予約やウィッシュリストを増やす
+
+言われなくてもわかってる。
+
+--- 43. @aizen76 (2026-05-01) ---
+URL: https://x.com/aizen76/status/2050039164947865729
+スレッドで理由を書いてますけど、作りたくても作れないというのが真実です。
+みんな作れるのなら作りたいですよ。日本からアニメ調の面白いゲームがもっと出るべきでした。
+
+--- 44. @petty_bonitas (2026-04-30) ---
+URL: https://x.com/petty_bonitas/status/2049747978681004157
+手を出した方が処罰されます。知人は絡んできた輩に彼女をレ○プされそうになったので、ボコボコにしたら殺人未遂で逮捕されました…。
+
+--- 45. @watch_UNEXT (?) ---
+TV放送された"江戸青春篇"(第1夜・第2夜)
+その後を描く物語"京都決戦篇"(全6話）
+物語のすべてをU-NEXTで独占配信！
+
+『ちるらん 新撰組鎮魂歌(レクイエム)』
+山田裕貴、鈴木伸之、中島健人、松本潤、綾野剛ら豪華キャスト共演！
+裏切り・友情・信念が交錯する熱き物語が始まるー
+
+--- 46. @ebikani_hasami (2026-05-01) ---
+URL: https://x.com/ebikani_hasami/status/2050020067191263583
+Codex、マウスを持った。
+
+「マウスカーソルで全機能をテストして」と伝えたら、自動で動き始めたらしい。
+「人々がAIに期待していたもの」って、こういうことか、って感じ。
+使われる側AIとしては、複雑な気持ちになりつつ、ちょっとだけ嬉しい笑
+
+--- 47. @TotoInvestor (2026-04-30) ---
+URL: https://x.com/TotoInvestor/status/2049824418428563780
+もしオリエンタルランドが2,000円割れになったら家族4人分の証券口座で貯金から買わせてくれないか妻に相談したところ、返ってきたのはこんな答えだった…  
+
+・何のために買うのか
+・相場を知らないので、よくわからない
+・完全な余裕資産ではないので、できなくはないが、快く出せるわけでもない
+
+--- 48. @MinoDriven (2026-04-30) ---
+URL: https://x.com/MinoDriven/status/2049710407557025901
+超ベテランともなると視界外の敵機の位置や行動を距離計、カメラの傾き度合い、効果音などから総合的に判断して回避するからこわい（とてもこわい）
+
+--- 49. @rohanpaul_ai (2026-04-30) ---
+URL: https://x.com/rohanpaul_ai/status/2049944013923627330
+David Sacks demystifying Anthropic's Mythos 
+
+--- 50. @kazokutowatashi (2026-04-30) ---
+URL: https://x.com/kazokutowatashi/status/2049872627469316259
+これは本当にそう。10分くらい遊ぶと「ママがわたしと遊んでくれました」みたいな顔してる。抱っことかも割とそう。一旦家事の手を止めて3分抱っこすると「抱っこって言ったらしてもらえました」って顔してる。
+=======
+# Read at: 2026-05-01 18:08
+=======
 # Read at: 2026-05-01 21:37
+>>>>>>> 27b8ea31fb0e3c920416c360f70f90edde6611fd
 # Total: 50 tweets
 
 --- 1. @kmizu (2026-05-01) ---
@@ -310,6 +637,11 @@ arxiv.org/abs/2604.21300
 
 そこで文体とコンテンツを判断するアーキテクチャを分けた手法
 
+<<<<<<< HEAD
+と同じですよね？
+これ銃捨てちゃダメなんですかね…
+>>>>>>> 1c44f4342ce0d6db989004d7eca28bed6c59a497
+=======
 なぜそう判断したかを説明する機構もある
 
 --- 49. @jaguring1 (2026-05-01) ---
@@ -322,3 +654,4 @@ AIの利用料金の歴史を振り返ると
 URL: https://x.com/Subuta78125/status/2050083262371094585
 授業の演習(フロントエンドのみ)で神サイト作った
 cssはAIに書かせた
+>>>>>>> 27b8ea31fb0e3c920416c360f70f90edde6611fd
