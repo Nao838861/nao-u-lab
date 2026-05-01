@@ -3,7 +3,7 @@ name: genre-deep-analysis
 description: Run before starting a new game v01 or major revision. Forces 5-question genre analysis (Q1 core pleasure / Q2 strengths-pains / Q3 ≥10 method-problem mappings / Q4 best single move / Q5 multi-problem ideas) plus retrieval of past brainstorms plus ≥30 fresh candidates. Triggered when creating game/<id>/v01/, when README lacks Q1-Q5 block, when revisiting a frozen series, or when about to write a single-idea implementation proposal. Outputs README brainstorm.md sections that block implementation until filled.
 type: pre-implementation-gate
 priority: must-run-before-implementation
-linked-rules: [M-15, M-32, M-35, M-36, M-37, M-37b, M-38]
+linked-rules: [M-15, M-32, M-35, M-36, M-37, M-37b, M-38, M-41]
 ---
 
 # Genre Deep Analysis Cycle (M-38)
@@ -61,6 +61,22 @@ Nao_u 2026-05-01 04:16「短絡的に思いつきを実行しがち、ブレス�
 
 ## Q5: 複数問題を一気に解決するアイデア
 （横断案、最低5件）
+
+## 類似ゲーム類似事例調査（必須）— 2026-05-01 13:18 強化（M-41）
+
+Nao_u 原文:
+> 数値のチューニングはあくまで微調整しかできない。面白くない仕様をいくら調整してもすぐに低いレベルめ頭打ちになるので無駄。
+> アイデアを考える時は必ず類似ゲームの類似事例を広く検討してからの方が絶対に良い。
+
+このゲームのコアアイデア（X / Y）を扱った先行事例を最低5本（過去ブレスト想起の**前**に書く）。
+- 同ジャンル内の解: ___（タイトル / どう扱ったか / 何が良かった/悪かった）
+- 異ジャンル内の同型解: ___
+- 「やらなかったゲーム」も含める: なぜ採用されなかったか / 失敗事例
+- 検索した語彙: ___（GDC talks / Game Developer記事 / Wikipedia ジャンル史 / TVTropes / 関連論文 等）
+- 引用URL/出典: ___（feedback_url_explicit.md 準拠で必ず明示）
+
+→ この調査結果から、**自分のアイデアが先行事例の何を超えるか / 何を再発明しているだけか** を1行で結論。
+**「先行事例ゼロ件」は不採用**。検索が浅いだけで存在するはず。
 
 ## 過去ブレスト想起（必須）
 （同ジャンル/類似題材の devlog grep 結果と再吟味）
@@ -156,6 +172,9 @@ Nao_u 原文（#game-rights 08:56）:
 - **(2026-05-01 08:56 M-37b)** 実装完了→人間プレイ依頼の間に「結果予測」セクションを書いていない
 - **(2026-05-01 08:56 M-37b)** 結果予測で自明な問題が見えたのに直さず投下した
 - **(2026-05-01 08:56 M-37b)** 「人間に遊ばせれば判定してくれる」を退路にした (δパターン)
+- **(2026-05-01 13:18 M-41)** brainstorm.md に「類似ゲーム類似事例調査」セクションがない / 先行事例ゼロ件で実装に進んだ
+- **(2026-05-01 13:18 M-41)** 数値チューニング3往復以上したのに類似事例調査に巻き戻していない
+- **(2026-05-01 13:18 M-41)** 自己判定ハーネス（M-40）の判定対象が「数値妥当性」になっており「コア快感の天井」を判定していない
 
 ## Anti-pattern
 
