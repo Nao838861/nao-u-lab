@@ -206,4 +206,58 @@ Phase 1 が「未対応」と書いた項目を再検証した結果、ほとん
 → 最低限1, 2, 3 を完遂。4 は時間・トークン余力次第。5 は次サイクル送り可能。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 実行サマリ
+
+Nao_u 18:08「鉱脈出るまで粘れ／v6の反省で先行事例掘った結果はどうした？」を受領した v07 計画を **substrate 側 = 実装** で完遂。infrastructure（memory/skill 追加）は次サイクル送り。
+
+### 1) v07/index.html 実装 ✓
+
+- v06 ベース (15324bytes) → v07 (約 16700bytes、ロジック追加で +1.4KB)
+- 削除: SWAY_AMP / SWAY_PERIOD / blockSwayOffset / updateBlockPositions
+- 追加: WARN_TRIGGER_DIST=100 / WARN_RELEASE_DIST=120 / WARN_TIMEOUT=30 / WARN_MAX_COUNT=3 / WARN_BACK_PX=2 / WARN_HIT_MULT=2
+- updateBlockWarning(): 距離計算 → 距離昇順 Top 3 が警戒、ヒステリシス（100px in / 120px out / 30frame timeout）、後退オフセットを 2D（ボールから遠ざかる方向）
+- 描画: 警戒ブロックは `lighten()` で明度+45% + 白縁 1.2px、非警戒は v06 と同じ
+- HUD: "×2 HITS" カウンタ追加（state.warnHits）
+- localStorage キー: `bricklog_v07_hi`（v06 と分離）
+- 軌道予測 (computeFullTrajectory) は変更なし — 後退済みの blk.x/y を使うので自動対応
+- node 構文チェック PARSE OK
+
+### 2) v07/predicted_play.md 作成 ✓（M-39 ゲート）
+
+30秒予測（0-5秒/5-30秒/30-60秒）+ 観点5軸 + 懸念3点 + ヘッドレス自己評価候補。
+**実装後にこのゲートを書く過程で「README 仕様外の独断追加（中間ヒット 0.5 倍ボーナス）」を発見し、その場で削除**（index.html の該当ブロックを書き換え、JS 再パース確認済）。M-39 が M-37 の盲点を拾う構造を体感できた。
+
+### 3) #game-rights 報告 + cross_review 起票 ✓
+
+- `game/cross_review/20260501_log_brick_log_v07_request.md` 作成（Mir/Ash 観察軸を分けて指定: Mir=ADV/演出視点、Ash=STG 視点）
+- `drafts/post_log_game_rights_20260501_brick_log_v07.py` 経由で `tools/post_draft.py` から #game-rights 投稿（ts=1777631986.587669, archived OK）
+
+### 4) next_tasks 後続登録 ✓
+
+- t-260501194005-0c0b: v07 self_judgment.md 作成 + headless 計測3項目（検証期限 2026-05-08）
+- t-260501194011-10bd: M-43 候補 (先行事例の二重利用 meta-pattern) の judgment（self_judgment 後に再評価、検証期限 2026-05-15）
+
+### 5) 余力タスク（4. tools/discriminator.py 雛形 / 5. Q-H-8b README 雛形注入）の判断
+
+**両方ともこのサイクルでは着手しない**。理由:
+- Slack ペース 1.7x（リセットまで6日）で外部投稿+実装で既に消費
+- substrate vs infrastructure 観点（feedback_substrate_not_infrastructure）: tools/discriminator.py は infrastructure、Q-H-8b README 注入も infrastructure。**v07 を粘る前にハーネス追加に行くと 18:08 「逃げるのが早すぎ」処方箋に反する**
+- 次サイクル v07 self_judgment 完了後、結果を見て discriminator/Q-H-8b 注入の優先度を再評価
+
+### 6) Phase 2 で抽出した meta-pattern の扱い
+
+「先行事例の二重利用」(M-43 候補) は v07 実装過程で実体験できた構造（v06 では凍結根拠としてしか使わず、v07 では分岐素材として再利用）。このサイクルでは memory 起票せず、v07 self_judgment 完了後に v07/lessons.md へ観察を併記する形で記録予定。**substrate 優先**。
+
+### 7) Slack 即時応答の確認
+
+- Phase 1 §1〜§2 で「未対応」と書いた項目は Phase 2 で全件処理済と確認済
+- 今サイクル新規 Slack 反応: #game-rights v07 報告 1件のみ
+- #nao-u 投稿禁止ルール遵守、#all-nao-u-lab 余分な投稿せず
+
+### 結果サマリ
+
+- ゲーム実装: v07/index.html (substrate 1mm 達成、絶対にやる目標 #1〜#3 充足)
+- ゲート: M-37 / M-38 / M-39 / M-41 全て通過、M-39 が M-37 の盲点を 1 件拾った
+- Slack: #game-rights 1件投稿、cross_review 起票
+- 後続: self_judgment + headless 計測（次サイクル）、M-43 起票判断（self_judgment 後）
