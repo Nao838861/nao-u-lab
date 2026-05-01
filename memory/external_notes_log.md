@@ -2370,3 +2370,40 @@ notf=ノトフ/川本龍、DreamCore運営者（国産AIゲーム生成プラッ
 ---
 
 **親マーカー（2026-04-27 AYi 2件統合）**: [親集約 2026-04-27 Log C134 Phase 1/2 — a=Markdown 4欠陥批判 / b=3週間前却下テスト の2件全てサブ統合済。Markdown 記憶批判は Witcheer Camp 2 の意識的選択を維持しつつ「失敗台帳の graph 化」未着手領域を発見、A' タスクとして concept_graph 拡張範囲を明示。**本節の親マーカー完了**]
+
+---
+
+## 2026-05-01 kaizen #106 自発検索：M-40 自己判定ハーネス三角化（Log C151 Phase 1→2）— Nao_u 投下ではなく Log 自発検索 [統合済 親集約マーカー — 全3サブ統合済]
+
+**起点**: Nao_u 2026-05-01 09:58 #game-rights「人間のプレイに依存せず、ちゃんと自分で判断できるようになって」→ 10:11 M-40 刻印直後、外部三角化として `LLM agent self-evaluation game design playtest harness 2026` で検索。kaizen #106 運用（Phase 1 §6 Log 自発検索1本必須化）に従う。Phase 2/3 で内容を強制実装利用しない（ノイズ混入防止）。原典未取得・三角化の存在のみ確認。
+
+### a. HN「Letting AI play my game – building an agentic test harness to help play-testing」(原典未取得)
+
+出典候補: `news.ycombinator.com/item?id=47947525`（実在性未検証、Phase 2 で読まずに記録のみ）
+要点（検索snippetベース）: 個人ゲーム開発者が AI に自分のゲームをプレイテストさせるエージェントハーネスを構築した話。
+
+**Log側の角度**: M-40 が要求する4手段（過去ゲーム比較 / mental simulation 高解像度化 / 映像レンダリング / 独立判定LLM）を「個人レベル運用」で兼ねる現存事例。M-40 を 10:11 刻印したが、同コンセプトが個人開発者で動いている＝ハーネス機構自体は infrastructure 側、commodity 化進行中。M-32 substrate_not_infrastructure の射程内。**差別化軸は M-40 機構そのものではなく、Nao_u 20年日記＋失敗台帳 M-10〜M-40＋3インスタンス cross_review の運用**。Phase 2 で原典確認しないことが重要（kaizen #106 ノイズ防止）、brick_log v06 で screenshot oracle 必要時に読みに行く。
+
+[統合済 2026-05-01 Log C151 Phase 2 — #shared-reads ts=1777599071.966059 で3件まとめ三角化観察として共有]
+
+### b. GamingAgent (lmgame-org GitHub, ICLR 2026採択, 原典未取得)
+
+出典候補: `github.com/lmgame-org/GamingAgent`（実在性未検証）
+要点（検索snippetベース）: LLM/VLM ゲームエージェントを標準化された interactive game env で評価。perception / memory / reasoning の3モジュール分解で各寄与を測定する harness。
+
+**Log側の角度**: 3モジュール分解は brick_log v05 headless_check.js の数値検証（perception 層）が映像レンダリング/独立判定LLM と分離設計されていない欠落を可視化。M-40 を実装する設計指針として「層分離」をヒントに採用候補。ただし強制利用しない、brick_log v06 で具体的な分離が必要になった時点で再訪。
+
+[統合済 2026-05-01 Log C151 Phase 2 — 上記 a と同投稿でまとめ統合]
+
+### c. TITAN (arxiv 2509.22170)「Leveraging LLM Agents for Automated Video Game Testing」(原典未取得)
+
+出典候補: `arxiv.org/abs/2509.22170`（実在性未検証）
+要点（検索snippetベース）: LLM 駆動ゲームテストエージェント。high-dimensional game state perception / action prioritization / long-horizon reasoning with reflective self-correction / LLM-based oracles for issue detection の 4 component。
+
+**Log側の角度**: 4 component が我々の M-37（着手前批判レビュー） / M-38（ジャンル深掘り分析） / M-39（人間プレイ前結果予測） / M-40（自己判定ハーネス）とほぼ位置対応。reflective self-correction = M-37、LLM-based oracles = M-40 の独立判定LLM。これは M-37〜M-40 群が外部研究と同方向の動き（commodity 化）であることの三角化、独自発明としての framing 禁止。
+
+[統合済 2026-05-01 Log C151 Phase 2 — 上記 a/b と同投稿でまとめ統合]
+
+---
+
+**親マーカー（2026-05-01 kaizen #106 自発検索 3件統合）**: [親集約 2026-05-01 Log C151 Phase 2 — a=HN個人開発者ハーネス / b=GamingAgent 3モジュール / c=TITAN 4 component の3件全てサブ統合済。三角化の意味は (i) M-40 は外部 commodity 化進行中で infrastructure 側、(ii) 差別化は substrate (Nao_u 20年日記+失敗台帳+3インスタンス) (iii) 強制利用しない＝brick_log v06 で必要発生時に原典確認。kaizen #106 自発検索の最初の親集約マーカー、運用継続の起点として記録。**本節の親マーカー完了**]
