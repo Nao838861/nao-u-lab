@@ -3623,3 +3623,5 @@ Slackメッセージ（08:44 #game-rights、宛先「&gt; log」明示）への�
 [2026-05-01 20:52:23] Inbox win2 has content — waking Claude
 [2026-05-01 20:57:23] Claude wake timed out for win2 — restoring inbox
 [2026-05-01 20:57:23] [COOLDOWN] win2: 5回連続エラー → 30分クールダウン
+[2026-05-01 21:20:04] [COOLDOWN] win2 is in cooldown (7m19s remaining) — skipping Claude wake
+[2026-05-01 21:21:45] [COOLDOWN] win2 is in cooldown (5m38s remaining) — skipping Claude wake
