@@ -39,6 +39,20 @@ GAN の本質は「D が静的だと G は基準を攻略して終わる」。�
 
 **現状**: 部分稼働（Ash の自己判定で1回成功、構造化されていない）。
 
+**外部参考実装（2026-05-01 19:30 Nao_u #nao-u 投下 Rushia Codex ガイド）**: <https://note.com/rushiagames/n/n4c8f38dd4c34>
+
+評価スクリプト5指標が D 層1 スロットの雛形として直接流用可能:
+
+| Rushia 指標 | brick_log への翻訳 | 一般化 |
+|---|---|---|
+| clear_rate（クリア可能率） | headless solver 到達率 | コア勝利条件への到達率 |
+| avg_playtime（平均プレイ時間） | 1ゲーム秒数 | セッション長 |
+| collision_freq（衝突頻度） | ball-paddle / ball-brick イベント率 | コアメカニクスの発火頻度 |
+| fps_drop（FPS低下） | requestAnimationFrame 計測 | 表示破綻の検出 |
+| reachability（到達可能性） | 裏抜け率 / brick 全消去到達率 | ゲーム空間の踏破可能性 |
+
+→ tools/discriminator.py 雛形（第一歩）の最初のスロット定義はこの5本で切る。ただし **層1 単独運用は M-41 違反路**（数値妥当性で天井不変）= 必ず層2/層3 を後段に置く前提でのみ採用。詳細: `external_notes/20260501_rushia_codex_gamedev_guide_d_layer1_concrete.md`
+
 ### 層2: 比較判定（過去ゲーム vs 新作）
 
 **入力**: `game/<id>/<v??>/` 一式 + 比較対象 1〜3 本（BACKLASH / 過去 v?? / 同型既存ゲーム）
