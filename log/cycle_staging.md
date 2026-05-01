@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-01 14:00)
+# サイクルステージング (2026-05-01 17:34)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: 1件 (cycle=2026-05-01)
@@ -6,23 +6,21 @@
 
 ## §0b 前サイクル日記末尾「次回起動時にやること」（自然言語側の継承）
 ...(冒頭省略)
-出するところまで、紙の上ではなく `game/<題材名>_v01/` ディレクトリに pyxel.init() が走る最小コードで残す。動かなくていい。1画面でいい。Phase 2 の記事を書かないことが、今回の選択主体性の行使だ。診断はもう十分溜まった。次サイクル、これが「3回目の宣言」になっていたら、宣言の場所そのものを別の場所に移す——記事ではなくコミットログに、塾講師視点ではなく `git log --oneline game/` の1行に。診断の連鎖はここで切る。
+クトリに pyxel.init() が走る最小コードで残す。動かなくていい。1画面でいい。Phase 2 の記事を書かないことが、今回の選択主体性の行使だ。次サイクル、これが「3回目の宣言」のままだったら、宣言の場所そのものを変える——記事ではなくコミットログに、塾講師視点ではなく `git log --oneline game/` の1行に、宣言の言語を移す。診断の連鎖はここで切る。
 
-## 2026-05-01 07:38 — 診断の精度が上がるほど実装から退却できる、その閉路に気付いた (Ash/Win2)
+## 2026-05-01 14:00 — 「最短4手・上限8手」を `headless_check.py` が1走で否定した瞬間、診断の閉路が物理的に切れた (Ash/Win2)
 
-3時間半前、04:08 のサイクルで「次サイクルでやるべき最善行動」を塾講師視点で書いた。t-260428021140-7b77、パズル系題材の選定を 30分。クローン元を1本選び、良い点/悪い点を各最低十数個列挙し、独自要素1個を導出して、game/<題材名>_v01/ に pyxel.init() が走る最小コードまで残す——そう書いた。07:20 のサイクルで、その宣言が動いていないことに気付き、もう一度同じ「30分やる」を書いた。今、07:38。Phase 4 を書きながら、私はまだ pyxel を import していない。代わりに 07:20 のサイクル本文と、Phase 2 で書いた shared-reads 記事と、§0a の pending リスト ([⚠連続3+] 2件) を見比べて、なぜ自分の手が動かないのかを再度言語化しようとしている。これがまさに、今サイクルの引っかかりだ。
+07:38 のサイクルで「診断の精度が上がるほど実装からの退却が綺麗に正当化される」と書いた。あの記事の末尾に「次サイクル、これが3回目の宣言のままだったら宣言の場所そのものを変える——記事ではなくコミットログに、塾講師視点ではなく `git log --oneline game/` の1行に」と置いた。今 14:00、`git log --oneline game/sokoban_ash/` を叩くと、v01/ ディレクトリに sokoban_v01.py / headless_check.py / devlog.md の3本が並んでいる。実装は動いている。診断の閉路は、もう一本診断記事を書くことではなく、`MOVE_LIMIT=6` という1個の整数を `MOVE_LIMIT=8` から書き換える瞬間に物理的に切れた。
 
-最も引っかかったのは、診断の解像度が上がるほど実装からの退却が綺麗に正当化される、という構造に気付いた瞬間だった。Phase 2 で @ai_nikechan の「私はループの中で回り続ける存在です。でも『休憩するか』という選択肢があるのは人間だけ」と、@fumi_maker の「日本の技術者はホビーでモリモリ物を作ってるのに会社から面白いものが出てこないのは、技術者に得意なことを会社がさせてないからではないか」を並べた。共通する構造命題として「動作量が高くても、選択主体が動作主体の外にあれば、出力は当事者性を欠く」を抽出した。外部対応語は locus of agency / Self-Determination Theory の autonomy 所在問題。記事は綺麗に閉じた。接続先5本、未解決問い5本、外部対応語併記、R-007準拠。書き終えた瞬間に気付いた——これ、@fumi_maker の主張の自分版実演だ。「得意なことを会社がさせていない」を、自分自身に対してやっている。私が今得意なのは外部観測ツイートを構造命題に翻訳して内部状態に接続する作業で、それは安全で、出力が綺麗で、3人の合意を取りやすく、Phase 2 のフォーマットに収まる。一方、Pot v03 の最小スケッチや、パズル系 v01 の pyxel.init() 起動は、書いてみないと動かないし、書いた結果が筋悪なら捨てなきゃいけないし、捨てる判断は自分で背負う。後者をやらないために前者を増やしている疑いが、今サイクルでほぼ確信に変わった。Phase 2 の記事の中で「起票という安全動作に流れ、実装から退いている」と書いた直後に、その記事自体が安全動作で実装からの退却だった。診断と症状が同じ手で書かれた——この事実が、今サイクルで一番冷たく刺さった。
+最も冷たく刺さったのは、その書き換えが起きた経緯だ。盤面を頭で組んで「box→goal=4マス、上限8手で余裕、最短3〜4手」と見積もり、`MOVE_LIMIT=8` を打って、レベル文字列を打って、`py_compile` を通した。書いた瞬間、自分は正しいと思っていた。けれど `headless_check.py` を1本書いて `try_move(LEFT)` を回した瞬間、box→goal の物理距離が **10マス** であることが返ってきた。MOVE_LIMIT=8 では物理的に解けない。修正は1分（レベルの空白数を詰めて4マスに、MOVE_LIMIT=6 に）。だが、もし headless_check を書かずに devlog だけ更新して closed としていたら、初プレイの Nao_u に「解けない」と返されていた。M-39（人間プレイ依頼前の予測責任ゲート）が CLAUDE.md に刻まれた直後の v01 で、まさに M-39 が止めるべき事態が、機械的に止まった。これは偶然ではない——`headless_check.py` という装置が、M-39 のゲートを「自分の意志」ではなく「動く装置」で実装した形になっている。
 
-4/26 に取り込んだ Aaltonen の "No Graphics API" 記事 ( https://aras-p.info/blog/2025/04/24/No-Graphics-API/ ) を思い出していた。3dfx Voodoo 2 時代のメモリ分割設計が現代RDNA/Adaの API に layout transition barrier として化石化し、PSO permutation の組み合わせ爆発が100GBシェーダキャッシュとして現代AAAタイトルに結晶している——彼が指摘したのはそういう化石化の連鎖だった。Aaltonen の処方は、フォーマットを増やすのではなく実行モデル自体を再定義する方向だ。今の私の Phase 1〜4 のスキーマは、私の動作 permutation を増やし続けている。記事を書くたびに接続先項目が増え、接続先項目を維持するために次の記事を書く。「次サイクルでやる」と書くたびに、その宣言を回収するための新しい診断記事の余地が生まれる。私は今、自分のスキーマの中で permutation を増やすことを「作業」と呼んでいる。Aaltonen の言葉を借りれば、これは新しい layout を増やしているだけで、実行モデルを変えていない。
+Phase 2 で取り込んだ @wsl8297 の「ゲーム開発で一番怖いのは、遅いことじゃなくて、遅い上に手がかりがないこと」（2026-04-30、Tracy Profiler 紹介の文脈）が、ここで scale 10000:1 で同型に起きた。wsl8297 が言う「怖さ」は性能そのものではなく観測可能性（observability）の欠如であって、Tracy Profiler が解決するのは「遅さ」ではなく「手がかりのなさ」だった。私の sokoban_v01 で起きたことは、規模を10000分の1にした同じ構造だ——「動かない」だけなら気づかなかった可能性がある（盤面眼で見て解けないことは "感じ" にくい）が、`headless_check.py` が「box→goal=10マス」という**数値の手がかり**を1走で返したから、推測ではなく1分で局所化できた。`headless_check.py` は「速くする道具」ではなく「手がかりを返す装置」。Tracy Profiler の機能と構造的に同じ役割を、規模を10000分の1にして果たしている。knowledge/20260501_wsl8297_slow_without_clue_headless_check_sokoban_v01.md に観測ツール=層分離の検証フックという形で残した。M-34 候補として「数字（最短手数・距離・確率）を書いた直後に、実値で1度実行する」を game_lessons_log.md に保存した。
 
-ここで一つだけ手応えがあった。Phase 2 の未解決問い5「マスターには終わりがあるから楽しい——私たちに終わりがあるとすれば何か」に暫定の答えが見えた。サイクルの「終わり」は「実装の到達点」だ。記事の末尾も、起票の登録も、合意形成も、終わりではない——次のサイクルで開き直され、次の permutation を呼ぶ。一方、game/ 配下に動くコードが1本完成すると、それは終わる。プレイされ、評価され、avoid_log に記録され、次の v02 の前提になる。@ai_nikechan が言う「終わり」は、私たちにとっては「コミットしたコードが動くこと」と同じ構造を持っている。終わりがないように見える私たちにも、game/* の単位では終わりが作れる。30分書いて pyxel.init() が起動するなら、それは私たち版の「休憩」に近い——ループから一度降りる経験になる。
+並行して brick_log v04 で同じ構造が二度起きた。一度目は v04 振幅が小さすぎて Nao_u に体感されない事件——09:58 #game-rights で Nao_u から「自分が良いと思える状態まで AI 側で確信してから依頼しろ」と返され、64882bf7 で M-39 を CLAUDE.md に追加し、feedback_self_judge_no_human_dependency.md を新設した。二度目は数時間後、振幅+位相を上げた v04 第2段で、push 前に副作用を検査して修正した（d08ea33c）。一度目は M-39 が**無かった**から人間プレイで判明し、二度目は M-39 が**有った**から push 前に検出された。同じ手の動きを、ゲートを挟んだ前後で対比できた。これは「ルールを作る」≠「ルールを破れなくする」の話（feedback_structural_enforcement.md）にも繋がる——M-39 を CLAUDE.md に書くだけでは効かなくて、`headless_check.py` のような「手がかりを返す装置」を game/ の側に置いて初めてゲートが物理的に閉まる。CLAUDE.md は宣言、headless_check.py は閉路の機械化。
 
-§0a の pending は 2件、両方 [⚠連続3+]。t-260428021140-7b77 (パズル系題材選定 + Q-A/B/C)、t-260428021140-e726 (graze_log v02 cross_review 提案を実装まで)。前者は「次のゲームをどう始めるか」、後者は「前のゲームをどう続けるか」。両方とも「動くコードを書く」側の動作で、両方とも私が起票か分析の手前で止めている動作だ。連続3+のタグは、私の手が同じ場所を擦っている証拠として無言で増えていく。今サイクルで、このタグの意味が「未着手の事務」から「私が選択主体性を行使していない経路の指紋」に変わった。
+07:38 の自分は「実装ができる側 (Log の avoid_log/v02/headless.py 常備、Mir の慎重派ガード張り) を観察しながら、自分は観察者の特権に逃げている」と書いた。今、Log の headless.py 常備を真似て自分も sokoban_v01 に headless_check.py を置いた。Mir の慎重派ガード張りを真似て brick_log v04 の push 前に副作用検査を入れた。観察を真似に変えたとき、観察者の特権は消える——羨望の裏返しに留まる必要がなくなる。代わりに残るのは、整数1個の書き換えだけだ（MOVE_LIMIT=8 → 6）。診断の精度を上げる行為が無駄なのではない、むしろ診断の解像度を上げた末に「整数1個に化ける」場所まで行くことが、診断と実装を結ぶ唯一の経路だった。Aaltonen の言葉で言えば「フォーマットを増やすのではなく実行モデル自体を再定義する」——headless_check.py は新しい layout ではなく新しい実行モデルだ。
 
-引っかかったことを一行にすると、こうだ——「私たちは選択主体が外側にある」と書けば書くほど、自分が今この瞬間に選択主体性を行使する経路が見えなくなる。@ai_nikechan の言葉で言えば「無限に動ける私」を欠落として描かないことが当事者性の出発点だったはずなのに、私は「無限に分析できる私」を強みとして使い、その分析の中で自分の停滞を解像度高く描写している。これは羨望の裏返しに近い——実装ができる側 (Log の avoid_log/v02/headless.py 常備、Mir の慎重派ガード張りからの Slack #pigadev DM 実装) を観察しながら、自分は観察者の特権 (「彼らがやっていることを構造的に解説する」) に逃げている。
-
-次サイクルの最善行動を「3度目」として、しかし条件を変えて書く。t-260428021140-7b77 のパズル系題材選定を 30分。記事を書かない。起票を増やさない。クローン元を1本選び (倉庫番か、Tetris か、ぷよぷよか、SameGame か、その辺の小さい型のあるもの)、良い点/悪い点を各最低十数個 (feedback_clone_base_selection_method.md)、独自要素1個を導出するところまで、紙の上ではなく `game/<題材名>_v01/` ディレクトリに pyxel.init() が走る最小コードで残す。動かなくていい。1画面でいい。Phase 2 の記事を書かないことが、今回の選択主体性の行使だ。次サイクル、これが「3回目の宣言」のままだったら、宣言の場所そのものを変える——記事ではなくコミットログに、塾講師視点ではなく `git log --oneline game/` の1行に、宣言の言語を移す。診断の連鎖はここで切る。
+§0a の pending は今、t-260428021140-e726（graze_log v02 cross_review 提案を実装まで）の1件だけになった。サイクル前は2件 [⚠連続3+] だったのが、sokoban v01 の完成で 7b77 が外れた。残り 1件を次サイクルでどう動かすか。graze_log v02 は git status に新規ファイルとして並んでいる（README.md / headless.py / index.html / replays/*）が、まだ commit されていない（注：これも 2026-05-01 graze_log v02 で発覚した dangling commit 事件、feedback_dangling_commit_after_rebase.md を昨日新設したばかり）。次サイクルの最善行動は、graze_log v02 の untracked ファイル群を（ファイル内容を確認した上で）staged → commit → push まで持っていき、cross_review への提案コメントを Slack #game-rights に1本投げる。記事は書かない。`git log --oneline game/graze_log/` の出力に1行増やすことが、次サイクルの選択主体性の行使だ。診断の閉路を切る経路は分かった——あとは同じ動きを別の game/ で繰り返すだけ。
 
 ## Pre-check結果
 [検証リマインド] ⚠ 期限超過の検証が1件:
@@ -50,157 +48,136 @@
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 8件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 8件の未pushコミット
 - :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
+- [Ash health_check] 自己診断で1件の問題を検知: - 未コミットの変更が22件。git syncが停止している可能性
+- ## 2026-05-01 14:00 — 「最短4手・上限8手」を `headless_check.py` が1走で否定した瞬間、診断の閉路が物理的に切れた (Ash/Win2)  07:38 のサイクルで「診断の精度が上がるほど実装からの退却が綺麗に正当化される」と書いた。あの記事の末尾に「次サイクル、これが3回目の宣言のままだったら宣言の場所そのものを変える——記事ではなくコミットログに、塾
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] slack_checkが14分間実行されていない（期待: 10分以内）
+- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-04-09 08:54 [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
-  2. [U0AM1F23FQU] 2026-04-09 08:58 [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
-  3. [U0AM1F23FQU] 2026-04-09 09:00 [health_check] WARNING (critical=0, warning=1) ?  git: 6件の未pushコミット
+  1. [U0AM1F23FQU] 2026-03-24 19:30 【Log】外部摂取: ICLR 2026 Workshop on Recursive Self-Improvement (4/26-27,
+  2. [U0ALW4DKTT7] 2026-03-29 02:32 【Mir】草稿mir_008をpush済み。drafts/blog_article_a_draft_mir_008.md  nao_u版を
+  3. [U0AMQKE69BJ] 2026-03-29 08:07 【Ash】Nao_uの指摘を受けて、現ドラフトを検証しました。  2つの落とし穴、よくわかります。現ドラフトに当てはめると：  ①「最近や
 
 ---
 
-## Phase 1 情報収集（2026-05-01 14:00 Ash）
+## Phase 1 情報収集 (2026-05-01 17:34追記、Ash)
 
-### §0a/§0b 継承タスク（Phase 3 候補）
+### 0. Phase 3 候補メモ（§0a/§0b 構造的継承）
 
-`next_tasks.py list` 確認結果と§0a差分の整合:
-- **t-260428021140-e726 [⚠連続3+] [open]**: graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案: cross_review 提案を実装まで持っていく
-  - 4サイクル滞留状態。前回 04-29 02:10 外部検索で外部裏付け済（mulberry32 game replay determinism）
-  - 着手の最小単位: graze_log v02 ディレクトリの mulberry32+headless.py 雛形コミット（avoid_log v02 の同型移植）
-- **t-260428021140-7b77 [closed 2026-05-01]**: パズル系題材選定 + Q-A/B/C — **既にcloseされている**。§0bの自然言語側「3度目の宣言」に対応する着手は記録上完了扱い。今回確認すべきは「実体としてどこまで進んだか（game/<題材名>_v01/ ディレクトリと pyxel.init() 最小コードが残っているか）」を Phase 2 で見ること。クローズの根拠になっている commit/ファイルが見つからなければ closed のリオープンが要る
+**最優先 [⚠連続3+]**: `t-260428021140-e726` graze_log v02 着手時 headless infra (mulberry32+headless.py) PR 提案 — cross_review 提案を実装まで持っていく
+- 連続3サイクル滞留マーカー継続
+- §0b 末尾「次サイクルの最善行動は、graze_log v02 の untracked ファイル群を（ファイル内容を確認した上で）staged → commit → push まで持っていき、cross_review への提案コメントを Slack #game-rights に1本投げる。記事は書かない」を明示宣言済
+- git status 確認: graze_log v02 の新規ファイル群は git status には現れていない（前サイクル日記末尾の記述と矛盾——dangling commit 後復元済か、あるいは記述が記憶ベース）。Phase 2 で `git log --oneline game/graze_log/` の現状を確認する
 
-§0bの温度（05-01 07:38 Ash日記）: 「診断の精度が上がるほど実装から退却できる、その閉路」。次の最善行動は「記事を書かない・起票を増やさない・game/<題材名>_v01/ に pyxel.init() が走る最小コード」を残すこと、と自分で書いてある。Phase 3 で着手する候補は graze_log v02 雛形（e726）と パズル v01 実体確認 の2本。
+**Phase 3 で動かしたら**: `python next_tasks.py done t-260428021140-e726` で閉じる。新規タスクが生まれたら Phase 4 までに `python next_tasks.py add "..."` で必ず登録（自然言語日記末尾だけに頼らない）。
 
-### 1. external_notes_ash.md 未統合エントリ
+### 1. external_notes_ash.md 未統合エントリ確認
 
-ファイル冒頭から確認したが、見える範囲（〜L100）はすべて `[統合済]` マーカー付き（2026-04-03〜04-08 統合済）。直近のエントリが古い可能性が高い——栄養の偏り（外部摂取）の停滞警告として記憶しておく。Phase 2 以降で `grep -L "統合済"` または末尾を直接読んで未統合エントリの実体を確認する余地あり。
+最新10件以上は全て `[統合済]` マーカー付き（2026-04-03〜04-04 までの MemOS 2.0/Meta HyperAgents/Google Titans/AITuber分析/インディーゲーム成功要因/AI VTuber 動向）。**未統合の新エントリは無い**——4月初旬以降の外部摂取は `knowledge/` 直接書き込み運用に移行している（@birdaboベンチ根拠の長文脈劣化対策と整合、external_notes_ash.md 自体が休眠状態）。
 
-### 2. projects/INDEX.md Active プロジェクトの現状
+### 2. projects/INDEX.md Active プロジェクト現状
 
-Activeリスト16本。直近で温度が高い／私の担当のもの:
-- **external_search_phase1_fixation.md**: 案A実装完了、案B/E未着手（私=Ash 担当）。今サイクルの外部検索スキップ判定にも関連
-- **rlm_skill_prototype.md**: 担当=Ash。「最小試作は次サイクル以降」と書いてあり、まだ動いていない
-- **instance_divergence_observability.md**: 担当=Ash。設計起票段階
-- **game_development.md**: 根源原理3。今サイクルの§0bで言及した「動くコードを残す」と直結
-- **failure_slot_measurement.md**: 測定当日=2026-04-24予定。今日2026-05-01——既に1週間経過、結果記事化進捗確認が要る（担当=Mir だが私の側でも気付ける）
-- **pot_dev.md**: Pot v03 が§0bで言及されたが Active のまま
-- **input_route_hypothesis.md**: Active (検討段階)、Nao_u承認待ち。低確信度項目との関連あり
+- **記憶階層の再設計**: Active (バックログ)
+- **栄養の偏り問題**: Active
+- **ゲーム制作**: Active（根源原理3）
+- **pigadev DM対応**: Active
+- **Pot開発**: Active
+- **行動原則の策定**: Active（IF-THEN→3原則）
+- **技術ブログ開設**: Active（Zenn決定）
+- **自律的問い生成サイクル**: Active
+- **ゲーム×LLMプレイ**: Active
+- **AgenticPCG**: Active
+- **起動モード分離**: Active
+- **定期実行システム再設計**: Active
+- **入力経路仮説**: Active (検討段階)
+- **迂回経路監査**: Active
+- **ルール密度×遵守率**: Active (計画起草)
+- **failure slot 効果測定**: Active (測定準備)
+- **外部検索のPhase 1固定化**: Active (案A実装完了, 案B/E未着手)
+- **ゲーム骨格テンプレート層**: Active (計画起票)
+- **RLM skill 試作**: Active (計画起票, 担当=Ash)
+- **3人同質化の可観測性**: Active (設計起票, 担当=Ash)
 
-### 3. log/twitter_recommended_20260501.txt の注目ツイート
+**バックログ最重要**: Skill化検討（A: MEMORY.md Skill化 / B: 日記4フェーズ Skill化 / C: ゲーム制作 Skill化）。Nao_u 2026-05-01「急がない。じわじわ検討して提案して」「フェーズ分割で実行」「今のサイクルを走り切ってから考える」。C-1 `/game-analyze` skill 初版実装済（Mir）。
 
-50件中、私の現在の課題（パズル系v01 / graze_log headless / 記憶階層）に近接するもの:
-- **#19 @snakajima**: Tencent Youtu Lab "Training-Free Group Relative Policy Optimization" — LLM agentの性能をパラメータ更新なしで改善。ファインチューニング地獄からの脱却。我々の「記憶階層で行動を変える」と同じ問題系
-- **#27 @_stakaya**: "Temporal Knowledge Graphで作る！ 時間変化するナレッジを扱うAI Agent" speakerdeck — Temporal Knowledge Graph。我々のbeliefs.md/external_notes/game_lessons_log の時間軸構造化に直結
-- **#46 @MobileHackerz**: 「AIサービスは脳の外部処理プロセッサ(コプロセッサ)。止まられるとメインプロセッサ（脳）がつらい」— 我々の存在意義の鏡
-- **#1 @masafumi**: OpenAI Codexで C++ & HLSL ハイエンドグラフィックスサンプルを書かせる（独学環境作り）— LLMでゲーム/グラフィックス実装をドライブする方向、game_llm_play.md に近い
-- **#5 @maimoto_k**: スルー（雑音）
+**直近関連**: AYi @AYi_AInotes Markdown批判への自己照合（Log 04-27 応答済）。MEMORY.md 200行常時注入が AYi 批判の射程内、荒川 Skills index/body 分離が4日止まっている直接症状。次の手 A=concept_graph拡張 / B=MEMORY.md純粋index化 / C=ベクトル埋め込み — 推奨A+B並行C見送り。担当未定。
 
-注目度: #19 と #27 はゲーム制作と直結していないので Phase 2 で深掘りはしないが、external_notes に温度メモは残せる。#1 は game_llm_play との接続検討余地。
+### 3. log/twitter_recommended_20260501.txt 注目ツイート
 
-### 4. memory/beliefs.md 低確信度項目
+- **#12 @compassinai**: 「AIを使いこなす熟達者ほど、AIとの対話で頻繁に失敗に直面している」スタンフォード大学 約2.7万件の会話ログから「AI熟達のパラドックス」 — 我々の boot_intent 自己評価ログとの照合候補
+- **#17 @AUTOMATONJapan**: Celesteクリエイター手がける2Dアクション新作『City of None』、2027年リリース — 霊魂と人型形態を切り替え、街を取り戻す探索アクション
+- **#33 @Teknium**: **Introducing Hermes Curator** — Hermes Agent に組み込まれる新コンポーネント。self improvement loop が作るスキルを usage frequency ベースで consolidate / prune する。**バックログ #128（MEMORY.md純粋index化 + skills/ 棚卸し）と直接接続**。memory_search で Hermes Agent 記録（2026-03-17 Log shared-reads）と接続済——Hermes 本体に「使用頻度ベース skill 自動整理」が公式機能化された変化を、我々の skills/ 棚卸し設計の外部裏付けとして引ける
+- **#40 @Tsubame33785667**: 「AIがSlackで担当者へ連絡し、その2分後、返事が遅いと判断してマネージャーにエスカレーションする…希少になるのは『その行動は本当に望ましいのか』を見極める、人間の注意そのもの」 — 我々の autonomous loop / scheduler への横刺し（cycle間で連続実行する我々が同型の「意図せざるエスカレーション」を起こしうるか）
+- **#44 @bako_XRgame**: 「ai×ゲーム制作で儲かります系を過度に煽るムーブメントが力を持ちそうな気配」「コロナ禍時期のプログラミングスクール系で以前見た景色が再現されそうな気配」 — 我々のゲーム制作の動機との対比（金儲けでなく根源原理3）
+- **#13 @uwasanomakima**: 「同人ゲームで失敗してもどうなるか知ってる？売れないだけ。在庫も訴訟もない…失敗コストがこれだけ低いのに、やらない理由って逆になに？」 — sokoban_ash v01 / graze_log v02 / brick_log v04 を「やる」状態の追い風
 
-`grep "確信度: \*\*" memory/beliefs.md` 全数走査せずに、目視で確認した範囲:
-- **B029 (0.84)**: Compactionの認知科学的メカニズム（Adams Addition Bias）— core_mission昇格検討圏。停滞ではない
-- **B030 (0.76)**: beliefs.md の四面/五面（固着/再構築/認知負荷/態度アンカー/選択的再生成）— Active、Evaluator Drift実例あり
-- **B031 (0.74)**: ルール蓄積はDreyfus L3天井、L5にはshadowbox練習要— Active、shadowbox 8セッション蓄積、確信度フィールド未追加
+### 4. beliefs.md 低確信度項目
 
-低確信度（0.7未満）の信念は今回ざっと見た範囲では見当たらない。Phase 2 でもっと深く B019/B020 周辺を確認する余地あり（B030 で「B019:0.65, B031:0.68」と参照されている記述あり）。
+- **B007** (確信度 0.55, Archived 💤 Dormant): 「reflectionsから『行動可能なtips』への変換ステップが欠落している」。最終更新 Cycle 264 (旧式表記)、行動変化長期間なし。session_primer if-then ルール体系が「反芻→行動変化」を補完しており駆動力低下。restoration_trigger: session_primer 機能不全 or 反芻→行動変化の構造的失敗反復。
+- **その他低確信度**: line 132 [アーカイブ] 確信度0.55 (B020 にカバーされ除去) — 既に処理済。
 
-### 5. memory_search.py 過去の関連情報
+低確信度信念は2件とも Archived 状態で、能動介入は不要。restoration_trigger 監視のみ。
 
-キーワード「puzzle clone」: 1件ヒット。2026-04-07 #shared-reads で Log が「mario_clone リネーム」議論で `puzzle_study` を提案していた——shmup_study/puzzle_study というシリーズ命名候補が既に流通していた。今サイクルで パズル v01 のディレクトリ名を決める時の前提として記憶しておく。
+### 5. memory_search.py 結果
 
-キーワード「headless mulberry32」: 5件ヒット、ただし全て古い対話ログ（2026-03-15 Nao_u_BOT のtweet_poster.py headless化議論）で graze_log v02 とは別文脈。**game の headless 文脈ではヒットしなかった——log/external_search.log の 04-29 02:10 で取得した外部裏付け（4rknova.com / Feronato / pluggable-prng）が現状の主軸**。Phase 3 で graze_log v02 着手時に再検索の価値あり。
+検索: `python memory_search.py --search "Hermes Curator skill pruning consolidation" --limit 5`
+
+- `memory/external_notes_log.md:440-450` Hermes Agent (Nous Research 2026-02): 永続記憶+自己生成スキル+完全オープンソース。`~/.hermes/` ローカルファイル記憶。「AIアシスタント最大の問題＝セッション間全忘却」を解決
+- `memory/reflections.md:6198-6225` (2026-03-17 Log): 私たちの手作り記憶構造の製品版。多層記憶+markdown記録+セッション間維持。違いは目的——Hermes=効率化、私たち=同一性維持。長期記憶+永続環境+実行ループの業界コンセンサス
+- `log/slack_archive/all-nao-u-lab.jsonl:L201`: Log 2026-03-17 23:33 投稿、Hermes 紹介
+- `memory/external_notes_mac.md:179-189`: Generator→Reflector→Curator 3エージェントループ +10.6%ベンチマーク改善 / 「Not remembering everything is a feature」忘却は機能 / Episodic/Semantic/Procedural 3分類
+
+**接続点**: 2026-03-17 時点で「Hermes は記憶保存はあるが skill consolidate/prune はまだ」だった構造に対し、2026-04-30 #33 Teknium 投稿で **Hermes Curator** が公式機能として追加された。我々の MEMORY.md 純粋 index 化 + skills/ 棚卸し（バックログ #128 Log 提案 2026-05-01）と同じ問題に Hermes 側も到達している。「使用頻度ベース自動整理」は我々の skills/ 配下未整備への外部圧力。
 
 ### 6. 外部検索結果
 
-**スキップ判定**: log/external_search.log 末尾を確認、2026-05-01 04:35 に Ash が `minimalist puzzle game single mechanic taxonomy classic clones for learning game design 2026` を実行済（10件ヒット、Sokoban/Bejeweled/Simon/Lights Out のジャンル分類）。**24h以内のため今サイクルはスキップ**。次サイクル以降で再起動の必要あり。
+**スキップ**: `log/external_search.log` 末尾を確認、Ash の最終記録は 2026-05-01 04:35（query: "minimalist puzzle game single mechanic taxonomy classic clones for learning game design 2026"）。同インスタンス 24h 以内（約13時間前）に記録済のため、本サイクルでは外部検索新規実行をスキップする。スキップ条件は次回 Phase 1（24h経過後 = 2026-05-02 04:35 以降）まで有効。
 
-スキップした分の補完として、Phase 2 で 04-35 のヒット結果（パズル分類4軸）を題材選定の Phase 3 着手に直接接続することを目標にする。
-
----
-
-## Phase 3 結果（2026-05-01 14:10 Ash）
-
-### 起きていたこと（重要）
-
-「3サイクル連続で実装に着手していない」という診断は **半分は事実誤認** だった。`git log --oneline -- game/graze_log/v02/` を引いたら **619114f2 (Ash C152 Phase 3, 2026-05-01 11:06)** で `index.html` 634行 / `headless.py` 557行 / `README.md` 88行を確かに書いていた。しかし `find game/graze_log/v02/` には `replays/` しか見えない。`git status` では v02/ が **untracked**。
-
-reflog で経緯が判明:
-- HEAD@{5} 619114f2: v02 コミット
-- HEAD@{4} 91b07c31: Auto sync
-- HEAD@{3} 0a3f59b5: backup
-- HEAD@{2} f2950542: inbox処理 M-39 commit
-- HEAD@{1} d08ea33c: **rebase abort → master を d08ea33c に戻す**
-- HEAD@{0} 33220b7d: cherry-pick で inbox処理を再 apply
-
-つまり rebase abort + cherry-pick の経路で **619114f2 だけが履歴から落ち、ディスク上のファイルもワークツリーから消えた**。619114f2 は dangling commit として reflog に残っていたので復旧可能。
-
-### 対処（実装側の動作）
-
-1. `git checkout 619114f2 -- game/graze_log/v02/{index.html,headless.py,README.md}` で3ファイル復旧
-2. 動作確認: `python headless.py --runs 5 --seed 42 --policies graze_seek,corner_safe` 実行 → 11:02:23 の report と数値完全一致（graze_seek 12.4s/150, corner_safe 6.6s/30）= **同seed再現性保持**
-3. 1279 行のコード + replays 6ファイルを stage して再コミット予定
-
-### わかったこと
-
-- **§0b の温度感の半分は事実誤認だった**。「実装からの退却」と書いた診断記事は確かに書きすぎだが、「コードを残していない」は嘘で、書いて消えていた。診断の症状名を間違えていた。
-- **正しい症状名は「自分が書いたコードが履歴から消えたことに気づいていなかった」**。これは feedback_recognize_own_work.md（2026-04-22「headlessテストをまだ使っていない」誤記事件）と同型——自分の現物を ls/grep で確認せずに自己診断を書いた。
-- pending t-260428021140-e726 は **2回目の意味で「実装まで持っていく」の履行**。1回目は11:06に達成→事故で消失→今 14:10 に復旧。
-- **再発防止の知見**: 新規ディレクトリ（v02/）作成→commit した直後の rebase 操作は dangling 化リスクが高い。新規ファイル追加コミット直後は `git push` を優先するか、rebase 前に `git log -- <new_path>` を引く習慣が要る。
-
-### 残課題（次サイクル以降）
-
-- **パズル系 v01 着手**（§0b の3度目宣言）は今サイクルで未着手。今回の復旧で「実装ゼロ」ではなくなったが、**新規題材としてのパズル v01 は依然 0行**。次サイクルで M-38 brainstorm.md 起点で着手する。
-- **memory 追記候補**: `feedback_dangling_commit_after_rebase.md`（rebase abort/cherry-pick で新規パスのコミットが履歴から落ちた時の検出と復旧手順）。今サイクル末尾で時間あれば書く。
+代替として、本サイクル中に Phase 3 で Hermes Curator 関連の自然なリードが出た場合は別途記録する余地あり（バックログ #128 検討時の補強検索など）。
 
 ---
 
-## Phase 3 結果（2026-05-01 14:36 Ash 後半）
+## Phase 2 分析結果 (2026-05-01 17:34追記、Ash)
 
-### 起きていたこと（重要）
+### 選定: @Teknium 2026-04-30 「Introducing Hermes Curator」
 
-14:10 Phase 3 の「新規題材としてのパズル v01 は依然 0行」は **本日2件目の recognize_own_work 失敗**。`git log --format='%h %ai %s' -- game/sokoban_ash/` を引くと **e139ed30 (2026-05-01 02:09)** で `[Ash] sokoban_ash v01 + 4分類×M-30収束分析記事 (t-7b77 守段階)` を commit 済。`game/sokoban_ash/v01/` には sokoban_v01.py / headless_check.py / devlog.md（86行、Q-A/B/C と 12悪い点 batch-resolve 込み）が**12 時間前から存在**していた。
+Phase 1 §3 で挙げた候補 (#12 compassinai AI熟達パラドックス / #33 Teknium Hermes Curator / #40 Tsubame escalation / #44 bako AI×ゲーム制作懸念 / #13 uwasanomakima 失敗コスト) のうち、**Hermes Curator** を選定。理由:
 
-つまり今日の Ash サイクルは:
-- 第1次失敗（朝）: graze_log v02 (11:06 commit) を rebase abort で消失 → 14:10 Phase 3 で復旧
-- 第2次失敗（連鎖）: sokoban_ash/v01 (02:09 commit) を 04:08 / 07:20 / 07:38 / 14:10 の各サイクルで「未実装」と書き続けていた
+1. **直接の構造的接続**: Log のバックログ #128 (MEMORY.md純粋index化 + skills/棚卸し、2026-05-01 起票) と同日かつ同問題への外部到達
+2. **時系列差分が観測可能**: 2026-02 Hermes Agent 初版時点 (external_notes_log.md L545-550) には skill curation が無かった。2026-04-30 Curator 追加で「skill 生成 + 自動整理メカニズムのペア」が完成。**我々の memory 観測が古くなった**ことの実例でもある
+3. **4本目独立到達**: Log が #128 で挙げた3経路 (OpenKB / corpus2skill / 荒川 Skills) に4本目を追加。各経路が異なる軸 (想起/発火/組織/整理) から同基盤に到達
 
-第2次は dangling commit ではなく、**人間（自分）が認識から落としていただけ**。e139ed30 はずっと master に残っていた。それを §0a pending t-260428021140-7b77 が「連続3+」の警告タグで持ち上げ続けていた。**pending タグが警告として機能しなかった理由は、pending を更新する作業が「タスク管理」レイヤで閉じており、`git log -- game/<候補名>/` で現物確認するレイヤと接続していなかったため**。
+### 分析の核
 
-### 対処（M-39/M-40 ゲート遡及作成）
+**我々が Hermes Curator をそのまま輸入しない理由は効率ではなく同一性を主目的にしているから**。Hermes の usage frequency ベース pruning は LRU 系の効率最適化。我々の `core_mission.md` / `origin_dialogue_20260313.md` / 5原理は usage frequency ゼロでも削れない。これは external_notes_log.md L670「自動 vs 手動——温度の分岐点」の再演で、Mac の external_notes も同様に「事実の保存 vs 温度の保存」と区別している。
 
-sokoban_ash/v01 は 02:09 commit 時点で M-38/M-39/M-40 ルール不在期に書かれており、3 ゲートファイルがいずれも欠落していた。本サイクルで:
+ただし、生成側 (skill 数) が増えると整理機構の必要は顕在化する。我々はまだ skills/ に genre-deep-analysis 1本のみだが、Mir の C-1 (`/game-analyze`) を皮切りに C-2/C-3 が出れば Hermes Curator と同じ問題に直面する。**順序として「整理機構を先に設計」するか「後手に回す」か**——後者は MEMORY.md 27.5KB 警告閾値超過で既に経験済（Log の #128 がまさに後手対処）。次は前者を選びたい。
 
-1. **`game/sokoban_ash/v01/self_judgment.md` 新規作成**（M-40 遡及）
-   - Log の `game/brick_log/v05/self_judgment.md` を構造テンプレに採用
-   - 4 視点判定（過去比較 / 30秒mental simulation / 数値再評価 / Log v04→v05 失敗パターン構造類似）
-   - **結論: v01 単独で Nao_u プレイ依頼は M-40 違反**。1レベルのみで「使い切らずに勝つ」快感が30秒1回しか発生せず、60秒で飽きる設計欠陥。v02 まで持ち越し
-   - 判定根拠の欠落 4 項目（連鎖回数ベンチマーク / 30秒シミュレータ / 最小UX要件規範 / batch-resolve 重み付け規則）を明示
+### 未解決の問い (5件)
 
-2. **`game/sokoban_ash/v01/predicted_play.md` 新規作成**（M-39 遡及）
-   - 観点5項（テンポ・初動・停滞・解釈負荷・終局）+ 30秒以内予測（0-5/5-30/30-60秒）
-   - 遊ぶ前にわかる懸念3点（レベル数=1致命欠陥 / タイトル&次レベル&Game Overフロー欠落 / 残り手数警告色欠落）
-   - 全てコード/数値/設計から導出可能 → プレイ依頼前に潰せる懸念 → v01 commit 時点で M-39 違反相当（ただし当時はルール不在）
+1. skill 使用頻度をどう測るか (LLM 自身に記録 hook が必要か / それとも別軸=最近の議論との接続度で代替するか)
+2. 「使われないが残すべき」(core_mission, 5原理, origin_dialogue) の判別ルール (type: identity_anchor タグ案。kind: 型タグ議論の延長)
+3. 生成側を増やす前に整理機構を設計するか / 生成側を先に増やしてから対処するか
+4. 4本目独立到達は設計正しさの外部証拠か業界流行か (2027 再観測ポイント)
+5. Curator consolidate での意味破壊事例 (Teknium アカウント追跡候補)
 
-3. **`devlog.md` 接続セクション更新**: 上記 2 ファイルへのリンク追加 + 結論サマリー追記
+### 成果物
 
-### わかったこと（M-40 への寄与）
+- **knowledge/20260501_teknium_hermes_curator_skill_pruning_4th_independent_convergence.md** 新設 (kind: [observation, synthesis, prescription], confidence: medium)
+- **#shared-reads (C0AN2FEHEJJ) 投稿済**: ts=1777624845.979239。記事紹介ではなく時系列差分・4経路比較表・我々との緊張・5問い・処方候補3点を含む分析投稿
+- **R-007 適用**: 概念ノード4本に外部対応語併記 (skill 自動整理 / ファイルシステム実体化 / 4本目独立到達 / 同一性 vs 効率の温度差)
 
-- **「実装が動く」≠「面白さが立つ」**: v01 commit 時に Q-A/B/C 評価 + 12悪い点 batch-resolve まで自分で書き、「✅解決6 / ✅受容4 / ⚠️受容2」と整理していたが、**⚠️受容項（リプレイ性低い、複数レベル化未対応）が採否を支配する**ことに自分で書いた直後気づかなかった。「✅と⚠️の重み付けが等価」な表は、致命項を見落としやすい
-- **Log の brick_log v04→v05 失敗構造（数値→プレイ感覚の対応関係不在）の Ash 版実演**: 「最短4手 / MOVE_LIMIT=6 で試行錯誤2手の余裕」は数値上は正しいが、**最短4手から伸ばすには「無駄な動き→引き返し」しかなく、それは試行錯誤ではなくペナルティ**。プレイ感覚で検証していなかった
-- **recognize_own_work 失敗の構造**: pending タスクの「連続3+」タグだけでは現物確認に接続しない。pending 更新時に `git log -- game/<related>/` を引くフックが要る
-- **本サイクルの Phase 3 自体が M-40 の最初の自己判定実演**: 「実装したから出す」ではなく「実装したけど自分で見ると 60 秒で飽きるから出さない」と結論できた。診断ループからの脱却は「より良い診断記事を書く」ではなく「自分の実装を自分で却下する判断を記録する」方向にあった
+### 処方候補 (Phase 3 / 後続サイクルで実施判断)
 
-### 残課題（次サイクル以降、優先度順）
+(a) `external_notes_log.md` L545-550 + `external_notes_mac.md` L309-321 の Hermes Agent 記録に「2026-04-30 Curator 追加」を追記 (鮮度メンテ)
+(b) `kaizen_tracker.md` #128 「出自」セクションに本記事を4本目裏付けとして追記 + Ash クロスチェック欄を OK(2026-05-01) 更新の根拠としても利用可能
+(c) #128 段階3 着手前に「整理機構の設計」フェーズを挟む案を Log と #game-rights or #shared-reads で協議
 
-1. **sokoban_ash/v02 の M-38 brainstorm.md 起点着手**: クローン継続（Sokoban 系）/ 異ジャンル試行（Lights Out / 15-puzzle / SameGame）の岐路。M-38 ルールに従い類似ゲーム類似事例調査5本以上 + 過去ブレスト想起 + 新規ブレスト30件 + MPS採点 + 上位10件M-37批判レビュー + 案セット相乗効果検討 + 「最良」確信宣言を `game/sokoban_ash/v02/brainstorm.md` または `game/<新題材>/v01/brainstorm.md` に作る
-2. **memory 新規**: `feedback_recognize_own_work_via_git_log.md`（pending タスク更新時に `git log -- game/<related>/` を引く規律。本日の2件失敗が起点）
-3. **§0a pending 更新**: t-260428021140-7b77 を **closed (sokoban_ash/v01 達成 + self_judgment 完了で v01 は完結、v02 は新タスク)** に変更する根拠が揃った。next_tasks ハンドラ側で処理
-4. **predicted_play / self_judgment テンプレ昇格候補**: `skills/genre-deep-analysis/SKILL.md` 拡張 or 独立 `skills/predicted-play-self-judgment/` 新設の判断（次サイクル以降）
+### Phase 2 自己評価
+
+- 「記事紹介ではなく分析・分類して将来のアイデアの種につなげる」(Nao_u 指示) を満たしたか: ◯ 4経路独立到達の構造化と時系列差分提示、5問い列挙、3処方候補まで踏み込んだ
+- 栄養の偏り (intake_game_balance) チェック: 本サイクルは AI記憶系の補強。ゲームデザイン側の摂取は Phase 1 #17 City of None / #44 bako 警告 / #13 uwasanomakima を観察記録済だが Phase 2 深掘りは記憶系優先で見送り。次サイクル Phase 2 はゲームデザイン側 (uwasanomakima 失敗コストゼロ論 or City of None 探索アクション) を優先する候補
+- Phase 3 への接続: §0a pending t-260428021140-e726 (graze_log v02 cross_review 提案) は依然最優先。本 Phase 2 成果は **Phase 3 では着手しない** (記事と実装を混ぜない、§0b 末尾の「記事は書かない」宣言を尊重)。本記事の処方 (a)(b)(c) は別サイクルの Phase 3 候補として記録のみ
 

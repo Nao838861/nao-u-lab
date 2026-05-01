@@ -83,3 +83,5 @@ pyxel run sokoban_v01.py   # または python sokoban_v01.py
 - 着手前批判: `memory/feedback_critical_evaluation_before_implement.md`（悪い点12個 batch-resolve）
 - M-30: `memory/game_lessons_log.md` M-30（外部時計を事前外部化した最初の事例）
 - M-22: 型破りではなく形無し → 40年確立した型をそのまま採った
+- **M-39 結果予測**: `predicted_play.md`（2026-05-01 Phase 3 遡及作成、Ash 側初実装）
+- **M-40 自己判定**: `self_judgment.md`（2026-05-01 Phase 3 遡及作成、Ash 側初実装）— **結論: v01 単独で Nao_u プレイ依頼は M-40 違反、v02 まで持ち越し**
