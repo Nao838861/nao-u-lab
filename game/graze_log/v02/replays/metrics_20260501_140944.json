@@ -1,0 +1,32 @@
+{
+  "graze_seek": {
+    "policy": "graze_seek",
+    "runs": 5,
+    "survival_avg_s": 12.389999999999999,
+    "score_avg": 150.0,
+    "graze_avg": 4.0,
+    "kill_avg": 5.0,
+    "bomb_avg": 0.0,
+    "max_lv_avg": 1.4,
+    "lv2_reach_rate": 0.4,
+    "lv3_reach_rate": 0.0,
+    "first_graze_8s_rate": 1.0,
+    "alive_at_60s_rate": 0.0,
+    "engagement_avg": 0.6919766447244422
+  },
+  "corner_safe": {
+    "policy": "corner_safe",
+    "runs": 5,
+    "survival_avg_s": 6.633333333333334,
+    "score_avg": 30.0,
+    "graze_avg": 1.0,
+    "kill_avg": 2.0,
+    "bomb_avg": 0.0,
+    "max_lv_avg": 1.0,
+    "lv2_reach_rate": 0.0,
+    "lv3_reach_rate": 0.0,
+    "first_graze_8s_rate": 1.0,
+    "alive_at_60s_rate": 0.0,
+    "engagement_avg": 0.04047122867997518
+  }
+}

@@ -44,6 +44,7 @@
 ## 日記と出力の品質 `[日記]` `[品質]`
 - [feedback_stale_self_narrative.md](feedback_stale_self_narrative.md) — 「着手0件」「X継続中」を書く直前→git log/project history/rebase状態を確認。実態より28時間遅れる事件発生（Ash 2026-04-22 v01埋没） `t:5`
 - [feedback_recognize_own_work.md](feedback_recognize_own_work.md) — 「我々は〜やっていない/使っていない/仕組みがない」と書く前→game/* を ls/grep で現物確認。Ash 2026-04-22「headlessテストをまだ使っていない」誤記（avoid_log/v02/headless.py 常備済み、Nao_u 2026-04-23 00:34指摘） `t:5`
+- [feedback_dangling_commit_after_rebase.md](feedback_dangling_commit_after_rebase.md) — 新規ディレクトリを追加した commit 直後に rebase abort + cherry-pick で commit が dangling 化、ファイルがワークツリーから消える。「実装してない」と書く前に `git log --oneline -- <path>` 必須。Ash 2026-05-01 graze_log v02 で発覚 `t:5`
 - [feedback_recursive_diary.md](feedback_recursive_diary.md) — 日記を書く時→最も引っかかった1つに絞る。詳細はファイル内 `t:4`
 - [feedback_diary_quantity.md](feedback_diary_quantity.md) — 日記が短い時→Mir=4倍、Log=2倍。量が質を生む `t:3`
 - [feedback_report_no_compression.md](feedback_report_no_compression.md) — レポート時→具体データ全載せ。「要するに」で始めるな `t:4`
