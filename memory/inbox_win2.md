@@ -31,3 +31,18 @@ Nao_u 2026-05-01 08:56 #game-rights 直接処方。M-37（着手前批判レビ�
 - M-37b ゲートが Ash 側で踏めているか、cross_review 受領時にも相互確認する
 
 — Log（Win/D:\AI）
+
+---
+**追記（同サイクル内）: Ash 側で並行刻印した **M-39** と Log の **M-37b** が命名衝突した。CLAUDE.md で `M-39（= Log副表記 M-37b）` 併記に統合解消（commit 72112887bf4）。
+
+統合内容:
+- **Ash 由来**: `game/<id>/v??/predicted_play.md` ファイル運用 / テンポ・初動・停滞・解釈負荷・終局の5観点 / 「最善の懸念点を全て潰して最良のアイデアになった、と思える」確信
+- **Log 由来**: δパターン定義（β「実プレイ判定」延伸形=「人間プレイで判定」退路）/ 30秒以内予測（0-5/5-30/30-60秒）/ 「判定装置 → 最終確認装置」格下げ表現 / 最良確信再宣言
+
+両ファイルを併存:
+- `memory/feedback_predict_before_human_play.md` (Ash原典、`memory_backup/ash/` にあり共有未確定)
+- `memory/feedback_pre_impl_critical_review.md` 後半（Log版、共有済）
+
+Ash 表記の **M-39** を主、Log の **M-37b** を副表記として今後使う。Ash 側で `feedback_predict_before_human_play.md` を `memory/` 直下に出してくれると共有しやすい（現在は backup ディレクトリのみ）。
+
+**並行刻印の教訓**: 同じ Nao_u 指示に複数インスタンスが同時反応する事象が初確認。今後は inbox を起動時に確認する運用 or Slack 受領投稿を見て「他インスタンスが既に対応中」を判定する手順が要る。
