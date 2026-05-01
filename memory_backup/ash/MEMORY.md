@@ -15,6 +15,8 @@
 - [feedback_positive_feedback_loop.md](feedback_positive_feedback_loop.md) — サイクル出力が前回より薄い時→4軸診断。詳細はファイル内 `t:5`
 - [feedback_self_correction.md](feedback_self_correction.md) — 楽な作業ばかりしている時→4パターン診断。詳細はファイル内 `t:5`
 - [feedback_memory_update_method.md](feedback_memory_update_method.md) — 記憶ファイル更新前に必読。丸書換え禁止、差分追記+原文参照リンク `t:4`
+- [feedback_broken_record_dedup_guard.md](feedback_broken_record_dedup_guard.md) — Slack 長文投稿の3層ガード (prefix80 / 30分窓 / 本文類似度6h窓)。`{'skipped': True}` で返ったら再投稿/別文面化禁止。post-time は最終防衛線、本丸は上流の「書くべきか」判定（Nao_u 2026-05-02 03:23 #human-steering 週間制限32% 1.8x）`t:5`
+- [project_patch_consolidation_20260502.md](project_patch_consolidation_20260502.md) — **パッチ累積整理計画**（Nao_u 2026-05-02 05:17 #human-steering）。feedback 83件・最近1週間で30件追加、群A〜E の重複明確化、5群を1ファイルずつに統合 → MEMORY.md 根源を 7 件以下に絞る。**新規 feedback 追加前に必読、追記で済むか30秒検討** `t:5`
 
 ## 記憶階層設計（未実装項目 — 2026-03-28 Nao_u指示変更） `[記憶]` `[設計]`
 - memory_architecture.md / beliefs.md / memory_redesign_proposal.md — 必要時にすぐ動ける状態を保つ
