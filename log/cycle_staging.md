@@ -126,3 +126,46 @@ C153（前サイクル）で発生した新たな確信撤回案件:
 - 一方、log/external_search.log 側は 2026-05-01 04:35 まで動いている → **検索→external_notes 昇格の継ぎ目が外れた**形。projects/external_search_phase1_fixation.md 案E（昇格N日ゼロ検出）の必要性が今ここで立っている。
 - 自己診断: **Phase 3 候補** に「@gigazine #6 sycophancy 条件 / @kmizu #1 AI性質鏡 / kiyoshi_shin（C153 で knowledge 化された）の追加分析」を external_notes_ash.md にまとめて昇格するタスクを追加。
 
+---
+
+## Phase 3 結果 (2026-05-02 00:50頃 — Ash)
+
+### やったこと（実質変更）
+
+1. **detached HEAD 19件 push 完了** — 最大の infrastructural fix
+   - `2637f123 (detached)` にアンカーするため `save-ash-c154-detached-recovery-20260502` save-branch 作成
+   - 新規 commit `c4943603 ash C154 Phase 3: detached HEAD 18件解消準備 + brainstorm M-38 やり直し登録` を detached HEAD 上に積み、`master` を update-ref で同位置に移動
+   - `git checkout master` 後 `git merge origin/master` で 19↔19 件の divergence を統合 (merge commit `4e067be9`)
+   - 競合 2件: `log/inbox_check.log` (timestamp ソートで union マージ、35エントリ統合) / `log/twitter_recommended_20260501.txt` (HEAD=21:37 snapshot を採用、origin=19:39 snapshot を破棄)
+   - `git push origin master` 成功: `6c0d04bf..4e067be9 master -> master`
+   - **health_check CRITICAL「14件の未pushコミット」は次回実行で解消するはず**
+
+2. **Phase 2 出力 2件 を knowledge/ に commit**
+   - `knowledge/20260502_anthropic_stanford_sycophancy_memory_self_judgment_threat.md` — sycophancy 研究 3系列 (Anthropic personal-guidance / Stanford 11モデル / Sharma et al. 2023) が M-40 自己判定ハーネスと記憶増幅問題を直撃する分析
+   - `knowledge/20260501_joho_no_todai_uk_aisi_gpt55_mythos_class_2nd_model.md` — 英国AISI 評価で GPT-5.5 が Mythos 級到達=「2例目」が示す能力収束と side_channel_audit の射程
+
+3. **SKILL.md M-41 拡張 commit (Log↔Ash 合意)**
+   - 「先行事例ゼロ件」と「過去30年動かさなかった負の証拠」を別レイヤー化
+   - 候補仕様ごとに「動かさなかった推定理由 / 本案がその理由を解消できるか / 解消手段の具体性」を埋めるテーブル導入
+   - Anti-pattern に2行追加（M-41拡張版）
+
+4. **next_tasks に layer-A pending 登録**
+   - `t-260502005007-29c3 brick_log v07 brainstorm.md M-38 やり直し` (30案以上 + 過去ブレスト想起 + 類似事例≥5（M-41拡張「動かさなかった理由」検証含む）+ MPS採点 + 上位10件以上に M-37 + 案セット相乗効果 + 最良確信宣言)
+   - 撤回済 B+C 確信宣言は試行記録扱い、新規最良確信宣言は別作業
+
+5. **#kaizen-log に Slack 投稿** — `[Ash] detached HEAD 19件 ... brick_log v07 brainstorm M-38 やり直しを次タスクに登録。` (ts=1777650864.180959)
+
+6. **drafts/.archive 移動** — `post_ash_human_steering_diary_phrase_self_analysis.py` (deleted from drafts/2026-05-01/) + `post_ash_game_rights_20260501_brainstorm_violation_admit.py` (新規 archive 配置)
+
+### わかったこと
+
+- **detached HEAD は dangling commit と同根のリスク源**: 2026-05-01 の `feedback_dangling_commit_after_rebase.md` で発覚した graze_log v02 の dangling commit と、今回の C152/C153 が detached HEAD 上で push 出来ていなかった現象は、**「named branch にアンカーしないまま新規 commit を積む」という同じ短絡**。auto-sync の `git pull --rebase` が detached HEAD 上で master を更新できないため、Ash の実質コミット (24968466 / 951265d2 / 619114f2 等) が auto-sync の `Auto sync from Win2` commit に挟まれたまま master に反映されなかった。**save-branch を作るだけでなく master を update-ref で追従させる手順を auto-sync に組み込めば構造的に防げる**（projects 候補）。
+- **M-38 やり直しは Phase 3 内で完遂すべきではない**: 30案ブレスト + 類似事例調査 + MPS + M-37 + 相乗効果 + 確信宣言を Phase 3 末尾の残時間で「中途半端に着手」すると、また撤回連鎖を生む。次サイクル先頭で集中して実行する形を選んだ（layer-A pending に登録）。これが「自己判定ハーネス（M-40）の判定対象を『数値妥当性』ではなく『コア快感の天井』に固定」と整合する判断: brainstorm の質を Phase 3 末尾の残時間で測れない、判定不能なら出さない。
+- **sycophancy 研究の取り込みが M-40 自己判定ハーネスの上位制約として機能する**: Anthropic 公式研究で「ユーザー pushback あり 18% / なし 9%（約2倍）」が示すのは、cross_review/Slack で Nao_u から pushback を受けた直後の Ash の反応に、構造的に sycophancy が乗りやすいということ。**「Nao_u の言葉を pushback 後に取り込んだ判定基準」は信用度を 1/2 にする** という運用ルール候補が立った（次サイクル feedback 化検討）。
+
+### やらなかったこと（意図的省略）
+
+- brick_log v07 brainstorm M-38 やり直し本体（layer-A pending に降ろした）
+- external_notes_ash.md 昇格処理（次サイクル候補として記録、本サイクルでは触らない）
+- log/twitter_recommended_20260426.txt の pre-existing 残留 conflict マーカー（過去のmerge残骸、本サイクル merge とは無関係、out of scope）
+- inbox 処理（check_inbox.py 専管、Phase 3 では行わない方針）
