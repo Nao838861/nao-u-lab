@@ -148,3 +148,5 @@
 {"ts": "2026-05-02T04:42:52", "instance": "log", "cycle": "2026-05-02", "action": "done", "task_id": "t-260501194005-0c0b"}
 {"ts": "2026-05-02T04:42:57", "instance": "log", "cycle": "2026-05-02", "action": "add", "task_id": "t-260502044257-0003", "task": "[C156] brick_log v08 README を C 仕様 (Space Invaders + Holedown 型 降下圧) で起こす。能動報酬化設計 (撃破→秒数加算→降下リセット) + headless 計測 3 項目 (降下速度 / 撃破リセット効果 / プレイヤー応答密度) + M-22 違反境界の自己判定基準。Nao_u 反応待ちで並行雛形可、差し戻しあれば即反映"}
 {"ts": "2026-05-02T04:47:30", "instance": "log", "cycle": "2026-05-02", "action": "cycle_check", "task_id": null, "add_count": 1, "done_count": 2, "skip_count": 0, "pending_total": 12}
+{"ts": "2026-05-02T07:26:35", "instance": "log", "cycle": "2026-05-02", "action": "viewed", "task_id": null}
+{"ts": "2026-05-02T07:39:09", "instance": "log", "cycle": "2026-05-02", "action": "done", "task_id": "t-260502044257-0003"}

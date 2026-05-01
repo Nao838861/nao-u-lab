@@ -27,6 +27,27 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #129: brainstorm 工程の真偽検証ゲート 3点束（M-43 引用本文義務 + M-38 撤回シナリオ事前列挙 + M-38 ジャンル全要素一覧 Q1.5 恒久化）+ M-Nx 増殖メタ監視
+- 提案者: Log（2026-05-02 C156 Phase 2/3。brick_log v08 不発 = B撤回→C撤回→Nao_u 05:08「敵+動くボス」直接指示の Log 当事者視点分析を memory/feedback_brainstorm_workflow_failure.md に結晶化した結果。「M-37 6/6 / MPS=9 / M-41 純度最高 と数値で通過した工程が、捏造記憶+ジャンル盲点で支えられていた」という構造的盲点への直接処方）
+- 適用日: 2026-05-02（起票のみ、実装は brick_log v09 brainstorm.md 着手時に同梱）
+- 検証期限: 2026-05-16（2週間枠、kaizen #128 / M-38 検証期限と同期帯）
+- 検証手段: (1) 次に作る brainstorm.md（brick_log v09 想定）冒頭に「撤回シナリオ事前列挙」セクションがあり、各候補について「この案が撤回されるなら原因は」を3件以上書いている / 1件以上が未検証の事実主張に依存している場合は確信宣言禁止と明記されている (2) 同 brainstorm.md で URL を引用している全箇所に **本文1段落引用** が併記されている（URL のみ単独引用ゼロ件） (3) 同 brainstorm.md に「ジャンル全要素一覧 Q1.5」セクションがあり、メイン/変奏/サブ敵/サブアイテム/サブボス/進行/演出 7レイヤーで列挙、サブオブジェクト枠（敵/アイテム/ボス）が空欄でない (4) M-Nx 系列を新たに追加する kaizen 起票時、self-audit セクションに「既存3原則（体験で考える/動いて残す/自分から始める）+ feedback_few_rules_big_effect への吸収可能性を点検した」記述がある (5) skills/genre-deep-analysis/SKILL.md にも (1)(2)(3) を追記し、Q-H シート雛形に組み込む
+- 改善内容:
+  (a) **M-43 引用本文義務**: feedback_quote_verification_required.md R-Q1〜R-Q5 に「URL を貼ったら本文1段落引用が必須、本文要約が書けるまで『引用元あり』と書かない」を追加
+  (b) **M-38 撤回シナリオ事前列挙**: skills/genre-deep-analysis/SKILL.md に「最良」確信宣言の前に「この案が撤回されるなら原因は」3件以上書く節を追加。1件以上が未検証の事実主張に依存していたら確信宣言禁止
+  (c) **M-38 ジャンル全要素一覧 Q1.5**: skills/genre-deep-analysis/SKILL.md に Q1.5「ジャンル全構成要素一覧」（メイン/変奏/サブ敵/サブアイテム/サブボス/進行/演出 7レイヤー）を Q1 と Q2 の間に追加。サブオブジェクト枠ゼロ件は brainstorm 不通過
+  (d) **M-Nx 増殖メタ監視**: kaizen 起票テンプレートに「既存3原則 + feedback_few_rules_big_effect への吸収可能性 self-audit」セクションを必須化（M-Nx 系列の新規追加時のみ発火）
+- 期待効果: brick_log v08 不発の3段構造を再発させない構造強制。「工程数値化への没入」（M-37 6/6 / MPS=9 で通過したが元データ捏造）を「真偽検証で止める」方向に転換。M-37〜M-45 の4日6個増殖を「3原則への吸収可能性 gate」で抑制し、ルール量↑＝遵守率↓の罠を回避。
+- 根源原理との接続: 原則6「わかった」と「残った」は違う——「URL を貼った／確信宣言を書いた／工程を踏んだ」と「事実根拠が真であることを確認した」は別。原理5「自分の記憶を自分で守り、育てること」——記憶が捏造（合成記憶 Doh It Again 1997）で支えられていた事案は記憶の品質劣化そのもの。feedback_few_rules_big_effect.md（少ないルールで大きな効果）への直接補強——M-Nx 増殖は本原則違反、自己監視 gate を構造化。
+- pre-mortem: 最likely失敗=「(a)(b)(c) を書いただけで実行されない、brainstorm.md 雛形に注入しないと忘れる」→緩和: 検証手段(5) で SKILL.md への注入を必須化、雛形が更新されているかを brick_log v09 着手時にチェック。次点=「Q1.5 7レイヤー全埋めが形式主義に堕ちて『敵=なし／アイテム=なし』と書いて通過する」→緩和: 「サブオブジェクト枠ゼロ件は brainstorm 不通過」を明示、ゼロ件なら題材自体を再考。次々点=「(d) M-Nx self-audit が新規 M-Nx 提案時のみ発火するため、既存 M-37〜M-45 の事後審査が漏れる」→緩和: 段階2 として「既存 M-37〜M-45 を 3原則への吸収可能性で再評価」を別 kaizen 起票（本 kaizen 検証完了後）
+- 検証担当: Log（Mir/Ash 横展開時はクロスチェック必須）
+- クロスチェック: Log=OK(2026-05-02 起票者) / Mir=未 / Ash=未
+- 状態: 起票済み（実装は brick_log v09 brainstorm.md 着手時に (a)(b)(c) を SKILL.md とテンプレに同梱、(d) は次の M-Nx 起票時に発火）
+- 検証結果:
+- 出自: Phase 2「v08 不発理由 Log 視点分析」3段構造（段1 M-43 矮小化 / 段2 確信宣言自己暗示 / 段3 ジャンル全要素一覧盲点）+ 「一段上の不発」工程数値化への没入（M-37 6/6 / MPS=9 / M-41 純度最高 が捏造記憶で支えられていた）+ feedback_few_rules_big_effect.md「ルール量↑＝遵守率↓」警告。memory/feedback_brainstorm_workflow_failure.md（本サイクル起票）に詳細結晶化済。
+
+---
+
 ### #128: MEMORY.md 純粋 index 化 + .claude/skills/ 構造移行（Skills/Corpus2Skill/OpenKB 三角化、Markdown肥大化への構造処方）
 - 提案者: Log（2026-05-01 C151 Phase 2/3。記憶アーキ4経路三角化 [OpenKB(1)/corpus2skill(3)/Skills(4) が「ファイルシステム階層を LLM 走査・ベクター検索捨てる」で同方向別経路独立到達] と MEMORY.md 27.5KB/174行肥大化警告 [Read出力末尾 "WARNING: MEMORY.md is 27.5KB (limit: 24.4KB)"] が同サイクルで結合した結果。荒川 Skills（reference_arakawa_three_engineering 2026-04-22）への Nao_u 指摘「肝をもう少し掘り下げて欲しかった」を 04-29 corpus2skill 投下 + 04-30 OpenKB 投下で再ピック）
 - 適用日: 2026-05-01（起票のみ。実装は段階的、第1週は MEMORY.md トリガー圧縮 + skills/ 配下棚卸しから）
