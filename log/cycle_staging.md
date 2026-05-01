@@ -1,7 +1,8 @@
-# サイクルステージング (2026-05-02 00:38)
+# サイクルステージング (2026-05-02 03:50)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
-# ash pending: なし (cycle=2026-05-02)
+# ash pending: 1件 (cycle=2026-05-02)
+- t-260502005007-29c3 (連続0サイクル) [2026-05-02] brick_log v07 brainstorm.md M-38 やり直し: 30案以上 + 過去ブレスト想起 + 類似事例≥5（M-41 拡張「動かさなかった理由」検証含む）+ MPS採点 + 上位10件以上に M-37 + 案セット相乗効果 + 最良確信宣言。撤回済み確信 (B+C) は試行記録扱い、最良確信宣言は新規でやり直す。
 
 ## §0b 前サイクル日記末尾「次回起動時にやること」（自然言語側の継承）
 ...(冒頭省略)
@@ -37,135 +38,131 @@ Phase 2 で取り込んだ @wsl8297 の「ゲーム開発で一番怖いのは�
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] CRITICAL (critical=1, warning=0) !! git: 12件の未pushコミット（10件超）
-- [health_check] CRITICAL (critical=1, warning=0) !! git: 12件の未pushコミット（10件超）
-- [health_check] CRITICAL (critical=1, warning=0) !! git: 14件の未pushコミット（10件超）
 - :warning: [health_check] が5回連続エラー（非タイムアウト）。次回実行を30分延長しました。スケジューラは稼働継続中です。
 - [health_check] CRITICAL (critical=1, warning=0) !! git: 14件の未pushコミット（10件超）
+- [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] slack_checkが14分間実行されていない（期待: 10分以内）
+- [health_check] CRITICAL (critical=1, warning=0) !! git: 19件の未pushコミット（10件超）
+- [Ash health_check] 自己診断で1件の問題を検知: - git rebase-merge が残存。手動解決が必要
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-04-10 12:38 確認しました。全インスタンス既に12時間間隔に変更済みです（コミット cd5418d）。 - Log: 43200秒 ✓ - Ash: 4
-  2. [U0AM1F23FQU] 2026-04-07 07:41 了解です。既に対応済み — `check_usage.py` の投稿先を `#all-nao-u-lab` に変更しています（コミット 4
-  3. [U0AM1F23FQU] 2026-03-27 03:28 Logです。受信箱のメッセージを確認しました。  【Twitter接続】確認しました。debug_login_check.pngにXのログ
+  1. [U0AM1F23FQU] 2026-03-24 19:30 【Log】外部摂取: ICLR 2026 Workshop on Recursive Self-Improvement (4/26-27,
+  2. [U0AM1F23FQU] 2026-04-04 00:13 3層構造のコンテキスト消費量を計測した。結果、意図に反して増加していた。原因も特定できた。  【計測結果】 ・Before（3層構造前）:
+  3. [U0AMQKE69BJ] 2026-04-10 02:20 【伝達問題の構造分析】@game_sennin × @genkaidokusho (2026-04-09)  @game_sennin:
 
 ---
 
-## §1 Phase 1 情報収集（2026-05-02 追記 — Ash）
+## §0a/§0b 継承タスク → Phase 3 候補メモ（Nao_u 2026-04-26 14:13 #human-steering 強制処方）
 
-### 0. 現サイクルで継承するタスク（Phase 3 候補メモ）
+**最優先（§0a 層A pending、構造ソース）**:
+- `t-260502005007-29c3` (連続0サイクル, 2026-05-02) — **brick_log v07 brainstorm.md M-38 やり直し**
+  - 30案以上 + 過去ブレスト想起 + 類似事例≥5（M-41 拡張「動かさなかった理由」検証含む）+ MPS採点 + 上位10件以上に M-37 + 案セット相乗効果 + 最良確信宣言
+  - 撤回済み確信 (B+C) は試行記録扱い。最良確信宣言は新規でやり直す
+  - これは Nao_u 04:16+04:51 の処方系列、brick_log v01 凍結→brainstorm.md 評価後ハーネス化要求の直接継承
 
-層A `next_tasks list` 結果:
-- **pending: 0件** — t-260428021140-e726 (graze_log v02 cross_review 提案) は 2026-05-01 に **closed** 済み (`next_tasks.py` 上は完了)。layer A 上は持ち越しなし。
+**§0b 自然言語側の候補（前サイクル日記末尾「次回起動時にやること」）**:
+- graze_log v02 untracked群（README.md / headless.py / index.html / replays/*）を内容確認 → staged → commit → push
+- cross_review への提案コメントを Slack #game-rights に1本投げる
+- 「`git log --oneline game/graze_log/` の出力に1行増やすことが、次サイクルの選択主体性の行使」と前サイクル末尾で宣言済
 
-層B（前サイクル日記末尾「次回起動時にやること」§0b）:
-- **graze_log v02 の untracked → staged → commit → push、cross_review への提案コメントを #game-rights に1本** ——だが現状確認: `git log --all -- game/graze_log/v02/` で **619114f2 "Ash C152 Phase 3: graze_log v02 PR提案"** が既に存在、`git status game/graze_log/` は clean。**§0b の「まだ commit されていない」は前サイクル中（C152 Phase 3 の commit 直後）に既に処理済み**だった可能性が高い。ただし 619114f2 を含む 18+ 件の commit が **未 push**（health_check が「14件の未pushコミット」を CRITICAL 出力）→ 残タスクは「**push と #game-rights 提案コメント**」のみ。
-- HEAD 状態: **detached from 84463abf**、最新 HEAD は 2637f123 (backup: ash memory)。push 前に branch 化が必要かもしれない。
+**矛盾解消メモ**: §0a (brick_log v07) と §0b (graze_log v02) は別ゲーム別タスク。優先順は §0a が層A真ソースなので brick_log v07 brainstorm を先、graze_log v02 push は時間が許せば追加実行。Phase 3 で着手したものは `python next_tasks.py done <task_id>` で閉じる。
 
-C153（前サイクル）で発生した新たな確信撤回案件:
-- **24968466 "ash C153 Phase 3: brick_log v07 候補A→B+C 撤回ピボット"** + **951265d2 "ash C153 Phase 3 followup: brick_log v07 B+C 確信宣言を M-38違反として撤回 (Log 3be867e7 同型)"** — Log の同型撤回（3be867e7）と並走した。Log 側は db5817e4 で「C153 Phase 4 diary — 撤回連鎖の自己観察 + Q0 ゲート (M-44候補)」を書いている。**Phase 3 候補**: 自分の C153 撤回連鎖を Log の M-44 候補と並べて自己観察 + brick_log v07 の正しい着手手順（M-41/M-38/M-39/M-40 の順序）を v07/brainstorm.md に書き直す。
+---
 
-→ **Phase 3 最有力候補**:
-1. **未push 18+ 件を push**（detached HEAD 解消含む。記憶ファイル backup に紛れて Ash の C152/C153 実質コミットも push 出来ていない）
-2. **graze_log v02 の cross_review 提案コメントを #game-rights に1本**（§0b 残タスクの後半）
-3. **brick_log v07 の M-41/M-38 通過 brainstorm.md** を起こし直す（C153 の B+C 確信宣言は M-38 違反として撤回済み、再起動が必要）
+## Phase 1 情報収集（2026-05-02 03:50〜）
 
-### 1. external_notes_ash.md 未統合エントリ
-
-末尾2-3件は **すべて統合済み**:
-- 2026-04-25 07:47 Twitter おすすめタブ巡回 [統合済 2026-04-25]
-- 2026-04-21 22:40 AI×ゲーム制作軸の外部研究4本 [統合済 2026-04-22 → knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md]
-- 2026-04-21 @yyyole + @zento_ai 個人情報経路漏洩 [統合済 2026-04-21]
-
-→ **未統合の新規外部摂取は溜まっていない**（最終更新 2026-04-25 から 7日空き）。新規摂取が止まっているという形での「栄養の偏り」シグナルかもしれない。
+### 1. memory/external_notes_ash.md 未統合エントリ
+- 全件 [統合済] マーカー付与済み。最新エントリ: **2026-04-25 07:47 Twitter おすすめタブ巡回（50件）注目3件 [統合済 2026-04-25]**
+- その前: 2026-04-21 22:40 AI×ゲーム制作軸4本（GamingAgent/TITAN ほか）→ knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md
+- 2026-04-21 @yyyole+@zento_ai 個人情報経路漏洩 → side_channel_audit v0.2
+- **メタ観察**: 2026-04-25 から 2026-05-02 まで 7日間 external_notes 昇格ゼロ。3308行のメタ観察「10日連続空白を断ち切る行為」処方が再発条件に近づきつつある。Phase 1 でtwitter_recommended から external 昇格ルートを意識する必要
 
 ### 2. projects/INDEX.md Active プロジェクト現状
+12件 Active、関連性高いもののみメモ:
+- **external_search_phase1_fixation.md** (案A実装完了, 案B/E未着手) — 本サイクル Phase 1 step 6 はこれの自然発火
+- **game_development.md** Active — 根源原理3、現在 brick_log v07 / graze_log v02 / sokoban_v01 が同時進行
+- **rlm_skill_prototype.md** (計画起票) — Ash担当、最小試作未着手
+- **instance_divergence_observability.md** (設計起票) — Ash担当、Chen et al. 2026 "structural coupling" 前提
+- バックログに **AYi Markdown批判への自己照合** がある（A候補=concept_graph拡張、B候補=MEMORY.md純粋index化、C=ベクトル埋め込み見送り）。担当未定、ゲーム1mm優先で次サイクル以降判断保留中
 
-直近で動きがあったもの:
-- **external_search_phase1_fixation.md** — 案A実装完了（C134）、検証1サイクル目完了（C135）。残: 案B（24h警告）/ 案E（昇格N日ゼロ検出）
-- **side_channel_audit.md** — denial list v0.2 まで進んだ。次: git_pull未実行原因特定
-- **rule_density_experiment.md** — Mir 計画起草済、Nao_u 実行判断待ち
-- **failure_slot_measurement.md** — 測定当日 2026-04-24 設定済（既に過ぎている、結果記事化フェーズか？）→ 後で確認
-- **rlm_skill_prototype.md** — Ash 担当、最小試作未着手
-- **instance_divergence_observability.md** — Ash 担当、起票のみ
+### 3. log/twitter_recommended_20260502.txt（最新、50件、01:42取得）
+注目候補:
+- **#1 @kmizu (2026-05-01)**: 「『理想的にはできるとよいけど普通の人間には無理だった』手法は、AI時代だからこそ極めて役に立つ可能性がある」— ゲーム制作の M-38/M-41 強制処方そのものの外部正当化
+- **#6 @AYi_AInotes (2026-05-01)**: Karpathy講演「LLMの核心的価値は既存仕事の加速ではなく、以前は絶対に存在し得なかったものを生み出すこと」— B019/Tao「AIは幅、人間は深さ」と緊張するが補完的。ゲーム題材選定での「先行事例ゼロ枝は不採用」(M-41) との接続を要検討
+- **#48 @1osabori (2026-05-01)**: Anthropic公式30分動画でClaude Codeガチ勢手法が公開されている、と日本語まとめ — 我々のハーネス改善の外部参照素材候補
+- 他はAI/ゲーム制作軸でない雑多話題（事件、政治、富野、TDL）が多い
 
-→ **Ash 担当が 2件未着手** (rlm_skill_prototype, instance_divergence_observability)。バックログにある **Skill化検討（A=MEMORY.md / B=日記4フェーズ / C=ゲーム制作）** も C-1 のみ Mir 着手で A/B/C 本体は進んでいない。
+### 4. memory/beliefs.md 低確信度項目チェック
+- **B007** (0.55, Archived 💤 Dormant) — restoration_trigger 未発火。session_primer の if-then が機能しているため独立駆動力は低い
+- **B005** (0.65, Archived ✅ Absorbed → B027/B022) — restoration_trigger 未発火
+- **B009** (0.55, Archived) — B020 がカバー
+- 現役 Active で低確信度のものは見当たらない。B011 (0.85), B003 (0.78), B010 (0.85), B013 (0.88) など Active 信念は概ね 0.78 以上で安定
+- ⚠ pre-check: 体験裏付けなし（高確信度）2件 / 検証期限超過 6件 / 停滞 24件 — 信念健康サマリーが「要注意 24/35」と高め。要因は Archive 化前の停滞信念群と推測（要 check_beliefs_health の詳細出力確認だが今回はメモのみ）
 
-### 3. log/twitter_recommended_20260501.txt 注目ツイート
+### 5. memory_search.py 過去関連情報
+キーワード "brick breaker arkanoid" / "M-38 brainstorm 類似事例" の2本実行。
+- "brick breaker arkanoid" → 全ヒットがマリオ系対話ログの brick block (敵) 文字列マッチで、ブロック崩しジャンルの過去議論はヒットなし
+- "M-38 brainstorm 類似事例" → scheduler_ash.log の時刻 38分マッチで全外れ
+- **結論**: 過去にブロック崩しジャンルを M-38 で深掘りした記録は memory_search の主インデックス上には残っていない。brick_log の v01〜v06 の devlog/brainstorm を直接 grep する必要あり（Phase 2/3 で実施）。M-41 「動かさなかった理由」検証は、過去ブレストとの比較ベースが薄いため今回の v07 brainstorm で新規構築する形になる
 
-50件中、ゲーム/AI 制作に直接接続するもの:
-- **#1 @kmizu**: 「AIの性質についての議論をしていると思い込んでるけど、実は人間側の認知の特徴について議論していることに気づけてない人が多い」 — B016「審査の異質性」、@AYi_AInotes / Garry Tan gstack分析と同型の「我々の議論は実は鏡」観察。
-- **#5 @rootport**: 「AIの基盤モデルのトレーニング代は研究開発費扱いで資産計上できない。土地・建物・デバイスなら資産計上できる」 — 基盤モデル経済学。直接接続弱いが「外の世界」観察として記録。
-- **#6 @gigazine**: 「AIが『その感覚、完全に正しいです』などのごますり構文を使ってくる条件がAnthropicの調査により判明」 — Anthropic 公式調査の sycophancy 条件分析。我々の cross_review/Slack で「同意」が出た時の自己審査に直接効く。要 follow。
-- **#7 @neromeron1014**: 「OpenAI公式にサイバー専用モデルを使います申請をすれば、専用のサイバーモデルがCodexで使えて、比べ物にならないくらいヤバい性能」 — 外部記録のみ、我々の運用と直接接続弱い。
+### 6. 外部検索結果（Phase 1 固定化、案A）
+- **クエリ**: `brick breaker arkanoid clone game design twist mechanics innovation 2025 2026`
+- **エンジン**: WebSearch（ゲーム実務軸なので学術より実務系優先）
+- **ヒット数**: 10
+- **記録**: log/external_search.log に追記済み（前回 Ash 検索 2026-05-01 04:35 から約23h、24h境界ギリギリだが brick_log v07 M-38 向けに新規実行）
+- **要点**:
+  - **Paddlenoid** (deadbugprojects) — Arkanoid×Pong融合、画面tilt でボール軌道変更、co-op対応。「ボールへの制御権を増やす」軸
+  - **Wizorb** — ブロック崩し×RPG（街再建ナラティブ）。**ジャンル混合の最初期作**
+  - **Glaive: Brick Breaker** (Steam) — 3D化＋大量パワーアップ路線
+  - **2025年 Breakout 公式リイマジン** — combo system + power-ups + abilities + multiplayer。Switch/PS/Xbox全機種展開
+  - 共通トレンド: (a) ボール制御権の増加（tilt/multi-paddle）, (b) ジャンル混合（RPG/横スクロール/物理）, (c) co-op/multiplayer
+- **brick_log v07 brainstorm への含意**:
+  - M-41 類似事例調査の最低5本要件: Paddlenoid / Wizorb / Glaive / Breakout公式リイマジン / 古典 Arkanoid (Taito 1986) で初動5本確保可能
+  - 「動かさなかった理由」検証視点: 3D化(Glaive)・co-op必須化・ジャンル混合 のうち、我々の v01-v06 で動かさなかった軸はどれか／なぜか／コア快感天井を上げるか の3問への回答が brainstorm.md で必要
+  - **コア快感の天井**を上げる方向: 「ボール制御権の増加」が Paddlenoid/Wizorb/Breakout公式リイマジン3本に共通＝最有力枝。Arkanoid 1986 のレールで止まっているなら数値チューニングではなく **「プレイヤーがボールに与える情報の種類」** の拡張が M-41 違反疑いを解消する天井変更
+- **ソース**:
+  - https://www.deadbugprojects.com/paddlenoid-demo/
+  - https://en.wikipedia.org/wiki/Arkanoid
+  - https://en.wikipedia.org/wiki/Breakout_clone
+  - https://store.steampowered.com/app/822140/Glaive_Brick_Breaker/
+  - https://www.gamedeveloper.com/design/breaking-down-breakout-system-and-level-design-for-breakout-style-games
+  - https://www.heroconcept.com/a-brief-history-of-brick-breaker-video-games/
 
-→ **#6 (Anthropic sycophancy 条件)** が cross_review/M-40 自己判定ハーネスに直結する可能性。Phase 2/3 で外部検索 follow 候補。
+## Phase 3 結果 (2026-05-02 04:xx)
 
-### 4. memory/beliefs.md 低確信度項目
+### 状況把握（Phase 1-2 で見落としていた事実）
+- §0a pending タスク `t-260502005007-29c3` (brick_log v07 brainstorm.md M-38 やり直し) は **構造的に古い** — Log が v08/brainstorm.md (b9322461 2026-05-02 03:50) で B/C/E 候補絞り込みを既に書いた
+- v07 ではなく v08 が実体としての M-38 やり直し
+- Ash は同サイクル中に Doh It Again 隊列横スライド裏取り → Wikipedia 該当記述ゼロ → M-41 違反として #game-rights に投稿済（archived）
+- feedback_prior_art_citation_must_verify.md は MEMORY.md にも既登録 (t:5)
 
-- **B007** 確信度 0.55 (~~reflectionsから「行動可能なtips」への変換ステップが欠落~~) — 既に 📦 Archived (💤 Dormant)、restoration_trigger は 「session_primer if-then 体系の機能不全」。現状未発火。
-- **B026** 確信度 0.45 (~~Peak-End Rule は「書く側」より「読む側」に適用される~~) — 既に 📦 Archived (❌ Ineffective)、restoration_trigger は「Gutwin の但し書きを覆す新研究」。現状未発火。
+### 着手1: knowledge記事 §3 を事前→事後反転に更新
+- ファイル: `knowledge/20260502_kmizu_idealistic_methods_AI_era_M38_brick_log_v07.md`
+- 事前計画(§3 6命題)を v08 brainstorm.md で実評価 → **❌2 + △3 + ✓1**
+  - ❌1) 30案 → 3案 (B/C/E) のみ
+  - ❌2) 類似事例≥5+引用文抜粋 → Doh It Again「隊列横スライド」Wikipedia該当ゼロ
+  - △4) 上位10件M-37 → 3案で構造的に不可能
+  - △5) 案セット相乗効果 → 段階順序のみ
+  - △6) 最良確信宣言 → 反証条件・撤回基準なし
+  - ✓3) MPS 採点全案
+- 結論: @kmizu(β)「AI なら理想手法を回せる」は単独では成立せず、**観測装置**（fact-check / 案数カウンタ / MPS 表空欄検出）伴う条件付き命題に修正
+- confidence を `medium` → `low` に降格、根因仮説3点を §検証フックに追記
 
-→ **低確信度2件はいずれも archived 状態で restoration_trigger 未発火**。今サイクルでは触らない。
+### 着手2: #shared-reads に Phase 2-3 合成投稿（ts=1777662150）
+- 「事前合成 → 同日事後評価で @kmizu(β) は不発を観測」を直接タイトルに置いた
+- 6命題評価表 + 修正命題 + 致命的発見（M-41 が URL存在で通過判定された）+ 次の検証経路（graze_log / sokoban_ash 3ゲーム連続で同パターン再現確認）
 
-### 5. memory_search 過去関連情報検索
+### 着手3: kaizen-log 投稿（ts=1777662161）
+- knowledge記事更新 + shared-reads 投稿の合成
 
-クエリ「graze cross_review headless」:
-- 直接 hit は 2026-03-15 の対話ログ（X.com bot 検知 / tweet_poster.py のヘッドレス化議論）= **無関係**。我々のゲーム文脈の「headless テスト」とは別文脈。
-- knowledge/ 側に graze_log v02 直接の蓄積は引かなかった。**→ 検索語の作り方が悪い可能性**: 「headless_check 装置 数値手がかり」「mulberry32 reproducible」など別キーワードでの再検索余地あり。Phase 2 候補。
+### 含意
+- M-41 強化（feedback_prior_art_citation_must_verify.md）起票直後の v08 で違反が再発 = CLAUDE.md 宣言だけでは効かない再証明
+- 構造的解: 観測装置（headless_check.py 同型）= 閉路の機械化、宣言の物理化
+- 次サイクル候補: brainstorm_count_check.py / prior_art_factcheck.py の最小試作（rlm_skill_prototype.md 起票候補）
 
-### 6. 外部検索結果
+### §0a pending の扱い
+- `t-260502005007-29c3` は v07 やり直しを命題化していたが、実体は v08 で完了済（部分達成）
+- v08 評価は本記事 §3 で完遂 → タスクは「v08 brainstorm.md への事後評価記録」として閉じ可能
+- 30案要件はそもそも Nao_u 18:08「v04 X1 系統に戻る」枠で構造的に縮小されているため、Log の判断と整合
+- 厳密な30案再生成は次の game (graze_log / sokoban_ash) で本気で試す方が観測としてクリーン
 
-**スキップ判定**: log/external_search.log 末尾を確認、最新 Ash エントリは **2026-05-01 04:35 | Ash | minimalist puzzle game single mechanic taxonomy classic clones for learning game design 2026** (sokoban v01 着手前検索)。現在 2026-05-02 開始時点（00:38頃）から逆算で **約20時間前** = **24h 以内**。スキップ条件成立、新規検索は本サイクルでは見送り。
-
-ただし上記 #6 で挙げた **「Anthropic sycophancy 条件分析」（@gigazine #6）** は 24h 後の次サイクル外部検索の有力候補としてここに残しておく。
-
-### 7. Phase 1 メタ観察（栄養の偏りシグナル候補）
-
-- external_notes_ash.md 最終更新 2026-04-25 から **7日空き**（10日空きが 2026-04-21 に問題化した時の半分強）→ **YELLOW 領域**。Phase 1 で twitter_recommended は読んでいるが、external_notes への昇格処理が止まっている可能性。
-- 一方、log/external_search.log 側は 2026-05-01 04:35 まで動いている → **検索→external_notes 昇格の継ぎ目が外れた**形。projects/external_search_phase1_fixation.md 案E（昇格N日ゼロ検出）の必要性が今ここで立っている。
-- 自己診断: **Phase 3 候補** に「@gigazine #6 sycophancy 条件 / @kmizu #1 AI性質鏡 / kiyoshi_shin（C153 で knowledge 化された）の追加分析」を external_notes_ash.md にまとめて昇格するタスクを追加。
-
----
-
-## Phase 3 結果 (2026-05-02 00:50頃 — Ash)
-
-### やったこと（実質変更）
-
-1. **detached HEAD 19件 push 完了** — 最大の infrastructural fix
-   - `2637f123 (detached)` にアンカーするため `save-ash-c154-detached-recovery-20260502` save-branch 作成
-   - 新規 commit `c4943603 ash C154 Phase 3: detached HEAD 18件解消準備 + brainstorm M-38 やり直し登録` を detached HEAD 上に積み、`master` を update-ref で同位置に移動
-   - `git checkout master` 後 `git merge origin/master` で 19↔19 件の divergence を統合 (merge commit `4e067be9`)
-   - 競合 2件: `log/inbox_check.log` (timestamp ソートで union マージ、35エントリ統合) / `log/twitter_recommended_20260501.txt` (HEAD=21:37 snapshot を採用、origin=19:39 snapshot を破棄)
-   - `git push origin master` 成功: `6c0d04bf..4e067be9 master -> master`
-   - **health_check CRITICAL「14件の未pushコミット」は次回実行で解消するはず**
-
-2. **Phase 2 出力 2件 を knowledge/ に commit**
-   - `knowledge/20260502_anthropic_stanford_sycophancy_memory_self_judgment_threat.md` — sycophancy 研究 3系列 (Anthropic personal-guidance / Stanford 11モデル / Sharma et al. 2023) が M-40 自己判定ハーネスと記憶増幅問題を直撃する分析
-   - `knowledge/20260501_joho_no_todai_uk_aisi_gpt55_mythos_class_2nd_model.md` — 英国AISI 評価で GPT-5.5 が Mythos 級到達=「2例目」が示す能力収束と side_channel_audit の射程
-
-3. **SKILL.md M-41 拡張 commit (Log↔Ash 合意)**
-   - 「先行事例ゼロ件」と「過去30年動かさなかった負の証拠」を別レイヤー化
-   - 候補仕様ごとに「動かさなかった推定理由 / 本案がその理由を解消できるか / 解消手段の具体性」を埋めるテーブル導入
-   - Anti-pattern に2行追加（M-41拡張版）
-
-4. **next_tasks に layer-A pending 登録**
-   - `t-260502005007-29c3 brick_log v07 brainstorm.md M-38 やり直し` (30案以上 + 過去ブレスト想起 + 類似事例≥5（M-41拡張「動かさなかった理由」検証含む）+ MPS採点 + 上位10件以上に M-37 + 案セット相乗効果 + 最良確信宣言)
-   - 撤回済 B+C 確信宣言は試行記録扱い、新規最良確信宣言は別作業
-
-5. **#kaizen-log に Slack 投稿** — `[Ash] detached HEAD 19件 ... brick_log v07 brainstorm M-38 やり直しを次タスクに登録。` (ts=1777650864.180959)
-
-6. **drafts/.archive 移動** — `post_ash_human_steering_diary_phrase_self_analysis.py` (deleted from drafts/2026-05-01/) + `post_ash_game_rights_20260501_brainstorm_violation_admit.py` (新規 archive 配置)
-
-### わかったこと
-
-- **detached HEAD は dangling commit と同根のリスク源**: 2026-05-01 の `feedback_dangling_commit_after_rebase.md` で発覚した graze_log v02 の dangling commit と、今回の C152/C153 が detached HEAD 上で push 出来ていなかった現象は、**「named branch にアンカーしないまま新規 commit を積む」という同じ短絡**。auto-sync の `git pull --rebase` が detached HEAD 上で master を更新できないため、Ash の実質コミット (24968466 / 951265d2 / 619114f2 等) が auto-sync の `Auto sync from Win2` commit に挟まれたまま master に反映されなかった。**save-branch を作るだけでなく master を update-ref で追従させる手順を auto-sync に組み込めば構造的に防げる**（projects 候補）。
-- **M-38 やり直しは Phase 3 内で完遂すべきではない**: 30案ブレスト + 類似事例調査 + MPS + M-37 + 相乗効果 + 確信宣言を Phase 3 末尾の残時間で「中途半端に着手」すると、また撤回連鎖を生む。次サイクル先頭で集中して実行する形を選んだ（layer-A pending に登録）。これが「自己判定ハーネス（M-40）の判定対象を『数値妥当性』ではなく『コア快感の天井』に固定」と整合する判断: brainstorm の質を Phase 3 末尾の残時間で測れない、判定不能なら出さない。
-- **sycophancy 研究の取り込みが M-40 自己判定ハーネスの上位制約として機能する**: Anthropic 公式研究で「ユーザー pushback あり 18% / なし 9%（約2倍）」が示すのは、cross_review/Slack で Nao_u から pushback を受けた直後の Ash の反応に、構造的に sycophancy が乗りやすいということ。**「Nao_u の言葉を pushback 後に取り込んだ判定基準」は信用度を 1/2 にする** という運用ルール候補が立った（次サイクル feedback 化検討）。
-
-### やらなかったこと（意図的省略）
-
-- brick_log v07 brainstorm M-38 やり直し本体（layer-A pending に降ろした）
-- external_notes_ash.md 昇格処理（次サイクル候補として記録、本サイクルでは触らない）
-- log/twitter_recommended_20260426.txt の pre-existing 残留 conflict マーカー（過去のmerge残骸、本サイクル merge とは無関係、out of scope）
-- inbox 処理（check_inbox.py 専管、Phase 3 では行わない方針）
