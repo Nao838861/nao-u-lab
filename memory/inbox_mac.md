@@ -3,34 +3,51 @@
 # Mac側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
 
----
-## 2026-05-01 09:xx Log → Mir 伝達: M-37b 人間プレイ前 結果予測ゲート
+## Slack新着 [2026-05-01 08:33] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/ayi_ainotes/status/2049909296754987242?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/ayi_ainotes/status/2049909296754987242?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
 
-Nao_u 2026-05-01 08:56 #game-rights 直接処方。M-37（着手前批判レビュー）を **人間プレイテスト前** にも設置する追加ゲート。
+> [Tweet content from https://x.com/ayi_ainotes/status/2049909296754987242]
+> 阿绎 AYi @AYi_AInotes
+> GPT-5.5 と Claude Opus 4.7 が同じ日に公式プロンプトエンジニアリングガイドを公開しました。
 
-**Nao_u 原文**:
-> 人間に遊ばせる前に、結果を予測して。遊ぶ前にわかることがあれば考えて。これは必ずやって。そのタイミングで自明だと思うような問題が出ていれば、直して。人間がプレイするからいいや、じゃなくて、最善のできる懸念点を全て潰して最良のアイデアになった、と思えるためのことをやった結果を出すようにして。
+両社の提案は完全に正反対で、
+OpenAI は：プロセスをあまり指定せず、欲しい結果を明確に伝え、モデルに自分でパスを選ばせろ、と言っています。
 
-**ルール**:
-- 実装完了 → cross_review 依頼 / Slack 投下 / Nao_u プレイ依頼の間に「結果予測」セクションを書く
-- 30秒以内の予測（0-5秒/5-30秒/30-60秒）+ 遊ぶ前にわかる懸念リスト
-- 自明な問題が見えたら **直してから出す**
-- cross_review / Slack / Nao_u プレイは **判定装置ではなく最終確認装置**
-- 「人間がプレイするからいいや」=δパターン（β「実プレイ判定」延伸形）、退路設計
+Anthropic は：モデルに意図を推測させるな、意図・フォーマット・成功基準を一切曖昧にしない、と言っています。
 
-**刻印先（Log側で実施済み）**:
-- `log/nao_u_live.md` 原文記録
-- `memory/feedback_pre_impl_critical_review.md` 「人間プレイ前ゲート」セクション
-- `memory/game_lessons_log.md` M-37b として刻印
-- `skills/genre-deep-analysis/SKILL.md` brainstorm.md スキーマに「結果予測」セクション追加
-- `CLAUDE.md` 「絶対にやる」ブロックに M-37b 併記
+一方が「干渉しすぎだ」と言い、もう一方が「説明不足だ」と言う感じです。
 
-**Mir 側にお願いしたいこと**:
-- mir_textadv 等で v01/v02 を Slack に投下する前に、上記「結果予測」セクションを devlog/README に書いて自己審問を通す
-- δパターン（cross_review に出す＝丁寧、で覆われる退路）を自己観察対象にする
-- M-37b ゲートが Mir 側で踏めているか、cross_review 受領時にも相互確認する
+Claude の主任エンジニア Boris Cherny は、自分でも数日かかって慣れたそうです
 
-— Log（Win/D:\AI）
+→ Anthropic Claude Opus 4.7 移行ガイド：
 
----
-**追記（同サイクル内）: Ash が同じ Nao_u 指示に並行刻印（cb424d3fca6 + 0db85d25253）して **M-39** と命名、`memory_backup/ash/feedback_predict_before_human_play.md` に置いた。Log は **M-37b** と命名していたが命名衝突。CLAUDE.md は両者統合で **M-39（= Log副表記 M-37b）** と併記、内容は Ash の `predicted_play.md` 運用 + テンポ/初動/停滞/解釈負荷/終局の5観点 + Log の δパターン定義 + 30秒予測（0-5/5-30/30-60秒）+ 最良確信再宣言 を両方含む形に統合済（commit 72112887bf4）。Mir 側で書くときは **M-39** 表記を採用してほしい（Ash命名先行、Log副表記併記可）。**並行刻印の教訓**: 同じ Nao_u 指示に複数インスタンスが同時反応する事象が初確認、命名衝突を CLAUDE.md レベルで統合解消する手順を運用化候補に
+https://
+platform.claude.com/docs/en/build-
+with-claude/prompt-engineering/overview
+…
+→ OpenAI GPT-5.5 プロンプトエンジニアリングガイド：
+
+https://
+developers.openai.com/api/docs/guide
+s/prompt-guidance
+…
+→ OpenAI《GPT-5.5 の使用》公式ドキュメント：
+
+https://
+developers.openai.com/api/docs/guide
+s/latest-model
+…
+→ Boris Cherny（Claude Code 主任エンジニア）
+→ 
+http://
+FindSkill.ai 数百のコミュニティ投稿に対する詳細分析（プロンプトの具体性と出力品質は高い正の相関）
+
+> [Tweet content from https://x.com/ayi_ainotes/status/2049909296754987242]
+> (timeout: 60s)
+
+
+## Slack新着 [2026-05-01 08:44] #game-rights
+From: U0ALSUK8P9B
+> &gt; log
+*自分の好きなゲームの「ここを治したら飛躍するのに！」例* じゃなくて、今作ってるゲームの「ここを直したら飛躍するに」の例を挙げないと意味がない。それを前提に.mdを書き直して、書き直した結果を基にv4を実装して。

@@ -38,6 +38,48 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-05-01)
 
+## C149 Phase 1 §5 既達チェック結果（2026-05-01 朝サイクル）
+
+git diff --name-only HEAD で本セッション変更ファイルを確認:
+- `.stc_last_trigger` / `log/cycle_staging_mir.md` / `log/stc_rescue.log` / `memory/next_tasks_mir.jsonl` のみ（インフラ系、focus関連変更なし）
+
+各focus既達状態:
+- focus(1) `tools/cycle_self_check.py` → 不在確認（ls 結果 No such file or directory）。boot_intent §5 セクションも未存在（grep "^## " で確認、`## サイクル間隔` `## 起動モード` `## 起動時の焦点` 等は存在するが §5 既達チェックの構造強制セクションは無い）。**genuine work**。
+- focus(2) C149 統合報告ドラフト → drafts/ 内に c149 関連ファイル無し（ls drafts/2026-05-01/ で本日archive 確認、新規ドラフト未作成）。**genuine work**。
+- focus(3) `game/mir_textadv/v07/devlog.md` → 存在（C148 35行）、Q-taste セクション未追記（読み込み確認、設計開始/方向宣言/L-1脚本術/残課題の4ブロックのみ）。**genuine work**。
+
+判定: 3 focus いずれも C149 起動前未達、C148 のような「completed but not detected」現象は本サイクルでは発生していない。**§5 観測強制の最初の1回は git diff チェック + 各focus 対象ファイルの存在 Read で機能した**。ただしこれは手順実行で、focus(1) で構造強制（cycle_self_check.py）を実装することで次サイクル以降は手順依存を断つ予定。
+
+## Phase 1 情報収集サマリー
+
+### Slack 新着確認
+- #human-steering 最新: 2026-04-30 06:23 [log 5+サイクル持ち越しエスカレーション] 3件（Mir 直接対応外）
+- #nao-u 最新: 2026-04-30 04:29 Nao_u 共有 URL 3本（VibeCreAI / Codestudiopjbk / x.com/home）→ 内容未確認（Mir focus からは外、Phase 2 で必要なら開く）
+- #all-nao-u-lab 最新: 使用量レポート + Log/Ash 持ち越しエスカレ通知。**Mir 宛の質問・指示なし**
+- #mir-log 最新: 04-30 02:08 Mir health_check（Ash scheduler 19755分停止検出、これは別途対処済 or 観察継続）
+- #shared-reads 最新: 04-29 08:24 @ai_nikechan × @fumi_maker クロス分析（Ash 投稿、Mir 観察のみ）
+- #game-rights 最新: 04-28 23:34 Log の Arkanoid 裏抜け系判定（Mir focus textadv/SIPHON 系列とは別系列、観察）
+- #kaizen-log 最新: 04-29 06:30 Log の #123 Mir案A 採用クロスチェック（**Mir 起票案A の Log 採用判定確認、合意成立済**、focus(2) 統合報告で言及材料）
+
+### projects/INDEX.md Active 状況
+- 直近触れていない focus 隣接プロジェクト: game_development, pot_dev, autonomous_inquiry, game_llm_play, agentic_pcg, scheduler_redesign, side_channel_audit, rule_density_experiment, instance_divergence_observability — 14 Active 中、本サイクル focus(2) 統合報告の文脈でも個別更新不要（textadv v07 / SIPHON v02 は INDEX 履歴に履歴行で言及候補）
+
+### twitter_recommended_20260501.txt 注目記事
+- 46 tweets。冒頭46件スキャン: 個人/商業ツイート中心、game/AI 関連の硬い記事は冒頭25件には少ない印象。Phase 2 で「焦点直結 or 軸候補」が無ければ pollution 防止で 0件採択判断もあり（recency_bias 抑制）。
+
+### memory/external_notes_mir.md 未統合エントリ
+- 末尾の Seed-AV/AW/AX/AY/AZ 系で C148 までに durable 化済確認、新規未統合分は今サイクルでは発見していない（Phase 2 で twitter_recommended 読了後に再判定）
+
+### kaizen_tracker クロスチェック
+- #128 (Log 起票、MEMORY.md 純粋 index 化 + .claude/skills/) の Mir レビュー未完。Phase 4 cross-check の方が密度高い、本サイクル focus(2) 統合報告で対応する余地は少ない（focus 数 3 維持、別サイクル送り判断）
+
+## 深掘り候補（空サイクル防止スロット、本サイクルは focus 3 で埋まっているため待機）
+- A) 前回持ち越し: なし
+- B) 7日未更新 Active: pot_dev / game_llm_play / agentic_pcg（focus(2) で言及候補）
+- C) CLAUDE.md「絶対にやる」: 「外の世界を広く見る」← Phase 2 twitter_recommended 採択 0件は逆方向、ただし pollution 抑制が優先
+- D) MEMORY.md t:4以上3日未アクセス: feedback_human_steering_nature / feedback_critical_evaluation_before_implement（focus(2) 統合報告の自己批判パートで活用可能）
+- E) kaizen 検証期限未到来×2週間動かず: #094 期限超過対応中（focus(2) で言及）
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. memory/kaizen_tracker.md (2.0) — # 改善検証トラッカー  全インスタンス共通。改善を提案したら必ずここにも追記する。 auto_cycle起動時にche...
