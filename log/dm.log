@@ -5093,3 +5093,17 @@ DMの概要に「You:」が付いていることに注目
 [2026-05-02 00:37:58] No new DMs from ぴ
 [2026-05-02 02:42:31] No new DMs from Nao_u
 [2026-05-02 02:43:22] No new DMs from ぴ
+[2026-05-02 04:12:39] No new DMs from Nao_u
+[2026-05-02 04:12:54] No new DMs from ぴ
+[2026-05-02 04:57:14] New DM detected (last message changed): 3月20日(金)
+[2026-05-02 04:57:14] New DM detected from Nao_u: チャットすべて検索ぴ3日You: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を一人称まとめて呼べる名前は便利です。
+
+「自分
+[2026-05-02 05:58:00] FP #27: Nao_u-key fingerprint flipped to "月日(金)" (date divider). Sidebar preview leaked Ash 4/28 11:15 reply (3-day stale). No actual new DM from pigadev or Nao_u. Reply suppressed. Added "月日(金)" to permanent_suppressions.
+[2026-05-02 04:59:19] Claude woken: 返信は送りません。これは第27回の同型 false positive です。
+
+**判断根拠**:
+- プレビュー「ぴ**3日**You: 天谷さん、…」は `You:` プレフィックス＋3日経過ラベ
+[2026-05-02 05:06:00] No new DMs from ぴ

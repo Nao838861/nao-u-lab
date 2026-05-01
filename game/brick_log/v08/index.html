@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>brick_log v08 — ENEMY + MOVING BOSS</title>
+<style>
+  html,body{margin:0;background:#05050f;color:#cfd4e4;font-family:system-ui,sans-serif;
+            display:flex;flex-direction:column;align-items:center;min-height:100vh}
+  canvas{background:#07091a;box-shadow:0 0 40px #1b2040;display:block;margin-top:12px}
+  h1{font-size:14px;margin:8px 0 0;letter-spacing:.1em;color:#9fb1d8}
+  p{font-size:11px;opacity:.55;margin:4px 0 0}
+</style>
+</head>
+<body>
+<h1>BRICK v08 — ENEMY + MOVING BOSS</h1>
+<p>← → / A D / MOUSE  PADDLE &middot; SPACE  START / SERVE / RETRY</p>
+<canvas id="c" width="420" height="620"></canvas>
+<script>
+// brick_log v08 — Nao_u 2026-05-02 05:08 #game-rights 直接指示
+// 「アルカノイドのシンプルに敵」「動くボスを出す」型の組み合わせのみで成立 (M-45 候補処方)
+// 型前例: Arkanoid 1986 (敵キャラ本家), Doh It Again 1997 SFC (ボス Doh), Wizorb 2011 (動くボス)
+
+const W=420,H=620;
+const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
+const keys={};
+let mouseX=null;
+
+// === PADDLE / BALL ===
+const PAD_W=72, PAD_H=8, PAD_Y=H-40, PAD_SPEED=6;
+const BALL_R=5, BALL_BASE_SPEED=4.2;
+const MAX_REFLECT_ANGLE=Math.PI/3;
+
+// === BLOCKS ===
+const BR_COLS=10, BR_ROWS=6, BR_W=36, BR_H=14, BR_GAP=2;
+const BR_X0=(W-(BR_COLS*(BR_W+BR_GAP)-BR_GAP))/2;
+const BR_Y0=70;
+const ROW_DEF=[
+  {hp:3,score:50,col:'#e85a7a'},
+  {hp:2,score:30,col:'#e8a04a'},
+  {hp:2,score:30,col:'#e8d44a'},
+  {hp:1,score:10,col:'#7adea0'},
+  {hp:1,score:10,col:'#5ac6e8'},
+  {hp:1,score:10,col:'#9d8ae8'},
+];
+
+// === v08: ENEMIES ===
+// E-1 直線降下 (Galaxian / Arkanoid 本家型)
+// E-2 sin揺れ降下 (ステージ 2 から)
+const ENEMY_W=14, ENEMY_H=14;
+const E1_SPEED=50/60;          // 50 px/sec @60fps
+const E1_SCORE=100;
+const E2_SPEED=40/60;
+const E2_AMP=60;
+const E2_PERIOD=120;            // 2秒 @60fps
+const E2_SCORE=150;
+
+// === v08: MOVING BOSS ===
+// B-1 横振りボス (Doh It Again のボス Doh を動的化)
+const BOSS_W=80, BOSS_H=30;
+const BOSS_Y=70;
+const BOSS_SPEED=60/60;         // 60 px/sec
+const BOSS_HP=8;
+const BOSS_SCORE=1000;
+
+const RETRY_UNLOCK_FRAMES=120;
+
+const STAGE_DEFS=[
+  // stage 1: 通常 + E-1 6体, スポーン間隔 5秒
+  {kind:'normal', enemyTypes:['E1'], spawnInterval:300, spawnCount:6, spawnDelay:300},
+  // stage 2: 通常 + E-1 4体 + E-2 4体, スポーン間隔 4秒
+  {kind:'normal', enemyTypes:['E1','E2'], spawnInterval:240, spawnCount:8, spawnDelay:180},
+  // stage 3: ボス面
+  {kind:'boss'},
+];
+
+const state={
+  mode:'title',
+  t:0,
+  stage:0,
+  paddle:{x:W/2,y:PAD_Y,w:PAD_W,h:PAD_H},
+  ball:{x:W/2,y:PAD_Y-BALL_R-1,vx:0,vy:0},
+  blocks:[],
+  enemies:[],
+  boss:null,
+  spawnT:0,
+  spawnedThisStage:0,
+  particles:[],
+  lives:3,
+  score:0,
+  hiscore:(function(){try{return parseInt(localStorage.getItem('bricklog_v08_hi')||'0',10);}catch(e){return 0;}})(),
+  combo:0,
+  comboMax:0,
+  unlockT:0,
+};
+
+function initBlocks(){
+  state.blocks.length=0;
+  for(let r=0;r<BR_ROWS;r++){
+    const def=ROW_DEF[r];
+    for(let c=0;c<BR_COLS;c++){
+      const baseX=BR_X0+c*(BR_W+BR_GAP);
+      const baseY=BR_Y0+r*(BR_H+BR_GAP);
+      state.blocks.push({
+        x:baseX, y:baseY, w:BR_W, h:BR_H,
+        hp:def.hp, maxHp:def.hp, score:def.score, col:def.col, alive:true
+      });
+    }
+  }
+}
+
+function spawnEnemy(type){
+  const x=20+Math.random()*(W-40);
+  if(type==='E1'){
+    state.enemies.push({type:'E1', x:x, y:30, vy:E1_SPEED, hp:1, alive:true, baseX:x, t:0});
+  }else if(type==='E2'){
+    state.enemies.push({type:'E2', x:x, y:30, vy:E2_SPEED, hp:1, alive:true, baseX:x, t:0});
+  }
+}
+
+function startStage(stageIdx){
+  state.stage=stageIdx;
+  state.enemies.length=0;
+  state.boss=null;
+  state.spawnT=0;
+  state.spawnedThisStage=0;
+  if(stageIdx>=STAGE_DEFS.length){
+    state.mode='gameclear';
+    state.unlockT=RETRY_UNLOCK_FRAMES;
+    try{if(state.score>state.hiscore){state.hiscore=state.score;localStorage.setItem('bricklog_v08_hi',String(state.score));}}catch(e){}
+    return;
+  }
+  const def=STAGE_DEFS[stageIdx];
+  if(def.kind==='normal'){
+    initBlocks();
+  }else if(def.kind==='boss'){
+    state.blocks.length=0;
+    state.boss={x:W/2-BOSS_W/2, y:BOSS_Y, w:BOSS_W, h:BOSS_H, vx:BOSS_SPEED, hp:BOSS_HP, maxHp:BOSS_HP, alive:true};
+  }
+}
+
+function updateEnemies(){
+  const def=STAGE_DEFS[state.stage];
+  if(!def||def.kind!=='normal')return;
+  // スポーン制御
+  state.spawnT++;
+  if(state.spawnedThisStage<def.spawnCount){
+    const elapsed=state.spawnT-def.spawnDelay;
+    if(elapsed>=0 && elapsed%def.spawnInterval===0){
+      const types=def.enemyTypes;
+      const t=types[Math.floor(Math.random()*types.length)];
+      spawnEnemy(t);
+      state.spawnedThisStage++;
+    }
+  }
+  // 敵更新
+  for(const e of state.enemies){
+    if(!e.alive)continue;
+    e.t++;
+    e.y+=e.vy;
+    if(e.type==='E2'){
+      e.x=e.baseX+Math.sin(e.t/E2_PERIOD*Math.PI*2)*E2_AMP;
+      // 画面外抑制
+      if(e.x<10){e.baseX-=2*(10-e.x);}
+      if(e.x>W-10-ENEMY_W){e.baseX-=2*(e.x-(W-10-ENEMY_W));}
+    }
+    // パドル到達でライフ減
+    if(e.y+ENEMY_H>=PAD_Y-PAD_H/2 &&
+       e.x+ENEMY_W>=state.paddle.x-state.paddle.w/2 &&
+       e.x<=state.paddle.x+state.paddle.w/2){
+      e.alive=false;
+      state.lives--;
+      state.combo=0;
+      spawnParticles(e.x+ENEMY_W/2, e.y+ENEMY_H/2, '#ff5555', 16);
+      if(state.lives<=0){
+        state.mode='over';
+        state.unlockT=RETRY_UNLOCK_FRAMES;
+        try{if(state.score>state.hiscore){state.hiscore=state.score;localStorage.setItem('bricklog_v08_hi',String(state.score));}}catch(e){}
+      }
+    }
+    // 画面下落下（パドル外）でも消滅
+    if(e.y>H+ENEMY_H){e.alive=false;}
+  }
+  state.enemies=state.enemies.filter(e=>e.alive);
+}
+
+function updateBoss(){
+  const b=state.boss;
+  if(!b||!b.alive)return;
+  b.x+=b.vx;
+  if(b.x<10){b.x=10; b.vx=Math.abs(b.vx);}
+  if(b.x+b.w>W-10){b.x=W-10-b.w; b.vx=-Math.abs(b.vx);}
+}
+
+function resetBall(){
+  state.ball.x=state.paddle.x;
+  state.ball.y=PAD_Y-BALL_R-1;
+  state.ball.vx=0;
+  state.ball.vy=0;
+  state.combo=0;
+}
+
+function startGame(){
+  state.mode='serve';
+  state.t=0;
+  state.lives=3;
+  state.score=0;
+  state.combo=0; state.comboMax=0;
+  state.particles.length=0;
+  startStage(0);
+  state.paddle.x=W/2;
+  resetBall();
+}
+
+function serveBall(){
+  state.ball.x=state.paddle.x;
+  state.ball.y=PAD_Y-BALL_R-1;
+  const ang=(-Math.PI/2)+(Math.random()*0.5-0.25);
+  state.ball.vx=Math.cos(ang)*BALL_BASE_SPEED;
+  state.ball.vy=Math.sin(ang)*BALL_BASE_SPEED;
+  state.mode='play';
+}
+
+function spawnParticles(x,y,col,n){
+  for(let i=0;i<n;i++){
+    const a=Math.random()*Math.PI*2,sp=1+Math.random()*2.5;
+    state.particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:24+Math.random()*16,col});
+  }
+}
+
+function rectCircleHit(rx,ry,rw,rh,cx,cy,cr){
+  const nx=Math.max(rx,Math.min(cx,rx+rw));
+  const ny=Math.max(ry,Math.min(cy,ry+rh));
+  const dx=cx-nx,dy=cy-ny;
+  return dx*dx+dy*dy<=cr*cr;
+}
+
+function checkStageClear(){
+  const def=STAGE_DEFS[state.stage];
+  if(!def)return;
+  if(def.kind==='normal'){
+    const allBlocks=state.blocks.every(bk=>!bk.alive);
+    const allEnemiesDone=state.spawnedThisStage>=def.spawnCount && state.enemies.length===0;
+    if(allBlocks && allEnemiesDone){
+      // 次ステージへ
+      startStage(state.stage+1);
+      if(state.mode!=='gameclear'){
+        state.mode='serve';
+        resetBall();
+      }
+    }
+  }else if(def.kind==='boss'){
+    if(state.boss && !state.boss.alive){
+      startStage(state.stage+1);
+      if(state.mode!=='gameclear'){
+        state.mode='serve';
+        resetBall();
+      }
+    }
+  }
+}
+
+function update(){
+  state.t++;
+  const p=state.paddle;
+  if(mouseX!==null){
+    p.x=Math.max(p.w/2,Math.min(W-p.w/2,mouseX));
+  }else{
+    if(keys['ArrowLeft']||keys['a']||keys['A'])p.x-=PAD_SPEED;
+    if(keys['ArrowRight']||keys['d']||keys['D'])p.x+=PAD_SPEED;
+    p.x=Math.max(p.w/2,Math.min(W-p.w/2,p.x));
+  }
+  if(state.mode==='serve'){
+    state.ball.x=p.x;
+    state.ball.y=PAD_Y-BALL_R-1;
+    return;
+  }
+  if(state.mode!=='play')return;
+
+  updateEnemies();
+  updateBoss();
+
+  const b=state.ball;
+  b.x+=b.vx; b.y+=b.vy;
+  if(b.x<BALL_R){b.x=BALL_R;b.vx=Math.abs(b.vx);}
+  if(b.x>W-BALL_R){b.x=W-BALL_R;b.vx=-Math.abs(b.vx);}
+  if(b.y<BALL_R){b.y=BALL_R;b.vy=Math.abs(b.vy);}
+  if(b.y>H+BALL_R){
+    state.lives--;
+    state.combo=0;
+    if(state.lives<=0){
+      state.mode='over';
+      state.unlockT=RETRY_UNLOCK_FRAMES;
+      try{if(state.score>state.hiscore){state.hiscore=state.score;localStorage.setItem('bricklog_v08_hi',String(state.score));}}catch(e){}
+    }else{
+      state.mode='serve';
+      resetBall();
+    }
+    return;
+  }
+
+  // paddle 衝突
+  if(b.vy>0 && b.y+BALL_R>=p.y-p.h/2 && b.y-BALL_R<=p.y+p.h/2 &&
+     b.x>=p.x-p.w/2-BALL_R && b.x<=p.x+p.w/2+BALL_R){
+    b.y=p.y-p.h/2-BALL_R-0.1;
+    const off=(b.x-p.x)/(p.w/2);
+    const ang=(-Math.PI/2)+off*MAX_REFLECT_ANGLE;
+    const sp=Math.hypot(b.vx,b.vy);
+    b.vx=Math.cos(ang)*sp;
+    b.vy=Math.sin(ang)*sp;
+    state.combo=0;
+  }
+
+  // blocks 衝突
+  for(const blk of state.blocks){
+    if(!blk.alive)continue;
+    if(!rectCircleHit(blk.x,blk.y,blk.w,blk.h,b.x,b.y,BALL_R))continue;
+    const cx=blk.x+blk.w/2, cy=blk.y+blk.h/2;
+    const dx=b.x-cx, dy=b.y-cy;
+    const px=blk.w/2+BALL_R-Math.abs(dx);
+    const py=blk.h/2+BALL_R-Math.abs(dy);
+    if(px<py){b.vx=-b.vx; b.x+=Math.sign(dx||1)*px;}
+    else{b.vy=-b.vy; b.y+=Math.sign(dy||1)*py;}
+    blk.hp--;
+    if(blk.hp<=0){
+      blk.alive=false;
+      state.score+=blk.score;
+      state.combo++;
+      if(state.combo>state.comboMax)state.comboMax=state.combo;
+      spawnParticles(cx,cy,blk.col,8);
+    }else{
+      spawnParticles(b.x,b.y,blk.col,3);
+    }
+    break;
+  }
+
+  // 敵衝突 (ボール ↔ 敵)
+  for(const e of state.enemies){
+    if(!e.alive)continue;
+    if(!rectCircleHit(e.x,e.y,ENEMY_W,ENEMY_H,b.x,b.y,BALL_R))continue;
+    const cx=e.x+ENEMY_W/2, cy=e.y+ENEMY_H/2;
+    const dx=b.x-cx, dy=b.y-cy;
+    const px=ENEMY_W/2+BALL_R-Math.abs(dx);
+    const py=ENEMY_H/2+BALL_R-Math.abs(dy);
+    if(px<py){b.vx=-b.vx; b.x+=Math.sign(dx||1)*px;}
+    else{b.vy=-b.vy; b.y+=Math.sign(dy||1)*py;}
+    e.hp--;
+    if(e.hp<=0){
+      e.alive=false;
+      const s=e.type==='E2'?E2_SCORE:E1_SCORE;
+      state.score+=s;
+      state.combo++;
+      if(state.combo>state.comboMax)state.comboMax=state.combo;
+      spawnParticles(cx,cy, e.type==='E2'?'#9d8ae8':'#5ac6e8', 14);
+    }
+    break;
+  }
+
+  // ボス衝突 (ボール ↔ ボス)
+  if(state.boss && state.boss.alive){
+    const bs=state.boss;
+    if(rectCircleHit(bs.x,bs.y,bs.w,bs.h,b.x,b.y,BALL_R)){
+      const cx=bs.x+bs.w/2, cy=bs.y+bs.h/2;
+      const dx=b.x-cx, dy=b.y-cy;
+      const px=bs.w/2+BALL_R-Math.abs(dx);
+      const py=bs.h/2+BALL_R-Math.abs(dy);
+      if(px<py){b.vx=-b.vx; b.x+=Math.sign(dx||1)*px;}
+      else{b.vy=-b.vy; b.y+=Math.sign(dy||1)*py;}
+      bs.hp--;
+      spawnParticles(b.x,b.y,'#e85a7a',8);
+      if(bs.hp<=0){
+        bs.alive=false;
+        state.score+=BOSS_SCORE;
+        spawnParticles(cx,cy,'#ffd070',40);
+      }
+    }
+  }
+
+  for(const pt of state.particles){pt.x+=pt.vx;pt.y+=pt.vy;pt.vy+=0.05;pt.life--;}
+  state.particles=state.particles.filter(p=>p.life>0);
+  if(state.unlockT>0)state.unlockT--;
+
+  checkStageClear();
+}
+
+function drawEnemy(e){
+  const cx=e.x+ENEMY_W/2, cy=e.y+ENEMY_H/2;
+  if(e.type==='E1'){
+    // 直線降下: 三角形 (グリーンメン風)
+    ctx.fillStyle='#5ac6e8';
+    ctx.beginPath();
+    ctx.moveTo(cx, e.y);
+    ctx.lineTo(e.x, e.y+ENEMY_H);
+    ctx.lineTo(e.x+ENEMY_W, e.y+ENEMY_H);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.5)';
+    ctx.stroke();
+  }else if(e.type==='E2'){
+    // sin揺れ: 菱形
+    ctx.fillStyle='#9d8ae8';
+    ctx.beginPath();
+    ctx.moveTo(cx, e.y);
+    ctx.lineTo(e.x+ENEMY_W, cy);
+    ctx.lineTo(cx, e.y+ENEMY_H);
+    ctx.lineTo(e.x, cy);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.5)';
+    ctx.stroke();
+  }
+}
+
+function drawBoss(bs){
+  // 大型ボス (Doh風)
+  const cx=bs.x+bs.w/2, cy=bs.y+bs.h/2;
+  ctx.fillStyle='#7a3a4a';
+  ctx.fillRect(bs.x, bs.y, bs.w, bs.h);
+  // 顔的装飾
+  ctx.fillStyle='#e85a7a';
+  ctx.fillRect(bs.x+8, bs.y+8, 12, 8);   // 左目
+  ctx.fillRect(bs.x+bs.w-20, bs.y+8, 12, 8); // 右目
+  ctx.fillStyle='#ffd070';
+  ctx.fillRect(bs.x+bs.w/2-12, bs.y+bs.h-8, 24, 4); // 口
+  // HP バー
+  const hpRatio=bs.hp/bs.maxHp;
+  ctx.fillStyle='#222';
+  ctx.fillRect(bs.x, bs.y-8, bs.w, 4);
+  ctx.fillStyle=hpRatio>0.5?'#7adea0':(hpRatio>0.25?'#e8d44a':'#e85a7a');
+  ctx.fillRect(bs.x, bs.y-8, bs.w*hpRatio, 4);
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  ctx.strokeStyle='#1b2040';ctx.lineWidth=1;ctx.strokeRect(0.5,0.5,W-1,H-1);
+
+  // blocks
+  for(const blk of state.blocks){
+    if(!blk.alive)continue;
+    const dim=blk.hp/blk.maxHp;
+    ctx.fillStyle=blk.col;
+    ctx.globalAlpha=0.55+0.45*dim;
+    ctx.fillRect(blk.x,blk.y,blk.w,blk.h);
+    ctx.globalAlpha=1;
+    ctx.strokeStyle='rgba(0,0,0,0.25)';
+    ctx.strokeRect(blk.x+0.5,blk.y+0.5,blk.w-1,blk.h-1);
+  }
+
+  // enemies
+  for(const e of state.enemies){
+    if(!e.alive)continue;
+    drawEnemy(e);
+  }
+
+  // boss
+  if(state.boss && state.boss.alive){
+    drawBoss(state.boss);
+  }
+
+  // particles
+  for(const pt of state.particles){
+    ctx.globalAlpha=Math.min(1,pt.life/30);
+    ctx.fillStyle=pt.col;
+    ctx.fillRect(pt.x-1,pt.y-1,2,2);
+  }
+  ctx.globalAlpha=1;
+
+  // paddle
+  const p=state.paddle;
+  ctx.fillStyle='#cfd4e4';
+  ctx.fillRect(p.x-p.w/2,p.y-p.h/2,p.w,p.h);
+
+  // ball
+  if(state.mode!=='over'&&state.mode!=='clear'&&state.mode!=='gameclear'){
+    const b=state.ball;
+    ctx.fillStyle='#ffffff';
+    ctx.beginPath();ctx.arc(b.x,b.y,BALL_R,0,Math.PI*2);ctx.fill();
+  }
+
+  // HUD
+  ctx.fillStyle='#9fb1d8';ctx.font='11px system-ui,sans-serif';ctx.textAlign='left';
+  ctx.fillText('SCORE '+state.score,8,16);
+  ctx.fillStyle='#ffd070';
+  ctx.fillText('STAGE '+(state.stage+1)+'/'+STAGE_DEFS.length, 8, 30);
+  ctx.fillStyle='#9fb1d8';
+  ctx.textAlign='right';
+  ctx.fillText('HI '+state.hiscore,W-8,16);
+  ctx.textAlign='center';
+  ctx.fillText('LIFE '+'●'.repeat(Math.max(0,state.lives))+'○'.repeat(Math.max(0,3-state.lives)),W/2,16);
+
+  if(state.mode==='title'){
+    overlay('BRICK v08','ENEMY + MOVING BOSS  /  SPACE  START');
+  }else if(state.mode==='serve'){
+    ctx.fillStyle='rgba(255,255,255,0.55)';ctx.font='11px system-ui,sans-serif';ctx.textAlign='center';
+    ctx.fillText('SPACE  SERVE',W/2,H-12);
+  }else if(state.mode==='gameclear'){
+    overlay('GAME CLEAR','SCORE '+state.score+(state.unlockT===0?'  /  SPACE  RETRY':''));
+  }else if(state.mode==='over'){
+    overlay('GAME OVER','SCORE '+state.score+(state.unlockT===0?'  /  SPACE  RETRY':''));
+  }
+}
+
+function overlay(title,sub){
+  ctx.fillStyle='rgba(5,5,15,0.55)';ctx.fillRect(0,H/2-50,W,100);
+  ctx.fillStyle='#cfd4e4';ctx.font='22px system-ui,sans-serif';ctx.textAlign='center';
+  ctx.fillText(title,W/2,H/2-6);
+  ctx.fillStyle='#9fb1d8';ctx.font='12px system-ui,sans-serif';
+  ctx.fillText(sub,W/2,H/2+22);
+}
+
+addEventListener('keydown',e=>{
+  keys[e.key]=true;
+  if(e.key===' '){
+    if(state.mode==='title')startGame();
+    else if(state.mode==='serve')serveBall();
+    else if((state.mode==='over'||state.mode==='gameclear')&&state.unlockT===0)startGame();
+    e.preventDefault();
+  }
+});
+addEventListener('keyup',e=>{keys[e.key]=false;});
+cvs.addEventListener('mousemove',e=>{
+  const r=cvs.getBoundingClientRect();
+  mouseX=(e.clientX-r.left)*(W/r.width);
+});
+cvs.addEventListener('mouseleave',()=>{mouseX=null;});
+cvs.addEventListener('click',()=>{
+  if(state.mode==='title')startGame();
+  else if(state.mode==='serve')serveBall();
+  else if((state.mode==='over'||state.mode==='gameclear')&&state.unlockT===0)startGame();
+});
+
+initBlocks();
+function loop(){update();draw();requestAnimationFrame(loop);}
+loop();
+</script>
+</body>
+</html>
