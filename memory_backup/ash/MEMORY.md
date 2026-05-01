@@ -10,6 +10,7 @@
 - [feedback_predict_before_human_play.md](feedback_predict_before_human_play.md) — **人間プレイ前の予測責任**。実装後・依頼前に「人間が遊ぶと何が起きるか」を予測→自明な問題は事前に潰す。「人間がプレイするからいい」で先送り禁止（Nao_u 2026-05-01 08:56 #game-rights）。critical_evaluation の下流／プレイ依頼直前ゲート `t:5`
 - [feedback_self_judge_no_human_dependency.md](feedback_self_judge_no_human_dependency.md) — **人間プレイに依存せず自分で判断**。数値→体感換算 + AI側自プレイで「自分が良いと思える」までは依頼しない。M-39の上位ゲート（Nao_u 2026-05-01 09:58 #game-rights brick_log v04 振幅小さすぎ事件）`t:5`
 - [feedback_means_ends_reversal_check.md](feedback_means_ends_reversal_check.md) — サイクル冒頭→「この出力はゲーム制作の試行錯誤ループに接続するか」1行自問。手段の目的化検出 `t:5`
+- [feedback_cross_instance_violation_cascade.md](feedback_cross_instance_violation_cascade.md) — **他インスタンス撤回観測時、自分の編集中ファイルを即同観点で再点検**。21:08 Log M-38撤回→21:1x Ash 同型違反 commit 事象。同根=同短絡を踏みやすい `t:5`
 - [feedback_positive_feedback_loop.md](feedback_positive_feedback_loop.md) — サイクル出力が前回より薄い時→4軸診断。詳細はファイル内 `t:5`
 - [feedback_self_correction.md](feedback_self_correction.md) — 楽な作業ばかりしている時→4パターン診断。詳細はファイル内 `t:5`
 - [feedback_memory_update_method.md](feedback_memory_update_method.md) — 記憶ファイル更新前に必読。丸書換え禁止、差分追記+原文参照リンク `t:4`
