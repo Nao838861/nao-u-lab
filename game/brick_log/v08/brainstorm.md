@@ -34,7 +34,7 @@ Nao_u #game-rights 05:08:
 | **メインオブジェクトの変奏** | 多段 HP / 鋼鉄不破 / 移動ブロック | Arkanoid 1986 鋼鉄, Revenge of Doh 1987 個別ブロック移動 |
 | **サブオブジェクト = 敵キャラ** ★ | 偵察機 / 妨害弾発射体 / シールド付き敵 | **Arkanoid 1986 本体 (敵が降下、ボールに当たると軌道変化、撃破でスコア)**, Revenge of Doh 1987 |
 | **サブオブジェクト = アイテム** | カプセル (パドル拡大/分裂/レーザー/スロー/ワープ) | Arkanoid 1986 標準 |
-| **サブオブジェクト = ボス** ★ | 静止ボス (Doh) / 動くボス | **Doh It Again 1997 SFC ボス Doh (回転)**, Wizorb 2011 動くボス |
+| **サブオブジェクト = ボス** ★ | 静止ボス / 動くボス | **静止ボス**: Doh It Again 1997 SFC（ボス Doh、ボディは静止）／ **動くボス**: Wizorb 2011・Shatter 2009 |
 | **進行構造** | 多段ステージ / ライフ / スコア / ハイスコア | 全作標準 |
 | **演出層** | パーティクル / SE / カットイン | 全作標準 |
 
@@ -64,12 +64,12 @@ Nao_u #game-rights 05:08:
 
 | 作品 | 年 | ボス挙動 | 引用 |
 |---|---|---|---|
-| **Arkanoid: Doh It Again** | Taito SFC 1997 | ボス Doh (大型顔面、画面回転で位置変化、SFC は静止ボディだが演出は動的) | https://en.wikipedia.org/wiki/Arkanoid:_Doh_It_Again |
-| **Wizorb** | 2011 | 各章末に動くボス (パターン攻撃) | https://en.wikipedia.org/wiki/Wizorb |
-| **Shatter** | Sidhe 2009 | 章末動くボス (HP・パターン移動) | https://en.wikipedia.org/wiki/Shatter_(video_game) |
-| **Breakout 系汎用**: 多くのレトロゲーム / Arkanoid系派生 | — | 動くボスは標準テンプレート | — |
+| **Wizorb** | Tribute Games 2011 | 各章末に動くボス（パターン攻撃、HP制） | https://en.wikipedia.org/wiki/Wizorb |
+| **Shatter** | Sidhe 2009 | 章末動くボス（HP・パターン移動） | https://en.wikipedia.org/wiki/Shatter_(video_game) |
 
-→ **動くボスは Arkanoid 系派生で 2009 (Shatter) / 2011 (Wizorb) 等で標準的に実装**。Nao_u 05:08「すごくシンプル」「一般的なゲームの形」が事実として支持される。
+**※ Doh It Again (1997 SFC) は「ボスの存在」型前例として Q-H-2 に残すが、SFC ボスは静止ボディのため「動くボス」表には含めない**（M-43 引用検証義務に沿う訂正、2026-05-02 v08 自己訂正）。Nao_u 05:08 でも「SFC のボスは動かないが、動くボスを出すのではだめ？」と明示されており、Doh It Again は「ボスを置く」型の前例、「動くボス」は Wizorb/Shatter 型の派生。
+
+→ **動くボスは Arkanoid 系派生で 2009 (Shatter) / 2011 (Wizorb) で実装**。Nao_u 05:08「すごくシンプル」「一般的なゲームの形」が Wizorb/Shatter で支持される。
 
 ### 引用検証 (M-43 R-Q1〜R-Q5)
 
