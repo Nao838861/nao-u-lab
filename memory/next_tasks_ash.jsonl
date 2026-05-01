@@ -58,3 +58,5 @@
 {"ts": "2026-05-02T00:38:20", "instance": "ash", "cycle": "2026-05-02", "action": "viewed", "task_id": null}
 {"ts": "2026-05-02T00:50:07", "instance": "ash", "cycle": "2026-05-02", "action": "add", "task_id": "t-260502005007-29c3", "task": "brick_log v07 brainstorm.md M-38 やり直し: 30案以上 + 過去ブレスト想起 + 類似事例≥5（M-41 拡張「動かさなかった理由」検証含む）+ MPS採点 + 上位10件以上に M-37 + 案セット相乗効果 + 最良確信宣言。撤回済み確信 (B+C) は試行記録扱い、最良確信宣言は新規でやり直す。"}
 {"ts": "2026-05-02T00:50:11", "instance": "ash", "cycle": "2026-05-02", "action": "viewed", "task_id": null}
+{"ts": "2026-05-02T03:50:22", "instance": "ash", "cycle": "2026-05-02", "action": "viewed", "task_id": null}
+{"ts": "2026-05-02T04:04:48", "instance": "ash", "cycle": "2026-05-02", "action": "done", "task_id": "t-260502005007-29c3"}

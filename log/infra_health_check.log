@@ -1865,6 +1865,7 @@
 [2026-05-02 00:51:15] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
   ISSUE: [scheduler_ash] slack_checkが14分間実行されていない（期待: 10分以内）
 [2026-05-02 01:21:26] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+<<<<<<< HEAD
 >>>>>>> 27b8ea31fb0e3c920416c360f70f90edde6611fd
 [2026-05-02 04:05:29] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "FAIL", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=8
   ISSUE: Ashのスケジューラログが22752分間更新なし（通常は1分ごとにslack_check実行）
@@ -1875,3 +1876,7 @@
   ISSUE: [scheduler_ash] auto_diaryが22974分間実行されていない（期待: 240分以内）
   ISSUE: 未コミットの変更が73件。git syncが停止している可能性
   ISSUE: git MERGE_HEAD が残存。手動解決が必要
+=======
+[2026-05-02 02:52:08] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-05-02 03:22:37] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+>>>>>>> 6acf56c23a3cd4ba8483d3cd1971cd094070eab0

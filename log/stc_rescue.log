@@ -704,3 +704,8 @@ Logのコメントへの返
   [3.00] docs/operations.md (undated) via ref→operations.md
   [3.00] memory/memory_redesign_proposal.md (undated) via ref→memory_redesign_proposal.md
   [3.00] memory/tips.md (undated) via ref→tips.md
+
+[2026-05-02 04:06] trigger=nao-u:2026-05-01 anchor=君たちが紹介してくれたこれ、今のAIがゲームをつくれない理由の一つなので、何とか解決したい。
+君たちが作ったゲームが、ち
+  [1.50] docs/scheduler_architecture.md (undated) via kw(変更)
+  [0.75] memory/external_notes_mir.md (undated) via kw(根源)
