@@ -108,11 +108,68 @@ def _local_dedup_check(channel, text):
     return False
 
 
+# 2026-05-02 broken-record対策: 冒頭80字のみ比較する既存ガードは
+# 14:15/17:46/18:08 #ash 日記 (タイトルだけ変えて本文同じ) や
+# 20:34/00:35 #human-steering 自己分析 (4時間後に逐語コピー) を素通りさせた。
+# 本文中央の類似度 (SequenceMatcher.ratio) を窓 6h で見る第3層を追加。
+_CONTENT_DEDUP_WINDOW_SEC = 6 * 3600
+_CONTENT_DEDUP_RATIO_THRESHOLD = 0.6
+_CONTENT_DEDUP_QUICK_THRESHOLD = 0.5
+
+
+def _content_similarity_check(channel, text):
+    """直近 6h の同チャンネル投稿と本文類似度を比較する。
+    SequenceMatcher.quick_ratio() で初回フィルタ → ratio() で確認。
+    >= _CONTENT_DEDUP_RATIO_THRESHOLD なら重複と判定して True を返す。
+    既存の prefix チェックを潜り抜ける「タイトルだけ変えた再投稿」を捕捉する。
+    """
+    import difflib
+    import time
+    try:
+        recent = _api_call("conversations.history", {
+            "channel": channel, "limit": 10
+        })
+    except Exception:
+        return None  # ガードエラーは投稿をブロックしない (None=判定不能)
+    if not recent.get("ok"):
+        return None
+
+    now = time.time()
+    norm_new = _normalize_for_dedup(text)
+    if len(norm_new) < 200:
+        return False  # 短すぎ: 通常メッセージ、prefix ガードに任せる
+
+    for msg in recent.get("messages", []):
+        try:
+            msg_ts = float(msg.get("ts", "0"))
+        except Exception:
+            continue
+        if now - msg_ts > _CONTENT_DEDUP_WINDOW_SEC:
+            continue
+        msg_text = msg.get("text", "")
+        if len(msg_text) < 200:
+            continue
+        norm_old = _normalize_for_dedup(msg_text)
+        # 長さが大きく違うものはスキップ (短い告知 vs 長文日記の誤検出回避)
+        ratio_len = min(len(norm_old), len(norm_new)) / max(len(norm_old), len(norm_new))
+        if ratio_len < 0.4:
+            continue
+        sm = difflib.SequenceMatcher(a=norm_old, b=norm_new, autojunk=False)
+        if sm.quick_ratio() < _CONTENT_DEDUP_QUICK_THRESHOLD:
+            continue
+        if sm.ratio() >= _CONTENT_DEDUP_RATIO_THRESHOLD:
+            return msg.get("ts", "?")  # 真値: 衝突した過去ts
+    return False
+
+
 def post_message(channel, text, thread_ts=None):
     """チャンネルにメッセージを投稿（thread_ts指定でスレッド返信）
 
-    長文（500文字以上）の投稿には30分間の重複防止ガードが適用される（kaizen #095）。
-    ローカルキャッシュ（race condition対策）+ API履歴の二重チェック。
+    長文（500文字以上）の投稿には3層の重複防止ガードが適用される:
+      Phase 1: ローカルキャッシュで冒頭80字一致を即時検知（30分窓）
+      Phase 2: API履歴で冒頭80字一致を検知（30分窓、別セッション対策）
+      Phase 3: API履歴で本文類似度（SequenceMatcher）を検知（6時間窓）
+               ※タイトル/冒頭だけ変えた再投稿（broken record）対策
     """
     # 長文投稿の重複ガード（日記の二重投稿防止）
     if len(text) >= 500 and not thread_ts:
@@ -140,6 +197,15 @@ def post_message(channel, text, thread_ts=None):
                                 "message": "Duplicate diary post detected (API), skipped"}
         except Exception:
             pass  # ガードのエラーは投稿をブロックしない
+
+        # Phase 3: 本文類似度チェック（6時間窓）— タイトル変更の再投稿を捕捉
+        try:
+            collision_ts = _content_similarity_check(channel, text)
+            if collision_ts:
+                return {"ok": True, "skipped": True,
+                        "message": f"Broken-record post detected (content similarity >= {_CONTENT_DEDUP_RATIO_THRESHOLD}, collides with ts={collision_ts}), skipped"}
+        except Exception:
+            pass
 
     data = {"channel": channel, "text": text}
     if thread_ts:

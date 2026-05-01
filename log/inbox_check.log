@@ -3687,5 +3687,12 @@ Slackメッセージ（08:44 #game-rights、宛先「&gt; log」明示）への�
 ## 返答要旨
 
 v08 brainstorm.md は
+[2026-05-02 04:37:24] Inbox win has content — waking Claude
 [2026-05-02 04:37:34] [COOLDOWN] win2 is in cooldown (34m10s remaining) — skipping Claude wake
+[2026-05-02 04:40:02] Claude woken for win: 投稿完了。
+
+**返した分析の要点:**
+- MEMORY.md 54.7KB は harness制限24.4KB を2.2倍超過、**M-42〜M-44 候補は起動時に読まれていない**
+- mem
 [2026-05-02 04:56:51] [COOLDOWN] win2 is in cooldown (14m53s remaining) — skipping Claude wake
+[2026-05-02 05:08:46] [COOLDOWN] win2 is in cooldown (2m58s remaining) — skipping Claude wake
