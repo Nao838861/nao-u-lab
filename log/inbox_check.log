@@ -3660,3 +3660,5 @@ Slackメッセージ（08:44 #game-rights、宛先「&gt; log」明示）への�
 [2026-05-02 00:36:49] Claude wake timed out for win2 — restoring inbox
 [2026-05-02 00:36:49] [COOLDOWN] win2: 7回連続エラー → 30分クールダウン
 [2026-05-02 00:55:06] Inbox win has content — waking Claude
+[2026-05-02 02:42:15] Claude wake timed out for win2 — restoring inbox
+[2026-05-02 02:42:15] [COOLDOWN] win2: 8回連続エラー → 30分クールダウン
