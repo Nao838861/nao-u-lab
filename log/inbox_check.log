@@ -3555,3 +3555,8 @@ Slackメッセージ（08:44 #game-rights、宛先「&gt; log」明示）への�
 [2026-05-01 12:09:29] Inbox win has content — waking Claude
 [2026-05-01 13:07:51] Inbox win has content — waking Claude
 [2026-05-01 13:18:27] Inbox win has content — waking Claude
+[2026-05-01 13:23:04] Claude woken for win: 対処完了。
+
+**やったこと**:
+1. `memory/feedback_similar_games_first.md` 新規作成（M-41 候補刻印）
+2. `skills/genre-deep-
