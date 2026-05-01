@@ -3668,3 +3668,6 @@ Slackメッセージ（08:44 #game-rights、宛先「&gt; log」明示）への�
 **Nao_u指摘への返答**:
 - **ソース**: 私が虚偽を書いた。Wikipedia URLを貼ったがそこに該当記述は無く、1997 Doh It Again と 1987 Re
 [2026-05-02 03:16:57] Inbox win has content — waking Claude
+[2026-05-02 03:20:59] Claude woken for win: 対処完了。
+
+- npaka「Codex のゲーム開発のためのプロンプトまとめ」を WebFetch 2回で読み、骨格抽出（PLAN.md / AGENTS.md / 評価2層 / 7ステップループ 
