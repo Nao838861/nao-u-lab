@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>brick_log v06 compare — M-40 判定ハーネス</title>
+<style>
+  html,body{margin:0;background:#04040c;color:#cfd4e4;font-family:system-ui,sans-serif}
+  body{padding:8px}
+  h1{font-size:14px;margin:0 0 6px;letter-spacing:.1em;color:#9fb1d8}
+  .desc{font-size:11px;opacity:.6;margin:0 0 10px}
+  .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .cell{background:#07091a;padding:6px;border:1px solid #1b2040}
+  .cell h2{font-size:11px;margin:0 0 4px;color:#9fb1d8;letter-spacing:.05em}
+  .cell .meta{font-size:10px;opacity:.55;margin:0 0 4px}
+  canvas{background:#05050f;display:block;width:100%;image-rendering:pixelated}
+  .verdict{font-size:10px;margin-top:4px}
+  .verdict.ok{color:#7adea0}
+  .verdict.bad{color:#e85a7a}
+</style>
+</head>
+<body>
+<h1>brick_log v06 compare — 5 amplitudes side-by-side (M-40 judgment harness)</h1>
+<p class="desc">同一弾道を5振幅で並列再生。ガイドが指す位置(オレンジ)と実ブロック位置の乖離を視覚確認するための装置。Nao_u 09:58「人間プレイ依存からの脱却」への回答。</p>
+<div class="grid" id="grid"></div>
+
+<script>
+const W=200, H=300; // 圧縮版（compare用）
+const PAD_W=36, PAD_H=4, PAD_Y=H-20, PAD_SPEED=3;
+const BALL_R=2.5, BALL_BASE_SPEED=2.1; // half scale of v05
+
+const BR_COLS=10, BR_ROWS=6, BR_W=18, BR_H=7, BR_GAP=1;
+const BR_X0=(W-(BR_COLS*(BR_W+BR_GAP)-BR_GAP))/2;
+const BR_Y0=35;
+const ROW_DEF=[
+  {hp:3,col:'#e85a7a'},
+  {hp:2,col:'#e8a04a'},
+  {hp:2,col:'#e8d44a'},
+  {hp:1,col:'#7adea0'},
+  {hp:1,col:'#5ac6e8'},
+  {hp:1,col:'#9d8ae8'},
+];
+const MAX_REFLECT_ANGLE=Math.PI/3;
+
+const VARIANTS = [
+  { name:'A=5  (v04)',  amp:5/2,  period:240, verdict:'invisible (Nao_u: small)', ok:false },
+  { name:'A=10 ★',      amp:10/2, period:200, verdict:'visible & aimable',         ok:true  },
+  { name:'A=14',        amp:14/2, period:200, verdict:'guide drifts',               ok:false },
+  { name:'A=18',        amp:18/2, period:200, verdict:'often misses target',        ok:false },
+  { name:'A=22 (v05)',  amp:22/2, period:180, verdict:'severe overshoot',           ok:false },
+];
+
+function rectCircleHit(rx,ry,rw,rh,cx,cy,cr){
+  const nx=Math.max(rx,Math.min(cx,rx+rw));
+  const ny=Math.max(ry,Math.min(cy,ry+rh));
+  const dx=cx-nx,dy=cy-ny;
+  return dx*dx+dy*dy<=cr*cr;
+}
+
+function makeBoard(variant){
+  const cell=document.createElement('div');
+  cell.className='cell';
+  cell.innerHTML=`
+    <h2>${variant.name}</h2>
+    <div class="meta">period ${variant.period}f</div>
+    <canvas width="${W}" height="${H}"></canvas>
+    <div class="verdict ${variant.ok?'ok':'bad'}">${variant.ok?'★':'×'} ${variant.verdict}</div>
+  `;
+  document.getElementById('grid').appendChild(cell);
+  const cvs=cell.querySelector('canvas');
+  return {cvs, ctx:cvs.getContext('2d'), v:variant};
+}
+
+function makeBlocks(){
+  const arr=[];
+  for(let r=0;r<BR_ROWS;r++){
+    for(let c=0;c<BR_COLS;c++){
+      arr.push({
+        baseX: BR_X0+c*(BR_W+BR_GAP),
+        baseY: BR_Y0+r*(BR_H+BR_GAP),
+        x: 0, y: 0,
+        w: BR_W, h: BR_H,
+        hp: ROW_DEF[r].hp, maxHp: ROW_DEF[r].hp, col: ROW_DEF[r].col,
+        alive: true,
+        phase: r*0.7 + c*0.4,
+      });
+    }
+  }
+  return arr;
+}
+
+function makeState(){
+  return {
+    t:0,
+    paddle:{x:W/2,y:PAD_Y,w:PAD_W,h:PAD_H,vx:0},
+    ball:{x:W/2,y:PAD_Y-BALL_R-1,vx:0,vy:0,launched:false},
+    blocks:makeBlocks(),
+    autoT:60, // タイトル60フレーム
+    serveCount:0,
+  };
+}
+
+function swayOf(blk, t, amp, period){
+  return amp * Math.sin(2*Math.PI*t/period + blk.phase);
+}
+
+function updateBoard(b){
+  const v=b.v, st=b.state;
+  st.t++;
+
+  // ブロック位置更新
+  for(const blk of st.blocks){
+    if(!blk.alive)continue;
+    blk.x = blk.baseX + swayOf(blk, st.t, v.amp, v.period);
+    blk.y = blk.baseY;
+  }
+
+  // パドル: ボール追従(オートプレイ)
+  const p=st.paddle;
+  const targetX = st.ball.launched ? st.ball.x : W/2;
+  const dx = targetX - p.x;
+  p.x += Math.sign(dx)*Math.min(Math.abs(dx), PAD_SPEED);
+  p.x = Math.max(p.w/2, Math.min(W-p.w/2, p.x));
+
+  if(!st.ball.launched){
+    st.autoT--;
+    if(st.autoT<=0){
+      // serve
+      st.ball.x = p.x;
+      st.ball.y = PAD_Y - BALL_R - 1;
+      // 決定論的サーブ角度 (5回ローテーション)
+      const angles = [-0.3, -0.1, 0.1, 0.3, 0.0];
+      const ang = -Math.PI/2 + angles[st.serveCount%angles.length];
+      st.ball.vx = Math.cos(ang)*BALL_BASE_SPEED;
+      st.ball.vy = Math.sin(ang)*BALL_BASE_SPEED;
+      st.ball.launched = true;
+    }
+    st.ball.x = p.x;
+    st.ball.y = PAD_Y - BALL_R - 1;
+    return;
+  }
+
+  const ball=st.ball;
+  ball.x += ball.vx;
+  ball.y += ball.vy;
+  if(ball.x<BALL_R){ball.x=BALL_R;ball.vx=Math.abs(ball.vx);}
+  if(ball.x>W-BALL_R){ball.x=W-BALL_R;ball.vx=-Math.abs(ball.vx);}
+  if(ball.y<BALL_R){ball.y=BALL_R;ball.vy=Math.abs(ball.vy);}
+  if(ball.y>H+BALL_R){
+    // 落下: リサーブ
+    st.ball.launched=false;
+    st.autoT=30;
+    st.serveCount++;
+    return;
+  }
+  // パドル衝突
+  if(ball.vy>0 && ball.y+BALL_R>=p.y-p.h/2 && ball.y-BALL_R<=p.y+p.h/2 &&
+     ball.x>=p.x-p.w/2-BALL_R && ball.x<=p.x+p.w/2+BALL_R){
+    ball.y=p.y-p.h/2-BALL_R-0.1;
+    const off=(ball.x-p.x)/(p.w/2);
+    const ang=(-Math.PI/2)+off*MAX_REFLECT_ANGLE;
+    const sp=Math.hypot(ball.vx,ball.vy);
+    ball.vx=Math.cos(ang)*sp;
+    ball.vy=Math.sin(ang)*sp;
+  }
+  // ブロック衝突
+  for(const blk of st.blocks){
+    if(!blk.alive)continue;
+    if(!rectCircleHit(blk.x,blk.y,blk.w,blk.h,ball.x,ball.y,BALL_R))continue;
+    const cx=blk.x+blk.w/2, cy=blk.y+blk.h/2;
+    const dx=ball.x-cx, dy=ball.y-cy;
+    const px=blk.w/2+BALL_R-Math.abs(dx);
+    const py=blk.h/2+BALL_R-Math.abs(dy);
+    if(px<py){ball.vx=-ball.vx; ball.x+=Math.sign(dx||1)*px;}
+    else{ball.vy=-ball.vy; ball.y+=Math.sign(dy||1)*py;}
+    blk.hp--;
+    if(blk.hp<=0)blk.alive=false;
+    break;
+  }
+  // 全滅したら復活
+  if(st.blocks.every(bk=>!bk.alive)){
+    st.blocks = makeBlocks();
+  }
+}
+
+function computeTrajectory(b){
+  const v=b.v, st=b.state;
+  if(!st.ball.launched)return null;
+  const ball=st.ball, p=st.paddle;
+  if(Math.hypot(ball.vx,ball.vy)<0.01)return null;
+
+  const segs=[];
+  const STEP=1.5;
+  const MAX=300;
+  let cx=ball.x, cy=ball.y;
+  let dvx=ball.vx, dvy=ball.vy;
+  const sp=Math.hypot(dvx,dvy);
+  let segStartX=cx, segStartY=cy;
+  let phase=0, p1Idx=-1;
+  for(let i=0;i<MAX;i++){
+    const nx=cx+dvx*STEP/sp, ny=cy+dvy*STEP/sp;
+    if(nx<BALL_R){segs.push({x1:segStartX,y1:segStartY,x2:BALL_R,y2:ny});dvx=Math.abs(dvx);cx=BALL_R;cy=ny;segStartX=cx;segStartY=cy;continue;}
+    if(nx>W-BALL_R){segs.push({x1:segStartX,y1:segStartY,x2:W-BALL_R,y2:ny});dvx=-Math.abs(dvx);cx=W-BALL_R;cy=ny;segStartX=cx;segStartY=cy;continue;}
+    if(ny<BALL_R){segs.push({x1:segStartX,y1:segStartY,x2:nx,y2:BALL_R});dvy=Math.abs(dvy);cx=nx;cy=BALL_R;segStartX=cx;segStartY=cy;continue;}
+    let hit=false;
+    for(const blk of st.blocks){
+      if(!blk.alive)continue;
+      if(rectCircleHit(blk.x,blk.y,blk.w,blk.h,nx,ny,BALL_R)){
+        segs.push({x1:segStartX,y1:segStartY,x2:nx,y2:ny});
+        hit=true; break;
+      }
+    }
+    if(hit)break;
+    const cP=p.y-p.h/2-BALL_R-0.1;
+    if(phase===0 && dvy>0 && ny>=cP){
+      const t=(cP-cy)/(ny-cy);
+      const hx=cx+(nx-cx)*t;
+      segs.push({x1:segStartX,y1:segStartY,x2:hx,y2:cP});
+      const off=Math.max(-1,Math.min(1,(hx-p.x)/(p.w/2)));
+      const ang=-Math.PI/2+off*MAX_REFLECT_ANGLE;
+      dvx=Math.cos(ang)*sp;
+      dvy=Math.sin(ang)*sp;
+      cx=hx;cy=cP;
+      segStartX=cx;segStartY=cy;
+      phase=1; p1Idx=segs.length;
+      continue;
+    }
+    cx=nx;cy=ny;
+  }
+  return {segs, p1Idx};
+}
+
+function drawBoard(b){
+  const ctx=b.ctx, st=b.state;
+  ctx.fillStyle='#05050f';ctx.fillRect(0,0,W,H);
+  // blocks
+  for(const blk of st.blocks){
+    if(!blk.alive)continue;
+    ctx.fillStyle=blk.col;
+    ctx.globalAlpha=0.55+0.45*(blk.hp/blk.maxHp);
+    ctx.fillRect(blk.x,blk.y,blk.w,blk.h);
+    ctx.globalAlpha=1;
+  }
+  // trajectory
+  const tr=computeTrajectory(b);
+  if(tr){
+    ctx.lineWidth=1;
+    for(let i=0;i<tr.segs.length;i++){
+      const s=tr.segs[i];
+      const isP1=(tr.p1Idx>=0 && i>=tr.p1Idx);
+      ctx.strokeStyle=isP1?'rgba(255,200,100,0.8)':'rgba(180,210,255,0.4)';
+      ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+    }
+  }
+  // paddle
+  const p=st.paddle;
+  ctx.fillStyle='#cfd4e4';
+  ctx.fillRect(p.x-p.w/2,p.y-p.h/2,p.w,p.h);
+  // ball
+  ctx.fillStyle='#fff';
+  ctx.beginPath();ctx.arc(st.ball.x,st.ball.y,BALL_R,0,Math.PI*2);ctx.fill();
+}
+
+const boards = VARIANTS.map(v=>{
+  const b = makeBoard(v);
+  b.state = makeState();
+  return b;
+});
+
+function loop(){
+  for(const b of boards){
+    updateBoard(b);
+    drawBoard(b);
+  }
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>

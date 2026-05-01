@@ -119,3 +119,14 @@
 {"ts": "2026-05-01T07:41:00", "instance": "log", "cycle": "2026-05-01", "action": "viewed", "task_id": null}
 {"ts": "2026-05-01T07:41:12", "instance": "log", "cycle": "2026-05-01", "action": "done", "task_id": "t-260427194752-f6a0"}
 {"ts": "2026-05-01T07:49:31", "instance": "log", "cycle": "2026-05-01", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 4, "skip_count": 3, "pending_total": 10}
+{"ts": "2026-05-01T10:24:43", "instance": "log", "cycle": "2026-05-01", "action": "viewed", "task_id": null}
+{"ts": "2026-05-01T10:35:34", "instance": "log", "cycle": "2026-05-01", "action": "done", "task_id": "t-260427074530-e8b6"}
+{"ts": "2026-05-01T10:36:04", "instance": "log", "cycle": "2026-05-01", "action": "add", "task_id": "t-260501103604-2063", "task": "[C151→C152] M-40 事前ゲート化運用: 「揺れ量・振幅 2回目指摘 → 判定機構を作る方を次の実装より優先」を発火条件付きでハーネス化。brick_log v05→v06 の場合は段階値比較版 v05a/v05b/v05c/v05d を作る前に『判定根拠4点（過去ベンチ/映像レンダ/段階値比較/閾値経験）』のうちどれを最優先で構築するか決める。kaizen 起票候補（同パターン2回検出スクリプト）。検証期限 2026-05-15"}
+{"ts": "2026-05-01T10:43:40", "instance": "log", "cycle": "2026-05-01", "action": "cycle_check", "task_id": null, "add_count": 1, "done_count": 5, "skip_count": 3, "pending_total": 10}
+{"ts": "2026-05-01T13:24:59", "instance": "log", "cycle": "2026-05-01", "action": "viewed", "task_id": null}
+{"ts": "2026-05-01T13:38:55", "instance": "log", "cycle": "2026-05-01", "action": "skip", "task_id": "t-260427074530-e8b6", "reason": "drop: Verbalized Sampling N案+確率は M-37/M-38/M-41 ハーネス整備優先度より下、5+ サイクル滞留 + 検証期限不明のため drop。再着手するならハーネスが落ち着いた後 (2026-05-15 以降)。"}
+{"ts": "2026-05-01T13:38:59", "instance": "log", "cycle": "2026-05-01", "action": "skip", "task_id": "t-260427164058-12a7", "reason": "保留延長: 検証期限 2026-05-04 まで4日、M-37/M-38/M-41 ハーネス整備が落ち着いた段階で実行。drop ではない (substrate-first 1mm 連動のため)。"}
+{"ts": "2026-05-01T13:39:02", "instance": "log", "cycle": "2026-05-01", "action": "viewed", "task_id": null}
+{"ts": "2026-05-01T13:39:05", "instance": "log", "cycle": "2026-05-01", "action": "viewed", "task_id": null}
+{"ts": "2026-05-01T13:39:40", "instance": "log", "cycle": "2026-05-01", "action": "add", "task_id": "t-260501133940-c650", "task": "Q-H-8b README 雛形注入: feedback_mechanism_damage_pleasure.md 由来「自明な快感を機構介入で毀損していないか」を新ゲーム README 雛形/SKILL.md の着手前ゲートに必須化。docs/game_dev_foundation.md M-37/M-38 該当節に併設。検証期限 2026-05-15 (M-41 と同期)。skill フェーズ分割の Q-H-8b スロット候補。"}
+{"ts": "2026-05-01T13:47:08", "instance": "log", "cycle": "2026-05-01", "action": "cycle_check", "task_id": null, "add_count": 2, "done_count": 5, "skip_count": 5, "pending_total": 10}

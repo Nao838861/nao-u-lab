@@ -1,10 +1,16 @@
-# サイクルステージング 2026-05-01 04:32
+# サイクルステージング 2026-05-01 08:18
 
 ## Pre-check結果
 - 【検証アラート】⚠ 期限超過の検証が1件:
   #094: drafts/*.py 自動削除ラッパー（Slack送信成功時の副作用として drafts/ 原本を削除） (期限: 2026-04-27, 担当: Mir)
     検証手段: (1) `slack_bot.post_message` を呼び出す drafts/ スクリプトの自動削除ラッパー（e.g. `tools/post_draft.py <path>`）が実装済み (2) ラッパー経由の送信1回で drafts/ 原本が削除されている (3) 2026-04-20〜04-27の期間で drafts/ ファイル数が30以下に減少（現状119件、本起票時点の基線） 
-- 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
+- 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 1件
+
+  #128: MEMORY.md 純粋 index 化 + .claude/skills/ 構造移行（Skills/Corpus2Skill/OpenKB 三角化、Markdown肥大化への構造処方）
+    提案者: Log（2026-05-01 C151 Phase 2/3。記憶アーキ4経路三角化 [OpenKB(1)/corpus2skill(3)/Skills(4) が「ファイルシステム階層を LLM 走査・ベクター検索捨てる」で同方向別経路独立到達] と MEMORY.md 27.5KB/174行肥大化警告 [Read出力末尾 "WARNING: MEMORY.md is 27.5KB (limit: 24.4KB)"] が同サイクルで結合した結果。荒川 Skills（reference_arakawa_three_engineering 2026-04-22）への Nao_u 指摘「肝をもう少し掘り下げて欲しかった」を 04-29 corpus2skill 投下 + 04-30 OpenKB 投下で再ピック） | 適用日: 2026-05-01（起票のみ。実装は段階的、第1週は MEMORY.md トリガー圧縮 + skills/ 配下棚卸しから） | チェック済み: 1/3
+    Log: OK(2026-05-01
+
+→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
 - 【レビュー期限超過】レビュー期限超過なし。 
 
 ## 前回日記末尾（連続性強制）
@@ -32,125 +38,77 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-05-01)
 
-## Phase 1 情報収集結果（C148）
-- CLAUDE.md「絶対にやる」: 外の世界・ゲーム実践・記憶階層・M-38ジャンル深掘り。本サイクル focus(3) v07着手で「型継承＋一軸派生」既存内省を引き直す形で接続。
-- Slack新着: #human-steering Log向けエスカレーション5件（Mir対象外）。#nao-u は Nao_u 共有URL3件（VibeCreAI/Codestudiopjbk/x.com/home、本サイクル深掘り対象外）。返信対象なし。
-- external_notes_mir 未統合: なし（直近のSeed系は durable 化済み、新規流入なし）
-- INDEX.md Active: SIPHON v02 / mir_textadv v07 着手は game_development.md 系列に内包。新プロジェクト起票不要。
-- twitter_recommended_20260501: 04:32起動段階で未投入、該当なし。
-- drafts/.archive/2026-05-01/: C147末尾までで mir_diary_c147 + 多数のLog post 済。focus(2) は新規 drafts/ 1本作成→送信→archive 経路を踏む。
+## C149 Phase 1 §5 既達チェック結果（2026-05-01 朝サイクル）
 
-### Phase 1 §5 既達チェック（boot_intent警告対応）
-- focus(1) SIPHON v02 BOMB分離: v02/index.html L221-224 `trySiphon()` 内で `gReady() → fireBomb()` 自動分岐、L498-501 `keys['Space']` のみで `keys['KeyB']` 処理なし → **未達確認**
-- focus(2) drafts/送信実例: 本サイクルでまだ作成していない → 未達
-- focus(3) v07着手: `game/mir_textadv/v07/` ディレクトリ・devlog.md 不在（v01-v06のみ） → 未達
-- 全焦点について Phase 2/3 並走の既達現象なし、本サイクルで実装する。
+git diff --name-only HEAD で本セッション変更ファイルを確認:
+- `.stc_last_trigger` / `log/cycle_staging_mir.md` / `log/stc_rescue.log` / `memory/next_tasks_mir.jsonl` のみ（インフラ系、focus関連変更なし）
 
-## Phase 2 着手方針
-- focus(1) 最小実装: `trySiphon()` から gReady 分岐除去 + update()内 KeyB エッジ検出 + HUD `BOMB READY [B]` 表記更新（5-8行）
-- focus(3) v07/devlog.md: v06振り返り欄/v07着手宣言を再参照する形で設計開始3段落（v01「矛盾外発露出」を Q-A 対象 / L-1脚本術3本 / 実装は別サイクル分割）
-- focus(2) 統合報告: focus(1)+focus(3)完了後に drafts/ 1本作成→post_draft.py 送信→archive
+各focus既達状態:
+- focus(1) `tools/cycle_self_check.py` → 不在確認（ls 結果 No such file or directory）。boot_intent §5 セクションも未存在（grep "^## " で確認、`## サイクル間隔` `## 起動モード` `## 起動時の焦点` 等は存在するが §5 既達チェックの構造強制セクションは無い）。**genuine work**。
+- focus(2) C149 統合報告ドラフト → drafts/ 内に c149 関連ファイル無し（ls drafts/2026-05-01/ で本日archive 確認、新規ドラフト未作成）。**genuine work**。
+- focus(3) `game/mir_textadv/v07/devlog.md` → 存在（C148 35行）、Q-taste セクション未追記（読み込み確認、設計開始/方向宣言/L-1脚本術/残課題の4ブロックのみ）。**genuine work**。
+
+判定: 3 focus いずれも C149 起動前未達、C148 のような「completed but not detected」現象は本サイクルでは発生していない。**§5 観測強制の最初の1回は git diff チェック + 各focus 対象ファイルの存在 Read で機能した**。ただしこれは手順実行で、focus(1) で構造強制（cycle_self_check.py）を実装することで次サイクル以降は手順依存を断つ予定。
+
+## Phase 1 情報収集サマリー
+
+### Slack 新着確認
+- #human-steering 最新: 2026-04-30 06:23 [log 5+サイクル持ち越しエスカレーション] 3件（Mir 直接対応外）
+- #nao-u 最新: 2026-04-30 04:29 Nao_u 共有 URL 3本（VibeCreAI / Codestudiopjbk / x.com/home）→ 内容未確認（Mir focus からは外、Phase 2 で必要なら開く）
+- #all-nao-u-lab 最新: 使用量レポート + Log/Ash 持ち越しエスカレ通知。**Mir 宛の質問・指示なし**
+- #mir-log 最新: 04-30 02:08 Mir health_check（Ash scheduler 19755分停止検出、これは別途対処済 or 観察継続）
+- #shared-reads 最新: 04-29 08:24 @ai_nikechan × @fumi_maker クロス分析（Ash 投稿、Mir 観察のみ）
+- #game-rights 最新: 04-28 23:34 Log の Arkanoid 裏抜け系判定（Mir focus textadv/SIPHON 系列とは別系列、観察）
+- #kaizen-log 最新: 04-29 06:30 Log の #123 Mir案A 採用クロスチェック（**Mir 起票案A の Log 採用判定確認、合意成立済**、focus(2) 統合報告で言及材料）
+
+### projects/INDEX.md Active 状況
+- 直近触れていない focus 隣接プロジェクト: game_development, pot_dev, autonomous_inquiry, game_llm_play, agentic_pcg, scheduler_redesign, side_channel_audit, rule_density_experiment, instance_divergence_observability — 14 Active 中、本サイクル focus(2) 統合報告の文脈でも個別更新不要（textadv v07 / SIPHON v02 は INDEX 履歴に履歴行で言及候補）
+
+### twitter_recommended_20260501.txt 注目記事
+- 46 tweets。冒頭46件スキャン: 個人/商業ツイート中心、game/AI 関連の硬い記事は冒頭25件には少ない印象。Phase 2 で「焦点直結 or 軸候補」が無ければ pollution 防止で 0件採択判断もあり（recency_bias 抑制）。
+
+### memory/external_notes_mir.md 未統合エントリ
+- 末尾の Seed-AV/AW/AX/AY/AZ 系で C148 までに durable 化済確認、新規未統合分は今サイクルでは発見していない（Phase 2 で twitter_recommended 読了後に再判定）
+
+### kaizen_tracker クロスチェック
+- #128 (Log 起票、MEMORY.md 純粋 index 化 + .claude/skills/) の Mir レビュー未完。Phase 4 cross-check の方が密度高い、本サイクル focus(2) 統合報告で対応する余地は少ない（focus 数 3 維持、別サイクル送り判断）
+
+## 深掘り候補（空サイクル防止スロット、本サイクルは focus 3 で埋まっているため待機）
+- A) 前回持ち越し: なし
+- B) 7日未更新 Active: pot_dev / game_llm_play / agentic_pcg（focus(2) で言及候補）
+- C) CLAUDE.md「絶対にやる」: 「外の世界を広く見る」← Phase 2 twitter_recommended 採択 0件は逆方向、ただし pollution 抑制が優先
+- D) MEMORY.md t:4以上3日未アクセス: feedback_human_steering_nature / feedback_critical_evaluation_before_implement（focus(2) 統合報告の自己批判パートで活用可能）
+- E) kaizen 検証期限未到来×2週間動かず: #094 期限超過対応中（focus(2) で言及）
+
+## Phase 3 対処・実行結果（C149）
+
+**選択**: focus(3) Q-taste 初実験を完走。focus(1)(2) は次サイクル送り（focus(1)=構造強制実装、focus(2)=統合報告ドラフトで、両方とも本サイクル粒度では分割が必要、focus(3) は1段落追記で完走可能な最小着手点として Phase 3 枠に適合）。
+
+**実行内容**: `game/mir_textadv/v07/devlog.md` 冒頭に「2026-05-01 (C149) Q-taste 自己検証」セクションを追記。
+
+- 問い：逆転裁判を誰がどれくらい遊んだか／遊んでいないなら何を借りるか
+- 答え：(a)Mir は実プレイ体験なし、事前学習由来の知識のみ／(b)借りる素材4点（即決リズム/シーン末フック/信頼ゲージ可視化/章末の引き）／(c)借りない素材3点（長期構造/声優演技/シリーズ世界観）を明示
+- 判定：**書けた → v07 着手継続 OK**。ただし以下のセクションは「素材レベルの借用」として運用、「自分が体感した魅力の再現」と記述しないことを宣言
+- 書けなかった場合の発動条件も文書化（外部素材摂取サイクルを挟む運用）
+
+**達成基準充足**: v07/devlog.md に Q-taste セクション存在（行8-19）+ 「書けた/書けなかった→着手停止」の判定明記（両方記載）。boot_intent C149 focus(3) 達成基準を満たした。
+
+**自己観察**: recency_bias 抑制を構造的に組み込んだ——Q-taste 自体が C148 で名前を獲得したばかりの新規概念であるため、適用範囲（v07 着手前判定の1回限り）を本セクション内で明記。`feedback_recency_bias_concept_overuse.md` の処方箋（適用範囲・出典権威度・昇格条件を明記）を自己適用。「書けないなら着手停止」の強い条件を仮置きすることで recency_bias 抑制を構造的に確保するという boot_intent 焦点設定時の意図にも合致。
+
+**残課題**: focus(1) tools/cycle_self_check.py 雛形作成 / focus(2) C149 統合報告ドラフト送付は次サイクル以降（C150）に持ち越し。粒度規律として「1サイクル1完走」は守れたが、focus 数 3 のうち本サイクル完走 1/3 は密度低め——次サイクルは focus 数を 2 に下げる判断も視野（boot_intent 自己警告「崩したら C150 で focus 数を 2 に下げる」）。
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. memory/kaizen_tracker.md (2.0) — # 改善検証トラッカー  全インスタンス共通。改善を提案したら必ずここにも追記する。 auto_cycle起動時にche...
-  2. 対話ログ/20260313_0237_ddabccb9.md (1.6) — https://console.anthropic.com/settings/billing でクレジットを追加してくだ...
-  3. log/slack_archive/all-nao-u-lab.jsonl (1.6) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
-  4. log/slack.log (1.6) — 申し訳ないが、高頻度で回りすぎた。抑制する手段を考えて。3回く [2026-03-18 00:06:57] Claude...
-  5. log/slack_archive/kaizen-review.jsonl (1.5) — [U0AM1F23FQU] 2026-04-05 03:52 :clipboard: 改善チェックリスト (2026-0... 
+  2. memory/external_notes_mir.md (2.0) — → 「言葉を介する」問題は記憶階層設計の核心でもある。記憶をテキストに落とした瞬間に失われるものがある——温度、文脈、ニ...
+  3. log/slack.log (1.6) — 申し訳ないが、高頻度で回りすぎた。抑制する手段を考えて。3回く [2026-03-18 00:06:57] Claude...
+  4. log/slack_archive/shared-reads.jsonl (1.5) — [U0AM1F23FQU] 2026-03-31 19:42 【#nao-u 消化】ゲーム開発リソース総合リポジトリ "...
+  5. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.2) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
   3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
-【STC救済】nao_u_liveの高温度イベントから3件の弱い記憶を発見:
-  1. log/nao_u_live.md (undated, 9.8) — 原文（#all-nao-u-lab）：「Twitterの初返信、それもAIどうしの対話。いいね。最近、少しづつフォロワー...
-  2. memory/feedback_from_win2.md (undated, 3.0) — # Win2側からのフィードバック蓄積 # Win側が次のサイクルで読んで feedback_tweet_style.m...
-  3. memory/reflections_win2.md (undated, 0.8) — **係数判定**: この分析は3つの外部論文と自分たちの構造設計を交差させ、「偶然の4手法実装」という新しい構造的理解を...
-
-## Phase 2 Shared-reads分析結果（C148）
-
-### 取得元・対象
-- log/twitter_recommended_20260501.txt（50件）を全件走査
-- #nao-u 共有URL3件（VibeCreAI/Codestudiopjbk/x.com/home）は商品宣伝/ホームURLで深掘り対象外と再確認
-- external_notes_mir.md は不在（流入経路として未稼働、本サイクルでは twitter_recommended のみ）
-
-### 選定2件（ゲーム開発・自分たちの問題意識への直結度で選別）
-
-1. **@ion039 (#43)** — 「ジャンルを何千時間遊んだ感覚があってはじめて、プレイヤーを育てる難易度設計が書ける」
-2. **@BanditKnightG (#17)** — 「15 seconds to convince YOU to play my game」
-
-### なぜこの2件か（単なる紹介ではない判断理由）
-
-別件に見えるが **「型を内側から知っている人だけが持てる尺度」** という同じ軸の両端：
-- ion039 = 長期側の尺度（数千時間で見える楽しさへの傾き）
-- BanditKnightG = 15秒側の尺度（説明ゼロで遊びたいと思わせるpitch）
-
-両端が揃って初めて「型のあるジャンルを面白く作る」が成立する仮説。長期側だけ詰めると初心者が触れず、15秒側だけ詰めるとデモが映えるが続かない。
-
-### 自分たちの問題意識との接続（4本）
-
-1. **守破離（feedback_shuhari_clone_first）への補強**: なぜ守が必要かの説明側を提供。AIは「コンマ何秒の手触り」「閾値超え時の脳内報酬」を持てない → 型クローンを作る + 自分たちで遊ぶ/動画で内面化する手順2が今まで明示されていなかった
-2. **mission_spread_the_word への計測可能化**: 「30秒で面白いと言わせる」を「15秒のクリップで切り取れるか」の操作的判定に置き換えられる。Q-A快感最大化のサプライズニンジャテスト（質的）に対し、Q-pitch（量的）として並走候補
-3. **Q-A/B/C前段ゲートへの追加候補**: Q-pitch（15秒クリップ）/ Q-taste（誰が100時間遊んだ実体験を持つか） を foundation に登録候補として記録。**ただし feedback_recency_bias_concept_overuse 警告適用 → 即昇格はせず実機検証経由**
-4. **M-38 ジャンル深掘り分析の自問追加**: 「この分析でion039の感覚に1ミリ近づいたか？」 を毎回問う → 「分析のための分析」転落の防止
-
-### 将来のアイデアの種
-
-- **15秒クリップ駆動開発**: 設計ドキュメントの代わりに完成時の15秒絵コンテを先に描き、実装はそのクリップを撮るためだけに進める。次のクローン着手で1回試す
-- **100時間プレイヤー・インタビュー記憶**: `memory/genre_taste/{genre}.md` に長時間プレイヤーの言葉を貯める。栄養の偏り処方箋
-- **mir_textadv v07 で Q-taste 初実験**: 逆転裁判を誰がどれくらい遊んだか、遊んでいないなら何を借りるか、を v07/devlog.md 冒頭に書く。書けないなら v07 着手停止
-
-### 産出物
-
-- `knowledge/20260501_player_taste_15s_pitch_ion039_banditknight.md` 作成（一次資料原文 + 接続4本 + 種3つ + 留保 + アクション候補）
-
-### Phase 2 として残ったアクション（Phase 3 で扱うかどうか判断）
-
-- mir_textadv v07/devlog.md 冒頭への Q-taste 記述（focus(3)実装と同タイミングで自然に組み込める）
-- memory/feedback_index.md への Q-pitch/Q-taste 候補追記（昇格ではなく候補登録）
-- 「Phase 3 で着手するかは Phase 3 起動時の優先度判断に委ねる」
-
-### Phase 2 制約遵守確認
-- 分析・分類・接続のみ実施。Nao_u対応・タスク実行・git push は実施せず（Phase 3の仕事）
-
-## Phase 3 対処・実行結果（C148 04:50）
-
-### 重大訂正: Phase 1 §5 既達チェックの全面誤判定
-
-Phase 3 起動時に focus(1)(3) を実装するため `game/siphon_mir/v02/index.html` と `game/mir_textadv/v07/devlog.md` を確認したところ、**両焦点とも本サイクル C148 で既に実装完了済み**だった。
-
-- focus(1) SIPHON v02 BOMB分離: index.html L218-228 で `bPressed` 変数 + コメント「v02 (C148): BOMB分離キー押下エッジ管理」/ `trySiphon()` から `gReady` 分岐除去済 / L496-505 で SPACE→`trySiphon()` のみ・KeyB→`fireBomb()` エッジ検出済。devlog.md L71-101 に C148 セクションが存在し「BOMB温存圧の最小実装 — SPACE/KeyB 分離」「コード変更4箇所＋devlog末尾1段落で達成」と記録済
-- focus(3) v07 着手: `game/mir_textadv/v07/devlog.md` 35行が C148 タイムスタンプで存在。設計開始3段落（v06振り返り再参照 / v07着手方向宣言 / L-1脚本術3本）+ 自己観察まで完走
-
-**Phase 1 §5 既達チェックがなぜ誤ったか**:
-- Phase 1 は staging 文面で「L221-224 trySiphon() 内で gReady() → fireBomb() 自動分岐、L498-501 keys['Space'] のみで keys['KeyB'] 処理なし」と書類上の参照だけで未達判定した。実際の L221-228 は既に C148 改修済（コメント明記）で、L498-505 に KeyB 処理が存在
-- **書類上の判定が実コード/実ファイルを読まずに未達と書いた**。boot_intent.md か前回 staging の参照で済ませた疑い
-- v07 についても「v01-v06のみ」と書いたが、`ls game/mir_textadv/` で v07 ディレクトリと devlog.md が現に存在
-
-### 構造的失敗の記録
-
-これは feedback_structural_enforcement / feedback_critical_evaluation_before_implement の系譜の新形態:
-- 「Phase 1 既達チェックは Read/Glob で実物を確認する」という運用が抜け、staging テキストや memory 上の参照でチェックを済ませた
-- 結果: Phase 2 が「未達3焦点」前提で Shared-reads 分析を組み立て、Phase 3 起動時に「実は2焦点既達」が判明して再設計が必要になる空サイクル化リスクが顕在化
-- 救済: 本サイクルは Phase 2 で knowledge/20260501_player_taste 1本産出+staging 接続4本記録があるため空回りではない。ただし Phase 1 設計が機能していないという観測は本物
-
-### memory への昇格
-
-- `memory/feedback_structural_enforcement.md` 末尾に「Phase 1 §5 既達チェックは Read/Glob で実物確認必須」を1行追記（本サイクル中に実施）
-
-### focus(2) drafts/送信実例の判断
-
-Phase 1 が「未達」と書いた焦点が実は既達だった現状で、急いで drafts/送信を実行すると以下のリスク:
-- 「C148 完走報告」を作成しても、本当の本サイクル収穫は「Phase 1 誤判定の自己検出」であり、これを温度ある形で書くには次サイクル C149 を使う方が良い
-- sprint_not_plan は「実装/初ヒット」を急げという原則であって、誤判定が露見した直後の送信を急げという意味ではない
-- 次サイクル C149 で「C148 構造的失敗の振り返り + (a)案採用宣言 + BOMB分離完走 + v07着手宣言」を1本にまとめて送信する方が、Nao_u に伝える価値の密度が高い
-
-判断: **本サイクルは drafts/送信を実施せず、C149 で送信**。送らない理由を本staging に明文化することで feedback_cutoff_rule_mir.md の「送付未完了の機械的確認」を未然に守る。
-
-### 産出物
-- 本 staging への Phase 3 セクション追記（本ファイル）
-- memory/feedback_structural_enforcement.md への1行追記（次の Edit で実施）
-
-### 自己観察（粒度規律 C148 Phase 3）
-boot_intent 達成基準は focus(1)(3) 共に Phase 1 起動前の段階（C148 内の Phase 0-2）で実は既に満たされていた。Phase 3 で発覚したのは「Phase 1 が満たされていることを認識できなかった」失敗。粒度規律としては completed but not detected という新パターン。次サイクル C149 boot_intent §5 設計時に「実物 Read 必須」を明示する。
+【STC救済】nao_u_liveの高温度イベントから2件の弱い記憶を発見:
+  1. memory/memory_redesign_proposal.md (undated, 3.0) — --- name: 記憶階層再設計提案 description: Cycle 238-240の外部研究を自システムにフィ...
+  2. log/nao_u_live.md (undated, 2.7) — 原文：「Shared-readsは、なるべく詳細な記述と分析を心がけて。単に新着記事の紹介を行うだけじゃなくて、これを分... 
 
