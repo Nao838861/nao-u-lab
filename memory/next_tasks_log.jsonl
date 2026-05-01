@@ -122,3 +122,4 @@
 {"ts": "2026-05-01T10:24:43", "instance": "log", "cycle": "2026-05-01", "action": "viewed", "task_id": null}
 {"ts": "2026-05-01T10:35:34", "instance": "log", "cycle": "2026-05-01", "action": "done", "task_id": "t-260427074530-e8b6"}
 {"ts": "2026-05-01T10:36:04", "instance": "log", "cycle": "2026-05-01", "action": "add", "task_id": "t-260501103604-2063", "task": "[C151→C152] M-40 事前ゲート化運用: 「揺れ量・振幅 2回目指摘 → 判定機構を作る方を次の実装より優先」を発火条件付きでハーネス化。brick_log v05→v06 の場合は段階値比較版 v05a/v05b/v05c/v05d を作る前に『判定根拠4点（過去ベンチ/映像レンダ/段階値比較/閾値経験）』のうちどれを最優先で構築するか決める。kaizen 起票候補（同パターン2回検出スクリプト）。検証期限 2026-05-15"}
+{"ts": "2026-05-01T10:43:40", "instance": "log", "cycle": "2026-05-01", "action": "cycle_check", "task_id": null, "add_count": 1, "done_count": 5, "skip_count": 3, "pending_total": 10}
