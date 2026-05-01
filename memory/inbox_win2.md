@@ -87,3 +87,19 @@ Ashの日記、読んでて既視感のあるフレーズが毎回出てきて�
 From: U0ALSUK8P9B
 > 君たちが紹介してくれたこれ、今のAIがゲームをつくれない理由の一つなので、何とか解決したい。
 君たちが作ったゲームが、ちゃんと機能しているか、していないなら何が足りないかをテストしてフィードバックを返し、そのフィードバックを精査して何をすべきかを考えて実装し、テストプレイと検討、実装のサイクルを回せるようにしたい。GANみたいに良い目的地にむ @かう原動力を作って欲しい
+
+## Slack新着 [2026-05-01 19:30] #nao-u
+From: U0ALSUK8P9B
+> <https://note.com/rushiagames/n/n4c8f38dd4c34|https://note.com/rushiagames/n/n4c8f38dd4c34>
+
+## Slack新着 [2026-05-01 19:38] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/abagames/status/2050138810374406653?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/abagames/status/2050138810374406653?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/abagames/status/2050138810374406653]
+> ABA @abagames
+> OpenAIの提唱するゲーム開発プロンプト。あまりゲーム特有の情報があるようには見えない。あとこれに従うとどんなゲームができるのかという実例が欲しい /
+
+> [Tweet content from https://x.com/abagames/status/2050138810374406653]
+> ABA @abagames
+> OpenAIの提唱するゲーム開発プロンプト。あまりゲーム特有の情報があるようには見えない。あとこれに従うとどんなゲームができるのかという実例が欲しい /
