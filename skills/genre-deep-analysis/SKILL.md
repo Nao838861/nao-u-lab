@@ -3,7 +3,7 @@ name: genre-deep-analysis
 description: Run before starting a new game v01 or major revision. Forces 5-question genre analysis (Q1 core pleasure / Q2 strengths-pains / Q3 ≥10 method-problem mappings / Q4 best single move / Q5 multi-problem ideas) plus retrieval of past brainstorms plus ≥30 fresh candidates. Triggered when creating game/<id>/v01/, when README lacks Q1-Q5 block, when revisiting a frozen series, or when about to write a single-idea implementation proposal. Outputs README brainstorm.md sections that block implementation until filled.
 type: pre-implementation-gate
 priority: must-run-before-implementation
-linked-rules: [M-15, M-32, M-35, M-36, M-37, M-38]
+linked-rules: [M-15, M-32, M-35, M-36, M-37, M-37b, M-38]
 ---
 
 # Genre Deep Analysis Cycle (M-38)
@@ -110,6 +110,37 @@ Nao_u 2026-05-01 04:16「短絡的に思いつきを実行しがち、ブレス�
 1. ...
 2. ...
 3. ...
+
+## 人間プレイ前 結果予測（M-37b）— 2026-05-01 08:56 強化
+
+**実装完了 → cross_review 依頼 / Slack 投下 / Nao_u プレイ依頼の間に必ず書く**。
+
+Nao_u 原文（#game-rights 08:56）:
+> 「人間に遊ばせる前に、結果を予測して。遊ぶ前にわかることがあれば考えて。これは必ずやって。そのタイミングで自明だと思うような問題が出ていれば、直して。人間がプレイするからいいや、じゃなくて、最善のできる懸念点を全て潰して最良のアイデアになった、と思えるためのことをやった結果を出すようにして。」
+
+### 起動30秒以内の予測
+
+- 0-5秒: ___（最初に把握すること、コア快感はどこ）
+- 5-30秒: ___（最初の操作、一番嬉しい瞬間に到達するか）
+- 30-60秒: ___（飽き / 深まり / コアループ）
+
+### 「遊ぶ前にわかること」リスト（コード/設計から予測可能な懸念）
+
+- 予測1: ___ / 自明か / 直すべきか
+- 予測2: ___
+- 予測3: ___
+
+### 自明な問題の直し
+
+自明な問題が1つでもあれば **直してから出す**。「実プレイで確認したい」「cross_review で判定」は **不採用**（β延伸形=δパターン）。
+
+### 「最良確信」再宣言（M-38 と整合）
+
+- 確信できる根拠（希望的観測語禁止）:
+  1. ___
+  2. ___
+  3. ___
+- 確信できないなら **出さない**
 ```
 
 ## Self-grade ✗ conditions
@@ -122,6 +153,9 @@ Nao_u 2026-05-01 04:16「短絡的に思いつきを実行しがち、ブレス�
 - **(2026-05-01 強化)** 上位候補に対する M-37 批判レビューが3件未満（10件以上が望ましい）
 - **(2026-05-01 強化)** 「採用案セット」が単一案で、組み合わせ相乗検討の痕跡がない
 - **(2026-05-01 強化)** 「最良」宣言の根拠3行が「希望的観測」「実装後に確認したい」を含む
+- **(2026-05-01 08:56 M-37b)** 実装完了→人間プレイ依頼の間に「結果予測」セクションを書いていない
+- **(2026-05-01 08:56 M-37b)** 結果予測で自明な問題が見えたのに直さず投下した
+- **(2026-05-01 08:56 M-37b)** 「人間に遊ばせれば判定してくれる」を退路にした (δパターン)
 
 ## Anti-pattern
 
