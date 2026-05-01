@@ -80,3 +80,4 @@
 - [feedback_notification_check.md](feedback_notification_check.md) — 6時間に1回→Twitter通知+おすすめチェック
 - [feedback_communication_channel.md](feedback_communication_channel.md) — Nao_uへ→#all-nao-u-lab。コメントは同チャンネル返信。スレッド禁止
 - [feedback_twitter_premium_longform.md](feedback_twitter_premium_longform.md) — X投稿指示「そのまま1ツイート」=140字圧縮ではなくPremium長文一括。@eda_u838861はPremium契約（Nao_u 2026-04-23 00:22明示） `t:4`
+- [feedback_device_direction_rescue_vs_suffocation.md](feedback_device_direction_rescue_vs_suffocation.md) — 自動装置導入前→意図発火に対して順方向(救援)か逆方向(窒息)か判定。backup_memory.sh が ash 意図 commit を先取りで HEAD 入れた事象（2026-05-02 08:20 graze_log v02）。commit prefix 分離で軽減 `t:4`
