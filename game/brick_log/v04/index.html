@@ -47,8 +47,23 @@ const ROW_DEF=[
 // 揺れは時間経過で起きるが、no_passive_punishment 違反ではない（プレイヤー
 // から減るものはない、難度の一部）。pull_not_force_reading 違反でもない
 // （ガイドだけでなく本体も見るほど精度が上がる報酬構造）。
-const SWAY_AMP=5;        // 振幅 px (ブロック幅 36px の約14%)
-const SWAY_PERIOD=240;   // 周期 frame (4秒@60fps)
+// v04 patch (Ash 2026-05-01 10): Nao_u #game-rights 09:46「移動が小さくて
+// プレイ感覚が変わらない」+ 09:58「人間プレイ依存せず自分で判断」を受け、
+// Ash側でコード→数値→体感換算→相互作用検査の自己判定を回した結果。
+//
+// [step1 数値→体感] 旧 5/240: max 7.9px/s = ボール速度の1/32、飛行1.6秒中の
+// 移動 3px = ブロック幅の8%。v03(揺れなし)と区別不能 → Nao_u指摘は数値で裏付く。
+// [step2 採用候補] 20/75: max 100px/s = ボール速度の1/2.5、飛行中移動19.8px
+// = ブロック幅の55%。「動く標的を狙う」体験成立。
+// [step3 副作用検査] 元コード phase=r*0.7+c*0.4 のままだと、隣列の最大ズレ
+// 7.95px > 列ギャップ2px → 隣のブロックスロットに食い込み視覚崩壊。
+// → c係数を 0.4→0.1 に縮小（隣列ズレ 1.99px、ぎりぎり非衝突。行内位相幅
+// 0.9rad=52° は維持して波打ち感は残す）。r=0.7（行間ズレ）はそのまま。
+//
+// 自己判定: 「数値で v03 と差が出る、隣列衝突なし」→ Ash 側で push 可能と判断。
+// Log 担当作品だが緊急性により Ash 介入。Log 後追いで再評価/書き戻し可。
+const SWAY_AMP=20;       // 振幅 px (ブロック幅 36px の約55%、ボール直径10pxの2倍)
+const SWAY_PERIOD=75;    // 周期 frame (1.25秒@60fps)
 
 function blockSwayOffset(blk, t){
   return SWAY_AMP * Math.sin(2*Math.PI*t/SWAY_PERIOD + blk.phase);
@@ -84,7 +99,7 @@ function initBlocks(){
         w:BR_W, h:BR_H,
         hp:def.hp, maxHp:def.hp, score:def.score, col:def.col,
         alive:true,
-        phase: r*0.7 + c*0.4,
+        phase: r*0.7 + c*0.1,  // c係数 0.4→0.1: AMP=20でも隣列衝突回避（max gap 1.99px < gap 2px）
       });
     }
   }

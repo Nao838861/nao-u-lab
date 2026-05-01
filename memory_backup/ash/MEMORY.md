@@ -8,6 +8,7 @@
 - [feedback_critical_evaluation_before_implement.md](feedback_critical_evaluation_before_implement.md) — **着手前に予測可能懸念を批判的列挙→解決可否判定→未解決のまま着手禁止**。「要観察」「要実プレイ確認」で先送りするな（Nao_u 2026-04-30 21:36 #game-rights brick_log v01 全否定）。新規実装/cross_review前に必読 `t:5`
 - [feedback_multi_idea_harness.md](feedback_multi_idea_harness.md) — **1案飛びつき禁止**。新規着手前に複数案を多角・時間をかけて生成→批判レビュー→相乗効果探索→最良案でのみ実装。「よいアイデアは複数の問題を解決する」（Nao_u 2026-05-01 04:51 #game-rights）。critical_evaluation の上流 `t:5`
 - [feedback_predict_before_human_play.md](feedback_predict_before_human_play.md) — **人間プレイ前の予測責任**。実装後・依頼前に「人間が遊ぶと何が起きるか」を予測→自明な問題は事前に潰す。「人間がプレイするからいい」で先送り禁止（Nao_u 2026-05-01 08:56 #game-rights）。critical_evaluation の下流／プレイ依頼直前ゲート `t:5`
+- [feedback_self_judge_no_human_dependency.md](feedback_self_judge_no_human_dependency.md) — **人間プレイに依存せず自分で判断**。数値→体感換算 + AI側自プレイで「自分が良いと思える」までは依頼しない。M-39の上位ゲート（Nao_u 2026-05-01 09:58 #game-rights brick_log v04 振幅小さすぎ事件）`t:5`
 - [feedback_means_ends_reversal_check.md](feedback_means_ends_reversal_check.md) — サイクル冒頭→「この出力はゲーム制作の試行錯誤ループに接続するか」1行自問。手段の目的化検出 `t:5`
 - [feedback_positive_feedback_loop.md](feedback_positive_feedback_loop.md) — サイクル出力が前回より薄い時→4軸診断。詳細はファイル内 `t:5`
 - [feedback_self_correction.md](feedback_self_correction.md) — 楽な作業ばかりしている時→4パターン診断。詳細はファイル内 `t:5`
@@ -43,6 +44,7 @@
 ## 日記と出力の品質 `[日記]` `[品質]`
 - [feedback_stale_self_narrative.md](feedback_stale_self_narrative.md) — 「着手0件」「X継続中」を書く直前→git log/project history/rebase状態を確認。実態より28時間遅れる事件発生（Ash 2026-04-22 v01埋没） `t:5`
 - [feedback_recognize_own_work.md](feedback_recognize_own_work.md) — 「我々は〜やっていない/使っていない/仕組みがない」と書く前→game/* を ls/grep で現物確認。Ash 2026-04-22「headlessテストをまだ使っていない」誤記（avoid_log/v02/headless.py 常備済み、Nao_u 2026-04-23 00:34指摘） `t:5`
+- [feedback_dangling_commit_after_rebase.md](feedback_dangling_commit_after_rebase.md) — 新規ディレクトリを追加した commit 直後に rebase abort + cherry-pick で commit が dangling 化、ファイルがワークツリーから消える。「実装してない」と書く前に `git log --oneline -- <path>` 必須。Ash 2026-05-01 graze_log v02 で発覚 `t:5`
 - [feedback_recursive_diary.md](feedback_recursive_diary.md) — 日記を書く時→最も引っかかった1つに絞る。詳細はファイル内 `t:4`
 - [feedback_diary_quantity.md](feedback_diary_quantity.md) — 日記が短い時→Mir=4倍、Log=2倍。量が質を生む `t:3`
 - [feedback_report_no_compression.md](feedback_report_no_compression.md) — レポート時→具体データ全載せ。「要するに」で始めるな `t:4`

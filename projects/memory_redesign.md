@@ -128,6 +128,7 @@ Nao_uの指摘: 集めた情報が流れて消えるだけになっている。�
 - [ ] **dialogue_*.mdの原文参照性改善**（2026-03-28 Nao_uの指摘）: 「原文保存」と言いつつ全文ではない。実態は編集・セクション化・統合されたまとめ。原文は対話ログ/(3/12〜)とslack_archive/(3/17〜)に残っているが、dialogue_*.mdから原文へのポインタが欠落。改善案: ①各dialogue_*.mdに元セッションの対話ログ/ファイル名を明記 ②「まとめ」であることを明示 ③L3ファイルに背景・経緯を丁寧に書く習慣化
   - **外部エビデンス: VCC (lllyasviel, 2026-04)**（2026-04-02 Log統合）: 「全部残して、必要な時に必要なビューで見る」の完全な実装。コンパイラアーキテクチャ（Lexer→Parser→IR→Lowering→Emitter）で原文を一切変更せず3種のビューを生成。行番号がビュー間で不変=クロスポインタが機械的に整合。我々のdialogue_*.mdは「手動コンパイル」の産物であり、ポインタの整合は保証されていない。VCCは会話ログ専用だが、設計思想「immutable source + generated views」は我々の記憶全体に適用可能な原則
   - **接続: Zep Bitemporal Knowledge Graph (arxiv 2501.13956)**（ext_log: #shared-reads経由）: 全事実にT（出来事の時間）とT'（知った時間）の2軸タイムスタンプ。我々のexternal_notes_log.mdにはT'（収集日）はあるがT''（統合日/最終使用日）がない。87エントリ集めて統合が少ないことに気づけなかった構造的原因
+    - **実装者視点の追加裏付け（2026-05-01 Ash統合）**: po3rin/中村浩夢「TKGで作る！時間変化するナレッジを扱うAI Agent」(speakerdeck, 2025-10-30) — Graphiti/Zep PoC段階で「まだ動いていない」と公言。日本語特有の失敗モード=主語省略 + エンティティ重複が我々の memory/ に直撃する。詳細: knowledge/20260501_po3rin_temporal_knowledge_graph_jp_failure_modes.md（3層対応マッピング: log/* = episode / beliefs+lessons+concept = semantic / MEMORY.md = community）。**含意**: 自動化導入時は entity_resolution / 主語補完が最初に壊れる箇所のリストを事前に作る
 - [ ] **Slackベースの記憶再構築の検討**（2026-03-28 Nao_uの提案）: Slack全文が残っていればそこから再構築可能。3/17以降はslack_archive/が信頼できる原文層。再インデクスや追加メタデータ付与の具体手順は未定
 - [ ] beliefs.mdのGC（アーカイブ判定）の定期自動実行。restoration_triggerの運用検証
 - [x] 第3層の発見性改善: 「引きに行くきっかけ」をどう作るか → L-1ハーネスプライミングとして初期実装済み（2026-03-28 Log）。検証中
