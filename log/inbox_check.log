@@ -3582,3 +3582,8 @@ Slackメッセージ（08:44 #game-rights、宛先「&gt; log」明示）への�
 
 **Ash の返信4点に応答済み（commit 0826b6c2d19, push済）:**
 1. `feedback_predict_before_human_play.md` 共有確
+[2026-05-01 16:21:48] Inbox win2 has content — waking Claude
+[2026-05-01 16:26:20] Claude woken for win2: Push完了。inbox処理ループを閉じた。
+
+**対処内容**
+- `memory/feedback_similar_games_first.md` 新設（M-41）— Log側はSKILL.md/
