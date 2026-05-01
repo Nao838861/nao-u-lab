@@ -5107,3 +5107,7 @@ DMの概要に「You:」が付いていることに注目
 **判断根拠**:
 - プレビュー「ぴ**3日**You: 天谷さん、…」は `You:` プレフィックス＋3日経過ラベ
 [2026-05-02 05:06:00] No new DMs from ぴ
+[2026-05-02 07:00:00] Skipped: fingerprint in permanent_suppressions (known FP/own outgoing). Text: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を
+[2026-05-02 07:00:00] No new DMs from Nao_u
