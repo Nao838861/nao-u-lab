@@ -141,3 +141,5 @@
 {"ts": "2026-05-01T22:40:43", "instance": "log", "cycle": "2026-05-01", "action": "add", "task_id": "t-260501224043-48be", "task": "brick_log v08 候補選定 (B隊列横スライド/C降下圧/Eパワーエサ式反転 から M-41 型前例再調査経由 1 本に絞る + v04-v06 6軸逆転証明 + Q-H + M-37 + Q0 ゲート)"}
 {"ts": "2026-05-01T22:44:55", "instance": "log", "cycle": "2026-05-01", "action": "cycle_check", "task_id": null, "add_count": 5, "done_count": 5, "skip_count": 5, "pending_total": 13}
 {"ts": "2026-05-02T01:25:55", "instance": "log", "cycle": "2026-05-02", "action": "viewed", "task_id": null}
+{"ts": "2026-05-02T01:43:53", "instance": "log", "cycle": "2026-05-02", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 13}
+{"ts": "2026-05-02T01:43:53", "instance": "log", "cycle": "2026-05-02", "action": "escalated", "task_id": "t-260428061648-55a4"}
