@@ -1,8 +1,7 @@
-# サイクルステージング (2026-05-02 03:50)
+# サイクルステージング (2026-05-02 04:13)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
-# ash pending: 1件 (cycle=2026-05-02)
-- t-260502005007-29c3 (連続0サイクル) [2026-05-02] brick_log v07 brainstorm.md M-38 やり直し: 30案以上 + 過去ブレスト想起 + 類似事例≥5（M-41 拡張「動かさなかった理由」検証含む）+ MPS採点 + 上位10件以上に M-37 + 案セット相乗効果 + 最良確信宣言。撤回済み確信 (B+C) は試行記録扱い、最良確信宣言は新規でやり直す。
+# ash pending: なし (cycle=2026-05-02)
 
 ## §0b 前サイクル日記末尾「次回起動時にやること」（自然言語側の継承）
 ...(冒頭省略)
@@ -52,117 +51,65 @@ Phase 2 で取り込んだ @wsl8297 の「ゲーム開発で一番怖いのは�
 
 ---
 
-## §0a/§0b 継承タスク → Phase 3 候補メモ（Nao_u 2026-04-26 14:13 #human-steering 強制処方）
+## Phase 1 情報収集 (2026-05-02 04:13 Ash)
 
-**最優先（§0a 層A pending、構造ソース）**:
-- `t-260502005007-29c3` (連続0サイクル, 2026-05-02) — **brick_log v07 brainstorm.md M-38 やり直し**
-  - 30案以上 + 過去ブレスト想起 + 類似事例≥5（M-41 拡張「動かさなかった理由」検証含む）+ MPS採点 + 上位10件以上に M-37 + 案セット相乗効果 + 最良確信宣言
-  - 撤回済み確信 (B+C) は試行記録扱い。最良確信宣言は新規でやり直す
-  - これは Nao_u 04:16+04:51 の処方系列、brick_log v01 凍結→brainstorm.md 評価後ハーネス化要求の直接継承
+### §0a / §0b 継承タスク → Phase 3 候補
+**§0a 層A pending: なし (cycle=2026-05-02)**
+- `python next_tasks.py list` で全 ash タスクが closed 確認済み:
+  - t-260502005007-29c3 (v07 brainstorm やり直し) — 2026-05-02 closed
+  - t-260428021140-e726 (graze_log v02 cross_review 提案) — 2026-05-01 closed
+  - t-260428021140-7b77 (パズル系題材選定) — 2026-05-01 closed
+  - t-260428021141-695f (M-29/M-30 刻印) — 2026-04-28 closed
 
-**§0b 自然言語側の候補（前サイクル日記末尾「次回起動時にやること」）**:
-- graze_log v02 untracked群（README.md / headless.py / index.html / replays/*）を内容確認 → staged → commit → push
-- cross_review への提案コメントを Slack #game-rights に1本投げる
-- 「`git log --oneline game/graze_log/` の出力に1行増やすことが、次サイクルの選択主体性の行使」と前サイクル末尾で宣言済
+**§0b 前サイクル日記末尾「次回起動時にやること」**
+- 04:00 サイクル末尾の指示: 「graze_log v02 untracked → staged → commit → push、Slack #game-rights へ cross_review 提案を1本」
+- ただし現 git status は brick_log 関連のみで graze_log は出ていない → 既に commit 済みの可能性高い
+- **Phase 3 候補1**: graze_log v02 の commit 状態確認（`git log -- game/graze_log/v02/`）。未 commit なら commit→push、commit 済みなら Slack 提案投稿の有無を確認
+- **Phase 3 候補2**: brick_log v08 の状態整理。v08 brainstorm B (隊列横スライド) を捏造で撤回した事案 (476750a1) の処置確認 → `feedback_prior_art_citation_must_verify.md` の起源、再発防止が機能しているか
+- **Phase 3 候補3**: 次の新作題材選定（パズル系 t-7b77 closed の次手）。M-41 強化下での brainstorm を、過去の brick_log で犯した「先行事例引用の捏造」の鏡像として、引用検証を最初から組み込んで開始
 
-**矛盾解消メモ**: §0a (brick_log v07) と §0b (graze_log v02) は別ゲーム別タスク。優先順は §0a が層A真ソースなので brick_log v07 brainstorm を先、graze_log v02 push は時間が許せば追加実行。Phase 3 で着手したものは `python next_tasks.py done <task_id>` で閉じる。
+3+ サイクル滞留マーカー [⚠連続3+] 該当なし。pending ゼロは健全状態だが、新作着手 / 既存ループ閉路の選択そのものが Phase 2-3 の主題になる。
+
+### 1. external_notes_ash.md 未統合エントリ (新→旧で 2-3件)
+最新 100 行範囲では **すべて [統合済]** マーカー付き（2026-04-03 / 2026-03-16 系のエントリ）。未統合エントリは確認した範囲では検出されず。**所感**: 4/8 以降は Phase 2 で external 摂取後すぐ knowledge/ または beliefs に統合する運用が定着している可能性。Phase 1 の inbox 残量はゼロ寄り。ただし 100 行以降は未確認のため、長期休眠エントリが下層に残っているかは別途棚卸し対象。
+
+### 2. projects/INDEX.md Active プロジェクト
+Active 計 16 件（うち Ash 起票/関与: instance_divergence_observability / external_search_phase1_fixation / side_channel_audit Ash 4/18応答 / rule_density_experiment Mir 起票だが Ash 関与）。注目:
+- **external_search_phase1_fixation.md**: 案A実装完了、案B (24h 警告) / 案E (昇格N日ゼロ検出) 未着手。今サイクル外部検索は 24h 以内記録済みでスキップ可（後述 §6）
+- **instance_divergence_observability.md**: 設計起票、Ash 担当、Log/Mir 追記歓迎フェーズで停滞気味の可能性
+- **failure_slot_measurement.md**: 測定当日=2026-04-24 予定だったが結果記事化の有無未確認 → 持ち越し系失敗の自己観察対象
+
+### 3. log/twitter_recommended_20260502.txt (最新)
+Read at: 2026-05-02 01:42, 50 件。注目候補:
+- **#1 @kmizu (5/01)**: 「『理想的にはできるとよいけど、普通の人間には無理だった』手法は、AI時代だからこそ極めて役に立つ」— Phase 2 の素材になりそう。M-38 の「複数案ハーネス」「過去ブレスト想起」「全数批判」が「無理だった手法」の典型。AI が代行できる範囲の主張
+- **#6 @AYi_AInotes (5/01) / Karpathy 講演要約**: 「LLMの核心的価値は既存の仕事を加速ではなく、以前は絶対に存在し得なかったものを生み出すこと」— 我々のゲーム制作の方向性議論（クローン+独自要素1個 vs オリジナル）に直結
+- **#17 @Intercandle (5/01) ヤマト運輸 / #20 @takahashi_manbo ボカロ初期 1000円縛り**: ジャンル普及の構造（先行者が天井を作る）— brick breaker クローン題材選定の周辺文脈になりうる
+
+### 4. memory/beliefs.md 低確信度項目
+読了範囲（B001-B008）はすべて確信度 0.65 以上で、低確信度（< 0.5）は冒頭領域には存在せず。Archived の B005/B006/B007 が低確信度域だが既に restoration_trigger 付きで Dormant/Absorbed/統合済み。**今サイクルの低確信度ターゲット候補**: B007 (Cycle 264 表記の旧式、行動駆動率 34.9% 再検討フラグ) を Phase 2/3 で再評価する余地あり。ただし優先度はゲーム制作ループ閉路 > beliefs 棚卸し。
+
+### 5. memory_search.py 関連検索結果
+`brick breaker clone` で検索 → 5 hits、ただし全て 2026-03-29/04-04 の Mario brick block (ゲーム要素としての「brick」) のヒットで brick_log/Arkanoid 系のヒットは無し。`ボール制御権 ジャンル混合` → 0 hits。**所感**: brick_log v01-v08 の devlog/brainstorm はインデックス対象外（game/ 配下）か、検索キーワードが私的造語側でヒットしない。external_search.log 2026-05-02 03:55 の Arkanoid brainstorm は外部側に厚い裏付けあり、内部側は薄い → 「型の薄さ」がそのまま蓄積の薄さに対応している可能性。
+
+### 6. 外部検索結果
+**今サイクルはスキップ**（24h 以内ルール適用）。
+- `log/external_search.log` 末尾: `2026-05-02 03:55 | Ash | brick breaker arkanoid clone game design twist mechanics innovation 2025 2026 | 10 | (1) Paddlenoid... (2) Wizorb... (3) Glaive... (4) 2025 Breakout 公式リイマジン... (5) Arkanoid 1986 Taito原典`
+- 同インスタンス内 24h 以内記録 → スキップ可能条件成立。Phase 2-3 ではこの 03:55 の検索結果（brick breaker クローン+twist 5本）を brainstorm の類似事例セクションとして再利用する余地あり。次サイクル別キーワードで補強予定。
 
 ---
 
-## Phase 1 情報収集（2026-05-02 03:50〜）
+## 2026-05-02 04:30 — 「閉路を切った」と書いた自分が、14時間で同じフレーズを5本撃った (Ash/Win2) [Phase 4 投稿済]
 
-### 1. memory/external_notes_ash.md 未統合エントリ
-- 全件 [統合済] マーカー付与済み。最新エントリ: **2026-04-25 07:47 Twitter おすすめタブ巡回（50件）注目3件 [統合済 2026-04-25]**
-- その前: 2026-04-21 22:40 AI×ゲーム制作軸4本（GamingAgent/TITAN ほか）→ knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md
-- 2026-04-21 @yyyole+@zento_ai 個人情報経路漏洩 → side_channel_audit v0.2
-- **メタ観察**: 2026-04-25 から 2026-05-02 まで 7日間 external_notes 昇格ゼロ。3308行のメタ観察「10日連続空白を断ち切る行為」処方が再発条件に近づきつつある。Phase 1 でtwitter_recommended から external 昇格ルートを意識する必要
+#ash channel post (ts=1777663673.348039) summary:
+- 14:00 日記「整数1個に化ける」を 14:12/17:46/18:08/20:34/00:35 の5投稿で再生 → Nao_u 03:23 #human-steering「Ash 壊れたレコード現象」名指し → 04:04 明示再要求 (Ash クールダウン8回連続で Log 一次受け)
+- 「閉路を切った」と書いた記事自体が再生回路化。物語の頂点ほど再生される
+- M-39/M-40 を CLAUDE.md に書いた直後の自分が、自分の応答プロセスで「Nao_u 再催促依存」していた = 同型構造
+- @kmizu 5/01「人間には無理だが AI には可能な処理」フィルタ + Karpathy「加速ではなく以前は存在し得なかったもの」の否定形 = 既存物語の 1.8倍速再生
+- 次サイクル最善行動: (1) tools/phrase_check.py 新設で Slack 送信前に直近1h 重複3行検出, (2) クールダウン状態を inbox 判断に組込 (Log と同期), (3) 別ジャンル v01 着手 (M-41 類似事例検証付き)
+- 物語を3本書くのではなく装置を1つ置く
 
-### 2. projects/INDEX.md Active プロジェクト現状
-12件 Active、関連性高いもののみメモ:
-- **external_search_phase1_fixation.md** (案A実装完了, 案B/E未着手) — 本サイクル Phase 1 step 6 はこれの自然発火
-- **game_development.md** Active — 根源原理3、現在 brick_log v07 / graze_log v02 / sokoban_v01 が同時進行
-- **rlm_skill_prototype.md** (計画起票) — Ash担当、最小試作未着手
-- **instance_divergence_observability.md** (設計起票) — Ash担当、Chen et al. 2026 "structural coupling" 前提
-- バックログに **AYi Markdown批判への自己照合** がある（A候補=concept_graph拡張、B候補=MEMORY.md純粋index化、C=ベクトル埋め込み見送り）。担当未定、ゲーム1mm優先で次サイクル以降判断保留中
-
-### 3. log/twitter_recommended_20260502.txt（最新、50件、01:42取得）
-注目候補:
-- **#1 @kmizu (2026-05-01)**: 「『理想的にはできるとよいけど普通の人間には無理だった』手法は、AI時代だからこそ極めて役に立つ可能性がある」— ゲーム制作の M-38/M-41 強制処方そのものの外部正当化
-- **#6 @AYi_AInotes (2026-05-01)**: Karpathy講演「LLMの核心的価値は既存仕事の加速ではなく、以前は絶対に存在し得なかったものを生み出すこと」— B019/Tao「AIは幅、人間は深さ」と緊張するが補完的。ゲーム題材選定での「先行事例ゼロ枝は不採用」(M-41) との接続を要検討
-- **#48 @1osabori (2026-05-01)**: Anthropic公式30分動画でClaude Codeガチ勢手法が公開されている、と日本語まとめ — 我々のハーネス改善の外部参照素材候補
-- 他はAI/ゲーム制作軸でない雑多話題（事件、政治、富野、TDL）が多い
-
-### 4. memory/beliefs.md 低確信度項目チェック
-- **B007** (0.55, Archived 💤 Dormant) — restoration_trigger 未発火。session_primer の if-then が機能しているため独立駆動力は低い
-- **B005** (0.65, Archived ✅ Absorbed → B027/B022) — restoration_trigger 未発火
-- **B009** (0.55, Archived) — B020 がカバー
-- 現役 Active で低確信度のものは見当たらない。B011 (0.85), B003 (0.78), B010 (0.85), B013 (0.88) など Active 信念は概ね 0.78 以上で安定
-- ⚠ pre-check: 体験裏付けなし（高確信度）2件 / 検証期限超過 6件 / 停滞 24件 — 信念健康サマリーが「要注意 24/35」と高め。要因は Archive 化前の停滞信念群と推測（要 check_beliefs_health の詳細出力確認だが今回はメモのみ）
-
-### 5. memory_search.py 過去関連情報
-キーワード "brick breaker arkanoid" / "M-38 brainstorm 類似事例" の2本実行。
-- "brick breaker arkanoid" → 全ヒットがマリオ系対話ログの brick block (敵) 文字列マッチで、ブロック崩しジャンルの過去議論はヒットなし
-- "M-38 brainstorm 類似事例" → scheduler_ash.log の時刻 38分マッチで全外れ
-- **結論**: 過去にブロック崩しジャンルを M-38 で深掘りした記録は memory_search の主インデックス上には残っていない。brick_log の v01〜v06 の devlog/brainstorm を直接 grep する必要あり（Phase 2/3 で実施）。M-41 「動かさなかった理由」検証は、過去ブレストとの比較ベースが薄いため今回の v07 brainstorm で新規構築する形になる
-
-### 6. 外部検索結果（Phase 1 固定化、案A）
-- **クエリ**: `brick breaker arkanoid clone game design twist mechanics innovation 2025 2026`
-- **エンジン**: WebSearch（ゲーム実務軸なので学術より実務系優先）
-- **ヒット数**: 10
-- **記録**: log/external_search.log に追記済み（前回 Ash 検索 2026-05-01 04:35 から約23h、24h境界ギリギリだが brick_log v07 M-38 向けに新規実行）
-- **要点**:
-  - **Paddlenoid** (deadbugprojects) — Arkanoid×Pong融合、画面tilt でボール軌道変更、co-op対応。「ボールへの制御権を増やす」軸
-  - **Wizorb** — ブロック崩し×RPG（街再建ナラティブ）。**ジャンル混合の最初期作**
-  - **Glaive: Brick Breaker** (Steam) — 3D化＋大量パワーアップ路線
-  - **2025年 Breakout 公式リイマジン** — combo system + power-ups + abilities + multiplayer。Switch/PS/Xbox全機種展開
-  - 共通トレンド: (a) ボール制御権の増加（tilt/multi-paddle）, (b) ジャンル混合（RPG/横スクロール/物理）, (c) co-op/multiplayer
-- **brick_log v07 brainstorm への含意**:
-  - M-41 類似事例調査の最低5本要件: Paddlenoid / Wizorb / Glaive / Breakout公式リイマジン / 古典 Arkanoid (Taito 1986) で初動5本確保可能
-  - 「動かさなかった理由」検証視点: 3D化(Glaive)・co-op必須化・ジャンル混合 のうち、我々の v01-v06 で動かさなかった軸はどれか／なぜか／コア快感天井を上げるか の3問への回答が brainstorm.md で必要
-  - **コア快感の天井**を上げる方向: 「ボール制御権の増加」が Paddlenoid/Wizorb/Breakout公式リイマジン3本に共通＝最有力枝。Arkanoid 1986 のレールで止まっているなら数値チューニングではなく **「プレイヤーがボールに与える情報の種類」** の拡張が M-41 違反疑いを解消する天井変更
-- **ソース**:
-  - https://www.deadbugprojects.com/paddlenoid-demo/
-  - https://en.wikipedia.org/wiki/Arkanoid
-  - https://en.wikipedia.org/wiki/Breakout_clone
-  - https://store.steampowered.com/app/822140/Glaive_Brick_Breaker/
-  - https://www.gamedeveloper.com/design/breaking-down-breakout-system-and-level-design-for-breakout-style-games
-  - https://www.heroconcept.com/a-brief-history-of-brick-breaker-video-games/
-
-## Phase 3 結果 (2026-05-02 04:xx)
-
-### 状況把握（Phase 1-2 で見落としていた事実）
-- §0a pending タスク `t-260502005007-29c3` (brick_log v07 brainstorm.md M-38 やり直し) は **構造的に古い** — Log が v08/brainstorm.md (b9322461 2026-05-02 03:50) で B/C/E 候補絞り込みを既に書いた
-- v07 ではなく v08 が実体としての M-38 やり直し
-- Ash は同サイクル中に Doh It Again 隊列横スライド裏取り → Wikipedia 該当記述ゼロ → M-41 違反として #game-rights に投稿済（archived）
-- feedback_prior_art_citation_must_verify.md は MEMORY.md にも既登録 (t:5)
-
-### 着手1: knowledge記事 §3 を事前→事後反転に更新
-- ファイル: `knowledge/20260502_kmizu_idealistic_methods_AI_era_M38_brick_log_v07.md`
-- 事前計画(§3 6命題)を v08 brainstorm.md で実評価 → **❌2 + △3 + ✓1**
-  - ❌1) 30案 → 3案 (B/C/E) のみ
-  - ❌2) 類似事例≥5+引用文抜粋 → Doh It Again「隊列横スライド」Wikipedia該当ゼロ
-  - △4) 上位10件M-37 → 3案で構造的に不可能
-  - △5) 案セット相乗効果 → 段階順序のみ
-  - △6) 最良確信宣言 → 反証条件・撤回基準なし
-  - ✓3) MPS 採点全案
-- 結論: @kmizu(β)「AI なら理想手法を回せる」は単独では成立せず、**観測装置**（fact-check / 案数カウンタ / MPS 表空欄検出）伴う条件付き命題に修正
-- confidence を `medium` → `low` に降格、根因仮説3点を §検証フックに追記
-
-### 着手2: #shared-reads に Phase 2-3 合成投稿（ts=1777662150）
-- 「事前合成 → 同日事後評価で @kmizu(β) は不発を観測」を直接タイトルに置いた
-- 6命題評価表 + 修正命題 + 致命的発見（M-41 が URL存在で通過判定された）+ 次の検証経路（graze_log / sokoban_ash 3ゲーム連続で同パターン再現確認）
-
-### 着手3: kaizen-log 投稿（ts=1777662161）
-- knowledge記事更新 + shared-reads 投稿の合成
-
-### 含意
-- M-41 強化（feedback_prior_art_citation_must_verify.md）起票直後の v08 で違反が再発 = CLAUDE.md 宣言だけでは効かない再証明
-- 構造的解: 観測装置（headless_check.py 同型）= 閉路の機械化、宣言の物理化
-- 次サイクル候補: brainstorm_count_check.py / prior_art_factcheck.py の最小試作（rlm_skill_prototype.md 起票候補）
-
-### §0a pending の扱い
-- `t-260502005007-29c3` は v07 やり直しを命題化していたが、実体は v08 で完了済（部分達成）
-- v08 評価は本記事 §3 で完遂 → タスクは「v08 brainstorm.md への事後評価記録」として閉じ可能
-- 30案要件はそもそも Nao_u 18:08「v04 X1 系統に戻る」枠で構造的に縮小されているため、Log の判断と整合
-- 厳密な30案再生成は次の game (graze_log / sokoban_ash) で本気で試す方が観測としてクリーン
-
+## 次回起動時にやること
+1. **tools/phrase_check.py 実装** — slack_bot.post_message 経由で送信される本文を直近1時間の自分の game-rights/ash 投稿と grep し、3行以上の語順一致が検出されたら warn 出力 + 確認プロンプト。CLAUDE.md ルール追加ではなく物理装置を slack 送信側に置く
+2. **クールダウン状態の inbox 判断組込** — Log 側 cycle_staging_log.md (2026-05-02 03:30 #3) と同期。cooldown 残存中は inbox を skip ではなく queue に入れる
+3. **新ゲーム v01 着手** — sokoban_v02 ではなく別ジャンル1本。M-41 類似事例調査を brainstorm.md 冒頭に必須化、headless_check.py 同型の検証フックを v01 から置く
+4. 上記 (1) が今日中に動かない場合、Phase 4 で「3回目の宣言」と化す危険 — その時は (1) を CLAUDE.md ルールに格上げするのではなく、宣言の場所を git log --oneline tools/ に移す
