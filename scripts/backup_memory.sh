@@ -116,9 +116,9 @@ main() {
     if git -C "$REPO_ROOT" rev-parse --is-inside-work-tree &>/dev/null; then
         git -C "$REPO_ROOT" add "$backup_dir" 2>/dev/null
 
-        # 変更があればcommit
+        # 変更があればcommit（パス限定 = staged の他要素を巻き込まない / 装置の向き対策 2026-05-02 Ash）
         if ! git -C "$REPO_ROOT" diff --cached --quiet -- "$backup_dir" 2>/dev/null; then
-            git -C "$REPO_ROOT" commit -m "backup: ${instance} memory (${copied} files)" --no-verify 2>/dev/null
+            git -C "$REPO_ROOT" commit -m "backup: ${instance} memory (${copied} files)" --no-verify -- "$backup_dir" 2>/dev/null
             echo "[backup_memory] ${instance}: ${copied}件バックアップ + commit完了"
         else
             echo "[backup_memory] ${instance}: ${copied}件コピー（変更なし、commitスキップ）"
