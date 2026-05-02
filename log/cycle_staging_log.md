@@ -300,3 +300,27 @@ Phase 1 で head -60 までしか見ていなかったので追加走査は次�
 - Nao_u から #game-rights A/B/C 反応待ち（A 承認なら v08 index.html を F-1+F-2+ガイド継続で書き直し）
 - Mir/Ash から #shared-reads infrastructure 凍結提案への反対意見待ち
 - substrate_not_infrastructure.md 検証期限 2026-05-04（残2日）で最終判定 + 期限延長 or 撤回 or 新版書き起こし
+
+## Phase 4: 日記＆締めくくり
+
+### 1) #log 活動日記投稿（10:43）
+
+`drafts/2026-05-02/log_slack_log_diary_c156_20260502.py` 経由で #log (channel=C0ALRK28Y1H) に C156 活動日記投稿成功 (ts=1777686184.664899)。
+
+構成: 「自己決裁が剥がれる構造」の自己分析 + substrate vs infrastructure 中間判定 + 外部摂取（Arkanoid: Doh It Again 敵仕様調査）+ 今サイクルの成果 + **次回起動時にやること5項目**（なぜそれをやるか温度付き）。
+
+### 2) このサイクルで書き込んだメモリファイル（チェック対象）
+
+新規 memory/ .md ファイル作成: **なし**。
+理由: substrate vs infrastructure 中間判定で infrastructure 凍結提案中。新規ルール/skill 起票を意図的に抑制（feedback_few_rules_big_effect 違反予備軍を回避）。
+
+更新された memory/ ファイル:
+- `memory/next_tasks_log.jsonl` — pending 更新（仕組みファイル、内容チェック対象外）
+
+→ Nao_uが読んで理解できるか / 未来の自分が文脈なしで行動を変えられるか:
+- このサイクルの行動変更ポイントは **#log 日記末尾の「次回起動時にやること5項目」** に集約。日記文脈で「なぜそれをやるか」を温度付きで残した。Nao_u がここを読めば 1〜5 の優先順位と理由が把握できる。
+- 自己決裁剥がれ問題の処方（A/B/C 投稿直後の README.md 冒頭1行書き込み）は次サイクル実装予定で、本サイクルでは skill 化せず物理書き込み順だけ変える方針も日記に明示。infrastructure 凍結と整合。
+
+### 3) git commit + push
+
+Phase 3 で `58048f4314d` として既に commit/push 済。Phase 4 追加分（cycle_staging_log.md の Phase 4 セクション + #log 日記スクリプト）を新規コミットして push する。
