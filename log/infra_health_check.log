@@ -1895,3 +1895,5 @@
   ISSUE: 未コミットの変更が26件。git syncが停止している可能性
   ISSUE: git MERGE_HEAD が残存。手動解決が必要
 [2026-05-02 11:52:27] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=0
+[2026-05-02 12:12:34] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=1
+  ISSUE: [scheduler_ash] slack_checkが13分間実行されていない（期待: 10分以内）
