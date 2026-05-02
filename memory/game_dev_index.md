@@ -76,6 +76,7 @@ MEMORY.md（Level 1 親）からの引き下げ先。**新ゲーム着手前 / �
 ## (e) 失敗台帳 — M-XX / L-XX / S-XX / D-XX / X-XX
 
 - [game_lessons_log.md](game_lessons_log.md) — **Log 側ゲーム制作教訓親 INDEX**。M-XX (主要教訓 31件) ＋ L-XX (Log 固有失敗 5件) ＋ S-XX (機能した設計 6件) ＋ D-XX (開発ログ構造 3件) ＋ X-XX (cross_review 共通構造 6件) ＋ _appendix。各エントリは太字キーワード + 核 + 処方の3パート、本ファイルだけで「開く価値」判断可能。新ゲーム着手前に必ず読む [T:4]
+- [skills/lessons-recall/SKILL.md](../skills/lessons-recall/SKILL.md) — **想起ハーネス**。系統マップ→ID 自動 suggest。判断手前 (新作着手 / 改修判断 / cross_review / Nao_u 評価受領 / Q-A〜H 記入 / brainstorm.md 検討) で並行起動。引いた lesson を判断文書に記載することで「経験で判断した」(ID 想起なし) を防ぐ。lesson 本文は `[ID](ID.md)` リンクで連鎖読み可能 [T:5]
 
 ---
 
