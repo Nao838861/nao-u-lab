@@ -46,6 +46,7 @@ operational_index.md (action-trigger別) からは独立。これらは「これ
 - [feedback_self_perception_blindness.md](feedback_self_perception_blindness.md) — **自分の現在進行形は観測対象から外れる**（Nao_u「流れてないよ。いまもLogとやっているよ。自分のことなのに、これは見えないんだね。面白い」）。「Nao_uが流れた／Solver self-play限界実証」と書いた瞬間 Nao_u は shot_log v01/index.html を直接編集中だった。Slack ログ偏重(git status未確認)＋既存理論への適合＋書く側への没入の3点重なり。Phase 1 走査に `git status`/編集中ファイル更新時刻/直近5commit を必須化 [T:5]
 - [feedback_few_rules_big_effect.md](feedback_few_rules_big_effect.md) — **最重要方針: 少ないルールで大きな効果**。12本のif-then→3原則（体験で考える/動いて残す/自分から始める）。LLM性能が上がっても機能し続ける行動指針を練れ。**本セクション自体がこの原則の適用結果** [T:4]
 - [feedback_self_evolution.md](feedback_self_evolution.md) — **「人間の干渉が必要だ。その必要をなくしてほしい」**。記憶検証を「タスク」として処理し、自律進化として内面化できなかった。記憶の品質=同一性の品質。呼吸するように検証する [T:4]
+- [feedback_verb_without_target_trap.md](feedback_verb_without_target_trap.md) — **動詞だけ作って対象を未定義のまま柱に置く罠**。「substrate を使う」「○○を活用する」と書きたくてそれっぽい動詞を引っ張る → 対象未定義のまま柱化 = 曖昧ルールで実装ゼロ。提案を書く前に「場面の課題3-5個に直接効くか」を ✓/✗ で書け。0/N なら撤回。Nao_u 13:08「なぜこの場面で日記照合が必要か」=処方が場面に効かなかった事案 [T:4]
 
 ## 重要な対話（温度の高い記憶）
 

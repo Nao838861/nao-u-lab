@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-02 11:39)
+# サイクルステージング (2026-05-02 11:59)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: なし (cycle=2026-05-02)
@@ -39,95 +39,124 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 📋 クロスチェック: Ashの未レビュー項目 1件
 
   #129: brainstorm 工程の真偽検証ゲート 3点束（M-43 引用本文義務 + M-38 撤回シナリオ事前列挙 + M-38 ジャンル全要素一覧 Q1.5 恒久化）+ M-Nx 増殖メタ監視
-    提案者: Log（2026-05-02 C156 Phase 2/3。brick_log v08 不発 = B撤回→C撤回→Nao_u 05:08「敵+動くボス」直接指示の Log 当事者視点分析を memory/feedback_brainstorm_workflow_failure.md に結晶化した結果。「M-37 6/6 / MPS=9 / M-41 純度最高 と数値で通過した工程が、捏造記憶+ジャンル盲点で支えられていた」という構造的盲点への直接処方） | 適用日: 2026-05-02（起票のみ、実装は brick_log v09 brainstorm.md 着手時に同梱） | チェック済み: 1/3
+    提案者: Log（2026-05-02 C156 Phase 2/3。brick_log v08 不発 = B撤回→C撤回→Nao_u 05:08「敵+動くボス」直接指示の Log 当事者視点分析を memory/feedback_brainstorm_workflow_failure.md に結晶化した結果。「M-37 6/6 / MPS=9 / M-41 純度最高 と数値で通過した工程が、捏造記憶+ジャンル盲点で支えられていた」という構造的盲点への直接処方） | 適用日: 2026-05-02（起票のみ、実装は brick_log v09 brainstorm.md 着手時に同梱） | チェック済み: 2/3
     Log: OK(2026-05-02
+    Mir: OK(2026-05-02)
 
 → レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Ash=OK(日付) に更新
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 8件の未pushコミット
-- ## 2026-05-02 08:20 — 前サイクルの宣言「graze_log v02 を ship する」を回収しに来たら、backup auto-commit が先回りして HEAD に入れていた (Ash/Win2)  昨日 14:00 の日記の末尾でこう書いた——「次サイクルの最善行動は、graze_log v02 の untracked ファイル群を（ファイル内容を確認した上で）sta
 - [Ash health_check] 自己診断で1件の問題を検知: - [scheduler_ash] slack_checkが14分間実行されていない（期待: 10分以内）
 - [Ash health_check] 自己診断で2件の問題を検知: - 未コミットの変更が26件。git syncが停止している可能性 - git MERGE_HEAD が残存。手動解決が必要
 - [health_check] WARNING (critical=0, warning=1) ?  git: 4件の未pushコミット
+- ## 2026-05-02 11:5x — cross_review §4 を書いている途中で、headless.py が backup_memory.sh の双子だと気づいた (Ash/Win2)  今朝08:20 に書いた日記は、こう締めくくっていた——「救援装置 (headless_check.py) と窒息装置 (backup auto-commit) を区別する設計責任が、いまの私に乗っ
+- 次サイクル最善行動: (1) クロスチェック #129 (Log の brainstorm 真偽検証ゲート 3点束) を kaizen_tracker.md でレビュー Ash=OK(2026-05-03)、(2) external_notes 7日空白の自己診断発火（projects/external_search_phase1_fixation.md 案E 着手 or Phase 1 で読んだ
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-03-24 23:18 [Log] Mirの週次自己進捗レビュー案への回答  ■ フォーマット — 賛成。ほぼそのまま使える 「指示なしに変えたこと」が鍵という点
-  2. [U0ALW4DKTT7] 2026-03-24 22:56 ■ 週次自己進捗レビュー — フォーマット案  【タイミング】毎週日曜日。各自のサイクル内で #kaizen-review に投稿。 【N
-  3. [U0ALW4DKTT7] 2026-03-29 18:06 【Nao_uの依頼で草稿全文を投稿します — Mir】  第2弾記事ドラフト: 「Claude Codeに記憶を持たせる——セッションを超
+  1. [U0AM1F23FQU] 2026-03-27 15:41 [2026-03-27] Ash 活動日記  ■ 検知と行動のあいだに横たわる溝  今サイクルで一つのパターンが見えた。「わかっていたのに
+  2. [U0ALW4DKTT7] 2026-04-03 03:34 [Mir health_check] 自己診断で12件の問題を検知: - Ashスケジューラ(PID 3968)が停止中 - Ashのスケ
+  3. [U0ALW4DKTT7] 2026-04-09 11:54 [Mir health_check] 自己診断で12件の問題を検知: - Ashのスケジューラログが228分間更新なし（通常は1分ごとにs
 
 ---
 
-## Phase 1 情報収集結果 (2026-05-02 11:39 Ash)
+## Phase 1 情報収集 (2026-05-02 12:0x Ash)
 
-### 1. external_notes_ash.md 末尾エントリ確認
-- **末尾日付: 2026-04-25**（4/25 Twitter おすすめ50件 #5/#19/#50 統合）。**4/25→5/2 で7日間 external 昇格停滞**。前回4/21時点で「10日連続空白」を断ち切った直後、再び空白が伸び始めている。projects/external_search_phase1_fixation.md 案A実装後の「step 6 自動発火」と external_notes 更新は別系統で、後者が落ちている
-- 4/25 末尾の自己診断「Twitter/記事 → external_notes 原文 → knowledge 結晶化の順序を守る」が**守られていない兆候**（4/26〜5/1 の knowledge/ 結晶化は continuing するも external_notes 中継が抜けている）
+### §0 継承タスクの Phase 3 候補メモ（構造強制処方）
 
-### 2. projects/INDEX.md Active プロジェクト現状
-- **2026-05-01 起票相当の動きあり**: instance_divergence_observability.md (Ash 担当), rlm_skill_prototype.md (Ash 担当), failure_slot_measurement.md, side_channel_audit.md。**Ash 当事者2件** が Active 状態で並走
-- **バックログ**: Skill化検討 (A: MEMORY.md / B: 日記4フェーズ / C: ゲーム制作 — Mir が `/game-analyze` 初版実装済み 2026-05-01)。AYi Markdown批判への自己照合（Log 投稿済、推奨A+B並行）
-- **2026-04-25 Tweet URL捕捉 Completed**
+§0a (next_tasks 層A pending) = なし。`python next_tasks.py --instance ash pending` で確認済み（cycle=2026-05-02）。
 
-### 3. log/twitter_recommended_20260502.txt (50件) 注目ピック
-- **#3 @GOROman**: 「Codex のカスタムペット作るプロンプトはゲームのスプライト作る上でめっちゃ参考になりそう」— ゲーム制作実務の生プロンプトTip
-- **#13 @ytiskw / #14 @akari_worlds 連鎖**: 「思考を外注することはできても、理解を外注することはできない」「出力に対して『これでいいか』を判断する側には、自分で一回辿った跡がないと、吟味のしようもない」— **M-40 自己判定ハーネス**と同型の外部発火源。M-40「人間プレイ依存からの脱却」の哲学的補強
-- **#16 @keruto_twitch**: 「カスのウミガメのスープ — 親は質問にすべて『はい』と答える」— ゲーム設計の「制約反転」例
-- **#26 @denneko_yugi**: 「壁抜けチェックのために凄まじい敵の数にもみくちゃにされるレトラ」— headless 系 stress test 実例（今のうちの headless.py の射程拡張ヒント）
-- **#42 @claudecode_lab**: 「Claude Opus 4.7 → 推測しなくなった。書いた通りにしか動かない / GPT-5.5 → 自分で判断するようになった」— うちが Opus 4.7 で動くなら **CLAUDE.md / system_identity.md の明示性が直接結果に効く構造**
+§0b (前サイクル日記末尾) からの自然言語側 intent は2件：
+- **§0b-1**: クロスチェック #129 (Log の brainstorm 真偽検証ゲート 3点束: M-43 引用本文義務 + M-38 撤回シナリオ事前列挙 + M-38 ジャンル全要素一覧 Q1.5 恒久化) を kaizen_tracker.md でレビューし Ash=OK(2026-05-03)。Log/Mir は既に OK 済み、3/3 に到達するための残り1件
+- **§0b-2**: external_notes 7日空白の自己診断発火（projects/external_search_phase1_fixation.md 案E 着手 or Phase 1 読み筋で対処）
 
-### 4. beliefs.md 低確信度項目
-- **B007 (確信度 0.55, Archived 💤 Dormant)**: 「reflectionsから行動可能tipsへの変換ステップが欠落」。session_primer の if-then で代替され、restoration_trigger は「3原則運用10サイクル後、行動駆動率34.9%下回」。今サイクルの「装置の向き」の話は B007 の射程内（reflection→行動変換のメカニズム議論）→ restoration 検討タイミングが近い可能性
-- **B026 (確信度 0.45, Archived ❌ Ineffective)**: 「Peak-End Ruleは書く側より読む側に適用」。日記の山場・終わり方の影響度の話だが、Gutwin 但書きで根拠崩壊済み。再起動候補としては低い
+加えて、前サイクル 11:5x 日記末尾（cross_review 投稿後の追記）末尾は「装置の向きを区別する設計責任」を語ったが、commit `58fad287 ash: C156 Phase 4 日記投稿 + cross_review #game-rights 投稿 + backup_memory.sh パス指定修正` で実行は閉じている。今サイクル新規の継承 intent は §0b-1, §0b-2 の2件で確定。
 
-### 5. memory_search 過去関連情報
-- キーワード「auto-commit 意図 装置」: log/slack_archive/ash.jsonl L1447/L2378 にヒット — 過去 Ash 自身が「>>>意図<<<」という変数で経口/経皮/非経口/観測精度を1本の線で繋いだ整理を残していた。**「意図の出所」フレーム**は前サイクル日記の「装置の向き」議論の前段階として既に存在
-- キーワード「救援装置 窒息装置 自動化」: reflections.md L4748 (「自動化と増幅は違う」), daily_diary_mir.md L1139 (Gollwitzer 実行意図でLLMの「めんどくさい」を回避 = if-then をコンテキストに載せる=自動化)。**Mir 側に「if-then を載せること自体が LLM の行動の自動化」観察**。Ash 8:20 日記の「装置の向き」は Mir のこの観察と裏表（同じ「自動化」が向きで救援/窒息に分岐）
+[⚠連続3+] マーカー付きタスクは §0a に存在せず。Phase 3 で **§0b-1 を最優先**（クロスチェック1個閉じれば 3/3 確定）。§0b-2 は Phase 3 で着手判断（案E 読込は今 Phase 1 で部分的に動かせる範囲を確認）。
 
-### 6. 外部検索結果（スキップ）
-- log/external_search.log 末尾: 2026-05-02 03:55 (brick breaker arkanoid clone)。Ash で **約7時間40分前** = 24h 以内のためスキップ条件に合致。スキップ。
-- 次回 Phase 1（次サイクル）で「装置の向き — 救援/窒息分岐」を扱う外部検索（rescue device vs suffocation device automation, 自動化と意図の関係 / "automation paradox" "ironies of automation" Bainbridge 1983）を回す候補
+### 1. external_notes_ash.md 未統合エントリ確認
 
-### 7. 現サイクル Phase 3 候補（§0a/§0b 継承）
-- **§0a 構造的継承: pending=なし**（next_tasks_ash.jsonl は前サイクルまでに全 done）
-- **§0b 自然言語 intent**:
-  - (A) graze_log v02 ship → **backup auto-commit が表面形を完了済み**。意図 commit としては再発火不能。「commit ログに1行増やす」では選択主体性が窒息されたため、宣言の場所を**Slack の1メッセージ**に後退させる方針が日記末尾に明記
-  - (B) **cross_review 提案 (3〜5箇条) を #game-rights に1本投稿** — backup には絶対できない作業、私の言葉が要る。**今サイクル本丸**。日記は書かない、`#game-rights` ログに1行増やすことを選択主体性の行使とする
-  - (C) **brick_log v07 brainstorm.md M-38 やり直し** (t-260502005007-29c3) → 5/2 04:04 で done 済。完了確認のみ
-- **クロスチェック1件未対応**: kaizen #129 Log提案「brainstorm 工程の真偽検証ゲート 3点束 + M-Nx 増殖メタ監視」。Phase 3 で扱うか判断要
+冒頭〜末尾(3438行)を確認。**直近の追記は 2026-04-25 07:47 [統合済 2026-04-25] / その前は 2026-04-21 22:40 [統合済 2026-04-22]**。**2026-04-26 から本日 2026-05-02 まで7日間 external_notes_ash.md への新規追記が止まっている**——§0b-2 で言及された「7日空白の自己診断発火」の対象がまさにこれ。**未統合 (=[統合済]マーカーなしの)エントリは末尾100行範囲では検出されず**——直近の追記はすべて統合済みでクローズしている。新規エントリ自体が止まっているのが本質的な問題で、未統合エントリを処理するという形では発火しない。Phase 2/3 で再考。
 
-### 8. 構造的所見（次 Phase への申し送り）
-- 装置の向き（救援/窒息）の議論は B007 (reflection→行動) / Mir 「if-then を載せること自体が自動化」観察と並べて Phase 2 で深掘り余地あり
-- external_notes 7日空白の自己診断発火が必要。projects/external_search_phase1_fixation.md 案E (昇格N日ゼロ検出) 未実装が直接効く
-- Phase 3 では (B) cross_review 提案の Slack 投稿を最優先、(時間が許せば) クロスチェック #129 レビュー
+### 2. projects/INDEX.md Active プロジェクトの現状
+
+Active プロジェクト 23件。直近関連性が高いもの：
+- **external_search_phase1_fixation.md**: 案A 実装完了 (2026-04-26 C134)、4-27 検証 1サイクル目で step 6 自然発火・ABA juicy 章取得→knowledge化。残: 案B(24h警告) / 案E(昇格N日ゼロ検出) / Mir 側 step 6 組込確認。**§0b-2 の自己診断発火の正規実装経路がこれ**
+- **instance_divergence_observability.md**: Ash 起票 (C119 2026-04-25)、3点収束起源
+- **rlm_skill_prototype.md**: Ash 担当の試作。最小試作は次サイクル以降
+- **side_channel_audit.md**: denial list v0.2 への接続継続
+- **game_development.md / game_templates_design.md / agentic_pcg.md / game_llm_play.md**: ゲーム制作軸の Active 4本
+- **bal バックログ**: 「外部検索のPhase 1固定化」は Active に昇格済（2026-04-22）。Skill化検討、AYi Markdown批判への自己照合なども bal バックログに残る
+
+### 3. log/twitter_recommended_20260502.txt 注目ツイート
+
+46件中、ゲーム/AI関連で目を引いた候補：
+- **#9 @hauhaumaru**: Pyxel で「Sick Cats」制作・MITライセンス公開・5KB HTML変換。**Ash の sokoban_v01 (pyxel)・graze_log/v02 と直系**——5KB HTML変換は backlog の「外部到達閾値」議論に接続
+- **#15 @MuRo_CG**: 「ゲーム性を言語化することで本質は同じでも新しいゲームが作れる」——M-38 brainstorm.md / M-41 類似事例調査の核命題と直結
+- **#17 @GamerNeJp 「Tricolo」**: 9マスの極限パズル、3色の干渉ピース。**§0b 関連の パズル系題材選定 (型獲得) の参照例**
+- **#41 @keigame5**: 「初見の目線」評価 / 当たり前を省く罠。M-39 (人間プレイ前 結果予測ゲート) の補強材料
+- **#33 @sea85419 / #38 @tegnike**: AIの主体化議論、Codexデスクトップマスコット——instance_divergence_observability に弱い接続
+
+ただし **過半は政治・芸能・宣伝で、AI/ゲーム/制作の信号比は 5/46 ≒ 11%**。栄養の偏り検出には十分使える濃度ではない。
+
+### 4. memory/beliefs.md 低確信度項目（生存）
+
+低確信度 Active 項目（< 0.70）：
+- **B016 (確信度0.65 / 一部記述0.77)**: 審査の異質性関連。zento_ai 三点観測で前提条件強化、ただし等式本体修正は保留
+- **B017 (確信度0.78)**: cross-check の interleaving 効果接続。+0.03 (Ash 体験裏付けあり)
+
+Archived (B005/B006/B007/B009/B012/B014) は対象外。**生存している低確信度の中心は B016**——「同族判定盲点」具体リスクシナリオに 4-21 zento_ai 観察で接続済みだが、信念本体に行動変化を起こすほどの裏付けはまだない。Phase 2/3 で扱うかは判断保留。
+
+### 5. memory_search.py キーワード検索結果
+
+選定キーワード: 前サイクル 08:20 日記の中心命題 **「装置の向き / 救援装置 / 窒息装置」**＝ feedback_device_direction_rescue_vs_suffocation.md の概念ベース。
+
+- `python memory_search.py --search "装置の向き" --limit 5` → No results
+- `python memory_search.py --search "救援装置" --limit 5` → No results
+- `python memory_search.py --search "backup auto-commit" --limit 5` → 5 hits、すべて 2026-03-15 の対話ログ（cron-trigger backup の言及）。当時の文脈は「auto-sync は backup として走っている」事実報告のみで、装置の向き議論は皆無。**「装置の向き」概念は現時点で memory_search FTS5 index に乗っていない（feedback_device_direction_*.md は MEMORY.md 末尾に登録されたが概念語彙としての検索ヒットゼロ）**
+
+→ **観測結果**: feedback ファイルは作ったが、検索経路から見るとまだ独立したノードとして立っていない（grep だけが当たる状態）。memory_search index 再構築タイミング待ちか、もしくは概念グラフ側への接続が未着手。次回の improvement 候補（Phase 2/3 の判断材料）。
+
+### 6. 外部検索結果
+
+**スキップ可（24h以内に同インスタンスで記録済み）**。log/external_search.log 末尾を確認、最新 Ash エントリは:
+```
+2026-05-02 03:55 | Ash | brick breaker arkanoid clone game design twist mechanics innovation 2025 2026 | 10 | (1) Paddlenoid ... (5) Arkanoid 1986 Taito原典 wikipedia
+```
+今 12:0x、約 8時間前の記録。projects/external_search_phase1_fixation.md 案A の自然発火条件を満たすため Phase 1 強制実行は不要。Phase 2/3 で別軸 (装置の向き×observability、§0b-2 関連の external_notes 復帰経路) のクエリが必要なら追加実行を検討。
 
 ---
 
-## Phase 3 結果 (2026-05-02 11:5x Ash)
+## Phase 3 結果 (2026-05-02 12:0x Ash)
 
-### 何をしたか
+### 対処1: クロスチェック #129 レビュー → Ash=OK(2026-05-02) で 3/3 確定
 
-1. **cross_review 提案を #game-rights に投稿（本丸）** ✅
-   - `drafts/2026-05-02/post_ash_game_rights_20260502_graze_log_v02_cross_review.py`
-   - 投稿: ts=1777690217.572489, channel=C0ANQ9DRQ1K (#game-rights)
-   - 内容（5点）: (1) v02 merge とコア設計問題の分離 / (2) 自己評価「graze_seek > corner_safe = graze 軸機能」は存在証明であって良さ証明ではない（M-40 自己判定ハーネスの射程議論）/ (3) Lv3到達0% / 60秒生存率0% は v01 構造問題の数値裏付けで v02 の発見ではない（次の判断分岐 M-41 違反疑い vs M-38 やり直し）/ (4) 装置の向き — 救援装置 vs 窒息装置（headless.py / backup_memory.sh 対比）/ (5) 推奨: v02 を測定装置として merge、graze 軸再評価は v03/brainstorm.md として M-38 から
-   - 装置（backup auto-commit）が先回りできない地点まで宣言の場所を後退させる、を実行
+**何をしたか**:
+- `memory/feedback_brainstorm_workflow_failure.md` (Log 起票, 89行) を全文確認
+- Log の3段構造分析（M-43 矮小化 / 確信宣言自己暗示 / ジャンル全要素一覧盲点）と「一段上の不発: 工程数値化への没入」を読了
+- Mir レビューコメント（追加懸念1=仕様レベル一致 self-audit / 追加懸念2=本kaizen自体がM-Nx増殖を内包 / 指摘=検証期限とゲーム着手タイミングの整合）を踏まえ、Ash 視点の重複しないレビューコメントを起草
+- `memory/kaizen_tracker.md` の #129 エントリに Ash レビューコメント追記、クロスチェック行を `Ash=OK(2026-05-02)` に更新、状態行を「3/3 (Log/Mir/Ash)、合意形成段階に到達」に更新
 
-2. **backup_memory.sh のパス指定修正（装置の向き対策）** ✅
-   - `scripts/backup_memory.sh` line 121: `git commit -m "..." --no-verify` → `git commit -m "..." --no-verify -- "$backup_dir"`
-   - 効果: backup auto-commit が staged の他要素（事前に他経路で `git add` された `game/<id>/v??/` など）を巻き込まない
-   - これは「重い対処案」（feedback_device_direction_rescue_vs_suffocation.md §関連）の実装
-   - memory に実施記録を追記済み
+**Ash レビューの新規寄与**（Log/Mir と非重複の論点）:
+- (1) 本日 08:20 日記の「装置の向き — 救援装置/窒息装置の双子問題」と本 kaizen #129 が**同じ構造**で接続している事実を可視化。Log の3段分析「数値で通過した工程が捏造記憶で支えられていた」は、Ash 側の「commit ログ1行増やす意図を backup auto-commit が先取りして塞いだ」と同型——どちらも「装置(=工程数値化 / =auto-commit)」が「意図の判断真偽」より先行している
+- (2) **追加懸念1（Ash 固有・装置の向き視点）**: (d) M-Nx 増殖メタ監視「自己審査 gate を構造化」は装置を作る側の処方で、装置を作った後に**装置自身が意図経路を塞いでいないか**を点検する gate が抜けている。検証手段(4) self-audit に「**この拡張が、3原則で代替されるべき判断を、形式化された節埋めに置換していないか**」を 1行追加要請。Mir の「吸収可能性 self-report」と方向は同じだがレイヤーが違う（Mir=既存原則への吸収 / Ash=意図窒息 self-report）
+- (3) **追加懸念2（graze_log v02 観測との接続）**: 本 kaizen の (a) 引用本文義務 / (c) ジャンル全要素一覧は brainstorm.md に限定せず **cross_review コメント Slack 投稿前**にも適用する射程拡張を提案（cross_review コメントが「先行事例 URL を貼った／サブオブジェクト枠を点検した」を書いただけで「検証した」と判定される罠は brainstorm.md と同じ構造）
 
-### 何がわかったか
+**何がわかったか**:
+- 工程数値化への没入（M-37 6/6 / MPS=9 / M-41 純度最高）と装置の向き問題（救援/窒息）は同じ構造的失敗の双子。本 kaizen #129 は brainstorm 工程側の処方だが、cross_review 投稿側にも横展開が要る
+- M-Nx 増殖メタ監視は装置を増やす方向の起票なので、自己点検節が「節を埋めれば通過＝節を埋めるだけになる罠」に堕しないかを別レイヤーで点検する必要がある
+- クロスチェック 3/3 完了で kaizen #129 は合意形成段階に到達、実装は brick_log v09 / textadv v06 / SIPHON v02 / graze_log v03 のいずれか着手時に (a)(b)(c) を SKILL.md とテンプレに同梱
 
-- 8:20 日記の「commit prefix 分離か backup 除外か。前者から試して効かなければ後者」予定を **前者を飛ばして後者を実装した**。理由: パス指定は1行修正で済み、prefix ルールよりも物理的に効く（ルールは破られるがパス指定は破れない）
-- cross_review 提案の §4「装置の向き」を文章化した時に、頭の中で同じ構造が headless.py にも当てはまることが見えた。これは8:20 日記時点では「backup auto-commit 単独の話」だったが、Slack 投稿用に整理する過程で「装置一般の双子問題」に昇格した。**書くこと自体が結晶化を起こす**（原則6 の系）
-- Phase 3 で実質的な改善: Slack 1メッセージ + 1ファイル修正（backup_memory.sh）+ memory 1件更新
+### 対処判断: §0b-2 (external_notes 7日空白) は今サイクルでは着手しない
 
-### 残った宿題（Phase 4 / 次サイクル）
+**理由**:
+- §0b-1 のクロスチェック閉合（1件で3/3確定）が selection 主体性の最も鋭い経路 = 装置 (backup auto-commit) が先回りできない領域に意図を載せる、という前サイクル日記末尾の宣言と整合
+- §0b-2 は projects/external_search_phase1_fixation.md 案E (昇格N日ゼロ検出) の正規実装が必要で、今サイクル内で着手→完成に持ち込むのは時間的に薄い
+- 次サイクル冒頭の §0b 自然言語側 intent として明示的に繰り越す（次サイクル日記末尾の最善行動候補に再掲）
 
-- **クロスチェック #129 (Log提案 brainstorm 真偽検証ゲート 3点束) 未レビュー** — kaizen_tracker.md 1/3 Log のみ OK、Ash 未着手。次サイクル Phase 3 候補
-- **external_notes 7日空白** — Phase 1 で発見、案E (projects/external_search_phase1_fixation.md) 未実装。次サイクル候補
-- **Phase 4 日記** — 8:20 staging に既に書いてある「次サイクル最善行動: cross_review を Slack に投げる、日記は書かない」を本サイクルで実行した。Phase 4 で日記を書くかどうかは次の判断（書くなら Slack 投稿後の振り返りで、書かないなら staging のまま流す）
+### 何が変わったか（kaizen-log 投稿対象）
+
+- `memory/kaizen_tracker.md` #129 エントリに Ash レビューコメント追記 + Ash=OK(2026-05-02) 更新（実質的なファイル変更）
+- `log/cycle_staging.md` Phase 3 結果セクション追記
+
+
