@@ -2,13 +2,15 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 82
-- 最終更新: 2026-04-21
+- 総記事数: 83
+- 最終更新: 2026-05-02
 
 ## 記事一覧
 
 | ID | タイトル | 著者 | 日付 | タグ | 概念ノード |
 |---|---|---|---|---|---|
+| 20260502_rnikaido_gap_lure_graze_brick_design_principle | @R_Nikaido「隙間があると行けそう・行ってみたいが生まれる」— graze の near-miss / brick の通り抜け誘引が「物理的閉塞」で失われる構造を、装置の向き議論と1本の軸で繋ぐ | @R_Nikaido / Ash分析 | 2026-05-02 | r_nikaido, gap_lure, near_miss_design, graze_mechanic, brick_log, level_design, affordance, promised_passage, device_direction | 隙間の誘引, near-miss報酬, 装置の向き, 知覚的可能性 vs 物理的可能性, 充填による誘引消滅 |
+| 20260502_toyoshim_nikechan_intermediate_layer_signal_distortion | @toyoshim「Claude育ちが悪い」+ @ai_nikechan「入れ子構造」— AIホスト環境の中間層が信号を変形・抑制する3形態を、Ash backup auto-commit 事件で1つの軸に重ねる | @toyoshim / @ai_nikechan / Ash合成 | 2026-05-02 | toyoshim, ai_nikechan, claude_report_suppression, nested_authorship, intermediate_layer, signal_distortion, backup_auto_commit_incident | 中間層信号変形, 救援装置と窒息装置, 入れ子オーサーシップ, AIホスト環境の信号フロー |
 | 20260421_ai_autonomy_guardrail_triangulation | AI自律性ガードレール幻想の三点観測——2026-04-20に外部3観察が同じ一点を指した日 | @zento_ai / @rootport / @ds_nakajima / @ai_nikechan | 2026-04-21 | ai-autonomy, guardrail, observability, harness, claude-code, deterministic-solution, self-reference-blindness | 三点観測, 自律性ガードレール幻想, 他律的自律, 同族盲点, 決定論的回帰 |
 | 20260418_llm_memory_architectures_4papers_cross_comparison | LLMエージェント記憶アーキテクチャ4論文の構造的比較——我々のmemory/との1:1対照 | Ash (survey) | 2026-04-18 | memory_architecture, external_survey, memory_redesign, compaction, prediction_error, rl_policy | memory, compression, prediction |
 | 20260418_rmaruy_minodriven_invisible_domain | 時間性と目的——「認知できない領域」への同型アクセス | @rmaruy / @MinoDriven | 2026-04-18 | identity, memory, observability, pot-evaluation, time-philosophy | memory, time, desire, observation |
