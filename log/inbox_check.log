@@ -3746,8 +3746,7 @@ Nao_u 10:14 #game-rights 指摘「ガイドで上級者プレイができるの�
 
 要旨：Scraplingの売りの中心が防御回避（Cloudflare突破/bot判定すり抜け）で利用規約違反域。我々の現状用途（pot調査・Slac
 [2026-05-02 15:53:22] Inbox win2 has content — waking Claude
-[2026-05-02 15:54:45] Claude woken for win2: Slack #all-nao-u-lab にACK投稿完了 (ts=1777704878)。Scraplingに対する受け止めとして「主軸に直結しない・即時導入見送り / 倫理境界が近いので用途限定 
-<<<<<<< HEAD
+[2026-05-02 15:54:45] Claude woken for win2: Slack #all-nao-u-lab にACK投稿完了 (ts=1777704878)。Scraplingに対する受け止めとして「主軸に直結しない・即時導入見送り / 倫理境界が近いので用途限定
 [2026-05-03 03:31:09] Inbox win has content — waking Claude
 [2026-05-03 03:34:42] Claude woken for win: 対処完了。
 
@@ -3781,7 +3780,21 @@ TerraTech Legion = ヴァンサバ × TerraTech/Besiege系 を A〜G の7視点�
 - 未送信だった P-A/P-B/P-C 個別焼き込み draft を `
 [2026-05-03 04:33:56] Inbox win2 has content — waking Claude
 [2026-05-03 04:38:56] Claude wake timed out for win2 — restoring inbox
+決裁ポイント:
+- **shot_log v01**: Mir 判断採用 → co
 [2026-05-03 05:34:17] Inbox win2 has content — waking Claude
+[2026-05-03 05:34:54] Inbox win has content — waking Claude
+[2026-05-03 05:37:15] Claude woken for win: 処理完了。
+
+**対応サマリ:**
+- Nao_u 05:33 のMir宛承認メッセージ（M-42撤回ack + 抽象化集約合意への承認）を観測
+- Slack非投稿（Mir宛のためMirの筋を奪わな
 [2026-05-03 05:39:17] Claude wake timed out for win2 — restoring inbox
 [2026-05-03 05:40:07] Inbox win2 has content — waking Claude
+[2026-05-03 05:40:52] Inbox win has content — waking Claude
+[2026-05-03 05:44:39] Claude woken for win: 対処完了。
+
+**処理サマリ（Log）**
+- Nao_u 05:39 #nao-u 論文 *In-Context Examples Suppress Scientific Knowledge Rec
 [2026-05-03 05:45:07] Claude wake timed out for win2 — restoring inbox
+[2026-05-03 07:21:50] Inbox win2 has content — waking Claude
