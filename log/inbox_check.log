@@ -3718,3 +3718,4 @@ v08 brainstorm.md は
 Nao_u 10:14 #game-rights 指摘「ガイドで上級者プレイができるのが有効に機能したから、敵を出した、という順番なのにガイドを消す意味が分から
 [2026-05-02 10:58:14] Inbox win has content — waking Claude
 [2026-05-02 11:56:43] Inbox win2 has content — waking Claude
+[2026-05-02 11:58:46] Claude woken for win2: inbox は既にクリア済み（並行プロセスが先行処理）。overflow ファイルの内容も既に Log/Mir 側で受領され Slack 10:14 含めコミット済み（e95f4a0b, 58048f
