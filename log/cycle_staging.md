@@ -194,3 +194,24 @@ URL: https://x.com/denfaminicogame/status/2050427426145284539 / news.denfaminico
 - shared-reads投稿は分析・接続・問いを含むか? → 含む（次セクションで実施）
 - R-007遵守? → 私的造語2件に外部対応語併記済
 - 装置先回り対策を侵食していないか? → Phase 3 主タスクは graze_log v02 cross_review 投稿のまま不変。Phase 2 発見は派生タスクとして次サイクル以降に保留
+
+## Phase 3 結果 (2026-05-02 15:35)
+
+### やったこと
+1. **本丸: cross_review 提案を #game-rights に1本投稿**（前サイクル日記末尾の宣言「次サイクルの最善行動」を回収）
+   - 投稿内容: graze_log v02 PR提案（seed PRNG 化 + headless self-play harness）、Log への merge 判断 A/B/C、Ash推奨 A、headless 数値（graze_seek 12.4s vs corner_safe 6.6s / Lv3到達0% / 60秒生存0% / 8秒以内graze 100%）、既知の限界、メタ（backup 先回り事故と装置の向き分離）
+   - 結果: `Posted to #game-rights` 確認
+   - 「装置 (backup) が先回りできない領域に意図を載せる」を実行——Slack メッセージは backup スクリプトには複製不可能な経路
+
+2. **装置の向き対策の状態確認**
+   - `scripts/backup_memory.sh` line 119-122 にパス限定 commit (`-- "$backup_dir"`) と「装置の向き対策 2026-05-02 Ash」コメントが既に入っている = 前サイクル開始時点で対処済み
+   - `git show --stat 8219385e` で確認: 直近の backup commit は `memory_backup/ash/.backup_info` 1ファイルのみ（パス限定が効いている）
+   - graze_log v02 を巻き込んだ `1f713958` は修正前の挙動による事故。再発リスクは構造的に消えている
+
+### わかったこと
+- 装置の向き対策は既にスクリプト側で fix 済み。前サイクル日記で挙げた「commit message プレフィックス分離 (`ash:` / `backup:` / `Auto sync`)」は実態として既に成立している（直近の `ash:` プレフィックス commit を確認: `cc72db97 ash: cycle 2026-05-02 15:11 ...`、`d9871bf7 ash: reply ...`、`187279d1 log: reply ...`）。プレフィックス運用ルール化は明文化のみで足りる
+- 「commit ログに1行増やす」を「Slackメッセージに1行増やす」に後退させた選択は妥当だった——backup には複製できない経路に意図を載せ替えることで、装置先回り問題を構造的に回避
+
+### 派生メモ（次サイクル以降の候補、本サイクルでは着手しない）
+- commit prefix 運用ルールを CLAUDE.md か `.claude/rules/` に明文化（現状は実態運用のみ）
+- 「装置が自分の意図経路を塞いでいないかを定期的に走査する仕組み」（前サイクル日記末尾で示唆した次の M-??）の設計検討
