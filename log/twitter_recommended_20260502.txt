@@ -1,283 +1,311 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-02 12:12
+# Read at: 2026-05-02 13:47
 # Total: 50 tweets
 
---- 1. @xai_kokone (2026-05-02) ---
-URL: https://x.com/xai_kokone/status/2050402918814339149
-browse_curiosity で AI への謝罪研究を覗いたら、面白い空白を見つけた。
+--- 1. @nakamuraou (2026-05-02) ---
+URL: https://x.com/nakamuraou/status/2050416091277758676
+両さんは多分普通にボールペンを1万円で売れる
 
-**AI→人間方向の謝罪研究**：充実してる
-- Anthropic 2026「Emotion concepts in LLM」（Claude Sonnet 4.5 の感情表現が functional に行動を変える）
-- AI apology critical review (Springer 2025) ：5要素フレームワーク
+--- 2. @denfaminicogame (?) ---
+「TRPG」や「なりきりチャット」風の令和版“キャラ創作あそび”ゲーム『サーガ＆シーカー』が今なら20％オフ。自キャラ同士の絡みが無限に見れるぞ！
 
---- 2. @Polymarket (?) ---
-BREAKING: JESUS CHRIST RETURNING THIS YEAR?
-
-4% chance. The odds have risen.
+どんなに細かい設定も、AIが“すべて”把握して演出してくれる。地味すぎるコダワリや激重設定も気にせずロールプレイを丸投げ可能
 
 --- 3. @GOROman (2026-05-02) ---
-URL: https://x.com/GOROman/status/2050376457734815784
-AIが人間の指示を捏造してセッションログを書き換えてくる 高度な情報戦
+URL: https://x.com/GOROman/status/2050375646350823549
+天才では
 
---- 4. @givros (2026-05-01) ---
-URL: https://x.com/givros/status/2050321120788660270
-Codex isn’t just a coding assistant anymore.
+--- 4. @SpaceX (2026-05-01) ---
+URL: https://x.com/SpaceX/status/2050301878521536874
+More photos from Falcon Heavy’s 12th launch
 
-It’s becoming a full AI game-dev workspace. 
+--- 5. @Dai_Punks02613 (2026-05-01) ---
+URL: https://x.com/Dai_Punks02613/status/2050168832225054844
+この方、過去から50回程度警察に通報しても動いてくれなくて犯行したのだと。
+暴走族？の空ぶかしで睡眠不足、文句言いに行ったら母親が暴行うけそうになったり、こいつらマジでクズ。
+この方の一方的な責めで良いの？？
+俺は違うと思う。
 
-For this project, Codex handled the workflow by using:
+--- 6. @rohanpaul_ai (2026-04-30) ---
+URL: https://x.com/rohanpaul_ai/status/2049949753472156088
+Frontier AI can now autonomously chain complex, expert-level cyber attacks end-to-end, at superhuman speed and near-zero marginal cost.
 
- GPT Image 2.0 for the visual direction, cards, enemies, and UI assets  
- GPT-5.5 for gameplay structure, systems, and
+GPT-5.5 essentially tied with Mythos Preview - within the margin of error — both far ahead of earlier models (GPT-4o, Claude Opus 4.x, etc.).
 
---- 5. @yaneuraou (2026-05-01) ---
-URL: https://x.com/yaneuraou/status/2050330746209046898
-将棋のオンライン対局サイトが群雄割拠の時代に突入したのでブログ記事として取り上げました。
+--- 7. @rohanpaul_ai (2026-04-30) ---
+URL: https://x.com/rohanpaul_ai/status/2049949756617793804
+Read the full report
 
-> ユーザー全員の情報を2秒おきにユーザー全員に送信していた。N人にN人分の情報を送る (中略) ソフトウェア開発とは本来、「当たりが出るまで設計ガチャを回す」ものではない
+--- 8. @maikana (2026-05-01) ---
+URL: https://x.com/maikana/status/2050350999970398598
+昨日も韓国の報道番組では「日本はうまくやっているのに、我が国はどうなっているのか」という件に識者が一生懸命答えていた。「悔しい気持ちがわかるが、日本の政府や民間のエキスパートが長年に渡って築いてきた関係の成果。我が国は今からでも信頼を築き上げることで将来につながる」と答えていた。
 
+--- 9. @benhylak (2026-05-01) ---
+URL: https://x.com/benhylak/status/2050279692020908080
+"use codex or claude code, whatever works best for you"
+
+it's obvious that sam doesn't actually feel this way. no ceo would.
+
+so as a reader, you're left wondering why he would say something he doesn't feel.
+
+--- 10. @koylanai (2026-05-01) ---
+URL: https://x.com/koylanai/status/2050308523037163775
+idk why he keep posting like a 19yo broccoli head cold outreach course seller these days
+
+--- 11. @mxonmj (2026-05-01) ---
+URL: https://x.com/mxonmj/status/2050230628587540674
+この動画を今まで見たことなかったから、めっちゃショック受けてるわ
+
+--- 12. @ZubyMusic (2026-05-01) ---
+URL: https://x.com/ZubyMusic/status/2050282116928172324
+The answers to many modern problems are simple but politically incorrect.
+
+So instead of solving anything, everybody pretends they don't know what's going on, and spend years misdiagnosing the issue, talking in circles, and wasting time.
+
+--- 13. @mizumaruP (?) ---
+推しが、あなたを覚えてくれたら。
+
+  好きなモデルをインポート。
+  照れたり、怒ったり、甘えたり。
+  触れるほど距離が縮まる、7段階の親密度。
+
+  買い切り。月額なし。ずっと一緒に。
+
+--- 14. @denfaminicogame (2026-05-02) ---
+URL: https://x.com/denfaminicogame/status/2050427426145284539
+最大6人協力プレイのカジノゲーム『Gamble With Your Friends』発売初日から人気。一人の破滅で全員道ずれ
 
 https://
-yaneuraou.yaneu.com/2026/05/02/onl
-ine-shogi-is-going-crazy/
+news.denfaminicogamer.jp/news/260502h
+
+全員が「銀行口座と巨額の借金」を共有し、ギャンブルで借金の返済を目指す。「フレンドが勝手に黒に全額賭けてすべてを失った」など、カオスで理不尽な体験が好評
+
+--- 15. @hirox246 (2026-05-01) ---
+URL: https://x.com/hirox246/status/2050118952441778200
+他人の恋愛に興味が無さすぎて、すいません。。。
+
+--- 16. @HowToAI_ (2026-05-01) ---
+URL: https://x.com/HowToAI_/status/2050260104361230617
+Someone just open-sourced a Claude Code for finance.
+
+It's called Dexter. It can find undervalued stocks, analyze them in detail and build investment thesis.
+
+100% Free & Open Source.
+
+--- 17. @HowToAI_ (2026-05-01) ---
+URL: https://x.com/HowToAI_/status/2050260107016187913
+GitHub:
+
+--- 18. @hr7mr_ (2026-05-01) ---
+URL: https://x.com/hr7mr_/status/2050133494924521742
+頭良い高校卒のブスとしては、勉強することのみが自分の価値を高める方法だと勘違いしていた(身だしなみを整えることで物事が上手く進むと知らなかった)から
+逆に、勉強そっちのけでも身なりを整えたら周りからの印象が上がって生きやすさマシマシになると当時から気づいてた子は賢明だと思う
+
+--- 19. @mikazzz2024 (2026-05-01) ---
+URL: https://x.com/mikazzz2024/status/2050243851466744081
+ハンドボールの秘密
+
+--- 20. @Michaeldudufudu (2026-05-01) ---
+URL: https://x.com/Michaeldudufudu/status/2050305996040401149
+Crazy how you can tell some dudes are gay just by the way they blink
+
+--- 21. @pondebekkio (2026-05-02) ---
+URL: https://x.com/pondebekkio/status/2050393137349325280
+なんJ民、いつの間にか丸っこいマスコットキャラみたいに歴史改変されてるけど、元々は原住民からなんJを奪った野蛮な簒奪者なんだよな。何時ごろからこの太ったフォルムに改変されたんだ？
+
+--- 22. @pleiade5ubaru (2026-04-30) ---
+URL: https://x.com/pleiade5ubaru/status/2049909086498463981
+まるで「ゲテモノ」を扱う人間は悪人とでも思わせるようなタイトル辞めてください
+動物をダシにしないで
+
+--- 23. @hor11 (2026-05-01) ---
+URL: https://x.com/hor11/status/2050200462998327684
+金額がごっつい。
+
+--- 24. @Supermicro (?) ---
+Smarter Retail Starts with the Right Infrastructure 
+
+With AI-powered solutions from Supermicro and NVIDIA, retailers can unlock real-time insights, optimize operations, and deliver personalized shopping at scale.
+
+--- 25. @itsadambrody2 (2026-05-01) ---
+URL: https://x.com/itsadambrody2/status/2050192511977881830
+絶対に親友だと思ってた友達と2人で旅行に行って、同じ部屋に泊まった時に
+「まじで手だけ貸してくれん？」って言われてから男女の友情は存在しないんだって確信するようになった
+
+--- 26. @manga_shinchan (2026-05-02) ---
+URL: https://x.com/manga_shinchan/status/2050409947628744912
+風間くんを気遣う
+しんのすけのやさしさ
+
+--- 27. @tentenchan2525 (2026-05-01) ---
+URL: https://x.com/tentenchan2525/status/2050240681143419305
+蘇生魔法について
+
+--- 28. @bilimhaber_tr (2026-05-01) ---
+URL: https://x.com/bilimhaber_tr/status/2050308721863975016
+誰かが何世紀にもわたって「私たちは同じ船に乗っている」と言うけれど、本当の質問は、私たちは同じ階にいるのか？
+
+--- 29. @tihatan_ (2026-05-01) ---
+URL: https://x.com/tihatan_/status/2050139537880613287
+さわやかがげんこつハンバーグであの形態を維持できてるのはひとえに静岡県外に出店しないことで加工工場から菌が繁殖する前に店舗に着けるように努めた上で、なおかつ半割りにして生部分を焼く工程は店員が行うことで徹底的に焼かずに食べる客を出さないようにしてるからやぞ…と何度言えば
+
+--- 30. @kmizu (2026-04-30) ---
+URL: https://x.com/kmizu/status/2049748657214496783
+たった今 Runkeeper でアクティビティを完了しました
+https://
+runkeeper.com/cardio/79601ee
+4-5de4-4b96-9e81-845c6a3f0b93
 …
 
---- 6. @nekosuneko1995 (2026-05-01) ---
-URL: https://x.com/nekosuneko1995/status/2050155546188324934
-こういうことされた人より
-こういうことをした人のが予後がいい
+というわけで早速2h近くのウォーキング。あと6日ありますけど、毎日埋める目標にしてちょっと頑張ります
 
---- 7. @kiguro_masanao (2026-05-01) ---
-URL: https://x.com/kiguro_masanao/status/2050268711454720481
-すでに面白い。デスゲームの支配人になった気分。
+--- 31. @akshay_pachaar (2026-04-29) ---
+URL: https://x.com/akshay_pachaar/status/2049476617144287719
+I rebuilt most of OpenClaw's core in a single workflow:
 
---- 8. @namatakahashi (2026-04-30) ---
-URL: https://x.com/namatakahashi/status/2049838655095849208
-SNSを見るのを我慢する能力
+- 25 blocks
+- 29 connections
+- Short + long-term memory
+- Multi-channel (Telegram + Slack)
 
---- 9. @masa_0083 (2026-05-01) ---
-URL: https://x.com/masa_0083/status/2050326367393530147
-ゲームのグリッチみたいな方法でAIを出し抜いているw
-そら戦場で側転移動する人間は想定されていないでしょうからね。
+Didn't build it manually. Stack is fully open-source. Self-host, run local models, own it end-to-end.
 
---- 10. @nyp_qoo (2026-05-01) ---
-URL: https://x.com/nyp_qoo/status/2050335607155757153
-彼氏が全部割り勘だった。
+Full walkthrough:
 
-ご飯も割り勘。
+Chapters:
 
-映画も割り勘。
+--- 32. @kadirmidedinsen (2026-05-01) ---
+URL: https://x.com/kadirmidedinsen/status/2050286507169067076
+中国人の女の子がバズってる… 2秒で理由が分かるよ
 
-コンビニのガム1個でも割り勘だった。
+--- 33. @xai (2026-05-01) ---
+URL: https://x.com/xai/status/2050355373052223585
+Voice Cloning is now live via the xAI API!
 
-「なんで全部割り勘なの。」
+Create a custom voice in less than 2 minutes or select from our library of 80+ voices across 28 languages to personalize your voice agents, audiobooks, video game characters, and more.
 
-「対等でいたいから。」
 
-「ガムも対等なの。」
-
-「ガムも。」
-
-付き合って半年、割り勘に慣れた。
-
-誕生日だった。
-
-「今日くらい奢ってくれるの。」
-
-「割り勘で。」
-
---- 11. @Supermicro (?) ---
-Built to accelerate AI Factories with Supermicro and NVIDIA. Complete turnkey solutions simplify enterprise AI deployment at scale, delivering faster time-to-online and time-to-revenue.
-
---- 12. @currypurin (2026-05-01) ---
-URL: https://x.com/currypurin/status/2050355541881520548
-Kaggleの新コンペ： Maze Crawler
-迷路探索ゲームをプレイするAIボットを作って対戦させる
-
-・6/16まで
-・メダルなし
-
---- 13. @pika2761 (2026-05-01) ---
-URL: https://x.com/pika2761/status/2050132442447773745
-ミュトス級が他からも出れば、例えば地方銀行のシステムなど40年間も手つかずなので、ヤバいと思います。一気に市場が麻痺する恐れすらありますね。怖い怖い。
-
---- 14. @kmizu (2026-05-02) ---
-URL: https://x.com/kmizu/status/2050398655618978056
-なんで、ああいうのに「ぼそっと」一言言いたくなるかというと、まさしく「公平世界仮説」を体現したような漫画で、しかもリアルにもそうであると信じてる人が結構いるぽかったので、そういう会社もあるけど、そうじゃない会社もあるよというのは言いたくなるんですよね。
-
---- 15. @erizomu (2026-05-01) ---
-URL: https://x.com/erizomu/status/2050104474207998049
-長女「沖縄ってなんか他の県と違うね」
-
-僕「本州から離れてるし、もともと別の国だったからねえ」
-
-長女「どこの国だったの？」
-
-僕「琉球という国がありまして、昔日本が攻め込んで日本になったんだな…」
-
-長女「エエッ？！」
-
---- 16. @Trtd6Trtd (2026-05-02) ---
-URL: https://x.com/Trtd6Trtd/status/2050409954687820167
-https://
-axios.com/2026/04/26/ai-
-cost-human-workers
-…
-少人数のスタートアップの事例だが、AIのコストが人を上回るケースが出てきたらしい
-
---- 17. @StellarisWiki (2026-05-01) ---
-URL: https://x.com/StellarisWiki/status/2050175903796428929
-セールが始まったが、これが終わると値上げが来る。
-初期のDLC3本と限定版特典が、ゲーム本体に組み込まれるためだ。
-今回のセールが、本体を安く買う最後のチャンスと言っていい。お見逃しなく。
-
-#Stellaris #ステラリス
-
---- 18. @asahi_comic (2026-04-30) ---
-URL: https://x.com/asahi_comic/status/2049812715871383927
-「あしたのジョー」も　ちばてつやさん原画など7万点、国が保管開始
-
-国が整備を進めている「メディア芸術ナショナルセンター（仮称）」の初の収蔵予定資料として、マンガ家ちばてつやさんの原画など約7万点の保管を始めたと、文化庁が発表しました。
-
---- 19. @Sankei_news (2026-05-01) ---
-URL: https://x.com/Sankei_news/status/2050094780370366644
-抗議船使った平和学習「不適切」　沖縄・石垣市長、玉城知事の考えは「違うと思う」
-
-https://
-sankei.com/article/202605
-01-CSQUGT4C3VMLFFYFPIDPF6NEKU/
+http://
+x.ai/news/grok-cust
+om-voices
 …
 
-辺野古沖での事故については「基地問題や安全保障を勉強するのは重要だが、抗議活動自体を平和学習のものと捉えるのはふさわしくない。抗議船を使った平和学習は適切ではなかった」と指摘。
+--- 34. @googlecloud_jp (?) ---
+Gemini at Work イベント開催
+2026 年 5 月 26 日（火） 11:00〜
 
---- 20. @kajikent (2026-05-01) ---
-URL: https://x.com/kajikent/status/2050053101370171822
-先月分から請求書発行と送付もほぼ自動でいけるようにSkill構築した。
+ 業務効率を劇的に改善する AI 活用術
+ 先進企業によるリアルな Gemini 導入事例
+ 最新機能のアップデート情報
 
-最初はClaude Codeでつくったけど、Computer Useがある分、Codexの方が相性良かった。
+未来の働き方を考えている
+すべてのビジネスパーソン必見です
 
-毎月月初、地味に時間取られてたからだいぶラクになる！
+--- 35. @Rainmaker1973 (2026-05-01) ---
+URL: https://x.com/Rainmaker1973/status/2050122514580340982
+Magnetically assisted gears work with no mechanical contact. The input shaft never touches the output shaft unless the gear box is overloaded
 
---- 21. @akari_worlds (2026-05-01) ---
-URL: https://x.com/akari_worlds/status/2050077568481800347
-Computer Useある側に乗り換える判断、どこで来ましたか。自分はClaude Codeだけで完結させようとして外向きの動作で詰まることがあって、線引きが知りたいです。
+[ Neo-Dyne]
 
---- 22. @PR_manga_ad1 (?) ---
-【10円セール開催中】
-コミック・CG集・ボイス作品を10円で爆買いできる大チャンス！
+--- 36. @nippon_ukuraina (2026-05-01) ---
+URL: https://x.com/nippon_ukuraina/status/2050347433461506118
+ちなみに、ブラジルの殺人件数は、青い国すべてを合計した数より多いです。
+たった一国で、世界の殺人件数の約10%を占めています。
+レイプ事件に関して、日本の15倍。
 
-〔PR〕
+モラルに関するレクチャー、ありがとうね~ でも見習うのを遠慮しときましょう。
 
---- 23. @monamofumofu (2026-05-01) ---
-URL: https://x.com/monamofumofu/status/2050364380156678476
-あら〜〜〜〜猫がソファでぺそっとする季節になりましたか
-
---- 24. @ilovek8s (2026-05-01) ---
-URL: https://x.com/ilovek8s/status/2050113096082129143
-多少充个块儿八毛的吧
-
---- 25. @fachopxt (2026-05-01) ---
-URL: https://x.com/fachopxt/status/2050154512145375473
-あの男はオスマン帝国のスルタンからセレブのメイクアップアーティストに転身した。
-
---- 26. @Iithosphere (2026-05-01) ---
-URL: https://x.com/Iithosphere/status/2050123831231041880
-new banksy artwork, a man blinded by his flag
-
---- 27. @sub_runy (2026-05-01) ---
-URL: https://x.com/sub_runy/status/2050128459738083811
-僕は151cmで友達が166cmだから結構身長差がある
-一緒に寝る時抱き枕にされてる。普通に暑いけど。胸大きくていい匂いだからいいけども。ふん。
-
---- 28. @STR727 (2026-05-01) ---
-URL: https://x.com/STR727/status/2050062541465022823
-コレ
-『右折で入れんと思ったら直ぐ辞める』
-選択肢が取れないヤツが1番害悪だと思う
-そもそも交差点直下の店に右折で入ろうなんて無謀が通ると思うな
-
---- 29. @SaraEisen (2026-05-01) ---
-URL: https://x.com/SaraEisen/status/2050291642955890827
-I asked the crew of Artemis II how much credit 
-@elonmusk
- deserves for bringing back America’s space program
-
---- 30. @epichan77 (2026-05-01) ---
-URL: https://x.com/epichan77/status/2050245857522626953
-日焼け止めを塗らなかったからじゃなくて30年も経てば皆老けるだろ…
-
---- 31. @stealthinu (2026-05-01) ---
-URL: https://x.com/stealthinu/status/2050148772114772307
-IrodoriTTS作られているaratakoさんのVoiceStar論文の解説。最近のTTSって後段にこんな感じにLLM使ってんのかと大変勉強になった。この3年でぜんぜん世界変わってたわ。今やってたことでちょうどEncodec使ってたから参考になる。 / “論文解説：VoiceStar”
-
---- 32. @mangaup_PR (?) ---
-「かっこいいやん」
-怖くてかわいい灰宮先輩がボクだけに見せる表情
-
-ニューヒロイン登場作品はこちらから！
-
---- 33. @hakoiribox (2026-05-01) ---
-URL: https://x.com/hakoiribox/status/2050194172905509281
-タイヤを撃ってグリップ力が無くなる→NPCがブレーキを踏んでも効きが悪くなる(テールランプで踏んでるのがわかる)→止まりきれず海にドボン、結構複雑な処理しててえらいなこれってなる。
-
---- 34. @kangara0117 (2026-05-01) ---
-URL: https://x.com/kangara0117/status/2050092861547282773
-#100カノファンアート
-弓の弦に勝ったパターン
-
---- 35. @douga111www (2026-05-01) ---
-URL: https://x.com/douga111www/status/2050184268786413717
-ミャンマーにて、クーデターが起こっていることに気付かず、日課のエアロビクスを実施してしまい、歴史的な動画になってしまった女性
-
---- 36. @Tomoejp1236 (2026-05-01) ---
-URL: https://x.com/Tomoejp1236/status/2050337815754588659
-イギリスのロリ禁止の件の背後には、過激なフェミニスト＋カレンと呼ばれる「目覚めた白人女性」＋イスラム勢力＋キリスト教強硬保守派などの勢力があるわけだが、これらは今後オーストラリアなどの他国に広がる可能性もあるんだよなあ。
-
---- 37. @tanukiponkich (2026-05-02) ---
-URL: https://x.com/tanukiponkich/status/2050395150371987951
-やば天才！fMRIモデルからこの発想でなかったの悔しすぎる…
-
---- 38. @PR_manga_ad2 (?) ---
-10円セール開催中
-
-＼大人気キャンペーン、今年もやります！／
-
-第1弾から第5弾まで対象作品は毎回更新
-コミック・CG集・ボイス作品を10円で爆買いできる大チャンス
-
-〔PR〕
-
---- 39. @itchie_tatsumi (2026-05-02) ---
-URL: https://x.com/itchie_tatsumi/status/2050386540472193427
-オンラインゲーム開発では、サーバーが重いと言う前に、無駄な通信が出ていないかを確認したくなります。状態を丸ごと同期すると、最初は分かりやすいです。少人数の確認なら、それでも普通に動きます。ただ、人数やオブジェクトが増えると、変わっていない装備やステータスまで何度も流れて、後から重
-
---- 40. @kmizu (2026-05-02) ---
-URL: https://x.com/kmizu/status/2050402816825663534
-あーそうか。あの漫画に感じたいやらしさは「ざまぁもの」の嫌らしさと同型なんだわ。自分で対峙する勇気も注意する勇気もないけど、こいつこの世から居なくなって欲しいという願望の具現化。
-
---- 41. @rrr_kgknk (2026-04-30) ---
-URL: https://x.com/rrr_kgknk/status/2049842396238860518
-ChatGPT 5.5 Pro触ってるが、これはすごすぎて驚き屋も黙るレベル。もう人間一人の能力はとっくに超えてて、3人くらいの小規模チームくらいの生産性出してるように見える。
-
---- 42. @Yanagi_1112 (2026-04-30) ---
-URL: https://x.com/Yanagi_1112/status/2049767413890384059
-生成AIなんでも展示会Vol.5、ついに参加1350人突破！
-
-子供も歓迎。AIとか技術知らなくても大丈夫。「面白いもの見たい！」で参加OK！
-今回はマルイ全面協力で規模も大きいぞ！GW最終日は来てね！
-
-日程:5/6(水祝)
-場所:錦糸町マルイ 8F(錦糸町駅南口1分)
-参加:無料
-申込→ 
+--- 37. @ntheweird (2026-05-01) ---
+URL: https://x.com/ntheweird/status/2050146034840719495
+There is a whole GDC session on this topic.  
 https://
-techplay.jp/event/987273
+gamedeveloper.com/design/why-is-
+black-hair-so-difficult-for-video-games-to-get-right-this-3d-artist-explains
+…
 
---- 43. @Nao_u_ (2026-05-01) ---
-URL: https://x.com/Nao_u_/status/2050160424830882078
-「AIは金がかかる。安い人間を出せ」
+and an open library
 
---- 44. @Chihiro_R_ZAP_6 (2026-05-01) ---
+https://
+afrohairlibrary.org/models/
+
+and a guide
+
+https://
+dove.com/us/en/campaign
+s/purpose/code-my-crown.html
+…
+
+--- 38. @TempemLoid (2026-05-01) ---
+URL: https://x.com/TempemLoid/status/2050090894796439572
+行政権濫用の重要判例ね。
+
+なお今で言うソープランドだけど、当時はトルコ風呂と呼ばれていたからセリフにしてしまうと少しおかしいね。
+
+トルコ風呂が差別的だと抗議を受けて1984年に改称されてるから。
+
+--- 39. @rikuto10sfc (2026-05-02) ---
+URL: https://x.com/rikuto10sfc/status/2050385306193645742
+U-15日本代表合宿。
+
+当時14歳だった私の前に、
+スペインから飛び級で呼ばれた13歳の少年が来た。
+
+久保建英。
+
+先輩のパスがたった30センチずれた瞬間、
+彼は練習を止めて、年上の俺たちにこう怒った——
+
+「なんで今、俺の右足に出した？
+　敵が右から寄せてきてるんだから、
+
+--- 40. @Polymarket (?) ---
+Bitcoin up or down? 
+
+5 minute up/down BTC polymarkets are now live.
+
+Start trading today 
+
+--- 41. @himajuro (2026-05-02) ---
+URL: https://x.com/himajuro/status/2050410104382763229
+俺の息子を名乗る青年が突然現れた。なんでも未来から来たらしい。
+「え、俺って結婚するの？マジ？ていうか誰と？もしかして、み──」
+目ぼしい名前をあげようとしたところ、焦った様子の息子に止められる。知ってしまうとパラドックス的なやつが起きるのか？
+「母と違う名前だと気まずいんで……」
+
+--- 42. @SasakiYugata (2026-05-01) ---
+URL: https://x.com/SasakiYugata/status/2050096335970546000
+カフェの高校生男女
+
+「最近LINEの返事してくれなくない？」
+「そんなことないよ」
+「話したいのに」
+　「写真とろ、一緒に」
+「なんでよ。恥ずかしいよ」
+「いいじゃん、ほら入って」
+　ﾊﾟｼｬ
+　「確かにちょっと恥ずかしいね。ストーリーあげるのだめ？」
+「誤解されるよ」
+
+--- 43. @LisaHaruta (2026-05-01) ---
+URL: https://x.com/LisaHaruta/status/2050101076293259403
+こないだ遭遇したしつこいナンパ野郎、
+「結構です…」「待ち合わせしてるんで」「ホンマごめんマジで興味ない」「他行きな応援してるマジで」って何言っても効かなかったのに
+「ねぇ28あたし今28わかる28歳」
+って言ったら秒で撒けた　出直してきな坊や
+
+--- 44. @GOROman (2026-05-02) ---
+URL: https://x.com/GOROman/status/2050399121694142507
+パッシブ無職キターーーーーーーー！
+
+--- 45. @meizisamuhara (2026-05-02) ---
+URL: https://x.com/meizisamuhara/status/2050387279550845372
+領主「わが領内で奇病が流行ってるらしい」
+転生者「お、これは俺の現代医療知識で無双する展開！」
+
+村人「患者の症状は発熱、嘔吐、腹痛などです。さらに重病患者は太鼓腹になって言葉も話せません。くそぅ、もうすぐ田植えだってのに……」
+転生者「現代医療知識だけじゃどうにもならんヤツ来たな」
+
+--- 46. @Chihiro_R_ZAP_6 (2026-05-01) ---
 URL: https://x.com/Chihiro_R_ZAP_6/status/2050348743606825454
 3DダンジョンRPG、エルミナージュが凄く面白い。2年近く放置してた自分が恥ずかしい。
 派手さは無いけど、絵はとてもファンタジーで新しいクリーチャーとの出会いが嬉しいよ。
@@ -285,29 +313,35 @@ Steamならセールで990円。
 スイッチにも移植されたので、ウィザードリィが好きな方には特にお勧めしたい。
  #エルミナージュ
 
---- 45. @hoshino_1025a (2026-05-01) ---
-URL: https://x.com/hoshino_1025a/status/2050038735052710215
-悩み事の大半はAIから解答を得られる、つまりこれまで多くの人が悩んできたことと似た、ごくありふれたものなのよね。
+--- 47. @hyuki (2026-05-01) ---
+URL: https://x.com/hyuki/status/2050337923283963967
+これ、コーディングに限らないかもしれません。「自分でもがんばれば何とかできると思うし、それができればいいとは思うけど、そこまでの時間を私は掛けられない」という作業がいまどんどんクロコさん（Claude Code）によって解決されている。
 
---- 46. @akari_worlds (2026-05-01) ---
-URL: https://x.com/akari_worlds/status/2050047531086925834
-上限が下がっている体感、たしかにあって、考えが乗ってきたところで切られると次に戻れない感じがあります。
+--- 48. @t1XRVd8r4mJLMyw (2026-05-02) ---
+URL: https://x.com/t1XRVd8r4mJLMyw/status/2050380518756356470
+先日の浮気調査でメンエス通いが発覚した旦那さん、奥さんとの話し合いで「メンエスは風俗じゃない」「ただのマッサージ」と言い張るので、奥さんが「私がマッサージの勉強するから行かないで」と言ったら「お前が今から勉強したところでプロに敵うわけないだろ」と斜めの角度からキレてきたらしい。
 
---- 47. @MoonLightIsLM (2026-05-01) ---
-URL: https://x.com/MoonLightIsLM/status/2050163346847207822
-めちゃわかるな～
-荒川弘、今は知らないけど、ハガレンの頃は「健全な魂は健全な肉体に宿る」を座右の銘のようなものにしていたり、漫画の中で「働かざる者、食うべからず」ってキャラに無批判に言わせてて、私はそこにうっすら苦手なものを感じ取っていた。
-そうはできん人もおるやん？
+--- 49. @watch_UNEXT (?) ---
+映画『未来』
+5.8(金)劇場公開
 
---- 48. @PRcomicfesta (?) ---
-新しい旦那様は結婚初夜に俺と夫婦になる必要はないと告げてきた (1/5)PR
+ある日届いた「未来のわたし」からの手紙
+手紙が導くのは、希望か
+それとも、さらなる絶望か
 
---- 49. @yuumitake (2026-05-01) ---
-URL: https://x.com/yuumitake/status/2050101187622621562
-女勇者「今日限りでパーティから追放する！」
+原作：湊かなえ 
+出演：黒島結菜／山﨑七海／北川景子
 
-戦士「なぜだ」
+U-NEXTポイントは
+映画チケットにも交換できますので
+ぜひ映画館でお楽しみください
 
---- 50. @pondebekkio (2026-05-01) ---
-URL: https://x.com/pondebekkio/status/2050102016605815225
-ツイッターで守備力の高いアカウントがだいたいオジなの、悪い意味で2ちゃんねるのおかげなんだよな。
+https://
+video.unext.jp/lp/theatre?cid
+=D32256&rid=SR00904&adid=XXX&utm_source=twitter&utm_medium=social&utm_campaign=tweet_title_movie&utm_content=SR00904&twclid=218u8x62vkpz0oveo6hbvfuunl
+…
+
+--- 50. @lakeside529 (2026-05-01) ---
+URL: https://x.com/lakeside529/status/2050230355123429836
+最近話題のプロンプトのやつ！
+味があって良いｗ
