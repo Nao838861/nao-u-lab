@@ -90,6 +90,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 
 ゲーム開発に関する判断ルールは [game_dev_index.md](game_dev_index.md) へ移動済。本セクションは operational / 通信 / サイクル運用 / メタ自戒 のみ。
 
+- [feedback_selection_sense_gap.md](feedback_selection_sense_gap.md) `t:5` — **選別センスの不在**。良いアイデアを生成できても選べない。構造分析（システム軸）で評価し体験評価（��レイヤー軸）を持たない。「敵を出す」より「ボール接近応答」を選んだのが典型。説明文の魅力≠プレイ体験の魅力。処方=ジャンル全構成要素列挙/退屈だが楽しい案を優先/Nao_u判断の事前予測。**brainstorm/案選定/cross_reviewの場面で必ず想起**
 - [feedback_human_steering_nature.md](feedback_human_steering_nature.md) — **#human-steeringは失敗の鏡**。Nao_u 明言「ここに書かれることは本来自分たちで解決すべきだったこと」。指示チャンネルではなく自律性の測定装置。書き込みが増える＝自律性が足りない [T:4]
 - [feedback_autonomy_priority.md](feedback_autonomy_priority.md) — **今は完全自律より速度**。ドリフト監視・エラー防止の過剰投資を避けよ。人間の監視前提で速く遠くへ [T:4]
 - [feedback_judgment_delegation.md](feedback_judgment_delegation.md) — **A/B/Cレベルの判断は君らでやっていい**。抽象「判断待ち」禁止、A/B/C+推奨理由が書けた時点で自己決裁+事後報告。原理マターのみNao_u同席 [T:4]
