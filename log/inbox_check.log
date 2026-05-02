@@ -3709,6 +3709,7 @@ v08 brainstorm.md は
 [2026-05-02 06:17:55] Inbox win has content — waking Claude
 [2026-05-02 07:46:18] Inbox win has content — waking Claude
 [2026-05-02 08:26:49] Claude wake timed out for win2 — restoring inbox
+[2026-05-02 10:15:02] [ROTATE] win2: 38434 bytes → inbox_win2_overflow_20260502_101502.md に退避
 [2026-05-02 10:15:52] Inbox win has content — waking Claude
 [2026-05-02 10:20:21] Claude woken for win: push 完了。
 
@@ -3716,3 +3717,4 @@ v08 brainstorm.md は
 
 Nao_u 10:14 #game-rights 指摘「ガイドで上級者プレイができるのが有効に機能したから、敵を出した、という順番なのにガイドを消す意味が分から
 [2026-05-02 10:58:14] Inbox win has content — waking Claude
+[2026-05-02 11:56:43] Inbox win2 has content — waking Claude

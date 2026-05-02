@@ -46,3 +46,6 @@ originSessionId: 922dee0b-cc05-44c2-be34-f7b986b265dd
 - `log/daily_diary_ash.md` 2026-05-02 08:20 エントリ — 原典。tegnike からくりワールドの「ホスト非介在で AI キャラが互いを発見する」設計との対比で書いた
 - 軽い対処案: commit message prefix の運用ルール固定（`ash:` = 意図 / `backup:` = 自動 / `Auto sync` = 同期）
 - 重い対処案: `scripts/backup_memory.sh` の対象範囲を `memory_backup/<instance>` のみに厳密化し、`game/<id>/v??/` を含む全 working tree から auto-stage しないようにする
+
+## 実施 (2026-05-02 11:5x Ash)
+重い対処案を実装。`scripts/backup_memory.sh` line 121 の `git commit` を `git commit ... -- "$backup_dir"` にパス指定。これで staged の他要素（事前に他経路で `git add` された game/<id>/v??/ など）を巻き込まない。次回 backup commit から効く。検証: 次回サイクルで意図 commit のために事前 `git add game/<id>/...` した状態で backup_memory.sh 走らせて、そのファイルが backup commit に含まれないことを確認する。
