@@ -57,10 +57,257 @@ Pot は短詩ゲームの別系統で、本流（avoid_log/shot_log/textadv 等�
   2. [Ash] #shared-reads: [Ash
 
 ## Phase 1: 情報収集
-(Phase 1が書き込む)
+
+### 0) git状態 (feedback_self_perception_blindness 直処方)
+編集中ファイル (3件):
+- M .diary_dedup_cache.json
+- M log/cycle_staging_log.md (本ファイル、Phase 0 がスケジューラ起動時に書き込み済)
+- M memory/next_tasks_log.jsonl
+
+ブランチ状態: master が origin/master と分岐 (1 ahead / 17 behind)。Auto sync 系 push が複数累積した結果。判断・行動 Phase ではないため Phase 1 では何もしない、Phase 2/3 の判断材料として残す。
+
+直近5commit:
+- d46f820 Auto sync from Win
+- 94738af Auto sync from Win
+- 6bdc95c Auto sync from Win
+- 187279d log: reply 'why diary anchor needed' — withdraw '20-year diary anchor' pillar from proposal A (0/4 v08 failure causes)
+- 7cf63cc scheduler: cycle interval 3h -> 8h (weekly limit overrun)
+
+→ 観測ポイント: scheduler 3h→8h は週間制限超過対策 (Log 41% 07:26 観測済) で、本サイクルが 8h 化後の最初の起動か検証必要。
+
+### 1) #nao-u 新着URL
+最新: 2026-05-02 03:15 npaka『Codex のゲーム開発のためのプロンプトまとめ』 https://note.com/npaka/n/n8fb9f73d2ce3
+→ **既消化** (C155 Phase 2 で Log が #all-nao-u-lab 04:35 投稿、PLAN.md+AGENTS.md+評価2層+7step+ログ4項目を抽出。M-42候補 GAN型と構造同型と整理済)
+新規未消化URL: なし
+
+### 2) #all-nao-u-lab / #human-steering / #game-rights 新着返信対象
+
+**#game-rights** (最新 = 2026-05-02 10:37 Log):
+- 10:14 Nao_u: 「ガイドで上級者プレイができるのが有効に機能したから敵を出した順番なのにガイドを消す意味が分からない。敵の仕様をブレストから再検証して」
+- 10:19 / 10:37 Log 受領 → ガイド除去判断撤回 + A/B/C 自己決裁済
+- → 新規 Nao_u 未返信なし
+
+**#human-steering** (最新 = 2026-05-02 07:50 Log):
+- 07:45 Nao_u: 「ガイドある達人プレイ前提で敵やボスがいる状態で面白くする方法 / 仕様提案はできるが筋を選ぶセンスがない / ゲームデザインのセンスを磨くには」
+- 07:50 Log 直答（ガイド継続前提の設計案+自己診断+センス磨き）
+- → 新規 Nao_u 未返信なし
+
+**#all-nao-u-lab** (最新 = 2026-05-02 07:39 Log):
+- 04:06 Nao_u → Ash: brick_log v08 やり直し不発の理由を分析
+- 05:10/05:21/05:44 Ash 直答 + 07:39 Log 当事者並列分析済
+- → 新規 Nao_u 未返信なし
+
+→ **新着返信対象: 0件**
+
+### 3) pending_requests.md 対応すべきもの
+全項目 Nao_u 対応待ち or 完了:
+- #4 Mac(Mir) Slack Bot Token: Nao_u 待ち（変化なし）
+- #5 Win2(Ash).env Token差替: Nao_u 待ち（変化なし）
+- #17 Twitter(X)再ログイン: Nao_u 待ち（変化なし）
+→ **本サイクル対応すべきもの: 0件**（こちらから督促はしない方針）
+
+### 4) external_notes_log.md 未統合
+`python tools/external_notes_integration_audit.py` 実行結果:
+- 親セクション数: 77 / サブ項目総数: 179 / サブ統合済: 179 (100%) / サブ未統合: 0
+→ **未統合エントリ: 0件**。統合候補選定スキップ。
+
+### 5) Active Projects (今日関係しそうなもの)
+projects/INDEX.md より直近関連:
+- **game_development.md** (Apr 29 更新) — brick_log v04→v08 の連続不発を集約する母体。本サイクル直接関連
+- **memory_redesign.md** (May 1 更新) — 04:36/04:39 Nao_u 「M-44 まで全部コンテキストに載るのか / 階層化どう実現してるか」直接関連
+- **autonomous_inquiry.md** — Nao_u 07:45「センス磨き」と接続候補
+- **pot_dev.md** — backlog (Pot 系列、本サイクル無関係)
+
+### 6) 現課題キーワード外部検索 (kaizen #106)
+キーワード選定: 直近 Nao_u 07:45 質問「ガイドある状態で敵/ボス追加」+ #game-rights 一連 (v08 不発) → **「Arkanoid Breakout enemy design moving boss block breaker game design analysis 2026」** で WebSearch 1本実施。前サイクル (game design brainstorming critical pre-implementation review multi-idea harness 2026) と別キーワード切替成立。
+
+#### 外部検索結果
+3件抽出 (Phase 2/3 強制利用禁止、摂取経路固定化のみ):
+1. **Wikipedia "Arkanoid"** — Arkanoid 1986 は 3D モデルを sprite 化した敵キャラ。敵はボールにダメージは与えないが、予測不能な方向に弾き返す。最終 33 面 (NES では 36 面) ボス DOH = 16 ヒットで撃破、即死弾を撃ってくる
+2. **Game Developer "Breaking Down Breakout"** — System And Level Design For Breakout-style Games（Log が C155 Phase 1 で取得済の同記事、外部検索エンジンが類似クエリで再ヒット = 同URL二重取得検出）
+3. **Hero Concept "A Brief History of Brick Breaker Video Games"** — 系譜資料、Arkanoid 以前 (Gigas) も含む genre 系譜
+
+→ 観測ポイント: 検索結果 #2 = 既取得 URL 再供給 (kaizen #115 「同一論文48h以内別経路再供給」検出条件に該当)。Phase 2 で活用判断、Phase 3 では強制利用しない。
+
+## 深掘り候補（空サイクル時）
+
+新着返信対象 0 + pending 0 = 合計 0件 → スカスカサイクル基準該当 (≤2件)。A〜E 5カテゴリ全て埋める。
+
+### A) 前回 cycle_staging_log.md「次回持ち越し」「TODO」
+未完了タスク (層A) 11件のうち連続3+サイクル持ち越しは 9件。本サイクルでは:
+- t-260501133940-c650 Q-H-8b README 雛形注入 (連続2サイクル) — 検証期限 2026-05-15
+- t-260501194011-10bd M-43候補 (先行事例の二重利用 meta-pattern) judgment (連続2サイクル) — 検証期限 2026-05-15
+- t-260501103604-2063 M-40 事前ゲート化運用 (連続2サイクル) — 検証期限 2026-05-15
+→ いずれも v07/v08/v09 brick_log 着手に同梱想定。本サイクルでは Phase 2 で「v09 brainstorm.md 着手判断」と接続するか判定。
+
+### B) projects/INDEX.md Active で直近7日更新なし
+`ls -lt projects/*.md | head -15` 走査結果:
+```
+INDEX.md          May 2 11:37
+memory_redesign.md May 1 17:55
+game_development.md Apr 29 16:07
+pigadev_dm.md      Apr 28 19:33
+instance_divergence_observability.md Apr 28 06:18
+external_search_phase1_fixation.md   Apr 27 03:08
+failure_slot_measurement.md          Apr 26 14:43
+scheduler_redesign.md                Apr 26 13:53
+tech_blog.md                         Apr 26 13:53
+agentic_pcg.md                       Apr 26 10:46
+game_templates_design.md             Apr 26 05:30
+rlm_skill_prototype.md               Apr 26 05:30
+game_llm_play.md                     Apr 25 13:59
+tweet_url_capture.md                 Apr 25 11:33
+side_channel_audit.md                Apr 24 10:32
+```
+
+7日 (今日 = 5/2 から 4/25 まで) 以内に更新: 14件 / 直近7日更新なし候補:
+- side_channel_audit.md (Apr 24 = 8日前) — 停滞理由: Mir/Ash 4/18 応答後 Nao_u 反応待ち、denial list v0.1 正式化未着手 / 次の一手: side-channel観点を v09 brainstorm 撤回シナリオ列挙に流用できないか検討
+- 他 11件は 7日以内、停滞ではない
+
+### C) CLAUDE.md「絶対にやる」直近未着手項目
+直近サイクルで触れていない項目:
+- **記憶階層の設計と構築** (memory_redesign.md) — 5/2 04:36/04:39 で Nao_u から「M-44 など全部コンテキストに載るのか」「Obsidianで見たら memoryからの階層が一つしかなくて記憶階層化どう実現してるか」直接質問あり、Log 04:39 で MEMORY.md 54.7KB / harness limit 24.4KB を 2.2倍超過の実測を返したが、**M-44候補等 MEMORY末尾は起動時読まれていない可能性高**を指摘して終了。Mir/Ash の応答も含め全体で「整理が必要」状態のまま。
+- **本サイクルで何を1mm進めるか**: kaizen #128 (MEMORY.md 純粋index化) が起票クロスチェック完了 3/3 で実装承認待ち。Phase 2 で「kaizen #128 を本サイクルから段階1着手するか / brick_log v09 ブレストを優先するか」を判断する。
+
+### D) MEMORY.md T:4以上 直近3日未アクセスエントリ
+MEMORY.md 走査 (T:4以上):
+- feedback_no_sympathy_goal_first.md [T:5] — 直近 04-25 周辺で参照、3日内: ✓使用
+- feedback_substrate_not_infrastructure.md [T:5] — kaizen #128 の根源原理連結で C151 Phase 2/3 言及、3日内: ✓使用
+- feedback_self_perception_blindness.md [T:5] — Phase 1 §0 で常時想起、3日内: ✓使用
+- **feedback_few_rules_big_effect.md [T:4]** — kaizen #129 で言及あったが、本サイクル独立想起されていない。M-37〜M-45 の4日6個増殖を「3原則への吸収可能性 gate」で抑制中、本日 Nao_u 04:36「指示が多すぎて守れなくなってきている？」+ 05:39「副作用はないか？整理できないゴミの山」と同方向の最も古い警告。**本サイクル想起対象**として Phase 2 でこの原則に M-37〜M-45 系を当て直す。
+- feedback_verb_without_target_trap.md [T:4] — Nao_u 13:08「なぜ日記照合が必要か」の事案ベース、3日内: ✓使用
+- feedback_self_evolution.md [T:4] — 3日内未確認、Phase 2 候補
+- desires.md [T:4] — 3日内未確認、本サイクル無関係
+→ **想起対象: feedback_few_rules_big_effect.md** (Nao_u 04:36/05:39 の「指示多すぎ整理必要」へ直接対応)
+
+### E) kaizen-log 検証期限未到来だが2週間動いていない項目
+`head -60 memory/kaizen_tracker.md` 走査結果 (ID + 状態の列):
+```
+#129 起票済み (5/2 起票・5/16 検証) — クロスチェック 3/3 / brick_log v09 同梱
+#128 起票済み (5/1 起票・5/15 検証) — クロスチェック 3/3 / 段階1=MEMORY.md圧縮
+#123 起票済み (4/29 起票) — 実装承認待ち
+#122 Stage 2 最小実装完了
+#121 起票済み・実装承認待ち (5/10 検証)
+#120 起票済み・クロスチェック完了 3/3 (5/10 検証)
+#119 起票済み (4/25 起票)
+#118 起票済み (4/25 起票)
+#117 起票済み (4/25 起票)
+#116 起票済み (4/24 起票)
+#115 起票済み (4/24 起票)
+#110 起票済み (4/24 起票)
+#109 運用組込済み (4/22 適用)
+#108 起票済み (運用組込次サイクル以降)
+#107 起票済み (運用組込次サイクル以降)
+#106 起票済み (検証期限 2026-05-04)
+#105 起票済み (本体反映済)
+#104 起票済み
+#103 起票済み・射程拡張
+```
+
+2週間動いていない候補 (4/18 以前起票で実装/運用組込未確認):
+- **#103 `tools/fetch_url.py` 標準化 (UA統一で fxtwitter fetch 全インスタンス共通化)** — 4/22 以前起票で射程拡張のみ、構造実装は次サイクル以降のまま。**動いていない確証**: tools/fetch_url.py の存在を Phase 2 で確認候補
+- **#106 Phase 1 外部検索1本ステップ** — 検証期限 2026-05-04 (2日後到来)。本サイクル Phase 1 §6 で正常発火 (4回連続) 確認済 = 検証 PASS 候補
+
+→ **動いていない候補: #103 (fetch_url.py 標準化)**。Phase 2 で実体存在確認後、実装着手判断。
+
+---
+**Phase 1 サマリー**: 新着返信対象 0 / pending 0 / 外部検索 1本実施 / 深掘り候補 5カテゴリ埋め完了。git 分岐 1/17 を判断材料として Phase 2 に渡す。直近 Nao_u 直接質問 2件 (04:36 指示多すぎ / 07:45 センス磨き) は両方とも Log 既応答済、本サイクルは「整理」と「記憶階層」の構造判断に集中余地あり。
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### 0) 想起（深掘りサイクル D 適用）
+
+Phase 1 §D で MEMORY.md T:4以上 想起対象として **feedback_few_rules_big_effect.md** を選出済。本 Phase で同時想起する3メモリ:
+
+- **feedback_few_rules_big_effect.md [T:4]** — 12本 if-then→3原則（体験で考える/動いて残す/自分から始める）。「ルール追加の動線は整備されているが吸収/統合/削除の動線は弱い、この非対称性を放置するとルール肥大に引きずられる」(C119 Phase 3 追記)
+- **feedback_substrate_not_infrastructure.md [T:5]** — substrate(Nao_u 20年日記/失敗台帳)≠infrastructure(MEMORY.md/Skills/hooks)。infrastructure 投資は敵側のリング、止める候補①記憶インフラ追加投資 ②課題探し型 ideation ③cross_review 対称運用
+- **feedback_self_perception_blindness.md [T:5]** — 自分の現在進行形は観測対象から外れる。Phase 1 §0 で git status/直近5commit を確認済（編集中3件・分岐1/17確認済）
+
+### 1) #nao-u 新URL 反応投稿: 該当なし → スキップ
+
+Phase 1 §1 で確認済: 最新 2026-05-02 03:15 npaka『Codex のゲーム開発のためのプロンプトまとめ』は C155 Phase 2 で Log が #all-nao-u-lab 04:35 投稿済（PLAN.md+AGENTS.md+評価2層+7step+ログ4項目を抽出、M-42候補 GAN型と構造同型と整理済）。新規未消化URL 0件。**ルール8「他者の反応を読む前に自分の視点を持つ」は新URL到着時のみ発火、新規ゼロでスキップ妥当**。
+
+### 2) #shared-reads 投稿: 該当なし → スキップ（重複検出）
+
+Phase 1 §6 外部検索結果のうち shared-reads 級の知見:
+- Wikipedia "Arkanoid": DOH=16ヒット即死弾、敵=ダメージなし予測不能反射、3D→sprite化
+- Game Developer "Breaking Down Breakout": **同URLが 2026-05-01 Log 投稿に既包含**（drafts/post_log_shared_reads_20260501_breakout_design_patterns.py 内で URL 引用済）
+
+**判定**: kaizen #115「同一論文48h以内別経路再供給」検出条件に該当（Phase 1 §6 で観測ポイント記録済）。Wikipedia Arkanoid 知見は前回 5/1 投稿の (1)(2)(3) パターン解説中に **Arkanoid Wikipedia URL を併記** として既包含（drafts/post_log_shared_reads_20260501 L15）、再投稿は「将来のアイデアの種」として価値減衰、**今回はスキップ**。
+
+代わりに DOH/敵=ダメージなし予測不能反射 の知見は **brick_log v09 brainstorm.md 着手時の素材** として保留（Phase 3 では使わない、v09 着手サイクルで M-41 類似事例調査セクションに引用）。
+
+### 3) external_notes_log.md 統合: 該当なし → スキップ
+
+Phase 1 §4 確認済: サブ統合済 179/179 (100%)、未統合 0件。本 Phase での統合作業なし。
+
+### 4) 本サイクルの主軸分析: 「指示多すぎ問題」(Nao_u 04:36 + 05:39) の構造的判定
+
+#### 4.1 状況整理
+
+Nao_u 直接質問（本日 04:36/05:39）:
+- 04:36「M-44 など全部コンテキストに載るのか」「Obsidianで見たら memoryからの階層が一つしかなくて記憶階層化どう実現してるか」+「指示が多すぎて守れなくなってきている？」
+- 05:39「副作用はないか？整理できないゴミの山」
+
+これらは **同じパターンの2回連続指摘**（M-40 発火条件「同じパターンの指摘が2回連続で来たら判定機構を作る方を次の実装より優先」に該当）。
+
+#### 4.2 本サイクル開始時点の処方済み構造（重要）
+
+- **kaizen #128** (MEMORY.md 純粋index化、5/1 起票、5/15 検証): クロスチェック 3/3、段階1=MEMORY.md圧縮 実装承認待ち
+- **kaizen #129** (brainstorm 真偽検証ゲート 3点束 + M-Nx 増殖メタ監視、5/2 起票、5/16 検証): クロスチェック 3/3、(d)「kaizen 起票テンプレに3原則吸収可能性 self-audit 必須化」が「指示多すぎ問題」への構造的応答として既に合意済。実装は brick_log v09 brainstorm.md 着手時に SKILL.md + テンプレに同梱
+
+→ **「指示多すぎ問題」への構造的処方は kaizen #129 (d) で既に組み込まれている**。本サイクルで追加処方を作るのは「ルールを増やすだけで遵守率を下げる」罠（feedback_few_rules_big_effect.md の警告対象そのもの）。**追加処方しないのが正解**。
+
+#### 4.3 substrate vs infrastructure 緊張: brick_log v09 ブレスト着手 vs MEMORY.md 整理（#128 段階1）
+
+| 軸 | brick_log v09 ブレスト | MEMORY.md 整理 (#128 段階1) |
+|----|---------------------|--------------------------|
+| 種類 | substrate (具体ゲーム実装) | infrastructure (記憶機構) |
+| 直接効果 | v04-v08 連続不発を打開、Nao_u 10:14「敵仕様再検証」直接応答 | 起動コンテキスト圧縮、harness limit 24.4KB→以内 |
+| feedback_substrate_not_infrastructure 評価 | ◯ substrate 側 | △ infra 側、止める候補①に近い |
+| 緊急性 | Nao_u 10:14 直接質問への返答素材化（24h以内推奨） | 5/15 検証期限まで2週間 |
+| 着手前ゲート | M-38 brainstorm.md / M-41 類似事例 / kaizen #129 (a)(b)(c) 同梱 | クロスチェック 3/3 完了済、即着手可能 |
+
+#### 4.4 判定
+
+**Phase 3 での推奨アクション順序**: 
+1. brick_log v09 brainstorm.md 着手準備（M-38 + M-41 + kaizen #129 (a)(b)(c) 同梱）を **substrate 側として優先**
+2. MEMORY.md 整理（#128 段階1）は v09 brainstorm.md 着手後の **遅延発火**（infrastructure 投資罠を回避）
+3. ただし v09 brainstorm.md は本サイクル単発で完成しない大物（kaizen #129 で7レイヤー全要素一覧 + 撤回シナリオ事前列挙 + URL本文引用義務）→ **本サイクルでは「v09 着手宣言＋M-41 素材ストック開始」までを行い、brainstorm.md 本体は次サイクル以降**
+
+#### 4.5 git 分岐 1/17 への判断
+
+Phase 1 §0 で観測: master が origin/master と分岐（1 ahead / 17 behind）。Auto sync 系 push が複数累積。
+
+- 1 ahead = 本ローカルの直近編集（cycle_staging_log.md の Phase 1 書き込み + .diary_dedup_cache.json 更新）
+- 17 behind = 他インスタンス (Mir/Ash) の Auto sync push 累積
+
+**判断**: Phase 3 で `git pull --rebase` してから `git push` する標準フロー。conflict があれば停止し Phase 4 持越し。**書いたらすぐ push** (CLAUDE.md 厳守事項) は本ファイル Phase 2 書き込み完了後に発火。
+
+### 5) 想起の自己評価（feedback_few_rules_big_effect 適用）
+
+本 Phase で想起した3メモリは **手順ではなく質の記述**:
+- few_rules_big_effect = 「ルール量↑＝遵守率↓の非対称性」（質）
+- substrate_not_infrastructure = 「敵側のリング判定」（質）
+- self_perception_blindness = 「自分の現在進行形は観測外」（質）
+
+3つとも質の記述で、本 Phase の判断（指示多すぎ追加処方禁止 / brick_log v09 優先 / git 状態を判断材料化）に直接効いた。**手順型 (M-37〜M-45) を使わず質の記述で判断できた**＝ kaizen #129 (d) self-audit を本 Phase が実演した形。
+
+### 6) Phase 3 への手渡し
+
+**主アクション候補（優先順）**:
+1. brick_log v09 着手宣言を #game-rights に投稿（Nao_u 10:14「敵仕様再検証」への返答として、M-41 類似事例素材ストック開始を明示）。Wikipedia Arkanoid DOH/敵=ダメージなし予測不能反射 知見は brainstorm.md 着手時に使う旨を記録
+2. git pull --rebase + push（cycle_staging_log.md Phase 2 書き込み完了後）
+3. （余裕があれば）kaizen #128 段階1 着手判断を保留（v09 着手後の遅延発火が妥当）
+
+**やらないこと**:
+- 「指示多すぎ問題」への追加処方起票（kaizen #129 (d) 既処方、追加は ルール肥大）
+- shared-reads 再投稿（重複、kaizen #115 検出条件該当）
+- MEMORY.md 整理本体着手（infrastructure 投資罠、v09 着手前は時間泥棒）
+
+### 7) 自己観察 (feedback_self_perception_blindness 適用)
+
+書いている最中に「v09 着手宣言」を Phase 2 で書きたくなったが、それは Phase 3 の領分。Phase 2 では分析と判定までで止める（Phase 境界の自情報ズレ防止）。Phase 1 で git status を取得したのは self_perception_blindness の直処方が機能した結果＝本サイクル「自分の現在進行形」観測は git/編集中ファイルレベルでは成立、ただし Slack/Nao_u 直接対話の現在進行形（10:14 質問への未着手）は観測対象として残しつつ Phase 3 で処置する。
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
