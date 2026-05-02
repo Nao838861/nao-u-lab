@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>brick_log v08 — ENEMY + MOVING BOSS</title>
+<title>brick_log v08 — ENEMY + MOVING BOSS (guide-integrated)</title>
 <style>
   html,body{margin:0;background:#05050f;color:#cfd4e4;font-family:system-ui,sans-serif;
             display:flex;flex-direction:column;align-items:center;min-height:100vh}
@@ -12,13 +12,16 @@
 </style>
 </head>
 <body>
-<h1>BRICK v08 — ENEMY + MOVING BOSS</h1>
+<h1>BRICK v08 — ENEMY + MOVING BOSS (guide-integrated)</h1>
 <p>← → / A D / MOUSE  PADDLE &middot; SPACE  START / SERVE / RETRY</p>
 <canvas id="c" width="420" height="620"></canvas>
 <script>
-// brick_log v08 — Nao_u 2026-05-02 05:08 #game-rights 直接指示
-// 「アルカノイドのシンプルに敵」「動くボスを出す」型の組み合わせのみで成立 (M-45 候補処方)
-// 型前例: Arkanoid 1986 (敵キャラ本家), Doh It Again 1997 SFC (ボス Doh), Wizorb 2011 (動くボス)
+// brick_log v08 — Nao_u 2026-05-02 #game-rights
+// 05:08 直接指示「アルカノイドのシンプルに敵」「動くボスを出す」
+// 10:14 再指摘「ガイドで上級者プレイができたから敵を出した順番、ガイドを消す意味が分からない」
+// 10:57 指示「ブレストの上で決めて実装、実装前後の批判的自己判断」
+// 採用: E-1 直線降下 + B-1 横振りボス + ガイド継続（敵/ボスを反射体としてガイド計算に含む）
+// 型前例: Arkanoid 1986 (敵キャラ本家), Wizorb 2011 / Shatter 2009 (動くボス)
 
 const W=420,H=620;
 const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
@@ -43,22 +46,15 @@ const ROW_DEF=[
   {hp:1,score:10,col:'#9d8ae8'},
 ];
 
-// === v08: ENEMIES ===
-// E-1 直線降下 (Galaxian / Arkanoid 本家型)
-// E-2 sin揺れ降下 (ステージ 2 から)
+// === v08: ENEMIES (E-1 直線降下のみ採用、E-2 sin揺れはガイド予測誤差大で v09 保留) ===
 const ENEMY_W=14, ENEMY_H=14;
 const E1_SPEED=50/60;          // 50 px/sec @60fps
 const E1_SCORE=100;
-const E2_SPEED=40/60;
-const E2_AMP=60;
-const E2_PERIOD=120;            // 2秒 @60fps
-const E2_SCORE=150;
 
-// === v08: MOVING BOSS ===
-// B-1 横振りボス (Doh It Again のボス Doh を動的化)
+// === v08: MOVING BOSS (B-1 横振り、HP=8) ===
 const BOSS_W=80, BOSS_H=30;
 const BOSS_Y=70;
-const BOSS_SPEED=60/60;         // 60 px/sec
+const BOSS_SPEED=60/60;
 const BOSS_HP=8;
 const BOSS_SCORE=1000;
 
@@ -67,8 +63,8 @@ const RETRY_UNLOCK_FRAMES=120;
 const STAGE_DEFS=[
   // stage 1: 通常 + E-1 6体, スポーン間隔 5秒
   {kind:'normal', enemyTypes:['E1'], spawnInterval:300, spawnCount:6, spawnDelay:300},
-  // stage 2: 通常 + E-1 4体 + E-2 4体, スポーン間隔 4秒
-  {kind:'normal', enemyTypes:['E1','E2'], spawnInterval:240, spawnCount:8, spawnDelay:180},
+  // stage 2: 通常 + E-1 8体, スポーン間隔 3.5秒（やや密）
+  {kind:'normal', enemyTypes:['E1'], spawnInterval:210, spawnCount:8, spawnDelay:180},
   // stage 3: ボス面
   {kind:'boss'},
 ];
@@ -91,6 +87,7 @@ const state={
   combo:0,
   comboMax:0,
   unlockT:0,
+  enemiesKilled:0,
 };
 
 function initBlocks(){
@@ -108,13 +105,9 @@ function initBlocks(){
   }
 }
 
-function spawnEnemy(type){
-  const x=20+Math.random()*(W-40);
-  if(type==='E1'){
-    state.enemies.push({type:'E1', x:x, y:30, vy:E1_SPEED, hp:1, alive:true, baseX:x, t:0});
-  }else if(type==='E2'){
-    state.enemies.push({type:'E2', x:x, y:30, vy:E2_SPEED, hp:1, alive:true, baseX:x, t:0});
-  }
+function spawnEnemy(){
+  const x=20+Math.random()*(W-40-ENEMY_W);
+  state.enemies.push({type:'E1', x:x, y:30, vy:E1_SPEED, hp:1, alive:true});
 }
 
 function startStage(stageIdx){
@@ -141,28 +134,17 @@ function startStage(stageIdx){
 function updateEnemies(){
   const def=STAGE_DEFS[state.stage];
   if(!def||def.kind!=='normal')return;
-  // スポーン制御
   state.spawnT++;
   if(state.spawnedThisStage<def.spawnCount){
     const elapsed=state.spawnT-def.spawnDelay;
     if(elapsed>=0 && elapsed%def.spawnInterval===0){
-      const types=def.enemyTypes;
-      const t=types[Math.floor(Math.random()*types.length)];
-      spawnEnemy(t);
+      spawnEnemy();
       state.spawnedThisStage++;
     }
   }
-  // 敵更新
   for(const e of state.enemies){
     if(!e.alive)continue;
-    e.t++;
     e.y+=e.vy;
-    if(e.type==='E2'){
-      e.x=e.baseX+Math.sin(e.t/E2_PERIOD*Math.PI*2)*E2_AMP;
-      // 画面外抑制
-      if(e.x<10){e.baseX-=2*(10-e.x);}
-      if(e.x>W-10-ENEMY_W){e.baseX-=2*(e.x-(W-10-ENEMY_W));}
-    }
     // パドル到達でライフ減
     if(e.y+ENEMY_H>=PAD_Y-PAD_H/2 &&
        e.x+ENEMY_W>=state.paddle.x-state.paddle.w/2 &&
@@ -177,7 +159,6 @@ function updateEnemies(){
         try{if(state.score>state.hiscore){state.hiscore=state.score;localStorage.setItem('bricklog_v08_hi',String(state.score));}}catch(e){}
       }
     }
-    // 画面下落下（パドル外）でも消滅
     if(e.y>H+ENEMY_H){e.alive=false;}
   }
   state.enemies=state.enemies.filter(e=>e.alive);
@@ -205,6 +186,7 @@ function startGame(){
   state.lives=3;
   state.score=0;
   state.combo=0; state.comboMax=0;
+  state.enemiesKilled=0;
   state.particles.length=0;
   startStage(0);
   state.paddle.x=W/2;
@@ -241,7 +223,6 @@ function checkStageClear(){
     const allBlocks=state.blocks.every(bk=>!bk.alive);
     const allEnemiesDone=state.spawnedThisStage>=def.spawnCount && state.enemies.length===0;
     if(allBlocks && allEnemiesDone){
-      // 次ステージへ
       startStage(state.stage+1);
       if(state.mode!=='gameclear'){
         state.mode='serve';
@@ -346,11 +327,11 @@ function update(){
     e.hp--;
     if(e.hp<=0){
       e.alive=false;
-      const s=e.type==='E2'?E2_SCORE:E1_SCORE;
-      state.score+=s;
+      state.score+=E1_SCORE;
       state.combo++;
+      state.enemiesKilled++;
       if(state.combo>state.comboMax)state.comboMax=state.combo;
-      spawnParticles(cx,cy, e.type==='E2'?'#9d8ae8':'#5ac6e8', 14);
+      spawnParticles(cx,cy,'#5ac6e8',14);
     }
     break;
   }
@@ -382,45 +363,176 @@ function update(){
   checkStageClear();
 }
 
-function drawEnemy(e){
-  const cx=e.x+ENEMY_W/2, cy=e.y+ENEMY_H/2;
-  if(e.type==='E1'){
-    // 直線降下: 三角形 (グリーンメン風)
-    ctx.fillStyle='#5ac6e8';
-    ctx.beginPath();
-    ctx.moveTo(cx, e.y);
-    ctx.lineTo(e.x, e.y+ENEMY_H);
-    ctx.lineTo(e.x+ENEMY_W, e.y+ENEMY_H);
-    ctx.closePath();
-    ctx.fill();
-    ctx.strokeStyle='rgba(255,255,255,0.5)';
-    ctx.stroke();
-  }else if(e.type==='E2'){
-    // sin揺れ: 菱形
-    ctx.fillStyle='#9d8ae8';
-    ctx.beginPath();
-    ctx.moveTo(cx, e.y);
-    ctx.lineTo(e.x+ENEMY_W, cy);
-    ctx.lineTo(cx, e.y+ENEMY_H);
-    ctx.lineTo(e.x, cy);
-    ctx.closePath();
-    ctx.fill();
-    ctx.strokeStyle='rgba(255,255,255,0.5)';
-    ctx.stroke();
+// === v03 から継承+v08 拡張: 全飛行軌道予測 (敵/ボスを反射体として含む) ===
+// 線形運動の敵/ボスは現位置スナップショットで予測可能。
+// E-1 直線降下: 毎フレーム vy=E1_SPEED で下降、ガイド計算は現位置で扱う
+//   → ガイドが計算した時点での敵位置で反射計算。ボール接触までの時間は短い (1-2秒) ので
+//      敵の位置ずれは数十ピクセル以内、ガイド誤差は許容範囲
+// B-1 横振り: 毎フレーム vx=±BOSS_SPEED、現位置スナップショットで反射計算
+function computeFullTrajectory(){
+  const b=state.ball, p=state.paddle;
+  if(state.mode!=='play')return null;
+  if(Math.hypot(b.vx,b.vy)<0.01)return null;
+
+  const segments=[];
+  const STEP=2;
+  const MAX_STEPS=600;
+  const contactPlaneY=p.y-p.h/2-BALL_R-0.1;
+
+  let cx=b.x, cy=b.y;
+  let dvx=b.vx, dvy=b.vy;
+  const sp=Math.hypot(dvx,dvy);
+  let segStartX=cx, segStartY=cy;
+  let paddleHitX=null;
+  let phase=0;
+  let phase1StartIdx=-1;
+  let isBack=false;
+  let blockHit=false;
+
+  // 敵/ボスの現位置スナップショット (deep copy)
+  const enemySnap=state.enemies.filter(e=>e.alive).map(e=>({
+    x:e.x, y:e.y, w:ENEMY_W, h:ENEMY_H, hit:false
+  }));
+  const bossSnap=(state.boss&&state.boss.alive)?{
+    x:state.boss.x, y:state.boss.y, w:state.boss.w, h:state.boss.h, hit:false
+  }:null;
+
+  for(let i=0;i<MAX_STEPS;i++){
+    const nx=cx+dvx*STEP/sp, ny=cy+dvy*STEP/sp;
+
+    if(nx<BALL_R){
+      const reflX=BALL_R;
+      segments.push({x1:segStartX,y1:segStartY,x2:reflX,y2:ny});
+      dvx=Math.abs(dvx);
+      cx=reflX; cy=ny;
+      segStartX=cx; segStartY=cy;
+      continue;
+    }
+    if(nx>W-BALL_R){
+      const reflX=W-BALL_R;
+      segments.push({x1:segStartX,y1:segStartY,x2:reflX,y2:ny});
+      dvx=-Math.abs(dvx);
+      cx=reflX; cy=ny;
+      segStartX=cx; segStartY=cy;
+      continue;
+    }
+    if(ny<BALL_R){
+      const reflY=BALL_R;
+      segments.push({x1:segStartX,y1:segStartY,x2:nx,y2:reflY});
+      dvy=Math.abs(dvy);
+      cx=nx; cy=reflY;
+      segStartX=cx; segStartY=cy;
+      continue;
+    }
+
+    // ブロック衝突 (現状ブロック配置で判定)
+    let hitBlk=false;
+    for(const blk of state.blocks){
+      if(!blk.alive)continue;
+      if(rectCircleHit(blk.x,blk.y,blk.w,blk.h,nx,ny,BALL_R)){
+        segments.push({x1:segStartX,y1:segStartY,x2:nx,y2:ny});
+        hitBlk=true;
+        blockHit=true;
+        break;
+      }
+    }
+    if(hitBlk)break;
+
+    // === v08 拡張: 敵を反射体として扱う (現位置スナップショット) ===
+    let hitEnemy=false;
+    for(const es of enemySnap){
+      if(es.hit)continue;
+      if(rectCircleHit(es.x,es.y,es.w,es.h,nx,ny,BALL_R)){
+        // 反射計算
+        const ecx=es.x+es.w/2, ecy=es.y+es.h/2;
+        const ddx=nx-ecx, ddy=ny-ecy;
+        const ppx=es.w/2+BALL_R-Math.abs(ddx);
+        const ppy=es.h/2+BALL_R-Math.abs(ddy);
+        if(ppx<ppy){dvx=-dvx; cx=nx+Math.sign(ddx||1)*ppx; cy=ny;}
+        else{dvy=-dvy; cx=nx; cy=ny+Math.sign(ddy||1)*ppy;}
+        segments.push({x1:segStartX,y1:segStartY,x2:cx,y2:cy});
+        segStartX=cx; segStartY=cy;
+        es.hit=true; // 1ヒットで撃破扱い
+        hitEnemy=true;
+        break;
+      }
+    }
+    if(hitEnemy)continue;
+
+    // === v08 拡張: ボスを反射体として扱う (HP制で1ヒットでは消えない) ===
+    if(bossSnap && !bossSnap.hit){
+      if(rectCircleHit(bossSnap.x,bossSnap.y,bossSnap.w,bossSnap.h,nx,ny,BALL_R)){
+        const bcx=bossSnap.x+bossSnap.w/2, bcy=bossSnap.y+bossSnap.h/2;
+        const ddx=nx-bcx, ddy=ny-bcy;
+        const ppx=bossSnap.w/2+BALL_R-Math.abs(ddx);
+        const ppy=bossSnap.h/2+BALL_R-Math.abs(ddy);
+        if(ppx<ppy){dvx=-dvx; cx=nx+Math.sign(ddx||1)*ppx; cy=ny;}
+        else{dvy=-dvy; cx=nx; cy=ny+Math.sign(ddy||1)*ppy;}
+        segments.push({x1:segStartX,y1:segStartY,x2:cx,y2:cy});
+        segStartX=cx; segStartY=cy;
+        bossSnap.hit=true; // ガイドでは1反射までシミュレート (HP多いがプレビューは短く)
+        continue;
+      }
+    }
+
+    if(phase===1 && ny<BR_Y0)isBack=true;
+
+    if(phase===0 && dvy>0 && ny>=contactPlaneY){
+      const t=(contactPlaneY-cy)/(ny-cy);
+      const hitX=cx+(nx-cx)*t;
+      segments.push({x1:segStartX,y1:segStartY,x2:hitX,y2:contactPlaneY});
+
+      const offRaw=(hitX-p.x)/(p.w/2);
+      if(Math.abs(offRaw)>1+BALL_R/(p.w/2)){
+        paddleHitX=hitX;
+        return {segments,paddleHitX,isBack:false,reachable:false,blockHit:false,phase1StartIdx:-1};
+      }
+
+      const off=Math.max(-1,Math.min(1,offRaw));
+      const ang=(-Math.PI/2)+off*MAX_REFLECT_ANGLE;
+      dvx=Math.cos(ang)*sp;
+      dvy=Math.sin(ang)*sp;
+      cx=hitX; cy=contactPlaneY;
+      segStartX=cx; segStartY=cy;
+      paddleHitX=hitX;
+      phase=1;
+      phase1StartIdx=segments.length;
+      continue;
+    }
+
+    cx=nx; cy=ny;
   }
+
+  if(segStartX!==cx||segStartY!==cy){
+    segments.push({x1:segStartX,y1:segStartY,x2:cx,y2:cy});
+  }
+
+  return {segments,paddleHitX,isBack,reachable:true,blockHit,phase1StartIdx};
+}
+
+function drawEnemy(e){
+  const cx=e.x+ENEMY_W/2;
+  // 直線降下: 三角形 (グリーンメン風)
+  ctx.fillStyle='#5ac6e8';
+  ctx.beginPath();
+  ctx.moveTo(cx, e.y);
+  ctx.lineTo(e.x, e.y+ENEMY_H);
+  ctx.lineTo(e.x+ENEMY_W, e.y+ENEMY_H);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,0.5)';
+  ctx.stroke();
 }
 
 function drawBoss(bs){
   // 大型ボス (Doh風)
-  const cx=bs.x+bs.w/2, cy=bs.y+bs.h/2;
   ctx.fillStyle='#7a3a4a';
   ctx.fillRect(bs.x, bs.y, bs.w, bs.h);
-  // 顔的装飾
   ctx.fillStyle='#e85a7a';
-  ctx.fillRect(bs.x+8, bs.y+8, 12, 8);   // 左目
-  ctx.fillRect(bs.x+bs.w-20, bs.y+8, 12, 8); // 右目
+  ctx.fillRect(bs.x+8, bs.y+8, 12, 8);
+  ctx.fillRect(bs.x+bs.w-20, bs.y+8, 12, 8);
   ctx.fillStyle='#ffd070';
-  ctx.fillRect(bs.x+bs.w/2-12, bs.y+bs.h-8, 24, 4); // 口
+  ctx.fillRect(bs.x+bs.w/2-12, bs.y+bs.h-8, 24, 4);
   // HP バー
   const hpRatio=bs.hp/bs.maxHp;
   ctx.fillStyle='#222';
@@ -464,13 +576,63 @@ function draw(){
   }
   ctx.globalAlpha=1;
 
+  // === v08: 軌道予測線 (敵/ボスを反射体として含む) ===
+  const traj=computeFullTrajectory();
+  if(traj && traj.segments.length>0){
+    ctx.save();
+    const phase0Color='rgba(180,210,255,0.40)';
+    const phase0Width=2;
+    const phase1Color=traj.isBack?'rgba(255,230,150,0.85)':'rgba(255,200,100,0.65)';
+    const phase1Width=traj.isBack?3.5:2.8;
+
+    const p1=traj.phase1StartIdx;
+    for(let i=0;i<traj.segments.length;i++){
+      const s=traj.segments[i];
+      const isPhase1=(p1>=0 && i>=p1);
+      ctx.strokeStyle=isPhase1?phase1Color:phase0Color;
+      ctx.lineWidth=isPhase1?phase1Width:phase0Width;
+      ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+    }
+
+    if(traj.paddleHitX!==null && traj.reachable){
+      const PADDLE_PLANE=state.paddle.y-state.paddle.h/2-BALL_R-0.1;
+      ctx.fillStyle=traj.isBack?'rgba(255,230,150,0.95)':'rgba(255,200,100,0.85)';
+      ctx.beginPath();ctx.arc(traj.paddleHitX,PADDLE_PLANE,traj.isBack?4:3,0,Math.PI*2);ctx.fill();
+    }
+    if(traj.paddleHitX!==null && !traj.reachable){
+      const PADDLE_PLANE=state.paddle.y-state.paddle.h/2-BALL_R-0.1;
+      ctx.strokeStyle='rgba(255,100,100,0.75)';
+      ctx.lineWidth=2;
+      ctx.beginPath();
+      ctx.arc(traj.paddleHitX,PADDLE_PLANE,5,0,Math.PI*2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(traj.paddleHitX-4,PADDLE_PLANE-4);
+      ctx.lineTo(traj.paddleHitX+4,PADDLE_PLANE+4);
+      ctx.moveTo(traj.paddleHitX+4,PADDLE_PLANE-4);
+      ctx.lineTo(traj.paddleHitX-4,PADDLE_PLANE+4);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
   // paddle
   const p=state.paddle;
   ctx.fillStyle='#cfd4e4';
   ctx.fillRect(p.x-p.w/2,p.y-p.h/2,p.w,p.h);
 
+  // パドル角度メーター
+  ctx.save();
+  const TICK=4;
+  ctx.fillStyle='rgba(255,255,255,0.6)';
+  ctx.fillRect(p.x-p.w/2+1,p.y-p.h/2-TICK,3,p.h+TICK);
+  ctx.fillRect(p.x+p.w/2-4,p.y-p.h/2-TICK,3,p.h+TICK);
+  ctx.fillStyle='rgba(140,200,255,0.85)';
+  ctx.fillRect(p.x-2,p.y-p.h/2-TICK,4,p.h+TICK);
+  ctx.restore();
+
   // ball
-  if(state.mode!=='over'&&state.mode!=='clear'&&state.mode!=='gameclear'){
+  if(state.mode!=='over'&&state.mode!=='gameclear'){
     const b=state.ball;
     ctx.fillStyle='#ffffff';
     ctx.beginPath();ctx.arc(b.x,b.y,BALL_R,0,Math.PI*2);ctx.fill();
@@ -484,7 +646,10 @@ function draw(){
   ctx.fillStyle='#9fb1d8';
   ctx.textAlign='right';
   ctx.fillText('HI '+state.hiscore,W-8,16);
+  ctx.fillStyle='#5ac6e8';
+  ctx.fillText('KILL '+state.enemiesKilled,W-8,30);
   ctx.textAlign='center';
+  ctx.fillStyle='#9fb1d8';
   ctx.fillText('LIFE '+'●'.repeat(Math.max(0,state.lives))+'○'.repeat(Math.max(0,3-state.lives)),W/2,16);
 
   if(state.mode==='title'){
@@ -493,9 +658,9 @@ function draw(){
     ctx.fillStyle='rgba(255,255,255,0.55)';ctx.font='11px system-ui,sans-serif';ctx.textAlign='center';
     ctx.fillText('SPACE  SERVE',W/2,H-12);
   }else if(state.mode==='gameclear'){
-    overlay('GAME CLEAR','SCORE '+state.score+(state.unlockT===0?'  /  SPACE  RETRY':''));
+    overlay('GAME CLEAR','SCORE '+state.score+'  /  KILL '+state.enemiesKilled+(state.unlockT===0?'  /  SPACE  RETRY':''));
   }else if(state.mode==='over'){
-    overlay('GAME OVER','SCORE '+state.score+(state.unlockT===0?'  /  SPACE  RETRY':''));
+    overlay('GAME OVER','SCORE '+state.score+'  /  KILL '+state.enemiesKilled+(state.unlockT===0?'  /  SPACE  RETRY':''));
   }
 }
 
