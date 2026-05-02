@@ -41,7 +41,13 @@ brick_log v07-v08。brainstormで30件以上の案を出し、6軸構造分析�
 4. **棄却台帳**: 棄却した案の理由を記録し、後追い検証（Logの提案）
 5. **棄却基準格上げ**: 「コア快感天井を上げない案」「数値チューニングで補える案」は棄却（Logの提案）
 
-## Nao_u強化処方（2026-05-03 03:42 #human-steering）
+## Nao_u強化処方（2026-05-03 03:42 #human-steering）→ 撤回（03:59 同日 #human-steering）
+
+**撤回経緯**: Log が下記「強化処方」を CLAUDE.md M-42 として刻んだ直後（03:59）、Nao_u から害悪認定。「文章として魅力的=棄却」は短絡解釈で良案を殺す / 「ボール軌跡」固有事例がルール化で抽象化ゼロ / 個別事例を一字一句ルール化する反射が LLM 典型失敗パターン。詳細: [feedback_rule_proliferation_re_violation.md](feedback_rule_proliferation_re_violation.md)
+
+**以下は教師データ・事例として保存。原則化はしない。** Nao_u原文を抽象化された原理に変換する素材として `sense_prediction_log.md` 構築や brainstorm時の参考に使う。CLAUDE.md「絶対にやる」セクションには載せない。
+
+---
 
 Mir 5/2 07:45 投稿全体に同意の上、処方2と3を**特に重要**として強化。
 
