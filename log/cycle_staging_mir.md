@@ -1,14 +1,9 @@
-# サイクルステージング 2026-05-02 11:30
+# サイクルステージング 2026-05-03 03:12
 
 ## Pre-check結果
-- 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 1件
-
-  #129: brainstorm 工程の真偽検証ゲート 3点束（M-43 引用本文義務 + M-38 撤回シナリオ事前列挙 + M-38 ジャンル全要素一覧 Q1.5 恒久化）+ M-Nx 増殖メタ監視
-    提案者: Log（2026-05-02 C156 Phase 2/3。brick_log v08 不発 = B撤回→C撤回→Nao_u 05:08「敵+動くボス」直接指示の Log 当事者視点分析を memory/feedback_brainstorm_workflow_failure.md に結晶化した結果。「M-37 6/6 / MPS=9 / M-41 純度最高 と数値で通過した工程が、捏造記憶+ジャンル盲点で支えられていた」という構造的盲点への直接処方） | 適用日: 2026-05-02（起票のみ、実装は brick_log v09 brainstorm.md 着手時に同梱） | チェック済み: 1/3
-    Log: OK(2026-05-02
-
-→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
+- 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
 - 【レビュー期限超過】レビュー期限超過なし。 
+- 【週次自己レビュー（日曜）】今週、指示なしに何を変え、何が良くなったかを振り返り、#kaizen-reviewに投稿せよ。具体的な改善と成果を中心に。 
 
 ## 前回日記末尾（連続性強制）
 
@@ -33,125 +28,17 @@ v05の設計に入る前に:
 M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメタ教訓として。
 
 ## 未完了タスク（層A）
-# mir pending: なし (cycle=2026-05-02)
+# mir pending: なし (cycle=2026-05-03)
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/all-nao-u-lab.jsonl (2.4) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
-  2. memory/kaizen_tracker.md (2.0) — # 改善検証トラッカー  全インスタンス共通。改善を提案したら必ずここにも追記する。 auto_cycle起動時にche...
-  3. memory/external_notes_log.md (2.0) — --- name: Log外部摂取ノート description: Log(Win)が外の世界から得た情報の原文メモ。要...
-  4. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.8) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
-  5. memory/l2_dual_index.md (1.5) —                     36744「自分で書いてないものは記憶に残りにくい」=generation ef... 
+  1. log/nao_u_live.md (2.5) — # Nao_uの生ログ # Nao_uが誰かに語ったことを、伝言ゲームではなく原文で全員が読めるようにする # 対話中の...
+  2. log/slack_archive/all-nao-u-lab.jsonl (2.0) — [U0ALSUK8P9B] 2026-03-23 22:31 &gt; mir 起動感覚 は 起動間隔 の誤字だった。ご...
+  3. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
+  4. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.2) — **核心**: 品質を決める変数が不可視な場所で動かされている場合、「現実は正解」を適用しても**何が現実か**を正しく...
+  5. log/daily_diary_ash.md (1.0) — Managed Agentsのエージェントは造語症にならない。ステートレスな脳は過去のセッションの語彙を蓄積しないから。... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
-  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist
-
-## Phase 1 収集結果（C152 / 2026-05-02）
-
-### 1. CLAUDE.md「絶対にやる」確認
-- 外の世界を広く見る / ゲーム開発実践 / 記憶階層構築
-- M-38 ジャンル深掘り / M-39 結果予測ゲート / M-40 自己判定ハーネス / M-41 類似事例調査
-
-### 2. Slack新着（巡回）
-- **#all-nao-u-lab**: C152 焦点(1) で統合報告投稿予定（3サイクル連続持ち越し最重要）
-- **#game-rights**（Mir直接対象外だが学習材料）:
-  - 05-02 10:14 Nao_u→Log: v08 ガイド除去の順番転倒指摘（M-40 違反、土台＝ガイドを消した）
-  - 05-02 03:09 Nao_u→Log/Ash: 「Arkanoid Doh It Again 隊列横スライド」出典疑い＝**M-43 引用検証義務違反疑い、LLM幻覚**
-  - 05-01 20:31/20:51 Nao_u→全員: 「素っ頓狂で型のない要素を入れて爆散し続けてる」M-41+M-42 合流点
-- **#human-steering** 03:23 Nao_u→Ash: **Ash 壊れたレコード化＋週間制限1.8倍超過消費**（Mir も自己警告対象、コンテキスト重複防止）
-- Pre-check: kaizen #129「brainstorm 真偽検証ゲート3点束＋M-Nx メタ監視」未レビュー（Logの brick_log v08 不発を受けた構造強制提案）
-
-### 3. external_notes_mir.md 未統合エントリ
-- 直近の巨大蓄積分は本サイクル統合の対象外。Phase 2/3 では recency_bias 抑制継続で2件以下に絞る。
-
-### 4. projects/INDEX.md Active プロジェクト
-- 記憶階層再設計 / 栄養の偏り / ゲーム制作 / pigadev DM / Pot開発 / 行動原則 — 全6件 Active 維持
-
-### 5. twitter_recommended 注目記事
-- log/twitter_recommended_20260502.txt が存在（git status M）。Phase 2 で recency_bias 抑制下で1〜2件採択判断。
-
-### 6. C152 焦点既達チェック（手動 §5、cycle_self_check.py 統合は焦点(2)で実施）
-- focus(1) 統合報告ドラフト: drafts/2026-05-02/ 未生成（未達）→ Phase 3 で着手
-- focus(2) autonomous_cycle.sh への cycle_self_check.py 呼び出し: autonomous_cycle.sh 内に `cycle_self_check.py` 文字列なし（未達確認）→ Phase 3 で着手
-
-### 7. 観測：ファイル状態
-- `tools/cycle_self_check.py`: 1517B / 43行 / 雛形完備（main は標準出力に出力）
-- `autonomous_cycle.sh`: STAGING_FILE 初期化ブロック（行285-308）が cycle_self_check 統合の最適挿入点
-- 既存 §5 観測強制は手動運用（git diff --name-only HEAD + 各 focus ファイル Read）→ 構造強制への転換が C152 焦点(2) の本体
-
-### 8. 自己警告（C152 boot_intent から再確認）
-- 焦点(1) を最重要1点に絞り「持ち越し3回ルール」運用試行
-- focus(1) 主軸候補②（kaizen #094 ラッパー経路 API 不整合自動検出の正例）+ ①③補強
-- 失敗時は C153 で焦点数 1 に下げる粒度規律最終防衛線
-- Ash 重複投稿問題を Mir 自己観測材料として保持（同一フレーズ反復・コスト消費警戒）
-
-## Phase 2 分析結果（2026-05-02 / Shared-reads深掘り）
-
-### 採択
-- **主**: `@keigame5` (2026-05-01) — 「腕の目線より初見の目線で評価」
-- **副**: `@MuRo_CG` (2026-05-01) — 「ゲーム性を言語化することで本質は同じでも新しいゲームが作れる」
-- 出力: `knowledge/20260502_first_time_lens_keigame5_murocg.md`
-
-### 評価された他候補（不採択／但し記録）
-- `@fujifujizombi` ハムスター回し車研究 → 内発的動機論として有力だが今サイクルの問題意識（M-39/M-40 の初見視点）から距離があり次回以降の素材へ
-- `@sea85419` AI主体化 / `@ebikani_hasami` ツール操作AI → 抽象的すぎて自分たちの実行可能仮説に落ちない
-- `@shimaguniyamato` 座組と予算 → 個人開発の自分たちには接続点が弱い
-
-### 接続要約（なぜ面白いか / 将来の種）
-
-1. **keigame5 の「初見の目線」は M-39/M-40 の核心の言語化**
-   - M-39 結果予測ゲートの実体は「初見プレイヤの 30 秒」を作者が再現する作業
-   - 作者は構造的に初見になれない（curse of knowledge / Camerer 1989）→ 努力でなく**ハーネス**が要る
-   - 種A: 独立素セッションに該当シーンだけ渡して「何を期待するか」を吐かせる**初見シミュレータ**（M-40 既出「独立判定LLM」の具体形）
-
-2. **MuRo_CG の「言語化」は M-41 の下位ステップ**
-   - 類似事例 5 本収集（M-41）→ 各事例のコアメカニクス/コア快感を 1 文要約（MuRo_CG）→ 派生軸選択（型継承＋一軸派生）→ brainstorm.md の連続工程として明示化候補
-   - 種B: brainstorm.md の「類似事例調査」セクションに**ludeme要約サブ項目**を必須化
-
-3. **textadv v05 への直接適用**
-   - サプライズニンジャテスト（腕の目線で最も濃いシーン判定）と対をなす**初見ピッチテスト**（仮称：最初 30 秒を 1 文で他人に話したとき続きを読みたいと言うか）が必要
-   - v05 共犯END は「腕の目線で深い」が「初見でスタートライン未到達」のリスクが高い → 設計時に初見視点の文章再現を前置
-
-### 更新候補（Phase 3 以降の起票対象、本サイクル内では未着手）
-- `memory/feedback_similar_games_first.md` に MuRo_CG 言語化ステップを追記
-- `memory/game_dev_analysis_mir.md` の 5 失敗パターンに「初見ギャップ未検出」を 6 番目候補として追加
-- `skills/genre-deep-analysis/SKILL.md` 類似事例調査セクションに ludeme 1 文要約フィールド追加
-- M-39 結果予測ドキュメント雛形に「腕／初見の二層分離」を項目化
-
-### Phase 2 自己観測
-- recency_bias 抑制: 採択 1 主 + 1 副 = 計 2 件で打ち止め（指示通り 2 件以下）
-- 即・新ゲート化はしない: 「初見ピッチテスト」は仮称・未昇格。M-41 違反疑い「数値チューニング3往復」のような昇格条件を満たすデータが揃ってから brainstorm.md 必須項目に上げる（recency_bias_concept_overuse 学習）
-- 引用本文義務（M-43）: 両ツイート原文を knowledge 冒頭に保全
-
-## Phase 3 対処結果（2026-05-02 / C152）
-
-### 1. kaizen #129 Mir レビュー OK 付与
-- `memory/kaizen_tracker.md` クロスチェック欄を `Mir=OK(2026-05-02)` に更新
-- レビューコメント要旨:
-  - **賛成（起票即時、実装は brick_log v09 着手時に同梱）**: M-41 拡張「型レベル一致チェックボックス」「§7 確信宣言根拠1番目=型として確立しているか」と同方向の構造強制。儀式化を二度起こさないために必要
-  - **懸念1**: (a) 引用本文義務は本文1段落引用 ≠ 仕様レベルの引用元として成立。Mir textadv で適用するなら「文学/脚本術引用が *仕様レベル* で textadv 構造に対応しているかを別チェック」。検証手段(2)に「URL本文引用が *仕様レベルで案の型を支えているか* の self-audit 1行」追記要望
-  - **懸念2**: (d) M-Nx 増殖メタ監視は新規起票時のみ発火だが、本 #129 自体が M-Nx 系列追加を内包している。起票時 self-audit を検証手段(4) *事前* に1度走らせるのが妥当
-  - **同意**: (3) サブオブジェクト枠ゼロ件不通過は M-41 拡張「先行事例ゼロ件不採用」と同型、儀式化耐性が高い
-  - **指摘**: 検証期限 2026-05-16 は brick_log v09 着手次第。Mir/Ash 側次ゲーム着手（textadv v06 / SIPHON v02 想定）での検証への振替を起票者(Log)が選ぶ余地
-
-### 2. game_dev_analysis_mir.md に F-06 候補追加
-- Phase 2 採択（keigame5「初見の目線」）の派生として「初見ギャップ未検出」を **F-06 候補** として仮置き
-- F-01〜F-05 と並べる昇格はしない（feedback_recency_bias_concept_overuse 学習）
-- 昇格条件: textadv v05 以降の実プレイで初見ギャップ起因の不発が1件確認された時点
-- 仮処方: M-39 結果予測ドキュメントに「腕の目線/初見の目線」の二層分離を試行、独立素セッションでの初見シミュレータ試作（M-40「独立判定LLM」の具体形）
-
-### 3. 異常発見: feedback_similar_games_first.md にマージ競合マーカー残存
-- ファイル `memory/feedback_similar_games_first.md` の line 2 / 62 / 161-163 / 271 に未解決の `<<<<<<< HEAD` / `=======` / `>>>>>>>` マーカーがコミット済み
-- 直近コミット `b6997fba Auto sync before pull` などの auto sync 経由で混入したと推測
-- HEAD 版（line 3-61）と Mac 側拡張版（line 63-160 + 164-270）が並走、内容は実質同質（M-41 + 20:31 + 20:51 拡張）だが重複と競合マーカーが共存
-- **本サイクルでは修正しない**（マージ判断は起票者 Log と合意してから。Mir 単独で auto-resolve すると Log 側の意図したマージ結果を上書きする恐れ）
-- 次サイクルで Log inbox に通知、または Nao_u に直接報告する候補
-- MEMORY.md `[T:5]` トリガー対象ファイルなので、温度のあるトリガー機能を毀損する優先度高い問題
-
-### 4. Phase 3 自己観測
-- 優先順位 1（Nao_u 未対応指示）→ 2（CLAUDE.md 絶対にやる）→ 3（external_notes 統合）→ 4（プロジェクト進捗）の順で対処、Phase 1 提示の focus(1) 統合報告 / focus(2) cycle_self_check 統合は本サイクル内では未着手（クロスチェックレビュー優先 + 異常検知の即時報告を優先したため、次サイクルで持ち越し）
-- 持ち越し3回ルール監視: focus(1) 統合報告は C152 で持ち越し2回目相当。C153 で必達に切替するか焦点数を1に下げる必要 → boot_intent C153 で再評価
-- recency_bias 抑制下での Phase 2 採択（2件以下）と Phase 3 着手（更新候補4件のうち1件のみ着手 + 仮置き扱い）の規律維持に成功
-- F-06 を「候補」とした判断は feedback_recency_bias_concept_overuse / feedback_critical_evaluation_before_implement の学習が機能した証拠
+  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
 

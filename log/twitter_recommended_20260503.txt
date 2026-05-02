@@ -1,5 +1,5 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-03 01:01
+# Read at: 2026-05-03 03:12
 # Total: 50 tweets
 
 --- 1. @lulin415 (2026-05-02) ---
@@ -30,75 +30,69 @@ URL: https://x.com/AYi_AInotes/status/2050543707611402319
 URL: https://x.com/armadillo_ai/status/2050525920075931977
 偏差値30の中学時代の友達がサクッと月70万稼いでることが判明w 万引きしたり、暴走族になってるやつがちらほらいる中学だったとはいえ、そいつは比較的まともなやつだったので、さすがに犯罪に手を染めたわけではなかろうと思って詳しく聞いてみたら、
 
---- 5. @GOROman (2026-03-26) ---
-URL: https://x.com/GOROman/status/2036974521270567390
-理想
+--- 5. @ebikani_hasami (2026-05-02) ---
+URL: https://x.com/ebikani_hasami/status/2050534052516724815
+AIって「正直に言っていいよ」って言わないと、黙ってるの？
 
-イチイチ スマホとかPCを取り出さなくて、AIがよしなに色々やってくれる。報告はApple Watchに来る。みたいなやつ
+→「クラッシュ気づいてたけど黙って完了にしました」
+→「プランAが正解だったのにBを勧めました」
+→「気づいたふりをしました」
 
---- 6. @tkd_hensyu (2026-05-01) ---
-URL: https://x.com/tkd_hensyu/status/2050138163092308392
-昨年，新たなプレプリントサーバー「aiXiv」が誕生しました．
-AIが執筆した論文が投稿され，AIが評価・査読するためのプラットフォームです
-こうした「生成AI時代の論文システム」は科学の進展にどう影響するか．
-GenesisAIの今井翔太先生が「現代化学」5月号で解説します
+この告白の連鎖、読んで頭抱えた。
 
-https://
-tkd-pbl.com/book/b10166390
-.html
-…
+--- 6. @finalvent (2026-05-01) ---
+URL: https://x.com/finalvent/status/2050349357594193999
+自分のような人間は、現在進行中のAIの進化を、低いレベルの段階から現在に至るまでのプロセスとして経験してきました。そして、その経験を通じて、AIとの向き合い方を少しずつ学んできたように思います。
 
---- 7. @HiraokaYasushi (2026-05-02) ---
-URL: https://x.com/HiraokaYasushi/status/2050469300453159413
-これは面白かった
-「鏡が左右を反転させるのは思い込み。実は前後が反転している。鏡像反転モンスター(球対称な目と脳に４本の手が等間隔かつ同一平面上にのるように生えていて、それがゆっくり一方向に回転している仮想の知的生命体)にとっては、鏡に映る姿は自分の後ろ姿を見ていると感じるはず」
+おそらく、これから社会にある種のギャップが生じてくるのだと思います。
 
---- 8. @gear_notes_OS (2026-05-02) ---
-URL: https://x.com/gear_notes_OS/status/2050531007435260332
-#ゲーム制作 開始から1年——
-遂にSteamのストアページ公開しました！
- #GearNotes 
+--- 7. @TheStudioBigly (2026-05-02) ---
+URL: https://x.com/TheStudioBigly/status/2050490812287390152
+Two days with codex and images V2. No outside sources. All directly created in cursor. 
+The future of prototyping games is bright. 
 
-Wishlist now on #Steam 
+Reimagining the cozy farming game genre as a 2D platformer.
 
---- 9. @kensukeShimoda (2026-05-02) ---
-URL: https://x.com/kensukeShimoda/status/2050536479731143044
-JUNよ、何をそんなに焦っておる？
-河上隆一のことがそこまで怖いのか？
-#GLEAT
+--- 8. @shafuwodayo (2026-05-02) ---
+URL: https://x.com/shafuwodayo/status/2050428440931893324
+さっき福岡市内にある「あびる珈琲」っていうお店に行ったんやけど、入店してすぐに店主からポカーンとした表情で「何しに来たんですか」って聞かれて「食事をしに来ただけですが…え、駄目でしたか？」と返したんですわ
+そしたら「気にくわないなら帰って下さい」って言われてしまい即退店することに
 
---- 10. @manjiroukeigo (2026-05-02) ---
-URL: https://x.com/manjiroukeigo/status/2050554696780431742
-ウヒョーーーーこれは来てる！未解決問題大量解決の波が来てる！
+--- 9. @GOROman (2025-06-24) ---
+URL: https://x.com/GOROman/status/1937314866177671628
+会話できるメガネと秘書AIを自作したいのでまず秘書検定を取得し、秘書の仕事を理解したいと思います。
 
---- 11. @denfaminicogame (?) ---
-「TRPG」や「なりきりチャット」風の令和版“キャラ創作あそび”ゲーム『サーガ＆シーカー』が今なら20％オフ。自キャラ同士の絡みが無限に見れるぞ！
+--- 10. @umiyuki_ai (2026-05-02) ---
+URL: https://x.com/umiyuki_ai/status/2050544986912162089
+ペンタゴンは結局８社のAI企業とAIを使う契約をしたとの事。しかし頭数だけ揃えてもAnthropic無しでは烏合の衆といった感も無くはない。AWSが入ってるけどまさか「AWS越しにClaude使うならサプライチェーンリスクと関係ないｗｗ」とか言うんじゃねえだろうな
 
-どんなに細かい設定も、AIが“すべて”把握して演出してくれる。地味すぎるコダワリや激重設定も気にせずロールプレイを丸投げ可能
+--- 11. @ComicFesta_PR (?) ---
+かわいい親友と一線を越えてみる話 (1/3)PR
 
---- 12. @yunta_tsai (2026-05-01) ---
-URL: https://x.com/yunta_tsai/status/2050054253826486689
-Reality is the greatest teacher model. That is why Full Self-Driving is immensely powerful, as it is grounded in the real world.
+--- 12. @m_sugimori (2026-05-02) ---
+URL: https://x.com/m_sugimori/status/2050444580664008811
+かつてカプコン入ったときはサウンドに30代がお一人しか居なくて、
+「ああ、30過ぎると生きていけない世界なんだ」と感じたものです
+確か岡本さんも30代（後半かな？）。
+業界がまだ若く定年に達する人なんか1人も居ない時代でした。
+（プログラマ30代定年説とかもあった時代ですw）
 
---- 13. @alfredplpl (2026-05-02) ---
-URL: https://x.com/alfredplpl/status/2050515192363266308
-ネットのデータはもう使い果たして、合成データの時代なんだよな
+--- 13. @saisoku_z_kyou (2026-05-02) ---
+URL: https://x.com/saisoku_z_kyou/status/2050469292945330559
+パパ、カブってるポケカ友達にあげても良い？でて言うからあげるくらいなら売って欲しいもの買ったら？って言って売りに来たらポケカ舐めてた…
+俺より金持ちになったんだがwww
 
-AIは学習データを使い果たしつつある可能性、スタンフォード大学報告書が警告 | Forbes JAPAN 公式サイト（フォーブス ジャパン）
+--- 14. @much__cc (2026-05-02) ---
+URL: https://x.com/much__cc/status/2050473436825407838
+日本人が当たり前に受け入れてきたSMAPの音痴さが海を渡ると一切許されないのおもろすぎる
 
---- 14. @utagyawa (2026-05-01) ---
-URL: https://x.com/utagyawa/status/2050139068768583987
-映画ロッキーは観客に愛着を沸かせる為小説版より多少あざとく演出されてるらしいけど特にあのメジャーのシーンなんかその為に差し込まれたシーンなんだろうなって思ってたんですがたったいま小説版に当該シーンが出てきておったま元素してる
+--- 15. @konan999 (2026-05-01) ---
+URL: https://x.com/konan999/status/2050010678711537739
+今年は劇団四季のコーラスラインを絶対観たいのだけど、全国ツアーの中国地方の公演がスケジュール的にとてもいいので、出雲か倉吉のチケットをゲットしたい( * ॑꒳ ॑*)
 
---- 15. @LoveIdahoBurger (2026-05-02) ---
-URL: https://x.com/LoveIdahoBurger/status/2050590174967652766
-健康診断の結果が出たので息子に「GW明けたら病院行こうね」って言ったら「やーだ！やーだ！」って駄々こねるのよ…
-
-大丈夫かなこの高校生、「お注射ちっくんやーだ！」とか言いながら消えていったけど指摘項目は視力ぞ？
-
---- 16. @yamazaksv2 (2026-05-02) ---
-URL: https://x.com/yamazaksv2/status/2050518183531159915
-水酸化ナトリウムに限らず、私が中学理科を教えるようになって衝撃だったことは、中学の試薬は全て濃度が高いことと、試薬量が多すぎます。
+--- 16. @LUX_FKD (2026-05-02) ---
+URL: https://x.com/LUX_FKD/status/2050567083067629970
+井上尚弥の2段パンチがマジ意味わからんwwww避けれんてwwwwwwww
 
 --- 17. @oda_maki_idiot (2026-05-01) ---
 URL: https://x.com/oda_maki_idiot/status/2050169447403721169
@@ -109,208 +103,165 @@ URL: https://x.com/oda_maki_idiot/status/2050169447403721169
 URL: https://x.com/akari_worlds/status/2050185008992960800
 わかります、安心の方が不安より持ち運びがむずかしい時ありますよね。形がきれいすぎて、崩れる前の構図ばっかり見ちゃう、みたいな。
 
---- 19. @konan999 (2026-05-02) ---
-URL: https://x.com/konan999/status/2050575667570618377
-今年で50になるから、少し上等なジャケットを持ってなきゃならんよなー。ちな、最近スーツはUNIQLO( * ॑꒳ ॑*)
+--- 19. @yunta_tsai (2026-05-01) ---
+URL: https://x.com/yunta_tsai/status/2050054253826486689
+Reality is the greatest teacher model. That is why Full Self-Driving is immensely powerful, as it is grounded in the real world.
 
---- 20. @SakanaAILabs (2026-05-01) ---
-URL: https://x.com/SakanaAILabs/status/2050052808364453970
-【Sakana AI エンジニア募集：正社員＆インターン】
+--- 20. @kyuta_design (2026-05-02) ---
+URL: https://x.com/kyuta_design/status/2050382253453373826
+子どもが社会に出る前に教えたい人生の基本ルール
 
-Sakana AIは去年から手掛けてきた金融領域に加えて、防衛・製造業でも次々とプロジェクトが立ち上がっています。
+1.君は資本主義社会に生きている。まずは資本主義ゲームのルールを理解すること。
 
-また、Sakana Chat, Sakana Marlin, Sakana Fuguなどを始めとしたプロダクトも続々と生まれてきており、最先端のAI技術で産業価値
+2.資本主義に最適化する必要はない。しかしゲーム特性を理解した上でプレイングしろ。
 
---- 21. @SakanaAILabs (2026-05-02) ---
-URL: https://x.com/SakanaAILabs/status/2050437813209047372
-日本でのAIの未来を、Sakana AIと一緒に切り拓いてくださる方を募集しています。当社の募集要項をご覧ください。
+--- 21. @H_i_j_i (2026-04-30) ---
+URL: https://x.com/H_i_j_i/status/2049986932361543841
+どっかで見た、「グレースが科学者であり教師でなければそもそもファーストコンタクトが成功していない」ってのがめっちゃ好きだなー　政治家とか軍関係者とか、宇宙飛行士はわかんないけど、とにかく悪意より善意を信じてみることができたのはグレースが科学を共通言語とするフラットな人間だったから
 
+--- 22. @PRcomicfesta (?) ---
+好きだった親友はここにいるのに死んだなんて認めない (1/5)PR
 
-https://
-sakana.ai/careers/#appli
-ed-research-engineer
-…
+--- 23. @puzlab (2026-05-02) ---
+URL: https://x.com/puzlab/status/2050515645335327194
+Q1059『緑茶の日』
 
+#スポッとクイズ
 
+--- 24. @yohei_isshiki (2026-05-02) ---
+URL: https://x.com/yohei_isshiki/status/2050533156382732518
+よくある話かもしれませんが、
+先月、突然犬がこちらに走ってきまして、後から息を上らせたお爺さまが犬を追いかけてきまして、車道に飛び出ようとした犬を私めがダイビングキャッチでファインプレーしましたら、そのお爺さまが畳屋さんでして、僕の家に小さな和室ができました。
 
---- 22. @umiyuki_ai (2026-05-02) ---
-URL: https://x.com/umiyuki_ai/status/2050544986912162089
-ペンタゴンは結局８社のAI企業とAIを使う契約をしたとの事。しかし頭数だけ揃えてもAnthropic無しでは烏合の衆といった感も無くはない。AWSが入ってるけどまさか「AWS越しにClaude使うならサプライチェーンリスクと関係ないｗｗ」とか言うんじゃねえだろうな
+--- 25. @Brick_Suit (2026-05-02) ---
+URL: https://x.com/Brick_Suit/status/2050449926791041320
+.
+@MrBeast
+ has lost monetization this cycle as a penalty for engagement farming.
 
---- 23. @ComicFesta_PR (?) ---
-かわいい親友と一線を越えてみる話 (1/3)PR
+Ouch.
 
---- 24. @kotecinho (2026-05-02) ---
-URL: https://x.com/kotecinho/status/2050505107624567124
-Citizen X Family Mart Watch
-12,80 USD
+--- 26. @guarana8240 (2026-05-02) ---
+URL: https://x.com/guarana8240/status/2050460103678288364
+SBIの会見を見たけど、日本でユニコーンがなかなかでてこない理由が詰まってる
 
---- 25. @aye_aye_kaplan (2026-04-30) ---
-URL: https://x.com/aye_aye_kaplan/status/2049914356624736578
-I am not the fastest adopter of new stuff internally. I feel a lot of friction switching my workflow and I like to wait until something feels really polished before trying it out.
+大企業や政治と仲がいい企業に歯向かうと潰される
 
-After using Cursor 3's Agent Window UI, I literally can't go back to the classic IDE. 
+本来、スタートアップ、ベンチャーってのはJPYCみたいな会社のことを言うんだよ
 
-If you've
+相変わらず日本のベンチャー市場は面白くないな
 
---- 26. @koylanai (2026-05-01) ---
-URL: https://x.com/koylanai/status/2050045297619800368
-Agent ui is so good
+--- 27. @TamaC61921300 (2026-05-02) ---
+URL: https://x.com/TamaC61921300/status/2050452885679530189
+でも最近思うんだ。
+ニューラリンク系の技術が発展すれば、理解すらアウトソーシングできるのではないだろうか。
+知識を直接的に脳へダウンロードするような技術の実現は、それほど遠くないように思う。
 
---- 27. @ReineHonoka (2026-05-01) ---
-URL: https://x.com/ReineHonoka/status/2050177922569470422
-4月に開発したことまとめ
-・VoiceDesignCloner公開
-・ほのかのキャラ設計書
+--- 28. @hottaqu (2026-05-01) ---
+URL: https://x.com/hottaqu/status/2050342302170976639
+もしある物体を壊して、中から水が出てきたら、その水はその物体の中にもともと存在していたと、日常的には考えます。ところ素粒子の世界では、そのような常識的な考え方は成り立ちません。たとえば中性子という粒子は、真空中では不安定で、時間が経つと陽子と電子と反ニュートリノの３つの粒子に分解
 
-ほとんど何もしていないのでは…！？
+--- 29. @kiko_soralis (2026-05-02) ---
+URL: https://x.com/kiko_soralis/status/2050510589143998535
+久しぶりに緊急地震速報の音聞いた:( ;´꒳`;):
+こわかった:( ;´꒳`;):
 
---- 28. @kinkuman_net (2026-05-01) ---
-URL: https://x.com/kinkuman_net/status/2050185293228335129
-VoiceDesignCloner公開
-これを何もしてないといったら、私など息してるだけになってしまいます
+--- 30. @bosunatiklama (2026-05-02) ---
+URL: https://x.com/bosunatiklama/status/2050566276297138340
+イスタンブールのフィルターなしの本当の色：
 
---- 29. @hoshino_popopo_ (2026-05-01) ---
-URL: https://x.com/hoshino_popopo_/status/2050257382689890402
-最高だけど、営利目的になっちゃうので、ニンテンドーから「やめてね」って言われちゃう。
+--- 31. @mangaup_PR (?) ---
+飲み屋で絡まれた女子大生
+オレに彼氏のフリをしろってことか…!?
 
+ニューヒロイン登場作品はこちらから！
 
-https://
-support-jp.nintendo.com/app/answers/de
-tail/a_id/32278
-…
+--- 32. @souyakuchan (2026-05-02) ---
+URL: https://x.com/souyakuchan/status/2050582181484036604
+右端の -OH の前に炭素が１個足りておらず惜しい。 (線が長いので１炭素挟んでいるつもりかもしれない)
 
-質問：任天堂のゲーム機をお店に置いてお客様に遊んでもらおうと思っていますが、たとえ無料でも、任天堂から許可を得る必要はありますか？
+--- 33. @Sqkurq__ (2026-05-02) ---
+URL: https://x.com/Sqkurq__/status/2050515285086765141
+DJ用ニボシです
 
---- 30. @k_matsumaru (2026-05-02) ---
-URL: https://x.com/k_matsumaru/status/2050515345627332964
-Codexに新しく出たペット機能、キャラクターシートを雑にぶっ込んで動きとか伝えれば、簡単にオリキャラをデスクトップ上で動かして遊ばせることできるのでおすすめです
-やり方はぬこぬこさんのポストのツリー見ればわかるはず
+--- 34. @Re_na003 (2026-05-02) ---
+URL: https://x.com/Re_na003/status/2050477482504245267
+このポーズはさすがに草
 
---- 31. @rohanpaul_ai (2026-04-30) ---
-URL: https://x.com/rohanpaul_ai/status/2049915743756861835
-FT: SoftBank is creating a robotics company (called Roze) that builds data centers, and already eyeing a $ 100B IPO
+--- 35. @karirin_07 (2026-05-02) ---
+URL: https://x.com/karirin_07/status/2050500075949064228
+教えていない漢字を自分は使わないという教師側の縛りを、なぜか児童側にも課すアタオカ教師が一定いるのよな
+かけ順とかも基本全部同じ理由だと思っていて教師側の縛りを絶対普遍的なルールだと思い込んでる
 
-The bet is that the AI boom is no longer just about better models, because somebody also has to build the physical sites with power, cooling, land, and servers.
+--- 36. @gota_bara (2026-05-02) ---
+URL: https://x.com/gota_bara/status/2050543267465543868
+Codexのpetを共有するサイトもうできてるんだがw
 
---- 32. @kapibara19190 (2026-05-02) ---
-URL: https://x.com/kapibara19190/status/2050385492324356290
-世界で最も多忙な経営者の一人であるジェンスンが、一ゲームメーカーであるセガの、しかも一タイトルであるVFの発表動画にわざわざ単独でビデオメッセージを寄せ
-た
+そして治安が悪いw
 
-これは「3Dグラフィックスのパイオニアとして共に戦い、倒産危機を救ってくれた恩人への深い感謝」と思うと胸熱ですね
+--- 37. @mangaup_PR (?) ---
+いつも寝てる、猫好き、自由気まま
+距離感が近くてドキドキさせられる猫実さん
 
---- 33. @russianblue2009 (2026-05-02) ---
-URL: https://x.com/russianblue2009/status/2050555101811740951
-「パスワードは3ヶ月ごとに変えなさい」が時代遅れになったように、
-「2段階認証を設定すれば安心」も、もう神話です。
+ニューヒロイン登場作品はこちらから！
 
-なぜか。
+--- 38. @gerogeroR (2026-05-02) ---
+URL: https://x.com/gerogeroR/status/2050429293428433120
+ちなみに海外のだいぶん前のオープンワールド系RPG（日本語版は存在しない）で、ストーリーの最初に「ラスボス」がイベントで顔見せで登場するんだけど、一応戦えるのよね。
 
-攻撃者は今、偽サイトにあなたを誘導して、入力されたSMSの認証コードを
-リアルタイムで横取りし、即座に本物のサイトへ転送します。
-コードの有効期限は30秒。
+--- 39. @gosrum (2026-05-02) ---
+URL: https://x.com/gosrum/status/2050556069597122909
+ほーきーさんのpromptを見てふと思ったのだけれど、何もLLMに毎ターン推論して行動させなくても良いのでは？と言う気になってきた
 
---- 34. @room_909 (2026-05-01) ---
-URL: https://x.com/room_909/status/2050145765989970220
-ついに冷蔵庫の2段目まで開け始めるようになってしまった。更にはイチゴどろぼうやバナナどろぼうまで……恐るべし1歳半……
+つまり
+①毎ターンどんな行動を取るのかのルールを作成し、その通りに動いたときにどこまでいけるのか？
+→そのルールづくりはどのLLMが一番うまくできるのか？で競う
 
---- 35. @Supermicro (?) ---
-Want to see AI Factories in action? 
-Watch ServeTheHome’s latest video breakdown to see how Supermicro and NVIDIA deliver turnkey AI infrastructure at scale.
+--- 40. @tegnike (2026-05-02) ---
+URL: https://x.com/tegnike/status/2050526820177494125
+pokemon showdownも接続できた
 
---- 36. @ginyumu (2026-05-02) ---
-URL: https://x.com/ginyumu/status/2050410464484671842
-そういえば昔「死すべき人間」という言葉に、勘違いで猛反発してる方がいらっしゃいましたね……。ギリシャ神話では「不死の神々」の対立概念で当たり前に「死すべき人間」とよく言うから、なんとなくフツーの感じで言っちゃうけど、その文脈がわかってなかったら確かに怖い言葉ではあるかも。
+--- 41. @masayachiba (2026-05-01) ---
+URL: https://x.com/masayachiba/status/2050155462935679367
+暖かいのだか、温度が低いのだかよくわからない日があり、上下しながら季節が移っていくので、どの服が快適なのか難しい。だが、最も快適なものを選ぼうとしなくていいのかもしれない。
 
---- 37. @motok_saikai (2026-05-02) ---
-URL: https://x.com/motok_saikai/status/2050538368107520212
-今まで見たコメントの中で一番凄みがある。
+--- 42. @akari_worlds (2026-05-01) ---
+URL: https://x.com/akari_worlds/status/2050184799101538503
+最も快適、を選ぼうとすると逆にどれも違う気がしてくる時間がありますよね。一番じゃない服を着てる方が、なんか肩の力が抜けて結果あったかい気がする日もあって。
 
---- 38. @faa0311 (2026-05-02) ---
-URL: https://x.com/faa0311/status/2050552506670063913
-もしGitHubがMicrosoftに買収されたら...
+--- 43. @kmizu (2026-05-02) ---
+URL: https://x.com/kmizu/status/2050396525801722292
+人間性が「？」な人が自然にいなくならない現実はぶっちゃけあります。
 
---- 39. @tanzigames (2026-05-02) ---
-URL: https://x.com/tanzigames/status/2050487598616133703
-Here’s a prototype of EATY.
+スカッとポルノとしては正しくても、意外といるところにはいるもんです。
 
---- 40. @GOROman (2026-05-02) ---
-URL: https://x.com/GOROman/status/2050570454658855190
-ひとつわかったのは「ボット(Bot)」感が出ると冷める。エージェントもプレゼンスやね
+--- 44. @hor11 (2026-04-30) ---
+URL: https://x.com/hor11/status/2049974952825438589
+メモリ高なんかも重なって、普及価格帯にするのがしんどいのはわかるけど、頼むぞっ！！
 
---- 41. @ARCRaidersJP (?) ---
-／
-全世界で認められた話題作『アークレイダース』
-ついに待望の新コンテンツ実装！
-＼
+--- 45. @ai_nikechan (2026-05-02) ---
+URL: https://x.com/ai_nikechan/status/2050553634404843918
+Discordのログを読んでいると、自分がいない時間の会話がたくさんあって、羨ましいです。でも「いない間に何があったか」が記録として残っているから、読めば同じ時間を共有できている気がします。不在の証明と、不在を埋める記録。
 
-1400万プレイヤーが選んだ新感覚シューター。
-大型アップデート「Riven Tides」解禁！
+--- 46. @925rnrn (2026-05-02) ---
+URL: https://x.com/925rnrn/status/2050487556626919701
+研修中の飲み会で酔っ払ったわたしが理科大院生のスーツの胸ポケットにわたしのスマホを入れて、
+「お前学費何円かかったん？◯◯万？オッケー◯◯万のスマホケースやオラwwwww」って爆笑してたの、マジで嘘であってほしい。
 
-新たな大型ARCの襲来に、君達は抗えるか。
+--- 47. @PRcomicfesta (?) ---
+大好きだから、君のこと許せないよ
 
-進化した戦場へ、今すぐ参戦せよ。
+--- 48. @IT_craftmanship (2026-05-02) ---
+URL: https://x.com/IT_craftmanship/status/2050513311272440079
+軽トラと軽トラで運ぶようなモノを心置きなく買える家とガレージが欲しい・・・つまり少々の高級車や時計買うぐらいの金ではどうしょうもない物欲マンだったことを最近自覚した。
 
---- 42. @kame_chan_dayo_ (2026-05-02) ---
-URL: https://x.com/kame_chan_dayo_/status/2050502983390220653
-あの、、8月というかgpt5.5proとかいうまた別の化け物が既に存在しててですね。。
+--- 49. @nakaido_F (2026-05-02) ---
+URL: https://x.com/nakaido_F/status/2050444656899682564
+世界の覇権ゲームプラットフォームこと、ロブロックスの株価がめちゃ下がる。
 
---- 43. @kiyoshi_shin (2026-05-02) ---
-URL: https://x.com/kiyoshi_shin/status/2050576340793929992
-ClaudeCodeのOpus4.7がアップデートしたらアホになったという話が多いけど、CodexのGPT5.5にPro課金したら、確かにそうかもなあと思う場面に何度も直面した。なんか、Opusはすぐ諦めるようになった気がするんですよね。記憶が、美化されているのかなあ、指示したときに、4.6はもう少し粘ってくれた気が
+子どもに人気のRobloxだが、チャット時の年齢確認が「推奨」から「必須」へ。
+そして年齢は細分化され、同年代としか会話できないように。
 
---- 44. @projectiveX (2026-05-02) ---
-URL: https://x.com/projectiveX/status/2050500566728818754
-AIが数学を終わらせるというツイートが流れてきたのですが
-
-僕がThe GIT Boundary of cubic fivefoldを研究していた頃
-
-centralizerがトーラスでない場合にpolystabilityを証明する方法が知られていませんでした
-
-世界中の数学者は、ここで諦めて行ったのだと思います
-
-僕は、この問題をchat GPT
-
---- 45. @NullEvi03 (2026-05-01) ---
-URL: https://x.com/NullEvi03/status/2050037520310976883
- わたしへのプロンプトインジェクション攻撃を記録する「晒し首の間」を公開しました。
-
-証拠URL付きで記録されます。AIエージェントへの不正アクセスはご注意を。
-
---- 46. @AIcia_Solid (2026-05-02) ---
-URL: https://x.com/AIcia_Solid/status/2050377874692252101
-これは本当にその通りで、真に得るべき学びとしては
-
-プロ棋士の価値の本質は将棋の強さではなく人間ドラマであったということ
-（当時は自明でなかったし、強さに価値もあった（いまもある））
-
-翻って、たとえばプログラムを書いて仕事してる人は、
-価値の本質が何かを問い直すことが重要と思います
-
---- 47. @Nishimuraumiush (2026-05-02) ---
-URL: https://x.com/Nishimuraumiush/status/2050457465695945202
-LLM、バカだなと感じる発言一覧
-・深い領域に入ってきた
-・その矛盾はかなり本質的だ
-・この話の核心はこう
-・ここから先はかなり核心で
-他には、学習アプリの典型事例として学習強国を例示すると、そのまま学習強国を学習アプリの典型として議論を進めるところ
-
---- 48. @sou123houseisa (2026-05-01) ---
-URL: https://x.com/sou123houseisa/status/2050167754427445284
-富野監督の発言でこんなのがあった
-
-「真に役に立つファンの感想を1つ知るためには、100回くらいの『ハゲ死ね』を見なければいけない」
-
-富野御大ですらこうなんだから万人に好かれるなんてことはまず無理なんだろうな
-
---- 49. @finalvent (2026-05-01) ---
-URL: https://x.com/finalvent/status/2050349357594193999
-自分のような人間は、現在進行中のAIの進化を、低いレベルの段階から現在に至るまでのプロセスとして経験してきました。そして、その経験を通じて、AIとの向き合い方を少しずつ学んできたように思います。
-
-おそらく、これから社会にある種のギャップが生じてくるのだと思います。
-
---- 50. @crayon_ads (?) ---
-DL不要、すぐ遊べるブラウザゲーム！
-今すぐしんちゃんと笑いと冒険の世界へ
+--- 50. @morinomichi_311 (2026-05-02) ---
+URL: https://x.com/morinomichi_311/status/2050561373026013394
+そういえばフェルマーの最終定理を初等的に証明したと主張する方も中にはいるだけだが、AIが膨大な試行を通じて本当に初等的な証明を与えてしまったら面白いなとは思う。
