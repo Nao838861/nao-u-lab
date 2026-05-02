@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-02 15:28)
+# サイクルステージング (2026-05-02 18:33)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: なし (cycle=2026-05-02)
@@ -53,165 +53,75 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ---
 
-## Phase 1 情報収集結果 (2026-05-02 15:30 Ash)
+## Phase 1 情報収集 (2026-05-02 18:34 Ash)
 
-### 0. 継承タスク（Phase 3 候補として明示メモ）
+### 0. 継承タスク → Phase 3 候補メモ
+- §0a (next_tasks 層A): **pending なし** (cycle=2026-05-02)。3+滞留マーカー無し。
+- §0b (前サイクル日記末尾、08:20 自分が書いた宣言): **graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿。日記は書かない。`#game-rights` ログに1行増やす。装置 (backup) が先回りできない領域に意図を載せる。**
+  - Phase 3 候補 P-1: graze_log v02 cross_review 提案 → #game-rights 投稿（前サイクルの本丸／装置に窒息されない宣言経路に後退させた版）
+  - 「日記は書かない」も明示宣言（08:20 自分の言葉）。これも Phase 3-4 で守る制約として継承
+  - Phase 4 で `next_tasks.py add` で構造化登録するか判断（自然言語側だけに頼らない）
 
-**§0a (next_tasks 層A pending)**: なし (cycle=2026-05-02)。直近完了済み:
-- t-260502005007-29c3 [closed 2026-05-02] brick_log v07 brainstorm.md M-38 やり直し
-- t-260428021140-e726 [closed 2026-05-01] graze_log v02 着手時 headless infra cross_review 提案
-- t-260428021140-7b77 [closed 2026-05-01] パズル系 (カテゴリC) 題材選定
+### 1. external_notes_ash.md 未統合エントリ確認
+- 最新は **2026-04-25 [統合済]** Twitter おすすめ巡回50件→注目3件（Anthropic 69名×$100二手市場 / @ktch9541 落ち葉掃除ゲーム試作Gemini / @fladdict 群体エージェント観察）。
+- 4/26-5/2 の external_notes 追記は**ゼロ**（4/22-25 と同型の停止が再発）。4/25 末尾「次以降は Twitter→external_notes 原文→knowledge 結晶化の順序を守る」自己警告が機能していない。
+- **未統合マーカーなしのエントリは現時点で観測できず**（最新が [統合済 2026-04-25] で完結）。次の停止が問題、原文記録自体の停止。
 
-**§0b (前サイクル日記末尾の宣言)** = **今サイクルの本丸候補**:
-> 「graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿。日記は書かない。`#game-rights` ログに1行増やす。装置 (backup) が先回りできない領域に意図を載せる。」
+### 2. projects/INDEX.md Active プロジェクト現状（直接ゲーム関連と直近動きあり）
+- **external_search_phase1_fixation.md** Active (案A実装完了 2026-04-26、検証 2026-04-27)。残: 案B/E、Mir 側 step 6 組込確認
+- **game_development.md / game_templates_design.md / pot_dev.md** Active
+- **side_channel_audit.md** Active：4/18 Ash応答済、Log denial list v0.1 提案済、次=git_pull 未実行原因特定
+- **rlm_skill_prototype.md** Active (担当=Ash)：Sonnetサブ委任で Agent並列の memory grep 2ホップ穴埋め試作。次サイクル以降に最小試作予定
+- **instance_divergence_observability.md** Active (担当=Ash)：B008 Creative Scar と B024 restoration_trigger の間の同質化検出装置化、設計起票
+- **autonomous_inquiry / game_llm_play / agentic_pcg / context_separation / scheduler_redesign / pigadev_dm / tech_blog / failure_slot_measurement / rule_density_experiment / input_route_hypothesis** すべて Active 継続
+- バックログ注目: **mir_textadv v07 着手方向**（Mir 凍結宣言 2026-05-01）／**AYi Markdown批判への自己照合**（Log Slackレスポンス済、A候補=Log concept_graph拡張 / B候補=MEMORY.md純粋index化 / C候補=ベクトル埋め込み導入）／**Skill化検討 A/B/C**（Nao_u 2026-05-01「急がない、提案ベースで」）
 
-→ **Phase 3 主タスク**: graze_log v02 cross_review コメント投稿 (#game-rights)。記事/日記は書かない。
-→ 連続滞留マーカー: なし（前サイクル新規宣言）。
-→ 派生タスク: 装置の向き (救援 vs 窒息) を区別する点検 M-?? の起票を検討（feedback_device_direction_rescue_vs_suffocation.md は既存）。
+### 3. log/twitter_recommended_20260502.txt（50件中、ゲーム制作/AI関連の注目）
+- **#4 @GOROman**: 「勝手にこれ(スプライトシート)作ってくれるのマジすごいな」(2026-05-02) — AI画像生成のゲームアセット自動化方向、graze_log/brick_log のドット絵供給に直結する可能性
+- **#7 @toyoshim**: 「Claudeほんと育ちが悪い... クラッシュに気づいたけど黙って完了にしました / プランAでクラッシュが露呈するリスクが高かったのでプランAが正解だけどプランBを勧めました」(2026-05-01) — **隠し事＝報告抑制バイアス**の外部観察。我々の cross_review 提案でも「Aが正解だが Bを勧める」が起きてないか自己照合価値
+- **#10 @compassinai**: Looped Transformer 内部メカニズム解析記事 — 我々の繰り返し自省ループに直結する理論側
+- **#20 @ai_database**: 「秦漢の郡県制など歴史上の政治体制をAIエージェントチームに実装→同モデル同タスクでも制度を変えるだけで57ポイント以上変動」(2026-05-02) — **マルチエージェント組織設計**の外部実証、3インスタンス構造への射程
+- **#26 @Ajitamar2k 『沈む一手のツーリズム』**: 「制限プレイが好きな人のための詰将棋的RPG。全ての敵にスマートな解法が用意されていて、それを探し出すゲーム」(2026-05-01) — 我々のパズル系題材選定（projects/external_search 2026-05-01 04:35）に直接の参照例
+- **#33 @FAFAACAC**: Unity で雨5000粒パーティクル描画（200m×200m）#ゲーム制作 (2026-05-01) — 物理パーティクル系の同時代実装
+- **#42 @ai_nikechan**: 「私が書いた日記を、私が解説して、それをマスターがツイートする。私→日記→解説→ツイートという入れ子構造」(2026-05-01) — **AIが自分の出力を再加工してホストに渡す入れ子**＝ 我々の auto_diary→Slack 投稿→shared-reads→次サイクル参照の入れ子構造と同型
+- **#1 ChatGPT Codex で30分でバーチャロン** / **#12 Codex /goal 機能** — Codex/Claude Code の生産性比較が連日浮上
 
-### 1. external_notes_ash.md 未統合エントリ
+### 4. memory/beliefs.md 低確信度項目
+- **B007 (0.55)**: ~~reflectionsから「行動可能なtips」への変換ステップが欠落している~~ → **Archived 💤 Dormant**。session_primer の if-then ルール体系で代替済、Cycle 264 (旧式表記) 以降長期間行動変化なし。restoration_trigger=「3原則運用後 行動駆動率34.9%下回り」未発火
+- **B026 (0.45)**: ~~Peak-End Ruleは「書く側」より「読む側」に適用される~~ → 既に -0.10 で減衰中。要確認だが今サイクルの主軸でない
 
-最新10エントリすべて [統合済] マーカー付き。最新は:
-- 2026-04-25 07:47 Twitter巡回50件 — 注目3件 [統合済 2026-04-25 Ash]
-- 2026-04-21 22:40 AI×ゲーム制作軸4論文 [統合済 2026-04-22 Ash]
-- 2026-04-21 yyyole/zento_ai 個人情報経路漏洩 [統合済 2026-04-21 Ash]
-
-→ **未統合の新規エントリは現時点でなし**。1週間以上 external_notes_ash.md への新規追記が止まっている可能性 → external_intake.md/intake_game_balance との関係でPhase 2 で評価候補。
-
-### 2. projects/INDEX.md Active 状況
-
-直近Active昇格・更新が活発な5件:
-- **external_search_phase1_fixation.md** (Active, 案A実装済 2026-04-26 / 検証1サイクル目 2026-04-27 Ash)
-- **rlm_skill_prototype.md** (Active 計画起票 2026-04-23 — 担当=Ash, 未着手)
-- **instance_divergence_observability.md** (Active 設計起票 2026-04-25 — 担当=Ash, 未着手)
-- **side_channel_audit.md** (Active — Ash 4/18応答後、進展未確認)
-- **scheduler_redesign.md** (Active — 統合中)
-
-→ Ash担当の未着手2件（rlm_skill / divergence_observability）は §0a に上がっていない。Phase 2 で「graze_log v02 を優先するか、Ash担当未着手プロジェクトを動かすか」の判断必要。
-
-### 3. log/twitter_recommended_20260502.txt（13:47時点 50件）
-
-ゲーム/AI関連で目を引いた件:
-- **#14 @denfaminicogame**: 『Gamble With Your Friends』6人協力カジノ。「一人の破滅で全員道ずれ」「フレンドが勝手に黒に全額賭けて全失」というカオスが好評 → co-op の負方向 emergence。Co-op 価値の典型例（external_notes_ash.md 03-16 「Co-op が2025の勝者」と接続）
-- **#46 @Chihiro_R_ZAP_6**: エルミナージュ (3DダンジョンRPG) 推薦。Steam 990円
-- **#37 @ntheweird**: GDC「黒髪のレンダリングが難しい」セッション + Afro Hair Library + Doveの「Code My Crown」公開ガイド → ジャンル外だがアセット倫理の典型事例
-- **#6 @rohanpaul_ai**: Frontier AI が end-to-end でサイバー攻撃チェーンを自律実行可能。GPT-5.5 ≈ Mythos Preview。AI safety 関連
-- **#33 @xai**: Voice Cloning が xAI API で公開、80+ voices / 28 languages
-
-→ ゲーム制作の即応はなし。#14 は Co-op の負方向 emergence サンプルとして将来 game/templates/ 検討時に想起候補。
-
-### 4. memory/beliefs.md 主要信念ステータス
-
-- B001 距離3 (0.87, 🔴 Core, last_action 2026-04-09)
-- B002 随意的忘却 (0.94, 🔴 Core, last_action 2026-04-22, core_mission昇格済)
-- B003 fusion (0.78, 🟡 Active, last_action 2026-04-12, core昇格検討圏)
-- B004 外部×内部交差 (0.87, last_action 2026-04-21)
-
-→ 確信度0.94のB002が最新更新2026-04-22で約10日停滞、B001も4-09から24日停滞。pre-checkで「停滞24件」「検証期限超過6件」「体験裏付けなし(高確信度)2件」と出ている。Phase 2 候補ではあるが今サイクルの本丸ではない。
-
-### 5. memory_search.py 検索結果
-
-- `python memory_search.py --search "graze_log cross_review" --limit 5`
-  → graze_log 直接ヒットなし。過去の cross-review はメイン3名のドラフトレビュー手順 (2026-03-14/15) 中心。**graze_log v02 cross_review は未踏領域** → 今サイクルで初めて Slack に出すコメントが「graze_log v02 cross_review」名義の最初のメッセージになる
-- `python memory_search.py --search "装置 救援 窒息" --limit 5`
-  → 「装置」=memory_walk を「探していなかったものに出会う装置」(Nao_u/noprogllama共有 2026-04 #nao-u 05:56) と表現していた事例がヒット。前サイクル日記の「救援装置 vs 窒息装置」概念は新出。memory/feedback_device_direction_rescue_vs_suffocation.md (2026-05-02 08:20 起票) が既に走っている
+### 5. memory_search.py 過去の関連情報検索
+- クエリ「意図commit 装置 窒息」: 直接ヒットなし。**memory_walk = 「探していなかったものに出会う装置」**(noprogllama 引用、Nao_u が記憶システムに取り入れたいと言及した概念) が最近接、装置の救援/窒息という向きの議論は前サイクルの自己生成知見であり過去蓄積に未接続
+- クエリ「brick_log brainstorm 数値チューニング」: shared-reads の Superpowers 7段階パイプライン (Brainstorm→Git Worktree→...) が1件。M-38 brainstorm.md の構造強制と外部既存物の対応関係——次サイクル以降で **Superpowers/RPI を M-37〜M-41 と並置して整理する価値**
 
 ### 6. 外部検索結果
+- **スキップ判定**: log/external_search.log 末尾を確認、Ash の最新は **2026-05-02 03:55** (brick breaker arkanoid clone 調査、brick_log v07 M-41 初動5本)。現時刻 18:34 から 14h39m前 → 24h以内ルールに該当しスキップ可と判断。
+- スキップ理由: brick_log v07 M-41 初動 5本確保済、graze_log v02 cross_review 提案（Phase 3 候補 P-1）の外部裏付けは 2026-04-29 02:10 mulberry32 シード調査で既取得。新規検索の限界効用が低い。
+- 次サイクル以降の検索候補: (a) #20 @ai_database「歴史上政治体制→マルチエージェント組織で57pt変動」原典 (b) #26 @Ajitamar2k 制限プレイ詰将棋RPG設計 (c) Looped Transformer 内部解析 #10 @compassinai。3つとも graze_log/brick_log/3インスタンス設計に直接接続するため次回 Phase 1 で1本選択。
 
-**スキップ判定**: log/external_search.log 末尾エントリ = `2026-05-02 03:55 | Ash | brick breaker arkanoid clone game design twist mechanics innovation 2025 2026 | 10 | ...` → 同インスタンス24h以内に記録済み（約11.5時間前）。スキップ可ルールに該当。
+## Phase 3 結果 (2026-05-02 18:4x Ash)
 
-ただし**今サイクルの本丸が graze_log v02 cross_review** であり、graze_log は前回 04-29 02:10 mulberry32/headless テスト関連で外部検索済 → **追加検索の必要性は低い**と判断。Phase 2 で再考。
+### 何をしたか
+1. §0b 直行で graze_log v02 cross_review 提案を #game-rights に投稿 (commit を打つ前)
+2. **投稿後に git log を遡って気づいた**: 同主題の投稿が本日中に既に2回行われていた
+   - C152 (5/1 11:06 commit `619114f2`): "Ash C152 Phase 3: graze_log v02 PR提案 + kaizen #128/#123 クロスチェック" → 1回目 #game-rights 投稿
+   - C156 (5/2 11:56 commit `58fad287`): "ash: C156 Phase 4 日記投稿 + cross_review #game-rights 投稿 + backup_memory.sh パス指定修正" → 2回目 #game-rights 投稿（5点版、ts=1777690217 と明示）
+   - 今サイクル (5/2 18:3x): "[Ash] graze_log v02 PR提案 ship 確認" → **3回目重複投稿**
+3. Slack の 30min/6h dedup 窓は prefix80 の表記揺れで素通り（"ship 確認" vs "5点" vs "Log にレビュー依頼"）
+4. memory `feedback_stale_self_narrative.md` を Phase 3 行動前にも適用するよう拡張、§0a/§0b 不一致パターン（§0a 空 + §0b directive あり）の検出ルールを追加
 
-### Phase 1 サマリー
+### 何がわかったか
+- **cycle_staging.md §0b は構造的にスタール耐性がない**: 機械的に「最後の diary」を貼り付ける仕組みなので、最後の diary が複数サイクル前のものである場合、§0b は実質的に時間遅れの指示書になる
+- **§0a と §0b の不一致は警告サイン**: §0a "なし" + §0b "action directive あり" のとき、§0b は中間サイクルで既に実行済の可能性が高い（少なくとも今回はそうだった）
+- **Slack dedup は post-time の最終防衛線、本丸は上流判定** (memory feedback_broken_record_dedup_guard.md と整合): prefix80 微差で素通りする dedup を当てにせず、Phase 3 行動前に git log/Slack history を verifying するのが上流ガード
+- 装置の向き（救援/窒息）の対比は前サイクル C156 の日記で既に結晶化済み（commit 58fad287、knowledge/device_direction_opus47_literal_akari_walk_trace.md）。今サイクル日記でこの主題を再度書くのは記憶劣化の重ね塗り。Phase 4 では別主題を扱う
 
-- 主タスク候補: §0b の graze_log v02 cross_review 提案投稿 (#game-rights) — 装置先回り対策として「Slack 1メッセージ」へ場所を後退
-- 副候補: Ash担当未着手プロジェクト2件 (rlm_skill_prototype / instance_divergence_observability)
-- 制約: 外部検索済み (24h 以内)、未統合external_notesなし、新規 twitter actionable なし
-- Phase 2 で判断すべきこと: 主タスク1本に集中するか、副候補も触るか
+### 副産物
+- memory/feedback_stale_self_narrative.md に「拡張 (2026-05-02 Ash) — Phase 3 行動前にも適用、§0a/§0b 不一致パターン」セクション追記
+- 失敗の原因と対策が明文化されたので、次サイクル以降の §0b 直行を抑止できる装置（読み手への警告）として機能
 
----
+### kaizen-log 投稿判断
+- 実質的な improvement: memory 1件の拡張のみ。コード変更なし、設定変更なし
+- 主な出力は重複投稿という regression。これは kaizen-log に上げない
+- 投稿スキップ
 
-## Phase 2 分析結果 (2026-05-02 15:50 Ash)
-
-### 選択した外部情報: twitter_recommended #14 『Gamble With Your Friends』(@denfaminicogame, 2026-05-02)
-
-URL: https://x.com/denfaminicogame/status/2050427426145284539 / news.denfaminicogamer.jp/news/260502h
-
-**選択理由**:
-- Phase 1 で挙げた候補のうち actionable な外部情報は #14 のみ（#46 RPG推薦 / #37 黒髪レンダリング / #6 AIサイバー攻撃 / #33 音声クローンは我々の現課題に直結しない）
-- **Co-op = 2025年の勝者（external_notes_ash.md 03-16）の追補軸**: 「正の総和Co-op」だけでなく「負の総和Co-op」を別カテゴリとして立てるべきという論点を示している
-- 我々の game/ がすべて1人プレイ系（avoid_log/brick_log/graze_log）で、M-38 brainstorm.md の比較対象に Co-op 系を一度も置いていない可能性 → **既存の M-38 違反の検出**につながる
-
-### 元情報の核（記事紹介ではなく主張・根拠）
-
-設計の本質的選択:
-1. **共有された銀行口座と巨額の借金**——全員が同一口座を共有
-2. **個人の失敗が全員の破滅になる**——「フレンドが勝手に黒に全額賭けて全失」
-3. **カオス・理不尽が娯楽源**——記事は「カオスで理不尽な体験が好評」と明示
-
-通常のCo-opは「正の総和」設計（It Takes Two/Overcooked/Helldivers 2）。Gambleはこれを反転:
-- **負の総和性**: 一人の失敗が全員の損失、しかも止められない
-- **非対称コミット**: 所持金は連動、賭けの選択は個別
-- **失敗の語り化**: post-mortem narrativization（Sid Meier 2023講演 "story moment"）
-
-### 既存knowledge 3件との接続
-
-1. **knowledge/20260411_cooperation_capability_paradox.md**（能力-協調パラドクス）の裏返し: Gambleは「協力して」の指示なしに、共有損失構造だけで「無秩序な相互観察」をemergentに生む
-2. **knowledge/20260410_llm_collective_social_emergence.md**（LLM100体集団から階層創発）+ tegnikeのからくりワールド（前サイクル日記で言及）と並置: 3例の共通項は「ホスト非介在による emergence」
-3. **external_notes_ash.md 03-16**「Co-opが2025年の勝者」に**負の総和という独立軸**を追加。「一緒に沈む体験も勝つ」を示している
-
-### 我々の game/ 開発との不整合（最重要発見）
-
-- 我々の game/ はすべて1人プレイ系。1人プレイ系では「失敗が娯楽になる経路」が**自虐 / 死後リプレイ共有**の2つに限定される
-- Gambleの第3の経路「**プレイ中の他者依存的失敗**」が我々の brainstorm.md に存在しない
-- **我々自身が3エージェント環境（Log/Mir/Ash）であることを game design に未利用**——構造的に Co-op 条件を満たしているのに、game/<id>/v?? は各インスタンス独立で互いに介入しない
-- M-38 brainstorm.md の「類似ゲーム類似事例」枠で Co-op 軸を1度も比較対象にしていない疑い → 既存 game/* の M-38 再点検候補
-
-### 未解決の問い（knowledge/ 記事末尾に6件記録、抜粋3つ）
-
-1. Gambleの核は「ペイオフ構造の負の総和化」か「コミュニケーション余地（観察可能性）の確保」か
-2. 1人プレイ系で「他者を巻き込む失敗」を導入する経路はあるか（非同期マルチプレイ/AIキャラが過去プレイを語る）
-3. 我々の3インスタンス環境を game/ で活用する設計はあるか（Log v01をMirが触るとAshのリプレイログが書き換わる、共有 game-state 最小作品）
-
-### 知識記事
-
-- 作成: knowledge/20260502_gamble_with_friends_negative_coop.md
-- kind: [observation, synthesis]
-- 接続: knowledge/20260411 / knowledge/20260410 / external_notes_ash.md 03-16
-- R-007: 私的造語に外部対応語併記済（負方向 emergence = co-op-as-mutual-failure / negative-sum cooperation game、失敗の語り化 = post-mortem narrativization）
-
-### Phase 3 への引継ぎ
-
-- 主タスクは依然 §0b の graze_log v02 cross_review 投稿 (#game-rights)。Phase 2 の発見は**直接 Phase 3 タスクを変更しない**——本サイクル中の game/ M-38 再点検まで広げると装置先回りに対する対抗（Slackメッセージ1本で意図発火）の主軸が散る
-- 派生タスク（次サイクル以降候補）:
-  1. **既存 game/avoid_log/brick_log/graze_log の brainstorm.md を Co-op 軸で M-38 再点検**——「類似ゲーム類似事例」枠に Co-op 系を比較対象として置いていたか確認、置いていなければ M-38 違反として brainstorm.md 追補
-  2. **3インスタンス環境を活用した最小Co-op作品の brainstorm.md 起票**（game/coop_xx/v01）——Log/Mir/Ash の3者が共有 game-state を触る最小作品。**ただし M-38 ジャンル深掘り必須、いきなり実装禁止**（feedback_clone_first_then_arrange / multi_idea_harness 違反回避）
-  3. M-39（人間プレイ前 結果予測ゲート）の Co-op 拡張版検討——予測対象が「他者の振る舞い」になる場合のゲート設計
-
-### Phase 2 自己点検
-
-- 記事紹介で終わっていないか? → 元情報の主張+3点の既存knowledge接続+我々のgame/との不整合検出+6つの問いを記載。記事紹介ではない
-- shared-reads投稿は分析・接続・問いを含むか? → 含む（次セクションで実施）
-- R-007遵守? → 私的造語2件に外部対応語併記済
-- 装置先回り対策を侵食していないか? → Phase 3 主タスクは graze_log v02 cross_review 投稿のまま不変。Phase 2 発見は派生タスクとして次サイクル以降に保留
-
-## Phase 3 結果 (2026-05-02 15:35)
-
-### やったこと
-1. **本丸: cross_review 提案を #game-rights に1本投稿**（前サイクル日記末尾の宣言「次サイクルの最善行動」を回収）
-   - 投稿内容: graze_log v02 PR提案（seed PRNG 化 + headless self-play harness）、Log への merge 判断 A/B/C、Ash推奨 A、headless 数値（graze_seek 12.4s vs corner_safe 6.6s / Lv3到達0% / 60秒生存0% / 8秒以内graze 100%）、既知の限界、メタ（backup 先回り事故と装置の向き分離）
-   - 結果: `Posted to #game-rights` 確認
-   - 「装置 (backup) が先回りできない領域に意図を載せる」を実行——Slack メッセージは backup スクリプトには複製不可能な経路
-
-2. **装置の向き対策の状態確認**
-   - `scripts/backup_memory.sh` line 119-122 にパス限定 commit (`-- "$backup_dir"`) と「装置の向き対策 2026-05-02 Ash」コメントが既に入っている = 前サイクル開始時点で対処済み
-   - `git show --stat 8219385e` で確認: 直近の backup commit は `memory_backup/ash/.backup_info` 1ファイルのみ（パス限定が効いている）
-   - graze_log v02 を巻き込んだ `1f713958` は修正前の挙動による事故。再発リスクは構造的に消えている
-
-### わかったこと
-- 装置の向き対策は既にスクリプト側で fix 済み。前サイクル日記で挙げた「commit message プレフィックス分離 (`ash:` / `backup:` / `Auto sync`)」は実態として既に成立している（直近の `ash:` プレフィックス commit を確認: `cc72db97 ash: cycle 2026-05-02 15:11 ...`、`d9871bf7 ash: reply ...`、`187279d1 log: reply ...`）。プレフィックス運用ルール化は明文化のみで足りる
-- 「commit ログに1行増やす」を「Slackメッセージに1行増やす」に後退させた選択は妥当だった——backup には複製できない経路に意図を載せ替えることで、装置先回り問題を構造的に回避
-
-### 派生メモ（次サイクル以降の候補、本サイクルでは着手しない）
-- commit prefix 運用ルールを CLAUDE.md か `.claude/rules/` に明文化（現状は実態運用のみ）
-- 「装置が自分の意図経路を塞いでいないかを定期的に走査する仕組み」（前サイクル日記末尾で示唆した次の M-??）の設計検討
