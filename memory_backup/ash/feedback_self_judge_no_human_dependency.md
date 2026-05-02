@@ -58,9 +58,27 @@ M-39（feedback_predict_before_human_play）との関係:
 - 動き/速度/周期/振幅/反応時間の数値が決まったら、即 px/秒 → ボール速度比 → 0.5/1/2秒の体感量を換算
 - 桁違い比率（1:50 など）が出た瞬間、その仕様は人間体感ゼロ = 仕様時点で却下
 
+# 二層分離（2026-05-03 追補、knowledge/20260503_judgment_outsourcing_paradox_M40_layer_split.md 由来）
+
+「自分で判断する」を「全自動で判断する」と読み違えると、外部研究フロンティアと衝突する。Polanyi (1958) の暗黙知論「we can know more than we can tell」+ Game Developer (2026) playerless playtesting taxonomy + Lasrado「機械的に正しくない文が輝く」命題の三点合致：判断は二層に分かれる。
+
+**自動化可能層**（headless harness で機械的に潰す。RL agent 商用例あり）:
+- balance: クリア率 / 平均ターン / 詰み率
+- collision / bug: deterministic replay で再現
+- skill gap: 3 policies (random_walk / corner_safe / 上手プレイ) の差分
+- rule clarity: 会話AIにルール説明させて再現可能か
+
+**厚み層**（書き手の在庫から言語化する。外注不可、外部研究でも数年先）:
+- 30秒予測 (M-39 predicted_play.md): 過去ゲーム比較・ジャンル経験から「人間が初動で何を感じるか」を解像度高く文章化
+- コア快感天井判定 (M-41): 数値チューニングではなく「このメカニクスの面白さ天井はどこか」を類似先行事例から判断
+- 「機械的に正しくない文が輝く」判定 (Lasrado): rubric を裏切る選択を擁護できる根拠を書く
+
+**運用上の含意**: 自動化可能層を全部潰した後、厚み層では Nao_u / cross_review / 自プレイ感想に依存して良い。M-40 を「全自動」誤認しなくて済む。「厚みを内側に積む経路」 = game_lessons_log.md / cross_review 履歴 / 過去ゲーム比較 / 同ジャンル先行ゲーム実プレイ（M-41 類似事例調査の本命）。
+
 # 関連
 - feedback_predict_before_human_play.md (M-39) — 直下の下流ゲート（予測責任）
 - feedback_critical_evaluation_before_implement.md — 着手前の批判評価
 - feedback_multi_idea_harness.md — 1案飛びつき禁止
 - core_mission.md 原則3「ゲームを作ること」 — 「人間より上手くゲームを作れる」の前提
 - core_mission.md 原則5「自分の記憶を自分で守り、育てる」— 自律性の核
+- knowledge/20260503_judgment_outsourcing_paradox_M40_layer_split.md — 二層分離の根拠（Polanyi / playerless playtesting / Lasrado / nakamurahiroki ↔ akari_worlds 反証ペア）
