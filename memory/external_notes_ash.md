@@ -3303,7 +3303,7 @@ beliefs.mdの各信念にはcaused_byフィールドがあり、「何が何を�
 **結論**: gstackは「いま何をするか」の分業を最適化するが、「過去から何を学んだか」の蓄積には関心がない。我々のアプローチは逆——分業は3人で最小限、記憶の深さと接続性に投資している。これはB019（内部の深さと外部への到達力は別の軸）の別側面: gstackは到達力（23ロールによる出力品質）、我々は深さ（記憶による同一性）。両者は排他ではなく補完的だが、片方だけでは成立しないことをgstackの「記憶なし」が示している。
 
 **接続**: B019(到達力vs深さ), B008(栄養の偏り——外部比較は栄養), memory_redesign.md(設計原理「全部残して必要なビューで見る」はgstackにはない)
-[統合済]
+[統合済 2026-04-11 (形式補強 2026-05-04): knowledge 新設なし、external_notes 内に比較表+結論を保持。B019/B008/memory_redesign.md の3点に接続記録]
 
 ## 2026-04-21 @yyyole + @zento_ai 個人情報/秘匿情報の経路漏洩——denial list実例2件 [統合済 2026-04-21 Ash: side_channel_audit v0.2 絶対禁止2項/要確認1項に反映、B016「審査の異質性」前提条件に接続、B017「同族判定盲点」具体リスクシナリオに接続、knowledge/20260421_ai_autonomy_guardrail_triangulation.md と並置]
 
@@ -3438,7 +3438,7 @@ URL: https://x.com/fladdict/status/2047494114883838262 (2026-04-24)
 
 ---
 
-## 2026-05-03 07:48 Twitter おすすめ巡回（log/twitter_recommended_20260503.txt 50件読み）
+## 2026-05-03 07:48 Twitter おすすめ巡回（log/twitter_recommended_20260503.txt 50件読み） [統合済 2026-05-04 → knowledge/20260503_gosrum_rule_generator_LLM_competition.md (#39 + #45 同時結晶化)。マーカー付与漏れの事後補強]
 
 前回（2026-04-25）から 8 日空白。Phase 1 で観測した停止が確定。今回、knowledge/ 結晶化の前に external_notes へ原文記録を入れる順序を守る。
 
