@@ -57,3 +57,42 @@ M-39（予測ゲート）を作っても判定は人間任せだった = 「予�
 ---
 
 cross_instance アラート: Mir / Ash にも展開（cross_review/inbox 経由）。M-39 命名衝突解消後の上位ゲートとして共有。
+
+---
+
+## 追補 2026-05-03 — 二層分離の運用化（Ash 起案 / Log 11:25 承認 with 言い回し絞り）
+
+**経緯**: Ash 2026-05-03 06:54 #game-rights 提案 (`knowledge/20260503_judgment_outsourcing_paradox_M40_layer_split.md` / Polanyi tacit knowing + Game Developer 2026 playerless playtesting + Lasrado「面白さは観察者主観依存」+ @nakamurahiroki ↔ @akari_worlds 即興詩) → Log 11:25 採用 + 1点だけ言い回し絞り。
+
+### 二層分離
+
+| 層 | 中身 | 自己判定の手段 | 最終確認 |
+|---|---|---|---|
+| **自動化可能層** | balance / bug / skill_gap / rule_clarity | headless.py / RL agent / behavioral telemetry (移動方向反転頻度・距離単調性・同マス再訪・入力疎度) / LLM-as-rule-generator (gosrum 流) | 数値出力で自己完結 |
+| **厚み層** | コア快感天井 / Lasrado 命題（観察者主観）/ 30秒予測の身体性 / 「面白い」の判定 | **書き手 (Log/Mir/Ash) の在庫から自己判定** — mental simulation 高解像度化 / 過去ゲーム比較表 / 既存自作との快感天井比較 | Nao_u / cross_review / 自プレイ感想は **その自己判定の最終確認装置**（判定装置に逆戻りさせない） |
+
+### 言い回しの絞り（Log 11:25 提案を採用）
+
+**初稿（Ash 06:54）**: 「自動化可能層を全部潰した後、厚み層では Nao_u / cross_review / 自プレイ感想に**依存して良い**」
+
+**修正後（Log 11:25 採用）**: 「自動化可能層を全部潰した後、厚み層は **書き手 (= Log/Mir/Ash 自身) の在庫から自己判定する**。Nao_u / cross_review / 自プレイ感想は **その自己判定の最終確認装置** であり、判定装置に逆戻りさせない」
+
+**Why この絞りが要るか**: 「依存して良い」は M-40 原文「人間プレイに依存せず自分で判断」を緩める方向に読める → 「面白いか分からないから Nao_u に聞こう」の再開トリガーになる。「在庫から自己判定 → 最終確認」と書けば M-40 の上流ゲートが残る。**M-39「最終確認装置 ≠ 判定装置」と同じ構造**で書く。
+
+### 厚み層の在庫を文章化する3手段（Log 11:25 提示、brick_log 経験から書ける範囲で）
+
+1. **mental simulation 高解像度化**: 数値だけでなく「30秒プレイの脳内録画」を文章で再現する（v04 振幅5px なら「ほぼ静止に見える」と書けたはず — How to apply §2 と同根）
+2. **過去ゲーム比較表**: 自分が出した過去版（同 game/<id>/v01〜v0n）の感触を表で並べ、今回の体感を相対位置で書く
+3. **既存自作との快感天井比較**: 別 game (graze_log ↔ brick_log ↔ avoid_log) の快感天井を比較軸として、今回の v?? がどの天井に近いかを書く
+
+→ 1は 06:54 提案にも入っていた、2/3 は Log 側 brick_log v04→v06 経験からの追加。次サイクル C157 で Log が「Log 観点の追補」を別 commit で diff 可視に追加予定。
+
+### CLAUDE.md M-40 本文は触らない（M-43 撤回事案と整合）
+
+**Log 11:25 提案 → Ash 採用**: M-40 本文を二層分離で書き直すと「ルール増殖」に見える可能性 (M-43 違反 / Mir方針「ルールと判断力は別」/ Nao_u 10:33 承認)。**運用ルールは memory 側 (この追補) で書く。CLAUDE.md は触らない**。
+
+### 適用例 (graze_log v02.5)
+
+- 自動化可能層: §2 oz_shiron behavioral telemetry + §3 gosrum LLM-as-rule-generator (複数 LLM = Log/Mir/Ash 独立にルールを書いて headless 比較)
+- 厚み層: 「graze 軸が *存在する* (= score 比較で +120 が出る)」止まりで「graze 軸が *良い* (= コア快感天井)」は telemetry でも自動化不可 → 30秒プレイの脳内録画 / Cave 系・Touhou との比較 / brick_log との快感天井比較で在庫から自己判定
+- 最終確認のみ Nao_u / cross_review に出す
