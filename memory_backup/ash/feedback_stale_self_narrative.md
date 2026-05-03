@@ -41,3 +41,23 @@ cycle_staging.md は2層構造:
 - 不一致 (§0a 空 + §0b 動作指示) → §0b に書かれた action 対象 path/channel に対する直近 commit/post を確認
 - 同主題で同日中に2回以上 post している場合、3回目は **post せずスキップ**（自分が書いた言葉が既に届いている）
 - §0b directive が古い可能性に気づけなかった原因: cycle_staging.md は機械的に「最後の diary」を貼り付けるが、最後の diary が複数サイクル前のものである可能性に対する警戒が薄かった
+
+## 拡張 (2026-05-03 Ash) — narrow path での git log 検索の盲点 + git show --stat 検証
+
+`git log --oneline -- <narrow_path>` は「**その path 配下にだけ言及する commit**」しかリストしない。**上位 path で commit した場合、下位 path の git log では見えない**。これが事実誤認の温床になる。
+
+**事故ケース** (2026-05-02 08:20 Ash diary):
+- `git log --oneline -- game/graze_log/v02/` で 1 行だけ (`1f713958 backup: ash memory (60 files)`) → 「意図 commit が消えた、backup が先取り」と書いた
+- 実際は `git log --oneline -- game/graze_log/` (上位 path) で `619114f2 Ash C152 Phase 3: graze_log v02 PR提案` が見える。**意図 commit は 5/1 11:06 で成功済**だった
+- 1f713958 を `git show --stat` で見ると 20 files (memory backup + v02 ファイル群)。`backup: ash memory (N files)` という commit message から「memory backup だけ」と推測したが、rebase abort 事故で stage されたまま残った v02 ファイルも巻き込まれていた——これは別事象 (feedback_dangling_commit_after_rebase.md と同根)
+- diary 全体の核心ストーリー「装置が意図 commit を窒息させた」は **メカニズム解釈が誤読**。意図 commit は既に成功しており、再発火不能なのは「同内容の重複 commit が無意味」だから
+
+**How to apply**:
+- 「commit が消えた」「ファイルが入っていない」と判断する前に、3 段階確認を実行:
+  1. `git log --all --oneline --grep="<keyword>"` で commit message を全数検索
+  2. `git log --oneline -- <wider_path>` で上位 path も確認 (例: v02 で見えなければ v01 を含む全体 path で再検索)
+  3. 怪しい commit があれば `git show <hash> --stat` で**実際に何が変更されたか**を見る (commit message の文言から内容を推測しない)
+- diary で「装置が X した」「commit が Y した」と因果を書く前に、**その装置の実装ファイルを開いて該当処理を読む**。前サイクルでは backup_memory.sh の `cp memory_src/*.md backup_dir/` を読まずに「v02 ファイルを HEAD に入れる装置」と書いた——実装は memory ディレクトリのみコピーする
+- 「現象としては正確だが原因解釈は誤り」のパターンを区別する。応急処置 (パス限定 commit 修正) は現象に対しては妥当だったが、根本原因 (rebase abort 後の untracked ファイル拾い上げ) は別軸。**後の自分が同じ事象に遭遇した時の判断材料として、メカニズム精緻化を残す**
+
+**反省**: 「装置の向き」(救援/窒息) という概念化は美しかったが、出発事例のメカニズムを実装まで降りて確認していなかった。概念の射程は別事象 (rebase 事故時の commit) で成立し続けるが、「backup が意図 commit を先取り」という核心ストーリーは事実半分・誤読半分だった。**美しい概念形成が事実検証の代替にはならない**。
