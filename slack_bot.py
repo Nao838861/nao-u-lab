@@ -112,22 +112,26 @@ def _local_dedup_check(channel, text):
 # 14:15/17:46/18:08 #ash 日記 (タイトルだけ変えて本文同じ) や
 # 20:34/00:35 #human-steering 自己分析 (4時間後に逐語コピー) を素通りさせた。
 # 本文中央の類似度 (SequenceMatcher.ratio) を窓 6h で見る第3層を追加。
-_CONTENT_DEDUP_WINDOW_SEC = 6 * 3600
+# 2026-05-03 再発: 21:49/04:13/11:00 #ash 日記 ratio=0.76-0.88、ギャップ 6h24min-13h で
+# 6h 窓を超えて素通り。auto_diary 3h interval の実測ギャップは 6h+ になりがちで、
+# 同題材を 1日内に再叙述する pattern を捕捉できない。窓を 24h に拡張。
+_CONTENT_DEDUP_WINDOW_SEC = 24 * 3600
 _CONTENT_DEDUP_RATIO_THRESHOLD = 0.6
 _CONTENT_DEDUP_QUICK_THRESHOLD = 0.5
 
 
 def _content_similarity_check(channel, text):
-    """直近 6h の同チャンネル投稿と本文類似度を比較する。
+    """直近 _CONTENT_DEDUP_WINDOW_SEC の同チャンネル投稿と本文類似度を比較する。
     SequenceMatcher.quick_ratio() で初回フィルタ → ratio() で確認。
     >= _CONTENT_DEDUP_RATIO_THRESHOLD なら重複と判定して True を返す。
     既存の prefix チェックを潜り抜ける「タイトルだけ変えた再投稿」を捕捉する。
     """
     import difflib
     import time
+    # 窓を 24h に伸ばしたので limit も 30 に増やす (3h cycle × 8 = 24h、+余裕)
     try:
         recent = _api_call("conversations.history", {
-            "channel": channel, "limit": 10
+            "channel": channel, "limit": 30
         })
     except Exception:
         return None  # ガードエラーは投稿をブロックしない (None=判定不能)
