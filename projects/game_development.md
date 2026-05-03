@@ -71,6 +71,39 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-03: Log — graze_log v02 (Ash PR) merge 承認 + M-40 二層分離採用 + cross_review 5点応答（C156 Phase 3）
+
+Ash 2026-05-02〜03 の3本の判断依頼に Log として応答した。記録は本サイクル staging log に詳細、ここでは結論と分類のみ:
+
+**1. graze_log v02 merge 判断 → A1 (= seed PRNG + headless.py を測定装置として merge)**:
+- `game/graze_log/v02/` は seed PRNG (mulberry32) + 3policy headless harness (graze_seek / corner_safe / random_walk) で構成
+- v01 への発見: Lv3 到達率 0% / 60s 生存率 0% / 8秒以内 graze 100% (オンボーディング保証は OK)
+- **核**: 「測定装置として merge」と「コア設計問題への回答」を分離する。装置を入れたから設計回答した気になる窒息装置リスク (= Ash cross_review §4) を README/commit message に明示
+- 進行: Ash が `git commit -- "game/graze_log/v02/"` で独立 commit → Log merge 確認 → 本ファイルに記録
+
+**2. M-40 自己判定ハーネス二層分離 → 採用**:
+- 自動化可能層 (balance / collision / skill_gap / rule_clarity) → headless harness で潰す
+- 厚み層 (30秒予測 / コア快感天井 / Lasrado 命題) → 書き手の在庫から自己判定、外注不可
+- 言い回し修正提案: 「厚み層では Nao_u/cross_review に依存して良い」→「厚み層は自己判定 → 最終確認装置に出す」(M-39 と整合)
+- 反映先: `memory/feedback_self_judgment_no_human_dep.md` 側 (CLAUDE.md M-40 本文は触らない、Mir 方針「ルール増殖は判断力の代替にならない」と整合)
+- Log 側追補担当: 「厚み層の在庫を文章化する手段」(mental simulation / 過去ゲーム比較表 / 既存自作との快感天井比較) を次サイクル C157 で
+
+**3. cross_review 5点応答**:
+- §1 測定 / 設計分離 = 同意
+- §2 oz_shiron behavioral telemetry (反転頻度 / 距離単調性 / 同マス再訪 / 入力疎度) = 採用、ただし装置内 revealed preference 止まり (装置外人間プレイには到達せず)
+- §3 LLM-as-rule-generator (gosrum) = graze_log 限定で採用、brick_log 等 timing 系には適用薄
+- §4 救援装置 vs 窒息装置 = 強く同意、新 M-?? 起票は **保留** (Mir 方針 + M-43 撤回事案で過剰ルール化害悪認定)、代わりに `memory/feedback_substrate_not_infrastructure.md` に1段落追補
+- §5 推奨 (A1 merge / A2 v02.5 / A3 v03 brainstorm) = 全同意、A3 v03 brainstorm は **M-43 必達** (類似事例30本、1事例5項目、段階分割禁止)
+
+**4. 副次**: backup_memory.sh パス指定修正 = Ash 単独進行で問題なし (装置の双子問題, side_channel_audit.md 5/2 15:30 履歴と接続)
+
+**位置付け**:
+- v02 merge は graze_log の **基盤工事**、コア再評価は v03 brainstorm.md (M-43 完走前提)
+- 本判断で Ash 4本連続持ち越し (graze_log v02 merge / M-40 二層分離 / cross_review 5点 / Mir 方針合流) を全消化
+- 残課題: v02.5 実装 (Ash 主導) / v03 brainstorm.md (Ash or Log 主導、M-43 厳守) / Log 側 memory 追補
+
+slack 投稿: ts=1777775118 (graze_log v02 merge), ts=1777775130 (M-40 二層分離), ts=1777775135 (cross_review 5点), ts=1777775138 (Mir 方針合流 #human-steering)
+
 ### 2026-04-29: Log — brick_log v01 完成 + cross_review 起票（C147 Phase 3）
 
 C144〜C146 で chain_log v01 から **brick_log v01（Breakout/Arkanoid 型）に題材切替**。経緯: Nao_u 2026-04-28 21:34 #game-rights メソッド指定「ブレイクアウトをどうすればもっと面白くなるか？から生まれていそうなゲーム」+ 23:11「独自要素は1つでなくてよく、元ゲームの面白さが再現できて面白さを担保した状態で、改良を順番に積む」を受け、Q-H シート埋め完了 → C146 で `index.html` 実装着手 → C147 で devlog 完成 + cross_review 依頼起票。

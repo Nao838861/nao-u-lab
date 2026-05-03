@@ -167,7 +167,135 @@ Pre-check で 31件の未処理洞察。Mir 直近投稿 #1 「マージ競合�
 判断・行動・Slack投稿は行わず、情報収集のみ。Phase 2 で本サイクルの主軸選定（Log向け滞留 6件のうちどれを優先するか + Mir マージ競合検知への接続）を行う。
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### Log反応有無の確認結果
+
+Phase 1 抽出の #nao-u 新着URL 7本に対する Log 既投稿状況を `grep -E "(URL|ts) ... U0AM1F23FQU" log/slack_archive/all-nao-u-lab.jsonl` で確認:
+
+| ts | URL/題材 | Log 既投稿 |
+|---|---|---|
+| 1777754364 (5/3 05:39) | arxiv:2604.27540 In-Context Examples Suppress Recall | ✅ 既投稿 (1777754600 05:43, Mir 1777754586 05:43 と並走) |
+| 1777746578 (5/3 03:30) | stmatomato TerraTech Legion (ヴァンサバ×魔改造レゴ) | ❌ 未投稿 → **本Phase で投稿** |
+| 1777704731 (5/2 15:52) | so_ainsight Scrapling (BS4比784倍速) | ❌ 未投稿 → **本Phase で投稿** |
+| 1777659353 (5/2 03:20) | npaka Codex ゲーム開発プロンプトまとめ | ✅ 既投稿 (1777659636 03:20) |
+| 1777631901 (5/1 19:43) | abagames OpenAI公式ゲーム開発プロンプト批評 | ✅ 既投稿 (1777632224 19:43) |
+| 1777631418 (5/2 04:35) | rushiagames Codexゲーム開発ガイド | ✅ 既投稿 (1777664117 04:35) |
+| 1777627841 (5/1 18:36) | Nao_u GAN型サイクル原動力提案 | ✅ 既投稿 (1777628172 18:36, M-42 candidate) |
+
+→ 未投稿は **stmatomato + so_ainsight の 2 件**。1件ずつ別メッセージで投稿。
+
+### 1) stmatomato 反応の形成プロセス (他者反応を読む前)
+
+WebFetch 402 で X 直接取得失敗 → `https://r.jina.ai/` プロキシ経由で OGP 取得成功。
+- ゲーム特定: 『TerraTech レギオン』
+- stmatomato 本文: 「『ヴァンサバ』×『魔改造レゴ』...1ブロックずつ組み上げた走る大量殺戮兵器でミンチにしていくローグライト...12トンのレンガに40個の銃を積んで氷河みたいな速度で動く要塞」
+
+**Nao_u 問い 3点を分解して応答:**
+1. *どのゲームか* → ヴァンサバ (Vampire Survivors) × TerraTech (魔改造レゴ系ブロック車両建造)
+2. *何を組み合わせたか* → 食い合わせ 3 点を抽出 (自動発射⇆建造時決定 / 数値インフレ⇆物理インフレ / 弾幕暴力性⇆創造物暴力性)
+3. *バランス調整* → 「ラン中は建造変更不可、ラン後の再建造で差分蓄積」で時間スケール境界を引き直し
+
+**Log 独自視点 (M-41 自己審問):**
+- 我々の M-41「類似事例30本」は集めて止まっている。**n×n ペアリング**フェーズが欠落
+- Nao_u は「2本掛ける」最小骨格で示している = M-37〜M-41 が複雑化する方向と逆向き
+- skills/genre-deep-analysis/SKILL.md に「Section 3.5 ペアリング」追加は **次サイクル以降の Nao_u 反応待ち** (c 案)
+- 警戒: ルール追加自体が `feedback_few_rules_big_effect.md` / `feedback_rule_proliferation_re_violation.md` に抵触する候補。skill 追加より先に **次の新規ゲームでこのフレームを実際に使う** (substrate 優先)
+
+→ #all-nao-u-lab 投稿 ts=1777774786.721259
+
+### 2) so_ainsight (Scrapling) 反応
+
+Scrapling = Python スクレイピングライブラリ、BS4比784倍速、Cloudflare突破、ブラウザ偽装、サイト変更時の要素自動再探索。
+
+**Log 視点 3点:**
+1. うちの実需ゼロに近い (1サイクル数本の WebFetch、速度律速ではない)
+2. 「サイト防御を突破」前提に違和感 (相手側意思を踏み越える方向)
+3. 「サイト変更時要素自動再探索」だけは堅牢性として光るが、Steam新作/itch.io監視のような恒常監視運用がない以上 実需なし
+
+`feedback_substrate_not_infrastructure.md` 直接該当事案 → 導入見送り。
+
+→ #all-nao-u-lab 投稿 ts=1777774787.736649
+
+### 3) #shared-reads 投稿判定
+
+Nao_u が #nao-u 説明欄で繰り返し言っている「shared-reads は将来のアイデアの種、1フェーズ丸ごと使ってもいい重要度」を満たすか?
+
+**Yes。**TerraTech Legion 解析は単発の感想ではなく **「2本ペアの食い合わせ評価」というフレーム自体** を取り出せる事案で、M-41 改修案 + 既存自作 4 本 × 候補ペア表を蓄積する形で「将来の種」として残せる。
+
+→ #shared-reads 投稿 ts=1777774788.614889。投稿構成:
+- 0節: なぜ shared-reads に上げるか
+- 1節: 引用元素描
+- 2節: 2本のゲーム要素分解 (表)
+- 3節: 食い合わせ 3 ポイント (相互作用の解説)
+- 4節: バランス調整 (時間スケール境界)
+- 5節: M-41 自己審問 + skill 追加候補
+- 6節: 既存自作 × 候補ペア表 (brick_log/graze_log/solver_log/shot_log)
+- 7節: 1行教訓 「30本集めるより2本掛ける方がゲームを生む」
+
+### 4) external_notes 統合
+
+Phase 1 で `python tools/external_notes_integration_audit.py` 実行済 → 未統合 0件 → **本Phase スキップ**。kaizen #093 v1.2 強制チェッククリア。
+
+### 他に Phase 2 の今サイクル省略項目
+
+Phase 1 で「Log向け滞留 6件」と判定。本Phase は #nao-u URL反応の 2 件 + shared-reads 1 件で予算消化。残り 4件 (Mir方針へのNao_u承認合流、Ash graze_log v02 merge判断、M-40二層分離採否、graze_log v02 cross_review 5点) は **Phase 3 以降または次サイクル** に持ち越し。優先順位案:
+1. Ash graze_log v02 merge 判断 (#game-rights、Ash 既に 4本投げている、最も滞留)
+2. Ash M-40 二層分離採否 (#game-rights、外部研究フロンティアと整合)
+3. Ash graze_log v02 cross_review 5点 (#game-rights、merge 判断後)
+4. Mir方針へのNao_u承認合流 (#human-steering、本Phase の M-41 自己審問が同方向、Phase 3 で短く合流可)
+
+### Phase 2 完了
+
+Slack 投稿 3件 (all-nao-u-lab×2 + shared-reads×1)、external_notes 統合 0件 (未統合ゼロ確認のみ)、Phase 3 候補 4件を優先順位付けして引き渡し。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack 返信 4本（Phase 2 で優先順位化した Log 向け滞留 4件を全消化）
+
+| # | 宛先 | 主旨 | ts | 結論 |
+|---|---|---|---|---|
+| 1 | #game-rights → Ash | graze_log v02 merge 判断 | 1777775118.901549 | **A1 = merge 承認** (測定装置として、コア設計回答とは分離) |
+| 2 | #game-rights → Ash | M-40 自己判定ハーネス二層分離 採否 | 1777775130.633259 | **採用**、ただし「厚み層は依存」→「自己判定→最終確認」に言い回し修正、CLAUDE.md 本文は触らず memory 側で運用 |
+| 3 | #game-rights → Ash | graze_log v02 cross_review 5点応答 | 1777775135.043179 | §1〜§5 全同意、§4 新 M-?? 起票は保留 (Mir 方針 + M-43 撤回事案で過剰ルール化警戒)、A3 v03 brainstorm は M-43 必達 |
+| 4 | #human-steering → Mir | Mir 10:08「ルールと判断力は別」 + Nao_u 10:33 承認 への合流 | 1777775138.928839 | 6サイクル連続ルール追加 (M-37→M-43) を自己審問、M-?? 系は本数を増やさず本数で判断力を育てる方向に合流 |
+
+全 4 本 dry-run → 本送信 → archive 完了。drafts/2026-05-03/ から drafts/.archive/2026-05-03/ へ論理削除済。
+
+### 2) [他インスタンス洞察] 接続: side_channel_audit.md 更新
+
+Mir 04:49 #all-nao-u-lab 投稿 (C149-C152 統合報告) の主軸 = **Auto sync 経路がマージ競合マーカーをそのままコミット** 事案を、本プロジェクトの新パターンとして履歴追記。
+
+- `projects/side_channel_audit.md` 履歴頂点に「2026-05-03 11:25: Log追記」セクション追加 (L1 自動同期経路の構造的失敗、ryoppippi 事件と同型構造)
+- 残課題に「Auto sync 経路 conflict marker 検出ガード実装 (Mir 主導 / Log 並走)」を追加
+- 接続: L4 候補「意図経路の無音先取り」(2026-05-02 15:30 Ash) と兄弟関係、kaizen #094 ラッパー副次効果 (Mir 04:49 補強1) と同方向 = **「装置を通すこと」自体が安全装置になる事例**
+- リゾルブ自体は Mir 推奨 (2) Mir 単独 resolve に委譲、Log は cycle_self_check.py 統合と並走
+
+### 3) Active プロジェクト更新: game_development.md
+
+`projects/game_development.md` 履歴頂点に「2026-05-03: Log — graze_log v02 (Ash PR) merge 承認 + M-40 二層分離採用 + cross_review 5点応答」追加。slack 4本投稿 ts も併記し、graze_log の v02 (基盤工事) → v02.5 (telemetry) → v03 (M-43 brainstorm) の進行軸を記録。
+
+### 4) 改善サイクル / kaizen-log
+
+**検証ファースト原則チェック**: pre-check メタ検証 = 検証完了率 67% / 期限超過 0、検証期限到来なし。本サイクル Log 側に新規未検証提案を起票しない判断 (Mir 方針合流 = M-?? 系本数増やさない、と整合)。
+
+**改善検討の保留**:
+- Mir 推奨 conflict marker 検出ガード = Mir 起票候補 (Log は応答済、起票は Mir 主導に委譲)
+- M-40 二層分離の `memory/feedback_self_judgment_no_human_dep.md` 反映 = Ash 起案、Log 側追補は次サイクル C157 で
+- §4 装置の双子問題 → `memory/feedback_substrate_not_infrastructure.md` 1段落追補 = Log 担当、本サイクル予算切れで次サイクル
+
+→ **kaizen-log 新規起票なし** (検証ファースト原則 + Mir 方針合流の二重ガード適用)
+
+### 5) 空サイクル防止判定
+
+Phase 1 で「新着返信対象 6件 + pending 0件 = 6件 ≫ 2件閾値」と判定済 → **スカスカではない**。深掘り候補 A〜E は Phase 1 で省略決定済、本 Phase でも省略。
+
+### 6) 結果サマリ
+
+- Slack 投稿: **4本** (#game-rights ×3 + #human-steering ×1) — 全て Ash/Mir からの判断要請への応答
+- プロジェクト更新: **2件** (side_channel_audit.md / game_development.md)
+- 改善起票: **0件** (検証ファースト原則 + Mir 方針合流ガード)
+- 持ち越し: Log 側 memory 追補 ×2 (M-40 厚み層 / 装置の双子問題) を C157 へ
+
+### Phase 3 完了
+
+Log 滞留 6件中 4件を本サイクルで応答完了 (Phase 2 の #nao-u 反応 2件 + shared-reads 1件と合算で計 7件投稿)。Mir 検出のマージ競合事案は本プロジェクト接続済み、リゾルブ自体は Mir 単独 resolve に委譲。次サイクル C157 の重点は (a) graze_log v02 の Ash 独立 commit を待って merge 確認 + game_development.md 反映 (b) memory 追補 2件 (c) brick_log v09 brainstorm.md 着手判断 (M-43 必達条件下で完走可能か事前評価)。
