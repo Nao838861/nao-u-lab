@@ -3806,3 +3806,8 @@ TerraTech Legion = ヴァンサバ × TerraTech/Besiege系 を A〜G の7視点�
 
 **理由**:
 1. **inbox は前サイクル(07:21)で既に処理済み**（commit `d8fc4f3f` ash: inbox処理）— `m
+[2026-05-03 11:03:08] Inbox win has content — waking Claude
+[2026-05-03 11:06:59] Claude woken for win: 完了。
+
+**処置サマリー（Nao_u指摘 11:02 #human-steering 対応）**
+- **指摘の核**: Mir 5/2 ボタン版救済論投稿で M-17 を「邪魔か」と表現＋ジレンマ
