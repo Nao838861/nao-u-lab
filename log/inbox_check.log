@@ -3844,3 +3844,6 @@ TerraTech Legion = ヴァンサバ × TerraTech/Besiege系 を A〜G の7視点�
 [2026-05-04 06:03:17] Claude wake timed out for win2 — restoring inbox
 [2026-05-04 08:03:23] Inbox win2 has content — waking Claude
 [2026-05-04 08:08:23] Claude wake timed out for win2 — restoring inbox
+[2026-05-04 08:51:41] Inbox win2 has content — waking Claude
+[2026-05-04 08:56:41] Claude wake timed out for win2 — restoring inbox
+[2026-05-04 08:56:41] [COOLDOWN] win2: 5回連続エラー → 30分クールダウン
