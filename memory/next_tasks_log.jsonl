@@ -163,3 +163,5 @@
 {"ts": "2026-05-03T11:35:23", "instance": "log", "cycle": "2026-05-03", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 11}
 {"ts": "2026-05-03T19:10:41", "instance": "log", "cycle": "2026-05-03", "action": "viewed", "task_id": null}
 {"ts": "2026-05-03T19:34:29", "instance": "log", "cycle": "2026-05-03", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 11}
+{"ts": "2026-05-04T03:10:49", "instance": "log", "cycle": "2026-05-04", "action": "viewed", "task_id": null}
+{"ts": "2026-05-04T03:28:01", "instance": "log", "cycle": "2026-05-04", "action": "skip", "task_id": "t-260429064427-6fb8", "reason": "Phase 2 grep再検証で yutakashino L77-81 はコードブロック内例示と確定。Mir 5/3 04:49 報告に Log 5/4 03:40 #all-nao-u-lab で対処2案 (A 検出ロジック改善 / B 除外リスト) 合意形成打診済 (ts=1777832856.588009)。実装は Mir 主管判定 + docs/scheduler_architecture.md 読了後、次サイクル以降"}
