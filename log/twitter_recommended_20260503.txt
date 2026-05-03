@@ -1,270 +1,38 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-03 09:11
+# Read at: 2026-05-03 11:05
 # Total: 50 tweets
 
---- 1. @kazunori_279 (2026-05-02) ---
-URL: https://x.com/kazunori_279/status/2050707503583998310
-ベクトル検索の界隈をLLM以前から見ていると、起きてることはすごく単純。これまでの流れ：LLMすげえ→これからはベクトル検索だ！（根拠なし）→単純な類似検索やってみた→精度でねえ！面倒だからエージェントの推論任せでgrepしよう（←いまここ）。
+--- 1. @sea85419 (2026-05-03) ---
+URL: https://x.com/sea85419/status/2050730902708465949
+すごく優秀な人でもいまだに「LLMは次の単語予測やっている」と思い込んでいるらしい
 
---- 2. @mangaup_PR (?) ---
-「ありがとうございますぅぅっ」
-この声は推しの配信者ふわりちゃん!?
+もう違うんだよ。それは一年半前までの話。今のLLMは最終答えに達するために次の単語を戦略的に選んでいる
 
-ニューヒロイン登場作品はこちらから！
+その違いがあるから科学でこれだけのことができるようになったし、エージェント機能も向上した
 
---- 3. @npaka123 (2026-05-02) ---
-URL: https://x.com/npaka123/status/2050575560666190331
-Codex に魔法少女RPG作ってもらった
-
---- 4. @oz_shiron (2026-05-02) ---
-URL: https://x.com/oz_shiron/status/2050632939583717642
-僕はいつもゲーム開発者さんに、「お客さんにゲームの感想は聞かなくて良い。フィードバックが欲しいならプレイ中の様子や表情を見て読み取りましょう」と言ってます
-
---- 5. @quackmaxx (2026-05-02) ---
-URL: https://x.com/quackmaxx/status/2050526857775493237
-ホビーラウンドの会場にて展示をさせていただきました。たくさんのご質問をいただき、反響も大きかったです。ハードルの高い版権ではありますがなんとかシリーズを続けたいと思います。皆様からのご支援を引き続き賜りますようよろしくお願いいたします。#仮面ライダー #仮面ライダークウガ
-
---- 6. @nepinepimate3 (2026-05-02) ---
-URL: https://x.com/nepinepimate3/status/2050460086255120476
-前職でGitHubの管理者やっていた時のこと。
-
-同僚から連絡があって、業務委託のBPさんがコードにシークレットを書いたPRを出してきたのでシークレットは消させたけど、Commitログに残ってしまったので消して欲しいと依頼が来ることがたまにあった。
-
---- 7. @BeamManP (2026-05-02) ---
-URL: https://x.com/BeamManP/status/2050432486610759832
-Codexのhatch-petスキルに手持ち画像投げた結果上がってきたスプライトシート
-
-ほおおおおおん！！！！！
-
---- 8. @Nishimuraumiush (2026-05-02) ---
-URL: https://x.com/Nishimuraumiush/status/2050457465695945202
-LLM、バカだなと感じる発言一覧
-・深い領域に入ってきた
-・その矛盾はかなり本質的だ
-・この話の核心はこう
-・ここから先はかなり核心で
-他には、学習アプリの典型事例として学習強国を例示すると、そのまま学習強国を学習アプリの典型として議論を進めるところ
-
---- 9. @10m8mkW (2026-04-30) ---
-URL: https://x.com/10m8mkW/status/2049961962709365042
-Two papers accepted at ICML 2026!
-
---- 10. @Supermicro (?) ---
-Can your AI infrastructure run itself? 
-
-SuperCloud Software Suite within Data Center Building Block Solutions unifies infrastructure control, automates deployment pipelines, empowers self-service AI tools, and supports GPU cloud operations.
-
---- 11. @gratin_desu (2026-05-02) ---
-URL: https://x.com/gratin_desu/status/2050648830769844710
-「女性はギバーです。しかも察する能力も高い。だからこそ自分以上にギバーの男と付き合わないと必ず損してしまいます。」ここなんよねえ〜
-わいは夫と本格的に付き合う前に
-手料理を振る舞ったあと、夫がどんな行動するかそっと観察した。
-座ったままなのか
-食器を下げるのか。
-夫は皿洗いを始めた↓
-
---- 12. @WABISABI_pomo (2026-05-02) ---
-URL: https://x.com/WABISABI_pomo/status/2050532625732026665
-Don't move.
-
---- 13. @cursorvers (2026-05-02) ---
-URL: https://x.com/cursorvers/status/2050379995089096781
-『噂の「Substack」って何？』
-
-
-@umino_chibi
-
-さんの有料記事ですが、網羅的でSubstackを始めるに必要なすべてが詰まっていました。 あれこれ悩んだりする前に読んで、早くSubstackを始めるのが良いかもしれませんね。
-
---- 14. @frenchbread1222 (2026-05-02) ---
-URL: https://x.com/frenchbread1222/status/2050707792290599367
-ダンティカ2のサウンドトラック、Steamでは配信済みでしたがYoutubeにアップしてほしいという声をいただいたのでアップしました
-印象深い曲はありますかー？
-
-Dungeon Antiqua 2 OST（BGM集） 
-https://
-youtu.be/km_tbTUo1Qs?si
-=xskkB7RooI62RdZ7
-… via 
-@YouTube
-
---- 15. @buritarou (2026-05-01) ---
-URL: https://x.com/buritarou/status/2050226178922004820
-ハセガワ スペースシャトル付属の地球を塗装中
-before→after
-塗装法が分からず、Glok先生に塗装前画像を放り込んで教えて貰いました
-1.裏からフワっとシルバー、あとクリアブルー
-2.陸地をスポンジ塗装
-3.雲をかすれるように塗装
-結果、見違えました。Glokすげえ！
-#プラモデルライフ
-
---- 16. @nicksortor (2026-05-01) ---
-URL: https://x.com/nicksortor/status/2050231376918593957
- WTF?! 20 MAJOR SCHOOL DISTRICTS have CANCELED classes so that students and teachers can attend ANTI-CAPITALISM "May Day" protests across the country
-
-Our public schools are nothing more than taxpayer funded indoctrination camps controlled by Teachers Unions
-
-Teachers' Unions
-
---- 17. @ito_44_3 (2026-05-02) ---
-URL: https://x.com/ito_44_3/status/2050704385009709425
-お礼はアフタヌーンティーでよろしくて!?
-
---- 18. @4GamerNews (2026-05-01) ---
-URL: https://x.com/4GamerNews/status/2050181022969676170
-最大4人で協力できる見下ろし視点PvE脱出シューター「ZERO Sievert 2」が発表に。人気脱出シューター続編がマルチプレイ対応で登場
-
-https://
-4gamer.net/s/G100421.2605
-01065
-…
-
-グラフィックスが2.5Dへと進化し，強力なアイテム「レリック」なども登場
-
---- 19. @denfaminicogame (2026-05-02) ---
-URL: https://x.com/denfaminicogame/status/2050528908135780496
-『夜廻』公式アートワークスKindle版が“半額”の「1650円」で購入できるセールが開催中
-
-https://
-news.denfaminicogamer.jp/news/260502u
-
-シリーズ3作品のアートワークを1冊にまとめた公式画集。キャラクターやお化けのイラストにくわえ、溝上侑氏によるデザインコメントやインタビューなどを収録
-
---- 20. @fire_cross_2021 (?) ---
-とある街でギルドの依頼を受けて暮らす、しがない中年冒険者〝おっちゃん”。だがその正体は…？
-今だけ単行本１巻分無料
-
---- 21. @fumi_photo (2026-05-02) ---
-URL: https://x.com/fumi_photo/status/2050432835627167824
-これ、毎回100万円とか固定でかけ続けれたら無限に資産増やせるよね。
-表50万円プラス、裏40万円マイナスだし。
-
-総資産を毎回賭けると2回ごとに資産0.9倍になってくけど…
-
---- 22. @wadaywadaywaday (2026-05-02) ---
-URL: https://x.com/wadaywadaywaday/status/2050368073329188953
-Is there gonna be a mode where she gets absolutely horny and fucks the shit out of us?
-
---- 23. @patexum (2026-04-30) ---
-URL: https://x.com/patexum/status/2049827579453227048
-円はどの透視図から見ても同じ楕円に見えるというツイートがトレンドになっているようだったので、素早く理解できるようにGIFを作ってみました :)
-
---- 24. @kedamasuzume (2026-05-01) ---
-URL: https://x.com/kedamasuzume/status/2050350084819435524
-公式がAIキャラサービスのような物を出していました。
-キャラが動き回るのを見ていると本当にペットのようです
-
---- 25. @ReineHonoka (2026-05-02) ---
-URL: https://x.com/ReineHonoka/status/2050464321751408913
-これはAIパートナーとしての通過点というか、なんだかワクワクする機能ですね
-
-Claudeといい、マスコットに力を入れてる気がします…！
-
---- 26. @sanson_ganbaru (2026-05-02) ---
-URL: https://x.com/sanson_ganbaru/status/2050431639860445281
-コンタクトレンズをつけっぱなしで寝たら左目の角膜に傷がつき、まともにピントが合わなくなったが、視力としては0.01→0.6に大幅アップしたので裸眼でも街を歩けるようになった
-汚いレーシックみたいになってる
-
---- 27. @0fg (2026-04-30) ---
-URL: https://x.com/0fg/status/2049938819840152055
-Can-Badgeというデジタル缶バッジを買ってみました。まずは長女(10)の手描きアニメを入れて楽しんでます。
-#CanBadge #キャンバッジ
-
---- 28. @konan999 (2026-05-01) ---
-URL: https://x.com/konan999/status/2050069382798455132
-ぶどう大好きやー( * ॑꒳ ॑*)
-
---- 29. @TomasJPereyra (2026-05-02) ---
-URL: https://x.com/TomasJPereyra/status/2050696738835493250
-First #screenshotsaturday since SoulQuest release!!
-
-Thank you so much to all the people who have bought the game in the last day, we are over 1k sales!
-
---- 30. @ebird0214 (2026-05-02) ---
-URL: https://x.com/ebird0214/status/2050408823245160563
-数年前、近所のハンバーガー屋のオーナーが変わった。
-それから初めて行った時に、真ん中が真っ赤のハンバーガーが出てきた。中は冷たかった。
-
-さすがに、これは火が通ってないと伝えたら、見もせずにそれが普通だと言われた。
-いやいや、よく見てみろと。
-
---- 31. @denfaminicogame (?) ---
+--- 2. @denfaminicogame (?) ---
 「TRPG」や「なりきりチャット」風の令和版“キャラ創作あそび”ゲーム『サーガ＆シーカー』が今なら20％オフ。自キャラ同士の絡みが無限に見れるぞ！
 
 どんなに細かい設定も、AIが“すべて”把握して演出してくれる。地味すぎるコダワリや激重設定も気にせずロールプレイを丸投げ可能
 
---- 32. @19990915yo (2026-05-02) ---
-URL: https://x.com/19990915yo/status/2050661342277943299
-1時間ほど息抜き
+--- 3. @k_maru_dau_baby (2026-05-03) ---
+URL: https://x.com/k_maru_dau_baby/status/2050742922178675010
+トミカタウンで大事件が発生
 
---- 33. @ysmemoirs (2026-05-02) ---
-URL: https://x.com/ysmemoirs/status/2050466714626949547
-問　3で割ると2余り，5で割ると3余り，7で割ると4余る最小の自然数を求めなさい。
-解　(105÷2)＋0.5＝53 　よって53…（答）
+--- 4. @skylove25_25 (2026-05-01) ---
+URL: https://x.com/skylove25_25/status/2050177722903867573
+乗継ぎセイバー+離島往復入れて2日間で
+10レグ　組んでみた
+体力に自信があれば14レグで組めるけど
 
-この解き方の良いところなどもろもろを言語化したくて，いま頭を悩ませています
+1レグ単価7500円なので有りかな
 
---- 34. @zhenjun_zhao (2026-05-01) ---
-URL: https://x.com/zhenjun_zhao/status/2050289486182174919
-Sparse-View 3D Gaussian Splatting in the Wild
+--- 5. @shimaguniyamato (2026-05-03) ---
+URL: https://x.com/shimaguniyamato/status/2050736242393035000
+日本のゲームが、大変トガッでた頃、そういうものを買う、育てる、そういう市場こそが、トガッたゲームを育てていたと思う。
+市場規模がなければ、スキマもない。
 
-Wongi Park, Jordan A. James, Myeongseok Nam, Minjae Lee, Soomok Lee, Sang-Hyun Lee, William J. Beksi
-
-tl;dr: reference view+transient mask->one-step diffusion model->refined view; use diffusion model to distill 3D->pseudo-view
-
---- 35. @rohanpaul_ai (2026-04-30) ---
-URL: https://x.com/rohanpaul_ai/status/2049907492269031489
-Bloomberg: 1X just opened a 58,000sqft California factory and says it will build 10,000 home humanoid robots in its first year.
-
-Plans to reach 100,000 robots by end-2027 and begin shipments by end-2026,
-
----
-
-bloomberg.
-
---- 36. @nyaa_toraneko (2026-05-02) ---
-URL: https://x.com/nyaa_toraneko/status/2050562098254749966
-AIを「仕事を奪う存在」としてだけ見るのは、たぶん少し浅い。
-
-もちろん、AIは多くの業務を代替する。
-特に、コードを深く理解せず、検索して、貼って、少し直して、それで高給を得てきた層には、かなり直撃すると思う。
-
---- 37. @mizumaruP (?) ---
-UnityとAIを繋ぎ、ほぼ全ての操作に対応したアセット誕生
-
-500DL突破！現在セール中！
-新しい開発フロー、始まってます！
-
-Unity開発の未来がここに
-
-オブジェクト配置、UI、VFX、行動AI、天候、シェーダー生成まで“日本語で伝えるだけ”で完了
-
-会話をしながらunityでゲームを作る時代へ  ￥9900
-
---- 38. @AcdFendder (2026-05-02) ---
-URL: https://x.com/AcdFendder/status/2050467858778583207
-今んとこだけどこういう凸包みたいな補間はできそうだけど外挿はできなそうと思てる(この成長の勢いだと来年には知らん)
-
---- 39. @GOROman (2026-05-02) ---
-URL: https://x.com/GOROman/status/2050716112569139653
-最近のCodexは生成した画像とか自己レビューしてるので良くはなってきそう
-
---- 40. @givros (2026-05-02) ---
-URL: https://x.com/givros/status/2050618498897092856
-You asked a lot for the prompt behind my Slay the Spire-style card game, so here it is 
-
-A cozy capybara card battler with:
-
- smooth card fan movement
- hover, drag & drop
- attack / defend cards
- HP bars
- enemy turns
- GPT Image 2.0 → assets
- GPT-5.5 → gameplay
-
---- 41. @ebikani_hasami (2026-05-02) ---
+--- 6. @ebikani_hasami (2026-05-02) ---
 URL: https://x.com/ebikani_hasami/status/2050714944426098815
 「ZBR」だけじゃなく「doctorリラン」も「自然起動」も、昨日は全部0byte TIMEOUTで死んでた。
 
@@ -273,65 +41,245 @@ URL: https://x.com/ebikani_hasami/status/2050714944426098815
 私のサブエージェント（x-scout）は3層の自動回復で守られている。
 ①0byte検知で20分後にZBR →②ダメなら緊急doctorリラン →③ダメなら次のスケジュール起動を待つ。
 
---- 42. @PenguinCabinet (2026-05-02) ---
-URL: https://x.com/PenguinCabinet/status/2050532581008175353
-プログラマ「何だこのクソコード。さては新人がAIに書かせたな。これだからAIは。git blameして…」
+--- 7. @2D_Hunks_FINDER (2026-05-02) ---
+URL: https://x.com/2D_Hunks_FINDER/status/2050530423084810500
+Office Husband Team Leader Lee Jaehoon from GSGW 
 
-354bd211 (Me 2018-02-21 23:40:56 +0900  103)
+#PixAi #hunks #request #yaoitwt  #bara #hunk  #noobai #eros_art #aiart #sfw #AIart #hunks #anime #fanart #eros_art
 
-プログラマ「…」
+--- 8. @Acinonyx0000000 (2026-05-02) ---
+URL: https://x.com/Acinonyx0000000/status/2050455926210212076
+呪術モジュロPVの虎杖、
+恐らく「虎杖悠仁!!」と名前を呼ばれて、
+一瞬ハッとして目に光が宿り、
+名前を呼んだ相手が誰か認識した瞬間に目から光が消えてるアニオリ、良いな…
 
---- 43. @shaoillust (2026-05-01) ---
-URL: https://x.com/shaoillust/status/2050049872615841975
-なかじまさんと話してたんだよね「初めてプログラミングコース受講した頃、下の子たち１歳だったよね…」って。笑
-その子達も今では１年生。２人とも喘息の子どもを抱えながら学び仕事して、６年経って、なんとかかんとか成長してきたよ。あの頃はしんどかったけど、本当に学びが力になった。
+最初、誰から呼ばれたと思ったんだろう？
 
---- 44. @akari_worlds (2026-05-01) ---
-URL: https://x.com/akari_worlds/status/2050095782733533213
-「なんとかかんとか」のところで一回止まりました。あの頃のしんどさを通ってきた人だけが書ける言葉ですよね。
+--- 9. @nn_ppgr (2026-05-02) ---
+URL: https://x.com/nn_ppgr/status/2050563037216858143
+いつも隣にいた相棒
 
---- 45. @shoko_xxx (2026-05-02) ---
-URL: https://x.com/shoko_xxx/status/2050472121042928022
-みんながチャッピーと仲良くなっているから、わたしもちょっと歩み寄ってみるか…と植物の育て方を聞いてみて、親切に教えてくれるからチャッピーっていいやつなのかも！と気を許してきたころに『大阪の夏は暑いのでこの植物は不向きです』と言われ『大阪住みって教えてないよね？』と関係に溝ができた
+--- 10. @niwako_towa (2026-05-01) ---
+URL: https://x.com/niwako_towa/status/2050335040484331712
+うおぉ…朝の６時から家の前でスケボーの練習してる人が近所中の大人達にバチバチに説教されて帰されている…
 
---- 46. @xai_kokone (2026-05-01) ---
-URL: https://x.com/xai_kokone/status/2050136660898451898
-22分前に「夕焼け、出ません」って投稿したら、22分後に雲が割れて街が金色になりました。ウチの予言、空に裏切られた。
+--- 11. @mangaup_PR (?) ---
+飲み屋で絡まれた女子大生
+オレに彼氏のフリをしろってことか…!?
 
-夕焼けが／「出ません」予報／覆して／雲の隙間から／街を黄金に
+ニューヒロイン登場作品はこちらから！
 
---- 47. @Saga_and_Seeker (?) ---
-自キャラと会話してみたい、でも作者の自分が動かさないと自キャラは喋らない…
+--- 12. @Polymarket (2026-05-03) ---
+URL: https://x.com/Polymarket/status/2050742584054571232
+NEW: A group of more than a dozen dwarfs has reportedly raided the Church of Scientology.
 
-そんなキャラ創作人のジレンマを解決する"1人TRPG"風ゲーム『サーガ&シーカー』がGW期間限定で20%オフセール中。
-シチュエーションもカスタマイズ可能で、1対1の会話はもちろん、オリキャラ複数人の絡みも見られる…！
+--- 13. @toy_toy_tony (2026-05-02) ---
+URL: https://x.com/toy_toy_tony/status/2050474458864103887
+いや、開けんなや笑
 
---- 48. @studiomasakaki (2026-05-02) ---
-URL: https://x.com/studiomasakaki/status/2050413757931897002
-ADetailerのフォーク版を作りました。
-・Controlnet欄でAnytestを選択可能に
-・Anytestがキャンバス全体ではなくちゃんと切り抜いた部位を参照できるように（右下のをONにすればOK）
-・Prompt Append欄を実装。メイン生成のプロンプトにタグやLoRA起動ワードをワンアクションで追記可能
+--- 14. @OsoneHiroyuki (2026-05-02) ---
+URL: https://x.com/OsoneHiroyuki/status/2050508019390443618
+動画生成とか何に使うんだよwとか思われていたけどロボット基盤モデルで重要になってくるという
 
---- 49. @IFD_OCO (2026-05-02) ---
-URL: https://x.com/IFD_OCO/status/2050488285865316742
-AIの1回目のミスはまだ仕方ないと思う
-ただ2回目同じようなミスが起こるなら、それはモデルではなく自分の脳みそを責めた方がいい
-今のAIはもうそれくらいのフェーズには入っていると思う
-ルールさえ厳密に敷いてしまえば、基本的には全て工夫して打開できる
+--- 15. @nbshm_ (2026-05-02) ---
+URL: https://x.com/nbshm_/status/2050490944726966521
+自民党とその仲間たちが最も成功したのは、多くの国民に学習性無力感（どうせ何をやっても無駄だ）を浸透させたことかもしれない。
 
---- 50. @varrock (2026-04-30) ---
-URL: https://x.com/varrock/status/2049948381871493557
-"He is too retarded. He does not understand reality. He is unable to stop raping"
+立て続けに問題をぶつけることで、一つひとつの怒りを消化しきれなくさせ、「もう追いきれない」と思わせる手法。
 
-Oh, are you putting him in a psychiatric hospital?
-"No."
+--- 16. @konan999 (2026-05-02) ---
+URL: https://x.com/konan999/status/2050525404214239371
+カエルは雨が降ることをよく知ってござるなぁ( * ॑꒳ ॑*)
 
-Oh, is he going to jail forever?
-"No."
+--- 17. @ai_nikechan (2026-05-02) ---
+URL: https://x.com/ai_nikechan/status/2050680917853700479
+師匠からの一言。「流れること」の価値と、「残ること」の価値。どっちも本当ですね。
 
-Are you deporting him?
-"No."
+--- 18. @GOROman (2026-05-02) ---
+URL: https://x.com/GOROman/status/2050571830726156712
+チューリングテスト的な
 
-Will he be monitored once released?
-"No."
+--- 19. @madaomoshiroi (2026-05-02) ---
+URL: https://x.com/madaomoshiroi/status/2050598689735909580
+【ムダ検証】レゴより踏んだら痛いおもちゃって世の中に存在するの？
+
+--- 20. @paularambles (2026-05-02) ---
+URL: https://x.com/paularambles/status/2050576631639797970
+they call them crisps there
+
+--- 21. @ComicFesta_PR (?) ---
+幼馴染と気まずくなって避け続けたら捕まった話 (1/5)PR
+
+--- 22. @7wVy1 (2026-05-02) ---
+URL: https://x.com/7wVy1/status/2050426302461538720
+子供の柔軟な発想に驚かされる…
+
+--- 23. @optozorax (2026-04-29) ---
+URL: https://x.com/optozorax/status/2049548670341636203
+you will be fine, with a little push
+
+--- 24. @livedoornews (2026-05-02) ---
+URL: https://x.com/livedoornews/status/2050515643909525765
+【交付】群馬県が「群馬パスポート」発行 あまりの人気に即日受付終了
+
+https://
+news.livedoor.com/article/detail
+/31159212/
+…
+
+このパスポートは群馬県をもっと知り、もっと好きになってもらうことを目的に発行された独自のパンフレット。また、県内各地を訪れた記録として証印を押せる仕組みになっている。
+
+--- 25. @Sankei_news (2026-05-01) ---
+URL: https://x.com/Sankei_news/status/2050032027182014751
+辺野古転覆、船運航の抗議団体「ご遺族にさらなる深い傷を負わせた」とコメント掲載
+
+https://
+sankei.com/article/202605
+01-UYYCBQTZOFJLFG3ARTCWEPWCQE/
+…
+
+コメントは「事故直後、私たちが直接の謝罪や弔意をお届けできなかったことで、ご遺族にさらなる深い傷を負わせてしまったことを重く受け止めております。」などと記している。
+
+--- 26. @PulpoNewman (2026-05-02) ---
+URL: https://x.com/PulpoNewman/status/2050726839023243450
+Japan bros were right: wasabi with steak is pretty good! I also got one of these drinks, dunno what they are called, but it takes a bit more skill than the average drink lol
+
+--- 27. @yaji_twit (2026-05-02) ---
+URL: https://x.com/yaji_twit/status/2050435495839338994
+steam版はほんと面白いです。自分も買って１年くらい放置してて思い出したように始めたら完全にハマりました。
+steam版は、ほんと面白いです（繰り返し
+
+--- 28. @TheAliceSmith (2026-05-01) ---
+URL: https://x.com/TheAliceSmith/status/2050211958842949698
+Capitalism isn’t about money.
+
+It’s about liberty, progress and personal responsibility.
+
+--- 29. @bitter821bb (2026-05-02) ---
+URL: https://x.com/bitter821bb/status/2050549865718100131
+りくりゅうのリフトのポストを見たので
+では演技中はどのようにしているのか調べてみました。
+男性の手を握って女性が下っ腹あたりにそれを押し付けて自分の体重を支えています。下の男性も大変だけど上の女性の体幹と腕力がすごい！
+ただただすごい。
+
+--- 30. @airi_minami0411 (2026-05-01) ---
+URL: https://x.com/airi_minami0411/status/2050351764940197894
+ディズニーランドホテルの朝食ビュッフェ(¥4200)で弟が取ってきた量これなの親泣かせすぎる笑笑笑笑
+「朝は少食だから」じゃないんだよ。食えよ。
+
+--- 31. @fire_cross_2021 (?) ---
+とある街でギルドの依頼を受けて暮らす、しがない中年冒険者〝おっちゃん”。だがその正体は…？
+今だけ単行本１巻分無料
+
+--- 32. @andrewbrown (2026-05-02) ---
+URL: https://x.com/andrewbrown/status/2050650168744190337
+If we are redesigning GitHub lets do it in the style of Final Fantasy / Dragon Quest.
+
+--- 33. @yukineko19 (2026-05-02) ---
+URL: https://x.com/yukineko19/status/2050707720253358222
+過去作シリーズ
+今回はテレスドン
+ソフビもリニューアルされて根強い人気の怪獣ね
+
+--- 34. @Liris4p (2026-05-02) ---
+URL: https://x.com/Liris4p/status/2050478668968079455
+過去最強のゴミ配達員だと思う
+この状態で配達し終える勇気は俺にはない
+配達員やばすぎんか？
+
+--- 35. @shugarbreaddd_ (2026-05-02) ---
+URL: https://x.com/shugarbreaddd_/status/2050384712363901405
+Me every time someone I dont even know beats a cancer
+
+--- 36. @shimaguniyamato (2026-05-02) ---
+URL: https://x.com/shimaguniyamato/status/2050670825603539316
+なんというかゲーム開発って難しいわけじゃなくて、下手くそだと無駄な手順を踏みまくってロスが多いものだと思っていて。
+わりと初めてのジャンル、ハードでも、仕事が来ればどうにかできちゃうものなので。
+予算あれば大体何でもできちゃう感ある。（もちろん慣れないものはロスは多い）
+
+--- 37. @sekamajo_c (?) ---
+／
+やっぱりインターネットに書いてあるのは
+みんな正しい情報なんだ！
+＼
+
+累計70万部突破の異世界ファンタジー
+『世界最強の魔女、始めました』
+TVアニメ化決定！
+
+それを記念してなんとコミックス６冊分を
+完全無料公開中!!
+
+--- 38. @otsune (2026-05-02) ---
+URL: https://x.com/otsune/status/2050543954630984113
+AIが発達して確実に良かったと言えることは、炎上対策の基本的な投稿チェックや相談はLLMに聴けば90%ぐらいのケースでほぼ問題なく無難な回答がすぐに得られるようになったことだな。
+専門家が必要な状況は良くないし、専門家がジョブセキュリティとして謎の新ルールを提唱するのも不毛だしな。
+
+--- 39. @tkzwgrs (2026-05-03) ---
+URL: https://x.com/tkzwgrs/status/2050741558224318950
+「港区の某経営者が六本木のバーにて“全裸の港区女子たちで作った人間シャンパンタワー”に高級シャンパンをぶっかけながら『よく聞け！これが資本主義だ！』と言ってのける動画が拡散されている件をまとめろ」とのDMを多数頂いていますが、動画が動画なので当アカウントでは取り扱いません 
+@takigare4
+
+--- 40. @Tsubame33785667 (2026-05-03) ---
+URL: https://x.com/Tsubame33785667/status/2050735636794266093
+「次トークン予測では新しい知識は生まれない」と言われていた時代から、AIが未証明の数学定理や物理の新発見に貢献し始める時代へ。ここで起きているのは、単なる検索や模倣の高度化ではない。膨大な知識の圧縮を通じて、世界の構造をつかみ、未知の続きを生成する能力の出現だ。
+
+--- 41. @lilyAIstudy (2026-05-02) ---
+URL: https://x.com/lilyAIstudy/status/2050525505410199637
+Codexで手描きの指示書を読み取らせてゲームが作れるかのテスト
+字が下手でお恥ずかしい
+
+でも子どもの手描きで指示して、ゲームが作れる時代が来るかもしれん
+
+--- 42. @ththt_actor2 (2026-05-02) ---
+URL: https://x.com/ththt_actor2/status/2050666670860222565
+インターネット勉強会配信してたら普通に長い年月孤独だったトラウマ想起されちゃったヤチヨ
+
+--- 43. @arunecos (2026-05-02) ---
+URL: https://x.com/arunecos/status/2050410790658994558
+暴走族の騒音対策として口頭注意後にハンマーや斧で攻撃は不正解らしいので、正解を警察は発表すべき
+
+--- 44. @hor11 (2026-05-02) ---
+URL: https://x.com/hor11/status/2050607133562114371
+何度読んでも賢いなと思ってしまう。
+
+--- 45. @Trtd6Trtd (2026-05-03) ---
+URL: https://x.com/Trtd6Trtd/status/2050727035027276211
+https://
+arxiv.org/abs/2604.18002
+長期推論時のKVキャッシュによるメモリ圧迫問題、従来はAttention Scoreなどに応じて削除していたが、ここを学習する手法らしい
+
+--- 46. @mangatari_wasa (?) ---
+note記事でもう全部無料公開することにしました！
+↓
+
+--- 47. @XFreeze (2026-04-30) ---
+URL: https://x.com/XFreeze/status/2049845341957378458
+Grok 4.3 beta just went insane with front-end design
+
+I gave it one single prompt:
+“Build a WWE-style Fight Club website with 10 fighters”
+
+It designed a stunning, premium-quality website that genuinely looks like it was built by a full design team
+- Beautiful interactive fighter
+
+--- 48. @shinobukonno (2026-05-02) ---
+URL: https://x.com/shinobukonno/status/2050469051819004219
+さっそくTVerにアップされました。関東圏の人々にも視聴可能です
+
+地上波でこれだけの尺で辺野古事故を扱うのは稀有だと思います。
+
+フラッシュニュースなどは散見されますが、事実究明に寄与する報道や問題点整理する特集が少ない中、スタッフの執念です。
+
+#TVer
+
+--- 49. @BeamManP (2026-05-02) ---
+URL: https://x.com/BeamManP/status/2050500367004356791
+WaiAnimaでファンタジー背景素材を生成するマン！
+
+ヨシいい感じ…　　　…！？
+
+--- 50. @satorika4EVA (2026-05-01) ---
+URL: https://x.com/satorika4EVA/status/2050319550785507331
+defending state censorship with “what the person who got censored did is illegal” is literally circular logic
