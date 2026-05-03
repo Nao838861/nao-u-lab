@@ -60,3 +60,7 @@ source: Nao_u #human-steering
 - feedback_stereotypical_responses.md — 入力が変わっても出力の型が同じ。ここでは逆: 入力が変わると出力が新入力に引きずられる
 - feedback_info_integration.md — 集めた情報の統合。統合の質が問題
 - feedback_surprise_ninja_concept_first.md — サプライズニンジャ理論の原典。適用範囲はADV文脈
+
+## 2026-05-03 再発1件（追補）
+
+Nao_u 11:02 #human-steering 指摘。Mir が 2026-05-02 ボタン版救済論投稿で M-17 を「邪魔か」と表現し、ジレンマ構造の評価器として援用 → 射程外。今回は ADV 文脈ではあるが、**役割の流用**（引力測定 → ジレンマ評価）が新たな誤用形。処方は `feedback_surprise_ninja_concept_first.md` 末尾「定義表現の標準形」節を参照。M-17 の射程の主役は「**シーンの引力強度測定**」、ジレンマ構造の評価ではない。
