@@ -713,3 +713,8 @@ Logのコメントへの返
 [2026-05-02 07:06] trigger=nao-u:2026-04-30 anchor=<https://x.com/sumika45379/status/2048681621432549402?s=46&a
   [1.50] docs/scheduler_architecture.md (undated) via kw(ドキュメント)
   [0.75] memory/external_notes_mir.md (undated) via kw(毛玉雀)
+
+[2026-05-03 08:50] trigger=nao_u_live anchor=2026-05-03 04:32 #human-steering — Nao_u → 全員（brainstorm分析の量
+  [3.00] docs/game_seeds.md (undated) via ref→game_seeds.md
+  [3.00] memory/tips.md (undated) via ref→tips.md
+  [2.83] log/nao_u_live.md (undated) via seed(全員 分析 原文 情報 収集) + kw(指摘)
