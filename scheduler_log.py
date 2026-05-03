@@ -316,11 +316,19 @@ _CONFLICT_TARGETS = [
     'CLAUDE.md', 'docs', 'projects', 'knowledge', '.claude',
 ]
 _CONFLICT_SKIP_EXTS = {'.png', '.jpg', '.jpeg', '.gif', '.mp3', '.mp4', '.zip', '.pdf', '.ico', '.woff', '.woff2'}
+_FENCE_RE = re.compile(rb'^```[^\n]*\n.*?^```', re.MULTILINE | re.DOTALL)
+
+
+def _strip_fenced_blocks(data: bytes) -> bytes:
+    """Markdown ``` fenced code block を空行に置換。conflict marker の意図的例示を除外する。
+    2026-05-04 C160 適用 (pending t-260429064427-6fb8 / Mir 5/3 04:49 報告)。"""
+    return _FENCE_RE.sub(b'', data)
 
 
 def _scan_conflict_markers():
     """2026-04-21 Ash/Log C99合意: pull後のconflictマーカー検出。
-    pullが一見成功でもマーカーが残るケース（--no-rebase merge等）を検知してSlack通知。"""
+    pullが一見成功でもマーカーが残るケース（--no-rebase merge等）を検知してSlack通知。
+    2026-05-04: ``` fenced block 内の例示マーカーは除外（false positive 抑止）。"""
     hits = []
     for t in _CONFLICT_TARGETS:
         p = REPO_DIR / t
@@ -332,6 +340,8 @@ def _scan_conflict_markers():
                 continue
             try:
                 data = f.read_bytes()
+                if f.suffix.lower() == '.md':
+                    data = _strip_fenced_blocks(data)
                 if _CONFLICT_RE.search(data):
                     hits.append(str(f.relative_to(REPO_DIR)).replace('\\', '/'))
                     if len(hits) >= 20:

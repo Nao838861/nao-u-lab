@@ -323,3 +323,311 @@ URL: https://x.com/elonmusk/status/2050824116324925699
 URL: https://x.com/mech_eng_PE/status/2050606198316286364
 かなりズレるけど、小1の時に国語の時間に教科書に載っているとあるお話について宿題で「疑問に思ったことを何でも書いてください」と先生が言ったの思い出した。
 「タヌキのお腹をたたくと本当にポンポコなるのですか？」とか書くじゃん？（小1なので割と本気）
+# Read at: 2026-05-03 21:14
+# Total: 50 tweets
+
+--- 1. @mizchi (2026-05-03) ---
+URL: https://x.com/mizchi/status/2050892185114194286
+最近考えてたこと
+
+- AIに指示を出せるかは、自分の専門性の範囲で無茶振りを繰り返し、モデル性能の期待値を蓄積する必要がある
+- モデルの出力を評価すること、あるいは評価手法を確立することが人間側に強く求められている
+- 人間側が最低一つは専門性がないと評価軸を持てない
+
+--- 2. @shenmacro (2026-05-03) ---
+URL: https://x.com/shenmacro/status/2050874755507695854
+「人間は単語を予測しているだけで思考しているわけではない」
+
+むしろ思考してしまうとコミュ障になるぞ。昨日聞いた定型文を今日ぶつけなさい！
+
+--- 3. @notf (2026-05-03) ---
+URL: https://x.com/notf/status/2050855605498413399
+ChatGPTからDreamCoreにアップロードできるようにする。
+
+--- 4. @itnavi2022 (2026-05-03) ---
+URL: https://x.com/itnavi2022/status/2050770555733999876
+ChatGPTには検索機能があるので、以下の指示だけで、推奨プロンプト構造に従ったかなりよいプロンプトが作成できます。
+「⚪︎⚪︎について、GPT-5.5 prompting guideに従ってプロンプトを作成して」
+
+https://
+developers.openai.com/api/docs/guide
+s/prompt-guidance
+…
+
+--- 5. @yousukezan (2026-05-03) ---
+URL: https://x.com/yousukezan/status/2050899856584245604
+AIの進化で脆弱性報告が急増する中、Googleが報奨金制度を大幅に見直した。Androidは報酬を引き上げる一方、Chromeは減額し、量より質を重視する方針へと転換している。
+
+--- 6. @ClaudeCode_love (2026-05-02) ---
+URL: https://x.com/ClaudeCode_love/status/2050587378646139372
+【速報】
+Anthropicが「危険すぎて一般公開できない」と判断したAIモデルが、NSA（米国家安全保障局）で稼働しているとのこと
+・Claude Mythosが全主要OSのゼロデイ脆弱性を大量に発見
+・あまりの能力に一般公開を断念
+・現在は国家機関の内部でのみ運用中
+・もはや「AI＝便利ツール」の時代ではない
+
+--- 7. @SADAKIYO202510 (2026-05-03) ---
+URL: https://x.com/SADAKIYO202510/status/2050880120915894678
+急展開キタコレ
+
+--- 8. @nakaido_F (2026-05-03) ---
+URL: https://x.com/nakaido_F/status/2050894175185605113
+日本ではアニメ調OWを「作れない」会社も「作らない」会社もあります。
+
+アカツキは対原神の「プロジェクト暁」を立ち上げましたが失敗に終わりました。
+ブルプロは10年前から動いてましたが、開発に失敗しました。
+
+--- 9. @x2775co (2026-05-02) ---
+URL: https://x.com/x2775co/status/2050548915242688860
+ポン出し連投ガチャなどではなく、生成AIを一つの作品をより良くする方向へ使うべき、と以前から言い続けていた。
+しかし、まさか、あの浮上そのものが厳しいと諦めていたカクヨムで、実績無しの一作入魂の週間１位は、凄すぎる。
+
+--- 10. @gamella (2026-05-03) ---
+URL: https://x.com/gamella/status/2050733648056582525
+PyTorchのモジュールがやられたのは肝が冷えましたね。もうライブラリはガチガチに選んで、安易に最新は使わずにバージョン固定しないとダメなことを確信しました。
+
+--- 11. @famitsu (2026-05-03) ---
+URL: https://x.com/famitsu/status/2050885749730685092
+手軽なアクションRPGとはこうあるべきだと思う。丁寧に丁寧に用意された、華麗に敵を倒す快感
+
+https://
+famitsu.com/article/202605
+/72838
+…
+
+『魔法司書アリアナ ～七英傑の書～』は本の世界にダイブする2Dアクション。敵を一掃できるバースト攻撃や特定の属性強化など、魔法を使いこなすのがとにかく楽しい。
+
+--- 12. @satetu4401 (2026-05-03) ---
+URL: https://x.com/satetu4401/status/2050826250651115854
+人生の楽しみ方を知っている人間は少ない。ほとんどのゲームプレイヤーがMinecraftのクリエイティブモードでTNTの山を爆発させ始めるのと同じだ
+
+殆どの人間は自分が本当に面白いと感じるものなのが何なのか知らずに生きてる。金持ちも貧乏人も同じだ。まあ「同じだと良くない」って話ではある（続く
+
+--- 13. @RITUx6qb (2026-05-03) ---
+URL: https://x.com/RITUx6qb/status/2050775062324924849
+睡眠が6時間を切ると、定型発達の人でもADHDに近い脳状態になると言われています。ADHD当事者が睡眠不足になると、注意欠陥や衝動性が通常の数倍に跳ね上がります。「さっさと寝る」ことで、脳の多動を物理的にクールダウンさせることを徹底してください。
+
+--- 14. @keitowebai (2026-05-03) ---
+URL: https://x.com/keitowebai/status/2050854391738233309
+GPT-3.5がリリースされた時も
+「GPTなんて随分前からGPT-3使えたよ笑」
+
+Spotifyのポッドキャストも
+「今さら、ポッドキャスト？Spotifyとか随分前からあったけど、ワロタ」
+
+Claude Codeがバズっても
+「Claude Codeとか半年前からあったわ。なに今さら盛り上がってるの？笑」
+
+--- 15. @obata_416 (2026-05-02) ---
+URL: https://x.com/obata_416/status/2050588793905004897
+ゲーム開発におけるチームリーダー像
+
+今まで色々なリーダーを見てたし自分も経験しているけど、
+例えばヴァンパイアセイヴァーやストZEROはエンジニアが同じチームで本当に活気があって熱いチームでした。
+
+--- 16. @Docwho89757 (2026-05-03) ---
+URL: https://x.com/Docwho89757/status/2050752092923687015
+異環の開発費実は激安で、コスト3億くらい（本体2億、宣伝1億）。
+中国だけで初日6000万、国際服含め初月最低5億の売上。
+幻塔から移植して開発費安いのに利益率50%超え。
+最新でグローバル初日1億突破だってよ。
+#NTE
+
+--- 17. @QuantumSoulWave (2026-05-03) ---
+URL: https://x.com/QuantumSoulWave/status/2050761559794942113
+こうやって見ると、AIから親しみや人間性を奪うのが悪手という事がよくわかる。悪手どころか、需要に対して非現実的ですらあるな。よくあるメジャーな反論として「依存が…」というのがあるが、誰かに依存しなくては生きられない状態の人の福音にもなるし、むしろAIの補助を得ての自立になるのだ
+
+--- 18. @GOROman (2026-01-12) ---
+URL: https://x.com/GOROman/status/2010562347090256324
+現状、やりたい操作の「UIを探す、覚える、プラグインを入れる」 とかだけど、#生成UI 時代はダイナミックにその場でUIが構築されるようになっていくんだろうなー。
+
+--- 19. @rohanpaul_ai (2026-05-03) ---
+URL: https://x.com/rohanpaul_ai/status/2050910745689301458
+Adobe paper tests if LLM chain of thought explanations show real influences, and finds they often hide them.
+
+LLMs often notice hidden hints in a question but leave them out of their step by step explanation.
+
+So the point they are making is that LLMs often notice hidden hints in
+
+--- 20. @FairyCaveStudio (2026-05-03) ---
+URL: https://x.com/FairyCaveStudio/status/2050743797554798929
+This post has no hashtags either so...If it reaches you, you're a true fan of metroidvania games
+
+--- 21. @ccfolier (2026-05-03) ---
+URL: https://x.com/ccfolier/status/2050866649281220650
+これは僕も思ったことあるし、ITだけやってると感覚が麻痺するんだけど、20-30%を売場、5-10%流通、30%が製造費、10-15%を広告費、ってやっていくと実は結構難しいんだよね。作家さんが偉大なのはペンひとつでたくさんの人たちの食い扶持を産んでいることでもある。
+
+--- 22. @meby_central (2026-05-02) ---
+URL: https://x.com/meby_central/status/2050693069985771707
+Three.js (TSL) + WebGPU で2Dローグライトのプロトタイプ。
+
+光がそのまま視界になるので、Rogue Light と名付けました。
+・解析的計算による軽量なソフトシャドウ
+・剣の軌跡や攻撃も光と影の演算で処理
+
+コードは Gemini 3.1 Pro Preview で生成。
+
+#roguelike #tsl #threejs #webgpu #gemini #ai
+
+--- 23. @kmizu (2026-05-03) ---
+URL: https://x.com/kmizu/status/2050816047553581237
+https://
+github.com/klassic/klassic
+GWに、klassicをrust製で、かつinterpreterのみならずx64 binaryを吐けるようにしてました。GCの実装も最低限はできたので、Linux / x64なら動くコードが吐けるようになってきました。
+
+--- 24. @EzoeRyou (2026-05-02) ---
+URL: https://x.com/EzoeRyou/status/2050662677459173481
+まずPowerShellを手で打つのは人間には不可能でしょ。
+
+--- 25. @lakeside529 (2026-05-03) ---
+URL: https://x.com/lakeside529/status/2050797109176361180
+はっ…！
+もしかして、ミレミアム問題をAIで解いたら100万ドル貰えるのでは…？
+
+--- 26. @kosugi_mokusei (2026-05-03) ---
+URL: https://x.com/kosugi_mokusei/status/2050744270794190943
+これ「兵庫」誤字っててやばい
+「兵庫」が書けなくても入れる大学、神戸大学。
+
+--- 27. @umiyuki_ai (2026-05-03) ---
+URL: https://x.com/umiyuki_ai/status/2050858446485106816
+楽曲を入力するとちょっとずつ動画生成して埋めてってMV自動生成してくれるブツ
+
+--- 28. @totsugeki_tai (2026-05-03) ---
+URL: https://x.com/totsugeki_tai/status/2050773973567500666
+フォッサマグナミュージアムに来ているんですがPC-98が動いていて構造線どころではない
+
+--- 29. @mkl480 (2026-05-03) ---
+URL: https://x.com/mkl480/status/2050866302282240335
+一つだけ義務教育の敗北あって草
+
+--- 30. @wing_tachyon (2026-05-03) ---
+URL: https://x.com/wing_tachyon/status/2050790769238376635
+サイゼ普通に味劣化しててしんどい
+特にパスタやばくね
+
+--- 31. @kaduki24 (2026-05-03) ---
+URL: https://x.com/kaduki24/status/2050774950068523116
+ぬい活する側だけどこの言い草だけで察せる。
+身に覚えあって「あれ迷惑だったかな」と本当に思ったのなら何も言わずに去るかそのお店でのぬい活控えれば良いでしょ。
+
+カチンと来たからって嫌味ったらしいな。 
+https://
+x.com/Cristoforou/st
+/Cristoforou/status/2050541751203692587
+…
+
+--- 32. @SakanaAILabs (2026-05-02) ---
+URL: https://x.com/SakanaAILabs/status/2050571126825447425
+We are honored to be featured in the latest 
+@TwoMinutePapers
+ video!
+
+You all can watch the full video here:
+
+https://
+youtu.be/QzZ4VwDHAT4
+
+Here’s a short clip from it:
+
+--- 33. @Yorcia_Durandal (2026-05-03) ---
+URL: https://x.com/Yorcia_Durandal/status/2050771084325371934
+Heroes of Might and Magic: Olden Era
+何これ面白すぎて時間溶けるんですけど？？？
+
+元々SLG（特にHEX型）戦闘は超苦手なのだけど、兵力さえ揃えれば拠点制圧戦すらオートでいけるのですごく楽。グリフィン可愛いよグリフィン
+
+--- 34. @keisukenoyatu2 (2026-05-03) ---
+URL: https://x.com/keisukenoyatu2/status/2050834399768572261
+ふだん買い物しないやつがいっちょかみするとこうなるという例
+
+--- 35. @GOROman (2026-04-28) ---
+URL: https://x.com/GOROman/status/2049054720535544181
+ この仕組みのスマホを胸にペンダントみたいに吊るして自動で乾杯を検知する #AutoGMK という仕組みをつくろう
+
+--- 36. @PRcomicfesta (?) ---
+ザイオンが愛しているのはミアとしての私なのか聖女としての私なのか？ (1/4)PR
+
+--- 37. @super_bonochin (2026-05-03) ---
+URL: https://x.com/super_bonochin/status/2050901094331826442
+『こちとら何年間も公開情報との齟齬によって数万人に叩かれることを想定して事実と推測を分けて書く所作を24時間365日続けて身に付いとんのじゃ素人は黙っとれ』と喉まで出かかったけど言わなかったワイは偉い。
+
+--- 38. @BeamManP (2026-05-03) ---
+URL: https://x.com/BeamManP/status/2050808051008241723
+常々思ってる事なのだけど、人間の仕事を奪うのはAIじゃなくてAIを上手に使える人間だってこと世間は忘れがち
+
+--- 39. @mameyama_kun (2026-05-02) ---
+URL: https://x.com/mameyama_kun/status/2050547028116304361
+米オープンAIが先日、最新AIモデル「GPT-5.5」を発表した。
+英国の政府機関の検証によると、GPT-5.5は「ネットワーク完全乗っ取り攻撃」を自律的に実行できる能力があることが判明。
+「核兵器級」と評された米アンソロピックの「Claude Mythos」に続いて2例目で、一部では上回る数値を出している。
+
+--- 40. @ktch9541 (2026-05-03) ---
+URL: https://x.com/ktch9541/status/2050854415981285440
+根気よく大量にゲームを試作していると、どんなアイディアでも一定以上に面白く仕上げる技術が身に付く。そうすると、日常で体験するあらゆる出来事を「ゲームメカニクスにできるのでは？」と思い始めるのが不思議だなと。
+目に入る全てがアイディアの種に見えてくるというか。
+
+--- 41. @elonmusk (2026-05-03) ---
+URL: https://x.com/elonmusk/status/2050824116324925699
+テスラ
+
+--- 42. @creativetomred (2026-05-03) ---
+URL: https://x.com/creativetomred/status/2050817634111823969
+ゲーム開発の永遠の課題：
+
+「仕様変更は開発終盤に最大化する」
+
+なぜか。動くものを見て初めて「違う」と気づくから。
+
+早くプロトタイプを作って
+早く「違う」と言わせるのが正解。
+
+完成度より速度を優先する理由がここにある。
+
+#ゲーム制作
+
+--- 43. @stocktrading0 (2026-05-03) ---
+URL: https://x.com/stocktrading0/status/2050824399679631514
+本日のニュース欄　凄い事になってる　全部Codex関係だ！
+
+--- 44. @wad0427 (2026-05-02) ---
+URL: https://x.com/wad0427/status/2050410208606953472
+GPT Images 2.0の裏技
+
+ChatGPTに任意の画像をアップロードし、
+「画像を JSON プロンプトに変換し、サイズと詳細を含めてください」と指示
+
+すると、画像を再現するためのプロンプトを出力してくれるので、変更したい部分だけを修正して使用可能
+
+--- 45. @Supermicro (?) ---
+Discover Supermicro’s AI Factory portfolio in ServeTheHome’s video review, featuring 20+ solutions powered by NVIDIA Blackwell and turnkey AI infrastructure built for scale.
+
+--- 46. @miyumiyuna5 (2026-05-02) ---
+URL: https://x.com/miyumiyuna5/status/2050550899312050472
+これはほんそれと思う。
+AIを使いませんって公言するほうが今後リスクに繋がることを真剣に考える時期だと思う
+
+--- 47. @notf (2026-05-03) ---
+URL: https://x.com/notf/status/2050822443930181728
+佐久間宣行さんがワールドトリガー！！！アニメのリメイクもくるし、ワートリの時代くる！！アメトーークのワートリ芸人も来てほしい！！
+
+--- 48. @kame_chan_dayo_ (2026-05-03) ---
+URL: https://x.com/kame_chan_dayo_/status/2050731277536706767
+もしも仮に来年1月1日にAGIが開発された場合速い離陸が起これば年末までに全人類仮想空間無限移行のユートピアが本当に完成するのだろうか、
+
+--- 49. @kazakura_22 (2026-05-03) ---
+URL: https://x.com/kazakura_22/status/2050837438399226275
+これマジでヤバい
+数日前に紹介されて読んだけど、全然面白いんですよね
+
+AI生成も、極めるとここまでいくのか…
+命令文(とさせておく)だけで、10万文字オーバーということで、一般人には全く扱えない領域だけど
+
+その上で｢出力➔チェック➔微修正➔再提出｣を1話で何十と繰り返す作業
+楽じゃないね
+
+--- 50. @blackA55167623 (2026-05-02) ---
+URL: https://x.com/blackA55167623/status/2050566752350998546
+『Dungeon Antiqua』面白いなぁ。
+こういうハクスラ系は普段やらないんだけど、これは面白い。

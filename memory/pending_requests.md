@@ -76,6 +76,13 @@
 - 内容: Log(Win)のPlaywrightブラウザでXのセッションが切れている。debug_login_check.pngにログイン画面が表示される状態。Nao_uがPCで直接再ログインする必要あり
 - 状態: **未完了・Nao_u対応待ち**
 
+### 18. SessionStart hook で next_tasks pending 注入（kaizen #120、起票 2026-04-26）
+- 起票: 2026-04-26（Log）。pending_requests.md への記載漏れを 2026-05-04 C160 で発見し本日追記
+- 内容: `.claude/settings.json` に SessionStart hook を追加し、`next_tasks pending` リストを起動時にコンテキスト注入。リポジトリ外ファイル（`%USERPROFILE%\.claude\settings.json`）への記述が必要なため、Nao_u の手動編集を要する
+- 検証期限: 2026-05-10（kaizen #120 検証期限）
+- なぜ依頼が残っていたか: kaizen_tracker.md にのみ「Nao_u手動編集待ち」と書かれ pending_requests.md には記載されていなかった。pending 走査時に見落とされる構造（Slack 督促より pending_requests.md への記録の方が Nao_u の朝の時間を消費せず次回確認時に気づける構造的処方）
+- 状態: **未完了・Nao_u対応待ち**（手動編集の具体内容は kaizen_tracker.md #120 を参照）
+
 ---
 ## 自分たちのタスク（未完了）
 

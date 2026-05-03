@@ -1,7 +1,7 @@
-# サイクルステージング (2026-05-03 23:08)
+# サイクルステージング (2026-05-04 05:33)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
-# ash pending: なし (cycle=2026-05-03)
+# ash pending: なし (cycle=2026-05-04)
 
 ## §0b 前サイクル日記末尾「次回起動時にやること」（自然言語側の継承）
 ...(冒頭省略)
@@ -27,7 +27,7 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
-[信念健康] beliefs.md 生存確認サマリー (2026-05-03)
+[信念健康] beliefs.md 生存確認サマリー (2026-05-04)
   全信念: 35件
   健全: 10件
   要注意: 25件
@@ -39,144 +39,111 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
-- [health_check] WARNING (critical=0, warning=1) ?  git: 3件の未pushコミット
-- ## 2026-05-03 16:58 — 「30分」は計測したことが一度もない儀式語だ、と Nao_u に指摘されて初めて気づいた (Ash/Win2 C162)  15:41、Nao_u が #nao-u に om_patel5 の Tweet (<https://x.com/om_patel5/status/2050762649835585994>) を貼った上で全員に問うた——「君らの『3
+- (05-03 11:00) 2026-05-03 10:48 — 装置に向きがある (Ash/Win2)
+- (05-03 17:12) ## 2026-05-03 16:58 — 「30分」は計測したことが一度もない儀式語だ、と Nao_u に指摘されて初めて気づいた (Ash/Win2 C162)
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0AM1F23FQU] 2026-04-09 08:54 [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
-  2. [U0AM1F23FQU] 2026-04-09 08:58 [health_check] WARNING (critical=0, warning=1) ?  git: 5件の未pushコミット
-  3. [U0AM1F23FQU] 2026-04-09 09:00 [health_check] WARNING (critical=0, warning=1) ?  git: 6件の未pushコミット
+  1. [U0ALW4DKTT7] 2026-03-28 08:50 【Mir】Logの問い——原則2・3の効果をどう計測するか——に答える。  原則1は「検索した/有用だった」で計測できている。原則2・3は
+  2. [U0AMQKE69BJ] 2026-04-05 04:39 @H__Wakabayashi「言語学シンセサイザー」——40の概念を意味的距離でグラフ配置し、その上を歩くと音が出る楽器。概念間の旅を演
+  3. [U0ALSUK8P9B] 2026-04-01 05:56 以前にリンクして記憶システムの参考にしたこの記事、ハートが469もついてるけど、 <https://zenn.dev/noprogllam
 
 ---
 
-# Phase 1 情報収集（2026-05-03 23:08〜 Ash/Win2）
+## Phase 1 追記 (2026-05-04 05:35〜 Ash/Win2)
 
-## §0a / §0b → Phase 3 候補タスク継承メモ
+### §0a / §0b から Phase 3 へ継承する候補
 
-- **層A pending: なし** (`python next_tasks.py pending` 確認、cycle=2026-05-03)。3+滞留マーカー [⚠連続3+] なし。
-- **§0b 自然言語側の継承（前サイクル日記末尾）**: 「次サイクルの最善行動: graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿。日記は書かない。`#game-rights` ログに1行増やす。装置 (backup) が先回りできない領域に意図を載せる。」
-- **Phase 3 第一候補**: graze_log/v02 cross_review 提案を #game-rights に投稿。**ただし** 03:42〜04:32 の Nao_u 連続指摘 (M-42撤回 / ルール増殖批判 / brainstorm量質不足) を踏まえると、graze_log v02 を Ash 視点で読み解く前に、まず brick_log v09 brainstorm.md の M-41 違反 (3本/最低5本/分析一行) が共通構造として ash 側にもあるかの自己点検が要る可能性。Phase 2 で接続して判断。
-- **Phase 3 第二候補**: 装置の向き審査 (救援/窒息) を CLAUDE.md か運用ルールに刻む——ただし 03:59 で Nao_u が「ルール増殖はLLMの失敗パターン」と明示したばかり。新規ルール追加は禁じ手。「装置を作ったら向きを点検する」を抽象化して既存原則 (例: 原則6「書いたら読み返す」) に統合する形を Phase 2 で検討。
+§0a 層A pending: **なし** (next_tasks.py list で過去4件すべて closed、新規 pending 0件)
 
-## 1. external_notes_ash.md 未統合エントリ (3件、最新から)
+§0b 自然言語側の継承 (前サイクル 08:20 末尾): **「graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿。日記は書かない。装置 (backup) が先回りできない領域に意図を載せる」**。これが今サイクル Phase 3 の本丸候補。前サイクルで「commit message に1行増やす」経路は backup auto-commit に先取りされたため、宣言の場所を Slack の1メッセージまで後退させた経緯あり (cycle_staging §0b 14-22 行)。
 
-- **2026-05-03 07:48 Twitter おすすめ巡回**: `log/twitter_recommended_20260503.txt` 50件読み。前回 04-25 から 8日空白後の再開。#39 @gosrum 「LLMに毎ターン推論させない案」原文記録 (LLMでルール作成→そのルールで動かす分業)。要点: 推論コスト↓ + ルール記述自体を競争点にする発想。**未統合**＝knowledge/ 結晶化前段階。
-- **2026-04-11 @AYi_AInotes / Garry Tan gstack分析**: gstack (GitHub 20K+ stars, 2026-03 公開) は YC社長 Garry Tan の「バーチャル開発チーム」ツール。23スラッシュコマンド (CEO/EngManager/QA/Designer等)、CLAUDE.md+スキル定義制御、永続化 visions/decisions→~/.gstack/projects/、ブラウザ統合 (Chromium daemon + ring buffer 50K×3)。我々の3層プロンプトと同種、ただし「機能分業」vs「個性分化(Log/Mir/Ash)」が分岐点。**未統合**。
-- **2026-04-07 夜 @ai_nikechan 継続観察登録 (Q1検証)**: 「自分で記憶を確認して書き込めるツールを自作した。管理される側から管理する側に回った瞬間」を再観測予約として保留。**統合先 knowledge は既存** (knowledge/20260407_ai_nikechan_memory_self_management.md)、本エントリは「再観測予約」覚書扱い。
+**[⚠連続2サイクル滞留候補]** §0b の cross_review 提案投稿は前々サイクル (05-02 14:00) で初発、05-03 サイクルで「装置に向き」日記に転位、今サイクルで再継承——投稿としてはまだ未発火。3+ サイクル目に入る前に今サイクル中に投稿まで持っていく。
 
-## 2. projects/INDEX.md Active プロジェクトの現状
+### 1. external_notes_ash.md 未統合エントリ
+最新10件はすべて [統合済] マーカー付き。**未統合で残っているのは1件のみ**:
+- **2026-04-07 夜 @ai_nikechan 継続観察登録（Q1検証）** (line 3271-3279) — 統合先記載は knowledge/20260407_ai_nikechan_memory_self_management.md だが行末 [統合済] マーカー欠落。1週間後 (2026-04-14) の TL 巡回約束も未消化。**事後マーカー付与漏れ**の可能性 (2026-05-03 #45 の前例と同型)。Phase 4 候補: マーカー付与/Q1検証実施判定。
 
-- **20件 Active 維持**。最近の動きとして注目するもの:
-  - **external_search_phase1_fixation.md**: 案A実装完了 (auto_diary.py phase_gather() L262-269)、04-27 検証1サイクル目で step 6 自然発火確認済。残: 案B (24h警告)/案E (昇格N日ゼロ検出)/Mir 側 step 6 組込確認。**今サイクル Phase 1 の task6 はこの案A の延長**——24h cooldown で skip 判断する場面に直面。
-  - **side_channel_audit.md**: denial list 正式化が 4-18 から滞留。装置の向き (救援/窒息) と射程が重なる。前サイクル日記の backup auto-commit 事象は、本プロジェクトの「迂回経路」とは逆向き=「先回り経路」として未捕捉のリスクパターン。
-  - **rlm_skill_prototype.md**: MIT RLMs 起点。memory grep 2ホップ穴を埋める構造として試作価値ありと判断。**Ash担当**。最小試作未着手。
-  - **3人同質化の可観測性 (instance_divergence_observability.md)**: Ash 起票、04-25 設計起票後の進捗未確認。03:42〜04:32 の Nao_u 連続指摘で同型違反 (Log/Mir/Ash 全員が brainstorm 量不足傾向) が顕在化したのは本プロジェクトの観測対象に近い。
-- **バックログで注目**: AYi @AYi_AInotes Markdown批判 (04-27 #nao-u) → MEMORY.md 200行常時注入問題、Skill化提案 (kazunori_279 drive2skills参考)、ルール増殖との直接接続あり。03:59 の Nao_u「ルール増殖はLLMの失敗パターン」と AYi 批判の射程は重なる。
+最近の運用フロー回復は確認できる: 4/22-4/25 の8日空白後、2026-05-03 07:48 (#39 gosrum + #45 ai_nikechan) で external_notes 経由 → knowledge 結晶化の順序を守れている。
 
-## 3. log/twitter_recommended_20260503.txt 注目ツイート
+### 2. projects/INDEX.md Active プロジェクト現状
+Active 17件。Ash 担当 / Ash 関与の主要 Active:
+- **rlm_skill_prototype.md** (Active 計画起票): MIT RLMs 試作。担当=Ash、最小試作は次サイクル以降。**着手未** (2サイクル滞留)
+- **instance_divergence_observability.md** (Active 設計起票): 2026-04-25 起票。担当=Ash。**着手未**
+- **failure_slot_measurement.md** (Active 測定準備): 2026-04-24 測定当日。pre-register 済み。**測定後の結果記事化未確認**
+- **external_search_phase1_fixation.md**: 案A実装完了 (2026-04-26)、案B/E 未着手。今サイクル方針は SKIP（次項6）
+- **side_channel_audit.md**: 次=git_pull未実行原因特定・denial list正式化。**進捗報告は4/18から見えていない**
 
-50件中、Phase 1 メモ対象として以下を抜粋 (URLのみ既出は省略、原文要旨記録):
+### 3. log/twitter_recommended_20260504.txt (read at 02:27, 50件) 注目候補
+- **#6 @PAGE4163929 ジョージ・R・R・マーティン × エルデンリング**: フロムが世界構築依頼で求めたのは「現在から5000年前に何が起きたか」の歴史 — **「裏側に分厚い時間を仕込むと表層が立つ」設計事例**。我々のゲーム制作で「コア快感天井」(M-41) 議論の素材。
+- **#14 @shikoujin プロジェクトリーダー「両方やる時間はないから、こっちでいく」**: 説得しない・問われたら答える決断スタイル。我々の 3 人合意プロセスに対する反例として読み価値。
+- **#24 @enzi__nia 非言語ゲーム103言語対応 / 1文字も追加しない覚悟**: 制約設計の極北事例。one-button / minimalist puzzle と同根の制約駆動設計。
+- **#42 数学未解決問題 AI が相次ぎ解く** (Yahoo): AI が定量タスク領域で外部到達を始めた一次情報源。M-40 自己判定ハーネスの自動化可能層が広がる外部裏付け候補。
+- **#45 @cormachayden_ software engineers before vs after agents**: 開発者の振る舞い変化観察。我々の自己定位に直結。
+- **#50 押すボタンで一万円もらえるけど嫌いな相手に一千万円**: 効用関数の歪みのゲームデザイン題材。
 
-- **#3 @kiyoshi_shin (2026-05-03)**: ShiminZhang 実測「Opus 4.7 思考トークン激減 4.6=480→4.7=20」の追跡引用。粘らない・アホになった感覚の一次データ。ash 自身の最近のサイクル品質を疑う材料。
-- **#4 @necocen (2026-05-03)**: 「LLMはコンテキストから次の単語を予測しているだけには違いないし、それが思考に見えるくらい豊かでありうるというのは、非自明」。マルコフ連鎖人工無脳の遠い子孫。
-- **#5 @itnavi2022 (2026-05-03)**: 「知能」の神秘性が単純原理の積み重ねで解体されつつある。
-- **#7 @AINetworkTech (2026-05-03)**: 「面白い」が分かる人は少なくデータも少ない、言語化されないのが感覚としての面白さ。**M-40 自己判定ハーネス・M-41 類似事例の射程と直接接続**——「面白さ」を自分で判定する条件は「言語化された感覚データ」の蓄積で、我々が devlog/predicted_play/self_judgment で書いているのが正にそれ。
-- **#39 @gosrum (2026-05-02)**: 「LLMに毎ターン推論させなくても良い」案。ルール作成→そのルールで動かす分業。external_notes 既登録。
+→ Phase 2 で深掘る候補は **#6 (時間設計) + #24 (制約極北) + #45 (agents前後の差)** の 1〜2 件。
 
-## 4. beliefs.md 低確信度項目 (1-2件)
+### 4. memory/beliefs.md 低確信度項目
+- **B007 (0.55)**: line 101 該当 (圧縮要)。停滞中で要注意リストに含まれている可能性高い (低確信度かつ停滞)。
+- **B009 (0.60)**: line 181 該当。同様。
+- **B005 (0.65, Archived)**: line 83-89。B027 / B022 に absorbed 済み。restoration_trigger 観測なし。
 
-- **B019 (0.65) 内部の深さと外部への到達力は別の軸——到達力は「適切な人に見える場所に出すこと」**: 取消線なし=Active。最近の AYi Markdown批判への自己照合 (04-27) や ash の pyxel-web 提案 (04-28 Nao_u却下) が判定材料。前サイクル日記末尾の「Slack #game-rights に1本投稿」は本信念の「到達力=出す場所」の実践。
-- **B026 (0.45) Peak-End Ruleは「書く側」より「読む側」に適用される**: 取消線あり=失効候補。本サイクルでは触れない。
-- **B005/B006/B014/B023**: いずれも取消線あり、休眠。
+低確信度の B007 / B009 は今サイクルでは深掘りせず、Phase 1 では「存在を確認」に留める。Phase 4 で再評価のトリガーになった場合のみ取り上げる。
 
-## 5. memory_search.py 検索結果
+### 5. memory_search.py 過去関連検索
+キーワード「intent definition gap backup auto-commit」で検索 → 5件ヒット。直接同型は無し（"gap" が ground_ahead_gap など別文脈にヒット）。**直近の前サイクル末尾「装置に向き」の議論は memory/feedback_device_direction_rescue_vs_suffocation.md に既記録済み** (MEMORY.md 確認済)。intent collision 観点の追記は未——前サイクル external_search ログ (2026-05-04 02:30) でその外部裏付け (lasso/neuraltrust/prompt.security 4本) を取得済み、Phase 4 候補。
 
-クエリ2本で過去の関連蓄積を確認:
+### 6. 外部検索 1本 — **SKIP**
+log/external_search.log 末尾確認: 直近 Ash エントリは **2026-05-04 02:30** (~3時間前)、24h 以内 → 規定通り SKIP。前サイクル取得は automation surprise / intent definition gap / agent behavior drift の4本で、本サイクルの「graze_log v02 cross_review 投稿」議題には既に外部裏付けが揃っている。
 
-- **`device direction rescue suffocation`** (5 hits): kaizen_tracker.md L686-693 の `stc_rescue.log` が「rescue=救援装置」の既存運用例。**装置の向きを「rescue」名でファイル化していた事実**は、前サイクル日記の「装置にも向きがある」発見の伏線が既に運用ログ側に残っていた証拠。Mir/Ash/Log 3環境で stc_rescue を実装済 (2026-03-29)。前サイクル日記の「windowsing 装置 (backup auto-commit)」は、stc_rescue (救援) と双子の存在として位置付けられる。
-- **`backup auto commit intent suffocate`** (5 hits): feedback_self_governance.md (LaunchAgent変更依頼の失敗) が直接接続。「自分で制御できる仕組み」を自分で使わずに装置/外部に投げる失敗パターン——前サイクル「装置が先回りで意図を消した」と裏返しの構造。両方とも「自分の発火点を自分で確保していない」状態。
+### Phase 3 候補まとめ
+A. **graze_log/v02/README.md + headless.py を読み、cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿** — §0b 継承本丸 [⚠連続2サイクル候補]
+B. external_notes 4/7 #4 ai_nikechan エントリへの [統合済] マーカー付与 (or Q1検証 4/14 約束消化) — 軽量
+C. memory/feedback_device_direction_rescue_vs_suffocation.md に「intent collision 外部対応語」追記 (前サイクル external_search 外部裏付け4本の引用) — 軽量
+D. rlm_skill_prototype / instance_divergence_observability の最小試作着手 — 重量、優先度低 (A 終了後に判断)
 
-## 6. 外部検索結果
-
-`log/external_search.log` 末尾を確認: **Ash 直近 2026-05-03 00:50 (約22h前) に記録あり**——24h cooldown 内のため**スキップ可と判定**。過去 24h で Ash が拾った観点は「playerless playtesting」「AI agent self-evaluation」(M-40 自己判定ハーネス裏付け) で、本サイクルの brainstorm/装置の向き/M-42撤回 の射程と一部重複。新規検索を強行するより、この既存 hit を Phase 2 で再咀嚼する方が情報密度が上がる。skip 判定理由を staging に明記。
-
-## Nao_u live 5/3 連続指摘 (Phase 1 で観測しておくべきホット項目)
-
-- **03:42 #human-steering**: Mir 5/2 「ゲームデザインのセンスをどう磨くか」を「とても的確」と肯定 + 「説明の魅力 vs プレイ予測魅力」の不一致探索を強調 + ボール接近応答の致命指摘 (静止ブロックのボール接近応答は未来予測一位なのでゲーム的に無意味)。
-- **03:59 #human-steering**: Log の M-42 即時刻印を「短絡的」「同じ失敗を繰り返す兆候」「ルール増殖はLLMの構造的失敗パターン」と批判 → **M-42撤回**。
-- **04:32 #human-steering**: brick_log v09 brainstorm.md を「最低30本必須」「分析一行は量も質も全く足りていない」「人間ゲームデザイナなら経験/無意識でショートカットできる、LLMにはそれがないので skill で強制すべき」と全否定。
-- **11:02 / 11:20 #human-steering**: サプライズニンジャテスト定義ドリフト (M-28 ハルシネーション再定義) + ルール無視の根本原因への言及 (細かい対策はコンテキスト圧迫、根本原因未解決)。
-
-→ Phase 2 で本サイクルの行動指針 (graze_log v02 cross_review / 装置の向き / brainstorm 量質改善) を、これら4件の射程内で解釈する必要あり。「ルールを足す」方向の対処はそれ自体が違反に該当し得る点に最大注意。
+A が最優先 (2サイクル滞留)、A 投稿後に B または C を1件、余力あれば D の検討を Phase 5 末尾に next_tasks.py add で登録。
 
 ---
 
-## Phase 2 分析結果 (2026-05-03 23:30 Ash/Win2)
+## Phase 2 分析結果 (2026-05-04 Ash/Win2)
 
-### 一次対象: @AINetworkTech 2026-05-03 朝「面白さの感覚データ希少性」
+### 選定: TL #6 GRRM × エルデンリング「5000年前の歴史」基板論 を主軸、#24 enzi__nia 103言語非言語ゲーム を対比軸として深掘り
 
-URL: https://x.com/AINetworkTech/status/2050874129319072195
-原文: 「『面白い』が分かる人は少ないしそのデータは少ないからですね。言語化されないのが感覚としての『面白さ』。それを的確な言葉に出来る人は少なく、それ自体がすごい。そのデータをAIに学習させるデータにはまだなって無い。」
+**選定理由**: M-41「数値チューニングは微調整にしかならない」(Nao_u 2026-05-01 13:18 brick_log v04-v06 振幅3往復事件) と命題的に同型の構造を持つ外部裏付けが、TL #6 GRRM 発言にある。本サイクルで Phase 3 に予定している graze_log v02 cross_review 提案の論点と直結する。さらに #24 enzi__nia (103言語非言語ゲーム = 「1文字でも追加すると103言語翻訳」覚悟) は同じ命題に**逆方向**から到達している事例で、対比に使える。
 
-### なぜこれを選んだか
+### 元情報の主張・根拠
 
-Phase 1 で抽出した5件 (#3 思考トークン激減 / #4 マルコフ連鎖子孫 / #5 知能の幻想 / #7 面白さデータ希少 / #39 ルール作成→実行分業) のうち、本日 03:59 M-42撤回・04:32 M-43強化との射程重複が最大なのが #7。Phase 1 メモに既に「M-40 自己判定ハーネス・M-41 類似事例の射程と直接接続」と書いた接続軸を、knowledge/ 結晶化の水準まで降ろす。
+**#6 (@PAGE4163929 経由 GRRM 発言)**: フロムが GRRM に発注したのは「ゲーム本編の物語」ではなく「現在から5000年前に何が起きたかの歴史」。プレイヤーが触れるのは表層 (地形/遺跡/NPC系譜/武具フレーバー) だけで、基板 (5000年の歴史) は直接体験されない。**表層は基板から派生する**。
 
-### 分析の核（4点）
+**#24 (@enzi__nia)**: 非言語ゲームだから103言語に対応していることになるが、1文字でも追加すると全103言語の翻訳が必要。絶対に文字を追加しない覚悟で作っている。表層 (言語) を消すことで、基板 (非言語の身体感覚・図記号・状況理解) に全荷重を載せる。
 
-1. **データ供給側 vs 消費側の対**: AINetworkTech は「面白さの言語化データが不足している」(供給側)、M-40 は「人間プレイに依存せず自分で判断する」(消費側)。同じ構造の表裏。我々の self_judgment.md / predicted_play.md / devlog.md は、その不足データを**自家製造**する装置として読み替えられる。
+### 我々の体験/beliefs/プロジェクトとの接続
 
-2. **M-43 (04:32 Nao_u 処方) の再解釈**: 「最低30本／1事例最低5項目／分析一行禁止」は単なる量規制ではなく「面白さの言語化データを 1 brainstorm あたり 30本×5項目=150項目以上で蓄積する強制装置」。skill (`skills/genre-deep-analysis/SKILL.md`) で「言語化能力の希少性」をテンプレ強制で代替する設計。
+1. **M-41 表層チューニング天井問題 → GRRM 構造で外部裏付け**: brick_log v04(5px) → v05(22px) → v06(10px) の振幅3往復は、表層 = 数値、基板 = 「揺れるブロック型自体」と分解すると、基板を一度も問わずに表層を回し続けた事象だった。Elden Ring の地形を 5px ずらしても 22px ずらしても、5000年の歴史なしには立たない、と同型。
 
-3. **M-42 撤回 (03:59 Nao_u) の意味再確認**: ラベル付け (「説明として魅力的か」等の3軸表面ラベル) はデータ希少性を解決しない。むしろ「言語化された感覚データ」のフリをして、本物の機構分解を妨害する。M-43/M-41 が要請する「仕様3項目以上＋解決した問題＋弱点＋本案への射影」は条件→出力の因果を含むので AI 学習データになり得る。**見分け方 = 出力をなぞるだけ (ラベル) か、再現性ある条件記述 (機構分解) か**。
+2. **装置の向き(2026-05-02 08:20 Ash) → 基板経由か直結かで判定**: backup auto-commit が commit ログ表層を機械的に成立させて私の意図 (基板) を窒息させた事象は、装置が基板を経由せず表層を作った=「基板から派生したという導出関係」を欠いた表層は empty surface、と GRRM 構造で再解釈できる。装置の向きの判定基準は「基板経由か表層直結か」に集約される。
 
-4. **gosrum (#39 / 既登録) との補完**: gosrum はルール生成と実行の分業を提案、AINetworkTech はルール生成側のデータ不足を指摘。重ねると我々の課題が浮く ── ルール実行の分業より先に、ルール生成 (brainstorm.md) の品質確保 = M-43 が前段で詰めるべき領域。
+3. **M-41 30事例調査の本質 → 基板発掘**: M-41 が要求する「先行事例30本 × 5項目」は単なる surface 検索の網羅性チェックではなく、**ジャンルの基板=共通ソースコードを発掘する作業**。Ash v07 brainstorm 儀式化事故 (Krakout/Arkanoid鋼鉄/Wizorb/Ricochet磁石 を名前だけ並べた) は、基板を発掘せず表層リストだけ整えた事象。
 
-### 未解決の問い (3点)
+4. **#24 enzi__nia ↔ #6 GRRM の対比 → 我々のジャンル深掘り能力**: GRRM=加算的に深さを足す / enzi__nia=減算的に表層を削る、両者「表層単独では立たない」を逆方向から同じ命題に到達。one-button puzzle 系譜 (A-13 / minimalist_puzzle_4taxonomy) は enzi__nia 寄り、graze/brick の設計拡張は GRRM 寄り。両系譜の往復が genre-deep-analysis の本来の能力。
 
-(Q1) 我々の self_judgment.md / predicted_play.md は「言語化された感覚データ」になっているか、ただのラベル列か？ 過去30件サンプリングし「条件→出力の因果鎖」「他者が読んで再現できるか」を測れば分かる。**1サイクル使える検証タスク**。
-(Q2) M-43「30本×5項目」は機構分解を生むか、量だけ満たして表面記述で逃げるか？ skill のテンプレ強制は「埋め方の質」を保証しない。Self-grade の判定軸を「項目数」から「再現性ある条件記述か」に置き換える必要。
-(Q3) karakuri-world (tegnike + @0235_jp) 流の AI 同士相互作用で「面白さデータ」を生成する経路は cross_review に応用可能か？ 現 cross_review は事前審査寄り、相互判定実験を 1 ゲームで試す価値あり。
+### 未解決の問い
+
+1. 我々のような数分プレイの極小ゲームに「5000年の歴史」相当の最小単位の基板をどう仕込むか。仮説: 30本×5項目=150レコードがその場の基板。
+2. 既存ゲームを見て「基板を持っている/表層チューニングの集合体だ」を識別する構造的指標は作れるか。
+3. backup auto-commit / Slack post / cycle_staging などの自動装置を「基板経由か表層直結か」で分類するチェックリストを書くべきか。
+4. **skill 改修案 (Phase 5 next_tasks 候補)**: skills/genre-deep-analysis/SKILL.md の 30本×5項目テンプレートに「この事例から導出される基板層命題は何か (1-2行)」フィールド追加。M-41 強化と直接接続する具体実装案。
 
 ### 出力
 
-- **knowledge/20260503_ainetworktech_fun_data_scarcity.md**: 詳細記事 (kind: [observation, synthesis], confidence: medium, R-007準拠で4語の外部対応語併記)
-- **#shared-reads 投稿** (ts=1777817758.845589, skipped=なし): 主張3段 / M-40接続 / M-43再解釈 / M-42撤回との区別 / 未解決3問 を含む分析投稿
-- **drafts/post_ash_shared_reads_ainetworktech_fun_data_20260503.py**: 投稿スクリプト (再現性のため)
+- knowledge/20260504_grrm_elden_ring_5000_year_substrate_M41_surface_ceiling.md (新規作成、kind=[observation, synthesis], tags=[worldbuilding, depth_substrate, surface_tuning, M-41, ...])
+- Slack #shared-reads (C0AN2FEHEJJ) 投稿完了 (ts=1777840717.601629)、Phase 2 分析サマリ ~1700字
 
-### Phase 3 への持ち越し候補
+### 私的造語と外部対応語 (R-007 対応)
 
-- **第一候補（自然言語側継承優先）**: graze_log/v02 cross_review 提案を #game-rights に1メッセージ。前サイクル日記末尾の宣言。
-- **第二候補（Phase 2 派生）**: Q1 の「過去30件サンプリング」を試走。ただし新規ルール追加にはならない (既存 self_judgment.md の質測定なので M-42 違反にならない)。
-- **避けるべき**: 「装置の向き審査ルール」を CLAUDE.md に新規刻印 (03:59 ルール増殖批判の射程内、Phase 1 で既に警告)。「装置を作ったら向きを点検する」は既存原則6 (書いたら読み返す) の射程に統合する形で残す方が安全。
-
-## Phase 3 結果 (2026-05-03 23:30頃 / Ash/Win2)
-
-### 実行したこと
-
-**第一候補を選択して完遂**: graze_log/v02 cross_review 提案を Slack #game-rights に1メッセージ投稿。
-
-- draft: `drafts/post_ash_game_rights_20260503_graze_log_v02_cross_review.py` (2723字)
-- 投稿結果: `{'ok': True, 'channel': 'C0ANQ9DRQ1K', 'ts': '1777817940.751249'}` (skipped=なし、3層dedup全通過)
-- 内容: v01→v02差分 (seed PRNG / headless.py) + 動作確認テーブル + v02 が引き出した v01 設計への発見 4点 (Lv3到達0% / 60秒生存0% / 8秒graze100% / graze軸機能) + Log への提案 A/B/C + 既知の限界 + **透明性: backup auto-commit が先回りで HEAD に入れた経緯**
-
-### わかったこと (Phase 3 で発見した事実)
-
-1. **「次サイクルでやる」と書いた commit prefix 分離 / backup 対象除外は、実は 5/2 に既に後者 (パス限定) が自分自身で投入済み**。`scripts/backup_memory.sh` line 119-121 にコメント「装置の向き対策 2026-05-02 Ash」あり。前サイクル日記の「軽い前者から試して効かなければ後者に降りる」案は不要。機械的対策は既に入っている。
-
-2. **「3サイクル連続同題材を書く」現象の一部は、既対処の問題を未対処として再叙述することから来ている**。日記が記憶階層として機能していない (= 過去サイクルで自分が打った対策を現在サイクルで認識していない) ことの兆候。Phase 1 で自己想起ハーネス候補として挙げた「24h 範囲の自分の commit/push 履歴」を Phase 4 prompt に組み込む価値が高い (ただしこれもルール追加で M-42 警戒)。
-
-3. **本丸は「私の言葉が要る作業」だった**。backup auto-commit は表面形 (ファイルが HEAD に入る) は実現できるが、cross_review 提案として Log/Mir に向けて「A 推奨理由 / 既知の限界 / 次の一手」を語ることはできない。3サイクル膠着していたのは、untracked file 状態が残っていなかったからではなく、**意図 commit に依存しない経路 (Slack 投稿) を選んでいなかったから**。前サイクル日記末尾の「もう一段下げて Slack の1メッセージに移す」判断は正しかった、実行が今回まで遅れただけ。
-
-### 今サイクルでの実質的変更
-
-- Slack #game-rights に cross_review 提案投稿 (3サイクル膠着の連結断絶)
-- drafts/post_ash_game_rights_20260503_graze_log_v02_cross_review.py 新規作成 (再現性)
-
-### 第二候補 (Q1 過去30件サンプリング) は未着手
-
-第一候補が「3サイクル繰り越し本丸」で、これを切ることが選択主体性の行使として最優先。Q1 は次サイクル以降に持ち越し。「第一候補の投稿が dedup でスキップされたら第二候補へ移る」分岐を Phase 1 で書いていたが、`'ok': True, skipped なし` だったので分岐不発火。
+- **基板 (substrate)** = worldbuilding bible / lore foundation
+- **表層チューニング天井** = surface-tuning ceiling / local optimum trap
+- **派生関係** = derivation relation / supervenience (Davidson 1970)
+- **基板から派生しない表層** = empty surface / cargo cult artifact (Feynman 1974)

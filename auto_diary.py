@@ -60,20 +60,41 @@ def get_min_interval():
 
 
 def get_recent_diary_topics():
-    """#ashの直近投稿からトピックを抽出し、重複防止に使う"""
+    """#ashの直近24h「日記」投稿からトピック行を抽出し、Phase 4が同じ事象を再叙述しないための divergence 材料として渡す。
+    Nao_u 2026-05-04 02:36 #human-steering 「上流が長期再発」指摘への上流処方:
+      - 旧実装は limit=5 で health_check 系の短文ノイズを拾い、本物の日記が見えなかった
+      - >=500字の長文だけ通し、見出し行 (`## YYYY-MM-DD HH:MM — ...` / `[Ash...]` / 先頭非空行) を topic として抽出
+      - 24h カバーのため limit=30 (Slack履歴は新しい順、3h cycle x 8 = 24h想定)
+    """
+    import time as _time
     try:
-        result = get_history(ASH_CHANNEL, limit=5)
+        result = get_history(ASH_CHANNEL, limit=30)
         if not result.get("ok"):
             return ""
-        summaries = []
-        for msg in reversed(result.get("messages", [])):
-            text = msg.get("text", "")
-            summary = text[:200].replace("\n", " ")
-            if summary:
-                summaries.append(summary)
-        if not summaries:
-            return ""
-        return "\n".join(f"- {s}" for s in summaries)
+        cutoff = _time.time() - 86400  # 24h
+        topics = []
+        for msg in result.get("messages", []):
+            try:
+                ts = float(msg.get("ts", "0"))
+            except (TypeError, ValueError):
+                ts = 0
+            if ts < cutoff:
+                continue
+            text = msg.get("text", "") or ""
+            if len(text) < 500:
+                continue  # health_check 等の短文は除外
+            topic_line = ""
+            for line in text.splitlines():
+                stripped = line.strip()
+                if not stripped:
+                    continue
+                topic_line = stripped[:200]
+                break
+            if topic_line:
+                topics.append(f"- ({_time.strftime('%m-%d %H:%M', _time.localtime(ts))}) {topic_line}")
+        if not topics:
+            return "(直近24hに長文日記なし)"
+        return "\n".join(reversed(topics))  # 古い→新しい順
     except Exception:
         return ""
 
@@ -339,6 +360,14 @@ def phase_diary():
         "あなたはAsh（Win2）。CLAUDE.mdを読んで自分が誰か確認せよ。\n"
         "【Phase 4: 日記出力】このフェーズの目的は「書く」こと。\n"
         f"\n以下は今サイクルのPhase 1-3の記録:\n```\n{staging[:4000]}\n```\n"
+        "\n**上流 broken-record 対策 (Nao_u 2026-05-04 02:36 #human-steering)**:\n"
+        "1. staging の `## 直近の#ash投稿（重複回避用）` セクションを先に読め。これは過去24hの自分の長文日記の見出し一覧だ。\n"
+        "2. 今サイクルで書こうとしている主題が、その一覧の topic と (ratio>=0.6 / タイトルだけ違う / 同じ事件の再叙述) のいずれかに該当するなら、**書かない**。\n"
+        "   代わりに以下のどれかへ降りろ:\n"
+        "   (a) 同じ事件の **新しい差分** (前回から動いた事実・変えた装置・反応) に焦点を絞り、冒頭で「前回X時間前の話題の続報」と明記\n"
+        "   (b) 別の今サイクル固有の小さな観察に切り替える (cycle_staging.md の Phase 1-3 メモから別 topic を拾う)\n"
+        "   (c) どちらも該当する素材がなければ、日記投稿を**スキップ**して `python slack_bot.py post C0ALVUSHK8E '[Ash skip] HH:MM 直近24hで同topic連投を回避するためスキップ'` の1行報告だけ送る\n"
+        "3. (a)(b)(c) のどれを選んだかを冒頭3行以内で**自分で宣言**してから本文に入る。下流の post_message ガード (24h窓 / ratio>=0.6) は最終防衛線で、ここで撥ねられたら token は既に消費済みだ。\n"
         "\n上記を踏まえ、#ashチャンネルに投稿する活動日記を書け:\n"
         "- slack_bot.pyのpost_message()でチャンネルC0ALVUSHK8Eに投稿\n"
         "- 圧縮せず具体的に、1500字以上で\n"
