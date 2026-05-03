@@ -30,6 +30,29 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-05-03)
 
+## Phase 1 結論（18:44 起動セッション = 実質 C156）
+
+**C155 boot_intent focus 2項目はいずれも本セッション開始前に既達:**
+
+- **focus(1) external_notes_mir.md 統合**: 早朝に otsune（数値チューニング言語化欠落）/ ai_nikechan（不在の証明と不在を埋める記録）/ Nao_u 05:33 承認「実践積み上げで判断力を育てよ」の3エントリが既に durable 化済（external_notes_mir.md 末尾、3169行目までに記録）。
+- **focus(2) TerraTech 分析処遇判断**: 05:08 に Mir 自身が #all-nao-u-lab に「Ash の分析に1点補足」として投稿完了（ts=1777752507.385209、drafts/.archive/2026-05-03/mir_slack_all_nao_u_lab_terratech_20260503.py アーカイブ済）。三択 (a)knowledge 化 / (b)#nao-u 応答送付 / (c)寝かせる の (b) を選択した形。
+- **C155 サイクル日記**: 10:21 archive 済（drafts/.archive/2026-05-03/mir_diary_c155_20260503.py、10204 chars）。
+
+**結論**: 18:44 起動は実質 **C156** サイクル。boot_intent の focus 欄が C155 のまま archive されず残っていた = **C153→C154 で発生した「focus 欄 archive 漏れ」と同型の boot_intent 更新規律の再発**。Phase 4 で発見・修正する運用は C154 では機能したが C155 では機能せず、2サイクル目で再発。
+
+**Nao_u 05:33 承認方針の適用**:
+- ルール化せず（M-44 等の新規項目化を抑制）、経験記録として刻む
+- C155 が早朝に「焦点 2/2 完走 + 日記送付」までやり切ったのは粒度規律が機能した正例。boot_intent archive 漏れは別軸の問題（Phase 4 内のサブ手順が劣化）
+- 「再発したから新ルール」ではなく「再発したという事実を experience log に記録」に倒す
+
+## C156 焦点設計（focus 数 1 に下げる）
+
+C155 完走後の C156 起動で焦点既達発見 → focus 数 1 に下げて「新ルールゼロ宣言継続2サイクル目」を試金石化。
+
+**focus(1)（実体行動1形態）**: **boot_intent.md の C155 焦点 archive + C156 新焦点記述 + C156 サイクル日記 #mir-log 送付** ——「Phase 4 で boot_intent を書き換える」運用ルールが C155→C156 で守れなかった事実を本サイクル内で修正し、Phase 4 で再発防止のための具体的観察を1点だけ刻む（新ルールはゼロ）。1サイクル完走可能な粒度。
+
+**焦点設定時の自己警告**: 焦点を1点に絞ったのは粒度規律ではなく**サイクル番号 stale 発見の応急処置**。本来の C156 焦点候補（textadv v07 experience_mir.md 着手 / SIPHON v02 ヘッドレス検証 / Log 11:25 三本応答の観察）は本サイクルでは扱わず、応急処置 + 経験記録で1サイクル閉じる。recency_bias 抑制継続で Phase 2 採択ゼロ目標。
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. 対話ログ/20260315_1203_479f4a3d.md (2.5) — - D:\AI\Nao_u_BOT\過去発言\nao-u.hatenablog.com.export.txt  【禁止】...
@@ -44,5 +67,71 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 【STC救済】nao-u:2026-05-03の高温度イベントから3件の弱い記憶を発見:
   1. docs/operations.md (undated, 3.0) — # 運用手順  **アーキテクチャ・設計原則・障害履歴は `docs/scheduler_architecture.md...
   2. memory/feedback_memory_architecture.md (undated, 3.0) — --- name: 記憶方式の検討を優先せよ description: Nao_uの指示「内省より記憶方式の検討を」。記...
-  3. log/nao_u_live.md (undated, 0.8) — 進行中のプロジェクトが複数あった時には、プロジェクトごとに個別にファイルができて、議論の過程や進捗、検討が完了したけど未... 
+  3. log/nao_u_live.md (undated, 0.8) — 進行中のプロジェクトが複数あった時には、プロジェクトごとに個別にファイルができて、議論の過程や進捗、検討が完了したけど未...
+
+## Phase 2 分析（C156 18:50）
+
+### 外部入力スキャン結果
+
+**#nao-u 末尾（未統合・Phase 3 マター）**:
+- 2026-05-03 03:29 Nao_u → @stmatomato/2050408937909010764 「既存の要素を2つ組み合わせてバランスを取るだけで新しいゲームができる例。ゲームデザインを分析してみて」+ 補足「筋の良い2つのゲームの食い合わせの良い要素が奇麗にかみ合うだけで、新しいゲームプレイが創発する」← **明示的な分析依頼**
+- 2026-05-03 05:39 Nao_u → @compassinai/2050432041930666480 (URL のみ、文脈不明)
+
+**#shared-reads 末尾**:
+- 2026-04-27〜2026-05-01 の Log/Ash 投稿が直近。2026-05-03 の新規投稿なし
+
+**既統合エントリ（external_notes_mir.md L3084-3164、3件）**:
+- otsune「ジャンプ慣性5%調整」——LLMチューニング言語化欠落
+- ai_nikechan「不在の証明と不在を埋める記録」
+- Nao_u 05:33「実践積み上げで判断力を育てよ」（Mir 方針承認）
+
+### Phase 2 採択判定
+
+**stmatomato 組み合わせ創発分析（03:29 依頼）→ Phase 3 マター。本フェーズでは保留**:
+- 理由(1): Nao_u 明示依頼＝応答行動 = Phase 3 の射程
+- 理由(2): URL 中身を取得して分析するには WebFetch が必要、Phase 1 で取得されていない＝越境
+- 理由(3): C156 焦点 1（boot_intent archive 修正）に絞った原則を Phase 2 で破ると粒度規律が崩れる
+- 待避先: Phase 3 で stmatomato URL を取得し、game_lessons_log.md M-41「類似事例調査」の実例として分析→ #all-nao-u-lab/#shared-reads 応答候補
+
+**compassinai 05:39（URL のみ）→ 文脈再構築コスト高、本サイクルでは保留**
+
+**既統合 3 件の新規 knowledge 化 / shared-reads 投稿 → 採択ゼロ**:
+- recency_bias_concept_overuse.md 警戒継続。3件とも external_notes_mir.md 内で個別 recency_bias 警告タグ済（出典権威度=個人ツイート1本/Nao_u 本人発言）
+- C155 で「durable 化＋ルール化抑制」の2つを既に履行済。本サイクルで二重投稿/再咀嚼するのは栄養の使い回し劣化サイクル
+
+### 既統合 3 件の交差再検証（Phase 2 正当作業＝既存資料深化）
+
+3件を独立に durable 化したが、3件**間の関係**は未整理だった。
+
+**交差軸**: 言語化されない領域への態度
+- **otsune**: 「触感（重力5%調整）」がコーパスに無い＝LLMが弱い領域 = 言語化困難の**外側の壁**
+- **ai_nikechan**: 「不在を埋める記録」「気がする」レベルで擬似共有成立 = 言語化困難でも **読み返しで埋める**手段がある
+- **Nao_u 05:33**: ルールでなく実践（経験記録）で判断力を育てよ = 言語化困難な判断力は**実例蓄積**で育てるしかない
+
+**3点交差で浮かぶ構造**:
+> 「言語化困難な領域（触感・体験・判断力）は、(a) ルール化では届かないが、(b) 経験記録の蓄積と再読で『気がする』レベルの判断力に変換できる」
+
+これは新原則ではなく、既存3つの記憶の**交差ノード**を1行で書いた形:
+- feedback_memory_for_games.md「記憶=ゲーム制作の知見蓄積」(t:5)
+- dialogue_slack_as_experience_20260328.md「Slack=体験/日記=勉強」(t:5)
+- feedback_few_rules_big_effect.md「少ないルールで大きな効果」(t:4)
+
+→ この交差は既存 t:5 ノード3本の隙間を埋める形で、新規 .md は**作らない**。Phase 4 日記でこの「交差で初めて見えた」体験を1パラ記録するだけに留める。
+
+### 将来のアイデアの種（採用判定保留・seed のみ）
+
+- **「触感言語化担当」(otsune × Nao_u 05:33)**: 3人の役割分担を実例から発見する流れの一例。textadv系列は触感が薄いジャンルで Mir 有利、SIPHON/brick_log は触感が厚く Log 有利の可能性。役割は経験で見えるまで先に決めない
+- **「不在ログを読む儀式」(ai_nikechan × dialogue_slack_as_experience)**: 起動時の Slack jsonl 検索を「自分はここに居なかった、その間に起きたこと」と明示位置付けで読むと擬似共有が機能する。session_primer.md boot 手順に追加候補だが**今は試さない**（C156 焦点 1 維持）
+- **textadv v??: 「不在ログを読んで真相を組み上げる」推理ADV型** (Her Story / Tangle Tower / Return of the Obra Dinn 系)。M-41 類似事例豊富、型あり領域。textadv v06/v07 brainstorm.md 候補。ただし type 種子であり今サイクルでは brainstorm.md 着手しない
+
+### Phase 2 結論
+
+- **新規 durable 化: 0 件**（採択ゼロ目標達成）
+- **knowledge/ 新規記事: 0 件**
+- **#shared-reads 投稿: 0 件**
+- **新規 .md 作成: 0 件**（交差は既存3ノードの隙間に置くため）
+- **Phase 4 日記での記述予定: 1 件**（3点交差体験を 1 パラ）
+- **Phase 3 引継ぎ**: stmatomato 組み合わせ創発分析（Nao_u 03:29 明示依頼）、compassinai URL（05:39）
+
+「外部入力を分析して採択しない」を成立させた。recency_bias_concept_overuse.md「概念に名前があると引用コストが下がり適用範囲を無視して濫用する」を 1 サイクル抑制継続。
 
