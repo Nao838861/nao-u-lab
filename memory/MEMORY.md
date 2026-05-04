@@ -17,9 +17,9 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 各エントリのサマリは **太字キーワード + 核 + 処方** の3パート構成。読めば温度を思い出せる圧縮された記憶。詳細が必要ならファイルを開く（Level 3）。原文が必要なら.jsonlへ（Level 4）。
 
 **設計原則 (2026-05-02 段階4)**: 想起クラスを3種類に分けて常時注入を絞る。
-- **action 直前** (Slack送信／外部摂取／空サイクル等) → [operational_index.md](operational_index.md)
+- **action 直前** (Slack送信／外部摂取／空サイクル等) → `operational_index.md`
 - **observation/judgment 直前** (判断・自己観察・構造設計) → root の **メタ・行動原則**
-- **architecture 改善時** (記憶階層／3層プロンプト／harness) → [references_external_index.md](references_external_index.md)
+- **architecture 改善時** (記憶階層／3層プロンプト／harness) → `references_external_index.md`
 
 ## サブインデックス（領域別、必要時に開く）
 
