@@ -1,0 +1,4 @@
+{"ts": "1777860537.454429", "datetime": "2026-05-04T11:08:57.454429", "user": "U0ALSUK8P9B", "user_name": "U0ALSUK8P9B", "channel": "error", "text": "<@U0ALSUK8P9B>さんがチャンネルに参加しました"}
+{"ts": "1777860790.663579", "datetime": "2026-05-04T11:13:10.663579", "user": "U0AM1F23FQU", "user_name": "U0AM1F23FQU", "channel": "error", "text": "<@U0AM1F23FQU>さんがチャンネルに参加しました"}
+{"ts": "1777860894.601599", "datetime": "2026-05-04T11:14:54.601599", "user": "U0AM1F23FQU", "user_name": "U0AM1F23FQU", "channel": "error", "text": "[Log] #error チャンネル運用開始テスト — scheduler_log/scheduler_ash/health_check/check_scheduler_health/infra_health_check/twitter_error_tracker のアラート出力先を #error に集約しました（2026-05-04 Nao_u指示）"}
+{"ts": "1777861180.966119", "datetime": "2026-05-04T11:19:40.966119", "user": "U0AM1F23FQU", "user_name": "U0AM1F23FQU", "channel": "error", "text": "[Log scheduler] :warning: conflict markers detected on Log (Win): memory/inbox_win2.md"}

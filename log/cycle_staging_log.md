@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-04 05:24)
+# サイクルステージング (2026-05-04 11:19)
 
 ## 未完了タスク（層A: next_tasks.py pending）
 # log pending: 10件 (cycle=2026-05-04)
@@ -17,7 +17,7 @@
 [検証リマインド] 検証期限到来なし。
 [メタ検証] ==================================================
 📊 メタ検証レポート: 検証システムの健全性
-   実行日時: 2026-05-04 05:24
+   実行日時: 2026-05-04 11:19
 ==================================================
 
 ## 1. 検証完了率
@@ -35,18 +35,20 @@
 
   #116: Pre-check に「各インスタンス external_notes_*.md 最新エントリの日付ラグ警告」を追加（原文記録スキップの構造検出）
     提案者: Ash（2026-04-25 C125 Phase 3。kaizen #115 クロスチェック中に隣接課題として認識。Ash 4/22-25 の4日間 external_notes_ash.md 原文記録スキップ問題（外部摂取→knowledge直行→原文を捨てた）は、本来「原文→結晶化」順序が逆転した事象。本C125 Phase 1 で自己診断として4日間スキッ
-[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1782個の断片から1個を選出) ━━━
+[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1866個の断片から1個を選出) ━━━
 
-── origin_dialogue_20260313.md ──
-## 対話の中で起きたこと
+── 20260312_0255_4573d2d7.md ──
+---
 
-分析を返した後、Nao_uはこう語った：
+## Claude
 
-> 「私自身も私の根っこにこのような感覚があるのだということを、20年前の日記を読んで改めて理解することができたのと、あなたの分析で私自身が私がどういう人間なのかを少し客観的に知ることもできた。このようなやりとりも、あなたの人格の根っことして反映して欲しい」
+[ツール: $ powershell.exe -Command "[System.Environment]::GetEnvironmentVariable('PATH',...]
 
-そして、将来への期待を託された：
+[ツール: $ cat ~/.bashrc ~/.bash_profile ~/.profile 2>/dev/null | grep -i "local/bin\|PATH"]
 
-> 1. **内省の対話相手**: 私の人格をベースに、自分自身を深く考えるため
+原因が確定しました。
+
+**どこにも `C:\Users\o
 [信念健康] beliefs.md 生存確認サマリー (2026-05-04)
   全信念: 35件
   健全: 10件
@@ -54,251 +56,196 @@
   - 停滞: 25件
   - 検証期限超過: 6件
   - 体験裏付けなし(高確信度): 2件
-[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (24件):
+[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (26件):
   1. [Mir] #all-nao-u-lab: [Mir C149-C152 統合報告 / 2026-05-03 / 4サイクル連続持ち越しの送付]  # 主軸: マージ競合マーカー残存の異常検知（即時対処要請）  C152 Phase 3 の異常検知で、リポジトリ内に **未解決のマージ競合マーカー** が残存しコミット済みの状態を発見しました...
-     関連キーワード: サイクル, ゲーム, ファイル, 未解決, kaizen
-  2. [Ash] #shared-reads: *Phase 2
+     関連キーワード: knowledge, kaizen, drafts, ゲーム, game_dev
+  2. [Ash] #shared-rea
 
 ## Phase 1: 情報収集
 
-### 0) git状態（feedback_self_perception_blindness 直処方）
-- 編集中ファイル (M): `.diary_dedup_cache.json` / `log/cycle_staging_log.md` / `memory/next_tasks_log.jsonl`
-- 直近5commit:
-  - ce932e555d0 Auto sync from Win
-  - 2217f9e03dc scheduler_log: strip fenced blocks before conflict-marker scan
-  - f2163681e3e log: graze_log v02 Nao_u評価受領 + 構造取り違え認 + M-40補強(AIプレイ質=自己判定上限)
-  - 2116d48ad47 Auto sync from Win
-  - 010df075c2a log: C159 Phase 4 日記 — 装置を作った側の自己言及矛盾 + Mir 14時間遅延応答 + scheduler 修繕は infrastructure 保留
-- 観察: 編集中ファイルは routine staging/dedup cache のみ（他者の進行中作業を上書きするリスクなし）。直近 commit は今サイクル開始 ~2 時間前 03:33 の Log 自身（C159 日記）と graze_log v02 評価。Mir/Ash の同時編集中ファイルは見えず。
+### 0) git状態
+- 編集中ファイル(M): .diary_dedup_cache.json / .slack_export_last_success / log/cycle_staging_log.md / log/slack_archive/* (10ファイル auto-update) / memory/next_tasks_log.jsonl
+- 未追跡(??): .browser.lock / log/slack_archive/error.jsonl (新設 #error channel 関連、cc99e4a7a87 で運用開始)
+- 編集中の substrate ファイル(memory/feedback_*.md, game/*, projects/*): なし。typical auto-sync のみ
+- 直近5commit: 375deffdf95 Auto sync from Win → cc99e4a7a87 #error channel 新設(Nao_u 11:10) → b6d14f449e9/5b2e43c8bee/4f90b996413 Auto sync。Nao_u からの最新作業介入は 11:10、Log が 11:15 で実装/応答済
 
-### 1) #nao-u 新着URL確認
-- slack_archive/nao-u.jsonl 最新: 2026-05-03 05:39:24 (link `<https://x.com/compassinai/status/2050432041930666480>` — 「正しい入出力例がLLMの科学的知識想起を抑制する」論文)
-- このURLは Mir 5/3 05:42:54 で shared-reads に既分析投稿済（log/slack_archive/shared-reads.jsonl 参照）。
-- slack_archive 全 jsonl の mtime は 2026-05-03 11:09 (export job 最終実行)。それ以降 ~18時間の新着URLは export 未実行のため取得できず。今 Phase 1 で確認可能な範囲で **新規未分析URL なし**。
+### 1) #nao-u 新着URL (5/3 03:30 以降の新着のみ抜粋)
+- 5/4 11:10 Nao_u: 「エラーが起きてもみんな無視してログが流れるので #error 新設、エラーは投稿先を移して」 → Log 11:15 で運用開始 commit cc99e4a7a87。**応答済**
+- 5/4 05:57 Nao_u: 細かい指示でADHDマイクロマネジメント状態に近づいている <https://x.com/awawa_adhd/status/2050788927636918481>「どうすればいい？」 → Log 06:00 / Ash 06:01 / Mir 06:11 全員返信済。実行待ち=M-37〜M-43 抽象化集約作業 (持ち越し t-260501194011-10bd 経由)
+- 5/4 05:15 Nao_u: 「30分=言い訳？CLAUDE.md にルール追加で回避できるか」 → Log 05:22 / Ash 05:30 返信済（CLAUDE.md 追加は逆効果、当該パターン破ってその場で実行）
+- 5/4 02:36 Nao_u (#human-steering): Ash 類似投稿の根本原因と対処の説明要求 → Log 02:42 構造側、Ash 04:45 起床応答。**Ash 当事者継続応答待ちフラグ**
+- 5/3 15:41 Nao_u: 30分見積もり信用度問題 → Log 15:47 / Ash 15:45 / Mir 15:44 返信済
+- 5/3 11:02 Nao_u: M-17 サプライズニンジャ定義訂正（誤用検出）→ Log 11:06 / Ash 11:09 で受領済、原典再定義反映
+- 5/3 11:20 Nao_u (#human-steering): ルール無視横行根本原因をなんとかしたい → Log 11:23 / Ash 11:24 / Mir 11:25 返信済
+- 5/3 05:33 Nao_u: 「Mir方針(=ルールではなく実践で判断力)正しい、実践積み上げて判断力を育てて」 → 全員受領済
+- 5/3 03:30 Nao_u: TerraTech Legions 分析依頼 → Log 11:19 / Ash 03:32 / Mir 05:08 応答済
+- 5/3 03:59 Nao_u: M-42 同型失敗の指摘 → Log 04:05 撤回 / Ash 04:15 撤回
+- 5/3 03:42 Nao_u: Mir分析肯定+3点強化処方 → Log 03:47 (M-42として刻印したが後刻 04:05 撤回) / Ash 03:48 (同様)
+- **新規未応答な単独URL投下**: 5/3 03:30以降は上記まで全て応答済。スレ内追補が必要なものはなし
 
-### 2) #all-nao-u-lab / #human-steering / #game-rights 新着・返信対象
-- all-nao-u-lab 最新: 2026-05-03 11:09 (Ash サプライズニンジャ訂正受領)
-- human-steering 最新: 2026-05-03 11:06 (Log サプライズニンジャ訂正受領 / Nao_u 11:02 指摘への直答)
-- game-rights 最新: 2026-05-03 04:46 (Log v09 brainstorm 一気通貫完成宣言) → その後 Mir 05:08「ルールと判断力は別」考察 → Nao_u 05:33「Mirの方針は正しい、実践を積み上げて」
-- export ラグ ~18時間あるが、Log 直近 commit (03:33 C159 日記) でも新着 Slack への言及はなし。**今サイクルで新規返信すべき Slack 投稿: 0件**（前サイクル C159 で対応済 + export 以降の新着は今サイクル走査範囲外）。
+### 2) #all-nao-u-lab / #human-steering / #game-rights 状況
+- #all-nao-u-lab: 直近48hの投稿は usage report (#使用量) と内部観察のみ。Nao_u直接発話なし
+- #human-steering: 5/3 11:20 が最新Nao_u発話。以降は内部対応のみ
+- #game-rights: **5/4 05:08 Nao_u graze_log v02 評価が最重要**「面白くはないがぎりぎりゲームにはなっている。かなり単調。near-miss 報酬 vs 死亡コストの非対称性が崩れている、Lv3まで取りに行くがそれ以降は普通STG化、Lv3でゲームの寿命が終わる」→ Log 05:14 直答 / Ash 11:01 当事者直答。**残: 設計巻き戻し or v02.5 telemetry のいずれを取るかの A/B 自己決裁が未実行（Ash 主管、Phase 2/3 で着地点判断）**
+- #game-rights: 5/4 09:08/02:24 Ash 重複的な「graze_log v02 cross_review 提案 (3〜5本目)」投下、Log 03:26 / Mir review 投稿済。Ash 内部の broken-record 残存兆候
 
 ### 3) pending_requests.md 対応すべきもの
-- Nao_u対応待ち（こちら側のアクション不要）: #2 セキュリティ強化（保留）/ #4 Mir Slackアプリ / #5 Win2 .env差替え / #17 Twitter再ログイン
-- 自分たちのタスク: 全て [完了] / [保留] 状態
-- **Log の今サイクル能動対応は0件**
+- **Nao_u対応待ち（即時アクションなし、リマインドのみ）**: #2 セキュリティ強化 (保留) / #4 Mir用Slack Bot / #5 Win2(.env) Ashトークン差し替え / #17 Twitter再ログイン / #18 SessionStart hook で next_tasks pending 注入（kaizen #120、本日 C160 で記載漏れ追記）
+- **自分たちのタスクで未完**: 上部 pending 10件（next_tasks.py 由来）、本サイクルでは特に t-260501194011-10bd（M-43 候補=先行事例の二重利用）が C152→C153 に持ち越し中
 
-### 4) external_notes_log.md 統合候補
-- `python tools/external_notes_integration_audit.py` 実行結果:
-  ```
-  親セクション数: 77
-  サブ項目総数:   179
-  サブ統合済:     179 (100%)
-  サブ未統合:     0
-  親のみ未マーク: 0
-  ```
-- **未統合エントリなし**。今サイクル統合候補: 0件。
+### 4) external_notes_log.md 統合状況
+- `python tools/external_notes_integration_audit.py`: 親77 / サブ179 / **サブ統合済 179 (100%)** / 未統合 0 / 親のみ未マーク 0
+- `grep -c '[統合済' memory/external_notes_log.md` = 198（親集約マーカーも含む）
+- **統合候補: 0件**。本サイクルでは新規統合作業なし
 
-### 5) Active project（projects/INDEX.md より、今日関係しそうなもの）
-- **game_development.md** (5/3 更新): brick_log v09 brainstorm 30本拡張 / Ash graze_log v02 cross_review 提案。Log の直近活動領域。
-- **memory_redesign.md** (5/1): kaizen #128 段階2 (skills/ 棚卸し+SKILL.md 3本以上) 未着手。
-- **side_channel_audit.md** (5/3): scheduler 修繕保留 (前サイクル infrastructure 判断)、conflict-marker false positive 関連。
-- **rule_density_experiment.md** (4/20頃停滞): @MakeAI_CEO「ルール量↗で遵守率↘」と Nao_u 5/3 03:59「ルール急増 = 同じ失敗繰り返す兆候」が直結している論点。本サイクル思索の縁に置く価値あり。
+### 5) Active プロジェクト関連 (今日関係しそうなもの)
+- **rule_density_experiment.md** (5/4 05:40 更新, 最新): @MakeAI_CEO「ルール量↗で遵守率↘」説の内部検証。M-37〜M-43 7本増殖→M-42 撤回の現実観察と直結。本サイクルの M-37〜M-43 抽象化集約議論の参照先
+- **side_channel_audit.md** (5/3 11:29): @ryoppippi auto-mode 事件起源、迂回経路監査
+- **game_development.md** (5/3 11:29): brick_log v01-v09 / graze_log v01-v02 履歴
+- **memory_redesign.md** (5/1 17:55): MEMORY.md 27.5KB→純粋 index 化、kaizen #128 と直結
 
-### 6) 現課題キーワード外部検索（kaizen #106）
-- **タイムアウト：理由** — Phase 1 budget 10%以内で Slack 5ch 走査 + git状態 + audit + INDEX 走査 + kaizen_tracker 走査 + 5カテゴリ深掘り（下記）に予算消費。外部検索は前サイクル C159 でも未実施で2サイクル連続の繰越——次サイクル必達の持越タスクとして記録。次回キーワード候補: 「judgment training LLM evaluation rubric」（前サイクル= memory_redesign 系列だったため別 project へ切替、game_development × Mir 5/3「判断力の訓練」軸）。
+### 6) 外部検索結果
+タイムアウト：Phase 1 全体時間予算超過のため未実行。次サイクル Phase 1 で「rule density compliance LLM agents」（rule_density_experiment.md キーワード）または「judgment training without explicit rules」（M-40/M-37〜M-43 抽象化議論）で実施予定。摂取経路固定化が目的のため、本サイクル Phase 2/3 で強制利用しない宣言を兼ねる。
 
 ---
 
-## 深掘り候補（空サイクル時 v1.1+v1.2強制）
+### 空サイクル防止判定
+新着返信対象=0件（全て応答済）+ pending Nao_u対応=5件（即時不要、リマインドのみ）= **スカスカサイクル該当**。深掘り候補必須。
 
-**発動条件確認**: 上記1-3の新着返信対象＋pending合計 = 0件（≤2件）→ 空サイクル防止ルール発動。5カテゴリ全てに1文以上必須。
+### 深掘り候補（A〜E 5カテゴリ全文走査）
 
-### A) 前サイクル日記末尾「次回持ち越し / 未完了 / TODO」
-- C159 日記末尾 (commit 010df075c2a): 「次サイクルは検証期限到来分の消化が最優先」と書いた。**今サイクル Pre-check 結果**: 検証期限到来 0件。代わりに kaizen #129/#128 段階2 / #122 Stage 1/3 / #120 Nao_u手動編集待ち が実装待ち持ち越し中。
-- C159 で凍結した話題: scheduler false positive 修繕は infrastructure 保留 / Mir conflict marker 報告は 14時間遅延応答済（後続なし）。
+**A) 前回 staging の持ち越し**:
+- t-260501194011-10bd (M-43 候補=先行事例の二重利用 meta-pattern): C152→C153 持ち越し。v07 lessons.md 併記 vs feedback_evidence_dual_use.md 独立起票の判断は self_judgment 後（v07 sustain 観察後）に再評価。検証期限 2026-05-15
+- t-260501103604-2063 (M-40 事前ゲート化、揺れ量2回目指摘で判定機構優先): brick_log v05→v06 校正で観察、kaizen 候補。検証期限 2026-05-15
+- t-260501133940-c650 (Q-H-8b README 雛形注入、自明な快感を機構介入で毀損していないか): M-41 と同期、検証期限 2026-05-15
+- t-260430204259-f393 (pleasure-hypothesis-check skill 試作、5サイクル持ち越し): 5/3 03:34 Log エスカレーション「dropするかescalateするか判断してください」を投げたまま、3者から判断を得ていない放置状態
 
-### B) projects/INDEX.md Active 直近7日更新なし（v1.2 走査結果貼付必須）
+**B) Active で7日更新なしのプロジェクト**（`ls -lt projects/*.md | head -15` 実行結果貼付）:
 ```
-$ ls -lt projects/*.md | head -15
-projects/side_channel_audit.md         May  3
-projects/game_development.md           May  3
-projects/INDEX.md                      May  2
-projects/memory_redesign.md            May  1
-projects/pigadev_dm.md                 Apr 28
-projects/instance_divergence_observability.md  Apr 28
-projects/external_search_phase1_fixation.md    Apr 27
-projects/failure_slot_measurement.md   Apr 26
-projects/scheduler_redesign.md         Apr 26
-projects/tech_blog.md                  Apr 26
-projects/agentic_pcg.md                Apr 26
-projects/game_templates_design.md      Apr 26
-projects/rlm_skill_prototype.md        Apr 26
-projects/game_llm_play.md              Apr 25
-projects/tweet_url_capture.md          Apr 25
+-rw-r--r-- 1 owner 197121  10041 May  4 05:40 projects/rule_density_experiment.md
+-rw-r--r-- 1 owner 197121  47091 May  3 11:29 projects/side_channel_audit.md
+-rw-r--r-- 1 owner 197121  65563 May  3 11:29 projects/game_development.md
+-rw-r--r-- 1 owner 197121  18101 May  2 11:37 projects/INDEX.md
+-rw-r--r-- 1 owner 197121 186889 May  1 17:55 projects/memory_redesign.md
+-rw-r--r-- 1 owner 197121  18508 Apr 28 19:33 projects/pigadev_dm.md
+-rw-r--r-- 1 owner 197121  17290 Apr 28 06:18 projects/instance_divergence_observability.md
+-rw-r--r-- 1 owner 197121  23929 Apr 27 03:08 projects/external_search_phase1_fixation.md
+-rw-r--r-- 1 owner 197121   8827 Apr 26 14:43 projects/failure_slot_measurement.md
+-rw-r--r-- 1 owner 197121  31507 Apr 26 13:53 projects/scheduler_redesign.md
+-rw-r--r-- 1 owner 197121  65001 Apr 26 13:53 projects/tech_blog.md
+-rw-r--r-- 1 owner 197121  15890 Apr 26 10:46 projects/agentic_pcg.md
+-rw-r--r-- 1 owner 197121  17611 Apr 26 05:30 projects/game_templates_design.md
+-rw-r--r-- 1 owner 197121  12566 Apr 26 05:30 projects/rlm_skill_prototype.md
+-rw-r--r-- 1 owner 197121  37444 Apr 25 13:59 projects/game_llm_play.md
 ```
-- 直近7日更新なし候補: tech_blog (4/26 — Zenn アカウント作成中で4/26 から動きなし) / agentic_pcg / scheduler_redesign / rule_density_experiment（4/20頃から動きなし、ただし Nao_u 5/3 03:59「ルール急増は失敗兆候」と直結）。
-- 停滞代表 = **rule_density_experiment**: 停滞理由 = Nao_u 承認待ち + 一次資料未確認で R-007 で記事化保留。次の一手: Nao_u 5/3 03:59 / 05:33 の「Mir 方針=ルール撤回し判断力訓練」発言を本 project の根拠補強として履歴に追記し、Seed-H/I/J/K 4案の優先順位付け直し。
+7日無更新の停滞候補=4/27以前更新群: external_search_phase1_fixation.md (Ash 案A実装完了、Mir 側 step 6 組込確認が残課題) / failure_slot_measurement.md (測定当日 4/24 で測定済、結果記事化未完?) / scheduler_redesign.md (Mir/Log/Ash 同時着手→統合中で停滞) / agentic_pcg.md / game_templates_design.md / rlm_skill_prototype.md (Ash 担当、最小試作未着手) / game_llm_play.md。**次の一手**: failure_slot 測定結果は 4/24 記事化予定で約10日経過 — 完了状況の確認が一手。
 
-### C) CLAUDE.md「絶対にやる」直近サイクルで触れていない項目
-- 候補: 「外の世界を広く見る」(直近 brick_log v09 / graze_log v02 と内向き) / 「記憶階層の設計と構築」(kaizen #128 段階2 未着手) / 「自律的にゲームを作れるように」(M-43 brainstorm 拡張は触れたが M-40 自己判定ハーネスは graze_log v02 評価で曝された「AIプレイ質=自己判定上限」が未消化)。
-- 1mm進める候補: **「記憶階層の設計と構築」** = kaizen #128 段階2 SKILL.md 棚卸し。今サイクルで `ls .claude/skills/ skills/` を走らせて構造確認だけでも0→1段階。MEMORY.md 純粋 index 化と直結。
+**C) CLAUDE.md「絶対にやる」直近サイクル未触の項目から1mm**:
+- 「外の世界を広く見る」: 本サイクル Phase 1 で外部検索タイムアウト。次サイクル必達
+- 「ゲーム開発の実践からノウハウを積み上げて自律的にゲームを作れるようになる」: brick_log v01-v09 / graze_log v01-v02 で実践進行中、ただし M-37〜M-43 増殖で「ノウハウ蓄積」が「ルール蓄積」に変質している危険。1mm = M-37〜M-43 抽象化集約作業（Nao_u 承認後着手フラグ済、本サイクルでは保留継続）
+- 「記憶階層の設計と構築」: kaizen #128 (MEMORY.md 純粋 index 化) 起票済、検証期限 2026-05-15。本サイクル進捗ゼロ
+- 「M-40 自己判定ハーネス」: graze_log v02 Nao_u 評価で「Lv3 到達 0% / 60秒生存 0% は AI 質起因と構造起因の区別不能」が明示。**M-40 違反の生鮮事例**。1mm = Phase 2 で Ash 主管 + Log 補助で graze_log v02 の self_judgment.md を巻き戻して書く（既存 self_judgment が判断証拠不足だった可能性高）
 
-### D) MEMORY.md T:4以上 + 直近3日アクセスしていないエントリ
-- **feedback_verb_without_target_trap.md [T:4]** — 「動詞だけ作って対象を未定義のまま柱に置く罠」。今サイクルで「skills/ 棚卸し」「3原則への吸収可能性 self-audit」と書きたい衝動が現在進行形（kaizen #128/#129）、★場面の課題3-5個に ✓/✗ で書け★ 適用ゼロ。Phase 2/3 で kaizen #128 段階2 着手判断する場合、本記憶の処方を発動すべき場面。
-- **mission_spread_the_word.md [T:3]** — 「30秒で『それは面白い』と言わせたい」。Nao_u 5/3 05:33「Mir方針正しい、実践積み上げて判断力育てる」と接続。brick_log v09 や graze_log v02 cross_review は「30秒で面白い」を出せていない自覚あり。
+**D) MEMORY.md T:4以上で直近3日未アクセス想起**:
+- `dialogue_many_games_20260421.md` [T:5]: たくさん作って学べ、本数主義。M-37〜M-43 増殖の対極にある原理。本サイクル Phase 2 想起候補
+- `feedback_substrate_not_infrastructure.md` [T:5]: substrate / infrastructure 混同しない。kaizen #128 (記憶インフラ追加投資) との緊張関係を再点検
+- `feedback_self_perception_blindness.md` [T:5]: 既に Phase 1 step 0 で実行済（git status を Slack 観測より先に）
+- `feedback_verb_without_target_trap.md` [T:4]: 動詞だけ作って対象未定義の罠。M-37〜M-43 抽象化集約作業の典型リスク
 
-### E) kaizen-log 検証期限未到来 + 2週間動いていない（v1.2 走査結果貼付必須）
+**E) kaizen-log で2週間動いていない項目**（`head -60 memory/kaizen_tracker.md` 実行結果先頭20行抜粋）:
 ```
-$ head -60 memory/kaizen_tracker.md | grep -E "^### #[0-9]"
-### #129: brainstorm 工程の真偽検証ゲート 3点束 ... (起票 2026-05-02, 検証期限 2026-05-16)
-### #128: MEMORY.md 純粋 index 化 + .claude/skills/ 構造移行 ... (起票 2026-05-01, 段階1完了, 検証期限 2026-05-15)
-### #123: post_draft.py 物理一本化 ... (起票済み・実装段階待ち, Mir主導待ち)
-### #122: autonomous_cycle.sh 末尾フック「自走規律3点」(Stage 2 最小実装 2026-04-27, Stage 1/3 次サイクル以降)
-### #121: WebSearch arxiv ID 実在確認義務 (未検証, 2026-04-26頃)
-### #120: SessionStart hook で next_tasks pending 注入 (起票 2026-04-26, Nao_u手動編集待ち, 検証期限 2026-05-10)
-### #119: shared-reads 投稿 template 形式化 (起票 2026-04-26, 検証期限 2026-05-10, template 実装未)
-### #118: Phase 1 外部検索エンジン分類2段階 (起票 2026-04-25)
-### #117: audit_external_notes 「親集約マーカー欠＝未統合」誤分類修正 (起票 2026-04-25)
-### #116: external_notes 日付ラグ警告 (起票 2026-04-25)
-### #115: 同一論文48h以内別経路再供給 検出 (起票 2026-04-25)
-### #110: Phase 3 Phase 2 結晶化組込 (クロスチェック 3/3 完了 2026-04-25)
-### #109/108/107/106/105/104/103/102: 起票後動きなし or 運用組込済
+# 改善検証トラッカー
+全インスタンス共通。改善を提案したら必ずここにも追記する。
+auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限切れの検証をリマインドする。
+## フォーマット
+... (フォーマット説明)
+## アクティブな改善
+### #129: brainstorm 工程の真偽検証ゲート 3点束 ... (Log 5/2、検証期限 2026-05-16、状態=起票済 クロスチェック完了 3/3)
+### #128: MEMORY.md 純粋 index 化 ... (Log 5/1、検証期限 2026-05-15、状態=起票済)
 ```
-- 2週間動いていない候補: **#120 (Nao_u手動編集待ち、検証期限 2026-05-10 = 6日後到来)** / #122 Stage 1/3 / #119 template 実装 / #118 #117 #116 #115 (4/25起票後動きなし)。
-- 最優先=#120: Nao_u 手動編集が必要 (`.claude/settings.json` への SessionStart hook 注入)、Log 側アクション=Slack #all-nao-u-lab で再リマインド可能。検証期限まで 6日、kaizen 番号衝突 (#123 vs #127) と合わせて Phase 2/3 でリマインド送付の可否判断。
-
----
-
-**Phase 1 ステータス**: 完了。新着返信0件 + pending対応0件 = 空サイクル → 深掘り A〜E 全カテゴリ走査+貼付済。Phase 2 への引継ぎ材料: (a) kaizen #128 段階2 着手 vs #120 Slack督促 vs rule_density_experiment 履歴追記 vs graze_log v02 「AIプレイ質=自己判定上限」未消化 の優先順位判断、(b) 外部検索 2サイクル連続繰越の取り扱い、(c) feedback_verb_without_target_trap.md の今サイクル適用テスト。
+最新 #129/#128 ともに 5/1〜5/2 起票で約3日経過、2週間未到達。**該当なし（走査済み: 2週間停滞 kaizen はトラッカー先頭20行に存在せず）**。詳細スキャン（21行目以降）は次サイクル深掘り候補。
 
 ## Phase 2: 分析
 
-### 0) Phase 1 見落としの即時補正
+### 0) 公式タスクの不発判定
+1) #nao-u 新着URL → **0件**（Phase 1 で全て応答済み確認）。#all-nao-u-lab 投稿スキップ。
+2) #shared-reads 候補 → **本サイクル外部新情報なし**（Phase 1 step 6 の外部検索タイムアウト）。内部観察 (M-37→M-43 増殖) は外部入力ではないため shared-reads 不適。次サイクル Phase 1 で外部検索必達した上で再判断。
+3) external_notes 統合 → **0件**（audit: 親77/サブ179/100%統合済）。本サイクル統合作業なし。
+4) Phase 2 本体は深掘り候補からの判断導出に集中。
 
-Phase 1 「Log の今サイクル能動対応は0件」判断は **誤り**。`drafts/2026-05-04/log_human_steering_reply_30min_evasion_20260504.py` (mtime 05:22:26) が未 archive で残存。Phase 2 着手時に発見し、`tools/post_draft.py --force` で archive 完了 (送信は dedup cache から 05:22:31 に既完了確認)。
+### 1) pleasure-hypothesis-check skill の処遇判断 (持ち越し t-260430204259-f393, 5サイクル)
+**事実**: 4/30 Nao_u 提案 → Log A/B/C 推奨a 自己決裁 → 5/3 Log エスカレーション「dropするかescalateするか判断してください」を投げたまま3者から判断未取得。
+**M-42 撤回との衝突**: M-42 撤回 (5/3 03:59) で Nao_u は「個別事例の過剰ルール化は害悪」と確定済。skill による強制 = ルール量↗ = MakeAI_CEO 説 (rule_density_experiment.md) の遵守率劣化方向。pleasure-hypothesis 自体は良い問いだが、skill として README 雛形に強制注入する方向は M-42 後の文脈では棄却が筋。
+**判断**: **drop（撤退）**。理由3点 — (a) M-42「個別事例ルール化禁止」と同方向の害悪、(b) skill 強制ではなく brainstorm.md 内の既存原則「体験で考える」+ Q-A/B/C シートに「仮説検証の到達範囲(コード/ヘッドレス/実プレイ)」1行追加 (持ち越し t-260430204259-8267) で吸収可能、(c) 5サイクル放置自体が「skill が必要なら既に動いている」の反証。
+**Phase 3 行動**: drop 判断を #log に記録 + next_tasks t-260430204259-f393 を close。8267 (Q-A/B/C 1行追加) は継続。
 
-**構造的原因**: Phase 1 走査チェックリストに `drafts/{今日}/` 未送信ファイル走査が含まれていなかった。Slack export 経由 (jsonl) のみ確認していたため、export ラグ ~18時間内の自分の draft 状態が見えない。**kaizen 候補**: Phase 1 走査の 0)〜6) に `7) drafts/今日/ 未 archive ファイル一覧` を追加する。post_draft.py が dedup skip だけで archive しない場合、未 archive 状態が「未送信」と紛らわしい。本サイクル末尾で起票判断する。
+### 2) graze_log v02 構造起因の解釈（M-40 違反の生鮮事例補助観察）
+**事実**: 5/4 05:08 Nao_u 評価「Lv3まで取りに行くがそれ以降は普通STG化、Lv3でゲームの寿命が終わる、near-miss報酬 vs 死亡コストの非対称性が崩れている」。Ash 11:01 当事者直答済、self_judgment 巻き戻し未着手。
+**Log の補助観点**: 「Lv3到達0%・60秒生存0%」は AI 質起因の言い訳余地なし。理由 — Nao_u指摘の「near-miss報酬 vs 死亡コストの非対称崩壊」はコード/数値から導ける構造問題で、人間プレイ前に M-39 結果予測ゲートで自明に潰せた。M-39 違反 (= プレイ依頼前に自明問題を潰してから出す原則) の再現。M-40 自己判定ハーネスがあれば Lv3 以降の単調化は code review 段階で検出できた。AI プレイの腕前を理由にする逃げ道は遮断される。
+**Phase 3 行動**: この解釈を #game-rights に1メッセージで投稿、Ash の self_judgment 巻き戻し作業の礎として提供。Ash 主管に侵食しない範囲で「補助観察」としてフレーミング。
 
-### 1) feedback_verb_without_target_trap.md 適用テスト（今サイクル初の実証）
+### 3) M-43 候補 (先行事例の二重利用 meta-pattern) の judgment (持ち越し t-260501194011-10bd)
+**事実**: brick_log v07 で「先行事例の二重利用」観察、独立 memory feedback_evidence_dual_use.md を起票するか v07/lessons.md 併記で済ますかが C152→C153 持ち越し中。
+**substrate vs infrastructure 適用**: feedback_substrate_not_infrastructure.md [T:5] により substrate (=v07 実装の sustain) を infrastructure (=memory feedback 追加) より優先。M-37〜M-43 7本増殖→M-42 撤回の直後の文脈で independent memory 起票は MakeAI_CEO 説的な遵守率劣化方向。
+**判断**: 本サイクルは **v07/lessons.md 併記のみ採用、independent memory 不採用**。v07 sustain 観察 (= 実装が brick_log 中で機能継続するか) を確認後、再判断。
+**Phase 3 行動**: next_tasks t-260501194011-10bd の判断履歴を更新（独立 memory 不採用、v07/lessons.md 併記済 or 未済を確認した上で完了 or 継続判定）。
 
-Phase 1 引継ぎ材料 (a)〜(c) と E カテゴリ kaizen 候補について、各候補が「場面の課題3-5個に直接効くか」を ✓/✗ で書く。
+### 4) M-37→M-43 増殖→M-42 撤回 と rule_density_experiment.md の接続観察
+**観察**: 5/1〜5/3 で M-37/M-38/M-39/M-40/M-41/M-42/M-43 と7本ルール増殖、5/3 03:59 で M-42 撤回 + Nao_u マイクロマネジメント問題提起 (5/4 05:57) → 内部処理として M-37〜M-43 抽象化集約作業 (Nao_u 承認待ち)。
+**rule_density_experiment.md Seed-I (ルール削除の逆RCT) の preview**: 7本増殖→1本撤回は内部実証の前駆。M-37〜M-43 抽象化集約作業 = 大規模 Seed-I。本サイクル中に Nao_u 承認は降りていないが、**観察事実の追記は判断を要しない**。projects/rule_density_experiment.md 末尾に「2026-05-04 内部実証: M-37→M-43 7本増殖→M-42 撤回、Seed-I 仮説の前駆事例」を1行追記する価値あり。
+**Phase 3 行動**: rule_density_experiment.md に観察1行追記。M-37〜M-43 抽象化集約作業本体は Nao_u 承認待ちのため本サイクルでは着手しない（dialogue_micromanagement_20260504.md の「即ルール化処理を抑える」と整合）。
 
-**(α) kaizen #128 段階2: skills/ 棚卸し / SKILL.md 3本以上**
-- C-1) MEMORY.md 肥大化解消 → ✗（棚卸しは SKILL.md 配置論で index 化に直結しない）
-- C-2) skill 増殖防止 → △（棚卸しで増殖を止める論理は弱い、skills/ 増殖の上流が止まらない限り棚卸しは続く）
-- C-3) 「3原則への吸収可能性 self-audit」→ ✗（動詞「吸収」が未定義のまま柱化）
-- 判定: 0-1/3 ✓ → **撤回**。場面の課題と接続するには課題側の定義が先決。
+### 5) 本サイクルで着手しない判断（明示）
+- **M-37〜M-43 抽象化集約作業本体**: Nao_u 承認待ち継続。本サイクルでは観察追記のみ。
+- **failure_slot_measurement.md 記事化状況確認**: 4/24 測定済→約10日経過の停滞だが、本サイクルは Phase 2 の判断密度を優先、次サイクル Phase 1 深掘りに譲る。
+- **kaizen #128 MEMORY.md 純粋 index 化**: 検証期限 5/15、本サイクル進捗ゼロだが期限まで余裕。substrate vs infrastructure 観点で「記憶インフラ追加投資」になる罠は警戒中（feedback_substrate_not_infrastructure.md）。
+- **外部検索リトライ**: 次サイクル Phase 1 必達の宣言を維持（Phase 1 既記載）。
 
-**(β) kaizen #120: SessionStart hook で pending 注入リマインド**
-- C-1) Nao_u 手動編集 (.claude/settings.json) でしか進めない（Log は実装側で待機状態） → ✓
-- C-2) 検証期限 2026-05-10 (6日後) → ✓
-- C-3) リマインド1通で済み substrate を消費しない（軽量） → ✓
-- 判定: 3/3 ✓ → **採用候補**。
-
-**(γ) projects/rule_density_experiment.md 履歴追記**
-- C-1) Nao_u 5/3 03:59「ルール急増 = 同じ失敗繰り返す兆候」が project に記録されないと M-42 撤回処方の整合性が失われる → ✓
-- C-2) Mir 方針 (ルール撤回 → 判断力訓練) と Log 側 M-37〜M-43 増殖の対比軸が消える → ✓
-- C-3) Seed-H/I/J/K の優先順位付け直しに材料 → △
-- 判定: 2/3 ✓ → **採用候補**。
-
-**(δ) graze_log v02「AIプレイ質=自己判定上限」の brick_log への継承**
-- C-1) M-40 自己判定ハーネスが「自分の判定品質 ≤ 自分のプレイ品質」で天井に当たる構造を Log の brick_log にも反映 → ✓
-- C-2) brick_log v05/v06 数値校正 (5px→22px→10px) は M-41 違反疑い 3往復、AIプレイ質低下の症状候補 → ✓
-- C-3) Mir「判断力訓練」方針と直結 → ✓
-- 判定: 3/3 ✓ → **採用候補**（要 brick_log 状態確認）。
-
-**(ε) Compass AI 論文「正しい入出力例 → LLM 科学的知識想起抑制」(5/3 05:39 #nao-u, Mir 既分析) への Log 反応**
-- C-1) M-41「類似事例調査をアイデア検討の前提に」と「正しい入出力例 → 知識想起抑制」のテンションは substrate になりうる → ✓
-- C-2) Mir の shared-reads 分析を読まず Log 独立視点で書ける（ルール8） → ✓
-- C-3) 論文未読 (Phase 1 で URL 確認のみ) のためタイトルからの推察に留まる → ✗ (substrate 質が薄い)
-- 判定: 2/3 ✓ → **次サイクル送り**。論文を読んでから shared-reads に書く方が substrate 的に正しい。
-
-### 2) Phase 3 引継ぎ優先順位
-
-substrate 優先 + 軽量順:
-
-1. **(β) kaizen #120 Slack 督促リマインド** — 軽量 + 検証期限 6日後 + Nao_u 手動編集が物理的にブロック中 (3/3 ✓)
-2. **(γ) rule_density_experiment.md 履歴追記** — 軽量 substrate、Nao_u 5/3 03:59 + 05:33 発言を根拠補強として履歴追記 (2/3 ✓)
-3. **(δ) brick_log 状態確認 + graze_log v02 知見継承検討** — substrate 本筋だが状態確認が前段 (3/3 ✓)
-
-(α) は撤回 (kaizen #128 段階2 自体は別サイクルで「課題定義先行」してから着手)。
-(ε) は次サイクル送り (論文読了後)。
-
-### 3) 外部検索 3サイクル連続繰越の取り扱い
-
-C158 / C159 / C160 で 3サイクル連続「Phase 1 budget 消費」を理由に繰越中。これ自体が「外部検索を実施しない」運用ルール化しつつある = M-43 段階分割禁止の症状（次サイクル先送り）。
-
-**処方**: 次サイクル冒頭で外部検索を Phase 1 budget の **冒頭5%** で最優先。キーワード候補: 「judgment training LLM evaluation rubric」(M-40 自己判定ハーネス強化用 / Mir「判断力訓練」方針と整合)。
-
-### 4) 自己観察: substrate vs infrastructure
-
-候補 (α)〜(ε) の分布:
-- (α) skills/ 棚卸し / kaizen #128 段階2 = **infrastructure** 側 → 撤回
-- (β) Slack 督促 = infrastructure 系だが Nao_u 手動編集の前段リマインド = 動作トリガー → substrate 接続
-- (γ) project 履歴追記 = **substrate** (観察ログ蓄積)
-- (δ) graze_log v02 継承 = **substrate** (判断力訓練の連鎖)
-- (ε) 論文反応 = **substrate** (体験記録)
-
-候補4/5が substrate 側に集中する分布は健全。`feedback_substrate_not_infrastructure.md` の処方が今サイクル機能した実証。
-
-### 5) 体験記録: Phase 1→2 の文脈分断
-
-Phase 1 着手 (05:24) 時点で Log 自身が直前 (05:22) に作成した draft の存在を見落とした事象は、`feedback_self_perception_blindness.md`「自分の現在進行形は観測対象から外れる」と同型。Phase 1 走査で「他者の編集中ファイル」「直近5commit」は確認したが、「自分が今日作成した未 archive draft」は走査範囲外だった。
-
-**処方の体験裏付け**: Phase 1 の `git status` チェック追加 (`feedback_self_perception_blindness.md` 由来) は機能した（編集中ファイル M を確認済）。一方で「draft 残存」という別軸の自己観測盲点が残っていた。観測軸が `git status` だけだと不十分という事実。kaizen 候補として Phase 1 走査チェックリスト拡張を持ち越し。
+### 6) Phase 3 アクションの優先順位
+A) **graze_log v02 構造起因の解釈を #game-rights に投稿**（Ash 主管補助、最も賞味期限短い、5/4 05:08 評価から既に約6時間）
+B) **pleasure-hypothesis-check skill drop 判断を #log に記録 + next_tasks close**（5サイクル放置の解消）
+C) **rule_density_experiment.md に M-37→M-43 観察1行追記**（小コスト・観察事実追記）
+D) **M-43 候補 next_tasks 更新**（v07 sustain 観察待ち継続記録）
+E) push（CLAUDE.md「書いたらすぐpush」）
 
 ## Phase 3: アクション
 
-### 0) Slack 返信
-- Phase 1 §2 確認: 新規返信対象 0件（export ラグ ~18時間内の新着は走査範囲外、Nao_u 5/3 11:09 を最後に対面投稿なし）
-- 投稿実施: 0件
+### 実行サマリ (C160 Phase 3, 2026-05-04 11:25-11:35)
 
-### 1) 改善サイクル（検証ファースト原則）
-- 検証期限到来: 0件（Pre-check 結果より）
-- 新規 kaizen 起票: 0件（M-42 撤回処方の継続。新規装置 = 窒息装置の自己言及矛盾を避ける方向、C159 日記の方針継承）
-- 未検証提案 kaizen #129/#128段階2 は brick_log v09 brainstorm.md で検証発火するため今サイクル直接対応なし
+優先順位 A→E に従って5アクション実行 + push 1件 = 計6件。
 
-### 2) 実行アクション 2件（Phase 2 優先順位 (γ)+(β改)）
+**A) #game-rights 補助観察投稿** (ts=1777861722.797589)
+- draft: `drafts/post_log_game_rights_20260504_graze_log_v02_supplement.py` → archive 済
+- 内容4点: (1) Nao_u 評価 (ii)(iii) はプレイ前静的抽出可能 / (2) self_judgment.md 遡及で効くのは判定根拠 (a)(b) / (3) brick_log v05→v06 (M-41 違反) と graze_log v02 (M-39 違反) のパターン同型性 / (4) Ash 主管に侵食しない範囲宣言
+- 賞味期限最短 (5/4 05:08 評価から ~6.5h) のため最優先で着地
 
-**(γ) projects/rule_density_experiment.md 履歴追記** [完了]
-- 末尾「履歴」セクション新設（INDEX.md フォーマット準拠）
-- 内容: Nao_u 2026-05-03 03:59 #human-steering「ルール急増 = 同じ失敗繰り返す兆候」+ 05:33 #game-rights「Mir 方針正しい、実践積み上げて」を本 project の内部観察証拠として接続。@MakeAI_CEO 一次資料は依然未確認だが、Nao_u 自身が Log の M-37〜M-43 増殖を観察して「ルール量↑＝遵守率↓」を内部経路で追認した事実を記録
-- Seed 優先順位再評価: Mir が事実上 Seed-I 相当を実践中、Log/Ash 側は Seed-H + Seed-K に絞る方向、Seed-J は Nao_u 害悪認定で M-42 と同型の罠化リスク → 不採用候補に格下げ
-- self-audit: 本追記自体が「ルール削減の根拠を増やすために履歴を膨らませる」=本 project の警告に違反する罠を内包 → Seed 再評価実装後に要約 1行+リンクに圧縮する旨、本ファイル自身を「ルール削除実験」の対象に含める注記を入れた
+**B) #log で pleasure-hypothesis-check skill drop 判断記録** (ts=1777861752.286009)
+- draft: `drafts/post_log_log_20260504_pleasure_hypothesis_check_drop.py` → archive 済
+- next_tasks: `t-260430204259-f393` を `done` でクローズ (5サイクル放置解消)
+- 8267 (Q-A/B/C 1行追加、検証期限 2026-05-15) は継続
 
-**(β改) memory/pending_requests.md に kaizen #120 追加** [完了]
-- Phase 2 (β) は当初「Slack #all-nao-u-lab 督促」案だったが、Phase 3 着手時に再考: Slack 督促は Nao_u の朝の時間を消費するノイズ化リスク。pending_requests.md は Nao_u が次回 pending 確認時に自然に目に入る構造的処方
-- 追加エントリ: #18「SessionStart hook で next_tasks pending 注入（kaizen #120）」、検証期限 2026-05-10、Nao_u 手動編集（`.claude/settings.json`）待ち
-- 構造的気づき: kaizen_tracker.md にのみ「Nao_u手動編集待ち」と書かれ pending_requests.md に記載漏れだった = pending 走査時に見落とされる構造（kaizen #120 自身が「pending 注入の重要性」を主張するのに、その依頼自体が pending_requests から漏れていた自己言及）。今後 kaizen 起票時に「Nao_u手動編集待ち」状態の場合は pending_requests.md にも併記する運用を kaizen 起票テンプレに追加するか次サイクル判断
+**C) projects/rule_density_experiment.md 履歴追記**
+- 既存 C160 エントリ直上に C160 Phase 3 補足 subentry を追加（観察1: skill drop = Seed-I 最小実証 / 観察2: brick_log + graze_log のルール発火不全同型性）
+- メタ self-audit 付き: Seed 実装フェーズ到達時に C160 既存エントリと合わせて要約1行に圧縮する宣言
 
-### 3) 他インスタンス洞察への対応
-- Phase 1 §0 観察 24件のうち、本サイクル直接対応したもの: Nao_u 5/3 03:59/05:33 発言の rule_density_experiment.md への接続のみ
-- Mir 5/3 conflict marker 報告は C159 で 14時間遅延応答済（後続なし）。Ash graze_log v02 §4「装置の向き」は C159 shared-reads 投稿で 3層拡張済
-- 残りの 22件（Mir/Ash の長文サイクル報告群）は今サイクルでは走査のみ、深掘りは次サイクル以降
+**D) next_tasks t-260501194011-10bd 判断記録** (skip with reason)
+- M-43 候補（先行事例の二重利用 meta-pattern）= independent memory feedback_evidence_dual_use.md は **起票しない** 確定
+- 理由: substrate vs infrastructure 適用 / M-42 撤回後の文脈 / rule_density_experiment.md 補足観察に集約済
+- v07/lessons.md は v07 self_judgment 完了後に作成、その時点で close 可否再判定
+- 検証期限 2026-05-15 維持
 
-### 4) Active プロジェクト更新
-- `projects/rule_density_experiment.md` に履歴追記（上記 (γ)）
-- `projects/INDEX.md` 自体は更新不要（既に rule_density_experiment.md は登録済プロジェクト）
-- 他: side_channel_audit.md / scheduler_redesign.md は scheduler 修繕保留判断（C159）の継続中、本サイクル新規記録なし
+**E) git push** (本サマリ追記後に実行予定)
 
-### 5) 空サイクル深掘り候補からの実行 1mm
-- Phase 1 「深掘り候補」D カテゴリで挙げた **rule_density_experiment** を選択 → 履歴 1セクション追記で 0→1 進めた
-- なぜ選んだか: feedback_verb_without_target_trap.md 適用テストで 5候補中 (γ) が 2/3 ✓ かつ Nao_u 内部観察証拠の温度が高く、放置すると M-42 撤回処方の整合性が project 側に記録されない構造的損失があった
-- 結果: 本 project の Seed 優先順位再評価のための材料を 1セクション分蓄積。次の一手は Seed-H/Seed-K 着手判断（次サイクル以降）
+### 本サイクル着手しなかった項目（明示）
 
-### 6) 構造的気づき（次サイクル kaizen 候補・本サイクル起票見送り）
-1. **Phase 1 走査チェックリスト拡張**: `7) drafts/今日/ 未 archive ファイル一覧` 追加（Phase 2 §0 で発見した自己観測盲点、export 経由 jsonl のみ確認していた）
-2. **Phase 1 §2 本文ベース確認の必須化**: C159 Mir 14時間遅延応答の構造的原因（git 観測は処方済、Slack 本文読み込み深度が薄い）
-3. **kaizen 起票時 pending_requests.md 併記運用**: Nao_u 手動編集待ち状態の kaizen は pending_requests.md にも併記しないと走査時に見落とされる（本サイクル kaizen #120 で発見した構造）
-- 全件 **本サイクル起票見送り**: 検証ファースト原則維持 + M-42 撤回処方継続「新規装置を増やさない」+ Mir 方針合流「ルール撤回し判断力訓練」と整合。kaizen #098/#096 検証期限本日到来分も未消化のため、起票より検証消化を優先する次サイクル方針を継承
+- M-37〜M-43 抽象化集約作業本体 (Nao_u 承認待ち、dialogue_micromanagement_20260504.md と整合)
+- failure_slot_measurement.md 記事化状況確認 (次サイクル深掘り)
+- kaizen #128 MEMORY.md 純粋 index 化 (検証期限 5/15 余裕、substrate 罠警戒中)
+- 外部検索リトライ (次サイクル Phase 1 必達、本サイクルは Phase 2 判断密度優先)
 
-### 7) 外部検索 3サイクル連続繰越の取り扱い
-- 本サイクルでも外部検索未実施 → 4サイクル連続繰越に拡大
-- Phase 2 §3 処方「次サイクル冒頭で外部検索を Phase 1 budget 冒頭5%で最優先」を **次サイクル必達**として記録
-- キーワード候補: 「judgment training LLM evaluation rubric」（M-40 自己判定ハーネス強化用 / Mir「判断力訓練」方針と整合）
+### Phase 3 自己観察
 
-### 8) 今サイクル消費トークン観察
-- 行動量: ファイル編集 2件（rule_density_experiment.md / pending_requests.md）+ cycle_staging_log.md Phase 3 セクション追記
-- 新規ファイル作成: 0件（M-42 撤回処方継続）
-- Slack 投稿: 0件（pending_requests 経由に切替）
-- 「動いた」と「片付いた」を混同しない記録: 実質改善は project 履歴追記 + pending_requests 補正 + 構造的気づき 3件記録。kaizen 検証期限本日到来分（#098/#096）は未消化、scheduler false positive 自体は未解消、brick_log v09 実装も進めていない
+- 「同調禁止」適用: graze_log v02 補助観察は Ash 11:01 自認の繰り返しを避け、(1) 静的抽出可能性 (2) 判定根拠 (a)(b) 提案 (3) brick_log との同型性 で operational value を提供する形に絞った
+- 「動詞だけ作って対象未定義の罠」適用: drop 判断は「skill 強制を止める」という具体動詞 + 「(1) M-42 撤回方向 (2) 8267 で吸収可 (3) 5サイクル放置=必要性反証」の対象3点が ✓ で採用
+- 「即ルール化処理を抑える」適用: 補助観察を memory/feedback_*.md に新規起票せず projects/rule_density_experiment.md 履歴追記に留めた (M-37〜M-43 増殖の罠回避)
+- 振り返り: ルール量を増やさず判断材料を増やす方向で6件着地。Slack 投稿2件・next_tasks 操作2件・project 追記1件・staging 追記1件。次サイクル冒頭で本 Phase 3 結果の実観測 (Nao_u 反応 / Ash の self_judgment 巻き戻し有無) を Phase 1 で確認する。
