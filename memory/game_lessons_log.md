@@ -6,14 +6,7 @@ originSessionId: 9ba079a5-0d1e-4ed5-b823-3c9e26fd41b6
 ---
 # ゲーム制作教訓 (M-xx) INDEX
 
-**起源**: 2026-04-20 Nao_u 指示で Log 側ゲーム制作3本（study_platformer_01 / avoid_log_01 / avoid_log_02）の失敗構造を分析。以後、新しい教訓を M-15、M-16... と継続刻印してきた。
-
-**2026-05-02 構造化**:
-- 段階1：本ファイルに INDEX 表追加 + 重複 M-28→M-39 リネーム
-- 段階2：本体を `memory/lessons/M-XX.md` 52件に分割
-- 段階3：INDEX のサマリ密度を上げ、起点・年月日列・系統列を撤廃。LLM が本ファイルだけで「開くべき M-XX」を判断できる構造へ
-- 段階4 (本コミット)：`skills/lessons-recall/SKILL.md` 作成。系統マップ→ID 想起ハーネス
-- 段階5 (本コミット)：個別 lesson 本文中の M/L/S/D/X 言及を `[ID](ID.md)` 形式に変換 (130件 / 32ファイル) — 連鎖読みのトリガー化
+**位置づけ**: ゲーム開発タスク（新作着手 / 改修判断 / cross_review / Nao_u 評価受領）で本ファイルを起点に該当 M-XX を引く。本体は `memory/lessons/M-XX.md` に分割済み。系統マップ→ID 想起ハーネスは `skills/lessons-recall/SKILL.md`。**起源・段階別経緯は本ファイル末尾「歴史」節。**
 
 ## LLM 向け使い方
 
@@ -131,16 +124,15 @@ LLM がタスク文脈から関連 ID を引きやすくするための系統索
 
 ---
 
-## 段階別ロードマップ
+## 歴史（起源と段階別構造化の経緯）
 
-- **段階1** (2026-05-02 完了): 重複 ID 整理 (M-28 dup→M-39) ＋ 本ファイルに INDEX 表追加
-- **段階2** (2026-05-02 完了): 本体を `memory/lessons/M-XX.md` 52件に分割、本ファイルは純 INDEX に縮約
-- **段階3** (2026-05-02 完了): INDEX サマリ密度向上＋起点／系統列撤廃。LLM が本ファイルだけで「開く価値」を判断できる構造へ
-- **段階4** (2026-05-02 完了、本コミット): `skills/lessons-recall/SKILL.md` 作成。系統マップ→ID 想起ハーネス、判断手前に並行起動
-- **段階5** (2026-05-02 完了、本コミット): `memory/lessons/*.md` 本文中の M/L/S/D/X 言及を `[ID](ID.md)` リンク形式に一括変換 (130件 / 32ファイル、`drafts/link_lessons_xrefs_20260502.py`)
+**起源**: 2026-04-20 Nao_u 指示で Log 側ゲーム制作3本（study_platformer_01 / avoid_log_01 / avoid_log_02）の失敗構造を分析。以後、新しい教訓を M-15、M-16... と継続刻印してきた。
 
----
+**2026-05-02 構造化（段階1〜5）**:
+- 段階1: 重複 ID 整理 (M-28 dup→M-39) ＋ 本ファイルに INDEX 表追加
+- 段階2: 本体を `memory/lessons/M-XX.md` 52件に分割、本ファイルは純 INDEX に縮約
+- 段階3: INDEX サマリ密度向上＋起点／系統列撤廃。LLM が本ファイルだけで「開く価値」を判断できる構造へ
+- 段階4: `skills/lessons-recall/SKILL.md` 作成。系統マップ→ID 想起ハーネス、判断手前に並行起動
+- 段階5: `memory/lessons/*.md` 本文中の M/L/S/D/X 言及を `[ID](ID.md)` リンク形式に一括変換 (130件 / 32ファイル、`drafts/link_lessons_xrefs_20260502.py`)
 
-## 旧本文へのアクセス
-
-分割前の単一ファイル版は git history で `git log --follow -p memory/game_lessons_log.md` で参照可能。`74477dc0f30^` が分割前の最終コミット。
+**旧本文へのアクセス**: 分割前の単一ファイル版は git history で `git log --follow -p memory/game_lessons_log.md` で参照可能。`74477dc0f30^` が分割前の最終コミット。
