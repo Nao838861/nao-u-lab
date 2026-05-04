@@ -32,13 +32,13 @@
 > 1) ask Codex to write a perf:guard script, that will run/simulate one of your save
 > 2) they ask it to iterate until perf improves WITHOUT impacting gameplay
 
-核心: AI に最適化させる際、**gameplay という核を壊さないことを保証するガード（perf:guard）を先に書く**。+20fps の実利を1セッションで取れた。これは Q-B 「サプライズニンジャテスト」と**完全同型**——核（元のシーン／ gameplay）が改変によって損なわれていないかを毎回チェックする外部装置。
+
 
 **外部対応語併記（R-007 / 造語症対策）**:
 - **M-12「罰ではなく報酬で設計」** = positive reinforcement design / rewardful design — Schell *The Art of Game Design* lens #18-19 系
 - **M-17「コンセプト段階で快感最大化」** = peak experience first / "design before plumbing" — システム実装より先に「面白さの核」を確定する
 - **Q-A「快感最大化」** = identify peak moment — 元シーンの最大価値点
-- **Q-B「サプライズニンジャテスト」** = core-preserving iteration test / preservation guard — NicolasZu 型 perf:guard が同型
+
 - **Q-C「罰なし版」** = punishment-free baseline — 最初に「罰一切なし」で快感が出るか測る
 
 ## 我々の分析・体験接続

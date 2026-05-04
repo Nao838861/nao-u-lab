@@ -85,8 +85,6 @@ graze_log v01 のコード調査:
 - headless.py が Solver self-play 用に存在
 - Ash 側で C127 Phase 3 「defensive 3way 0%」を発見した実績あり
 
-**v01 妥当性判断**: spec/feasibility 確認段階で seed まで入れると「v01 膨張」になる。Q-B ニンジャテスト（着手前 devlog 採点）で「v01 入れない範囲」に headless が含まれていたのは正しい判断。
-
 **v02 必須化の根拠**:
 1. **Solver self-play で graze 軸を評価したい** — BACKLASH の defensive=0% を発見した方法と同型で、graze_log も「graze を取りに行かないポリシー vs 取りに行くポリシー」を seed 横断で比較できないと、Mir が指摘した「弾は脅威かリソースか」のambivalence が定量化できない
 2. **30秒オンボーディング保証の seed 非依存化** — v01 では `introMedSpawned` フラグで開幕の medium 早期発砲を保証しているが、これは1パターンの保証にすぎない。seed PRNG なら「100seed のうち何 % で 8 秒以内に初 graze が起きるか」を統計化できる
