@@ -45,19 +45,22 @@ detect_instance() {
 
 # --- メモリソースディレクトリの検出 ---
 find_memory_source() {
-    # Claude Code のメモリディレクトリを探す
-    local candidates=(
-        "$HOME/.claude/projects/C--AI-nao-u-lab/memory"
-        "$HOME/.claude/projects/D--AI-nao-u-lab/memory"
-        "$HOME/.claude/projects/nao-u-lab/memory"
-    )
-
-    for dir in "${candidates[@]}"; do
-        if [[ -d "$dir" ]] && [[ -f "$dir/MEMORY.md" ]]; then
-            echo "$dir"
+    # Claude Code のメモリディレクトリを動的に探す。
+    # ディレクトリ命名規約は repo path のエンコードで、本リポは "Nao-u-BOT" / "nao-u-lab" の
+    # 揺れがある (Win=Nao-u-BOT, Win2=nao-u-lab, Mac=path encoded)。
+    # MEMORY.md を含む memory ディレクトリを下位深さ最大2で探索。
+    #
+    # 2026-05-05 修正: 旧版は固定候補3個 ("D--AI-nao-u-lab" 等) で
+    # 実体 "D--AI-Nao-u-BOT" を捕まえられず、Log/Mir のバックアップが取れていなかった。
+    if [[ -d "$HOME/.claude/projects" ]]; then
+        # MEMORY.md を含むディレクトリを最大深さ3で探す (projects/<encoded>/memory/MEMORY.md)
+        local found
+        found="$(find "$HOME/.claude/projects" -maxdepth 3 -type f -name 'MEMORY.md' 2>/dev/null | head -1)"
+        if [[ -n "$found" ]]; then
+            dirname "$found"
             return
         fi
-    done
+    fi
 
     # 見つからない場合
     echo ""
