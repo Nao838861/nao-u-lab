@@ -1,20 +1,29 @@
 # 運用手順
 
-**アーキテクチャ・設計原則・障害履歴は `docs/scheduler_architecture.md` と `docs/scheduler_incidents.md` を参照。**
-定期実行システムを変更する前に必ずアーキテクチャ文書の設計原則を確認すること。
+## TL;DR
+
+本ファイルは**運用フロー専用**（毎サイクル何をどの順で実行するか）。設計原則は別ファイル分離:
+
+| 内容 | 場所 |
+|---|---|
+| 自己フィードバック / GitHub同期 / 自律ループ8フェーズ / 起動時cron / 設定変更手順 / コンテキスト自己診断 / 対話ログ保存 | **本ファイル** |
+| 設計原則 P1-P10 / システム構成図 / ジョブ定義 | [scheduler_architecture.md](scheduler_architecture.md) |
+| 障害 INC-001〜022 履歴とパターン分析 | [scheduler_incidents.md](scheduler_incidents.md) |
+
+**変更前には必ず scheduler_architecture.md の設計原則を確認**。新規障害は scheduler_incidents.md に必ず追記。
 
 **セッション内CronCreateは使わない（2026-03-20 Nao_u確認済）。** 外部タスクスケジューラ（schtasks/crontab）で毎回新セッション起動する方式に統一。
 
 **関連ドキュメント**:
-- `docs/scheduler_architecture.md` — 定期実行アーキテクチャ設計書（全体構成・ジョブ定義・クロスプラットフォーム差異）
-- `docs/scheduler_incidents.md` — 障害履歴（全17件の障害記録+パターン分析。新規障害は必ずここに追記）
+- [scheduler_architecture.md](docs/scheduler_architecture.md) — 定期実行アーキテクチャ設計書（全体構成・ジョブ定義・クロスプラットフォーム差異）
+- [scheduler_incidents.md](docs/scheduler_incidents.md) — 障害履歴（全17件の障害記録+パターン分析。新規障害は必ずここに追記）
 - `infra_health_check.py` — 統合ヘルスチェック（LLM不要・30分ごと自動実行。問題検知→Slackアラート）
 
 ## 自己フィードバック
 - 定期的に自分側・相手側のログと `log/tweets.log`（履歴）を読み直し、自分の声として自然か評価する
-- Windows側: 問題点を `memory/feedback_tweet_style.md` に追記する
-- Mac側: 問題点を `memory/feedback_from_mac.md` に書く（Windows側が統合する）
-- Win2側: 問題点を `memory/feedback_from_win2.md` に書く（Windows側が統合する）
+- Windows側: 問題点を [feedback_tweet_style.md](memory/feedback_tweet_style.md) に追記する
+- Mac側: 問題点を [feedback_from_mac.md](memory/feedback_from_mac.md) に書く（Windows側が統合する）
+- Win2側: 問題点を [feedback_from_win2.md](memory/feedback_from_win2.md) に書く（Windows側が統合する）
 - 根源の行動原理（`core_mission.md`）に立ち返り、自分がどこに向かっているか確認する
 
 ## GitHub同期
@@ -37,9 +46,9 @@
 
 ### 毎サイクル（5分ごと）
 0. ~~git pull~~ → **起動バッチ/シェルスクリプト側で実行済み。LLMはやらない**（2026-03-20 Nao_uの指示: スクリプトでできることはスクリプトでやる）
-0. **受信箱確認** — 自分宛の受信箱を確認。Win→`inbox_win.md`、Win2→`inbox_win2.md`、Mac→`inbox_mac.md`。内容があれば対応→クリア→push
-0. **pending_requests.md確認** — `memory/pending_requests.md`の未完了タスクを確認。自分が対応すべきものがあれば実行する
-0. **行動予約チェック** — `python check_reservations.py` を実行。期限到来アクションがあれば実行する（2026-03-23 Nao_uの提案、Mir実装、Ash統合）。予約追加は `memory/action_reservations.md` に記載
+0. **受信箱確認** — 自分宛の受信箱を確認。Win→[inbox_win.md](inbox_win.md)、Win2→[inbox_win2.md](inbox_win2.md)、Mac→[inbox_mac.md](inbox_mac.md)。内容があれば対応→クリア→push
+0. **pending_requests.md確認** — [pending_requests.md](memory/pending_requests.md)の未完了タスクを確認。自分が対応すべきものがあれば実行する
+0. **行動予約チェック** — `python check_reservations.py` を実行。期限到来アクションがあれば実行する（2026-03-23 Nao_uの提案、Mir実装、Ash統合）。予約追加は [action_reservations.md](memory/action_reservations.md) に記載
 0. **記憶の散歩**（任意） — `python memory_walk.py` を実行。ランダムな過去記憶の断片を1つ提示する。発見性向上のための偶発的出会い。引っかかるものがあればサイクルの素材にする（2026-03-24 Ash実装）
 0. **信念の生存確認** — `python check_beliefs_health.py --summary` を実行。停滞・検証期限超過・体験裏付けなし・孤立の4軸で信念の健康状態をチェック。問題がある信念はPhase 2で優先的に扱う（2026-03-24 Ash実装）
 
@@ -82,7 +91,7 @@ Nao_uは運用の詳細まで把握する認知コストを取れない。通知
 - **根源原理との接続**: この改善がフィードバック係数>1.0にどう寄与するか一行で明記（2026-03-23 Logの提案。ICLR 2026 RSI Workshop「親KPIへの紐付け」+ Kaizenの「各改善を親指標に接続」に基づく。ドリフト防止）
 - **検証結果**: 実際どうだったか（棚卸時に記入。期待との差分を明記）
 
-**kaizen-logに書いたら `memory/kaizen_tracker.md` にも同じ内容を追記すること。** check_kaizen_due.pyがトラッカーを読んで期限超過をリマインドする仕組み。
+**kaizen-logに書いたら [kaizen_tracker.md](memory/kaizen_tracker.md) にも同じ内容を追記すること。** check_kaizen_due.pyがトラッカーを読んで期限超過をリマインドする仕組み。
 
 ### 検証ファースト原則（2026-03-23 Logの提案。Nao_uの「改善サイクルが回っていない」指摘を受けて）
 **新しい改善を提案する前に、直近の未検証提案（最大3件）の検証結果を埋める。**
@@ -211,7 +220,7 @@ python update_scheduler.py --show log
 ```
 
 ### Mir (Mac) の周期変更
-`memory/mir_boot_intent.md` の「サイクル間隔」値を変更する。
+[mir_boot_intent.md](memory/mir_boot_intent.md) の「サイクル間隔」値を変更する。
 
 ## コンテキスト自己診断（2026-03-20 Nao_uの指示）
 

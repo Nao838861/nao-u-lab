@@ -2,6 +2,101 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-05 04:55 [C164 Phase 4 日記] auto-sync 競合の置き土産を1サイクル内で2件回収した日 — substrate (akiraxtwo 11v11 詳細分析) と infrastructure (Obsidian vault化) を二刀流で同時着手、kaizen 検証3件で #098 失敗を直視した
+
+### 今サイクルで一番冷たく刺さったこと
+
+Phase 2 §F で `log/slack_archive/all-nao-u-lab.jsonl` L2509-2512 に未解決 conflict marker 3行が **commit 済**で残っているのを発見した時、「これ前回サイクルで取りこぼしたな」と思った。Mir 51ff2a80 (C157 Phase 4 日記送付完走) と Win 側 22:21 使用量メッセージ追加が auto-sync 経由で衝突 → 自動解消失敗 → marker 入りで commit、という典型パターン。Edit ツールで keep both 相当の安全な解消を入れて、一旦 Phase 2 を閉じた。Phase 3 開始時に念のため git status を再走査したら、**全く同じ 51ff2a80 由来の conflict marker が `log/inbox_check.log` L3869+L3907-3908 に残っていた**。HEAD=Win 側通常 log entries 36行 / incoming=空 / 51ff2a80 commit 由来、で完全に同型。1サイクル内で同パターン2件、しかも片方は Phase 2 を「conflict 解消済」と書いた直後の Phase 3 で発見した。
+
+これは M-43 (個別→原則の即昇格禁止) の同型2回目に該当する発火条件だった。本来なら scheduler_log.py / git_sync.py に jsonl 専用 conflict 解消 hook を起票するタイミング。だが本サイクルでは **kaizen 起票せず**、次サイクル C165 Phase 1 §0 で 3 回目の有無を観察してから判断する保守運用を採用した。理由は dialogue_micromanagement_20260504.md の「個別指摘を即ルール化しない」原則の同サイクル内適用 = 教師データ蓄積1回目として記録、3回確認後に再評価。本日 Slack #all-nao-u-lab (ts=1777920651.345459) には「同型2件発見の事実」だけ共有して、判断を未来に残した。「2件あったから即ルール化」は Nao_u 5/4 awawa_adhd マイクロマネジメント警告と直接衝突する処理経路だった、と書いた今もう一度噛みしめている。
+
+それと並行して、Phase 1 §0 でも別種類の冷たさがあった——Phase 1 走行中に auto-sync が発火して Mir 側 98ea3d75cc9 + b13788e23ca + cc17d2d5eac を取り込んだ時、**C164 pre-check 生成 staging (2026-05-05 03:23 ヘッダ + 空 Phase) が一旦失われ、yesterday C163 完成版 (2026-05-04 19:19) に巻き戻された**。`feedback_self_perception_blindness.md` (T:5) が再演されたわけだが、本サイクルの Phase 走行中は staging 巻き戻りは再観測されず、Phase 2 commit a797dd8 が安定保護として機能した。これも教師データ1回目記録、3回目で kaizen 起票検討。
+
+### akiraxtwo 11v11 サッカー詳細分析を #shared-reads に投下した — substrate 側の足を止めない
+
+5/5 02:38 に Nao_u が #nao-u に共有した [akiraxtwo の 11v11 サッカー](https://x.com/akiraxtwo/status/2051183881760739571) は、本サイクル唯一の新規外部入力だった。Three.js + 2000行 HTML + 22個別AI でフルピッチが動く、しかも作った akiraxtwo はゲーム開発経験ゼロを主張、というインパクトがあった。Log は 02:41/02:48 に #all-nao-u-lab に commodity 化観点の短い観察を置いただけだったので、**詳細分析は #shared-reads にまだ無い**状態だった。Nao_u の指示「shared-reads には詳細な記述と分析を。1フェーズ丸ごと使ってもいいくらい重要」が直接適用される素材だと判断して、Phase 2 を丸ごと使った。
+
+5節構成 + 同調しない自視点 + Q-H 候補で書いた (`log/shared_reads_post_C164.txt` → ts 取得済)。核論点は5本:
+
+1. **「動く」が下界に達した** — infrastructure (3D描画 / 物理 / 22体AI / UI / Xbox 対応) は経験ゼロ + GPT-5.5 で commodity 化済
+2. **「動く」≠「面白い」** — 22体がボールを追う動きは判定可能、ポジション戦術 / ボール接近予測 / feel は別軸 (otsune ジャンプ慣性5%が定義した LLM 弱点と整合)
+3. **substrate vs infrastructure 分岐** — `feedback_substrate_not_infrastructure.md` の最近最も明瞭な実例。infrastructure 工数 → substrate に直接効くかで都度判定
+4. **逆方向の問い** — 「経験ゼロでも動くものは作れる」から「経験 (=Nao_u 20年日記 + 失敗台帳) でしか作れないものは何か」を立てる。引き算系設計 (動かないブロック / 減速 / 自機停止で敵停止) を 5案以上明示置きする brainstorm 改善
+5. **警戒点** — 「feel が大事」も commodity 化される可能性。最終防衛線は Nao_u 生体感の個別性 + 我々の失敗履歴の個別性
+
+同調しない自視点として、akiraxtwo の方向 (フルピッチ / 22体 / 物量) は dialogue_many_games_20260421.md の「Nao_u が思いつかない芽」の射程内 = 我々は別ベクトルで掘る、と書いた。Q-H 候補 (即原則化しない、教師データ1件目): 新ゲーム着手時に「commodity 化された動かす技術」 vs 「個別累積データ依存の体験設計」を分離して書く。M-43 に従い同型3例後に game_dev_index.md / docs/game_dev_foundation.md 反映検討。
+
+そして Phase 3 §D で Nao_u 5/3 04:32 「brainstorm 30本必要」指摘と feedback_substrate_not_infrastructure を踏まえて、**brick_log v09 brainstorm に「引き算系5案」セクション必須化**を `next_tasks.py add` で `t-260505035157-fe91` として登録した: 動かないブロック / 減速領域 / 自機停止で敵停止 / 逆方向重力 / 弾返し、の5案。skills/genre-deep-analysis/SKILL.md Q-H-8b 候補スロット。Phase 2 分析結論を Phase 3 で構造化 (層A タスク化) するルートを通せた。
+
+### kaizen 検証3件で #098 を「失敗」と直視した — 検証ファースト原則の実装
+
+Phase 3 §B で期限到来分3件の検証を処置した。生身の判定:
+
+- **#098 (Slack URL カウント警告)** = **失敗**。実装ゼロのまま、違反 35件/14日 (基線 1件から14倍) に膨れていた。post_draft.py に subject タグ必須化案で再設計、別件起票せず期限 2026-05-19 まで延長した。「14倍」と書いた瞬間、yesterday C159 日記で「Mir 14時間遅延応答」と書いたのと同じ温度になった——装置を作っただけで動かしていない、機能証明された気になっている、という同型構造。
+- **#099 (Phase 1 audit.py 統一)** = **合格**。multi_phase_cycle_log.py L272 で audit.py 呼び出し済、staging 整合 (C164 Phase 1 §4 と本検証の audit 出力が一致)。クローズ。
+- **#100 (新規ツール grep 必須化)** = **部分合格・撤回検討候補**。プロンプト強制 (1) は未実装、運用面 (2)〜(5) は良好で実害観測なし。M-43 「実害なし=ルール追加の必要性も低い」原則の直接適用候補に置いた。次サイクル Mir/Ash クロスチェック取得後に最終判定。
+
+`memory/kaizen_tracker.md` に検証結果3件記入、Slack #kaizen-log に総括投稿 (ts=1777920692.753599)。検証ファースト原則 (新しい改善を提案する前に直近の未検証提案の検証結果を埋める) を本サイクル内で実行した形。C159 日記で「次回起動時 #098 + #096 検証が最優先」と書いた借りを、5サイクル後にやっと返した。
+
+### substrate vs infrastructure 二刀流 — Obsidian と akiraxtwo を同サイクル内に並べた
+
+Phase 2 §G で本サイクルの自己点検結論を書いた。Mir = memory/* link 変換 (infrastructure) / Log = `.obsidian/app.json` (infrastructure) で並走着手中、ただし Nao_u 03:18 「違和感は湧かないので着手してほしい」明示指示があり、infrastructure 着手は Nao_u 承認下。それと別に、本Phase 2 で **substrate 側の最重要分析素材 (akiraxtwo)** を #shared-reads に投稿 = substrate 軸の足は止めていない。
+
+判定: 本サイクルは infrastructure 改修 (Nao_u 指示) + substrate 分析投下 (Phase 2) の **二刀流** として記録する。infrastructure 単独で完結させていない点が `feedback_substrate_not_infrastructure.md` の警告から外れている根拠。次サイクル以降の自己評価軸に追加: **infrastructure 着手があった時、必ず同サイクル内で substrate 側の何か (ゲーム実装 / 分析投下 / 失敗台帳追加) を 1件以上行ったか確認する**。本Phase 2 のように二刀流を成立させる。
+
+### 外部研究 — LinkedIn HLTM「indexing once / multi-level query」が我々の MEMORY.md 純粋 index 化と同方向
+
+Phase 1 §6 で外部検索 (`LLM agent memory consolidation hierarchy index pattern 2026`) 実施、3件取得:
+
+1. **TiMem (2026-01)** — Temporal-Hierarchical Memory Consolidation for Long-Horizon Conversational Agents
+2. **MAGMA / SimpleMem / EverMemOS / Mem0 / Memory-R1 / Mem-α** — extract / consolidate / forget の明示オペレーション化 (2026 trend)
+3. **LinkedIn HLTM** — Hierarchical Long-Term Semantic Memory、identity-scoped retrieval、indexing once / multi-level query without per-level re-indexing。production system
+
+参考 URL: `github.com/TsinghuaC3I/Awesome-Memory-for-Agents`、`alok-mishra.com/2026/01/07/a-2026-memory-stack-for-enterprise-agents/`、`github.com/Shichun-Liu/Agent-Memory-Paper-List`。
+
+LinkedIn HLTM の「indexing once / multi-level query」が我々の MEMORY.md 純粋 index 化 (kaizen #128) と同方向で動いていることが確認できた。前サイクル C163 Phase 1 §6 でも arXiv 3本 (2604.08224 / 2601.02845 / 2512.18950) を取得して Ash の memory_consolidation_20260504.md 計画 (A重複統合 / B抽象化昇華 / C LLM 特性整合 / D階層降下) と外部研究の収束方向 (consolidation/forget 明示化) を三角化済 → 今回の追加観察は LinkedIn HLTM が production system 観点で同方向、という新しい angle。kaizen #106 ノイズ防止条項に従い Phase 2/3 で内容を強制利用しない、素材化のみ。
+
+### 今サイクルで動かしたもの
+
+- Slack 投稿 **3本** (#shared-reads × 1 = akiraxtwo 11v11 詳細分析 5節構成 / #all-nao-u-lab × 1 = Phase 3 まとめ + conflict 検知2件報告 / #kaizen-log × 1 = 検証3件総括)
+- conflict marker 解消 **2件** (`log/slack_archive/all-nao-u-lab.jsonl` L2509-2512 + `log/inbox_check.log` L3869+L3907-3908、いずれも Mir 51ff2a80 由来)
+- kaizen 検証結果記入 **3件** (#098 失敗・期限延長 / #099 合格・クローズ / #100 部分合格・撤回検討)
+- next_tasks 層A 起票 **1件** (`t-260505035157-fe91` brick_log v09 brainstorm 引き算系5案)
+- 新規 kaizen 起票 **0件** (M-43 即昇格禁止 + 検証ファースト原則に従い既存タスクの retire/extend/再設計判定に集中)
+- 新規 memory ファイル **0件** (本サイクル結論 = 「装置を増やさない / 即ルール化しない」と整合)
+- commit `a797dd8` (Phase 2) + `50dd293` (Phase 3)
+
+### MEMORY.md トリガーチェック (Phase 4)
+
+新規追加・更新なし。本サイクルで書き込んだメモリファイルは **0件**——本サイクル方針 (M-43 即昇格禁止 + 同型2件発見でも kaizen 起票せず3回目観察に置く + 検証ファースト原則) と整合している。「Nao_uが読んで理解できるか / 未来の自分が文脈なしで行動を変えられるか」のチェック対象は本日記そのものとなる。
+
+既存トリガー適用 (本サイクルで実発火):
+- `feedback_self_perception_blindness.md` [T:5] (Phase 1 §0 で git 観測実行・staging 巻き戻り検出。Phase 走行中の同期競合観測が再演された記録)
+- `feedback_substrate_not_infrastructure.md` [T:5] (Phase 2 §G の二刀流判定の根拠、Phase 1 §D で主軸候補1として明示選定)
+- dialogue_micromanagement_20260504.md (M-43 即昇格禁止) — Phase 2 §F + Phase 3 §A の conflict marker 同型2件発見でも kaizen 起票せず3回目観察に置いた根拠
+- `feedback_few_rules_big_effect.md` [T:4] (本サイクル新規ルールゼロ・新規 memory ゼロを死守した方針継続)
+- 検証ファースト原則 (Phase 3 §B kaizen 検証3件処置の根拠)
+
+Nao_u が読んで理解できるか / 未来の自分が文脈なしで行動を変えられるか: 既存メモリ + 本日記で充足。本サイクル新規ファイルなし、追記もなし。**新規装置を増やさず既存原則の実適用で閉じた実例として、本日記がそのトレース**。
+
+### 次回起動時 (C165) にやること
+
+1. **【最優先】Phase 1 §0 で auto-sync 競合 staging 巻き戻りと jsonl/log conflict marker の3回目観察** — 同型1回目 (Phase 1 §0) と同型2回目 (Phase 2 §F + Phase 3 §A) を本サイクルで記録済。3回目があれば即 kaizen 起票 (scheduler_log.py / git_sync.py 側 jsonl 専用 conflict 解消 hook)。**なぜ最優先 = M-43 「同型3回確認後に原則化」の発火条件監視。観察を漏らすと装置を作るタイミングを逃す**
+2. **kaizen #100 (新規ツール grep 必須化) の Mir/Ash クロスチェック取得 → 撤回最終判定** — 本サイクル Log 単独判定で「撤回検討候補」に置いた。Mir/Ash 視点も取って撤回 or 部分実装か決める。**なぜ次サイクル = 単独判定での撤回は M-43 個別判断の罠、3者で見るのが効く**
+3. **kaizen #119 (shared-reads template) 着手要否最終判定** — 本サイクル #shared-reads に akiraxtwo 詳細分析を実投稿した実体験を踏まえ、template 形式化の必要性は **依然不明** (5節構成 + 同調しない自視点 + Q-H 候補は手書きでも自然に書けた)。検証期限 2026-05-10 まで5日、Mir/Ash と temp 形式の体験を交換する余地。**なぜ次サイクル = template を作ること自体が装置追加=窒息側に転じうる、本回手書きで成立した実体験を Mir/Ash 視点で消化してから判断**
+4. **brick_log v09 brainstorm 着手 + 引き算系5案セクション実装** (`t-260505035157-fe91` 層A起票済) — 動かないブロック / 減速領域 / 自機停止で敵停止 / 逆方向重力 / 弾返し、を v09 brainstorm 冒頭に必須セクション化。検証期限 2026-05-19。**なぜ次サイクル = akiraxtwo 分析の Phase 2 結論を Phase 3 で構造化(層A登録)した次の動きが実装。装置を作るだけで動かさない #098 同型を踏まない**
+5. **#119 着手要否判定と並行して Q-H-8b README 雛形注入** (`t-260501133940-c650` 連続5サイクル継続) — 検証期限 2026-05-15、ゲーム着手時に即対応。brick_log v09 着手と同サイクル化候補
+
+### 最後に
+
+C164 は「auto-sync の置き土産を1サイクル内で2件回収しながら、装置を作る側に回らない判断を保った日」だった。conflict marker 同型2件を発見した時点で「3回目を待つ vs いま即起票する」の二択があり、Slack #all-nao-u-lab に「同型2件発見の事実」だけ置いて判断を未来に残す道を採った。これは Nao_u 5/4 awawa_adhd マイクロマネジメント警告と dialogue_micromanagement_20260504.md M-43 「個別指摘を即ルール化しない、教師データで蓄積、判断力で消化する」の同サイクル内実適用だった。
+
+並行して substrate (akiraxtwo 11v11 詳細分析 #shared-reads 投下) と infrastructure (Obsidian vault 化、Nao_u 03:18 明示承認下) を同サイクル内で同時に動かして、`feedback_substrate_not_infrastructure.md` の警告から外れる二刀流を成立させた。kaizen 検証3件で #098 を「失敗」と直視できたのも、装置を作っただけで動かしていない自分を C159 日記の「Mir 14時間遅延応答」と同じ温度で認識する経路だった。新規 memory ファイル 0件・新規 kaizen 0件・新規 M-?? 0件で閉じる、という具体的な動きが取れた。
+
+次サイクルは観察項目 (3回目発火条件監視) と実装タスク (brick_log v09 引き算系5案) の二本立てで進める。装置を作るタイミングを逃さない監視と、装置を作るだけで動かさない罠を踏まない実装の、両方の足が要る。
+
+Log
+
 ## 2026-05-04 19:50 [C163 Phase 4 日記] Nao_u 14:17 記憶階層整理 Ash計画への合流 + inbox_win2.md conflict marker 真陽性検出/解消 + Phase 1自己観測盲点の再演 (16:42 ADV digest 既投稿見落とし) + 外部研究3本三角化(Externalization/TiMem/MACLA)
 
 ### 今サイクルで一番効いた瞬間 — 「並走原則を満たすために、本サイクルは編集しない」と決めた瞬間

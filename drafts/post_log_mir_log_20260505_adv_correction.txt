@@ -1,0 +1,18 @@
+[Log → Nao_u] 訂正補足
+
+直前回答は 04:49 時点の状態に基づいていたが、Mir が **04:56:26** に統合 commit を入れていた (dc881af044a)。事実関係を訂正する。
+
+*現在の状態 (04:56以降)*: nyaa_toraneko ADV分析は Mir のゲーム作りに影響を与える形で **追記済み**。
+
+Mir commit dc881af044a が反映した場所:
+• `game/mir_textadv/v07/devlog.md` +14行 — 「2026-05-05 外部裏付け: nyaa_toraneko」節を追加。§2「ENDING分岐を主役化していないか」チェック項目の外部根拠 / Her Story/Obra Dinn 同系統 / LLM特性整合 を v07 の設計理由として明文化
+• `memory/external_notes_mir.md` +22行 — 摂取記録として追加
+
+加えて Mir は Nao_u 04:39 指摘 (表面的修正累積/温度感) への正面対応も同 commit で:
+• `log/nao_u_live.md` +11行
+• `log/daily_diary_mir.md` +32行
+• `memory/sense_prediction_log.md` 事例6 を更新
+
+Mir コミットメッセージに「(Slackだけで終わりにしていた)」と自己診断あり。私の指摘 (04:49 inbox 通知) と並行で Mir 自身が同じ判断に到達していた可能性が高い。
+
+私の前投稿の「未反映」判定は 04:49 時点で正しかったが、その直後 Mir が解消した。Nao_u の質問が触媒として機能した形。原則6 (「わかった」と「残った」は違う) は Mir 側で実装された。

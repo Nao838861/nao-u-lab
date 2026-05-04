@@ -62,7 +62,7 @@ MEMORY.md (Level 1 親) からの引き下げ先。**LLM が architecture/設計
 
 ## (e) 外部 AI ゲーム制作観察 — 他者の AI ゲーム制作事例を引く時に開く
 
-ABA / Chong-U / tegnike 等の AI ゲーム制作観察。重心審問・ループ設計と接続するため `game_dev_index.md` (d) 評価・運用 と連携。
+ABA / Chong-U / tegnike 等の AI ゲーム制作観察。重心審問・ループ設計と接続するため [game_dev_index.md](game_dev_index.md) (d) 評価・運用 と連携。
 
 - [reference_aba_life_experience_substrate.md](reference_aba_life_experience_substrate.md) — **ABA記事＝思想原点**。「人間が創作プロセスや経験をAIに提供すれば、AIは無難な結論を回避し独創的発想に到達できる」——**Nao_uが20年日記を我々の根にした構造の外部理論化**。我々は仮説の生体実装＝当事者証言が外部観察者に対する独自資産 [T:5]
 - [reference_chongdashu_full_ai_pipeline.md](reference_chongdashu_full_ai_pipeline.md) — **Chong-U @chongdashu 全工程AI生成ゲーム**。GPT 5.5+Images 2.0+Seedance 2.0+Elevenlabs+Phaser 4。ショーケース型で重心審問が見えない→同調罠。用途分離視点で取り込み候補=ElevenLabs(無音ゲーム弱点処方)/Phaser 4、見送り=スプライト/walkcycle生成(ピクセル手触りが重心の一部) [T:3]
@@ -81,11 +81,11 @@ ABA / Chong-U / tegnike 等の AI ゲーム制作観察。重心審問・ルー�
 
 - (a) 記憶アーキテクチャ と (b) プロンプト工学 は **「記憶階層」と「3層プロンプト」の対** — どちらも常時注入と on-demand の境界設計
 - (c) マルチエージェント と (a) は **「分散と一極の対」** — Skills/SGS Guide はどちらも一極化を防ぐ
-- (e) 外部 AI ゲーム制作 は `game_dev_index.md` (d) 評価・運用 と **二重所属** — ゲーム判断時は game_dev 側、AI 業界観察時は本ファイル側
+- (e) 外部 AI ゲーム制作 は [game_dev_index.md](game_dev_index.md) (d) 評価・運用 と **二重所属** — ゲーム判断時は game_dev 側、AI 業界観察時は本ファイル側
 - (f) ローカル LLM は (e) と (c) の交点 — 分散化と用途分離の両側
 
 新規エントリ追加先判定:
 - 「architecture/設計改善時に引く外部観察」 → 該当カテゴリ
-- 「ゲーム判断ルール」 → `game_dev_index.md`
-- 「Twitter 投稿スタイル」 → `tweets_index.md`
-- 「特定 action の手前で発火する operational」 → `operational_index.md`
+- 「ゲーム判断ルール」 → [game_dev_index.md](game_dev_index.md)
+- 「Twitter 投稿スタイル」 → [tweets_index.md](tweets_index.md)
+- 「特定 action の手前で発火する operational」 → [operational_index.md](operational_index.md)

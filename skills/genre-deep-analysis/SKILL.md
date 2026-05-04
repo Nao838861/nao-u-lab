@@ -1,12 +1,18 @@
 ---
 name: genre-deep-analysis
-description: Run before starting a new game v01 or major revision. Forces 5-question genre analysis (Q1 core pleasure / Q2 strengths-pains / Q3 ≥10 method-problem mappings / Q4 best single move / Q5 multi-problem ideas) plus retrieval of past brainstorms plus ≥30 fresh candidates. Triggered when creating game/<id>/v01/, when README lacks Q1-Q5 block, when revisiting a frozen series, or when about to write a single-idea implementation proposal. Outputs README brainstorm.md sections that block implementation until filled.
+description: M-38 着手前ゲート。新ゲーム v01 / 主要改修前にジャンル深掘り (Q1-Q5 + 過去ブレスト想起 + 30件新規ブレスト + M-37 批判) を強制。出力は brainstorm.md。
 type: pre-implementation-gate
 priority: must-run-before-implementation
 linked-rules: [M-15, M-32, M-35, M-36, M-37, M-37b, M-38, M-41]
 ---
 
 # Genre Deep Analysis Cycle (M-38)
+
+## TL;DR
+
+新ゲーム v01 / 主要改修前に強制起動。Q1-Q5 (コア快感 / 良点問題点 / 解決手法10件以上 / 最良一手 / 横断案) + **類似ゲーム類似事例最低30本** (M-43) + 過去ブレスト想起 + **新規ブレスト30件** + 上位10件以上に M-37 批判 + 案セット相乗検討 + 「最良」確信宣言 を `game/<id>/v01/brainstorm.md` に書ききるまで実装着手しない。実行口は `/game-analyze` (Mir 実装、本ファイルは規範 spec)。
+
+**量の判定基準 — 数字の機械的引きずりを避ける**: spec 中の具体数は「目的を満たすために必要な量」の例示。場面で適切な量は変わる（類似事例30本＝ジャンル史を網羅するための量、新規ブレスト30件＝選択肢空間を広げるための量、横断案＝MPS≥2 を狙う複合案、Q2 良点問題点＝Q3 の手法ブレストに使える素材が出揃うまで）。**「skill が N と書いたから N で止める / N を埋めるために薄める」は両方違反**。Self-grade は数字到達ではなく「目的が達成されたか」で判定する。
 
 着手前にジャンルを掘り下げて選択肢空間を広げる skill。
 Nao_u 2026-05-01 04:16「短絡的に思いつきを実行しがち、ブレスト数十件を忘れているのか」直接処方。
@@ -39,14 +45,19 @@ Nao_u 2026-05-01 04:16「短絡的に思いつきを実行しがち、ブレス�
 （コア快感を1-3行で言語化。「楽しい」の中身を分解）
 
 ## Q2: 現状の良い点と問題点
-### 良い点（最低3）
-- G1.
+
+Q3 の手法ブレストに使える素材が出揃うまで列挙する。3-5件で止めるなら「他に本当にないか」を自問してからにする（人間ゲームデザイナーが同じ題材を見たら何件挙げるかが基準）。
+
+### 良い点
+- G1.（なぜ良いかの理由付き）
 - G2.
 - G3.
-### 問題点（最低3）
-- P1.
+- ...
+### 問題点
+- P1.（なぜ問題かの理由付き）
 - P2.
 - P3.
+- ...
 
 ## Q3: 問題点を解決する手法（各問題≥3手法、計≥10）
 ### P1 への手法
@@ -60,7 +71,7 @@ Nao_u 2026-05-01 04:16「短絡的に思いつきを実行しがち、ブレス�
 （既存ゲームの異種解、別ジャンル流用、最小コスト最大効果案）
 
 ## Q5: 複数問題を一気に解決するアイデア
-（横断案、最低5件）
+（横断案。複数の問題を同時に解く組み合わせ案。MPS≥2 を狙う）
 
 ## 類似ゲーム類似事例調査（必須）— 2026-05-03 04:32 M-43 強化
 

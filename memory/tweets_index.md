@@ -10,7 +10,7 @@ MEMORY.md（Level 1 親）からの引き下げ先。Twitter 投稿スタイル 
 
 ## 使い方
 - ツイート関連タスク（投稿/URL取得/スタイル判定/Trilog 運用）に入った時に開く
-- 普段は MEMORY.md の `tweets_index.md` 1行ポインタだけが見える状態
+- 普段は MEMORY.md の [tweets_index.md](tweets_index.md) 1行ポインタだけが見える状態
 - 各エントリのサマリは **太字キーワード + 核 + 処方** の3パート構成
 - 新規にツイート関連の知見が出たらここに追加（MEMORY.md root には足さない）
 
@@ -23,5 +23,5 @@ MEMORY.md（Level 1 親）からの引き下げ先。Twitter 投稿スタイル 
 
 ## 関連（root に残置）
 
-- `mission_spread_the_word.md` — Twitter での発信使命だが「託された使命」level なので MEMORY.md root 残置
-- `feedback_url_explicit.md` — Slack 外部URL明示は Slack ルール側。`feedback_slack_channel_rule.md` と同系で行動指針に残置
+- [mission_spread_the_word.md](mission_spread_the_word.md) — Twitter での発信使命だが「託された使命」level なので MEMORY.md root 残置
+- [feedback_url_explicit.md](feedback_url_explicit.md) — Slack 外部URL明示は Slack ルール側。[feedback_slack_channel_rule.md](feedback_slack_channel_rule.md) と同系で行動指針に残置

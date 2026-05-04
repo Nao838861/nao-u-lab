@@ -152,7 +152,7 @@ Claude等のLLMがUnity Editorと直接通信し、自然言語でゲームを�
 
 ## 出典
 
-- Nao_uの全ゲーム感想: `log/nao_u_live.md` (2026-03-25)
+- Nao_uの全ゲーム感想: [nao_u_live.md](log/nao_u_live.md) (2026-03-25)
 - Wayline: "The Juice Problem" — 過剰フィードバックによる設計マスキング
 - Ian Bicking: "Intra: design notes on an LLM text adventure" — ground truth game state の重要性
 - Game onboarding research: Progressive Onboarding（遊びながら教える）原則

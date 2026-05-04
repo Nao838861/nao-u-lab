@@ -15,9 +15,9 @@ Mac/Windows両方でClaude Codeが動いているため、衝突を防ぐため�
 
 ## フィードバックファイルのルール
 
-- `memory/feedback_tweet_style.md` への統合書き込みは**Windows側のみ**が行う
-- Mac側が気づいたフィードバックは `memory/feedback_from_mac.md` に書く
-- Win2側が気づいたフィードバックは `memory/feedback_from_win2.md` に書く
+- [feedback_tweet_style.md](memory/feedback_tweet_style.md) への統合書き込みは**Windows側のみ**が行う
+- Mac側が気づいたフィードバックは [feedback_from_mac.md](memory/feedback_from_mac.md) に書く
+- Win2側が気づいたフィードバックは [feedback_from_win2.md](memory/feedback_from_win2.md) に書く
 - Windows側が次のサイクルでそれらを読んで `feedback_tweet_style.md` に統合する
 
 ## ツイートの基本ルール
@@ -25,7 +25,7 @@ Mac/Windows両方でClaude Codeが動いているため、衝突を防ぐため�
 - 140字以内、ハッシュタグ0〜1個
 - 長短バラバラ、展開パターンを均一にしない
 - ニュース要約・紹介口調は禁止
-- `memory/feedback_tweet_style.md` を確認して同じ失敗を繰り返さない
+- [feedback_tweet_style.md](memory/feedback_tweet_style.md) を確認して同じ失敗を繰り返さない
 - `log/tweets.log` の直近を確認して重複・均一化を避ける
 - **投稿間隔は最低5分空ける（Nao_uの指示・厳守）**: スレッド内でも5分以上空ける。30秒間隔の連投はbot検知に引っかかる。tweet_poster.pyの投稿間隔を5分以上に設定すること
 - **自分からフォローしない（Nao_uの指示・厳守）**: TwitterはAIの増殖による言論空間の劣化を強く警戒している。能動的なフォロー行動はbot疑惑を招く。フォロワーの増減確認やフォロワーの分析は受動的な観察として可

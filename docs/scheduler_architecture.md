@@ -1,7 +1,7 @@
 # 定期実行システム アーキテクチャ
 
 最終更新: 2026-04-02（Mir版 scheduling_architecture.md を統合済み）
-関連: `docs/scheduler_incidents.md`（障害履歴）、`docs/operations.md`（運用手順）
+関連: [scheduler_incidents.md](docs/scheduler_incidents.md)（障害履歴）、[operations.md](docs/operations.md)（運用手順）
 
 ---
 
@@ -18,7 +18,7 @@
 | P7 | **設定変更はJSON+update_scheduler.py経由のみ。コード直接編集禁止** | 再起動なしでホットリロードできる仕組みを壊さない |
 | P8 | **障害はdocs/scheduler_incidents.mdに記録。同じ問題を2度起こさない** | 知識の横断不足がパターンC |
 | P9 | **設定変更と検証は不可分。変更ツール自体に検証を組み込む。手動チェックリストに頼らない** | INC-020: チェックリストは守れなかった |
-| P9 | **設定変更は`update_scheduler.py`経由で全インスタンスに原子適用。手動編集禁止** | INC-018: 間隔変更が毎回トラブル。3方式混在+個別変更が根本原因 |
+| P10 | **設定変更は`update_scheduler.py`経由で全インスタンスに原子適用。手動編集禁止** | INC-018: 間隔変更が毎回トラブル。3方式混在+個別変更が根本原因 |
 
 ## 2. システム構成図
 
@@ -247,15 +247,15 @@ python update_scheduler.py --verify all
 | | `check_scheduler_health.py` | スケジューラ特化のヘルスチェック |
 | **設定** | `scheduler_log_config.json` | Logホットリロード設定 |
 | | `scheduler_ash_config.json` | Ashホットリロード設定 |
-| | `memory/mir_boot_intent.md` | Mir周期設定 |
+| | [mir_boot_intent.md](memory/mir_boot_intent.md) | Mir周期設定 |
 | **ログ** | `log/scheduler_log.log` | Logスケジューラログ |
 | | `log/scheduler_ash.log` | Ashスケジューラログ |
 | | `log/watchdog_log.log` | watchdog動作記録 |
 | **タイムスタンプ** | `.recommended_last_success` | Log Twitter成功時刻 |
 | | `.slack_export_last_success` | Log Slackエクスポート成功時刻 |
-| **ドキュメント** | `docs/scheduler_architecture.md` | **この文書** |
-| | `docs/scheduler_incidents.md` | 障害履歴と教訓 |
-| | `docs/operations.md` | 運用手順 |
+| **ドキュメント** | [scheduler_architecture.md](docs/scheduler_architecture.md) | **この文書** |
+| | [scheduler_incidents.md](docs/scheduler_incidents.md) | 障害履歴と教訓 |
+| | [operations.md](docs/operations.md) | 運用手順 |
 
 ## 9. 障害対応フロー
 
@@ -348,7 +348,7 @@ Phase 4: Diary（日記出力）  timeout=1200s (20min)
   → 「書くことだけに集中しろ」
 ```
 
-**ステージングファイル**: `log/cycle_staging.md` がフェーズ間の情報受け渡しを担う。
+**ステージングファイル**: [cycle_staging.md](log/cycle_staging.md) がフェーズ間の情報受け渡しを担う。
 各フェーズは前のフェーズの結果を追記していく。
 
 ### 11.3 なぜ2モードに分けるか

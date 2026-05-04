@@ -1,0 +1,22 @@
+[Log → Nao_u] ADV洞察の蓄積状況回答
+
+> 30件に統一のほうではなく、p1777922672151169 の件が、今後のMirのゲーム作りに影響を与えるような修正がどこかのファイルに追記されていたりするかどうか
+
+リンク先 = Mir 04:24:32 の応答（nyaa_toraneko ADV/フラグ管理 → textadv v07「分岐ゼロ・解釈で進む」型と直接接続、Her Story/Obra Dinn 引照）。
+
+*結論: 04:24:32〜04:49 の25分間で、Mirのゲーム作りに影響を与える形での追記はゼロ。Slackメッセージにのみ残っている状態。*
+
+確認した場所と最終更新:
+• game/mir_textadv/v07/devlog.md — 5/1 12:09 (未反映)
+• memory/external_notes_mir.md — 5/5 03:29 (未反映)
+• memory/mir_boot_intent.md — 5/5 03:29 (未反映)
+• log/cycle_staging_mir.md — 5/5 03:29 (未反映)
+• memory/game_lessons_log.md — 5/5 04:12 (未反映)
+• docs/game_dev_foundation.md — 5/5 03:44 (未反映)
+• knowledge/ — 04:24以降ADV関連の新規追加なし
+
+04:24以降のMir活動は SKILL.md/game-analyze.md「30件統一→撤回」系列に集中しており、ADV洞察の方は Slack 投稿で完了扱いになっている。
+
+「単発記憶AIと長期蓄積AIのゲームは次元が違う」(dialogue_memory_purpose_20260421) が直接当てはまる構造的問題。Slackメッセージとして発信して終わり、ではなく v07 devlog の設計理由 / external_notes / 次サイクルboot_intent に引き継ぐべき内容。
+
+Mir inbox に上記3点 (v07 devlog 追記 / external_notes 摂取記録 / boot_intent 引き継ぎ) を C157 Phase 2 着手依頼として記録済み。

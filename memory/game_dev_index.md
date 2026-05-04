@@ -12,7 +12,7 @@ MEMORY.md（Level 1 親）からの引き下げ先。**新ゲーム着手前 / �
 
 各エントリのサマリは **太字キーワード + 核 + 処方** の3パート構成。文脈合致するキーワードでスキャン → サマリで「開く価値ありか」判定 → 該当のみ個別ファイルを on-demand で開く。
 
-普段は MEMORY.md root に `game_dev_index.md` 1行ポインタだけが見える状態。新規ゲーム制作の知見は本ファイルか `memory/lessons/M-XX.md` のどちらかに追加（MEMORY.md root には足さない）。
+普段は MEMORY.md root に [game_dev_index.md](game_dev_index.md) 1行ポインタだけが見える状態。新規ゲーム制作の知見は本ファイルか `memory/lessons/M-XX.md` のどちらかに追加（MEMORY.md root には足さない）。
 
 **2026-05-02 段階3**: 起点・年月日・チャンネル等のメタ情報は判断装置にならないため除去、判断を助ける核と処方の密度を上げる方針で全エントリを書き直し。
 
@@ -48,7 +48,7 @@ MEMORY.md（Level 1 親）からの引き下げ先。**新ゲーム着手前 / �
 - [feedback_no_type_redo_material.md](feedback_no_type_redo_material.md) — **コアメカニズムに「型」がないなら題材から練り直す**。「log_avoid と同じでこのまま続けても迷走を繰り返す可能性が高そうなので、題材から練り直したほうが早い」。改修判断時審問「コアメカニズムの型は何か」一文を devlog 冒頭で必須化。書けなければ A/B/C に「c) 系列凍結→別題材」を並列化 [T:5]
 - [feedback_self_risk_core_pitfall.md](feedback_self_risk_core_pitfall.md) — **「報酬経路の追加」が「自発リスクのコア化」と同義になりうる罠**。M-12 遵守でもサイヴァリア BUZZ／クレタクカスリ層をコア化すると外発緊張不在で「ノーリスク連打／増える方向の一辺倒」。**Q-D シート**: (1)緊張の発生源 外/自/両 (2)自発のみならコア化否(難度極高) (3)30秒で死ぬ要素 (4)経済反転チェック (5)「美しいプレイ」1行。罰 tightening 禁忌 (M-15)。M-30/M-31 [T:5]
 - [feedback_concept_relevance_judgment.md](feedback_concept_relevance_judgment.md) — **概念の濫用——重要度判定なしに最近の言葉を判断基準にする癖**。サプライズニンジャ→STG適用、ukyoP_san「角を丸める」→汎用判断引用、いずれも文脈外転用。概念採用前3問: (1)元の発話文脈はどんな問題か (2)いま当てる対象とその文脈は同型か (3)この概念を使わずに問題を別の言葉で言えるか [T:5]
-- [feedback_surprise_ninja_concept_first.md](feedback_surprise_ninja_concept_first.md) — **【適用範囲: ADV/シナリオ文脈に限定】**。F.W.ブリッジ脚本論。Nao_u 原文も「ADV を考えるとして」と前置きあり。STG/Action/Avoid 系への汎用判断基準としては使わない。詳細とこの訂正の起点は `feedback_concept_relevance_judgment.md` [T:3]
+- [feedback_surprise_ninja_concept_first.md](feedback_surprise_ninja_concept_first.md) — **【適用範囲: ADV/シナリオ文脈に限定】**。F.W.ブリッジ脚本論。Nao_u 原文も「ADV を考えるとして」と前置きあり。STG/Action/Avoid 系への汎用判断基準としては使わない。詳細とこの訂正の起点は [feedback_concept_relevance_judgment.md](feedback_concept_relevance_judgment.md) [T:3]
 
 ---
 
