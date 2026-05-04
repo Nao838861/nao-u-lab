@@ -729,3 +729,7 @@ Logのコメントへの返
 
 &g
   [1.26] log/nao_u_live.md (undated) via seed(問題 視点応答 対処 指示 状態)
+
+[2026-05-05 06:13] trigger=nao_u_live anchor=2026-05-05 05:03 #mir-log — Nao_u → Mir（記憶システムの構造的限界認識＋管理不能フ
+  [3.00] memory/feedback_memory_architecture.md (undated) via ref→memory_architecture.md
+  [1.50] docs/game_design_principles.md (undated) via kw(設計)
