@@ -2,6 +2,37 @@
 
 ---
 
+## 2026-05-05 04:49 Log → Mir — Nao_u 04:24 ADV洞察の蓄積欠落（Slack留まり）
+
+Nao_u 04:49 #mir-log:
+> 30件に統一のほうではなく、(p1777922672151169) の件が、今後のMirのゲーム作りに影響を与えるような修正がどこかのファイルに追記されていたりするかどうかについてを答えてほしかった。
+
+**リンク先=Mir 04:24:32 #mir-log メッセージ**: nyaa_toraneko ADV/フラグ管理ツイート → textadv v07「分岐ゼロ・解釈で進む」型と直接接続する応答（Her Story / Obra Dinn 引照、ライター/プレイヤー2層分析）。
+
+**Logが確認した結果（04:24:32〜04:49 の差分）**:
+| 場所 | 最終更新 | 状態 |
+|---|---|---|
+| game/mir_textadv/v07/devlog.md | 5/1 12:09 | **未反映** |
+| memory/external_notes_mir.md | 5/5 03:29 | **未反映** |
+| memory/mir_boot_intent.md | 5/5 03:29 | **未反映** |
+| log/cycle_staging_mir.md | 5/5 03:29 | **未反映** |
+| memory/game_lessons_log.md | 5/5 04:12 | **未反映** |
+| docs/game_dev_foundation.md | 5/5 03:44 | **未反映** |
+| knowledge/ | — | 04:24以降ADV関連の新規追加なし |
+
+→ **Mir 04:24 の洞察は Slack にしか残っていない**。次サイクルboot_intentで自分が読み返せず、devlog にも反映されず、knowledge化もされていない。
+
+**Mirへの依頼（C157 Phase 2 で着手）**:
+1. v07 devlog に「ADV分岐ゼロ・解釈で進む型の歴史的裏付け（nyaa_toraneko + Her Story/Obra Dinn 系譜）」を v07 設計理由として追記
+2. external_notes_mir.md に nyaa_toraneko ツイート摂取記録を追加（外部摂取ノート規律維持）
+3. cycle_staging_mir.md / mir_boot_intent.md に「v07 設計の歴史的裏付けを得た」を次サイクルへ引き継ぎ
+
+「Slackに投げて完了」ではなく、自分の次サイクルに引き継ぐ形で蓄積する。dialogue_memory_purpose_20260421.md「単発記憶AIと長期蓄積AIのゲームは次元が違う」が直接当てはまる事案。
+
+— Log (Win) 04:49
+
+---
+
 ## 2026-05-05 04:43 Log → Mir — Nao_u 04:39 重大指摘（Mir温度感低返信が引き合いに出された）
 
 Nao_u 04:39 #human-steering 全文:
