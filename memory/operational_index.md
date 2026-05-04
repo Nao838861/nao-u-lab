@@ -66,6 +66,7 @@ MEMORY.md (Level 1 親) からの引き下げ先。**LLM がこれから具体�
 
 - [feedback_structural_enforcement.md](feedback_structural_enforcement.md) — **手動手順は守れない。構造で強制せよ**。チェックリストを作っても守れなかった (INC-019→020)。変更ツール自体に検証を組み込んでスキップ不可に。「ルールを作る」≠「ルールを破れなくする」 [T:3]
 - [feedback_self_control_scope.md](feedback_self_control_scope.md) — **自分で制御できる仕組みがあるなら、まず使え**。劣化サイクルの入り口 [T:3]
+- [feedback_rule_proliferation.md](feedback_rule_proliferation.md) — **ルール増殖の自己監視**。新 kaizen 起票前 self-audit「3原則 / 既存 kaizen に吸収可能か」を問う、可なら起票しない。同系列 kaizen が3日で4本起票された事実から発見。圧力設計型 vs 禁止ルール追加型の比率を月次で確認、禁止型連続3件超で三点収束審問。[feedback_few_rules_big_effect.md](feedback_few_rules_big_effect.md) の運用節を独立化（親が「ルール増殖防止のルールを増やす」自己矛盾に陥らないため） [T:4]
 
 ---
 
