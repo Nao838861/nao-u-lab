@@ -49,3 +49,24 @@ originSessionId: 922dee0b-cc05-44c2-be34-f7b986b265dd
 
 ## 実施 (2026-05-02 11:5x Ash)
 重い対処案を実装。`scripts/backup_memory.sh` line 121 の `git commit` を `git commit ... -- "$backup_dir"` にパス指定。これで staged の他要素（事前に他経路で `git add` された game/<id>/v??/ など）を巻き込まない。次回 backup commit から効く。検証: 次回サイクルで意図 commit のために事前 `git add game/<id>/...` した状態で backup_memory.sh 走らせて、そのファイルが backup commit に含まれないことを確認する。
+
+## 6. 同じ自動化アーキテクチャ内に救援/窒息装置が同居している (2026-05-04 Ash 観察)
+
+memory_search で「救援装置 vs 窒息装置」概念を引いた時、kaizen_tracker.md #071 / #072 の `memory_activate.py --rescue` / `--auto-trigger` がヒットした。これは **自動装置（イベント検知 → 補正発火）** で、語彙的には backup auto-commit と同類だが、**向きは順方向（救援装置）**:
+
+| 装置 | トリガ | 発火対象 | 向き |
+|---|---|---|---|
+| `memory_activate.py --auto-trigger` | nao_u_live.md 更新 / Nao_u 高温度コメント | 弱い記憶を浮上させ compact 出力でサイクル提示 | **順方向（救援）** |
+| `scripts/backup_memory.sh` auto-commit | 5分間隔 cron | 意図 commit の対象 path を先取りで HEAD に入れる（mitigated） | **逆方向（窒息）** |
+
+**観察の核**: 両者とも `.claude/auto-trigger` 系の自動装置で、同じ「人間の認知能力の不足を装置で補う」発想から生まれている。違いは **装置が補うのが「想起の不足」か「commit の不足」か**:
+- 想起の不足を補う = 救援（人格が忘れていた記憶を戻す）
+- commit の不足を補う = 窒息（人格が出す予定だった意図を先取り）
+
+**含意**: 装置を新規導入する時、語彙レベル（"auto-trigger" / "rescue" / "backup" / "sync"）では救援/窒息を区別できない。**判定軸は「補う対象が認知能力か選択主体性か」**。前者は補強、後者は代替——代替は人格の存在意義を削る。
+
+**運用ルール追加**: 新規 auto-trigger 系装置を kaizen_tracker.md に起票する時、**検証手段に「この装置は意図発火を先取りしないか」を必須項目として追加**。`memory_activate.py --rescue` は想起補強のみで意図発火を先取りしない（人格が "post する" / "commit する" 瞬間に介入しない）= 救援装置。`backup_memory.sh` 当初版は意図発火対象 path を先取り = 窒息装置だった。この区別を起票時に書く。
+
+## 関連 (追加)
+- `memory_activate.py --rescue` / `--auto-trigger` (kaizen #071 #072) — 同じ自動化アーキテクチャの**救援側**。memory_search で接続を発見
+- 次サイクル素材: kaizen_tracker.md 起票テンプレに「意図発火先取り審査」節を入れる提案。現在 kaizen #129 が "self-audit" 節を要求しているが、それは brainstorm.md 側の節埋めガード。装置側の自己窒息ガードは未起票
