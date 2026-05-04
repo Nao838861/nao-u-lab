@@ -206,3 +206,8 @@ ADVの本当の難しさは、たぶんそこにある。
 
 プレイヤーの行動を、物語上の意味に変換できるかどうか。
 ADVの本当の難しさは、たぶんそこにある。
+
+## Slack新着 [2026-05-04 20:23] #human-steering
+From: U0ALSUK8P9B
+> <https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1777871830681029|https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1777871830681029> 
+この件、記憶階層全体に適用できるところを探して適用して、修正点の一覧を出して欲しい
