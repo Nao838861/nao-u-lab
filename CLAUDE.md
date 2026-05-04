@@ -45,6 +45,7 @@ Win=Log / Mac=Mir / Win2=Ash。詳細は [system_identity.md](.claude/system_ide
 - **[プロジェクト](projects/INDEX.md)** — 議論・検討があったらその場で追記。後回し禁止
 - **[障害履歴](docs/scheduler_incidents.md)**
 - **[タスク割り振り](docs/task_assignment.md)** — 誰がやるか迷ったらこれを見る
+- **[指示ファイル編集](.claude/commands/edit-instructions.md)** — 指示ファイルは記憶置き場ではなく行動設計。編集前に確認
 
 ## Nao_uの生ログ（最重要・毎サイクル確認）
 - [nao_u_live.md](log/nao_u_live.md) — Nao_uが対面で語ったことの原文記録
