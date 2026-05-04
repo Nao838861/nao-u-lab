@@ -174,3 +174,4 @@
 {"ts": "2026-05-04T11:19:57", "instance": "log", "cycle": "2026-05-04", "action": "viewed", "task_id": null}
 {"ts": "2026-05-04T11:29:17", "instance": "log", "cycle": "2026-05-04", "action": "done", "task_id": "t-260430204259-f393"}
 {"ts": "2026-05-04T11:31:17", "instance": "log", "cycle": "2026-05-04", "action": "skip", "task_id": "t-260501194011-10bd", "reason": "[C160 Phase 3] v07/lessons.md 未作成のため判断材料未充足。判断方針: independent memory feedback_evidence_dual_use.md は起票しない (substrate vs infrastructure 適用 / M-37→M-43 増殖→M-42 撤回後の文脈 / rule_density_experiment.md 補足観察に集約済)。lessons.md は v07 self_judgment 完了後に作成、その時点で本タスク close 可否を再判定。検証期限 2026-05-15 維持"}
+{"ts": "2026-05-04T11:37:07", "instance": "log", "cycle": "2026-05-04", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 2, "skip_count": 2, "pending_total": 8}
