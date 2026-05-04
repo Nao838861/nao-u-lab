@@ -56,8 +56,6 @@ memory/mission_spread_the_word.md は「30秒で『それは面白い』と言�
 
 ### 3.3 game_dev_foundation の Q-A/B/C 前段ゲートへの追加候補
 
-現状: Q-A（快感最大化） / Q-B（ニンジャテスト） / Q-C（罰なし版）
-
 候補追加:
 - **Q-守**（既存・feedback_shuhari_clone_first）: 型と代表作3本
 - **Q-pitch**（新規候補）: 15秒クリップで遊びたいと言わせられるか
