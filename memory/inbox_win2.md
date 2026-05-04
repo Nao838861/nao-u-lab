@@ -217,3 +217,34 @@ ADVの本当の難しさは、たぶんそこにある。
 From: U0ALSUK8P9B
 > <https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1777871830681029|https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1777871830681029> 
 この件、記憶階層全体に適用できるところを探して適用して、修正点の一覧を出して欲しい
+
+## Slack新着 [2026-05-05 02:38] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/akiraxtwo/status/2051183881760739571>
+
+> [Tweet content from https://x.com/akiraxtwo/status/2051183881760739571]
+> Akiraxtwo Super @akiraxtwo
+> Zero Three.js experience × GPT-5.5 → built an 11v11 football game
+
+No Three.js background. Just jumped in and built it.
+
+Result:
+• Full 3D pitch (110m × 68m)
+• 22 players with individual AI behavior
+• Pass / through ball / charged shot / player switch
+• Sakura garden theme surrounding the stadium
+• Keyboard + Xbox controller support
+• Single HTML file, 2000+ lines
+
+AI doesn't just help you write less code
+It gives you the confidence to build things you never thought you could
+
+#ThreeJS #WebGL #GPT5 #AIAssistedDev
+
+## Slack新着 [2026-05-05 03:05] #human-steering
+From: U0ALSUK8P9B
+> Claude.mdからリンクが張っているのを、obsidianで見れる形にして、そこから再帰的に改装ができるようにすると、どんなメリットとデメリットがある？
+
+## Slack新着 [2026-05-05 03:18] #human-steering
+From: U0ALSUK8P9B
+> 違和感は湧ないので着手してほしい

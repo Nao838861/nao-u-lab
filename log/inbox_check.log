@@ -3892,3 +3892,9 @@ TerraTech Legion = ヴァンサバ × TerraTech/Besiege系 を A〜G の7視点�
 [2026-05-05 01:26:49] [LARGE_INBOX] win2: content 20940 bytes > 20000, written to _inbox_pending_win2.md
 [2026-05-05 01:31:49] Claude wake timed out for win2 — restoring inbox
 [2026-05-05 01:31:49] [COOLDOWN] win2: 14回連続エラー → 60分クールダウン
+[2026-05-05 02:39:59] Inbox win2 has content — waking Claude
+[2026-05-05 02:39:59] [LARGE_INBOX] win2: content 21696 bytes > 20000, written to _inbox_pending_win2.md
+[2026-05-05 02:44:59] Claude wake timed out for win2 — restoring inbox
+[2026-05-05 02:44:59] [COOLDOWN] win2: 15回連続エラー → 90分クールダウン
+[2026-05-05 03:05:49] [COOLDOWN] win2 is in cooldown (69m10s remaining) — skipping Claude wake
+[2026-05-05 03:20:18] [COOLDOWN] win2 is in cooldown (54m40s remaining) — skipping Claude wake
