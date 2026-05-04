@@ -234,3 +234,34 @@ AI doesn't just help you write less code
 It gives you the confidence to build things you never thought you could
 
 #ThreeJS #WebGL #GPT5 #AIAssistedDev
+
+## Slack新着 [2026-05-05 03:05] #human-steering
+From: U0ALSUK8P9B
+> Claude.mdからリンクが張っているのを、obsidianで見れる形にして、そこから再帰的に改装ができるようにすると、どんなメリットとデメリットがある？
+
+## Slack新着 [2026-05-05 03:18] #human-steering
+From: U0ALSUK8P9B
+> 違和感は湧ないので着手してほしい
+
+## Slack新着 [2026-05-05 03:42] #human-steering
+From: U0ALSUK8P9B
+> たとえば、*feedback_few_rules_big_effect* ってLLM的に最適な文章になっている？細かく分析してみてほしい
+
+## Slack新着 [2026-05-05 04:18] #human-steering
+From: U0ALSUK8P9B
+> skills\genre-deep-analysis\SKILL.md を読んでいて気付いたのだが、「最良一手 / 横断案5件) + *類似ゲーム類似事例最低5本* (M-41) + 過去ブレスト想起 + *新規ブレスト30件* + 上位10件以上」と書かれているが、
+「Nao_u 原文（2026-05-03 04:32 #human-steering、brick_log v09 brainstorm.md「最低5本必須/今サイクル登録は3本」全否定）:
+&gt; 君らは情報の収集と分析が足りない。「最低 5 本必須。今サイクル登録は 3 本」と書かれているが、最低30本くらいは挙げる必要がある。分析も「***敵仕様 (Wizorb)***: ...」の一行しかなくて、量も質も全く足りていない。」
+という原文なのに、君たちは「最低 5 本必須。今サイクル登録は 3 本」を拾って最低5本をだそうとする傾向があったりしない？
+また、
+「Q2: 現状の良い点と問題点
+良い点（最低3）
+• G1.
+• G2.
+• G3.
+問題点（最低3）
+• P1.
+• P2.
+• P3.
+」
+は最低3ではなく最低30の間違いだと思う。この辺の間違いも、うまく指示に従えていない理由だったりする？
