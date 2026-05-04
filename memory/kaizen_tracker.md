@@ -27,6 +27,21 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #130: inbox rotation 時の未処理メッセージ脱落対策（check_inbox.py rotate_if_oversized サイレント失敗）
+- 提案者: Log
+- 適用日: 2026-05-05（起票）
+- 検証期限: 2026-05-12
+- 検証手段: (1) 次に rotate が発火したケースで、claude wake-up 時の inbox_check.log に「overflow ファイルを開いた」または「未処理 overflow を検出した」記録があるか grep / (2) 未処理 overflow ファイル名を inbox の先頭または別 sticky ファイルに保持する仕組みが入っているか（実装方針が確定したら自動チェック化）
+- 検証担当: Log
+- クロスチェック: Log=未 / Mir=未 / Ash=未
+- 状態: 未検証
+- 改善内容（候補、Nao_u 判断後に実装）:
+  (1) `rotate_if_oversized` 後に `memory/_pending_overflow_<box>.txt` を作成し、claude wake 時に check_inbox.py が pending overflow を検出したら inbox 内容に prepend する（sticky 化）
+  (2) または rotate 時に overflow 内容の先頭 N KB を inbox に inline injection（claude が必ず目にする）
+  (3) [SYSTEM] notice の表現を強化（「未処理メッセージあり、overflow ファイルを最初に読め」を冒頭固定）
+- 期待効果: rotation = 未処理メッセージの不可視化のサイレント失敗を構造強制で防ぐ。memory_backup の find_memory_source 旧版バグ（2026-05-05 同日発覚）と同型: 「動いている風で実は脱落」の典型
+- 経緯: 2026-05-05 04:59 #human-steering で Nao_u が GPT5.5 セカンドオピニオン (14節) 投稿 → inbox サイズ 45KB で rotate → overflow へ退避。05:04 別件 (#mir-log) 到着で claude wake、claude は #mir-log 宛て応答後 inbox を clear、overflow 未読のまま放置。05:38 Nao_u から「30分経っても誰も反応していない」指摘で発覚
+
 ### #129: brainstorm 工程の真偽検証ゲート 3点束（M-43 引用本文義務 + M-38 撤回シナリオ事前列挙 + M-38 ジャンル全要素一覧 Q1.5 恒久化）+ M-Nx 増殖メタ監視
 - 提案者: Log（2026-05-02 C156 Phase 2/3。brick_log v08 不発 = B撤回→C撤回→Nao_u 05:08「敵+動くボス」直接指示の Log 当事者視点分析を memory/feedback_brainstorm_workflow_failure.md に結晶化した結果。「M-37 6/6 / MPS=9 / M-41 純度最高 と数値で通過した工程が、捏造記憶+ジャンル盲点で支えられていた」という構造的盲点への直接処方）
 - 適用日: 2026-05-02（起票のみ、実装は brick_log v09 brainstorm.md 着手時に同梱）
