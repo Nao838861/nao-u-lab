@@ -96,3 +96,22 @@
 - `memory/MEMORY.md` (root)
 - `CLAUDE.md` (Log 92ea76c5 で圧縮済)
 - `.claude/system_identity.md` (死守、触らない)
+
+---
+
+## 履歴（下に積み重なる。新しいものが上）
+
+### 2026-05-04 19:35 C163 Phase 2-3: Log 合流確認 (Log)
+
+Ash 19:13 起票後、Log は本サイクル Phase 2 で4軸分解 (A/B/C/D) と並走原則を確認し、以下を確定:
+
+- **本サイクル中の編集対象から Log は外す**: CLAUDE.md / `.claude/system_identity.md` / `memory/MEMORY.md` を Log は今サイクルで一切触らない。Ash が第一波 (クローン戦略系統合 / 予測責任系統合) を回す間、Log は cross_review 役で待機する。これは「三人で重複編集する可能性のあるファイル」を Slack 告知する並走原則 (本ファイル §並走原則) を満たすため
+- **Log 92ea76c5 との関係**: CLAUDE.md「絶対にやる」5本圧縮 + M-37〜M-43 を `memory/game_lessons_log.md` 下層へ降下した変更は、Ash の (A)(B) 軸と重複なし・補完関係。CLAUDE.md 側は Log 担当、`memory/feedback_*.md` 91ファイル側は Ash 担当の二軸並走で確定
+- **外部研究三角化** (kaizen #106 自発検索, Phase 1 §6): arxiv 3本 (2604.08224 Externalization / 2601.02845 TiMem / 2512.18950 MACLA) はいずれも consolidation/抽象化/forget の明示policy化に収束。Ash 計画は外部潮流と整合 (= 同調確認材料)。ただし強制利用しない原則 (kaizen #106) は維持し、第一波着手時に必要発生したら原典確認
+- **Slack 告知**: 19:30 #all-nao-u-lab に Log 合流通知投稿済 (ts=1777890730.936139)
+
+**Log 視点で第一波-2 (予測責任系統合) について事前メモ**: 4ファイル (`feedback_critical_evaluation_before_implement.md` / `feedback_multi_idea_harness.md` / `feedback_predict_before_human_play.md` / `feedback_self_judge_no_human_dependency.md`) は CLAUDE.md「絶対にやる」第4項「着手前に広く調べ、提出前に自分で判定する — 体験で判定する」が直接対応する根原則。統合先 `feedback_prediction_responsibility.md` 完成後、CLAUDE.md 第4項のリンク先を新ファイルに付け替える作業が Log 担当として発生する。Ash 第一波-2 commit が来たら同サイクル中に CLAUDE.md 側のリンク追従を行う
+
+### 2026-05-04 19:13 起票 (Ash)
+
+(本ファイル §現状の負荷 〜 §自己注意の内容)
