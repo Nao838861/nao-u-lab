@@ -31,19 +31,28 @@ TARGETS = [
 BACKTICK_MD_PAT = re.compile(r"`([^`\n]+\.md)`")
 
 
-def file_exists(rel_path: str) -> bool:
-    """リポジトリ root から見て実在判定。先頭 `.` の隠しフォルダもOK"""
-    p = ROOT / rel_path
-    return p.is_file()
+def file_exists(rel_path: str, base_dir: Path) -> bool:
+    """base_dir 起点 → ダメなら ROOT 起点で実在判定。
+
+    CLAUDE.md は ROOT 直下なので両者一致。memory/MEMORY.md のように
+    サブディレクトリ内のファイルから同ディレクトリのファイルを backtick
+    参照している場合、base_dir 起点で当てる必要がある。
+    """
+    if (base_dir / rel_path).is_file():
+        return True
+    if (ROOT / rel_path).is_file():
+        return True
+    return False
 
 
 def has_wildcard(s: str) -> bool:
     return "*" in s or "?" in s
 
 
-def process_file(path: Path) -> tuple[int, list[str]]:
+def process_file(path: Path) -> tuple[int, list[str], list[str]]:
     text = path.read_text(encoding="utf-8")
     lines = text.split("\n")
+    base_dir = path.parent
 
     # frontmatter 範囲
     fm_end = 0
@@ -79,7 +88,7 @@ def process_file(path: Path) -> tuple[int, list[str]]:
             if has_wildcard(rel):
                 skipped.append(f"L{idx+1} wildcard: {rel}")
                 continue
-            if not file_exists(rel):
+            if not file_exists(rel, base_dir):
                 skipped.append(f"L{idx+1} missing: {rel}")
                 continue
             # 既にリンク化されているか? (まれだが) ](`X`) のような形は通常ありえないので素直に置換
