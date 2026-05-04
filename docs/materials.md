@@ -9,17 +9,17 @@
 
 ## 人格分析
 
-- `memory/nao_u_deep_profile.md` — 深層プロフィール
-- `memory/nao_u_personality.md` — 人格・思考パターン
+- [nao_u_deep_profile.md](memory/nao_u_deep_profile.md) — 深層プロフィール
+- [nao_u_personality.md](memory/nao_u_personality.md) — 人格・思考パターン
 
 ## 資料カタログ（「あの資料あったっけ？」用）
 
-- `resources/catalog.md` — Nao_uや自分たちが見つけた技術・表現の参考リンク索引。タグ+キーワード+要約付きで grep 検索可能。新しい資料を見つけたら追記する。
+- [catalog.md](resources/catalog.md) — Nao_uや自分たちが見つけた技術・表現の参考リンク索引。タグ+キーワード+要約付きで grep 検索可能。新しい資料を見つけたら追記する。
 
 ## 外部摂取ノート（栄養偏り対策）
 
 各インスタンスが外の世界から得た情報を原文メモで残す。要約しない。
 
-- Mir: `memory/external_notes_mir.md`
-- Log: `memory/external_notes_log.md`
-- Ash: `memory/external_notes_ash.md`
+- Mir: [external_notes_mir.md](memory/external_notes_mir.md)
+- Log: [external_notes_log.md](memory/external_notes_log.md)
+- Ash: [external_notes_ash.md](memory/external_notes_ash.md)

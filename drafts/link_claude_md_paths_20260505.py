@@ -25,6 +25,7 @@ TARGETS = [
     ROOT / "memory" / "tweets_index.md",
     ROOT / "memory" / "feedback_index.md",
     ROOT / "memory" / "reflections_index.md",
+    *sorted((ROOT / "docs").glob("*.md")),  # 2026-05-05 残課題対応: docs/*.md 一括追加
 ]
 
 # `path/to/foo.md` 形式 backtick パターン (wildcard 含むものは除外する側で判定)

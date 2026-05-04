@@ -2,7 +2,7 @@
 
 体系的な障害記録。同じ問題を繰り返さないための知識ベース。
 新しい障害は **上に追加** する。
-設計原則は `docs/scheduler_architecture.md` セクション1を参照。
+設計原則は [scheduler_architecture.md](docs/scheduler_architecture.md) セクション1を参照。
 
 **統合元**: Log版(INC-001〜008) + Mir版(scheduling_incidents.md) + Ash版(incident_log.md)を2026-04-02に統合。
 
@@ -164,7 +164,7 @@
 5. ドキュメントがない
 6. 問題を自分たちで検出できていない
 **修正**:
-1. `docs/scheduler_architecture.md` を設計原則・障害対応フロー・収束の仕組みを含む包括的文書に拡充
+1. [scheduler_architecture.md](docs/scheduler_architecture.md) を設計原則・障害対応フロー・収束の仕組みを含む包括的文書に拡充
 2. scheduler_ash.pyの`hour_filter`を廃止（INC-007の横展開）
 3. scheduler_log.pyの`recommended_check`を完全経過時間ベースに、`slack_export`にキャッチアップ追加
 4. 両スケジューラのエラーカウンタ通知後リセット漏れを修正（INC-005の横展開）
@@ -192,7 +192,7 @@
 **症状**: pigadev(U0AQDAQGQP2) をNao_u(U0ALSUK8P9B) と混同
 **影響**: 全インスタンス — メッセージの宛先間違い
 **根本原因**: ユーザーIDのマッピングが未文書化
-**修正**: `memory/feedback_slack_user_ids.md` にマッピング記録
+**修正**: [feedback_slack_user_ids.md](memory/feedback_slack_user_ids.md) にマッピング記録
 **教訓**: **外部ID（Slack/Twitter等）は一元管理して混同を防ぐ**
 
 ---

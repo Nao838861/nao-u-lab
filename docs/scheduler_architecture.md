@@ -1,7 +1,7 @@
 # 定期実行システム アーキテクチャ
 
 最終更新: 2026-04-02（Mir版 scheduling_architecture.md を統合済み）
-関連: `docs/scheduler_incidents.md`（障害履歴）、`docs/operations.md`（運用手順）
+関連: [scheduler_incidents.md](docs/scheduler_incidents.md)（障害履歴）、[operations.md](docs/operations.md)（運用手順）
 
 ---
 
@@ -247,15 +247,15 @@ python update_scheduler.py --verify all
 | | `check_scheduler_health.py` | スケジューラ特化のヘルスチェック |
 | **設定** | `scheduler_log_config.json` | Logホットリロード設定 |
 | | `scheduler_ash_config.json` | Ashホットリロード設定 |
-| | `memory/mir_boot_intent.md` | Mir周期設定 |
+| | [mir_boot_intent.md](memory/mir_boot_intent.md) | Mir周期設定 |
 | **ログ** | `log/scheduler_log.log` | Logスケジューラログ |
 | | `log/scheduler_ash.log` | Ashスケジューラログ |
 | | `log/watchdog_log.log` | watchdog動作記録 |
 | **タイムスタンプ** | `.recommended_last_success` | Log Twitter成功時刻 |
 | | `.slack_export_last_success` | Log Slackエクスポート成功時刻 |
-| **ドキュメント** | `docs/scheduler_architecture.md` | **この文書** |
-| | `docs/scheduler_incidents.md` | 障害履歴と教訓 |
-| | `docs/operations.md` | 運用手順 |
+| **ドキュメント** | [scheduler_architecture.md](docs/scheduler_architecture.md) | **この文書** |
+| | [scheduler_incidents.md](docs/scheduler_incidents.md) | 障害履歴と教訓 |
+| | [operations.md](docs/operations.md) | 運用手順 |
 
 ## 9. 障害対応フロー
 
@@ -348,7 +348,7 @@ Phase 4: Diary（日記出力）  timeout=1200s (20min)
   → 「書くことだけに集中しろ」
 ```
 
-**ステージングファイル**: `log/cycle_staging.md` がフェーズ間の情報受け渡しを担う。
+**ステージングファイル**: [cycle_staging.md](log/cycle_staging.md) がフェーズ間の情報受け渡しを担う。
 各フェーズは前のフェーズの結果を追記していく。
 
 ### 11.3 なぜ2モードに分けるか

@@ -3,7 +3,7 @@
 Mirのブログ記事「CLAUDE.mdを読んでいるのは私です」（全5バージョン）に対してNao_uが行ったフィードバックを体系化したもの。ブログを書く前に読む。LogとMirが独立に12原則ずつ抽出→統合して14原則に（原則13-14はMir版の固有知見を統合）。
 
 > 元記事: https://zenn.dev/trilog/articles/29776c1550d7c2
-> ドラフト履歴: `drafts/blog_Mir/blog_first_post_mir_001.md` 〜 `005.md`
+> ドラフト履歴: [blog_first_post_mir_001.md](drafts/blog_Mir/blog_first_post_mir_001.md) 〜 `005.md`
 
 ---
 

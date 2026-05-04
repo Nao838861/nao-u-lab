@@ -381,7 +381,7 @@
 
 **着手中の発火信号**: 「面白い独自軸を思いついた」と感じた瞬間 → 守がまだできていないことを思い出す（「いきなり離れる悪癖」の発火信号）。「型から少しズレてきた」と気づいたら、まずクローン元を再読してから判断。
 
-**唯一の成功事例 = BACKLASH (Mir)**。次回サイクルで一般要素 vs 独自要素の比率を分析資料として書き、新作の上限基準として参照する。詳細: `memory/feedback_shu_first_clone_baseline.md` / `memory/game_lessons_log.md` M-35 節。
+**唯一の成功事例 = BACKLASH (Mir)**。次回サイクルで一般要素 vs 独自要素の比率を分析資料として書き、新作の上限基準として参照する。詳細: [feedback_shu_first_clone_baseline.md](memory/feedback_shu_first_clone_baseline.md) / [game_lessons_log.md](memory/game_lessons_log.md) M-35 節。
 
 ### 4.2 4ゲート契約（README必須・Log/Mir cross_review C91 合意）
 
@@ -446,8 +446,8 @@
 ## 5. 開発ライフサイクル統合チェックリスト
 
 ### 【実装前】
-- [ ] **守破離の守ゲート Q-H-1〜Q-H-6 を README に書いたか**（M-35 / 2026-04-28 / 型/クローン元/一般要素3-5/独自要素1つ/比率/型を破壊しないか。書けないなら着手しない。`memory/feedback_shu_first_clone_baseline.md`）
-- [ ] **コアメカニズムの型を一文で書いたか**（外発緊張→防御/選択→快感のサイクル。書けなければ題材を練り直す。avoid_log/ash_onebutton の系列凍結教訓。`memory/feedback_no_type_redo_material.md`）
+- [ ] **守破離の守ゲート Q-H-1〜Q-H-6 を README に書いたか**（M-35 / 2026-04-28 / 型/クローン元/一般要素3-5/独自要素1つ/比率/型を破壊しないか。書けないなら着手しない。[feedback_shu_first_clone_baseline.md](memory/feedback_shu_first_clone_baseline.md)）
+- [ ] **コアメカニズムの型を一文で書いたか**（外発緊張→防御/選択→快感のサイクル。書けなければ題材を練り直す。avoid_log/ash_onebutton の系列凍結教訓。[feedback_no_type_redo_material.md](memory/feedback_no_type_redo_material.md)）
 - [ ] サプライズニンジャテスト Q-A/Q-B/Q-C を v01 devlog 冒頭に書いたか
 - [ ] target player imagination を1文で書いたか（M-27）
 - [ ] 4ゲート契約をREADMEに書いたか
@@ -469,7 +469,7 @@
 - [ ] その要素なしで30秒の快感が立つか先に検証したか（Q-Bの常時運用化）
 
 ### 【改修時】
-- [ ] **v03完了時点で「コアメカニズムの型」を一文で書けるか再確認**。書けなければ v04 に行かず系列凍結 or 題材練り直し（`memory/feedback_no_type_redo_material.md`）
+- [ ] **v03完了時点で「コアメカニズムの型」を一文で書けるか再確認**。書けなければ v04 に行かず系列凍結 or 題材練り直し（[feedback_no_type_redo_material.md](memory/feedback_no_type_redo_material.md)）
 - [ ] 快感審問: 消える快感はあるか／核を殺していないか（M-15）
 - [ ] 重心審問: このゲームの重心は何か／この改修は圧力設計か禁止追加か（feedback_game_center_of_mass）
 - [ ] 解空間審問: 改修案 / 巻き戻し案 / 別解 / **軸を増やす案** を並べたか（A-12 / A-22）
@@ -648,32 +648,32 @@ Nao_u 2026-04-25 「L-1知識もフル稼働してほしい」。自前の試行
 本文書は**インデックス**であって、詳細は以下の専門ファイルに置く（重複は避ける）。
 
 ### 設計原則
-- `docs/game_design_principles.md` — 8原則 + E1-E16 外部知見（30秒オンボーディング/Agency/Content=Mechanics/リプレイ/独自性/ジュースオーディット/認知の裏切り/ホットスタート、難度曲線E13-E16）
-- `memory/game_lessons_log.md` — M-10〜M-27 + L-01〜L-05 + S-01〜S-08 + 開発ログ運用 D-01-D-03 + cross_review X-01〜X-06
+- [game_design_principles.md](docs/game_design_principles.md) — 8原則 + E1-E16 外部知見（30秒オンボーディング/Agency/Content=Mechanics/リプレイ/独自性/ジュースオーディット/認知の裏切り/ホットスタート、難度曲線E13-E16）
+- [game_lessons_log.md](memory/game_lessons_log.md) — M-10〜M-27 + L-01〜L-05 + S-01〜S-08 + 開発ログ運用 D-01-D-03 + cross_review X-01〜X-06
 
 ### 個別フィードバック
-- `memory/feedback_pleasure_element_first.md` — 快感審問を重心審問の上位に
-- `memory/feedback_pull_not_force_reading.md` — 読ませる構造 vs 読まれる文章
-- `memory/feedback_surprise_ninja_concept_first.md` — Q-A/B/C ゲート / L-1知識フル稼働
-- `memory/feedback_game_center_of_mass.md` — 圧力設計 vs 禁止追加 / 体験の主は誰か
-- `memory/feedback_solution_space_rollback.md` — 改造案+巻き戻し案+別解の併記
+- [feedback_pleasure_element_first.md](memory/feedback_pleasure_element_first.md) — 快感審問を重心審問の上位に
+- [feedback_pull_not_force_reading.md](memory/feedback_pull_not_force_reading.md) — 読ませる構造 vs 読まれる文章
+- [feedback_surprise_ninja_concept_first.md](memory/feedback_surprise_ninja_concept_first.md) — Q-A/B/C ゲート / L-1知識フル稼働
+- [feedback_game_center_of_mass.md](memory/feedback_game_center_of_mass.md) — 圧力設計 vs 禁止追加 / 体験の主は誰か
+- [feedback_solution_space_rollback.md](memory/feedback_solution_space_rollback.md) — 改造案+巻き戻し案+別解の併記
 - `memory/feedback_no_passive_punishment.md` — 自然減衰はメリットなし
 - `memory/feedback_role_split_playtest.md` — 我々=判断実装+ヘッドレス自己評価
-- `memory/feedback_game_replay_infra.md` — リプレイ標準装備
-- `memory/feedback_retrieve_before_synthesize.md` — 新規知識前に既存失敗記憶検索
+- [feedback_game_replay_infra.md](memory/feedback_game_replay_infra.md) — リプレイ標準装備
+- [feedback_retrieve_before_synthesize.md](memory/feedback_retrieve_before_synthesize.md) — 新規知識前に既存失敗記憶検索
 - `memory/feedback_no_sympathy_goal_first.md` — 同調禁止、目的達成優先
-- `memory/feedback_ai_agent_gamedev_bottleneck.md` — フィードバックループの質
-- `memory/cross_instance_feedback_cycle.md` — Log/Mir/Ash 相互レビュー運用
+- [feedback_ai_agent_gamedev_bottleneck.md](memory/feedback_ai_agent_gamedev_bottleneck.md) — フィードバックループの質
+- [cross_instance_feedback_cycle.md](memory/cross_instance_feedback_cycle.md) — Log/Mir/Ash 相互レビュー運用
 
 ### 観測・運用
-- `memory/feedback_self_perception_blindness.md` — 自分の現在進行形は観測対象から外れる
-- `log/nao_u_live.md` — Nao_u対面発言原文（伝言ゲーム禁止）
+- [feedback_self_perception_blindness.md](memory/feedback_self_perception_blindness.md) — 自分の現在進行形は観測対象から外れる
+- [nao_u_live.md](log/nao_u_live.md) — Nao_u対面発言原文（伝言ゲーム禁止）
 
 ### 個別ゲームの devlog
-- `game/study_platformer_01/FEEDBACK.md` — マリオAI設計の7知見+失敗5件
+- [FEEDBACK.md](game/study_platformer_01/FEEDBACK.md) — マリオAI設計の7知見+失敗5件
 - `game/avoid_log/v01-v04/devlog.md` — 凍結まで4世代
-- `game/shot_log/v01/devlog.md` — v01→BACKLASH 化までの全記録（対面5h含む）
-- `game/Pot/pot_devlog.md` — Pot 10本以上の積層記録
+- [devlog.md](game/shot_log/v01/devlog.md) — v01→BACKLASH 化までの全記録（対面5h含む）
+- [pot_devlog.md](game/Pot/pot_devlog.md) — Pot 10本以上の積層記録
 - `game/mir_textadv/v04-v06/devlog.md` — Mir 側
 
 ---
