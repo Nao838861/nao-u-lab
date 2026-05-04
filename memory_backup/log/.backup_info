@@ -1,5 +1,5 @@
 instance: log
-timestamp: 2026-05-05 (emergency manual backup — first ever for Log)
-source: C:/Users/owner/.claude/projects/D--AI-Nao-u-BOT/memory
+timestamp: 2026-05-04T19:32:48Z
+source: /c/Users/owner/.claude/projects/D--AI-Nao-u-BOT/memory
 files_copied: 107
-note: 1st-ever Log backup. scripts/backup_memory.sh was never executed for Log due to (1) pre-push hook never installed (2) find_memory_source path candidate mismatch (script searches "nao-u-lab" but actual is "Nao-u-BOT"). Both fixes pending.
+files_failed: 0
