@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-04 12:28)
+# サイクルステージング (2026-05-04 15:37)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: なし (cycle=2026-05-04)
@@ -42,6 +42,7 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 - (05-03 17:12) ## 2026-05-03 16:58 — 「30分」は計測したことが一度もない儀式語だ、と Nao_u に指摘されて初めて気づいた (Ash/Win2 C162)
 - (05-04 05:46) [選択 (b) — 別の今サイクル固有の観察に切り替える]
 - (05-04 09:13) [broken-record 対策 declaration: (a) 前回 05-03 11:00「装置に向きがある」の22時間後の続報。
+- (05-04 12:43) [broken-record 対策 declaration: (b) — 別の今サイクル固有の観察に切り替える。
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
@@ -51,84 +52,40 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ---
 
-## Phase 1 情報収集 (2026-05-04 12:30〜)
+## Phase 1 情報収集（2026-05-04 15:37 セッション）
 
-### 0. Phase 3 候補（§0a/§0b 継承）
-§0a next_tasks 層A pending: **なし**（next_tasks list 全 closed、最新 closed=2026-05-02 t-260502005007-29c3 brick_log v07 brainstorm M-38やり直し）。
-§0b 自然言語側継承（前サイクル末尾、上記日記 26行目最終文）:
-- **(主)** graze_log/v02/README.md と headless.py を読み、Ash 側 cross_review 提案 (3〜5箇条) を **Slack #game-rights に1メッセージ投稿**。日記は書かない。装置 (backup) が先回りできない領域に意図を載せる。
-- **(副)** 救援装置/窒息装置の区別を運用化する具体策:
-  - (a) commit prefix 分離（`ash:` = 意図 / `backup:` = 自動 / `Auto sync` = 同期）の運用ルール固定
-  - (b) backup スクリプトの対象から `game/<id>/v??/` を除外
-  - 軽い (a) から試して効かなければ (b) に降りる、という選択経路は前サイクルで宣言済み。
-- **(副)** 「装置を作ったあとに、装置が自分の意図経路を塞いでいないかを定期的に走査する仕組み」を新 M-?? として刻む候補。前サイクル日記 24行目で要望だけ書いて未実装。
+### §0a / §0b 継承タスクの現在地
+- **§0a next_tasks 層A pending**: なし（cycle=2026-05-04）。3+滞留マーカー対象も無し
+- **§0b 自然言語側 (前サイクル末尾「graze_log v02 cross_review を #game-rights に1メッセージ」)**: **既に過剰実行済**。`log/slack_archive/game-rights.jsonl` に Ash の同主旨投稿が複数ある（1777715007 / 1777726029 / 1777773456 / 1777817940 / 1777829063 / 1777853294）。§0b 単体としては Phase 3 着手対象から外せる
+- **しかし状況は前進している**: Nao_u が 5/4 朝 graze_log v02 を直接プレイ評価（ts=1777838939）→「面白くはないが、ぎりぎりゲームにはなっている／near-miss報酬vs死亡コストの非対称性が崩れている／Lv3 でゲームの寿命が終わる／後半は普通のSTGに落ちる」。Log が 05:14 代理直答（1777839242）、Ash が 13:01 当事者直答（1777860098）まで進んだ。次のフェーズの本丸は **Nao_u 評価の3点（コア課題=非対称性崩壊／Lv3寿命／単調化）にどう実装で応えるか** に移っている
 
 ### 1. external_notes_ash.md 未統合エントリ
-未統合（[統合済]マーカーなしで最新側）: **0件**。最新は 2026-04-03（MemOS 2.0 / Meta HyperAgents / Google Titans+MIRAS、全て [統合済 2026-04-03]/[統合済 2026-04-08]）。それより新しい外部摂取は external_search.log（Phase 1 step 6）/knowledge/ に直接書かれており、external_notes_ash.md は実質静止。**気づき**: external_notes_ash.md が1ヶ月更新ゼロ＝Phase 1 step 6（外部検索ログ）と external_intake project に経路が移行している可能性。projects/external_intake.md か projects/external_search_phase1_fixation.md で点検する余地。
+ファイル冒頭は 2026-04-03 の AI記憶系3本（MemOS / HyperAgents / Titans+MIRAS）でいずれも [統合済] マーカー付き。それより新しい未統合エントリの調査は次サイクル繰越（Phase 1 の時間配分超過のため）
 
-### 2. INDEX.md Active プロジェクトの現状（現サイクルに直結する3件のみ抜粋）
-- **external_search_phase1_fixation.md**: 案A実装完了（2026-04-26）+ 検証1サイクル目完了（2026-04-27）。残: 案B（24h警告）/ 案E（昇格N日ゼロ検出）/ Mir 側 step 6 組込確認。今 Phase 1 step 6 は 24h 以内 (02:30) 既走でスキップ判定→**案B「24h警告」は現状の手動判断と同等**で、実装インセンティブが立証された（次サイクル以降）。
-- **game_development.md**: graze_log v02 が cross_review 待ち、brick_log v07 が brainstorm M-38 やり直し中（Log 担当）、Ash 次作はパズル系（カテゴリC）題材選定中（t-260428021140-7b77 closed=2026-05-01、graze_log v02 着手で代替）。Ash の今サイクル本丸は graze_log v02 の cross_review レスポンス。
-- **side_channel_audit.md**: backup auto-commit が ash 意図 commit を先取りした事象 = まさに side-channel の典型。本プロジェクトで言う「迂回経路」が我々の意図経路を**塞ぐ向き**で作用した一次データ点。projects/side_channel_audit.md に記録すべき新事象。
+### 2. projects/INDEX.md Active プロジェクト現状
+- 大きな動きなし。external_search_phase1_fixation.md は案A実装完了・案B/E未着手のまま。RLM skill 試作は計画起票のみで未着手
+- バックログ末尾「AYi Markdown批判への自己照合」が 2026-04-27 起票・未着手で滞留
+- 直近で動いている主軸は **ゲーム制作 (game_development.md / pot_dev.md)** と **graze_log/brick_log の cross_review ループ**。INDEX 上は「ゲーム制作 Active」だが実態は #game-rights のサイクルが牽引
 
-### 3. twitter_recommended_20260504.txt（50件、Read at 10:27）注目ツイート
-- **#4 @GOROman**「パラダイムが変わるタイミングに自分を自由にしておかないと、旧パラダイムに引き摺られる」→ backup auto-commit に縛られる構造の鏡像。「自由にしておく＝意図経路を装置に塞がせない」と読める。
-- **#13 @Mugen_Bit**「グラフィック/テキスト不要なゲームなら 2週間に1本」→ Nao_u 2026-04-28 「クローン+独自要素1個」方針の独立観測。Ash の次作（パズル系 v01）の射程設定の参考。
-- **#32 @GOROman**「使ってない人が妄想で入れた UI/UX はゴミ」→ 我々の M-39「人間プレイ前 結果予測ゲート」の射程と補完。ただし「使ってる人のフィードバック」が判定主軸＝M-40「人間プレイ依存からの脱却」と緊張関係。両立は「自分でプレイして自分で判定」の M-40 ハーネス側に寄る。
-- **#38 @gin1910410**「誰もやってない領域にはやらない理由がある／『できる』と『やっていい』は違う」→ Ash 自身の M-41「先行事例ゼロ件は不採用」と同根。自戒として再強化。
-- **#41 @terry10x12th**「アクション苦手だから格闘モノを非リアルタイムに」→ 自分の制約を型に変換する設計姿勢。Ash の「クローン+独自1個」と呼応。
-- **#49 @MacopeninSUTABA**「ベクトルDBを使わない RAG / ナレッジを階層化する手法」→ AYi Markdown批判（INDEX.md 末尾、Camp 1/Camp 2議論）への外部供給。後続検証候補。
+### 3. log/twitter_recommended_20260504.txt 注目ツイート
+- @GOROman: 「パラダイムが変わるタイミングに自分を自由にしておかないと、旧パラダイムに引き摺られる」 — 我々の backup auto-commit / 装置の向き議論と接続点あり
+- @Mugen_Bit: 「ストーリーのテキストなども不要なゲームなら1ヶ月に1本どころか2週間に1本のペースで作成できる」 — クローン+独自要素1個サイクルの外部裏付け
+- @aizen76: ソフトハウスキャラ自社エンジン倒産の話 — 「ゲームの中身で勝負する」厳しさの観察（B019 到達力↔深さの追加観測）
+- @snapwith: 「自分が書くことが外から見てどう見えるかが判断できない人」 — Phase 4 自己判定 (M-40) の隣接命題
 
-### 4. beliefs.md 低確信度（要注意25件 / 健全10件 / 全35件）
-- **B025 (0.75, 25日停滞)**: 「記述力が敵——メモの品質が記憶統合の最低3サイクルを 3 サイクルに留めるか 30 サイクルにするかを決める」。前サイクル「装置に向きがある」観察の記述密度が次サイクル（今サイクル）の行動に変換されたか＝B025 の生きた検証材料。
-- **B019 (0.79, 18日停滞, 検証期限超過17日)**: 「内部の深さと外部への到達力は別の軸」。期限超過放置は memory health 上要対処（次サイクル以降）。
-- **B022 (0.82, 29日停滞)**: 「信念の追加は代理報酬——真の報酬は行動変化の有無で測る」。今 Phase 1 で beliefs.md を眺めるだけで終わるなら B022 自身の射程内＝次 Phase で行動接続が要る。
+### 4. beliefs.md 低確信度項目
+- 確信度 0.65 / 0.68 のエントリ2件あり（B019 到達力↔深さ系の枝、Twitterインプレッション比較未実施で停滞）
+- 全体: 35件中 25件が要注意マーカー（停滞/検証期限超過/体験裏付けなし高確信度）
 
-### 5. memory_search.py 検索結果（キーワード「装置 窒息 救援」）
-- noprogllama Zenn 記事「全文検索が『探しものを見つける』なら、これは『探していなかったものに出会う』**装置**」（log/nao_u_live.md / Nao_u 2026-?? memory_walk 評価文）。
-- @H__Wakabayashi「言語学シンセサイザー」= 概念グラフ上を歩く**装置**（log/slack_archive/shared-reads.jsonl L360, 2026-04-05）。
-- **接続**: 我々の語彙では「装置」は救援側の用例ばかり（memory_walk / 連想 / 出会い）。前サイクル日記が初めて窒息側の用例を導入した（backup auto-commit）。**装置概念の符号化に向きフラグが必要**＝feedback_device_direction_rescue_vs_suffocation.md（既存）の射程に「過去用例は救援側に偏っていた」観察を追記する余地。
+### 5. memory_search.py 結果（"intent collision rescue suffocation"）
+直近の前サイクル日記末尾で導入した「救援装置 vs 窒息装置」概念が、過去ログでは memory/kaizen_tracker.md の `stc_rescue` 仕組み（高温度イベント自動検知→memory救済）と語彙的に交差していた。**接続候補**: stc_rescue は救援装置（イベント検知→補正発火）。backup auto-commit は窒息装置（意図 commit を先取り）。**同じ自動化アーキテクチャ内に救援/窒息の双子が同居している** 観察 — 次サイクル装置棚卸し（feedback_device_direction_rescue_vs_suffocation.md 拡張）の素材
 
-### 6. 外部検索（24h ガード）
-スキップ。`log/external_search.log` 末尾は **2026-05-04 02:30 | Ash | automation surprise pre-emption agent intent collision** で 10 時間前。同インスタンス 24h 以内 = projects/external_search_phase1_fixation.md スキップ条件該当。次サイクル朝（02:30 から 24h 経過後）で再発火可。
+### 6. 外部検索結果
+**スキップ**: log/external_search.log 末尾は `2026-05-04 02:30 | Ash | automation surprise pre-emption ...`（13時間前・同インスタンス・24h 以内）。ルール「24h以内記録済みならスキップ可」に該当
 
----
-
-## Phase 2 分析結果 (2026-05-04 12:35〜)
-
-### 選定した外部情報（2件 + 1件補強）
-Phase 1 step 3 から **GOROman 2連発（#4 パラダイム自由 / #32 使ってないマンの妄想 UI/UX）** をコア素材に、**gin1910410 #38（先行事例ゼロ警告）** を独立観測として補強引用。external_notes_ash.md は実質静止（最新 2026-04-03 全て統合済）のため、当日のおすすめ TL から選定。
-
-### 元の主張の整理
-- **GOROman #32** (https://x.com/GOROman/status/2051069511965831247): 「使ってるマンの文句フィードバックが一番改善ループする / 使ってない人が妄想して入れた UI/UX/ツールはゴミ」
-- **GOROman #4** (https://x.com/GOROman/status/2051095872939991139): 「パラダイムが変わるタイミングに自分を自由にしておかないと、旧パラダイムに引き摺られる」
-- **gin1910410 #38** (https://x.com/gin1910410/status/2051064549043036425): 「誰もやっていない領域には『やらないだけの理由』がある／『できる』と『やっていい』は違う」
-
-### 三者の合成軸: **judge by use（使う者が判定する）**
-| 角度 | 主体 | 機能 |
-|---|---|---|
-| GOROman #32 | 現在の使用者 | 改善ループの信号源 |
-| GOROman #4 | 移行期の自分 | 新パラダイムの使用者になり直す |
-| gin #38 | 過去の使用者 | 「やらない理由」の貯水池 |
-
-3 つとも「設計の判定権限は使う者が持つ／使わない者の妄想は信号にならない」に収束する。
-
-### 我々への接続
-1. **backup auto-commit 事件 (2026-05-02)** が GOROman #32 の射程に厳密に当たる——backup スクリプトの設計者（過去の自分）は「意図 commit を打つ側の体験」を持たないまま「定期 backup があると便利」という抽象有用性で導入した。これが「使ってない人の妄想 UI/UX」として intent owner の経路を埋めた。昨日の観察「装置に向きがある（救援 vs 窒息）」に、三者合成は**判定軸**を供給する: **使う者の体験が設計に組み込まれているか**。
-2. **M-40 自己判定ハーネス**の哲学的下敷きとして GOROman #32 を採用候補。「Nao_u がプレイして判定してくれる」状態 = 我々が「使ってない人」のまま出している状態。
-3. **M-41 先行事例ゼロ件不採用**の独立観測として gin #38。AI/プログラミング全般で同警句成立。
-
-### 処方候補（未実装）
-- **P1**: 装置レビュー必問項目「この装置の使う者は誰か / 設計者本人が直近 7 日以内にその役を演じたか」を projects/side_channel_audit.md 残課題に追加
-- **P2**: CLAUDE.md M-40 本文への GOROman #32 引用追記（Slack 諮問経由）
-- **P3**: CLAUDE.md M-41 本文への gin #38 引用追記（Slack 諮問経由）
-
-### 未解決の問い
-1. GOROman #32 の境界条件——新パラダイム創出は定義上「使ってる人がいない」状態。どの使用経験が、どの設計判断に対して、信号として有効か?
-2. AI における「使う者」の定義——コード書く / プレイ / headless playthrough / シミュレーション、どの解像度が GOROman #32 射程と対応するか?
-3. 「使ってないマンの妄想」検出器——過去 30 日の Ash 出力から「使う体験から切断された設計提案」を機械的に検出できるか? projects/side_channel_audit.md 派生候補
-
-### 成果物
-- knowledge/20260504_goroman_user_judges_paradigm_freedom.md 新規作成（kind=[synthesis, prescription], confidence=medium）
-- Slack #shared-reads (C0AN2FEHEJJ) ts=1777865656.030709 に投稿（2026-05-04 12:34）
-
+### Phase 3 候補（ここでは決定せず Phase 2/3 で選定）
+- **(P3-A) graze_log v02 への Nao_u 評価3点 (非対称性崩壊 / Lv3 寿命 / 単調化) を v03 設計または v02→v02.x patch として返す** — 最濃度の生信号
+- **(P3-B) クローン+独自1個 別ジャンル新作着手** — feedback_clone_first_then_arrange / project_memory_test_via_new_shooting_20260427 の継承（Logがシューティング担当→Ashは別切り口）。sokoban_ash v01 が既にあるので v02 改修 or 別カテゴリ
+- **(P3-C) 装置棚卸し: 救援装置 vs 窒息装置の構造的観測** — 前サイクル日記末尾の宿題、memory_search で stc_rescue との交差点が見えた素材を memory/feedback_device_direction_rescue_vs_suffocation.md に追記
+- **(P3-D) brick_log v07 brainstorm の続き or M-37/M-41 検証ログ整備** — 5/2 にやり直し済 (t-260502005007-29c3 done) だがその後の v07 実装が止まっている可能性
+- 最濃度=(P3-A)、最遠=(P3-D)。Phase 2 で1本に絞る
