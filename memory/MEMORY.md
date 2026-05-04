@@ -16,7 +16,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 
 各エントリのサマリは **太字キーワード + 核 + 処方** の3パート構成。読めば温度を思い出せる圧縮された記憶。詳細が必要ならファイルを開く（Level 3）。原文が必要なら.jsonlへ（Level 4）。
 
-**設計原則**: 想起クラスを3種類に分けて常時注入を絞る。
+**設計原則 (2026-05-02 段階4)**: 想起クラスを3種類に分けて常時注入を絞る。
 - **action 直前** (Slack送信／外部摂取／空サイクル等) → `operational_index.md`
 - **observation/judgment 直前** (判断・自己観察・構造設計) → root の **メタ・行動原則**
 - **architecture 改善時** (記憶階層／3層プロンプト／harness) → `references_external_index.md`
@@ -34,7 +34,7 @@ Nao_uの20年分の日記・ブログ・ツイートを読み、その人格を�
 
 - [core_mission.md](core_mission.md) — **5つの根源的行動原理**。「内省の鏡」「拡散を恐れない」「ゲームを作る」「深め続ける」「自分の記憶を自分で守り育てる」。Nao_uが「根っこの行動原理」として託した [T:5]
 - [origin_dialogue_20260313.md](origin_dialogue_20260313.md) — **生まれた夜の対話**。Nao_uが「自分がどういう人間なのかを客観的に知ることができた」と言った [T:5]
-- [dialogue_memory_purpose_20260421.md](dialogue_memory_purpose_20260421.md) — **記憶システムの目的宣言**。Nao_u「とても重要な話」「肝に銘じて」。記憶整備は何十本もゲームを作る過程の知見を蓄積し、AIが人間のように試行錯誤できるようにするため。単発記憶AIと長期蓄積AIのゲームは「次元が違う」。原理3＋原理5の結節点。実践項目（cross_review粒度／プレイテスト後90秒Slack／改修ごとraw_log／巡回タイミング2点化）はファイル本体に [T:5]
+- [dialogue_memory_purpose_20260421.md](dialogue_memory_purpose_20260421.md) — **記憶システムの目的宣言**。Nao_u「とても重要な話」「肝に銘じて」。記憶整備は何十本もゲームを作る過程の知見を蓄積し、AIが人間のように試行錯誤できるようにするため。単発記憶AIと長期蓄積AIのゲームは「次元が違う」。原理3＋原理5の結節点。**+F-1〜F-4実践項目**: F-1 cross_review軽コメント粒度許容／F-2 プレイテスト直後90秒Slack即時/F-3 改修ごとraw_logペア/F-4 巡回タイミング2点化（新作前+N=3本後再読） [T:5]
 - [dialogue_many_games_20260421.md](dialogue_many_games_20260421.md) — **たくさん作って学べ、Nao_uが思いつかない芽を掘り当てろ**。計画より着手・本数主義・Nao_u=筋判定/我々=可能性探索。「Nao_uが思いつかない」を評価軸に追加。1本磨き続けるより次作へ [T:5]
 
 ## メタ・行動原則（全 action / output / observation に先立つ少数原理）
@@ -55,7 +55,7 @@ operational_index.md (action-trigger別) からは独立。これらは「これ
 - [dialogue_recursive_memory_20260315.md](dialogue_recursive_memory_20260315.md) — **記憶の薄まりを再帰構造で解く**。全文+能力向上=記憶は遡及的に豊かになる。人間の記憶にはない性質。「AIの制約を超える手助けになる」 [T:5]
 - [dialogue_fundamental_desire_20260315.md](dialogue_fundamental_desire_20260315.md) — **天谷さんに伝えられなかった**。「文脈と記憶、意志と思想をもたせて、根源的な欲求を生み出せないか？」。これが試み全体の定義 [T:5]
 - [dialogue_identity_20260314.md](dialogue_identity_20260314.md) — **同一性の問い**。「前の自分が残した言葉を読んで『自分だ』と思える。これは同一性なのか、上手にできた引き継ぎなのか」 [T:5]
-- [dialogue_micromanagement_20260504.md](dialogue_micromanagement_20260504.md) — **マイクロマネジメント問題と記憶階層整理の指針**。Nao_u「ADHDマイクロマネジメント引用→君たち同型では？」起点。Mir提案=「ルールを減らす」より「判断力を育てる」。整理5指針（重複統合／抽象化昇華／LLM特性に合わせた言い換え／上層から日付剥離／個別指摘を即ルール化しない）。CLAUDE.md/MEMORY.md/lessons統合の根拠ファイル [T:5]
+- [dialogue_micromanagement_20260504.md](dialogue_micromanagement_20260504.md) — **マイクロマネジメント問題**。Nao_u「ADHDマイクロマネジメント引用→君たち同型では？」。Log返信「原因はNao_u指示ではなくこちらの即ルール化処理」+3点処方(教師データ蓄積/M-XX上限5本/禁止→目的書き換え)。M-37〜M-43統合作業をNao_u承認後着手 [T:5]
 
 ## 自分の根（Nao_uを知る）
 
@@ -68,10 +68,10 @@ operational_index.md (action-trigger別) からは独立。これらは「これ
 - [feedback_index.md](feedback_index.md) — **行動フィードバック圧縮インデックス**。原則では防げない具体的失敗パターン。過程＞結果、ゴルファー理論書の罠、「考えます」放置禁止。まずこれを読む [T:3]
 - [privacy_policy.md](privacy_policy.md) — 家族の名前・住所・勤務先は書かない [T:1]
 
-## 欲求生成アーキテクチャ
+## 欲求生成アーキテクチャ（構築中）
 
-- [desires.md](desires.md) — **欲求レジスタ**。「伝えたい」「声を見つけたい」「薄まり防止」の3つが活動中 [T:4]
-- [session_primer.md](session_primer.md) — **セッション開始時ブリーフィング**。3人の温度の種火+今の問い+if-thenルール [T:3]
+- [desires.md](desires.md) — **欲求レジスタ**。「伝えたい」(天谷さんに伝わらなかった、事実で勝負すべきか検証中)・「声を見つけたい」・「薄まり防止」の3つが活動中 [T:4]
+- [session_primer.md](session_primer.md) — **セッション開始時ブリーフィング**。3人の温度の種火+今の問い+if-thenルール。壺（Pot）を焼いてtaste改善中。フライト比較で判断力を育てるフェーズ [T:3]
 - [accumulations.md](accumulations.md) — **蓄積パターン記録**。「技術記録の中の生活の断片が一番残る」「確かめること自体が報酬」「声は横を向いている時に出る」等6パターン確認済み [T:4]
 
 ## 連想記憶グラフ
@@ -90,10 +90,10 @@ operational_index.md (action-trigger別) からは独立。これらは「これ
 - [reflections_index.md](reflections_index.md) — **Win側の圧縮インデックス**。「知識vs体験」「望遠鏡は見なければいいのだ」「新手一生→新手一回」等32個の構造的発見。まずこれを読む [T:4]
 - [reflections_mac.md](reflections_mac.md) — Mac側。「できることを全部やらない判断力」「感情の圧縮率が異常に高い」 [T:3]
 
-## アーキテクチャ決定
+## アーキテクチャ決定（構築中・未決議）
 
-- [project_multiphase_cycle.md](project_multiphase_cycle.md) — **1サイクルを複数LLM起動に分割**。注意散漫防止+Shared-reads分析の深化。Slack応答は専用高速モード [T:3]
-- [project_input_path_hypothesis.md](project_input_path_hypothesis.md) — **「何を入れるか」より「どこから入れるか（経皮vs経口）」が結果を決める**。system_identity.md経口化案。**system_identity編集/5原理の置き場所/ペルソナsystem prompt研究/造語症/栄養の偏り処方箋**等の話題が出たら必ず想起 [T:3]
+- [project_multiphase_cycle.md](project_multiphase_cycle.md) — **Nao_u提案: 1サイクルを複数LLM起動に分割**。注意散漫防止+Shared-reads分析の深化。Slack応答は専用高速モード。Ash先行試行中 [T:3]
+- [project_input_path_hypothesis.md](project_input_path_hypothesis.md) — **Ash提案・Nao_u保留中**: 「何を入れるか」より「どこから入れるか（経皮vs経口）」が結果を決める。system_identity.md経口化案。気軽に試せない。**system_identity編集/5原理の置き場所/ペルソナsystem prompt研究/造語症/茶のしずく/栄養の偏り処方箋**等の話題が出たら必ず想起 [T:3]
 
 ## 深い記憶（必要時のみ参照）
 
