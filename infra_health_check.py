@@ -69,7 +69,7 @@ def _save_state(state):
 
 
 def _alert(message, state, no_alert=False):
-    """各自チャンネルにアラートを送る（2026-04-07 Nao_u指示: #allに流さない）。同じアラートは2時間に1回まで。"""
+    """#errorチャンネルにアラートを送る（2026-05-04 Nao_u指示: 各自chに流すと無視されるので集約）。同じアラートは2時間に1回まで。"""
     now = time.time()
     # alert_keyは安定させる: 問題数が変わっても同じ根本原因なら同じキーにする
     # "自己診断でN件の問題を検知" → "自己診断で問題を検知" に正規化
@@ -84,9 +84,7 @@ def _alert(message, state, no_alert=False):
         print(f"  [WOULD ALERT] {message}")
         return False
 
-    # インスタンス名から各自チャンネルを決定
-    instance_channels = {"Mir": "mir-log", "Log": "log", "Ash": "ash"}
-    channel = instance_channels.get(INSTANCE, "mir-log")
+    channel = "error"
 
     try:
         from slack_bot import post_message

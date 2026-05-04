@@ -79,8 +79,9 @@ LOG_TAIL_LINES = 100
 # 連続エラーの検出閾値
 CONSECUTIVE_ERROR_PATTERN_THRESHOLD = 5
 
-# Slackチャンネル（エラーログは各自チャンネルに出す。2026-04-07 Nao_u指示）
-_INSTANCE_CHANNELS = {"log": "log", "ash": "ash", "mir": "mir-log"}
+# エラーアラートは #error に集約（2026-05-04 Nao_u指示: 各自chに流すと無視されるので集約）
+# インスタンス名はメッセージ本文に含める。
+ERROR_CHANNEL = "error"
 
 # --- チェック定義 ---
 
@@ -614,9 +615,9 @@ def alert_slack(report, instance=None):
             else:
                 instance = "log"
 
-        channel = _INSTANCE_CHANNELS.get(instance, "log")
+        channel = ERROR_CHANNEL
         msg = (
-            f"[health_check] {report['overall'].upper()} "
+            f"[{instance.upper()} health_check] {report['overall'].upper()} "
             f"(critical={report['summary']['critical']}, "
             f"warning={report['summary']['warning']})\n"
             + "\n".join(lines[:10])

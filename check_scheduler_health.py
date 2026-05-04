@@ -389,7 +389,7 @@ def main():
         print(f"[{instance.upper()}] ヘルスチェック {result.summary()}")
         print(result.to_text())
 
-    # Slack通知（FAILがある場合のみ。各自チャンネルへ。2026-04-07 Nao_u指示）
+    # Slack通知（FAILがある場合のみ。#errorに集約。2026-05-04 Nao_u指示: 各自chでは無視される）
     # 30分dedup: スケジューラ不安定時の連投防止（2026-04-10）
     if args.slack and result.failures:
         try:
@@ -407,8 +407,7 @@ def main():
             else:
                 sys.path.insert(0, str(REPO_DIR))
                 from slack_bot import post_message
-                instance_channels = {"mir": "mir-log", "log": "log", "ash": "ash"}
-                channel = instance_channels.get(instance, "log")
+                channel = "error"
                 msg = f"⚠️ [{instance.upper()}] スケジューラ異常検出\n{result.summary()}\n"
                 for f in result.failures:
                     msg += f"\n❌ {f['name']}: {f['detail']}"

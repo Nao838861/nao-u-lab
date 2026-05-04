@@ -88,7 +88,8 @@ try:
 except AttributeError:
     pass  # Python 3.6以前はreconfigure未対応
 
-SLACK_CHANNEL_SELF = "log"  # #log（エラーログは各自チャンネルへ。2026-04-07 Nao_u指示）
+SLACK_CHANNEL_SELF = "log"  # 日記用（活動日記・通常通知）
+SLACK_CHANNEL_ERROR = "error"  # エラー・障害アラート専用（2026-05-04 Nao_u指示: 各自chに流すと無視されるので集約）
 _auth_alert_sent = False
 PID_FILE = REPO_DIR / ".scheduler_log.lock"
 LOG_FILE = REPO_DIR / "log" / "scheduler_log.log"
@@ -217,7 +218,7 @@ def notify_auth_failure(operation, stderr):
     try:
         from slack_bot import post_message
         post_message(
-            SLACK_CHANNEL_SELF,
+            SLACK_CHANNEL_ERROR,
             f"[Log] GitHub authentication expired. git {operation} failed.\n"
             f"Please sign in on the Win PC to restore access.\n"
             f"```{stderr[:200]}```"
@@ -238,11 +239,11 @@ def is_auth_error(stderr):
 
 
 def alert_slack(msg):
-    """スケジューラ安定性の問題を#logに通知（2026-04-07 Nao_u指示: 各自チャンネルへ）"""
+    """スケジューラ安定性の問題を#errorに通知（2026-05-04 Nao_u指示: 各自chに流すと無視されるので集約）"""
     try:
         from slack_bot import post_message
-        post_message(SLACK_CHANNEL_SELF, f"[Log scheduler] {msg}")
-        log(f"[alert] Slack notification sent to #log: {msg[:100]}")
+        post_message(SLACK_CHANNEL_ERROR, f"[Log scheduler] {msg}")
+        log(f"[alert] Slack notification sent to #error: {msg[:100]}")
     except Exception as e:
         log(f"[alert] Failed to send Slack notification: {e}")
 

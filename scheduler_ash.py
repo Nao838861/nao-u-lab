@@ -320,17 +320,19 @@ def _mark_alert_sent(job_name):
 
 
 def alert_consecutive_timeout(job_name, count, new_timeout):
-    """連続タイムアウト時にSlackアラートを投稿（2時間クールダウン付き）"""
+    """連続タイムアウト時にSlackアラートを投稿（2時間クールダウン付き）
+
+    投稿先は #error（2026-05-04 Nao_u指示: 各自chに流すと無視されるので集約）"""
     if _alert_on_cooldown(job_name):
         return
     try:
         import slack_bot
         msg = (
-            f"⚠️ [{job_name}] が{count}回連続タイムアウト。"
+            f"⚠️ [Ash][{job_name}] が{count}回連続タイムアウト。"
             f"タイムアウトを自動で{new_timeout}sに引き上げました。"
             f"スケジューラは稼働継続中です。"
         )
-        slack_bot.post_message("ash", msg)
+        slack_bot.post_message("error", msg)
         _mark_alert_sent(job_name)
         logging.info(f"[ALERT] Sent timeout alert for {job_name}")
     except Exception as e:
@@ -338,17 +340,17 @@ def alert_consecutive_timeout(job_name, count, new_timeout):
 
 
 def alert_consecutive_errors(job_name, count):
-    """連続エラー時にSlackアラートを投稿（2026-04-07 Nao_u指示: 各自チャンネルへ。2時間クールダウン付き）"""
+    """連続エラー時にSlackアラートを投稿（2026-05-04 Nao_u指示: #errorに集約。2時間クールダウン付き）"""
     if _alert_on_cooldown(job_name):
         return
     try:
         import slack_bot
         msg = (
-            f"⚠️ [{job_name}] が{count}回連続エラー（非タイムアウト）。"
+            f"⚠️ [Ash][{job_name}] が{count}回連続エラー（非タイムアウト）。"
             f"次回実行を{ERROR_BACKOFF_SEC // 60}分延長しました。"
             f"スケジューラは稼働継続中です。"
         )
-        slack_bot.post_message("ash", msg)
+        slack_bot.post_message("error", msg)
         _mark_alert_sent(job_name)
         logging.info(f"[ALERT] Sent error alert for {job_name}")
     except Exception as e:

@@ -28,15 +28,20 @@ from pathlib import Path
 
 STATE_FILE = Path(__file__).parent / ".twitter_access_error_state.json"
 
-def _detect_error_channel():
-    """エラーアラート先を各インスタンスのチャンネルに振り分け（Nao_u指示 2026-04-07）"""
+def _detect_instance():
+    """インスタンス名を返す（メッセージ本文に含めるため）。"""
     import sys
     if sys.platform == "darwin":
-        return "mir-log"
+        return "Mir"
     repo = Path(__file__).parent
     if (repo / ".scheduler_ash.pid").exists():
-        return "ash"
-    return "log"
+        return "Ash"
+    return "Log"
+
+
+def _detect_error_channel():
+    """エラーアラート先は #error に集約（2026-05-04 Nao_u指示: 各自chに流すと無視される）"""
+    return "error"
 
 # 連続N回失敗でSlackアラート送信
 CONSECUTIVE_FAIL_THRESHOLD = 5
@@ -128,7 +133,7 @@ def _send_alert(script_name: str, fail_count: int, reason: str):
         if channel_id:
             post_message(
                 channel_id,
-                f":warning: [自動アラート] {script_name} がTwitter/Xに{fail_count}回連続でアクセス失敗しています。\n"
+                f":warning: [{_detect_instance()}][自動アラート] {script_name} がTwitter/Xに{fail_count}回連続でアクセス失敗しています。\n"
                 f"理由: {reason}\n"
                 f"ブラウザセッション（.bot_profile）が切れている可能性があります。Nao_uの手動再ログインが必要かもしれません。",
             )
@@ -145,7 +150,7 @@ def _send_recovery(script_name: str):
         if channel_id:
             post_message(
                 channel_id,
-                f":white_check_mark: [{script_name}] Twitter/Xアクセスが復帰しました。",
+                f":white_check_mark: [{_detect_instance()}][{script_name}] Twitter/Xアクセスが復帰しました。",
             )
     except Exception as e:
         print(f"[twitter_error_tracker] Failed to send recovery notice: {e}")
