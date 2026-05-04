@@ -1,12 +1,16 @@
 ---
 name: genre-deep-analysis
-description: Run before starting a new game v01 or major revision. Forces 5-question genre analysis (Q1 core pleasure / Q2 strengths-pains / Q3 ≥10 method-problem mappings / Q4 best single move / Q5 multi-problem ideas) plus retrieval of past brainstorms plus ≥30 fresh candidates. Triggered when creating game/<id>/v01/, when README lacks Q1-Q5 block, when revisiting a frozen series, or when about to write a single-idea implementation proposal. Outputs README brainstorm.md sections that block implementation until filled.
+description: M-38 着手前ゲート。新ゲーム v01 / 主要改修前にジャンル深掘り (Q1-Q5 + 過去ブレスト想起 + 30件新規ブレスト + M-37 批判) を強制。出力は brainstorm.md。
 type: pre-implementation-gate
 priority: must-run-before-implementation
 linked-rules: [M-15, M-32, M-35, M-36, M-37, M-37b, M-38, M-41]
 ---
 
 # Genre Deep Analysis Cycle (M-38)
+
+## TL;DR
+
+新ゲーム v01 / 主要改修前に強制起動。Q1-Q5 (コア快感 / 良点問題点 / 解決手法10件以上 / 最良一手 / 横断案5件) + **類似ゲーム類似事例最低5本** (M-41) + 過去ブレスト想起 + **新規ブレスト30件** + 上位10件以上に M-37 批判 + 案セット相乗検討 + 「最良」確信宣言 を `game/<id>/v01/brainstorm.md` に書ききるまで実装着手しない。実行口は `/game-analyze` (Mir 実装、本ファイルは規範 spec)。
 
 着手前にジャンルを掘り下げて選択肢空間を広げる skill。
 Nao_u 2026-05-01 04:16「短絡的に思いつきを実行しがち、ブレスト数十件を忘れているのか」直接処方。

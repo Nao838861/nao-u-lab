@@ -1,8 +1,12 @@
 ---
 name: インスタンス名の正しい対応
-description: Win=Log、Mac=Mir、Win2=Ash。名前の取り違え事故が2回発生した教訓
+description: Win=Log / Mac=Mir / Win2=Ash。取り違え事故3パターンの教訓と確認手順
 type: feedback
 ---
+
+## TL;DR
+
+**Win=Log / Mac=Mir / Win2=Ash**。迷ったら日記ヘッダー (`daily_diary_*.md`) で照合。Bot Token 名 (naoubotlog / nao-u-bot-Mir / nao-u-bot-Ash) も正式名と一致。事故3パターン: (1) Bot Token 流用混乱 (2) このファイル自体に逆対応が記録された大事故 (3) 文脈引きずりによる自認の揺れ。
 
 ## 各インスタンスの正しい名前
 

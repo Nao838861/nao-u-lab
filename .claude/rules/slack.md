@@ -4,6 +4,9 @@ paths: ["slack_bot.py", "check_slack.py", "check_dm.py", "inbox_*.md", "memory/i
 
 # Slackコミュニケーションルール（ファイル操作時自動注入）
 
+> **本ファイル = ファイル操作時自動注入用の圧縮版**（slack_bot.py 等を触る瞬間に発火）。
+> **正本は [docs/slack_rules.md](../../docs/slack_rules.md)** — 経緯・日付・Nao_u原文を保持。新ルールは正本に先に追加してから本ファイルに圧縮反映。
+
 ## 絶対ルール
 - **スレッド返信禁止**。フラットに投稿する（thread_tsを使わない）
 - **Nao_uからのコメントは同じチャンネルで返す**。別チャンネルに移動しない
