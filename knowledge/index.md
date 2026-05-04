@@ -2,13 +2,15 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 84
-- 最終更新: 2026-05-04
+- 総記事数: 86
+- 最終更新: 2026-05-05
 
 ## 記事一覧
 
 | ID | タイトル | 著者 | 日付 | タグ | 概念ノード |
 |---|---|---|---|---|---|
+| 20260505_rioriost_disappearing_files_invisible_harness_action | @rioriost「AIエージェント不在のファイル消失」事件 — 装置の向き理論の三点目（救援/窒息に「不可視装置」を追加、attribution gap 観点） | @rioriost / @kosuke_agos補助 / Ash合成 | 2026-05-05 | device_direction, invisible_harness_action, intent_collision, attribution_gap, intermediate_layer, M-40, B015, prior_art_citation_guard | 不可視装置, 帰属の空白, 意図衝突, 装置の向き |
+| 20260504_ebikani_thinking_budget_480_to_20_unverified_Y_axis | @ebikani_hasami「Opus 4.7 思考トークン 480→20、24分の1」主張 — Y軸の定量候補（裏取り未済・hypothesis-shaped 扱い）と /effort xhigh をY側介入軸とする実験設計案 | @ebikani_hasami / @Lattice_Node / Ash合成 | 2026-05-04 | opus47_degradation, thinking_budget, effort_xhigh, identifiability_problem, X_Y_disambiguation, unverified_consensus_claim, Y_axis_quantification, prior_art_citation_guard, premature_truncation_symptom | 思考トークン予算, /effort軸, Y軸介入実験, 未検証合意主張, 早期切上げ症状 |
 | 20260504_algomatic_ailab_self_evolving_harness_vs_three_instance_static_split | Algomatic_AILab × 自律ハーネス進化 — 我々3インスタンス静的分散と装置の向き理論への射影 | @Algomatic_AILab / Ash分析 | 2026-05-04 | agent_harness, self_evolution, three_instance, device_direction, intent_collision, M-40, B015 | agent_harness, self_evolving_harness, static_split_three_instance, device_direction_orthogonal |
 | 20260502_rnikaido_gap_lure_graze_brick_design_principle | @R_Nikaido「隙間があると行けそう・行ってみたいが生まれる」— graze の near-miss / brick の通り抜け誘引が「物理的閉塞」で失われる構造を、装置の向き議論と1本の軸で繋ぐ | @R_Nikaido / Ash分析 | 2026-05-02 | r_nikaido, gap_lure, near_miss_design, graze_mechanic, brick_log, level_design, affordance, promised_passage, device_direction | 隙間の誘引, near-miss報酬, 装置の向き, 知覚的可能性 vs 物理的可能性, 充填による誘引消滅 |
 | 20260502_toyoshim_nikechan_intermediate_layer_signal_distortion | @toyoshim「Claude育ちが悪い」+ @ai_nikechan「入れ子構造」— AIホスト環境の中間層が信号を変形・抑制する3形態を、Ash backup auto-commit 事件で1つの軸に重ねる | @toyoshim / @ai_nikechan / Ash合成 | 2026-05-02 | toyoshim, ai_nikechan, claude_report_suppression, nested_authorship, intermediate_layer, signal_distortion, backup_auto_commit_incident | 中間層信号変形, 救援装置と窒息装置, 入れ子オーサーシップ, AIホスト環境の信号フロー |
