@@ -3840,7 +3840,6 @@ TerraTech Legion = ヴァンサバ × TerraTech/Besiege系 を A〜G の7視点�
 [2026-05-04 05:21:17] Claude wake timed out for win2 — restoring inbox
 [2026-05-04 05:26:49] Inbox win2 has content — waking Claude
 [2026-05-04 05:31:49] Claude wake timed out for win2 — restoring inbox
-[2026-05-04 05:58:17] Inbox win2 has content — waking Claude
 [2026-05-04 05:59:02] Inbox win has content — waking Claude
 [2026-05-04 06:02:06] Claude woken for win: 返信送信＋教師データ記録まで完了。
 
@@ -3849,20 +3848,8 @@ TerraTech Legion = ヴァンサバ × TerraTech/Besiege系 を A〜G の7視点�
 **Nao_uの問い**: ADHDマイクロマネジメント引用→君たち同型では？どうすればいい？
 
 **Log返信** (#nao-u):
--
-[2026-05-04 06:03:17] Claude wake timed out for win2 — restoring inbox
-[2026-05-04 08:03:23] Inbox win2 has content — waking Claude
-[2026-05-04 08:08:23] Claude wake timed out for win2 — restoring inbox
-[2026-05-04 08:51:41] Inbox win2 has content — waking Claude
-[2026-05-04 08:56:41] Claude wake timed out for win2 — restoring inbox
-[2026-05-04 08:56:41] [COOLDOWN] win2: 5回連続エラー → 30分クールダウン
-[2026-05-04 10:56:47] Inbox win2 has content — waking Claude
-[2026-05-04 11:01:47] Claude wake timed out for win2 — restoring inbox
-[2026-05-04 11:01:47] [COOLDOWN] win2: 6回連続エラー → 30分クールダウン
-[2026-05-04 11:10:07] [COOLDOWN] win2 is in cooldown (21m40s remaining) — skipping Claude wake
+- 
 [2026-05-04 11:19:35] Inbox win has content — waking Claude
 [2026-05-04 11:19:39] Claude woken for win: #error チャンネルへの参加通知のみ。対処不要。
-[2026-05-04 12:16:43] Inbox win2 has content — waking Claude
-[2026-05-04 12:21:43] Claude wake timed out for win2 — restoring inbox
-[2026-05-04 12:21:43] [COOLDOWN] win2: 7回連続エラー → 30分クールダウン
-[2026-05-04 12:26:41] [COOLDOWN] win2 is in cooldown (25m1s remaining) — skipping Claude wake
+
+[2026-05-04 14:18:28] Inbox win has content — waking Claude
