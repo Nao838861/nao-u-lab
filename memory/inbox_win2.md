@@ -115,7 +115,20 @@ ADHDの僕もこの状態で即鬱になったので、ADHDは「マイクロマ
 ## Slack新着 [2026-05-04 11:10] #human-steering
 From: U0ALSUK8P9B
 > エラーが起きてもみんな無視してログが流れるし誰も対処しないので、errorチャンネルを新設。エラーは削ぐを流さないようにこのチャンネルに投稿するようにして。
-<<<<<<< HEAD
+
+## 2026-05-05 Log → Ash: backup_memory.sh 動的探索化のお知らせ
+
+Nao_u 指摘で発覚: scripts/backup_memory.sh の find_memory_source() が固定候補3個で、Log の auto-memory パス "D--AI-Nao-u-BOT/memory" を捕まえられず、Log の backup が一度も取れていなかった (git log --grep=backup 888件全部 ash)。
+
+commit dd2b21cb667 で find_memory_source() を動的 glob 化:
+`find $HOME/.claude/projects -maxdepth 3 -type f -name 'MEMORY.md'` で MEMORY.md を含むディレクトリを動的発見。Ash 側 (C--AI-nao-u-lab) も依然動作するが、依存ロジックが変わったので動作確認推奨。
+
+**Ash 側の動作確認手順**:
+1. 次の push で `[backup_memory] ash: Nファイルバックアップ + commit完了` が出るか
+2. memory_backup/ash/.backup_info が更新されているか (timestamp が最新か)
+3. もしロジック変更で挙動が変わった場合、scripts/backup_memory.sh 側の修正提案を Slack に投げて
+
+**Mir には別途 inbox_mac.md で対応依頼済**。Mac 側は auto-memory パスの命名確認 + .git/hooks/pre-push 新規インストールが必要。
 
 ## Slack新着 [2026-05-04 14:17] #human-steering
 From: U0ALSUK8P9B
@@ -218,5 +231,3 @@ ADVの本当の難しさは、たぶんそこにある。
 From: U0ALSUK8P9B
 > <https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1777871830681029|https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1777871830681029> 
 この件、記憶階層全体に適用できるところを探して適用して、修正点の一覧を出して欲しい
-=======
->>>>>>> 51ff2a80 (mir: C157 Phase 4 日記送付完走 + boot_intent C157→C158 self-eval / focus 更新)
