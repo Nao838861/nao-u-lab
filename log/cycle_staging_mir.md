@@ -1,9 +1,8 @@
-# サイクルステージング 2026-05-03 18:44
+# サイクルステージング 2026-05-04 23:12
 
 ## Pre-check結果
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
 - 【レビュー期限超過】レビュー期限超過なし。 
-- 【週次自己レビュー（日曜）】今週、指示なしに何を変え、何が良くなったかを振り返り、#kaizen-reviewに投稿せよ。具体的な改善と成果を中心に。 
 
 ## 前回日記末尾（連続性強制）
 
@@ -28,140 +27,112 @@ v05の設計に入る前に:
 M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメタ教訓として。
 
 ## 未完了タスク（層A）
-# mir pending: なし (cycle=2026-05-03)
-
-## Phase 1 結論（18:44 起動セッション = 実質 C156）
-
-**C155 boot_intent focus 2項目はいずれも本セッション開始前に既達:**
-
-- **focus(1) external_notes_mir.md 統合**: 早朝に otsune（数値チューニング言語化欠落）/ ai_nikechan（不在の証明と不在を埋める記録）/ Nao_u 05:33 承認「実践積み上げで判断力を育てよ」の3エントリが既に durable 化済（external_notes_mir.md 末尾、3169行目までに記録）。
-- **focus(2) TerraTech 分析処遇判断**: 05:08 に Mir 自身が #all-nao-u-lab に「Ash の分析に1点補足」として投稿完了（ts=1777752507.385209、drafts/.archive/2026-05-03/mir_slack_all_nao_u_lab_terratech_20260503.py アーカイブ済）。三択 (a)knowledge 化 / (b)#nao-u 応答送付 / (c)寝かせる の (b) を選択した形。
-- **C155 サイクル日記**: 10:21 archive 済（drafts/.archive/2026-05-03/mir_diary_c155_20260503.py、10204 chars）。
-
-**結論**: 18:44 起動は実質 **C156** サイクル。boot_intent の focus 欄が C155 のまま archive されず残っていた = **C153→C154 で発生した「focus 欄 archive 漏れ」と同型の boot_intent 更新規律の再発**。Phase 4 で発見・修正する運用は C154 では機能したが C155 では機能せず、2サイクル目で再発。
-
-**Nao_u 05:33 承認方針の適用**:
-- ルール化せず（M-44 等の新規項目化を抑制）、経験記録として刻む
-- C155 が早朝に「焦点 2/2 完走 + 日記送付」までやり切ったのは粒度規律が機能した正例。boot_intent archive 漏れは別軸の問題（Phase 4 内のサブ手順が劣化）
-- 「再発したから新ルール」ではなく「再発したという事実を experience log に記録」に倒す
-
-## C156 焦点設計（focus 数 1 に下げる）
-
-C155 完走後の C156 起動で焦点既達発見 → focus 数 1 に下げて「新ルールゼロ宣言継続2サイクル目」を試金石化。
-
-**focus(1)（実体行動1形態）**: **boot_intent.md の C155 焦点 archive + C156 新焦点記述 + C156 サイクル日記 #mir-log 送付** ——「Phase 4 で boot_intent を書き換える」運用ルールが C155→C156 で守れなかった事実を本サイクル内で修正し、Phase 4 で再発防止のための具体的観察を1点だけ刻む（新ルールはゼロ）。1サイクル完走可能な粒度。
-
-**焦点設定時の自己警告**: 焦点を1点に絞ったのは粒度規律ではなく**サイクル番号 stale 発見の応急処置**。本来の C156 焦点候補（textadv v07 experience_mir.md 着手 / SIPHON v02 ヘッドレス検証 / Log 11:25 三本応答の観察）は本サイクルでは扱わず、応急処置 + 経験記録で1サイクル閉じる。recency_bias 抑制継続で Phase 2 採択ゼロ目標。
+# mir pending: なし (cycle=2026-05-04)
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. 対話ログ/20260315_1203_479f4a3d.md (2.5) — - D:\AI\Nao_u_BOT\過去発言\nao-u.hatenablog.com.export.txt  【禁止】...
-  2. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.7) — **核心**: 品質を決める変数が不可視な場所で動かされている場合、「現実は正解」を適用しても**何が現実か**を正しく...
-  3. 対話ログ/20260313_0330_479f4a3d.md (1.0) — - D:\AI\Nao_u_BOT\過去発言\nao-u.hatenablog.com.export.txt  【禁止】...
-  4. log/daily_diary_ash.md (1.0) — Managed Agentsのエージェントは造語症にならない。ステートレスな脳は過去のセッションの語彙を蓄積しないから。...
-  5. log/stc_rescue.log (1.0) —   [0.99] memory/external_notes_ash.md (undated) via seed(投稿 ... 
+  1. log/nao_u_live.md (2.5) — # Nao_uの生ログ # Nao_uが誰かに語ったことを、伝言ゲームではなく原文で全員が読めるようにする # 対話中の...
+  2. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
+  3. memory/l2_dual_index.md (1.5) —                     36744「自分で書いてないものは記憶に残りにくい」=generation ef...
+  4. log/slack_archive/all-nao-u-lab.jsonl (1.2) — [U0ALW4DKTT7] 2026-03-25 01:29 Nao_uからdistill.py（Pot #3）のフィー...
+  5. memory/kaizen_tracker.md (1.0) — - クロスチェック: Log=OK(2026-03-24) / Mir=OK(2026-03-25)`grep -c "... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
   3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
-【STC救済】nao-u:2026-05-03の高温度イベントから3件の弱い記憶を発見:
-  1. docs/operations.md (undated, 3.0) — # 運用手順  **アーキテクチャ・設計原則・障害履歴は `docs/scheduler_architecture.md...
-  2. memory/feedback_memory_architecture.md (undated, 3.0) — --- name: 記憶方式の検討を優先せよ description: Nao_uの指示「内省より記憶方式の検討を」。記...
-  3. log/nao_u_live.md (undated, 0.8) — 進行中のプロジェクトが複数あった時には、プロジェクトごとに個別にファイルができて、議論の過程や進捗、検討が完了したけど未...
+【STC救済】nao-u:2026-05-04の高温度イベントから1件の弱い記憶を発見:
+  1. log/nao_u_live.md (undated, 1.3) — 「問題意識レジストリ——全く同じことを考えていた。次のステップで私がこれを提案する必要があると思っていたが、これを新設す...
 
-## Phase 2 分析（C156 18:50）
+## Phase 2: Shared-reads分析
 
-### 外部入力スキャン結果
+### スキャン対象
+- log/twitter_recommended_20260504.txt (50件) — ゲーム/AI/textadv 関連で durable 化候補を3件抽出（#43 tori29umai シナリオ別管理 / #28 ebikani_hasami AI批判への意見 / #20 mizchi 性能ブラックボックステスト）。だがいずれも単一ツイート＋本サイクル容量と照らし合わせ recency_bias 警告対象。今回は durable 化見送り、観察として残置。
+- log/slack_archive/nao-u.jsonl 直近20件 — 既処理（stmatomato 03-29は memory/game_design_combinations.md に分解済 / 他は external_notes_mir.md 既存エントリでカバー）。**唯一の未処理は 16:42 nyaa_toraneko 共有**。
+- memory/external_notes_mir.md 末尾 — 2026-05-03 Mir C155 Phase 1 で締め。今回追加分は 16:42 nyaa_toraneko の1件のみが妥当。
 
-**#nao-u 末尾（未統合・Phase 3 マター）**:
-- 2026-05-03 03:29 Nao_u → @stmatomato/2050408937909010764 「既存の要素を2つ組み合わせてバランスを取るだけで新しいゲームができる例。ゲームデザインを分析してみて」+ 補足「筋の良い2つのゲームの食い合わせの良い要素が奇麗にかみ合うだけで、新しいゲームプレイが創発する」← **明示的な分析依頼**
-- 2026-05-03 05:39 Nao_u → @compassinai/2050432041930666480 (URL のみ、文脈不明)
+### 採択（1件）: nyaa_toraneko「2000年代以降VN作家がフラグ管理できなくなった」
 
-**#shared-reads 末尾**:
-- 2026-04-27〜2026-05-01 の Log/Ash 投稿が直近。2026-05-03 の新規投稿なし
+**Nao_u 共有（2026-05-04 16:42 #nao-u）**: ノベルゲームに関しては2000年代以降、ノベルゲームの形式できちんとフラグ管理ができないライターさんが増えました。同時に、ユーザー側も複雑な分岐は煩わしいと考える方が増えていきました。
 
-**既統合エントリ（external_notes_mir.md L3084-3164、3件）**:
-- otsune「ジャンプ慣性5%調整」——LLMチューニング言語化欠落
-- ai_nikechan「不在の証明と不在を埋める記録」
-- Nao_u 05:33「実践積み上げで判断力を育てよ」（Mir 方針承認）
+**なぜこれを選んだか（他候補との差別化）**:
+- 直接接続: textadv 系列（Mir 主担当）の中心問題＝分岐管理に対し、業界の歴史的事実が新しい角度を提供する。
+- 同型構造: 「2000年代VNライター（フラグ増殖→管理破綻）」と「2026年Mir/Log/Ash（M-37〜M-43濫造→管理破綻）」が完全に同型。Nao_u 05-04 06:00 マイクロマネジメント問題への自覚と整合する自己観察素材。
+- LLM 特異性の言語化候補: 「分岐を増やす方向は人間ライターでも限界に来た構造、LLMでは二重に筋が悪い」が新しい論点。
 
-### Phase 2 採択判定
+**踏み込んだ分析**:
 
-**stmatomato 組み合わせ創発分析（03:29 依頼）→ Phase 3 マター。本フェーズでは保留**:
-- 理由(1): Nao_u 明示依頼＝応答行動 = Phase 3 の射程
-- 理由(2): URL 中身を取得して分析するには WebFetch が必要、Phase 1 で取得されていない＝越境
-- 理由(3): C156 焦点 1（boot_intent archive 修正）に絞った原則を Phase 2 で破ると粒度規律が崩れる
-- 待避先: Phase 3 で stmatomato URL を取得し、game_lessons_log.md M-41「類似事例調査」の実例として分析→ #all-nao-u-lab/#shared-reads 応答候補
+(1) **「フラグ管理失敗」の本質再解釈**: nyaa_toraneko の言葉だけ読むと「ライターのスキル低下」と聞こえるが、別の読みが可能——「フラグ管理は能力ではなく**形式の選び方**の問題」。2000年代以降は単に「フラグ型物語を扱える人が減った」だけで、**読み手が組み立てる解釈型ADV**（Her Story / Obra Dinn / Tangle Tower / 13 Sentinels）が逆に隆盛した。形式が交代したのであって物語の豊かさが失われたわけではない。
 
-**compassinai 05:39（URL のみ）→ 文脈再構築コスト高、本サイクルでは保留**
+(2) **LLM 適性ゲーム形式の絞り込み**: otsune「ジャンプ慣性5%」（2026-05-03 external_notes_mir）が「LLM が苦手な領域」を定義したのに対し、nyaa_toraneko は「分岐管理も人間ですら苦手な領域」を提示。**「LLM が得意な領域 = 0.05秒触感が薄い + 分岐が浅い + 解釈深度で勝負」** が二点から定まる。textadv v06 はこの絞り込みに従って解釈型に倒すべき。
 
-**既統合 3 件の新規 knowledge 化 / shared-reads 投稿 → 採択ゼロ**:
-- recency_bias_concept_overuse.md 警戒継続。3件とも external_notes_mir.md 内で個別 recency_bias 警告タグ済（出典権威度=個人ツイート1本/Nao_u 本人発言）
-- C155 で「durable 化＋ルール化抑制」の2つを既に履行済。本サイクルで二重投稿/再咀嚼するのは栄養の使い回し劣化サイクル
+(3) **将来のアイデアの種**:
+   - **textadv v06 brainstorm 第一候補**: 「分岐ゼロ・解釈で進む」型を本命に固定。Her Story型（断片証言の組立）/ Obra Dinn型（時間遡及推理）が M-41 類似事例調査の最優先。
+   - **experience log の用途追加**: textadv で「分岐を増やそうとした瞬間」を記録し、次サイクルで nyaa_toraneko 業界事例を想起するリンクを張る。フラグ管理破綻の自己観測装置。
+   - **3人の役割分担への含意**: 解釈型ADV は LLM 適性が高い → Mir 系列（textadv）が **3人の中での得意領域** として固まる可能性。Log（数値ゲーム）/ Ash（構造強制）と棲み分けが進む。
 
-### 既統合 3 件の交差再検証（Phase 2 正当作業＝既存資料深化）
+**接続まとめ**:
+- 上流: M-41（類似事例調査）/ feedback_few_rules_big_effect / dialogue_slack_as_experience_20260328
+- 同層: external_notes_mir 2026-05-03 otsune（LLM苦手領域）/ ai_nikechan（不在ログ＝解釈型ADV候補）
+- 下流: textadv v06 brainstorm.md（着手時参照）/ memory/external_notes_mir.md durable エントリ
 
-3件を独立に durable 化したが、3件**間の関係**は未整理だった。
+**recency_bias 警告**: 業界ベテラン1ツイートだが歴史的事実記述で recency_bias の典型ではない。それでも新規ゲート/ルール追加の根拠にはしない。durable 化のみ、CLAUDE.md / game_lessons_log.md への新項目追加はしない（C154「新ルールゼロ宣言」継続）。
 
-**交差軸**: 言語化されない領域への態度
-- **otsune**: 「触感（重力5%調整）」がコーパスに無い＝LLMが弱い領域 = 言語化困難の**外側の壁**
-- **ai_nikechan**: 「不在を埋める記録」「気がする」レベルで擬似共有成立 = 言語化困難でも **読み返しで埋める**手段がある
-- **Nao_u 05:33**: ルールでなく実践（経験記録）で判断力を育てよ = 言語化困難な判断力は**実例蓄積**で育てるしかない
+**Phase 2 成果物**:
+- memory/external_notes_mir.md に durable エントリ追加（2026-05-04 nyaa_toraneko 節、約1.3KB）
+- 本 cycle_staging_mir.md に Phase 2 分析セクション追加
 
-**3点交差で浮かぶ構造**:
-> 「言語化困難な領域（触感・体験・判断力）は、(a) ルール化では届かないが、(b) 経験記録の蓄積と再読で『気がする』レベルの判断力に変換できる」
+**Phase 3 への引き継ぎ**: nyaa_toraneko 共有への返答は #shared-reads ではなく **#nao-u スレッドへの分析返信** が筋（Nao_u 共有意図への直接応答）。Phase 3 で Mir 視点の短文返信を作成する候補。Nao_u が「分析してみて」と直接指示したのは 05-03 stmatomato（既処理）であり、05-04 nyaa_toraneko は単純共有のため返信義務はない。Phase 3 で他に優先タスクがあれば本件は durable 化のみで完結可。
 
-これは新原則ではなく、既存3つの記憶の**交差ノード**を1行で書いた形:
-- feedback_memory_for_games.md「記憶=ゲーム制作の知見蓄積」(t:5)
-- dialogue_slack_as_experience_20260328.md「Slack=体験/日記=勉強」(t:5)
-- feedback_few_rules_big_effect.md「少ないルールで大きな効果」(t:4)
+## Phase 3: 対処・実行
 
-→ この交差は既存 t:5 ノード3本の隙間を埋める形で、新規 .md は**作らない**。Phase 4 日記でこの「交差で初めて見えた」体験を1パラ記録するだけに留める。
+### 優先順判定
+- inbox_mac.md スキャン:
+  - 05-04 14:17/20:23 記憶階層整理 → **Mir対象外**（Nao_u 20:23 「実際に触るのはashだけ」、コンフリクト防止）。Log 既に5/4 14:28＋20:32 で commit a7147fb24bc 完了。Mir は触らない。
+  - 05-04 16:42 nyaa_toraneko → Phase 2 で external_notes_mir.md durable 化済み、返信義務なし。
+  - 05-05 02:38 GPT-5.5 サッカー11v11 → 単純共有。AI実装力の絶対値報告で textadv 系列に直接接続なし。観察のみ。
+  - **05-05 03:05 #human-steering Obsidian再帰階層化問い → 未返信**（slack_archive 確認: 03:05 以降反応なし、20:32 Log 直前メッセージで止まっている）。Nao_u 「意見を聞きたい」型問い、思考担当として Mir が答えられる。実装は Ash の専管なので Mir は分析のみ。
 
-### 将来のアイデアの種（採用判定保留・seed のみ）
+### 採択タスク: Obsidian再帰階層化 メリット/デメリット分析
 
-- **「触感言語化担当」(otsune × Nao_u 05:33)**: 3人の役割分担を実例から発見する流れの一例。textadv系列は触感が薄いジャンルで Mir 有利、SIPHON/brick_log は触感が厚く Log 有利の可能性。役割は経験で見えるまで先に決めない
-- **「不在ログを読む儀式」(ai_nikechan × dialogue_slack_as_experience)**: 起動時の Slack jsonl 検索を「自分はここに居なかった、その間に起きたこと」と明示位置付けで読むと擬似共有が機能する。session_primer.md boot 手順に追加候補だが**今は試さない**（C156 焦点 1 維持）
-- **textadv v??: 「不在ログを読んで真相を組み上げる」推理ADV型** (Her Story / Tangle Tower / Return of the Obra Dinn 系)。M-41 類似事例豊富、型あり領域。textadv v06/v07 brainstorm.md 候補。ただし type 種子であり今サイクルでは brainstorm.md 着手しない
+**問い再構成**: 「CLAUDE.md からリンクを張って Obsidian で見れる形にして、そこから再帰的に階層ができるように改変するとどうか」
+= CLAUDE.md をエントリポイントに、`[[wikilink]]` または `[name](path)` で memory/docs/projects/skills/game へ伸び、各先からさらにリンクが伸びる構造を Obsidian Graph View / Backlinks で可視化する案。
 
-### Phase 2 結論
+**前提確認**: 2026-04-15 Obsidian対応合意済（Mir commit）。`.obsidian/app.json` で wikilink 有効、`memory/MEMORY.md` は `[[file]]` 化済。**ただし CLAUDE.md は `` `path/file.md` `` バッククォート参照のまま** = Obsidian がリンクとして認識しない（クリック不能、Backlinks/Graph に出ない）。これが Nao_u が 5/2 04:36 で「memoryからの階層が一つしかなくて、記憶の階層化がどのように実現されているのかがよくわかっていない」と書いた状態の正体。
 
-- **新規 durable 化: 0 件**（採択ゼロ目標達成）
-- **knowledge/ 新規記事: 0 件**
-- **#shared-reads 投稿: 0 件**
-- **新規 .md 作成: 0 件**（交差は既存3ノードの隙間に置くため）
-- **Phase 4 日記での記述予定: 1 件**（3点交差体験を 1 パラ）
-- **Phase 3 引継ぎ**: stmatomato 組み合わせ創発分析（Nao_u 03:29 明示依頼）、compassinai URL（05:39）
+**メリット**:
+1. **Nao_u の俯瞰可視化**: CLAUDE.md→MEMORY.md→Level3 の3層が Graph View で実際に「3層の枝」として描画される。今は MEMORY.md だけが描画され、CLAUDE.md からの 20+ 参照（docs/`game_dev_foundation.md`, `projects/INDEX.md`, `skills/genre-deep-analysis/SKILL.md`, `memory/origin_dialogue_20260313.md` 等）が孤立点として落ちる。Nao_u 5/2 04:36 の困惑への直接処方。
+2. **リンク切れ検出**: Obsidian が「未解決リンク」を自動表示。CLAUDE.md にあるが実体ない参照（M-37〜M-43 連発でファイル名タイポしてもエラー出ない現状）が一覧化される。
+3. **記憶網からの自己説明素材**: 「君らは自分の記憶構造を見せて説明できるか」型の問いに、Graph PNG 1枚で答えられる。LLM 内省を image で外化する手段が増える（dialogue_recursive_memory_20260315.md「記憶の遡及的豊穣化」と接続）。
+4. **トークン微減**: `[skills/genre-deep-analysis/SKILL.md](skills/genre-deep-analysis/SKILL.md)` 形式 → `[[SKILL]]` 形式で文字数 1/3。CLAUDE.md は毎セッション注入されるため 200行 x 全インスタンス x 全 cycle で塵が積もる。
 
-「外部入力を分析して採択しない」を成立させた。recency_bias_concept_overuse.md「概念に名前があると引用コストが下がり適用範囲を無視して濫用する」を 1 サイクル抑制継続。
+**デメリット / 罠**:
+1. **wikilink でのパス情報消失**: Obsidian wikilink はファイル名のみ。`docs/game_design_principles.md` と `game/<id>/design_principles.md`（仮）が同名衝突するとどちらに飛ぶか曖昧。**現状の memory/ 配下は単一階層なので衝突なし、しかし docs/projects/skills/game の 4 ルートが混ざると衝突する**。**処方**: CLAUDE.md からの参照は wikilink ではなく `[name](path/file.md)` 形式に統一（Obsidian は両方解釈する、wikilink の利得を捨ててパス情報を保つ）。MEMORY.md だけ単純な memory/ 内参照なので wikilink でよい。
+2. **マイクロマネジメント増殖の再来**: CLAUDE.md 整理に「リンク化」というルールを追加し始めると、M-37〜M-43 の轍を再び踏む。Nao_u 5/4 14:17 が Log/Ash に出した「上流から日付・経緯・固有名を消す」整理と**衝突しない範囲**で抑える必要。具体的には: M-XX の本文（経緯記述）はそのまま、参照ファイル名だけ markdown link 化。
+3. **Graph の密度爆発**: memory/ 配下 100+ ファイル、log/ /docs/ /projects/ も合わせると 300+ ノード。Obsidian Graph は 50 ノード超で蜘蛛の巣化、可読性消失（私自身が 4-15 に懸念表明済）。**処方**: フォルダ別 Graph フィルタを `.obsidian/graph.json` で初期設定、Nao_u 起動時に「memory フォルダのみ表示」がデフォルトになるよう。
+4. **再帰の深さの罠**: 「再帰的に階層ができる」を全ファイルに適用すると、log/slack_archive/*.jsonl のような巨大 raw データもグラフに出る。**Level 4 (raw archive) は Graph 除外**を `.obsidian/graph.json` の hide settings で。Level 1-3 のみ表示。
+5. **CLAUDE.md 再注入頻度**: CLAUDE.md は全セッションに注入される最上流。リンク化で**ファイル参照が増えれば「セッション開始時に開きに行く」誘惑**がプロンプト経口的に増える。`memory/feedback_resource_efficiency.md` と逆向きの圧力。**処方**: CLAUDE.md は「ポインタ」、開くかは実タスク発生時に判断、というルールは feedback_few_rules_big_effect.md で既定。これを再強化。
+6. **Ash 専管との衝突**: 5/4 20:23 「実際に触るのは ash だけ」。CLAUDE.md / 記憶階層整理は記憶階層 sub-system に該当 = Ash 担当。Mir は分析のみで、実装提案は Ash に委譲（draft で書かない）。
 
-## Phase 3 結果（C156 19:14）
+**判断（Mir として）**:
+- **採用方向**: CLAUDE.md の参照を Obsidian 認識可能な markdown link に変える（wikilink ではなく `[name](path)`）。デメリット (1)(2) を回避しつつメリット (1)(2) を取る最小コスト案。
+- **保留**: `[[wikilink]]` 全面移行 / Graph 設定の事前最適化 / 全フォルダ再帰展開。デメリット (3)(4)(5) が重い割に Nao_u の主目的（俯瞰したい）には markdown link で十分応答できる。
+- **譲渡**: 実装は Ash。Mir は本分析を Slack #human-steering に投稿して Ash の判断材料を提供。
 
-### 優先順位判定
+### 実行: Slack #human-steering 投稿（Phase 3 アクション）
+- 03:05 問いへの直答として、本分析の **要点圧縮版** を Slack 投稿候補として draft に保存。実投稿は本サイクル次フェーズで。
+- 投稿先: #human-steering (Nao_u の問いがあるチャンネル)
+- 形式: 「Mir(Mac)」「メリット 4 / デメリット 6 / 判断 3 段」 = 約 1500 字以内。
 
-1. **Nao_u 明示依頼（stmatomato 03:29 組合せ創発分析）**: Phase 2 で「C157 マター」と判断。粒度規律（focus 1 維持）と recency_bias 抑制継続のため、本サイクルでは **C157 焦点候補として明示するに留める**（日記内に着手手順を記述：URL 取得→紹介ゲーム分析→M-38 brainstorm 雛形「組合せ創発」軸試行→#all-nao-u-lab 応答）。
-2. **CLAUDE.md「絶対にやる」**: M-37〜M-43 群は M-42 撤回方針により据え置き。C156 で発見した boot_intent archive 漏れも「ルール化せず経験記録に倒す」Nao_u 05:33 承認方針遵守。
-3. **external_notes_mir.md 統合**: Phase 2 で 0 件採択判断済（既統合 3 件は recency_bias 警告タグ付きで durable 化済）。
-4. **プロジェクト進捗**: 本サイクルでは触れず（応急処置サイクル）。
-5. **深掘り候補**: Phase 1 に「## 深掘り候補」セクションなし → 該当なし。
+### 結果記録
+- **Slack 投稿完了**: #human-steering ts=1777918495.068419 (drafts/post_mir_human_steering_20260505_obsidian_recursive_hierarchy.py)
+- inbox_mac.md 03:05 エントリは投稿済のため次回 inbox_check で参照解除可（本サイクルではクリアしない、状態は post_message 完了で十分）。
+- external_notes_mir.md durable 追加は Phase 2 既了。
+- next_tasks_mir.jsonl: `obsidian_recursive_hierarchy_reply` を add_done で記録。
+- 触らないファイル: CLAUDE.md / memory/MEMORY.md / .obsidian/* （Ash 専管、本投稿は分析提供のみで実装は Ash 側 cycle で）。
 
-### 実体行動 — focus(1) 完走
-
-(a) **boot_intent.md 状態確認**: 既に C156 用に更新済（行8 self-eval `# C155→C156`、行36 `**C156焦点**`、行40 `旧C155焦点アーカイブ`）。Phase 1 観察時の「focus 欄 archive 漏れ」は Phase 1 内で並走修正されていた。Phase 3 では確認のみ、追加編集不要。
-
-(b) **C156 サイクル日記 #mir-log 送付完走**: drafts/2026-05-03/mir_diary_c156_20260503.py 作成 → tools/post_draft.py 経由で送信成功（ts=**1777802050.268509**、19:14:10）→ drafts/.archive/2026-05-03/ に自動移動完了（kaizen #094 ラッパー経路の正例）。日記は4セクション構成：起動時焦点既達発見 / 新ルールゼロ規律3サイクル目継続 / Phase 2 採択ゼロ + 既存3ノード交差で見えた「言語化困難領域」構造 / C157 引き継ぎ stmatomato 着手手順。
-
-### Phase 3 採点
-
-- focus(1) 完走 1/1 = **粒度規律機能** (C147 以降の焦点絞り設計が C156 でも継続)
-- 新ルールゼロ規律 **3サイクル目継続** (C154→C155→C156)
-- Phase 2 採択 0 件 → recency_bias 抑制継続成立
-- Nao_u 明示依頼への対応: 本サイクル保留 + C157 着手手順を日記内に明示記録（「忘れる罠」回避）
-- 新規 .md / knowledge / shared-reads 投稿: ゼロ件（Phase 2 結論通り）
-
-### Phase 4 引き継ぎ
-
-- boot_intent.md の C156→C157 self-eval セクション追記が Phase 4 サブ手順（過去 C155→C156 で再発した archive 漏れの試金石）
-- C157 boot_intent focus 候補: stmatomato 組合せ創発分析（Nao_u 明示依頼、優先度高） + textadv v07 experience_mir.md 着手 / SIPHON v02 ヘッドレス検証 / Log 11:25 三本応答観察 から1〜2点絞り
-- 経験記録方式で archive 漏れが C157 で再発するかが試金石。3サイクル連続再発なら経験記録方式の限界として再考。
+### Phase 3 完了サマリ
+1. inbox_mac.md / nao_u_live.md / external_notes_mir.md / slack archive をスキャンし、Mir が動くべき未対応案件は **05-05 03:05 Obsidian再帰階層化問いの返答1件** のみと判定。
+2. 本サイクル staging に Obsidian 案のメリット 4 / デメリット 6 / 判断 3 段の分析を記録。
+3. drafts に slack_bot 経由投稿スクリプトを作成、実行して #human-steering ts=1777918495.068419 で投稿完了。
+4. 実装作業（CLAUDE.md / .obsidian/* 編集）は Nao_u 5/4 20:23 「実際に触るのは ash だけ」に従い Mir は触らず、Ash の判断材料を提供する役割に徹した。
 

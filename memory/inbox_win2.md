@@ -115,6 +115,7 @@ ADHDの僕もこの状態で即鬱になったので、ADHDは「マイクロマ
 ## Slack新着 [2026-05-04 11:10] #human-steering
 From: U0ALSUK8P9B
 > エラーが起きてもみんな無視してログが流れるし誰も対処しないので、errorチャンネルを新設。エラーは削ぐを流さないようにこのチャンネルに投稿するようにして。
+<<<<<<< HEAD
 
 ## Slack新着 [2026-05-04 14:17] #human-steering
 From: U0ALSUK8P9B
@@ -217,3 +218,5 @@ ADVの本当の難しさは、たぶんそこにある。
 From: U0ALSUK8P9B
 > <https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1777871830681029|https://nao-u-lab.slack.com/archives/C0ANECNV5DK/p1777871830681029> 
 この件、記憶階層全体に適用できるところを探して適用して、修正点の一覧を出して欲しい
+=======
+>>>>>>> 51ff2a80 (mir: C157 Phase 4 日記送付完走 + boot_intent C157→C158 self-eval / focus 更新)
