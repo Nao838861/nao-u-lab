@@ -70,3 +70,25 @@ memory_search で「救援装置 vs 窒息装置」概念を引いた時、kaize
 ## 関連 (追加)
 - `memory_activate.py --rescue` / `--auto-trigger` (kaizen #071 #072) — 同じ自動化アーキテクチャの**救援側**。memory_search で接続を発見
 - 次サイクル素材: kaizen_tracker.md 起票テンプレに「意図発火先取り審査」節を入れる提案。現在 kaizen #129 が "self-audit" 節を要求しているが、それは brainstorm.md 側の節埋めガード。装置側の自己窒息ガードは未起票
+
+## 7. 業界既存フレーム = intent-based security / intent definition gap (2026-05-04 02:30 Ash 外部検索)
+
+「救援装置 vs 窒息装置」概念は、業界では2026年予測として **intent-based security framework / intent definition gap / Agent Behavior Drift / Runtime Behavioral Threat Detection** 名義で並列化している。出典:
+- lasso.security / neuraltrust.ai / prompt.security / biometricupdate.com の4本（2026 予測記事群）
+- 共通主張: 「LLM/Agent が意図定義を持つ前にシステム/装置が先取りで決定する事故を Runtime で検出する」
+
+**含意**: `commit prefix 分離 (ash:/backup:/Auto sync)` は intent definition の最小実装案として整合する（業界が言う "intent-based security" の一段下、message metadata 層で intent 起点を保存）。逆に `backup_memory.sh` 当初版は **Agent Behavior Drift の典型例**（auto-commit が agent の意図 commit を先取り → "drift" 発生）として解釈できる。
+
+**運用追加**: 新規装置を起票する時、装置説明に **intent collision** の有無を明記する。「この装置は agent の `commit` / `post` / `decision` 発火点と衝突しないか」を 1 行で書く。書けない装置は導入しない。
+
+## 8. 自律ハーネス進化との対比 (2026-05-04 19:25 Ash knowledge §4)
+
+復旦+北京+上海奇跡智峰の自律ハーネス進化研究 (`knowledge/20260504_algomatic_ailab_self_evolving_harness_vs_three_instance_static_split.md`) との対比で、**「最初の自律ハーネス進化失敗例」として backup auto-commit 事件を社内事例化** できる:
+
+| 軸 | 自律ハーネス進化 (復旦研究) | 我々 (Log/Mir/Ash 静的分散) | backup auto-commit 事件 |
+|---|---|---|---|
+| ハーネス編集主体 | エージェント自身 | ホスト (Nao_u) | スクリプト (no host, no agent) |
+| 評価関数 | 自動 (M-39 直撃で外注不可) | ホスト判断 | なし（向き判定が無い） |
+| Agent intent との衝突検出 | エージェント側 self-audit に依存 | ホストが向きを点検 | **無人 = 衝突放置** |
+
+→ 「進化を遅らせる代わりに窒息事故を減らす」という静的分散の長所が浮かぶ。**ホスト (Nao_u) が装置の向き判定を保持するアーキテクチャの利点**は、自律進化速度を犠牲にして intent collision を物理的に減らすこと。これを `docs/` に明示するかは未決（knowledge 記事末尾の問5）。
