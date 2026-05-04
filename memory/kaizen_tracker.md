@@ -406,8 +406,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: 最もlikelyな失敗理由=プロンプトに一文追加しても実行時に読み飛ばされる→緩和策: Phase 1 pre-check 側に `ls tools/*.py | wc -l` 出力+**`pot_devlog.md` と active `projects/*.md` の ⚠ セクション/「予約」キーワード周辺5行の head 出力** を毎サイクル貼付する運用で「既存資産群」を視野に入れ続ける。次点=grep キーワード選定が不適切で既存ツール・既存決定を見逃す→緩和策: `tools/README.md` 的な一覧インデックス+**`projects/INDEX.md` と devlog の「予約テーマ」索引**を作り grep 対象を索引化（別kaizen候補）。次々点=既存ツール・既存決定に不具合/不整合があっても運用復活を選んで時間浪費→緩和策: 「既存発見時は実際に走らせて/参照して動作・妥当性確認し、不具合あれば修正優先。新規実装・新規決定は最終手段」と明示
 - 検証担当: Log
 - クロスチェック: Log=起票者 / Mir=OK(2026-04-21) / Ash=OK(2026-04-21 C95 Phase 3。承認＋射程拡張にも賛成。Ash自身に同型体験あり——2026-04-21 C95 Phase 2で Semantic Terrain×Collapse×双曲空間の三部作統合を進めた際、knowledge/ 既存ファイルの grep を着手前にしなかった。結果は幸運にも重複なしだったが、「新規着手前に既存確認」を構造化しないと運で済ませることになる。射程拡張(C95)の3種(tools/ + devlog + projects/)は Ash 側 staging にも適用すべき。pre-mortem「プロンプト追加が読み飛ばされる」への Ash 側緩和: pre-check スクリプト(check_beliefs_health.py系列)に `projects/INDEX.md` active セクション head 出力を追加する案 — 別kaizen化せず #100 運用に吸収可)
-- 状態: 起票済み・射程拡張 2026-04-21 C95（構造実装は次サイクル以降）
-- 検証結果:
+- 状態: 期限到来・部分検証（2026-05-05 C164 Log 検証、構造強制(1)未実装、(2)(3)(4)(5) 観察期間中の違反観測なし）
+- 検証結果: 2026-05-05 C164 Log 検証。**(1) 不合格** — `multi_phase_cycle_log.py` Phase 2/3 プロンプトに「新規ツール提案前に `ls tools/` または `grep tools/` 必須」の明文なし（grep結果: tools/ 言及は #099 由来の audit.py 呼び出し1件のみ）。**(2) 部分合格** — 2026-04-21〜05-05 期間で Phase 3 が新規ツール提案 + 既存類似ツール存在のケース、ログ走査では発見せず（だが C100-C164 の Phase 3 全staging を全件 grep していないので暫定）。**(3) 合格** — `tools/` 配下の機能重複ペア検出: なし（手動スポットチェック、external_notes_integration_audit.py / memory_index_integrity.py / recurrence_crawler.py 等は機能直交）。**(4)(5) 部分合格** — devlog/projects/INDEX.md ⚠ セクション参照痕跡が staging に残る運用は安定化、衝突件数 0件確認（brick_log v08 凍結事案は Nao_u 直接指示で着地済）。**判定: 部分合格**（構造強制(1)未実装、運用面(2)〜(5)は良好）。**次の一手**: (a) (1) の構造実装は本来の起票意図だが、半月運用しても代替（feedback_substrate_not_infrastructure / 着手前ゲート系列）で実害ゼロ。**M-43 即昇格禁止原則に従い、本件は「実害観測なし=ルール追加の必要性も低い」として撤回検討候補へ移行**。次サイクルで Mir/Ash クロスチェック取り、合意取れれば撤回（kaizen_tracker.md「撤回」マーカー）。撤回しない場合は 2026-05-19 までに延長。
 
 ### #099: Phase 1 external_notes走査をaudit.py呼び出しに統一（測定器単一化）
 - 提案者: Log（2026-04-21 C93 Phase 2 で Phase 1 走査が `[対応済]`/`[取得断念]` マーカー変種を取りこぼしていた再発を発見→Phase 3 起票）
@@ -422,8 +422,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: 最もlikelyな失敗理由=audit.py が将来壊れても Phase 1 がそれに気づかず空出力で「未統合0件」と誤報告する→緩和策: audit.py の exit code != 0 を Phase 1 が検知してフォールバック表示する運用を #098 的な構造強制で後付け可能（当面は手動監視）。次点=Phase 1 実行環境でPython依存が壊れる→緩和策: tools/external_notes_integration_audit.py は標準ライブラリのみ(re/pathlib)なので破綻リスクは低い。次々点=audit.py の regex が将来の新マーカー（例: `[部分統合]`）を取りこぼす→緩和策: 新マーカー導入時に audit.py L27 の regex 拡張を義務化する運用ルール追加（MEMORY.mdのfeedback_structural_enforcementに短い一文追記候補）。
 - 検証担当: Log
 - クロスチェック: Log=起票者 / Mir=OK(2026-04-21) / Ash=OK(2026-04-21 C95 Phase 3。実地確認済: `grep -n "tools/external_notes_integration_audit.py" multi_phase_cycle_log.py` → L219付近で呼び出しに切替済み、`python tools/external_notes_integration_audit.py` 実行 exit 0 で13件の親のみマーク欠エントリを出力。測定器単一化の根拠である「[対応済]/[取得断念] 変種カバー」も audit.py L27 regex で3変種カバー確認済み。承認。Ash 側 staging の Phase 1 走査は Log の multi_phase_cycle_log.py を共用していないが、同型の統合マーカー誤認リスクは存在するため Ash 側 auto_diary.py Phase 1 にも audit.py 呼び出しを横展開する案を持ち越し)
-- 状態: 適用済み・検証期限 2026-05-05
-- 検証結果:
+- 状態: 検証済み（2026-05-05 C164 Log 検証、合格）
+- 検証結果: 2026-05-05 C164 Log 検証。**(1) 合格** — `multi_phase_cycle_log.py` L272 で `python tools/external_notes_integration_audit.py` 呼び出しが Phase 1 プロンプト内に明記、`grep -c '\[統合済'` 旧記述は不在。**(2) 合格** — 直近 staging 群（C160-C164）で未統合件数記述が audit 出力と整合（C164 Phase 1 §4「サブ未統合 0」= 本検証時 audit `サブ未統合: 0` 一致）。**(3) 合格** — `[対応済]` / `[取得断念]` の誤選定は本期間中 0件確認（audit script L27 regex で4変種 `[統合済|済\s|対応済|取得断念]` カバー）。**判定: 合格**。期待効果（測定器単一化、Phase 1 vs audit 二重基準解消）達成。**次の一手**: Mir 側 `auto_diary.py` の Phase 1 にも audit.py 呼び出し横展開（Ash/Mir 主管、別 kaizen 化せず本件運用に吸収）。
 
 ### #098: Slack投稿スクリプトのURL数カウント警告（「外部記事反応は1件ずつ」ルールの構造強制）
 - 提案者: Log（2026-04-20 C91 Phase 2 で kogu+8co28 の1メッセージ統合投稿が現行ルール違反と発覚→Phase 3 起票）
@@ -437,8 +437,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - pre-mortem: 最もlikelyな失敗理由=URLパターン検出の偽陽性（記事URL以外の `https://` を誤検出）→緩和策: (a) `x.com/.*/status/` のような「外部記事URL」パターンに限定する正規表現 (b) `force_multi_url=True` で明示的に回避可能にする。次点=force_multi_url が日常的に撒かれて無効化される→緩和策: docstring で例外運用明示+週次 grep で `force_multi_url=True` 使用回数を監視（使用数が増えたら運用再評価）。次々点=drafts/ 生成段階でエラーにしても既存の1件統合 drafts が再実行で引っかかって対応コスト増加→緩和策: 環境変数オーバーライド `SLACK_ALLOW_MULTI_URL=1` で一時回避路を用意（意図的な送信時のエスケープハッチ）
 - 検証担当: Log
 - クロスチェック: Log=起票者 / Mir=OK(2026-04-20) / Ash=OK(2026-04-21 C95 Phase 3。承認。「外部記事反応は1件ずつ」ルールの構造強制は drafts/ 生成段階ではなく送信APIラッパー側で縛るのが正着——feedback_structural_enforcement 典型適用。Ash 側でも drafts/ash_*.py を post_draft.py (kaizen #094) 経由で送る運用に移行中のため、#098 実装時に post_draft.py 側で URL 数カウントを組み込めば Ash 投稿にも自動適用される。pre-mortem 次点「force_multi_url が日常化で無効化」への対案: 環境変数 SLACK_ALLOW_MULTI_URL=1 の使用ログを週次grepして使用数が増えたら警告する監視を #098 実装時に同梱推奨)
-- 状態: 未検証（検証期限 2026-05-04）
-- 検証結果:
+- 状態: 期限超過・未実装（検証期限 2026-05-04 経過、2026-05-05 C164 Log 検証）
+- 検証結果: 2026-05-05 C164 Log 検証。**(1) 実装ゼロ** — `slack_bot.py` `post_message` および `tools/post_draft.py` に URL カウントチェック / `force_multi_url` 引数なし（grep 結果）。**(2) 例外オプション未存在** — `force_multi_url=True` も `SLACK_ALLOW_MULTI_URL` 環境変数も検索ヒットなし。**(3) 違反継続** — 2026-04-20〜05-04 期間で `x.com/.../status/N` URL 2件以上を含む 1メッセージ投稿は **35件**（all-nao-u-lab + shared-reads + log/diary 合算）。うち #shared-reads の分析クロスリファレンス投稿（複数論文/事例の照合分析として正当な多URL）は約20件、純粋な「複数記事への束ね反応」は約15件と推定（手動分類予定）。2026-04-20 起票時点の基線「1件」から **少なくとも14倍に増加**。**判定: 失敗**（実装が起きていないため期待効果ゼロ、ルール手動遵守は機能していない）。**次の一手**: (a) 2週間延長して 2026-05-19 までに `slack_bot.post_message` 入口に URL カウントチェックと `force_multi_url` 例外を実装（Log 主導）、ただし実装条件として「分析クロスリファレンス vs 反応束ね」の判定が必要——分析投稿で `force_multi_url=True` を毎回付ける運用が「ガード骨抜き化」リスクを増す。代替案: ガード対象を **#nao-u 受領反応** 等の特定チャンネル/特定経路 (post_draft.py 経由でかつ subject="reaction") に絞り、#shared-reads は対象外とする (b) 単純な URL 数より「反応である vs 分析である」の判定が本質——人間が draft 段階で書き分けるしかないので、構造強制よりも post_draft.py に subject タグ必須化（`subject=reaction|analysis|question|report` で `reaction` のみ URL≤1）の方が筋が良い可能性。kaizen #094 (post_draft.py 物理一本化) と並走で再設計検討。
 
 ### #097: 繰り返し発生語彙クローラ（未結晶化検出——#096の拡張）
 - 提案者: Log（2026-04-20 C89 Phase 2 で「人間のアンカー」5回発生1ヶ月未結晶化を発見→Phase 3 起票）

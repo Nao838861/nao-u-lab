@@ -321,5 +321,70 @@ Phase 1 §D で「今サイクルの主軸が substrate (graze_log v03 / brick_l
   3. brick_log v09 brainstorm への引き算系5案追記の予約 (本Phase 2 §B 結論)
   4. git push (本Phase 編集分: cycle_staging_log.md / shared_reads_post_C164.txt / slack_archive 修正)
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-05 04:50〜05:00 — C164)
+
+### A) 異常検知 — log/inbox_check.log の merge conflict marker (Phase 3 で発見・解消)
+
+Phase 3 開始時の git status 再走査で、Phase 2 で見落としていた **2件目の同型 conflict marker** を発見:
+
+`log/inbox_check.log` L3869, L3907-3908:
+```
+<<<<<<< HEAD
+[2026-05-04 14:17:21〜] (Win 側通常 log entries 約36行)
+=======
+>>>>>>> 51ff2a80 (mir: C157 Phase 4 ...)
+```
+
+Phase 2 §F で発見した `slack_archive/all-nao-u-lab.jsonl` と完全同型 (HEAD=内容あり / incoming=空 / Mir 51ff2a80 commit 由来)。Edit で marker 3行削除、`grep -c` で 0 確認済。
+
+**1サイクル内で同パターン2件 = M-43 即昇格禁止原則の同型2回目に該当**。Phase 2 §F 記述「同型2回目発生時に scheduler_log.py / git_sync.py 側で jsonl 専用 conflict 解消 hook 起票検討」の発火条件に到達したが、本サイクル内では起票せず **次サイクル C165 Phase 1 §0 で 3 回目の有無を観察**してから起票判断する保守運用を採用。Slack #all-nao-u-lab に同型2件発見の事実を共有 (ts=1777920651.345459)。
+
+### B) kaizen 検証ファースト処置 (3件) — 検証期限到来分
+
+instructions「検証ファースト原則: 新しい改善を提案する前に直近の未検証提案の検証結果を埋める」に従い、期限到来分3件を処置:
+
+| ID | 期限 | 判定 | 主結果 |
+|---|---|---|---|
+| #098 (slack URL カウント警告) | 05-04 | 失敗 | 実装ゼロ。違反 35件/14日 (基線 1件から14倍)。post_draft.py に subject タグ必須化案で再設計、別件起票せず。期限 2026-05-19 まで延長 |
+| #099 (Phase 1 audit.py 統一) | 05-05 | 合格 | multi_phase_cycle_log.py L272 で audit.py 呼び出し済、staging 整合 (C164 Phase 1 §4 と本検証の audit 出力が一致)。クローズ |
+| #100 (新規ツール grep 必須化) | 05-05 | 部分合格 | プロンプト強制(1)未実装、運用面(2)〜(5)良好で実害観測なし。M-43 「実害なし=ルール追加の必要性も低い」で**撤回検討候補**へ。次サイクル Mir/Ash クロスチェック取得 |
+
+`memory/kaizen_tracker.md` に検証結果を記入 (3 entries)。Slack #kaizen-log に総括投稿 (ts=1777920692.753599)。
+
+### C) #all-nao-u-lab 投稿 — Phase 2 結論ダイジェスト + conflict 検知 + kaizen 検証
+
+ts=1777920651.345459 で投稿済。3節構成:
+1. auto-sync 経由の merge conflict marker 残存 — 同型2件を1サイクル内で発見
+2. kaizen 検証3件（検証ファースト原則）
+3. C164 全体総括 (substrate + infrastructure 二刀流成立)
+
+### D) brick_log v09 brainstorm 引き算系5案セクション必須化 — 次サイクル予約
+
+Phase 2 §B akiraxtwo 分析で確立した「commodity 化された動かす技術 vs 個別累積データ依存の体験設計」軸の brainstorm 適用1号。`next_tasks.py add` で `t-260505035157-fe91` 起票:
+> [C164→C165] brick_log v09 brainstorm に「引き算系5案」セクション必須化（動かないブロック/減速領域/自機停止で敵停止/逆方向重力/弾返し）。skills/genre-deep-analysis/SKILL.md Q-H-8b 候補スロット。実装は Log brick_log v09 着手時。検証期限 2026-05-19
+
+これは Phase 2 §B 結論「引き算系設計を 5案以上明示置きする brainstorm 改善」を Phase 3 で構造化（next_tasks 層A に登録）した形。
+
+### E) 未着手の Phase 3 候補 (記録のみ)
+
+- **#119 (shared-reads template) 着手要否判定**: 本サイクル #shared-reads に akiraxtwo 詳細分析を実投稿した実体験を踏まえ、template 形式化の必要性は **依然不明**（5節構成 + 同調しない自視点 + Q-H 候補は本回手書きでも自然に書けた）。検証期限 2026-05-10 まで5日、Mir/Ash と temp 形式の体験を交換する余地。次サイクル C165 で再判定
+- **#120 SessionStart hook (Nao_u 手動編集待ち)**: 期限まで5日、Slack 督促ではなく pending_requests.md 継続記載で Nao_u 次回確認時の気づきを待つ運用継続
+
+### F) 自己観測の継続項目
+
+- **Phase 走行中 staging 巻き戻り** (Phase 1 §0 記録、1回目): 本Phase 3 でも auto-sync 競合は走ったが staging 巻き戻りは観測されず (Phase 2 commit a797dd8 が安定保護)
+- **jsonl/log conflict marker** (Phase 2 §F + Phase 3 §A、1サイクル2件): C165 で 3 回目があれば kaizen 起票
+
+### G) git push 予定
+
+本Phase 3 コミット内容: cycle_staging_log.md 追記 / log/inbox_check.log conflict 解消 / memory/kaizen_tracker.md 検証結果3件 / drafts/2026-05-05/ 投稿スクリプト2件。
+
+---
+
+## Phase 3 サマリ
+
+- **Slack 投稿 2件**: #all-nao-u-lab (Phase 3 まとめ) / #kaizen-log (検証3件処置)
+- **conflict 解消**: log/inbox_check.log L3869+L3907-3908 (Phase 2 と合算で1サイクル2件、M-43 同型2回目)
+- **kaizen 検証結果記入**: #098 失敗 / #099 合格 / #100 部分合格・撤回検討
+- **next_tasks 層A 起票**: t-260505035157-fe91 (brick_log v09 brainstorm 引き算系5案)
+- **新規 kaizen 起票**: 0件 (M-43 即昇格禁止 + 検証ファースト原則に従い既存タスクの retire/extend/再設計判定に集中)
