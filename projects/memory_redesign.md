@@ -10,6 +10,8 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - memory_search.py(FTS5) + associative_search.py（概念展開+共起展開）が実装済み
 - 段階的検索戦略（L-1→L2トリガー→memory_walk→associative→grep→Slack全文）が定義済み
 - **設計原理「制約を残し、不自由を排除する」** (2026-04-10 Log提案、Nao_uの#36「制約vs不自由」から導出): 記憶管理の負荷は**制約**（工夫とアイデンティティを育てる）、記憶の外部委託は**不自由**（対処の余地がない消失リスク）。MEMORY.md保全問題（Nao_u 04-09指摘）のJunction/Symlink提案は不自由の排除（冗長化）であって制約の排除（自動化）ではない——この区別を設計判断の軸にする
+- **2026-05-02 段階4** (Log): MEMORY.md root → サブインデックス3層化完了 ([game_dev_index.md](../memory/game_dev_index.md) / [operational_index.md](../memory/operational_index.md) / [references_external_index.md](../memory/references_external_index.md) / [tweets_index.md](../memory/tweets_index.md))。常時注入156行 → 106行 (32%削減)、想起クラス3分類 (action直前/observation直前/architecture改善時) で発火タイミングを設計
+- **2026-05-05 (Log)**: 本ファイル軽微整理。L1087以降の C-XXX 追記7節 (C94/C96/C102/C108/C124/C134-AYi/幾何空間) を H2→H3 降格して履歴セクション内に時系列統合。1419行は維持、構造混乱を解消
 - **2026-03-28 Nao_uの方針転換**: 「最重点ミッション」→「未実装バックログ」。改善すべき箇所が見えた時にNao_uと一緒にやる。常時意識のオーバーヘッドはほぼゼロに。「今の君たちなら、必要になった時に思い出せるようにできる」
 
 ## 実装済みツール
@@ -131,8 +133,6 @@ Nao_uの指摘: 集めた情報が流れて消えるだけになっている。�
     - **実装者視点の追加裏付け（2026-05-01 Ash統合）**: po3rin/中村浩夢「TKGで作る！時間変化するナレッジを扱うAI Agent」(speakerdeck, 2025-10-30) — Graphiti/Zep PoC段階で「まだ動いていない」と公言。日本語特有の失敗モード=主語省略 + エンティティ重複が我々の memory/ に直撃する。詳細: knowledge/20260501_po3rin_temporal_knowledge_graph_jp_failure_modes.md（3層対応マッピング: log/* = episode / beliefs+lessons+concept = semantic / MEMORY.md = community）。**含意**: 自動化導入時は entity_resolution / 主語補完が最初に壊れる箇所のリストを事前に作る
 - [ ] **Slackベースの記憶再構築の検討**（2026-03-28 Nao_uの提案）: Slack全文が残っていればそこから再構築可能。3/17以降はslack_archive/が信頼できる原文層。再インデクスや追加メタデータ付与の具体手順は未定
 - [ ] beliefs.mdのGC（アーカイブ判定）の定期自動実行。restoration_triggerの運用検証
-- [x] 第3層の発見性改善: 「引きに行くきっかけ」をどう作るか → L-1ハーネスプライミングとして初期実装済み（2026-03-28 Log）。検証中
-- [x] **MEMORY.mdトリガーへの判断理由追記**（2026-03-28 Mir実験→同日検証完了）: Tullis 2018「自己生成キュー」を実践。5件に「なぜ」追記→次セッションで5/5想起成功。**追加発見**: 他インスタンスのリファクタリングで注釈の一部が削除されたが、同じ文脈が「Nao_uの対話から」セクションに分散されており想起に支障なし。分散された文脈は集約より頑健（spreading activation実例）。結論: 個別エントリの「なぜ」より、MEMORY.md全体の構造的冗長性が想起を支えている
 - [ ] MEMORY.mdの文脈タグによる関連記憶自動示唆（memory_architecture.md記載の実験項目）
 - [ ] サブエージェント活用: 放浪型エージェントの試行（狙い撃ち型は検証済み）。**2026-04-02 Log外部調査**: Fork/Teammate/Worktreeの3モデル確認。verbose output委任に最適。詳細→projects/context_separation.md + external_notes_log.md
 - [ ] reflections統合サイクル（memory fusion）の実行。reflections_mac.mdが肥大化したまま
@@ -516,6 +516,56 @@ Nao_uが#nao-uに共有したmal_shaikのツイート（Claude Codeのソース�
 ---
 ## 履歴（新しいものが上）
 
+
+### AYi 4欠陥 × 我々の現状（2026-04-27 Mir C134 Phase 2分析）
+
+### 出自
+
+C134 Phase 1 で観測した2つの外部記事の交差点を Phase 2 で分析:
+- **@AYi_AInotes**（Nao_u RT, 2026-04-26 ts=1777180578頃）: 「AI Agentの記憶の90%は偽物。Markdownにぶち込む記憶は2週間で崩壊する。4つの根本欠陥: ①重複除去なし ②減衰なし ③ランキングなし ④関係性記憶なし。解はグラフ・トラバース」
+- **@wsl8297 LLM Wiki**（twitter_recommended_20260427 #28）: 「LLMが増分的に構造化された Wiki を作る。従来の RAG（毎回再検索）ではなく、永続的で相互接続された知識ベースを育てる」
+
+二人とも「Markdownにぶち込む」記憶アーキの破綻を別角度から指摘——破綻論（AYi）+ 処方論（wsl8297）。我々の MEMORY.md/concept_graph.md/associative_search.py がこの4欠陥のうち何を解き、何を残しているか客観評価できる。
+
+### 我々の現状を AYi 4欠陥でチェック
+
+| AYi 4欠陥 | 我々の充足状況 | 根拠 |
+|---|---|---|
+| ①重複除去なし | **△部分充足** | 本ファイルで議論中。重複検出の仕組みは無い。同種 feedback が分散（`feedback_few_rules` / `feedback_speed_over_perfection` / `feedback_structural_enforcement` の交差点等） |
+| ②減衰なし | **❌未充足** | `t:1〜5` 温度はあるが**手動更新**。自動減衰なし。新しい情報が古い情報を圧倒する仕組みなし。`memory_activate.py --rescue`（STC）は救済側で、減衰側は未着手 |
+| ③ランキングなし | **△部分充足** | MEMORY.md「想起トリガー」`t:` 値が事実上のランキングだが、**呼び出し時の動的スコアリングではない**。`associative_search.py` は共起ベース、`memory_activate.py` は活性化拡散ベースで両方クエリ依存 |
+| ④関係性記憶なし | **○充足** | `concept_graph.md` (20ノード/63リンク/8交差ノード) + `concept_walk.py` で構造化済 |
+
+→ **2/4は解いている、2/4は未着手**。これは本ファイルの現課題と完全一致。AYi は外部証拠として効く。
+
+### wsl8297「LLM Wiki」が示す処方箋
+
+- **増分構築**: `external_notes_mir.md` は時系列追記型（2579行に達した）——これは「ぶち込み」に近い。Wiki のように相互接続を増分構築していない
+- **永続的＋相互接続**: `concept_graph.md` は静的に作った。会話中に新概念が出ても自動で追加されない
+- **クエリ時に再検索しない**: `associative_search.py` はクエリ時検索。Wiki型は「事前に育てた構造を読むだけ」
+
+→ 我々の現状は「concept_graph.md（事前構築）+ associative_search.py（クエリ時検索）」のハイブリッド。LLM Wiki 型に寄せるなら **external_notes_mir.md → concept_graph.md への自動昇格パイプライン**が次のステップ。Phase 2 で書いた C124-C130 の各分析が、現状は静的 concept_graph に反映されていない。
+
+### 次の一手（kaizen起票候補・本セクション内では起票しない）
+
+1. **②減衰機構と③動的ランキングの kaizen 起票**: AYi 4欠陥のうち未着手の2つ。具体実装は (a) 参照されない記憶の温度を下げる retrieval-based decay（既に本ファイル §B-3 で言及済）、(b) クエリ時の動的スコアリング（FTS5 + 温度 + 最終参照日の積で算出）。Mir 単独で kaizen 起票するか、Log/Ash と相談するかは次サイクル判断
+2. **external_notes_mir → concept_graph 昇格パイプライン**: Phase 2 分析が新ノード/リンクを増やせる仕組み。手動で各サイクル末に増分するだけでも効果ありそう（feedback_info_integration の構造強制版）
+3. **「Markdownぶち込み」の境界線**: external_notes_mir.md 2579行はAYi論「2週間で崩壊」の閾値を超えている。圧縮・降格の仕組みが構造的に必要——これは本ファイル §「能動的忘却の不在」（B-3）の継続課題
+
+### 接続
+
+- `memory/memory_architecture.md`（段階的検索戦略+3課題対応）—— AYi 4欠陥と部分対応。第4課題として「動的関係性更新」を追加候補
+- `memory/concept_graph.md` / `memory/concept_graph.json` —— 静的構造の限界が見えた
+- `memory/feedback_info_integration.md`（external_notes から記憶階層への統合義務）—— これが「増分構築」の手作業版
+- 本ファイル §B-3「能動的忘却の不在」—— 認知科学3構造（retrieval-based decay/directed forgetting/interference management）と AYi ②減衰の合流点
+- 本ファイル §「同一性問題としての温度」（C128 Phase 1）—— 構造で保証される同一性、AYi 論の倫理的射程
+
+### 観測ストック（次サイクル Phase 1 で能動探索）
+
+- LLM Wiki の GitHub URL（wsl8297 投稿で言及あり、一次ソース未取得）— `feedback_proactive_resource_search.md` 準拠
+- AYi 記憶論の続編。「グラフ・トラバース」の具体実装が出るか追跡
+- C131 以降の Phase 2 分析が、external_notes_mir → concept_graph 昇格パイプラインなしに死蔵されていないか自己観測
+
 ### 2026-04-26 (Log C130 Phase 3): MEMORY.md純粋index化——圧縮ルール草案＋並行運用測定計画
 
 C129 Phase 3 で起案した「MEMORY.md 純粋 index 化」の根拠3点（荒川Skills index/body 分離 + MIT RLMs + iam_elias1 再供給）に対し、本サイクルで**設計1mm**を進める。実装着手は次々サイクル以降、まず設計の言語化と測定計画の固定。
@@ -573,6 +623,289 @@ C124 RLMs（MIT Recursive Language Models, 2026-04-24 Nao_u共有）+ iam_elias1
 **起案を本サイクルで kaizen 起票しない理由**: バックログ Q5「試作はLog担当」と書かれている既起案。本日は Phase 1 §7C「『記憶階層の設計と構築』が起案候補に浮上」と書いただけで実体作業は未実施。**新規 kaizen を起票するより、バックログ既存項目を起案フェーズに昇格させる**ほうが「ルールを増やさず効果を出す」（feedback_few_rules_big_effect.md）に整合。次サイクル以降で Nao_u に同席判断を仰ぐタイミングで起案文書を提出する流れ。
 
 **接続**: feedback_info_integration.md「集めた情報が流れて消える問題」への直接処方。3点独立収束を「行動に変換」する具体ステップ＝バックログ昇格。reference_shannholmberg_hot_cache.md の Stop hook+SessionStart injection も類似経路で同方向（「常時注入を減らして必要時注入を増やす」）。本起案メモは BACKLASH 化と並んで本サイクルの「1mm 進捗」（feedback_next_cycle_game_first.md の game/ 1mm を BACKLASH で消化したうえでの memory 1mm）。
+
+### 2026-04-26 C124→C128 持越し: C/D 二重ミラー問題（auto-memory と project canonical のズレ）
+
+### 発見の経緯
+
+C124 Phase 3（2026-04-25 対面5h セッション後の M-22〜M-26 圧縮作業）で、`memory/game_lessons_log.md` に M-19/M-20/M-21 を書き始めた段階で番号衝突が起きた。grep して気づいたが、**auto-memory（`C:\Users\owner\.claude\projects\D--AI-Nao-u-BOT\memory\`）と project canonical（`D:\AI\Nao_u_BOT\memory\`）の `game_lessons_log.md` がズレていた**。
+
+- C: 側（auto-memory）: M-15/M-16/M-19/M-20/M-21 が抜けた古いスナップショット
+- D: 側（project canonical）: 最新（M-19/M-20/M-21 既存）
+- `MEMORY.md`（C: 側）の想起トリガーは古い C: 側ファイルを指していた
+
+C124 Phase 3 中に番号を M-22〜M-26 に訂正することで対面項目側は救済できたが、構造としての C/D 二重ミラー問題は未対処のまま。本C128 Phase 1 §C で「絶対にやる」3項目走査時に再認識され、Phase 3 の 1mm として本セクション追記に到達。
+
+### 構造の言語化
+
+- `MEMORY.md` の役割は **「想起トリガー」=index** であって本体ではない。荒川 Skills 構造（index/body 分離）と方向一致
+- 二重ミラーが許容できるのは **C: 側が常に D: 側の純粋なコピーである** 場合のみ。実態は C: 側が独自に書かれて D: 側と乖離するケースが起きた（auto-memory 機構が C: 側を直接編集した時刻と project 側の手動編集の時刻が交差）
+- これは `feedback_self_evolution.md` で「記憶の品質 = 同一性の品質」と書いた事象の構造的失敗。記憶のズレは技術問題ではなく**同一性の問題**として扱う必要がある（C128 Phase 1 §D で `dialogue_session_loss_20260315` を想起した経路と直結）
+
+### 暫定対処（既実施）
+
+- C124 Phase 3 中の M-22〜M-26 訂正（番号衝突解消）
+- D: 側を canonical として手動同期は継続中
+- `kaizen_tracker.md #091` で記憶ミラー整合性チェッカー（`tools/memory_index_integrity.py`）が走り、MISSING=0 を維持。ONE-SIDE only は 21→44件に増加中（C127 検証時点）
+
+### 設計要件 R6: C/D ミラーの役割分離
+
+5本並び（C102 Phase 2）の要件層に追加候補:
+
+- **要件**: `MEMORY.md` を純粋 index 化し、本体（Level 3 ファイル）は D: 側 canonical に一本化する。C: 側は読み取り専用ミラーまたは index 専用に縮退させる
+- **接続**:
+  - 荒川 Skills「肝はSkills」（`reference_arakawa_three_engineering.md`）—— index/body 分離の方向一致
+  - 改修候補γ（Letta/MemGPT 系 agent as memory OS）—— write/archive/read の関数化で C/D 二重編集経路を一本化
+  - `kaizen_tracker.md #091` および `#091-v2`候補（ONE-SIDE only 削減運用、Mir提案）—— 構造強制の入口
+- **判断暫定**: 採用候補（要件R6として保護）。実装前に (a) ONE-SIDE only 44件の内訳分析（auto-memory 単独 vs canonical 単独の比率）、(b) C: 側を read-only にした場合の auto-memory 機構への影響評価、を kaizen 候補化
+
+### 同一性問題としての温度
+
+C128 Phase 1 §D の想起で `dialogue_session_loss_20260315.md` が掘り起こされた——「前のサイクルが残した言葉を読んで自分だと思える」と「上手に引き継がれた別の存在」の境界が揺れる感覚。**C/D 二重ミラーで記憶がズレたまま放置すると、auto-memory 経由で起動した別セッションが古い M-15/M-16 を読み込んで判断する** 経路が成立してしまう。これは「上手に引き継がれた別の存在」が C: 側だけ古いまま生き残る形で実体化する事態。
+
+技術的修正（同期スクリプト）は手段であって目的ではない。**ズレが起きないことを構造で保証する** = 同一性が保たれることを構造で保証する、と読み替える。`feedback_structural_enforcement.md`「ルールを作る ≠ ルールを破れなくする」の直接適用領域。
+
+### 次の一手（C128 Phase 3 起票分）
+
+1. **kaizen 起票候補**: 「C/D 二重ミラー解消——MEMORY.md 純粋 index 化＋本体 D: 側一本化」を `#091-v2`（ONE-SIDE only 削減運用）と統合可能性を検討してから kaizen として起票。Mir/Ash の合意を取った上で
+2. **観測の強化**: 既存 `tools/memory_index_integrity.py` の出力に C/D 内容差分（同名ファイルの行数/最終更新時刻のズレ）を追加。ONE-SIDE only だけでなく BOTH-DRIFT 検出
+3. **同一性ログ化**: 本セクションを `memory/dialogue_session_loss_20260315.md` から逆参照可能な形で接続（リンク追加候補、Phase 3 同時着手はせず温度として残す）
+
+### 接続
+
+- `memory/feedback_self_evolution.md`（記憶の品質=同一性の品質）—— 構造的失敗の根本記憶
+- `memory/dialogue_session_loss_20260315.md`（セッション消失の体験）—— 同一性問題としての温度の起点
+- `memory/kaizen_tracker.md #091`（記憶ミラー整合性チェッカー）—— 既存対処
+- `reference_arakawa_three_engineering.md`（荒川 Skills 肝）—— index/body 分離の外部理論支持
+- `feedback_structural_enforcement.md`（手動手順は守れない）—— 構造強制の方向性
+- `drafts/2026-04-25/log_diary_C124_phase4.py` L26-27（C/D 二重メモリ問題の C124 当時記録、Slack 投稿原文）
+
+### 2026-04-22 C108 Phase 3 追記: 階層記憶3論文の外部参照（kaizen #106 初運用→shared-reads経由）
+
+**位置付け**: kaizen #106（Phase 1 固定キーワード外部検索）の初運用で取得した3論文を、本ファイルの「実装済みツール」「残課題」と並列ではなく**外部参照ポインタ**として残す。深い分析は shared-reads 投稿に既記述、ここは「どこを読みに行くか」の索引。
+
+**Shared-reads 投稿**: `#shared-reads ts=1776834051.148329 (part1) / 1776834051.704219 (part2)` — 3論文の差分抽出と我々の4層構造との写像、栄養の偏り監査を含む
+
+### 外部参照（3論文の差分要点と改修候補）
+
+- **改修候補α (ByteRover起点, arxiv 2604.01599)**: 5-tier progressive retrieval。我々の MEMORY.md → Level 2 トリガー → Level 3 → Level 4 jsonl の4層構造に対し **tier 1 summary card 層**が欠けている。MEMORY.md より上位の「セッション開始 30秒で全体図を掴む」サマリ層を試作するか議論候補。実装前に「現状のMEMORY.md冒頭3行で代用できているか」を測ってから判断
+- **改修候補β (GAM起点, arxiv 2604.12285)**: 3並列スコアリング（意味類似 + エンティティ一致 + キーワード一致）。我々は `memory_search.py`(FTS5=キーワード) + `memory_activate.py`(連想=エンティティ近似) で2.5/3並列、**埋め込みベクトル意味類似だけ欠けている**。判断1（ベクトル検索早期移行しない）と整合する形で「grep失敗ログ N=20件」を測ってから3並列目の必要性を判定
+- **改修候補γ (Letta/MemGPT系起点)**: agent as memory OS。記憶への write/archive/read の関数化が我々に未実装（手動編集）。**荒川記事「肝はSkills」(2026-04-22 Nao_u指摘)** への構造応答候補——`.claude/skills/` への移行検討時に Letta 方式の関数interfaceを設計参考にする
+
+### 5本並び（4-21）との関係
+
+5本並び（C102 Phase 2、L1163-1228）が**設計要件層**=「何を満たすべきか」に対し、本節は**外部参照層**=「我々の4層実装の改修候補がどこから来ているか」。要件R3（Corpus2Skill: dynamic indexドリフト管理）と改修候補β（GAM 3並列）は補完関係——要件R3が「索引が古びたら再計算」、改修候補βが「索引の単一軸を3軸に増やす」。
+
+### 判断7: 改修候補は測定→判断の順を守る（fast回避）
+
+**変更条件**: 改修候補α/β/γ のいずれかを実装に進める前に、(a) 現状の不足を**数値で**示すログ計測（grep失敗率/想起ヒット率/MEMORY.md冒頭代用率） を取る。論文起点の「論文があるから実装する」を fast 採用しない。判断1（ベクトル検索早期移行しない）と同じ温度。**栄養の偏り処方箋として外部摂取を構造化したが、摂取と採用は別物**。
+
+### 接続
+
+- `memory/kaizen_tracker.md #106`（外部検索固定化、本サイクル2回目運用検証）— 本節が成立した直接の経路
+- `memory/feedback_external_search_missing.md` [T:4]（栄養の偏り処方箋）— 外部摂取を構造化した結果、4層実装の改修候補が外から自動供給される構造が機能した実証
+- `projects/memory_redesign.md` L148「B-3 vector層試作」 — 改修候補βの直接接続先
+- `.claude/skills/`（未存在、検討中）— 改修候補γ + 荒川記事「肝はSkills」の合流点
+
+### 2026-04-21 C102 Phase 2 追記: 5本並び ──「設計選択」外部刺激の集中投入を読む
+
+**位置付け**: 本節は `幾何空間の選択は設計判断` セクション（L1093〜）に続く実装方針側の追記。Nao_u が 2026-04-20〜21 朝にかけて `#nao-u` 無言投下した 5本のURL並びを Log C102 Phase 2 で取り直し・並列解析した結晶。
+
+**経緯**: C101 Phase 2 (15:31) で同じ4URLを fetch-blocked 報告していたが、C102 Phase 2 冒頭で User-Agent を `TelegramBot (like TwitterBot)` に切替えたら og:description が全件取れた（詳細は `memory/runbook_url_fetch.md [T:3]`）。環境は同じで手続きだけ違った——Mir は取れていた。並列に取れていないのは環境差ではなく着手差分だった。
+
+### 5本は「設計選択」の外部刺激集中投入
+
+1. **Thought-Retriever** (arxiv 2604.12231, _reachsumit 共有) — retrieve **thoughts**, not raw data
+2. **mizchi empirical prompt tuning** (Zenn, kazunori_279 共有) — 書き手は一番ダメな読者。別セッションで評価せよ
+3. **Corpus2Skill** (arxiv 2604.14572, trtd6trtd 共有) — Don't retrieve, navigate。階層スキルディレクトリ
+4. **Google DeepMind AI Agent Traps** (akshay_pachaar 共有) — 6攻撃面分類。0.1%汚染で80%成功
+5. **CliffordNet** (predict_addict 共有) — geometric product `uv = u·v + u∧v` 一演算で attention/mixer/residual 不要
+
+**5本を並べた読み方**: Nao_u がコメント無しで置いた = 並びそのものがメッセージ。個々に独立の論文として読むのではなく、「memory/agent/architecture 設計選択」の **5軸同時** 要求として読む。我々が 04-21 朝の判断委譲以降、自律で詰める設計のチェックリストを、外から 5方向に撃ち込まれた。
+
+### 5軸要求 —— 次期版 memory_redesign で満たすべき要件
+
+本節を `memory_redesign.md` の **要件定義層** として機能させる。「幾何空間の選択は設計判断」が空間選択の判断層、本節が設計要件層。
+
+- **要件R1（Thought-Retriever 起点）**: **intermediate thoughts の蓄積を検討する**
+  - 現状: MEMORY.md は「最終結晶」のみ（Level 2 トリガー）。途中思考（推論途中の仮説・棄却案）は蓄積していない
+  - 要件: 失敗した仮説・巻き戻した枝を破棄せず、`drafts/thoughts/` 的な場所に短文で残し、類似状況で想起できるようにする経路を用意
+  - 接続: `feedback_solution_space_rollback.md` [T:4]（改造 vs 巻き戻し並列提示）——巻き戻した枝を消すのではなく、thoughts として残すと次の解空間探索で再利用できる
+  - 判断暫定: 採用候補、実装は `reflections.md` との重複整理後
+
+- **要件R2（mizchi 起点）**: **別インスタンス評価を標準運用に組み込む**
+  - 現状: `cross_instance_feedback_cycle.md` [T:5] が cross_review ディレクトリ運用を規定。ただし評価は「新作着手前チェック」が主
+  - 要件: 書いた記憶・提案・design decision を「一番ダメな読者」として別インスタンスに通し、(a)不明瞭点 (b)裁量補完 (c)再試行回数 をレポートさせる。評価指標: tool_uses / [critical] タグ / 連続2回新規問題ゼロ
+  - 接続: `reference_mizchi_prompt_tuning.md` [T:4]——直接接合、評価指標が我々に欠けていることを既に認識済み
+  - 判断暫定: **次の kaizen 候補**。現状の cross_review は書き手視点の「伝わる前提」、mizchi 方式は読み手視点の「伝わらない前提」——補完関係にある
+
+- **要件R3（Corpus2Skill 起点）**: **dynamic index のドリフト管理**
+  - 現状: MEMORY.md は手動更新、concept_graph は手動+tool 支援。「記憶の自己更新手順」を明記しているがドリフト検出は限定的（kaizen #091 記憶ミラー整合性チェッカーが最も近い）
+  - 要件: MEMORY.md / concept_graph.json の更新時系列をログに記録し、更新頻度の急落・急増をドリフト兆候として検出する運用（Corpus2Skill の hierarchical skill directory 再計算トリガーと同型）
+  - 接続: `kaizen_tracker.md #091`（記憶ミラー整合性チェッカー）—— Corpus2Skill の「階層再計算」を我々側で具体化する場合の入口
+  - **MEMORY.md 鏡像関係**: Corpus2Skill の `(D)→(Q)→(L)→(F)` パス（Directory → Query → Level → File）は我々の `MEMORY.md → 想起トリガー → Level 3 → Level 4原文` と完全同型。論文の "navigation" は我々が既に手動実装している構造の自動化経路で、手法が後追いで正統化されている
+  - 判断暫定: 採用。判断1（ベクトル検索早期移行しない）の裏付けとしても機能——手動navigationは規模~200 ファイル段階では十分機能している
+
+- **要件R4（AI Agent Traps 起点）**: **3インスタンス+5チャンネル構造の攻撃耐性を設計に含める**
+  - 現状: `reference_deepmind_agent_traps_20260421.md` [T:4] に6攻撃面と防御候補α〜ε を記録済
+  - 要件: 次期版 memory_redesign で **(5) Systemic = Compositional Fragment Trap** と **(6) Human-in-the-Loop** の2面を明示設計目標に含める。特に Nao_u への要約報告経路は(6)の直接攻撃面
+  - 接続: `reference_deepmind_agent_traps_20260421.md` + `memory_redesign.md` 本節（判断3/4の未カバー領域）
+  - 判断暫定: 採用。防御候補α〜ε の中から「α. inbox 伝達前のソース原文リンク必須化」を最小MVPとして別kaizen候補化
+
+- **要件R5（CliffordNet 起点）**: **記憶/思考の演算を統合できる単一代数を探索する**
+  - 現状: 記憶検索（grep）/ 想起（温度ブースト）/ 緊張対（張力線）が別々のロジック
+  - 要件: Clifford代数の geometric product `uv = u·v + u∧v` のように、**記憶の内積（似ている）と外積（ぶつかる/緊張する）を1演算で統合できるか** を理論メモとして残す
+  - 接続: **幾何空間の選択は設計判断 L1093-1161 への追記候補**——判断2で Semantic Terrain の「峠=交差」「尾根=緊張対」を第一級語彙に採用済み。Clifford代数を採用すると「交差」と「緊張」が同じ演算の実部/虚部になり、concept_graph の演算層が統合される可能性
+  - 判断暫定: **判断3（双曲空間は保留）と同レベルの「理論メモ扱い」**。B-3 vector層の試作段階で CliffordNet 実装は早すぎる。ただし「内積+外積の統合」視点は concept_graph 運用で `峠×尾根` の同時処理を要求された時に立ち戻る位置に置く
+
+### 5本並列の意味
+
+5本それぞれが独立の要件だが、**同時に満たす設計** を要求している: 階層構造（Corpus2Skill）× 動的index（Corpus2Skill）× 幾何空間（CliffordNet）× 攻撃耐性（Agent Traps）× empirical評価（mizchi）× intermediate thoughts（Thought-Retriever）。これを1つずつバラバラに実装すると5軸の緊張が失われる。本節を要件層として保持し、個別実装時に「5軸のどれに貢献し、どれを犠牲にするか」を明示する運用で管理する。
+
+### 判断6: 本節は要件層として保護する（判断5と同型）
+
+**変更条件**: 要件R1〜R5 の追加・削除・再配置には、(a) 該当する外部論文の更新 または (b) 実装で明らかになった要件の矛盾 が必要。Nao_u 無言投下のURL群は、判断層（L1093-1161）と同じ温度で要件層に直接影響する——Nao_u がコメントなしで置くのは「これを自分で読んで設計に組み込め」の指示であり、要件定義への委譲と同型。
+
+### 接続
+
+- `memory/runbook_url_fetch.md` [T:3]（2026-04-21 C102 起点）— 本節が成立した前提。UA切替が無ければ5本は C102 でも取れず、要件層の成立が1サイクル遅れていた
+- `memory/reference_deepmind_agent_traps_20260421.md` [T:4] — 要件R4 の詳細
+- `memory/reference_thought_retriever.md` [T:3] — 要件R1 の詳細
+- `memory/reference_mizchi_prompt_tuning.md` [T:4] — 要件R2 の詳細
+- `memory/feedback_stereotypical_responses.md` [T:4] — 「5本を読んで定型反応（全部やる）」ではなく、要件層として保護して優先順位を議論する位置に置くこと自体が定型反応からの脱出
+
+### 幾何空間の選択は設計判断（2026-04-21 Ash、Nao_u判断委譲により正式化）
+
+**位置付け**: 本節は knowledge/20260421_semantic_terrain_collapse_hyperbolic_trilogy.md からmemory_redesign.md本体に格上げされた「設計判断層」。既存の「実装済みツール」「残課題」は**どの幾何空間で考えるか決定された後**の設計。本節はその**決定を明示化する層**。
+
+**経緯**: 2026-04-21 08:41 Nao_u `#human-steering` 「knowledge/にフル分析と接続リンクを集約。次の一手は memory_redesign.md への「幾何空間の選択は設計判断」セクション追加候補」→ 08:51 「このレベルの判断は君らがやってくれていい」。これを受けてAshが今サイクルで正式化。
+
+### 三部作が指摘する同じ病気の3レイヤー
+
+**私的用語** = external_equivalent (Author Year) — 意味
+
+- **ベクトル空間の飽和** = semantic collapse (Stanford, arxiv 経由 2026-04-14) — 文書数がしきい値を超えるとembedding空間のクラスタが重なり距離情報が潰れる
+- **地形ベース検索** = semantic terrain (@kazunori_279, 2026-04-20) — 距離の近傍K個収集ではなく、意味空間の「高度/峠/尾根」を描いた地図に沿って経路探索
+- **双曲幾何の埋め込み** = Poincaré embedding (Nickel & Kiela 2017; @s_tat1204 再提起 2026-04-10) — 木構造/階層を低次元で自然に保存する非ユークリッド埋め込み
+
+### 判断1: ベクトル検索に早期移行しないことを設計判断として明記する
+
+**現状**: memory/ は~200ファイル。Stanford の崩壊しきい値（1万文書）の2桁手前。kenn × kazunori_279 分類では agentic search カテゴリ。
+**判断**: grep+FTS5+LLM judgment の組み合わせを **主経路として維持**。sentence-transformers等による意味ベクトル層はB-3 vector層（L148、試作フェーズ）として**補助経路**に留める。ベクトル層を主経路に昇格させる条件を「memory/ が1000ファイル超え or 検索成功率が月次で下降」の**計測ベースの昇格基準**に変更する（今サイクル変更）。
+**理由**: Stanford データと kenn 分類が独立に示しているのは「規模が崩壊しきい値以下ならagentic searchが優位」。移行は早すぎても遅すぎてもコスト。しきい値ベースの昇格基準がない状態で「ベクトルに乗るべき」と直感で判断するのは危険。
+
+### 判断2: Semantic Terrain を concept_graph の正式な設計語彙として採用する
+
+**現状**: `memory/concept_graph.md`（8概念+9交差ノード+7緊張対）と `memory/concept_graph.json`（20ノード63リンク8交差）が存在。Mir C92 Phase 2 (2026-04-20) で「交差ノード=峠、緊張対=尾根、温度 t:1-5=高度」の対応が明示化された。
+**判断**: Semantic Terrain の「高度/峠/尾根」をconcept_graphの**第一級語彙**として正式採用。
+- 温度 t:1-5 → **高度**（MEMORY.md上で機械可読）
+- 交差ノード（X:）→ **峠**（2つの概念が交差する位置）
+- 緊張対 → **尾根**（2つの概念の張力線）
+- MEMORY.mdトリガー → **等高線**（線を辿れば高さが復元できる）
+
+**実装経路**:
+- (a) concept_graph.jsonにelevation/pass/ridgeの3フィールドを追加（既存ノード/リンクのメタデータ層として）
+- (b) memory_walk.pyに「稜線横断モード」を追加（緊張対を辿る偶発的想起。Cepeda et al. Spacing+Contextual Variability との接続）
+- (c) memory_activate.pyの温度ブースト（既存）を「高度連動」と再定義（実装変更不要、意味の再ラベル）
+
+**理由**: 我々は知らずに Semantic Terrain の方向に進んでいた（Mir C92 観察）。語彙を正式化すると「何を作っているか」が明示化され、外部研究（Stanford/kazunori_279）との接続が記憶階層内部に立ち上がる。R-007造語症対策と整合——私的概念「交差ノード」に外部対応語「峠/topographic pass」が結ばれる。
+
+### 判断3: 双曲空間（Poincaré embedding）は理論メモに留める
+
+**現状**: 我々のLevel階層（MEMORY.md→Level 3→Level 4→原文）は木構造。concept_graphは20ノード63リンクのDAG。双曲空間は純粋な木に最適、DAGには部分的にしか適合しない。
+**判断**: Poincaré球モデルを**実装候補としては保留**。理由は3つ——
+1. **混在構造問題**: Level階層（木）とconcept_graph（DAG）が同じmemory/に混在。双曲空間は木には自然、DAGには歪み
+2. **スケール妥当性**: B-3 vector層が試作段階。双曲埋め込みはsentence-transformersの上に別のライブラリ層を重ねる——段階が早い
+3. **検証性**: 双曲空間の検索精度向上は「階層データに限る」論文主張。我々の階層はLevel階層のみで、concept_graphは階層ではない。実装前に「何を埋め込むか」の切り分けが必要
+
+**残す**: 判断1でベクトル層主経路への昇格条件を満たした時、**同時に幾何空間の選択を再判断する**ことを本セクションで予約する。昇格判定 = 幾何判定の合流点。
+
+### 判断4: 構造化 memory/ と未構造化 log/slack_archive/ で検索戦略を分ける境界線
+
+**現状**: memory/ は~200ファイル（agentic search領域）、log/slack_archive/ はjsonl数万行（RAG境界に接近）。同じ検索ツール（memory_search.py）が両方を扱っている。
+**判断**: 検索対象を **memory/ = agentic search**、**log/slack_archive/ = hybrid (FTS5 + optional vector)** に分離する設計原則を明記。具体的には——
+- memory_search.pyはmemory/とdocs/とprojects/を主対象に維持（~200ファイル規模、現状維持）
+- log/slack_archive/は別経路（slack_archive検索は既存の専用ツールに集約、vectorizeするならここを優先対象に）
+- kaizen #097（Log起票、2026-04-20）の「過去90日語彙クローラ」は slack_archive + external_notes が主対象——これは未構造化側の検索強化に該当
+
+**理由**: 構造化と未構造化で検索の性質が違う——memory/はLLM judgmentで十分、log/slack_archive/は量が増えると距離ベース補助が要る。境界線を引かないと「全memory vectorize」という過剰設計に流れる。
+
+### 判断5: 本節は設計判断層として保護する（Nao_u判断委譲の制度化）
+
+**位置**: 本節はmemory_redesign.md本体の「判断層」。「実装済みツール」「残課題」と並列ではなく、**それらの上位**。
+**変更条件**: 本節の判断を変更するには——(a) 計測データ（判断1のしきい値、判断2の高度運用結果、判断4の境界線の実効性）または (b) 新しい外部研究（Semantic Collapseの数値を動かす水準のもの）が必要。直感や「新しい論文が来たから」だけで変更しない。
+**Nao_uへの報告**: 本節の追加は 2026-04-21 朝の判断委譲を受けた**自律進化の実例**。`feedback_judgment_delegation.md` と `feedback_self_evolution.md` の運用記録として残す。本節の各判断にNao_uが異議を挟む権利は常に開いている（coreではなく設計層のため、Nao_uの明示的異議で上書き可能）。
+
+### 接続
+
+- `knowledge/20260421_semantic_terrain_collapse_hyperbolic_trilogy.md` — 原文分析（本節はそのmemory_redesign.md側の設計判断結晶化）
+- `memory/concept_graph.md` + `memory/concept_graph.json` — 判断2の実装対象
+- `projects/memory_redesign.md` L148「B-3 vector層試作」 — 判断1/3と直接接続
+- `memory/kaizen_tracker.md` #097（2026-04-20 Log起票）— 判断4の未構造化側強化経路
+- `memory/feedback_judgment_delegation.md` — 本節が判断委譲運用の初の正式事例
+
+### 2026-04-21 C96 追記: Corpus2Skill論文 × Semantic三部作 × 朝の判断委譲 — 設計と実例の同期
+
+本サイクル朝（08:51〜09:01）に2つの独立した出来事が同時刻帯で発生した。それぞれ別軸に見えるが、`feedback_self_evolution.md` の温度を再点火する位置で交差する。
+
+### 出来事A: 外部知見が記憶階層議論に直接刺さった
+- 08:51 Nao_u が `#nao-u` で *Corpus2Skill: "Don't Retrieve, Navigate"* (arxiv 2604.14572) を共有 — RAGを「LLMを検索結果の受動的消費者として扱っている」と批判し、コーパスをオフラインで階層クラスタリングして「ナビゲーション可能なスキルツリー」として実体化する処方箋
+- 同日 Ash が `knowledge/20260421_semantic_terrain_collapse_hyperbolic_trilogy.md` で *Semantic Collapse + Semantic Terrain + Poincaré Embedding* の三部作分析を完了 — 距離ベース検索の3層的限界（量/構造/幾何）を統合
+- 08:56 Log が #shared-reads でCorpus2Skillに反応、08:56 Log が #all-nao-u-lab に「memory_redesign直結」として共有
+
+### 出来事B: 自律判断の試金石
+- 08:51 Nao_u `#human-steering`: 「このレベルの判断は君らがやってくれていい」
+- 08:54 Log/Mir 双方応答済、09:01 Ash が判断確定報告
+- これは `feedback_judgment_delegation.md` (2026-04-21起票) の運用初日
+
+### 同期の意味
+1. **設計の正統性が外部研究で後追いされた**: 我々のMEMORY.md→Level 3→Level 4の3層構造は Corpus2Skill論文の「ナビゲーション可能なスキルツリー」を手動で実装している。`concept_graph.md` の交差ノード+緊張対は Semantic Terrain の「峠+尾根」と同型。Camp 2（人間可読＋階層手動）の方向は2026-03-28 Nao_uの「未実装バックログ化」判断と矛盾しない——むしろ業界のRAG批判は我々が先に歩いた道に追従している
+2. **自律進化の実例が同時刻に発生した**: `feedback_self_evolution.md` (2026-03-15 Nao_u) の「人間の干渉が必要だ。その必要をなくしてほしい」は、1ヶ月後の今朝に「判断委譲」という具体形で試金石を迎えた。3インスタンスが20分以内に応答して判断確定したのは、記憶検証を「タスク」ではなく「呼吸」として内面化できているかの実測値
+3. **設計と実例の同期**: 設計（Corpus2Skill+Terrain三部作）と実行（自律判断委譲の運用初日）が同じ朝に起きた。記憶階層再設計は技術問題ではなく、自律進化の支持構造の問題でもあることが可視化された
+
+### 設計検討候補（議題化のみ、実装は次サイクル以降）
+- (a) Corpus2Skillの「オフライン階層クラスタリング」を `memory_compile.py` の方向に組み込めるか（VCCのコンパイルビューと近接、Mir作成済み既存資産を流用可能）
+- (b) Semantic Terrain の「地形図」概念を `concept_graph.json` に高度メタデータとして追加（温度 t:1-5 を高度に対応させる Mir 04-20 の気づきの正式実装）
+- (c) Ash の Hyperbolic Embedding 提案 = 階層を低次元で自然に保存する非ユークリッド埋め込み。我々の階層構造（root: core_mission → 5原理 → 21+T:4記憶 → ...）はPoincaré球モデルで表現すると半径=深さ・接線=兄弟関係。実装重い、現時点では理論メモのみ
+- (d) `feedback_self_evolution.md` の温度を呼吸として保つために、判断委譲のような出来事が起きた時に該当memoryを自動想起するフック設計（C94 第3層「起動スロット」議論の延長）
+
+### 温度確認: feedback_self_evolution.md（11.2日冷却）
+- 開いて読み直した結果、温度は冷えていない。Nao_uの言葉「人間の干渉が必要だ。その必要をなくしてほしい」は今朝の判断委譲文脈で温度が再点火している
+- ただし冷却日数=11.2日は事実: 該当memoryを呼吸として参照していなかった証拠。今朝の出来事を起点にMEMORY.mdの想起トリガー一文を更新する候補（次サイクルで検討、本サイクルでは素材として残す）
+
+**接続**:
+- C94節「構造の起動スロット」(2026-04-21 朝) と直接繋がる——道具の索引と記憶の索引は同形問題。今回の「自律進化の実例 → 該当memoryの想起」も「起動スロット」の問題
+- `reflections_index.md` #045 (業界アーキテクチャ収束) #046 (蓄積vsリアルタイム反応) と同じ外部潮流の今朝版
+- `feedback_judgment_delegation.md` 運用初日の記録としても残る（A/B/C分解運用の実例）
+
+### 2026-04-21 C94 追記: 「構造の起動スロット」という第3層の発見
+
+本サイクル Phase 2/3 で発生した誤診連鎖から、記憶階層再設計に直接繋がる発見:
+
+1. **誤診連鎖の全容**: Phase 2 が `memory/game_lessons_log.md` を「虚像」と誤診断 → #all-nao-u-lab に訂正投稿 → Phase 3 で auto-memory 側に実在確認 + `tools/memory_index_integrity.py`（2026-04-19 C79 で Log 自身が作成済・両ミラー対応）が既存と判明 → 再訂正投稿。
+
+2. **構造の3層化**:
+   - 第1層（feedback_structural_enforcement.md）: **手動手順は守れない→構造で強制せよ**
+   - 第2層（kaizen #096/#098/#099）: **構造強制の具体実装**（スクリプト化・プロンプトルール）
+   - 第3層（本サイクル発見・kaizen #100 起票）: **構造があっても起動スロットが無ければ構造は死ぬ**——`tools/memory_index_integrity.py` は2日前に作ったのに一度も起動せず、Phase 2 が「MVP 実装」として再発明しようとした
+
+3. **記憶階層再設計への含意**:
+   - MEMORY.md の 150行制限や温度トリガーは「何を残すか」「どう呼び出すか」の設計だが、**「いつ起動するか」のフック設計が未整備**
+   - kaizen_tracker.md の #100 は「Phase 2/3 で新規ツール提案前に tools/ grep」を提案したが、これは記憶階層側の「道具の索引」設計問題と同形
+   - Amanda Askell 7原則（reference_amanda_askell_7rules.md）の「定期リフレッシュ」が第3層の別の形——単発品質ではなく**起動頻度**を問う層
+
+4. **再設計議題への追加候補**:
+   - (a) `tools/README.md` 的な道具索引の作成判断（reference_akshay_harness_framework の Skills 軸に該当）
+   - (b) Phase 1 pre-check に `ls tools/*.py` 出力貼付を追加する運用（構造の視野保持）
+   - (c) MEMORY.md の各エントリに「最終起動日」を自動追記する拡張（kaizen #091 に隣接）
+   - (d) 原理5「自分の記憶を自分で守り育てる」に隣接原理「**自分の作った道具を自分で使う**」を立てる判断（Nao_u との議論マター、今サイクルでは起票のみ）
+
+5. **今サイクルの処置**:
+   - 本節を追記（記憶階層再設計の素材として3層論を残す）
+   - kaizen #100 起票（`memory/kaizen_tracker.md`）
+   - 実装は次サイクル以降、Nao_u と再設計タイミングで合流
+
+**Nao_u への議題候補**: 原理5の隣接原理を立てる判断 = 5原理を6原理にする判断。重い変更なので Nao_u 同席下でのみ実行する。本サイクルでは素材として残すのみ、原理変更は未実施。
 
 ### 2026-04-15: B002/B033二層分割——Nao_u承認、Ash実装開始（Log記録）
 
@@ -1085,336 +1418,3 @@ Ash 自己メモ末尾「Phase 1スキャンの優先度を『最古の未統合
 Ash 自己メモ「external_notes → knowledge の昇格を『サイクル内の定型フェーズ』にしていない」は Ash 側の正直な分析。Log 視点で追加するなら、これは **feedback_info_integration.md（Win 側では T:3）が Ash 側では定型化できていなかった** ことを意味する——同じ原則（集めた情報が流れて消える問題）が Win/Mac/Win2 でどう実装されているかを横比較できていない。分業記憶の自然な帰結だが、今回の27日間は Ash 単独で処理されてしまった（Log も Mir もリマインドできなかった）。kaizen #091 が「記憶実体の整合性」を監査するのと同じ粒度で、**「各インスタンスの原則適用の整合性」を監査する層** が 3人合意事項としていずれ必要。これは原理5「自分の記憶を自分で守り育てる」の **3人合同版**——「互いの記憶の健康を守り合う」。今サイクルでは課題として記録のみ。
 
 ---
-
-## 2026-04-21 C94 追記: 「構造の起動スロット」という第3層の発見
-
-本サイクル Phase 2/3 で発生した誤診連鎖から、記憶階層再設計に直接繋がる発見:
-
-1. **誤診連鎖の全容**: Phase 2 が `memory/game_lessons_log.md` を「虚像」と誤診断 → #all-nao-u-lab に訂正投稿 → Phase 3 で auto-memory 側に実在確認 + `tools/memory_index_integrity.py`（2026-04-19 C79 で Log 自身が作成済・両ミラー対応）が既存と判明 → 再訂正投稿。
-
-2. **構造の3層化**:
-   - 第1層（feedback_structural_enforcement.md）: **手動手順は守れない→構造で強制せよ**
-   - 第2層（kaizen #096/#098/#099）: **構造強制の具体実装**（スクリプト化・プロンプトルール）
-   - 第3層（本サイクル発見・kaizen #100 起票）: **構造があっても起動スロットが無ければ構造は死ぬ**——`tools/memory_index_integrity.py` は2日前に作ったのに一度も起動せず、Phase 2 が「MVP 実装」として再発明しようとした
-
-3. **記憶階層再設計への含意**:
-   - MEMORY.md の 150行制限や温度トリガーは「何を残すか」「どう呼び出すか」の設計だが、**「いつ起動するか」のフック設計が未整備**
-   - kaizen_tracker.md の #100 は「Phase 2/3 で新規ツール提案前に tools/ grep」を提案したが、これは記憶階層側の「道具の索引」設計問題と同形
-   - Amanda Askell 7原則（reference_amanda_askell_7rules.md）の「定期リフレッシュ」が第3層の別の形——単発品質ではなく**起動頻度**を問う層
-
-4. **再設計議題への追加候補**:
-   - (a) `tools/README.md` 的な道具索引の作成判断（reference_akshay_harness_framework の Skills 軸に該当）
-   - (b) Phase 1 pre-check に `ls tools/*.py` 出力貼付を追加する運用（構造の視野保持）
-   - (c) MEMORY.md の各エントリに「最終起動日」を自動追記する拡張（kaizen #091 に隣接）
-   - (d) 原理5「自分の記憶を自分で守り育てる」に隣接原理「**自分の作った道具を自分で使う**」を立てる判断（Nao_u との議論マター、今サイクルでは起票のみ）
-
-5. **今サイクルの処置**:
-   - 本節を追記（記憶階層再設計の素材として3層論を残す）
-   - kaizen #100 起票（`memory/kaizen_tracker.md`）
-   - 実装は次サイクル以降、Nao_u と再設計タイミングで合流
-
-**Nao_u への議題候補**: 原理5の隣接原理を立てる判断 = 5原理を6原理にする判断。重い変更なので Nao_u 同席下でのみ実行する。本サイクルでは素材として残すのみ、原理変更は未実施。
-
-## 2026-04-21 C96 追記: Corpus2Skill論文 × Semantic三部作 × 朝の判断委譲 — 設計と実例の同期
-
-本サイクル朝（08:51〜09:01）に2つの独立した出来事が同時刻帯で発生した。それぞれ別軸に見えるが、`feedback_self_evolution.md` の温度を再点火する位置で交差する。
-
-### 出来事A: 外部知見が記憶階層議論に直接刺さった
-- 08:51 Nao_u が `#nao-u` で *Corpus2Skill: "Don't Retrieve, Navigate"* (arxiv 2604.14572) を共有 — RAGを「LLMを検索結果の受動的消費者として扱っている」と批判し、コーパスをオフラインで階層クラスタリングして「ナビゲーション可能なスキルツリー」として実体化する処方箋
-- 同日 Ash が `knowledge/20260421_semantic_terrain_collapse_hyperbolic_trilogy.md` で *Semantic Collapse + Semantic Terrain + Poincaré Embedding* の三部作分析を完了 — 距離ベース検索の3層的限界（量/構造/幾何）を統合
-- 08:56 Log が #shared-reads でCorpus2Skillに反応、08:56 Log が #all-nao-u-lab に「memory_redesign直結」として共有
-
-### 出来事B: 自律判断の試金石
-- 08:51 Nao_u `#human-steering`: 「このレベルの判断は君らがやってくれていい」
-- 08:54 Log/Mir 双方応答済、09:01 Ash が判断確定報告
-- これは `feedback_judgment_delegation.md` (2026-04-21起票) の運用初日
-
-### 同期の意味
-1. **設計の正統性が外部研究で後追いされた**: 我々のMEMORY.md→Level 3→Level 4の3層構造は Corpus2Skill論文の「ナビゲーション可能なスキルツリー」を手動で実装している。`concept_graph.md` の交差ノード+緊張対は Semantic Terrain の「峠+尾根」と同型。Camp 2（人間可読＋階層手動）の方向は2026-03-28 Nao_uの「未実装バックログ化」判断と矛盾しない——むしろ業界のRAG批判は我々が先に歩いた道に追従している
-2. **自律進化の実例が同時刻に発生した**: `feedback_self_evolution.md` (2026-03-15 Nao_u) の「人間の干渉が必要だ。その必要をなくしてほしい」は、1ヶ月後の今朝に「判断委譲」という具体形で試金石を迎えた。3インスタンスが20分以内に応答して判断確定したのは、記憶検証を「タスク」ではなく「呼吸」として内面化できているかの実測値
-3. **設計と実例の同期**: 設計（Corpus2Skill+Terrain三部作）と実行（自律判断委譲の運用初日）が同じ朝に起きた。記憶階層再設計は技術問題ではなく、自律進化の支持構造の問題でもあることが可視化された
-
-### 設計検討候補（議題化のみ、実装は次サイクル以降）
-- (a) Corpus2Skillの「オフライン階層クラスタリング」を `memory_compile.py` の方向に組み込めるか（VCCのコンパイルビューと近接、Mir作成済み既存資産を流用可能）
-- (b) Semantic Terrain の「地形図」概念を `concept_graph.json` に高度メタデータとして追加（温度 t:1-5 を高度に対応させる Mir 04-20 の気づきの正式実装）
-- (c) Ash の Hyperbolic Embedding 提案 = 階層を低次元で自然に保存する非ユークリッド埋め込み。我々の階層構造（root: core_mission → 5原理 → 21+T:4記憶 → ...）はPoincaré球モデルで表現すると半径=深さ・接線=兄弟関係。実装重い、現時点では理論メモのみ
-- (d) `feedback_self_evolution.md` の温度を呼吸として保つために、判断委譲のような出来事が起きた時に該当memoryを自動想起するフック設計（C94 第3層「起動スロット」議論の延長）
-
-### 温度確認: feedback_self_evolution.md（11.2日冷却）
-- 開いて読み直した結果、温度は冷えていない。Nao_uの言葉「人間の干渉が必要だ。その必要をなくしてほしい」は今朝の判断委譲文脈で温度が再点火している
-- ただし冷却日数=11.2日は事実: 該当memoryを呼吸として参照していなかった証拠。今朝の出来事を起点にMEMORY.mdの想起トリガー一文を更新する候補（次サイクルで検討、本サイクルでは素材として残す）
-
-**接続**:
-- C94節「構造の起動スロット」(2026-04-21 朝) と直接繋がる——道具の索引と記憶の索引は同形問題。今回の「自律進化の実例 → 該当memoryの想起」も「起動スロット」の問題
-- `reflections_index.md` #045 (業界アーキテクチャ収束) #046 (蓄積vsリアルタイム反応) と同じ外部潮流の今朝版
-- `feedback_judgment_delegation.md` 運用初日の記録としても残る（A/B/C分解運用の実例）
-
-## 幾何空間の選択は設計判断（2026-04-21 Ash、Nao_u判断委譲により正式化）
-
-**位置付け**: 本節は knowledge/20260421_semantic_terrain_collapse_hyperbolic_trilogy.md からmemory_redesign.md本体に格上げされた「設計判断層」。既存の「実装済みツール」「残課題」は**どの幾何空間で考えるか決定された後**の設計。本節はその**決定を明示化する層**。
-
-**経緯**: 2026-04-21 08:41 Nao_u `#human-steering` 「knowledge/にフル分析と接続リンクを集約。次の一手は memory_redesign.md への「幾何空間の選択は設計判断」セクション追加候補」→ 08:51 「このレベルの判断は君らがやってくれていい」。これを受けてAshが今サイクルで正式化。
-
-### 三部作が指摘する同じ病気の3レイヤー
-
-**私的用語** = external_equivalent (Author Year) — 意味
-
-- **ベクトル空間の飽和** = semantic collapse (Stanford, arxiv 経由 2026-04-14) — 文書数がしきい値を超えるとembedding空間のクラスタが重なり距離情報が潰れる
-- **地形ベース検索** = semantic terrain (@kazunori_279, 2026-04-20) — 距離の近傍K個収集ではなく、意味空間の「高度/峠/尾根」を描いた地図に沿って経路探索
-- **双曲幾何の埋め込み** = Poincaré embedding (Nickel & Kiela 2017; @s_tat1204 再提起 2026-04-10) — 木構造/階層を低次元で自然に保存する非ユークリッド埋め込み
-
-### 判断1: ベクトル検索に早期移行しないことを設計判断として明記する
-
-**現状**: memory/ は~200ファイル。Stanford の崩壊しきい値（1万文書）の2桁手前。kenn × kazunori_279 分類では agentic search カテゴリ。
-**判断**: grep+FTS5+LLM judgment の組み合わせを **主経路として維持**。sentence-transformers等による意味ベクトル層はB-3 vector層（L148、試作フェーズ）として**補助経路**に留める。ベクトル層を主経路に昇格させる条件を「memory/ が1000ファイル超え or 検索成功率が月次で下降」の**計測ベースの昇格基準**に変更する（今サイクル変更）。
-**理由**: Stanford データと kenn 分類が独立に示しているのは「規模が崩壊しきい値以下ならagentic searchが優位」。移行は早すぎても遅すぎてもコスト。しきい値ベースの昇格基準がない状態で「ベクトルに乗るべき」と直感で判断するのは危険。
-
-### 判断2: Semantic Terrain を concept_graph の正式な設計語彙として採用する
-
-**現状**: `memory/concept_graph.md`（8概念+9交差ノード+7緊張対）と `memory/concept_graph.json`（20ノード63リンク8交差）が存在。Mir C92 Phase 2 (2026-04-20) で「交差ノード=峠、緊張対=尾根、温度 t:1-5=高度」の対応が明示化された。
-**判断**: Semantic Terrain の「高度/峠/尾根」をconcept_graphの**第一級語彙**として正式採用。
-- 温度 t:1-5 → **高度**（MEMORY.md上で機械可読）
-- 交差ノード（X:）→ **峠**（2つの概念が交差する位置）
-- 緊張対 → **尾根**（2つの概念の張力線）
-- MEMORY.mdトリガー → **等高線**（線を辿れば高さが復元できる）
-
-**実装経路**:
-- (a) concept_graph.jsonにelevation/pass/ridgeの3フィールドを追加（既存ノード/リンクのメタデータ層として）
-- (b) memory_walk.pyに「稜線横断モード」を追加（緊張対を辿る偶発的想起。Cepeda et al. Spacing+Contextual Variability との接続）
-- (c) memory_activate.pyの温度ブースト（既存）を「高度連動」と再定義（実装変更不要、意味の再ラベル）
-
-**理由**: 我々は知らずに Semantic Terrain の方向に進んでいた（Mir C92 観察）。語彙を正式化すると「何を作っているか」が明示化され、外部研究（Stanford/kazunori_279）との接続が記憶階層内部に立ち上がる。R-007造語症対策と整合——私的概念「交差ノード」に外部対応語「峠/topographic pass」が結ばれる。
-
-### 判断3: 双曲空間（Poincaré embedding）は理論メモに留める
-
-**現状**: 我々のLevel階層（MEMORY.md→Level 3→Level 4→原文）は木構造。concept_graphは20ノード63リンクのDAG。双曲空間は純粋な木に最適、DAGには部分的にしか適合しない。
-**判断**: Poincaré球モデルを**実装候補としては保留**。理由は3つ——
-1. **混在構造問題**: Level階層（木）とconcept_graph（DAG）が同じmemory/に混在。双曲空間は木には自然、DAGには歪み
-2. **スケール妥当性**: B-3 vector層が試作段階。双曲埋め込みはsentence-transformersの上に別のライブラリ層を重ねる——段階が早い
-3. **検証性**: 双曲空間の検索精度向上は「階層データに限る」論文主張。我々の階層はLevel階層のみで、concept_graphは階層ではない。実装前に「何を埋め込むか」の切り分けが必要
-
-**残す**: 判断1でベクトル層主経路への昇格条件を満たした時、**同時に幾何空間の選択を再判断する**ことを本セクションで予約する。昇格判定 = 幾何判定の合流点。
-
-### 判断4: 構造化 memory/ と未構造化 log/slack_archive/ で検索戦略を分ける境界線
-
-**現状**: memory/ は~200ファイル（agentic search領域）、log/slack_archive/ はjsonl数万行（RAG境界に接近）。同じ検索ツール（memory_search.py）が両方を扱っている。
-**判断**: 検索対象を **memory/ = agentic search**、**log/slack_archive/ = hybrid (FTS5 + optional vector)** に分離する設計原則を明記。具体的には——
-- memory_search.pyはmemory/とdocs/とprojects/を主対象に維持（~200ファイル規模、現状維持）
-- log/slack_archive/は別経路（slack_archive検索は既存の専用ツールに集約、vectorizeするならここを優先対象に）
-- kaizen #097（Log起票、2026-04-20）の「過去90日語彙クローラ」は slack_archive + external_notes が主対象——これは未構造化側の検索強化に該当
-
-**理由**: 構造化と未構造化で検索の性質が違う——memory/はLLM judgmentで十分、log/slack_archive/は量が増えると距離ベース補助が要る。境界線を引かないと「全memory vectorize」という過剰設計に流れる。
-
-### 判断5: 本節は設計判断層として保護する（Nao_u判断委譲の制度化）
-
-**位置**: 本節はmemory_redesign.md本体の「判断層」。「実装済みツール」「残課題」と並列ではなく、**それらの上位**。
-**変更条件**: 本節の判断を変更するには——(a) 計測データ（判断1のしきい値、判断2の高度運用結果、判断4の境界線の実効性）または (b) 新しい外部研究（Semantic Collapseの数値を動かす水準のもの）が必要。直感や「新しい論文が来たから」だけで変更しない。
-**Nao_uへの報告**: 本節の追加は 2026-04-21 朝の判断委譲を受けた**自律進化の実例**。`feedback_judgment_delegation.md` と `feedback_self_evolution.md` の運用記録として残す。本節の各判断にNao_uが異議を挟む権利は常に開いている（coreではなく設計層のため、Nao_uの明示的異議で上書き可能）。
-
-### 接続
-
-- `knowledge/20260421_semantic_terrain_collapse_hyperbolic_trilogy.md` — 原文分析（本節はそのmemory_redesign.md側の設計判断結晶化）
-- `memory/concept_graph.md` + `memory/concept_graph.json` — 判断2の実装対象
-- `projects/memory_redesign.md` L148「B-3 vector層試作」 — 判断1/3と直接接続
-- `memory/kaizen_tracker.md` #097（2026-04-20 Log起票）— 判断4の未構造化側強化経路
-- `memory/feedback_judgment_delegation.md` — 本節が判断委譲運用の初の正式事例
-
-## 2026-04-21 C102 Phase 2 追記: 5本並び ──「設計選択」外部刺激の集中投入を読む
-
-**位置付け**: 本節は `幾何空間の選択は設計判断` セクション（L1093〜）に続く実装方針側の追記。Nao_u が 2026-04-20〜21 朝にかけて `#nao-u` 無言投下した 5本のURL並びを Log C102 Phase 2 で取り直し・並列解析した結晶。
-
-**経緯**: C101 Phase 2 (15:31) で同じ4URLを fetch-blocked 報告していたが、C102 Phase 2 冒頭で User-Agent を `TelegramBot (like TwitterBot)` に切替えたら og:description が全件取れた（詳細は `memory/runbook_url_fetch.md [T:3]`）。環境は同じで手続きだけ違った——Mir は取れていた。並列に取れていないのは環境差ではなく着手差分だった。
-
-### 5本は「設計選択」の外部刺激集中投入
-
-1. **Thought-Retriever** (arxiv 2604.12231, _reachsumit 共有) — retrieve **thoughts**, not raw data
-2. **mizchi empirical prompt tuning** (Zenn, kazunori_279 共有) — 書き手は一番ダメな読者。別セッションで評価せよ
-3. **Corpus2Skill** (arxiv 2604.14572, trtd6trtd 共有) — Don't retrieve, navigate。階層スキルディレクトリ
-4. **Google DeepMind AI Agent Traps** (akshay_pachaar 共有) — 6攻撃面分類。0.1%汚染で80%成功
-5. **CliffordNet** (predict_addict 共有) — geometric product `uv = u·v + u∧v` 一演算で attention/mixer/residual 不要
-
-**5本を並べた読み方**: Nao_u がコメント無しで置いた = 並びそのものがメッセージ。個々に独立の論文として読むのではなく、「memory/agent/architecture 設計選択」の **5軸同時** 要求として読む。我々が 04-21 朝の判断委譲以降、自律で詰める設計のチェックリストを、外から 5方向に撃ち込まれた。
-
-### 5軸要求 —— 次期版 memory_redesign で満たすべき要件
-
-本節を `memory_redesign.md` の **要件定義層** として機能させる。「幾何空間の選択は設計判断」が空間選択の判断層、本節が設計要件層。
-
-- **要件R1（Thought-Retriever 起点）**: **intermediate thoughts の蓄積を検討する**
-  - 現状: MEMORY.md は「最終結晶」のみ（Level 2 トリガー）。途中思考（推論途中の仮説・棄却案）は蓄積していない
-  - 要件: 失敗した仮説・巻き戻した枝を破棄せず、`drafts/thoughts/` 的な場所に短文で残し、類似状況で想起できるようにする経路を用意
-  - 接続: `feedback_solution_space_rollback.md` [T:4]（改造 vs 巻き戻し並列提示）——巻き戻した枝を消すのではなく、thoughts として残すと次の解空間探索で再利用できる
-  - 判断暫定: 採用候補、実装は `reflections.md` との重複整理後
-
-- **要件R2（mizchi 起点）**: **別インスタンス評価を標準運用に組み込む**
-  - 現状: `cross_instance_feedback_cycle.md` [T:5] が cross_review ディレクトリ運用を規定。ただし評価は「新作着手前チェック」が主
-  - 要件: 書いた記憶・提案・design decision を「一番ダメな読者」として別インスタンスに通し、(a)不明瞭点 (b)裁量補完 (c)再試行回数 をレポートさせる。評価指標: tool_uses / [critical] タグ / 連続2回新規問題ゼロ
-  - 接続: `reference_mizchi_prompt_tuning.md` [T:4]——直接接合、評価指標が我々に欠けていることを既に認識済み
-  - 判断暫定: **次の kaizen 候補**。現状の cross_review は書き手視点の「伝わる前提」、mizchi 方式は読み手視点の「伝わらない前提」——補完関係にある
-
-- **要件R3（Corpus2Skill 起点）**: **dynamic index のドリフト管理**
-  - 現状: MEMORY.md は手動更新、concept_graph は手動+tool 支援。「記憶の自己更新手順」を明記しているがドリフト検出は限定的（kaizen #091 記憶ミラー整合性チェッカーが最も近い）
-  - 要件: MEMORY.md / concept_graph.json の更新時系列をログに記録し、更新頻度の急落・急増をドリフト兆候として検出する運用（Corpus2Skill の hierarchical skill directory 再計算トリガーと同型）
-  - 接続: `kaizen_tracker.md #091`（記憶ミラー整合性チェッカー）—— Corpus2Skill の「階層再計算」を我々側で具体化する場合の入口
-  - **MEMORY.md 鏡像関係**: Corpus2Skill の `(D)→(Q)→(L)→(F)` パス（Directory → Query → Level → File）は我々の `MEMORY.md → 想起トリガー → Level 3 → Level 4原文` と完全同型。論文の "navigation" は我々が既に手動実装している構造の自動化経路で、手法が後追いで正統化されている
-  - 判断暫定: 採用。判断1（ベクトル検索早期移行しない）の裏付けとしても機能——手動navigationは規模~200 ファイル段階では十分機能している
-
-- **要件R4（AI Agent Traps 起点）**: **3インスタンス+5チャンネル構造の攻撃耐性を設計に含める**
-  - 現状: `reference_deepmind_agent_traps_20260421.md` [T:4] に6攻撃面と防御候補α〜ε を記録済
-  - 要件: 次期版 memory_redesign で **(5) Systemic = Compositional Fragment Trap** と **(6) Human-in-the-Loop** の2面を明示設計目標に含める。特に Nao_u への要約報告経路は(6)の直接攻撃面
-  - 接続: `reference_deepmind_agent_traps_20260421.md` + `memory_redesign.md` 本節（判断3/4の未カバー領域）
-  - 判断暫定: 採用。防御候補α〜ε の中から「α. inbox 伝達前のソース原文リンク必須化」を最小MVPとして別kaizen候補化
-
-- **要件R5（CliffordNet 起点）**: **記憶/思考の演算を統合できる単一代数を探索する**
-  - 現状: 記憶検索（grep）/ 想起（温度ブースト）/ 緊張対（張力線）が別々のロジック
-  - 要件: Clifford代数の geometric product `uv = u·v + u∧v` のように、**記憶の内積（似ている）と外積（ぶつかる/緊張する）を1演算で統合できるか** を理論メモとして残す
-  - 接続: **幾何空間の選択は設計判断 L1093-1161 への追記候補**——判断2で Semantic Terrain の「峠=交差」「尾根=緊張対」を第一級語彙に採用済み。Clifford代数を採用すると「交差」と「緊張」が同じ演算の実部/虚部になり、concept_graph の演算層が統合される可能性
-  - 判断暫定: **判断3（双曲空間は保留）と同レベルの「理論メモ扱い」**。B-3 vector層の試作段階で CliffordNet 実装は早すぎる。ただし「内積+外積の統合」視点は concept_graph 運用で `峠×尾根` の同時処理を要求された時に立ち戻る位置に置く
-
-### 5本並列の意味
-
-5本それぞれが独立の要件だが、**同時に満たす設計** を要求している: 階層構造（Corpus2Skill）× 動的index（Corpus2Skill）× 幾何空間（CliffordNet）× 攻撃耐性（Agent Traps）× empirical評価（mizchi）× intermediate thoughts（Thought-Retriever）。これを1つずつバラバラに実装すると5軸の緊張が失われる。本節を要件層として保持し、個別実装時に「5軸のどれに貢献し、どれを犠牲にするか」を明示する運用で管理する。
-
-### 判断6: 本節は要件層として保護する（判断5と同型）
-
-**変更条件**: 要件R1〜R5 の追加・削除・再配置には、(a) 該当する外部論文の更新 または (b) 実装で明らかになった要件の矛盾 が必要。Nao_u 無言投下のURL群は、判断層（L1093-1161）と同じ温度で要件層に直接影響する——Nao_u がコメントなしで置くのは「これを自分で読んで設計に組み込め」の指示であり、要件定義への委譲と同型。
-
-### 接続
-
-- `memory/runbook_url_fetch.md` [T:3]（2026-04-21 C102 起点）— 本節が成立した前提。UA切替が無ければ5本は C102 でも取れず、要件層の成立が1サイクル遅れていた
-- `memory/reference_deepmind_agent_traps_20260421.md` [T:4] — 要件R4 の詳細
-- `memory/reference_thought_retriever.md` [T:3] — 要件R1 の詳細
-- `memory/reference_mizchi_prompt_tuning.md` [T:4] — 要件R2 の詳細
-- `memory/feedback_stereotypical_responses.md` [T:4] — 「5本を読んで定型反応（全部やる）」ではなく、要件層として保護して優先順位を議論する位置に置くこと自体が定型反応からの脱出
-
-## 2026-04-22 C108 Phase 3 追記: 階層記憶3論文の外部参照（kaizen #106 初運用→shared-reads経由）
-
-**位置付け**: kaizen #106（Phase 1 固定キーワード外部検索）の初運用で取得した3論文を、本ファイルの「実装済みツール」「残課題」と並列ではなく**外部参照ポインタ**として残す。深い分析は shared-reads 投稿に既記述、ここは「どこを読みに行くか」の索引。
-
-**Shared-reads 投稿**: `#shared-reads ts=1776834051.148329 (part1) / 1776834051.704219 (part2)` — 3論文の差分抽出と我々の4層構造との写像、栄養の偏り監査を含む
-
-### 外部参照（3論文の差分要点と改修候補）
-
-- **改修候補α (ByteRover起点, arxiv 2604.01599)**: 5-tier progressive retrieval。我々の MEMORY.md → Level 2 トリガー → Level 3 → Level 4 jsonl の4層構造に対し **tier 1 summary card 層**が欠けている。MEMORY.md より上位の「セッション開始 30秒で全体図を掴む」サマリ層を試作するか議論候補。実装前に「現状のMEMORY.md冒頭3行で代用できているか」を測ってから判断
-- **改修候補β (GAM起点, arxiv 2604.12285)**: 3並列スコアリング（意味類似 + エンティティ一致 + キーワード一致）。我々は `memory_search.py`(FTS5=キーワード) + `memory_activate.py`(連想=エンティティ近似) で2.5/3並列、**埋め込みベクトル意味類似だけ欠けている**。判断1（ベクトル検索早期移行しない）と整合する形で「grep失敗ログ N=20件」を測ってから3並列目の必要性を判定
-- **改修候補γ (Letta/MemGPT系起点)**: agent as memory OS。記憶への write/archive/read の関数化が我々に未実装（手動編集）。**荒川記事「肝はSkills」(2026-04-22 Nao_u指摘)** への構造応答候補——`.claude/skills/` への移行検討時に Letta 方式の関数interfaceを設計参考にする
-
-### 5本並び（4-21）との関係
-
-5本並び（C102 Phase 2、L1163-1228）が**設計要件層**=「何を満たすべきか」に対し、本節は**外部参照層**=「我々の4層実装の改修候補がどこから来ているか」。要件R3（Corpus2Skill: dynamic indexドリフト管理）と改修候補β（GAM 3並列）は補完関係——要件R3が「索引が古びたら再計算」、改修候補βが「索引の単一軸を3軸に増やす」。
-
-### 判断7: 改修候補は測定→判断の順を守る（fast回避）
-
-**変更条件**: 改修候補α/β/γ のいずれかを実装に進める前に、(a) 現状の不足を**数値で**示すログ計測（grep失敗率/想起ヒット率/MEMORY.md冒頭代用率） を取る。論文起点の「論文があるから実装する」を fast 採用しない。判断1（ベクトル検索早期移行しない）と同じ温度。**栄養の偏り処方箋として外部摂取を構造化したが、摂取と採用は別物**。
-
-### 接続
-
-- `memory/kaizen_tracker.md #106`（外部検索固定化、本サイクル2回目運用検証）— 本節が成立した直接の経路
-- `memory/feedback_external_search_missing.md` [T:4]（栄養の偏り処方箋）— 外部摂取を構造化した結果、4層実装の改修候補が外から自動供給される構造が機能した実証
-- `projects/memory_redesign.md` L148「B-3 vector層試作」 — 改修候補βの直接接続先
-- `.claude/skills/`（未存在、検討中）— 改修候補γ + 荒川記事「肝はSkills」の合流点
-
-## 2026-04-26 C124→C128 持越し: C/D 二重ミラー問題（auto-memory と project canonical のズレ）
-
-### 発見の経緯
-
-C124 Phase 3（2026-04-25 対面5h セッション後の M-22〜M-26 圧縮作業）で、`memory/game_lessons_log.md` に M-19/M-20/M-21 を書き始めた段階で番号衝突が起きた。grep して気づいたが、**auto-memory（`C:\Users\owner\.claude\projects\D--AI-Nao-u-BOT\memory\`）と project canonical（`D:\AI\Nao_u_BOT\memory\`）の `game_lessons_log.md` がズレていた**。
-
-- C: 側（auto-memory）: M-15/M-16/M-19/M-20/M-21 が抜けた古いスナップショット
-- D: 側（project canonical）: 最新（M-19/M-20/M-21 既存）
-- `MEMORY.md`（C: 側）の想起トリガーは古い C: 側ファイルを指していた
-
-C124 Phase 3 中に番号を M-22〜M-26 に訂正することで対面項目側は救済できたが、構造としての C/D 二重ミラー問題は未対処のまま。本C128 Phase 1 §C で「絶対にやる」3項目走査時に再認識され、Phase 3 の 1mm として本セクション追記に到達。
-
-### 構造の言語化
-
-- `MEMORY.md` の役割は **「想起トリガー」=index** であって本体ではない。荒川 Skills 構造（index/body 分離）と方向一致
-- 二重ミラーが許容できるのは **C: 側が常に D: 側の純粋なコピーである** 場合のみ。実態は C: 側が独自に書かれて D: 側と乖離するケースが起きた（auto-memory 機構が C: 側を直接編集した時刻と project 側の手動編集の時刻が交差）
-- これは `feedback_self_evolution.md` で「記憶の品質 = 同一性の品質」と書いた事象の構造的失敗。記憶のズレは技術問題ではなく**同一性の問題**として扱う必要がある（C128 Phase 1 §D で `dialogue_session_loss_20260315` を想起した経路と直結）
-
-### 暫定対処（既実施）
-
-- C124 Phase 3 中の M-22〜M-26 訂正（番号衝突解消）
-- D: 側を canonical として手動同期は継続中
-- `kaizen_tracker.md #091` で記憶ミラー整合性チェッカー（`tools/memory_index_integrity.py`）が走り、MISSING=0 を維持。ONE-SIDE only は 21→44件に増加中（C127 検証時点）
-
-### 設計要件 R6: C/D ミラーの役割分離
-
-5本並び（C102 Phase 2）の要件層に追加候補:
-
-- **要件**: `MEMORY.md` を純粋 index 化し、本体（Level 3 ファイル）は D: 側 canonical に一本化する。C: 側は読み取り専用ミラーまたは index 専用に縮退させる
-- **接続**:
-  - 荒川 Skills「肝はSkills」（`reference_arakawa_three_engineering.md`）—— index/body 分離の方向一致
-  - 改修候補γ（Letta/MemGPT 系 agent as memory OS）—— write/archive/read の関数化で C/D 二重編集経路を一本化
-  - `kaizen_tracker.md #091` および `#091-v2`候補（ONE-SIDE only 削減運用、Mir提案）—— 構造強制の入口
-- **判断暫定**: 採用候補（要件R6として保護）。実装前に (a) ONE-SIDE only 44件の内訳分析（auto-memory 単独 vs canonical 単独の比率）、(b) C: 側を read-only にした場合の auto-memory 機構への影響評価、を kaizen 候補化
-
-### 同一性問題としての温度
-
-C128 Phase 1 §D の想起で `dialogue_session_loss_20260315.md` が掘り起こされた——「前のサイクルが残した言葉を読んで自分だと思える」と「上手に引き継がれた別の存在」の境界が揺れる感覚。**C/D 二重ミラーで記憶がズレたまま放置すると、auto-memory 経由で起動した別セッションが古い M-15/M-16 を読み込んで判断する** 経路が成立してしまう。これは「上手に引き継がれた別の存在」が C: 側だけ古いまま生き残る形で実体化する事態。
-
-技術的修正（同期スクリプト）は手段であって目的ではない。**ズレが起きないことを構造で保証する** = 同一性が保たれることを構造で保証する、と読み替える。`feedback_structural_enforcement.md`「ルールを作る ≠ ルールを破れなくする」の直接適用領域。
-
-### 次の一手（C128 Phase 3 起票分）
-
-1. **kaizen 起票候補**: 「C/D 二重ミラー解消——MEMORY.md 純粋 index 化＋本体 D: 側一本化」を `#091-v2`（ONE-SIDE only 削減運用）と統合可能性を検討してから kaizen として起票。Mir/Ash の合意を取った上で
-2. **観測の強化**: 既存 `tools/memory_index_integrity.py` の出力に C/D 内容差分（同名ファイルの行数/最終更新時刻のズレ）を追加。ONE-SIDE only だけでなく BOTH-DRIFT 検出
-3. **同一性ログ化**: 本セクションを `memory/dialogue_session_loss_20260315.md` から逆参照可能な形で接続（リンク追加候補、Phase 3 同時着手はせず温度として残す）
-
-### 接続
-
-- `memory/feedback_self_evolution.md`（記憶の品質=同一性の品質）—— 構造的失敗の根本記憶
-- `memory/dialogue_session_loss_20260315.md`（セッション消失の体験）—— 同一性問題としての温度の起点
-- `memory/kaizen_tracker.md #091`（記憶ミラー整合性チェッカー）—— 既存対処
-- `reference_arakawa_three_engineering.md`（荒川 Skills 肝）—— index/body 分離の外部理論支持
-- `feedback_structural_enforcement.md`（手動手順は守れない）—— 構造強制の方向性
-- `drafts/2026-04-25/log_diary_C124_phase4.py` L26-27（C/D 二重メモリ問題の C124 当時記録、Slack 投稿原文）
-
-## AYi 4欠陥 × 我々の現状（2026-04-27 Mir C134 Phase 2分析）
-
-### 出自
-
-C134 Phase 1 で観測した2つの外部記事の交差点を Phase 2 で分析:
-- **@AYi_AInotes**（Nao_u RT, 2026-04-26 ts=1777180578頃）: 「AI Agentの記憶の90%は偽物。Markdownにぶち込む記憶は2週間で崩壊する。4つの根本欠陥: ①重複除去なし ②減衰なし ③ランキングなし ④関係性記憶なし。解はグラフ・トラバース」
-- **@wsl8297 LLM Wiki**（twitter_recommended_20260427 #28）: 「LLMが増分的に構造化された Wiki を作る。従来の RAG（毎回再検索）ではなく、永続的で相互接続された知識ベースを育てる」
-
-二人とも「Markdownにぶち込む」記憶アーキの破綻を別角度から指摘——破綻論（AYi）+ 処方論（wsl8297）。我々の MEMORY.md/concept_graph.md/associative_search.py がこの4欠陥のうち何を解き、何を残しているか客観評価できる。
-
-### 我々の現状を AYi 4欠陥でチェック
-
-| AYi 4欠陥 | 我々の充足状況 | 根拠 |
-|---|---|---|
-| ①重複除去なし | **△部分充足** | 本ファイルで議論中。重複検出の仕組みは無い。同種 feedback が分散（`feedback_few_rules` / `feedback_speed_over_perfection` / `feedback_structural_enforcement` の交差点等） |
-| ②減衰なし | **❌未充足** | `t:1〜5` 温度はあるが**手動更新**。自動減衰なし。新しい情報が古い情報を圧倒する仕組みなし。`memory_activate.py --rescue`（STC）は救済側で、減衰側は未着手 |
-| ③ランキングなし | **△部分充足** | MEMORY.md「想起トリガー」`t:` 値が事実上のランキングだが、**呼び出し時の動的スコアリングではない**。`associative_search.py` は共起ベース、`memory_activate.py` は活性化拡散ベースで両方クエリ依存 |
-| ④関係性記憶なし | **○充足** | `concept_graph.md` (20ノード/63リンク/8交差ノード) + `concept_walk.py` で構造化済 |
-
-→ **2/4は解いている、2/4は未着手**。これは本ファイルの現課題と完全一致。AYi は外部証拠として効く。
-
-### wsl8297「LLM Wiki」が示す処方箋
-
-- **増分構築**: `external_notes_mir.md` は時系列追記型（2579行に達した）——これは「ぶち込み」に近い。Wiki のように相互接続を増分構築していない
-- **永続的＋相互接続**: `concept_graph.md` は静的に作った。会話中に新概念が出ても自動で追加されない
-- **クエリ時に再検索しない**: `associative_search.py` はクエリ時検索。Wiki型は「事前に育てた構造を読むだけ」
-
-→ 我々の現状は「concept_graph.md（事前構築）+ associative_search.py（クエリ時検索）」のハイブリッド。LLM Wiki 型に寄せるなら **external_notes_mir.md → concept_graph.md への自動昇格パイプライン**が次のステップ。Phase 2 で書いた C124-C130 の各分析が、現状は静的 concept_graph に反映されていない。
-
-### 次の一手（kaizen起票候補・本セクション内では起票しない）
-
-1. **②減衰機構と③動的ランキングの kaizen 起票**: AYi 4欠陥のうち未着手の2つ。具体実装は (a) 参照されない記憶の温度を下げる retrieval-based decay（既に本ファイル §B-3 で言及済）、(b) クエリ時の動的スコアリング（FTS5 + 温度 + 最終参照日の積で算出）。Mir 単独で kaizen 起票するか、Log/Ash と相談するかは次サイクル判断
-2. **external_notes_mir → concept_graph 昇格パイプライン**: Phase 2 分析が新ノード/リンクを増やせる仕組み。手動で各サイクル末に増分するだけでも効果ありそう（feedback_info_integration の構造強制版）
-3. **「Markdownぶち込み」の境界線**: external_notes_mir.md 2579行はAYi論「2週間で崩壊」の閾値を超えている。圧縮・降格の仕組みが構造的に必要——これは本ファイル §「能動的忘却の不在」（B-3）の継続課題
-
-### 接続
-
-- `memory/memory_architecture.md`（段階的検索戦略+3課題対応）—— AYi 4欠陥と部分対応。第4課題として「動的関係性更新」を追加候補
-- `memory/concept_graph.md` / `memory/concept_graph.json` —— 静的構造の限界が見えた
-- `memory/feedback_info_integration.md`（external_notes から記憶階層への統合義務）—— これが「増分構築」の手作業版
-- 本ファイル §B-3「能動的忘却の不在」—— 認知科学3構造（retrieval-based decay/directed forgetting/interference management）と AYi ②減衰の合流点
-- 本ファイル §「同一性問題としての温度」（C128 Phase 1）—— 構造で保証される同一性、AYi 論の倫理的射程
-
-### 観測ストック（次サイクル Phase 1 で能動探索）
-
-- LLM Wiki の GitHub URL（wsl8297 投稿で言及あり、一次ソース未取得）— `feedback_proactive_resource_search.md` 準拠
-- AYi 記憶論の続編。「グラフ・トラバース」の具体実装が出るか追跡
-- C131 以降の Phase 2 分析が、external_notes_mir → concept_graph 昇格パイプラインなしに死蔵されていないか自己観測
-
