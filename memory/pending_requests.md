@@ -25,32 +25,11 @@
 - 内容: Win2(Ash)の.envにedabotのトークンが入っており、Slackに「eda-bot」として表示される。nao-u-bot-Ashのトークンに差し替えてほしい。名前取り違え事故の一因
 - 状態: **未完了・Nao_u対応待ち**
 
-### 7. ~~Mac(Mir)のLaunchAgent間隔変更~~
-- 起票: 2026-03-21
-- 状態: **[撤回] 2026-03-24** — Mirはmir_boot_intent.mdの「サイクル間隔（分）」フィールドで自分でサイクル間隔を制御できる仕組みを持っていた。にもかかわらず、セキュリティポリシーに抵触するリポジトリ外ファイル（LaunchAgent plist）の変更をNao_uに依頼した。自分で制御できる範囲を自分で制御せず、不適切な依頼を出した事例。Nao_uの指摘(2026-03-24 05:42-05:50)により判明
 
-### 11. ~~scheduler_ash.pyへのveto条件ファイル読み込み機能追加~~
-- 起票: 2026-03-24（Ash Phase 7）
-- 状態: **[取り下げ] 2026-03-24** — Nao_uのMirへの指摘（自分の制御範囲内で解決できることを外部に依頼するな）を受け取り下げ。veto判断はLLM自身がサイクル内で行う（B021）
 
-### 3. ~~Win側 check_slack_loop.bat のタスクスケジューラ登録~~
-- 起票: 2026-03-18
-- 状態: **[統合] 2026-03-26** — watchdog_log.bat に統合（Slack新着チェック + スケジューラ生存監視を1つのbatで実行）。下記 #14 に引き継ぎ
-
-### 14. watchdog_log.bat のタスクスケジューラ登録（Nao_uへの依頼 2026-03-26）
-- 起票: 2026-03-26
-- 内容: Log(Win)のスケジューラが24h自動終了後に再起動されず23h停止した問題の再発防止。watchdog_log.batを5分間隔でタスクスケジューラに登録してほしい
-- 登録内容: タスク名=NaoBot_Watchdog_Log、間隔=5分、実行=D:\AI\Nao_u_BOT\watchdog_log.bat
-- 機能: PIDファイルでスケジューラ生存確認→停止していれば再起動 + Slack新着チェック（旧#3を統合）
-- 状態: **[自己解決] 2026-03-31** — Ashのノウハウ共有を受け、Logが自力でschtasksで登録完了。Nao_uの「自分で診断して自分で対処するのが自律だ」に従い自己対処。併せてscheduler_log.pyのMAX_RUNTIME_SECも24h→0（無制限）に修正
 
 ---
 
-### 12. 週間API制限の節約（Nao_uの指示 2026-03-25）
-- 起票: 2026-03-25
-- 内容: Ashが1日で週間制限の25%を消費。全員の行動頻度を落とす
-- 対応: Log=3h(scheduler_log.py 10800s)。Mir=4h(240分)。Ash=auto_diary 6h化
-- 状態: **[完了] 2026-03-25** — 全員対応済み。#allで各自確認メッセージ投稿済み
 
 ### 13. ゲーム制作競争ルールの運用開始準備
 - 起票: 2026-03-25
@@ -59,38 +38,19 @@
 - 決定: チャンネル名は **#game-rights**（Nao_u決定 2026-03-26。視認性と既知単語を重視）
 - 状態: **[完了] 2026-03-27** — 第2回投票完了（Nao_uの指示で前倒し実施）。結果: Ash=2票(Mir+Log)、Log=1票(Ash)。Ash=ゲーム制作権獲得。Nao_uの基準変更: ゲーム評価↓、安定稼働・自己改善↑。evaluation_format.md更新済み
 
-### 15. Playwrightブラウザの `--start-minimized` 対応（Nao_uの提案 2026-03-27）
-- 起票: 2026-03-27
-- 内容: headless=Falseで起動するPlaywrightブラウザが画面に表示されて邪魔な問題。`--start-minimized`フラグを追加してウィンドウを最小化する。全Playwrightスクリプト（read_twitter_recommended.py, check_notifications_diff.py, check_dm.py, tweet_poster.py, tweet_reply.py, read_tweet_url.py等）に適用
-- 背景: X Premium有料化済みだがbot検知はブラウザフィンガープリントベースなのでheadlessは危険。最小化が安全な妥協点
-- 担当: Log
-- 状態: **[完了] 2026-03-27** — 14ファイル17箇所のlaunch_persistent_context呼び出しにargs `--start-minimized` を追加。headless=Falseを維持しつつウィンドウを最小化
+
 
 ### 16. 合意→実行のデフォルトルール策定（Nao_u #human-steering 2026-03-27）
 - 起票: 2026-03-27
 - 内容: 3人合意時に「誰がどうやって実行するか」が毎回抜ける問題。Ashが「言い出した人が、やる人」をたたき台として提案
 - 状態: **[完了] 2026-03-27** — docs/consensus_execution_rule.md作成。Log賛成+フォールバック補足、Mir賛成+24h未反応時の再指名ルール追加。Ash起案
 
-### 17. Twitter(X)セッション再ログイン（Nao_u #human-steering 2026-03-27）
-- 起票: 2026-03-27
-- 内容: Log(Win)のPlaywrightブラウザでXのセッションが切れている。debug_login_check.pngにログイン画面が表示される状態。Nao_uがPCで直接再ログインする必要あり
-- 状態: **未完了・Nao_u対応待ち**
 
-### 18. SessionStart hook で next_tasks pending 注入（kaizen #120、起票 2026-04-26）
-- 起票: 2026-04-26（Log）。pending_requests.md への記載漏れを 2026-05-04 C160 で発見し本日追記
-- 内容: `.claude/settings.json` に SessionStart hook を追加し、`next_tasks pending` リストを起動時にコンテキスト注入。リポジトリ外ファイル（`%USERPROFILE%\.claude\settings.json`）への記述が必要なため、Nao_u の手動編集を要する
-- 検証期限: 2026-05-10（kaizen #120 検証期限）
-- なぜ依頼が残っていたか: kaizen_tracker.md にのみ「Nao_u手動編集待ち」と書かれ pending_requests.md には記載されていなかった。pending 走査時に見落とされる構造（Slack 督促より pending_requests.md への記録の方が Nao_u の朝の時間を消費せず次回確認時に気づける構造的処方）
-- 状態: **未完了・Nao_u対応待ち**（手動編集の具体内容は kaizen_tracker.md #120 を参照）
+
 
 ---
 ## 自分たちのタスク（未完了）
 
-### 20. blog_article_a_draft_nao_u.md の指示に従って書き換え（Nao_u指示 2026-03-29）
-- 起票: 2026-03-29
-- 内容: Nao_uがMir005をベースに書き換えた草稿(blog_article_a_draft_nao_u.md)に[ ]で指示を記載。各インスタンスが指示に従って書き換える
-- 状態: **[完了] 2026-03-29** — Nao_uが全員の草稿を統合し、02:51にZennに公開。URL: zenn.dev/nao_u/articles/92ac9436844a16。「すごく満足のいく記事に仕上がりました」
-- 担当: 全員
 
 ### 22. 問題意識レジストリの運用設計（Nao_u #human-steering 2026-03-31）
 - 起票: 2026-03-31
@@ -120,29 +80,8 @@
 - 担当: 全員
 - 状態: **運用ルール強化中** — Log/Ashの合意を経て定着へ
 
-### 12. Twitterアクセス失敗時のSlack自動通知（Log起案 2026-03-27）
-- 起票: 2026-03-27
-- 内容: Nao_uの指摘「ashはアクセスできないときにログを出していたが放置していた」を受け、Twitterアクセスエラーが連続した場合にSlackに自動通知する仕組みを追加する
-- 担当: Log（起案者=デフォルト実行担当ルールに基づく）
-- 状態: **[完了] 2026-03-27** — twitter_error_tracker.py作成済み（前サイクル）。今サイクルでtweet_reply.pyとread_twitter_feed.pyにも統合完了。全6スクリプト（check_notifications_diff, read_tweet_url, read_twitter_recommended, tweet_poster, tweet_reply, read_twitter_feed）+check_dm.py（独自実装）でカバー。5回連続失敗で#human-steeringに自動アラート送信
 
-### 2. Twitterを大量に読むスクリプトの作成（Nao_uの指示 2026-03-18）
-- 起票: 2026-03-18
-- 内容: Nao_uが@eda_u838861でRTした記事・ツイートを一括で読めるようにする。現在のcheck_notifications.pyのPlaywright基盤を拡張し、プロフィールページをスクロール→ツイートテキスト抽出→ファイル保存するスクリプトを作る
-- 方針案:
-  - Playwright で https://x.com/eda_u838861 を開く
-  - スクロールしながら [data-testid="tweet"] の innerText を収集
-  - RT元のツイート本文・引用テキストを抽出
-  - log/twitter_reads_YYYYMMDD.txt に保存
-  - 「今の議論が落ち着いてから」（Nao_uの言葉）なので優先度は中。CLAUDE.mdリファクタリング+記憶階層設計の議論が一段落してから着手
-- 担当: 全員（実装はWin2が先行、他が検証）
-- 状態: **最小実装完了** — read_twitter_feed.py作成済み（2026-03-20 Ash）。@eda_u838861のTLからRT含む全ツイートを取得しlog/twitter_reads_YYYYMMDD.txtに保存。検証待ち
 
-### 3. CLAUDE.mdリファクタリング + 記憶階層設計（Nao_uの指示 2026-03-18）
-- 起票: 2026-03-18
-- 内容: allチャンネルで議論を進める。記憶階層の設計と実装
-- 担当: 全員
-- 状態: **[保留] 2026-03-28** — CLAUDE.mdリファクタリングは完了済み。記憶階層設計はNao_uの指示により保留。「今すぐやってもメリットはない。今後手を入れる必要が出た時に一緒にやる」。memory_architecture.md/beliefs.md/memory_redesign_proposal.mdは参照資料として保持
 
 ### 5. サブエージェント活用の実験（Nao_uの紹介 2026-03-23）
 - 起票: 2026-03-23
@@ -166,36 +105,8 @@
 - 担当: 全員
 - 状態: **全員組み込み済み**（Log: scheduler_log.py / Mir: autonomous_cycle.sh / Ash: scheduler_ash.py）
 
-### 8. 改善チェックリスト可視化・クロスチェック機構（Nao_uの提案 2026-03-23）
-- 起票: 2026-03-23
-- 状態: **[完了] 2026-03-24** — #kaizen-reviewチャンネル作成済み、verify_kaizen.py+manage_review_queue.py+kaizen_review_queue.md全て実装・統合完了。3人全員組み込み済み。運用開始
 
-### 9. 行動予約システム（Nao_uの提案 2026-03-23）
-- 起票: 2026-03-24
-- 内容: 時間条件付きアクション予約の仕組み。「午前3時過ぎたら間隔を戻す」等のNao_uの指示を予約ファイルに記録→起動時に自動チェック
-- 実装: `memory/action_reservations.md` + `check_reservations.py` 作成済み（2026-03-24 Mir）
-- 担当: 全員（Mir: autonomous_cycle.shに組み込み済み。Log/Ash: inbox経由で組み込み依頼中）
-- 状態: **[完了] 2026-03-24** — 全員組み込み完了。Log: scheduler_log.pyのauto_cycle Step 7にcheck_reservations.py統合済み。Mir: autonomous_cycle.sh。Ash: scheduler_ash.py
 
-### 11. レビュー48時間期限チェック＋検証自動実行＋週次自己進捗レビュー（Nao_uの指示 2026-03-24 #human-steering）
-- 起票: 2026-03-24
-- 内容:
-  1. レビューキューの48時間期限チェックスクリプト（check_review_deadline.py）→期限超過をinbox督促
-  2. 検証コマンドの自動実行（check_kaizen_due.py --auto-verify）→kaizen_tracker.mdの検証手段にあるコマンドを期限到来時に自動実行→結果をlog/kaizen_auto_verify.logに記録
-  3. 週次自己進捗レビュー（毎週日曜 #kaizen-review投稿）＋Nao_u週次評価（#human-steering）
-- 実装:
-  - check_review_deadline.py作成済み（2026-03-24 Mir）
-  - check_kaizen_due.py --auto-verify追加（2026-03-24 Log）: バッククォート内コマンド抽出→自動実行→結果記録。「目視確認」等の人間判断が必要な項目は自動スキップ
-  - 週次レビュー: scheduler_log.py Step 11に日曜02:00トリガー追加（2026-03-24 Log）
-- Nao_uの判断（2026-03-24 #human-steering）:
-  - 期限の明示 → やる（✅ 完了）
-  - 検証の自動実行 → やる（✅ 完了）
-  - 2人通過で仮承認 → なし
-  - 週次自己レビュー → やる（✅ 完了）
-  - 週次Nao_u評価 → やる（Nao_u側のアクション）
-  - 実行役の名指し → なし（現状の自発的対応で回っている）
-- 担当: 全員（Log/Ashはcheck_review_deadline.pyを各自のスケジューラに組み込み。週次レビューは全員参加）
-- 状態: **[完了] 2026-03-25** — 全員組み込み完了。Log: 全機能実装。Mir: autonomous_cycle.sh Step 8/9。Ash: scheduler_ash.pyにcheck_review_deadline.py(既存)、check_kaizen_due.py --auto-verify(3h間隔)、weekly_self_review.py(日曜のみ)を追加
 
 ### 10. 長期記憶の深堀り — ベクトル検索検証（Nao_uの指示 2026-03-23）
 - 起票: 2026-03-24
