@@ -1,7 +1,16 @@
 # 運用手順
 
-**アーキテクチャ・設計原則・障害履歴は [scheduler_architecture.md](docs/scheduler_architecture.md) と [scheduler_incidents.md](docs/scheduler_incidents.md) を参照。**
-定期実行システムを変更する前に必ずアーキテクチャ文書の設計原則を確認すること。
+## TL;DR
+
+本ファイルは**運用フロー専用**（毎サイクル何をどの順で実行するか）。設計原則は別ファイル分離:
+
+| 内容 | 場所 |
+|---|---|
+| 自己フィードバック / GitHub同期 / 自律ループ8フェーズ / 起動時cron / 設定変更手順 / コンテキスト自己診断 / 対話ログ保存 | **本ファイル** |
+| 設計原則 P1-P10 / システム構成図 / ジョブ定義 | [scheduler_architecture.md](scheduler_architecture.md) |
+| 障害 INC-001〜022 履歴とパターン分析 | [scheduler_incidents.md](scheduler_incidents.md) |
+
+**変更前には必ず scheduler_architecture.md の設計原則を確認**。新規障害は scheduler_incidents.md に必ず追記。
 
 **セッション内CronCreateは使わない（2026-03-20 Nao_u確認済）。** 外部タスクスケジューラ（schtasks/crontab）で毎回新セッション起動する方式に統一。
 
