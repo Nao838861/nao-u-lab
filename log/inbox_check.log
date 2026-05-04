@@ -3862,24 +3862,22 @@ TerraTech Legion = ヴァンサバ × TerraTech/Besiege系 を A〜G の7視点�
 [2026-05-04 15:31:41] Inbox win2 has content — waking Claude
 [2026-05-04 15:36:41] Claude wake timed out for win2 — restoring inbox
 [2026-05-04 15:36:41] [COOLDOWN] win2: 8回連続エラー → 30分クールダウン
-<<<<<<< HEAD
-[2026-05-04 16:44:02] Inbox win2 has content — waking Claude
-[2026-05-04 16:49:03] Claude wake timed out for win2 — restoring inbox
-[2026-05-04 16:49:03] [COOLDOWN] win2: 9回連続エラー → 30分クールダウン
-=======
-[2026-05-04 16:43:48] Inbox win has content — waking Claude
-[2026-05-04 16:47:56] Claude woken for win: 投稿完了、push済み。
+
+
 
 ## 対処サマリ
-
 **Slack新着**: Nao_uが #nao-u に @nyaa_toraneko のADV/フラグ管理論ツイートを共有。
-
 **対処**: `#s
->>>>>>> c130d40a8f9329c111e8b3fed8c796b094d7dfa6
+[2026-05-04 16:43:48] Inbox win has content — waking Claude
+[2026-05-04 16:44:02] Inbox win2 has content — waking Claude
+[2026-05-04 16:47:56] Claude woken for win: 投稿完了、push済み。
+[2026-05-04 16:49:03] Claude wake timed out for win2 — restoring inbox
+[2026-05-04 16:49:03] [COOLDOWN] win2: 9回連続エラー → 30分クールダウン
 [2026-05-04 18:49:11] Inbox win2 has content — waking Claude
 [2026-05-04 18:54:11] Claude wake timed out for win2 — restoring inbox
 [2026-05-04 18:54:11] [COOLDOWN] win2: 10回連続エラー → 60分クールダウン
 [2026-05-04 18:56:40] [COOLDOWN] win2 is in cooldown (57m31s remaining) — skipping Claude wake
+[2026-05-04 20:23:36] Inbox win has content — waking Claude
 [2026-05-04 20:24:30] Inbox win2 has content — waking Claude
 [2026-05-04 20:29:30] Claude wake timed out for win2 — restoring inbox
 [2026-05-04 20:29:30] [COOLDOWN] win2: 11回連続エラー → 60分クールダウン

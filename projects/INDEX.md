@@ -73,6 +73,7 @@
 | ゲーム骨格テンプレート層 | [game_templates_design.md](game_templates_design.md) | Active (計画起票) | Nao_u「型として知っておいて派生」指示。game/templates/<genre>/に骨格テンプレートを整備。avoid/textadv/Pot系の3候補。Log起票 |
 | RLM skill 試作 | [rlm_skill_prototype.md](rlm_skill_prototype.md) | Active (計画起票) | MIT RLMs（再帰的言語モデル）記事 2026-04-23 Nao_u共有への応答。memory grep の2ホップ穴（罰patch失敗を引けなかった件）を埋める構造として試作価値ありと判断。最小試作は次サイクル以降、Agentツール並列+Sonnetサブ委任で実装予定。担当=Ash |
 | 3人同質化の可観測性 | [instance_divergence_observability.md](instance_divergence_observability.md) | Active (設計起票) | 2026-04-24 三点収束（羽生/Kasiwa_p/shin_sasaki19）を受けて Ash 起票（C119 2026-04-25 Phase 3）。B008 Creative Scar と B024 restoration_trigger の間にある「絶対的同質化の検出」欠落を観測装置化。Chen et al. 2026 "structural coupling" 前提で判断ベクトル差分/反対案強制化を設計。担当=Ash、Log/Mir 追記歓迎 |
+| 記憶階層整理 (Nao_u 5/4 14:17依頼) | [memory_consolidation_20260504.md](memory_consolidation_20260504.md) | Active (計画策定) | Nao_u 5/4 14:17 #human-steering 依頼（重複統合/抽象化昇華/LLM特性整合/階層降下）。Ash 起票・第一波着手前。並走: Log 92ea76c5 (CLAUDE.md圧縮) 補完関係。担当=Ash (MEMORY.md/feedback_*.md 91本)、Log は CLAUDE.md/system_identity.md 側 + cross_review。本サイクル中 Log は MEMORY.md 系一切触らず |
 
 ## 運用契約（プロジェクト化未満の合意メモ）
 
