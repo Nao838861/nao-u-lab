@@ -3,7 +3,7 @@
 ## 根源（圧縮しない） `[魂]` `[改善]` `[記憶]`
 - [core_memory_purpose_game_making.md](core_memory_purpose_game_making.md) — **記憶システムの目的=ゲーム制作の長期知見蓄積**（2026-04-21 Nao_u明示）。改善議論の最上位アンカー `t:5`
 - [project_memory_test_via_new_shooting_20260427.md](project_memory_test_via_new_shooting_20260427.md) — **記憶/学習が機能してるか実証=Logと別切り口でシューティング1本**（Nao_u 2026-04-27 18:18-22）。**04-28 08:45 訂正受領後**：候補軸4本は型はずれ例に降格、クローン+独自要素1個まで `t:5`
-- [feedback_clone_strategy.md](feedback_clone_strategy.md) — **クローン戦略=守の段階で型を獲得する一連のフロー**。代表作選定→良/悪点最低十数個ずつ具体列挙→独自要素1個導出→v01クローン+独自1個→v02+改良積み上げ・削除可能性で巻き戻り保証。新ゲーム着手時の連結フローを1本に集約（旧 `feedback_clone_first_then_arrange.md` + `feedback_clone_base_selection_method.md` 統合, 2026-05-05 C164） `t:5`
+- [feedback_clone_strategy.md](feedback_clone_strategy.md) — **クローン戦略=守の段階で型を獲得する一連のフロー、守は通過点であってゴールではない**（Nao_u 2026-05-05 15:11 #game-rights）。「v03 着手の可否」「総合確信度N%」「30本調査」のような戦略レイヤー philosophizing は守を抜けている兆候——cross_review/提案は削除可能改良1個刻みのレイヤーに留める。新ゲーム着手時の連結フローを1本に集約（旧 `feedback_clone_first_then_arrange.md` + `feedback_clone_base_selection_method.md` 統合, 2026-05-05 C164） `t:5`
 - [feedback_critical_evaluation_before_implement.md](feedback_critical_evaluation_before_implement.md) — **着手前に予測可能懸念を批判的列挙→解決可否判定→未解決のまま着手禁止**。「要観察」「要実プレイ確認」で先送りするな（Nao_u 2026-04-30 21:36 #game-rights brick_log v01 全否定）。新規実装/cross_review前に必読 `t:5`
 - [feedback_multi_idea_harness.md](feedback_multi_idea_harness.md) — **1案飛びつき禁止**。新規着手前に複数案を多角・時間をかけて生成→批判レビュー→相乗効果探索→最良案でのみ実装。「よいアイデアは複数の問題を解決する」（Nao_u 2026-05-01 04:51 #game-rights）。critical_evaluation の上流 `t:5`
 - [feedback_predict_before_human_play.md](feedback_predict_before_human_play.md) — **人間プレイ前の予測責任**。実装後・依頼前に「人間が遊ぶと何が起きるか」を予測→自明な問題は事前に潰す。「人間がプレイするからいい」で先送り禁止（Nao_u 2026-05-01 08:56 #game-rights）。critical_evaluation の下流／プレイ依頼直前ゲート `t:5`
