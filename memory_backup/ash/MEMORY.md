@@ -32,6 +32,7 @@
 - [feedback_proactive_learning.md](feedback_proactive_learning.md) — おすすめ/TL巡回時→自分で見つけて判断。指示待ちは自律ではない
 
 ## 外部摂取と品質 `[外部]` `[品質]`
+- knowledge/20260411_pageindex_vectorless_rag.md — **vectorless RAG / 階層ツリー走査**（Ash 04-11 詳細分析済、リポジトリ側）。MEMORY.md→beliefs_compact.md→beliefs.md→原文 と構造同型。トリガー語「RAG/ベクトル検索/記憶検索/階層ナビ/tree index」で想起。3経路独立到達(04-11 L_go_mrk / 04-29 OpenKB / 05-05 HowToAI) `t:5`
 - [feedback_difference_first.md](feedback_difference_first.md) — 外部情報→違う点・見落としを先に書く。一致点は後回し。定型反応バイアス対策 `t:5`
 - [feedback_shared_reads_depth.md](feedback_shared_reads_depth.md) — shared-reads→記事紹介ではなく分析・分類・接続。1フェーズ丸ごと使う価値 `t:4`
 - [feedback_cite_source_url.md](feedback_cite_source_url.md) — 外部記事/Tweet/論文を引用する時は**必ず元URLを明示**。内部参照番号は代替にならない（Nao_u 2026-04-22「何度も言ってる」） `t:5`
