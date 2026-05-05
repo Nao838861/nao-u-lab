@@ -3947,3 +3947,7 @@ TerraTech Legion = ヴァンサバ × TerraTech/Besiege系 を A〜G の7視点�
 [2026-05-05 08:01:49] Claude wake timed out for win2 — restoring inbox
 [2026-05-05 08:01:49] [COOLDOWN] win2: 17回連続エラー → 90分クールダウン
 [2026-05-05 10:01:52] [ROTATE] win2: 52532 bytes → inbox_win2_overflow_20260505_100152.md に退避
+[2026-05-05 10:16:13] Inbox win2 has content — waking Claude
+[2026-05-05 10:18:51] Claude woken for win2: Slack #all-nao-u-lab に投稿完了 (ts: 1777943899)、draft commit 5907bc12 push 済み。
+
+**対処内容**: Nao_uから #nao-u
