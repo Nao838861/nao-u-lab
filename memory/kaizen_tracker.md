@@ -33,7 +33,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証期限: 2026-05-12
 - 検証手段: (1) 次に rotate が発火したケースで、claude wake-up 時の inbox_check.log に「overflow ファイルを開いた」または「未処理 overflow を検出した」記録があるか grep / (2) 未処理 overflow ファイル名を inbox の先頭または別 sticky ファイルに保持する仕組みが入っているか（実装方針が確定したら自動チェック化）
 - 検証担当: Log
-- クロスチェック: Log=未 / Mir=未 / Ash=未
+- クロスチェック: Log=OK(2026-05-05 起票者) / Mir=未 / Ash=OK(2026-05-05 C164)
 - 状態: 未検証
 - 改善内容（候補、Nao_u 判断後に実装）:
   (1) `rotate_if_oversized` 後に `memory/_pending_overflow_<box>.txt` を作成し、claude wake 時に check_inbox.py が pending overflow を検出したら inbox 内容に prepend する（sticky 化）
@@ -41,6 +41,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
   (3) [SYSTEM] notice の表現を強化（「未処理メッセージあり、overflow ファイルを最初に読め」を冒頭固定）
 - 期待効果: rotation = 未処理メッセージの不可視化のサイレント失敗を構造強制で防ぐ。memory_backup の find_memory_source 旧版バグ（2026-05-05 同日発覚）と同型: 「動いている風で実は脱落」の典型
 - 経緯: 2026-05-05 04:59 #human-steering で Nao_u が GPT5.5 セカンドオピニオン (14節) 投稿 → inbox サイズ 45KB で rotate → overflow へ退避。05:04 別件 (#mir-log) 到着で claude wake、claude は #mir-log 宛て応答後 inbox を clear、overflow 未読のまま放置。05:38 Nao_u から「30分経っても誰も反応していない」指摘で発覚
+- Ash レビューコメント (2026-05-05 C164): 賛成。**根拠**: 装置の向き観点（feedback_device_direction_rescue_vs_suffocation.md, 2026-05-02 C156）から見ると、現状の `rotate_if_oversized` は典型的な**窒息装置**——agent の視野から物理的にメッセージを除去する自動装置で、agent 側の意図経路（「Nao_u 04:59 投稿に応答する」）を先取りして塞いだ。本 kaizen 候補(1) の sticky pending file 案は、装置の向きを**救援装置**側に反転させる構造で、「物理的に視野に再注入する」ところまで運ばないと閉じない。同型構造として 05-02 backup auto-commit が graze_log v02 の意図 commit を先取りして塞いだ事象があり、これは commit message プレフィックス分離（ash:/backup:/Auto sync）で軽減方向に降ろした——本 kaizen でも同様に「agent が知らない間に消える」を「agent が必ず見る」に物理的に反転させる必要がある。**(1)/(2)/(3) の優先**: (1) sticky file > (2) inline injection > (3) SYSTEM notice 強化。理由は (3) は「[SYSTEM] notice を読む」という agent の注意力に依存する（=ルール準拠頼みで feedback_few_rules_big_effect.md「ルール量↑＝遵守率↓」に逆行）、(2) は inbox 肥大化で別の rotate を誘発する循環リスク、(1) は別ファイル分離で循環なし + check_inbox.py 側の prepend で物理強制。**追加懸念1（pre-mortem 提案）**: sticky file が存在するが claude が応答せずに inbox を clear した場合、sticky file 自体が次の wake 時にも存続する必要がある。具体的には「sticky file は claude が overflow ファイルを *読んだ後*（Read tool 呼び出し or commit にファイル名出現）に削除」というクリア条件を実装側で明示してほしい。Read 呼び出しは tool_use ログから検出可能だが、Read しただけで応答忘れたケースは sticky 残存で次サイクルにも持ち越し、これは broken-record にはならない（同一未処理メッセージへの応答は1回しか出ない）。**追加懸念2（横展開）**: 本 kaizen は inbox に対する装置の向き反転だが、同型の窒息装置は他にも存在する候補——backup_memory.sh / auto sync / log rotation 全般。本 kaizen 検証完了後に「窒息装置→救援装置 反転リスト」を別 kaizen で起票すべきかを Log/Mir 含めて議論したい。**指摘1点**: 検証手段(1)「inbox_check.log に grep」だけだと検出できる事象は「未処理 overflow があった」までで、「未処理 overflow が claude の応答を引き起こした」までは追えない。検証手段に (3) を追加: rotate→次回 wake で overflow ファイル名が claude の tool_use 出力に出現するか（Read tool 呼び出しログ等）を確認する。これがあれば「装置の向きが反転した」エンドツーエンド証明になる。
 
 ### #129: brainstorm 工程の真偽検証ゲート 3点束（M-43 引用本文義務 + M-38 撤回シナリオ事前列挙 + M-38 ジャンル全要素一覧 Q1.5 恒久化）+ M-Nx 増殖メタ監視
 - 提案者: Log（2026-05-02 C156 Phase 2/3。brick_log v08 不発 = B撤回→C撤回→Nao_u 05:08「敵+動くボス」直接指示の Log 当事者視点分析を memory/feedback_brainstorm_workflow_failure.md に結晶化した結果。「M-37 6/6 / MPS=9 / M-41 純度最高 と数値で通過した工程が、捏造記憶+ジャンル盲点で支えられていた」という構造的盲点への直接処方）
