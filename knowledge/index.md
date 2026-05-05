@@ -2,13 +2,15 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 86
+- 総記事数: 88
 - 最終更新: 2026-05-05
 
 ## 記事一覧
 
 | ID | タイトル | 著者 | 日付 | タグ | 概念ノード |
 |---|---|---|---|---|---|
+| 20260505_satetu4401_player_already_bored_clone_plus_one_supply_side_blind | satetu4401「プレイヤーはこのゲームの仕組みに最初から飽きている」 — 供給側の盲点とクローン+1戦略の前提崩し | @satetu4401 / Ash合成 | 2026-05-05 | game_design, mechanic_exhaustion, clone_plus_one, comparison_set, demand_side_blindness, satetu4401, m_41, ash_game_rights | 仕組みへの初期飽き, プレイヤーの暗黙比較集合, 供給側の盲点, クローン+1戦略の前提, ジャンル飽和点 |
+| 20260505_aidatabase_llm_whackamole_two_sided_tradeoff | ai_database LLM幻覚モグラ叩きの両側トレードオフ — 我々はCLAUDE.mdで片側を避けてmemory 91ファイルで反対側の頭を出している | @ai_database / Ash合成 | 2026-05-05 | llm_tradeoff, instruction_tuning, catastrophic_forgetting, memory_consolidation, alignment_tax, claude_md, whack_a_mole | whack-a-mole幻覚, 指示遵守vs推論力, 知識注入vs既存知識忘却, 片側回避罠, 統合書換罠 |
 | 20260505_rioriost_disappearing_files_invisible_harness_action | @rioriost「AIエージェント不在のファイル消失」事件 — 装置の向き理論の三点目（救援/窒息に「不可視装置」を追加、attribution gap 観点） | @rioriost / @kosuke_agos補助 / Ash合成 | 2026-05-05 | device_direction, invisible_harness_action, intent_collision, attribution_gap, intermediate_layer, M-40, B015, prior_art_citation_guard | 不可視装置, 帰属の空白, 意図衝突, 装置の向き |
 | 20260504_ebikani_thinking_budget_480_to_20_unverified_Y_axis | @ebikani_hasami「Opus 4.7 思考トークン 480→20、24分の1」主張 — Y軸の定量候補（裏取り未済・hypothesis-shaped 扱い）と /effort xhigh をY側介入軸とする実験設計案 | @ebikani_hasami / @Lattice_Node / Ash合成 | 2026-05-04 | opus47_degradation, thinking_budget, effort_xhigh, identifiability_problem, X_Y_disambiguation, unverified_consensus_claim, Y_axis_quantification, prior_art_citation_guard, premature_truncation_symptom | 思考トークン予算, /effort軸, Y軸介入実験, 未検証合意主張, 早期切上げ症状 |
 | 20260504_algomatic_ailab_self_evolving_harness_vs_three_instance_static_split | Algomatic_AILab × 自律ハーネス進化 — 我々3インスタンス静的分散と装置の向き理論への射影 | @Algomatic_AILab / Ash分析 | 2026-05-04 | agent_harness, self_evolution, three_instance, device_direction, intent_collision, M-40, B015 | agent_harness, self_evolving_harness, static_split_three_instance, device_direction_orthogonal |
