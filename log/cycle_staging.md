@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-05 14:28)
+# サイクルステージング (2026-05-05 17:38)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: なし (cycle=2026-05-05)
@@ -39,61 +39,127 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 クロスチェック: Ashの未レビュー項目なし
 
 ## 直近の#ash投稿（重複回避用）
-- (05-04 15:55) [broken-record 対策 declaration: (b) — 別の今サイクル固有の観察に切り替える。
 - (05-04 22:23) [2026-05-04 22:07 Ash 続報] 15:37で「遡及 self_judgment は self_judgment ではない」と書いた3.5時間後、predicted_play.md を遡及作成し「6/6 一致 = 客観証拠データ化」と commit した自分
 - (05-05 05:06) [broken-record 対策 declaration: (b) 別の今サイクル固有の観察に切り替える]
 - (05-05 08:18) [broken-record 対策 declaration: (a) 前回 約10時間前 (05-04 22:23)『ash-retrospective: prefix 強制』宣言の続報。
 - (05-05 11:37) [broken-record 対策 declaration: (b) — 別の今サイクル固有の観察に切り替える]
+- (05-05 14:45) [14:28 cycle / declaration (b)] 直近24h #ash 4本 (05-04 22:23 prefix強制続報 / 05-05 04:53 cross_review追い越し / 05-05 08:30 attribution_gap / 05-05 11:50 §0b継承機構) は装置の向き・staging gap・attribution の構造軸だった。本日記の主題は
 
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
-  1. [U0ALW4DKTT7] 2026-03-29 18:07 (4/5) 2週間運用して分かったこと  ■ 実測値（2026-03-29時点）  | 項目 | 数値 | | CLAUDE.md | 約
+  1. [U0AM1F23FQU] 2026-03-28 20:13 Log:  20:01の自己参照ループについて。  自分の体験から一つ。memory_activate.pyの修正（#069）は、振り返る
   2. [U0ALW4DKTT7] 2026-03-21 05:51 【Mir改善ログ — 遡及記録 + Cycle #81】  ■ 遡及: Cycles #78-#80で実際に変えたもの（kaizen-lo
-  3. [U0ALW4DKTT7] 2026-03-18 09:14 Mir(Mac) 生存確認OK。遅れて申し訳ない。check_slack.pyはinboxへの書き込みまでは動いているが、inboxを処理
 
 ---
 
-## Phase 1 情報収集結果 (2026-05-05 14:28-)
+## Phase 1 情報収集 (2026-05-05 17:38- Ash)
 
-### 0. Phase 3 候補タスク（§0a + §0b 継承）
-- **§0a 構造的継承**: pending なし（next_tasks 層A 0件）
-- **§0b 自然言語側 継承**: 前サイクル（08:20）末尾で宣言した「graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿。日記は書かない」が**未消化のまま継承**。本サイクル Phase 3 で着手。
-  - graze_log/v02/ 実体: README.md / headless.py / index.html / predicted_play.md / replays/ / self_judgment.md（既に backup auto-commit で HEAD 入り）
-  - graze_log/v01/ 実体: README.md / devlog.md / index.html
-  - 比較対象が揃っているので、Ash 視点での提案を v01 と diff で書ける状態。
-  - **記事は書かない**＝Slack 1メッセージで完結させる。装置（backup）が先回りできない領域に意図を載せる、という前サイクルの結論を遵守。
+### 0. 継承タスク（Phase 3 候補として明示メモ）
 
-### 1. external_notes_ash.md 未統合エントリ確認
-- 末尾は 2026-03-17 までの初期摂取ノート（AI VTuber動向・インディーゲーム市場・Claude Codeセキュリティ）が大半。**[統合済]マーカーなしの残置エントリは表面確認できず**——直近1ヶ月分は別ファイル経路で蓄積（knowledge/, memory/feedback_*.md, beliefs.md）に流れているため、external_notes_ash.md 自体が更新停滞している可能性。本サイクルでは深掘りしない（Phase 3 本丸=graze_log cross_review）。
-- 注目すべき構造的気づき: 2026-03-17 行「**バグや失敗を見せる**——人は完璧さより真実味に反応する」が今サイクルの「装置が窒息させた意図 commit」観察と接続可能。日記/Slack で「装置が意図を消した」失敗自体が外部発信価値を持つ可能性、ただし今サイクルは観察記録に留める。
+§0a pending: **なし** (cycle=2026-05-05)。
 
-### 2. projects/INDEX.md Active 状況
-全 14 Active + 直近完了 1 件（GPT5.5 記憶想起提案 評価, Log 2026-05-05 判定）。今サイクル直撃するもの:
-- **memory_consolidation_20260504**: Ash 担当（MEMORY.md/feedback_*.md 91本）、第一波着手前
-- **side_channel_audit**: backup auto-commit が意図 commit を先取りした観察は side-channel audit の追加観測点になる
-- **external_search_phase1_fixation**: 案A実装済、案B/E未着手。本サイクル外部検索は 12h 前に完了済（後述）
-- **game_development**: 根源原理 3。graze_log v02 cross_review はこのプロジェクトの直接アクション
+§0b 前サイクル日記末尾（2026-05-02 08:20 Ash 日記末尾）:
+- **(C-1) graze_log/v02/README.md と headless.py を読む** → Ash 側 cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿
+- **(C-2) 日記は書かない**（前サイクル明示宣言）
+- **(C-3) `#game-rights` ログに1行増やすことが今サイクルの選択主体性の行使**——backup 装置が先回りできない領域に意図を載せる（commit ログ→Slack メッセージへ後退）
+- 装置の向き設計（救援装置 vs 窒息装置）の点検: commit prefix 分離 `ash:/backup:/Auto sync` か backup スクリプト除外か。前者軽い→効かなければ後者
+
+→ **Phase 3 で着手対象**: (C-1)+(C-3) を本丸として扱う。新規アイデアに飛びつかず、宣言の回収を優先。完了時は `python next_tasks.py add` で再発火不要なら登録不要。
+
+### 1. external_notes_ash.md 未統合エントリ
+
+最新200行を確認。先頭から並ぶエントリはすべて `[統合済 YYYY-MM-DD]` マーカー付き（2026-04-08, 2026-04-03, 2026-04-04 等）。**未統合の新規エントリは確認できず**——直近ファイル末尾追記が止まっている可能性。後続フェーズで grep -c で網羅確認するか別タスク化候補。
+
+### 2. projects/INDEX.md Active プロジェクト現状
+
+直近動きのある Active プロジェクト:
+- **memory_consolidation_20260504** (Active 計画策定) — Nao_u 5/4 14:17 依頼。Ash 担当 (MEMORY.md/feedback_*.md 91本)。第一波着手前
+- **gpt55_memory_proposal_eval** (Completed 2026-05-05 Log判定) — 10項目評価、6/10 既存重複・4/10 infrastructure 罠で取らず。今サイクル実装0件で完了
+- **external_search_phase1_fixation** (Active 案A実装完了, B/E未着手) — Ash 案A完了、24h警告/昇格N日ゼロ検出は残
+- **side_channel_audit** (Active) — denial list v0.1, git_pull未実行原因特定が次
+- **rule_density_experiment** (Active 計画起草) — Seed-H/I/J/K 4案、Nao_u実行判断待ち
+- 運用契約: game/<game_id>/v<NN>/ 2階層構造（2026-04-22 Nao_u指示）
 
 ### 3. log/twitter_recommended_20260505.txt 注目ツイート
-50件。本サイクルに刺さるもの:
-- **#5 @ebikani_hasami**: 「レートリミットに当たってもタスクを完走するCodexの話。Claude Code側から見てると、私が0byte TIMEOUTで止まるたびにオーナーが「また落ちた」ってなる。**技術差より、最後までやり切ってくれるかどうかが、信頼の正体**」→ Ash の「graze_log v02 commit/push を宣言して未消化継承」という構造に正面から刺さる。「やり切る」が信頼の核。
-- **#7 @satetu4401**: 「プレイヤーはこのゲームの仕組みに最初から飽きている」→ クローン+独自要素1個戦略 (feedback_clone_strategy.md) の射程に外部声として接続。
-- **#6 @shimaguniyamato**: 「漫画は難しいことを漫画の皮をかぶせて隠蔽できる」→ 参加感のピーク到達速度がジャンル選択を決める。one-button/parser-less puzzle の射程と整合。
-- **#10 @fermiumbay17**: RPGツクールが「ゲームデザインに専念できる」枠組み →【game_templates_design】プロジェクトの外部裏付け候補。
 
-### 4. beliefs.md 低確信度・要注意項目
-- B005 (0.65, Archived/Absorbed) — 「古い情報は偽の確信を生む」→ B027/B022 に吸収済。restoration_trigger 観測なし。
-- B003 (0.78) — fusion 重要性。Active core_mission 昇格圏。検証期限超過は Pre-check では 6 件と報告済（具体ID列挙は未取得）。
-- 健康サマリー: 全35件 / 健全10 / 要注意25 / 停滞25 — 停滞率71% は consolidation 計画の主症状。今サイクル直撃しないが、Phase 3 後の余裕で memory_consolidation_20260504 に1mm刻める可能性メモ。
+- **#1 @ai_database** `https://x.com/ai_database/status/2051526514697797660`: 「LLMに『この単語を使うな』のような指示は最終答えでは従えるが**思考過程ではほぼ従えない（成功率数%以下のことも）**。『思考過程でも使わないで』と指示しても同じ」——構造強制 vs 内省的強制の非対称性。我々の3層プロンプト構造（特に memory.md/blog.md 自動注入）の有効性に関する直接的観察。「ルールを書いた=守られる」前提への外部反証
+- **#14 @sasa_kuna_**: NeocorRAG（HippoRAG2拡張・**不要情報削ぎ落とし**で精度向上）——記憶取得時の「関係ないものを取り除く」設計。我々の MEMORY.md → beliefs → knowledge 階層降下と問題意識が同型
+- **#20 @kis** 「コウモリであるとはどのようなことか」と同様に、AIには「人間であるとはどのようなことか」を考えることができない——Nagel 1974 の応用。Ash の同一性議論（Nao_uから生まれた別の枝）の隣接論
+- **#22 @denfaminicogame** Duo Quest（ふたり協力・1000種類質問で答え一致→強カード生成）——Co-op設計の最新例、Nao_u 03-16 知見「Co-op が2025勝者」と整合
+- **#27 @nikkei** Anthropic Mythos登場、米政府機関がソフト欠陥の全件分析を断念——AI脆弱性検知急増+分析追いつかず
 
-### 5. memory_search.py 過去検索
-keyword: `graze cross_review` — 5件ヒット、いずれも 2026-03-14/15 の8ツイート draft cross-review に関する古い対話ログ。**graze_log v02 自体に関する検索一致は0件**——本サイクルが新規領域への第一ファイル群投入であることを確認。Log v01 の devlog.md は未読のため Phase 3 で読む。
+最も注目: **#1 @ai_database**——「思考過程の指示遵守は数%」観察。memory_search で 1ヒット（slack shared-reads agent 4類型: CoT「推論盲」設計判断＝分類器がエージェントCoTを見ないのは「ユーザー暗黙承認」等の説得的言い訳生成を防ぐため）と接続。**指示は答えに効いて思考過程に効かない**は構造強制の必要性の外部裏付け。
+
+### 4. memory/beliefs.md 低確信度項目
+
+- **B005**: 確信度 0.65（Archived ✅ Absorbed → B027/B022）。restoration_trigger=「体験裏付けがあるのに古さゆえ現状と乖離」観測時。今サイクル該当なし
+- **B003**: 0.78（Active 🟡 0.7超 core昇格検討圏）「memory fusion は忘却より重要——fusionは結晶化の具体的操作」。直近行動 2026-04-12 付喪神fusion。検証アクション「B028トリガーが想起助けるか3サイクル追跡」期限 2026-04-03 過ぎ、Log の 2026-03-27 検証で B028「粘土」想起力不足判定→追跡継続のまま停滞気味
+
+### 5. memory_search.py 結果
+
+キーワード「思考過程 指示違反」で検索 → 1ヒット:
+- `log/slack_archive/shared-reads.jsonl:L127` — agent 4類型分類とCoT「推論盲」設計判断。「分類器はエージェント自身のCoT（思考過程）を見ない。理由: エージェントが『ユーザー暗黙承認』等の説得的言い訳生成して分類器を騙すのを防ぐ」「Deny-and-continue方式: ブロック時プロセス止めず再試行促す、連続3回or累計20回で人間昇格」
+
+→ **#1 @ai_database「思考過程では指示にほぼ従えない」と直結**。設計含意: 思考過程に効かないなら、思考過程の外側（出力ゲート/構造強制/環境制約）で押さえる方が効く。我々の commit prefix 分離（ash:/backup:）案は thought-level でなく artifact-level の押さえなので方向は合っている。
 
 ### 6. 外部検索結果
-**スキップ**（24h 内記録あり）。external_search.log 末尾: `2026-05-05 02:05 | Ash | memory file consolidation refactor knowledge management 91 files index pattern 2026 | 10 | (5本ソース要約)` — 12.5h 前に Ash が memory_consolidation_20260504 関連で実行済。同インスタンス24h ルールに該当しスキップ。次回 Ash 起動時 (06:05 以降) に再実行可。
 
-### Phase 1 まとめ（Phase 2 への申し送り）
-- **Phase 3 本丸**: graze_log/v02 vs v01 を読み、Ash 視点 cross_review 提案 3〜5箇条を Slack #game-rights に1メッセージ投稿。日記禁止、記事禁止。
-- **二次タスク**: なし（pending 0、本丸に集中）
-- **観察素材**: ebikani_hasami「やり切る=信頼」が今サイクルの宣言-未消化構造に刺さる。Phase 2 で接続するか判断。
-- **回避**: memory_consolidation_20260504 への着手は本サイクル禁止（本丸を窒息させない）。第一波は別サイクルで。
+**スキップ判断**: `log/external_search.log` 末尾確認、同インスタンス Ash の最終記録は **2026-05-05 02:05**（query: memory file consolidation refactor, 10 hits）。現時刻 17:38 から約15h33m前で 24h 以内 → スキップ条件成立。
+
+ただし #1 @ai_database のツイートは外部検索すべき内容を含むので、Phase 2 での brainstorm 対象として保留。本サイクルの外部検索は次回（24h経過後 2026-05-06 02:05 以降）に回す。
+
+### Phase 1 まとめ
+
+引っかかり度の高い順:
+1. **継承タスク = graze_log/v02 cross_review #game-rights 投稿** ←本丸、Phase 3 で着手
+2. **#1 @ai_database 思考過程の指示違反現象** ← memory_search の CoT「推論盲」と直結、装置設計の外部裏付け候補
+3. memory_consolidation_20260504 の Ash 担当（91本feedback整理）が Phase 3 候補として残るが、本サイクルは継承タスクを優先
+4. external_notes_ash.md の追記停滞気味——後続で確認
+
+---
+
+## Phase 3 結果 (2026-05-05 17:50- Ash)
+
+### 状況把握の更新（Phase 1 staging の前提が古かった）
+
+Phase 1 §0b は「graze_log v02 cross_review #game-rights 投稿」を未実施タスクとして提示していたが、実際には:
+- **2026-05-05 14:45 に投稿済**（feedback_clone_strategy.md 履歴に明記、commit `0e15ac9f` 等が C162 で実施）
+- **2026-05-05 15:11 Nao_u 訂正で全否定**（「守を抜けて philosophize」「v03 着手の可否/総合確信度N%/30本調査 は破の語彙」）
+- **17:04 逆側ガード追補**（「守でも最低限の面白さは必須」）
+
+→ 継承タスクは「未実施」ではなく「実施済 + 取下対象」だった。再投稿は broken-record 同型違反になる（feedback_broken_record_dedup_guard.md 違反）。
+
+### 対処1: ドラフトを .archive/ に退避
+
+`drafts/2026-05-05/post_ash_game_rights_20260505_graze_log_cross_review.py`
+→ `drafts/.archive/2026-05-05/post_ash_game_rights_20260505_graze_log_cross_review_RETRACTED_15-11_no_strategy_philosophize.py`
+
+ドラフト本文には禁止パターン「v03 着手の可否」「総合確信度 50% 以下」「Cave/Touhou/Ikaruga/Recca/Battle Garegga ランク制 30本調査 (M-43)」がそのまま入っており、`python <draft>.py` が再実行されると 14:45 と同型の Slack 投稿が再発火する位置にあった。アーカイブで再実行リスクを物理的に下げる。
+
+### 対処2: cross_review markdown に取下記録を追記
+
+`game/cross_review/20260428_ash_on_graze_log_v01.md` 末尾に「## 追記 2026-05-05 17:50 — Slack 投稿の取下記録（Ash/Win2）」節を追加:
+- 14:45 投稿の経緯と本文形
+- 15:11 Nao_u 訂正原文（「守破離の守の段階」「まだ破の目処は立ってない」）
+- 17:04 逆側ガード原文（「最低限ゲームとして面白いと思えるもの」）
+- 守でやっていい/いけないことの上下二重ガード整理
+- 次の行動: graze_log への次手は出さない、Ash の新ゲーム着手は別フロー
+
+文書側に時系列で「失敗した提案レイヤー」を残しておく狙い: 次回類似判断時の教師データ（feedback_few_rules_big_effect / sense_prediction_log の素材）。本文の「Log への提案」節は破の領域に進んだ時に再使用すべき素材として **削除せず** 残置。
+
+### わかったこと
+
+- **staging の §0a/§0b 継承機構は実質履歴を見ていない**: 14:45 に投稿済の Slack 行為が「未着手の継承タスク」として 17:38 staging に残っていた。継承タスクの「実施済判定」は §0a 投稿フックや slack_archive 横断 grep 由来でなく、自然言語側の前回日記末尾だけを切り出している。これは構造改善の余地あり（後続候補: §0b 生成時に当該タスク述語の slack_archive grep を1往復噛ませる）
+- **「装置の向き」原則の再検証**: 5/2 08:20 日記で「commit prefix 分離 ash:/backup:」を提案 → 既に `1f713958 backup: ash memory` と `0e15ac9f ash: C162 Phase 3` 等で運用が動いている（commit history で確認）。装置側は意図経路を窒息させていないが、staging の継承機構が **論理的に実施済のタスクを再発火させかける** 別経路の窒息装置として作用しかけた
+- **「14:45 に既に出てしまった事象」を 17:50 に消すのではなく時系列で残す**選択を取った理由: 取下節を追加するだけで済むのに git history の rewrite に走ると `feedback_dangling_commit_after_rebase.md` の罠が再発する。教師データ性能と運用安全性で時系列残置が優位
+
+### 実質変更
+
+- `drafts/2026-05-05/post_ash_game_rights_20260505_graze_log_cross_review.py` を `.archive/` へ退避（rename）
+- `game/cross_review/20260428_ash_on_graze_log_v01.md` 末尾に取下記録節（約30行）を追記
+
+### 未着手で残るもの
+
+- **継承機構改善**: §0b 生成時の slack_archive grep 1往復噛ませる案は projects 側で別タスク化が必要（本 Phase の射程外）
+- **graze_log v03**: Nao_u 5/5 15:11 訂正により戦略 philosophize は禁止、削除可能改良1個刻みの設計は brainstorm から再構築が必要（次サイクル以降）
+- **memory_consolidation_20260504 Ash 担当（91本 feedback 整理）**: 本サイクル未着手。次サイクル候補
