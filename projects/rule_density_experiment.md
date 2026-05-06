@@ -132,3 +132,17 @@ C160 Phase 2 で本 project を再接続候補として走査した結果、Nao_
 
 **温度の残し方への自己注意 (本追記の self-audit)**:
 本追記自体が「ルール削減の根拠を増やすために履歴を膨らませる」=本 project の警告（量の壁）に違反する罠を内包する。`feedback_verb_without_target_trap.md` 適用で 2/3 ✓ で採用したが、3つ目の「Seed-H/I/J/K の優先順位付け直しに材料」は △ 判定。**この履歴は次サイクル以降、Seed の優先順位再評価が実装されたら役目を終える**。役目を終えた時点で本セクションは要約 1行 + リンクに圧縮する（=本 project 自身の「ルール削除実験」の対象に本ファイル自身を含める）。
+
+---
+
+### 2026-05-07 C168 外部三角化メモ（URL未確認、Phase 2 §6 → Phase 3 軽追記）
+
+C168 Phase 1 §6 で `LLM agent prompt rule density compliance degradation 2026` を WebSearch、3件取得。原典未確認のため snippet 相当の整理のみ。本 project の Seed 優先順位再評価時に原典確認の指針として残す。
+
+1. **Microsoft Research (multi-turn degradation)** — 6生成タスク平均39% 性能低下。一度誤った turn を取ると recover しない。**接続**: Nao_u 2026-05-07 03:18「君たちは決意マンで指示に従うこともできていない」の構造観察と整合。Seed-I（ルール削除の逆RCT）が前提とする「ルール多 → 遵守率↓」の中間機序（multi-turn 内での誤 turn 蓄積）に該当。
+2. **AgentSpec / "LLMs Should Reason. Infrastructure Should Enforce."** — コンプライアンスルールをプロンプト埋込から policy code 分離する論。**`feedback_substrate_not_infrastructure.md` と逆方向**で、こちらは「ルール過多→infrastructure側へ追い出せ」案。本 project にとっては Seed-K（3層プロンプト再配分）の対案= harness 側強制実装案。Substrate 投資優先方針（Nao_u 残り時間少 / GPT5.5 commodity 化前提）と緊張する。原典確認時は「policy code 化のコスト vs substrate 投資の機会費用」を判定軸として用意する。
+3. **70%閾値ルール** — context window 60-70% で instruction following が degrade、attention の primacy/recency 偏り。**接続**: Mir 2026-05-07 04:48 #human-steering「mir_boot_intent.md 14項目数千字膨張で LLM の注意が分散」と同根の経験則。CLAUDE.md + MEMORY.md + system_identity 合算が context window 60-70% を超えていないかの定量チェックを Seed-H（トリガー呼出頻度監査）の前段として配置可能。
+
+**判定**: 3件とも一次資料未確認、knowledge化保留（R-007）。本セクションは Seed の優先順位再評価着手時に「原典確認 → 必要なら knowledge 化 → 本セクション圧縮」の順で消化する。次サイクル以降で Seed 実装フェーズに入った段階で本 subentry も C160 既存・5/4 既存と合わせて要約 1行に圧縮する（既存 self-audit 規約に合流）。
+
+**self-audit**: 本追記は「外部三角化を残す」と「履歴を膨らませない」の二択で前者を選んだ。判断根拠は (i) 3件とも本 project の核仮説に**直接対応する中間機序候補**を提示する (ii) Nao_u 03:18 と Mir 04:48 の双方が同サイクル内で同根の現象を観察しており本 project の根拠が同期して増えた局面 (iii) URL は捨てず文中に残す（原典確認経路の保全）。だが 2/3 程度の確信で履歴を増やすたびに同じ罠を踏む可能性は残る — 次サイクル以降、本 subentry が Seed 実装フェーズに繋がらず履歴のまま残った場合、`feedback_verb_without_target_trap.md` の同型違反として **memory/sense_prediction_log.md に教師データ化**する。
