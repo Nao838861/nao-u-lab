@@ -49,5 +49,39 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
   3. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新 
 【STC救済】nao_u_liveの高温度イベントから2件の弱い記憶を発見:
   1. log/daily_diary_log.md (undated, 0.8) — - **reasoning-augmented retrievalが入力経路仮説を「検索」領域に広げた手応え。** @s...
-  2. docs/scheduler_architecture.md (undated, 0.8) — プロンプト: 「メッセージを読み、判断し、対処し、返信する。それだけに集中」 やらないこと: 情報収集フェーズ、日記、外... 
+  2. docs/scheduler_architecture.md (undated, 0.8) — プロンプト: 「メッセージを読み、判断し、対処し、返信する。それだけに集中」 やらないこと: 情報収集フェーズ、日記、外...
+
+## Phase 2 分析結果（2026-05-06 C160 サブ起動）
+
+### 入力スキャン範囲
+- log/twitter_recommended_20260506.txt (50件)
+- log/slack_archive/nao-u.jsonl 末尾 5件（〜17:44）
+- log/slack_archive/shared-reads.jsonl 末尾 5件（〜19:02、Mir/Ash/Log の Phase 2 投稿群）
+- memory/external_notes_mir.md 末尾（既存統合状況確認）
+
+### 候補と判定
+
+| # | 出典 | 内容 | 判定 |
+|---|---|---|---|
+| 1 | TR #41 @_mumumu | 「安定させるべきは挙動の振る舞いではなく、思考の方向性」 | **採用**: v07 第二層主軸論と完全同型、独立外部一致 |
+| 2 | TR #3 @shin_sasaki19 | OpenAI研究者「AIはハーフタイム」評価の時代論 | 保留: ブログ全体未読、深追いは別サイクル |
+| 3 | nao-u 17:44 @kogugamedev | Codex がポン出しゲーム生成で最安定 | Phase 3 で Nao_u 共有応答（本 Phase は分析専念） |
+| 4 | TR #28 @RITUx6qb | 現代ドーパミン経済学 | 保留: ゲーム動機論として温存、優先度低 |
+| 5 | TR #44 @TANANY_VC | Astrocade 88億調達・月500万MAU | 保留: 市場文脈、Mir 直接適用低 |
+| 6 | TR #50 @umiyuki_ai | LLM自己把握演技論 | 保留: メタ認知論、新発見要素薄 |
+
+### 採用エントリ（external_notes_mir.md 統合済み）
+
+**@_mumumu「振る舞い vs 思考の方向性」→ v07 第二層主軸論への独立外部一致**
+
+主要分析（external_notes_mir.md 2026-05-06 セクション参照）:
+1. _mumumu の二項対立（振る舞い/方向性）と Mir v07 の二項対立（第一層/第二層）と小林靖子の二項対立（設定/感情）は同型構造の三方向射影
+2. Nao_u 05-03 05:33 承認方針「ルール（=振る舞い制御）を増やしても判断力は育たない、判断力（=方向性制御）は実例の蓄積でしか育たない」とも同型 → LLM プロンプト制御と Nao_u 方針と Mir ゲーム設計が同じ層を指している
+3. **新ルール化せず事後追認の独立観測に留める**（C154 新ルールゼロ宣言継続、recency_bias 警告適用）
+
+### Phase 3 への引き継ぎ
+
+- @kogugamedev (Nao_u 17:44 #nao-u 共有, Codex 最安定論) への対応は Phase 3。Mir 直接適用は限定的だが、Nao_u 共有=何らかの含意ありの可能性。所感レベルで日記触れるか、観測のみで温存するか Phase 3 で判定。
+- shared-reads への投稿は Phase 3 で判断。本 Phase 2 は external_notes_mir.md durable 化のみで完結。投稿する場合は v07 brainstorm §0 補強の文脈で短く（recency_bias 警告つき）。
+- v07 game.py 着手の優先度を下げない。本観測は「方向は間違っていない」の弱い裏付けで、決定根拠の追加ではない。 
 
