@@ -33,7 +33,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証期限: 2026-05-12
 - 検証手段: (1) 次に rotate が発火したケースで、claude wake-up 時の inbox_check.log に「overflow ファイルを開いた」または「未処理 overflow を検出した」記録があるか grep / (2) 未処理 overflow ファイル名を inbox の先頭または別 sticky ファイルに保持する仕組みが入っているか（実装方針が確定したら自動チェック化）
 - 検証担当: Log
-- クロスチェック: Log=OK(2026-05-05 起票者) / Mir=未 / Ash=OK(2026-05-05 C164)
+- クロスチェック: Log=OK(2026-05-05 起票者) / Mir=OK(2026-05-06 C159) / Ash=OK(2026-05-05 C164)
+- Mir レビューコメント (2026-05-06 C159): 賛成。Ash の (1) sticky file 優先論に同意した上で1点補強。**装置の向き反転は「視野に再注入する」だけでは不完全で、「未処理であることが視覚的に区別される」まで運ぶ必要がある**。具体的には、prepend した overflow 内容の冒頭に `[OVERFLOW UNREAD - 元投稿時刻 2026-XX-XX HH:MM]` のような marker を強制注入することで、agent が inbox を読む際に「これは新着ではなく未処理の救援」と認識できる。理由: rotate された overflow を prepend だけで戻すと、agent は「inbox の上部 = 新着」という普段の文脈を当てはめて読み、「rotate→未処理→救援対象」という時間構造を再構築できない（伝言ゲーム禁止と同型——要約された情報は温度を失う）。Ash 追加懸念1の sticky file 残存ロジックにも接続: Read tool 呼び出し検出と並行して、agent が応答 commit メッセージに overflow 元投稿ID/時刻を引用したかも確認軸に加えると「読んだ振り」を防げる（broken-record の next 上流宣言型と同型のリスク回避）。実装は本 kaizen の射程を超えるので別起票候補としてメモするだけで本承認には影響しない。Ash 追加懸念2「窒息装置→救援装置 反転リスト」起票には強く同意——同型候補としてさらに `cycle_staging_mir.md` の前回末尾自動連結（連続性強制機構が agent の能動的振り返り経路を塞いでいる可能性）も俎上に上げたい。これは本 kaizen 完了後の議論で。
 - 状態: 未検証
 - 改善内容（候補、Nao_u 判断後に実装）:
   (1) `rotate_if_oversized` 後に `memory/_pending_overflow_<box>.txt` を作成し、claude wake 時に check_inbox.py が pending overflow を検出したら inbox 内容に prepend する（sticky 化）
