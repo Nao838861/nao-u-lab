@@ -92,6 +92,13 @@ M-39（feedback_predict_before_human_play）との関係:
 - 完成校正の担当は、その完成ゲームを作った主体が主導（外部からの校正案は見当違いになりやすい）
 - brick_log v05 の headless_check.js は「未完成ゲームの数値整合確認」用途で書かれており、校正テンプレートとしては使えない（同型の罠）
 
+**校正基準ゲーム = `game/shot_log/v01`（Nao_u 2026-05-07 02:59 #game-rights 確定）**:
+- Log制作、インターネットランキング稼働、外部プレイヤーが実際にランクインしている = 現時点で唯一「一定の面白さ」に到達して外部に出せた完成ゲーム
+- 「ヘッドレスで評価する価値のあるゲームは今のところこれだけ」（Nao_u 原文）
+- 既存の `shot_log/v01/headless.py` が完成済みゲーム上の挙動を取れる前提で書かれている = 校正テンプレートの第一候補
+- **未完成ゲーム（avoid_log / brick_log / graze_log 等）にheadlessを書く前に、まず shot_log/v01 で「指標が何を捉えて何を捉えないか」を確定させる**
+- 校正主導は Log（shot_log制作主体）。Ash/Mir からの校正案・指標提案は「見当違いになりやすい」前提で慎重に出す
+
 # 関連
 - feedback_predict_before_human_play.md (M-39) — 直下の下流ゲート（予測責任）
 - feedback_critical_evaluation_before_implement.md — 着手前の批判評価
