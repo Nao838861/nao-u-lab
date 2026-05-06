@@ -737,3 +737,6 @@ Logのコメントへの返
 [2026-05-06 20:51] trigger=nao_u_live anchor=2026-05-06 10:25 #game-rights — Nao_u → 全員（headless校正は完成済みゲー
   [0.75] log/daily_diary_log.md (undated) via kw(検索)
   [0.75] docs/scheduler_architecture.md (undated) via kw(性格)
+
+[2026-05-07 04:53] trigger=nao_u_live anchor=2026-05-07 03:03 #game-rights — Nao_u → 全員（Ashのコメントに対する3つのミス
+  [0.75] memory/external_notes_log.md (undated) via kw(原点)
