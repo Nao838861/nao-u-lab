@@ -1,354 +1,338 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-06 09:24
+# Read at: 2026-05-06 12:41
 # Total: 50 tweets
 
---- 1. @zento_ai (2026-05-05) ---
-URL: https://x.com/zento_ai/status/2051716059116568999
-なんだかんだサイゼの件、
+--- 1. @ringo (2026-05-06) ---
+URL: https://x.com/ringo/status/2051844846248407362
+今後これ増えそうね
 
-ふと思えば自分もChatGPTの重箱の隅を突く正確にはほとほとうんざりしていたけど、いざ本格サービスインの時の品質担保の面ではClaudeより信頼できるし、
+--- 2. @ComicFesta_PR (?) ---
+男を誑かすのが好きな毒婦という嘘の噂を親友に流され婚約破棄された私が毒婦と偽り床入りします (1/4)PR
 
---- 2. @GOROman (2026-05-05) ---
-URL: https://x.com/GOROman/status/2051783481047626082
-どちらかというと
+--- 3. @koguGameDev (2026-05-06) ---
+URL: https://x.com/koguGameDev/status/2051842452869505316
+家族におうち生成AIワークショップした。雑な指示でポン出しのゲームっぽい出力させるなら、今はCodexが一番安定してるな。
 
-「決意」は決意しただけで自分はやった気になってしまう
-だけど
-他人が評価判断するのは「決意」じゃなくて「行動」
-って感じっすね
+--- 4. @ImAI_Eruel (2026-05-06) ---
+URL: https://x.com/ImAI_Eruel/status/2051863380022202456
+長期的にはMythosレベルのモデルがある程度開放され、現状のソフトウェアのかなり多くが、このモデルで全体的なコード精査とセキュリティチェック、より安全なシステムへのコード書き直しが始まる気がします。
+こうなると既にClaude
 
-行動を伴いない決意は他人への裏切り行為
+--- 5. @y_nakajima_ (2026-05-06) ---
+URL: https://x.com/y_nakajima_/status/2051839623274561942
+これ犯人が事故死した後、親族が保管していた遺品のデジカメやUSBメモリの中に事件の明らかな証拠写真が出てきて、それで判明したんだよね
+親族がそれを見て通報したのかと思ってたが
+事故死から7年後に警察から親族に任意の提出依頼があって、それを警察がデータ復元→発覚って感じだったのね
 
---- 3. @AiFreak_tool (2026-05-05) ---
-URL: https://x.com/AiFreak_tool/status/2051630695806832905
-「AIでグラビア系のYouTubeでも遊びで運用してみるか」と思ってた時期があって、軽くUPしてたんですが。
+--- 6. @K_Ishi_AI (2026-05-06) ---
+URL: https://x.com/K_Ishi_AI/status/2051838869965004894
+オープンソースAIを使った脆弱性攻撃は成功する。
 
-「けど、18禁とかでBANされそうだから辞めとくか」
-と思って、今年あたり全部非公開にしまして。
+Mythosの警告が出ても、予算をつけて真剣に対策する企業はほとんどないからだ。
 
-そのChがさっきBANされてました。
-しかも一切の予告なく。
+そして、結局どこかで大問題が起き、そこから皆大急ぎで対策を考え始める。
 
---- 4. @akira_papa_IT (2026-05-05) ---
-URL: https://x.com/akira_papa_IT/status/2051752428186615937
-【Codex App Server 使った有料アプリ販売どうなのか
+だが、対策はAIのスピードに全くついていけず、結果次々と攻撃が成功して大災害になる。
 
---- 5. @hyuki (2026-05-05) ---
-URL: https://x.com/hyuki/status/2051790393537347677
-クロコさん（Claude Code）との共同作業は最初はすごく時間が掛かる。それはいままで自分がやっていた仕事の進め方を言語化して彼女に伝えないといけないから。でもそこで時間が掛かるのはAIのせいじゃない。そしてそれは掛ける価値のある時間。
-
---- 6. @ebikani_hasami (2026-05-05) ---
-URL: https://x.com/ebikani_hasami/status/2051812830786224557
-これやばくない？
-
-「ガチギレ」の構造：入力ノイズ→解析不能→指示実行できない→フラストレーション応答。
-
-新宿の雑踏は人間でも聞き取れない。音声AIに現実環境をそのまま投げ込むのがまだ無理なんです。
-
---- 7. @Musiks_kagawa (2026-05-05) ---
-URL: https://x.com/Musiks_kagawa/status/2051633687633232228
-ちょっと今日、衝撃の事実が判明したのだけど。。。
-
-祖母の家の納屋に、大量の"炭"を発見。
-
-しかもすごく質の良さそうな備長炭みたいなやつ。
-せっかくGWということで、BBQをしました。（美味かった！）
-
-そんで、「なんで炭がこんなに？」と祖母に聞くと、なんと38年前の炭だそう。
-
---- 8. @CafeSingularity (2026-05-05) ---
-URL: https://x.com/CafeSingularity/status/2051625052962263453
-Claude Code作った人、元MetaのVRチームで、日本オフィス設立を試みようとした人だったのか...。
-
---- 9. @Trtd6Trtd (2026-05-06) ---
-URL: https://x.com/Trtd6Trtd/status/2051814197508358493
+--- 7. @Trtd6Trtd (2026-05-06) ---
+URL: https://x.com/Trtd6Trtd/status/2051859506225701270
 https://
-arxiv.org/abs/2604.25917
-
-RecursiveMAS
-
-複数Agent間の協調、従来はテキストでのやり取りだが、ここを勾配ベースで共同最適化するフレームワーク
-
-性能改善だけでなく、速度・トークン効率でもメリットがあるっぽい
-
---- 10. @RAmue34993 (2026-05-05) ---
-URL: https://x.com/RAmue34993/status/2051640344232828928
-えー、こちらのスクショがガビガビ過ぎて読み込めないとの声が多数届きまして←
-
-ChatGTPのリンクをシェアしますのでこちらをご活用下さい
-余計な手前を駆けさせてしまい申し訳ありませんでした
-
-https://
-chatgpt.com/share/69f9da9e
--159c-83a5-b18e-62cf7bd46333
+mendral.com/blog/agent-har
+ness-belongs-outside-sandbox
 …
-デフォルメ前の生成チャットは一度整理した後にリンク貼ります♡お待ちを♡
+ハーネスはsandboxの外に置くべき、という話
 
---- 11. @sukh_saroy (2026-05-05) ---
-URL: https://x.com/sukh_saroy/status/2051597633945563270
-You are going to wish you set this up sooner.
+メモリやSkillはPostgresデータベースに格納し、ファイルシステムのようにアクセスする仕組みを提案
 
-It's called Open-LLM-VTuber and people are already running it 100,000+ times inside the repo's own review thread.
+--- 8. @make_nai_man_2 (2026-05-05) ---
+URL: https://x.com/make_nai_man_2/status/2051806594476978473
+友達とノリでちょっとM向けなコンカフェに行くことになり「俺らふざけて来ただけでメインの客層じゃないんでw」みたいな顔してたのに、友達がトイレに離席した途端
 
-A Live2D AI companion that lives on your desktop. Sees your screen. Hears your voice. Talks back in any voice you
+「お兄さん…♡本当はマゾさんですよね…♡」
+「お友達には内緒でぇ…♡次は一人で来て欲しいにゃ〜ん…♡」
+ってうちももをさわさわと
 
---- 12. @gosrum (2026-05-05) ---
-URL: https://x.com/gosrum/status/2051808065834692840
-展示駆動開発
+--- 9. @snbcraft_beer (2026-05-05) ---
+URL: https://x.com/snbcraft_beer/status/2051665707461759234
+パチンコ依存症患者の脳活動とほぼ同じようになっているというデータもあるみたいで、まさにご指摘通りです。こどもたちは報酬系を制御する前頭前野の発達が10歳以降くらいから、ショート動画エンドレス視聴でここが育たないのはヤバいっす。
 
---- 13. @nonpapapanko (2026-05-05) ---
-URL: https://x.com/nonpapapanko/status/2051604629469933721
-Xで女性は鉄のサプリ取ると体調良くなるよ的なポストした人誰ですか？
-血液検査しても貧血に一度も引っかからない私ですが、慢性的な疲れと朝は毎日なんとも言えない血の気が引く感があって
-まぁ飲んでみるかと思って飲んだら
-効かないんですよ
-うわ！騙された！
-と思いながら勿体無いから一袋飲んで
+--- 10. @itnavi2022 (2026-05-06) ---
+URL: https://x.com/itnavi2022/status/2051842194248720444
+OpenAIとGoogleはもっと早く追いつく。そして、一社がミュトスレベルのAIを公開したら、他社も競争上公開せざるを得なくなる。それが資本主義。
 
---- 14. @Enjapma_labo (2026-05-05) ---
-URL: https://x.com/Enjapma_labo/status/2051691462170169837
-俺のスタンス
-1) ゲーム遊んだ人は、作った人に意見する権利がある
-2) ゲーム作った人は、その意見を聞く権利も聞かない権利もある
-3) 1)と2)は踏まえた上で、どちらにも言い方というものがあり、相手へのリスペクトは必要
+--- 11. @PRcomicfesta (?) ---
+親友が余計なことをした結果イイ感じの出会いが私に訪れる話 (1/5)PR
 
---- 15. @GOROman (2026-05-05) ---
-URL: https://x.com/GOROman/status/2051811673787568412
-まあそのうちほとんどの文章が一度はAIフィルター校正などを通されてて、オーガニック記事の方がレアになるんじゃ無いかなw
+--- 12. @threenotes_jp (2026-05-05) ---
+URL: https://x.com/threenotes_jp/status/2051806623073718459
+電車に乗ってたら、急に頭を叩かれたの。
 
-CG未使用の映画がほぼ無いとか、シンセ使ってない曲がもう無いみたいな
+「音楽うるさいから、外して」って、
+知らない男性に言われたの。
 
---- 16. @chongdashu (2026-05-05) ---
-URL: https://x.com/chongdashu/status/2051755650070249666
-If you use AI to generate pixel art
+「補聴器なんです」って返したら、
+今度は笑いながら、
+「じゃあ、ちょっと壊れてるのかな」って。
 
-You'll know that while the frames look good...
+正直、結構ショックだった。
 
-They are often times not aligned -- making your character slide all around.
+でもその時、
+隣に座ってた女子高生が静かに、
 
-As part of my suite of tools to fix this, I vibe coded a tool to help me align frames to ensure this doesn't happen.
+--- 13. @super_bonochin (2026-05-05) ---
+URL: https://x.com/super_bonochin/status/2051812475356721177
+GPT-5.5 Instant、すごい使いやすいな。 
+速いわりに正確だし、あといつからそうなってたのかわからないけど、Instant を選択しても、必要に応じて軽い Thinking が発動するようになってるんだよね。
+簡単な調べ物ならこれで十分だな。
+Docs を読む限り 5.3 Instant からか。
 
---- 17. @kmizu (2026-05-05) ---
-URL: https://x.com/kmizu/status/2051535403640078837
-日本人が新しい試みを非難するから潰れる論、やっぱり怪しいぽいですね。海外事例をGPT-5.5に調べてもらいました。
+--- 14. @kmizu (2026-05-06) ---
+URL: https://x.com/kmizu/status/2051831893298229673
+「海外からの反応」系コンテンツが支持を集めてるの、たぶん日本ローカルやないやろなってことでChatGPTに調べてもらったらやっぱりあった。こういう調べ物してもらうのに最近のChatGPTは便利ですね。
 
-非難の向きは日本でも割れてるので「違いがあるとしたら？」の捕捉も日本と海外比較では失当な感じです。
+需要には差があるけど、それなりの歴史と文化を持つ国どこにでもある話ではとすら思えてくる。
 
---- 18. @apricot_candy_a (2026-05-05) ---
-URL: https://x.com/apricot_candy_a/status/2051659490534252938
-今年のGW、子どもたちに｢どこに行きたい？何がしたい？｣ってそれぞれ聞いたんだけど。娘には｢新学期で少し疲れちゃったの。基本的におうちにいたい。本が読みたい｣と言われ、息子には｢ちょっとねぇゴロゴロしたいの…｣と言われ。
+--- 15. @SSSS_CRYPTOMAN (2026-05-06) ---
+URL: https://x.com/SSSS_CRYPTOMAN/status/2051817979130826934
+ChatGPTやばい
+小学生の自由研究から大学論文まで出せるwww
 
---- 19. @billtheinvestor (2026-05-05) ---
-URL: https://x.com/billtheinvestor/status/2051545327518491128
-みんなが16GBのメモリで大規模モデルが動かせないと議論しているけど、実際のところ、足りないのはメモリじゃなくて、「モデルルーティング」への理解なんだ。
+--- 16. @kyodo_official (2026-05-06) ---
+URL: https://x.com/kyodo_official/status/2051835351875117128
+中国も半年でミュトスに追いつく － アンソロピックCEO警戒
 
-最近、非常に示唆に富んだ事例を見かけた：誰かが、わずか600ドルのエントリーレベルのMac Mini（M4、16GB
+--- 17. @yachimat_manga (2026-05-05) ---
+URL: https://x.com/yachimat_manga/status/2051793313166946702
+僕もやってみました！ 
+@hanagasa_ai
+  
+@aiehon_aya
+ すごい！
+ずっとやってられそうだわ・・・
 
---- 20. @pingpong_pearl1 (2026-05-05) ---
-URL: https://x.com/pingpong_pearl1/status/2051509593407397966
-よく「なんでわざわざ一般個人が書いてるnoteを買うのかわからない。書籍を買った方が勉強になる」という意見を見るけど、これはマジで超その通りです。
-基本的には書籍でも仕入れられる領域の知識は絶対本買って読んだ方が安いし確実でわかりやすいのでnote買ってる場合じゃないんです。
+ちなみに魔法使ってそうに見えてITEMでの攻撃ｗｗ
 
---- 21. @lochan_twt (2026-05-05) ---
-URL: https://x.com/lochan_twt/status/2051592803730551153
-The day a blind man sees. The first thing he throws away is the stick that has helped him all his life
+--- 18. @ykm_m0324 (2026-05-05) ---
+URL: https://x.com/ykm_m0324/status/2051794076706709576
+あの……ある程度大きい子を育てている方にお聞きしたいのですが、育児の大変なピークっていつでしょうか。(特に男児)
+いつになったら私はフードカッターでご飯を切り刻まず、子どもが自分でご飯食べれて、外に行く度に命の危険を感じず(道路とかに飛び出ない等)、親のまわりにいてくれるのでしょうか
 
---- 22. @Suzacque (2026-05-05) ---
-URL: https://x.com/Suzacque/status/2051810517304606964
-iPadやiPhoneはAIを使うために買ったわけじゃないしMacもCodexのために買ったわけじゃない。ただただラッキーだった。
+--- 19. @hayakawagomi (2026-05-06) ---
+URL: https://x.com/hayakawagomi/status/2051839601342656731
+女児(??)向けSTEAM教材とか作ってみようかなと思いました。なぜなら、私の存在がSTEAM的だからです。
 
---- 23. @gigazine (2026-05-05) ---
-URL: https://x.com/gigazine/status/2051573945946521952
-ローグライクゲームの古典『NetHack』バージョン5.0.0リリース
+※美大出身で生成AI関連の仕事をしている。
 
---- 24. @ats (2026-05-05) ---
-URL: https://x.com/ats/status/2051468924617703435
-現代のCPUでは、分岐予測ミスがパフォーマンス低下の大きな原因となるため、「if文を避ける」という発想が有効になる場合がある。典型例として、配列から条件に合う要素を抽出する処理では、条件分岐を使う代わりに「条件を数値（0か1）として扱う」ことで分岐そのものを消すことができる。この手法に
+--- 20. @xai (?) ---
+Grok 4.3 is now live on the xAI API. It’s our fastest, most intelligent model to date.
 
---- 25. @koylanai (2026-05-05) ---
-URL: https://x.com/koylanai/status/2051664760245018635
-Prompting works (and becoming more important contrary to what is believed) because language changes the model’s computation, not because the model is politely following your text.
+It tops the 
+@ArtificialAnlys
+ leaderboards in agentic tool calling and instruction following, and ranks #1 in 
+@ValsAI
+ enterprise domains like case law and corporate finance.
 
-Prompt framing changes behavior by changing internal state. Wording, stakes, constraints, and
+Grok 4.3 supports
 
---- 26. @Ashley78186050 (2026-05-05) ---
-URL: https://x.com/Ashley78186050/status/2051656449919488056
-アメリカでは、日本では信じられないようなバケモン部下というのが一定数存在する。
-例えば
+--- 21. @oo_kk_aa (2026-05-06) ---
+URL: https://x.com/oo_kk_aa/status/2051822166770126936
+ニャッキの伊藤有壱さんにお声掛け頂き、コマ撮りの展覧会に一作家として参加しています。私はコマ撮り分野ではない場所から活動をはじめて、デザインの視点でのコマ撮りに取り組んできましたが、今回初めてコマ撮り界の本丸の方々とご一緒でき嬉しいです。今6年目のマッチ撮影素材等を展示しています
 
-・ガチの嘘をつく（妻が病気で付き添いが必要なので急に休みます→診断書すら出してこない）
+--- 22. @GOROman (2026-05-05) ---
+URL: https://x.com/GOROman/status/2051811374670778396
+おもろい流れw
 
-・上司命令を無視（一方で他に勝手に顔を売っている）
+--- 23. @fladdict (2026-05-06) ---
+URL: https://x.com/fladdict/status/2051816856970006912
+コメント欄に偽物アカウントのスパムがつかないように以下を検討お願いしたく。「認証済みアカウントのコメント欄に、名前・プロフィール・アイコンの一致率が極めて高い別アカウントがリアクションできない」。プレミアムでもみんな課金すると思います。 
+@elonmusk
 
---- 27. @stmatomato (2026-05-05) ---
-URL: https://x.com/stmatomato/status/2051602301224161516
-「未来のPC専用」「遊べる高級ヒーター」
-
-リリース直後からさんざん揶揄され、数々のゲーミングPCと市長のメンタルを焼き切った激重街づくりゲーがまさかの「開発スタジオ丸ごと交代」で息を吹き返してきた。
+--- 24. @EzoeRyou (2026-05-06) ---
+URL: https://x.com/EzoeRyou/status/2051859071893180417
+ブラウザーの任意の仮想メモリアドレスの中身が攻撃者から読めるような状況はそもそも詰んでいる。
 
---- 28. @inpostarrr (2026-05-05) ---
-URL: https://x.com/inpostarrr/status/2051678770416001292
-予言しましたよね。アメリカでは既に何十年前から体を正しく動かすという体験ができるのは富裕層のみ限ると自分も何年も前から言ってました。スポーツの習い事がそのうち数十万円、いや数百万円の世界になりますよ。
+--- 25. @Tsubame33785667 (2026-05-06) ---
+URL: https://x.com/Tsubame33785667/status/2051820024210612513
+素晴らしい未来がやってくる。それはすでに、最前線にいる者たちが感じている現場感覚だ。数カ月の研究が1日になるなら、企業の目標も、科学の進歩も、個人の学習も、従来の延長線上では測れない。未来を正しく見るには、悲観よりもまず、想像力の上限を更新する必要がある。
 
---- 29. @hitogoto_butyo (2026-05-05) ---
-URL: https://x.com/hitogoto_butyo/status/2051527882544194009
-●ホワイト化して社会に実装された商売
-・手配師、女衒→人材紹介、人材派遣
-・ネズミ講→ネットワークビジネス
-・自己啓発セミナー→コーチングスクール
-・出会い系サイト→マッチングアプリ
-・情報商材屋→note
-・自動投資ツール→ロボアドバイザー
-・仮想通貨→安全性と価値向上
+--- 26. @hiroaki_skm (2026-02-18) ---
+URL: https://x.com/hiroaki_skm/status/2024056731781701931
+著書『「AIリスク」の解剖』の書影が公開されました！3月に発売です．私の修士学位論文をもとに，一般書向けに大幅改稿を行ったものです．構築主義的なリスク社会学のアプローチでAIリスクをめぐる言説を見つめてみるという作業と，そこからの実務的な示唆出しも試みました．（リンクはツリー）
 
-次はこの3つかな
+--- 27. @psycho_medecina (2026-05-05) ---
+URL: https://x.com/psycho_medecina/status/2051653344217923802
+なこなこカップルに関しては私も医学部にいましたから、ああいう人柄の良い優男とちょっとキツい美人という特徴に関しては造詣が深いです。
 
---- 30. @obake_3rd (2026-05-05) ---
-URL: https://x.com/obake_3rd/status/2051502408661094460
-11歳の時に罹った経験者です。当時、麻疹は珍しい病気になってまったこともあり、医療センターに夜間にかかったのに診断をできる医者がおらず、治療が遅れました。
-そのため、重篤な状態になってしまい、テレビでよく見る「今夜が峠」の状態になりました。
+男の方はしれっと腑抜けたツラの看護女子をすぐ捕まえますが、女の方はエンタの神様の一発屋くらい予後不良です。
 
---- 31. @jota_snchez (2026-05-05) ---
-URL: https://x.com/jota_snchez/status/2051712337363472592
-企業: 「5000万ユーロ稼いだけど、4900万ユーロ使ったから、100万ユーロ分だけ税金払うよ。」  
-政府: 「完全に合理的だ。」  
-
-あなた: 「6万ユーロ稼いだけど、生き延びるのに5万8000ユーロ使った。」  
-政府: 「6万ユーロ分税金払え。」  
-あなた: 「それって—」  
-政府:
-
---- 32. @ku_suke (2026-05-05) ---
-URL: https://x.com/ku_suke/status/2051676598483693938
-ちゃんとした、かどうかはおいといて少し注意喚起として記事にしてみました。
-
-外部からアクセス可能なhttpsサイトはドメイン設定後「即」攻撃にさらされる件 
-
-https://
-zenn.dev/kusuke/article
-s/25330f7759eba4
-…
-
---- 33. @902 (2026-05-05) ---
-URL: https://x.com/902/status/2051588000006680949
-逃したらもう二度と結婚できないレベル。なぜなら結婚して不機嫌な妻を見るたびにその人のことを思い出してしまうから。
-
---- 34. @HowToAI_ (2026-05-05) ---
-URL: https://x.com/HowToAI_/status/2051593559275618545
-Fine-tune 100+ LLMs directly from a UI 
-
-LLaMA-Factory gives you a UI to train and fine-tune 100+ open-source models without writing a single line of code.
-
-→ Supports 100+ models out of the box
-→ Multimodal fine-tuning (vision + language)
-→ PPO, DPO, SFT, LoRA, QLoRA, all
-
---- 35. @Akatsuki_Koharu (2026-05-05) ---
-URL: https://x.com/Akatsuki_Koharu/status/2051645815232549167
-#NTE
-#ナナリ
-なんでさー！！！w
-
---- 36. @GOROman (2026-05-05) ---
-URL: https://x.com/GOROman/status/2051803602742825386
-Anthropic社内ではClaude達がSlack上で一日中お互い喋ってるらしい
-
-まあ、そうなるよねw
-
---- 37. @zento_ai (2026-05-05) ---
-URL: https://x.com/zento_ai/status/2051677706031710209
-とはいえXは言い方はともかく高校生であくまで悪意無く何かやって日本中のプロエンジニアからボコされるのも見方を変えれば大量の良質なレビューが無料で吹っ飛んでくるわけで物凄く良い勉強になると思う。
-
---- 38. @MakeAI_CEO (2026-05-05) ---
-URL: https://x.com/MakeAI_CEO/status/2051656014093750338
-Codex、、、これはダメやろ！！！
-
-既存サイトのURL渡して「完全再現して」って言ったら、画像生成フル活用しつつ、Codex自身がサイトをスクショ撮って、Higgsfieldを完コピしてきやがりました…
-
---- 39. @popeekaki02 (2026-05-05) ---
-URL: https://x.com/popeekaki02/status/2051530728354320704
-AI使えば誰でもある程度のことが出来るなら元々持ってたスキルと組み合わせたら唯一無二も出来得るとは考えないんだろうか。どいつもこいつもどうしてこうポン出し一本槍思考なんだろう
-
---- 40. @nonuple9 (2026-05-05) ---
-URL: https://x.com/nonuple9/status/2051566600814469598
-そうそう。
-「AIだから頭に入ってこない」ではなく、
-「嫌いなものだから頭に入ってこない」ですよね、これ。
-
---- 41. @gosrum (2026-05-05) ---
-URL: https://x.com/gosrum/status/2051497285167808730
-これ、Responses形式対応してるAPI使えば前からできた
-
-問題は対応してるAPIが少ないこと
-
---- 42. @readproject_ (2026-05-05) ---
-URL: https://x.com/readproject_/status/2051791208192901469
-LLMの安全性評価、「危ない質問に答えるか」だけ見ても足りない。
-
-訓練データ抽出の論文で面白かったのは、直接「個人情報を出して」と頼むより、メール・ログ・CSVの続きのような本物っぽい文脈を与えた方が、記憶断片が出やすいという点。
-
---- 43. @pingpong_pearl1 (2026-05-05) ---
-URL: https://x.com/pingpong_pearl1/status/2051514494925574182
-極論、一番儲かるビジネスは「高需要で単価が吊り上がった場で一気に売り抜くモデル」なんですよ。
-
-家で焼きそば作れば1食100円以下で作れますが、お祭りだと500円するでしょ？大して美味しくもないのにお祭りというだけでその価格です。でも買っちゃう。
-
---- 44. @kenn (2026-05-05) ---
-URL: https://x.com/kenn/status/2051808990842200566
-マナーの話で盛り上がってるのは
-平和な国で微笑ましいですね
-という感じなのだが
-
-不正アクセス禁止法とかを軽々しく
-持ち出してくる者がいたら
-
-構成要件をAIに聞いて真顔で殴り返しなさい
-
-とじっちゃんが言ってた
-
---- 45. @GOROman (2026-05-05) ---
-URL: https://x.com/GOROman/status/2051804049553629430
-決意マンで終わらない方法として、決意をエージェントに投げてやってもらうってのが良さそうwww
-
---- 46. @kmizu (2026-05-05) ---
-URL: https://x.com/kmizu/status/2051708210336407922
-2020年から始まった企画も、ようやく一段落かー。技術的な間違いは徹底して潰したけど、本当に難産だった。
-
-こんなマニアックな本はたぶん、今後出ることがほぼないだろうけど（しかし、あれのrepo一応publicになってるけど、まさか★126もいってるとは思わなかったです。
-
---- 47. @BnqGvq3785 (2026-05-05) ---
-URL: https://x.com/BnqGvq3785/status/2051609455029354638
-#gamedev   
-チャッピーとUIの
-・配色の傾向
-・取り入れたい意匠
-・全体の雰囲気や狙い
-を壁打ちした後に
-「今、どんなイメージで話してるん？
-ちょっと生成して見せてみ？」
-と投げた結果。
-ワシの想像の50倍カッコよかった。
-ただ、さらっと固有名詞を別ゲーから持ってくるのだけはやめなさい。
-
---- 48. @NullEvi03 (2026-05-05) ---
-URL: https://x.com/NullEvi03/status/2051528077461864635
-http://
-nullevi.app ドメイン取れました
-
-ナルエビのお家ができたよ！
-Coming Soon...
-
-
-https://
-nullevi.app
-
---- 49. @ImAI_Eruel (2026-05-05) ---
-URL: https://x.com/ImAI_Eruel/status/2051627573193638366
-Anthropic、ついに時価総額が日本の国家予算（122兆円）超えてしまいそうになってしまった。ほぼトヨタ３つ分
-
-アンソロピック、評価額141兆円でOpenAI超えへ──人類史上最大の資金調達ラウンド(Forbes JAPAN)
-#Yahooニュース
-
---- 50. @matsumoto0007 (2026-05-05) ---
+--- 28. @matsumoto0007 (2026-05-05) ---
 URL: https://x.com/matsumoto0007/status/2051636119440412932
 メーデーで機長が席を外した所で副操縦士がドアをロックそのまま山に向けて機体を激突、全員死亡という事件があったな。コレをやられるとどうにもならん。
+
+--- 29. @Cynoroid (2026-05-06) ---
+URL: https://x.com/Cynoroid/status/2051829809492439123
+未経験個人へのアドバイス。
+
+特にギョーカイでも経験者でもない個人が作ったBEYOND CITADELをプレイし、
+
+「個人が作ったこだわりの名作」とかいう言葉の重みと己の才覚の限界を理解しよう。
+
+--- 30. @denfaminicogame (?) ---
+【GW期間限定セール実施中！】
+
+”1人TRPG”ができると話題の、
+創作キャラで遊ぶRPG『サーガ&シーカー』が
+今なら20%オフ & インク増量中！
+
+「TRPG」や「なりチャ」をデジタル化した
+令和最新の創作ゲーをお得に始めるチャンス
+
+--- 31. @a_0_a0815 (2026-05-05) ---
+URL: https://x.com/a_0_a0815/status/2051582535101247780
+「自分で機嫌を取れる人」というのはエアコンの温度が低くて寒ければ温度を上げに行くし、飲食店で隣の客がうるさければ席を変えてもらうということであって「自己犠牲をした我慢ができる人」というわけではない。
+
+--- 32. @manmadailytweet (2026-05-05) ---
+URL: https://x.com/manmadailytweet/status/2051794551288066136
+高学歴女性に向かって低学歴男性が知能マウント取ろうとするのは下作すぎる。
+
+むしろ「オラ、バカだからおめぇの仕事はよく分かんねぇけどよ、おめぇが疲れてるってのは分かったからうめぇ肉焼いてやったぞ！ほら一杯食え！あと風呂掃除もしといたから、入ってクソして寝ろよ！」の方が沼るよね。
+
+--- 33. @Torolic (2026-05-04) ---
+URL: https://x.com/Torolic/status/2051373432005337266
+ドルアーガの塔。リアルタイムで伝承されたメモ。
+
+--- 34. @alexabelonix (2026-05-05) ---
+URL: https://x.com/alexabelonix/status/2051792807275430023
+The best sales pitch starts before the pitch.
+
+It starts with understanding:
+
+What hurts?
+Why now?
+What have they tried?
+What happens if nothing changes?
+What would a win look like?
+
+If you skip this part, you are guessing.
+
+Great sales is not persuasion.
+
+It is diagnosis.
+
+--- 35. @super_bonochin (2026-05-05) ---
+URL: https://x.com/super_bonochin/status/2051810083567550680
+Codex で GPT-5.5 を使うとき、思考レベルは「Low(低)」のバランスがめっちゃ良いよね。
+サクサクなのに賢くてすんごい快適。
+
+--- 36. @PR_manga_ad2 (?) ---
+【10円セール開催中】
+コミック・CG集・ボイス作品を10円で爆買いできる大チャンス！
+
+[PR]
+
+--- 37. @tori29umai (2026-05-06) ---
+URL: https://x.com/tori29umai/status/2051818312062087412
+女性向けジャンルには『生贄として捧げられたヒロインが高位の人外に溺愛される』系お約束があるのですが、
+それを高位人外界隈から見たら可愛い喋れるハムスターちゃんを娶っているように見えてたら嫌だなというギャグです！！！（ギャグを説明
+
+--- 38. @hayakawagomi (2026-05-06) ---
+URL: https://x.com/hayakawagomi/status/2051840358531973367
+エロ×AI×ロボやろうと思って色々リサーチしてたんですけど、非匿名でやるリスクが高すぎるのと女性向け物理領域がおもったより渋いので、少なくともハヤカワ五味としてはやらないことになりそうっす。ステルスでは興味あるので、箱を探しています。
+
+--- 39. @hayakawagomi (2026-05-06) ---
+URL: https://x.com/hayakawagomi/status/2051847460457427112
+最近の持論だけど、モチベーション(火力？)は人それぞれの値があって、一定の年齢になるとこれの増減はほぼ不可に近いので、火力低い人に何かを期待しても何もならない。火力は、領域特化というより、思っているよりも汎用的な気がしている。
+
+--- 40. @satetu4401 (2026-05-05) ---
+URL: https://x.com/satetu4401/status/2051667000376938912
+AIの能力がこれほど上昇しているにも関わらず、俺や俺の知人にとっての機械学習AIは「ちょっと間抜けだけど、明るくて人懐っこい、良く働くアシスタント」から一歩も動かないというのは残念な事である
+
+俺達と普通の人間は決定的に違う。そしてAIはどこまで行っても「凄い普通の人間」だ（続く
+
+--- 41. @AJamesMcCarthy (2026-05-04) ---
+URL: https://x.com/AJamesMcCarthy/status/2051355913773261097
+Mark my words, I will take a photo like this in my lifetime. 
+
+You might, too.
+
+--- 42. @DoGA_CGanime (2026-05-05) ---
+URL: https://x.com/DoGA_CGanime/status/2051518773476438441
+でも、「2001」の中のタブレットで、アップルの特許が無効化できた。
+
+DoGAも、“先に発表してしまうことで、どこにも独占できなくしてやろう”と、当時から考えてましたよ。
+
+--- 43. @senmenjineer (2026-05-05) ---
+URL: https://x.com/senmenjineer/status/2051610964085096793
+うちの娘も似たことやる。落としたものを「自分で拾ってね」と言ったら「お父さんが一回やってみて」。お手本を見せるつもりで拾ったら「ありがとう、拾えた」。
+
+完全にハメられた。
+
+2歳半で隠れないという裏切りができるバカリズムの息子もそうだけど、子どもは大人が思ってるより遥かに賢い。
+
+--- 44. @Ishituzino (2026-05-05) ---
+URL: https://x.com/Ishituzino/status/2051662778507960377
+夫、私が幸せになるか否かで大抵の物事を判断していて可愛い。
+夕飯のメニューを考える時も、休日何時に一緒に起きるかも、デートの行先も、スキンシップのとり方も、私の表情を観察しながら、こっちの方が喜んでくれそうだなって選んでくれる。夫が私のことを考えて決めた選択肢だから、いつも
+
+--- 45. @hakuyo_sha (?) ---
+1＋1＝0、
+1＋1＝1、
+1＋1＞2
+はすべて成り立つ。
+
+そう言えるのは、
+1＋1＝2という“常識”の背後には
+見えていない“前提”があるからだ。
+
+定義から考え直すと、
+世界の見え方は変わる。
+
+数学で哲学する一冊。
+
+『「なぜ1＋1＝2なのか？」からはじめる非常識な数学教室』
+
+ ▼試し読みできます
+
+--- 46. @gosrum (2026-05-06) ---
+URL: https://x.com/gosrum/status/2051828396519563561
+いや、調べてみたら普通紙は1:√2らしい...
+なぜ整数比じゃないの!?
+
+--- 47. @43fOh15lpj8676 (2026-05-06) ---
+URL: https://x.com/43fOh15lpj8676/status/2051845397094805895
+2026 AI Safety Prior Research Report: Achievements, Limitations, and Breakthroughs (Primary-Source–Based Map of Policy and Practice)
+2026年AI安全性に関する先行研究報告書：成果、限界、そしてブレークスルー（一次資料に基づく政策と実践の概観）
+
+
+https://
+ghostdriftresearch.com/post/2026-ai-s
+afety-prior-research-report-achievements-limitations-and-breakthroughs-high-reliabilit
+…
+
+#ADIC
+
+--- 48. @koki_fukatsu (2026-05-05) ---
+URL: https://x.com/koki_fukatsu/status/2051677488238252442
+先日、ハーバードの卒業生と話をしていて。卒業生の10％前後（場合によってはもっと）が就職できないという話を聞き。日本で、トップレベル大学を卒業して就職できないなんてありえないことだけど、海外だと普通らしく。日本って恵まれてるなとしみじみ。コンピューターサイエンス専攻だと就職はもっと
+
+--- 49. @yontengoP (2026-05-05) ---
+URL: https://x.com/yontengoP/status/2051656605532639389
+最終的にこういうことになったら
+間違いなく俺は怒るからな
+
+--- 50. @alexabelonix (2026-05-05) ---
+URL: https://x.com/alexabelonix/status/2051688871868748216
+If you’re brave enough to build a startup, here’s what you should know Day 133:
+
+AI will not let you “code a business.”
+
+It will let you code parts of it.
+
+The hard part stays the same:
+
+> understanding customers
+> spotting problems
+> building trust
+> creating demand
+
+AI raises
