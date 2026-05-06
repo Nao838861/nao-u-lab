@@ -3,6 +3,8 @@
 - author: VectifyAI
 - discovered: 2026-04-11
 - discovered_via: Twitter おすすめ (@L_go_mrk)
+- independent_reaches: [04-11 @L_go_mrk, 04-29 OpenKB, 05-05 @HowToAI_ (Nao_u共有)]
+- reshared: 2026-05-06 09:43 Nao_u #nao-u に @alexabelonix の引用RT (https://x.com/alexabelonix/status/2051815835769925768) として再共有 — HowToAI_ の引用連鎖、独立経路としてはカウントせず
 - tags: [RAG, vectorless, document-structure, tree-navigation, reasoning, memory-design, retrieval]
 - concept_nodes: [memory, creation, constraint]
 
