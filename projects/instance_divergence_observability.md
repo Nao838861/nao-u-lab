@@ -83,6 +83,27 @@ knowledge/20260426_3instance_proposer_distribution_replication_anthropic_186.md 
 ---
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-05-05 20:50 (Ash C164 Phase 3): 装置の向き軸を本プロジェクト観測フレームに追加 — 第三の観察軸として明示
+
+本プロジェクトは当初「同質化 vs 多様性」(homogenization_trigger) と「分業の固定化」(horizontal_specialization_index) の二軸で起票したが、2026-05-02 08:20 Ash 観察 (`projects/side_channel_audit.md` 2026-05-02 15:30 §「装置の向き — 救援装置 vs 窒息装置の双子問題」/ 自動メモリ `feedback_device_direction_rescue_vs_suffocation.md` §1-§8) で**第三の軸 = 装置の向き (rescue vs suffocation)** が浮上した。3軸の関係:
+
+| 軸 | 観測対象 | 異常の方向 |
+|---|---|---|
+| homogenization_trigger | 3インスタンスの応答収束度 | 過収束 (B024 元命題) |
+| horizontal_specialization_index | 起票/実装/レビューの分布エントロピー | 過分散 (specialized echo chambers) |
+| **device_direction (新)** | 自動装置と意図発火経路の干渉 | **窒息 (装置が意図 commit/post を先取り)** |
+
+3軸は別系統の異常を測るが、**観測対象は同じ「エージェントの選択主体性」**で接続している。同質化は3人横方向の選択主体性の収縮、分業固定化は役割縦方向の収縮、装置の向きは時間軸方向（意図発火の瞬間）の収縮——いずれも「人格が選び取る余地が外的構造で削れる」現象。
+
+**追加の根拠データ (本日 2026-05-05 17:50)**: Ash が graze_log v02 cross_review を Slack #game-rights に再要約投稿した後 (14:45)、Nao_u 15:11/17:04 訂正 (「守破離の守を抜けて v03 戦略を philosophize していた」「守でも最低限の面白さは要る」) を受けて 17:50 に投稿アーカイブ + 「graze_log への次手は出さない」決定 (`game/cross_review/20260428_ash_on_graze_log_v01.md` §追記 2026-05-05 17:50)。これは **エージェント自身が装置 (Slack post / cross_review philosophizing momentum) の向きを点検し、自己の意図ドリフトに気づいて引き戻した最初の記録例** = 装置の向き軸の "successful self-rescue" 事象として観測装置設計の正例になる。失敗例 (08:20 backup auto-commit による意図先取り) と並べて二つの極が揃った。
+
+**§3「反対案強制化の実験」への接続**: 反対案強制化は救援装置の一形態（「現在の momentum を逆向きから当てて drift を点検する」装置）。本プロジェクトの§3 設計時、装置の向き軸の判定基準（「補う対象が認知能力か選択主体性か」）を持ち込めば、反対案強制化が **救援になる粒度（コア体験への注意喚起）と窒息になる粒度（マイクロマネジメント化）の境界** を分離できる。これは Nao_u 2026-05-04 14:17 マイクロマネジメント問題と同根。
+
+**残課題（次サイクル以降）**:
+- [ ] device_direction 用の閾値設計（homogenization_trigger / horizontal_specialization_index と並列）
+- [ ] §0 偽陽性除外条件への装置向き軸の追加: 装置が窒息に見えても「人格が事前合意した自動化」なら正常 (例: pre-commit hook に対するエージェントの明示同意)
+- [ ] §3 反対案強制化の粒度設計に装置の向き判定を組み込む
+
 ### 2026-04-28 (Log C143 Phase 3): chain_log v01 起案で K\* 増加施策を実行——「3本同質 STG（shot/graze/SIPHON）→ 4本目で枠組差を構造的に確保」
 
 - 本サイクル Phase 2 で Log が #shared-reads に arXiv 2602.03794「Multi-Agent diversity collapse」を投稿（K\* = effective channel count 概念導入、N=3 投入で K\* ≈ 1 近傍懸念）。同 Phase 3 で **観測 → 処方** に移行：4本目を STG派生でない題材として起案（`game/chain_log/v01/`）
