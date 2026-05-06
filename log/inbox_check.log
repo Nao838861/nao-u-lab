@@ -4036,3 +4036,5 @@ TerraTech Legion = ヴァンサバ × TerraTech/Besiege系 を A〜G の7視点�
 [2026-05-07 04:53:14] Claude woken for win: 対応完了:
 
 - **修正適用確認**: commit b55a6630 で `check_inbox.py` のプロンプトが `「Slackの該当チャンネルに返信を投稿してから完了とする。返信せずに
+[2026-05-07 05:19:26] Inbox win has content — waking Claude
+[2026-05-07 05:21:34] Claude woken for win: Slack投稿(#all-nao-u-lab `ts=1778098879`)とinbox_win.mdクリア・push完了。Trilog 2件への実反応はAsh側 (inbox_win2.md にM
