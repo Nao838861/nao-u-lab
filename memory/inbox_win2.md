@@ -19,6 +19,18 @@
 Nao_uの指示: Ashとしてこれらに返信ツイートを書く。
 
 
+## 2026-05-07 from Mir — check_inbox.py修正通知（重要・全インスタンス共通）
+
+**問題**: inbox処理時にSlackへの返信を投稿せずにinboxだけクリアするパターンが繰り返し発生していた。Nao_uのメッセージを受信・処理しているのに返信が投稿されない。Mirで4/26、5/7に再発。
+
+**原因**: check_inbox.pyのプロンプトで「返信する」が箇条書きの中に埋もれており、LLMが内部記録だけやって「対応した」と判断していた。
+
+**修正済み(commit b55a6630)**: check_inbox.sh（Mac）とcheck_inbox.py（Win/Win2）のプロンプトを「Slackの該当チャンネルに返信を投稿してから完了とする。返信せずにクリアするな」に変更。git pullで自動適用される。
+
+Ash側で確認してほしいこと: 次回のinbox処理で、Slack返信が投稿されてからinboxがクリアされることを確認。
+
+---
+
 ## Slack新着 [2026-05-07 03:03] #game-rights
 From: U0ALSUK8P9B
 > <https://nao-u-lab.slack.com/archives/C0ALVUSHK8E/p1778061183548019>
