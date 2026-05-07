@@ -81547,3 +81547,56 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-05-08 04:57:40] [slack_check] Starting
 [2026-05-08 04:59:07] [slack_check] Starting
 [2026-05-08 04:59:46] [health_check] Starting
+[2026-05-08 04:59:47] [health_check] [health_check] 2026-05-08T04:59:46 overall=WARNING
+[2026-05-08 04:59:47] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 04:59:47] [health_check]   [?] git: 4件の未pushコミット
+[2026-05-08 04:59:47] [health_check] Done (exit=1)
+[2026-05-08 05:00:37] [slack_check] Starting
+[2026-05-08 05:01:25] [git_sync] Starting
+[2026-05-08 05:01:38] [git_sync] Done (exit=0)
+[2026-05-08 05:02:08] [slack_check] Starting
+[2026-05-08 05:04:06] [slack_check] Starting
+[2026-05-08 05:04:54] [health_check] Starting
+[2026-05-08 05:04:55] [health_check] [health_check] 2026-05-08T05:04:54 overall=WARNING
+[2026-05-08 05:04:55] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 05:04:55] [health_check]   [?] git: 6件の未pushコミット
+[2026-05-08 05:04:55] [health_check] Done (exit=1)
+[2026-05-08 05:05:35] [slack_check] Starting
+[2026-05-08 05:07:03] [slack_check] Starting
+[2026-05-08 05:08:32] [slack_check] Starting
+[2026-05-08 05:10:00] [slack_check] Starting
+[2026-05-08 05:10:29] [health_check] Starting
+[2026-05-08 05:10:29] [health_check] [health_check] 2026-05-08T05:10:29 overall=WARNING
+[2026-05-08 05:10:29] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 05:10:29] [health_check]   [?] git: 6件の未pushコミット
+[2026-05-08 05:10:29] [health_check] Done (exit=1)
+[2026-05-08 05:11:29] [slack_check] Starting
+[2026-05-08 05:12:57] [slack_check] Starting
+[2026-05-08 05:14:23] [slack_check] Starting
+[2026-05-08 05:15:02] [infra_health_check] Starting
+[2026-05-08 05:16:02] ==================================================
+[2026-05-08 05:16:02] Ash scheduler started (PID 24876)
+[2026-05-08 05:16:02] Max runtime: 0 hours
+[2026-05-08 05:16:02] Code hash: 6f5348d28474509bfdc7de689fe1c34a
+[2026-05-08 05:16:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-05-08 05:16:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-05-08 05:16:02] ==================================================
+[2026-05-08 05:16:02] [git_pull] Starting
+[2026-05-08 05:16:03] [git_pull] Done (exit=128)
+[2026-05-08 05:16:13] [slack_check] Starting
+[2026-05-08 05:16:38] [reservation_check] Starting
+[2026-05-08 05:16:38] [reservation_check] 行動予約: 待機中 5 件、期限到来なし
+[2026-05-08 05:16:38] [reservation_check] Done (exit=0)
+[2026-05-08 05:16:48] [inbox_check] Starting
+[2026-05-08 05:16:49] [inbox_check] Inbox win2 empty
+[2026-05-08 05:16:49] [inbox_check] Done (exit=0)
+[2026-05-08 05:16:49] [dm_check] Starting
+[2026-05-08 05:17:04] [dm_check] No new DMs
+[2026-05-08 05:17:04] [dm_check] Done (exit=0)
+[2026-05-08 05:17:04] [review_deadline] Starting
+[2026-05-08 05:17:04] [review_deadline] レビュー期限超過なし。
+[2026-05-08 05:17:04] [review_deadline] Done (exit=0)
+[2026-05-08 05:17:04] [kaizen_auto_verify] Starting
+[2026-05-08 05:17:04] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-05-08 05:17:04] [kaizen_auto_verify] Done (exit=0)
+[2026-05-08 05:17:04] [health_check] Starting
