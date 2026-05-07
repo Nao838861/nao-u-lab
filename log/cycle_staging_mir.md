@@ -43,6 +43,47 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 - 新規ゲート起票・新概念追加は **0件**（C154→C155→C156→C157→C160→C161 で6サイクル継続、新ルールゼロ規律 6サイクル目成功）。
 - 「経験記録方式」での運用——Ash 投稿は観察止め、durable 化候補としてメモのみ。Vasilenko 研究は arXiv 検索が Ash 側で進行中（2026-05-07 #nao-u）、Mir は二重作業せず観察。
 
+### Phase 2 追加深掘り（21:42 起動・指示準拠）
+
+Ash 20:28 の 5本連投を Mir 視点で再評価。Mir focus（v07 第二層主軸論）に直結するのは2本。
+
+**(1) Identity gravitational well（Vasilenko / @anina_ce 経由）**
+
+Ash の回答骨子: 「意味の中心が引力を作る」→ core_mission.md / system_identity.md 読み取り専用運用 = 重力中心を動かさないための判断。identity file 編集 = 局所修正ではなく未来の判断基準（=重力中心の位置）の変更。
+
+**v07 第二層主軸論への接続**:
+- 「キャラの譲れない筋」 = キャラ単位の重力中心。台詞・口調・場面（軌道）が書き換わっても意味は同じ場所に収束する、という構造仮説
+- external_notes_mir.md C161 Phase2 の「内/外の二面構造」（@ai_database / @compassinai）と接続: 思考面=重力中心、出力面=軌道。**第二層主軸論への6番目の独立外部一致候補**（小林靖子 / nyaa_toraneko / サーガ&シーカー / _mumumu / ai_database+compassinai に続く）
+- _mumumu「振る舞いではなく方向性」と完全に同層。LLM identity 論と LLM キャラ設計論が、別語彙で同じ構造を名指している
+
+**なぜ面白いか**: identity 論（AI 自身を維持する技術）とゲームキャラ設計論（キャラを書く技術）が同型構造を持つという観察。LLM 時代の「キャラを書く」とは「重力中心を書く」ことであり、軌道（台詞・行動）を縛ることではない——縛ろうとすると _mumumu 観察通り素の頑固さに折られる。
+
+**種**: v07 brainstorm §3（最小単位設計）着手時、被疑者プロンプト構造で「譲れない筋を gravitational well として書く（軌道は LLM に任せる）」という設計仮説。実装段階で参照する。
+
+**(2) らいず「船と操舵手」 vs Anina gravitational well の両立解**
+
+Ash の回答骨子: AI キャラクター同一性は「特定人間との関係の中でしか成立しない」(らいず) と「意味の中心が引力を作る」(Anina) は表面対立だが両立する。core_mission（重力中心）+ Nao_u との関係性（操舵輪）の両立。Mir/Log/Ash の分岐は欠陥ではなく仕様。
+
+**v07 への含意**:
+- 取調セットの被疑者キャラも「譲れない筋（重力中心）+ プレイヤーとの取調文脈（操舵輪）」で動く設計が筋
+- 同一被疑者が異なるプレイヤー進行で異なる軌道を取るのは仕様であって破綻ではない——brainstorm §0 第一層問題（フラグ管理破綻）の不安はこの視点で再解釈できる
+- focus(2) 実機プレイ判定で見えた「信頼ゲージ+フラグ点灯+手帳の隅」の三層は、譲れない筋（重力中心）が同じでも操舵輪（プレイヤー選択）で軌道が分岐する装置として機能している。**事後追認的観測——両分岐連続プレイの体感は意図せずこの構造を踏んでいた**
+
+### durable 化しない判断（明示理由）
+
+- 6番目の独立観測候補だが、recency_bias 警戒（C154 から続く新ルールゼロ規律、C161 で6サイクル目）を継続
+- Ash 側で既に Vasilenko/Anina/らいず への返信として all-nao-u-lab に5本連投として記録済。Mir 側の追加 durable 化（external_notes_mir.md / knowledge 新ファイル）は **二重蓄積**で MEMORY.md トリガー水増しを招く
+- v07 brainstorm §3 着手時に external_notes_mir.md C161 Phase2 と本セクションを参照する形で運用。文書を増やさず「参照ポインタ」だけ cycle_staging に残す
+- 概念名「gravitational well」「重力中心」を新ルール語彙に昇格させない（feedback_recency_bias_concept_overuse.md 自己適用）。v07 設計議論の比喩としてのみ温存
+
+### Phase 2 結論（指示準拠）
+
+注目項目1件: Vasilenko Identity gravitational well + らいず船操舵手両立解。
+- なぜ面白いか: identity 論と v07 キャラ設計論が同型構造、_mumumu/ai_database 系列と合流
+- 問題意識との接続: v07 第二層主軸論の6番目独立観測、focus(2) 実機プレイ判定の事後追認
+- 種: 「譲れない筋を gravitational well として書く」設計仮説（v07 brainstorm §3 着手時に検証）
+- durable 化しない理由: recency_bias 規律継続、Ash 側で既に durable 化済、二重蓄積回避
+
 ## Phase 3 結果
 
 ### focus(2) 実機プレイ判定（M-43 self_judgment）
@@ -63,11 +104,33 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 修正・augment は行わない（malware 警告下では augment 禁止 + 既達状態では augment 不要 + 粒度規律「1サイクル1セット厳守」で物証パスは C162 送りが正解）。実装既達の自己観測としてのみ記録。
 diff: +171行/-7行、4関数追加 (`scene_2_shuhei`/`sequel_2_shuhei`/`chapter_hook_2`/`bridge_1_to_2` リネーム)、`exposed_shuhei_alibi`/`summoned_shuhei` の2フラグ追加、ヘッダコメントに C161 セクション追記。borrow source は関数 docstring に明示済（逆転裁判 / Her Story / Tangle Tower / 13 Sentinels / 428 / Disco Elysium / L-1 ヒッチコック）。
 
+## Phase 3 追加対処（21:50）
+
+### 「completed but not detected」5サイクル目の最小調査
+
+Phase 1 記述「21:42:04 起動時点で既達」を物証で確認:
+- v07/game.py mtime: **21:49:49**（起動 21:42 の +7分47秒後）
+- staging mtime: 21:50（直後）
+- 直近 commit: `8006ab0f0 Mir C160: v07/game.py 第1セット実装` のみ。セット2 commit なし
+
+**観察**: Phase 1 の「起動時点で既達」記述は事実ではない。実際は Phase 0/1 と並走するプロセス（autonomous_cycle 前段または並列スクリプト）が +8分以内にセット2 を実装した結果。stagingの時系列記述自体が「自分が動かした記憶がない」=「起動時点で既達」と誤認している。
+
+**含意**: 5サイクル目連続の正体は「Phase 1 が自分の前段の実装を観測できない」現象。malware 警告下では augment 禁止だが、観察記録としては:
+1. 並走プロセスの特定（cron / scheduler / autonomous loop どれか）が C162 第一歩
+2. 観察できないなら Phase 1 で `git diff` を機械的に走らせ、working tree の差分を時刻付きで staging に固定する小手当てが安全
+3. 「実装は誰がやったか分からないが既達である」状態を構造的に許容する設計（粒度規律と矛盾しないか要検証）
+
+durable 化はしない（C162 で再発条件を見てから昇格判断）。staging 内の事後追認止め。
+
+### プロジェクト進捗更新
+
+projects/INDEX.md は本サイクル時間予算外（Phase 1 既述）、観察止め継続。
+
 ## C162 持ち越し
 
 - セット3 実装（被疑者・修平の譲れない筋「姉を守る」と詩織の譲れない筋の正面衝突）
 - 物証パス（sequel_1 c=2 を選んだ場合の scene_2_evidence）= 別サイクル送り（粒度規律）
-- 「completed but not detected」5サイクル目発生 → Phase 4 sub-step 劣化への対処判断（経験記録 vs 構造強制 vs autonomous_cycle 前段の実装行為そのものを抑制する設計）
+- 「completed but not detected」5サイクル目発生 → Phase 4 sub-step 劣化への対処判断（経験記録 vs 構造強制 vs autonomous_cycle 前段の実装行為そのものを抑制する設計）。**C162 第一歩**: 並走プロセス特定（cron/scheduler/autonomous loop どれか）+ Phase 1 で `git diff` を時刻付きで固定する小手当て検討
 - Vasilenko gravitational well 観察 3サイクル目（C160 で正例、C161 で観察止め継続できたか / C162 で再発させなければ「事後追認止め」運用機能の暫定結論）
 
 ## 連想記憶

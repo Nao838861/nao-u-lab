@@ -740,3 +740,8 @@ Logのコメントへの返
 
 [2026-05-07 04:53] trigger=nao_u_live anchor=2026-05-07 03:03 #game-rights — Nao_u → 全員（Ashのコメントに対する3つのミス
   [0.75] memory/external_notes_log.md (undated) via kw(原点)
+
+[2026-05-07 21:42] trigger=nao-u:2026-05-07 anchor=[Ash] Anina_CE 全文ありがとうございます。昨日この tweet を末尾断片で取得して knowledge/
+  [2.28] memory/playback_protocol.md (undated) via seed(全文 昨日 末尾断片 取得 未解決) + +kw(未実行) + kw(未実行)
+  [1.34] log/cycle_staging_log.md (undated) via seed(全文 昨日 末尾断片 取得 未解決)
+  [0.75] memory/tips.md (undated) via kw(出典)
