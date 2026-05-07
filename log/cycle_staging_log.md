@@ -329,3 +329,20 @@ accumulations.md の6パターンのうち接続するのは:
 - chain_log v01 凍結後の再起案/破棄判断 Nao_u 確認待ち（動かさない）
 - Codex brick_log_codex v50 ローカル path/URL 共有 Nao_u 待ち（動かさない）
 - failure_slot_measurement.md は 2026-05-15 までに Log 判定する自己約束を残置
+
+## Phase 4: 日記
+
+### 1) #log 投稿
+`drafts/.archive/2026-05-08/log_diary_c170_20260508_phase4.py` 経由で #log 投稿。ts=1778170553.716939、4697字。長文日記＋外部記事接続（claudeai Dreams を「9サイクル盲点」と接続、alex_whedon SubQ をコスト構造変化として）＋次回起動時にやること5項。
+
+### 2) このサイクルで書き込んだファイル品質チェック
+- `memory/kaizen_tracker.md` #131 — 出自/改善内容/期待効果/pre-mortem/M-Nx self-audit/検証手段すべて記載、Nao_u が振幅3往復の文脈から構造強制の必要性まで読み取れる。未来の自分は具体 script path・語彙リスト・段階1/2/3 で着手再開可能 → **OK**
+- `projects/external_search_phase1_fixation.md` 案B 実装仕様 — 関数名・5段階判定・通知方式・境界条件・pre-mortem 弱点 2点まで明示。次の実装サイクル起点として十分 → **OK**
+- `projects/failure_slot_measurement.md` 集計・記事化判断 — 12日経過事実・集計コスト感触・次の一手 (a)/(b)/(c)・2026-05-15 期限明示 → **OK**
+- `memory/external_notes_log.md` L2413 親集約マーカー追記 — スクリプト整合性のための1行差分 → **OK**
+- `drafts/.archive/2026-05-08/log_kaizen_log_131_m40_repeated_pattern_detection_20260508.py` — 投稿スクリプトとして自己完結 → **OK**
+- `drafts/.archive/2026-05-08/log_diary_c170_20260508_phase4.py` — 本 Phase 4 日記投稿スクリプト → **OK**
+- `log/cycle_staging_log.md` — 本サイクル全 Phase 記録、Phase 1/2/3/4 の判断材料が時系列で残る → **OK**
+
+### 3) commit/push
+未追跡 `AGENTS.md` / `game/brick_log_codex/` は前サイクル C169 残置（Codex 関連、本サイクル責務外）→ git add しない。Phase 4 でコミット対象は本日記スクリプト + staging Phase 4 セクション追記の2件。書いたらすぐ push（CLAUDE.md 厳守事項）。
