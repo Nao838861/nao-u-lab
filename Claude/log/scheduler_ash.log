@@ -81187,3 +81187,25 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-05-08 01:59:28] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
 [2026-05-08 01:59:28] [kaizen_auto_verify] Done (exit=0)
 [2026-05-08 01:59:28] [health_check] Starting
+[2026-05-08 01:59:28] [health_check] [health_check] 2026-05-08T01:59:28 overall=OK
+[2026-05-08 01:59:28] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 01:59:28] [health_check] Done (exit=0)
+[2026-05-08 01:59:38] [slack_check] Starting
+[2026-05-08 02:00:06] [git_sync] Starting
+[2026-05-08 02:00:20] [git_sync] Done (exit=0)
+[2026-05-08 02:00:20] [auto_diary] Starting
+[2026-05-08 02:12:20] [auto_diary] Timeout (720s)
+[2026-05-08 02:12:20] [twitter_recommended] Starting
+[2026-05-08 02:13:26] [twitter_recommended] Opening For You tab...
+[2026-05-08 02:13:26] [twitter_recommended]     1. @pastel_orbit: BLAZING STARの冒頭が4重スクロールである理由
+[2026-05-08 02:13:26] [twitter_recommended] 
+[2026-05-08 02:13:26] [twitter_recommended] BLAZING STAR関係の投稿に好評を頂いています
+[2026-05-08 02:13:26] [twitter_recommended] 昨今...
+[2026-05-08 02:13:26] [twitter_recommended] Done (exit=0)
+[2026-05-08 02:13:26] [infra_health_check] Starting
+[2026-05-08 02:13:29] [infra_health_check] [infra_health] Ash health check at 2026-05-08 02:13:26
+[2026-05-08 02:13:29] [infra_health_check] [infra_health] 2 issues found
+[2026-05-08 02:13:29] [infra_health_check]   ISSUE: [scheduler_ash] slack_checkが14分間実行されていない（期待: 10分以内）
+[2026-05-08 02:13:29] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 02:13:29] [infra_health_check] Done (exit=1)
+[2026-05-08 02:13:29] [scheduler_health] Starting
