@@ -1,0 +1,6 @@
+# Repo root sits at D:/AI/Nao_u_BOT/ to allow Claude/ and GPT/ to coexist.
+# Inner project gitignores (Claude/.gitignore, future GPT/.gitignore) handle
+# their own contents. This root file only blocks accidents at the parent layer.
+
+# Claude Code local settings auto-created when CLI runs from parent dir
+.claude/
