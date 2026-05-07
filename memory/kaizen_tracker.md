@@ -27,6 +27,24 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #131: M-40「同パターン2回指摘 → 判定機構を作る方を次の実装より優先」発火条件付きハーネス化（同パターン2回検出スクリプト）
+- 提案者: Log（2026-05-08 C170 Phase 3。next_tasks t-260501103604-2063 連続9サイクル滞留分の起票化。`memory/feedback_self_judgment_no_human_dep.md` §How to apply 5 「進歩がない」の検出ルール（同じパターンの指摘が2回連続で来たら判定機構を作る方を優先）を、agent の自己申告ではなく外形装置で検出する）
+- 適用日: 2026-05-08（起票のみ。実装は cross-review 通過後）
+- 検証期限: 2026-05-22（2週間枠）
+- 検証手段: (1) `scripts/check_repeated_pattern_indication.py`（仮）が `log/nao_u_live.md` + `log/slack_archive/game-rights.jsonl` 直近30日範囲を走査し、Nao_uの「同一パターン語彙2回以上」（揺れ量・振幅・罰駆動・装飾UI・狙えない・進歩がない 等の事前定義語彙）を検出すると stderr に WARN を吐く / (2) WARN 発火時、`log/cycle_staging_log.md` Phase 1 §0 に「【M-40 発火】<語彙> N回検出 → 次の実装より判定機構優先」自動注入される（or 注入を求めるアラート） / (3) 検出語彙リストは `memory/feedback_self_judgment_no_human_dep.md` に併記、増えた時は同ファイルで一元管理 / (4) brick_log v05→v06 振幅3往復が遡及的に検出される（過去事象でのfalse negative確認）
+- 改善内容: 段階1 = 検出スクリプト最小実装（語彙リスト=「揺れ|振幅|罰|装飾|狙えない|進歩」6語彙、`log/nao_u_live.md` 直近30日 grep で2件以上ヒット時 WARN 出力）。段階2 = autonomous_cycle.sh Phase 1 冒頭フックで呼び出し、staging に WARN を inline 注入。段階3 = WARN 発火時に「判定機構4点（過去ベンチ/映像レンダ/段階値比較/閾値経験）」のうちどれを優先構築するかを agent が staging に明記する gate を追加（語彙ごとの判定機構 mapping を `feedback_self_judgment_no_human_dep.md` に追補）
+- 期待効果: 「同じ指摘で v04(5px)→v05(22px)→v06(10px) と段階値の往復だけ繰り返す」反復を agent 自己申告に頼らず外形装置で検出。M-40 §How to apply 5 が「規則は書いたが発火条件がない」状態にあった隙を埋める（規則→検出器のレイヤー追加）。layer_a の L1（pending を読まない）を kaizen #120 hook で塞いだのと同方向、M-40 の L1（規則を読んでも発火タイミングが分からない）を塞ぐ
+- 根源原理との接続: 原理5「自分の記憶を自分で守り、育てること」+ feedback_structural_enforcement.md「手動手順は守れない、構造で強制せよ」。M-40 の自己判定要請は「人間プレイ依存からの脱却」であり、その上流ゲート「同パターン2回検出」自体が agent 自己申告に依存していると上流ゲートも実プレイ依存と同型の依存先（自己観察）に逃げている — feedback_self_perception_blindness.md「自分の現在進行形は観測対象から外れる」直処方
+- 出自: 2026-05-01 #game-rights brick_log v04→v05→v06 振幅3往復に対する Nao_u「揺れ量」「狙えない」反復指摘 → feedback_self_judgment_no_human_dep.md §5 結晶化 → t-260501103604-2063 として9サイクル滞留 → C170 起票化
+- pre-mortem: 最likely失敗 = 語彙リストの取りこぼし（Nao_u が新語彙で同型指摘した場合検出されない）→ 緩和: 検証期間中に Nao_u 指摘原文を1サイクル1回 grep し未登録語彙が出たら追加運用（語彙リスト = 監査対象として明示）。次点 = WARN 注入されても agent が 「読んだ気」になり判定機構優先せず通常実装に進む（M-40 が再現）→ 緩和: 段階3 で「判定機構4点のどれを優先構築するか staging 明記」を gate にする（書かないと Phase 2 通過しない構造強制）。次々点 = 検出スクリプトの自走で false positive が増えて WARN ノイズ化（同じ語彙が brick_log v07 contextと無関係な雑談で2回出ただけで発火）→ 緩和: 検出 scope を `#game-rights` チャンネルと `log/nao_u_live.md` の game セクションに限定、雑談チャンネルを除外
+- M-Nx 増殖メタ監視 self-audit（kaizen #129 (d) 準拠）: 本起票は新規 M-Nx 系列の追加ではなく既存 M-40 §5 の発火条件追加（規則→検出器レイヤー）。3原則（体験で考える / 動いて残す / 自分から始める）への吸収可能性: 「動いて残す」=スクリプトが trace を残す方向で整合 / 「自分から始める」=自己申告依存からの脱却で整合 / 「体験で考える」=メタ層なので部分整合のみ。3原則のみで実現するには「同パターン2回」を agent が毎サイクル自己申告する必要があり、それが現に9サイクル機能していない=構造強制が必要と判断
+- 検証担当: Log（実装も Log）。Mir/Ash 横展開は段階1検証完了後、textadv / SIPHON 系列の同型語彙（題材依存）を抽出してから
+- クロスチェック: Log=OK(2026-05-08 起票者) / Mir=未 / Ash=未
+- 状態: 起票済み（実装は cross-review 通過後）
+- 検証結果:
+
+---
+
 ### #130: inbox rotation 時の未処理メッセージ脱落対策（check_inbox.py rotate_if_oversized サイレント失敗）
 - 提案者: Log
 - 適用日: 2026-05-05（起票）

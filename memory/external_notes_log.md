@@ -2410,7 +2410,7 @@ notf=ノトフ/川本龍、DreamCore運営者（国産AIゲーム生成プラッ
 
 ---
 
-## 2026-05-07 #nao-u 7件投下（Log C168 Phase 2 で記録漏れ発覚→C169 Phase 3 で親セクション化）— infrastructure commodity化観測の同日横断束
+## 2026-05-07 #nao-u 7件投下（Log C168 Phase 2 で記録漏れ発覚→C169 Phase 3 で親セクション化）— infrastructure commodity化観測の同日横断束 [統合済 親集約マーカー — 全7サブ統合済 2026-05-08 Log Phase 2]
 
 **起点**: Phase 2 §3 統合の質チェックで「本日 7 URL 反応投稿後の external_notes_log への記録漏れ」を発見。Log は 09:47 (a=miz_oka) と 20:28-20:29 (b〜f の5件) で #all-nao-u-lab に反応投稿済、Ash は 20:04 で g=anina_ce に反応投稿済。本親セクションは「反応済だが原文記録が未統合」状態の補完。
 

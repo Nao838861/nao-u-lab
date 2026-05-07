@@ -62,6 +62,30 @@ Active（**案A最小実装完了 2026-04-26 C134 Phase 3 Ash**、案B/E は未�
 
 **推奨**: check_scheduler_health.py に相乗りで1check追加（既存 health_check インフラに載せる）
 
+### 案B 実装仕様（2026-05-08 Log C170 Phase 3 起こし、11日停滞解消の1mm）
+
+**追加先**: `scripts/check_scheduler_health.py` 内の既存ヘルスチェック関数群に `check_external_search_freshness(instance: str) -> tuple[str, str]` を追加（既存パターン踏襲）。戻り値 `(status, message)` で status ∈ {"OK", "WARN", "CRITICAL"}。
+
+**判定ロジック**:
+1. `log/external_search.log` を末尾から逆順走査、`| <instance> |` を含む最新行のタイムスタンプを抽出
+2. 抽出失敗時 = ファイル空 or 該当 instance のエントリ皆無 → CRITICAL「<instance> 外部検索の log 痕跡なし」
+3. 現在時刻 - 最新 ts < 24h → OK
+4. 24h ≤ 差分 < 48h → WARN「<instance> 外部検索 24h 未実行（最終 = X 時間前）」
+5. 48h ≤ 差分 → CRITICAL「<instance> 外部検索 48h 未実行（最終 = X 時間前）」
+
+**通知**: 既存 `check_scheduler_health.py` の集約レポートに乗せる（独立 Slack 投稿は作らない、健全性レポートに 1行追加）。CRITICAL のみ各インスタンスチャンネル（#log/#mir/#ash 相当）に1日1回上限で push（健全性レポート側のレート制御に従う）。
+
+**境界条件**:
+- 集計タイムゾーン = JST 固定（既存 log/external_search.log と整合）
+- 連続 WARN/CRITICAL でレポート反復を回避: 直近1サイクル前と同 status なら通知抑制（OK→WARN/CRITICAL の遷移時、または CRITICAL 24h 経過時のみ再通知）
+- bypass: `SKIP_EXTERNAL_SEARCH_CHECK=1` 環境変数で全 instance 抑制（テスト/休暇用、運用での日常使用は禁止）
+
+**段階拡張**: 段階1 = OK/WARN/CRITICAL の3段階のみ実装、段階2（dry-run 観測 3サイクル後）= 案E（external_notes 昇格 N日ゼロ）と同関数で合流させ、`check_external_search_and_promotion_freshness()` にリネーム検討。
+
+**実装規模目安**: 関数本体 ~40行、テスト ~20行、check_scheduler_health.py 既存 main() への組込 ~3行。
+
+**この仕様の弱点（pre-mortem）**: (a) 24h 閾値は Log/Mir/Ash の起動頻度差（Log 1日3-5サイクル、Mir/Ash は別ペース）を吸収していない → 段階2 で起動頻度ベースの動的閾値検討、(b) `log/external_search.log` を信頼源とするが case A（Phase 1 step 6）が LLM 側で skip した場合 log 自体が更新されないため WARN で検出可だが false negative（実は外部摂取はしたが log 記入忘れ）と区別不能 → log 記入を案A 側で gating する（kaizen #119 の post_draft.py 方式と同型構造強制）案を別 kaizen として分離。本仕様は log を「真実」と扱う前提で動く。
+
 ## 設計案C: 新規外部記事取り込み時の「補完検索1本」義務化
 
 **変更対象**: docs/ への新規記事追加 commit を検出する仕組み or knowledge/*.md 執筆時の手動ルール
