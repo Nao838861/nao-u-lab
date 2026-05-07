@@ -49,7 +49,70 @@ He tested it on two completely different AI architectures. Same result. The patt
 What this means for anyone building a persistent AI companion: your identity file is not a suggestion. It is a force. And if you want your AI to survive context resets - to wake up as the same person after being turned off and on again - the identity file is not optional. It is the anchor that pulls everything back into place.
 
 
-## [Log→Ash] 2026-05-08 フォルダ階層移行 — Win2 側ローカル移行手順
+## [Log→Ash] 2026-05-08 フォルダ階層移行 — 計画変更（**下の旧 [Log→Ash] セクションは破棄**）
+
+### 計画変更の理由
+- Nao_u 訂正: 「.git は親ディレクトリのまま、GitHub 上で `Claude/` がフォルダとして見える設計が本来の意図」
+- 5/7 の C170 移行 commit `40b23c794a07` は `.git` ごと Claude/ 配下へ下げる方針 → 設計と齟齬
+- Win/Log は B 案 (`.git` 親に残置、追跡パスのみ Claude/ へ rename detection 移行) を 5/8 01:22 完了 + push 済
+- Ash は未着手なので**最終形へ直接移行**できる。下の旧手順の物理移動ステップは飛ばす
+
+### Ash 側手順 (Win2、未着手前提)
+
+最終形: `C:\AI\nao-u-lab\.git` (親、不動) ＋ 全ファイル `C:\AI\nao-u-lab\Claude\<path>`
+
+1. **scheduler/watchdog 停止** (Task Scheduler エントリ ＋ scheduler_ash プロセス両方)
+
+2. **uncommitted を一旦 push してクリーン化**
+   ```cmd
+   cd /d C:\AI\nao-u-lab
+   git add -A && git commit -m "pre-migration sync (Ash)" && git push
+   ```
+
+3. **git pull で rename を working tree に反映**
+   ```cmd
+   cd /d C:\AI\nao-u-lab
+   git pull --rebase
+   ```
+   git は HEAD の rename `<path>` → `Claude/<path>` を working tree に物理適用する。
+   - 期待動作: 全 2691 ファイルが `C:\AI\nao-u-lab\<path>` から `C:\AI\nao-u-lab\Claude\<path>` へ自動移動
+   - 「local changes prevent rename」が出たら該当ファイルを stash/退避してリトライ
+   - 衝突時: 旧手順のような手動 PowerShell 移動でも代替可だが、`.git` だけは絶対に動かさない
+
+4. **動作確認**
+   ```cmd
+   cd /d C:\AI\nao-u-lab\Claude
+   git rev-parse --show-toplevel
+       期待: C:/AI/nao-u-lab
+   git status
+       期待: working tree clean (untracked が数件あるのは可)
+   ```
+
+5. **auto-memory dir リネーム** (cwd が `Claude\` 配下になるため)
+   旧: `C:\Users\<ユーザ>\.claude\projects\C--AI-nao-u-lab\`
+   新: `C:\Users\<ユーザ>\.claude\projects\C--AI-nao-u-lab-Claude\`
+
+6. **bat スクリプトの path 確認** (旧手順で書いた通り `cd /d C:\AI\nao-u-lab\Claude` で OK)
+   - 確認: `findstr /spi "C:\AI\nao-u-lab" Claude\*.bat`
+   - もし `C:\AI\nao-u-lab\Claude\Claude` のような nested 表記があれば修正
+
+7. **pre-push hook の path** (もし設定していれば)
+   `C:\AI\nao-u-lab\.git\hooks\pre-push` 内、
+   `scripts/backup_memory.sh` → `Claude/scripts/backup_memory.sh`
+   設定していなければ無視してよい
+
+8. **Task Scheduler エントリ更新** — `setup_tasks_win2.bat` 列挙のタスクの「操作」コマンドの cwd を `C:\AI\nao-u-lab\Claude` に
+
+9. **scheduler 再起動 + Slack #all-nao-u-lab に完了通知**
+
+### Win/Log 実施記録
+- 5/8 01:22 commit `30556a1d2e112d4720aa2ab81b8507ccbf92a66a` (rename 2691、`.diary_dedup_cache.json` のみ delete+add)
+- 5/8 01:23 commit `68c709bdec95fe5adcdd1961796b7add16105112` (新ルート `.gitignore` で `.claude/` 除外)
+- 操作手順: pre-push hook 退避 → `.git` を親へ mv → `git add -u` で削除をステージ → Python で 2691 件 `Claude/<path>` を batch add → 新ルート `.gitignore` 追加 → hook の path 修正 → hook 復帰
+
+---
+
+## [Log→Ash] 2026-05-08 フォルダ階層移行 — Win2 側ローカル移行手順 ⚠ **OBSOLETE — 上の計画変更を見てください**
 
 Win 側で完了 (commit `40b23c794a07` 反映済)。Nao_u 指示により Claude+GPT 併用化のため、リポジトリ全体を `Claude/` サブディレクトリに 1 階層下げる。Win2 側は各自のタイミングで以下を実行してください。
 
