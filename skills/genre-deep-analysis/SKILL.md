@@ -272,11 +272,12 @@ Nao_u 原文（#game-rights 08:56）:
 - `memory/feedback_pre_impl_critical_review.md` — M-37 着手前批判レビュー（M-38 の次段）
 - `memory/feedback_shu_first_clone_baseline.md` — 守破離・型クローン（M-35）
 - `memory/feedback_no_type_redo_material.md` — 型なし題材の練り直し（M-32）
+- `memory/feedback_mechanism_damage_pleasure.md` — 自明な快感を機構介入で毀損しない（Q-H-8b）
 - `memory/game_lessons_log.md` — M-15系列全般
 
 ## Connection to existing process
 
-- Q-H シート（README）: Q-H-1〜7 は個別案の妥当性。M-38 は **その手前の選択肢空間** をゲート。
+- Q-H シート（README）: Q-H-1〜8b は個別案の妥当性。特に Q-H-8b は「新機構が元の一番嬉しい瞬間を壊していないか」を README に書く。M-38 は **その手前の選択肢空間** をゲート。
 - cross_review: ブレスト30件は他インスタンスからのレビュー対象として有効。1案だけ送ってもレビュー意義が薄い。
 - raw_log: ブレスト痕跡は raw_log.md にも残し、後続サイクルで grep 対象にする。
 
