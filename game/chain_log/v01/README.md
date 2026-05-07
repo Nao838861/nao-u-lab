@@ -1,5 +1,10 @@
 # chain_log v01 — 1D マッチパズル（4本目・STG派生でない題材）
 
+> **【凍結 2026-05-07】M-38 (アイデアの出し方手順) 未遵守。**
+> Nao_u 2026-05-07 03:13 #game-rights 指摘: brainstorm.md なし、game-analyze 起動なし、既存ゲーム30本分析なし、上位案へのM-37批判なし、最良確信宣言なし。個別ゲート（Q-H/4ゲート/Q-D）を埋めたことで「手順を踏んだ」感が出ていただけ。
+> 再起案前に: (1) `/game-analyze` 起動 → (2) brainstorm.md に Match-3 系30件以上の良点・問題点分析 → (3) 新規ブレスト30件 → (4) 上位10件以上の M-37 批判レビュー → (5) 最良確信宣言と根拠 を経由する。
+> shot_log ヘッドレス整備優先のため、再起案そのものを後ろに回す可能性あり (Nao_u 確認待ち)。コードは触らない。
+>
 > **2026-04-28 着手前 STATUS**: README のみ確定（コードは v01 README 凍結後の次サイクル）。Nao_u 2026-04-27 18:22 #human-steering「logのシューティングのようなものを違う切り口でもう一本」の **STG派生でない4本目** として起案。同日 22:59 graze_log v01 への「Logの磁石と似た臭い」指摘で **STG/カスリ系・自発リスクコア化系の連鎖**（shot_log → BACKLASH → graze_log → SIPHON）を打ち切るための K\* 増加施策。詳細: `memory/feedback_self_risk_core_pitfall.md` (M-30) / `projects/instance_divergence_observability.md`。
 
 ## 重心

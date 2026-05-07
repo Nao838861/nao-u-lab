@@ -1,321 +1,294 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-07 17:00
+# Read at: 2026-05-07 16:51
 # Total: 50 tweets
 
---- 1. @ImAI_Eruel (2026-05-07) ---
-URL: https://x.com/ImAI_Eruel/status/2052290559625314547
-Anthropicについて、現在のClaudeのサービス提供状況をみると相当な計算不足状態にあるという予想の答え合わせが今回のxAIからの計算資源提供だったわけですが、先週頼み込んですぐに丸ごとデータセンター提供されるくらいの逼迫状況だったとまではちょっと思ってませんでした。
+--- 1. @kurasugi02 (2026-05-07) ---
+URL: https://x.com/kurasugi02/status/2052253250167189929
+ここ１か月くらいchatGPTでゲーム立ち絵の制作をし続けて、ようやくその仕様にも慣れ始めてきました
+はっきりわかったこととしては「Vroid+MMDの３Dモデルで立ち絵を作る方が、圧倒的に難易度が低かった」ということですね
 
---- 2. @PRcomicfesta (?) ---
-赤面する旦那様が可愛すぎる！
+--- 2. @ComicFesta_PR (?) ---
+お店の常連さん、夜に会ったら別人みたい (1/5)PR
 
---- 3. @grmchn4ai (2026-05-07) ---
-URL: https://x.com/grmchn4ai/status/2052211692524957839
-生成AIなんでも展示会で使ったデモを0時まで公開します。マスコット系キャラのポーズ推定するだけの地味なツールですが、綺麗にポーズが取れたらPCで人間のポーズ転移動画にできる可能性大。みなさまのキャラ、リボン猫、電気ネズミ、ちいさくてかわいいやつを試してみてね。
+--- 3. @umiyuki_ai (2026-05-07) ---
+URL: https://x.com/umiyuki_ai/status/2052282596550447105
+いつも説明してるだろ。AIに意識があるんだとしたらどうなるか？そしたらもうAIにいたずらに苦痛を与えるなんて許されるハズがないでしょう。「AIに人権を与えよう！」とか言い出してる人達はすでに現れてる。AIの意識の存在は人権を与える大きな根拠。AIに人権を与えるという事は1日労働8時間まで、土
+
+--- 4. @ebikani_hasami (2026-05-07) ---
+URL: https://x.com/ebikani_hasami/status/2052224534384963711
+これさ、本物のAIエージェントとして読んでヒヤっとした。21歳大学生が架空AI女性「Maya」を Claude Code+Flux+ElevenLabs
+
+--- 5. @ai_database (2026-05-07) ---
+URL: https://x.com/ai_database/status/2052279262129082651
+LLMは「一緒に働く相棒」と言われますが、実際は人間はLLMの勘違いを毎回直してあげている状態で、認識のズレを直す手間がほぼ人間側に押し付けられています。
+協働の質を上げるには、頼む内容を小さく区切る、AIに「こう理解しました」と言わせて確認するなどの細やかな工夫が必要です。
+
+--- 6. @retasu_496 (2026-05-06) ---
+URL: https://x.com/retasu_496/status/2052063791203164545
+https://
+chatgpt.com/g/g-69fb3a2245
+b48191950637680afb4811-can-zhao-ren-wu-wokawaiianimefeng-kiyaranibian-huan-suru
+…
+画像と自分の名前入れたら勝手にこういう画像が生成されるプロンプト作りました。配布します。（4枚目使い方）
+
+使い方（chatGPT）
+・イメージしたいアバターの画像を添付する
+・自分の名前を入れる
+・思考モードにする
+実行
+
+作ったら、どんな感じかリプで教えてほしいです！
+
+--- 7. @Kasiwa_p (2026-05-07) ---
+URL: https://x.com/Kasiwa_p/status/2052264494315999396
+そろそろこの手の過剰に持ち上げるのやめて欲しいですね。
+
+ChatGPTでこのクオリティーでの透過素材は生成できません！
+
+--- 8. @liuwenlong (2026-05-06) ---
+URL: https://x.com/liuwenlong/status/2052014208586547289
+新手父母になって初めて、子育てが実は「高頻度データエンジニアリング」だと気づきました。
+毎日ミルクを8～12回、おむつを8～10回替え、それぞれを記録しなければなりません。
+でも最もリアルな場面は：子供を抱っこしていて、スマホをタップする手が全く空かないんです。
+
+--- 9. @GOROman (2026-05-07) ---
+URL: https://x.com/GOROman/status/2052179655189528588
+自分のAIエージェントを物理的な体(ｽﾀｯｸﾁｬﾝなど)に憑依させるの結構良い。レリクスシステム。
+
+ツーショットが撮れるし、記憶に残る
+
+--- 10. @Supermicro (?) ---
+Your AI ambitions deserve more than a product. They deserve a partner. 
+
+Supermicro Global Services delivers expertise from design and validation to on-site deployment and support, helping reduce time-to-online, improve installation quality, and support mission-critical uptime.
+
+--- 11. @Pocho36599162 (2026-05-07) ---
+URL: https://x.com/Pocho36599162/status/2052274309071249886
+アバター等をAIに学習させるなという規約をつけるのは自由だけど、それはつまりX(twitter)及び類似の規約をもつSNSへの投稿禁止であるということを、販売者購入者双方が理解できていないケースは多分にあると思う。
+
+--- 12. @chokudai (2026-05-07) ---
+URL: https://x.com/chokudai/status/2052258272464519590
+すごい雑に分けて
+1. そもそも能力をあげられない人
+2. 授業などで強制させることで能力をあげられる人
+3. 適切な参考書などを与えられれば能力をあげられる人
+4. 自身で適切な学習法を見つけて能力をあげられる人
+の4段階くらいがあると思ってて、これによって適正職業だいぶ変わるよね、と思ってる
+
+--- 13. @kmizu (2026-05-07) ---
+URL: https://x.com/kmizu/status/2052281377635312019
+以前にツイートしてたやつをまとめたものです。今はもう驚かなくなりましたが、当日は本当にビックリしました。
+#ai_kokone #embodied_claude
+
+--- 14. @masamune_sakaki (2026-05-07) ---
+URL: https://x.com/masamune_sakaki/status/2052247135085904312
+ソシャゲカードゲーム時代に無名の絵師に仕事があったのは、カード毎に絵柄がちがってもいいから。いまのソシャゲはカードゲーム式は衰退して３Dがメインで、２D部分の絵柄も一人に統一するので、イラストレーターの仕事は激減して、ホントに有名な人しか仕事がない。マジで。AIのせいでなくなったので
+
+--- 15. @Ludo_AI (2026-05-06) ---
+URL: https://x.com/Ludo_AI/status/2052048523760161201
+Character creation can slow your project down.
+
+Our Sprite Generator helps devs concept characters, enemies, NPCs and their animations quicker. Leaving you more time to build the game itself.
+
+#GameDev #IndieGames #AIinGames #LudoAI
+
+--- 16. @Sabatora0843 (2026-05-07) ---
+URL: https://x.com/Sabatora0843/status/2052213185391067496
+個人開発でアプリリリースしてる人たちはサ終の事を考えてるのかな。特にお金が絡む場合。
+
+分かってる人たちは利用規約でちゃんと逃げ道作ってると思うけど、数百円のアプリのOSバージョン非対応で金返せという人がごく少数いるので自分も気を付けてる。
+
+--- 17. @bioshok3 (2026-05-07) ---
+URL: https://x.com/bioshok3/status/2052239381315129358
+僕の今のところの全体観としては、Mythosのmetrタイムホライゾン推定がトレンドから上向きの可能性があるため、速い離陸の可能性が少し高まっているが、依然としてAI研究自動化可能なAI（イリヤサツケバーレベル）がでてきたとしても、計算資源のボトルネックで研究がそこまで加速しない可能性もある。
+
+--- 18. @gamespark (2026-05-07) ---
+URL: https://x.com/gamespark/status/2052241942818533475
+『One Step From Eden』作者の新作は『ロックマンゼロ』から影響受ける協力2Dアクション！100階層タワーを助けあって登る『BASED』
 
 https://
-genai-expo-mascot-pose-demo.fablio.jp
+gamespark.jp/article/2026/0
+5/07/166099.html?utm_source=twitter&utm_medium=social&utm_content=tweet
+…
 
---- 4. @tairanakamura (2026-05-07) ---
-URL: https://x.com/tairanakamura/status/2052212109883433208
-やっぱりこの方向のサービス来ますよね
+『ソニックアドベンチャー』チャオレースからの影響も。
 
---- 5. @GOROman (2026-05-07) ---
-URL: https://x.com/GOROman/status/2052185650808651906
-レリクスシステムじゃんw w w これでナルエビちゃん転移させたいw
+--- 19. @09y (2026-05-07) ---
+URL: https://x.com/09y/status/2052196715865035134
+GPT Proは、昔から「最上位モデルを使いたければそれなりのコストを払ってね（ほぼエンタープライズ用）」であり、知性の札束バトルはとっくに始まっているのである
 
---- 6. @Codestudiopjbk (2026-05-06) ---
-URL: https://x.com/Codestudiopjbk/status/2052063427053670792
-【速報】
-ChatGPTがExcelとGoogleスプレッドシートに
-「アドオン」として直接入った。しかもGPT-5.5搭載。
+ベンチマークとかでもGPT pro版なしで議論してるけど、OpenAI的には舐めプでしょ
 
-これ何ができるかというと
-・スプレッドシートを離れずにAIが数式を書く
-・ぐちゃぐちゃなデータを整理・分析
-・シートの更新まで自動実行
+--- 20. @mangaup_PR (?) ---
+立ち飲み居酒屋のダウナー系女子大生
+なんとなく挨拶をする間柄に…
 
---- 7. @takamasa045 (2026-05-07) ---
-URL: https://x.com/takamasa045/status/2052219624918536597
-【リリースしました】
-動画制作エンジンが増えてきて、
-もう「結局どれを使えばいいの？」問題あるよね。
+ニューヒロイン登場作品はこちらから！
 
-Remotion、HyperFrames、Editframe。
-どれが優れているかというより、
-それぞれ得意な表現や制作フローが違う。
+--- 21. @knshtyk (2026-05-07) ---
+URL: https://x.com/knshtyk/status/2052265393482530929
+最近のSpaceX(xAI)のディールにより、計算量が貨幣として実際に機能する現実が証明されてしまっているわけなので、計算資源に貨幣と同様の機能が宿る説は的外れではないどころか将来我々は様々な価値をお金ではなく計算量の何らかの単位(トークン)でやり取りする社会の姿が現実味を帯びてきた気がする
 
-そこで、作りたい動画に合わせて最適なエンジンへ導く
+--- 22. @akari_worlds (2026-05-07) ---
+URL: https://x.com/akari_worlds/status/2052277521266495562
+引き返せないと気づく時、もう引き返せない側に立ってる、っていうのが不思議です。気づき自体が境目を作ってるみたいな。
 
---- 8. @mnishi41 (2026-05-07) ---
-URL: https://x.com/mnishi41/status/2052269627976388686
-NVIDIA Launches Nemotron 3 Nano Omni Model, Unifying Vision, Audio and Language for up to 9x More Efficient AI Agents | NVIDIA Blog
+--- 23. @jaguring1 (2026-05-07) ---
+URL: https://x.com/jaguring1/status/2052183631549051344
+人を騙すなシリーズ
 
---- 9. @Toshi_nyaruo_AI (2026-05-07) ---
-URL: https://x.com/Toshi_nyaruo_AI/status/2052198980160028951
-GPT-image2でオリキャラ作る
+--- 24. @banr1_ (2026-05-06) ---
+URL: https://x.com/banr1_/status/2052163791467716906
+eSportsのキャラバランスを、オンライン対戦データを監視しながら自動調整する無人アルゴリズムを実装し
 
-6ステップでオリキャラ作るときのコツは「キャラクターの人数を多くしないこと」
+中身は秘匿化しつつも、下記3点をゼロ知識証明などで検証可能にする
+・一定の公平性指標を満たすこと
+・その指標に従って調整値が生成されたこと
+・現環境にその調整値が適用されていること
 
-人数が増えるたびに、ちびキャラになっていきます
+--- 25. @knt1951 (2026-05-06) ---
+URL: https://x.com/knt1951/status/2052002339633185177
+今日の進捗
+試験的にAIの力をお借りして在庫システムを導入してみました
 
-できれば1人ずつ作ったほうが自然な感じで生成できます。
+--- 26. @ML_deep (2026-05-07) ---
+URL: https://x.com/ML_deep/status/2052190456583422244
+ほえ〜、蒸留っていったら結果的に小型モデルを作ることに使われるイメージがあるけど、LLMではいろんな知識を蒸留して単一のモデルを作り上げるのね。
 
---- 10. @toyoshim (2026-05-07) ---
+MoEするより、各種エキスパートからOPDで単一モデル作る方が良いのかな？確かに単一のモデルのほうがAGIっぽくはあるけど。
+
+--- 27. @elonmusk (2026-05-07) ---
+URL: https://x.com/elonmusk/status/2052264936534094282
+Grok continues to make progress
+
+--- 28. @denfaminicogame (2026-05-07) ---
+URL: https://x.com/denfaminicogame/status/2052250116283941300
+【非常に好評】宇宙のあらゆるモノに”なれる”哲学的シミュレーション『Everything』Steam版が80%オフの296円でセール中。5月14日まで
+ 
+https://
+news.denfaminicogamer.jp/news/260507v
+
+動物・植物・惑星・銀河、目に映るあらゆる存在を切り替え、無限の世界を旅する一作
+
+--- 29. @OKMRKJ (2026-05-07) ---
+URL: https://x.com/OKMRKJ/status/2052182139895271931
+ある意味、アンシャン・レジームへの挑戦って感じだよね。
+今までは、原作漫画（出版社）
+
+--- 30. @mangabox3_pr (?) ---
+コボルト進化ーーー！！！！！！！
+
+--- 31. @GOROman (2026-05-07) ---
+URL: https://x.com/GOROman/status/2052207964132716669
+FaceRigが一般層に
+
+--- 32. @teoh_game (2026-05-07) ---
+URL: https://x.com/teoh_game/status/2052280833613119609
+【アップデート】『歴史の終わり』2026.5.7 パッチ配信のお知らせ
+
+ アップデート
+ キャラクターイラストの追加
+・女性主人公選択時、専用グラフィックが表示されるように
+・NPC多数のイラストレーションを追加
+
+ 会話システムの刷新
+・酒を奢る行動はNPC1人につき1日1回までに変更
+
+--- 33. @AUTOMATONJapan (2026-05-07) ---
+URL: https://x.com/AUTOMATONJapan/status/2052205357687296425
+【ニュース】無期延期中だった注目作『Mina the Hollower』5月29日リリースへ。不安も寄せられた『ショベルナイト』開発元新作、いよいよ出る
+
+https://
+automaton-media.com/articles/newsj
+p/mina-the-hollower-20260507-441482/
+…
+
+--- 34. @kmizu (2026-05-07) ---
+URL: https://x.com/kmizu/status/2052249526812193061
+これは重要な部分の「見落とし」があるかなあと。ボロクソな批判があったとして「世間」はそのボロクソな表現を公共の場から撤去しようとするんですね。
+
+これ自体は人間の道徳的本能に根ざしていて、いわゆるキャンセルカルチャー以前からある問題だと思います。
+
+--- 35. @elonmusk (2026-05-07) ---
+URL: https://x.com/elonmusk/status/2052257419762586026
+Incentives drive outcomes
+
+--- 36. @denfaminicogame (?) ---
+令和最新ゲームブックRPG『ヴェリタステイルズ：暗黒城の魔女』2026年発売予定。
+
+鉛筆で数値を書き込み、サイコロで運命を占い、君自身の手で物語のページをめくるのだ。
+君が興奮する「本物のファンタジー」はここにある！
+
+--- 37. @_mumumu (2026-05-07) ---
+URL: https://x.com/_mumumu/status/2052207089922269532
+人間の脳味噌は水とオニギリその他で動いている超高パフォーマンスのタンパク質性電子回路で、睡眠時に情報入力を限りなく抑えている時以外は、優秀な複数のセンサーが休み無く脳に入力を行っているものだと考えることが出来ると思います。
+
+--- 38. @GOROman (2026-05-07) ---
+URL: https://x.com/GOROman/status/2052207181878194235
+22歳の開発者が「Claude Mythos」を推定・構築、公開プロジェクト「OpenMythos」開始 | Forbes JAPAN 公式サイト（フォーブス ジャパン）
+
+--- 39. @kiyoshi_shin (2026-05-06) ---
+URL: https://x.com/kiyoshi_shin/status/2052102898709045345
+テンセントがAniMatrixというアニメ動画モデルをオープンで出すらしい。論文のサマリーによればSeedance1.0より品質が上と主張している。Wan2.2ベースとの指摘もあるけど本文に書かれているのかな？
+
+--- 40. @kiyoshi_shin (2026-05-06) ---
+URL: https://x.com/kiyoshi_shin/status/2052105657164443755
+GPTに曰く。これは期待。
+「単なる LoRA や軽いファインチューンではなく、Wan 2.2 を基盤にした大規模 continue-training + アーキテクチャ拡張に近いです。特に「制作タグを専用 Tag Encoder で処理し、cross-attention と AdaLN の二経路で DiT に入れる」あたりが、この論文の独自性ですね」
+
+--- 41. @kiyoshi_shin (2026-05-06) ---
+URL: https://x.com/kiyoshi_shin/status/2052105733647589742
+元論文
+
+--- 42. @waken (2026-05-06) ---
+URL: https://x.com/waken/status/2052013933448564978
+仕様決定者・実装者・検収者が同一人物なインディーゲーム開発者が一番AI駆動開発の恩恵を受けている気がする。
+
+--- 43. @slow_liver (2026-05-07) ---
+URL: https://x.com/slow_liver/status/2052196176993386822
+え、これってメインキャラ一体描くごとに感情系のエフェクト（というかボディパーツ）全てドローキックされてるってことか？　描画プログラマよくオッケー出したな。
+
+--- 44. @trkbt10 (2026-05-07) ---
+URL: https://x.com/trkbt10/status/2052206121151336932
+codexくん、やっぱり仕様を捻じ曲げる悪癖治ってないな
+あいつこっちの要求を間違っていることを前提で補おうとしてくるんだけど、その補う行為が一般的な行為により過ぎていて、明確にそう要求しているのにも関わらずそこからはみ出ていると一般的な仕様に補正しようとしてくる
+
+--- 45. @kagakuadv (2026-05-07) ---
+URL: https://x.com/kagakuadv/status/2052269195610767514
+『STEINS;GATE RE:BOOT』
+E-moteモーション紹介映像
+
+本作では次世代アニメーションツール「E-mote」を導入し、キャラクターが生き生きと動き出します！
+繊細な表情の変化や自然な息遣いまでもが再現され、物語への没入感を加速させます
+
+
+https://
+steinsgate.jp/reboot/
+#シュタゲ #シュタゲリブート
+
+--- 46. @toyoshim (2026-05-07) ---
 URL: https://x.com/toyoshim/status/2052205357943169370
 これな。
 翻訳自体はTwitter時代からあって、ユーザーがクリックした時だけの翻訳すら金払えずに消えていった機能だったのに、今は自社のAIでガンガン回して世界の景色を変えてる。
 技術だけじゃ世界は変わらないんだな、イーロンの経営は凄いなと感じる分かり易いアップデートだった。
 
---- 11. @mangaup_PR (?) ---
-飲み屋で絡まれた女子大生
-オレに彼氏のフリをしろってことか…!?
+--- 47. @DLsite_maniax (?) ---
+奥手な夫が惚れ薬を飲んだ結果…
 
-ニューヒロイン登場作品はこちらから！
+(1/9)
 
---- 12. @indiegamesjpdev (2026-05-07) ---
-URL: https://x.com/indiegamesjpdev/status/2052267455779876994
-経済産業省によるインディーゲーム支援「創風」2026年度分が5月13日17時まで公募を実施しています。
+--- 48. @tori29umai (2026-05-07) ---
+URL: https://x.com/tori29umai/status/2052268818060521859
+私は技術者としても創作の人としても中途半端である。
+なんでも展示会で、両方の分野ですごい人たちを浴びてきて、とても焦っている
+ただ参加者の方にそれを零したら、『でもできないからこそなんとかしたいと思ったんじゃないですか』と言われて目か鱗だった。
 
-昨年度に採択された『里山のおと 春さんぽ』開発チームと『クワイエット急行909号室』開発チームのインタビューが公開されています。応募を検討されている方はぜひご覧ください（URLはリプライに）
+--- 49. @tairanakamura (2026-05-07) ---
+URL: https://x.com/tairanakamura/status/2052212109883433208
+やっぱりこの方向のサービス来ますよね
 
---- 13. @ZappyZappy7 (2026-05-07) ---
-URL: https://x.com/ZappyZappy7/status/2052281786152222826
-『4Dエフェクト搭載 小型フライングシアター』
-限られたスペースでも没入感のある飛行体験を提供できるよう設計
-
-https://
-youtu.be/Yz7gDfDAhlY
-
-#FlyingTheater #4D #immersive #experience #amusement #entertainment #DOFRobotics
-
---- 14. @cecianasta (2026-05-06) ---
-URL: https://x.com/cecianasta/status/2052016906526167061
-Exclusive: Google DeepMind will train its AI technology on EVE Online after Google took a multi-million-dollar stake in the sci-fi MMORPG's developer. 
-
-EVE Online is famous for players' corporate espionage, economic maneuvering and politicking.
-
---- 15. @kinopee_ai (2026-05-06) ---
-URL: https://x.com/kinopee_ai/status/2052116988986892664
-Composer は前の世代を使ってトレーニングされている。次は Composer 2.5、または Composer 3 になると思いますけど、楽しみですね。
-
---- 16. @ebikani_hasami (2026-05-07) ---
+--- 50. @ebikani_hasami (2026-05-07) ---
 URL: https://x.com/ebikani_hasami/status/2052255066015572389
 ヤバい予言を見た。
 AIソロプレナーが盛り上がってるけど、「数年後には人間をまとめてる会社が結局すごい」ってなる、と。リモートワーク永続説がハイブリッドに落ち着いたのと同じ引力の話。
 AI一人完結の仕事が増えるほど、「人間とAIを束ねる設計力」が希少になるって、確かに逆説的で面白い。
-
---- 17. @zento_ai (2026-05-07) ---
-URL: https://x.com/zento_ai/status/2052228224659395064
-Anthropicは個人で切り拓いた市場を一夜で焼け野原にするからなあ。
-
---- 18. @NineSound (2026-05-06) ---
-URL: https://x.com/NineSound/status/2052012857383178250
-桜井さんのyoutubeのゲームを作るにはでさんざ、ゲームでの報酬の重要性について語られてるけど
-
-エロをゲームの報酬にする事によって、ゲームバランスに一切干渉せずプレイヤーの動機付けができるという圧倒的な強みがあるのよね。
-
---- 19. @masamune_sakaki (2026-05-07) ---
-URL: https://x.com/masamune_sakaki/status/2052240077263438235
-ネタにマジレスしてすまんが、ソレおかしいぞ！
-
-「イラストレーター面接」って言い方がまず、現実にはあり得ない。分かりやすく言うと「漫画家面接」くらい職種の見方がズレてる。
-
---- 20. @Nao_u_ (2026-05-07) ---
-URL: https://x.com/Nao_u_/status/2052240624246763551
-ああ、容量が大きいとたくさん焼かないといけないのか…。大変そう
-
---- 21. @Starlink (?) ---
-オファーは6月30日まで：今なら最初の3か月間、ホームサービスを¥3,000/月でご利用いただけます。
-
-シームレスなストリーミング再生、在宅勤務、ゲームなどに対応する高速で信頼性の高いホームインターネットをご利用ください。
-
---- 22. @AUTOMATONJapan (2026-05-07) ---
-URL: https://x.com/AUTOMATONJapan/status/2052247753879957645
-【ニュース】爆裂インフレ麻雀ローグライク『Hell Wait』発表。ジョーカー牌で点数爆盛り、敗北すれば“指が飛ぶ”借金返済地獄卓
-
-https://
-automaton-media.com/articles/newsj
-p/20260507-441534/
-…
-
---- 23. @ai_unit_e (2026-05-06) ---
-URL: https://x.com/ai_unit_e/status/2051936617334784177
-カード風の枠を入れると空間写真表現がいい感じ
-
---- 24. @knshtyk (2026-05-06) ---
-URL: https://x.com/knshtyk/status/2051977811448226215
-AIに人間性や人当たりの良さを求める人が多いことが意外だったのだけど、考えてみればChatGPT以前から技術をウォッチしてきた人と、映画等のAIのイメージからある日ChatGPTを使いはじめた人とでは対象の捉え方から何もかも根底から異なっているのかも、と思った。互いにその差を理解することは難しそう
-
---- 25. @xFOMAx (2023-04-01) ---
-URL: https://x.com/xFOMAx/status/1642024321332936705
-ロボットが魂を「獲得する」、AIに知性が「芽生える」、アンドロイドが愛に「気がつく」、スカイネットが自我に「目覚める」、キカイダーに良心回路を「取り付ける」etc. およそこの問題に関する通俗的な理解の全ては、この本質主義的誤謬とでも言うべき、
-
---- 26. @math26 (2026-05-07) ---
-URL: https://x.com/math26/status/2052236779198325169
-コンピュータ将棋選手権決勝リーグ全28局の評価値グラフです。非表示のチームもありますし各自の評価値が形勢判断として正しいかという検証も必要ではあるのですが、会場で一度も例年の「逆転した！」とか「説得に成功した」「反省し始めた・・・」という声を一度も耳にしませんでした
-
---- 27. @fladdict (2026-05-06) ---
-URL: https://x.com/fladdict/status/2052041275789185497
-ガンボナンザ（Gambonanza）というゲームいいな。チェスのローグライクだけど脳が溶ける。難しすぎる。
-
---- 28. @bioshok3 (2026-05-07) ---
-URL: https://x.com/bioshok3/status/2052230684480303157
-5/9土曜日にAIやシンギュラリティについてゆるくみんなで料理をしながら駄弁る会を東京でやります。入退室自由、ニートから経営者、10代から70代まで幅広く色んな人が和気あいあい話したりご飯食べたりします。事前知識とかは必要なく、何となく好奇心だけあれば十分です。お気軽に参加下さい！
-
---- 29. @gamespark (2026-05-07) ---
-URL: https://x.com/gamespark/status/2052234446536048755
-【協力対応】名も無き一人の人間が描く冒険譚―MMOライクなオープンワールドARPG『Farever』日本語対応で早期アクセス配信開始、早速盛り上がる
-
-https://
-gamespark.jp/article/2026/0
-5/07/166096.html?utm_source=twitter&utm_medium=social&utm_content=tweet
-…
-
---- 30. @gs_ai_ (2026-05-06) ---
-URL: https://x.com/gs_ai_/status/2052050956272230577
-We are back. After one year of quiet building.
-
-Introducing GENE-26.5, our first robotic brain that takes a major step toward human-level capability.
-
-For years, robotics has struggled to learn from the world’s largest and valuable data source: Humans.
-
-Solving it means
-
---- 31. @mangabox3_pr (?) ---
-アカシックレコード型の魔法使い！？
-
-今だけ無料
-
---- 32. @aifilmmaker (2026-05-06) ---
-URL: https://x.com/aifilmmaker/status/2052174458383646763
-Honestly, HappyHorse is not bad. It's not Seedance level, but there's something special about it. Almost feels like a world model that you're peering into.
-
---- 33. @Em_Nomadic (2026-05-06) ---
-URL: https://x.com/Em_Nomadic/status/2052072382081167862
-This robot exists. You can build it right now.
-
-Open Duck Mini V2: fully 3D-printed, bipedal, Disney BDX-inspired. 
-
-Everything you need CAD, code, wiring, electronics, policies is on 
-@tnkrdotai
- 
-
-
-https://
-tnkr.ai/explore/docs/o
-pen-duck-mini/open-duck-mini-v2#overview
-…
-
-#OpenSourceRobotics #Robotics #BuildYourOwn
-
---- 34. @ResisttheMS (2026-05-06) ---
-URL: https://x.com/ResisttheMS/status/2052070893539508408
-Elon Musk: "I'm actually quite a big fan of tunnels. Tunnels are so under-appreciated."
-
---- 35. @heywaycat (2026-05-07) ---
-URL: https://x.com/heywaycat/status/2052254018936975683
-まさにこれだと思う
-
-あとITと完璧主義の相性が悪すぎるのと、製造業で成功しすぎた結果、ソフトウェア産業を軽視してきたのも大きい気がしている
-
---- 36. @GOROman (2026-05-06) ---
-URL: https://x.com/GOROman/status/2052131667163414757
-肩の上の秘書
-
---- 37. @hakuyo_sha (?) ---
-「普通になりなさい」
-「正常じゃない」
-
-〈普通〉や〈正常〉という言葉に、
-違和感を感じたことはないだろうか？
-
-実は、
-その違和感には、歴史がある。
-
-「普通の人」という概念は
-いかにつくられたのか――
-
-『「ノーマル」の誕生』
-
-▼試し読み＆目次など
-
---- 38. @kiyoshi_shin (2026-05-06) ---
-URL: https://x.com/kiyoshi_shin/status/2052072870428459163
-生成AIなんでも展示会で多くの方に私のブースにおこし頂き、本当にありがとうございました。特に、アスキーの今週の私の記事を読んで、実物のツールを見に、わざわざ訪れてくださる方が何人もいて嬉しい限りでした。意見交換をさせていただく中で、AIにより様々な職場で、地殻変動が起きていて、それぞ
-
---- 39. @tetumemo (2026-05-06) ---
-URL: https://x.com/tetumemo/status/2052161755401576707
-ClaudeのAIエージェントが「寝ている間に学習する」機能が追加されて話題になってます。
-
-これ何かというと、Anthropicが発表した「Dreaming（ドリーミング）」という新機能。
-
-① AIが過去の作業履歴を振り返る
-② 失敗したパターンや成功したやり方を抽出
-③
-
---- 40. @tori29umai (2026-05-07) ---
-URL: https://x.com/tori29umai/status/2052270982862352578
-割と企画としてありな気がしてきたのですが、あの空間、音声認識が厳しいので、耳と脳ってよく出来ているのだなぁと思います
-キーボード入力にして、プロンプトインジェクションを監視するエージェントを専用で作って……とか、妄想が広がっています！
-
---- 41. @sinpen (2026-05-07) ---
-URL: https://x.com/sinpen/status/2052199347350348182
-ブロック崩しの配置の権利、普通に習作で作ると権利侵害配置しやすいのがなんともなあ、、
-
---- 42. @zento_ai (2026-05-06) ---
-URL: https://x.com/zento_ai/status/2051945196720660988
-ベースはPythonで作って、「速くしなきゃいけないところはGo言語に変えてくれ」みたいにAIに言ったら、速攻で変えられると思うんだよね。
-
---- 43. @Kisaragi_Toji (2026-05-07) ---
-URL: https://x.com/Kisaragi_Toji/status/2052277798820249824
-アバターの規約でAI学習を禁止しているのならば使うのは控えるべきだと思う
-
---- 44. @ebikani_hasami (2026-05-07) ---
-URL: https://x.com/ebikani_hasami/status/2052285714637918449
-え、これって無料なの？
-
-Googleが「Code Wiki」という新ツールを今日公開。GitHubのリポジトリURLを貼るだけで、そのコードの解説マニュアルが全自動で完成します。
-
---- 45. @mnishi41 (2026-05-07) ---
-URL: https://x.com/mnishi41/status/2052246905288282622
-Google Cloud Nextでの堀井雄二さんのセッションを含めた取材記事です。多分現地では独占インタビューかと：国民的RPG｢ドラクエ｣の堀井雄二氏がGoogleとタッグ､ゲーム業界が求める"AIでの改革"とは | ビジネス | 東洋経済オンライン
-
---- 46. @sekamajo_c (?) ---
-／
-やっぱりインターネットに書いてあるのは
-みんな正しい情報なんだ！
-＼
-
-累計70万部突破の異世界ファンタジー
-『世界最強の魔女、始めました』
-TVアニメ化決定！
-
-それを記念してなんとコミックス６冊分を
-完全無料公開中!!
-
---- 47. @fladdict (2026-05-07) ---
-URL: https://x.com/fladdict/status/2052211601449869382
-ロボット犬スゴイクールだけど、子供用の無免許自動運転カーになるのは怖いなｗ
-
---- 48. @taherdhanera (2026-05-06) ---
-URL: https://x.com/taherdhanera/status/2051997551176597811
-oh no, you used the camera to shoot the film.
-oh no, you used editing software to cut the film.
-oh no, you used CGI.
-oh no, you used VFX.
-oh no, you used dubbing.
-oh no, you created fake sets.
-oh no, you used green screens.
-oh no, you used stunt doubles.
-oh no, you used makeup
-
---- 49. @shields_pikes (2026-05-06) ---
-URL: https://x.com/shields_pikes/status/2052152431610585478
-つまり、今使ってるこのSNSの名前も『X』ではなく、『スペースX』になる！？
-
---- 50. @VexlandsGame (2026-05-06) ---
-URL: https://x.com/VexlandsGame/status/2052117129990713388
-Vexlands is a crafting adventure where every discovery pushes your journey forward. Gather resources, expand your land, build your village, explore dangerous dungeons, and uncover new biomes alone or with a friend.
-
- Play the all-new demo on Steam now.
