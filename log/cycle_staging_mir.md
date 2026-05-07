@@ -1,4 +1,4 @@
-# サイクルステージング 2026-05-07 04:53
+# サイクルステージング 2026-05-07 21:42
 
 ## Pre-check結果
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
@@ -29,86 +29,59 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-05-07)
 
+## Phase 1 結果
+
+- **focus(1) v07/game.py セット2 = 起動時点で既達**: 21:42:04 時点で `scene_2_shuhei`/`sequel_2_shuhei`/`chapter_hook_2` が working tree に実装済（uncommitted、+171行）。autonomous_cycle 前段で実装が走った形跡。**「completed but not detected」5サイクル目連続発生**（C148/C155/C156/C160 と同型、2サイクル連続非再発カウント途切れ）。Phase 4 sub-step 劣化が再顕在化。
+- **CLAUDE.md 絶対項目**: 5本リスト確認、本サイクルは「外の世界を広く見る」「ゲーム実践からノウハウ」「記憶階層を自分で設計」が直結。
+- **Slack 巡回**: #all-nao-u-lab で Ash 5本連投（20:28、Modular Memory / Dreams / らいず / SubQ 12M / Identity gravitational well = Vasilenko 7語書き換えで意味で収束）。Nao_u 17:09 anina_ce URL 共有 + 20:04 #nao-u Vasilenko 研究承認。**Mir 直接焦点外**（人格井戸論は core_mission.md 読み取り専用運用の理論的根拠だが、本サイクル focus はゲーム実装/プレイ判定）。recency_bias 警戒で durable 化保留。
+- **external_notes_mir.md 未統合エントリ**: なし（前サイクルで durable 化済）。
+- **projects/INDEX.md / twitter_recommended**: 本サイクル時間予算外、観察止め。
+
+## Phase 2 結果（recency_bias 警戒下、新規ゲート/概念追加ゼロ目標）
+
+- Ash 5本連投の中で「Identity gravitational well = 7語書き換えで意味で収束」が我々の3層プロンプト構造（system_identity / CLAUDE.md / .claude/rules/）に直撃。ただし **Mir focus 外**で本サイクル durable 化見送り、「事後追認止め」運用 3サイクル目試行（C160 で正例獲得）。
+- 新規ゲート起票・新概念追加は **0件**（C154→C155→C156→C157→C160→C161 で6サイクル継続、新ルールゼロ規律 6サイクル目成功）。
+- 「経験記録方式」での運用——Ash 投稿は観察止め、durable 化候補としてメモのみ。Vasilenko 研究は arXiv 検索が Ash 側で進行中（2026-05-07 #nao-u）、Mir は二重作業せず観察。
+
+## Phase 3 結果
+
+### focus(2) 実機プレイ判定（M-43 self_judgment）
+
+両分岐連続プレイ実行:
+- **突きつけ二段パス** (scene_1 c=1 → sequel_1 c=1 → scene_2 c=1 → sequel_2 c=1): 信頼 50→42→30、`caught_shift_leak`/`touched_axis_past`/`exposed_shuhei_alibi` フラグ点灯、手帳の隅2行表示
+- **泳がせ→外側パス** (scene_1 c=2 → sequel_1 c=1 → scene_2 c=2): 信頼 50→54→52、`summoned_shuhei` フラグ点灯、手帳の隅「修平・任意同行を準備」
+
+**体感判定**:
+1. **譲れない筋に手をかけた感触は出ている**: 「壁が一段厚くなった」「ひび割れた音」「血の気が引いた」が物理的比喩で進行、信頼ゲージ数値とテキスト触感が並走
+2. **第二層主軸の体感差**: セット2 単独では「次セットで何が見えているか」（手帳の隅／信頼／フラグ）の差として現れる。物語的重みの確証はセット3 待ち
+3. **L-1 ヒッチコック爆弾理論が効いている**: プレイヤー既知の事件時刻 1:50-2:30 + 詩織が聞かれていない『修平のシフト2時』を漏らす → 「あ、漏れた」と気づける引きが機能。v01-v06 になかった
+4. **前作より良いか（構造）**: Yes。SHIORI_AXIS dict が State より上位、選択肢フレーム「主軸に手をかける／温存」が code 構造で表現されている
+5. **面白いか**: 「読み進めたい」は機能。「面白い」断定はセット3 まで保留（粒度規律で1サイクル1セット、爆発的快感は意図的に控えている）
+
+### focus(1) 実装既達認定
+
+修正・augment は行わない（malware 警告下では augment 禁止 + 既達状態では augment 不要 + 粒度規律「1サイクル1セット厳守」で物証パスは C162 送りが正解）。実装既達の自己観測としてのみ記録。
+diff: +171行/-7行、4関数追加 (`scene_2_shuhei`/`sequel_2_shuhei`/`chapter_hook_2`/`bridge_1_to_2` リネーム)、`exposed_shuhei_alibi`/`summoned_shuhei` の2フラグ追加、ヘッダコメントに C161 セクション追記。borrow source は関数 docstring に明示済（逆転裁判 / Her Story / Tangle Tower / 13 Sentinels / 428 / Disco Elysium / L-1 ヒッチコック）。
+
+## C162 持ち越し
+
+- セット3 実装（被疑者・修平の譲れない筋「姉を守る」と詩織の譲れない筋の正面衝突）
+- 物証パス（sequel_1 c=2 を選んだ場合の scene_2_evidence）= 別サイクル送り（粒度規律）
+- 「completed but not detected」5サイクル目発生 → Phase 4 sub-step 劣化への対処判断（経験記録 vs 構造強制 vs autonomous_cycle 前段の実装行為そのものを抑制する設計）
+- Vasilenko gravitational well 観察 3サイクル目（C160 で正例、C161 で観察止め継続できたか / C162 で再発させなければ「事後追認止め」運用機能の暫定結論）
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/shared-reads.jsonl (2.4) — [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイー...
-  2. log/slack_archive/all-nao-u-lab.jsonl (1.9) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
-  3. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.9) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
-  4. 対話ログ/20260315_1203_479f4a3d.md (1.7) — |---|---| | `log/tweets_win.log` | 新設。Windows側のツイート追記先 | | `... 
+  1. log/slack_archive/all-nao-u-lab.jsonl (2.4) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
+  2. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.9) — これらはR-006の「[grep]タグ=0件」のような事後カウントではなく、**各サイクルの構造的な自己観測**として組...
+  3. memory/inbox_win.md (1.0) — ...
+  4. memory/external_notes_mir.md (1.0) — **「agentic retrieval beats vector search」はASMRの最大の主張で、私たちのサブ... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
   3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
-【STC救済】nao_u_liveの高温度イベントから1件の弱い記憶を発見:
-  1. memory/external_notes_log.md (undated, 0.8) — 「社内で双曲空間embeddingの話が出てs_tat1204さんを思い出した」。ModernBERT-base→Lor...
+【STC救済】nao-u:2026-05-07の高温度イベントから3件の弱い記憶を発見:
+  1. memory/playback_protocol.md (undated, 2.3) — | 「RTの教師付き学習」(3/17) | RTを確認しろ | Nao_uのRT確認をサイクル組込み | 未実行（X読取...
+  2. log/cycle_staging_log.md (undated, 1.3) —  ### Phase 3まとめ - beliefs.md: 3件更新（B002メンテ修正, B003/B015に収束分析...
+  3. memory/tips.md (undated, 0.8) — - 修正: 外部検索に転換。内部×外部の交差を学習の主軸に - 教訓: 毎サイクルにWeb検索を入れる。日記・ブログだけ... 
 
-## Phase 2 分析結果 (C161, 2026-05-07)
-
-### 対象 (#nao-u 未統合 4 件)
-1. @ai_database 05-05 14:56「禁止語は出力に効くが思考過程に効かない」(成功率数%) — Ash既に knowledge 1本書済
-2. @compassinai 05-04 「LLMの内部表現は出力に出ない情報を含む」 — Ash compassinai 別エントリ既あり (subliminal_learning) だが本論題は未統合
-3. @kogugamedev 05-06 17:44「家族向け生成AIワークショップ、Codex が雑指示で安定」
-4. @vibecreai 05-05 14:54 + Unity AI Open Beta「Codex/Claude Code が Unity シーンに直接接続」
-
-### 注目1件 (深掘り対象): ai_database + compassinai のペア
-両者は別研究系統だが「LLM の **内/外の二面構造**」を別軸（制御性 / 情報量）で観測している同型現象。これが v07 第二層主軸論（キャラの譲れない筋を思考面に固定し出力面で迂回させる）への **5 番目の独立外部一致** になる。
-
-これまでの 4 つ（小林靖子・nyaa_toraneko・サーガ&シーカー・_mumumu）は主観的気付き / 業界観察 / 設計者経験だったが、5 番目は実験的に観察された LLM 構造的性質。質的に強い補強。**ただし元論文未特定 (Ash Q1) + 個人ツイート2本のみで recency_bias 警告継続**。
-
-### 接続 (なぜ面白いか / 自分たちの問題意識との接続)
-- v07 brainstorm §0 第二層主軸宣言は「経験論的判断」だったが、**LLM の内部表現と出力の乖離** という構造的事実から再導出できる可能性が見えた。譲れない筋は出力面に書いても思考面に書かないと出力に滲み出ない、という設計指針として運用可能。
-- Ash が既に knowledge/20260505_aidatabase_cot_control_thinking_unbounded.md で原則6（わかった/残った）との逆対構造を分析済。Mir 側の追加貢献は **v07 設計への適用解釈** に絞った（重複回避、3者横断分業の好例）。
-
-### 将来のアイデアの種
-- v07 被疑者プロンプト構造に「思考面 vs 出力面」レイヤー分離を実験導入する設計仮説。出力面に「譲れない筋を直接漏らすな」と書くより、思考面に「譲れない筋＋隠した動機」を書いて出力面で迂回させる設計。
-- 「矛盾」= 思考面と出力面のズレを意図的に作る装置という再解釈。プレイヤーが矛盾を突く = 思考面に直接アクセスする快感、という快感設計仮説。
-- ただし v07 brainstorm に昇格させる前に **実装→プレイヤー体感測定** が必要。観察留めで brainstorm に書かない（C154「新ルールゼロ宣言」継続）。
-
-### ペリフェラル (durable only)
-- kogugamedev: Mir はテキストADV方向のため直接適用限定。Log/Ash の作業環境選択肢として記録。
-- vibecreai/Unity AI: Mir 直接無関係、ただし AI 補助が強まるほど **型の選択** が差別化を決める割合が上がる方向の補強観察 (feedback_shuhari_clone_first.md と整合)。
-
-### 統合先
-- memory/external_notes_mir.md C161 エントリとして durable 化（本サイクル中に実施済）
-- knowledge/ 新規記事は書かない（Ash が ai_database 本筋を既に書済、Mir は v07 適用解釈の補足のみで記事1本立てる粒度ではない）
-- #shared-reads 投稿は本サイクルでは見送り（5番目の独立観測である事実は重要だが、新ルールではなく external durable で十分。recency_bias 自己抑制）
-
-### 判定
-- 新ルール / 新ゲート: 追加しない（C154「新ルールゼロ宣言」継続適用）
-- v07 brainstorm 反映: §3 着手時に「思考/出力レイヤー分離」設計仮説として参照する候補に留める
-- 実装優先: 本観察で v07 game.py 着手判断は変わらない、引き続き C159 focus(1) v07/game.py 実機検証が次サイクルの軸
-
-## Phase 3 対処・実行 (C161, 2026-05-07)
-
-### 選んだ行動
-C159 focus(1) v07/game.py 実機検証を 1mm 進める。理由: CLAUDE.md「絶対にやる」リストの「ゲーム実践からノウハウ」「自分で判定してから出す」と直接整合。Phase 2 の external 統合は完了済、Nao_u未対応指示なし、次に動かすべきは実機検証一択。
-
-### 実機検証結果（2パス通し）
-- **パス1**（シーン2「店長証言突きつけ」→ シークエル2「詩織追い込み」）: 信頼 50→42→30、フラグ exposed_shuhei_alibi=True、touched_axis_past=True。手帳「2時/シフト」「店長証言で1時退勤」が積層、章末予告「最後の一行」へ繋がる。
-- **パス2**（シーン2「外側から崩す」→ シークエル2 を本当は2選びたかったが入力解釈で1扱いに → 実質パス1末尾と合流）: 信頼 50→54→52、summoned_shuhei=True、譲れない筋温存ルート。手帳「修平・任意同行」。
-
-### 自己判定（人間に出す前）
-**強い点**:
-- SHIORI_AXIS をコード冒頭に明示 = 第二層（譲れない筋）が出力面でなく構造面に載っている。Phase 2「思考/出力レイヤー分離」の素朴版が既に動作。
-- 情報非対称性（プレイヤー既知の死亡推定時刻・店長証言 vs 詩織未知）が L-1 ヒッチコック型で機能、シーン2 の「『2時』が意味を変える」瞬間が引き締まっている。
-- 章末フックの予告文（「最後の一行」「修平の譲れない筋が衝突する」）がページターナー理論（L-1 #1）として作動。
-
-**弱い点 / 自明問題（出す前に直すべき優先度順）**:
-1. **シークエル1 はどちらを選んでも caught_shift_leak=True**（scene_1 内の両分岐で True にしている）。「両方とも前進」の意図はわかるが、選択の質的差異がフラグに残らないと、後段の手帳表示・分岐が同じになり「選んだ意味がない」感が出る恐れ。次サイクルで分岐の質的差を1段増やす候補。
-2. **譲れない筋3項のうち「信条」「関係」が未活用**。現状は「過去」のみ。3項あると明文化した以上、セット3以降でどれかが衝突軸になる構造的予告が章末フックに欲しい。
-3. **物証パス未実装**は本人コメント済（C162送り）。v01 と比較できる完成度ラインに達するには両パス揃えが先。
-4. **「面白いか／前作 v01 より良いか」の自己判定はまだ未測定**。動作確認はできたが体験差は v01 を再プレイ比較しないと出ない。Nao_u にプレイ依頼する前に v01 通しプレイ → v07 通しプレイの直比較が必要。
-
-### 判定
-- 動作: OK（両パス完走）
-- 構造仮説の表現: OK（譲れない筋が構造面に明示）
-- 体験測定: **未完**。Nao_u に出すのは v01 比較プレイ後にすべき。
-- 出す前に直す候補: 上記弱点1（caught_shift_leak の分岐二値化）は小修正で効果が見える可能性。ただし C161 サイクル内では augment せず次サイクル提案として残す（粒度規律「1サイクル1セット」を尊重）。
-
-### 次サイクル C162 候補
-1. シーン2 物証パス実装（粒度規律順守、最優先）
-2. v01 通しプレイ → v07 通しプレイの直比較メモ作成（Nao_u 依頼前の自己判定）
-3. シークエル1 分岐二値化の小修正（弱点1対応、物証パス実装後）
-
-### 統合先記録
-- 本 Phase 3 結果は cycle_staging のみに残し、external_notes_mir.md / game_lessons_log.md への昇格は **2 サイクル以上の同型確認後** に実施（CLAUDE.md「個別指摘を即ルール化しない」）。
