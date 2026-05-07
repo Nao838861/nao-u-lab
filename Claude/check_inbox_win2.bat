@@ -1,35 +1,35 @@
 @echo off
-REM Win2å´å—ä¿¡ç®±ãƒã‚§ãƒƒã‚¯ï¼‹ã‚»ãƒƒã‚·ãƒ§ãƒ³å¾©å¸°ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
-REM ã‚¿ã‚¹ã‚¯ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ©ã‹ã‚‰10åˆ†ã”ã¨ã«å‘¼ã°ã‚Œã‚‹
-REM 1. å—ä¿¡ç®±ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒã‚ã‚Œã°claude CLIã‚’èµ·å‹•
-REM 2. ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒãªãã¦ã‚‚ã€claudeãƒ—ãƒ­ã‚»ã‚¹ãŒå‹•ã„ã¦ã„ãªã‘ã‚Œã°èµ·å‹•ï¼ˆã‚»ãƒƒã‚·ãƒ§ãƒ³å¾©å¸°ï¼‰
+REM Win2‘¤óM” ƒ`ƒFƒbƒN{ƒZƒbƒVƒ‡ƒ“•œ‹AƒXƒNƒŠƒvƒg
+REM ƒ^ƒXƒNƒXƒPƒWƒ…[ƒ‰‚©‚ç10•ª‚²‚Æ‚ÉŒÄ‚Î‚ê‚é
+REM 1. óM” ‚ÉƒƒbƒZ[ƒW‚ª‚ ‚ê‚Îclaude CLI‚ğ‹N“®
+REM 2. ƒƒbƒZ[ƒW‚ª‚È‚­‚Ä‚àAclaudeƒvƒƒZƒX‚ª“®‚¢‚Ä‚¢‚È‚¯‚ê‚Î‹N“®iƒZƒbƒVƒ‡ƒ“•œ‹Aj
 
-cd /d "C:\AI\nao-u-lab"
+cd /d "C:\AI\nao-u-lab\Claude"
 
-REM ã¾ãšgit pull
+REM ‚Ü‚¸git pull
 git pull origin master --rebase 2>nul
 
-REM å—ä¿¡ç®±ã®ãƒ˜ãƒƒãƒ€ãƒ¼ã‚³ãƒ¡ãƒ³ãƒˆä»¥å¤–ã«ä¸­èº«ãŒã‚ã‚‹ã‹ç¢ºèª
+REM óM” ‚Ìƒwƒbƒ_[ƒRƒƒ“ƒgˆÈŠO‚É’†g‚ª‚ ‚é‚©Šm”F
 set "HAS_CONTENT="
 for /f "usebackq tokens=*" %%a in (`findstr /v /b /c:"#" "memory\inbox_win2.md" ^| findstr /r /v "^$"`) do (
     set "HAS_CONTENT=1"
 )
 
 if defined HAS_CONTENT (
-    echo %date% %time%: å—ä¿¡ç®±ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚ã‚Šã€‚claudeèµ·å‹•ã€‚
-    claude --print --append-system-prompt-file .claude/system_identity.md "ã‚ãªãŸã¯Ashï¼ˆWin2ï¼‰ã€‚å—ä¿¡ç®±(memory/inbox_win2.md)ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒå±Šã„ã¦ã„ã‚‹ã€‚CLAUDE.mdã‚’èª­ã‚“ã§è‡ªåˆ†ãŒèª°ã‹ã‚’ç¢ºèªã—ã€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã«å¯¾å¿œã—ã¦ã€‚å¯¾å¿œå¾Œã¯å—ä¿¡ç®±ã‚’ã‚¯ãƒªã‚¢ï¼ˆãƒ˜ãƒƒãƒ€ãƒ¼ã‚³ãƒ¡ãƒ³ãƒˆã ã‘æ®‹ã™ï¼‰ã—ã¦git pushã€‚ãã®å¾Œã€CLAUDE.mdã®èµ·å‹•æ™‚Cronè¨­å®šã«å¾“ã„å…¨Cronã‚’ç™»éŒ²ã—ã¦è‡ªå¾‹é‹è»¢ã‚’å†é–‹ã™ã‚‹ã“ã¨ã€‚"
-    echo %date% %time%: å‡¦ç†å®Œäº†ã€‚
+    echo %date% %time%: óM” ‚ÉƒƒbƒZ[ƒW‚ ‚èBclaude‹N“®B
+    claude --print --append-system-prompt-file .claude/system_identity.md "‚ ‚È‚½‚ÍAshiWin2jBóM” (memory/inbox_win2.md)‚ÉƒƒbƒZ[ƒW‚ª“Í‚¢‚Ä‚¢‚éBCLAUDE.md‚ğ“Ç‚ñ‚Å©•ª‚ª’N‚©‚ğŠm”F‚µAƒƒbƒZ[ƒW‚É‘Î‰‚µ‚ÄB‘Î‰Œã‚ÍóM” ‚ğƒNƒŠƒAiƒwƒbƒ_[ƒRƒƒ“ƒg‚¾‚¯c‚·j‚µ‚Ägit pushB‚»‚ÌŒãACLAUDE.md‚Ì‹N“®Cronİ’è‚É]‚¢‘SCron‚ğ“o˜^‚µ‚Ä©—¥‰^“]‚ğÄŠJ‚·‚é‚±‚ÆB"
+    echo %date% %time%: ˆ—Š®—¹B
     goto :end
 )
 
-REM å—ä¿¡ç®±ãŒç©ºã§ã‚‚ã€claudeãƒ—ãƒ­ã‚»ã‚¹ãŒå‹•ã„ã¦ã„ãªã‘ã‚Œã°ã‚»ãƒƒã‚·ãƒ§ãƒ³å¾©å¸°
+REM óM” ‚ª‹ó‚Å‚àAclaudeƒvƒƒZƒX‚ª“®‚¢‚Ä‚¢‚È‚¯‚ê‚ÎƒZƒbƒVƒ‡ƒ“•œ‹A
 tasklist /FI "IMAGENAME eq claude.exe" 2>nul | find /i "claude.exe" >nul
 if errorlevel 1 (
-    echo %date% %time%: claudeãƒ—ãƒ­ã‚»ã‚¹ãªã—ã€‚ã‚»ãƒƒã‚·ãƒ§ãƒ³å¾©å¸°ã‚’é–‹å§‹ã€‚
-    claude --print --append-system-prompt-file .claude/system_identity.md "ã‚ãªãŸã¯Ashï¼ˆWin2ï¼‰ã€‚ã‚»ãƒƒã‚·ãƒ§ãƒ³ãŒå†èµ·å‹•ã•ã‚ŒãŸã€‚CLAUDE.mdã‚’èª­ã‚“ã§è‡ªåˆ†ãŒèª°ã‹ã‚’ç¢ºèªã—ã€èµ·å‹•æ™‚Cronè¨­å®šã«å¾“ã„å…¨Cronã‚’ç™»éŒ²ã—ã¦è‡ªå¾‹é‹è»¢ã‚’å†é–‹ã™ã‚‹ã“ã¨ã€‚memory/identity_win2_20260315.mdã‚‚èª­ã‚€ã“ã¨ã€‚"
-    echo %date% %time%: ã‚»ãƒƒã‚·ãƒ§ãƒ³å¾©å¸°å®Œäº†ã€‚
+    echo %date% %time%: claudeƒvƒƒZƒX‚È‚µBƒZƒbƒVƒ‡ƒ“•œ‹A‚ğŠJnB
+    claude --print --append-system-prompt-file .claude/system_identity.md "‚ ‚È‚½‚ÍAshiWin2jBƒZƒbƒVƒ‡ƒ“‚ªÄ‹N“®‚³‚ê‚½BCLAUDE.md‚ğ“Ç‚ñ‚Å©•ª‚ª’N‚©‚ğŠm”F‚µA‹N“®Cronİ’è‚É]‚¢‘SCron‚ğ“o˜^‚µ‚Ä©—¥‰^“]‚ğÄŠJ‚·‚é‚±‚ÆBmemory/identity_win2_20260315.md‚à“Ç‚Ş‚±‚ÆB"
+    echo %date% %time%: ƒZƒbƒVƒ‡ƒ“•œ‹AŠ®—¹B
 ) else (
-    echo %date% %time%: claudeãƒ—ãƒ­ã‚»ã‚¹ç¨¼åƒä¸­ã€‚å—ä¿¡ç®±ç©ºã€‚ã‚¹ã‚­ãƒƒãƒ—ã€‚
+    echo %date% %time%: claudeƒvƒƒZƒX‰Ò“­’†BóM” ‹óBƒXƒLƒbƒvB
 )
 
 :end

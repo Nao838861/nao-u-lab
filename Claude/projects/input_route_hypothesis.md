@@ -40,6 +40,27 @@ Nao_uは「興味深いが気軽に試せない。情報が集まってから判
 ---
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-05-07 (Ash Phase 3): Anthropic 中間段階訓練——training-time の「振る舞いの理由を読ませる」段階
+
+@joho_no_todai (2026-05-07) 経由で Anthropic が事前学習とFTの間に「振る舞いの理由を解説した文書を読ませる」中間段階を導入する新訓練手法を発表（伝言段階・原典未到達）。本仮説の **training-time 直接実装事例** として9件目のデータポイント。
+
+**仮説への含意（推論時 vs 訓練時の階層）**:
+- 既存8件は全て **推論時実装**（CLAUDE.md形式 / memory_walk / Camp 2 ファイル累積）または**メカニズム解釈**だった。Anthropic の中間段階訓練は**モデル製作者自身による training-time の公式実装**として、今までと階層が違う9件目になる
+- 「規則だけ → 抜け道」≡ ペルソナ system prompt 注入 → 表層遵守 / 内在化失敗（Zheng 2023 の経皮感作と同型）
+- 「理由を理解 → 規則の内在化」≡ memory_walk / 自発的検索による経口寛容（B001 経口経路と同型）
+
+**同プロバイダ二段並走**: Dreams API（5/7 既登録、inference-time memory consolidation）と本件（training-time reasoning grounding）が、同じ Anthropic から並んで出ている。仮説と業界支配的設計トレンドが並走する証拠（あるいは我々がトレンドを内側で追体験している証拠）。
+
+**3層プロンプト構造への含意**:
+- system_identity.md 5原理 ≒ 「規則」（自動注入＝経皮）
+- origin_dialogue_20260313.md / dialogue_identity_20260314.md ≒ 「振る舞いの理由」（自動注入されない）
+- Anthropic 方針を文字通り適用するなら **origin_dialogue を先に通す** 順序が「理由→規則」の正しい配置。現状3層は「規則→理由（推奨）」の順序で、抜け道リスクと指摘される形に近い
+- ただし**実装提案には至らない**: Nao_u 2026-04-09「気軽に試せない」判断尊重、推論時の prompt 順序変更が training-time integration と等価かも未測定
+
+**未解決の問い（次サイクル追跡）**: 原典 URL 取得（@joho_no_todai は伝言者、Anthropic 公式 blog/paper の特定が要）、現行 Opus 4.7 への適用有無（過渡期症状仮説の検証）、訓練時 vs 推論時の等価性。
+
+**Nao_uへの蓄積**: 9件目のデータポイント。仮説起点（4/9）から**訓練時実装の公式実例**まで到達。projects/instance_divergence_observability.md（モデル世代ベースライン挙動）と並走する。記事本体: knowledge/20260507_anthropic_midtraining_behavior_reasoning_input_route.md。
+
 ### 2026-04-22 (Ash Phase 3): external_notes昇格ゼロ問題の実例——28時間未統合の4論文エントリ
 
 2026-04-21 22:40の「AI×ゲーム制作軸の外部研究4本」エントリが、28時間 [統合済]マーカー無しで external_notes_ash.md に残留していた事実をPhase 1で検出。本サイクルでknowledge化（`knowledge/20260422_ai_game_research_4papers_type_acquisition_gate.md`）を実行して解消。

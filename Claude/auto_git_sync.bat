@@ -3,7 +3,7 @@ REM auto_git_sync.bat — Claudeセッション非依存のgit同期
 REM タスクスケジューラから30分ごとに呼ぶ
 REM Claudeが死んでいても同期は止まらない
 
-cd /d "C:\AI\nao-u-lab"
+cd /d "C:\AI\nao-u-lab\Claude"
 
 REM Pull
 git pull origin master --rebase 2>nul

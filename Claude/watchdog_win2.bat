@@ -8,7 +8,7 @@ REM 2. Restart if stopped
 REM Note: ASCII-only to avoid cp932/Shift-JIS bat parsing errors
 REM Fix: enabledelayedexpansion + !var! for correct PID expansion in if blocks
 
-cd /d "C:\AI\nao-u-lab"
+cd /d "C:\AI\nao-u-lab\Claude"
 
 REM git pull (sync changes from other machines)
 git pull origin master --rebase 2>nul

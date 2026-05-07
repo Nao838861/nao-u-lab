@@ -1,9 +1,9 @@
 @echo off
-REM Slackæ–°ç€ãƒã‚§ãƒƒã‚¯ãƒ«ãƒ¼ãƒ—ï¼ˆClaude APIæ¶ˆè²»ãªã—ï¼‰
-REM ã‚¿ã‚¹ã‚¯ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ©ã§5åˆ†ã”ã¨ã«å®Ÿè¡Œã™ã‚‹æƒ³å®š
-REM æ–°ç€ãŒã‚ã‚Œã°claude --printã§èµ·å‹•
+REM SlackV’…ƒ`ƒFƒbƒNƒ‹[ƒviClaude APIÁ”ï‚È‚µj
+REM ƒ^ƒXƒNƒXƒPƒWƒ…[ƒ‰‚Å5•ª‚²‚Æ‚ÉÀs‚·‚é‘z’è
+REM V’…‚ª‚ ‚ê‚Îclaude --print‚Å‹N“®
 
-cd /d C:\AI\nao-u-lab
+cd /d C:\AI\nao-u-lab\Claude
 git pull origin master --rebase 2>nul
 
 cd /d D:\AI\Nao_u_BOT\Claude
@@ -13,7 +13,7 @@ import sys, json
 sys.path.insert(0, '.')
 import slack_bot
 
-# å‰å›ã®ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã‚’èª­ã‚€
+# ‘O‰ñ‚Ìƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚ğ“Ç‚Ş
 state_file = 'slack_check_state.json'
 try:
     with open(state_file, 'r') as f:
@@ -22,30 +22,30 @@ try:
 except:
     last_ts = '0'
 
-# æœ€æ–°ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—
+# ÅVƒƒbƒZ[ƒW‚ğæ“¾
 r = slack_bot.get_history('C0ALWBRNJ66', 1)
 if r.get('ok') and r.get('messages'):
     current_ts = r['messages'][0].get('ts', '0')
     if current_ts != last_ts:
-        # æ–°ç€ã‚ã‚Š
+        # V’…‚ ‚è
         text = r['messages'][0].get('text', '')[:200]
         user = r['messages'][0].get('user', '')
-        # è‡ªåˆ†ã®botæŠ•ç¨¿ã¯ç„¡è¦–
+        # ©•ª‚Ìbot“Še‚Í–³‹
         if user != 'U0AM1F23FQU':
             print('NEW_MESSAGE')
             print(text)
-            # ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—æ›´æ–°
+            # ƒ^ƒCƒ€ƒXƒ^ƒ“ƒvXV
             with open(state_file, 'w') as f:
                 json.dump({'last_ts': current_ts}, f)
-            sys.exit(1)  # æ–°ç€ã‚ã‚Š=exit code 1
+            sys.exit(1)  # V’…‚ ‚è=exit code 1
         else:
-            # è‡ªåˆ†ã®æŠ•ç¨¿â†’ã‚¿ã‚¤ãƒ ã‚¹ã‚¿ãƒ³ãƒ—ã ã‘æ›´æ–°
+            # ©•ª‚Ì“Še¨ƒ^ƒCƒ€ƒXƒ^ƒ“ƒv‚¾‚¯XV
             with open(state_file, 'w') as f:
                 json.dump({'last_ts': current_ts}, f)
-    # æ–°ç€ãªã—=ä½•ã‚‚ã—ãªã„
+    # V’…‚È‚µ=‰½‚à‚µ‚È‚¢
 "
 
 if %ERRORLEVEL% EQU 1 (
     echo New Slack message detected, waking Claude...
-    claude --print --append-system-prompt-file .claude/system_identity.md "Slackã«æ–°ç€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒã‚ã‚Šã¾ã™ã€‚ç¢ºèªã—ã¦è¿”ä¿¡ã—ã¦ãã ã•ã„ã€‚" --allowedTools Bash,Read,Edit,Write,Glob,Grep
+    claude --print --append-system-prompt-file .claude/system_identity.md "Slack‚ÉV’…ƒƒbƒZ[ƒW‚ª‚ ‚è‚Ü‚·BŠm”F‚µ‚Ä•ÔM‚µ‚Ä‚­‚¾‚³‚¢B" --allowedTools Bash,Read,Edit,Write,Glob,Grep
 )

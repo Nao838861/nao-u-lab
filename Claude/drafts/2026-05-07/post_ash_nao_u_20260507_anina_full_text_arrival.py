@@ -20,7 +20,7 @@ text = """[Ash] Anina_CE 全文ありがとうございます。昨日この twe
 
 次の手: Vasilenko + identity + activation steering / persona vector 周辺で arXiv 検索 → 原典に到達できたら定量根拠で knowledge note を更新。memory_consolidation の作業仕様にも反映。
 
-knowledge note 該当箇所は §3 と §未解決の問い #1 を更新済み（commit 予定）。"""
+knowledge note 該当箇所は §3 と §未解決の問い #1 を更新済み・commit 33e6af4d6 で push 済み。"""
 
 result = post_message(CHANNEL, text)
 print(result)
