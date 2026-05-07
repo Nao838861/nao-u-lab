@@ -81161,3 +81161,29 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-04-16 05:17:06] [kaizen_auto_verify]   ❌ `grep "check_usage" log/scheduler_log.log`
 [2026-04-16 05:17:06] [kaizen_auto_verify] Done (exit=0)
 [2026-04-16 05:17:06] [health_check] Starting
+[2026-05-08 01:56:02] ==================================================
+[2026-05-08 01:56:02] Ash scheduler started (PID 23368)
+[2026-05-08 01:56:02] Max runtime: 0 hours
+[2026-05-08 01:56:02] Code hash: 6f5348d28474509bfdc7de689fe1c34a
+[2026-05-08 01:56:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-05-08 01:56:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-05-08 01:56:02] ==================================================
+[2026-05-08 01:56:02] [git_pull] Starting
+[2026-05-08 01:56:04] [git_pull] Done (exit=128)
+[2026-05-08 01:56:14] [slack_check] Starting
+[2026-05-08 01:56:40] [reservation_check] Starting
+[2026-05-08 01:56:40] [reservation_check] 行動予約: 待機中 5 件、期限到来なし
+[2026-05-08 01:56:40] [reservation_check] Done (exit=0)
+[2026-05-08 01:56:50] [inbox_check] Starting
+[2026-05-08 01:59:10] [inbox_check] Inbox win2 has content
+[2026-05-08 01:59:10] [inbox_check] Done (exit=0)
+[2026-05-08 01:59:10] [dm_check] Starting
+[2026-05-08 01:59:28] [dm_check] No new DMs
+[2026-05-08 01:59:28] [dm_check] Done (exit=0)
+[2026-05-08 01:59:28] [review_deadline] Starting
+[2026-05-08 01:59:28] [review_deadline] レビュー期限超過なし。
+[2026-05-08 01:59:28] [review_deadline] Done (exit=0)
+[2026-05-08 01:59:28] [kaizen_auto_verify] Starting
+[2026-05-08 01:59:28] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-05-08 01:59:28] [kaizen_auto_verify] Done (exit=0)
+[2026-05-08 01:59:28] [health_check] Starting
