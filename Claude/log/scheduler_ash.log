@@ -81227,3 +81227,80 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-05-08 02:15:06] [check_usage] 週間 *6%* | セッション 14%
 [2026-05-08 02:15:06] [check_usage] Done (exit=0)
 [2026-05-08 02:15:06] [health_check] Starting
+[2026-05-08 02:15:06] [health_check] [health_check] 2026-05-08T02:15:06 overall=OK
+[2026-05-08 02:15:06] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 02:15:06] [health_check] Done (exit=0)
+[2026-05-08 02:15:46] [slack_check] Starting
+[2026-05-08 02:16:43] [slack_check] [02:16:43] 1 msg(s) -> inbox_win2.md
+[2026-05-08 02:16:43] [slack_check] Done (exit=0)
+[2026-05-08 02:16:43] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-05-08 02:16:43] [inbox_check] Starting
+[2026-05-08 02:21:30] [inbox_check] Inbox win2 has content
+[2026-05-08 02:21:30] [inbox_check] Done (exit=0)
+[2026-05-08 02:21:40] [slack_check] Starting
+[2026-05-08 02:22:08] [health_check] Starting
+[2026-05-08 02:22:09] [health_check] [health_check] 2026-05-08T02:22:08 overall=OK
+[2026-05-08 02:22:09] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 02:22:09] [health_check] Done (exit=0)
+[2026-05-08 02:23:09] [slack_check] Starting
+[2026-05-08 02:24:36] [slack_check] Starting
+[2026-05-08 02:26:04] [slack_check] Starting
+[2026-05-08 02:27:10] [health_check] Starting
+[2026-05-08 02:27:11] [health_check] [health_check] 2026-05-08T02:27:11 overall=OK
+[2026-05-08 02:27:11] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 02:27:11] [health_check] Done (exit=0)
+[2026-05-08 02:27:31] [slack_check] Starting
+[2026-05-08 02:28:59] [slack_check] Starting
+[2026-05-08 02:30:29] [slack_check] Starting
+[2026-05-08 02:32:02] [slack_check] Starting
+[2026-05-08 02:32:40] [health_check] Starting
+[2026-05-08 02:32:40] [health_check] [health_check] 2026-05-08T02:32:40 overall=OK
+[2026-05-08 02:32:40] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 02:32:40] [health_check] Done (exit=0)
+[2026-05-08 02:33:30] [slack_check] Starting
+[2026-05-08 02:34:59] [slack_check] Starting
+[2026-05-08 02:36:25] [slack_check] Starting
+[2026-05-08 02:37:43] [health_check] Starting
+[2026-05-08 02:37:43] [health_check] [health_check] 2026-05-08T02:37:43 overall=OK
+[2026-05-08 02:37:43] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 02:37:43] [health_check] Done (exit=0)
+[2026-05-08 02:37:53] [slack_check] Starting
+[2026-05-08 02:39:22] [slack_check] Starting
+[2026-05-08 02:40:50] [slack_check] Starting
+[2026-05-08 02:42:19] [slack_check] Starting
+[2026-05-08 02:42:57] [health_check] Starting
+[2026-05-08 02:42:58] [health_check] [health_check] 2026-05-08T02:42:57 overall=OK
+[2026-05-08 02:42:58] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 02:42:58] [health_check] Done (exit=0)
+[2026-05-08 02:43:38] [infra_health_check] Starting
+[2026-05-08 02:43:40] [infra_health_check] [infra_health] Ash health check at 2026-05-08 02:43:38
+[2026-05-08 02:43:40] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 02:43:40] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 02:43:40] [infra_health_check] Done (exit=1)
+[2026-05-08 02:43:50] [slack_check] Starting
+[2026-05-08 02:45:17] [slack_check] Starting
+[2026-05-08 02:46:42] [slack_check] Starting
+[2026-05-08 02:47:59] [health_check] Starting
+[2026-05-08 02:48:00] [health_check] [health_check] 2026-05-08T02:48:00 overall=OK
+[2026-05-08 02:48:00] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 02:48:00] [health_check] Done (exit=0)
+[2026-05-08 02:48:10] [slack_check] Starting
+[2026-05-08 02:49:38] [slack_check] Starting
+[2026-05-08 02:51:06] [slack_check] Starting
+[2026-05-08 02:52:33] [slack_check] Starting
+[2026-05-08 02:53:11] [health_check] Starting
+[2026-05-08 02:53:11] [health_check] [health_check] 2026-05-08T02:53:11 overall=OK
+[2026-05-08 02:53:11] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 02:53:11] [health_check] Done (exit=0)
+[2026-05-08 02:54:01] [slack_check] Starting
+[2026-05-08 02:55:29] [slack_check] Starting
+[2026-05-08 02:56:07] [git_pull] Starting
+[2026-05-08 02:56:08] [git_pull] Done (exit=128)
+[2026-05-08 02:56:58] [slack_check] Starting
+[2026-05-08 02:58:16] [health_check] Starting
+[2026-05-08 02:58:16] [health_check] [health_check] 2026-05-08T02:58:16 overall=OK
+[2026-05-08 02:58:16] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 02:58:16] [health_check] Done (exit=0)
+[2026-05-08 02:58:26] [slack_check] Starting
+[2026-05-08 02:59:53] [slack_check] Starting
+[2026-05-08 03:00:33] [git_sync] Starting
