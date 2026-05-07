@@ -2,7 +2,7 @@
 import json, os, glob, re
 from datetime import datetime
 
-BASE = r'C:\Users\owner\.claude\projects\D--AI-Nao-u-BOT'
+BASE = r'C:\Users\owner\.claude\projects\D--AI-Nao-u-BOT-Claude'
 KEYWORDS = ['study_platformer', 'mario_clone', 'platformer_kata', 'MarioGame',
             'core.py', 'play.py', 'tilemap', 'target_ai', 'Goomba', 'クリボー',
             'マリオ', 'renderer', 'hierarchical_ai', 'mario.c', 'kuribo',

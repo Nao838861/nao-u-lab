@@ -18,7 +18,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 JST = timezone(timedelta(hours=9))
-CLAUDE_DIR = Path.home() / ".claude" / "projects" / "D--AI-Nao-u-BOT"
+CLAUDE_DIR = Path.home() / ".claude" / "projects" / "D--AI-Nao-u-BOT-Claude"
 
 # Tool calls that produce important visible output
 IMPORTANT_TOOLS = {"Write", "Edit", "Bash"}

@@ -1,8 +1,8 @@
 @echo off
 echo Syncing memory and tweets to GitHub...
 
-set REPO_DIR=D:\AI\Nao_u_BOT
-set CLAUDE_MEMORY=%USERPROFILE%\.claude\projects\D--AI-Nao-u-BOT\memory
+set REPO_DIR=D:\AI\Nao_u_BOT\Claude
+set CLAUDE_MEMORY=%USERPROFILE%\.claude\projects\D--AI-Nao-u-BOT-Claude\memory
 
 cd /d %REPO_DIR%
 

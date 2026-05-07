@@ -136,9 +136,9 @@ def process_session(path, out):
 
 def main():
     sessions = [
-        (r'C:\Users\owner\.claude\projects\D--AI-Nao-u-BOT\1c42588d-c71c-4099-8659-9e87bddc0fd7.jsonl',
+        (r'C:\Users\owner\.claude\projects\D--AI-Nao-u-BOT-Claude\1c42588d-c71c-4099-8659-9e87bddc0fd7.jsonl',
          '2026-04-09 (ゲーム開発メインセッション)'),
-        (r'C:\Users\owner\.claude\projects\D--AI-Nao-u-BOT\c74ed781-a28c-4902-8929-107a57e8adf6.jsonl',
+        (r'C:\Users\owner\.claude\projects\D--AI-Nao-u-BOT-Claude\c74ed781-a28c-4902-8929-107a57e8adf6.jsonl',
          '2026-04-11 (AI改善+マップ精度向上)'),
     ]
 

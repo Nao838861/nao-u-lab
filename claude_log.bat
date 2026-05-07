@@ -3,7 +3,7 @@ REM claude_log.bat — Log(Win) Claude Code launcher wrapper
 REM Starts scheduler -> runs Claude Code -> stops scheduler on exit
 REM For family-shared PC: only runs while Claude Code is active
 
-cd /d D:\AI\Nao_u_BOT
+cd /d D:\AI\Nao_u_BOT\Claude
 
 REM --- git pull ---
 git pull origin master --rebase 2>nul

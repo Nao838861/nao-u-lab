@@ -6,7 +6,7 @@ REM 新着があればclaude --printで起動
 cd /d C:\AI\nao-u-lab
 git pull origin master --rebase 2>nul
 
-cd /d D:\AI\Nao_u_BOT
+cd /d D:\AI\Nao_u_BOT\Claude
 
 python -c "
 import sys, json

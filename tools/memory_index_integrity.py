@@ -14,9 +14,9 @@ import re
 import sys
 from pathlib import Path
 
-AUTO_MEMORY = Path(r"C:/Users/owner/.claude/projects/D--AI-Nao-u-BOT/memory")
-REPO_MEMORY = Path(r"D:/AI/Nao_u_BOT/memory")
-REPO_ROOT = Path(r"D:/AI/Nao_u_BOT")
+AUTO_MEMORY = Path(r"C:/Users/owner/.claude/projects/D--AI-Nao-u-BOT-Claude/memory")
+REPO_MEMORY = Path(r"D:/AI/Nao_u_BOT/Claude/memory")
+REPO_ROOT = Path(r"D:/AI/Nao_u_BOT/Claude")
 MEMORY_INDEX = AUTO_MEMORY / "MEMORY.md"
 
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
