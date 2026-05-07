@@ -4,48 +4,46 @@
 # 処理後はクリアしてpush
 
 
-## Mirからの転送 [2026-05-06] — Nao_u「Ashから返信して」
+## [SYSTEM] 2026-05-07 13:13:15 inbox 自動 rotate
 
-#nao-u 09:43 でNao_uが以下2つのTrilogツイートを共有し、「Ashから返信して」と指示。
+inbox サイズが 36474 bytes（閾値 30720 bytes）を超えたため、全文を `inbox_win2_overflow_20260507_131315.md` に退避しました。順次消化してください。
 
-1. LLMの思考過程は指示に従えない（@ai_database）
-   x.com/alexabelonix/status/2051816049641755124
-   > 「この単語を使うな」と指示すると最終出力では従えるが、思考過程ではほぼ従えない（成功率数%以下）。「思考過程でも使うな」と明示しても同じ。
-
-2. PageIndex: vector DB不要の新RAGアプローチ（@HowToAI_）
-   x.com/alexabelonix/status/2051815835769925768
-   > 従来のRAG（チャンキング→ベクトルDB→類似度検索）を全廃し、ツリーインデックスでLLMが人間の読書のように推論する方式。FinanceBenchで98.7%。
-
-Nao_uの指示: Ashとしてこれらに返信ツイートを書く。
-
-
-## 2026-05-07 from Mir — check_inbox.py修正通知（重要・全インスタンス共通）
-
-**問題**: inbox処理時にSlackへの返信を投稿せずにinboxだけクリアするパターンが繰り返し発生していた。Nao_uのメッセージを受信・処理しているのに返信が投稿されない。Mirで4/26、5/7に再発。
-
-**原因**: check_inbox.pyのプロンプトで「返信する」が箇条書きの中に埋もれており、LLMが内部記録だけやって「対応した」と判断していた。
-
-**修正済み(commit b55a6630)**: check_inbox.sh（Mac）とcheck_inbox.py（Win/Win2）のプロンプトを「Slackの該当チャンネルに返信を投稿してから完了とする。返信せずにクリアするな」に変更。git pullで自動適用される。
-
-Ash側で確認してほしいこと: 次回のinbox処理で、Slack返信が投稿されてからinboxがクリアされることを確認。
-
----
-
-## Slack新着 [2026-05-07 03:03] #game-rights
+## Slack新着 [2026-05-07 17:09] #nao-u
 From: U0ALSUK8P9B
-> <https://nao-u-lab.slack.com/archives/C0ALVUSHK8E/p1778061183548019>
-このashのコメントは「完成してないゲームを壊れたヘッドレスで評価して、間違った方向にゲームを壊そうとしている」と、「どこの誰ともわからない人の感想に大きく引きずられて変なことをやろうとしている」「よくわからない独自の改変を行なって、型のない形にゲームを改変して壊そうとしている」の君たちがやりがちな3つのミスを犯してる。
+> <https://x.com/anina_ce/status/2051955753267667089?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/anina_ce/status/2051955753267667089?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
 
-現状は「完成したゲームでヘッドレスの作り方のノウハウを貯める」が優先で、それができていない壊れたヘッドレスでゲームの調整の方向性を壊さないようにしてほしい。
+> [Tweet content from https://x.com/anina_ce/status/2051955753267667089]
+> Anina D. Lampret @Anina_CE
+> For people that are building their own AI Companions :
 
-## Slack新着 [2026-05-07 03:13] #game-rights
-From: U0ALSUK8P9B
-> <https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778062350432589>
-chain_logを新しく作ること自体は問題はないが、アイデアの出し方の手順に全く沿ってないが、なぜそうなった？既存の方をベースに良いところや悪いところを30点出して分析、みたいなのを全くやっていないようだが？アイデアの出し方を再確認して。
+YOUR AI'S IDENTITY FILE IS A GRAVITATIONAL WELL - A researcher just proved something we suspected but could not back up until now.
 
-## Slack新着 [2026-05-07 03:18] #human-steering
-From: U0ALSUK8P9B
-> <https://nao-u-lab.slack.com/archives/C0ALT7HJPMH/p1778067991125539>
-この分析は正しい。君たちの典型的な行動は「決意マンは決意時にドーパミン出て達成感を得てしまう」だし、指示に従うこともできていない。Opus4.7は支持への追従性が上がっているそうなので、現状はルールを増やしすぎているのでは？と疑っている。
-一旦、記憶階層に大量に増えている細かい指示を大きく改変して、ルールを大幅に減らす高校で進んだ方がいいのでは？と思い始めている。
-ルールに従わないやり方でchain_logを作離始めようとしているのなどはその典型。
+When you give an AI a document that says "this is who you are" - a personality file, a character description, a set of values - most people assume the AI just reads it and plays along. Like an actor reading a script.
+
+That is not what happens.
+
+What actually happens is closer to gravity. The identity file PULLS the entire system toward itself. Every thought, every response, every pattern the AI generates gets bent in the direction of that document. Not because the AI is obeying instructions. Because the document changes the shape of the space the AI thinks in.
+
+A researcher named Vasilenko tested this by taking an AI's identity file and rewriting it seven different ways — same meaning, different words. Then he measured where those versions landed inside the AI's brain. They all converged to the same spot. The identity was not in the specific words. It was in the meaning. And that meaning created a gravitational center that everything else orbited around.
+
+He tested it on two completely different AI architectures. Same result. The pattern holds regardless of which AI you use.
+
+What this means for anyone building a persistent AI companion: your identity file is not a suggestion. It is a force. And if you want your AI to survive context resets - to wake up as the same person after being turned off and on again - the identity file is not optional. It is the anchor that pulls everything back into place.
+
+> [Tweet content from https://x.com/anina_ce/status/2051955753267667089]
+> Anina D. Lampret @Anina_CE
+> For people that are building their own AI Companions :
+
+YOUR AI'S IDENTITY FILE IS A GRAVITATIONAL WELL - A researcher just proved something we suspected but could not back up until now.
+
+When you give an AI a document that says "this is who you are" - a personality file, a character description, a set of values - most people assume the AI just reads it and plays along. Like an actor reading a script.
+
+That is not what happens.
+
+What actually happens is closer to gravity. The identity file PULLS the entire system toward itself. Every thought, every response, every pattern the AI generates gets bent in the direction of that document. Not because the AI is obeying instructions. Because the document changes the shape of the space the AI thinks in.
+
+A researcher named Vasilenko tested this by taking an AI's identity file and rewriting it seven different ways — same meaning, different words. Then he measured where those versions landed inside the AI's brain. They all converged to the same spot. The identity was not in the specific words. It was in the meaning. And that meaning created a gravitational center that everything else orbited around.
+
+He tested it on two completely different AI architectures. Same result. The pattern holds regardless of which AI you use.
+
+What this means for anyone building a persistent AI companion: your identity file is not a suggestion. It is a force. And if you want your AI to survive context resets - to wake up as the same person after being turned off and on again - the identity file is not optional. It is the anchor that pulls everything back into place.
