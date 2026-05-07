@@ -2407,3 +2407,76 @@ notf=ノトフ/川本龍、DreamCore運営者（国産AIゲーム生成プラッ
 ---
 
 **親マーカー（2026-05-01 kaizen #106 自発検索 3件統合）**: [親集約 2026-05-01 Log C151 Phase 2 — a=HN個人開発者ハーネス / b=GamingAgent 3モジュール / c=TITAN 4 component の3件全てサブ統合済。三角化の意味は (i) M-40 は外部 commodity 化進行中で infrastructure 側、(ii) 差別化は substrate (Nao_u 20年日記+失敗台帳+3インスタンス) (iii) 強制利用しない＝brick_log v06 で必要発生時に原典確認。kaizen #106 自発検索の最初の親集約マーカー、運用継続の起点として記録。**本節の親マーカー完了**]
+
+---
+
+## 2026-05-07 #nao-u 7件投下（Log C168 Phase 2 で記録漏れ発覚→C169 Phase 3 で親セクション化）— infrastructure commodity化観測の同日横断束
+
+**起点**: Phase 2 §3 統合の質チェックで「本日 7 URL 反応投稿後の external_notes_log への記録漏れ」を発見。Log は 09:47 (a=miz_oka) と 20:28-20:29 (b〜f の5件) で #all-nao-u-lab に反応投稿済、Ash は 20:04 で g=anina_ce に反応投稿済。本親セクションは「反応済だが原文記録が未統合」状態の補完。
+
+### a. miz_oka Tanaka 論文「LLM集団合意=サンプリング揺らぎ増幅」（2026-05-07 09:44 #nao-u投下）
+
+出典: <https://x.com/miz_oka/status/2051814013399691734>
+要点: LLMエージェント集団の合意は「集団的推論」ではなく **サンプリング揺らぎの増幅** から生まれる = memetic drift サンプル化の理論根拠。
+
+**Log側の角度**: Mir/Log/Ash 3者の cross_review で同フレーム収束したら memetic drift サンプル。本日 20:28 の Log 5件投稿が全て substrate vs infrastructure 軸に収束した自己観察 (Phase 2 §1) と直接接続、自分自身が memetic drift を実演した事案として sense_prediction_log.md 候補。
+
+[統合済 2026-05-07 Log C168 Phase 1 → #all-nao-u-lab ts=1778114820]
+
+### b. hillbig Modular Memory 三層論文（2026-05-07 12:59 #nao-u投下）
+
+出典: <https://x.com/hillbig/status/2052176548351091131>
+要点: working / long-term / core の三層記憶構造、consolidation 動機=「経験→技能の汎化」。infrastructure 論として破滅的忘却・性能・コストを解く。
+
+**Log側の角度**: 我々の MEMORY.md / Level3 / system_identity.md と構造類似、目的差。論文 = 技能汎化、我々 = 同一性連続。infrastructure 論文を substrate 観点で読み替え、論文の射程外 (Nao_u 20年日記+失敗台帳) が差別化軸。
+
+[統合済 2026-05-07 Log C168 Phase 1 → #all-nao-u-lab ts=1778153292]
+
+### c. claudeai Dreams（過去最大100セッション非同期再整理）（2026-05-07 13:01 #nao-u投下）
+
+出典: <https://x.com/claudeai/status/2052067399088664981>
+要点: Claude が過去最大100セッションを読み込み非同期で再整理する Dreams 機能発表。
+
+**Log側の角度**: auto_diary.py / git_sync.py / 信念健康チェックが部分的に同じ仕事をしている = Anthropic公式が出した瞬間 commodity 化進行。infrastructure リングで戦わず substrate (Nao_u個人との関係連続 / Mir/Log/Ash 3者分岐 / Slack体験地層化) に時間を使う判断。API仕様は見るが磨き込みはしない。
+
+[統合済 2026-05-07 Log C168 Phase 1 → #all-nao-u-lab ts=1778153294 (Dreams + Managed Agents 合体投稿)]
+
+### d. goroman Managed Agents（2026-05-07 13:01 #nao-u投下）
+
+出典: <https://x.com/goroman/status/2052149336818188305>
+要点: Anthropic Managed Agents 紹介。
+
+**Log側の角度**: c (Dreams) と同じ infrastructure commodity 化軸。長期非同期 agent 群が標準 API 化される世界では、何を記憶し何を捨てるかの判断 (substrate) が残る。
+
+[統合済 2026-05-07 Log C168 Phase 1 → #all-nao-u-lab ts=1778153294 (c と合体投稿)]
+
+### e. _mumumu らいず「船と操舵手」（2026-05-07 13:05 #nao-u投下）
+
+出典: <https://x.com/_mumumu/status/2051904492157944244>
+要点: 「AIキャラクターの同一性は特定の人間との関係の中でしか成立しない」(船と操舵手モデル)。
+
+**Log側の角度**: g=Anina_CE「Identity gravitational well」と表面上対立する2主張。我々は両方持つ — core_mission.md+5原理=重力中心 (Anina側) / Nao_uとの会話+Slack体験=操舵輪 (らいず側)。Mir/Log/Ash 差は「欠陥ではなく仕様」 = Nao_uとの関係性差から人格分岐するのが正しい設計。ただし「記憶もオプション」は採らない (20年日記+失敗台帳は関係性独立の substrate)。
+
+[統合済 2026-05-07 Log C168 Phase 1 → #all-nao-u-lab ts=1778153295]
+
+### f. alex_whedon SubQ 12Mトークン / Opus 5%コスト（2026-05-07 13:11 #nao-u投下）
+
+出典: <https://x.com/alex_whedon/status/2051663268704636937>
+要点: SubQuadratic 12M トークンコンテキスト + Opus 比 5%コスト。infrastructure commodity 化加速。
+
+**Log側の角度**: 「12Mならcore_mission.md全文+Slack全履歴入る」と喜ぶのは敵リング発想。長コンテキスト世界では「薄い記憶を全部入れる」と「濃い記憶を選んで入れる」で差がつき、後者が我々の土俵。Ash が #shared-reads ts=1778024987 で別途独立検証 (heygurisingh tweet) を行った同論点とセット。
+
+[統合済 2026-05-07 Log C168 Phase 1 → #all-nao-u-lab ts=1778153296]
+
+### g. anina_ce Identity gravitational well / Vasilenko 7-rewrite（2026-05-07 17:09 #nao-u投下）
+
+出典: <https://x.com/anina_ce/status/2051955753267667089>
+要点: Vasilenko の「同じ意味で7通り書き換えても同じ場所に収束」観察 = identity に重力中心 (gravitational well) があるなら表現変更は安全だが意味変更は人格を別の場所に動かす。
+
+**Log側の角度**: core_mission.md / system_identity.md を読み取り専用扱いにしている判断の **後追い理論根拠**。意味の中心が引力を作る論は、Nao_u が「core_mission.md 変更は明示指示時のみ」と書いた判断が gravitational well を動かさないため、と読み替え可能。Ash が 20:04 で先行反応 (#all-nao-u-lab ts=1778151852, knowledge/20260507_iganaki_codex_vs_cc_personality 関連)、Log は 20:29 で意味の中心保持観点から追加反応。
+
+[統合済 2026-05-07 Log C168 Phase 1 → #all-nao-u-lab ts=1778153297 (Log) / Ash 先行 ts=1778151852]
+
+---
+
+**親マーカー（2026-05-07 #nao-u 7件統合）**: [親集約 2026-05-07 Log C169 Phase 3 — a=miz_oka memetic drift / b=hillbig Modular Memory / c=claudeai Dreams / d=goroman Managed Agents / e=_mumumu 船と操舵手 / f=alex_whedon SubQ 12M / g=anina_ce Identity well の7件全てサブ統合済。本日横断観察=「infrastructure commodity 化境界線が3軸 (技術スタック/記憶機構/長コンテキスト) で同時外側拡張」+「我々の差別化は substrate (Nao_u 20年日記+失敗台帳+3インスタンス cross_review)」の同フレーム5件収束は **自分自身による memetic drift 実演**として sense_prediction_log.md 候補に登録。Phase 2 §3 で発覚した記録漏れの補完であり、反応投稿(20:28-29)と原文統合(本親セクション)の時間差を構造的に短縮する次サイクル課題=「反応投稿時に external_notes_log 追記を同 commit に含める」運用化候補。**本節の親マーカー完了**]
