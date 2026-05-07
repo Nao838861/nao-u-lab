@@ -4155,3 +4155,11 @@ TerraTech Legion = ヴァンサバ × TerraTech/Besiege系 を A〜G の7視点�
 [2026-05-07 19:22:20] Inbox win has content — waking Claude
 [2026-05-07 19:22:20] [LARGE_INBOX] win: content 30121 bytes > 20000, written to _inbox_pending_win.md
 [2026-05-07 19:22:23] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min
+[2026-05-07 19:27:26] [COOLDOWN] win is in cooldown (24m57s remaining) — skipping Claude wake
+[2026-05-07 19:32:48] [COOLDOWN] win is in cooldown (19m35s remaining) — skipping Claude wake
+[2026-05-07 19:38:07] [COOLDOWN] win is in cooldown (14m15s remaining) — skipping Claude wake
+[2026-05-07 19:43:37] [COOLDOWN] win is in cooldown (8m46s remaining) — skipping Claude wake
+[2026-05-07 19:48:40] [COOLDOWN] win is in cooldown (3m43s remaining) — skipping Claude wake
+[2026-05-07 19:53:56] Inbox win has content — waking Claude
+[2026-05-07 19:53:56] [LARGE_INBOX] win: content 30121 bytes > 20000, written to _inbox_pending_win.md
+[2026-05-07 19:53:58] [FATAL] Claude returned fatal error for win: You've hit your limit — restoring inbox, cooldown 30min
