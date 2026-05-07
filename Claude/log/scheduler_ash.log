@@ -81209,3 +81209,21 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-05-08 02:13:29] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
 [2026-05-08 02:13:29] [infra_health_check] Done (exit=1)
 [2026-05-08 02:13:29] [scheduler_health] Starting
+[2026-05-08 02:13:32] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-05-08 02:13:32] [scheduler_health] ✅ scheduler_ash PID — PID=23368 生存中
+[2026-05-08 02:13:32] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-05-08 02:13:32] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-04-16 05:17:06] [kaizen_auto_verify]   ❌ `grep "check_usage" log/scheduler_log.log`
+[2026-05-08 02:13:32] [scheduler_health] ✅ git 未push — 1件
+[2026-05-08 02:13:32] [scheduler_health] Done (exit=1)
+[2026-05-08 02:13:42] [slack_check] Starting
+[2026-05-08 02:14:39] [dm_check_pigadev] Starting
+[2026-05-08 02:14:54] [dm_check_pigadev] No new DMs
+[2026-05-08 02:14:54] [dm_check_pigadev] Done (exit=0)
+[2026-05-08 02:14:54] [check_usage] Starting
+[2026-05-08 02:15:06] [check_usage] Opening https://claude.ai/settings/usage...
+[2026-05-08 02:15:06] [check_usage] Usage data: {"session_pct": 14, "weekly_pct": 6, "pct": 6, "unit": "pct", "sonnet_pct": 0, "session_reset_min": 225, "extra_usd": 0.0, "balance_usd": 166.79, "scraped_at": "2026-05-08T02:15:04.578763"
+[2026-05-08 02:15:06] [check_usage] 
+[2026-05-08 02:15:06] [check_usage] *使用量* (05/08 02:15)
+[2026-05-08 02:15:06] [check_usage] 週間 *6%* | セッション 14%
+[2026-05-08 02:15:06] [check_usage] Done (exit=0)
+[2026-05-08 02:15:06] [health_check] Starting
