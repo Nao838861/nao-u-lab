@@ -81608,3 +81608,97 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-05-08 05:17:30] [git_sync] Done (exit=0)
 [2026-05-08 05:17:40] [slack_check] Starting
 [2026-05-08 05:18:07] [infra_health_check] Starting
+[2026-05-08 05:18:10] [infra_health_check] [infra_health] Ash health check at 2026-05-08 05:18:07
+[2026-05-08 05:18:10] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 05:18:10] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 05:18:10] [infra_health_check] Done (exit=1)
+[2026-05-08 05:18:20] [auto_diary] Starting
+[2026-05-08 05:30:20] [auto_diary] Timeout (720s)
+[2026-05-08 05:30:30] [slack_check] Starting
+[2026-05-08 05:30:57] [dm_check_pigadev] Starting
+[2026-05-08 05:31:16] [dm_check_pigadev] No new DMs
+[2026-05-08 05:31:16] [dm_check_pigadev] Done (exit=0)
+[2026-05-08 05:31:16] [twitter_recommended] Starting
+[2026-05-08 05:32:13] [twitter_recommended] Opening For You tab...
+[2026-05-08 05:32:13] [twitter_recommended]     1. @masahirochaen: 【速報】OpenAI、新音声モデル「GPT-Realtime-2」を発表。GPT-5級の推論を声で動かせる。
+[2026-05-08 05:32:13] [twitter_recommended] 
+[2026-05-08 05:32:13] [twitter_recommended] 音声AI...
+[2026-05-08 05:32:13] [twitter_recommended]     2. @mariomoviejp: ˗ˋˏGW納めはマリオと映画館で！ˎˊ˗
+[2026-05-08 05:32:13] [twitter_recommended] Done (exit=0)
+[2026-05-08 05:32:13] [check_usage] Starting
+[2026-05-08 05:32:13] [check_usage] 前回投稿から197分しか経っていない（最小間隔: 300分）。あと102分待機。スキップ。
+[2026-05-08 05:32:13] [check_usage] Done (exit=0)
+[2026-05-08 05:32:13] [health_check] Starting
+[2026-05-08 05:32:14] [health_check] [health_check] 2026-05-08T05:32:13 overall=OK
+[2026-05-08 05:32:14] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 05:32:14] [health_check] Done (exit=0)
+[2026-05-08 05:32:14] [scheduler_health] Starting
+[2026-05-08 05:32:16] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-05-08 05:32:16] [scheduler_health] ✅ scheduler_ash PID — PID=24876 生存中
+[2026-05-08 05:32:16] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-05-08 05:32:16] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-05-08 05:32:16] [scheduler_health] ✅ git 未push — 2件
+[2026-05-08 05:32:16] [scheduler_health] Done (exit=0)
+[2026-05-08 05:32:26] [slack_check] Starting
+[2026-05-08 05:33:55] [slack_check] Starting
+[2026-05-08 05:35:24] [slack_check] Starting
+[2026-05-08 05:36:51] [slack_check] Starting
+[2026-05-08 05:37:29] [health_check] Starting
+[2026-05-08 05:37:29] [health_check] [health_check] 2026-05-08T05:37:29 overall=OK
+[2026-05-08 05:37:29] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 05:37:29] [health_check] Done (exit=0)
+[2026-05-08 05:38:19] [slack_check] Starting
+[2026-05-08 05:39:47] [slack_check] Starting
+[2026-05-08 05:41:17] [slack_check] Starting
+[2026-05-08 05:42:37] [health_check] Starting
+[2026-05-08 05:42:37] [health_check] [health_check] 2026-05-08T05:42:37 overall=OK
+[2026-05-08 05:42:37] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 05:42:37] [health_check] Done (exit=0)
+[2026-05-08 05:42:47] [slack_check] Starting
+[2026-05-08 05:44:16] [slack_check] Starting
+[2026-05-08 05:45:43] [slack_check] Starting
+[2026-05-08 05:47:11] [slack_check] Starting
+[2026-05-08 05:47:51] [health_check] Starting
+[2026-05-08 05:47:51] [health_check] [health_check] 2026-05-08T05:47:51 overall=OK
+[2026-05-08 05:47:51] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 05:47:51] [health_check] Done (exit=0)
+[2026-05-08 05:48:11] [infra_health_check] Starting
+[2026-05-08 05:48:14] [infra_health_check] [infra_health] Ash health check at 2026-05-08 05:48:11
+[2026-05-08 05:48:14] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 05:48:14] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 05:48:14] [infra_health_check] Done (exit=1)
+[2026-05-08 05:48:44] [slack_check] Starting
+[2026-05-08 05:50:12] [slack_check] Starting
+[2026-05-08 05:51:42] [slack_check] Starting
+[2026-05-08 05:53:01] [health_check] Starting
+[2026-05-08 05:53:01] [health_check] [health_check] 2026-05-08T05:53:01 overall=OK
+[2026-05-08 05:53:01] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 05:53:01] [health_check] Done (exit=0)
+[2026-05-08 05:53:11] [slack_check] Starting
+[2026-05-08 05:54:40] [slack_check] Starting
+[2026-05-08 05:56:08] [slack_check] Starting
+[2026-05-08 05:57:38] [slack_check] Starting
+[2026-05-08 05:58:15] [health_check] Starting
+[2026-05-08 05:58:15] [health_check] [health_check] 2026-05-08T05:58:15 overall=OK
+[2026-05-08 05:58:15] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 05:58:15] [health_check] Done (exit=0)
+[2026-05-08 05:59:05] [slack_check] Starting
+[2026-05-08 06:00:32] [slack_check] Starting
+[2026-05-08 06:02:00] [slack_check] Starting
+[2026-05-08 06:03:16] [health_check] Starting
+[2026-05-08 06:03:16] [health_check] [health_check] 2026-05-08T06:03:16 overall=OK
+[2026-05-08 06:03:16] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 06:03:16] [health_check] Done (exit=0)
+[2026-05-08 06:03:26] [slack_check] Starting
+[2026-05-08 06:04:54] [slack_check] Starting
+[2026-05-08 06:06:22] [slack_check] Starting
+[2026-05-08 06:07:51] [slack_check] Starting
+[2026-05-08 06:08:59] [health_check] Starting
+[2026-05-08 06:08:59] [health_check] [health_check] 2026-05-08T06:08:59 overall=OK
+[2026-05-08 06:08:59] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 06:08:59] [health_check] Done (exit=0)
+[2026-05-08 06:09:49] [slack_check] Starting
+[2026-05-08 06:11:18] [slack_check] Starting
+[2026-05-08 06:12:43] [slack_check] Starting
+[2026-05-08 06:14:08] [slack_check] Starting
+[2026-05-08 06:14:36] [health_check] Starting
