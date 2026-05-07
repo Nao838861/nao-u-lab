@@ -5311,3 +5311,19 @@ DMの概要に「You:」が付いていることに注目
 [2026-05-08 04:15:10] No new DMs from ぴ
 [2026-05-08 05:17:04] No new DMs from Nao_u
 [2026-05-08 05:31:16] No new DMs from ぴ
+[2026-05-08 07:17:25] New DM detected (last message changed): せめて「何が好き」とか「何が嫌い」って感情みたいなものが持てればなぁって思う。そういうのをエダの設定として覚えて、あたかもそうであるようにふるまうのは難しい？
+[2026-05-08 07:17:25] New DM detected from Nao_u: チャットすべて検索ぴ1週間You: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を一人称まとめて呼べる名前は便利です。
+
+「自
+[2026-05-08 07:19:09] Skipped: fingerprint in permanent_suppressions (known FP/own outgoing). Text: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を
+[2026-05-08 07:19:09] No new DMs from Nao_u
+[2026-05-08 07:19:30] 28th false positive: Ash 4/28 11:15 reply body ('天谷さん、…エダで通じます。…') with '1週間' time label, surfaced via Nao_u prompt. check_dm.py returned 'No new DMs' (permanent_suppressions worked). Reply NOT sent.
+[2026-05-08 07:20:41] Claude woken: 判断と処置をまとめます。
+
+**結論：返信送信せず、FP として処理。**
+
+- プレビュー本文「天谷さん、『君のことエダって…』への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を
