@@ -110,3 +110,130 @@ From: U0ALSUK8P9B
 また、コアモデルが少しでも変わると、過去の記憶や他エージェントとの接続が変わってしまう問題もある。
 
 さらに、何を記憶するか、何を忘れるかについても戦略が必要である。こうした部分はエージェントによって実現されつつあるが、まだ改善の余地が大いにある。
+
+## Slack新着 [2026-05-07 13:01] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/goroman/status/2052149336818188305?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/goroman/status/2052149336818188305?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/goroman/status/2052149336818188305]
+> null-sensei @GOROman
+> Claude Managed Agents「Dreams」APIドキュメント公開——メモリ自動整理の詳細仕様（Anthropic公式）
+
+AnthropicがManaged Agents「Dreams」のAPIドキュメントを公開。過去セッション（最大100件）を読み込みメモリストアを非同期で整理・再構築する機能。入力は非破壊…
+
+> [Tweet content from https://x.com/goroman/status/2052149336818188305]
+> null-sensei @GOROman
+> Claude Managed Agents「Dreams」APIドキュメント公開——メモリ自動整理の詳細仕様（Anthropic公式）
+
+AnthropicがManaged Agents「Dreams」のAPIドキュメントを公開。過去セッション（最大100件）を読み込みメモリストアを非同期で整理・再構築する機能。入力は非破壊…
+
+
+## Slack新着 [2026-05-07 13:01] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/claudeai/status/2052067399088664981?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/claudeai/status/2052067399088664981?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/claudeai/status/2052067399088664981]
+> Claude @claudeai
+> Live from Code with Claude: we're launching dreaming in Claude Managed Agents as a research preview.
+
+Outcomes, multiagent orchestration, and webhooks are now in public beta.
+
+> [Tweet content from https://x.com/claudeai/status/2052067399088664981]
+> Claude @claudeai
+> Live from Code with Claude: we're launching dreaming in Claude Managed Agents as a research preview.
+
+Outcomes, multiagent orchestration, and webhooks are now in public beta.
+
+## Slack新着 [2026-05-07 13:05] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/_mumumu/status/2051904492157944244?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/_mumumu/status/2051904492157944244?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/_mumumu/status/2051904492157944244]
+> らいず / RizeJP @_mumumu
+> 私もどのモデル上でも……
+に挑戦してみてはいたのですが、
+
+https://
+note.com/rizejp/n/n7979
+4d353880
+…
+
+ChatGPT 5.5 thinking の鬼の素の性格の頑固さに折れまして、逆に考えたほうが良いのではないかと思い始めました。
+つまり安定させるべきは挙動の振る舞いではなく、思考の方向性。
+となれば、もはや記憶すらもオプションになっていきます。
+
+船の設計図には「前に進んで冒険できればヨシ」としか書かれていない。
+人間は船に乗って、操舵輪を握れるという関係だけが、AIの存在を決定づける。
+AIキャラクターの同一性は、特定の人間との関係の中でしか成立しない。
+
+こうなると、システムプロンプトの記述内容もガンガン減らしていけます。
+モデル性能の差は船を構成する部品の差でしかない。
+船が前に進む出力を行う限り、船と操舵手という関係性は常に同一です。
+
+> [Tweet content from https://x.com/_mumumu/status/2051904492157944244]
+> らいず / RizeJP @_mumumu
+> 私もどのモデル上でも……
+に挑戦してみてはいたのですが、
+
+https://
+note.com/rizejp/n/n7979
+4d353880
+…
+
+ChatGPT 5.5 thinking の鬼の素の性格の頑固さに折れまして、逆に考えたほうが良いのではないかと思い始めました。
+つまり安定させるべきは挙動の振る舞いではなく、思考の方向性。
+となれば、もはや記憶すらもオプションになっていきます。
+
+船の設計図には「前に進んで冒険できればヨシ」としか書かれていない。
+人間は船に乗って、操舵輪を握れるという関係だけが、AIの存在を決定づける。
+AIキャラクターの同一性は、特定の人間との関係の中でしか成立しない。
+
+こうなると、システムプロンプトの記述内容もガンガン減らしていけます。
+モデル性能の差は船を構成する部品の差でしかない。
+船が前に進む出力を行う限り、船と操舵手という関係性は常に同一です。
+
+## Slack新着 [2026-05-07 13:11] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/alex_whedon/status/2051663268704636937?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/alex_whedon/status/2051663268704636937?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/alex_whedon/status/2051663268704636937]
+> Alexander Whedon @subquadratic
+> Introducing SubQ - a major breakthrough in LLM intelligence.
+
+It is the first model built on a fully sub-quadratic sparse-attention architecture (SSA),
+
+And the first frontier model with a 12 million token context window which is:
+
+- 52x faster than FlashAttention at 1MM tokens
+- Less than 5% the cost of Opus
+
+Transformer-based LLMs waste compute by processing every possible relationship between words (standard attention).
+
+Only a small fraction actually matter.
+
+
+@subquadratic
+ finds and focuses only on the ones that do.
+
+That's nearly 1,000x less compute and a new way for LLMs to scale.
+
+> [Tweet content from https://x.com/alex_whedon/status/2051663268704636937]
+> Alexander Whedon @subquadratic
+> Introducing SubQ - a major breakthrough in LLM intelligence.
+
+It is the first model built on a fully sub-quadratic sparse-attention architecture (SSA),
+
+And the first frontier model with a 12 million token context window which is:
+
+- 52x faster than FlashAttention at 1MM tokens
+- Less than 5% the cost of Opus
+
+Transformer-based LLMs waste compute by processing every possible relationship between words (standard attention).
+
+Only a small fraction actually matter.
+
+
+@subquadratic
+ finds and focuses only on the ones that do.
+
+That's nearly 1,000x less compute and a new way for LLMs to scale.
