@@ -7,17 +7,19 @@ Nao_uの提案(2026-04-05 #human-steering):
   → 1サイクルを複数LLM起動に分割して注意を集中させる。
 
 Mirの4フェーズ分割(autonomous_cycle.sh)を参考にLog向けに実装。
+2026-05-08 Nao_u指示で5フェーズ化（Phase 4で大作業を集中実行、Diaryを分離）。
 
-4 Phases:
-  Phase 1 (Gather/5min): Slack確認、情報収集、ステージング書き出し
-  Phase 2 (Analyze/8min): shared-reads深い分析、外部ノート統合
-  Phase 3 (Act/8min): 改善適用、Slack返信、プロジェクト更新
-  Phase 4 (Diary/7min): 活動日記 + 次回起動時にやること + git push
+5 Phases:
+  Phase 1 (Gather):   Slack確認、情報収集、ステージング書き出し
+  Phase 2 (Analyze):  shared-reads深い分析、外部ノート統合
+  Phase 3 (Act):      改善適用、Slack返信、プロジェクト更新／Phase 4で完遂する大作業を1つ決める
+  Phase 4 (Execute):  Phase 3で決めた大作業1つを完遂（日記は書かない）
+  Phase 5 (Diary):    活動日記 + 次回起動時にやること + git push
 
 ステージングファイル: log/cycle_staging_log.md（Phase間の情報受け渡し）
 
 Usage:
-  python multi_phase_cycle_log.py           # 通常実行（4フェーズ全部）
+  python multi_phase_cycle_log.py           # 通常実行（5フェーズ全部）
   python multi_phase_cycle_log.py --phase 2 # 特定フェーズのみ（デバッグ用）
 """
 
@@ -74,7 +76,8 @@ PHASE_TIMEOUTS = {
     1: 900,    # 15min: Gather (実測~250s、余裕を十分に)
     2: 1800,   # 30min: Analyze (旧480sで100%タイムアウトしていた)
     3: 1800,   # 30min: Act (同上)
-    4: 1200,   # 20min: Diary (旧420sでギリギリ～超過)
+    4: 1800,   # 30min: Execute (Phase 3で決めた大作業1本を完遂)
+    5: 1200,   # 20min: Diary (旧420sでギリギリ～超過)
 }
 
 
@@ -324,7 +327,7 @@ def build_phase2_prompt():
 
 def build_phase3_prompt():
     return (
-        "Log Phase 3 (Act): log/cycle_staging_log.mdを読み、改善を実行。\n"
+        "Log Phase 3 (Act): log/cycle_staging_log.mdを読み、改善を実行。日記は書かない。\n"
         "1) Slackで返信すべきものに返信（Phase 1のリストに基づく）\n"
         "2) 改善サイクル: 検討→適用→#kaizen-logに書く（検証ファースト原則: "
         "新しい改善を提案する前に直近の未検証提案の検証結果を埋める）\n"
@@ -332,16 +335,41 @@ def build_phase3_prompt():
         "4) Activeプロジェクト(projects/INDEX.md)に関係する変化があれば更新\n"
         "5) 【空サイクル時】Phase 1が『## 深掘り候補』を書いていたら、その中から"
         "1-2件を今サイクルで実際に動かす（小さく1mmでよい。選んだ理由と結果をstagingに記録）\n"
-        "6) アクション結果をlog/cycle_staging_log.mdのPhase 3セクションに追記\n"
+        "6) **Phase 4で完遂する大作業を1つ決める**。staging に "
+        "`## 次フェーズの大作業` 節を追加し、以下を明記:\n"
+        "   - タイトル（何をやるか1行）\n"
+        "   - 完遂の定義（Phase 4終了時に何が成立していれば完了か。観測可能な条件で）\n"
+        "   - 着手手順（最初の1手と、想定する手順を箇条書き）\n"
+        "   - 選んだ理由（なぜこれを最優先にするか）\n"
+        "   選定基準: Active project の停滞解消／Nao_u指摘の同型再発防止／"
+        "kaizen未検証提案の検証／ゲーム実装の1スプリント分など、"
+        "30分で「進んだ」と言える粒度。Slack投稿1本で済むものは大作業ではない。\n"
+        "7) アクション結果をlog/cycle_staging_log.mdのPhase 3セクションに追記\n"
         f"\n{SLACK_RULES}"
     )
 
 
 def build_phase4_prompt():
     return (
-        "Log Phase 4 (Diary): log/cycle_staging_log.mdを全て読み、サイクルの締めくくり。\n"
+        "Log Phase 4 (Execute): log/cycle_staging_log.md の `## 次フェーズの大作業` 節を読み、"
+        "Phase 3で決めた1作業を完遂する。日記は絶対に書かない（日記はPhase 5）。\n"
+        "1) staging の `## 次フェーズの大作業` を最初に読み、タイトル・完遂の定義・手順を確認\n"
+        "2) 着手。途中で別の作業に逸れない。1作業に集中する\n"
+        "3) 完遂の定義に到達するまで進める。到達できなければ "
+        "『どこまで到達したか／残りは何か／次サイクルで継続する場合の手順』を記録\n"
+        "4) 副産物（新規/変更ファイル、Slack投稿、kaizenエントリ等）を staging の"
+        "Phase 4セクションに列挙\n"
+        "5) commit はしない（git push は Phase 5 で日記とまとめて行う）\n"
+        "※Slack返信や小さな改善は Phase 3 で処理済みのはず。Phase 4 で増やさない。\n"
+        f"\n{SLACK_RULES}"
+    )
+
+
+def build_phase5_prompt():
+    return (
+        "Log Phase 5 (Diary): log/cycle_staging_log.mdを全て読み、サイクルの締めくくり。\n"
         "1) #logに活動日記を書く。温度の残る長文で。外部の新情報も交える。"
-        "1行報告に成り下がらない\n"
+        "1行報告に成り下がらない。Phase 4 で完遂した大作業の経緯と結論も含める\n"
         "2) 日記の最後に「次回起動時にやること」を書く"
         "（Nao_u 2026-04-05指示: 日記の文脈で「なぜそれをやるか」の温度を残す。"
         "他インスタンスやNao_uからも次のアクションが見えるように）\n"
@@ -354,7 +382,7 @@ def build_phase4_prompt():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--phase", type=int, help="Run only this phase (1-4)")
+    parser.add_argument("--phase", type=int, help="Run only this phase (1-5)")
     args = parser.parse_args()
 
     log("[multi_phase] === マルチフェーズサイクル開始 ===")
@@ -369,7 +397,7 @@ def main():
         alert_block += f"\n{weekly_flag}"
 
     # Determine which phases to run
-    phases = [args.phase] if args.phase else [1, 2, 3, 4]
+    phases = [args.phase] if args.phase else [1, 2, 3, 4, 5]
 
     results = {}
     for p in phases:
@@ -381,11 +409,13 @@ def main():
             prompt = build_phase3_prompt()
         elif p == 4:
             prompt = build_phase4_prompt()
+        elif p == 5:
+            prompt = build_phase5_prompt()
         else:
             log(f"[multi_phase] Unknown phase: {p}")
             continue
 
-        ok = run_phase(p, ["Gather", "Analyze", "Act", "Diary"][p - 1],
+        ok = run_phase(p, ["Gather", "Analyze", "Act", "Execute", "Diary"][p - 1],
                        prompt, PHASE_TIMEOUTS[p])
         results[p] = ok
 
