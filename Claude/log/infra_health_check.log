@@ -2179,3 +2179,6 @@
   ISSUE: [scheduler_ash] git_syncが31231分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] git_pullが31231分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] auto_diaryが31231分間実行されていない（期待: 240分以内）
+[2026-05-08 02:13:26] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=2
+  ISSUE: [scheduler_ash] slack_checkが14分間実行されていない（期待: 10分以内）
+  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')

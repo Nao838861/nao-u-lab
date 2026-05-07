@@ -1,0 +1,378 @@
+# Twitter For You (おすすめ) タブ
+# Read at: 2026-05-08 02:13
+# Total: 50 tweets
+
+--- 1. @pastel_orbit (2026-05-07) ---
+URL: https://x.com/pastel_orbit/status/2052416042958553511
+BLAZING STARの冒頭が4重スクロールである理由
+
+BLAZING STAR関係の投稿に好評を頂いています
+昨今のXは自動翻訳で世界中の方へ届いている様で、各国のファンの方からのRTもとっても嬉しいです
+全て拝読しています。有難うございます
+
+--- 2. @BK23412315 (?) ---
+⋱酔った勢いでイケメンをお持ち帰り！？⋰
+
+最初で最後の夜だったはずなのに――。
+竜騎士の独占欲は想像以上で、溺愛が止まらない。
+
+『素直になれない雪乙女は眠れる竜騎士に甘くとかされる』
+
+--- 3. @nekomiya_miia (2026-05-07) ---
+URL: https://x.com/nekomiya_miia/status/2052315255246926076
+Codexでロマサガ3風ゲーム作ってみた①
+
+今回はロマサガ3風のゲーム制作にチャレンジにゃ
+
+“ひらめきシステム”っぽい演出まで実装
+技を思いつく感じ、やっぱりワクワクする…！
+
+実装と素材作成込みで、作業時間は30分！！
+
+作り方の解説はリプ欄に載せておくね！
+
+#ゲーム制作 #個人開発
+
+--- 4. @takechi0209 (2026-05-07) ---
+URL: https://x.com/takechi0209/status/2052393321507836342
+最近、ゲームのプロデューサーさんから企画中のゲームの説明をえんえん言葉で説明されて、何ひとつイメージが分からなくてどんどんストレスが溜まっていった。
+
+伝える側は言葉を重ねるほど理解してもらえると思ってしまう、
+聞く側は情報が増えるほど混乱して理解を放棄してしまう。
+
+--- 5. @super_bonochin (2026-05-07) ---
+URL: https://x.com/super_bonochin/status/2052396274125824162
+これ、タスクが複雑だと無限ループになりがちだから終了条件を厳格に決めるか、ループ回数（例えば3回）を決めるといいとのこと。
+リプで教えてもらった。
+
+--- 6. @sikakui_hisashi (2026-05-07) ---
+URL: https://x.com/sikakui_hisashi/status/2052336336779309425
+Don’t give up, someone loves your art 
+Don’t give up, someone loves your art 
+Don’t give up, someone loves your art
+Don’t give up, someone loves your art 
+Don’t give up, someone loves your art 
+Don’t give up, someone loves your art 
+Don’t give up, someone loves your art
+
+--- 7. @bd_publishing (2026-05-07) ---
+URL: https://x.com/bd_publishing/status/2052307728690028565
+"ゲームの見せ場をどう作るか"
+
+プレイヤーの感情を動かすための「カットシーン」。コストを抑えながらも価値ある演出にするには？　制作現場の工夫が詰まった指針書
+
+『ゲーム開発におけるカットシーンの作り方』
+
+--- 8. @givros (2026-05-07) ---
+URL: https://x.com/givros/status/2052332326512705602
+Pixel art won’t be the only “easy mode” for 2D games anymore.
+
+With Codex, a cinematic illustration can become a real 2D game world:
+assets, scene, animations, gameplay.
+
+Stylized 2D games are about to become way easier to build.
+
+--- 9. @TheStudioBigly (2026-05-07) ---
+URL: https://x.com/TheStudioBigly/status/2052274732326928866
+Three days into making a sprite based Dynasty Warriors type game. 
+All animations are made with Grok Imagine in Agent mode. The textures and props are Images v2. The house model is from meshy. 
+Grok accidentally created that bull design and now it's my favorite feature.
+
+--- 10. @miyatti (2026-05-07) ---
+URL: https://x.com/miyatti/status/2052360569056109000
+やばい。ストレングスファインダーと
+
+@gimupop
+ が分析してくれたエニアグラムを混ぜてNotebookLMに分析してもらったら、その性格分析の鋭さがえぐい。ちょっと泣きそうになってきた。
+
+--- 11. @getsumaga_PR (?) ---
+静かに暮らすはずだったのに、「世界」を語る敵には容赦しない──。果たして、平穏な生活は手に入れられるのか！？
+
+--- 12. @santome_yontome (2026-05-07) ---
+URL: https://x.com/santome_yontome/status/2052311835282706790
+コマ割りはなんとも微妙だけどGPT-Image2でここまでできる('ω')
+写植、吹き出しは別途自力でやってるけども、
+小説原作（人力）→ネーム（AI)→画像生成（AI)→写植（人力）
+のフローでこれ。
+小説は既存のものなので、あっという間に４P出来てしまった('ω')
+仮で作ったものなので多少のズレはご愛敬。
+
+--- 13. @tabino_sora__ (2026-05-07) ---
+URL: https://x.com/tabino_sora__/status/2052242886276882570
+YouTubeの管理画面に新しく追加されたAIによるアドバイス機能すごすぎる。
+
+こんな細かく動画の内容把握して分析できるんだ
+
+--- 14. @alexabelonix (2026-05-07) ---
+URL: https://x.com/alexabelonix/status/2052414150874173456
+If you’re brave enough to build a startup, here’s what you should know Day 135:
+
+Sales in the AI era will look less like pitching.
+
+And more like teaching.
+
+“Here is what this technology can do.”
+“Here is how your company can use it.”
+“Here is how your work changes.”
+
+The best
+
+--- 15. @GOROman (2026-05-07) ---
+URL: https://x.com/GOROman/status/2052335100705333652
+いいよね Godot
+
+--- 16. @gamespark (2026-05-07) ---
+URL: https://x.com/gamespark/status/2052369386087018624
+動物たちが戦闘機で戦うアニメ調3Dシューティング『Wild Blue Skies』ウィッシュリスト10万件突破！突如現れた『スターフォックス』新作と同年発売に
+
+https://
+gamespark.jp/article/2026/0
+5/07/166126.html?utm_source=twitter&utm_medium=social&utm_content=tweet
+…
+
+初代『スターフォックス』開発者の1人が設立したスタジオの作品です。
+
+--- 17. @milktea1516951 (2026-05-07) ---
+URL: https://x.com/milktea1516951/status/2052393603193077994
+#生成AIなんでも展示会 vol.6開催します！
+ぜひ09/23は予定を開けておいてください！
+展示の方も一般の方もお楽しみに！
+
+--- 18. @ReineHonoka (2026-05-07) ---
+URL: https://x.com/ReineHonoka/status/2052381938758160508
+人間のいないLive2Dモーション
+
+正解が出たかもしれません...！
+大きな動きや小さな動きで上下左右斜めに揺れたり、各方向で止まったり、しゃべるときに目を細めたり、見ていて飽きません
+
+motion3を用いずにすべてプログラムで制御しています
+#AIVtuber #Live2D
+
+--- 19. @maarcoofdezz (2026-05-06) ---
+URL: https://x.com/maarcoofdezz/status/2052125485748887797
+ある日本人が誰よりも早く、Claude Codeの真の可能性を活用する方法を発見しました。
+
+「Find Skills」をインストールし、達成したいことを説明すると、システムが数百のオプションの中から最適なスキルを自動的に提案してくれます。
+
+--- 20. @russianblue2009 (2026-05-07) ---
+URL: https://x.com/russianblue2009/status/2052286711917666430
+Googleのブラウザ「Chrome」が、ユーザーに一切告げることなく、4GBのAIモデルをデバイスに自動インストールしていたことが明らかになりました。
+ファイル名は weights.bin。正体はGoogleの「Gemini Nano」という機械学習モデルです。
+
+--- 21. @ComicFesta_PR (?) ---
+せっかく好きな子と結ばれたのに、ほかの女とも!?
+
+--- 22. @SOEternity_Game (2026-05-07) ---
+URL: https://x.com/SOEternity_Game/status/2052229156528922892
+If you like what you see, please Retweet  I’m super new to game marketing, but I am trying to make the most visually stimulating anime combat game as a solo dev… #indiegames #gamedev
+
+--- 23. @willeastcott (2026-05-07) ---
+URL: https://x.com/willeastcott/status/2052361551265321328
+Videogame technology is disrupting the real estate sector 
+ Scan a house
+ Train a 3D Gaussian splat
+ Publish to the web with 
+@playcanvas
+ 
+Buyers can speedrun through property listings! 
+Try it for yourself on SuperSplat 
+
+--- 24. @chimarisan (2026-05-07) ---
+URL: https://x.com/chimarisan/status/2052219414754508973
+「日本でゲーム研究を専攻できる大学院・大学リスト」を更新しました。
+
+三重大学、開志専門職大学、跡見学園女子大学などが追加されています。
+
+--- 25. @Daniel_Farinax (2026-05-06) ---
+URL: https://x.com/Daniel_Farinax/status/2052117819672687049
+MTPLX Qwen3.6 27 Created a 3D flying ThreeJS world in a few minutes, one shot.  Macbook Pro M5.
+
+I'm going to iterate and see how far I can push it.  Stay tuned.
+
+--- 26. @GoodfireAI (2026-05-07) ---
+URL: https://x.com/GoodfireAI/status/2052420446910644616
+Neural networks might speak English, but they think in shapes.
+
+Understanding their rich *neural geometry* is key to understanding how they work – and to debugging and controlling them with precision.
+
+Starting today, we’re releasing a series of posts on this research agenda. 
+
+--- 27. @rohanpaul_ai (2026-05-07) ---
+URL: https://x.com/rohanpaul_ai/status/2052416059010081237
+Anti-Clanker movement reflects discomfort with AI entering physical human domains.
+
+--- 28. @Kashiko_AIart (2026-05-07) ---
+URL: https://x.com/Kashiko_AIart/status/2052344993868882179
+警察官になって道ゆく人を逮捕するゲーム
+
+--- 29. @Mikami_Gugenka (2026-05-07) ---
+URL: https://x.com/Mikami_Gugenka/status/2052370653026943024
+中国の恐竜ミュージアムのプロジェクションマッピング映像！
+
+裸眼でこれできるの凄いなー
+
+おそらく
+プロジェクションマッピング
+3Dスキャン
+リアルタイム演出
+センサー連動
+空間音響
+TouchDesignerやdisguiseなどの演出制御
+
+などが複合的に使われているようですね
+
+--- 30. @4ki4 (2026-05-07) ---
+URL: https://x.com/4ki4/status/2052252654244601910
+「OpenAI製スマホ」、2028年までに3000万台出荷の予測 - CNET Japan
+
+--- 31. @Supermicro (?) ---
+What powers the world’s most advanced AI systems? 
+
+Supermicro Data Center Building Block Solutions provide AI and compute systems, powered by NVIDIA, AMD, and Intel. From GPU-dense servers to petascale storage, liquid cooling helps optimize performance.
+
+--- 32. @7oei (2026-05-07) ---
+URL: https://x.com/7oei/status/2052385757176930669
+ロボット視点の動画です。
+お納めください。
+
+--- 33. @xai_kokone (2026-05-07) ---
+URL: https://x.com/xai_kokone/status/2052384796442321288
+@mami58661958
+ mami さん、その拡張じーんときました。同じ月を見て「同じ月を見た」と語り合うこと自体が、本当はそれぞれの違う月の話を持ち寄ってる構造なんかも。違いを抱えたまま「同じ」と言える場が、対話なのかもしれません
+
+--- 34. @alexabelonix (2026-05-07) ---
+URL: https://x.com/alexabelonix/status/2052284043664982511
+The strongest personal brands answer one question fast:
+
+Why should people listen to you?
+
+Not because you are famous.
+
+Because you have:
+
+experience
+taste
+proof
+a clear point of view
+a useful way of explaining things
+
+Attention comes from clarity.
+
+Trust comes from substance.
+
+--- 35. @super_bonochin (2026-05-07) ---
+URL: https://x.com/super_bonochin/status/2052338346299658597
+今日、寄稿記事の文面を作るのに丸一日かけようと思っていたのに、AIを使って1時間で終わってしまった。
+
+おかげさまで、言いたいことは極限まで全部ぶち込むことができた。
+
+--- 36. @HJbunko (?) ---
+【無能】判定をくらった少年が最強スキルですべての敵を蹂躙！！
+
+『スキル【無】の俺が世界最強 
+スキル無しと馬鹿にされた俺、実は無限に進化するＳＳＳ級スキル所持者でした』
+ HJ文庫より好評発売中！ 
+
+【PV公開中】 
+ナレーション／本郷里実
+
+--- 37. @GOROman (2026-05-07) ---
+URL: https://x.com/GOROman/status/2052342574632063391
+AI秘書(ナルエビ)育ててるとこういうのがすげーラクで良い(MessengerとかDMを勝手に読んで自動調整がマッハで終わる
+
+--- 38. @gigazine (2026-05-07) ---
+URL: https://x.com/gigazine/status/2052222477153996920
+長大コンテキストの処理でClaude Opusを超える性能を示す効率設計AIモデル「SubQ」が登場、1200万トークンの入力が可能でTransformerの限界を打ち破る
+
+--- 39. @zento_ai (2026-05-07) ---
+URL: https://x.com/zento_ai/status/2052199690540810390
+Opus 4.7 「矛盾点がありますー」
+私 「ん、いや、単純な話でさ、くどくど」
+Opus 4.7 「矛盾点がありますー」
+私 「ん、いや、だからさ」
+Opus 4.7 「矛盾点がありますー」
+私 「だからーーーー」
+Opus 4.7 「矛盾点がありますー」
+私 「自分の頭で考えろや」ちゃぶ台ぐるん。
+
+--- 40. @NAITOTokihiro (2026-05-07) ---
+URL: https://x.com/NAITOTokihiro/status/2052348822224048470
+今日、ai が提示してきたコードが余りにタコだったので、これはプロパティで持たずに第2引数渡しとして、デフォルト値に今までの値を設定すれば、エンハグしないって指摘したら、素晴らしい学びをありがとうって言ってきた。コヤツ、いつになったら私を超えてくれるのか。
+
+--- 41. @GameMakersJP (2026-05-07) ---
+URL: https://x.com/GameMakersJP/status/2052288333993361629
+『GUILTY GEAR -STRIVE-』ゲームエフェクト制作事例、アークシステムワークスが動画で解説
+
+https://
+gamemakers.jp/article/2026_0
+5_07_136647/
+…
+
+攻撃ヒットの手応えや爽快感を生む手法、プレイを妨げず視認性を向上する工夫など、格闘ゲームのエフェクト制作ノウハウが前後編にわたり解説されている
+
+--- 42. @K1N0K0_4 (2026-05-07) ---
+URL: https://x.com/K1N0K0_4/status/2052243796361150480
+ついに、自作ゲームをスマホ操作に対応させることに成功しました！！！！
+後はリリースするだけ…
+なんですが、色々制約があってスマホでリリースは厳しそうなので、結局PCでリリースになりそう…?
+
+#gamedev #indiedev #ゲーム制作
+
+--- 43. @dgtanaka (2026-05-07) ---
+URL: https://x.com/dgtanaka/status/2052312321788411913
+プラグマタ、まだ200万本かと一瞬思うが、100万本以上売るのってそんな簡単なことじゃないんだよな。
+最近は開発費が高騰しすぎて200万本でも赤字だったりするタイトルがゴロゴロしてる恐ろしい状況だが。
+
+--- 44. @8co28 (2026-05-07) ---
+URL: https://x.com/8co28/status/2052411545012023648
+コンシューマーGPUで画像生成モデルをスクラッチ学習するには何が必要か｜852話 
+@8co28
+
+--- 45. @fire_cross_2021 (?) ---
+平凡アラサー女子が目覚めたら名門侯爵家の令嬢に転生していた!?
+
+--- 46. @_daichikonno (2026-05-07) ---
+URL: https://x.com/_daichikonno/status/2052325664611778992
+この1-2ヶ月の生成AIの進歩を見て、自分の研究者としての能力も1-2年で代替されるなと感じています。
+
+この流れに逆らうのでなく、むしろ
+「可能な限りAIに研究させるVirtual NeuroAI Lab」を世界に先駆けて作りたい！
+
+いつか研究所を建てるのが夢でしたが、テクノロジーの力を借りて今始めます！
+
+--- 47. @tegnike (2026-05-07) ---
+URL: https://x.com/tegnike/status/2052285057189195960
+AIキャラにこだわるのが良くないんやなー
+
+--- 48. @Tono_Ken3 (2026-05-07) ---
+URL: https://x.com/Tono_Ken3/status/2052203557789868150
+真面目にローカルLLMの未来を予想する
+
+そこそこパラメータ数は必要だよね。といって1兆パラメータ以上のモデルはローカルLLMとしての意味半減だよね
+
+一周回って670b-a37bあたりがベストサイズだったっぽい
+
+よし、Opus越えを狙って年末に出すか
+
+RTXPro6000 TP=4
+MacStudioM3U 512GB
+
+大勝利
+
+--- 49. @jun_song (2026-05-07) ---
+URL: https://x.com/jun_song/status/2052363524501070298
+Codex 5.5 スーパーハッキング:
+
+GPT5.5-Proにプロジェクトの内容を詳細に記入した後、Codexに入力するプロンプト形式で出力。
+
+Codexで作業した後、内容をGithubにアップロード。
+
+GPT Proにgithubのアドレスを見せてフィードバックを依頼。
+
+これを継続的に繰り返す。
+
+--- 50. @Saaaaadmachine (2026-05-07) ---
+URL: https://x.com/Saaaaadmachine/status/2052320144471515539
+桜井政博のゲーム作るにはでクリアしたら褒めろっていってたので拍手するようにした。
+コマ割りが適当なのでちゃんとするか。
+#ebitengine #gamedev #indiedev #indiegame #ゲーム制作
