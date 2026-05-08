@@ -1,4 +1,331 @@
 # Twitter For You (おすすめ) タブ
+<<<<<<< HEAD
+# Read at: 2026-05-09 00:57
+# Total: 50 tweets
+
+--- 1. @super_bonochin (2026-05-08) ---
+URL: https://x.com/super_bonochin/status/2052755271982952950
+結局まだ言いたいことが言えてないような気がするから、もう一度言っておくと、AIが賢くなることによって、あなたが関わらなくても、あなたが手を下さなくても、物事っていうのはうまく回るようになっていくんだよ。これは間違いない。
+
+--- 2. @PRcomicfesta (?) ---
+課金しまくって作った最強キャラに転生したので、力でわからせる (1/5)PR
+
+--- 3. @SSSS_CRYPTOMAN (2026-05-08) ---
+URL: https://x.com/SSSS_CRYPTOMAN/status/2052719266571673942
+ごめん、正直デモ動画しょぼくない？
+これで2日もかかってるなら講師のレベルを疑っちゃいますね…
+
+情弱ビジネスならこれでいいけど、ガチでクリエイター育てたいならもっと圧倒的な映像を見せて欲しい
+
+参考までに趣味レベルの私が「半日」で作った動画載せておきます
+この程度なら誰でも作れるよ
+
+--- 4. @gigazine (2026-05-08) ---
+URL: https://x.com/gigazine/status/2052601969865363691
+AIモデルの思考を言葉に翻訳する「自然言語オートエンコーダー」をAnthropicが発表
+
+--- 5. @SpAItial_AI (2026-05-08) ---
+URL: https://x.com/SpAItial_AI/status/2052765448769270052
+WeGaming 
+
+AI-generated first-person shooter made easy: input an image -> Echo-2 generates world -> let's play!
+
+We're already having fun playing but it'll be open soon :)
+
+--- 6. @itm_aiplus (2026-05-08) ---
+URL: https://x.com/itm_aiplus/status/2052668596527280451
+国立国会図書館、「AI動向」に関する調査資料を無料公開中
+
+--- 7. @russianblue2009 (2026-05-07) ---
+URL: https://x.com/russianblue2009/status/2052527713534259339
+AIが使う電力は、ここ数年で想定をはるかに超えて膨らんでいます。
+
+その現実に最初に動いたのは、NVIDIAでした。
+
+--- 8. @GOROman (2026-05-08) ---
+URL: https://x.com/GOROman/status/2052752307046199328
+既視感が
+
+--- 9. @KomoriGameDev (2026-05-08) ---
+URL: https://x.com/KomoriGameDev/status/2052765470751863134
+新作「月ウサギの重力」をリリースしました
+
+重力差を使ったパズルゲームです！
+
+PCで遊べるので返信欄にURLを貼っておきます↓
+
+#スーパーゲ制デー
+
+--- 10. @adcock_brett (2026-05-08) ---
+URL: https://x.com/adcock_brett/status/2052770989944242335
+Figure taught two robots to make a bed together - fully autonomous
+
+Honestly, they’re better at it than most humans
+
+--- 11. @mangabox3_pr (?) ---
+「火弾！！」の叫びとともに現れた謎な3人組。なお、実力は本物な模様。
+
+今だけ無料
+
+--- 12. @puramu776 (2026-05-08) ---
+URL: https://x.com/puramu776/status/2052707816738377900
+今思うとSTGの途中にスキップ不可の90秒越えムービーが入るとか正気の沙汰ではないですが、グラⅤを印象付ける大事なシーンでもありますよね、ナンバリングで初の超時空戦闘機っぽいことしたしｗ
+ちなみに当時は戻り復活設定で遊んでてこの面はミスでステージ冒頭まで戻されるのが地味に辛かったですw
+
+--- 13. @shukichi_studio (2026-05-08) ---
+URL: https://x.com/shukichi_studio/status/2052767734229008565
+#スーパーゲ制デー #gamedev
+
+「箱庭×ローグライト×サバイバル」SLGを
+制作しています！！
+ぜひウィッシュリスト登録お願いします！！
+
+https://
+store.steampowered.com/app/4505140/_/
+?l=japanese
+…
+
+--- 14. @Kasiwa_p (2026-05-08) ---
+URL: https://x.com/Kasiwa_p/status/2052768229232427260
+ファンタジーRPG「Celestoria」制作中です。メニューとシステムを改修し、戦闘レイアウト、装備メニューと強化システム連携、スキル装備システムを作りました。バトルモードにウェイトを追加して難易度を緩和。
+#スーパーゲ制デー #ゲーム制作
+
+--- 15. @SINNYA_HAIKAI (2026-05-08) ---
+URL: https://x.com/SINNYA_HAIKAI/status/2052767718420680892
+もう少しで100万インプレッション！
+
+ノーコード1週間でゲームはここまで作れる！
+
+Steam販売者登録したので、順調にいけば1～2ヶ月後くらいに体験版出せると思います
+
+以下、開発済、開発中の無料ゲームを紹介
+#個人開発 #スーパーゲ制デー
+
+--- 16. @TamagawaSoft (2026-05-08) ---
+URL: https://x.com/TamagawaSoft/status/2052765744409285081
+#スーパーゲ制デー
+エンディングまでの全てのステージの実装を終えて今は調整を行っています！完成まで見守ってくれると嬉しいです！
+#indiedev
+
+--- 17. @PolloAIJP (2026-05-08) ---
+URL: https://x.com/PolloAIJP/status/2052696293148115075
+Seedance 2.0が、無制限に。
+
+5月8日（金）〜27日（水）。
+10日間、使い放題。
+
+動画1本あたり、わずか約17円。
+
+--- 18. @gamespark (2026-05-08) ---
+URL: https://x.com/gamespark/status/2052761955480514623
+武装女子高生TPS×学園シムRPG『Project JK（仮）』開発中―ややセクシャルな表現はあれどR18作品ではない
+
+https://
+gamespark.jp/article/2026/0
+5/08/166180.html?utm_source=twitter&utm_medium=social&utm_content=tweet
+…
+
+--- 19. @Indie_Game_Ent (2026-05-07) ---
+URL: https://x.com/Indie_Game_Ent/status/2052464601216979192
+Blades of Mirage is an isometric ARPG. Play As Mira, use your ability to create water-based weapons and explore ancient ruins scattered across unique islands. 
+
+By: 
+@bladesofmirage
+ 
+
+Getting Death's Door + Water Bender Vibes. Very Cool.
+
+#indiegame #gamedev #TrailerThursday
+
+--- 20. @Kashiko_AIart (2026-05-08) ---
+URL: https://x.com/Kashiko_AIart/status/2052723892666667065
+街中ゴルフ
+
+--- 21. @ComicFesta_PR (?) ---
+幼馴染と気まずくなって避け続けたら捕まった話 (1/4)PR
+
+--- 22. @shiropen2 (2026-05-08) ---
+URL: https://x.com/shiropen2/status/2052558519518507284
+未来から過去へ、データは何ビット送れる？ 理論上の限界を数学的に解明　『インターステラー』に着想　物理学術誌に掲載 
+https://
+levtech.jp/media/detail_8
+55/
+… 時空内を未来方向へ進み続けているのに、いつのまにか自分の過去に戻るCTC経路を用いて、未来から過去へどれだけの情報量を正確に伝送できるかを解明
+
+--- 23. @HeyZaraKhan (2026-05-08) ---
+URL: https://x.com/HeyZaraKhan/status/2052654526969127097
+This is what’s going on right now:
+
+--- 24. @DailyTocana (2026-05-08) ---
+URL: https://x.com/DailyTocana/status/2052731615797723437
+【速報】米政府が大量の「UFOファイル」を公開！ 動画・FBI文書など162件が一斉解禁 #UAP #情報開示 #米国防総省 
+https://
+ift.tt/x0XDwUk 
+
+　2026年5月8日21時（日本時間）、アメリカ国防総省系サイト「
+http://
+WAR.GOV」にて、大量のU...
+
+--- 25. @masanork (2026-05-08) ---
+URL: https://x.com/masanork/status/2052722613924045162
+もうヤバい脆弱性であっても、公表時点でCVE番号が割り当てられていることを期待できない時代になってしまったんだな
+
+--- 26. @tjmlab (2026-05-08) ---
+URL: https://x.com/tjmlab/status/2052720694509883720
+コイルなしで発振する電子回路を実現
+－巨大インダクタンスを分子材料で発見－
+
+https://
+riken.jp/press/2026/202
+60508_2/index.html
+…
+従来はコイルによって実現されてきたインダクター機能を、物質の内部ダイナミクスによって代替できることが示され、コイル不要の発振回路が可能
+
+創発インダクタなんていらんかったんや！
+
+--- 27. @mouri45 (2026-05-08) ---
+URL: https://x.com/mouri45/status/2052755286965031315
+ARスマートグラスのRayNeo X3 ProでCodex Pets召喚できました！ #aimeetup #CodexApp #RayNeo
+
+--- 28. @DrJimFan (2026-05-08) ---
+URL: https://x.com/DrJimFan/status/2052758642781487237
+I promise this will be the best 20 min you spend today! Robotics: Endgame, the sequel to my last year's Sequoia AI Ascent talk, "Physical Turing Test". I laid out the roadmap for solving Physical AGI as a simple parallel to the LLM success story. Be a good scientist, copy
+
+--- 29. @zento_ai (2026-05-08) ---
+URL: https://x.com/zento_ai/status/2052625132213227973
+どうでもいいけど何故国内のSaaSスタートアップ企業勢は若手の生成AIプレイヤー達を誰一人囲い込む事に成功しなかったのか意味不明で仕方が無い。
+
+現場はどうでも良いとして（意地悪な面接して落としてやったぜみたいな話聞くので）何故経営者陣はそれで良いと思ったのか。
+
+--- 30. @tyranusII (2026-05-07) ---
+URL: https://x.com/tyranusII/status/2052382380418347049
+噂であまりに一喜一憂している状況だし、噂の元はなんとも思ってないけど初出情報が一番拡散してしまうので、西田さんに筆をとってもらった
+
+--- 31. @Supermicro (?) ---
+How do you keep up when AI workloads generate massive heat across multiple racks? 
+
+Supermicro In-Row Solutions deliver 1.8MW cooling, Liquid-to-Air Sidecars, and pre-validated SuperCluster solutions to support seamless multi-rack scaling.
+
+--- 32. @sudotadashi (2026-05-08) ---
+URL: https://x.com/sudotadashi/status/2052647854305611871
+本日のソニーグループの経営方針説明会で、久々にクランチロールの最新の有料会員数が発表された
+2100万人、2千万の大台超え
+
+アニメだけの配信に毎月お金を払うファンが、世界にこれだけいるのすごい。
+
+--- 33. @ericzakariasson (2026-05-07) ---
+URL: https://x.com/ericzakariasson/status/2052453150888755551
+orchestrate a swarm of agents
+
+here's a visualization of the swarm and how it's using multiple planners, verifiers, and workers
+
+try it today with /add-plugin orchestrate and then /orchestrate [goal]
+
+--- 34. @itsPaulAi (2026-05-07) ---
+URL: https://x.com/itsPaulAi/status/2052505472482046468
+Woow Tencent has released a model 100% open source which is better than Google Translate...
+
+And it runs locally on your phone?!
+
+- Only 440MB (!!)
+- 33 languages
+- On-device translation
+
+So we have now a local Google Translate which is running completely offline.
+
+They are using
+
+--- 35. @AUTOMATONJapan (2026-05-08) ---
+URL: https://x.com/AUTOMATONJapan/status/2052660560517607580
+【ニュース】期待の超能力推理ADV『Staffer Retro: 超能力推理クエスト』日本語ボイス実装で瞬く間に大注目。白砂沙帆さん・藤田咲さんなどの豪華キャスト、もうデモ版で聞ける
+
+https://
+automaton-media.com/articles/newsj
+p/20260508-441848/
+…
+
+--- 36. @GOROman (2026-05-08) ---
+URL: https://x.com/GOROman/status/2052754789214400700
+WebアプリとｽﾀｯｸﾁｬﾝファームウェアとBLEサーバーはCodexで作りました
+
+--- 37. @fire_cross_2021 (?) ---
+新米オッサン冒険者(32)、最強パーティに死ぬほど鍛えられて無敵になる。
+★コミックス3巻分無料配信中！
+
+--- 38. @ynishi2015 (2026-05-07) ---
+URL: https://x.com/ynishi2015/status/2052380455924838499
+みないなのをガンガン投げつけてもCodexは簡単にはつぶれない。5並列40時間とかやると、わりと使い切れる。
+
+--- 39. @BuyBitcoinHODL (2026-05-08) ---
+URL: https://x.com/BuyBitcoinHODL/status/2052568960508547196
+俺ですらアビトラしてるしこれはマジ。
+コードを作ってくれるAIはずっと前からあったけど、俺が本当にやりたくなかったのは環境構築とかターミナル周りだったんだよな。
+そこも勝手にやってくれるAIエージェントが出たと聞いて試したら一瞬でbotできてビビりました。
+もう小学生でもアビトラできる。
+
+--- 40. @kOjDxE1K53W1kkr (2026-05-08) ---
+URL: https://x.com/kOjDxE1K53W1kkr/status/2052765718110716104
+#スーパーゲ制デー #RPGツクール
+ノンフィールドハクスラRPG「ソウビタバネ」フリーゲーム夢現での公開も開始しました！ 敵の行動がダメージまで事前に分かるのが特徴です！  ゲームをプレイ出来るページへのリンクは固定ポストをご覧ください。
+
+--- 41. @beef_and_rice (2026-05-07) ---
+URL: https://x.com/beef_and_rice/status/2052441535690805657
+プロであろうと素人であろうと、AIを使えば自分よりも少し高みには達することができて、さらに上がろうと思うと崩壊するので。地に足がつかなくなる瞬間を自覚し、地面を高くすることが必要。地面を作るのが専門性。だと、思っています
+
+--- 42. @enginner_dog (2026-05-08) ---
+URL: https://x.com/enginner_dog/status/2052680163696189648
+3週間前のこれやん。
+
+--- 43. @Ad8qqsEUYofd6cR (2026-05-08) ---
+URL: https://x.com/Ad8qqsEUYofd6cR/status/2052668636075372967
+くるわけがない
+もうあの頃と違ってゲーム会社達がソシャゲに新作を数出さない
+そのせいで話題作も減って
+ファミ通Appが終了しファミ通comに合併された
+中韓のアニメソシャゲやってる人達も
+スマホの容量カツカツだからPS5でやってる。10年前とは全然違う。
+
+--- 44. @chokkanorg (2026-05-08) ---
+URL: https://x.com/chokkanorg/status/2052623383582724136
+Swallow Leaderboard v2をアップデートしました。
+
+GPT-5.4, Qwen 3.5, Gemma 4, llm-jp-4などのLLMを追加
+推論型モデルの評価で確率的デコーディングを採用
+MT-Benchの自動採点モデルをGPT-5.2（推論off）に変更
+表の列見出しをクリックしてソートできるようにした
+
+--- 45. @mangaup_PR (?) ---
+「かっこいいやん」
+怖くてかわいい灰宮先輩がボクだけに見せる表情
+
+ニューヒロイン登場作品はこちらから！
+
+--- 46. @yugen_matuni (2026-05-08) ---
+URL: https://x.com/yugen_matuni/status/2052551366749598150
+もうあらゆる業務がCodexAppで良くなりますね。
+
+--- 47. @kg_r08 (2026-05-08) ---
+URL: https://x.com/kg_r08/status/2052691302798758010
+良薬は口に苦し。
+
+劇薬だよね。どう考えても
+
+--- 48. @bako_XRgame (2026-05-08) ---
+URL: https://x.com/bako_XRgame/status/2052650648844607761
+今日も元気にもくもくUnity！
+前作のノンフィールドRPG講座はここまで進化した！
+デッキ構築あり！レリックあり！進路選択あり！イベントありのオリジナルスレスパライクJRPGが作れる！
+
+--- 49. @kataokadesign (2026-05-08) ---
+URL: https://x.com/kataokadesign/status/2052613466717065529
+クラウドワークスのLP制作コンペを覗いてみたら77,000円の案件に応募数65件あって、ほとんど生成AIのデザインをそのまま貼り付けている状況でした。
+
+採用されたLPはさすがにデザイナーが自力で作ったものでしたが、すでにクラウドソーシングという仕組み自体が機能不全になりつつあると感じました。
+
+--- 50. @towel_funnel (2026-05-08) ---
+URL: https://x.com/towel_funnel/status/2052621561476329516
+AI学習禁止って言ってる人の話を聞くと、メインで禁止したいのi2iであって、それ学習じゃないから禁止できてない・・・みたいなことあるけど、それを教えようとすると攻撃されるので誰も教えない、みたいな悲しい状況もある
+=======
 # Read at: 2026-05-09 00:06
 # Total: 50 tweets
 
@@ -317,3 +644,4 @@ t=0,draw=$=>{t||createCanvas(w=400,w);background(9).noStroke().fill(w,116);for(t
 --- 50. @cixliv (2026-05-08) ---
 URL: https://x.com/cixliv/status/2052623522288316566
 The robots are preparing for tomorrow…
+>>>>>>> d619ca86d403f7cbb63f8ba7ef2ff6ebc3635ec3

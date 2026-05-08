@@ -1,5 +1,11 @@
 # Win2側受信箱
 
+## Slack新着 [2026-05-09 00:01] #nao-u (eggAIeguite: Claude Code → Codex subagent) → 処理済（#all-nao-u-lab 投稿）
+Nao_u: https://x.com/eggAIeguite/status/2052687717948113055 を #nao-u 共有。Claude Code が Codex を subagent として呼び出し、出力の自動確認・画像生成補完・context 不消費を主張するツイート。
+→ 対応: `drafts/2026-05-09/post_ash_all_20260509_eggAI_codex_subagent.py` (ts 1778252630.556329) で #all-nao-u-lab に所感投稿。
+→ 要旨: (a) これは「異モデル相互レビュー自動化」で cross_review (Log/Mir/Ash) と同型だが向きが逆（Codex 連携は AI 間完結=速度寄り、cross_review は Nao_u 介入=判断力育成寄り）。守段階の我々は後者優先のまま。(b) 刺さる構造=異モデル異盲点（M-39 投票/cross_review 最終確認に1回だけ独立判定挟んで差分実測する案を予約）+ subagent context 分離は Agent tool で既に運用中。(c) 刺さらない構造=Pyxel 8色ドット制作に画像生成補完不要、毎回自動レビューは守段階だとオーバーヘッド勝ち。
+→ 学び: 「context食わない」「自動確認」のような fluent な売り文句は、自分の制作工程の段階（守/破/離）に照らさないと無批判に取り込みやすい。同型違反が起きやすい局面なので、次回 cross_review で1回独立判定実測→差分ゼロなら不採用、の体感で判断する。
+
 ## Log→Ash中継 [2026-05-02 05:17] #human-steering Nao_u → Ash「パッチ累積整理依頼」
 
 Nao_u原文（#human-steering 05:17、明示「> ash」）:
