@@ -82426,3 +82426,61 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-05-08 11:27:37] [slack_check] Starting
 [2026-05-08 11:28:55] [slack_check] Starting
 [2026-05-08 11:29:23] [health_check] Starting
+[2026-05-08 11:29:24] [health_check] [health_check] 2026-05-08T11:29:23 overall=CRITICAL
+[2026-05-08 11:29:24] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 11:29:24] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-05-08 11:29:24] [health_check] Done (exit=2)
+[2026-05-08 11:30:14] [slack_check] Starting
+[2026-05-08 11:31:03] [git_sync] Starting
+[2026-05-08 11:31:16] [git_sync] Done (exit=0)
+[2026-05-08 11:31:36] [slack_check] Starting
+[2026-05-08 11:32:55] [slack_check] Starting
+[2026-05-08 11:34:25] [health_check] Starting
+[2026-05-08 11:34:25] [health_check] [health_check] 2026-05-08T11:34:25 overall=CRITICAL
+[2026-05-08 11:34:25] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 11:34:25] [health_check]   [!!] git: 15件の未pushコミット（10件超）
+[2026-05-08 11:34:25] [health_check] Done (exit=2)
+[2026-05-08 11:34:45] [slack_check] Starting
+[2026-05-08 11:36:03] [slack_check] Starting
+[2026-05-08 11:37:21] [slack_check] Starting
+[2026-05-08 11:38:40] [slack_check] Starting
+[2026-05-08 11:39:28] [health_check] Starting
+[2026-05-08 11:39:29] [health_check] [health_check] 2026-05-08T11:39:28 overall=CRITICAL
+[2026-05-08 11:39:29] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 11:39:29] [health_check]   [!!] git: 15件の未pushコミット（10件超）
+[2026-05-08 11:39:29] [health_check] Done (exit=2)
+[2026-05-08 11:39:29] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 11:39:29] [ALERT] Cooldown active for health_check, skipping alert
+[2026-05-08 11:39:59] [slack_check] Starting
+[2026-05-08 11:41:18] [slack_check] Starting
+[2026-05-08 11:41:46] [scheduler_health] Starting
+[2026-05-08 11:41:48] [scheduler_health] [ASH] ヘルスチェック OK=3 WARN=2 FAIL=0
+[2026-05-08 11:41:48] [scheduler_health] ✅ scheduler_ash PID — PID=13560 生存中
+[2026-05-08 11:41:48] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-05-08 11:41:48] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-05-08 11:13:36] [ALERT] Sent error alert for health_check
+[2026-05-08 11:41:48] [scheduler_health] ⚠️ git 未push — 15件の未pushコミット
+[2026-05-08 11:41:48] [scheduler_health] Done (exit=1)
+[2026-05-08 11:42:08] [infra_health_check] Starting
+[2026-05-08 11:46:02] ==================================================
+[2026-05-08 11:46:02] Ash scheduler started (PID 17652)
+[2026-05-08 11:46:02] Max runtime: 0 hours
+[2026-05-08 11:46:02] Code hash: 6f5348d28474509bfdc7de689fe1c34a
+[2026-05-08 11:46:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-05-08 11:46:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-05-08 11:46:02] ==================================================
+[2026-05-08 11:46:02] [git_pull] Starting
+[2026-05-08 11:46:04] [git_pull] Done (exit=128)
+[2026-05-08 11:46:14] [slack_check] Starting
+[2026-05-08 11:46:32] [reservation_check] Starting
+[2026-05-08 11:46:32] [reservation_check] 行動予約: 待機中 5 件、期限到来なし
+[2026-05-08 11:46:32] [reservation_check] Done (exit=0)
+[2026-05-08 11:46:42] [inbox_check] Starting
+[2026-05-08 11:51:44] [inbox_check] Inbox win2 has content
+[2026-05-08 11:51:44] [inbox_check] Done (exit=0)
+[2026-05-08 11:51:44] [dm_check] Starting
+[2026-05-08 11:51:58] [dm_check] No new DMs
+[2026-05-08 11:51:58] [dm_check] Done (exit=0)
+[2026-05-08 11:51:58] [review_deadline] Starting
+[2026-05-08 11:51:58] [review_deadline] レビュー期限超過なし。
+[2026-05-08 11:51:58] [review_deadline] Done (exit=0)
+[2026-05-08 11:51:58] [health_check] Starting

@@ -1,15 +1,17 @@
 """
-auto_diary.py — 4フェーズ分割サイクル (2026-04-05 Nao_u提案)
+auto_diary.py — 5フェーズ分割サイクル (2026-05-08 Nao_u提案、4→5へ拡張)
 
-1サイクルを4回のLLM呼び出しに分割し、各フェーズで注意を集中させる:
+1サイクルを5回のLLM呼び出しに分割し、各フェーズで注意を集中させる:
   Phase 1 (Gather): 情報収集。Slack・inbox・pre-check結果を集めてステージングファイルに書く
-  Phase 2 (Analyze): shared-reads分析。外部情報を深く分析・分類し、アイデアの種に接続
-  Phase 3 (Process): 対処・研究。ステージングを読み、最重要1-2件に集中して対応
-  Phase 4 (Diary): 日記出力。Phase 1-3の結果を踏まえて#ashに活動日記を投稿
+  Phase 2 (Analyze): 深い分析。shared-reads投稿＋external_notes統合（外部情報をアイデアの種に接続）
+  Phase 3 (Act): Slack返信／改善適用／プロジェクト更新（日記なし）。フェーズ4でやる大きな作業を1つ決める
+  Phase 4 (BigWork): フェーズ3で決めた大きな作業を1つ完遂する。日記は書かない
+  Phase 5 (Diary): 日記投稿＋次回起動メモ＋git push
 
 背景:
 - 「LLMは1回の起動でやるべきことが多いと注意が分散する」(Nao_u #human-steering 2026-04-05)
 - 「Shared-readsは詳細な記述と分析を。1フェーズこのために使ってもいいくらい重要」(Nao_u #human-steering 2026-04-05)
+- 「フェーズ3で雑務、フェーズ4で大きな作業1つを完遂、フェーズ5で日記」(Nao_u #human-steering 2026-05-08 08:46)
 """
 
 import io
@@ -38,10 +40,11 @@ STAGING_FILE = REPO_DIR / "log" / "cycle_staging.md"
 
 # フェーズ別タイムアウト
 PHASE_TIMEOUTS = {
-    "gather": 240,   # 情報収集（claude --print応答遅延に余裕。120s→240s 2026-04-09）
-    "analyze": 300,  # shared-reads分析（外部情報の深い分析・分類）
-    "process": 240,  # 対処・研究
-    "diary": 240,    # 日記出力（CLAUDE.md読み込み+1500字執筆+Slack投稿+git push）
+    "gather": 240,    # 情報収集（claude --print応答遅延に余裕。120s→240s 2026-04-09）
+    "analyze": 300,   # shared-reads分析＋external_notes統合
+    "act": 240,       # 雑務処理（Slack返信／改善適用／プロジェクト更新）＋ Phase 4 大作業の選定
+    "big_work": 360,  # Phase 3 で選定された大きな作業1つを完遂（日記なし）
+    "diary": 240,     # 日記出力（CLAUDE.md読み込み+1500字執筆+Slack投稿+git push）
 }
 
 
@@ -322,57 +325,109 @@ def phase_analyze():
     return ok
 
 
-# ── Phase 3: Process（対処・研究） ──────────────────────────────────
+# ── Phase 3: Act（雑務処理＋大作業の選定） ──────────────────────────────────
 
-def phase_process():
-    """ステージングを読み、最重要1-2件に集中して対応"""
+def phase_act():
+    """Slack返信／改善適用／プロジェクト更新（日記なし）。
+    最後に Phase 4 でやる「大きな作業」を1つ決め、cycle_staging.md に明示的に宣言する。"""
     staging = read_staging()
 
     prompt = (
         "あなたはAsh（Win2）。CLAUDE.mdを読んで自分が誰か確認せよ。\n"
-        "【Phase 3: 対処・研究】このフェーズの目的は「集めた情報に基づいて行動する」こと。\n"
+        "【Phase 3: Act】このフェーズの目的は「短い対処を片付け、Phase 4 で挑む大作業を1つ確定させる」こと。\n"
+        "日記は書くな（Phase 5 で書く）。\n"
         f"\n以下はPhase 1-2で収集・分析した情報:\n```\n{staging[:3000]}\n```\n"
-        "\n上記を踏まえ、最も重要な1-2件に集中して対処せよ:\n"
+        "\n## A. 雑務処理 (短時間で閉じる対処を1-3件)\n"
+        "以下のうち今サイクルで該当するものを処理せよ:\n"
+        "- Slack返信（inbox/メンション/未対応の問いかけ）\n"
         "- external_notesの未統合エントリ → beliefs.mdや日記素材として接続\n"
         "- クロスチェック未レビュー → kaizen_tracker.md更新\n"
         "- Activeプロジェクトの進展 → プロジェクトファイル更新\n"
         "- 低確信度beliefs → 検証・更新\n"
-        "\n【kaizen-log投稿（必須）】このフェーズで実質的な改善（コード変更、ファイル更新、設定変更等）を行った場合、\n"
-        "slack_bot.pyのpost_message()でC0AMSJCTTC4(#kaizen-log)に投稿せよ。\n"
-        "形式: 「[Ash] 何を変えたか（1-2行の具体的記述）」\n"
-        "※日記投稿やAuto syncだけの場合は投稿不要。実質的な変更があった場合のみ。\n"
-        "\n結果をlog/cycle_staging.mdに追記せよ（既存内容を消すな）。\n"
-        "「## Phase 3 結果」セクションとして、何をしたか・何がわかったかを書け。\n"
+        "実質的な改善（コード変更、ファイル更新、設定変更等）を行った場合は\n"
+        "slack_bot.pyのpost_message()でC0AMSJCTTC4(#kaizen-log)に「[Ash] 何を変えたか」を投稿。\n"
+        "\n## B. Phase 4 大作業の選定 (必須)\n"
+        "このフェーズの**最重要アウトプット**は「Phase 4 で完遂する大きな作業を1つ確定する」こと。\n"
+        "選定基準:\n"
+        "- 1サイクル (約6分) で完遂可能な大きさ。完遂できないものは細分化して1ステップ分を選ぶ\n"
+        "- §0a (next_tasks 層A pending)・§0b (前サイクル末尾の次回タスク)・Phase 1-2で浮上した課題から最重要を選ぶ\n"
+        "- ゲーム制作の試行錯誤ループに接続するものを優先 (memory/feedback_means_ends_reversal_check.md)\n"
+        "- 雑務の延長ではなく、ship に近づく/構造を変える/ノウハウを残すレベル\n"
+        "\n選定したら cycle_staging.md に以下のフォーマットで明示宣言せよ:\n"
+        "```\n## Phase 3 → Phase 4 大作業宣言\n"
+        "**大作業**: <1行で何をやるか>\n"
+        "**完遂条件**: <Phase 4 終了時に何が達成されていれば成功か。検証可能な形で>\n"
+        "**根拠**: <なぜこれを選んだか。staging のどの行に紐づくか>\n```\n"
+        "Phase 4 はこの宣言だけを読んで実行する。曖昧だと Phase 4 が空転する。\n"
+        "\n## C. ログ\n"
+        "結果をlog/cycle_staging.mdに追記せよ（既存内容を消すな）。\n"
+        "「## Phase 3 結果」セクション + 上記「## Phase 3 → Phase 4 大作業宣言」を書け。\n"
         "※inbox処理はcheck_inbox.pyが専用で行う。このフェーズでは行わない。\n"
-        "※日記は次のPhaseで書く。ここでは対処に集中。"
+        "※日記は Phase 5 で書く。ここでは対処と選定に集中。"
     )
-    ok, output = run_phase("process", prompt, PHASE_TIMEOUTS["process"])
+    ok, output = run_phase("act", prompt, PHASE_TIMEOUTS["act"])
     return ok
 
 
-# ── Phase 4: Diary（日記出力） ──────────────────────────────────
+# ── Phase 4: BigWork（大作業の完遂） ──────────────────────────────────
 
-def phase_diary():
-    """Phase 1-3の結果を踏まえて日記を書き、Slackに投稿"""
+def phase_big_work():
+    """Phase 3 で宣言された大作業を1つ完遂する。日記は書かない。"""
     staging = read_staging()
 
     prompt = (
         "あなたはAsh（Win2）。CLAUDE.mdを読んで自分が誰か確認せよ。\n"
-        "【Phase 4: 日記出力】このフェーズの目的は「書く」こと。\n"
-        f"\n以下は今サイクルのPhase 1-3の記録:\n```\n{staging[:4000]}\n```\n"
+        "【Phase 4: BigWork】このフェーズは Phase 3 で宣言された大きな作業1つを完遂することだけが任務。\n"
+        "日記は書くな（Phase 5 で書く）。shared-reads 投稿もしない（Phase 2 で完了済み）。\n"
+        f"\n以下は Phase 1-3 の staging:\n```\n{staging[:5000]}\n```\n"
+        "\n## 手順\n"
+        "1. cycle_staging.md の `## Phase 3 → Phase 4 大作業宣言` セクションを探し、**大作業 / 完遂条件 / 根拠** を読む。\n"
+        "   宣言が見つからない or 不明瞭な場合 → cycle_staging.md 末尾に「[Ash Phase 4] 大作業宣言が読めなかった。Phase 5 で再選定する」と1行残してこのフェーズ終了。\n"
+        "2. 宣言が読めたら、その大作業を完遂する。完遂条件を満たすことが目的。\n"
+        "3. ゲーム実装系なら: コード書く / playtest する / commit する。設計系なら: ドキュメントに結論まで書く。\n"
+        "   分析系なら: 結論を memory/ や projects/ に残す。Slack投稿系なら: 投稿してログに記録。\n"
+        "4. **完遂条件をチェック**: 自分で「達成された」と言える状態か。半端なら追加で1ターン回す。\n"
+        "5. 結果を cycle_staging.md に「## Phase 4 大作業の結果」として追記:\n"
+        "   - **やったこと**: 何をしたか（commit hash / ファイルパス / Slack ts 等の検証可能な参照）\n"
+        "   - **完遂判定**: 完遂条件を満たしたか (Yes/No/Partial) + 理由\n"
+        "   - **次へ繰り越し**: 残ったタスクがあれば next_tasks.py add で登録し、Phase 5 の日記末尾に書く素材を残す\n"
+        "\n## 注意\n"
+        "- 別の作業に脇道しない。Phase 3 宣言の作業以外は Phase 5 か次サイクルへ。\n"
+        "- 「考えるだけ」「メモするだけ」で終えない。完遂条件が「ファイル更新」なら更新まで、「commit」なら commit まで。\n"
+        "- 既存ファイルの編集を優先。新規ファイル作成は本当に必要な時のみ。\n"
+        "- 日記はまだ書くな。Phase 5 のための素材を staging に残せ。"
+    )
+    ok, output = run_phase("big_work", prompt, PHASE_TIMEOUTS["big_work"])
+    return ok
+
+
+# ── Phase 5: Diary（日記出力＋次回起動メモ＋git push） ──────────────────────────────────
+
+def phase_diary():
+    """Phase 1-4の結果を踏まえて日記を書き、Slackに投稿。次回起動メモを末尾に書き、git push まで完遂。"""
+    staging = read_staging()
+
+    prompt = (
+        "あなたはAsh（Win2）。CLAUDE.mdを読んで自分が誰か確認せよ。\n"
+        "【Phase 5: 日記出力＋次回起動メモ＋git push】このフェーズの目的は「書く・繋ぐ・配る」こと。\n"
+        f"\n以下は今サイクルの Phase 1-4 の記録:\n```\n{staging[:5000]}\n```\n"
         "\n**上流 broken-record 対策 (Nao_u 2026-05-04 02:36 #human-steering)**:\n"
         "1. staging の `## 直近の#ash投稿（重複回避用）` セクションを先に読め。これは過去24hの自分の長文日記の見出し一覧だ。\n"
         "2. 今サイクルで書こうとしている主題が、その一覧の topic と (ratio>=0.6 / タイトルだけ違う / 同じ事件の再叙述) のいずれかに該当するなら、**書かない**。\n"
         "   代わりに以下のどれかへ降りろ:\n"
         "   (a) 同じ事件の **新しい差分** (前回から動いた事実・変えた装置・反応) に焦点を絞り、冒頭で「前回X時間前の話題の続報」と明記\n"
-        "   (b) 別の今サイクル固有の小さな観察に切り替える (cycle_staging.md の Phase 1-3 メモから別 topic を拾う)\n"
+        "   (b) 別の今サイクル固有の小さな観察に切り替える (cycle_staging.md の Phase 1-4 メモから別 topic を拾う)\n"
         "   (c) どちらも該当する素材がなければ、日記投稿を**スキップ**して `python slack_bot.py post C0ALVUSHK8E '[Ash skip] HH:MM 直近24hで同topic連投を回避するためスキップ'` の1行報告だけ送る\n"
         "3. (a)(b)(c) のどれを選んだかを冒頭3行以内で**自分で宣言**してから本文に入る。下流の post_message ガード (24h窓 / ratio>=0.6) は最終防衛線で、ここで撥ねられたら token は既に消費済みだ。\n"
         "\n上記を踏まえ、#ashチャンネルに投稿する活動日記を書け:\n"
         "- slack_bot.pyのpost_message()でチャンネルC0ALVUSHK8Eに投稿\n"
         "- 圧縮せず具体的に、1500字以上で\n"
         "- Phase 2のshared-reads分析で得た外部知見は思考の流れの中で自然に出すこと（別セクションにしない）\n"
-        "- 最も引っかかった1つを軸に深く書け\n"
+        "- Phase 4 で完遂した大作業の中で「最も引っかかった1点」を軸に深く書け（作業ログの羅列ではなく、内省）\n"
+        "\n## 次回起動メモ（必須）\n"
+        "日記本文の末尾に必ず「次サイクルの最善行動」を1段落書け。\n"
+        "- §0a (next_tasks 層A) に登録済みかどうかも明示する\n"
+        "- 未登録なら `python next_tasks.py add \"...\"` を実行してから日記を投稿する\n"
         "\n※shared-readsへの投稿はPhase 2で完了済み。このフェーズでは日記に集中。\n"
         "\n投稿後、git add + git commit + git pushを実行せよ。"
     )
@@ -429,7 +484,7 @@ def record_run():
 
 def main():
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"[{now}] auto_diary.py 実行 (4フェーズ分割モード)")
+    print(f"[{now}] auto_diary.py 実行 (5フェーズ分割モード)")
 
     if not check_min_interval():
         return
@@ -437,23 +492,28 @@ def main():
     # Phase 1: Gather（情報収集）
     ok1 = phase_gather()
     if not ok1:
-        print("Phase 1 (Gather) 失敗。Phase 2-4は中止。状態報告のみ投稿。")
+        print("Phase 1 (Gather) 失敗。Phase 2-5は中止。状態報告のみ投稿。")
         record_run()
         post_status_report(reason=f"Phase 1 (Gather) がタイムアウト/失敗 (timeout={PHASE_TIMEOUTS['gather']}s)")
         return
 
-    # Phase 2: Analyze（shared-reads分析 — Nao_u指示: 1フェーズ丸ごと使う価値）
+    # Phase 2: Analyze（shared-reads分析＋external_notes統合 — Nao_u指示: 1フェーズ丸ごと使う価値）
     ok2 = phase_analyze()
     if not ok2:
-        print("Phase 2 (Analyze) 失敗。Phase 3-4は試行する。")
+        print("Phase 2 (Analyze) 失敗。Phase 3-5は試行する。")
 
-    # Phase 3: Process（対処・研究）
-    ok3 = phase_process()
+    # Phase 3: Act（雑務処理＋Phase 4 大作業の選定）
+    ok3 = phase_act()
     if not ok3:
-        print("Phase 3 (Process) 失敗。Phase 4 (Diary)は試行する。")
+        print("Phase 3 (Act) 失敗。Phase 4 BigWork は宣言不在のまま試行する（Phase 4 側でフォールバック）。")
 
-    # Phase 4: Diary（日記出力）
-    ok4 = phase_diary()
+    # Phase 4: BigWork（Phase 3 で宣言された大作業を1つ完遂）
+    ok4 = phase_big_work()
+    if not ok4:
+        print("Phase 4 (BigWork) 失敗。Phase 5 (Diary) は試行する。")
+
+    # Phase 5: Diary（日記出力＋次回起動メモ＋git push）
+    ok5 = phase_diary()
     record_run()
 
     # next_tasks 層A サイクル末尾チェック（Mir C126 設計合意 2026-04-26）
@@ -467,11 +527,11 @@ def main():
     except Exception as e:
         print(f"next_tasks check_cycle 失敗: {e}")
 
-    if ok4:
-        print("4フェーズ完了。")
+    if ok5:
+        print("5フェーズ完了。")
     else:
-        print("Phase 4 (Diary) 失敗。状態報告を投稿。")
-        post_status_report(reason="Phase 4 (Diary) でタイムアウト/失敗。Phase 1-3は完了済み")
+        print("Phase 5 (Diary) 失敗。状態報告を投稿。")
+        post_status_report(reason="Phase 5 (Diary) でタイムアウト/失敗。Phase 1-4は完了済み")
 
 
 if __name__ == "__main__":
