@@ -4,6 +4,9 @@ description: アイデア評価時、「作る前から分かりきっている�
 type: feedback
 originSessionId: b8c4b3bd-3aae-447d-9f19-2793aafc38d9
 ---
+
+> **→ 統合先: [feedback_prediction_responsibility.md](feedback_prediction_responsibility.md)** (Stage 2 着手前批判)。本ファイルは履歴保全のため残置。新規参照は統合先を使うこと。
+
 # Rule
 アイデアを「筋が良い」と判定して実装着手する前に、以下を必ず通せ:
 1. **懸念点列挙**: 作る前から予測可能な問題点を列挙する（自分で書いた懸念も含む）

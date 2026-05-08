@@ -4,6 +4,9 @@ description: 実装後、人間に遊ばせる前に「結果を予測する」�
 type: feedback
 originSessionId: 16a6232b-85b7-4131-88f2-323a307e2afe
 ---
+
+> **→ 統合先: [feedback_prediction_responsibility.md](feedback_prediction_responsibility.md)** (Stage 3 人間プレイ前予測)。本ファイルは履歴保全のため残置。新規参照は統合先を使うこと。
+
 # Rule
 ゲーム実装後、Nao_u/人間にプレイさせる前に、以下を必ず通せ:
 

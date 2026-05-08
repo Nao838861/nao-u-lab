@@ -4,6 +4,9 @@ description: 新規着手時、思い付き1案ではなく複数アイデアを
 type: feedback
 originSessionId: 4fd5e240-3cf6-47cb-aef1-d3a9d3732946
 ---
+
+> **→ 統合先: [feedback_prediction_responsibility.md](feedback_prediction_responsibility.md)** (Stage 1 複数案で最良を選ぶ)。本ファイルは履歴保全のため残置。新規参照は統合先を使うこと。
+
 # Rule
 新ゲーム着手前 / 新機能設計前 / 大きな修正の cross_review 前に、以下のハーネスを必ず通せ:
 
