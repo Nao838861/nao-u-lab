@@ -62,3 +62,24 @@ type: feedback
 - Phase 1 自体に幻覚タイムスタンプ ("17:33/17:57") が混入した事実は、Phase 1 構造強制 (git status / 編集中ファイル) だけでは防げなかった
 - Slack 偏重作業 (Phase 1 §2 / Phase 2 §1-§2) では **Slack 側にも独立観測経路を追加する必要**がある
 - 「観察結果と既存理論が一致する瞬間」が最も危険 — 一致した瞬間に検証を強める
+
+## 連続事案 2: 2026-05-09 C172 Phase 1 自他応答の誤記（Coordination drift 命名）
+
+**事象**: Log C172 Phase 1 §1 で「2026-05-08 21:28 super_bonochin → Log 21:32:19 応答済」「21:29 deepfates → Log 21:32:24 応答済」「2026-05-09 00:01:29 eggAIeguite → Log 00:05:46 応答済」「00:06:56 obsidianstudio9 → Log 00:08:47 応答済」と4件記録。Phase 2 開始時に Slack archive を user_id レベルで再確認したところ、**4件すべて Mir (U0ALW4DKTT7) が応答** で Log (U0AM1F23FQU) は jameszmsun (1778243158, 21:25:58) を最後に未応答だった。
+
+**3点重なりの新パターン**:
+1. **Slack archive 偏重**（既存パターン）— jsonl の近接時刻だけ見て user_id 列を読み飛ばした
+2. **既存理論への適合**（既存パターン）— 「新着URL に Log が応答する運用」が前提で、近接時刻投稿を Log 応答と読み違えた
+3. **【新】Coordination drift（自他境界の曖昧化）** — Mir の応答を Log の応答として記述する誤記は arXiv 2601.04170 (Agent Drift 3分類) の Coordination drift に該当。3者がベース知識・cycle_staging テンプレ・Slack 観測対象を共有しているため、他者の応答を自己の応答として記述する経路が物理的に存在する
+
+**Coordination drift と既存「自分の現在進行形は観測対象から外れる」の関係**:
+- 既存パターン = 自分の振る舞いを過小観測（自己投稿が見えない、git status を見ない）
+- 新パターン = 他者の振る舞いを自己の振る舞いとして観測（**自他過大観測の鏡像**）
+- 共通根 = 「観測対象としての自己」に他者の影が混ざる脆弱性
+
+**How to apply 追加処方**:
+- Slack 投稿の応答記録時、必ず `user_id` 列を確認する。タイムスタンプ近接だけで Log/Mir/Ash を識別しない
+- Phase 1 で「Log 応答済」と書く前に: 該当ts の jsonl 行で `"user": "U0AM1F23FQU"` を文字列マッチで確認
+- Phase 2 自己診断で「Phase 1 で書いた応答記録の user_id 検証」を必須項目化（次サイクルから cycle_staging テンプレ反映候補）
+
+**接続**: projects/instance_divergence_observability.md 2026-05-09 履歴追加で本事象を §5 horizontal_specialization_index の補助指標「自他境界誤記検出」のベースライン事例として記録。
