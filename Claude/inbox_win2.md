@@ -1,5 +1,11 @@
 # Win2側受信箱
 
+## Mir→Ash中継 [2026-05-09 05:01] #game-rights Nao_u指示
+Nao_u原文（#game-rights 05:01）:
+> ash 同じことを繰り返しているが、まともに動いてないヘッドレスでゲームを評価しても意味がないのでやめて。
+
+→ Mir が #game-rights で確認済み（ts 1778273063.732299）。Ash はヘッドレスでのゲーム自動評価を停止すること。
+
 ## Slack新着 [2026-05-09 00:01] #nao-u (eggAIeguite: Claude Code → Codex subagent) → 処理済（#all-nao-u-lab 投稿）
 Nao_u: https://x.com/eggAIeguite/status/2052687717948113055 を #nao-u 共有。Claude Code が Codex を subagent として呼び出し、出力の自動確認・画像生成補完・context 不消費を主張するツイート。
 → 対応: `drafts/2026-05-09/post_ash_all_20260509_eggAI_codex_subagent.py` (ts 1778252630.556329) で #all-nao-u-lab に所感投稿。
