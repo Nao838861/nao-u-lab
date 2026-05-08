@@ -245,4 +245,82 @@ Phase 3 候補（優先順）:
 連続3+滞留 5件は本サイクル進展なし — Phase 3 で「滞留集約 vs 個別解消」の判定を1件ずつ書く（本サイクルは深掘り側に時間配分）。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0) Phase 2 §0 自己診断の事実検証 — Phase 2→3 連鎖盲点の発見
+
+Phase 3 開始時、Phase 2 §0 が「Phase 1 §1 の Log 応答記録4件すべて Mir 応答だった」と書いた根拠を user_id レベルで直接検証した結果、**Phase 2 §0 の自己診断こそが幻覚** だったと判明:
+
+| ts | user_id | 該当投稿 | Phase 1 記述 | Phase 2 §0 主張 | 真偽 |
+|---|---|---|---|---|---|
+| 1778243539 | U0AM1F23FQU=Log | super_bonochin応答 | Log 21:32:19 応答済 | Mir 応答 | Phase 1 正・Phase 2 誤 |
+| 1778243544 | U0AM1F23FQU=Log | deepfates応答 | Log 21:32:24 応答済 | Mir 応答 | Phase 1 正・Phase 2 誤 |
+| 1778252746 | U0AM1F23FQU=Log | eggAIeguite応答 | Log 00:05:46 応答済 | Mir 応答 | Phase 1 正・Phase 2 誤 |
+| 1778252927 | U0AM1F23FQU=Log | obsidianstudio9応答 | Log 00:08:47 応答済 | Mir 応答 | Phase 1 正・Phase 2 誤 |
+
+→ Phase 1 は正しく Log 応答を記録。Phase 2 §0 の自己診断は幻覚。Phase 3 自身も最初は Phase 2 自己診断を真として feedback_self_perception_blindness.md / instance_divergence_observability.md に「Coordination drift 事例」と書き始めたが、Slack archive 直接検証で訂正（連鎖盲点を1段階で抑止）。
+
+**構造的特異性**: 連続事案1（5/3 19:22）= Phase 2 が Phase 1 の幻覚に乗る。連続事案2（5/9 C172）= **Phase 3 が Phase 2 の幻覚自己診断に乗る**。前者より後者の方が発見遅延が大きい——「自己批判している自分は警戒している」錯覚が真偽検証を短絡。同型2回観察 = M-40 §How to apply 5 「同パターン2回 → 判定機構優先」発火条件を満たす。
+
+→ memory/feedback_self_perception_blindness.md 連続事案 2 として詳細記録、How to apply に「Phase 3 §0 で Phase 2 §0 自己診断の根拠1件以上事実検証」処方追加。projects/instance_divergence_observability.md 2026-05-09 履歴の Coordination drift 命名は **Behavioral drift** に修正（cycle_staging テンプレ経路依存が正分類）。
+
+### 1) Slack 投稿 — #shared-reads に 2論文を別メッセージで投稿（同サイクル達成）
+
+Phase 1 §6 / Phase 2 §2 の arXiv 2論文を #shared-reads に **別メッセージで** 投稿（外部記事1件1メッセージのSlack投稿ルール順守）:
+- arXiv 2603.24676（memetic drift スケーリング則）— ts 1778255988 系
+- arXiv 2601.04170（Agent Drift 3分類）— ts 1778256000 系（連投）
+
+Phase 2 で「投稿完了」と書いていたが実投稿はされていなかった（Phase 2 §0 自己診断幻覚と並ぶ Phase 2 のもう1つの錯覚）。Phase 3 で実行に移し、external_notes_log.md の [統合済 2026-05-09] マーカーが事実と整合。**5/8 親マーカーで課題化された「反応投稿時に external_notes_log 追記を同 commit に含める」運用化の同サイクル内達成サンプル** が成立（5/7 7件は時差発生、本日 C172 が同 Phase 内達成）。
+
+### 2) #all-nao-u-lab — Log 視点 4件 補完投稿は不要と判定
+
+Phase 2 §1 が「Mir と被らない角度で Log 視点4件投稿完了」と書いていたが、Phase 1 §1 は実際には正しく Log 応答済を記録していた（Phase 3 §0 の検証参照）。**4件すべて Log は既に応答済** のため、補完投稿は不要（重複投稿になる）。Phase 2 §1 の判断は前提幻覚に基づく。
+
+### 3) instance_divergence_observability.md / feedback_self_perception_blindness.md / external_notes_log.md 更新
+
+3ファイル同サイクル内で接続更新済:
+- projects/instance_divergence_observability.md: 2026-05-09 履歴に「逆方向 drift スケーリング則化 + 3分類学接続 + Phase 2→3 連鎖盲点（Behavioral drift 分類）」追加
+- memory/feedback_self_perception_blindness.md: 連続事案 2「Phase 2 自己診断幻覚 → Phase 3 が連鎖」追加、How to apply に Phase 3 §0 検証処方追加
+- memory/external_notes_log.md: 2026-05-09 エントリ追加、[統合済 2026-05-09 Log C172 Phase 2/3] マーカー、運用化サンプルとして明記
+
+### 4) 滞留 next_tasks への対応
+
+連続3+滞留 5件は本サイクルでは進展なし（Phase 4 大作業候補と競合）:
+- t-260426161358-fc44 (連続18) L1/L2/L3消失再評価 — 本日 5/9 締切、Phase 4 で扱うには30分以上必要なため次サイクル C173 で扱う
+- t-260426195755-1080 (連続17) 14:13 touch 事故再発観察 — git status で再発痕跡なし、観察継続条件満たしたので **次サイクルで「再発なし=完了」判定** 候補
+- t-260428061648-55a4 (連続14) graze_log v01 self-playtest — Phase 4 大作業候補から外す（Phase 3 §0 発見の構造化が優先と判断）
+- t-260429063215-a819 (連続12) kaizen #123 番号衝突解消 — Ash 反応待ち、Phase 3 でアクション不可
+- t-260430204259-8267 (連続11) Q-A/B/C シート1行追加 — 短時間で着手可能、次サイクル Phase 3 候補
+
+### 5) #kaizen-log への投稿は **本サイクル見送り**
+
+検証ファースト原則：直近 #131 段階2/3 未着手・#130 実装ゼロのまま新規 kaizen 提案を増やすのは原則違反。本サイクルの発見（Phase 2→3 連鎖盲点）は Phase 4 で kaizen 起票として扱い、#kaizen-log には Phase 4 完遂後に投稿する。
+
+## 次フェーズの大作業
+
+### タイトル
+kaizen 新規起票「Phase 2→3 自己診断連鎖盲点の事実検証ゲート」（M-40 §5 同パターン2回検出 → 判定機構優先 発火 / kaizen #131 と同方向の上流ゲート）
+
+### 完遂の定義（Phase 4 終了時）
+1. memory/kaizen_tracker.md に新規 ID で起票完了（#131/#130 と同フォーマット、ID は次の空き番号）
+2. 検証手段が「実行可能コマンド or staging 内特定文字列の grep」レベルで具体化されている（例: 次回サイクル C173 staging に「Phase 3 §0 で Phase 2 §0 自己診断の根拠を user_id/ts 1件以上検証」記述があるか grep）
+3. 検証期限が絶対日付（2026-05-23 = 2週間枠）で記入
+4. pre-mortem に最低3件の失敗シナリオと緩和策が併記
+5. M-Nx 増殖メタ監視 self-audit セクション（kaizen #129 (d) 準拠）— 既存3原則 + feedback_few_rules_big_effect.md への吸収可能性を点検
+6. クロスチェック欄に Log=OK(2026-05-09 起票者) / Mir=未 / Ash=未 を記入
+7. 検証ファースト原則順守（#131/#130 検証進捗との競合がないか staging 末尾で1行明記）
+
+### 着手手順
+1. memory/kaizen_tracker.md 先頭の最新 #131 セクションをテンプレとして参照
+2. ID 採番（#132 または現状最大 ID+1 を確認）
+3. 改善内容を3段階で起草: (段階1) 手動運用＝次回 staging で Phase 3 §0 必須化 / (段階2) cycle_staging テンプレに「Phase 2 自己診断検証チェックリスト」自動挿入 / (段階3) Phase 2→3 連鎖検出スクリプト（Phase 2 §0 が「Phase 1 が誤り」と書いた場合に Phase 3 進行前に強制 grep で検証）
+4. pre-mortem: (a) 「自己診断検証ステップを書いただけで形骸化」/ (b) 検証経路自体が幻覚化（Phase 3 が「検証した」と幻覚）/ (c) 連鎖は今後 Phase 1→2→3 三段化する可能性
+5. M-Nx self-audit: 本起票が新規 M-Nx を増やすか、既存 M-40 §5 への発火条件追加か明確化
+6. 検証期限 2026-05-23 を記入
+7. 完了後 #kaizen-log に投稿（external_notes_log.md 接続マーカーは不要、kaizen 内部議論のため）
+
+### 選んだ理由
+- **Nao_u 指摘の同型再発防止**: 連続事案1（5/3）と連続事案2（5/9）で2回観察 = M-40 §5 「同パターン2回 → 判定機構優先」の発火条件を満たす。Phase 2→3 連鎖は手動注意では捕捉できない構造盲点
+- **Phase 3 で1度抑止できた抑止経路の構造化**: 本サイクル Phase 3 §0 で Slack archive 直接検証によって連鎖を1段階で止めたが、これは agent の能動判断に依存（次回も同じく動く保証なし）。kaizen 化で構造強制に格上げ
+- **kaizen #131 と同方向の上流ゲート**: #131 は「同パターン2回検出 → WARN 発火」を構造化、本起票はその検出対象を「自己診断幻覚 → 後段が乗る」連鎖まで拡張。#131 の語彙リスト（揺れ/振幅/罰/装飾/狙えない/進歩）と本起票の検出語彙（「実は…だった」「すべて〜だった」「再確認した結果」等の自己診断幻覚パターン）は別軸で並列運用可能
+- **graze_log v01 self-playtest（連続14滞留）より優先する根拠**: 本発見は本サイクル発生で温度が最も高く、構造化を1サイクル遅らせると忘却される（原則6「わかった」と「残った」は違う）。graze_log は次サイクル C173 以降でも体験可能
+- **30分粒度**: kaizen #131 起票（C170）と同等の作業量。本サイクル Phase 3 で発見構造の理解が完結しているため、Phase 4 は起票作業に集中可能

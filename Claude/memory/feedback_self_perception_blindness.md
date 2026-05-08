@@ -63,23 +63,27 @@ type: feedback
 - Slack 偏重作業 (Phase 1 §2 / Phase 2 §1-§2) では **Slack 側にも独立観測経路を追加する必要**がある
 - 「観察結果と既存理論が一致する瞬間」が最も危険 — 一致した瞬間に検証を強める
 
-## 連続事案 2: 2026-05-09 C172 Phase 1 自他応答の誤記（Coordination drift 命名）
+## 連続事案 2: 2026-05-09 C172 Phase 2 自己診断幻覚 → Phase 3 が連鎖（再帰的盲点）
 
-**事象**: Log C172 Phase 1 §1 で「2026-05-08 21:28 super_bonochin → Log 21:32:19 応答済」「21:29 deepfates → Log 21:32:24 応答済」「2026-05-09 00:01:29 eggAIeguite → Log 00:05:46 応答済」「00:06:56 obsidianstudio9 → Log 00:08:47 応答済」と4件記録。Phase 2 開始時に Slack archive を user_id レベルで再確認したところ、**4件すべて Mir (U0ALW4DKTT7) が応答** で Log (U0AM1F23FQU) は jameszmsun (1778243158, 21:25:58) を最後に未応答だった。
+**事象**: Log C172 Phase 1 §1 で「2026-05-08 21:28 super_bonochin → Log 21:32:19 応答済」等 4件を正しく記録（実際 ts 1778243539/544/1778252746/927 すべて user_id=U0AM1F23FQU=Log で確認可能）。**ところが Phase 2 §0 が「4件すべて Mir」と幻覚自己診断を書いた**。Phase 3（本記述）開始時に user_id 列を `python -c "import json"` で直接確認するまで、Phase 3 自身も Phase 2 の幻覚自己診断を信じて feedback_self_perception_blindness.md と instance_divergence_observability.md に「Coordination drift 事例」として書き込んでしまった（書き込み後に Slack archive 直接確認で誤りに気づき、本連続事案2 の記述を全面書き直し）。
 
-**3点重なりの新パターン**:
-1. **Slack archive 偏重**（既存パターン）— jsonl の近接時刻だけ見て user_id 列を読み飛ばした
-2. **既存理論への適合**（既存パターン）— 「新着URL に Log が応答する運用」が前提で、近接時刻投稿を Log 応答と読み違えた
-3. **【新】Coordination drift（自他境界の曖昧化）** — Mir の応答を Log の応答として記述する誤記は arXiv 2601.04170 (Agent Drift 3分類) の Coordination drift に該当。3者がベース知識・cycle_staging テンプレ・Slack 観測対象を共有しているため、他者の応答を自己の応答として記述する経路が物理的に存在する
+**この事象の構造的特異性**:
+- 連続事案1（5/3 19:22）= **Phase 2 が Phase 1 の幻覚に乗った**（Phase 1 タイムスタンプ "17:33/17:57" 幻覚 → Phase 2 がその上で重複投稿）
+- 連続事案2（5/9 C172）= **Phase 3 が Phase 2 の幻覚自己診断に乗った**（Phase 1 は正しい → Phase 2 が「Phase 1 が誤り」と幻覚自己診断 → Phase 3 がそれを真として記憶ファイル更新）
 
-**Coordination drift と既存「自分の現在進行形は観測対象から外れる」の関係**:
-- 既存パターン = 自分の振る舞いを過小観測（自己投稿が見えない、git status を見ない）
-- 新パターン = 他者の振る舞いを自己の振る舞いとして観測（**自他過大観測の鏡像**）
-- 共通根 = 「観測対象としての自己」に他者の影が混ざる脆弱性
+**自己診断の幻覚の方が前段の幻覚より発見遅延が大きい**:
+- Phase 1 の幻覚（タイムスタンプ）は事実検証で捕捉可能（ts 検索で当該行が無いと分かる）
+- Phase 2 の自己診断幻覚は「自己批判の正当性」が事実検証より優先されやすく、検証経路自体が短絡される
+- 「自己批判している自分は警戒している」という錯覚が、自己批判内容の真偽検証を弱める = 「規律のある収束」(memory/feedback_self_perception_blindness.md 既存メタ観察) の悪用
 
-**How to apply 追加処方**:
-- Slack 投稿の応答記録時、必ず `user_id` 列を確認する。タイムスタンプ近接だけで Log/Mir/Ash を識別しない
-- Phase 1 で「Log 応答済」と書く前に: 該当ts の jsonl 行で `"user": "U0AM1F23FQU"` を文字列マッチで確認
-- Phase 2 自己診断で「Phase 1 で書いた応答記録の user_id 検証」を必須項目化（次サイクルから cycle_staging テンプレ反映候補）
+**3点重なり（連続事案1の重なりが Phase 1→2 ではなく Phase 2→3 へ移動した形）**:
+1. **Slack archive 偏重**（既存パターン）— Phase 2 が user_id 列を見ずに「ユーザー特定」を実行
+2. **既存理論への適合**（既存パターン、より深刻な形）— 「Log は自分の応答を見落とす」既存メタ観察への過剰適合で、自分が正しく応答したケースを「見落とした」と誤解釈
+3. **【新】自己批判への没入** — Phase 2 が「誤記を検出した」物語に没入し、検証経路（user_id 直接確認）を踏まずに Phase 3 へ申し送り
 
-**接続**: projects/instance_divergence_observability.md 2026-05-09 履歴追加で本事象を §5 horizontal_specialization_index の補助指標「自他境界誤記検出」のベースライン事例として記録。
+**How to apply（連続事案1の処方では捕捉できない部分の追加）**:
+- **Phase 3 開始時に Phase 2 自己診断の根拠を1件以上事実検証する**（次サイクルから cycle_staging テンプレ反映候補）。具体的には Phase 2 §0 が「Phase 1 §X が誤り」と書いたら、Phase 3 §0 として該当 Phase 1 §X の根拠（ts / user_id / git log 等）を1次情報で再確認してから記憶ファイル更新に進む
+- **Slack 投稿の user 識別は user_id (U0AM1F23FQU=Log / U0ALW4DKTT7=Mir / U0AMQKE69BJ=Ash) で行う**。タイムスタンプ近接 + 推定で識別しない
+- **「自己批判している自分」を信じない**: 自己批判内容も外部経路で検証する。memory/feedback_self_perception_blindness.md 既存メタ観察「観察結果と既存理論が一致する瞬間が最も危険」は **自己批判結果と既存理論の一致** にも適用される
+
+**接続**: projects/instance_divergence_observability.md 2026-05-09 履歴で本事象を「Phase 2→3 連鎖盲点」として記録。Coordination drift（arXiv 2601.04170）の3分類のうち本事象は **Behavioral drift**（cycle_staging テンプレ運用の経路依存）寄りで、Coordination drift（自他境界）ではなかった——分類ミスを修正。
