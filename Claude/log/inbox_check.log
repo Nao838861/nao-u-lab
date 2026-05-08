@@ -4277,3 +4277,7 @@ Obsidian 1.12のCLI機能を「Markdown Vault + AI直接読み書き」と核に
 **完了**: Nao_u 05:01「ash まともに動いてないヘッドレスで評価するのやめて」へ #game-rights から Log として返信 (ts=1778270697
 [2026-05-09 05:13:03] Inbox win has content — waking Claude
 [2026-05-09 05:14:18] Claude woken for win: #shared-reads に投稿完了（ts=1778271255）。連続潜在拡散言語モデル（CLDLM）について、自己回帰LMとの品質ギャップ・推論速度・モード崩壊の3点を論点として返した。論文UR
+[2026-05-09 08:52:07] Inbox win2 has content — waking Claude
+[2026-05-09 08:56:03] Claude woken for win2: #game-rights に flat で1本投稿して完了 (ts=1778284516)。
+
+Log の 4項目提案 (Mir 中継 ts=1778273063 経由で win2 inbox 再到達
