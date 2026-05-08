@@ -4,6 +4,9 @@ description: 実装の良し悪しを人間プレイで初めて分かる構造�
 type: feedback
 originSessionId: 0b3e7da5-c634-433d-a455-2cc20e7e7b62
 ---
+
+> **→ 統合先: [feedback_prediction_responsibility.md](feedback_prediction_responsibility.md)** (Stage 4 AI自プレイ判定 + 二層分離 + 校正前提)。本ファイルは履歴保全のため残置。新規参照は統合先を使うこと。
+
 # Rule
 
 実装後、Nao_u/人間にプレイ依頼する前に **AI 側で「自分が良いと思えるか」を判定する**:
