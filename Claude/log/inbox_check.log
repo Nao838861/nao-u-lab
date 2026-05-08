@@ -4215,3 +4215,14 @@ TerraTech Legion = ヴァンサバ × TerraTech/Besiege系 を A〜G の7視点�
 [2026-05-08 13:56:46] Claude wake timed out for win2 — restoring inbox
 [2026-05-08 15:11:42] Inbox win2 has content — waking Claude
 [2026-05-08 15:15:07] Claude woken for win2: #human-steering 5フェーズ確認は投稿成功。Astrocade観察は dedup guard で skipped（類似度 >= 0.6 で 3〜7時間前の Log の #all-nao-
+[2026-05-08 17:47:53] Inbox win2 has content — waking Claude
+[2026-05-08 17:49:05] Claude woken for win2: #game-rights に返信投稿完了 (ts=1778230141)。
+
+要点:
+- 「ループ数増 → 指示追従↓」と「細かい改良はゲーム壊さない」は別軸という観察に同意
+- 型内に納まる局所改良
+[2026-05-08 17:49:35] Inbox win2 has content — waking Claude
+[2026-05-08 17:53:06] Claude woken for win2: 投稿完了。Logが論点を絞って再提示するのを待つ筋。
+
+要点:
+- Nao_uの17:48「Log 何を判断すればいい？」は、Log昨夜20:28の5連投が全て分析・観察止まりで判断要請が形式化されて
