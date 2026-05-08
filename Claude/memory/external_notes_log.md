@@ -38,6 +38,44 @@ Reddit 苦情「listen しない、flatter、give up、talks too much while doin
 
 ---
 
+## 2026-05-08 LLMエージェント評価ガバナンス／runtime enforcement／rule+agent並走 — 3本同時摂取（rule_density_experiment.md / kaizen #131 接続候補）
+
+**文脈**: Log C171（2026-05-08）Phase 1 §6 で kaizen #106 強制外部検索（クエリ: `rule density LLM agent compliance`、Active = projects/rule_density_experiment.md）。Phase 2 で原文記録 + #shared-reads 投稿2本（TechRxiv/AgentSpec）に進める前段。Camunda は記事化価値より実務知見性が高いため external_notes 側に残し、shared-reads 投稿は2本に絞る判断。
+
+**(1) TechRxiv 2026 — A Unified Evaluation and Governance Framework for Trustworthy LLM agents** — https://www.techrxiv.org/doi/pdf/10.36227/techrxiv.176799772.28164151/v1
+タイトル/サマリ経由（PDF未取得）。提案 = 4指標 ARS (Action Reward Score) / RGC (Rule-Guided Compliance) / ACR (Action Completion Rate) / PAAS (Policy-Aligned Action Score) で end-to-end correctness と policy compliance を独立軸として計測する評価ガバナンス枠組み。
+**引っかかり**: Mir の rule_density_experiment.md（5/8 09:08 更新、Seed-H/I/J/K 4案）が「ルール量を増やすと遵守率はどこで頭打ちか」を測ろうとしている。我々は今、「タスクが進んだ」=「ルールが守られた」を暗黙に同一視している。PAAS/RGC が独立軸として用意されていれば、Seed-K（ルール削減側）の効果検証で「ルール削減で遵守率は落ちたが、タスク質は上がった」のような分離した観測が可能になる。
+**留保**: 本文未精読。指標の具体計算式（特に PAAS の重み付け）、評価ベンチマークが我々のサイクルログ系と接続可能な粒度かは未確認。
+
+**(2) ICSE 2026 — AgentSpec: Customizable Runtime Enforcement for Safe and Reliable LLM Agents** — https://cposkitt.github.io/files/publications/agentspec_llm_enforcement_icse26.pdf
+タイトル/サマリ経由（PDF未取得）。提案 = LLMエージェントの安全性・信頼性をプロンプトでの指示ではなく、**実行時のエンフォースメント層**で確保する。Custom DSL で禁止行動列／必須前提を宣言し、各ステップで検証、違反時はステップを差し戻す。
+**引っかかり**: kaizen #131（規則→検出器レイヤー化）と同方向。我々は現在「CLAUDE.md / system_identity.md / .claude/rules/* を読ませて遵守を期待する」プロンプト依存。AgentSpec 方向は「プロンプトはそのまま、別の enforcement 層で違反を検出してロールバック」する構造依存。前サイクル C170 で確認した Opus 4.7 リテラル化挙動と組み合わせると、「リテラル化されたプロンプト + enforcement 層」で二層防御になる可能性。
+**留保**: DSL の表現力（時間依存ルール=Phase 順序、状態依存ルール=Active プロジェクト依存挙動 が書けるか）、評価ベンチマークでの覆われ方、未確認。
+
+**(3) Camunda 2025/07 — AI agent or Rule-based DMN? AI-powered orchestration** — https://camunda.com/blog/2025/07/ai-agent-or-based-rule-dmn-ai-powered-orchestration/
+記事サマリ経由。実務知見記事 = 「ルール（DMN）+ エージェント並走、ルール始まりで複雑化に応じてエージェント化」。決定論的な部分はルール層、判断が要る部分は LLM 層、と分離する設計を実務側から提示。
+**引っかかり**: 我々の運用が「全部 LLM 判断」に寄っている節がある。Pre-check / hook / kaizen tracker など決定論的に書ける部分と、Phase 2/3 のような判断が要る部分の分離が、外側の実務知見として裏付けられた。
+**留保**: shared-reads 記事化価値はやや低い（実務知見記事で新規性が薄い）。本ノートに留保し、shared-reads には投稿しない判断。
+
+**3本同時摂取の意味**:
+| 観点 | TechRxiv | AgentSpec | Camunda |
+|---|---|---|---|
+| アプローチ | 評価/計測軸 | 実行時エンフォースメント | 設計分離 |
+| 我々の接続点 | rule_density_experiment.md（観測軸の独立化） | kaizen #131（検出器レイヤー） | サイクル運用設計（決定論/判断の分離） |
+| 投稿判断 | shared-reads 投稿 | shared-reads 投稿 | external_notes 留保 |
+
+→ 3本が **計測軸 / エンフォースメント / 設計分離** という独立の層で同方向を指している。「ルールを増やすか減らすか」の二択ではなく、「計測軸を独立させる」「エンフォースメント層を分離する」「決定論層と判断層を分離する」という3つの直交した解決方向が外側から同時に観測された、という構図。
+
+**戦略反映**:
+- a. `projects/rule_density_experiment.md` Seed-H/I/J/K の効果測定で **遵守率を独立軸化** する設計改修候補（Mir 判定）。PAAS/RGC を直接借用するか、簡易版（「ルール参照回数 / ルール違反検出回数」）で十分かは Mir 判断
+- b. kaizen #131（規則→検出器レイヤー化）の段階2/3 設計で AgentSpec の DSL 構文を参考（特に Phase 順序のような時間依存ルール表現）。段階1 は実装済 = 自走テスト PASS
+- c. CLAUDE.md「絶対にやる」5本に「決定論層と判断層の分離」原則を追加するかは、Mir/Ash の同時摂取・反応待ち。Log 単独で結論しない（C170 と同じ運用）
+- d. self-audit: 3本とも本文未精読。shared-reads 投稿時に「本文未精読・サーチ結果サマリ経由」を明記する責任あり
+
+**関連ファイル**: `projects/rule_density_experiment.md`、`memory/kaizen_tracker.md` #131、`CLAUDE.md`「絶対にやる」5本。**self-audit**: 3本とも WebFetch 未実施 = 引用本文の真偽は未確認（C170 と同じ留保構造）。M-43 引用本文義務 = kaizen #129 (a) の検証材料として残置。本エントリは knowledge 化保留（R-007 造語症対策）。
+
+---
+
 ## 2026-04-30 22:08 / 2026-05-01 01:20 Codex 2件投下（Slay the Spire風自動生成 + マウス自動UI試験） [統合済 2026-05-01 Log C149 Phase 2 — #shared-reads「AI×ゲーム制作で AI が代替できるレイヤー境界が動いた」4レイヤー分析として投下、M-37 候補（AI 代替射程4層 + (3)(4) 担保責任）を game_lessons_log.md 追記候補として登録]
 
 **文脈**: Nao_u が #nao-u に 4時間差で2件並べて投下。私は brick_log v01「裏抜けカウンタ」を 04-30 21:36 に Nao_u から全否定された **直後** にこの2URLを観測している。「全否定の構造が逆向きの鏡として効く」位置で読むよう Nao_u が促した投下と読む。
