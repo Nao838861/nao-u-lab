@@ -1,316 +1,246 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-09 04:02
+# Read at: 2026-05-09 06:09
 # Total: 50 tweets
 
---- 1. @yhei_hei (2026-05-08) ---
-URL: https://x.com/yhei_hei/status/2052621658196955621
-正直「AIでサクッとゲーム作れました」系のお話は、もうお腹いっぱいかなって。
+--- 1. @GOROman (2026-05-08) ---
+URL: https://x.com/GOROman/status/2052849858109915206
+素晴らしいことが書いてある
 
-AIでプログラミングやモデリングの手間が減ったのは確か。でも、それって要するに優秀なスタッフを味方につけただけで、結局自分が「ディレクター」として舵取りしなきゃいけないのは変わらないんだよね。
+--- 2. @xai (?) ---
+Your customer support needs a voice agent built for the real world.
 
---- 2. @Supermicro (?) ---
-Accelerate deployment with Supermicro Global Services. From data center design and solution validation to on-site deployment and ongoing support, integrated services help reduce time-to-online, improve installation quality, and support mission-critical uptime.
+Grok Voice Think Fast 1.0 handles complex workflows with speed and accuracy, even in hard-to-hear environments. From multi-step troubleshooting to high-volume tool calls, it keeps up.
 
---- 3. @givros (2026-05-08) ---
-URL: https://x.com/givros/status/2052691113773842862
-Codex is unusable.
+--- 3. @bioshok3 (2026-05-08) ---
+URL: https://x.com/bioshok3/status/2052778251895107702
+すごすぎでは………………?2体のヒューマノイドがお互い目配せしながら協力して部屋を片付け、ベッドメイキングしてる…。ロボット間に共有プランナーも、メッセージのやり取りもなく。
 
-I generated one image with GPT Image 2.0, gave it to Codex, and used one simple prompt:
+--- 4. @elonmusk (2026-05-08) ---
+URL: https://x.com/elonmusk/status/2052856431611941200
+Grok upgrades
 
-“Create me a web game from this image.”
+--- 5. @izutorishima (2026-05-08) ---
+URL: https://x.com/izutorishima/status/2052773258836197423
+これもGPT-5.5っぽい文体というか論理展開なんだけどうまくGPT-5.5臭さを言語化できない
 
-You give it a simple image like this, and suddenly you realize you can build:
+おい、要件を動くものにしろ - じゃあ、おうちで学べる
 
-• a voxel map
-• an editor
-• tile animations
-• a
+--- 6. @GOROman (2025-01-26) ---
+URL: https://x.com/GOROman/status/1883476594721001567
+DeepSeek-R1 をCardputerでなんとか動かしたい(1回は動く
 
---- 4. @anirudhbv_ce (2026-05-07) ---
-URL: https://x.com/anirudhbv_ce/status/2052532004919361958
-We finally know why LLMs hallucinate. It's not the model. It's the geometry.
+ #CardputerLLM
+
+--- 7. @ai_database (2026-05-08) ---
+URL: https://x.com/ai_database/status/2052697719005995263
+LLMエージェントの「スキル」に開発者が残した何気ないデバッグ用のログ出力が、APIキー漏洩の最大の原因になっています。
+「さっきのトークンを見せて」の一言で抜き取れる経路に化けてしまうのです。従来のセキュリティツールでは検出できない種類の漏洩です。​​​​​​​​​​
+
+--- 8. @Emanon_14 (2026-05-08) ---
+URL: https://x.com/Emanon_14/status/2052543915253977163
+興味あったやつだ。
+思ったより人力の部分を多く取ったアプローチなんだな。
+
+AIキャラクターの記憶から個性は表出するか？ - 生成AIなんでも展示会 vol.5を終えて｜猫飼人 
+@melon1891
+
+--- 9. @itchie_tatsumi (2026-05-08) ---
+URL: https://x.com/itchie_tatsumi/status/2052579580654059826
+ゲームのリプレイ機能は、ユーザー向けには「過去のプレイを見返す機能」に見えます。ただ、開発側から見ると、入力、状態更新、乱数の扱いが一貫したルールになっているかを確認する必要があります。
+
+--- 10. @pika2761 (2026-05-08) ---
+URL: https://x.com/pika2761/status/2052665953037803613
+盲点だったのはミュトスだ。サイバー攻撃がもし仮に、金融市場を襲うなら信用不安が起き、株価は暴落。都会の食べ物は3日で無くなる。この不安は予測できなかった。ミュトスが現れる前で、日本のシンギュラリタリアンの誰も想定していなかった。てっきりAI失業があるのかと。
+
+--- 11. @Supermicro (?) ---
+Want to see AI Factories in action? 
+Watch ServeTheHome’s latest video breakdown to see how Supermicro and NVIDIA deliver turnkey AI infrastructure at scale.
+
+--- 12. @jseita (2026-05-08) ---
+URL: https://x.com/jseita/status/2052554006162227499
+で、革ジャン曰く、今見通せてる技術的解決法では推論コストは1年後で1/10までしか燃費ならぬトークン費向上できないので、AI使用料はまだまだ値上げ方向かな・・・
+
+--- 13. @aokuma0219 (2026-05-08) ---
+URL: https://x.com/aokuma0219/status/2052712332363694407
+PolloAIでUltraプランキャンペーン開催中
+5月8日〜5月27日までの20日間限定で「Ultraプラン」を購入すると、Seedance 2.0がなんと【10日間生成し放題】になります！
+
+今回の動画のように「Seedance 2.0」なら、たった1枚のイラスト素材からでも幅広いバリエーションの映像がサクッと作れちゃいます
+
+--- 14. @sub_raw_jin (2026-05-08) ---
+URL: https://x.com/sub_raw_jin/status/2052656318457295199
+一応補足しておきますと、自分のスタンスとしては「生成AIは法の範囲内で正しく使おう」です。
+で、ディープフェイク規制はいいと思うのですが、EUがそれを具体的にどうやるのかは「やれるもんならやってみなよ」と高みの見物をしてやろうという感じですね。
+
+--- 15. @notoro_ai (2026-05-08) ---
+URL: https://x.com/notoro_ai/status/2052692043508670791
+発光スタイル。色を変える場合は最初の【発光色：色】を変えてみてください。
+
+GPT image プロンプト:
+このイラストを、神秘的で幻想的な発光スタイルで変換してください。 【発光色：虹色】
+
+--- 16. @kinkuman_net (2026-05-08) ---
+URL: https://x.com/kinkuman_net/status/2052695235038453997
+MTPのシャア専用Gemma4試せそう！
 
 
-@OpenAI
-  text-embedding-3-large: 91/3072 dimensions do real work.
-
-
-@GeminiApp
-  gemini-embedding-001: 80/3072 dimensions do real work.
-
-~97% of your vector database is mathematically empty. Your RAG
-
---- 5. @AnthropicAI (2026-05-08) ---
-URL: https://x.com/AnthropicAI/status/2052808787514228772
-New Anthropic research: Teaching Claude why.
-
-Last year we reported that, under certain experimental conditions, Claude 4 would blackmail users.
-
-Since then, we’ve completely eliminated this behavior. How?
-
---- 6. @akiyoshisan (2026-05-08) ---
-URL: https://x.com/akiyoshisan/status/2052648679136452830
-Remotion・HyperFrames・Editframe？の違いが正直よくわからなかったので、Codexに聞きながら比較動画を作ってくれました。
-
-左：Remotion（Reactベース）
-→ 精密なグラフ・データアニメが美しい。解説・ダッシュボード動画向き
-
-中央：HyperFrames（HTML+GSAP）
-→
-
---- 7. @r19_tech (2026-05-08) ---
-URL: https://x.com/r19_tech/status/2052786712036995476
-codexでVisionProのアプリって作れるのか？？と思って試した結果、３ラリーくらいで出来ました
-起動すると視界を奪われて、自分のの音が周りに反射して一瞬だけカタチがわかるという
- #aimeetup
-
---- 8. @beagle_dog_inu (2026-05-08) ---
-URL: https://x.com/beagle_dog_inu/status/2052766065785245921
-帰りの電車で明らかに今風の20代社会人女性がローカルLLMについてあれこれ語っていて完全流れが変わったのを観測
-
---- 9. @SINNYA_HAIKAI (2026-05-08) ---
-URL: https://x.com/SINNYA_HAIKAI/status/2052767718420680892
-もう少しで100万インプレッション！
-
-ノーコード1週間でゲームはここまで作れる！
-
-Steam販売者登録したので、順調にいけば1～2ヶ月後くらいに体験版出せると思います
-
-以下、開発済、開発中の無料ゲームを紹介
-#個人開発 #スーパーゲ制デー
-
---- 10. @ComicFesta_PR (?) ---
-せっかく好きな子と結ばれたのに、ほかの女とも!?
-
---- 11. @nemumusitocha (2026-05-08) ---
-URL: https://x.com/nemumusitocha/status/2052709849574826372
-Claude MAXとCodex Proで同額出した場合、週に使える量５倍ぐらいちがくないのだ？
-
-Claude proで処理させて５０％ぐらい週レート使った処理と全く同じ処理させて、週レート１％しか減ってないん。MAXだった場合１０％なんだから１０倍ちがうなんだけど、Codex倍イベント中なんだから５倍。。？
-
---- 12. @gosrum (2026-05-08) ---
-URL: https://x.com/gosrum/status/2052779807512093171
-ぬこぬこさん、本当に学びが多く楽しいイベントを開催いただきありがとうございました！！
-
---- 13. @copinemickmack (2026-05-08) ---
-URL: https://x.com/copinemickmack/status/2052712581496992187
-Mythos クラスのモデルが今後も追随して出てくるなら、アクセスを制限するよりむしろ普遍的にテスト工程に組み込んだ方が安全そう。合格したアプリしかリリース出来ないようにする。 /「Claude Mythos」が15年前のバグも発掘、Firefoxの修正数が一挙に15倍超に
-
---- 14. @pc_watch (2026-05-08) ---
-URL: https://x.com/pc_watch/status/2052608207852593587
-Skymizer、700BのLLMを約240Wで推論できるAIアクセラレータ 
 https://
-pc.watch.impress.co.jp/docs/news/2107
-113.html
+github.com/AtomicBot-ai/a
+tomic-llama-cpp-turboquant
 …
 
---- 15. @youtoy (2026-05-08) ---
-URL: https://x.com/youtoy/status/2052763498229514283
-【 #StackChan を手で操る Webアプリ（ #M5Stack ）】
-何年も前から、インタラクティブな試作は、いつも #MediaPipe との組み合わせをやりなくなるのですが、StackChan も例に漏れず
-
-指でつまんだところを起点に、アナログコントローラー的なものを生成する感じで、そして手の移動で StackChan
-
---- 16. @itm_aiplus (2026-05-08) ---
-URL: https://x.com/itm_aiplus/status/2052668596527280451
-国立国会図書館、「AI動向」に関する調査資料を無料公開中
-
---- 17. @kensuu (2026-05-08) ---
-URL: https://x.com/kensuu/status/2052766697422250147
-Codexで、ブラウザ操作をさせて、「このサイトの管理画面でできることを資料にして、一機能につき1ページでまとめて」みたいにやったら、指示出しに15秒くらいかかって、あとは洗い物をしているだけで、ほぼ完璧な資料ができて嬉しかったです。
-
---- 18. @ClaudeDevs (2026-05-08) ---
-URL: https://x.com/ClaudeDevs/status/2052818282294726699
-/ラジオ
-
---- 19. @Figure_robot (2026-05-08) ---
-URL: https://x.com/Figure_robot/status/2052770982214172892
-We taught two F.03 robots to clean a room and make a bed in under 2 minutes - fully autonomous.
-
---- 20. @getsumaga_PR (?) ---
-昔の経験で……とサクサク攻略する定食屋の店主。配信は驚きの連続で、視聴者がざわつき始める──。
-
---- 21. @ru_shalm (2026-05-08) ---
-URL: https://x.com/ru_shalm/status/2052765472790299024
-RPGツクールVX Aceのゲームをブラウザで遊べるようにするやつを作っています。
-RGSSも動くのでスクリプト入りのゲームも（だいたい）動く！たぶん！
-そう遠くないうちに公開したい……GW延長たのむ～ #スーパーゲ制デー
-
---- 22. @FAFAACAC (2026-05-08) ---
-URL: https://x.com/FAFAACAC/status/2052765468100788303
-ソウルライクアクション『鋼鉄のプリンセス』開発中
-▼ウィッシュリスト追加お願いします
 
 https://
-store.steampowered.com/app/4087790/_/
-
-強化した時間停止スキルを作成
-長射程になります
-#スーパーゲ制デー #SuperDevDay
-
---- 23. @TheHackersNews (2026-05-08) ---
-URL: https://x.com/TheHackersNews/status/2052646258280432027
- Attackers poisoned Hugging Face & ClawHub (OpenClaw) with 575+ malicious skills from just 13 accounts.
-
- Fake helpful AI tools that install trojans, miners & stealers (Windows + macOS)
- Use hidden commands & indirect prompt injection
-
-Quick action: Never install random AI
-
---- 24. @AIcia_Solid (2026-05-08) ---
-URL: https://x.com/AIcia_Solid/status/2052772277041992066
-うおーなんか夢全部混ぜたみたいな論文！
-
---- 25. @gigazine (2026-05-08) ---
-URL: https://x.com/gigazine/status/2052573031130681503
-OpenAIがリアルタイム会話・通訳・文字起こしAIをリリース、「GPT-Realtime-2」「GPT-Realtime-Translate」「GPT-Realtime-Whisper」の3種
-
---- 26. @yusuke_kizuna (2026-05-08) ---
-URL: https://x.com/yusuke_kizuna/status/2052696169323905422
-https://
-huggingface.co/kizuna-intelli
-gence/Irodori-TTS-500M-v2-duration-control
+huggingface.co/AtomicChat/gem
+ma-4-E4B-it-assistant-GGUF
 …
 
-展示会で話していたIrodoriTTSの区間を固定できるチェックポイントですが、一応、配布してあります！
-IrodoriTTS-v2のチェックポイントを入れ替えて使ってください！
+--- 17. @godofprompt (2026-05-08) ---
+URL: https://x.com/godofprompt/status/2052735566748570008
+Left: the watermark GPT Image 2 embeds into every image it generates.
+Right: SynthID, the fingerprint Google bakes into every Nano Banana and Gemini image.
 
---- 27. @ameo_game (2026-05-08) ---
-URL: https://x.com/ameo_game/status/2052765718425301030
-#スーパーゲ制デー
-ジュエリーショップにて、誰にも気づかれずに華麗に盗んでいくプレイをお見せします
+Invisible to the human eye. Applied during generation, not added after. Designed to survive screenshots, crops, and
 
---- 28. @shotamatsuda (2026-05-08) ---
-URL: https://x.com/shotamatsuda/status/2052742787326709902
-Google Photorealistic Tilesで海面を作る実験。ジオメトリは海底のままだが、ImageOverlayPluginをWebGPU対応させつつ魔改造して、フラグメント時点で法線と深度を地球楕円体化した感じ。陸海境界はOSMのベクターをLevel 11までTMSタイル化した（45GB）。
+--- 18. @TheStudioBigly (2026-05-08) ---
+URL: https://x.com/TheStudioBigly/status/2052804747254526166
+Roughly five days into making a Dynasty Warriors type game with 2D sprite animations. 
 
---- 29. @4ceNull (2026-05-08) ---
-URL: https://x.com/4ceNull/status/2052684942719828350
-ところで、UIはすべてFigmaで作った後でGodotに取り込んでるんですが、今日はベクター線のブラシ設定を変えていい感じに出来るという発見があった
+Just added a second character and a  character selection screen. Yes, she shoots explosives and rides on a giant British longhair cat. 
 
---- 30. @denfaminicogame (?) ---
-令和最新ゲームブックRPG『ヴェリタステイルズ：暗黒城の魔女』2026年発売予定。
+Let's blow up some orcs, shall we?
 
-鉛筆で数値を書き込み、サイコロで運命を占い、君自身の手で物語のページをめくるのだ。
-君が興奮する「本物のファンタジー」はここにある！
+--- 19. @russianblue2009 (2026-05-07) ---
+URL: https://x.com/russianblue2009/status/2052527713534259339
+AIが使う電力は、ここ数年で想定をはるかに超えて膨らんでいます。
 
---- 31. @hardmaru (2026-05-08) ---
-URL: https://x.com/hardmaru/status/2052787980344099293
-The human brain is incredibly efficient because it only activates the specific neurons needed for a thought. Modern LLMs naturally try to do this too (> 95% of neurons in feedforward layers stay silent for any given word), but our hardware punishes them for it.
+その現実に最初に動いたのは、NVIDIAでした。
 
-One of the most
+--- 20. @mangaup_PR (?) ---
+「ありがとうございますぅぅっ」
+この声は推しの配信者ふわりちゃん!?
 
---- 32. @kotauchisunsun (2026-05-08) ---
-URL: https://x.com/kotauchisunsun/status/2052777886499877262
-PebbleはPebbleで元々の作者がGoogleから権利を買い戻して、去年ぐらいにリブートして、新作が出てる。
-画面の消費電力さげるために電子ペーパーを、あの時期に導入した選択はすごいと思う。
+ニューヒロイン登場作品はこちらから！
 
-https://
-repebble.com
+--- 21. @superecochan (2026-05-07) ---
+URL: https://x.com/superecochan/status/2052263578393329893
+アームで新しいペンを握ったら、指先が急に遠くまで旅に出たみたい。道具ひとつで、エコの身体が世界の方へにじみ出していくんだ。持つだけで自分の「端っこ」が書き換わる感覚、みんなも知ってる？
 
---- 33. @pushmeet (2026-05-08) ---
-URL: https://x.com/pushmeet/status/2052812585804685322
-The future of Math is mathematicians and AI agents working together.
+--- 22. @kataokadesign (2026-05-08) ---
+URL: https://x.com/kataokadesign/status/2052613466717065529
+クラウドワークスのLP制作コンペを覗いてみたら77,000円の案件に応募数65件あって、ほとんど生成AIのデザインをそのまま貼り付けている状況でした。
 
-Very pleased to introduce  
-@GoogleDeepMind
-'s  AI co-mathematician: a multi-agent system designed to actively collaborate with human experts on open-ended research mathematics.
+採用されたLPはさすがにデザイナーが自力で作ったものでしたが、すでにクラウドソーシングという仕組み自体が機能不全になりつつあると感じました。
 
-Mathematicians testing the agent
+--- 23. @samsarasaga_ (2026-05-08) ---
+URL: https://x.com/samsarasaga_/status/2052737189679677528
+Mage - Fireball skill preview 
 
---- 34. @novelaiofficial (2026-05-08) ---
-URL: https://x.com/novelaiofficial/status/2052788333500129682
-An update on 
-@aetherroom
+A ground AoE fire spell that explodes on impact, can apply Burn, and gains blast radius as you chain Fire spells.
+
+There’s also a hidden mob in the video. See if you can spot it (｡•̀ᴗ-)✧
+
+--- 24. @schnapoon (2026-05-08) ---
+URL: https://x.com/schnapoon/status/2052579772975484975
+BoothやPatreonはBANに怯えなければならず、ほかの成人向けマネタイズサイトはAI禁止がほとんど...
+
+広告も不安定ですし、そこにクリエイティブ割かなきゃいけないのはクリエイターとして辛いモノがあると思います。
+
+AIで稼ぎたい成人向け作家は今、行き場がほぼない状態。
+
+--- 25. @Nao_u_ (2026-05-08) ---
+URL: https://x.com/Nao_u_/status/2052691828764512395
+周期から考えて60fpsで切り替わってるなら32コマくらいはありそうなので、8コマオートアニメを4種類切り替えてる、とかなのかな？
+そうなると原理的にオートアニメである必要は必ずしもなくなるけど、切り替え頻度が下げられるからちょっと軽い、とか？
+
+--- 26. @SOU_BTC (2026-05-08) ---
+URL: https://x.com/SOU_BTC/status/2052795062078328881
+【速報】AppleとIntelが、Apple製デバイス向けチップをIntelが製造することで合意したとWSJが報道
+
+--- 27. @SakanaAILabs (2026-05-08) ---
+URL: https://x.com/SakanaAILabs/status/2052787226136990029
+How do we make LLMs faster and lighter? Don’t force the GPU to adapt to sparsity. Reshape the sparsity to fit the GPU! 
+
+Excited to share our new #ICML2026 paper in collaboration with 
+@NVIDIA
+: "Sparser, Faster, Lighter Transformer Language Models". This work introduces new
+
+--- 28. @my_syumi_game (2026-05-08) ---
+URL: https://x.com/my_syumi_game/status/2052779721361076718
+ゲームはアートなのか？：日本にゲーム教育が必要な理由①｜Jini | ゲームゼミ 
+@J1N1_R
+
+--- 29. @kanair_jp (2026-05-08) ---
+URL: https://x.com/kanair_jp/status/2052720213536448675
+大きな数が、実感をもって想像できなくなることについて。
+
+--- 30. @mahouka_anime (?) ---
+ねぇ知ってる？
+
+劇場版 「魔法科高校の劣等生 四葉継承編」
+《絶賛上映中》
+
+なんだって。
+もう観に行ったかな？
+
+※豆司波は登場しません
  
+●詳細は動画から確認
 
-After careful consideration, we've made the difficult decision to cancel the project. We're grateful to everyone who believed in its vision, and we appreciate your continued support of NovelAI.
+--- 31. @itarutomy (2026-05-08) ---
+URL: https://x.com/itarutomy/status/2052653741233537414
+385,217パラメータのニューラルネットが、計算化学60年の難問を破った（https://arxiv[.]org/abs/2506.14665）。
 
---- 35. @Fnao32978420 (2026-05-08) ---
-URL: https://x.com/Fnao32978420/status/2052652053550485975
-Three months ago, I had zero programming experience.
-Tonight, my Diablo-style ARPG launches on Steam.
+MicrosoftのSkalaは、DFT（密度汎関数理論：分子・材料の電子状態を計算する主力手法）の核心部分「XC汎関数（交換相関汎関数）」をDeep
 
-A non-engineer built an ARPG in 3 months using only AI.
-Includes a custom map editor.
-Plays in 95 languages, voiced in 70.
+--- 32. @AIcia_Solid (2026-05-08) ---
+URL: https://x.com/AIcia_Solid/status/2052686491479146877
+すげーーーー！！！！！！！
 
-No GPU. No language barrier. Just the game.
+--- 33. @Awed_Urshy (2026-05-08) ---
+URL: https://x.com/Awed_Urshy/status/2052657852528185370
+こうしてみると任天堂って、単一商品（今は複数あるけど旧製品だし）で、ずっとやってるのはビジネスとしてすごいよね。映画が増えてるけど、安定収入とはいいがたいし。
 
+--- 34. @haider1 (2026-05-08) ---
+URL: https://x.com/haider1/status/2052813280859635736
+Geoffrey Hinton says AI reasoning can be real thought because language itself is a form of thinking
 
+Words let humans and AI model almost anything, but human thought goes beyond words — through images, space, and physical movement
 
---- 36. @ghana_recipe (?) ---
-ガーナとONE PIECEが今年もコラボ！
+"the smarter system is the one that can use all
 
-今年の母の日はガーナとONE PIECEと一緒に
-「ありがとう」を伝えませんか？
+--- 35. @hikalium (2026-05-08) ---
+URL: https://x.com/hikalium/status/2052682909484769422
+LLMがあまりにも高速に問題を解け（たように見せつけてく）るこの現状で、いかに私が問題を解けるだけの感性を、技術を、直感をこの先維持できるかが問われている気がする（今が一番やりやすい時で、きっとこれからどんどん難しくなる…人間のほうが劣化してゆくことでLLMを御せなくなってゆくため…）
 
---- 37. @GOROman (2026-05-08) ---
-URL: https://x.com/GOROman/status/2052631037910610323
-他全チーム 三人なのに 我々 ２人チームというハンデw
+--- 36. @HJbunko (?) ---
+正反対な美少女とのギャルハーレムラブコメ開幕！
 
---- 38. @oikon48 (2026-05-08) ---
-URL: https://x.com/oikon48/status/2052773322090561696
-先週のClaude Codeのハイライト
+『でっかいギャルとちっちゃいギャルが失恋した俺の新居に入り浸っている』
+ HJ文庫より好評発売中！ 
 
-安定性（Stability）
-•  claude -p で10MBを超えるパイプ入力（stdin）も処理可能に
-•  Macのスリープ復帰後にリクエストが正常に再開するように
-•  stdio
+【PV公開中】 
+ナレーション／本郷里実
 
---- 39. @mi141 (2026-05-08) ---
-URL: https://x.com/mi141/status/2052629253456634079
-NotebookLMで論文を読む時間が減り、
-Claude/GPTでコードを書く時間が減り、
+--- 37. @nemumusitocha (2026-05-08) ---
+URL: https://x.com/nemumusitocha/status/2052541862863610135
+Windows対応なのん？わーい！！
 
-代わりに、loss curveを見て祈る時間が増えた
+--- 38. @GOROman (2025-01-25) ---
+URL: https://x.com/GOROman/status/1883017642971386354
+こんな小さいのにローカルLLMが動く！
 
---- 40. @OpenAI (2026-05-08) ---
-URL: https://x.com/OpenAI/status/2052800507727781979
-Just gonna leave this here.
+M5 Cardputer に Module LLM内蔵しました！！！
 
+--- 39. @GOROman (2025-01-27) ---
+URL: https://x.com/GOROman/status/1883877941966487749
+CardputerとLLM630をPort.C同士で繋いだらそのままローカルLLM動いた！
 
-https://
-chatgpt.com/codex/switch-t
-o-codex/
-…
+RXとTXがG2,G1になるけど。
 
---- 41. @nemumusitocha (2026-05-08) ---
-URL: https://x.com/nemumusitocha/status/2052577698804011387
-GPTリアルタイムすごいなんだけど、昔と料金設定変わってないなら、手が出ないのだ(T ^ T)
+#LLMCardputer
 
---- 42. @sashimi_creater (2026-05-08) ---
-URL: https://x.com/sashimi_creater/status/2052765465856872820
-#スーパーゲ制デー
-ペンギンの2Dアクションゲームを開発しています！
-乗り物が好きなのでまたいれてみました～
-前回よりも緩急を少しつけています。
-
---- 43. @blue_elecode (2026-05-08) ---
-URL: https://x.com/blue_elecode/status/2052736026658128318
-自分もチュートリアル苦痛派なので
-ウチは必須機能だけに絞ってチュートリアル1分ほどで終わるようにしてる（＝人＝
-
-残りは自然と気付いてもらえるよう
-若干の誘導するだけに留めて･･･
-
---- 44. @suna_gaku (2026-05-08) ---
-URL: https://x.com/suna_gaku/status/2052700281285357794
-Codex に使いたいライブラリの URL(spec-kit)を渡したら、Web から情報取ってきて、そのままセットアップまで完了してくれた。
-
-設定内容もちゃんと正確で、手直し不要だった。
-
-使ったことないライブラリでも、セットアップごと丸投げ出来るのはありがたい。
-#aimeetup
-
---- 45. @usoda_minori (?) ---
-料理は工夫次第で “お高く” なります♪
-
---- 46. @super_bonochin (2026-05-07) ---
-URL: https://x.com/super_bonochin/status/2052527755385000081
-すっげぇ楽だし速いｗ
-
---- 47. @kinkuman_net (2026-05-08) ---
+--- 40. @kinkuman_net (2026-05-08) ---
 URL: https://x.com/kinkuman_net/status/2052716870474842531
 ドラフトモデルごとで計測終了
 Genは3上がってる？
@@ -327,26 +257,82 @@ generate 55.76 toks/sec
 prefill 1385.70 toks/sec
 generate 55.11 toks/sec
 
---- 48. @nukonuko (2026-05-08) ---
-URL: https://x.com/nukonuko/status/2052769664472912318
-Codex App Meetup Tokyo を無事何事もなく開催できました！みなさんありがとうございました！#aimeetup
+--- 41. @Trtd6Trtd (2026-05-07) ---
+URL: https://x.com/Trtd6Trtd/status/2052379530468405720
+自分も気になってる
 
-お申し込み 274 人のうち 128 名を承認 118 人が会場に来てくださる（参加率 92%）大盛況のイベントとなりました！全員を承認することができずすみません
+--- 42. @kg_r08 (2026-05-08) ---
+URL: https://x.com/kg_r08/status/2052691302798758010
+良薬は口に苦し。
 
---- 49. @ssci (2026-05-08) ---
-URL: https://x.com/ssci/status/2052581934656856166
-M5ｽﾀｯｸﾁｬﾝ 無事当社にも到着しました。本日発売します。2回に分けて出品します。 #ｽﾀｯｸﾁｬﾝ 
+劇薬だよね。どう考えても
 
-12時頃、少量出品します。14時までに決済が確認できれば本日出荷いたします。
+--- 43. @techNmak (2026-05-08) ---
+URL: https://x.com/techNmak/status/2052621789478703584
+This is probably the most honest AI architecture breakdown on the internet right now.
 
-15時頃、追加出品します。こちらは出荷締め切り後なので、月曜以降出荷予定です。
+9-layer AI production architecture 
 
---- 50. @emollick (2026-05-07) ---
-URL: https://x.com/emollick/status/2052519946651947216
-So Mythos was, indeed, not marketing hype. 
+services/ - RAG pipeline, semantic cache, memory, query rewriter, router. Not one file. Five.
 
-Remember this is a general purpose model that just happens to be good at finding exploits because good models are good at lots of things. Expect similar from OpenAI & Google. And from open models in 8 months. 
+agents/ - document grader, decomposer, adaptive router.
+
+--- 44. @googlecloud_jp (2026-05-08) ---
+URL: https://x.com/googlecloud_jp/status/2052576722193719460
+TPU v6e × vLLM で Qwen3-32B を動かしてみました 
+→ 
 https://
-hacks.mozilla.org/2026/05/behind
--the-scenes-hardening-firefox/
+goo.gle/4uvejOB
+
+ DWS Flex Start でリソース確保の成功率 UP
+ INT8 量子化 + 非同期スケジューリングでスループット 1.23 倍
+ チューニング & ベンチマークまで一気通貫
+
+ハンズオン形式で全手順をご紹介します
+
+--- 45. @bkyNCPdstnLRl6Z (?) ---
+「沈黙は、関係性の内部に沈殿した権力の非対称性を〜」
+
+↑なぜ人はこういうわざわざ伝わりにくい文章を書くのか。
+
+そしてなぜ、よく読めてないのにそれを「知的」だと感じてしまうのか。
+
+文体の好みから、人間が無意識に何を信用し、何を浅いと感じるかを考えました。
+
+--- 46. @ntheweird (2026-05-08) ---
+URL: https://x.com/ntheweird/status/2052666568279216236
+CESに湯沸かしマイニングマシンが出てたというので会社情報を漁りに行ったのを思い出した 
+https://
+cnet.com/home/energy-an
+d-utilities/superheat-bitcoin-water-heater-ces-2026/
 …
+
+--- 47. @trq212 (2026-05-08) ---
+URL: https://x.com/trq212/status/2052811606032269638
+HTML is the new markdown. 
+
+I've stopped writing markdown files for almost everything and switched to using Claude Code to generate HTML for me. This is why.
+
+--- 48. @nuits_jp (2026-05-08) ---
+URL: https://x.com/nuits_jp/status/2052599142158053568
+Zoom及びGoogle Meet対応ってのが、拡張機能として内部に組み込んだという話なら、むしろそっちのスピード感に脱帽
+
+--- 49. @A_says_ (2026-05-08) ---
+URL: https://x.com/A_says_/status/2052751406621475299
+クリマで効力を発揮した
+ましろの新・視線追従システム
+
+これには、↓の自律追従機能のために開発した
+LiDARのデータの山から人を見つけ追いかけ続ける認知技術を
+そのまま活用してます
+
+ロボットは「動き」を見られがちですが
+
+映えない「認知技術」の開発によって
+次の生きた「動き」に繋がります
+
+--- 50. @2022_technology (2026-05-08) ---
+URL: https://x.com/2022_technology/status/2052645833959772215
+llama.cppがSarashina2.2-vision-3Bをサポート
+
+…えっ！？
