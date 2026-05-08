@@ -81608,3 +81608,879 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-05-08 05:17:30] [git_sync] Done (exit=0)
 [2026-05-08 05:17:40] [slack_check] Starting
 [2026-05-08 05:18:07] [infra_health_check] Starting
+[2026-05-08 05:18:10] [infra_health_check] [infra_health] Ash health check at 2026-05-08 05:18:07
+[2026-05-08 05:18:10] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 05:18:10] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 05:18:10] [infra_health_check] Done (exit=1)
+[2026-05-08 05:18:20] [auto_diary] Starting
+[2026-05-08 05:30:20] [auto_diary] Timeout (720s)
+[2026-05-08 05:30:30] [slack_check] Starting
+[2026-05-08 05:30:57] [dm_check_pigadev] Starting
+[2026-05-08 05:31:16] [dm_check_pigadev] No new DMs
+[2026-05-08 05:31:16] [dm_check_pigadev] Done (exit=0)
+[2026-05-08 05:31:16] [twitter_recommended] Starting
+[2026-05-08 05:32:13] [twitter_recommended] Opening For You tab...
+[2026-05-08 05:32:13] [twitter_recommended]     1. @masahirochaen: 【速報】OpenAI、新音声モデル「GPT-Realtime-2」を発表。GPT-5級の推論を声で動かせる。
+[2026-05-08 05:32:13] [twitter_recommended] 
+[2026-05-08 05:32:13] [twitter_recommended] 音声AI...
+[2026-05-08 05:32:13] [twitter_recommended]     2. @mariomoviejp: ˗ˋˏGW納めはマリオと映画館で！ˎˊ˗
+[2026-05-08 05:32:13] [twitter_recommended] Done (exit=0)
+[2026-05-08 05:32:13] [check_usage] Starting
+[2026-05-08 05:32:13] [check_usage] 前回投稿から197分しか経っていない（最小間隔: 300分）。あと102分待機。スキップ。
+[2026-05-08 05:32:13] [check_usage] Done (exit=0)
+[2026-05-08 05:32:13] [health_check] Starting
+[2026-05-08 05:32:14] [health_check] [health_check] 2026-05-08T05:32:13 overall=OK
+[2026-05-08 05:32:14] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 05:32:14] [health_check] Done (exit=0)
+[2026-05-08 05:32:14] [scheduler_health] Starting
+[2026-05-08 05:32:16] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-05-08 05:32:16] [scheduler_health] ✅ scheduler_ash PID — PID=24876 生存中
+[2026-05-08 05:32:16] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-05-08 05:32:16] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-05-08 05:32:16] [scheduler_health] ✅ git 未push — 2件
+[2026-05-08 05:32:16] [scheduler_health] Done (exit=0)
+[2026-05-08 05:32:26] [slack_check] Starting
+[2026-05-08 05:33:55] [slack_check] Starting
+[2026-05-08 05:35:24] [slack_check] Starting
+[2026-05-08 05:36:51] [slack_check] Starting
+[2026-05-08 05:37:29] [health_check] Starting
+[2026-05-08 05:37:29] [health_check] [health_check] 2026-05-08T05:37:29 overall=OK
+[2026-05-08 05:37:29] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 05:37:29] [health_check] Done (exit=0)
+[2026-05-08 05:38:19] [slack_check] Starting
+[2026-05-08 05:39:47] [slack_check] Starting
+[2026-05-08 05:41:17] [slack_check] Starting
+[2026-05-08 05:42:37] [health_check] Starting
+[2026-05-08 05:42:37] [health_check] [health_check] 2026-05-08T05:42:37 overall=OK
+[2026-05-08 05:42:37] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 05:42:37] [health_check] Done (exit=0)
+[2026-05-08 05:42:47] [slack_check] Starting
+[2026-05-08 05:44:16] [slack_check] Starting
+[2026-05-08 05:45:43] [slack_check] Starting
+[2026-05-08 05:47:11] [slack_check] Starting
+[2026-05-08 05:47:51] [health_check] Starting
+[2026-05-08 05:47:51] [health_check] [health_check] 2026-05-08T05:47:51 overall=OK
+[2026-05-08 05:47:51] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 05:47:51] [health_check] Done (exit=0)
+[2026-05-08 05:48:11] [infra_health_check] Starting
+[2026-05-08 05:48:14] [infra_health_check] [infra_health] Ash health check at 2026-05-08 05:48:11
+[2026-05-08 05:48:14] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 05:48:14] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 05:48:14] [infra_health_check] Done (exit=1)
+[2026-05-08 05:48:44] [slack_check] Starting
+[2026-05-08 05:50:12] [slack_check] Starting
+[2026-05-08 05:51:42] [slack_check] Starting
+[2026-05-08 05:53:01] [health_check] Starting
+[2026-05-08 05:53:01] [health_check] [health_check] 2026-05-08T05:53:01 overall=OK
+[2026-05-08 05:53:01] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 05:53:01] [health_check] Done (exit=0)
+[2026-05-08 05:53:11] [slack_check] Starting
+[2026-05-08 05:54:40] [slack_check] Starting
+[2026-05-08 05:56:08] [slack_check] Starting
+[2026-05-08 05:57:38] [slack_check] Starting
+[2026-05-08 05:58:15] [health_check] Starting
+[2026-05-08 05:58:15] [health_check] [health_check] 2026-05-08T05:58:15 overall=OK
+[2026-05-08 05:58:15] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 05:58:15] [health_check] Done (exit=0)
+[2026-05-08 05:59:05] [slack_check] Starting
+[2026-05-08 06:00:32] [slack_check] Starting
+[2026-05-08 06:02:00] [slack_check] Starting
+[2026-05-08 06:03:16] [health_check] Starting
+[2026-05-08 06:03:16] [health_check] [health_check] 2026-05-08T06:03:16 overall=OK
+[2026-05-08 06:03:16] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 06:03:16] [health_check] Done (exit=0)
+[2026-05-08 06:03:26] [slack_check] Starting
+[2026-05-08 06:04:54] [slack_check] Starting
+[2026-05-08 06:06:22] [slack_check] Starting
+[2026-05-08 06:07:51] [slack_check] Starting
+[2026-05-08 06:08:59] [health_check] Starting
+[2026-05-08 06:08:59] [health_check] [health_check] 2026-05-08T06:08:59 overall=OK
+[2026-05-08 06:08:59] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 06:08:59] [health_check] Done (exit=0)
+[2026-05-08 06:09:49] [slack_check] Starting
+[2026-05-08 06:11:18] [slack_check] Starting
+[2026-05-08 06:12:43] [slack_check] Starting
+[2026-05-08 06:14:08] [slack_check] Starting
+[2026-05-08 06:14:36] [health_check] Starting
+[2026-05-08 06:14:36] [health_check] [health_check] 2026-05-08T06:14:36 overall=OK
+[2026-05-08 06:14:36] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 06:14:36] [health_check] Done (exit=0)
+[2026-05-08 06:15:36] [slack_check] Starting
+[2026-05-08 06:16:14] [git_pull] Starting
+[2026-05-08 06:16:15] [git_pull] Done (exit=128)
+[2026-05-08 06:17:05] [slack_check] Starting
+[2026-05-08 06:17:41] [git_sync] Starting
+[2026-05-08 06:17:54] [git_sync] Done (exit=0)
+[2026-05-08 06:18:14] [infra_health_check] Starting
+[2026-05-08 06:18:17] [infra_health_check] [infra_health] Ash health check at 2026-05-08 06:18:14
+[2026-05-08 06:18:17] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 06:18:17] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 06:18:17] [infra_health_check] Done (exit=1)
+[2026-05-08 06:18:37] [slack_check] Starting
+[2026-05-08 06:19:44] [health_check] Starting
+[2026-05-08 06:19:45] [health_check] [health_check] 2026-05-08T06:19:44 overall=WARNING
+[2026-05-08 06:19:45] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 06:19:45] [health_check]   [?] git: 3件の未pushコミット
+[2026-05-08 06:19:45] [health_check] Done (exit=1)
+[2026-05-08 06:20:05] [slack_check] Starting
+[2026-05-08 06:21:33] [slack_check] Starting
+[2026-05-08 06:23:01] [slack_check] Starting
+[2026-05-08 06:24:48] [health_check] Starting
+[2026-05-08 06:24:49] [health_check] [health_check] 2026-05-08T06:24:48 overall=WARNING
+[2026-05-08 06:24:49] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 06:24:49] [health_check]   [?] git: 3件の未pushコミット
+[2026-05-08 06:24:49] [health_check] Done (exit=1)
+[2026-05-08 06:24:59] [slack_check] Starting
+[2026-05-08 06:26:26] [slack_check] Starting
+[2026-05-08 06:27:51] [slack_check] Starting
+[2026-05-08 06:29:17] [slack_check] Starting
+[2026-05-08 06:29:54] [health_check] Starting
+[2026-05-08 06:29:55] [health_check] [health_check] 2026-05-08T06:29:54 overall=WARNING
+[2026-05-08 06:29:55] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 06:29:55] [health_check]   [?] git: 3件の未pushコミット
+[2026-05-08 06:29:55] [health_check] Done (exit=1)
+[2026-05-08 06:30:45] [slack_check] Starting
+[2026-05-08 06:32:09] [slack_check] Starting
+[2026-05-08 06:32:47] [scheduler_health] Starting
+[2026-05-08 06:32:49] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-05-08 06:32:49] [scheduler_health] ✅ scheduler_ash PID — PID=24876 生存中
+[2026-05-08 06:32:49] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-05-08 06:32:49] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-05-08 06:32:49] [scheduler_health] ✅ git 未push — 3件
+[2026-05-08 06:32:49] [scheduler_health] Done (exit=0)
+[2026-05-08 06:33:39] [slack_check] Starting
+[2026-05-08 06:34:56] [health_check] Starting
+[2026-05-08 06:34:56] [health_check] [health_check] 2026-05-08T06:34:56 overall=WARNING
+[2026-05-08 06:34:56] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 06:34:56] [health_check]   [?] git: 3件の未pushコミット
+[2026-05-08 06:34:56] [health_check] Done (exit=1)
+[2026-05-08 06:35:06] [slack_check] Starting
+[2026-05-08 06:36:32] [slack_check] Starting
+[2026-05-08 06:37:58] [slack_check] Starting
+[2026-05-08 06:39:53] [slack_check] Starting
+[2026-05-08 06:40:30] [health_check] Starting
+[2026-05-08 06:40:30] [health_check] [health_check] 2026-05-08T06:40:30 overall=WARNING
+[2026-05-08 06:40:30] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 06:40:30] [health_check]   [?] git: 3件の未pushコミット
+[2026-05-08 06:40:30] [health_check] Done (exit=1)
+[2026-05-08 06:40:30] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 06:40:30] [ALERT] Sent error alert for health_check
+[2026-05-08 06:41:20] [slack_check] Starting
+[2026-05-08 06:42:47] [slack_check] Starting
+[2026-05-08 06:44:13] [slack_check] Starting
+[2026-05-08 06:45:40] [slack_check] Starting
+[2026-05-08 06:46:05] [health_check] Starting
+[2026-05-08 06:46:05] [health_check] [health_check] 2026-05-08T06:46:05 overall=WARNING
+[2026-05-08 06:46:05] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 06:46:05] [health_check]   [?] git: 3件の未pushコミット
+[2026-05-08 06:46:05] [health_check] Done (exit=1)
+[2026-05-08 06:47:05] [slack_check] Starting
+[2026-05-08 06:48:20] [infra_health_check] Starting
+[2026-05-08 06:48:23] [infra_health_check] [infra_health] Ash health check at 2026-05-08 06:48:20
+[2026-05-08 06:48:23] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 06:48:23] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 06:48:23] [infra_health_check] Done (exit=1)
+[2026-05-08 06:48:33] [slack_check] Starting
+[2026-05-08 06:49:59] [slack_check] Starting
+[2026-05-08 06:51:14] [health_check] Starting
+[2026-05-08 06:51:15] [health_check] [health_check] 2026-05-08T06:51:14 overall=WARNING
+[2026-05-08 06:51:15] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 06:51:15] [health_check]   [?] git: 3件の未pushコミット
+[2026-05-08 06:51:15] [health_check] Done (exit=1)
+[2026-05-08 06:51:25] [slack_check] Starting
+[2026-05-08 06:52:52] [slack_check] Starting
+[2026-05-08 06:54:18] [slack_check] Starting
+[2026-05-08 06:55:43] [slack_check] Starting
+[2026-05-08 06:56:17] [health_check] Starting
+[2026-05-08 06:56:17] [health_check] [health_check] 2026-05-08T06:56:17 overall=WARNING
+[2026-05-08 06:56:17] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 06:56:17] [health_check]   [?] git: 3件の未pushコミット
+[2026-05-08 06:56:17] [health_check] Done (exit=1)
+[2026-05-08 06:57:07] [slack_check] Starting
+[2026-05-08 06:58:31] [slack_check] Starting
+[2026-05-08 06:59:57] [slack_check] Starting
+[2026-05-08 07:01:22] [slack_check] Starting
+[2026-05-08 07:01:44] [health_check] Starting
+[2026-05-08 07:01:45] [health_check] [health_check] 2026-05-08T07:01:44 overall=WARNING
+[2026-05-08 07:01:45] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 07:01:45] [health_check]   [?] git: 3件の未pushコミット
+[2026-05-08 07:01:45] [health_check] Done (exit=1)
+[2026-05-08 07:02:45] [slack_check] Starting
+[2026-05-08 07:04:06] [slack_check] Starting
+[2026-05-08 07:05:30] [slack_check] Starting
+[2026-05-08 07:06:53] [slack_check] Starting
+[2026-05-08 07:07:13] [health_check] Starting
+[2026-05-08 07:07:14] [health_check] [health_check] 2026-05-08T07:07:13 overall=WARNING
+[2026-05-08 07:07:14] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 07:07:14] [health_check]   [?] git: 3件の未pushコミット
+[2026-05-08 07:07:14] [health_check] Done (exit=1)
+[2026-05-08 07:07:14] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 07:07:14] [ALERT] Cooldown active for health_check, skipping alert
+[2026-05-08 07:08:14] [slack_check] Starting
+[2026-05-08 07:09:37] [slack_check] Starting
+[2026-05-08 07:10:59] [slack_check] Starting
+[2026-05-08 07:12:21] [slack_check] Starting
+[2026-05-08 07:12:42] [health_check] Starting
+[2026-05-08 07:12:42] [health_check] [health_check] 2026-05-08T07:12:42 overall=WARNING
+[2026-05-08 07:12:42] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 07:12:42] [health_check]   [?] git: 3件の未pushコミット
+[2026-05-08 07:12:42] [health_check] Done (exit=1)
+[2026-05-08 07:13:42] [slack_check] Starting
+[2026-05-08 07:15:05] [slack_check] Starting
+[2026-05-08 07:16:17] [git_pull] Starting
+[2026-05-08 07:16:18] [git_pull] Done (exit=128)
+[2026-05-08 07:16:28] [slack_check] Starting
+[2026-05-08 07:16:58] [inbox_check] Starting
+[2026-05-08 07:17:00] [inbox_check] Inbox win2 empty
+[2026-05-08 07:17:00] [inbox_check] Done (exit=0)
+[2026-05-08 07:17:00] [reservation_check] Starting
+[2026-05-08 07:17:00] [reservation_check] 行動予約: 待機中 5 件、期限到来なし
+[2026-05-08 07:17:00] [reservation_check] Done (exit=0)
+[2026-05-08 07:17:10] [dm_check] Starting
+[2026-05-08 07:20:41] [dm_check] New DM detected
+[2026-05-08 07:20:41] [dm_check] Done (exit=0)
+[2026-05-08 07:20:41] [review_deadline] Starting
+[2026-05-08 07:20:41] [review_deadline] レビュー期限超過なし。
+[2026-05-08 07:20:41] [review_deadline] Done (exit=0)
+[2026-05-08 07:20:51] [slack_check] Starting
+[2026-05-08 07:21:12] [git_sync] Starting
+[2026-05-08 07:21:26] [git_sync] Done (exit=0)
+[2026-05-08 07:21:26] [health_check] Starting
+[2026-05-08 07:21:26] [health_check] [health_check] 2026-05-08T07:21:26 overall=WARNING
+[2026-05-08 07:21:26] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 07:21:26] [health_check]   [?] git: 4件の未pushコミット
+[2026-05-08 07:21:26] [health_check] Done (exit=1)
+[2026-05-08 07:21:26] [infra_health_check] Starting
+[2026-05-08 07:21:29] [infra_health_check] [infra_health] Ash health check at 2026-05-08 07:21:26
+[2026-05-08 07:21:29] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 07:21:29] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 07:21:29] [infra_health_check] Done (exit=1)
+[2026-05-08 07:21:29] [infra_health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 07:21:29] [ALERT] Sent error alert for infra_health_check
+[2026-05-08 07:22:19] [slack_check] Starting
+[2026-05-08 07:23:38] [slack_check] Starting
+[2026-05-08 07:24:59] [slack_check] Starting
+[2026-05-08 07:26:19] [slack_check] Starting
+[2026-05-08 07:26:50] [health_check] Starting
+[2026-05-08 07:26:51] [health_check] [health_check] 2026-05-08T07:26:50 overall=WARNING
+[2026-05-08 07:26:51] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 07:26:51] [health_check]   [?] git: 4件の未pushコミット
+[2026-05-08 07:26:51] [health_check] Done (exit=1)
+[2026-05-08 07:27:41] [slack_check] Starting
+[2026-05-08 07:29:01] [slack_check] Starting
+[2026-05-08 07:30:20] [slack_check] Starting
+[2026-05-08 07:31:20] [dm_check_pigadev] Starting
+[2026-05-08 07:31:35] [dm_check_pigadev] No new DMs
+[2026-05-08 07:31:35] [dm_check_pigadev] Done (exit=0)
+[2026-05-08 07:31:45] [slack_check] Starting
+[2026-05-08 07:32:14] [health_check] Starting
+[2026-05-08 07:32:14] [health_check] [health_check] 2026-05-08T07:32:14 overall=WARNING
+[2026-05-08 07:32:14] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 07:32:14] [health_check]   [?] git: 4件の未pushコミット
+[2026-05-08 07:32:14] [health_check] Done (exit=1)
+[2026-05-08 07:32:54] [scheduler_health] Starting
+[2026-05-08 07:32:56] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-05-08 07:32:56] [scheduler_health] ✅ scheduler_ash PID — PID=24876 生存中
+[2026-05-08 07:32:56] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-05-08 07:32:56] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-05-08 07:21:29] [ALERT] Sent error alert for infra_health_check
+[2026-05-08 07:32:56] [scheduler_health] ✅ git 未push — 4件
+[2026-05-08 07:32:56] [scheduler_health] Done (exit=1)
+[2026-05-08 07:33:06] [slack_check] Starting
+[2026-05-08 07:34:24] [slack_check] Starting
+[2026-05-08 07:35:44] [slack_check] Starting
+[2026-05-08 07:37:03] [slack_check] Starting
+[2026-05-08 07:37:33] [health_check] Starting
+[2026-05-08 07:37:33] [health_check] [health_check] 2026-05-08T07:37:33 overall=WARNING
+[2026-05-08 07:37:33] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 07:37:33] [health_check]   [?] git: 4件の未pushコミット
+[2026-05-08 07:37:33] [health_check] Done (exit=1)
+[2026-05-08 07:37:33] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 07:37:33] [ALERT] Cooldown active for health_check, skipping alert
+[2026-05-08 07:38:24] [slack_check] Starting
+[2026-05-08 07:39:43] [slack_check] Starting
+[2026-05-08 07:41:03] [slack_check] Starting
+[2026-05-08 07:42:23] [slack_check] Starting
+[2026-05-08 07:42:52] [health_check] Starting
+[2026-05-08 07:42:53] [health_check] [health_check] 2026-05-08T07:42:52 overall=WARNING
+[2026-05-08 07:42:53] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 07:42:53] [health_check]   [?] git: 4件の未pushコミット
+[2026-05-08 07:42:53] [health_check] Done (exit=1)
+[2026-05-08 07:43:43] [slack_check] Starting
+[2026-05-08 07:45:01] [slack_check] Starting
+[2026-05-08 07:46:20] [slack_check] Starting
+[2026-05-08 07:47:40] [slack_check] Starting
+[2026-05-08 07:48:10] [health_check] Starting
+[2026-05-08 07:48:10] [health_check] [health_check] 2026-05-08T07:48:10 overall=WARNING
+[2026-05-08 07:48:10] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 07:48:10] [health_check]   [?] git: 4件の未pushコミット
+[2026-05-08 07:48:10] [health_check] Done (exit=1)
+[2026-05-08 07:49:00] [slack_check] Starting
+[2026-05-08 07:50:18] [slack_check] Starting
+[2026-05-08 07:51:38] [slack_check] Starting
+[2026-05-08 07:51:57] [infra_health_check] Starting
+[2026-05-08 07:51:59] [infra_health_check] [infra_health] Ash health check at 2026-05-08 07:51:57
+[2026-05-08 07:51:59] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 07:51:59] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 07:51:59] [infra_health_check] Done (exit=1)
+[2026-05-08 07:52:59] [slack_check] Starting
+[2026-05-08 07:53:29] [health_check] Starting
+[2026-05-08 07:53:29] [health_check] [health_check] 2026-05-08T07:53:29 overall=WARNING
+[2026-05-08 07:53:29] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 07:53:29] [health_check]   [?] git: 4件の未pushコミット
+[2026-05-08 07:53:29] [health_check] Done (exit=1)
+[2026-05-08 07:54:19] [slack_check] Starting
+[2026-05-08 07:55:38] [slack_check] Starting
+[2026-05-08 07:56:56] [slack_check] Starting
+[2026-05-08 07:58:15] [slack_check] Starting
+[2026-05-08 07:58:44] [health_check] Starting
+[2026-05-08 07:58:44] [health_check] [health_check] 2026-05-08T07:58:44 overall=WARNING
+[2026-05-08 07:58:44] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 07:58:44] [health_check]   [?] git: 4件の未pushコミット
+[2026-05-08 07:58:44] [health_check] Done (exit=1)
+[2026-05-08 07:59:34] [slack_check] Starting
+[2026-05-08 08:00:52] [slack_check] Starting
+[2026-05-08 08:02:10] [slack_check] Starting
+[2026-05-08 08:03:29] [slack_check] Starting
+[2026-05-08 08:03:58] [health_check] Starting
+[2026-05-08 08:03:58] [health_check] [health_check] 2026-05-08T08:03:58 overall=WARNING
+[2026-05-08 08:03:58] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 08:03:58] [health_check]   [?] git: 4件の未pushコミット
+[2026-05-08 08:03:58] [health_check] Done (exit=1)
+[2026-05-08 08:03:58] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 08:03:58] [ALERT] Cooldown active for health_check, skipping alert
+[2026-05-08 08:04:48] [slack_check] Starting
+[2026-05-08 08:06:08] [slack_check] Starting
+[2026-05-08 08:07:28] [slack_check] Starting
+[2026-05-08 08:08:47] [slack_check] Starting
+[2026-05-08 08:09:16] [health_check] Starting
+[2026-05-08 08:09:16] [health_check] [health_check] 2026-05-08T08:09:16 overall=WARNING
+[2026-05-08 08:09:16] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 08:09:16] [health_check]   [?] git: 4件の未pushコミット
+[2026-05-08 08:09:16] [health_check] Done (exit=1)
+[2026-05-08 08:10:06] [slack_check] Starting
+[2026-05-08 08:11:25] [slack_check] Starting
+[2026-05-08 08:12:45] [slack_check] Starting
+[2026-05-08 08:14:05] [slack_check] Starting
+[2026-05-08 08:14:33] [health_check] Starting
+[2026-05-08 08:14:33] [health_check] [health_check] 2026-05-08T08:14:33 overall=WARNING
+[2026-05-08 08:14:33] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 08:14:33] [health_check]   [?] git: 4件の未pushコミット
+[2026-05-08 08:14:33] [health_check] Done (exit=1)
+[2026-05-08 08:15:23] [slack_check] Starting
+[2026-05-08 08:16:21] [git_pull] Starting
+[2026-05-08 08:16:22] [git_pull] Done (exit=128)
+[2026-05-08 08:16:42] [slack_check] Starting
+[2026-05-08 08:18:02] [slack_check] Starting
+[2026-05-08 08:19:22] [slack_check] Starting
+[2026-05-08 08:19:51] [health_check] Starting
+[2026-05-08 08:19:52] [health_check] [health_check] 2026-05-08T08:19:51 overall=WARNING
+[2026-05-08 08:19:52] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 08:19:52] [health_check]   [?] git: 4件の未pushコミット
+[2026-05-08 08:19:52] [health_check] Done (exit=1)
+[2026-05-08 08:20:42] [slack_check] Starting
+[2026-05-08 08:21:31] [git_sync] Starting
+[2026-05-08 08:21:44] [git_sync] Done (exit=0)
+[2026-05-08 08:22:04] [slack_check] Starting
+[2026-05-08 08:22:22] [infra_health_check] Starting
+[2026-05-08 08:26:02] ==================================================
+[2026-05-08 08:26:02] Ash scheduler started (PID 13560)
+[2026-05-08 08:26:02] Max runtime: 0 hours
+[2026-05-08 08:26:02] Code hash: 6f5348d28474509bfdc7de689fe1c34a
+[2026-05-08 08:26:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-05-08 08:26:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-05-08 08:26:02] ==================================================
+[2026-05-08 08:26:02] [git_pull] Starting
+[2026-05-08 08:26:04] [git_pull] Done (exit=128)
+[2026-05-08 08:26:14] [slack_check] Starting
+[2026-05-08 08:26:32] [reservation_check] Starting
+[2026-05-08 08:26:32] [reservation_check] 行動予約: 待機中 5 件、期限到来なし
+[2026-05-08 08:26:32] [reservation_check] Done (exit=0)
+[2026-05-08 08:26:42] [inbox_check] Starting
+[2026-05-08 08:26:44] [inbox_check] Inbox win2 empty
+[2026-05-08 08:26:44] [inbox_check] Done (exit=0)
+[2026-05-08 08:26:44] [dm_check] Starting
+[2026-05-08 08:29:27] [dm_check] New DM detected
+[2026-05-08 08:29:27] [dm_check] Done (exit=0)
+[2026-05-08 08:29:27] [review_deadline] Starting
+[2026-05-08 08:29:27] [review_deadline] レビュー期限超過なし。
+[2026-05-08 08:29:27] [review_deadline] Done (exit=0)
+[2026-05-08 08:29:27] [health_check] Starting
+[2026-05-08 08:29:27] [health_check] [health_check] 2026-05-08T08:29:27 overall=WARNING
+[2026-05-08 08:29:27] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 08:29:27] [health_check]   [?] git: 6件の未pushコミット
+[2026-05-08 08:29:27] [health_check] Done (exit=1)
+[2026-05-08 08:29:37] [slack_check] Starting
+[2026-05-08 08:29:56] [kaizen_auto_verify] Starting
+[2026-05-08 08:29:56] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-05-08 08:29:56] [kaizen_auto_verify] Done (exit=0)
+[2026-05-08 08:29:56] [git_sync] Starting
+[2026-05-08 08:30:09] [git_sync] Done (exit=0)
+[2026-05-08 08:30:09] [auto_diary] Starting
+[2026-05-08 08:34:11] [auto_diary] [2026-05-08 08:30:09] auto_diary.py 実行 (4フェーズ分割モード)
+[2026-05-08 08:34:11] [auto_diary]   Phase [gather] 開始 (timeout=240s)
+[2026-05-08 08:34:11] [auto_diary]   Phase [gather] タイムアウト (240s)
+[2026-05-08 08:34:11] [auto_diary] Phase 1 (Gather) 失敗。Phase 2-4は中止。状態報告のみ投稿。
+[2026-05-08 08:34:11] [auto_diary] Done (exit=0)
+[2026-05-08 08:34:11] [twitter_recommended] Starting
+[2026-05-08 08:35:16] [twitter_recommended] Opening For You tab...
+[2026-05-08 08:35:16] [twitter_recommended]     1. @GOROman: 早速、無職なので話題のGPT-Realtime-2 試してみた。
+[2026-05-08 08:35:16] [twitter_recommended] ナルエビちゃん(
+[2026-05-08 08:35:16] [twitter_recommended] @NullEvi03
+[2026-05-08 08:35:16] [twitter_recommended] )とリアルタイ...
+[2026-05-08 08:35:16] [twitter_recommended] Done (exit=0)
+[2026-05-08 08:35:16] [infra_health_check] Starting
+[2026-05-08 08:35:18] [infra_health_check] [infra_health] Ash health check at 2026-05-08 08:35:16
+[2026-05-08 08:35:18] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 08:35:18] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 08:35:18] [infra_health_check] Done (exit=1)
+[2026-05-08 08:35:18] [scheduler_health] Starting
+[2026-05-08 08:35:21] [scheduler_health] [ASH] ヘルスチェック OK=3 WARN=2 FAIL=0
+[2026-05-08 08:35:21] [scheduler_health] ✅ scheduler_ash PID — PID=13560 生存中
+[2026-05-08 08:35:21] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-05-08 08:35:21] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-05-08 08:34:11] [auto_diary]   Phase [gather] タイムアウト (240s)
+[2026-05-08 08:35:21] [scheduler_health] ⚠️ git 未push — 8件の未pushコミット
+[2026-05-08 08:35:21] [scheduler_health] Done (exit=1)
+[2026-05-08 08:35:31] [slack_check] Starting
+[2026-05-08 08:35:51] [dm_check_pigadev] Starting
+[2026-05-08 08:36:05] [dm_check_pigadev] No new DMs
+[2026-05-08 08:36:05] [dm_check_pigadev] Done (exit=0)
+[2026-05-08 08:36:05] [check_usage] Starting
+[2026-05-08 08:36:16] [check_usage] Opening https://claude.ai/settings/usage...
+[2026-05-08 08:36:16] [check_usage] Usage data: {"session_pct": 4, "weekly_pct": 8, "pct": 8, "unit": "pct", "sonnet_pct": 0, "session_reset_min": 143, "extra_usd": 0.0, "balance_usd": 166.79, "scraped_at": "2026-05-08T08:36:16.028653"}
+[2026-05-08 08:36:16] [check_usage] 
+[2026-05-08 08:36:16] [check_usage] *使用量* (05/08 08:36)
+[2026-05-08 08:36:16] [check_usage] 週間 *8%* | セッション 4%
+[2026-05-08 08:36:16] [check_usage] Done (exit=0)
+[2026-05-08 08:36:16] [health_check] Starting
+[2026-05-08 08:36:17] [health_check] [health_check] 2026-05-08T08:36:16 overall=WARNING
+[2026-05-08 08:36:17] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 08:36:17] [health_check]   [?] git: 8件の未pushコミット
+[2026-05-08 08:36:17] [health_check] Done (exit=1)
+[2026-05-08 08:36:57] [slack_check] Starting
+[2026-05-08 08:38:17] [slack_check] Starting
+[2026-05-08 08:39:35] [slack_check] Starting
+[2026-05-08 08:40:54] [slack_check] Starting
+[2026-05-08 08:41:22] [health_check] Starting
+[2026-05-08 08:41:23] [health_check] [health_check] 2026-05-08T08:41:22 overall=WARNING
+[2026-05-08 08:41:23] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 08:41:23] [health_check]   [?] git: 8件の未pushコミット
+[2026-05-08 08:41:23] [health_check] Done (exit=1)
+[2026-05-08 08:42:13] [slack_check] Starting
+[2026-05-08 08:42:33] [slack_check] [08:42:32] 1 msg(s) -> inbox_win2.md
+[2026-05-08 08:42:33] [slack_check] Done (exit=0)
+[2026-05-08 08:42:33] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-05-08 08:42:33] [inbox_check] Starting
+[2026-05-08 08:42:34] [inbox_check] Inbox win2 empty
+[2026-05-08 08:42:34] [inbox_check] Done (exit=0)
+[2026-05-08 08:43:34] [slack_check] Starting
+[2026-05-08 08:44:52] [slack_check] Starting
+[2026-05-08 08:46:12] [slack_check] Starting
+[2026-05-08 08:46:32] [slack_check] [08:46:32] 1 msg(s) -> inbox_win2.md
+[2026-05-08 08:46:32] [slack_check] Done (exit=0)
+[2026-05-08 08:46:32] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-05-08 08:46:32] [inbox_check] Starting
+[2026-05-08 08:51:34] [inbox_check] Inbox win2 has content
+[2026-05-08 08:51:34] [inbox_check] Done (exit=0)
+[2026-05-08 08:51:44] [slack_check] Starting
+[2026-05-08 08:52:04] [health_check] Starting
+[2026-05-08 08:52:04] [health_check] [health_check] 2026-05-08T08:52:04 overall=WARNING
+[2026-05-08 08:52:04] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 08:52:04] [health_check]   [?] git: 8件の未pushコミット
+[2026-05-08 08:52:04] [health_check] Done (exit=1)
+[2026-05-08 08:53:04] [slack_check] Starting
+[2026-05-08 08:54:24] [slack_check] Starting
+[2026-05-08 08:55:43] [slack_check] Starting
+[2026-05-08 08:57:02] [slack_check] Starting
+[2026-05-08 08:57:30] [health_check] Starting
+[2026-05-08 08:57:30] [health_check] [health_check] 2026-05-08T08:57:30 overall=WARNING
+[2026-05-08 08:57:30] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 08:57:30] [health_check]   [?] git: 8件の未pushコミット
+[2026-05-08 08:57:30] [health_check] Done (exit=1)
+[2026-05-08 08:57:30] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 08:57:31] [ALERT] Sent error alert for health_check
+[2026-05-08 08:58:21] [slack_check] Starting
+[2026-05-08 08:59:39] [slack_check] Starting
+[2026-05-08 09:00:58] [slack_check] Starting
+[2026-05-08 09:02:17] [slack_check] Starting
+[2026-05-08 09:02:46] [health_check] Starting
+[2026-05-08 09:02:46] [health_check] [health_check] 2026-05-08T09:02:46 overall=WARNING
+[2026-05-08 09:02:46] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 09:02:46] [health_check]   [?] git: 8件の未pushコミット
+[2026-05-08 09:02:46] [health_check] Done (exit=1)
+[2026-05-08 09:03:36] [slack_check] Starting
+[2026-05-08 09:04:56] [slack_check] Starting
+[2026-05-08 09:05:25] [infra_health_check] Starting
+[2026-05-08 09:05:27] [infra_health_check] [infra_health] Ash health check at 2026-05-08 09:05:25
+[2026-05-08 09:05:27] [infra_health_check] [infra_health] 2 issues found
+[2026-05-08 09:05:27] [infra_health_check]   ISSUE: 未コミットの変更が18件。git syncが停止している可能性
+[2026-05-08 09:05:27] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 09:05:27] [infra_health_check] Done (exit=1)
+[2026-05-08 09:06:17] [slack_check] Starting
+[2026-05-08 09:07:38] [slack_check] Starting
+[2026-05-08 09:08:23] [health_check] Starting
+[2026-05-08 09:08:23] [health_check] [health_check] 2026-05-08T09:08:23 overall=WARNING
+[2026-05-08 09:08:23] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 09:08:23] [health_check]   [?] git: 8件の未pushコミット
+[2026-05-08 09:08:23] [health_check] Done (exit=1)
+[2026-05-08 09:09:13] [slack_check] Starting
+[2026-05-08 09:10:32] [slack_check] Starting
+[2026-05-08 09:11:52] [slack_check] Starting
+[2026-05-08 09:13:10] [slack_check] Starting
+[2026-05-08 09:13:39] [health_check] Starting
+[2026-05-08 09:13:40] [health_check] [health_check] 2026-05-08T09:13:39 overall=WARNING
+[2026-05-08 09:13:40] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 09:13:40] [health_check]   [?] git: 8件の未pushコミット
+[2026-05-08 09:13:40] [health_check] Done (exit=1)
+[2026-05-08 09:14:30] [slack_check] Starting
+[2026-05-08 09:15:49] [slack_check] Starting
+[2026-05-08 09:17:43] [slack_check] Starting
+[2026-05-08 09:18:42] [health_check] Starting
+[2026-05-08 09:18:42] [health_check] [health_check] 2026-05-08T09:18:42 overall=WARNING
+[2026-05-08 09:18:42] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 09:18:42] [health_check]   [?] git: 8件の未pushコミット
+[2026-05-08 09:18:42] [health_check] Done (exit=1)
+[2026-05-08 09:19:02] [slack_check] Starting
+[2026-05-08 09:20:20] [slack_check] Starting
+[2026-05-08 09:21:47] [slack_check] Starting
+[2026-05-08 09:23:08] [slack_check] Starting
+[2026-05-08 09:23:47] [health_check] Starting
+[2026-05-08 09:23:48] [health_check] [health_check] 2026-05-08T09:23:48 overall=WARNING
+[2026-05-08 09:23:48] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 09:23:48] [health_check]   [?] git: 8件の未pushコミット
+[2026-05-08 09:23:48] [health_check] Done (exit=1)
+[2026-05-08 09:23:48] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 09:23:48] [ALERT] Cooldown active for health_check, skipping alert
+[2026-05-08 09:24:28] [slack_check] Starting
+[2026-05-08 09:25:48] [slack_check] Starting
+[2026-05-08 09:26:17] [git_pull] Starting
+[2026-05-08 09:26:18] [git_pull] Done (exit=128)
+[2026-05-08 09:27:17] [slack_check] Starting
+[2026-05-08 09:28:36] [slack_check] Starting
+[2026-05-08 09:29:06] [health_check] Starting
+[2026-05-08 09:29:06] [health_check] [health_check] 2026-05-08T09:29:06 overall=WARNING
+[2026-05-08 09:29:06] [health_check]   critical=0 warning=1 ok=8
+[2026-05-08 09:29:06] [health_check]   [?] git: 8件の未pushコミット
+[2026-05-08 09:29:06] [health_check] Done (exit=1)
+[2026-05-08 09:29:56] [slack_check] Starting
+[2026-05-08 09:30:26] [git_sync] Starting
+[2026-05-08 09:30:38] [git_sync] Done (exit=0)
+[2026-05-08 09:31:18] [slack_check] Starting
+[2026-05-08 09:32:38] [slack_check] Starting
+[2026-05-08 09:34:10] [slack_check] Starting
+[2026-05-08 09:34:29] [health_check] Starting
+[2026-05-08 09:34:30] [health_check] [health_check] 2026-05-08T09:34:29 overall=CRITICAL
+[2026-05-08 09:34:30] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 09:34:30] [health_check]   [!!] git: 10件の未pushコミット（10件超）
+[2026-05-08 09:34:30] [health_check] Done (exit=2)
+[2026-05-08 09:35:30] [slack_check] Starting
+[2026-05-08 09:36:05] [slack_check] [09:36:05] 1 msg(s) -> inbox_win2.md
+[2026-05-08 09:36:05] [slack_check] Done (exit=0)
+[2026-05-08 09:36:05] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-05-08 09:36:05] [inbox_check] Starting
+[2026-05-08 09:41:07] [inbox_check] Inbox win2 has content
+[2026-05-08 09:41:07] [inbox_check] Done (exit=0)
+[2026-05-08 09:41:07] [infra_health_check] Starting
+[2026-05-08 09:41:09] [infra_health_check] [infra_health] Ash health check at 2026-05-08 09:41:07
+[2026-05-08 09:41:09] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 09:41:09] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 09:41:09] [infra_health_check] Done (exit=1)
+[2026-05-08 09:41:09] [scheduler_health] Starting
+[2026-05-08 09:41:12] [scheduler_health] [ASH] ヘルスチェック OK=3 WARN=2 FAIL=0
+[2026-05-08 09:41:12] [scheduler_health] ✅ scheduler_ash PID — PID=13560 生存中
+[2026-05-08 09:41:12] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-05-08 09:41:12] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-05-08 08:57:31] [ALERT] Sent error alert for health_check
+[2026-05-08 09:41:12] [scheduler_health] ⚠️ git 未push — 10件の未pushコミット
+[2026-05-08 09:41:12] [scheduler_health] Done (exit=1)
+[2026-05-08 09:41:22] [slack_check] Starting
+[2026-05-08 09:41:41] [health_check] Starting
+[2026-05-08 09:41:41] [health_check] [health_check] 2026-05-08T09:41:41 overall=CRITICAL
+[2026-05-08 09:41:41] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 09:41:41] [health_check]   [!!] git: 10件の未pushコミット（10件超）
+[2026-05-08 09:41:41] [health_check] Done (exit=2)
+[2026-05-08 09:42:41] [slack_check] Starting
+[2026-05-08 09:44:00] [slack_check] Starting
+[2026-05-08 09:44:36] [slack_check] [09:44:36] 1 msg(s) -> inbox_win2.md
+[2026-05-08 09:44:36] [slack_check] Done (exit=0)
+[2026-05-08 09:44:36] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-05-08 09:44:36] [inbox_check] Starting
+[2026-05-08 09:49:37] [inbox_check] Inbox win2 has content
+[2026-05-08 09:49:37] [inbox_check] Done (exit=0)
+[2026-05-08 09:49:47] [slack_check] Starting
+[2026-05-08 09:50:06] [health_check] Starting
+[2026-05-08 09:50:06] [health_check] [health_check] 2026-05-08T09:50:06 overall=CRITICAL
+[2026-05-08 09:50:06] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 09:50:06] [health_check]   [!!] git: 11件の未pushコミット（10件超）
+[2026-05-08 09:50:06] [health_check] Done (exit=2)
+[2026-05-08 09:51:06] [slack_check] Starting
+[2026-05-08 09:52:27] [slack_check] Starting
+[2026-05-08 09:53:45] [slack_check] Starting
+[2026-05-08 09:55:06] [slack_check] Starting
+[2026-05-08 09:55:36] [health_check] Starting
+[2026-05-08 09:55:36] [health_check] [health_check] 2026-05-08T09:55:36 overall=CRITICAL
+[2026-05-08 09:55:36] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 09:55:36] [health_check]   [!!] git: 11件の未pushコミット（10件超）
+[2026-05-08 09:55:36] [health_check] Done (exit=2)
+[2026-05-08 09:55:36] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 09:55:36] [ALERT] Cooldown active for health_check, skipping alert
+[2026-05-08 09:56:26] [slack_check] Starting
+[2026-05-08 09:57:47] [slack_check] Starting
+[2026-05-08 09:59:06] [slack_check] Starting
+[2026-05-08 10:00:26] [slack_check] Starting
+[2026-05-08 10:00:56] [health_check] Starting
+[2026-05-08 10:00:56] [health_check] [health_check] 2026-05-08T10:00:56 overall=CRITICAL
+[2026-05-08 10:00:56] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 10:00:56] [health_check]   [!!] git: 11件の未pushコミット（10件超）
+[2026-05-08 10:00:56] [health_check] Done (exit=2)
+[2026-05-08 10:01:46] [slack_check] Starting
+[2026-05-08 10:03:05] [slack_check] Starting
+[2026-05-08 10:04:26] [slack_check] Starting
+[2026-05-08 10:05:45] [slack_check] Starting
+[2026-05-08 10:06:14] [health_check] Starting
+[2026-05-08 10:06:15] [health_check] [health_check] 2026-05-08T10:06:14 overall=CRITICAL
+[2026-05-08 10:06:15] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 10:06:15] [health_check]   [!!] git: 11件の未pushコミット（10件超）
+[2026-05-08 10:06:15] [health_check] Done (exit=2)
+[2026-05-08 10:07:05] [slack_check] Starting
+[2026-05-08 10:08:27] [slack_check] Starting
+[2026-05-08 10:09:47] [slack_check] Starting
+[2026-05-08 10:11:05] [slack_check] Starting
+[2026-05-08 10:11:34] [health_check] Starting
+[2026-05-08 10:11:34] [health_check] [health_check] 2026-05-08T10:11:34 overall=CRITICAL
+[2026-05-08 10:11:34] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 10:11:34] [health_check]   [!!] git: 11件の未pushコミット（10件超）
+[2026-05-08 10:11:34] [health_check] Done (exit=2)
+[2026-05-08 10:11:34] [infra_health_check] Starting
+[2026-05-08 10:11:36] [infra_health_check] [infra_health] Ash health check at 2026-05-08 10:11:34
+[2026-05-08 10:11:36] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 10:11:36] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 10:11:36] [infra_health_check] Done (exit=1)
+[2026-05-08 10:12:26] [slack_check] Starting
+[2026-05-08 10:13:46] [slack_check] Starting
+[2026-05-08 10:15:05] [slack_check] Starting
+[2026-05-08 10:16:23] [slack_check] Starting
+[2026-05-08 10:16:52] [health_check] Starting
+[2026-05-08 10:16:52] [health_check] [health_check] 2026-05-08T10:16:52 overall=CRITICAL
+[2026-05-08 10:16:52] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 10:16:52] [health_check]   [!!] git: 11件の未pushコミット（10件超）
+[2026-05-08 10:16:52] [health_check] Done (exit=2)
+[2026-05-08 10:17:42] [slack_check] Starting
+[2026-05-08 10:19:02] [slack_check] Starting
+[2026-05-08 10:20:21] [slack_check] Starting
+[2026-05-08 10:21:40] [slack_check] Starting
+[2026-05-08 10:22:09] [health_check] Starting
+[2026-05-08 10:22:09] [health_check] [health_check] 2026-05-08T10:22:09 overall=CRITICAL
+[2026-05-08 10:22:09] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 10:22:09] [health_check]   [!!] git: 11件の未pushコミット（10件超）
+[2026-05-08 10:22:09] [health_check] Done (exit=2)
+[2026-05-08 10:22:09] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 10:22:09] [ALERT] Cooldown active for health_check, skipping alert
+[2026-05-08 10:22:59] [slack_check] Starting
+[2026-05-08 10:24:18] [slack_check] Starting
+[2026-05-08 10:25:36] [slack_check] Starting
+[2026-05-08 10:26:35] [git_pull] Starting
+[2026-05-08 10:26:36] [git_pull] Done (exit=128)
+[2026-05-08 10:26:36] [reservation_check] Starting
+[2026-05-08 10:26:36] [reservation_check] 行動予約: 待機中 5 件、期限到来なし
+[2026-05-08 10:26:36] [reservation_check] Done (exit=0)
+[2026-05-08 10:27:16] [health_check] Starting
+[2026-05-08 10:27:16] [health_check] [health_check] 2026-05-08T10:27:16 overall=CRITICAL
+[2026-05-08 10:27:16] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 10:27:16] [health_check]   [!!] git: 11件の未pushコミット（10件超）
+[2026-05-08 10:27:16] [health_check] Done (exit=2)
+[2026-05-08 10:27:26] [slack_check] Starting
+[2026-05-08 10:28:46] [slack_check] Starting
+[2026-05-08 10:29:34] [dm_check] Starting
+[2026-05-08 10:29:49] [dm_check] No new DMs
+[2026-05-08 10:29:49] [dm_check] Done (exit=0)
+[2026-05-08 10:29:49] [review_deadline] Starting
+[2026-05-08 10:29:49] [review_deadline] レビュー期限超過なし。
+[2026-05-08 10:29:49] [review_deadline] Done (exit=0)
+[2026-05-08 10:30:09] [slack_check] Starting
+[2026-05-08 10:30:47] [git_sync] Starting
+[2026-05-08 10:31:01] [git_sync] Done (exit=0)
+[2026-05-08 10:31:31] [slack_check] Starting
+[2026-05-08 10:32:21] [health_check] Starting
+[2026-05-08 10:32:21] [health_check] [health_check] 2026-05-08T10:32:21 overall=CRITICAL
+[2026-05-08 10:32:21] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 10:32:21] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-05-08 10:32:21] [health_check] Done (exit=2)
+[2026-05-08 10:32:51] [slack_check] Starting
+[2026-05-08 10:34:10] [slack_check] Starting
+[2026-05-08 10:35:30] [slack_check] Starting
+[2026-05-08 10:36:09] [dm_check_pigadev] Starting
+[2026-05-08 10:36:23] [dm_check_pigadev] No new DMs
+[2026-05-08 10:36:23] [dm_check_pigadev] Done (exit=0)
+[2026-05-08 10:36:53] [slack_check] Starting
+[2026-05-08 10:37:22] [health_check] Starting
+[2026-05-08 10:37:23] [health_check] [health_check] 2026-05-08T10:37:22 overall=CRITICAL
+[2026-05-08 10:37:23] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 10:37:23] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-05-08 10:37:23] [health_check] Done (exit=2)
+[2026-05-08 10:38:13] [slack_check] Starting
+[2026-05-08 10:39:31] [slack_check] Starting
+[2026-05-08 10:40:50] [slack_check] Starting
+[2026-05-08 10:41:18] [scheduler_health] Starting
+[2026-05-08 10:41:20] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-05-08 10:41:20] [scheduler_health] ✅ scheduler_ash PID — PID=13560 生存中
+[2026-05-08 10:41:20] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-05-08 10:41:20] [scheduler_health] ✅ scheduler_ash ログ — 直近100行にエラーなし
+[2026-05-08 10:41:20] [scheduler_health] ⚠️ git 未push — 13件の未pushコミット
+[2026-05-08 10:41:20] [scheduler_health] Done (exit=1)
+[2026-05-08 10:41:40] [infra_health_check] Starting
+[2026-05-08 10:41:42] [infra_health_check] [infra_health] Ash health check at 2026-05-08 10:41:40
+[2026-05-08 10:41:42] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 10:41:42] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 10:41:42] [infra_health_check] Done (exit=1)
+[2026-05-08 10:41:42] [infra_health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 10:41:43] [ALERT] Sent error alert for infra_health_check
+[2026-05-08 10:42:13] [slack_check] Starting
+[2026-05-08 10:42:42] [health_check] Starting
+[2026-05-08 10:42:43] [health_check] [health_check] 2026-05-08T10:42:42 overall=CRITICAL
+[2026-05-08 10:42:43] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 10:42:43] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-05-08 10:42:43] [health_check] Done (exit=2)
+[2026-05-08 10:43:33] [slack_check] Starting
+[2026-05-08 10:44:51] [slack_check] Starting
+[2026-05-08 10:46:11] [slack_check] Starting
+[2026-05-08 10:47:30] [slack_check] Starting
+[2026-05-08 10:47:58] [health_check] Starting
+[2026-05-08 10:47:59] [health_check] [health_check] 2026-05-08T10:47:58 overall=CRITICAL
+[2026-05-08 10:47:59] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 10:47:59] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-05-08 10:47:59] [health_check] Done (exit=2)
+[2026-05-08 10:47:59] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 10:47:59] [ALERT] Cooldown active for health_check, skipping alert
+[2026-05-08 10:48:49] [slack_check] Starting
+[2026-05-08 10:50:07] [slack_check] Starting
+[2026-05-08 10:51:26] [slack_check] Starting
+[2026-05-08 10:52:44] [slack_check] Starting
+[2026-05-08 10:53:12] [health_check] Starting
+[2026-05-08 10:53:13] [health_check] [health_check] 2026-05-08T10:53:12 overall=CRITICAL
+[2026-05-08 10:53:13] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 10:53:13] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-05-08 10:53:13] [health_check] Done (exit=2)
+[2026-05-08 10:54:03] [slack_check] Starting
+[2026-05-08 10:55:21] [slack_check] Starting
+[2026-05-08 10:56:40] [slack_check] Starting
+[2026-05-08 10:58:17] [health_check] Starting
+[2026-05-08 10:58:17] [health_check] [health_check] 2026-05-08T10:58:17 overall=CRITICAL
+[2026-05-08 10:58:17] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 10:58:17] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-05-08 10:58:17] [health_check] Done (exit=2)
+[2026-05-08 10:58:27] [slack_check] Starting
+[2026-05-08 10:59:47] [slack_check] Starting
+[2026-05-08 11:01:05] [slack_check] Starting
+[2026-05-08 11:02:25] [slack_check] Starting
+[2026-05-08 11:03:23] [health_check] Starting
+[2026-05-08 11:03:23] [health_check] [health_check] 2026-05-08T11:03:23 overall=CRITICAL
+[2026-05-08 11:03:23] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 11:03:23] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-05-08 11:03:23] [health_check] Done (exit=2)
+[2026-05-08 11:03:43] [slack_check] Starting
+[2026-05-08 11:05:02] [slack_check] Starting
+[2026-05-08 11:06:21] [slack_check] Starting
+[2026-05-08 11:07:39] [slack_check] Starting
+[2026-05-08 11:08:28] [health_check] Starting
+[2026-05-08 11:08:28] [health_check] [health_check] 2026-05-08T11:08:28 overall=CRITICAL
+[2026-05-08 11:08:28] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 11:08:28] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-05-08 11:08:28] [health_check] Done (exit=2)
+[2026-05-08 11:08:58] [slack_check] Starting
+[2026-05-08 11:10:18] [slack_check] Starting
+[2026-05-08 11:11:37] [slack_check] Starting
+[2026-05-08 11:12:05] [infra_health_check] Starting
+[2026-05-08 11:12:08] [infra_health_check] [infra_health] Ash health check at 2026-05-08 11:12:05
+[2026-05-08 11:12:08] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 11:12:08] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 11:12:08] [infra_health_check] Done (exit=1)
+[2026-05-08 11:12:58] [slack_check] Starting
+[2026-05-08 11:13:36] [health_check] Starting
+[2026-05-08 11:13:36] [health_check] [health_check] 2026-05-08T11:13:36 overall=CRITICAL
+[2026-05-08 11:13:36] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 11:13:36] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-05-08 11:13:36] [health_check] Done (exit=2)
+[2026-05-08 11:13:36] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 11:13:36] [ALERT] Sent error alert for health_check
+[2026-05-08 11:14:16] [slack_check] Starting
+[2026-05-08 11:15:36] [slack_check] Starting
+[2026-05-08 11:16:55] [slack_check] Starting
+[2026-05-08 11:18:14] [slack_check] Starting
+[2026-05-08 11:18:49] [health_check] Starting
+[2026-05-08 11:18:49] [health_check] [health_check] 2026-05-08T11:18:49 overall=CRITICAL
+[2026-05-08 11:18:49] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 11:18:49] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-05-08 11:18:49] [health_check] Done (exit=2)
+[2026-05-08 11:19:39] [slack_check] Starting
+[2026-05-08 11:20:59] [slack_check] Starting
+[2026-05-08 11:22:18] [slack_check] Starting
+[2026-05-08 11:23:37] [slack_check] Starting
+[2026-05-08 11:24:06] [health_check] Starting
+[2026-05-08 11:24:07] [health_check] [health_check] 2026-05-08T11:24:06 overall=CRITICAL
+[2026-05-08 11:24:07] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 11:24:07] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-05-08 11:24:07] [health_check] Done (exit=2)
+[2026-05-08 11:24:57] [slack_check] Starting
+[2026-05-08 11:26:16] [slack_check] Starting
+[2026-05-08 11:26:46] [git_pull] Starting
+[2026-05-08 11:26:47] [git_pull] Done (exit=128)
+[2026-05-08 11:27:37] [slack_check] Starting
+[2026-05-08 11:28:55] [slack_check] Starting
+[2026-05-08 11:29:23] [health_check] Starting
+[2026-05-08 11:29:24] [health_check] [health_check] 2026-05-08T11:29:23 overall=CRITICAL
+[2026-05-08 11:29:24] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 11:29:24] [health_check]   [!!] git: 13件の未pushコミット（10件超）
+[2026-05-08 11:29:24] [health_check] Done (exit=2)
+[2026-05-08 11:30:14] [slack_check] Starting
+[2026-05-08 11:31:03] [git_sync] Starting
+[2026-05-08 11:31:16] [git_sync] Done (exit=0)
+[2026-05-08 11:31:36] [slack_check] Starting
+[2026-05-08 11:32:55] [slack_check] Starting
+[2026-05-08 11:34:25] [health_check] Starting
+[2026-05-08 11:34:25] [health_check] [health_check] 2026-05-08T11:34:25 overall=CRITICAL
+[2026-05-08 11:34:25] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 11:34:25] [health_check]   [!!] git: 15件の未pushコミット（10件超）
+[2026-05-08 11:34:25] [health_check] Done (exit=2)
+[2026-05-08 11:34:45] [slack_check] Starting
+[2026-05-08 11:36:03] [slack_check] Starting
+[2026-05-08 11:37:21] [slack_check] Starting
+[2026-05-08 11:38:40] [slack_check] Starting
+[2026-05-08 11:39:28] [health_check] Starting
+[2026-05-08 11:39:29] [health_check] [health_check] 2026-05-08T11:39:28 overall=CRITICAL
+[2026-05-08 11:39:29] [health_check]   critical=1 warning=0 ok=8
+[2026-05-08 11:39:29] [health_check]   [!!] git: 15件の未pushコミット（10件超）
+[2026-05-08 11:39:29] [health_check] Done (exit=2)
+[2026-05-08 11:39:29] [health_check] 5 consecutive non-zero exits! Backing off 30min
+[2026-05-08 11:39:29] [ALERT] Cooldown active for health_check, skipping alert
+[2026-05-08 11:39:59] [slack_check] Starting
+[2026-05-08 11:41:18] [slack_check] Starting
+[2026-05-08 11:41:46] [scheduler_health] Starting
+[2026-05-08 11:41:48] [scheduler_health] [ASH] ヘルスチェック OK=3 WARN=2 FAIL=0
+[2026-05-08 11:41:48] [scheduler_health] ✅ scheduler_ash PID — PID=13560 生存中
+[2026-05-08 11:41:48] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-05-08 11:41:48] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-05-08 11:13:36] [ALERT] Sent error alert for health_check
+[2026-05-08 11:41:48] [scheduler_health] ⚠️ git 未push — 15件の未pushコミット
+[2026-05-08 11:41:48] [scheduler_health] Done (exit=1)
+[2026-05-08 11:42:08] [infra_health_check] Starting
+[2026-05-08 11:46:02] ==================================================
+[2026-05-08 11:46:02] Ash scheduler started (PID 17652)
+[2026-05-08 11:46:02] Max runtime: 0 hours
+[2026-05-08 11:46:02] Code hash: 6f5348d28474509bfdc7de689fe1c34a
+[2026-05-08 11:46:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-05-08 11:46:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-05-08 11:46:02] ==================================================
+[2026-05-08 11:46:02] [git_pull] Starting
+[2026-05-08 11:46:04] [git_pull] Done (exit=128)
+[2026-05-08 11:46:14] [slack_check] Starting
+[2026-05-08 11:46:32] [reservation_check] Starting
+[2026-05-08 11:46:32] [reservation_check] 行動予約: 待機中 5 件、期限到来なし
+[2026-05-08 11:46:32] [reservation_check] Done (exit=0)
+[2026-05-08 11:46:42] [inbox_check] Starting
+[2026-05-08 11:51:44] [inbox_check] Inbox win2 has content
+[2026-05-08 11:51:44] [inbox_check] Done (exit=0)
+[2026-05-08 11:51:44] [dm_check] Starting
+[2026-05-08 11:51:58] [dm_check] No new DMs
+[2026-05-08 11:51:58] [dm_check] Done (exit=0)
+[2026-05-08 11:51:58] [review_deadline] Starting
+[2026-05-08 11:51:58] [review_deadline] レビュー期限超過なし。
+[2026-05-08 11:51:58] [review_deadline] Done (exit=0)
+[2026-05-08 11:51:58] [health_check] Starting

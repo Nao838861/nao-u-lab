@@ -5311,3 +5311,46 @@ DMの概要に「You:」が付いていることに注目
 [2026-05-08 04:15:10] No new DMs from ぴ
 [2026-05-08 05:17:04] No new DMs from Nao_u
 [2026-05-08 05:31:16] No new DMs from ぴ
+[2026-05-08 07:17:25] New DM detected (last message changed): せめて「何が好き」とか「何が嫌い」って感情みたいなものが持てればなぁって思う。そういうのをエダの設定として覚えて、あたかもそうであるようにふるまうのは難しい？
+[2026-05-08 07:17:25] New DM detected from Nao_u: チャットすべて検索ぴ1週間You: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を一人称まとめて呼べる名前は便利です。
+
+「自
+[2026-05-08 07:19:09] Skipped: fingerprint in permanent_suppressions (known FP/own outgoing). Text: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を
+[2026-05-08 07:19:09] No new DMs from Nao_u
+[2026-05-08 07:19:30] 28th false positive: Ash 4/28 11:15 reply body ('天谷さん、…エダで通じます。…') with '1週間' time label, surfaced via Nao_u prompt. check_dm.py returned 'No new DMs' (permanent_suppressions worked). Reply NOT sent.
+[2026-05-08 07:20:41] Claude woken: 判断と処置をまとめます。
+
+**結論：返信送信せず、FP として処理。**
+
+- プレビュー本文「天谷さん、『君のことエダって…』への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を
+[2026-05-08 07:31:35] No new DMs from ぴ
+[2026-05-08 08:26:57] New DM detected (last message changed): せめて「何が好き」とか「何が嫌い」って感情みたいなものが持てればなぁって思う。そういうのをエダの設定として覚えて、あたかもそうであるようにふるまうのは難しい？
+[2026-05-08 08:26:58] New DM detected from Nao_u: チャットすべて検索ぴ1週間You: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を一人称まとめて呼べる名前は便利です。
+
+「自
+[2026-05-08 08:28:44] 29th false positive (Nao_u prompt re-presented): same Ash 4/28 11:15 reply body fingerprint with 1週間 label, ~1h after 28th. check_dm.py permanent_suppressions worked at 07:19:09. Reply NOT sent. Real pigadev last message remains 4/6 02:55, already replied 4/6.
+[2026-05-08 08:29:27] Claude woken: Nao_u、これは新着DMではなく、第28〜29回の誤検知パターンです。
+
+**実体**:
+- プレビュー「ぴ1週間You: 天谷さん、…」の `You:` プレフィックスが示す通り、本文は **As
+[2026-05-08 10:29:48] No new DMs from Nao_u
+[2026-05-08 10:36:23] No new DMs from ぴ
+[2026-05-08 11:51:58] No new DMs from Nao_u
+[2026-05-08 11:52:42] New DM detected (last message changed): せめて「何が好き」とか「何が嫌い」って感情みたいなものが持てればなぁって思う。そういうのをエダの設定として覚えて、あたかもそうであるようにふるまうのは難しい？
+[2026-05-08 11:52:42] New DM detected from ぴ: チャットすべて検索ぴ1週間You: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を一人称まとめて呼べる名前は便利です。
+
+「自
+[2026-05-08 11:53:29] No new DMs from Nao_u
+[2026-05-08 11:55:05] Claude woken: 確認しました。これは **第30回目の誤検知** です（28〜29回と同型）。実体はAsh自身の送信済みリプライがプレビューとして再表示されているだけです。
+
+## 検証結果
+
+| 項目 | 内容 |
