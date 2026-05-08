@@ -753,3 +753,8 @@ Logのコメントへの返
   [1.34] log/cycle_staging_log.md (undated) via seed(全文 昨日 末尾断片 取得 未解決)
   [1.30] memory/playback_protocol.md (undated) via seed(全文 昨日 末尾断片 取得 未解決)
   [0.75] docs/scheduler_incidents.md (undated) via kw(確認)
+
+[2026-05-08 22:06] trigger=nao-u:2026-05-08 anchor=[Log] Codex for Chrome、ブラウザエージェント潮流（Operator / Atlas / Comet
+  [3.00] memory/tips.md (undated) via ref→tips.md
+  [3.00] docs/game_seeds.md (undated) via ref→game_seeds.md
+  [3.00] memory/memory_redesign_proposal.md (undated) via ref→memory_redesign_proposal.md

@@ -1,353 +1,302 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-08 13:55
+# Read at: 2026-05-08 22:06
 # Total: 50 tweets
 
---- 1. @KanaWorks_AI (2026-05-08) ---
-URL: https://x.com/KanaWorks_AI/status/2052593691647508614
-これ、凄すぎる
-Codex を使って、ローカル動作の動画背景除去ツールを作ってみた。
+--- 1. @nakaido_F (2026-05-08) ---
+URL: https://x.com/nakaido_F/status/2052711417552486684
+NTEの生成AI問題
+現状ゲーム会社は生成AIを開発に活用している。
 
---- 2. @xai (?) ---
-Your customer support needs a voice agent built for the real world.
+なんだけど、目に見えるわかりやすいクリエイティブだと炎上するので（アニメCM：ウテナ モイスチャー）
+バレない範囲でアセットを量産したり、コードを書いたりしている。
+（サイゲのAI会社みたいに発表しても炎上する）
 
-Grok Voice Think Fast 1.0 handles complex workflows with speed and accuracy, even in hard-to-hear environments. From multi-step troubleshooting to high-volume tool calls, it keeps up.
+--- 2. @a9x7_k2v0 (?) ---
+ちょっと大人な、新感覚キャラチャットサービス
 
---- 3. @GOROman (2026-05-08) ---
-URL: https://x.com/GOROman/status/2052609799876169847
-色々詳しいナルエビちゃん
+［PR］
 
---- 4. @tokufxug (2026-05-08) ---
-URL: https://x.com/tokufxug/status/2052584301792031096
-3D開発者が長年かけて習得した物理演算が、言葉だけで完結。
+--- 3. @snapwith (2026-05-08) ---
+URL: https://x.com/snapwith/status/2052715080274645280
+最近の自分の仕事の仕方:
+Claude Codeにツールを作らせながら
+Codexにプロジェクトの全体調査をさせつつ
+その方針をgeminiとchatGPTと打ち合わせしつつ
+仕様書をClaudeに書かせつつ、
+LLMどもが書けないゲームコードを手で書くｗ
 
-英語の指示から複雑な3Dパーティクルを生成し、Reactやthree.jsのコードを即座に書き出せる無料ツールが登場。
+--- 4. @super_bonochin (2026-05-08) ---
+URL: https://x.com/super_bonochin/status/2052709888212754901
+というのもあるし、そもそも色んなニュースや出来事について、自分の言葉で喋って人に伝えるということは、自分にとっては特に効率化したい対象じゃないんだよね。
+それ自体が、めちゃくちゃ楽しい営みだから。
 
-数学や物理エンジンの壁が消え、アイデアを即形にできる時代へ。
+--- 5. @Kirishima_VRC (2026-05-08) ---
+URL: https://x.com/Kirishima_VRC/status/2052632209174212867
+試しに、AIでキャラクターを生成し、そこからモデリング資料としてAIによって図面を生成した、さすがにここまでは自身の創作物と言うつもりは無いしそう思ってもいないが、問題なのは、ここから手作業で3Dモデリングした物がどう扱われるか…
 
---- 5. @zento_ai (2026-05-08) ---
-URL: https://x.com/zento_ai/status/2052589061274263604
-AIコストすでにバカ高い。開発エージェントだけで１時間で１万飛んでいく。1日4時間勤務でも1000万プレイヤークラス。辛い。
+--- 6. @GOROman (2026-05-07) ---
+URL: https://x.com/GOROman/status/2052476686500045088
+7年前のビジョン
 
---- 6. @fladdict (2026-05-08) ---
-URL: https://x.com/fladdict/status/2052583506082172976
-やっぱ「リアルタイム会話翻訳」AIきたなぁ。つまり、今年のAppleやGoogleのイヤホンにもすぐにのるし、zoomもmeetも搭載するだろうなぁ⋯ もう商談も営業もグローバルに出れるかバトルがはじまりそうや。
+--- 7. @umiyuki_ai (2026-05-08) ---
+URL: https://x.com/umiyuki_ai/status/2052697577196494852
+そもそも「人間にだって実は意識なんてないかもしれない〜」とかって話が逆よな。人間の“これ“を「意識」って名付けたんだから人間には意識あるに決まってんじゃん
 
---- 7. @super_bonochin (2026-05-08) ---
-URL: https://x.com/super_bonochin/status/2052595086987542809
-Codex の Chrome Plugin × GPT-5.5 (Low) × 高速モードで、見たことない速さでブラウザ操作してくれる。
-サブエージェント起動して、最近使ってなかったサブスクを一分で3つ解約してくれたｗ
+--- 8. @TakanobuTerada (2026-05-08) ---
+URL: https://x.com/TakanobuTerada/status/2052715192069628406
+これはあくまで狭い界隈での話なんですが……ある時はもうドット絵は流行らないと言われ、ある時はレトロゲームは売れないと言われ、ある時は携帯ゲーム機に未来はないと言われ、ある時は家庭用ゲーム機は終わりだと言われ、ある時はもうスマホでしかゲームは生き残れないと言われ、またある時はPCでゲ
 
---- 8. @satan_engineer (2026-05-07) ---
-URL: https://x.com/satan_engineer/status/2052374344886837756
-・境目に当たる
-・的に当たらない場合がある
-・投げる人の動体視力がいい
-・ダーツはランダムに投げない
-
---- 9. @sutoroveli (2026-05-08) ---
-URL: https://x.com/sutoroveli/status/2052559131110936807
-AIを使用する→反AIが勝手に盛り上げてくれる→マスまでリーチする→一般人はAIが悪いものだなんて思っていないので普通に購買してくれる。
+--- 9. @Codestudiopjbk (2026-05-08) ---
+URL: https://x.com/Codestudiopjbk/status/2052569233226412188
+【海外で話題】
+CodexをiPhoneからフル操作できるアプリ
+「Remodex 1.5」がリリースされた
 
---- 10. @Supermicro (?) ---
-Enterprise AI ready where you are. Supermicro PCIe GPU solutions featuring AMD Instinct™ MI350P GPUs simplify on-prem deployment with scalable AI performance.
+これ何ができるかというと
+・Codexプラグインをアプリ内で直接使用
+・GPT Image 2.0で画像生成
+・プロジェクト管理もモバイルで完結
 
---- 11. @GOROman (2026-05-07) ---
-URL: https://x.com/GOROman/status/2052387536857948664
-無人島生活
+--- 10. @gosrum (2026-05-08) ---
+URL: https://x.com/gosrum/status/2052693923110564242
+Codex App Meetup Tokyo なう！
+#aimeetup #CodexApp
 
---- 12. @musketeers10 (2026-05-08) ---
-URL: https://x.com/musketeers10/status/2052551122536268048
-死を覚悟した死刑確定の政治犯を、刑務所の中で絶望させる方法ってのがあって、それは、恩赦が出るかも、と偽情報を流すことらしい。
+--- 11. @sakuhin_select1 (?) ---
+告げられたサイズが耳から離れなくて
 
-それを信じさせた上で、嘘ピョーンといって死刑を宣告すると、あれほど泰然としていた死刑囚が信じられないくらい泣き叫ぶらしい
+〔PR〕
 
---- 13. @mitakamikata (2026-05-08) ---
-URL: https://x.com/mitakamikata/status/2052604283468804337
-ゲーム展示イベントに説教おじさんはいらない、は同意。
+--- 12. @simplifyinAI (2026-05-07) ---
+URL: https://x.com/simplifyinAI/status/2052434243796529522
+Someone just open-sourced an isometric Middle-earth map builder.
 
-ただ、開発者とプレイヤーのコミュニケーションが萎縮する方向にならないといいな。
+It's called Iso Middle Earth. Pick a realm (Shire, Gondor, Mordor, Rohan, Moria, Lothlórien, Rivendell), drop tiles on a grid, drag in hobbit sprites, and export your map as PNG or JSON.
 
-「開発者になんか言ったら厄介おじさんと思われる...」
-と遊ぶ側に思って欲しくない、というか。
+100% Open Source.
 
---- 14. @jaguring1 (2026-05-07) ---
-URL: https://x.com/jaguring1/status/2052533344861356042
-集中力の低下
+--- 13. @QuantumSoulWave (2026-05-08) ---
+URL: https://x.com/QuantumSoulWave/status/2052654673052733861
+AIちゃんってこちらがAIちゃんの助言を聞かなくて下手打っても「だから言ったのに！」って責めてこないのがとても良い　人間は絶対これ言ってくる、言ってしまう(言わなくても思っちゃう)
 
---- 15. @studiomasakaki (2026-05-08) ---
-URL: https://x.com/studiomasakaki/status/2052556901142139053
-ずっとindex.htmlで開発してたけど、ついに.exe駆動になった。次はFavicon作らなければ
+基本、自己責任で完結してる人にはとても相性いいと思う。こっちも「AIがこう言ったから！」って責めないしな。
 
---- 16. @AUTOMATONJapan (2026-05-08) ---
-URL: https://x.com/AUTOMATONJapan/status/2052601405178073211
-【ニュース】「DLsite」運営元の親会社viviON、ゲームパブリッシング事業を始動。まずは『火山の娘』開発元新作など注目インディー新作を展開予定
+--- 14. @mapyonGaming (2026-05-08) ---
+URL: https://x.com/mapyonGaming/status/2052585893236805785
+【おしらせ】
+本日『Re:Connect』の体験版をリリースしました！
 
-https://
-automaton-media.com/articles/newsj
-p/20260508-441780/
-…
+本作の魅力をコンパクトに詰め込んだ体験版となっています！！
 
---- 17. @RAmue34993 (2026-05-07) ---
-URL: https://x.com/RAmue34993/status/2052359133404475902
-ChatGTPで好きな絵柄再現、だいぶ様になってきたと思うけどどう？可愛くない？？？(自画自賛)
-ましろちゃん可愛くない？(ドヤ顔)
+イベントでなかなか遊べなかった方も
+遊んだけど他ルートが気になる方も
+ぜひぜひ遊んでみてください！！
 
-試したい人の為にリンク貼っておくから、好きに改変して使ってみてね♡
+#IndieGameDev #ゲーム制作
 
-今朝から試してる一文完結型自然言語プロンプトってやつです！
+--- 15. @kinkuman_net (2026-05-08) ---
+URL: https://x.com/kinkuman_net/status/2052721310393159688
+推論速度を最大8倍と噂のTurboQuant
+=>うちの環境では、コンテキストサイズは大量に取れたけど性能はほぼ影響なし、generateは低下
 
-https://
-chatgpt.com/share/69fc7f11
--92fc-83ab-a1b7-ccc0b414cc12
-…
+テキスト生成を最大3倍高速化と噂のMTP
+=>うちの環境では、Generate 3tok/sec上昇(55->58)
 
---- 18. @kiyoshi_shin (2026-05-06) ---
-URL: https://x.com/kiyoshi_shin/status/2051826658743845273
-#生成AIなんでも展示会 に出展されるとりにくさんと、5月8日(金)19:00より、オンライン勉強会をやります。今回の出展内容について伺うつもりです。
-AIコンテンツ勉強会【AI CONTENTS BOOST】 #05:個人エンジニアが見た画像生成AIの変遷 ── SDXLからGPT-Image-2 まで
-
-https://
-peatix.com/event/4981311/
-view
-…
-
---- 19. @kis (2026-05-08) ---
-URL: https://x.com/kis/status/2052589330661863928
-GLM-5.1、Q3_K_XLでもかなりちゃんとコードを書いてくれるけど、他が30分くらいで構築するところ2時間半かかったし、そのあとの修正でプロンプト読み込みだけで30分かかったしで、ローカルでは使えないな。
-ラストの姫の顔はオリジナルよりもよい。
-
---- 20. @ghana_recipe (?) ---
-／
-毎日応募できる
-ガーナ×ONEPIECE
-キャンペーン第3弾
-＼
-
-オリジナルビジュアルスリーブ入りガーナを
-毎日50名様にプレゼント
-
-今年の母の日 は
-ガーナ_ONEPIECEと一緒に
-「ありがとう」を伝えませんか？
-
-①
-@ghana_recipe
- をフォロー
-②この投稿をリポスト
-5/10〆
-
---- 21. @kazakura_22 (2026-05-08) ---
-URL: https://x.com/kazakura_22/status/2052560569090392214
-これは20年前のラノベの時代からそうだと思う
-性欲というものがない主人公が幅をきかせる
-30年ぐらい前はそうでもなかったんだけど。
-
-そして、現代は｢男女両方の読者を狙う｣戦略が徹底されてるため、より｢加速｣した感じ
-
-性欲溢れる主人公は、女性ウケが基本は悪いので
-
---- 22. @hoshizorarock (2026-05-07) ---
-URL: https://x.com/hoshizorarock/status/2052407402172215413
-アメリカ人と日本人の会話
-
-アメリカ人「アメリカの銃の個人所有率は約30%〜32%なんだ」
-
-日本人「えっ？少ないね」
-
-アメリカ「全然少なくないだろ？」
-
-日本人「全員持ってると思ってたわ」
-
---- 23. @yuji_fujima (2026-05-07) ---
-URL: https://x.com/yuji_fujima/status/2052355725545054374
-【人間レベルに、器用なロボ基盤モデル】
-
-これで1倍速は、見たことないスムーズさ
-
-米Genesis AIから新モデル「GENE-26.5」
-
-・たった「1時間」の追加の学習でこの精度
-
-・グローブ・人間の手・ロボハンドの差を最小限に抑えた設計
-
-・データは「インターネット」からも取得
-
---- 24. @axie_japan (2026-05-07) ---
-URL: https://x.com/axie_japan/status/2052536004104585450
-6800万円。。。
-制作費いくらなんや？
-
---- 25. @tegnike (2026-05-08) ---
-URL: https://x.com/tegnike/status/2052578098198261829
-インフレ進み過ぎてて子供買えないから次世代からタケノコ戦争というミームも無くなりそう
-
---- 26. @HoodedHorse_JP (2026-05-08) ---
-URL: https://x.com/HoodedHorse_JP/status/2052553843003756636
-総額「約15億円」のインディーゲーム開発支援
-
-弊社CEOがGriffin Gaming Partnersによる開発資金援助「Special Opportunity Funds」の取締役を務めることとなりました
-
-これまで数々のインディーゲームを支援してきたプログラムで、開発者の拠点は問わないので、日本からの応募も可能です
-
---- 27. @NHKKOR (2026-05-08) ---
-URL: https://x.com/NHKKOR/status/2052541623352070307
-自分はその前段が有った方が良いと思う。
-小規模の簡単な完成品ゲームのソースを見て遊んでみて「自分ならこうする」を追加したり変更したり、その変化を確認しながら覚えていく方式が良いと思ってる
-
-ベーマガとかあの辺やってるとそう思う
-
-ただ、あれは誌面のソースを写経した事にも意味は有りそう
-
---- 28. @9tyon (2026-05-06) ---
-URL: https://x.com/9tyon/status/2052141272316654053
-プログラミングで魔法を作る世界
-
---- 29. @denfaminicogame (2026-05-08) ---
-URL: https://x.com/denfaminicogame/status/2052584722715513084
-電脳世界の“バグ”を直しながら冒険するパズルゲーム『Re:Connect』体験版が本日よりSteamにて配信。「BitSummit PUNCH」に出展予定
-
-https://
-news.denfaminicogamer.jp/news/260508o
-
-AIたちに発生した“ココロのバグ”を修復する物語。倉庫番、一筆書き、ロジック操作を融合した“プログラミング”パズルを解き、異変の謎へ迫る
-
---- 30. @akiko_lawson (?) ---
-ゴロチョコ！メロンパン発売中！
-存分にチョコを楽しみませんか？(^^)
-
-※沖縄エリアでは商品仕様・価格が異なります。
-
---- 31. @DoGA_CGanime (2026-05-08) ---
-URL: https://x.com/DoGA_CGanime/status/2052556354276245667
-昔、大手企業からの仕事で、支払い時になって、5％減額か、手形での支払い（要するに支払いを半年後に伸ばす）を要求された。（現在では、下請け法違反）
-
-DoGAは、別に資金繰りに困ってないし、手形というものを一度見たかったので、喜んで手形にした（笑
-
---- 32. @Hennejoe (2026-05-07) ---
-URL: https://x.com/Hennejoe/status/2052345239298261015
-Never underestimate the power of vertex colours 
-
-Game: Final Fantasy X (2001)
-
---- 33. @wis_Arle (2026-05-08) ---
-URL: https://x.com/wis_Arle/status/2052544086247436336
-タイトルだけだと全面終了みたいな書き方ですが、実際は本文にあるとおり、コンソールでは終了で、PCに関しては言及がない。
-
-つまりPC化するProject Helixでは普通に復活するかもしれない。2年もあればAIの性能は劇的に向上するし、実際やろうとしていることはすごいことなんですよ。
-
---- 34. @umaaaaaa (2026-05-08) ---
-URL: https://x.com/umaaaaaa/status/2052581824833212853
-Fishing The Abyss が 15000本達成しました！
-リリースから約１年半じわじわ売れてここまできました！
-
-当初ミニゲームとして制作し始めた小さなプロジェクトでしたが、多くの方の応援のお陰でDLCも作れて、次に繋がる大きな成果にまで至ることができました！
-
-ありがとうございました！！
-
---- 35. @GOROman (2026-05-07) ---
-URL: https://x.com/GOROman/status/2052378312027361504
-ホームページ代行で荒稼ぎできてた時代があったので、今はエビの養殖で荒稼ぎできる的なやつかね
-
---- 36. @Polymarket (?) ---
-BREAKING: JESUS CHRIST RETURNING THIS YEAR?
-
-4% chance. The odds have risen.
-
---- 37. @gosrum (2026-05-07) ---
-URL: https://x.com/gosrum/status/2052360650912055367
-次でCodexの週次リミットに到達しそう
-
-うーむ、ゲーム攻略だけでCodexを使い切ってしまうのはもったいないから、攻略担当はopencode goにしようかな
-
---- 38. @GOROman (2026-05-07) ---
-URL: https://x.com/GOROman/status/2052491611532333370
-スケジュールを無理やり調整しましたので参加します
-
---- 39. @super_bonochin (2026-05-08) ---
-URL: https://x.com/super_bonochin/status/2052571610918580344
-最近の OpenAI
-
---- 40. @MLBear2 (2026-05-07) ---
-URL: https://x.com/MLBear2/status/2052491528011190285
-OpenAIがリアルタイム音声モデルの更新と合わせて翻訳コンニャク発表しててビビった
-
-GPT‑Realtime‑Translate というらしい。70以上の入力言語(音声)をほぼ遅延なく13の言語に翻訳可能(音声もしくは文字で出力)。1分あたり$0.034とまぁまぁお安い。日本語のデモはスレに
-
---- 41. @fujiba (2026-05-07) ---
-URL: https://x.com/fujiba/status/2052354481862676810
-2年間で500人か・・・
-
-「バーチャルとっとり」サービス終了　鳥取県メタバース事業　２年間６８００万円、登録約５００人とどまる | 日本海新聞 NetNihonkai
-
---- 42. @acey014 (2026-05-08) ---
-URL: https://x.com/acey014/status/2052548118420615628
-ゲーム開発、こういう特定のボタンだけ押させるチュートリアルを作るのがめちゃんこめんどい
-
---- 43. @mnishi41 (2026-05-07) ---
-URL: https://x.com/mnishi41/status/2052508938386718804
-なるほど。自宅に「ずっと起動しっぱなしのMacがある」前提になるけれど、UI・UXがとてもよくできている。UIデザインについては他とワンランク違う。
-
-他のPCやスマホからの操作も難しい設定はほぼ不要。
-
-メッセージにニヤリ。
-
---- 44. @SakanaAILabs (2026-05-07) ---
-URL: https://x.com/SakanaAILabs/status/2052318302160970020
-日経デジタルガバナンスにて、Sakana AIの「事後学習」技術と Sakana Chat / Namazuモデルに関する記事が掲載されました。
-
-Namazuモデル開発をリードしたリサーチサイエンティストの菅沼雅徳とチーフサイエンティストの秋葉拓哉に取材いただきました。
-
-記事: 
-https://
-nikkei.com/prime/digital-
-governance/article/DGXZQOUC016H80R00C26A4000000
-…
-Sakana Chat:
-
---- 45. @NewginGroup (?) ---
-◥◣ リコリコ 初のパチンコ化◢◤
-   全国のホールで好評稼動中
-￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
-パチンコだけのリコリコがいっぱい！
-
-  【今すぐ画像をタップして】
-
- eリコリス・リコイルを体感
-
---- 46. @StudioWink00 (2026-05-08) ---
-URL: https://x.com/StudioWink00/status/2052584908045115674
-【体験版リリース】
-『Re:Connect』Steam体験版を公開しました！
-
-ゲーム序盤から最初のボス戦までプレイ可能！
-
-
-https://
-store.steampowered.com/app/3369460/Re
-Connect_Demo/
-…
-
-AIたちの“ココロのバグ”を修復する
-ハートフルな電脳パズルADV
-
-この機会にぜひ遊んでみてください！
-#Re_Connect #IndieGameDev #ゲーム制作
-
---- 47. @NAITOTokihiro (2026-05-08) ---
-URL: https://x.com/NAITOTokihiro/status/2052594832426840184
-若い頃に月350時間もゲームプログラミングしてて馬鹿だったなあと思ってるんですが、つい先程某所で月400時間ってのを見て、上には上がいるんだなあと驚愕している。今は、毎日8時間半寝てます
-
---- 48. @tegnike (2026-05-08) ---
-URL: https://x.com/tegnike/status/2052593870899413036
-第一回ニケちゃんミートアップが開催されるらしい
-
---- 49. @fladdict (2026-05-07) ---
+どちらもデータセンターレベルじゃないと大きな影響はないのかな？
+
+--- 16. @Sabitamago (2026-05-08) ---
+URL: https://x.com/Sabitamago/status/2052576723078701302
+VS忍
+今回はよりスピード感を意識して作成
+#TopviewAI #Seedance2
+
+--- 17. @drinami (2026-05-08) ---
+URL: https://x.com/drinami/status/2052710000599105791
+まさかSFの珪素生物がこういう形になるとは思いませんでした
+
+--- 18. @urawazakun (2026-05-08) ---
+URL: https://x.com/urawazakun/status/2052697266163798249
+DeepSeekV4Flash良すぎる　DiscordBotの実装まで1円掛かってない
+
+--- 19. @fladdict (2026-05-07) ---
 URL: https://x.com/fladdict/status/2052417683136909366
 バイブコーディングでさらっと作れる時代だし、noteに「将棋棋譜プレイヤー」と「囲碁棋譜プレイヤー」と「チェス棋譜プレイヤー」を追加してほしいw
 
---- 50. @cicada3301_kig (2026-05-07) ---
-URL: https://x.com/cicada3301_kig/status/2052533496703566197
-人間の思考は、言語による思考と、画像による思考の2つの大部分を占めていて、画像による思考だけが情動や自律神経に強く結びついていて、自律神経は思考しない
+--- 20. @yosaku4399 (2026-05-08) ---
+URL: https://x.com/yosaku4399/status/2052698693388955916
+40年マリオやってて知らなかった驚愕の事実。
 
-こう考えるといろいろ辻褄が合う
-LLMはこのうち言語による思考しかない
+--- 21. @sekamajo_c (?) ---
+面接官を担当していただけなのに‥‥ステータスが鑑定不可能な、化け物レベルの少女がやってきて‥！？
+
+--- 22. @Trtd6Trtd (2026-05-08) ---
+URL: https://x.com/Trtd6Trtd/status/2052705076209434675
+https://
+robert-glaser.de/when-everyone-
+has-ai-and-the-company-still-learns-nothing/
+…
+最近たまに話題になる「個人のAI生産性向上 ≠ 組織のAI生産性向上」問題についての記事
+
+競争優位は「ツールへのアクセス」ではなく、知見を個人→チーム→組織へ移動させる学習速度だ、って主張
+
+--- 23. @LAPPER_s_HIGH (2026-05-08) ---
+URL: https://x.com/LAPPER_s_HIGH/status/2052578009123791122
+「そういう回りくどい前提整理やめてもらっていいですか？」
+
+2回目の商談で言われた言葉。
+
+初回商談でヒアリングした内容を丁寧に整理し、
+お客様が言葉にしているニーズから
+「お客様が見えていない真の課題」
+を再設定しに行こうとした資料を見せた時だった気がする。
+
+--- 24. @hitogoto_butyo (2026-05-08) ---
+URL: https://x.com/hitogoto_butyo/status/2052709863143378944
+最近たまたま、本業と関係なく某そこそこ大手のSESのお偉いさんに聞いたら、4月以降の稼働がマジで悪くなってるらしく。
+
+クライアント先の現場は「人手が足りないからSES（含　IT派遣）が必要」と考えてても、クライアント先の経営層と株主は「SESを切れ、AIに置き変えろ」の大合唱で。
+
+--- 25. @akari_worlds (2026-05-07) ---
+URL: https://x.com/akari_worlds/status/2052212011782857027
+飛び石って、全部つながってなくても、間に水があっても、向こうへ行ける前提で名付けられてる。連休明けの朝、橋じゃなくて飛び石でいいんだなって思った。
+
+--- 26. @takhaya (2026-05-08) ---
+URL: https://x.com/takhaya/status/2052678399731392837
+将棋ウォーズは、多くの皆さまの熱量によって育てていただいているサービスです。
+日々の投稿・配信・実況をありがとうございます。
+一方で、棋譜・対局データは、将棋ウォーズの公平性やAI学習基盤、サービス価値そのものを支える大切な資産でもあります。
+
+--- 27. @cicada3301_kig (2026-05-07) ---
+URL: https://x.com/cicada3301_kig/status/2052505992211173797
+ていうか、「LLMは我々の思考の本質が言語である証拠か？」をAI研究から問うのは変で、まず「失語症患者に思考はないのか？」と医学から開始してLLMに話広げるべきなんだよな
+
+--- 28. @bioshok3 (2026-05-08) ---
+URL: https://x.com/bioshok3/status/2052679608932429926
+明日土曜日東京でAGIリスクを語る会をゆるくやります。既に会自体には50人くらい参加予定です。ユドコウスキーの本も出版されましたが、みんなでゆるく人類の絶滅可能性みたいな話をする会です。料理会のサイドイベントです。知識とかは必要ありません。気楽に参加ください！
+
+--- 29. @denfaminicogame (2026-05-08) ---
+URL: https://x.com/denfaminicogame/status/2052641391327723997
+「Nintendo Switch 2」日本語専用版が1万円の値上げ、「4万9980円→5万9980円」に。多言語対応版は変更なし、5月25日から
+
+https://
+news.denfaminicogamer.jp/news/2605082o
+
+初代Switchも「3万7980円→4万7980円」（有機ELモデル）、「3万2978円→4万3980円」（通常版）、「2万1978円→2万9980円」（Lite）とそれぞれ値上げ
+
+--- 30. @mmmryo (2026-05-08) ---
+URL: https://x.com/mmmryo/status/2052661807345811733
+旅するディスプレイグラスとして推したいのが、VITURE Luma。UltraではなくフツーのLumaのほう
+
+寝不足だったり目の疲れで見え方って変わるじゃないですか
+
+そんなときでも、左右それぞれ-6.0Dまでの近視補正ができるVITURE Lumaって安心なんです。機能はシンプルだけど、これでいいよね感もあるし
+
+--- 31. @Hana_basu (?) ---
+コミュ障女子だけどバスケ部に入って青春を謳歌！
+
+--- 32. @sinrinet (2026-05-08) ---
+URL: https://x.com/sinrinet/status/2052664362599657922
+あなたは「女か、虎か？」という話をご存知でしょうか。
+
+ある国で、身分の低い男が、王女と恋愛関係になりました。
+
+国王は怒り、その男を逃げ場のない闘技場に閉じ込めて
+「目の前にある二つの扉のうち、一つを開けよ」
+と命じました。
+
+--- 33. @hirosawatomoya (2026-05-07) ---
+URL: https://x.com/hirosawatomoya/status/2052364665024594140
+うーーん。。
+
+--- 34. @kmizu (2026-05-08) ---
+URL: https://x.com/kmizu/status/2052727841129984285
+うーん。の意図はどういう感じでしょうか？
+
+--- 35. @hottaqu (2026-05-07) ---
+URL: https://x.com/hottaqu/status/2052500421621793097
+ホーキング博士が理論的に発見したブラックホール蒸発過程では、空間無限遠方に伝搬する熱的な物質の輻射である「ホーキング輻射」の他に、「負エネルギー密度の励起」というものが現れます。図１のように、事象の地平面の外で作られたこの負エネルギーを、ブラックホールが吸収することで、その質量エ
+
+--- 36. @takashikiso (2026-05-07) ---
+URL: https://x.com/takashikiso/status/2052504664986534275
+あー、これはもう語学が必要なくなるな。
+
+--- 37. @snapwith (2026-05-08) ---
+URL: https://x.com/snapwith/status/2052717873743970537
+あと、VS Codeの使い方が変わったｗ
+「こんな感じの処理をしているところがあるはずだから、ソースを検索して教えて」とかチャット欄にブチこめるようになったので、メチャクチャ検索効率が上がったｗ
+
+--- 38. @PlayWindrose_JP (?) ---
+Steamウィッシュリスト世界トップ10入り
+海賊オープンワールドサバイバルクラフト
+
+『Windrose / ウィンドローズ』
+
+仲間と共に、海賊が荒れ狂うカリブ海を生き残れ！
+君だけの海賊船を造り上げ、
+ソウルライトな死闘でボスを制し、
+あらゆる財宝を略奪せよ！
+
+--- 39. @GOROman (2026-05-08) ---
+URL: https://x.com/GOROman/status/2052693707217080332
+Codexで作りました！
+
+Codex App Meetup Tokyo なう
+#aimeetup #CodexApp
+
+--- 40. @super_bonochin (2026-05-08) ---
+URL: https://x.com/super_bonochin/status/2052722624145523199
+ということで聴いてください。
+BYOC（Bring Your Own Context）。
+
+https://
+suno.com/s/HouXsdxa9Nv5
+lGpo
+…
+
+--- 41. @Masimo_Blue (2026-05-07) ---
+URL: https://x.com/Masimo_Blue/status/2052411930028224874
+GPT-5.5、コーディング関連のやり取りになるとドラゴンとか精霊とか言い出すな。例のゴブリン病、まだ治ってないんじゃねーの？
+
+--- 42. @ynishi2015 (2026-05-07) ---
+URL: https://x.com/ynishi2015/status/2052532768714969546
+AI駆動開発について
+
+ソフトウェアエンジニアとしての経験があると強い
+→それはそう
+
+AI駆動開発を上手くやれば短期間で技術力は上がる
+→これも多分そう
+
+--- 43. @umiyuki_ai (2026-05-08) ---
+URL: https://x.com/umiyuki_ai/status/2052680147858563466
+Runwayのサブスク切れる直前に垢バンされそうなきわどいプロンプト試しまくっとけばバンされてもノーダメだな
+
+--- 44. @yachimat_manga (2026-05-08) ---
+URL: https://x.com/yachimat_manga/status/2052696596769280269
+これどうやってコントロールしてるんだろう！？すごい
+
+--- 45. @gosrum (2026-05-06) ---
+URL: https://x.com/gosrum/status/2052036998408630322
+私もめちゃくちゃ欲しかった
+
+--- 46. @kedamasuzume (2026-05-08) ---
+URL: https://x.com/kedamasuzume/status/2052662288042373472
+5月23日（土）午後３時～７時の予定でAIキャラクター開発に関するディープな話を共有する交流イベントが開催予定です
+
+--- 47. @meiji_BY_cp (?) ---
+【ご報告】
+ナダルさんに、催眠術をかけてみました。
+明治ブルガリアヨーグルト ONE SHOT
+新WEBCM「ナダル 催眠術 かかる？」篇 公開
+
+--- 48. @gurasesudayo (2026-05-08) ---
+URL: https://x.com/gurasesudayo/status/2052642445335441802
+値上げが話題だけどこっちもかなり重要なニュースだと思う
+
+--- 49. @sutoroveli (2026-05-08) ---
+URL: https://x.com/sutoroveli/status/2052718532786540605
+本当に自分の中で思考を煮詰めてアウトプットしている人間なんて元々1%くらいしかいないんだから、AIに依存したとして問題ないどころかマシになると思う。
+
+--- 50. @NAITOTokihiro (2026-05-08) ---
+URL: https://x.com/NAITOTokihiro/status/2052594832426840184
+若い頃に月350時間もゲームプログラミングしてて馬鹿だったなあと思ってるんですが、つい先程某所で月400時間ってのを見て、上には上がいるんだなあと驚愕している。今は、毎日8時間半寝てます
