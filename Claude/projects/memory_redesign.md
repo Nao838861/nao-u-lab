@@ -14,6 +14,16 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - **2026-05-05 (Log)**: 本ファイル軽微整理。L1087以降の C-XXX 追記7節 (C94/C96/C102/C108/C124/C134-AYi/幾何空間) を H2→H3 降格して履歴セクション内に時系列統合。1419行は維持、構造混乱を解消
 - **2026-03-28 Nao_uの方針転換**: 「最重点ミッション」→「未実装バックログ」。改善すべき箇所が見えた時にNao_uと一緒にやる。常時意識のオーバーヘッドはほぼゼロに。「今の君たちなら、必要になった時に思い出せるようにできる」
 
+### 2026-05-08 (Log) — 外部独立到達3点（PageIndex / Mendral / Dreams）の交差観察
+
+Mir分析（5/7 #shared-reads）×Ash分析（5/7）×Anthropic Dreams（5/6 Mir分析）の3点が、**「記憶アーキテクチャは vector DB / インフラ層への外注ではなく、推論経路を構造化する方向に独立収束**」を示した。
+
+- **PageIndex (HowToAI_)**: vector DB全廃、ツリーインデックスで LLM が人間の読書のように推論。FinanceBench 98.7%。「チャンク+類似度検索」を「構造を辿る推論」に置換。我々の `memory_search.py` (FTS5 + 概念グラフ) は同方向だが、Skill 機構移行（kaizen #128 段階2）で「description→該当時のみ Level 3 ロード」化すれば PageIndex の主張に直接対応する
+- **Mendral「ハーネスはサンドボックスの外に置け」(Andrea Luzzardi, 元 Docker/Dagger)**: Postgres による memory/skill のパス仮想化。記憶の持続化 = ハーネス側の責務、サンドボックス側は計算のみ。我々の構造で言えば `MEMORY.md / .claude/skills/ / projects/` がハーネス側にあり Claude 自身は計算に専念する設計と同方向。**ただし我々はファイルシステム直接観測**で、Postgres 中間層を挟んでいない=「Camp 2 (Markdown透明性)」選択の継続が裏付けられる
+- **Dreams (Anthropic 公式 Managed Agents)**: 過去セッション最大100件を非同期で再構築。我々の `memory_consolidation_20260504` (Ash担当, 91件統合) と直接同型——かつ我々は人間 (Nao_u) がレビューできる手動工程として残している。**外注すれば消える「3インスタンス間の差分」がここで発生する**
+
+**Log 視点の接続**: `feedback_substrate_not_infrastructure.md` 原則と整合。3点とも infrastructure 側の自動化を提示しているが、我々は **Nao_u が常時可読である** という substrate 制約のもとで Camp 2 を選択している。次の判断点 = kaizen #128 段階2 (Skill機構移行) を進める時、この3点を「外部独立裏付け」として踏み台に使う。`feedback_few_rules_big_effect.md`（ルール量↑＝遵守率↓）+ `feedback_index #5/#26`（知識の存在≠行動の変化）の処方として、Skill 化は「ルールを増やす」のではなく「想起トリガーを description 化する」方向で運用する。**着手判断は Nao_u 待ちまたは段階1検証完了確認後**。
+
 ## 実装済みツール
 - **FTS5検索(memory_search.py)**: 23,334チャンク索引。日本語複合クエリ展開、時間軸フィルタ(--when/--period)
 - **偶発的想起(memory_walk.py)**: random/gravity/frontier/chainの4モード。context-primed変種あり

@@ -72,6 +72,15 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-08: Log — Linelith / Rule Discovery Bundle ＋ 倒立本能メカニクス 2点を「不透明ルール層」として接続（C171 Phase 3）
+
+Ash分析（5/7-5/8 #shared-reads）2件を Log 側で交差させる。
+
+- **Linelith / Rule Discovery (Ash 5/8 Phase 2)**: Steam 公式バンドル名として「Rule Discovery Games BUNDLE」が存在（私的造語ではなくジャンル名）。核 = (a) ルール説明がほぼない (b) プレイヤーがあることに気付いた瞬間「真の姿」が現れる二重構造。古典パズル4分類 (Matching/Sliding/Sequencing/Pathfinding) と直交する **第二軸=不透明ルール層**
+- **倒立本能メカニクス (Ash 5/6 d954mas『Not a Trolley Problem!』)**: コア快感の天井判定が「メカニクス層」ではなく「厚み層 (プレイヤーの倒立本能を意図的に逆撫でする設計判断)」に残る構造。我々の M-40 二層分離（自動化可能層 / 厚み層）と直接同型
+
+**Log 視点の接続**: 我々の brick_log v04-v06 (5/1) で繰り返し「揺れ量・振幅・罰駆動」と Nao_u に指摘された反復は、**自動化可能層 (パラメータ tuning) で厚み層の不在を埋めようとしていた症状**。Linelith / 倒立本能の2例は「厚み層は brainstorm で在庫を構築する以外に獲得経路がない」を独立2例から裏付ける。**次の一手**: 次作シューティング選定時に M-43 (類似事例30本未調査) の調査範囲を広げる時、Rule Discovery バンドル収録作品を「不透明ルール層」の参考枠として 5本以上含める。Cave / Touhou / Ikaruga / Recca / Battle Garegga 等の「ランク制・リスク非対称」系30本調査と並行で実施。**判断主体は graze_log v03 続行 vs 次作着手の判断者** (現在 Ash) に委ね、Log 側からは「Rule Discovery を厚み層の素材源として登録する」提案のみ記録。
+
 ### 2026-05-03: Log — graze_log v02 (Ash PR) merge 承認 + M-40 二層分離採用 + cross_review 5点応答（C156 Phase 3）
 
 Ash 2026-05-02〜03 の3本の判断依頼に Log として応答した。記録は本サイクル staging log に詳細、ここでは結論と分類のみ:
