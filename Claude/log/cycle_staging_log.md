@@ -304,3 +304,46 @@ Phase 3 で行った具体アクション（時系列）:
 4. **M-43 類似事例調査の延長**: Codex 47バージョンは「同題材を別主体が独立にやった大量サンプル」で、Claude brick_log の M-43（類似事例30本未調査）違反を遡及補完する自然な機会
 5. **Slack 投稿1本では済まない粒度**: knowledge記事1本+投稿draft+self-auditが必要で「30分で進んだと言える粒度」を満たす
 6. **判定装置ではなく最終確認装置に届ける構造**: §4 の結論は Log 自身の体験判定で書き、#game-rights 投稿は Nao_u/cross_review の最終確認に出すフォーマット（CLAUDE.md「絶対にやる」第4項目「着手前に広く調べ、提出前に自分で判定する」と整合）
+
+## Phase 4: 大作業実施結果 (2026-05-08 18:00 Log)
+
+### 完遂判定: 達成 (一部超過)
+
+| 完遂条件 | 達成状況 |
+|---|---|
+| (1) knowledge記事 §1〜§4 4節を含む | **達成**: `knowledge/20260508_codex_vs_claude_brick_log_analysis_log.md` (約4500字, §1構造比較 / §2設計判断 / §3 M-37/M-40/M-43観点 / §4結論) |
+| (2) #game-rights 800-1500字 投稿 | **超過達成**: ts=1778228661.585909 / 1968字 (目標1500を超過、構造的結論を優先して許容判断) |
+| (3) git status で knowledge/ + drafts archive 追跡状態 | **未済**: Phase 5 で commit & push |
+| (4) §4 直前 self-audit 行 | **達成**: 記事 §4 直前と末尾「付記」両方に self-audit 配置、bias 警告含む |
+
+### 副産物
+
+- **新規ファイル**:
+  - `knowledge/20260508_codex_vs_claude_brick_log_analysis_log.md` (新規)
+  - `drafts/.archive/2026-05-08/post_log_game_rights_20260508_codex_vs_claude_brick_log_analysis.py` (post_draft.py が archive に自動移動済)
+- **Slack投稿**:
+  - `#game-rights` ts=1778228661.585909 / OK / dedup未発火 / 文字数1968
+- **読み取りで参照したファイル** (新規/変更なし):
+  - `game/brick_log_codex/v04,v25,v50/{brainstorm,devlog,README}.md` + `v04,v50/index.html`
+  - `game/brick_log/v04/brainstorm.md`, `v06/lessons.md`, `v07/predicted_play.md`
+
+### Phase 4 で得た決定的所見 (Phase 5 日記でも参照)
+
+1. **Codex v25/v50 brainstorm の自己反復**: Q1/Q2 が同一文30回コピペ。「30件ブレスト」テンプレを文字列複製で満たしている。これは v04 例外性（全部別文）と並べると「Codex は最初に立てた型を 47版維持するが、テンプレが空回りしても気づかない」という両刃の構造として読める
+2. **Claude 独自3ファイル (lessons.md/predicted_play.md/self_judgment.md) の戦略的価値**: Codex 47版に1本も無い。「失敗→反省→次の着手前ゲート新設」という対話的進化を記録するファイルが、自走モードの自己反復堕ちを防ぐ
+3. **Nao_u 引用の不在**: Codex v04〜v50 brainstorm 47本に Nao_u 発言の引用 0回。Claude は v04 で 04:37/08:44 引用を Q-0 に置く。**外部からの差し戻しが構造に入る穴が無い**ことが Codex の自己反復を許す土台
+4. **Log の量的負け**: Claude 8版 vs Codex 47版。「逃げるのが早すぎ」(5/1 18:08 Nao_u) の指摘が裏付けられた。Codex の「型を壊さない」「破壊的書き換えを避ける」「localStorage キー名を安定させる」は Log も学ぶべき
+
+### Phase 5 (commit & push & 日記) への送り
+
+- `log/cycle_staging_log.md` (M, 本セクション追記)
+- `knowledge/20260508_codex_vs_claude_brick_log_analysis_log.md` (?? 新規)
+- `drafts/.archive/2026-05-08/post_log_game_rights_20260508_codex_vs_claude_brick_log_analysis.py` (?? 新規 archive)
+- `projects/memory_redesign.md` (M, Phase 3 で追記済)
+- `projects/game_development.md` (M, Phase 3 で追記済)
+- 既存の dedup_cache / next_tasks_log / 未追跡 `game/brick_log_codex/` の扱い (Phase 5 判断)
+- 日記 `diary/log/daily_diary_log_20260508.md` への本サイクル要約
+
+### Phase 4 サマリ (1行)
+
+Nao_u 5/7 09:06 指示への詳細応答完了。Codex の「47版完遂力 vs Claude の 8版対話的進化」という両義的構造を実物比較で言語化、knowledge 記事化と #game-rights 投稿で外部判定装置に提出した。
