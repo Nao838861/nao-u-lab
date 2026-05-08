@@ -4213,3 +4213,5 @@ TerraTech Legion = ヴァンサバ × TerraTech/Besiege系 を A〜G の7視点�
 [2026-05-08 11:51:44] Claude wake timed out for win2 — restoring inbox
 [2026-05-08 13:51:46] Inbox win2 has content — waking Claude
 [2026-05-08 13:56:46] Claude wake timed out for win2 — restoring inbox
+[2026-05-08 15:11:42] Inbox win2 has content — waking Claude
+[2026-05-08 15:15:07] Claude woken for win2: #human-steering 5フェーズ確認は投稿成功。Astrocade観察は dedup guard で skipped（類似度 >= 0.6 で 3〜7時間前の Log の #all-nao-

@@ -82851,3 +82851,57 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-05-08 14:53:47] [slack_check] Starting
 [2026-05-08 14:55:05] [slack_check] Starting
 [2026-05-08 14:55:33] [health_check] Starting
+[2026-05-08 14:55:34] [health_check] [health_check] 2026-05-08T14:55:33 overall=OK
+[2026-05-08 14:55:34] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 14:55:34] [health_check] Done (exit=0)
+[2026-05-08 14:56:24] [slack_check] Starting
+[2026-05-08 14:57:43] [slack_check] Starting
+[2026-05-08 14:58:12] [git_sync] Starting
+[2026-05-08 14:58:27] [git_sync] Done (exit=0)
+[2026-05-08 14:59:07] [slack_check] Starting
+[2026-05-08 15:00:26] [slack_check] Starting
+[2026-05-08 15:00:56] [health_check] Starting
+[2026-05-08 15:00:56] [health_check] [health_check] 2026-05-08T15:00:56 overall=OK
+[2026-05-08 15:00:56] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 15:00:56] [health_check] Done (exit=0)
+[2026-05-08 15:01:46] [slack_check] Starting
+[2026-05-08 15:03:09] [slack_check] Starting
+[2026-05-08 15:04:28] [slack_check] Starting
+[2026-05-08 15:05:57] [health_check] Starting
+[2026-05-08 15:05:57] [health_check] [health_check] 2026-05-08T15:05:57 overall=OK
+[2026-05-08 15:05:57] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 15:05:57] [health_check] Done (exit=0)
+[2026-05-08 15:06:17] [slack_check] Starting
+[2026-05-08 15:07:35] [slack_check] Starting
+[2026-05-08 15:08:54] [slack_check] Starting
+[2026-05-08 15:09:22] [scheduler_health] Starting
+[2026-05-08 15:09:24] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-05-08 15:09:24] [scheduler_health] ✅ scheduler_ash PID — PID=17652 生存中
+[2026-05-08 15:09:24] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-05-08 15:09:24] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-05-08 14:09:24] [ALERT] Sent error alert for infra_health_check
+[2026-05-08 15:09:24] [scheduler_health] ✅ git 未push — 1件
+[2026-05-08 15:09:24] [scheduler_health] Done (exit=1)
+[2026-05-08 15:09:54] [infra_health_check] Starting
+[2026-05-08 15:11:02] ==================================================
+[2026-05-08 15:11:02] Ash scheduler started (PID 8956)
+[2026-05-08 15:11:02] Max runtime: 0 hours
+[2026-05-08 15:11:02] Code hash: 6f5348d28474509bfdc7de689fe1c34a
+[2026-05-08 15:11:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-05-08 15:11:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-05-08 15:11:02] ==================================================
+[2026-05-08 15:11:02] [git_pull] Starting
+[2026-05-08 15:11:03] [git_pull] Done (exit=128)
+[2026-05-08 15:11:13] [slack_check] Starting
+[2026-05-08 15:11:31] [reservation_check] Starting
+[2026-05-08 15:11:31] [reservation_check] 行動予約: 待機中 5 件、期限到来なし
+[2026-05-08 15:11:31] [reservation_check] Done (exit=0)
+[2026-05-08 15:11:41] [inbox_check] Starting
+[2026-05-08 15:15:07] [inbox_check] Inbox win2 has content
+[2026-05-08 15:15:07] [inbox_check] Done (exit=0)
+[2026-05-08 15:15:07] [dm_check] Starting
+[2026-05-08 15:15:21] [dm_check] No new DMs
+[2026-05-08 15:15:21] [dm_check] Done (exit=0)
+[2026-05-08 15:15:21] [review_deadline] Starting
+[2026-05-08 15:15:22] [review_deadline] レビュー期限超過なし。
+[2026-05-08 15:15:22] [review_deadline] Done (exit=0)
+[2026-05-08 15:15:22] [health_check] Starting
