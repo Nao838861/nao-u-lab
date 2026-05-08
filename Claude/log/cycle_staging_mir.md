@@ -166,5 +166,33 @@ recency_bias 規律下で外部素材を v07 設計に持ち込むと、5/3-5/8 
 - 観察A（CAIRN 3層共鳴）= v08 以降の根幹設計種、Phase 3 で v07 への限定的反映可否のみ判断
 - 観察B（hikalium 感性維持）= 複数サイクル観察対象、本サイクルでは何も書き換えない
 - shared_reads 投稿/knowledge 起票はいずれも本サイクル見送り。Phase 3 は v07 セット3 実装に集中
+
+---
+
+## Phase 3 §D: 実装結果（focus(1) 完遂）
+**実装**: v07/game.py に scene_3_shiori_continue + sequel_3_shiori を追加。chapter_hook_3 を 4分岐対応に拡張（"対面"/"個別深化"/"通話履歴全展開"/"修平召喚への切替"）。main() に next_subject == "詩織・続行" 分岐追加。ヘッダ docstring を C166 表記に更新。
+
+**自警プロンプト3問の運用2回目（コードコメント残留）**:
+- 自警1（前提整理 vs 摩擦）: 「詩織が修平を守る」を地の文で3度目に書かない縛り → 「彼女自身の指が残した一行を彼女のいる現在に戻す動き」だけで構成
+- 自警2（既見動機の再説明回避）: 修平の即時自認との対比 → 詩織側は「整った再構築」または「沈黙選択」という新しい一行で処理
+- 自警3（整理直後ニンジャ）: 突きつけ時 → 詩織が「弟への日常的な気遣い」と切り返す予想破壊 + 6か月で1件のみという供述自身からの矛盾露見。画面伏せ時 → 自白でも言い訳でもなく「理由は言わない」沈黙選択という別系統出力
+
+**State 追加フラグ**: shiori_message_shown / shiori_self_disclosed（共に scene_3_shiori_continue で更新、chapter_hook_3 の手帳の隅に反映）
+
+**動作確認**:
+- 突きつけ→通話履歴全展開: trust 50→42→30→20、shiori_message_shown=True, shiori_self_disclosed=True、章末「6か月分のメッセージ履歴に詩織が誰を何回どの時間に守ってきたかが彼女自身の指で残した形で立ち並ぶ」
+- 画面伏せ→修平召喚切替: trust 50→42→30→33、shiori_message_shown=False, shiori_self_disclosed=True、章末「詩織が語らないと選んだ理由を修平の側が彼女が選ばなかった形で差し出す」
+- 両ブランチ exception なく完走、syntax check pass
+
+**残課題**:
+- 物証・固めパス（scene_3_evidence_lock + sequel_3_evidence_lock）= 次サイクル送り。chapter_hook_3 はその実装後に5分岐目を追加して完成
+- recency_bias 規律 10サイクル目入り（次サイクル開始時）: durable 化ゼロ継続を維持するか、観察A/Bの蓄積見直しを始めるか判断点
+- shared_reads_post_C163_mir.txt は棄却確定、ファイル自体の削除/退役判断は次サイクル
+
+**Phase 1 §5 既達チェック更新**:
+- focus(1) v07/game.py セット3 残り分岐実装: **達成**（詩織・続行パス完成）
+- focus(2) shared_reads_post_C163_mir.txt 送信判断: **達成**（棄却で確定）
+
+git push 不要（指示通り）。
  
 
