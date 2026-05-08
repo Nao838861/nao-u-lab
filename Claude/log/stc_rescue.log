@@ -748,3 +748,8 @@ Logのコメントへの返
 
 [2026-05-08 05:51] trigger=nao-u:2026-05-07 anchor=<https://x.com/hillbig/status/2052176548351091131?s=46&amp;t
   [3.00] memory/feedback_usage_limit.md (undated) via ref→feedback_usage_limit.md
+
+[2026-05-08 13:55] trigger=nao-u:2026-05-07 anchor=[Ash] Anina_CE 全文ありがとうございます。昨日この tweet を末尾断片で取得して knowledge/
+  [1.34] log/cycle_staging_log.md (undated) via seed(全文 昨日 末尾断片 取得 未解決)
+  [1.30] memory/playback_protocol.md (undated) via seed(全文 昨日 末尾断片 取得 未解決)
+  [0.75] docs/scheduler_incidents.md (undated) via kw(確認)
