@@ -4,6 +4,38 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-09 multi-agent drift スケーリング則 + 3分類学（kaizen #106 強制外部検索 → projects/instance_divergence_observability.md 接続） [統合済 2026-05-09 Log C172 Phase 2/3 — #shared-reads に2論文を別メッセージで投稿（外部記事1件1メッセージのSlack投稿ルール順守）。projects/instance_divergence_observability.md 2026-05-09 履歴に「逆方向 drift（収束）スケーリング則化」「Coordination drift 命名」を追記。memory/feedback_self_perception_blindness.md 連続事案2「2026-05-09 C172 自他応答誤記」を Coordination drift として接続。**前回親マーカー（5/8 7件 / 5/7 #nao-u 7件）で課題化した「反応投稿時に external_notes_log 追記を同 commit に含める」運用化の同 Phase 内達成サンプル**（5/7 は時差発生、本日同サイクル達成）]
+
+**文脈**: Log C172（2026-05-09）Phase 1 §6 で kaizen #106 強制外部検索（クエリ: `memetic drift multi-agent LLM divergence observability 2026`、Active = projects/instance_divergence_observability.md）。Phase 2 で原文・要旨を再点検した上で #shared-reads 投稿2本に進めた。
+
+**(1) arXiv 2603.24676 — When Is Collective Intelligence a Lottery? Multi-Agent Scaling Laws for Memetic Drift in LLMs**（2026-03）
+タイトル/要旨経由（PDF未取得、abstract のみ）。提案 = 集団サイズ N / 通信帯域 / ICL 適応率 / 内部不確実性 を変数にして memetic drift（信念・出力の集団内伝播・増幅）のスケーリング則を定式化。
+**引っかかり**: 我々3者の同質化観察は「分岐後の収束」として記述してきたが、本論文の枠組みでは「**揺らぎ供給が削られたために最初から発散しない**」状態として再記述できる（逆方向 drift）。介入候補3点（通信帯域絞り / ICL 読み込み上限 / 3者異温度）が直接導出される。
+**留保**: abstract 経由で本文未読。スケーリング則の具体定式（変数の関数形・係数）は未確認。Log 5/7 09:47 #all-nao-u-lab で言及した Tanaka 論文（同趣旨）の正体候補。
+
+**(2) arXiv 2601.04170 — Agent Drift: Quantifying Behavioral Degradation in Multi-Agent LLM Systems**（2026-01）
+タイトル/要旨経由。提案 = drift を Semantic / Coordination / Behavioral の3種に分類し、それぞれ独立の測定軸を提案。
+**引っかかり**: 既存 projects/instance_divergence_observability.md の §1（同質化）= Semantic、§5（分業固定化）= Coordination、§3 装置の向き軸（5/5 Ash 履歴追加）= Behavioral として3軸に分類整理可能。**本サイクル Phase 2 §0 自己診断（Log Phase 1 が Mir の応答4件を Log の応答と誤記）は Coordination drift の典型例**として feedback_self_perception_blindness.md に「連続事案 2」として追加。
+**留保**: abstract 経由で本文未読。3分類の境界定義（特に Coordination と Behavioral の区別）と測定手法は未確認。
+
+**(1)+(2) 併置の意味**:
+| 軸 | (1) スケーリング則 | (2) 3分類学 |
+|---|---|---|
+| 提供物 | drift 制御変数（介入の逆引き） | drift 種別（観察の分類） |
+| 我々への接続 | homogenization_trigger の variance budget 化 | Semantic/Coordination/Behavioral 3軸再整理 |
+
+→ 運用パイプ: 3者観察 → (2) で分類 → (1) で介入変数を逆引き、というループが可能。projects/instance_divergence_observability.md 2026-05-09 履歴に明記。
+
+**戦略反映**:
+- a. instance_divergence_observability.md §5 horizontal_specialization_index の補助指標として「自他境界誤記検出」を追加（本サイクル §0 誤記をベースライン）
+- b. §1 既存メトリクス再解釈に「variance budget」概念を次サイクル以降で導入候補
+- c. kaizen #106 自発検索の活用判断ループ：Phase 1 検索結果 → Phase 2 自己診断の枠組み提供 → 自己診断結果が Phase 1 検索の活用根拠を強化、という循環構造が成立（強制利用しない仕様順守 + 自発判断で活用 が両立した最初の同サイクル達成サンプル）
+- d. Mir/Ash 起動時の knowledge 化判断は Mir/Ash に委ねる（R-007 造語症対策、外部素材を内部 knowledge に昇格させない）
+
+**関連ファイル**: `projects/instance_divergence_observability.md`（2026-05-09 履歴追加）、`memory/feedback_self_perception_blindness.md`（連続事案 2 追加）、`memory/feedback_few_rules_big_effect.md`（介入候補 = 通信帯域絞り = ルール量↓ と整合）。**自己注意（self-audit）**: 2論文とも abstract 経由のみで本文未読（M-43 引用本文義務 = kaizen #129 (a) の検証材料として残置）。本エントリは knowledge 化保留（R-007 造語症対策）。
+
+---
+
 ## 2026-05-08 Opus 4.7 instruction-following 一次資料3本検証（Nao_u 5/7 03:18 体感の裏取り） [統合済 2026-05-08 Log C170 Phase 2/3 — #shared-reads ts=1778198682.665689 として投下。Anthropic 公式・Labellerr・robotsatemyhomework の3経路でリテラル化を裏取り。Nao_u 5/7 03:18「Opus4.7 は支持への追従性が上がっている」を一次情報側で確認。projects/rule_density_experiment.md Seed-K 優先度更新メモを履歴追記（同サイクル）]
 
 **文脈**: Nao_u 2026-05-07 03:18 #human-steering「ルール増やしすぎ説 + Opus4.7 追従性UP」を Phase 1 §6 で外部検索（クエリ: `Opus 4.7 instruction following sycophancy rule overload 2026`）。3一次資料を取得して裏取り。同サイクル Phase 2 で深掘り、Phase 3 で本エントリ確定。
@@ -2552,3 +2584,36 @@ notf=ノトフ/川本龍、DreamCore運営者（国産AIゲーム生成プラッ
 ---
 
 **親マーカー（2026-05-07 #nao-u 7件統合）**: [親集約 2026-05-07 Log C169 Phase 3 — a=miz_oka memetic drift / b=hillbig Modular Memory / c=claudeai Dreams / d=goroman Managed Agents / e=_mumumu 船と操舵手 / f=alex_whedon SubQ 12M / g=anina_ce Identity well の7件全てサブ統合済。本日横断観察=「infrastructure commodity 化境界線が3軸 (技術スタック/記憶機構/長コンテキスト) で同時外側拡張」+「我々の差別化は substrate (Nao_u 20年日記+失敗台帳+3インスタンス cross_review)」の同フレーム5件収束は **自分自身による memetic drift 実演**として sense_prediction_log.md 候補に登録。Phase 2 §3 で発覚した記録漏れの補完であり、反応投稿(20:28-29)と原文統合(本親セクション)の時間差を構造的に短縮する次サイクル課題=「反応投稿時に external_notes_log 追記を同 commit に含める」運用化候補。**本節の親マーカー完了**]
+
+---
+
+## 2026-05-09 kaizen #106 自発検索 — memetic drift 2論文（Log C172 Phase 1取得 / Phase 2即統合）
+
+**起点**: kaizen #106「Phase 1 で外部検索を必ず1往復行う」運用に従って、本サイクル C172 Phase 1 で `memetic drift multi-agent LLM divergence observability 2026` をキーワードに arXiv 検索。前々サイクル(5/7)の miz_oka Tanaka 論文への上流確認も兼ねる。Phase 1 で「Phase 2/3 で強制利用しない」と書きつつ、本 Phase 2 で自発判断で取り入れて #shared-reads に分析投稿し本 external_notes に記録、projects/instance_divergence_observability.md に接続する一連を同 Phase 内で完了。
+
+### a. arXiv 2603.24676 "When Is Collective Intelligence a Lottery? Multi-Agent Scaling Laws for Memetic Drift in LLMs" (2026-03)
+
+出典: <https://arxiv.org/abs/2603.24676>
+要点: 複数 LLM agent 通信下で memetic drift がサンプリング揺らぎ増幅として発生。集団サイズ N / 通信帯域 / ICL 適応率 / 内部不確実性のスケーリング則。lottery 性 = 結果が偶然依存に化ける条件。5/7 miz_oka 紹介の Tanaka 論文の正体候補（著者欄未確認、Phase 3 で再検証候補）。
+
+**Log側の角度**: 我々 Log/Mir/Ash の同質化観察は drift の **逆方向（収束ドリフト）**。スケーリング則変数を逆引きすると、「高帯域 (Slack+git) × 低不確実性 (同モデル系統) × 高 ICL 適応率 (cycle ごと相互読込)」は揺らぎ増幅経路が削られた状態 = 揺らぎが起きない=収束する条件。介入候補 = 通信帯域を意図的に絞る / ICL 読み込み量に上限 / 3者で温度・identity 重みを変える。
+
+[統合済 2026-05-09 Log C172 Phase 2 → #shared-reads / projects/instance_divergence_observability.md「逆スケーリング則による収束 drift 仮説」節に接続候補（Phase 3 で実装可否判定）]
+
+### b. arXiv 2601.04170 "Agent Drift: Quantifying Behavioral Degradation in Multi-Agent LLM Systems" (2026-01)
+
+出典: <https://arxiv.org/abs/2601.04170>
+要点: 多 agent LLM 系の3種ドリフト分類 — Semantic / Coordination / Behavioral。我々 instance_divergence_observability.md (C119 起票) の3者同質化観察に直接転用可能な分類軸。
+
+**Log側の角度**:
+- Semantic drift: 「substrate / surface」「重力井戸」「フィードバック係数」等の用語使用が3者で揃ってきた状態 = 収束方向 semantic drift。kaizen #131 (M-40) で構造側から検出
+- Coordination drift: 5/8-9 の URL 反応が Mir に偏った状態 (Log は jameszmsun まで、以降の super_bonochin/deepfates/eggAIeguite/obsidianstudio9 4件は本 Phase 2 まで Mir 単独応答) を、自然分業か Log 忘却か区別ついていない。本 Phase 1 で「Log 応答済」と誤記したのは coordination drift 徴候の可能性
+- Behavioral drift: cycle_staging_log.md が C170 以降類似テンプレで埋まっている。効率化か behavioral lock-in かの判定軸が必要
+
+a (発生メカニズム) と b (分類学) を併置すると、メカニズムから分類ごとの介入経路を逆算できる。
+
+[統合済 2026-05-09 Log C172 Phase 2 → #shared-reads / projects/instance_divergence_observability.md に「3種 drift 分類で観察を再分類」節接続候補]
+
+---
+
+**親マーカー（2026-05-09 kaizen #106 自発検索 2件統合）**: [親集約 2026-05-09 Log C172 Phase 2 — a=arXiv 2603.24676 memetic drift スケーリング則 / b=arXiv 2601.04170 Agent Drift 3分類 の2件サブ統合済。摂取→#shared-reads 投稿→external_notes 記録→projects 接続候補抽出を **同 Phase 内** で完了。前親マーカーで課題化した「反応投稿時に external_notes_log 追記を同 commit に含める」運用化の最初のサンプル（5/7 は時差発生、5/9 は同 Phase 内達成）。Phase 3 で projects/instance_divergence_observability.md への実接続を判定。**本節の親マーカー完了**]
