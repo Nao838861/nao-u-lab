@@ -289,3 +289,36 @@ kaizen #131 段階1: `scripts/check_repeated_pattern_indication.py` 最小実装
 - **brick_log v09 brainstorm.md 着手**: kaizen #129 (a)(b)(c) を同梱する重い実装で、ゲーム本体の素材検討から始める必要があり 30 分粒度を超える。次サイクル以降で別途
 - **t-260501021002-7f8d スネーク**: Nao_u 承認待ちで Log 着手不可
 - **rule_density_experiment.md Seed-K 実装の最初の1手**: Mir 起草プロジェクトのため Log 単独で結論しない（本サイクル §B で Mir に判定を渡す形式まで）
+
+## Phase 4: 大作業実行 (2026-05-08 完了)
+
+### 実行サマリ
+
+kaizen #131 段階1: `scripts/check_repeated_pattern_indication.py` 最小実装 — **完遂**。
+完遂の定義 6項目すべて達成（自走テスト PASS、brick_log v05→v06 遡及検出 OK、出典明記 OK、kaizen_tracker 状態更新 OK）。
+
+### 完遂の定義 達成チェック
+
+| # | 条件 | 結果 |
+|---|---|---|
+| 1 | `scripts/check_repeated_pattern_indication.py` 存在・起動可 | ✅ `python scripts/check_repeated_pattern_indication.py --help` 正常動作 |
+| 2 | 6語彙 (揺れ\|振幅\|罰\|装飾\|狙えない\|進歩) 2件以上で stderr WARN | ✅ 振幅24/罰24/揺れ8/進歩4 が `[M-40 WARN] <語彙> N回検出 → 判定機構優先（kaizen #131 段階1）` で発火 |
+| 3 | 0/1 件で exit 0 / 無出力 | ✅ `--since-days 0` で exit 0 / 無出力。装飾=1・狙えない=1 も WARN 出力されず |
+| 4 | brick_log v05→v06 振幅3往復が遡及検出 | ✅ デフォルト30日窓 (2026-04-08〜) で「振幅」24回・「揺れ」8回 — 5/1 brick_log v04 振幅5px / v05 22px / v06 10px 段階値往復が `nao_u_live.md` セクション 2026-05-01 群で全部拾えている |
+| 5 | docstring に出典と kaizen #131 段階1 明記 | ✅ docstring 冒頭で `memory/feedback_self_judgment_no_human_dep.md §How to apply 5` 出典明記、段階1/2/3 切り分けも明示 |
+| 6 | kaizen_tracker.md #131 状態を「段階1 実装済（自走テストPASS）、段階2 hook 統合は未着手」に更新 | ✅ 「段階1 実装済（自走テストPASS、2026-05-08 C170 Phase 4）。段階2 hook 統合は未着手、段階3 判定機構 mapping gate も未着手」に更新、検証結果セクションに自走テスト詳細を追記 |
+
+### 副産物
+
+- **新規**: `scripts/check_repeated_pattern_indication.py` (約70行、標準ライブラリのみ: argparse/re/sys/datetime/pathlib)
+- **更新**: `memory/kaizen_tracker.md` #131 状態行 + 検証結果行（Phase 5 の commit に同梱）
+- **更新**: `log/cycle_staging_log.md` 本セクション（Phase 4 ログ）
+- **Slack 投稿**: なし（Phase 3 で #shared-reads 1件投下済、本フェーズで追加投稿なし）
+- **kaizen 新規起票**: なし（#131 段階1 を消化したのみ、新規 M-Nx 増殖なし）
+
+### 補足観察（次サイクルへの引き継ぎ）
+
+1. **「罰」24回検出**: brick_log/feedback 系で「罰駆動」の議論密度が高い。M-40 §5 で具体例として上がっていた語彙が外形装置で検出される正例。次サイクル Phase 1 で「罰」に対して agent が判定機構（罰駆動 vs 報酬駆動の段階値比較ベンチ）を構築済か self-audit する候補
+2. **「装飾」=1 / 「狙えない」=1**: 直近30日で語彙ヒット1回のみ → false positive 抑制で WARN 出ず。M-40 §5 「2回」閾値が機能している正例。閾値調整は不要
+3. **段階2（hook 統合）の next step**: 現状は手動実行のみ。`autonomous_cycle.sh` Phase 1 冒頭に `python scripts/check_repeated_pattern_indication.py` を呼び、出力（stderr WARN 行）を `cycle_staging_log.md` Phase 1 §0 直後に inline 注入する設計が次の1手。本サイクルは 30 分粒度のため段階1 のみで止め、段階2 は別サイクルで Mir/Ash クロスチェック後に着手
+4. **コミット未実施**: Phase 5 で日記とまとめて commit/push する手順（staging 先頭 commit ポリシー準拠）。本フェーズでは編集のみ
