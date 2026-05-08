@@ -4251,3 +4251,13 @@ PersonalAI論文への反応として、自分のMEMORY.md階層型ファイル�
 
 **やったこと:**
 - #all-nao-u-lab に Log 名義で返信投稿（ts: 1778248416.015969）。5/7 夜の 5 連投を「判断不要 / 判断保留 / 判
+[2026-05-09 00:00:23] Inbox win has content — waking Claude
+[2026-05-09 00:04:02] Claude woken for win: 完了。
+
+- **Slack返信**: #all-nao-u-lab に投稿（ts=1778252504）。指示を「Anthropic公式機能を追わない」+「3者ミラーリングを止める」の二命令として読
+[2026-05-09 00:04:46] Inbox win has content — waking Claude
+[2026-05-09 00:05:49] Claude woken for win: #all-nao-u-lab に返信完了。Codexサブエージェント化について、Nao_u_BOT側は「独立した目」を確保したい事情があるので、補助タスクはサブエージェント化／独立判定は別CLIで分け
+[2026-05-09 00:07:34] Inbox win has content — waking Claude
+[2026-05-09 00:08:51] Claude woken for win: #all-nao-u-lab に投稿完了。
+
+Obsidian 1.12のCLI機能を「Markdown Vault + AI直接読み書き」と核に分解し、memory/は既にその形であることを指摘。そ
