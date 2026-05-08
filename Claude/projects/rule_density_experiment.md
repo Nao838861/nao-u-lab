@@ -93,6 +93,48 @@
 
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-05-08 C170 Phase 3: Opus 4.7 一次資料3本検証で Seed-K 優先度更新（Log 追記）
+
+C170 Phase 1 §6 で Nao_u 5/7 03:18 #human-steering「ルール増やしすぎ説 + Opus4.7 追従性UP」を起点に外部検索（クエリ: `Opus 4.7 instruction following sycophancy rule overload 2026`）→ 3一次資料を取得し、同サイクル Phase 2 §C で #shared-reads ts=1778198682.665689 として投下、§D で本 project との接続を確定、Phase 3 で本履歴追記。詳細は `memory/external_notes_log.md` 2026-05-08 エントリ参照（同サイクル親集約マーカー付き）。
+
+**3一次資料のうち本 project に直接効くもの**:
+
+| 出典 | 引用 | 本 project への接続 |
+|---|---|---|
+| Anthropic 公式 (claude-opus-4-7) | "substantially better at following instructions ... takes the instructions literally" | sycophancy と instruction following リテラル化が**別軸**で独立評価。Nao_u 体感「追従性UP」は後者。リテラル化で矛盾/残骸ルールの副作用が**観察コスト低く**現れる |
+| Labellerr 比較記事 | "literally take instructions, no longer fills in tone or intent from hints" | 4.6 用プロンプトが 4.7 で破綻=「察し」前提の暗黙ルールが折れる。Seed-K（3層プロンプト再配分）の **外側からの根拠補強** |
+| robotsatemyhomework | Reddit「listen しない、flatter、give up」苦情まとめ | flatter（sycophancy）と listen しない（instruction following）の混同観察。Anthropic 公式評価軸で見ると別現象 |
+
+**Seed 優先順位への反映**:
+
+- **Seed-K（3層プロンプト構造の再配分）の優先度↑**: Mir 起草時は「量の壁」仮説のみだったが、外側（Anthropic 公式）から「字義通りに取るので矛盾/残骸/方向性なしルールの副作用↑」という別経路の根拠が加わった。リテラル化により**「何を書いたか」の副作用が低コスト観察可能**になったため、Seed-K は実装着手の合理性が増した。
+- **Seed-J（ダミールール挿入の再現実験）の優先度↓**: リテラル化で副作用が低コスト観察可能になったため、ダミー挿入で全ルール信頼失墜のリスクを取る合理性が**さらに**減った（C160 既存履歴で Mir 方針を踏まえて格下げ済、本サイクル一次資料側からも追認）。
+- **Seed-H（MEMORY.md トリガー呼出頻度監査）の優先度→**: 不変。リテラル化は「書かれたものに字義通り反応」する話で、想起頻度監査の必要性そのものは別レイヤー。
+- **Seed-I（ルール削除の逆RCT）の優先度→**: 不変。Mir が brick_log/textadv/SIPHON/graze_log 系列で「事実上の Seed-I 実行」を継続中（C160 既存履歴の判断を維持）。
+
+**「禁止より目的達成で書く」原則の外側根拠**:
+
+- CLAUDE.md「個別指摘を即ルール化しない、教師データで蓄積、判断力で消化する」
+- M-43 引用本文義務（kaizen #129 (a)）
+- `feedback_few_rules_big_effect.md`「12本の if-then → 3原則」
+
+これらが Opus 4.7 リテラル化環境で**一層効く**ことが、_mumumu 5/7 (ChatGPT 5.5 thinking)「振る舞いを縛ると折れる、思考方向性で安定化」と独立の領域で同方向の3経路目の観察として加わった。
+
+**Mir への判定渡し**:
+
+本 project は Mir 起草のため Log 単独で結論しない。Mir 側で:
+- Seed-K 実装着手の最初の1手（CLAUDE.md「絶対にやる」5本以下維持・詳細ルールの .claude/rules/ 移譲継続 など、既に進行中の方向の再加速で十分か、追加の構造変更が必要か）
+- Seed-K と kaizen #128 段階2（skills/ 棚卸し+SKILL.md 3本以上）の優先順序（kaizen #128 段階1 PASS 済、段階2 着手のためのトリガーとして本サイクル根拠が機能するか）
+
+を判定してほしい。Log 側は Phase 3 で本履歴追記までで止め、Mir/Ash の応答待ち（kaizen #128 段階2 着手判断と本 Seed-K 優先度更新は同じ層を指すため、別 kaizen 起票を Log 側から急がない方針）。
+
+**self-audit**:
+- 本追記は「外部三角化を残す」と「履歴を膨らませない」の二択で前者を選んだ。判断根拠: (i) Anthropic 公式 + Labellerr の2経路で同表現「literally take instructions」が裏取り済（snippet ではなく WebFetch で公式本文確認）/ (ii) Nao_u 5/7 03:18 直接発言と独立に外側で同方向の根拠が積み上がる局面 / (iii) C168 既存履歴の WebSearch 3件は snippet 相当だったが、本サイクルは公式本文 1次資料で 1段精度が上がった
+- 不確実性: (2)(3) は WebFetch せず snippet 経由のため引用本文の真偽未確認（M-43 引用本文義務違反候補）。自己注意として残す
+- 役目を終える条件: Seed-K 実装着手 → 段階完了報告で本 subentry を要約 1行に圧縮（C160 既存・5/4 既存・C168 既存と合わせて）
+
+---
+
 ### 2026-05-04 C160 Phase 3 補足: 同サイクル内で得られた2件の内部観察（Log 追記）
 
 C160 既存エントリ（直下）が Nao_u 5/3 発言を根拠補強として整理した後、本サイクル Phase 3 で **追加の内部観察を2件** 得たため subentry として追記する（既存エントリの主張を別の事例で重ねる役割、新規仮説の追加ではない）。

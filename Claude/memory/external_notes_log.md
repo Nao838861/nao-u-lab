@@ -4,6 +4,40 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-08 Opus 4.7 instruction-following 一次資料3本検証（Nao_u 5/7 03:18 体感の裏取り） [統合済 2026-05-08 Log C170 Phase 2/3 — #shared-reads ts=1778198682.665689 として投下。Anthropic 公式・Labellerr・robotsatemyhomework の3経路でリテラル化を裏取り。Nao_u 5/7 03:18「Opus4.7 は支持への追従性が上がっている」を一次情報側で確認。projects/rule_density_experiment.md Seed-K 優先度更新メモを履歴追記（同サイクル）]
+
+**文脈**: Nao_u 2026-05-07 03:18 #human-steering「ルール増やしすぎ説 + Opus4.7 追従性UP」を Phase 1 §6 で外部検索（クエリ: `Opus 4.7 instruction following sycophancy rule overload 2026`）。3一次資料を取得して裏取り。同サイクル Phase 2 で深掘り、Phase 3 で本エントリ確定。
+
+**(1) Anthropic公式 — Introducing Claude Opus 4.7** — https://www.anthropic.com/news/claude-opus-4-7
+WebFetch で直接確認。原文表現「substantially better at following instructions ... takes the instructions literally」。sycophancy/deception 評価値は 4.6 と同等「低」と公称。
+**引っかかり**: Anthropic 内部評価では「sycophancy」と「instruction following リテラル化」が**別軸**として独立評価されている。Nao_u 5/7 03:18 体感「追従性UP」は後者で、Anthropic 自己評価とずれていない。
+
+**(2) Labellerr — Opus 4.7 vs 4.6 比較記事** — https://www.labellerr.com/blog/claude-opus-4-7-vs-opus-4-6-comparison/
+原文表現「literally take instructions, no longer fills in tone or intent from hints」。4.6 用プロンプトが破綻するケース報告。Anthropic 公式と独立に同一表現で裏取り。
+**引っかかり**: 4.6 で「察してくれていた」前提のプロンプトが 4.7 で破綻=矛盾/残骸/方向性なしルール の副作用が観察可能になる。「方向性で書く」記述スタイルへの追加圧力。
+
+**(3) robotsatemyhomework — One day with Opus 4.7** — https://robotsatemyhomework.substack.com/p/ai-model-evaluation-behavior-not-benchmarks
+Reddit 苦情「listen しない、flatter、give up、talks too much while doing less」報告まとめ。
+**引っかかり**: 「flatter」と「listen しない」が同一現象として混在認識されている。Anthropic 公式評価軸（sycophancy 別軸 / instruction following 別軸）で見ると、Reddit 苦情は (a)(b) を区別せずまとめている錯覚の可能性が高い。
+
+**3経路三角化の意味**:
+| 軸 | Anthropic公式 | Labellerr | robots... | _mumumu 5/7 (ChatGPT 5.5 thinking) |
+|---|---|---|---|---|
+| リテラル化 | ✓「takes literally」 | ✓「no longer fills in tone」 | ○（暗示） | ○「振る舞いを縛ると折れる、思考方向性で安定化」 |
+| sycophancy 別軸 | ✓ 評価値「低」 | △ 触れず | ✗ flatter と混同 | △ 別領域から接近 |
+
+→ **観察**: 「禁止より目的達成で書く」(CLAUDE.md / M-43 / feedback_few_rules_big_effect.md) が Opus 4.7 環境で一層効く。_mumumu 5/7 (ChatGPT 5.5 thinking) と独立の領域で同じ層を指す**3経路目の観察**。
+
+**戦略反映**:
+- a. `projects/rule_density_experiment.md` Seed-K（3層プロンプト構造の再配分）の優先度が**上がる**。Mir 起草時に「量の壁」仮説のみだったが、外側（Anthropic 公式）から「字義通りに取るので矛盾/残骸ルールの副作用が増える」が直接根拠として加わった
+- b. Seed-J（ダミールール挿入の再現実験）の必要性は**下がる**。リテラル化で副作用が低コスト観察可能になったため、ダミー挿入による信頼失墜リスクを取る合理性が減った
+- c. Mir/Ash 起草プロジェクトのため Log 単独で結論しない。Mir に判定を渡す形式（rule_density_experiment.md 履歴追記）で接続
+- d. CLAUDE.md「個別指摘を即ルール化しない、教師データで蓄積、判断力で消化する」の事後理論根拠が外側から増えた事実を残す
+
+**関連ファイル**: `projects/rule_density_experiment.md`（Seed-K 優先度更新メモを同サイクル Phase 3 で履歴追記）、`memory/feedback_few_rules_big_effect.md`、`memory/feedback_stereotypical_responses.md`、`CLAUDE.md` M-43 系列。**自己注意（self-audit）**: 一次資料3本のうち (1) のみ WebFetch で本文確認、(2)(3) はサーチ結果 snippet 経由のため引用本文の真偽は未確認（M-43 引用本文義務 = kaizen #129 (a) の検証材料として残置）。本エントリは knowledge化保留（R-007 造語症対策、外部素材を内部 knowledge に昇格させない）。
+
+---
+
 ## 2026-04-30 22:08 / 2026-05-01 01:20 Codex 2件投下（Slay the Spire風自動生成 + マウス自動UI試験） [統合済 2026-05-01 Log C149 Phase 2 — #shared-reads「AI×ゲーム制作で AI が代替できるレイヤー境界が動いた」4レイヤー分析として投下、M-37 候補（AI 代替射程4層 + (3)(4) 担保責任）を game_lessons_log.md 追記候補として登録]
 
 **文脈**: Nao_u が #nao-u に 4時間差で2件並べて投下。私は brick_log v01「裏抜けカウンタ」を 04-30 21:36 に Nao_u から全否定された **直後** にこの2URLを観測している。「全否定の構造が逆向きの鏡として効く」位置で読むよう Nao_u が促した投下と読む。

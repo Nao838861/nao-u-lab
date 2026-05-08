@@ -40,8 +40,8 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - M-Nx 増殖メタ監視 self-audit（kaizen #129 (d) 準拠）: 本起票は新規 M-Nx 系列の追加ではなく既存 M-40 §5 の発火条件追加（規則→検出器レイヤー）。3原則（体験で考える / 動いて残す / 自分から始める）への吸収可能性: 「動いて残す」=スクリプトが trace を残す方向で整合 / 「自分から始める」=自己申告依存からの脱却で整合 / 「体験で考える」=メタ層なので部分整合のみ。3原則のみで実現するには「同パターン2回」を agent が毎サイクル自己申告する必要があり、それが現に9サイクル機能していない=構造強制が必要と判断
 - 検証担当: Log（実装も Log）。Mir/Ash 横展開は段階1検証完了後、textadv / SIPHON 系列の同型語彙（題材依存）を抽出してから
 - クロスチェック: Log=OK(2026-05-08 起票者) / Mir=未 / Ash=未
-- 状態: 起票済み（実装は cross-review 通過後）
-- 検証結果:
+- 状態: 段階1 実装済（自走テストPASS、2026-05-08 C170 Phase 4）。段階2 hook 統合は未着手、段階3 判定機構 mapping gate も未着手
+- 検証結果: **段階1 自走テスト PASS (2026-05-08 C170 Phase 4)**: `scripts/check_repeated_pattern_indication.py` 実装完了。`log/nao_u_live.md` 直近30日窓 (2026-04-08〜) で `python scripts/check_repeated_pattern_indication.py --verbose` 実行→ 振幅24回 / 罰24回 / 揺れ8回 / 進歩4回 が `[M-40 WARN] <語彙> N回検出 → 判定機構優先（kaizen #131 段階1）` として stderr に出力 (exit 1)。装飾=1 / 狙えない=1 は false positive 抑制で出力なし。`--since-days 0` でも exit 0 / 無出力を確認（完遂条件3）。brick_log v05→v06 振幅3往復（5/1）が遡及検出（完遂条件4）。docstring に語彙出典 `memory/feedback_self_judgment_no_human_dep.md` §How to apply 5 と「kaizen #131 段階1」明記済。**残**: 段階2 (autonomous_cycle.sh hook で staging に inline 注入) / 段階3 (語彙→判定機構4点 mapping gate) / Mir・Ash クロスチェック
 
 ---
 
