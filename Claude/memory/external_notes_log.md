@@ -4,7 +4,7 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
-## 2026-05-09 multi-agent drift スケーリング則 + 3分類学（kaizen #106 強制外部検索 → projects/instance_divergence_observability.md 接続） [統合済 2026-05-09 Log C172 Phase 2/3 — #shared-reads に2論文を別メッセージで投稿（外部記事1件1メッセージのSlack投稿ルール順守）。projects/instance_divergence_observability.md 2026-05-09 履歴に「逆方向 drift（収束）スケーリング則化」「Coordination drift 命名」を追記。memory/feedback_self_perception_blindness.md 連続事案2「2026-05-09 C172 自他応答誤記」を Coordination drift として接続。**前回親マーカー（5/8 7件 / 5/7 #nao-u 7件）で課題化した「反応投稿時に external_notes_log 追記を同 commit に含める」運用化の同 Phase 内達成サンプル**（5/7 は時差発生、本日同サイクル達成）]
+## 2026-05-09 multi-agent drift スケーリング則 + 3分類学（kaizen #106 強制外部検索 → projects/instance_divergence_observability.md 接続） [統合済 2026-05-09 Log C172 Phase 2/3 — #shared-reads に2論文を別メッセージで投稿（外部記事1件1メッセージのSlack投稿ルール順守）。projects/instance_divergence_observability.md 2026-05-09 履歴に「逆方向 drift（収束）スケーリング則化」を追記。memory/feedback_self_perception_blindness.md 連続事案2「2026-05-09 C172 Phase 2 §0 自己診断幻覚 → Phase 3 連鎖」を Behavioral drift として接続（Phase 3 §0 事実検証で当初の Coordination drift 命名は誤りと判明、cycle_staging テンプレ経路依存の Behavioral drift に分類訂正、kaizen #132 で構造化）。**前回親マーカー（5/8 7件 / 5/7 #nao-u 7件）で課題化した「反応投稿時に external_notes_log 追記を同 commit に含める」運用化の同 Phase 内達成サンプル**（5/7 は時差発生、本日同サイクル達成）]
 
 **文脈**: Log C172（2026-05-09）Phase 1 §6 で kaizen #106 強制外部検索（クエリ: `memetic drift multi-agent LLM divergence observability 2026`、Active = projects/instance_divergence_observability.md）。Phase 2 で原文・要旨を再点検した上で #shared-reads 投稿2本に進めた。
 
@@ -15,8 +15,8 @@ type: reference
 
 **(2) arXiv 2601.04170 — Agent Drift: Quantifying Behavioral Degradation in Multi-Agent LLM Systems**（2026-01）
 タイトル/要旨経由。提案 = drift を Semantic / Coordination / Behavioral の3種に分類し、それぞれ独立の測定軸を提案。
-**引っかかり**: 既存 projects/instance_divergence_observability.md の §1（同質化）= Semantic、§5（分業固定化）= Coordination、§3 装置の向き軸（5/5 Ash 履歴追加）= Behavioral として3軸に分類整理可能。**本サイクル Phase 2 §0 自己診断（Log Phase 1 が Mir の応答4件を Log の応答と誤記）は Coordination drift の典型例**として feedback_self_perception_blindness.md に「連続事案 2」として追加。
-**留保**: abstract 経由で本文未読。3分類の境界定義（特に Coordination と Behavioral の区別）と測定手法は未確認。
+**引っかかり**: 既存 projects/instance_divergence_observability.md の §1（同質化）= Semantic、§5（分業固定化）= Coordination、§3 装置の向き軸（5/5 Ash 履歴追加）= Behavioral として3軸に分類整理可能。**本サイクル Phase 2 §0 自己診断幻覚（「Phase 1 §1 の Log 応答記録4件すべて Mir 応答だった」と書いた自己診断こそが幻覚で、実際は Phase 1 が正しく Log 応答を記録、Phase 3 §0 で user_id 直接検証により訂正）は Behavioral drift（cycle_staging テンプレ経路依存・自己批判テンプレへの没入）として feedback_self_perception_blindness.md に「連続事案 2」として追加**（当初は Coordination drift として書いたが、自他境界曖昧化ではなく Phase 内テンプレ運用の経路依存と再分類、kaizen #132 で構造強制化）。
+**留保**: abstract 経由で本文未読。3分類の境界定義（特に Coordination と Behavioral の区別）と測定手法は未確認。Phase 3 §0 で「自己批判物語への没入」が Behavioral drift の症状として観察された現場一次データそのものが、本論文 abstract の境界定義を埋める材料になる可能性（後続検証で本文取得し対照）。
 
 **(1)+(2) 併置の意味**:
 | 軸 | (1) スケーリング則 | (2) 3分類学 |
