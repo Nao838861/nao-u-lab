@@ -2221,35 +2221,8 @@
   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
 [2026-05-08 11:42:09] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 12:08:29] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=2
-  ISSUE: [scheduler_ash] slack_checkが16分間実行されていない（期待: 10分以内）
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 12:38:39] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 13:08:45] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 13:39:13] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 14:09:22] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 14:39:43] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 15:09:54] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 15:29:17] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=2
-  ISSUE: [scheduler_ash] slack_checkが14分間実行されていない（期待: 10分以内）
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 15:59:22] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 16:29:36] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 16:59:58] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 17:30:07] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 18:00:22] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 18:33:00] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
-[2026-05-08 19:03:07] instance=Ash checks={"scheduler_alive": "OK", "scheduler_log_freshness": "OK", "job_last_run": "OK", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "FAIL"} issues=1
-  ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 13:54:44] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=4
+  ISSUE: Ashのスケジューラログが107分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが129分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] git_syncが129分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが129分間実行されていない（期待: 120分以内）
