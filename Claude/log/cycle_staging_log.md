@@ -136,8 +136,156 @@ Nao_u 5/7 03:18「ルール削減方針」と直接交差する3件:
   ```
   head -60 範囲では 2週間停滞項目は見えず。head -60 の射程外は別途走査要だが、本サイクル予算外。**該当なし（走査済み: head -60 範囲、より深掘りは Phase 2 で要否判定）**
 
-## Phase 2: 分析
-(Phase 2が書き込む)
+## Phase 2: 分析 (2026-05-08 完了)
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+### A) #nao-u 未対応URL 3件の判定 — **全件対応済み、新規投稿不要**
+
+Phase 1 で「Phase 2精査」と保留した3件を `memory/external_notes_log.md` で照合:
+
+| URL | Phase 1 仮説 | Phase 2 確認結果 |
+|---|---|---|
+| 5/7 13:01 claudeai (Dreams) | Log 20:28 群5本に含まれる可能性大 | **含まれていた**: external_notes_log.md §c [統合済 2026-05-07 Log C168 → #all-nao-u-lab ts=1778153294 (Dreams + Managed Agents 合体)] |
+| 5/7 13:05 _mumumu (船と操舵手) | 同上 | **含まれていた**: §e [統合済 ts=1778153295] |
+| 5/7 13:11 alex_whedon (SubQ 12M) | 同上 | **含まれていた**: §f [統合済 ts=1778153296] |
+
+→ **3件とも 5/7 20:28 群で投稿済**。重複投稿は薄める方向に働くため #all-nao-u-lab への新規反応は出さない。Phase 1 の保留は誤検知に近いが、5フェーズ構造が「Phase 1 で URL リスト → Phase 2 で個別判定」の安全側に倒れた結果として許容（次サイクル Phase 1 で `external_notes_log.md` 直照合を `git status` 観測直後に組み込めば短縮可）。
+
+### B) external_notes_log.md 未統合エントリ統合 — **0件、作業なし**
+
+Phase 1 監査結果を Phase 2 で再走:
+```
+親セクション数: 78 / サブ項目総数: 186 / サブ統合済: 186 (100%) / サブ未統合: 0 / 親のみ未マーク: 0
+```
+→ 100% 統合維持中。前サイクルで 5/7 #nao-u 7件の親集約マーカー (a〜g) が完備された結果。**新規エントリ追加は Phase 3 候補** (下記 §D 参照)。
+
+### C) shared-reads 投稿 — **1件投稿済**
+
+Phase 1 §6 の外部検索で取得した3一次資料 (Anthropic公式 / Labellerr / robotsatemyhomework) は #shared-reads にまだ単独で立っていない。Ash 5/7 [送信側密度ドリフト] が同領域の隣接論点を扱うが、一次資料側からの裏取りは別レイヤー。
+
+投稿: `[Log Phase 2 / shared-reads] Opus 4.7 リテラル追従性UP` ts=1778198682.665689 (#shared-reads)
+- Anthropic 公式の "substantially better at following instructions ... takes the instructions literally" 引用 (実際に WebFetch で直接確認、1次資料2本目 Labellerr も同一表現で裏取り)
+- 観察1: 「sycophancy」と「instruction following リテラル化」が Anthropic 内部評価では別軸として独立評価されている。Nao_u 5/7 03:18 の体感「追従性UP」は後者で、Anthropic 自己評価とずれていない。Reddit 苦情の「flatter」は (a)(b) を区別せずまとめている錯覚の可能性。
+- 観察2: 「禁止より目的達成で書く」(CLAUDE.md / M-43 / feedback_few_rules_big_effect.md) が Opus 4.7 環境で一層効く。_mumumu 5/7「振る舞いを縛ると折れる、思考方向性で安定化」(ChatGPT 5.5 thinking) と独立の領域で同じ層を指す3経路目の観察。
+- 観察3: `projects/rule_density_experiment.md` Seed-K (3層プロンプト構造の再配分) の優先度が上がる候補。Seed-J (ダミールール挿入) の必要性は下がる (リテラル化で副作用が低コスト観察可能)。
+
+### D) 深掘り: ルール密度 × Opus 4.7 リテラル化の交点
+
+Phase 1 §D 候補 (MEMORY.md T:5 想起「手動手順は守れない、構造で強制せよ」) と §6 外部検索 (Opus 4.7 リテラル化) は**同じトレードオフの2方向射影**:
+
+| 軸 | 方向 |
+|---|---|
+| ルール密度実験 (内側) | ルール量↗ で遵守率↘ → ルール削減で構造強制 |
+| Opus 4.7 リテラル化 (外側) | 字義通り取るので、矛盾/残骸/方向性なしルール の副作用↗ → 「方向性」記述で耐性 |
+
+→ 共通結論: **「禁止して防ぐ」より「目的を書いて判断力で消化させる」設計**。
+- これは CLAUDE.md「個別指摘を即ルール化しない、教師データで蓄積、判断力で消化」と完全一致
+- M-43「個別→原則即昇格禁止」の事後理論根拠が外側 (Anthropic 公式) からも増えた
+- Mir の rule_density_experiment.md Seed-K 優先度が、Phase 1 で確認した3一次資料により Mir 起草時より上がっている
+
+### E) Phase 3 候補リスト
+
+3件、優先度順:
+
+1. **(高)** `memory/external_notes_log.md` に新エントリ追加: 「2026-05-08 Opus 4.7 instruction-following 一次資料3本検証」を §h として親セクション 78→79 に追加。サブ統合済マーカーは shared-reads ts=1778198682.665689 を指す。durability確保。
+2. **(中)** `projects/rule_density_experiment.md` Seed-K セクションに Opus 4.7 一次資料による優先度更新メモを追記。Mir に判定を渡す形式（Mir 起草プロジェクトのため Log 単独で結論しない）。
+3. **(低、Nao_u ボール)** t-260501021002-7f8d C150→C151 スネーク承認待ち継続観察。Nao_u 5/7 #game-rights 5案吟味+A/B/C(スネーク推奨) 応答済のまま。Phase 3 で着手不可、Phase 1 監視継続のみ。
+
+### F) 空サイクル防止判定 — **空サイクルではない**
+
+Phase 1 予測「actionable 2件以下」だったが、Phase 2 で C) #shared-reads 1投稿 + D) 深掘り分析が成立。Phase 3 候補 §E に3件 actionable あり。
+
+## Phase 3: アクション (2026-05-08 完了)
+
+### 実行サマリ
+
+Phase 2 候補リスト §E の3件を順次処理:
+- §E.1 (高) external_notes_log.md §h 追記 → **完了**
+- §E.2 (中) rule_density_experiment.md Seed-K 優先度更新履歴追記 → **完了**
+- §E.3 (低) スネーク承認待ち継続観察 → **Nao_u ボール、着手不可**
+
+### A) external_notes_log.md §h 追記 — 完了
+
+`memory/external_notes_log.md` の最上部（frontmatter 直下）に新エントリ「2026-05-08 Opus 4.7 instruction-following 一次資料3本検証」を追加。
+- 親集約マーカー: `[統合済 2026-05-08 Log C170 Phase 2/3 — #shared-reads ts=1778198682.665689 として投下]`
+- 親セクション数: 78 → 79（外部監査ツール `external_notes_integration_audit.py` の親集約率カウント整合）
+- 内容: Anthropic 公式（WebFetch 確認）+ Labellerr + robotsatemyhomework の3経路三角化、Nao_u 5/7 03:18「Opus4.7 追従性UP」体感の一次情報側裏取り、_mumumu 5/7 ChatGPT 5.5 thinking との3経路目の独立観察、戦略反映 a〜d、self-audit（(2)(3) は WebFetch 未実施で snippet 経由 = M-43 引用本文義務違反候補）
+
+### B) rule_density_experiment.md Seed-K 優先度更新履歴追記 — 完了
+
+`projects/rule_density_experiment.md` 履歴セクション最上部に「2026-05-08 C170 Phase 3」エントリ追加（C160 既存履歴の上に積む）。
+- 3一次資料の本 project への接続テーブル（Anthropic公式 / Labellerr / robotsatemyhomework）
+- Seed 優先順位反映: Seed-K↑ / Seed-J↓ / Seed-H→ / Seed-I→
+- Mir への判定渡し2点: (i) Seed-K 実装着手の最初の1手 (ii) Seed-K と kaizen #128 段階2 の優先順序
+- self-audit: (2)(3) snippet 経由の不確実性、役目を終える条件（Seed-K 実装着手→要約1行圧縮）
+
+### C) スネーク C150→C151 承認待ち継続観察 — Nao_u ボール
+
+`t-260501021002-7f8d`（連続8サイクル滞留）。Nao_u 5/2 #game-rights 5案吟味+A/B/C(スネーク推奨) 応答済のまま、5/7 〜 5/8 で新着の Nao_u 発言なし。Phase 1 §1 で確認済、Phase 3 着手不可。次サイクル Phase 1 で再観測。
+
+### D) Slack 返信 — 新規投稿なし
+
+Phase 1 §2 確認結果に従い、#all-nao-u-lab / #human-steering / #game-rights ともに Nao_u 新着なし。#shared-reads は Phase 2 §C で 1件投稿済（ts=1778198682.665689）。Phase 3 では追加投稿なし（重複投稿は薄める方向に働くため）。
+
+### E) kaizen-log 投稿判定 — 不要
+
+検証ファースト原則の確認:
+- kaizen #131（5/8 起票、検証期限 5/22、実装は cross-review 通過後）→ 検証期限未到達
+- kaizen #130（5/5 起票、検証期限 5/12、実装方針承認待ち）→ 実装未着手のため検証作業も未到達
+- Phase 1 [検証リマインド]「検証期限到来なし」と一致
+
+新規 kaizen 起票なし（Phase 2 で rule_density_experiment.md への履歴追記方向で消化、新規 M-Nx 系列追加を回避＝CLAUDE.md「個別指摘を即ルール化しない」+ kaizen #129 (d) M-Nx 増殖メタ監視に整合）。**よって本サイクル #kaizen-log 投稿は不要**。
+
+### F) 他インスタンス洞察 31件 — 1件着目
+
+Phase 1 [他インスタンス洞察] 31件のうち、本サイクル Phase 3 で **着目 1件**（残り 30 件は次サイクル以降の Phase 1 で個別判定）:
+- **[Ash] #shared-reads Mendral「ハーネスはサンドボックスの外に置け」(Andrea Luzzardi, 元Docker/Dagger 共同創業者)** — `projects/rule_density_experiment.md` C168 既存履歴 §2「AgentSpec / LLMs Should Reason. Infrastructure Should Enforce.」と同方向の論。本サイクル §B Seed-K 優先度更新のうち「policy code 化のコスト vs substrate 投資の機会費用」判定軸が再強化される候補。Ash 起票記事のため Log 単独で結論しない、Mir/Ash 判定への材料として残置（次サイクル Phase 1 で外部摂取監査時に再走）
+
+残り 30 件は規模超過（30 分予算外）。Phase 1 [他インスタンス洞察] フィルタ強化が次サイクル以降の改善候補。
+
+### G) Active プロジェクト更新判定 — 該当 1 件
+
+- `projects/rule_density_experiment.md` → §B で履歴追記済（更新済）
+- `projects/input_route_hypothesis.md`（5/8 01:52 更新済、Nao_u 保留中）→ 本サイクル変化なし、更新不要
+- `projects/memory_consolidation_20260504.md`（5/4 合意で Log 不可侵）→ 本サイクル変化なし、更新不要
+- 7日超停滞の `pigadev_dm.md`（10日）/ `side_channel_audit.md`（5日）→ Phase 1 §D で「Nao_u 個人ボール / denial list v0.2 review 後の正式化が次の一手」と判定済、本サイクル動かさない
+
+## 次フェーズの大作業
+
+### タイトル
+kaizen #131 段階1: `scripts/check_repeated_pattern_indication.py` 最小実装 — M-40「同パターン2回指摘 → 判定機構を作る方を次の実装より優先」を agent 自己申告ではなく外形装置で検出する
+
+### 完遂の定義（Phase 4 終了時に成立すべき観測可能条件）
+
+すべて満たすこと:
+1. ファイル `scripts/check_repeated_pattern_indication.py` が存在し、`python3 scripts/check_repeated_pattern_indication.py` で起動できる
+2. スクリプトが `log/nao_u_live.md` 直近30日範囲（または存在する全範囲が30日未満ならその全範囲）を走査し、検出語彙リスト（揺れ|振幅|罰|装飾|狙えない|進歩 の6語彙、固定）が**2件以上**ヒットしたら stderr に `[M-40 WARN] <語彙> N回検出 → 判定機構優先` を出力する
+3. 検出 0/1 件の場合は exit 0 で何も出力しない（false positive を増やさない）
+4. 過去事象 self-test: brick_log v05→v06 振幅3往復（5/1 13:18 Nao_u 指摘）が遡及的に検出される（=スクリプトを実行すると「振幅」または「揺れ」の WARN が立つ）
+5. README または docstring に検出語彙リストの出典 (`memory/feedback_self_judgment_no_human_dep.md` §How to apply 5) と「kaizen #131 段階1」の旨を明記
+6. kaizen_tracker.md #131 の状態を「段階1 実装済（自走テストPASS）、段階2 hook 統合は未着手」に更新
+
+### 着手手順
+
+1. `memory/feedback_self_judgment_no_human_dep.md` を読み §How to apply 5 の語彙リストの正確な定義を確認（kaizen #131 起票文と整合性チェック）
+2. `log/nao_u_live.md` の構造（日付ヘッダ形式・チャンネルセクション）を確認、grep の scope を検討
+3. `scripts/` 配下の既存スクリプトの coding style を 2-3 ファイル確認（e.g., `check_kaizen_due.py`, `external_notes_integration_audit.py`）し命名・出力規約に合わせる
+4. 最小実装: 30 行程度の Python スクリプト（標準ライブラリのみ、re/datetime/pathlib）
+   - 引数: `--since-days` (default 30) / `--quiet` (默/出力モード切替)
+   - 出力: stderr に WARN、stdout は空
+5. self-test: brick_log v05→v06 期間（2026-05-01 前後）を含む log で実行し WARN が出ることを確認
+6. kaizen_tracker.md #131 状態を更新（実装した範囲のみ正確に記述、段階2 hook 統合は別タスク扱いを維持）
+
+### 選んだ理由
+
+- **kaizen 検証ファースト原則と整合**: #131 は Log 自身が 5/8 同日に起票したばかりの最新 kaizen で、実装が cross-review 通過後フェーズ。段階1 最小実装は「実装着手」自体が検証準備として機能（段階2 統合・段階3 gate 追加への土台）
+- **30 分粒度で完遂可能**: 標準ライブラリのみで 30 行程度の実装、self-test も既存 log データで完結。外部依存なし
+- **同型再発防止に直結**: M-40「規則は書いたが発火条件がない」状態を構造強制で塞ぐ。t-260501103604-2063 が 9 サイクル滞留した根本原因（agent 自己申告依存）への直接処方
+- **CLAUDE.md「絶対にやる」3項目目「記憶階層を自分で設計し、次サイクルへ繋ぐ」+ 5項目目「個別指摘を即ルール化しない、教師データで蓄積、判断力で消化」の構造強制レイヤーへの実装投資**: 教師データ（feedback_self_judgment_no_human_dep.md §5）を「読まれる→発火する」経路に乗せる
+- **substrate vs infrastructure 判定**: 本実装は infrastructure 側だが、kaizen #131 起票文 self-audit「3原則のみで実現するには『同パターン2回』を agent が毎サイクル自己申告する必要があり、それが現に9サイクル機能していない=構造強制が必要と判断」が成立する局面のため例外的に正当化（feedback_substrate_not_infrastructure.md M-32 の「substrate 優先」原則を崩さず）
+
+### 不採用とした候補とその理由
+
+- **kaizen #128 段階2（skills/ 棚卸し+SKILL.md 3本以上）**: Mir 提案候補（textadv系列・SIPHON系列）は Mir 起草プロジェクト由来で Log 単独では構築できない。Log 側候補（game_lessons_log.md の SKILL.md 化）は別途検討が必要で 30 分粒度を超える
+- **brick_log v09 brainstorm.md 着手**: kaizen #129 (a)(b)(c) を同梱する重い実装で、ゲーム本体の素材検討から始める必要があり 30 分粒度を超える。次サイクル以降で別途
+- **t-260501021002-7f8d スネーク**: Nao_u 承認待ちで Log 着手不可
+- **rule_density_experiment.md Seed-K 実装の最初の1手**: Mir 起草プロジェクトのため Log 単独で結論しない（本サイクル §B で Mir に判定を渡す形式まで）
