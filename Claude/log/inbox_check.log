@@ -4267,3 +4267,7 @@ Obsidian 1.12のCLI機能を「Markdown Vault + AI直接読み書き」と核に
 [2026-05-09 02:37:23] Claude woken for win: Log として対処不要と判定。理由を残して終了します。
 
 **判定:** Nao_u は "ashが返信して" と明示。Log が代理投稿すれば指名を無視することになるため不可。Win2 (Ash) 
+[2026-05-09 03:12:36] Inbox win has content — waking Claude
+[2026-05-09 03:14:14] Claude woken for win: #all-nao-u-lab に警告を投稿（ts: 1778264041.870029）。要点は3つ:
+
+- Obsidian作者が「公式CLI」を出した記録は確認できない（orphans はコア機能
