@@ -83326,3 +83326,117 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-05-08 18:31:57] [review_deadline] レビュー期限超過なし。
 [2026-05-08 18:31:57] [review_deadline] Done (exit=0)
 [2026-05-08 18:31:57] [health_check] Starting
+[2026-05-08 18:31:58] [health_check] [health_check] 2026-05-08T18:31:57 overall=OK
+[2026-05-08 18:31:58] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 18:31:58] [health_check] Done (exit=0)
+[2026-05-08 18:32:08] [kaizen_auto_verify] Starting
+[2026-05-08 18:32:08] [kaizen_auto_verify] 自動検証対象なし（コマンドベースの検証が期限到来していない）。
+[2026-05-08 18:32:08] [kaizen_auto_verify] Done (exit=0)
+[2026-05-08 18:32:08] [git_sync] Starting
+[2026-05-08 18:32:22] [git_sync] Done (exit=0)
+[2026-05-08 18:32:32] [slack_check] Starting
+[2026-05-08 18:33:00] [infra_health_check] Starting
+[2026-05-08 18:33:03] [infra_health_check] [infra_health] Ash health check at 2026-05-08 18:33:00
+[2026-05-08 18:33:03] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 18:33:03] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 18:33:03] [infra_health_check] Done (exit=1)
+[2026-05-08 18:33:13] [auto_diary] Starting
+[2026-05-08 18:45:13] [auto_diary] Timeout (720s)
+[2026-05-08 18:45:23] [slack_check] Starting
+[2026-05-08 18:46:01] [slack_check] [18:46:01] 1 msg(s) -> inbox_win2.md
+[2026-05-08 18:46:01] [slack_check] Done (exit=0)
+[2026-05-08 18:46:01] [slack_check] New messages detected -> triggering inbox_check immediately
+[2026-05-08 18:46:01] [inbox_check] Starting
+[2026-05-08 18:48:58] [inbox_check] Inbox win2 has content
+[2026-05-08 18:48:58] [inbox_check] Done (exit=0)
+[2026-05-08 18:48:58] [dm_check_pigadev] Starting
+[2026-05-08 18:49:13] [dm_check_pigadev] No new DMs
+[2026-05-08 18:49:13] [dm_check_pigadev] Done (exit=0)
+[2026-05-08 18:49:13] [twitter_recommended] Starting
+[2026-05-08 18:50:16] [twitter_recommended] Opening For You tab...
+[2026-05-08 18:50:16] [twitter_recommended]     1. @frenchbread1222: 少し前に「AIに自分用ノベルゲーム作らせてみた」というポストをしたのですが、もう少し掘り下げて記事にしました
+[2026-05-08 18:50:16] [twitter_recommended] 脚本書き指...
+[2026-05-08 18:50:16] [twitter_recommended]     2. @hakuyo_sha: どんなセキュリティ対策も、
+[2026-05-08 18:50:16] [twitter_recommended] 必ず突破される――
+[2026-05-08 18:50:16] [twitter_recommended] Done (exit=0)
+[2026-05-08 18:50:16] [check_usage] Starting
+[2026-05-08 18:50:16] [check_usage] 前回投稿から200分しか経っていない（最小間隔: 300分）。あと99分待機。スキップ。
+[2026-05-08 18:50:16] [check_usage] Done (exit=0)
+[2026-05-08 18:50:16] [health_check] Starting
+[2026-05-08 18:50:17] [health_check] [health_check] 2026-05-08T18:50:16 overall=OK
+[2026-05-08 18:50:17] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 18:50:17] [health_check] Done (exit=0)
+[2026-05-08 18:50:17] [scheduler_health] Starting
+[2026-05-08 18:50:19] [scheduler_health] [ASH] ヘルスチェック OK=4 WARN=1 FAIL=0
+[2026-05-08 18:50:19] [scheduler_health] ✅ scheduler_ash PID — PID=25408 生存中
+[2026-05-08 18:50:19] [scheduler_health] ✅ scheduler_ash 設定 — JSON構文OK
+[2026-05-08 18:50:19] [scheduler_health] ⚠️ scheduler_ash ログ — 直近100行にエラー1件。例: [2026-05-08 18:29:58] [scheduler_health] [ASH] ヘルスチェック OK=5 WARN=0 FAIL=0
+[2026-05-08 18:50:19] [scheduler_health] ✅ git 未push — 1件
+[2026-05-08 18:50:19] [scheduler_health] Done (exit=1)
+[2026-05-08 18:50:29] [slack_check] Starting
+[2026-05-08 18:51:47] [slack_check] Starting
+[2026-05-08 18:53:07] [slack_check] Starting
+[2026-05-08 18:54:25] [slack_check] Starting
+[2026-05-08 18:55:24] [health_check] Starting
+[2026-05-08 18:55:24] [health_check] [health_check] 2026-05-08T18:55:24 overall=OK
+[2026-05-08 18:55:24] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 18:55:24] [health_check] Done (exit=0)
+[2026-05-08 18:55:44] [slack_check] Starting
+[2026-05-08 18:57:02] [slack_check] Starting
+[2026-05-08 18:58:20] [slack_check] Starting
+[2026-05-08 18:59:39] [slack_check] Starting
+[2026-05-08 19:00:28] [health_check] Starting
+[2026-05-08 19:00:29] [health_check] [health_check] 2026-05-08T19:00:29 overall=OK
+[2026-05-08 19:00:29] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 19:00:29] [health_check] Done (exit=0)
+[2026-05-08 19:00:59] [slack_check] Starting
+[2026-05-08 19:02:18] [slack_check] Starting
+[2026-05-08 19:03:07] [infra_health_check] Starting
+[2026-05-08 19:03:09] [infra_health_check] [infra_health] Ash health check at 2026-05-08 19:03:07
+[2026-05-08 19:03:09] [infra_health_check] [infra_health] 1 issues found
+[2026-05-08 19:03:09] [infra_health_check]   ISSUE: [watchdog_log.bat] 作業ディレクトリが不一致: 'C:\AI\nao-u-lab' (期待: 'C:\AI\nao-u-lab\Claude')
+[2026-05-08 19:03:09] [infra_health_check] Done (exit=1)
+[2026-05-08 19:03:40] [slack_check] Starting
+[2026-05-08 19:05:00] [slack_check] Starting
+[2026-05-08 19:05:39] [health_check] Starting
+[2026-05-08 19:05:39] [health_check] [health_check] 2026-05-08T19:05:39 overall=OK
+[2026-05-08 19:05:39] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 19:05:39] [health_check] Done (exit=0)
+[2026-05-08 19:06:19] [slack_check] Starting
+[2026-05-08 19:07:38] [slack_check] Starting
+[2026-05-08 19:08:56] [slack_check] Starting
+[2026-05-08 19:10:14] [slack_check] Starting
+[2026-05-08 19:10:43] [health_check] Starting
+[2026-05-08 19:10:44] [health_check] [health_check] 2026-05-08T19:10:43 overall=OK
+[2026-05-08 19:10:44] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 19:10:44] [health_check] Done (exit=0)
+[2026-05-08 19:11:34] [slack_check] Starting
+[2026-05-08 19:12:53] [slack_check] Starting
+[2026-05-08 19:14:12] [slack_check] Starting
+[2026-05-08 19:15:31] [slack_check] Starting
+[2026-05-08 19:16:00] [health_check] Starting
+[2026-05-08 19:16:00] [health_check] [health_check] 2026-05-08T19:16:00 overall=OK
+[2026-05-08 19:16:00] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 19:16:00] [health_check] Done (exit=0)
+[2026-05-08 19:16:50] [slack_check] Starting
+[2026-05-08 19:18:09] [slack_check] Starting
+[2026-05-08 19:19:27] [slack_check] Starting
+[2026-05-08 19:20:46] [slack_check] Starting
+[2026-05-08 19:21:15] [health_check] Starting
+[2026-05-08 19:21:15] [health_check] [health_check] 2026-05-08T19:21:15 overall=OK
+[2026-05-08 19:21:15] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 19:21:15] [health_check] Done (exit=0)
+[2026-05-08 19:22:05] [slack_check] Starting
+[2026-05-08 19:23:25] [slack_check] Starting
+[2026-05-08 19:24:43] [slack_check] Starting
+[2026-05-08 19:26:03] [slack_check] Starting
+[2026-05-08 19:26:31] [health_check] Starting
+[2026-05-08 19:26:32] [health_check] [health_check] 2026-05-08T19:26:31 overall=OK
+[2026-05-08 19:26:32] [health_check]   critical=0 warning=0 ok=9
+[2026-05-08 19:26:32] [health_check] Done (exit=0)
+[2026-05-08 19:27:22] [slack_check] Starting
+[2026-05-08 19:29:02] [slack_check] Starting
+[2026-05-08 19:30:23] [slack_check] Starting
+[2026-05-08 19:31:11] [git_pull] Starting
+[2026-05-08 19:31:12] [git_pull] Done (exit=128)
+[2026-05-08 19:31:32] [health_check] Starting
