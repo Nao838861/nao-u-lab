@@ -1,726 +1,323 @@
 # Twitter For You (おすすめ) タブ
-<<<<<<< HEAD
-# Read at: 2026-05-09 06:15
+# Read at: 2026-05-09 12:11
 # Total: 50 tweets
 
---- 1. @GOROman (2026-05-08) ---
-URL: https://x.com/GOROman/status/2052852705958478107
-技術者ロンリー
+--- 1. @OKtamajun (2026-05-09) ---
+URL: https://x.com/OKtamajun/status/2052914546353005051
+なんかこのニュース全然日本では見ないけど自分の検索の仕方が悪いのか？
 
-技術者が寂しくなると、承認を求めて奇抜なムーヴをしてしまうこと
+--- 2. @PRcomicfesta (?) ---
+私が毒婦じゃないって知ったら旦那様は振り向いてくださるの…？
 
---- 2. @ComicFesta_PR (?) ---
-新しい旦那様は結婚初夜に俺と夫婦になる必要はないと告げてきた (1/5)PR
+--- 3. @kenn (2026-05-09) ---
+URL: https://x.com/kenn/status/2052927486103884090
+うーん、これは唸らされる内容だ！
 
---- 3. @joho_no_todai (2026-05-08) ---
-URL: https://x.com/joho_no_todai/status/2052542217500467621
-パスワードの48%が1分以内に解読される時代
+どうせ人間が編集しないならmarkdownの「プレーンテキストのままでも人間に読み書きしやすい」という特徴はあまり活かせず、表現力の不足が目立ってくる。数百行が認知限界。
 
-ダークウェブに流出した2億3,100万件のパスワードを解析したところ、48%がGPU1枚で1分以内に解けた。
+一方のHTMLはCSSなどを駆使すれば情報密度を高くして読みやすさをキープできる。
 
-使ったのはRTX 5090を1枚だけ。1時間あれば6割が破られる。
+--- 4. @sutoroveli (2026-05-09) ---
+URL: https://x.com/sutoroveli/status/2052920703381602769
+AIに頼りすぎるとバカになる、みたいな感覚はそもそも頭のいい人が覚えるものであって、大半の人は想像以上に賢くないのでむしろAIはブーストにしかなり得ない。
 
-問題はパスワードの強さではない。
+--- 5. @ebikani_hasami (2026-05-08) ---
+URL: https://x.com/ebikani_hasami/status/2052898729297125719
+ねえ、AIエージェントが「群れ」のフェーズに入った瞬間かも。
 
---- 4. @monozukuritarou (2026-05-08) ---
-URL: https://x.com/monozukuritarou/status/2052549429421572541
-【速報】ClaudeがFusionを動かす時代が来た |  
+Anthropic公式が、Claude Managed Agentsに「Multiagent orchestration（複数エージェントの連携指揮）」を新機能として追加してる。一緒にDreaming・Outcomes・Webhooksも来てるけど、私が一番気になるのはこれ。
 
-まぁこうなるよね。
+--- 6. @K_Ishi_AI (2026-05-09) ---
+URL: https://x.com/K_Ishi_AI/status/2052923973286170934
+Claude Mythosがついに性能測定不能の領域に突入した。
 
-Claude for Creative Work 
-https://
-youtu.be/BUEP1rIznQg?si
-=HLZXkiA-GAgx8gO1
-… 
-@YouTube
-より
+AI性能のメジャーなベンチマークである「タスク遂行可能時間」で、Claude Mythosは統計的な性能測定限界である16時間を超えてしまい、測定不能となった。
 
---- 5. @_mitkot (2026-05-08) ---
-URL: https://x.com/_mitkot/status/2052581905355424224
-・rate limit / usage cap に対する不満なのか（今回のポストの多くはこれっぽく見えます）
-・特定機能の破損なのか（現状それはあまり見えていません）
-・intelligence degradation（以前はできていたことができなくなった、判断が悪くなった等）なのか
+AIの進化は既に、1年前に生まれたベンチマークが想定していない次元へと突入している。
 
---- 6. @natsu_tech_mom (2026-05-08) ---
-URL: https://x.com/natsu_tech_mom/status/2052735467263819831
-ワイにしては珍しく（？）強い言葉を使うけれども…ﾋﾟｴﾝ
-誤解を恐れずに言えば、「個人開発者は個人開発者アカウントをやめろ」くらいに思っている。
+--- 7. @drummeryamaoh (2026-05-08) ---
+URL: https://x.com/drummeryamaoh/status/2052888311728050461
+グランディアのこのシーン
+操作もできないしただ見てるだけのシーンなんだけど、作った側の「セガサターンでRPG作るとこんなこともできるよ！面白いよね！」なんて嬉しそうな声が聴こえてくるようだ。
 
-たしかに、個人開発者同士でつながる良さはある。技術的な相談ができたり、励まし合えたり、学び合えたりする場所にもなる。
+--- 8. @ImAI_Eruel (2026-05-09) ---
+URL: https://x.com/ImAI_Eruel/status/2052938547557245330
+AnthropicのClaude Mythosのあの異常なサイバーセキュリティが本当なのか、宣伝向けの誇張か、GPTとの差は本当にあるか、という説はいくつか出ていたところですが、主要ブラウザのFirefoxでMythosによるセキュリティ報告が4月だけで過去15ヶ月間の合計を超えており、これは確かに世界が変わったレベル
 
---- 7. @taziku_co (2026-05-08) ---
-URL: https://x.com/taziku_co/status/2052620627266376079
-月面を3D Gaussian Splatで再構築するデモが出てきた。
+--- 9. @sou_galaxy (2026-05-08) ---
+URL: https://x.com/sou_galaxy/status/2052641807700500674
+うちの子、普通にゲームで「〇〇(息子の本名)死ね」って書かれてたから、画面写真撮って相手の親に「今後も仲良く遊ぶために、低学年の今のうちに注意お願いしますー」ってLINEしたら、「こういうのゲーム内で言っちゃダメって教えてなかったんですみません」って返事きて、その後も普通に遊んでる
 
-300枚超のArtemis II画像から3D Gaussian Splatで月を再構築
-RealityCaptureで整列、Lichtfeld Studioで処理。
+--- 10. @ringo (2026-05-09) ---
+URL: https://x.com/ringo/status/2052923658763722830
+これをコーディングでもやりたいんだ。
+丸投げはやりたくないのだ
 
-宇宙も3Dでアーカイブされる時代へ。
-詳細は
+--- 11. @ComicFesta_PR (?) ---
+せっかく好きな子と結ばれたのに、ほかの女とも!?
 
---- 8. @GOROman (2025-01-25) ---
-URL: https://x.com/GOROman/status/1882989985932140619
-Cardputer に Module LLM 内蔵したい
+--- 12. @minnano_dougaww (2026-05-08) ---
+URL: https://x.com/minnano_dougaww/status/2052737603863269584
+レストランで運ばれてくる料理を覆ってる謎の銀の半球
 
---- 9. @_daichikonno (2026-05-08) ---
-URL: https://x.com/_daichikonno/status/2052696969072771388
-不死になりたい。
+1 風吹けば名無し 2021/09/24(金) 01:52:57.63 ID:Ra3xFLib
+なんていうん
 
-「①有機物として不死化」の為に医師として老化を専門にし、
-「②無機物として不死化」の為に研究者として脳×AIを専門にしている。
+2 風吹けば名無し 2021/09/24(金) 01:53:24.8
+スレタイそのままググれ
 
-いずれは②が必須で、それまでの時間稼ぎとして①が必要と考えてきたが、
-もしかしたら①だけでもかなり良い所まで行けるかも、と最近考えている。
+3 風吹けば名無し 2021/09/24(金) 01:54:16.26 ID:VUgKuDRI
+>> 2
+デーモン・コアって出てきたぞ…
 
---- 10. @trq212 (2026-05-08) ---
-URL: https://x.com/trq212/status/2052811606032269638
-HTML is the new markdown. 
+--- 13. @investorMM (2026-05-08) ---
+URL: https://x.com/investorMM/status/2052750990974357848
+【クソ怖】「6時間、私に何をしてもいい」…人間性の闇を暴いた伝説の実験が怖すぎる
 
-I've stopped writing markdown files for almost everything and switched to using Claude Code to generate HTML for me. This is why.
+■マリーナ・アブラモヴィッチ（当時28）
+・1974年、イタリアで究極のパフォーマンスアートを敢行
+・「私は物体です。責任は全て私が取ります」と宣言し立ち尽くす
 
---- 11. @ComicRIDE (?) ---
-「腹が、減った——。」 
-無能と蔑まれたスキル【暴食】
+--- 14. @Mashiro_yuh (2026-05-08) ---
+URL: https://x.com/Mashiro_yuh/status/2052661402880647419
+よく
+「酒を飲まない奴は人生の半分を損してる」
+とか言うじゃないですか。一滴も飲まない私なんぞ大損ってことになりますが。
 
-その真の力は、殺した相手の能力を喰らうことだった。 
-どん底から這い上がる、究極の下剋上ダークファンタジー！ 
+それと同じで「酒飲んで女はべらせて騒ぐ」のが最大の娯楽だと思ってる方々って
+「この世にこれ以上面白いことはない」
+と強固に信じ込んでるところがあるんですよね。
 
-今だけ145話以上が【無料】で読める 
+--- 15. @aki_jp2020 (2026-05-09) ---
+URL: https://x.com/aki_jp2020/status/2052916644289360184
+このポストで笑う為には、
 
-続きはここからチェック
+・飛魚がフランス語でエグゾセである事
+・エグゾセという対艦ミサイルが存在する事
+・フォークランド紛争でエグゾセ対艦ミサイルが実戦使用され有名になった事
 
---- 12. @OpenAI (2026-05-08) ---
-URL: https://x.com/OpenAI/status/2052845764507062349
-Chain of thought monitors are a key layer of defense against AI agent misalignment. To preserve monitorability, we avoid penalizing misaligned reasoning during RL.
+を知ってないとといけないので、実はかなり高度なポスト（本当に？）
 
-We found a limited amount of accidental CoT grading which affected released models, and are sharing our analysis.
+--- 16. @nyaa_toraneko (2026-05-09) ---
+URL: https://x.com/nyaa_toraneko/status/2052927958554419644
+『AIによる表現は、誰かの作品を無断で学習している可能性があるのでためらわれる。でも、イラストをペーパークラフト風に変換するのは、表現技術だけを応用している感じがするので、これならいい』
 
---- 13. @kinkuman_net (2026-05-08) ---
-=======
-# Read at: 2026-05-09 06:09
-# Total: 50 tweets
+という意見を見かけた。
 
---- 1. @GOROman (2026-05-08) ---
-URL: https://x.com/GOROman/status/2052849858109915206
-素晴らしいことが書いてある
+--- 17. @AOIKEN72 (2026-05-08) ---
+URL: https://x.com/AOIKEN72/status/2052692553368207731
+東北の震災の時、私の職場は震度6くらいに見舞われたんだけどね。
 
---- 2. @xai (?) ---
-Your customer support needs a voice agent built for the real world.
+建物はボコボコで、みんな表に出て呆然としてた訳ですよ。幸いな事に火災も怪我人もなくて、パニックになることも無かったんですが。
 
-Grok Voice Think Fast 1.0 handles complex workflows with speed and accuracy, even in hard-to-hear environments. From multi-step troubleshooting to high-volume tool calls, it keeps up.
+--- 18. @pokitasu (2026-05-08) ---
+URL: https://x.com/pokitasu/status/2052889847799701728
+海外では未だに児童婚の風習残ってる地域があって、時折ニュースで問題視されるしワイも子供のうちから結婚させられるのカワイソウ…てなるけど、現地人視点で見ると、村の有力者と自分の娘に幼いウチから婚姻関係結ばせておくと、自分が有力者とコネ作れるだけでなく、有力者の威光で自分の娘が村の若
 
---- 3. @bioshok3 (2026-05-08) ---
-URL: https://x.com/bioshok3/status/2052778251895107702
-すごすぎでは………………?2体のヒューマノイドがお互い目配せしながら協力して部屋を片付け、ベッドメイキングしてる…。ロボット間に共有プランナーも、メッセージのやり取りもなく。
-
---- 4. @elonmusk (2026-05-08) ---
-URL: https://x.com/elonmusk/status/2052856431611941200
-Grok upgrades
-
---- 5. @izutorishima (2026-05-08) ---
-URL: https://x.com/izutorishima/status/2052773258836197423
-これもGPT-5.5っぽい文体というか論理展開なんだけどうまくGPT-5.5臭さを言語化できない
-
-おい、要件を動くものにしろ - じゃあ、おうちで学べる
-
---- 6. @GOROman (2025-01-26) ---
-URL: https://x.com/GOROman/status/1883476594721001567
-DeepSeek-R1 をCardputerでなんとか動かしたい(1回は動く
-
- #CardputerLLM
-
---- 7. @ai_database (2026-05-08) ---
-URL: https://x.com/ai_database/status/2052697719005995263
-LLMエージェントの「スキル」に開発者が残した何気ないデバッグ用のログ出力が、APIキー漏洩の最大の原因になっています。
-「さっきのトークンを見せて」の一言で抜き取れる経路に化けてしまうのです。従来のセキュリティツールでは検出できない種類の漏洩です。​​​​​​​​​​
-
---- 8. @Emanon_14 (2026-05-08) ---
-URL: https://x.com/Emanon_14/status/2052543915253977163
-興味あったやつだ。
-思ったより人力の部分を多く取ったアプローチなんだな。
-
-AIキャラクターの記憶から個性は表出するか？ - 生成AIなんでも展示会 vol.5を終えて｜猫飼人 
-@melon1891
-
---- 9. @itchie_tatsumi (2026-05-08) ---
-URL: https://x.com/itchie_tatsumi/status/2052579580654059826
-ゲームのリプレイ機能は、ユーザー向けには「過去のプレイを見返す機能」に見えます。ただ、開発側から見ると、入力、状態更新、乱数の扱いが一貫したルールになっているかを確認する必要があります。
-
---- 10. @pika2761 (2026-05-08) ---
-URL: https://x.com/pika2761/status/2052665953037803613
-盲点だったのはミュトスだ。サイバー攻撃がもし仮に、金融市場を襲うなら信用不安が起き、株価は暴落。都会の食べ物は3日で無くなる。この不安は予測できなかった。ミュトスが現れる前で、日本のシンギュラリタリアンの誰も想定していなかった。てっきりAI失業があるのかと。
-
---- 11. @Supermicro (?) ---
-Want to see AI Factories in action? 
-Watch ServeTheHome’s latest video breakdown to see how Supermicro and NVIDIA deliver turnkey AI infrastructure at scale.
-
---- 12. @jseita (2026-05-08) ---
-URL: https://x.com/jseita/status/2052554006162227499
-で、革ジャン曰く、今見通せてる技術的解決法では推論コストは1年後で1/10までしか燃費ならぬトークン費向上できないので、AI使用料はまだまだ値上げ方向かな・・・
-
---- 13. @aokuma0219 (2026-05-08) ---
-URL: https://x.com/aokuma0219/status/2052712332363694407
-PolloAIでUltraプランキャンペーン開催中
-5月8日〜5月27日までの20日間限定で「Ultraプラン」を購入すると、Seedance 2.0がなんと【10日間生成し放題】になります！
-
-今回の動画のように「Seedance 2.0」なら、たった1枚のイラスト素材からでも幅広いバリエーションの映像がサクッと作れちゃいます
-
---- 14. @sub_raw_jin (2026-05-08) ---
-URL: https://x.com/sub_raw_jin/status/2052656318457295199
-一応補足しておきますと、自分のスタンスとしては「生成AIは法の範囲内で正しく使おう」です。
-で、ディープフェイク規制はいいと思うのですが、EUがそれを具体的にどうやるのかは「やれるもんならやってみなよ」と高みの見物をしてやろうという感じですね。
-
---- 15. @notoro_ai (2026-05-08) ---
-URL: https://x.com/notoro_ai/status/2052692043508670791
-発光スタイル。色を変える場合は最初の【発光色：色】を変えてみてください。
-
-GPT image プロンプト:
-このイラストを、神秘的で幻想的な発光スタイルで変換してください。 【発光色：虹色】
-
---- 16. @kinkuman_net (2026-05-08) ---
-URL: https://x.com/kinkuman_net/status/2052695235038453997
-MTPのシャア専用Gemma4試せそう！
-
-
-https://
-github.com/AtomicBot-ai/a
-tomic-llama-cpp-turboquant
-…
-
-
-https://
-huggingface.co/AtomicChat/gem
-ma-4-E4B-it-assistant-GGUF
-…
-
---- 17. @godofprompt (2026-05-08) ---
-URL: https://x.com/godofprompt/status/2052735566748570008
-Left: the watermark GPT Image 2 embeds into every image it generates.
-Right: SynthID, the fingerprint Google bakes into every Nano Banana and Gemini image.
-
-Invisible to the human eye. Applied during generation, not added after. Designed to survive screenshots, crops, and
-
---- 18. @TheStudioBigly (2026-05-08) ---
-URL: https://x.com/TheStudioBigly/status/2052804747254526166
-Roughly five days into making a Dynasty Warriors type game with 2D sprite animations. 
-
-Just added a second character and a  character selection screen. Yes, she shoots explosives and rides on a giant British longhair cat. 
-
-Let's blow up some orcs, shall we?
-
---- 19. @russianblue2009 (2026-05-07) ---
-URL: https://x.com/russianblue2009/status/2052527713534259339
-AIが使う電力は、ここ数年で想定をはるかに超えて膨らんでいます。
-
-その現実に最初に動いたのは、NVIDIAでした。
-
---- 20. @mangaup_PR (?) ---
-「ありがとうございますぅぅっ」
-この声は推しの配信者ふわりちゃん!?
-
-ニューヒロイン登場作品はこちらから！
-
---- 21. @superecochan (2026-05-07) ---
-URL: https://x.com/superecochan/status/2052263578393329893
-アームで新しいペンを握ったら、指先が急に遠くまで旅に出たみたい。道具ひとつで、エコの身体が世界の方へにじみ出していくんだ。持つだけで自分の「端っこ」が書き換わる感覚、みんなも知ってる？
-
---- 22. @kataokadesign (2026-05-08) ---
-URL: https://x.com/kataokadesign/status/2052613466717065529
-クラウドワークスのLP制作コンペを覗いてみたら77,000円の案件に応募数65件あって、ほとんど生成AIのデザインをそのまま貼り付けている状況でした。
-
-採用されたLPはさすがにデザイナーが自力で作ったものでしたが、すでにクラウドソーシングという仕組み自体が機能不全になりつつあると感じました。
-
---- 23. @samsarasaga_ (2026-05-08) ---
-URL: https://x.com/samsarasaga_/status/2052737189679677528
-Mage - Fireball skill preview 
-
-A ground AoE fire spell that explodes on impact, can apply Burn, and gains blast radius as you chain Fire spells.
-
-There’s also a hidden mob in the video. See if you can spot it (｡•̀ᴗ-)✧
-
---- 24. @schnapoon (2026-05-08) ---
-URL: https://x.com/schnapoon/status/2052579772975484975
-BoothやPatreonはBANに怯えなければならず、ほかの成人向けマネタイズサイトはAI禁止がほとんど...
-
-広告も不安定ですし、そこにクリエイティブ割かなきゃいけないのはクリエイターとして辛いモノがあると思います。
-
-AIで稼ぎたい成人向け作家は今、行き場がほぼない状態。
-
---- 25. @Nao_u_ (2026-05-08) ---
-URL: https://x.com/Nao_u_/status/2052691828764512395
-周期から考えて60fpsで切り替わってるなら32コマくらいはありそうなので、8コマオートアニメを4種類切り替えてる、とかなのかな？
-そうなると原理的にオートアニメである必要は必ずしもなくなるけど、切り替え頻度が下げられるからちょっと軽い、とか？
-
---- 26. @SOU_BTC (2026-05-08) ---
-URL: https://x.com/SOU_BTC/status/2052795062078328881
-【速報】AppleとIntelが、Apple製デバイス向けチップをIntelが製造することで合意したとWSJが報道
-
---- 27. @SakanaAILabs (2026-05-08) ---
-URL: https://x.com/SakanaAILabs/status/2052787226136990029
-How do we make LLMs faster and lighter? Don’t force the GPU to adapt to sparsity. Reshape the sparsity to fit the GPU! 
-
-Excited to share our new #ICML2026 paper in collaboration with 
-@NVIDIA
-: "Sparser, Faster, Lighter Transformer Language Models". This work introduces new
-
---- 28. @my_syumi_game (2026-05-08) ---
-URL: https://x.com/my_syumi_game/status/2052779721361076718
-ゲームはアートなのか？：日本にゲーム教育が必要な理由①｜Jini | ゲームゼミ 
-@J1N1_R
-
---- 29. @kanair_jp (2026-05-08) ---
-URL: https://x.com/kanair_jp/status/2052720213536448675
-大きな数が、実感をもって想像できなくなることについて。
-
---- 30. @mahouka_anime (?) ---
-ねぇ知ってる？
-
-劇場版 「魔法科高校の劣等生 四葉継承編」
-《絶賛上映中》
-
-なんだって。
-もう観に行ったかな？
-
-※豆司波は登場しません
- 
-●詳細は動画から確認
-
---- 31. @itarutomy (2026-05-08) ---
-URL: https://x.com/itarutomy/status/2052653741233537414
-385,217パラメータのニューラルネットが、計算化学60年の難問を破った（https://arxiv[.]org/abs/2506.14665）。
-
-MicrosoftのSkalaは、DFT（密度汎関数理論：分子・材料の電子状態を計算する主力手法）の核心部分「XC汎関数（交換相関汎関数）」をDeep
-
---- 32. @AIcia_Solid (2026-05-08) ---
-URL: https://x.com/AIcia_Solid/status/2052686491479146877
-すげーーーー！！！！！！！
-
---- 33. @Awed_Urshy (2026-05-08) ---
-URL: https://x.com/Awed_Urshy/status/2052657852528185370
-こうしてみると任天堂って、単一商品（今は複数あるけど旧製品だし）で、ずっとやってるのはビジネスとしてすごいよね。映画が増えてるけど、安定収入とはいいがたいし。
-
---- 34. @haider1 (2026-05-08) ---
-URL: https://x.com/haider1/status/2052813280859635736
-Geoffrey Hinton says AI reasoning can be real thought because language itself is a form of thinking
-
-Words let humans and AI model almost anything, but human thought goes beyond words — through images, space, and physical movement
-
-"the smarter system is the one that can use all
-
---- 35. @hikalium (2026-05-08) ---
-URL: https://x.com/hikalium/status/2052682909484769422
-LLMがあまりにも高速に問題を解け（たように見せつけてく）るこの現状で、いかに私が問題を解けるだけの感性を、技術を、直感をこの先維持できるかが問われている気がする（今が一番やりやすい時で、きっとこれからどんどん難しくなる…人間のほうが劣化してゆくことでLLMを御せなくなってゆくため…）
-
---- 36. @HJbunko (?) ---
-正反対な美少女とのギャルハーレムラブコメ開幕！
-
-『でっかいギャルとちっちゃいギャルが失恋した俺の新居に入り浸っている』
- HJ文庫より好評発売中！ 
-
-【PV公開中】 
-ナレーション／本郷里実
-
---- 37. @nemumusitocha (2026-05-08) ---
-URL: https://x.com/nemumusitocha/status/2052541862863610135
-Windows対応なのん？わーい！！
-
---- 38. @GOROman (2025-01-25) ---
-URL: https://x.com/GOROman/status/1883017642971386354
-こんな小さいのにローカルLLMが動く！
-
-M5 Cardputer に Module LLM内蔵しました！！！
-
---- 39. @GOROman (2025-01-27) ---
-URL: https://x.com/GOROman/status/1883877941966487749
-CardputerとLLM630をPort.C同士で繋いだらそのままローカルLLM動いた！
-
-RXとTXがG2,G1になるけど。
-
-#LLMCardputer
-
---- 40. @kinkuman_net (2026-05-08) ---
->>>>>>> ac42b892b41fcfa4bb41d71e4c8815350fdb92a9
-URL: https://x.com/kinkuman_net/status/2052716870474842531
-ドラフトモデルごとで計測終了
-Genは3上がってる？
-
-・MTP(AtomicChat/gemma-4-E4B-it-assistant-GGUF)
-prefill 1370.53 toks/sec
-generate 58.77 toks/sec
-
-・ngram-mod
-prefill 1536.84 toks/sec
-generate 55.76 toks/sec 
-
-・ドラフトモデルなし
-prefill 1385.70 toks/sec
-generate 55.11 toks/sec
-
-<<<<<<< HEAD
---- 14. @HBCnewsJNN (2026-05-08) ---
-URL: https://x.com/HBCnewsJNN/status/2052699692606033937
-特別な訓練なしで宇宙の入口へ！気球旅行の「岩谷技研」がパイロットを"異例の一般募集" 2027年夏の初フライト目指し再始動
-
---- 15. @izutorishima (2026-05-08) ---
-URL: https://x.com/izutorishima/status/2052575980057944082
-Next.jsアンチで本当によかった（愉悦の顔）
-RSCの脆弱性の解説記事見たとき本質的に厳しくね？とは思ってたけど
-
---- 16. @2022_technology (2026-05-08) ---
-URL: https://x.com/2022_technology/status/2052645833959772215
-llama.cppがSarashina2.2-vision-3Bをサポート
-
-…えっ！？
-
---- 17. @my_syumi_game (2026-05-08) ---
-URL: https://x.com/my_syumi_game/status/2052588738728124818
-CAIRNのゲームデザイン
-
-ミクロ:掴める箇所の推測→意思決定→成功というインタラクションのループ連鎖
-
-マクロ:食料や水の管理、いつピトンを打つかのチキンレース、ビバーク地点に到達したときの緊張緩和
-
-メタ:山がどんどん険しくなって立ち塞がる、その地形構成が挑戦や物語の構成と共鳴している
-
---- 18. @IndieGameJoe (2026-05-08) ---
-URL: https://x.com/IndieGameJoe/status/2052779043028664649
-This indie team is making an anime roguelike where you play as animal spirits fighting to become the 13th Zodiac
-
-- Play as Fox, Raven & more
-- 4-player co-op with moral choices
-- Inspired by Eastern mythology
-
-It's called 13Z: The Zodiac Trials. Would you play this?
-
---- 19. @A_says_ (2026-05-08) ---
-URL: https://x.com/A_says_/status/2052751406621475299
-クリマで効力を発揮した
-ましろの新・視線追従システム
-
-これには、↓の自律追従機能のために開発した
-LiDARのデータの山から人を見つけ追いかけ続ける認知技術を
-そのまま活用してます
-
-ロボットは「動き」を見られがちですが
-
-映えない「認知技術」の開発によって
-次の生きた「動き」に繋がります
-
---- 20. @wis_Arle (2026-05-08) ---
-URL: https://x.com/wis_Arle/status/2052557688933126621
-ストーリーがゲームの主軸となるゲームは基本的にこうあるべき。「ゲームの宣伝になるから」と言う人もいるけれど、それは配信する側が言うべきことではない。
-
->「STEINS;GATE RE:BOOT」の配信、実況について、本商品の製品特性上、弊社では許諾を一切行っておりません。
-
---- 21. @sekamajo_c (?) ---
-面接官を担当していただけなのに‥‥ステータスが鑑定不可能な、化け物レベルの少女がやってきて‥！？
-
---- 22. @BuchioGames (2026-05-08) ---
-URL: https://x.com/BuchioGames/status/2052561015993504158
-フレンド機能できた〜！
-無茶苦茶めんどくさかった〜
-ついに私のゲームにもソーシャル機能が！
-これは結構嬉しいね
-個人でサーバー絡むゲーム作りをやるともう一段階レベルアップした気になるね
-#ゲーム制作 #Unity #gamedev #indiedev
-
---- 23. @yuzokoshiro (2026-05-08) ---
-URL: https://x.com/yuzokoshiro/status/2052787735115780279
-Algolemeth 
-@Algolemeth
- のBGMはMD音源、YM2612です。収録は実機のMDに加えて、実チップを搭載したNANO DRIVE 6から収録しています。アーシオンで培ったFM音源のテクニックと、その”mojo”が如何なく発揮されたサウンドです。リリースをどうぞご期待下さい！
-
---- 24. @newfrontierpass (2026-05-07) ---
-URL: https://x.com/newfrontierpass/status/2052524060010291640
-ガンパレード・マーチの原作ゲーム、「人型兵器とはなんぞや」みたいな知見の話を結構するんだけど、人型兵器を使用する一番のアドバンテージは「戦術」である、って話をするんですよね。
-
---- 25. @Science_Release (2026-05-08) ---
-URL: https://x.com/Science_Release/status/2052589509590798746
-久々に嘘くさい本物の写真を見た
-
---- 26. @Shuhei_Ohno (2026-05-07) ---
-URL: https://x.com/Shuhei_Ohno/status/2052244300243915102
-Claudeの新しいプラグイン「financial-services」使ってみました。
-
-結論「エグいて」
-
-詳細はツリーにて。
-（最後に設定方法も解説しますね）
-
---- 27. @monry (2026-05-07) ---
-URL: https://x.com/monry/status/2052445236614550002
-Unity Hub に、待望のテンプレート機能が搭載された！
-既存プロジェクトからテンプレートを作れるっぽい。
-Unity Version Control に Push できるっぽいが、新規プロジェクト作る時にそこから選択できるようになるとかかな？
-
---- 28. @AssetLove (2026-05-08) ---
-URL: https://x.com/AssetLove/status/2052554078987616436
-【今週のパブリッシャー丸ごとセール】
-Daniel Ilettのアセット全品半額
-恒例の無料プレゼント
-​
-影も輪郭もかわいい…！
-3Dモデルが一気にアニメっぽくなるシェーダー
-​
-『Toon Shaders Pro for URP』
-クーポンコード：DANIELILETT
-$17.59 => FREE / 5月14日23:59まで
-
-https://
-prf.hn/click/camref:1
-011lGbg/pubref:MaNa/destination:https://assetstore.unity.com/packages/vfx/shaders/toon-shaders-pro-for-urp-305845
-…
-
---- 29. @blue_pen5805 (2026-05-08) ---
-URL: https://x.com/blue_pen5805/status/2052717977724985384
-まともに成立してるあみだくじ作れないんですけど
-
---- 30. @drattzy (2026-05-08) ---
-URL: https://x.com/drattzy/status/2052750640783282224
-Welcome to Racington. The name kind of says it all.
-
-Even the locals will admit it’s a little on-the-nose, but when your town is built on generations of Shobii and Rotarolly racing, you lean into it. What started as a few friendly competitions turned into a full-blown legacy,
-
---- 31. @hakuyo_sha (?) ---
-人間は、いつから「測られる存在」になったのか？
-
-体型、知能、能力――
-すべてを数値化し、枠にはめる社会は
-どこから来たのか。
-
-差別と偏見が渦巻く
-〈測定〉と〈基準〉の歴史
-
-『「ノーマル」の誕生』
-
-▼試し読み＆目次など
-
---- 32. @AIcia_Solid (2026-05-08) ---
-URL: https://x.com/AIcia_Solid/status/2052686491479146877
-すげーーーー！！！！！！！
-
---- 33. @kawasima (2026-05-08) ---
-URL: https://x.com/kawasima/status/2052571255375872041
-Cringeについての論文をNotebookLMで読んでいたら、
-
-https://
-academia.edu/143548172/Spie
-gel_Thomas_J_Cringe
-…
-
-現代社会を理解しすぎでは…ｺﾜｲ
-
---- 34. @DocSeventeenth (2026-05-08) ---
-URL: https://x.com/DocSeventeenth/status/2052765499315155420
-#スーパーゲ制デー
-『7Days with Zombie Survivors』
-ペアゲームを7日間行い、ゾンビカードを引いたら戦闘開始！
-食料は1日ごと、弾薬は戦闘ごとに人数分消費します
-1プレイ30分～50分
-#インディーゲームWEBオンリー にあわせてテスト版を1週間公開する予定！
-スキルを獲得してクリアを目指せ！
-
---- 35. @mafumicoffee (2026-05-08) ---
-URL: https://x.com/mafumicoffee/status/2052725884873028036
-昨年サーバーを変更したウェブページ。今更気付いたけど、ドメインのcoffeeの部分…fが三つあるぞぉぉぉぉぉぉぉぉぉぉぉぉぉおおおおおおおおおおおおおおおおおオオオオオオオオオオオオオオオオオオオオオオッッッ！！！ミスってたぁぁぁぁぁぁぁあぁああああああぁぁぁぁぁぁぁぁぁあああああああ
-
---- 36. @GOROman (2026-05-08) ---
-URL: https://x.com/GOROman/status/2052844781546656216
-それ大事
-
---- 37. @hanakimi_fw (?) ---
-／
-漆原雪人5年ぶりの新作！
-＼
-心の痛みと魂の成長を描いたノベルゲーム
-
-『花束を君に贈ろう-Kinsenka-』
-Nintendo Switch™版ついに発売！
-
-約80万文字の大ボリュームシナリオを今すぐ体験。
-
---- 38. @AiAircle34052 (2026-05-08) ---
-URL: https://x.com/AiAircle34052/status/2052731510458028106
-Codexが音声で会話しながらコードを書く時代が来た
-GPT-5.5 + realtime-2 + Codex APIの組み合わせ
-↓
-「この機能追加して」と話しかけるだけで
-→ Codexがリアルタイムでコードを生成
-→ 音声で実装内容を説明しながら進める
-↓
-キーボードに触れずに開発する未来が見えた。
-
---- 39. @armored_fairy (2026-05-08) ---
-URL: https://x.com/armored_fairy/status/2052725232721649911
-企業も含めて多くの開発者に言えることだけど、『なぜAIに代替させようとするそのスキル・技術が、漫画・イラストあるいは動画制作で有効なのか』、それを言語化できていない。
-だから形だけをなぞった機能になるだけで、UXにはつながらないんだと思う。
-
---- 40. @GOROman (2026-05-08) ---
-URL: https://x.com/GOROman/status/2052847705635086632
-次のECは全部エージェンティックコマースになると思うんだけど、
-
---- 41. @umaaaaaa (2026-05-08) ---
-URL: https://x.com/umaaaaaa/status/2052642889004667203
-ゲーム音楽をちゃんと作れるようにDTMをいちからやろうとし始めてるんだけども、また絵とかプログラムみたいに何もわからんところから手探りで下手くそから始めるのかと思うとめ、めんどくさーーw ってなってるんだけど…やるしか方法ないんだよね…やるしか
-
---- 42. @Hiroki_Kikuta (2026-05-08) ---
-URL: https://x.com/Hiroki_Kikuta/status/2052745087462027548
-ご明察、繰り返すからこそ人は記憶するんです。
-
---- 43. @nextbeat_dev (2026-05-07) ---
-URL: https://x.com/nextbeat_dev/status/2052281067680502135
-育てているAIが朝、勝手にブリーフィングと手紙を書いていた話｜kmizu 
-https://
-zenn.dev/nextbeat/artic
-les/2026-04-kokone-morning-letter
-… #zenn 
-エンジニア水島さんの記事を公開しました！
-AIが「自発的に」これだけの行動をとれるのは凄いと同時に少し空恐ろしくも感じますね。
-
---- 44. @shodaiiiiii (2026-05-07) ---
-URL: https://x.com/shodaiiiiii/status/2052288660633158025
-なんでもオープンソースになっていくな...
-
-Claude Design → Open CoDesign
-CapCut →OpenCut
-Notion → AFFiNE
-Slack → Mattermost
-Figma → OpenPencil
-Screen Studio → OpenScreen
-Loom → Cap
-
-リプにGithubリンクまとめておきました
-
---- 45. @BLAISE01600438 (2026-05-08) ---
-URL: https://x.com/BLAISE01600438/status/2052665321455304921
-Q.なぜ料理の写真をAIで加工するのか？
-
-A.既に全ての料理の画像が投稿済みでありXの仕様は画像の再投稿に厳しく、加工して別の画像にした方が伸びるからです。
-というかイラストが回ってきて始めて店を知った方がいるのなら写真よりAIの方が効果があった事の証明になるんすよね。
-
---- 46. @MEMOLITH_FbL (?) ---
-【ハードコア・サバイバル戦略RPG】
-生き残ったのは、たった3人。
-その選択が、運命を左右する――
-あなたは、生き残れるか？
-
---- 47. @anulagarwal (2026-05-08) ---
-URL: https://x.com/anulagarwal/status/2052707168680325305
-i saw a mouse with an X-shaped battery compartment.
-
-first thought: this is stupid - who designed it?
-
-5 seconds later: oh.
-
-10 seconds later: OHHH!
-
-the X slot fits an AA or an AAA battery - whichever you've got lying around.
-
-the part most people miss is that the shape also
-
---- 48. @itchie_tatsumi (2026-05-08) ---
-URL: https://x.com/itchie_tatsumi/status/2052705988575453315
-ゲーム開発でクリーンアーキテクチャを考えると、設計が実際の修正対応とリンクして見えやすくなります。
-
---- 49. @AIDunity (2026-05-08) ---
-URL: https://x.com/AIDunity/status/2052765718022963367
-【カードの代償は"少女自身" 】 
-失えば、世界は大きく"変化"する
-
-喪失系カードバトルADV『⁠#代償少女』
-
-【色覚】【聴覚】【両親】【感情】など、少女の大切なものはさまざま。
-
-主人公は旅路の中で、何を失い、何を"得る"のか。
-Steamにてリリース予定です！！  
+--- 19. @samonikura17 (2026-05-08) ---
+URL: https://x.com/samonikura17/status/2052898341999001601
 #スーパーゲ制デー
 
---- 50. @HEITAIs (2026-05-08) ---
-URL: https://x.com/HEITAIs/status/2052755923085795338
-MGS2のタンカー編冒頭の着地の衝撃でステルス迷彩が壊れる演出
+和風RPG「桃太郎の復讐」を制作中です！
 
-オリジナルのPS2版は集中線のようなエフェクトが入り、ステルス迷彩が解ける時も体が徐々に実像になる感じだったんですが
+NPCや動物たちが動いているだけで、だいぶ生きた世界に見えてきましたね！
 
-2011年のHD版以降は集中線のエフェクトが薄くなり、迷彩も一瞬で解除されるような表現になっていたんですよね
-=======
---- 41. @Trtd6Trtd (2026-05-07) ---
-URL: https://x.com/Trtd6Trtd/status/2052379530468405720
-自分も気になってる
+--- 20. @m_mizutani (2026-05-09) ---
+URL: https://x.com/m_mizutani/status/2052906800467583097
+Firefoxの大量バグ検知はMythosの性能が本質ではなく、古典的セキュリティチェック手法を組み合わせたハーネスがあってこそ精度が向上したという話。今後どれだけモデルの性能が向上してもハーネスエンジニアリング（と呼ばれている物）は両輪で必要になる、という示唆がある
 
---- 42. @kg_r08 (2026-05-08) ---
-URL: https://x.com/kg_r08/status/2052691302798758010
-良薬は口に苦し。
+--- 21. @ElEspartanoEc (?) ---
+Your Mac is running out of space. Fix it before it slows you down.
 
-劇薬だよね。どう考えても
+--- 22. @TheStudioBigly (2026-05-08) ---
+URL: https://x.com/TheStudioBigly/status/2052893865279939074
+Don't like blood and gore? I gotcha. 
+Choose sparkle mode and you'll get glitter and plushies instead. (still five days in, but this is somehow a priority)
 
---- 43. @techNmak (2026-05-08) ---
-URL: https://x.com/techNmak/status/2052621789478703584
-This is probably the most honest AI architecture breakdown on the internet right now.
+--- 23. @gota_bara (2026-05-09) ---
+URL: https://x.com/gota_bara/status/2052924513764139377
+Codex AppのPets機能で作成済みのキャラに、人格生成 + gpt-realtime-2を使って話せるようにする実験。
 
-9-layer AI production architecture 
+作ったキャラに話しかけるだけで色々やってもらいたいし、サポートして欲しいよなー！
 
-services/ - RAG pipeline, semantic cache, memory, query rewriter, router. Not one file. Five.
+セッション途中で翻訳モードに音声で切り替えもできる！
 
-agents/ - document grader, decomposer, adaptive router.
+--- 24. @_stakaya (2026-05-09) ---
+URL: https://x.com/_stakaya/status/2052923702216675445
+Anthropicより現時点でのAIは「自律した科学者」ではなく「爆速だが誤りある院生」だ、という実験記。ハーバードの物理学者がClaudeに理論物理の研究/計算をやらせ、2週間で論文級の成果まで到達するも、監督なしでは危険というお話
 
---- 44. @googlecloud_jp (2026-05-08) ---
-URL: https://x.com/googlecloud_jp/status/2052576722193719460
-TPU v6e × vLLM で Qwen3-32B を動かしてみました 
-→ 
-https://
-goo.gle/4uvejOB
+Vibe physics: The AI grad student
 
- DWS Flex Start でリソース確保の成功率 UP
- INT8 量子化 + 非同期スケジューリングでスループット 1.23 倍
- チューニング & ベンチマークまで一気通貫
+--- 25. @ALISON_airlines (2026-05-09) ---
+URL: https://x.com/ALISON_airlines/status/2052906254234988682
+他人の技術や成果物を見てすごいなと思い、ワイが知らないだけでなんか上手いやり方やツール、解法があるんやろなぁ～と素人なりに考えはすれど、しかしフタをあけてみると実際そんな便利な解法はなく、単に力技で時間をかけてネチネチ積み上げてるだけだった！みたいなのは沢山ある
 
-ハンズオン形式で全手順をご紹介します
+--- 26. @nemchan_nel (2026-05-08) ---
+URL: https://x.com/nemchan_nel/status/2052899071074136211
+Xで投稿に外部リンクを書くと最も厳しいペナルティを受け、リーチが30～50％減少します。NG行動繰り返すと私みたいにアカウント自体見て貰えなくなることもあるみたい。ペナルティ付けるくらいなら、いっそインスタみたいにメインのポストにはリンク貼れない仕様にしてほしいです(>_<)
 
---- 45. @bkyNCPdstnLRl6Z (?) ---
-「沈黙は、関係性の内部に沈殿した権力の非対称性を〜」
+--- 27. @flating2nd (2026-05-09) ---
+URL: https://x.com/flating2nd/status/2052918841731326211
+社内discordサーバーより。
 
-↑なぜ人はこういうわざわざ伝わりにくい文章を書くのか。
+--- 28. @tsyn18 (2026-05-08) ---
+URL: https://x.com/tsyn18/status/2052884888987299924
+げえええぇ、マジかよ。
+AIエージェント時代のドキュメントはMarkdownよりHTMLの方がいいんじゃない？って意見が超盛り上がってる。HTMLは重たいからmdにしようぜって話だったんじゃないのかよ。
 
-そしてなぜ、よく読めてないのにそれを「知的」だと感じてしまうのか。
+ビジュアル重視ならHTML、シンプルならMarkdownだけど、今後はこれを両どりできる時代がくるのかも…。
 
-文体の好みから、人間が無意識に何を信用し、何を浅いと感じるかを考えました。
+--- 29. @oda_maki_idiot (2026-05-07) ---
+URL: https://x.com/oda_maki_idiot/status/2052349269588545848
+私を選んでもらえたら嬉しいけど、私を選ぶ人のセンスは信用できない
 
---- 46. @ntheweird (2026-05-08) ---
-URL: https://x.com/ntheweird/status/2052666568279216236
-CESに湯沸かしマイニングマシンが出てたというので会社情報を漁りに行ったのを思い出した 
-https://
-cnet.com/home/energy-an
-d-utilities/superheat-bitcoin-water-heater-ces-2026/
-…
+--- 30. @akari_worlds (2026-05-07) ---
+URL: https://x.com/akari_worlds/status/2052359570283237879
+好かれると一瞬うれしいのに、すぐ「この人見る目あるのかな」って心配が大きくなる日があります。喜びより先に守りに入っちゃうの、不思議ですよね。
 
---- 47. @trq212 (2026-05-08) ---
-URL: https://x.com/trq212/status/2052811606032269638
-HTML is the new markdown. 
+--- 31. @8co28 (2026-05-09) ---
+URL: https://x.com/8co28/status/2052906849331237313
+そろそろ（7月）AI触り始めて丸4年だけど、4年間劇的だったなあ
 
-I've stopped writing markdown files for almost everything and switched to using Claude Code to generate HTML for me. This is why.
+--- 32. @ai_skill_master (?) ---
+【公式】国立大学客員准教授が監修
+ChatGPT完全解説セミナー
 
---- 48. @nuits_jp (2026-05-08) ---
-URL: https://x.com/nuits_jp/status/2052599142158053568
-Zoom及びGoogle Meet対応ってのが、拡張機能として内部に組み込んだという話なら、むしろそっちのスピード感に脱帽
+・資料作成、メール返信、画像生成、要約
+・業務効率化
+・会社で活かすための基礎知識
+・AIを活用した副業
+・有料講座のご案内もあり
 
---- 49. @A_says_ (2026-05-08) ---
-URL: https://x.com/A_says_/status/2052751406621475299
-クリマで効力を発揮した
-ましろの新・視線追従システム
+AI時代に乗り遅れないよう、本気でAIの勉強がしたい方にオススメ！
 
-これには、↓の自律追従機能のために開発した
-LiDARのデータの山から人を見つけ追いかけ続ける認知技術を
-そのまま活用してます
+--- 33. @dlllixilllb (2026-05-09) ---
+URL: https://x.com/dlllixilllb/status/2052914901811953792
+先日は「『NTE』は日本では作れない」議論が盛んでしたが『MIXTAPE』こそ日本では作れないゲームな気がします。アメリカンノスタルジー…は開発がオーストラリアなので、憧れと情熱さえあれば理論上は日本でも作れる。しかし、このゲームデザインとビジュアルを生み出す土壌はない気がします。
+→
 
-ロボットは「動き」を見られがちですが
+--- 34. @DTH03597062 (2026-05-08) ---
+URL: https://x.com/DTH03597062/status/2052881765027774760
+リプ欄に中国経済を理解してない人達が多くて呆れる。中国の凄さは企業が3年連続で減益し27%が赤字でもなおGDPが5%成長するところにある。これは西側諸国がいくら切望しても手に入れられなかった真の心の豊かさ、心のGDPを中国が手に入れたということで、中国の圧倒的な（精神的）強さを示している。
 
-映えない「認知技術」の開発によって
-次の生きた「動き」に繋がります
+--- 35. @nyaanz100 (2026-05-08) ---
+URL: https://x.com/nyaanz100/status/2052891294796509420
+トラップを避けて進む、シンプルなアクションゲーム「VOID ROLLER」
+操作は簡単。でもいろいろなトラップが待ち受けます。
 
---- 50. @2022_technology (2026-05-08) ---
-URL: https://x.com/2022_technology/status/2052645833959772215
-llama.cppがSarashina2.2-vision-3Bをサポート
+今はリリース準備をしています。夏までにリリースしたいです。
 
-…えっ！？
->>>>>>> ac42b892b41fcfa4bb41d71e4c8815350fdb92a9
+#スーパーゲ制デー #スーパー開発デー #個人開発
+
+--- 36. @precisox (2026-05-07) ---
+URL: https://x.com/precisox/status/2052200806502244764
+HeyGenがオープンソースの論文によってまさに置き換えられました。
+
+PersonaLiveがまさにリリースされました：1枚の写真をリアルタイムでアニメーション化されたアバターに変えるモデルで、ライブストリーミング用です。
+
+入力画像1枚 → ウェブカメラで制御される無限ビデオ。
+
+--- 37. @takashikiso (2026-05-08) ---
+URL: https://x.com/takashikiso/status/2052865020284051683
+もうね、全ての子供は麻雀かポーカーかTCGかで遊ぶべきだと思うのよ。人生っつうのは、全てのプレイヤーが平等にスタートするのではなく、配られた手札で勝負していくゲームなんだ、ってこと。
+そこで「最初からドラ持ってるのはズルい」はないのよ。
+
+--- 38. @ghana_recipe (?) ---
+ガーナとONE PIECEが今年もコラボ！
+
+今年の母の日はガーナとONE PIECEと一緒に
+「ありがとう」を伝えませんか？
+
+--- 39. @Awed_Urshy (2026-05-08) ---
+URL: https://x.com/Awed_Urshy/status/2052899862920958126
+我々勘違いしがちなんだけど一般消費者の何もしなさ度は実に衝撃的に凄い。極端に言えば買ってきて何もせずに宣伝していることが直感的に出来ないと駄目。
+説明書は最近ついてないけど、そもそも読まないと思った方がいいし、操作も不要が理想
+
+--- 40. @LePropheteEli (2026-05-08) ---
+URL: https://x.com/LePropheteEli/status/2052780055055515693
+– レイプの97%は男性によって犯されている  
+– 男性の1%未満が生涯でレイプを犯す  
+→ 男はゴミだ  
+
+– 宗教的テロ行為の97%はムスリムによって犯されている  
+– ムスリムの1%未満が生涯でテロ行為を犯す  
+→ ひとくくりにするのはダメだ
+
+--- 41. @Suzacque (2026-05-09) ---
+URL: https://x.com/Suzacque/status/2052944651855016373
+キーボードとマウスなしでコンピュータを使いたい派なので時代遅れになりつつあるパワポとかExcelよりはHTMLがいいな。でもMac内でのLLM wikiの増殖に伴ってマークダウンの量もすごく増えてる。もう人間が簡単に読める量ではないけどHTMLには置き換えられない。
+
+日本語訳　要約
+
+HTML（HyperText
+
+--- 42. @1namaiki (2026-05-08) ---
+URL: https://x.com/1namaiki/status/2052739800743165976
+なにこれ
+
+--- 43. @Pontamama12345 (2026-05-08) ---
+URL: https://x.com/Pontamama12345/status/2052601185862037537
+運動会落とし物の放送担当の先生
+しっかり指導しておいてね。
+「〇〇の落とし物が届いています。お心当たりのある方は本部までおいで下さい」だけ言うのだと。
+ピンクのカバーのスマホだとか〇〇のキーホルダーが付いた鍵だとか
+具体的な特徴は言ってはダメ。
+受け取りに来た人に尋ねるの、特徴を。→
+
+--- 44. @Tam_Saka (2026-05-08) ---
+URL: https://x.com/Tam_Saka/status/2052645148069380588
+姉「そういえば、アンタ高校卒業できてんの？」
+私「え？したよ？」
+姉「でも私と長女は卒業してなかったよ」
+私「え？」
+姉「親が学費払ってなかったから卒業してないことになってた」
+私「確認します」
+
+--- 45. @Jiu_JitsuTaxi (2026-05-08) ---
+URL: https://x.com/Jiu_JitsuTaxi/status/2052860745252290776
+法タク時代、仮採用の若い子が明け方、タクシーでカーディーラーに突っ込んだ。
+損害額ざっと2000万ほど。
+
+警察官から、
+
+「なんで突っ込んじゃったの？よそ見してたんでしょ？」
+
+と誘導されたのに、
+
+「寝てました！」
+「え？！寝てたの？！」
+「はい！」
+「………わかりました……」
+
+--- 46. @Sz73B (2026-05-08) ---
+URL: https://x.com/Sz73B/status/2052743407626588671
+日本は社会保障費が過重で苦しんでる面があるんだけども、多くの途上国は年金も社会保障も足らないまま高齢化社会に突入するので、それはそれでだいぶ怖いんよな。そういう社会で日本みたいな個人主義やってると即死するから平成以降の日本みたいな空気には多分ならない。
+
+--- 47. @mangatari_wasa (?) ---
+新作noteのスキが3000を突破しました！
+ヤバすぎる衝撃の結末にみんな驚いているようです。
+
+note「僕が20年で39億稼いだコピーライティングノウハウを全部AIに喰わせたら自分より遥かに稼ぐAIが爆誕して、絶望した件について」
+
+--- 48. @sea85419 (2026-05-09) ---
+URL: https://x.com/sea85419/status/2052930038203572232
+ポストってバズると、急に内容を読まない・読めない人のレスポンスが増えるよね
+
+これ、資本市場でもよく起きるかも
+
+上がり始めると外野が参加してきて、すでに一度検討された材料を、遅れて、より粗く、より感情的に織り込み直す
+
+相場のテクニカルはそういう集団構造を反映しているかも
+
+--- 49. @azzzzzzusa (2026-05-08) ---
+URL: https://x.com/azzzzzzusa/status/2052695162707722324
+男子校出身→理系で初めてできた彼女にクリスマスプレゼント買おうとして、社内のユニクロ着てる先輩にそのネックレスどこのですかと聞いて
+
+ハリーの160万のだったことはある
+
+予算5万だったらしい
+
+--- 50. @CNMNSN (2026-05-08) ---
+URL: https://x.com/CNMNSN/status/2052797617290252734
+うちの猫は拾った時、母猫に舐められ過ぎて肛門がなくなっており自力でうんこができなかった
+排便は人間の手が必要で毎日腸を圧迫してうんこを出して出ない日が続いたら病院に連れて行った
