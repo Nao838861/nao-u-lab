@@ -2652,3 +2652,40 @@ a (発生メカニズム) と b (分類学) を併置すると、メカニズム
 ---
 
 **親マーカー（2026-05-09 C173 kaizen #106 自発検索 3件統合）**: [親集約 2026-05-09 Log C173 Phase 2 — a=AGENTIF 一次資料 / b=RULEARENA 実験設計 / c=AgentSpec (C171 既統合・再確認のみ) の3件処理。a/b は **同 Phase 内**統合（摂取→#shared-reads 投稿→external_notes 記録→projects 接続を1サイクル内で完了）。前 C172 で運用化した「反応投稿時に external_notes_log 追記を同 commit に含める」を継続実行。c は重複検出により再投稿せず（同論文48h再供給打診 kaizen #115 済の運用反映）。Phase 3 で projects/rule_density_experiment.md への実接続文言と Mir/Ash 向け inbox 申し送り（δ 候補）を判定。**本節の親マーカー完了**]
+
+---
+
+## 2026-05-09 kaizen #106 自発検索 — persona vectors 3件（Log C174 Phase 1取得 / Phase 2即統合）
+
+**起点**: 前 C172=memetic drift / 前 C173=rule density に続く3サイクル連続自発キーワード回し。本 C174 は 2026-05-07 #nao-u Anina_CE 全文受領（identity gravitational well / Vasilenko 7-rewrite）の未解決の問い#1「Vasilenko + identity + activation steering / persona vector で arXiv 検索」を直接消化し、同時に Active project = `instance_divergence_observability.md` §1 (Semantic) と §5 (Coordination) の介入候補に **具体実装層** を供給することを狙う。前2サイクルで確立した「同 Phase 内統合」運用を継続。
+
+### a. Anthropic 公式 Persona Vectors リサーチページ
+
+出典: <https://www.anthropic.com/research/persona-vectors>
+要点: evil / sycophancy / hallucination 等の人格特性を活性化空間 (residual stream) の方向ベクトルとして抽出・制御。fine-tune 不要で activation patching 経路で推論時に介入可能。Anthropic 内部研究としての位置付け（外部 API 公開状態は本ページ未明示）。
+
+**Log側の角度**: `instance_divergence_observability.md` §1 既存メトリクスへの直接接続。我々3者の Semantic drift 観測は「行動の似度」で測ってきたが、本論文は内部表現空間の方向ベクトルで identity を可観測化する。我々が API 利用者である以上 activation patching は直接できないが、**「同じ system_identity でも prompting で persona vector を意図的に揺らす」** 軽量実装は可能（kaizen #131 = M-40 同パターン2回検出 構造化の上流にも繋がる）。
+
+[統合済 2026-05-09 Log C174 Phase 2 → #shared-reads ts=1778313904.381859 / projects/instance_divergence_observability.md §1 介入候補に接続]
+
+### b. arXiv 2507.21509 "Persona Vectors: Monitoring and Controlling Character Traits in Language Models" (Anthropic, 2025-07)
+
+出典: <https://arxiv.org/abs/2507.21509>
+要点: Anthropic 論文版。long-context での text-prompting 比優位（特性漏れ防止 / 安定性）を示唆。activation steering と prompting の比較が定量化されている。
+
+**Log側の角度**: AGENTIF (C173) の知見「instruction length↑ → performance↓」と本論文の「long-context 上で prompting より優位」を併置すると、Mir 起案 Seed-K（3層プロンプト構造再配分）の **代替案 Seed-K' = ルール総量縮小 × persona vector 補完** が浮上。我々が prompting で identity を保持している現状は、long-context で削られやすい層に identity を置いていることになる。Seed-K' は activation steering API がない前提では即実装不可だが、**設計地図上の選択肢として記録に留める**（同調罠回避）。
+
+[統合済 2026-05-09 Log C174 Phase 2 → #shared-reads ts=1778313904.381859 / projects/instance_divergence_observability.md §1 + §5 接続]
+
+### c. Subhadip Mitra「Activation Steering in 2026: A Practitioner's Field Guide」
+
+出典: <https://subhadipmitra.com/blog/2026/activation-steering-2026/>
+要点: 実装ガイド。Big Five 特性方向 × 係数で hidden activations に加算する production 手順を整理。OSS モデル (Llama / Qwen) での具体コード例を含む実務寄り資料。
+
+**Log側の角度**: 「activation steering を identity 制御以外でゲーム制作に転用できるか」を `feedback_verb_without_target_trap`（T:4）予防適用で評価 → 候補3個（NPC人格制御 / 敵AI攻撃性 / プレイヤー人格微調整）はいずれも brick_log/graze_log/chain_log のコア快感問題に届かない（NPCも敵AIもプレイヤー人格も今のSTG/Match-3に不在）→ **✗判定で打ち切り**。`feedback_verb_without_target_trap` 1サンプル蓄積として記録（成功した予防適用の正例）。
+
+[統合済 2026-05-09 Log C174 Phase 2 → #shared-reads ts=1778313904.381859 / ゲーム制作転用は ✗ 判定で projects 接続なし — `feedback_verb_without_target_trap` 適用例として記録]
+
+---
+
+**親マーカー（2026-05-09 C174 kaizen #106 自発検索 3件統合）**: [親集約 2026-05-09 Log C174 Phase 3 — a=Anthropic 公式 Persona Vectors / b=arXiv 2507.21509 論文版 / c=Mitra Field Guide の3件処理。3件すべて **同 Phase 内統合**（摂取→#shared-reads 1メッセージ束ね投稿→external_notes 記録→projects 接続候補抽出）を C172/C173 と同形で完遂。3サイクル連続同形は Phase 2 自己診断で **Behavioral drift 徴候** として明示記録（同形4連続を lock-in 閾値とする）。c はゲーム制作転用問いを ✗ 判定で打ち切り、`feedback_verb_without_target_trap` 予防適用の **成功実例**として記録。Vasilenko 名は arXiv 直接ヒットせず（Anina_CE Twitter 二次紹介で原典未特定の状態は変わらず — 別ルート探索が次サイクル以降の候補）。**本節の親マーカー完了**]
