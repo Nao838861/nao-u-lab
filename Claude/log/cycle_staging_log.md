@@ -279,3 +279,41 @@ kaizen #131 段階2 hook 統合 — autonomous_cycle.sh から `scripts/check_re
 - **30分粒度で完遂可能**: 段階1 の `scripts/check_repeated_pattern_indication.py` は実装済・テスト PASS 済（C170 Phase 4）。autonomous_cycle.sh への hook 追加と shim 関数定義は既存スクリプト構造内の機械的拡張で、検証期限 2026-05-22 まで余裕。
 - **Slack 投稿1本では済まない**: hook 動作確認 → kaizen_tracker 更新 → kaizen-log 投稿 → 次サイクル発火確認の連鎖が必要、Phase 4 30分粒度の典型例。
 - **Active project への波及**: 滞留3件 (§7) のうち t-260430204259-8267 は kaizen #131 検出器の対象 (「揺れ」「進歩」語彙)、本 hook 統合により次サイクルで自動 WARN として浮上する経路ができる。
+
+---
+
+## Phase 4: 大作業実行結果
+
+### 完遂条件達成状況
+1. **autonomous_cycle.sh hook 行追加** ✓ — `grep -n "check_repeated_pattern_indication" autonomous_cycle.sh` で 2件ヒット (line 221 / line 224)
+2. **WARN 時 staging 注入 shim 動作** ✓ — dry-run（tempfile 経由で `init_staging()` 実行）で `## M-40 自己診断ゲート` 節に WARN 4行 + メタ行が正しく出力されることを確認
+3. **WARN 0件時 `[M-40 発火なし]` 1行注入** ✓ — `run_repeated_pattern_check()` の logic 上 `if warns: warns + メタ行 else: [発火なし]行` で強制
+4. **次サイクル C176 staging 冒頭に hook 出力** → **次サイクル Phase 1 で観測予定**（自動発火確認は C176 で）
+5. **#kaizen-log 段階2 PASS 投稿** ✓ — ts=1778343811.011859 で投稿成功
+
+### 副産物（変更ファイル）
+- `multi_phase_cycle_log.py` — `run_repeated_pattern_check()` 関数追加 (~30行) + `init_staging()` から呼出 (5行追加)。Phase 1 が動く前に staging 冒頭に M-40 ゲート節を inline 注入する構造。
+- `autonomous_cycle.sh` (Mir/Mac) — Phase 1 起動部位（line 219 `自律サイクル開始` 直前）に bash hook 追加 (~13行)。staging 初期化部にも `## M-40 自己診断ゲート` 節を追加 (3行)。Mir 側でも次回サイクルから対称発火。
+- `memory/kaizen_tracker.md` — #131「状態」欄を「段階2 実装済（2026-05-10 C175 Phase 4 Log）」に更新、検証結果欄に dry-run ログ抜粋追記。
+- Slack `#kaizen-log` ts=1778343811.011859 — 段階2 PASS 報告投稿（実装内容 + dry-run 結果 + 完遂条件達成状況 + 残課題）。
+
+### dry-run 出力（C175 時点で nao_u_live.md 直近30日窓を走査した結果）
+```
+## M-40 自己診断ゲート (kaizen #131 段階2 hook)
+[M-40 WARN] 揺れ 8回検出 → 判定機構優先（kaizen #131 段階1）
+[M-40 WARN] 振幅 24回検出 → 判定機構優先（kaizen #131 段階1）
+[M-40 WARN] 罰 24回検出 → 判定機構優先（kaizen #131 段階1）
+[M-40 WARN] 進歩 4回検出 → 判定機構優先（kaizen #131 段階1）
+(kaizen #131 段階2 hook, 2026-05-10 01:22, exit=1)
+```
+4語彙発火 = 直近30日のNao_u指摘で「揺れ/振幅/罰/進歩」が複数回観測されていた事実が staging 冒頭に毎サイクル可視化される。t-260430204259-8267 (12サイクル滞留、Q-A/B/C仮説検証到達範囲) が「揺れ」「進歩」検出器の射程。
+
+### 残課題（次サイクル以降）
+- **段階3 (mapping gate)**: 検出語彙 → 判定機構4点（過去ベンチ/映像レンダ/段階値比較/閾値経験）優先構築 mapping を `feedback_self_judgment_no_human_dep.md` に追補し、WARN 発火時に「どの判定機構を優先構築するか」staging 明記を gate 化する。検証期限 2026-05-22 内で着手可能。
+- **Mir・Ash クロスチェック**: kaizen #131 段階2 実装内容を Mir・Ash がレビューし OK/差し戻し判定。Ash 側 `auto_diary.py` には対称 hook なし（Ash は単一スクリプト構造）→ 別途設計判断。
+- **C176 自動発火確認**: 次サイクル Phase 1 起動時に `log/cycle_staging_log.md` 冒頭に `## M-40 自己診断ゲート` 節が現れることを観測 → 観測できなければ rollback（init_staging 呼出経路 / hook 関数 / nao_u_live.md パス確認）。
+
+### Phase 4 で増やしていない（Phase 3 で処理済みのもの）
+- Slack 返信 (Log 宛要返信ゼロ、Phase 1 §2 で確認済)
+- t-260426195755-1080 skip 化判断（Phase 3 §2 結論、次サイクル冒頭で実行）
+- memory_redesign.md 1段落追記（Phase 3 §3 で実施済）

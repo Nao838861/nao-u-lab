@@ -216,6 +216,21 @@ else
     WEEKLY_REVIEW_PROMPT=""
 fi
 
+# 8g. M-40 自己診断ゲート (kaizen #131 段階2 hook, 2026-05-10 Log C175 実装)
+# nao_u_live.md 直近30日窓を走査し、同パターン語彙2回以上で WARN 行を staging に inline 注入。
+# 段階1 = scripts/check_repeated_pattern_indication.py (C170 PASS 済)。
+# 形骸化防止: WARN 0件でも「[M-40 発火なし]」1行を必ず staging に出す（ノーオペで黙らない）。
+# Log 側は multi_phase_cycle_log.py init_staging() で対称実装。
+M40_RAW=$(python3 scripts/check_repeated_pattern_indication.py 2>&1)
+M40_TS=$(date '+%Y-%m-%d %H:%M')
+if echo "$M40_RAW" | grep -q "\[M-40 WARN\]"; then
+    M40_WARN_BLOCK=$(echo "$M40_RAW" | grep "\[M-40 WARN\]")
+    M40_LINE="${M40_WARN_BLOCK}
+(kaizen #131 段階2 hook, ${M40_TS})"
+else
+    M40_LINE="[M-40 発火なし] (kaizen #131 段階2 hook, ${M40_TS})"
+fi
+
 echo "$(date): 自律サイクル開始（pull完了済み）"
 
 # === Mir起動意図の読み込み（3項目上限・構造強制 2026-04-27） ===
@@ -285,6 +300,9 @@ else
     STAGING_FILE="log/cycle_staging_mir.md"
     {
         echo "# サイクルステージング $(date '+%Y-%m-%d %H:%M')"
+        echo ""
+        echo "## M-40 自己診断ゲート (kaizen #131 段階2 hook)"
+        echo "$M40_LINE"
         echo ""
         echo "## Pre-check結果"
         [ -n "$KAIZEN_PROMPT" ] && echo "- $KAIZEN_PROMPT"
