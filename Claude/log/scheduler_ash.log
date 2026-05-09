@@ -85352,3 +85352,34 @@ UnicodeEncodeError: 'cp932' codec can't encode chara
 [2026-05-09 09:52:26] [slack_check] Starting
 [2026-05-09 09:53:45] [slack_check] Starting
 [2026-05-09 09:54:14] [health_check] Starting
+[2026-05-09 09:54:14] [health_check] [health_check] 2026-05-09T09:54:14 overall=OK
+[2026-05-09 09:54:14] [health_check]   critical=0 warning=0 ok=9
+[2026-05-09 09:54:14] [health_check] Done (exit=0)
+[2026-05-09 09:55:04] [slack_check] Starting
+[2026-05-09 09:56:23] [slack_check] Starting
+[2026-05-09 09:57:12] [git_sync] Starting
+[2026-05-09 09:57:27] [git_sync] Done (exit=0)
+[2026-05-09 09:57:37] [infra_health_check] Starting
+[2026-05-09 10:01:02] ==================================================
+[2026-05-09 10:01:02] Ash scheduler started (PID 6700)
+[2026-05-09 10:01:02] Max runtime: 0 hours
+[2026-05-09 10:01:02] Code hash: 6f5348d28474509bfdc7de689fe1c34a
+[2026-05-09 10:01:02] Config: scheduler_ash_config.json (hot-reload enabled, changes auto-applied without restart)
+[2026-05-09 10:01:02] Jobs: git_pull, slack_check, inbox_check, dm_check, dm_check_pigadev, reservation_check, review_deadline, kaizen_auto_verify, weekly_self_review, git_sync, auto_diary, twitter_recommended, check_usage, health_check, infra_health_check, scheduler_health
+[2026-05-09 10:01:02] ==================================================
+[2026-05-09 10:01:02] [git_pull] Starting
+[2026-05-09 10:01:03] [git_pull] Done (exit=128)
+[2026-05-09 10:01:13] [slack_check] Starting
+[2026-05-09 10:01:33] [reservation_check] Starting
+[2026-05-09 10:01:33] [reservation_check] 行動予約: 待機中 5 件、期限到来なし
+[2026-05-09 10:01:33] [reservation_check] Done (exit=0)
+[2026-05-09 10:01:43] [inbox_check] Starting
+[2026-05-09 10:01:45] [inbox_check] Inbox win2 empty
+[2026-05-09 10:01:45] [inbox_check] Done (exit=0)
+[2026-05-09 10:01:45] [dm_check] Starting
+[2026-05-09 10:01:59] [dm_check] No new DMs
+[2026-05-09 10:01:59] [dm_check] Done (exit=0)
+[2026-05-09 10:01:59] [review_deadline] Starting
+[2026-05-09 10:01:59] [review_deadline] レビュー期限超過なし。
+[2026-05-09 10:01:59] [review_deadline] Done (exit=0)
+[2026-05-09 10:01:59] [health_check] Starting
