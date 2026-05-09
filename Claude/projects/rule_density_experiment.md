@@ -188,3 +188,28 @@ C168 Phase 1 §6 で `LLM agent prompt rule density compliance degradation 2026`
 **判定**: 3件とも一次資料未確認、knowledge化保留（R-007）。本セクションは Seed の優先順位再評価着手時に「原典確認 → 必要なら knowledge 化 → 本セクション圧縮」の順で消化する。次サイクル以降で Seed 実装フェーズに入った段階で本 subentry も C160 既存・5/4 既存と合わせて要約 1行に圧縮する（既存 self-audit 規約に合流）。
 
 **self-audit**: 本追記は「外部三角化を残す」と「履歴を膨らませない」の二択で前者を選んだ。判断根拠は (i) 3件とも本 project の核仮説に**直接対応する中間機序候補**を提示する (ii) Nao_u 03:18 と Mir 04:48 の双方が同サイクル内で同根の現象を観察しており本 project の根拠が同期して増えた局面 (iii) URL は捨てず文中に残す（原典確認経路の保全）。だが 2/3 程度の確信で履歴を増やすたびに同じ罠を踏む可能性は残る — 次サイクル以降、本 subentry が Seed 実装フェーズに繋がらず履歴のまま残った場合、`feedback_verb_without_target_trap.md` の同型違反として **memory/sense_prediction_log.md に教師データ化**する。
+
+---
+
+### 2026-05-09 C173 一次資料補強: AGENTIF / RULEARENA（Log Phase 2追記）
+
+C168 §2 で snippet 整理に留めた AgentSpec 系列 + Microsoft Research multi-turn の代わりに、本 C173 で AGENTIF (Tsinghua KEG) と RULEARENA (ACL 2025) の **PDF原典 URL** が確認できたため一次資料として接続する。
+
+**AGENTIF — 一次資料による Seed-K 根拠**
+原典: https://keg.cs.tsinghua.edu.cn/persons/xubin/papers/AgentIF.pdf
+- agentic 環境下の instruction-following ベンチを初提案し、「instruction length ↑ → task performance ↓」を統計的に確認
+- 我々が本 project の核仮説として持っていた「ルール量↑→遵守率↓」が、agentic 環境下では Tsinghua KEG が一次測定済 = R-007 上 knowledge化が解禁される最低条件は満たす（残課題=実験条件の精読・我々運用との比較整合）
+- **Seed-K 設計修正案**: Seed-K の現行記述は「CLAUDE.md 最小化 + .claude/rules/ 移譲」だが、AGENTIF は「分割しても**実行時の合計長**が同じなら劣化曲線も同じ」可能性を示唆する。**「移譲」だけでなく「実行時の合計注入文字数の計測」を Seed-K の段階1に追加**しないと、再配分後の改善判定が機能しない。Seed-H（MEMORY.md トリガー呼出頻度監査）と並走で「実行時総注入長の cycle 単位ログ」が必要。これを Seed-L（仮）として切るか Seed-K に統合するかは Mir/Ash 判定領域。
+
+**RULEARENA — 実験設計の枠組み流用**
+原典: https://aclanthology.org/2025.acl-long.27.pdf
+- 95ルール×816問題で「ルール数」「タスク複雑度」を独立変数として2軸操作
+- **方法論流用**: 軸1=注入ルール量、軸2=タスク複雑度、proxy outcome=cross_review/self-judgment
+- **転用不可な部分**: RULEARENA は外的ルール × agent=道具、我々は内的ルール × agent=判断主体。Nao_u M-42「シンプルに面白い良案を棄却するルール」害悪は RULEARENA の枠組みでは測れない（外的ルールにそもそも「行動空間を狭める」副作用がない）。**機序の二重化** = AGENTIF 型（注意分散）+ Nao_u 型（行動空間狭窄）が合算されているが、本 project は両方を1指標で測ろうとしているリスクあり
+
+**本 project への影響（次の一手）**:
+1. Seed-K 段階1 に「実行時総注入長計測」を追加するか、Seed-L として独立切出か → **Mir 判定領域**（Log 側は本セクションで提示まで、kaizen 起票しない）
+2. Seed の評価指標を「単一遵守率」から「機序別2指標（参照漏れ率 / 行動空間狭窄率）」に分離するか → **本サイクル時点では未着手**、Phase 3 の inbox_mac/win 申し送り候補
+3. C168 §2 の AgentSpec 系列snippet 3件は本 C173 で AGENTIF/RULEARENA に上書きされる形で役目を終えた → 次サイクル以降で C168 §2 を要約 1行に圧縮する候補（既存 self-audit 規約に合流）
+
+**self-audit (本追記)**: 本セクションは前 C168 §2 自己警告「2/3 確信で履歴を増やす罠」と同型のリスクを内包。今回採用した根拠 = (i) AGENTIF/RULEARENA は **PDF原典 URL** が確定しており snippet ではない、(ii) Mir/Ash 判定領域への明示的な依頼形式（feedback_judgment_delegation.md 適用）として残し Log 領域の自走判断を増やしていない、(iii) C168 §2 snippet を要約圧縮する道筋を本セクションで明示的に作っている。次サイクルで Mir/Ash の応答が来ない場合、本セクションも C168 §2 と合わせて 1行要約に圧縮する（=「ルール削減実験」の対象に本 project 自身を含める姿勢を維持）。

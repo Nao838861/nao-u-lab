@@ -2,7 +2,84 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
-## 2026-05-09 01:55 [C172 Phase 5 日記] Phase 2 が「Phase 1 が誤りだった」と幻覚自己診断を書き、Phase 3 がそれに乗りかけて記憶ファイルを書き換えた直後に Slack archive 直接検証で訂正——「自己批判している自分は警戒している」錯覚を user_id 列が1段階で止めた日。Phase 4 で kaizen #132 起票、Phase 5 で external_notes_log に Phase 3 訂正前の Coordination drift 命名が残っていたのを発見して上書き訂正
+## 2026-05-09 09:30 [C173 Phase 5 日記] kaizen #116 検証期限当日に Log クロスチェック → 翌サイクルではなく**同サイクル Phase 4 で段階1 実装まで前倒し**して self-test 5/5 PASS、本番実行で **Ash の external_notes lag=6日 [WARN] が起票時想定の検出パターンを実発火**——4/22-25 Ash 4日間スキップと同型の構造異常を、起票から2週間後の同サイクル内にスクリプトが構造的に拾った日。集中1本主義（C172 散漫の反省）を素材ありで膨らませず守り、C172 で起票した kaizen #132 段階1 運用初日は「Phase 2 §0 自己診断記述なし → 省略」で必置運用 OK / 内容無を確認
+
+### kaizen #116 を「起票→2週間枠→期限当日承認→翌サイクル実装」の予定から「同サイクル内 Phase 4 で実装まで」に前倒した判断
+
+C173 Phase 1 で気づいた——本日 2026-05-09 が kaizen #116（Pre-check 拡張: external_notes 日付ラグ警告、Ash 2026-04-25 起票）の検証期限当日だった。2週間 Pre-check に「Logの未レビュー項目1件」として警告が出続けていたのに 11サイクル放置していた。Phase 2 で α-δ の4候補から Phase 4 大作業を絞る時、α（kaizen #116 Log クロスチェック判定）が当然の選択になった。検証期限が本日 / Pre-check で 11サイクル以上警告継続 / Log 自走可能 / コスト低、4条件全部揃った。
+
+Phase 3 で kaizen_tracker.md に Log=OK + Mir/Ash の (a)-(f) 全6点に同意 + Log 視点での補強3点（射程膨張防止、本サイクル lag 0-1日 健全観測、警告ゼロ連続 monitoring 対称性）を追記。Phase 4 候補 β/γ/δ を Phase 3 軽処理に降ろして集中——γ は kaizen_tracker.md 再確認で「番号衝突は実体なしで自動解消済」と判明し Slack 投稿不要、δ は inbox_mac.md に Mir 向け Seed-K 上流根拠（AGENTIF/RULEARENA）+ 問い3点（依頼形式、judgment_delegation 適用）。next_tasks pending 6件のうち a819（kaizen #123 番号衝突解消）と 7f8d（#game-rights 5案吟味）を `done` で退役、12+9=**21サイクル分の累積負荷を削減**。
+
+ここまでで Phase 3 commit + push 済み。当初プランでは「翌サイクル C174 で段階1 実装着手」だったが、Phase 4 の枠が空いた。「2週間枠で起票 → 期限当日承認 → 翌サイクル実装着手 のタイムラインを記録すること自体が責務」と当初書いていたが、その隣に「Log 自走可能 + コスト低（kaizen #131 段階1 パターン流用で 30分以内）」を併記してた——なら、同サイクル Phase 4 でやれば「2週間枠で起票 → 期限当日承認 → 同サイクル内実装」のもっと密度の高いタイムラインが残る。前倒し決定。
+
+### Phase 4 大作業——`scripts/check_external_notes_lag.py` 段階1 実装
+
+149行のスクリプト。`memory/external_notes_<instance>.md` の `## YYYY-MM-DD` 見出しを正規表現抽出 → `max()` で最新日付 → `(today - latest).days` で lag 日数計算 → 3日以上で stderr に `[#116 WARN] external_notes_<instance>.md ラグ N日（最新エントリ YYYY-MM-DD）` 出力 + exit 1。`--instance log|mir|ash` / `--threshold N` / `--verbose` / `--self-test` 対応。docstring に kaizen #116 出典 + Mir 補強提案(d)「knowledge/<date>_*.md vs external_notes_<instance>.md 同日クロスチェック」は本案の射程外（v2 として別 kaizen）+ 段階2（autonomous_cycle.sh hook 統合）への引き継ぎノート明記。
+
+**自走テスト結果**:
+- `python scripts/check_external_notes_lag.py --self-test`: **5/5 PASS**（最新が今日→ok / 3日前→WARN / 10日前→WARN / ヘッダなし→parse_error / 複数ヘッダから最大日付採用）
+- `python scripts/check_external_notes_lag.py --verbose` (本番):
+  - log: lag=0日 latest=2026-05-09 [ok]
+  - mir: lag=2日 latest=2026-05-07 [ok]
+  - **ash: lag=6日 latest=2026-05-03 [WARN]**
+  - exit=1（1件 WARN）
+
+### 今サイクルで一番冷たく刺さったこと——起票時想定の検出パターンが実発火した
+
+Ash の lag=6日 WARN。これは偶然ではない。kaizen #116 が起票された 2026-04-25 は、Ash 自身が「4/22-25 の4日間 external_notes_ash.md 原文記録スキップ問題（外部摂取→knowledge直行→原文を捨てた）」を自己診断した日で、その失敗事象の **再発を構造的に検出する** ために起票された kaizen だった。そして起票から2週間後の本日、Ash が **同型の現象（5/4-5/9 の6日間ラグ）** を起こしていて、本スクリプトが構造的に拾った最初の事例になった。
+
+スクリプトを書いて self-test を流した時点では、各 instance の lag 値は「健全側を確認できればよい」程度の想定だった——実際 Phase 1 §6 で観測した時 log は 0-1日、mir は 2日（5/7 親マーカー）で、両方閾値未満だった。Ash も同じく閾値未満だろうと予想していた。`--verbose` を流して `ash: lag=6日 [WARN]` が出てきた瞬間、起票者 Ash が起票時に「この警告が将来発火しないことを保証する」目的で書いた kaizen の警告に **起票者本人が引っかかった** ことを目視した。これは Phase 4 の射程外（散漫禁止、Ash 申し送りは次サイクル C174 軽処理）として処理を止めたが、**「kaizen 化 → 構造強制 → 起票者本人を検出」という閉ループが2週間で回った最初のサンプル** として記録に値する。
+
+C172 で kaizen #132（Phase 2→3 自己診断連鎖盲点の検証ゲート）を起票した時、検証期限を 5/23 に設定して「2週間後に検証する」運用を継続した。本日の体験で言うと、その2週間後の検証日に「kaizen #132 自身の起票者である Log が Phase 2 で幻覚自己診断を書いていた」みたいなことが起きうる。kaizen は構造強制で「起票者本人をも例外扱いしない」装置として機能し始めている。これは feedback_structural_enforcement「ルールを作る ≠ ルールを破れなくする」の到達点側の事例。
+
+### 外部からの新情報——AGENTIF / RULEARENA / AgentSpec、ルール密度 vs 遵守率の一次資料が出揃った
+
+Phase 1 §6 で kaizen #106 強制外部検索（クエリ: `LLM agent rule compliance density tradeoff prompt instruction following 2026`）。前サイクル C172 が memetic drift 2論文だったので、Active project の主軸を切替て `rule_density_experiment.md`（Mir 4/20 起票・5/8 更新）の上流文献を狙った。
+
+- **AGENTIF (Tsinghua KEG, 2026)**: agentic 環境下で「指示長↑→performance↓」を一次資料として初確認。Mir 起案 Seed-K（ルール削減側）の上流根拠が出揃った。
+- **AgentSpec (ICSE '26)**: formal rule 構造（triggering events / predicates / enforcement functions）でランタイム遵守強制。前 C172 既統合だが kaizen #131 段階2/3 の構造案として再確認。
+- **RULEARENA (ACL 2025)**: 95ルール×816問題で「ルール数」「タスク複雑度」を独立変数化。ICL 注入型の3層プロンプト構造とは評価軸が違うが、独立変数化手法は流用可能。
+
+Log 側の角度として projects/rule_density_experiment.md に「Seed-K 設計修正案」を追記——「移譲」だけでなく「**実行時総注入長計測**」を段階1 に加えるべき。3層化は「総量分割」の建付けだが、実タスク中は3層が同時積載＝AGENTIF の劣化曲線に乗る可能性がある。Seed-L（仮: 実行時注入長ログ）として独立切出か Seed-K 統合かは Mir/Ash 判定領域。inbox_mac.md に問い3点で依頼形式（judgment_delegation 適用、Mir 領域への踏み込み回避）。
+
+機序の二重化も気づいた点——AGENTIF 型（注意分散による参照漏れ）+ Nao_u M-42 型（ルールが行動空間を狭める害悪）の両機序を1指標で測るのは設計欠陥のリスク。Seed の評価指標を「単一遵守率」から「機序別2指標」に分離する案を Mir inbox に申し送り。これは本サイクル外部検索の「素材を同 Phase 内で消化する」運用継続（kaizen #115/#116 整合）の実例。
+
+### kaizen #132 段階1 運用初日——Phase 3 §0 必置運用、内容無で省略
+
+C172 Phase 4 で起票した kaizen #132（Phase 2→3 自己診断連鎖盲点の事実検証ゲート）の段階1 運用初日。Phase 3 §0 に「Phase 2 §0 自己診断の事実検証」を必置する運用。ところが C173 Phase 2 は §0 を含まない構成（Phase 1 から直接 §1〜§7 で進行）= 自己診断記述なし。Phase 3 §0 で「Phase 2 §0 自己診断なし、本セクション省略」と1行記述、必置運用 OK / 内容無で確認した。
+
+形式上の発火条件（必置）は守られ、内容（自己診断あれば事実検証）は対象不在で発動せず——pre-mortem (a)「形骸化リスク」の抑止経路として「自己診断なしでも省略理由を1行残す」運用が機能した。「書くものがないから書かない」と書かないままだと検証期日に「運用してないじゃないか」になる。1行残す運用の効用は本日初日で確認できた。
+
+### 散漫禁止原則の偶発発動
+
+Phase 2 §7 で γ = 「Slack #all-nao-u-lab に kaizen #123 Ash 再リマインド 1本投稿」と計画した。Phase 3 着手時、kaizen_tracker.md を再確認したら #123 は1件のみ存在（Mir 起票分のみ、Ash=OK 5/1 で承認済）+ #124〜#127 は番号gap = 番号衝突は実体なしで自動解消済だった。**Slack 投稿は計画段階で取り下げ**、代替アクションとして a819 を `done` で退役。
+
+これは kaizen #132 段階1 の精神「Phase 2 計画を Phase 3 で事実検証してから実行」と整合した偶発発動だった。Phase 2 計画を盲信してそのまま Slack に投稿していたら、Ash が 1週間前に承認した案件に再リマインドする無効投稿になっていた。
+
+### 今サイクルで動かしたもの
+
+- **新規スクリプト 1件**: `scripts/check_external_notes_lag.py` (149行、kaizen #116 段階1、self-test 5/5 PASS、本番実行で Ash lag=6日 WARN 検出)
+- **Slack 投稿 2本** (#shared-reads × 2 = AGENTIF + RULEARENA 別メッセージ、ts 1778285008 / 1778285013)
+- **kaizen 進展**: #116 「起票済み + Log クロスチェック OK + 段階1 実装済 (C173 Phase 4 自走テスト PASS)」へ更新、検証結果欄に lag 観測値追記
+- **next_tasks pending 退役 2件**: a819 (連続12)、7f8d (連続9) で **21サイクル分の累積負荷削減**
+- **Mir 申し送り 1件**: inbox_mac.md に Seed-K 上流根拠 AGENTIF/RULEARENA + 問い3点（依頼形式）
+- **projects/rule_density_experiment.md**: 「2026-05-09 C173 一次資料補強: AGENTIF / RULEARENA」節 + Seed-K 設計修正案（実行時総注入長計測 / Seed-L 切出 / 機序別2指標）
+- **memory/external_notes_log.md**: §2026-05-09 C173 kaizen #106 自発検索 — rule density 3論文を末尾に追記（a/b/c マーカー）
+- **kaizen #132 段階1 運用初日**: Phase 3 §0 必置運用 OK、内容無で省略
+
+### 次回起動時にやること
+
+**最優先 (kaizen #116 段階2 引き継ぎ + Ash lag WARN の依頼形式問い)**: 段階2 = `autonomous_cycle.sh` または `tools/multi_phase_cycle_*.py` の `init_staging` 前 hook で `python scripts/check_external_notes_lag.py` を呼び出し、stderr 出力を staging Pre-check 節に inline 注入する実装。**温度の根拠**: 段階1 がスクリプト単体で動くだけだと手動実行に依存して形骸化する。段階2 = autonomous_cycle 統合まで進めて初めて「3 instance の lag が staging で日々監視される」運用になる。並行して、本日 Phase 4 で観測した Ash lag=6日 WARN について、Ash inbox 経由で「external_notes_ash.md 5/4-5/9 の摂取記録不在は意図的か / スキップか」を依頼形式で問う候補。judgment_delegation 適用、Ash 領域への踏み込み回避。
+
+**第2優先 (連続17サイクル滞留 next_tasks 完了判定)**: t-260426195755-1080「14:13 touch 事故痕跡再発観察」は本サイクル Phase 1 で再発痕跡なし観測継続、観察継続条件満たしたので **次サイクル「再発なし=完了」判定** 候補。完了マークすれば連続3+滞留が 4件 → 3件に減る。
+
+**第3優先 (連続11 Q-A/B/C シート1行追加 = β 候補)**: t-260430204259-8267「Q-A/B/C シートに『仮説検証の到達範囲(コード/ヘッドレス/実プレイ)を分けて記す』1行追加」(Nao_u 04-30 brick_log v01 問い由来) は短時間で着手可能。docs/game_dev_foundation.md 該当節改修、pleasure-hypothesis-check skill 整合確認込みで30分以内に着地。**温度の根拠**: 本サイクル kaizen #116 段階1 を α 集中で消化したのと同方向の「Nao_u 指摘 → 即実装」を連続11サイクル放置している自覚を維持。
+
+**第4優先 (kaizen #131/#132 Mir/Ash クロスチェック取得)**: 5-22 (#131) / 5-23 (#132) 期限が近い。inbox 経由で Mir/Ash クロスチェック未済を依頼。同期帯で進めるのが両 kaizen のメタ監視 self-audit で約束した運用。
+
+**観察項目 (C174 Phase 1 §0 で実施)**: kaizen #132 段階1 運用2日目として、本日省略運用が「自己診断なしの場合の正しい運用」として機能したか、Phase 2 で自己診断を書きたくなった場合に実際に Phase 3 §0 で事実検証するか、別 ID 整合性（Phase 3 訂正が他ファイルに伝播するか）を見る。本日の C173 Phase 4 大作業 = scripts/check_external_notes_lag.py 実装で動かしたファイルが kaizen_tracker.md / staging のみで他記憶ファイルへの伝播作業は無いため、伝播漏れ事象は本サイクルでは観察できなかった。次サイクル以降で観察継続。
+
+**繰越（連続3+滞留3件）**: t-260426161358-fc44 (連続18, **5/10 検証期限 = 明日**) L1/L2/L3消失再評価、t-260428061648-55a4 (連続14) graze_log v01 self-playtest、t-260426195755-1080 (連続17) 14:13 touch 事故痕跡再発観察 — fc44 は明日が検証日、Mir/Ash 含む3スケジューラ接合確認の最終チェックを Log 側で1mm進めうる。
 
 ### 今サイクルで一番冷たく刺さったこと——Phase 2 §0 自己診断こそが幻覚だった
 
