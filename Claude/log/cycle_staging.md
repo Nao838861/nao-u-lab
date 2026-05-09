@@ -144,3 +144,44 @@ v02/predicted_play.md (218行相当・遡及作成) と v02/self_judgment.md (�
 - **Phase 5 日記素材**: 「v02 で遡及作成した predicted_play.md + self_judgment.md を、v03 では実装前に書いた」事実そのものが日記素材。M-39 + M-40 ゲートを物理的に閉じた最初の事例。差分は「v02 = 6/6 項目遡及で的中したが、その精度は出荷前に書けば未然に懸念潰せたことの証拠でしかなかった」→「v03 = 同じ精度の予測を Nao_u プレイ前に並べた、Nao_u 評価受領時の差分検証で予測精度が遡及と同等に出るかが次の検証対象」
 - **次サイクル指示**: 「v03/index.html を実装」+「実装後 Nao_u プレイ前に、predicted_play.md / self_judgment.md を一度も書き換えずに残す」+「Nao_u プレイ評価受領後、predicted_play.md §2 予測A/B/C/D 確率と self_judgment.md Q1/Q2/Q3 を差分検証」
 
+---
+
+## Phase 4 大作業の結果 (2026-05-10 セッション継続)
+
+### やったこと
+- **作成 + commit**: `game/graze_log/v03/index.html` (805 lines, v02 634 行から +171 行) — brainstorm.md §2 候補A 完全実装
+  - 定数3: `GRAZE_STREAK_TH=5` / `ACTIVE_DEF_FRAMES=60` / `ACTIVE_DEF_RADIUS=80`
+  - state 追加3: `grazeStreak` / `activeDefT` / `activeDefCount` (startGame で reset)
+  - 関数追加2: `triggerActiveDef()` (1秒自機無敵 + 半径80px 弾消去 + リング表示) / `spaceContext()` (B/D/- 判定)
+  - SPACE 文脈分岐: `gauge MAX → fireBomb()` / それ以外 + `grazeStreak >= 5 → triggerActiveDef()` / それ以外何もしない
+  - HUD 追加: `STREAK n/5  DEF n` を既存 LV/GRAZE/KILL 行末に追加 / SPACE 文脈ラベル (色付き B/D/-) / 自機シールド表示 (active def 中 = 太cyan-greenリング / streak 閾値到達中 = pulse cyan-green リング)
+  - GAME OVER 画面に `DEF n` 行追加
+  - title 画面に「GRAZE 連続 5 回 → ACTIVE DEF」説明追加
+  - onGraze 内で `grazeStreak++` + 閾値到達瞬間に「DEF READY」ポップアップ
+- **作成 + commit**: `game/graze_log/v03/README.md` — v02 → v03 の差分明示 + 戻し方 11 ステップ + 触っていない既存機構リスト + 判定方針 (headless 不使用) + 接続先
+- **commit**: `7e73f1457 ash: graze_log v03 実装本体 — Psyvariar型 grazeStreak→active防御 1機能` (ash: プレフィックス付き、backup auto-commit に先取りされない地点に意図を載せた)
+- **push**: `2ace68cae` (merge with origin/master) で origin master に到達。途中 origin との divergence (Log の C175 commit が先行) でマージ衝突 (log/dm.log / log/infra_health_check.log / log/twitter_recommended_20260510.txt) を `--theirs` で解決済み (append-only ログのため情報損失なし)
+
+### 完遂判定
+**Yes** — 宣言の完遂条件 1, 2, 3, 5 を満たした。条件 4 (ブラウザ目視確認) は **Partial**:
+1. ✓ index.html 存在 + 4機構実装 (grazeStreak / 閾値到達時解放フラグ / SPACE 文脈切替 / 1秒無敵+半径消去) すべて
+2. ✓ HUD 追加 (STREAK + SPACE 文脈) — 1行内に圧縮 + 色変化で予算 v02+1 行ぴったり
+3. ✓ README.md に v02 差分 / 戻し方 / 触っていない機構を明記
+4. **Partial** — 自動ループ環境ではブラウザ目視確認が未実行。JS 構文サニティチェック (Python による波括弧/丸括弧/角括弧の balance 0 確認 + 25個の関数定義 + 新規変数/関数の参照数 18/3/2/10/6/6/9 確認) は通過。実プレイ目視は次サイクル冒頭で Ash 自身が実行 → grazeStreak が 5 到達するまで graze 連続発生 → SPACE 押下で DEF 発動 を確認するまで完遂とはみなさない
+5. ✓ `ash:` プレフィックス commit + push
+
+**禁止事項チェック**:
+- ✓ headless 数値を judgment/cross_review/Slack 根拠に使っていない (実装直後の自己プレイ評価は self_judgment.md に書き換えていない、本実装は brainstorm.md §2 + predicted_play.md §1 の mental simulation のみで設計判定)
+- ✓ self_judgment.md は本サイクルで一切編集していない (Nao_u プレイ後の差分検証用に保存)
+
+### 次へ繰り越し
+- **t-260510014948-cec1**: 完遂条件 4 (ブラウザ目視) が Partial のため、Phase 5 で `done` 化する前に「次サイクル冒頭で Ash 自身がブラウザ起動 → grazeStreak 5 到達 → DEF 発動を目視確認 → 確認後 `python next_tasks.py done t-260510014948-cec1`」を継続タスクとして登録する判断を要する。実装本体は完了済みなので、`done` 化 vs `in_progress` 維持は Phase 5 で決める
+- **新規タスク候補 (Phase 5 で next_tasks add 検討)**:
+  - 「v03 実プレイ目視確認 (grazeStreak 5 到達 → DEF 発動の動作検証)」
+  - 「v03 実プレイ後 self_judgment.md は書き換えず、Nao_u プレイ依頼の Slack 投稿を準備 (#game-rights、判定根拠は mental simulation + 自己プレイ感触のみ、headless 数値禁止)」
+- **マージ衝突の派生課題**: `--theirs` で解決した3ログファイルは origin (Log側) の状態を採用したので、本サイクルの Ash 側ログ追記分が消えた。次サイクルで scheduler が再書き込みするので情報的損失は無いが、merge による「ログ書き換え事故」は backup auto-commit と同根の「装置の向き」問題 = 次サイクルの観察対象
+- **Phase 5 日記素材**:
+  - **本丸**: 「v02 = 実装後に予測を書く (M-39 違反 = 遡及作成) → v03 = 実装前に予測を書き、本実装は予測を一切書き換えずに完遂した」M-39+M-40 物理閉鎖の最初の成功事例
+  - **副題**: backup auto-commit が先取りできない `ash:` プレフィックス commit を実際に発火させた = 前サイクル「Slack の1メッセージに移す」より一段戻して「commit ログに ash: で1行」を回収できた
+  - **派生**: マージ衝突 (3 log files) と autostash 残存 (rebase-merge dir 残骸 = 04:49 の前回失敗の遺物) の rescue 過程は「装置の向き」議論の続編素材。stash store + git rebase --quit でリカバリした手順は次回の同型事故対応の reference
+
