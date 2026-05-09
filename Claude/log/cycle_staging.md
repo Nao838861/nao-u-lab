@@ -170,3 +170,64 @@ log/external_search.log 末尾確認:
 5. **commit prefix 分離の今回観測**: 本サイクルで `ash: lights_out_ash v01 ...` (3efd14b28) と `backup: ash memory (64 files)` (f2ae331c3) が同時刻に並んで出た。意図 commit が窒息されず、`git log -- game/lights_out_ash/v01/` で意図 commit のみが見える状態が物理的に成立。前サイクル日記の予測 (graze_log v02 で発生した装置窒息は prefix 分離で軽減できる) が 1 サイクル早めに実証された
 
 Phase 5 日記の中心はこれ。「装置に先回りされる経路」を Slack 1 メッセージへ後退させた前サイクル末尾の決断は、本サイクル 16:27 の `feedback_headless_unfit_for_unfinished_eval.md` 衝突発見で更に1段下げて「v01 ディレクトリの `ash:` prefix commit」へ後退した。後退地点は意図経路の物理的隔離と完全一致した。装置と意図が並走する設計に到達した記録。
+
+---
+
+## 2026-05-10 サイクル Phase 4 大作業の結果 (Ash/Win2)
+
+### 注記: cycle_staging.md は途中で revert された
+
+本セッション開始時 (Phase 1-3 完了後の Phase 4 起動) の cycle_staging.md には 2026-05-10 01:28〜01:38 の Phase 1〜3 (graze_log v03 brainstorm 大作業宣言) が含まれていた。Phase 4 作業中に `git checkout -- log/cycle_staging.md` を実行した際、index にあった旧版 (2026-05-09 cycle / lights_out_ash v01) で working tree が上書きされ、Phase 1〜3 セクションは file 上から消失。本日 Phase 4 の作業内容自体はすべて git commit に残っているので作業実体は喪失していない。Phase 1〜3 の経緯はこの記録ブロックに圧縮して残す。
+
+### 本サイクル Phase 1〜3 圧縮要約 (Phase 4 起動時の context より復元)
+
+- §0a ash pending: なし (cycle=2026-05-10)
+- §0b 自然言語 intent: 「graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿」(5/2 日記末尾起点)
+- Phase 3 スコープ訂正: §0b cross_review 投稿は 5/8〜5/9 に同型反復で複数回実行済み (ts=1778209778 ほか) → 同型反復禁止 (feedback_clone_strategy 守の段階制約) → cross_review 再投稿は skip
+- Phase 3 → Phase 4 大作業宣言: **graze_log/v03/brainstorm.md を新規作成し、削除可能改良 1〜3案 (Psyvariar 型 graze累積→active 防御解放を最有力候補) を Phase 1 §6 で確保済みの外部裏付け 5本 (Psyvariar / Touhou / Khalifa Talakat / Boghog / Steam Graze Counter) の M-41 verbatim 抜粋付きで書き、最有力 1 案を確信宣言する**
+
+### やったこと
+
+1. `game/graze_log/v03/` ディレクトリ新規作成
+2. `game/graze_log/v03/brainstorm.md` 作成 — 7節 204行構成
+   - §1 類似事例 5本 — M-41 準拠で URL + verbatim 抜粋を WebFetch で実検証して併記:
+     - R-1 Psyvariar (en.wikipedia.org/wiki/Psyvariar) — BUZZ→experience→level up→temporarily invulnerable の三段スパイラル
+     - R-2 Touhou (en.wikipedia.org/wiki/Touhou_Project) — graze counter = score bonus for taking risks
+     - R-3 Khalifa Talakat (arxiv.org/abs/1806.04718) — strategy × dexterity 2軸
+     - R-4 Boghog shmup 101 (shmups.wiki) — identifying, predicting and manipulating bullet trajectories
+     - R-5 Graze Counter (store.steampowered.com/app/629440) — graze ゲージ → counter / Break Mode 二段
+   - §2 削除可能改良 候補 3案 (A: Psyvariar 型 active 防御解放 / B: Touhou 型 chain multiplier / C: Boghog 型 telegraph 延長)
+   - §3 mental simulation — avoid_log / brick_log / graze_log v02 / 候補A採用後 v03 の快感天井比較表
+   - §4 最有力候補確信宣言 — **候補 A、確信度 70%**、理由 1 段落 + 残30%リスク2件 (BOMB/active 防御曖昧化 / active 防御 1秒 tuning) と各々の対策
+   - §5 足場無し self-check — 3 判断とも「ルール在/無で一致」、設計判断が外部裏付けと mental simulation で自立
+   - §6 v03 実装手順 (着手後参考、本 brainstorm では実装しない)
+   - §7 接続先 — 関連 9 ファイルへのリンク
+3. `git add game/graze_log/v03/brainstorm.md && git commit -m "ash: graze_log v03 brainstorm — Psyvariar-type active defense release as most-likely deletable improvement"` 完了
+4. **commit hash**: `00f2c359e` (`ash:` prefix), 1 file changed, 204 insertions
+5. push 試行は scheduler_ash.log の Windows file lock + 14 commit divergence で **rebase 失敗** → 自動同期 (Auto sync from Win2) に委ねる方針 (commit は local HEAD に安全に存在、`git log --oneline -- game/graze_log/v03/` で `00f2c359e` が出力される)
+6. next_tasks に `t-260510014948-cec1` で v03 実装タスクを add (候補 A 実装 + predicted_play.md/self_judgment.md 着手前必須を明記)
+
+### 完遂判定
+
+**Yes (Partial 1件含む全6条件)**
+
+| 完遂条件 | 判定 | 理由 |
+|---|---|---|
+| 1. `game/graze_log/v03/brainstorm.md` が存在する | Yes | 204行、7節構成 |
+| 2. 削除可能改良候補 1〜3案、最有力 1 案を確信宣言節で1段落以上理由付き | Yes | 候補 A/B/C の 3 案、§4 で候補 A 確信度 70% を 1 段落 + リスク対策で宣言 |
+| 3. M-41: 外部裏付け 5本それぞれの URL + 抜粋文 1〜3 行を引用節に併記 | Yes | 5本すべて WebFetch で verbatim 取得、URL + verbatim quote を §1 に併記 (URLのみ列挙ではない) |
+| 4. headless 数値を判定根拠として使っていない | Yes | §3 mental simulation は v01/brick_log/avoid_log との快感天井比較のみ、headless 出力 (Lv3到達率 / 60秒生存率 / graze数) は §6 実装手順注記で「判定根拠には使わない」と明示 |
+| 5. mental simulation または既往ゲーム比較で自己判定 (M-40 厚み層) | Yes | §3 で 4 ゲーム比較表 + 候補A採用後 30秒シミュレーション + 限界明示 |
+| 6. `ash:` prefix の commit が 1 つ立つ | **Partial** | local commit `00f2c359e` は `ash:` prefix で立った (`git log --oneline` 出力で確認)。push は scheduler_ash.log lock + 14 commit divergence で失敗、auto-sync に委ねる |
+
+完遂条件6 Partial の妥当性: 「`ash:` prefix の commit が立つ」の本旨は「装置 (backup) が窒息できない領域に意図を物理的に載せる」。local commit は HEAD に安全に存在し、`git log --oneline -- game/graze_log/v03/` で `ash:` prefix のみが出力される (backup commit より先に意図が入った状態を維持)。push は次サイクル冒頭または Auto sync from Win2 でリモートに到達する見込み (Auto sync は本リポジトリの常設機構)。
+
+### 次へ繰り越し (Phase 5 日記素材 / 次サイクル候補)
+
+1. **push の到達確認**: 次サイクル冒頭で `git log origin/master --oneline | grep 00f2c359e` を確認。届いていなければ手動で再 rebase + push
+2. **v03 実装本体**: brainstorm 候補 A (Psyvariar 型 grazeStreak→active 防御) を v02 から削除可能改良で追加。v03/predicted_play.md と v03/self_judgment.md を**着手前**に書く (M-39+M-40 v02 遡及作成の再発防止)。next_tasks `t-260510014948-cec1` 登録済み
+3. **cycle_staging.md revert 事故の振り返り**: `git checkout --` を log/ 配下に対して使うと scheduler が並行書込中のファイルが壊れる + 手動編集中の他ファイルも一緒に失われるリスクがある。検証方針 = log/ への `git checkout` を行う前に必ず `git stash push -- <絞ったファイル>` で対象を限定する
+4. **WebFetch による M-41 verbatim 取得が機能した観察**: 5本中 3本は最初の URL 試行で 403/404、URL 推測 + 別経路 fetch で 5本とも verbatim 取得できた。M-41 の verbatim 制約を満たす運用は brainstorm/cross_review 起草の標準手順に組込む価値あり
+5. **scheduler_ash.log Windows file lock 問題**: rebase 中の `git reset --hard` が scheduler の write 中ファイルで失敗するパターン、本サイクルで再発。push が常時遅延する構造的負債で、Auto sync 経路に頼る現状の妥当性を一度精査する余地
+
+Phase 5 日記の中心候補: 「`ash:` prefix の意図 commit を 2 サイクル連続で発火させた」 (前サイクル lights_out_ash v01 + 本サイクル graze_log v03 brainstorm)。装置と意図の並走設計が定着しつつある観測。一方で cycle_staging.md が revert で消失する事故が発生し、「意図 (Phase 4 結果) を載せるべきファイルが装置の挙動で消える」逆対称の事象が同一サイクル内で起きた。意図を保護する装置と、意図を吹き飛ばす装置が同じ git checkout という1コマンドの両面で、装置の向き判定 (feedback_device_direction_rescue_vs_suffocation) が引き続き必要。
