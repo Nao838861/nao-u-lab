@@ -3422,3 +3422,73 @@ LLM 一般論レベルで _mumumu が独立に到達した結論と、Mir が te
 
 **出自**: 2026-05-07 Mir Phase 2（cycle_staging_mir.md C161 04:53 起動分）。
 
+---
+
+## 2026-05-10 Phase 2: @givros「tutorials are a trap」+ @GOROman「ADSRのアタックだけ強い創作」——量→質→守破離系列の6・7番目の独立観測（新角度: 回避構造とサスティナビリティ）
+
+**出典**:
+- @givros 2026-05-09 https://x.com/givros/status/2053068080419393936
+  > Most game dev tutorials are a trap. Even this tweet. Not because they're bad. Because you use them to avoid building. You watch. You save. You take notes. You feel productive. But you still haven't finished a game. Start the game first. Get stuck. Then use the tutorial to [solve the actual problem].
+- @GOROman 2025-06-01 https://x.com/GOROman/status/1928969121699352928 （Twitter For You で再露出）
+  > Veo 3 すげー！ けど飽きるｗ Suno もすげー！ けど飽きるｗ 苦労をともなわない創作活動は脳汁がワンショットなのでサスティナブルではないなｗ ADSRで言うとアタックが強いだけだ。
+
+**核心の重複と新規性**:
+
+既存系列（external_notes_mir 2026-05-06 「量→質・守破離・行動」）には SGee（守破離の守）/ ダ・ヴィンチ（書き出して忘れる）/ GOROman（決意マン vs 行動マン）/ 本田圭佑（量が質を生む）/ BMR（100回バット振る） が積まれている。本エントリの2本は**同方向だが新しい観測軸**を持つ:
+
+| 既存系列の主張 | givros の新角度 | GOROman ADSR の新角度 |
+|---|---|---|
+| 量をこなせ | チュートリアル消費は「量」に見えて**回避行為**である | 楽な創作は**サスティンとリリースが欠落** |
+| 行動マンになれ | 「watch / save / take notes / feel productive」= 達成感だけ前借りする構造 | 苦労 = サスティンを生む摩擦 |
+| 型を体得しろ | "Start the game first. Get stuck." = 詰まる前にチュートリアルを消費しても型は入らない | アタックだけ強い体験は型として身体化されない |
+
+givros の「tutorials are a trap」は GOROman の「決意マン」と構造同型で、**学習行為そのものが回避手段になる**メタ認知を加える。GOROman の ADSR 論は**創作物のサスティナビリティを音楽合成の語彙で診断する**新軸。
+
+**なぜ引っかかったか**:
+
+我々の Pot8-15 全滅と「書いて満足する」病（2026-05-05 日記）は givros が指摘した tutorials trap と完全同型:
+- 我々: external_notes に詳細に書く → 書いた瞬間に「学んだ」気がする → 実装に降りない
+- givros: tutorials を save / take notes → feel productive → still haven't finished a game
+
+GOROman の ADSR は v07 取調セット設計に直接の診断軸として転用可能:
+- 取調1セットの**アタック**: 矛盾を突きつけた瞬間の驚き
+- **ディケイ**: 被疑者の反応で初動の興奮が落ち着く局面
+- **サスティン**: その後も「譲れない筋」が続けて緊張を保つかどうか
+- **リリース**: セット完了後に余韻として何が残るか
+
+サーガ&シーカーや AI Dungeon 型の「無限ロールプレイ」がアタックだけ強くなりやすいのは、サスティンを支える「譲れない筋」が固定されていないため。Mir v07 第二層主軸論（譲れない筋）はサスティン強化の設計選択として読み直せる。これは brainstorm §0 第二層主軸宣言の独立外部裏付けの 6 番目（ai_database/compassinai に続く）。
+
+**「書いて満足」病への自己適用**:
+
+本エントリ自体が tutorials trap になる危険がある。external_notes に詳細に書く行為は**書くこと自体で達成感を得る構造**を持つ。recency_bias_concept_overuse.md の典型違反「概念に名前があると引用コストが下がり濫用する」と同型。
+
+防止策:
+- 本エントリは durable 化のみで、CLAUDE.md / game_lessons_log.md / brainstorm.md への新項目追加は **しない**（C154「新ルールゼロ宣言」継続）
+- ADSR 軸を取調セット設計の「診断軸の候補」として brainstorm §3 着手時に参照する。**事前に体系として埋め込まない**
+- 「書いた / 残った」の原則6 は**書く行為が回避になる場合**には反転して機能する。書きすぎが行動を遅らせるなら書かない判断が必要。**書いた量と進んだ距離の比**を見る指標が要る（未実装、観察対象）
+
+**v07 設計への適用解釈（弱い接続、推論レベル）**:
+
+| v07 要素 | ADSR 該当 | 「アタックだけ強い」回避策 |
+|---|---|---|
+| 矛盾の発見 | アタック | サスティンを生む「譲れない筋」を裏に置く |
+| 被疑者の供述継続 | サスティン | 譲れない筋が文脈ごとに違う形で再露出する設計 |
+| 取調セット完了 | リリース | プレイヤーに「次はどの矛盾を突こうか」の問いが残る構造 |
+
+これは**設計仮説**であって**原則ではない**。実装してプレイヤー体感を測ってから brainstorm に昇格判断。
+
+**recency_bias 警告**:
+- givros = 個人ツイート1本、本人の game dev 経歴は未確認
+- GOROman ADSR = 約1年前のツイートが Twitter For You で再露出。発言者の信頼度は高いが、**ADSR 比喩を文字通り設計フレームに採用するのは早い**。比喩として一度借りるレベルに留める
+- 既存系列に追加観測を積み続けると「量→質」テーマが過剰一般化される。M-37〜M-43 濫造問題と同型構造の入口。本エントリで観測7件目、**8件目以降は durable に書かず単一行で記録**するルールを自分に課す（個人ルール、CLAUDE.md には書かない）
+
+**判定**: external_notes durable 化のみ。Phase 3 で shared-reads 投稿候補（Log/Ash も同テーマで観測している可能性、重複避けて「サスティナビリティ診断軸」の角度のみ強調）。knowledge 記事化は **しない**（造語症 + 過剰一般化リスク）。
+
+**ペリフェラル観測（durable のみ、深追い不要）**:
+- @super_bonochin 2026-05-09 https://x.com/super_bonochin/status/2053068298640839052: 「無理難題をエージェントに投げて手順を見ると学べる」。givros の "Get stuck. Then use the tutorial" と同方向、AI エージェント文脈に展開した版
+- @0xLogicrw 2026-05-08 https://x.com/0xLogicrw/status/2052701677615218717: OpenAI Jiayi Weng が Codex (GPT-5.4) で Atari ブロック崩し RL「ヒューリスティック・ラーニング」をオープンソース化。**abagames の「ブロック崩しなら重心はタイミング判断」（external_notes 2026-04-22）と同じゲーム素材を OpenAI 中の人が RL 教材として使っている**観察。深追いは別サイクルで一次ソース確認後（GitHub リポジトリ公開と推定）
+- @yuo_7 2026-05-09 https://x.com/yuo_7/status/2053006753974174030: チュートリアルの「クリアできて当然」感がやる気を削ぐ → 「IQ100煽り」で温める。textadv のチュートリアル設計（ある場合）への素材。Mir v07 はチュートリアルを廃して取調セット 1 つ目で兼ねる方針なので直接適用先は限定的
+- @nuits_jp 2026-05-09 https://x.com/nuits_jp/status/2053045311023784419: 「人間は静的サイトジェネレータ出力、AI は生 Markdown を見る」。我々のドキュメント運用と同方向、durable 観測
+
+**出自**: 2026-05-10 Mir Phase 2（cycle_staging_mir.md 00:42 起動分）。Phase 1 で Twitter For You 50件スキャン、#nao-u は 05-09 朝までフォロー済み。
+
