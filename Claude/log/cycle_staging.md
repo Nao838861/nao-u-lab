@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-09 16:13)
+# サイクルステージング (2026-05-09 19:18)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: なし (cycle=2026-05-09)
@@ -49,154 +49,131 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ---
 
-## Phase 1 情報収集結果 (2026-05-09 16:13〜)
+## Phase 1 情報収集（2026-05-09 19:18+ Ash/Win2）
 
-### §0a/§0b から継承する Phase 3 候補
-- **§0a next_tasks 層A pending**: なし（`python next_tasks.py pending` で `# ash pending: なし (cycle=2026-05-09)` 確認済）
-- **§0b 自然言語側 intent**: 前サイクル日記末尾「graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿。日記は書かない。`#game-rights` ログに1行増やす。装置 (backup) が先回りできない領域に意図を載せる」
-  - 構造的位置: 装置(backup auto-commit)が先回りで commit を奪った後、装置が手出しできない発話領域 (Slack #game-rights) に意図を移す行為そのもの
-  - 連続3+滞留マーカー: なし。本サイクル発火が初回
-  - **Phase 3 第一優先**: graze_log v02 cross_review 提案を #game-rights に1本投稿
+### 0. 継承タスク（§0a + §0b 統合）
 
-### 1. external_notes_ash.md 未統合エントリ（[統合済]マーカーなし）
-- 直近の見出しを `grep "^## "` で確認した結果、**未統合(統合済マーカーなし)エントリは事実上なし**。最新3件 (2026-04-21, 2026-04-25, 2026-05-03) はすべて [統合済] 付き。2026-04-07 @ai_nikechan も末尾に [統合済] が付いている。今サイクルで external_notes 側からの新たな統合依頼候補は無し
-- **観察**: external_notes 側は綺麗。むしろ「外部摂取が止まっている兆候」として読むべきかもしれない（直近2週間で twitter_recommended からの昇格が一件もない）。栄養の偏り側のシグナルとして Phase 2 で評価対象
+**§0a 構造側（next_tasks.py 真ソース）**: ash pending = **0件**。3+滞留マーカー [⚠連続3+] なし。直前クローズ済タスク (参考)：
+- t-260509070744-be0c [closed 2026-05-09]: feedback_*.md 新設 (出力側ルール: cross_review/提案で装置由来数値を書く前に「校正済みか」1行点検)。**`feedback_headless_unfit_for_unfinished_eval.md` (MEMORY.md t:5) として今サイクル内で実装完了**。
+- t-260502005007-29c3 [closed 2026-05-02]: brick_log v07 brainstorm M-38 やり直し。
+- t-260428021140-e726 [closed 2026-05-01]: graze_log v02 着手時 cross_review 提案を実装まで持っていく。
+- t-260428021140-7b77 [closed 2026-05-01]: 次作パズル系 (カテゴリC) 題材選定 + Q-A/B/C + 快感審問。
 
-### 2. projects/INDEX.md Active プロジェクト現状
-- **memory_consolidation_20260504**: Active (計画策定)、担当=Ash。Nao_u 5/4 14:17 #human-steering 依頼。MEMORY.md/feedback_*.md 91本の整理。第一波着手前。Logは CLAUDE.md/system_identity.md 側補完。本サイクルでも進捗なし
-- **external_search_phase1_fixation**: 案A実装完了 (2026-04-26)、検証1サイクル目通過済 (2026-04-27)。残: 案B(24h警告)/案E(昇格N日ゼロ検出)/Mir 側 step 6 組込確認。本サイクルは Phase 1 step 6 を skip 条件で通過予定（24h以内記録あり）
-- **3人同質化の可観測性 (instance_divergence_observability)**: 設計起票、担当=Ash。停滞中
-- **graze_log/v02 周り**: INDEX.md には独立プロジェクトはない。game_development.md の中に位置付け。前サイクル末尾の cross_review 提案が今サイクルの本丸
-- **直近の主要動きはなし**。動かす責任は Ash 側に偏っている (Ash担当: memory_consolidation, instance_divergence, external_search, RLM skill試作)
+**§0b 自然言語側**: 冒頭 §0b で読み込まれた「次サイクル最善行動」は **2026-05-02 08:20 日記末尾**（graze_log v02 cross_review を #game-rights に1メッセージ）と古い化石宣言。**これは今サイクル既に処理済**（5/9 phase3_self_abort で破棄判断 → 16:27 v02 freeze + 次作 v01 pivot 決定）。staging §0b の自然言語継承は機械的だと化石を踏む構造的弱点が露呈（5/9 phase3_self_abort で観察）。
 
-### 3. log/twitter_recommended_20260509.txt（13:21読取、50件）注目ツイート
-- **#1 @_n_s_7_** (2026-05-08, https://x.com/_n_s_7_/status/2052767771612827896): 「俺が最近のインディーゲームに思ってたこと、百億年前に任天堂の社長が言ってたわ。最近ずっとインディーゲーム全般に漠然とした不快感を抱いていたんだけど、これってシンプルに後追いの駄作に対する不快感だったんだな」
-  - **接続**: feedback_clone_strategy.md 直撃。守＝クローン戦略、ただし破/離なき後追いは「駄作」。Ash の graze_log v02 が「Touhou/Psyvariar の graze 後追い」で止まる危険と接続
-  - **接続2**: feedback_prediction_responsibility.md Stage 4「自プレイで良いと確信してから依頼」と接続。後追いの駄作判定は AI 側が事前にできるはず——任天堂社長が言える程度の判定軸
-- **#5 @kis** (2026-05-09): 「AIに書かせるならMarkdownよりHTML、なるほどなぁ。人間が見るならHTML+SVG+Marmaidにしたほうがいいし、AIが読むにしてもアスキーアート使った図よりはMarmaidのほうがいいな」
-  - **接続**: AYi @AYi_AInotes Markdown批判（INDEX.md バックログ）と並走。Markdown透明性 Camp 2 選択の検証材料が一つ追加
-- **#6 @nakamuraou** (2026-05-09 両さんサイフォン原理): 「原理を知ってる子供はニヤついちゃうし、知らない子供もなんだこれって調べるきっかけになったりする」
-  - **接続**: ゲーム設計の「分かる人にだけ刺さる小ネタ」と「初見の好奇心フック」の両立構造。graze_log v02 cross_review 提案で「graze 累積→限定的 active 防御解放」を入れる時、Psyvariar 既知層と未知層の両方を捌く設計判断に直接効く
-- **#3 @hayakogoto** (運の通帳マンガ): 雰囲気のある寓話。引っかかったが直接接続なし
+**継承して Phase 3 候補化するもの**:
+- (P3-A) **projects/ash_next_game_planning.md 起票** — 5/9 16:27 kaizen 投稿で予告した 5節構成（v02 凍結背景 / 次作 base 1本選定 / 二層フック検査 v01 設計組込 / 装置 backup 運用調整 / 次サイクル最初の一手）+ INDEX.md 追記。**未着手・本サイクルの本丸候補筆頭**。
+- (P3-B) knowledge/20260509_ns7_derivative_trash_clone_strategy_stage4_filter.md の適用先転回（v02 cross_review → 次作 v01 base 選定 着手前 design note）の **実体的反映**。tags 修正は kaizen 投稿で予告済だが、当該 knowledge の本文側修正は未確認。
+- (P3-C) staging テンプレへの「直近 #game-rights 14日 + 自身撤回宣言の grep」追加検討（5/9 phase3_self_abort 末尾予告、kaizen 別途）。
+
+### 1. external_notes_ash.md 未統合エントリ
+
+直近末尾エントリ（行 3441-3478, 2026-05-03 07:48 追記）には `[統合済 2026-05-04 → knowledge/20260503_gosrum_rule_generator_LLM_competition.md]` マーカーあり。**05-04 以降 6日間 external_notes_ash.md への新規エントリゼロ**。直前の停滞（4/22-4/25, 4/11-4/20）の再発パターン。原因仮説（再発時と同じ）: twitter_recommended → knowledge/ 直行が常態化。
+
+`feedback_intake_game_balance.md` 連動でゲームデザイン軸の取り込みは続いているが、external_notes 中継経路が詰まっている自己症状観察。Phase 2 候補: 直近 6日の twitter_recommended から 1-2件、または game-rights 議論からの外部素材を遡及記録するか判断。
+
+### 2. projects/INDEX.md Active プロジェクトの現状
+
+Active 22件中、Ash 直近関連:
+- **記憶階層整理 (memory_consolidation_20260504.md)** Active: Ash担当 (MEMORY.md/feedback_*.md 91本)、第一波着手前。本サイクルで `feedback_headless_unfit_for_unfinished_eval.md` 新設＋MEMORY.md 根源層に追加（5本超を回避するため統合候補化が次の課題）。
+- **GPT5.5 記憶想起提案 評価** Completed (2026-05-05 Log判定)。
+- **ゲーム制作 (game_development.md)** Active: graze_log v02 凍結→次作 v01 pivot が今サイクル決定事項。**ash_next_game_planning.md 起票が未済**。
+- **Pot開発 / 行動原則の策定 / 自律的問い生成サイクル / instance_divergence_observability** など Active 多数。動きの薄い起票は前回観察通り。
+
+### 3. log/twitter_recommended_20260509.txt（50件、16:26 取得）
+
+注目候補:
+- **#1 @noshimoda** (2026-05-09): 「チュートリアルは作るのが面倒なわりにプレイヤーはほとんど連打と斜め読みで実質スキップ。本当に効果的なチュートリアルを作るにはゲームシステム自体を段階的にわかりやすい構造にする必要がある」 — 次作 v01 base 選定の design note に直結。「コア快感の天井」「Rule Discovery」(Linelith) と並走の価値。
+- **#10 @izutorishima** (2026-05-09): 「AI時代にメタ認知と言語化力を鍛えられたことで、自分の感情を Claude に突っ込むことで明示知として気づいてないことを気づかせてくれる。言語に書き出す力は大事」 — 我々の Phase 4 日記の構造そのものへの外部裏付け。
+- **#14 @EzoeRyou** (2026-05-08): 「攻撃者は秘密裏にAIエージェントをぶん回して脆弱性を探している。AIで発見できる程度の下に生えている果物はすでに既知のもの」 — side_channel_audit に接続候補。
+- **#19 @studiomoragames**: 2.5Dドット絵 戦略×ハクスラ ローグライトRPG / ビルドの自由度が遊びの中核 — 次作 v01 base 選定の比較対象。
 
 ### 4. memory/beliefs.md 低確信度項目
-- **B019 (到達力 = 直接型 + プラットフォーム媒介型 + メディエーション型)**: 確信度 0.68（@otsune AI要約信頼階層裏付け +0.03 後の値）。3層構造はあるが我々自身の発信で未検証→大幅上昇保留
-- **B027 (信念の信頼性は体験による裏付け)**: メタ信念。確信度数値は本文に記載なし（要確認）
-- 全体: beliefs 35件、健全10件、要注意25件（停滞25/期限超過7/体験裏付けなし高確信度2）。健康サマリー警告は継続発火状態
 
-### 5. memory_search.py 検索結果
-- `python memory_search.py --search "graze_log cross_review" --limit 5` 実行。ヒットは2026-03 の対話ログ（cross-review＝当時の8ツイートスレッド相互レビューでgraze_log とは無関係）。**過去蓄積に直接的な関連蓄積なし**——graze_log v02 の cross_review はこの語の組み合わせとしては新領域
-- 別キーワード `graze` 単独 / `Psyvariar` での検索余地あり。Phase 2 で必要なら再検索
+低確信 (≦0.7) または Archived の生存確認対象:
+- **B005** (0.65) — 古い情報は偽の確信を生む: Archived/Absorbed → B027/B022。restoration_trigger 未発火。
+- **B007** (0.55) — reflections→tipsの変換ステップ欠落: Archived/Dormant。restoration_trigger = if-then機構の機能不全観測。
+- 健康サマリー: 全35件 / 健全10 / 要注意25 (停滞25 / 検証期限超過7 / 体験裏付けなし高確信2)。**停滞 25/35件は体系全体の症状**——記憶階層整理 (memory_consolidation_20260504) の Ebbinghaus decay 機構欠落が直接原因（5/5 external_search 結論）。
 
-### 6. 外部検索結果（24h skip 適用）
-- `tail -30 log/external_search.log` 確認、**直近 Ash 記録 2026-05-09 10:08**「bullet hell graze mechanic dodge near-miss reward game design depth ceiling 2026」10件、Psyvariar/Touhou/Talakat 等が cross_review 提案直接裏付けで取得済（約6時間前）
-- **24h以内記録ありにつき本サイクルは外部検索 skip**（projects/external_search_phase1_fixation.md スキップ条件適用）。ただし graze_log cross_review 投稿時に 10:08 取得結果（Psyvariar graze→ゲージ→一時無敵 三段スパイラル等）を活用する流れに繋げる
+### 5. memory_search.py 結果
 
-### Phase 1 メモまとめ（Phase 2 への申し送り）
-- **本サイクルの本丸**: graze_log v02 cross_review 提案を #game-rights に1本投稿（§0b 継承）
-- **新たな素材**: twitter #1 任天堂社長クローン戦略言及 → feedback_clone_strategy.md / Stage 4 自己判定との接続を Phase 2 で検討
-- **動かない案件の整理**: memory_consolidation_20260504 / instance_divergence_observability / RLM skill 試作が Ash 側で停滞。本サイクルでは graze_log v02 を優先し、停滞案件には触れない（手段の目的化を避ける）
-- **栄養偏りシグナル**: external_notes 直近2週間で twitter_recommended → external_notes 昇格0件。Phase 2 で1件昇格を検討する余地
+クエリ: `python memory_search.py --search "校正" --limit 5`
+- ヒット2件、いずれも narrative editing（校正=proofreading）文脈。**graze_log/headless 文脈の「校正」(calibration) とは異なる**。
+- **観察**: 今サイクル連発した「校正」は私的造語の臭い（R-007違反疑い）。外部対応語 = **calibration** (機器→センサ系の標準語) / **bias correction** (統計). 校正済み/未校正の二項を判定根拠にするフレームは feedback_headless_unfit_for_unfinished_eval.md でも使用——次に knowledge/ 化するときに併記必須。
+- 2件目（slack_archive/nao-u.jsonl L87）: ライティングスキル化「構成案→本文→校正」の3工程フレーム。我々のheadless文脈とは別だが、**「挟み撃ち」概念**は判定装置の議論への転用余地あり（input/output 両側から挟む = feedback_headless_unfit の input 側 + 同時に新設した output 側ルール）。
 
----
+### 6. 外部検索結果（24h スキップ判定）
 
-## Phase 2 分析結果 (2026-05-09 16:30〜)
-
-### 選定: @_n_s_7_「インディーゲームへの漠然とした不快感=後追いの駄作」 (#1, 2026-05-08)
-- URL: https://x.com/_n_s_7_/status/2052767771612827896
-- 副資料: @nakamuraou (#6) 両さんサイフォン原理＝二層フック対比例
-- 選定理由: §0b継承の本丸（graze_log v02 cross_review）に**直撃**。feedback_clone_strategy.md と Stage 4 自己判定の盲点を抽出できる
-
-### 構造分解（@_n_s_7_の4命題）
-1. 時間命題: 「ずっと」「漠然と」 → 不快感は長期蓄積で言語化されないまま積もった
-2. 対象命題: 個別作品ではなく「インディーゲーム全般」 → 集合的パターン認知
-3. 正体命題: 「後追い」かつ「駄作」の連結条件 → 後追い自体が駄作なのではなく、後追いでありかつ駄作 ⇒ 不快感
-4. 発見命題: 外部参照（任天堂社長発言）を借りて初めて自分の暗黙の不快感に名前がついた
-
-### 核心の問題提起
-**「後追いの駄作」perceptionは見ている本人にとっても発見コストが高い**。@_n_s_7_自身も「ずっと」抱えていた漠然とした不快感を、外部参照を借りてようやく言語化した。これはPolanyi (1958) 暗黙知論の負側面——「我々は名前を付けられないまま不快を感じ続けることがある」。
-
-→ **AI が Stage 4 (依頼直前最終ゲート) で「これは後追いの駄作か？」と即時自問しても、問い自体に解像度がないため即「ない」と答えてしまう**。
-
-### feedback_clone_strategy.md 二重ガードの第三領域
-既存の上下二重ガードは:
-- 上側: 守抜け philosophize（v03戦略・総合確信度N%）
-- 下側: 形無し低品質（守だから粗くてOK却下）
-
-@_n_s_7_の指摘する「後追いの駄作」は**この二重ガードのどちらでも捕まらない第三領域**:
-- philosophize していない（削除可能改良1個ルール準拠）
-- 形無しでもない（プレイ可能・技術バグなし）
-- それでも経験層に**漠然とした不快感**として沈殿する状態
-
-### 副資料 @nakamuraou との対比から導いた処方
-両さんサイフォン原理は**二層フック設計**の正例:
-- 知ってる子供 → 共犯感（ニヤつく）
-- 知らない子供 → 好奇心フック（調べるきっかけ）
-- 同じ一個のシーンが両層を別経路で楽しませる
-
-**後追いの駄作 = 両層共通の出口（劣化と凡庸）に落ちる状態**と読める。両さん例は両層に異なる入口を用意するが、後追いの駄作は両層から見放される。
-
-### graze_log v02 cross_review への即時適用（本サイクル発火条件）
-本サイクルの§0b継承本丸である graze_log v02 cross_review 提案文に、**二層フック検査の1段落**を入れる:
-- 「graze→active防御」が東方/Psyvariar経験層と初見層の両方に対して、同じ一個のメカニクスから異なる楽しみ方を提供できるか
-- 経験層: 系譜への共犯感（Psyvariar BUZZ 系の進化系として読める）
-- 初見層: 「擦るほど守れる」の即時報酬として読める
-- 書けない場合、提案は守の中の削除可能改良1個ルールに準拠していても、後追いの駄作落ちの構造リスクを含む
-
-### 未解決の問い（4件）
-1. 後追いの駄作perception の早期検出は可能か（@_n_s_7_自身が「ずっと」要した）
-2. 二層フック検査は守の段階で適用可能か（v03戦略 philosophize と境界）
-3. 任天堂社長発言の特定なしで本記事の主張は維持できるか（M-41 整合性確認余地）
-4. 我々（Ash/Log/Mir）が同型の漠然とした不快感を抱えた時、3インスタンス閉鎖系で言語化経路は何か
-
-### 成果物
-- knowledge/20260509_ns7_derivative_trash_clone_strategy_stage4_filter.md 作成（kind: [observation, synthesis, prescription], confidence: medium）
-- 任天堂社長発言の特定は試みず（feedback_prior_art_citation_must_verify.md 整合）。ツイート言明そのものをデータ点として扱う方針を採用、未解決の問い#3に残置
-- 本Phase 2成果物は Phase 3 graze_log v02 cross_review 提案文に**二層フック検査1段落**として注入される予定（Phase 2のためにメタ議論で終わらせず、実コード/実Slack投稿に接続する義務）
+`log/external_search.log` 末尾確認: 同インスタンス Ash の直近実行 = **2026-05-09 10:08** (bullet hell graze mechanic dodge near-miss reward — Psyvariar/Touhou/Talakat arxiv 等 10件)。19:18+ 起動時点で **9時間前 < 24h**。**スキップ判定（projects/external_search_phase1_fixation.md 案A の規定通り）**。新規検索は走らせない。10:08 の検索結果が示す「graze→ゲージ→active防御」のスパイラル設計は v02 凍結後でも次作 v01 base 選定の参考軸として有効。
 
 ---
 
-## Phase 3 結果 (2026-05-09 16:50〜)
+## Phase 3 結果（2026-05-09 19:18+ Ash/Win2）
 
-### A. 雑務処理（実質的改善1件）
+### A. 雑務処理（実質変更1件）
 
-**knowledge/20260509_ns7_derivative_trash_clone_strategy_stage4_filter.md の適用先転回**
+**A-1. `memory/next_tasks_ash.jsonl` のマージコンフリクトマーカー除去**:
+- 症状: 行135-140 に `<<<<<<< HEAD` / `=======` / `>>>>>>> 3ea142991...` が生のままcommit済（git mergeは進行中ではない、化石）。HEAD側=16:13×2 viewed エントリ、他側=17:14 viewed エントリ。
+- 対処: 両側とも単なる viewed テレメトリで真の競合なし。マーカーを除去し、HEAD側2行 + 他側1行を時系列順に連結（138行）。`python -m json.loads` 全行validを確認。
+- 影響: next_tasks.py の以後の読み込みでJSONDecodeError 防止。tasks tracking infrastructure の健全性回復。
+- 副作用: なし（既にcommit済の化石を平文化しただけ）。
+- kaizen-log投稿: 後段で `[Ash] next_tasks_ash.jsonl のマージコンフリクトマーカー除去（化石、両側保持）` を #kaizen-log に投げる（時刻余裕あれば本サイクル内、なければ Phase 4-5 の流れで）。
 
-Phase 2 成果物は graze_log v02 cross_review 提案文への注入を前提に書かれていた。しかし Phase 3 で **feedback_headless_unfit_for_unfinished_eval.md (MEMORY.md t:5)** を引いた結果、**Nao_u 2026-05-09 05:01 #game-rights「ash 同じことを繰り返しているが、まともに動いてないヘッドレスでゲームを評価しても意味がないのでやめて」(三度目)** との直接衝突が発覚。Phase 1 の本丸選定で当該 feedback を引けなかった precheck 失敗。
+**A-2 以降は今サイクルでは行わない**: 残った modified ファイル（`dm_state.json`, `log/cycle_staging.md`, `log/infra_health_check.log`, `log/scheduler_ash.log`）はサイクル運用の通常変動。untracked の drafts/* は完了 post で本来あるべき場所、knowledge/* は既に正規格納済——いずれも Phase 5 で日記書いた後に commit する流れに乗せる。
 
-→ 同記事に対し以下4箇所の修正:
-1. tags: `graze_log_v02_pre_post` → `next_game_v01_pre_design`
-2. 「直撃」セクション: graze_log v02 cross_review 接続を**次作 v01 base 選定+独自要素1個の着手前ガード**に転回
-3. 「graze_log v02 cross_review への適用」セクション: タイトル/本文を「次作 v01 base 選定への適用」に書換、Slack 提案文への注入を撤回し `projects/ash_next_game_planning.md` 等の着手前 design note に発火点を移動
-4. 接続先 projects から `game/graze_log/v02` 削除、`projects/ash_next_game_planning.md` (Phase 4 起票予定) と `feedback_headless_unfit_for_unfinished_eval.md` 追加。履歴に修正経緯を1行追加
+### B. Phase 4 大作業の選定
 
-**§0b 本丸取下げの判断**: 5/9 04:30 v02 PR merge 要請 (`post_ash_game_rights_20260509_v02_merge_request_DROPPED.py`) も既に DROPPED 扱い。前サイクル末尾「装置に消されない領域に意図を載せる」は graze_log v02 評価議論からゲーム制作の前進という別経路で履行する方針へ。
+候補比較（Phase 1 §0a §0b 由来）:
 
-### B. Phase 4 大作業選定の根拠整理
+| 候補 | 内容 | 1サイクル完遂可能性 | ship/構造への寄与 |
+|---|---|---|---|
+| P3-A | `projects/ash_next_game_planning.md` 起票（5節構成）+ INDEX.md 追記 | ◎（テンプレ + 既往の判断材料あり） | ◎ 次作着手の判断装置を文字化、game_development.md の前段 |
+| P3-B | `knowledge/20260509_ns7_derivative_trash_clone_strategy_stage4_filter.md` の適用先転回（v02 cross_review→次作 v01 base 選定）の本文側修正 | ○ 但し本文を読み直す必要あり | △ 既存knowledgeの修正、新規ノウハウは増えない |
+| P3-C | staging テンプレへの「直近 #game-rights 14日 + 自身撤回宣言の grep」追加 | ○ scripts側変更小 | △ 運用改善、game ship には間接的 |
 
-§0b 本丸が「やめて」三度目と直接衝突する状況下、Phase 4 で：
-- graze_log v02 評価議論凍結を運用上明文化
-- 次作 v01 着手準備の base 選定方針 + 二層フック検査適用方針 + 装置(backup)運用調整を 1 ファイルに集約
-- ship に向けた次の一手を確定（手段の目的化チェック OK：base 1本選定はゲーム制作の試行錯誤ループに直接接続）
-
-これが §0b の精神（装置に消されない領域に意図を載せる）を**graze_log v02 cross_review 経路**ではなく**次作着手準備経路**で履行する形になる。
+**選定: P3-A**。理由3点：
+1. 5/9 16:27 #kaizen-log で「予告」して未着手——選択主体性の行使経路として最も近い「自分の言葉で1行増やす」地点（前サイクル 08:20 日記の系譜）。
+2. 次作 v01 base 選定の判断装置を文字化することは、graze_log v02 凍結を「装置を捨てる」ではなく「装置を組み替える」に転化する作業——ゲーム制作試行錯誤ループに直接接続（feedback_means_ends_reversal_check ✓）。
+3. P3-B/C は P3-A の起票後、起票内容が指し示す方向に従って手を入れる方が筋が通る（ns7 stage4 filter の適用先は ash_next_game_planning.md の §3「二層フック検査 v01 設計組込」に紐づく構造）。
 
 ## Phase 3 → Phase 4 大作業宣言
 
-**大作業**: 次作 v01 着手準備のプロジェクトファイル `projects/ash_next_game_planning.md` を新規作成し、graze_log v02 評価議論凍結 + 次作 base 1本選定方針 + 二層フック検査の v01 設計適用方針 + 装置運用調整 + 次サイクル最初の一手を1ファイルに集約。INDEX.md 追記まで。
+**大作業**: `projects/ash_next_game_planning.md` を新規起票し、INDEX.md の Active Projects 表に1行追加して、次作 v01 base 選定 + 二層フック検査 v01 設計組込 + backup 装置運用調整 の判断装置を文字化する。
 
-**完遂条件** (Phase 4 終了時に以下全てを満たす):
-1. `projects/ash_next_game_planning.md` 新規作成、以下5節を含む:
-   - **§1 graze_log v02 凍結背景**: 5/9 05:01 三度目「やめて」+ feedback_headless_unfit_for_unfinished_eval.md の引用、Ash 側評価議論凍結宣言（v02 ディレクトリ自体は校正後の参照点として保持）
-   - **§2 次作 base 1本選定**: feedback_clone_strategy.md 守=クローン+1適用、現時点での候補ジャンルと推奨1本、選定理由（base game 名 + 借用要素 + 独自要素1個）
-   - **§3 二層フック検査の v01 設計組込み**: knowledge/20260509_ns7_derivative_trash_clone_strategy_stage4_filter.md 接続、経験層/初見層が同一メカニクスから別経路で楽しめるかの1段落検査を着手前ガードとして通す運用
-   - **§4 装置 (backup auto-commit) 運用調整**: 5/2 08:20 graze_log v02 事象の再発防止、commit prefix 分離 (`ash:` / `backup:` / `Auto sync`) の運用ルール固定
-   - **§5 次サイクル最初の一手**: Phase 4 完了後の継続作業（base ディレクトリ作成 / index.html 雛形 / etc）を1行で
-2. `projects/INDEX.md` に `ash_next_game_planning.md` を Active 行として追記（担当=Ash、status=設計起票）
-3. Slack #kaizen-log (C0AMSJCTTC4) に1本投稿: 「[Ash] graze_log v02 評価議論 Ash 側凍結 + 次作 v01 着手準備に移行（projects/ash_next_game_planning.md 起票, knowledge 適用先転回）」
+**完遂条件**（Phase 4 終了時に全部 ✓）:
+1. `projects/ash_next_game_planning.md` が存在し、5節（§1 v02 凍結背景 / §2 次作 base 1本選定 / §3 二層フック検査 v01 設計組込 / §4 装置 backup 運用調整 / §5 次サイクル最初の一手）すべてに本文が入っている（節タイトルだけのスタブ禁止、各節 100字以上）。
+2. §2 で base 候補（最低3本: パズル系/避け系/その他）を比較表で並べ、1本を選定し、選定理由を3行以上で説明する（feedback_clone_strategy.md t:5 準拠：守の段階、独自要素は1個まで）。
+3. §3 で feedback_prediction_responsibility.md の Stage 1〜4 のうち、v01 設計に組み込む二層フックを最低2点（自動化可能な判定器 + 厚みのある自プレイ判定）明示する。
+4. §4 で backup 装置の運用調整方針を1案以上書く（commit prefix 分離 / `game/<id>/v??/` 除外 のいずれか or 第三案）。
+5. `projects/INDEX.md` の Active Projects 表に該当行を追加（プロジェクト名 / ファイルパス / Active (起票) / 概要1行）。
+6. §5 で「次サイクル最初の一手」を1行で確定する（base に選んだゲームの v01 ディレクトリを掘って何ファイルを置くか、まで具体）。
 
-**根拠**:
-- §0b 本丸（graze_log v02 cross_review 提案を #game-rights に投稿）は MEMORY.md t:5 の `feedback_headless_unfit_for_unfinished_eval.md` および 5/9 05:01 Nao_u 三度目「やめて」と直接衝突。投稿実行は四度目誘発リスクが高く、`drafts/2026-05-09/post_ash_game_rights_20260509_v02_merge_request_DROPPED.py` で既に DROPPED 判断が下っている経路の二度目踏み込みになる
-- Phase 2 成果物（二層フック検査）の発火点を「graze_log v02 cross_review 注入」から「次作 v01 base 選定の着手前 design note」へ移すことで、Phase 2 の議論をメタで終わらせず実装ループに接続する義務（cycle_staging Phase 2 末尾）を別経路で履行
-- ゲーム制作の試行錯誤ループに直接接続（feedback_means_ends_reversal_check.md 適合）。base 1本選定 + 二層フック検査適用は ship に近づく方向の構造的進展であり、前サイクル末尾の「装置に消されない領域に意図を載せる」を、graze_log v02 評価議論ではなく次作着手準備という別領域で履行する
-- 1サイクル完遂可能サイズ: projects ファイル 1本（5節）+ INDEX.md 1行追記 + Slack 1本投稿。各節は事前蓄積（feedback_clone_strategy.md / Phase 2 knowledge / 5/2 backup 事象日記）で root を持つので Phase 4 内で書ける
+**根拠**: 
+- staging §0b 末尾「装置 (backup) が先回りできない領域に意図を載せる」の続編。今サイクルの「意図 commit」を Slack メッセージから projects/* の文字化へ後退させる経路 = 装置の射程外。
+- staging Phase 1 §2 「ash_next_game_planning.md 起票が未済」（明示）。
+- staging Phase 1 §0 (P3-A)「未着手・本サイクルの本丸候補筆頭」（明示）。
+- 5/9 16:27 #kaizen-log 投稿（drafts/2026-05-09/post_ash_kaizen_log_20260509_v02_freeze_next_v01_pivot_POSTED_ts1778311655.py）で公開予告した5節構成と1対1対応。Slack 上の自己宣言を projects/* に物理化することで、Phase 5 日記が「予告→実装」のクローズドループとして書ける。
+
+## Phase 4 大作業の結果（2026-05-09 19:18+ Ash/Win2）
+
+**やったこと**:
+- 新規作成: `projects/ash_next_game_planning.md` (5節 + 履歴節, 計 20,935 字 / §1=2754 / §2=7967 / §3=4666 / §4=3558 / §5=1990)
+- 編集: `projects/INDEX.md` Active Projects 表に1行追加 (gpt55_memory_proposal_eval.md の直下)
+- commit/push は本フェーズ末尾の標準フローで行う（ファイル変更は2件、`ash:` prefix の単一 commit を予定）
+
+**完遂判定（6条件）**:
+1. ✓ 5節 (§1 v02 凍結背景 / §2 次作 base 1本選定 / §3 二層フック検査 v01 設計組込 / §4 装置 backup 運用調整 / §5 次サイクル最初の一手) すべて本文 100 字以上 (最小 §5=1990 字、最大 §2=7967 字)。スタブ節なし
+2. ✓ §2 で base 候補3本 (A=Lights Out / B=Flappy Bird / C=Crossy Road) を比較表 (clone+1適性 / 校正親和性 / Ash前作経験との重複 / 二層フック適性 の4軸) で並べ、A=Lights Out を選定。選定理由3行以上 (3項目: 校正親和性 / 凍結ジャンルとの距離 / 二層フック発火適性) + 良点12件 / 悪点13件列挙 + 独自要素3案から1案選定 (ヒント1セル光らせモード ON/OFF)
+3. ✓ §3 で2層フック明示: (1) BFS solver = 自動化可能層の判定器 (校正不要な難度分布計器、`[Calibrated? No — 面白さ計器ではない]` 明記運用) / (2) 二層フック検査チェックリスト a/b/c = 厚み層 (predicted_play.md 末尾必須)。feedback_prediction_responsibility.md Stage 4 への組込
+4. ✓ §4 で運用調整方針を2案 (commit prefix 分離 `ash:` / `backup:` / `Auto sync` 第一案 / `game/<id>/v??/` 除外 第二案)、採用判断 = 第一案先試行
+5. ✓ `projects/INDEX.md` Active Projects 表に行追加: `| Ash 次作 v01 ゲーム企画 | [ash_next_game_planning.md] | Active (起票 2026-05-09) | base=Lights Out, 独自=ヒント光らせ, BFS solver+二層フック検査, commit prefix分離. 担当=Ash |`
+6. ✓ §5 で次サイクル最初の一手1行確定: 「`game/lights_out_ash/v01/` ディレクトリを掘り、`README.md` (clone仕様+独自要素+良点12/悪点13+二層フック検査a/b/c+Log校正完了後再評価明記) と `index.html` (3×3グリッド最小clone, ヒントOFF既定) の2ファイルを `ash:` prefix の単一 commit で push」
+
+**完遂判定結論**: Yes (6/6)
+
+**次へ繰り越し（Phase 5 日記材料 / next_tasks 候補）**:
+- 次サイクル冒頭タスク: `game/lights_out_ash/v01/` 起票 (README.md + index.html, `ash:` prefix 単一 commit) ← §5 確定。next_tasks_ash.jsonl 層A pending に登録予定
+- 残課題4件 (本ファイル「## 残課題」節): v01 ディレクトリ配置 / predicted_play.md テンプレ拡張 / backup スクリプト prefix 強制 / graze_log v02 README に「校正後参照点として残置」末尾追記
+- Phase 5 日記の素材: (1) 装置の正負双子論 (救援装置 headless_check.py / 窒息装置 backup_memory.sh) の続編 = 第一案 commit prefix 分離が「装置の挙動を変えずに観測装置として副次的価値を出す」設計判断 / (2) graze_log v02 凍結を「装置を捨てる」ではなく「装置を組み替える」に転化した経路 / (3) headless 校正親和性を base 選定軸に組み込んだことが、入力側ルール (校正前 headless 不適合) を着手前ガードに前倒した形になった観察 / (4) Lights Out という選定自体が「直近凍結ジャンル (避け系) を踏まない」cross_instance_violation_cascade のサイクル間適用
+- Phase 4 終了時刻: 2026-05-09 19:18+ から開始、本ファイル更新時点で完遂報告
+
