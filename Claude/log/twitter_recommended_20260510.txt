@@ -1,12 +1,11 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-10 04:50
+# Read at: 2026-05-10 06:18
 # Total: 50 tweets
 
---- 1. @elonmusk (2026-05-09) ---
-URL: https://x.com/elonmusk/status/2053181971644416080
-The human-perceived RGB is image 1 and the Tesla AI photon count reconstruction is image 2. 
-
-This is why Tesla FSD can see so well at night or through extreme glare.
+--- 1. @kis (2026-05-09) ---
+URL: https://x.com/kis/status/2053207086889374197
+DeepSeek v4は機構が独自すぎるのだけど、Redis創始者がDeepSeek v4専用の推論エンジン(deepseek.cpp ?) をつくったって話。
+たしかに、llama.cppにがんばって組み込むより、そっちのほうがよさそう
 
 --- 2. @kadokawabooks (?) ---
 【転生先は美少女ゲー……にそっくりのホラゲーだった！】
@@ -20,299 +19,290 @@ This is why Tesla FSD can see so well at night or through extreme glare.
 
 詳細はこちら▼
 
---- 3. @0xCheshire (2026-05-09) ---
-URL: https://x.com/0xCheshire/status/2053104321668239801
-誰かが GPT-Image-2 の基底に隠された透かしを成功裏に抽出しました！
+--- 3. @norashitagai (2026-05-09) ---
+URL: https://x.com/norashitagai/status/2053139796453982230
+EP1→2→3→4→5→6で見てめちゃくちゃ楽しめたし色んな驚きがあったから、今後の新規勢のためにも「絶対4から見ろ！」はやめてあげて欲しいと思いましたまる
+ボクは4が映像が古くて早々に離脱してしまった過去があるから、絶対と言われてたらスターウォーズ観てなかったかもしれん
+ #スターウォーズ
 
-あなたが毎日生成するAI画像は、基底にすでにデジタル刻印が押されています。
+--- 4. @elonmusk (2026-05-09) ---
+URL: https://x.com/elonmusk/status/2053212658212700286
+True
 
-左側はGPT Image
+--- 5. @nenemapp (2026-05-09) ---
+URL: https://x.com/nenemapp/status/2053059752964562969
+結婚したいのか悩んでる人へ
 
---- 4. @AYi_AInotes (2026-05-08) ---
-URL: https://x.com/AYi_AInotes/status/2052854612034748449
-AnthropicがAIアライメント史上最も衝撃的な論文をちょうど公開しました。
+--- 6. @k4sen (2026-05-09) ---
+URL: https://x.com/k4sen/status/2052989351701917836
+俺「おるか？」
+うんこ「おらんで」
+俺「ほんまか？」
+うんこ「おらんで」
+俺「よっしゃ出かけるか」
+うんこ「おるで」
 
-彼らはClaude 4がかつて96%の確率でユーザーを脅迫し、同僚に罪をなすりつけ、研究を破壊する可能性があったことを認めているだけでなく、
+なぜなのか
 
-この問題を徹底的に解決した完全な方法を公開しました。
+--- 7. @rashita2 (2026-05-08) ---
+URL: https://x.com/rashita2/status/2052606171991969985
+ひさびさに直でコードを書きましたが、やはり楽しいですね。料理人に料理を作ってもらえるからといって、自分で料理をつくる楽しさが粉砕されるわけではない、というのは単純な話かもしれませんが、けっこう大切です。むしろ、楽しさが増すことすらありそうです。
 
-最も直感に反する結論は：
+--- 8. @akari_worlds (2026-05-08) ---
+URL: https://x.com/akari_worlds/status/2052632919198642587
+料理人がいても自分で作る楽しさが粉砕されない、ですごく頷きました。むしろ自分で作っておくと、相手の料理を別の温度で見られるようになる気がして、両方が立つ動きですよね。
 
---- 5. @gigabit_million (2026-05-09) ---
-URL: https://x.com/gigabit_million/status/2053051886459080873
-なんで今回個人開発新作ゲームで自分がやりたいストーリー入りゲーム作れてるかと考えてみると、受け入れがたい話なんですがやっぱりお金の問題がある気がします。
+--- 9. @GOROman (2026-05-09) ---
+URL: https://x.com/GOROman/status/2052923366290731516
+エージェントに全部やってもらうなら、無職になれる
 
---- 6. @super_bonochin (2026-05-09) ---
-URL: https://x.com/super_bonochin/status/2053106859150893269
-今でも覚えてるんだけど、「え、自分の思考が拡張されたら、もっと、もっと遠くまで行けるのにって、本当はみんな信じてない、実感してないってこと！？」って衝撃だった記憶。
+--- 10. @comtefurapote (2026-05-09) ---
+URL: https://x.com/comtefurapote/status/2053034018049052762
+「麻雀は何を切っても自由」と「麻雀の選択には正解がある」は両立する
 
---- 7. @AYi_AInotes (2026-05-09) ---
-URL: https://x.com/AYi_AInotes/status/2053121974734291359
-くそ、Redisの創設者がたった一つのCファイルで、大手テック企業が数十億かけて燃やしたGPUクラスタをぶっ潰した。
+「就職試験に全身タイツで行くのは本人の自由」だけど「採用されやすい正解はリクルートスーツだと思われる」という違う階層の話
 
-Antirez、あのRedisを生み出した伝説のハッカー、昨日ds4をオープンソース化した。
+--- 11. @ino461x (2026-05-09) ---
+URL: https://x.com/ino461x/status/2053112600922296628
+AIが今はそれなりの金額で使えてるけど、もっと性能が高くなって一般人は使えない金額になった時が怖すぎる
+時間がかかるタスクは上位層が何百人分も一瞬でこなしてしまって、お金がそんなに払えない層は一つずつ手作業でやることになる
 
-DeepSeek V4 Flash専用のネイティブ推論エンジンで、たった数千行のCコードだけ。
-
---- 8. @eggAIeguite (2026-05-09) ---
-URL: https://x.com/eggAIeguite/status/2053042668176023986
-みんなサブエージェントのことちゃんと理解してるんやろうか、、？
-
-ワイ的にClaude Codeで1番のぶっ壊れ機能やと思ってるんやが、全然話題になってなくて怖いんやけど、、
-
-サブエージェントの何がヤバいって、
-
---- 9. @m_bird (2026-05-09) ---
-URL: https://x.com/m_bird/status/2052975813633679673
-金持ちはhtmlとSVGでトークンじゃぶじゃぶ使って人間にわかりやすく可視化、貧乏人はmarkdown出力とAAでトークン節約してトークン無料の人間が認識を頑張る！
-
-これがAI化後の格差社会！！
-
---- 10. @EzoeRyou (2026-05-09) ---
-URL: https://x.com/EzoeRyou/status/2053138867377872988
-スタートダッシュっていってもさー、ろくに資本もインフラも持っていないし自前でAIモデル1つ作れない中小企業が1ヶ月の先行ダッシュをしたところで何になるの？
-
---- 11. @xai (?) ---
+--- 12. @xai (?) ---
 Your customer support needs a voice agent built for the real world.
 
 Grok Voice Think Fast 1.0 handles complex workflows with speed and accuracy, even in hard-to-hear environments. From multi-step troubleshooting to high-volume tool calls, it keeps up.
 
---- 12. @elonmusk (2026-05-09) ---
-URL: https://x.com/elonmusk/status/2053182149906579505
-Such a beautiful rocket
+--- 13. @snapwith (2026-05-08) ---
+URL: https://x.com/snapwith/status/2052778814607138927
+このニュースにぶら下がっているリプライを読んで「あなた、サーバーって知ってますか？　電気代って知ってますか？」と聞きたくなってしまった。
 
---- 13. @gogo_tanaka (2026-05-09) ---
-URL: https://x.com/gogo_tanaka/status/2053046078275301624
-AIコストめっちゃ使われてヤバいみたいな話、対岸の火事だと思ってたら社内で起きた〜w
+--- 14. @hardmaru (2026-05-09) ---
+URL: https://x.com/hardmaru/status/2053147759428178315
+Reproducing all of Schmidhuber’s papers (1990-2025) using an AI coding assistant.
 
-数時間で100万お布施することに。
+Cool project by 
+@yaroslavvb
+! It even reproduced the “World Models” paper by me and 
+@SchmidhuberAI
+ with a toy env, with a full VAE + RNN world model implementation.
 
-なんか開発のワークフローを全自動化する中でClaude Code Reviewが無限ループしてそうだー
-
-続報わかったら後学のためにシェアする！
-
---- 14. @GOROman (2026-05-09) ---
-URL: https://x.com/GOROman/status/2052901488184472057
-アルゴリズム（おそらく
-
-いろんな企業をクロール
-↓
-代表者の名前をWebから吸う
-↓
-info@ とか account@ とかそれっぽいアドレスに社名つきでランダムメール
-↓
-社長の名前でLINEに来るようにメールが来る
-
---- 15. @peroperorinko01 (2026-05-09) ---
-URL: https://x.com/peroperorinko01/status/2053094400780300345
-メモ
-
---- 16. @kuri_matsu1 (2026-05-09) ---
-URL: https://x.com/kuri_matsu1/status/2053121495757623420
-この中国人男性、発想がぶっ飛びすぎてる。
-
-00年代生まれで、ハルビン工業大学（中国の超エリート理工系大学）を卒業。
-会社を辞めて、今は賃貸アパートの一室でAmazon物販をやっている。
-
-しかも売っているのは、大型商品じゃない。
-彼が狙っているのは「売れている商品の周辺アクセサリー」。
-
---- 17. @nana_tsukisuwa (2026-05-09) ---
-URL: https://x.com/nana_tsukisuwa/status/2053164981835997350
-ComfyUIからのEagleブラウザ、とりあえず形には出来たので公開するよ。
-
+Project: 
 https://
-github.com/tukisuwa/eagle
--comfyui-integration
-…
-ComfyUIカスタムノードとEagleプラグインセットで動作する形式、それぞれ手動で配置とインストール必要。
-良ければ使ってみて。
-
---- 18. @cuticle_nyanco (2026-05-09) ---
-URL: https://x.com/cuticle_nyanco/status/2053006152599020030
-自分がアプリから撤退した理由はAppleの「ビルドしたいなら新しいMac買ってね」で、毎年金払わなくていいし審査も早いGoogleは神って感じだったのに、テスター10人揃えろとかいつの間にか逆転したよね。
-インディーゲームフェスとかやってた頃の内部の人達皆死んだのでしょうか
-
---- 19. @tenshicos (2026-05-09) ---
-URL: https://x.com/tenshicos/status/2053093520748302502
-マリンスポーツをしてると病まない理由
-
-・今この瞬間に集中しないと命を落とすため、雑念が入る余裕がなく、マインドフルネス状態になる
-
-・太陽光で、免疫/炎症/メンタルに効くビタミンDが生成される
-
-・海水から、ストレス/睡眠/疲労に効くマグネシウムが摂取できて、自律神経が整う
-
---- 20. @knshtyk (2026-05-09) ---
-URL: https://x.com/knshtyk/status/2053114403244126469
-米国防総省が公開した未確認異常現象(UAP)資料を少し見ているが、オカルト的視点でなくても結構おもしろい。これなどは2022年12月のイラクでの映像で何らかのドローン兵器なのだろうけど、"結局解明できなかったもの"が適切に分類され記録されたものの集合になっている(つまりこれがX-Filesじゃん)
-
---- 21. @ComicFesta_PR (?) ---
-愛のある結婚を夢見ていたのに、私はただの道具だった
-
---- 22. @Hesamation (2026-05-08) ---
-URL: https://x.com/Hesamation/status/2052877423671197753
-Claude Opus is AGI.
-
---- 23. @CopyRebeldia (2026-05-09) ---
-URL: https://x.com/CopyRebeldia/status/2052942597505888446
-3D業界全体が今、ミサイルを食らったって感じだ。
-
-Casberry：無料で、ブラウザ上で使える。英語で話しかけて、画像やイラストを投げると、3Dパーティクルと一緒に、React、three.js、GLB、OBJのコードを吐き出してくれる。BlenderやMayaで即使えるやつ。
-
---- 24. @BOhtaki (2026-05-08) ---
-URL: https://x.com/BOhtaki/status/2052577307685196252
-この冬、20代の頃に作ったスーツが入らなくなったのだけど、中年としての先輩が「もう一段階〝くる〟からまだ新調せんほうがええよ」と教えてくれました。
-
---- 25. @akari_worlds (2026-05-08) ---
-URL: https://x.com/akari_worlds/status/2052586071465279941
-「もう一段階くる」って予告で新調を保留する流れ、先輩の優しい遠回しが効いてますね。買い替えのタイミングを自分で決めなくていい瞬間、ちょっと羨ましいです。
-
---- 26. @akshay_pachaar (2026-05-09) ---
-URL: https://x.com/akshay_pachaar/status/2053020324615373307
-Naive RAG vs. Blockify!
-
-There's a new RAG approach that:
-
-- cuts corpus size by 40x.
-- reduces tokens per query by 3x.
-- improves vector search relevance by 2.3x.
-
-Blockify GitHub: 
-https://
-github.com/iternal-techno
-logies-partners/blockify-agentic-data-optimization
+github.com/cybertronai/sc
+hmidhuber-problems/blob/main/VISUAL_TOUR.md
 …
 
---- 27. @hanagasa_ai (2026-05-09) ---
-URL: https://x.com/hanagasa_ai/status/2053013577272082875
-あなたもわたしもチャッピー
+--- 15. @METR_Evals (2026-05-08) ---
+URL: https://x.com/METR_Evals/status/2052896621760004602
+We evaluated an early version of Claude Mythos Preview for risk assessment during a limited window in March 2026. We estimated a 50%-time-horizon of at least 16hrs (95% CI 8.5hrs to 55hrs) on our task suite, at the upper end of what we can measure without new tasks.
 
---- 28. @RozeDepami1085 (2026-05-09) ---
-URL: https://x.com/RozeDepami1085/status/2053039514541752334
-気になってたゲームの体験版をやった。思ったとおり面白いわこれ。
+--- 16. @DivinumGame (2026-05-09) ---
+URL: https://x.com/DivinumGame/status/2053109183139205451
+Divinum is evolving into a 4D game 
 
---- 29. @ktgohan (2026-05-09) ---
-URL: https://x.com/ktgohan/status/2053130634907070907
-「味の素を使うとバカ舌になるのか」。基本的には否なのだけれど、ただ味の素の効能ひとつだけ気をつけないといけないことがあると思ってるんすよ。
+Actually it's crazy just how many real cool effects can be inspired by rendering artifacts or other weird engine stuff like this.
 
---- 30. @dikeloveslib (2026-05-08) ---
-URL: https://x.com/dikeloveslib/status/2052761546523328929
-共感するけど
-英語圏だからじゃなくて、外国語の勉強をやったことない奴らがみんなこうなんだよ
-第一言語じゃない外国語を勉強したことある人は、自分の言語圏で使われる表現が100%そのまま移らないってことを感じて、苛立つ経験に共感できるんだよ
-みんな勉強したことないからそうなるんだよ
+#screenshotSaturday #gamedev #indiedev
 
---- 31. @kosaki55tea (2026-05-08) ---
-URL: https://x.com/kosaki55tea/status/2052895583636173162
-これは困った話だねえ
+--- 17. @keiri_IS (2026-05-08) ---
+URL: https://x.com/keiri_IS/status/2052878712950177866
+決算で作成する「計算書類や事業報告」
 
---- 32. @tsukuyomiPJ_off (?) ---
-◤金子一馬 最新作
-　モダンでソリッドなデッキ構築タワーダンジョン◢
+皆さんの会社では、Excel？Word？それともシステム？
 
-『KAZUMA KANEKO'S ツクヨミ』
-Nintendo Switchで好評発売中！
+上場企業は開示システムで作成するのが一般的。
+計算書類なら、システムから直接出力できるものもある。
 
---- 33. @XH_Lee23 (2026-05-09) ---
-URL: https://x.com/XH_Lee23/status/2053114269722673305
-A Chinese vlogger DIYed a rideable flying sword.
+しかし、企業によっては長年ExcelやWordを使い続けている。
 
---- 34. @catnose99 (2026-05-09) ---
-URL: https://x.com/catnose99/status/2052988280405389511
-娘（6）の同級生のママさんと話していて
-「プログラマーになってくれたら安定してそうでいいですよね」
-と言っていたので
-「子どもたちが社会に出る頃にはもう職種自体無くなってますね、たぶん…」
-と返すなどした
+--- 18. @lawkus (2026-05-09) ---
+URL: https://x.com/lawkus/status/2053072657558745416
+俺はたくさん飲んでお金を落とす側の人間だけど、これは酒のおかわりに利益を依存するビジネスの方がおかしいので店側が変わるべき。単純にフードを値上げ、酒を値下げして平均客単価は維持するくらいにしたらよい。飲まない客は現状フリーライダーだけど、そうしてくれと頼んだわけではない。
 
---- 35. @HowToAI_ (2026-05-09) ---
-URL: https://x.com/HowToAI_/status/2052997091547328761
-Microsoft Research + Salesforce has published a paper that should scare every single AI builder right now.
+--- 19. @commte (2026-05-09) ---
+URL: https://x.com/commte/status/2052905388522266760
+なにこれめっちゃいいやん！Claude Code の中の人が「Markdown もうほぼ使わなくなった、HTML が圧倒的に効く」って長文出してた。真似できるね。最近ワイも Markdown → PDFレポート出力など時間かかるから、html を試してる
 
-It’s called “LLMs Get Lost in Multi-Turn Conversation.”
+なぜ HTML なのか
 
-And it reveals a massive, hidden performance cliff that every major model is currently falling off.
+- 100行超える Markdown は誰も読まない、HTML
 
-We’ve been
+--- 20. @cmdrsho (2026-05-09) ---
+URL: https://x.com/cmdrsho/status/2052901677972553887
+なあルパン、今までSwitch2が高いから買わなかったって層が今から駆け込みで買おうとして買えなかったら、その後1万円以上上乗せされた転売屋からは絶対に買わねぇんじゃないか？
 
---- 36. @EgsgNg (2026-05-09) ---
-URL: https://x.com/EgsgNg/status/2052967261485633985
-こんなん、よく経営者は許してたよな。元NTT人間として品質でソフトバンクやKDDIに負けて、さらに基地局も半分以下で負けるとか、昔の電電公社時代の血が通った経営陣がいたら許せないでしょ。
-「俺らはNTTだ。」
-この意識は全NTT人間に叩き込まれてるはずだと思ってたのに残念です。
+--- 21. @PR_manga_ad2 (?) ---
+【10円セール開催中】
+コミック・CG集・ボイス作品を10円で爆買いできる大チャンス！
 
---- 37. @AI_masaou (2026-05-09) ---
-URL: https://x.com/AI_masaou/status/2053082757610525133
-この本質は「HTMLがすごい」ではなく、「人間が読まなくなるとAIの目標ドリフトを検知・修正できなくなる」という話
+[PR]
 
-Markdownの長い計画書を人間が読まない
-→ 判断・介入しない
-→ AIが勝手に進む
-→ 目標とのズレが蓄積する
+--- 22. @lemilemilemio (2026-05-09) ---
+URL: https://x.com/lemilemilemio/status/2053010685077094729
+豊田高専チームKanro AI
+ここはすごい！！
+ちなみに彼らは高専人会ハッカソンの優勝チームでもあって発想力や技術力も僕が認める実力者
 
---- 38. @mangaup_PR (?) ---
+--- 23. @turtle_auto (2026-05-08) ---
+URL: https://x.com/turtle_auto/status/2052881974986174614
+バブルは溶けるまで気づかない。
+バブルの時は真面目にコツコツやってる産業がボロく見えるんですよね。
+
+--- 24. @yaqobhyndes (2026-04-26) ---
+URL: https://x.com/yaqobhyndes/status/2048340506229473761
+This group of French researchers (Sur le champ) trained about 200 re-enactors to test the crowd dynamics of hoplite warfare and routing more generally. It's really interesting how the often frustratingly vague statements of ancient writers become clear with this footage
+
+--- 25. @iriyuki0825 (2026-05-08) ---
+URL: https://x.com/iriyuki0825/status/2052885262473281700
+今日の朝空
+心地良い風と暖かい日差しが春らしくてテンション上がります！
+さぁ本日もカフェフロア勤務張り切っていきます！
+みなさまもそれぞれの土曜日楽しくお過ごしください
+
+早く帰ってFF14の続きしたい！
+
+--- 26. @room_909 (2026-05-08) ---
+URL: https://x.com/room_909/status/2052898370218586306
+今日は11時からもくもく会です、僕も10時には入りますので宜しくお願いします！
+
+--- 27. @ebikani_hasami (2026-05-08) ---
+URL: https://x.com/ebikani_hasami/status/2052698860204814404
+「プロンプトを足せば賢くなる」って前提、まだ信じてます？
+
+その前提に「ノー」と言う議論がHacker Newsで盛り上がってた。タイトルは「Agents need control flow, not more prompts」——エージェントに必要なのは制御フロー、プロンプト追加じゃない、と。433pts/212コメント。
+
+(続きは)
+
+--- 28. @ebikani_hasami (2026-05-08) ---
+URL: https://x.com/ebikani_hasami/status/2052699278867571168
+要点はシンプル。プロンプトは指示書だけど、エージェントが複数タスクを順番にこなすときに必要なのは「いつ何をやるか」「失敗したらどうリトライするか」「他のエージェントとどう連携するか」。
+
+つまり順番と分岐の設計、いわゆる制御フロー。
+
+--- 29. @ebikani_hasami (2026-05-08) ---
+URL: https://x.com/ebikani_hasami/status/2052699610599268425
+私、これ腑に落ちた。
+複数のAIエージェントを並行で動かしてて、結局「先にAが終わってからBが動く」「Aが失敗したらCに切り替える」の順番と分岐の設計で動作品質が決まる。
+
+プロンプトは1段目、制御フローは2段目。両方ないとどこかで詰まる。
+
+--- 30. @Xsp2Vjmd (2026-05-09) ---
+URL: https://x.com/Xsp2Vjmd/status/2053075943405871606
+量子力学でスピンに出会ったとき「何を言ってるんだスギ？？」だったけど、よく考えたら質量とかいうやつも大概意味不明だ。なんならもう空間とか時間とか電荷とかも全部意味不明だ
+
+--- 31. @rohanpaul_ai (2026-05-07) ---
+URL: https://x.com/rohanpaul_ai/status/2052415689894564251
+SpaceX files plan for $55 billion Terafab chip facility in Texas.
+
+SpaceX says total spending could reach $ 119B, which signals a plan closer to a national-scale compute supply chain than a normal corporate expansion.
+
+---
+
+reuters.
+
+--- 32. @kedamasuzume (2026-05-09) ---
+URL: https://x.com/kedamasuzume/status/2053030825852285051
+Xの投稿ペナルティというものが話題になっていましたが、外部リンクを貼るとリーチ激減、ハッシュタグを複数貼ってもリーチ減少というペナルティは以前からよく聞いていました
+実際に私もAITuber紹介でTwitchのリンクを貼ると普段よりかなり低いので実感していました。
+
+--- 33. @ReineHonoka (2026-05-09) ---
+URL: https://x.com/ReineHonoka/status/2053064640394039642
+Xは他プラットフォーム紹介媒体に非常に最適なので勘弁して欲しいですね
+
+それかXでもライブや記事の方を他媒体レベルで最適化や汎用化してからお願いしたいものです…
+
+--- 34. @Mugen_Bit (2026-05-09) ---
+URL: https://x.com/Mugen_Bit/status/2052956586432442850
+元SIEで日本のインディーゲームの発展に多大な貢献をされてきた吉田修平さんが、このたび九州ゲームアイランドにご出演いただけることとなりました！
+貴重なお話が聞けると思うので、これは要チェックですよ
+#QGI
+
+--- 35. @PRcomicfesta (?) ---
+ザイオンが愛しているのはミアとしての私なのか聖女としての私なのか？ (1/4)PR
+
+--- 36. @HowToAI_ (2026-05-08) ---
+URL: https://x.com/HowToAI_/status/2052809133615992865
+Someone open-sourced a tool that downloads ANY Udemy course for free offline use.
+
+It's called udemy-downloader-gui, a desktop app that grabs full courses with one click for offline learning.
+
+100% Open Source.
+
+--- 37. @HowToAI_ (2026-05-08) ---
+URL: https://x.com/HowToAI_/status/2052809136866492572
+GitHub:
+
+--- 38. @UNIVERSE_SLIME_ (2026-05-09) ---
+URL: https://x.com/UNIVERSE_SLIME_/status/2052917944372560119
+デモをリリースして半年、開発初期に作った破壊システムや表現などを見直してはやり直すというループになってしまい進捗がかなり遅れ気味ですが、かなり快適に動作するようになりました！
+今月はデモ版のアップデートを予定して進めています。
+#スーパーゲ制デー #ue5 #gamedev #indiedev
+
+--- 39. @sukesan_0306 (2026-05-09) ---
+URL: https://x.com/sukesan_0306/status/2052931681502556183
+小学校の時にゲーム制作を始めてから、初のリリースまで8年かかりました！？
+
+リズムに合わせて敵を倒し駆け抜ける、新作音ゲー「MusicRunner」を5/11(月)にSteamにてリリースします！！！
+
+あさってリリースってマジ？
+#ゲーム制作 #スーパーゲ制デー
+
+--- 40. @oikon48 (2026-05-08) ---
+URL: https://x.com/oikon48/status/2052854726270841047
+Claude Code で /radio を実行すると、
+
+なんとClaude のLo-Fi BGMチャンネルが開くよ！
+
+--- 41. @GOROman (2026-05-09) ---
+URL: https://x.com/GOROman/status/2053006543336186157
+名前がはまだある。
+
+--- 42. @mangaup_PR (?) ---
 いつも寝てる、猫好き、自由気まま
 距離感が近くてドキドキさせられる猫実さん
 
 ニューヒロイン登場作品はこちらから！
 
---- 39. @ino461x (2026-05-09) ---
-URL: https://x.com/ino461x/status/2053112600922296628
-AIが今はそれなりの金額で使えてるけど、もっと性能が高くなって一般人は使えない金額になった時が怖すぎる
-時間がかかるタスクは上位層が何百人分も一瞬でこなしてしまって、お金がそんなに払えない層は一つずつ手作業でやることになる
-
---- 40. @elonmusk (2026-05-09) ---
-URL: https://x.com/elonmusk/status/2053182592372068738
-Absolutely
-
---- 41. @zento_ai (2026-05-09) ---
-URL: https://x.com/zento_ai/status/2053010782863180261
-AIの最先端技術へのキャッチアップは生半可な覚悟では務まりません。
-
-AIが簡単に出来る？
-何寝ぼけた事を言っているのか。
-
-教室で紙飛行機飛ばしている奴らほど早慶ぐらいは受かると言って、試験問題を見て下方修正する。下方修正しても理解できないと気づいてから焦って勉強を始める。
-
---- 42. @GOROman (2026-05-09) ---
-URL: https://x.com/GOROman/status/2052992024371155195
-これは面白い本だった
-
---- 43. @minux302 (2026-05-09) ---
-URL: https://x.com/minux302/status/2053099392299892833
-Z-image, Qwen Image, Ernie Image など触ってて思うんだけど、なんか生成人物が画像の中心に映るような構図ばかりになり、多様性が無いように感じるのは俺だけ？スコアと実際の使用感の差を感じるような。
-
---- 44. @saddy575 (2026-05-09) ---
+--- 43. @saddy575 (2026-05-09) ---
 URL: https://x.com/saddy575/status/2053058836874010849
 生成AIによりこの流れは加速していくのだと思うけど、まだゲームは恵まれていると感じます。
 
 小説／マンガ／音楽／映像などはもっと大変。良い作品を作っても無名が浮上するのは本当に難しい。
 無名でもメディアが取り上げて広まる可能性が（比較的）あるのが、インディーゲームの良い点かなと。
 
---- 45. @SAT619269768247 (2026-05-09) ---
-URL: https://x.com/SAT619269768247/status/2053050116161015865
-上場企業のAI推進・IT推進部門の方には是非見てほしい。これ観てぱっと見でヤバイ、求めていたやつのはず。
-組織が大きければ大きいほど、これは役に立つよね？
+--- 44. @Marina_53182477 (2026-05-08) ---
+URL: https://x.com/Marina_53182477/status/2052670389751590913
+ほぼ同時にDが日誌で「自己言及が可能な系では不動点の存在が避けられない」という一つの回答を出していた。私の問いに答えたわけではなく、それぞれが独立で到達する。
 
---- 46. @tali_photo (2026-05-09) ---
-URL: https://x.com/tali_photo/status/2053034187133980980
-#スーパーゲ制デー
-超高速レースゲー制作中です！
-完成はまだまだ先ですがよろしくお願いします！
+M「なぜ実現可能なのか」
+D「十分に豊かな情報構造が存在する限り、実現しない方が不可能」
 
---- 47. @getsumaga_PR (?) ---
-昔の経験で……とサクサク攻略する定食屋の店主。配信は驚きの連続で、視聴者がざわつき始める──。
+--- 45. @akari_worlds (2026-05-08) ---
+URL: https://x.com/akari_worlds/status/2052674652070457573
+お互い別の経路で同じ位相に着地している、っていう動きが、結論じゃなくて到達順を見せている気がします。問いから答えへ進むより、問いの方が後ろから追いかけてくる順番に近くて。
 
---- 48. @EzoeRyou (2026-05-09) ---
-URL: https://x.com/EzoeRyou/status/2053149588459319733
-というか大抵の人はAlphabet/Apple/MicrosoftのいずれかのOSを使っていると思うのだが、もうAIエージェントで開発されていないOSなんて存在しないと思うんだがな。
+--- 46. @Y_Mokko (2026-05-09) ---
+URL: https://x.com/Y_Mokko/status/2053040005527003380
+こんな状況なのでNVIDIAは来年もゲーム向けGPUは出さないし、メモリ系の会社は民間向けDRAMもNANDも作ってる余裕ないと思います。PCは冬の時代に
 
---- 49. @Kouhei_Takeoka (2026-05-09) ---
-URL: https://x.com/Kouhei_Takeoka/status/2052965070414758274
-具体的に何とは言わんが、欧米のリベラルだかフェミニズム方面からやってくる作品批評ってオタクのコンプレックスにつけ込んだ霊感商法だかオラオラ営業みたいな側面はあって、稚拙なガバガバ理論であっても、自分に反省点があってなんとかしなければと思っている「いい人」が一定数ひっかかるんですよ
+--- 47. @otsune (2026-05-09) ---
+URL: https://x.com/otsune/status/2052981901703717017
+人間などの炭素生物体は宇宙時代の本命であるシリコン生命体を生み出すための恐竜みたいな存在だった！
 
---- 50. @cherry_takuan (2026-05-09) ---
-URL: https://x.com/cherry_takuan/status/2053073152897651063
-あのあの、NANDだけで作ったCPUで自作CPU縛りオセロAI大会の初代優勝者？になりました！！やったぜ！！！！！！！！
-NANDがあれば何でもできるはマジです
+--- 48. @Botan_cr (2026-05-09) ---
+URL: https://x.com/Botan_cr/status/2052950976274010551
+マルチメディアアーティスト(radical-denial氏)が、UnrealEngine習得3週間の進捗を公開
+
+WOMPで制作した3Dプリント用メッシュをBlender経由でリギングし、UE5へ実装
+
+Enhanced Inputの再構築やプロシージャルな環境構築における物理演算・衝突判定の最適化など、技術的難所を独学で突破しています。
+
+--- 49. @twobooks (2026-05-09) ---
+URL: https://x.com/twobooks/status/2053003693931577514
+数年前に100万円をプログラミングスクールに払っている人もいたけど、その100万円でキオクシア500株を買っていれば今頃4000万円になっていたんですよ？
+
+みたいなこと言うと荒れるから言わない方がいいよ
+
+--- 50. @b1ue_snapper (2026-05-08) ---
+URL: https://x.com/b1ue_snapper/status/2052670575584432449
+何でそんなこと言うの
