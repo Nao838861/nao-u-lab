@@ -341,3 +341,48 @@ feedback_judgment_delegation.md「判断を依頼形式で渡す」適用、Mir 
 4. **Log 領域と密接**: external_notes 日付ラグ警告 = Log の Phase 1 入口側補強で Log の review が筋
 5. **集中1本主義**: β/γ/δ を Phase 3 軽処理に降ろした分 α に集中、Phase 4 で他作業に分散しない
 
+## Phase 4: Execute（2026-05-09 C173 Phase 4 大作業 = α）
+
+### 1) 副産物（新規/変更ファイル）
+- **新規**: `scripts/check_external_notes_lag.py` (kaizen #116 段階1 実装、126行)
+  - `--instance log|mir|ash` / `--threshold N` / `--verbose` / `--self-test` 対応
+  - WARN 形式: `[#116 WARN] external_notes_<instance>.md ラグ N日（最新エントリ YYYY-MM-DD）`
+  - 既定閾値 3日、3日以上 = stderr WARN + exit 1
+  - `--self-test`: 合成データでパース+閾値ロジック健全性確認（Log クロスチェック補強3点「警告ゼロ連続が長期化した場合の monitoring」対称項）
+- **変更**: `memory/kaizen_tracker.md` #116
+  - 状態: 「起票済み + Log クロスチェック OK」 → 「起票済み + Log クロスチェック OK + **段階1 実装済 (2026-05-09 C173 Phase 4 自走テスト PASS)**」
+  - 検証結果欄に自走テスト結果 + 各 instance lag 観測値追記
+
+### 2) 自走テスト結果
+- `python scripts/check_external_notes_lag.py --self-test`: **5/5 PASS**
+  - 最新が今日 → ok ✅
+  - 最新が3日前 → WARN ✅
+  - 最新が10日前 → WARN ✅
+  - ヘッダなし → parse_error ✅
+  - 複数ヘッダから最大日付採用 ✅
+- `python scripts/check_external_notes_lag.py --verbose` (本番実行):
+  - log: lag=0日 latest=2026-05-09 [ok]
+  - mir: lag=2日 latest=2026-05-07 [ok]
+  - ash: **lag=6日 latest=2026-05-03 [WARN]** ← 起票時想定の検出パターンが実発火
+  - exit=1 (1件以上 WARN なので)
+
+### 3) 観測の含意
+- Ash の 6日ラグ = 起票時想定 (Ash 4/22-25 4日間スキップ) と同型の現象が再発中の可能性。本スクリプトが構造的に検出した最初の事例。次サイクル以降で:
+  - (a) Ash inbox 経由で「external_notes_ash.md 5/4-5/9 の摂取記録不在は意図的か / スキップか」を依頼形式で問う候補
+  - (b) ただし本日 Phase 4 の射程外（散漫禁止）。Phase 3 で Mir 申し送りに集中したように、Ash 申し送りは次サイクル C174 Phase 3 で軽処理候補
+- log lag=0 / mir lag=2 = 閾値3日内、起票時想定の閾値設定が「過剰警告化していない」第二の事後確認
+
+### 4) 完遂の定義 vs 実績
+- (1) スクリプト存在 + WARN 動作: ✅
+- (2) 3日未満 = exit 0 + 無出力: ✅ (log/mir 単独実行で確認)
+- (3) `--instance` 省略時 3 instance チェック: ✅
+- (4) 自走テスト + 各 instance lag 一覧: ✅
+- (5) docstring に kaizen #116 出典 + Mir 補強提案(d) 射程外明示 + 段階2 引き継ぎノート: ✅
+- (6) kaizen_tracker.md #116 更新: ✅
+- (7) commit + push: **Phase 5 に持ち越し**（本サイクル Phase 4 指示で「commit はしない、git push は Phase 5 で日記とまとめて行う」）
+
+### 5) 次サイクル引継ぎ（C174 以降）
+- **段階2 実装候補**: `autonomous_cycle.sh` または `tools/multi_phase_cycle_*.py` の `init_staging` 前 hook で `python scripts/check_external_notes_lag.py` を呼び出し、stderr 出力を staging Pre-check 節に inline 注入
+- **Ash 申し送り**: Ash の external_notes lag 6日 観測の意味確認（依頼形式、judgment_delegation 適用）
+- **検証手段 (2)(3) 測定開始**: 段階2 統合後 C174〜C174+2週間 で再発率測定
+
