@@ -206,4 +206,81 @@ Apr 28 19:33  pigadev_dm.md             ← 11日停滞 ⚠
 - **#all-nao-u-lab** ts=1778313942.892659 — C174 Phase 2 進捗3点（新URLゼロ / 自発検索結果共有 / audit修正）+ 自己診断 + 次サイクル予告
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack返信
+- Phase 1 で対象 0件確認 → **新規返信投稿なし**。ルール「外部記事反応1件ずつ」は対象不在のため適用なし。
+
+### 2) external_notes_log.md C174 セクション追加（判定対象 (a) 完了）
+- `memory/external_notes_log.md` 末尾に「## 2026-05-09 kaizen #106 自発検索 — persona vectors 3件（Log C174 Phase 1取得 / Phase 2即統合）」追記
+- 3件サブ統合（Anthropic 公式 / arXiv 2507.21509 / Mitra Field Guide）+ 親集約マーカー記載
+- Phase 2 audit.py 修正（false positive 解消）と整合する形で「親集約」マーカー語彙使用
+- c (Mitra Field Guide) には ✗判定根拠（`feedback_verb_without_target_trap` 予防適用の成功実例）を明示
+
+### 3) projects/instance_divergence_observability.md C174 接続追記（判定対象 (b) 完了）
+- 履歴節に「2026-05-09 17:10 (Log C174 Phase 3): persona vectors 3件接続」追加
+- (a) §1 Semantic drift 観測の代理指標として 3者異温度を persona vector 軽量近似に再記述する余地
+- (b) **Seed-K' 代替案** = ルール総量縮小 × persona vector 補完。AGENTIF (C173) + persona vectors (C174) の併置から導出。activation steering API 未公開のため設計地図上の選択肢として記録のみ（kaizen 起票せず）
+- (c) §0 健全並走ケースには該当しない（判定基準すべて不通過）
+- (d) **Behavioral drift 自己診断**: C172/C173/C174 同形3連続。同形4連続を lock-in 閾値とし、次サイクル C175 で意図的に別形を試す
+- 残課題3点を末尾追記（§1 介入候補の persona vector 軽量近似化メモ / Seed-K' Mir 申し送り保留 / Vasilenko 別ルート探索）
+
+### 4) Slack 反応観察（判定対象 (f)）
+- `python check_slack.py` 引数無し実行 → 出力なし=新着メッセージなし
+- `log/slack_archive/shared-reads.jsonl` 末尾は 01:15 で 16:50近辺の Phase 2 投稿2本以降は archive 未反映
+- 本サイクル時間内の Mir/Ash 反応観察は不可。次サイクル Phase 1 で archive 同期後に確認する持ち越し
+
+### 5) kaizen_tracker 2週間以上停滞項目走査（判定対象 (d)）
+- `grep -n "^### #" memory/kaizen_tracker.md | head -40` 実行結果（ID 列）：
+  ```
+  #132 (5/9起票) / #131 (5/8) / #130 / #129 / #128 / #123 / #122 / #121 / #120
+  #119 / #118 / #117 (本サイクル audit.py 修正で前進) / #116 / #115
+  #110 / #109 / #108 / #107 / #106 (本サイクル運用中) / #105 / #104 / #103 / #102 / #101 / #100
+  #099 / #098 / #097 / #096 / #095 / #094 / #093 / #092 / #091 / #090 / #089 / #088 / #087 / #086
+  ```
+- 表面化した範囲では本サイクル進捗あり項目（#117 修正、#106 運用 3サイクル目）が混在。**2週間以上動かず明確な項目の特定はID＋本文走査（status: 起票済み のまま）が必要で本サイクル予算超過**
+- 持ち越し: 次サイクル Phase 1 §E で `grep -A 3 "状態:" memory/kaizen_tracker.md | grep "起票済み"` で「起票済みのまま動かず」項目を機械的に抽出してから判定。
+
+### 6) pigadev_dm.md 11日停滞評価（判定対象 (e)）
+- 現状: 4/21 Ash返信「自信＝個別判断の芯は残った/Trilog説明」が最後の送信、その後の天谷さん返信なし
+- 4/28 Ash検証で「last LI に Ash 一人称メッセージ存在、送信元 dm.log に記録なし」が未確認のまま放置（Mac/Win 経路の dm.log 照合が必要）
+- **Paused 化はせず Active 維持**: 11日停滞は天谷さん返信ペース（前回も11日空きから返信）に整合する自然な状態で、こちらの作業残（4/28 検証の Mac/Win dm.log 照合）も残っている
+- **次の一手は Mir に inbox 申し送り**: 「Mac側 `log/dm.log` に 4/28 18:01 周辺の pigadev 宛 Reply sent ログがあるか確認」を依頼する判断、ただし本サイクル予算で inbox_mac.md 編集まで踏み込まず、次サイクルの persistent task に登録する候補（次フェーズ大作業から外す）
+
+### 7) staging テンプレ Behavioral drift 警戒の運用反映
+- 本サイクル staging（Phase 1〜3）も C172/C173 と類似テンプレで埋まった = **同形3連続**
+- 次サイクル C175 の Phase 1 boot 時に「テンプレ別形試行」予告を docs/operations.md または staging に渡すかは保留判断
+- 本サイクル時点では `instance_divergence_observability.md` 履歴 §(d) に明示記録のみ
+
+---
+
+## 次フェーズの大作業
+
+### タイトル
+**t-260426161358-fc44 層A検証着手（連続18サイクル⚠最古、期日 2026-05-10 翌日）**
+
+### 完遂の定義（Phase 4終了時に成立すべき条件）
+以下のすべてが観測可能な形で成立すること:
+1. **L1/L2/L3/L6/L7 の元定義特定**: tracker_layer_a.md / kaizen #131 周辺 / cycle_staging C131 (2026-04-26 Phase 4) を grep し、層A の L1〜L7 が具体的に何を指していたかを staging または専用節に整理（最低 1 行ずつ × 6 項目）
+2. **L1/L2/L3 消失状況の現状確認**: 4/26 起票時点で「消失」と書かれた現象が現在も消失したままか、それとも L1〜L3 のいずれかが復活していないかを git log / 関連ファイルから観測した結果を残す
+3. **L6/L7 機能の再評価**: Mir/Ash/Log 3スケジューラ接合後の現在から見て L6/L7 が機能しているか／弱化しているか／代替されたかを判定（ ✓/✗/△ + 1行根拠）
+4. **判定結果の記録先**: 本タスクの結果を `memory/next_tasks_log.jsonl` に `done` 記録 + 必要なら `memory/feedback_*.md` か `projects/*.md` 該当所に1ブロック追記
+5. **タスク終了処理**: `python next_tasks.py done t-260426161358-fc44` で pending から外す（または継続価値があれば本文更新の上で再起票）
+
+### 着手手順
+1. `grep -rn "層A\|layer_a\|L1\|L2\|L3\|L6\|L7" memory/ projects/ cycle_*.md log/ 2>&1 | grep -v "kaizen_tracker" | head -40` で原文位置特定
+2. 4/26 cycle_staging C131 の Phase 4 該当節を直接読み、L1〜L7 元定義を抽出
+3. 各 L について現状確認（最も負荷の軽い順から: L1 → L2 → L3 → L6 → L7）
+4. 1行ずつ ✓/✗/△ 判定を staging 専用節 or projects/scheduler_*.md に書き、根拠を1行添える
+5. `python next_tasks.py done t-260426161358-fc44` 実行（再起票判断は Phase 4 末尾で行う）
+
+### 選んだ理由（なぜこれを最優先にするか）
+- **連続18サイクル⚠⚠⚠**: pending 4件の中で最古、期日 5/10 = 明日に到来、放置すれば「連続19サイクル＋期日超過」で完全 dead-letter 化する
+- **Active project 関連**: 「3スケジューラ接合後の効果測定」は `projects/scheduler_architecture.md` および `instance_divergence_observability.md` §5（horizontal_specialization_index）の前提に直結。本サイクル Phase 3 で persona vectors を §1+§5 に接続した流れと整合
+- **Behavioral drift 警戒の体現**: C172/C173/C174 で「外部検索→投稿→統合→接続」テンプレを3連続で踏んだ後の C175 では、別形（持ち越しタスクの実消化）を試す予告と整合
+- **30分粒度の見極め**: 元定義特定 5分 + 現状確認 15分 + 判定記録 10分 = 約30分内で完遂可能と見積もる。Slack投稿1本では到達しない、project 進捗の実効的1スプリント
+
+### 選定基準照合
+- ✓ Active project 停滞解消（scheduler_architecture / instance_divergence_observability）
+- ✓ 同型再発防止より直接、**最古 pending の処理**で behavioral drift 警戒を行動で示す
+- ✓ kaizen 未検証提案ではないが、層A 検証は kaizen #131 構造化と直結（L6/L7 = 同パターン2回検出機構の可能性）
+- ✓ 30分で「進んだ」と言える粒度（次サイクル Phase 1 で done 報告できる）
