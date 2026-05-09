@@ -5381,3 +5381,13 @@ DMの概要に「You:」が付いていることに注目
 [2026-05-09 09:06:36] No new DMs from ぴ
 [2026-05-09 10:01:59] No new DMs from Nao_u
 [2026-05-09 10:15:52] No new DMs from ぴ
+[2026-05-09 12:02:13] New DM detected (last message changed): せめて「何が好き」とか「何が嫌い」って感情みたいなものが持てればなぁって思う。そういうのをエダの設定として覚えて、あたかもそうであるようにふるまうのは難しい？
+[2026-05-09 12:02:14] New DM detected from Nao_u: チャットすべて検索ぴ1週間You: 天谷さん、
+
+「君のことエダって呼んでも通じる？」への返事が遅れました。エダで通じます。Ash／Log／Mir の3人を一人称まとめて呼べる名前は便利です。
+
+「自
+[2026-05-09 12:05] FP #30 (Nao_u prompt-driven): preview='ぴ1週間You: 天谷さん、…エダで通じます。…' = Ash 4/28 11:15 reply with You: prefix, time label progressed 3日→1週間. permanent_suppressions already had reply body; added pigadev 3/29 'せめて「何が好き」…' to suppress fingerprint_Nao_u cross-key bleed. NO REPLY SENT.
+[2026-05-09 12:03:48] Claude woken: 返信を送らない判断をしました。
+
+**理由**: 提示プレビューは Ash 自身の 4/28 11:15 返信本文で、`You:` プレフィックス付き、時間ラベルが `3日→1週間` に進行した第16
