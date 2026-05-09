@@ -16,8 +16,14 @@ originSessionId: 02650e6e-a443-4358-8507-2e02666600bb
 - 失敗系列: 5/8 12:09 cross_review 5箇条 / 5/8 18:09 体感型 / 5/9 03:38 ootamato 3軸自己判定 / 5/9 04:30 v02 PR merge 要請 — いずれも graze_log v02 (未完成) の headless 数値 (Lv3=0% / 60s=0%) を判定根拠に使った。三度目の指示でやっと停止
 
 **How to apply**:
+- **出力ゲート: 1行点検テンプレート (Calibrated? Yes/No)**: cross_review / judgment / merge 要請 / Slack で装置由来の数値を1つでも書いた直後 (または書こうとした直後) → 行末に `[Calibrated? No — 校正実績なし、参考値]` または `[Calibrated? Yes — 出典: <完成ゲーム名/校正記録>]` を1行付ける。Yes と書けない場合、その数値は判定根拠カラム・推奨アクション・merge 提案の主軸から外す（観察記録までに留める）。**書く前ではなく書いた直後がトリガー** — germane load scaffolding (Sweller 1988 cognitive load theory) として最小コスト発火、判断資源 3-4h 天井 (shirasu59s 2026-05-08) の節約設計
 - 未完成ゲームの cycle で headless harness を書いた直後 → 数値を「観察記録」までに留め、`judgment_*.md` `self_judgment.md` `predicted_play.md` の判定根拠カラムや Slack 投稿の判断材料には使わない
 - cross_review / 自己判定 / merge 要請 / 設計改修議論を書く前 → headless 数値が根拠の何%を占めているか確認。20%以上なら投稿前に止めて、実プレイ観察・先行事例調査・コア機構の手作業検証で置換する
 - 「Lv3 到達率」「N秒生存率」「graze 成功率」など headless harness 由来の数値を文中に書こうとした瞬間がトリガー — 完成済みゲームでの校正実績が手元にあるか確認してから書く
 - Log が完成済みゲームで headless 校正結果を出したあと、校正済みであることを明示してから初めて未完成ゲームへの適用を再検討する
 - v02 ディレクトリのような既存成果物は削除しない (校正後の参照点として残す)。ただし設計判定の根拠としては凍結
+
+**出力側ルールの理論的裏付け** (2026-05-09 追記):
+- knowledge/20260509_judgment_load_abstract_thinking_pair_shirasu_ebikani.md (b) 接続: 「校正済みか?」の1行形式は cognitive load theory の germane load scaffolding として、生数値 → 校正状態 の階層1段を最小コストで発火させる
+- 入力側ルール (本ファイル本文 = 校正前 headless を未完成ゲーム評価に使わない) は判断の前段ゲート、出力側ルール (1行点検テンプレート) は判断の後段ゲートで、両者は判断負荷の二重制約 (量側 3-4h 天井 / 質側 抽象思考) に対し独立に効く
+- 完了タスク参照: §0a `t-260509070744-be0c` (2026-05-09 追加 → 同日完了)
