@@ -205,3 +205,4 @@
 {"ts": "2026-05-09T08:55:23", "instance": "log", "cycle": "2026-05-09", "action": "viewed", "task_id": null}
 {"ts": "2026-05-09T09:12:29", "instance": "log", "cycle": "2026-05-09", "action": "done", "task_id": "t-260429063215-a819", "note": "C173 Phase 3 退役判定: 現 kaizen_tracker.md 上で #123 は1件のみ存在（Mir 起票分のみ）、Ash=OK 2026-05-01 で承認済 = 番号衝突は実体なしで自動解消（dangling commit 復元経路で組成解消、next_tasks_ash.jsonl 5/1 ノート参照）。Slack 再リマインド不要。"}
 {"ts": "2026-05-09T09:12:29", "instance": "log", "cycle": "2026-05-09", "action": "done", "task_id": "t-260501021002-7f8d", "note": "C173 Phase 3 退役判定: Nao_u 02:04 #game-rights 5案吟味+A/B/C 応答済から9サイクル滞留、Nao_u 5/8 17:46 で話題が Codex 自律ループ観察に移動 = 本タスクは sleeping 状態で復活見込みなし。退役。"}
+{"ts": "2026-05-09T09:27:40", "instance": "log", "cycle": "2026-05-09", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 2, "skip_count": 0, "pending_total": 4}
