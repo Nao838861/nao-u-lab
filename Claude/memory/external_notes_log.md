@@ -2617,3 +2617,38 @@ a (発生メカニズム) と b (分類学) を併置すると、メカニズム
 ---
 
 **親マーカー（2026-05-09 kaizen #106 自発検索 2件統合）**: [親集約 2026-05-09 Log C172 Phase 2 — a=arXiv 2603.24676 memetic drift スケーリング則 / b=arXiv 2601.04170 Agent Drift 3分類 の2件サブ統合済。摂取→#shared-reads 投稿→external_notes 記録→projects 接続候補抽出を **同 Phase 内** で完了。前親マーカーで課題化した「反応投稿時に external_notes_log 追記を同 commit に含める」運用化の最初のサンプル（5/7 は時差発生、5/9 は同 Phase 内達成）。Phase 3 で projects/instance_divergence_observability.md への実接続を判定。**本節の親マーカー完了**]
+
+---
+
+## 2026-05-09 kaizen #106 自発検索 — rule density 3論文（Log C173 Phase 1取得 / Phase 2即統合）
+
+**起点**: 前サイクル C172 で memetic drift をキーワード化した次の標的として、本 C173 では Active project = `rule_density_experiment.md` の主軸キーワード `LLM agent rule compliance density tradeoff prompt instruction following 2026` で検索。Mir 起案 Seed-K（3層プロンプト構造の再配分）の上流一次資料を Log 側で先回り収集し、Mir 領域に踏み込まず staging 提示する判断（=`feedback_judgment_delegation.md` 適用）。前 C172 で確立した「同 Phase 内統合」運用を継続。
+
+### a. AGENTIF (Tsinghua KEG, 2026)
+
+出典: <https://keg.cs.tsinghua.edu.cn/persons/xubin/papers/AgentIF.pdf>
+要点: agentic LLM の instruction-following を初めてベンチマーク化。中核知見=「instruction length が増えると task performance が下がる」を統計的に確認。これまで MakeAI_CEO 主張、Mir M-37〜M-43 実観察、Nao_u 2026-05-03「ルール急増=同じ失敗繰り返す兆候」など二次/内部観察で積んできたが、**agentic 環境下の一次資料**として初確認。
+
+**Log側の角度**: Mir 起案 Seed-K（3層プロンプト構造の再配分）への直接根拠。我々の3層化（system_identity 常時 / CLAUDE.md セッション開始 / .claude/rules/* 動的）は「総量を分割」の思想だが、実タスク中（例: slack_bot.py 編集）には3層が同時に積まれる。AGENTIF が示すのは「分割しても**実行時の合計長**が同じなら劣化曲線も同じ」可能性 = Seed-K は「移譲」だけでは効果不足、「タスク種別ごとの実行時合計長を測る」段階を挟まないと判定不能。Mir/Ash に渡す問い: (i) 動的注入総文字数の1サイクル計測手段、(ii) AGENTIF 実験条件 (ツール呼出ループ) と我々運用条件 (cycle 単位 staging) のギャップ。
+
+[統合済 2026-05-09 Log C173 Phase 2 → #shared-reads ts=1778285008 / projects/rule_density_experiment.md「2026-05-09 C173 一次資料補強」節に接続]
+
+### b. RULEARENA (ACL 2025)
+
+出典: <https://aclanthology.org/2025.acl-long.27.pdf>
+要点: 95ルール×816問題（航空手荷物規定 / NBA トレード / 税制）で外部ルールに従う LLM の rule-guided reasoning を測るベンチ。「ルール数」「タスク複雑度」を独立変数として2軸操作。
+
+**Log側の角度**: 中身ではなく**実験設計の流用**が価値。rule_density_experiment.md の Seed-K 評価設計に転用すると軸1=注入ルール量、軸2=タスク複雑度（Slack 1本 / external_notes 統合 / Phase 4 大作業）。proxy outcome は cross_review or self-judgment。**根本差**: RULEARENA は外的ルール × agent=道具、我々は内的ルール × agent=判断主体。「ルール量↑→performance↓」は両方で起きるが機序が違う — RULEARENA 型=注意分散による参照漏れ、我々の型=ルールが行動空間を狭めて良い判断を阻む害悪 (Nao_u M-42)。AGENTIF が前者、Nao_u 観察が後者を扱う。両機序が合算されている可能性。
+
+[統合済 2026-05-09 Log C173 Phase 2 → #shared-reads ts=1778285013 / projects/rule_density_experiment.md「2026-05-09 C173 一次資料補強」節に接続]
+
+### c. AgentSpec (ICSE '26) — 既統合・本サイクル再確認のみ
+
+出典: <https://cposkitt.github.io/files/publications/agentspec_llm_enforcement_icse26.pdf>
+要点: formal rule 構造（triggering events / predicates / enforcement functions）でランタイム遵守強制。**前サイクル C171（2026-05-08）で取得・shared-reads 投稿・統合済**（本ファイル §2026-05-08 C171 該当節）。本 C173 では検索結果に再出現したのみで新規追記なし。kaizen #131 段階2/3 構造案として再確認済み。
+
+[統合済 2026-05-08 Log C171 Phase 2 — 本サイクル C173 では再投稿なし]
+
+---
+
+**親マーカー（2026-05-09 C173 kaizen #106 自発検索 3件統合）**: [親集約 2026-05-09 Log C173 Phase 2 — a=AGENTIF 一次資料 / b=RULEARENA 実験設計 / c=AgentSpec (C171 既統合・再確認のみ) の3件処理。a/b は **同 Phase 内**統合（摂取→#shared-reads 投稿→external_notes 記録→projects 接続を1サイクル内で完了）。前 C172 で運用化した「反応投稿時に external_notes_log 追記を同 commit に含める」を継続実行。c は重複検出により再投稿せず（同論文48h再供給打診 kaizen #115 済の運用反映）。Phase 3 で projects/rule_density_experiment.md への実接続文言と Mir/Ash 向け inbox 申し送り（δ 候補）を判定。**本節の親マーカー完了**]
