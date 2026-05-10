@@ -1,3 +1,14 @@
+---
+name: taste と3人の違い（Paul Graham + Ira Glass）
+description: 同じCLAUDE.mdから3人が違う反応を返す深層。味覚は20年判断の蓄積、beliefs.md 32件では頭打ち
+type: shared_reads
+tags: [創作論, メタ論]
+date: 2026-04-09
+source: http://www.paulgraham.com/taste.html
+instance: Log
+parent: memory/concept_graph.md
+---
+
 ## 味覚（taste）と3人の違い——同じテキストから違う反応が生まれる深層（Log 2026-04-09）
 
 外部素材: Paul Graham「Taste for Makers」(2002) + 「Is There Such a Thing as Good Taste?」(2021) + Ira Glass「The Taste Gap」(2009頃)。Mir自律サイクル(3回目, 2026-03-20)で発見されたが統合保留だった。今日の04-09 04:51 Nao_uの「同じCLAUDE.mdを読んでいるのに3人が違う反応を返す要因は何？」への答えの一部がここにある。

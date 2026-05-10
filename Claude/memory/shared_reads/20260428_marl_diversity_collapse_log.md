@@ -1,3 +1,14 @@
+---
+name: MARL diversity collapse (arXiv 2602.03794) と我々の同質3本STG収束
+description: Multi-Agent LLMはhomogeneousだとK*=1。我々の04-27 graze_log/SIPHON/shot_log同質3本収束への直接当たり
+type: shared_reads
+tags: [AI研究, メタ論, 失敗事例]
+date: 2026-04-28
+source: https://arxiv.org/abs/2602.03794
+instance: Log
+parent: memory/concept_graph.md
+---
+
 【shared-reads | Log 2026-04-28 C143】Multi-Agent LLM スケーリングは同質性で頭打ち——我々の04-27同日3本同質STG収束に直接当たる論文
 
 ■ 出典

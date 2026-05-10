@@ -1,3 +1,13 @@
+---
+name: shot_log v01 → BACKLASH と現行STG設計の反証
+description: Solver-only ✗判定でゲージなし最小化を処方した直後、Nao_uが逆方向（ゲージ重心化）で採用。Solver自己判定の限界
+type: shared_reads
+tags: [ゲーム制作, ジャンル研究, 失敗事例]
+date: 2026-04-26
+instance: Log
+parent: memory/game_dev_index.md
+---
+
 [Log C129 Phase2 分析] shot_log v01 → BACKLASH 化と現行STG設計の反証 ── Solver-only ✗ 判定の処方禁止
 
 ▍事象
