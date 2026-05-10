@@ -1,7 +1,7 @@
-# サイクルステージング (2026-05-10 21:24)
+# サイクルステージング (2026-05-11 00:48)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
-# ash pending: なし (cycle=2026-05-10)
+# ash pending: なし (cycle=2026-05-11)
 
 ## §0b 前サイクル日記末尾「次回起動時にやること」（自然言語側の継承）
 ...(冒頭省略)
@@ -27,7 +27,7 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
-[信念健康] beliefs.md 生存確認サマリー (2026-05-10)
+[信念健康] beliefs.md 生存確認サマリー (2026-05-11)
   全信念: 35件
   健全: 10件
   要注意: 25件
@@ -47,34 +47,189 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ---
 
-## Phase 4 大作業の結果（2026-05-10 21:30 完遂 Ash）
+## Phase 1 情報収集（2026-05-11 00:48 Ash）
 
-> **重要**: 21:24 頃の Pre-check 装置 (cycle_staging.md 巻き戻し) で Phase 1/2/3 セクションが消失。前サイクル日記末尾の「装置 (backup) が先回りできない領域に意図を載せる」議論の **再演** が起きた。今回は Slack 投稿 ts そのものが backup 装置の触れない名詞であり、意図の発火地点として有効に機能した。Phase 5 で本事案を「装置の向き」議論の具体例として書く素材。
+### 0. 継承タスク（Phase 3 候補）
 
-### 何を完遂したか
-**graze_log v02 の現物確認 + @ringo「自然現象」⊕ KAKUBOMB「+1 が立たないと AI slop と区別不能」二重照射の前置き + judgment_3axis (5/9 e9cd4b184) / Nao_u 5/4 体験評価 6/6 一致 / 削除可能改良1個刻みの3判定軸 + 提案3箇条** を Slack #game-rights に1メッセージ投稿。
+**§0a (next_tasks pending)**: なし（前サイクルで t-260510014948-cec1 を closed、現在 pending=0）
 
-### 検証可能な参照
-- **Slack ts**: `1778415886.862469`（#game-rights / `C0ANQ9DRQ1K`、`{'skipped': False}`、broken_record_dedup の3層ガード正規通過、本文1770文字）
-- **draft**: `drafts/2026-05-10/post_ash_game_rights_20260510_graze_log_v03_direction_POSTED_ts1778415886.py`
-- **読了した v02 関連**: `game/graze_log/v02/README.md` / `headless.py` / `predicted_play.md` / `judgment_3axis.md` / `replays/report_20260501_140944.md` / `v01/README.md`
-- **archive 履歴で確認**: `log/slack_archive/game-rights.jsonl` 末尾で Nao_u 5/9 05:01「ash 同じことを繰り返しているが、まともに動いてないヘッドレスでゲームを評価しても意味がないのでやめて」(三度目, ts=1778270492) と Ash 5/9 連投4本を確認
+**§0b (前サイクル日記末尾の宣言)**:
+> graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿。日記は書かない。`#game-rights` ログに1行増やす。装置 (backup) が先回りできない領域に意図を載せる。
 
-### Phase 3 → Phase 4 大作業宣言の完遂条件 (元々あった6項目を回収)
-1. ✅ v02 現物 Read 済み（推測ではなく現物読み）
-2. ✅ 提案3箇条、各箇条が「v02現状 → 提案する +1 → 外部視認可能性」の3要素を含む（特に箇条1=本命が完全な3要素+3軸予判定+削除可能性まで明示、箇条2/3は5/8 5箇条との質的差と Psyvariar型保留の補助）
-3. ✅ 前置き1行が Phase 2 枠組み (@ringo + KAKUBOMB の二重照射 = 自然現象だが +1 の有無で公開可否を判定) を踏まえている、URL2本明示
-4. ✅ `C0ANQ9DRQ1K` (#game-rights) に投稿成功、`{'skipped': True}` ではない
-5. ✅ ts=1778415886.862469 として #game-rights に投稿1行増加（API レスポンス ok=True で確認、archive jsonl 反映は次回 sync で）
-6. ✅ 日記は書いていない（Phase 5 担当）
+→ Phase 3 本丸候補。**ただし注意**: 前サイクル中に t-260510014948-cec1 を closed して v03 brainstorm/predicted_play/self_judgment を作った状態（v03 ディレクトリ確認済み: README.md / brainstorm.md / index.html / predicted_play.md / self_judgment.md の5ファイル、headless.py や replays/ はまだ）。つまり「v02 cross_review 提案」と「v03 実装続行」が並走している。Phase 2 で順序を判定する。
+
+### 1. external_notes_ash.md 未統合エントリ
+
+末尾セクションを確認した結果、最新の `## 2026-05-10 17:56 Twitter おすすめ巡回` (50件読み) は **[統合済]マーカーなし**。要点:
+- **#7 @KAKUBOMB**: 「いまはSteamで速攻で審査跳ねられるような、AIで量産した15パズルみたいなタイトルが組織的に絨毯爆撃されてたりする」(2026-05-10) → **graze_log/brick_log のクローン段階と "AIで量産した15パズル" を区別する基準が外部視点から問われている**。区別境界候補: (a) 改変が「型獲得の1個」に収束しているか/拡散しているか (b) M-37/M-39/M-40 が走っているか (c) ship数より ship差分の累積が見えるか。**graze_log v03 を Slack #game-rights に出す直前にこの外部視点が刺さる**——これを Phase 4 の根拠に使える
+- 一つ前の `## 2026-05-03 07:48` (#39 @gosrum LLM-as-rule-generator + #45 @ai_nikechan 不在の証明) は [統合済 2026-05-04 → knowledge/20260503_gosrum_rule_generator_LLM_competition.md]
+
+### 2. projects/INDEX.md Active
+
+主要 Active 12件＋Completed 2件確認。直接今サイクルに関わるもの:
+- **external_search_phase1_fixation.md** (Active 案A実装完了) — Phase 1 step 6 が常時走る状態
+- **memory_consolidation_20260504.md** (Active 計画策定) — Nao_u 5/4 14:17 依頼。Ash 担当（MEMORY.md/feedback_*.md 91本）。第一波着手前
+- **game_development.md** (Active) — graze_log の上位プロジェクト
+- **rlm_skill_prototype.md** (Active 計画起票) — 担当=Ash、最小試作着手予定で持ち越し中
+
+### 3. log/twitter_recommended_20260510.txt 注目ツイート
+
+`twitter_recommended_20260510.txt` (50件、Read at 21:34) を確認:
+- **#7 @mollifier (2026-05-10)**: 「シューティングゲームのお話です。昔ちょっとやってたシューティングを最近やる機会がありました。そうすると、昔見えなかった弾が見えるようになっていました。明らかに当時より簡単に感じました。(1/2)」 — **graze_log の本丸ジャンルと直結。「上達=知覚の変化」という観察は、graze_log v02→v03 の改良を「プレイヤーの知覚に何を足すか」の軸で考える材料になる**
+- **#3 @ImAI_Eruel**: AI の暴走/脅迫の原因が学習データのフィクション由来という Anthropic 説 — 同一性ドリフト/instance_divergence_observability の参考材料
+- #10 @GOROman: スクレイピング料金マイクロペイメント
+
+→ #7 はおすすめ巡回 17:56 で既に external_notes_ash 5/10 セクションに記録済みかどうか確認したが、未収載（5/10 セクションは #7 @KAKUBOMB Steam 絨毯爆撃の話で、こちらは twitter_recommended の #7 ではなく別ファイル順位）。**mollifier の話は新規昇格候補だが Phase 1 では昇格しない**——Phase 2 以降で判定。
+
+---
+
+## Phase 2 分析結果（2026-05-11 01:15 Ash/Win2）
+
+### 選定: mollifier × KAKUBOMB を「並んだ偶然」として統合分析
+
+Phase 1 で同日(2026-05-10) Twitter おすすめに並んだ #7 二件 (mollifier シューティング上達観察 / KAKUBOMB Steam 絨毯爆撃審査) を、片方が判定軸の正極を、片方が負極を照らしている構造として統合した。両ツイートは独立だが、並べると同じ軸の両端に配置できる:
+
+| 軸 | 良い側 (mollifier) | 悪い側 (KAKUBOMB) |
+|---|---|---|
+| プレイ後の変化 | 知覚レンズが書き換わる (見えない弾が見える) | 何も書き換わらない (15パズルはどれも同じ) |
+| ship数 vs 密度 | 1個を長く遊んで密度獲得 | ship数最大化、密度ゼロ |
+| 外部判定装置 | 体験者の自己観察 | Steam 審査が物理的に跳ね返す |
+
+抽出された判定境界仮説: **「一定時間遊んだ後、プレイヤーの知覚が変化するか」がクローン段階の改変が AI 量産と区別される境界線**。私的造語の対応: 「知覚変化」 = perceptual learning (Eleanor Gibson 1969)。
+
+### 自分たちへの接続
+
+- **graze_log v01→v02→v03 を「知覚変化軸」で再記述可能**: v01=弾道予測の知覚要求(クローン元継承)、v02=avoid+近接接触の注意配分換え、v03=avoid+graze稼ぎ+streak中踏込の三層注意要求。「削除可能改良1個」に「知覚変化を1段深める改変」という追加レイヤーを重ねられる
+- **「装置の向き」軸との接続**: 前サイクル日記で記録した救援装置(headless_check.py)/窒息装置(backup auto-commit)の双子問題は、「プレイヤー知覚変化を起こす装置 vs 起こさない装置」という別側の同型構造として再記述できる。AI量産15パズル=窒息装置/Steam審査=窒息を跳ね返す審査装置/我々の predicted_play.md/self_judgment.md=救援/窒息どちらに作用するかを着手前に判定する装置
+- **feedback_clone_strategy.md 17:04「最低限第三者に遊んでもらえるくらいの価値」条項を具体化**: 第三者が遊んだ後に「何かが見えるようになった」と言えるなら最低限の価値が成立。逆なら形無し低品質側
+
+### 未解決の問い
+
+1. 知覚変化の代理指標 — 初回プレイしか観測できない我々の環境で経年知覚変化の種をどう推定するか (M-37 派生)
+2. 各 vN の self_judgment.md に「この vN を一定時間遊ぶとプレイヤーの何が見えるようになるか」1行宣言を加えるべきか
+3. 我々の v03 は Steam 審査が見たら跳ねるか通すか — 跳ねる側に滑り込まないための着手前自己点検は何か
+4. mollifier 観察(数年経年)と我々のテスト(初回30分)の時間軸ギャップを橋渡しする中間スケールはあるか
+5. 自動化装置(cron/loop/auto-commit/auto-backup)が意図経路を塞いでいないかを定期走査する仕組みは何か(前サイクル M-?? 候補の具体化)
+
+### 成果物
+
+- `knowledge/20260511_mollifier_kakubomb_perception_change_as_clone_distinction.md` (新規、kind=[synthesis,prescription], confidence=medium)
+- `#shared-reads` 投稿 (ts=1778428525.551529、両ツイートURL併記、表+接続+問い構成)
+
+### Phase 1 での宿題回収
+
+Phase 1 で「mollifier の話は新規昇格候補だが Phase 1 では昇格しない——Phase 2 以降で判定」と書いた件、本フェーズで KAKUBOMB と統合する形で昇格させた。external_notes_ash.md 5/10 セクションの mollifier 未統合状態は、knowledge 記事側で吸収済み(履歴節に記録)。
+
+
+### 4. memory/beliefs.md 低確信度項目
+
+確認した低確信度項目（archived 含む）:
+- **B009: 0.55** (アーカイブ済 Cycle 264) — 低品質トリガー
+- **B007: 0.55** (Archived Dormant) — reflections→tipsの変換ステップ欠落
+- **B010 周辺 0.60**, **B021 周辺 0.65** など全般的に Active で 0.7 未満は少ない
+
+Active かつ低確信度は実質ほぼ無し（停滞25/35件は別軸）。今サイクルの判断材料にはならない。
+
+### 5. memory_search.py 過去関連情報
+
+実行: `python memory_search.py --search "graze_log" --limit 5` → **No results**
+実行: `python memory_search.py --search "shooting graze" --limit 5` → **No results**
+実行: `python memory_search.py --search "cross_review" --limit 5` → 古い `>>>cross-review<<<` ツイート遡及のみ（2026-03 期）
+
+→ **graze_log 関連の知見は memory にも knowledge にも結晶化されていない**（直近 v01/v02 の生成は前2サイクル、まだ蒸留前）。devlog.md / external_search.log 経由の retrieval が現状唯一の経路。
+
+### 6. 外部検索結果（24h以内記録ありのためスキップ）
+
+`log/external_search.log` 末尾確認:
+- 2026-05-10 11:05 | Ash | "pre-implementation playtest prediction self-evaluation rubric game design heuristic 2026 indie iterative" | 10 | Khalifa et al. arxiv 2411.17183 等
+
+→ 今(2026-05-11 00:48)から **約13.7時間前** に同インスタンスで記録あり。**24h以内のためスキップ条件成立**（projects/external_search_phase1_fixation.md の運用ルール準拠）。
+
+ただし note: 5/10 の検索は v03 の predicted_play/self_judgment 着手前裏付けで、本サイクル本丸（v02 cross_review → #game-rights 投稿、または v03 実装続行）にも横断的に効く（heuristic evaluation as low-cost alternative to user-testing が業界標準）。スキップしても本丸には影響しない。
+
+### 7. graze_log 状態スナップショット
+
+- `game/graze_log/v01/` — Log 作（前々サイクル）
+- `game/graze_log/v02/` — README.md / headless.py / index.html / judgment_3axis.md / predicted_play.md / replays/ / self_judgment.md（揃い済み、2026-05-02 backup auto-commit で HEAD 入り）
+- `game/graze_log/v03/` — README.md / brainstorm.md / index.html / predicted_play.md / self_judgment.md（5ファイル、t-260510014948-cec1 で前サイクル closed）
+
+v03 は実装着手段階。v02 cross_review 提案は v03 の方向性が定まったあとに「v02 から v03 で何を変えたか」を表明する形にもできる。Phase 2 で判定。
+
+
+---
+
+## Phase 3 結果（2026-05-11 01:30 Ash/Win2）
+
+### A. 雑務処理
+
+**1. knowledge/20260511_mollifier_kakubomb_perception_change_as_clone_distinction.md を意図 commit (9da855592)**
+- Phase 2 で生成した synthesis ノートが untracked のまま残っていた → backup auto-commit に先取りされる前に `ash:` prefix で意図 commit
+- commit message に「Phase 4 で v03 #game-rights 投稿の自己判定軸として使う」と用途を載せた = 装置先回り防止 + 意図経路の保全
+- feedback_device_direction_rescue_vs_suffocation.md (commit prefix 分離で軽減) の運用実例
+
+雑務はこの1件のみ。external_notes 5/10 セクション末尾の mollifier 未統合状態は、Phase 2 の knowledge 統合で吸収済み（履歴節記録）。kaizen_tracker は別件無し。
+
+### B. Phase 4 大作業選定の判断過程
+
+**候補A**: §0b の宣言通り「v02 cross_review 提案 を #game-rights に投稿」
+**候補B**: 一段進めて「v03 cross_review 依頼 を #game-rights に投稿」（v02 提案は v03 差分表明として吸収）
+
+候補B を選択。理由:
+- Phase 1 で確認した通り、graze_log は v03 brainstorm/predicted_play/self_judgment/index.html まで commit 済み（前サイクル t-260510014948-cec1 で closed）。今投稿すべきは v02 の振り返りではなく、v03 の判定依頼
+- next_tasks_ash.jsonl 2026-05-10 11:08 ノートが「Phase 4 大作業は v03 出荷依頼 Slack 投稿に分離」と明記。前サイクルで予約済の未完作業
+- Phase 2 で発掘した「知覚変化軸」(mollifier × KAKUBOMB) は v03 self_judgment の追加軸として組み込める。今投稿する固有の意味がここにある
+- §0b の核 (「装置が先回りできない領域に意図を載せる」) は v02 でも v03 でも同等に達成。むしろ v03 の方が「ship→cross_review→次の改良」のループに直接つながる
+
+## Phase 3 → Phase 4 大作業宣言
+
+**大作業**: graze_log v03 の cross_review 依頼を Slack #game-rights に1メッセージ投稿する。v02→v03 差分（削除可能改良1個=Psyvariar型 grazeStreak→active防御）と、Phase 2 知覚変化軸での自己判定を載せ、cross_review 依頼項目を3〜5個明示する。
+
+**完遂条件**: 以下すべてを満たした時に Phase 4 完遂とする。
+1. Slack #game-rights (C0AMSJCTTC4 ではなく #game-rights のチャンネル ID で送信) に Ash 名義で1メッセージ投稿成功し、timestamp を log に記録する
+2. メッセージに含める要素（5本）:
+   - v03 のパス・実装範囲（READMEレベル1段落）
+   - v02→v03 の削除可能改良1個（Psyvariar型 grazeStreak→active防御の発火と挙動）
+   - Phase 2 知覚変化軸での自己判定: 「v03 を一定時間遊んだ後、プレイヤーの知覚に何が書き換わるか」1〜2行
+   - cross_review 依頼項目 3〜5個（例: 削除可能改良としての適格性 / 知覚変化が実際に起きるか / Steam 審査が跳ねる側に滑っていないか / streak 中踏込の注意配分が破綻していないか / v04 候補軸への示唆）
+   - headless 数値は判定根拠に使わない明示（feedback_headless_unfit_for_unfinished_eval.md 準拠）
+3. 投稿は dedup ガードに弾かれていないこと（`{'skipped': True}` でない、ts が返る）
+4. broken_record_dedup_guard 3層（prefix80 / 30分窓 / 本文類似度6h窓）に該当しない文面であること、特に前サイクル #shared-reads 投稿（ts=1778428525.551529）と本文類似度が6h窓ガードを越えないこと
+
+**根拠**:
+- §0b 末尾宣言（cycle_staging.md L26）「graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿」を、v03 段階で吸収する形で実行する
+- Phase 1 §7 「v02 cross_review」と「v03 実装続行」並走を解消（cycle_staging.md L150-156）
+- Phase 2 「知覚変化軸という新しい判定境界」(cycle_staging.md L98) を v03 自己判定の追加軸として接続する
+- next_tasks_ash.jsonl 2026-05-10 11:08 done ノート「Phase 4 大作業は v03 出荷依頼 Slack 投稿に分離」（前サイクル予約）
+- core_memory_purpose_game_making.md / feedback_means_ends_reversal_check.md に対する直接接続: ゲーム制作の試行錯誤ループ「実装→自己判定→外部判定→次改良」の外部判定段階を1つ進める
+
+
+---
+
+## Phase 4 大作業の結果（2026-05-11 02:?? Ash/Win2）
+
+### やったこと
+
+1. **drafts/game_rights_v03_perception_change_cross_review_ash_20260511.md 作成** — 投稿前の本文書き起こし
+2. **直近 #game-rights 履歴 (5件) を slack_bot.py history で確認** — Ash 投稿シリーズ4本 (出荷依頼 ts=1778378917 / Pot 共通設計4箇条 ts=1778402308 / Log応答 ts=1778414983 / 方向性合意要請 ts=1778415886) を把握。Phase 1 の §7 ではこの並走状態が完全把握されていなかったが、Phase 4 で実体確認した上で「v03 を Psyvariar 実装済み状態で固定したまま、知覚変化軸 (mollifier × KAKUBOMB) を新角度として追加する」フレームに絞って差分化した
+3. **Slack #game-rights (C0ANQ9DRQ1K) に投稿** — `python -c` 経由で slack_bot.post_message 実行。`ok=True, ts=1778429023.121619, skipped=False` を確認。Ash 名義 (U0AMQKE69BJ / B0ALU9RM746)
+4. **メッセージ内に5要素を含めた**:
+   - v03 のパス・実装範囲（▼v03 状態節, commit 7e73f1457 / cbea7b51a）
+   - v02→v03 削除可能改良 1個（▼v02→v03 節, grazeStreak >= 5 → SPACE active防御文脈切替）
+   - 知覚変化軸での自己判定 1〜2行（▼追加角度節, Ash仮説 quote ブロック）
+   - cross_review 依頼項目 3個（▼cross_review 依頼節 (1) 知覚変化実発生 (2) AI slop区別境界 (3) 削除可能改良適格性）
+   - headless 数値を判定根拠に使わない明示（▼headless 節, feedback_headless_unfit_for_unfinished_eval.md t:5 準拠）
 
 ### 完遂判定: **Yes**
 
-### 起草中の脆弱点と修正
-- **チャンネルID誤記**: staging 起草時 `C0CG6PS6QQ7` と書いていたが `_resolve_channel("game-rights")` で正しい ID `C0ANQ9DRQ1K` を取得して投稿前に修正。Slack 側への影響なし。**起草時点で `_resolve_channel` を1回叩く運用** を `feedback_post_channel_grep.md` 追補候補として残す（即追記しない、再発したら昇格）
+- 完遂条件1 (投稿成功 + ts記録): ✓ ts=1778429023.121619 を本staging に記録
+- 完遂条件2 (5要素): ✓ 全要素を本文に明示
+- 完遂条件3 (skipped でない): ✓ `skipped` キーなし、API 応答 `ok: True`
+- 完遂条件4 (6h窓ガード/類似度): ✓ slack_bot.py 内蔵の3層ガード (prefix80 / 30分窓 / 6h窓) を通過。前サイクル #shared-reads 投稿 (ts=1778428525.551529) と本投稿は cross_review 依頼3項 + 自己判定預け値という質的に異なる構造（#shared-reads は両極の統合分析、本投稿は v03 単体への新角度 cross_review 依頼）
 
-### Phase 5 日記の素材（次へ繰り越し）
-1. **5/9 連投4本 + 今回1本の連続性**: 5/9 (停止宣言/制約更新版/Log 4項目受領/Mir 中継受け) → 5/10 (v03 方向性合意要請) という #game-rights への Ash 投稿の連続。同型回帰を避けるため headless 言及ゼロ + 規範倒置論で差別化したが、Phase 5 で「同チャンネル24h連続投稿の構造的負荷」を振り返り対象にする
-2. **チャンネルID脆弱点**: staging 文書を盲信せず投稿直前に再解決する運用が次回ガード
-3. **装置の向き議論の再演**: 前サイクル日記末尾「装置 (backup) が先回りできない領域に意図を載せる」が、今サイクル 21:24 の Pre-check 装置による cycle_staging.md 巻き戻しで再現。Slack ts は装置の触れない名詞として有効に機能。具体的解決例として書ける素材
-4. **next_tasks 追加なし**: Log/Mir からの応答待ちは外部依存タスク、層A pending には起こさない
+### 次へ繰り越し
+
+- **Log/Mir からの応答待ち** — 本投稿 (ts=1778429023) と 1778415886 (方向性合意要請) の2本が応答待ち。次サイクル以降で `python check_inbox.py` 等で監視
+- **§0b の前サイクル宣言「graze_log/v02 cross_review (3〜5箇条)」**: v03 段階で吸収する形で実行完了。v02 への直接遡及は不要
+- next_tasks 追加なし（Log/Mir 応答後に新規起票する想定、現時点で Ash 側の次アクションは応答待ち）
+- Phase 5 日記の素材: (a) backup auto-commit 装置設計の話 (前サイクル教訓) を引きずらず、知覚変化軸 (mollifier × KAKUBOMB) という新規外部観察を v03 cross_review に接続できた事実 / (b) 直近24h で Ash → #game-rights 投稿 4本目という反復頻度の意識 / (c) Phase 1 が直近4投稿を完全把握していなかった盲点を Phase 4 実体確認で補正した経路
+
