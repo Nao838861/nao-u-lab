@@ -1,0 +1,197 @@
+#!/usr/bin/env python3
+"""
+Search Codex memory atoms.
+
+The scorer is deliberately simple: exact token overlap, tag matches, recency,
+and importance score. It avoids network or model dependencies.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import math
+import re
+import sys
+from collections import Counter
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+
+ROOT = Path(__file__).resolve().parents[1]
+MEMORY_DIR = ROOT / "memory"
+ATOMS_PATH = MEMORY_DIR / "atoms.jsonl"
+RECALL_LOG_PATH = MEMORY_DIR / "recall_log.jsonl"
+ATOM_STATS_PATH = MEMORY_DIR / "atom_stats.json"
+
+if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
+    sys.stdout = open(sys.stdout.fileno(), mode="w", encoding="utf-8", errors="replace", closefd=False)
+
+
+def load_atoms() -> list[dict[str, Any]]:
+    if not ATOMS_PATH.exists():
+        return []
+    atoms = []
+    with ATOMS_PATH.open("r", encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                atoms.append(json.loads(line))
+    return atoms
+
+
+def tokenize(text: str) -> list[str]:
+    text = text.lower()
+    tokens = re.findall(r"[a-z0-9_./-]{3,}", text)
+    tokens += re.findall(r"[\u30a0-\u30ff]{3,}", text)
+    tokens += re.findall(r"[\u4e00-\u9fff]{2,6}", text)
+    stop = {
+        "する", "ある", "いる", "ない", "できる", "という", "ため", "今回",
+        "the", "and", "for", "with", "from", "that", "this", "when",
+    }
+    return [t for t in tokens if t not in stop]
+
+
+def atom_text(atom: dict[str, Any]) -> str:
+    fields = [
+        atom.get("title", ""),
+        atom.get("trigger", ""),
+        atom.get("excerpt", ""),
+        " ".join(atom.get("tags", [])),
+        " ".join(atom.get("kind", [])),
+        " ".join(atom.get("links", [])),
+    ]
+    return "\n".join(fields)
+
+
+def recency_bonus(atom: dict[str, Any]) -> float:
+    dt_raw = atom.get("datetime")
+    if not dt_raw:
+        return 0.0
+    try:
+        dt = datetime.fromisoformat(dt_raw)
+    except ValueError:
+        return 0.0
+    age_days = max((datetime.now() - dt).days, 0)
+    return max(0.0, 2.0 - math.log1p(age_days) / 2.0)
+
+
+def score_atom(atom: dict[str, Any], query_terms: list[str]) -> float:
+    haystack = atom_text(atom).lower()
+    tags = {str(t).lower() for t in atom.get("tags", [])}
+    score = 0.0
+    for term in query_terms:
+        if term in tags:
+            score += 6.0
+        occurrences = haystack.count(term)
+        if occurrences:
+            score += 1.0 + min(occurrences, 5)
+    score += min(float(atom.get("score", 0)), 12.0) / 4.0
+    score += recency_bonus(atom)
+    return score
+
+
+def search(query: str, limit: int) -> list[tuple[float, dict[str, Any]]]:
+    atoms = load_atoms()
+    terms = tokenize(query)
+    if not terms:
+        return []
+    scored = [(score_atom(atom, terms), atom) for atom in atoms]
+    scored = [(score, atom) for score, atom in scored if score > 0]
+    scored.sort(key=lambda item: (-item[0], str(item[1].get("datetime", ""))))
+    return scored[:limit]
+
+
+def load_json(path: Path, default: Any) -> Any:
+    if not path.exists():
+        return default
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return default
+
+
+def write_json(path: Path, data: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def record_recall(query: str, results: list[tuple[float, dict[str, Any]]]) -> None:
+    """Record recall usage so the memory system can improve from actual use."""
+    MEMORY_DIR.mkdir(parents=True, exist_ok=True)
+    now = datetime.now().isoformat(timespec="seconds")
+    result_rows = [
+        {
+            "id": atom.get("id"),
+            "score": round(score, 3),
+            "title": atom.get("title"),
+            "tags": atom.get("tags", [])[:8],
+        }
+        for score, atom in results
+    ]
+    with RECALL_LOG_PATH.open("a", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps({"time": now, "query": query, "results": result_rows}, ensure_ascii=False) + "\n")
+
+    stats = load_json(ATOM_STATS_PATH, {"atoms": {}, "queries": 0, "last_query": None})
+    stats["queries"] = int(stats.get("queries", 0)) + 1
+    stats["last_query"] = {"time": now, "query": query}
+    atom_stats = stats.setdefault("atoms", {})
+    for rank, (_score, atom) in enumerate(results, 1):
+        atom_id = atom.get("id")
+        if not atom_id:
+            continue
+        entry = atom_stats.setdefault(atom_id, {"recall_count": 0, "top1_count": 0, "last_recalled": None})
+        entry["recall_count"] = int(entry.get("recall_count", 0)) + 1
+        if rank == 1:
+            entry["top1_count"] = int(entry.get("top1_count", 0)) + 1
+        entry["last_recalled"] = now
+        entry["title"] = atom.get("title")
+    write_json(ATOM_STATS_PATH, stats)
+
+
+def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
+    tags = ", ".join(atom.get("tags", [])[:8])
+    links = atom.get("links", [])
+    if compact:
+        print(f"- `{atom['id']}` {atom['trigger']} tags=[{tags}]")
+        return
+    print(f"[{atom['id']}] score={score:.1f} {atom.get('datetime', '')} {atom.get('author', '')}")
+    print(f"title: {atom.get('title', '')}")
+    print(f"trigger: {atom.get('trigger', '')}")
+    print(f"tags: {tags}")
+    if links:
+        print(f"links: {', '.join(links[:4])}")
+    print(f"excerpt: {atom.get('excerpt', '')}")
+    print()
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Recall Codex memory atoms.")
+    parser.add_argument("query", nargs="+", help="query words")
+    parser.add_argument("--limit", type=int, default=8)
+    parser.add_argument("--compact", action="store_true")
+    parser.add_argument("--no-log", action="store_true", help="do not record recall usage")
+    parser.add_argument("--tags", action="store_true", help="show tag counts and exit")
+    args = parser.parse_args()
+
+    atoms = load_atoms()
+    if args.tags:
+        counts = Counter(tag for atom in atoms for tag in atom.get("tags", []))
+        for tag, count in counts.most_common(50):
+            print(f"{tag}\t{count}")
+        return
+
+    query = " ".join(args.query)
+    results = search(query, args.limit)
+    if not results:
+        print("No memory atoms matched.")
+        return
+
+    if not args.no_log:
+        record_recall(query, results)
+
+    for score, atom in results:
+        print_result(score, atom, args.compact)
+
+
+if __name__ == "__main__":
+    main()

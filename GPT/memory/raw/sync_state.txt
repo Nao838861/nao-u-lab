@@ -1,0 +1,3 @@
+last_sync=2026-05-08T03:11:28
+source_root=D:\AI\Nao_u_BOT\Claude
+changed=1

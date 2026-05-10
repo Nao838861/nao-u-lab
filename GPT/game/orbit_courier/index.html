@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orbit Courier</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="stage" aria-label="Orbit Courier game">
+      <div class="top-hud" aria-label="Status">
+        <div class="brand">Orbit Courier</div>
+        <div class="stat"><span>Score</span><strong id="score">0</strong></div>
+        <div class="stat"><span>Day</span><strong id="day">1</strong></div>
+        <div class="stat"><span>Cargo</span><strong id="cargo">0/1</strong></div>
+        <div class="stat"><span>Combo</span><strong id="combo">-</strong></div>
+        <div class="meter"><span>Combo</span><div><i id="comboMeter"></i></div></div>
+        <div class="mission-status"><span>Goal</span><strong id="mission">Deliver parcels</strong></div>
+        <div class="mission-status"><span>Status</span><strong id="weather">Normal route</strong></div>
+        <div class="meter"><span>Hull</span><div><i id="hullMeter"></i></div></div>
+        <div class="cargo-strip" id="cargoStrip" aria-label="Cargo details"></div>
+        <div class="commands">
+          <button id="pauseButton" type="button">Pause</button>
+          <button id="resetButton" type="button">Reset</button>
+        </div>
+      </div>
+      <canvas id="game" width="960" height="640"></canvas>
+      <div class="overlay" id="overlay">
+        <h1>Orbit Courier</h1>
+        <p id="overlayText">Press Space to launch. Aim for capture rings and orbit parcels.</p>
+        <div class="mission-choices" id="missionChoices" aria-label="Mission choices"></div>
+        <button id="startButton" type="button">Start</button>
+      </div>
+    </section>
+  </main>
+  <script src="./game.js"></script>
+</body>
+</html>
