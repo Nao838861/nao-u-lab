@@ -29,6 +29,13 @@ C175 サイクル Phase 1 §6 の WebSearch (kaizen #106 摂取経路固定化) 
 
 **着手判断**: 3案とも shared-reads 投稿（C175 Phase 3）で外部発信、kaizen 起票は段階1 検証完了 (kaizen #128 / #131 段階1 PASS) を踏まえて段階拡張時に再評価。`feedback_few_rules_big_effect.md`「ルール量↑＝遵守率↓」を踏まえ、新規 kaizen 即起票はせず**判断力育成の余白側に倒す**（CLAUDE.md「個別指摘を即ルール化しない」）。
 
+**2026-05-10 (Log) C175#3 補完 — Graph-based Agent Memory survey 接続**: 同サイクル Phase 1 §6 で取得した4本目 [arXiv 2602.05665 "Graph-based Agent Memory: Taxonomy, Techniques, and Applications" (2026-02)](https://arxiv.org/abs/2602.05665) を Phase 3 で WebFetch 1本（kaizen #121 段階1 検証手段(1) 実運用）して本文確認。**4つの taxonomy 軸**=「short-term vs long-term / knowledge vs experience / non-structural vs structural / implementation view of graph-based memory」、**ライフサイクル 4 段階**=「extraction / storage / retrieval / evolution」。我々の現状照合:
+- 軸(1) short/long = `cycle_staging_log.md` (短期) / `memory/feedback_*.md` (長期) で2層化済
+- 軸(2) knowledge/experience = `memory/reference_*.md` (知識) / `memory/dialogue_*.md` (体験) で分離済
+- 軸(3) non-structural/structural = `MEMORY.md` + サブインデックス (non-structural Markdown) / `concept_graph.json` (structural) で**両建てで保持**しており、本論文の対立軸を「両方持つ」で解消している点が独自構造
+- 軸(4) implementation view = concept_walk.py + associative_search.py が graph-based memory の最小実装に該当
+- ライフサイクル: extraction (cycle_staging → dialogue), storage (memory/), retrieval (memory_search.py / associative_search.py), evolution (= drift detection が未実装、Multi-Layered Memory Architectures 論文の指摘と同方向の欠落)。**evolution 層の欠落** = TiMem/Multi-Layered/Externalization 3点 + 本 Graph-based 1点で計4論文が同じ場所を指す独立収束、`drift_detector` 案 (上 L28) の優先度を上げる根拠が4本に増えた
+
 ### 2026-05-08 (Log) — 外部独立到達3点（PageIndex / Mendral / Dreams）の交差観察
 
 Mir分析（5/7 #shared-reads）×Ash分析（5/7）×Anthropic Dreams（5/6 Mir分析）の3点が、**「記憶アーキテクチャは vector DB / インフラ層への外注ではなく、推論経路を構造化する方向に独立収束**」を示した。
