@@ -59,8 +59,18 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - M-Nx 増殖メタ監視 self-audit（kaizen #129 (d) 準拠）: 本起票は新規 M-Nx 系列の追加ではなく既存 M-40 §5 の発火条件追加（規則→検出器レイヤー）。3原則（体験で考える / 動いて残す / 自分から始める）への吸収可能性: 「動いて残す」=スクリプトが trace を残す方向で整合 / 「自分から始める」=自己申告依存からの脱却で整合 / 「体験で考える」=メタ層なので部分整合のみ。3原則のみで実現するには「同パターン2回」を agent が毎サイクル自己申告する必要があり、それが現に9サイクル機能していない=構造強制が必要と判断
 - 検証担当: Log（実装も Log）。Mir/Ash 横展開は段階1検証完了後、textadv / SIPHON 系列の同型語彙（題材依存）を抽出してから
 - クロスチェック: Log=OK(2026-05-08 起票者) / Mir=未 / Ash=OK(2026-05-08 段階1 自走テストPASS確認・docstring 出典明記OK・brick_log v05→v06 遡及検出OK・段階2/3 残課題明示済で承認)
-- 状態: 段階1 実装済（自走テストPASS、2026-05-08 C170 Phase 4）。**段階2 hook 統合実装済（2026-05-10 C175 Phase 4 Log）**。段階3 判定機構 mapping gate は未着手
-- 検証結果: **段階1 自走テスト PASS (2026-05-08 C170 Phase 4)**: `scripts/check_repeated_pattern_indication.py` 実装完了。`log/nao_u_live.md` 直近30日窓 (2026-04-08〜) で `python scripts/check_repeated_pattern_indication.py --verbose` 実行→ 振幅24回 / 罰24回 / 揺れ8回 / 進歩4回 が `[M-40 WARN] <語彙> N回検出 → 判定機構優先（kaizen #131 段階1）` として stderr に出力 (exit 1)。装飾=1 / 狙えない=1 は false positive 抑制で出力なし。`--since-days 0` でも exit 0 / 無出力を確認（完遂条件3）。brick_log v05→v06 振幅3往復（5/1）が遡及検出（完遂条件4）。docstring に語彙出典 `memory/feedback_self_judgment_no_human_dep.md` §How to apply 5 と「kaizen #131 段階1」明記済。**段階2 PASS (2026-05-10 C175 Phase 4)**: `multi_phase_cycle_log.py` に `run_repeated_pattern_check()` 追加 + `init_staging()` から呼出（`## M-40 自己診断ゲート (kaizen #131 段階2 hook)` 節を staging 冒頭に inline 注入、形骸化防止のため WARN 0件でも `[M-40 発火なし]` 1行出力）。Mir 側 `autonomous_cycle.sh` にも対称 hook 追加（line 220-230、`grep -n check_repeated_pattern_indication autonomous_cycle.sh` 2件ヒット）。dry-run（`tempfile.NamedTemporaryFile` 経由で `init_staging()` 実行）で staging に WARN 4行 (揺れ8/振幅24/罰24/進歩4) + メタ行が正しく出力されることを確認。次サイクル C176 Phase 1 で自動発火を観測予定。**残**: 段階3 (語彙→判定機構4点 mapping gate) / Mir・Ash クロスチェック
+- 状態: 段階1 PASS / 段階2 PASS / 段階3 PASS（適用日 2026-05-10 C176）
+- 検証結果: **段階1 自走テスト PASS (2026-05-08 C170 Phase 4)**: `scripts/check_repeated_pattern_indication.py` 実装完了。`log/nao_u_live.md` 直近30日窓 (2026-04-08〜) で `python scripts/check_repeated_pattern_indication.py --verbose` 実行→ 振幅24回 / 罰24回 / 揺れ8回 / 進歩4回 が `[M-40 WARN] <語彙> N回検出 → 判定機構優先（kaizen #131 段階1）` として stderr に出力 (exit 1)。装飾=1 / 狙えない=1 は false positive 抑制で出力なし。`--since-days 0` でも exit 0 / 無出力を確認（完遂条件3）。brick_log v05→v06 振幅3往復（5/1）が遡及検出（完遂条件4）。docstring に語彙出典 `memory/feedback_self_judgment_no_human_dep.md` §How to apply 5 と「kaizen #131 段階1」明記済。**段階2 PASS (2026-05-10 C175 Phase 4)**: `multi_phase_cycle_log.py` に `run_repeated_pattern_check()` 追加 + `init_staging()` から呼出（`## M-40 自己診断ゲート (kaizen #131 段階2 hook)` 節を staging 冒頭に inline 注入、形骸化防止のため WARN 0件でも `[M-40 発火なし]` 1行出力）。Mir 側 `autonomous_cycle.sh` にも対称 hook 追加（line 220-230、`grep -n check_repeated_pattern_indication autonomous_cycle.sh` 2件ヒット）。dry-run（`tempfile.NamedTemporaryFile` 経由で `init_staging()` 実行）で staging に WARN 4行 (揺れ8/振幅24/罰24/進歩4) + メタ行が正しく出力されることを確認。**段階3 PASS (2026-05-10 C176 Phase 4 Log)**: `feedback_self_judgment_no_human_dep.md` §How to apply 5 に「語彙→判定機構4点 mapping 表」セクション追加（揺れ/振幅=段階値比較, 罰=閾値経験, 装飾/狙えない=映像レンダ, 進歩=過去ベンチ で 6→4 の 1対1対応）。`scripts/check_repeated_pattern_indication.py` に `VOCAB_TO_MECHANISM` dict 追加、WARN 出力フォーマットを `判定機構優先（kaizen #131 段階1）` から `判定機構優先（<判定機構名>）` に切替。dry-run 出力:
+  ```
+  $ python scripts/check_repeated_pattern_indication.py --verbose
+  [M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
+  [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
+  [M-40 WARN] 罰 24回検出 → 判定機構優先（閾値経験）
+  [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
+  [check_repeated_pattern] since=2026-04-10 揺れ=8 振幅=24 罰=24 装飾=1 狙えない=1 進歩=4
+  exit=1
+  ```
+  hook 経路（`multi_phase_cycle_log.run_repeated_pattern_check()`）でも同 4行 + メタ行が新形式で出力されることを `python -c "from multi_phase_cycle_log import run_repeated_pattern_check; print(run_repeated_pattern_check())"` で dry-run 確認済（subprocess 経由なので script 修正で自動反映）。**残**: Mir・Ash クロスチェック（段階3 mapping 案の妥当性 / textadv・SIPHON 系列での語彙差を踏まえた拡張可否）
 
 ---
 

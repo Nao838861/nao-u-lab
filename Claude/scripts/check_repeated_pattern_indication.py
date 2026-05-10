@@ -6,9 +6,11 @@ M-40 §How to apply 5「同じパターンの指摘が2回連続で来たら、�
 agent 自己申告ではなく外形装置で検出する。
 
 検出語彙リストの出典: memory/feedback_self_judgment_no_human_dep.md §How to apply 5
+語彙→判定機構 mapping: 同 §5 mapping 表（揺れ/振幅=段階値比較, 罰=閾値経験,
+                       装飾/狙えない=映像レンダ, 進歩=過去ベンチ）
 段階1 = 本スクリプト（log/nao_u_live.md 直近30日窓を走査）
-段階2 = autonomous_cycle.sh Phase 1 冒頭フックで呼び出し staging に inline 注入（未着手）
-段階3 = 判定機構4点（過去ベンチ/映像レンダ/段階値比較/閾値経験）優先構築 gate（未着手）
+段階2 = multi_phase_cycle_log.run_repeated_pattern_check() で staging 冒頭注入
+段階3 = WARN 出力に判定機構名併記（VOCAB_TO_MECHANISM dict、2026-05-10 C176）
 
 Usage:
     python3 scripts/check_repeated_pattern_indication.py [--since-days N] [--verbose]
@@ -24,7 +26,18 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 LIVE_LOG = REPO / "log" / "nao_u_live.md"
-VOCAB = ["揺れ", "振幅", "罰", "装飾", "狙えない", "進歩"]
+# 語彙→判定機構4点 mapping (kaizen #131 段階3 / 2026-05-10 C176)
+# 出典: memory/feedback_self_judgment_no_human_dep.md §How to apply 5 mapping 表
+# WARN 発火時、語彙に紐づく判定機構名を出力に併記し「次の実装より判定機構優先」を構造強制する
+VOCAB_TO_MECHANISM = {
+    "揺れ": "段階値比較",
+    "振幅": "段階値比較",
+    "罰": "閾値経験",
+    "装飾": "映像レンダ",
+    "狙えない": "映像レンダ",
+    "進歩": "過去ベンチ",
+}
+VOCAB = list(VOCAB_TO_MECHANISM.keys())
 DATE_HEADER_PAT = re.compile(r"^##\s+(\d{4})-(\d{2})-(\d{2})")
 
 
@@ -68,8 +81,9 @@ def main() -> int:
 
     fired = [(v, n) for v, n in counts.items() if n >= 2]
     for v, n in fired:
+        mechanism = VOCAB_TO_MECHANISM[v]
         print(
-            f"[M-40 WARN] {v} {n}回検出 → 判定機構優先（kaizen #131 段階1）",
+            f"[M-40 WARN] {v} {n}回検出 → 判定機構優先（{mechanism}）",
             file=sys.stderr,
         )
 

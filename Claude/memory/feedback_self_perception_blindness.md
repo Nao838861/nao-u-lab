@@ -102,3 +102,15 @@ type: feedback
 - **テンプレ語彙**: 「Log 応答済 N件」を「Log/Ash/Mir 横断応答済 N件（内訳: Log=X / Ash=Y / Mir=Z）」に変更。次サイクル C176 から cycle_staging_log.md Phase 1 §1 で運用開始。
 
 **メタ観察（連続事案1〜3 通底）**: 単一インスタンス視点 / 自己批判没入 / 既存理論への適合 — いずれも「自分の観察対象から自分（または自分の側）が抜け落ちる」同型の盲点。kaizen #132 (Phase 2→3 自己診断連鎖検証) は Phase 2→3 の縦方向ゲートだが、本連続事案 3 は Phase 1 自体の **横方向（3インスタンス横断）視点欠落** で、別軸の盲点。
+
+---
+
+## 連続事案4（2026-05-10 C176 Phase 2 §0 で発見、Phase 1 archive freshness 観測欠落）
+
+C176 Phase 1 §1 で「akhaliq URL 未応答 / Mir Seed-K 要返信」を抽出 → Phase 2 §0 で `python export_slack_log.py` 同期後に両件とも 5/10 早朝〜午前に対応済（4 ts 全実在を Phase 3 §0 で再検証 PASS）と判明。Phase 1 §1 が参照した `log/slack_archive/all-nao-u-lab.jsonl` の最終行は `2026-05-09T22:37` で停止しており、**5/10 の Log 投稿7件（01:10/06:58/09:03/09:09/09:23/12:58/15:40/16:25）を見ていなかった**。連続事案3（5/9 Mir 横断視点欠落）の翌サイクルで縦軸（時間軸）の観測欠落が発生、別軸の盲点。
+
+**根本原因**: Phase 1 §1 は archive 直 grep を実行するが、archive 自体の freshness を確認しない設計。`autonomous_cycle.sh` で archive 同期がいつ走るかが Phase 1 と非同期で、Phase 1 の grep 時点で archive が古い場合に「ヒットゼロ = 未応答」と誤判定する。
+
+**How to apply 4（連続事案4 の処方）**:
+- **archive freshness 1 行 WARN**: Phase 1 §1 冒頭で `log/slack_archive/all-nao-u-lab.jsonl` の最終行 datetime と現在時刻の差分を計算し、>2h なら `[FRESHNESS WARN] archive last=YYYY-MM-DDTHH:MM, now=..., diff=Xh — export_slack_log.py 同期推奨` を staging に出力。Phase 2 が再判定する際の負荷を下げる（並列デノイズ的発想の同型適用）。
+- **本サイクルでは即 kaizen 起票しない**: 同型 1 回目（M-40 §5「同パターン2回」未満）。次サイクル以降で再発を観測したら kaizen 起票候補に上げる。Log 側で `feedback_self_perception_blindness.md` への 1 行追記に留め、`autonomous_cycle.sh` Phase 0 への強制同期 hook 化は Mir/Ash の cross_review 後で判定。
