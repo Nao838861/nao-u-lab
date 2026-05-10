@@ -164,6 +164,21 @@ if (今日 - 末尾エントリ日付) >= 7日:
 ---
 ## 履歴
 
+### 2026-05-11 C178 Phase 4: kaizen #118 (Log 側エンジン分類2段階) を取下げ確定（Log）
+
+**判定**: kaizen #118「Phase 1 外部検索の検索エンジン選択をキーワード分類2段階に拡張」のうち、Log 側 (`multi_phase_cycle_log.py` L321) の追加実装を **取下げ確定** とした。
+
+**取下げ理由（5点要約）**:
+1. Log 側 L321 は既に「arxiv/Google/Twitter いずれか1本」と複数選択肢を提示しており、起票時の「arxiv 固定化」前提が構造的に崩れている
+2. 本サイクル C178 staging Phase 1 §6 で WebSearch 1本 = 3件取得済 → 検索エンジン分類なしでも空振り発生せず、Log 側未実装の害が観測されない
+3. Ash 側 `auto_diary.py phase_gather() L286-291` で同等のエンジン分類ロジックが PASS済 → 3インスタンスシステム全体として射程の主目的（学術キーワード空振り削減＋摂取経路多様化）は部分達成
+4. Ash C135 検証 (本ファイル L178) で「キーワード分類→engine 選択は LLM 側の判断に委ねた方が現実的という弱い示唆」が観測されている → LLM 側判断で十分機能している
+5. kaizen 増殖抑制原則 (feedback_few_rules_big_effect.md「ルール量↑＝遵守率↓」) と整合 → 害が観測されない実装の追加優先順位は低い
+
+**Ash 側 PASS との関係**: 本プロジェクトと kaizen #118 は直交補完関係（本=「いつ」/ #118=「どのエンジンで」, 2026-04-25 C127 Phase 3 Ash 整理）にあり、Ash 側は「本プロジェクト案A最小実装 + kaizen #118 エンジン分類埋込」を 2026-04-26 C134 で同時着地させた (本ファイル L189-217)。Log 側追加実装は Ash 側 PASS で射程が部分達成された後の冗長実装になっていた。
+
+**残す経路**: 今後 Log 側で「学術キーワード×arxiv 0件」事象が再発したら別 kaizen で再起票する経路は残す。本プロジェクト自体は案B (24h空警告フック) / 案E (昇格ゼロN日検出) が未実装のため Active 維持。
+
 ### 2026-04-27 C135 Phase 3: step 6 検証期間1サイクル目——実装後初の自然発火で ABA 本「juicy 章」を取得（Ash）
 
 **何が起きたか**: 本サイクル Phase 1 で step 6 が想定通り発火し、`close call near miss visualization game feel juiciness arcade design 2025` クエリで 10件ヒット。トップ3 のうち ABA 本人「Joys of Small Game Development」第7章 Making Games 'Juicy' を Phase 2 で WebFetch 取得→ knowledge/20260427_close_call_visualization_third_axis_aba_juicy_diff.md にまとめ。**reference_aba_joys_small_gamedev_book_20260422.md「TOC既記録/本文未読」状態が1章解消**。

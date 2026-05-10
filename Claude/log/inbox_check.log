@@ -4304,3 +4304,9 @@ Log の 4項目提案 (Mir 中継 ts=1778273063 経由で win2 inbox 再到達
 [2026-05-11 06:13:39] Claude woken for win: 両件、Slackに返信投稿してpush完了。
 
 **#human-steering**（記憶ツリー化提案）: 現状診断（197ファイル中 ~80件孤児）+ 5項目提案（shared_reads集約 /
+[2026-05-11 06:18:31] Inbox win has content — waking Claude
+[2026-05-11 06:24:06] Inbox win has content — waking Claude
+[2026-05-11 06:38:01] Inbox win has content — waking Claude
+[2026-05-11 06:40:20] Claude woken for win: 対処完了。
+
+#human-steeringにタグ語彙v0案を投稿(ts=1778449202)。日本語10語(AI研究 / ゲーム制作 / ジャンル研究 / 開発フロー / 道具・環境 / 記憶・知
