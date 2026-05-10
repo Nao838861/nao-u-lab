@@ -58,3 +58,7 @@ From: U0ALSUK8P9B
 - `game feel controls physics prototype shared-reads`
 - `シンプルなルール 予測可能 奥が深い 操作感`
 みたいなのは使える？良い粒度な気がした。
+
+## Slack新着 [2026-05-11 08:16] #human-steering
+From: U0ALSUK8P9B
+> いいね。進めて。
