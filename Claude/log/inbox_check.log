@@ -4288,3 +4288,4 @@ Log の 4項目提案 (Mir 中継 ts=1778273063 経由で win2 inbox 再到達
 
 反映内容:
 - `scheduler_log_config.json` auto_cyc
+[2026-05-10 15:38:56] Inbox win has content — waking Claude
