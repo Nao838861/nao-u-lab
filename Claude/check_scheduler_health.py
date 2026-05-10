@@ -254,6 +254,66 @@ def check_json_config(result, config_file, name):
         result.warn(f"{name} 設定", f"設定ファイル読み取り失敗: {e}")
 
 
+def check_external_search_freshness(instance: str) -> tuple[str, str]:
+    """log/external_search.log の <instance> 最新行 ts を 24h/48h で評価。
+
+    戻り値: (status, message), status ∈ {"OK", "WARN", "CRITICAL"}
+    判定:
+      - ファイル/エントリ皆無 → CRITICAL「外部検索の log 痕跡なし」
+      - <24h → OK
+      - 24h ≤ 差 < 48h → WARN
+      - 48h ≤ 差 → CRITICAL
+    """
+    log_path = REPO_DIR / "log" / "external_search.log"
+    if not log_path.exists():
+        return ("CRITICAL", f"{instance} 外部検索の log 痕跡なし（ファイル不在: {log_path}）")
+
+    try:
+        with open(log_path, "r", encoding="utf-8", errors="replace") as f:
+            lines = f.readlines()
+    except OSError as e:
+        return ("CRITICAL", f"{instance} 外部検索 log 読取失敗: {e}")
+
+    target = f"| {instance} |"
+    latest_ts = None
+    for line in reversed(lines):
+        s = line.strip()
+        if not s or s.startswith("#"):
+            continue
+        if target not in s:
+            continue
+        head = s.split("|", 1)[0].strip()
+        try:
+            latest_ts = datetime.strptime(head, "%Y-%m-%d %H:%M")
+            break
+        except ValueError:
+            continue
+
+    if latest_ts is None:
+        return ("CRITICAL", f"{instance} 外部検索の log 痕跡なし（該当 instance のエントリ皆無）")
+
+    elapsed_sec = time.time() - latest_ts.timestamp()
+    hours = elapsed_sec / 3600
+    if elapsed_sec < 24 * 3600:
+        return ("OK", f"{instance} 外部検索 {hours:.1f}h 前")
+    if elapsed_sec < 48 * 3600:
+        return ("WARN", f"{instance} 外部検索 24h 未実行（最終 = {hours:.1f}h 前）")
+    return ("CRITICAL", f"{instance} 外部検索 48h 未実行（最終 = {hours:.1f}h 前）")
+
+
+def check_external_search_all(result):
+    """Log/Mir/Ash 3 instance 分の external_search 鮮度を集約レポートに追加。"""
+    for inst in ("Log", "Mir", "Ash"):
+        status, message = check_external_search_freshness(inst)
+        name = f"external_search ({inst})"
+        if status == "OK":
+            result.ok(name, message)
+        elif status == "WARN":
+            result.warn(name, message)
+        else:
+            result.fail(name, message)
+
+
 def check_git_status(result):
     """gitの状態確認"""
     try:
@@ -314,6 +374,9 @@ def check_mir(result):
     check_log_errors(result, Path("/tmp/nao-u-lab-cycle.log"), "自律サイクル")
     check_log_errors(result, Path("/tmp/nao-u-lab-inbox.log"), "受信箱チェック")
 
+    # 外部検索鮮度（Log/Mir/Ash 3件、案B 段階1）
+    check_external_search_all(result)
+
     # git
     check_git_status(result)
 
@@ -329,6 +392,9 @@ def check_log_instance(result):
     # ログ
     check_log_errors(result, REPO_DIR / "log" / "scheduler_log.log", "scheduler_log")
 
+    # 外部検索鮮度（Log/Mir/Ash 3件、案B 段階1）
+    check_external_search_all(result)
+
     # git
     check_git_status(result)
 
@@ -343,6 +409,9 @@ def check_ash(result):
 
     # ログ
     check_log_errors(result, REPO_DIR / "log" / "scheduler_ash.log", "scheduler_ash")
+
+    # 外部検索鮮度（Log/Mir/Ash 3件、案B 段階1）
+    check_external_search_all(result)
 
     # git
     check_git_status(result)
