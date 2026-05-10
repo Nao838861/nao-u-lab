@@ -193,15 +193,54 @@ def get_next_tasks_pending():
         return ""
 
 
+def run_repeated_pattern_check():
+    """nao_u_live.md 同パターン2回検出 hook を実行し staging 注入用の行リストを返す。
+
+    kaizen #131 段階2 (2026-05-10 C175 Log 実装):
+      段階1 = scripts/check_repeated_pattern_indication.py（実装済 / C170 Phase 4 PASS）
+      段階2 = この関数で init_staging() から自動呼出 → staging に inline 注入
+      段階3 = 判定機構4点（過去ベンチ等）優先構築 gate（未着手）
+
+    Mir 側 autonomous_cycle.sh の対応 hook と対称。形骸化防止のため WARN 0件でも
+    `[M-40 発火なし]` 1行を必ず注入する（ノーオペで黙らない）。"""
+    script = REPO_DIR / "scripts" / "check_repeated_pattern_indication.py"
+    if not script.exists():
+        return [f"[M-40 hook ERROR] script not found: {script}"]
+    try:
+        kwargs = dict(
+            capture_output=True, text=True, timeout=15,
+            cwd=str(REPO_DIR), encoding="utf-8", errors="replace",
+        )
+        if _CREATION_FLAGS:
+            kwargs["creationflags"] = _CREATION_FLAGS
+        r = subprocess.run([*PY, str(script)], **kwargs)
+        warns = [ln.strip() for ln in r.stderr.splitlines() if "[M-40 WARN]" in ln]
+        ts = datetime.now().strftime("%Y-%m-%d %H:%M")
+        if warns:
+            return warns + [f"(kaizen #131 段階2 hook, {ts}, exit={r.returncode})"]
+        return [f"[M-40 発火なし] (kaizen #131 段階2 hook, {ts}, exit={r.returncode})"]
+    except subprocess.TimeoutExpired:
+        return ["[M-40 hook ERROR] timeout (15s)"]
+    except Exception as e:
+        log(f"[multi_phase] M-40 hook 失敗: {e}")
+        return [f"[M-40 hook ERROR] {e}"]
+
+
 def init_staging(alerts, weekly_flag):
     """Initialize staging file with pre-check results."""
     ts = datetime.now().strftime("%Y-%m-%d %H:%M")
     pending = get_next_tasks_pending()
+    m40_lines = run_repeated_pattern_check()
     lines = [f"# サイクルステージング ({ts})", ""]
     # 層A: 未完了タスクを冒頭に注入（書式依存を外した次回タスク継承 / 2026-04-26 Mir C126接合）
     lines.extend([
         "## 未完了タスク（層A: next_tasks.py pending）",
         pending if pending else "(なし — next_tasks_log.jsonl は空。Phase 3/4 で `python next_tasks.py --instance log add \"...\"` 実行有無を確認)",
+        "",
+        "## M-40 自己診断ゲート (kaizen #131 段階2 hook)",
+    ])
+    lines.extend(m40_lines)
+    lines.extend([
         "",
         "## Pre-check結果",
     ])
@@ -215,7 +254,8 @@ def init_staging(alerts, weekly_flag):
         "", "## Phase 3: アクション", "(Phase 3が書き込む)",
     ])
     STAGING_FILE.write_text("\n".join(lines), encoding="utf-8")
-    log(f"[multi_phase] Staging initialized: {len(alerts)} alerts, pending={'yes' if pending else 'empty'}")
+    fired = sum(1 for ln in m40_lines if "[M-40 WARN]" in ln)
+    log(f"[multi_phase] Staging initialized: {len(alerts)} alerts, pending={'yes' if pending else 'empty'}, M-40 WARN={fired}")
 
 
 def run_phase(phase_num, phase_name, prompt, timeout_s):

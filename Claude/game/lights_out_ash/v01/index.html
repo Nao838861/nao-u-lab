@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>lights_out_ash v01 — Lights Out 3x3 + Hint</title>
+<style>
+  body {
+    background: #1a1a1a;
+    color: #ddd;
+    font-family: system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+    margin: 0;
+  }
+  h1 { font-size: 18px; margin: 0 0 12px; font-weight: 500; }
+  .info { font-size: 14px; margin-bottom: 8px; color: #aaa; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    grid-template-rows: repeat(3, 80px);
+    gap: 6px;
+    margin: 16px 0;
+  }
+  .cell {
+    width: 80px; height: 80px;
+    border: 2px solid #444;
+    background: #222;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.1s, border-color 0.1s, box-shadow 0.1s;
+  }
+  .cell.on {
+    background: #f0c040;
+    border-color: #ffe080;
+    box-shadow: 0 0 16px rgba(240,192,64,0.5);
+  }
+  .cell.hint {
+    border-color: #4080ff;
+    box-shadow: 0 0 12px rgba(64,128,255,0.6);
+  }
+  .cell:hover { border-color: #888; }
+  .controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  button {
+    background: #333;
+    color: #ddd;
+    border: 1px solid #555;
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  button:hover { background: #444; }
+  button.active { background: #4080ff; border-color: #6090ff; color: white; }
+  .clear {
+    color: #80ff80;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 8px 0;
+    height: 28px;
+  }
+  .footer {
+    margin-top: 16px;
+    font-size: 11px;
+    color: #666;
+  }
+</style>
+</head>
+<body>
+<h1>lights_out_ash v01 — Lights Out 3×3 clone + ヒント機能</h1>
+<div class="info">セルクリックで自分+隣接4マス（上下左右）をトグル。全 OFF で CLEAR。</div>
+<div class="info" id="moves">手数: 0</div>
+<div class="clear" id="clear"></div>
+<div class="grid" id="grid"></div>
+<div class="controls">
+  <button id="reset">リセット (新しい盤面)</button>
+  <button id="hint-toggle">ヒント: OFF</button>
+</div>
+<div class="footer">独自要素=ヒント機能（削除可能）。BFS solver は難度分布計器であり面白さ計器ではない。</div>
+
+<script>
+'use strict';
+
+const N = 3;
+const TOTAL = N * N;
+const ALL_OFF = 0;
+const FULL_MASK = (1 << TOTAL) - 1;
+
+let board = 0;
+let moves = 0;
+let hintOn = false;
+let cleared = false;
+
+function cellMask(r, c) {
+  return 1 << (r * N + c);
+}
+
+function toggleMask(r, c) {
+  let m = 0;
+  m |= cellMask(r, c);
+  if (r > 0) m |= cellMask(r - 1, c);
+  if (r < N - 1) m |= cellMask(r + 1, c);
+  if (c > 0) m |= cellMask(r, c - 1);
+  if (c < N - 1) m |= cellMask(r, c + 1);
+  return m;
+}
+
+const TOGGLES = [];
+for (let r = 0; r < N; r++) {
+  for (let c = 0; c < N; c++) {
+    TOGGLES.push(toggleMask(r, c));
+  }
+}
+
+function applyClick(state, idx) {
+  return state ^ TOGGLES[idx];
+}
+
+function bfsBestFirstMove(start) {
+  if (start === ALL_OFF) return -1;
+  const visited = new Uint8Array(FULL_MASK + 1);
+  visited[start] = 1;
+  const parent = new Int32Array(FULL_MASK + 1);
+  const moveTaken = new Int8Array(FULL_MASK + 1);
+  parent[start] = -1;
+  const queue = [start];
+  let head = 0;
+  while (head < queue.length) {
+    const s = queue[head++];
+    if (s === ALL_OFF) {
+      let cur = s;
+      while (parent[cur] !== start && parent[cur] !== -1) {
+        cur = parent[cur];
+      }
+      return moveTaken[cur];
+    }
+    for (let i = 0; i < TOTAL; i++) {
+      const next = applyClick(s, i);
+      if (!visited[next]) {
+        visited[next] = 1;
+        parent[next] = s;
+        moveTaken[next] = i;
+        queue.push(next);
+      }
+    }
+  }
+  return -1;
+}
+
+function makeRandomSolvableBoard() {
+  let s = ALL_OFF;
+  const k = 3 + Math.floor(Math.random() * 5);
+  for (let i = 0; i < k; i++) {
+    const idx = Math.floor(Math.random() * TOTAL);
+    s = applyClick(s, idx);
+  }
+  if (s === ALL_OFF) {
+    s = applyClick(s, Math.floor(Math.random() * TOTAL));
+  }
+  return s;
+}
+
+const gridEl = document.getElementById('grid');
+const movesEl = document.getElementById('moves');
+const clearEl = document.getElementById('clear');
+const resetBtn = document.getElementById('reset');
+const hintBtn = document.getElementById('hint-toggle');
+
+const cellEls = [];
+for (let i = 0; i < TOTAL; i++) {
+  const el = document.createElement('div');
+  el.className = 'cell';
+  el.dataset.idx = i;
+  el.addEventListener('click', () => onCellClick(i));
+  gridEl.appendChild(el);
+  cellEls.push(el);
+}
+
+function render() {
+  let hintIdx = -1;
+  if (hintOn && !cleared) {
+    hintIdx = bfsBestFirstMove(board);
+  }
+  for (let i = 0; i < TOTAL; i++) {
+    const on = (board >> i) & 1;
+    let cls = 'cell' + (on ? ' on' : '');
+    if (i === hintIdx) cls += ' hint';
+    cellEls[i].className = cls;
+  }
+  movesEl.textContent = '手数: ' + moves;
+  if (board === ALL_OFF) {
+    clearEl.textContent = 'CLEAR! (' + moves + ' 手)';
+    cleared = true;
+  } else {
+    clearEl.textContent = '';
+    cleared = false;
+  }
+}
+
+function onCellClick(idx) {
+  if (cleared) return;
+  board = applyClick(board, idx);
+  moves++;
+  render();
+}
+
+function reset() {
+  board = makeRandomSolvableBoard();
+  moves = 0;
+  cleared = false;
+  render();
+}
+
+resetBtn.addEventListener('click', reset);
+
+hintBtn.addEventListener('click', () => {
+  hintOn = !hintOn;
+  hintBtn.textContent = 'ヒント: ' + (hintOn ? 'ON' : 'OFF');
+  hintBtn.classList.toggle('active', hintOn);
+  render();
+});
+
+reset();
+</script>
+</body>
+</html>

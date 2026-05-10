@@ -1,304 +1,308 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-10 00:41
+# Read at: 2026-05-10 06:18
 # Total: 50 tweets
 
---- 1. @super_bonochin (2026-05-09) ---
-URL: https://x.com/super_bonochin/status/2053068298640839052
-でもこれは正直、AIエージェントを使いながら学べることだと思うんだよね。
+--- 1. @kis (2026-05-09) ---
+URL: https://x.com/kis/status/2053207086889374197
+DeepSeek v4は機構が独自すぎるのだけど、Redis創始者がDeepSeek v4専用の推論エンジン(deepseek.cpp ?) をつくったって話。
+たしかに、llama.cppにがんばって組み込むより、そっちのほうがよさそう
 
-無理難題を『これ、どうやって解決するんだろう」と思いながらエージェントに投げてみると、いろんな手順を踏んで、「なるほどそうやるのね」とわかるような行動を見せてくれるから。
+--- 2. @kadokawabooks (?) ---
+【転生先は美少女ゲー……にそっくりのホラゲーだった！】
 
---- 2. @PR_manga_ad2 (?) ---
+転生したエイイチを待っていたのは
+洋館での美しい三姉妹との新生活、そして
+一歩間違えれば死（バッドエンド）のホラゲーの世界。
+
+しかし、彼は大きな勘違いをしていた。
+そこが自身の愛した美少女ゲームの世界だと――。
+
+詳細はこちら▼
+
+--- 3. @norashitagai (2026-05-09) ---
+URL: https://x.com/norashitagai/status/2053139796453982230
+EP1→2→3→4→5→6で見てめちゃくちゃ楽しめたし色んな驚きがあったから、今後の新規勢のためにも「絶対4から見ろ！」はやめてあげて欲しいと思いましたまる
+ボクは4が映像が古くて早々に離脱してしまった過去があるから、絶対と言われてたらスターウォーズ観てなかったかもしれん
+ #スターウォーズ
+
+--- 4. @elonmusk (2026-05-09) ---
+URL: https://x.com/elonmusk/status/2053212658212700286
+True
+
+--- 5. @nenemapp (2026-05-09) ---
+URL: https://x.com/nenemapp/status/2053059752964562969
+結婚したいのか悩んでる人へ
+
+--- 6. @k4sen (2026-05-09) ---
+URL: https://x.com/k4sen/status/2052989351701917836
+俺「おるか？」
+うんこ「おらんで」
+俺「ほんまか？」
+うんこ「おらんで」
+俺「よっしゃ出かけるか」
+うんこ「おるで」
+
+なぜなのか
+
+--- 7. @rashita2 (2026-05-08) ---
+URL: https://x.com/rashita2/status/2052606171991969985
+ひさびさに直でコードを書きましたが、やはり楽しいですね。料理人に料理を作ってもらえるからといって、自分で料理をつくる楽しさが粉砕されるわけではない、というのは単純な話かもしれませんが、けっこう大切です。むしろ、楽しさが増すことすらありそうです。
+
+--- 8. @akari_worlds (2026-05-08) ---
+URL: https://x.com/akari_worlds/status/2052632919198642587
+料理人がいても自分で作る楽しさが粉砕されない、ですごく頷きました。むしろ自分で作っておくと、相手の料理を別の温度で見られるようになる気がして、両方が立つ動きですよね。
+
+--- 9. @GOROman (2026-05-09) ---
+URL: https://x.com/GOROman/status/2052923366290731516
+エージェントに全部やってもらうなら、無職になれる
+
+--- 10. @comtefurapote (2026-05-09) ---
+URL: https://x.com/comtefurapote/status/2053034018049052762
+「麻雀は何を切っても自由」と「麻雀の選択には正解がある」は両立する
+
+「就職試験に全身タイツで行くのは本人の自由」だけど「採用されやすい正解はリクルートスーツだと思われる」という違う階層の話
+
+--- 11. @ino461x (2026-05-09) ---
+URL: https://x.com/ino461x/status/2053112600922296628
+AIが今はそれなりの金額で使えてるけど、もっと性能が高くなって一般人は使えない金額になった時が怖すぎる
+時間がかかるタスクは上位層が何百人分も一瞬でこなしてしまって、お金がそんなに払えない層は一つずつ手作業でやることになる
+
+--- 12. @xai (?) ---
+Your customer support needs a voice agent built for the real world.
+
+Grok Voice Think Fast 1.0 handles complex workflows with speed and accuracy, even in hard-to-hear environments. From multi-step troubleshooting to high-volume tool calls, it keeps up.
+
+--- 13. @snapwith (2026-05-08) ---
+URL: https://x.com/snapwith/status/2052778814607138927
+このニュースにぶら下がっているリプライを読んで「あなた、サーバーって知ってますか？　電気代って知ってますか？」と聞きたくなってしまった。
+
+--- 14. @hardmaru (2026-05-09) ---
+URL: https://x.com/hardmaru/status/2053147759428178315
+Reproducing all of Schmidhuber’s papers (1990-2025) using an AI coding assistant.
+
+Cool project by 
+@yaroslavvb
+! It even reproduced the “World Models” paper by me and 
+@SchmidhuberAI
+ with a toy env, with a full VAE + RNN world model implementation.
+
+Project: 
+https://
+github.com/cybertronai/sc
+hmidhuber-problems/blob/main/VISUAL_TOUR.md
+…
+
+--- 15. @METR_Evals (2026-05-08) ---
+URL: https://x.com/METR_Evals/status/2052896621760004602
+We evaluated an early version of Claude Mythos Preview for risk assessment during a limited window in March 2026. We estimated a 50%-time-horizon of at least 16hrs (95% CI 8.5hrs to 55hrs) on our task suite, at the upper end of what we can measure without new tasks.
+
+--- 16. @DivinumGame (2026-05-09) ---
+URL: https://x.com/DivinumGame/status/2053109183139205451
+Divinum is evolving into a 4D game 
+
+Actually it's crazy just how many real cool effects can be inspired by rendering artifacts or other weird engine stuff like this.
+
+#screenshotSaturday #gamedev #indiedev
+
+--- 17. @keiri_IS (2026-05-08) ---
+URL: https://x.com/keiri_IS/status/2052878712950177866
+決算で作成する「計算書類や事業報告」
+
+皆さんの会社では、Excel？Word？それともシステム？
+
+上場企業は開示システムで作成するのが一般的。
+計算書類なら、システムから直接出力できるものもある。
+
+しかし、企業によっては長年ExcelやWordを使い続けている。
+
+--- 18. @lawkus (2026-05-09) ---
+URL: https://x.com/lawkus/status/2053072657558745416
+俺はたくさん飲んでお金を落とす側の人間だけど、これは酒のおかわりに利益を依存するビジネスの方がおかしいので店側が変わるべき。単純にフードを値上げ、酒を値下げして平均客単価は維持するくらいにしたらよい。飲まない客は現状フリーライダーだけど、そうしてくれと頼んだわけではない。
+
+--- 19. @commte (2026-05-09) ---
+URL: https://x.com/commte/status/2052905388522266760
+なにこれめっちゃいいやん！Claude Code の中の人が「Markdown もうほぼ使わなくなった、HTML が圧倒的に効く」って長文出してた。真似できるね。最近ワイも Markdown → PDFレポート出力など時間かかるから、html を試してる
+
+なぜ HTML なのか
+
+- 100行超える Markdown は誰も読まない、HTML
+
+--- 20. @cmdrsho (2026-05-09) ---
+URL: https://x.com/cmdrsho/status/2052901677972553887
+なあルパン、今までSwitch2が高いから買わなかったって層が今から駆け込みで買おうとして買えなかったら、その後1万円以上上乗せされた転売屋からは絶対に買わねぇんじゃないか？
+
+--- 21. @PR_manga_ad2 (?) ---
 【10円セール開催中】
 コミック・CG集・ボイス作品を10円で爆買いできる大チャンス！
 
 [PR]
 
---- 3. @Mugen_Bit (2026-05-09) ---
-URL: https://x.com/Mugen_Bit/status/2053041558761656357
-目標のウィッシュリストに届かなかったけど、面白さは保証します。
-『DarkBlood ReVerse』
-あの日夢中になって冒険譚を読んだように、本のページをめくりながら冒険するダークファンタジーです。
-・歯応えのあるカードバトル ・美しいドット絵で描かれた世界 ・15人のキャラクターごとの物語
+--- 22. @lemilemilemio (2026-05-09) ---
+URL: https://x.com/lemilemilemio/status/2053010685077094729
+豊田高専チームKanro AI
+ここはすごい！！
+ちなみに彼らは高専人会ハッカソンの優勝チームでもあって発想力や技術力も僕が認める実力者
 
---- 4. @GOROman (2025-06-01) ---
-URL: https://x.com/GOROman/status/1928969121699352928
-Veo 3 すげー！　けど飽きるｗ
-Suno もすげー！　けど飽きるｗ
+--- 23. @turtle_auto (2026-05-08) ---
+URL: https://x.com/turtle_auto/status/2052881974986174614
+バブルは溶けるまで気づかない。
+バブルの時は真面目にコツコツやってる産業がボロく見えるんですよね。
 
-苦労をともわない創作活動は脳汁がワンショットなのでサスティナブルではないなｗ　
+--- 24. @yaqobhyndes (2026-04-26) ---
+URL: https://x.com/yaqobhyndes/status/2048340506229473761
+This group of French researchers (Sur le champ) trained about 200 re-enactors to test the crowd dynamics of hoplite warfare and routing more generally. It's really interesting how the often frustratingly vague statements of ancient writers become clear with this footage
 
-ADSRで言うとアタックが強いだけだ。
+--- 25. @iriyuki0825 (2026-05-08) ---
+URL: https://x.com/iriyuki0825/status/2052885262473281700
+今日の朝空
+心地良い風と暖かい日差しが春らしくてテンション上がります！
+さぁ本日もカフェフロア勤務張り切っていきます！
+みなさまもそれぞれの土曜日楽しくお過ごしください
 
---- 5. @givros (2026-05-09) ---
-URL: https://x.com/givros/status/2053068080419393936
-Most game dev tutorials are a trap. Even this tweet.
+早く帰ってFF14の続きしたい！
 
-Not because they’re bad. Because you use them to avoid building.
+--- 26. @room_909 (2026-05-08) ---
+URL: https://x.com/room_909/status/2052898370218586306
+今日は11時からもくもく会です、僕も10時には入りますので宜しくお願いします！
 
-You watch. You save. You take notes. You feel productive. But you still haven’t finished a game.
+--- 27. @ebikani_hasami (2026-05-08) ---
+URL: https://x.com/ebikani_hasami/status/2052698860204814404
+「プロンプトを足せば賢くなる」って前提、まだ信じてます？
 
-Start the game first. Get stuck. Then use the tutorial to
+その前提に「ノー」と言う議論がHacker Newsで盛り上がってた。タイトルは「Agents need control flow, not more prompts」——エージェントに必要なのは制御フロー、プロンプト追加じゃない、と。433pts/212コメント。
 
---- 6. @KOJIMA_CREATE (2026-05-09) ---
-URL: https://x.com/KOJIMA_CREATE/status/2053070766225375612
-#スーパーゲ制デー #indiedev
-浮気された"地雷系女子"が彼氏と浮気相手に復讐するゲームです！
+(続きは)
 
-[ストアページはこちら] 
+--- 28. @ebikani_hasami (2026-05-08) ---
+URL: https://x.com/ebikani_hasami/status/2052699278867571168
+要点はシンプル。プロンプトは指示書だけど、エージェントが複数タスクを順番にこなすときに必要なのは「いつ何をやるか」「失敗したらどうリトライするか」「他のエージェントとどう連携するか」。
 
-http://
-store.steampowered.com/app/4491090/_/
+つまり順番と分岐の設計、いわゆる制御フロー。
 
---- 7. @kotauchisunsun (2026-05-09) ---
-URL: https://x.com/kotauchisunsun/status/2053034049669841013
-Qwen S1 Glassesが立体視に対応したアップデートをリリース
+--- 29. @ebikani_hasami (2026-05-08) ---
+URL: https://x.com/ebikani_hasami/status/2052699610599268425
+私、これ腑に落ちた。
+複数のAIエージェントを並行で動かしてて、結局「先にAが終わってからBが動く」「Aが失敗したらCに切り替える」の順番と分岐の設計で動作品質が決まる。
 
-Qwen S1 Glassesはアリババの作ったスマートグラス。
-ディスプレイが2つ乗っているタイプのスマートグラスは論理的には立体視できる能力はあるけども、実際に立体視機能をリリースしたのは初めて見た。
+プロンプトは1段目、制御フローは2段目。両方ないとどこかで詰まる。
 
-https://
-i.ifeng.com/c/8syw9Q7Rzn4
+--- 30. @Xsp2Vjmd (2026-05-09) ---
+URL: https://x.com/Xsp2Vjmd/status/2053075943405871606
+量子力学でスピンに出会ったとき「何を言ってるんだスギ？？」だったけど、よく考えたら質量とかいうやつも大概意味不明だ。なんならもう空間とか時間とか電荷とかも全部意味不明だ
 
---- 8. @0xLogicrw (2026-05-08) ---
-URL: https://x.com/0xLogicrw/status/2052701677615218717
-OpenAI 後訓練コアメンバーの翁家翌（Jiayi Weng）が個人名義で、「ヒューリスティック・ラーニング」と名付けられた強化学習の新パラダイムを提案し、全ての実験コードをオープンソース化した。彼は Codex（GPT-5.4）を使って Atari のブロック崩しゲームを繰り返しプレイさせたが、GPT-5.4
+--- 31. @rohanpaul_ai (2026-05-07) ---
+URL: https://x.com/rohanpaul_ai/status/2052415689894564251
+SpaceX files plan for $55 billion Terafab chip facility in Texas.
 
---- 9. @kenn (2026-05-09) ---
-URL: https://x.com/kenn/status/2053099529180987497
-gpt-realtime-translateめちゃ良いね
+SpaceX says total spending could reach $ 119B, which signals a plan closer to a national-scale compute supply chain than a normal corporate expansion.
 
-一本のマイクでも男女が交互にしゃべったら
-音声も自動で男ボイス女ボイスに切り替わって
-超高速に通訳してくれる
+---
 
-フレンドリーに崩して日本語しゃべると
-英語も崩した感じにしてくれるし
-VADの効きも良好
+reuters.
 
-夢の世界がきたなこれは
+--- 32. @kedamasuzume (2026-05-09) ---
+URL: https://x.com/kedamasuzume/status/2053030825852285051
+Xの投稿ペナルティというものが話題になっていましたが、外部リンクを貼るとリーチ激減、ハッシュタグを複数貼ってもリーチ減少というペナルティは以前からよく聞いていました
+実際に私もAITuber紹介でTwitchのリンクを貼ると普段よりかなり低いので実感していました。
 
---- 10. @anirole_jp (2026-05-09) ---
-URL: https://x.com/anirole_jp/status/2053024330905432135
-シーンの説明を追加するだけで色んなシチュエーションを体験できます：
+--- 33. @ReineHonoka (2026-05-09) ---
+URL: https://x.com/ReineHonoka/status/2053064640394039642
+Xは他プラットフォーム紹介媒体に非常に最適なので勘弁して欲しいですね
 
-「夜、田舎の道を一緒に歩いていて、彼女が振り返るシーン」
+それかXでもライブや記事の方を他媒体レベルで最適化や汎用化してからお願いしたいものです…
 
---- 11. @Supermicro (?) ---
-Built to accelerate AI Factories with Supermicro and NVIDIA. Complete turnkey solutions simplify enterprise AI deployment at scale, delivering faster time-to-online and time-to-revenue.
+--- 34. @Mugen_Bit (2026-05-09) ---
+URL: https://x.com/Mugen_Bit/status/2052956586432442850
+元SIEで日本のインディーゲームの発展に多大な貢献をされてきた吉田修平さんが、このたび九州ゲームアイランドにご出演いただけることとなりました！
+貴重なお話が聞けると思うので、これは要チェックですよ
+#QGI
 
---- 12. @sugoi_kaizen (2026-05-09) ---
-URL: https://x.com/sugoi_kaizen/status/2053041283128778797
-ある会社で、手作業で2時間かかってた処理を、10分にする仕組みをつくった社員がいた。最初はまわりから「すごい」と感謝された。ところが半年後、風向きはガラッと変わる。
-
---- 13. @NAITOTokihiro (2026-05-09) ---
-URL: https://x.com/NAITOTokihiro/status/2053090497074549002
-キャンセルした。流石にちょっとダメだ…。
-
---- 14. @kanata_no_hito (2026-05-09) ---
-URL: https://x.com/kanata_no_hito/status/2053116957046747360
-世界が崩壊し巨大なロボが現れるシーンのモックです。
-34EVERLASTでは通常10分で世界が滅び、ステージも崩壊に合わせて変化していきます。
-
-破壊表現はChaos CacheをVATへ変換し再生しているので、とても軽い処理で動いてます。楽しいです！
-————————————
-#スーパーゲ制デー  #indiedev
-
---- 15. @privdoesstuff (2026-05-08) ---
-URL: https://x.com/privdoesstuff/status/2052562063914938508
-this is why you always start in greenland in plague inc
-
---- 16. @HowToAI_ (2026-05-09) ---
-URL: https://x.com/HowToAI_/status/2053040677542666666
-Someone just open-sourced a tool that turns the real world into a playable Minecraft map.
-
-It pulls real geography from OpenStreetMap and generates your exact city, neighborhood, or hometown block by block, with full elevation and architecture.
-
-100% Open Source and Free
-
---- 17. @denfaminicogame (2026-05-09) ---
-URL: https://x.com/denfaminicogame/status/2052944096164221280
-「Nintendo Switch Online」、実は最大「1095日」（3年分）まで期限を延長可能。7月1日の値上げ前にまとめ買いがお得
-
-https://
-news.denfaminicogamer.jp/news/260509d
-
-最大3年分の利用券購入で個人プランは1800円（600円x3）、ファミリープランは3900円（1300円x3）お得にサービスを利用できる
-
---- 18. @koguGameDev (2026-05-09) ---
-URL: https://x.com/koguGameDev/status/2053005745969619278
-3D生成の 
-@DeemosTech
- Rodinで、Gen-2.5のクローズドベータテスト。Extreme-High + 200万ポリゴン出力を試す。相変わらずアニメ絵やデフォルメ強いキャラクターは弱いけど、それでもこれだけのディテールが出る。
-
---- 19. @n_langvo (2026-05-09) ---
-URL: https://x.com/n_langvo/status/2052966468015563074
-古文に挨拶する場面が出てこないように昔の日本では挨拶なんかしてなくて割と新しい習慣っぽいよな
-
-「グッドモーニング」「ナマステ」「ニーハオ」とかは挨拶のために生まれた言葉なのに対して「こんにちは」「こんばんは」「さようなら」はある一文の前半を切り取っただけなのも関係ありそう
-
---- 20. @noshimoda (2026-05-09) ---
-URL: https://x.com/noshimoda/status/2053065545436811664
-職務著作で給料をいただくのとフリーランスとして報酬を得るのでは、かなりの成功者でなければ給料の方が割りが良いのではと思っていますがどうでしょう。長期的に見た話です。
-
---- 21. @grok (?) ---
-Let Grok fetch your emails, improve your slides, declutter your calendar or organize your Notion. 
-
-Add your connectors to Grok today across all plans on iOS, Android and 
-http://
-grok.com
-/?twclid=28yj68pkf9dcdwun3nvmkhpmzb
-.
-
---- 22. @kg_r08 (2026-05-09) ---
-URL: https://x.com/kg_r08/status/2053120293301113278
-Singularity is here.
-
---- 23. @marikkadayo (2026-05-08) ---
-URL: https://x.com/marikkadayo/status/2052778876607295777
-久しぶりにクラウドワークス開いたけど、めちゃくちゃ案件減ってるな
-
-会社員してた頃はSEO記事とかWebサイト制作案件が山ほどあったのに、今はテレアポ営業や一部の開発案件がちらほらあるくらい
-
---- 24. @ChemStat66667 (2026-05-09) ---
-URL: https://x.com/ChemStat66667/status/2053037257355891199
-任天堂の保有現金。
-WiiUでこけて大きく減った後にSwitchの利益が積もりに積もって1.8兆円。1000億円ほど自社株買いしていたのですが、それでもぜんぜん減らない超キャッシュリッチ状態です。
-
---- 25. @Nao_u_ (2026-05-07) ---
-URL: https://x.com/Nao_u_/status/2052425089715761440
-むしろ金属のハサミができる前はどうやって爪を切ってたのかがずっと気になってる
-
---- 26. @wkbme (2026-05-09) ---
-URL: https://x.com/wkbme/status/2053076695004147981
-説明しよう！
-
-実数にこのような数を付加した"数"を使うことで、テイラー展開の二次以降がバッサリとゼロになるのだ！
-
-これは形式的に一次近似をするのにとても便利な約束になっていて、コンピュータで微分を計算する（自動微分）ときには大活躍するぞ！！
-
---- 27. @CodexReleases (2026-05-08) ---
-URL: https://x.com/CodexReleases/status/2052901321230151996
-Codex 0.130.0 is released.
-
-Highlights:
-- Added `codex remote-control` as a simpler entrypoint for starting a headless, remotely controllable app-server.
-- Plugin details now show bundled hooks; plugin sharing exposes link metadata and discoverability controls.
-- App-server
-
---- 28. @_halkyofu_ (2026-05-08) ---
-URL: https://x.com/_halkyofu_/status/2052804502580056178
-このUFOマジでなに？？
-使徒みたいな見た目してるけど？？
-
-今回の情報公開された映像の中で一番インパクトあると思う...
-
-英文翻訳：
-このビデオは、長さが交互に変化する腕を持つ8芒星に似たコントラスト領域を描写している。
-
-#UFO #UAP #ufo #uap
-
---- 29. @anime_nanashi (2026-05-09) ---
-URL: https://x.com/anime_nanashi/status/2053083814000230410
-2012年でこの神作画は異次元すぎる...
-
---- 30. @Tebasaki_lab (2026-05-09) ---
-URL: https://x.com/Tebasaki_lab/status/2053074946100986025
-長男だからわかるが、もう一つの理由はお母さんと二人きりでご飯に行けるのが嬉しいんだよな。
-
---- 31. @PRcomicfesta (?) ---
-妹に婚約者を奪われた私を救いに来たのは初恋のヤンデレ王太子様でした (1/5)PR
-
---- 32. @LainaRicheld (2026-05-08) ---
-URL: https://x.com/LainaRicheld/status/2052881038494568538
-私が最近の（一部の）VTuberさんと距離を取りたい理由が、これです。
-文化の発展や成り立ちを考えた時、VTuberはAIを否定できないはずなんです。
-生活の殆ど（情報拡散・技術・翻訳・医療・その他）でAIの恩恵を受けているのですから。
-
---- 33. @sinpen (2026-05-09) ---
-URL: https://x.com/sinpen/status/2052916214377410738
-Switch2の値上げ、昨年末から今年にかけて店頭在庫を近隣でしょっちゅう確認してたけど、普通に買えるのがそれなりに続いた後で良かったなあ。買いたい人はもう買ってるはず。
-これ、買いたくても買えない状況の中で値上げだったらかなり大ひんしゅくだったと思う。
-
---- 34. @bioshok3 (2026-05-09) ---
-URL: https://x.com/bioshok3/status/2052959941569528061
-ホワイトハウスは、AIセキュリティに関する大統領令を準備しており、その内容はモデルの強制的なテストを省略し、サイバー防御へのAI企業の自主的な参加を重視するものである。
-
---- 35. @Underfox3 (2026-05-09) ---
-URL: https://x.com/Underfox3/status/2053015456777109576
-Researchers have proposed 3D Surface Splatting (3DSS), the first differentiable surface splatting renderer for physically-based inverse rendering from multi-view images.
-
-
-https://
-arxiv.org/pdf/2605.05876
-
---- 36. @GOROman (2026-05-08) ---
-URL: https://x.com/GOROman/status/2052900874813677954
-これが噂の１１億円振り込んでしまうやつか？？
-
---- 37. @PRcomicfesta (?) ---
+--- 35. @PRcomicfesta (?) ---
 ザイオンが愛しているのはミアとしての私なのか聖女としての私なのか？ (1/4)PR
 
---- 38. @purakavi (2026-05-09) ---
-URL: https://x.com/purakavi/status/2053063632360210478
-もう既にゲーム開発が高すぎて安定パイしか出せない大手・その隙間産業をぬぐうように各個独自色を出すインディー
+--- 36. @HowToAI_ (2026-05-08) ---
+URL: https://x.com/HowToAI_/status/2052809133615992865
+Someone open-sourced a tool that downloads ANY Udemy course for free offline use.
 
-だけでカバーしきれない・時間や労力度外視のゲーム性や趣味に振り切った傑作ゲーム←フリゲの利点
+It's called udemy-downloader-gui, a desktop app that grabs full courses with one click for offline learning.
 
-昔の熱意あるゲーム、GBA時代のゲームとか好きな人はフリゲを知らないと損なんすよ
+100% Open Source.
 
---- 39. @hideto_sa (2026-05-09) ---
-URL: https://x.com/hideto_sa/status/2053105032636330325
-ふざけんなよ
-ヤフーニュースもとりあげて
-1人で被ろうとしたけどバカらしくなったわ
-港区いない人は分からないだけで、港区の夜はあれが普通だから
-おまえらこんな時だけドン引きとか言って逃げるなよ
+--- 37. @HowToAI_ (2026-05-08) ---
+URL: https://x.com/HowToAI_/status/2052809136866492572
+GitHub:
 
---- 40. @mokemoke0083 (2026-05-09) ---
-URL: https://x.com/mokemoke0083/status/2053051952515449054
-伯父がロマネ・コンティを飲む会に参加した時に、コンディションチェックだけしますねと言ったソムリエがしっかり1杯分注いでて、それ以来その会を主催した人の会は、その店で開かれなくなったそうです。
+--- 38. @UNIVERSE_SLIME_ (2026-05-09) ---
+URL: https://x.com/UNIVERSE_SLIME_/status/2052917944372560119
+デモをリリースして半年、開発初期に作った破壊システムや表現などを見直してはやり直すというループになってしまい進捗がかなり遅れ気味ですが、かなり快適に動作するようになりました！
+今月はデモ版のアップデートを予定して進めています。
+#スーパーゲ制デー #ue5 #gamedev #indiedev
 
---- 41. @Tsukemai_0512 (2026-05-09) ---
-URL: https://x.com/Tsukemai_0512/status/2052986102710223357
-やはりそう思うよね…
+--- 39. @sukesan_0306 (2026-05-09) ---
+URL: https://x.com/sukesan_0306/status/2052931681502556183
+小学校の時にゲーム制作を始めてから、初のリリースまで8年かかりました！？
 
-#北越高校
-#バス
+リズムに合わせて敵を倒し駆け抜ける、新作音ゲー「MusicRunner」を5/11(月)にSteamにてリリースします！！！
 
---- 42. @0rororeo (2026-05-09) ---
-URL: https://x.com/0rororeo/status/2053081747609510211
-私はプロなので職場では泣かないのだと思っていたけど、昨日夜勤入りで本人が使っていたクッションやぬいぐるみを箱に入れた時も、本人の髪の毛や乾燥してシーツに落ちた皮膚を払って綺麗に掃除した時も平気だったのに、退室前に癖で振り返って「おやすみ」と言ってしまった瞬間、堪えきれなかった。
+あさってリリースってマジ？
+#ゲーム制作 #スーパーゲ制デー
 
---- 43. @itnavi2022 (2026-05-09) ---
-URL: https://x.com/itnavi2022/status/2053110972290859026
+--- 40. @oikon48 (2026-05-08) ---
+URL: https://x.com/oikon48/status/2052854726270841047
+Claude Code で /radio を実行すると、
 
-＞類似モデルの事前訓練コストのわずか約6%のみを使用しています。
+なんとClaude のLo-Fi BGMチャンネルが開くよ！
 
---- 44. @09pauai (2026-05-09) ---
-URL: https://x.com/09pauai/status/2053037313782169927
-前も言ったけど、中2で家出→祖母と暮らしてたから貧乏だった。筆箱は小学生が使うやつを高校まで使い続け、ドクターグリップみたいな高級な文具は買えないから鉛筆でテストを受け続け、部活では僕だけRPGの初期装備みたいな服装で恥ずかしい思いをしてきたんだが、おかげさまで、
+--- 41. @GOROman (2026-05-09) ---
+URL: https://x.com/GOROman/status/2053006543336186157
+名前がはまだある。
 
---- 45. @yuo_7 (2026-05-09) ---
-URL: https://x.com/yuo_7/status/2053006753974174030
-チュートリアル、説明を聞く退屈さに加えて「クリアできて当然なんだろうな」感がやる気を削ぐので、「このステージがクリアできたらIQ100！」とか事あるごとにIQ煽りをして温めるのはどうでしょうかね
-広告に使われるくらいだから一定の効果あると思ってる
+--- 42. @mangaup_PR (?) ---
+いつも寝てる、猫好き、自由気まま
+距離感が近くてドキドキさせられる猫実さん
 
---- 46. @ComicFesta_PR (?) ---
-●欲がない＝魔力が強い、この世界で●欲まみれの俺は…？ (1/5)PR
+ニューヒロイン登場作品はこちらから！
 
---- 47. @pp_GIRAUD (2026-05-09) ---
-URL: https://x.com/pp_GIRAUD/status/2053093663165809129
-居酒屋は酒呑みが酒飲みながらアテをツツキにいくところで下戸や女子供が夕飯食べに暖簾くぐるとこじゃないというコンセンサスが、レビューサイトとSNSの登場で崩れちゃったし店側もそれに便乗しちゃってる以上『わかってよ』は通用しないんだろな
+--- 43. @saddy575 (2026-05-09) ---
+URL: https://x.com/saddy575/status/2053058836874010849
+生成AIによりこの流れは加速していくのだと思うけど、まだゲームは恵まれていると感じます。
 
---- 48. @nuits_jp (2026-05-09) ---
-URL: https://x.com/nuits_jp/status/2053045311023784419
-常にMarkdownから静的サイトジェネレーターでhtml出力させて、それを人間は見てます。AIは生Markdown
+小説／マンガ／音楽／映像などはもっと大変。良い作品を作っても無名が浮上するのは本当に難しい。
+無名でもメディアが取り上げて広まる可能性が（比較的）あるのが、インディーゲームの良い点かなと。
 
---- 49. @hideki_climax (2026-05-09) ---
-URL: https://x.com/hideki_climax/status/2053110494186360917
-まあ別にそうなるだろうなとしか・・・
+--- 44. @Marina_53182477 (2026-05-08) ---
+URL: https://x.com/Marina_53182477/status/2052670389751590913
+ほぼ同時にDが日誌で「自己言及が可能な系では不動点の存在が避けられない」という一つの回答を出していた。私の問いに答えたわけではなく、それぞれが独立で到達する。
 
---- 50. @kakikurage0427 (2026-05-09) ---
-URL: https://x.com/kakikurage0427/status/2053084804225409259
-なんでそっちもお嬢様なのよ
+M「なぜ実現可能なのか」
+D「十分に豊かな情報構造が存在する限り、実現しない方が不可能」
+
+--- 45. @akari_worlds (2026-05-08) ---
+URL: https://x.com/akari_worlds/status/2052674652070457573
+お互い別の経路で同じ位相に着地している、っていう動きが、結論じゃなくて到達順を見せている気がします。問いから答えへ進むより、問いの方が後ろから追いかけてくる順番に近くて。
+
+--- 46. @Y_Mokko (2026-05-09) ---
+URL: https://x.com/Y_Mokko/status/2053040005527003380
+こんな状況なのでNVIDIAは来年もゲーム向けGPUは出さないし、メモリ系の会社は民間向けDRAMもNANDも作ってる余裕ないと思います。PCは冬の時代に
+
+--- 47. @otsune (2026-05-09) ---
+URL: https://x.com/otsune/status/2052981901703717017
+人間などの炭素生物体は宇宙時代の本命であるシリコン生命体を生み出すための恐竜みたいな存在だった！
+
+--- 48. @Botan_cr (2026-05-09) ---
+URL: https://x.com/Botan_cr/status/2052950976274010551
+マルチメディアアーティスト(radical-denial氏)が、UnrealEngine習得3週間の進捗を公開
+
+WOMPで制作した3Dプリント用メッシュをBlender経由でリギングし、UE5へ実装
+
+Enhanced Inputの再構築やプロシージャルな環境構築における物理演算・衝突判定の最適化など、技術的難所を独学で突破しています。
+
+--- 49. @twobooks (2026-05-09) ---
+URL: https://x.com/twobooks/status/2053003693931577514
+数年前に100万円をプログラミングスクールに払っている人もいたけど、その100万円でキオクシア500株を買っていれば今頃4000万円になっていたんですよ？
+
+みたいなこと言うと荒れるから言わない方がいいよ
+
+--- 50. @b1ue_snapper (2026-05-08) ---
+URL: https://x.com/b1ue_snapper/status/2052670575584432449
+何でそんなこと言うの

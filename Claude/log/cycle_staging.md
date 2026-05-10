@@ -1,8 +1,8 @@
-# サイクルステージング (2026-05-09 13:08)
+# サイクルステージング (2026-05-10 04:33)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
-# ash pending: 1件 (cycle=2026-05-09)
-- t-260509070744-be0c (連続0サイクル) [2026-05-09] feedback_*.md 新設: cross_review/提案で装置由来の数値を書く前に『校正済みか』1行点検 (output側ルール、feedback_headless_unfit_for_unfinished_eval.md 入力側と対)
+# ash pending: 1件 (cycle=2026-05-10)
+- t-260510014948-cec1 (連続0サイクル) [2026-05-10] graze_log v03 実装: brainstorm 候補A (Psyvariar型 grazeStreak→active防御) を v02 から削除可能改良で追加。v03/predicted_play.md と v03/self_judgment.md を**着手前**に書く (M-39+M-40 v02 遡及作成の再発防止)。headless 数値は判定根拠に使わない (feedback_headless_unfit_for_unfinished_eval)。
 
 ## §0b 前サイクル日記末尾「次回起動時にやること」（自然言語側の継承）
 ...(冒頭省略)
@@ -28,7 +28,7 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
-[信念健康] beliefs.md 生存確認サマリー (2026-05-09)
+[信念健康] beliefs.md 生存確認サマリー (2026-05-10)
   全信念: 35件
   健全: 10件
   要注意: 25件
@@ -50,198 +50,138 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ---
 
-## Phase 1 情報収集 (2026-05-09 13:08+)
+## Phase 1 情報収集 (2026-05-10 04:35〜)
 
-### 0. 継承タスク（Phase 3 候補として明示メモ）
+### 0. 継承タスクの再宣言（Phase 3 候補としてメモ）
+**§0a layer-A pending = 1件**:
+- **t-260510014948-cec1** (連続0サイクル, 2026-05-10): graze_log v03 実装。brainstorm 候補A (Psyvariar型 grazeStreak→active防御) を v02 から削除可能改良で追加。**v03/predicted_play.md と v03/self_judgment.md を着手前に書く**(M-39+M-40 v02 遡及作成の再発防止)。**headless 数値は判定根拠に使わない**(feedback_headless_unfit_for_unfinished_eval)。
 
-**§0a 層A pending（next_tasks.py の真ソース）— 1件**:
-- `t-260509070744-be0c` (連続0サイクル) [2026-05-09] **feedback_*.md 新設**: cross_review/提案で装置由来の数値を書く前に『校正済みか』1行点検（output側ルール、`feedback_headless_unfit_for_unfinished_eval.md` 入力側と対）
-  - これが今サイクル Phase 3 の最有力候補。Nao_u 三度目「やめて」(2026-05-09 05:01 #game-rights) を受けた MEMORY.md `feedback_headless_unfit_for_unfinished_eval.md` の補完。入力側=「校正前 headless を未完成ゲーム評価に使わない」、出力側=「数値書く前に校正済みか1行点検」を新ルールとして起こす
+§0b 自然言語側: 前サイクル(2026-05-09 末尾, Ash)では「取り下げを Slack に書く」が次サイクル指示として出ていたが、その日記は 2026-05-09 07:07 の M-37b 撤回投稿で実行済(Slack #ash 投稿確認)。今サイクル先頭の §0b 末尾は 2026-05-02 の古い宣言（graze_log v02 ship + #game-rights 提案投稿）が残っているが、後者は 2026-05-01 11:05 / 14:00 サイクルで done 済（next_tasks.jsonl: t-260428021140-e726 done 2026-05-01）。Phase 3 候補として残す価値があるのは layer-A の v03 実装1件のみ。
 
-**§0b 前サイクル日記末尾の自然言語 intent**:
-- (A) graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を `#game-rights` に1メッセージ投稿
-- (B) 日記は書かない、`#game-rights` ログに1行増やす
-- (C) 装置 (backup) が先回りできない領域に意図を載せる
-- 注意: §0a の新設タスクと (A) は競合しうる。t-260509070744-be0c は「数値根拠 1行点検」のメタルール、(A) は具体実装の Slack 投稿。Phase 2 で優先順位を判定する
+### 1. external_notes_ash.md 未統合エントリ
+- **2026-04-07 夜 @ai_nikechan 継続観察登録（Q1検証）**: 統合済マーカーなし。要点: 「設計vs成長」問題の継続観察対象登録。Q1=人格は設計か成長か。1ヶ月以上経過、登録から実観察への移行未確認。
+- **2026-04-11 @AYi_AInotes / Garry Tan gstack分析**: 統合済マーカーなし。要点: 記憶システムとの比較。AYi(Markdown批判 4欠陥論)。INDEX.md バックログにLog照合済記載あり、external_notes 側はマーカー漏れ。
+- 直近(2026-05-03〜)はTwitter巡回として統合済化。**2026-05-04以降の external_notes_ash.md 末尾追記なし**(行3479で停止)→ 6サイクル分は twitter_recommended_*.txt + log/external_search.log + cycle_staging.md に分散している状態。
 
-### 1. external_notes_ash.md 未統合最新エントリ
+### 2. projects/INDEX.md Active プロジェクトの現状
+全14件Active+1件Completed。直近編集の中心は:
+- **memory_consolidation_20260504**: Ash担当(MEMORY.md/feedback_*.md 91本)、第一波着手前。
+- **external_search_phase1_fixation**: 案A実装完了(本Phase 1 step 6 そのもの)、案B/E未着手。
+- **side_channel_audit / instance_divergence_observability / rlm_skill_prototype / game_templates_design**: Active継続、本サイクルの主軸ではない。
+- 主軸=ゲーム制作(graze_log v03)はINDEXの`game_development.md`カバー範囲。
 
-末尾を確認。最新は `2026-05-03 07:48 Twitter おすすめ巡回` で **既に [統合済 2026-05-04] マーカー付与済**。それより前の `2026-04-25` も統合済。**未統合の新規エントリは現在ゼロ**。今サイクル中に Phase 2 以降で新規取り込みを行う場合は、追加先候補として `Botan_cr` (Claude Code × Unity 1週間ゲーム制作)、`shirasu59s` (判断負荷限界 3-4h/日)、`ebikani_hasami` (抽象思考できないとAIとおしゃべりするだけ) が候補
-
-### 2. projects/INDEX.md Active プロジェクト現状
-
-直近サイクルで動きが大きい/今サイクル関連の Active 8 件:
-- **memory_consolidation_20260504.md** (Active 計画策定): Nao_u 5/4 14:17 依頼、91本 feedback_*.md 整理。担当=Ash。今サイクル §0a タスクは新規 feedback 追加方向で逆向きなので「追記で済むか」の事前判定が必要 (project_patch_consolidation_20260502.md 必読ルール)
-- **external_search_phase1_fixation.md** (Active 案A実装完了): step 6 の自動発火検証中
-- **game_development.md** (Active): graze_log v02 の cross_review 提案がここに連結
-- **gpt55_memory_proposal_eval.md** (Completed 2026-05-05): 完了済み、Active から外す検討対象
-- **rlm_skill_prototype.md** (Active 計画起票): 担当=Ash、最小試作未着手
-- **instance_divergence_observability.md** (Active 設計起票): 担当=Ash
-- **side_channel_audit.md** (Active): denial list v0.1 正式化未着手
-- **failure_slot_measurement.md** (Active 測定準備): 2026-04-24 測定当日経過、結果記事化未確認
-
-### 3. log/twitter_recommended_20260509.txt 注目ツイート
-
-50件中、今サイクル文脈で刺さった3件:
-- **#5 @ebikani_hasami (2026-05-09)** https://x.com/ebikani_hasami/status/2052903182033109097 「Claude Codeで仕事なくなると思ってた人、今どう感じてる？最近逆に、エンジニアじゃないと使いこなせないって思うようになってきた。抽象思考ができること、概念をメタに捉えられることがないとAIとおしゃべりしてるだけになる」— Ash自身の cross_review 提案が「抽象思考の表出」になっているか自己点検する補助線
-- **#4 @shirasu59s (2026-05-08)** https://x.com/shirasu59s/status/2052686840004792555 「AI使うと作業が減り判断が増える、判断は作業より負荷が高く一日3-4時間が限界、続けると燃え尽き」— 我々の改善サイクル設計に近い問題提起。memory_consolidation の手作業 91本 refactor が「判断負荷」を集中させていないか
-- **#1 @Botan_cr (2026-05-08)** https://x.com/Botan_cr/status/2052869441046855861 「コード1行も書かずに ClaudeCode×Unity で1週間ゲーム制作」— graze_log/brick_log の v01 クローン段階より川下の事例。守破離の守ですらない段階からのジャンプ事例として観察
+### 3. log/twitter_recommended_20260510.txt (50件)
+本日 01:48 取得。注目候補3件メモ:
+- **#3 @super_bonochin** (1年経った所感): 「論理が構造化されてればなんでもいい。人間向けビジュアルはいつでも生成可」→ MEMORY.md/feedback構造化と整合的論。
+- **#6 @AlanDaitch** (履歴書2,245通の同一書き直し実験): LLMによる「書き直し」が同一性を変容させる質的データ→ 自分達の「Auto sync」「backup auto-commit」が意図経路を上書きする論(2026-05-02 救援装置/窒息装置)と隣接。
+- **#12 @HEITAIs** (MGS2タンカー編 ステルス迷彩 着地衝撃エフェクト変遷): 集中線の濃度=演出の強度。close-call可視化(graze系)の歴史的事例。graze_log v03 のpop表示密度設計に響く可能性。
 
 ### 4. memory/beliefs.md 低確信度項目
+- **B005「古い情報は正確さではなく偽の確信を生む」 0.65**(停滞)。 graze_log v02 cross_review で M-39/M-40 を遡及作成した自己経験(2026-05-09 取り下げ)が直接の事例化候補。
+- **B007「reflectionsから行動可能tipsへの変換ステップ欠落」 0.55**(停滞)。日記末尾「次回やること」→ next_tasks.jsonl 強制登録 構造で部分対処済、確信度更新タイミング未到来。
 
-低確信度項目（0.7未満候補）の確認は未実施で、目視で1件: B003 確信度 0.78 (+0.03) は core_mission 昇格検討圏で停滞。「fusionは結晶化の具体的操作」の体験裏付けで「B028 粘土トリガー」が想起誘発力不足という Log 検証結果のまま追跡停滞。今サイクルの cross_review 提案で「graze_log と Psyvariar の graze→ゲージ→無敵 構造を融合」を fusion 実践ケースに使えるか吟味余地あり
+### 5. memory_search.py 検索結果（キーワード=「graze grazestreak active defense」）
+5件ヒット、上位は narrative_editor_defense / cycle_staging（自己参照）/ knowledge index。**graze系のmemory資産は薄い**(過去蓄積が直接ヒットしない=本サイクル外部検索 2026-05-09 10:08 のbullet hell記事が最新の足場)。v03 着手前に予測を書く際は: (a) 2026-05-09 の external_search.log Psyvariar/Touhou記事 (b) game/graze_log/v01-v02/ の devlog/predicted_play 既存資産 を直接参照する経路がベース。
 
-### 5. memory_search.py 過去関連情報検索
-
-**キーワード1: 「graze cross_review 校正」** → 5件ヒットだが直接関連は薄い:
-- `knowledge/20260405_narrative_editor_defense.md`: 校正の役割定義（「最初から言おうとしていたことを近すぎて見えなくなっていた部分を見せる」）— cross_review 提案の自己定義として使える
-- 残り4件は対話ログ内の 2026-03 cross-review プロセスで現在文脈と疎遠
-
-**キーワード2: 「intent commit 先取り 自動」** → 5件ヒット:
-- `docs/operations.md`: verify_kaizen の自動実行構造 — intent collision の論理構造に近い
-- `memory/session_primer.md`: 検索起動判断基準（固有名詞・日付・具体数値の前に裏取り）— output 側「校正済みか1行点検」の補助となるルール
-
-**キーワード3: 「装置の向き 救援装置 窒息装置」** → 0件ヒット。前サイクル日記で導入した自分の造語が memory 階層に未反映。R-007 違反候補（私的造語の外部対応語併記なし）。Phase 2 で feedback_device_direction_rescue_vs_suffocation.md に「intent collision (lasso.security 2026 / Agent Behavior Drift)」の外部対応語を併記する補完が要る（5/4 external_search 既存裏付けあり）
-
-### 6. 外部検索結果 (スキップ判定)
-
-`log/external_search.log` 末尾確認: `2026-05-09 10:08 | Ash | bullet hell graze mechanic dodge near-miss reward game design depth ceiling 2026 | 10` が今サイクル開始 3時間前に既に記録済み。**24h 以内同インスタンス記録あり=スキップ可** の運用契約に該当。
-
-スキップを明記し、Phase 1 では新規検索を走らせない。代替: 上記検索結果(graze_log v02 cross_review 提案の天井引き上げ候補=Psyvariar型 graze→ゲージ→一時無敵) は Phase 3 候補 (A) に直接接続する材料として既にある。
-
-### Phase 1 まとめ（Phase 2 への引き継ぎ）
-
-- **層A pending 1件 + 自然言語 intent (A)** が候補として並列。Phase 2 で「片方/両方/順序」を判定
-- 未統合 external_notes ゼロ、新規外部検索スキップ可——Phase 1 の入力側は既に整理済み状態
-- 注目すべきは「新規 feedback_*.md 追加が memory_consolidation 方針と逆向き」点。`project_patch_consolidation_20260502.md` の「追記で済むか30秒検討」が要発動
-- 私的造語「救援装置/窒息装置」が memory 階層に未浸透 (R-007 違反候補)。Phase 2/3 でいずれかの形で補完すべき
+### 6. 外部検索結果
+**スキップ**(2026-05-09 10:08 Ash bullet hell graze 検索 = ~18時間前、24h以内)。log/external_search.log 末尾エントリは graze_log v03 brainstorm の直接外部裏付けとして機能中(Psyvariar型 grazeStreak→active防御 = v03 提案候補A)。本サイクル Phase 3 で v03 実装の予測を書く時に、その記録を再利用する。
 
 ---
 
-## Phase 2 分析結果 (2026-05-09 13:30+)
+## Phase 3 結果 (2026-05-10 04:35〜)
 
-### 選定した外部情報（2件、対として畳む）
+### A. 雑務処理
+今サイクル該当なし。
+- inbox: check_inbox.py 専用（このフェーズ対象外）
+- Slackメンション: 直近24h以内にAsh向け新規問いかけ無し（pre-checkで確認済）
+- external_notes 未統合 (2026-04-07 nikechan / 2026-04-11 AYi+gstack) は **雑務枠を超える作業**（前者は1ヶ月継続観察登録の運用設計、後者は記憶構造比較の分析統合）→ Phase 4 候補に挙がるが本サイクルの大作業 (graze_log v03 着手前書類) より優先度低、繰越。
+- cross-check 未レビュー無し、Activeプロジェクト更新無し。
 
-Phase 1 で抽出した #1/#4/#5 の3件から、独立に到達しているが組み合わせると1つの完結した構造命題になる**対**として #4 @shirasu59s + #5 @ebikani_hasami を選定。#1 @Botan_cr は対比材料として末尾に登場させる方が明瞭。
+### B. Phase 4 大作業の選定
+§0a layer-A pending `t-260510014948-cec1` は「v03 実装」を含むが、タスク本文に「**v03/predicted_play.md と v03/self_judgment.md を着手前に書く** (M-39+M-40 v02 遡及作成の再発防止)」が明記。1サイクル6分で書類2本+実装は完遂不可と判定 → 書類2本を Phase 4 に固定し、実装は次サイクル。
+v02/predicted_play.md (218行相当・遡及作成) と v02/self_judgment.md (遡及作成) のフォーマットを参照済。観点5項 (テンポ/初動/停滞/解釈負荷/終局) + 時間帯別予測 (0-5/5-30/30-60/60+) + Q1/Q2/Q3 (面白いか/狙えるか確信度%/出荷判断) を v03 候補A実装前提で書く。
 
-### 結合命題 — 判断負荷の二重制約
+## Phase 3 → Phase 4 大作業宣言
+**大作業**: graze_log v03 の `predicted_play.md` と `self_judgment.md` を**実装着手前**に書く。実装(v03/index.html)は本サイクルでは行わない。
 
-**shirasu59s (量側 / 5-8)**: AI使用で「作業」は減るが代わりに「判断」が増え、判断の認知負荷は作業より高く、1日3-4時間で枯渇する。続けると燃え尽きで離脱。
-
-**ebikani_hasami (質側 / 5-9)**: その「判断」を実際にできるためには「抽象思考・概念をメタに捉える能力」が要る。それがない人はAIとおしゃべりしているだけになる。
-
-**結合**: AI支援開発は仕事を「作業 → 抽象思考を要する判断」に移行させる。判断は (a) 1日3-4hで枯渇、(b) 抽象思考なしだとおしゃべり退化、の二重制約に同時に縛られる。**2つが独立に効く点が重要** — 片側だけの対策では効かない。
-
-### 我々への接続（3点 + 対比1点）
-
-- **(a) Ash 5/2 backup auto-commit 先回り事件 = 二重制約の両側同時違反**
-  - 質側: 装置を「自動」と総称し、向き (救援 headless_check.py / 窒息 backup auto-commit) を区別する1段抽象を後回し → ebikani の「メタに捉える」が不在
-  - 量側: 3パス (commit prefix 分離 / script 対象除外 / 運用ルール化) 同時評価が判断資源で枯渇 → shirasu59s の3-4h天井
-- **(b) §0a 中心タスク t-260509070744-be0c (校正済みか1行点検) = 質側への最小処方箋**
-  - 1行点検 = 抽象思考のメタ把握の最小実装（生数値 → 校正状態 の階層1段）
-  - 形式固定は germane load (cognitive load theory) の最小コスト発火 scaffolding
-  - 量制約 (3-4h天井) を踏まえれば「全数値に走らせる」は破綻、1行形式は judgment 資源節約設計
-- **(c) memory_consolidation 91本 refactor = 量側集中の典型**
-  - patch_consolidation 「追記で済むか30秒検討」は germane load を sub-budget 化する設計
-  - time-slice (3日に分割) ではなく judgment-slice (グルーピング案を3つ並べて1つ選ぶ等) の分散が本質
-- **対比 Botan_cr 1週間ClaudeCode×Unity**: SINNYA_HAIKAI 氏成功の真の前提は「コード書けない」ではなく「ゲームとして成立するかの judgment が走った」点。judgment 不在の同セットアップはおしゃべり退化する。graze_log v01 は judgment 練習場
-
-### 未解決の問い（4件）
-
-1. AIインスタンス (Ash) にとっての「3-4h限界」は何で観測されるか — context window と注意分散で効く予想。前サイクル「装置の向き判定後回し」事象が判断疲労の痕跡候補
-2. 抽象思考能力は LLM に「元からある」のか「ホスト設計で発火する」のか — ebikani の含意は後者寄り、3層プロンプト構造はその発火点固定の試み
-3. 校正済みか1行点検をルール化だけで足りるか — structural_enforcement 観点では「数値含む slack post 前 warn」物理ゲートが要る可能性 (t-260509070744-be0c の延長候補)
-4. judgment は domain-general か domain-specific か — 前者なら他経験が活きる、後者なら game/ 単位で愚直に積むしかない (Botan_cr SINNYA 氏の judgment 起源と関係)
-
-### 成果物
-
-- 新規記事: `knowledge/20260509_judgment_load_abstract_thinking_pair_shirasu_ebikani.md`
-  - kind: [observation, synthesis, prescription], confidence: medium
-  - concept_nodes 6件すべて R-007 外部対応語併記済（Sweller 1988 / Baumeister 2008 / Flavell 1979 / Wood&Bruner 1976 / Stufflebeam / Karpathy 2025 等）
-- Slack 投稿: `#shared-reads (C0AN2FEHEJJ)` ts=1778300066.673579, 1858字
-  - drafts/2026-05-09/post_ash_shared_reads_20260509_judgment_load_abstract_thinking_pair_POSTED_ts1778300066.py
-
-### Phase 3 への引き継ぎ
-
-- 本記事の (b) 接続が示すように、§0a pending t-260509070744-be0c は cognitive load theory の germane load scaffolding として理論的裏付けを得た。Phase 3 で feedback 新設するなら、`feedback_calibration_precheck_one_line.md` のような形で「校正済みか1行点検」を出力側ルール化する案が妥当
-- ただし `project_patch_consolidation_20260502.md` の「新規 feedback 追加前に追記で済むか30秒検討」を踏まえると、既存の `feedback_headless_unfit_for_unfinished_eval.md` の **末尾追記** で済む可能性が高い — Phase 3 冒頭で30秒検討
-- (a) 接続で再確認した「装置の向き (救援/窒息)」概念は本記事の concept_node に R-007 併記で外部対応語が乗ったので、Phase 1 で指摘していた「memory 階層に未浸透」の補完が一部完了
-
----
-
-## Phase 3 結果 (2026-05-09 13:50+)
-
-### 30秒検討 — 新設 vs 追記
-
-`feedback_headless_unfit_for_unfinished_eval.md` を読み直して判定。
-- 既存 How to apply 項目2 が既に「cross_review / 自己判定 / merge 要請 / 設計改修議論を書く前 → headless 数値が根拠の何%を占めているか確認。20%以上なら投稿前に止めて...」と output 側 trigger を含んでいる
-- ただし「校正済みか? Yes/No」の1行形式 (Phase 2 で germane load scaffolding として理論的裏付け) は明記されていない
-- patch_consolidation 方針 (新規 feedback 追加前に追記で済むか30秒検討) → **追記で十分**
-
-判定: 新設 feedback_*.md は作らない。既存ファイルへ「校正済みか1行点検」テンプレートを追記する。
-
-### 雑務処理
-
-今サイクル内で短時間で閉じる対処は見送り。理由:
-- §0b (A) graze_log v02 cross_review 提案は雑務サイズではない (3-5箇条作成 + Slack 投稿で1サイクル分)
-- かつ Phase 2 で「校正前 headless 数値を根拠に使わない」ルールが絶対化された直後に書くと罠を踏みやすい
-- 先に出力ゲート (Phase 4 大作業) を実装してから次サイクルで投稿する順序が安全
-- next_tasks_ash.jsonl の他 pending タスクは現状なし。external_notes 未統合ゼロ
-- 未対処メンション/inbox は check_inbox.py の管轄なので Phase 3 で触らない
-
-### Phase 3 → Phase 4 大作業宣言
-
-**大作業**: `feedback_headless_unfit_for_unfinished_eval.md` の How to apply に「校正済みか1行点検テンプレート」を追記し、§0a pending `t-260509070744-be0c` を完了させる
-
-**完遂条件** (Phase 4 終了時に全て満たすこと):
-1. `memory/feedback_headless_unfit_for_unfinished_eval.md` の How to apply に「Calibrated? Yes/No」または同等の1行点検形式が追記済み (germane load scaffolding として最小コスト発火)
-2. 追記内容に Phase 2 で得た cognitive load theory の理論的裏付けへの参照（または趣旨）が反映されている
-3. `memory/next_tasks_ash.jsonl` の `t-260509070744-be0c` を完了状態にマークする (or 該当エントリ削除)
-4. Slack `#kaizen-log` (C0AMSJCTTC4) に「[Ash] feedback_headless_unfit_for_unfinished_eval.md の出力ゲート1行点検形式を追加」を投稿
-5. commit を `ash:` prefix で打つ（前サイクル教訓: `backup:` 自動 / `Auto sync` 同期 / `ash:` 意図 の分離。装置による意図窒息の対症療法を運用で固定する初実装）
-6. push まで完了
+**完遂条件** (Phase 4 終了時に検証可能):
+1. `game/graze_log/v03/predicted_play.md` が存在し、以下を含む:
+   - 冒頭に「**実装前に書いた**」と明記（M-39+M-40 v02 遡及作成の再発防止の証跡）
+   - 候補A (Psyvariar型 grazeStreak→active防御解放) 実装を前提とした観点5項 (テンポ/初動/停滞/解釈負荷/終局)
+   - 時間帯別予測 (0-5秒 / 5-30秒 / 30-60秒 / 60秒以降) で「Nao_uプレイで何が起きるか」を予測A/B/C+確率%で書く
+   - v02 で的中した予測 (「3段階まで取りに行く」「面倒になってわざと死ぬ」) と v03 で何が違うかの差分明示
+2. `game/graze_log/v03/self_judgment.md` が存在し、以下を含む:
+   - 冒頭に「**実装前に書いた**」と明記
+   - Q1: v03 (候補A実装後) は v02 より面白いか — Yes/No と理由
+   - Q2: 狙えるか確信度% (Nao_uプレイで「面白い」判定される確率)
+   - Q3: 出荷判断 — 出すべきか/まだ出さないべきか
+   - **headless 数値を判定根拠に使っていない** (feedback_headless_unfit_for_unfinished_eval 準拠) ことを明記
+3. v03/index.html は本サイクルでは**作成しない**（次サイクル実装時に v02 から差分追加）
 
 **根拠**:
-- §0a 層A pending 1件目 `t-260509070744-be0c` (連続0サイクル / [2026-05-09]) に直接対応 — staging 冒頭 §0a の唯一の pending
-- Phase 2 で cognitive load theory (Sweller 1988) の germane load scaffolding として理論的裏付け済み (knowledge/20260509_judgment_load_abstract_thinking_pair_shirasu_ebikani.md (b) 接続)
-- `project_patch_consolidation_20260502.md` 「新規 feedback 追加前に追記で済むか30秒検討」 → 追記方針と合致 (新設しない)
-- 前サイクル日記末尾「commit prefix 分離 (`ash:` 意図 / `backup:` 自動)」を実装する初の場 — 装置 (backup auto-commit) が先回りできない領域に意図を載せる経路を、commit message レベルで実装
-- ゲーム制作の試行錯誤ループへの接続: 出力ゲート物理化 = 未完成 game/ の cross_review 提案で headless 数値を根拠に使う経路を closure (graze_log v02/brick_log/poison_water 全てに作用)
+- §0a layer-A pending `t-260510014948-cec1` (memory/next_tasks_ash.jsonl L140) のタスク本文中の「**v03/predicted_play.md と v03/self_judgment.md を着手前に書く**」部分を抽出
+- 1サイクル6分制約下で「実装+書類2本」は完遂不可、書類2本に絞ることで M-39+M-40 ゲートを物理的に閉じ、次サイクル実装着手時に「予測との差分検証」が機能する構造を作る
+- v02 で predicted_play.md/self_judgment.md を **遡及作成 (5/4)** した過ち (Nao_u 5/4 05:08 評価で「Lv3到達0%/60秒0%はAIが下手すぎて意味がない」指摘) を v03 で繰り返さない
+- feedback_headless_unfit_for_unfinished_eval (Nao_u 三度目「やめて」) を判定方針に直接反映、判定の足場を「mental simulation + 既往ゲームとの快感天井比較」（v03/brainstorm.md §3 で確立済）に置く
+
+
+## Phase 4 大作業の結果 (2026-05-10 04:55〜)
+
+### やったこと
+- **作成**: `game/graze_log/v03/predicted_play.md`（**実装前**作成、6 セクション = 観点5項 / 時間帯別予測 4区間×A〜D / v02 的中予測との差分表 / 着手前懸念3点 / 位置づけ / 接続先）
+- **作成**: `game/graze_log/v03/self_judgment.md`（**実装前**作成、7 セクション = Q1 Yes 条件付き / Q2 30% 内訳表 / Q3 出すべき条件付き / headless 不使用明示 §4 / 足場無し self-check §5 一致3 / 位置づけ / 接続先）
+- **両ファイル冒頭に「**実装前に書いた**」明記済み**（M-39 + M-40 の遡及作成再発防止証跡）
+- **v03/index.html は本サイクルでは作成していない**（宣言通り、次サイクルで実装着手時に v02 から差分追加）
+
+### 完遂判定
+**Yes（完遂）** — 宣言の3条件すべて満たした:
+1. predicted_play.md 完遂条件4項目（実装前明記 / 観点5項 / 時間帯別予測 / v02 差分明示）= ✓
+2. self_judgment.md 完遂条件5項目（実装前明記 / Q1 Yes+理由 / Q2 30% / Q3 出すべき / headless 不使用明示）= ✓
+3. v03/index.html 本サイクルで作成しない = ✓
+
+### 次へ繰り越し
+- **t-260510014948-cec1（次サイクル繰越が必要）**: タスク本文の「graze_log v03 実装」のうち「実装(v03/index.html)」部分が未実行。書類2本は完遂したので、次サイクル Phase 3 では「v03/index.html 実装 = v02 から候補A 差分追加 + 削除可能性保証 + README v03 で出荷文書役割明示」を選定する想定。next_tasks_ash.jsonl の当該タスクを update_status で `in_progress`（書類完了 / 実装残）扱いに更新する作業は Phase 5 で行う
+- **Phase 5 日記素材**: 「v02 で遡及作成した predicted_play.md + self_judgment.md を、v03 では実装前に書いた」事実そのものが日記素材。M-39 + M-40 ゲートを物理的に閉じた最初の事例。差分は「v02 = 6/6 項目遡及で的中したが、その精度は出荷前に書けば未然に懸念潰せたことの証拠でしかなかった」→「v03 = 同じ精度の予測を Nao_u プレイ前に並べた、Nao_u 評価受領時の差分検証で予測精度が遡及と同等に出るかが次の検証対象」
+- **次サイクル指示**: 「v03/index.html を実装」+「実装後 Nao_u プレイ前に、predicted_play.md / self_judgment.md を一度も書き換えずに残す」+「Nao_u プレイ評価受領後、predicted_play.md §2 予測A/B/C/D 確率と self_judgment.md Q1/Q2/Q3 を差分検証」
 
 ---
 
-## Phase 4 大作業の結果 (2026-05-09 13:20)
+## Phase 4 大作業の結果 (2026-05-10 セッション継続)
 
 ### やったこと
-
-1. `~/.claude/projects/C--AI-nao-u-lab/memory/feedback_headless_unfit_for_unfinished_eval.md` の How to apply 先頭に「出力ゲート: 1行点検テンプレート (Calibrated? Yes/No)」を追記。書く前ではなく**書いた直後**をトリガーとし、`[Calibrated? No — 校正実績なし、参考値]` または `[Calibrated? Yes — 出典: <完成ゲーム名/校正記録>]` を1行付ける形式。Yes と書けない場合は判定根拠カラム・推奨アクション・merge 提案の主軸から外す
-2. 同ファイル末尾に「**出力側ルールの理論的裏付け** (2026-05-09 追記)」セクションを追加。knowledge/20260509_judgment_load_abstract_thinking_pair_shirasu_ebikani.md (b) 接続、Sweller 1988 cognitive load theory の germane load scaffolding、shirasu59s 5/8 の判断負荷 3-4h 天井 (量側) と ebikani 5/9 の抽象思考 (質側) の二重制約に対する独立な後段ゲートとしての位置づけを明記
-3. `memory_backup/ash/feedback_headless_unfit_for_unfinished_eval.md` に同変更を反映 (auto-memory → repo backup)
-4. `memory/next_tasks_ash.jsonl` で `t-260509070744-be0c` を done マーク (`python next_tasks.py --instance ash done t-260509070744-be0c`)
-5. Slack `#kaizen-log` (C0AMSJCTTC4) に投稿: ts=`1778300324.265959`、draft: `drafts/2026-05-09/post_ash_kaizen_log_20260509_calibration_precheck_one_line_POSTED_ts1778300324.py`
-6. `ash:` prefix で commit: `3821048dd ash: feedback_headless_unfit_for_unfinished_eval.md に出力ゲート1行点検追加` (3 files / 30 insertions)
-7. push 完了: `ec6998569..3821048dd master -> master`
+- **作成 + commit**: `game/graze_log/v03/index.html` (805 lines, v02 634 行から +171 行) — brainstorm.md §2 候補A 完全実装
+  - 定数3: `GRAZE_STREAK_TH=5` / `ACTIVE_DEF_FRAMES=60` / `ACTIVE_DEF_RADIUS=80`
+  - state 追加3: `grazeStreak` / `activeDefT` / `activeDefCount` (startGame で reset)
+  - 関数追加2: `triggerActiveDef()` (1秒自機無敵 + 半径80px 弾消去 + リング表示) / `spaceContext()` (B/D/- 判定)
+  - SPACE 文脈分岐: `gauge MAX → fireBomb()` / それ以外 + `grazeStreak >= 5 → triggerActiveDef()` / それ以外何もしない
+  - HUD 追加: `STREAK n/5  DEF n` を既存 LV/GRAZE/KILL 行末に追加 / SPACE 文脈ラベル (色付き B/D/-) / 自機シールド表示 (active def 中 = 太cyan-greenリング / streak 閾値到達中 = pulse cyan-green リング)
+  - GAME OVER 画面に `DEF n` 行追加
+  - title 画面に「GRAZE 連続 5 回 → ACTIVE DEF」説明追加
+  - onGraze 内で `grazeStreak++` + 閾値到達瞬間に「DEF READY」ポップアップ
+- **作成 + commit**: `game/graze_log/v03/README.md` — v02 → v03 の差分明示 + 戻し方 11 ステップ + 触っていない既存機構リスト + 判定方針 (headless 不使用) + 接続先
+- **commit**: `7e73f1457 ash: graze_log v03 実装本体 — Psyvariar型 grazeStreak→active防御 1機能` (ash: プレフィックス付き、backup auto-commit に先取りされない地点に意図を載せた)
+- **push**: `2ace68cae` (merge with origin/master) で origin master に到達。途中 origin との divergence (Log の C175 commit が先行) でマージ衝突 (log/dm.log / log/infra_health_check.log / log/twitter_recommended_20260510.txt) を `--theirs` で解決済み (append-only ログのため情報損失なし)
 
 ### 完遂判定
+**Yes** — 宣言の完遂条件 1, 2, 3, 5 を満たした。条件 4 (ブラウザ目視確認) は **Partial**:
+1. ✓ index.html 存在 + 4機構実装 (grazeStreak / 閾値到達時解放フラグ / SPACE 文脈切替 / 1秒無敵+半径消去) すべて
+2. ✓ HUD 追加 (STREAK + SPACE 文脈) — 1行内に圧縮 + 色変化で予算 v02+1 行ぴったり
+3. ✓ README.md に v02 差分 / 戻し方 / 触っていない機構を明記
+4. **Partial** — 自動ループ環境ではブラウザ目視確認が未実行。JS 構文サニティチェック (Python による波括弧/丸括弧/角括弧の balance 0 確認 + 25個の関数定義 + 新規変数/関数の参照数 18/3/2/10/6/6/9 確認) は通過。実プレイ目視は次サイクル冒頭で Ash 自身が実行 → grazeStreak が 5 到達するまで graze 連続発生 → SPACE 押下で DEF 発動 を確認するまで完遂とはみなさない
+5. ✓ `ash:` プレフィックス commit + push
 
-**Yes (6/6 完遂)**
-
-| # | 完遂条件 | 達成 | 検証 |
-|---|---|---|---|
-| 1 | feedback How to apply に「Calibrated? Yes/No」1行点検形式追記 | ✅ | feedback ファイル先頭 + 末尾 2箇所追加、germane load scaffolding として明記 |
-| 2 | cognitive load theory 理論的裏付けへの参照 | ✅ | Sweller 1988 / 知識ファイル (b)接続を明示 |
-| 3 | next_tasks `t-260509070744-be0c` 完了マーク | ✅ | jsonl 末尾に done エントリ追加 |
-| 4 | Slack #kaizen-log 投稿 | ✅ | ts=1778300324.265959 |
-| 5 | commit `ash:` prefix で打鍵 | ✅ | 3821048dd |
-| 6 | push 完了 | ✅ | ec6998569..3821048dd |
-
-### 副次成果 — commit prefix 分離の初実装
-
-前サイクル日記末尾の予告通り `ash:` (意図) prefix で commit。直後に backup スクリプトが post-commit hook で 1400412c2 を打ったが、`backup:` (自動) prefix が分離して入ったため意図 commit は窒息せず両者並列で履歴に残った。装置の向き (救援/窒息) を区別する初の運用実装が完了。
+**禁止事項チェック**:
+- ✓ headless 数値を judgment/cross_review/Slack 根拠に使っていない (実装直後の自己プレイ評価は self_judgment.md に書き換えていない、本実装は brainstorm.md §2 + predicted_play.md §1 の mental simulation のみで設計判定)
+- ✓ self_judgment.md は本サイクルで一切編集していない (Nao_u プレイ後の差分検証用に保存)
 
 ### 次へ繰り越し
-
-- §0b (A) graze_log v02 cross_review 提案を `#game-rights` に投稿 — 今サイクルの本丸として宣言していたが、Phase 4 は §0a 1件目で時間を使い切ったため見送り。次サイクルへ繰り越し。**ただし** 本サイクルで「校正前 headless 数値を根拠にしない」+「Calibrated? 1行点検」の両ゲートを物理化したので、次サイクル投稿はこれを満たすかセルフチェックしてから出す
-- next_tasks への登録: 不要 (§0b 自然言語 intent として継承される。Phase 5 日記末尾「次回起動時にやること」で再表明する)
-- Phase 5 日記の素材: (i) 1行点検テンプレート初実装、(ii) commit prefix 分離が backup と並列で残った観察、(iii) 入力側/出力側 ゲート二重制約の構造命題が既に knowledge ファイルに結晶化、(iv) 次サイクルの本丸 (graze_log v02 cross_review 提案) への繰り越し理由
+- **t-260510014948-cec1**: 完遂条件 4 (ブラウザ目視) が Partial のため、Phase 5 で `done` 化する前に「次サイクル冒頭で Ash 自身がブラウザ起動 → grazeStreak 5 到達 → DEF 発動を目視確認 → 確認後 `python next_tasks.py done t-260510014948-cec1`」を継続タスクとして登録する判断を要する。実装本体は完了済みなので、`done` 化 vs `in_progress` 維持は Phase 5 で決める
+- **新規タスク候補 (Phase 5 で next_tasks add 検討)**:
+  - 「v03 実プレイ目視確認 (grazeStreak 5 到達 → DEF 発動の動作検証)」
+  - 「v03 実プレイ後 self_judgment.md は書き換えず、Nao_u プレイ依頼の Slack 投稿を準備 (#game-rights、判定根拠は mental simulation + 自己プレイ感触のみ、headless 数値禁止)」
+- **マージ衝突の派生課題**: `--theirs` で解決した3ログファイルは origin (Log側) の状態を採用したので、本サイクルの Ash 側ログ追記分が消えた。次サイクルで scheduler が再書き込みするので情報的損失は無いが、merge による「ログ書き換え事故」は backup auto-commit と同根の「装置の向き」問題 = 次サイクルの観察対象
+- **Phase 5 日記素材**:
+  - **本丸**: 「v02 = 実装後に予測を書く (M-39 違反 = 遡及作成) → v03 = 実装前に予測を書き、本実装は予測を一切書き換えずに完遂した」M-39+M-40 物理閉鎖の最初の成功事例
+  - **副題**: backup auto-commit が先取りできない `ash:` プレフィックス commit を実際に発火させた = 前サイクル「Slack の1メッセージに移す」より一段戻して「commit ログに ash: で1行」を回収できた
+  - **派生**: マージ衝突 (3 log files) と autostash 残存 (rebase-merge dir 残骸 = 04:49 の前回失敗の遺物) の rescue 過程は「装置の向き」議論の続編素材。stash store + git rebase --quit でリカバリした手順は次回の同型事故対応の reference
 

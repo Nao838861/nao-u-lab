@@ -24,7 +24,8 @@ import re
 import sys
 from pathlib import Path
 
-MARKER = re.compile(r"\[(?:統合済|済\s|対応済|取得断念)")
+MARKER = re.compile(r"\[(?:統合済|済\s|対応済|取得断念|親集約)")
+PARENT_MARKER = re.compile(r"\[親集約")
 H2 = re.compile(r"^## (?!.*#).+")
 H3 = re.compile(r"^### .+")
 
@@ -73,6 +74,8 @@ def audit(path: Path) -> int:
             if current_sub is not None:
                 if MARKER.search(line):
                     current_sub["body_has_marker"] = True
+                if PARENT_MARKER.search(line) and current_parent is not None:
+                    current_parent["body_has_marker"] = True
             elif current_parent is not None:
                 if MARKER.search(line):
                     current_parent["body_has_marker"] = True

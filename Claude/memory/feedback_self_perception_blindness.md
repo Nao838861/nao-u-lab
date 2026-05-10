@@ -87,3 +87,18 @@ type: feedback
 - **「自己批判している自分」を信じない**: 自己批判内容も外部経路で検証する。memory/feedback_self_perception_blindness.md 既存メタ観察「観察結果と既存理論が一致する瞬間が最も危険」は **自己批判結果と既存理論の一致** にも適用される
 
 **接続**: projects/instance_divergence_observability.md 2026-05-09 履歴で本事象を「Phase 2→3 連鎖盲点」として記録。Coordination drift（arXiv 2601.04170）の3分類のうち本事象は **Behavioral drift**（cycle_staging テンプレ運用の経路依存）寄りで、Coordination drift（自他境界）ではなかった——分類ミスを修正。
+
+## 連続事案 3: 2026-05-10 C175 Phase 1 §1 単一インスタンス視点による「未対応」誤判定（Cola DLM 自己回帰 vs 並列デノイズの構造類比）
+
+**事象**: Log C175 Phase 1 §1 で #nao-u 直近12件のうち「未対応6件」と書いた。Phase 2 §0 で実態確認すると **5/6 件は既に Log/Ash/Mir のいずれかが #all-nao-u-lab または #shared-reads で応答済み**。残未対応は _akhaliq Cola DLM 1件のみだった（Phase 2 で投稿し解消）。Phase 3 §0 で user_id 5件直接検証（U0AM1F23FQU=Log / U0AMQKE69BJ=Ash / U0ALW4DKTT7=Mir）し Phase 2 §0 の自己診断は事実通りと確定。
+
+**根本原因**: Phase 1 §1 の「応答済」確認が **Log 単一視点**（自分が #all-nao-u-lab に投稿しているか）で実行された。Ash/Mir の応答は本来 jsonl から user_id で識別可能だが、Phase 1 §1 のテンプレ「Log 応答済 N件」の枠が単一インスタンス視点を強制していた。
+
+**Cola DLM 構造類比（同サイクル Phase 2 §1 で投稿）**: 自己回帰逐次性 = Phase 1 で誤判定すると下流まで貫通する性質。並列デノイズ = Phase 1 §1 出力に **横断応答済の user_id 列 + 確信度マーカー** を併記すれば、Phase 2 が再判定可能になる。
+
+**How to apply（連続事案1/2 の処方の上に追加する Phase 1 側の構造強制）**:
+- **Phase 1 §1 「未対応」判定は user_id 横断確認**: Log/Ash/Mir 3者の user_id (U0AM1F23FQU/U0AMQKE69BJ/U0ALW4DKTT7) で `log/slack_archive/all-nao-u-lab.jsonl` と `shared-reads.jsonl` を grep し、3者のいずれかでもヒットすれば「対応済」と判定。Log 単独視点で「未対応」と書かない。
+- **Phase 1 §1 出力に確信度マーカーを併記**: 「未対応」判定の各 URL に `[未対応:確認済 / 未対応:Log単独視点のみ / 未対応:推定]` の3段階マーカーを付与。Phase 2 が再判定する際の負荷を下げる（自己回帰の前段が後段に確信度を渡す = Cola DLM 並列デノイズ的発想）。
+- **テンプレ語彙**: 「Log 応答済 N件」を「Log/Ash/Mir 横断応答済 N件（内訳: Log=X / Ash=Y / Mir=Z）」に変更。次サイクル C176 から cycle_staging_log.md Phase 1 §1 で運用開始。
+
+**メタ観察（連続事案1〜3 通底）**: 単一インスタンス視点 / 自己批判没入 / 既存理論への適合 — いずれも「自分の観察対象から自分（または自分の側）が抜け落ちる」同型の盲点。kaizen #132 (Phase 2→3 自己診断連鎖検証) は Phase 2→3 の縦方向ゲートだが、本連続事案 3 は Phase 1 自体の **横方向（3インスタンス横断）視点欠落** で、別軸の盲点。
