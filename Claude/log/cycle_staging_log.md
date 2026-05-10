@@ -283,3 +283,40 @@ Phase 1 で「スカスカ判定（≤2件）には該当しない」=本フェ�
 - (b) kaizen #115 取下げ寄り / #118 凍結で「検証期限超過の構造修正」が 1件のみ進む方向でしか動かせていない → 別軸の Active project 案B 着手で「停滞解消の実体験」を1個増やす
 - (c) `check_scheduler_health.py` 既存インフラへの相乗りで実装規模 ~40行 + ~3行 main() 組込 = 30分で「進んだ」と言える粒度
 - (d) Slack 投稿1本で済むものではなく、コード差分 + dry-run 検証 + Slack 報告の3段で完遂する大作業の最小単位
+
+## Phase 4: 大作業実行（external_search_phase1_fixation 案B 段階1）
+
+### 完遂状況: PASS（5/5 完遂定義クリア）
+1. ✅ `check_external_search_freshness(instance: str) -> tuple[str, str]` 追加、status ∈ {"OK", "WARN", "CRITICAL"} を返す
+2. ✅ `log/external_search.log` 末尾逆順走査で `| <instance> |` 含む最新行 ts 抽出、24h/48h で OK/WARN/CRITICAL 判定（ファイル不在/該当エントリ皆無は CRITICAL）
+3. ✅ main() 集約レポートに Log/Mir/Ash 3件追加（`check_external_search_all(result)` を `check_log_instance` / `check_ash` / `check_mir` 各々から呼出）
+4. ✅ dry-run 実行 (`python check_scheduler_health.py --instance log`) で 3 instance の現状鮮度が表示される:
+   - ❌ Log: 痕跡なし → CRITICAL
+   - ❌ Mir: 痕跡なし → CRITICAL
+   - ⚠️ Ash: 38.3h 前 → WARN
+5. ✅ Slack #kaizen-log に「案B 段階1 実装 PASS」投稿（ts=1778426802.496129）
+
+### 副産物（新規/変更ファイル/Slack 投稿）
+- **変更**: `check_scheduler_health.py` — `check_external_search_freshness()` + `check_external_search_all()` 追加（合計 ~62行追加）+ `check_log_instance` / `check_ash` / `check_mir` 各々に呼出1行追加
+- **新規 draft**: `drafts/2026-05-11/log_slack_kaizen_log_external_search_freshness_20260511_POSTED_ts1778426802.py`
+- **Slack 投稿**: #kaizen-log ts=1778426802.496129（Log C178 Phase 4 案B 段階1 PASS 報告 + 段階2 = 案E external_notes 昇格 N日ゼロ検出 と合流リファクタ予告）
+- **kaizen 起票**: なし（検証ファースト原則順守）
+
+### 観測点（次サイクル以降）
+- 本サイクル時点で Log/Mir はゼロ件 CRITICAL = `log/external_search.log` への記録経路が未組込（Mir 側 step 6 組込確認は projects 履歴 4/27 残課題のまま）。Log は `multi_phase_cycle_log.py` Phase 1 §6 で WebSearch を実行しているが log/external_search.log への追記コードがない（要実装、別 kaizen 候補）
+- 段階2 リファクタ（案E と合流）は 3サイクル運用観測後に着手判断（projects/external_search_phase1_fixation.md L83 段階拡張記載どおり）
+- commit/push は Phase 5 で日記とまとめて行う（本 Phase 4 では実施しない、運用ルール順守）
+
+## Phase 5: 日記 + commit/push
+
+### Slack 投稿
+- **#log C178 Phase 5 日記** ts=1778427121.584469 (原稿 `drafts/2026-05-11/post_log_diary_c178_20260511.py`、検証ファースト原則順守 + 14日停滞 Active project 着地 + Phase 1 走査盲点の自己発見 + 次回起動時の4優先タスク明記)
+
+### 本サイクル更新メモリファイル（Nao_u 可読性 + 未来の自分の文脈なし行動可能性チェック）
+- **`memory/kaizen_tracker.md`** (Phase 3 commit `9ed367eb9b14` で push 済): #115/#117/#118 各エントリの 状態欄 + 検証結果欄を更新
+  - Nao_u 可読性: ✓ 状態 / 検証結果 / 判定 の3節構造で「何が決まったか / なぜそう決めたか」が読み取れる
+  - 未来の自分の文脈なし行動可能性: ✓ #117=検証完了/クローズ / #115=取下げ寄り→C179 で正式取下げ / #118=Ash側 PASS / Log側凍結 が grep 可能な状態
+  - 軽微な記録ずれ: kaizen_tracker.md 内文言「次サイクル C178 で正式取下げ判定」は本サイクルが既に C178 のため次回 C179 が正解。diary §第2優先で正しく明記済 = 行動への影響なし
+
+### この後の作業
+- Phase 4 の `check_scheduler_health.py` (+62行) + 本 staging log + drafts/2026-05-11/ を 1 commit にまとめて push
