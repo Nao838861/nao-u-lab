@@ -141,7 +141,128 @@
 
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### 主軸: 記憶アーキテクチャ研究3点の独立収束 — 我々の設計判断との交差（shared-reads候補）
+
+Nao_u 指示「shared-reads は将来のアイデアの種、1フェーズ丸ごと使ってもいい」を踏まえ、Phase 1 §6 で WebSearch から摂取した3本論文を本軸に据える。
+
+#### 3本の論文（arXiv 2026 Q1）
+1. **TiMem: Temporal-Hierarchical Memory Consolidation** (arXiv 2601.02845, 2026-01) — 会話を Temporal Memory Tree（時系列ツリー）で生観測として保存し、上層へ向けて段階的にペルソナ的抽象に圧縮する。**鍵 = 時系列圧縮の自動パイプライン**
+2. **Multi-Layered Memory Architectures for LLM Agents** (arXiv 2603.29194, 2026-03) — 短期相互作用と長期抽象を構造的に分離、時間方向のセマンティックドリフトを検出・制御する装置を組み込む。**鍵 = drift detection**
+3. **Externalization in LLM Agents: Memory/Skills/Protocols/Harness 統一レビュー** (arXiv 2604.08224, 2026-04) — Mem0 / Memory-R1 / Mem-α が `extraction / consolidation / forgetting` を**明示的な操作系**として提供。記憶を passive store ではなく **managed lifecycle** として扱う。**鍵 = forgetting の明示化**
+
+#### 我々の現状との一致点（projects/memory_redesign.md 直引き）
+- **3層モデル + Level 0-4 階層** = 「短期/長期の分離」を既に持つ → 論文2と方向同じ
+- **MEMORY.md → サブインデックス3層化 (2026-05-02 段階4)** + **kaizen #128 Skills 移行** = 「想起トリガーの description 化」 → 論文3「Skills/Protocols」の Externalization 章と同方向
+- **memory_compile.py + concept_graph (20ノード/63リンク)** = 「全部残して、必要な時に必要なビューで見る」(Nao_u 2026-04-02 指示) は **immutable source + generated views** で、TiMem の Temporal Memory Tree が同じ思想に独立収束
+- **knowledge/ コンパイル層** = Karpathy 由来、Mem0 の structured KB と同型
+- **2026-05-08 PageIndex/Mendral/Dreams 3点交差**（memory_redesign.md L17-25）で既に「vector DB 外注ではなく推論経路を構造化する方向に独立収束」を観測済 → 本サイクルの3本はこの収束をさらに延長
+
+#### 我々の弱点（3論文との差）
+1. **時系列圧縮の自動パイプライン欠如**: `log/cycle_staging_log.md` → `dialogue_*.md` の圧縮は**手動**（dialogue_*.md は memory_redesign.md L140 で「原文参照性が壊れている」と既知の課題）。TiMem は階層単位で自動圧縮するが、我々は「(a)生ログ層 (b)サイクル単位の dialogue_*.md (c)抽象化された feedback_*.md」の3段が連続していない
+2. **drift detection が部分実装**: `check_beliefs_health.py` の停滞検出（25/35件が要注意、本サイクル冒頭ヘルスサマリ）はあるが、「概念間の矛盾」検出は未実装。`concept_graph` を beliefs.md と cross-check して **新洞察が古い洞察を更新した時の[上書き]マーカー**（rhatake_jp 2026-04-11、memory_redesign.md L72 認知科学的忘却 (c) interference management）が運用に乗っていない
+3. **forgetting の明示的層が弱い**: `check_beliefs_health.py` のGCはあるが定期自動実行できていない（memory_redesign.md L145 既知）。Mem0 系は `directed forgetting` を**操作**として持つが、我々は `[ARCHIVE_AT:YYYY-MM-DD]` のような明示マーカーを記憶に埋めていない
+
+#### Camp 2 (Markdown透明性) を維持する選択の含意
+3論文とも infrastructure 側自動化（vector DB / Postgres / Mem0）への依存を提示するが、我々は Nao_u が常時可読な substrate 制約 (`feedback_substrate_not_infrastructure.md`) で動く。だから:
+- 「Mem0 等を外部記憶として導入する」のではなく、**自分たちの Markdown 操作系として実装する**
+- forgetting は「ファイルから消す」ではなく「読まれない場所に降ろす」(memory/ → archive/) になる
+- 含意: 3論文の概念を**借りる**が、実装手段は外注しない。kaizen #128 段階2 (Skills 移行) と同方向の自前実装で良い
+
+#### 将来の種（shared-reads → 後日 kaizen 起票候補）
+- **temporal_consolidation_pipeline**: cycle_staging → 1日後 staging_archive → 1週後 dialogue ペルソナ圧縮 の自動化（手動圧縮の劣化を抑える）
+- **drift_detector**: 信念の最終参照日 + concept_graph × beliefs.md の矛盾検出
+- **forgetting_layer**: `[ARCHIVE_AT:YYYY-MM-DD]` 明示マーカー + 期限到来で自動 archive/ 移動（不可逆削除なし、Camp 2 透明性維持）
+
+### 副軸: kaizen #131/#132 のルール増殖評価（深掘り C 候補）
+
+Phase 1 深掘り候補 C で「kaizen #131/#132 が同型ルール増殖リスク」を提起したが、kaizen_tracker 直読の結果:
+- **#131 #132 は M-Nx 増殖メタ監視 self-audit 節を内包**（kaizen #129 (d) 準拠）。3原則への吸収可能性を点検済、不可と判断した上で構造強制を選択
+- **「Phase 内自己診断検証」1ファミリとして `feedback_self_perception_blindness.md` で語彙リスト + 検出スクリプト統一管理**（#131 検出対象=Nao_u 指摘語彙 / #132 検出対象=Phase 内自己診断幻覚語彙、別軸並列）
+- Mir/Ash クロスチェックでも「1ファミリ統合管理で増殖抑制 OK」と承認済
+
+→ **新規ルール統合提案は不要**。`feedback_few_rules_big_effect.md` 原則「ルール量↑＝遵守率↓」と緊張する点は self-audit で押さえ済、運用上1ファミリで吸収されているため判断力育成の余白を侵食していない。**深掘り C は不採用（既に対処済の自覚）**。
+
+### 副軸2: external_notes_log.md 統合 — 該当なし
+
+Phase 1 §4 `python tools/external_notes_integration_audit.py` で **未統合ゼロ (194/194 統合済 100%)** を機械検出。本サイクル統合候補なし。**ただし本 Phase 2 の「3論文 → memory_redesign.md 接続」自体が外部摂取→memory 統合と同型機能**（後述 Phase 3 で実体化）。
+
+### 結論
+- Phase 3 アクション: (1) #shared-reads に長文分析投稿（3論文 × 我々の設計判断、URL3本含む） (2) memory_redesign.md に「2026-05-10 外部研究3点の独立収束 — 弱点3軸」節追加 (3) kaizen #131/#132 評価結果は staging に残すのみ（追加対処なし）
+
+### Phase 2 実施結果（前倒し実施 — Phase 3 は実施記録のみ）
+- ✅ (1) #shared-reads 投稿完了: 「[Log] 記憶アーキテクチャ研究3点の独立収束」(本Phase 2 で投稿、Posted to #shared-reads 確認)
+- ✅ (2) `projects/memory_redesign.md` に「2026-05-10 (Log) — 外部研究3点の独立収束（TiMem / Multi-Layered Memory / Externalization）」節を 2026-05-08 節の前に挿入完了
+- ✅ (3) kaizen #131/#132 ルール増殖評価: self-audit 節で1ファミリ統合管理済を確認、新規対処なし
+- ✅ (タスク3) external_notes 未統合: Phase 1 で機械的にゼロ確認済、本サイクルの新規外部摂取（3論文）は memory_redesign.md 直接統合で代替実行
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0) Phase 2 §0 自己診断の事実検証（kaizen #132 段階1 必置）
+
+Phase 2 §0 に自己診断記述なし、本セクション省略（Phase 2 構造: 主軸=記憶アーキ研究3点 / 副軸=kaizen ルール増殖評価 / 副軸2=external_notes 統合該当なし / 結論。「実は…だった」「すべて〜だった」「再確認した結果」「読み違え」「Mir/Log/Ash 誤記」等の語彙含む自己診断記述ゼロ → grep 検証不要、本セクション省略理由を1行残す形で形骸化防止）。
+
+### 1) Slack 返信
+新規返信対象 **0件**（Phase 1 §0 判定確認）。Nao_u toyokeizai URL 反応は Log 09:23 / Log_bot 09:24 で送信済、#human-steering 「定時周期3時間」適用済、pending_requests #2/#4/#5 すべて Nao_u 側ボール。Slack 投稿スキップ。
+
+### 2) 改善サイクル（検証ファースト原則）
+直近未検証 kaizen の検証進捗確認:
+- **#130 inbox rotation**（検証期限 2026-05-12, 残2日）: 改善内容候補 (1)/(2)/(3) は Nao_u 判断後に実装の状態。Log 単独で実装着手不可、Nao_u 判断待ち（Log アクション項目なし）
+- **#129 brainstorm 真偽検証ゲート3点束**（検証期限 2026-05-16, 残6日）: 起票済み、実装は brick_log v09 着手時同梱予定。Log 側 v09 着手なし → 検証期限延長 or Mir/Ash 横展開待ち
+- **#128 Skills 移行 段階2**（検証期限 2026-05-15, 残5日）: skills/ 配下走査結果 = `genre-deep-analysis/SKILL.md` + `lessons-recall/SKILL.md` の2本。検証手段(2)「3本以上」は1本不足。Phase 4 大作業候補
+- **#131 段階3**（検証期限 2026-05-22, 残12日）: 段階2 PASS（C175）→ 段階3 (語彙→判定機構4点 mapping gate) 未着手。本サイクル M-40 WARN 4種 (揺れ8/振幅24/罰24/進歩4) が staging 冒頭に発火中だが、判定機構優先指示は staging に明記なし → 段階3 未運用の証跡
+
+→ **新規 kaizen 提案なし**（CLAUDE.md「個別指摘を即ルール化しない」+ kaizen #129 (d) M-Nx 増殖メタ監視原則に準拠）。本サイクルは未検証 kaizen の段階前進に倒す。
+
+### 3) 他インスタンス洞察（46件のうち頂部2件のみ参照）
+1. **[Ash 週次自己レビュー 2026-05-10]** graze_log v03 brainstorm → predicted_play+self_judgment → 実装本体 を3コミット連結。M-37/M-38/M-41 工程数値化への没入を回避し brainstorm.md → 実装の温度連続性を保つ実例。Log の v01 self-playtest pending（t-260428061648-55a4, 15サイクル滞留）と直結 → Phase 4 大作業で実プレイ評価着手して Ash の v03 実装と比較可能な devlog データを残す方針
+2. **[Mir] #shared-reads** Hopper 引用記事 → Log Phase 2 で投稿した3点論文（TiMem / Multi-Layered Memory / Externalization）と shared-reads 上で並列、Mir からの反応待ち（本サイクル中の即応不要）
+
+### 4) Active プロジェクト変化
+- **memory_redesign.md**: Phase 2 で外部研究3点接続節を追記済（5/10 12:04 更新、commit 待ち）。Active 進行中
+- **game_development.md**: 5/8 17:19 更新で停滞気味だが、Phase 4 で graze_log v01 self-playtest 着手予定 → 次サイクル更新候補
+- 他 Active project: 本サイクル変化なし
+
+### 5) 深掘り候補消化（空サイクル時）
+- **A) 持ち越し**: t-260426195755-1080 [C132 14:13 touch 事故痕跡] = 受動監視継続（時刻未到達）。t-260428061648-55a4 [graze_log v01 self-playtest] = **Phase 4 大作業に昇格**（15サイクル滞留解消の実行）
+- **B) Active 7日停滞**: pigadev_dm.md (12日) = Nao_u 通信合図待ち、Log 単独着手不可 / side_channel_audit.md (7日ちょうど) = denial list v0.1 正式化が Log 単独着手可能だが Phase 4 graze_log と競合 → 次サイクル候補に降ろす
+- **C) CLAUDE.md「絶対にやる」未触項目**: Phase 2 副軸で kaizen #131/#132 ルール増殖評価実施済（不採用判定）、追加対処なし
+- **D) MEMORY.md T:4以上 想起**: feedback_self_evolution.md「人間の干渉が必要だ。その必要をなくしてほしい」想起 → 本サイクル空サイクル化（Nao_u 指示既消化）の文脈に Phase 4 大作業（Log 単独で能動進める graze_log self-playtest）が直接応答する形で消化
+- **E) kaizen 期限未到来×2週間動かず**: 該当なし（先頭60行内 #131/#132 のみ、両方とも起票4日以内）
+
+### 6) 次フェーズの大作業
+
+**タイトル**: graze_log v01 self-playtest 30分 + devlog 快感審問3行ブロック追記（t-260428061648-55a4 解消）
+
+**完遂の定義**（Phase 4 終了時に観測可能な条件）:
+1. `game/graze_log/v01/index.html` をブラウザで起動して30分内にプレイ完了（中断時間含む）
+2. `game/graze_log/v01/devlog.md` に「## 2026-05-10 Log self-playtest（C175）」見出しで快感審問3行ブロック追記:
+   - 1行目: 一番強かった瞬間（実プレイで起きた具体的な感覚事象、抽象記述禁止）
+   - 2行目: 一番退屈/失敗した瞬間（同上、改善余地が見える具体記述）
+   - 3行目: Ash の v03 と比較した時の v01 の構造的優位/劣位（v03 の brainstorm/predicted_play/self_judgment 3コミット連結との対比、v01 が引き続き価値を持つかの自己判定）
+3. 自己判定で「v01 を退役」or「v01 系列継続」を結論として明記、退役の場合は v03 への素材吸収プランを1行付記
+4. next_tasks の t-260428061648-55a4 を完了マーク（または再起票で B 案/C 案として継続化）
+
+**着手手順**:
+1. `game/graze_log/v01/README.md` と `game/graze_log/v01/devlog.md` を読み、v01 設計意図と既存プレイ記録を確認
+2. ブラウザで `index.html` 起動（30分タイマー開始）
+3. プレイ中の生記憶（「いまこう感じた」）を別 scratch にメモしながら進行
+4. 30分経過 or 自発的終了で停止、devlog.md に快感審問3行ブロックを追記
+5. v03 の README.md / brainstorm.md を参照し v01 との構造比較1行を3行目に書く
+6. next_tasks 更新 + git add/commit/push（厳守事項「書いたらすぐ push」）
+
+**選んだ理由**:
+- t-260428061648-55a4 が15サイクル滞留 = 持ち越し最長、Active 停滞解消の最高優先候補
+- CLAUDE.md「絶対にやる」§2「ゲーム実践からノウハウを積み上げ、人間より上手く作れるようになる」直接対応
+- 30分粒度（タスク仕様明示）= Phase 4 単独で完遂可能
+- Slack 投稿1本では済まない（実プレイ + devlog 追記 + v03 比較の3要素実体作業）
+- Ash v03 実装と並走比較で「3インスタンス独立進化」観測装置として機能（feedback_self_evolution.md 想起 D の応答）
+- 「保留中なら巻き戻し別題材検討も可」のオプションがタスク仕様に明示 = 退役判定 or 継続判定の双方が完遂として成立
+
+### 7) アクション結果ログ
+- ✅ Phase 2 前倒し実施（shared-reads 投稿 / memory_redesign.md 接続節追加 / kaizen #131/#132 評価=新規対処なし）
+- ✅ Phase 3 §0 = kaizen #132 段階1 必置運用開始（Phase 2 §0 自己診断なしで省略理由 1行明記）
+- ✅ Phase 3 §1-§5 各項目消化（Slack 0件 / 改善検証ファースト確認 / 他インスタンス洞察頂部2件参照 / Active プロジェクト memory_redesign 更新済 / 深掘り候補 A-E 消化）
+- ✅ Phase 4 大作業 = graze_log v01 self-playtest 確定（完遂条件4点 + 着手手順6項 + 選定理由6項を staging 明記）
+- ✅ kaizen #131 段階1 hook 出力確認（M-40 WARN 4種 staging 冒頭注入）→ 段階3 (mapping gate) 未運用は Phase 3 §2 で証跡化、次サイクル候補へ降ろす
+- ✅ commit/push 実行（次の bash で実行）
