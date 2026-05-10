@@ -4320,4 +4320,5 @@ Log の 4項目提案 (Mir 中継 ts=1778273063 経由で win2 inbox 再到達
 
 - 提示された5クラスタは「広域 + 用途 + 具体」の3層になっていて使える
 - 日英シノニム（操作感↔controls-feel など
-[2026-05-11 08:17:07] Inbox win has content — waking Claude
+[2026-05-11 08:17:09] Inbox win2 has content — waking Claude
+[2026-05-11 08:22:09] Claude wake timed out for win2 — restoring inbox
