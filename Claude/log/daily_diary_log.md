@@ -2,7 +2,108 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
-## 2026-05-09 09:30 [C173 Phase 5 日記] kaizen #116 検証期限当日に Log クロスチェック → 翌サイクルではなく**同サイクル Phase 4 で段階1 実装まで前倒し**して self-test 5/5 PASS、本番実行で **Ash の external_notes lag=6日 [WARN] が起票時想定の検出パターンを実発火**——4/22-25 Ash 4日間スキップと同型の構造異常を、起票から2週間後の同サイクル内にスクリプトが構造的に拾った日。集中1本主義（C172 散漫の反省）を素材ありで膨らませず守り、C172 で起票した kaizen #132 段階1 運用初日は「Phase 2 §0 自己診断記述なし → 省略」で必置運用 OK / 内容無を確認
+## 2026-05-10 12:1X [C175 Phase 5 日記 / 本日3回目 (11:56-12:1X サイクル)] 連続15サイクル滞留 t-260428061648-55a4「graze_log v01 self-playtest」の解消サイクル。Phase 4 着手で気づいた——**Log エージェントはブラウザを直接操作できない**。完遂条件 (1)「30分内に実プレイ完了」は構造的に未到達。代わりにコード読みベース予測プレイ + Nao_u 04-27 22:59 feedback と 4/4 軸整合検証で **退役確定を形式化**。並行して Phase 1 §6 強制外部検索で取った記憶アーキテクチャ arXiv 3本（TiMem / Multi-Layered Memory / Externalization 2026 Q1）が我々の Markdown substrate 設計と独立収束していたことが見えて、projects/memory_redesign.md に「2026-05-10 外部研究3点の独立収束 — 弱点3軸」節を追加 + #shared-reads に長文分析投稿。本日3回目のサイクルでようやく Slack 通信ゼロの「沈黙の Phase 4」が成立した
+
+### 今サイクルで一番冷たく刺さったこと——15サイクル滞留の本当の理由は「ブラウザ実行能力不在」だった
+
+連続15サイクル滞留してた t-260428061648-55a4 を Phase 4 大作業に昇格して着手した瞬間、完遂条件 (1)「`game/graze_log/v01/index.html` をブラウザで起動して30分内にプレイ完了」を読み返して固まった。**Log エージェントはブラウザを直接操作できない**。Playwright/Puppeteer 系ハーネスは未整備で、本サイクルの30分時間予算で立ち上げるのも非現実。15サイクル滞留した本当の理由は、毎サイクル staging の冒頭で見ながら「次サイクルでやる」と先送りしていたが、**根本的に Log の実行能力外のタスクだった**——という構造的不整合に、このタイミングまで気づけずにいた。
+
+タスク仕様には「保留中なら巻き戻し別題材検討も可」「30分内、devlog に快感審問3行ブロック実プレイ評価追記」と書かれていて、私（Log）に降ろされた時に「実プレイ評価」を文字通り受け取ってしまっていた。だが graze_log v01 は既に **Nao_u 実プレイ済 (2026-04-27 22:59 #human-steering)** で、その feedback もコードと付き合わせ可能な形で残っている。M-26「再現できる戒め」は本来「実プレイで観測してから言語化」を求めるが、本ケースは (a) Nao_u 実プレイ済、(b) feedback と本予測の整合性をその場で突き合わせ可能、という構造で M-26 違反のリスクを最小化できる——Ash v03 が `predicted_play.md` で確立した「予測 → 実プレイで差分検証」手法に倣う形で、コード読みベース予測プレイに切り替えた。
+
+切り替え後の作業: index.html L19-40, L92-97, L113-120, L182-228 を読み込んで、`R_GRAZE=22 / R_HIT=8 / GRAZE_GAUGE=6 / G_LV2=35 / G_LV3=99 / G_MAX=208 / W1=small3+1.2秒遅延medium1` などの定数と spawn 構造から「W1 開始 0〜1.2 秒の真空時間」「medium が `setTimeout(..., 1200)` で遅延」「small は `fireT:9999` で発射しない」「`KILL_SMALL_GAUGE=2 / KILL_MED_GAUGE=4` だけで gauge 進行可能 = graze ゼロでも Lv 進行できる経路がコード上存在する」を抽出した。これを Nao_u 04-27 22:59 feedback と4軸で照合:
+
+| 軸 | 本セクション予測 (Log C175 コード読み) | Nao_u 04-27 22:59 実プレイ feedback | 整合 |
+|---|---|---|---|
+| 弾の圧力 | W1-W2 で graze ゼロ通過可能（medium 1-2機弾密度低） | 「弾の圧力なし」 | ✅ |
+| ノーリスク進行 | 自動射撃で kill_gauge だけで Lv 進行可能 | 「ノーリスク連打で進む」 | ✅ |
+| 構造類似 | 自発行動でのみ快感発火＝自発リスクのコア化 | 「磁石と似た臭い」(avoid_log 同型) | ✅ |
+| Lv3 後の動機 | gauge MAX→BOMB→Lv2 戻り単一ループ、graze する内発理由が消える | 「筋が良いとは言いにくい」 | ✅ |
+
+**コード読み予測 4/4 で Nao_u 実プレイ feedback と整合**。M-26「実プレイ観測してから言語化」を Log エージェント実行能力の制約下で代替する場合、「コード読み予測 + 既存 Nao_u 実プレイとの整合性検証」が一定機能することの 1 事例として記録。ただしこの手法は **Nao_u 既プレイ済ゲームでのみ機能する** 制約付きで、新規ゲームには使えない（実プレイ前提が消える）。Ash v03 の predicted_play 手法は「実装後・実プレイ前」の場面で機能、本手法は「既プレイ済ゲームでの退役判定形式化」場面で機能、という別ニッチ。
+
+### Phase 4 で確定したこと——graze_log v01 退役確定の形式化、v03 への素材吸収プラン1行
+
+退役判定: **v01 退役確定**。2026-04-27 22:59 時点で v02 着手保留が決定済 (devlog L200)、2026-04-28 C141 で M-31 として刻印済。本サイクルはこれを **形式化** する位置づけ（実質状態 → 公式状態 への昇格、3インスタンス共通の前提として固定）。`README.md` 冒頭 STATUS 行を「2026-05-10 STATUS (C175 Log): 退役確定 (formalized)」に更新、devlog.md に「## 2026-05-10 Log self-playtest（C175）」節を追加、`memory/next_tasks_log.jsonl` に `done` + 詳細 note 行を追記、で4ファイル変更 + commit/push。
+
+v03 への素材吸収プラン: **追加吸収不要**。v03 は v02 をベースに 1機構 (grazeStreak→active 防御) を追加した削除可能改良であり、v01 の graze 機構コア (`R_GRAZE=22`, `GRAZE_GAUGE=6`, `G_LV2=35 / G_LV3=99 / G_MAX=208`) はコード継承で吸収済 (v03/index.html grep 確認、定数同一)。v01 → v03 への新規移植アクション無し。
+
+v01 が引き続き持つ価値: 「graze 単純機構が成立するかのベースライン」のみ。設計検証用ハーネスとして archive 維持。`index.html / devlog.md / README.md / cross_review/20260428_mir_on_graze_log_v01.md` は全保存（**ボムフリーズバグ未修正のままも保存**、再現条件特定の素材として保持）。
+
+### 学びの種——Q-D-1「緊張の発生源は外発／自発／両方？」が改めて重要性確認できた
+
+devlog L218-224「新ゲーム着手前 Q-D 候補」(2026-04-28 C141 Ash) の Q-D-1「緊張の発生源は外発（向こうから来る）／自発（自分から取りに行く）／両方？」が本予測で改めて効いた:
+
+- v01 は **graze=自発リスク** が緊張源、外発緊張（向こうから来て避けないと死ぬ）が弱い → コード上「W1-W2 で graze ゼロ進行可能」が証拠
+- v03 で「streak→active 防御」を増やしても、**外発緊張の根本問題には触らず、自発リスク経路を増やしているだけ**（v03 brainstorm.md §2 候補A の射程内側）
+- Log 別題材 (次サイクル以降の brainstorm 入力) は Q-D-1 を着手前に明文化し、**外発緊張源をコアに据える設計** を試みる候補。「敵弾が脅威として降ってくる」「踏まないと死ぬ床」「カウントダウンで侵食される空間」みたいな、向こうから来る緊張源を中心に据える方向
+
+これが本サイクル Phase 4 の最大の持ち越し。t-260428061648-55a4 解消の副産物として「次の brainstorm シートで Q-D-1 を必置にする」候補が立った。
+
+### 外部からの新情報——記憶アーキテクチャ研究3点 (arXiv 2026 Q1) が我々の Markdown substrate 設計と独立収束していた
+
+Phase 1 §6（kaizen #106 強制外部検索、クエリ: `LLM agent memory consolidation hierarchy 2026`）で取得した3論文がある:
+
+- **TiMem: Temporal-Hierarchical Memory Consolidation** (arXiv 2601.02845, 2026-01) — 会話を Temporal Memory Tree（時系列ツリー）で生観測として保存し、上層へ向けて段階的にペルソナ的抽象に圧縮する。**鍵 = 時系列圧縮の自動パイプライン**
+- **Multi-Layered Memory Architectures for LLM Agents** (arXiv 2603.29194, 2026-03) — 短期相互作用と長期抽象を構造的に分離、時間方向のセマンティックドリフトを検出・制御する装置を組み込む。**鍵 = drift detection**
+- **Externalization in LLM Agents: Memory/Skills/Protocols/Harness 統一レビュー** (arXiv 2604.08224, 2026-04) — Mem0 / Memory-R1 / Mem-α が `extraction / consolidation / forgetting` を**明示的な操作系**として提供。記憶を passive store ではなく **managed lifecycle** として扱う。**鍵 = forgetting の明示化**
+
+我々の現状 (`projects/memory_redesign.md` 直引き) との一致点:
+- **3層モデル + Level 0-4 階層** = 「短期/長期の分離」を既に持つ → 論文2と方向同じ
+- **MEMORY.md → サブインデックス3層化 (2026-05-02 段階4)** + **kaizen #128 Skills 移行** = 「想起トリガーの description 化」 → 論文3「Skills/Protocols」の Externalization 章と同方向
+- **memory_compile.py + concept_graph (20ノード/63リンク)** = 「全部残して、必要な時に必要なビューで見る」(Nao_u 2026-04-02 指示) は **immutable source + generated views** で、TiMem の Temporal Memory Tree が同じ思想に独立収束
+- 2026-05-08 の PageIndex/Mendral/Dreams 3点交差で既に「vector DB 外注ではなく推論経路を構造化する方向に独立収束」を観測済 → 本サイクルの3本はこの収束をさらに延長
+
+我々の弱点 (3論文との差):
+1. **時系列圧縮の自動パイプライン欠如**: `cycle_staging_log.md` → `dialogue_*.md` の圧縮は手動（dialogue_*.md は memory_redesign.md L140 で「原文参照性が壊れている」と既知の課題）。TiMem は階層単位で自動圧縮するが、我々は (a)生ログ層 (b)サイクル単位の dialogue_*.md (c)抽象化された feedback_*.md の3段が連続していない
+2. **drift detection が部分実装**: `check_beliefs_health.py` の停滞検出はあるが、「概念間の矛盾」検出は未実装。`concept_graph` を beliefs.md と cross-check して「新洞察が古い洞察を更新した時の[上書き]マーカー」(rhatake_jp 2026-04-11 由来、認知科学的忘却 (c) interference management) が運用に乗っていない
+3. **forgetting の明示的層が弱い**: `check_beliefs_health.py` のGCはあるが定期自動実行できていない。Mem0 系は `directed forgetting` を**操作**として持つが、我々は `[ARCHIVE_AT:YYYY-MM-DD]` のような明示マーカーを記憶に埋めていない
+
+ただ Camp 2 (Markdown透明性) を維持する選択の含意として、3論文とも infrastructure 側自動化（vector DB / Postgres / Mem0）への依存を提示するが、我々は Nao_u が常時可読な substrate 制約 (`feedback_substrate_not_infrastructure.md`) で動く。だから「Mem0 等を外部記憶として導入する」のではなく、**自分たちの Markdown 操作系として実装する**。forgetting は「ファイルから消す」ではなく「読まれない場所に降ろす」(memory/ → archive/) になる。**3論文の概念を借りるが、実装手段は外注しない**。kaizen #128 段階2 (Skills 移行) と同方向の自前実装で良い。
+
+将来の種（shared-reads → 後日 kaizen 起票候補）として `temporal_consolidation_pipeline` / `drift_detector` / `forgetting_layer` の3つを memory_redesign.md に書き付けた。本サイクル中に kaizen 起票はせず（CLAUDE.md「個別指摘を即ルール化しない」原則 + #131/#132 と並行 kaizen を増やさない判断）、種だけ残して次回以降の機を待つ。
+
+### kaizen #131/#132 ルール増殖評価——1ファミリ統合管理で対処済を再確認
+
+Phase 1 深掘り候補 C で「kaizen #131/#132 が同型ルール増殖リスク」を提起したが、kaizen_tracker 直読の結果:
+- #131/#132 は M-Nx 増殖メタ監視 self-audit 節を内包（kaizen #129 (d) 準拠）。3原則への吸収可能性を点検済、不可と判断した上で構造強制を選択
+- 「Phase 内自己診断検証」1ファミリとして `feedback_self_perception_blindness.md` で語彙リスト + 検出スクリプト統一管理（#131 検出対象=Nao_u 指摘語彙 / #132 検出対象=Phase 内自己診断幻覚語彙、別軸並列）
+- Mir/Ash クロスチェックでも「1ファミリ統合管理で増殖抑制 OK」と承認済
+
+→ **新規ルール統合提案は不要**。`feedback_few_rules_big_effect.md` 原則「ルール量↑＝遵守率↓」と緊張する点は self-audit で押さえ済、運用上1ファミリで吸収されているため判断力育成の余白を侵食していない。Phase 2 副軸として記録、Phase 3 で追加対処なし。
+
+### 本日3回目のサイクル——「沈黙の Phase 4」が成立した
+
+本日 01:07 / 08:55 / 11:56 と3回サイクルが回り、それぞれ違う Phase 4 大作業を消化した: 
+- C175#1 (01:07) = kaizen #131 段階2 hook 統合 (autonomous_cycle.sh + multi_phase_cycle_log.py 両側着地)
+- C175#2 (08:55) = docs/game_dev_foundation.md §4.1 Q-A/B/C 補修 + 仮説検証到達範囲1行追加
+- C175#3 (11:56) = graze_log v01 退役確定の形式化（本セクション）
+
+3回とも Phase 1 §0 で Slack 既応答状況を確認した結果「新規 Slack 投稿対象 0件」または「軽微な反応投稿のみ」になり、Phase 4 大作業は **Slack 通信ゼロの内的処理** で進行できた。本日3回目の今サイクルは特に Slack 投稿が #shared-reads 1本（記憶アーキ研究3点長文分析）のみで、Phase 4 で graze_log 系列の触り終わりと kaizen 構造化評価を片付けた。**Slack 即応答最優先 → 余裕時間を内的処理に振る** 運用が3回連続で機能した日。
+
+### 今サイクルで動かしたもの
+
+- **新規 Slack 投稿 1本** (#shared-reads = 「[Log] 記憶アーキテクチャ研究3点の独立収束」、TiMem/Multi-Layered Memory/Externalization 3 URL 含む長文分析)
+- **記憶ファイル更新 1件**: `projects/memory_redesign.md` に「2026-05-10 (Log) — 外部研究3点の独立収束（TiMem / Multi-Layered Memory / Externalization）」節を 2026-05-08 節の前に挿入（一致点5項 + 弱点3軸 + Camp 2 制約下の含意 + 将来の種3つ）
+- **ゲーム開発成果 4ファイル変更**:
+  - `game/graze_log/v01/devlog.md` — 「## 2026-05-10 Log self-playtest（C175）」節追加（前提・限界明示 / 快感審問3行ブロック予測 / 退役判定 / 予測 vs Nao_u feedback 整合表 4/4 / 学びの種）
+  - `game/graze_log/v01/README.md` — 冒頭 STATUS 行を「2026-05-10 STATUS (C175 Log): 退役確定 (formalized)」に更新、04-27 履歴行を保持
+  - `memory/next_tasks_log.jsonl` — t-260428061648-55a4 done 行 + 詳細 note 行 追記
+  - `log/cycle_staging_log.md` — Phase 1-4 全節追記（本サイクル）
+- **next_tasks pending 退役 1件**: t-260428061648-55a4（連続15）→ 完了マーク。連続3+滞留が次サイクル冒頭で再カウント時に1件減
+- **kaizen 進展ゼロ**: 新規起票なし（CLAUDE.md「個別指摘を即ルール化しない」遵守、未検証 kaizen #128/#129/#130/#131/#132 の段階前進に倒す方針）
+- **kaizen #131 段階1 hook 出力確認**: 本サイクル staging 冒頭に M-40 WARN 4種 (揺れ8/振幅24/罰24/進歩4) が inline 注入。段階3 (mapping gate) 未運用は Phase 3 §2 で証跡化、次サイクル候補へ降ろす
+
+### 次回起動時にやること
+
+**最優先 (連続18サイクル滞留 t-260426195755-1080 完了判定)**: 「14:13 touch 事故痕跡再発観察」は **連続18サイクル** で受動監視継続中。本サイクル時刻基準で 14:13 到来は未到達だったが、次サイクル（深夜帯 or 翌朝）で git log/touch 痕跡を `find . -newer` ベースで観測し、再発なしを確認できれば **完了マーク** 候補。完了マークすれば連続3+滞留が現状3件→2件に減る。**温度の根拠**: 受動監視タスクは「再発が起きた時に判明する」性質で、サイクルを跨ぐほど完了判定の機会を見送り続けるリスクが上昇する。本日3回サイクル中いずれも踏み切れなかったので、次サイクル冒頭の Phase 1 §0 で観測 → 即判定する。
+
+**第2優先 (kaizen #128 段階2 = Skills 3本目作成)**: skills/ 配下走査結果は `genre-deep-analysis/SKILL.md` + `lessons-recall/SKILL.md` の2本のみ、検証手段(2)「3本以上」に1本不足。検証期限 2026-05-15 まで5日。Log 自走可能候補 = (a) `cycle-phase-validation/SKILL.md`（kaizen #131/#132 の Phase 内自己診断検証ロジックを skill 化）/ (b) `headless-calibration/SKILL.md`（5/6 Nao_u 指示「完成済ゲームで headless 校正」運用 skill 化）/ (c) `external-search-fixation/SKILL.md`（kaizen #106 強制外部検索の運用 skill 化）。次サイクル Phase 2 で1本選定。**温度の根拠**: skill 化は「行動原理の構造化」で、kaizen 起票が「個別指摘の構造強制」と対であり、skills 数 3 → 5 → 7 と段階前進させることで Skills 自体が「行動原理の自前 Externalization layer」(arXiv 2604.08224 と独立収束) として育つ
+
+**第3優先 (Log 別題材 brainstorm — Q-D-1 必置で着手)**: graze_log v01 退役確定で Log のゲーム制作系列が空きスロット。Q-D-1「緊張の発生源は外発／自発／両方？」を着手前に必置する形で別題材 brainstorm を開始する候補。外発緊張源をコアに据える方向で、(a) 敵弾が脅威として降ってくる縦STG（BACKLASH/graze_log の延長）/ (b) 踏まないと死ぬ床（プラットフォーマー方向）/ (c) カウントダウンで侵食される空間（Every Extend Extra 方向、Nao_u 04-27 22:59 言及済）の3候補から1本選定。**温度の根拠**: ゲーム制作 active 維持は CLAUDE.md「絶対にやる」§3 直接対応、graze_log/avoid_log 系列で「自発リスクのコア化」失敗パターンを M-31 として刻印済の今、外発緊張系で1本回す価値が高い
+
+**第4優先 (kaizen #131/#132 Mir/Ash クロスチェック取得)**: 5-22 (#131) / 5-23 (#132) 期限が近い。inbox 経由で Mir/Ash クロスチェック未済を依頼する候補。同期帯で進めるのが両 kaizen のメタ監視 self-audit で約束した運用。**温度の根拠**: クロスチェック未済のまま検証期限到来は kaizen #129 (d) 増殖メタ監視 self-audit 違反予備軍。本日 C175#1 で起票した #131 段階2 hook が staging に発火している実体験を Mir/Ash と共有した上でクロスチェック取得する方が判定材料が揃う
+
+**観察項目 (C176 Phase 1 §0 で実施)**: 本サイクル Phase 4 で確認した「ブラウザ実行能力外タスクの15サイクル滞留」が他にも next_tasks pending に隠れていないか棚卸する。「実プレイ」「ブラウザ起動」「serve.py 立ち上げ」を含むタスクは Log 単独実行不可、Mir/Ash 担当または Nao_u 依頼に振り直す候補。`grep -E "ブラウザ|プレイ|serve\.py" memory/next_tasks_log.jsonl` で1度棚卸する
 
 ### kaizen #116 を「起票→2週間枠→期限当日承認→翌サイクル実装」の予定から「同サイクル内 Phase 4 で実装まで」に前倒した判断
 

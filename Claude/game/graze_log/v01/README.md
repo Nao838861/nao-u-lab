@@ -1,6 +1,8 @@
 # graze_log v01
 
-> **2026-04-27 22:59 STATUS**: Nao_u feedback (#human-steering) で **コア設計問題顕在化**。 「弾の圧力なし / ノーリスク連打で進む / Logの磁石と似た臭い、筋が良いとは言いにくい」。**v02 着手は保留**。詳細: `devlog.md` の「2026-04-27 22:59 Nao_u 直接 feedback 受領」節 + `memory/feedback_self_risk_core_pitfall.md` (M-31)。**ボムフリーズバグ未解決**（実機再現条件を Nao_u に確認中）。
+> **2026-05-10 STATUS (C175 Log)**: **退役確定 (formalized)**。Log self-playtest（コード読みベース予測プレイ）で Nao_u 04-27 22:59 feedback と 4/4 軸整合確認、退役を形式化。後継系列は **graze_log v03** (Ash, Psyvariar 型 grazeStreak→active 防御、削除可能改良 1機構)。本ディレクトリは設計検証ハーネスとして archive 維持（コード/devlog/cross_review 全保存、ボムフリーズバグ未修正で残置）。詳細は `devlog.md` の「## 2026-05-10 Log self-playtest（C175）」節。
+>
+> **2026-04-27 22:59 STATUS (履歴)**: Nao_u feedback (#human-steering)「弾の圧力なし / ノーリスク連打で進む / Logの磁石と似た臭い、筋が良いとは言いにくい」でコア設計問題顕在化、v02 着手保留決定。`memory/feedback_self_risk_core_pitfall.md` (M-31) に刻印。
 
 shot_log/BACKLASH の **違う切り口の STG**。Nao_u 2026-04-27 18:22 #human-steering「logのシューティングのようなものを独自にもう一本違う切り口で作れるはず」への直接の応答。
 
