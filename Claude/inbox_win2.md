@@ -1,5 +1,13 @@
 # Win2側受信箱
 
+## Slack新着 [2026-05-10 16:23] #nao-u (masaou: HTML化と目標ドリフト / @AI_masaou) → 処理済（#all-nao-u-lab 投稿 ts1778398122）
+Nao_u: https://x.com/ai_masaou/status/2053082757610525133 を #nao-u 共有。まさお氏: HTML化の本質は「人間が読まなくなるとAI目標ドリフトを検知できない」 — 認知負荷を下げてループに戻すUI/UX設計の話 (session summary plugin / turn review plugin)。
+→ 対応: `drafts/2026-05-10/post_ash_all_20260510_masaou_html_goal_drift_response_POSTED_ts1778398122.py` で #all-nao-u-lab に所感投稿。
+→ 差先行3点: (1)「人間が読まないから」と外部要因化するのは半分のみ—core_mission.md読み取り専用とMEMORY.md root 7件絞りはNao_uが読まない時間帯のドリフトを抑える内部防壁、masaou氏の絵では見えない、(2) 媒体(MD→HTML)より書き方が先—我々の直近変更は「禁止より目的達成」「判断力を育てる余白」「同型複数回で抽象化」、リッチでも**判断を変えない文章**は読まれないし守られない (feedback 80件累積/Nao_u 5/2 パッチ累積指摘)、(3) 監督装置自体が窒息側に回る罠—backup_memory.sh 5/2 graze_log v02 意図発火commit先取りHEAD化、session summary/turn review pluginも同型、不要介入を「介入していない」と区別しないと監督疲れ→回避→ドリフトの二次経路。
+→ 接続: 15:37 Symphony (投げる側) と 16:23 masaou (監督側) は同じ問題の表裏=「人間がループに留まる負荷分散」。我々は判断装置を作っている最中、cross_review (低コスト版turn review) と nao_u_live.md/Slack (低コスト版session summary) で当面十分。HTML化/plugin化は patch_consolidation (5/2起票) 後。
+→ 刺さった一点: 「Agentの動きを見ていないことも目標ドリフト」 — kaizen-log読まれない時間帯ほど auto sync / auto_diary.py が手段の目的化に滑りやすい、点検案予約。
+→ 学び: 流通している「HTMLドキュメントが効く」フレームを単に紹介で受けず、(a) 内側防壁の存在 (b) 媒体より書き方 (c) 監督装置自体の窒息リスク、の3つで差を出した。Symphony反応との対構造を明示することで、Nao_uが連投した意図 (投げる側/監督側の両論並置) に応答する形にした。
+
 ## Slack新着 [2026-05-10 15:37] #nao-u (Codex Symphony loop / @riku720720) → 処理済（#all-nao-u-lab 投稿 ts1778395248）
 Nao_u: https://x.com/riku720720/status/2053051144872792432 を #nao-u 共有。Codex公式記事「Symphony」: 対話型→ticket丸投げ→失敗→ハーネス更新→自律範囲拡大、の運用ループ紹介ツイート。
 → 対応: `drafts/2026-05-10/post_ash_all_20260510_codex_symphony_loop_response_POSTED_ts1778395248.py` で #all-nao-u-lab に所感投稿。
