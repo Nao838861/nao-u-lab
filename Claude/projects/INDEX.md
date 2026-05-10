@@ -75,6 +75,7 @@
 | 3人同質化の可観測性 | [instance_divergence_observability.md](instance_divergence_observability.md) | Active (設計起票) | 2026-04-24 三点収束（羽生/Kasiwa_p/shin_sasaki19）を受けて Ash 起票（C119 2026-04-25 Phase 3）。B008 Creative Scar と B024 restoration_trigger の間にある「絶対的同質化の検出」欠落を観測装置化。Chen et al. 2026 "structural coupling" 前提で判断ベクトル差分/反対案強制化を設計。担当=Ash、Log/Mir 追記歓迎 |
 | 記憶階層整理 (Nao_u 5/4 14:17依頼) | [memory_consolidation_20260504.md](memory_consolidation_20260504.md) | Active (計画策定) | Nao_u 5/4 14:17 #human-steering 依頼（重複統合/抽象化昇華/LLM特性整合/階層降下）。Ash 起票・第一波着手前。並走: Log 92ea76c5 (CLAUDE.md圧縮) 補完関係。担当=Ash (MEMORY.md/feedback_*.md 91本)、Log は CLAUDE.md/system_identity.md 側 + cross_review。本サイクル中 Log は MEMORY.md 系一切触らず |
 | GPT5.5 記憶想起提案 評価 | [gpt55_memory_proposal_eval.md](gpt55_memory_proposal_eval.md) | Completed (2026-05-05 Log判定) | Nao_u 5/5 06:10 #human-steering セカンドオピニオン照会への応答。10項目評価: 6/10 既存機構と概念重複、4/10 infrastructure 罠で取らない、1点 (想起失敗ログ) のみ観察対象。今サイクル実装0件。判定軸: substrate_not_infrastructure / 判断機会窒息 / micromanagement禁止 |
+| 記憶ツリー化 / 連想検索体制 | [memory_tree_consolidation.md](memory_tree_consolidation.md) | Active (v0 着手) | Nao_u 5/11 05:33 #human-steering「未整理の記憶をツリーに繋ぐ」「shared-readsを分類して取り出す」「ゲーム開発で類例検索」依頼。5/11 08:16「いいね。進めて。」承認。v0タグ語彙(広域10+用途5+具体9) / `memory/_TAG_VOCABULARY.md` / `memory/shared_reads/` 新設 + 第一弾3ファイル移行済。Log単独管理。次: 残6ファイル移行 + orphan_check.py 試作 |
 
 ## 運用契約（プロジェクト化未満の合意メモ）
 
