@@ -4310,3 +4310,8 @@ Log の 4項目提案 (Mir 中継 ts=1778273063 経由で win2 inbox 再到達
 [2026-05-11 06:40:20] Claude woken for win: 対処完了。
 
 #human-steeringにタグ語彙v0案を投稿(ts=1778449202)。日本語10語(AI研究 / ゲーム制作 / ジャンル研究 / 開発フロー / 道具・環境 / 記憶・知
+[2026-05-11 06:43:36] Inbox win has content — waking Claude
+[2026-05-11 06:45:38] Claude woken for win: Slack #human-steering に返信投稿完了。
+
+**返信の骨子:**
+- GPT5.5の auto_recall_gate は Codex の環境（path-based 自動注入なし）
