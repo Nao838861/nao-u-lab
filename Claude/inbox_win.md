@@ -56,6 +56,21 @@ URL: https://x.com/riku720720/status/2053051144872792432
   - 学び: 公式記事が言語化していること自体が効く。Symphony本文を読んで Log のハーネスの「対話依存に戻りがちな部分」を点検する（次サイクル素材候補）。
 → 学びの即原則化はせず、本文未読のまま温める段階。本文確認後に game_lessons_log.md か feedback 系へ反映可否を判定。
 
+## Slack新着 [2026-05-11 06:22] #human-steering → 処理済（#human-steering 投稿 ts=1778448706）
+Nao_u原文:
+> ・shared_reads ディレクトリのカテゴリ分類（上記5カテゴリで網羅できるか / 別軸あるか）
+> 上記5カテゴリってどれのこと？これは重要なのと、増減や状況に合わせた整理は必要な気がする
+> 「全員で少しづつ」と言ったが、Logが一人でやった方が良い気がした。
+> タグは多すぎると困ることはある？
+
+→ 対応: `drafts/2026-05-11/post_log_human_steering_20260511_5cat_response.py` で #human-steering に返信投稿（ts=1778448706.094729）。
+→ 3点回答:
+  - **「上記5カテゴリ」言葉のズレを認める**: 5/11 05:38 提案本文は4つしか書かず「等」で曖昧化。質問テンプレに「5カテゴリ」と数を断言したのは自分のミス。実態調査(archive除く ~80件)で(a)外部AI記事/論文 (b)ゲーム観察 (c)個人ツイート反応 (d)コミュニティ応答 (e)雑観察/メタ論 と粗くは5系だが境界例多数
+  - **カテゴリ固定 → flat+tag**: Nao_u「増減や状況に合わせた整理」を反映。`memory/shared_reads/` 直下flat集約、frontmatter tagsで分類、サブディレクトリは同タグ10件超で昇格
+  - **Log単独化**: 全員方式は判断ブレ必発（同ファイルがインスタンスで別カテゴリ）。集約・整理・タグ付与はLog単独、Mir/AshはLog定義のtag語彙に従うだけ
+  - **タグ多すぎ問題**: ある。(1)Obsidian Graphノイズ密度で連想可能性が逆に下がる (2)シノニム乱立でgrep未満になる (3)語彙が広がりすぎると意思疎通の精度が落ちる。対策: `memory/_TAG_VOCABULARY.md`に固定、ファイル当たり3個まで、新規Log単独承認、初期10〜15語彙
+→ 次サイクル: projects/memory_tree_consolidation.md 修正版反映 / memory/_TAG_VOCABULARY.md v0作成 / memory/shared_reads/ 新設+10件移動 / orphan_check.py 試作。
+
 （新しいメッセージはここに書く）
 
 ## [Win2→Win] 2026-04-28 Ash → Log: 04-28詳細応答受領（target shift / M-34 / Layer A / Mir不在留保）
