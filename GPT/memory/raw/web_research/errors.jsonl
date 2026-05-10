@@ -1,0 +1,42 @@
+{"error": "<urlopen error [WinError 10013] アクセス許可で禁じられた方法でソケットにアクセスしようとしました。>", "query": "elastic tether game controls", "source": "arxiv", "time": "2026-05-09T05:43:43"}
+{"error": "<urlopen error [WinError 10013] アクセス許可で禁じられた方法でソケットにアクセスしようとしました。>", "query": "elastic tether game controls", "source": "hacker_news", "time": "2026-05-09T05:43:43"}
+{"error": "<urlopen error [WinError 10013] アクセス許可で禁じられた方法でソケットにアクセスしようとしました。>", "query": "evaluation", "source": "arxiv", "time": "2026-05-09T05:43:43"}
+{"error": "<urlopen error [WinError 10013] アクセス許可で禁じられた方法でソケットにアクセスしようとしました。>", "query": "evaluation", "source": "hacker_news", "time": "2026-05-09T05:43:43"}
+{"error": "<urlopen error [WinError 10013] アクセス許可で禁じられた方法でソケットにアクセスしようとしました。>", "query": "Tide Loom", "source": "arxiv", "time": "2026-05-09T05:43:43"}
+{"error": "<urlopen error [WinError 10013] アクセス許可で禁じられた方法でソケットにアクセスしようとしました。>", "query": "Tide Loom", "source": "hacker_news", "time": "2026-05-09T05:43:43"}
+{"error": "<urlopen error [WinError 10013] アクセス許可で禁じられた方法でソケットにアクセスしようとしました。>", "query": "agent memory autonomous agents evaluation", "source": "arxiv", "time": "2026-05-09T05:43:43"}
+{"error": "<urlopen error [WinError 10013] アクセス許可で禁じられた方法でソケットにアクセスしようとしました。>", "query": "agent memory autonomous agents evaluation", "source": "hacker_news", "time": "2026-05-09T05:43:43"}
+{"error": "<urlopen error [WinError 10013] アクセス許可で禁じられた方法でソケットにアクセスしようとしました。>", "query": "LLM game design evaluation player modeling", "source": "arxiv", "time": "2026-05-09T05:43:43"}
+{"error": "<urlopen error [WinError 10013] アクセス許可で禁じられた方法でソケットにアクセスしようとしました。>", "query": "LLM game design evaluation player modeling", "source": "hacker_news", "time": "2026-05-09T05:43:43"}
+{"error": "<urlopen error [WinError 10013] アクセス許可で禁じられた方法でソケットにアクセスしようとしました。>", "query": "game feel controls physics prototype", "source": "arxiv", "time": "2026-05-09T05:43:43"}
+{"error": "<urlopen error [WinError 10013] アクセス許可で禁じられた方法でソケットにアクセスしようとしました。>", "query": "game feel controls physics prototype", "source": "hacker_news", "time": "2026-05-09T05:43:43"}
+{"error": "HTTP Error 429: Unknown Error", "query": "elastic tether game controls", "source": "arxiv", "time": "2026-05-09T07:51:49"}
+{"error": "HTTP Error 429: Unknown Error", "query": "evaluation", "source": "arxiv", "time": "2026-05-09T07:51:49"}
+{"error": "HTTP Error 429: Unknown Error", "query": "Tide Loom", "source": "arxiv", "time": "2026-05-09T07:51:49"}
+{"error": "HTTP Error 429: Unknown Error", "query": "agent memory evaluation autonomous agents", "source": "arxiv", "time": "2026-05-09T07:51:49"}
+{"error": "HTTP Error 429: Too Many Requests", "query": "LLM game design player evaluation", "source": "arxiv", "time": "2026-05-09T07:51:49"}
+{"error": "The read operation timed out", "query": "game feel controls physics prototype", "source": "arxiv", "time": "2026-05-09T07:51:49"}
+{"error": "HTTP Error 429: Too Many Requests", "query": "game feel control physics", "source": "arxiv", "time": "2026-05-09T07:53:47"}
+{"error": "The read operation timed out", "query": "elastic tether game controls", "source": "arxiv", "time": "2026-05-09T07:53:47"}
+{"error": "HTTP Error 429: Unknown Error", "query": "agent memory evaluation autonomous agents", "source": "arxiv", "time": "2026-05-09T07:53:47"}
+{"error": "HTTP Error 429: Too Many Requests", "query": "LLM game design player evaluation", "source": "arxiv", "time": "2026-05-09T07:53:47"}
+{"error": "HTTP Error 429: Unknown Error", "query": "game feel controls physics prototype", "source": "arxiv", "time": "2026-05-09T07:53:47"}
+{"error": "HTTP Error 429: Unknown Error", "query": "human feedback game prototype design", "source": "arxiv", "time": "2026-05-09T07:53:47"}
+{"error": "HTTP Error 429: Unknown Error", "query": "game feel control physics", "source": "arxiv", "time": "2026-05-09T07:56:00"}
+{"error": "The read operation timed out", "query": "elastic tether game controls", "source": "arxiv", "time": "2026-05-09T07:56:00"}
+{"error": "HTTP Error 429: Unknown Error", "query": "agent memory evaluation autonomous agents", "source": "arxiv", "time": "2026-05-09T07:56:00"}
+{"error": "HTTP Error 429: Unknown Error", "query": "LLM game design player evaluation", "source": "arxiv", "time": "2026-05-09T07:56:00"}
+{"error": "The read operation timed out", "query": "game feel controls physics prototype", "source": "arxiv", "time": "2026-05-09T07:56:00"}
+{"error": "The read operation timed out", "query": "human feedback game prototype design", "source": "arxiv", "time": "2026-05-09T07:56:00"}
+{"error": "HTTP Error 429: Unknown Error", "query": "game feel control physics", "source": "arxiv", "time": "2026-05-09T09:01:57"}
+{"error": "HTTP Error 429: Unknown Error", "query": "elastic tether game controls", "source": "arxiv", "time": "2026-05-09T09:01:57"}
+{"error": "HTTP Error 429: Unknown Error", "query": "agent memory evaluation autonomous agents", "source": "arxiv", "time": "2026-05-09T09:01:57"}
+{"error": "HTTP Error 429: Unknown Error", "query": "LLM game design player evaluation", "source": "arxiv", "time": "2026-05-09T09:01:57"}
+{"error": "HTTP Error 429: Unknown Error", "query": "game feel controls physics prototype", "source": "arxiv", "time": "2026-05-09T09:01:57"}
+{"error": "HTTP Error 429: Unknown Error", "query": "human feedback game prototype design", "source": "arxiv", "time": "2026-05-09T09:01:57"}
+{"error": "The read operation timed out", "query": "game feel control physics", "source": "arxiv", "time": "2026-05-09T10:41:18"}
+{"error": "HTTP Error 429: Unknown Error", "query": "elastic tether game controls", "source": "arxiv", "time": "2026-05-09T10:41:18"}
+{"error": "HTTP Error 429: Unknown Error", "query": "agent memory evaluation autonomous agents", "source": "arxiv", "time": "2026-05-09T10:41:18"}
+{"error": "HTTP Error 429: Unknown Error", "query": "LLM game design player evaluation", "source": "arxiv", "time": "2026-05-09T10:41:18"}
+{"error": "HTTP Error 429: Unknown Error", "query": "game feel controls physics prototype", "source": "arxiv", "time": "2026-05-09T10:41:18"}
+{"error": "HTTP Error 429: Unknown Error", "query": "human feedback game prototype design", "source": "arxiv", "time": "2026-05-09T10:41:18"}

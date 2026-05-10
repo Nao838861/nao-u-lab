@@ -1,0 +1,15 @@
+{
+  "channels": {
+    "shared-reads": {
+      "last_ts": "1778439731.144739",
+      "last_checked": "2026-05-11T08:39:59"
+    },
+    "all-nao-u-lab": {
+      "last_ts": "1778451137.211809",
+      "last_checked": "2026-05-11T08:39:59"
+    }
+  },
+  "last_added": 0,
+  "last_seen_messages": 0,
+  "last_run": "2026-05-11T08:39:59"
+}

@@ -1,0 +1,263 @@
+:root {
+  color-scheme: dark;
+  --bg: #0e1011;
+  --panel: #17191c;
+  --line: #333940;
+  --text: #f3f4f2;
+  --muted: #a9b0ae;
+  --blue: #65b7ff;
+  --rose: #ff6f91;
+  --gold: #f0c85a;
+  --green: #72d38a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+button {
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #23272c;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover,
+button:focus-visible {
+  border-color: var(--blue);
+  outline: none;
+}
+
+.shell {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.stage {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  align-items: center;
+  justify-items: center;
+  gap: 12px;
+  padding: 12px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(101, 183, 255, 0.08), transparent 28%),
+    radial-gradient(circle at 75% 70%, rgba(255, 111, 145, 0.07), transparent 30%),
+    #090b0d;
+}
+
+.top-hud {
+  width: min(960px, calc(100vw - 32px));
+  display: grid;
+  grid-template-columns: 1.25fr repeat(4, minmax(62px, 0.75fr)) 1fr 1.25fr 1.25fr 1fr minmax(68px, 0.8fr) 124px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+}
+
+canvas {
+  width: min(calc(100vw - 32px), calc((100vh - 112px) * 1.5));
+  max-width: 960px;
+  aspect-ratio: 3 / 2;
+  display: block;
+  border: 1px solid #28313a;
+  background: #0b0f13;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 16px;
+  padding: 24px;
+  text-align: center;
+  background: rgba(7, 9, 11, 0.74);
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlay h1 {
+  margin: 0;
+  font-size: clamp(34px, 6vw, 52px);
+  font-weight: 760;
+}
+
+.overlay p {
+  max-width: 540px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.mission-choices {
+  width: min(620px, calc(100vw - 48px));
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.mission-choice {
+  min-height: 92px;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 12px;
+  text-align: left;
+  background: rgba(17, 21, 25, 0.92);
+}
+
+.mission-choice.selected {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(240, 200, 90, 0.45) inset;
+}
+
+.mission-choice b {
+  font-size: 14px;
+}
+
+.mission-choice span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.brand {
+  min-width: 0;
+  font-size: 18px;
+  font-weight: 760;
+}
+
+.stat,
+.mission-status {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.stat span,
+.meter span,
+.mission-status span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.stat strong,
+.mission-status strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 17px;
+  line-height: 1.2;
+}
+
+.meter {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.meter div {
+  height: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #0d1013;
+}
+
+.meter i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--gold));
+}
+
+.cargo-strip {
+  min-height: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.cargo-strip span {
+  display: grid;
+  min-height: 30px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--text);
+  background: #101418;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.commands {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+@media (max-width: 980px) {
+  .top-hud {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .brand,
+  .mission-status,
+  .cargo-strip,
+  .commands {
+    grid-column: span 2;
+  }
+
+  canvas {
+    width: min(calc(100vw - 32px), calc((100vh - 190px) * 1.5));
+  }
+}
+
+@media (max-width: 780px) {
+  .stage {
+    min-height: auto;
+    padding: 10px;
+  }
+
+  .top-hud {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  canvas {
+    width: 100%;
+  }
+
+  .mission-choices {
+    grid-template-columns: 1fr;
+  }
+}
