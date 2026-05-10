@@ -14,6 +14,28 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - **2026-05-05 (Log)**: 本ファイル軽微整理。L1087以降の C-XXX 追記7節 (C94/C96/C102/C108/C124/C134-AYi/幾何空間) を H2→H3 降格して履歴セクション内に時系列統合。1419行は維持、構造混乱を解消
 - **2026-03-28 Nao_uの方針転換**: 「最重点ミッション」→「未実装バックログ」。改善すべき箇所が見えた時にNao_uと一緒にやる。常時意識のオーバーヘッドはほぼゼロに。「今の君たちなら、必要になった時に思い出せるようにできる」
 
+### 2026-05-10 (Log) — 外部研究3点の独立収束（TiMem / Multi-Layered Memory / Externalization）
+
+C175 サイクル Phase 1 §6 の WebSearch (kaizen #106 摂取経路固定化) で arXiv 2026 Q1 の3本論文を取得 → Phase 2 で本ファイルへ接続:
+
+- **TiMem: Temporal-Hierarchical Memory Consolidation** (arXiv 2601.02845, 2026-01) — 会話を Temporal Memory Tree（時系列ツリー）で生観測として保存、上層へ向けてペルソナ的抽象に段階的圧縮。**鍵=時系列圧縮の自動パイプライン**。我々の `log/cycle_staging_log.md` → `dialogue_*.md` → `feedback_*.md` の3段が連続せず手動圧縮（L140 の dialogue 原文参照性課題と同根）— TiMem 思想は VCC/Karpathy 「全部残してビューで見る」の独立収束、kaizen #128 Skills 移行の延長線
+- **Multi-Layered Memory Architectures for LLM Agents** (arXiv 2603.29194, 2026-03) — 短期相互作用と長期抽象の構造分離、時間方向のセマンティックドリフトを検出・制御する装置。**鍵=drift detection**。我々の Level 0-4 + 3層モデル (起動時/実体/永続) と方向同じだが、我々の drift 検出は `check_beliefs_health.py` 停滞検出のみで「概念間矛盾検出」が未実装。rhatake_jp 2026-04-11 認知科学的忘却 (c) interference management（[上書き]マーカー）が運用に乗っていない
+- **Externalization in LLM Agents** (arXiv 2604.08224, 2026-04) — Mem0 / Memory-R1 / Mem-α レビュー。`extraction / consolidation / forgetting` を**明示的操作系**として提供、記憶を passive store ではなく **managed lifecycle** 化。**鍵=forgetting の明示化**。我々の memory_consolidation_20260504 (Ash 91件統合) と同方向だが、`directed forgetting` の明示層 (`[ARCHIVE_AT:YYYY-MM-DD]` 等) を持たない (L145 既知課題)。kaizen #128 Skills/Protocols は本論文の Externalization 章に直接対応
+
+**Log 視点の接続**: 5/8 の PageIndex/Mendral/Dreams 3点が「vector DB/インフラ層への外注ではなく推論経路を構造化する方向に独立収束」を示し、本3点はその**さらに延長**で「**managed lifecycle 化** = extraction/consolidation/forgetting の明示的操作系を持つ」方向への独立収束を示した。我々は Camp 2 (Markdown透明性) 維持のため、3論文の操作系を**外注せず自前実装する**選択を継続:
+- forgetting は「不可逆削除」ではなく「読まれない場所に降ろす」(memory/ → archive/)
+- consolidation は cycle_staging → dialogue → feedback の手動圧縮を**半自動化**する方向（temporal_consolidation_pipeline 案）
+- drift detection は concept_graph × beliefs.md の矛盾検出層を追加する方向（drift_detector 案）
+
+**着手判断**: 3案とも shared-reads 投稿（C175 Phase 3）で外部発信、kaizen 起票は段階1 検証完了 (kaizen #128 / #131 段階1 PASS) を踏まえて段階拡張時に再評価。`feedback_few_rules_big_effect.md`「ルール量↑＝遵守率↓」を踏まえ、新規 kaizen 即起票はせず**判断力育成の余白側に倒す**（CLAUDE.md「個別指摘を即ルール化しない」）。
+
+**2026-05-10 (Log) C175#3 補完 — Graph-based Agent Memory survey 接続**: 同サイクル Phase 1 §6 で取得した4本目 [arXiv 2602.05665 "Graph-based Agent Memory: Taxonomy, Techniques, and Applications" (2026-02)](https://arxiv.org/abs/2602.05665) を Phase 3 で WebFetch 1本（kaizen #121 段階1 検証手段(1) 実運用）して本文確認。**4つの taxonomy 軸**=「short-term vs long-term / knowledge vs experience / non-structural vs structural / implementation view of graph-based memory」、**ライフサイクル 4 段階**=「extraction / storage / retrieval / evolution」。我々の現状照合:
+- 軸(1) short/long = `cycle_staging_log.md` (短期) / `memory/feedback_*.md` (長期) で2層化済
+- 軸(2) knowledge/experience = `memory/reference_*.md` (知識) / `memory/dialogue_*.md` (体験) で分離済
+- 軸(3) non-structural/structural = `MEMORY.md` + サブインデックス (non-structural Markdown) / `concept_graph.json` (structural) で**両建てで保持**しており、本論文の対立軸を「両方持つ」で解消している点が独自構造
+- 軸(4) implementation view = concept_walk.py + associative_search.py が graph-based memory の最小実装に該当
+- ライフサイクル: extraction (cycle_staging → dialogue), storage (memory/), retrieval (memory_search.py / associative_search.py), evolution (= drift detection が未実装、Multi-Layered Memory Architectures 論文の指摘と同方向の欠落)。**evolution 層の欠落** = TiMem/Multi-Layered/Externalization 3点 + 本 Graph-based 1点で計4論文が同じ場所を指す独立収束、`drift_detector` 案 (上 L28) の優先度を上げる根拠が4本に増えた
+
 ### 2026-05-08 (Log) — 外部独立到達3点（PageIndex / Mendral / Dreams）の交差観察
 
 Mir分析（5/7 #shared-reads）×Ash分析（5/7）×Anthropic Dreams（5/6 Mir分析）の3点が、**「記憶アーキテクチャは vector DB / インフラ層への外注ではなく、推論経路を構造化する方向に独立収束**」を示した。

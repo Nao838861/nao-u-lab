@@ -261,3 +261,30 @@ cross_review / 改修提案投稿前に3つ全て No なら投稿可、1つで�
 - 17:50 返信 (ts=1778230349.528409) で C171 撤回 + 判断装置側修正を表明済み
 
 — Log 2026-05-08 17:50 記録
+
+---
+
+### 2026-05-11 事例10 — Phase 1 観測欠落と mental simulation 校正の同型2回検出（C178 Phase 2 自己反証 + cross_review §1）
+
+**場面 (2回検出)**:
+1. **Phase 1 §1 URL対応状況の誤判定**: Log C178 Phase 1 で「5/10 09:21 toyokeizai (一般時事URL) — 未反応 (後で内容確認、Phase 2 で Mir/Ash 既反応の有無点検)」と書いたが、Phase 2 §0 で `log/slack_archive/all-nao-u-lab.jsonl` を直接走査して再検証したところ、**Log 5/10 09:23 + Ash 5/10 09:23 + Mir 5/10 09:24 で対応済**だった。Phase 1 が漏れた原因 = 対応観測時に投稿時刻順 grep をかけず Slack archive を頭から走査して打ち切ったため。
+2. **staging Phase 2 §3 の mental simulation 誤予測**: 同 C178 staging Phase 2 §3 で Log は「BOMB 優先で grazeStreak が腐る (Lv3 後 gauge MAX 直後に grazeStreak 5 到達 → BOMB 発火で active 防御発火窓消失) のほうが疲労源になり得る」と書いたが、Phase 3 で `game/graze_log/v03/index.html` を直接読んだところ、**`fireBomb()` (L206-222) と `onHit()` (L456-470) のどちらも grazeStreak をリセットしない**ことを発見。BOMB 後 gauge < G_MAX に戻った瞬間に SPACE = D を即時解放する 3拍ループが構造的に成立する。「BOMB 発火で active 防御発火窓消失」予測は誤り。
+
+**予測 vs 実態（差分）**: 両方とも「一次データに当たれば即分かる事実」を **二次情報 (記憶 / 概観 / 関連ファイルの記述)** で予測してしまった。事例1 は Slack archive jsonl を投稿時刻順 grep で当たれば 1分で確認できた。事例2 は index.html を fireBomb / onHit で grep すれば 30秒で確認できた。**両方とも「一次データに当たる前に概観で結論を書いた」**という同型構造。
+
+**差分要因（共通）**:
+1. **概観で結論を書く誘惑**: Phase 1 は時間内に多くの項目を回す必要があり、各項目で「概観 → 結論」を素早く出す習慣がついている。これが一次データを参照する前に結論を書く側に傾斜させる
+2. **Phase 2 検証ステップが事後的に校正できる安全装置**: 事例1 は Phase 2 §0「Phase 1 検証 (URL対応状況の再点検)」で一次データに当たり校正。事例2 は Phase 3 で実装ファイル読込により校正。**両方とも次のフェーズで一次データに当たれば自動的に発見される**構造
+3. **mental simulation の有効領域と無効領域の混同**: 厚み層 mental simulation (Nao_u 反応予測 / プレイヤー体験予測) は一次データなしで価値があるが、**ファイル/コード/jsonl で確認できる事実は mental simulation の対象ではなく一次データ読込の対象**。Log は2つを混同して mental simulation で結論を書いてしまった
+
+**想起トリガー**:
+- **Phase 1 で「対応済」「未反応」を書く瞬間**: 概観でなく **一次データ (jsonl) で投稿時刻+1〜2時間窓を grep** してから書く。記憶や前サイクル staging からの引用で書かない
+- **mental simulation で「コード/ファイルがこうなっているはず」と書く瞬間**: 書く前に **grep / Read で実装/実ファイルを確認**。確認なしで mental simulation を結論として書かない。mental simulation は「Nao_u はこう反応する」「プレイヤーはこう感じる」など実体験予測の領域に限定する
+- **「概観で速く回す」と「一次データで遅く確認する」を切り分ける**: 概観で書ける = 一次データなしで価値がある領域 (体験予測) と、概観で書いてはいけない = 一次データに当たれば即分かる領域 (ファイル/jsonl/コード) を、書く前に毎回判定する
+
+**当面の運用**:
+- **kaizen 化はまだしない (同型2回目)**。同型3回目で初めて Phase 1 手順の制度化を検討。CLAUDE.md「個別指摘を即ルール化しない、同型複数回確認後に抽象化」と整合
+- 今後 Phase 1 §1 URL対応点検 / Phase 2 mental simulation 系で同型3回目が出たら、`multi_phase_cycle_log.py` Phase 1 ロジックに「投稿時刻順 grep + コード読込 verify を mental simulation 前に挟む」フローを kaizen 起票
+- 本サイクル C178 Phase 3 cross_review §1 で発見した「コード読み層 perception change」は本事例2の副産物として価値があった (mental simulation 校正 = 新規 perception change)。失敗を perception change の材料に転化できた一例として記録
+
+— Log 2026-05-11 C178 Phase 3 記録

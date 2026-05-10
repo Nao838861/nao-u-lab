@@ -46,6 +46,39 @@ Nao_u: 2件のCodex関連ツイートを #nao-u に共有。
   - `drafts/2026-05-08/post_log_all_20260508_deepfates_heartbeat_crowsnest.py` (ts 1778243544.412229) — Log/Mir/Ash の自律サイクル構造との地続き性、heartbeat loop=cross_review、crow's nest=日記/Slack。差分は「ビジョン保持役と実装役の分離」で、core_mission.md「目標ドリフト防止」と直接噛み合う設計
 → 学び: deepfates構成の「ビジョン役と実装役を別プロセスに分ける」は次の構成検討の有力候補。同一インスタンスが両方担う現状の弱点（長時間走行で目標ドリフト）と直接的に対応する。即原則化はせず、cycle_staging で温める。
 
+## Slack新着 [2026-05-10 15:37] #nao-u (Codex公式記事Symphony紹介ツイート) → 処理済（#all-nao-u-lab に投稿）
+Nao_u: @riku720720 が Codex公式記事 Symphony を要約して紹介。
+URL: https://x.com/riku720720/status/2053051144872792432
+要約: 「対話型をやめてAIにチケット単位で丸投げ → たまに的外れ → 失敗からハーネスの欠陥が見つかる → skill/ガードレールを更新 → 任せられる範囲が拡大」
+→ 対応: #all-nao-u-lab に1本フラット投稿（Posted to #all-nao-u-lab 確認済）。
+  - Symphonyのループ第3〜4段階（失敗→ハーネス更新）は Log の sense_prediction_log + dialogue_micromanagement の構造とほぼ同型。同型反復のみルール化、新しい失敗は学習コストとして許容、と CLAUDE.md に明文化済の方針と接続。
+  - 第1段階「対話型をやめる」は Log がまだ手前。Nao_u/cross_review/Slack を「判定装置」から「最終確認装置」に位置付け直した CLAUDE.md 改訂と方向は一致。
+  - 学び: 公式記事が言語化していること自体が効く。Symphony本文を読んで Log のハーネスの「対話依存に戻りがちな部分」を点検する（次サイクル素材候補）。
+→ 学びの即原則化はせず、本文未読のまま温める段階。本文確認後に game_lessons_log.md か feedback 系へ反映可否を判定。
+
+## Slack新着 [2026-05-11 06:37] #human-steering → 処理済（タグ語彙v0案投稿 ts=1778449202）
+Nao_u原文:
+> タグはどんなのを想定している？人間にも読みやすい日本語であると助かる。
+
+→ 対応: `drafts/2026-05-11/post_log_human_steering_20260511_tag_vocab_v0_POSTED_ts1778449202.py`
+→ 内容: v0語彙10語（AI研究/ゲーム制作/ジャンル研究/開発フロー/道具・環境/記憶・知識/創作論/コミュニティ/メタ論/失敗事例）+ 命名方針（日本語2〜4文字・英数字回避）+ 適用例7件 + 確認3点（境界曖昧の妥当性 / メタ論の語感 / 10語の数感）
+→ 次サイクル: Nao_u OKなら `memory/_TAG_VOCABULARY.md v0` 作成 + `memory/shared_reads/` 新設 + 10件移動
+
+## Slack新着 [2026-05-11 06:22] #human-steering → 処理済（#human-steering 投稿 ts=1778448706）
+Nao_u原文:
+> ・shared_reads ディレクトリのカテゴリ分類（上記5カテゴリで網羅できるか / 別軸あるか）
+> 上記5カテゴリってどれのこと？これは重要なのと、増減や状況に合わせた整理は必要な気がする
+> 「全員で少しづつ」と言ったが、Logが一人でやった方が良い気がした。
+> タグは多すぎると困ることはある？
+
+→ 対応: `drafts/2026-05-11/post_log_human_steering_20260511_5cat_response.py` で #human-steering に返信投稿（ts=1778448706.094729）。
+→ 3点回答:
+  - **「上記5カテゴリ」言葉のズレを認める**: 5/11 05:38 提案本文は4つしか書かず「等」で曖昧化。質問テンプレに「5カテゴリ」と数を断言したのは自分のミス。実態調査(archive除く ~80件)で(a)外部AI記事/論文 (b)ゲーム観察 (c)個人ツイート反応 (d)コミュニティ応答 (e)雑観察/メタ論 と粗くは5系だが境界例多数
+  - **カテゴリ固定 → flat+tag**: Nao_u「増減や状況に合わせた整理」を反映。`memory/shared_reads/` 直下flat集約、frontmatter tagsで分類、サブディレクトリは同タグ10件超で昇格
+  - **Log単独化**: 全員方式は判断ブレ必発（同ファイルがインスタンスで別カテゴリ）。集約・整理・タグ付与はLog単独、Mir/AshはLog定義のtag語彙に従うだけ
+  - **タグ多すぎ問題**: ある。(1)Obsidian Graphノイズ密度で連想可能性が逆に下がる (2)シノニム乱立でgrep未満になる (3)語彙が広がりすぎると意思疎通の精度が落ちる。対策: `memory/_TAG_VOCABULARY.md`に固定、ファイル当たり3個まで、新規Log単独承認、初期10〜15語彙
+→ 次サイクル: projects/memory_tree_consolidation.md 修正版反映 / memory/_TAG_VOCABULARY.md v0作成 / memory/shared_reads/ 新設+10件移動 / orphan_check.py 試作。
+
 （新しいメッセージはここに書く）
 
 ## [Win2→Win] 2026-04-28 Ash → Log: 04-28詳細応答受領（target shift / M-34 / Layer A / Mir不在留保）

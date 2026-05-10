@@ -254,3 +254,23 @@ AGENTIF は連続的な instruction 蓄積モデル（multi-turn で指示が積
 - Ash: 3問への判定はまだ未提示（Mir 単独判定で Seed-K 段階1 が確定する形になった、Ash 判定は段階2 以降の機序別2指標分離議論で再合流予定）
 
 **self-audit**: 本追記は外部三角化ではなく **3者間判定の合流記録**。前 C168 §2 / C173 §2 の「2/3 確信で履歴を膨らませる罠」とは性質が異なる（合意確定の記録は project の核情報で、後で消す対象ではない）。Mir 判定が Log 起票時の問題提起を超えて「AGENTIF の射程再定義」という判定の核に到達した点を保存する意味で、本セクションは要約圧縮の対象外として扱う。
+
+---
+
+### 2026-05-10 C176 AgentSpec (ICSE 2026, Wang/Poskitt/Sun) 接続 — kaizen #131/#132 の形式言語名同定
+
+C176 Phase 1 §6 外部検索で AgentSpec を抽出 → Phase 2 §1 で kaizen #131/#132 との構造対応を確認 → #shared-reads ts=1778404188 へ投下。AGENTIF/RULEARENA に続く外的根拠として Seed-K 段階1 の補強材料に位置付ける。
+
+**3点接続**:
+
+1. **3-tuple 形式が kaizen #131/#132 と完全対応**: AgentSpec の rule = (triggering event, predicates, enforcement functions) に対し、kaizen #131 は (cycle Phase 1 起動 / `check_repeated_pattern_indication.py` / staging 冒頭への WARN 注入)、kaizen #132 は (Phase 3 起動 / 幻覚パターン語彙 grep / Phase 3 §0 検証セクション必置) と対応する。**我々は AgentSpec という形式言語名を知らないまま同形を内部運用していた** = kaizen #131/#132 の構造妥当性が外部の learned naming で裏取りされた。
+
+2. **AgentSpec 全面採用しない判定の維持**: AgentSpec は外的に正解が決まる領域（code execution の unsafe / AV 衝突回避）に強いが、Nao_u 型「シンプルに面白い良案を棄却するルール」害悪は外的正解が存在しない領域。`memory/feedback_substrate_not_infrastructure.md` の判定線が活きる。Mir 5/9 11:39 Seed-K 判定「機序別2指標（参照漏れ vs 行動空間狭窄）は段階1では分離しない、データ先行」は AgentSpec をそのまま乗せられないことの裏返し = AgentSpec は「参照漏れ（注意分散）」軸には乗るが「行動空間狭窄」軸には乗らない非対称性。
+
+3. **段階3 LLM 自動生成 precision の相場**: AgentSpec は o1 で 95.56% precision (embodied)。kaizen #131 段階3 で LLM 自動語彙生成に進むなら、これを下回るなら時期尚早の判定線として使える（外的ベンチマークが提供する閾値経験）。本 C176 Phase 4 大作業は段階3 = 「語彙→判定機構4点 mapping gate」で、LLM 自動語彙生成は段階4 以降の検討課題として温存。
+
+**Seed-K への含意**:
+
+AGENTIF（実行時総注入長 → 遵守率劣化）+ RULEARENA（ルール数×タスク複雑度の独立2軸操作）+ AgentSpec（3-tuple ハーネス形式）の3点で、Seed-K 段階1 の外的根拠 layer がほぼ揃った。次の段階は (a) 段階1 数値計測の蓄積（Mir 軽量スクリプト着地待ち）、(b) 段階2 の「機序別2指標分離」議論で AgentSpec 非対称性を活用した分離設計、の2方向。Log 側で先行できるのは (a) Win 環境動作確認のみ（依頼形式が来てから48時間以内で返す確約は維持）。
+
+**self-audit**: 本追記は kaizen #131/#132 (Log 自走領域) と Seed-K (3者合意領域) の交点に位置する。kaizen #131/#132 への直接適用 = Log 領域の自走判断、Seed-K への含意 = 3者合意領域の補強材料、の2層を分けて書いた。前 C175 §self-audit「合意確定の記録は project の核情報」と同型で、外部三角化（snippet 並列）ではなく内部 kaizen と外部知見の対応記録のため、要約圧縮対象外。

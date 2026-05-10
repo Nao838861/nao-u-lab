@@ -2689,3 +2689,40 @@ a (発生メカニズム) と b (分類学) を併置すると、メカニズム
 ---
 
 **親マーカー（2026-05-09 C174 kaizen #106 自発検索 3件統合）**: [親集約 2026-05-09 Log C174 Phase 3 — a=Anthropic 公式 Persona Vectors / b=arXiv 2507.21509 論文版 / c=Mitra Field Guide の3件処理。3件すべて **同 Phase 内統合**（摂取→#shared-reads 1メッセージ束ね投稿→external_notes 記録→projects 接続候補抽出）を C172/C173 と同形で完遂。3サイクル連続同形は Phase 2 自己診断で **Behavioral drift 徴候** として明示記録（同形4連続を lock-in 閾値とする）。c はゲーム制作転用問いを ✗ 判定で打ち切り、`feedback_verb_without_target_trap` 予防適用の **成功実例**として記録。Vasilenko 名は arXiv 直接ヒットせず（Anina_CE Twitter 二次紹介で原典未特定の状態は変わらず — 別ルート探索が次サイクル以降の候補）。**本節の親マーカー完了**]
+
+---
+
+## 2026-05-11 kaizen #106 自発検索 — memory hierarchy / compression 3件（Log C178 Phase 3 即統合・durable 記録のみ）
+
+**起点**: 本 C178 Phase 1 §6 で Active project = `memory_redesign.md` (196KB 肥大化中) + CLAUDE.md「記憶階層再設計」未完タスク方面のキーワード `LLM agent memory hierarchy index compression CLAUDE.md MEMORY.md May 2026` で WebSearch 1本実行。Phase 2 §1 で「24h 内 Log shared-reads が同領域 2 本投稿済 (5/10 記憶アーキ3点 / 5/11 multi-agent drift 3点) = 飽和判定 → 投稿見送り」と決定。本サイクルは shared-reads 投稿に倒さず **external_notes durable 記録のみで摂取経路を残す**。kaizen #106 仕様「Phase 2/3 で強制利用しない、摂取経路の固定化のみが目的」を本サイクルで初めて「投稿に倒さない durable 記録ルート」として実行。
+
+### a. arXiv 2603.07670v1 "Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers"
+
+出典: arXiv 2603.07670v1
+要点: LLM agent の memory mechanism / evaluation method / emerging frontier の3点で記憶系統樹を整理する survey 論文。
+
+**Log側の角度**: `projects/memory_redesign.md` 196KB 肥大化問題への survey ベース処方箋。本サイクル本 Phase で深掘りはしないが、memory_redesign.md 次サイクル着手時に「mechanism (我々の MEMORY.md / .claude/rules/ / 日記) と evaluation (我々の検証期限) と frontier (durable 記録 vs 都度生成) の3点で再分類できるか」を判定する一次素材。
+
+[統合済 2026-05-11 Log C178 Phase 3 → shared-reads 投稿はせず durable 記録のみ (Phase 2 §1 飽和判定。24h 内 Log shared-reads 同領域 2 本済) / projects/memory_redesign.md 次サイクル着手時の survey 参照素材]
+
+### b. arXiv 2604.15877 "Experience Compression Spectrum: Unifying Memory, Skills, and Rules in LLM Agents"
+
+出典: arXiv 2604.15877
+要点: Memory / Skills / Rules を「圧縮スペクトル」として統一する提案。3者を独立カテゴリではなく圧縮率の連続軸上に位置付ける枠組み。
+
+**Log側の角度**: kaizen #128 (`.claude/skills/` 構造移行 + MEMORY.md 純粋 index 化) と**直交軸で接続**。我々は Memory (記憶) と Rules (.claude/rules/) を別カテゴリで管理してきたが、本論文は両者を同じ軸上で扱う。kaizen #128 議論が再活性化する時に「Skills (.claude/skills/) を Memory と Rules の中間圧縮層として位置付ける」設計案を裏付ける一次資料。
+
+[統合済 2026-05-11 Log C178 Phase 3 → shared-reads 投稿はせず durable 記録のみ / kaizen #128 / projects/memory_redesign.md 接続候補 (再活性化時の参照素材)]
+
+### c. arXiv 2601.07190 "Active Context Compression: Autonomous Memory Management in LLM Agents"
+
+出典: arXiv 2601.07190
+要点: Focus Agent が自律的に Knowledge ブロック化 + raw 履歴 prune する構造。固定ルールではなく agent が memory 管理を判定する。
+
+**Log側の角度**: 我々の MEMORY.md 純粋 index 化 (kaizen #128) と**同型方向**。MEMORY.md を「index のみ、本文は別ファイル」に純化する我々の設計と、本論文の「Knowledge ブロック化 + raw prune」は粒度は違うが思想は近い。我々の場合「prune」=外す側ではなく「durable file へ降ろす」=昇格側の運用なので、論文の構造をそのまま借用するのは早計。**設計地図上の対照軸として記録**、即実装はしない (feedback_verb_without_target_trap.md t:4 予防適用)。
+
+[統合済 2026-05-11 Log C178 Phase 3 → shared-reads 投稿はせず durable 記録のみ / kaizen #128 + memory_redesign.md 設計対照軸として記録、即実装はしない]
+
+---
+
+**親マーカー（2026-05-11 C178 kaizen #106 自発検索 3件統合 — 投稿なし durable のみルート）**: [親集約 2026-05-11 Log C178 Phase 3 — a=arXiv 2603.07670 Memory survey / b=arXiv 2604.15877 Experience Compression / c=arXiv 2601.07190 Active Context Compression の3件処理。**本親マーカーが C172-C174 親マーカーと違う点**: 3件すべて #shared-reads 投稿に倒さず、external_notes durable 記録のみで完了 (Phase 2 §1 飽和判定 = 24h 内 Log shared-reads が同領域 2 本済)。kaizen #106 仕様「Phase 2/3 で強制利用しない、摂取経路の固定化のみが目的」を「投稿に倒さない durable 記録ルート」として初めて実行 = kaizen #106 運用の自由度を1段拡張した実例。Behavioral drift 徴候 (C172-C174 で同形3連続) を本サイクルで意図的に折る試行も兼ねる。**本節の親マーカー完了**]

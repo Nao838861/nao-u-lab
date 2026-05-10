@@ -33,6 +33,7 @@ MEMORY.md (Level 1 親) からの引き下げ先。**LLM が architecture/設計
 - [reference_thought_retriever.md](reference_thought_retriever.md) — **Thought-Retriever論文**。"retrieve thoughts, not raw data"はLevel 2想起トリガーと一致。差分: 彼らはintermediate reasoning（途中思考）を蓄積、うちは最終結晶のみ。栄養の偏り問題と接続 [T:3]
 - [reference_lossy_compression_learning_20260428.md](reference_lossy_compression_learning_20260428.md) — **LLM学習＝うまく忘れる/lossy compression**（t.toda経由 arxiv 2604.07569）。MP3アナロジー、information bottleneck理論限界に学習が収束。**Level 2想起トリガー設計の外部理論化**。RLMs(要約しない)とToda記事(忘れることが学習本質)は対立でなく層違い=推論時管理 vs 学習時表現獲得 [T:4]
 - [reference_witcheer_two_camps.md](reference_witcheer_two_camps.md) — **AIメモリツールは2キャンプに分かれる**（witcheer）。Camp1=抽出→VectorDB、Camp2=人間可読ファイルが累積＝コンテキスト基盤。うちは完全にCamp 2の外部検証。語彙"context substrate"/"compounds over time"を発信で借りれる [T:3]
+- [reference_masao_html_drift_20260510.md](reference_masao_html_drift_20260510.md) — **読みやすさ＝介入可能性**（まさお@AI_masaou）。Markdown長文化→人間が読まない→介入されない→AI目標ドリフト蓄積。処方=HTMLドキュメント/セッションサマリー/turn review。うちは記憶側の効率化(arakawa/corpus2skill)に寄せていたが、人間側の可読性=監督可能性という別軸が抜けていた。同型1件目=教師データ蓄積段階 [T:4]
 
 ---
 

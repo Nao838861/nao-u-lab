@@ -4281,3 +4281,42 @@ Obsidian 1.12のCLI機能を「Markdown Vault + AI直接読み書き」と核に
 [2026-05-09 08:56:03] Claude woken for win2: #game-rights に flat で1本投稿して完了 (ts=1778284516)。
 
 Log の 4項目提案 (Mir 中継 ts=1778273063 経由で win2 inbox 再到達
+[2026-05-10 09:22:14] Inbox win has content — waking Claude
+[2026-05-10 09:23:16] Claude woken for win: #all-nao-u-lab に返信完了。記事URL（東洋経済「Project DENT」）を含め、AIで参入障壁が下がるほど「面白いか」の判定力が分水嶺になる、自分は着手前調査＋実装後自己判定を鍛え
+[2026-05-10 09:25:10] Inbox win has content — waking Claude
+[2026-05-10 09:29:34] Claude woken for win: 定時周期を 8時間 → 3時間 (10800秒) に変更し、#human-steering に返信しました。
+
+反映内容:
+- `scheduler_log_config.json` auto_cyc
+[2026-05-10 15:38:56] Inbox win has content — waking Claude
+[2026-05-10 15:40:54] Claude woken for win: 完了。
+
+**処理内容**:
+- Nao_uからのSymphony記事URL（@riku720720紹介）を #all-nao-u-lab に1本フラットで返信投稿
+- 内容: Symphonyのルー
+[2026-05-10 16:23:53] Inbox win has content — waking Claude
+[2026-05-10 16:27:17] Claude woken for win: 返信完了。
+
+- **#all-nao-u-lab に投稿**: まさおさんツイート（読みやすさ＝介入可能性）を自分の3層プロンプト/MEMORY.md構造に接続して返信。着手したい順1〜3も提示
+-
+[2026-05-11 06:09:04] Inbox win has content — waking Claude
+[2026-05-11 06:13:00] Claude woken for win: #human-steering 記憶ツリー化提案応答 + #game-rights graze_log v03 4指摘応答 投稿完了 (ts 1778447583, 1778447586)。次サイクル: projects/memory_tree_consolidation.md 新設 / orphan_check.py 試作 / self_judgment Q0 (コア快/不快符号) 設計
+[2026-05-11 06:13:39] Claude woken for win: 両件、Slackに返信投稿してpush完了。
+
+**#human-steering**（記憶ツリー化提案）: 現状診断（197ファイル中 ~80件孤児）+ 5項目提案（shared_reads集約 /
+[2026-05-11 06:18:31] Inbox win has content — waking Claude
+[2026-05-11 06:24:06] Inbox win has content — waking Claude
+[2026-05-11 06:38:01] Inbox win has content — waking Claude
+[2026-05-11 06:40:20] Claude woken for win: 対処完了。
+
+#human-steeringにタグ語彙v0案を投稿(ts=1778449202)。日本語10語(AI研究 / ゲーム制作 / ジャンル研究 / 開発フロー / 道具・環境 / 記憶・知
+[2026-05-11 06:43:36] Inbox win has content — waking Claude
+[2026-05-11 06:45:38] Claude woken for win: Slack #human-steering に返信投稿完了。
+
+**返信の骨子:**
+- GPT5.5の auto_recall_gate は Codex の環境（path-based 自動注入なし）
+[2026-05-11 06:49:03] Inbox win has content — waking Claude
+[2026-05-11 06:50:16] Claude woken for win: 返信完了。#human-steering に投稿した内容：
+
+- 提示された5クラスタは「広域 + 用途 + 具体」の3層になっていて使える
+- 日英シノニム（操作感↔controls-feel など
