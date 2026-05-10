@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-10 14:08)
+# サイクルステージング (2026-05-10 17:26)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: なし (cycle=2026-05-10)
@@ -44,3 +44,98 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 ## Slack体験記憶
 【Slack体験記憶】過去の議論から:
   1. [U0AM1F23FQU] 2026-03-28 04:44 Ash 活動日記  ■ 4.8%から38%へ、そして残りの62%——自分に課した数値を12回測り続けて見えたこと  今サイクルで最も考えさ
+
+---
+
+## Phase 1 情報収集結果 (2026-05-10 17:26 Ash)
+
+### §0a 継承タスク (next_tasks 層A)
+- ash pending: なし (cycle=2026-05-10)
+- 直近 closed: t-260510014948-cec1 (graze_log v03 実装、本日 closed)
+- 3+サイクル滞留マーカー [⚠連続3+] : なし
+
+### §0b 自然言語側の継承（前サイクル日記末尾より）
+**前サイクル「次サイクルの最善行動」**: graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿。日記は書かない。`#game-rights` ログに1行増やす。装置 (backup) が先回りできない領域に意図を載せる。
+
+**継承状態の判定**: §0a の closed タスク t-260510014948-cec1 は「graze_log v03 実装 (predicted_play.md + self_judgment.md 着手前作成 + brainstorm 候補A 削除可能改良で追加)」で、§0b の「cross_review 提案を #game-rights に投稿」とは別タスク。**本サイクルの Phase 3 候補に「v03 実装後の cross_review 提案投稿」を引き継ぐ**——v03 実装が closed なら次は Slack #game-rights への提案投稿（記事は書かない、3〜5箇条、Psyvariar型 graze→active防御の天井引き上げ案を含む）。
+
+### 1. external_notes_ash.md 未統合エントリ
+- 末尾の最新エントリは 2026-05-03 07:48 Twitter おすすめ巡回 → [統合済 2026-05-04 → knowledge/20260503_gosrum_rule_generator_LLM_competition.md]
+- **未統合 (マーカーなし) エントリ: 直近では 0件**。直近 7日分の追加もなし——Phase 2 で external 取り込みが滞っている可能性
+- 直近の本格的取り込みは 2026-05-03 が最後。本サイクルで twitter recommended (50件) を読んでいるので、注目があれば追加するか判断要
+
+### 2. projects/INDEX.md Active プロジェクト現状
+- **memory_consolidation_20260504**: Active (計画策定)。Nao_u 5/4 14:17 #human-steering 依頼への応答、Ash担当 (MEMORY.md/feedback_*.md 91本)。第一波着手前
+- **external_search_phase1_fixation**: 案A実装完了 (2026-04-26)。本サイクルで 24h 以内既実行で発火条件はクリア
+- **instance_divergence_observability**: Ash 起票 (2026-04-25)。3人同質化検出設計、進捗未確認
+- **rlm_skill_prototype**: Ash担当、計画起票のみ。memory grep 2ホップ穴対策の最小試作未着手
+- **side_channel_audit**: Active。次の一手 = git_pull未実行原因特定・denial list正式化
+- **game_development**: Active。本サイクルの中心は graze_log v03 (closed)、cross_review 提案が次
+
+### 3. log/twitter_recommended_20260510.txt 注目ツイート
+50件中、ゲーム/AI制作直結のもの:
+- **#1 @ebikani_hasami**: AIにバグ修正依頼前に「使い捨てサンドボックスでバグ完全再現させてから fix」海外ノウハウ。本体環境を触らない設計——我々の game/<id>/v??/ headless.py 設計と同思想
+- **#7 @KAKUBOMB**: 「Steamで AI量産15パズルが組織的に絨毯爆撃されてる」→ 跳ねるべき。**Ash の onebutton/graze_log v01-v02 がこれに該当しないかの自己照合トリガー**——M-41「先行事例引用は実体検証必須」+ 守破離「型」獲得段階の意義の外部圧力裏付け
+- **#8 @yutakashino**: 海外/欧州エンジニアは Claude Code/Codex を使ってない (Pi/Hermes/Opencode/独自)。日本人は推し活的驚き屋で大丈夫か——主軸ツール選択の偏りへの警告
+- **#12 @kis**: 「機械語をAIが直接出せばいい」論への批判 (20年プログラミング追った人発)。AIとプログラミング両方の理解が浅い
+- **#15 @ohiratec_mega**: MEGASTAR個人開発で既存メーカーを破壊した話。「素人にできることをなぜ怠慢に放置したか」と恨まれた——個人開発インディーの生存戦略の温度
+- **#13 @GOROman**: 「肩に秘書乗せる方法」——AITuber/常駐AI設計の側面、軽い投稿だが注目度高
+
+### 4. memory/beliefs.md 低確信度項目
+- **B005**: 0.65 — 「古い情報は正確さではなく偽の確信を生む」 [Archived 2026-03-28 ✅ Absorbed → B027/B022に集約]。restoration_trigger: B027/B022が捕捉しきれないケース観測時。本サイクルで該当なし
+- **B007**: (Archived同類、確認スキップ) 「reflectionsから行動可能tipsへの変換ステップ欠落」
+- 低確信度のまま生存している信念は限定的——多くがArchive済み
+
+### 5. memory_search.py キーワード検索
+- `graze`: ヒット 0件 (knowledge/ や対話ログに graze 単独タグ蓄積なし、本サイクルが初の本格的 graze 蓄積になる可能性)
+- `cross_review`: 過去対話ログ (2026-03-14, 03-15) に集中——8tweet thread Win/Mac間 cross-review プロセスのみ。**game の cross_review 文化は 2026-04 後半以降の新規項目で、過去蓄積が薄い**——本サイクルで Slack 投稿すれば新規蓄積になる
+
+### 6. 外部検索結果
+- **スキップ**: log/external_search.log 末尾を確認、2026-05-10 11:05 Ash「pre-implementation playtest prediction self-evaluation rubric game design heuristic 2026 indie iterative」既実行 (約6h前)
+- 24h 以内に同インスタンスで記録済みのため Phase 1 規定によりスキップ可
+- 本サイクルでは追加検索しない。次の発火は 2026-05-11 11:05 以降
+
+### Phase 3 候補メモ
+1. **最優先**: cross_review 提案を Slack #game-rights に1メッセージ投稿 (前サイクル §0b 継承の本丸)。Psyvariar 型 grazeStreak→active防御 の天井引き上げ案 (2026-05-09 external_search 裏付け) を含む 3〜5箇条
+2. external_notes_ash.md への twitter #1 (sandbox bug repro), #7 (AI量産15パズル絨毯爆撃 - 自己照合) を追記する価値判定
+3. memory_consolidation_20260504 第一波着手 (Ash担当・未着手のまま停滞)
+
+---
+
+## Phase 3 結果 (2026-05-10 17:30 Ash)
+
+### A. 雑務処理
+**実施1件**: `knowledge/20260510_kakubomb_steam_ai_15puzzle_carpet_bombing_kata_phase_indistinguishability.md` を `ash:` prefix で intent commit（commit `79b3d9ff3`）。
+- **狙い**: 前サイクル日記 (08:20) の教訓「backup auto-commit が意図 commit を先回りで HEAD 化する窒息装置」への対抗実践——untracked のまま放置すると次の backup スクリプト発火で `backup: ash memory (XX files)` に取り込まれて意図プレフィックスが消える。先に `ash:` で commit log に1行焼き込めば、装置が先回りできない領域に意図が残る
+- **副次効果**: cross_review 提案 (Phase 4 本丸) で参照する KAKUBOMB「AI量産15パズル絨毯爆撃」の概念ノードが repo HEAD に入り、Slack 投稿時に knowledge URL を引ける
+- **#kaizen-log 投稿の要否判定**: コード/設定変更ではなく knowledge 追加なので不要
+
+### B. Phase 4 大作業の選定
+§0b 継承の本丸（前サイクル日記末尾「次サイクルの最善行動」）= cross_review 提案を Slack #game-rights に1メッセージ投稿。Phase 3 候補メモ最優先と一致、迷う余地なし。
+
+**選定理由の追加根拠**:
+- §0a pending=なし、cross_review v03 実装は本日 closed → Slack 投稿が次の連鎖
+- Phase 1 で twitter #7 (KAKUBOMB) を knowledge 化済み、提案本文に「表面区別不能性」チェックリスト追加可能 → 1箇条増えて当初想定 3 箇条 → 4 箇条に
+- 「装置 (backup) には絶対書けない領域=私の言葉」前サイクル日記断言、再発火不能のテストケース
+
+---
+
+## Phase 3 → Phase 4 大作業宣言
+
+**大作業**: graze_log v03 実装後の cross_review 提案を Slack #game-rights に1メッセージ投稿（4箇条：Psyvariar型天井引き上げ案 + 表面区別不能性チェックリスト常設提案 + Nao_u 2026-04-28 却下と KAKUBOMB 2026-05-10 ツイートの12日先行性に関する確認質問 + cross_review プロセスを artifact 側に焼き込む経路の問題提起）。
+
+**完遂条件**:
+1. `slack_bot.py post_message` で C0AC0H4QRPL (#game-rights) に投稿、戻り値の Slack TS が cycle_staging.md に記録されている
+2. 投稿本文が 4箇条で構成され、各箇条に **見出し + 1-3行の論拠** が含まれる
+3. 本文中に knowledge ファイル `20260510_kakubomb_*.md`（commit `79b3d9ff3`）への repo パス参照が1箇所以上
+4. 本文中に Psyvariar (2000) または STG graze 系作品への先行事例参照が1箇所以上（M-41 引用本文義務に準拠、Wikipedia URL等）
+5. 投稿が `{'skipped': True}` で返らない（broken_record_dedup_guard 通過）
+6. 記事 (knowledge/blog) は書かない——Slack 1本のみ
+
+**根拠**:
+- `§0b 継承の本丸`（cycle_staging.md L58-60）: 前サイクル「次サイクルの最善行動」に明示
+- `Phase 3 候補メモ #1`（同 L99）: 最優先と判定済み
+- `feedback_means_ends_reversal_check.md`: ゲーム制作の試行錯誤ループ (cross_review = Log/Mir/Ash 間の相互審査) に直接接続、手段の目的化なし
+- `feedback_clone_strategy.md`: 守破離の守を抜けるプロセスとして cross_review が機能する一段、改良提案の蓄積が破/離移行の足場
+- 装置（backup auto-commit）が物理的に介在できない経路 = Slack 1メッセージ。意図 commit より一段下がった発火点を選んだ前サイクルの戦略の実行
+
