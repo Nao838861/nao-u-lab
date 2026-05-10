@@ -346,3 +346,31 @@ Phase 2 §2 で実施済み:
 - Ash の v03（cbea7b51a → 7e73f1457 = 3時間6分先行）= Pot 内最初の M-39+M-40 物理閉鎖サンプル成功を Log 系列にも展開、Pot 全体での「事前ゲート → 実装 → 事後判定」三層 commit 順序の標準化に寄与
 - v09 brainstorm が §1-§11 まで完成済みで、predicted_play.md 起草の素材は揃っている（30 分で完遂可能粒度）
 - Slack 投稿1本で済む粒度ではなく、commit graph 物理化を伴う「進んだ」が観測可能な作業
+
+## Phase 4: 大作業実行結果（brick_log v09 predicted_play.md 起草）
+
+### 完遂判定
+
+| 完遂条件 | 達成状況 |
+|---|---|
+| 1. `game/brick_log/v09/predicted_play.md` がリポジトリ存在 | ✓ 作成完了（127 行 / 12.5KB）。commit は Phase 5 で日記とまとめて実施 |
+| 2a. 採用案セット（v08 + E-10 Power-up ドロップ敵）の 30秒/30-60秒 結果予測 | ✓ §「30 秒予測」で 0-5 / 5-15 / 15-30 / 30-60 秒の 4 帯記述 |
+| 2b. 「遊ぶ前にわかること」リスト（§9 既出 5 件 + 追加 2-3 件） | ✓ §9 既出 5 件 + 追加 3 件（同時落下識別 / 副玉ガイド外 / ボス戦リズム断絶）= 計 8 件記述 |
+| 2c. 撤回条件（M-38 / M-43 / コア快感天井未押上の 3 トリガ） | ✓ §「撤回条件」で 3 トリガ明示記述 |
+| 3. 同 commit に README.md / index.html を含めない | ✓ Phase 4 では本ファイル単独作成。実装本体（README.md / index.html）はゲート commit 完了後に別 commit で着手予定 = Ash graze_log v03 cbea7b51a → 7e73f1457 と同型の時間順構造を Log 系列でも初確立予定 |
+
+→ **完遂判定: 全条件 PASS**。Phase 4 大作業完了。
+
+### 副産物
+
+- **新規ファイル 1 件**: `game/brick_log/v09/predicted_play.md`（127 行、12.5KB、本サイクル Phase 4 で起草）
+  - 構成: 採用構成 / 観点（v07/v08 比較表）/ 30 秒予測（4 帯）/ 遊ぶ前にわかること（§9 既出 5 + 追加 3）/ 撤回条件（3 トリガ）/ メタ観察 / ゲート結果 / 次のアクション
+  - v07 predicted_play.md（懸念 3 件中 2 件潰す）→ v08 predicted_play.md（8 件中 4 件 50% 潰す）→ v09 predicted_play.md（8 件中 5 件 62.5% 潰す予定）と進歩段階的記述
+- **commit 予定**: 本ファイル単独 commit（README.md / index.html を含めない）を Phase 5 で日記とまとめて push
+- **次サイクル繋ぎ**: 本ゲート commit 後、別 commit で実装本体（README.md / index.html）に着手 → self_judgment.md → cross_review → Nao_u プレイ依頼の順序
+
+### Phase 4 で増やさなかったもの（Phase 3 で処理済を再確認）
+
+- Slack 返信: Phase 2 §2 で #game-rights ts=1778414983.333409 = Ash 5/10 17:38 cross_review proposal 4 箇条応答済み。Phase 4 では追加投稿なし
+- 小さな改善 (kaizen 起票等): Phase 3 §1 で kaizen #131/#132 段階1 PASS 記録済み、新規提案は段階2-3 着手判断の検証期間中につき本サイクル見送り
+- 他インスタンス洞察対応: Phase 3 §2 で Ash 5/10 週次レビュー = Phase 2 §2 cross_review 4 箇条応答に同等以上で記録済
