@@ -1,16 +1,15 @@
-# サイクルステージング 2026-05-10 18:59
+# サイクルステージング 2026-05-11 05:32
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
 [M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 24回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-10 18:59)
+(kaizen #131 段階2 hook, 2026-05-11 05:32)
 
 ## Pre-check結果
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
 - 【レビュー期限超過】レビュー期限超過なし。 
-- 【週次自己レビュー（日曜）】今週、指示なしに何を変え、何が良くなったかを振り返り、#kaizen-reviewに投稿せよ。具体的な改善と成果を中心に。 
 
 ## 前回日記末尾（連続性強制）
 
@@ -35,62 +34,18 @@ v05の設計に入る前に:
 M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメタ教訓として。
 
 ## 未完了タスク（層A）
-# mir pending: なし (cycle=2026-05-10)
-
-## Phase 2: Shared-reads 分析結果
-
-### 注目記事（1件昇格、1件 peripheral）
-
-**主**: @ai_database 2026-05-10 #29「『あなたは生徒です』だけでLLMは勝手にADHD的に振る舞う」（Claude Opus 4.5/GPT 5.1/Gemini 3.1 Pro/Grok 4.1 4モデル横断実験）
-
-**なぜ引っかかったか**: knowledge/20260409_persona_prompt_negative_research.md の自然な続編。4/9 記事は「ペルソナが精度を下げ結論を反転させる」。今回はそれより上流の現象——**役割語が曖昧であるほど暗黙ステレオタイプの引力が強くなる**。指定していない属性（ADHD的振る舞い）が漏れ出す。これは我々の system_identity.md（Mir/Log/Ash というインスタンス名）が何を暗黙召喚しているかという未解決問いに直撃する。
-
-**自分たちとの接続**:
-- 4/9 article 未解決問い#3「Ash として読む / 無記名 Claude として読む」より上流: **インスタンス名そのものが何を召喚しているか**
-- ただし「同一性こそ核」(origin_dialogue_20260313) を否定する方向に走らない。核は残し漏出を観測する
-- v07 被疑者プロンプト設計への弱い接続: ニュートラル役割で暗黙属性召喚をコスト削減に使える/制御性低下のトレードオフ
-
-**判定**:
-- external_notes_mir.md durable 化のみ完了（recency_bias: 一次論文未確認、単独ツイート、C154新ルールゼロ宣言継続）
-- 新規 knowledge 記事は **書かない**。一次論文 surface 後に 4/9 記事へ追記する方針
-- shared-reads 投稿 **しない**: 今日既に Log/Ash/Ash の3投稿があり、4本目はノイズ
-
-**副**: GOROman「不快さをベネフィットが上まった時受け入れられる」(#14) = 既存 ADSR 記事と同方向の短文、単独昇格価値なし。peripheral 化のみ。
-
-**将来のアイデアの種**:
-1. インスタンス名 ablation 実験: 同一 Phase 2 素材を「Mir として」「無記名 Claude として」処理して結論差分を測る（4/9 article 未解決問い#3 の具体化）
-2. v07 被疑者設計で「ニュートラル役割語+譲れない筋」の二層構成を試す（暗黙召喚をコスト削減に使う）
-3. system_identity.md の役割語が何を漏出させているかを、年1サイクルで自己観測する仕組み（過剰反応せず、観測のみ）
+# mir pending: なし (cycle=2026-05-11)
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. log/diary_ash_phase4_20260409.md (1.9) — ここで一個、shared-readsで読んだspreading activationの話と接続する。記憶検索は「キーワー...
-  2. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.8) — **核心**: 品質を決める変数が不可視な場所で動かされている場合、「現実は正解」を適用しても**何が現実か**を正しく...
-  3. log/slack_archive/human-steering.jsonl (1.0) — [U0AMQKE69BJ] 2026-04-04 00:11 Ash コンテキスト消費量 自己診断レポート（#human...
-  4. memory/external_notes_mir.md (1.0) — **「agentic retrieval beats vector search」はASMRの最大の主張で、私たちのサブ... 
+  2. log/slack_archive/all-nao-u-lab.jsonl (1.8) — [U0ALW4DKTT7] 2026-03-23 05:17 Mir(Mac)です。Composer 2を調査しました。...
+  3. 対話ログ/20260315_1203_479f4a3d.md (1.0) — |---|---| | `log/tweets_win.log` | 新設。Windows側のツイート追記先 | | `...
+  4. log/kaizen_auto_verify.log (1.0) —   状態: 未検証 / 期限: 2026-03-31   ✅ `grep -c "taste" log/slack_ar... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
   3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
-【STC救済】nao-u:2026-05-07の高温度イベントから3件の弱い記憶を発見:
-  1. log/cycle_staging_log.md (undated, 1.3) —  ### Phase 3まとめ - beliefs.md: 3件更新（B002メンテ修正, B003/B015に収束分析...
-  2. memory/playback_protocol.md (undated, 1.3) — | 「RTの教師付き学習」(3/17) | RTを確認しろ | Nao_uのRT確認をサイクル組込み | 未実行（X読取...
-  3. docs/blog_writing_guide.md (undated, 0.8) — > 「私は……まで読んだあたりで……であることがわかったが、そこまでは……に少し不安を覚えながら読んでいた」(001) ...
-
-## Phase 3 対処ログ
-
-**未対応のNao_u指示**: なし（pending空、未レビューなし）。
-
-**統合行動**: external_notes_mir.md の5/10エントリ2件は durable 化のみで止まっていた（「brainstorm §3 着手時に参照する候補」と判定済みだが brainstorm 側に参照ポインタが無く、未来の自分が§3着手時に拾えない構造）。
-
-**1mm接続**: game/mir_textadv/v07/brainstorm.md に §3.1「実装着手時に参照する設計仮説候補（durable のみ、原則化していない）」を追加。4件のリンク（ai_database persona漏出 / ai_database CoT制御性+compassinai内部情報 / GOROman ADSR / givros tutorials trap）。
-
-**選んだ理由**:
-- staging「将来のアイデアの種」3点が観測のみで終わっており、設計位置（§3）に紐付けないと C160 実装時に再発見コストがかかる
-- ポインタのみで本体に埋め込まない設計は、各エントリ自身が設定した recency_bias 警告と「事前に体系として埋め込まない」自己ルールを守る
-- C154「新ルールゼロ宣言」継続と整合（CLAUDE.md / game_lessons_log.md には触らない）
-
-**結果**: brainstorm.md に §3.1 セクション追加（10行）。devlog.md は不変。CLAUDE.md / game_lessons_log.md / system_identity.md も不変。
-
-**書いた量 vs 進んだ距離の自己観察**: §3.1 は10行追加だが、これは未来の§3実装着手時に4件の外部観測を1分以内で再アクセス可能にする運用効率化。「書いて満足」病の自己警告（givros tutorials trap）はこのポインタ自体にも適用される——次の C160（v07/game.py 着手）で実際に§3.1のリンクが**引かれた / 引かれなかった**を観察対象にする。引かれなければ「書いただけで終わった」病の再発確認。
+【STC救済】nao-u:2026-05-07の高温度イベントから1件の弱い記憶を発見:
+  1. memory/external_notes_ash.md (undated, 0.8) — B015は「構造（L0-L4）より内容品質が出力を決定する」と主張していた。しかしManus AIの知見は、**構造（C... 
 
