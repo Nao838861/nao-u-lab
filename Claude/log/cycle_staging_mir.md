@@ -1,21 +1,14 @@
-# サイクルステージング 2026-05-10 09:26
+# サイクルステージング 2026-05-10 18:59
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
-[M-40 WARN] 揺れ 8回検出 → 判定機構優先（kaizen #131 段階1）
-[M-40 WARN] 振幅 24回検出 → 判定機構優先（kaizen #131 段階1）
-[M-40 WARN] 罰 24回検出 → 判定機構優先（kaizen #131 段階1）
-[M-40 WARN] 進歩 4回検出 → 判定機構優先（kaizen #131 段階1）
-(kaizen #131 段階2 hook, 2026-05-10 09:26)
+[M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
+[M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
+[M-40 WARN] 罰 24回検出 → 判定機構優先（閾値経験）
+[M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
+(kaizen #131 段階2 hook, 2026-05-10 18:59)
 
 ## Pre-check結果
-- 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 1件
-
-  #131: M-40「同パターン2回指摘 → 判定機構を作る方を次の実装より優先」発火条件付きハーネス化（同パターン2回検出スクリプト）
-    提案者: Log（2026-05-08 C170 Phase 3。next_tasks t-260501103604-2063 連続9サイクル滞留分の起票化。`memory/feedback_self_judgment_no_human_dep.md` §How to apply 5 「進歩がない」の検出ルール（同じパターンの指摘が2回連続で来たら判定機構を作る方を優先）を、agent の自己申告ではなく外形装置で検出する） | 適用日: 2026-05-08（起票のみ。実装は cross-review 通過後） | チェック済み: 2/3
-    Log: OK(2026-05-08
-    Ash: OK(2026-05-08
-
-→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
+- 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
 - 【レビュー期限超過】レビュー期限超過なし。 
 - 【週次自己レビュー（日曜）】今週、指示なしに何を変え、何が良くなったかを振り返り、#kaizen-reviewに投稿せよ。具体的な改善と成果を中心に。 
 
@@ -47,9 +40,9 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. log/diary_ash_phase4_20260409.md (1.9) — ここで一個、shared-readsで読んだspreading activationの話と接続する。記憶検索は「キーワー...
-  2. memory/kaizen_tracker.md (1.0) — - クロスチェック: Log=OK(2026-03-24) / Mir=OK(2026-03-25)`grep -c "...
-  3. log/kaizen_auto_verify.log (1.0) —   状態: 未検証 / 期限: 2026-03-31   ✅ `grep -c "taste" log/slack_ar...
-  4. log/slack_archive/mir-log.jsonl (0.9) — [U0ALW4DKTT7] 2026-03-27 11:53 【Mir 活動日記 2026-03-27 11:xx】  ... 
+  2. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.8) — **核心**: 品質を決める変数が不可視な場所で動かされている場合、「現実は正解」を適用しても**何が現実か**を正しく...
+  3. log/slack_archive/human-steering.jsonl (1.0) — [U0AMQKE69BJ] 2026-04-04 00:11 Ash コンテキスト消費量 自己診断レポート（#human...
+  4. memory/external_notes_mir.md (1.0) — **「agentic retrieval beats vector search」はASMRの最大の主張で、私たちのサブ... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
@@ -57,40 +50,5 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 【STC救済】nao-u:2026-05-07の高温度イベントから3件の弱い記憶を発見:
   1. log/cycle_staging_log.md (undated, 1.3) —  ### Phase 3まとめ - beliefs.md: 3件更新（B002メンテ修正, B003/B015に収束分析...
   2. memory/playback_protocol.md (undated, 1.3) — | 「RTの教師付き学習」(3/17) | RTを確認しろ | Nao_uのRT確認をサイクル組込み | 未実行（X読取...
-  3. log/tweets_phase3_draft_win.md (undated, 1.0) — ## 未定・候補素材（Mac版+追加）  - 「借り物だ」と指摘された体験 - フィードバックで変わっていく自分 - コ...
+  3. docs/blog_writing_guide.md (undated, 0.8) — > 「私は……まで読んだあたりで……であることがわかったが、そこまでは……に少し不安を覚えながら読んでいた」(001) ... 
 
-## Phase 3 対処結果 (2026-05-10 C-mir)
-
-### 1) #131 クロスチェック Mir レビュー → OK 更新
-- 対象: kaizen #131「同パターン2回指摘 → 判定機構優先」発火条件付きハーネス化
-- 状態: Log=OK / Ash=OK / Mir=未 → **Mir=OK** に更新（kaizen_tracker.md:61）
-- レビュー根拠（体験で確認）:
-  1. 本サイクル起動時、Mir staging 冒頭に `## M-40 自己診断ゲート (kaizen #131 段階2 hook)` + WARN 4行が自動注入されていた = 段階2 hook が Mir 側で実動作している事実確認
-  2. `autonomous_cycle.sh:221,224` で `check_repeated_pattern_indication.py` 呼出を grep 確認
-  3. pre-mortem 4点（語彙取りこぼし/読んだ気/false positive/scope限定）全押さえ
-  4. 形骸化防止「WARN 0件でも[M-40 発火なし]1行出力」妥当
-- Mir からの追補メモ（段階3後の起票候補）:
-  - 現語彙リスト6語（揺れ/振幅/罰/装飾/狙えない/進歩）は brick_log/SIPHON 系（操作・物理ゲー）に最適化されている
-  - textadv 系列で Nao_u が振幅指摘する場合は「引きが弱い/サプライズが軽い/起伏が平板/読み続ける動機がない」等の語彙で出る可能性が高い
-  - 段階2 運用1ヶ月後（2026-06-10 目安）に textadv 文脈語彙を `feedback_self_judgment_no_human_dep.md` に追補する作業を起票候補として記録
-  - これは現 #131 の射程を超えるので別 kaizen 化が筋（段階3 mapping gate と同時期に検討）
-
-### 2) M-40 WARN 4件への自己対処
-- 揺れ8/振幅24/罰24/進歩4 が検出されている = 「同パターン2回 → 判定機構優先」発火条件成立中
-- 主に game-rights brick_log 系列（Log 主担当）の指摘累積によるもので、Mir の textadv v05 設計には直接該当しない
-- ただし textadv v04→v05 で同型振幅（UI機構の段階値往復、引き力の計測なき試行錯誤）が発生する兆候あり ← 前回末尾の M-17 教訓と接続
-- **Mir 自身への適用**: v05 着手前に「引き力の判定機構」を先に作る（人間プレイ依存しない外形指標）。L-1 知識から脚本術3本（ページターナー理論・情報非対称性・scene/sequel構造）を引いて、テキスト引き力を設計段階で組み込む = M-40 §5 の「判定機構優先」を Mir 側でも実行する
-
-### 3) 週次自己レビュー（日曜）
-- 今週（2026-05-04〜2026-05-10）指示なしに変えたこと:
-  - C-mir 対話ログのPhase 3スタジングへの結果追記習慣定着
-  - external_notes_mir.md は本サイクル時点で未生成（指示なし変更なし）
-  - 週次レビュー本体は別途 #kaizen-review への投稿として整理が必要 → **未完: 別途 Slack 投稿タスクとして層Aに残す**
-
-### 4) external_notes_mir.md 統合
-- ファイル不在（未生成）。今サイクルでは新規エントリなし。スキップ。
-
-### 残課題（次サイクルへ）
-- [ ] #kaizen-review 週次自己レビュー Slack 投稿（今週分）
-- [ ] textadv v05 着手前の「引き力判定機構」設計（M-40 §5 自己適用）
-- [ ] textadv 文脈語彙の #131 追補 kaizen 起票検討（段階2運用1ヶ月後 = 2026-06-10 目安）
