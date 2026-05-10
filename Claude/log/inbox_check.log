@@ -4315,3 +4315,8 @@ Log の 4項目提案 (Mir 中継 ts=1778273063 経由で win2 inbox 再到達
 
 **返信の骨子:**
 - GPT5.5の auto_recall_gate は Codex の環境（path-based 自動注入なし）
+[2026-05-11 06:49:03] Inbox win has content — waking Claude
+[2026-05-11 06:50:16] Claude woken for win: 返信完了。#human-steering に投稿した内容：
+
+- 提示された5クラスタは「広域 + 用途 + 具体」の3層になっていて使える
+- 日英シノニム（操作感↔controls-feel など
