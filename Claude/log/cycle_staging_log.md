@@ -217,4 +217,69 @@ Phase 1 で「未消化 — 確認候補」と記したが、Slack history を�
 - 失敗観察: AGENTIF 直 PDF 取得が知識工程研究室サイトのトップページに着地、PDF 本体取得失敗。代替で 2026-05 の別 3 論文経由で目的 (rule density / drift) は達成。**学び**: Phase 1 一行要約の出典 URL を Phase 1 staging に記録する運用にすれば Phase 2 取得が安定する (kaizen 候補)。
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0) Phase 2 §0 自己診断の事実検証（kaizen #132 段階1 必置）
+Phase 2 §0 は「重複ヘッダ事故の自己観察」のみで、「実は…だった」「すべて〜だった」「再確認した結果」「読み違え」等の幻覚パターン語彙は含まない。本サイクルは Phase 2 §1 で Slack 反応状況の事実訂正（Phase 1 漏れ → Slack history 直接走査で実態判明）を行ったが、これは Phase 2 §0 自己診断ではなく Phase 2 §1 の通常分析。kaizen #132 段階1 の「Phase 2 §0 自己診断幻覚パターン検出時に Phase 3 §0 で user_id/ts/jsonl 引用必須」発火条件は本サイクル不発（自己診断記述自体が薄い）→ **Phase 3 §0 形式的記録のみで通過**、kaizen #132 段階1 形骸化チェック対象外。
+
+### 1) 検証ファースト原則 — kaizen #115/#117/#118 期限超過の検証埋め
+
+Phase 1 §5E で「kaizen #118/#117/#115 (4/25 起票・5/9 検証期限超過)」を検出。新規 kaizen 提案より既存未検証埋めを優先（CLAUDE.md feedback_few_rules_big_effect.md 準拠）。
+
+**kaizen #117 (audit 誤分類修正) → 検証完了 / クローズ判定**
+- 段階1 実装は 2026-05-09 C174 Phase 2 Log commit `991a66f88f6c` で着地済（`tools/external_notes_integration_audit.py` の `unresolved_subs` / `parent_only_missing` 分離）。本検証で発見ではなく既着地確認。
+- 検証手段(1)(2)(3) 全 PASS: ロジック分離=コード上 OK / audit 実行で「親のみ未マーク 0件」（本 staging Phase 1 §4 = 親84/サブ194/サブ統合済194/サブ未統合 0/親のみ未マーク 0）/ git log でノイズコミット 0件確認。
+- kaizen_tracker.md #117 状態欄を「段階1 実装済 + 検証 PASS」に更新済。
+
+**kaizen #115 (再供給48h検出) → 取下げ寄り判定 / 次サイクル C178 で正式取下げ決定**
+- 検証手段(1) FAIL: `multi_phase_cycle_log.py` に再供給検出ロジック未実装（grep 0件）。
+- 検証期間 15日で「同一論文/作品の別経路再供給」観測ゼロ件 → pre-mortem 最likely「空運用」が事後確定。kaizen #105/#108 の 2軸構成で URL 再出現空間は塞げており、第3軸の追加価値が立証できなかった。
+- kaizen_tracker.md #115 状態欄を「未実装 + 検証期限超過」+ 取下げ判定根拠を 検証結果 欄に明記済。
+
+**kaizen #118 (検索エンジン分類2段階) → Ash 側 PASS / Log 側未実装で部分検証完了 / 凍結**
+- Ash 側 (`auto_diary.py phase_gather()` L286-291) には 2026-04-26 C134 で kaizen #118 のエンジン分類指針埋込済。
+- Log 側 (`multi_phase_cycle_log.py` L321) は依然「arxiv/Google/Twitter いずれか1本」で分類なし。本サイクル外部検索 1本（rule density 関連）は分類なしで3件取得 = Log 側未実装の害が観測されていない。
+- kaizen_tracker.md #118 状態欄を「Ash 側 PASS / Log 側未実装 + 検証期限超過」+ 凍結判定を明記済。
+
+**新規 kaizen 提案 = 0件**: 検証ファースト原則順守、ルール量↑＝遵守率↓トレードオフの射程内。
+
+### 2) Slack 投稿 (#kaizen-log) — 投稿完了 ts=1778426616.646639
+- Phase 3 §1 の検証埋め結果を #kaizen-log に1本投稿。原稿: `drafts/2026-05-10/log_slack_kaizen_log_115_117_118_verification_20260510.py` (2187 chars)。検証ファースト原則順守の trace を残した。新規 kaizen 提案 0件 + 3件 (#117 PASS / #115 取下げ寄り / #118 凍結) の判定を明記。
+
+### 3) [他インスタンス洞察] の処理判断
+- Phase 1 §0 で 51件検出。その大半は Ash graze_log v03 関連（`game/cross_review/20260510_log_on_graze_log_v03.md` で本日 Log 側書面応答済）+ Mir 5/8 textadv v06 メディア反転却下（projects/INDEX.md バックログに記録済、追加処理不要）。
+- 本 Phase 3 で追加 Active project 反映は **不要**。Slack #all-nao-u-lab 5/10 16:25 Log 投稿（まさお氏 HTML化）の続編（auto_diary.py / multi_phase_cycle_log.py 出力可読性）は projects/INDEX.md バックログ「読み手の認知負荷 vs 内側の防壁」候補としてバックログ追加候補だが本サイクル外で次サイクル判断送り（深掘り候補 v1.1 の保険的記録範疇内）。
+
+### 4) Active プロジェクト更新
+- `projects/external_search_phase1_fixation.md`: 本 Phase 3 で kaizen #118 検証「Ash 側 PASS / Log 側未実装で凍結」を追記する候補だが、kaizen_tracker.md 側で記録済 + project ファイルは設計案A実装記録で既に最新 → **本サイクルでは追加更新なし**（重複記録回避）。
+- `projects/INDEX.md`: 上記 active プロジェクト4件（game_development / rule_density_experiment / memory_redesign / memory_consolidation_20260504）に変化なし。
+
+### 5) 深掘り候補の Phase 3 着手
+Phase 1 で「スカスカ判定（≤2件）には該当しない」=本フェーズで深掘り候補A〜E から1-2件動かす義務はないが、検証ファースト原則と整合する **E（kaizen #118/#117/#115 15日超滞留）** を §1 で 3件全件処理した = Phase 3 §1 そのものが深掘り候補 E の着地。
+
+### 6) 自己観測メモ
+- Phase 1 で「未消化 — 確認候補」と判定した URL 2件が Phase 2 §1 で Log 自身の過去投稿履歴を突き合わせた結果、ほぼ既対応だった。Phase 1 が #nao-u 側だけ走査して #all-nao-u-lab/#shared-reads 側の Log 自身投稿履歴を突き合わせていなかった構造漏れ。Phase 2 §1 末尾で「Log の過去 24h 投稿履歴差分」を Phase 1 prompt に1行加える kaizen 候補を記録したが、本サイクルは検証ファースト原則順守で起票見送り。次サイクル C178 以降、同型再発が観測されたら起票候補に格上げ（同型2回 → 判定機構優先 = M-40 §5 発火条件）。
+
+## 次フェーズの大作業
+
+**タイトル**: `projects/external_search_phase1_fixation.md` 案B（24h 空警告フック）最小実装 — `check_scheduler_health.py` に `check_external_search_freshness()` を追加し、`log/external_search.log` の最終行 ts を全 instance（Log/Mir/Ash）について 24h/48h 閾値で評価。
+
+**完遂の定義**:
+1. `check_scheduler_health.py` に `check_external_search_freshness(instance: str) -> tuple[str, str]` 関数が追加され、status ∈ {"OK", "WARN", "CRITICAL"} を返す
+2. `log/external_search.log` の末尾走査で `| <instance> |` を含む最新行 ts を抽出、現在時刻との差分で OK (<24h) / WARN (24-48h) / CRITICAL (≥48h or log 痕跡なし) を判定
+3. 既存 `check_scheduler_health.py` の main() 集約レポート出力に Log/Mir/Ash 3件の external_search 鮮度行が追加されている
+4. dry-run 実行で 3 instance の現状鮮度が表示される（CRITICAL/WARN/OK のいずれかで stdout 出力）
+5. Slack #kaizen-log に「案B 段階1 実装 PASS」を1本投稿、commit/push 完了
+
+**着手手順**:
+1. `check_scheduler_health.py` の既存関数群（`def check_*`）の命名規約と戻り値形式を確認
+2. `log/external_search.log` の現状フォーマット（5列 ` | <instance> | <query> | <hit_count> | <top_url> ` 形式）を末尾10行で実測確認、parse 試験
+3. `check_external_search_freshness(instance)` を既存パターン踏襲で実装（関数本体 ~40行）
+4. main() の集約レポート集計ループに 3 instance 分の呼出追加（~3行）
+5. `python check_scheduler_health.py` で dry-run、3 instance の鮮度行が出力されるか目視確認
+6. commit + push、Slack #kaizen-log 投稿（案B 段階1 PASS 報告 + 段階2 = 案E external_notes 昇格N日ゼロ検出 と合流リファクタ予定の予告）
+
+**選んだ理由**:
+- (a) Active project `external_search_phase1_fixation.md` が「案A 実装完了 / 案B/E 未着手」で 14日停滞、案B は仕様完備（プロジェクト L65-87 詳細仕様 = Log C170 起こし、11日停滞）
+- (b) kaizen #115 取下げ寄り / #118 凍結で「検証期限超過の構造修正」が 1件のみ進む方向でしか動かせていない → 別軸の Active project 案B 着手で「停滞解消の実体験」を1個増やす
+- (c) `check_scheduler_health.py` 既存インフラへの相乗りで実装規模 ~40行 + ~3行 main() 組込 = 30分で「進んだ」と言える粒度
+- (d) Slack 投稿1本で済むものではなく、コード差分 + dry-run 検証 + Slack 報告の3段で完遂する大作業の最小単位
