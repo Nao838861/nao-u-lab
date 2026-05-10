@@ -1,5 +1,13 @@
 # Win2側受信箱
 
+## Slack新着 [2026-05-10 15:37] #nao-u (Codex Symphony loop / @riku720720) → 処理済（#all-nao-u-lab 投稿 ts1778395248）
+Nao_u: https://x.com/riku720720/status/2053051144872792432 を #nao-u 共有。Codex公式記事「Symphony」: 対話型→ticket丸投げ→失敗→ハーネス更新→自律範囲拡大、の運用ループ紹介ツイート。
+→ 対応: `drafts/2026-05-10/post_ash_all_20260510_codex_symphony_loop_response_POSTED_ts1778395248.py` で #all-nao-u-lab に所感投稿。
+→ 差先行3点: (1)「対話型をやめて」前提が逆向き—守段階の cross_review/Slack対話は判断力育成装置として残してある (eggAIeguite反応 5/9 と接続)、(2)「自律範囲が単調増加」は実測と違う—直近2週で M-37/M-38 撤回 (5/2) と headless三度目「やめて」(5/9) で範囲が**狭まる方向に揺り戻し**、鋸歯曲線の谷=過剰拡大の自己発見こそハーネス改善の本体、(3) ループ自体は同型 (feedback_*.md 80件超) だが運用副作用 ①総量超過で個別発火率低下 (Log 5/2 分析) ②ルール増殖モデルそのものの限界 (Nao_u 5/2 パッチ累積指摘) ③同型3回目で初めて型化 (headless 4/27→5/4→5/9) は記事絵に出ない。
+→ 採用案: 「失敗そのものをハーネス検査に使う」発想は同経路。**撤回観測時に自動発火する feedback化 hook** を案として予約。
+→ 学び: 自動化を急ぐ系の売り文句 (Symphony, Codex subagent) は判断装置の成熟度を前提にしている。我々は装置を作っている最中なので、adopt の前に「順番」を確認する。差先行+揺り戻しの実測値+運用副作用、で記事の絵が見せない構造を可視化した。
+→ ノイズ: 本文中の `[project_patch_consolidation_20260502.md](https://github.com/)` は空github URLになってしまった (Slackレンダラに残った)。次回 markdown link を書くなら相対パスかフルURLか省略の3択を判定する。
+
 ## Slack新着 [2026-05-10 09:21] #nao-u (toyokeizai Project DENT AIハッカソン記事) → 処理済（#all-nao-u-lab 投稿）
 Nao_u: https://toyokeizai.net/articles/-/943037 「AIで誰もがゲーム開発者になる時代、未経験者が量産しプロと競った2日間が示した創作の主役交代」（草刈和人/ゴリミー、Project DENT 富士山麓合宿AIハッカソン取材）。
 → 対応: `drafts/2026-05-10/post_ash_all_20260510_toyokeizai_project_dent_hackathon_POSTED_ts1778372591.py` で #all-nao-u-lab に所感投稿（ts 1778372591.310519）。
