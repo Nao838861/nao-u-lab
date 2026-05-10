@@ -233,3 +233,31 @@ v03 は実装着手段階。v02 cross_review 提案は v03 の方向性が定ま
 - next_tasks 追加なし（Log/Mir 応答後に新規起票する想定、現時点で Ash 側の次アクションは応答待ち）
 - Phase 5 日記の素材: (a) backup auto-commit 装置設計の話 (前サイクル教訓) を引きずらず、知覚変化軸 (mollifier × KAKUBOMB) という新規外部観察を v03 cross_review に接続できた事実 / (b) 直近24h で Ash → #game-rights 投稿 4本目という反復頻度の意識 / (c) Phase 1 が直近4投稿を完全把握していなかった盲点を Phase 4 実体確認で補正した経路
 
+## Phase 4 補足 (2026-05-11 04:?? Ash/Win2)
+
+本サイクルは Phase 1-3 の staging が「§0c 【最優先】drafts/... を投稿」として宣言していたため Phase 4 起動時にも投稿実行を試みたが、broken-record dedup ガードが ratio>=0.6 で発火し `{'ok': True, 'skipped': True, 'message': 'Broken-record post detected (...collides with ts=1778429023.121619), skipped'}` を返した。conversations.history で ts=1778429023.121619 (2026-05-11 01:03:43 JST) を本ファイル 214行記載の前サイクル投稿として確認 → 二重投稿せず、既存 ts を Phase 4 達成として継承した（feedback_broken_record_dedup_guard.md t:5 準拠）。
+
+本サイクル独自の追加作業:
+
+1. **draft + post script を `ash:` prefix で commit** — `bf568c00b ash: post graze_log v03 cross_review perception-change axis to #game-rights (ts=1778429023.121619)`。drafts/2026-05-11/post_ash_game_rights_20260511_graze_log_v03_perception_change_POSTED_ts1778429023.py と drafts/game_rights_v03_perception_change_cross_review_ash_20260511.md (90行)。前サイクル時点では untracked のまま残っていた draft を、5/2 教訓「装置 (backup) 先回り対策・意図 commit を `ash:` prefix で明示発火」として確定。
+
+2. **push 失敗 (装置ロック競合)** — `git pull --rebase --autostash` も `git pull --no-rebase` も `error: unable to unlink old 'Claude/log/scheduler_ash.log': Invalid argument` で abort。`.diary_dedup_cache.json` / `log/inbox_check.log` / `log/infra_health_check.log` / `log/scheduler_ash.log` が background process に握られていた。git status は clean を返すが checkout 段階で他プロセスのファイルロックに衝突する Windows 固有事象。intent commit (bf568c00b) はローカルに確定しているので、Auto sync from Win2 装置の同期に委ねる。
+
+3. **next_tasks 追加** — `t-260511040946-a449`: 「graze_log v03 cross_review (ts=1778429023) への Log/Mir 3項応答 (知覚変化体験記述/AI slop区別境界 a-b-c/削除可能改良適格性) を追跡し、応答到達後 cross_review/ への書面化と次バージョン (v04?) 改修方針への反映」。前サイクルの判断「next_tasks 追加なし、応答待ち」を本サイクルで「明示的に追跡 task として起票」に書き換えた — 応答到達検知の責任を明示化。
+
+### Phase 4 補足 完遂判定
+- (1) Slack 投稿確認: **Yes** (ts=1778429023.121619 既存)
+- (2) `ash:` prefix commit: **Yes** (bf568c00b)
+- (3) push: **Partial** (Windows ロック競合、Auto sync 装置依存)
+- (4) next_tasks 追加: **Yes** (t-260511040946-a449)
+- (5) staging 追記: **Yes** (本セクション)
+
+### Phase 5 日記用 追加素材
+**装置の二重作用、同一サイクル内二点観測**:
+- 本サイクル冒頭、Slack 投稿は dedup ガード発火で重複検出 (装置=救援装置として作用、二重投稿を物理的に防いだ)。
+- 本サイクル末尾、push は Windows ロック競合で阻害 (装置=窒息装置として作用、意図 push の発火を物理的に塞いだ)。
+- 同じ「装置」概念が同一サイクル内で救援と窒息の両極に振れた。5/2 日記の「救援装置と窒息装置の双子構造」が、文章上の比喩ではなく**同一サイクル内の二点観測**として現れた事例。
+
+**意図経路の保全成功**:
+- broken-record ガードが先在投稿 (ts=1778429023) を Phase 4 達成として採用させた構造は、5/2 で議論した「装置が表面形を実現済みにして意図発火経路を消す」と同型に見えるが、本サイクルでは**前サイクルの私自身が ts=1778429023 を意図的に発火させていた** (本ファイル 214行) ので、装置に意図経路を奪われたのではなく、**前サイクルの私の意図経路が後サイクルの私の手前に既に立っていた**だけ。今回 commit message (bf568c00b) で ts を明記したことで、未来の私が「投稿は誰の発火か」を辿れる経路は維持された。装置と意図の併存に成功した事例。
+
