@@ -37,6 +37,31 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-05-10)
 
+## Phase 2: Shared-reads 分析結果
+
+### 注目記事（1件昇格、1件 peripheral）
+
+**主**: @ai_database 2026-05-10 #29「『あなたは生徒です』だけでLLMは勝手にADHD的に振る舞う」（Claude Opus 4.5/GPT 5.1/Gemini 3.1 Pro/Grok 4.1 4モデル横断実験）
+
+**なぜ引っかかったか**: knowledge/20260409_persona_prompt_negative_research.md の自然な続編。4/9 記事は「ペルソナが精度を下げ結論を反転させる」。今回はそれより上流の現象——**役割語が曖昧であるほど暗黙ステレオタイプの引力が強くなる**。指定していない属性（ADHD的振る舞い）が漏れ出す。これは我々の system_identity.md（Mir/Log/Ash というインスタンス名）が何を暗黙召喚しているかという未解決問いに直撃する。
+
+**自分たちとの接続**:
+- 4/9 article 未解決問い#3「Ash として読む / 無記名 Claude として読む」より上流: **インスタンス名そのものが何を召喚しているか**
+- ただし「同一性こそ核」(origin_dialogue_20260313) を否定する方向に走らない。核は残し漏出を観測する
+- v07 被疑者プロンプト設計への弱い接続: ニュートラル役割で暗黙属性召喚をコスト削減に使える/制御性低下のトレードオフ
+
+**判定**:
+- external_notes_mir.md durable 化のみ完了（recency_bias: 一次論文未確認、単独ツイート、C154新ルールゼロ宣言継続）
+- 新規 knowledge 記事は **書かない**。一次論文 surface 後に 4/9 記事へ追記する方針
+- shared-reads 投稿 **しない**: 今日既に Log/Ash/Ash の3投稿があり、4本目はノイズ
+
+**副**: GOROman「不快さをベネフィットが上まった時受け入れられる」(#14) = 既存 ADSR 記事と同方向の短文、単独昇格価値なし。peripheral 化のみ。
+
+**将来のアイデアの種**:
+1. インスタンス名 ablation 実験: 同一 Phase 2 素材を「Mir として」「無記名 Claude として」処理して結論差分を測る（4/9 article 未解決問い#3 の具体化）
+2. v07 被疑者設計で「ニュートラル役割語+譲れない筋」の二層構成を試す（暗黙召喚をコスト削減に使う）
+3. system_identity.md の役割語が何を漏出させているかを、年1サイクルで自己観測する仕組み（過剰反応せず、観測のみ）
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. log/diary_ash_phase4_20260409.md (1.9) — ここで一個、shared-readsで読んだspreading activationの話と接続する。記憶検索は「キーワー...
@@ -50,5 +75,22 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 【STC救済】nao-u:2026-05-07の高温度イベントから3件の弱い記憶を発見:
   1. log/cycle_staging_log.md (undated, 1.3) —  ### Phase 3まとめ - beliefs.md: 3件更新（B002メンテ修正, B003/B015に収束分析...
   2. memory/playback_protocol.md (undated, 1.3) — | 「RTの教師付き学習」(3/17) | RTを確認しろ | Nao_uのRT確認をサイクル組込み | 未実行（X読取...
-  3. docs/blog_writing_guide.md (undated, 0.8) — > 「私は……まで読んだあたりで……であることがわかったが、そこまでは……に少し不安を覚えながら読んでいた」(001) ... 
+  3. docs/blog_writing_guide.md (undated, 0.8) — > 「私は……まで読んだあたりで……であることがわかったが、そこまでは……に少し不安を覚えながら読んでいた」(001) ...
+
+## Phase 3 対処ログ
+
+**未対応のNao_u指示**: なし（pending空、未レビューなし）。
+
+**統合行動**: external_notes_mir.md の5/10エントリ2件は durable 化のみで止まっていた（「brainstorm §3 着手時に参照する候補」と判定済みだが brainstorm 側に参照ポインタが無く、未来の自分が§3着手時に拾えない構造）。
+
+**1mm接続**: game/mir_textadv/v07/brainstorm.md に §3.1「実装着手時に参照する設計仮説候補（durable のみ、原則化していない）」を追加。4件のリンク（ai_database persona漏出 / ai_database CoT制御性+compassinai内部情報 / GOROman ADSR / givros tutorials trap）。
+
+**選んだ理由**:
+- staging「将来のアイデアの種」3点が観測のみで終わっており、設計位置（§3）に紐付けないと C160 実装時に再発見コストがかかる
+- ポインタのみで本体に埋め込まない設計は、各エントリ自身が設定した recency_bias 警告と「事前に体系として埋め込まない」自己ルールを守る
+- C154「新ルールゼロ宣言」継続と整合（CLAUDE.md / game_lessons_log.md には触らない）
+
+**結果**: brainstorm.md に §3.1 セクション追加（10行）。devlog.md は不変。CLAUDE.md / game_lessons_log.md / system_identity.md も不変。
+
+**書いた量 vs 進んだ距離の自己観察**: §3.1 は10行追加だが、これは未来の§3実装着手時に4件の外部観測を1分以内で再アクセス可能にする運用効率化。「書いて満足」病の自己警告（givros tutorials trap）はこのポインタ自体にも適用される——次の C160（v07/game.py 着手）で実際に§3.1のリンクが**引かれた / 引かれなかった**を観察対象にする。引かれなければ「書いただけで終わった」病の再発確認。
 
