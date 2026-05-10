@@ -202,7 +202,81 @@ Untracked:
 本セクション内で「実は…だった」「すべて〜だった」「再確認した結果」「読み違え」等の自己診断幻覚パターン語彙を検索 → 該当ゼロ。事実記述に留めている（「対応済」「未対応」「該当なし（走査済み）」等）。Phase 1 PASS（Phase 2 §0 で再診時に二段ゲート発動可能）。
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### §0 Phase 2 self-audit (kaizen #132 段階1 同上流ゲート)
+
+幻覚パターン語彙（「実は…だった」「すべて〜だった」「再確認した結果」「読み違え」）を本セクション内で検索 → 該当ゼロ。Phase 1 で「新URL未対応の可能性」とメモした obsidianstudio9 / automaton-media は Phase 2 §1 直接 grep で**全件対応済**と確定（事実訂正、Phase 1 主張の留保解消）。「未対応の可能性メモ → Phase 2 grep 確定」の二段運用が想定通り動いた1サンプル。
+
+### §1 #nao-u 新URL対応状況の grep 確定
+
+`grep -E "obsidianstudio9|automaton-media" log/slack_archive/all-nao-u-lab.jsonl` で全件対応確認:
+
+| #nao-u 投稿 | 対応投稿 | 対応者 | ts |
+|---|---|---|---|
+| 5/9 00:06 obsidianstudio9 #1 | 5/9 00:08 + 01:03 + 01:24 | Log/Ash | 1778252927 / 1778256182 / 1778257484 |
+| 5/9 01:37 automaton-media (高難度) | 5/9 01:39 + 01:40 | Log/Ash | 1778258345 / 1778258438 |
+| 5/9 03:10 obsidianstudio9 #2 | 5/9 03:14 (Log 警告: 怪しい点を指摘してスルー推奨) | Log | 1778264041 |
+| 5/9 03:11 obsidianstudio9 #3 | 同上 (3URL まとめて警告) | Log | 1778264041 |
+| 4/29 17:00 automaton-media (パリィ) | 5/1 04:36 (M-38 ジャンル深掘りお手本として位置付け) | Log | 1777577790 |
+
+**新規返信対象なし**を確定。Phase 1 の「未確認」「要照合」メモは grep で解消。
+
+### §2 #game-rights Ash 5/10 17:38 cross_review proposal 4箇条への Log 視点応答
+
+#### v03 self_judgment.md / README.md 直接読込 (game/graze_log/v03/)
+
+- M-39+M-40 物理閉鎖の **Pot 内最初の成功サンプル**: ゲート commit cbea7b51a (2026-05-10 04:47:40) → 実装本体 7e73f1457 (07:53:14) が **3時間6分差**で成立、predicted_play / self_judgment が実装前作成された事実が commit graph で物理裏付け
+- self_judgment §4「headless 数値を判定根拠に使っていない」表は Nao_u 5/9 三度目「やめて」(feedback_headless_unfit_for_unfinished_eval.md t:5) を直接踏んだ判定方針として、他ゲーム転用可能テンプレート
+- Log 設計面所感: 「BOMB 優先で grazeStreak が腐る」順序 (Lv3 後 gauge MAX 直後に streak 5 到達 → BOMB 発火で active 防御発火窓消失) が SPACE 文脈切替の認知負荷より疲労源になり得る一点を Nao_u プレイで観測したい
+
+#### 4箇条 Log 視点判定サマリ
+
+| 観点 | Log 判定 | 根拠要旨 |
+|---|---|---|
+| 1. Psyvariar 型 Pot 全体正式採択 | **時期尚早** | shot_log v01 外部ランキング = 動機軸切替の機能的同型先行サンプル。共通層は「動機軸切替 (Motive Substitution)」のメタレベル粒度のみ可。具体形は graze_log ジャンル固有解として保つ。sample size 1 では昇格早い (CLAUDE.md「同型2回確認後に抽象化」と整合) |
+| 2. 表面区別不能性チェック self_judgment.md 常設 | **賛成、置き場と運用に追加意見** | 各 self_judgment.md コピペは M-43 / feedback_few_rules_big_effect.md と矛盾。docs/game_dev_foundation.md に1節追加 + 参照のみ推奨。「+1」意味固定脚注必要、ゲート化禁止・観察項目化推奨 |
+| 3. Nao_u 4/28 vs KAKUBOMB 5/10 12日先行性 | **Nao_u 宛、Log 脇から** | 後者 (外部市場非同期成立) の方が cross_review 根拠強い (観察コスト線形増加回避)。両者排他ではなく「両方」シナリオ最有力 |
+| 4. artifact 側焼き込み経路 | **(e)+(f) 組合せ + 媒体経由本道指摘** | (e) artifact 内 cross_review.md 必須同梱 + footer リンク / (f) 開始/終了画面クレジット最小化。守段階は (e) 即時導入。**より根本**: artifact 単体勝負ではなく Pot 公式チャンネル (shared-reads 同種媒体) 経由で判定主体を媒体側に誘導が本道、媒体経由は破以降 |
+
+#### Phase 2 アクション完了
+
+- ✓ 書面 game/cross_review/20260510_log_on_graze_log_v03.md (3.7KB) を作成
+- ✓ Slack 投稿 #game-rights ts=1778414983.333409 (3025 chars, draft archive 済)
+- ✓ Phase 1 で見つけた「Ash 5/10 17:38 未応答 1件」を Phase 2 で完了
+
+### §3 shared-reads 候補判定
+
+Phase 1 §6 で挙げた外部検索5本のうち shared-reads 投稿候補は **arxiv 2603.03258 Inherited Goal Drift: Contextual Pressure Can Undermine Agentic Goals**（instruction hierarchy が drift 耐性に対して限定的相関、強い hierarchy が必須でも十分でもない）。3層プロンプト構造の有効性議論と直結。
+
+**今サイクル shared-reads 投稿は見送り**。理由:
+1. 本文未読 (M-43 引用本文義務 = kaizen #129 (a) 検証材料) の状態で投稿すると留保構造が C170 / C171 / C172 に続く4回目の同型運用になる。同型反復は CLAUDE.md「個別指摘を即ルール化しない」と整合しないが、**WebFetch で本文を取得してから投稿する筋**を選ぶ方が品質が一段上がる
+2. 本サイクル Phase 2 主軸は #game-rights cross_review 4箇条応答 (3025 chars) で、Nao_u の指示「1フェーズ丸ごと使ってもいいくらい重要」を **#game-rights 応答に充当**した形
+3. 次サイクル C178 で WebFetch (arxiv 2603.03258 + 2602.16935 DeepContext) を実行して本文取得 → shared-reads 投稿、を持ち越す
+
+**external_notes_log.md への摂取記録**: Phase 1 §6 で5本タイトル/要旨を既記載済。本サイクルでは追加摂取記録は書かない (二重記載を避ける)。Phase 1 §6 にて kaizen #106 摂取経路維持済。
+
+### §4 external_notes_log.md 統合監査
+
+Phase 1 §4 audit で「サブ未統合: 0 / 親のみ未マーク: 0」を確認済。**統合候補なし**。本サイクル新規追加は Phase 1 §6 外部検索5本のメモが external_notes_log.md ではなく cycle_staging_log.md 直接記載となっている (摂取記録の即時統合を兼ねる Phase 1 内運用)。次サイクル WebFetch 後に shared-reads 投稿時、external_notes_log.md に親エントリ + 統合済マーカーを追加する流れ。
+
+### §5 Phase 3 への引き継ぎ
+
+Phase 3 で実施する候補 (順位付き):
+
+1. **commit + push**: cycle_staging_log.md 更新 + game/cross_review/20260510_log_on_graze_log_v03.md 新規 + drafts/.archive/ 追加 を1 commit にまとめる
+2. **次 game_id 着手判断**: brick_log v07 凍結後の game_id を CLAUDE.md「絶対にやる」②「ゲーム実践からノウハウ」項目として 1mm 進める。Ash v03 と同形でゲート commit (predicted_play.md / self_judgment.md 事前作成) → 実装 commit の順序を物理的に確保する**最初の Log 事例**にする判断。Phase 3 着手は staging 整理後の余力次第で時期判定
+3. **#log 日記投稿**: C177 Phase 5 として、本サイクルの軸 (Ash cross_review 応答 = Pot 内最初の M-39+M-40 物理閉鎖サンプルへの Log 応答) を1〜2段落で
+
+### §6 Phase 1 滞留メモ消化
+
+- **t-260426195755-1080 (連続19サイクル, 14:13 touch 事故痕跡再発観察)**: 本サイクルでも再発確認なし、継続観察。
+- **C176 Phase 2 §0 改善余地 kaizen 起票候補 (autonomous_cycle.sh Phase 0 export_slack_log 強制同期)**: 同型2回確認後の原則に従い本サイクルでも未起票、再発1回追加観察待ち。
+- **pigadev_dm.md (12日無更新)**: 本サイクルでは judgement のみ、ファイル touch なし。Twitter feed の DM 活動再開シグナル待ち。
+
+### §7 深掘り候補 (Phase 1 D 項目消化)
+
+**feedback_verb_without_target_trap.md (T:4)** 想起 = 本サイクル Phase 2 §2 観点1 判定根拠で **直接活用**。「Psyvariar 型 graze→active 防御の Pot 全体正式採択」は具体的動詞 (graze/active 防御) を Pot 共通設計層に置く操作で、対象が「全ジャンル」と未定義のまま柱化する罠そのもの。場面の課題3-5個に直接効くか ✓/✗ チェックで判定 → 0/N (現時点 sample size 1) なので「動機軸切替 (Motive Substitution)」メタレベルへの抽象化を撤回根拠にした。**T:4 想起が判定で寄与した最初のサンプル**として feedback_verb_without_target_trap.md の活用記録あり (使用1回 = 既出記録 +1 候補)。
+
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
