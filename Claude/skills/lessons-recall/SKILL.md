@@ -2,6 +2,7 @@
 name: lessons-recall
 description: Run before / during any game development judgment (new v01, revision decision, cross_review, Nao_u play feedback, brainstorm review, Q-A〜H sheet filling). Uses the 系統マップ (lineage map) in memory/game_lessons_log.md to identify which M/L/S/D/X lessons to open, instead of grepping blind or skipping recall entirely. Triggered when about to write devlog/brainstorm/cross_review judgment, when receiving Nao_u feedback on a v??, when freezing/reviving a series, or when feeling "this situation reminds me of something but I forget".
 type: pre-implementation-gate
+archetype: judgement-skill
 priority: must-run-before-judgment
 linked-rules: [M-37, M-37b, M-38, M-40, M-41]
 ---

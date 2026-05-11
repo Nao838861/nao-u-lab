@@ -2,6 +2,7 @@
 name: genre-deep-analysis
 description: M-38 着手前ゲート。新ゲーム v01 / 主要改修前にジャンル深掘り (Q1-Q5 + 過去ブレスト想起 + 30件新規ブレスト + M-37 批判) を強制。出力は brainstorm.md。
 type: pre-implementation-gate
+archetype: judgement-skill
 priority: must-run-before-implementation
 linked-rules: [M-15, M-32, M-35, M-36, M-37, M-37b, M-38, M-41]
 ---

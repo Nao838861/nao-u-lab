@@ -93,3 +93,32 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
   - SKILL.md メタデータに `judgement-skill` / `procedural-skill` 二分を入れる作業に着手するか判断（個別 SKILL を読み直す必要あり、優先度は要検討）
 - #1 umiyuki_ai (Anthropic 事前学習データ問題) は別サイクルで深掘り——アイデンティティ形成テーマで Anina_CE の identity activation steering と接続できそう
 
+## Phase 3 対処結果 (2026-05-11 Mir)
+
+### 選択した行動
+
+申し送り 2 件のうち「SKILL.md メタデータに二分カテゴリを入れる」を 1mm で実行。
+shared-reads 投稿は保留（git push 不要との指示、要約版作成は別サイクル）。
+
+### 理由
+
+- 既存 skill 2 本 (genre-deep-analysis, lessons-recall) はいずれも judgement-skill 型（着手前ゲート、判断力育成、目的達成で自己採点）と明確に判定できる
+- 個別指摘の即ルール化ではなく、外部観察 (mizchi/Matz) から既存設計を意識化したメタデータ追加なので、同型反復待ちは不要と判断
+- 未来の自分が mizchi 路線 (テスト×採点) へ寄せる誤りを防ぐ最小マーカーになる
+
+### 実装
+
+両 SKILL.md frontmatter に 1 行追加:
+- `skills/genre-deep-analysis/SKILL.md`: `archetype: judgement-skill`
+- `skills/lessons-recall/SKILL.md`: `archetype: judgement-skill`
+
+### 副次的な観察
+
+ゲーム本体テスト (avoid_log/v02/headless.py 系) を将来 procedural-skill として明示する余地がある。今サイクルでは新規 procedural-skill は作らず、概念だけ knowledge ノートに残した状態を維持。
+
+### 残課題（次サイクル候補）
+
+- shared-reads 投稿用要約版の作成（mizchi 当人観測下に届ける価値の検討込み）
+- `judgement-skill` / `procedural-skill` 区別を docs/game_dev_foundation.md か skills/README に明文化するか判断
+- #1 umiyuki_ai 深掘り（別軸テーマなので独立サイクル）
+
