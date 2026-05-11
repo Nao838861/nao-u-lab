@@ -148,6 +148,24 @@ def run_external_research(dry_run: bool) -> dict[str, Any]:
     return data
 
 
+def run_discussion_router(dry_run: bool) -> dict[str, Any]:
+    cmd = [sys.executable, str(TOOLS_DIR / "slack_discussion_router.py")]
+    if dry_run:
+        cmd.append("--dry-run")
+    result = run_command(cmd, timeout=120)
+    if result.returncode != 0:
+        return {
+            "ok": False,
+            "error": (result.stderr.strip() or result.stdout.strip())[:800],
+        }
+    try:
+        data = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return {"ok": False, "error": f"slack_discussion_router.py returned non-json: {result.stdout[:500]}"}
+    data["ok"] = True
+    return data
+
+
 def run_memory_health() -> str:
     result = run_command([sys.executable, str(TOOLS_DIR / "memory_health.py"), "--compact"], timeout=60)
     text = result.stdout.strip() or result.stderr.strip()
@@ -208,6 +226,7 @@ def build_message(ingest: dict[str, Any], state: dict[str, Any], reason: str) ->
     slack_info = ingest.get("slack", {})
     external_info = ingest.get("external_research", {})
     game_feedback_info = ingest.get("game_feedback", {})
+    discussion_info = ingest.get("discussion_router", {})
     interesting = slack_info.get("interesting", [])
     analysis_atoms = interesting[:3] if interesting else recent[:3]
 
@@ -219,6 +238,7 @@ def build_message(ingest: dict[str, Any], state: dict[str, Any], reason: str) ->
         f"- Slack新規確認: seen={slack_info.get('seen_messages', 0)}, atom追加={slack_info.get('added_atoms', 0)}",
         f"- 外部検索: fetched={external_info.get('fetched', 0)}, selected={external_info.get('selected', 0)}, posted={external_info.get('posted', False)}",
         f"- game-rights教師化: seen={game_feedback_info.get('seen_messages', 0)}, feedback={game_feedback_info.get('feedback_atoms', 0)}, atom追加={game_feedback_info.get('added_atoms', 0)}",
+        f"- all-nao-u-lab議論投入: selected={discussion_info.get('selected', False)}, posted={discussion_info.get('posted', False)}",
         f"- 健全性: {ingest.get('health', '未確認')}",
         "- 次に使う検索: `python tools/memory_recall.py \"<焦点>\"`",
     ]
@@ -226,6 +246,8 @@ def build_message(ingest: dict[str, Any], state: dict[str, Any], reason: str) ->
         lines.append(f"- 外部検索エラー: {external_info.get('error', '')[:240]}")
     if not game_feedback_info.get("ok", True):
         lines.append(f"- game-rights教師化エラー: {game_feedback_info.get('error', '')[:240]}")
+    if not discussion_info.get("ok", True):
+        lines.append(f"- all-nao-u-lab議論投入エラー: {discussion_info.get('error', '')[:240]}")
 
     if interesting:
         lines.append("")
@@ -295,10 +317,12 @@ def main() -> int:
         external_research = run_external_research(args.dry_run)
         game_feedback = run_game_feedback_ingest(args.dry_run)
         slack_ingest = run_slack_ingest()
+        discussion_router = run_discussion_router(args.dry_run)
         ingest = run_ingest()
         ingest["slack"] = slack_ingest
         ingest["external_research"] = external_research
         ingest["game_feedback"] = game_feedback
+        ingest["discussion_router"] = discussion_router
         ingest["health"] = run_memory_health()
         message = build_message(ingest, state, reason)
         result = post_to_slack(args.channel, message, args.dry_run)

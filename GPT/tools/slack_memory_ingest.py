@@ -20,7 +20,7 @@ STATE_PATH = MEMORY_DIR / "slack_ingest_state.json"
 RECENT_PATH = MEMORY_DIR / "slack_recent_ingest.jsonl"
 RAW_SLACK_DIR = MEMORY_DIR / "raw" / "slack_api"
 
-DEFAULT_CHANNELS = ["shared-reads", "all-nao-u-lab"]
+DEFAULT_CHANNELS = ["shared-reads", "all-nao-u-lab", "game-rights", "human-steering"]
 
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):

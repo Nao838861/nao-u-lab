@@ -15,6 +15,7 @@ from urllib import error, request
 
 ROOT = Path(__file__).resolve().parents[1]
 ENV_FILE = ROOT / ".env"
+POST_PREFIX = "[Log_cdx]"
 
 
 def _load_token() -> str | None:
@@ -60,6 +61,13 @@ def resolve_channel(name_or_id: str) -> str:
     return name_or_id
 
 
+def ensure_log_cdx_prefix(text: str) -> str:
+    stripped = text.lstrip()
+    if stripped.startswith(POST_PREFIX):
+        return text
+    return f"{POST_PREFIX} {stripped}"
+
+
 def post_message(channel: str, text: str) -> dict:
     channel_id = resolve_channel(channel)
-    return api_call("chat.postMessage", {"channel": channel_id, "text": text})
+    return api_call("chat.postMessage", {"channel": channel_id, "text": ensure_log_cdx_prefix(text)})
