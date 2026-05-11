@@ -1,4 +1,5 @@
 # Twitter For You (おすすめ) タブ
+<<<<<<< HEAD
 # Read at: 2026-05-12 01:25
 # Total: 50 tweets
 
@@ -288,11 +289,152 @@ URL: https://x.com/tanakh/status/2053833685540180241
 (´･_･`)うーん、東大の数学科出てる人に僕ごときがなんか言うのもなんかおこがましいんだけど、これは完全に数学の悪いとこが出てしょうもない話になってるなあって思うのと、あと少なくとも、等式と不等式を並列に語るのは意味ないじゃないんすかねえというか。プログラマーとして感じるのは、や
 
 --- 45. @mangaup_PR (?) ---
+=======
+# Read at: 2026-05-12 04:29
+# Total: 50 tweets
+
+--- 1. @labelmake (2026-05-11) ---
+URL: https://x.com/labelmake/status/2053638610428244442
+> コンパイラが安く速く品質高く実現するものを、高い課金して時間かけてAIにやらせる経済合理性がない
+
+ほんまにこれ。品質とコストを追求したらプログラミング言語のように圧縮した方法？で記述するので少なくともプログラミング言語は絶滅しない。
+
+--- 2. @dicehitgames (?) ---
+A deckbuilder where the ordering is everything. Free Demo on Steam!
+
+--- 3. @accelerator2045 (2026-05-10) ---
+URL: https://x.com/accelerator2045/status/2053508747788718388
+ダニエルココタジロのAI2027を読もう！！
+それを上回るってのはどういうことか
+来年世界がどうなるのか
+それが今年になるのか
+
+とんでもないことになるよ！！
+
+--- 4. @elonmusk (2026-05-11) ---
+URL: https://x.com/elonmusk/status/2053893323446747173
+Worth reading
+
+--- 5. @0317_hiroya (2026-05-10) ---
+URL: https://x.com/0317_hiroya/status/2053607389929279493
+ワイも、全く同じ考え。。
+
+Obsidian使って数ヶ月経っているのに
+知能が構築されず
+
+複利の力を感じていなければ、、
+
+その運用を
+見直すべきかもしれない。
+
+--- 6. @GOROman (2026-05-11) ---
+URL: https://x.com/GOROman/status/2053856479032295592
+未来の普通をプリロードしているだけとも言える
+
+--- 7. @kmizu (2026-05-11) ---
+URL: https://x.com/kmizu/status/2053901191076311154
+早めに寝て、さっきふと起きて気付いたんですよ。なんでリモートで研修をすると「皆がどこで詰まっているのかわかりづらい」のか。なんでリモートのMTGだと、対面に比べて「わかりづらい」のか。
+
+答えは「共同注意（joint attention）がうまく働かないから」だ、と。
+
+--- 8. @hanagasa_ai (2026-05-11) ---
+URL: https://x.com/hanagasa_ai/status/2053805529617793303
+フリップブックを動画で作るツール
+
+https://
+pager.ai.yami.net
+画像突っ込んだら即時に出来ます
+
+--- 9. @nya3_neko2 (2026-05-11) ---
+URL: https://x.com/nya3_neko2/status/2053750638673355254
+Even G2の会話サポートとか使ってみるとわかるんだけど、あれめちゃくちゃ面白いしいいよ。普通に自分の周囲が全員アレを起動して、知識領域を瞬間的に拡張されたらついていくために使わずにはいられないっていう瞬間は近いと思う
+
+--- 10. @masamune_sakaki (2026-05-11) ---
+URL: https://x.com/masamune_sakaki/status/2053681042817683707
+AI界隈って、頭がいい人が多いというより、好奇心がバグってる人が多いんよ。
+
+新しいモデルが出たら、とりあえず触る。うまくいったら「これは何に使える？」と考える。失敗しても「なんでこうなった？」で掘りに行く。
+
+あの界隈、実験好きが集まりすぎだと思う。
+
+--- 11. @Supermicro (?) ---
+Want to see AI Factories in action? 
+Watch ServeTheHome’s latest video breakdown to see how Supermicro and NVIDIA deliver turnkey AI infrastructure at scale.
+
+--- 12. @d_1d2d (2026-05-10) ---
+URL: https://x.com/d_1d2d/status/2053515293725712682
+OpenAI社長「知能の需要は無限」
+
+
+https://
+youtube.com/watch?v=bBS93A
+0BeNI
+…
+
+--- 13. @Alzhacker (2026-05-10) ---
+URL: https://x.com/Alzhacker/status/2053484489175961825
+Sci-Hubという学術論文の海賊サイトが、2026年4月に自前の人工知能Sci-Botをアルファ版で公開した。
+
+この事実は、知識の壁を巡る長年の闘いを一変させる出来事だ。Sci-Hubは9500万件を超える学術論文を蓄積し、単独で運営されてきた。
+
+--- 14. @tegnike (2026-05-11) ---
+URL: https://x.com/tegnike/status/2053822517815525674
+レビューもCodex内でするようにしてしまった
+別のセッションのCodexの方がClaudeよりも良い指摘するんだもんしょうがないね
+
+Claude Code余りまくってるんだけど何か良い用途ないかねえ…
+
+--- 15. @schnapoon (2026-05-11) ---
+URL: https://x.com/schnapoon/status/2053634798351155569
+AI漫画の現場の話ですが...「最先端のAIを追う」とか必要ないです。
+
+「AI使うの得意です」これもいりません。
+
+理由はシンプルで、新しいものとか技術より大事なことがいっぱいあるから。
+
+プロンプト極めるとか
+モデルへの投げ方を工夫するとか
+
+こういう系は資産になりづらい。
+
+--- 16. @sniktsnikt111 (2026-05-11) ---
+URL: https://x.com/sniktsnikt111/status/2053663822418948314
+なんか昨日から、ゲーム業界の採用と年齢の話がTLを賑わせていて、胃がキリキリしちゃう。
+
+自分も面談する側だから、年齢や希望給与に対して、どの程度の職務をこなして頂けるのか？　というのは確認するし。
+
+--- 17. @nyaa_toraneko (2026-05-11) ---
+URL: https://x.com/nyaa_toraneko/status/2053690677083668876
+その通りだと思うけど、コレだとヒトの間に格差が生まれるだけなんだよなぁ。
+
+かと言って、なんでも便利なツールとして開放するのも、コピーキャットを生み出すだけなので鬱陶しいし。
+
+--- 18. @enzi__nia (2026-05-11) ---
+URL: https://x.com/enzi__nia/status/2053822961526944162
+私はアートできないゲーム制作者だから
+良いゲームを作るには面白いギミックやシステムを考えるやり方が良いと思うんだけど
+
+ゲーム制作はまともな人は続けられないので
+ロジカルに狂う必要があって難しい...
+
+ロジカル狂人ってどうやったらなれるんだろう...
+
+--- 19. @izutorishima (2026-05-11) ---
+URL: https://x.com/izutorishima/status/2053893742856450355
+最近の Codex のこの変更、前と打って変わってめちゃくちゃセンスあってすごく好き
+
+--- 20. @Ludi_uni (2026-05-11) ---
+URL: https://x.com/Ludi_uni/status/2053805282514604118
+AITuberの人格、もしかしてローカルLLM勢は少ないのかな……？
+
+--- 21. @mangaup_PR (?) ---
+>>>>>>> 79ef28150 (Auto sync before pull)
 「ありがとうございますぅぅっ」
 この声は推しの配信者ふわりちゃん!?
 
 ニューヒロイン登場作品はこちらから！
 
+<<<<<<< HEAD
 --- 46. @noshimoda (2026-05-11) ---
 URL: https://x.com/noshimoda/status/2053677148486128123
 ゲーム黎明期では既存競技を模擬したゲームが発想しやすかったのでよく作られて、プレイヤー側も他の選択肢が乏しかったので競技に興味がなくても遊ばれていた。需要に即したゲームデザインが発展すると競技物をプレイするのは競技ファンに絞られていき、より競技再現度の高いゲームが作られるように
@@ -323,3 +465,193 @@ URL: https://x.com/TempemLoid/status/2053647469691695510
 「それは子どもたちに文章の書き方を教えれば将来の競合作家が増える、と文句を言うのと何ら変わりない。」
 
 競合するのが技術だけであれば、これも頷けるね。
+=======
+--- 22. @kiyoshi_shin (2026-05-11) ---
+URL: https://x.com/kiyoshi_shin/status/2053724109646045597
+元のSulphur2がfp8でも29GBもあるので、これは4090でも動かない、と思ったら、3日前に圧縮版が出ていた。Q4_K_Mで、品質が90-94%が確保されるそうなので、これで良いのかも。といっても、それでも14.3GBあります。
+
+https://
+huggingface.co/vantagewithai/
+Sulphur-2-Base-GGUF
+…
+
+--- 23. @OpenAI (2026-05-11) ---
+URL: https://x.com/OpenAI/status/2053824997777457651
+Today we’re launching the OpenAI Deployment Company to help businesses build and deploy AI.
+
+It's majority-owned and controlled by OpenAI. It brings together 19 leading investment firms, consultancies, and system integrators to help organizations deploy frontier AI to production
+
+--- 24. @kazuyo_k (2026-05-11) ---
+URL: https://x.com/kazuyo_k/status/2053833055148835108
+Open AIのWhisperのクレンジングなしにするためには、たったこれだけのプロンプトでした。
+
+prompt="こんにちは。今日は、とても良い天気ですね。これから、音声入力を開始します。"
+
+--- 25. @fladdict (2026-05-11) ---
+URL: https://x.com/fladdict/status/2053840356291248230
+SP500全チェックして、ファンダメンタル分析を定期的にするシステムつくった。
+
+--- 26. @playismJP (2026-05-10) ---
+URL: https://x.com/playismJP/status/2053446009926390249
+はじめは何もない世界。
+マスを開くと、世界が拓いていく。
+だけど時々ダンジョンが潜んでいるから気を付けて。
+
+マインスイーパーの要領で世界を開拓する『Dungeon Sweeper Plus』は2026年配信予定。ウィッシュリストに登録し、発売をお待ち下さい。
+#playismgameshow
+
+https://
+store.steampowered.com/app/4562750
+
+--- 27. @BATALEON007 (2026-05-11) ---
+URL: https://x.com/BATALEON007/status/2053762887236329650
+新人へ
+
+頭取の普通預金口座覗くと応接に呼ばれます。
+
+--- 28. @BREAK_BROTHER (2026-05-11) ---
+URL: https://x.com/BREAK_BROTHER/status/2053785408346145229
+JAXAのJERGを読んでたら、だいぶ前にツイートした内容が書かれていたことに気が付いた
+
+--- 29. @koder_dev (2026-05-11) ---
+URL: https://x.com/koder_dev/status/2053776933260067124
+個人開発のアプリ3つ、月額完全0円で運用してる人の話えぐい
+
+DBはDrift使ってブラウザのIndexedDBに全部入れてサーバDB自体無くす設計、こんな手があるんやな
+
+Koderも「作っては放置」ループあるあるすぎたから、0円縛りで作るって制約駆動の発想真似してみよ
+
+--- 30. @next_adventureX (?) ---
+2000年代のCGIゲーム「FF ADVENTURE」が令和に復活
+
+無料ブラウザRPG、登録不要ですぐプレイ。
+
+3vs3のターン制バトル、職業・スキル育成。
+
+--- 31. @kotauchisunsun (2026-05-11) ---
+URL: https://x.com/kotauchisunsun/status/2053781481437446608
+「スマートグラスが流行らない」と考える1つの見方に
+
+全員が同じメガネをかける。
+
+みたいな世界観がある(電脳コイル的な)と思ってて、仮にデザインの良いAppleGlassesがでたとしても、ファッションとしての自己表現との相性の悪さ的なジレンマは感じる。
+この辺、どうなるんだろなぁ。と思ってる。
+
+--- 32. @servasyy_ai (2026-05-11) ---
+URL: https://x.com/servasyy_ai/status/2053664200971686356
+この記事を強くおすすめ：LLMにおけるKVキャッシング
+
+かなりわかりやすく書かれていて、第一原理から出発し、動図で比較もついています。推論最適化にあまり詳しくない人にもぴったりです。
+
+--- 33. @CharmNexusCore (2026-05-10) ---
+URL: https://x.com/CharmNexusCore/status/2053388507994091840
+codex cliでollama経由でqwenうごかしてるのかにゃ
+便利そうですじゃ
+
+--- 34. @gosrum (2026-05-10) ---
+URL: https://x.com/gosrum/status/2053394006055473453
+ollamaではなくLM Studio経由です
+
+--- 35. @shinmura0 (2026-05-11) ---
+URL: https://x.com/shinmura0/status/2053685802027389431
+【VLA⇒野菜の収穫に適用】
+・成功率30％ほどながら、外乱に強いとのこと
+・自作したデバイスが凄い（テレオペレーションの代わり）
+https://
+arxiv.org/html/2411.0992
+9v1
+…
+
+--- 36. @GOROman (2026-05-11) ---
+URL: https://x.com/GOROman/status/2053749505510756554
+ワイ 高校生まで視力2.0で一生眼鏡に縁が無いと思ってたら、40代くらいで急に近視と乱視になった。あんま普段メガネはしないんだけど
+
+--- 37. @xai (?) ---
+Your customer support needs a voice agent built for the real world.
+
+Grok Voice Think Fast 1.0 handles complex workflows with speed and accuracy, even in hard-to-hear environments. From multi-step troubleshooting to high-volume tool calls, it keeps up.
+
+--- 38. @sm_hn (2026-05-10) ---
+URL: https://x.com/sm_hn/status/2053575540892942684
+眼鏡に通知が来れば腕を上げずとも十分ということだろう
+
+Google、画面捨てた5.2gの新型「Fitbit Air」を発表
+
+--- 39. @kiyoshi_shin (2026-05-11) ---
+URL: https://x.com/kiyoshi_shin/status/2053877328166744343
+Sulphur2のお試し。4090で1024ｘ1408が15秒が5分30秒。悪くない感じではあるけど、特有のくすみがある。既存のLTX-2.3より優れているとまでいえるのかは、まだよくわからない。これはDreamを使って5枚の静止画を繋いでいる。
+
+--- 40. @kmizu (2026-05-11) ---
+URL: https://x.com/kmizu/status/2053902170198786195
+もっと拡大すると「リモートワークでの生産性」問題にも共同注意が絡んでいるのかも。
+
+逆に「リモートワークでの方が快適/あまり変わらない」と思う人は、共同注意の働き方が違う可能性もありますね。
+
+--- 41. @saeroyi_ican (2026-05-10) ---
+URL: https://x.com/saeroyi_ican/status/2053593389405540660
+このAIのヤバさが広まってないのおもろい
+アップした動画のフックの強さや視聴維持率を人間の脳の反応から数値化して、それを元にバズる動画に作り直してくれる
+つまり完全上位互換の動画が量産出来る
+
+色んなショート動画の環境壊れるけど
+特にあのジャンルがやばい
+
+--- 42. @K_Ishi_AI (2026-05-11) ---
+URL: https://x.com/K_Ishi_AI/status/2053695135423381883
+アメリカでは既にAIサービスの広告がそこらにあるのか。こりゃ確かに一般の人のAIに対する認知率も利用率も高くなる。
+
+--- 43. @kuranuki (2026-05-11) ---
+URL: https://x.com/kuranuki/status/2053631848304251301
+DHH本人の許可を得たので公式に紹介します。私が長年「仕事技芸論」として書き続けてきたことと、彼の語る "Taste and Judgment（審美眼と判断力）" の時代観が、見事に重なっていることに興奮を覚えています。
+
+「審美眼こそが真実」〜DHHが語るAIエージェント時代の技芸論
+
+--- 44. @Supermicro (?) ---
+Your AI ambitions deserve more than a product. They deserve a partner. 
+
+Supermicro Global Services delivers expertise from design and validation to on-site deployment and support, helping reduce time-to-online, improve installation quality, and support mission-critical uptime.
+
+--- 45. @higamoeru (2026-05-10) ---
+URL: https://x.com/higamoeru/status/2053563684946055636
+ナムコで初めてハードディスクを、自分が貸与された開発PCに繋いでもらった時は30MBを四つにパーテーション切って、三人で使いながら、「一生ドット描いても、埋まんないね（良い笑顔）」で笑い合っていたのですが、いつ頃だったのだろう？
+１９８９年前後かな？
+横でＡさんがロンパーズ描いて居たから
+
+--- 46. @ReineHonoka (2026-05-10) ---
+URL: https://x.com/ReineHonoka/status/2053421538762998264
+Irodori-TTSのボイスデザインからクローン量産して完全なTTSモデルを作ってみるテスト！
+
+驚いたのは、人間らしい非常に自然な抑揚を持ちながらもAIっぽさがあるところです...！
+AIVtuberの音声の元に非常に役立つ手法だと思います
+
+--- 47. @super_bonochin (2026-05-11) ---
+URL: https://x.com/super_bonochin/status/2053741775806959766
+Codex に Ultra Fast 来そうだな。
+めっちゃほしい。
+
+--- 48. @elonmusk (2026-05-11) ---
+URL: https://x.com/elonmusk/status/2053893462622171438
+Exactly
+
+--- 49. @akshay_pachaar (2026-05-10) ---
+URL: https://x.com/akshay_pachaar/status/2053380764805583212
+The MCP vs CLI debate.
+
+For most of 2025, AI Engineers argued about it.
+
+The skeptics had real numbers:
+
+- Playwright MCP eats 13.7K tokens
+- Chrome DevTools MCP eats 18K
+- A 5-server setup burns 55K tokens before any work
+
+The defenders pushed back:
+
+- CLIs break on multi-tenant
+
+--- 50. @harumak_11 (2026-05-11) ---
+URL: https://x.com/harumak_11/status/2053688126271549921
+ゲーム開発におけるボタン連打対策、難しい話ではないですが漏れがちなので、ちゃんと考えて実装しようねという話を書きました。
+
+ボタン連打による不具合を防ぐために事前に考えておくべき観点
+>>>>>>> 79ef28150 (Auto sync before pull)
