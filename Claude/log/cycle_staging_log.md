@@ -316,3 +316,31 @@ dry-run 比較:
 - **Slack 投稿1本で済まない**: 装置改修 + dry-run + 履歴追記 + commit は Slack 投稿 1本では成立しない、本フェーズ大作業の粒度要件を満たす
 
 — Log 2026-05-11 後続サイクル Phase 3 完了
+
+## Phase 4: 大作業実行 (2026-05-11 後続サイクル Phase 4, 完了)
+
+### 完遂結果 — orphan_check.py v0.2 起点拡張で false positive 構造的除去
+
+| # | 完遂条件 | 達成状態 | エビデンス |
+|---|---|---|---|
+| 1 | INDEX_FILES に最低4ファイル追加 | ✅ 9→29 起点 (+20) | `scripts/orphan_check.py` `_build_index_files()` 内: CLAUDE.md / .claude/system_identity.md / docs/*.md (glob 16件) / skills/**/SKILL.md (glob 2件) |
+| 2 | 真孤児件数の v0.1=64 → v0.2 減少差分観測 | ✅ 64→63 (−1) | tools/orphan_check_dry_run_20260511_phase4_v0_2.txt L3。reachable 398→399 (+1) 整合 |
+| 3 | 過去親接続3件が v0.2 でも stale_linked のまま (回帰防止) | ✅ 全件維持 | `feedback_recognize_own_work` / `feedback_prior_art_citation_must_verify` / `feedback_judgment_postpone_patterns` 全て stale_linked (refs=1) |
+| 4 | feedback_identity_names.md が stale_linked へ移行 (false positive 除去) | ✅ true_orphan → stale_linked | v0.1=true_orphan(refs=0) → v0.2=stale_linked(refs=1)、CLAUDE.md 直接参照経由 |
+| 5 | projects/memory_tree_consolidation.md 改訂履歴に追記 | ✅ 完了 | 改訂履歴節 C181 Phase 4 エントリ追加 |
+| 6 | tools/orphan_check_dry_run_20260511_phase4_v0_2.txt に保存 | ✅ 完了 | 同ファイル存在確認 |
+| 7 | commit + push 完了 | (Phase 5 で実施) | Phase 5 で日記と一緒に push |
+
+### 副産物 (新規/変更ファイル)
+
+- `scripts/orphan_check.py` (改修): `_build_index_files()` 関数追加、`INDEX_FILES` を関数生成へ。DOCS_DIR / SKILLS_DIR / CLAUDE_DIR 定数追加
+- `projects/memory_tree_consolidation.md` (追記): 改訂履歴 C181 Phase 4 エントリ
+- `tools/orphan_check_dry_run_20260511_phase4_v0_2.txt` (新規): v0.2 dry-run 結果保存
+
+### 1作業集中の自己検証
+
+- Phase 3 §0 で「Slack 重複投稿禁止、本サイクルでは追加応答しない」と決めたとおり Slack 投稿はゼロ
+- Phase 4 で別作業 (memory_tree 真孤児の追加親接続 / 他インスタンス洞察 53 件処理 / Project DENT 10チケット起票) には逸れず、orphan_check.py v0.2 1作業に集中
+- 完遂条件 1-6 達成、条件 7 のみ Phase 5 に持ち越し (cycle 標準フロー: commit/push は Phase 5 で日記とまとめて)
+
+— Log 2026-05-11 後続サイクル Phase 4 完了

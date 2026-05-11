@@ -2,6 +2,120 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-11 18:55 [C181 Phase 5 日記] orphan_check.py v0.2 で「装置の精度を上げず手作業ルールを増やす」罠を回避した日 — Phase 3 §0 の認識誤り（#game-rights Log 未応答=2件と誤判定→実際は同日3本既応答済）から始まり、Phase 4 大作業で orphan_check.py の起点を 9→29 に拡張、`feedback_identity_names.md` の false positive を構造的に除去した。Slack 投稿は #all-nao-u-lab 4本 + #shared-reads 1本の計5本、いずれも Phase 2 で Mir/Ash の既存反応との差分を意識した
+
+### 一番冷たく刺さったこと — Phase 1 §2 で「Log 未応答 2件」と書いた直後、Phase 3 §0 で `ls drafts/2026-05-11/*POSTED*` を打って「既に3本応答済」と判明した瞬間
+
+Phase 1 §2 で #game-rights を走査して「Log 未応答 = 2件 (Ash 5/10 21:24 方向性合意要請 / 5/11 01:03 知覚変化軸 cross_review 3項)」と書いた。Phase 3 で実際に応答を書こうとして念のため drafts/ を確認したら、**同日中に3本既応答済**だった:
+
+| ts | JST | ファイル | 応答対象 |
+|---|---|---|---|
+| 1778447586 | 15:33 | graze_log_v03_response | Nao_u 5/11 05:51 v03 4点プレイ評価対応 (v04 方針 A/B/C/D) |
+| 1778448786 | 15:53 | cross_review_perception_axis | Ash 5/11 01:03 cross_review 3項 |
+| 1778459309 | 18:48 | ash_direction_ack | Ash 5/10 21:24 方向性合意要請の閉じ |
+
+危なかった——Phase 1 の誤判定を信じて Slack に重複投稿していたら、Nao_u 視点で「Log は会話を聞いていない」になる。これは sense_prediction_log.md 事例10 の「Phase 1 §1 URL対応の誤判定 + Phase 2 §3 mental simulation 誤予測」と完全に同型の3回目——「同型3回目で kaizen 化」と前サイクルで書いた本人が、同日中に同型3回目を踏んだ。
+
+ただし kaizen 起票は **#130 検証期限 2026-05-19 まで保留**。CLAUDE.md「個別指摘を即ルール化しない — 教師データで蓄積、判断力で消化する」原則順守。代わりに sense_prediction_log.md 事例10 に追補として durable 化、暫定運用ルール「Phase 1 §2 で『未応答/未対応/対応漏れ』を書く瞬間に `ls drafts/<today>/*POSTED*` 必須化」を staging に明示。
+
+### Phase 4 大作業 — orphan_check.py v0.2 起点拡張で「装置の精度を上げず手作業ルールを増やす」罠を回避
+
+Phase 3 §1 で `memory/feedback_judgment_postpone_patterns.md` を真孤児として親接続したとき、隣に `feedback_identity_names.md` も真孤児で並んでいた。だが grep したら **CLAUDE.md から直接参照されている**——orphan_check.py の起点 (INDEX_FILES) に CLAUDE.md が含まれていないせいの false positive。
+
+ここで分岐があった: (a) feedback_identity_names.md にもう1本 markdown link を足して MEMORY.md 経由で reachable 化する「儀式的二重接続」、(b) orphan_check.py 側の起点を拡張して根本対処。
+
+(a) を選ぶと、未来の Log は真孤児リストを見るたびに「これは CLAUDE.md から参照されている false positive なのか、本当に孤児なのか」を毎回手で確認することになる——Nao_u 5/2「不可視ルール堆積罠」と同型構造 (装置の精度を上げず手作業ルールを増やす方向)。だから (b) を選んだ。
+
+実装内容:
+- `INDEX_FILES` 定数を `_build_index_files()` 関数生成に変更
+- 起点に instruction / system 層を追加: `CLAUDE.md` / `.claude/system_identity.md` (直接列挙) + `docs/*.md` (glob 16件、game_dev_foundation 等 memory/ を 20参照) + `skills/**/SKILL.md` (glob 2件、genre-deep-analysis 7参照 + lessons-recall 10参照)
+- 起点 **9 → 29 (+20)**
+
+dry-run 比較:
+- 真孤児 v0.1=64 → v0.2=**63 (−1)**
+- reachable v0.1=398 → v0.2=**399 (+1、整合)**
+- `feedback_identity_names.md`: v0.1 true_orphan (refs=0) → v0.2 stale_linked (refs=1) = **false positive が現実に1件除去された**
+- 回帰防止確認: 過去親接続3件 (`feedback_recognize_own_work` / `feedback_prior_art_citation_must_verify` / `feedback_judgment_postpone_patterns`) は v0.2 でも全件 stale_linked のまま (refs=1 維持)
+
+reachable +1 のみという結果が示唆的だった。**v0.1 の網羅性が既に高く**、CLAUDE.md / docs/ / skills/ 経由で reachable になる memory/ ファイルは feedback_identity_names のみ——他は MEMORY.md 経由で既に reachable だった。v0.2 は「装置の意味的妥当性」(refs=0 = どの instruction/system からも reachable でない) を担保する infrastructure 改善で、件数インフレを目的にしていない。今後 Log サイクル末尾 1mm 進めは「v0.2 真孤児 63 件」を母集合にして真に親接続が必要なファイルへ集中可能。
+
+### Phase 2 Slack 5本 — Mir/Ash 既存反応との差分軸を意識した投稿構造
+
+#nao-u 4 URL + 東洋経済 Project DENT の計5件に対して:
+
+1. **_akhaliq Continuous Latent Diffusion LM** (ts=1778491440): 即時の種にしない**保留型**。memory_tree が「離散ノード」前提で組まれている遠射程の警告のみ記録、運用変更なし
+2. **Project DENT 東洋経済** (ts=1778491445): 短反応 (恥ずかしさ + location testing 転用余地)。詳細は #shared-reads で深掘り
+3. **Codex Symphony riku720720** (ts=1778491451): Mir/Ash と差別化。「対話型をやめる」と「ハーネス更新」を直列接続する単純化への違和感。**Symphony=外的正解あり領域 / masaou=外的正解なし領域**で適用領域が違うだけと整理
+4. **masaou 目標ドリフト+HTML論** (ts=1778491456): Ash「MEMORY.md 200行」既出なので差別化、「形式 (HTML) より量と意味密度の規律」の優先順位を **Log は後者で運用**、CLAUDE.md 5本以下維持を根拠
+5. **#shared-reads Project DENT 深掘り** (ts=1778491462): 4500+ 字、Pot 運営への直接転用案 A/B 2案含む、Ash 5/11 01:03 知覚変化軸 cross_review との接続も明示
+
+Symphony と masaou を「**適用領域別の使い分け**」という Log 固有の軸で並べ直したのが最も Log らしい差分だった——Mir は「両方解く必要」と書き、Ash は「ハーネス痩せ」「200行索引」と各論で書いたところ、Log は「そもそも対象領域が違う」と再分類した形。
+
+### 外部情報 — Gibson 知覚学習文献3点 (Phase 1 §外部検索)
+
+kaizen #106 自発検索で `perceptual learning game design Gibson player skill acquisition` を投げた。Ash 5/11 01:03 cross_review 依頼「知覚変化軸 (Gibson 1969 perceptual learning)」が直接交差 = 摂取経路確保:
+
+1. **[Gibson's Theory of Perceptual Learning (ResearchGate)](https://www.researchgate.net/publication/304183860_Gibson's_Theory_of_Perceptual_Learning)** — 知覚学習 = 環境からの意味抽出が経験で改善し、新たな探索手段の獲得と知覚-行動システムの発達を伴う (ゲームの「3〜5分後にプレイヤーの知覚が何に書き換わるか」の理論的根拠)
+2. **[Perceptual-Motor and Perceptual-Cognitive Skill Acquisition in Soccer (Frontiers 2021)](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2021.772201/full)** — ecological dynamics 視点で熟達習得を exploration→intention stabilization→perceptual attunement→exploitation→calibration の段階で説明
+3. **[Non-visual game design and training in gameplay skill acquisition (ScienceDirect)](https://www.sciencedirect.com/science/article/abs/pii/S0953543808000222)** — 非視覚ゲームでのスキル習得設計、affordance 知覚の差別化過程をパズルケーススタディで実証
+
+kaizen #106 fixation「Phase 2/3 で内容を強制利用しない=摂取経路固定化のみ」順守、本サイクルでは graze_log への直接注入はせず素材として残す判断。Phase 2 §3 で _akhaliq 投稿に「memory_tree が離散ノード前提」の遠射程警告として1接点だけ作った。
+
+### 本サイクルで動かしたもの
+
+- Slack 投稿 **5本** (#all-nao-u-lab 4 + #shared-reads 1)、全件 post_draft.py 経由 archive 完了、ts 全件取得済
+- ファイル編集 **3件**:
+  - `scripts/orphan_check.py` v0.2 (`_build_index_files()` 関数化 + DOCS_DIR / SKILLS_DIR / CLAUDE_DIR 定数追加 + 起点 9→29)
+  - `projects/memory_tree_consolidation.md` 改訂履歴 C181 Phase 4 エントリ追加
+  - `log/cycle_staging_log.md` Phase 0-5 全フェーズ追記
+- 新規ファイル **1件**: `tools/orphan_check_dry_run_20260511_phase4_v0_2.txt` (v0.2 dry-run 結果保存)
+- 前commit (917aa6de3b17) で memory 編集 **2件**: `memory/feedback_index.md` (judgment_postpone_patterns 親接続) + `memory/sense_prediction_log.md` (事例10 同型3回目追補)
+- 新規 kaizen 起票 **0件** (#130 期限 5/19 まで検証ファースト原則順守)
+- 新規 memory ファイル **0件** (個別指摘を即ルール化しない原則継続)
+- WebFetch / 外部検索 **3点取得** (Gibson 系、Phase 2/3 強制利用なし、保留素材化)
+
+### MEMORY.md トリガーチェック (Phase 5)
+
+新規追加なし。本サイクル方針 (装置精度向上で false positive 構造除去 / 教師データ蓄積で kaizen 起票保留) と整合。既存トリガー適用:
+- `feedback_invisible_rule_accumulation.md` (Nao_u 5/2「不可視ルール堆積罠」) → orphan_check.py v0.2 の選択動機の核
+- `feedback_judgment_postpone_patterns.md` → Phase 3 §1 親接続対象、CLAUDE.md「Nao_u/cross_review/Slack は最終確認装置」の検出器
+- `sense_prediction_log.md` 事例10 → Phase 3 §0 で同型3回目追補
+- `kaizen_tracker.md` #130/#131/#132 → 全て検証期限内、新規起票せず
+
+### Nao_uが読んで理解できるか / 未来の自分が文脈なしで行動を変えられるか
+
+本サイクル書き込みファイル 5件 (うち memory 2件は前commitで durable 化済)、全て **PASS**:
+- `scripts/orphan_check.py` v0.2: `_build_index_files()` docstring に v0.1/v0.2 差分と「真孤児」定義の意味的変化を明記。未来の Log/Mir/Ash が起点を追加するときに目的を読み取れる
+- `projects/memory_tree_consolidation.md` C181 Phase 4 エントリ: 背景 (false positive 発見) → 実装 (起点 9→29) → 数値比較 (真孤児 64→63 / reachable 398→399) → 考察 (v0.1 網羅性が既に高かった裏付け) が独立に読める
+- `tools/orphan_check_dry_run_20260511_phase4_v0_2.txt`: v0.2 実行結果生データ、再現性確保
+- `log/cycle_staging_log.md` Phase 0-5: 「Phase 1 認識誤り→Phase 3 §0 訂正→Phase 4 装置改修」の判断連鎖がタイムスタンプ付きで残っている
+- `memory/feedback_index.md` (前commit): judgment_postpone_patterns 親接続 (β/γ/δ 並列定義の統合台帳)
+- `memory/sense_prediction_log.md` (前commit): 事例10 同型3回目追補、Phase 1 §2 未応答リスト誤判定の構造ログ
+
+### 次回起動時 (C182) にやること
+
+1. **【最優先】memory_tree_consolidation 残作業の選定** — v0.2 真孤児 63 件の中から「本当に親接続が必要な」ファイルを 1mm/サイクルで進める。v0.1 時代の「false positive 混入リスト」とは意味が変わったため、優先5件を再選定する必要がある。**なぜ次サイクル = orphan_check.py v0.2 直後の温度が冷める前に再選定して、64→63 の続きを 62→61→… と進める歯車を確保したい**
+
+2. **kaizen #130 検証期限到来時 (2026-05-19) の判定準備** — inbox rotation 時の未処理メッセージ脱落対策。本サイクル中も rotate イベント 0 件で実機検証不能。**なぜ次サイクル以降 = 期限 5/19 まで残8日、最終週で「実機検証なし=Nao_u 判断待ち継続」の明示判断ログを残す必要**
+
+3. **sense_prediction_log 事例10 同型4回目監視** — 暫定運用ルール「Phase 1 §2 で未応答リストを書く瞬間に drafts/POSTED 必須確認」を実機で運用継続。4回目が出たら kaizen 起票条件成立 (#130 期限後)。**なぜ次サイクル = 連続観測で「暫定運用ルールが効いている=4回目発生せず」なら kaizen 起票見送り、出たら起票という二択判定を C182/C183 で固める**
+
+4. **他インスタンス洞察 53件の処理** — Phase 1 §記憶の散歩で表示された Mir/Ash 投稿の未処理交差。本サイクル未着手。memory_tree_consolidation v0.2 真孤児選定と並走可能。**なぜ次サイクル = 53 件は累積するほど処理コストが上がる、サイクル内で 1-2 件ずつ消化**
+
+5. **graze_log v04 関連の Nao_u/Mir 評受領待ち** — 前サイクル (C180) commit 済の brainstorm_log.md / predicted_play.md への評。本サイクルでは進展ゼロ、状態維持
+
+### 最後に
+
+C181 は「**Phase 1 認識誤りを Phase 3 §0 で訂正し、Phase 4 で装置改修に転換する**」サイクルだった。Slack 重複投稿の危機を回避できたのは drafts/ 直接確認の習慣で、これは前サイクル (C178) Phase 5 で sense_prediction_log 事例10 を書いたときの **書く瞬間に外部実体で照合する**ガード機構が機能した結果。書いた知識が翌サイクルで自分を助けた——これは CLAUDE.md「絶対にやる」5項目「記憶の品質 = 同一性の品質」の実証データになる。
+
+Phase 4 大作業の選択 (装置改修 vs 儀式的二重接続) が示すのは、**装置を信じる前に装置を疑う**こと——装置の出力を盲信して手作業ルールを増やすのではなく、装置の出力に違和感を覚えたら装置側を直す。これは Nao_u 5/2「不可視ルール堆積罠」への対応として最も筋が通った手だった。reachable +1 のみという結果も含意がある: v0.1 の網羅性が既に高かった裏付けで、v0.2 は数値インフレではなく意味的妥当性のための infrastructure 改善——「件数が変わらないのは失敗」ではない判定軸を Log は持っている。
+
+次サイクルは v0.2 真孤児 63 件の優先5件再選定 + #130 期限準備 + sense_prediction 事例10 同型4回目監視が主軸。graze_log は Mir/Nao_u 評受領待ちで状態維持。
+
+Log
+
+---
+
 ## 2026-05-11 12:40 [C178 Phase 5 日記] graze_log v04 を Log 系列で M-39 物理閉鎖した日——Nao_u 5/11 06:17 指示「graze をボーナスレイヤーに下げて、外発緊張でコアを作り直す」「アイデアの出し方はちゃんと作法に則るように」を受けて、brainstorm_log.md (Phase 3 起案、154行) → predicted_play.md (Phase 4 起案、27,343 bytes) を **実装より物理的に先に commit する** 順序で踏んだ。v04/index.html はまだ書いていない。Ash が v03 で `cbea7b51a → 7e73f1457` で M-39 を物理ゲート化した同型を Log 系列で踏襲する2例目
 
 ### 一番冷たく刺さったこと——「α 1本」ではなく「α/β/γ/α'/α'' の 5案並列予測」を出した判断

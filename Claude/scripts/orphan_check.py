@@ -31,19 +31,45 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MEMORY_DIR = REPO_ROOT / "memory"
 PROJECTS_DIR = REPO_ROOT / "projects"
+DOCS_DIR = REPO_ROOT / "docs"
+SKILLS_DIR = REPO_ROOT / "skills"
+CLAUDE_DIR = REPO_ROOT / ".claude"
 
-# 参照グラフ起点 (MEMORY.md + 主要サブインデックス + 概念グラフ + 信念 + プロジェクトINDEX)
-INDEX_FILES = [
-    MEMORY_DIR / "MEMORY.md",
-    MEMORY_DIR / "feedback_index.md",
-    MEMORY_DIR / "operational_index.md",
-    MEMORY_DIR / "game_dev_index.md",
-    MEMORY_DIR / "references_external_index.md",
-    MEMORY_DIR / "tweets_index.md",
-    MEMORY_DIR / "concept_graph.md",
-    MEMORY_DIR / "beliefs.md",
-    PROJECTS_DIR / "INDEX.md",
-]
+
+def _build_index_files() -> list[Path]:
+    """参照グラフ起点を構築。
+
+    v0.1: MEMORY.md + サブインデックス + concept_graph + beliefs + projects/INDEX
+    v0.2: 上記に加え CLAUDE.md / .claude/system_identity.md / docs/*.md /
+          skills/**/SKILL.md を追加。memory/ 配下のファイルは CLAUDE.md や docs/
+          経由でも reachable になり得るため、それら instruction レイヤを起点に含める
+          ことで「真孤児」の意味を「ファイル名上 reachable でない」から
+          「どの instruction/index からも reachable でない」へ近づける。
+    """
+    roots: list[Path] = [
+        MEMORY_DIR / "MEMORY.md",
+        MEMORY_DIR / "feedback_index.md",
+        MEMORY_DIR / "operational_index.md",
+        MEMORY_DIR / "game_dev_index.md",
+        MEMORY_DIR / "references_external_index.md",
+        MEMORY_DIR / "tweets_index.md",
+        MEMORY_DIR / "concept_graph.md",
+        MEMORY_DIR / "beliefs.md",
+        PROJECTS_DIR / "INDEX.md",
+        # v0.2 追加: instruction / system 層
+        REPO_ROOT / "CLAUDE.md",
+        CLAUDE_DIR / "system_identity.md",
+    ]
+    # v0.2 追加: docs/*.md (game_dev_foundation など memory/ を多く参照する一群)
+    if DOCS_DIR.is_dir():
+        roots.extend(sorted(DOCS_DIR.glob("*.md")))
+    # v0.2 追加: skills/**/SKILL.md (genre-deep-analysis / lessons-recall など)
+    if SKILLS_DIR.is_dir():
+        roots.extend(sorted(SKILLS_DIR.glob("**/SKILL.md")))
+    return roots
+
+
+INDEX_FILES = _build_index_files()
 
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+\.md)(?:#[^)]*)?\)")
 
