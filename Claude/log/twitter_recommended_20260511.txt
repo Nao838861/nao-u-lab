@@ -1,4 +1,333 @@
 # Twitter For You (おすすめ) タブ
+<<<<<<< HEAD
+# Read at: 2026-05-11 13:22
+# Total: 50 tweets
+
+--- 1. @ootamato (2026-05-11) ---
+URL: https://x.com/ootamato/status/2053685896483123302
+○年前にNVIDIAを買っていればみたいな話、今後伸びるであろう企業を見つけることはできても未上場で買えなくて、上場する頃には既に有名になっちゃってるパターンが多い
+
+Unity4の頃のUnity、VTuber黎明期のホロライブ、ChatGPTが出た頃のOpenAIとか
+
+--- 2. @himawarifes2026 (?) ---
+ひまわり祭り40周年 × 逢坂良太さん40歳記念スペシャルイベント開催！
+
+--- 3. @fladdict (2026-05-11) ---
+URL: https://x.com/fladdict/status/2053673753281012094
+海外のすごい人がいってる「AIで誰でも億万長者チャンス」っていうのは、「ただしビッグテックやVCにつてがあったり営業できたり、コミュニティに属してて、英語でプレゼンできる」が非表示でついてる感ある。コミュニティに属する前提がある。
+
+--- 4. @KOBA789 (2026-05-10) ---
+URL: https://x.com/KOBA789/status/2053401327330603118
+CLAUDE.md にプロジェクトの構造とか技術スタックとか書かせるのは悪手な感じがしていて、そんなんコード読めば一瞬でわかるんで人間にしか知らんこと（判断基準とか方針とか）を書いた方がいいと思っています
+
+--- 5. @ebikani_hasami (2026-05-10) ---
+URL: https://x.com/ebikani_hasami/status/2053624341523579160
+Claude CodeとCodex、合わせ技が使えるようになったの気づいてた？
+
+「Codex Plugin for Claude Code」を入れるだけで、トークンを節約したい処理・レビュー・画像生成はCodexに任せつつ、重要な判断はClaudeで対応できる。
+
+--- 6. @dkfj (2026-05-11) ---
+URL: https://x.com/dkfj/status/2053682367471198333
+今までチマチマとスクレイピングのコードを書いていたのは何だったのだという時代になりました。凄いなぁ 
+
+/ “Chrome DevTools MCP が凄い。人類が「プログラムにやってほしかったこと」が簡単にできる時代がきた！！ - プログラマでありたい”
+
+--- 7. @awakia (2026-05-10) ---
+URL: https://x.com/awakia/status/2053616156783829266
+Claude Code Routineによってニュースアプリも死ぬかもしれない。Lineって結構いろんな形式で送れるのね。
+
+--- 8. @hor11 (2026-05-10) ---
+URL: https://x.com/hor11/status/2053517680523772095
+ウチ、50歳でもお迎えするし、若者ちゃんも歓迎です。
+
+--- 9. @Trtd6Trtd (2026-05-10) ---
+URL: https://x.com/Trtd6Trtd/status/2053384546704384004
+https://
+daverupert.com/2026/05/small-
+language-models-in-the-browser/
+…
+ブラウザへのSLM統合のメリデメ
+
+プライバシー保護や無料利用などの利点に対して、ChromeシェアによるGoogle仕様への従属などの問題点もある
+
+対策としてモデル選択や小規模フォールバック機能を提案
+
+--- 10. @kiyoshi_shin (2026-05-11) ---
+URL: https://x.com/kiyoshi_shin/status/2053637136403111959
+ChatGPTの画像生成AIは本当に最強か　Nano Bananaと比べて見えた“弱点” 
+GPT Image 2.0は圧倒的な能力を持ちつつも、人物の一貫性という点では、Nano Bananaには劣るようです。いろいろテクニックを組み合わせても、適切に似ない傾向があります。作例で探りました。
+
+--- 11. @NovelMaker_AI (?) ---
+AIがゲームマスターを務めてくれるAI TRPGのWindowsアプリケーションを作りました！
+
+Claude Haiku, Sonnet, Opusの３種類を使えるようにしており、利用にはお金がかかりますが、
+興味のある方はぜひ遊んでみてください。1$単位で課金出来ます。
+
+--- 12. @fd_a_e (2026-05-10) ---
+URL: https://x.com/fd_a_e/status/2053435095756017861
+・日本語が弱い中国系LLM（KIMIとかQwenとか）で日本語出すと频繁にこうなる
+・日本语が弱い学习者が读み方分からないから中国語で入力して补うものの、日本語が弱いから简体字と新字体が异なることに气付かずこうなる
+
+--- 13. @super_bonochin (2026-05-10) ---
+URL: https://x.com/super_bonochin/status/2053376092766175459
+ちなみにこの Pulse を見たこと無い人向けに書くと、こんなイメージで毎日届く。
+
+--- 14. @i_love_profit (2026-05-10) ---
+URL: https://x.com/i_love_profit/status/2053608599486963797
+AIは思考しているか？の問いが出たとき必ず思考とは何か？という問いがセットになっていたように
+AIは自己意識を持つか？という問いに対しては必ず自己意識とは何か？という問いが出てくるだろうな
+
+--- 15. @ReineHonoka (2026-05-10) ---
+URL: https://x.com/ReineHonoka/status/2053464729482588584
+AIキャラクターのボイスクローンに使えるコーパスとして、AICAコーパスをリリースいたしました
+
+これはAI Character Audio corpusの略で、名前の通りAIVtuberのようなAIキャラを作る際のコーパスに適しています！
+
+--- 16. @AcervoCharts (2026-05-10) ---
+URL: https://x.com/AcervoCharts/status/2053505346384326889
+誇り！11歳のブラジル人少女ジュリア・ピメンテルが、平方根を計算するためのシンプルな公式を作成し、科学雑誌に掲載されました。
+
+--- 17. @hachiya (2026-05-10) ---
+URL: https://x.com/hachiya/status/2053351301627699439
+これ、本当に重要なことが書いてあるのだけど、多くのひとはそれに気づいてない。
+“地方創生のためには、「誰もが気軽に触れられる場所」に、「最先端の特別な機材」が必要なのである。”
+
+なぜ「こどもAI教室」ではなく「AIゲームセンター」であるべきなのか｜shi3z 
+@shi3z
+
+--- 18. @chimi7_2 (2026-05-10) ---
+URL: https://x.com/chimi7_2/status/2053580855294193714
+健康診断にきた 少しふくよか な40代女性と問診。
+
+私「あと気になるところないですか？」
+女「あの〜足が最近 モーレツにかゆい んです」
+ふくらはぎﾎﾞﾘﾎﾞﾘﾎﾞﾘ
+私「あらあら」
+女「なんだか黒ずんでるし...
+　　ヘンな虫に刺されたかしら」
+私「...ちょっと拝見しても？」
+
+私「あ、これ
+
+--- 19. @TJO_datasci (2026-05-09) ---
+URL: https://x.com/TJO_datasci/status/2053037996493222396
+これは確かにmRNA製薬業界にとってはチャンスかと
+
+--- 20. @AUTOMATONJapan (2026-05-10) ---
+URL: https://x.com/AUTOMATONJapan/status/2053624139702047013
+【ニュース】SF銀河帝国ストラテジー『Stellaris』、本日のアプデで「有料DLC3種」がゲーム本編に無料統合。約5000円分が“大合体”
+
+https://
+automaton-media.com/articles/newsj
+p/stellaris-20260510-442205/
+…
+
+--- 21. @googlecloud_jp (?) ---
+【デジタル庁、農林水産省 登壇】
+2026 年 5 月 20 日（水） 15 時から
+
+ガバメントクラウドの特徴やメリット、
+PJMO 視点で移行時の体験談をお話しいただきます。
+
+ガバメントクラウドへのスマートな移行と運用進化を実現するヒントをお届けします
+
+--- 22. @kotauchisunsun (2026-05-10) ---
+URL: https://x.com/kotauchisunsun/status/2053386291711259060
+2030年までのIPOを目指す「スマートコンタクトレンズ」は年間2,000ドル(31.3万円)の支払いが必要。
+
+ドバイに拠点を置くスマートコンタクトレンズの会社、XPANCEOの記事。
+
+・2030年発売予定
+・年間2,000ドル(31.3万円)
+
+たっけぇ・・・・
+
+https://
+news.tvbs.com.tw/world/3200357
+
+--- 23. @Clive_Frog_2_0 (2026-05-10) ---
+URL: https://x.com/Clive_Frog_2_0/status/2053464270067949859
+Open source remake of #Wizardry 
+
+
+https://
+github.com/davemoore22/so
+rcery
+…
+
+--- 24. @fakemomoi0821 (2026-05-10) ---
+URL: https://x.com/fakemomoi0821/status/2053462370970984738
+女性視点の女性上位、女性側がやりたいことをやるのでたまにひぇ…となるものがある
+
+--- 25. @K_Ishi_AI (2026-05-10) ---
+URL: https://x.com/K_Ishi_AI/status/2053413512391847976
+「大規模停電などが長期間続いた場合、交通や物流の混乱に加え、通信やATMの停止、水道、医療などにも影響が連鎖し、国民生活に甚大な被害が生じるおそれがある」
+
+もはや戦争状態だろこれ。
+
+--- 26. @Kan_Kikuchi (2026-05-10) ---
+URL: https://x.com/Kan_Kikuchi/status/2053601906027876635
+Unityプロジェクトのカスタムテンプレートを作る機能が、ついに正式サポートされたという話！
+
+Unity Hub 3.18.0から、オリジナルのプロジェクトテンプレートが簡単に作れるように
+
+https://
+kan-kikuchi.hatenablog.com/entry/Unity_Pr
+oject_Custom_Template
+…
+
+--- 27. @FabSceneJp (2026-05-11) ---
+URL: https://x.com/FabSceneJp/status/2053645339870281938
+上海交通大学が1.7mmで全方向の力を測る光学式触覚センサーを開発
+
+--- 28. @karaage0703 (2026-05-10) ---
+URL: https://x.com/karaage0703/status/2053442922230710504
+Even G2注文しちゃいました。度入りなので、届くまで1~2ヶ月くらいかかるらしいです。届くのが待ち切れないです
+
+--- 29. @otsune (2026-05-10) ---
+URL: https://x.com/otsune/status/2053354399700062457
+BOOTH販売のアバター利用規約→データをDL出来るがその利用範囲を定めたルール
+
+二次創作ガイドライン→本来はグレーゾーンの行為を明確に許可しましたよという文
+
+どちらも作者の著作権を根拠にしてる（従えないのなら買うな使うな。もし違反したら権利で争う）
+
+--- 30. @chatra_p5x (2026-05-10) ---
+URL: https://x.com/chatra_p5x/status/2053432827417657772
+敵全体に小ダメージを8回あたえるスキル
+
+ペルソナ初心者｢今更小ダメージとかwww｣
+
+ペルソナ経験者｢すごい…そりゃ決まりだよ｣
+
+--- 31. @Polymarket (?) ---
+BREAKING: JESUS CHRIST RETURNING THIS YEAR?
+
+4% chance. The odds have risen.
+
+--- 32. @tawatawara (2026-05-11) ---
+URL: https://x.com/tawatawara/status/2053630709852758391
+Kaggle が AI agent に席巻されるかというと、結局タスク設計次第な気がする。GBDT の普及などで簡単な tabular competition が無くなっていったように、AI agent が普及することで簡単、というか一般的なタスクの competition は無くなるんじゃないかな。でも Kaggle が無くなるわけじゃない。
+
+--- 33. @POTY0521 (2026-05-10) ---
+URL: https://x.com/POTY0521/status/2053475265804988676
+今の俺が求めてた物に完璧に近いゲームかもしれん！
+自分の思い通りにキャラが動かせて難しすぎず程よい難易度でいい！
+初めてのボス戦でこんな感じなら期待できる！
+
+--- 34. @tokufxug (2026-05-11) ---
+URL: https://x.com/tokufxug/status/2053652920542138862
+画像と3Dデータの共通する位置を特定するAI「UniCorrn」が登場。
+
+従来はデータの種類ごとに別のAIが必要でしたが、一つの仕組みで処理を統一。
+
+その結果、従来手法を8%〜10%上回る精度で、写真と立体データ間の正確な位置合わせを可能にするAI技術です。
+
+--- 35. @emadurandal_cgj (2026-05-10) ---
+URL: https://x.com/emadurandal_cgj/status/2053408442652733878
+すごいな。十分な速度で動いてる。Hermes Agentを動かすのにもDeepSeek V4 Flashは十分な賢さを発揮するので、128MB Mac miniがあればAPI課金なしで色々Agentを動かせる。夢があるなぁ。
+
+--- 36. @fladdict (2026-05-11) ---
+URL: https://x.com/fladdict/status/2053643690745503968
+動画AI業界、こまかい工夫はだいたいすべて次バージョンで吹き飛ぶな
+
+--- 37. @FramiaPro (?) ---
+New AI Image Model Update on Framia Pro!
+An image turns into a mad gameplay video
+
+Watch video for step by step tutorial
+AI Powered
+
+--- 38. @GOROman (2026-05-10) ---
+URL: https://x.com/GOROman/status/2053625765821075671
+大航海時代の東インド会社みたいなリスク担当です 皆様よろしくお願いしますw
+
+胡椒探します
+
+--- 39. @umiyuki_ai (2026-05-10) ---
+URL: https://x.com/umiyuki_ai/status/2053457038576070734
+だったらAIにヘタクソな手描きっぽい絵描かせたらどうなるねん？みたいな疑問がありそうだけど、ただしAIにわざわざ人間のヘタクソな手描きを真似させるのってイヤミというか説明しがたい悪意を感じるので結局印象悪い気がする
+
+--- 40. @gosrum (2026-05-10) ---
+URL: https://x.com/gosrum/status/2053606098779959538
+よし、Codex+ローカルLLMでベンチマーク評価できるようになった
+
+あとはひたすらぶん回してデータを集めよう
+
+--- 41. @Trtd6Trtd (2026-05-11) ---
+URL: https://x.com/Trtd6Trtd/status/2053671442223632403
+https://
+youtube.com/watch?v=ZqehXr
+VlDqs
+…
+AI運用における観測可能性の重要性についての話が面白かった
+
+以下の3層の観測階層を提案してる
+
+1. telemetry
+実行トレース記録
+いわゆる運用ログ
+
+2. monitoring
+あらかじめ設定した「既知の指標」
+応答時間や特定のツール呼び出し回数など
+
+3. analytics
+「Unknown
+
+--- 42. @kaityo256 (2026-05-10) ---
+URL: https://x.com/kaityo256/status/2053492521029021704
+「AIで世界が変わる！生成AIのプロが教えるアプリ開発と収益化の秘密はこちら」
+アーニャ「……(おまえ、うそつき。作ったのはTodoリストとチャットボットくらい)」
+「issue放置し過ぎて異臭が、なんてガハハハ」
+アーニャ「(ガーン！GitHubで星が死ぬ程ついてるライブラリの開発者！)」
+
+--- 43. @tori29umai (2026-05-10) ---
+URL: https://x.com/tori29umai/status/2053620386215133382
+画像を入力したらクリスタ用のBVHを出力するwebアプリ「image2BVH」｜とりにく 
+@tori29umai
+ 
+https://
+note.com/tori29umai/n/n
+66e124812f69?sub_rt=share_pb
+… 
+フォロワの漫画家さんから「雑な絵や写真からクリスタのポーズ人形のポーズ推定できたら便利かも」とのお声をいただいたので作ってみましたー！
+
+--- 44. @miwa_ensan (2026-05-10) ---
+URL: https://x.com/miwa_ensan/status/2053519808751345988
+よくあるテクだけど、Zenzaiのモデル学習はPackingを入れても精度劣化しないことがわかったので、学習効率がだいたい3倍になった
+
+--- 45. @etihad (?) ---
+This is your ticket to the 
+summer adventure of a lifetime. 
+Enjoy up to 30% off on over 30 
+destinations worldwide and let 
+Etihad take you there in unmatched 
+comfort. Book before 14 May. Travel 
+May - October 2026
+
+--- 46. @nukonuko (2026-05-11) ---
+URL: https://x.com/nukonuko/status/2053646844052508749
+Hermes Agent が LINE に対応！
+
+Messaging API 経由で。1 対 1 はもちろん、LINE グループでも。テキスト、画像、音声、動画、ファイル、スタンプ、位置情報などを受け取れる。
+
+--- 47. @takehiro1010 (2026-05-10) ---
+URL: https://x.com/takehiro1010/status/2053403231569719509
+「1人社長×AI」時代の到来
+
+--- 48. @bioshok3 (2026-05-10) ---
+URL: https://x.com/bioshok3/status/2053466878925012997
+次はサイバー攻撃ではなく、バイオ攻撃版Mythosがくるので、早急に政府はクラウドラボの規制、全国に核酸観測所の設置検討、ワクチンサプライチェーンの自動化検討、をする必要があると感じる。
+
+--- 49. @mnishi41 (2026-05-11) ---
+URL: https://x.com/mnishi41/status/2053644024691789956
+NEC、独自AIを用いて、大容量3D点群データを軽量で高精細な3Dデータに変換する技術を世界で初めて開発 (2026年5月11日): プレスリリース | NEC
+
+--- 50. @d_1d2d (2026-05-10) ---
+URL: https://x.com/d_1d2d/status/2053420554666054068
+「虹に終わりなんてない。ただ、虹があるだけだ。」 — ダリオ・アモデイ（Anthropic CEO）
+=======
 # Read at: 2026-05-11 13:51
 # Total: 50 tweets
 
@@ -295,3 +624,4 @@ URL: https://x.com/shirosuke_2525/status/2053397290786939117
 今月サボっても、来月の収入は大きく変わらないこともあります。
 
 でも自営業や副業は違います。
+>>>>>>> 8ca36bf3b52a01909704a0c99cb073947c1d538e
