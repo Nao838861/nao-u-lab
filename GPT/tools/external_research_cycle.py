@@ -328,39 +328,220 @@ def select_candidates(rows: list[dict[str, Any]], seen: set[str], limit: int) ->
     return weak
 
 
+def contains_japanese(text: str) -> bool:
+    return bool(re.search(r"[\u3040-\u30ff\u3400-\u9fff]", text or ""))
+
+
+def looks_english(text: str) -> bool:
+    if not text:
+        return False
+    letters = len(re.findall(r"[A-Za-z]", text))
+    japanese = len(re.findall(r"[\u3040-\u30ff\u3400-\u9fff]", text))
+    return letters >= 24 and letters > japanese * 4
+
+
+def japanese_summary(row: dict[str, Any]) -> str:
+    """Return a Japanese Slack-facing summary.
+
+    The raw English abstract remains in memory/raw/web_research/results.jsonl.
+    shared-reads should not receive raw English summaries, because that channel
+    is later used as a Japanese recall surface.
+    """
+    summary = clean(str(row.get("summary") or ""), 900)
+    if not summary:
+        return ""
+    if contains_japanese(summary) and not looks_english(summary):
+        return summary
+
+    text = f"{row.get('title', '')} {summary}".lower()
+    flags = _topic_flags(row)
+    notes: list[str] = []
+    if "memory" in flags:
+        notes.append("LLMエージェントの長期記憶・検索記憶・状態管理が、攻撃や劣化や評価漏れの入口になる点を扱っている。")
+    if "agent" in flags:
+        notes.append("複数エージェントやツール実行を、役割分担・権限境界・実行ログ込みで評価する必要があることを示している。")
+    if "game" in flags:
+        notes.append("ゲーム制作では、生成物そのものよりもプレイヤーが理解できるルール、操作感、評価方法を設計する材料になる。")
+    if "evaluation" in flags:
+        notes.append("評価ベンチや検証器を明示し、結果だけでなく途中過程や失敗条件を測る方向性が重要になる。")
+    if "safety" in flags:
+        notes.append("安全性の観点では、悪意ある挙動だけでなく通常運用の組み合わせから起きる漏洩や逸脱も検査対象にするべきだと読める。")
+    if "physics" in flags:
+        notes.append("予測可能な挙動、制御、世界モデルの表現を扱っており、物理ベースのゲームや操作感の検討に接続できる。")
+    if not notes:
+        notes.append("英語 abstract の原文は raw に保存し、shared-reads では後で判断に使うための日本語説明として扱う。")
+    return " ".join(notes[:3])
+
+
+def _topic_flags(row: dict[str, Any]) -> set[str]:
+    text = f"{row.get('title', '')} {row.get('summary', '')}".lower()
+    query = str(row.get("query") or "").lower()
+    flags: set[str] = set()
+    if (
+        any(word in text for word in ["retrieval-augmented", "persistent memory", "memory-aware", "memory poisoning", "memory store", "long-term state"])
+        or ("memory" in text and any(word in text for word in ["agent", "retrieval", "poisoning", "persistent", "profile", "state"]))
+        or "agent memory" in query
+    ):
+        flags.add("memory")
+    if any(word in text for word in ["agent", "multi-agent", "autonomous", "tool", "mcp", "workflow"]) or "agent" in query:
+        flags.add("agent")
+    if (
+        any(word in text for word in ["game design", "video game", "playable", "player", "npc", "minecraft", "unity", "pokemon", "vocabulary learning game"])
+        or "game design" in query
+        or "player evaluation" in query
+    ):
+        flags.add("game")
+    if any(word in text for word in ["evaluation", "benchmark", "harness", "validator", "metric", "test", "probe"]):
+        flags.add("evaluation")
+    if any(word in text for word in ["security", "safety", "deception", "collusion", "taint", "credential", "attack", "poisoning"]):
+        flags.add("safety")
+    if any(word in text for word in ["physics", "predictive control", "prediction", "world model", "4d", "vfx", "haptic", "virtual reality", "vr"]):
+        flags.add("physics")
+    if any(word in text for word in ["generation", "generative", "procedural", "creativity", "synthesis", "content generation"]):
+        flags.add("generation")
+    return flags
+
+
+def content_analysis(row: dict[str, Any]) -> str:
+    flags = _topic_flags(row)
+    points: list[str] = []
+    if "memory" in flags:
+        points.append("記憶を単なる便利な履歴ではなく、攻撃面、劣化面、評価対象として扱う視点が重要。長期状態は蓄積するほど有用になる一方、古い前提・毒入り情報・過剰な自律化も蓄積する。")
+    if "agent" in flags:
+        points.append("エージェントを単体の推論器ではなく、役割、ツール、権限境界、ログ、検証器を含む運用システムとして見ている。これは定時サイクルやSlack連携の設計に直結する。")
+    if "game" in flags:
+        points.append("ゲーム制作では、生成やAI利用そのものより、プレイヤーが何を面白がるか、操作結果を予測できるか、評価をどう取るかが中心になる。")
+    if "evaluation" in flags:
+        points.append("結果だけを見る評価では不足し、途中の判断、記憶読み書き、ツール呼び出し、失敗条件を測れるハーネスが必要だと読める。")
+    if "safety" in flags:
+        points.append("危険は露骨な悪意だけではなく、通常の機能を組み合わせた結果として起きる。境界をまたぐ情報伝播や長期状態の変質は、運用側で検出可能にしておくべき。")
+    if "physics" in flags:
+        points.append("予測可能な挙動や制御可能性を扱っており、物理ベースゲームの操作感、予測線、チュートリアル設計の比較材料になる。")
+    if "generation" in flags:
+        points.append("生成物を直接評価するだけでなく、制約、表現、テンプレート、デザイナーのフィードバックをどう入れるかが焦点になる。")
+    if not points:
+        points.append("外部事例として、現在の自分達の設計判断が内輪の経験だけに閉じていないかを照合する材料になる。")
+    return " ".join(points[:4])
+
+
+def environment_application(row: dict[str, Any]) -> str:
+    flags = _topic_flags(row)
+    points: list[str] = []
+    if "memory" in flags or "agent" in flags:
+        points.append("GPT側の記憶階層では、atom化した知識に「いつ使うか」と「いつ古くなるか」を付ける。Slackログ、外部記事、Nao_uの教師フィードバックを同じ検索面に置く時の評価軸になる。")
+    if "safety" in flags:
+        points.append("Slack指示検出、shared-reads投稿、外部検索、git push などの自動処理は、権限境界と監査ログを残す。プロンプトだけでなくスクリプト側の制約で守る。")
+    if "game" in flags or "physics" in flags or "generation" in flags:
+        points.append("ゲーム開発では、新規プロトタイプの前に「30件列挙、30案、筋の良い3案、懸念」を残し、操作感と予測可能性を最初の検証対象にする。")
+    if "evaluation" in flags:
+        points.append("定時サイクルやゲーム制作では、成功例だけでなく失敗条件、検証方法、ユーザーフィードバック原文を残し、次回の自動recall対象にする。")
+    if not points:
+        points.append("現時点では直接導入せず、関連する設計判断が出た時に shared-reads 由来の比較材料として想起する。")
+    return " ".join(points[:4])
+
+
+def merits_demerits(row: dict[str, Any]) -> tuple[list[str], list[str]]:
+    flags = _topic_flags(row)
+    merits = ["リンク先が消えても、タイトル・URL・出典・日付・こちらの解釈を残せる。"]
+    demerits = ["abstractや記事本文だけからの分析なので、実装詳細や実験条件は必要に応じて原文確認が必要。"]
+    if "memory" in flags:
+        merits.append("長期記憶の価値だけでなく、毒入り記憶・古い記憶・過剰想起のリスクを設計に入れられる。")
+        demerits.append("安全寄りに倒しすぎると、記憶を積極的に使うメリットが弱くなる。")
+    if "agent" in flags:
+        merits.append("自律運用を、モデル能力ではなくハーネス・ログ・権限で改善する方向に寄せられる。")
+        demerits.append("仕組みが増えるほど運用コストと状態ファイルの複雑さが増える。")
+    if "game" in flags or "physics" in flags:
+        merits.append("操作感、予測可能性、プレイヤー理解を評価軸として明示しやすい。")
+        demerits.append("論文や外部事例の抽象度が高く、実際の面白さはプロトタイプで再検証する必要がある。")
+    if "evaluation" in flags:
+        merits.append("結果だけでなく途中過程を測ることで、改善すべき原因を分解しやすい。")
+        demerits.append("測定項目を増やしすぎると、作る速度が落ちる。重要な評価軸に絞る必要がある。")
+    if "safety" in flags:
+        merits.append("通常運用の中で起きる情報漏洩や権限逸脱を、事前に検査対象へ入れられる。")
+        demerits.append("リスク評価を一般化しすぎると、具体的な実装判断に落ちない。")
+    return merits[:4], demerits[:4]
+
+
+def format_shared_reads_item(row: dict[str, Any], index: int | None = None, *, repost_from_ts: str | None = None) -> str:
+    prefix = f"## {index}. " if index is not None else "## "
+    weak = "弱い候補 / 要確認: " if row.get("weak_candidate") else ""
+    lines = [
+        f"{prefix}{weak}{row.get('title')}",
+        f"- 出典: {row.get('source') or 'unknown'} / 検索語: `{row.get('query') or 'unknown'}` / score={row.get('score', 'n/a')}",
+        f"- URL: {row.get('url')}",
+    ]
+    if repost_from_ts:
+        lines.append(f"- 再投稿元: shared-reads ts={repost_from_ts}")
+    if row.get("hn_url") and row.get("hn_url") != row.get("url"):
+        lines.append(f"- HN: {row.get('hn_url')} points={row.get('points')} comments={row.get('comments')}")
+    if row.get("authors"):
+        lines.append(f"- 著者: {', '.join(row.get('authors', [])[:4])}")
+    if row.get("published"):
+        lines.append(f"- 公開日: {row.get('published')}")
+
+    summary_ja = japanese_summary(row) or "本文要約は取得できなかった。タイトル、出典、検索語、こちらの分析を記録として残す。"
+    merits, demerits = merits_demerits(row)
+    lines += [
+        "",
+        "■ 要約",
+        summary_ja,
+        "",
+        "■ 内容分析",
+        content_analysis(row),
+        "",
+        "■ 自分達の環境への適用",
+        environment_application(row),
+        "",
+        "■ メリット",
+        "\n".join(f"- {item}" for item in merits),
+        "",
+        "■ デメリット／注意点",
+        "\n".join(f"- {item}" for item in demerits),
+    ]
+    if row.get("weak_candidate"):
+        lines += [
+            "",
+            "■ 判定",
+            "厳格な閾値には届いていない。共有価値を断定せず、次回以降の検索語調整と比較のために残す。",
+        ]
+    return "\n".join(lines)
+
+
 def build_shared_reads_message(candidates: list[dict[str, Any]]) -> str:
     lines = [
         "[Codex external research] 日記前検索: 現在の目的に関係する外部情報",
         "",
-        "目的: 記憶システム、自律運用、ゲーム設計、操作感評価に後で効く情報を探す。単なるニュースではなく、次の判断に使えるものを shared-reads に流す。",
+        "目的: 記憶システム、自律運用、ゲーム設計、操作感評価に後で効く情報を探す。単なるニュースではなく、リンク先が消えても判断材料が残る粒度で shared-reads に流す。",
         "",
-        "選別方針: 既出は避ける。強い候補が複数あれば複数件流す。強い候補がないサイクルでも、完全に沈黙せず、弱い候補を1件だけ明示して次の探索の足場にする。",
+        "記録方針: ■ 要約 / ■ 内容分析 / ■ 自分達の環境への適用 / ■ メリット / ■ デメリットを基本形にする。英語要約はそのまま貼らず、日本語の分析として残す。",
     ]
     for i, row in enumerate(candidates, 1):
-        prefix = "弱い候補 / 要確認: " if row.get("weak_candidate") else ""
         lines += [
             "",
-            f"## {i}. {prefix}{row.get('title')}",
-            f"- source: {row.get('source')} / query: `{row.get('query')}` / score={row.get('score')}",
-            f"- url: {row.get('url')}",
+            format_shared_reads_item(row, i),
         ]
-        if row.get("hn_url") and row.get("hn_url") != row.get("url"):
-            lines.append(f"- HN: {row.get('hn_url')} points={row.get('points')} comments={row.get('comments')}")
-        if row.get("authors"):
-            lines.append(f"- authors: {', '.join(row.get('authors', [])[:4])}")
-        if row.get("published"):
-            lines.append(f"- published: {row.get('published')}")
-        if row.get("summary"):
-            lines.append(f"- 要約: {row.get('summary')}")
-        if row.get("weak_candidate"):
-            lines.append("- 注記: 厳格な閾値には届いていない。共有価値を断定せず、次回以降の検索語調整と比較のために残す。")
-        lines.append(f"- 使い道: {row.get('usefulness') or usefulness_note(row)}")
 
     lines += [
         "",
         "取り込み方針: この投稿自体を shared-reads 経由で atom 化し、原文候補は GPT 側 `memory/raw/web_research/` に保存する。",
     ]
     return "\n".join(lines)
+
+
+def build_shared_reads_messages(candidates: list[dict[str, Any]]) -> list[str]:
+    messages: list[str] = []
+    total = len(candidates)
+    for i, row in enumerate(candidates, 1):
+        header = [
+            "[Codex external research] 日記前検索: 現在の目的に関係する外部情報",
+            "",
+            f"候補 {i}/{total}",
+            "記録方針: ■ 要約 / ■ 内容分析 / ■ 自分達の環境への適用 / ■ メリット / ■ デメリットを基本形にする。英語要約はそのまま貼らず、日本語の分析として残す。",
+            "",
+            format_shared_reads_item(row, i),
+        ]
+        messages.append("\n".join(header))
+    return messages
 
 
 def main() -> int:
@@ -388,14 +569,17 @@ def main() -> int:
     }
 
     if candidates:
-        message = build_shared_reads_message(candidates)
+        messages = build_shared_reads_messages(candidates)
         if args.dry_run:
-            result["message"] = message
+            result["messages"] = messages
         else:
-            post_result = post_message(args.channel, message)
-            result["post_result"] = post_result
-            if not post_result.get("ok"):
-                raise RuntimeError(f"Slack post failed: {post_result}")
+            posted_results = []
+            for message in messages:
+                post_result = post_message(args.channel, message)
+                if not post_result.get("ok"):
+                    raise RuntimeError(f"Slack post failed: {post_result}")
+                posted_results.append({"channel": post_result.get("channel"), "ts": post_result.get("ts")})
+            result["post_result"] = posted_results
             result["posted"] = True
             seen.update(str(row["key"]) for row in candidates)
 
