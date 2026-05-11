@@ -49,6 +49,8 @@ MEMORY.md（Level 1 親）からの引き下げ先。**新ゲーム着手前 / �
 - [feedback_self_risk_core_pitfall.md](feedback_self_risk_core_pitfall.md) — **「報酬経路の追加」が「自発リスクのコア化」と同義になりうる罠**。M-12 遵守でもサイヴァリア BUZZ／クレタクカスリ層をコア化すると外発緊張不在で「ノーリスク連打／増える方向の一辺倒」。**Q-D シート**: (1)緊張の発生源 外/自/両 (2)自発のみならコア化否(難度極高) (3)30秒で死ぬ要素 (4)経済反転チェック (5)「美しいプレイ」1行。罰 tightening 禁忌 (M-15)。M-30/M-31 [T:5]
 - [feedback_concept_relevance_judgment.md](feedback_concept_relevance_judgment.md) — **概念の濫用——重要度判定なしに最近の言葉を判断基準にする癖**。サプライズニンジャ→STG適用、ukyoP_san「角を丸める」→汎用判断引用、いずれも文脈外転用。概念採用前3問: (1)元の発話文脈はどんな問題か (2)いま当てる対象とその文脈は同型か (3)この概念を使わずに問題を別の言葉で言えるか [T:5]
 - [feedback_surprise_ninja_concept_first.md](feedback_surprise_ninja_concept_first.md) — **【適用範囲: ADV/シナリオ文脈に限定】**。F.W.ブリッジ脚本論。Nao_u 原文も「ADV を考えるとして」と前置きあり。STG/Action/Avoid 系への汎用判断基準としては使わない。詳細とこの訂正の起点は [feedback_concept_relevance_judgment.md](feedback_concept_relevance_judgment.md) [T:3]
+- [feedback_predict_before_human_play.md](feedback_predict_before_human_play.md) — **M-37b 人間プレイ前の予測責任 — 実プレイは検証ではなく確認の場**（Nao_u 2026-05-01 08:56 #game-rights）。実装後 Nao_u/人間にプレイさせる前に必ず通す: (1) 結果予測 3行（操作感/快感ピーク/想定離脱点） (2) 既知の懸念列挙＋自己解決可否判定 (3) 解決不可なら撤回。「人間プレイで判明」型の δ パターン（feedback_judgment_postpone_patterns.md）と表裏。Nao_u/cross_review は最終確認装置で判定装置ではない [T:5]
+- [feedback_prior_art_research.md](feedback_prior_art_research.md) — **M-40 先行事例調査ゲート — 数値チューニングは微調整しかできない**（Nao_u 2026-05-01 13:07/13:18 #game-rights）。新仕様着手前に類似事例を広く実調査せよ。仕様の根本が面白くないなら数値調整は頭打ち。M-38 Q4 の上流強化。M-41（feedback_similar_games_first.md）と独立: M-40 は「面白さの源泉特定」、M-41 は「先行事例ゼロ件は不採用」のゲート判定 [T:5]
 
 ---
 

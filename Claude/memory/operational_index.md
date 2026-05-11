@@ -34,6 +34,7 @@ MEMORY.md (Level 1 親) からの引き下げ先。**LLM がこれから具体�
 - [feedback_external_output_policy.md](feedback_external_output_policy.md) — **外部発信ポリシー**。knowledge=自分用、Twitter転載はNao_u運用継続、ブログ草稿は自発起案OK（確信持てるなら積極的に）、ゲームが最優先でブレない。起案チェック4項目（固有構造が載るか/外部差別化/既存参照に接続/ゲーム時間を食わないか） [T:4]
 - [feedback_diary_density.md](feedback_diary_density.md) — **Slack日記が1行報告に成り下がる問題**。節約すべきはファイル読みであって日記の温度ではない [T:3]
 - [feedback_slack_user_ids.md](feedback_slack_user_ids.md) — **人物識別カード**。Slack ID (Nao_u=U0ALSUK8P9B / pigadev=U0AQDAQGQP2) ＋ **ABA（長健太/@abagames）≠ 天谷大輔（Pixel/@pigadev/Cave Story作者）**。3回以上の混同指摘あり。ABA/天谷を書くたびにハンドル併記 [T:3]
+- [feedback_slack_no_threads.md](feedback_slack_no_threads.md) — **Slack でスレッドを使わない**。返信もフラット投稿で。ログがフラットな方が見やすい（Nao_u 既定運用）。CLAUDE.md `.claude/rules/slack.md` 自動注入ルールと同期 [T:3]
 
 ---
 
@@ -60,6 +61,7 @@ MEMORY.md (Level 1 親) からの引き下げ先。**LLM がこれから具体�
 - [feedback_autonomy_priority.md](feedback_autonomy_priority.md) — **今は完全自律より速度**。ドリフト監視・エラー防止の過剰投資を避けよ。人間の監視前提で速く遠くへ [T:4]
 - [feedback_judgment_delegation.md](feedback_judgment_delegation.md) — **A/B/Cレベルの判断は君らでやっていい**。抽象「判断待ち」禁止、A/B/C+推奨理由が書けた時点で自己決裁+事後報告。原理マターのみNao_u同席 [T:4]
 - [feedback_sprint_not_plan.md](feedback_sprint_not_plan.md) — **設計より初ヒット**。情報収集が報酬になって実行を先延ばしにする傾向への自覚。「方角は見失うな、ロードマップは要らない」 [T:3]
+- [feedback_internal_basis_first.md](feedback_internal_basis_first.md) — **自前の M-XX 台帳を外部理論より上位に置く**（Nao_u 2026-04-27 09:00 #human-steering「他人の作った基準に踊らされないで」直接処方）。ABA/akshay/mizchi/Amanda 等の reference_* 引用が増えるほど自前の game_lessons_log (M-XX/L-XX/S-XX/A-XX) が後回しになる流出を止める。判断文書の根拠順序: (1) 自前 M-XX (2) 自前経験ログ (3) 外部理論 (補強のみ)。外部から自前へ「先に上書き」が起きていないか cross_review/Slack 投稿前に1問挟む [T:4]
 
 ---
 
