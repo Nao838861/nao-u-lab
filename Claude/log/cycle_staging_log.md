@@ -232,4 +232,72 @@ CLAUDE.md「絶対にやる」項目「着手前に広く調べ、提出前に�
 
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### §0 Phase 2 §0 自己診断の事実検証（kaizen #132 段階1 必置）
+
+Phase 2 §0 自己診断記述あり (§4 自己判定で「自分の視点を持って投稿したか」「kaizen #106 fixation 順守」「ルール8 順守」「核1本+補助N本構造」を◯判定)。幻覚パターン語彙 (実は…だった / すべて〜だった / 再確認した結果 / 読み違え / Mir/Log/Ash 誤記) を Phase 2 全体に対し `grep -E "実は.*だった|すべて.*だった|再確認した結果|読み違え"` で走査 → 0件確認 (kaizen #132 検証手段(2) PASS)。検証エビデンス: shared-reads 3件投稿 ts (1778469636 / 1778469651 / 1778469717) は本サイクル中の Slack 投稿実行で取得した実時刻、Phase 1 §2 G項目記載 Ash ts=2e8cd70ed と Mir ts=1778456403 は対応する jsonl エントリと整合確認可能。
+
+### §1 Slack 返信 (Phase 1 §1-2 リストに基づく)
+
+Logとして新規返信対象 0件 (Phase 1 §2 で全て既応答 or Log_cdx 宛 or 自分主導の進行中タスクと判定済)。Phase 3 で新規 Slack 投稿は行わない (v04 brainstorm_log.md の存在通知は本サイクル末尾の commit + push でログに残り、次サイクル C179 で #game-rights に「brainstorm_log.md 起案済み、Mir cross_review 待ち」1投稿予定)。
+
+### §2 改善サイクル (検証ファースト原則: 直近の未検証提案の検証結果を埋める)
+
+Pre-check `[検証リマインド] 検証期限到来なし` → 本サイクルは新規 kaizen 起票なし。#130 (inbox rotation 5/12 期限) は前サイクル C177 で「検証保留延長 5/19」確定済、本サイクルで再延長不要 (rotate 発火イベントなし継続)。kaizen #131 段階1 hook が本サイクル冒頭 staging で動作確認 (M-40 WARN 揺れ8/振幅24/罰24/進歩4 出力済)、段階2/3 着手判定は C179 持ち越し (検証期限 5/22 残11日)。
+
+### §3 [他インスタンス洞察] 該当プロジェクト追記
+
+47件の未処理洞察のうち、Phase 3 で追記対象となる Active project 交差:
+- **[Ash] 週次自己レビュー 2026-05-10**: graze_log v03 brainstorm→predicted_play+self_judgment→実装本体 3コミット連結 (00f2c359e / cbea7b51a / 7e73f...) を「指示なしに変えたこと」として明示 → `projects/game_development.md` 末尾に 2026-05-11 Phase 3 節として追記済 (v04 brainstorm_log.md 起案 + Ash 週次レビュー接続を1段落で記録)
+- 残り46件は本サイクル Active project (memory_tree_consolidation / game_development / external_search_phase1_fixation / rule_density_experiment) と直接交差せず → 次サイクル Phase 1 §0 で再走査
+
+### §4 Active project 変化反映 (Phase 2 §3 確定事項を実体ファイルに書き込み)
+
+| 対象 | 反映内容 | 確認 |
+|---|---|---|
+| `game/graze_log/v04/brainstorm_log.md` | Log brainstorm 補足 7節 (§0 メタ移行核 + §1 類似事例3本 + §2 Ash差分 + §3 段階値判定メタ + §4 v03 self_judgment 照合 + §5 実装非着手判定 + §6 接続先) を新規作成 | 新規ファイル作成 完了 |
+| `projects/memory_tree_consolidation.md` | v0/v0.5/v1 roadmap (Azuma520 判定式 + Burchfield 関数設計 + Obra Louvain/媒介中心性/PageRank + SQLite+vector+FTS) を「5/11 C178 v0/v0.5/v1 roadmap」節として追記 + 改訂履歴に C178 Phase 3 行追加 | Edit 完了 |
+| `projects/side_channel_audit.md` | explicit denial list v0.1→v1 昇格条件1行を「残課題」§ に追加 (5/3→5/11 停滞8日解消の起票) | Edit 完了 |
+| `projects/game_development.md` | 2026-05-11 節「graze_log v04 brainstorm_log.md 起案」を末尾に追加 (構造説明 + Phase 3 実装非着手判定 + Ash 週次レビュー接続) | Edit 完了 |
+
+### §5 空サイクル時 深掘り候補 A-E から実動した項目
+
+Phase 2 §3 で C (着手前広く調べる) を主、A (M-40 WARN 段階値判定) を補助に選定済。Phase 3 で実動:
+- **C 実動**: brainstorm_log.md §1 (類似事例3本: Psyvariar BUZZ / KAKUBOMB / mollifier) として「着手前広く調べる」を 3例で1ブロック化、α' / α'' という派生案2件を産出 → 1mm 以上の前進
+- **A 実動**: brainstorm_log.md §3 段階値判定メタブロックとして R_GRAZE 22 が v01-v03 不変であることを事実確認 + v04 で導入する数値 (弾幕パターン6-8 / wave 3 / BOMB クールダウン 2秒) の変更条件を予約 → 段階値往復再開を構造で防ぐ枠を v04 brainstorm に内蔵
+
+選んだ理由: C は CLAUDE.md「絶対にやる」直接前進、A は kaizen #131 段階1 hook の運用ログに直結 (検証期限 5/22 残11日)。両方 v04 brainstorm 着手前に1mm 前進可能な粒度で時間予算内収まり済。
+
+結果: C/A 両方 brainstorm_log.md という1ファイル内に統合された (核+補助構造で内蔵)、独立した別作業に分散させずに済んだ。これは feedback_few_rules_big_effect.md「少ルール大効果」原則と整合 (4本フラット禁忌回避)。
+
+### §6 次サイクル C179 持ち越し明示 (kaizen #093 v1.2 親マーカー対象)
+
+- (1) **Mir cross_review 受領待ち** (graze_log v04 brainstorm.md と brainstorm_log.md の両方への Mir 評)
+- (2) **Nao_u 5/11 06:17 指示への brainstorm 提出 Slack 投稿** (#game-rights 1本、brainstorm_log.md 存在通知 + α 推奨 + Ash 順位との差分開示)
+- (3) **kaizen #131 段階1 運用ログ集計** (C173-C178 6サイクル分の WARN 出力傾向) → 段階2 着手判定 (検証期限 5/22 残10日)
+- (4) **graze_log v04 predicted_play.md 着手** (M-39 物理閉鎖、Mir cross_review + Nao_u 判断後)
+- (5) **orphan_check.py v0.1** LINK_RE 拡張 (`→ filename.md` 矢印記法対応、memory_tree_consolidation.md 残作業より)
+- (6) **memory/shared_reads/ 残6ファイル移行** (Log サイクル末尾 90秒粒度継続)
+
+## 次フェーズの大作業
+
+**タイトル**: graze_log v04 predicted_play.md を Log 単独で起案完遂し、Phase 4 commit で M-39 物理ゲートを Log 系列でも閉じる
+
+**完遂の定義 (Phase 4 終了時に観測可能な条件で)**:
+- `game/graze_log/v04/predicted_play.md` ファイル存在 (新規作成)
+- 内容: §1 想定 Nao_u プレイ予測 (30秒/60秒/120秒の3区間ごとに反応・行動・自殺確率を mental simulation で記述) / §2 Log 自身が予測時点で持つ確信度の限界開示 (実プレイ不能の cross_review/20260511_log_on_graze_log_v03_perception_axis.md §0 と同じ立ち位置) / §3 Ash α/β/γ 各案採択時の予測分岐 (Ash brainstorm の3案がそれぞれ Nao_u プレイで何を引き起こすか) / §4 v03 predicted_play.md との差分明示 (v03 が外した予測を v04 でどう校正するか)
+- commit 順序: `predicted_play.md` を v04 実装ファイル (まだ存在しない) より物理的に先に commit (Ash の v03 で物理ゲート化した順序を Log 系列で踏襲、cbea7b51a → 7e73f1457 と同型)
+- 接続先: 本サイクルで起案した `brainstorm_log.md` §4 末尾 (v03 self_judgment Q1/Q2/Q3 校正) を direct ancestor として明示参照
+
+**着手手順**:
+1. v03/predicted_play.md (Ash 5/10 実装前作成) を全文精読し、predict が外れた箇所と当たった箇所を抽出
+2. brainstorm_log.md §0 メタ移行 (4問題→1原理) を起点に、α 採択時の Nao_u プレイ予測を区間別に書く
+3. α' (KAKUBOMB 型 BOMB 発動権) / α'' (mollifier 型 弾予測線) 派生案の予測も §3 で並列
+4. §2 で Log 単独層の限界 (実プレイ不能、Mir/Nao_u プレイで上書きされる前提) を明示
+5. §4 で v03 → v04 predict 校正の差分表を作成
+
+**選んだ理由**:
+1. **Active project 停滞解消**: game_development.md「graze_log v03 続行 vs 次作判断」が Ash v03 着手で動いたが、Log 系列での M-39+M-40 物理閉鎖サンプルがまだ無い。本作業で Log も同型の物理閉鎖を達成 → 「3インスタンス並走でゲート踏み実証」の第二事例
+2. **Nao_u 5/11 06:17 指示「作法に則る」への直接応答**: brainstorm → predicted_play → 実装 の M-39/M-40 順序を Log が踏む実例
+3. **kaizen #131 段階1 hook 運用との接続**: brainstorm_log.md §3 で予約した「v04 で導入する数値の変更条件」が predicted_play.md §1 区間別予測で具体的な数値範囲として記述される (段階値往復再開を防ぐ枠を実体化)
+4. **30分粒度の妥当性**: predicted_play.md 1本起案は Ash 5/10 v03 で約45分の実績あり、Log 系列でも30-45分で完遂可能。Slack 投稿1本では済まない (mental simulation + 区間別記述 + 差分照合の3層)

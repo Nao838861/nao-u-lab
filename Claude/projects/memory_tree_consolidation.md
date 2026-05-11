@@ -58,6 +58,33 @@
 - `memory/**/*.md` の全集合との diff = 孤児リスト
 - 毎サイクル末尾に走らせ、孤児が出たら最低 1 個拾って親に繋ぐ
 
+**5/11 C178 v0/v0.5/v1 roadmap (Phase 1 §6 摂取3リポジトリ確定書き込み)**:
+
+Phase 1 §6 で摂取した3リポジトリの本プロジェクトへの配置:
+
+| Stage | 採用要素 | 起源 | 採用根拠 |
+|---|---|---|---|
+| **v0** (本サイクル C178/C180 で着手済) | in=0 AND out=0 の判定式 / per-folder 集計 / connected components (将来枠) / 修正日順 + 孤児継続日数 | **Azuma520/obsidian-graph-query** | 設定ファイル1本で vault 全体統計を一発生成、Python だけで完結。Pot infrastructure 警戒線 (約100行) と一致 |
+| **v0** | `get_orphaned_notes()` の修正日順ソート (最近の孤立 insight を表面化) | **Burchfield/obsidian-graph** | AI埋め込み/PostgreSQL/pgvector は採用せず関数設計のみ流用 (Pot で重量バックエンドは不要) |
+| **v0.5** | Louvain community detection (vault のクラスタ自動抽出) | **Obra/knowledge-graph** | タグ語彙 v0 (3層クラスタ手動) を裏付けるかの実証用。タグと自動クラスタの一致度を計測すれば「タグ語彙が事実上の真クラスタを捉えているか」検証可能 (kaizen 検証手段で利用可) |
+| **v0.5** | 媒介中心性 (Betweenness centrality) | Obra | ブリッジノードの可視化 (どのファイルが切られると vault が分断するか)。memory/MEMORY.md の Level 2 トリガー設計の妥当性を数値裏付け |
+| **v1** | vault→SQLite+vector埋め込み+FTS (10 CLI/MCP操作) | Obra | grep より効率的に類例検索 = Nao_u 5/11 05:38 依頼の到達点。pgvector でなく SQLite ベースが個人開発 Pot と整合。Stage v1 = 6/30 目標 (タグ語彙運用の3ヶ月運用評価後) |
+| **v1** | PageRank (重要ノード自動抽出) | Obra | beliefs.md 35件のうち停滞25件 (71%) の中で「PageRank 高いのに停滞しているもの」を優先的に検証イベント起こすシグナルとして利用 |
+
+**Phase 2/3 強制利用しないルール (kaizen #106 摂取経路固定化)**: 上記 v0.5/v1 は内容を強制注入していない。v0 着手段階で Louvain/媒介中心性/PageRank は **使わない判断**を明示。infrastructure 警戒線 (feedback_substrate_not_infrastructure.md T:5) との衝突を v0.5 タイミングで再判定する。
+
+**v0 → v0.5 昇格条件**:
+- v0 が30日 (5/11→6/10) 安定稼働
+- 真孤児/静止親接続/新規未登録 の3クラス分類が運用5分以内で消化できている
+- タグ語彙 v0 の月次レビュー結果と Louvain クラスタの照合価値が cross_review で確認
+
+**v0.5 → v1 昇格条件** (現時点 6/30 目標):
+- タグ語彙が3ヶ月運用で安定 (大幅改訂なし)
+- grep を超える検索効率の必要性が体感で発生 (今は grep で十分)
+- Mir/Ash も同じ vault 構造で動いている (3インスタンス統一済み)
+
+---
+
 **5/11 C178 追補（外部研究3件摂取で要件追加）**:
 
 Phase 1 §6 で摂取した Karpathy LLM Wiki / arXiv 2602.05665 (Graph-based Agent Memory Taxonomy) / engraph (devwhodevs) を踏まえた要件強化:
@@ -129,3 +156,4 @@ Phase 1 §6 で摂取した Karpathy LLM Wiki / arXiv 2602.05665 (Graph-based Ag
 - 2026-05-11 C178: 起票 + v0 タグ語彙 + 第一弾 3 ファイル移行 + Nao_u 進めて承認反映
 - 2026-05-11 C179: §E orphan_check.py 要件追加（外部研究3件摂取由来 = engraph temporal awareness レーン併用 + arXiv 2602.05665 ライフサイクル4段階の evolution 最弱点診断 → 3クラス分類: 真孤児/静止親接続/新規未登録）。infrastructure 警戒線で実装規模制限明記
 - 2026-05-11 C180 Phase 4: §E orphan_check.py v0 実装完成（193行・実行時間 0.38秒）。第一弾試走で 真孤児75/静止親接続156/新規未登録14 を検出。1mm進め=真孤児`feedback_recognize_own_work.md`を `feedback_index.md` に markdown link 親接続 → stale_linked クラスへ移行確認。次サイクル v0.1 課題: `→ filename.md` 矢印記法も参照認識する LINK_RE 拡張（feedback_index.md のプロセ記法を取り逃す問題）
+- 2026-05-11 C178 Phase 3 (Log): v0/v0.5/v1 roadmap 確定書き込み（Azuma520 判定式 + Burchfield 関数設計 = v0 / Louvain + 媒介中心性 = v0.5 / Obra SQLite+vector+FTS + PageRank = v1）。昇格条件 (v0→v0.5: 30日安定 / v0.5→v1: 3ヶ月タグ運用 + grep 超え検索必要性) を明記。Phase 2/3 強制利用しないルール (kaizen #106) 準拠で v0.5/v1 内容を v0 に強制注入しないことを明示
