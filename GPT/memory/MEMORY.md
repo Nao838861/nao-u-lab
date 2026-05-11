@@ -7,8 +7,8 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-05-12T06:32:38
-- atoms: 868
+- generated: 2026-05-12T06:42:49
+- atoms: 904
 - scanned shared-reads rows: 1502
 
 ## High Signal
@@ -44,38 +44,38 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1778300066-e7c3bd45b1` Use when 記憶・想起・圧縮を扱う時。@shirasu59s「判断は作業より重く一日3-4hが限界」 × @ebikani_hasami「抽象思考できないとAIとおしゃべり」を1つの構造に畳む (prescription/synthesis) tags=[memory, harness, game-design, slack, identity, knowledge]
 
 ## Recent
-- `sr-1778535144-7c03b2e628` 2026-05-12T06:32:24.814409 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, slack, agent, identity]
-- `sr-1778535144-4c120860c1` 2026-05-12T06:32:24.089139 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778535143-0eb24194ea` 2026-05-12T06:32:23.548829 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778535143-eeedfa4766` 2026-05-12T06:32:23.015819 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, slack, agent, identity]
-- `sr-1778535142-0fdc0aaf1f` 2026-05-12T06:32:22.306789 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778535141-080ae1ec7a` 2026-05-12T06:32:21.550139 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[game-design, slack, agent, identity, knowledge]
-- `sr-1778535141-e5c8c67380` 2026-05-12T06:32:21.001029 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[game-design, slack, agent, identity, knowledge]
-- `sr-1778535140-3967460d50` 2026-05-12T06:32:20.285529 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, slack, agent, identity]
-- `sr-1778535139-f67bb303b1` 2026-05-12T06:32:19.721689 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778535139-b0d68005c3` 2026-05-12T06:32:19.137799 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778535138-48396d3233` 2026-05-12T06:32:18.451449 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778535137-ed3d6aedac` 2026-05-12T06:32:17.732699 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[game-design, slack, agent, identity, knowledge]
-- `sr-1778535137-a3a578533d` 2026-05-12T06:32:17.028569 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, slack, agent, identity]
-- `sr-1778535136-0f7de3e3fa` 2026-05-12T06:32:16.320949 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, slack, agent, identity]
-- `sr-1778535135-53e73713ee` 2026-05-12T06:32:15.594949 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778535135-f7326b0024` 2026-05-12T06:32:15.011629 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778535134-5a3855394d` 2026-05-12T06:32:14.060979 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778535133-cc9d8ed7b6` 2026-05-12T06:32:13.036829 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778535132-a95dfca513` 2026-05-12T06:32:12.354249 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[game-design, slack, agent, identity, knowledge]
-- `sr-1778535131-ffd913f582` 2026-05-12T06:32:11.476029 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
+- `sr-1778535762-5144ddf8e1` 2026-05-12T06:42:42.271969 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, slack, agent, identity]
+- `sr-1778535761-238e8fbf77` 2026-05-12T06:42:41.718219 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
+- `sr-1778535761-d875427ea3` 2026-05-12T06:42:41.037479 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
+- `sr-1778535760-f134cd7693` 2026-05-12T06:42:40.193839 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, slack, agent, identity]
+- `sr-1778535759-9d7006a842` 2026-05-12T06:42:39.606529 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
+- `sr-1778535758-ca1a993ec1` 2026-05-12T06:42:38.904789 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[game-design, slack, agent, identity, knowledge]
+- `sr-1778535758-e9de57e160` 2026-05-12T06:42:38.197559 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[game-design, slack, agent, identity, knowledge]
+- `sr-1778535757-06e2816bcc` 2026-05-12T06:42:37.625229 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, slack, agent, identity]
+- `sr-1778535756-a58a39002f` 2026-05-12T06:42:36.911129 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
+- `sr-1778535756-bc94b128bc` 2026-05-12T06:42:36.176629 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
+- `sr-1778535755-366810fc08` 2026-05-12T06:42:35.442869 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
+- `sr-1778535754-248bd8987d` 2026-05-12T06:42:34.740259 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[game-design, slack, agent, identity, knowledge]
+- `sr-1778535754-f7f7f65a3f` 2026-05-12T06:42:34.026269 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, slack, agent, identity]
+- `sr-1778535753-829a316f40` 2026-05-12T06:42:33.409069 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, slack, agent, identity]
+- `sr-1778535752-4df8dce5d5` 2026-05-12T06:42:32.535609 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
+- `sr-1778535751-2d97d95d20` 2026-05-12T06:42:31.798779 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
+- `sr-1778535751-37e5169c9b` 2026-05-12T06:42:31.103379 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
+- `sr-1778535750-22d980cc10` 2026-05-12T06:42:30.562089 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
+- `sr-1778535749-6cd00652d5` 2026-05-12T06:42:29.886399 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[game-design, slack, agent, identity, knowledge]
+- `sr-1778535749-22a1189f83` 2026-05-12T06:42:29.182739 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
 
 ## Tag Entry Points
-- `identity` (708): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `knowledge` (595): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (542): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `memory` (525): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `principle` (504): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `game-design` (495): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `evaluation` (483): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `agent` (417): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `slack` (375): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `harness` (213): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `identity` (744): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `knowledge` (631): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (573): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `memory` (555): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `game-design` (525): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `evaluation` (519): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (507): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `agent` (453): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `slack` (411): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `harness` (243): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (112): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (88): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
 - `supervised-feedback` (88): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
