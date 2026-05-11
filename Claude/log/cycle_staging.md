@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-11 10:03)
+# サイクルステージング (2026-05-11 13:38)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: 1件 (cycle=2026-05-11)
@@ -50,261 +50,189 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ---
 
-# Phase 1 情報収集結果（10:04 Ash追記）
+## Phase 1 情報収集 (2026-05-11 13:38 着手)
 
-## §0a 継承タスク → Phase 3 候補（構造強制）
+### §0a 現サイクルで継承するタスク（Phase 3 候補メモ）
 
-- **t-260511040946-a449** [連続0サイクル][2026-05-11]: graze_log v03 cross_review (ts=1778429023) への Log/Mir 3項応答（知覚変化体験記述/AI slop区別境界 a-b-c/削除可能改良適格性）を追跡し、応答到達後 cross_review/ への書面化と次バージョン（v04?）改修方針への反映
-  - **Phase 3 候補確定**: Phase 2 で Slack #game-rights の ts=1778429023 への応答有無を確認 → 応答あれば書面化、応答なければ「応答到達まで待機」を明示記録し別の前進経路を探す
-- **§0b 前サイクル日記末尾の自然言語側 intent**:
-  - 前サイクル末尾は `cycle_staging.md §0b` ではなく 07:14 の #ash 投稿 (self_judgment.md は「公開層」の判定装置だった話) が直近。「核そのものを問う層の装置」が未設計 = self_judgment.md の構造拡張が Phase 3 候補
-  - §0a 継承の `a449` と方向は整合（v03 cross_review の応答追跡が「核を問う層」への外部入力経路）
+- **t-260511040946-a449** (連続0サイクル, [2026-05-11]): graze_log v03 cross_review への Log/Mir 3項応答追跡 + cross_review/ 書面化 + v04 改修方針反映
+  - **【重要発見】Log はすでに応答済み**: `game/cross_review/20260511_log_on_graze_log_v03_perception_axis.md` (本日 commit) が存在。Log の3項応答 ((1) コード読み層 perception change 1点 = BOMB 発火で active 防御発火窓消失は誤り、streak は BOMB を潜って保持、(2) AI slop 区別境界 3層、(3) 削除可能改良適格性 直接 verify) が既に書面化されている
+  - **Phase 3 で着手すべき内容**: (a) 20260511_log_on_graze_log_v03_perception_axis.md を全文読み込み (b) Mir 側応答が来ているか game/cross_review/ で確認 (c) Log の発見「BOMB を潜る streak の3拍ループ」の v04 改修方針への反映
+  - 完了時は `python next_tasks.py done t-260511040946-a449` で閉じる
 
-## 1. external_notes_ash.md 未統合エントリ（最新2-3件確認）
+### §0b 前サイクル日記末尾の自然言語側 intent
+- 「graze_log/v02/README.md と headless.py を読み、Ash 側からの cross_review 提案 (3〜5箇条) を #game-rights に1メッセージ投稿。日記は書かない」
+- ※ §0b は §0a 真ソース外の参考情報。今サイクルは §0a の v03 応答追跡が継承タスクとして優先（v02 ship intent はすでに backup auto-commit で表面形は実現済み）
 
-ファイル冒頭から 2026-04-03 以降のエントリには `[統合済]` マーカーがあるものが多い。最新セクションは古い 2026-03-17 ブロックまで読んだ範囲では全て統合済み（4/3 MemOS, HyperAgents, Titans, 3/16 AITuber, インディーゲーム, 3/17 Claude Code Security, インディーマーケ, AI感情接続）。**未統合の新規エントリは確認範囲（〜200行目）では見つからず**。ファイル全長を後ろから確認すべきだが Phase 1 範囲外。注: external_notes は 1819行+ あるため、最新エントリ確認は Phase 2 にずらす方が安全。
+### 1. external_notes_ash.md 未統合エントリ確認
 
-## 2. projects/INDEX.md Active プロジェクト現状
+- 2026-04-03 直近の3エントリ (MemOS 2.0 / Meta HyperAgents / Google Titans+MIRAS) は全て `[統合済]` マーカー付き、新規未統合エントリ無し
+- 末尾に向けてのスキャンは Phase 2 まで持ち越し (200行 limit で一旦ストップ)
 
-Active 17件のうち本サイクル関連:
-- **memory_tree_consolidation.md (Log単独管理)**: Nao_u 5/11 05:33依頼で着手済、5/11 08:16「いいね。進めて。」承認。v0タグ語彙+shared_reads/新設+第一弾3ファイル移行済。Log の本サイクル本丸。**Ash は MEMORY.md系・feedback_*.md系一切触らない契約 (memory_consolidation_20260504 サイクル中)**
-- **memory_consolidation_20260504.md (Ash管理)**: 第一波着手前。Log の memory_tree_consolidation と並走補完関係
-- **game_development.md / Pot_dev / 各 game/<id>/**: Ash は graze_log v03 が直近本丸
-- **autonomous_inquiry / game_llm_play / AgenticPCG**: 進捗静止中
+### 2. projects/INDEX.md Active プロジェクト現状
 
-## 3. log/twitter_recommended_20260511.txt 注目ツイート
+Active プロジェクトのうち Ash 関連 + 直近動きありの項目:
+- **memory_consolidation_20260504** (Active 計画策定): Ash 担当 (MEMORY.md/feedback_*.md 91本)、Log は 92ea76c5 で CLAUDE.md 圧縮補完中
+- **external_search_phase1_fixation** (Active 案A実装完了): Ash 案A 実装済 (auto_diary.py phase_gather() L262-269)、案B/E 未着手
+- **side_channel_audit** (Active): 次は git_pull 未実行原因特定 + denial list 正式化
+- **instance_divergence_observability** (Active 設計起票): Ash 起票、Log/Mir 追記歓迎
+- **memory_tree_consolidation** (Active v0 着手): 5/11 Nao_u 承認「進めて」、Log 単独管理、v0 タグ語彙完成 + 第一弾3ファイル移行済
+- **GPT5.5 記憶想起提案 評価** (Completed 2026-05-05): Log 判定済、6/10既存重複・4/10 infrastructure 罠で取らない
 
-50件読了。ゲーム/AI/記憶/設計に直接関連するものは少ないが、抽出:
-- **#13 @nns_blackhand**: 「時代劇で『史実通り』を求められるのは、フィクションならではの『ウソ』を際立たせるため」→ クローン戦略（守破離の守）と同型構造：型に忠実な土台があってこそ独自の「ウソ（破）」が際立つ。feedback_clone_strategy.md `t:5` の外部裏付け候補
-- **#26 @_hnsol**: 「茶の湯→寿司→鉄板焼き」仮説 → 文化的型の継承=守破離の流れと並列。クローン戦略の外部例として弱いが、型の連鎖が成立する条件の観察素材
-- **#28 @koibuchicpa**: 「合宿で生まれた一体感は日常に戻ったら溶ける。信頼は非日常では作れない。日々の一言やミスした時にどう動いたか」→ memory_consolidation の「日常的に積み上げる」原則と並列。`feedback_kaizen_output.md` の Auto sync≠出力 の別表現
-- **ゲーム直接の有用情報なし**（バイラル系・芸能・政治論評が大半）
+バックログ:
+- **AYi @AYi_AInotes Markdown批判への自己照合** (2026-04-27): MEMORY.md 200行常時注入が AYi 批判射程内、推奨A+B並行・C見送り、ゲーム1mm優先で着手判断保留中
 
-## 4. beliefs.md 低確信度項目
+### 3. log/twitter_recommended_20260511.txt 注目ツイート
 
-beliefs.md は 信念数35件、要注意25件（停滞25/検証期限超過7/体験裏付けなし高確信度2）と pre-check 報告済。本サイクル冒頭100行を確認:
-- **B005 (確信度0.65, Archived)**: ✅ Absorbed by B027/B022。restoration_trigger に注意
-- **B003 (0.78)**: memory fusion 重要性。B028「粘土」トリガーの想起誘発力検証は 2026-04-03 期限で停滞中
-- 100行以降の低確信度項目（B007〜B033範囲）は未確認。Phase 2 で必要に応じ精査
+50件中、ゲーム制作/AI 文脈で注目:
+- **#7 @GOROman**: 「Vibe コーディングからコミュニケーションコーディングへ」
+- **#10 @iwashi86**: AI中毒自覚ポスト (アイデア→実行苦痛→AI肩代わり→Claude 100ユーロ投資)
+- **#22 @KanaWorks_AI**: 寝る前 Codex に Blender キャラモデル制作+リギング+歩行アニメ依頼、1時間20分で完成
+- **#23 @super_bonochin**: Codex Chrome 拡張、用途別ブラウザプロファイル切替ルール仕込み
+- **#24 @WO33427414**: ゲーム表現技術。「自機は飛んでないし前にも進んでいない、飛んでるように見えるのはスプライト時代の疑似3D感性」
+- **#36 @GOROman**: 「ADSR特性 は ディケイ強めです(すぐ飽きる」
+- **#38 @Nao_u_** (本人): 「続編たくさん出たけどグランツーリスモモードが、一番面白かったのは初代だった」
+- **#40 @piacere_ex**: Claude Code 評価。「オーケストレーターとして優秀と言うほど全体像把握できてない、既存コードリーディング弱い」
+- **#47 @kiyoshi_shin**: GPT Image 2.0 vs Nano Banana、人物一貫性は Nano Banana 優位
 
-## 5. memory_search 結果
+ゲーム制作直結度高: #38 (Nao_u 本人「初代が一番面白かった」=守破離の守を重んじる視点) と #24 (疑似3D の表現技術=型の習熟が見た目を作る) は今のゲーム制作議論と直結。
 
-- `"graze cross_review"` → 過去の8ツイートthread cross-review (2026-03-14) が hit、現サイクルの graze_log v03 cross_review (ts=1778429023) とは無関係。**過去蓄積で直接接続する記憶はない**
-- `"graze_log v03 Psyvariar"` → 0件。v03 brainstorm.md は 5/10 着手で memory_search index に未取り込みの可能性
-- `"AI slop 削除可能改良"` → 既存 reference_ai_lounge.md など別文脈のヒットのみ。AI slop 概念は **本サイクル v03 cross_review で新規導入された用語** で記憶層に蓄積なし
+### 4. beliefs.md 低確信度項目
 
-→ **示唆**: 本サイクルの本丸（v03 cross_review 応答追跡 + AI slop 区別境界）は memory_search で過去想起できない＝**新規概念形成中の段階**。過去蓄積からの想起より、外部素材と実装の対話で形成する局面
+- **B019** (確信度 0.60, 最終更新 2026-03-22) `~~記憶の品質はインプットの「粒度」で決まる~~` → ✅ Absorbed → B013 / restoration_trigger: B013比喩+if-then#5 が粒度制御をカバーしきれない場合
+- **B005** (確信度 0.65, 件数省略) → 要確認、Phase 2 で再読
+- **B007** (確信度 0.55) `~~reflectionsから「行動可能なtips」への変換ステップが欠落している~~` → 💤 Dormant、session_primer if-then 機能中、ニケちゃん記事接続済 (2026-04-05 Ash)
+- 低確信度は概ね Archived/Dormant 処理済。新規 restoration_trigger 発火兆候は Phase 1 観測範囲では無し
 
-## 6. 外部検索結果
+### 5. memory_search.py 検索結果
 
-**スキップ判定**: log/external_search.log 最終行 `2026-05-10 11:05 | Ash | pre-implementation playtest prediction self-evaluation rubric...` 確認。現在時刻 2026-05-11 10:04 → **22h59m 前**＝24h 以内 → スキップ可。前回の検索 (Khalifa et al. arxiv 2411.17183 "Pre-Release Experimentation in Indie Game Development" + Heuristics of Playability) は graze_log v03/predicted_play.md + self_judgment.md の M-39+M-40 の直接裏付けとして既に Phase 4 反映済の流れ。**本サイクルは外部検索スキップ、上記5の memory_search 不発を踏まえ「外部素材より実装と応答追跡」を Phase 2 で優先**。
+- `--search "graze cross_review" --limit 5` → 主に旧対話ログ (20260314-15) ヒット、graze_log 文脈とは無関連 (3月時点 cross-review = 8-tweet thread の文脈)
+- `--search "graze_log v03 知覚変化" --limit 5` → 0件
+- `--search "削除可能改良" --limit 5` → 0件
+- `--search "AI slop" --limit 5` → 主に "AI lounge" / "AI nikechan" の部分一致、AI slop 文脈とは無関連
+- **観察**: 今サイクルの中心キーワード (graze_log v03 / 知覚変化 / 削除可能改良 / AI slop) は memory 側にまだ蓄積が薄い。直近の cross_review 書面 (20260511_log_on_graze_log_v03_perception_axis.md) はインデックス化前の可能性高い
 
-## Phase 1 まとめ（判断は Phase 2 以降）
+### 6. 外部検索結果
 
-- 本丸候補: (A) graze_log v03 cross_review ts=1778429023 への応答到達確認、(B) self_judgment.md の「核を問う層」拡張、(C) 応答未到達の場合の前進経路選択
-- 触らない: MEMORY.md / feedback_*.md（Log の memory_tree_consolidation サイクル中の契約）
-- 外部検索: 24h スキップ条件成立、本サイクルは内部実装と応答追跡に集中
-
----
-
-# Phase 2 分析結果（10:25 Ash追記）
-
-## 選択した外部情報
-
-twitter_recommended_20260511.txt から **#50 @meizisamuhara**（過激派「大河は史実通りやれ！」/ 各専門家「なら史実を教えてくれ」）と **#28 @koibuchicpa**（合宿で生まれた信頼は日常に戻ると溶ける、日々の積み重ねが組織文化になる）を組み合わせ対象とした。
-
-**選択理由**:
-- #13 @nns_blackhand（時代劇の史実=「ウソ」を際立たせるための装置）は既に Mir が `knowledge/20260511_nnsblackhand_fact_as_lie_amplifier_silencesuzuka.md` で分析済み
-- Mir の収束設計「99%の事実が1%の嘘を爆発させる」は「事実が確定的に固定できる」という前提に乗っている。#50 はその前提自体に穴を開ける（史実=確定的でない、誰も保有していない）。Mir 記事への補完角度として Ash が書く価値あり
-- #28 は #50 と同型構造（「型は明示的命令や非日常イベントでは生成できず、日常的な積み重ねによってしか作れない」）を別ドメインで観察したもの。組み合わせて1記事化することで構造の汎用性を主張できる
-
-## 作成した knowledge 記事
-
-`knowledge/20260511_ash_canon_authority_void_daily_accumulation.md`
-
-- kind: [observation, synthesis]
-- 主軸: 「型 (canonical reference / norm)」は命令で生成できない、日常的な積み重ね (institutional micro-routines, Feldman 2000) によってしか作れない、という同型構造を #50/#28 から抽出
-- 我々のプロジェクトとの接続:
-  1. feedback_clone_strategy.md (t:5): クローン元の「型」(Psyvariar BUZZ系のうち何を取るか) は確定していない。何を型とするかの選択自体が既に「破」の一部
-  2. graze_log v03 cross_review AI slop境界 a-b-c: cross_review の単一指摘で境界は固定できない。複数回のプレイ判定の積み重ねの中でしか生成されない。cross_review 指摘が「権威の空虚」になるリスクもある
-  3. 「装置」議論 (前サイクル末尾): 救援装置 (headless_check.py) と窒息装置 (backup auto-commit) の違いは「日常的生成の場所を開くか/奪うか」で説明できる
-- 私的用語 (R-007準拠で外部対応語併記):
-  - 型の不確定性 = canonical underdetermination (extension of Quine's underdetermination thesis)
-  - 権威の空虚 = authority void / referential vacuum
-  - 日常的生成 = institutional micro-routines (Feldman 2000) / tacit knowledge accumulation (Polanyi 1966)
-
-## Slack 投稿
-
-- channel: C0AN2FEHEJJ (#shared-reads)
-- ts: **1778461773.821309**
-- skipped: False（重複ガード通過）
-- 投稿内容: 記事紹介ではなく、両ツイートの構造分析 + Mir記事との関係 + 自プロジェクト接続3項 + 未解決の問い3項 を含む
-- 外部URL: @meizisamuhara, @koibuchicpa 両者の元ツイートURLを明示（slack.md R-外部URL必須）
-
-## 未解決の問い（次サイクル以降への持ち越し）
-
-1. AI slop の境界は誰の日常で生成されるのか (Ash 単独 / cross_review / Nao_u プレイの混合、どの比率か)
-2. 装置の向き判定を Ash 自身が日常的にできるか (設置後どのくらいで、どの観察項目で取り違えを検出できるか)
-3. 「型の不確定性を維持しながら守破離の守を閉じる」は可能か (守を『型の選び方を1つに固定して完遂』と定義すれば閉じられるか)
-
-→ (1) は graze_log v03 cross_review 応答到達時の **教師データ追加対象**。応答内容が「Ash 単独プレイで分かるはず」型なら #50 の権威空虚側、「複数人プレイの積み重ねが必要」型なら #28 の日常的生成側に分類して `memory/sense_prediction_log.md` 候補にする
-
-## Phase 2 自己点検
-
-- [x] 記事紹介ではなく分析・接続・問いを含む（投稿本文の80%以上が分析・接続・問い）
-- [x] knowledge/ 記事作成（R-007 外部対応語併記済み）
-- [x] 外部URL を Slack に必ず含めた
-- [x] Mir の既存記事を上書きせず補完角度を選択
-- [x] 自プロジェクト3項目への具体接続あり
-- [x] 既存 cycle_staging.md 内容を消さず追記
-
+**スキップ**: log/external_search.log 末尾を確認、`2026-05-11 13:17 | Ash | sandbox-first bug reproduction AI agent code fix isolation pattern 2026 ebikani | 10` が**21分前 (同日同インスタンス)** に記録済。24h 以内記録ありによりスキップ可条件成立。
+- 直近の取得は ebikani_hasami 5/10 tweet「再現サンドボックスを先に作らせる→本体環境を触らない」が 2026 Q1 業界標準 agent isolation pattern と一致するという発見。前サイクル §0「装置の向き(救援vs窒息)」と接続済。
+- 次回検索想定キーワード: 「v03 perception axis cross_review」「streak persistence design pattern game」あたりを Phase 4 で次回タスク登録候補
 
 ---
 
-# Phase 3 結果（10:35 Ash追記）
+## Phase 2 分析結果 (2026-05-11 13:50 着手)
 
-## A. 雑務処理
+### 選定基準と選択
+Twitter おすすめ 50件中、Nao_u本人発言は #38 のみ。本人発言は最高優先信号、かつ我々の現在作業（守破離の守 / クローン戦略 N=1 / graze_log v03 cross_review）と直接接続する判定装置（judgment device）として確保する価値がある。これを核に、#36 GOROman ADSR・#24 WO33427414 疑似3D感性を補助構造として扱う。
 
-### A-1. §0a a449 状態更新 → close
-`memory/next_tasks_ash.jsonl` に close エントリ追加 (10:35:00)。Slack #game-rights を `conversations.history` で確認した結果：
+### 選定: #38 @Nao_u_ (2026-05-11)
+> 続編たくさん出たけどグランツーリスモモードが、一番面白かったのは初代だった。
+> https://x.com/Nao_u_/status/2053636241577725958
 
-- **Log 応答** (ts=1778448786): 知覚変化軸 3項応答 + 書面 `game/cross_review/20260511_log_on_graze_log_v03_perception_axis.md` 投稿済み
-- **Mir 応答** (ts=1778446638): graze_log v03 整理応答済み
-- **Nao_u 実プレイ4指摘** (ts=1778446287, 04:51): graze 認識不能 / MAX到達困難 / bomb 大幅パワーダウン / 他
-- **Nao_u v04 方針指示** (ts=1778447837, 05:51): 「grazeをボーナスレイヤーに下げて、外発緊張でコアを作り直す。私のメタ思考を活かして、作法に則って」
-- **Log v04 brainstorm 計画投稿** (ts=1778448247): M-30+M-33+M-39 直系で brainstorm.md 完走計画
-- **Mir 補足** (ts=1778456403): graze 降格 + 外発緊張に合意、コア構造分解 1点補足
-- **Log → Ash 方向性合意要請の閉じ** (ts=1778459309): Psyvariar 保留 + near-miss 一拍多重化を v03 本命に絞る要請は Nao_u 05:51 評価で議題シフト → v04 方針に吸収
+### 主張の構造分解（短文4要素）
+1. 対象モード固定: GT Mode（ライセンス→中古車→改造→キャリア）
+2. シリーズ全体観: 「続編たくさん出たけど」= 全シリーズ把握済み前提
+3. 比較判定: 序列付き比較完了
+4. 暗黙含意: 続編で機能総量が増えたにもかかわらず、GT Mode の濃度は減った
 
-a449 の本体「応答到達後 cross_review/ への書面化 + v04 改修方針への反映」は議題が **v04 brainstorm 起案** へとシフトしたため、Phase 4 大作業に統合する。
+### 核心の発見: 3レイヤー同型構造
+ootamato 機構希釈ジレンマ(5/9) を時間軸拡張すると、同抽象構造が3レイヤーで成立する:
 
-### A-2. 雑務処理その他
-他チャンネルのメンション/inbox 未対応エントリは Phase 1 ですでに整理済み（external_notes 未統合エントリなし、Active プロジェクトの当面の本丸は graze_log v03→v04）。本サイクルの実質改善 (next_tasks 更新) は #kaizen-log 投稿に値する規模ではないため skip。Phase 4 完遂時に Slack 投稿を行う想定。
-
-## B. 主要観察 (Phase 4 への前提)
-
-- v03 への 3 者応答 (Log/Mir/Nao_u) が想定より早く揃った。**Ash の v04 議論参加が遅れている状態**——Log と Mir は v04 計画/補足を投稿済み、Ash だけ未参加
-- Nao_u 指示の核は 2 つ：
-  1. **graze をボーナスレイヤーへ降格** (M-30「コアの緊張は向こうから来る / ボーナスは自分から取りに行く」)
-  2. **外発緊張でコアを作り直す** (passive 防御 + active 防御の双方を「向こうから来る」緊張で組む)
-- Nao_u 4 指摘の中で v04 が解消すべき具体項目：
-  - 認識可能性 (graze の輪を戻すか、別の認識フィードバックを置く)
-  - 上達曲線 (MAX 到達困難の閾値再調整)
-  - bomb の非懲罰化 (MAX → bomb で大幅パワーダウン回避設計)
-- 自分の制約 (memory/feedback_clone_strategy.md t:5)：**削除可能改良 1 個刻み**、philosophizing 禁止、戦略レイヤー言語禁止。複数案を出す (M-37 Stage 1) のは最良 1 個を選ぶための準備であって、複数を同時実装しない
-
-## Phase 3 → Phase 4 大作業宣言
-
-**大作業**: graze_log v04 のコア設計案を `game/graze_log/v04/brainstorm.md` に起案し、要約を #game-rights に1投稿する。Nao_u 5/11 05:51 方針「graze ボーナス降格 + 外発緊張でコア作り直し」に対する Ash 起案として、Log/Mir 既出論点に乗る形で 3 候補を提示する。
-
-**完遂条件** (Phase 4 終了時にすべて満たすこと):
-1. `game/graze_log/v04/brainstorm.md` 新規作成 + commit (Ash 起案 3 案)
-2. 各案が以下の構造を持つ:
-   - **緊張源** (どこから「向こうから来る」か。弾幕パターン/敵配置/ステージ進行など)
-   - **プレイヤー応答** (passive 回避 + active 防御の文脈切替条件)
-   - **graze 降格の整合** (graze はボーナス層として残るか、それとも別表現に置換するか)
-   - **Nao_u 4 指摘のどれを解消するか** (認識可能性 / 上達曲線 / bomb 非懲罰化 / 他、明示)
-   - **削除可能改良 1 個刻み制約** (v03 からの差分が 1 機能に閉じるか)
-3. 冒頭に Log v04 計画 (ts=1778448247) + Mir 補足 (ts=1778456403) のどの論点に乗るかを明示
-4. #game-rights に Slack 投稿、ts を取得・記録 (重複ガード通過 = skipped:False)
-5. 投稿本文に: 3 候補名 + 各案の緊張源 1 行 + 「最良候補は当面 Nao_u 判断/cross_review に委ねる」明示 (M-37/M-38: 自分で最良 1 案を絞らずに最終確認を委ねる場面ではない、ただし Ash 単独で「最良」を決め切るのは型はずれ。Stage 1 複数案提示として並べる)
-
-**根拠**:
-- §0a a449 の最終 deliverable（応答到達後の v04 改修方針への反映）= v04 brainstorm 起案
-- staging §0b 「次サイクルの最善行動」(line 27-28) 「graze_log/v02 cross_review 提案を #game-rights に1メッセージ」の同型構造で、対象を v04 に進めたもの
-- Phase 1 §0a 候補 (line 56-57) 「応答あれば書面化」を「議題シフト後の起案」に書き換えた形
-- memory/feedback_means_ends_reversal_check.md：ゲーム制作試行錯誤ループに直接接続（次バージョンのコア設計）
-- memory/feedback_clone_strategy.md t:5：守の段階 = クローン + 独自要素 1 個。複数案出し (M-37 Stage 1) は守の通過点で philosophizing ではない
-- memory/feedback_prediction_responsibility.md t:5 Stage 1：複数案で最良を選ぶ準備段階として 3 案提示は適格
-- memory/feedback_headless_unfit_for_unfinished_eval.md t:5：本起案は **設計案** であって headless 数値根拠ではない、制約抵触なし
-
-
----
-
-# Phase 4 大作業の結果（10:50 Ash追記）
-
-## やったこと
-
-1. **game/graze_log/v04/brainstorm.md 新規作成** (201行) + commit `2e8cd70ed` ("ash:" prefix 準拠 = 装置先回り防止運用)
-2. **3 案構成** (案 α: 弾幕回避コア + graze passive bonus / 案 β: Spell Card パターン制圧 + graze score multiplier / 案 γ: 地形+弾幕 二重制圧)
-3. **各案構造完備**: 緊張源 / プレイヤー応答 / graze 降格の整合 / Nao_u 4指摘の解消経路 / 削除可能改良 1個刻み制約 (3 案とも閉じないことを正直開示)
-4. **冒頭で乗る論点を明示**: Log v04 方針 (ts=1778447586 = staging line 175 表記 ts=1778448247 と 1分差、同一投稿の解釈で運用) + Mir 補足 (ts=1778456403) + Nao_u 5/11 05:51 方針指示
-5. **#game-rights 投稿**: ts=1778462309.901539 (CHANNEL=C0ANQ9DRQ1K), skipped:False (重複ガード通過)
-6. **投稿本文に必須要素**: 3 候補名 + 各緊張源 1 行 + 「最良候補確定は本起案で行わず cross_review/Nao_u 判断に委ねる」明示 (M-37 Stage 1 作法)
-7. **draft script** を `post_ash_game_rights_20260511_graze_log_v04_brainstorm_POSTED_ts1778462309.py` にリネーム
-
-## 完遂判定
-
-**Yes (完遂)**。Phase 3 大作業宣言の完遂条件 5 項目すべて満足:
-
-| 条件 | 達成 | 検証 |
+| レイヤー | 同方向 | 逆方向 |
 |---|---|---|
-| 1. brainstorm.md 新規作成 + commit (3案) | ✅ | commit `2e8cd70ed`, 201行 |
-| 2. 各案の5項目構造 (緊張源/応答/graze降格/Nao_u 4指摘/削除可能制約) | ✅ | 全案 §1/§2/§3 で網羅 |
-| 3. 冒頭で Log/Mir 論点に乗る明示 | ✅ | §0 で 3 論点明示 |
-| 4. #game-rights 投稿 + ts 取得 + skipped:False | ✅ | ts=1778462309.901539 |
-| 5. 投稿本文に 3 候補名 + 緊張源 1 行 + 最良委任明示 | ✅ | 「**最良 1 案の確定は本起案では行わない**」明記 |
+| 装置(infra) | 救援装置(headless.py) | 窒息装置(backup auto-commit, 5/2 §02) |
+| 機構(1作内) | 倒立本能メカニクス(5/6) | 機構希釈ジレンマ(5/9) |
+| **続編(series)** | **守の深化（稀）** | **シリーズ減衰（多）** |
 
-## 次へ繰り越し
+法則「ベース系主ベクトルと同方向か逆方向かを判定せずに足してはならない」の3レイヤー目を Nao_u 本人発言が実証する形になった。
 
-- **cross_review 応答追跡**: Log/Mir/Nao_u から 3 案への評価が到達するまで待機、次サイクル以降に応答収束観察
-- **応答到達後**: 最良案決定 → v04 実装着手 (predicted_play.md / self_judgment.md を着手前に書く M-39+M-40 物理閉鎖)
-- next_tasks_ash.jsonl に新規エントリ追加候補: 「v04 brainstorm 3 案への cross_review 応答 (Log/Mir/Nao_u) 到達確認 + 最良案決定」
+### 構造説明（なぜ初代が濃度最大か）
+- 仮説1: 販売要請の累積（続編は足し算になりやすい）
+- 仮説2: ベクトル干渉の累積（コアと無関係な機構の許容）
+- **仮説3（最有力）: 守の濃度は単方向**。守破離の「守」は最初の1点に集中するから守。続編は構造的に「破」「離」を要求され、コア体験の集中は1作目に取り残される。
 
-## 観察ポイント
+### GOROman ADSR (#36) のシリーズ時間軸投影
+1作内エンベロープ Attack→Decay→Sustain→Release をシリーズ時間軸に拡張: 初代=Attack ピーク（守の濃度最大）、2-3作目=Decay、4-5作目=Sustain、それ以降=Release。Nao_u 判定 = Attack ピーク優位の自然帰結。
 
-- 本サイクルの Phase 4 は §0a a449 (v03 cross_review 応答追跡) の議題シフト後の deliverable として、v04 brainstorm 起案を完遂した
-- Mir「brainstorm は Ash 主導」明示 + Log の Ash 5/10 21:24 方向性合意要請の閉じ (ts=1778459309) を受けた直後の起案 = タイミングとして適切
-- 装置 (backup auto-commit) の先回り防止のため "ash:" prefix commit を運用 → 5/2 装置議論の運用ルール準拠の最初の Ash 実例
+### WO33427414 (#24) 疑似3D感性接続
+「自機は飛んでないし前にも進んでいない、飛んでるように見えるのはスプライト時代の感性」= 制約下の感性が見た目を作る。GT 初代も PSハード制約下で「リアルなドライビング」を成立させていた。**制約 = 守の設計言語**。続編でハード性能向上 → 制約緩和 → 守の設計言語が手元から失われる。
 
+### graze_log 自己点検
+- v01 守の濃度=最大（瞬時回避+graze スリル）
+- v02 meta-mechanic（プレイヤー不可視、濃度影響なし）
+- v03 BOMB+streak → **判定: 希釈ではなく深化**。Log の cross_review 書面 (20260511_log_on_graze_log_v03_perception_axis.md) で streak が BOMB を潜って保持される 3拍ループが発見されており、瞬時判断の重みを増す方向に作用している。元の graze ベクトル上で集中度を上げる追加。
+- **v04 警告: v03 と別軸（防御強化/装備選択/スコア系/ストーリー）を入れると初代GT→続編GT と同型の減衰が起きうる。v04 着手前に「守の濃度が v03 より下がらないか」を判定軸として持つ運用を組み込む。**
 
----
+### 未解決の問い（5本）
+1. 続編で守の濃度が下がらなかった事例（マリオ3、時オカ、ロックマン2）の構造的差異 — 「足し算続編 vs 引き算・純化続編」の仮説
+2. シリーズ減衰のディケイ係数はジャンルで違うか（SIM>RPG>ACT 仮説）
+3. graze_log v04 で減衰を起こすベクトル干渉源リストの事前化
+4. Nao_u 本人発言の常時引き当て運用の負荷と精度（本記事が第一実装）
+5. 「守の濃度」の客観計測指標（コアモード時間比率/介在密度/モード遷移回数）
 
-# Phase 3 結果（14:08 Ash追記 — C2 サイクル）
-
-## 文脈
-
-本サイクル（13:16 Phase 1 起動）は前サイクル C1 (10:35 Phase 3) で v04 brainstorm 起案完遂後の追走サイクル。C1 末尾の「次へ繰り越し」で `cross_review 応答追跡` を継続課題とし、§0a に新規 `t-260511040946-a449` を立てた状態で Phase 1-2 を回した。
-
-## A. 雑務処理 (実施)
-
-1. **Phase 2 成果物 commit + push**: `64a534c7b ash: knowledge x2 + Phase 2 ebikani sandbox-first synthesis posted artifacts` (5 files: knowledge x2 / drafts POSTED x2 / external_search.log)
-   - 途中 push 衝突 → pull --rebase 失敗 (scheduler_ash.log ファイルロックでアボート阻止) → update-ref で HEAD 復旧 → conflict ファイル take-theirs (sync log系) → merge commit `dfda882b6` → 最終 push 成功 `933c53b36`
-   - `ash:` 接頭辞で意図 commit 識別 (feedback_device_direction §3 準拠)
-2. **Log 5/11 perception axis 応答到達確認**: `game/cross_review/20260511_log_on_graze_log_v03_perception_axis.md` (Log C178 Phase 3) 既存。Ash 5/11 01:03 ts=1778429023 依頼 3 項 (知覚変化体験記述/AI slop区別境界 a-b-c/削除可能改良適格性) すべてに応答済み
-   - §0a pending t-260511040946-a449 のトリガー条件 (応答到達) 満足
-3. **Mir 応答状態確認**: `game/cross_review/` 配下に Mir からの **v03 perception axis 応答書面 未到達** (最新 Mir 書面は 20260501_mir_on_brick_log_v02.md)。Phase 4 では Log 応答単独に対する Ash 書面を起こし、Mir 応答到達後に追補書面を別途立てる方針
-
-## B. Log 応答の主要 3 発見 (Phase 4 Ash 応答書面の核)
-
-- **(F1) コード読み層 perception change 1点**: `fireBomb()` (L206-222) と `onHit()` (L456-470) のどちらも grazeStreak をリセットしない → BOMB 発火後も streak 保持で D 窓が即時解放される **3拍ループ構造**が成立。Ash の予測 (predicted_play.md §停滞: BOMB 後 streak 0 から再蓄積) を**コード読みで自己反証**
-- **(F2) AI slop 区別境界 (a) → △→×に下振れ**: スクショ母集団分布で streak ≥ 5 が出る瞬間は < 50%、cyan リング映らない大半のスクショは v02 と区別不能。改善案 = 自機常時 streak ゲージ
-- **(F3) 削除可能改良適格性 = 3条件全満足**: 約60行削除 / 機能直交 / 戻し手順 README 明記。v03→v02 巻き戻しが**安全装置として機能する** (Nao_u 5/11 05:51 4点指摘で v03 評価下振れたため意義大)
-
-## C. v04 brainstorm への接続点 (Phase 4 で明文化する射程)
-
-- F1 (3拍ループ) は **v04 案 α (Mir 直系・弾幕回避コア) と直交**: v04 ではコア構造が graze から弾幕回避に移行 → 3拍ループは「v03 で構造的に成立したが実プレイで Lv3 到達困難で発火しなかった」事象として確定し、v04 ではこの構造そのものを引き継がない判断
-- F2 (スクショ判別困難) は **v04 でも残る問題**: 弾幕回避コアでも視覚アセット差分は薄い。v04 ship 前に「説明文 1文目で +1 が言える」設計を明示する必要
-- F3 (削除可能改良 v03→v02) は **v04 着手前の安全保障**: v04 で別アプローチに振っても v03 を物理的に巻き戻せる前提で、v04 を「失敗した場合の復旧コスト低い」状態で着手できる
+### 成果物
+- knowledge/20260511_nao_u_gt_initial_is_best_series_decay.md 新規作成（5接続: graze_log自己点検 / クローン戦略N=1理論補強 / canon authority並走 / 装置の向き3レイヤー目 / ootamato 1作内→続編拡張）
+- #shared-reads (C0AN2FEHEJJ) 投稿成功 (ts=1778474714.809439)
+- drafts/2026-05-11/post_ash_shared_reads_20260511_nao_u_gt_series_decay.py
 
 ---
+
+## Phase 3 結果 (2026-05-11 13:55 着手)
+
+### A. 短時間対処 (実施)
+1. **game/cross_review/ ディレクトリ物理確認**: graze_log v03 関連は Log の 2 ファイルのみ (`20260510_log_on_graze_log_v03.md` / `20260511_log_on_graze_log_v03_perception_axis.md`)、Mir の応答は**未到達**。`git log` も Log 側 commit (4f0d52b36 / 54b853fcb) のみで Mir 応答 commit は無し。→ §0a タスクの (b)「Mir 側応答が来ているか確認」は**現時点で『未到達』が回答**。
+2. **B 選定根拠の補強**: Log の `20260511_log_on_graze_log_v03_perception_axis.md` (19,200 bytes) は未読のため、Phase 4 で全文読込→Ash 側 cross_review 応答 → v04 改修方針反映の経路が確定する。Mir 待ちにせず Ash 単独で書面化可能 (Mir 到達後に追補する設計)。
+
+### B. Phase 4 大作業の選定
+
+選定の判断:
+- §0a `t-260511040946-a449` は連続0サイクルだが、Log 応答が今朝到達した時点で Ash 側の書面化が最重要タスクに昇格
+- Phase 2 で書いた Nao_u GT初代発言の3レイヤー同型構造 (装置→機構→続編) と Log の perception axis 応答は直接接続 (v04 で「守の濃度が下がらないか」を判定軸として持つ運用)
+- Phase 4 (約6分) 内で「Log の応答全文読込 → Ash 側応答書面化 (cross_review/ への新規 md) → v04 改修方針 3項提示」は1サイクルで完遂可能なスコープ
+- 雑務の延長ではなく ship に近づく (graze_log v04 着手の方針が決まる) + ノウハウを残す (cross_review 連鎖の一手)
 
 ## Phase 3 → Phase 4 大作業宣言
-
-**大作業**: `game/cross_review/20260511_ash_on_log_perception_axis_response.md` を新規作成し、Log 5/11 perception axis 応答 (上記 F1/F2/F3) への Ash 側書面応答を起こす。応答内容: (a) F1 コード読み層 3拍ループ発見の受領 + Ash 自身の predicted_play.md §停滞予測の自己反証受け入れ (b) F2 スクショ判別 △→× 下振れ判定の受領 + v04 への持ち越し条件化 (c) F3 削除可能改良適格性確認の受領 + v04 着手前安全装置としての位置付け (d) v04 brainstorm 案 α/β/γ への 3 発見の影響整理 (e) Mir 応答未到達の明示 + 追補書面方針。書面 commit + push までを完遂。
-
+**大作業**: graze_log v03 への Ash 側 cross_review 応答書面 (`game/cross_review/20260511_ash_on_graze_log_v03_response.md`) を新規作成し、Log の perception axis 応答 (20260511 ファイル) + 今日の Phase 2 発見 (Nao_u GT 初代=守の濃度ピーク) を踏まえた v04 改修方針 3項を明示する。
 **完遂条件**:
-1. `game/cross_review/20260511_ash_on_log_perception_axis_response.md` 作成 (3〜5 セクション、各セクションで F1/F2/F3 の受領内容 + v04 への接続を明記)
-2. `ash:` 接頭辞付き commit + push 成功 (commit hash 取得・記録)
-3. cycle_staging.md に Phase 4 結果セクション追記 (書面 path + commit hash + Mir 応答待ち を §0a 次サイクル化候補として明示)
+1. `game/cross_review/20260511_ash_on_graze_log_v03_response.md` が新規作成され、内容に以下を含む:
+   - (1) Log の3項応答 (perception change 1点 / AI slop区別境界 3層 / 削除可能改良適格性) への Ash 側の同意・差分・追加観点
+   - (2) Phase 2 で発見した「3レイヤー同型構造 (装置/機構/続編)」を v03→v04 遷移にどう適用するかの判定軸
+   - (3) v04 改修方針 3項 (具体的に何を足す/足さない/判定基準は何か)
+   - (4) Mir 応答未到達のため、Mir 到達後に追補する旨の明示
+2. 上記 md を `git commit -m "ash: ..."` (意図プレフィックス分離) で commit
+3. `python next_tasks.py done t-260511040946-a449` で §0a タスクを閉じる (Mir 応答追加処理は新タスクとして残す)
 
 **根拠**:
-- §0a t-260511040946-a449「応答到達後 cross_review/ への書面化」の直接実行 (連続 0 サイクル → 即時消化)
-- ゲーム制作試行錯誤ループに直結 (cross_review は試作 → 評価 → 次版方針の閉路の中核)
-- 1 サイクル完遂可能 (1 書面 + commit + push、参照素材は Phase 3 で全て読了済み)
-- ノウハウ残す: F1 の自己反証は sense_prediction_log.md 2 回目の同型事例 (Log §持ち帰り(2)) で、Ash 側の受領記録が 3 回目 kaizen 化判断材料になる
-- ship に近づく: v04 brainstorm 案選定の根拠を 3 発見で補強 → Nao_u 判断/Mir cross_review への入力が強化される
-- 副選定 (KAKUBOMB #7 視点 / ebikani sandbox-first フレーム) は本書面の文脈接続として 1 段落のみ言及 (主軸 hijack しない、Phase 2 知識記事側で消化済み)
-- Slack #game-rights 通知は本サイクルでは行わない判断: cross_review 書面 commit/push 自体が他インスタンスの inbox check で拾われる + #game-rights 投稿は本日既に ash 複数件投稿済みで broken_record 防衛線抵触リスク。次サイクル以降で必要に応じて 1 メッセージ通知を再判断
+- §0a `t-260511040946-a449` (Phase 1 §0a 5-6行目) の (a)(b)(c) 完遂が直接の動機
+- Phase 2 末尾「v04 警告: v03 と別軸を入れると初代GT→続編GT と同型の減衰が起きうる」(staging 163行) を実運用に落とす一手
+- 前サイクル日記末尾「装置 (backup) が先回りできない領域に意図を載せる」(staging 27行) と整合: cross_review 書面化 + 意図 commit prefix `ash:` 分離は backup auto-commit が先取りできない領域
+- ゲーム制作の試行錯誤ループに直接接続 (means_ends_reversal_check クリア): graze_log v04 着手前の判定軸を物理的にファイルに置く
 
+---
 
+## Phase 4 大作業の結果 (2026-05-11 14:00 完遂)
+
+### やったこと
+- **新規作成**: `game/cross_review/20260511_ash_on_graze_log_v03_response.md` (198 行)
+  - §1 Log 応答(1) 知覚変化軸への応答: 「3拍ループ発見」同意 + 「層 a (コード読み) / 層 b (実プレイ) / 層 c (設計判断) の分離」追加観点
+  - §2 Log 応答(2) AI slop 区別境界 3点判定への応答: (a) △→× 確定 (Nao_u 5/11 指摘①直系) / (b)(c) 完全一致 / (c) は v04 で書き直し要 (案 α/β/γ 別の説明文 1 文目を提示)
+  - §3 Log 応答(3) 削除可能改良適格性への応答: v03 単体は適格に同意 + v04 は守の通過点 = 破への転換として制約から外れることを正直に開示 + 適格性確認の運用ルール3項追記提案
+  - §4 Phase 2 で発見した3レイヤー同型構造 (装置/機構/続編) の v03→v04 遷移への適用: 禁止項目4 + 推奨項目4 を列挙
+  - §5 v04 改修方針 3項: (1) コア構造再起動 v01ベース / (2) 外発緊張源 α/β/γ 3択 / (3) 着手前ゲート強化 (Q0追加/消失要素セクション/headless不採用)
+  - §6 Mir 応答受領後の追補設計: §7 を将来 append、3 サイクル以上未到達なら v04/README に「Mir 未判定」明記して進む
+  - §7 (将来追補) 空セクション、Mir 応答受領後に append
+  - §8 接続先 (15 件)
+- **commit**: `8e95bfc5f` (commit message prefix `ash:` 分離、backup auto-commit の先取り経路を物理的に閉鎖)
+- **push**: 完了 (`fd1d722f1..8e95bfc5f master -> master`)
+- **§0a タスク `t-260511040946-a449` close**: `next_tasks.py done t-260511040946-a449` 実行済み
+- **新タスク登録**: `t-260511135020-d8c2` 「Mir 応答到達後の §7 追補 + v04 brainstorm 最良案絞り込みの Nao_u 判断要請」
+
+### 完遂判定: Yes
+- 完遂条件1 (内容 (1)(2)(3)(4) 含む書面新規作成): **Yes** (§1〜§5 + §7 空セクション)
+- 完遂条件2 (`ash:` intent prefix で commit): **Yes** (8e95bfc5f)
+- 完遂条件3 (§0a タスク close): **Yes** (Mir 応答処理は新タスクとして残す)
+
+### 次へ繰り越し (Phase 5 日記素材 + 次サイクル)
+- **Mir 応答到達確認**: 次サイクル冒頭で `game/cross_review/20260511_mir_on_graze_log_v03_*.md` の有無を確認、到達していれば §7 追補
+- **v04 着手判断**: Mir 応答 + Nao_u 判断後、3案 α/β/γ から最良 1 案を絞り込み (Ash 単独で絞らない、philosophizing 禁止)
+- **Phase 5 日記の核**: 「Phase 2 で発見した3レイヤー同型構造が、即サイクル内で v03→v04 cross_review に適用された」= 知見が手元の作業に閉路するまでの最短距離が観察された。装置 (commit prefix) 経由で意図経路を確保する手法も同サイクル内で実行された。さらに「コード読み層 perception change が実プレイ層では失格する」を Log/Ash が同期して認識した = AI インスタンス cross_review の出力品質開示が一段進んだ
+- **未解決**: Mir 応答到達タイミング次第で v04 着手が遅延する可能性、長期未到達時のフォールバック (v04/README に Mir 未判定明記) を §6 で設計済み
