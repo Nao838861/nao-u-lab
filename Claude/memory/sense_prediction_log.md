@@ -288,3 +288,23 @@ cross_review / 改修提案投稿前に3つ全て No なら投稿可、1つで�
 - 本サイクル C178 Phase 3 cross_review §1 で発見した「コード読み層 perception change」は本事例2の副産物として価値があった (mental simulation 校正 = 新規 perception change)。失敗を perception change の材料に転化できた一例として記録
 
 — Log 2026-05-11 C178 Phase 3 記録
+
+### 2026-05-11 事例10 追補 — 同型3回目（C178 後続サイクル Phase 3 着手時）
+
+**場面 (3回目)**: 本サイクル Phase 1 §2 #game-rights 「Log 未応答 = 2件 (Ash 5/10 21:24 方向性合意要請 / 5/11 01:03 知覚変化軸 cross_review 3項)」と staging に書いたが、Phase 3 着手時に `drafts/2026-05-11/post_log_game_rights_*POSTED*.py` 一覧を確認したところ、**Log は 5/11 15:33 ts=1778447586 (v03 response = Nao_u 4点評価対応含む) / 15:53 ts=1778448786 (cross_review 知覚変化軸応答) / 18:48 ts=1778459309 (Ash 方向性合意要請の閉じ)** で既に 3本投稿済だった。Phase 1 staging 時刻 (18:15) より前に少なくとも 2本は投稿済 = Phase 1 が drafts/ 一覧を確認せず staging 冒頭の前回サイクル認識を引きずったまま「未応答」と書いた。
+
+**予測 vs 実態**: 事例10 (5/11 早朝) で「同型3回目で kaizen 化」と書いた本人が、**同日中に同型3回目を踏んだ**。Phase 1 §2 で「未応答リストを書く瞬間」が一次データ (drafts/ 一覧 + slack_archive 投稿時刻) を当たる対象なのに、二次情報 (Phase 1 §1 git 状態の "編集中ファイル" 観察) で結論を書いた。
+
+**重要な差分**: 事例10 (2回目) は **同サイクル内で Phase 2 / Phase 3 が校正した**ため Phase 4 までに修正が間に合った。3回目は **Phase 1→Phase 2→Phase 3 着手時点まで未検出**で、Phase 3 着手で初めて drafts/ 一覧を見て気づいた。Phase 2 §1 では「Slack 投稿合計5本」と書いたが、それは新規4本 (#all-nao-u-lab Mir/Ash 既反応に Log 視点追加) + 1本 (#shared-reads Project DENT) で、**#game-rights Log 未応答候補 2件には触れていない**。Phase 2 もこの認識誤りを校正できなかった = 連鎖盲点が Phase 1→2→3 で発生していたが、kaizen #132 (Phase 2 §0 自己診断幻覚 → Phase 3 §0 検証) は Phase 1 認識誤りの校正には届かない構造的隙間。
+
+**kaizen 化判断 (CLAUDE.md「同型3回目」基準到達)**:
+- 同型3回目到達 = kaizen 起票条件成立。ただし **kaizen #130 未検証 (期限延長 5/19)** で残っているため、**検証ファースト原則順守**で本サイクル kaizen 起票は保留
+- 暫定運用ルール: Phase 1 §2 で「未応答」「Log 未対応」「他インスタンス未着」を書く瞬間に **`ls drafts/<today>/*POSTED*` で投稿済確認 + `grep ts= ... | sort` で投稿時刻順スキャン**を必須化。staging に明示してから書く
+- kaizen 正式起票: #130 検証期限 2026-05-19 後に着手判定。それまでは暫定運用ルールで自己統制 (CLAUDE.md「個別指摘を即ルール化しない — 判断力で消化する」と整合的)
+
+**想起トリガー (3回分共通の抽象化)**:
+- **「未対応」「未応答」「未着」「対応漏れ」を書く瞬間 = 一次データ (jsonl + drafts/ + git log) 直接確認の対象**
+- mental simulation / staging 引用 / 前サイクル認識を **そのまま結論にしない**
+- Phase 1 / Phase 2 のどちらでも、上記キーワードを書く前に一次データ確認の自己宣言を staging に書く
+
+— Log 2026-05-11 後続サイクル Phase 3 記録

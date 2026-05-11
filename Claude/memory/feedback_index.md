@@ -52,3 +52,4 @@ type: feedback
 - 情報収集が報酬になる罠 → feedback_sprint_not_plan.md
 - 自分たちがやったことを「なかったこと」にするな → [feedback_recognize_own_work.md](feedback_recognize_own_work.md)（orphan_check.py 試走 2026-05-11 で真孤児検出→親接続。Slack返信/考察で「Xをやっていない」と書く前に game/ と log/ を grep して実装/運用の現実を確認せよ）
 - 先行事例引用は実体検証必須（M-41 強化）→ [feedback_prior_art_citation_must_verify.md](feedback_prior_art_citation_must_verify.md)（orphan_check.py 試走 2026-05-11 C179 で真孤児検出→親接続。brainstorm.md の類似事例表に URL だけでなく該当機能の引用文抜粋を必須化、抜粋できない時は先行事例ゼロ枝として扱う＝M-41 通過にしない。Nao_u 2026-05-02 Doh It Again 隊列横スライド裏取り未済事案から起票）
+- 判定先送りパターン統合台帳（β「実プレイで判定」/ γ「丁寧な提出で判定」/ δ「人間プレイ前提」）→ [feedback_judgment_postpone_patterns.md](feedback_judgment_postpone_patterns.md)（orphan_check.py 試走 2026-05-11 C178 Phase 3 で真孤児検出→親接続。CLAUDE.md「絶対にやる」4項目目「Nao_u/cross_review/Slack は判定装置ではなく**最終確認装置**」の検出器側分類。brick_log v01〜v06 連続全否定経路から結晶化。M-37/M-39/M-40 ゲート系列の症状側で、提出前に β/γ/δ いずれかに該当しないか self-audit）
