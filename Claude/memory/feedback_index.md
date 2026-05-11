@@ -50,3 +50,4 @@ type: feedback
 - #human-steeringの性質 → feedback_human_steering_nature.md
 - 日付の引きずられ → feedback_date_verification.md
 - 情報収集が報酬になる罠 → feedback_sprint_not_plan.md
+- 自分たちがやったことを「なかったこと」にするな → [feedback_recognize_own_work.md](feedback_recognize_own_work.md)（orphan_check.py 試走 2026-05-11 で真孤児検出→親接続。Slack返信/考察で「Xをやっていない」と書く前に game/ と log/ を grep して実装/運用の現実を確認せよ）

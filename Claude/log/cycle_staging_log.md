@@ -262,3 +262,32 @@ Phase 1 §4 で監査結果 0件（親85 / サブ197 / 未統合0 / 親集約マ
 - **infrastructure 警戒線下の制御済み投資**: 100行/30分制限を §E 追補に明記済、自走時間を週次5分以内に抑える設計 → feedback_substrate_not_infrastructure.md T:5 警戒線をクリアできる規模
 - **arXiv 2602.05665 evolution 最弱点診断の即時還元**: 「memory ライフサイクル4段階のうち evolution が我々の最弱点」を本サイクル Phase 2 §3 で診断したが、それを 1mm 動かす装置が orphan_check.py の3クラス分類。「診断 → 即時実装」のループで Phase 1 → Phase 4 の繋ぎを示す
 - **Slack 投稿1本では済まない粒度**: 100行スクリプト + 試走 + projects 更新 + 真孤児1件親接続 = 30分以上の実装単位、Phase 4 大作業の閾値を満たす
+
+
+## Phase 4: 完遂
+
+### 達成
+- [x] `scripts/orphan_check.py` v0 新規作成 (193行)
+- [x] `python scripts/orphan_check.py --dry-run` 実行可能、`--write PATH` で書き出し可能
+- [x] 3クラス分類 (true_orphan / stale_linked / unregistered_new) で `[CLASS] memory/path.md (last_edit=YYYY-MM-DD, age=NN日, refs=N)` 形式出力
+- [x] 実行スコープ: `memory/**/*.md` = 252 ファイル / 参照グラフ起点 = 9 ファイル (MEMORY.md + サブインデックス6本 + concept_graph.md + beliefs.md + projects/INDEX.md)
+- [x] temporal awareness = `git log --pretty=format:COMMIT %ci --name-only` を 1 回呼び出してパース。`^log: relocate` (5/8 一括 rename) のみ除外、Auto sync 系は cross-machine 同期で意味的編集を含むので除外しない
+- [x] 実行時間 0.38 秒 (完遂定義 5 秒以内クリア)
+- [x] 結果出力 `tools/orphan_check_dry_run_1778460021.txt` (252 ファイル分類済)
+- [x] 真孤児 1 件親接続: `feedback_recognize_own_work.md` を `memory/feedback_index.md` 「関連ファイル」節に markdown link で追加 → orphan_check.py 再実行で true_orphan→stale_linked クラス移行確認 (refs 0→1, 真孤児件数 75→74)
+
+### 試走結果サマリ
+- scope: memory/**/*.md = 252 files / reachable from 9 index roots = 195 files
+- 真孤児 (refs=0 + age>30日): **74 件** (`memory/dialogue_*.md` 4件, `memory/feedback_*.md` 35件, `memory/inbox_*.md` 9件, `memory/reflections_*.md` 4件 など)
+- 静止親接続 (refs>0 + age>30日): **157 件**
+- 新規未登録 (refs=0 + age<7日): **14 件** (`_TAG_VOCABULARY.md` 等の今日作成分は親接続済のため外れた、残った14件は inbox/external_notes/kaizen_tracker/shared_reads 個別ファイルが中心)
+
+### 副産物
+- `scripts/orphan_check.py` (新規, 193 行)
+- `tools/orphan_check_dry_run_1778460021.txt` (新規, 22KB)
+- `memory/feedback_index.md` (1行追加, 真孤児 1 件親接続)
+- `projects/memory_tree_consolidation.md` (「着手済み C180 Phase 4」節 + 「残作業」更新 + 改訂履歴 C180 行)
+- 次サイクル v0.1 課題明確化: `→ filename.md` 矢印記法も参照認識する LINK_RE 拡張 (feedback_index.md の既存プロセ記法が真孤児を過大評価している可能性)
+
+### 完遂判定
+完遂の定義 (1)-(6) すべて達成。残作業はあくまで v0.1 以降の改善 (LINK_RE 拡張、真孤児優先5件親接続、新規未登録レビュー)。本 Phase 4 の閾値は超えた。

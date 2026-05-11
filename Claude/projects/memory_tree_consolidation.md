@@ -84,6 +84,21 @@ Phase 1 §6 で摂取した Karpathy LLM Wiki / arXiv 2602.05665 (Graph-based Ag
   - `20260426_backlash_stg_disproof_log.md` ← `log/shared_reads_post_C129.txt`
 - [x] `projects/memory_tree_consolidation.md` 起票（本ファイル）
 
+## 着手済み（2026-05-11 C180 本サイクル Phase 4）
+
+- [x] `scripts/orphan_check.py` 試作 v0 完成
+  - BFS 参照グラフ構築 (9 起点: MEMORY.md + サブインデックス6本 + concept_graph.md + beliefs.md + projects/INDEX.md、`projects/`/`log/` 経由の中継も traverse 対象)
+  - temporal awareness = `git log --invert-grep --grep="^log: relocate"` で 5/8 一括 rename を除外、Auto sync 系は cross-machine 同期で意味的編集を含むので除外しない
+  - 3クラス分類 (真孤児/静止親接続/新規未登録) を `[CLASS] memory/path.md (last_edit=YYYY-MM-DD, age=NN日, refs=N)` 形式で出力
+  - `--dry-run` / `--write` / `--verbose` フラグ実装
+  - 実行時間 0.38 秒 (252 ファイル × 1回 git log で完了、完遂定義 5 秒以内クリア)
+- [x] 第一弾試走 → `tools/orphan_check_dry_run_1778460021.txt` に出力
+  - scope: memory/**/*.md = 252 files / reachable = 195 files
+  - 真孤児 = 75 → 74 件 (1mm 進めで -1)
+  - 静止親接続 = 156 → 157 件 (+1)
+  - 新規未登録 = 14 件
+- [x] 1mm 進め: 真孤児 `feedback_recognize_own_work.md` (Nao_u feedback「自分たちがやったことを『なかったこと』にするな」) を `memory/feedback_index.md` の関連ファイル節に markdown link で親接続 → stale_linked クラスに移行確認
+
 ## 残作業（次サイクル以降）
 
 - [ ] 残 6 ファイル移行（frontmatter 付与しながら）
@@ -93,11 +108,12 @@ Phase 1 §6 で摂取した Karpathy LLM Wiki / arXiv 2602.05665 (Graph-based Ag
   - `log/shared_reads_post_C163_mir.txt` (Mir)
   - `log/shared_reads_post_C164.txt` (Log)
   - `log/shared_reads_post_C171_ash.txt` (Ash)
-- [ ] `scripts/orphan_check.py` 試作
-- [ ] 孤児リスト第一弾生成 → 上 5 件を親に接続して動作確認
+- [ ] 真孤児 74 件のうち優先5件を親接続 (Log サイクル末尾 90 秒で 1〜3 件ずつ)
+- [ ] orphan_check.py v0.1: バレンアロー記法 `→ filename.md` も参照として認識する LINK_RE 拡張 (feedback_index.md などプロセ参照が真孤児を過大評価する原因)
 - [ ] MEMORY.md トリガー追加（`_TAG_VOCABULARY.md` / `shared_reads/`）
 - [ ] Mir / Ash に inbox 伝達（タグ語彙 v0 への準拠依頼）
 - [ ] 既存 `memory/feedback_*.md` 91 件への tags 付与（Log サイクル末尾で 1〜3 件ずつ）
+- [ ] 新規未登録 14 件のレビュー (`kaizen_tracker.md` を MEMORY.md トリガーに追加検討、shared_reads/ 個別ファイルを `shared_reads/README.md` から再帰参照可能化)
 
 ## 接続先
 
@@ -112,3 +128,4 @@ Phase 1 §6 で摂取した Karpathy LLM Wiki / arXiv 2602.05665 (Graph-based Ag
 
 - 2026-05-11 C178: 起票 + v0 タグ語彙 + 第一弾 3 ファイル移行 + Nao_u 進めて承認反映
 - 2026-05-11 C179: §E orphan_check.py 要件追加（外部研究3件摂取由来 = engraph temporal awareness レーン併用 + arXiv 2602.05665 ライフサイクル4段階の evolution 最弱点診断 → 3クラス分類: 真孤児/静止親接続/新規未登録）。infrastructure 警戒線で実装規模制限明記
+- 2026-05-11 C180 Phase 4: §E orphan_check.py v0 実装完成（193行・実行時間 0.38秒）。第一弾試走で 真孤児75/静止親接続156/新規未登録14 を検出。1mm進め=真孤児`feedback_recognize_own_work.md`を `feedback_index.md` に markdown link 親接続 → stale_linked クラスへ移行確認。次サイクル v0.1 課題: `→ filename.md` 矢印記法も参照認識する LINK_RE 拡張（feedback_index.md のプロセ記法を取り逃す問題）

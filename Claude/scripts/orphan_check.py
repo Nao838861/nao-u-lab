@@ -1,0 +1,310 @@
+#!/usr/bin/env python3
+"""memory/ 孤児ノード検出 試作 v0 — memory_tree_consolidation.md §E
+
+参照グラフ (MEMORY.md + サブインデックス + 再帰展開) と memory/**/*.md 全集合の
+diff を取り、temporal awareness (git log 履歴) を併用して3クラス分類で出力する。
+
+3クラス分類:
+- true_orphan    : 参照グラフから到達不可 + 直近30日以内に編集なし
+- stale_linked   : 参照グラフ内だが直近30日編集なし (evolution 段階の死活判定対象)
+- unregistered_new: 直近7日以内に新規作成 + 参照グラフ未登録 (接続待ち優先度高)
+
+arXiv 2602.05665 (Graph-based Agent Memory: Taxonomy, Techniques, and Applications)
+が指摘する memory ライフサイクル 4 段階 (extraction/storage/retrieval/evolution)
+のうち、evolution が Pot 現状で最弱点 (beliefs.md 停滞 25/35 = 71% など)。
+「孤児 ≠ 死んだノード」の区別を本スクリプトで装置化する。
+
+Usage:
+    python scripts/orphan_check.py --dry-run
+    python scripts/orphan_check.py --write tools/orphan_check_dry_run_<ts>.txt
+    python scripts/orphan_check.py --dry-run --verbose
+"""
+from __future__ import annotations
+
+import argparse
+import re
+import subprocess
+import sys
+from datetime import date, datetime
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+MEMORY_DIR = REPO_ROOT / "memory"
+PROJECTS_DIR = REPO_ROOT / "projects"
+
+# 参照グラフ起点 (MEMORY.md + 主要サブインデックス + 概念グラフ + 信念 + プロジェクトINDEX)
+INDEX_FILES = [
+    MEMORY_DIR / "MEMORY.md",
+    MEMORY_DIR / "feedback_index.md",
+    MEMORY_DIR / "operational_index.md",
+    MEMORY_DIR / "game_dev_index.md",
+    MEMORY_DIR / "references_external_index.md",
+    MEMORY_DIR / "tweets_index.md",
+    MEMORY_DIR / "concept_graph.md",
+    MEMORY_DIR / "beliefs.md",
+    PROJECTS_DIR / "INDEX.md",
+]
+
+LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+\.md)(?:#[^)]*)?\)")
+
+AGE_THRESHOLD_STALE = 30
+AGE_THRESHOLD_NEW = 7
+
+EXCLUDE_PART = "memory_backup"
+
+
+def normalize_link(link: str, base_file: Path) -> Path | None:
+    """Markdown link を repo 配下の絶対 Path に正規化。外部 URL や repo 外なら None。
+
+    memory/ 制限はしない (projects/ や log/ も traverse 対象にする)。
+    memory/ かどうかは呼び出し側で判定する。
+    """
+    link = link.split("#", 1)[0].split("?", 1)[0].strip()
+    if not link or link.startswith(("http://", "https://", "mailto:")):
+        return None
+    try:
+        resolved = (base_file.parent / link).resolve()
+    except OSError:
+        return None
+    try:
+        resolved.relative_to(REPO_ROOT)
+    except ValueError:
+        return None
+    return resolved
+
+
+def is_memory_path(p: Path) -> bool:
+    try:
+        rel = p.relative_to(REPO_ROOT)
+    except ValueError:
+        return False
+    return str(rel).replace("\\", "/").startswith("memory/")
+
+
+def build_reference_set(verbose: bool = False) -> set[Path]:
+    """起点ファイルから BFS で到達可能な memory/ パス集合を構築。
+
+    projects/ や log/ 経由の中継も traverse 対象にする (memory/ への 2-hop 以上を
+    捕捉するため)。最終 set には memory/ 配下のみを含める。
+    """
+    visited: set[Path] = set()
+    queue: list[Path] = []
+    for idx in INDEX_FILES:
+        if idx.exists():
+            queue.append(idx.resolve())
+        elif verbose:
+            print(f"WARN: index missing: {idx}", file=sys.stderr)
+    while queue:
+        cur = queue.pop()
+        if cur in visited:
+            continue
+        visited.add(cur)
+        if not cur.exists():
+            continue
+        try:
+            text = cur.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        for _name, link in LINK_RE.findall(text):
+            target = normalize_link(link, cur)
+            if target is not None and target not in visited:
+                queue.append(target)
+    return {p for p in visited if is_memory_path(p)}
+
+
+def collect_memory_files() -> list[Path]:
+    """memory/**/*.md を列挙 (memory_backup は除外)。"""
+    files = []
+    for p in MEMORY_DIR.rglob("*.md"):
+        if EXCLUDE_PART in p.parts:
+            continue
+        files.append(p.resolve())
+    return sorted(files)
+
+
+def get_git_toplevel() -> Path | None:
+    """git リポジトリのトップレベル絶対パスを取得。
+
+    本リポジトリは D:\\AI\\Nao_u_BOT\\ が git root で、Claude/ はその配下。
+    git log の出力は repo-top 相対パスなので、突合せに toplevel が要る。
+    """
+    try:
+        proc = subprocess.run(
+            ["git", "rev-parse", "--show-toplevel"],
+            cwd=str(REPO_ROOT),
+            capture_output=True,
+            text=True,
+            check=False,
+            encoding="utf-8",
+            errors="replace",
+        )
+        if proc.returncode != 0:
+            return None
+        return Path(proc.stdout.strip()).resolve()
+    except FileNotFoundError:
+        return None
+
+
+def get_last_edit_dates(files: list[Path]) -> dict[Path, date]:
+    """memory/ 配下の全ファイルの最終 commit 日を 1 回の git log で取得。
+
+    `git log --pretty=format:COMMIT %ci --name-only -- memory/` をパースし、
+    各ファイルが最初に現れた commit 日を最終編集日とする。
+    git log のパスは repo-top 相対なので、git toplevel 基準で resolve する。
+    """
+    result: dict[Path, date] = {}
+    git_top = get_git_toplevel()
+    if git_top is None:
+        print("ERROR: git not found or not a repo", file=sys.stderr)
+        return result
+
+    try:
+        # 意味的でない一括 commit は temporal awareness の対象外。
+        # 除外対象 (先頭アンカー):
+        #   ^log: relocate      (2026-05-08 の .git 親階層化、全 2691 ファイル
+        #                        を一括 rename。意味的編集ではない)
+        # 除外しないもの:
+        #   - `backup:` 系は memory_backup/ への commit で memory/ を触らない
+        #     ため、path filter で自然に外れる (フィルタ不要)
+        #   - `Auto sync` 系は cross-machine 同期で実 memory/ 変更を含むので
+        #     temporal signal として有効 (除外しない)
+        # ※ `--grep=backup` の単体使用は "backup_memory.sh" 等を含む正常
+        #   commit にも誤マッチするので、必ず先頭アンカー / 高選択的パターン。
+        proc = subprocess.run(
+            ["git", "log",
+             "--extended-regexp",
+             "--invert-grep",
+             "--grep=^log: relocate",
+             "--pretty=format:COMMIT %ci", "--name-only", "--",
+             "memory/"],
+            cwd=str(REPO_ROOT),
+            capture_output=True,
+            text=True,
+            check=False,
+            encoding="utf-8",
+            errors="replace",
+        )
+    except FileNotFoundError:
+        print("ERROR: git not found in PATH", file=sys.stderr)
+        return result
+
+    current_date: date | None = None
+    for line in proc.stdout.splitlines():
+        if line.startswith("COMMIT "):
+            # %ci format = "YYYY-MM-DD HH:MM:SS +ZZZZ"; date部のみで十分
+            ts = line[len("COMMIT "):].strip()[:10]
+            try:
+                current_date = date.fromisoformat(ts)
+            except ValueError:
+                current_date = None
+        elif line and current_date is not None:
+            path = (git_top / line).resolve()
+            if path not in result:
+                result[path] = current_date
+    return result
+
+
+def classify(
+    refs: set[Path],
+    files: list[Path],
+    dates: dict[Path, date],
+    today: date,
+) -> dict[str, list[tuple[Path, str, int, int]]]:
+    classes: dict[str, list[tuple[Path, str, int, int]]] = {
+        "true_orphan": [],
+        "stale_linked": [],
+        "unregistered_new": [],
+        "other": [],
+    }
+    for f in files:
+        ref_count = 1 if f in refs else 0
+        last = dates.get(f)
+        if last is None:
+            age = 9999
+            last_str = "unknown"
+        else:
+            age = (today - last).days
+            last_str = last.isoformat()
+        entry = (f, last_str, age, ref_count)
+        if ref_count == 0 and age > AGE_THRESHOLD_STALE:
+            classes["true_orphan"].append(entry)
+        elif ref_count > 0 and age > AGE_THRESHOLD_STALE:
+            classes["stale_linked"].append(entry)
+        elif ref_count == 0 and age < AGE_THRESHOLD_NEW:
+            classes["unregistered_new"].append(entry)
+        else:
+            classes["other"].append(entry)
+    for k in classes:
+        classes[k].sort(key=lambda e: (-e[2], str(e[0])))
+    return classes
+
+
+def format_entry(cls: str, entry: tuple[Path, str, int, int]) -> str:
+    f, last, age, refs = entry
+    try:
+        rel = f.relative_to(REPO_ROOT)
+    except ValueError:
+        rel = f
+    rel_s = str(rel).replace("\\", "/")
+    return f"[{cls}] {rel_s} (last_edit={last}, age={age}日, refs={refs})"
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="memory/ orphan check (v0)")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="標準出力に表示 (--write 未指定時はデフォルトで有効)")
+    parser.add_argument("--write", type=str, default=None,
+                        help="結果を指定パスに書き出す")
+    parser.add_argument("--verbose", action="store_true",
+                        help="other クラスも出力 + 欠損インデックス警告")
+    args = parser.parse_args()
+
+    today = date.today()
+    refs = build_reference_set(verbose=args.verbose)
+    files = collect_memory_files()
+    dates = get_last_edit_dates(files)
+    classes = classify(refs, files, dates, today)
+
+    lines: list[str] = []
+    lines.append(f"# orphan_check.py result (run={today.isoformat()})")
+    lines.append(
+        f"# scope: memory/**/*.md = {len(files)} files, "
+        f"reachable from {len(INDEX_FILES)} index roots = {len(refs)} files"
+    )
+    lines.append("")
+
+    for cls_name, cls_label in [
+        ("true_orphan", f"真孤児 (refs=0 + age>{AGE_THRESHOLD_STALE}日)"),
+        ("stale_linked", f"静止親接続 (refs>0 + age>{AGE_THRESHOLD_STALE}日)"),
+        ("unregistered_new", f"新規未登録 (refs=0 + age<{AGE_THRESHOLD_NEW}日)"),
+    ]:
+        entries = classes[cls_name]
+        lines.append(f"## {cls_label}: {len(entries)} 件")
+        for e in entries:
+            lines.append(format_entry(cls_name, e))
+        lines.append("")
+
+    if args.verbose:
+        lines.append(f"## other (active or middle-age): {len(classes['other'])} 件")
+        for e in classes["other"]:
+            lines.append(format_entry("other", e))
+        lines.append("")
+
+    output = "\n".join(lines)
+
+    if args.write:
+        out_path = Path(args.write)
+        if not out_path.is_absolute():
+            out_path = REPO_ROOT / out_path
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(output, encoding="utf-8")
+        print(f"written: {out_path}")
+
+    if args.dry_run or not args.write:
+        print(output)
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
