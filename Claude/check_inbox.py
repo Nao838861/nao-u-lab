@@ -222,6 +222,88 @@ def restore_inbox(inbox_path, content):
         f.write("\n" + content + "\n")
 
 
+def _pending_overflow_path(box_name):
+    """sticky pending file のパスを返す。"""
+    return REPO_DIR / "memory" / f"_pending_overflow_{box_name}.txt"
+
+
+def write_pending_overflow(box_name, overflow_path, original_size):
+    """rotate 時に sticky pending file を作る。
+    overflow_path: 退避先 Path (memory/inbox_<box>_overflow_<ts>.md)
+    """
+    pending = _pending_overflow_path(box_name)
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    pending.write_text(
+        f"overflow_file: {overflow_path.name}\n"
+        f"rotated_at: {ts}\n"
+        f"original_size_bytes: {original_size}\n",
+        encoding="utf-8",
+    )
+    log(f"[PENDING_WRITE] {box_name}: sticky {pending.name} -> {overflow_path.name}")
+
+
+def read_pending_overflow(box_name):
+    """sticky pending file が存在すれば内容を辞書で返す。なければ None。"""
+    pending = _pending_overflow_path(box_name)
+    if not pending.exists():
+        return None
+    data = {}
+    try:
+        for line in pending.read_text(encoding="utf-8").splitlines():
+            if ":" in line:
+                k, v = line.split(":", 1)
+                data[k.strip()] = v.strip()
+    except OSError:
+        return None
+    return data
+
+
+def inject_pending_overflow_marker(box_name, inbox_path):
+    """sticky pending file があれば inbox 先頭（header 直下）に
+    `[OVERFLOW UNREAD - timestamp]` marker 付きで未消化 overflow ファイル名を prepend。
+    既に同じ overflow_file を prepend 済（marker が inbox に存在）なら何もしない（重複防止）。
+    返り値: prepend したら True、しなかったら False。
+    """
+    info = read_pending_overflow(box_name)
+    if not info:
+        return False
+    overflow_file = info.get("overflow_file", "<unknown>")
+    rotated_at = info.get("rotated_at", "<unknown>")
+    original_size = info.get("original_size_bytes", "?")
+
+    if not inbox_path.exists():
+        return False
+
+    with open(inbox_path, "r", encoding="utf-8") as f:
+        body = f.read()
+    marker_signature = f"[OVERFLOW UNREAD - {rotated_at}]"
+    if marker_signature in body:
+        # 既に prepend 済（前回起動で挿入したまま Claude 未処理）。再注入しない。
+        return False
+
+    marker = (
+        f"\n## {marker_signature} 未消化の inbox 退避ファイルあり\n\n"
+        f"前回 rotate 時 ({rotated_at}) に inbox サイズが {original_size} bytes を超えたため、"
+        f"全文を `memory/{overflow_file}` に退避しました。**まだ消化されていません**。\n\n"
+        f"処理手順（必須）:\n"
+        f"1. `memory/{overflow_file}` を Read して内容を確認・処理する\n"
+        f"2. 処理完了後、`memory/_pending_overflow_{box_name}.txt` を削除する\n"
+        f"   （削除しないと次回起動でも再 prepend されて Claude が同じ処理を繰り返す）\n"
+        f"3. overflow ファイルそのものは履歴として残してよい（削除任意）\n\n"
+    )
+
+    with open(inbox_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+    header_lines = lines[:HEADER_LINE_COUNT]
+    rest_lines = lines[HEADER_LINE_COUNT:]
+    with open(inbox_path, "w", encoding="utf-8") as f:
+        f.writelines(header_lines)
+        f.write(marker)
+        f.writelines(rest_lines)
+    log(f"[OVERFLOW_INJECT] {box_name}: pending overflow marker prepended (file={overflow_file})")
+    return True
+
+
 def rotate_if_oversized(box_name, inbox_path):
     """inbox がサイズ閾値を超えていれば overflow ファイルに退避してヘッダのみに戻す。
     退避した場合は True を返す（呼び出し側はその回の wake をスキップして次回起動に任せる）。
@@ -248,6 +330,8 @@ def rotate_if_oversized(box_name, inbox_path):
         f.writelines(header_lines)
         f.write(notice)
     log(f"[ROTATE] {box_name}: {size} bytes → {overflow_path.name} に退避")
+    # sticky pending file を作成（次回以降の起動で inbox 先頭に強制 prepend される）
+    write_pending_overflow(box_name, overflow_path, size)
     return True
 
 
@@ -358,6 +442,11 @@ def main():
 
     # First pull to get latest
     git_pull()
+
+    # 未消化 overflow があれば inbox 先頭に強制 prepend してから has_content 判定へ進む。
+    # （rotate 後の notice 文だけだと Claude が overflow ファイルを読まずクリアして
+    #  サイレント脱落するリスクがあるため、明示的に [OVERFLOW UNREAD] marker を挟む）
+    inject_pending_overflow_marker(args.box, inbox_path)
 
     if has_content(inbox_path):
         # クールダウン中か確認
