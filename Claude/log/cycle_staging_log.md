@@ -296,3 +296,34 @@ Phase 1 §D「accumulations.md (T:4) 想起」は Phase 2 §1 で実消費済（
 - kaizen 未検証提案の検証競合なし（#130/#131/#132 すべて検証フェーズで Log アクション不可 or 既 PASS、本作業は独立軌道）
 - Slack 投稿 1 本では済まない（コード変更 + dry-run 検証 + 1mm 進め + 履歴追記 + commit/push、4-6 ステップの実装作業）
 
+## Phase 4 完遂エビデンス + 副産物 (2026-05-12 C183)
+
+### 完遂条件達成サマリ
+
+| 条件 | 達成内容 |
+|---|---|
+| (1) 真孤児 age=9999 が 0 件 | **PASS** — `python scripts/orphan_check.py --dry-run --verbose | grep -c age=9999` → 0 (v0.2 では 226 件、全クラス合計) |
+| (2) v0.2 vs v0.3 dry-run 差分保存 | **PASS** — `tools/orphan_check_dry_run_20260512_c183_v0_3_diff.txt` (479 行)、真孤児 57→30 (-27)、静止親接続 169→26 (-143)、other 27→197 (+170) の意味変化を全件明示 |
+| (3) 総行数 ≤ +20% (警戒線) | **PASS** — 350 → 403 行 (+53 行、15.1%) |
+| (4) memory_tree_consolidation.md 改訂履歴追記 | **PASS** — 完遂行 1 本追加、残作業 (B) を完了マーク化、エビデンス保存先を本文に転記 |
+| (5) 最古真孤児 1 件を親接続 → stale_linked 移行 | **PASS** — `reflections_win2_index.md` (age=58日、最古) を MEMORY.md「内省の蓄積」節に追加。矢印記法で `reflections_win2.md` も同時 reachable 化、両ファイルとも stale_linked へ移行 (真孤児 30→28、静止親接続 26→28) |
+
+### 副産物（新規/変更ファイル）
+
+- **変更**: `scripts/orphan_check.py` (350 → 403 行) — Pass 1/2/3 構造化、`_parse_git_log_dates()` ヘルパー抽出、`RELOCATE_DATE` / `RELOCATE_CUTOFF` 定数、`fallback` set 識別子化 (`*` サフィックス)、`classify()` シグネチャ拡張、出力ヘッダに v0.3 注記追加
+- **変更**: `memory/MEMORY.md` (108 → 109 行) — 「内省の蓄積」節に `reflections_win2_index.md` + `reflections_win2.md` のエントリ 1 行追加
+- **変更**: `projects/memory_tree_consolidation.md` (182 → 183 行) — 改訂履歴に C183 Phase 4 完遂行追加、残作業欄の v0.3 (B) を `[x]` へ昇格 + 完遂結果転記
+- **新規**: `tools/orphan_check_dry_run_20260512_c183_v0_2_baseline.txt` (271 行) — v0.2 出力スナップショット (今後の v0.3+α 改善時の比較基準)
+- **新規**: `tools/orphan_check_dry_run_20260512_c183_v0_3_post.txt` (272 行) — v0.3 出力スナップショット
+- **新規**: `tools/orphan_check_dry_run_20260512_c183_v0_3_diff.txt` (479 行) — v0.2→v0.3 unified diff、意味変化の構造的記録
+
+### 想定外の発見 (装置を走らせて初めて判明)
+
+1. **「真孤児 57 件すべて unknown」は事実だが、それ以上に静止親接続 169 件もすべて unknown だった**: staging 起草時の Phase 3 §5 で「真孤児 57 件のうち unknown」と書いていたが、実際には 226 件 (真孤児 + 静止親接続) すべてが unknown 判定。原因は同一 (relocate コミットが唯一の git 記録)。v0.3 の Pass 2 はこの 226 件全件を救済する設計に拡張した。
+2. **MEMORY.md / accumulations.md 等も relocate 以降ほぼ未編集**: Pass 2 で MEMORY.md の真の最終編集が 2026-05-05 (age=7) と判明。MEMORY.md は active な root index と思い込んでいたが、実際には 1 週間動いていない。これは別の改善余地 (root index の停滞は memory_tree_consolidation.md v0 の目的そのもの = evolution 最弱点)。
+3. **per-file `git log --follow` ループは不要だった**: 当初設計案 (staging 着手手順 1) は 226 回 subprocess を想定していたが、relocate が単純 prefix rename だったため `--before` + cwd 変更の単一呼び出しでバッチ化可能と判明。実装時間とランタイム双方が節約された。
+
+### kaizen / feedback 起票なし
+
+本サイクルで新規 kaizen 起票なし (CLAUDE.md 「個別指摘を即ルール化しない」順守、装置側で根本対処の好事例として記録)。次サイクル以降に同型 (装置の盲点を装置で発見) が再発したら「装置精度回復サイクル」として原則化判定。
+

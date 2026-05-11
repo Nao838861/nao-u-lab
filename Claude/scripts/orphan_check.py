@@ -184,32 +184,63 @@ def get_git_toplevel() -> Path | None:
         return None
 
 
-def get_last_edit_dates(files: list[Path]) -> dict[Path, date]:
-    """memory/ 配下の全ファイルの最終 commit 日を 1 回の git log で取得。
+# v0.3: 親階層化 relocate コミット (2026-05-08) で path が memory/ → Claude/memory/
+# に一括 rename された結果、relocate 後に未編集のファイルは Pass 1 では捕捉できない。
+# Pass 2 で pre-relocate コミット (paths=memory/) を逆方向に走査し、Pass 3 で
+# それでも取れないファイルに relocate 日をフォールバック付与する。
+RELOCATE_DATE = date(2026, 5, 8)
+RELOCATE_CUTOFF = "2026-05-08 00:00:00"
 
-    `git log --pretty=format:COMMIT %ci --name-only -- memory/` をパースし、
-    各ファイルが最初に現れた commit 日を最終編集日とする。
-    git log のパスは repo-top 相対なので、git toplevel 基準で resolve する。
+
+def _parse_git_log_dates(
+    stdout: str,
+    path_to_abs,
+    result: dict[Path, date],
+) -> None:
+    """`COMMIT %ci` / `<path>` 形式の git log 出力をパースし result に最終編集日を入れる。
+
+    path_to_abs(line) は git log の path 行を absolute Path に変換する関数。
+    既に result にあるエントリは上書きしない (newest-first 前提)。
+    """
+    current_date: date | None = None
+    for line in stdout.splitlines():
+        if line.startswith("COMMIT "):
+            ts = line[len("COMMIT "):].strip()[:10]
+            try:
+                current_date = date.fromisoformat(ts)
+            except ValueError:
+                current_date = None
+        elif line and current_date is not None:
+            path = path_to_abs(line)
+            if path is not None and path not in result:
+                result[path] = current_date
+
+
+def get_last_edit_dates(
+    files: list[Path],
+) -> tuple[dict[Path, date], set[Path]]:
+    """memory/ 配下の全ファイルの最終 commit 日を取得。fallback 適用先も返す。
+
+    Pass 1: post-relocate コミット (Claude/memory/) を走査。
+    Pass 2: pre-relocate コミット (memory/, git_top cwd) を走査。
+            paths を Claude/memory/foo.md に正規化して merge。
+    Pass 3: それでも未取得のファイルに relocate 日 (2026-05-08) をフォールバック。
+            戻り値の set にフォールバック適用ファイルを記録 (分類時に
+            FALLBACK_RELOCATE 識別子として利用可能)。
     """
     result: dict[Path, date] = {}
+    fallback: set[Path] = set()
     git_top = get_git_toplevel()
     if git_top is None:
         print("ERROR: git not found or not a repo", file=sys.stderr)
-        return result
+        return result, fallback
 
+    # Pass 1: post-relocate (REPO_ROOT cwd, paths = Claude/memory/...)
+    # 意味的でない一括 commit `^log: relocate` のみ除外。`backup:` は
+    # memory_backup/ commit で memory/ を触らないため path filter で自然に外れる。
+    # `Auto sync` は cross-machine 同期で実変更を含むため除外しない。
     try:
-        # 意味的でない一括 commit は temporal awareness の対象外。
-        # 除外対象 (先頭アンカー):
-        #   ^log: relocate      (2026-05-08 の .git 親階層化、全 2691 ファイル
-        #                        を一括 rename。意味的編集ではない)
-        # 除外しないもの:
-        #   - `backup:` 系は memory_backup/ への commit で memory/ を触らない
-        #     ため、path filter で自然に外れる (フィルタ不要)
-        #   - `Auto sync` 系は cross-machine 同期で実 memory/ 変更を含むので
-        #     temporal signal として有効 (除外しない)
-        # ※ `--grep=backup` の単体使用は "backup_memory.sh" 等を含む正常
-        #   commit にも誤マッチするので、必ず先頭アンカー / 高選択的パターン。
-        proc = subprocess.run(
+        proc1 = subprocess.run(
             ["git", "log",
              "--extended-regexp",
              "--invert-grep",
@@ -217,36 +248,52 @@ def get_last_edit_dates(files: list[Path]) -> dict[Path, date]:
              "--pretty=format:COMMIT %ci", "--name-only", "--",
              "memory/"],
             cwd=str(REPO_ROOT),
-            capture_output=True,
-            text=True,
-            check=False,
-            encoding="utf-8",
-            errors="replace",
+            capture_output=True, text=True, check=False,
+            encoding="utf-8", errors="replace",
         )
     except FileNotFoundError:
         print("ERROR: git not found in PATH", file=sys.stderr)
-        return result
+        return result, fallback
+    _parse_git_log_dates(
+        proc1.stdout,
+        lambda line: (git_top / line).resolve(),
+        result,
+    )
 
-    current_date: date | None = None
-    for line in proc.stdout.splitlines():
-        if line.startswith("COMMIT "):
-            # %ci format = "YYYY-MM-DD HH:MM:SS +ZZZZ"; date部のみで十分
-            ts = line[len("COMMIT "):].strip()[:10]
-            try:
-                current_date = date.fromisoformat(ts)
-            except ValueError:
-                current_date = None
-        elif line and current_date is not None:
-            path = (git_top / line).resolve()
-            if path not in result:
-                result[path] = current_date
-    return result
+    # Pass 2: pre-relocate (git_top cwd, paths = memory/...)
+    # `--before` で relocate より前の commits に限定し、paths を
+    # Claude/memory/foo.md に正規化して Pass 1 dict に merge する。
+    proc2 = subprocess.run(
+        ["git", "log",
+         f"--before={RELOCATE_CUTOFF}",
+         "--pretty=format:COMMIT %ci", "--name-only", "--",
+         "memory/"],
+        cwd=str(git_top),
+        capture_output=True, text=True, check=False,
+        encoding="utf-8", errors="replace",
+    )
+    _parse_git_log_dates(
+        proc2.stdout,
+        lambda line: (git_top / "Claude" / line).resolve(),
+        result,
+    )
+
+    # Pass 3: それでも未取得のファイルに relocate 日をフォールバック。
+    # 旧パス・新パスのどちらにも commit 履歴がない = relocate の rename イベント
+    # でしか動いていない真の静止ファイル。relocate 日を最後の砦として使う。
+    for f in files:
+        if f not in result:
+            result[f] = RELOCATE_DATE
+            fallback.add(f)
+
+    return result, fallback
 
 
 def classify(
     refs: set[Path],
     files: list[Path],
     dates: dict[Path, date],
+    fallback: set[Path],
     today: date,
 ) -> dict[str, list[tuple[Path, str, int, int]]]:
     classes: dict[str, list[tuple[Path, str, int, int]]] = {
@@ -263,7 +310,10 @@ def classify(
             last_str = "unknown"
         else:
             age = (today - last).days
+            # v0.3: relocate フォールバック適用ファイルは識別子付きで明示
             last_str = last.isoformat()
+            if f in fallback:
+                last_str += "*"  # relocate-fallback marker
         entry = (f, last_str, age, ref_count)
         if ref_count == 0 and age > AGE_THRESHOLD_STALE:
             classes["true_orphan"].append(entry)
@@ -301,14 +351,18 @@ def main() -> int:
     today = date.today()
     refs = build_reference_set(verbose=args.verbose)
     files = collect_memory_files()
-    dates = get_last_edit_dates(files)
-    classes = classify(refs, files, dates, today)
+    dates, fallback = get_last_edit_dates(files)
+    classes = classify(refs, files, dates, fallback, today)
 
     lines: list[str] = []
     lines.append(f"# orphan_check.py result (run={today.isoformat()})")
     lines.append(
         f"# scope: memory/**/*.md = {len(files)} files, "
         f"reachable from {len(INDEX_FILES)} index roots = {len(refs)} files"
+    )
+    lines.append(
+        f"# v0.3: relocate-fallback ({RELOCATE_DATE.isoformat()}*) "
+        f"applied to {len(fallback)} files"
     )
     lines.append("")
 
