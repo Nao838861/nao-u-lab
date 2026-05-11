@@ -242,3 +242,4 @@
 {"ts": "2026-05-11T18:40:58", "instance": "log", "cycle": "2026-05-11", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 1}
 {"ts": "2026-05-11T21:15:36", "instance": "log", "cycle": "2026-05-11", "action": "viewed", "task_id": null}
 {"ts": "2026-05-11T21:28:57", "instance": "log", "cycle": "2026-05-11", "action": "skip", "task_id": "t-260426195755-1080", "reason": "19サイクル連続再発なし。条件待ち型タスク(\"再発したら原因スクリプト特定\")で観察期間十分。再発検出はPhase 2 §0自己診断・kaizen #131/#132経路で代替可能。escalated WARN生成のノイズ源として退役。"}
+{"ts": "2026-05-11T21:43:20", "instance": "log", "cycle": "2026-05-11", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 1, "pending_total": 0}
