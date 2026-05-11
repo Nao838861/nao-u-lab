@@ -58,6 +58,22 @@
 - `memory/**/*.md` の全集合との diff = 孤児リスト
 - 毎サイクル末尾に走らせ、孤児が出たら最低 1 個拾って親に繋ぐ
 
+**5/11 C178 追補（外部研究3件摂取で要件追加）**:
+
+Phase 1 §6 で摂取した Karpathy LLM Wiki / arXiv 2602.05665 (Graph-based Agent Memory Taxonomy) / engraph (devwhodevs) を踏まえた要件強化:
+
+- **temporal awareness レーン併用** (engraph 5-lane の3本目): `git log --format=%ci -- <file>` で各 memory ファイルの直近編集日を取得。`grep` 参照グラフ単体では「孤児だが実は最近触れた」「親はあるが3ヶ月放置」を区別できない
+- **3 クラス分類で出力**:
+  1. **真孤児** (=参照グラフから到達不可 + 直近30日以内に編集なし): 即時親接続候補
+  2. **静止親接続** (=参照グラフ内だが直近30日編集なし): evolution 段階の死活判定対象（arXiv 2602.05665 ライフサイクル4段階のうち最弱）
+  3. **新規未登録** (=直近7日以内に新規作成、参照グラフ未登録): 接続待ち優先度高
+- 出力フォーマット例: `[CLASS] memory/foo.md (last_edit=YYYY-MM-DD, age=NN日, refs=N)`
+- 毎サイクル末尾走らせは1〜3クラスのうち1個拾って親接続、3クラス目は即時起票
+
+**目的**: arXiv 2602.05665 が指摘する memory ライフサイクル4段階 (extraction/storage/retrieval/evolution) のうち、Pot 現状で **evolution が最弱点** (beliefs.md 停滞25/35 = 71%、kaizen #130 検証イベント不在で2週間動かず etc)。「孤児 ≠ 死んだノード」の区別を装置化することで、「参照グラフ内だが死んでいるノード」(=2クラス目=静止親接続) を初めて見える化する
+
+**注意**: 本要件追加は infrastructure 寄り (feedback_substrate_not_infrastructure.md T:5 警戒線)。実装単位を「Python スクリプト1本 約100行 / 30分」に抑え、3クラス分類を週次レビュー (運用5分以内) に乗せる形で substrate 投資量を制御する
+
 ## 着手済み（2026-05-11 C178 本サイクル）
 
 - [x] `memory/_TAG_VOCABULARY.md` v0 作成（10広域+5用途+9具体、3層クラスタ整理済み）
@@ -95,3 +111,4 @@
 ## 改訂履歴
 
 - 2026-05-11 C178: 起票 + v0 タグ語彙 + 第一弾 3 ファイル移行 + Nao_u 進めて承認反映
+- 2026-05-11 C179: §E orphan_check.py 要件追加（外部研究3件摂取由来 = engraph temporal awareness レーン併用 + arXiv 2602.05665 ライフサイクル4段階の evolution 最弱点診断 → 3クラス分類: 真孤児/静止親接続/新規未登録）。infrastructure 警戒線で実装規模制限明記

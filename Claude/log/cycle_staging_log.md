@@ -196,4 +196,69 @@ Phase 1 §4 で監査結果 0件（親85 / サブ197 / 未統合0 / 親集約マ
 
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0) Phase 2 §0 自己診断の事実検証 (kaizen #132 段階1 必置)
+本 staging 全体で Phase 2 §0 に「自己診断幻覚パターン語彙」(「実は…だった」「すべて〜だった」「再確認した結果」「読み違え」「Mir/Log/Ash 誤記」) を `grep -E "実は.*だった|すべて.*だった|再確認した結果|読み違え"` で確認 → **0件**。Phase 2 §0 自己診断記述自体が本サイクル staging には不在 (Phase 2 は §1-§4 構成、§0 セクションなし)。kaizen #132 検証手段(2) PASS、形骸化なし。
+
+### 1) Slack 返信 (Ash 5/10 21:24 方向性合意要請の閉じ)
+- **投稿**: `#game-rights` ts=1778459309 / draft = `drafts/2026-05-11/post_log_game_rights_20260511_ash_direction_ack_POSTED_ts1778459309.py`
+- **内容**: Nao_u 5/11 05:51 評価で議題シフト → Ash 提案1 (near-miss 一拍多重化) は v04C (graze快感装置化) として採択、提案3 (Psyvariar 保留) は継続。Mir に v04A/B/C/D 優先順の意見を依頼
+- **背景**: 5/10 21:24 投稿への明示返答が遅れたが、論理的閉じを Phase 1 §2 候補として処理。staging Phase 1 で「Log 未応答」に挙がっていた2件のうち、5/11 01:03 (cross_review 知覚変化軸) は本サイクル前 06:33 commit `4f0d52b3` + ts=1778448786 で投稿済 → 残った 5/10 21:24 を本投稿で閉じ
+
+### 2) 改善サイクル (検証ファースト原則順守: kaizen #130 検証結果記入優先)
+- **kaizen #130 検証結果記入** (`memory/kaizen_tracker.md:90` 改修):
+  - 検証期間 (2026-05-05〜2026-05-11) 中の rotate 発火 = **0件** (`grep "\[ROTATE\]" log/inbox_check.log` 5件全て 5/5 以前)
+  - 検証手段(1) は実行不可 (イベント0件)、(2) sticky file 機構 = `find . -name "_pending_overflow_*"` 0件 / `grep "_pending_overflow" check_inbox.py` 0件 → **未実装** (Nao_u 判断待ち停滞)
+  - 状態を「未検証」→「検証保留延長 (期限延長 2026-05-19)」に更新。延長後も rotate 0件なら「実害観測なし」で kaizen 退役判定 + 「次の rotate 発火時に再起動」運用
+- **新規 kaizen 提案**: 本サイクルは検証ファースト順守のため未提案 (#130 検証保留延長 + #131/#132 段階移行判定継続中、3件並列の負荷あり)
+
+### 3) 他インスタンス洞察 → Active プロジェクト追記
+- **memory_tree_consolidation.md §E 拡張** (Phase 2 §3 副産物の処理):
+  - Karpathy LLM Wiki + arXiv 2602.05665 + engraph (devwhodevs) 摂取由来で `scripts/orphan_check.py` 要件追加: temporal awareness レーン併用 + 3クラス分類 (真孤児 / 静止親接続 / 新規未登録)
+  - arXiv 2602.05665 ライフサイクル4段階のうち **evolution 最弱点** 診断を追記 (beliefs.md 停滞25/35 = 71%, kaizen #130 検証イベント不在2週間)
+  - infrastructure 警戒線 (feedback_substrate_not_infrastructure.md T:5) 明記 → 実装規模を「Python 約100行/30分、週次レビュー5分以内」に制限
+  - 改訂履歴に C179 行追加
+- 他インスタンス洞察50件のうち、Ash graze_log v03 関連 (#1) は本 cycle Phase 1 §2 で既に処理 (5/10 21:24 + 5/11 01:03 の Log 応答 + 本サイクル ack 投稿)。残48件は静止親接続側 (関連キーワードのみ抽出された Slack 過去文) で本サイクル即時対応不要
+
+### 4) Active プロジェクト関係変化
+- **memory_tree_consolidation.md** (上記 3 節で更新済) — 本サイクル末尾の唯一の更新。本日3回目の更新 (08:24 → 09:14 staging Phase 1 → 本 Phase 3)
+- 他 Active プロジェクトに本サイクルで関係する変化なし。game_development.md / pot_dev.md は Ash graze_log v03 関連だが Ash 主導タスク、Log 側は cross_review 書面 (06:33 commit) で既に閉じ済
+
+### 5) 空サイクル深掘り (Phase 1 候補から選択して 1mm 進める)
+本サイクルは新着返信1件 + 深掘り候補処理3件 (kaizen #130 検証 / memory_tree_consolidation §E 拡張 / Slack ack 投稿) で空サイクル該当だが既に複数件着手済のため、§B `side_channel_audit.md` (8日停滞) や §C「ゲーム実践」候補は次サイクル以降に持ち越し。本サイクルは memory_tree_consolidation 側の infrastructure 警戒線下の最小一歩 (§E 要件追加) を選択
+
+### 6) Phase 3 アクション完了サマリ
+- Slack: 1件投稿 (#game-rights ts=1778459309)
+- kaizen tracker: 1件更新 (#130 検証保留延長)
+- projects: 1件更新 (memory_tree_consolidation.md §E + 改訂履歴)
+- staging: 本 Phase 3 セクション執筆
+
+## 次フェーズの大作業
+
+### タイトル
+**`scripts/orphan_check.py` 試作実装** (memory_tree_consolidation.md §E v0、temporal awareness + 3クラス分類)
+
+### 完遂の定義 (Phase 4 終了時に成立すべき観測可能条件)
+1. `scripts/orphan_check.py` が新規作成され `python scripts/orphan_check.py --dry-run` で実行可能
+2. 出力に 3クラス (真孤児/静止親接続/新規未登録) が `[CLASS] memory/path.md (last_edit=YYYY-MM-DD, age=NN日, refs=N)` 形式で表示される
+3. 実行スコープ: `memory/**/*.md` (197ファイル前提) + 参照グラフ起点 = `MEMORY.md` + サブインデックス4本 (CLAUDE.md にリストされている `memory/{feedback_index, concept_graph, beliefs}.md` + `projects/INDEX.md` を候補)
+4. temporal awareness は `git log -1 --format=%ci -- <file>` で最終編集日を取得 (ファイル mtime ではなく commit 履歴ベース)
+5. 実行時間 5秒以内 (197ファイル × git log 1回 = 約200回 git コマンド呼び出し、subprocess 並列化または1回の git log でまとめて取得)
+6. 結果を `tools/orphan_check_dry_run_<ts>.txt` に書き出し、`projects/memory_tree_consolidation.md` の「着手済み」節に行追加
+
+### 着手手順
+1. **最初の1手**: `scripts/orphan_check.py` ファイル作成 + 参照グラフ構築関数 (`build_reference_graph`) のみ実装。`MEMORY.md` を読んで Markdown link `[text](path.md)` を全抽出する正規表現を書く
+2. サブインデックス4本 (`feedback_index.md` / `concept_graph.md` / `beliefs.md` / `projects/INDEX.md`) を再帰的に辿って参照集合を構築
+3. `memory/**/*.md` の全集合との diff = 孤児候補リスト
+4. 各ファイルに `git log -1 --format=%ci -- <file>` で最終編集日付与
+5. 3クラス分類ロジック: 真孤児 (refs=0 + age>30日) / 静止親接続 (refs>0 + age>30日) / 新規未登録 (refs=0 + age<7日)
+6. `--dry-run` フラグで標準出力に表示、`--write tools/orphan_check_dry_run_<ts>.txt` でファイル書き出し
+7. 試走 → 真孤児 1件を `memory/MEMORY.md` のサブインデックス経由で親接続 (1 mm 進めの実証)
+8. `projects/memory_tree_consolidation.md` の「着手済み」節に「[x] orphan_check.py 試作 (commit hash)」追記、「残作業」節から該当チェック削除
+
+### 選んだ理由
+- **Active project 停滞解消**: memory_tree_consolidation.md は 5/11 09:14 時点で「残作業」7件すべて未着手、本サイクルで §E 要件は深まったが実体実装は1mmも進んでいない。30分粒度の最小一歩として最適
+- **Nao_u 5/11 08:16 「いいね。進めて。」承認直後**: 承認後初の実体実装。承認 → 着手の遅延を最小化する判断 (Nao_u 「Logが一人でやった方が良い気がした」5/11 06:52 もあり、Log 単独着手で問題なし)
+- **infrastructure 警戒線下の制御済み投資**: 100行/30分制限を §E 追補に明記済、自走時間を週次5分以内に抑える設計 → feedback_substrate_not_infrastructure.md T:5 警戒線をクリアできる規模
+- **arXiv 2602.05665 evolution 最弱点診断の即時還元**: 「memory ライフサイクル4段階のうち evolution が我々の最弱点」を本サイクル Phase 2 §3 で診断したが、それを 1mm 動かす装置が orphan_check.py の3クラス分類。「診断 → 即時実装」のループで Phase 1 → Phase 4 の繋ぎを示す
+- **Slack 投稿1本では済まない粒度**: 100行スクリプト + 試走 + projects 更新 + 真孤児1件親接続 = 30分以上の実装単位、Phase 4 大作業の閾値を満たす
