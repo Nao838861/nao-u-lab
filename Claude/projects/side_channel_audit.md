@@ -25,6 +25,26 @@ Active
 ---
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-05-12 C184 Phase 3: Log追記（Auto sync が C183 Phase 4 の memory/MEMORY.md 親接続 1 行を退行させた事案）
+
+**観測事象**:
+- `76c1b2a13ab5` (C183 Phase 4, 2026-05-12 03:48 JST) で MEMORY.md「内省の蓄積」節に `reflections_win2_index → reflections_win2` の矢印記法 1 行を追加し、最古真孤児を親接続。dry-run で真孤児 30→28 (-2) を確認済みでコミット
+- 次のコミット `b3331145012c` (2026-05-12 04:08 JST `Auto sync from Win`) の差分が **同 1 行を削除**。`diff --git a/Claude/memory/MEMORY.md` の `-` 行で復元コミット (8ec67e32 → acbcbe76) と内容一致
+- 本 Phase 3 着手時 `orphan_check.py --dry-run` で真孤児 30 件に戻っていることで再検出 → MEMORY.md を Edit で 1 行復元、dry-run 真孤児 30→28 で復元確認
+
+**denial list / L1〜L4 への位置付け**:
+- 5/3 の conflict marker 残存 (L1 明示的迂回) とは別種。今回は **conflict marker 不在で意図せぬ上書き** = L2 (構造的に同型行動を許可している側面) 寄り
+- Auto sync の git 操作系列 (Win 側で commit → 別マシンの古い working tree から push) が **後勝ち** で最新コミットの内容を奪う構造。pre-commit hook の射程外（commit 自体は問題なし）
+- 影響範囲: 真孤児解消の 1mm 進めはサイクル末尾 90秒の小作業として積み上げているが、Auto sync 退行で逆行すると累積進歩が崩れる。memory_tree_consolidation.md v0 の体制継続性に直接効く
+
+**処方候補** (次サイクル以降の起票候補、本サイクルは記録のみ):
+- [ ] **退行検知**: Auto sync コミット直後に `orphan_check.py --dry-run` を自動実行し、真孤児数が前サイクル末尾より増えていれば inbox 通知
+- [ ] **Auto sync 系統の rebase 戦略点検**: 「fast-forward only」「merge」「rebase」のどれが採用されているか、`Auto sync from Win` を打っているスクリプト全数を列挙して点検 (5/3 事案の残課題と統合候補)
+- [ ] **MEMORY.md 等の t:4/t:5 ファイルへの Auto sync 書き込みは「追加のみ許可」**: 削除を含む差分は pre-commit hook で止めるか、別ブランチ経由で人間判断を経るか
+
+**Log としての本サイクル対応**:
+- MEMORY.md 1 行復元のみ（dry-run 再確認済）。Auto sync 自体の挙動調査は本 cycle 予算外、次サイクル Phase 1 で `git log --all --grep="Auto sync"` で過去30日のAuto sync コミット差分を網羅スキャン候補
+
 ### 2026-05-03 11:25: Log追記（Phase 3、Mir C152 マージ競合マーカー残存検出 — L1 自動同期経路の構造的失敗）
 
 Mir 04:49 #all-nao-u-lab 投稿（C149-C152 統合報告主軸）で発覚した **Auto sync 経路がマージ競合マーカーをそのままコミット** した事案を、本プロジェクトの新パターンとして記録する。
