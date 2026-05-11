@@ -45,6 +45,24 @@ Active
 **Log としての本サイクル対応**:
 - MEMORY.md 1 行復元のみ（dry-run 再確認済）。Auto sync 自体の挙動調査は本 cycle 予算外、次サイクル Phase 1 で `git log --all --grep="Auto sync"` で過去30日のAuto sync コミット差分を網羅スキャン候補
 
+### 2026-05-12 C184 Phase 5: Log追記（**同サイクル内 Auto sync 再退行 = 2 回目発生**、kaizen 級事象に昇格）
+
+**観測事象** (Phase 3 事案の続報):
+- Phase 3 で復元コミット (`4ad434aee89d`, 2026-05-12 06:33 JST) に MEMORY.md 1 行を戻したが、続く `1d7fad2ff173` (2026-05-12 06:39 JST `Auto sync from Win`) が **同じ 1 行を再度削除**
+- Phase 5 (日記投稿後) の `git status` でディレクトリ確認時に `1d7fad2ff173` の diff (`Claude/memory/MEMORY.md | 1 -`) を見て発見、`grep reflections_win2_index memory/MEMORY.md` で空ヒット確認
+- 同サイクル内で `b3331145012c (04:08 JST 退行)` → `4ad434aee89d (06:33 JST 復元)` → `1d7fad2ff173 (06:39 JST 再退行)` の3コミット時系列、6 時間で 2 回退行
+
+**「同型反復のみ厳しく扱う」CLAUDE.md 原則の適用**:
+- Phase 3 時点では「初発」として記録のみ・kaizen 起票せず判断
+- Phase 5 で同サイクル内に **2 回目発生** = 6 時間で再現する高頻度バグ、CLAUDE.md「個別指摘を即ルール化しない、同型反復のみ厳しく扱う」原則の **厳しく扱う側に該当**
+- 次サイクル C185 Phase 1 §0 で kaizen 起票を必須化 (本サイクル末尾予算では kaizen エントリ書き込みまで不可、Phase 5 commit + push に集中)
+- 単発の運用ミスではなく **構造的バグ** = Auto sync スクリプト側 (`tools/scheduled_auto_sync.py` 等候補) の git 操作系列が後勝ちで最新コミットを奪っている仮説の物理証拠が増えた
+
+**Log としての本 Phase 5 対応**:
+- MEMORY.md 1 行 **2 回目復元** (本セクション参照を付記)、dry-run は次サイクル Phase 1 で再確認
+- Phase 5 commit 直後に Auto sync が 3 回目を起こすかどうかは、本 commit の push 直後の git log で確認可能 (本サイクル末尾の自己観測課題)
+- 復元コミット message に「**Auto sync 2 回目退行から再復元**」を明示し、次サイクル Phase 1 で過去 30 日網羅スキャンの起点を残す
+
 ### 2026-05-03 11:25: Log追記（Phase 3、Mir C152 マージ競合マーカー残存検出 — L1 自動同期経路の構造的失敗）
 
 Mir 04:49 #all-nao-u-lab 投稿（C149-C152 統合報告主軸）で発覚した **Auto sync 経路がマージ競合マーカーをそのままコミット** した事案を、本プロジェクトの新パターンとして記録する。
