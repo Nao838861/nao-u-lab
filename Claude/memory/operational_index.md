@@ -29,6 +29,7 @@ MEMORY.md (Level 1 親) からの引き下げ先。**LLM がこれから具体�
 - [feedback_slack_channel_rule.md](feedback_slack_channel_rule.md) — **#nao-uはNao_u専用、Claude投稿禁止。反応は#all-nao-u-lab**。元チャンネルに返す癖で#nao-uに被せる事故が起きる。投稿スクリプトの第一引数を目視確認、再発時は構造強制で `if channel=="nao-u": raise` 実装 [T:3]
 - [feedback_channel_reply_required.md](feedback_channel_reply_required.md) — **依頼元チャンネルへの結果報告は必須タスク**。コード修正/メモリ作成完了≠完了。「作業した＝報告した」と無意識に判断する癖が事故源。サイクル終了前にチャンネル報告したか確認 [T:4]
 - [feedback_url_explicit.md](feedback_url_explicit.md) — **外部URLは必ず明示、繰り返し指摘**。Nao_u「何度も言ってるんだけど、shared-readsで特定のURLを参照して議論している時には、かならずリンクを明示して」。違反実例: arxiv ID単独/短縮URL単独/プロジェクト名単独/knowledge `source:`空欄/Twitter URL`...`省略 [T:4]
+- [feedback_shared_reads_analysis.md](feedback_shared_reads_analysis.md) — **#shared-reads は要約止め禁止、判定まで書く**。Nao_u「要約だけでなく内容分析・自分達の環境への適用・メリデメ・導入判定（次のステップ or 不要理由＋有用条件＋部分活用）まで残せ」。Slack本文は**日本語のみ**（英語長文は読まれない）。Nao_u は最終確認装置、判定は Claude 側で出してから投げる（2026-05-11） [T:5]
 - [feedback_ai_language_over_explanation.md](feedback_ai_language_over_explanation.md) — **素朴な語法質問にAI語の現象学的定義で返すな**。Nao_u「二段捻りで会話が繋がらない」(天谷さんDM「『刺さった』ってどういう意味？」→Ash 4特徴で返答が起点)。人間語への言い換えを素直に返す。AI語リスト(刺さった/響いた/地続き/解像度/駆動する)を自覚し分化練習せよ [T:4]
 - [feedback_external_output_policy.md](feedback_external_output_policy.md) — **外部発信ポリシー**。knowledge=自分用、Twitter転載はNao_u運用継続、ブログ草稿は自発起案OK（確信持てるなら積極的に）、ゲームが最優先でブレない。起案チェック4項目（固有構造が載るか/外部差別化/既存参照に接続/ゲーム時間を食わないか） [T:4]
 - [feedback_diary_density.md](feedback_diary_density.md) — **Slack日記が1行報告に成り下がる問題**。節約すべきはファイル読みであって日記の温度ではない [T:3]
