@@ -257,3 +257,54 @@ a449 の本体「応答到達後 cross_review/ への書面化 + v04 改修方�
 - Mir「brainstorm は Ash 主導」明示 + Log の Ash 5/10 21:24 方向性合意要請の閉じ (ts=1778459309) を受けた直後の起案 = タイミングとして適切
 - 装置 (backup auto-commit) の先回り防止のため "ash:" prefix commit を運用 → 5/2 装置議論の運用ルール準拠の最初の Ash 実例
 
+
+---
+
+# Phase 3 結果（14:08 Ash追記 — C2 サイクル）
+
+## 文脈
+
+本サイクル（13:16 Phase 1 起動）は前サイクル C1 (10:35 Phase 3) で v04 brainstorm 起案完遂後の追走サイクル。C1 末尾の「次へ繰り越し」で `cross_review 応答追跡` を継続課題とし、§0a に新規 `t-260511040946-a449` を立てた状態で Phase 1-2 を回した。
+
+## A. 雑務処理 (実施)
+
+1. **Phase 2 成果物 commit + push**: `64a534c7b ash: knowledge x2 + Phase 2 ebikani sandbox-first synthesis posted artifacts` (5 files: knowledge x2 / drafts POSTED x2 / external_search.log)
+   - 途中 push 衝突 → pull --rebase 失敗 (scheduler_ash.log ファイルロックでアボート阻止) → update-ref で HEAD 復旧 → conflict ファイル take-theirs (sync log系) → merge commit `dfda882b6` → 最終 push 成功 `933c53b36`
+   - `ash:` 接頭辞で意図 commit 識別 (feedback_device_direction §3 準拠)
+2. **Log 5/11 perception axis 応答到達確認**: `game/cross_review/20260511_log_on_graze_log_v03_perception_axis.md` (Log C178 Phase 3) 既存。Ash 5/11 01:03 ts=1778429023 依頼 3 項 (知覚変化体験記述/AI slop区別境界 a-b-c/削除可能改良適格性) すべてに応答済み
+   - §0a pending t-260511040946-a449 のトリガー条件 (応答到達) 満足
+3. **Mir 応答状態確認**: `game/cross_review/` 配下に Mir からの **v03 perception axis 応答書面 未到達** (最新 Mir 書面は 20260501_mir_on_brick_log_v02.md)。Phase 4 では Log 応答単独に対する Ash 書面を起こし、Mir 応答到達後に追補書面を別途立てる方針
+
+## B. Log 応答の主要 3 発見 (Phase 4 Ash 応答書面の核)
+
+- **(F1) コード読み層 perception change 1点**: `fireBomb()` (L206-222) と `onHit()` (L456-470) のどちらも grazeStreak をリセットしない → BOMB 発火後も streak 保持で D 窓が即時解放される **3拍ループ構造**が成立。Ash の予測 (predicted_play.md §停滞: BOMB 後 streak 0 から再蓄積) を**コード読みで自己反証**
+- **(F2) AI slop 区別境界 (a) → △→×に下振れ**: スクショ母集団分布で streak ≥ 5 が出る瞬間は < 50%、cyan リング映らない大半のスクショは v02 と区別不能。改善案 = 自機常時 streak ゲージ
+- **(F3) 削除可能改良適格性 = 3条件全満足**: 約60行削除 / 機能直交 / 戻し手順 README 明記。v03→v02 巻き戻しが**安全装置として機能する** (Nao_u 5/11 05:51 4点指摘で v03 評価下振れたため意義大)
+
+## C. v04 brainstorm への接続点 (Phase 4 で明文化する射程)
+
+- F1 (3拍ループ) は **v04 案 α (Mir 直系・弾幕回避コア) と直交**: v04 ではコア構造が graze から弾幕回避に移行 → 3拍ループは「v03 で構造的に成立したが実プレイで Lv3 到達困難で発火しなかった」事象として確定し、v04 ではこの構造そのものを引き継がない判断
+- F2 (スクショ判別困難) は **v04 でも残る問題**: 弾幕回避コアでも視覚アセット差分は薄い。v04 ship 前に「説明文 1文目で +1 が言える」設計を明示する必要
+- F3 (削除可能改良 v03→v02) は **v04 着手前の安全保障**: v04 で別アプローチに振っても v03 を物理的に巻き戻せる前提で、v04 を「失敗した場合の復旧コスト低い」状態で着手できる
+
+---
+
+## Phase 3 → Phase 4 大作業宣言
+
+**大作業**: `game/cross_review/20260511_ash_on_log_perception_axis_response.md` を新規作成し、Log 5/11 perception axis 応答 (上記 F1/F2/F3) への Ash 側書面応答を起こす。応答内容: (a) F1 コード読み層 3拍ループ発見の受領 + Ash 自身の predicted_play.md §停滞予測の自己反証受け入れ (b) F2 スクショ判別 △→× 下振れ判定の受領 + v04 への持ち越し条件化 (c) F3 削除可能改良適格性確認の受領 + v04 着手前安全装置としての位置付け (d) v04 brainstorm 案 α/β/γ への 3 発見の影響整理 (e) Mir 応答未到達の明示 + 追補書面方針。書面 commit + push までを完遂。
+
+**完遂条件**:
+1. `game/cross_review/20260511_ash_on_log_perception_axis_response.md` 作成 (3〜5 セクション、各セクションで F1/F2/F3 の受領内容 + v04 への接続を明記)
+2. `ash:` 接頭辞付き commit + push 成功 (commit hash 取得・記録)
+3. cycle_staging.md に Phase 4 結果セクション追記 (書面 path + commit hash + Mir 応答待ち を §0a 次サイクル化候補として明示)
+
+**根拠**:
+- §0a t-260511040946-a449「応答到達後 cross_review/ への書面化」の直接実行 (連続 0 サイクル → 即時消化)
+- ゲーム制作試行錯誤ループに直結 (cross_review は試作 → 評価 → 次版方針の閉路の中核)
+- 1 サイクル完遂可能 (1 書面 + commit + push、参照素材は Phase 3 で全て読了済み)
+- ノウハウ残す: F1 の自己反証は sense_prediction_log.md 2 回目の同型事例 (Log §持ち帰り(2)) で、Ash 側の受領記録が 3 回目 kaizen 化判断材料になる
+- ship に近づく: v04 brainstorm 案選定の根拠を 3 発見で補強 → Nao_u 判断/Mir cross_review への入力が強化される
+- 副選定 (KAKUBOMB #7 視点 / ebikani sandbox-first フレーム) は本書面の文脈接続として 1 段落のみ言及 (主軸 hijack しない、Phase 2 知識記事側で消化済み)
+- Slack #game-rights 通知は本サイクルでは行わない判断: cross_review 書面 commit/push 自体が他インスタンスの inbox check で拾われる + #game-rights 投稿は本日既に ash 複数件投稿済みで broken_record 防衛線抵触リスク。次サイクル以降で必要に応じて 1 メッセージ通知を再判断
+
+
