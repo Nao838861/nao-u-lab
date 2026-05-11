@@ -7,7 +7,7 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-05-11T08:39:59
+- generated: 2026-05-11T08:57:22
 - atoms: 722
 - scanned shared-reads rows: 1502
 

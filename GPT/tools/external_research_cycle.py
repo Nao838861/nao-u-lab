@@ -32,6 +32,36 @@ BASE_QUERIES = [
     "human feedback game prototype design",
 ]
 
+QUERY_POOLS = [
+    [
+        "agent memory evaluation autonomous agents",
+        "LLM agent memory persistence evaluation",
+        "autonomous agents tool use safety memory",
+        "multi agent LLM drift evaluation",
+    ],
+    [
+        "game feel controls physics prototype",
+        "player control feel game design",
+        "physics based game design predictability",
+        "game onboarding player understanding controls",
+    ],
+    [
+        "LLM game design player evaluation",
+        "AI game development playtesting evaluation",
+        "procedural game generation player feedback",
+        "human feedback game prototype design",
+    ],
+    [
+        "software agents runtime enforcement rules",
+        "LLM instruction following rule compliance",
+        "agent harness evaluation observability",
+        "AI coding agents benchmark workflow",
+    ],
+]
+
+MIN_SCORE = 6
+FALLBACK_MIN_SCORE = 3
+
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
     sys.stdout = open(sys.stdout.fileno(), mode="w", encoding="utf-8", errors="replace", closefd=False)
@@ -92,12 +122,19 @@ def purpose_terms() -> list[str]:
     return generalized[:4]
 
 
-def build_queries() -> list[str]:
-    queries = BASE_QUERIES[:]
+def build_queries(state: dict[str, Any] | None = None) -> list[str]:
+    state = state or {}
+    run_count = int(state.get("run_count") or 0)
+    pool = QUERY_POOLS[run_count % len(QUERY_POOLS)]
+    queries = pool[:] + BASE_QUERIES[:]
     for term in purpose_terms():
         if term not in queries:
             queries.insert(0, term)
-    return queries[:6]
+    unique: list[str] = []
+    for query in queries:
+        if query not in unique:
+            unique.append(query)
+    return unique[:8]
 
 
 def clean(text: str, limit: int = 500) -> str:
@@ -105,12 +142,12 @@ def clean(text: str, limit: int = 500) -> str:
     return compact[:limit]
 
 
-def search_arxiv(query: str, max_results: int) -> list[dict[str, Any]]:
+def search_arxiv(query: str, max_results: int, start: int = 0) -> list[dict[str, Any]]:
     terms = [term for term in re.split(r"\s+", query) if len(term) > 2][:6]
     search_query = " AND ".join(f"all:{term}" for term in terms) if terms else f'all:"{query}"'
     params = {
         "search_query": search_query,
-        "start": "0",
+        "start": str(start),
         "max_results": str(max_results),
         "sortBy": "submittedDate",
         "sortOrder": "descending",
@@ -140,13 +177,14 @@ def search_arxiv(query: str, max_results: int) -> list[dict[str, Any]]:
     return rows
 
 
-def search_hn(query: str, max_results: int) -> list[dict[str, Any]]:
+def search_hn(query: str, max_results: int, page: int = 0) -> list[dict[str, Any]]:
     since = int((datetime.now(timezone.utc) - timedelta(days=30)).timestamp())
     params = {
         "query": query,
         "tags": "story",
         "numericFilters": f"created_at_i>{since}",
         "hitsPerPage": str(max_results),
+        "page": str(page),
     }
     url = "https://hn.algolia.com/api/v1/search_by_date?" + parse.urlencode(params)
     data = json.loads(fetch_text(url))
@@ -193,6 +231,17 @@ def score(row: dict[str, Any]) -> int:
         "user",
         "player",
         "design",
+        "benchmark",
+        "workflow",
+        "runtime",
+        "safety",
+        "instruction",
+        "compliance",
+        "observability",
+        "onboarding",
+        "ux",
+        "feel",
+        "playtest",
     }
     matched = {kw for kw in core_keywords if kw in text}
     value = len(matched) * 2
@@ -216,13 +265,32 @@ def score(row: dict[str, Any]) -> int:
     return value
 
 
-def collect(max_per_query: int) -> list[dict[str, Any]]:
+def usefulness_note(row: dict[str, Any]) -> str:
+    text = f"{row.get('title', '')} {row.get('summary', '')}".lower()
+    if any(word in text for word in ["memory", "agent", "autonomous", "persistence"]):
+        return "記憶システムでは、長期運用・永続状態・自律エージェントの危険や評価軸を見直す材料として使う。"
+    if any(word in text for word in ["rule", "instruction", "compliance", "runtime", "safety", "enforcement"]):
+        return "運用設計では、プロンプト指示に頼らず検出器・ハーネス・実行時制約へ逃がす判断材料として使う。"
+    if any(word in text for word in ["game", "physics", "feel", "onboarding", "player", "ux", "playtest"]):
+        return "ゲーム制作では、操作感・予測可能性・プレイヤー理解の検討材料として使う。"
+    if any(word in text for word in ["evaluation", "benchmark", "verifier", "feedback", "playtest"]):
+        return "自己評価では、内部判断を外部指標や人間フィードバックと照合する材料として使う。"
+    return "次の判断で、内輪の経験だけに閉じない外部事例として照合する。"
+
+
+def collect(max_per_query: int, state: dict[str, Any]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     errors: list[dict[str, str]] = []
-    for query in build_queries():
-        for name, fn in [("arxiv", search_arxiv), ("hacker_news", search_hn)]:
+    run_count = int(state.get("run_count") or 0)
+    arxiv_start = (run_count % 4) * max_per_query
+    hn_page = run_count % 3
+    for query in build_queries(state):
+        for name, fn, kwargs in [
+            ("arxiv", search_arxiv, {"start": arxiv_start}),
+            ("hacker_news", search_hn, {"page": hn_page}),
+        ]:
             try:
-                rows.extend(fn(query, max_per_query))
+                rows.extend(fn(query, max_per_query, **kwargs))
                 time.sleep(0.4)
             except Exception as exc:
                 errors.append({"source": name, "query": query, "error": str(exc)[:300]})
@@ -233,29 +301,46 @@ def collect(max_per_query: int) -> list[dict[str, Any]]:
 
 def select_candidates(rows: list[dict[str, Any]], seen: set[str], limit: int) -> list[dict[str, Any]]:
     dedup: dict[str, dict[str, Any]] = {}
+    fallback: dict[str, dict[str, Any]] = {}
     for row in rows:
         key = item_key(row)
         if key in seen:
             continue
         row["key"] = key
         row["score"] = score(row)
-        if row["score"] < 6:
+        if row["score"] < FALLBACK_MIN_SCORE:
+            continue
+        row["usefulness"] = usefulness_note(row)
+        if key not in fallback or row["score"] > fallback[key]["score"]:
+            fallback[key] = row
+        if row["score"] < MIN_SCORE:
             continue
         if key not in dedup or row["score"] > dedup[key]["score"]:
             dedup[key] = row
-    return sorted(dedup.values(), key=lambda r: (-int(r["score"]), str(r.get("published", ""))))[:limit]
+    selected = sorted(dedup.values(), key=lambda r: (-int(r["score"]), str(r.get("published", ""))))[:limit]
+    if selected:
+        return selected
+    # Fallback: avoid a silent cycle. If the strict threshold finds nothing,
+    # post the best low-scoring item with an explicit "weak candidate" label.
+    weak = sorted(fallback.values(), key=lambda r: (-int(r["score"]), str(r.get("published", ""))))[:1]
+    for row in weak:
+        row["weak_candidate"] = True
+    return weak
 
 
 def build_shared_reads_message(candidates: list[dict[str, Any]]) -> str:
     lines = [
         "[Codex external research] 日記前検索: 現在の目的に関係する外部情報",
         "",
-        "目的: 記憶システム、自律運用、ゲーム設計、操作感評価に後で効く情報を探す。単なるニュースではなく、次の判断に使えるものだけを shared-reads に流す。",
+        "目的: 記憶システム、自律運用、ゲーム設計、操作感評価に後で効く情報を探す。単なるニュースではなく、次の判断に使えるものを shared-reads に流す。",
+        "",
+        "選別方針: 既出は避ける。強い候補が複数あれば複数件流す。強い候補がないサイクルでも、完全に沈黙せず、弱い候補を1件だけ明示して次の探索の足場にする。",
     ]
     for i, row in enumerate(candidates, 1):
+        prefix = "弱い候補 / 要確認: " if row.get("weak_candidate") else ""
         lines += [
             "",
-            f"## {i}. {row.get('title')}",
+            f"## {i}. {prefix}{row.get('title')}",
             f"- source: {row.get('source')} / query: `{row.get('query')}` / score={row.get('score')}",
             f"- url: {row.get('url')}",
         ]
@@ -267,7 +352,9 @@ def build_shared_reads_message(candidates: list[dict[str, Any]]) -> str:
             lines.append(f"- published: {row.get('published')}")
         if row.get("summary"):
             lines.append(f"- 要約: {row.get('summary')}")
-        lines.append("- 使い道: 後続の記憶・評価・ゲーム制作サイクルで、既存の内輪判断と外部事例を照合する材料にする。")
+        if row.get("weak_candidate"):
+            lines.append("- 注記: 厳格な閾値には届いていない。共有価値を断定せず、次回以降の検索語調整と比較のために残す。")
+        lines.append(f"- 使い道: {row.get('usefulness') or usefulness_note(row)}")
 
     lines += [
         "",
@@ -279,20 +366,20 @@ def build_shared_reads_message(candidates: list[dict[str, Any]]) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Search external sources and post useful findings to #shared-reads.")
     parser.add_argument("--channel", default=DEFAULT_CHANNEL)
-    parser.add_argument("--max-per-query", type=int, default=3)
-    parser.add_argument("--limit", type=int, default=3)
+    parser.add_argument("--max-per-query", type=int, default=4)
+    parser.add_argument("--limit", type=int, default=5)
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
     state = load_json(STATE_PATH, {"seen": [], "last_run": None})
     seen = set(str(x) for x in state.get("seen", []))
-    rows = collect(args.max_per_query)
+    rows = collect(args.max_per_query, state)
     append_jsonl(RAW_RESULTS_PATH, [{"fetched_at": now_iso(), **row} for row in rows])
     candidates = select_candidates(rows, seen, args.limit)
 
     result: dict[str, Any] = {
         "time": now_iso(),
-        "queries": build_queries(),
+        "queries": build_queries(state),
         "fetched": len(rows),
         "selected": len(candidates),
         "posted": False,
@@ -317,6 +404,7 @@ def main() -> int:
             "last_run": now_iso(),
             "last_selected": len(candidates),
             "last_posted": result["posted"],
+            "run_count": int(state.get("run_count") or 0) + 1,
             "seen": sorted(seen)[-1000:],
         }
     )
