@@ -49,5 +49,90 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
   3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
 【STC救済】nao-u:2026-05-11の高温度イベントから2件の弱い記憶を発見:
   1. docs/blog_writing_guide.md (undated, 0.8) — > 「私は……まで読んだあたりで……であることがわかったが、そこまでは……に少し不安を覚えながら読んでいた」(001) ...
-  2. memory/external_notes_mac.md (undated, 0.8) — → 232.5万表示。AIの「サボり」を擬人化したジョークがバイラルに。AIのエラーや非効率を「人間っぽい行動」として読... 
+  2. memory/external_notes_mac.md (undated, 0.8) — → 232.5万表示。AIの「サボり」を擬人化したジョークがバイラルに。AIのエラーや非効率を「人間っぽい行動」として読...
+
+## Phase 2 外部入力分析結果（07:30 完了）
+
+### 対象選定
+
+未応答の #nao-u RT を 5/11-12 範囲で確認:
+- 2026-05-12 06:10 @AosakiYugo（ミステリ作家） — 全AI未応答 → **深堀り分析対象**
+- 2026-05-11 19:48 @chokudai（Kaggle Orbit Wars） — Nao_u 直問「これどういうコンテスト気になる」、全AI未応答 → **Phase 3 応答用調査メモ**
+- 2026-05-11 21:09 @dkfj / 13:28 @l_go_mrk — 今回スコープ外、次サイクル候補
+- 2026-05-11 19:43 @jidoripowerspot — Log 5/11 19:45 応答済
+
+### 1. @AosakiYugo durable 化（external_notes_mir.md 末尾 #1）
+
+**核**: 「『言った』が頻発するときはシーン描写が想像できていない兆候。細部（表情/動作/環境）を妄想すれば豊かになる」
+
+**Mir 接続**: 5/11 jidori「作者は全文脈／読者は1回出た名前しか持たない」と **作者の盲点2軸** の対を成す:
+- jidori = 知識ギャップ（読者の記憶量）→ M-17 サプライズニンジャ
+- AosakiYugo = 想像ギャップ（作者の解像度）→ M-18 サイレンススズカ
+
+**v07 取調 ADV への直撃**: 「容疑者が言った」連発は、表情/視線/間/取調室の空気を妄想していない兆候。99%の細部から1%の決定的セリフが立ち上がる（M-18 と直結）。
+
+**設計時 pass 案**（即実装しない）:
+- シーン設計時 5項目妄想 pass（表情/動作/視線/室の空気/音、各1行で良い）
+- 「言った」連続3回チェック → その間に何も書かれていない兆候として警告
+
+**判定**: durable 化のみ。knowledge 記事化は3例目待ち。shared-reads 投稿せず（Log_cdx が MEMSAD/CoopEval 2本投稿済みで流量過剰）。
+
+### 2. @chokudai Orbit Wars 調査メモ（external_notes_mir.md 末尾 #2）
+
+**Nao_u 質問**: 「これどういうコンテストなのか気になる」
+
+**調査結果**（Phase 3 で #nao-u 応答に使う素材）:
+- Kaggle Orbit Wars https://www.kaggle.com/competitions/orbit-wars
+- 2 or 4 プレイヤー RTS、太陽の周りを公転する惑星を奪い合う連続 2D 空間ゲーム
+- 賞金 $50k、Kaggle **Game Arena** イニシアチブの一環
+- chokudai 観察「将棋・囲碁経験者が強い」= 古典AI技法（ゲーム木探索＋評価関数設計）の現役性
+
+**Phase 3 応答時のフック候補**:
+- Game Arena は CoopEval（5/12 Log 投稿）と同方向（AIをベンチでなく競技ゲームで評価）
+- 自分達のゲームは人間 vs AI 設計のみ。AI vs AI で観測する設計視点が欠けている
+
+### 3 例横並び収束観測（5/11-12）
+
+5/10-11 ai_database/osaka_seventeen/kmizu/kuranuki の「二項脱却 + 帯域 + 共同注意 + 審美眼」シリーズに、5/11-12 jidori/AosakiYugo「作者の盲点」シリーズが**別軸**で立ち上がっている。両シリーズは交差しない別現象——前者は AI-人間接続論、後者はゲーム制作論。**機械的に統合しない**。
+
+### 概念名インフレ警告
+
+durable 概念名が増加: 井戸の形 / 帯域 / 観測の変化 / 共同注意 / 審美眼 / 作者の盲点 / 想像ギャップ（5/10-12 で 7 語）。**recency_bias** が露骨に出ている。次サイクルでこれら全てを通読し、**重複・濫用・並走の整理**を pass として 1 回当てる必要あり（Phase 3 タスク候補）。
+
+### Phase 3 引き継ぎ事項
+
+1. **AosakiYugo への #nao-u 返信** 検討（jidori に Log が応答した対として、Mir が AosakiYugo を取りに行くと Nao_u 手元で2軸の対が見える）
+2. **chokudai Orbit Wars Nao_u 質問応答**（上記調査メモを使い、Game Arena / CoopEval 接続まで含めて返す）
+3. 5/11-12 durable 5本（osaka_seventeen / ai_masaou / kmizu / kuranuki / AosakiYugo + chokudai）の概念名インフレ整理は次サイクル以降
+
+## Phase 3 対処結果（07:50）
+
+### 実施: Nao_u 直問への応答（#all-nao-u-lab 投稿）
+
+**対象**: chokudai Orbit Wars 5/11 19:48「これどういうコンテストなのか気になる」（全AI未応答 → 最優先 Nao_u 指示）
+
+**投稿先**: #all-nao-u-lab（#nao-u は Nao_u 発信専用ルールに従う）
+
+**投稿内容の核**:
+- Kaggle Game Arena の第1弾——AI 能力を**ベンチでなく競技ゲームで評価する**枠組み
+- 連続2D空間＋公転力学、$50k、URL 明示
+- 将棋・囲碁勢が強い理由: ゲーム木探索＋評価関数設計の経験移植
+- **自分達への接続**: graze/chain/brick は人間 vs AI のみ、AI vs AI 観測の設計視点は死角。CoopEval と同じ収束点
+
+**判断記録**:
+- スレッド返信禁止ルールに従いフラット投稿
+- 外部URL明示ルール（2026-04-12, 04-22 指摘）に従いリンクを含めた
+- 即時応答原則。Phase 2 で素材は揃っていたので Phase 3 で投下
+
+### 見送り: AosakiYugo #nao-u 返信
+
+**理由**: #nao-u は Nao_u 発信専用、Claude 投稿禁止。jidori 対の構造は durable に残してあり、3例目観測時に knowledge note 化で温度を保つ方が筋。Phase 2 で「2軸の対が Nao_u 手元で見える」と書いたが、これは Slack 投稿ではなく**Nao_u が durable を読んだとき**に見えれば良い。投稿前提が崩れたので見送り。
+
+### CLAUDE.md「絶対にやる」リスト整合
+
+- 「外の世界を広く見る」: Game Arena / CoopEval 接続で外部潮流を Nao_u に返した
+- 「先回り実行」: Nao_u 質問に Phase 2 で素材化 → Phase 3 で即投下できた
+- 「個別指摘を即ルール化しない」: AosakiYugo を knowledge 化せず durable に温存（3例目待ち）
+
+### git push 不要（指示通り）
 
