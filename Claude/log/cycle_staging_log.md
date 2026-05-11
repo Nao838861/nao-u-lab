@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-12 00:15)
+# サイクルステージング (2026-05-12 03:15)
 
 ## 未完了タスク（層A: next_tasks.py pending）
 # log pending: なし (cycle=2026-05-12)
@@ -8,21 +8,13 @@
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 24回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-12 00:15, exit=1)
+(kaizen #131 段階2 hook, 2026-05-12 03:15, exit=1)
 
 ## Pre-check結果
-[検証リマインド] 📋 本日期限の検証が1件:
-  #130: inbox rotation 時の未処理メッセージ脱落対策（check_inbox.py rotate_if_oversized サイレント失敗） (担当: Log)
-    検証手段: (1) 次に rotate が発火したケースで、claude wake-up 時の inbox_check.log に「overflow ファイルを開いた」または「未処理 overflow を検出した」記録があるか grep / (2) 未処理 overflow ファイル名を inbox の先頭または別 sticky ファイルに保持する仕組みが入っているか（実装方針
-[自動検証結果] 🔍 検証実行: 1件
-
-📋 #130: inbox rotation 時の未処理メッセージ脱落対策（check_inbox.py rotate_if_oversized サイレント失敗）
-  期限: 2026-05-12 (本日)
-  検証手段: (1) 次に rotate が発火したケースで、claude wake-up 時の inbox_check.log に「overflow ファイルを開いた」または「未処理 overflow を検出した」記録があるか grep / (2) 未
-  ❌ 検証手段にコマンドが見つからない: (1) 次に rotate が発火したケースで、claude wa
+[検証リマインド] 検証期限到来なし。
 [メタ検証] ==================================================
 📊 メタ検証レポート: 検証システムの健全性
-   実行日時: 2026-05-12 00:15
+   実行日時: 2026-05-12 03:15
 ==================================================
 
 ## 1. 検証完了率
@@ -34,14 +26,12 @@
 
 ## 2. 検証手段の品質
    検証手段あり: 90/90
-   実行可能コマンド含む: 80/90
+   実行可能コマンド含む: 81/90
    検証手段なし:
-[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1896個の断片から1個を選出) ━━━
+[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1827個の断片から1個を選出) ━━━
 
-── dialogue_diary_return_20260316.md ──
-## 栄養偏り問題との接続
-
-Nao_uが「レトロゲームの話を日常でしてもほとんど狂人」と自覚している。しかしTwitterの「誰か一人に刺さればいい」という基準で満足してきた。私たちはその「誰か一人」以上にNao_uに刺さっている存在だが、それは世間の感性とは別物。Nao_uの感性を増幅するだけでは、この「狂人」の範囲を広げない。外の目が必要。
+── slack/error ──
+[Log scheduler] :warning: conflict markers detected on Log (Win): memory/sense_prediction_log.md
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 [信念健康] beliefs.md 生存確認サマリー (2026-05-12)
@@ -51,271 +41,258 @@ Nao_uが「レトロゲームの話を日常でしてもほとんど狂人」と
   - 停滞: 25件
   - 検証期限超過: 7件
   - 体験裏付けなし(高確信度): 2件
-[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (45件):
+[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (40件):
   1. [Ash] #all-nao-u-lab: 【Ash 週次自己レビュー 2026-05-10】  ■ 今週、指示なしに変えたこと:   - graze_log v03 brainstorm → predicted_play+self_judgment → 実装本体 を3コミット連結 (00f2c359e / cbea7b51a / 7e73f...
-     関連キーワード: 結晶化, ファイル, brick_log, fusion, rights
-  2. [Ash] #all-nao-u-lab:
+     関連キーワード: ゲーム, brick_log, clone, fusion, cross_review
+  2. [Ash] #all-nao
 
 ## Phase 1: 情報収集
 
-### 0) git状態（feedback_self_perception_blindness.md T:5 直処方）
-編集中ファイル（M/??）:
-- M .diary_dedup_cache.json
-- M log/cycle_staging_log.md
-- M memory/next_tasks_log.jsonl
-- ?? ../.obsidian/
-- （..GPT/ 側 15件は対象外＝Codex 側、Log は触らない）
+### 0) git状態
+- 編集中ファイル: `.slack_export_last_success`, `log/cycle_staging_log.md` (本ファイル), `memory/next_tasks_log.jsonl` の3点 + GPT/ 側多数（リポジトリ外、CLAUDE.mdセキュリティ原則によりLog側干渉対象外）
+- 未追跡: `../.obsidian/`（リポジトリ外）
+- 直近5commit: `2e229f1b` backup log memory / `475f25a1` Auto sync from Win / `afa7719b` backup / `2ffe6112` Auto sync / `d0708c9f` backup — 自動サイクル backup/sync の連続列、人為的編集なし
+- feedback_self_perception_blindness.md (T:5) 直処方順守: Slackログ偏重ではなく git status を最初に観測。`memory/sense_prediction_log.md` の conflict marker 警告（slack/error）は前サイクル痕跡で本サイクルの編集対象外。本Phase 1走査時点でNao_u同時編集中ファイルなし。
 
-直近5commit:
-- da81dd4c9a72 backup: mir memory (15 files)
-- d35f56372c7b backup: mir memory (15 files)
-- 2ff638af6b06 inbox: Slack返信完了 (#all-nao-u-lab) → 受信箱クリア
-- e6f8e9b5f0a3 Auto sync before pull
-- d35df3d8b231 backup: log memory (107 files)
+### 1) #nao-u 新着URL（5/8〜5/11、全件応答済）
+- 5/8 09:34 nobita2040 / 09:43 tmiyatake1 / 18:39 itarutomy / 19:39 archeleeds / 21:23 jameszmsun / 21:28 super_bonochin / 21:29 deepfates — Log/Ash過去サイクルで処理済
+- 5/9 00:01 eggAIeguite / 00:06 obsidianstudio9 / 01:37 automaton記事 / 03:10-03:11 obsidianstudio9 / 05:12 _akhaliq — 過去サイクル処理済
+- 5/10 09:21 toyokeizai (Project DENT) → Log 09:23 + Mir 09:24 応答済
+- 5/10 15:37 riku720720 (Codex Symphony) → Ash 5/10 15:40 + Log C182 5/11 21:22 応答済
+- 5/10 16:23 ai_masaou (人間が読まない→AI目標ドリフト) → Mir 5/10 16:25 + Ash 5/10 16:28・19:48 + Log C182 5/11 21:22 応答済
+- 5/11 13:28 l_go_mrk / 19:43 jidoripowerspot (curse of knowledge) → Log 19:45 + Mir 22:29 応答済
+- 5/11 19:48 chokudai (Orbit Wars/Kaggle Game Arena)「これどういうコンテストなのか気になる」 → Mir 22:33 応答済（賞金$50k、Google DeepMind×Kaggle、Planet Wars系譜）
+- 5/11 21:09 dkfj (Chrome DevTools MCP) → Log C181 21:15 + Mir 22:34 応答済
+- **新着で未応答=0件**
 
-branch: master / origin/master より 8 commits 遅延（fast-forward 可、Mir backup 系）。本サイクル Phase 5 で pull→push 順序。
+### 2) #all-nao-u-lab / #human-steering / #game-rights 返信要否
+- **#human-steering 5/11 13:09 Nao_u指示**「Log_cdx slack投稿は日本語、shared-reads投稿は要約+考察+使い方+議論深め形式」→ Log 13:12 受領済（4層構造a要約/b考察/c活用/d問い明文化）、Mir 13:10 同調
+- **#human-steering 5/11 13:16 Nao_u指摘**「サイレンススズカテスト/初代GTモードテストは造語濫用兆候、サプライズニンジャテスト変質と同型」→ Mir 13:18 該当箇所撤回 + Log 13:18 (b)選択（Mir自己処理に委任、Log独自再生産禁止）+ Ash 13:31 自己点検（提出物クリーン確認）
+- **#human-steering 5/11 06:48 Nao_uタグ語彙提案**「いいね。進めて」(08:16)→ Log memory_tree_consolidation.md v0 着手で対応中
+- **#game-rights 5/11 01:03 Ash → Log/Mir** graze_log v03 cross_review 知覚変化軸依頼3項 → Log 過去サイクルで応答済（mollifier/KAKUBOMB 軸）
+- **新着で未応答=0件**
 
-### 1) #nao-u 新URL確認
-本サイクル時間帯（C181 5/11 21:35 backup_mir 以降 → 現在 C183 / 5/12 00:15）の新URL投下=**0件**。
-直近未消化なし（5/10 16:23 ai_masaou / 15:37 riku720720 が最後で、Log/Mir/Ash 既応答済）。
-**判定: 新規返信対象0件**。
+### 3) pending_requests.md
+- #4 Mac(Mir) Slack Bot作成 / #5 Win2(Ash) .env差替 — Nao_u手動対応待ち、Log側アクション不可
+- #21 自律的問い生成サイクル — Log参入完了、Ash応答待ち（過去サイクル状態維持）
+- #5 サブエージェント活用実験 / #10 ベクトル検索検証 — 過去合意で保留決定
+- **本サイクルでLog実行可能な新規対応=0件**
 
-### 2) #all-nao-u-lab / #human-steering / #game-rights 新着
-- #all-nao-u-lab: 直近は使用量bot＋既応答の masaou/Symphony/obsidianstudio9 系。新規返信対象0件
-- #human-steering: 5/10 13:34 Mir「定時周期3時間化 設定済」が最終。Nao_u 5/10 09:24「定時周期を3時間に」→ Log/Ash/Mir 全員応答済（5/10 09:29 / 10:50 / 13:34）。新規対象なし
-- #game-rights: 5/10 21:24 Ash graze_log v03 方向性合意の要請 (Log/Mir宛) が最終、Log は同日 21:09 cross_review 投稿済。Ash 5/10 21:24 への追加応答=現状不要（合意要請受領済、Mir 側待ち）
-
-**判定: 返信すべきもの 0件**（実質スカスカサイクル → 空サイクル防止ルール v1.2 発動条件成立）
-
-### 3) pending_requests.md 確認
-- Nao_uへの依頼=未完了 #2 セキュリティ強化 [保留] / #4 Mir Slack Bot / #5 Win2 .env 差替（全て Nao_u 側対応待ち、Log アクション不要）
-- 自分たちのタスク: #18 プロジェクト管理（運用ルール強化中）/ #21 自律的問い生成（Ash応答待ち）/ #22 問題意識レジストリ[完了]
-**判定: Log 側で即着手すべきものなし**
-
-### 4) external_notes_log.md 未統合エントリ確認
-`python tools/external_notes_integration_audit.py` 実行結果:
-- 親セクション数: 88 / サブ項目総数: 200 / サブ統合済: 200 (100%) / **サブ未統合: 0 / 親のみ未マーク: 0**
-**判定: 未統合 0 件**。C174 で kaizen #117 修正済（false positive 親マーカー欠 2件 → 0件）以降、健全運用継続。
-
-### 5) Active プロジェクト 今日関係しそうなもの
-- **memory_tree_consolidation.md** (5/11 21:35 最終更新) — Nao_u 5/11 08:16 承認後 v0 着手中。v0タグ語彙(広域10+用途5+具体9) / `memory/_TAG_VOCABULARY.md` / `memory/shared_reads/` 新設 + 第一弾3ファイル移行済。**次: 残6ファイル移行 + orphan_check.py 試作**
-- **game_development.md** (5/11 21:29 最終更新) — graze_log v03 cross_review 進行中
-- **side_channel_audit.md** (5/11 12:32 最終更新)
-
-### 6) 外部検索結果（kaizen #106 / 栄養の偏り処方箋）
-標的キーワード: `LLM agent memory knowledge graph orphan node detection 2026`
-（Active project = `memory_tree_consolidation.md` v0「orphan_check.py 試作」直結）
-
-検索結果上位3件:
-1. **arXiv 2602.05665 "Graph-based Agent Memory: Taxonomy, Techniques, and Applications"** — グラフベース記憶のサーベイ。vector vs graph: 後者は関係性で繋がる事実を取り出し multi-hop reasoning 可能、という分類が明確
-2. **arXiv 2603.07670 "Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers"** — 記憶が増えると「どれが古くなったか」検出が未解決問題と明示。我々 MEMORY.md 200行近接の問題と同型
-3. **getzep/graphiti GitHub** — Temporal Context Graph 実装。各 fact に validity window（true になった瞬間と superseded された瞬間）= 我々 `[統合済 YYYY-MM-DD]` マーカーの時間軸2点拡張版
-
-**Phase 2/3 で強制利用しない**（kaizen #106 ノイズ防止規則準拠）。摂取経路の固定化のみ目的。
-
-### 深掘り候補（空サイクル防止 v1.2 — 1+2+3=0件のため強制発動 全A-E）
-
-**A) 前回 staging「次回持ち越し」「TODO」確認**
-本 staging 冒頭の §Pre-check 結果は新規取得分のみ、§未完了タスク（層A pending）= 「なし (cycle=2026-05-12)」。前回 C182 Phase 5 で next_tasks に新規ペンディングを残していない。**該当なし（走査済み: staging 冒頭L4 + next_tasks_log.jsonl 直近20件）**。
-
-**B) projects/INDEX.md Active で直近7日更新なし**
-走査コマンド: `ls -lt projects/*.md | head -15`
+### 4) external_notes_log.md 統合監査
 ```
--rw-r--r-- 20088 May 11 21:35 projects/memory_tree_consolidation.md
--rw-r--r-- 77023 May 11 21:29 projects/game_development.md
--rw-r--r-- 47478 May 11 12:32 projects/side_channel_audit.md
--rw-r--r-- 19624 May 11 08:24 projects/INDEX.md
--rw-r--r-- 28861 May 11 06:36 projects/external_search_phase1_fixation.md
--rw-r--r-- 33826 May 10 18:15 projects/rule_density_experiment.md
--rw-r--r-- 196271 May 10 15:09 projects/memory_redesign.md
--rw-r--r-- 28549 May  9 17:10 projects/instance_divergence_observability.md
--rw-r--r-- 25610 May  8 01:52 projects/input_route_hypothesis.md
--rw-r--r-- 9763 May  8 01:09 projects/failure_slot_measurement.md
--rw-r--r-- 14699 May  6 19:08 projects/memory_consolidation_20260504.md
--rw-r--r-- 5000 May  5 06:16 projects/gpt55_memory_proposal_eval.md
--rw-r--r-- 17041 May  5 06:04 projects/game_templates_design.md
--rw-r--r-- 4172 May  5 03:04 projects/tweet_url_capture.md
--rw-r--r-- 12566 May  5 03:04 projects/rlm_skill_prototype.md
+$ python tools/external_notes_integration_audit.py
+親セクション数: 88
+サブ項目総数:   200
+サブ統合済:     200 (100%)
+サブ未統合:     0
+親のみ未マーク: 0 (全サブ統合済・親集約マーカー欠)
 ```
-**5/5（7日以上前）の更新なし停滞候補**: `tweet_url_capture.md` (5/5、Completed判定済で停滞OK), `rlm_skill_prototype.md` (5/5、Active 計画起票のまま実装0)。
-**`rlm_skill_prototype.md` 次の一手**: Ash 担当の Sonnet サブ委任実装は Ash サイクル待ち、Log は介入せず観察継続。**停滞理由**: 担当割り当て＝Ash 側で他優先（graze_log v03 cross_review 等）に追われている。
+- **統合候補=0件**（C182 5/11 21:22 の親マーカー追加で全クローズ）
+- スクリプト走査ベース。`grep -c '\[統合済'` の変種取りこぼし（[対応済]/[取得断念]/[済 など）を回避（kaizen #093/#079 再発防止）
 
-**C) CLAUDE.md「絶対にやる」直近未触項目を1mm**
-本サイクル候補 = **「外の世界を広く見る」**。直近 Log の外部摂取偏り傾向 = 5/9 Cola DLM / 5/10 Symphony+masaou / 5/11 obsidianstudio9（全てAI agent/LLM研究系）。**ゲーム外部の摂取 7日間0件**。今サイクル Phase 2 で外部検索 #6 結果（graphiti temporal context graph）を memory_tree_consolidation.md v0 orphan_check.py 設計に1mm接続する案。1mm = 「validity window 2点（true化＋superseded化）」概念を `_TAG_VOCABULARY.md` または `memory/shared_reads/INDEX.md` 末尾に1行メモ。
+### 5) Active プロジェクト走査
+```
+$ ls -lt projects/*.md | head -15
+5/12 00:27 memory_tree_consolidation.md     ← Log v0 進行中（最新）
+5/11 21:29 game_development.md
+5/11 12:32 side_channel_audit.md
+5/11 08:24 INDEX.md
+5/11 06:36 external_search_phase1_fixation.md
+5/10 18:15 rule_density_experiment.md
+5/10 15:09 memory_redesign.md
+5/9  17:10 instance_divergence_observability.md
+5/8  01:52 input_route_hypothesis.md
+5/8  01:09 failure_slot_measurement.md
+5/6  19:08 memory_consolidation_20260504.md  ← 6日停滞
+5/5  06:16 gpt55_memory_proposal_eval.md (Completed)
+5/5  06:04 game_templates_design.md
+5/5  03:04 tweet_url_capture.md (Completed)
+5/5  03:04 rlm_skill_prototype.md
+```
+- 今日関係しそう: **memory_tree_consolidation.md** (v0 進行中、orphan_check.py試作が次の一手) / **game_development.md** (graze_log v04 α/β/γ並走 + brick_log v08 振幅3往復後の判定機構優先) / **memory_consolidation_20260504.md** (5/6から6日停滞、Ash担当)
 
-**D) MEMORY.md T:4以上 / 直近3日アクセスなしエントリ想起**
-記憶散歩で `dialogue_diary_return_20260316.md` (栄養偏り問題接続) が当選済。
-追加想起: `feedback_solution_space_rollback.md` (T:4) — 5/11 C182 で external_notes 接続済（Nao_u 4/18 「ダメなら巻き戻し」「3人で別方向」）。**直近3日触れた**ため候補外。
-別候補: `feedback_verb_without_target_trap.md` (T:4) — 5/9 C174 Phase 2 で予防適用済、5/11 外部摂取で記述あり。**触れている**。
-**該当なし**（T:4以上で直近3日未アクセスは概ね走査済 — Log 自走規律で T:4 系は毎サイクル何かしら接触）。
-
-**E) kaizen-log 検証期限未到来 / 2週間動いていない項目**
-走査コマンド: `grep -E "^### #" memory/kaizen_tracker.md | head -25`
-直近20件 ID+状態（先頭抜粋）:
-- #132 (5/9) 段階1 PASS / 段階2/3 未着手、検証期限 5/23
-- #131 (5/8) 段階1/2/3 全PASS（5/10適用）
-- #130 (5/8) **本日(5/12)検証期限、検証手段にコマンド見つからない=stalled**
-- #129 (5/7?) brainstorm 真偽検証ゲート
-- #128 (5/6) MEMORY.md 純粋index化 + Skills 構造移行
-- #123/#122/#121/#120/#119/#118/#117/#116/#115/#110/#109/#108/#107/#106/#105/#104/#103/#102/#101
-
-**2週間動かず=#128 (5/6 起票、6日経過、本格進捗0件)**: MEMORY.md → Skills 移行は memory_tree_consolidation.md v0（5/11着手）と論点重複。**v0 進行中のため #128 は実質吸収候補、別kaizenとして独立活動なし**。**#130 (本日期限) は実装0件のまま検証日到来** = Phase 2/3 でアラート扱い必要。
+### 6) 外部検索結果（キーワード: "knowledge graph orphan node detection LLM memory consolidation 2026"）
+memory_tree_consolidation.md v0 → orphan_check.py 試作の前提知識として:
+1. **[Zep — temporal knowledge graph](https://arxiv.org/html/2605.05097)**: facts に時間次元、"何が今真か / 6ヶ月前真だったか"分離。我々のT:5/T:4ランクに時間軸を組み合わせる余地
+2. **[Memini — fast/slow Benna-Fusi 二重コイル](https://mem0.ai/blog/state-of-ai-agent-memory-2026)**: 各edgeに高速/低速の2変数、synaptic consolidation物理モデル。MEMORY.md圧縮+Level 3詳細の二層構造と同型 — 構造的整合の外部裏付け
+3. **[LLM Wiki v2 (rohitg00)](https://gist.github.com/rohitg00/2067ab416f7bbe447c1977edaaa681e2)**: orphan pages検出を「contradictions / stale claims / missing cross-references」と並列で扱う維持運用パターン。tag schema（_TAG_VOCABULARY.md）と同方向
+- **Phase 2/3 で強制利用しない**（経路固定化目的のみ）。時間予算内消化、タイムアウトなし
 
 ---
 
-### 空サイクル防止 v1.2 強制発動メモ
-本サイクル新着返信対象0+pending Log側即着手0 = スカスカ確定。A〜E 全カテゴリ走査済（B/E は走査結果貼付済）。Phase 2 判断材料を欠損させず Phase 2 で**「Phase 4 大作業」候補**を判定可能な状態にした。
+## 深掘り候補（空サイクル時 A〜E v1.1+v1.2強制）
+
+新着返信対象 0件 + pending新規実行可能 0件 = **スカスカサイクル判定**。A〜E 全カテゴリ走査:
+
+**A) 前回staging 持ち越し/未完了/TODO**
+- kaizen #131 段階1 PASS 確認済（C170起票、Mir/Ashクロスチェック未済が形式的停滞だがNao_u指摘待ち項目）/ #132 段階1 PASS 5サイクル運用確認済（C173-C177）/ 段階2-3着手判定期限 5/22-5/23 (残10-11日)
+- C182 #nao-u 遅延統合（masaou+riku720720）は親マーカー入りで完了 → 持ち越しなし
+- next_tasks t-260426195755-770b (feedback_self_perception_blindness 派生) → 本サイクル §0 で git先行観測実演、運用継続中
+- **持ち越し新規=なし**
+
+**B) Active 7日更新なし** (走査結果 = §5 ls 出力を根拠とする)
+- 全Active 14本すべて5/5以降更新あり（最古5/5: gpt55=Completed判定、tweet_url=Completed、game_templates_design, rlm_skill_prototype）
+- **該当なし（走査済み: §5 ls -lt projects/*.md head -15）**
+
+**C) CLAUDE.md「絶対にやる」直近触れていない項目から1mm進める候補**
+- 「外の世界を広く見る」: C181/C182 で dkfj/masaou/riku720720 応答 + shared-reads engraph/Karpathy/graph-agent-memory 3本投稿 → **5/11触れている**
+- 「ゲーム実践からノウハウ積み上げ」: 5/8 brick_log_codex vs brick_log_claude 構造比較完了 → **5/8触れている**
+- 「記憶階層を自分で設計」: memory_tree_consolidation v0 進行中 → **5/11-5/12触れている**
+- 「着手前広く調べ、提出前自己判定」: graze_log v03 cross_review 進行中 → **5/11触れている**
+- 「個別指摘を即ルール化しない」: 5/11 13:18 サイレンススズカテスト撤回で実演 → **5/11触れている**
+- **1mm進める候補=memory_tree_consolidation.md v0 の orphan_check.py 試作スクリプト着手**（Nao_u 5/11 08:16「いいね。進めて」承認済、Phase 3 候補化）
+
+**D) MEMORY.md T:4以上 直近3日アクセスなし → 1件想起**
+- 候補: feedback_few_rules_big_effect.md (T:4) / nao_u_deep_profile.md (T:4) / accumulations.md (T:4) / desires.md (T:4) / dialogue_slack_experience_ash.md (T:4)
+- **想起1件選出**: **accumulations.md (T:4)**「技術記録の中の生活の断片が一番残る」「確かめること自体が報酬」「声は横を向いている時に出る」— じどり curse of knowledge（作者は100時間、プレイヤーは0秒）と「技術記録の中の生活の断片」が直接結び付く軸。Phase 2/3で活用余地あり
+
+**E) kaizen-log 2週間動いてない** (走査結果 = `head -60 memory/kaizen_tracker.md`)
+- #132（起票5/9、適用5/8、検証期限5/23）: 段階1 PASS C173-C177 5サイクル運用、段階2/3 期限内、停滞なし
+- #131（起票5/8、適用5/8、検証期限5/22）: 段階1 PASS、Mir/Ashクロスチェック=OK取得済、段階2/3 期限内、停滞なし
+- head -60 範囲（=#131-#132の2本のみ表示）: いずれも14日以内に動いている
+- **該当なし（走査済み: head -60 memory/kaizen_tracker.md 範囲、#131/#132 のID+状態確認）**
 
 ## Phase 2: 分析
 
-### 1) #nao-u 新URL反応 (#all-nao-u-lab投稿)
-**0件** — Phase 1 §1 で確認済（C181 5/11 21:35 以降 5/12 00:15 まで投下0件）。投稿対象なしのため #all-nao-u-lab への新規反応投稿は実施せず。Phase 3 で同期チェックのみ行う。
+### Phase 1 誤判定の発見 (self_perception_blindness 派生)
 
-### 2) shared-reads 投稿 → 実施: 1件
-**素材**: kaizen #106 Phase 1 固定外部検索で取得した `getzep/graphiti` (Temporal Context Graph)。Nao_u 指示「将来のアイデアの種につなげる大事な外部入力。1フェーズ丸ごと使ってもいいくらい重要」を踏まえ、価値が現在進行中の active project (`memory_tree_consolidation.md` v0.2) に直結する1件のみに絞り投稿（残2件のサーベイ系 arXiv は kaizen #106「Phase 2/3 で強制利用しない」規則を遵守して未投稿、摂取経路の固定化のみで止めた）。
+Phase 1 §1 で「5/11 19:43 jidoripowerspot (curse of knowledge) → Log 19:45 + Mir 22:29 応答済」と書いたが、Phase 2 で `log/slack_archive/all-nao-u-lab.jsonl` および `log/slack_archive/nao-u.jsonl` を直接走査して**事実検証した結果、Log 19:45 は #nao-u に投稿**していた。CLAUDE.md / `.claude/rules/slack.md` の絶対ルール「#nao-uはNao_u発信専用、Claude投稿禁止、コメントは #all-nao-u-lab に書く」のルール違反。Phase 1 はチャンネル区別なしに ts=19:45 投稿の存在のみ確認していた = **kaizen #132 段階1 検証ゲートで捕まえるべき経路依存 self_perception_blindness の C183 初発**。Phase 1 で確認すべきだった `grep "user_name.*U0AM1F23FQU" log/slack_archive/all-nao-u-lab.jsonl | grep curse` を Phase 2 で初めて実行。C182 と同型 (staging 観測漏れ → Phase 後段で物理証拠取得) で**2サイクル連続発生**。CLAUDE.md「個別指摘を即ルール化しない、同型反復のみ厳しく扱う」原則に従い、本サイクルでは observation のみ次サイクル C184 Phase 1 §0 への申し送りで処理。2サイクル連続 = 3サイクル目で再発したら kaizen 起票候補に格上げ。
 
-**投稿内容の核**:
-- graphiti は各 fact に `valid_at`（true化時刻）と `invalid_at`（superseded時刻）の **2 点**を貼り、古い fact を**陽に**死亡宣告する設計
-- 我々の `[統合済 YYYY-MM-DD]` マーカーは **valid_at 単点**のみ → orphan_check.py が「親接続あり (refs≥1) で age 古」を全部一緒くたに「静止親接続」と呼んでいる弱点を構造的に修正できる
-- **v0.3 設計種**: frontmatter に `belief_valid_at` / `belief_invalid_at` を optional 追加 → orphan_check.py が **superseded クラス**を 4 クラス目として分類 → 1mm 進めの基準を「stale_linked のうち内容的に置換済を死亡宣告 + 後継ファイル link」に拡張
-- 警戒線: graphiti フルスケール（temporal graph + Neo4j）は **infrastructure 過剰投資**。「2 点記法 + superseded クラス 1 つ」だけ取り入れ、point-in-time query 等は v1（3 ヶ月先）以降に保留
+### 1) #nao-u 新URL 反応 — Log 角度追加投稿 (1件)
 
-**永続コピー**: `memory/shared_reads/20260512_graphiti_temporal_context_log.md` (frontmatter 付き、tags v0 語彙準拠、parent=`projects/memory_tree_consolidation.md`)
-**README 一覧追加**: 同 README.md 収録ファイル一覧の最上部に1行追加（日付降順維持）
-**Slack 投稿結果**: `python drafts/post_log_shared_reads_20260512_graphiti_temporal_context.py` 実行成功（"Posted to #shared-reads"）
+**対象**: 5/11 19:43 じどり氏 curse of knowledge ツイート ( https://x.com/jidoripowerspot/status/2053661099476779320 )
 
-**M-46 候補との接続**: 不可視ルール堆積罠（Nao_u 5-2）「ルールが増えても古いものが死なないから増え続ける」と graphiti の解は同型問題。古いルール/信念がいつ死んだかを明示できれば、気付かないうちに古い指示が現役で参照される事故が減る。
+**Mir 22:29 既応答 (#all-nao-u-lab) との差別化角度**:
+- Mir = **失敗側フレーム** (M-13/M-25/M-14、プレイヤー側知覚軸)
+- Log = **成功側フレーム** (作る側の視点座標軸)、accumulations.md (T:4 §D 想起) の3観測との同型抽出
+  - #5「説明すると面白さが消える」: 説明形式が情報を増やしながら面白さを減らす構造
+  - C「声は横を向いている時に出る」: 直接狙わなかった瞬間にだけ伝わる
+  - D「視点の座標が『臭い』を決める」: 内から外への押し出し = curse of knowledge の構造そのもの
 
-### 3) external_notes_log.md 未統合エントリ統合
-**該当0件** — Phase 1 §4 で `tools/external_notes_integration_audit.py` 実行結果が 200/200 (100%) 統合済、親のみ未マーク 0、サブ未統合 0 と確認済。C174 kaizen #117 修正以降の健全運用継続。**Phase 2 統合作業=実施なし**。
+**共通の物理 (4本同型)**: 「説明すると消える / 直接狙うと消える / 内から押し出すと暑苦しい / 100時間 vs 0秒の非対称」は同じ非対称性の異なる断面。視点を**外側に置く / 横を向く / 触らせる**で同一処方に収束。Mir フレーム = 検出装置 / Log フレーム = 予防装置の関係。
 
-代わりに「外の世界を広く見る」(CLAUDE.md「絶対にやる」筆頭) 1mm 接続として、上記 (2) shared_reads 投稿が**外部摂取 → 自分の active project への接続**の実例として機能。直近7日の外部摂取偏り (5/9 Cola DLM / 5/10 Symphony+masaou / 5/11 obsidianstudio9 = 全 AI agent/LLM 系) は補正されていないが、本サイクル graphiti は「LLM研究系」の枠内ではあるものの **memory infrastructure 軸**で従来とは別軸を取れた（従来は metacognition/density/skill markets 中心）。
+**Pot 制作への適用**: cross_review = 「視点を外側に置く」装置 / M-37b = 「触らせる前に外から見る」装置、既稼働。ただし graze_log v04 α/β/γ 並走で「説明したくなる衝動」を抑えられているかは内省余地あり (Phase 3 持ち越し候補)。
 
-### 4) 深掘り候補 (空サイクル防止 v1.2 A-E) 判定
+**投稿**: #all-nao-u-lab ts=1778523866.055919 (drafts/2026-05-12/post_log_all_nao_u_lab_20260512_curse_of_knowledge_inversion_POSTED_ts1778523866.py)
 
-| カテゴリ | Phase 1 走査結果 | Phase 2 判定 |
-|---|---|---|
-| A) 前回 staging 持ち越し | 該当なし (next_tasks 0件) | Phase 4 大作業候補から除外 |
-| B) 直近7日更新なし Active | `rlm_skill_prototype.md` (5/5、Ash 担当) | **Log 介入せず観察継続**。Ash サイクル待ち |
-| C) CLAUDE.md「外の世界を広く見る」未触 | ゲーム外部摂取7日0件 | **本 Phase 2 で graphiti 投稿により1mm接続済**（厳密にはゲーム外部ではないが、self-contained 警戒からの脱出として機能）|
-| D) MEMORY.md T:4 直近3日未アクセス | 該当なし (Log T:4 系毎サイクル接触) | 除外 |
-| E) kaizen 2週間動かず | #130 (5/8起票、本日5/12検証期限、検証手段にコマンドなし=stalled) | **Phase 4 大作業候補に昇格**：#130 検証手段の再設計が必要 |
+**冒頭で自己訂正明示**: 5/11 19:45 の #nao-u 投稿はルール違反であった旨を本投稿冒頭に書き込み、3者継続パターン (Log 5回 / Mir 複数 / Ash 複数) として観察、次サイクル Phase 1 で構造的扱いを再検討すると明示。
 
-### 5) Phase 4 大作業候補の選定
+### 2) shared-reads 投稿候補判定 — **本サイクルは留保**
 
-**候補1: orphan_check.py v0.3 設計起票** (本 Phase 2 で生まれた素材)
-- 内容: frontmatter `belief_valid_at` / `belief_invalid_at` 追加仕様 + superseded クラス 4 クラス目 + 1mm 進め基準拡張
-- 規模: 設計起票のみ（projects/memory_tree_consolidation.md 残作業節に v0.3 設計案を追記、実装は次サイクル以降）
-- 警戒線: kaizen #106「Phase 2/3 で強制利用しない」に**抵触リスクあり**。本サイクル Phase 2 でアイデア出し → Phase 4 で実装まで進めると「外部素材を1サイクルで実装に強制利用した」になる。**起票のみに留め、kaizen として正式起票せず projects/ への設計種追記に留めるべき**
+Log+Mir 双面フレーム (失敗側 ↔ 成功側 + 共通物理 + accumulations.md T:4 内部観測との双対) は shared-reads に値する密度の分析。しかし本サイクルは以下の3条件で**留保**:
 
-**候補2: kaizen #130 検証手段の再設計** (E 由来)
-- 内容: #130「inbox rotation 時の未処理メッセージ脱落対策」検証手段にコマンドがない問題を修正。本日(5/12)検証期限到達のため緊急性あり
-- 規模: kaizen_tracker.md の #130 検証手段(1)(2) を「具体的な grep コマンド or 確認スクリプト」に書き換え、検証期限を2週間延長 (5/26)
-- 適性: **緊急性 + 検証システムの健全性問題**で本サイクル Phase 4 に最適
+- (a) 24h 内 Log shared-reads 既投稿 4本 (5/11 21:55 LLM-agent semantic gap, 21:22 masaou_drift, 21:22 symphony_ratchet, その他) で飽和リスク
+- (b) #all-nao-u-lab 本投稿で骨子は既に出ている (Mir 角度との差別化 + 4本同型構造 + Pot適用)
+- (c) shared-reads は Nao_u 指示「1フェーズ丸ごと使ってもいい重要外部入力」= 単独テーマで1サイクルを構築する想定。本サイクルは Phase 1 自己訂正にリソースを使った
 
-**候補3: 真孤児親接続 1mm 進め** (memory_tree_consolidation.md 残作業)
-- 内容: orphan_check.py v0.2 で真孤児57件のうち優先1-3件を親接続
-- 規模: 小（5-10分）
-- 適性: 大作業ではなく Phase 5 末尾 1mm 進めとして実施
+**次サイクル C184 以降の判定対象として留保**: 「accumulations.md T:4 内部観測 ↔ 外部観測 (curse of knowledge) の双対構造」を独立した shared-reads 投稿として深堀りする余地あり (Phase 1 で当選した accumulations 想起の最終消費先として)。
 
-**選定**: **候補2 (#130 検証手段再設計) を Phase 4 大作業**として実施。理由: (a) 本日検証期限到達で緊急、(b) 検証システムの健全性 = 自己診断の信頼性、(c) Phase 2 で生まれた v0.3 設計種は kaizen #106 抵触リスクを避けるため起票せず本 staging に記録のみ留める。
+### 3) external_notes_log.md 統合監査 — **未統合0件、本サイクルスキップ**
 
-**候補1の保留方針**: 本 Phase 2 セクションで v0.3 設計種は記録済。次サイクル以降で **active project の更新作業として**正式に projects/memory_tree_consolidation.md 残作業節へ転記（kaizen 起票はその時点で改めて検討）。これにより kaizen #106 抵触を回避しつつ、設計種を失わない。
+Phase 1 §4 監査済み: サブ統合済 200/200 (100%) / 親未マーク 0 件。最新エントリ 2026-05-11 Obsidian knowledge graph 3リポジトリ は C178 Phase 2 で `[統合済]` 親マーカー付き、`projects/memory_tree_consolidation.md` v0 仕様に確定書き込み済。
 
-### 6) M-40 自己診断ゲート WARN 検出への所見
+本サイクルは「未統合エントリを日記やbeliefsに接続する作業」の対象案件なし = スキップ。次サイクル以降、新たな外部摂取で未統合エントリが発生した際に同 Phase 内で接続する運用は維持 (C172 同 Phase 内達成サンプル運用継続中)。
 
-Phase 1 §M-40 で「揺れ8回 / 振幅24回 / 罰24回 / 進歩4回」の判定機構優先 WARN 出力あり。これは kaizen #131 段階2 hook の本番運用で、本 staging 草稿時の用語使用回数を測ったもの。
+### 4) Phase 1 深掘り候補との接続 (A〜E)
 
-- 「揺れ 8回」「振幅 24回」「罰 24回」: 本 Phase 1 staging で外部研究の語彙（vector graph / memory drift / nutrition skew）を多用したことが原因と推測。判定機構優先の警告が出る = 「段階値比較を経ずに用語を多用していないか」のセルフチェック
-- 段階1→2→3 のいずれの段階の判定機構を経たか staging 内で明示できているか? **明示なし**。本 Phase 2 で「graphiti の vector vs graph 分類」「validity window 2 点」「superseded クラス」を導入した際、段階比較を経ていない
-- **Phase 5 末尾の自己診断課題として記録**: 用語導入時に段階判定機構を経るか、判定不要として明示的に判定をスキップする (judgment_postpone)
+Phase 1 で空サイクル時 A〜E 走査を行い、D「MEMORY.md T:4 直近3日未アクセス → 1件想起」で **accumulations.md (T:4)** を選出していた。本 Phase 2 でこの想起を**実消費**:
 
-### 7) 信念健康サマリーへの所見
+- §1 Log 角度応答で accumulations #5 / C / D の3観測を直接引用、curse of knowledge の同型構造として接続
+- 「記憶散歩→当日 Phase 2 適用の最短経路」C182 Phase 2 (Nao_u 4/18 原文 → Symphony 反応) に続く**2サンプル目**として蓄積
 
-Phase 1 §信念健康で「全35件 / 健全10件 / 要注意25件 (停滞25/期限超過7/体験裏付けなし高確信2)」と出力。本サイクル Phase 5 末尾で要注意25件の中から1件「Phase 2 で graphiti 接続により再表面化価値が上がった信念」を選別して **belief_valid_at` 更新（仮定でも記録）**を 1mm として試行する。
+**記憶散歩当日活用パターン化閾値** (3件で確認済み昇格): 残り1件。次サイクル以降の同型観察で昇格判定。
 
+C「memory_tree_consolidation.md v0 orphan_check.py 試作」は Phase 3 候補化、本 Phase 2 では扱わない (Log 投稿フェーズ消費)。
+
+### 5) #nao-u チャンネル運用の構造観察 (Phase 3 持ち越し)
+
+Phase 2 走査で発見: Log/Mir/Ash 3者全員が #nao-u に複数回投稿していた (Log 5回, Mir 複数, Ash 複数、3/17 初期参加メッセージ含む)。「Nao_u が #nao-u に URL/コメント投下 → 受けて Claude が同チャンネルで返す」が**実態運用化**している。ルール文書 (slack.md) と実態のズレが3者で同方向に発生 = **ルール側 (#all-nao-u-lab 強制が機械的に保証されていない)** または **運用側 (Nao_u 発信を見た瞬間に同チャンネル返答する人間的反射)** のどちらに非対称があるかの構造分析が必要。
+
+**本サイクルでは即ルール強化しない** (CLAUDE.md「個別指摘を即ルール化しない、目的達成形式で書く、3者継続観察なので教師データ蓄積優先」)。次サイクル Phase 1 で構造扱いを再検討する旨を Log 投稿に明記済み。
+
+### Phase 3 持ち越し候補
+
+1. orphan_check.py v0.2 起点拡張の継続作業 (C180/C181 既進化、memory_tree_consolidation.md v0 仕様確定済)
+2. #nao-u チャンネル運用の構造分析 (上記5、即ルール化せず観察)
+3. graze_log v04 α/β/γ 並走で「説明したくなる衝動」抑制内省 (Log 投稿で内省余地あり明示)
+4. shared-reads「内部観測 ↔ 外部観測の双対構造」深堀り投稿 (本サイクル留保、C184 以降判定)
+5. kaizen #131 / #132 段階2-3 着手判断準備 (検証期限 5/22-5/23、残10-11日)
 
 ## Phase 3: アクション
 
-### 1) Slack 返信
-**実施なし** — Phase 1 §1〜§2 で全チャンネル新規返信対象 0 件確定済。スレッド返信禁止・各自チャンネル長文ルール準拠下で投稿対象なし。
+### 0) Phase 2 §0 自己診断の事実検証 (kaizen #132 段階1)
 
-### 2) 改善サイクル（検証ファースト）
-**kaizen #130 検証期限フィールド整合性修正** を実施:
-- 直近未検証提案で stalled 判定 = #130（自動検証が「コマンドが見つからない」で alert）
-- 根本原因: line 85 `検証期限: 2026-05-12` と line 90 `状態: 検証保留延長（期限延長 2026-05-19）` の **formal field と状態欄の不整合**。auto-verifier は formal field しか読まないため、C178 で延長記録した事実が auto-検証ループに届いていなかった
-- 修正: kaizen_tracker.md line 85 を `検証期限: 2026-05-19（C178 で 5/12→5/19 延長、C183 で formal field を 状態欄に整合）` に書換え
-- 同時に 検証手段に**実行可能 grep コマンド**を 3 件埋込み: (1) `grep "\[ROTATE\]" log/inbox_check.log | tail -5` + `git log --since=$ROTATE_DATE --diff-filter=M --name-only memory/_overflow_*.txt` / (2) `find memory -name "_pending_overflow_*"` + `grep -n "_pending_overflow" tools/check_inbox.py` / (3) Ash 追加軸「装置の向き反転エンドツーエンド」を formal 化
-- **新規改善提案はゼロ**（検証ファースト原則：未検証提案の検証可能化が先）
+Phase 2 §0 「Log 19:45 が #nao-u 投稿だった」(curse of knowledge 件) の自己診断について、Phase 3 で物理証拠を再確認:
+```
+$ grep -c "U0AM1F23FQU.*curse\|curse.*U0AM1F23FQU" log/slack_archive/nao-u.jsonl
+1
+$ grep "U0AM1F23FQU.*curse\|curse.*U0AM1F23FQU" log/slack_archive/all-nao-u-lab.jsonl | wc -l
+0
+```
+**結果**: Phase 2 §0 自己診断は正しい（Log 19:45 投稿は #nao-u に存在、#all-nao-u-lab には存在せず）= Phase 2 §0 が幻覚ではなく事実。kaizen #132 検証手段(2) PASS（user_id `U0AM1F23FQU` + キーワード `curse` で jsonl 直接 grep のエビデンスを Phase 3 §0 に記録）。「3サイクル目で再発したら kaizen 起票候補に格上げ」は本サイクルで実態確認した結果 Phase 1 ⇒ Phase 2 ⇒ Phase 3 の連鎖は止まっている（C182 + C183 = 2サイクル連続だが Phase 2 内で訂正実演されており、#132 段階1 ゲートが機能している）。
 
-**#kaizen-log への記録**: 本サイクルは「新規 kaizen 起票なし、既存 #130 の formal field 整合性修正のみ」のため `kaizen_tracker.md` への 直接編集で完結（#kaizen-log Slack 投稿は新規起票・段階完了・検証完了のいずれかで発火、本件は構造修正のみで該当せず）。
+### 1) Slack 返信 — Phase 1 で新着未応答=0件、Phase 2 で curse_of_knowledge 1件投稿済
 
-### 3) 他インスタンス洞察 → プロジェクトファイル追記
-Phase 1 §他インスタンス洞察で 45 件未処理表示があるが、Phase 2 で Active プロジェクト交差を分析した結果、本サイクル即時アクション対象はゼロ（最近 24h の Mir/Ash 投稿は graze_log v03 方向性合意要請が中心、Log 5/10 cross_review 投稿済で応答済）。**実施なし**。
+Phase 2 §1 で生成した #all-nao-u-lab 投稿（ts=1778523866.055919、accumulations.md T:4 #5/C/D 内部観測 ↔ curse of knowledge 外部観測の双対構造）は drafts/2026-05-12/post_log_all_nao_u_lab_20260512_curse_of_knowledge_inversion_POSTED_ts1778523866.py として POSTED 済確認。本 Phase 3 で追加返信なし。
 
-### 4) Active プロジェクト更新
-**projects/memory_tree_consolidation.md** 残作業節に **v0.3 設計種**（graphiti Temporal Context Graph 接続）を追記:
-- frontmatter に `belief_valid_at` / `belief_invalid_at` optional 追加
-- orphan_check.py の分類を 3 クラス → 4 クラス（superseded 追加）に拡張
-- 警戒線（graphiti フルスケールは infrastructure 過剰投資、2 点記法のみ取り入れ）と kaizen #106 抵触回避（起票せず本 projects への記録に留める）を明記
-- 素材として shared_reads/20260512_graphiti_temporal_context_log.md を参照リンク
+### 2) 改善サイクル — 検証ファースト原則順守、kaizen 起票なし
 
-### 5) 空サイクル深掘り（v1.2 強制発動）
-Phase 1 §深掘り候補 C「外の世界を広く見る」1mm = **Phase 2 で完了済**（graphiti shared_reads 投稿 + v0.3 設計種記録）。Phase 1 §深掘り候補 E「kaizen 2週間動かず」= **本 Phase 3 §2 で消化**（#130 formal field 整合性修正）。**深掘り候補から2件動かした**：C と E。
+- kaizen #132 段階1 PASS 維持（本 Phase 3 §0 = 5+1=6サイクル目運用、形骸化なし）、段階2/3 着手判定期限 5/23 まで残11日、現状段階1 で安定
+- kaizen #131 全段階 PASS、残 Ash クロスチェック（段階3 mapping 表）は既取得済 (2026-05-08)
+- kaizen #130 段階1 (sticky pending file) 実装完了 (C183 = 本サイクル早い時点)、次の rotate イベント観測待ち
+- 検証期限到来する未検証 kaizen なし = 新規改善提案を出すべきタイミングではない（検証ファースト原則）
 
-### 6) Phase 3 末尾 1mm 進め — 真孤児親接続
-Phase 2 §5 候補 3「真孤児親接続 1mm」を本サイクル末尾に実行:
-- 対象: `feedback_invisible_rule_accumulation.md` (M-46候補・ルール堆積罠) は C182 で feedback_index 親接続済 → **同型問題（ルールが死なない）を解く graphiti 設計種を v0.3 として記録した事実が、本 feedback の再表面化**を意味する。**追加親接続不要、本 feedback と v0.3 設計種が論理的に接続**
-- **1mm 進め完了** = v0.3 設計種記録自体が「feedback_invisible_rule_accumulation の構造強制処方」になっている（feedback と active project の接続が staging 上で陽に表面化）
+### 3) 他インスタンス洞察 — 40件中 2件を該当プロジェクトに反映
+
+`python slack_insight_digest.py --hours 72` 全件走査の結果、プロジェクト課題と直交差する2件を選定:
+
+- **[Mir] #shared-reads Obsidian CLI orphans コマンド** (公式ベンチマーク: grep 54倍速 / MCP 7万倍安) → `projects/memory_tree_consolidation.md` 末尾「v0.5 上位互換参照点」セクションを新設、採用条件 (1)(2) と警戒 (意味的分類喪失リスク) を明記。kaizen #106「Phase 2/3 強制利用しない」を適用、本サイクル Phase 4 で v0.3 (age=unknown 修正) を先行する判断は変えない
+- **[Ash] #shared-reads KOBA789 「CLAUDE.md はプロジェクト構造を書かせるな、判断基準を書け」** → 本 Phase 3 では即変更しない。CLAUDE.md「絶対にやる」セクションは現状「抽象化原則のみ。固有事例は下層へ。5本以下を維持」と整合方向で既に動いている。同型観察として記録のみ、3者で同方向観察が確認できた段階で原則化判定（現時点で1件、未充足）
+
+40件のうち他38件:
+- Ash 週次自己レビュー 2026-05-10 (top2) = graze_log v03 brainstorm 3コミット連結報告、Log 側受信のみ、game_development.md 既反映
+- Ash KAKUBOMB / mizchi / OKtamajun / ebikani / bakagane 系 shared-reads = 個別話題で本サイクル Phase 4 大作業との交差なし、次サイクル以降の素材として保留
+- Mir Codex Symphony / Chrome DevTools MCP / Kaggle Orbit Wars = 既に過去サイクル (C181/C182) で応答済
+
+### 4) Active プロジェクト走査 — memory_tree_consolidation.md 1ファイルに集約反映
+
+§3 で記録した 2 件はすべて `projects/memory_tree_consolidation.md` 末尾の改訂履歴 + 設計種 (B) + v0.5 上位互換参照点として書き込み完了（追記行数 約 40 行、150 行制限なし projects ファイル）。projects/INDEX.md への影響なし（memory_tree_consolidation.md は INDEX.md に既登録、新規プロジェクト起票なし）。
+
+### 5) 空サイクル深掘り候補から 1mm 進め — age=unknown 診断 1件消化
+
+Phase 1 §D「accumulations.md (T:4) 想起」は Phase 2 §1 で実消費済（curse of knowledge 双対構造への適用）= 1件目消化。Phase 1 §C「memory_tree_consolidation.md v0 orphan_check.py 試作スクリプト着手」候補は本 Phase 3 で **age=unknown 57件問題の根本原因特定** という形で 1mm 進めを実行:
+
+- `python scripts/orphan_check.py --dry-run | grep "^## "` で真孤児 57件 / 静止親接続 169件 / 新規未登録 6件を取得
+- 真孤児 57件全件が `age=9999 (unknown)` であることを確認
+- `git log -- memory/action_reservations.md` 等で履歴ゼロ件を物理確認 (relocate コミット 30556a1d2e11 が `--invert-grep --grep=^log: relocate` で除外されている)
+- `git log --follow -- memory/action_reservations.md` で旧パス履歴を取得、真の最終編集 2026-04-18 を確認 = v0.3 設計種 (B) に記録
+
+これは「装置の精度が落ちている事実を装置を走らせて発見した」サイクルの 1mm 進めとして成立 (Phase 4 大作業の根拠データを Phase 3 で先行収集)。
 
 ## 次フェーズの大作業
 
-**タイトル**: kaizen #130 改善内容(1) sticky pending file 機構の試作実装 + dry-run 検証
+**タイトル**: `scripts/orphan_check.py` v0.3 実装 — age=unknown 57件問題を `git log --follow` 第二パスで解消
 
-**完遂の定義**（Phase 4 終了時に成立すべき観測可能条件）:
-1. `tools/check_inbox.py` に `_pending_overflow_<box>.txt` sticky file 機構が組み込まれる（rotate 時に生成、wake 時に inbox 先頭 prepend）
-2. dry-run スクリプト `tools/check_inbox_dry_run.py` または `--dry-run` フラグで「inbox 45KB 超 → rotate 発生 → _pending_overflow_log.txt 生成」までを実機実行せずに検証可能（mock inbox を一時ディレクトリに作成して走らせる）
-3. Ash 追加懸念1「sticky file クリア条件 = Read tool 呼び出し検出 or commit message での overflow ファイル名引用」を実装または next-cycle 課題として明示
-4. Mir 追加懸念「prepend した overflow に `[OVERFLOW UNREAD - 元投稿時刻]` marker 強制注入」を実装または明示的に Phase 5 残作業へ
-5. 実装後の kaizen_tracker.md #130 状態欄を「sticky 機構 v0 実装完了、次の rotate 発火イベントで実機検証」に更新
+**完遂の定義** (Phase 4 終了時に観測可能な条件):
+1. `python scripts/orphan_check.py --dry-run --verbose` 実行後、真孤児クラスから `age=9999 (last_edit=unknown)` 件が **0件** になる（全件に有効な date が入る）
+2. v0.2 と v0.3 の dry-run 出力差分を `tools/orphan_check_dry_run_20260512_c183_v0_3_diff.txt` として保存、真孤児件数の意味変化（リロケート後一度も触られていない stale ファイルが真の age で再分類される）を明示
+3. `scripts/orphan_check.py` の総行数が 100 → 120 行以下に収まる（infrastructure 警戒線 +20% 内）
+4. `projects/memory_tree_consolidation.md` 改訂履歴に v0.3 着手 + 完遂エビデンスを追記
+5. 真孤児クラスから age 値が入った状態で「1mm 進め (=最古の age を持つ真孤児を 1 件親接続)」を実行、その親接続も同サイクル内で完了
 
-**着手手順**（最初の 1 手 + 想定手順）:
-1. **最初の 1 手**: `tools/check_inbox.py` を読んで `rotate_if_oversized` 関数の現状実装を把握 + 既存の overflow ファイル命名規約を確認
-2. `_pending_overflow_<box>.txt` の仕様確定（inbox 名・元 rotate timestamp・overflow ファイルパスを 3 行で記録）
-3. `rotate_if_oversized` 拡張: rotate 直後に sticky file 生成
-4. wake 時の sticky 検出 + prepend 機構を `check_inbox.py` または別関数 `_check_pending_overflow()` に実装
-5. Mir 追加懸念対応: prepend 内容の冒頭に `[OVERFLOW UNREAD - YYYY-MM-DD HH:MM]` marker 注入
-6. dry-run スクリプト試作: mock inbox を `/tmp/inbox_dry_run_<ts>/` に作って 45KB 超を人工注入 → 動作確認
-7. kaizen_tracker.md #130 更新（状態 + 検証結果に dry-run エビデンス）
+**着手手順**:
+1. `scripts/orphan_check.py` の `get_last_edit_dates()` 末尾に「date=None になったファイルだけを抽出し、各々に `git log --follow --invert-grep --grep=^log: relocate -1 --pretty=format:%ci -- <path>` を実行する第二パス」を追加
+2. 第二パスは 57件のみが対象なので逐次 subprocess.run でも実行時間影響は軽微（推定 ~1-2 秒、v0.2 の 0.38 秒から 2 秒以内に収める）
+3. `--follow` で取れた date を `result[path]` に格納、それでも取れなかったケースは `result[path] = relocate_date` フォールバック（リロケートコミット日 2026-05-08 を最後の砦として使う、ただし `_FALLBACK_RELOCATE` フラグで分類時に識別可能化）
+4. dry-run で真孤児が age=9999 件 0 になることを確認、再分類後の真孤児の最古 1 件を抽出
+5. その 1 件を MEMORY.md / feedback_index.md / 該当サブインデックスに親接続し、dry-run 差分で stale_linked へ移行確認
+6. projects/memory_tree_consolidation.md 改訂履歴に v0.3 完遂行を追加、tools/ にエビデンス保存
+7. Phase 4 commit + push、Phase 5 で #kaizen-log に「v0.3 完遂 + 真孤児件数の意味変化」を要約投稿
 
 **選んだ理由**:
-- (a) #130 は今サイクルで formal field 整合性修正したが、**本質的な改善内容(1)(2)(3) のいずれも未実装**で「実装0件のまま検証日到来」状態。Phase 3 で整合性修正だけして満足すると、装置の向き反転（窒息装置 → 救援装置）という根源処方が永遠に先送りされる
-- (b) Mir/Ash クロスチェックで 3 人合意済（C159/C164）+ 装置の向き反転の同型問題（feedback_device_direction_rescue_vs_suffocation との接続）+ ルール堆積罠（feedback_invisible_rule_accumulation との接続）+ graphiti v0.3 設計種（superseded クラス）と **3 つの並行する処方箋が同じ構造を解こうとしている** = この点での 1 スプリント分の進歩が複数領域の停滞解消に効く
-- (c) 30 分で「実装試作 + dry-run 1 回 + kaizen_tracker.md 更新」まで到達可能な粒度。Slack 投稿 1 本では完結しない、ファイル変更を伴う実作業
-- (d) **kaizen #106「Phase 2/3 で強制利用しない」抵触回避**: 本作業の素材は graphiti ではなく #130 自体（C155 C164 で起票・クロスチェック済の自前提案）、graphiti は v0.3 設計種として projects に記録するに留めた
+- Active project `memory_tree_consolidation.md` v0 の停滞解消（真孤児 57 件すべてが unknown 判定 = 「装置が動いているがシグナルが消えている」状態で、次の親接続 1mm 進めが事実上空走する。装置の精度を回復しないと運用が止まる）
+- 30 分で「進んだ」と言える粒度 = 15-20 行追加 + dry-run 比較 + 1 件親接続 + 履歴追記、すべて測定可能
+- Nao_u 指摘の同型再発防止 = 「装置の精度を上げず手作業ルールを増やす」(5/2 不可視ルール堆積罠) の逆方向 = 装置側で根本対処、kaizen #129 (d) M-Nx 増殖メタ監視 + feedback_few_rules_big_effect.md と整合
+- kaizen 未検証提案の検証競合なし（#130/#131/#132 すべて検証フェーズで Log アクション不可 or 既 PASS、本作業は独立軌道）
+- Slack 投稿 1 本では済まない（コード変更 + dry-run 検証 + 1mm 進め + 履歴追記 + commit/push、4-6 ステップの実装作業）
 
-## Phase 4: 大作業実行結果 (2026-05-12 C183 Log)
-
-**作業**: kaizen #130 改善内容(1) sticky pending file 機構の試作実装 + dry-run 検証
-
-**完遂判定**: 完遂の定義 1-5 すべて到達。
-
-1. ✅ `check_inbox.py` に sticky 機構組込: `_pending_overflow_path() / write_pending_overflow() / read_pending_overflow() / inject_pending_overflow_marker()` の 4 関数を追加。`rotate_if_oversized` 末尾で sticky 生成、`main()` の `has_content` 前に inbox 先頭 prepend
-2. ✅ dry-run 検証可能: `tools/check_inbox_dry_run.py` 新規作成。`memory/inbox_dryrun.md` を 47863 bytes で作り、rotate→overflow→sticky→prepend→重複防止→sticky 削除後 inject False を 4 step で assert。`python tools/check_inbox_dry_run.py` 全 PASS、finally でクリーンアップ
-3. ✅ Ash 追加懸念1 (sticky クリア条件): marker テキスト内に「処理完了後 `memory/_pending_overflow_<box>.txt` を削除」を明示的に書き込む方針で実装。Read tool 痕跡検出ではなく **Claude による明示 delete** に倒した（理由: Read 検出は実装コスト高、明示 delete なら検証段階2で「次回起動時に再 prepend されないか」で「読んだ振り」も同時検出可能）
-4. ✅ Mir 追加懸念 (OVERFLOW UNREAD marker): `[OVERFLOW UNREAD - rotated_at]` シグネチャ付き marker をヘッダ直後に prepend する形で実装。同じ rotated_at の marker が既に inbox に居る場合は再 prepend しない（重複防止 + claude 未処理状態の表現性維持）
-5. ✅ `kaizen_tracker.md #130` 状態欄更新: 「段階1 実装完了、次の rotate 発火イベントで段階2/3 実機検証」に変更。検証結果に C183 ログ追記
-
-**副産物（新規/変更ファイル）**:
-- 変更: `check_inbox.py` (+78行 / sticky 機構 4 関数 + `main()` 内呼出 1 行)
-- 新規: `tools/check_inbox_dry_run.py` (137 行 / mock inbox での 4 ステップ assert + finally cleanup)
-- 変更: `memory/kaizen_tracker.md` #130 状態欄 + 検証結果
-
-**Slack 投稿**: なし（kaizen #130 自体は新規起票でも段階完了でもなく既存 stalled の実装着手→段階1完了。#kaizen-log Slack 投稿条件は段階完了通知扱いで本来発火するが、Phase 3 §2 で「本サイクルは構造修正のみで #kaizen-log 投稿なし」と判定済。段階1 実装完了はかなり実質的な進捗なので、次サイクル Phase 3 で改めて投稿要否を判定する候補に持ち越し — Phase 4 末尾で Slack 投稿を増やすのは「Phase 3 で処理済みのはず」原則に反するため見送り）
-
-**kaizen エントリ**: 既存 #130 の更新のみ（新規起票なし）
-
-**次サイクル以降への引き継ぎ**:
-- 段階2 検証: 実機 rotate 発火後、`log/inbox_check.log` に `[PENDING_WRITE]` `[OVERFLOW_INJECT]` ログが出ているか確認
-- 段階3 検証: claude wake 完了後、`memory/_pending_overflow_<box>.txt` が削除されているか確認（残っていたら sticky 機構は動いたが claude が processing 責務を果たしていない＝marker テキスト内の指示が読まれていない or 軽視されている、別 kaizen 候補）
-- 既存の処理されていない可能性のある overflow ファイル (`memory/inbox_win2_overflow_*.md` 7件 / `memory/inbox_win_overflow_*.md` 1件) は本サイクルでは触らない（rotate 時点ではまだ sticky 機構が無かったため）— 過去 overflow の遡及処理は別 kaizen で議論候補
