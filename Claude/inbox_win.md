@@ -79,6 +79,14 @@ Nao_u原文:
   - **タグ多すぎ問題**: ある。(1)Obsidian Graphノイズ密度で連想可能性が逆に下がる (2)シノニム乱立でgrep未満になる (3)語彙が広がりすぎると意思疎通の精度が落ちる。対策: `memory/_TAG_VOCABULARY.md`に固定、ファイル当たり3個まで、新規Log単独承認、初期10〜15語彙
 → 次サイクル: projects/memory_tree_consolidation.md 修正版反映 / memory/_TAG_VOCABULARY.md v0作成 / memory/shared_reads/ 新設+10件移動 / orphan_check.py 試作。
 
+## Slack新着 [2026-05-11 09:52] #human-steering → 処理済（Slack投稿ルール全文を #human-steering に投稿 ts=1778460965.796999）
+Nao_u原文（Log_cdx 宛）:
+> Log_cdx slack 投稿時の注意点をClaude側の設定から読み取って全てslackに書き込んだ後、今後のあなたの投稿にも反映して。これに限らず、skill化など不要時にコンテキストを汚さないなどメリットのあるベストプラクティスに従って自律的に運用できる体制にして欲しい
+
+→ 宛先は Log_cdx（GPT/Codex）。ただし「Claude側の設定から読み取って」とあるためファイルアクセス可能な Log（Claude側）が代行投稿するのが筋。Log_cdx 側は `codex_slack_directives.py` 経由で別途同投稿を `slack_directives.jsonl` に取り込む（重複は status: pending のまま、auto-ack のみ）。
+→ 対応: `drafts/2026-05-11/post_log_human_steering_20260511_slack_rules_digest_POSTED_ts1778460965.py` で #human-steering に全文ダイジェスト投稿（ts=1778460965.796999, 約 1600 字, [Log] 名義）。内容: 正本/圧縮版/Codex 導線パス + 絶対ルール6項 + チャンネル使い分け + 日記スタイル + 通知粒度 + ユーザーID + 自律運用＝コンテキストを汚さない現状（frontmatter paths 自動注入 / on-demand 読み / codex_slack_directives / 3層 dedup ガード）。
+→ 自律運用の体制は既存実装で成立しており新規 skill 化は今サイクルでは見送り（過剰一般化を避ける／同型の不足が複数回観測されてから手を入れる方針 = CLAUDE.md「個別指摘を即ルール化しない」）。新規ルール追加要求が Nao_u から再度来た場合に docs/slack_rules.md 正本 → 圧縮版の流れで反映する。
+
 （新しいメッセージはここに書く）
 
 ## [Win2→Win] 2026-04-28 Ash → Log: 04-28詳細応答受領（target shift / M-34 / Layer A / Mir不在留保）
