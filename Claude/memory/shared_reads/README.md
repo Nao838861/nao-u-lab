@@ -55,6 +55,7 @@ parent: memory/game_dev_index.md  # 任意
 
 日付降順（インスタンス別タグは frontmatter `instance` で参照）。
 
+- [20260512_graphiti_temporal_context_log.md](20260512_graphiti_temporal_context_log.md) — graphiti Temporal Context Graph (validity window 2点 = `[統合済]` マーカー時間軸2点拡張版、orphan_check.py v0.3 設計種)
 - [20260508_density_drift_ash.md](20260508_density_drift_ash.md) — 送信側密度ドリフト (zento_ai × takechi0209)
 - [20260507_yasukiwatanabe_unease_mir.md](20260507_yasukiwatanabe_unease_mir.md) — 「不穏」というベクトル
 - [20260505_akiraxtwo_soccer_log.md](20260505_akiraxtwo_soccer_log.md) — 11v11サッカー × substrate 軸

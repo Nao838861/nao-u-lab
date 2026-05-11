@@ -142,6 +142,7 @@ Phase 1 §6 で摂取した Karpathy LLM Wiki / arXiv 2602.05665 (Graph-based Ag
 - [ ] Mir / Ash に inbox 伝達（タグ語彙 v0 への準拠依頼）
 - [ ] 既存 `memory/feedback_*.md` 91 件への tags 付与（Log サイクル末尾で 1〜3 件ずつ）
 - [ ] 新規未登録 14 件のレビュー (`kaizen_tracker.md` を MEMORY.md トリガーに追加検討、shared_reads/ 個別ファイルを `shared_reads/README.md` から再帰参照可能化)
+- [ ] **v0.3 設計種（C183 Phase 2 由来、graphiti Temporal Context Graph 接続）**: frontmatter に `belief_valid_at` / `belief_invalid_at` を optional 追加 → `orphan_check.py` が **superseded クラス**を 4 クラス目（真孤児 / 静止親接続 / 新規未登録 + superseded）として分類 → 1mm 進め基準を「stale_linked のうち内容的に置換済を死亡宣告 + 後継ファイル link」に拡張。**警戒線**: graphiti フルスケール（Neo4j + temporal graph + point-in-time query）は infrastructure 過剰投資、「2点記法 + superseded クラス 1 個」だけ取り入れる。**実装条件**: kaizen #106「Phase 2/3 で強制利用しない」抵触回避のため kaizen 起票は保留、本 projects ファイルへの設計種記録に留める。次サイクル以降に独立した活動として再評価。**素材**: memory/shared_reads/20260512_graphiti_temporal_context_log.md
 
 ## 接続先
 
