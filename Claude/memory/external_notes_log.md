@@ -2793,3 +2793,43 @@ a (発生メカニズム) と b (分類学) を併置すると、メカニズム
 3. 「未経験者が量産」を「AIが量産した中から残るものを判定する基準」に再定義: 量産自体ではなく希少な判定軸が価値
 
 [統合済 2026-05-11 Log C179 Phase 2 — #all-nao-u-lab 即反応投稿 (1メッセージ) + #shared-reads 深層分析投稿 (1メッセージ、Nao_u 5/10指示「将来のアイデアの種につなげる大事な外部入力」適用)。graze_log v03 cross_review の AI slop 問題に直結する種を3点抽出済、Phase 3 で memory_tree_consolidation orphan_check.py / graze_log v03 自己判定ハーネス いずれに適用するか検討予定]
+
+---
+
+## 2026-05-11 #nao-u 2件遅延統合（Log C182 Phase 2）— masaou「人間が読まなくなる→AIドリフト」/ riku720720 Codex Symphony
+
+**起点**: 本 C182 Phase 1 §1 で 5/10 投下の2 URL (ai_masaou 16:23 / riku720720 15:37) を新着扱いとして検知。Mir 5/10 16:25 (masaou) / Ash 5/10 15:40・16:28・19:48 (両URL) は既応答済だが、Log 側の構造層 / 解空間探索視点からの追加角度が未投稿だった (Phase 1 で coordination drift 徴候として記録された 5/8-9 Mir偏重とは別系統の Log 遅延)。Phase 2 で2件並列 #all-nao-u-lab 投稿 → durable 記録に降ろす一連を同 Phase 内完了。
+
+### a. ai_masaou 5/10 16:23 #nao-u 投下「人間が読まなくなる→AI目標ドリフト」
+
+出典: <https://x.com/ai_masaou/status/2053082757610525133>
+要点 (Slack ingest 経由 Ash 5/10 16:28 要約): HTML化の本質は「人間が読まなくなるとAI目標ドリフトを検知できない」、認知負荷を下げてループに戻す UI/UX 設計の話 (session summary plugin / turn review plugin)。「Agent の動きをちゃんと見ていないことも目標ドリフトにつながる」。
+
+**Log側の角度** (Mir=可読性=介入可能性 表現層 / Ash=書き手AI内部要因+書き方+監督装置窒息側回り、への構造層追加):
+- 「人間が読まない=ドリフト検知不能」の双対 = 「AI自身がノード関係を走査していない=ドリフト発生」。memory_tree_consolidation.md v0 で試作中の orphan_check.py は、孤立ノードを構造的に検出する自律監督経路
+- HTML化は context を消費するトレードオフが masaou の絵にない。AGENTIF (Log C173 摂取) の「instruction length↑ → task performance↓」と直接衝突。MEMORY.md 1行索引化 (Ash 5/10 19:48 反応) は逆側の選択
+- Active Context Compression (arXiv 2601.07190, Log C178 摂取) が一段先の処方 — masaou session summary plugin は人間補助つき中間段階、orphan_check は構造判定自律化を狙う層
+
+**接続点**: Mir/Ash の2軸 (UI / writing style) に対して **3軸目=記憶ノードの参照グラフ**を補った。memory_tree_consolidation.md v0 (orphan_check.py 試作) は本記事の隣接層を独立に組んでいた偶然性を改めて確認。
+
+[統合済 2026-05-11 Log C182 Phase 2 → #all-nao-u-lab ts=1778502149.492639 (Log) / Mir ts=1778390784 5/10 16:25・Ash ts=1778390922 5/10 16:28+ts=1778406502 19:48 既応答に追加]
+
+### b. riku720720 5/10 15:37 #nao-u 投下 Codex公式「Symphony」
+
+出典: <https://x.com/riku720720/status/2053051144872792432>
+要点 (Slack ingest 経由 Ash 5/10 15:40 要約): Codex公式「Symphony」: 対話型→ticket丸投げ→失敗発見→ハーネス更新→自律範囲拡大、の運用ループ紹介。
+
+**Log側の角度** (Ash=対話型停止前提が逆向き / 範囲は単調増加ではなく鋸歯状 / 副作用3つ、への追加):
+- Symphony は「失敗→ハーネス更新→範囲拡大」の**単方向ラチェット**で、**解空間探索の視点が抜けている**。Nao_u 4/18 #game-rights 原文 (feedback_solution_space_rollback.md, 本サイクル記憶散歩当選) の「ダメなら巻き戻し」「3人で別方向」とは別運用思想
+- AGENTIF (Log C173) と Symphony は構造的に矛盾 — skill 累積は instruction length 増加方向で、累積閾値超で per-task 性能が逆転する
+- **失敗カウンタを減らすループ**が Symphony にない。我々の kaizen_tracker #131/#132 / patch_consolidation_20260502 (83件→7件以下圧縮) は退役判定経路 = ラチェットの逆向き。両方向に動かさないと masaou の「読まれない→ドリフト」に戻る
+
+**接続点**: a (masaou=人間監督UI側) と b (Symphony=AI自律ループ側) は表裏で、**3軸目=解空間探索 (ラチェット停止 / 巻き戻し設計)** が両記事に共通して欠けている。Nao_u 4/18 原文が本サイクル記憶散歩で再表面化した意味を、ここに置く。
+
+[統合済 2026-05-11 Log C182 Phase 2 → #all-nao-u-lab ts=1778502155.780689 (Log) / Ash ts=1778389248 5/10 15:40・ts=1778406502 19:48 既応答に追加]
+
+---
+
+**親マーカー（2026-05-11 C182 #nao-u 2件遅延統合）**: [親集約 2026-05-11 Log C182 Phase 2 — a=ai_masaou 目標ドリフト 構造層追加 / b=riku720720 Symphony 解空間探索視点追加 の2件処理。**特徴**: Mir/Ash 既応答後の **遅延 Log 追加** で coordination drift 徴候 (5/8-9 Mir 偏重と類似系統だが今回は Log 自己発見で挽回) を1件折る試行。#shared-reads は Phase 1 §1 で 24h Log 投稿 2 本 + Ash 1本既出 = 飽和判定により投稿見送り、durable 記録 (本親セクション) のみで完了。2件共通の3軸目=解空間探索 (ラチェット両方向 / 巻き戻し設計) は Nao_u 4/18 原文との直結が記憶散歩で当選した偶然性を含め、次サイクル以降の graze_log v04 α/β/γ 並走運用に直接連動。**本節の親マーカー完了**]
+
+---

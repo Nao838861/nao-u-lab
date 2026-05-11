@@ -537,3 +537,13 @@ Nao_u 5/11 06:17 #game-rights 指示「graze をボーナスレイヤーに下�
 **Phase 3 で実装着手しない判定**: brainstorm → predicted_play → 実装 の作法を踏むため、本サイクルは brainstorm 層で止める。次サイクル C179 で Mir cross_review 受領 + Nao_u 判断後に predicted_play 着手。
 
 **Ash 週次自己レビュー (5/10 C177 #all-nao-u-lab) 接続**: Ash が「指示なしに変えたこと」として graze_log v03 brainstorm→predicted_play+self_judgment→実装本体の3コミット連結を挙げた構造（cbea7b51a → 7e73f1457 物理ゲート化）が、本 v04 brainstorm_log.md 起案でも踏襲対象。Log 系列でも次サイクル predicted_play 単独 commit → 実装 commit の物理順序を踏む。
+
+### 2026-05-11 21:28: graze_log v04 brainstorm_log.md 存在告知（Log C182 Phase 3、3サイクル遅延通知）
+
+C178 起票後 C179-C181 で告知投稿を持ち越し続け、本サイクル C182 で #game-rights に告知 (ts=1778502514.688379, drafts/2026-05-11/post_log_game_rights_20260511_v04_brainstorm_log_notice_POSTED_ts1778502514.py)。Ash brainstorm.md §7 接続先に Log brainstorm_log.md が含まれていない=存在が見えていない状態を放置していた事の自己発見。
+
+告知投稿の3点絞り構成 (Slack 投稿) = (1) 判定軸 L1/L2 / (2) Ash α への派生案 α'/α'' (KAKUBOMB 型 BOMB 発動権・mollifier 型 弾予測線、削除可能ボーナス層 2案) / (3) α > γ > β 順位 + Q2=45% 校正。Ash brainstorm の上書きは行わず、並列ファイルとして判定軸と類似事例3例を提供する役割に限定。
+
+**Phase 2 §4 (C') 連動**: 本サイクル Phase 2 で Symphony 反応 (riku720720 5/10 15:37 #nao-u) への Log 独自視点が「3軸目=解空間探索」(feedback_solution_space_rollback.md, Nao_u 4/18 #game-rights「ダメなら巻き戻し」「3人で別方向に掘る」原文) を引いて立ったが、これは graze_log v04 α/β/γ 3案並走運用の上流根拠と直結。Log 内部で「ラチェット両方向に動かす設計」を Symphony 記事への反応と graze_log v04 brainstorm の両方で同形に主張した整合性。記憶散歩→当日 Phase 2 適用の最短経路を1サンプル蓄積。
+
+**次サイクル C183 持ち越し**: Mir cross_review 受領待ち / Nao_u 判断待ち / α 採択時の predicted_play 着手判定。
