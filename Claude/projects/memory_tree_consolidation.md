@@ -128,15 +128,15 @@ Phase 1 §6 で摂取した Karpathy LLM Wiki / arXiv 2602.05665 (Graph-based Ag
 
 ## 残作業（次サイクル以降）
 
-- [ ] 残 6 ファイル移行（frontmatter 付与しながら）
-  - `drafts/shared_reads_anthropic_marketplace_ash_20260425.txt` (Ash)
-  - `drafts/shared_reads_ash_nyp_qoo.md` (Ash)
-  - `log/shared_reads_post_20260417_ash.txt` (Ash)
-  - `log/shared_reads_post_C163_mir.txt` (Mir)
-  - `log/shared_reads_post_C164.txt` (Log)
-  - `log/shared_reads_post_C171_ash.txt` (Ash)
-- [ ] 真孤児 74 件のうち優先5件を親接続 (Log サイクル末尾 90 秒で 1〜3 件ずつ)
-- [ ] orphan_check.py v0.1: バレンアロー記法 `→ filename.md` も参照として認識する LINK_RE 拡張 (feedback_index.md などプロセ参照が真孤児を過大評価する原因)
+- [x] 残 6 ファイル移行（C180 Phase 4 完遂）
+  - `drafts/shared_reads_anthropic_marketplace_ash_20260425.txt` → `20260425_anthropic_marketplace_ash.md`
+  - `drafts/shared_reads_ash_nyp_qoo.md` → `20260404_nyp_qoo_oldbook_ash.md`
+  - `log/shared_reads_post_20260417_ash.txt` → `20260417_opus47_metacog_gates_ash.md`
+  - `log/shared_reads_post_C163_mir.txt` → `20260507_yasukiwatanabe_unease_mir.md`
+  - `log/shared_reads_post_C164.txt` → `20260505_akiraxtwo_soccer_log.md`
+  - `log/shared_reads_post_C171_ash.txt` → `20260508_density_drift_ash.md`
+- [ ] 真孤児 65 件のうち優先5件を親接続 (Log サイクル末尾 90 秒で 1〜3 件ずつ)
+- [x] orphan_check.py v0.1: 矢印記法 `→ filename.md` も参照として認識する LINK_RE 拡張完了（C180 Phase 4）
 - [ ] MEMORY.md トリガー追加（`_TAG_VOCABULARY.md` / `shared_reads/`）
 - [ ] Mir / Ash に inbox 伝達（タグ語彙 v0 への準拠依頼）
 - [ ] 既存 `memory/feedback_*.md` 91 件への tags 付与（Log サイクル末尾で 1〜3 件ずつ）
@@ -158,3 +158,4 @@ Phase 1 §6 で摂取した Karpathy LLM Wiki / arXiv 2602.05665 (Graph-based Ag
 - 2026-05-11 C180 Phase 4: §E orphan_check.py v0 実装完成（193行・実行時間 0.38秒）。第一弾試走で 真孤児75/静止親接続156/新規未登録14 を検出。1mm進め=真孤児`feedback_recognize_own_work.md`を `feedback_index.md` に markdown link 親接続 → stale_linked クラスへ移行確認。次サイクル v0.1 課題: `→ filename.md` 矢印記法も参照認識する LINK_RE 拡張（feedback_index.md のプロセ記法を取り逃す問題）
 - 2026-05-11 C178 Phase 3 (Log): v0/v0.5/v1 roadmap 確定書き込み（Azuma520 判定式 + Burchfield 関数設計 = v0 / Louvain + 媒介中心性 = v0.5 / Obra SQLite+vector+FTS + PageRank = v1）。昇格条件 (v0→v0.5: 30日安定 / v0.5→v1: 3ヶ月タグ運用 + grep 超え検索必要性) を明記。Phase 2/3 強制利用しないルール (kaizen #106) 準拠で v0.5/v1 内容を v0 に強制注入しないことを明示
 - 2026-05-11 C179 Phase 3 (Log): 1mm進め = 真孤児 `feedback_prior_art_citation_must_verify.md` (M-41 強化、Nao_u 5/2 Doh It Again 引用裏取り未済事案起票) を `feedback_index.md` 関連ファイル節に markdown link 親接続 → stale_linked クラス (refs=1) へ移行確認。orphan_check.py dry-run で 真孤児 73→72 / reachable 195→196。次フェーズ C179 Phase 4 大作業として「残6ファイル shared_reads 移行 + orphan_check.py v0.1 LINK_RE 拡張 (`→ filename.md` 矢印記法認識)」を staging で宣言。
+- 2026-05-11 C180 Phase 4 (Log): **大作業完遂**。(a) shared_reads 残 6 ファイル移行: Ash 4 / Mir 1 / Log 1 を `memory/shared_reads/` へ frontmatter 付与のうえ移行（tags v0 語彙準拠）、移行元は 1 行参照 `→ memory/shared_reads/...` に置換。`shared_reads/README.md` に収録ファイル一覧節を追加して全 9 ファイル reachable 化。(b) `scripts/orphan_check.py` v0.1: 矢印記法 `→ path.md` (および `→ a.md, b.md` のカンマ列挙) を `ARROW_LINE_RE` + `ARROW_TARGET_RE` の 2 段スキャンで参照認識する LINK_RE 拡張。`feedback_index.md` のプロセ参照経由で `feedback_pending_query_no_derive.md` / `feedback_critical_evaluation_before_implement.md` / `feedback_deep_analysis_cycle.md` / `feedback_few_rules_big_effect.md` / `feedback_tweet_style.md` の 5 件が真孤児 → stale_linked へ移行確認。dry-run 比較: 真孤児 v0=78 → v0.1=65 (−13)、reachable v0=196 → v0.1=395 (+199、ただし v0.1 reachable には regex 拾い損ね無しのため非存在パス含む inflation あり、実在ファイルベースの classify は正確)。tools/orphan_check_dry_run_20260511_c180_phase4_final.txt にエビデンス保存。M-43 副次検証: 30 本→3 本縮減と同じ轍は踏まず、宣言した 4 完遂条件（残6移行/LINK_RE拡張/dry-run差分観測/履歴追記）全てに到達。

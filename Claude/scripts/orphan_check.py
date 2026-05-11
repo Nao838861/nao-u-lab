@@ -47,6 +47,13 @@ INDEX_FILES = [
 
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+\.md)(?:#[^)]*)?\)")
 
+# v0.1 追加: feedback_index.md などプロセ参照に多い矢印記法
+#   `→ path.md` / `詳細→ path.md` / `→ a.md, b.md` 等
+# `→` から行末までを 1 チャンク化し、その中の `*.md` トークンを全部拾う。
+# `\.md` 単独や日本語混入を避けるため、md パスは [\w./\-]+ のみ許容。
+ARROW_LINE_RE = re.compile(r"→[^\n]*")
+ARROW_TARGET_RE = re.compile(r"([\w./\-]+\.md)")
+
 AGE_THRESHOLD_STALE = 30
 AGE_THRESHOLD_NEW = 7
 
@@ -109,6 +116,12 @@ def build_reference_set(verbose: bool = False) -> set[Path]:
             target = normalize_link(link, cur)
             if target is not None and target not in visited:
                 queue.append(target)
+        # v0.1: 矢印記法 `→ path.md` も参照として扱う
+        for arrow_line in ARROW_LINE_RE.findall(text):
+            for arrow_target in ARROW_TARGET_RE.findall(arrow_line):
+                target = normalize_link(arrow_target, cur)
+                if target is not None and target not in visited:
+                    queue.append(target)
     return {p for p in visited if is_memory_path(p)}
 
 

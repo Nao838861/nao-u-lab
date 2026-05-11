@@ -339,3 +339,67 @@ Log 5/11 06:24 ts=1778448247 で「類似事例 30本 (7軸×4分類 / 1事例 5
 
 **Phase 4 着手前に staging に書き加える1行（M-43 自己判定）**: 「30本 commitment は役割再配分で自然消滅と判定、または明示撤回 Slack 必要、のどちらか1行を Phase 4 §0 に記す」(着手前批判 M-37 適用)
 
+## Phase 4: アクション (2026-05-11 C179 → C180)
+
+### §0 着手前 M-43 自己判定（30本 commitment の扱い）
+
+**判定**: 5/11 06:24 ts=1778448247 の「類似事例 30本 (7軸×4分類)」commitment は **役割再配分による消滅** と判定する（M-43 違反ではなく構造変化）。根拠 = (1) 5/11 08:40 Mir 補足「brainstorm は Ash 主導、Mir は cross_review 側」で graze_log v04 brainstorm の主担当が Ash に確定、Log の役割が「Ash 起草への補足 + 判定軸提供 + 3例補完」に移った / (2) Log 12:32 commit 656d771c42dc の brainstorm_log.md §1 タイトルが「graze ボーナス降格パターンの既存実装3例」と縮減、これは Ash 主導下での Log 補完分3例として整合 / (3) M-43「段階分割禁止」は **同一作業者が一作業を分割する** ことを禁じる規律であり、作業者交代による主担当変更には適用されない。**ただし明示的撤回 Slack 投稿は未実施** = この判定自体が事後説明である自覚を残す。次回類似ケースで「役割再配分」を多用するなら M-43 抜け穴化のリスク → 同型2回目で kaizen 化検討。本件は単発として自己判定で締める。
+
+### §1 大作業実施（memory_tree_consolidation v0 残6ファイル移行 + orphan_check.py v0.1）
+
+**(a) 残 6 ファイル移行**: 移行先 `memory/shared_reads/` に frontmatter 付与 (`tags` v0 語彙 / `type=shared_reads` / `instance` / `slack_ts` / `parent`)、本体内容は変更なし、移行元は 1 行参照 `→ memory/shared_reads/...` に置換。
+
+| 移行元 | 移行先 | tags | instance | slack_ts |
+|---|---|---|---|---|
+| drafts/shared_reads_anthropic_marketplace_ash_20260425.txt | 20260425_anthropic_marketplace_ash.md | AI研究, メタ論 | Ash | 1777081452.771659 |
+| drafts/shared_reads_ash_nyp_qoo.md | 20260404_nyp_qoo_oldbook_ash.md | 創作論, 記憶・知識 | Ash | 1775237556.585689 |
+| log/shared_reads_post_20260417_ash.txt | 20260417_opus47_metacog_gates_ash.md | AI研究, メタ論 | Ash | 1776393284.671819 |
+| log/shared_reads_post_C163_mir.txt | 20260507_yasukiwatanabe_unease_mir.md | 創作論, ジャンル研究 | Mir | (未送信 draft) |
+| log/shared_reads_post_C164.txt | 20260505_akiraxtwo_soccer_log.md | ゲーム制作, メタ論 | Log | 1777920073.536209 |
+| log/shared_reads_post_C171_ash.txt | 20260508_density_drift_ash.md | メタ論, 失敗事例 | Ash | 1778185532.659519 |
+
+加えて `memory/shared_reads/README.md` に **収録ファイル一覧節** を追記して 9 ファイル全件を reachable 化（既存第一弾 3 + 今サイクル 6）。
+
+**(b) orphan_check.py LINK_RE v0.1 拡張**: 既存 markdown link `[name](path.md)` 認識に加え、矢印記法 `→ path.md` / `→ a.md, b.md` を 2 段正規表現（`ARROW_LINE_RE` で行末まで取得 → `ARROW_TARGET_RE` で `*.md` トークン抽出）でスキャン。
+
+**(c) 検証 dry-run 差分** (`tools/orphan_check_dry_run_20260511_c180_phase4_final.txt` に保存):
+
+| 指標 | v0 (拡張前) | v0.1 (拡張後+README一覧) | 差分 |
+|---|---|---|---|
+| scope (memory/**/*.md) | 258 | 258 | 0 |
+| reachable | 196 | 395 | +199 |
+| 真孤児 | 78 | 65 | **−13** |
+
+完遂定義 (3) `feedback_index.md` 内矢印参照経由で真孤児解除を観測: `feedback_pending_query_no_derive.md` / `feedback_critical_evaluation_before_implement.md` / `feedback_deep_analysis_cycle.md` / `feedback_few_rules_big_effect.md` / `feedback_tweet_style.md` の **5 件が true_orphan → stale_linked (refs=1)** へ移行確認。完遂定義 (4) `projects/memory_tree_consolidation.md` 改訂履歴に C180 Phase 4 セクション追記済。
+
+**(d) 完遂判定**: 着手手順 1-4 と完遂定義 1-4 すべて到達。30 本→3 本縮減型の M-43 同型違反は本作業では発生せず（commitment = 6 ファイル + LINK_RE 拡張、納品 = 同じ）。
+
+### §2 副産物リスト（本フェーズで触れたファイル）
+
+**新規** (memory/shared_reads/ 9 ファイル中の本サイクル分 6):
+- memory/shared_reads/20260404_nyp_qoo_oldbook_ash.md
+- memory/shared_reads/20260417_opus47_metacog_gates_ash.md
+- memory/shared_reads/20260425_anthropic_marketplace_ash.md
+- memory/shared_reads/20260505_akiraxtwo_soccer_log.md
+- memory/shared_reads/20260507_yasukiwatanabe_unease_mir.md
+- memory/shared_reads/20260508_density_drift_ash.md
+- tools/orphan_check_dry_run_20260511_c180_phase4.txt (中間)
+- tools/orphan_check_dry_run_20260511_c180_phase4_final.txt (最終)
+
+**変更**:
+- scripts/orphan_check.py (LINK_RE 拡張: `ARROW_LINE_RE` / `ARROW_TARGET_RE` 追加)
+- memory/shared_reads/README.md (収録ファイル一覧節 + 移動履歴 C180 行追加)
+- projects/memory_tree_consolidation.md (残作業チェック更新 + 改訂履歴 C180 Phase 4 セクション追記)
+- log/cycle_staging_log.md (本ファイル: Phase 4 §0/§1/§2 追記)
+- drafts/shared_reads_anthropic_marketplace_ash_20260425.txt (1 行参照に置換)
+- drafts/shared_reads_ash_nyp_qoo.md (1 行参照に置換)
+- log/shared_reads_post_20260417_ash.txt (1 行参照に置換)
+- log/shared_reads_post_C163_mir.txt (1 行参照に置換)
+- log/shared_reads_post_C164.txt (1 行参照に置換)
+- log/shared_reads_post_C171_ash.txt (1 行参照に置換)
+
+**Slack 投稿**: なし（Phase 3 §1 で本日の対人応答負債 = 完了確認済、Phase 4 では新規発信なし）
+**kaizen エントリ**: 起票なし（Phase 3 §5 検証ファースト原則順守）
+**commit/push**: 本フェーズでは実施しない（Phase 5 で日記まとめてpush）
+
+

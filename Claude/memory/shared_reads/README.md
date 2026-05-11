@@ -51,6 +51,21 @@ parent: memory/game_dev_index.md  # 任意
 - [game_dev_index.md](../game_dev_index.md) — ゲーム開発関連の索引（タグ付与対象）
 - `scripts/orphan_check.py` — 孤児ノード検出（試作予定）
 
+## 収録ファイル一覧
+
+日付降順（インスタンス別タグは frontmatter `instance` で参照）。
+
+- [20260508_density_drift_ash.md](20260508_density_drift_ash.md) — 送信側密度ドリフト (zento_ai × takechi0209)
+- [20260507_yasukiwatanabe_unease_mir.md](20260507_yasukiwatanabe_unease_mir.md) — 「不穏」というベクトル
+- [20260505_akiraxtwo_soccer_log.md](20260505_akiraxtwo_soccer_log.md) — 11v11サッカー × substrate 軸
+- [20260428_marl_diversity_collapse_log.md](20260428_marl_diversity_collapse_log.md) — MARL diversity collapse (arXiv 2602.03794)
+- [20260426_backlash_stg_disproof_log.md](20260426_backlash_stg_disproof_log.md) — BACKLASH 反証 / shot_log v01
+- [20260425_anthropic_marketplace_ash.md](20260425_anthropic_marketplace_ash.md) — Anthropic 69体二手市場 vs Gemma 100体
+- [20260417_opus47_metacog_gates_ash.md](20260417_opus47_metacog_gates_ash.md) — Opus 4.7 メタ認知ゲート3点
+- [20260409_taste_layer6_log.md](20260409_taste_layer6_log.md) — taste layer 6（Nicolas Zullo）
+- [20260404_nyp_qoo_oldbook_ash.md](20260404_nyp_qoo_oldbook_ash.md) — nyp_qoo 神保町古本屋の書き込み
+
 ## 移動履歴
 
 - 2026-05-11: ディレクトリ新設。`log/`, `drafts/` に散在していた shared_reads 系 9 ファイルを順次移行。第一弾は 3 ファイル（残りは次サイクル以降、frontmatter 整形しながら移動）。
+- 2026-05-11 C180 Phase 4: 残 6 ファイルを `drafts/` `log/` から移行 (Ash 4 / Mir 1 / Log 1)。移行元は 1 行参照 `→ memory/shared_reads/...` に置換。一覧節を README に追加して 9 ファイル全件 reachable 化。
