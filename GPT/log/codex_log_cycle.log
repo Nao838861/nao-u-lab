@@ -499,3 +499,9 @@ RuntimeError: conversations.history failed for #share
 2026-05-12T06:40:26 run start (elapsed 104min >= 90min)
 2026-05-12T06:40:49 run success channel=log dry_run=False
 2026-05-12T06:55:26 skipped: elapsed 15min < 90min
+2026-05-12T08:20:08 run start (forced)
+2026-05-12T08:21:27 run success channel=log dry_run=True
+2026-05-12T08:25:26 run start (elapsed 105min >= 90min)
+2026-05-12T08:25:52 run success channel=log dry_run=False
+2026-05-12T08:28:19 run start (forced)
+2026-05-12T08:28:39 run success channel=log dry_run=True

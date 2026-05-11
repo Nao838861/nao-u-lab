@@ -166,6 +166,24 @@ def run_external_research(dry_run: bool) -> dict[str, Any]:
     return data
 
 
+def run_shared_reads_deep_repost(dry_run: bool) -> dict[str, Any]:
+    cmd = [sys.executable, str(TOOLS_DIR / "shared_reads_deep_repost_cycle.py"), "--limit", "2"]
+    if dry_run:
+        cmd.append("--dry-run")
+    result = run_command(cmd, timeout=120)
+    if result.returncode != 0:
+        return {
+            "ok": False,
+            "error": (result.stderr.strip() or result.stdout.strip())[:800],
+        }
+    try:
+        data = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return {"ok": False, "error": f"shared_reads_deep_repost_cycle.py returned non-json: {result.stdout[:500]}"}
+    data["ok"] = True
+    return data
+
+
 def run_discussion_router(dry_run: bool) -> dict[str, Any]:
     cmd = [sys.executable, str(TOOLS_DIR / "slack_discussion_router.py")]
     if dry_run:
@@ -244,6 +262,7 @@ def build_message(ingest: dict[str, Any], state: dict[str, Any], reason: str) ->
     slack_info = ingest.get("slack", {})
     directive_info = ingest.get("slack_directives", {})
     external_info = ingest.get("external_research", {})
+    deep_repost_info = ingest.get("shared_reads_deep_repost", {})
     game_feedback_info = ingest.get("game_feedback", {})
     discussion_info = ingest.get("discussion_router", {})
     interesting = slack_info.get("interesting", [])
@@ -257,6 +276,7 @@ def build_message(ingest: dict[str, Any], state: dict[str, Any], reason: str) ->
         f"- Slack新規確認: seen={slack_info.get('seen_messages', 0)}, atom追加={slack_info.get('added_atoms', 0)}",
         f"- Nao_u→log_cdx指示: scanned={directive_info.get('scanned_messages', 0)}, found={directive_info.get('directives_found', 0)}",
         f"- 外部検索: fetched={external_info.get('fetched', 0)}, selected={external_info.get('selected', 0)}, posted={external_info.get('posted', False)}",
+        f"- shared-reads深掘り再投稿: ready={deep_repost_info.get('ready_count', 0)}, posted={len(deep_repost_info.get('posted', []))}, target_chars={deep_repost_info.get('target_chars', 4000)}",
         f"- game-rights教師化: seen={game_feedback_info.get('seen_messages', 0)}, feedback={game_feedback_info.get('feedback_atoms', 0)}, atom追加={game_feedback_info.get('added_atoms', 0)}",
         f"- all-nao-u-lab議論投入: selected={discussion_info.get('selected', False)}, posted={discussion_info.get('posted', False)}",
         f"- 健全性: {ingest.get('health', '未確認')}",
@@ -264,6 +284,8 @@ def build_message(ingest: dict[str, Any], state: dict[str, Any], reason: str) ->
     ]
     if not external_info.get("ok", True):
         lines.append(f"- 外部検索エラー: {external_info.get('error', '')[:240]}")
+    if not deep_repost_info.get("ok", True):
+        lines.append(f"- shared-reads深掘り再投稿エラー: {deep_repost_info.get('error', '')[:240]}")
     if not directive_info.get("ok", True):
         lines.append(f"- Nao_u→log_cdx指示チェックエラー: {directive_info.get('error', '')[:240]}")
     if not game_feedback_info.get("ok", True):
@@ -343,6 +365,7 @@ def main() -> int:
     try:
         log(f"run start ({reason})")
         external_research = run_external_research(args.dry_run)
+        shared_reads_deep_repost = run_shared_reads_deep_repost(args.dry_run)
         game_feedback = run_game_feedback_ingest(args.dry_run)
         slack_directives = run_slack_directives(args.dry_run)
         slack_ingest = run_slack_ingest()
@@ -351,6 +374,7 @@ def main() -> int:
         ingest["slack"] = slack_ingest
         ingest["slack_directives"] = slack_directives
         ingest["external_research"] = external_research
+        ingest["shared_reads_deep_repost"] = shared_reads_deep_repost
         ingest["game_feedback"] = game_feedback
         ingest["discussion_router"] = discussion_router
         ingest["health"] = run_memory_health()
