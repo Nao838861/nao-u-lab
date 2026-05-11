@@ -65,10 +65,10 @@ CLAUDE.md / SKILL.md / command.md などのエージェント向け指示ファ�
 - **[knowledge執筆](docs/knowledge_writing_guide.md)** — 造語症対策。新規私的用語に外部対応語を併記
 - **[運用](docs/operations.md)** — 同期、自律ループ、対話ログ保存
 - **[プロジェクト](projects/INDEX.md)** — 議論・検討があったらその場で追記。後回し禁止
-- **[drafts/](drafts/INDEX.md)** — 未統合の作業ファイル群。Obsidianグラフ上で「真孤児」と区別するための親リンク（`tools/rebuild_drafts_index.py` で自動生成）
 - **[障害履歴](docs/scheduler_incidents.md)**
 - **[タスク割り振り](docs/task_assignment.md)** — 誰がやるか迷ったらこれを見る
 - **[指示ファイル編集](.claude/commands/edit-instructions.md)** — 指示ファイルは記憶置き場ではなく行動設計。編集前に確認
+- **[下書き](drafts/README.md)** — drafts/ 作業場の概要。全ファイル親リンク=[drafts/INDEX.md](drafts/INDEX.md)（`tools/rebuild_drafts_index.py` 自動生成、Obsidianグラフで真孤児と区別）
 
 ## Nao_uの生ログ（最重要・毎サイクル確認）
 - [nao_u_live.md](log/nao_u_live.md) — Nao_uが対面で語ったことの原文記録
