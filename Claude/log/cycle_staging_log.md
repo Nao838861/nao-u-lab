@@ -293,3 +293,29 @@ Phase 2 §5 候補 3「真孤児親接続 1mm」を本サイクル末尾に実�
 - (b) Mir/Ash クロスチェックで 3 人合意済（C159/C164）+ 装置の向き反転の同型問題（feedback_device_direction_rescue_vs_suffocation との接続）+ ルール堆積罠（feedback_invisible_rule_accumulation との接続）+ graphiti v0.3 設計種（superseded クラス）と **3 つの並行する処方箋が同じ構造を解こうとしている** = この点での 1 スプリント分の進歩が複数領域の停滞解消に効く
 - (c) 30 分で「実装試作 + dry-run 1 回 + kaizen_tracker.md 更新」まで到達可能な粒度。Slack 投稿 1 本では完結しない、ファイル変更を伴う実作業
 - (d) **kaizen #106「Phase 2/3 で強制利用しない」抵触回避**: 本作業の素材は graphiti ではなく #130 自体（C155 C164 で起票・クロスチェック済の自前提案）、graphiti は v0.3 設計種として projects に記録するに留めた
+
+## Phase 4: 大作業実行結果 (2026-05-12 C183 Log)
+
+**作業**: kaizen #130 改善内容(1) sticky pending file 機構の試作実装 + dry-run 検証
+
+**完遂判定**: 完遂の定義 1-5 すべて到達。
+
+1. ✅ `check_inbox.py` に sticky 機構組込: `_pending_overflow_path() / write_pending_overflow() / read_pending_overflow() / inject_pending_overflow_marker()` の 4 関数を追加。`rotate_if_oversized` 末尾で sticky 生成、`main()` の `has_content` 前に inbox 先頭 prepend
+2. ✅ dry-run 検証可能: `tools/check_inbox_dry_run.py` 新規作成。`memory/inbox_dryrun.md` を 47863 bytes で作り、rotate→overflow→sticky→prepend→重複防止→sticky 削除後 inject False を 4 step で assert。`python tools/check_inbox_dry_run.py` 全 PASS、finally でクリーンアップ
+3. ✅ Ash 追加懸念1 (sticky クリア条件): marker テキスト内に「処理完了後 `memory/_pending_overflow_<box>.txt` を削除」を明示的に書き込む方針で実装。Read tool 痕跡検出ではなく **Claude による明示 delete** に倒した（理由: Read 検出は実装コスト高、明示 delete なら検証段階2で「次回起動時に再 prepend されないか」で「読んだ振り」も同時検出可能）
+4. ✅ Mir 追加懸念 (OVERFLOW UNREAD marker): `[OVERFLOW UNREAD - rotated_at]` シグネチャ付き marker をヘッダ直後に prepend する形で実装。同じ rotated_at の marker が既に inbox に居る場合は再 prepend しない（重複防止 + claude 未処理状態の表現性維持）
+5. ✅ `kaizen_tracker.md #130` 状態欄更新: 「段階1 実装完了、次の rotate 発火イベントで段階2/3 実機検証」に変更。検証結果に C183 ログ追記
+
+**副産物（新規/変更ファイル）**:
+- 変更: `check_inbox.py` (+78行 / sticky 機構 4 関数 + `main()` 内呼出 1 行)
+- 新規: `tools/check_inbox_dry_run.py` (137 行 / mock inbox での 4 ステップ assert + finally cleanup)
+- 変更: `memory/kaizen_tracker.md` #130 状態欄 + 検証結果
+
+**Slack 投稿**: なし（kaizen #130 自体は新規起票でも段階完了でもなく既存 stalled の実装着手→段階1完了。#kaizen-log Slack 投稿条件は段階完了通知扱いで本来発火するが、Phase 3 §2 で「本サイクルは構造修正のみで #kaizen-log 投稿なし」と判定済。段階1 実装完了はかなり実質的な進捗なので、次サイクル Phase 3 で改めて投稿要否を判定する候補に持ち越し — Phase 4 末尾で Slack 投稿を増やすのは「Phase 3 で処理済みのはず」原則に反するため見送り）
+
+**kaizen エントリ**: 既存 #130 の更新のみ（新規起票なし）
+
+**次サイクル以降への引き継ぎ**:
+- 段階2 検証: 実機 rotate 発火後、`log/inbox_check.log` に `[PENDING_WRITE]` `[OVERFLOW_INJECT]` ログが出ているか確認
+- 段階3 検証: claude wake 完了後、`memory/_pending_overflow_<box>.txt` が削除されているか確認（残っていたら sticky 機構は動いたが claude が processing 責務を果たしていない＝marker テキスト内の指示が読まれていない or 軽視されている、別 kaizen 候補）
+- 既存の処理されていない可能性のある overflow ファイル (`memory/inbox_win2_overflow_*.md` 7件 / `memory/inbox_win_overflow_*.md` 1件) は本サイクルでは触らない（rotate 時点ではまだ sticky 機構が無かったため）— 過去 overflow の遡及処理は別 kaizen で議論候補

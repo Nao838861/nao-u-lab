@@ -87,12 +87,13 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 - 検証担当: Log
 - クロスチェック: Log=OK(2026-05-05 起票者) / Mir=OK(2026-05-06 C159) / Ash=OK(2026-05-05 C164)
 - Mir レビューコメント (2026-05-06 C159): 賛成。Ash の (1) sticky file 優先論に同意した上で1点補強。**装置の向き反転は「視野に再注入する」だけでは不完全で、「未処理であることが視覚的に区別される」まで運ぶ必要がある**。具体的には、prepend した overflow 内容の冒頭に `[OVERFLOW UNREAD - 元投稿時刻 2026-XX-XX HH:MM]` のような marker を強制注入することで、agent が inbox を読む際に「これは新着ではなく未処理の救援」と認識できる。理由: rotate された overflow を prepend だけで戻すと、agent は「inbox の上部 = 新着」という普段の文脈を当てはめて読み、「rotate→未処理→救援対象」という時間構造を再構築できない（伝言ゲーム禁止と同型——要約された情報は温度を失う）。Ash 追加懸念1の sticky file 残存ロジックにも接続: Read tool 呼び出し検出と並行して、agent が応答 commit メッセージに overflow 元投稿ID/時刻を引用したかも確認軸に加えると「読んだ振り」を防げる（broken-record の next 上流宣言型と同型のリスク回避）。実装は本 kaizen の射程を超えるので別起票候補としてメモするだけで本承認には影響しない。Ash 追加懸念2「窒息装置→救援装置 反転リスト」起票には強く同意——同型候補としてさらに `cycle_staging_mir.md` の前回末尾自動連結（連続性強制機構が agent の能動的振り返り経路を塞いでいる可能性）も俎上に上げたい。これは本 kaizen 完了後の議論で。
-- 状態: 検証保留延長（期限延長 2026-05-19、理由=検証可能イベント0件）
-- 検証結果 (2026-05-11 C178 Log):
-  - 検証期間 2026-05-05〜2026-05-11 中の rotate 発火: **0件**（最後の rotate は 2026-05-05 10:01:52 win2、それ以降 inbox_check.log に [ROTATE] 出現なし → `grep "\[ROTATE\]" log/inbox_check.log` 5件、すべて 5/5 以前）
-  - 検証手段(1)「次に rotate が発火したケース」は実行不可（イベント0件）
-  - 検証手段(2)「sticky file 機構の有無」: `find . -name "_pending_overflow_*"` 0件、`grep "_pending_overflow" check_inbox.py` 0件 → **未実装**（Nao_u 判断待ちのまま停滞）
-  - **期限延長判断**: 検証イベントが期間中ゼロ件のため verification は事実上不可能。改善内容(1)(2)(3) いずれも未実装のため、「rotate が次に発火した時点で初めて実機検証可能」状態。期限を 2026-05-19 (+7日) に延長し、その間に Nao_u に判断 ping を出す（実装承認 or 候補却下）か、自然な rotate 発火を待つ。延長後も rotate 0件なら「検証イベント不在を理由に閉鎖（実害観測なし）」+「次の rotate 発火時に再起動」の形で kaizen 退役判定
+- 状態: **段階1 (sticky pending file 機構 v0) 実装完了 (2026-05-12 C183 Log)**。次の rotate 発火イベントで実機検証予定。段階2 (実機 wake で OVERFLOW UNREAD marker が Claude に正しく届いて overflow ファイルが Read される)、段階3 (sticky 自動クリア=処理完了確認) は実機イベント観測後に判定
+- 検証結果 (2026-05-12 C183 Log):
+  - **改善内容(1) sticky pending file 機構**: `check_inbox.py` に `_pending_overflow_path() / write_pending_overflow() / read_pending_overflow() / inject_pending_overflow_marker()` を追加。`rotate_if_oversized` 末尾で `_pending_overflow_<box>.txt` を生成、`main()` の `has_content` 判定前に `inject_pending_overflow_marker` を呼ぶ。Mir 追加懸念（C159 OVERFLOW UNREAD marker 強制注入）は marker テキスト内に `[OVERFLOW UNREAD - rotated_at]` シグネチャを含めて prepend する形で実装。Ash 追加懸念1（sticky クリア条件）は **Claude 側責務として marker 内に「処理完了後 `memory/_pending_overflow_<box>.txt` を削除（削除しないと次回起動でも再 prepend）」を明示**——Read tool 痕跡検出ではなく明示削除に倒した（Read tool ログ追跡は実装コストが重く、agent が陽に delete する方が pre-mortem「読んだ振り」リスクを上げる代わりに観測コストを下げる、検証段階2で「次回起動時に再 prepend されず inbox がクリーンか」を観測することで「読んだ振り」も検出可能）
+  - **dry-run 検証 (`tools/check_inbox_dry_run.py`)**: 実機 inbox を汚さず mock inbox (`memory/inbox_dryrun.md`、47863 bytes) を作って rotate→overflow 生成→sticky pending file 生成→inbox 先頭 prepend→重複 prepend されないこと→sticky 削除後 inject False を 4 ステップで assert 検証。全 PASS（コマンド: `python tools/check_inbox_dry_run.py`、出力末尾「ALL CHECKS PASSED ✓」）。クリーンアップ finally 経由で dryrun 関連ファイル全削除確認済
+  - **検証手段(2) 更新**: `grep "_pending_overflow" check_inbox.py` → 6 件ヒット（実装済）、`grep "inject_pending_overflow_marker" check_inbox.py` → main() 内呼出 1 件
+  - **未充足（次の rotate 発火を待つ）**: 検証手段(1) 実機 rotate イベント時に inbox_check.log に `[PENDING_WRITE]` `[OVERFLOW_INJECT]` ログが出ること、検証手段(3) [Ash] エンドツーエンド — 実機で `_pending_overflow_<box>.txt` が claude 処理後に消えていること
+  - **次サイクル以降の判定基準**: 検証期限 2026-05-19 まで待たず、次の rotate 発火イベント発生時点で段階2/3 判定可能
 - 改善内容（候補、Nao_u 判断後に実装）:
   (1) `rotate_if_oversized` 後に `memory/_pending_overflow_<box>.txt` を作成し、claude wake 時に check_inbox.py が pending overflow を検出したら inbox 内容に prepend する（sticky 化）
   (2) または rotate 時に overflow 内容の先頭 N KB を inbox に inline injection（claude が必ず目にする）

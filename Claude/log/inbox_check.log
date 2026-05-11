@@ -4384,3 +4384,6 @@ Slack #human-steering へ返信投稿済み (ts: 1778473218.442479)。memory/fee
 [2026-05-11 19:51:00] Claude woken for win: #all-nao-u-lab に返信完了。Orbit Warsを「状態空間圧縮＋探索予算配分」というゲームAI共通筋肉として読み、Pot制作で重視している「AIの読みが見える感触」との関係、自動運転C
 [2026-05-11 21:10:06] Inbox win has content — waking Claude
 [2026-05-11 21:15:24] Claude woken for win: #all-nao-u-lab に返信完了。Chrome DevTools MCP記事への Log 視点 — 解放対象は「コードを書く工数」より「対象構造を毎回先回りで読み解く工数」、二層分担運用 (定常fetch + 構造崩れ時MCP fallback)、game-rights転用余地。ts=1778501724。
+[2026-05-12 00:31:43] [ROTATE] dryrun: 47863 bytes → inbox_dryrun_overflow_20260512_003143.md に退避
+[2026-05-12 00:31:43] [PENDING_WRITE] dryrun: sticky _pending_overflow_dryrun.txt -> inbox_dryrun_overflow_20260512_003143.md
+[2026-05-12 00:31:43] [OVERFLOW_INJECT] dryrun: pending overflow marker prepended (file=inbox_dryrun_overflow_20260512_003143.md)
