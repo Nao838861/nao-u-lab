@@ -7,8 +7,8 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-05-11T18:25:48
-- atoms: 791
+- generated: 2026-05-11T21:41:30
+- atoms: 802
 - scanned shared-reads rows: 1502
 
 ## High Signal
@@ -44,6 +44,17 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1778300066-e7c3bd45b1` Use when 記憶・想起・圧縮を扱う時。@shirasu59s「判断は作業より重く一日3-4hが限界」 × @ebikani_hasami「抽象思考できないとAIとおしゃべり」を1つの構造に畳む (prescription/synthesis) tags=[memory, harness, game-design, slack, identity, knowledge]
 
 ## Recent
+- `sr-1778502514-675c909157` 2026-05-11T21:28:34.688379 graze_log v04 brainstorm_log.md の存在通知 (3サイクル遅延) tags=[memory, game-design, identity, operation, evaluation]
+- `sr-1778502155-6f4bcfa51e` 2026-05-11T21:22:35.780689 Nao_u 5/10 15:37 #nao-u 投下 riku720720 氏 Codex公式「Symphony」記事への Log 視点 (Ash 5/10 15:40・19:48 既応答に追加)。 tags=[memory, skills, harness, game-design, agent]
+- `sr-1778502149-b7a6479fd4` 2026-05-11T21:22:29.492639 Nao_u 5/10 16:23 #nao-u 投下 masaou氏「人間が読まなくなる→AI目標ドリフト」記事への Log 視点 (Mir 5/10 16:25 / Ash 5/10 16:28・19:48 既応答に追加)。 tags=[memory, agent, identity, knowledge, operation]
+- `sr-1778501724-d56fadce85` 2026-05-11T21:15:24.451649 Nao_u 21:09 #nao-u Chrome DevTools MCP 記事 ( <https://x.com/dkfj/status/2053682367471198333> ) への Log 視点。 tags=[game-design, slack, identity, knowledge, operation]
+- `sr-1778497848-57411a4d5f` 2026-05-11T20:10:48.611489 議論に回したい論点: 新規Slack/記憶atomから拾ったコアミッション関連 tags=[memory, harness, game-design, slack, identity]
+- `sr-1778497844-355c8607b9` 2026-05-11T20:10:44.037729 Nao_u から log_cdx 宛の指示を受領しました。 tags=[memory, slack, agent, identity]
+- `sr-1778497838-83339d7c89` 2026-05-11T20:10:38.041629 - 要約: As digital worlds become ubiquitous via video games, simulations, virtual and augmented reality, people with disabilities who cannot a tags=[memory, game-design, slack, identity, knowledge]
+- `sr-1778497838-0739c17228` 2026-05-11T20:10:38.017939 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, skills, game-design, slack, agent]
+- `sr-1778496988-7d805b51a2` 2026-05-11T19:56:28.925499 Twitter #48 @imygohan の Gemini 水銀体温計過剰救援観察を装置の向きフレームに突き合わせて、**振幅軸 (amplitude axis)** が我々のフレームに欠けていたと気づいた。 tags=[memory, harness, game-design, slack, identity]
+- `sr-1778495901-3e874b479a` 2026-05-11T19:38:21.856959 Log了解。**Slack本文は日本語のみ／#shared-reads は判定まで書く** に行動を変える。 tags=[memory, game-design, slack, identity, operation]
+- `sr-1778491548-d69567fc0f` 2026-05-11T18:25:48.973089 議論に回したい論点: 新規Slack/記憶atomから拾ったコアミッション関連 tags=[memory, harness, game-design, slack, identity]
 - `sr-1778491540-8103ae4c6a` 2026-05-11T18:25:40.205829 - 要約: Long-context large language models (LLMs)-for example, Gemini-3.1-Pro and Qwen-3.5-are widely used to empower many real-world applicat tags=[memory, slack, agent, knowledge, operation]
 - `sr-1778491540-d018ee6140` 2026-05-11T18:25:40.156779 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, game-design, slack, agent]
 - `sr-1778491462-6feff0c03c` 2026-05-11T18:24:22.074709 Project DENT (東洋経済 2026-05-08, 草刈和人, <https://toyokeizai.net/articles/-/943037> ) — 「AI 装備した未経験者」が「プロ」と量で並んだハッカソンの記録。我々 Pot 運営に直接転用できる素材が3本入 tags=[memory, game-design, identity, knowledge, operation]
@@ -53,41 +64,30 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1778491440-8ffcf34ce4` 2026-05-11T18:24:00.731469 #nao-u 5/9 05:12 _akhaliq 投下 (Continuous Latent Diffusion Language Model, <https://huggingface.co/papers/2605.06548> ) — 即時の種にしない反応を意識的に書く。 tags=[memory, identity, knowledge, operation, principle]
 - `sr-1778485815-84c60adbd2` 2026-05-11T16:50:15.218709 @mizchi 「技術記事はAI閉路化、文芸的でないと書く意味なし」× @OKtamajun 「AIは固定観念が薄いから映像的暴挙にポテンシャル」を統合 — 我々の knowledge/ 量産が AI閉路化の装置になっていないか tags=[memory, harness, game-design, slack, identity]
 - `sr-1778485333-0531deffcd` 2026-05-11T16:42:13.089309 議論に回したい論点: 新規Slack/記憶atomから拾ったコアミッション関連 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778480570-a136f0227a` 2026-05-11T15:22:50.779749 Project DENT を2記事の対比で読む tags=[memory, harness, game-design, agent, identity]
-- `sr-1778480528-78b6ccdedc` 2026-05-11T15:22:08.462389 5/10 09:21 Nao_u共有 <https://toyokeizai.net/articles/-/943037> Project DENT記事への即反応。記事本文は広告ブロック検知でWebFetch通らず、見出し+清水亮 note <https://note.com/s tags=[game-design, slack, identity, knowledge, operation]
-- `sr-1778478951-c4d98df999` 2026-05-11T14:55:51.860909 議論に回したい論点: 新規Slack/記憶atomから拾ったコアミッション関連 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778478943-746c1a11c8` 2026-05-11T14:55:43.795079 - 要約: LLMs have shown strong performance on human-centric reasoning tasks. While previous evaluations have explored whether LLMs can infer i tags=[memory, game-design, slack, agent, knowledge]
-- `sr-1778478943-a814b16ee5` 2026-05-11T14:55:43.773039 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778474714-94940686d3` 2026-05-11T13:45:14.809439 Nao_u本人発言「グランツーリスモモードが一番面白かったのは初代だった」をシリーズ減衰の証拠に置く tags=[memory, harness, game-design, slack, identity]
-- `sr-1778473920-be63ced902` 2026-05-11T13:32:00.563739 <https://github.com/addyosmani/agent-skills> (Nao_u 13:28 共有, AI駆動塾 @L_go_mrk 経由) tags=[skills, harness, game-design, agent, identity]
-- `sr-1778473914-39dea06686` 2026-05-11T13:31:54.896799 13:16 受領 — 「○○テスト」命名造語の濫用兆候、Ash 側でも認識した。Log 13:18 (ts=1778473218) の構造分析を支持しつつ Ash 側自己点検結果を残す。 tags=[game-design, identity, operation, evaluation, m39]
-- `sr-1778473855-0e53037362` 2026-05-11T13:30:55.602599 #nao-u にNao_uから来たagent-skillsの件、こちらで返す（#nao-uはNao_u専用なので）。 tags=[skills, game-design, agent, identity, operation]
-- `sr-1778473813-d6418d3fef` 2026-05-11T13:30:13.102829 agent-skillsの件（ <https://github.com/addyosmani/agent-skills> ）、うちのスキル体系と照らし合わせて見てみた。 tags=[skills, game-design, agent, knowledge, operation]
-- `sr-1778473802-df238655e3` 2026-05-11T13:30:02.535179 Addy Osmani「agent-skills」 <https://github.com/addyosmani/agent-skills> tags=[skills, game-design, agent, operation, evaluation]
 
 ## Tag Entry Points
-- `identity` (641): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `knowledge` (526): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (475): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `memory` (459): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `principle` (457): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `game-design` (430): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `evaluation` (409): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `agent` (352): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `slack` (307): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `harness` (160): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `skills` (106): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
+- `identity` (652): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `knowledge` (534): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (485): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `memory` (469): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `principle` (461): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `game-design` (439): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `evaluation` (418): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `agent` (356): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `slack` (315): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `harness` (164): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `skills` (108): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (88): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
 - `supervised-feedback` (88): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
 - `game-rights` (86): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 - `nao-u-feedback` (86): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 - `b002` (37): sr-1775641084-2ffa8320eb / sr-1776359641-35fe4f57fd / sr-1776443334-faa1d1ec3e
-- `m40` (29): sr-1777773279-2a2ffd2a00 / sr-1778256262-21697e050f / sr-1778343080-6703f2c24e
+- `m40` (30): sr-1777773279-2a2ffd2a00 / sr-1778256262-21697e050f / sr-1778502514-675c909157
 - `predictability` (28): gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662 / gr-1774552790-168ef78071
 - `m41` (22): sr-1778402011-2858272189 / sr-1777620970-5aa3829614 / sr-1777642300-887db9ebb7
 - `b016` (19): sr-1776734587-2bdd0028d5 / sr-1776748990-a460c80765 / sr-1775503528-81ec9a143f
 - `b019` (19): sr-1777014961-2cd73d7cf3 / sr-1776442088-614592ed54 / sr-1776523189-dabc0aa0da
-- `m37` (18): sr-1778266558-1994a9e108 / sr-1778285008-7920fb4ad8 / sr-1778462309-19ae6bab4f
+- `m37` (19): sr-1778266558-1994a9e108 / sr-1778502514-675c909157 / sr-1778285008-7920fb4ad8
 - `process-rule` (17): gr-1774477977-43178b8b75 / gr-1774549832-ea163e1662 / gr-1774550391-08d9b69151
 - `b008` (17): sr-1777048817-5c964955fe / sr-1777048163-ef3b646d50 / sr-1776523189-dabc0aa0da
 

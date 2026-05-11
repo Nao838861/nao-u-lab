@@ -1,0 +1,260 @@
+#!/usr/bin/env python3
+"""Detect Nao_u Slack instructions addressed to log_cdx across visible channels."""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import re
+import sys
+import time
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+from slack_client import api_call, post_message
+
+
+ROOT = Path(__file__).resolve().parents[1]
+MEMORY_DIR = ROOT / "memory"
+STATE_PATH = MEMORY_DIR / "slack_directives_state.json"
+DIRECTIVES_PATH = MEMORY_DIR / "slack_directives.jsonl"
+RAW_PATH = MEMORY_DIR / "raw" / "slack_api" / "log_cdx_directives.jsonl"
+
+NAO_U_USER_ID = "U0ALSUK8P9B"
+ADDRESS_RE = re.compile(r"(?i)(?:^|[\s\[@:>])log[_\-\s]?cdx(?:$|[\s\].,:：、。])")
+
+
+if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
+    sys.stdout = open(sys.stdout.fileno(), mode="w", encoding="utf-8", errors="replace", closefd=False)
+
+
+def now_iso() -> str:
+    return datetime.now().isoformat(timespec="seconds")
+
+
+def load_json(path: Path, default: Any) -> Any:
+    if not path.exists():
+        return default
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return default
+
+
+def save_json(path: Path, data: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def read_jsonl(path: Path) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    rows: list[dict[str, Any]] = []
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            try:
+                rows.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+    return rows
+
+
+def append_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
+    if not rows:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8", newline="\n") as f:
+        for row in rows:
+            f.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+
+
+def directive_id(channel_id: str, ts: str, text: str) -> str:
+    digest = hashlib.sha1(f"{channel_id}\n{ts}\n{text[:400]}".encode("utf-8")).hexdigest()[:10]
+    return f"log-cdx-{ts.split('.')[0]}-{digest}"
+
+
+def list_visible_channels() -> list[dict[str, Any]]:
+    channels: list[dict[str, Any]] = []
+    cursor = ""
+    while True:
+        payload = {"types": "public_channel,private_channel", "limit": 1000}
+        if cursor:
+            payload["cursor"] = cursor
+        result = api_call("conversations.list", payload)
+        if not result.get("ok"):
+            raise RuntimeError(f"conversations.list failed: {result}")
+        channels.extend(result.get("channels", []))
+        cursor = result.get("response_metadata", {}).get("next_cursor") or ""
+        if not cursor:
+            break
+    return channels
+
+
+def fetch_history(channel_id: str, oldest: str, limit: int) -> list[dict[str, Any]]:
+    result = api_call(
+        "conversations.history",
+        {
+            "channel": channel_id,
+            "oldest": oldest,
+            "inclusive": False,
+            "limit": limit,
+        },
+    )
+    if not result.get("ok"):
+        raise RuntimeError(f"conversations.history failed for {channel_id}: {result}")
+    return result.get("messages", [])
+
+
+def is_addressed_to_log_cdx(text: str) -> bool:
+    return bool(ADDRESS_RE.search(text or ""))
+
+
+def permalink(channel_id: str, ts: str) -> str:
+    return f"https://nao-u-lab.slack.com/archives/{channel_id}/p{ts.replace('.', '')}"
+
+
+def normalize_directive(channel: dict[str, Any], msg: dict[str, Any]) -> dict[str, Any]:
+    channel_id = str(channel.get("id", ""))
+    channel_name = str(channel.get("name") or channel_id)
+    ts = str(msg.get("ts", "0"))
+    text = str(msg.get("text", "")).strip()
+    return {
+        "id": directive_id(channel_id, ts, text),
+        "channel": channel_name,
+        "channel_id": channel_id,
+        "datetime": datetime.fromtimestamp(float(ts)).isoformat(timespec="microseconds"),
+        "permalink": permalink(channel_id, ts),
+        "source_ts": ts,
+        "status": "pending",
+        "text": text,
+        "user": msg.get("user"),
+        "detected_at": now_iso(),
+    }
+
+
+def ack_text(row: dict[str, Any]) -> str:
+    return (
+        "Nao_u から log_cdx 宛の指示を受領しました。"
+        "\nGPT 側 `memory/slack_directives.jsonl` に保存し、次の Codex 作業で確認して対応します。"
+        "\n危険操作や曖昧な操作は無人実行せず、必要なら確認してから進めます。"
+        f"\n対象: {row.get('permalink')}"
+    )
+
+
+def scan(args: argparse.Namespace, state: dict[str, Any]) -> dict[str, Any]:
+    existing_ids = {str(row.get("id")) for row in read_jsonl(DIRECTIVES_PATH)}
+    channels_state = state.setdefault("channels", {})
+    channels = list_visible_channels()
+    visible = 0
+    scanned = 0
+    errors: list[dict[str, str]] = []
+    found: list[dict[str, Any]] = []
+    max_ts_by_channel: dict[str, str] = {}
+
+    default_oldest = f"{int(time.time() - args.lookback_hours * 3600)}.000000"
+    for channel in channels:
+        channel_id = str(channel.get("id", ""))
+        channel_name = str(channel.get("name") or channel_id)
+        if args.joined_only and not channel.get("is_member"):
+            continue
+        visible += 1
+        oldest = channels_state.get(channel_id, {}).get("last_ts") or default_oldest
+        try:
+            messages = fetch_history(channel_id, oldest, args.limit)
+        except Exception as exc:
+            errors.append({"channel": channel_name, "channel_id": channel_id, "error": str(exc)[:300]})
+            continue
+        if messages:
+            max_ts_by_channel[channel_id] = max(str(msg.get("ts", "0")) for msg in messages)
+        else:
+            max_ts_by_channel[channel_id] = oldest
+        scanned += len(messages)
+        for msg in messages:
+            text = str(msg.get("text", ""))
+            subtype = msg.get("subtype")
+            if subtype in {"channel_join", "channel_leave"}:
+                continue
+            if msg.get("user") != NAO_U_USER_ID:
+                continue
+            if not is_addressed_to_log_cdx(text):
+                continue
+            row = normalize_directive(channel, msg)
+            if row["id"] in existing_ids:
+                continue
+            found.append(row)
+            existing_ids.add(row["id"])
+
+    return {
+        "visible_channels": visible,
+        "scanned_messages": scanned,
+        "directives": found,
+        "errors": errors,
+        "max_ts_by_channel": max_ts_by_channel,
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Find Nao_u Slack instructions addressed to log_cdx.")
+    parser.add_argument("--lookback-hours", type=int, default=24)
+    parser.add_argument("--limit", type=int, default=100)
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--initialize", action="store_true", help="record current channel watermarks without creating directives or acks")
+    parser.add_argument("--no-ack", action="store_true")
+    parser.add_argument("--joined-only", action="store_true", default=True)
+    args = parser.parse_args()
+
+    state = load_json(STATE_PATH, {"channels": {}, "acked_ids": []})
+    result = scan(args, state)
+    directives = result["directives"]
+
+    if args.initialize:
+        directives = []
+        result["directives"] = []
+        result["initialized"] = True
+
+    acked_ids = set(str(x) for x in state.get("acked_ids", []))
+    ack_results: list[dict[str, Any]] = []
+    if directives and not args.dry_run:
+        append_jsonl(DIRECTIVES_PATH, directives)
+        append_jsonl(RAW_PATH, directives)
+        if not args.no_ack:
+            for row in directives:
+                if row["id"] in acked_ids:
+                    continue
+                post_result = post_message(str(row["channel_id"]), ack_text(row))
+                ack_results.append({"id": row["id"], "ok": post_result.get("ok"), "result": post_result})
+                if post_result.get("ok"):
+                    acked_ids.add(row["id"])
+
+    if not args.dry_run:
+        for channel_id, max_ts in result["max_ts_by_channel"].items():
+            state.setdefault("channels", {})[channel_id] = {
+                "last_ts": max_ts,
+                "last_checked": now_iso(),
+            }
+        state["acked_ids"] = sorted(acked_ids)[-500:]
+        state["last_run"] = now_iso()
+        state["last_seen_directives"] = len(directives)
+        state["last_errors"] = result["errors"][:20]
+        save_json(STATE_PATH, state)
+
+    out = {
+        "time": now_iso(),
+        "dry_run": args.dry_run,
+        "initialized": bool(args.initialize),
+        "visible_channels": result["visible_channels"],
+        "scanned_messages": result["scanned_messages"],
+        "directives_found": len(directives),
+        "directives": directives,
+        "ack_results": ack_results,
+        "errors": result["errors"][:10],
+    }
+    print(json.dumps(out, ensure_ascii=False, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
