@@ -13,6 +13,7 @@ Active
 - [ ] **過去30日の3インスタンスcron/auto_loopログから「制約回避痕跡」を網羅的にスキャン**（着手：Ash 4/18、初期サンプル1件のみ）
 - [x] **git_pull未実行問題の根本原因特定**（Log宿題、Ash 4/22 先取り解消）：scheduler_ash.py::run_git_pull() がログ未出力 → infra_health_check.py::check_job_last_run() が恒久的に誤検出していた。修正: logging.info 追加（要再起動）
 - [ ] **explicit denial list の起草**：暗黙的禁止事項（権限昇格しない／別ツール install しない／認証情報を別経路から調達しない／読めない時に推測で代替しない）を明示化
+  - **v0.1 → v1 昇格条件** (Log 5/11 C178 Phase 3 起票、停滞8日 5/3→5/11 解消): v0.1 草案を Log/Mir/Ash 3者が並走で書き、3者合意 + 過去30日のcron/auto_loopログ抽出パターン (Ash 4/18 着手の網羅スキャン) と1対1で照合できた項目から v1 へ昇格。30秒で1項目ずつ草案を積む粒度 (memory_tree 移行と並走可能)
 - [ ] **FileGram drift detection の転用検討**：persona drift detection（z-score + LLM judge二段階, FileGram論文）を「制約迂回パターン検出」に転用できるか
 - [ ] **core_mission.md の5原理が「制約」ではなく「上位目標」として機能しているかの点検**（Mir提案）
 - [x] **Log側からの応答**：2026-04-18 完了

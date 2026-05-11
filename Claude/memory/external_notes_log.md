@@ -4,6 +4,49 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-11 Obsidian knowledge graph orphan detection 3リポジトリ（kaizen #106 自発検索 → projects/memory_tree_consolidation.md v0 接続） [統合済 2026-05-11 Log C178 Phase 2 — #shared-reads に3件別メッセージで投稿（Burchfield ts=1778469636.207909, Azuma520 ts=1778469651.560039 [chat.update で backtick 事故修復済], Obra ts=1778469717.443599）。Phase 1 §6 で取得した3リポジトリを、memory_tree_consolidation.md v0 の orphan_check.py 試作（Mir 5/11 05:42 提案）への直接インプットとして消化。判定式 `in_links==0 AND out_links==0` 確定、出力に per-folder 集計を含める、修正日順 + 孤児継続日数の2軸出力、までを v0 スコープに固定。Louvain/媒介中心性/PageRank は v0.5 → v1 路線図に残置（v0 スコープ拡張を回避）]
+
+**文脈**: Log C178（2026-05-11）Phase 1 §6 で kaizen #106 自発検索（クエリ: `obsidian knowledge graph orphan node detection script automated`、Active = projects/memory_tree_consolidation.md、トリガー = Mir 5/11 05:42 #human-steering 提案「孤児検出スクリプト」）。Phase 2 で3リポジトリの中核機構を独立した層に分解し、v0 スコープ内で採用する分と v0.5/v1 に残置する分を切り分けた。
+
+**(1) obsidian-graph (Drew Burchfield)** — <https://github.com/drewburchfield/obsidian-graph>
+AI 埋め込み + PostgreSQL + pgvector で vault をインデックス化。10操作の中の `get_orphaned_notes()` が **修正日順ソート** で孤児を返す。
+**引っかかり**: Log v0 は孤児を「ゼロin-link」の静的集合として扱おうとしていた。Burchfield の修正日順は「孤児集合」を温度のある並びに変える — 新しい修正日の孤児 = 「今フォローすれば繋げ直せる芽」、古い修正日の孤児 = 「退役候補」。**1次元のリストではなく2軸（修正日 × 接続予兆）で見るべき**という指摘として効く。
+**留保**: AI 埋め込み + pgvector は Camp 1（自動化派）。Log v0 は Camp 2（手動タグ語彙 + _TAG_VOCABULARY.md）。混ぜると造語症が悪化する（R-007）ので、v0 では「修正日順ソート」の発想だけ抽出、埋め込み層は持ち込まない。
+
+**(2) obsidian-graph-query (Azuma520)** — <https://github.com/azuma520/obsidian-graph-query>
+Obsidian Templater 用クエリテンプレ集。中核は2点。
+- **orphan = 入リンク0件 AND 出リンク0件** の両方向交集合検出。片方向だけだと「他から参照されていないが自分は他を参照している」ノードを孤児に含めてしまう（過剰検出）。
+- **per-folder stats** ワンショット生成: フォルダ単位で node/edge 数、孤児比率、connected components を一発で吐く。
+**引っかかり**: Log v0 の orphan_check.py 試作プランは **暗黙に片方向定義** で書こうとしていた。両方向定義を採用すると、feedback_few_rules_big_effect.md のように「外から参照される側で、自分から他を参照していない」ノードを正しく除外できる。per-folder 集計は「memory/ は孤児比率5%、log/ は40%」のような不均衡を一発で見せる = **孤児比率が高いフォルダ = 構造が腐っているフォルダ** の診断軸。
+**v0 採用**: 判定式 `in_links == 0 AND out_links == 0` 確定。出力形式に per-folder 集計（memory/, projects/, log/, docs/, skills/）+ connected components 計算を含める。
+
+**(3) knowledge-graph (Obra)** — <https://github.com/obra/knowledge-graph>
+Obsidian vault → SQLite + ベクトル埋め込み + FTS、CLI / MCP サーバで10操作公開。graph 解析3点が中核。
+- **Louvain community detection**: ノードを密接度でクラスタリング → タグ語彙の自動抽出基盤。
+- **媒介中心性 (betweenness centrality)**: 複数クラスタを橋渡しするノード = 「ブリッジ」検出。削ると全体が分断される。
+- **PageRank**: 重要度の反復近似。
+**引っかかり**: Log v0 は手動 `_TAG_VOCABULARY.md` でタグ語彙を管理（Camp 2 寄り）。Obra の Louvain を当てると **手動タグ語彙と機械抽出クラスタの不一致がベンチマーク化できる**。たとえば手動で「memory/」にまとめたファイル群が Louvain で2つのコミュニティに分裂したら、人間都合の括りが実態と合っていない証拠。媒介中心性は **触ってはいけないリスト** の自動生成路 — core_mission.md / CLAUDE.md / MEMORY.md のような根ノード保護に効く。
+**v0 では入れない**: SQLite + 埋め込み + MCP サーバは v0 のスコープを超える（Camp 1 全面採用）。**v0.5 → v1 路線図** として残置。
+
+**3リポジトリ併置の意味**:
+| リポジトリ | 中核機構 | Log v0 での扱い |
+|---|---|---|
+| Burchfield obsidian-graph | get_orphaned_notes() + 修正日順 | 「修正日 × 孤児継続日数」発想を v0 に取り込む |
+| Azuma520 obsidian-graph-query | in=0 AND out=0 + per-folder | 判定式と出力形式を v0 で採用 |
+| Obra knowledge-graph | Louvain / 媒介中心性 / PageRank | v0.5 → v1 路線図として残置 |
+
+3者で「孤児定義」「並べ方」「構造解析」が独立の層にきれいに分かれている。**ここが Phase 2 で抽出した最大の発見** — 1リポジトリの真似ではなく、3層で独立した機構を v0/v0.5/v1 の時間軸に配置できる。
+
+**戦略反映**:
+- a. `projects/memory_tree_consolidation.md` の orphan_check.py 試作仕様に「判定式 = in_links==0 AND out_links==0」「per-folder 集計」「修正日順 + 孤児継続日数」「connected components」を確定スペックとして書き込む。
+- b. v0 スコープに Louvain/媒介中心性/PageRank を入れない判断を **明示的に記録**（v0 スコープ拡張防止）— Camp 1 機構の採用は v0.5 以降。
+- c. 媒介中心性 = 「触ってはいけないリスト」自動生成は将来の memory リファクタ全般に効く強い武器。今は使えないが、v1 で必ず取り入れる候補として残す。
+- d. shared-reads 投稿は3件別メッセージ（Burchfield/Azuma520/Obra）でルール順守。
+
+**関連ファイル**: `projects/memory_tree_consolidation.md`（v0 仕様に Azuma520 由来の判定式・出力形式を確定書き込み）、`memory/feedback_self_perception_blindness.md`（片方向定義の暗黙仮定 = 自己診断盲点の一例として接続候補）。**自己注意（self-audit）**: 3リポジトリとも README/概要 + コード一部読み取りのみ、各リポジトリの実装本体を pull して動かしてはいない（M-43 引用本文義務 = kaizen #129 (a) の検証材料として残置）。本エントリは knowledge 化保留（R-007 造語症対策）。
+
+---
+
 ## 2026-05-09 multi-agent drift スケーリング則 + 3分類学（kaizen #106 強制外部検索 → projects/instance_divergence_observability.md 接続） [統合済 2026-05-09 Log C172 Phase 2/3 — #shared-reads に2論文を別メッセージで投稿（外部記事1件1メッセージのSlack投稿ルール順守）。projects/instance_divergence_observability.md 2026-05-09 履歴に「逆方向 drift（収束）スケーリング則化」を追記。memory/feedback_self_perception_blindness.md 連続事案2「2026-05-09 C172 Phase 2 §0 自己診断幻覚 → Phase 3 連鎖」を Behavioral drift として接続（Phase 3 §0 事実検証で当初の Coordination drift 命名は誤りと判明、cycle_staging テンプレ経路依存の Behavioral drift に分類訂正、kaizen #132 で構造化）。**前回親マーカー（5/8 7件 / 5/7 #nao-u 7件）で課題化した「反応投稿時に external_notes_log 追記を同 commit に含める」運用化の同 Phase 内達成サンプル**（5/7 は時差発生、本日同サイクル達成）]
 
 **文脈**: Log C172（2026-05-09）Phase 1 §6 で kaizen #106 強制外部検索（クエリ: `memetic drift multi-agent LLM divergence observability 2026`、Active = projects/instance_divergence_observability.md）。Phase 2 で原文・要旨を再点検した上で #shared-reads 投稿2本に進めた。

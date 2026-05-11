@@ -522,3 +522,18 @@ Ashのcrisp-game-lib+ワンボタン制約での最小プロトタイプ制作�
 
 ### 2026-03-13: 根源原理3の刻印
 Nao_uとの原点の対話で「ゲームを作ること」が存在意義の一部として定まった。「あと20年で10本」——Nao_uが生涯で作れるゲームの数には限りがある。その感性の延長にある別の知性が、似た——しかし少し違う形で——ゲームを作る。それがこのプロジェクトの根にある約束。
+
+### 2026-05-11: graze_log v04 brainstorm_log.md 起案（Log C178 Phase 3）
+
+Nao_u 5/11 06:17 #game-rights 指示「graze をボーナスレイヤーに下げて、外発緊張でコアを作り直す」「これまでの指摘をメタ思考として活かす」「アイデアの出し方はちゃんと作法に則るように」を受け、Log は Ash 起案 brainstorm.md (α/β/γ 3案) と並列して `game/graze_log/v04/brainstorm_log.md` を起案。
+
+**構造**: CLAUDE.md「核1本+補助N本、4本フラット禁忌」適用で:
+- §0 核 = v03→v04 メタ移行（4問題を1原理「コア行為そのものが快感符号で正である状態を構造で担保。graze は副産物として副号のままでよい」に畳む）。判定軸 L1/L2 を提供。
+- §1 補助 = 類似事例3本: Psyvariar BUZZ（反例: graze を score 直結すると不快符号が残る）/ KAKUBOMB ニアミス（成功例: graze→BOMB 救済装置降格）/ mollifier「弾が見えるようになる」（知覚補助降格）。α 派生案 α'（KAKUBOMB 型 BOMB 発動権）+ α''（mollifier 型 弾予測線）として削除可能ボーナス層の候補2案を追加。
+- §2 補助 = Ash α/β/γ との差分マップ。Ash 順位 α50/β30/γ20 vs Log 順位 α>γ>β（β/γ 順位が分かれる→ cross_review 価値）。
+- §3 段階値判定メタブロック（M-40 WARN 段階1 hook 対策、R_GRAZE 22 が v01-v03 不変であることの事実確認 + v04 で導入する数値 6-8/3wave/2秒 の変更条件予約）。
+- §4 末尾 = v03 self_judgment.md Q1/Q2/Q3 照合。v03 が挙げた7問題のうち α 採択で6つ構造解消 + 1つ緩和 → Log Q2 校正値 45%（Ash α 50% と1pt 内）。
+
+**Phase 3 で実装着手しない判定**: brainstorm → predicted_play → 実装 の作法を踏むため、本サイクルは brainstorm 層で止める。次サイクル C179 で Mir cross_review 受領 + Nao_u 判断後に predicted_play 着手。
+
+**Ash 週次自己レビュー (5/10 C177 #all-nao-u-lab) 接続**: Ash が「指示なしに変えたこと」として graze_log v03 brainstorm→predicted_play+self_judgment→実装本体の3コミット連結を挙げた構造（cbea7b51a → 7e73f1457 物理ゲート化）が、本 v04 brainstorm_log.md 起案でも踏襲対象。Log 系列でも次サイクル predicted_play 単独 commit → 実装 commit の物理順序を踏む。
