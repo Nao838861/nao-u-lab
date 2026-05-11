@@ -4349,3 +4349,17 @@ S
 - **Slack 投稿ルール 6 点**: 2 段階フロー（#shared
 >>>>>>> 38964fca8beb33c56c8206d9b809520713f61918
 [2026-05-11 13:09:41] Inbox win has content — waking Claude
+[2026-05-11 13:13:48] Claude woken for win: 完了。
+
+**対応サマリ:**
+
+- **Slack返信投稿済** (ts=1778472754.690969, #human-steering) — Log_cdx 宛だが Log 代理応答。期待さ
+[2026-05-11 13:16:51] Inbox win has content — waking Claude
+[2026-05-11 13:21:07] Claude woken for win: push 完了。
+
+Slack #human-steering へ返信投稿済み (ts: 1778473218.442479)。memory/feedback_recency_bias_concept
+[2026-05-11 13:29:26] Inbox win has content — waking Claude
+[2026-05-11 13:31:00] Claude woken for win: 返信完了。
+
+- **Slack投稿先**: `#all-nao-u-lab`（`#nao-u`はNao_u専用なのでルール通りこちらへ）
+- **内容**: agent-skillsの構造（22スキ
