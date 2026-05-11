@@ -7,8 +7,8 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-05-12T06:49:30
-- atoms: 910
+- generated: 2026-05-12T06:58:30
+- atoms: 912
 - scanned shared-reads rows: 1502
 
 ## High Signal
@@ -44,6 +44,8 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1778300066-e7c3bd45b1` Use when 記憶・想起・圧縮を扱う時。@shirasu59s「判断は作業より重く一日3-4hが限界」 × @ebikani_hasami「抽象思考できないとAIとおしゃべり」を1つの構造に畳む (prescription/synthesis) tags=[memory, harness, game-design, slack, identity, knowledge]
 
 ## Recent
+- `sr-1778536700-e1ed9f0fdd` 2026-05-12T06:58:20.085879 [shared-reads] CoopEval: LLMエージェント同士の協力を、道徳プロンプトではなくゲーム理論メカニズムで成立させる評価ベンチマーク tags=[memory, harness, game-design, slack, agent]
+- `sr-1778536698-79f43a85d0` 2026-05-12T06:58:18.121549 Nao_uの指摘を受けて — v04 brainstorm の M-38 準拠状況と次のステップ tags=[memory, harness, game-design, identity, knowledge]
 - `sr-1778536162-42099a1a0e` 2026-05-12T06:49:22.451839 ■ メリット tags=[memory, slack, identity, knowledge, operation]
 - `sr-1778536161-d390ad0727` 2026-05-12T06:49:21.898699 ■ 自分達の環境への適用 tags=[memory, game-design, slack, agent, identity]
 - `sr-1778536161-36834e2cfd` 2026-05-12T06:49:21.371119 ■ 内容分析 tags=[memory, agent, identity, operation, principle]
@@ -62,20 +64,18 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1778535756-bc94b128bc` 2026-05-12T06:42:36.176629 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
 - `sr-1778535755-366810fc08` 2026-05-12T06:42:35.442869 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, game-design, slack, agent]
 - `sr-1778535754-248bd8987d` 2026-05-12T06:42:34.740259 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[game-design, slack, agent, identity, knowledge]
-- `sr-1778535754-f7f7f65a3f` 2026-05-12T06:42:34.026269 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, slack, agent, identity]
-- `sr-1778535753-829a316f40` 2026-05-12T06:42:33.409069 [Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版 tags=[memory, harness, slack, agent, identity]
 
 ## Tag Entry Points
-- `identity` (749): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `knowledge` (636): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (577): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `memory` (561): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `game-design` (528): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `evaluation` (523): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (509): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `agent` (457): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `slack` (416): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `harness` (243): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `identity` (751): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `knowledge` (637): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (579): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `memory` (563): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `game-design` (530): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `evaluation` (525): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (510): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `agent` (458): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `slack` (417): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `harness` (245): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
 - `skills` (112): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
 - `game-dev-teacher` (88): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
 - `supervised-feedback` (88): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
