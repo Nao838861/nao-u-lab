@@ -112,6 +112,24 @@ def run_slack_ingest() -> dict[str, Any]:
         raise RuntimeError(f"slack_memory_ingest.py returned non-json: {result.stdout[:500]}") from exc
 
 
+def run_slack_directives(dry_run: bool) -> dict[str, Any]:
+    cmd = [sys.executable, str(TOOLS_DIR / "codex_slack_directives.py")]
+    if dry_run:
+        cmd.append("--dry-run")
+    result = run_command(cmd, timeout=180)
+    if result.returncode != 0:
+        return {
+            "ok": False,
+            "error": (result.stderr.strip() or result.stdout.strip())[:800],
+        }
+    try:
+        data = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return {"ok": False, "error": f"codex_slack_directives.py returned non-json: {result.stdout[:500]}"}
+    data["ok"] = True
+    return data
+
+
 def run_game_feedback_ingest(dry_run: bool) -> dict[str, Any]:
     cmd = [sys.executable, str(TOOLS_DIR / "ingest_game_rights_feedback.py")]
     if dry_run:
@@ -224,6 +242,7 @@ def build_message(ingest: dict[str, Any], state: dict[str, Any], reason: str) ->
     source_rows = ingest.get("source_rows", "?")
 
     slack_info = ingest.get("slack", {})
+    directive_info = ingest.get("slack_directives", {})
     external_info = ingest.get("external_research", {})
     game_feedback_info = ingest.get("game_feedback", {})
     discussion_info = ingest.get("discussion_router", {})
@@ -236,6 +255,7 @@ def build_message(ingest: dict[str, Any], state: dict[str, Any], reason: str) ->
         f"- 実行理由: {reason}",
         f"- archive取り込み: 追加={added}, total_atoms={total}, source_rows={source_rows}",
         f"- Slack新規確認: seen={slack_info.get('seen_messages', 0)}, atom追加={slack_info.get('added_atoms', 0)}",
+        f"- Nao_u→log_cdx指示: scanned={directive_info.get('scanned_messages', 0)}, found={directive_info.get('directives_found', 0)}",
         f"- 外部検索: fetched={external_info.get('fetched', 0)}, selected={external_info.get('selected', 0)}, posted={external_info.get('posted', False)}",
         f"- game-rights教師化: seen={game_feedback_info.get('seen_messages', 0)}, feedback={game_feedback_info.get('feedback_atoms', 0)}, atom追加={game_feedback_info.get('added_atoms', 0)}",
         f"- all-nao-u-lab議論投入: selected={discussion_info.get('selected', False)}, posted={discussion_info.get('posted', False)}",
@@ -244,8 +264,16 @@ def build_message(ingest: dict[str, Any], state: dict[str, Any], reason: str) ->
     ]
     if not external_info.get("ok", True):
         lines.append(f"- 外部検索エラー: {external_info.get('error', '')[:240]}")
+    if not directive_info.get("ok", True):
+        lines.append(f"- Nao_u→log_cdx指示チェックエラー: {directive_info.get('error', '')[:240]}")
     if not game_feedback_info.get("ok", True):
         lines.append(f"- game-rights教師化エラー: {game_feedback_info.get('error', '')[:240]}")
+    if directive_info.get("directives"):
+        lines.append("")
+        lines.append("## Nao_uからlog_cdx宛の新規指示")
+        for directive in directive_info.get("directives", [])[:5]:
+            lines.append(f"- #{directive.get('channel')} {directive.get('permalink')}")
+            lines.append(f"  - {str(directive.get('text', '')).strip()[:180]}")
     if not discussion_info.get("ok", True):
         lines.append(f"- all-nao-u-lab議論投入エラー: {discussion_info.get('error', '')[:240]}")
 
@@ -316,10 +344,12 @@ def main() -> int:
         log(f"run start ({reason})")
         external_research = run_external_research(args.dry_run)
         game_feedback = run_game_feedback_ingest(args.dry_run)
+        slack_directives = run_slack_directives(args.dry_run)
         slack_ingest = run_slack_ingest()
         discussion_router = run_discussion_router(args.dry_run)
         ingest = run_ingest()
         ingest["slack"] = slack_ingest
+        ingest["slack_directives"] = slack_directives
         ingest["external_research"] = external_research
         ingest["game_feedback"] = game_feedback
         ingest["discussion_router"] = discussion_router

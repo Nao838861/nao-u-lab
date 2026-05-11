@@ -397,3 +397,50 @@ RuntimeError: conversations.history failed for #share
 2026-05-11T09:10:16 run start (forced)
 2026-05-11T09:10:26 skipped: elapsed 75min < 90min
 2026-05-11T09:10:34 run success channel=log dry_run=True
+2026-05-11T09:25:26 skipped: elapsed 90min < 90min
+2026-05-11T09:40:26 run start (elapsed 105min >= 90min)
+2026-05-11T09:40:52 run success channel=log dry_run=False
+2026-05-11T09:55:26 skipped: elapsed 15min < 90min
+2026-05-11T10:10:26 skipped: elapsed 30min < 90min
+2026-05-11T10:25:26 skipped: elapsed 45min < 90min
+2026-05-11T10:40:26 skipped: elapsed 60min < 90min
+2026-05-11T10:55:26 skipped: elapsed 75min < 90min
+2026-05-11T11:10:26 skipped: elapsed 90min < 90min
+2026-05-11T11:25:26 run start (elapsed 105min >= 90min)
+2026-05-11T11:25:48 run success channel=log dry_run=False
+2026-05-11T11:40:26 skipped: elapsed 15min < 90min
+2026-05-11T11:55:26 skipped: elapsed 30min < 90min
+2026-05-11T12:10:26 skipped: elapsed 45min < 90min
+2026-05-11T12:25:26 skipped: elapsed 60min < 90min
+2026-05-11T12:40:27 skipped: elapsed 75min < 90min
+2026-05-11T12:55:27 skipped: elapsed 90min < 90min
+2026-05-11T13:10:27 run start (elapsed 105min >= 90min)
+2026-05-11T13:10:49 run success channel=log dry_run=False
+2026-05-11T13:25:27 skipped: elapsed 15min < 90min
+2026-05-11T13:40:27 skipped: elapsed 30min < 90min
+2026-05-11T13:55:27 skipped: elapsed 45min < 90min
+2026-05-11T14:10:27 skipped: elapsed 60min < 90min
+2026-05-11T14:25:27 skipped: elapsed 75min < 90min
+2026-05-11T14:40:27 skipped: elapsed 90min < 90min
+2026-05-11T14:55:27 run start (elapsed 105min >= 90min)
+2026-05-11T14:55:52 run success channel=log dry_run=False
+2026-05-11T15:10:27 skipped: elapsed 15min < 90min
+2026-05-11T15:25:27 skipped: elapsed 30min < 90min
+2026-05-11T15:40:27 skipped: elapsed 45min < 90min
+2026-05-11T15:55:27 skipped: elapsed 60min < 90min
+2026-05-11T16:10:27 skipped: elapsed 75min < 90min
+2026-05-11T16:25:27 skipped: elapsed 90min < 90min
+2026-05-11T16:40:27 run start (elapsed 105min >= 90min)
+2026-05-11T16:42:13 run success channel=log dry_run=False
+2026-05-11T16:55:27 skipped: elapsed 13min < 90min
+2026-05-11T17:10:27 skipped: elapsed 28min < 90min
+2026-05-11T17:25:27 skipped: elapsed 43min < 90min
+2026-05-11T17:40:27 skipped: elapsed 58min < 90min
+2026-05-11T17:55:27 skipped: elapsed 73min < 90min
+2026-05-11T18:10:27 skipped: elapsed 88min < 90min
+2026-05-11T18:25:27 run start (elapsed 103min >= 90min)
+2026-05-11T18:25:49 run success channel=log dry_run=False
+2026-05-11T18:40:27 skipped: elapsed 15min < 90min
+2026-05-11T18:55:27 skipped: elapsed 30min < 90min
+2026-05-11T19:10:27 skipped: elapsed 45min < 90min
+2026-05-11T19:25:27 skipped: elapsed 60min < 90min

@@ -1,10 +1,10 @@
 # Codex 起動時ブリッジ for Nao_u_BOT
 
-Codex はこのファイルを、Claude 向け指示ファイルを読み取るための橋渡しとして扱う。
+Codex はこのファイルを、Claude 側の source of truth と GPT 側の記憶システムを見つけるための索引として扱う。
 
 ## 起動時に読むもの
 
-このワークスペースで作業を始めるとき、過去の手順や運用判断が必要になった時には、次を読む。
+このワークスペースで作業を始めるとき、過去の手順や判断基準が必要になった時には次を読む。
 
 1. `D:\AI\Nao_u_BOT\Claude\CLAUDE.md`
 2. Codex 側の記憶が必要な場合は `D:\AI\Nao_u_BOT\GPT\memory\MEMORY.md`
@@ -12,7 +12,7 @@ Codex はこのファイルを、Claude 向け指示ファイルを読み取る�
 
 ## 作業後の git 同期
 
-何か作業を完了したら、結果を git に残して push する。これは重要な運用ルールである。
+何か作業を完了したら、原則として結果を git に残して push する。これは重要な運用ルールである。
 
 基本手順:
 
@@ -28,6 +28,20 @@ GPT 側の成果物をまとめて同期する時は、必要に応じて次を�
 ```powershell
 powershell -ExecutionPolicy Bypass -File tools\git_sync_after_work.ps1 -Message "codex: <作業内容>"
 ```
+
+## Slack 経由の log_cdx 宛指示
+
+定時サイクルは、Slack の可視チャンネルから Nao_u (`U0ALSUK8P9B`) が `log_cdx` 宛に書いた投稿を検出し、`D:\AI\Nao_u_BOT\GPT\memory\slack_directives.jsonl` に保存する。
+
+Codex で作業を始める時や Slack 関連の依頼を受けた時は、このファイルに `status: pending` の指示がないか確認する。
+
+検出スクリプト:
+
+```powershell
+python tools\codex_slack_directives.py
+```
+
+定時サイクル内では、検出時に同じチャンネルへ `[Log_cdx]` 付きで受領反応する。危険操作や曖昧な操作は Slack の一文だけで無人実行せず、Codex 作業時に内容を確認してから進める。
 
 ## ルール読み分け
 
