@@ -153,6 +153,8 @@ memory/feedback_prediction_responsibility.md M-37 Stage 4 = 「AI 自プレイ�
   - 正直さ装置 → 救援装置 (既存ノード) — 上位概念リンク
   - 破綻通告 → 内部装置/外部装置 (既存ノード) — ship 経路で位置付けが変わる
   - 定量入力ドメイン / 定性入力ドメイン (新規ノード) — feedback_headless_unfit の構造的根拠
+- memory:
+  - [../memory/feedback_communication_channel.md](../memory/feedback_communication_channel.md) — 原稿プランナーが「破綻通告」を Twitter スクショで流通させた経路 = 我々の通知粒度ルール (アーキ変更=通知 / 運用詳細=通知不要) の外部実装例。Nao_u 通知粒度の運用は「破綻」ではなく「重大な修正」を Slack #all-nao-u-lab に投稿する方向だが、本記事の「正直さ装置」発想と直交=「成果」だけでなく「破綻」も通告対象に含めるかの起票候補。同チャンネル返信ルールは Nao_u 認知コスト最小化 = 原稿プランナー側の「正直さ可視化経路」と同じ「ユーザー認知への到達」を志向した経路最短化
 
 ## 未解決の問い
 

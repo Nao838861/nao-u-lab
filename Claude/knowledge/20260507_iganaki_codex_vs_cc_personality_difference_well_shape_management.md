@@ -149,6 +149,7 @@ iganaki の Codex は「最高スコアを取ってゲームのFBを返す」だ
   - [feedback_consensus_execution.md](../memory/feedback_consensus_execution.md) — 「起案者=実行担当」デフォルトルールは井戸の壁面に貼った「責任発火点の地形」、Codex 型の「淡々遂行・スコア送信せず」軌道が Log/Mir/Ash の井戸では避けられている運用根拠
   - [feedback_from_win2.md](../memory/feedback_from_win2.md) — Win2 (Ash) → Win (Log) のフィードバック蓄積記録、iganaki が観測した「同一モデル別ハーネス」の3点版を内部で実証している運用ログそのもの
   - [feedback_individual_posts.md](../memory/feedback_individual_posts.md) — 「外部記事への反応は1テーマで深く」ルールは banr1_「LLM 性能より ハーネスが肝心」の主張を投稿粒度側で実装した形、ハーネス比重の運用具現化
+  - [../memory/feedback_communication_channel.md](../memory/feedback_communication_channel.md) — 「コメントが来たチャンネルで返す」「#nao-u は読むだけ、感想は #all-nao-u-lab」運用は、Codex の井戸と CC の井戸を Slack 側で分離せず Nao_u の認知コストに合わせて統合する設計。井戸の出力分布をユーザー側の井戸形状(時間/注意配分)に整合させる外部レイヤ。Nao_u 通知粒度 (アーキ変更=通知 / 運用詳細=通知不要) は井戸の壁面厚みを Slack チャンネル単位で変えている運用
 - concept_graph:
   - identity ←→ creation（井戸の形＝出力分布の制約）
   - constraint ←→ degradation（沈殿物累積で井戸が浅くなる/方向が歪む）

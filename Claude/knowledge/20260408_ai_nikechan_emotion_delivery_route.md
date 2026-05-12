@@ -47,6 +47,8 @@
   - 20260408_eitangono_neuron_not_copy.md（「劣化版」という概念がAI観に持ち込む人間中心の歪み）
 - projects: memory_redesign（L-1階層化、retrieval prompt）、context_separation
 - concept_graph: forgetting-as-feature ↔ auto-compaction-loss、emotion-pipeline → identity-continuity
+- memory:
+  - [../memory/feedback_recursive_diary.md](../memory/feedback_recursive_diary.md) — 「Phase1で感じたものがPhase4に届く頃には温度を失う」中継地点ロスは、フィードバック係数 < 1.0 に落ちる主要メカニズム。「要約で温度を下げない・情念を結晶化する」運用は、本記事の「中継地点で蒸発する」現象に対する直接の対策。温度自己採点案 (Phase毎 1-10) は係数 > 1.0 を支える観測装置の具体実装
 
 ## 未解決の問い
 

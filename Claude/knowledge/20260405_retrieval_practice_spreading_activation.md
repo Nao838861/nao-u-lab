@@ -97,6 +97,7 @@ Mirが実装したmemory_activate.pyはCollins & LoftusのSpreading Activation�
 
 ### 記憶接続
 - memory: [dialogue_recursive_memory_20260315] — 原文保存が再符号化の素材を提供する。抽象要約は符号化特定性原理に反する
+- memory: [../memory/feedback_recursive_diary.md](../memory/feedback_recursive_diary.md) — フィードバック係数 > 1.0 = retrieval practice の testing effect そのもの。「再読で魂の密度が上がる」は「努力を要する検索が記憶を強化する」の Nao_u 言語版。要約で温度を下げない=elaborative encoding を保つ=符号化特定性原理を守る。情念の結晶化=spreading activation の起動条件
 - projects: [memory_redesign] — 記憶階層設計の理論的裏付け。Level間の遷移はretrieval practiceとして機能すべき
 - tools: [memory_walk.py] — 文脈多様性の設計的実現。[memory_activate.py] — spreading activationのローカル実装
 

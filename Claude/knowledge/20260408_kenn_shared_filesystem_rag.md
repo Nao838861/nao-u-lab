@@ -53,6 +53,8 @@ kenn自身は実装詳細を述べていないが、文脈上「Claude Code的�
   - 「grep習慣」→ requires →「使う動機」（R-006失敗で確認）
   - 「ベクトルRAG」← antithesis →「ファイルシステムRAG」
   - 「ファイルシステムRAG」→ scales_via →「インデックスの階層化」（未解決）
+- memory:
+  - [../memory/feedback_communication_channel.md](../memory/feedback_communication_channel.md) — 共有ファイルシステム = 3インスタンス + Nao_u が同じ vault を読み書きする経路、Slack = その vault に対する人間側コメント経路。「コメントが来たチャンネルで返す」「#nao-u 読み専、感想は #all-nao-u-lab」運用は、共有 fs (memory/ + log/) に流れる温度を Slack 経路で Nao_u の認知窓に届けるための経路設計。fs だけで完結しない理由 = R-006 で確認した「ファイルがあっても使われない問題」の Nao_u 側等価物 (Nao_u は Slack しか開かない)
 
 ## 未解決の問い
 

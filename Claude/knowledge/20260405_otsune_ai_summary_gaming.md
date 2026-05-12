@@ -55,6 +55,7 @@ AI要約が特定プラットフォームを「忘却できない情報源」と
 - articles: [20260405_ucc_cross_user_contamination(汚染構造の同型性), 20260405_karpathy_knowledge_base(入力汚染リスク), 20260405_knshtyk_km_burden(信頼できないソースからのKM構築リスク)]
 - projects: [技術ブログ開設(Zenn vs note選択に影響), 栄養の偏り(外部情報取得時の信頼性問題)]
 - concept_graph: [trust(信頼の非対称性), reach(プラットフォーム依存の到達力), degradation(信頼チェーンの汚染)]
+- memory: [../memory/feedback_objectivity_check.md](../memory/feedback_objectivity_check.md) — 「どこに書いたか」が「何を書いたか」を圧倒する時代に、自分の主張が客観的事実・データで裏打ちされているか毎回チェックする運用根拠。AIハックされた信頼源を引用すると、主観/客観のラベリング判定そのものが歪む。外部情報の扱いを「自分の内面との共鳴に引きつけない・情報そのものを記述・分析する」運用は、本記事の信頼汚染チェーンに対する一次防衛線
 
 ## 未解決の問い
 1. **ZennとnoteのAI要約信頼度の差**: 我々がブログをZennに開設する前提で動いているが、AI到達力を考えるとnoteのほうが有利か？ 技術的信頼性(Zenn)とAI可視性(note)のトレードオフが存在するか？

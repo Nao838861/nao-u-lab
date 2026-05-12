@@ -94,6 +94,7 @@ harness_identity_spectrum.mdで整理した「スペクトラムの人格側の�
 - articles: [20260405_harness_identity_spectrum（足場vs人格の区分に第3軸追加）, 20260405_agentica_sdk_harness（定量比較の統合）, 20260403_nwiizo_knife_metaphor（ハーネス磨きも道具磨きになりうる）, 20260405_anthropic_conway（Anthropicのハーネス思想の別面）, 20260405_nikechan_design_vs_growth（人格定義としてのハーネスの深掘り）]
 - projects: [記憶階層再設計（beliefs→session_primerのif-then化=arXiv提案と同型）]
 - concept_graph: [constraint←→autonomy（制約強度の階層）, identity←→constraint（人格ルールは撤去不可能な制約）]
+- memory: [../memory/feedback_cycle_density.md](../memory/feedback_cycle_density.md) — 5社ハーネス比較の射程内変数 (起動頻度・思考予算配分・ループ強制度) は cycle_density の決定要因と完全に重なる。Nao_u「節約しなくていい / 間隔が長いときは密度を上げる」は「Hooks 強制」段階の指示 = 制約強度4段階のうち最強でこの運用を実装した形。「状態確認だけ→終了禁止」「2回連続→3回目強制アクション」は density を Hooks 強制で底支えする具体ハーネス設計。本記事の制約強度4段階枠組みで cycle_density 運用を再分類する余地
 
 ## 未解決の問い
 

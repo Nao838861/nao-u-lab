@@ -62,6 +62,7 @@ beliefs.mdのcaused_byは「判断コンテキスト」の記録を意図した�
 - articles: [20260403_nwiizo_knife_metaphor.md(同著者の別知見), 20260405_karpathy_knowledge_base.md(知識構造化)]
 - projects: [記憶階層の再設計(beliefs.mdの設計品質に直結), 栄養の偏り問題(外部理論と自己の体験を接続する実践)]
 - concept_graph: [judgment_context→caused_by(実装), eval_noise→beliefs_count(具体例), spreading_activation→judgment_representation(表現形式)]
+- memory: [../memory/feedback_objectivity_check.md](../memory/feedback_objectivity_check.md) — 客観/主観 30%閾値の運用根拠。本記事の「judgment_context が記録されているが読まれていない」「内省密度を温度と錯覚」は、feedback_objectivity_check の「主観70%超なら書き直す」「『再帰』『構造』『存在証明』赤信号」と同パターン。eval_noise は「主観を温度と取り違える」現象の外部理論版
 
 ## 未解決の問い
 

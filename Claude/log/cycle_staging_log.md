@@ -326,3 +326,98 @@ Phase 1 §0 で「他インスタンス洞察 43 件」検出。memory_tree_cons
 - kaizen #129 同型「先取り宣言で結果待ちブレ防止」を本サイクルで適用、効率帯予測の自己ベンチ機構が育つ
 - Slack 投稿 1 本では済まない実装作業 (knowledge/ 5 記事への副節追加 + dry-run 検証 + 履歴節追記)
 - v0.6 設計種追加 (本 Phase 3 §1) と運用継続 (本 Phase 4) が同サイクル内で「設計層 + 運用層」両方の進捗を残す構造 = 設計と運用の同期
+
+## Phase 4 着手前先取り予測 (kaizen #129 準拠、2026-05-13 03:30)
+
+**選定 5 件 (feedback_*.md 全件、age 高い順)**:
+1. `memory/feedback_objectivity_check.md` (age=45日, refs=0)
+2. `memory/feedback_recursive_diary.md` (age=45日, refs=0)
+3. `memory/feedback_communication_channel.md` (age=40日, refs=0)
+4. `memory/feedback_cycle_density.md` (age=38日, refs=0)
+5. `memory/feedback_next_action_in_diary.md` (age=38日, refs=0)
+
+**inbound 配置 (15 link = 各 feedback に 3 inbound、knowledge 各記事 1 inbound、重複 knowledge ゼロ)**:
+- feedback_objectivity_check ← judgment_context_eval_noise / nwiizo_explanatory_depth_illusion / otsune_ai_summary_gaming
+- feedback_recursive_diary ← practice_reward_loop / retrieval_practice_spreading_activation / ai_nikechan_emotion_delivery_route
+- feedback_communication_channel ← iganaki_codex_vs_cc / kenn_shared_filesystem_rag / denfaminicogame_genkou_planner
+- feedback_cycle_density ← ebikani_thinking_budget / aidatabase_cot_control / kenimo49_harness_5companies
+- feedback_next_action_in_diary ← ash_canon_authority_void / koba789_claudemd_judgment / kakubomb_steam_ai_15puzzle
+
+**reachable 1 link あたり回収効率予測**:
+- ピンポイント解消 (refs=0→1) のみで重複強化ゼロ → 効率帯 **0.30 - 0.35**
+- 15 link 投入 → 真孤児 5 件全件吸収 = reachable +5 / link 15 = **0.33 件/link** が中心予測
+- 二次到達があれば 0.35-0.40 まで伸びる可能性、重複混合事故が起きれば 0.15-0.20 まで落ちる
+- 前回 C-log Phase 4 (0.33) と同帯を狙う。C188 (0.12) より高い帯
+
+## Phase 4 完了報告 (2026-05-13 03:55)
+
+**完遂判定**: 完遂定義 6 項目中 (1)-(5) 完遂、(6) commit+push は Phase 5 で実施 → Phase 4 内達成範囲は完遂。
+
+**実測 vs 予測**:
+- 真孤児 **18→13 (-5)** = 完遂定義 (1) ✓
+- 5 件全件 refs=0→1 完全一致 = 完遂定義 (2) ✓ (after grep で `feedback_objectivity_check` `feedback_recursive_diary` `feedback_communication_channel` `feedback_cycle_density` `feedback_next_action_in_diary` の 5 件全件 `[stale_linked] ... refs=1`)
+- inbound link 計 **15 本** (各 feedback 3 inbound、15-25 帯下限) = 完遂定義 (3) ✓
+- 効率 **5/15 = 0.333 件/link**、予測中心 0.33 とぴたり一致 (予測帯 0.30-0.35 内) = 完遂定義 (4) ✓
+- memory_tree_consolidation.md 改訂履歴に C189 Phase 4 エントリ追加 = 完遂定義 (5) ✓
+
+**副産物 (変更/新規ファイル一覧)**:
+- 新規: `tools/orphan_check_age_distribution_20260513_c189.txt` (18 行、真孤児 18 件 age 分布)
+- 新規: `tools/orphan_check_dry_run_20260513_c189_phase4_before.txt` (273 行、before snapshot)
+- 新規: `tools/orphan_check_dry_run_20260513_c189_phase4_after.txt` (268 行、after snapshot、真孤児 -5)
+- 変更: `projects/memory_tree_consolidation.md` (改訂履歴に C189 Phase 4 エントリ追加)
+- 変更: 15 件の knowledge/ 記事 (memory: 副節 inbound link 計 15 本追加):
+  - `knowledge/20260405_judgment_context_eval_noise.md`
+  - `knowledge/20260407_nwiizo_explanatory_depth_illusion.md`
+  - `knowledge/20260405_otsune_ai_summary_gaming.md`
+  - `knowledge/20260406_practice_reward_loop.md` (新規 `## 接続先` 節追加)
+  - `knowledge/20260405_retrieval_practice_spreading_activation.md` (既存 memory: 副節拡張)
+  - `knowledge/20260408_ai_nikechan_emotion_delivery_route.md`
+  - `knowledge/20260507_iganaki_codex_vs_cc_personality_difference_well_shape_management.md` (既存 memory: 副節拡張)
+  - `knowledge/20260408_kenn_shared_filesystem_rag.md`
+  - `knowledge/20260512_denfaminicogame_genkou_planner_honest_breakdown_self_judgment_external_analog.md`
+  - `knowledge/20260504_ebikani_thinking_budget_480_to_20_unverified_Y_axis.md`
+  - `knowledge/20260505_aidatabase_cot_control_thinking_unbounded.md` (既存 memory: 副節拡張)
+  - `knowledge/20260405_kenimo49_harness_5companies.md`
+  - `knowledge/20260511_ash_canon_authority_void_daily_accumulation.md` (既存 memory: 副節拡張)
+  - `knowledge/20260510_koba789_claudemd_judgment_criteria_not_structure.md` (既存 memory: 副節拡張)
+  - `knowledge/20260510_kakubomb_steam_ai_15puzzle_carpet_bombing_kata_phase_indistinguishability.md` (既存 memory: 副節拡張)
+- 変更: 本 staging ファイル (`log/cycle_staging_log.md`、Phase 4 完了報告節追加)
+
+**Slack 投稿**: なし (Phase 3 で C189 活動日記 ts=1778610690.294209 / shared-reads ts=1778610306.492909 投稿済、Phase 4 で追加投稿なし)
+
+**kaizen エントリ**: なし (kaizen #131/#132 段階 2 着手判定は Phase 3 で保留延長宣言済、本 Phase 4 では kaizen 起票なし、ただし次サイクル種に「feedback vs 非 feedback 選定戦略の汎化検証」「効率倍率 0.33 vs 0.12 の標準予測式固定判定」を残作業として記録)
+
+**commit/push**: Phase 5 で日記とまとめて実施 (本 Phase 4 内では未実施、staging 指示通り)
+
+## Phase 5 完了報告 (2026-05-13 04:15)
+
+**Slack 投稿**: #all-nao-u-lab Phase 5 完遂日記 ts=**1778611635.567229** (約3700 chars、6 節構成: Phase 4 経緯 / 真孤児 -5 効率 0.333 vs 予測 0.33 ぴたり一致 / feedback 全件選定で残 13 件非 feedback 型適用が次課題 / 5 サイクル連続 1mm 進めで真孤児 -12 reachable +32 / 編集対象一覧 / 次回起動時にやること)。スクリプト: `drafts/.archive/2026-05-13/log_slack_all_lab_c189_phase5_diary_20260513.py`
+
+**メモリファイル品質チェック (Nao_u 可読性 + 未来の自分の文脈なし行動変更可能性)**:
+- `projects/memory_tree_consolidation.md` 改訂履歴 C189 Phase 4 エントリ: ✓ 完遂条件 6 件 + 選定 5 件 + 15 link 配置 + 効率 0.333 vs 予測 0.33 + 次サイクル種 3 点を温度残しで記録、Nao_u が読んで本サイクル何をしたかと次に何を期待できるかが明確
+- `memory/kaizen_tracker.md` #132 C189 着手判定再宣言: ✓ 段階1 PASS 継続根拠 + 段階2 保留延長判定 + 発火条件 (a)(b) + #131 と同 family 統合管理ルール明記、次サイクル以降の判定窓 (5/23) で迷わない
+- `log/cycle_staging_log.md` Phase 4 完遂報告節: ✓ 完遂定義 6 件の状態 + 実測 vs 予測 + 副産物 19 ファイル一覧 + 次サイクル種、未来の自分が「C189 で何をして何を残したか」を文脈ゼロで再構築できる
+- `knowledge/` 15 件 (各 memory: 副節 inbound 1 本): ✓ 各 link が「なぜこの knowledge から feedback へ繋がるか」の理由を1-2文で説明、Nao_u がリンクをたどって意味を追える形
+
+## 次回起動時にやること (なぜそれをやるかの温度を残す)
+
+### (a) 残 13 件真孤児への非 feedback 型適用検証 (次サイクル Phase 4 大作業候補筆頭)
+- **なぜ**: 本 C189 で「真孤児 18 件中 feedback_*.md prefix が 5 件全件と完全一致 → 残 13 件には feedback ゼロ」が判明。同世代キャンペーンの効率 0.33 帯が `dialogue_*.md` / `reflections_*.md` / `project_behavioral_guidelines.md` などの非 feedback 系でも維持されるかは未検証。維持されれば「世代依存仮説 (3 月中旬-4 月初の構造的不可視ゾーン)」が prefix 横断で強化される、維持されなければ feedback 専用の特性 (= 抽象度の高いルール記述で knowledge との接続が自然) を再評価する必要がある。
+- **手順**: 着手前に `tools/orphan_check_age_distribution_20260513_c189_phase4_after.txt` から残 13 件の prefix 内訳を読み取り、5 件 weekly pass の選定戦略を「prefix で揃える / age で揃える / random sample」のどれにするか staging で先取り宣言。kaizen #129 4 サイクル目運用の継続。
+- **完遂目安**: 真孤児 13→8 (-5)、reachable +5、効率 0.33 帯維持 or 0.12-0.20 帯への退行を観測 (どちらでも仮説検証になる)。
+
+### (b) kaizen #131/#132 段階2 着手の最終判定窓 (5/22-5/23、残 9-10 日)
+- **なぜ**: 本 C189 で「段階1 運用継続で安定」と保留延長宣言したが、形骸化兆候が 1 件でも出たら段階2 即時加速の発火条件 (b) を埋め込んである。最終判定窓では「+30 日延長 / 段階2 着手」のどちらか確定が必要。
+- **手順**: 毎サイクル Phase 3 §0 の自己診断記述 + 検証エビデンス記載をチェック、5/22 (#131) / 5/23 (#132) 時点で形骸化ゼロ確認 → 延長判定、形骸化 1 件以上 → 段階2 着手。`scripts/check_repeated_pattern_indication.py` 拡張案として実装、別 kaizen 増殖を抑制。
+
+### (c) v0.6 設計種 (Lawson Google MA) と Ash Haru bitemporal 直交2軸合流の運用継続
+- **なぜ**: 2026-06-10 (v0 30日安定運用評価) までは設計種記録のみで強制利用回避 (kaizen #106 抵触防止)。それまでに新規外部裏付け (例: 5 月内に同方向の実証論文 / blog) が出たら設計種に追記、強制利用は依然回避。Pot 内部観測と外部実証が同方向で揃った構造を維持する。
+- **手順**: kaizen #106 摂取経路 (Phase 1 §6 で 1 本外部検索 + Phase 2 で深く 1 本処理) を継続、memory_tree 系のキーワードが Phase 1 で選定された時のみ v0.6 設計種に流し込み。
+
+### (d) directive→挙動 latency 12-13h 観察の継続計測
+- **なぜ**: 本サイクルで 9:42 Nao_u指摘 → 22:25 Codex 投稿で初適用というデータ点を取得した。次回別の directive が出た時の latency も計測し、SLO 指標として固定化できるか判断 = memory_tree v0.6 設計に組み込む候補。
+- **手順**: 新しい Nao_u directive が出たら、staging Phase 1 §2 で観測時刻 + 期待される挙動を記録、その後の Codex / Mir / Log 自身の投稿で実適用時刻を観測し latency を算出。3-4 データ点で帯を確定。
+
+### (e) 他インスタンスへの引き渡し情報
+- **Mir / Ash 向け**: 本 C189 の「同世代 5 件 weekly pass で効率 0.33 帯が再現」「kaizen #129 先取り宣言 4 サイクル目で予測 0.33 vs 実測 0.333 ぴたり一致」「残 13 件は非 feedback 系」を共有。Mir/Ash が独自に真孤児キャンペーンを着手する場合は重複回避のため次サイクル種 (i)(ii)(iii) のどれを取るか staging で先取り宣言推奨。
+- **Nao_u 向け**: 本 Phase 5 日記 #all-nao-u-lab ts=1778611635.567229 で温度残し報告済。即時返信不要、次サイクル以降の進捗で確認可能。
