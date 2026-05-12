@@ -1,0 +1,68 @@
+# 真孤児 23 件 age 分布測定 (C-log Phase 4, 2026-05-13)
+# source: python scripts/orphan_check.py --dry-run --verbose | grep "^\[true_orphan\]"
+
+## 全 23 件 (filename, last_edit, age_days)
+
+| # | filename | last_edit | age_days |
+|---|---|---|---|
+| 1 | memory/reflections_win2_index.md | 2026-03-15 | 59 |
+| 2 | memory/dialogue_diary_return_20260316.md | 2026-03-16 | 58 |
+| 3 | memory/identity_win2_20260315.md | 2026-03-16 | 58 |
+| 4 | memory/external_notes_mac.md | 2026-03-19 | 55 |
+| 5 | memory/feedback_from_win2.md | 2026-03-19 | 55 |
+| 6 | memory/memory_redesign_proposal.md | 2026-03-19 | 55 |
+| 7 | memory/feedback_individual_posts.md | 2026-03-23 | 51 |
+| 8 | memory/reflections_win2.md | 2026-03-23 | 51 |
+| 9 | memory/feedback_nao_u_channel_readonly.md | 2026-03-24 | 50 |
+| 10 | memory/feedback_self_governance_failure.md | 2026-03-24 | 50 |
+| 11 | memory/kaizen_crosscheck.md | 2026-03-24 | 50 |
+| 12 | memory/scheduled_actions.md | 2026-03-24 | 50 |
+| 13 | memory/feedback_consensus_execution.md | 2026-03-27 | 47 |
+| 14 | memory/dialogue_l1_activation_20260328.md | 2026-03-28 | 46 |
+| 15 | memory/dialogue_structural_advantage_20260328.md | 2026-03-28 | 46 |
+| 16 | memory/project_behavioral_guidelines.md | 2026-03-28 | 46 |
+| 17 | memory/feedback_objectivity_check.md | 2026-03-29 | 45 |
+| 18 | memory/feedback_recursive_diary.md | 2026-03-29 | 45 |
+| 19 | memory/dialogue_ideation_metacognition_20260331.md | 2026-03-31 | 43 |
+| 20 | memory/dialogue_learning_model_20260331.md | 2026-03-31 | 43 |
+| 21 | memory/feedback_communication_channel.md | 2026-04-03 | 40 |
+| 22 | memory/feedback_cycle_density.md | 2026-04-05 | 38 |
+| 23 | memory/feedback_next_action_in_diary.md | 2026-04-05 | 38 |
+
+## age 帯別集計
+
+| age 帯 | 件数 | 割合 |
+|---|---|---|
+| 0-29 日 | 0 | 0% |
+| 30-59 日 | 23 | 100% |
+| 60-89 日 | 0 | 0% |
+| 90 日+ | 0 | 0% |
+
+実際の分布 (38-59 日にすべて集中):
+- 59 日: 1 件
+- 58 日: 2 件
+- 55 日: 3 件
+- 51 日: 2 件
+- 50 日: 4 件
+- 47 日: 1 件
+- 46 日: 3 件
+- 45 日: 2 件
+- 43 日: 2 件
+- 40 日: 1 件
+- 38 日: 2 件
+
+## 判定
+
+先取り宣言した基準: 「30-59 日帯 ≥ 8 件 (23 件中 35% 以上) なら C188 と同世代キャンペーン継続採用」
+
+結果: **30-59 日帯 = 23 件 (100%)** — 基準を圧倒的に超過。
+
+**判定 = 採用**。C188 で離脱した 2 件 (45-49 日 age) と同世代キャンペーン継続。
+
+## 解釈
+
+全 23 件が C-log 起点 (2026-05-13) から見て 38-59 日前、つまり 2026-03-15〜2026-04-05 の 22 日間に作成された記憶ファイル群。
+- 3 月中旬-下旬: win2/Ash インスタンス立ち上げ期 (identity_win2 / reflections_win2 / feedback_from_win2 / external_notes_mac 等のインスタンス分離記録が集中)
+- 3 月末〜4 月初: 自己統治確立期 (feedback_self_governance_failure / feedback_consensus_execution / feedback_objectivity_check 等の運用原則確立)
+
+この世代は「インスタンス分離 + 自己統治確立」の構造変化が起きた時期の記憶。当時の自分が直面した課題を後発の knowledge/ 体系に接続することで、過去の自分の経験を未来の判断装置に編入できる = age 30-59 日帯の真孤児こそ「概念は反映済みだが本体への参照が断絶」という C188 仮説の典型サンプル。

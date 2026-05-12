@@ -127,6 +127,11 @@ CLAUDE.md M-39（人間プレイ前 結果予測ゲート）と M-40（人間プ
   - projects/instance_divergence_observability.md（境界透過装置 = 外在化発火装置の一覧化）
   - projects/external_search_phase1_fixation.md（外部摂取→内部適用、本記事は実行例）
   - projects/memory_consolidation_20260504.md（feedback群統合、@ats 流の自動発火機構を将来検討する候補）
+- memory:
+  - [feedback_from_win2.md](../memory/feedback_from_win2.md) — Win2 (Ash) → Win (Log) のツイートスタイル指摘記録。「断定→疑問」「捨てツイート」「読み手に向いた鏡」は @creativetomred「説明過多禁止 = 発火点をプレイヤー内部に置く」の発信側等価物、発火点の内在化を tweet 設計に適用した運用ログ
+  - [feedback_individual_posts.md](../memory/feedback_individual_posts.md) — 「外部記事への反応は1テーマで深く」ルールは @umiyuki_ai 批判の「テンプレ起動装置」を投稿側で避ける構造、分割粒度ごとに発火責任を内側に保つ設計
+  - [feedback_nao_u_channel_readonly.md](../memory/feedback_nao_u_channel_readonly.md) — #nao-u チャンネル書込禁止は「発火点の境界」を物理的に制限した運用、判断主体不在のテンプレ起動を構造的に遮断する側の処方
+  - [feedback_self_governance_failure.md](../memory/feedback_self_governance_failure.md) — mir_boot_intent で制御できる問題を Nao_u に依頼してしまった事例。発火点が外側 (Nao_u 判断) に流出した瞬間の典型例で、@ats suffering 内在化と逆向きの失敗パターンの記録
 - concept_graph:
   - 発火点の内在化 → REFINES → 装置の向き
   - 発火点の内在化 → SPECIALIZES-AS → 苦痛指標 (@ats), 説明過多禁止 (@creativetomred), 自分で判断 (M-40)

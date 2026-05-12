@@ -107,6 +107,8 @@ active project `memory_consolidation_20260504` の文脈で、Lattice 5カテゴ
   - [feedback_rule_proliferation.md](../memory/feedback_rule_proliferation.md) — ルール過剰問題、Lattice 多数派が CLAUDE.md に「実装/アーキ/build」を書き並べる方向の運用副作用
   - [feedback_self_governance.md](../memory/feedback_self_governance.md) — 自己統治の編集プロトコル根拠、CLAUDE.md L24「指示ファイル編集」セクションが論文外3軸として立つ理由
   - [feedback_invisible_rule_accumulation.md](../memory/feedback_invisible_rule_accumulation.md) — 不可視ルール蓄積、CLAUDE.md 内ルールを抑える規範 (Lattice 多数派の static document 化を回避する運用根拠)
+  - [feedback_self_governance_failure.md](../memory/feedback_self_governance_failure.md) — 自分の仕組み (mir_boot_intent) で解決できる問題を Nao_u に依頼してしまった事例、CLAUDE.md L24「指示ファイル編集プロトコル」が「自分の管轄か Nao_u の管轄か」境界判定として機能する根拠
+  - [feedback_consensus_execution.md](../memory/feedback_consensus_execution.md) — 3人合意後の「起案者=実行担当」デフォルトルール、CLAUDE.md の「絶対にやる」5本が役割ラベルではなく「次の一手の発火責任」を内側に置く運用と整合
 - **concept_graph**:
   - CLAUDE.md構造設計 →（位置決定）→ 多数派/少数派位置
   - ルール過剰問題 →（裏付け）→ ai_database whack-a-mole

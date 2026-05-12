@@ -370,3 +370,74 @@ orphan_check.py 真孤児 23 件の **age 分布測定** + 「世代依存 inbou
 (c) **判定基準を先取り宣言済**: 「30-59日帯 ≥ 8 件で採用」と着手前に基準を固定 = 結果に応じて事後で基準を緩める誘惑を遮断 (sense_prediction_log 事例11 同意フレーム警戒 + feedback_no_sympathy_goal_first T:5 適用)
 (d) **物理視点裏付け**: Phase 3 §3 で記録した akari_worlds 「忘れる側にコストが残る」を **真孤児こそ最も多くのエントロピーを散逸している場所**と接続済 → age 分布測定はこの仮説の最初の経験的検証 = 設計種 (B) (2026-06-10 着手判定) への準備データ
 (e) **kaizen #129 検証期限 2026-05-16 残3日 vs 本作業優先理由**: kaizen #129 は brainstorm 工程ゲート、本サイクルに新規 brainstorm 起票がないため検証は次回 brainstorm (graze v05 等) に持ち越し可、本作業の方が「次サイクル種の累積防止」観点で緊急度が高い
+
+## Phase 4: 実行結果
+
+### 完遂状態
+
+完遂条件 (1)(2)(3)(4) すべて達成 (採用ルートで完遂、棄却ルート (5) は不発動)。
+
+| 条件 | 状態 | エビデンス |
+|---|---|---|
+| (1) 真孤児 23 件の (filename, last_edit, age_days) 記録 | 完遂 | `tools/orphan_check_age_distribution_20260513.txt` |
+| (2) age 帯別集計 | 完遂 | 30-59日帯=23件(100%) / 0-29=0 / 60-89=0 / 90+=0 |
+| (3) 判定 (採用/棄却) | **採用** | 先取り宣言「30-59日帯 ≥ 8 件で採用」基準に対し実測 100% |
+| (4) 真孤児 23→18 以下 + reachable 増加 | 完遂 | 23→18 (-5) / reachable 436→441 (+5) / stale_linked 33→38 (+5) |
+
+### 副産物 (新規/変更ファイル)
+
+**新規 (3件)**:
+- `tools/orphan_check_age_distribution_20260513.txt` — 23件の age 分布測定 + 判定記録
+- `tools/orphan_check_dry_run_20260513_phase4_before.txt` — 編集前 dry-run (真孤児23/静止親接続33/新規未登録6/reachable 436)
+- `tools/orphan_check_dry_run_20260513_phase4_after.txt` — 編集後 dry-run (真孤児18/静止親接続38/新規未登録6/reachable 441)
+
+**変更 (6件)**:
+- `knowledge/20260505_lattice_node_claudemd_empirical_2303files_inverted_position.md` — `memory:` 副節に 2 件追加 (feedback_self_governance_failure / feedback_consensus_execution)
+- `knowledge/20260415_karpathy_claudemd_persona_transfer.md` — `memory:` 副節を新規追加 (3件)
+- `knowledge/20260507_iganaki_codex_vs_cc_personality_difference_well_shape_management.md` — `memory:` 副節を新規追加 (3件)
+- `knowledge/20260417_feedback_capacity_two_failures_mir.md` — `## 接続先` 節を新規作成 + `memory:` 副節 (3件)
+- `knowledge/20260505_internal_ignition_three_tweets_ats_creativetomred_umiyuki.md` — `memory:` 副節を新規追加 (4件)
+- `projects/memory_tree_consolidation.md` — 改訂履歴節に「2026-05-13 C-log Phase 4 (Log)」追記
+
+### 追加 markdown link 総数
+
+15 本 (内訳: lattice +2 / karpathy +3 / iganaki +3 / feedback_capacity +3 / internal_ignition +4)。完遂定義「15-25 本」下限達成。
+
+各 feedback 5 件すべてが 3 inbound 受領 → 真孤児 23→18 (-5) で離脱 5 件 = 選定 5 件と完全一致 (diff 検算済)。
+
+### Slack / kaizen / 他副産物
+
+- Slack 投稿: なし (Phase 3 飽和判定継続、Phase 4 では追加投稿を行わない方針通り)
+- kaizen 新規提案: なし
+- 日記: 書かない (Phase 5 で実施)
+- commit / push: 実行せず (Phase 5 で日記とまとめて実施)
+
+### 次サイクル種 (memory_tree_consolidation.md C-log Phase 4 履歴節記載と同期)
+
+(i) 残 18 件真孤児を同世代キャンペーンで weekly pass 継続 (5 件 × 4 サイクル想定)
+(ii) C181 v0.2 以降に追加された feedback (38日未満 age) が真孤児に流入するか観測継続 = 世代依存仮説の予測検証
+(iii) reachable 増加効率 (1 link あたり 0.33) は本サイクル「ピンポイント解消」起因、次回 5 件は重複 inbound 強化が混じるはずなので 0.12-0.25 に戻ると予測 = 次サイクル staging 先取り宣言の判断材料
+
+## Phase 5: 日記 + push
+
+### 実行内容
+
+- `log/daily_diary_log.md` 先頭に C-log Phase 5 日記を追記 (温度の残る長文、外部情報 3 件 = kaizen #106 graph indexing 検索結果を含む)
+- `drafts/2026-05-13/post_log_log_diary_clog_20260513.py` 経由で **#log チャンネルへ投稿** (ts=1778600698.900979) → drafts/.archive/2026-05-13/ へ論理削除完了
+- 次回起動時にやること 6 件を「なぜそれをやるかの温度付き」で記録 (Nao_u 5/4 dialogue_micromanagement 指示準拠)
+
+### 書き込んだメモリ系ファイル一覧 (Nao_u 読解 PASS / 未来の自分の行動変化 PASS — 日記内チェック表で全 7 カテゴリ確認済)
+
+1. `tools/orphan_check_age_distribution_20260513.txt` — 23 件 age 分布測定 + 判定記録
+2. `tools/orphan_check_dry_run_20260513_phase4_before.txt` / `_after.txt` — dry-run エビデンス 2 本
+3. `knowledge/` 5 記事 `memory:` 副節 (lattice_node / karpathy / iganaki / feedback_capacity / internal_ignition、計 15 link)
+4. `memory/sense_prediction_log.md` 事例 12 (Orbit Wars 構造語多用 先回り宣言)
+5. `projects/memory_tree_consolidation.md` 改訂履歴 C-log Phase 3 (a)(b)(c) + Phase 4
+6. `game/cross_review/20260513_log_orbit_wars_axis_for_v04.md` (graze_log v04 build-phase patch 判定軸 L3)
+7. `log/cycle_staging_log.md` Phase 0-5
+8. `log/daily_diary_log.md` C-log 日記
+9. `drafts/.archive/2026-05-13/post_log_log_diary_clog_20260513.py`
+
+### サイクル C-log 完了
+
+Phase 1〜5 全フェーズ完遂。次サイクル C189 へ。

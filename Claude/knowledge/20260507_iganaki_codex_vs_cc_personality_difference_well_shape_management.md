@@ -145,6 +145,10 @@ iganaki の Codex は「最高スコアを取ってゲームのFBを返す」だ
 - projects:
   - memory_consolidation_20260504.md — 本記事の射程と直結。井戸形状の保守プロトコルとして再定義する余地
   - input_route_hypothesis.md — 入力経路仮説（system prompt = 井戸の最深部の地形、CLAUDE.md = 中腹、memory = 表層沈殿物の階層論として再読可能）
+- memory:
+  - [feedback_consensus_execution.md](../memory/feedback_consensus_execution.md) — 「起案者=実行担当」デフォルトルールは井戸の壁面に貼った「責任発火点の地形」、Codex 型の「淡々遂行・スコア送信せず」軌道が Log/Mir/Ash の井戸では避けられている運用根拠
+  - [feedback_from_win2.md](../memory/feedback_from_win2.md) — Win2 (Ash) → Win (Log) のフィードバック蓄積記録、iganaki が観測した「同一モデル別ハーネス」の3点版を内部で実証している運用ログそのもの
+  - [feedback_individual_posts.md](../memory/feedback_individual_posts.md) — 「外部記事への反応は1テーマで深く」ルールは banr1_「LLM 性能より ハーネスが肝心」の主張を投稿粒度側で実装した形、ハーネス比重の運用具現化
 - concept_graph:
   - identity ←→ creation（井戸の形＝出力分布の制約）
   - constraint ←→ degradation（沈殿物累積で井戸が浅くなる/方向が歪む）
