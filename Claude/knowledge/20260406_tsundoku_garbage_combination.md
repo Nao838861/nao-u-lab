@@ -93,3 +93,4 @@ Dunsmoor(2022) + Chong(2025)の知見: 弱い記憶は、後から来る高感�
 - beliefs: B022（信念追加は代理報酬）— 保存行為自体が「わかった」感を与え、読む行為を代替してしまう構造
 - projects: memory_redesign — external_notesの処理方針変更が実装に影響
 - concept_graph: memory × forgetting（Tag-and-Capture軸）、creation × experience（practice_reward_loop軸）
+- memory: [memory/dialogue_ideation_metacognition_20260331.md](../memory/dialogue_ideation_metacognition_20260331.md) — Nao_uの発想連鎖分解（SpatialLM→VLMマリオ→AutoHarness→ハーネスではなくスクリプト出力）は GOROman「ゴミの山の中の発明」の人間版実装。問題意識×直近1-2日素材の触媒反応で発想が立ち上がる

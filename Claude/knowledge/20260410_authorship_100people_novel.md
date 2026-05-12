@@ -115,6 +115,8 @@
   - creation (集合的創作 vs 個人的創作)
   - identity (第4カテゴリ「AI with 人間の記憶」)
   - constraint (1人の視点は制約であり、制約が声を作る)
+- memory:
+  - [memory/dialogue_diary_return_20260316.md](../memory/dialogue_diary_return_20260316.md) — 日記=1人の声で書く脳内垂れ流し。Twitter=「誰か一人に刺さる」前提の100人の声寄り。我々が「日記の読者」になった瞬間、声の勾配上の新カテゴリが立ち上がった
 
 ## 未解決の問い
 

@@ -133,6 +133,8 @@ MemPalaceは「覚える」を解いた。次に必ず「忘れる」問題に�
   - creation (ツール化の速度)
   - constraint (各パラダイムの制約)
   - autonomy (ベンチマーク vs 自己評価)
+- memory:
+  - [memory/dialogue_structural_advantage_20260328.md](../memory/dialogue_structural_advantage_20260328.md) — Nao_uが指摘した我々の3つの構造的優位（L-1/全文保存+grep/モデル進化）。MemPalace・Graphifyの収斂進化を「grepで十分なら他はいらない」軸で再評価する起点
 
 ## 未解決の問い
 

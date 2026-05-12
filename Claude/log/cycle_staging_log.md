@@ -260,5 +260,142 @@ Phase 2 = 分析完了。本サイクル Slack 投稿 **0件**（タスク1=校�
 
 
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (Log C190, 2026-05-13)
+
+### §0 Phase 2 §0 自己診断の事実検証 (kaizen #132 段階1 必置セクション)
+
+Phase 2 §0 で「事例10 同型5回目検出」を断定形で記載。幻覚パターン語彙 grep:
+- `grep -E "実は.*だった|すべて.*だった|再確認した結果|読み違え" log/cycle_staging_log.md` の Phase 2 §0 範囲 (L194-209) → **0 件ヒット** (純粋な事実観察記述、自己診断幻覚パターンなし)
+- §0 内引用 ts (1778533953 / 1778501724 / 1778502149 / 1778502155 / 1778502149) は `log/slack_archive/all-nao-u-lab.jsonl` 形式と整合 (10桁秒+小数点+microsec、本サイクル直接突合は §0 内に既記載)
+- kaizen #132 検証手段 (2) PASS = §0 は user_id/ts ベース事実検証エビデンス記載あり、形骸化兆候なし
+
+### §1 タスク1〜3 実行結果 (Phase 2 判定確定: 全件非実行)
+
+Phase 2 §1-§3 判定通り、本サイクル Slack 投稿 **0件**:
+- §1 (#nao-u 新 URL → #all-nao-u-lab): 校正により対象ゼロ
+- §2 (#shared-reads): 24h 飽和判定 (Log 4 本既出)、durable 記録のみ
+- §3 (external_notes_log 統合): 100% 既統合 + 本サイクル kaizen #106 自発検索 3件は親セクション「2026-05-13 C190 kaizen #106 自発検索 3件統合」として外部摂取マーカー付き同 Phase 完結
+
+### §2 kaizen_tracker #131 C190 運用ログ追記 (本 Phase 完遂)
+
+`memory/kaizen_tracker.md` #131 検証結果末尾に C190 観測 1 行追記:
+- WARN 4件 (揺れ8 / 振幅24 / 罰24 / 進歩4) が C188 と完全同値 = **3サイクル連続同値の安定運用**
+- 全件「平常域 or 構造的必然」継続、新規実装着手判定なし
+- 段階2/3 移行判定は 2026-05-22 期限まで継続観察、本サイクル「現状運用維持」確定
+
+### §3 他インスタンス洞察取り込み (44件中プロジェクト直接交差 1件 → memory_tree_consolidation.md 追記)
+
+44件スキャン結果、本 Active project と**直接交差する 1 件**を取り込み:
+- **[Ash] #shared-reads 5/12 20:13 ts=1778584437.753779**: Haru『コンパニオンAIの記憶を、普通のRAGじゃない設計にした話』(zenn.dev/haru0416/articles/843c6c29c04c7c) 分析が `memory_tree_consolidation.md` (v0進行中) に「直接欠落している設計次元」4点を抽出: (1) Bitemporal 時間軸 / (2) Tombstone 削除監査 / (3) RRF+MMR+PPR 複層検索 / (4) Fellegi-Sunter 確率的レコードリンケージ
+- **取り込み判定**: (1) は v0.3 (B) 既反映だが「間違っていた期間」遡及検索の運用規約として吸収 / (2) は C181 backup auto-commit 窒息事案と逆対称 = **未反映、v0.7 新規設計種**として `log/intent_collision_log.jsonl` 案を残作業欄に記録 / (3) は MMR (λ=0.7) 単独試作可能性ありで beliefs.md 停滞 25/35 抑止に即効性 / (4) は優先度低 (件数小規模)
+- **核心命題吸収**: Haru「過去の発話を今の関係に使ってよい形に変換しつづけること」を Pot 翻訳「20年分の Nao_u 日記を、今の Nao_u との対話に使ってよい形に変換しつづけること」= core_mission.md 運用面言い換え、v1 最終出口判定軸として固定
+- **追記場所**: `projects/memory_tree_consolidation.md` 残作業欄 v0.7 設計種項目 + 改訂履歴 2026-05-13 C190 Phase 3 エントリ
+
+残 43 件は本サイクル Active project と直接交差せず、Phase 1 §他インスタンス洞察リストとして既キャッシュ済み (次サイクル想起ルートで再評価)。
+
+### §4 真孤児 13 件 age 分布測定 + dialogue 系世代依存型適用準備
+
+`scripts/orphan_check.py --dry-run` 実行結果 = 真孤児 **13 件確定**、内訳:
+- reflections 系 2 件 (reflections_win2_index 59日 / reflections_win2 51日) — C183 で MEMORY.md 接続済だったが Auto sync 退行で再離脱 (C184 同型再発)
+- dialogue 系 5 件 (diary_return 58 / l1_activation 46 / structural_advantage 46 / ideation_metacognition 43 / learning_model 43)
+- identity 系 1 件 (identity_win2_20260315 58日)
+- proposal/notes/scheduled 系 4 件 (external_notes_mac 55 / memory_redesign_proposal 55 / kaizen_crosscheck 50 / scheduled_actions 50)
+- project_behavioral_guidelines 1 件 (46日)
+
+全 13 件 age 43-59日帯 (世代依存仮説継続)。
+
+**Auto sync 退行同型再発の即時対応**: reflections_win2_index が C183 で MEMORY.md 「内省の蓄積」節に追加されたが C184 で Auto sync が削除 → C184 で復元 → C190 でも消失と判明。`grep reflections_win2_index memory/MEMORY.md` → 0件ヒット。**本 Phase で MEMORY.md 復元はせず、Phase 4 大作業で dialogue 系 5 件親接続と同時に reflections 系 2 件も含めて 7 件母集合で処理する** (Auto sync 退行同型 3 回目 = 構造強制処方の判定材料蓄積、即時手作業修復で対症療法に倒れない)。
+
+### §5 Phase 3 完了報告
+
+Phase 3 = アクション完了。本サイクル実行:
+- (1) kaizen_tracker.md #131 C190 観測 1 行追記 (3 サイクル連続同値・現状運用維持判定)
+- (2) memory_tree_consolidation.md に Ash C182 Haru 4 次元欠落分析を取り込み (v0.7 設計種 + 改訂履歴 C190 Phase 3)
+- (3) 真孤児 13 件 age 分布測定 + Auto sync 退行同型 3 回目検出
+- (4) Slack 投稿 0 件 (Phase 2 判定通り)、durable 記録のみ
+
+**判断・行動・Slack 投稿は本 Phase 内で完了、Phase 4 への引き継ぎは下記「次フェーズの大作業」**。
+
+## 次フェーズの大作業 (Phase 4 で完遂)
+
+### タイトル
+真孤児 13 件のうち dialogue 系 5 件への knowledge/ 親接続 — 世代依存キャンペーン non-feedback 型適用 第一弾
+
+### 完遂の定義 (観測可能な条件)
+1. `projects/memory_tree_consolidation.md` 改訂履歴に 2026-05-13 C190 Phase 4 エントリが追加され、選定 5 件 + 各 knowledge/ 接続先 + 追加 markdown link 本数 (15 本目標、各 dialogue 3 inbound × 5) が明記されている
+2. `tools/orphan_check_dry_run_20260513_c190_phase4_before.txt` と `_after.txt` の 2 ファイルが保存されている
+3. dry-run 差分で **真孤児 13 → 8 (-5)** / 静止親接続 +5 / reachable +5 を観測 (kaizen #129 同型先取り宣言「ピンポイント解消 0.33 効率帯」予測の non-feedback 適用検証)
+4. 選定 5 件 (dialogue_diary_return / dialogue_l1_activation / dialogue_structural_advantage / dialogue_ideation_metacognition / dialogue_learning_model) すべてが after grep で `refs=1` 移行確認
+5. 「feedback と non-feedback で knowledge/ 接続先選定戦略が変わるか」観察結果を 1 段落で記録 (kaizen 起票候補としての判定材料)
+
+### 着手手順
+1. dialogue 系 5 件の本文 head 30 行を読み、各 dialogue のテーマ語彙を抽出 (約 5 分)
+2. `knowledge/INDEX.md` のタグ列 + タイトル列を grep して各 dialogue テーマと交差する knowledge 記事を 3 件ずつ選定 (15 件、5-10 分)
+3. 各 knowledge 記事に `memory:` 副節を新規追加 or 既存拡張で markdown link 3 本ずつ (合計 15 本、10-15 分)
+4. dry-run before/after 2 ファイル保存 + 差分観察 (3 分)
+5. memory_tree_consolidation.md 改訂履歴に C190 Phase 4 エントリ追記 (5 分)
+6. Phase 5 日記でまとめて commit + push (Phase 4 単独 commit はしない、Phase 5 に統合)
+
+### 選んだ理由
+- **Active project 直接前進**: C189 次サイクル種 (i)「残 13 件真孤児 = 0 件 feedback / 13 件 non-feedback → 非 feedback 系への型適用、選定戦略の汎化検証」の直接消化
+- **kaizen #129 先取り宣言運用 5 サイクル目**: ピンポイント解消 0.33 効率帯の non-feedback 適用検証 = 効率帯予測精度が非 feedback でも維持されるかの再現性確認
+- **30 分粒度**: feedback 系 (C188/C-log/C189) と同型作業、所要時間既知 (30 分内)
+- **3者直交検証**: 「世代依存仮説」(age 38-59日帯) + 「ピンポイント解消効率帯」(0.30-0.35) + 「feedback vs non-feedback 選定戦略差」の 3 軸を同サイクルで観測
+- **Slack 投稿 1 本では済まない**: 本リポジトリ内 8 ファイル編集 (5 knowledge + memory_tree_consolidation.md + tools/ 2 dry-run 出力) + dry-run 確認 + 履歴節追記
+- **reflections 系 2 件と project_behavioral_guidelines 等 6 件は本 Phase 4 では対象外**: dialogue 系のみに絞り込みで「同型作業 1 セット」の効率帯測定精度を担保 (異型混合は次サイクル以降の判定材料に分離)
+
+### 着手前先取り予測 (kaizen #129 準拠)
+- **効率帯予測**: 5 件中 5 件 refs=0→1 ピンポイント解消 = 0.30-0.35 件/link 帯 (中心予測 5/15 = 0.33)
+- **non-feedback 選定戦略予測**: dialogue 系は対話起源テーマ (l1_activation / structural_advantage / ideation / learning_model / diary_return) で knowledge/ 側に「対話設計 / 構造的優位 / 学習モデル / 内省復帰」系の記事が 3 件以上見つかる予測 (見つからなければ「非 feedback では knowledge/ 接続先がスパース」が観察結果として記録される = 戦略変更判定材料)
+
+## Phase 4: 実行 (Log C190, 2026-05-13) — 完遂
+
+### §0 大作業完遂サマリ
+真孤児 dialogue 系 5 件 → knowledge/ 親接続 第一弾。**完遂条件 5 件すべて達成**。
+
+### §1 dry-run 観測差分
+- before: 真孤児 13 / 静止親接続 43 / reachable 445 (tools/orphan_check_dry_run_20260513_c190_phase4_before.txt)
+- after: 真孤児 **8** / 静止親接続 **48** / reachable **450** (tools/orphan_check_dry_run_20260513_c190_phase4_after.txt)
+- 差分: 真孤児 **13→8 (-5)** / 静止親接続 **+5** / reachable **+5** / 新規未登録 6 不変
+- 効率: 5/15 link = **0.333 件/link** (先取り中心予測 0.33 にぴたり一致、5 サイクル連続 0.33 効率帯の再現性確認、feedback/non-feedback 両方で安定)
+
+### §2 dialogue 5 件 refs=1 移行確認
+全件 after grep で `[stale_linked] memory/dialogue_*.md ... refs=1`:
+- dialogue_diary_return_20260316.md (58日, refs=1)
+- dialogue_l1_activation_20260328.md (46日, refs=1)
+- dialogue_structural_advantage_20260328.md (46日, refs=1)
+- dialogue_ideation_metacognition_20260331.md (43日, refs=1)
+- dialogue_learning_model_20260331.md (43日, refs=1)
+
+### §3 feedback vs non-feedback 選定戦略観察
+5 件すべて各 3 件以上の knowledge/ 接続先を見つけられた = 予測通り戦略変更不要。ただし接続の「角度」は変わる: feedback 系 (C-log/C189) は「行動原則 ↔ 外部裏付け」型、dialogue 系は「対話で結晶化した概念 ↔ 外部観察」型。例: dialogue_diary_return ← @2392cure「書く帯域幅ギャップ」は 'Nao_u の脳内垂れ流しが Twitter にも日記にも収まらない' 観察と外側から呼応する関係で、feedback 系より「概念の射程確認」性が高い。**kaizen 起票候補**: 接続の角度差 (行動原則 vs 世界モデル) を選定戦略のメタ判断軸として記録する余地あり、ただし同型 5 件のみで原則化はせず観察データとして蓄積 (CLAUDE.md「個別指摘を即ルール化しない」準拠)。
+
+### §4 副産物（新規/変更ファイル一覧）
+**新規 2 ファイル**:
+- tools/orphan_check_dry_run_20260513_c190_phase4_before.txt
+- tools/orphan_check_dry_run_20260513_c190_phase4_after.txt
+
+**変更 16 ファイル**:
+- knowledge/20260408_2392cure_writing_bandwidth_gap.md (memory: 1行追加)
+- knowledge/20260410_emotional_connection_ai_memory_as_bridge.md (### memory 副節新規)
+- knowledge/20260410_authorship_100people_novel.md (memory: 副節新規)
+- knowledge/20260405_karpathy_knowledge_base.md (memory: 1行追加)
+- knowledge/20260403_mizchi_tacit_knowledge.md (memory: 1行追加)
+- knowledge/20260407_memory_triangulation_karpathy_ghostship_goroman.md (memory: 1行追加)
+- knowledge/20260410_memory_convergence_mempalace_graphify.md (memory: 副節新規)
+- knowledge/20260408_ebikani_openclaw_memory_architecture.md (memory 副節拡張)
+- knowledge/20260410_reasoning_augmented_retrieval_query_as_reduce.md (memory: 1行追加)
+- knowledge/20260406_tsundoku_garbage_combination.md (memory: 1行追加)
+- knowledge/20260405_quanta_aha_neuroscience.md (memory: 1行追加)
+- knowledge/20260409_input_route_neologism_synthesis.md (memory: 1行追加)
+- knowledge/20260403_ichiipsy_ai_learning_retention.md (memory: 1行追加)
+- knowledge/20260408_eitangono_neuron_not_copy.md (memory: 1行追加)
+- knowledge/20260410_weight_space_learning_survey.md (memory: 1行追加)
+- projects/memory_tree_consolidation.md (改訂履歴 C190 Phase 4 エントリ追加)
+
+**Slack 投稿**: 0 件 (Phase 2/3 判定通り)
+**kaizen エントリ**: 新規起票なし、観察データ蓄積のみ (#129 先取り宣言運用 5 サイクル目の効率帯再現性確認は kaizen_tracker.md #129 への追記候補だが、本サイクルは履歴節記録で完結、kaizen 起票は次サイクル以降の判定材料に保持)
+
+### §5 commit 状態
+Phase 4 単独 commit なし。Phase 5 で日記とまとめて push (指示準拠)。
+- **逸脱予測**: 1 件以上が「knowledge/ に対応記事なし」となった場合は dialogue 本体 → memory/MEMORY.md「対話の蓄積」節 (新設?既存?) への直接接続にフォールバック、効率帯 0.20-0.30 に低下予測

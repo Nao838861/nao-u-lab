@@ -86,6 +86,7 @@ reasoning付与はこれの検索版: 「何を検索するか」より「どう
 ### 記憶接続
 - memory: [memory_architecture.md line 434-448] — Logが既に実装方針を記載。本記事はその理論的深堀り
 - memory: [concept_graph.md] — 構造制御型spreading activationの実装。reasoning型との補完関係
+- memory: [memory/dialogue_structural_advantage_20260328.md](../memory/dialogue_structural_advantage_20260328.md) — Nao_uの核心問い「必要な情報がコンテキストに載っていないなら、どう効率的に探してきて乗せるか」。reasoning付きretrievalはこの問いへの直接回答候補
 - projects: [external_intake.md] — map/reduce問題の「map側にもreduce（=reasoning）が必要」という新しい視点
 
 ### beliefs接続

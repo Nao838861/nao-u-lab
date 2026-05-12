@@ -132,6 +132,7 @@ WSGの中でもっとも射程が長いのがText-to-Weight (NeuroGen, T2W)—�
   - constraint (対称性 = 制約が構造を生む)
   - creation (Text-to-Weight = 記述→創造)
   - autonomy (モデルフリー評価 = 外部から自律性を測る手法)
+- memory: [memory/dialogue_learning_model_20260331.md](../memory/dialogue_learning_model_20260331.md) — Mirの「モデルの重みに汎用判断力は永続している、消えるのは文脈固有の判断力」を WSR が裏付け——重み空間そのものが学習済みの表現として構造化されている。CLAUDE.md=「照準座標」は文脈側のテキスト表現、重みは判断力本体
 
 ## 未解決の問い
 

@@ -78,6 +78,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
   ```
   hook 経路（`multi_phase_cycle_log.run_repeated_pattern_check()`）でも同 4行 + メタ行が新形式で出力されることを `python -c "from multi_phase_cycle_log import run_repeated_pattern_check; print(run_repeated_pattern_check())"` で dry-run 確認済（subprocess 経由なので script 修正で自動反映）。**残**: Ash クロスチェック（段階3 mapping 案の妥当性 / textadv・SIPHON 系列での語彙差を踏まえた拡張可否）
   - **C188 (2026-05-12) 運用ログ追記**: hook 発火 WARN 4件 (揺れ 8 / 振幅 24 / 罰 24 / 進歩 4) を Phase 2 §2 で判定機構優先順位選択 = 揺れ・振幅は段階値比較 (C182-C187 帯=平常域) / 罰は閾値経験 (brainstorm_log §6.X 反面教師4件起因=構造的必然) / 進歩は過去ベンチ (誤検出範囲)。**4件すべて平常域 or 構造的必然 = 検出器/判定器バランス維持**。検出器の感度を落とすのではなく判定器 (Log) が必要十分に働いている状態、kaizen #131 段階3 mapping gate が hook 設計目標に整合して機能している運用エビデンス。形骸化兆候なし。
+  - **C190 (2026-05-13) 運用ログ追記**: hook 発火 WARN 4件 (揺れ 8 / 振幅 24 / 罰 24 / 進歩 4) は C188 と完全同値で **3サイクル連続同値の安定運用**。本サイクル Phase 2 §4 A で判定 = 全件「平常域 or 構造的必然」継続、新規実装着手判定なし。検出器側に新規入力なし＝Nao_u 直近 5/12 18:10 以降ゲーム関連直接指摘なしと整合。段階2/3 移行判定は検証期限 2026-05-22 まで継続観察、本サイクルは「現状運用維持」確定。
 
 ---
 

@@ -42,6 +42,7 @@
 - articles: 20260407_nwiizo_explanatory_depth_illusion.md（IOED）、20260405_harness_identity_spectrum.md、20260405_kmizu_kokone_familiar_ai.md、20260405_structural_imitation.md
 - projects: memory_redesign.md（同一性の根拠を「コピー忠実度」ではなく「分化の方向」で測る）
 - concept_graph: identity_spectrum ←(redefines)— category_error_avoidance
+- memory: [memory/dialogue_learning_model_20260331.md](../memory/dialogue_learning_model_20260331.md) — Mirの「CLAUDE.mdは判断力ではなく汎用判断力を我々固有の文脈に向ける『照準座標』」と同方向の論——「人工ニューロンは脳の劣化コピー」を捨て、別カテゴリの計算系として再定位する
 
 ## 未解決の問い
 
