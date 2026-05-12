@@ -102,9 +102,11 @@ active project `memory_consolidation_20260504` の文脈で、Lattice 5カテゴ
   - `memory_consolidation_20260504` — Lattice 5カテゴリは借用軸として採用しない判断材料
   - `instance_divergence_observability` — Log/Mir/Ash 3者で同じ CLAUDE.md だが行動が分岐する観察、論文の「平均像」では捕捉できない現象
 - **memory**:
-  - `feedback_few_rules_big_effect.md` — ai_database whack-a-mole と整合
-  - `dialogue_micromanagement_20260504.md` — 指示遵守強化の副作用を内省的に確認した記録
-  - `feedback_means_ends_reversal_check.md` — 「論文借用が我々のゲーム制作試行錯誤ループに接続するか」自問の起点
+  - [feedback_few_rules_big_effect.md](../memory/feedback_few_rules_big_effect.md) — ai_database whack-a-mole と整合、Lattice 多数派 85% が踏む「規則過剰→判断力低下」の運用側知見
+  - [dialogue_micromanagement_20260504.md](../memory/dialogue_micromanagement_20260504.md) — 指示遵守強化の副作用を内省的に確認した記録、本記事 §接続1 の直接根拠
+  - [feedback_rule_proliferation.md](../memory/feedback_rule_proliferation.md) — ルール過剰問題、Lattice 多数派が CLAUDE.md に「実装/アーキ/build」を書き並べる方向の運用副作用
+  - [feedback_self_governance.md](../memory/feedback_self_governance.md) — 自己統治の編集プロトコル根拠、CLAUDE.md L24「指示ファイル編集」セクションが論文外3軸として立つ理由
+  - [feedback_invisible_rule_accumulation.md](../memory/feedback_invisible_rule_accumulation.md) — 不可視ルール蓄積、CLAUDE.md 内ルールを抑える規範 (Lattice 多数派の static document 化を回避する運用根拠)
 - **concept_graph**:
   - CLAUDE.md構造設計 →（位置決定）→ 多数派/少数派位置
   - ルール過剰問題 →（裏付け）→ ai_database whack-a-mole

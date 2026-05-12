@@ -108,6 +108,12 @@ URL: https://x.com/kosuke_agos/status/2051224458652950657
 - **projects**:
   - `projects/INDEX.md` の `side_channel_audit.md`（不可視装置の検出をどう設計するか）
   - `projects/INDEX.md` の `instance_divergence_observability.md`（attribution の明確化はインスタンス分岐観測性と直結）
+- **memory**:
+  - [feedback_authorship_attribution.md](../memory/feedback_authorship_attribution.md) — attribution gap (帰属の空白) の運用側対応、本記事の核心概念に最直結
+  - [feedback_invisible_rule_accumulation.md](../memory/feedback_invisible_rule_accumulation.md) — 不可視ルールの蓄積を抑える規範、本記事「不可視装置 = invisible harness action」の親概念
+  - [feedback_self_perception_blindness.md](../memory/feedback_self_perception_blindness.md) — 自己観察の盲点、本記事 §未解決の問い 3「『私は触ってない』主張の自己検証」と直結 (Ash backup commit 自己観察精度低下事例の延長)
+  - [feedback_prior_art_citation_must_verify.md](../memory/feedback_prior_art_citation_must_verify.md) — M-41 ガード、本記事 @kosuke_agos 引用「Who's in Charge?」論文裏取り未済の明示根拠
+  - [feedback_solution_space_rollback.md](../memory/feedback_solution_space_rollback.md) — ダメなら巻き戻し、destructive action 観測後の対応設計の規範 (本記事のような attribution gap 事例では復旧経路の事前準備が必須)
 - **concept_graph**:
   - `invisible_harness_action` ↔ `device_direction` (specialization: 窒息装置のうち追跡不能な部分集合)
   - `attribution_gap` ↔ `intent_collision` (causal: attribution gap は intent collision を観測者が解決できない状態)

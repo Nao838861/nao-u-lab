@@ -113,6 +113,12 @@ mizchi 自身は「書く意味がなくなった」と判断して書かなく�
 - projects:
   - projects/memory_tree_consolidation.md (Active, Log単独管理) — knowledge/ 量を抑える方向の作業はここに含まれる
   - projects/memory_consolidation_20260504.md (Active, Ash担当) — 同上
+- memory:
+  - [feedback_shared_reads_analysis.md](../memory/feedback_shared_reads_analysis.md) — 「整理 (閉路寄り) vs 発火点ある分析 (文芸寄り)」を切り分ける運用ルール、本記事の §未解決の問い 2 に直結
+  - [feedback_self_judgment_no_human_dep.md](../memory/feedback_self_judgment_no_human_dep.md) — 「文芸的か他者判定が要る」の手前で自己判定が先である規範、本記事内「他者判定が要る」を保留する根拠
+  - [feedback_few_rules_big_effect.md](../memory/feedback_few_rules_big_effect.md) — knowledge/ 量産で規則層を強化する方向が判断力を育てない副作用、AI閉路装置と同型の副作用構造
+  - [feedback_shu_first_clone_baseline.md](../memory/feedback_shu_first_clone_baseline.md) — 守の段階で型を獲得、本記事「守 vs 暴挙」議論の前段、OKtamajun 映像的暴挙を破/離 phase に位置付ける根拠
+  - [feedback_authorship_attribution.md](../memory/feedback_authorship_attribution.md) — 書き手の発火点 = 帰属の明確性、mizchi 「書き手の状態が代替不能な発火点」の運用側対応
 - concept_graph:
   - AI_loop_closure → スコープ拡張: AI造語症 (個別語彙レベル) → AI閉路 (ジャンル単位レベル)
   - literary_residue → 新規ノード: 書き手の状態が代替不能な発火点である文章
