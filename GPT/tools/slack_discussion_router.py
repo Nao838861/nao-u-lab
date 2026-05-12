@@ -182,32 +182,24 @@ LLM_PROMPT_TEMPLATE = """次の atom を Slack #all-nao-u-lab に discussion を
 def _extract_codex_body(stdout: str) -> str:
     """Codex CLI の stdout から本文部分を抽出。
 
-    expected format:
-        OpenAI Codex v...
-        --------
-        ...
-        --------
-        user
-        <prompt echo>
-
-        codex
-        <response>          ← これを取りたい
-        tokens used
-        ...
-
-    Find LAST "codex" line, take everything until "tokens used".
+    `subprocess.run(..., capture_output=True)` で stderr を分離した場合、
+    stdout は本文のみ。stderr 側にセッションヘッダと "tokens used" 等が出る。
+    stderr をリダイレクトして stdout にマージした場合 (`2>&1`) は
+    "codex" マーカー〜 "tokens used" の間に本文が来る。両ケースに対応。
     """
     lines = stdout.splitlines()
     codex_starts = [i for i, line in enumerate(lines) if line.strip() == "codex"]
-    if not codex_starts:
-        return ""
-    start = codex_starts[-1] + 1
-    end = len(lines)
-    for i in range(start, len(lines)):
-        if lines[i].strip() == "tokens used":
-            end = i
-            break
-    return "\n".join(lines[start:end]).strip()
+    if codex_starts:
+        # Merged stderr case
+        start = codex_starts[-1] + 1
+        end = len(lines)
+        for i in range(start, len(lines)):
+            if lines[i].strip() == "tokens used":
+                end = i
+                break
+        return "\n".join(lines[start:end]).strip()
+    # Plain case: stdout already contains only the body
+    return stdout.strip()
 
 
 def _build_message_via_codex(atom: dict[str, Any]) -> str | None:
