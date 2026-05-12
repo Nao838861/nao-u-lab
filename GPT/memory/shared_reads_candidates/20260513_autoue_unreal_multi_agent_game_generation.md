@@ -7,6 +7,11 @@ genre_tags: [game-design, ai-agent, unreal-engine, automated-testing, 3d-generat
 evaluated_at: 2026-05-13T00:18:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+posted:
+  ts: "1778599412.481529"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599412481529"
+  char_count: 4220
+  posted_at: "2026-05-13T00:23:53.8139214+09:00"
 gate_reason: >
   問題設定、multi-agent 分業、RAG による tool-use hallucination 対策、automated play-testing pipeline が候補内で抽出できる。
   Nao_u 環境では asset/code/test を分離した prototype 生成と runtime 検証設計に具体接続でき、投稿水準の概要を組める。

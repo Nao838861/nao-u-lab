@@ -1,0 +1,892 @@
+High Dimensional Procedural Content Generation
+
+arXiv:2602.18943v1 [cs.AI] 21 Feb 2026
+
+Kaijie Xu
+McGill University Montreal, Quebec, Canada kaijie.xu2@mail.mcgill.ca
+Abstract
+Procedural content generation (PCG) has made substantial progress in shaping static 2D/3D geometry, while most methods treat gameplay mechanics as auxiliary and optimize only over space. We argue that this limits controllability and expressivity, and formally introduce High-Dimensional PCG (HDPCG): a framework that elevates non-geometric gameplay dimensions to first-class coordinates of a joint state space. We instantiate HDPCG along two concrete directions. Direction-Space augments geometry with a discrete layer dimension and validates reachability in 4D (, , , ), enabling unified treatment of 2.5D/3.5D mechanics such as gravity inversion and parallel-world switching. Direction-Time augments geometry with temporal dynamics via time-expanded graphs, capturing action semantics and conflict rules. For each direction, we present three general, practicable algorithms with a shared pipeline of abstract skeleton generation, controlled grounding, high-dimensional validation, and multi-metric evaluation. Large-scale experiments across diverse settings validate the integrity of our problem formulation and the effectiveness of our methods on playability, structure, style, robustness, and efficiency. Beyond quantitative results, Unity-based case studies recreate playable scenarios that accord with our metrics. We hope HDPCG encourages a shift in PCG toward general representations and the generation of gameplay-relevant dimensions beyond geometry, paving the way for controllable, verifiable, and extensible level generation.
+CCS Concepts
+· Applied computing  Computer games.
+Keywords
+Procedural Content Generation, Level Generation, Time Expanded Graph, A* Search, Dynamic Programming, Genetic Algorithms
+1 Introduction
+Procedural content generation (PCG) automates the production of game assets and levels so designers can focus on higher-level intent while still achieving variety, replayability, and scale [33, 38, 39]. Despite decades of progress, the dominant formulations for level generation remain largely geometry-first: 2D tile maps and aesthetically oriented 3D scenes are common [10, 11, 21, 22, 26, 48, 49], while mechanics such as time-dependent traversal, discrete interaction rules, and additional non-spatial state are injected via simulationbased objective functions or post-processing heuristics rather than being represented natively in the generator [15, 16, 32, 35, 37, 51]. While simulation is essential for continuous domains, it typically enforces such requirements only indirectly, making it harder to target specific mechanism-level structure during generation. This gap
+
+Clark Verbrugge
+McGill University Montreal, Quebec, Canada
+clump@cs.mcgill.ca
+suggests a missing general, extensible representation and problem formulation for complex, mechanism-rich PCG.
+To address this gap, we study High-Dimensional PCG (HDPCG) tasks and propose a general representation and pipeline that augments spatial nodes with additional gameplay dimensions (e.g., layers [17, 42], time [45, 52], locomotion modes and style [1, 2, 28, 29]). HDPCG encodes the world state as attribute-labeled cells over an expanded state space, enabling planners to reason about geometry and dynamics in a single expanded graph. Conceptually, HDPCG combines classic geometric PCG with structured representations for game rules and temporally evolving elements, drawing on ideas from dynamic networks/time-expanded graphs to handle evolution over time via graph expansion when appropriate [13, 20, 27, 44, 47]. Recent systems that treat level design as metric-driven optimization [5­7] motivate this direction; HDPCG generalizes these ideas into a unified high-dimensional state-space formulation.
+To validate breadth and practicality, we test HDPCG along two representative axes that mirror modern game design: Direction-S (Space), which augments geometry with discrete layers and controlled pacing; and Direction-T (Time), which augments geometry with temporal dynamics and proves feasibility on a time-expanded graph. For each direction, we clearly define the problem, provide multiple algorithmic families, and evaluate them under common metrics for controllability, robustness, efficiency, and quality. Finally, we validate playability and faithfulness via Unity case studies, replaying our computed solutions in-engine as layered gravity-flip levels similar to the single-button gravity inversion in VVVVVV 1, and as parallel-timeline puzzles where the player switches between two time states to traverse geometry and enemies, in the spirit of Dishonored 2: A Crack in the Slab2 and Titanfall 2: Effect and Cause3. For the Time direction we additionally realize moving-platform sequences with tight timing windows, similar to 3D platform-jumping challenges in games like Super Mario 3D World4. Together, these results position HDPCG as a basis for future PCG that moves beyond geometry-only synthesis towards mechanism- and dynamics-aware level generation, expanding the design space while maintaining controllability and analytical rigor. Our contributions are:
+· We propose HDPCG, a general, extensible representation and problem formulation for high-dimensional level generation, integrating geometry, time, and other gameplay axes under a single graph framework.
+· We instantiate HDPCG in two concrete directions, Space and Time, each with a group of generic methods.
+1
+https://thelettervsixtim.es 2 https://bethesda.net/en/game/dishonored2 3 https://www.ea.com/games/titanfall/titanfall- 2 4 https://supermario3dworld.nintendo.com/
+
+· We conduct multi-scale experiments with unified metrics that quantify controllability, robustness, efficiency, and composite quality, enabling fair cross-method comparisons.
+· We deliver Unity case studies for both directions, showing faithful mechanism reproduction and end-to-end feasibility from HDPCG plans to real-time 3D gameplay.
+2 Related Works
+Early level PCG has largely been geometry-first, representing levels as spatial grids while treating mechanics and dynamics (e.g., timing and ruleful interactions) as secondary, often handled via fitness/discriminators, post-processing, or simulation when needed (especially for physics-rich games) [30, 38, 39, 46]. As a result, these pipelines often struggle when layout and core mechanics are tightly interdependent [8, 9, 15, 51]. More recent work pushes beyond static tiles toward PCG that must respect complex dynamics, richer 3D structure, or temporal constraints. Mixed-initiative systems such as Tanagra link layout to pacing and jump physics via reactive planning/constraint solving, but remain on 2D grids with mechanics encoded as constraints over geometry rather than as state variables [35], which makes the mechanic state less reusable across different dynamics and harder to certify via a single unified planner. Rhythm-based generators similarly derive geometry from action rhythms, yet time is an external driver rather than a dimension of the generative state [34, 36]. For 3D levels, controllable generators learn to place volumetric chunks and structural affordances, but typically leave detailed mechanic interactions to downstream checks or reward shaping [22]. Beyond platformers, physics-based puzzle generation couples geometry with continuous dynamics and timing, e.g., Cut the Rope and Angry Birds families ensure solvability under simulation [16, 32, 37, 40]; stealth generation integrates moving guards/cameras with patrol timing and visibility fields [50]. LLM-assisted 3D pipelines now target functional, controllable worlds: DreamCraft synthesizes text-guided Minecraft environments with explicit constraints [10], T2BM uses LLM prompting for multi-storey buildings with functional blocks [21], and DreamGarden supports designer-in-the-loop growth of Unreal scenes from a single prompt [11]. Social Conjuring explores multi-user, runtime co-creation of dynamic 3D scenes [26]. Closer to full 3D level pipelines, optimization-based approaches use LLMs plus constraints to assemble multi-floor structures and then furnish mechanics [48, 49]. Finally, a line of work grounded in WaveFunctionCollapse [23, 24] explicitly explores time as a modeling axis [52]: Facey and Cooper operate on (, , ) blocks to generate levels and playthroughs [14], and a follow-up generalizes this spacetime level generation [43]. Complementary to these WFC-style models, the Sturgeon family of systems treats level and playthrough design as constraint-based multi-objective optimisation: Sturgeon-MKIII and MKIV jointly enforce tile and graph label rewrite rules together with designer-specified metrics over example paths, while a related formulation frames level creation as multi-objective optimization over playthrough statistics [5­7]. Together, these examples show rising interest in integrating geometry with dynamics and temporal logic, while many methods still treat these aspects as add-ons to basic geometric representations.
+
+Kaijie Xu and Clark Verbrugge
+
+Our approach moves forward by lifting mechanics into the representation itself. Concretely, we model generation on a dimensional expanded graph (DEG) in which spatial nodes are augmented with additional discrete axes (e.g., time steps, world "phases," puzzle states, etc.). This idea parallels time-expanded networks from dynamic flow theory, where a static graph is "unrolled" across time to reason about feasibility, providing well-studied guarantees and algorithmic tools [20, 27, 44, 45]. It is also conceptually aligned with configuration-space-time in motion planning, where obstacles and capabilities are embedded directly into a higher-dimensional search space to ensure realizability of trajectories [13]. Related mission planning works similarly cast patrol schedules as action windows that constrain feasible paths, reinforcing the need to make time an explicit axis of the state space [47]. In our framework, mechanical feasibility is checked during generation via graph search, allowing geometry and mechanics to co-evolve and making solvability a firstclass invariant. This contrasts with constraint-driven approaches that optimize over geometric encodings and only indirectly capture mechanical interdependence. Moreover, we detail how DEG layers are constructed and validated via search over the expanded graph, operationalizing this theory for high-dimensional PCG.
+
+3 Method
+This section formalizes HDPCG on a DEG, introduces a unified four stage pipeline, and details its instantiation in two directions via concrete planning, validation, and search methods. In Space instantiation, the player explores a level made of two overlapping layers and can only switch under rules; in Time instantiation, the player must time movement by waiting and crossing while platforms and enemies move on a repeating cycle.
+
+3.1 General method Definition and Pipeline
+High-dimensional level representation: We model a level as a finite discrete spatial grid X  Z (  {2, 3}) together with  gameplay dimensions D1, . . . , D (e.g., parallel layers, time, locomotion modes).
+The overall state space is
+
+S = X × D, D = D1 × · · · × D .
+
+A cell is  = (, )  S with   X and   D.
+
+Attribute-valued occupancy: We use an attribute labeling  : S  A, where A contains both static and dynamic gameplay
+symbols (e.g., empty, wall, enemy, platform, and their dimension-
+aware variants such as moving_enemy@t). A cell's traversability is given by a predicate  (; , )  {0, 1} that may depend on agent capability  and the label (). Likewise, transition feasibility is controlled by  (, ; )  {0, 1} to express constraints such as
+collision, swap prevention, or layer-switch rules.
+
+Adjacency and costs: Let A  Z \ {0} be the spatial neigh-
+borhood (4/6-connected) and, for each gameplay dimension , let
+A  D  × D  be admissible local transitions (e.g., layer switch (, ), time successor (,  +1)). We define the directed edge set
+
+E=
+
+(, ) :
+
+-  A  = 
+
+
+
+
+
+
+=
+
+  
+
+:
+
+(  ,  )  A
+
+and retain edges with  () =  () = 1 and  (, ) = 1. For axes
+
+that must advance each step (e.g. time), we disallow same-step
+
+spatial moves and couple moves with the dimension transition (e.g.
+
+High Dimensional Procedural Content Generation
+
+(, )  (,  + 1) or (, )  (,  + 1)). A nonnegative edge cost  : E  R0 assigns unit cost to spatial moves and dimensionspecific costs to non-spatial transitions (e.g., layer-switch penalty ), and may be modulated by attributes via  (; ).
+
+Dimensional-Expanded Graph: For ordered dimensions (e.g., time) or to bound search, we instantiate a finite subgraph
+
+G = S, E , S  S,
+by truncating along those axes (e.g.,  max) and inducing edges from E. The classical time-expanded graph (TEG) is the special case with D1 ={0, . . . ,max} and A1 ={(, +1)}. Our Space direction expands along discrete layers; our Time direction expands along time. Dynamic elements such as moving enemies or platforms are represented directly by () varying across the expanded dimension and by the feasibility predicate  .
+
+High-dimensional problem definition: Given start start  S, a goal set Ggoal  S (typically all states with spatial coordinate ), and generator parameters  producing (, ) (and optional priors/anchors),
+synthesize a level instance and a feasible path
+
+
+
+
+
+
+arg
+
+min
+
+ ()
+
+s.t.  : start
+
+Ggoal, m(, )  K,
+
+  (, )
+
+where  () =   (; ), (, ) is the set of admissible paths in G, m collects structural/playability metrics (coverage, tortuosity, switch-pattern compliance, robustness, etc.), and K encodes target ranges. A scalarized score  (, ) = m(, ) is used when con-
+
+venient. Validation, robustness probing, and metric computation
+
+are applied uniformly on the DEG across all instantiated directions.
+
+General solution scheme: We adopt a general four-stage scheme that unifies Space/Time (and other) dimensions:
+(1) Abstract planning in X or directly in G: compute a sparse route using a shaped spatial potential sp () = 0 () +   () -   (), where  encodes repulsion (e.g., obstacle blobs, dispersion around laid segments) and  encodes attraction to targeted features (e.g., intended layer-switch coordinates or time-synchronized events) [25].
+(2) Instantiation of attributes and rules: expand the abstract plan into attribute-valued occupancy and transition rules, yielding  and  (e.g., corridor/room carving across layers; time-varying labels for moving enemies/platforms; swap/collision constraints), and assemble the edge costs  on G.
+(3) Validation by shortest-path search: run A* [18], Breadth First Search (BFS), or Dynamic Programming (DP) on G to obtain a feasible path ; optionally replan under localized perturbations for robustness. If validation fails, we treat the instance as invalid, reject it in Space, or resample the generator parameters and retry in Time (e.g., object placement/catalog).
+(4) Evaluation and (optional) search over  : compute (, ) and either accept the instance or update  (e.g., evolutionary operators on anchors [19], potentials, or object sets) to improve  (, ) subject to K.
+This dimensional-expanded view treats geometry and auxiliary gameplay axes within a single graph-theoretic framework, enabling
+
+principled comparison and optimization across heterogeneous highdimensional PCG tasks.
+3.2 Direction-S: Space
+3.2.1 Problem Setup and Modeling. We inherit all notation and definitions from Section 3.1. In the Space direction we specialize the gameplay dimension to a finite layer set L and take the DEG over X × L. Spatial moves and layer transitions are exactly those in Section 3.1 with a nonnegative switch penalty . The only Spacespecific additions are two feasibility policies encoded via  and  : (i) cross-layer mutual exclusion at the same spatial coordinate (non-active layers are blocked unless the coordinate is a designated switch site), and (ii) switch consistency that opens the landing layer and locally seals the departure side to prevent immediate back-leak.
+3.2.2 Abstract Skeleton and Controlled Geometry. Stage 1 (Skeleton Planning): we compute a route in X under the spatial potential
+sp () = 0 () +   () -   (),
+where  promotes dispersion (e.g., repulsion around carved segments or repulsive blobs) and  attracts the route toward intended switch features (when present) [25, 31]. The result is a polyline 0, . . . ,   which we annotate with layer labels to form a skeleton  = (,  )=0 (indices or coordinates may mark switches).
+Stage 2 (Controlled Grounding): we instantiate attributes and rules by two-pass corridorroom growth around  with componentaware conflict checks. At each designated switch (,   ) we set (, ) = empty, and enforce  to (a) allow the same-coordinate layer edge (, )  (, ) and (b) discourage immediate reversal by sealing the departure side in a small neighborhood.
+Stage 3 (High-Dimensional Validation): we validate reachability on the DEG specialized to layers (Section 3.1) and run A* on that graph with the Manhattan heuristic (, ) =  -  1, which is admissible/consistent since switches are nonnegative-cost and do not decrease spatial distance. Search terminates on {(, ) :   L}; the recovered path  feeds evaluation and (optional) robustness replanning.
+3.2.3 Methods. We consider three increasingly controllable instantiations that differ only in how sp and switch sites are chosen; Stage 2/3 remain identical.
+Method 1: Naive Noise Baseline. A minimally guided reference with index-based switching. We take 0  1 on open cells and draw an i.i.d. noise field  : X  [0, 1]; set
+sp () = 1 +   () (  0,   0),
+run a single 3D A* to obtain 0, . . . ,  , and choose  interior indices at near-uniform spacing (with slight jitter) to flip layers:  = 1 - -1 while keeping  = -1. Stage 2 realizes geometry and rules; Stage 3 validates with 4D A*. In Genetic Algorithms (GA) mode, an individual encodes the noise seed, the switch count  and its index set along the backbone, plus corridor/room widths; mutation jitters indices, flips  ±1, and perturbs widths, and fitness is the scalarized  (, ) after validation.
+
+Kaijie Xu and Clark Verbrugge
+
+Method 2: Naive Penalty A*. Dispersion-aware planning with still index-based switching. We plan segment-wise between waypoints { } using
+sp () = 0 () +   (),   0,
+and accumulate  after each segment via a short-range kernel around newly carved voxels, gently steering later segments away from earlier ones. After concatenation, we sample  non-waypoint indices with a loose minimum-gap constraint and flip layers as above. Geometry instantiation and 4D validation follow unchanged. In GA mode, an individual encodes the dispersion field parameters (kernel radius/decay and the repulsion weight ), the waypoint seeds, and the index sampler for  switches; mutation jitters waypoints, perturbs kernel/weight, and resamples a small subset of switch indices.
+Method 3: Potential Field A*. Explicit spatial targeting of switch coordinates. We prescribe a set Q = {1, . . . ,  }  X (min-spacing enforced) and define
+sp () = 0 () +  blob () -  switch (),
+where blob aggregates repulsive blobs (discouraging undesirable regions) and switch provides narrow attraction at points in Q. The resulting 3D A* polyline tends to thread Q; we flip layers precisely at the indices where   Q (excluding endpoints). If any stochastic operator yields a cross-layer "teleport" (layer change across different coordinates), we locally patch by re-planning within the current layer to the intended coordinate before switching. Stage 2 enforces switch consistency in ,  ; Stage 3 completes validation. In GA mode, an individual encodes switch anchors (waypoints) and potential-field parameters (blob locations/radii and weights); mutation applies coordinate jitter and radius/weight noise.
+3.3 Direction-T: Time
+3.3.1 Problem Setup and Modeling. We inherit all notation from Section 3.1. The Time direction specializes the DEG to either a finitehorizon or cyclic time axis. We instantiate feasibility  to allow three transition types under time-varying attributes : (i) wait (, )  (,  + 1) when no violation occurs, (ii) walk (, )  (,  + 1) for  -   A if the landing cell is open at  + 1, and (iii) ride along a platform's motion with endpoint-only boarding/alighting and intermediate occupancy checks; we also prevent head-on swaps with moving obstacles [41]. Edge costs follow Section 3.1 (unit spatial steps with optional weights for wait/ride).
+3.3.2 Validation on TEG. Validation follows the general shortestpath scheme on the DEG, using A* when costs are non-uniform and BFS/DP otherwise. We employ the admissible heuristic (, ) =  -  1, and choose either a finite horizon max (truncation) or a cyclic domain Z (time wraps modulo  ).
+3.3.3 Methods. We provide three increasingly expressive instantiations. All share Stage 2/3 (attribute instantiation  and rule set  , followed by TEG validation); they differ in Stage 1 (how we plan in X vs. directly in G and how dynamic elements are proposed).
+Method 1: Static Backbone Baseline. Stage 1 computes a spatial backbone in X using 2D/3D A* under sp () = 0 () (optionally a lightly shaped variant). Around this backbone we instantiate  by
+
+placing periodic platforms and obstacles (periods, phases, ranges drawn from priors), and derive  to enforce head-on swap prevention and endpoint-only boarding. Feasibility is then validated by BFS on the induced TEG. If infeasible, object parameters are resampled and validation is retried. This baseline captures a planthen-animate workflow with minimal time awareness in Stage 1. In GA mode, an individual encodes the dynamic object catalog (platform counts, spans, periods and phases; obstacle patrols) optionally tied to the spatial-backbone seed; mutation resamples a subset of object parameters and applies phase shifts.
+Method 2: TEG-A*. An ideal validator would run an exact A* on the full time-expanded graph G, with (, ) states and transitions for wait/walk/ride, endpoint-only boarding/alighting, intermediate occupancy checks, and swap-conflict prevention. To actively drive meaningful interactions rather than incidental ones, the exact variant (as a witness-search objective for certification/metrics) must also reward riding edges and store interaction state (e.g., which platforms/endpoints have been used) so that repeated, low-value contacts are not mistaken as progress. This, however, leads to a combinatorial blow-up: the state must carry interaction masks or counters on top of (, ), and the branching factor grows with dynamic elements. In practice we observed timeouts even on our smallest grids under such a formulation.
+For tractability, we adopt a simplified TEG-A* baseline. We operate on a cyclic TEG (Z ) and keep feasibility rules intact: endpointonly riding, per-step occupancy and swap checks, and disallowing mid-track walking-while using a coarse cost model (unit costs for walk/wait; ride cost equals ride duration) and lightweight bookkeeping (bitmasks for "used platforms" and "visited obstacle endpoints"). We employ (, ) =  -  1 and a single-close policy (no re-opening) to keep search compact. This pragmatic baseline validates time-consistent paths efficiently but, being a shortest-path search without strong temporal shaping, does not reliably induce rich interactions even when constraints are present. We nevertheless include it for completeness; the observed limitations motivate our choice of TEG-DP as the main solver, which better balances scalability and temporal controllability. Full A* and simplified A* are detailed in Appendix A. When used with GA, an individual encodes periods and phases of dynamic elements and small ride/wait cost weights that shape the A* cost model.
+Method 3: TEG-DP. Stage 1 treats the dynamic object set and weights as part of the generator parameters  (platform/obstacle catalogs, phases, velocities, optional spatial anchors). Given  , we instantiate  and  , and construct per-time forbidden masks and a transition/vertex cost field  (·)  0. We then run a forward dynamic program on G (a layered DAG with edges only from  to +1) to obtain a minimum-cost, time-consistent path under  :
++1 ( ) = min( )  E , ¬forbid+1 ( )  ( ) +  (  ) ,
+with backpointers for path reconstruction and optional constraints. On our finite-horizon layered TEG with nonnegative additive costs, this forward min-cost DP returns the global minimum-cost path; see Appendix B for the argument. We initialize 0 on allowed starts and set  =  on forbidden states; the time horizon  prevents cycles. Waiting is encoded by (, )  (, +1) with its own cost. When  (·)  1, the DP degenerates to unweighted shortest path on
+
+High Dimensional Procedural Content Generation
+
+Table 1: Large-Scale Experimental Settings for Space Direction. Targets use density per 100 path cells;  is the layer-switch cost.
+
+Scale Grid Seeds GA (pop×gens)  1/2 
+
+Targets
+
+Sweep
+
+Validation settings
+
+Small 303 80 Medium 503 40 Large 1003 20
+
+40 × 30 20 × 20 10 × 10
+
+10 2/4 1 =2.0/100, min=5   {1, 3, 5}, min  {3, 5, 7} band, =0.01, band=1; ARR-=10;
+
+stab: pairs= 12, | -  |1  20
+
+15 3/6 1 =2.0/100, min=5   {2, 4}, min  {4, 6} band, =0.01, band=1; ARR-=10;
+
+stab: pairs= 10, | -  |1  25
+
+30 4/8 2 =2.0/100, min=5
+
+(no full sweep)
+
+global, =0.005, band=1; ARR-=8;
+
+stab: pairs= 12, | -  |1  30
+
+Notes.  : planned switches; 1/2: corridor/room growth depths. Weighted-score weights (all scales): path_length: 0.5, pb_length_uniformity: 1.0, pb_spatial_dispersion: 2.0, pb_min_length_penalty: 2.0, sb_coverage: 1.5. PF-A* reward weight: 200 (S/M), 300 (L). Per scale, total runs = #seeds × |#target pairs| × 3 methods × 2 modes (single+GA).
+
+the time-expanded graph, i.e., layer-by-layer BFS; with structured  it becomes a true DP that prefers desired wait/ride patterns and interaction uniformity. The structured field  used in all experiments is explicitly defined in Appendix C. To explore  at scale, GA mutates object parameters or cost fields and retains lower-cost candidates via tournament selection, but the planner itself is DP on the TEG. Each candidate is evaluated by the metric vector (, ), preserving the unified high-dimensional validation of Section 3.1.
+4 Experiments
+This section describes the experimental setups in both directions, including tasks, baselines, and evaluation metrics.
+4.1 Experiment Setup
+4.1.1 Direction-S. We evaluate the Space direction on three scales (Small/Medium/Large) following Table 1. Each scale instantiates identical planner variants, NP-A*, PF-A*, and NNB, in two modes: single (one-shot planning) and GA (genetic post-refinement with  generations). For controllability, each scale runs sweeps over target switch density  (per 100 path cells) and target minimum spacing min; the exact sweep sets per scale appear in Table 1. Robustness is tested under two perturbation protocols: (i) band-only voxels inside a radius- tube around the nominal path are randomly blocked with probability ; and (ii) global-light, uniform perturbation to the full grid (used on Large). The protocols and parameters (band radius, blocking probability, trial counts) follow Table 1 and our description of "band/global micro-perturbations" used to probe replanning success and cost deltas.
+To evaluate path endpoint sensitivity we also create endpoint pairs per scale with a Manhattan-distance floor and replan after shifting the start/end; near-ceiling success in this probe is used to attribute robustness failures primarily to local micro-structure. For each (scale, method, mode) and each target set (, min), we run the specified number of seeds (Table 1) and log all per-run metrics.
+4.1.2 Direction-T. We evaluate the Time direction on three scales (Small/Medium/Large) with periodic moving platforms and obstacles. Each condition instantiates three methods, Static Backbone, TEG-A*, and TEG-DP, in two modes: single and GA. Per scale we sweep two designer-facing targets: the ride ratio (fraction of frames on platforms) and the minimum inter-event spacing (board/interaction gap in ticks).
+For each (scale, method, mode) and each target pair (, min), we run the stated number of seeds (Table 2) and log per-run metrics.
+
+In GA mode, TEG-DP uses a TEG-aware fitness (Section 3.3) with population 20, generations 20, mutation rate 0.2, and lightweight evaluators that reuse the same feasibility rules as the validator. Plots and statistics are produced by the shared analysis utilities, aggregated by target, method and scale. The reproducibility for both directions, including complete seeds, parameter sweeps, perturbation protocols, GA configurations, and metrics, is documented in Appendix C.
+
+4.2 Evaluation Metrics and Statistics
+4.2.1 Direction-S. In the Space direction, we evaluate planners with a unified battery of structure, controllability, robustness, and efficiency metrics, and report aggregate statistics per target, method, and scale.
+
+Controllability: We directly compare targets to achieved struc-
+
+ture. (1) Density controllability: for each run we estimate the achieved
+
+switch density ^ (per 100 cells) and visualize =^ against =
+
+with a = reference. We also compute mean absolute error (MAE)
+
+()= 1
+
+
+ |^ -  | and (when targets have  2 levels) Spearman
+
+ between (, ^ ) for compact tabular summaries. (2) Spacing
+
+controllability (SPC): we turn violation rate into a success rate,
+
+SPC
+
+=
+
+1-
+
+#{( ) consecutive switches :
+
+dist(, )
+
+< min} ,
+
+# consecutive switch pairs
+
+and aggregate by min as mean±std / 95% CI per method and scale.
+
+Robustness: Under micro-perturbations we report the robust replanning success rate (fraction of trials that still find a valid route) and the mean cost delta cost between perturbed and nominal runs (to characterize the efficiency trade behind robustness). They also summarize the scale-wise behavior and the cost-robustness trade we reproduce in our figures. Endpoint-perturbation success is summarized separately and used diagnostically (near ceiling for all methods/scales). The analysis script provides the endpoint-success plotting with CIs and sample counts per (scale, method, mode).
+
+Alternative Route Robustness: ARR measures the availability/quality of alternative corridors near the nominal route [12]; we estimate it per run and visualize distributions by method and scale. ARR exhibits a consistent method ranking and is used to interpret why spacing-compliant methods are also more locally recoverable.
+
+Composite space quality: We summarize overall quality
+
+W =  Len +   +   +   +  ,
+
+Kaijie Xu and Clark Verbrugge
+Table 2: Large-Scale Experimental Settings for the Time Direction. Each scale runs all methods in single and GA modes.
+
+Scale Grid & Horizon Seeds GA (pop×gens) Plats/Obs Min spans (P/O)
+
+Sweep
+
+Options
+
+Small 30×15; max=200 12
+
+20×20
+
+4/4
+
+Medium 50×25; max=300 8
+
+20×20
+
+5/5
+
+Large 80×40; max=500 4
+
+20×20
+
+8/8
+
+4/3
+
+  {0.30, 0.40}, min  {10, 12} allow-ride, TTC on
+
+5/4
+
+  {0.25, 0.35}, min  {12, 15} allow-ride, TTC on
+
+6/5
+
+  {0.30, 0.40}, min  {15, 18} allow-ride, TTC on
+
+Notes. Plats/Obs and Min spans specify counts and minimal track spans for objects. "TTC on" enables time-to-collision (TTC) and head-on swap checks in TEG feasibility.
+
+where Len is path length (lower is better),  is per-block length uniformity,  is spatial dispersion,  is minimum-length penalty, and  is spatial-block coverage; each component is sign-corrected and standardized as z-scores within the same scale (S/M/L); the fixed weights follow the implementation (, , , ,  ) = (0.5, 1.0, 2.0, 2.0, 1.5). This weight set is chosen to (i) reflect designer-facing priorities that treat controllability and robustness as first-class, (ii) keep efficiency influential but secondary, and (iii) balance magnitudes so that a one-standard-deviation change in each standardized metric contributes a comparable shift to the composite score.
+Additional structure/efficiency diagnostics: We also report per-run or per-target distributions for: (i) dead-end rate (DER), (ii) switchexit freedom (SEF; local openness around switch portals), (iii) tortuosity, (iv) branching factor, (v) layer balance, and (vi) wall-clock time. These are summarized as figure panels and/or columns in the aggregated CSVs and are used primarily to interpret the main findings; see section D for how SPC/SEF/ARR complement the controllability and robustness story.
+Aggregation and uncertainty: Unless otherwise stated we aggregate over seeds at the (target, method, scale) level and report mean with either standard deviation or a normal-approximation 95% CI (code paths for mean/std and CI-based rendering are shown in the controllability and endpoint-success plotting utilities).
+4.2.2 Direction-T. For the Time direction we compute all statistics in O ( ) from the validated TEG policy (same feasibility rules as the validator) and aggregate by (target, method, scale) with mean±std or 95% CIs. Metrics are organized but reported jointly: (i) Temporal controllability-ride-ratio error MAE =| ^ -  | (achieved ^ vs. target  ) and inter-event spacing success defined as 1 minus the violation rate for the target minimum gap min; (ii) Pacing-uniformity of interaction beats via the coefficient of variation of inter-event intervals (lower is steadier); (iii) Playability & safety-waiting ratio (idle frames), transfer count (board/alight events), and near-swap counts with moving obstacles detected along the executed path; (iv) Spatial efficiency-ticks-to-goal (path length) and coverage ratio (distinct visited cells over open cells) plus optional local tortuosity; and (v) a composite utility time that linearly combines length/coverage/ride/wait/interaction components (the same weighting used by the GA evaluator) together with runtime (wall-clock seconds). These summaries support the same plots as in Space-target vs. achieved curves (for  and min), distributional pacing/interaction diagnostics, and runtime charts-enabling consistent, cross-direction comparison within the HDPCG framework.
+
+4.3 Unity Case Study Setup
+4.3.1 Direction-S. We build a Unity pipeline to instantiate the Space direction levels produced by the planner. The analysis code exports a compact JSON per level with grid size ( ,  ) (or ( , , )), start/end, and two binary occupancies {0, 1} (0: free, 1: solid). A LevelManager loads this file and constructs two aligned voxel meshes with colliders. Both layers are always resident; switching never reloads assets. The player uses a light-weight controller (WASD), and reaching the end trigger completes the level. This Unity scene supports direct human play; however, all quantitative results in Sec. 5.1 are computed from solver-generated trajectories rather than from user studies.
+We support two switching realizations that correspond one-toone to our planner's semantics. For 2.5D gravity inversion, pressing the switch key negates the local gravity vector and swaps which layer is treated as ground: floors/ceilings exchange roles while switch pockets from the plan remain traversable. For 3.5D timeshift, a toggle key enables rendering+colliders on the active timeline and disables them on the inactive one; an optional time lens renders the inactive layer through an elliptical mask for preview before committing to a switch. These mechanics are implemented with a thin set of scripts, require no hand-authored stitching, and operate directly on the exported planner grids. The two Unity scenes used in Section 5.2 are built exactly from the same JSONs that produce our Python visualizations, ensuring that controllable switch density and spacing measured in Section 5.1 manifest identically in-engine.
+4.3.2 Direction-T. Similarly, we instantiate Time-direction levels in Unity using the same high-level specification as our planners. Each level description includes the grid bounds, static tiles, a catalog of dynamic elements (platforms and obstacles) with waypoint polylines, periods and phases, and the validated player policy as a time-indexed sequence of primitives {WAIT, WALK, RIDE}. At load time the scene is procedurally built: static geometry is meshed; each dynamic element is bound to a parametric mover that replays its trajectory with the prescribed timing; and a lightweight controller replays the exported policy. The controller enforces the same feasibility rules as the TEG: waiting in place, collision-free walking to the next tick, boarding/alighting only at platform endpoints, and the prevention of head-on swaps with moving obstacles. A single clock drives movers and controller to guarantee tick-accurate synchronization with the planner's discretization.
+For qualitative analysis we render the player path as a ribbon with thicker strokes on ride segments and small decals at wait nodes, and color-code dynamic tracks (platforms in green, obstacles in red) to match the Python structural view. The loader can display either a one-shot plan single or the best candidate selected by evolutionary search GA; both are validated on the same TEG rules, so the
+
+High Dimensional Procedural Content Generation
+Figure 1: Space quality. S/M: NP-A* > PF-A* > NNB; L: PF-A* > NP-A*  NNB. GA boosts all methods; PF-A* best at L.
+
+Table 3: Controllability summary (MAE ). Mean absolute error between target and achieved Density / Spacing aggregated per scale (S/M/L). Best per column is bold. Counts (runs aggregated per scale): S: 1080; M: 240; L: 30
+
+Method PF-A* NP-A* NNB
+
+S
+Den. Sp.
+2.247 0.002 2.217 0.091 9.410 0.288
+
+M
+Den. Sp.
+2.078 0.000 1.366 0.093 8.738 0.284
+
+L Den. Sp. 1.343 0.000 2.554 0.097 10.978 0.326
+
+Unity replay is a faithful realization of the computed solution. This setup validates that our temporal modeling supports a wide range of modern platforming mechanics while remaining controllable by designer targets such as ride ratio and minimum inter-event spacing, enabling direct comparison between quantitative metrics and experiential pacing in a real-time 3D environment.
+5 Results
+This section presents the quantitative and qualitative results of these experiments, showing how HDPCG methods compare to baselines and what design-relevant patterns emerge.
+5.1 Space: Quantitative Results
+Setup recap. We evaluate three planners within the HDPCG Space direction( NP-A*, PF-A*, and NNB) across three scales {S,M,L}. Unless noted, we report single-run statistics aggregated over the large experiment suite; full results are deferred to Appendix D.
+R1 - Overall space quality: Fig. 1 compares the composite Weighted Score. On S/M, NP-A* attains the highest means (e.g., S: 168.9 vs. 137.6 for PF-A* in GA; M: 259.6 vs. 241.5), while NNB trails. On L, PF-A* overtakes (GA means: 412.3 for PF-A* vs. 400.0 for NP-A*; single: 99.6 vs. 45.4), with NNB collapsing (single mean -327.5). This establishes a scale-dependent ranking: NP-A* dominates at small/medium sizes; PF-A* scales better and wins at large size. Because W aggregates z-scored components, absolute values (including negatives) reflect relative performance within scale; the ordering is the intended interpretation.
+R2 - Controllability of switching patterns: We test whether target switch density and minimum spacing materialize in the final geometry. Fig. 2 and Fig. 3 visualize target vs. achieved values; the aggregated table (Table 3) reports error statistics. Spacing control: PF-A* is near-perfect across scales (mean MAE  0.00 at S/M/L), NP-A* is close but nonzero ( 0.09), and NNB degrades with larger spacing targets ( 0.28-0.33). Density control: at M, NP-A* shows slightly lower MAE (1.37) than PF-A* (2.08), while at L PF-A* is clearly better (1.34 vs. 2.55); at S the two are similar (2.22 vs. 2.25). Overall, PF-A* provides the most reliable knob-to-behavior mapping, especially for spacing, with NP-A* trading mild density overshoot for higher composite score (R1).
+
+Figure 2: Controllability-density. PF-A* tracks density targets with lowest MAE at L and competitive at S/M; NP-A* exhibits mild systematic overshoot; NNB is insensitive to targets.
+Figure 3: Controllability-spacing. PF-A*  perfect across scales; NP-A* slightly lower; NNB drops with higher targets.
+R3 - Robustness under perturbations: Under stochastic voxel microperturbations (band/global protocols as in Section 4), Figure 11 shows re-planning success by scale. Because the GA fitness maximizes  without a robustness term, it preferentially prunes the "slack" and redundant corridors that make PF-A* resilient, producing higher- but brittle, low-redundancy layouts with lower perturbation success (cf. ARR in Appendix D). Only PF-A* (single) achieves modest robustness: S 0.076 ± 0.26, M 0.045 ± 0.208, L 0.217 ± 0.40; NP-A* and NNB are near zero across scales, and GA variants are
+
+Table 4: Runtime (seconds; lower is better; Mean ± std.)
+
+Method (mode) PF-A* (single) NP-A* (single) NNB (single)
+PF-A* (GA) NP-A* (GA) NNB (GA)
+
+S
+0.138 ± 0.060 0.248 ± 0.094 0.070 ± 0.032
+35.888 ± 6.045 43.172 ± 7.086 25.368 ± 4.292
+
+M
+0.663 ± 0.278 0.982 ± 0.419 0.366 ± 0.173
+186.431 ± 26.924 153.150 ± 9.749 119.232 ± 15.990
+
+L
+4.119 ± 1.136 3.542 ± 0.915 3.163 ± 1.597
+500.064 ± 37.407 199.189 ± 9.823 411.569 ± 44.407
+
+Kaijie Xu and Clark Verbrugge
+
+also near zero. This suggests PF-A*'s strong spacing regularity (R2) translates into better local recoverability.
+R4 - Efficiency-coverage trade-off: PF-A* populates a favorable frontier (high coverage at shorter lengths); NP-A* can push coverage to the maximum but often at longer paths; NNB is dominated. This explains the interplay between R1 and R2-R3: NP-A* wins the composite objective on S/M, while PF-A* offers a cleaner lengthcoverage trade and stronger controllability/robustness at L. Full details in Appendix D.
+R5 - Runtime: We report wall-clock time (mean ± std; seconds) for both single and GA modes in Table 4. Two consistent patterns emerge: (i) in single mode the naive baseline (NNB) is always fastest across S/M/L, reflecting its minimal shaping; (ii) in GA mode, NNB remains fastest on S/M, but at L the segment-wise shaping of NP-A* has the lowest runtime (199.19 s), while PF-A* is slowest (500.06 s) yet achieves the best large-scale quality (R1).
+Across scales, (i) NP-A* delivers the best composite score on S/M, while PF-A* scales best and wins at L; (ii) PF-A* offers the strongest knob-to-behavior controllability (near-perfect spacing) and the highest robustness under micro-perturbations; (iii) NNB is a useful lower-bound baseline and the fastest in single mode, whereas NP-A* is the most GA-efficient at L.
+5.2 Space: Qualitative Analysis + Case Study
+We showcase two representative levels produced by the Space planner and instantiated in Unity, chosen to mirror well-known mechanics in real games: a 2.5D gravity-inversion level in the spirit of gravity-flip platformers (e.g., VVVVVV ), and a 3.5D time-shift level inspired by time-toggle encounters in Dishonored 2: A Crack in the Slab and Titanfall 2: Effect and Cause. The Python views in Fig. 4-5 render the exact grids consumed by Unity; Figs. 7-8 are in-engine screenshots of those same levels.
+Case A - 2.5D gravity inversion. Fig. 7 shows two co-located slab layers with mirrored walkable surfaces. A single toggle flips the gravity vector and swaps which layer acts as ground; the player "falls" through aligned apertures at green pockets (Fig. 4) to continue. Because switch pocket density and minimum spacing are set by our planner (Sec. 5.1, R2), designers can dial frequent micro-switch beats for dexterity tests, longer runs for traversal pacing-without any hand stitching. The Unity level is generated directly from the planner; what you see is exactly what is playable.
+Case B - 3.5D time-shift with preview lens. In Fig. 8, an elliptical time lens reveals the inactive timeline while the player stands in the active one; a toggle swaps colliders/materials so
+
+Figure 4: 2D combined-geometry view (Space). Blue/red cells are free only on 0/1; green are free on both (switch pockets); grey are blocked on both. Start/end are overlaid. This top-down grid visualization corresponds to our 2.5D Space (gravity-shift) instantiation. The corridor layout and pocket placement obey the target density/spacing used in Sec. 5.1.
+Figure 5: 3D combined-path view (Space). Blue/red points are free voxels on 0/1; purple diamonds are planned switch nodes on the successful route. Alternation frequency matches the requested spacing. that only one layer is traversable at a time. This reproduces the
+
+High Dimensional Procedural Content Generation
+
+Figure 6: Time (scores). Weighted score distributions across scales and modes. The ordering is consistent: TEG-DP > TEG-A* > Static, and GA pushes medians higher, especially at Scale L.
+
+Figure 7: Unity snapshot (2.5D gravity inversion). Flipping gravity swaps the active walkable layer; corridors and apertures correspond one-to-one with Fig. 4.
+Figure 8: Unity snapshot (3.5D time-shift). The lens previews the alternate timeline; toggling swaps active/inactive layers. Planned switch points remain reachable post-toggle.
+read  plan  toggle  traverse beat common to modern timeshift encounters, while preserving the planned switch nodes (Fig. 5) and their spacing for fairness. The same structural knobs (density/spacing) govern the cadence of time jumps, enabling both rapid multi-hop sequences and slower, set-piece transitions.
+
+Across both cases, the same two-layer abstraction supports complex mechanics, gravity inversion and time shift, because our planner explicitly models layer-specific free space plus shared switch pockets. The quantitative controls measured in Sec. 5.1 (density / spacing, robustness pockets) translate into qualitative pacing and readability: designers can target rhythmic alternation, guaranteed clearance at pockets, and route regularity. Combined with the automatic Unity instantiation, these examples show practical applicability: HDPCG's Space direction can block out modern switchingbased levels with controllable structure and beat-level pacing, aligning with patterns seen in shipped games.
+5.3 Time: Quantitative Results
+We compare the three Time-direction validators, Static Backbone, TEG-A* (simplified TEG search), and TEG-DP, under both Single and GA across scales S/M/L. The weighted score aggregates playability/interaction metrics; higher is better. Table 6 reports the means and standard deviations; Fig. 6 visualizes the score distributions. Additional results are in Appendix E.
+Overall, the weighted score generally follows the order of TEGDP > TEG-A* > Static. This ordering is statistically significant after Holm-Bonferroni correction in most cases (except S-Single and M-Single); see Appendix E, Table 5 for  statistics, Cliff's , and adjusted -values. GA further amplifies this gap, especially at L. Runtime shows the expected cost-quality trade-off: DP delivers the best playability/interaction patterns at a higher cost; A* offers an interpretable and much faster compromise; the Static validator is a lightweight reference for ablations.
+5.4 Time: Qualitative Analysis + Case Study
+Figure 9 shows a single, fully-time-aware level generated by our Time direction and rendered by the Python visualizer; Figure 10 shows the same instance reconstructed in Unity as a playable 3D platformer in the style of contemporary action-platform games. The Time model uses a time-expanded graph (TEG) to encode wait, walk, and ride transitions with conflict rules that forbid head-on
+
+Figure 9: Time direction (Python view). Green: platform tracks; red: obstacle tracks; blue: validated player path (darker  later); purple: ride segments; black points: waits. Stars mark start/goal.
+Figure 10: Time direction (Unity snapshot). The 3D platformer level instantiates the same moving platforms (green) / enemies (red) and reproduces the planned route (blue).
+swaps with moving obstacles and allow boarding/alighting only at platform endpoints. The Python figure overlays: (i) platform tracks (green polylines) and obstacle tracks (red polylines); (ii) the validated player trajectory (blue polyline, darker when later in time); (iii) ride segments (purple overlays); and (iv) discrete waiting events (black markers). Start and goal are shown as star glyphs. The trajectory demonstrates our method's ability to interleave purposeful waits with multi-segment rides while respecting safety constraints; the cadence matches target ratios specified to the generator.
+In Unity we instantiate identical dynamics: each platform and obstacle follows the exported keyframed path with cycle time and phase; the player can board at the scripted endpoints and is carried between frames while collisions block illegal swaps. Despite being simulated in continuous time, the observed play matches TEG semantics, including the discrete wait/ride structure and the same start-to-goal itinerary. This close match shows that our temporal formulation captures the key elements of moving-platform encounters, while letting designers control pacing through targets such as ride ratio and minimum inter-event spacing.
+
+Kaijie Xu and Clark Verbrugge
+6 Conclusion
+In this paper, we introduced High-Dimensional Procedural Content Generation, a graph-based framework that unifies space with explicit mechanic axes, and we show how this representation supports constructive solvers and compilation for mechanics such as layer switching and moving platforms. We formalized a general problem statement and a shared four-stage pipeline, then instantiated it in two domains with baselines and structured methods under the same representation. Across multi-scale experiments, our methods achieve controllable targets and replayable solutions, and Unity case studies confirm that the exported plans reproduce the intended mechanics in-engine rather than only matching geometry. Because validation certifies a witness route rather than enumerating all reachable behaviors, the instantiated levels can admit emergent shortcuts after corridor growth, which we leave for future work.
+However, several limitations remain. First, our ideal TEG-A* for Time requires state augmentation with interaction memory and rewards to drive meaningful, non-redundant contacts; this causes state explosion, forcing us to use a simplified variant that is tractable but less capable of strictly shaping interactions, leaving a gap between the Static baseline and DP. Second, the representation and solvers we study are constructive/search-based; we do not (yet) integrate PCGML or reinforcement-learning approaches that could learn priors or value functions over the high-dimensional state space. Third, we evaluate each mechanic axis separately; we have not yet evaluated multi-mechanic compositions in a single joint state space or their scalability. Fourth, robustness is currently evaluated post-hoc via re-planning under micro-perturbations, but is not yet part of GA fitness because it would require multiple replanning rollouts and significantly increase cost. Lastly, we have not conducted user studies; playability and pacing are supported by metrics and replays, but formal evidence of fun is future work.
+To address these, we will develop multi-tier planners with boundedsuboptimal search, event-window unrolling, and stronger pruning to make richer A* feasible at interactive scales. Although we instantiate HDPCG on 2D/3D grids here, the formulation only assumes a discrete adjacency graph; extending it to other discretizations is a natural direction for future work. Because the witness route is compiled into level geometry and is meant to match a designer-specified pacing, we discourage unnecessary detours (even if feasible) using explicit length and event-spacing constraints rather than relying on any suboptimal path. With our current pipeline reliably producing valid high-dimensional levels, we can also curate a large supervised dataset to explore PCGML and RL on top of HDPCG. Besides, we will move from per-axis studies to axis composition, combining layers, time, locomotion modes, and other mechanisms in a single dimensional-expanded validator, so designers can specify coupled targets and obtain jointly consistent solutions. In parallel, we will include explicit robustness terms and multi-objective optimization into the GA, and report Pareto fronts to balance composite quality with re-planning success. Finally, we plan to package the end-toend toolchain and conduct controlled user studies to connect our metrics to perceived pacing, challenge, and enjoyment. Overall, we hope HDPCG can serve as a foundation for pushing level generation beyond geometry toward controllable, mechanism-rich, and designer-aligned worlds.
+
+High Dimensional Procedural Content Generation
+References
+[1] Majed Al Zayer, Paul MacNeilage, and Eelke Folmer. 2018. Virtual locomotion: a survey. IEEE transactions on visualization and computer graphics 26, 6 (2018), 2315­2334.
+[2] Craig Anderton, Chris Creed, Sayan Sarcar, and Arthur Theil. 2025. From tele-
+portation to climbing: A review of locomotion techniques in the most used commercial virtual reality applications. International Journal of Human­Computer Interaction 41, 4 (2025), 1946­1966. [3] Norman Cliff. 1993. Dominance statistics: Ordinal analyses to answer ordinal questions. Psychological bulletin 114, 3 (1993), 494. [4] Norman Cliff. 2014. Ordinal methods for behavioral data analysis. Psychology Press.
+[5] Seth Cooper. 2023. Sturgeon-MKIII: Simultaneous level and example playthrough generation via constraint satisfaction with tile rewrite rules. In Proceedings of the 18th International Conference on the Foundations of Digital Games. 1­9.
+[6] Seth Cooper and Mahsa Bazzaz. 2024. Sturgeon-MKIV: constraint-based level and playthrough generation with graph label rewrite rules. In Proceedings of the AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment, Vol. 20. 13­24.
+[7] Seth Cooper and Mahsa Bazzaz. 2025. A Constraint-Based Graph Grammar Approach Unifying Level and Playthrough Generation. In EXAG-INT 2025: Experimental AI in Games and Intelligent Narrative Technologies 2025 (CEUR Workshop Proceedings, Vol. 4090). Edmonton, Alberta, Canada.
+[8] Joris Dormans. 2011. Level design as model transformation: a strategy for automated content generation. In Proceedings of the 2nd International Workshop on Procedural Content Generation in Games. 1­8.
+[9] Joris Dormans and Sander Bakkes. 2011. Generating missions and spaces for adaptable play experiences. IEEE Transactions on Computational Intelligence and AI in Games 3, 3 (2011), 216­228.
+[10] Sam Earle, Filippos Kokkinos, Yuhe Nie, Julian Togelius, and Roberta Raileanu.
+2024. Dreamcraft: Text-guided generation of functional 3D environments in Minecraft. In Proceedings of the 19th International Conference on the Foundations of Digital Games. 1­15. [11] Sam Earle, Samyak Parajuli, and Andrzej Banburski-Fahey. 2025. DreamGarden: A Designer Assistant for Growing Games from a Single Prompt. In Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems (CHI '25). Association for Computing Machinery, New York, NY, USA, Article 57, 19 pages.
+doi:10.1145/3706598.3714233 [12] David Eppstein. 1998. Finding the k shortest paths. SIAM Journal on computing
+28, 2 (1998), 652­673.
+[13] Michael Erdmann and Tomas Lozano-Perez. 1987. On multiple moving objects. Algorithmica 2, 1 (1987), 477­521.
+[14] Kaylah Facey and Seth Cooper. 2024. Toward space-time WaveFunctionCollapse for level and solution generation. In Proceedings of the AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment, Vol. 20. 25­34.
+[15] Pedro M Fernandes, Manuel Lopes, and Rui Prada. 2024. Generating game levels by defining player experiences. In Proceedings of the AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment, Vol. 20. 179­188.
+[16] Lucas Ferreira and Claudio Toledo. 2014. Generating levels for physics-based puzzle games with estimation of distribution algorithms. In Proceedings of the 11th Conference on Advances in Computer Entertainment Technology. 1­6.
+[17] BACKE HANS-JOACHIM. 2020. Spaces of Allegory. Non-Euclidean Spatiality as a Ludo-Poetic Device. In DiGRA-Proceedings of the 2020 DiGRA International Conference: Play Everywhere, Vol. 2.
+[18] Peter E Hart, Nils J Nilsson, and Bertram Raphael. 1968. A formal basis for the heuristic determination of minimum cost paths. IEEE transactions on Systems Science and Cybernetics 4, 2 (1968), 100­107.
+[19] John H Holland. 1992. Adaptation in natural and artificial systems: an introductory analysis with applications to biology, control, and artificial intelligence. MIT press.
+[20] Bruce Hoppe and Éva Tardos. 2000. The quickest transshipment problem. Mathematics of Operations Research 25, 1 (2000), 36­62.
+[21] Shiying Hu, Zengrong Huang, Chengpeng Hu, and Jialin Liu. 2024. 3d building generation in minecraft via large language models. In 2024 IEEE Conference on Games (CoG). IEEE, 1­4.
+[22] Zehua Jiang, Sam Earle, Michael Green, and Julian Togelius. 2022. Learning controllable 3D level generators. In Proceedings of the 17th International Conference on the Foundations of Digital Games. 1­9.
+[23] Isaac Karth and Adam M Smith. 2017. WaveFunctionCollapse is constraint solving in the wild. In Proceedings of the 12th International Conference on the Foundations of Digital Games. 1­10.
+[24] Isaac Karth and Adam M Smith. 2021. Wavefunctioncollapse: Content generation via constraint solving and machine learning. IEEE Transactions on Games 14, 3 (2021), 364­376.
+[25] Oussama Khatib. 1986. Real-time obstacle avoidance for manipulators and mobile robots. The international journal of robotics research 5, 1 (1986), 90­98.
+[26] Amina Kobenova, Cyan DeVeaux, Samyak Parajuli, Andrzej Banburski-Fahey,
+Judith Amores Fernandez, and Jaron Lanier. 2024. Social Conjuring: Multi-User
+
+Runtime Collaboration with AI in Building Virtual 3D Worlds. arXiv preprint arXiv:2410.00274 (2024). [27] Ekkehard Köhler, Katharina Langkau, and Martin Skutella. 2002. Time-expanded graphs for flow-dependent transit times. In European symposium on algorithms. Springer, 599­611.
+[28] Lucas Kovar, Michael Gleicher, and Frédéric Pighin. 2023. Motion graphs. In Seminal Graphics Papers: Pushing the Boundaries, Volume 2. 723­732.
+[29] C Karen Liu, Aaron Hertzmann, and Zoran Popovi. 2005. Learning physicsbased motion style with nonlinear inverse optimization. ACM Transactions on Graphics (TOG) 24, 3 (2005), 1071­1081.
+[30] Yoav IH Parish and Pascal Müller. 2001. Procedural modeling of cities. In Proceedings of the 28th annual conference on Computer graphics and interactive techniques. 301­308.
+[31] E Rimon and DE Koditschek. 1992. Exact robot navigation using artificial potential functions. IEEE Transactions on Robotics and Automation 8, 5 (1992), 501­518.
+[32] Noor Shaker, Mohammad Shaker, and Julian Togelius. 2013. Evolving playable content for cut the rope through a simulation-based approach. In Proceedings of the AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment, Vol. 9. 72­78.
+[33] Noor Shaker, Julian Togelius, and Mark J Nelson. 2016. Procedural content
+generation in games. (2016).
+[34] Gillian Smith, Mike Treanor, Jim Whitehead, and Michael Mateas. 2009. Rhythmbased level generation for 2D platformers. In Proceedings of the 4th international Conference on Foundations of Digital Games. 175­182.
+[35] Gillian Smith, Jim Whitehead, and Michael Mateas. 2010. Tanagra: A mixedinitiative level design tool. In Proceedings of the Fifth International Conference on the Foundations of Digital Games. 209­216.
+[36] Gillian Smith, Jim Whitehead, Michael Mateas, Mike Treanor, Jameka March, and
+Mee Cha. 2010. Launchpad: A rhythm-based level generator for 2-d platformers. IEEE Transactions on computational intelligence and AI in games 3, 1 (2010), 1­16. [37] Matthew Stephenson and Jochen Renz. 2016. Procedural generation of levels for angry birds style physics games. In Proceedings of the AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment, Vol. 12. 225­231. [38] Adam Summerville, Sam Snodgrass, Matthew Guzdial, Christoffer Holmgård,
+Amy K Hoover, Aaron Isaksen, Andy Nealen, and Julian Togelius. 2018. Procedural content generation via machine learning (PCGML). IEEE Transactions on Games 10, 3 (2018), 257­270. [39] Julian Togelius, Georgios N Yannakakis, Kenneth O Stanley, and Cameron
+Browne. 2011. Search-based procedural content generation: A taxonomy and survey. IEEE Transactions on Computational Intelligence and AI in Games 3, 3 (2011), 172­186.
+[40] Benjamin van Arkel, Daniel Karavolos, and Anders Bouwer. 2015. Procedural generation of collaborative puzzle-platform game levels. In GAME ON'2015: 16th International Conference on Intelligent Games and Simulation. Eurosis, 87­93.
+[41] Jur Van Den Berg, Stephen J Guy, Ming Lin, and Dinesh Manocha. 2011. Reciprocal n-body collision avoidance. In Robotics Research: The 14th International Symposium ISRR. Springer, 3­19.
+[42] Wouter Van Toll, Atlas F Cook, and Roland Geraerts. 2011. Navigation meshes for realistic multi-layered environments. In 2011 IEEE/RSJ International Conference on Intelligent Robots and Systems. IEEE, 3526­3532.
+[43] Akshar Vandara, Kaylah Facey, and Seth Cooper. 2025. Spacetime Level Generation and Editing with Constraints from Examples. In Proceedings of the AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment (AIIDE).
+[44] Yishu Wang, Ye Yuan, Yuliang Ma, and Guoren Wang. 2019. Time-dependent graphs: Definitions, applications, and algorithms. Data Science and Engineering 4, 4 (2019), 352­366.
+[45] Andrew Witkin and Michael Kass. 1988. Spacetime constraints. ACM Siggraph Computer Graphics 22, 4 (1988), 159­168.
+[46] Peter Wonka, Michael Wimmer, François Sillion, and William Ribarsky. 2003. Instant architecture. ACM Transactions on Graphics (TOG) 22, 3 (2003), 669­677.
+[47] Kaijie Xu and Clark Verbrugge. 2025. Action Window Planning for Stealth Missions. In 2025 IEEE Conference on Games (CoG). 1­4. doi:10.1109/CoG64752. 2025.11114360
+[48] Kaijie Xu and Clark Verbrugge. 2025. Constraint Is All You Need: OptimizationBased 3D Level Generation with LLMs (FDG '25). Association for Computing Machinery, New York, NY, USA, Article 66, 13 pages. doi:10.1145/3723498.3723840
+[49] Kaijie Xu and Clark Verbrugge. 2025. A Database-Driven Framework for 3D Level Generation with LLMs. arXiv preprint arXiv:2508.18533 (2025).
+[50] Qihan Xu, Jonathan Tremblay, and Clark Verbrugge. 2014. Generative methods for guard and camera placement in stealth games. In Proceedings of the AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment, Vol. 10. 87­93.
+[51] Georgios N Yannakakis and Julian Togelius. 2011. Experience-driven procedural content generation. IEEE Transactions on Affective Computing 2, 3 (2011), 147­ 161.
+[52] José P Zagal and Michael Mateas. 2010. Time in video games: A survey and analysis. Simulation & Gaming 41, 6 (2010), 844­868.
+
+A TEG-A* Details A.1 Exact TEG-A*
+Let X  Z2 and time domain be T = {0, . . . ,max} or Z . A state augments space-time with interaction memory:  = (, , ),   Z, where  records which platforms have been used and which obstacle endpoints have been hit (bitmasks or small counters). Edges  = (  ) implement wait, walk, and ride under feasibility  (endpoint-only boarding/alighting, occupancy and head-on swap checks). To drive non-trivial yet non-redundant interactions, the edge cost  () = time () -ride ·1ride () -hit ·hit( ), rewards riding and the first hits on required endpoints; a goal test demands  =  and   Zaccept (e.g., quotas or full coverage). The admissible heuristic (, ) =  -  1 lower-bounds remaining time.
+Complexity: Let |X| =  × , time size |T | =  , number of platforms , and required obstacle endpoints . Even with bitmasks, the state space scales as |S| = O   · 2 · 2 , and branching   5 + () (four moves + wait + ride options), yielding a worstcase expansion of ( · |S|). Moreover, waiting typically expands step-by-step, making practical node counts proportional to long
+dwell times near boarding windows. In our setting, this leads to
+timeouts even on small grids when interaction shaping is enabled.
+A.2 Simplified TEG-A*
+Pseudo-code is shown in Algorithm 1. To remain tractable while
+preserving feasibility semantics, we adopt a cyclic TEG with lightweight memory and coarse costs. The state is  = ( mod  , , , , ), where pm and ep are bitmasks for "used platforms" and "visited obstacle endpoints." Time wraps modulo the LCM  of
+object cycles. We apply:
+(1) Feasibility rules (unchanged). Endpoint-only riding; perstep occupancy and swap checks; no mid-track walking
+(non-endpoint track cells are non-walkable). (2) Coarse costs and heuristic. Unit cost for walk/wait; ride
+cost equals ride duration; (, ) =  -  1. (3) Lightweight search policy. Single-close (no re-opening
+states) to cap memory and runtime; cyclic time avoids large
+max. (4) Goal (hard) condition. Reach  with all platforms used
+and all sampled obstacle endpoints visited (pm and ep match
+their full masks).
+Rationality and correctness: If the algorithm returns a path, per-step occupancy and swap checks plus endpoint-only riding
+ensure the trajectory satisfies  ; the reconstruction enforces no
+mid-track walking and avoids spatial self-collisions. The singleclose policy sacrifices optimality but preserves feasibility. Coarse costs and cyclic time make the search compact; however, without explicit temporal rewards/quotas, the solver does not reliably induce interactions--exactly the empirical behavior we report. These limitations motivate our use of TEG-DP for high-quality, controllable time-aware generation at scale.
+B DP Optimality on the Time-Expanded Graph
+Let   Z2 be the spatial lattice and  = {0, . . . ,  } a finite horizon. The time-expanded graph is the layered DAG G = (V, E) with layers V = {(, ) :     (, ) allowed} and edges E 
+
+Kaijie Xu and Clark Verbrugge
+
+Algorithm 1 Simplified TEG-A*
+
+1: Build periodic objects; let  = lcm(cycles).
+
+2: Start 0 = (0, , , 0, 0); push to PQ with  =  + .
+
+3: while PQ not empty do
+
+4: Pop ( , ,  = (, , , , ))
+
+5: if (, ) =  and  = _ and  = _ then
+
+return path
+
+6: end if
+
+7: for each move/wait (, )  {4-neigh, (0, 0)} do
+
+8:
+
+  (+1 mod  , +, +, , )
+
+9:
+
+continue if out of bounds, cliff, mid-track, occupied at
+
++1, or swap
+
+10:
+
+push  with +1,  =  -  1
+
+11: end for
+
+12: for each platform  with endpoint at (, ) and  () =
+
+(, ) do
+
+13:
+
+Let  be half- or full-cycle to the opposite endpoint;
+
+continue if any frame collides
+
+14:
+
+  (  mod , , ,  | 2, ); push with cost
+
++(  - )
+
+15: end for
+
+16: end while
+
+17: return infeasible
+
+V ×V+1 encoding Wait, four-connected Walk, and endpoint-only Ride. Each edge   E has nonnegative additive cost  ()  0; forbidden states are removed (or assigned +). The start set is 0  V0 and the goal set is   V .
+Define  () as the minimum cost to reach (, ) from any (0, 0)  0, with initialization 0 () = 0 for (, 0)  0 and 0 () = +
+otherwise. The forward recurrence is
+
++1 ( )
+
+=
+
+min
+(  )  E
+
+ () +  (  ) ,
+
+ = 0, . . . ,  - 1,
+
+and a backpointer is stored at each update to reconstruct a terminal path in  . Because G is acyclic and the objective is additive, optimal substructure holds: if a path to (, +1) is globally optimal, its prefix to any (, ) on that path is also optimal. By induction over layers, the recurrence computes the exact minimum  (·) on every layer; selecting min(g, )   (g) yields a globally minimum-cost path. Runtime is O (|E |) and memory is O (|V |).
+Setting  ()  1 reduces the recurrence to unweighted shortest path on the layered TEG; any layer-wise breadth-first search
+returns an equal-length optimum (ties aside). Using admissible and
+consistent heuristics, A* on the same TEG returns the same opti-
+mum; simplified A* variants that employ coarse costs or single-close
+policies need not be optimal, whereas dynamic programming on
+the layered DAG remains exact.
+Periodic dynamics are handled by unrolling a finite horizon 
+(e.g., a fixed max per scale or the least common multiple of object periods), which preserves acyclicity; optimality above is therefore
+with respect to the chosen horizon. Optimality also presumes Markovian feasibility and costs in (, ); history-dependent constraints would require state augmentation to retain optimal substructure,
+which we do not use in our validators.
+
+High Dimensional Procedural Content Generation
+
+C Reproducibility
+Experiments are deterministic per run by fixing seed = run_index.
+For Space: single mode uses 80/40/20 seeds at S/M/L, GA mode
+uses 40/20/10 seeds at S/M/L. For Time: both single and GA use 12/8/4 seeds at S/M/L. Approximate memory needs are 4 GB for Space-L (1003 with two layers) and 2 GB for Time-L (80 × 40 with max = 500).
+Space validation uses a 6-connected (Von Neumann) neighbor-
+hood and an L1 heuristic. NNB adds an i.i.d. penalty field drawn from Uniform(0, 50) and uses the raw shortest-path skeleton;  switches are sampled at near-uniform indices excluding endpoints.
+NP­A* adds linear-decay repulsive blobs of radius 4 with peak
+penalty 10 000, plus scale-specific cost blobs: S: 10 blobs with radius [1.5, 2.5] and cost [20, 50]; M: 15 blobs, [2.0, 3.0], [30, 60]; L: 25 blobs, [3.0, 4.0], [40, 80]. PF­A* combines repulsive blobs with attractive switch anchors by subtracting a switch reward of 200
+at S/M and 300 at L; if a cross-layer "teleport" is detected, a local
+in-layer patch is inserted before switching. Postplanning growth en-
+forces component-aware corridors then rooms, with conflict checks
+across in-layer neighbors, same-cell/same-layer, in-layer adjacency
+during candidate expansion, and cross-layer coincidences; switch
+steps open the target layer, locally close the source layer, and keep the switch cell bi-layer open. 4D verification runs A* on (, , , ) with  =  -  1 (admissible with nonnegative switch costs), unit spatial move cost, and layer-switch cost  {1, 2}. Controllability sweeps use S:   {1, 3, 5} and min  {3, 5, 7}; M:   {2, 4} and min  {4, 6}; L:  = 2.0, min = 5. Start­goal endpoints are sampled with minimum Manhattan distances 20/25/30 at S/M/L, up to
+1000 attempts, with 12/10/12 accepted pairs per target at S/M/L. Robustness perturbations use a band protocol at S/M (radius  = 1, closing open voxels with probability  = 0.01 along the nominal path) and a global protocol at L ( = 0.005 over the full grid), with fixed repeats per target/method/scale. The Space GA uses popu-
+lation 15, generations 30/20/10 at S/M/L, mutation rate 0.3, and
+tournament size 3; chromosomes encode the Stage­1 parameters
+(blob counts/radii/weights, switch anchors/indices, skeleton seed),
+and fitness is the composite spatial score. Time validation uses a time-expanded graph with  = 1 and
+finite horizons max = 200/300/500 at S/M/L. Actions are Wait (, , )  (, , +1), four-connected Walk (, , )  (, , +1), and endpoint-only Ride along platform trajectories; per-tick occu-
+pancy is enforced and swap-prevention forbids cross-occupancy.
+Static scenarios instantiate 3/5/8 platforms and 3/5/8 obstacles at
+S/M/L with zig-line back-and-forth trajectories, minimum lengths
+4/5/6 for platforms and 4­6 for obstacles, unit speed, and period 2-2. TEG­A* shares catalogs, restricts boarding to endpoints (start and midpoint ticks), requires at least three ride ticks, and uses
+coarse costs with a single-close policy; paths are feasible but not
+guaranteed optimal. TEG­DP builds per-time forbidden masks and
+a nonnegative cost field  and solves the layered DAG by forward min-cost dynamic programming
+
++1 ( )
+
+=
+
+(
+
+
+
+
+
+)
+
+min
+ , ¬forbid
+
++1
+
+(
+
+
+
+)
+
+{
+
+( )
+
++ 
+
+(
+
+   ) },
+
+0 () = 0 on starts, + otherwise,
+
+Figure 11: Robustness to micro-perturbations. PF-A* (single) attains the highest success on S/M/L; NP-A*/NNB are near zero. Error bars show across-seed std.
+
+returning the global minimum-cost path on the finite-horizon TEG;   1 yields the unweighted shortest path (layer-wise BFS).
+ (  ) = WalkWalk + WaitWait + RideRide
+
++ cad Ride {  W ( )} + uni  - Ride
+
++
+
+saf
+
+Danger ()
+
+
+-
+
+ep Board/Alight ,
+
+(1)
+
+Constants used in all experiments: (Walk, Wait, Ride) = (1.0, 1.0,
+
+0.25); (cad, uni, saf, ep) = (0.5, 0.3, 2.0, 0.1);  = min + {2, 3,
+
+4}S/M/L,
+
+
+
+= round();
+
+
+
+
+
+{0, 1} shares (, );
+
+Danger ()
+
+
+=
+
+1 iff occupied or 4-neighbor at , or would swap at +1; else 0. All
+
+costs are clipped to be nonnegative before the DP update. The
+
+Time GA uses population 20, generations 20, mutation rate 0.2,
+
+tournament size 3, and an interaction-guided fitness over ride ratio,
+
+spacing, beat regularity, interaction coverage and safety.
+
+Space metrics include density/spacing controllability, alternativeroute robustness, perturbation success rate and cost, and a com-
+
+posite spatial score as a weighted sum of five standardized terms with fixed weights (0.5, 1.0, 2.0, 2.0, 1.5) for {path length, length
+
+uniformity, spatial dispersion, minimal-length penalty, coverage}; invalid runs set ± and are filtered at aggregation. Time met-
+
+rics include ride/wait ratios, total ticks, coverage, near-swap viola-
+
+tions, transmission counts, and beat uniformity; ratios are reported
+
+to three decimals and time in integer ticks; undefined events re-
+
+turn NaN and are ignored by aggregators. Statistical testing uses
+
+Mann­Whitney U with Cliff's  and Bonferroni correction for Space
+
+[3, 4], and Mann­Whitney U with Cliff's  and Holm­Bonferroni
+
+correction for Time; pairwise comparisons are conducted per ex-
+
+periment and run type, with CSV outputs for statistics, -values,
+
+adjusted -values, and effect sizes.
+
+D Additional Quantitative Results for Space
+Beyond the scale-aggregated micro-perturbation success in Fig. 11,
+we provide distributional diagnostics and compact statistics that
+clarify the mechanisms behind R2­R3. Alternative Route Robustness (ARR). Fig. 12 shows ARR
+distributions; single-run means are: PF-A* {0.338, 0.319, 0.530} for S/M/L, NP-A* {0.156, 0.215, 0.360}, NNB {0.037, 0.042, 0.057}; GA means are PF-A* {0.138, 0.245, 0.320}, NP-A* {0.233, 0.370, 0.340},
+
+Kaijie Xu and Clark Verbrugge
+
+Figure 12: ARR distributions (by method and scale). PF-A* stochastically dominates NP-A* and NNB in single mode; GA narrows the gap on S/M and remains comparable on L.
+
+Figure 15: Switch Pattern Compliance (SPC). GA tightens patterns and ranks PF-A* highest on M; single-mode shows NP-A* higher on S/M and PF-A* catching up on L.
+
+Figure 13: Endpoint perturbations. Near-ceiling success ( 1.0) for all methods and scales.
+Figure 14: Cost increase under micro-perturbations. S/M: near-zero for all (except NP-A* at M); L: PF-A* accepts costlier detours while NP-A* stays conservative. NNB {0.075, 0.070, 0.050}. Thus, single consistently ranks PF-A* > NP-A* > NNB across scales, while GA boosts NP-A* more on S/M and keeps both PF-A*/NP-A* comparable on L.
+Endpoint perturbations. Fig. 13 confirms near-ceiling success ( 1.0) for all methods and scales (each target set has =20­80
+
+Figure 16: Switch Exit Freedom (SEF). NNB has higher local exit openness but without gains in controllability or robustness.
+replans), indicating that robustness failures mainly originate from local micro-structure changes rather than start/end moves.
+Perturbation success and cost trade. The micro-perturbation success rate (mean) for PF-A* (single) is {S: 0.0756, M: 0.0455, L: 0.2173}, whereas NP-A* and NNB are near zero on all scales; GA variants are also near zero except PF-A* at L (0.0500). Complementarily, Fig. 14 summarize the mean cost (perturbed vs. nominal): on S/M all methods are close to 0 except NP-A* at M (0.273); on L, PF-A* accepts noticeably costlier detours (single 0.742, GA 1.800) while NP-A* remains conservative (0.038) and NNB is 0. Together with Fig. 11, this indicates that PF-A* achieves higher robustness partly by leveraging slightly more expensive alternatives on large grids, whereas NP-A* tends to reject them.
+Switch Pattern Compliance (SPC). Fig. 15 visualizes SPC distributions. Aggregated means show that GA yields the cleanest patterns overall. Under GA, PF-A* attains the highest SPC at M, while NP-A* is marginally higher at S and L (PF-A*: {0.737, 0.838, 0.791} vs. NP-A*: {0.748, 0.822, 0.800}; NNB: {0.715, 0.709, 0.444}). In single mode, NP-A* is higher on S/M (NP-A*: {0.659, 0.689, 0.475}; PF-A*: {0.366, 0.400, 0.490}), while PF-A* catches up at L. These trends are consistent with Section 5.1: PF-A* achieves near-perfect spacing MAE with competitive density, whereas SPC emphasizes minimum-gap compliance and shows NP-A* slightly ahead at S/L under GA.
+
+High Dimensional Procedural Content Generation
+Figure 17: Layer balance. No contradicting imbalance; GA generally narrows dispersion.
+
+Table 5: Time direction: nonparametric significance and effect sizes. Two-sided Mann­Whitney U with Holm­Bonferroni correction across key metrics; entries report Cliff's  (magnitude) and adjusted -values (adj).
+
+Scale Mode Comparison
+
+Cliff's  (mag.) adj
+
+S
+
+Single Static vs. TEG-A*
+
+-0.997 (large) < 0.001
+
+S
+
+Single TEG-A* vs. TEG-DP 0.236 (small) 0.372
+
+S
+
+GA Static vs. TEG-A*
+
+-0.979 (large) < 0.001
+
+S
+
+GA TEG-A* vs. TEG-DP -1.000 (large) < 0.001
+
+M Single Static vs. TEG-A*
+
+-0.992 (large) < 0.001
+
+M
+
+Single TEG-A* vs. TEG-DP -0.250 (small) 0.854
+
+M GA Static vs. TEG-A*
+
+-0.867 (large) < 0.001
+
+M
+
+GA TEG-A* vs. TEG-DP -1.000 (large) < 0.001
+
+L
+
+Single Static vs. TEG-A*
+
+-0.750 (large) 0.002
+
+L
+
+Single TEG-A* vs. TEG-DP -1.000 (large) < 0.001
+
+L
+
+GA Static vs. TEG-A*
+
+-0.500 (large) < 0.001
+
+L
+
+GA TEG-A* vs. TEG-DP -1.000 (large) < 0.001
+
+Notes. Magnitude thresholds: negligible | | < 0.11, small 0.11 | | < 0.28, medium 0.28 | | < 0.43, large | |  0.43. Except for TEG-A* vs. TEG-DP at S-Single and M-Single (small, non-significant), all comparisons remain significant after
+Holm-Bonferroni correction.
+
+Figure 18: Pareto: length vs. coverage. PF-A* lies on a strong frontier; NP-A* reaches extreme coverage with longer paths; NNB is dominated.
+Switch Exit Freedom (SEF). Fig. 16 shows that NNB typically has the largest SEF (single: {0.596, 0.538, 0.463}; GA: {0.488, 0.431, 0.408}), followed by NP-A* (single: {0.345, 0.296, 0.241}; GA: {0.334, 0.267, 0.252}) and PF-A* (single: {0.133, 0.131, 0.179}; GA: {0.356, 0.319, 0.323}).
+However, higher local exit openness (SEF) in NNB does not translate into either stronger controllability or robustness, reinforcing the need for structured switch placement.
+Layer balance. Fig. 17 shows no anomalous imbalance that would contradict the main conclusions; GA generally tightens dispersion across methods.
+Length­coverage Pareto fronts. Fig. 18 visualizes the trade-off between path length and spatial coverage across methods. PF-A* occupies a favorable frontier, achieving high coverage at shorter lengths; NP-A* can reach extreme coverage at the cost of longer paths; NNB is dominated. These trends are consistent with R4 in Section 5.1.
+
+E Additional Quantitative Results for Time
+To complement the main results, we report extended statistical significance tests, efficiency plots, and raw performance tables. We conducted pairwise significance tests (two-sided Mann­Whitney U tests with Holm­Bonferroni correction, reporting Cliff's ) across methods at each scale (Small, Medium, Large) and mode (Single vs. GA). The results show that, across all tested settings, TEG-A* significantly outperforms the Static Backbone baseline in weighted scores, and that TEG-DP achieves the highest scores overall. In particular, TEG-DP significantly outperforms TEG-A* in all but two low-complexity settings (Small/Single and Medium/Single), where effect sizes are small and not statistically significant. Overall, this pattern supports our intended ordering:
+Static Backbone < TEG-A* < TEG-DP.
+Table 5 shows that pairwise differences are significant after Holm-Bonferroni correction in all cases except TEG-A* vs. TEG-DP under S-Single and M-Single (small, non-significant effects). GA further amplifies the gap, especially at L, while runtime exhibits the expected cost­quality trade-off (DP best quality at higher cost; A* a faster compromise; Static a lightweight ablation).
+Figure 19 provides the extended efficiency summary across all methods, scales, and modes. We observe consistent trends:
+· TEG-DP exhibits the highest ride ratio and coverage ratio, but with longer runtimes.
+· TEG-A* achieves intermediate results, validating it as a middle ground between Static Backbone and DP.
+· Static Backbone shows the lowest coverage and ride ratios, confirming its role as a minimal baseline.
+Table 6 reports average runtime per method, scale, and mode. As expected, DP incurs the largest runtime cost due to its dynamic programming formulation, particularly under GA, but scales reliably. A* remains tractable across all scales in our experiments, with
+
+Kaijie Xu and Clark Verbrugge
+
+Figure 19: Efficiency summary across methods, scales, and modes.
+
+Table 6: Time direction: runtime and weighted score across scale/method/mode (mean ± std).
+
+Scale Method
+
+Mode Runtime (s)
+
+Score
+
+S Static Backbone Single 0.19 ± 0.17 8.22 ± 2.65
+
+S Static Backbone GA 34.39 ± 5.75 13.56 ± 1.68
+
+S
+
+TEG-A*
+
+Single 0.17 ± 0.22 9.19 ± 6.09
+
+S
+
+TEG-A*
+
+GA 15.79 ± 2.39 22.27 ± 2.42
+
+S
+
+TEG-DP
+
+Single 1.62 ± 0.16 9.19 ± 7.32
+
+S
+
+TEG-DP
+
+GA 159.23 ± 14.77 26.10 ± 9.31
+
+M Static Backbone Single 0.21 ± 0.17 7.87 ± 1.67
+
+M Static Backbone GA 31.59 ± 4.70 13.18 ± 1.76
+
+M
+
+TEG-A*
+
+Single 0.18 ± 0.24 8.97 ± 7.49
+
+M
+
+TEG-A*
+
+GA 15.76 ± 2.33 22.22 ± 2.84
+
+M
+
+TEG-DP
+
+Single 2.86 ± 0.34 11.84 ± 14.68
+
+M
+
+TEG-DP
+
+GA 283.76 ± 27.85 48.43 ± 6.45
+
+L Static Backbone Single 0.31 ± 0.20 7.81 ± 1.77
+
+L Static Backbone GA 30.20 ± 3.82 13.20 ± 2.33
+
+L
+
+TEG-A*
+
+Single 0.25 ± 0.18 13.30 ± 3.51
+
+L
+
+TEG-A*
+
+GA 16.66 ± 2.52 22.42 ± 4.18
+
+L
+
+TEG-DP
+
+Single 6.42 ± 0.68 20.35 ± 9.58
+
+L
+
+TEG-DP
+
+GA 576.72 ± 35.00 84.04 ± 12.99
+
+runtimes growing only moderately compared to DP. Table 6 also reports the aggregated weighted score means and standard deviations. Overall, the results support the ranking DP > A* > Static Backbone: both TEG variants consistently outperform the Static Backbone baseline across all scales and modes, and TEG-DP typically dominates TEG-A*, with only small, non-significant advantages over TEG-A* in the Small/Single and Medium/Single settings.
+
+

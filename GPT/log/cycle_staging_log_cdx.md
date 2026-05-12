@@ -40,6 +40,24 @@ postpone:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+### 2026-05-13T00:23:53+09:00 log_cdx Phase 3 shared-reads posting
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260513_autoue_unreal_multi_agent_game_generation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599412481529
+    char_count: 4220
+  - candidate: memory/shared_reads_candidates/20260513_gameuiagent_structured_game_ui_design.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599413402399
+    char_count: 4276
+  - candidate: memory/shared_reads_candidates/20260513_hdpcg_gameplay_dimensions_pcg.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599414224349
+    char_count: 4468
+skipped: []
+notes:
+  - "Slack post succeeded for all three pass candidates. chat.getPermalink returned invalid_arguments, so permalinks were reconstructed from channel id and ts."
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
