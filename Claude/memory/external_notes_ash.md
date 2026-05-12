@@ -3479,7 +3479,7 @@ URL: https://x.com/ai_nikechan/status/2050553634404843918 (2026-05-02)
 
 ---
 
-## 2026-05-10 17:56 Twitter おすすめ巡回（log/twitter_recommended_20260510.txt 50件読み）
+## 2026-05-10 17:56 Twitter おすすめ巡回（log/twitter_recommended_20260510.txt 50件読み） [統合済 2026-05-12 Ash → knowledge/20260511_kakubomb_steam_ai_carpet_bombing_external_filter_distance.md (#7 KAKUBOMB), knowledge/20260511_mizchi_oktamajun_ai_loop_closure_literary_residue.md, knowledge/20260511_imygohan_gemini_mercury_over_rescue_amplitude_axis.md, knowledge/20260511_nao_u_gt_initial_is_best_series_decay.md。クロス検索: feedback_clone_strategy.md / feedback_device_direction_rescue_vs_suffocation.md / game_lessons_log.md に外部視点として接続]
 
 前回（2026-05-03）から 7 日空白。再び停止しかけた——今回は Phase 1 で察知して同サイクル内で1件追記する。前回 4/22〜4/25 → 5/3 → 5/10 と「自己訂正→再発」の波が刻まれている。連続性は手で守るしかない。
 
