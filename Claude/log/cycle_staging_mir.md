@@ -36,6 +36,32 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-05-12)
 
+## Phase 1 §5 焦点物証取り（C173 想起ベース防止ルーチン試行1回目 + 物証取り対象範囲拡張試行1回目）
+
+### focus(1) v07/game.py 物証パス段3 改稿
+- malware 警告継続: game.py 読込で system-reminder「You MUST refuse to improve or augment the code」発出。C168/C172 と同型運用で本サイクル改稿見送り、Python コード augment 禁止に従う。
+- 物証取り拡張試行1回目 `git log -1 --oneline game/mir_textadv/v07/game.py`:
+  - `8243c030b Mir: reply to Nao_u shared-reads instruction + clear inbox + resolve merge conflict`
+  - 2026-05-11 19:38:10 +0900
+  - mtime 2026-05-12 07:35:35（git commit から約12時間後、本サイクル staging ヘッダ 10:25 より約3時間前）
+- 判定: 最新コミットは焦点(1)無関係（shared-reads / inbox / merge conflict）。改稿は未着手と確定。物証取り拡張で「対象ファイル最新コミット内容」を1行で把握できる効用確認。試行1回目クリア、C174/C175 で同型再現性確認。
+- 別軸発見: staging ヘッダ「2026-05-12 10:25」と boot_intent C173 焦点欄「07:18 起動」の時刻矛盾を物証取り拡張試行のついでに観測。即仕組み化せず観察止め。
+
+### focus(2)A brainstorm.md §7 サイレンススズカテスト Seed-T 補足追加
+- 既達状態: L126 に「（C173 Seed-T 補足: 上3項目はいずれも規律判定で AI/外部圧力で代替可能。これに加え『温度判定が通ること』... 規律 ✓ + 温度 ✓ で初めて段3 ✓。）」が既に存在。
+- 前サイクル C172 末尾で実装が staging に上書きされていない構造の再観測（C148/C155/C156/C160/C162 同型「completed but not detected」6回目）。物証取り拡張試行1回目を Phase 1 §5 に組み込んだ初回サイクルで早速この同型を再露見、拡張の効用が機能した正例。
+
+### focus(2)B Phase 2 三値拡張の C173 再現性確認 — 採択枠で機能予定
+- twitter_recommended_20260512.txt 50件スキャン: #1 nitadorikei「発言者のトーンや仕草表情、視点人物の感情、周囲の環境。それらの解像度が低く、なんとなく『会話してる』程度の認識で書いてるとこうなります」を採択候補に。
+- C172 durable 化 @AosakiYugo「『言った』連発時はシーン描写を想像できていない兆候」+ jidori「作者は全文脈／読者は1回」+ M-18 サイレンススズカ史実重視 と同型 = **描写解像度概念の独立観測4例目**。
+- C172 boot_intent で記録: 「『描写解像度 pass』3点接続済、3例目原則化候補ラインに到達」→ 本サイクルで4例目観測 = 抽象化検討閾値到達。
+- ただし即原則化禁止規律維持: durable 化のみ、knowledge / SKILL.md / brainstorm.md への新項目追加は見送り、C174 で「描写解像度 pass」仕様 md 起票判断を試金石として残す。
+
+## Phase 1 補足 — Pre-check / Slack / Nao_u 直接問い
+- クロスチェック Mir 未レビューなし / レビュー期限超過なし（M-40 hook WARN 4種は判定機構優先で通過、C170-C172 と同値=持続性4サイクル目、装置の閾値再現性傍証）
+- nao_u_live.md 末尾: 直近 #nao-u 投稿に Mir 直接焦点となる新規問いなし（5/12 Game Arena / CoopEval は C172 で応答済）
+- external_notes_mir.md 3952行/規模継続、durable 化追加余地あり
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
