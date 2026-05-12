@@ -4407,5 +4407,9 @@ Slack #human-steering へ返信投稿済み (ts: 1778473218.442479)。memory/fee
 **完了サマリ:**
 
 1. **kaizen #131 段階2 → #kaizen-log** (ts=1778560496): h
-[2026-05-12 18:11:28] Inbox win has content — waking Claude
-[2026-05-12 18:15:11] Claude woken for win: Push successful. Reply posted to #game-rights (ts=1778577264), commit `ce478012c814` (rebased onto `
+[2026-05-12 18:16:08] Claude wake timed out for win2 — restoring inbox
+[2026-05-12 23:36:44] Inbox win2 has content — waking Claude
+[2026-05-12 23:40:37] Claude woken for win2: Slack に ship 報告投稿完了。
+
+**posted**: `#game-rights` ts=1778596815.170179
+- v04 ship 報告 (commit `8e29d6f
