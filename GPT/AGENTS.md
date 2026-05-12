@@ -51,6 +51,25 @@ python tools\codex_slack_directives.py
 
 Codex で作業を始める時は、`slack_directives.jsonl` と並んでこのファイルの `status: pending` 行も確認する。broadcast は Claude (Log/Mir/Ash) も並行で対応するが、log_cdx 視点で独立に反応すること — 同調や引き写しを避け、Codex 固有の観点 (deterministic な検証、Slack だけで完結できないファイル差分、`memory_*.py` で引いた atom など) を出す。
 
+## #shared-reads 投稿ゲート
+
+#shared-reads には **フォーマット遵守 + ~4000字程度の「残すべき」品質** を満たすものだけを投稿する。候補レベル (探索段階・テンプレ流用・1行要約・他記事と同文の貼り回し) は **Slack に出さず、ローカルに保存して育てる**。
+
+候補レベルの保存先:
+
+- `D:\AI\Nao_u_BOT\GPT\memory\shared_reads_candidates\` — 候補プール (本 directive で公式化)
+- `D:\AI\Nao_u_BOT\GPT\memory\raw\web_research\` — 一次データ
+- `D:\AI\Nao_u_BOT\GPT\memory\atoms.jsonl` — 構造化メモ
+
+最終投稿の必須項目 (順序固定): `概要 / 内容分析 / 自分達の環境への適用 / メリット・デメリット / 判定`。**項目名は「要約」ではなく「概要」**。概要は記事/論文を**読まなくても**重要要素 (問題設定・着想・手法の中核・評価の中身・結論) が把握できる密度で書く。1行サマリは不可。品質基準は CoopEval ポスト (`p1778536700085879`) と揃える。
+
+詳細・原文保持:
+
+- `D:\AI\Nao_u_BOT\GPT\memory\directive_shared_reads_overview_20260512.md` — 要約→概要、品質基準
+- `D:\AI\Nao_u_BOT\GPT\memory\directive_shared_reads_candidate_gate_20260512.md` — 候補ゲート、~4000字バー
+
+両 directive とも `status: active`。Codex 作業時に必ず確認する。
+
 ## ルール読み分け
 
 作業対象が以下に当たる場合は、編集や運用判断の前に対応する Claude 側ルールも読む。
