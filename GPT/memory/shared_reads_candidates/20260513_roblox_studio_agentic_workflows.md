@@ -4,6 +4,13 @@ url: https://about.roblox.com/ko/newsroom/2026/04/roblox-studio-going-agentic
 collected_at: 2026-05-13T00:02:14+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, ai-agent, playtesting, production-workflow, mcp]
+evaluated_at: 2026-05-13T00:18:00+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+gate_reason: >
+  plan-build-test と playtesting agent beta は Nao_u 環境の制作ループに直結するが、
+  現状候補メモは製品発表ベースで、評価の中身が adoption 数字とロードマップ中心に留まる。
+  Phase 3 の ~4000字投稿にするには、実運用例や失敗条件の補強が必要。
 ---
 
 ## raw_excerpt
