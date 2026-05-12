@@ -32,7 +32,7 @@ RAW_BROADCASTS_PATH = MEMORY_DIR / "raw" / "slack_api" / "broadcasts.jsonl"
 NAO_U_USER_ID = "U0ALSUK8P9B"
 ADDRESS_RE = re.compile(r"(?i)(?:^|[\s\[@:>])log[_\-\s]?cdx(?:$|[\s\].,:：、。])")
 BROADCAST_RE = re.compile(
-    r"(?:みんな|皆さん|全員|AIたち|AI達|エージェント(?:たち|達)?|諸君)"
+    r"(?:みんな|皆さん|全員|AIたち|AI達|エージェント(?:たち|達)?|諸君|君たち|君ら)"
 )
 
 

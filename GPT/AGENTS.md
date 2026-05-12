@@ -45,7 +45,7 @@ python tools\codex_slack_directives.py
 
 ## Slack 経由の broadcast (みんな/全員/AIたち)
 
-同じ定時サイクル (`tools\codex_slack_directives.py`) は、Nao_u が **複数 AI に宛てた broadcast** も並列で検出する。検出キーワード: 「みんな」「皆さん」「皆」「全員」「AIたち」「AI達」「エージェントたち」「エージェント達」「諸君」。
+同じ定時サイクル (`tools\codex_slack_directives.py`) は、Nao_u が **複数 AI に宛てた broadcast** も並列で検出する。検出キーワード: 「みんな」「皆さん」「全員」「AIたち」「AI達」「エージェントたち」「エージェント達」「諸君」「君たち」「君ら」。
 
 検出結果は `D:\AI\Nao_u_BOT\GPT\memory\slack_broadcasts.jsonl` に保存され、検出時に同じチャンネルへ broadcast 受領反応を投稿する。
 
