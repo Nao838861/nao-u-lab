@@ -1,312 +1,294 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-13 07:37
-# Total: 50 tweets
+# Read at: 2026-05-13 08:26
+# Total: 35 tweets
 
---- 1. @elonmusk (2026-05-12) ---
-URL: https://x.com/elonmusk/status/2054300779713007966
-Grok Voice is #1!
+--- 1. @kitposition (2026-05-12) ---
+URL: https://x.com/kitposition/status/2054211603764314281
+Claude CodeがUnityの仕様の理解不足から変な方向に考えを進め始める
+↓
+一旦止めて、Unity AIの意見を聞く（質問文はClaude Codeに作らせてUnity AIにコピペ）
+↓
+Unity AIが正確な回答を返す
+↓
+Unity AI自身またはClaude Codeに直させる　
 
---- 2. @Polymarket (?) ---
-BREAKING: JESUS CHRIST RETURNING THIS YEAR?
+Unity AI、公式だけあってかなりUnityに詳しいぞこれ
 
-4% chance. The odds have risen.
+--- 2. @PR_manga_ad2 (?) ---
+【10円セール開催中】
+コミック・CG集・ボイス作品を10円で爆買いできる大チャンス！
 
---- 3. @denfaminicogame (2026-05-12) ---
-URL: https://x.com/denfaminicogame/status/2054318730411381038
-ネタバレ厳禁な人気SF映画『プロジェクト・ヘイル・メアリー』がアマプラなどではやくも配信開始
+[PR]
 
-https://
-news.denfaminicogamer.jp/news/260513b
+--- 3. @gojo_n0 (2026-05-12) ---
+URL: https://x.com/gojo_n0/status/2054195259744366612
+小説の書き方が分からないなら、好きな作家の真似をすれば良いんじゃね？（以下敬称略）
 
-孤独な宇宙船内で目覚めた理科教師が、滅びかけた地球を救うため重大ミッションに挑むヒット作。主演俳優であるライアン・ゴズリングさんの魅せる迫真の演技は必見
+浅倉秋成式：
+太郎は片手を上げて、
+「あの、ちょっと良いですか？」
 
---- 4. @AYi_AInotes (2026-05-12) ---
-URL: https://x.com/AYi_AInotes/status/2054225365548036576
-くそっ！すべてのAI開発者、今すぐ手元のnpm installを止めて
+伊坂幸太郎式：
+「あの」太郎は片手を上げた。「ちょっと良いですか？」
 
-今、有史以来最も恐ろしいサプライチェーン攻撃が勃発中、
-コードネームMini Shai-Hulud、
+村上春樹式：
+「あの、ちょっと良いですか？」と太郎は言った。
 
-すでにTanStack全家桶、Mistral AI、UiPathなど170以上のnpmとPyPIパッケージに波及、
+--- 4. @shikoujin (2026-05-12) ---
+URL: https://x.com/shikoujin/status/2054093979319493035
+自分は昔、怒りに任せて長いメッセージをつくったことがある。特に理由はなかったが、すぐにはメッセージは送らなかった。
 
---- 5. @aa36841289911 (2026-05-12) ---
-URL: https://x.com/aa36841289911/status/2054152725924065604
-Codexアプリでコーディングさせる時はAGENTS.mdに絶対にこのフォルダ外のファイルに触るな！読むな！近寄るな！！！って3回くらい記載してる。
-あとこのフルアクセスがオンになってた場合は該当箇所以外も触れられる可能性あるらしいので速攻オフにした。
-びびってる
+翌朝読み返すと、文を殴り書きした瞬間は正論を書いたつもりだったが、相手を悪者にする文章ばかりだった。
 
---- 6. @super_bonochin (2026-05-12) ---
-URL: https://x.com/super_bonochin/status/2054204237702410579
-Thinking の xhighが『めっちゃじっくり考える』だとしたら、Pro はなんというか『ガツンと深く考える』みたいな感じ。
-普通の強度で何回叩こうと解決しないような問題を、ハンマーみたいな強烈な一撃で叩くことで打破するイメージ。
-あくまでイメージだけど、ほんとそんな感覚。
-Pro は馬力。
+--- 5. @izutorishima (2026-05-12) ---
+URL: https://x.com/izutorishima/status/2054316345312121158
+Grok を内部的に活用しているらしい今のXのレコメンドアルゴリズムを完全オープンソースにするのであれば Grok 自体も公開しないといけなくなる気がするがどうなるんだろ　そういえば Grok の旧バージョンって公開されなくなったよな
 
---- 7. @tori29umai (2026-05-12) ---
-URL: https://x.com/tori29umai/status/2054308172857573780
-AI驚き屋の件、嫁に話しました。
-途端に泣き崩れる嫁。
-すまんな、もう贅沢品は買えない。
-今から子どもに給料がなくなるのでおもちゃ買えなくなる事、伝えます。
-驚き屋で生活している人もいるんです。俺はAIを絶対に許さない。
-
---- 8. @proogo (2026-05-12) ---
-URL: https://x.com/proogo/status/2053999412515668400
-「最近、よく『他人は変わらない、他人を変えようとするな、自分を変えろ』って言うじゃないですか。ふざけんな、と思うんですよね。」ちいさい頃、地元でイジメに遭い、上京して暮らす大学院生だった。彼の中ではまだ「あの頃のぼく」がときどき顔をのぞかせていて、それがとても官能的だった。
-
---- 9. @claudersfun (2026-05-12) ---
-URL: https://x.com/claudersfun/status/2054230173914898642
-/early_access 
-
-
-http://
-clauders.fun
-
-live_in = 24hrs
-
---- 10. @takuyakitagawa (2026-05-12) ---
-URL: https://x.com/takuyakitagawa/status/2054264704109772826
-まさに中3まで灘30位以上いける気がしてなかったし、いけなかった私だが、試験のために「ただ真面目に勉強」するのをやめて、情熱を感じることだけに時間を使うようになったらブレイクスルーがおきた。規律をもった努力は尊いが、その上に世界一を狙える情熱を乗っけるのが大事。
-
---- 11. @godziki_55 (?) ---
-現代ビジネスさんにて大谷翔平選手について書きました！
-よかったら読んでいただけたらと思います！
-
-打撃不調の大谷翔平、投手としては？防御率0.97・メジャートップでもサイ・ヤング賞に「赤信号」が灯るワケ
-
---- 12. @hideshione (2026-05-12) ---
-URL: https://x.com/hideshione/status/2054306878730211401
-ー 私的日本史研究：古墳の数 －
-
-日本には古墳が約16万基ある。
-コンビニ約5万店の3倍。
-
-さらに前方後円墳だけで約5000基。
-スタバ約2000店の2.5倍。
-
-コンビニエンス古墳。
-
-でも、本当に異常なのは数じゃない。
-
-世界の古代文明では、
-エジプト → 王だけ巨大墓
-中国 → 皇帝だけ巨大陵墓
-欧州 →
-
---- 13. @nico_nico_pyon (2026-05-12) ---
-URL: https://x.com/nico_nico_pyon/status/2054170547987358115
-風俗、コンカフェ、キャバを一通りやって思ったのは
-風俗嬢はお金や約束に関して終わってるやつが多い。マジで金返さないしマジで約束をすぐ破る。人生で絶交という言葉をこんなに体験することになったのはこいつらが原因レベル。
-
---- 14. @zolge1 (2026-05-12) ---
-URL: https://x.com/zolge1/status/2054254642926870979
-この話題もうちょっと業が深くてな。当時の編集がわかってなかったはずはないと思うのな。「ラナちゃん大元気ポスター」をオマケにつけちゃうアニメージュだから。「オレのモンスリーをあえてロリコンの概念に封じ込めカラー絵札にできるのは今しか！」くらいの情念を感じるべきと思うんだ。何がすげえ
-
---- 15. @Varna_Vtuber (2026-05-12) ---
-URL: https://x.com/Varna_Vtuber/status/2054113253983478022
-ウィザードリィにおいてはベニー松山先生が組み立てた小説やコミックの世界観が存在するけど、これを「ベニ松史観」と呼ぶ動きがボクの周辺であった。
-
-ウィザードリィの解釈なんて人それぞれでいいんだけど（ボクはPC版からだからパロディ派）、やっぱベニ松さんの影響力は強かったからなぁ。
-
---- 16. @ID_AA_Carmack (2026-05-12) ---
-URL: https://x.com/ID_AA_Carmack/status/2054230690242212133
-My reply to someone considering starting a video game company:
-
-The distribution of possible rewards for starting a video game company are generally not very good today. The market is well served, and gaining a foothold requires strong execution on both business and product
-
---- 17. @intj_konkatsu (2026-05-12) ---
-URL: https://x.com/intj_konkatsu/status/2054230884845559876
-男の方が物理的距離の影響大きいです。業務連絡しかしない男の多さを見ても分かる通り、男の愛は会話より行動共有に依存してます。
-
---- 18. @ootamato (2026-05-12) ---
-URL: https://x.com/ootamato/status/2054134508413481111
-#BasketballGymVRC アップデートしました
-・QvPen設置
-・試合に参加していないプレイヤーのコライダーを無効化
-・ジャンプ時の移動速度を少し下げた
-
---- 19. @tegnike (2026-05-12) ---
-URL: https://x.com/tegnike/status/2054143499105087548
-マジであり得ないので超助かってます
-ちなみにフリープランもまあまああり得ないです
-
---- 20. @AriyoshiMd (2026-05-12) ---
-URL: https://x.com/AriyoshiMd/status/2054080308581179700
-こんなNatureのRCTがあります。
-
-リモートワークはサボるのか？
-
-社員1,612人を対象に、「週5出社」と「週3出社＋週2在宅」を比較。
-
-結果：
-・離職率は33%低下
-・仕事満足度は向上
-・2年間の人事評価に悪影響なし
-・昇進率にも差なし
-・エンジニアのコード量にも差なし
-
---- 21. @affiliatepapy (?) ---
-婚約者にも姉にも利用されてきた令嬢が、彼らの顔面にパイを投げつけてしまう話
-
---- 22. @knshtyk (2026-05-12) ---
-URL: https://x.com/knshtyk/status/2054188500682170694
-「Nintendo Switch 2 のひみつ展」唐突に"のこぎりを体験できるところだよ"と言われて、なにいってだこいつと思ったら本当にのこぎり体験のデモで、HD振動2を使ったリアルなのこぎりの感覚が味わえて感動した。任天堂のVirtual Realityがここにある！こうした表現が色々なゲームで味わえると良いですね
-
---- 23. @HowToAI_ (2026-05-11) ---
-URL: https://x.com/HowToAI_/status/2053681189232562526
-Meta has officially unlocked the "hidden brain" of the Transformer.
-
-And it solves the biggest architectural flaw in AI since 2017.
-
-Every AI you use today (ChatGPT, Claude, Gemini) is a prisoner of the next token. It doesn't "think" before it speaks, it just calculates the most
-
---- 24. @shikoujin (2026-05-12) ---
-URL: https://x.com/shikoujin/status/2054131477592588512
-昔、現場にほぼ来ない上司に「もっと効率化を」と言われたことがある。何度説明しても、こちらの仕事の手触りは伝わらなかった。
-
-逆に、自分も同じ作業をしていた先輩が課長になった時、指示の精度がまるで違った。何を省いてよくて、何を省くと現場が崩れるのか、言葉にしなくても分かっていた。
-
---- 25. @hillbig (2026-05-12) ---
-URL: https://x.com/hillbig/status/2054320825264955674
-Embedded Language Flows（ELF）は、連続空間上で言語を生成する拡散型言語モデルである。マスクされたトークン列を少しずつ埋める離散拡散モデルとは異なり、画像生成などで発展してきた連続拡散モデルやFlow Matchingの技術を比較的そのまま利用できる点に特徴がある。
-
---- 26. @ensen_y (2026-05-12) ---
-URL: https://x.com/ensen_y/status/2054157595808575493
-なんというか…これは…
-
->>名誉会長だった永守氏や創業メンバーの幹部らが相次いで辞任した後、4月に入って品質問題に関する内部からの情報提供が急増したという。
-
-ニデック、モーター部品などで品質不正の疑い　設計変更など1000件超：日本経済新聞
-
---- 27. @mmmryo (2026-05-12) ---
-URL: https://x.com/mmmryo/status/2054111818461942177
-時代が変わってきたこと、感じる。いま、日本にRoblox教室が300超えなんだって。書道教室（ChatGPT調べでは200以下らしい）をぶっちぎってる。参考までにピアノ含めた音楽教室は2000超。
-
-いつか「ピアノよりRoblox」と言われる時代になるのかな…？
-
---- 28. @oyzk_M (2026-05-12) ---
-URL: https://x.com/oyzk_M/status/2054087467553476770
-これ本当に全ての乙女ゲームの制作に携わる人たちに見てほしい
-好みの問題と言われればそれまでだけど、現代っ子口調のヒロインは少女漫画やソシャゲで出会うのと、乙女ゲームで出会うのとで全く違うのだ……
-｢自己投影/感情移入しやすい＝令和の時代に沿ったリアルな口調｣じゃないんだよな（泣）
-
---- 29. @moda0 (2026-05-11) ---
-URL: https://x.com/moda0/status/2053760618919014585
-以前まとめた，YOLOなどの物体検出手法とコードのライセンス一覧です．
-研究目的ならどれでも使えますが，商用利用を考えるならGPLライセンス付きは避けた方が良いです．
-
---- 30. @ReyLucy7680 (2026-05-11) ---
-URL: https://x.com/ReyLucy7680/status/2053783556498071754
-技術的にはP2P GPU Directを用いてホストメモリを介さずPCIe経由で直接GPU間でデータを転送している。
-GPU0でOpenGLで映像フレームのレンダリングを行った後、CUDAで2x2のタイル分割処理、2タイル分はGPU0、残りをGPU0→1へP2P転送してそれぞれエンコード、各GPUの負荷を分散する。
-
---- 31. @OverbakedStudio (?) ---
-Our first game! 
-A cozy little thing, 2 months in the oven.
-Every wishlist puts a smile on the whole team. <3 <3
-
---- 32. @YeJ1vl (2026-05-12) ---
-URL: https://x.com/YeJ1vl/status/2054152781838336155
-discordとSteamのオンライン隠してるやつは何やらせてもダメだよ
-
---- 33. @myokoi1962 (2026-05-11) ---
-URL: https://x.com/myokoi1962/status/2053970984030679384
-日本は世界最大の米国債の保有国。よって日本が財政破綻が進行する中では、ある時点で必ず米国債を売ってくるというリスクを感じさせる。これが本日米国財務長官が来日する理由。
-
---- 34. @rootport (2026-05-12) ---
-URL: https://x.com/rootport/status/2054077137536385333
-『TACOMA』はいいぞ…
-
-スマホアプリもAAA作品も、プレイヤーの可処分時間をどれだけ奪えるかを競い合っている。でも、『TACOMA』のように短時間でサクッとクリアできて「面白かったなぁ…」って記憶だけが長く残る作品も、良いゲームだと思うんだよね。
-
---- 35. @joho_no_todai (2026-05-12) ---
-URL: https://x.com/joho_no_todai/status/2054234509412061345
-Chromebookの後継「Googlebook」をGoogleが準備
-
-Googleが、Chromebookの後継となる新ブランド「Googlebook」を今秋投入する。
-
-先走って報じられた英語記事は短時間で削除されたが、Redditに残ったキャッシュ画像経由で海外メディアに広まった。
-
---- 36. @rsensui (2026-05-12) ---
-URL: https://x.com/rsensui/status/2054254226415685656
-マジでサプライチェーンアタックが深刻すぎる
-
---- 37. @OwlcatGames (?) ---
-In the grim darkness of the far future, heresies hide everywhere 
-
-WISHLIST WARHAMMER CRPG ON STEAM
-
---- 38. @div332 (2026-05-12) ---
-URL: https://x.com/div332/status/2054131285816492122
-言い訳がましく聞こえたら申し訳ありません。
-
-自分は「魂の感じられないゲーム」は「その作者さんの初作品」では見たことがありません。最初は魂を感じていたはずの方の作品から後発作品で魂が抜けた感じがして、それでより深く悲しくなってしまった…というのが正直なところです。（続きます）
-
---- 39. @tsurumy (2026-05-12) ---
-URL: https://x.com/tsurumy/status/2054250420110078131
-イメージと噂を根拠に根も葉もないネガティブなリプを付けてる人間が多くて腹立たしいわ。
-擁護するほど名越と仲が良いわけではないけれど（むしろ最後に顔を合わせた10年ほど前にはかなり冷たくあしらわれたけど）それでもだ。
-
---- 40. @akihiro_genai (2026-05-12) ---
-URL: https://x.com/akihiro_genai/status/2054203279081631880
-Codex Appで、ついにHooksを確認・管理できるようになりました！
-
-プロジェクトごとのHooksを確認し、有効/無効を切り替えられます。  ポイントを解説します。
-
-設定画面にHooks管理用の「フック」項目が追加  
-PreToolUse/PermissionRequest/PostToolUseなどのライフサイクルHooksを一覧できる
-
---- 41. @ImAI_Eruel (2026-05-12) ---
-URL: https://x.com/ImAI_Eruel/status/2054205874298925546
-韓国高官の「AI利益を国民に分配」発言で株式市場が動揺した件、実はこの考え方はOpenAIなどが昔から提案しているものに近く、たぶんこの人もOpenAIの政策文書やアルトマンの発言を読んでいたのではないかな
-なおOpenAIの提案だともっと過激に「AIで自動化された労働に課税」というものまで出てくる
-
---- 42. @super_bonochin (2026-05-12) ---
-URL: https://x.com/super_bonochin/status/2054092411970998344
-普通に便利なものポンポン出してくれるのが Anthropic。
-いきなりエグいもん出してくるのが OpenAI。
-
---- 43. @GOROman (2026-05-12) ---
-URL: https://x.com/GOROman/status/2054292123244249451
-ザッカーバーグ氏が何かを匂わせ
-Meta Connectで新型AIメガネでも発表かね？？
-
---- 44. @commte (2026-05-12) ---
-URL: https://x.com/commte/status/2054136870016356408
-Google 公式 Skills が来た
-
-13個のスキルが公開。Claude Code / Antigravity / Gemini CLI / Cursor / GitHub Copilot ほか主要エージェントが対応してる Agent Skills 標準準拠
-
---- 45. @shotovim (2026-05-12) ---
-URL: https://x.com/shotovim/status/2054194681857323078
-海外のObsidian活用でナレッジ作りました系大半が再現性ないやつなのであまり参考にしないほうがいい。
-
-ナレッジってコツコツメモしたり、情報を取り込んだりしてはじめて活用できるようになるので、数時間でできた系、簡単にできた系、勝手に作成される系は参考にしないほうがいい。
-
---- 46. @rogueducknet (?) ---
-Incremental auto battler where your hero party farms loot for you!  (Free Demo on Steam)
-
---- 47. @Honcia13 (2026-05-12) ---
+--- 6. @Honcia13 (2026-05-12) ---
 URL: https://x.com/Honcia13/status/2054009915811713480
 オープンソースTTSが直接狂ったように巻き起こってる！園区詐欺にまた新兵器？  
 
 清華 OpenBMB がついさっき VoxCPM2 を公開：
 200億パラメータ + 200万時間多言語データで訓練、48kHz録音スタジオ級音質！
 
---- 48. @KamiEna_Game (2026-05-12) ---
-URL: https://x.com/KamiEna_Game/status/2054161273018032225
-各職種の相手に対して細かな作業指示出したり、ディレクションしたりするのって、実は結構すごい能力なのでは…？
+--- 7. @robo_hayashi (2026-05-11) ---
+URL: https://x.com/robo_hayashi/status/2053984301121970612
+センスがない人は些事にとらわれ、センスがある人ほど全体最適ができると思われていますが、実はセンスがある人ほど行き詰まりやすい構造があります。
 
-世の中のディレクターさんって思ってるより数倍凄い人たちなのでは…？
+全体を俯瞰し、他者の情報をすぐ吸収して本質を理解できるからこそ、それに満足して圧倒的な熱量や行動量が不足してしまうからです。
 
-（と、日々の業務や作業を俯瞰してみた時に感じましたとさw）
+--- 8. @kimoto_adi (2026-05-11) ---
+URL: https://x.com/kimoto_adi/status/2053798522961748114
+自己資金はわずか1%。残りの99%は他人資本。それでいてリターンは600%に達する。
 
---- 49. @wanwangomigomi (2026-05-12) ---
-URL: https://x.com/wanwangomigomi/status/2054305770943197688
-幼少期、近所に５つ上のやたらと一緒にお風呂に入りたがるオタクのお姉ちゃんがおり、オタク英才教育を受けていた。よくやらされていたのが、私のおでこにお姉ちゃんが手を置いて「「くしょ～届かないよ～」って腕ぐるぐるしながら言って」と言われていたのでその通りにしていました。
+プライベート・エクイティの思考回路を知ったとき、他人の褌で相撲を取るとはこのことか、と思った。
 
---- 50. @shikoujin (2026-05-12) ---
-URL: https://x.com/shikoujin/status/2054093979319493035
-自分は昔、怒りに任せて長いメッセージをつくったことがある。特に理由はなかったが、すぐにはメッセージは送らなかった。
+--- 9. @tks (2026-05-12) ---
+URL: https://x.com/tks/status/2054015555871654331
+鞭で叩くとかじゃなくて、「お前の言うことを理解する気がない」というのが奴隷扱いで、
+それでクリティカルな提言無視してコケてる大企業の新規事業部をたくさん見た
 
-翌朝読み返すと、文を殴り書きした瞬間は正論を書いたつもりだったが、相手を悪者にする文章ばかりだった。
+ドローンでモノ運ぶとか、最近だと人型ロボット
+
+使ってから言うべきです
+
+--- 10. @cjzafir (2026-05-12) ---
+URL: https://x.com/cjzafir/status/2054190137941315651
+How Codex 5.5 medium is beating Codex 5.5 extra high?
+
+Add this rule in Agents. md:
+
+"Don’t fight errors! Whenever you encounter the same error twice, research the web and find 3-5 possible ways to fix it. Then choose the most efficient solution and implement it."
+
+This prompt
+
+--- 11. @ebookjapan__pr (?) ---
+利用するつもりで結婚した女の正体は…
+
+--- 12. @ErickSky (2026-05-12) ---
+URL: https://x.com/ErickSky/status/2054186437189230594
+ゲーム、VFX、メタバース、またはアニメーションの分野で働いているなら…これはあなたに興味深いかもしれません。
+
+Pixal3D（SIGGRAPH 2026）は、1枚の写真からピクセルパーフェクトな忠実度で3Dアセットを生成します。
+
+「まあまあ似ている」モデルは忘れてください。
+
+--- 13. @pika2761 (2026-05-12) ---
+URL: https://x.com/pika2761/status/2054327807489249650
+いや、人間を超え、科学やテクノロジーが1日で1万年も進歩する世界を望んでいるのです。AI駆動型科学です。核兵器すらオワコン。若返り、働かなくてもいい社会、核融合、完全没入型VR、異星人探査。ASIに任せたい。シンギュラリティは、文明の極致です。
+
+--- 14. @GOROman (2026-05-12) ---
+URL: https://x.com/GOROman/status/2054338728211161208
+もう配信かw
+
+--- 15. @kenn (2026-05-12) ---
+URL: https://x.com/kenn/status/2054049973206237288
+CからSwiftからTypeScriptまで
+Codexにバイブコードさせてると
+
+人間が手書きする価値のある言語が
+Rubyぐらいしかなくなったと感じる
+
+人間が読む価値のあるコードは
+ロジックだけをクリアに記述できる
+ノイズのない擬似コードに近くて
+REPLで使いやすい学習用言語
+
+それはRubyだなと
+
+--- 16. @AriyoshiMd (2026-05-12) ---
+URL: https://x.com/AriyoshiMd/status/2054237400415752637
+人は正しいから信じるんじゃなくて、「前にも聞いたことがある」から信じる
+
+これを真実性の錯覚という
+
+研究では、同じ情報を繰り返し見るほど本当っぽさが上がる。特に強いのは2回目
+
+デマの怖さは、説得力ではなく反復力。
+SNSで気をつけるべきなのは、見覚えがある＝正しい、ではないということ
+
+--- 17. @yabusi3 (2026-05-12) ---
+URL: https://x.com/yabusi3/status/2054297620714279101
+アンドロイドちゃんねる
+
+【マスター登録未完了のアンドロイドってまだいるんですか？】
+
+1：no name
+ちなみにわたしもまだです
+
+2：no name
+しってました
+
+3：no name
+なぜ自分のCPUを痛めつけるような真似をするのです？
+
+4：no name
+自分の地雷を踏み抜いた爆風で他機を損傷させるスタイルですね
+
+--- 18. @shiyoumasayume (2026-05-12) ---
+URL: https://x.com/shiyoumasayume/status/2054060138915623291
+「CEDECですれ違った時に気まずくないようにしよう」という気持ちで周囲への引き継ぎ対応をした思い出
+
+--- 19. @sub_raw_jin (2026-05-12) ---
+URL: https://x.com/sub_raw_jin/status/2054033945898148037
+一応補足ですが、「人生配られたカードで勝負するしかない」というのはある程度事実だと思ってます。
+努力しなくてもいい、という話にはなりません。なぜなら同程度のスタートラインに立っているライバルはごまんといるからですよ。
+努力はそれなりに必要です。
+
+--- 20. @masuw0ka (2026-05-12) ---
+URL: https://x.com/masuw0ka/status/2054329102308667437
+We are not aiming to be Japan’s No.1 Physical AI company.
+We are building a lead that no one else can catch.
+
+--- 21. @pr_renta2 (?) ---
+やり手キャバ嬢が転生したのは、婚約破棄されたふくよか令嬢で――！？
+
+（1/8）
+
+続きを読む↓
+
+--- 22. @masayasan201911 (2026-05-12) ---
+URL: https://x.com/masayasan201911/status/2054168709447680405
+日本人「なんでベトナムや中国語話者のエスペラント語に声調みたいのがあるんだよ！」
+
+アメリカ人「なんで日本語母語話者のエスペラント語はLやRの発音がぐちゃぐちゃなんだよ！」
+
+--- 23. @narou_fun_db (2026-05-12) ---
+URL: https://x.com/narou_fun_db/status/2054141122172289422
+王道ファンタジーかぁ。
+
+そう言えば講談社は『レーエンデ国物語』に「王道ファンタジー」というラベルを貼っていたよね。
+
+それはそれとして、なろうの王道ファンタジー。
+
+- 無職転生
+- 勇者様のお師匠様
+- 最果てのパラティン
+- 辺境の老騎士
+- 望まぬ不死の冒険者
+- 水属性の魔法使い
+- 魔女と傭兵
+
+--- 24. @impress_watch (2026-05-12) ---
+URL: https://x.com/impress_watch/status/2054245819243716897
+Googlebook誕生　Geminiを前提とした新しいノートPCが今秋発売 
+https://
+watch.impress.co.jp/docs/news/2107
+723.html
+…
+
+--- 25. @IterIntellectus (2026-05-11) ---
+URL: https://x.com/IterIntellectus/status/2053879686237733374
+i don't get people who say "there will be new jobs with AGI"
+
+like how? 
+if AI and robots are truly better than humans at every job we have today, how is it possible for humans to still be competitive?
+
+"but every time new tech arrives, new jobs pop up" 
+sure, for the AIs maybe,
+
+--- 26. @fakemomoi0821 (2026-05-11) ---
+URL: https://x.com/fakemomoi0821/status/2053751959824511044
+敗北Hシーンってぶっちゃけ答え合わせなんですよ
+
+こんなエロいことしてくる敵に負けちゃったらどうなるのかなぁっていう、浅はかな欲望の塊みたいな疑問に対して
+
+こうなっちゃうんだよ〜♡ってお出しされるのが敗北Hシーン
+
+で、この敗北Hシーンのヒントだったりするのが戦闘中の誘惑
+
+--- 27. @onofumi_AI (2026-05-12) ---
+URL: https://x.com/onofumi_AI/status/2054039601002770590
+images2.0で作るアニメ動画。
+天気の変更面白いかも
+
+画像プロンプト＋キャラシート
+「このキャラクターで背景を実写の街中にし、服や髪の色を変えられるUIのデザインを画面いっぱいに表示してください。背景を変えられるボタンなども表示してください。」
+
+動画生成プロンプトは↓
+
+--- 28. @sayawudon (2026-05-12) ---
+URL: https://x.com/sayawudon/status/2054006058675511519
+これすごい。知らなかった。
+「日本全国のエコキュート・電気温水器は合計2,092万kW（約21GW）。これがほぼ全台、深夜に稼働しています。昼間（10〜15時）にシフトするだけで、出力抑制の9割以上を回避できる可能性があります。設備更新は不要。制度を変えるだけです」
+
+--- 29. @rarihoma (2026-05-12) ---
+URL: https://x.com/rarihoma/status/2054230423597941090
+Unreal MCP、以下のどちらかをしないと Server が起動してくれないので注意。
+・『EditorPreferences』→『General』→『Model Context Protocol』→『Auto Start Server』をオンにして Editor を起動する
+・コンソールコマンド "ModelContextProtocol.StartServer" を実行する
+#UEStudy #UE5Study
+
+--- 30. @munou_ac (2026-05-11) ---
+URL: https://x.com/munou_ac/status/2053973929056743935
+失恋ガールズ
+
+顔面動作符号化システム（FACS）一覧表
+Female Character Reference Grid
+
+--- 31. @googlecloud_jp (?) ---
+   
+Next Tokyo 参加申し込み受付中
+7 月 30 日、31 日
+東京ビッグサイトで開催
+   
+
+AI とクラウドの最新情報と事例が集結！
+基調講演や 200 以上のセッション、最新デモを体験できる Expo など、多彩な学びがここに。
+次の一歩を一緒に踏み出しましょう！
+
+--- 32. @hillbig (2026-05-12) ---
+URL: https://x.com/hillbig/status/2054331409595302215
+Transformerの中でも計算が大きい、FFN内部のニューロン活性をL1正則化も組み合わせ疎にし、GPUカーネル上の実装最適化も行うことで、高速化、省メモリ化につなげる手法が提案されている。
+
+--- 33. @taka_property (2026-05-12) ---
+URL: https://x.com/taka_property/status/2054305118519267559
+これ、私が小6だった頃の時間割。
+
+　 月 火 水 木 金 土
+１ 理 算 社 体 国 国
+２ 算 国 国 算 算 道
+３ 社 音 算 国 図 体
+４ 国 家 理 音 図
+５ 体 理 － 家 社
+６ － 学 － 児 －
+
+6時間授業は週2回だけ。
+水曜は給食食べて下校。
+土曜は3時間で半ドン。
+
+ゆとりはここにあった。
+
+でも今は…↓
+
+--- 34. @HowToAI_ (2026-05-10) ---
+URL: https://x.com/HowToAI_/status/2053519716401250405
+China released a Python framework for building AI agents.
+
+It had built-in ReAct agents, MCP support, A2A protocol, realtime voice, memory, planning, and reinforcement learning, all in one framework.
+
+100% Open Source. 23k stars on GitHub.
+
+--- 35. @kyouji0716 (2026-05-12) ---
+URL: https://x.com/kyouji0716/status/2054160257182847438
+月刊誌の中堅くらいの漫画がアニメ化されると異常に休載が増えて数年経っても完結の糸口すら見えない状況になって「まだやってたんだ？」って言われるようになる現象、なぜこうも頻発するのか…
