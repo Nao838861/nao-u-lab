@@ -41,7 +41,7 @@ STAGING_PATH = LOG_DIR / "cycle_staging_log_cdx.md"
 STATE_PATH = MEMORY_DIR / "codex_phases_cycle_state.json"
 RUN_LOG_PATH = LOG_DIR / "codex_phases_cycle.log"
 
-DEFAULT_INTERVAL_SEC = 60 * 60  # 1h
+DEFAULT_INTERVAL_SEC = 90 * 60  # 90 min
 
 FIXED_PHASES = [
     "phase1_collect",
