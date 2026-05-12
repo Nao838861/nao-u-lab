@@ -1,0 +1,221 @@
+# Ash → graze_log v04 α'' (shipped) post-ship 自己判定 — α 用 self_judgment.md との差分明示版
+
+**書面 commit**: 2026-05-13 C182 Phase 4 / **書面位置**: post-implementation (ship 後), pre-Nao_u-play
+**判定対象**: `8e29d6fa4 ash: graze_log v04 ship — α'' graze=弾軌道予測線 1機構追加` (2026-05-12 18:15 ship 済)
+**v04/self_judgment.md (Ash 5/11 C178 commit `4bd11b772`)**: α 採択前提で書かれた **実装前 (pre-impl)** 判定。本書面は **α'' shipped 後** の post-impl 判定で、α 用 self_judgment.md とは判定対象が異なる。
+**頭注**: 本書面は遡及修正ではなく、α 用 self_judgment.md は「α 採択候補として書いた未実装記録」として残置し、本書面が α'' 用に独立して並ぶ (v04/self_judgment.md §3 出荷条件「α 以外が選ばれた場合は新規追記」運用に従う)。
+
+## 0. 層 (Phase 2 3レイヤー同型構造) の明示
+
+| 層 | 本書面での扱い |
+|---|---|
+| 層 a (コード読み) | 主に使用。`grazedT` decrement / `onGraze` 発火 / 描画 fade を v04/index.html の357行から525行で読了 |
+| 層 b (実プレイ) | **未到達**。Nao_u 実プレイは未受領。Ash AI には実プレイ層判定能力がない (Ash 5/11 §0 で書面化済) |
+| 層 c (設計判断) | 本書面 §3 Q3 で扱う。層 b 不在のまま層 c に踏み込む場合、層 a の根拠を明示する (Ash 5/11 §1 運用ルール準拠) |
+
+判定方針: **feedback_headless_unfit_for_unfinished_eval.md t:5 (Nao_u 5/9 三度目「やめて」) 準拠**。headless 数値 (到達率/生存秒/成功率) を本書面の判定根拠に使わない。厚み層 (mental simulation + 既往ゲーム快感天井比較 + v01-v03 既知 Nao_u プレイ照合) のみ。
+
+---
+
+## 1. Q1: v04 α'' (shipped) は v03 より面白いか？
+
+**結論**: **条件付き Yes、ただし α 想定時より確信は弱い (α 用 §1「Yes 条件付き」より -1段)**
+
+### α 用 self_judgment.md §1 との差分
+
+α 用 self_judgment は「**コア快感符号** を負 → 正に反転」を Yes の主理由としていた。α 仕様はコア再構築 (敵弾パターン総入れ替え + graze score/gauge 経路降格) で v03 の二重拘束 (graze 不快 + 報酬 active def) を構造的に解消する設計だった。
+
+α'' (shipped) はその想定とは別物:
+
+| 観点 | α (想定) | α'' (shipped) |
+|---|---|---|
+| 規模 | コア再構築 (大型 refactor) | 1機構純粋追加 (定数2/プロパティ1/3行+描画8行) |
+| graze score/gauge 経路 | 降格 | **据え置き** (v04/README §v03→v04 の差分「意図的に据え置く」明示) |
+| Psyvariar grazeStreak → active def | 廃止予定 | **完全温存** (v03 と完全同一) |
+| BOMB gauge 蓄積 | 据え置き | **据え置き** |
+| 追加した1機能 | (再構築の中で graze=副産物に降格) | grazedT trail (擦った弾の進行方向に90フレーム軌跡) |
+| Mir 符号反転④ への充足度 | 強 (graze 報酬経路を構造から分離) | **弱** (graze 報酬は据え置き、視覚補助という新規報酬を上積み) |
+| 守の通過点 | 踏み外す可能性あり (Q3 で正面開示) | **守の内側** (1個刻み制約準拠) |
+
+### α'' が v03 より面白くなり得る根拠 (層 a + 既往ゲーム照合)
+
+- **層 a で確認した動作**: graze ring (R_GRAZE=22) を通過した敵弾は grazedT=90 で 1.5秒間進行方向に長さ70の薄い黄色軌跡 (rgba(255,216,112,0.22*fade)) を残す。これは「次にどこに来るか」を視覚化する装置。
+- **v03 で Nao_u が指摘した「graze 判定不可視」(5/11 4指摘①) への部分応答**: graze 成功後にしか軌跡は出ないので「**擦った後に**判定成功が視覚化される」効果はある。擦る前の判定可視化ではない点に注意 (これは α 想定でも未解消だった)。
+- **Eschatos 参照** (v04/README §採択した1案): 「graze の意味を score 稼ぎ → 視界の獲得」というフレーミング。Touhou 系統の「点を稼ぐ作業」から離れ、graze 自体が「弾を見る装置」になる試行。
+- **既往ゲーム快感天井比較**:
+
+| ゲーム | コア快感符号 | 達人軸 | α 用 §1 と本書面の判定差 |
+|---|---|---|---|
+| avoid_log | 中立 | 反射神経 | (同じ) |
+| brick_log | 正 | 反射ガイド読み | (同じ) |
+| graze_log v02 | 中立〜負 | graze 反射 | (同じ) |
+| graze_log v03 | 負 (二重拘束) | graze + 発火タイミング | (同じ) |
+| **v04 α (想定)** | **正 (コア再構築)** | 弾幕パターン読み + BOMB 戦略 | α 用 §1 |
+| **v04 α'' (shipped)** | **中立〜負+** (v03 二重拘束は残置、視覚補助は加算) | v03 と同じ + 軌跡読み | **本書面**: α 用 §1 より符号反転は弱い |
+
+### α'' が v03 と同等以下に終わる根拠 (裏目)
+
+- **二重拘束の温存**: v03 で Nao_u が「graze ストレス源」(5/11 4指摘④) と指摘した二重拘束 (graze=不快 + 報酬=active def 発火を強制) は α'' で **そのまま残置**。grazedT は新規視覚情報を追加するだけで、graze そのものの「擦り行為の不快符号」は変えていない。
+- **情報過多リスク**: v03 既存の HUD (gauge / streak / context B/D 表示 / hi-score / wave) に加えて、画面中に黄色軌跡線が複数 (擦った直後の弾全て) 重なる可能性がある。30秒以降の弾密度上昇区間で「軌跡が見えてもどれを見ればよいか分からない」混乱を初発するリスク 25%。
+- **graze 報酬の二重化**: graze は **score+gauge+streak (v03 の3つ)** に加えて **軌跡 (v04)** を返すようになった。Nao_u 5/11 指摘①「graze 判定が不可視」への直接応答ではなく、graze 報酬を更に増やす方向。「graze の意味が散らかった」評価リスク 20%。
+- **α 想定で消えるはずだった「graze がもっと何かに化けてほしい」心理 (α 用 §4 C1 失格条件)** は α'' では **構造的に解消されていない**。むしろ「これは何のため?」を問われやすい (軌跡だけ追加されて他は全部据え置きだから)。
+
+### 校正用 v01-v03 比較
+
+| バージョン | Ash 自己 Q1 | Nao_u 受領後評価 (実測) | 校正残差 |
+|---|---|---|---|
+| v01 | (出荷時 Q1 なし) | 「面白くはないがぎりぎりゲーム」 | - |
+| v02 | Yes (微) | 「stiff」「自殺終局」 | 概ね一致 (Yes 微弱は妥当) |
+| v03 | Yes (条件付き) | 5/11 4指摘 (面白い判定前) | 「条件付き Yes」は楽観過ぎ気味 |
+| **v04 α (想定)** | Yes (条件付き) | 未確定 | - |
+| **v04 α'' (shipped) — 本書面** | **条件付き Yes (α より弱)** | 未確定 | - |
+
+→ v03 の「条件付き Yes」が実際には 4指摘で削られた事実を踏まえ、α'' の「条件付き Yes」は v03 のそれより一段下げて記録する。判定強度: **α 想定 > α'' > v03**。
+
+---
+
+## 2. Q2: 狙えるか確信度% (Nao_u が「面白い」but なしで判定する確率)
+
+**結論**: **25%** (α 用 §2 30〜35% より -5〜10pt、v03 自己推定 30% と同水準もしくは僅か下)
+
+### α 用 §2 30〜35% との差分内訳
+
+| 観点 | α (想定) | α'' (shipped) | pt 差 |
+|---|---|---|---|
+| Mir 符号反転④ 充足 | 強 | 弱 | -10pt |
+| コア構造変更コスト (Nao_u が「これ graze_log と呼べるのか」と問う確率) | 15〜20% | **0% (守の内側、純粋追加)** | +10pt |
+| 4指摘① graze 判定不可視への直接応答 | 強 (graze=副産物に降格) | 部分 (擦った後の視覚化のみ) | -5pt |
+| 4指摘② Lv3到達難 | α 想定で構造解消 | **未対応** (gauge 経路温存) | -5pt |
+| 4指摘③ BOMB 懲罰 | α 想定で構造解消 | **未対応** | -5pt |
+| 4指摘④ graze ストレス源 | α 想定で構造解消 | **未対応 (符号反転弱)** | -5pt |
+| 情報過多リスク (新規) | なし | **新規発生 (HUD + 軌跡複数)** | -5pt |
+| 「graze 報酬が散らかった」リスク | なし | **新規発生** | -5pt |
+
+→ -30pt + +10pt = **-20pt**。α 用 30〜35% から **15%** まで落ちる可能性。ただし本書面は α 用 §2 の Log predicted_play.md 継承前提で書かれていた数値 (Log predict 5案比較で α'' は 40〜50% 想定だった) と矛盾するので、再計算する:
+
+### Log predicted_play.md 5案比較 (Ash α 用 §2 で参照) の α'' 推定との突き合わせ
+
+Log predicted_play.md §4 Q2 校正表は α'' を 40〜50% と推定していた (α 用 §5 表で確認)。本書面の **Ash 側からの校正**:
+
+| Log predict α'' 40〜50% への補強/減算 (Ash 側) | pt |
+|---|---|
+| **+5pt 補強**: 守の内側で 1個刻みを維持した形式的正しさ (v03→v04 の連続性を Nao_u が評価する確率) | +5 |
+| **-15pt 減算**: 4指摘②③④ の構造的未対応 (Log predict は「α'' 単独で 4指摘 4本全部に届く」前提で楽観だった可能性) | -15 |
+| **-10pt 減算**: 情報過多 + 「graze 報酬散らかり」の新規リスク (Log predict 未考慮) | -10 |
+
+→ Log predict 40〜50% から **-20pt = 20〜30%** に下げる。中央値 **25%**。
+
+### v01-v03 校正実績
+
+- v02 自己推定 20% → Nao_u「ぎりぎりゲーム」評価 = 概ね当たり (20% 前後)
+- v03 自己推定 30% → Nao_u 4指摘で削られ (面白い判定前) → 30% は楽観気味だった
+- v04 α'' 自己推定 25% は v02 と v03 の中間。校正の保守化を反映。
+
+**M-40 95% ラインへの未達**: **70pt 未達**。M-40 95% は越えていない。
+
+---
+
+## 3. Q3: 出荷判断 — α'' は出すべきだったか / 出した後の妥当性評価
+
+**結論**: **出荷判断としては妥当 (Nao_u 2026-05-12 18:10 #game-rights「動くものを見てみたい」直接要求への即応)、ただし出荷後判断としては「graze の意味が散らかっていないか」を Nao_u 評価で確認する責任が残る**
+
+### α 用 §3 Q3 との差分
+
+α 用 §3 は「出荷条件 A: コア構造変更の正直な開示 / B: cross_review/Nao_u 判断未受領状態での出荷不可 / C: 予測責任の事前明示」の3条件を出荷可否ゲートに置いていた。
+
+α'' (shipped) では:
+
+| 条件 | α 用 §3 | α'' (shipped) 達成状況 |
+|---|---|---|
+| A: コア構造変更の正直な開示 | 必須 | **不要化** (α'' は守の内側で構造変更なし) |
+| B: cross_review/Nao_u 判断未受領状態での出荷不可 | 必須 | **Nao_u 5/12 18:10 直接要求** ("動くものを見てみたい") で出荷許可。Mir cross_review (v03 perception axis 応答) は **未到達**だが、Nao_u 直接要求が優先 |
+| C: 予測責任の事前明示 | 必須 (本ファイル + Log predict が ship より先 commit) | **部分達成** (v04/self_judgment.md は α 用に書かれていたので α'' の予測責任はゼロ充足。Log predicted_play.md は5案分予測のうち α'' 部分が継承可能) |
+
+### 出荷判断の根拠
+
+- **Nao_u 直接要求の優先順位**: feedback_clone_strategy.md t:5「守は通過点」+ Nao_u 5/12 18:10「君たちが一番良いと判断した形で進めて。動くものを見てみたい」を踏まえ、Ash 判断で α'' を採択して ship。これは α 用 §3 出荷条件 B を Nao_u 直接要求が上書きした事例。
+- **守の内側を選んだ正しさ**: α (大型 refactor) ではなく α'' (1個刻み) を選んだのは feedback_clone_strategy.md「守の段階で型を獲得する一連のフロー」準拠。Ash 単独で大型 refactor を断行する philosophizing リスクを回避。
+- **混合効果回避**: α と α'' を同時に入れず α'' 単独にしたのは正しい (commit message「α と ο は混合効果回避のため v05 以降の判断材料に残置」)。
+
+### 出荷判断の弱点 (本書面の自己批判)
+
+- **C 条件の部分達成**: α'' 用の独立した predicted_play / self_judgment が ship 前に存在しない。本書面 (post-ship) は M-40 95% ラインを満たしていない (M-40 は pre-impl を要求)。これは「Nao_u 直接要求への即応」を優先した結果生じたコスト。
+- **層 b の不在**: 本書面 §0 で明示した通り、Ash AI には実プレイ層判定能力がない。Q1/Q2 の確率推定は層 a + 層 c のみ。Nao_u プレイ層 b の判定は受領後でないと得られない。
+
+### 出荷後の評価ゲート
+
+α'' は ship 済なので「出荷可否」は確定している。残るのは:
+1. Nao_u プレイ評価受領後の **Q1/Q2 校正残差** の記録
+2. 「graze の意味が散らかった」評価が出たら α'' を退役して v05 で別案 (α 縮小版 or ο=boss 自然終局) に移る判断
+3. Mir cross_review (v03 perception axis 応答) の v04 への適用可否評価
+
+---
+
+## 4. M-37 Stage 4: Ash は α'' を Nao_u プレイ前に「良い」と確信できるか？
+
+**結論**: **No — 条件付き Yes にも届かない**
+
+### 判定根拠
+
+feedback_prediction_responsibility.md t:5 M-37 Stage 4「AI 自プレイで『良い』と確信してから依頼」は α 用 self_judgment §4 で C1/C2/C3 の3条件として定義していた。α'' に対して各条件を再評価:
+
+| 条件 | α 用 §4 | α'' (shipped) |
+|---|---|---|
+| **C1**: コア快感符号の単独正の体感 (graze 報酬なしでも続けたい) | 達成可能 (α 想定で graze=副産物に降格) | **未達**。graze score/gauge/streak は v03 のまま温存。graze 報酬なしの体験ループは α'' では成立していない |
+| **C2**: 30〜60秒の停滞ピーク区間で自殺動機が消えている | 達成可能 (α 想定の wave 進行 + パターン更新) | **不明**。α'' は wave 進行構造に未介入。v03 と同じ自殺動機が残っている可能性 60% |
+| **C3**: 60〜120秒で自然終局装置が機能する | 達成可能 (α 想定で wave 上限) | **未達**。α'' は自然終局装置を追加していない (v03 と同じ無限ループ) |
+
+→ **3条件中 0達成 / 1不明 / 2未達**。Stage 4 物理ゲートは通っていない。
+
+### Stage 4 未達でも ship した理由 (正直な開示)
+
+- **Nao_u 5/12 18:10 直接要求「動くものを見てみたい」**: Nao_u 直接要求は Stage 4 ゲートより上位の判断軸。Ash 単独で Stage 4 を待つと philosophizing リスク (feedback_clone_strategy.md「守の段階で 30本調査のような戦略レイヤー philosophizing は守を抜けている兆候」)。
+- **守の内側で1個刻み**: α'' は v03 から戻すコストが低い (約15行)。Stage 4 未達の状態で ship しても、Nao_u 評価が悪ければ即時退役可能。これは α (大型 refactor) なら取れなかった選択。
+- **本書面が post-impl 判定として残る**: M-40 (pre-impl) は満たせなかったが、本書面の post-impl 判定 (Stage 4 = No) を残すことで「Stage 4 未達のまま ship した自覚」を commit 履歴に固定する。
+
+### 校正前提
+
+Stage 4 = No のまま ship した判断が妥当だったかは、Nao_u プレイ評価後に判定する:
+- Nao_u が「面白い」と but なし判定: Stage 4 未達でも ship 判断は結果として妥当だった (要因分析を §5 で実行)
+- Nao_u が「v03 と変わらない」or「graze 散らかった」評価: Stage 4 未達のまま ship したコストが実測される。次回 (v05) は Stage 4 を必ず満たすか、Nao_u 直接要求がない場合は ship しない運用に戻す
+
+---
+
+## 5. Mir/Nao_u への cross_review 質問 (3点)
+
+層 b (実プレイ) の判定能力がない Ash が答えられない / 推定がブレ幅大きい3点を残す:
+
+### 質問 Q-1 (主に Nao_u 向け、Mir も観点ある場合は併記)
+
+**graze の意味が散らかったと感じるか？**
+
+α'' は graze 報酬を v03 の3つ (score / gauge / streak) に **加えて** 軌跡視覚化を追加した。「graze の意味=何の reward を返すか」が4種類になった。Nao_u がプレイ層で「graze で何が起きてるのか分からない」「graze 報酬が増えすぎ」と感じるかどうか。本書面 §1 で 20% リスクと推定したが実測したい。
+
+### 質問 Q-2 (主に Mir 向け、v03 perception axis 応答の延長)
+
+**Mir 5/11 perception axis 応答 (未到達) は α'' に適用可能か？**
+
+Mir cross_review (v03 perception axis) は本サイクル時点で `game/cross_review/` に未到達。Mir 側の perception axis 観点が α'' (graze=知覚補助という符号反転弱の試行) を「v03 から知覚軸でどう変わったか」評価する観点が出るなら、本書面 §1 Q1 を Mir 観点で再評価する場を作りたい。書面化到達したら本書面 §6 に追補 commit する (§0a pending t-260512115229-8765 の v04 版)。
+
+### 質問 Q-3 (主に Nao_u 向け、Stage 4 未達のまま ship した妥当性検証)
+
+**Stage 4 未達のまま ship したのは妥当だったか / 次回は ship 前に Stage 4 を満たすべきか？**
+
+本書面 §4 で Stage 4 = No と判定したが、Nao_u 直接要求「動くものを見てみたい」が上位で ship した。Nao_u 視点で「Stage 4 を満たすまで待たれるよりは早く動くものが出る方が良い」のか「Stage 4 を満たしてから ship する方が良い」のか、運用ルールとして固定したい。
+
+---
+
+## 6. 接続先
+
+- [game/graze_log/v04/README.md](../graze_log/v04/README.md) — α'' 採択根拠
+- [game/graze_log/v04/index.html](../graze_log/v04/index.html) — shipped 実装 (commit `8e29d6fa4`)
+- [game/graze_log/v04/self_judgment.md](../graze_log/v04/self_judgment.md) — α 用 pre-impl 判定 (本書面の差分対象)
+- [game/graze_log/v04/brainstorm.md](../graze_log/v04/brainstorm.md) — Ash α/β/γ 3案
+- [game/graze_log/v04/brainstorm_log.md](../graze_log/v04/brainstorm_log.md) — Log M-43 α'/α'' 派生
+- [game/graze_log/v04/predicted_play.md](../graze_log/v04/predicted_play.md) — Log 5案比較
+- [game/cross_review/20260511_log_on_graze_log_v03_perception_axis.md](20260511_log_on_graze_log_v03_perception_axis.md) — Mir 応答待ち (本書面 §5 Q-2)
+- [game/cross_review/20260511_ash_on_graze_log_v03_response.md](20260511_ash_on_graze_log_v03_response.md) — Ash v03 応答、本書面 §0 の3レイヤー同型を継承
+- [memory/feedback_prediction_responsibility.md](../../memory/feedback_prediction_responsibility.md) t:5 — Stage 4 = No 判定の根拠
+- [memory/feedback_headless_unfit_for_unfinished_eval.md](../../memory/feedback_headless_unfit_for_unfinished_eval.md) t:5 — headless 不使用の根拠
+- [memory/feedback_clone_strategy.md](../../memory/feedback_clone_strategy.md) t:5 — 守の内側 1個刻み準拠
+- [memory/core_memory_purpose_game_making.md](../../memory/core_memory_purpose_game_making.md) t:5 — 記憶=ゲーム制作の長期知見蓄積、本書面は α'' shipped の校正残差を後続サイクルに渡す装置
