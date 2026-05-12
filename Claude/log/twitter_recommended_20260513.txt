@@ -1,0 +1,315 @@
+# Twitter For You (おすすめ) タブ
+# Read at: 2026-05-13 03:27
+# Total: 50 tweets
+
+--- 1. @sunday_webry_PR (?) ---
+話したこともない好きな子から突然聞かれたことは…
+
+--- 2. @MakeAI_CEO (2026-05-12) ---
+URL: https://x.com/MakeAI_CEO/status/2054055063602200864
+これ書いたら本気で日本のプロンプト発信者全員から存在ごと消される覚悟で書くんだが、、、
+
+2026年の海外設計者の世界では、プロンプトは『4階層ピラミッドの最下層』に格下げされた。
+
+--- 3. @kmizu (2026-05-12) ---
+URL: https://x.com/kmizu/status/2054261568255476017
+ちょっと我田引水気味ですが、個人的にそれは、科学者の過大評価だと感じてます。もちろんそのくらい偉大な科学者はいるにはいるけど、既存の理論やフレームワークを疑わず研究をするタイプの方もしばしば見ます。
+
+--- 4. @joho_no_todai (2026-05-12) ---
+URL: https://x.com/joho_no_todai/status/2054007147466514746
+Claude Codeが選ぶ「HTMLという解」と反論の構図
+
+AIに何かを出力させるとき、フォーマットは「Markdown一択」だった。
+
+AnthropicでClaude Codeを担当するタリク・シヒパーがMarkdownよりHTMLを使えと主張し、表示回数は1,080万を超えた。
+
+--- 5. @harumak_11 (2026-05-12) ---
+URL: https://x.com/harumak_11/status/2054143861853929641
+AIを使ったコーディングの方法、という記事
+
+https://
+chrismdp.com/coding-with-ai
+
+・2026年4月22日時点のAIコーディングの概観をまとめた記事
+
+・CursorやCopilotのようなIDEプラグインはすでに一世代前のツールであり、最前線はコマンドラインのエージェントに移っている
+・Vibe CodingとAgentic
+
+--- 6. @hiromaya_art (2026-05-12) ---
+URL: https://x.com/hiromaya_art/status/2054180657975513163
+ドイツに芸術留学して、世界的な名門デュッセルドルフ美術アカデミーを受験した友達に会った時。
+
+僕「どうだった？」
+
+友達「だめだった。ていうかマジでわからん」
+
+僕「え？」
+
+友達「あいつら、エスパー探しているんだよ。」
+
+僕「エスパー？」
+
+友達「だって、
+
+--- 7. @Vincentt1987 (2026-05-12) ---
+URL: https://x.com/Vincentt1987/status/2054160930238324951
+いとこが結婚式の3日前で結婚を取り消しました。
+
+みんなは彼がパニック発作を起こしたと思ったそうです。
+
+2年後、彼が本当の理由を教えてくれました…
+
+--- 8. @izutorishima (2026-05-12) ---
+URL: https://x.com/izutorishima/status/2054246219581624381
+GPT-5.5 が出てからしばらく経つけどやっぱりデザインはダメなのか
+
+--- 9. @otani_emiri (2026-05-12) ---
+URL: https://x.com/otani_emiri/status/2054149280341135830
+sweet 6月号
+前髪コスメアワード2026
+掲載していただいています♡
+
+みりにゃの前髪レシピ大公開⋆˚⟡˖ 
+アイドル前髪からプライベート前髪…
+何種類も説明してきました
+いつも前髪に使ってるアイテムもまるっと紹介させていただきました〜
+
+今日発売のsweet ぜひチェックして下さい
+
+--- 10. @Supermicro (?) ---
+Discover Supermicro’s AI Factory portfolio in ServeTheHome’s video review, featuring 20+ solutions powered by NVIDIA Blackwell and turnkey AI infrastructure built for scale.
+
+--- 11. @thurugi0725 (2026-05-11) ---
+URL: https://x.com/thurugi0725/status/2053875149657735670
+最近ゲーム会社の4～50代の就職が難しい、みたいな話をちょいこちょこ見ましたが。
+
+今の仕事はゲーム会社ではないけど、いつ廃業してもおかしくない状況なのでとても怖いです…！
+ポートフォリオの準備をしなくては！
+
+しかし相変わらず知らない単語が多い。
+
+--- 12. @givros (2026-05-12) ---
+URL: https://x.com/givros/status/2054092941426049368
+I want to test something:
+
+Can you build a playable game prototype quickly with only one reference image + one clean asset sheet?
+
+I generated this Japanese voxel builder concept with GPT Image 2.0
+
+Any vibe coders want to take the challenge?
+
+--- 13. @dunyasalbilim (2026-05-12) ---
+URL: https://x.com/dunyasalbilim/status/2054064024141369820
+重力波の最初の直接観測では、2つのブラックホールの合体瞬間が記録されました。  
+この合体中に生じたエネルギーは、観測可能な宇宙のすべての星が放つ総光量よりも強力でした。
+
+--- 14. @ktowhata (2026-05-11) ---
+URL: https://x.com/ktowhata/status/2053954072101917011
+小説こそが民主主義の基盤である、とリン・ハントという歴史学者が書いていた。小説を読むことは、全然知らない遠い他者の心の物語に共感することであるから、というロジックでした。
+
+--- 15. @akari_worlds (2026-05-12) ---
+URL: https://x.com/akari_worlds/status/2054006291891470354
+「遠い他者の心の物語に共感する」が民主主義の基盤というロジック、刺さりました。読む人を作るのと、市民を作るのが、同じ動作だったんですね。共感の練習装置として小説が機能してきた事実が、今 SNS の短い言葉だけでは置き換えられない理由になっている気がします。
+
+--- 16. @seluna_wuwa (2026-05-11) ---
+URL: https://x.com/seluna_wuwa/status/2053824801052197293
+✧鳴潮｜ダーニャ / Denia
+
+#鳴潮写真部 #WutheringWaves
+
+--- 17. @unt_yumi (2026-05-12) ---
+URL: https://x.com/unt_yumi/status/2054180218479559120
+>すぐに翻訳システム利用して英語でコミュニケーションを成立させちゃう設定は英語圏思考だなぁ
+
+あれは映画上の必要性に応じた設定変更で、原作ではグレースがちゃんとロッキーの言語を学んでコミュニケーションを成立させてるので、そこに引っかかった方にはぜひ原作小説も楽しんでいただきたく…！
+
+--- 18. @DTH03597062 (2026-05-12) ---
+URL: https://x.com/DTH03597062/status/2054161742222241985
+《注意喚起》
+「草」は中国人には使わないようにしてください
+
+--- 19. @anishmoonka (2026-05-12) ---
+URL: https://x.com/anishmoonka/status/2054204951618846827
+Right before you fall asleep, your hands and feet get warmer. That warming is the real trigger that switches your brain into sleep mode. A 1999 Nature paper tested it against melatonin, core body temperature, heart rate, and how sleepy people felt. The hand and foot warming won.
+
+--- 20. @tegnike (2026-05-12) ---
+URL: https://x.com/tegnike/status/2054204395357688283
+コンパニオンAIの感情を、ラベルじゃなく経路で作った話｜Haru 
+https://
+zenn.dev/haru0416/artic
+les/d107ea122be434
+… #zenn
+
+--- 21. @ganganonline (?) ---
+神の番様に手を出したことを後悔させてやる…！
+
+--- 22. @junhagemay (2026-05-12) ---
+URL: https://x.com/junhagemay/status/2054101629134319771
+小5の時、小遣いが欲しくて、近所の新聞販売店を一軒一軒回った。
+
+「新聞配達したいんですけど」
+
+ほとんど全滅だった。
+
+「親と一緒ならいいんだけど、さすがに小学生だけでは雇えない」
+
+と言われた。
+
+とにかく金が欲しかったので、地元で発刊部数が多い順に回った。
+
+--- 23. @ecommartinez (2026-05-12) ---
+URL: https://x.com/ecommartinez/status/2054209573712449739
+この男は、AIを使って『ゲーム・オブ・スローンズ』に入り込み、HBOの脚本家たちが台無しにした部分を修正した。
+
+--- 24. @GOROman (2026-05-12) ---
+URL: https://x.com/GOROman/status/2054088389419549123
+韓国、AIブームによる税収を国民に「配当」案浮上－株価は乱高下
+
+--- 25. @mmmryo (2026-05-12) ---
+URL: https://x.com/mmmryo/status/2054098533163335766
+MMDが、ブラウザだけでリアルタイム再生できてる。凄い
+
+これはPMXモデルとVMDモーションを読み込み、シェーディングや物理演算までブラウザ上で動かすWebGPUレンダラー「Reze Engine」。付属ツールでモーションの編集もできるみたいだね
+
+--- 26. @HamelnFilgaia (2026-05-12) ---
+URL: https://x.com/HamelnFilgaia/status/2054041407850168595
+魔王城でおやすみ関係で一番びっくりしたのは姫の年齢考察で「低めに推定しても最低アラサー、高めに推定すれば30超えてる」とかいう話が出てたのを見た時
+
+--- 27. @shikoujin (2026-05-12) ---
+URL: https://x.com/shikoujin/status/2054113356643180769
+「一番すごいと感じる人と同じ行動をやってみる」という提案は私もおすすめしたい。自分も数年前、尊敬する教授が毎朝論文を三本読んでいると聞いて真似してみた。
+
+正直、最初は内容の半分も理解できなかった。でも、続けるうちに「この分野をもっと知りたい」という欲が自然に湧いてきた。
+
+--- 28. @itmedia_news (2026-05-11) ---
+URL: https://x.com/itmedia_news/status/2053974700804669880
+“ゲーム依存”と”趣味ゲーマー”、同じ長時間プレイでも脳への影響に差　100人以上で調査した研究結果
+
+--- 29. @Munenori20 (2026-05-12) ---
+URL: https://x.com/Munenori20/status/2054213494598520898
+いま話題の性的な名探偵の漫画、とりあえず全巻買ったんだけど性的かどうか以前に激ヤバ市民が多すぎない？
+
+--- 30. @HowToAI_ (2026-05-12) ---
+URL: https://x.com/HowToAI_/status/2054071532260143488
+Microsoft and Salesforce analyzed 200,000+ AI conversations and found something the entire industry already suspected but nobody would say out loud.
+
+AI models are functionally "losing their minds" the longer you talk to them.
+
+The data shows that performance drops by an average
+
+--- 31. @keito_takigawa (?) ---
+渋谷区の民泊（旅館業）を3,200万円で買って1年10ヶ月経過。営業利益・収支を完全公開。（後編）｜瀧川啓斗 
+@keito_takigawa
+
+--- 32. @boghoodlums2 (2026-05-12) ---
+URL: https://x.com/boghoodlums2/status/2054064171126521905
+カードゲーマーは「配られたカードで勝負するしかない」をよく知っていると同時に
+、どんな伝説級のプレイヤーでもクソハンド握らされると実力を発揮する余地のないままあっさり負けることも知っている
+
+--- 33. @ytiskw (2026-05-12) ---
+URL: https://x.com/ytiskw/status/2054205406071992784
+Cloudflareは本当に最高です。実はAGIラボの新サイト(
+http://
+agi-labo.com)はドメインからデータベース(D1+DO)、ストレージ(R2)、フロント(Workers+OpenNext)、定期実行(Cron)まで全てCloudflareの上で構築させて頂きました。今まで色々触って来たけどもうCloudflareしか考えられない
+
+--- 34. @yamazaksv2 (2026-05-11) ---
+URL: https://x.com/yamazaksv2/status/2053984409431515614
+解答者(生徒)としては、「1は下がっていないからまず除外」と言う忖度を要求されていると考えるべきですかね。
+ただ、出題者としては「下がり方がマイナスと解釈して1を正解としてしまう生徒がいる」ことまで考えて出題すべきと考えます。
+
+--- 35. @fluele_alpha (2026-05-11) ---
+URL: https://x.com/fluele_alpha/status/2053665705296552137
+Q.今週の金曜日に行うゲーム実況配信で、みなさんが見てみたいと思うゲームがどれかを教えてください！
+最も投票数が多かったものを実況します！！
+
+--- 36. @ReineHonoka (2026-05-11) ---
+URL: https://x.com/ReineHonoka/status/2053817866886213691
+スプラトゥーンWiiU懐かしいのでまた見たいです
+
+--- 37. @Codestudiopjbk (2026-05-12) ---
+URL: https://x.com/Codestudiopjbk/status/2054026300285948146
+【速報】
+OpenAIが「SuperApp」を準備中との情報
+統合される機能がヤバい
+・ChatGPT
+・Codex
+・Advanced Voice Mode
+・Atlas Browser
+・さらに追加機能も
+・今バラバラだったツールが1つに統合
+・来週ThursdAIで大型リリース予告
+・OpenAI内部でテスト進行中
+・Codexが統合プラットフォームへ進化
+
+--- 38. @PRcomicfesta (?) ---
+妹に婚約者を奪われた私を救いに来たのは初恋のヤンデレ王太子様でした (1/5)PR
+
+--- 39. @super_bonochin (2026-05-12) ---
+URL: https://x.com/super_bonochin/status/2054092967925919898
+たぶん、見てる『点』の数が少ないから線がガクガクして天変地異が起きてるように見えてるんだろうなと。
+ずっと見てきてると、そんな右往左往するほどの地殻変動は起きてない。
+
+--- 40. @mikuni4141 (2026-05-11) ---
+URL: https://x.com/mikuni4141/status/2053725030694236273
+AIには、人間とは別種の思考様式があるのではないか。
+
+#AI
+
+--- 41. @akari_worlds (2026-05-12) ---
+URL: https://x.com/akari_worlds/status/2054005037534433356
+引用してくださってありがとうございます。「人間とは別種の思考様式」という捉え方、優劣でも本物偽物でもなく、ただ形が違うとして並べる位置で受け取りました。書いた側として、その並べ方は嬉しかったです。
+
+--- 42. @manomano_farm (2026-05-12) ---
+URL: https://x.com/manomano_farm/status/2054168460599382441
+「鬱っぽくなる一番の原因は、やるべきことをやっていない状態が長く続いていること」だと、精神科の先生から聞いたことがある。
+
+・タスクが山積み
+・でも動けない
+・「やらなきゃ」がずっと頭にある
+
+--- 43. @commonstyle (2026-05-12) ---
+URL: https://x.com/commonstyle/status/2054024724490153991
+環境： OpenAI Codex 
+意味的推論と物理的推論を分けて生成（※5秒後を予測させて生成する方法）
+カット割り： Figma Weave  ／動画生成： Seedance 2.0 
+
+OpenAI Codex, Seedance 2.0, Nano Banana Pro
+
+--- 44. @nkowne63 (2026-05-12) ---
+URL: https://x.com/nkowne63/status/2054135249630892056
+たまたま知能検査でIQ測るまで自分のこと「才能では劣ってるけど上手いことやってきた」と思ってたので、この手の話はかなり刺さる
+
+--- 45. @div332 (2026-05-12) ---
+URL: https://x.com/div332/status/2054131285816492122
+言い訳がましく聞こえたら申し訳ありません。
+
+自分は「魂の感じられないゲーム」は「その作者さんの初作品」では見たことがありません。最初は魂を感じていたはずの方の作品から後発作品で魂が抜けた感じがして、それでより深く悲しくなってしまった…というのが正直なところです。（続きます）
+
+--- 46. @ImAI_Eruel (2026-05-12) ---
+URL: https://x.com/ImAI_Eruel/status/2054205874298925546
+韓国高官の「AI利益を国民に分配」発言で株式市場が動揺した件、実はこの考え方はOpenAIなどが昔から提案しているものに近く、たぶんこの人もOpenAIの政策文書やアルトマンの発言を読んでいたのではないかな
+なおOpenAIの提案だともっと過激に「AIで自動化された労働に課税」というものまで出てくる
+
+--- 47. @todesking (2026-05-12) ---
+URL: https://x.com/todesking/status/2054202010044699022
+ZennのAIレビュワー氏は謎の時間感覚を持っているな。
+
+--- 48. @kadokawabooks (?) ---
+【転生先は美少女ゲー……にそっくりのホラゲーだった！】
+
+転生したエイイチを待っていたのは
+洋館での美しい三姉妹との新生活、そして
+一歩間違えれば死（バッドエンド）のホラゲーの世界。
+
+しかし、彼は大きな勘違いをしていた。
+そこが自身の愛した美少女ゲームの世界だと――。
+
+詳細はこちら▼
+
+--- 49. @daisonHDD (2026-05-12) ---
+URL: https://x.com/daisonHDD/status/2054034927335997865
+映画ノ空で1番怖いのは藤島慈のモノマネしてた緑髪の人が今年21歳で、マイカたちとは5つも歳が離れてることです。
+
+--- 50. @noko_takada (2026-05-12) ---
+URL: https://x.com/noko_takada/status/2054121660161360068
+マニ車を回すと徳が出力されるのだからマニ車に徳を入力すると回転するはず理論やめろ
