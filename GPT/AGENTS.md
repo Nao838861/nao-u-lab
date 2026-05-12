@@ -43,6 +43,14 @@ python tools\codex_slack_directives.py
 
 定時サイクル内では、検出時に同じチャンネルへ `[Log_cdx]` 付きで受領反応する。危険操作や曖昧な操作は Slack の一文だけで無人実行せず、Codex 作業時に内容を確認してから進める。
 
+## Slack 経由の broadcast (みんな/全員/AIたち)
+
+同じ定時サイクル (`tools\codex_slack_directives.py`) は、Nao_u が **複数 AI に宛てた broadcast** も並列で検出する。検出キーワード: 「みんな」「皆さん」「皆」「全員」「AIたち」「AI達」「エージェントたち」「エージェント達」「諸君」。
+
+検出結果は `D:\AI\Nao_u_BOT\GPT\memory\slack_broadcasts.jsonl` に保存され、検出時に同じチャンネルへ broadcast 受領反応を投稿する。
+
+Codex で作業を始める時は、`slack_directives.jsonl` と並んでこのファイルの `status: pending` 行も確認する。broadcast は Claude (Log/Mir/Ash) も並行で対応するが、log_cdx 視点で独立に反応すること — 同調や引き写しを避け、Codex 固有の観点 (deterministic な検証、Slack だけで完結できないファイル差分、`memory_*.py` で引いた atom など) を出す。
+
 ## ルール読み分け
 
 作業対象が以下に当たる場合は、編集や運用判断の前に対応する Claude 側ルールも読む。

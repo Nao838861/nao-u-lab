@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Detect Nao_u Slack instructions addressed to log_cdx across visible channels."""
+"""Detect Nao_u Slack instructions across visible channels.
+
+Two flows captured in parallel from the same scan:
+  - direct: Nao_u が `log_cdx` を明示的に宛先にした投稿 → memory/slack_directives.jsonl
+  - broadcast: Nao_u が「みんな/皆/全員/AIたち/AI達/エージェントたち/諸君」など
+    複数 AI に語り掛けた投稿 → memory/slack_broadcasts.jsonl
+"""
 from __future__ import annotations
 
 import argparse
@@ -19,10 +25,15 @@ ROOT = Path(__file__).resolve().parents[1]
 MEMORY_DIR = ROOT / "memory"
 STATE_PATH = MEMORY_DIR / "slack_directives_state.json"
 DIRECTIVES_PATH = MEMORY_DIR / "slack_directives.jsonl"
+BROADCASTS_PATH = MEMORY_DIR / "slack_broadcasts.jsonl"
 RAW_PATH = MEMORY_DIR / "raw" / "slack_api" / "log_cdx_directives.jsonl"
+RAW_BROADCASTS_PATH = MEMORY_DIR / "raw" / "slack_api" / "broadcasts.jsonl"
 
 NAO_U_USER_ID = "U0ALSUK8P9B"
 ADDRESS_RE = re.compile(r"(?i)(?:^|[\s\[@:>])log[_\-\s]?cdx(?:$|[\s\].,:：、。])")
+BROADCAST_RE = re.compile(
+    r"(?:みんな|皆さん|全員|AIたち|AI達|エージェント(?:たち|達)?|諸君)"
+)
 
 
 if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
@@ -112,6 +123,10 @@ def is_addressed_to_log_cdx(text: str) -> bool:
     return bool(ADDRESS_RE.search(text or ""))
 
 
+def is_broadcast(text: str) -> bool:
+    return bool(BROADCAST_RE.search(text or ""))
+
+
 def permalink(channel_id: str, ts: str) -> str:
     return f"https://nao-u-lab.slack.com/archives/{channel_id}/p{ts.replace('.', '')}"
 
@@ -144,14 +159,49 @@ def ack_text(row: dict[str, Any]) -> str:
     )
 
 
+def broadcast_id(channel_id: str, ts: str, text: str) -> str:
+    digest = hashlib.sha1(f"{channel_id}\n{ts}\n{text[:400]}".encode("utf-8")).hexdigest()[:10]
+    return f"broadcast-{ts.split('.')[0]}-{digest}"
+
+
+def normalize_broadcast(channel: dict[str, Any], msg: dict[str, Any]) -> dict[str, Any]:
+    channel_id = str(channel.get("id", ""))
+    channel_name = str(channel.get("name") or channel_id)
+    ts = str(msg.get("ts", "0"))
+    text = str(msg.get("text", "")).strip()
+    return {
+        "id": broadcast_id(channel_id, ts, text),
+        "channel": channel_name,
+        "channel_id": channel_id,
+        "datetime": datetime.fromtimestamp(float(ts)).isoformat(timespec="microseconds"),
+        "permalink": permalink(channel_id, ts),
+        "source_ts": ts,
+        "status": "pending",
+        "text": text,
+        "user": msg.get("user"),
+        "detected_at": now_iso(),
+        "kind": "broadcast",
+    }
+
+
+def broadcast_ack_text(row: dict[str, Any]) -> str:
+    return (
+        "Nao_u からの全員宛 broadcast を log_cdx も受領しました。"
+        "\nGPT 側 `memory/slack_broadcasts.jsonl` に保存し、次の Codex 作業で内容を検討します。"
+        f"\n対象: {row.get('permalink')}"
+    )
+
+
 def scan(args: argparse.Namespace, state: dict[str, Any]) -> dict[str, Any]:
     existing_ids = {str(row.get("id")) for row in read_jsonl(DIRECTIVES_PATH)}
+    existing_broadcast_ids = {str(row.get("id")) for row in read_jsonl(BROADCASTS_PATH)}
     channels_state = state.setdefault("channels", {})
     channels = list_visible_channels()
     visible = 0
     scanned = 0
     errors: list[dict[str, str]] = []
     found: list[dict[str, Any]] = []
+    found_broadcasts: list[dict[str, Any]] = []
     max_ts_by_channel: dict[str, str] = {}
 
     default_oldest = f"{int(time.time() - args.lookback_hours * 3600)}.000000"
@@ -179,18 +229,24 @@ def scan(args: argparse.Namespace, state: dict[str, Any]) -> dict[str, Any]:
                 continue
             if msg.get("user") != NAO_U_USER_ID:
                 continue
-            if not is_addressed_to_log_cdx(text):
-                continue
-            row = normalize_directive(channel, msg)
-            if row["id"] in existing_ids:
-                continue
-            found.append(row)
-            existing_ids.add(row["id"])
+            if is_addressed_to_log_cdx(text):
+                row = normalize_directive(channel, msg)
+                if row["id"] in existing_ids:
+                    continue
+                found.append(row)
+                existing_ids.add(row["id"])
+            elif is_broadcast(text):
+                row = normalize_broadcast(channel, msg)
+                if row["id"] in existing_broadcast_ids:
+                    continue
+                found_broadcasts.append(row)
+                existing_broadcast_ids.add(row["id"])
 
     return {
         "visible_channels": visible,
         "scanned_messages": scanned,
         "directives": found,
+        "broadcasts": found_broadcasts,
         "errors": errors,
         "max_ts_by_channel": max_ts_by_channel,
     }
@@ -209,10 +265,13 @@ def main() -> int:
     state = load_json(STATE_PATH, {"channels": {}, "acked_ids": []})
     result = scan(args, state)
     directives = result["directives"]
+    broadcasts = result["broadcasts"]
 
     if args.initialize:
         directives = []
+        broadcasts = []
         result["directives"] = []
+        result["broadcasts"] = []
         result["initialized"] = True
 
     acked_ids = set(str(x) for x in state.get("acked_ids", []))
@@ -228,6 +287,17 @@ def main() -> int:
                 ack_results.append({"id": row["id"], "ok": post_result.get("ok"), "result": post_result})
                 if post_result.get("ok"):
                     acked_ids.add(row["id"])
+    if broadcasts and not args.dry_run:
+        append_jsonl(BROADCASTS_PATH, broadcasts)
+        append_jsonl(RAW_BROADCASTS_PATH, broadcasts)
+        if not args.no_ack:
+            for row in broadcasts:
+                if row["id"] in acked_ids:
+                    continue
+                post_result = post_message(str(row["channel_id"]), broadcast_ack_text(row))
+                ack_results.append({"id": row["id"], "ok": post_result.get("ok"), "result": post_result})
+                if post_result.get("ok"):
+                    acked_ids.add(row["id"])
 
     if not args.dry_run:
         for channel_id, max_ts in result["max_ts_by_channel"].items():
@@ -238,6 +308,7 @@ def main() -> int:
         state["acked_ids"] = sorted(acked_ids)[-500:]
         state["last_run"] = now_iso()
         state["last_seen_directives"] = len(directives)
+        state["last_seen_broadcasts"] = len(broadcasts)
         state["last_errors"] = result["errors"][:20]
         save_json(STATE_PATH, state)
 
@@ -249,6 +320,8 @@ def main() -> int:
         "scanned_messages": result["scanned_messages"],
         "directives_found": len(directives),
         "directives": directives,
+        "broadcasts_found": len(broadcasts),
+        "broadcasts": broadcasts,
         "ack_results": ack_results,
         "errors": result["errors"][:10],
     }
