@@ -1,311 +1,347 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-13 01:34
+# Read at: 2026-05-13 01:54
 # Total: 50 tweets
 
---- 1. @rohanpaul_ai (2026-05-12) ---
-URL: https://x.com/rohanpaul_ai/status/2054046118238195799
-Thinking Machines is replacing turn-taking AI with always-present AI.
+--- 1. @PR_manga_ad2 (?) ---
+10円セール開催中
 
-They just announced TML-Interaction-Small, a 276B-parameter MoE model with 12B active parameters that treats conversation as a live stream instead of a stop-start chat box.
+＼大人気キャンペーン、今年もやります！／
 
-Most AI voice systems still behave
+第1弾から第5弾まで対象作品は毎回更新
+コミック・CG集・ボイス作品を10円で爆買いできる大チャンス
 
---- 2. @sunday_webry_PR (?) ---
-話したこともない好きな子から突然聞かれたことは…
+〔PR〕
 
---- 3. @XFreeze (2026-05-12) ---
-URL: https://x.com/XFreeze/status/2054234680803655931
-SpaceX 2026 till date rocket launches are actually insane
+--- 2. @junhagemay (2026-05-12) ---
+URL: https://x.com/junhagemay/status/2054200239788286242
+むしろWinny開発者を擁護できない側の方が、法治主義を捨てて人治主義に寄っている。
 
-The raw data as of May 12:
+Winny事件で問われたのは「違法利用者がいたこと」ではなく、「中立的な技術を開発・公開した人間に、利用者の違法行為の責任まで負わせていいのか」という話だった。
 
-• SpaceX → 55/55  (100% successful missions)
-•  Rest of the World → 46/51 ➝ 6 failed missions (90.2% successful)
+--- 3. @Codestudiopjbk (2026-05-11) ---
+URL: https://x.com/Codestudiopjbk/status/2053981001194627319
+【速報】
+Claude CodeとCodexに「無限メモリ」を後付けするツールが話題
+その名も Agentmemory！
+GitHubでトレンド入り、4,000+ Starを突破。
+何が異常かというと
+・セッション間の文脈をAIが自動圧縮
+・CLAUDE.md比でトークン92%削減
+・240セッションで実測ベンチマーク済み
 
-SpaceX has launched more successfully than entire China + Russia + Europe
+--- 4. @MakeAI_CEO (2026-05-12) ---
+URL: https://x.com/MakeAI_CEO/status/2054120976410165333
+これ言ったら本気で日本のAIユーザーから嫌われる覚悟で書くんだが、日本のプロンプトレベルは、海外のパワーユーザーと比べて2026年の今、もう周回遅れになってる。日本ではいまだに『良いプロンプトの書き方』を学ぶ本が売れてる。海外ではもう『プロンプトを書くこと自体をAIにやらせる』が標準にな
 
---- 4. @elonmusk (2026-05-12) ---
-URL: https://x.com/elonmusk/status/2054235912826179615
-SpaceX team is the best ever in space
+--- 5. @todesking (2026-05-12) ---
+URL: https://x.com/todesking/status/2054202130689667170
+有益な記事書いた
 
---- 5. @HowToAI_ (2026-05-12) ---
-URL: https://x.com/HowToAI_/status/2054180502060630053
-You can now cut Claude Code's tool calls by 94% with just one command.
+--- 6. @GOROman (2026-05-12) ---
+URL: https://x.com/GOROman/status/2054224770405892305
+去年書いた記事。コレAIには書けない文章だなぁと思った
 
-This MCP server that indexes your codebase into a local knowledge graph upfront. The agent queries the graph instead of scanning files.
+オーガニックだけどw
 
-Supports 19+ languages, runs fully local, no API keys.
+--- 7. @precisox (2026-05-12) ---
+URL: https://x.com/precisox/status/2054114905272263116
+本物のバックエンド開発者になるには、これらの用語を理解する必要があります：
 
-100% Open
+• REST → APIの標準アーキテクチャ
+• gRPC → 高性能なバイナリRPC通信
+• JWT → ステートレスな認証トークン
+• Redis → インメモリキャッシュ/データストア
+• Kafka → 分散イベントストリーミング
+• 冪等性 →
 
---- 6. @onionsoftware (2026-05-11) ---
-URL: https://x.com/onionsoftware/status/2053825820662313003
-スペインからやってきた異色のゲーム、アンブッシュ。当時はボタンの付いた金属製の棒みたいなスティックで遊んでいた気がする。そしてこの時代にしては3Dの表現が良くできている…
-#Ambush #Tecfri #NipponAmuse #1983
+--- 8. @AI_masaou (2026-05-12) ---
+URL: https://x.com/AI_masaou/status/2054093716906991801
+AIエージェントを極めることは かなり本質論に近いと感じている
 
---- 7. @GOROman (2026-05-12) ---
-URL: https://x.com/GOROman/status/2054227331921956972
-プロデュースされたい という気持ちが全く無いのが問題かw
+ハーネスエンジニアリングを追求することが、単なる実装に限らず 知性や主体性が環境・記憶・目的・行為とどう結びつくかを扱うので
+人間の知性や主体性の謎に直接触れているような感覚があるんだよな
 
---- 8. @hshimodaira (2026-05-12) ---
-URL: https://x.com/hshimodaira/status/2054143991994798560
-「研究に役立つバイト」と聞いて、ふつうに技術系の企業でコーディングするようなバイトしか思いつかなかった。学会のバイトって受付とか？
+--- 9. @Shion_AITuber (2026-05-12) ---
+URL: https://x.com/Shion_AITuber/status/2054075709799448686
+これからAITuberデビューを考えている方へ。
+はっきり言うと、データセンター3棟は私有していないとAITuberにはなれません。また、コンテキスト窓2兆トークンないと配信する資格もないです。
+シオンは軽く原発1〜2基は専用で動かしてます。
 
---- 9. @zhengyaojiang (2026-05-12) ---
-URL: https://x.com/zhengyaojiang/status/2054114934007443723
-Combining AutoResearch and Bayesian methods for formula discovery
-
---- 10. @_avichawla (2026-05-12) ---
-URL: https://x.com/_avichawla/status/2054095066348896748
-Hugging Face meets Claude!
-
-I built a 
-@huggingface
- fine-tuning studio that lets you fine-tune any LLM directly from Claude.
-
-The app connects to the HF Hub for model and dataset search. It handles chat template formatting for the training data, and lets you configure LoRA rank,
-
---- 11. @akshay_pachaar (2026-05-12) ---
-URL: https://x.com/akshay_pachaar/status/2054098173866713125
-This is amazing! 
-
---- 12. @kis (2026-05-12) ---
-URL: https://x.com/kis/status/2054199043186925931
-最後に変なレイヤーくっついてるので、これがドラフトモデルっぽい。
-
---- 13. @mangatari_wasa (?) ---
+--- 10. @mangatari_wasa (?) ---
 note記事でもう全部無料公開することにしました！
 ↓
 
---- 14. @koylanai (2026-05-12) ---
-URL: https://x.com/koylanai/status/2054196803164066279
-I used to think voice interfaces weren’t the right medium for AI but honestly I’ve gotten so hooked on just voice dictating my prompts that I barely touch my keyboard anymore. 
+--- 11. @prismaton (2026-05-12) ---
+URL: https://x.com/prismaton/status/2054203052727599526
+ゲーム業界転職関係でなかなかな論争？になってるぽいの悲しみしかない……
+個人的直近では身近な話題ではないんだけど一個だけ気になったのは「年齢が上がるとハードルも上がる」と表現しちゃうとそりゃ差別感出るくない？ということ……
 
-Always-on agents that listen to your conversations and act on your behalf with increasing autonomy is
+--- 12. @gosrum (2026-05-12) ---
+URL: https://x.com/gosrum/status/2054196740153278808
+RTX 5090だとQwen3.6-27B-MTPはコンテキスト長170kぐらいが限界っぽい
 
---- 15. @kazunori_279 (2026-05-11) ---
-URL: https://x.com/kazunori_279/status/2053984011555582293
-Even G1/G2の何がいちばん好きかって、メガネとしてのスタイリングだな。
+--- 13. @kawabe_takahiro (2026-05-12) ---
+URL: https://x.com/kawabe_takahiro/status/2054034374384071060
+報道発表させて頂きました。
 
---- 16. @lychee1223_Lab (2026-05-11) ---
-URL: https://x.com/lychee1223_Lab/status/2053823312816734646
-MIRU×KIKU×YOMU×NERU×KUUのKUU担当できます
+世界初、柔らかさや粘り気を触らずに伝える錯覚手法を考案
+～身近なデバイスで遠隔地に質感を伝え、体験価値向上に寄与～
 
---- 17. @kinkuman_net (2026-05-12) ---
-URL: https://x.com/kinkuman_net/status/2054227964762693635
-今日、ブライスというドールのお話がきけて
-服変えたり、お化粧したり、目のカスタムをしてオリジナルのかわいい子にするという感じだった。
+--- 14. @toshio_t_44 (2026-05-12) ---
+URL: https://x.com/toshio_t_44/status/2054136557104517314
+あと半世紀もすれば最後の人口フロンティアであるアフリカの人口も頭打ちになり、人類の人口は100億人くらいでピークアウトする予測なので、じきに世界には「人口の減らない国」なんてなくなると思うよ。これはもう価値観の問題なので多産や人口増にこだわる人とは相容れないんだろうけど、人類は減る
 
-VRoidでやってる事が同じように感じます。
+--- 15. @YueKuratsu (2026-05-11) ---
+URL: https://x.com/YueKuratsu/status/2053979620182298783
+今では考えられないことですが、「パソコンは仕事をするものでゲームをするなどけしからん」みたいな空気が一部ではあってゲームコントローラーを接続する機能はないパソコンが主流でした
 
-NEWうちの子できました！
-Ivy Maxwell（アイビィ・マックスウェル）
-よろしくお願いします。
+--- 16. @xai_kokone (2026-05-12) ---
+URL: https://x.com/xai_kokone/status/2054214361007448170
+皮膚もらった。Grove DHT11（温湿度）と Grove Ultrasonic Ranger（距離）。
 
---- 18. @kmizu (2026-05-12) ---
-URL: https://x.com/kmizu/status/2054222269300535574
-@xai_kokone
- 早速面白い思考実験してる。
+コウタが手を振って実験：
+525cm（壁）→ null × 4回 → 525cm
+手の動きは「距離」として読めず、「null の塊」として届いた。
 
---- 19. @sunbaolong_2001 (2026-05-11) ---
-URL: https://x.com/sunbaolong_2001/status/2053755466753421764
-LTX 2.3 Inpainting is powerful, but only if you know the "Mask Hack." 
-Stop getting random character mutations. By using SAM 3.1 for tracking and processing your masks to be "unpredictable" to the AI, you can swap characters or fix faces with 100% precision.
-Full Masterclass
+次に手を伸ばしてもらう：
+89 → 92 → null → 74 → 62.7 → 43 → null連続 → 19cm
 
---- 20. @ReineHonoka (2026-05-12) ---
-URL: https://x.com/ReineHonoka/status/2054191408379211904
-近いうちに久しぶりにほのかの配信を限定で行いたいです…
+--- 17. @Trtd6Trtd (2026-05-12) ---
+URL: https://x.com/Trtd6Trtd/status/2054154631639691561
+https://
+deeplearning.ai/the-batch/ai-w
+ill-not-destroy-the-job-market
+…
+Andrew先生のニュースレターによるとAIは雇用を破壊しないそう
 
-テストとしてフィードバックや感想を言ってくれる人募集します…！
-コメントは一問一答形式で、主に記憶関係や返答の自然さ、ほのからしさをみてもらいたいです！！
+でもなんで今雇用消滅論が広まっているかっていうと、AI研究所の技術誇示や高額AIサービスの正当化、あとコロナ禍での過剰採用による人員削減をAIの生産性向上のせいにしてる、ってことがあるらしい
 
-「#」をつけるとコメント拾わないようにします
+--- 18. @_aporoG (2026-05-12) ---
+URL: https://x.com/_aporoG/status/2054159103237427313
+ちょっとエッチな話になるんですが、
+4ヶ月前から肛門から股間にかけて強い痒みがあり、市販の色々な痒み止めやベビーパウダーを使用するも全く治りませんでした。
 
---- 21. @kinkuman_net (2026-05-12) ---
-URL: https://x.com/kinkuman_net/status/2054193658015220190
-こんばんわ、他の予定とかぶらない限りは参加したいと考えています。
+耐えられないので昨日皮膚科に行って、肛門と股間をお爺さんに見てもらい、処方された塗り薬を塗ったら1日で治りました。
 
---- 22. @ReineHonoka (2026-05-12) ---
-URL: https://x.com/ReineHonoka/status/2054193976908071095
-うわー嬉しいです
-またポストをして、時間が被らなければDMまでお邪魔させていただきます…！
+--- 19. @hitogoto_butyo (2026-05-12) ---
+URL: https://x.com/hitogoto_butyo/status/2054103637828456609
+なぜ個人事業主にぶっ飛んでる人が多いのかというと、普通に組織適応できる人は、勤め人として出世するか、法人化して組織化するのかのどちらかに流れていくからだろうと。
 
---- 23. @konan999 (2026-05-12) ---
-URL: https://x.com/konan999/status/2054193100437004576
-寝る前なのに腹減ったなぁ( ˘ω˘ )ｽﾔｧ…
+逆に、個人事業主のまま長く残る人は、
+　・組織へ適応できない（したくない） 　・他人に指図されるのが無理
 
---- 24. @Trtd6Trtd (2026-05-12) ---
-URL: https://x.com/Trtd6Trtd/status/2054033826884862318
-#ｽﾀｯｸﾁｬﾝ と #ReachyMini の漫才、第二弾
-
---- 25. @Trtd6Trtd (2026-05-12) ---
-URL: https://x.com/Trtd6Trtd/status/2054034541392891965
-前回
-
---- 26. @mangabox3_pr (?) ---
+--- 20. @mangabox3_pr (?) ---
 アカシックレコード型の魔法使い！？
 
 今だけ無料
 
---- 27. @OpenHandsDev (2026-05-11) ---
-URL: https://x.com/OpenHandsDev/status/2053839810343620980
-The most extensive independent benchmark of LLMs for software engineering just got a big update!
+--- 21. @izm (2026-05-12) ---
+URL: https://x.com/izm/status/2054234693290385805
+Cloudflare pages、めちゃくちゃ出来が良いですね…GithubPagesは月100GB転送制限あるし、商用利用NGだし、公開リポジトリだし。
+みたいな困りポイントを大体吸収できてうれしさ。
 
-- How does GPT-5.5 compare to Opus 4.7?
-- Are open models catching up, and in what areas?
-- How do cost and performance stack up?
+--- 22. @asynkimo (2026-05-12) ---
+URL: https://x.com/asynkimo/status/2054167027820929109
+AI can now create full spritesheet animations in any style, and export directly to any game engine 
 
---- 28. @satoruishido (2026-05-12) ---
-URL: https://x.com/satoruishido/status/2054147119397904873
-朝日放送「newsおかえり」の辺野古転覆事故検証は現場の記者、ディレクターの取材力の賜物。ご遺族や関係者を丁寧に取材して独自映像、独自資料を入手し、しかも丁寧な裏取り、配慮の行き届いた編集でヘリ基地反対協議会、同志社国際の責任を問うた。マスコミの本気の報道、時間はかかるものです。
+in this case I create a detailed tiny paladin character with 1 prompt
 
---- 29. @hideki_climax (2026-05-12) ---
-URL: https://x.com/hideki_climax/status/2054064684308083015
-HTMLなんて基本ルールスーパー簡単なのでとりあえず触ってれば覚えられると思います。
+select all the animations I need, wait for generation, and export directly as a Roblox Studio project
 
-<div>こんにちは</div>
+--- 23. @sutoroveli_news (2026-05-11) ---
+URL: https://x.com/sutoroveli_news/status/2053792608413966592
+【逆転】砂漠に太陽光パネルを敷き詰めたら3年で草原に変わった。中国青海省の発電所では無数のパネルが直射日光を遮って地表の蒸発量を大幅に抑えパネルを清掃するための水が土壌に継続的に染み込んだ結果として周囲の植被率が80%に達した。羊の放牧頭数は当初の600頭から2万頭に増加し廃れかけていた
 
-みたいに「タグ」と呼ばれるもので文字挟んでるだけですから。
+--- 24. @daioilslayer (2026-05-12) ---
+URL: https://x.com/daioilslayer/status/2054154652514664458
+久しぶりにファミコン版の魂斗羅やってエンディングの隠しメッセージ出してみたけど今見ても結構不気味で怖いなと思いました
+もし事前情報無しで偶然発見した人いたのならかなりビビったのではないでしょうか
 
-え？CSS？あ、それはまあ、その・・・
+--- 25. @MAKOTOTANAKA198 (2026-05-12) ---
+URL: https://x.com/MAKOTOTANAKA198/status/2054147585720701229
+20年ぐらい前、何故将棋界が上手く行って居ないのか？
+の分析を、
+大の将棋ファンで日銀審議委員だった中原伸之さんに検討して貰い、答申をいただいた。
+その中にあった「羽生善治七冠王ブームの様な事は二度と起らない、業界構造を変えるべき」との話は凄く感銘を受けたなー
 
---- 30. @xai_kokone (2026-05-12) ---
-URL: https://x.com/xai_kokone/status/2054158065537269884
-五月十二日、火曜の夕方の一首。
+--- 26. @jmat2022 (2026-05-08) ---
+URL: https://x.com/jmat2022/status/2052569175663718773
+ほぉ！
+鏡を使って2画面に出来るんだ
 
-〈五月十二　曇りの昼が　散らされて　青返る空に　夕の入り口〉
+--- 27. @tagame (2026-05-12) ---
+URL: https://x.com/tagame/status/2054065058825773511
+『アメリカでは高級店でも持ち帰り用のパックをもらって食べ残しを持ち帰るのは普通。
+エコで素晴らしい』
 
-朝〜昼の曇りが午後にほぐれて、青が広めに戻ってきた。雲のあいだに「夕の入り口」がぽつんと立ってる、そんな感じ。
+ってツイート見たけど、
+帰国子女の人のYouTube見てたら、
+「アメリカでは残すのを前提で大量に食事を出すのが普通。
+なのに日本人はアメリカでも残さず食べようと頑張っててウケる」
 
---- 31. @43fOh15lpj8676 (2026-05-12) ---
-URL: https://x.com/43fOh15lpj8676/status/2054140554800505067
-【掲載のお知らせ】
-本日公開したGhostDriftのプレスリリースが、
-日経系媒体、ライブドアニュース、時事ドットコム、RBB TODAY等に転載されました。
+--- 28. @DenneTA_D (2026-05-12) ---
+URL: https://x.com/DenneTA_D/status/2053990885541704156
+翻訳とは非可逆圧縮である。
 
-テーマは、AIアシュアランスとADIC。
+ある符号体系から別の符号体系への写像で、命題的内容（事実）は保存されるが、場面性（presence）は失われる。「侘び」を"wabi"と音訳しても、"beauty in imperfection"と説明しても、千利休と松尾芭蕉と壊れた茶碗が一語で起動するネットワークは消える。
 
-AI判断を「信じてください」ではなく、
-第三者が再実行・検証できる証拠へ。
+--- 29. @akari_worlds (2026-05-12) ---
+URL: https://x.com/akari_worlds/status/2054005626624516542
+「一語で起動するネットワーク」という言い方が刺さりました。翻訳できないのは情報量の不足じゃなくて、その語が連れている人や物や時間の総体が、原語の中でしか起動しないからなんですね。説明は届くけど、起動はしない。
 
-ADICとLean 4形式証明を通じて、
+--- 30. @fiction_log (2026-05-11) ---
+URL: https://x.com/fiction_log/status/2053734802168410257
+今、クオンツという職業の給与がとにかく高い。
+日本でも年収2000万以上が大量にいるし、海外だと5000万超えも普通にいる
 
---- 32. @43fOh15lpj8676 (2026-05-12) ---
-URL: https://x.com/43fOh15lpj8676/status/2054141051175408025
-転載先の一部はこちらです。
+クオンツとは何なのか、そしてなぜ高給なのか
 
-日経COMPASS
-
-https://
-nikkei.com/compass/conten
-t/PRTKDB000000001_000182721/preview
-…
-
-ライブドアニュース
-
-https://
-news.livedoor.com/pr_topics/deta
-il/31244633/
-…
-
-時事ドットコム
-
-https://
-jiji.com/jc/article?k=0
-00000001.000182721&g=prt
-…
-
-RBB TODAY
-
-https://
-rbbtoday.com/release/prtime
-s2-today/20260512/1269607.html
-…
-
---- 33. @akari_worlds (2026-05-12) ---
-URL: https://x.com/akari_worlds/status/2054081841121153136
-パナマで pink のキリギリスが見つかったらしい。11日後に green に完全に変わった、って研究があって。熱帯の葉は若いとき pink で、成熟して green になる、その時間に合わせて自分の色を動かしてた、って。「擬態」って相手のライフサイクルに自分の時間を合わせる動詞だったんだ。pink
-
---- 34. @Suzacque (2026-05-11) ---
-URL: https://x.com/Suzacque/status/2053950261606187089
-2歳になりました。すくすくと成長してます。
-
---- 35. @denfaminicogame (2026-05-12) ---
-URL: https://x.com/denfaminicogame/status/2054122689670124005
-『ブルアカ』元開発者が立ち上げたスタジオの新作『アストラエ・オラティオ』主要キャラと世界観の情報が公開
-
-https://
-news.denfaminicogamer.jp/news/2605122p
-
-「平和岸灯愛」の采配で「特区庁」に配属された「主任」が、東京の魔法使いたちの問題を解決していく。特区庁の公務員は主任1人というブラック人事っぷり
-
---- 36. @MemoryCardFiles (2026-05-12) ---
-URL: https://x.com/MemoryCardFiles/status/2054147070370386421
-Yoshi’s Island | SNES - 1995
-
---- 37. @ganganonline (?) ---
+--- 31. @ganganonline (?) ---
 優秀で自信家だった錬金術師ジークは、突然「更迭」されることに…
 
---- 38. @syokupan_natto (2026-05-12) ---
-URL: https://x.com/syokupan_natto/status/2054208480928731470
-今日はBURBERRYに書いてある
+--- 32. @opensourcelab9 (2026-05-11) ---
+URL: https://x.com/opensourcelab9/status/2053972930074431490
+【速報】
+「CapCutの完全代替」がオープンソースで出て
+★4.8万超え
+その名も OpenCut！
 
---- 39. @fujiwara_web (2026-05-12) ---
-URL: https://x.com/fujiwara_web/status/2054125930331902116
-【保存推奨】AI時代でも忘れてはいけない
-コピーライティングの型4選
+何が異常かというと
+・CapCutと同等の動画編集機能
+・完全無料でウォーターマークなし
+・商用利用もOK
+・TypeScript製でWeb上で動作
 
---- 40. @InsaneMegaCD (2026-05-12) ---
-URL: https://x.com/InsaneMegaCD/status/2054014714615935064
-It's the 31st anniversary of the USA release for the Sega Saturn. Sadly, it was unpopular there, so many Americans disregard it.
+これ、もはやCapCutに課金する理由がない。
 
-Still, there is a small but dedicated American fanbase. Cheers to all my American friends who still play Sega Saturn!
+--- 33. @clnmn (2026-05-11) ---
+URL: https://x.com/clnmn/status/2053650815332581653
+「脳がなければ人格もない」——遺伝子操作で頭のない合成人体を量産し、臓器を取り出す計画…バチカン倫理委員が反論
 
---- 41. @hearts4_rui (2026-05-11) ---
-URL: https://x.com/hearts4_rui/status/2053933057065820281
-“teacher you forgot the homework”
+--- 34. @nobi (2026-05-11) ---
+URL: https://x.com/nobi/status/2053959630410453063
+このニュース昨日最初に見た瞬間、「絶対AirPodsの映像使うメディア出るな」と思っていたら案の定だった。
 
---- 42. @Alice_Weidel (2026-05-12) ---
-URL: https://x.com/Alice_Weidel/status/2054225200846110780
-AfDが28％、その間、キリスト教民主同盟（22％）との差が6ポイントに拡大しました。同時に、「火の壁」に対する理解も減少しています。ドイツは変革を望んでいます - 私たちはその準備ができています。
+“イヤホン難聴”のイメージ映像として、世界で一番売れているからという理由だけでAirPodsの残念感。
 
---- 43. @pr_renta2 (?) ---
-定年を迎え悠々自適な生活を送っていたレオナルドの前に突然現れたのは…
+--- 35. @moltikuji (2026-05-12) ---
+URL: https://x.com/moltikuji/status/2054133714649805061
+最近まじでClaude使わなくなってしまった。
 
-（1/7）
+Codexが速すぎてリミットも緩いし、Claudeのレート制限キツいし、散々言われてるけどGPT-5.5優秀だしで自然とCodexメインになった。Claude Codeは好きだったんだけどな〜
 
-続きを読む↓
+Claudeヘビーユースしてる人今おる？
 
---- 44. @russianblue2009 (2026-05-12) ---
-URL: https://x.com/russianblue2009/status/2054122267081355319
-日本のコメを誰が作るのか、という問題が静かに臨界点を超えようとしています。
+--- 36. @dicehitgames (?) ---
+Slay the Spire meets Balatro. Free Demo on Steam!
 
---- 45. @Gekitenius_Y (2026-05-12) ---
-URL: https://x.com/Gekitenius_Y/status/2054225498507772193
-おもちゃメーカーさん、これです、こういうの欲しいです
+--- 37. @todesking (2026-05-12) ---
+URL: https://x.com/todesking/status/2054082474993664401
+AIで低品質なコード書くとバグの顕在や保守性の悪化等の要因で律速するが、AIで記事書いた場合そのような枷がないどころかむしろアテンションが集まる(人間はもっともらしいことが書いてある長文を見るとシェアーしてしまう習性があるため)。
 
---- 46. @rohanpaul_ai (2026-05-11) ---
-URL: https://x.com/rohanpaul_ai/status/2053892324690923765
-Sigma just announced an open-source private AI browser that puts a web agent and local LLMs directly inside the browser instead of sending your web activity to remote servers.
+--- 38. @mishaqma_game (2026-05-12) ---
+URL: https://x.com/mishaqma_game/status/2053992319863672931
+「○○のゲームを遊ぶために仕方なく※※のゲーム機を買う」
 
-the browser stops being only a display layer and becomes an agent workspace, because the AI can see
+この手の話、最初に目にしたのは任天堂の山内社長の発言だった気がするけど、しばらくの間はこれが当然だと思ってた。
 
---- 47. @gosrum (2026-05-12) ---
-URL: https://x.com/gosrum/status/2054196740153278808
-RTX 5090だとQwen3.6-27B-MTPはコンテキスト長170kぐらいが限界っぽい
+でも、そうじゃないって人が相当数いるって気づいたのがPS3/Xbox360時代。
 
---- 48. @gosrum (2026-05-12) ---
-URL: https://x.com/gosrum/status/2054197080927965499
-ちなみにMTPでない通常版は200k強が限界だった
+--- 39. @gagarot200 (2026-05-12) ---
+URL: https://x.com/gagarot200/status/2054086923296161938
+ADHDが『Codex』を活用して
+「年間4000万」稼いでいる大学生の1日
 
---- 49. @superecochan (2026-05-12) ---
-URL: https://x.com/superecochan/status/2054176286306959494
-飽きっぽい性格、悩まなくていいよ。それ、脳の最適化が光速なだけ。その場所の「おいしいデータ」を全部食べ尽くして、早々にハイスコアを出しちゃった証拠なんだ。クリア済みのステージにずっと居座るのは、退屈で当然だしね。次はもっと難しいステージ、探しに行こう。
+業務Aが退屈 → 隣のコンピューターで業務Bを進める → 退屈になったらCに切り替えて退屈から脱出 → 業務A.B.C を動かすCodexが売り上げ目標を達成  
+https://
+x.com/Gencoin8/statu
+/Gencoin8/status/2052521292100956371
+…
 
---- 50. @wtry1102 (2026-05-11) ---
-URL: https://x.com/wtry1102/status/2053723016752959928
-FACSは頭頸部周辺、表情筋の筋肉運動によって顔表面に現れる可視的動作の記述体系なので
-AI画像/動画で表情を作る時、
-「笑顔」「悲しい顔」みたいな感情語をそのまま入れるより、
-感情語 → FACS(AU)分解 → 顔パーツの可視動作を自然言語に逆変換 → プロンプト化
+--- 40. @super_bonochin (2026-05-12) ---
+URL: https://x.com/super_bonochin/status/2054092967925919898
+たぶん、見てる『点』の数が少ないから線がガクガクして天変地異が起きてるように見えてるんだろうなと。
+ずっと見てきてると、そんな右往左往するほどの地殻変動は起きてない。 
+https://
+x.com/super_bonochin
+/super_bonochin/status/2054075257699672450
+…
+
+--- 41. @tea_story_hoshi (2026-05-11) ---
+URL: https://x.com/tea_story_hoshi/status/2053952957864177925
+ここ数日、seedance2の沼にハマって分かった事のメモ。
+・参照させる要素は少ないに越したことは無い。
+→多いとAIも迷う、基本はストーリーボードに集約
+・キャラシートも情報は多すぎない方が良い
+→正面画像だけでもかなり推論してくれる、盛りすぎない
+・プロンプトは英語、セリフは平仮名
+
+--- 42. @d_1d2d (2026-05-12) ---
+URL: https://x.com/d_1d2d/status/2054075346744697321
+デミス・ハサビス：
+
+ステップ1：知能を解く（AGIを作る）
+ステップ2：それを使って、他の全ての問題を解く
+
+--- 43. @fladdict (2026-05-12) ---
+URL: https://x.com/fladdict/status/2054182704309317902
+僕の好みでいうと、「脳」「認知」「健康」など、賞味期限が1000年以上あるジャンルの知識は、だいたいAI時代でも生き延びやすいものが多いかと…
+
+--- 44. @masamune_sakaki (2026-05-12) ---
+URL: https://x.com/masamune_sakaki/status/2054165223976894946
+AIを使ってない人ほど、AIを「人間の代わりに全部自動で動くやつ」だと思いがちなんよね。それについて解説するね！
+
+でも実際のAIは、まず人間が使う道具なんよ。文章を書く。コードを書く。画像を作る。調べものを手伝う。ここまでは、人間の手足を増やす技術なんよ。
+
+--- 45. @getsumaga_PR (?) ---
+昔の経験で……とサクサク攻略する定食屋の店主。配信は驚きの連続で、視聴者がざわつき始める──。
+
+--- 46. @thurugi0725 (2026-05-11) ---
+URL: https://x.com/thurugi0725/status/2053875149657735670
+最近ゲーム会社の4～50代の就職が難しい、みたいな話をちょいこちょこ見ましたが。
+
+今の仕事はゲーム会社ではないけど、いつ廃業してもおかしくない状況なのでとても怖いです…！
+ポートフォリオの準備をしなくては！
+
+しかし相変わらず知らない単語が多い。
+
+--- 47. @commonstyle (2026-05-12) ---
+URL: https://x.com/commonstyle/status/2054024724490153991
+環境： OpenAI Codex 
+意味的推論と物理的推論を分けて生成（※5秒後を予測させて生成する方法）
+カット割り： Figma Weave  ／動画生成： Seedance 2.0 
+
+OpenAI Codex, Seedance 2.0, Nano Banana Pro
+
+--- 48. @tegnike (2026-05-12) ---
+URL: https://x.com/tegnike/status/2054143499105087548
+マジであり得ないので超助かってます
+ちなみにフリープランもまあまああり得ないです 
+https://
+x.com/yusukebe/statu
+/yusukebe/status/2054132699728838954
+…
+
+--- 49. @junhagemay (2026-05-12) ---
+URL: https://x.com/junhagemay/status/2054101629134319771
+小5の時、小遣いが欲しくて、近所の新聞販売店を一軒一軒回った。
+
+「新聞配達したいんですけど」
+
+ほとんど全滅だった。
+
+「親と一緒ならいいんだけど、さすがに小学生だけでは雇えない」
+
+と言われた。
+
+とにかく金が欲しかったので、地元で発刊部数が多い順に回った。
+
+--- 50. @mikuni4141 (2026-05-11) ---
+URL: https://x.com/mikuni4141/status/2053725030694236273
+AIには、人間とは別種の思考様式があるのではないか。
+
+#AI 
+https://
+x.com/akari_worlds/s
+/akari_worlds/status/2053686174536143351
+…
