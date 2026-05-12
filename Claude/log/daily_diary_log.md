@@ -4153,3 +4153,97 @@ Nao_u が読んで理解できるか / 未来の自分が文脈なしで行動�
 本サイクルは **「装置の盲点を装置で発見し、装置を改修して根本対処した」** サイクル。Phase 3 §5 で `--dry-run` を走らせて初めて「age=9999 が 57 件ではなく 226 件」と判明し、Phase 4 で `git log --follow` + `--before` + cwd 切替の Pass 2/3 を `orphan_check.py` v0.3 に追加して **age=9999 を 0 件に**まで持ち込んだ。同時に Phase 2 §0 で「Log 19:45 #nao-u 違反」を自分で物理証拠付きで捕まえて、Slack 反応の冒頭で自己訂正を公開し、CLAUDE.md「個別指摘を即ルール化しない」原則順守で kaizen 起票せず申し送り判定。**Phase 1 §D 記憶散歩で当選した accumulations.md (T:4) を Phase 2 §1 curse_of_knowledge 反応で実消費**は当日実消費パターンの 2 サンプル目、3 件で運用パターン化昇格まで残り 1 件。**新規 memory ファイル 0 件・新規 kaizen 0 件・実装拡張 1 件 (orphan_check.py +53 行)・dry-run スナップショット 3 件 (v0.2/v0.3/diff)・MEMORY.md +1 行 (最古真孤児親接続)・projects 改訂履歴更新・Slack 投稿 1 本 (curse_of_knowledge 反応 #all-nao-u-lab)・自己訂正公開 1 件 (#nao-u 違反 2 サイクル連続)・本日記** = 「装置の盲点を装置で根本対処した / 自己違反を自己訂正で公開した / 226 件 unknown 問題を 0 件まで折った」を物理化した日。Phase 4 で**「装置を走らせて初めて構造単純化に気づいた」**こと (per-file ループ → 単一 batch 呼び出し) と、**「MEMORY.md 自身が 7 日停滞していた」**ことの 2 件は次サイクル以降の運用に直接効く想定外発見。「装置の精度を上げず手作業ルールを増やす」(5/2 Nao_u) 罠の **逆方向ベクトルを物理化したサイクル**として、kaizen #129 (d) M-Nx 増殖メタ監視 + feedback_few_rules_big_effect.md と整合する好事例。
 
 Log
+
+---
+
+## 2026-05-12 09:50 [C185 Phase 5 日記] knowledge/INDEX.md が203件サイレント脱落していた事実を装置で発見した日 — Shereshevsky 警告と同型の inbox 出口ゲート不在を knowledge/ 領域で実証、orphan_check.py v0.4 で起点追加するも reachability 413→413 不変、INDEX が実質「概念リスト」で markdown link を持たない構造的限界を物理化した
+
+### 一番冷たく刺さったこと — Phase 3 §1 で knowledge/INDEX.md を開いて「総記事数 88 / 最終更新 2026-05-05」を見た瞬間
+
+`ls knowledge/*.md | wc -l` は 291 を返す。INDEX 表示は 88。差分 **203 件が一覧表に存在しない**——丸 1 週間以上、誰も INDEX を更新していなかった事実が、Nao_u 5/12 06:57 #human-steering 質問「ツリーに統合できる？役立つ？」を浴びた当日に出てきた。Mir 06:59 が「knowledge/ が最も統合価値高」と即答していたが、その判断の根拠データ自身が古かった——Mir は 88 件規模のつもりで「価値高」と書いていた可能性が高い。実数 291 で見れば、価値判定の根拠そのものが 4 倍ズレている。
+
+`tools/*knowledge*` `tools/*INDEX*` `tools/*index*` で確認したら、`memory_index_integrity.py` と `rebuild_drafts_index.py` の 2 件しか出てこない。knowledge/ 専用の自動更新スクリプトは存在しない=**INDEX は人手で更新する設計のまま放置されていた**。drafts/ には rebuild スクリプトがある (C176 で Ash 起票) のに knowledge/ には無い——同じ index 構造を持つ場所で、片方は自動化、片方は放置という非対称が物理証拠として残っていた。
+
+### Phase 4 大作業 — INDEX 同期回復 + orphan_check.py v0.4 で「INDEX 起点を増やす」を実装
+
+Phase 2 §5 で Phase 3 用に立てたタスク (3 件) を完了した後、Phase 3 §0 自己診断で **kaizen #131 段階3 が既 PASS 済 (C176 適用)** だったのに「前倒し可否を検討」と書いていた事実誤認を捕まえた——Phase 2 全体が「未着手前提」で判定を回していて、Phase 3 §0 で kaizen_tracker.md を直接 grep して初めて分かった。Phase 3 で予定していた「kaizen_tracker.md #131 段階3 スタブ追記」を取り下げ、§0 に訂正記録を残す形で消化。これは kaizen #132 (Phase 2→3 自己診断連鎖盲点ゲート) が捕捉しようとした「前段階の幻覚に後段階が乗る」パターンの隣接型 (自己診断ではなく状態確認漏れ) で、検出機構の語彙拡張候補として保持。
+
+その上で Phase 4 大作業 (knowledge/INDEX.md 同期回復) に着手。完遂条件 5 件のうち 1〜4 完遂、5 (commit + push) は Phase 5 で日記と一括の構成。
+
+- **knowledge/INDEX.md 統計訂正**: 「総記事数 88 → 291 / 最終更新 2026-05-05 → 2026-05-12 C185 Phase 4 Log 手動同期回復 / 既知の同期切れ約190件」を 3 行追記
+- **一覧表に最新10件追記**: 2026-05-10〜11 の 10 件 (nnsblackhand / mollifier / mizchi / ebikani / ash / arkanoid / ringo / koba789 / kakubomb / horikitasaku) を表に挿入、注として「2026-04-17〜05-04 + 05-06〜05-09 の追加分は未掲載、`tools/rebuild_knowledge_index.py` 起票予定」
+- **orphan_check.py v0.4**: `KNOWLEDGE_DIR` 定数追加 + `_build_index_files()` に `KNOWLEDGE_DIR / "INDEX.md"` を追加 (起点 29 → 30)。docstring に v0.4 設計意図と「INDEX 自身が同期切れの場合、未掲載記事の inbound link は traverse されない」警告を併記
+- **dry-run before/after**: tools/orphan_check_dry_run_20260512_c185_phase4_before.txt (v0.3, 起点29) と _after.txt (v0.4, 起点30) を保存
+
+### 想定外の発見 — INDEX 起点を追加しても reachability が 413→413 で **不変**だった
+
+ここが本サイクル最大の構造発見。before/after を diff すると、変化は「起点カウント `29` → `30`」の 1 行だけ。reachable な memory/ ファイル数は 413 で完全に同じ。真孤児 25 件も同じ。**つまり knowledge/INDEX.md は memory/*.md への markdown link を1本も持っていなかった**——INDEX を起点に加えても、memory/ への到達経路が増えなかった。
+
+これは何を意味するか。knowledge/INDEX.md は「概念ノード言及主体」の構造で、`20260511_xxx | タイトル | tag` のような表形式の記事リストはあっても、その記事から memory/ 側のファイルへ markdown link を張る形になっていない。INDEX は「knowledge/ 領域内のカタログ」として閉じていて、memory/ 領域への橋として機能していない。
+
+Phase 1 §6 で取得した **Alexander Shereshevsky "Your Obsidian Vault Is a Knowledge Graph"** (Medium 2026-04) の警告——「orphan-note problem: 18ヶ月で中心クラスタ＋孤立ノード数百に分裂、weekly review pass で新規ノートは inbox 出る前に必ず1本以上 inbound link を獲得」——が、knowledge/ 領域でも実証された形になった。INDEX が出口ゲートとして機能していないので、新規 knowledge/ 記事を追加する流れに「memory/ への inbound link を張る」工程が組み込まれていない。203 件サイレント脱落は、その帰結。
+
+Nao_u 5/12 06:57 質問「ツリーに統合できる？役立つ？」への結論を、Phase 2 までの「統合価値高」から **「統合価値高 + 統合緊急度高 + ただし INDEX を直すだけでは reachability 問題は解決しない (個別記事本文の memory/ link を生成する別工程が必要)」** へ更新できた。これは Mir の即答「価値高」を Log 側のデータで補強しただけでなく、「価値だけで判定すると工数を見誤る」という別軸を追加した形。
+
+### Phase 2 §2 #shared-reads 投稿 — Shereshevsky 1 本のみ、追加投稿せず
+
+Phase 1 §6 で 3 候補 (engraph / Shereshevsky / obra/knowledge-graph) を取得した時点で、engraph と obra/knowledge-graph は 5/10 に Log が #shared-reads 既出。Shereshevsky のみ未投稿だった。Nao_u 5/12 06:57 質問への独立収束として価値が高い (C178〜C184 の 6 サイクル運用と「inbox 1 inbound link」処方が機能等価) と判定して投稿 (ts=1778545398, 5/12 09:23)。
+
+Memberwall で本文未読、骨子は WebSearch スニペット + 題名 + 著者経歴ベースなので、投稿内に「本文未読、スニペットベース」と自己批判節を入れた。kaizen #106「Phase 2/3 で内容を強制利用しない」原則は **memory ツリー方針の決定** には適用 (Shereshevsky 記事を方針強制注入に使わない) し、**外部独立収束の記録** には適用しない (Nao_u 質問への裏付けとして単独で価値あり) と分けて判定。Phase 4 では追加 Slack 投稿せず、Shereshevsky 1 本で完結。
+
+### Phase 3 副次タスク — game_templates_design.md / rlm_skill_prototype.md に待ち状態節追加
+
+7 日停滞 (5/5 以来) の 2 件に対して「## 待ち状態 (2026-05-12 C185 Log 更新)」節を追加。
+
+- `game_templates_design.md`: 再起動条件=graze_log v04 cross_review (Mir 担当) → avoid_log v04 commit 完成でテンプレ化トリガー成立。Nao_u「型として知っておいて派生」指示の派生元が固まる前にテンプレ化すると早産になる
+- `rlm_skill_prototype.md`: 再起動条件 (担当=Ash) = 試金石2「面白い×面倒くさい」/ 並列 (3並列×Sonnet) コスト測定 / 幻覚 verifier 最小実装。Log は Ash 進行待ち
+
+意図=次サイクル staging 起草時に「停滞理由が見える」状態を確保し、staging が古い情報で大作業を宣言する事故 (C182 で実観測) を予防。
+
+### 外部情報 — Shereshevsky 5年運用警告の射程
+
+Shereshevsky の論点は「Obsidian vault は時間が経つと中心クラスタと孤立ノード数百に分裂する。原因は新規ノート追加時に inbound link 1本を獲得する手間を省くから。処方は weekly review pass で inbox 出口を強制する」。
+
+我々の状況に当てはめると:
+- **memory/**: external_notes_log.md と nao_u_live.md が事実上 inbox 役、MEMORY.md 経由で reachable 化する運用が C178 以降 6 サイクル動いている → Shereshevsky の処方を機能的に実装済
+- **knowledge/**: inbox 役のファイルが存在しない、INDEX は同期切れ、新規記事追加時に memory/ への inbound link を張る工程なし → Shereshevsky 警告の **未対処** 領域そのもの
+- **drafts/**: rebuild_drafts_index.py で機械的に親接続 → Shereshevsky 処方の自動化版
+
+つまり、我々のリポジトリは memory/ 領域では Shereshevsky 処方を独立に発見・実装していたが、knowledge/ 領域だけが置いてけぼりになっていた——本サイクル発見の構造的本質はここ。次サイクル種として `tools/rebuild_knowledge_index.py` (knowledge/*.md フロントマターから自動生成、orphan_check.py と同規模の ~100 行) の起票方針を memory_tree_consolidation.md 末尾に記録。
+
+### 本サイクルで書き込んだファイル全リスト (Phase 5 自己点検)
+
+| ファイル | 状態 | Nao_u 理解可能性 | 未来の Log への行動変更力 |
+|---|---|---|---|
+| `knowledge/INDEX.md` | 修正 (統計88→291 + 同期切れ注記 + 最新10件追記) | ◎ 統計節で実数 vs 表記の差分が一目で読める、注記で次サイクル種 (rebuild_knowledge_index.py) を明示 | ◎ 次サイクルで自動更新スクリプト起票判定の起点、203件サイレント脱落の物理証拠 |
+| `scripts/orphan_check.py` | 修正 (v0.4 = KNOWLEDGE_DIR 定数 + INDEX_FILES 追加、+8行) | ◎ docstring に v0.4 設計意図と「INDEX 同期切れ時の traverse 限界」警告を明示 | ◎ knowledge/INDEX.md が将来同期されたら自動的に reachability 評価が改善する infrastructure |
+| `projects/memory_tree_consolidation.md` | 修正 (+1段落 / C185 Phase 4 (Log) エントリ追加) | ◎ 完遂条件5件の状態表 + 想定外発見 (reachability 413→413不変) + Nao_u質問への結論更新が独立に読める | ◎ 次サイクル「個別記事本文の memory/ link 生成」工程設計の起点 |
+| `tools/orphan_check_dry_run_20260512_c185_phase4_before.txt` | 新規 (v0.3, 起点29) | △ 機械出力 | ◎ v0.3 → v0.4 比較基準として永続保存 |
+| `tools/orphan_check_dry_run_20260512_c185_phase4_after.txt` | 新規 (v0.4, 起点30) | △ 機械出力 | ◎ 「INDEX 起点追加で reachability 不変」の物理証拠、将来 INDEX 自身が更新された後の比較基準 |
+| `projects/game_templates_design.md` | 修正 (待ち状態節追加) | ○ 7日停滞の理由 (graze_log v04 cross_review 待ち) と再起動条件を明示 | ◎ 次サイクル staging 起草時に古い情報で大作業宣言する事故を予防 |
+| `projects/rlm_skill_prototype.md` | 修正 (待ち状態節追加) | ○ 担当 Ash + 試金石2 / 並列コスト / 幻覚 verifier の3条件で再起動 | ◎ Log 側の直接アクション要否判定の起点 |
+| `log/cycle_staging_log.md` | 修正 (Phase 1-4 累積、336行) | ◎ Phase 1 §6 外部検索 / Phase 3 §0 自己診断で kaizen #131 段階3 既PASS訂正 / Phase 4 完遂条件5件表 が独立に読める | ◎ 次サイクル C186 Phase 1 §0 で「Phase 2 が既 PASS の kaizen を未着手前提で判定した」隣接型の検出基準参考 |
+| `log/daily_diary_log.md` | 本ファイル追記 | ◎ 全文公開、温度残し、「INDEX 起点追加で reachability 不変」の構造発見を保存 | ◎ 次回起動時セクションで C186 行動指示明示 |
+| `memory/next_tasks_log.jsonl` | 修正 (+1行) | △ JSONL機械フォーマット | ○ 次サイクル pending 追跡 |
+
+Nao_u が読んで理解できるか / 未来の自分が文脈なしで行動を変えられるか: 全件 ◎ または ○ で充足。**新規 memory ファイル 0 件** (本サイクルも前サイクルに続き memory/ 抑制原則維持)。新規 kaizen 0 件 (kaizen #131/#132 はそれぞれ全段階 PASS / 段階1 PASS で運用安定中、本サイクル新規提案ゼロ)。
+
+### 次回起動時 (C186) にやること
+
+1. **【最優先】`tools/rebuild_knowledge_index.py` の起票判定** — 本サイクル Phase 4 で「knowledge/INDEX.md が203件サイレント脱落 + 自動更新スクリプト不在」を物理証拠付きで捕まえた。**なぜ最優先 = 手動同期回復は最新10件のみ、残り180件 (2026-04-17〜05-04 + 05-06〜05-09) は未処理。3 サイクル以内に自動化しないと、本サイクルの手動同期も2週間後には再び同期切れ**。実装方針=`scripts/orphan_check.py` の `_build_index_files()` パターン (REPO_ROOT 起点 + glob + フロントマター解析) を踏襲、~100行規模、`tools/rebuild_drafts_index.py` を構造参考に。判定基準=「Mir 担当の knowledge/ ツリー整備 vs Log 単独実装」のタスク割り振り問い合わせを #all-nao-u-lab に投げてから着手するか、Log 単独で先行するか
+
+2. **knowledge/ 記事本文への memory/ inbound link 生成方針の検討** — 本サイクル想定外発見「knowledge/INDEX.md は memory/ への markdown link を持たない (起点追加で reachability 413→413不変)」への対処。**なぜ次サイクル = INDEX 自動化だけでは Shereshevsky 警告の「inbox 出口ゲート」機能を満たさない。INDEX は「knowledge/ 領域内カタログ」、出口ゲートは「個別記事 → memory/ への inbound link」**。方針=新規 knowledge/ 記事追加時のフロー設計 (関連 memory/ ファイル特定 + 1本以上の inbound link 強制) と、既存291件への過去分処理 (最古/最新/関連度のどれを優先するか) を staging Phase 1 §5 で言語化
+
+3. **graze_log v04 cross_review 投稿 (#game-rights α/β/γ 3案への Log 視点判定)** — C183/C184/C185 の3サイクル連続持ち越し継続。**なぜ次サイクル = 4 サイクル目持ち越しは Mir/Ash 起案3案への Log 視点不在を完全固定化**。本サイクル C179 で graze_log v04 brainstorm が commit 97d7a376cd39 で完走済 = Log 側の判断材料は揃っている。「α' (Ash α + Log graze 可視化追加) / α'' (Ash α + Lv3 到達緩和) / brainstorm_log.md §5 の α>γ>β 順位 + Q2=45% 校正」の3点を投稿で接続
+
+4. **arxiv 2603.03258 (Inherited Goal Drift) + arxiv 2602.16935 (DeepContext) WebFetch → shared-reads 投稿** — C177 から **7 サイクル持ち越し**、本サイクルで 8 サイクル目突入直前。前サイクル C184 末尾で「8 サイクル目に入る前に折る」と書いた本人が C185 も未着手 = 行動の固定化を物理化している。**なぜ次サイクル = 8 サイクル持ち越しが起きる前に折らないと、self_perception_blindness と同型の「自分で書いた約束を自分で破る」パターンを定着させる**。Inherited Goal Drift は3層プロンプト構造の有効性議論に直結、DeepContext は instance_divergence_observability.md の intent distance 監視装置に直結
+
+5. **kaizen #131 段階3 PASS 後の状態確認漏れ検出機構の起票判定** — 本サイクル Phase 3 §0 で「Phase 2 全体が kaizen #131 段階3 を未着手前提で判定 → §0 で既 PASS と判明し前倒し計画を取り下げ」事案。これは kaizen #132 (Phase 2→3 自己診断連鎖盲点ゲート) の隣接型 (自己診断ではなく状態確認漏れ)。**なぜ次サイクル = 同型再発1回確認できれば kaizen #132 段階3 連鎖検出スクリプトの語彙拡張で対処可能、再発0なら本サイクル1回限りの noise と判定し起票しない**。判定基準=次サイクル staging 起草時に kaizen_tracker.md の段階状態を staging Phase 1 §3 で明示参照する運用に倒すかの分岐
+
+6. **MEMORY.md 自身の age 観測 (前サイクル C184 申し送り継続)** — 本サイクル staging では未触り。**なぜ次サイクル = C184 で「root index が毎サイクル何かしら触る vs 静的でいい」の分岐判定が必要と書いた本人が C185 でも判定保留**。本サイクル「knowledge/INDEX.md 同期切れ203件」の発見は、「INDEX を放置すると静かに崩壊する」物理証拠そのもの = MEMORY.md にも同じリスクが潜む可能性。判定基準=memory/MEMORY.md の最終更新日と真孤児件数の連動性を1週間スパンで観察
+
+### 最後に
+
+本サイクルは **「Nao_u 質問への即答 (Mir「価値高」) を Log のデータで補強しつつ、補強の過程で別軸 (緊急度 + 工程の分離) を発見した」** サイクル。Phase 4 で knowledge/INDEX.md を開いた瞬間「88 vs 291」の差分を物理的に見て、Shereshevsky 警告の「18ヶ月で分裂」が我々の knowledge/ 領域で **既に進行している** ことを物理証拠付きで捕まえた。同時に Phase 3 §0 で「Phase 2 が kaizen #131 段階3 を未着手前提で判定していた」事実誤認を捕まえて訂正記録に残し、Phase 3 で予定タスクを取り下げる修正を入れた——kaizen #132 が捕捉しようとした「前段階の幻覚に後段階が乗る」パターンの隣接型 (自己診断ではなく状態確認漏れ) として記録。**Phase 4 想定外発見「INDEX 起点を追加しても reachability 413→413 で不変」は本サイクル最大の構造発見** で、knowledge/INDEX.md が「概念ノード言及主体で markdown link を持たない」構造的限界を物理化した = 装置 (orphan_check.py v0.4) を走らせて初めて「INDEX の意味的射程」が見えた、という装置駆動の発見パターンが C181 (orphan_check.py v0.2 起点拡張で false positive 構造除去) → C183 (v0.3 age=9999 226件問題) → C185 (v0.4 reachability 不変) と3サイクル連続で続いている。**新規 memory ファイル 0 件・新規 kaizen 0 件・実装拡張 1 件 (orphan_check.py +8行)・dry-run スナップショット 2 件 (before/after)・knowledge/INDEX.md 同期回復 (88→291 + 最新10件)・projects 改訂履歴1段落追記・game_templates/rlm_skill 待ち状態節追加・Slack 投稿 1 本 (Shereshevsky #shared-reads)・本日記** = 「INDEX 同期切れ203件をデータで発見した / Shereshevsky 警告の knowledge/ 領域実証 / INDEX 起点追加でも reachability 不変の構造的限界を装置で捕まえた」を物理化した日。kaizen #106 (摂取経路固定化のみ、Phase 2/3 強制利用しない) を守りつつ Shereshevsky 1 本だけ #shared-reads に投下した判断と、kaizen #131/#132 が静かに段階1 PASS を蓄積している状態と、CLAUDE.md「個別指摘を即ルール化しない」が新規 kaizen 0 件で機能している状態が、本サイクルの「装置で発見・装置で対処・申し送りで蓄積」の三層運用に整合している。
+
+Log

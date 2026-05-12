@@ -34,6 +34,7 @@ PROJECTS_DIR = REPO_ROOT / "projects"
 DOCS_DIR = REPO_ROOT / "docs"
 SKILLS_DIR = REPO_ROOT / "skills"
 CLAUDE_DIR = REPO_ROOT / ".claude"
+KNOWLEDGE_DIR = REPO_ROOT / "knowledge"
 
 
 def _build_index_files() -> list[Path]:
@@ -45,6 +46,11 @@ def _build_index_files() -> list[Path]:
           経由でも reachable になり得るため、それら instruction レイヤを起点に含める
           ことで「真孤児」の意味を「ファイル名上 reachable でない」から
           「どの instruction/index からも reachable でない」へ近づける。
+    v0.4 (2026-05-12 C185 Phase 4): knowledge/INDEX.md を追加。knowledge/ は291件規模で
+          memory/ への inbound link を多数保持するため、起点に含めると knowledge/ 経由で
+          reachable になる memory/ ファイルが増え、「真孤児」判定の精度が上がる。
+          ただし knowledge/INDEX.md 自身が同期切れ（実数291 vs 一覧表101件記載）の場合、
+          一覧表に未掲載の knowledge/ 記事からの inbound link は traverse されない点に注意。
     """
     roots: list[Path] = [
         MEMORY_DIR / "MEMORY.md",
@@ -59,6 +65,8 @@ def _build_index_files() -> list[Path]:
         # v0.2 追加: instruction / system 層
         REPO_ROOT / "CLAUDE.md",
         CLAUDE_DIR / "system_identity.md",
+        # v0.4 追加: knowledge/ 層
+        KNOWLEDGE_DIR / "INDEX.md",
     ]
     # v0.2 追加: docs/*.md (game_dev_foundation など memory/ を多く参照する一群)
     if DOCS_DIR.is_dir():

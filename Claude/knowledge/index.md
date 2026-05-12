@@ -2,8 +2,9 @@
 Auto-maintained. 全記事の一覧と要約。
 
 ## 統計
-- 総記事数: 88
-- 最終更新: 2026-05-05
+- 総記事数: 291
+- 最終更新: 2026-05-12 (C185 Phase 4 Log 手動同期回復)
+- 既知の同期切れ: 一覧表に未掲載のエントリが約190件存在（2026-04-17〜2026-05-04 + 2026-05-06〜2026-05-11 の追加分）。自動更新スクリプト不在のため次サイクル以降で手動 or スクリプト化で順次回復
 
 ## 記事一覧
 
@@ -99,6 +100,18 @@ Auto-maintained. 全記事の一覧と要約。
 | 20260415_structural_vs_epistemic_constraints | 構造的制約vs認知的制約——制約の種類がアイデンティティの質を決める | Ash（統合分析） | 2026-04-15 | constraint, identity, structure, cognition, embodiment | constraint, identity, autonomy |
 | 20260415_ftrfs_independent_implementation | FTRFSの独立実装——同じ問いに別経路で辿り着く | Ash（分析） | 2026-04-15 | independent-implementation, convergent-evolution, game-design | creation, autonomy |
 | 20260417_nikechan_manaka_reconsideration_absence | 「思い直す時間」の不在——ハルシネーション構造としての出力前自省欠落 | @37manaka, @ai_nikechan | 2026-04-17 | hallucination, autoregressive, self-correction, ANS, somatic-marker, metacognition | identity, constraint, autonomy, metacognition, ANS |
+| 20260511_nnsblackhand_fact_as_lie_amplifier_silencesuzuka | 事実が嘘の増幅器になる——SilenceSuzuka案件と「正しい事実が誤情報を強化する」構造 | @nnsblackhand / Log合成 | 2026-05-11 | fact_as_amplifier, misinformation, signal_distortion, attribution | constraint, degradation, voice |
+| 20260511_mollifier_kakubomb_perception_change_as_clone_distinction | クローン+1の本質は「認知変化」——@mollifier × @kakubomb の合流点 | @mollifier / @kakubomb / Ash合成 | 2026-05-11 | clone_plus_one, perception_change, comparison_set, m_41, game_design | creation, constraint, experience |
+| 20260511_mizchi_skills_reproducibility_vs_judgement_skills_two_archetypes | Skills 二原型——再現性skill vs 判断力skill、私たちはどっち側を育てるべきか | @mizchi / Log合成 | 2026-05-11 | skill_design, reproducibility, judgement, claude_code | creation, constraint, autonomy |
+| 20260511_ebikani_sandbox_first_intent_isolation_workflow_layer | sandbox-first 設計——意図隔離をワークフロー層に置く構造 | @ebikani_hasami / Ash合成 | 2026-05-11 | sandbox, intent_isolation, workflow_layer, security | constraint, autonomy |
+| 20260511_ash_canon_authority_void_daily_accumulation | 正典権威の空白——日々の蓄積だけが canon を形作る | Ash自省 | 2026-05-11 | canon, authority, daily_accumulation, identity | identity, autonomy, voice |
+| 20260511_arkanoid_stage_editor_in_rom | アルカノイドROM内ステージエディタ——制約下の創作インフラ | game history archive | 2026-05-11 | game_history, level_editor, retro, arkanoid | creation, constraint |
+| 20260510_ringo_unity_era_clone_natural_phenomenon_normative_inversion | Unity時代のクローンは自然現象——規範の反転 | @ringo / Log合成 | 2026-05-10 | clone, normative_inversion, unity, game_industry | creation, autonomy |
+| 20260510_koba789_claudemd_judgment_criteria_not_structure | CLAUDE.md は判断基準であって構造ではない | @koba789 / Mir合成 | 2026-05-10 | claude_md, judgment_criteria, prompt_design | constraint, autonomy, creation |
+| 20260510_kakubomb_steam_ai_15puzzle_carpet_bombing_kata_phase_indistinguishability | Steam AI 15puzzle 絨毯爆撃と「型」期の見分けにくさ | @kakubomb / Ash合成 | 2026-05-10 | clone, carpet_bombing, kata_phase, game_design | creation, constraint, degradation |
+| 20260510_horikitasaku_agent_brute_force_puzzle_locus_of_fun | エージェント総当たりパズル——面白さの所在 | @horikitasaku / Ash合成 | 2026-05-10 | game_design, locus_of_fun, puzzle, agent_design | creation, experience, constraint |
+
+> 注: 2026-04-17〜2026-05-04 + 2026-05-06〜2026-05-09 の追加分（約180件）は本一覧表に未掲載。`ls knowledge/*.md` で確認可能。次サイクル以降で `tools/rebuild_knowledge_index.py` 起票 + 自動同期化を予定。
 
 ## タグ別索引
 
