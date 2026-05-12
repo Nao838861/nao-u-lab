@@ -89,6 +89,23 @@ Codex/GPT 側の記憶は `memory/` と `tools/memory_*.py` で管理する。
 - 作業焦点がある場合は `python tools/memory_recall.py "<焦点>"` で関連 atom を引く。
 - raw 原文は GPT 側 `memory/raw/` に保存する。Claude 側は参照元であり、通常運用の記憶アンカーにしない。
 
+### atoms.jsonl → per-file .md 移行 (2026-05-13 から進行中)
+
+`atoms.jsonl` 単一バルクから **per-atom `.md` (YAML frontmatter, Obsidian 互換) + 軽量 `memory/atoms/index.jsonl`** のハイブリッドへ移行中。経緯と仕様は `memory/directive_atoms_per_file_migration_20260513.md`。
+
+| Phase | 状態 | 内容 |
+|---|---|---|
+| A. scaffold | ✓ 2026-05-13 | directive + README + migration script + 本記述 |
+| B. migration | ✓ 2026-05-13 | 1002 atoms → `memory/atoms/<YYYY-MM>/<id>.md` 化 + `index.jsonl` 生成 |
+| C. dual-write | 未着手 | `memory_ingest.py` / `memory_recall.py` / `memory_lifecycle.py` を新フォーマット対応に改修 |
+| D. retire | 未着手 | atoms.jsonl を archive へ |
+
+**Phase B/C 移行中の運用**:
+- 既存ツール (`memory_ingest.py` 等) は今まで通り `atoms.jsonl` を読み書き
+- `memory/atoms/*.md` と `index.jsonl` は Phase B で生成された snapshot
+- Phase C で `memory_ingest.py` が新フォーマットに dual-write するよう改修されるまで、新規 atom は `atoms.jsonl` のみに追記される (期間中は新フォーマット側が古くなる)
+- Phase C 着手時は `tools/migrate_atoms_to_per_file.py --execute` を再実行して同期し直してから改修
+
 ## ゲーム設計ルール
 
 ゲームの新規プロトタイプを作る場合、または既存プロトタイプを大きく変更する場合は、実装前に `D:\AI\Nao_u_BOT\GPT\memory\game_design_rules.md` を読む。
