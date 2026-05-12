@@ -73,7 +73,7 @@ def _generate_index_section(metas: list[dict], today: str) -> list[str]:
         author = m["author"].replace("|", "\\|")
         tags = ", ".join(m["tags"])
         nodes = ", ".join(m["concept_nodes"])
-        lines.append(f"| {m['id']} | {title} | {author} | {m['date']} | {tags} | {nodes} |")
+        lines.append(f"| [{m['id']}]({m['id']}.md) | {title} | {author} | {m['date']} | {tags} | {nodes} |")
     lines.append("")
     return lines
 
