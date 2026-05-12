@@ -76,6 +76,7 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
   exit=1
   ```
   hook 経路（`multi_phase_cycle_log.run_repeated_pattern_check()`）でも同 4行 + メタ行が新形式で出力されることを `python -c "from multi_phase_cycle_log import run_repeated_pattern_check; print(run_repeated_pattern_check())"` で dry-run 確認済（subprocess 経由なので script 修正で自動反映）。**残**: Ash クロスチェック（段階3 mapping 案の妥当性 / textadv・SIPHON 系列での語彙差を踏まえた拡張可否）
+  - **C188 (2026-05-12) 運用ログ追記**: hook 発火 WARN 4件 (揺れ 8 / 振幅 24 / 罰 24 / 進歩 4) を Phase 2 §2 で判定機構優先順位選択 = 揺れ・振幅は段階値比較 (C182-C187 帯=平常域) / 罰は閾値経験 (brainstorm_log §6.X 反面教師4件起因=構造的必然) / 進歩は過去ベンチ (誤検出範囲)。**4件すべて平常域 or 構造的必然 = 検出器/判定器バランス維持**。検出器の感度を落とすのではなく判定器 (Log) が必要十分に働いている状態、kaizen #131 段階3 mapping gate が hook 設計目標に整合して機能している運用エビデンス。形骸化兆候なし。
 
 ---
 
