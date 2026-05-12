@@ -102,7 +102,7 @@ Codex/GPT 側の記憶は `memory/` と `tools/memory_*.py` で管理する。
 | サイクル | 種別 | 間隔 | 役割 |
 |---|---|---|---|
 | `tools\codex_log_cycle.py` | deterministic (LLM なし) | 15 分タスク (90 分 elapsed gate) | shared-reads index 更新 + Slack #log への status 投稿 |
-| `tools\codex_phases_cycle.py` | LLM 駆動 (Codex CLI 起動) | 2.5h 目安 | 情報収集→分析→投稿→記憶階層改善→日記 を分割 phase で実行 |
+| `tools\codex_phases_cycle.py` | LLM 駆動 (Codex CLI 起動) | 1h 目安 | 情報収集→分析→投稿→記憶階層改善→日記 を分割 phase で実行 |
 
 phase 構成 (`GPT/phases/`):
 

@@ -41,7 +41,7 @@ STAGING_PATH = LOG_DIR / "cycle_staging_log_cdx.md"
 STATE_PATH = MEMORY_DIR / "codex_phases_cycle_state.json"
 RUN_LOG_PATH = LOG_DIR / "codex_phases_cycle.log"
 
-DEFAULT_INTERVAL_SEC = int(2.5 * 60 * 60)  # 2.5h
+DEFAULT_INTERVAL_SEC = 60 * 60  # 1h
 
 FIXED_PHASES = [
     "phase1_collect",
@@ -177,8 +177,10 @@ def invoke_codex_cli(phase_name: str) -> int:
     - `--dangerously-bypass-approvals-and-sandbox` で承認プロンプト・サンドボックスを
       バイパス (autonomous cycle のため)
     - prompt は stdin から読ませる (- 引数)
+    - Windows では codex は .CMD として PATH にいるので shutil.which で解決
     - 出力は log に末尾だけ記録 (フル stdout は別ファイルに保存)
     """
+    import shutil
     import subprocess
 
     prompt_path = PHASES_DIR / f"{phase_name}.md"
@@ -186,20 +188,25 @@ def invoke_codex_cli(phase_name: str) -> int:
         log(f"phase prompt not found: {prompt_path}")
         return 1
 
+    codex_bin = shutil.which("codex")
+    if not codex_bin:
+        log("codex CLI not found in PATH (tried shutil.which('codex'))")
+        return 127
+
     prompt_text = prompt_path.read_text(encoding="utf-8")
     timeout = PHASE_TIMEOUTS.get(phase_name, 1800)
     stdout_path = LOG_DIR / f"codex_phase_{phase_name}_last.stdout.txt"
     stderr_path = LOG_DIR / f"codex_phase_{phase_name}_last.stderr.txt"
 
     cmd = [
-        "codex",
+        codex_bin,
         "exec",
         "--cd",
         str(ROOT),
         "--dangerously-bypass-approvals-and-sandbox",
         "-",
     ]
-    log(f"codex exec start phase={phase_name} timeout={timeout}s")
+    log(f"codex exec start phase={phase_name} timeout={timeout}s bin={codex_bin}")
     try:
         result = subprocess.run(
             cmd,
@@ -215,9 +222,6 @@ def invoke_codex_cli(phase_name: str) -> int:
         stdout_path.write_text(exc.stdout or "", encoding="utf-8")
         stderr_path.write_text(exc.stderr or "", encoding="utf-8")
         return 124
-    except FileNotFoundError:
-        log("codex CLI not found in PATH")
-        return 127
 
     stdout_path.write_text(result.stdout or "", encoding="utf-8")
     stderr_path.write_text(result.stderr or "", encoding="utf-8")
