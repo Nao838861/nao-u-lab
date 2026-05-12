@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """
-Codex-side 90-minute maintenance cycle for #log.
+Codex-side 90-minute deterministic maintenance cycle.
 
-This is intentionally deterministic. It refreshes the shared-reads memory index,
-checks new Slack posts, and posts a compact Japanese status message to Slack
-#log without starting a long-lived LLM session.
+Refreshes the shared-reads memory index, checks new Slack posts, ingests game
+feedback, and runs the discussion router (which posts to #all-nao-u-lab with an
+LLM-generated body). 自身では LLM セッションを起動しない。
+
+2026-05-13 Nao_u 指示で **Slack #log への compact status 投稿は廃止**。
+status は `log/codex_log_cycle_status.md` に local 保存するだけにし、
+#log への日記投稿は `codex_phases_cycle.py` Phase 5 (LLM 駆動) に一本化する。
 """
 from __future__ import annotations
 
@@ -335,21 +339,27 @@ def build_message(ingest: dict[str, Any], state: dict[str, Any], reason: str) ->
     return "\n".join(lines)
 
 
-def post_to_slack(channel: str, text: str, dry_run: bool) -> dict[str, Any]:
-    if dry_run:
-        return {"ok": True, "dry_run": True}
-    sys.path.insert(0, str(TOOLS_DIR))
-    from slack_client import post_message  # type: ignore
+def save_status_locally(text: str, dry_run: bool) -> dict[str, Any]:
+    """Save deterministic status report to local file (Slack 投稿は停止)。
 
-    result = post_message(channel, text)
-    if not isinstance(result, dict):
-        return {"ok": False, "error": f"unexpected result: {result!r}"}
-    return result
+    Nao_u 指示 2026-05-13: テンプレ status 投稿は #log を埋めるノイズ。
+    Slack に流すべき日記は `codex_phases_cycle.py` Phase 5 (LLM 駆動) が担う。
+    本 status は local 保存のみとし、Codex 作業時に最新版を読めるようにする。
+    """
+    status_path = LOG_DIR / "codex_log_cycle_status.md"
+    if dry_run:
+        return {"ok": True, "dry_run": True, "would_save_to": str(status_path)}
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    status_path.write_text(text, encoding="utf-8", newline="\n")
+    return {"ok": True, "saved_to": str(status_path), "char_count": len(text)}
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run Codex #log maintenance cycle.")
-    parser.add_argument("--channel", default=DEFAULT_CHANNEL, help="Slack channel name or ID")
+    parser = argparse.ArgumentParser(
+        description="Codex deterministic maintenance cycle (memory ingest + local status save). "
+                    "Slack 投稿は廃止 (Nao_u 指示 2026-05-13)。日記は codex_phases_cycle.py Phase 5 が担う。",
+    )
+    parser.add_argument("--channel", default=DEFAULT_CHANNEL, help="(deprecated/unused) Slack channel name; retained for arg compat")
     parser.add_argument("--interval-sec", type=int, default=DEFAULT_INTERVAL_SEC)
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
@@ -379,9 +389,9 @@ def main() -> int:
         ingest["discussion_router"] = discussion_router
         ingest["health"] = run_memory_health()
         message = build_message(ingest, state, reason)
-        result = post_to_slack(args.channel, message, args.dry_run)
+        result = save_status_locally(message, args.dry_run)
         if not result.get("ok"):
-            raise RuntimeError(f"Slack post failed: {result}")
+            raise RuntimeError(f"Status save failed: {result}")
         if args.dry_run:
             state.update(
                 {
@@ -395,13 +405,12 @@ def main() -> int:
                 {
                     "last_success": now_iso(),
                     "last_reason": reason,
-                    "last_channel": args.channel,
-                    "last_post_result": result,
+                    "last_status_save": result,
                     "last_error": None,
                 }
             )
         save_state(state)
-        log(f"run success channel={args.channel} dry_run={args.dry_run}")
+        log(f"run success dry_run={args.dry_run} saved={result.get('saved_to', '-')}")
         print(message)
         return 0
     except Exception as exc:
