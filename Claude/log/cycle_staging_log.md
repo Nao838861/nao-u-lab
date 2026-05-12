@@ -297,3 +297,39 @@ Phase 1 §0 メタ記憶散歩で「[他インスタンス洞察] 【未処理�
 - M-43 副次検証 (宣言した完遂条件に到達するか) を 5条件で構造化済
 
 **選定基準該当**: Active project の停滞解消／kaizen 未検証提案の検証より上位の「外部独立収束との突き合わせ実証」。本サイクル発見した同期切れ事実は、放置すると次サイクルで他者 (Mir/Ash) の判断データを汚染するため最優先。
+
+## Phase 4: 大作業実行 (C185 Log)
+
+### 完遂状態
+
+5 完遂条件のうち 1-4 完遂、5 (commit + push) は Phase 5 で日記とまとめて実施 (staging 指示「commit はしない」順守)。
+
+| # | 条件 | 状態 | エビデンス |
+|---|------|------|----------|
+| 1 | knowledge/INDEX.md 統計 88→291 | ✅ | `grep "総記事数" knowledge/INDEX.md` → 291 ヒット |
+| 2 | 一覧表に直近10件追記 + 自動更新スクリプト不在記録 | ✅ | INDEX.md 表に 2026-05-10/11 10件追加、`ls tools/*knowledge* tools/*INDEX* tools/*index*` で knowledge 専用無しを確認 |
+| 3 | orphan_check.py INDEX_FILES に knowledge/INDEX.md 追加 + dry-run before/after 保存 | ✅ | tools/orphan_check_dry_run_20260512_c185_phase4_before.txt (起点29, 真孤児25, reachable413) + _after.txt (起点30, 真孤児25, reachable413) |
+| 4 | memory_tree_consolidation.md 履歴節に C185 Phase 4 (Log) 1段落 | ✅ | projects/memory_tree_consolidation.md 末尾追記済 |
+| 5 | commit + push | ⏸ | Phase 5 で日記とまとめて実施 |
+
+### 副産物 (変更ファイル一覧)
+
+- `knowledge/INDEX.md` — 統計節 88→291 訂正、最新10件追記、同期切れ注記
+- `scripts/orphan_check.py` — v0.4 (KNOWLEDGE_DIR 定数 + INDEX_FILES に knowledge/INDEX.md 追加、docstring 更新)
+- `projects/memory_tree_consolidation.md` — 改訂履歴節に C185 Phase 4 (Log) 段落追加
+- `tools/orphan_check_dry_run_20260512_c185_phase4_before.txt` — v0.3 dry-run (起点29)
+- `tools/orphan_check_dry_run_20260512_c185_phase4_after.txt` — v0.4 dry-run (起点30)
+- `log/cycle_staging_log.md` — 本 Phase 4 セクション追記
+
+### 重要な発見 (Phase 5 日記用素材)
+
+knowledge/INDEX.md を orphan_check.py 起点に追加しても memory/ reachability が 413→413 で **不変**だった = **knowledge/INDEX.md は概念ノード言及主体で memory/*.md への markdown link を持たない構造**。
+
+これは Shereshevsky 警告「inbox 出口ゲート不在で 18ヶ月分裂」が knowledge/ 領域でも実証された形 — INDEX が出口ゲートとして機能していない。Nao_u 5/12 06:57 質問への結論を「統合価値高 + 統合緊急度高 + ただし INDEX を直すだけでは reachability 問題は解決しない (個別記事本文の link 生成が別工程として必要)」へ更新。
+
+### Phase 4 で**しなかった**こと
+
+- Slack 投稿 (Phase 2 §2 で Shereshevsky 1件投下済、Phase 4 では追加投稿なし)
+- commit + push (Phase 5 で日記と一括)
+- `tools/rebuild_knowledge_index.py` の実装 (次サイクル種として履歴節に記録のみ)
+- 個別 knowledge/ 記事本文の memory/ inbound link 生成 (発見だけで Phase 4 範囲外、次サイクル以降の別工程)
