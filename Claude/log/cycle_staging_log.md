@@ -340,3 +340,30 @@ Phase 2 まとめで「5. 大作業 = memory_tree_consolidation の v0.5 設計�
 - **kaizen #106「Phase 2/3 で強制利用しない」整合**: 本サイクル Phase 1 §6 外部摂取 3 件 (Graphiti / AriGraph / Memory survey) を Phase 4 大作業に強制注入しない (本大作業は別文脈 = C185 Phase 4 残作業由来)、kaizen #106 抵触なし
 
 (Phase 3 完了。Phase 4 で `tools/rebuild_knowledge_index.py` v0 実装に着手)
+
+## Phase 4: 大作業実行結果
+
+### 完遂条件 6 件の状態
+1. ✅ `tools/rebuild_knowledge_index.py` 新規実装 (127 行、infrastructure 警戒線 +27% 内)
+2. ✅ frontmatter (`- source: / author: / discovered: / tags: / concept_nodes:`) + 本文 1 行目 `# タイトル` 抽出 + ID/タイトル/著者/日付/タグ/概念ノード 6 列 markdown table 自動生成
+3. ✅ `knowledge/INDEX.md` 統計節「総記事数 290」 = `ls knowledge/*.md \| wc -l` 実数 (291) − INDEX.md 自身 (1) と一致。C185 の 291 は INDEX.md 含めた値だったと判明
+4. ✅ dry-run 出力 `tools/knowledge_index_rebuild_dry_run_20260512_c186.txt` (diff 409 行) 保存済
+5. ✅ `projects/memory_tree_consolidation.md` 改訂履歴に C186 Phase 4 として 5 部構成 ((a) 実装 / (b) dry-run / (c) --write / (d) Shereshevsky 接続 / (e) 残作業) 追記
+6. ✅ (Optional) 同期切れ警告 hook 化方針を改訂履歴 (e) に記録（実装は次サイクル以降、人手 weekly review が現実的との判定も併記）
+
+### 副産物（新規/変更ファイル）
+- **新規**: `tools/rebuild_knowledge_index.py` (127 行)
+- **新規**: `tools/knowledge_index_rebuild_dry_run_20260512_c186.txt` (diff 409 行、290 件 metadata 抽出結果のエビデンス)
+- **変更**: `knowledge/INDEX.md` (統計節 + 記事一覧テーブル 290 行を自動生成版へ移行、「## タグ別索引」「## 接続マップ」節は手動温度を保持)
+- **変更**: `projects/memory_tree_consolidation.md` (改訂履歴に C186 Phase 4 1 段落追記)
+
+### Slack 投稿・kaizen エントリ
+- **Slack 追加投稿**: 0 件（Phase 3 で shared-reads 3 件投稿済、Phase 4 で増やさない指示通り）
+- **kaizen 新規起票**: 0 件（kaizen #131/#132 既存運用、Phase 3 §2 で確認済）
+
+### 意味のある発見
+- **実数 290 件と C185 の 291 表記の不一致は INDEX.md 自身を含めるか否かの差**。`*.md` glob から INDEX.md を除く実装で「記事の数」と「INDEX 自身」を明確に分離
+- **knowledge/ の frontmatter フォーマットは混在**: 著者欄が空のファイルが複数存在（例: `20260502_npaka_codex_gamedev_eval_loop.md`, `20260501_player_taste_15s_pitch_ion039_banditknight.md` ほか）。自動生成版では空欄として表示、手動補完は次サイクル以降の課題
+- **inbox 出口ゲート構造の一段階自動化完了**: C185 「INDEX 同期切れ 203 件」状態が `--write` 1 回で構造的に解消。ただし C185 で実証済の「INDEX 起点では memory/ reachability 不変」と組み合わせると、**個別記事本文の inbound link 生成は別工程**として残る = 今回完遂は「inbox 出口ゲートの自動同期側」のみ
+
+(Phase 4 完了。Phase 5 で日記 + commit + push)
