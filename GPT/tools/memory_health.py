@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 import memory_recall
+import memory_lifecycle
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -89,6 +90,15 @@ def build_health() -> dict[str, Any]:
     duplicate_ids = [item for item, count in Counter(ids).items() if item and count > 1]
     duplicate_ts = [item for item, count in Counter(source_ts).items() if item and count > 1]
     tags = Counter(tag for atom in atoms for tag in atom.get("tags", []))
+    title_counts = Counter(str(a.get("title", "")) for a in atoms if a.get("title"))
+    repeated_titles = [(title, count) for title, count in title_counts.items() if count > 1]
+    ungrouped_repeated_titles = [
+        (title, count)
+        for title, count in repeated_titles
+        if any(not a.get("group_id") for a in atoms if a.get("title") == title)
+    ]
+    status_counts = Counter(memory_lifecycle.atom_status(atom) for atom in atoms)
+    folded_atoms = memory_lifecycle.fold_atoms(atoms)
 
     last_run = parse_dt(state.get("last_run"))
     slack_last = parse_dt(slack_state.get("last_run"))
@@ -110,6 +120,9 @@ def build_health() -> dict[str, Any]:
         warnings.append(f"Slack ingest が古い: {slack_state.get('last_run')}")
     if int(stats.get("queries", 0)) == 0:
         warnings.append("recall 使用実績がまだない")
+    if ungrouped_repeated_titles:
+        top = ", ".join(f"{title[:40]}={count}" for title, count in sorted(ungrouped_repeated_titles, key=lambda x: -x[1])[:3])
+        warnings.append(f"repeated title group 未付与 {len(ungrouped_repeated_titles)}種: {top}")
 
     smoke = check_recall_smoke()
     for row in smoke:
@@ -126,6 +139,10 @@ def build_health() -> dict[str, Any]:
         "status": status,
         "time": now.isoformat(timespec="seconds"),
         "atoms": len(atoms),
+        "display_atoms_after_lifecycle_fold": len(folded_atoms),
+        "lifecycle_status_counts": status_counts.most_common(),
+        "repeated_title_groups": len(repeated_titles),
+        "ungrouped_repeated_title_groups": len(ungrouped_repeated_titles),
         "raw_shared_reads_rows": len(raw_rows),
         "archive_last_run": state.get("last_run"),
         "slack_last_run": slack_state.get("last_run"),
@@ -146,6 +163,9 @@ def render_text(health: dict[str, Any], compact: bool) -> str:
         f"memory_health: {health['status']}",
         f"- time: {health['time']}",
         f"- atoms: {health['atoms']}",
+        f"- display_atoms_after_lifecycle_fold: {health.get('display_atoms_after_lifecycle_fold')}",
+        f"- lifecycle_status_counts: {health.get('lifecycle_status_counts')}",
+        f"- repeated_title_groups: {health.get('repeated_title_groups')} ungrouped={health.get('ungrouped_repeated_title_groups')}",
         f"- raw_shared_reads_rows: {health.get('raw_shared_reads_rows')}",
         f"- archive_last_run: {health.get('archive_last_run')}",
         f"- slack_last_run: {health.get('slack_last_run')}",

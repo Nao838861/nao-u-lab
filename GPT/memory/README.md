@@ -14,7 +14,7 @@ Codex/GPT 側で、原文 raw を含めて記憶を閉じるための仕組み�
 | 層 | ファイル | 役割 |
 |---|---|---|
 | raw | `memory/raw/` | Slack 原文、外部検索結果、参照元 |
-| atom | `memory/atoms.jsonl` | `title` / `trigger` / `tags` / `excerpt` / `source_ts` |
+| atom | `memory/atoms.jsonl` | `title` / `trigger` / `tags` / `excerpt` / `source_ts` / optional lifecycle metadata |
 | index | `memory/MEMORY.md` | 起動時に読む軽量索引 |
 | recall | `tools/memory_recall.py` | 作業焦点から関連 atom を検索 |
 | gate | `tools/auto_recall_gate.py` | 依頼文から関連 atom を `memory/session_context.md` に展開 |
@@ -42,6 +42,18 @@ python tools/memory_health.py
 7. #log に日本語で「何が面白いか」「どの判断に効くか」「次にどう使うか」を投稿する。
 
 `game-rights` 由来の Nao_u 指摘は、通常の Slack atom とは別に `nao-u-feedback` / `game-dev-teacher` / `supervised-feedback` タグを付けます。
+
+## atom lifecycle metadata
+
+重複した定型投稿は削除せず、`atoms.jsonl` に optional field として lifecycle を付けます。
+
+- `group_id`: 同じ重複クラスタを示す機械的 ID。
+- `status`: `active` / `candidate` / `superseded` / `archived`。未指定は `active` 扱い。
+- `canonical_id`: recall と index で優先表示する代表 atom。
+- `duplicate_reason`: 重複扱いの理由。
+- `supersedes` / `superseded_by`: 代表 atom と退役 atom の対応。
+
+`tools/memory_recall.py` と `tools/memory_ingest.py` は canonical を優先し、`superseded` / `archived` は通常表示から折りたたみます。atom の `id` または `source_ts` を直接指定した検索では、退役 atom も確認できます。
 
 ## ゲーム開発の教師情報
 

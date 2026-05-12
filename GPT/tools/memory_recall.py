@@ -17,6 +17,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+import memory_lifecycle
+
 
 ROOT = Path(__file__).resolve().parents[1]
 MEMORY_DIR = ROOT / "memory"
@@ -90,15 +92,51 @@ def score_atom(atom: dict[str, Any], query_terms: list[str]) -> float:
     return score
 
 
+def exact_reference_matches(atoms: list[dict[str, Any]], query: str) -> list[tuple[float, dict[str, Any]]]:
+    ref = query.strip()
+    if not ref:
+        return []
+    matches = [
+        atom
+        for atom in atoms
+        if ref in {str(atom.get("id", "")), str(atom.get("source_ts", ""))}
+    ]
+    return [(999.0, atom) for atom in matches]
+
+
+def fold_scored(
+    scored: list[tuple[float, dict[str, Any]]],
+    atoms_by_id: dict[str, dict[str, Any]],
+) -> list[tuple[float, dict[str, Any]]]:
+    by_group: dict[str, list[tuple[float, dict[str, Any]]]] = {}
+    for score, atom in scored:
+        by_group.setdefault(memory_lifecycle.group_id(atom), []).append((score, atom))
+
+    folded: list[tuple[float, dict[str, Any]]] = []
+    for group_rows in by_group.values():
+        best_score = max(score for score, _atom in group_rows)
+        group_atoms = [atom for _score, atom in group_rows]
+        cid = memory_lifecycle.canonical_id(group_atoms[0])
+        representative = atoms_by_id.get(cid) or memory_lifecycle.preferred_atom(group_atoms)
+        if memory_lifecycle.is_hidden(representative):
+            continue
+        folded.append((best_score, representative))
+    folded.sort(key=lambda item: (-item[0], str(item[1].get("datetime", ""))))
+    return folded
+
+
 def search(query: str, limit: int) -> list[tuple[float, dict[str, Any]]]:
     atoms = load_atoms()
+    exact_matches = exact_reference_matches(atoms, query)
+    if exact_matches:
+        return exact_matches[:limit]
+
     terms = tokenize(query)
     if not terms:
         return []
     scored = [(score_atom(atom, terms), atom) for atom in atoms]
     scored = [(score, atom) for score, atom in scored if score > 0]
-    scored.sort(key=lambda item: (-item[0], str(item[1].get("datetime", ""))))
-    return scored[:limit]
+    return fold_scored(scored, memory_lifecycle.index_by_id(atoms))[:limit]
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -152,7 +190,10 @@ def print_result(score: float, atom: dict[str, Any], compact: bool) -> None:
     tags = ", ".join(atom.get("tags", [])[:8])
     links = atom.get("links", [])
     if compact:
-        print(f"- `{atom['id']}` {atom['trigger']} tags=[{tags}]")
+        suffix = ""
+        if atom.get("folded_count"):
+            suffix = f" folded={atom.get('folded_count')}"
+        print(f"- `{atom['id']}` {atom['trigger']} tags=[{tags}]{suffix}")
         return
     print(f"[{atom['id']}] score={score:.1f} {atom.get('datetime', '')} {atom.get('author', '')}")
     print(f"title: {atom.get('title', '')}")

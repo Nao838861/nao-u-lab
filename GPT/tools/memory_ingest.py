@@ -12,6 +12,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+import memory_lifecycle
+
 
 ROOT = Path(__file__).resolve().parents[1]
 MEMORY_DIR = ROOT / "memory"
@@ -250,14 +252,15 @@ def cutoff_ts(days: int) -> float:
 
 
 def render_index(atoms: list[dict[str, Any]], source_count: int) -> str:
-    atoms_sorted = sorted(atoms, key=lambda a: (-int(a.get("score", 0)), str(a.get("datetime", ""))))
-    recent = sorted(atoms, key=lambda a: str(a.get("datetime", "")), reverse=True)[:20]
+    display_atoms = memory_lifecycle.fold_atoms(atoms)
+    atoms_sorted = sorted(display_atoms, key=lambda a: (-int(a.get("score", 0)), str(a.get("datetime", ""))))
+    recent = sorted(display_atoms, key=lambda a: str(a.get("datetime", "")), reverse=True)[:20]
     by_tag: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for atom in atoms_sorted:
         for tag in atom.get("tags", [])[:8]:
             by_tag[tag].append(atom)
 
-    tag_counts = Counter(tag for atom in atoms for tag in atom.get("tags", []))
+    tag_counts = Counter(tag for atom in display_atoms for tag in atom.get("tags", []))
     generated = datetime.now().isoformat(timespec="seconds")
     lines = [
         "# Codex Memory Index",
@@ -271,6 +274,8 @@ def render_index(atoms: list[dict[str, Any]], source_count: int) -> str:
         "",
         f"- generated: {generated}",
         f"- atoms: {len(atoms)}",
+        f"- display atoms after lifecycle fold: {len(display_atoms)}",
+        f"- folded by lifecycle metadata: {len(atoms) - len(display_atoms)}",
         f"- scanned shared-reads rows: {source_count}",
         "",
         "## High Signal",

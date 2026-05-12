@@ -142,5 +142,40 @@ designs:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+### 2026-05-13T00:52:00+09:00 log_cdx Phase 4c memory hierarchy introduction
+
+```yaml
+implemented:
+  - issue_id: ISS-001
+    files_changed:
+      - path: tools/memory_lifecycle.py
+        change: created
+      - path: tools/backfill_atom_lifecycle.py
+        change: created
+      - path: tools/memory_recall.py
+        change: modified
+      - path: tools/memory_health.py
+        change: modified
+      - path: tools/memory_ingest.py
+        change: modified
+      - path: memory/atoms.jsonl
+        change: modified
+      - path: memory/MEMORY.md
+        change: modified
+      - path: memory/README.md
+        change: modified
+    summary: "Phase 4b recommended の atom lifecycle metadata を導入。repeated title 上位3クラスタを canonical/superseded として折りたたみ、recall/health/index render が lifecycle を読むようにした。"
+    partial: false
+migrations:
+  - what: "Phase 4a evidence の repeated title 3種だけに group_id/status/canonical_id/duplicate_reason/supersedes/superseded_by を backfill。削除なし。"
+    affected: "120 atoms total; 3 canonical active + 117 superseded. display atoms after lifecycle fold: 862 / raw atoms: 979."
+verification:
+  - "python -m py_compile tools\\memory_lifecycle.py tools\\memory_recall.py tools\\memory_health.py tools\\memory_ingest.py tools\\backfill_atom_lifecycle.py: passed"
+  - "python tools\\backfill_atom_lifecycle.py --dry-run: target 3 groups only, changed_atoms=120"
+  - "python tools\\memory_recall.py \"議論に回したい論点 コアミッション\" --limit 3 --compact --no-log: canonical sr-1778554642-282e606ce3 returned first"
+  - "python tools\\memory_recall.py sr-1778458414-927b0d3751 --limit 1 --no-log: direct superseded atom lookup works"
+  - "python tools\\memory_health.py --compact: warning only; existing ungrouped repeated titles remain outside 4c outline"
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
