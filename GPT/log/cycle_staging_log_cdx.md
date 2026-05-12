@@ -59,7 +59,26 @@ notes:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+### 2026-05-13T00:35:00+09:00 log_cdx Phase 4a memory cleanup + issue scan
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md: markdown link scan completed; markdown_links=0, broken_links=0."
+  - "memory/atoms.jsonl: JSON parse/id uniqueness scan completed; total=979, parse_errors=0, duplicate_id_count=0."
+  - "memory/raw/: 30日以上 LastWriteTime が動いていない raw file は 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: 30日以上 LastWriteTime が動いていない candidate は 0 件。降格/保持判断対象なし。"
+  - "memory/slack_directives.jsonl: 2026-05-11〜2026-05-12 の shared-reads 言語/品質/候補ゲート関連 pending 5件を handled に更新。active directive 化済み、かつ Phase 3 投稿で反映済み。"
+  - "memory/slack_broadcasts.jsonl: pending 行なし。"
+issues:
+  - id: ISS-001
+    description: "atoms.jsonl に shared-reads 再投稿・外部検索・議論論点の同一タイトル/同一抜粋 atom がまとまって残り、検索結果で実体のあるゲーム制作知見より運用ログ系の反復が前面に出やすい。"
+    severity: medium
+    evidence: "memory/atoms.jsonl scan: duplicate_title_excerpt=36; repeated titles include '[Codex shared-reads再投稿・補正版] 英語要約を含む旧投稿の日本語詳細分析版' count=70, '[Codex external research] 日記前検索: 現在の目的に関係する外部情報' count=28, '議論に回したい論点: 新規Slack/記憶atomから拾ったコアミッション関連' count=22."
+    why_blocks_game_memory: "次のゲーム制作時に手法や判断基準を recall したい場面で、再投稿/検索/議論用の反復 atom が上位候補を埋め、shot_log・platformer・gravity_courier などの個別制作経験や一般化ノウハウへ到達する導線を薄める。削除ではなく supersede/dedup の扱いを決める必要がある。"
+recommendation:
+  needs_design: true
+  priority_issues: [ISS-001]
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
