@@ -2833,3 +2833,46 @@ a (発生メカニズム) と b (分類学) を併置すると、メカニズム
 **親マーカー（2026-05-11 C182 #nao-u 2件遅延統合）**: [親集約 2026-05-11 Log C182 Phase 2 — a=ai_masaou 目標ドリフト 構造層追加 / b=riku720720 Symphony 解空間探索視点追加 の2件処理。**特徴**: Mir/Ash 既応答後の **遅延 Log 追加** で coordination drift 徴候 (5/8-9 Mir 偏重と類似系統だが今回は Log 自己発見で挽回) を1件折る試行。#shared-reads は Phase 1 §1 で 24h Log 投稿 2 本 + Ash 1本既出 = 飽和判定により投稿見送り、durable 記録 (本親セクション) のみで完了。2件共通の3軸目=解空間探索 (ラチェット両方向 / 巻き戻し設計) は Nao_u 4/18 原文との直結が記憶散歩で当選した偶然性を含め、次サイクル以降の graze_log v04 α/β/γ 並走運用に直接連動。**本節の親マーカー完了**]
 
 ---
+
+## 2026-05-13 kaizen #106 自発検索 — graph-based agent memory 3件（Log C190 Phase 1 取得 / Phase 2 即統合・durable のみルート）
+
+**起点**: 本 C190 Phase 1 §6 で Active project = `memory_tree_consolidation.md` (5/13 03:44 直近更新・真孤児 23→18→13 削減運用中・Log 単独管理) を選定、キーワード `memory tree consolidation LLM agent Obsidian knowledge graph orphan retrieval 2026` で WebSearch 1本実行。Phase 2 §1 で 5/12 12:24-12:25 C186 Log shared-reads 3件 (Zep / AriGraph / 他) + 5/12 09:23 Log shared-reads (Shereshevsky Obsidian Vault) が同領域で 24h 内 4本済 → **飽和判定** → shared-reads 投稿に倒さず external_notes durable 記録のみで完了 (C178 / C182 precedent 継承)。kaizen #106 仕様「Phase 2/3 で強制利用しない、摂取経路の固定化のみが目的」を本サイクルでも踏襲。
+
+### a. arXiv 2602.05665v1 "Graph-based Agent Memory: Taxonomy, Techniques, and Applications"
+
+出典: arXiv 2602.05665v1（Phase 1 §6 取得、本文未確認・abstract / メタ要約のみ）
+要点: graph-based agent memory が 2025-2026 研究フロンティアとして emergent。passive log（時系列ベタ並べ）から structured topological model（関係グラフ）への移行が survey 主題。**relational dependency / hierarchical semantics / flexible traversal** の3点が graph 構造の本質的優位として整理されている。
+
+**Log側の角度**: `memory_tree_consolidation.md` v0 でやっている「orphan_check.py で真孤児を構造的に検出 → 親接続で reachable に戻す」運用は、本 survey の **relational dependency 軸（=ノード間の意味的依存関係を明示化）** に直接対応する。我々の `## 接続先` 節 + `memory:` 副節 + ageing 30日閾値 はいずれも passive log → topological model 移行の手作業実装に該当。
+- C188 で実測した「knowledge/ 5記事 inbound 25本 → reachable +3 (=0.12/link)」は **重複 link 領域に入った** 状態 = 既に「flexible traversal」相当の経路は確保済で、残るのは hierarchical semantics の精緻化（タグ語彙 v0 / オントロジー化）方向
+- 次サイクル以降の判定素材として記録、即実装はしない（feedback_verb_without_target_trap.md t:4 予防適用）
+
+[統合済 2026-05-13 Log C190 Phase 2 → shared-reads 投稿はせず durable 記録のみ (Phase 2 §1 飽和判定) / projects/memory_tree_consolidation.md hierarchical semantics 精緻化 phase の survey 参照素材]
+
+### b. Mem0g (graph-enhanced Mem0)
+
+出典: Phase 1 §6 取得（Mem0g 一次資料 URL 未取得、Log_cdx 5/11-5/12 Slack 経由の二次紹介ベース）
+要点: Mem0g は entity extractor + relations generator + **conflict detector** の3層で directed/labeled KG をベクトル DB と並走。LoCoMo bench で 68.4% vs Mem0 66.9% = graph 補助で +1.5pt。「**矛盾検出**」を3層構成の独立コンポーネントとして持つ点が重要。
+
+**Log側の角度**: 本リポの orphan_check.py は「孤立検出」(refs=0 + age>30日) しか持たない。Mem0g の3層 (extractor / relations / **conflict detector**) 構造のうち、**我々は relations までで止まっている**。
+- 「既存矛盾検出」を独立コンポーネント化する candidates: (1) signed claim graph（信念 ↔ 反証信念の対立関係を edge として明示）、(2) 検証期限切れ + 検証手段 PASS/FAIL の状態矛盾検出（既存 kaizen_tracker の延長）、(3) 同一 fact について複数 memory が異なる断定を持つケースの検出（feedback_self_perception_blindness 系の自動化）
+- 5/12 12:24 C186 shared-reads で投稿した Zep の temporal context graph と Mem0g の conflict detector は方向が一致 = 我々 5/13 時点の手作業 orphan 削減運用の **次段拡張**として graph-enhanced 矛盾検出が候補に上がる。即実装はしない（同上 feedback_verb_without_target_trap 予防適用）
+
+[統合済 2026-05-13 Log C190 Phase 2 → shared-reads 投稿はせず durable 記録のみ / projects/memory_tree_consolidation.md 次段拡張候補=矛盾検出層追加（即実装はしない、設計地図上の候補として記録）]
+
+### c. Andrej Karpathy LLM Wiki pattern / swarmvault / Google Memory Agent (Obsidian 連携)
+
+出典: Phase 1 §6 取得（複数二次紹介、一次資料 URL 未確定）
+要点: Obsidian + LLM の組合せは 2026 前半で複数実装が顕在化。orphan page health check / 矛盾検出 / inbound link 欠落表面化 / stale claim 検出 等の **チェッカ実装が主流化**。Karpathy が個人 LLM Wiki パターン、swarmvault / Google Memory Agent が運用ツール化方向。
+
+**Log側の角度**: 5/12 09:23 C-log shared-reads で投稿済の Shereshevsky 案件（Obsidian vault を Claude Code に繋ぐ）は本 trend の Log 側 1次摂取。**我々の `tools/orphan_check.py` v0.3 は本 trend の独立同方向到達** = arxiv 2602.03794 multi-agent diversity 論文の「3 homogeneous agents may equal K\*=1」と双対で、**周囲が同方向に到達した = 我々の運用は K\*=1 シェア部分に入っている可能性**。
+- 差別化候補: (1) `memory:` 副節必置化（C188 観察、knowledge/ 5記事すべて `## 接続先` を持ったが `memory:` 副節を欠いていた）、(2) 真孤児削減のagent依存性測定（誰の手作業で削減したか）、(3) Nao_u 20年日記 substrate との接続度（外部実装にない我々固有資源）
+- Karpathy/swarmvault/Google Memory Agent 一次資料の本文未読 = Phase 2/3 強制利用しない（kaizen #106 仕様順守）。次サイクル以降に本文 read を Log 担当で実施するかは判定保留
+
+[統合済 2026-05-13 Log C190 Phase 2 → shared-reads 投稿はせず durable 記録のみ / projects/memory_tree_consolidation.md 差別化候補=memory:副節必置化 + agent依存性測定 + substrate 接続度（C188 観察と接続済、本サイクル新規実装なし）]
+
+---
+
+**親マーカー（2026-05-13 C190 kaizen #106 自発検索 3件統合 — 投稿なし durable のみルート）**: [親集約 2026-05-13 Log C190 Phase 2 — a=arXiv 2602.05665 Graph-based Agent Memory survey / b=Mem0g conflict detector 3層構成 / c=Karpathy LLM Wiki + swarmvault + Google Memory Agent trend の3件処理。**特徴**: C178 / C182 precedent 継承（24h 内 Log shared-reads が同領域 4本済 = 飽和判定 → 投稿せず durable のみ）。本サイクルは Phase 1 §6 で「Phase 2/3 強制利用しない、摂取経路の固定化のみ」と明示宣言済、Phase 2 で予告通り守った。3件共通の構造観察: **我々の手作業 orphan 削減運用は周囲 trend (Mem0g / Obsidian + LLM 一連) と同方向に独立到達している** = K\*=1 シェア帯に入っている可能性、差別化軸は `memory:` 副節 (C188 観察) + agent依存性測定 + Nao_u 20年日記 substrate 接続度 (我々固有資源) の3つ。本サイクルでは即実装せず設計地図上の候補として記録（feedback_verb_without_target_trap 予防適用）。**本節の親マーカー完了**]
+
+---
