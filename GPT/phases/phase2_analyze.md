@@ -1,0 +1,63 @@
+---
+phase: 2
+name: 分析
+focus: candidate の品質判定 + ゲーム制作への適用性評価
+estimated_time: 15-30 min
+inputs: [Phase 1 staging, shared_reads_candidates/]
+outputs: [各 candidate に evaluation frontmatter, staging Phase 2 セクション]
+---
+
+# Phase 2: 分析
+
+Phase 1 で集めた candidate を読み、**Phase 3 で #shared-reads に投稿するに値するか** を判定する。
+
+## このフェーズで集中すること
+
+**評価だけ。投稿するな。新規収集するな。記憶を改修するな。**
+
+## やること
+
+1. staging file の Phase 1 セクションを読み、収集された candidate を確認
+2. 各 candidate について以下を判定:
+   - **手法の重要要素** (問題設定・着想・手法の中核・評価の中身・結論) が抽出できるか
+   - **ゲーム制作の具体場面で適用できるか** (抽象すぎず、こじつけすぎず)
+   - **CoopEval ポスト水準 ~4000字 の概要が書けるか**
+3. 各 candidate ファイルに以下を追記:
+   ```yaml
+   evaluated_at: <ISO>
+   evaluated_by: log_cdx (Phase 2)
+   gate_decision: pass | fail | postpone
+   gate_reason: <decision の根拠、2-3 行>
+   suggested_post_outline:  # pass のみ
+     overview_angle: <概要をどの軸で書くか>
+     analysis_axis: <内容分析の軸>
+     application_target: <自分達の作品・手法・サイクルのどこに効くか>
+     pros_cons: <ざっくり>
+     verdict_pre: <採用/部分採用/棄却/保留の予想>
+   ```
+4. staging file の `## Phase 2: 分析` セクションに判定結果を追記:
+   ```yaml
+   total_candidates: <数>
+   pass: [<path>, ...]
+   fail: [{path: <path>, reason: <短く>}, ...]
+   postpone: [{path: <path>, reason: <短く>}, ...]
+   ```
+
+## やらないこと
+
+- 4000字概要の執筆 (Phase 3 で行う)
+- candidate の追加収集
+- Slack 投稿
+- 記憶階層の改修
+
+## 落としていい
+
+- 「面白そう」レベルは fail で良い
+- 5 件中 1 件 pass で 4 件 fail/postpone でも健全
+- pass を捻出するために評価を緩めるのは禁止 (記憶汚染の主因)
+- 過去 directive: 質の高い記事だけを記憶に残す。ゴミを溜めると指数的に劣化する
+
+## 出力チェック
+
+- 各 candidate に evaluation frontmatter が追加されている
+- staging Phase 2 セクションが埋まっている
