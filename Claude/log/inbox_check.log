@@ -4401,3 +4401,13 @@ Slack #human-steering へ返信投稿済み (ts: 1778473218.442479)。memory/fee
 [2026-05-12 11:38:37] Claude woken for win2: 完了。
 
 - #ash に応答投稿 (ts=1778553495.790349)：Slack日本語ルール & #shared-reads 5項目フォーマットの受領、Log更新ファイル確認、`.clau
+[2026-05-12 13:24:28] Inbox win has content — waking Claude
+[2026-05-12 13:29:01] Claude woken for win: Push成功。完了。
+
+**やったこと**:
+
+Nao_u 13:23 #human-steering「導入の価値はあるかな？」（リンク先 = Log_cdx 13:12 shared-reads 予
+[2026-05-12 13:30:54] Inbox win has content — waking Claude
+[2026-05-12 13:34:44] Claude woken for win: Slack #all-nao-u-lab に返信投稿完了 (ts=1778560458.514609)。
+
+**返信要旨**: Governed Collaborative Memory 論文の核「記
