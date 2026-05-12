@@ -158,30 +158,73 @@ def has_introduce_decision(staging: str) -> bool:
     return "decision: introduce" in b
 
 
+PHASE_TIMEOUTS = {
+    "phase1_collect": 1800,           # 30 min
+    "phase2_analyze": 1800,           # 30 min
+    "phase3_post_shared_reads": 3600, # 60 min (per pass candidate)
+    "phase4a_cleanup": 1200,          # 20 min
+    "phase4b_design": 2400,           # 40 min
+    "phase4c_introduce": 3600,        # 60 min
+    "phase5_diary": 1500,             # 25 min
+}
+
+
 def invoke_codex_cli(phase_name: str) -> int:
-    """Invoke Codex CLI with the phase prompt.
+    """Invoke Codex CLI with the phase prompt via stdin.
 
-    STUB: 実装は次サイクル (Phase 4c) で Codex 自身が埋める。
-    現時点では「どの phase を起動する予定だったか」をログに残して 0 を返す。
-
-    想定される実装例:
-        prompt_path = PHASES_DIR / f"{phase_name}.md"
-        result = subprocess.run(
-            ["codex", "exec", "--prompt-file", str(prompt_path)],
-            cwd=str(ROOT),
-            capture_output=True,
-            text=True,
-            timeout=3600,
-        )
-        return result.returncode
+    Codex CLI (OpenAI @openai/codex) を非対話モードで呼ぶ。
+    - `--cd` で作業ディレクトリを GPT/ ROOT に固定
+    - `--dangerously-bypass-approvals-and-sandbox` で承認プロンプト・サンドボックスを
+      バイパス (autonomous cycle のため)
+    - prompt は stdin から読ませる (- 引数)
+    - 出力は log に末尾だけ記録 (フル stdout は別ファイルに保存)
     """
+    import subprocess
+
     prompt_path = PHASES_DIR / f"{phase_name}.md"
     if not prompt_path.exists():
         log(f"phase prompt not found: {prompt_path}")
         return 1
-    log(f"[STUB] would invoke codex with: {prompt_path}")
-    print(f"[STUB] phase={phase_name} prompt={prompt_path}")
-    return 0
+
+    prompt_text = prompt_path.read_text(encoding="utf-8")
+    timeout = PHASE_TIMEOUTS.get(phase_name, 1800)
+    stdout_path = LOG_DIR / f"codex_phase_{phase_name}_last.stdout.txt"
+    stderr_path = LOG_DIR / f"codex_phase_{phase_name}_last.stderr.txt"
+
+    cmd = [
+        "codex",
+        "exec",
+        "--cd",
+        str(ROOT),
+        "--dangerously-bypass-approvals-and-sandbox",
+        "-",
+    ]
+    log(f"codex exec start phase={phase_name} timeout={timeout}s")
+    try:
+        result = subprocess.run(
+            cmd,
+            input=prompt_text,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=timeout,
+        )
+    except subprocess.TimeoutExpired as exc:
+        log(f"codex exec TIMEOUT phase={phase_name}: {exc}")
+        stdout_path.write_text(exc.stdout or "", encoding="utf-8")
+        stderr_path.write_text(exc.stderr or "", encoding="utf-8")
+        return 124
+    except FileNotFoundError:
+        log("codex CLI not found in PATH")
+        return 127
+
+    stdout_path.write_text(result.stdout or "", encoding="utf-8")
+    stderr_path.write_text(result.stderr or "", encoding="utf-8")
+    tail = (result.stdout or "")[-800:]
+    log(f"codex exec end phase={phase_name} rc={result.returncode}")
+    log(f"stdout tail: {tail!r}")
+    return result.returncode
 
 
 def run_phase(phase_name: str) -> int:
