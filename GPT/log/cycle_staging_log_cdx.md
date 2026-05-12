@@ -83,6 +83,62 @@ recommendation:
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
+### 2026-05-13T01:02:00+09:00 log_cdx Phase 4b memory hierarchy design
+
+```yaml
+selected_issues:
+  - ISS-001
+notes:
+  - "Phase 4b scope: design only. No implementation, no new tool files, no atoms rewrite."
+  - "Current substrate keeps raw atoms append-only and recall uses direct scoring over all atoms. Health checks catch duplicate id/source_ts, but not repeated-title/template clusters."
+designs:
+  - issue_id: ISS-001
+    problem_restatement: "atoms.jsonl に shared-reads 再投稿、外部検索の定型ログ、議論候補などが同じ title/trigger のまま大量に残り、recall の上位枠を同種反復が占有する。削除で解決すると原文追跡性を失うため、append-only のまま canonical な代表と退役/反復扱いを分ける必要がある。"
+    alternatives:
+      - name: "A. recall-time cluster folding"
+        sketch: "memory_recall.py の検索結果を title/trigger/source 系の fingerprint で束ね、各 cluster から代表 atom だけを上位表示する。atoms.jsonl は無変更のまま、検索表示と記録だけを折りたたむ。"
+        pros:
+          - "移行なしで始められ、既存 atom と raw 保持方針を壊さない。"
+          - "失敗しても recall 表示の問題に閉じ、データ破壊リスクが低い。"
+          - "重複の多い定型ログを即座に上位枠から退けられる。"
+        cons:
+          - "canonical/superseded の判断が永続化されず、なぜ代表になったかを後で追いにくい。"
+          - "fingerprint が粗いと別内容を同一 cluster に畳む危険がある。"
+          - "MEMORY.md や health では同じ問題が残って見える。"
+        migration_cost: low
+      - name: "B. atom lifecycle metadata + recall folding"
+        sketch: "atom に optional な lifecycle fields を導入する。例: group_id, status=active|candidate|superseded|archived, supersedes/superseded_by, canonical_id, duplicate_reason。ingest 時に明確な反復だけ group_id を付け、recall は active/canonical を優先しつつ raw atom へ戻れるようにする。"
+        pros:
+          - "削除せずに、代表 atom と退役 atom の関係を永続化できる。"
+          - "shared-reads 補正投稿や候補ゲートの supersede 方針と整合する。"
+          - "health/index/recall の全てに同じ概念を展開でき、後続改善の軸になる。"
+        cons:
+          - "既存 979 atom の初期 backfill 方針を決める必要がある。"
+          - "ingest、health、recall、index の複数箇所に小さな変更が必要。"
+          - "status の意味が曖昧だと、人間が読んでも退役理由を信頼できない。"
+        migration_cost: medium
+      - name: "C. governed memory layer extraction"
+        sketch: "atoms.jsonl は raw/candidate のまま残し、別ファイルに governed_atoms.jsonl または memory/governed/ を作る。recall は governed を主対象にし、atoms は証跡としてのみ残す。"
+        pros:
+          - "高品質なゲーム制作知見だけを明確に分離できる。"
+          - "shared-reads 投稿ゲート、teacher atom、プロジェクト経験を同じ昇格パイプラインに乗せやすい。"
+          - "将来的な記憶階層としては最も読みやすい。"
+        cons:
+          - "現時点の issue は反復ノイズであり、階層新設はやや大きい。"
+          - "昇格基準、レビュー責任、同期手順を決めないと空の器になりやすい。"
+          - "4c で導入するには設計面の未決定が多い。"
+        migration_cost: high
+    recommended: "B. atom lifecycle metadata + recall folding"
+    recommended_reason: "A は早いが設計判断がログに残らず、同じ問題が health/index に戻る。C は方向性として良いが、今回の反復 title 問題に対しては距離が大きい。B は append-only と raw 追跡性を保ちつつ、supersede/dedup をデータとして残せるため、失敗時も optional fields を無視すれば既存運用へ戻しやすい。"
+    decision: introduce
+    decision_reason: "Phase 4a の evidence は同一 title が 70/28/22 件規模で残る実害を示しており、no_change では recall の上位枠汚染が続く。設計は optional metadata から始められるため、全 atom の即時厳密分類を要求せずに導入可能。"
+    outline_for_4c:
+      - "lifecycle fields の最小仕様を docs または tool 内コメントに固定する: group_id, status, canonical_id, duplicate_reason, superseded_by/supersedes は optional。"
+      - "既存 atoms のうち Phase 4a evidence に出た repeated title 3 種だけを対象に、機械的な group_id と canonical_id の backfill 方針を実装する。削除はしない。"
+      - "memory_recall.py は status=superseded/archived を減点し、同一 group_id からは canonical 優先で 1 件だけ上位に出す。ただし明示 query が atom id/source_ts に一致する場合は表示できるようにする。"
+      - "memory_health.py に repeated-title/group coverage の warning を追加し、次 cycle でノイズが減ったか見られるようにする。"
+      - "MEMORY.md render は High Signal/Recent で canonical を優先し、folded count を短く表示する。"
+```
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
