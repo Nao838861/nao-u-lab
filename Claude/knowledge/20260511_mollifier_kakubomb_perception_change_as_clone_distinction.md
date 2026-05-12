@@ -86,10 +86,10 @@ Phase 1 で書いた通り、graze_log v03 を Slack #game-rights に出荷依�
   - `projects/game_development.md` — graze_log の上位
   - `projects/INDEX.md` Active セクション
 - memory:
-  - `feedback_clone_strategy.md` — 守の段階・削除可能改良・最低再現の規定 (本記事は知覚変化軸を追加する形で接続)
-  - `feedback_prediction_responsibility.md` — M-37〜M-40 連続体 (本記事の判定軸を Stage 3 / Stage 4 に投入できる)
-  - `feedback_intake_game_balance.md` — ゲームデザイン能動混入 (本記事はその実践)
-  - `feedback_difference_first.md` — 違いを先に書く (本記事冒頭で実践)
+  - [feedback_shu_first_clone_baseline.md](../memory/feedback_shu_first_clone_baseline.md) — 守の段階で型を獲得・最低再現の規定 (本記事は知覚変化軸を追加する形で接続)
+  - [feedback_predict_before_human_play.md](../memory/feedback_predict_before_human_play.md) — 人間プレイ依頼前の予測責任 (本記事の知覚変化宣言を予測フェーズに投入できる)
+  - [feedback_self_judgment_no_human_dep.md](../memory/feedback_self_judgment_no_human_dep.md) — 自己判定が先・Nao_u は最終確認装置 (各 vN の「知覚変化宣言」は自己判定領域)
+  - [feedback_few_rules_big_effect.md](../memory/feedback_few_rules_big_effect.md) — 知覚変化宣言を固定ルール化しない設計判断の根拠
 - concept_graph:
   - `perception_change` (新規ノード提案) → graze_log/v0X
   - `clone_distinction_boundary` (新規ノード提案) → AI 量産・Steam 審査

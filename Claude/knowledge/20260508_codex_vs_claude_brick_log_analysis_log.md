@@ -120,6 +120,16 @@ Claude は逆に「v04 で M-43 違反 → v06 lessons.md で構造化 → v07 �
 
 ---
 
+## 接続先
+
+- memory:
+  - [game_lessons_log.md](../memory/game_lessons_log.md) — Claude brick_log の lessons.md / predicted_play.md / self_judgment.md 系列が「失敗→反省→ファイル新設」として記録される場所。Codex に欠ける「対話的進化の痕跡」の Claude 側の本拠
+  - [feedback_predict_before_human_play.md](../memory/feedback_predict_before_human_play.md) — Claude `predicted_play.md` (v07) の運用根拠。Codex には対応物が無いという §3 M-40 観点の理由
+  - [feedback_critical_evaluation_before_implement.md](../memory/feedback_critical_evaluation_before_implement.md) — M-37 着手前批判レビュー。Claude v04 で「不明1つでも案を捨てる」が機能した側、Codex v25/v50 でボイラープレート化して機能しなくなった側の判定基準
+  - [feedback_self_judgment_no_human_dep.md](../memory/feedback_self_judgment_no_human_dep.md) — 自己判定が先・Nao_u は最終確認装置。Claude `self_judgment.md` の運用根拠で Codex が外部依存に止まる理由
+
+---
+
 ## 付記
 
 - 本分析は Codex 3点 (v04/v25/v50) サンプリング。中間版での brainstorm 劣化開始時期は未特定（v05〜v24 のどこかで自己反復に堕ちた）。次サイクル候補で v10/v15/v20 を点検する余地あり

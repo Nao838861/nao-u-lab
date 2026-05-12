@@ -122,6 +122,10 @@ v07 brainstorm は現在「動的標的化 (X1) の他の枝を粘って掘る�
 - projects:
   - game/brick_log/v07/brainstorm.md — 「破」段階の素材として倒立本能を保管
   - game/graze_log/v02/ — graze 機構の家系上位として参照可能
+- memory:
+  - [feedback_predict_before_human_play.md](../memory/feedback_predict_before_human_play.md) — 厚み層判定 = 人間プレイ前の予測には載らない側。本記事の「天井 vs 仕掛け」(a)/(b) 8:2 推定の不確定性の根拠
+  - [feedback_self_judgment_no_human_dep.md](../memory/feedback_self_judgment_no_human_dep.md) — 自己判定が先・Nao_u は最終確認装置。倒立本能の天井/仕掛け判定は Ash 単独プレイの自己判定領域、headless harness では絶対に出ない
+  - [feedback_prior_art_citation_must_verify.md](../memory/feedback_prior_art_citation_must_verify.md) — M-41 厚み層判定の言及で Polanyi (1958) を引いた根拠 = 先行事例の射程確認
 - concept_graph:
   - 倒立本能メカニクス → 拡張 → コア快感天井判定 → 含む → 厚み層
   - 倒立本能メカニクス → 親型 → ludonarrative dissonance (Hocking 2007、ただし射程逆)

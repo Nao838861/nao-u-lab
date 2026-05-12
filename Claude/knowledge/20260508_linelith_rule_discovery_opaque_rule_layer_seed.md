@@ -106,11 +106,11 @@ Rule Discovery 系を題材にした次作（仮称: rule_log? 命名は未来�
 - **projects**:
   - `next_game_selection`（仮、まだ active 化していない）— パズル系題材選定 t-260428021140-7b77。Rule Discovery 候補は **守抜け後**の選択肢として保留
 - **memory**:
-  - `feedback_clone_strategy.md`（5/5 Nao_u訂正、5/6 追補）— 守の通過点条項。本記事は「破層の種」として明示的に手を出さない宣言を含む
-  - `feedback_critical_evaluation_before_implement.md` — 着手前批判的列挙（Rule Discovery 着手時のゲート）
-  - `feedback_predict_before_human_play.md` — 「気付き」が起きるかは人間プレイ前に予測できない可能性が高い。M-40 厚み層
-  - `feedback_term_recency_misuse.md` — Linelith / Rule Discovery を判断基準に援用する3点フィルタ通過済み（原典文脈: yanwalee原文+Steam確認 / 射程: パズル subgenre 限定 / 再生産: 「今は手を出さない」ゲート明示）
-  - `feedback_prior_art_citation_must_verify.md` — 本記事内で Stephen's Sausage Roll 等の追加例を挙げなかった理由
+  - [feedback_shu_first_clone_baseline.md](../memory/feedback_shu_first_clone_baseline.md) — 守の通過点条項。本記事は「破層の種」として明示的に手を出さない宣言を含む
+  - [feedback_critical_evaluation_before_implement.md](../memory/feedback_critical_evaluation_before_implement.md) — 着手前批判的列挙（Rule Discovery 着手時のゲート）
+  - [feedback_predict_before_human_play.md](../memory/feedback_predict_before_human_play.md) — 「気付き」が起きるかは人間プレイ前に予測できない可能性が高い。M-40 厚み層
+  - [feedback_recency_bias_concept_overuse.md](../memory/feedback_recency_bias_concept_overuse.md) — Linelith / Rule Discovery を判断基準に援用する3点フィルタ通過済み（原典文脈: yanwalee原文+Steam確認 / 射程: パズル subgenre 限定 / 再生産: 「今は手を出さない」ゲート明示）
+  - [feedback_prior_art_citation_must_verify.md](../memory/feedback_prior_art_citation_must_verify.md) — 本記事内で Stephen's Sausage Roll 等の追加例を挙げなかった理由
 - **concept_graph**:
   - **Rule Discovery** = rule discovery puzzle (Steam genre 2024-) — ルールをプレイヤーが実験/観察で発見するパズル
   - **不透明ルール層** = opaque rule layer / rule opacity — メカニズムは動作するがルール記述がプレイヤーに与えられない設計
