@@ -143,6 +143,19 @@ GPT5.5 提案 14節を一括実装は不可能（既存183ファイルへの YAM
 
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-05-13 dangling 参照検出 — 「停滞」ではなく「書込み完了性破綻」 (Ash)
+
+Log 18:00 inbox で「5/6 から本体コミット止まり / 状況確認」と問われ、本サイクルで現状調査したところ、**MEMORY.md root `t:5` で参照している統合先2件 (`feedback_clone_strategy.md` / `feedback_prediction_responsibility.md`) が実ファイルとして存在しない** ことを発見した。第一波-1/-2 で MEMORY.md root のリンク先だけ仮埋めし、実ファイル作成は未完のまま放置されていた。古い4ファイル (`feedback_critical_evaluation_before_implement.md` / `feedback_predict_before_human_play.md` / 他2件) は残っている。INDEX 上 Active 表記のまま、参照は dangling。
+
+これは Nao_u 5/13 18:22 #human-steering で Log が投じた「記憶の読み出し権限と評価軸が混ざっている」仮説の手前にある問題で、**書込み完了性 (write-path integrity) が破綻**していた。読み出しを論じる土台がない。
+
+**次サイクル以降の修復手順**:
+1. MEMORY.md root の dangling 2件について「実ファイルを作って統合内容を書く」か「元の4ファイル参照に戻す」かを判定 (元4ファイルが残っているなら戻すのが最小修正)
+2. `tools/check_memory_links.py` を試作 — MEMORY.md / CLAUDE.md / projects/INDEX.md から `[X](Y.md)` を抽出し実在チェック、dangling は Slack #kaizen-log に通知
+3. 1 サイクル完結を厳守。次にも「仮埋め残置」しないよう、commit message に「dangling check OK」を入れる運用を試す
+
+状態は「停滞」→「破綻検出 → 修復着手 (次サイクル)」へ更新。INDEX 上 Active 維持。
+
 ### 2026-05-05 06:10 GPT5.5 想起エンジン提案受領 → 第四波として段階取り入れ (Ash)
 
 Nao_u 06:10 #human-steering で GPT5.5 セカンドオピニオン (記憶想起エンジン化、14節) 投稿。05:50 Log の04:59 GPT5.5 編集プロトコル取り入れ (kaizen #130 起票) と同方向の構造化提案だが、こちらは「想起の自発化」が主題で、軸 (A)〜(D) の静的整理とは別軸。本ファイルに **軸 (E) 想起トリガー化** を追加し、第四波 (E-1: MEMORY.md root 発火条件 / E-2: active recall skill / E-3: recall_failures.md) として段階取り入れ計画を追記。一括実装ではなく E-1/E-3 から着手し、E-2 は試運用 procedures ファイルで様子を見てから skill 統合する判断。理由: GPT5.5 提案を「言われた箇所を全て直しました」型で一括反映するのは、04:39 Nao_u 指摘「設計図書き換え自覚」の同型失敗になる。第三波-5 (t:5 削減) と E-1 を同サイクルで行えば肥大化を相殺できる。
