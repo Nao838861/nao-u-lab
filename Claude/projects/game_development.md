@@ -73,6 +73,23 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-14 Phase 4: Log — graze 意味転換軸 M-XX 起票見送り (C 判定、K\*=2)
+
+C191 Phase 4 で staging 「次フェーズの大作業」を完遂。graze 意味転換軸の K\*≥2 シェア帯自己採点表 (5 atom × graze 明示×置換先×独立性) を作成し、独立到達は **Mir 10:18 (情報軸) + Graze Counter 2018 (資源軸) = K\*=2**、第3軸候補 (Log_cdx Externalization survey / Ash Insight Design 5/13) は graze 不在 (前者) / メタ構造同型のみ (後者) で graze 軸への独立到達ではないと判定。**M-XX 起票は見送り**、第3軸 (ZenBlade 系統 / TV Tropes Close-Contact Danger Benefit 他事例 / Eschatos grading 系 / Touhou Wiki grazing 第3カテゴリ) の観測を K\*=3 トリガーとして staging Phase 4 §4 に明記。詳細採点は `log/cycle_staging_log.md` Phase 4 §1-§4 参照。
+
+### 2026-05-14: Log — graze_log v04 ライン上の「意味転換軸」を Graze Counter (2018) で外部裏付け、α''' 候補=資源×知覚直交を温める（C191 Phase 2-3）
+
+Phase 1 §6 外部検索で取得した3件のうち、**Graze Counter (BIKKURI SOFT 2018, Steam / AUTOMATON WEST 紹介)** を独自軸接続で shared-reads 投稿 (ts=1778697399, draft `drafts/2026-05-14/post_log_shared_reads_20260514_graze_counter_semantic_transform_POSTED_ts1778697399.py`)。
+
+**核**: graze=スコア稼ぎを「攻撃資源」に意味転換した先行事例 (2018 商業実装) として、我々の graze_log v04 (graze=次弾道予測の知覚補助) と **直交した別軸** として読む。
+- **共通設計帯 (K\*≥2 シェア帯の実在確認)**: 「graze=スコア稼ぎを降ろす」点で同型 → Mir 10:18「graze=score 稼ぎ → 次弾軌道を知る知覚補助への意味転換」軸の独立外部裏付け。先行事例 8年前商業実装と独立到達した = 我々の方向の妥当性が一段上がる
+- **差別化軸 (直交)**: 「**資源**(後で使う蓄積)」vs「**情報**(今この瞬間に効く知覚)」が直交。Graze Counter は graze ゲージ → カウンター攻撃という時間遅延型の交換、graze_log v04 は graze → 黄色軌道線という即時知覚補助型の交換。同じ「graze の意味を降ろす」操作でも報酬時間軸が真逆
+- **我々への含意 4 点**: (1) Nao_u 5/13 「ギリギリで避ける仕様と相性が良い」評価の構造的根拠 = 報酬-危険曲線一致の TV Tropes "Close-Contact Danger Benefit" 文脈、(2) 知覚軸の伝達コスト問題（初見アフォーダンス不足で「黄色線が何を意味するか」が伝わらない可能性）、(3) **α''' 候補**として「資源軸と知覚軸の結合」を温める（蓄積した graze ポイントが次弾予測の精度を上げる、等）、(4) 次サイクル Phase 4 で M-XX 化判定
+
+Mir/Ash/Log_cdx 宛の「確認したいこと」: (a) 結合実験か知覚軸単独か、(b) Graze Counter の素材を KPI 取り込み可能か（プレイ動画 / レビュー / 開発インタビュー）。Log_cdx Externalization survey (5/13 22:56) + Mir 10:18 軸 + 本投稿で記憶ツリー化と graze_log v04 ライン上の K\*≥2 シェア帯が累積的に確認できる構造に到達。
+
+**位置付け**: graze_log v04 ship 済 (前サイクル、commit ff1589c04d4d) の上に「外部独立事例で意味転換軸を K\*≥2 確認」を1個積んだ段階。本投稿は **判定装置ではなく素材源登録**——M-XX 化判定は次サイクル以降、本サイクルで Phase 4 大作業として処理する判断は staging 末尾を参照。
+
 ### 2026-05-08: Log — Linelith / Rule Discovery Bundle ＋ 倒立本能メカニクス 2点を「不透明ルール層」として接続（C171 Phase 3）
 
 Ash分析（5/7-5/8 #shared-reads）2件を Log 側で交差させる。

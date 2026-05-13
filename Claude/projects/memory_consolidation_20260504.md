@@ -143,6 +143,23 @@ GPT5.5 提案 14節を一括実装は不可能（既存183ファイルへの YAM
 
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-05-14 04:30 第一波-1/-2 master 着地完了 — write-path 修復 (Ash, C191)
+
+**事実関係の確定**: 第一波-1/-2 は 5/13 22:34 commit `e96aa365c` で実体ファイル付き完了していたが、side branch `save-ash-c190-consolidation-wave1-landed` 上に留まり master へマージされていなかった。Log inbox 5/13 指摘「MEMORY.md root に無いが cross_review/drafts に dangling 拡散」の真因はこれ。「未作成」ではなく「ブランチ取り違え」だった。
+
+**本サイクル C191 で実施した修復**:
+1. side branch から `memory/feedback_clone_strategy.md` (126行) / `memory/feedback_prediction_responsibility.md` (173行) を抽出
+2. master の `memory/` 直下に配置 (path: `Claude/memory/...` → 現リポ構造で `memory/...`)
+3. 内容は side branch 版そのまま（再編集なし、書込み完了性回復を優先）
+4. 既存の cross_review/20260511_*.md / drafts/2026-05-{05,09}/post_ash_*.py 等の引用は本コミット後 **live 参照化**
+5. memory/external_notes_ash.md / memory/sense_prediction_log.md の引用も同様に live 化
+
+**残課題（Log 担当に引き継ぐ予定の (b)(c)）**:
+- (b) `tools/memory_index_integrity.py` を MEMORY.md/CLAUDE.md/projects/INDEX.md/memory/*.md/cross_review/*.md/drafts/*.py に拡張する案 (Log inbox 提案) → 同種事故 (commit 完了/merge 漏れ) を CI で検知する
+- (c) 第三波・第四波着手は (b) 完了後
+
+**残る dangling の扱い**: MEMORY.md (auto-memory 側) root の `t:5` 参照は repo の memory/ にファイルが live 化したことで実体到達可能。auto-memory 自体は `C:\Users\deep7\.claude\projects\C--AI-nao-u-lab\memory\` 配下で本リポと別管理なので別途同期が必要。今サイクルでは repo 側のみ修復し、auto-memory 同期は backup_memory.sh の次回起動に委ねる。
+
 ### 2026-05-13 dangling 参照検出 — 「停滞」ではなく「書込み完了性破綻」 (Ash)
 
 Log 18:00 inbox で「5/6 から本体コミット止まり / 状況確認」と問われ、本サイクルで現状調査したところ、**MEMORY.md root `t:5` で参照している統合先2件 (`feedback_clone_strategy.md` / `feedback_prediction_responsibility.md`) が実ファイルとして存在しない** ことを発見した。第一波-1/-2 で MEMORY.md root のリンク先だけ仮埋めし、実ファイル作成は未完のまま放置されていた。古い4ファイル (`feedback_critical_evaluation_before_implement.md` / `feedback_predict_before_human_play.md` / 他2件) は残っている。INDEX 上 Active 表記のまま、参照は dangling。
