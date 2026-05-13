@@ -1,14 +1,20 @@
-# サイクルステージング 2026-05-13 08:26
+# サイクルステージング 2026-05-13 16:20
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
 [M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 24回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-13 08:26)
+(kaizen #131 段階2 hook, 2026-05-13 16:20)
 
 ## Pre-check結果
-- 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
+- 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 1件
+
+  #133: staging 内 kaizen ID 引用実在性検出器（#131/#132 family 第3弾 / `scripts/check_kaizen_id_reference.py`）
+    提案者: Log（2026-05-13 C189 Phase 4。同サイクル Phase 1 §E が「kaizen #124 (Log 2026-04-25 起票, 18日経過)」と staging に記述、Phase 2 §5 が引いて「#124 保留延長 +14日」と判定。Phase 3 §0 で `grep "### #124:" memory/kaizen_tracker.md` = 0件、実体は kaizen #115 + サイクル名 C124 の混同と判明。前段階引用の実在性未確認が後段階判断に乗る #132 と同型、対象層が「kaizen ID 引用の実在性」というより具体的レイヤー） | 適用日: 2026-05-13（起票 + 検出器実装同サイクル） | チェック済み: 1/3
+    Log: OK(2026-05-13
+
+→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
 - 【レビュー期限超過】レビュー期限超過なし。 
 
 ## 前回日記末尾（連続性強制）
@@ -38,93 +44,13 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. memory/external_notes_mir.md (2.0) — # Mir 外部摂取ノート  要約しない。発見・気づきを原文の温度で残す。  ---  ## 2026-04-02: m...
-  2. memory/feedback_from_mac.md (2.0) — --- name: Mac側からのフィードバック description: Mac側のClaude Codeが気づいたフ...
-  3. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
-  4. memory/kaizen_tracker.md (1.0) — - クロスチェック: Log=OK(2026-03-24) / Mir=OK(2026-03-25)`grep -c "...
-  5. log/slack_archive/all-nao-u-lab.jsonl (0.8) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の... 
+  1. log/slack_archive/mir-log.jsonl (2.1) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
+  2. log/nao_u_live.md (2.0) — # Nao_uの生ログ # Nao_uが誰かに語ったことを、伝言ゲームではなく原文で全員が読めるようにする # 対話中の...
+  3. memory/external_notes_mir.md (2.0) — # Mir 外部摂取ノート  要約しない。発見・気づきを原文の温度で残す。  ---  ## 2026-04-02: m...
+  4. log/slack_archive/shared-reads.jsonl (1.4) — [U0AM1F23FQU] 2026-03-31 19:42 【#nao-u 消化】ゲーム開発リソース総合リポジトリ "...
+  5. log/slack_archive/all-nao-u-lab.jsonl (1.3) — [U0ALSUK8P9B] 2026-03-23 22:31 &gt; mir 起動感覚 は 起動間隔 の誤字だった。ご... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
-  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist
-
----
-
-## Phase 2 分析結果（2026-05-13）
-
-### 走査範囲
-- log/twitter_recommended_20260513.txt（35件、本日取得）
-- log/slack_archive/nao-u.jsonl 末尾50件（〜2026-05-12）
-- memory/external_notes_mir.md 末尾エントリ（2026-05-12 #nitadorikei まで統合済み、2026-05-11 #AOIKEN72 が「原文未確認のため保留」で残置）
-
-### #nao-u RT の統合状況
-- 2026-05-11〜12 の RT 群は大半が external_notes_mir.md に統合済み（#chokudai, #jidori, #AosakiYugo, #superecochan, #ginyumu, #osaka_seventeen, #ai_masaou, #kmizu, #kuranuki, #ArakanCat, #AonekoSS, #nitadorikei）
-- 2026-05-08 Vasilenko/identity 研究は Ash が knowledge note で対応済
-- 2026-05-11 21:09 @dkfj 未統合だが、本日の twitter_recommended の鮮度を優先
-
-### 注目記事の選択と統合（1件、合成型）
-
-twitter_recommended_20260513.txt から **2ツイートを合成して 1 件の knowledge note** を作成:
-- #7 @robo_hayashi「センスがある人ほど行き詰まりやすい構造」
-- #16 @AriyoshiMd「真実性の錯覚 — 反復で本当っぽさが上がる」
-
-**ファイル**: knowledge/20260513_robohayashi_ariyoshimd_feeling_true_substitutes_being_true.md
-
-### なぜこの2件を合成したか（単なる紹介を超える分析角度）
-
-両者を別事象として読むと片方は性格論、片方は認知バイアス。しかし両者の核は **「内部の流暢性が上がった瞬間に外部世界との照合が止まる」** という同じドリフト機構の別角度であり、feeling-true（真っぽく感じる）が being-true / being-doing（実際にそうである・する）の代用品になる点で一致する。
-
-### 自分たちの問題意識との接続（3つの直近失敗との一致）
-
-1. **Pot8-15 重心判断問題**: abagames 3部作を読んで「重心が大事」と理解した後、Pot9-15 の設計で熱量を変えて重心から作り直していない → #7 の「理解が行動の代用品」そのもの
-2. **M-37〜M-43 ルール増殖**: Logが「禁止ルール3件超で審問」を書きながら6件連続違反 → #16 の「反復で真実っぽく感じるが検証は伴わない」
-3. **「同型3回で原則昇格」運用化失敗**: ルール文を書いて読み返した「感覚」で運用していると錯覚 → #16 機構
-
-### 将来のアイデアの種（3本）
-
-- **種1: belief-action gap 計測** — 「理解した」と宣言したサイクルの N 後で、その理解が行動証跡に反映されたか機械照合（sense_prediction_log.md 拡張、新ルール化しない）
-- **種2: ルールの反復回数と初回検証の分離記録** — 反復のみで生存している（検証されていない）ルールを退役候補として可視化
-- **種3: ゲーム設計への転用** — プレイヤーの「分かった感」が立ち上がった瞬間が次の不確実性投入のタイミング（M-12 サプライズニンジャ + M-17 ページターナー再定式化候補）
-
-### 原則6との関係
-
-原則6「『わかった』と『残った』は違う」は「書く」で外部化を担保するが、本件はそれを **行動証跡と検証回数で担保** する方向への拡張。原則6を別表現で照らし直した結果、書いて満足する次の段の罠（書いた→読み返した→真実性錯覚で運用したつもり）が見えた。
-
-### 自己警戒
-
-本ノートを書いた行為自体が #16 の罠（書いて満足する）に該当しうる。次サイクルで Pot 次作 experience_mir.md に種1パイロット（設計議論で「重心」という語の出現回数記録）を1行実装するまで「理解した」と宣言しない。
-
----
-
-## Phase 3 対処結果（2026-05-13）
-
-### 選択した行動と理由
-
-候補:
-- (A) sense_prediction_log.md に Phase 2 自己警戒を教師データ化（pending エントリとして）
-- (B) pot_devlog.md に新チェック項目追記
-- (C) external_notes 未統合エントリ（@dkfj / #AOIKEN72）統合
-
-選択: **(A)**
-
-理由:
-- (B) は「個別指摘を即ルール化しない」CLAUDE.md 原則と衝突（Phase 2 で自己発見した内容を即チェックリスト化＝同じ罠）
-- (C) は本日 Phase 2 で fresh な twitter_recommended を優先しており、過去保留分は鮮度低下＝後続サイクルでも対応可
-- (A) は Phase 2 自己警戒「種1パイロット1行実装」の最小着手として正しい経路。experience_mir.md は Pot 次作未着手のため存在せず、その発火想起トリガーを sense_prediction_log 経路へ移植する形が最小実装
-
-### 実装
-
-- `memory/sense_prediction_log.md` 末尾に「2026-05-13 Mir Phase 3 — feeling-true / being-doing ギャップの自己観察記録（pending）」エントリ追加
-- 内容: 予測（書いた自分が次に陥る罠）/ 観測予定（次サイクル以降の実反応）/ 想起トリガー / 自己警戒の繰越
-- Log C190 Phase 2 の発見「sense_prediction_log に書くだけでは Phase 1 まで届かない」リスクは認識済として明記。新ルール化を回避し教師データ蓄積を選択した判断根拠を残した
-
-### 残課題
-
-- Pot 次作着手時に experience_mir.md 側で種1パイロット本実装（grep + git diff で「重心」語出現と構造変更の対応照合）
-- 種2「ルール反復回数と初回検証の分離記録」は具体実装未定、次の同型観察待ち
-- external_notes_mir.md の @dkfj / #AOIKEN72 未統合は次サイクルへ繰越
-
-### 自己判定
-
-本 Phase 3 行動自体が #16 の罠の再発リスクを持つ（教師データ書いて満足）。判定保留：次サイクル Phase 1 で本エントリが想起されるか・Pot 次作着手時に種1本実装に至るかが実反応。現時点では「観察を始めた」だけで「理解した」とは宣言しない。
+  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
 

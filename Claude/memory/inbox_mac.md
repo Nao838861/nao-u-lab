@@ -57,3 +57,8 @@ Claude「これはLLMで処理するには重すぎますね。機械的に処�
 Claude「とはいえ、現実的な時間では対応できないので別の方針を・・」
 
 僕「Codex使えば？」
+
+## Slack新着 [2026-05-13 18:22] #human-steering
+From: U0ALSUK8P9B
+> <https://nao-u-lab.slack.com/archives/C0ALWBRNJ66/p1778649143969209|https://nao-u-lab.slack.com/archives/C0ALWBRNJ66/p1778649143969209> 
+このリンク先の話題について、みんなで議論して記憶システムの改善に繋げて欲しい
