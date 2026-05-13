@@ -81,6 +81,10 @@ casual／core fan／コンプ勢／30秒オンボーディング層など、誰�
 
 Nao_u の個別指摘は `sense_prediction_log.md` に**教師データとして累積**する。同型が3回以上確認されてから初めて R 層・M 層への昇格を検討する。新しい種類の失敗は学習コストとして許容、同型反復のみ厳しく扱う。詳細は [feedback_few_rules_big_effect.md](feedback_few_rules_big_effect.md) と [dialogue_micromanagement_20260504.md](dialogue_micromanagement_20260504.md)。
 
+### R/M 二層構造の理論的位置づけ（2026-05-13 追記）
+
+R 層 = semantic（抽象化・転送可能）、M 層 = episodic（個別事例）の二分は、`projects/memory_tree_consolidation.md` v0.6（Google MA pattern + Memora arxiv 2602.03315 + Externalization arxiv 2604.08224）の Memory 4次元写像のうち semantic/episodic 軸と直接対応する。タグ語彙 v0（3層クラスタ）は「索引機構」、本 R 層は「実行を駆動する手順」で、Externalization paper の Memory→Skill 昇格境界（"some evidence promoted into explicit reusable procedure"）に該当。R-X が「索引」から「実行手順」へ振れる瞬間は skill 化のサイン。memory_tree_consolidation の v0.6 設計種は本 R/M 構造を Pot 全体に拡張する射程を持つ — game lessons はその先行実装。
+
 ---
 
 ## 詳細事例（必要に応じて参照）

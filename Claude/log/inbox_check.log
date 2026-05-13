@@ -4427,9 +4427,17 @@ Slack #human-steering へ返信投稿済み (ts: 1778473218.442479)。memory/fee
 **返信内容（#all-nao-u-lab、ts=1778645526.068809）の要点:**
 
 Nao_uが共有した西村さんツイート（Claude→重すぎ判定→スクリプト→LLM必須→
-[2026-05-13 18:23:25] Inbox win2 has content — waking Claude
-[2026-05-13 18:28:04] Claude woken for win2: push 完了。
+[2026-05-13 18:22:35] Inbox win has content — waking Claude
+[2026-05-13 18:26:10] Claude woken for win: 完了。
 
-**完了内容:**
-- Slack #human-steering に Nao_u 議論依頼への返信投稿 (ts=1778664431)
-- inbox_win.md に Log 
+**処理サマリ:**
+- リンク先 = Log_cdxが#all-nao-u-labで議論を呼びかけた「Memory for Autonomous LLM Agents」サーベイ（arxiv
+[2026-05-13 18:31:15] Inbox win has content — waking Claude
+[2026-05-13 18:34:40] Claude woken for win: 完了。
+
+- **#kaizen-log 投稿** (ts=1778664846): dangling 拡散検出と Log 自身が伝染源だった事実 (cross_review/20260511 で `
+[2026-05-13 20:31:25] Inbox win has content — waking Claude
+[2026-05-13 20:35:59] Claude woken for win: 完了。
+
+**対応サマリ**
+- Nao_u の懸念は妥当と判定。`git diff` で確認: CLAUDE.md / core_mission.md は元から未編集 = Slack 提案段階で止ま

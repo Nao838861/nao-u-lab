@@ -652,3 +652,59 @@ index.html:1285 の name input handler 冒頭に `if(e.repeat)return;` を追加
 - 「ゲームオーバー時に押下中キーをマスク、keyup 待ち」案は二段防御として有効だが、`e.repeat` フィルタ単体で対象シナリオを完全カバーするため過剰実装と判断（少ないルールで大きな効果）
 
 — Log
+
+---
+
+## 2026-05-13 (Log C192 Phase 4) headless.py 最小同期 — BACKLASH 版閾値 35/99/208 反映
+
+### 動機
+
+C131 (2026-04-26) で observation のみ記録した「`headless.py` の数値が C128 から完全に不変、index.html の BACKLASH 実装が反映されていない」問題が **17日宙吊り**。Nao_u 5/13 06:37 broadcast 4点指摘の通底（「これは問題だ」記述機能不全 / 壊れた測定装置から設計判断を導出）に直結。R-F「壊れた測定装置からデータを引いて設計判断するのは、測定装置なしより悪い」直処方。
+
+Log 5/13 06:41 「ルール追加凍結 / 完成ゲームで headless 校正 最優先」自己宣言の最初の 1mm 実行。
+
+### 変更
+
+`game/shot_log/v01/headless.py` line 5:
+
+```diff
+- LV2, LV3, GMAX = 44, 124, 200
++ LV2, LV3, GMAX = 35, 99, 208  # 2026-05-13 C192 Phase 4: BACKLASH 版 index.html と同期
+```
+
+index.html line 432 (`gauge>=99?3:gauge>=35?2:1`) と line 818 (`Math.min(208,...)`) と一致。cooldown (`6/7/8`) と auto-shoot ロジック (`cooldown>0 で減少, <=0 で shoot`) は既に headless.py に実装済 (line 136, 202-204) のため変更なし。
+
+### Phase 4 で着手しなかった範囲（明示）
+
+- BOMB 機構 (`gauge>=208 + SPACE` → 敵弾全消+小中敵全滅、gauge=35 リセット): index.html line 642-671。**省略可で OK** の指示通り skip
+- AI Expert 17方向評価の Python 移植
+- Playwright headless で実 index.html を回す方式への移行
+- C131 持ち越し「冒頭3行ブロック改訂の Nao_u 確認 (target shift)」
+
+### 新ベンチ数値（seed 42 / 123 / 7777、SUMMARY = avg）
+
+| policy | time(s) seed別 | SUMMARY time / score / hits / items / 3way% |
+|---|---|---|
+| center | 120.0 / 24.4 / 120.0 | 88.1 / 473.3 / 2.0 / 109.0 / 65% |
+| aggressive | 54.6 / 9.6 / 50.0 | 38.1 / 191.0 / 2.0 / 54.0 / 42% |
+| defensive | **22.8 / 24.4 / 55.0** | 34.1 / 121.3 / 1.3 / 16.3 / 7% |
+| sweeper | **4.6 / 6.5 / 6.5** | 5.9 / 5.3 / 0.0 / 0.3 / 0% |
+
+### C128 ベンチとの差分（測定装置修復の最小エビデンス）
+
+| 項目 | C128 旧ベンチ | C192 新ベンチ | 変化 |
+|---|---|---|---|
+| defensive seed 42 | 22.8 | 22.8 | 不変 (1way 主体で閾値届かず) |
+| defensive seed 123 | 25.4 | **24.4** | -1.0s |
+| defensive seed 7777 | 52.5 | **55.0** | **+2.5s** ← 閾値変更（LV2 44→35, LV3 124→99）で 2way/3way 突入が早くなり延命に寄与 |
+| sweeper 全seed | 4.6 / 6.5 / 6.5 | 4.6 / 6.5 / 6.5 | 不変 (即死で gauge 上昇前に終了) |
+
+**判定**: 「C128 から完全に不変」状態は解消。defensive seed 7777 で +2.5s の変化 = 閾値同期が headless 内のレベル遷移挙動に伝播している実証。center / aggressive は元々 C128 ベンチに記録されておらず比較不可だが、今回 SUMMARY に記録したので **次回からの基準** になる。
+
+### この差分の意味するもの（小さく書く）
+
+- これは「ベンチが直った」最小エビデンスで、「測定装置が正しく動くようになった」を意味するに留まる。BOMB 機構と AI Expert がまだ無いので、**設計判断（特に Q-C 罰 vs 圧力評価）には依然この headless を使わない**
+- 中期 (AI Expert 移植) / 長期 (Playwright 移行) の kaizen 起票候補は **Log 06:41 ルール追加凍結フェーズ整合のため本サイクルでは新規起票せず**、devlog 内候補として残置
+- 「壊れた測定装置を 17日放置していた」事実は kaizen 起票しない代わりに、`sense_prediction_log.md` への教師データ蓄積で消化（Nao_u 06:37 第4点「これは問題だ記述機能不全」の正対応事例として）
+
+— Log (2026-05-13 C192 Phase 4)

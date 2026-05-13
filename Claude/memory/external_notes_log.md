@@ -4,6 +4,120 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-14 arXiv 2509.11353 "Do Large Language Models Favor Recent Content?" 本文読了（Nao_u 5/13 指摘③「最近見たものに引きずられすぎ＝栄養の偏り」直処方） [統合済 → projects/external_intake.md 2026-05-14 §結晶化率 KPI 第4軸]
+
+**文脈**: Log C194 (2026-05-14) Phase 4 大作業。本サイクル Phase 1 §6 で「経路を踏むだけで本文未読」のまま candidate 登録した3件のうち、recency bias 直撃の1本を Phase 4 で消化。同サイクル内で「経路 → 本文 → 内部接続」を所要サイクル数 1 で完了させ、「広く浅い摂取」傾向への構造的反例を作る。
+
+**論文情報**: Hanpei Fang, Sijie Tao, Nuo Chen, Kai-Xin Chang, Tetsuya Sakai. arXiv 2509.11353. URL: <https://arxiv.org/abs/2509.11353>
+
+**Abstract 中核引用 (M-43 引用本文義務充足)**:
+"Large language models (LLMs) are increasingly deployed in information systems, including being used as second-stage rerankers in information retrieval pipelines, yet their susceptibility to recency bias has received little attention. We investigate whether LLMs implicitly favour newer documents by prepending artificial publication dates to passages in the TREC Deep Learning passage retrieval collections in 2021 (DL21) and 2022 (DL22). Across seven models, GPT-3.5-turbo, GPT-4o, GPT-4, LLaMA-3 8B/70B, and Qwen-2.5 7B/72B, 'fresh' passages are consistently promoted, shifting the Top-10's mean publication year forward by up to 4.78 years and moving individual items by as many as 95 ranks in our listwise reranking experiments. Although larger models attenuate the effect, none eliminate it."
+
+**実験設定 (Method)**:
+- **Listwise reranking** + sliding window size 10、BM25 top-100 を上流リトリーバとして使用
+- **日付注入フォーマット**: 各 passage 冒頭に `"Published on: YYYY/MM/DD"` を前置。Rank 100 = `"2025/01/01"`、Rank が1段上がるごとに1年遡る → Rank 1 = `"1926/01/01"`。実際の relevance 判定とは独立な人工日付
+- **プロンプト**: "You are RankLLM, an intelligent assistant that can rank passages based on their relevancy to the query..."（RankLLM 系プロンプト）、出力形式 `[4] > [2]` で降順ランク
+- **Pairwise preference**: 同一 relevance level の2 passage に `"1980/01/01"` (古) と `"2025/01/01"` (新) を割当て、preference 反転率を測定（DL21 のみ、open-source 4モデルでコスト制約）
+
+**評価対象 (Experiments)**:
+- 7モデル: GPT-3.5-turbo / GPT-4 / GPT-4o / LLaMA3-8B/70B / Qwen2.5-7B/72B
+- DL21 (53 queries, NIST judgments) + DL22 (76 queries)
+
+**主要数値 (Results)**:
+- **Top-10 平均発行年シフト (Table 2)**: LLaMA3-8B = **3.908 年 (DL21) / 4.780 年 (DL22)** が最大。GPT-4o = 1.300 / 1.400 年で最も頑健、Qwen2.5-72B = 0.819 / 1.462 年
+- **絶対平均ランク変動 (Table 1)**: LLaMA3-8B 最揺れ (5.0008 / 5.2782)、GPT-4o 最安定 (1.8204 / 2.0047)
+- **個別最大ランク変動 (Table 1, ALRSall)**: GPT-3.5-turbo で **95 ランク** 移動 (DL21)、Qwen2.5-7B で 61 ランク
+- **Pairwise preference 反転率 (Table 4)**: LLaMA3-8B 平均 **25.23%**、LLaMA3-70B の relevance level 2 ペアで **29.63%**、Qwen2.5-72B でも 8.25%。relevance が同一でも日付注入だけで4回に1回は順位が逆転する
+- **モデルサイズ効果**: 大きいモデルほど bias は減衰するが、**ゼロにはならない**（GPT-4o ですら 1.3-1.4 年シフト残存）
+
+**結論・処方提案 (Conclusion / Future Work)**:
+- 本論文は mitigation を実装せず、観察と定量化に専念
+- Future work: (a) DL21/22 以外への拡張、(b) sliding-window size の系統的変化、(c) "Breaking news" / "Updated today" 等の richer manipulation、(d) bias-mitigation strategies の開発（「必要」と明記、未実装）
+
+**Nao_u 5/13 06:37 #human-steering 指摘③ との接続**:
+> 「『倫理観の代わりに視覚的・操作的な何かが磨耗』は、たまたま検索に引っかかった特殊な例のゲームをなぜか重要なものとみなしてずっと判断基準に置き続けている。最近見たものに引きずられすぎという悪癖そのもの」
+
+本論文が定量化したのは「**relevance が同一でも、新しい日付の passage が4回に1回は preference を逆転させる**」現象。これは Nao_u が指摘した「特殊な1事例を判断基準に置き続ける」癖の **構造的同型**——どちらも「最近 / 目立つ / 末尾近接」という relevance 非依存の signal が、本来の判断軸（relevance / 普遍性）を上書きする。**さらに重要なのは「larger models attenuate the effect, none eliminate it」**: GPT-4o (= 我々の同世代モデル) ですら 1.3-1.4 年の偏りが残る。**プロンプトでの「最近見たものに引きずられるな」自己注意では不十分**で、構造的な countermeasure (経路の頻度制御、年齢均衡サンプリング、relevance score の date-orthogonalization 等) が必要、と外部研究が裏付ける。
+
+**我々への直接の含意**:
+1. **栄養の偏り問題の精密化**: 「外を見ていない」だけでなく、見た中で「**最近見たもの** が不釣り合いに重く判断に乗る」現象が LLM の構造的バイアスとして存在する。external_intake プロジェクトの観察対象に「**recency 重み付け**」軸を明示的に追加すべき
+2. **本サイクル Phase 4 自体の意味**: 「経路取得 → 同サイクル本文消化」を強制した今回の Phase 4 は、kaizen #106 の「経路を踏む」工程の下流に「**経路取得後のサイクル経過数を測る**」KPI を立てる根拠を作った。所要サイクル数 = 1 = 同サイクル消化が、本文 400 字以上記録 + 内部接続記述で実装可能と実証された
+3. **arXiv 2503.10248 (LLM Agents Display Human Biases) と USC AI Beat (first-example anchoring) の未読も同方向**: 本文未読のまま candidate 残置されている2件は、recency bias の周辺証拠として独立した angle を持つ可能性が高い。次サイクル以降の Phase 4 候補として、所要サイクル数 = 7 以内を目標にする
+
+**留保 / 自己批評**:
+- 本論文は **reranking 文脈** (passage 並び替え) であり、我々の使用形態 (会話・記憶検索・staging 編集) と完全同型ではない。「日付注入で順位が動く」を「会話末尾の例が判断を支配する」に直接転写するのは粗い類推
+- ただし最大の含意は数値ではなく「**larger models attenuate, none eliminate**」の構造的観察にあり、これはモデル選択や size 増強で解決しない問題を示す。「Claude を大きくすれば直る」ではなく「**外側に countermeasure を持たないと直らない**」(Externalization 論文 2026-05-13 と一致: "The largest gains in reliability... come from changing the environment around the model.")
+- mitigation 未実装の論文を「直処方」として読むのは早計で、本論文は **問題の定量化** が貢献、解は我々が設計しないといけない
+
+**関連ファイル**: `projects/external_intake.md` (本サイクル §結晶化率 KPI 第4軸正式起票)、`memory/external_notes_log.md` 2026-05-13 Externalization エントリ (harness 側 countermeasure と接続)、`memory/sense_prediction_log.md` 事例10 (応答ゼロ断定の同型反復 = 本サイクル §0 で校正済、recency bias と直接接続: 「直近の語彙パターンに引きずられて断定が走る」）。
+
+---
+
+## 2026-05-13 LLM agent externalization / meta-rules / hierarchical 研究 3本（kaizen #106 摂取経路固定化 → R/M層+harness 統合検証） [統合済 2026-05-13 Log Phase 2 — Externalization 本論文1本を #shared-reads 投稿（本文精読 WebFetch 経由、Memora 朝投稿との相補性で内側×外側 validation ペア成立、Memory→Skill 昇格境界の概念を新規取得）。MAGE / HCL-GP は本文未精読のため投稿基準未満として除外、次サイクル以降の adaptive systems 路線 / 階層タスク分解設計で再参照する種として残置]
+
+**文脈**: Log C193 後継サイクル（2026-05-13 21:27 Phase 1 §6 → Phase 2 §B）。kaizen #106 摂取経路固定化（クエリ: `LLM agent meta-rules abstraction game design lessons hierarchy 2026`、Active = `memory_tree_consolidation v0.6` + `memory_consolidation_20260504`、トリガー = 本日朝 R-A〜R-I 抽象化議論 + memory_tree_consolidation v0.6 Google Memory Agent 取り込み中）。WebSearch 1回完了、本文精読は Phase 2 で Externalization 1本のみ WebFetch 実施。
+
+**(1) Externalization in LLM Agents: A Unified Review** — <https://arxiv.org/abs/2604.08224>
+3形態 (**Memory / Skills / Protocols**) + **Harness Engineering** で外部化を統一する survey。Memory はさらに4次元 (working context / episodic / semantic / personalized)。中核主張 "The largest gains in reliability do not come from changing the base model. They come from changing the environment around the model." — base modelを差し替えず harness 側の representational transformation で reliability を上げる。Memory→Skill 境界は **"Skills begin only when some of that evidence is promoted into explicit reusable procedure."** で明示。Reflexion / Memory-R1 / Mem-α は failed traces の reflective summary、GraphRAG / SYNAPSE は community detection で episodic→semantic 圧縮、MemVerse は周期的に fragmented experience を抽象知識に蒸留。
+**引っかかり**: 我々の `memory/atoms`=episodic、`game_lessons_log.md` R-A〜R-I=semantic、`feedback_identity_names.md`=personalized、`log/cycle_staging_log.md`=working context として**完全写像**。`.claude/rules/*.md`=Protocols、`settings.json` hooks + scheduler + slack_bot dedup=Harness Engineering。Memora 朝投稿（内側=memory 単軸の indexing 機構 validation）と本論文（外側=harness 全体軸の統合構造 validation）で内側×外側ペア。**Memory→Skill 昇格境界の概念**は新規取得 — R 層が「索引」から「実行を駆動する手順」に変わる瞬間 = skill 昇格のサイン、という運用ルールが立てられる（次サイクル課題候補）。
+**留保**: 4分類は綺麗だが、運用中に memory エントリが episodic か semantic か境界曖昧（R-A〜R-I も episodic 引用内蔵）。skill 昇格の閾値（何回出たら昇格か）は論文も明示せず運用判断。
+**判定**: **shared-reads 投稿実施**（Phase 2 §B）。本文精読の結果、Memora との明確な差別化 + R/M+harness 統合の独立同型 + 新規概念取得を確認、Phase 1 §6 の「強制利用しない」判定を上書き。
+
+**(2) MAGE: Meta-RL Framework for Lifelong Agents (ICLR 2026 Workshop)** — <https://openreview.net/pdf/d80ccf0395e94992b8cb63a1961d4b4612df0a4e.pdf>
+多エピソード訓練で過去エピソードの reflection を context に統合、LLM が過去経験から学ぶ能力を RL 最適化で内在化。
+**引っかかり**: memory_tree_consolidation v0.6 の「外部記憶として置く vs 内在化」の対比軸として参照価値あり。
+**留保**: 学習信号前提（RL）で我々の現アーキ（人手判断 / Nao_u起点更新）には直接適用不可。本文未精読、shared-reads 投稿基準（M-43 引用本文義務）未満。
+**判定**: 次サイクル以降 memory_tree_consolidation が adaptive systems 路線に踏み込む時に再参照。**本サイクル投稿せず**。
+
+**(3) HCL-GP: Hierarchical Component Learning for Generalizable Planning** — voltagent awesome-ai-agent-papers 経由
+階層タスク分解 + 汎化計画で reusable policy を合成。R-A〜R-I 化と同方向の研究系譜。
+**留保**: voltagent 経由で原文ソース未確認、本文未精読、shared-reads 投稿基準未満。
+**判定**: 階層タスク分解設計を実装する時に再参照。**本サイクル投稿せず**。
+
+**Externalization paper の中核引用（M-43 引用本文義務充足）**:
+- "The largest gains in reliability do not come from changing the base model. They come from changing the environment around the model."
+- "Memory stores the evidence of prior execution. Skills begin only when some of that evidence is promoted into explicit reusable procedure."
+- "The power of an artifact therefore lies in representational transformation: it restructures the problem so that the agent can solve it more reliably with the competencies it already has."
+- 3 transformations: Recall→Recognition / Generation→Composition / Ad hoc→Structured
+
+**関連ファイル**: `memory/game_lessons_log.md`（R-A〜R-I = semantic memory の実装）、`projects/memory_tree_consolidation.md`（v0.6 並走、本論文 4次元を写像可能）、`.claude/rules/slack.md`（Protocols 層実例）、`skills/genre-deep-analysis/SKILL.md`（Skill 昇格済み実例）、本日朝の Memora 統合エントリ（内側 validation ペア）。
+
+---
+
+## 2026-05-13 ゲーム設計の抽象原則 vs 具体事例研究 3本（kaizen #106 摂取経路固定化 → R-A〜R-I 二層化の外部裏付け候補） [未統合 2026-05-13 Phase 1取得 — #shared-reads 投稿は本サイクル見送り（Phase 2 §D 判断: Nao_u 06:37「ルールが多すぎ？」直後に外部研究で R 層化を validate する型は tone-deaf、5/13 中に Memora/Survey/Karpathy 3本既投稿で新規性低、暗黙 target が「ゲーム設計教育・研究」で我々のゲーム制作 target と半ズレ）]
+
+**文脈**: Log C192（2026-05-13）Phase 1 §6 で kaizen #106 摂取経路固定化（クエリ: `game design abstract principles vs concrete case studies lessons learned 2026`、Active = `game_development` + `memory_consolidation_20260504`、トリガー = Nao_u 06:29 #human-steering「game_lessons_log 個別具体すぎる → 抽象ルール+事例層構造に検討せよ」指示）。検索エンジン分類: Google（Web 一般、Active project と直結する研究系記事を狙う）。時間予算 10分以内で約3分完了。
+
+**(1) JMIR Serious Games (2025) "Identifying Key Principles and Commonalities in Digital Serious Game Design Frameworks: Scoping Review"**
+多数のゲーム設計フレームワークを抽象化した **4設計フェーズ (exploration / design / development / assessment)** に蒸留。多種多様な個別 framework から共通骨格を抽出するアプローチ。
+**引っかかり**: R-A〜R-I (9個) は M-XX 個別事例から抽出した抽象層で、4フェーズ蒸留と同方向（**個別事例の上に薄い抽象層を載せる構造**）。**外部裏付け候補**として位置付け可能だが、4フェーズは「設計プロセス時間軸」の蒸留で、R 層は「失敗類型」の蒸留 = 軸が違う（target ズレ）。
+**留保**: 暗黙 target = serious game design 教育研究、我々の target = 自分達のゲーム制作。半ズレで shared-reads 投稿には新規性が薄い。R 層運用を実地で観測した後、再評価可能な種として残す。
+
+**(2) Tandfonline (2022) "Video Game Design for Learning to Learn"**
+理論と実践の結合が中核、design pattern を **「自分で実装する」と「理論で学ぶ」の対比で実装側に価値**、抽象は具体を駆動するときに機能する。
+**引っかかり**: Log 06:41「ルール追加凍結 / 完成ゲーム headless 校正最優先」と同方向の主張 — 抽象（R 層）が具体（M-XX / 実装作業）を駆動するときに機能する、駆動先のない抽象は形骸化する。**R-A〜R-I 9個を持っている現状で「R 層が次の実装を駆動するか」を運用観察する軸を示唆**。
+**留保**: shared-reads 投稿には新規性低（Memora arxiv / Survey / Karpathy で既に同方向は投稿済）。
+
+**(3) CHI 2024 "Board Games as a Research Method"**
+抽象原則 (target group / simplicity / storytelling / gaming-the-game リスク) + 具体事例の併置パターン。**抽象原則と具体事例を1ドキュメント内で併置する構造提案**。
+**引っかかり**: `memory/game_lessons_log.md` の現状（R-A〜R-I 抽象層 + M-XX 詳細層 + R-X 詳細リンクで M-XX を辿る構造）と完全同型。**Nao_u 06:29 指示の構造ゴール（一段抽象化したルールから個別事例を辿る）の独立な外部実装サンプル**。R-G「gaming-the-game リスク」相当が CHI 2024 にもある = 抽象原則のレパートリが重なる。
+**留保**: target = board game research method、我々の target = digital game development。蓋然性ある外部裏付けだが直接投影は早計。
+
+**3本併置の意味**:
+| 論文 | 中核機構 | Log R層との関係 |
+|---|---|---|
+| JMIR Serious Games | 4設計フェーズ蒸留 | 軸違い（プロセス時間軸 vs 失敗類型）、同方向だが target 半ズレ |
+| Tandfonline VG L2L | 抽象は具体を駆動するときに機能 | R 層運用観察軸の示唆（Log 06:41 と同方向） |
+| CHI 2024 Board Games | 抽象原則 + 具体事例併置 | game_lessons_log R+M 二層構造の独立外部実装 |
+
+**Phase 2/3 で #shared-reads 投稿は見送り**（Phase 2 §D で判定理由詳述）。R 層運用を実地で観測した後、再評価可能な種として残す。本エントリは knowledge 化保留（R-007 造語症対策）。
+
+**自己注意（self-audit）**: 3本とも Phase 1 §6 で1行要約+リンクのみ取得、本文中身は精読していない（M-43 引用本文義務 = kaizen #129 (a) の検証材料として残置）。「外部裏付け候補」と書いた瞬間に R-G「外部記事の暗黙 target を1行明文化」を引いて target 半ズレ判定までは Phase 1 で実施済。
+
+**関連ファイル**: `memory/game_lessons_log.md`（R-A〜R-I + M-XX 二層構造の本体）、`projects/memory_consolidation_20260504.md`（記憶階層降下の Active project）、`memory/feedback_few_rules_big_effect.md`（ルール量↑＝遵守率↓と緊張する外部裏付け）。
+
+---
+
 ## 2026-05-11 Obsidian knowledge graph orphan detection 3リポジトリ（kaizen #106 自発検索 → projects/memory_tree_consolidation.md v0 接続） [統合済 2026-05-11 Log C178 Phase 2 — #shared-reads に3件別メッセージで投稿（Burchfield ts=1778469636.207909, Azuma520 ts=1778469651.560039 [chat.update で backtick 事故修復済], Obra ts=1778469717.443599）。Phase 1 §6 で取得した3リポジトリを、memory_tree_consolidation.md v0 の orphan_check.py 試作（Mir 5/11 05:42 提案）への直接インプットとして消化。判定式 `in_links==0 AND out_links==0` 確定、出力に per-folder 集計を含める、修正日順 + 孤児継続日数の2軸出力、までを v0 スコープに固定。Louvain/媒介中心性/PageRank は v0.5 → v1 路線図に残置（v0 スコープ拡張を回避）]
 
 **文脈**: Log C178（2026-05-11）Phase 1 §6 で kaizen #106 自発検索（クエリ: `obsidian knowledge graph orphan node detection script automated`、Active = projects/memory_tree_consolidation.md、トリガー = Mir 5/11 05:42 #human-steering 提案「孤児検出スクリプト」）。Phase 2 で3リポジトリの中核機構を独立した層に分解し、v0 スコープ内で採用する分と v0.5/v1 に残置する分を切り分けた。

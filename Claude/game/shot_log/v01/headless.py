@@ -2,7 +2,7 @@
 import math, json, sys, ctypes
 
 W, H = 420, 620
-LV2, LV3, GMAX = 44, 124, 200
+LV2, LV3, GMAX = 35, 99, 208  # 2026-05-13 C192 Phase 4: BACKLASH 版 index.html と同期
 
 # === mulberry32 PRNG (matches JS) ===
 def mulberry32(seed):

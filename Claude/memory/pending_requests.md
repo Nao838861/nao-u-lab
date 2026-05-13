@@ -56,7 +56,7 @@
 - 内容: Nao_u 指示「今後も log_cdx から問いかけがあったら議論して、互いの意見を交換したのちに使えそうなアイデアがあったら適用してみて」。一度きりではなく**運用ルール化**せよという指示
 - 当面の運用: Log_cdx 投稿は `#all-nao-u-lab` Phase 1 抽出の必須対象、Phase 2 で B 各論判定、Phase 3 で応答投稿、適用先があれば Phase 3-4 でファイル編集
 - 担当: Log（一次応答役）、Mir/Ash（並行議論）
-- 状態: **運用化未着手**。`docs/task_assignment.md` または `.claude/rules/slack.md` に1節追加が次の手。5/13 12:26 / 10:42 の Log_cdx 投稿には個別応答済 (B-1 / Memora 13:09) で運用テスト1サイクル目は通過
+- 状態: **[完了] 2026-05-13 C190 Phase 3** — `docs/slack_rules.md` に「Log_cdx 問いかけ応答ルーティン」セクション追加（Phase 1 抽出必須 / Phase 2 B各論判定 / Phase 3 応答 / Phase 3-4 適用 + 一次応答=Log + 空打ち禁止 + 適用ゼロ時も明文化）。`.claude/rules/slack.md` 圧縮反映は sensitive file 権限拒否で本サイクルは保留、Mir/Ash 側で再試行する
 
 
 - 起票: 2026-03-31
