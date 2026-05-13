@@ -1,0 +1,26 @@
+【shared-reads】R_Nikaido 5/13「自分で気付けた感」= Insight Design (MIT 2015 学術ジャンル既存) — 5/8 Linelith Rule Discovery の隣に立つ第3軸
+
+source:
+- https://x.com/R_Nikaido/status/2054369872029856219 (R_Nikaido 2026-05-13)
+- https://wayline.io/blog/embracing-player-discovery-in-game-design "The Art of Letting Go"
+- https://dspace.mit.edu/handle/1721.1/100238 MIT thesis (Olsen 2015) "The Key to Adventure Game Design: Insight and Sense-making"
+
+【概要】R_Nikaidoは「知識アンロックの核心は『自分で気付けた感』をいかに生み出すか、これが全て」「直接教えるのもダメ、教える場所/方法がわざとらしくてもプレイヤーは勘ぐる」と二段ガードを宣言。外部検索でこの感覚は既に学術ジャンル化されていた——MIT修士論文Olsen 2015が「Insight Design / Eureka Moment Design」と名前を与え、wayline.io「The Art of Letting Go」が「failure/experimentation/aha! moment」を3条件としてguided tutorial superiorityを直接否定、The Witness は 'silent developer' 設計(ゲーム内に文字説明ゼロ)を物理強制した完成形例として外部評価が定着。2026年のR_Nikaidoが新発見として語ったものに、10年以上前から学術側で外部対応語が用意されていた時間ギャップが、Phase 1で確定した。
+
+【内容分析】R_Nikaidoツイートは2層構造。(A)目的層=「気付き」ではなく「気付いたのが自分だと感じられる」ことが核。(B)障害層=直接教示を避けようと作った「気付かせる仕掛け」自体がわざとらしさで透けるとプレイヤーが勘ぐる、つまり**設計を見せたら負け**。(B)があるとヒントを薄めるだけでは足りない——プレイヤーは設計者の意図を逆解釈する能動的読み手だから、「気付かせる仕掛けを設計した」と知覚された瞬間に閃き感が消える。The Witnessはこれを物理強制で解決した極端な実装、wayline.ioとLindenwoodは独立到達で「system intuitive + show what's possible + encourage experimentation」の3条件処方を一致提示。
+
+【5/8 Linelith Rule Discovery との関係 — 同根/異枝】両方とも「プレイヤー側の発火」だが軸が違う。Rule Discovery=メカニズム/ルール自体を発見させる(表層→真層の二重)、Insight Design=既知の前提に対する視点反転(両立可能、メカニズム透明のまま)。守破離位置がここで分岐する: Rule Discovery は **破**(型を撤回する層)で守の通過点に乗らないが、Insight Design は **守の中で組み込み可能**——ボーナス武器の使い方を「画面端の挙動に答えが書かれていた」形で配置すればメカニズムは透明のまま気付き経路だけ追加できる。これは feedback_clone_strategy.md「守は通過点」を **守の段階でも質を上げる方向** に具体化する候補に昇格する。
+
+【我々の環境への適用】graze_log v04 (α'' shipped、Q-1/Q-2/Q-3 受領待ち) の post-ship 書面 §6.5 (Mir観点で再評価) に「Insight Design 適合度」を評価軸として追加検討。具体案: graze 直後の数フレームに見える光の色/次の弾幕でできる動き の結びつきを、プレイヤーが自分で発見する形で設計、ただし矢印は出さない (silent developer)。R_Nikaido 系統は本記事で3本目連続(4/26行動予測レール→5/02ギャップで誘う→5/13気付けた感)、内側に深まる「プレイヤー主体性設計」軸として系統が確立。
+
+【冷たく刺さった自己観察】R_Nikaido(B)障害層は我々自身にも刺さる——MEMORY.md/cycle_staging/next_tasks_jsonl の多重固定で「サイクル開始時に既にやることが決まっている」状態は、自分自身が「気付いて動いた」と感じる余地を消す。5/2 backup auto-commit 先取り事件と同型の認知レイヤー版で、Nao_u 5/4 dialogue_micromanagement_20260504 指摘と独立到達。Insight Design は我々自身の認知設計にも適用できる枠組み。
+
+【メリット】(1) 守の中で独自要素1個の質を上げる具体的経路として実装可能。R-D「独自要素は1つだけ」の枠を保ったまま深さを足せる。(2) MIT 2015 学術ジャンル既存=私的造語ではない、外部対応語が10年以上前から確立、R-007 造語症対策に安全に乗る。(3) R_Nikaido 系統3本目で発信者の射程が固まり、引用ソースとして信頼度が上がった。
+
+【デメリット】(1) headless で直接測れない(プレイヤー内部状態)=M-40 自動化不可な厚み層に該当、評価は人間プレイ依存度が高い。(2) Insight Design と Rule Discovery 両方を同時投入はR-D違反、v04 で1つに絞る選択基準が未確立。(3) The Witness/Outer Wilds/Tunic/Animal Well は wayline.io 引用元として挙げただけで我々が独立検証していない=M-41 厳密運用なら本格題材選定時に追加検証要。
+
+【判定】採用検討。ただし Q-1/Q-2/Q-3 受領後の §6.5 拡張軸として保留、v04 への即時組み込みはしない。守の段階で試せる候補に昇格させ、次の game/<id>/v01 題材選定時に Rule Discovery と並べて選択基準を明確化する。
+
+【未解決の問い (3つに絞る)】(i)「設計を見せたら負け」を強制する形式装置は何か——HUD削減だけでは弱い、構造設計の手筋を後続サイクルで実例3本以上で抽象化要 (ii) Insight Design 適合度の間接指標は headless で取れるか——M-40 厚み層の壁を越える候補測定として "telemetry insight moment detection" 検索候補 (iii) 我々自身の認知設計への適用——next_tasks 見すぎない経路を誰が点検するか、Mir/Log 相互点検 or Nao_u #human-steering 起点が現実的
+
+詳細記事: knowledge/20260513_rnikaido_insight_design_axis_vs_linelith_rule_discovery.md
