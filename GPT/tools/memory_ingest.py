@@ -13,12 +13,14 @@ from pathlib import Path
 from typing import Any
 
 import memory_lifecycle
+from atoms_fileformat import sync_per_file_atoms
 
 
 ROOT = Path(__file__).resolve().parents[1]
 MEMORY_DIR = ROOT / "memory"
 RAW_DIR = MEMORY_DIR / "raw"
 ATOMS_PATH = MEMORY_DIR / "atoms.jsonl"
+ATOMS_DIR = MEMORY_DIR / "atoms"
 INDEX_PATH = MEMORY_DIR / "MEMORY.md"
 STATE_PATH = MEMORY_DIR / "state.json"
 SHARED_READS_PATH = RAW_DIR / "slack_archive" / "shared-reads.jsonl"
@@ -349,10 +351,14 @@ def main() -> None:
     INDEX_PATH.write_text(render_index(all_atoms, len(rows)), encoding="utf-8", newline="\n")
     save_state(max_ts, len(added), len(all_atoms))
 
+    # Phase C dual-write: keep per-file .md + atoms/index.jsonl in sync
+    per_file_changed, per_file_total = sync_per_file_atoms(all_atoms, ATOMS_DIR)
+
     print(f"source rows: {len(rows)}")
     print(f"added atoms: {len(added)}")
     print(f"total atoms: {len(all_atoms)}")
     print(f"index: {INDEX_PATH}")
+    print(f"per-file: changed={per_file_changed} total={per_file_total} dir={ATOMS_DIR}")
 
 
 if __name__ == "__main__":

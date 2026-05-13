@@ -97,14 +97,20 @@ Codex/GPT 側の記憶は `memory/` と `tools/memory_*.py` で管理する。
 |---|---|---|
 | A. scaffold | ✓ 2026-05-13 | directive + README + migration script + 本記述 |
 | B. migration | ✓ 2026-05-13 | 1002 atoms → `memory/atoms/<YYYY-MM>/<id>.md` 化 + `index.jsonl` 生成 |
-| C. dual-write | 未着手 | `memory_ingest.py` / `memory_recall.py` / `memory_lifecycle.py` を新フォーマット対応に改修 |
-| D. retire | 未着手 | atoms.jsonl を archive へ |
+| C. dual-write + dual-read | ✓ 2026-05-13 | `tools/atoms_fileformat.py` 共有モジュール化、`memory_ingest.py` で per-file dual-write、`memory_recall.py` で per-file fallback read 対応 |
+| D. retire | 未着手 | atoms.jsonl を archive へ。他の atoms.jsonl 直読スクリプト (memory_health, slack_discussion_router, post_*, analyze_*, backfill_atom_lifecycle, ingest_game_rights_feedback, slack_memory_ingest) の dual-read 化が前提 |
 
-**Phase B/C 移行中の運用**:
-- 既存ツール (`memory_ingest.py` 等) は今まで通り `atoms.jsonl` を読み書き
-- `memory/atoms/*.md` と `index.jsonl` は Phase B で生成された snapshot
-- Phase C で `memory_ingest.py` が新フォーマットに dual-write するよう改修されるまで、新規 atom は `atoms.jsonl` のみに追記される (期間中は新フォーマット側が古くなる)
-- Phase C 着手時は `tools/migrate_atoms_to_per_file.py --execute` を再実行して同期し直してから改修
+**Phase C 完了時の運用**:
+- `memory_ingest.py` 起動時は **atoms.jsonl と per-file .md + index.jsonl の両方を更新** (dual-write、idempotent)
+- `memory_recall.py` は atoms.jsonl が存在すればそこから、なければ per-file から読む (Phase D 移行が trivial に)
+- 共有モジュール `tools/atoms_fileformat.py` に format helpers / parser / sync logic を集約
+- 他の `atoms.jsonl` 直読スクリプトは未対応 — atoms.jsonl を retire する前にそれらも dual-read 対応が必要
+
+**Phase D 開始前に行うこと**:
+1. 残りのスクリプト群を `atoms_fileformat.load_atoms_from_per_file()` または `memory_ingest` 経由の共通 loader を使う形に改修
+2. `memory/legacy/` ディレクトリを作り、atoms.jsonl を `memory/legacy/atoms_jsonl_<date>.jsonl` として移動
+3. 全 scheduled スクリプトを smoke test
+4. atoms.jsonl の git remove は最終段階
 
 ## ゲーム設計ルール
 

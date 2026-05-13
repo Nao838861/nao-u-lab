@@ -18,11 +18,13 @@ from pathlib import Path
 from typing import Any
 
 import memory_lifecycle
+from atoms_fileformat import load_atoms_from_per_file
 
 
 ROOT = Path(__file__).resolve().parents[1]
 MEMORY_DIR = ROOT / "memory"
 ATOMS_PATH = MEMORY_DIR / "atoms.jsonl"
+ATOMS_DIR = MEMORY_DIR / "atoms"
 RECALL_LOG_PATH = MEMORY_DIR / "recall_log.jsonl"
 ATOM_STATS_PATH = MEMORY_DIR / "atom_stats.json"
 
@@ -31,14 +33,20 @@ if sys.stdout.encoding and sys.stdout.encoding.lower().startswith("cp"):
 
 
 def load_atoms() -> list[dict[str, Any]]:
-    if not ATOMS_PATH.exists():
-        return []
-    atoms = []
-    with ATOMS_PATH.open("r", encoding="utf-8") as f:
-        for line in f:
-            if line.strip():
-                atoms.append(json.loads(line))
-    return atoms
+    """Load atoms.
+
+    Phase C (atoms.jsonl 存在): atoms.jsonl を canonical source として読む。
+        per-file .md は mirror として並走しているが、atoms.jsonl の方が高速かつ確実。
+    Phase D (atoms.jsonl 不在): per-file .md (memory/atoms/index.jsonl) から読む。
+    """
+    if ATOMS_PATH.exists():
+        atoms = []
+        with ATOMS_PATH.open("r", encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    atoms.append(json.loads(line))
+        return atoms
+    return load_atoms_from_per_file(ATOMS_DIR)
 
 
 def tokenize(text: str) -> list[str]:
