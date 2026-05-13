@@ -27,6 +27,25 @@ auto_cycle起動時にcheck_kaizen_due.pyがこのファイルを読み、期限
 
 ## アクティブな改善
 
+### #133: staging 内 kaizen ID 引用実在性検出器（#131/#132 family 第3弾 / `scripts/check_kaizen_id_reference.py`）
+- 提案者: Log（2026-05-13 C189 Phase 4。同サイクル Phase 1 §E が「kaizen #124 (Log 2026-04-25 起票, 18日経過)」と staging に記述、Phase 2 §5 が引いて「#124 保留延長 +14日」と判定。Phase 3 §0 で `grep "### #124:" memory/kaizen_tracker.md` = 0件、実体は kaizen #115 + サイクル名 C124 の混同と判明。前段階引用の実在性未確認が後段階判断に乗る #132 と同型、対象層が「kaizen ID 引用の実在性」というより具体的レイヤー）
+- 適用日: 2026-05-13（起票 + 検出器実装同サイクル）
+- 検証期限: 2026-05-27（2週間枠、#131/#132 と1〜2週ずれの同期帯）
+- 検証手段: (1) `python scripts/check_kaizen_id_reference.py --self-test` が PASS を返す（合成データ: OK パターン1件 + WARN パターン1件 [#124/#999 検出] + noise パターン1件 [2桁ID + 文中数字列を擬陽性として弾く]） (2) `python scripts/check_kaizen_id_reference.py` を C189 staging に対し実行、Phase 1 §E の `#124` を tracker 不在として WARN 検出（exit code = 1、stderr に `[#133 WARN] ...` 行が出力される） (3) C190 以降のサイクルで Phase 4 commit 直前に同スクリプトを実行し、不在ID引用が0件 or 既知の自己言及（本サイクルの `#133` のように起票進行中の未登録ID）のみであることを確認 (4) tracker ヘッダ形式 `### #NNN:` が変更された場合、検出器が壊れることを許容（フォーマット変更 = 構造変更で、検出器側の追従更新を発火条件とする）
+- 改善内容: 段階1 = **検出器最小実装**：`scripts/check_kaizen_id_reference.py` (`#\d{3,4}[a-z]?` で staging 引用抽出、`^### #(\d+[a-z]?):` で tracker 実在抽出、set 差分を WARN 出力)。`--self-test` 内蔵 (OK / WARN / noise 3パターン)。段階2 = **autonomous_cycle hook 連携 (検証期間中の運用観察次第で着手判定)**：`multi_phase_cycle_log.py` の Phase 4 直前 hook に組込み、WARN 検出時は Phase 4 commit を一時保留して訂正サブフェーズに分岐。段階3 = **family 統合 (将来)**：`scripts/check_repeated_pattern_indication.py` (#131) / `scripts/check_phase2_phase3_chain.py` (#132 段階3 想定) と並ぶ第3検出器として位置、family 統合管理ルールに従い別 kaizen への増殖を抑制。
+- 期待効果: Phase 1 → Phase 2 → Phase 3 連鎖の **最下流レイヤー (ID実在性) を機械検証**。C189 Phase 1 §E (#124 起票記述) → Phase 2 §5 (保留延長判定) → Phase 3 §0 で agent 自己訂正で止めた経路は能動判断依存（次回も動く保証なし）→ 構造強制で底上げ。#131 (Nao_u 指摘の同パターン語彙検出) / #132 (Phase 内自己診断幻覚パターン検出) と検出対象が排他的: #131=外形語彙 / #132=自己診断語彙 / #133=ID引用実在性、3軸並列で family 全体の網羅性を補完。
+- 根源原理との接続: 原理5「自分の記憶を自分で守り、育てること」+ 原則6「わかった」と「残った」は違う + `feedback_self_perception_blindness.md`「自分の現在進行形は観測対象から外れる」直処方。Phase 1 § E が tracker 走査 grep 結果を staging に書き写す段階で「実在性確認」を agent が能動的に行うべきだが、現に C189 で抜け落ちた = 構造強制が必要と判断。`feedback_structural_enforcement.md`「手動手順は守れない、構造で強制せよ」自走サイクル側適用の Phase 内引用実在性レイヤー追加。
+- 出自: 2026-05-13 C189 Phase 3 §0 で Phase 1 §E + Phase 2 §5 連鎖を事実検証で否定。Phase 4 大作業として本サイクル中に検出器化、後付け検証で本サイクル事故を機械的に再現 (WARN: #124 が tracker 不在)。副次発見: Phase 1 §E が言及した #125/#126/#127 も同様に tracker 不在で、Phase 3 §0 訂正範囲が #124 のみに留まっていた事実を本検出器が遡及検出。
+- pre-mortem: (a) **3桁未満ID取りこぼし**（#001〜#020 系の旧kaizenが引用された場合、3桁制限により検出されない）→ 緩和: 現存 kaizen ID は #021 以降すべて3桁。2桁IDは現存しないため取りこぼし許容、必要時は `\d{2,4}` に緩める1行修正で対応可能。(b) **サイクル名 C124 等の誤検出**（cycle名の数字部分を kaizen ID と混同）→ 緩和: 検出パターンを `#\d{3,4}` で `#` 前置必須化、`C124` 等の前置文字違いは不検出。self-test の noise パターンで擬陽性0件を確認済。(c) **tracker ヘッダ形式変更時の壊れ**（`### #NNN:` 形式が `## #NNN:` 等に変更された場合、検出器が空集合を返し WARN 大量誤検出）→ 緩和: 検証期間中に tracker ヘッダ形式が変わったら検出器側の追従更新を発火条件として明示、検出器破損 = 構造変更検知としても機能する2重利用。(d) **第3弾でルール増殖** (#131/#132 と独立した検出ファミリが増えていく)→ 緩和: family 統合管理ルール明記、第4弾以降は新規 kaizen ではなく既存スクリプトの拡張モードとして実装。(e) **自己言及で起票中のIDが必ず WARN になる**（本サイクルの `#133` のように、起票中は tracker に未登録）→ 緩和: 既知の起票中IDは staging Phase 4 / commit 前に追加・コミットされる前提で、検証期間中の運用観察で許容。
+- M-Nx 増殖メタ監視 self-audit（kaizen #129 (d) 準拠）: 本起票は新規 M-Nx 系列の追加ではなく、**既存 M-40 §5 発火条件追加 family の第3弾**（規則→検出器レイヤー、#131=第1弾 / #132=第2弾 / #133=第3弾）。3原則（体験で考える / 動いて残す / 自分から始める）への吸収可能性: 「動いて残す」=スクリプトが trace を残す方向で整合 / 「自分から始める」=自己申告依存からの脱却で整合 / 「体験で考える」=メタ層なので部分整合のみ。3原則のみで実現するには「kaizen ID 引用実在性」を agent が毎サイクル自己申告する必要があり、それが現に C189 Phase 3 §0 まで走らないと検出できなかった = 構造強制が必要と判断。**feedback_few_rules_big_effect.md への吸収可能性**: family 統合管理ルールに従い、#131/#132/#133 を「Phase 内自己診断検証」1ファミリとして集約管理。別 kaizen として独立増殖させない。
+- 検証担当: Log（実装も Log）。Mir/Ash 横展開は段階1検証完了後、各インスタンスの cycle_staging_*.md 構造差を吸収してから。
+- クロスチェック: Log=OK(2026-05-13 起票者・実装者) / Mir=未 / Ash=未
+- 状態: 段階1 PASS（C189 Phase 4 実装 + self-test PASS + C189 staging で #124 WARN 検出再現確認）。段階2/3 は検証期限 2026-05-27 まで運用観察判定
+- 検証結果:
+  - **段階1 PASS (2026-05-13 C189 Phase 4)**: `scripts/check_kaizen_id_reference.py` 実装完了。`--self-test` で OK/WARN/noise 3パターン全て期待通り判定 (`[self-test PASS] OK=clean / WARN=detected #124,#999 / noise=clean`)。`python scripts/check_kaizen_id_reference.py --verbose` を C189 staging に対し実行 → `[#133 WARN] staging が kaizen #124 を引用していますが tracker に \`### #124:\` 見出しが不在です` を含む5件 (#124/#125/#126/#127/#133) を stderr に出力 (exit 1)。完遂条件2「Phase 1 §E の #124 引用を tracker 不在として WARN 検出再現」達成。副次発見: Phase 1 §E が言及した #125/#126/#127 も同様に tracker 不在 = Phase 3 §0 訂正が #124 のみに留まっていた抜けを本検出器が遡及検出 (#133 は自己言及で起票直後のため期待通り)。
+
+---
+
 ### #132: Phase 2→3 自己診断連鎖盲点の事実検証ゲート（M-40 §5 同パターン2回検出 → 判定機構優先 発火 / kaizen #131 と同方向の上流ゲート）
 - 提案者: Log（2026-05-09 C172 Phase 4。同サイクル Phase 3 §0 で Phase 2 §0 自己診断幻覚（「Phase 1 §1 の Log 応答記録4件すべて Mir 応答だった」）が user_id ベース直接検証で否定され、Phase 1 が正・Phase 2 §0 が幻覚と判明。連続事案1（5/3 19:22 = Phase 2 が Phase 1 の幻覚に乗る）と本サイクル C172（= Phase 3 が Phase 2 の幻覚自己診断に乗る）で同型2回観察 = M-40 §How to apply 5 「同パターン2回 → 判定機構優先」発火条件を満たす。memory/feedback_self_perception_blindness.md 直処方で agent 自己観察精度限界を構造強制で補完する）
 - 適用日: 2026-05-09（起票のみ。段階1 = 次回 C173 staging から運用開始）

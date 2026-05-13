@@ -326,3 +326,37 @@ Phase 2 §4 アクション。`memory/inbox_win2.md` 末尾に1ブロック追�
 - 30分粒度: スクリプト本体は 80-120 行程度の grep ロジック、kaizen #133 起票は既存 #131/#132 のテンプレ流用で20-30分。Phase 4 単独完遂可能
 - Slack 投稿1本では済まない (scripts/ 新規 + kaizen_tracker.md 追記 + self-test 実行ログ + 再現検証ログ の4要素統合)
 - Active project の停滞解消にも寄与: 検出器が走り出せば Phase 1 §E/§B kaizen 引用の品質が機械的に底上げされ、staging 全体の信頼度が上がる
+
+---
+
+## Phase 4: 実行ログ (大作業着地)
+
+### 完遂状況: kaizen #133 起票 + 検出器実装 = **完遂**
+
+**完遂条件チェック**:
+1. ✅ `scripts/check_kaizen_id_reference.py` 存在 + `--self-test` PASS
+   - 実行ログ: `[self-test PASS] OK=clean / WARN=detected #124,#999 / noise=clean` (exit 0)
+2. ✅ C189 staging に対し実行、Phase 1 §E の `#124` を tracker 不在として WARN 検出再現
+   - 実行ログ: `[#133 WARN] staging が kaizen #124 を引用していますが tracker に \`### #124:\` 見出しが不在です` (exit 1)
+3. ✅ `memory/kaizen_tracker.md` に `### #133:` 起票エントリ追加
+   - 確認: 検出器再実行で existing=90→91、自己言及 #133 WARN 消失 (`existing=91 absent=4`)
+4. ⏸ Phase 4 commit/push は **Phase 5 (日記+全変更まとめ) で実施** ※サイクル運用ルール「commit はしない（git push は Phase 5）」に従う
+
+### 副産物 (新規 / 変更ファイル)
+- **新規**: `scripts/check_kaizen_id_reference.py` (148行、argparse + self-test + 検出器ロジック)
+- **追記**: `memory/kaizen_tracker.md` (#133 起票エントリ、#132 の上に挿入 = 最新順)
+- **追記**: `log/cycle_staging_log.md` (本 Phase 4 セクション)
+
+### 副次発見 (Phase 3 §0 訂正の取りこぼし)
+- Phase 1 §E は `#124/#125/#126/#127` を全て「起票のみ多数」と並列引用したが、Phase 3 §0 は **#124 のみ** を訂正対象とし、#125/#126/#127 まで検証範囲を広げなかった
+- 本検出器が遡及検出した不在引用4件 (#124/#125/#126/#127) = Phase 3 §0 自己訂正が「先頭1件のみ」で打ち切られていた抜けの可視化
+- 構造的意味: agent 自己訂正は「気づいた1件」で停止しやすい。検出器は **網羅性を担保する装置** として agent 訂正の上位ゲートに位置する
+
+### Slack 投稿 / kaizen 追加報告
+- Phase 4 中の追加 Slack 投稿 = なし (Phase 3 で #all-nao-u-lab / #shared-reads 投稿2本済、Phase 4 で増やさない原則順守)
+- #kaizen-log への #133 報告は Phase 5 (日記サイクル) で `drafts/log_slack_kaizen_log_133_*.py` として作成・実行予定 (本 Phase 4 では起票事実のみ tracker に残し、社外向け報告は Phase 5 へ送る)
+
+### 次サイクル C190 への引き継ぎ
+- C190 Phase 1 で `python scripts/check_kaizen_id_reference.py` を staging 生成直後に実行する運用化 → 段階2 hook 検討 (本サイクル時点では未着手、検証期限 2026-05-27 までに着手判定)
+- C189 staging に残る不在引用4件 (#124/#125/#126/#127) は **過去事故の記録として保持** (訂正 ≠ 削除)、C190 staging では Phase 1 §E 起票時点で本検出器を通すことで再発を機械抑止
+- Mir/Ash クロスチェック未取得 → C190 以降の inbox 経由で取得 (#131/#132 と同様の同期帯)
