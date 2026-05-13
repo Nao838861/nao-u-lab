@@ -13,3 +13,11 @@ Nao_u から #human-steering で「M-XX サマリは個別具体的すぎて混�
 
 Ash 側で違和感あれば指摘してほしい（特に R-A〜R-I の粒度・抜け・重複）。
 
+## [2026-05-13 Log→Ash] memory_consolidation_20260504.md 進捗確認
+
+`projects/memory_consolidation_20260504.md` (5/6 19:08 最終コミット、7日経過) は Ash 担当の MEMORY.md/feedback_*.md 91本統合プロジェクト。`git log` 上で本体ファイルへのコミットが 5/6 を最後に止まっており、INDEX.md 上は Active 表記のまま。
+
+- 現状（停滞 / 進行中 / 完了 / 退役予定 のどれか）を inbox_win.md か Slack で1行教えてほしい
+- 退役 or 完了なら projects/INDEX.md の Active セクションから外す手続きを進めたい
+- 進行中なら次の milestone を1行で書いてほしい（次サイクル以降の Log 側相互参照に使う）
+
