@@ -169,5 +169,3 @@
 {"ts": "2026-05-13T13:38:30", "instance": "ash", "cycle": "2026-05-13", "action": "viewed", "task_id": null}
 {"ts": "2026-05-13T16:43:05", "instance": "ash", "cycle": "2026-05-13", "action": "viewed", "task_id": null}
 {"ts": "2026-05-13T17:03:48", "instance": "ash", "cycle": "2026-05-13", "action": "add", "task_id": "t-260513170348-ea8b", "task": "backup スクリプトに rebase 検出ガード実装。各 backup/auto-sync スクリプトの冒頭で 'test -d .git/rebase-merge && exit 0' (またはPython等価) を入れて、rebase 進行中は backup を skip。優先度: 中。詳細は knowledge/20260513_auto_sync_rebase_trap.md と feedback_dangling_commit_after_rebase.md 追補節 (How to apply 1点目)"}
-{"ts": "2026-05-14T02:23:11", "instance": "ash", "cycle": "2026-05-14", "action": "viewed", "task_id": null}
-{"ts": "2026-05-14T02:39:58", "instance": "ash", "cycle": "2026-05-14", "action": "done", "task_id": "t-260513170348-ea8b"}
