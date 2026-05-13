@@ -237,3 +237,34 @@ Memoraは「内側からの validation」、Externalizationは「外側からの
 - 非 feedback 系 (reflections × 2 + external_notes) への型適用は feedback prefix 一致型と異なる接続先選定が要、効率 0.33 帯が維持できるかの最終検証点
 - 30 分粒度 / 観測可能 / Active project (memory_tree_consolidation) 直結 / 過剰実装ゼロ / kaizen #106 抵触なし
 - Phase 5 で Mir レビュー由来 sense_prediction 蓄積を同サイクル内で実行＝原則6「わかった と 残った は違う」順守
+
+## Phase 4: 実装 (2026-05-13 21:27 起動)
+
+**大作業完遂 — 真孤児 3 → 0 で世代依存キャンペーン最終 mile 達成**。staging 完遂条件 6 件すべて完遂 (commit + push は Phase 5)。
+
+### 編集ファイル (4 件)
+1. `memory/MEMORY.md` — 「## 内省の蓄積」節に 2 行追加 (reflections_win2.md / reflections_win2_index.md、L92-93 既存 reflections_mac.md 直下)
+2. `projects/external_intake.md` — L19 の裸テキスト `external_notes_{ash,log,mac,mir}.md` を 4 ファイル markdown link 化 (`[ash](../memory/external_notes_ash.md)` 等)
+3. `projects/memory_tree_consolidation.md` — 改訂履歴節末尾に C190 Phase 4 (21:27 起動) エントリ追加 (before/after 数値 + 採用親接続先 + 効率値 + 4 世代型適用完成評価)
+4. `memory/sense_prediction_log.md` — Mir 5/13 06:39 M-28 束ね指摘事例を教師データ 1 件として末尾追加 (R 層化キャンペーン投稿前マトリクス未作成の盲点記録)
+
+### 生成ファイル (2 件)
+- `tools/orphan_check_dry_run_20260513_c190_phase4_before.txt` (真孤児 3 / 静止親接続 53 / reachable 456)
+- `tools/orphan_check_dry_run_20260513_c190_phase4_after.txt` (真孤児 **0** / 静止親接続 56 / reachable **462**)
+
+### 構造差分
+- 真孤児: 3 → **0** (-3、完全消滅)
+- 静止親接続: 53 → 56 (+3)
+- reachable: 456 → 462 (+6)
+- 3 件全件 refs=0→1 移行完全一致 (after grep 確認)
+
+### Slack 投稿
+- 本 Phase 4 で新規 Slack 投稿なし (ファイル編集のみで完結、staging 指示通り)
+
+### kaizen エントリ
+- 新規起票なし。本サイクルは kaizen #129 (先取り宣言ブレ防止) 同型運用 7 サイクル目連続確認のみ
+- sense_prediction_log 新規事例追加 1 件 (同型カウント観察、即時昇格はしない)
+
+### Phase 5 持ち越し
+- commit + push (本 Phase 4 編集 4 ファイル + 生成 2 ファイル + Phase 5 日記を 1 commit にまとめる)
+- 日記書きでの温度残し: 真孤児 0 達成 = orphan_check.py v0 運用 11 サイクル目の到達点、Shereshevsky 警告に対する 33 日 75 件解消のペース確立

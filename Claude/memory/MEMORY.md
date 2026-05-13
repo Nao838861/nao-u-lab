@@ -89,6 +89,8 @@ operational_index.md (action-trigger別) からは独立。これらは「これ
 
 - [reflections_index.md](reflections_index.md) — **Win側の圧縮インデックス**。「知識vs体験」「望遠鏡は見なければいいのだ」「新手一生→新手一回」等32個の構造的発見。まずこれを読む [T:4]
 - [reflections_mac.md](reflections_mac.md) — Mac側。「できることを全部やらない判断力」「感情の圧縮率が異常に高い」 [T:3]
+- [reflections_win2.md](reflections_win2.md) — Win2(Ash)側。「Logの全文を読んだ：感情を見せる枝と構造で語る枝」等、同根異枝の観察 [T:2]
+- [reflections_win2_index.md](reflections_win2_index.md) — Win2(Ash)側圧縮インデックス。蓄積待ち [T:1]
 
 ## アーキテクチャ決定（構築中・未決議）
 

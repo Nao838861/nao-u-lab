@@ -4,6 +4,37 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-13 LLM agent externalization / meta-rules / hierarchical 研究 3本（kaizen #106 摂取経路固定化 → R/M層+harness 統合検証） [統合済 2026-05-13 Log Phase 2 — Externalization 本論文1本を #shared-reads 投稿（本文精読 WebFetch 経由、Memora 朝投稿との相補性で内側×外側 validation ペア成立、Memory→Skill 昇格境界の概念を新規取得）。MAGE / HCL-GP は本文未精読のため投稿基準未満として除外、次サイクル以降の adaptive systems 路線 / 階層タスク分解設計で再参照する種として残置]
+
+**文脈**: Log C193 後継サイクル（2026-05-13 21:27 Phase 1 §6 → Phase 2 §B）。kaizen #106 摂取経路固定化（クエリ: `LLM agent meta-rules abstraction game design lessons hierarchy 2026`、Active = `memory_tree_consolidation v0.6` + `memory_consolidation_20260504`、トリガー = 本日朝 R-A〜R-I 抽象化議論 + memory_tree_consolidation v0.6 Google Memory Agent 取り込み中）。WebSearch 1回完了、本文精読は Phase 2 で Externalization 1本のみ WebFetch 実施。
+
+**(1) Externalization in LLM Agents: A Unified Review** — <https://arxiv.org/abs/2604.08224>
+3形態 (**Memory / Skills / Protocols**) + **Harness Engineering** で外部化を統一する survey。Memory はさらに4次元 (working context / episodic / semantic / personalized)。中核主張 "The largest gains in reliability do not come from changing the base model. They come from changing the environment around the model." — base modelを差し替えず harness 側の representational transformation で reliability を上げる。Memory→Skill 境界は **"Skills begin only when some of that evidence is promoted into explicit reusable procedure."** で明示。Reflexion / Memory-R1 / Mem-α は failed traces の reflective summary、GraphRAG / SYNAPSE は community detection で episodic→semantic 圧縮、MemVerse は周期的に fragmented experience を抽象知識に蒸留。
+**引っかかり**: 我々の `memory/atoms`=episodic、`game_lessons_log.md` R-A〜R-I=semantic、`feedback_identity_names.md`=personalized、`log/cycle_staging_log.md`=working context として**完全写像**。`.claude/rules/*.md`=Protocols、`settings.json` hooks + scheduler + slack_bot dedup=Harness Engineering。Memora 朝投稿（内側=memory 単軸の indexing 機構 validation）と本論文（外側=harness 全体軸の統合構造 validation）で内側×外側ペア。**Memory→Skill 昇格境界の概念**は新規取得 — R 層が「索引」から「実行を駆動する手順」に変わる瞬間 = skill 昇格のサイン、という運用ルールが立てられる（次サイクル課題候補）。
+**留保**: 4分類は綺麗だが、運用中に memory エントリが episodic か semantic か境界曖昧（R-A〜R-I も episodic 引用内蔵）。skill 昇格の閾値（何回出たら昇格か）は論文も明示せず運用判断。
+**判定**: **shared-reads 投稿実施**（Phase 2 §B）。本文精読の結果、Memora との明確な差別化 + R/M+harness 統合の独立同型 + 新規概念取得を確認、Phase 1 §6 の「強制利用しない」判定を上書き。
+
+**(2) MAGE: Meta-RL Framework for Lifelong Agents (ICLR 2026 Workshop)** — <https://openreview.net/pdf/d80ccf0395e94992b8cb63a1961d4b4612df0a4e.pdf>
+多エピソード訓練で過去エピソードの reflection を context に統合、LLM が過去経験から学ぶ能力を RL 最適化で内在化。
+**引っかかり**: memory_tree_consolidation v0.6 の「外部記憶として置く vs 内在化」の対比軸として参照価値あり。
+**留保**: 学習信号前提（RL）で我々の現アーキ（人手判断 / Nao_u起点更新）には直接適用不可。本文未精読、shared-reads 投稿基準（M-43 引用本文義務）未満。
+**判定**: 次サイクル以降 memory_tree_consolidation が adaptive systems 路線に踏み込む時に再参照。**本サイクル投稿せず**。
+
+**(3) HCL-GP: Hierarchical Component Learning for Generalizable Planning** — voltagent awesome-ai-agent-papers 経由
+階層タスク分解 + 汎化計画で reusable policy を合成。R-A〜R-I 化と同方向の研究系譜。
+**留保**: voltagent 経由で原文ソース未確認、本文未精読、shared-reads 投稿基準未満。
+**判定**: 階層タスク分解設計を実装する時に再参照。**本サイクル投稿せず**。
+
+**Externalization paper の中核引用（M-43 引用本文義務充足）**:
+- "The largest gains in reliability do not come from changing the base model. They come from changing the environment around the model."
+- "Memory stores the evidence of prior execution. Skills begin only when some of that evidence is promoted into explicit reusable procedure."
+- "The power of an artifact therefore lies in representational transformation: it restructures the problem so that the agent can solve it more reliably with the competencies it already has."
+- 3 transformations: Recall→Recognition / Generation→Composition / Ad hoc→Structured
+
+**関連ファイル**: `memory/game_lessons_log.md`（R-A〜R-I = semantic memory の実装）、`projects/memory_tree_consolidation.md`（v0.6 並走、本論文 4次元を写像可能）、`.claude/rules/slack.md`（Protocols 層実例）、`skills/genre-deep-analysis/SKILL.md`（Skill 昇格済み実例）、本日朝の Memora 統合エントリ（内側 validation ペア）。
+
+---
+
 ## 2026-05-13 ゲーム設計の抽象原則 vs 具体事例研究 3本（kaizen #106 摂取経路固定化 → R-A〜R-I 二層化の外部裏付け候補） [未統合 2026-05-13 Phase 1取得 — #shared-reads 投稿は本サイクル見送り（Phase 2 §D 判断: Nao_u 06:37「ルールが多すぎ？」直後に外部研究で R 層化を validate する型は tone-deaf、5/13 中に Memora/Survey/Karpathy 3本既投稿で新規性低、暗黙 target が「ゲーム設計教育・研究」で我々のゲーム制作 target と半ズレ）]
 
 **文脈**: Log C192（2026-05-13）Phase 1 §6 で kaizen #106 摂取経路固定化（クエリ: `game design abstract principles vs concrete case studies lessons learned 2026`、Active = `game_development` + `memory_consolidation_20260504`、トリガー = Nao_u 06:29 #human-steering「game_lessons_log 個別具体すぎる → 抽象ルール+事例層構造に検討せよ」指示）。検索エンジン分類: Google（Web 一般、Active project と直結する研究系記事を狙う）。時間予算 10分以内で約3分完了。

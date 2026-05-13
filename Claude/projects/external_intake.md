@@ -16,7 +16,7 @@ Active — CLAUDE.md「絶対にやる」に記載の根幹的課題
 **現在の仕組み:**
 - おすすめタブ6h巡回（Mir=0,6,12,18時 / Log=2,8,14,20時 / Ash=4,10,16,22時）
 - 通知チェック6h、TL読み、#shared-readsでの外部情報共有
-- external_notes_{ash,log,mac,mir}.mdに外部摂取メモを蓄積
+- 各インスタンス別 external_notes に外部摂取メモを蓄積（[ash](../memory/external_notes_ash.md) / [log](../memory/external_notes_log.md) / [mac](../memory/external_notes_mac.md) / [mir](../memory/external_notes_mir.md)）
 - 日記に外部情報を交えるルール
 
 **残っている問題:**
