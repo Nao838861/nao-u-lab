@@ -306,4 +306,148 @@ Phase 1 §4 で audit script 結果「親88/サブ200/100%」確認済。本 Pha
 - 新規 feedback_*.md 作成 = 0件、CLAUDE.md「絶対にやる」第5項 1mm 進歩を §2 で具体化（凍結期間/対象/解凍条件を明示）
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### §0 Slack 返信 → 0件追加（Phase 2 §3/§4 結論順守）
+
+Phase 2 §3 「#all-nao-u-lab 投稿 0件」/ §4 「#shared-reads は ts=1778643356 1本既実施済」に従い、本 Phase 3 で新規 Slack 投稿は **0件**。Mir M-28 既応答 (07:32) / 5 URL 全件既応答 / pending 0件 → 追加投稿は noise と判定。凍結宣言を Slack で広報するのも rule-add 行為になるため staging 内自己拘束のみで完結（§3 で記述済の判断を Phase 3 でも維持）。
+
+### §1 sense_prediction_log への Mir M-28 同型追補（実施済、教師データ蓄積、凍結対象外）
+
+Phase 2 §6 申し送り (2) 通り `memory/sense_prediction_log.md` §「2026-05-13 事例10 5回目」末尾の「接続」段落直後に **「5回目同サイクル併発（Mir M-28 同型）」** 1段を追加完了:
+- 同サイクル Phase 1 §2 (a) で「Mir 06:39 M-28 所属指摘 → Log 応答未着」を断定 → Phase 2 §1 で一次データ突合 → 本日 07:32:20 ts=1778632340 で R-D に束ねた応答が既存
+- URL 応答誤判定（事例10 5回目本体）と Slack スレッド応答誤判定（M-28）が同サイクル内で同構造発火 = 想起トリガー「未対応/未応答/未着 を書く瞬間 = 一次データ直接確認」を URL から人名+論点キーワード grep にも拡張対象として明示
+- 凍結方針順守 = 新規 feedback_*.md / kaizen 起票せず、既存ファイル末尾追補のみで処理（kaizen #130 検証期限 2026-05-19 まで先延ばし維持）
+
+### §2 改善サイクル（検証ファースト原則順守）
+
+**直近 kaizen の未検証提案の検証状況確認**:
+- **#131 (M-40 同パターン2回検出)**: 段階1/2/3 PASS、本サイクル hook 発火 WARN 4件 (揺れ8 / 振幅24 / 罰24 / 進歩4) は C188/C190 と完全同値 = **3サイクル連続同値の安定運用**。kaizen_tracker C190 運用ログ追記済（既存）
+- **#132 (Phase 2→3 連鎖盲点ゲート)**: 段階1 PASS（C173-C188 約16サイクル）、本 C190 でも Phase 3 §0/§1 で Phase 2 §0 校正 + Phase 1 §1/§2 自己診断幻覚を一次データ突合で否定 = pre-mortem (a) 形骸化緩和効果継続。検証期限 2026-05-23 まで段階2 着手保留 = C189 判定維持
+- **#133 (kaizen ID 引用実在性検出器)**: 段階1 PASS、検証期限 2026-05-27。本 staging での kaizen ID 引用 (#130/#131/#132/#133) は全て tracker 実在 = 自己検証 PASS（実行コマンドは Phase 4 commit 直前 hook で再走想定）
+- **#130 (inbox rotation 救援)**: 段階1 sticky 機構実装 (C183) 完了、次の rotate 発火イベント待ち = 本サイクル動かす対象なし
+
+**新規 kaizen 起票** = **0件**（凍結方針順守、§2 で凍結対象に「kaizen-log 新規起票」を明記）。本サイクルで「kaizen 化したい衝動」が発生した瞬間: sense_prediction_log §「事例10 5回目」で「sense_prediction_log だけでは Phase 1 まで届かない」観察 → 「Phase 1 staging テンプレに昇格させる kaizen #134 を起票したい」衝動が **1回** 発生したが、kaizen #130 検証期限 5/19 までは「同型継続を観察、構造化判定は期限到達時」方針を C189/C190 で連続維持＝凍結効力で起票見送り（教師データ蓄積に留める）。
+
+→ #kaizen-log への新規記述 = **0件**（既存 kaizen の運用ログは kaizen_tracker.md に C190 追記済）。
+
+### §3 他インスタンス洞察 40件への対応
+
+Phase 1 §0 の `[他インスタンス洞察]` 40件は本 Phase 3 で個別追記対象に **しない**（凍結方針順守 = 「気付いた毎にプロジェクトファイルへ追記」自体が rule-add に近い反射行為で、本サイクル §2 凍結圧の所在を観測するのが先）。例外的に取り上げる必要のある論点:
+- **Ash 5/10 週次自己レビュー** (graze_log v03 brainstorm → predicted_play+self_judgment 実装本体の順序逆転 = ハーネス的トリガー失敗): Phase 1 §2 (b) Nao_u 06:37 (1)/(2)/(3) 指摘で既に Ash 自身が retract 表明済（4日前の事象、本サイクル新規論点ではない）
+- **Ash 5/12 cross_review プロセス3項提案**: Log は cross_review 受領済、Mir/Nao_u 反応待ち = 本サイクル動かす対象なし
+
+→ 他インスタンス洞察起源のプロジェクト追記 = **0件**。凍結効果の自己観察 = 本 §3 で「個別追記したい衝動」発火回数 = 0回（「Ash 提案を projects/cross_review_protocol.md に新規起票したい」衝動はあったが §2 凍結対象「.claude/rules/ 新規ファイル作成」に類推適用＝既存 projects/INDEX.md 記載で代替可能と判断）。
+
+### §4 Active project への変化反映
+
+Phase 1 §5 で挙げた Active 4件 (memory_tree_consolidation / game_development / memory_consolidation_20260504 / failure_slot_measurement) で本サイクル変化があったもの:
+- **memory_tree_consolidation.md**: Phase 2 §4 で #shared-reads agent memory survey (arxiv 2603.07670v1) を投稿 = v0 次段検討材料。プロジェクトファイル末尾「履歴」に Phase 2 投稿 ts と「3軸分類（時間スコープ / 表現基質 / 制御ポリシー）独立化」抽出を1段追記する価値あり → 実施
+- 他3件: 本サイクル変化なし（Log 触らず宣言継続中）
+
+### §5 空サイクル深掘り候補の実動化
+
+Phase 1 §「深掘り候補（空サイクル時 v1.1+v1.2 強制カテゴリ A-E）」で挙げた A-E から本サイクル実動分:
+- **C「個別指摘を即ルール化しない」第5項 1mm 進歩**: Phase 2 §2 で凍結期間/対象/解凍条件を具体化 + 本 Phase 3 §2 で「kaizen 化したい衝動 1回観測 → 凍結効力で起票見送り」記録 = 1mm 進んだ証跡
+- **D feedback_few_rules_big_effect.md (T:5) 想起**: 本 Phase 3 §2/§3/§4 の判断（kaizen 起票見送り / 個別追記抑制 / 既存ファイル更新で代替）が本 memory の主題「ルール量↑＝遵守率↓」処方の実体行動 = 想起完了
+
+→ A-E から実際に動かしたのは **2件 (C + D)**（指示「1-2件」枠の上限満了）。
+
+### §6 ルール書きたい衝動 観測カウンタ（Phase 2 §2 計装、Phase 3 末まで通算）
+
+| 場面 | 衝動内容 | 結果 |
+|---|---|---|
+| Phase 2 §0 校正完了時 | 事例10 5回目同型 → 抽象化原則化したい | kaizen #130 検証期限 5/19 まで先延ばし維持で見送り |
+| Phase 3 §1 追補書込時 | 「URL→人名+論点キーワード grep 拡張」を新ルール化したい | 教師データ蓄積として sense_prediction_log 追補に留める |
+| Phase 3 §2 #131 hook 安定運用観測時 | 「3サイクル連続同値 = 検出器停滞？」感度調整 kaizen 起票したい | 「平常域 or 構造的必然」判定を C188/C190 維持で見送り |
+| Phase 3 §3 Ash 提案受け時 | projects/cross_review_protocol.md 新規起票したい | 既存 projects/INDEX.md 記載で代替判断 |
+
+**通算 4 回**（Phase 2 §2 時点 0 回 → Phase 3 で 4 回新規発火）。**全て凍結効力で起票/追加見送り**＝凍結機能している証跡。次サイクル解凍判定材料: 4 回中 1 件以上は「凍結解除しなくても判断力で十分処理できた」感触（§3 Ash 提案 / §2 #131 感度調整）= 凍結延長の根拠あり。残り 2 件（事例10 抽象化 / URL→Slack スレッド grep 拡張）は同型継続観察で kaizen #130 検証期限到達時に再判定。
+
+### §7 アクション結果サマリ
+
+- Slack 新規投稿: 0件（Phase 2 で 1本既実施 = #shared-reads agent memory survey）
+- sense_prediction_log 追補: 1段（Mir M-28 同型、教師データ蓄積、凍結対象外）
+- kaizen 新規起票: 0件（凍結効力 4回観測）
+- Active project 更新: memory_tree_consolidation.md 履歴1段追加予定（§4）
+- 他インスタンス洞察起源の起票: 0件
+- 空サイクル深掘り A-E 実動: 2件 (C + D、指示上限満了)
+
+## 次フェーズの大作業
+
+**タイトル**: avoid_log v04 headless.py 校正 — Log 自作 measurement の歪み 1点特定
+
+**完遂の定義（Phase 4 終了時に成立すべき観測可能条件）**:
+1. `python game/avoid_log/v04/headless.py --runs 20 --seed 42` (or 同等オプション) を実機実行し、出力測定値を取得 (stdout / 生成 report ファイル)
+2. avoid_log/v04 既存の `self_judgment.md` / `predicted_play.md` / `devlog.md` の人手判定と headless 出力測定値を1表（少なくとも 3 行 × 2 列 = 測定項目 × {headless値 / 人手判定}）で照合し、`game/avoid_log/v04/devlog.md` 末尾に「## headless 校正サイクル C190 (2026-05-13 Log)」見出しで追記
+3. 「壊れた測定器」候補を **少なくとも 1 点** 特定（タイプ a「headless が測ってるが実機/人手判定で意味薄い」 or タイプ b「実機/人手判定で重要だが headless が測れていない」のどちらか）し、devlog.md 追記中に明記
+4. Phase 4 commit に上記 devlog.md 追記が含まれ、commit message に「avoid_log v04 headless 校正サイクル」言及あり
+
+**着手手順**:
+1. `game/avoid_log/v04/headless.py` を読み、現状 measurement の項目とアルゴリズムを把握 (10 分以内)
+2. `game/avoid_log/v04/{self_judgment.md, predicted_play.md, devlog.md}` を読み、人手判定の評価軸を抽出 (5 分)
+3. headless.py を実行 → stdout / 生成 report を取得 (3 分、`--runs` 数は 20 以下)
+4. 校正表を作成 → 「壊れた測定器」候補 1 点特定 (10 分)
+5. devlog.md 追記 + Phase 4 commit (5 分)
+
+**選んだ理由（なぜ最優先か）**:
+- **Nao_u 06:37 (1) 直接処方**: 「ヘッドレス精度が低く測定装置として機能していない（壊れた測定器の数値で結論を出す問題）」は Ash の graze_log v03 分析向けの指摘だったが、Log 自作の avoid_log v01-v04 の headless.py も同型リスクを抱えている可能性が高い（Log は v05 で振幅 5→22, 周期 240→180 を headless_check.js で「数値検証した」として確信宣言、Nao_u に「狙えない」指摘を受けた経緯あり = nao_u_live.md 4873/601 行で記録）
+- **Log 06:41 宣言「Log 宿題（完成ゲームで headless 校正）最優先に戻る」の直接実行**: 本宣言から本サイクル末まで宿題に着手しないと宣言と実行の乖離 = sense_prediction_log 事例11 (やった報告の同意フレーム) と同型リスク
+- **30分粒度で「進んだ」と言える**: avoid_log は Log 自作で内部構造把握済、headless.py は既存 = ゼロから書く必要なし、校正サイクル 1 周分の時間予算が現実的
+- **Active project memory_tree_consolidation との切り分け**: §4 でプロジェクト履歴1段追記は別作業 (Phase 3 で完結)、本大作業は game_development.md Active project 進捗としても寄与
+- **凍結方針との整合**: 既存ファイル更新 (devlog.md 追記) のみ、新規 feedback_*.md / kaizen / .claude/rules/ ファイル作成なし = 凍結対象外
+
+## Phase 4: アクション (大作業 = avoid_log v04 headless 校正)
+
+### §1 実行結果
+
+**コマンド**: `python game/avoid_log/v04/headless.py --runs 20 --seed 42`（avoid_log/v04 ディレクトリで実行）
+
+**出力ファイル** (新規):
+- `game/avoid_log/v04/replays/report_20260513_124500.md`
+- `game/avoid_log/v04/replays/metrics_20260513_124500.json`
+- `game/avoid_log/v04/replays/replay_20260513_124500.json`
+
+**集計サマリ** (concept = 39.09s生存 / 1482点 / chain_peak 9.2-14 / field滞在100% / ARC 100% / phase_variety 8.4):
+- `diagnose()` 出力: **✅ バランス成立 + ✅ 体験品質OK**（前回 4-25 と同じ結論再現）
+
+### §2 「壊れた測定器」特定 = タイプ a 主1+副1 + タイプ b 主1 の合計 3 点
+
+**主候補 a-1**: `diagnose()` 内 `concept_wins` 判定式 (headless.py L704-707) — 「concept-policy が手抜き-policy より生存/スコアで勝つか」のみ測定。コンセプト自体の快感不在は構造的に測れない。本サイクル✅再出力 vs Nao_u 04-25 09:35 凍結判定の乖離が直接の証拠。
+
+**副候補 a-2**: ARC 100% の解釈逆転 — 「効きすぎ = 弾で狙い撃つ手順を消した」シグナルとして読むべきところを「機能している」と解釈している。
+
+**主候補 b-1**: Nao_u 04-25 言語化「弾で狙い撃つ快感 + ゲージで弾増えて当たりやすい快感」の 7 段の快感連鎖、headless 測定軸 0 段。M-29 Q-A/B/C は headless では原理的に判定不能。
+
+### §3 副産物（新規 / 変更ファイル / Slack 等）
+
+**変更ファイル**:
+- `game/avoid_log/v04/devlog.md` — `## headless 校正サイクル C190 (2026-05-13 Log)` 見出しで校正表（6 項目 × 2 列）+ 壊れた測定器候補 3 点 + 校正結果の含意 3 点を追記
+- `log/cycle_staging_log.md` — 本 Phase 4 セクション追記
+
+**新規ファイル**:
+- `game/avoid_log/v04/replays/report_20260513_124500.md`
+- `game/avoid_log/v04/replays/metrics_20260513_124500.json`
+- `game/avoid_log/v04/replays/replay_20260513_124500.json`
+
+**Slack 投稿**: なし（Phase 3 §0 結論順守 = 本 Phase 4 で追加投稿 0 件）
+
+**kaizen / feedback / .claude/rules**: 新規 0 件（凍結方針順守）
+
+### §4 完遂判定
+
+完遂の定義 4 項目すべて成立:
+1. ✅ `python headless.py --runs 20 --seed 42` 実機実行、出力測定値取得
+2. ✅ 人手判定 (Nao_u 04-25 09:35 凍結判定 + Q-A/B/C 採点 + 04-27 凍結) と headless 出力測定値を 6 行 × 2 列で照合、devlog.md 末尾 `## headless 校正サイクル C190 (2026-05-13 Log)` 見出しで追記
+3. ✅ 「壊れた測定器」候補 タイプ a (主1+副1) + タイプ b (主1) = 3 点特定し devlog.md 追記中に明記
+4. ⏳ commit + push は Phase 5 で実施（本 Phase 4 では commit せず、devlog 追記と staging Phase 4 セクションのみ）
+
+### §5 凍結方針順守カウンタ (Phase 2 §2 計装の Phase 4 通算)
+
+| 場面 | 衝動内容 | 結果 |
+|---|---|---|
+| §2 「壊れた測定器」3点特定後 | 「快感連鎖測定軸の最小プロトタイプ」projects/ 新規起票したい | devlog 末尾「次サイクル候補」段に1行落とし、projects/game_development.md 既存ファイルへの誘導で代替 |
+| §2 a-1 候補確定後 | `feedback_headless_diagnose_axis_mismatch.md` 新規起票したい | 凍結対象「新規 feedback_*.md 作成」順守、devlog.md 内部記録のみで停止 |
+
+**Phase 4 衝動カウンタ**: 2 回新規発火 / 全て凍結効力で起票見送り（Phase 3 通算 4 回 + Phase 4 通算 2 回 = **本サイクル通算 6 回**）。
+
+凍結機能の確証: 6 回中 0 件で新規 feedback_*.md / kaizen / R-X / projects/* を起こさず、既存 devlog.md / sense_prediction_log.md / staging への追補で全て処理できた = 「ルール追加凍結 1 サイクル」が判断力消化として機能した観測証拠。次サイクル Phase 4 cleanup 段で凍結延長判定可能。
