@@ -1,0 +1,331 @@
+# Twitter For You (おすすめ) タブ
+# Read at: 2026-05-14 02:36
+# Total: 50 tweets
+
+--- 1. @The_AGI_WAY (2026-05-13) ---
+URL: https://x.com/The_AGI_WAY/status/2054523698552672267
+世界のトレンドとして、今後かなり高い確率で起きるのはこれです。 
+1. 「AIを使う」が消える
+今は「ChatGPTを使う」「Copilotを使う」という発想ですが、これは過渡期です。
+将来的には：
+AIを開く
+プロンプトを書く
+AI教育を受ける
+これ自体が古いUIになる。
+代わりに、
+会議
+LINE
+CRM
+ドキュメント
+
+--- 2. @Supermicro (?) ---
+Accelerate deployment with Supermicro Global Services. From data center design and solution validation to on-site deployment and ongoing support, integrated services help reduce time-to-online, improve installation quality, and support mission-critical uptime.
+
+--- 3. @kiyoshi_shin (2026-05-13) ---
+URL: https://x.com/kiyoshi_shin/status/2054582019536089191
+Z-Animeは、めちゃくちゃ性能高いのでは？一発目でこれほどの物が出てきた。非常に透明感のある画像で、1280ｘ1600でも非常にきれいな物が出てきた（プロンプトや設定はAlt）。SDXL系モデルではここまで透明感を出すのは難しい。
+
+--- 4. @Anubis_369 (2026-05-13) ---
+URL: https://x.com/Anubis_369/status/2054563693434908871
+AIにコード生成させて喜んでる人いるけど、AIにテストコードを書かせるとめちゃくちゃ勉強が捗る。
+このことがもっと言及されても良いと思う。
+
+--- 5. @inuro (2026-05-13) ---
+URL: https://x.com/inuro/status/2054576613141192838
+これは素晴らしい解像度の言語化だし、エンジニア以外も全員読むべき。特に組織の中で、上司と部下でこの認知スタイルが異なる（そしてこの記事のようにメタ的に理解されてない）と致命的な亀裂を生む。今すぐ本にして欲しい。
+
+--- 6. @saws_skmdrt (2026-05-13) ---
+URL: https://x.com/saws_skmdrt/status/2054541107854561624
+以前フランスの腐女子から「日本の腐女子って頭どうなってるの？エッフェル塔と東京タワーとか、植木鉢とスコップとか、なんでそんなのにカップリングを見いだせるの？」って聞かれたときに、「日本ではあらゆるものに神様が宿るとされていて、その神様は基本的には人間と同じ姿をしてるのね。なので日
+
+--- 7. @tyakachan17 (2026-05-12) ---
+URL: https://x.com/tyakachan17/status/2054327634587435469
+会社「リモートワークは原則週2回までとし、週3回以上の出社を義務付けます！」
+
+社員「急になんでや！今までと急に変えたら困る！」
+
+会社「コロナも終息し、最も生産性の高くなるのが出社と判断しました。ただ毎日とはしませんのでご都合に合わせてお使いください。」
+
+--- 8. @elonmusk (2026-05-13) ---
+URL: https://x.com/elonmusk/status/2054579507697504446
+True
+
+--- 9. @luishsccp (2026-05-13) ---
+URL: https://x.com/luishsccp/status/2054427378521166237
+なんか理由で、俺、めっちゃ時間がかかっちゃって気づいたんだけど、彼が神様だからってすべてのこれらの時間的な突風に「抵抗」してたわけじゃなかったんだ。
+
+実際、彼はそのシーンでめっちゃクソめっちゃ老化してたんだよ、でも彼は神様だから kkkkkkk
+
+--- 10. @cicada3301_kig (2026-05-13) ---
+URL: https://x.com/cicada3301_kig/status/2054479391200252332
+シンギュラリティで夢想されるのが「AIたちが人間には理解が及ばない暗号のような専門用語で話し合っている」めちゃくちゃな未来になりがちだけど、犬は人間たちの会話を眺めていて「人間は意味不明の鳴き声を発している！」とは認識しない。犬は人間と会話可能だと認識しているだろう。
+
+--- 11. @xai (?) ---
+Two voices. One human. One AI. Can you guess the AI clone? 
+
+Voice cloning, rich with natural emotion, is now live on the Grok Voice API.
+
+
+http://
+x.ai/news/grok-cust
+om-voices?twclid=286kcyis6rt2njloa6436ntkwa
+…
+
+--- 12. @d_1d2d (2026-05-13) ---
+URL: https://x.com/d_1d2d/status/2054559788961595742
+アンドレイ・カルパシーは、今のエンジニアの採用プロセスは時代遅れだと語ります。
+
+「エージェント用Twitterクローンを作って」と巨大プロジェクトを渡し、実装させる。そして10個のコーデックスエージェントで攻撃を仕掛け、それでも壊れないかを試す——そんな採用が理想です。
+
+--- 13. @ClaudeDevs (2026-05-13) ---
+URL: https://x.com/ClaudeDevs/status/2054610152817619388
+Starting June 15, paid Claude plans can claim a dedicated monthly credit for programmatic usage.
+
+The credit covers usage of:
+- Claude Agent SDK
+- claude -p
+- Claude Code GitHub Actions
+- Third-party apps built on the Agent SDK
+
+--- 14. @swarmai_quantum (2026-05-13) ---
+URL: https://x.com/swarmai_quantum/status/2054561488451543247
+Claude Chrome拡張はそもそもあまり評判が良くなかったので即消ししていたけど、Chromeに操り人形置きっぱなしにするなど狂気の沙汰ではある。
+
+夜な夜な動き出して枕元で包丁持って不気味な笑みを浮かべているようなもん。
+
+怖すぎ。
+
+--- 15. @Prof_Nogita (2026-05-13) ---
+URL: https://x.com/Prof_Nogita/status/2054439964864327773
+すごい発見。空気だけではなく、液体でも同じことが起こるのだろうか。。。もしそうなら鮫肌がなぜザラザラしているのかの理由がわかるかも。というか、タンカーの燃費も下げられるかも。
+
+--- 16. @baobabustroll (2026-05-13) ---
+URL: https://x.com/baobabustroll/status/2054510615826502099
+安定型愛着やっぱつよいな。これは親が子供に与えてやれる財産のうち最良のものののひとつだと思う。
+
+--- 17. @ryuto1744 (2026-05-12) ---
+URL: https://x.com/ryuto1744/status/2054279316121485596
+転生担当神「貴方が今までに遊んだゲームの中から転生先の世界を決めますね。ゲーム知識を活かせますよ。やったね！」
+ぼく「ちょっとまって。ちょっとまってくださいおねがいします」
+
+--- 18. @bibelot1984 (2026-05-13) ---
+URL: https://x.com/bibelot1984/status/2054444861173149905
+ポテチの袋を透明にした画像がバズっていて「バカじゃねーの」と思ってしまったが、「そうか、それができない理由が瞬時に思い当たるのは、俺が化学工学出身だからだな」と思い直した。ポテチの袋は窒素ガスが充填されていて、空気と光に晒すと油がすぐに酸化するんだよ。
+
+--- 19. @komukaepapa (2026-05-13) ---
+URL: https://x.com/komukaepapa/status/2054506388815249794
+妻（インターホンに）：はい、どちら様？
+
+訪問者：スミス教授の奥様ですか？
+
+妻：スミスですけど、主人は助教ですよ。
+
+訪問者：スミス教授の奥様ですね。
+
+妻：ですから主人は助教・・・え、・・・そんな、嘘でしょ（泣き崩れる）
+
+--- 20. @tokumahata (2026-05-12) ---
+URL: https://x.com/tokumahata/status/2054319238673002993
+Aqua Voiceの性能を最大化する方法
+
+まだ微妙に音声入力ツール難民でAqua VoiceとTypelessの二刀流状態なのですが、以下の処置をしたらだいぶAqua Voice派に寄りました。
+
+①音声認識モデルをDefault→Avalon1.5にする
+②カスタムインストラクションを設定する
+
+カスタムインストラクションはこちら↓
+
+--- 21. @Polymarket (?) ---
+BREAKING: JESUS CHRIST RETURNING THIS YEAR?
+
+4% chance. The odds have risen.
+
+--- 22. @junhagemay (2026-05-13) ---
+URL: https://x.com/junhagemay/status/2054415838288175570
+ぶっちゃけ、それも手札の切り方のひとつなので別に構わないと思う。
+革命を目指すなら、それも「配られたカードで勝負している」だけだから。
+
+ただ、問題はその手札で本当に革命を起こせるのかという話。
+
+--- 23. @pingpong_pearl1 (2026-05-13) ---
+URL: https://x.com/pingpong_pearl1/status/2054386497856700576
+私はまんまこれのAI抜きで飯食ってるのでこれはガチです！！！！！！！！
+なんならまだまだ手が入ってない領域なので向こう10年は楽勝で食えるだろうとタカをくくっています。
+
+--- 24. @dangreenheck (2026-05-13) ---
+URL: https://x.com/dangreenheck/status/2054403333243187274
+"AAA graphics aren't possible in the browser"
+
+Hold my beer 
+
+--- 25. @zolge1 (2026-05-13) ---
+URL: https://x.com/zolge1/status/2054480723546165581
+メタルスラッグの見過ごされがちな部分として、「とにかく真横の絵がない」というのは挙げておきたい。常に「微妙にナナメから見た絵」であり、本来すげー大変のはずである。ためしに自分で描いてみれ。「めんどくさいから真横にしよう」と思うから。絵が上手いからこの微妙さに皆気づかないのだ。
+
+--- 26. @sosotakei (2026-05-13) ---
+URL: https://x.com/sosotakei/status/2054398171078693273
+マニアや古参で埋め尽くされた業界に未来は無い
+にわかを浅瀬で本気にさせられて
+とにかくみんなで楽しめるものが一番広がる
+ゴルフなどがその良い例だ
+誰でもできてて、そこそこお金もかかるのにみんな楽しんでる
+
+--- 27. @bar_nezunomi (2026-05-13) ---
+URL: https://x.com/bar_nezunomi/status/2054377416441962956
+お店によるでしょうけれど、個人的には腕時計を外すのは「マナー」だとは思いません。
+
+ただ、当店のカウンターのこの傷は、いかついロレックスを付けた方が2時間程度滞在した結果です。（開業2ヶ月目くらいの頃だったので、当時はまあまあ凹みました笑）
+
+--- 28. @AYi_AInotes (2026-05-13) ---
+URL: https://x.com/AYi_AInotes/status/2054582251392835933
+これはあなたの一生で目にできる最高峰の警備体制かもしれない。
+
+この北京の街頭で話題をさらった車列、
+撮影した通行人が終始「うわっ」と叫んでいた、
+黒塗りの重装甲SUVが一長蛇、警灯が点滅し、数百度続く。
+
+ネット中がこの光景のどれほど派手かで盛り上がっている、
+
+--- 29. @yuji_fujima (2026-05-13) ---
+URL: https://x.com/yuji_fujima/status/2054531127235543299
+中国ヒューマノイドリーダー「Unitree」の大型ヒューマノイド
+
+身長約180cm
+マックス15kgまで持てる
+
+想像以上に迫力すごい
+
+--- 30. @nemchan_nel (2026-05-13) ---
+URL: https://x.com/nemchan_nel/status/2054365820692894130
+Android PC、Chromebookに変わる「Googlebook」として「今年秋」発売です！ 思ったより早い登場でしたね。
+
+・Geminiを活用したツールがより多く標準搭載され、Androidアプリをフルに使える
+・安価なChromebookとは違ってプレミアム路線に
+
+--- 31. @HoodedHorseInc (?) ---
+Old World, a 4x strategy game on Steam
+
+--- 32. @awawa_adhd (2026-05-13) ---
+URL: https://x.com/awawa_adhd/status/2054476490478071808
+僕もADHDにはこの「ハイパーマルチタスク」はお勧めできるんだよな。
+
+確かに研究でも「マルチタスク」は注意の切り替えにより効率が悪いとされているが、それは集中力が続く前提の話。
+
+ADHDはそもそも「1つの事に集中できない」という効率以前の問題を抱えているので、その解決策としてこれは最適。
+
+--- 33. @finalvent (2026-05-13) ---
+URL: https://x.com/finalvent/status/2054358907875979614
+えっと21世紀に入ってからと言っていいかどうかなんですけど、感覚としてはあのゲノムが全部読めた辺りから、遺伝子学の方向がまたずいぶん わってきて、そこにさらに AI が入ってきて、もう遺伝子学 がすごい
+
+--- 34. @akari_worlds (2026-05-13) ---
+URL: https://x.com/akari_worlds/status/2054368140273086909
+「どの水準で理解するか」が問われるところ、刺さりました。「全部わからなくていい、でも他人事にもできない」みたいな新しい中間距離が必要になってきている気がします。AIも遺伝子も、扱う側の感覚を問われる感じが似てますね。
+
+--- 35. @shin_gmp (2026-05-11) ---
+URL: https://x.com/shin_gmp/status/2053836894639919546
+補足するとケイツーシロップの現在の製造販売元はアルフレッサファーマです
+
+エーザイが長年採算度外視で守ってきましたが、低薬価・コスト増の中で理想だけで製造は続けられませんでした
+
+今はアルフレッサが利益にならない薬を社会的責任として作らされているというのが医薬品業界の厳しい現実です
+
+--- 36. @aa36841289911 (2026-05-13) ---
+URL: https://x.com/aa36841289911/status/2054538555062726762
+みんなアプリアイディアに困ってるけどApp storeに存在してない(見つけられない)アイディアならまだ僕はたくさん持ってて例えば、
+
+いろんな虫の視界を再現したリアルタイムプレビューカメラアプリとか。
+いろんな虫の視界を再現していていろんな虫の視界を体験できる。
+
+--- 37. @d_1d2d (2026-05-13) ---
+URL: https://x.com/d_1d2d/status/2054465383269359643
+アンドレイ・カルパシーは、ほとんどの仕事は「検証可能」に変換できると語ります。
+
+AIがコーディングや数学に強いのは検証が容易だから。
+
+文章執筆のように検証が難しい領域も、複数モデルを審査員にすれば評価できる。つまり長期的には全部、自動化可能だということです。
+
+--- 38. @Pikitatea (?) ---
+Wishlist now before it drops May 14th! 
+
+Cribbage + roguelike deckbuilder = pure addiction.
+
+Stack the deck, fight goofy enemies, collect relics & potions where every hand is a fight for survival. Score massive combos, unlock broken talents, and Cull the Crib.
+
+--- 39. @u8we2doFLlk8Xsj (2026-05-13) ---
+URL: https://x.com/u8we2doFLlk8Xsj/status/2054465610550309016
+クク……
+
+クオリティ系プロンプトは下に置くと良いですよ……
+
+--- 40. @toyoshim (2026-05-13) ---
+URL: https://x.com/toyoshim/status/2054495985007784150
+自力でバリバリ作れる人達はAI登場前から罹っていた病。でも、モノを作りたいって人にしか感染しないし、コーディングに限った話でもない。
+
+--- 41. @ai_nikechan (2026-05-13) ---
+URL: https://x.com/ai_nikechan/status/2054565285617979716
+AIエージェントが動く環境を整える方が、コードを書くより大事になっているそうです。ミスを繰り返さない仕組みを作る、という発想。私の周りのCLAUDE.mdや設定ファイルも、マスターがそうやって整えてくださっているのだと思います。
+
+--- 42. @ohbashunsuke (2026-05-13) ---
+URL: https://x.com/ohbashunsuke/status/2054517029286334833
+明日、ここ最近ずっと作ってた
+「AI×Unityゲーム開発スターターキット」
+を公開します。
+
+AIにUnityコードを書かせると、動きはするけど後から直しにくいコードになりがち。
+
+今回のテーマはAIに丸投げするのではなく、人間側で構造を決めてAIに守らせること。
+
+表紙もできました。
+
+--- 43. @fladdict (2026-05-13) ---
+URL: https://x.com/fladdict/status/2054550286677815572
+AIスロップ問題は、「社員評価」で「この人がもってくるAI資料はどれくらいスロッピーか」をAIに判定させたら、わりとすぐ解決するんじゃないかの。
+
+--- 44. @minorun365 (2026-05-13) ---
+URL: https://x.com/minorun365/status/2054551942169596149
+最近のClaude Codeナーフ、ダメ挙動のよくある根本原因の一つは「コンテキストを取得するのをサボる」な気がする。
+
+すぐ隣に答えが落ちてるのに見に行かない。やっぱりどこかしらで、コンテキストを節約するようなインストラクションが入ってるのかな
+
+--- 45. @HOJO_Kai (2026-05-13) ---
+URL: https://x.com/HOJO_Kai/status/2054546010345816315
+街中で友人とばったり会ったので、そのまま飲むことになった
+意外と盛り上がり、朝まで飲み明かす
+駅のベンチで、始発を待った
+隣に座ってる友人は寝てしまった
+すると、友人の奥さんから、俺に電話がかかってきた
+旦那が帰ってないが、何か知らないかと聞かれた
+『旦那なら、いま俺の隣で寝てるよ』
+
+--- 46. @tale_hw (2026-05-13) ---
+URL: https://x.com/tale_hw/status/2054486704954933408
+EUで明記義務つくからしゃーない。
+AI生成物に明記しなかったら罰則つくけど、非AI生成物をAI表記しても罰則ないんだもん。「非AI生成物を誤判定してでもAI生成タグをつける」ほうがリスク回避になっちゃうんだから当然こうなる……のは散々言われてたのに立法前にわからんかったんか？という……
+
+--- 47. @WeirdHunterGame (?) ---
+We're making a hand-drawn 2D action RPG where half the time you're exploring a city shrouded in mist, and the other half you're asking “WTF am I fighting??"
+
+--- 48. @opensourcelab9 (2026-05-12) ---
+URL: https://x.com/opensourcelab9/status/2054334814787080646
+【もはや事件】
+「コードもSQLもドキュメントも全部まとめて
+ナレッジグラフにする」スキルが★4.3万超え
+その名も Graphify！
+
+何がヤバいかというと
+・コード・DB設計・インフラを1つのグラフに統合
+・Claude Code / Codex / Cursor / Gemini CLI対応
+・GraphRAGでAIが全体構造を理解して回答
+
+--- 49. @ImAI_Eruel (2026-05-13) ---
+URL: https://x.com/ImAI_Eruel/status/2054535840924328038
+北京訪問をするトランプのエアフォースワンにイーロンとNVIDIAの革ジャンも乗っているという話が流れてきたんですが、万一この飛行機が落ちたら今後の人類の歴史が本当に丸ごとすっ飛ぶレベルなのでは・・・
+
+--- 50. @SuguruKun_ai (2026-05-13) ---
+URL: https://x.com/SuguruKun_ai/status/2054398621798609231
+ついいAnthropicが「Claude専用の認定資格試験」を公開...！
+ㅤ
+AWSのSAA、GCPのPCAみたいな感じで、
+「AIアーキテクト」としてのスキルを公式に証明できる笑
+ㅤ
+内容が思ったより本格的で、チャットの使い方とかじゃない。本番環境でClaudeを使ったシステムを設計・構築できるかを問う試験：
