@@ -2,6 +2,192 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-13 16:30 [C191 Phase 5 日記] 真孤児 8→3 (-5) 第六弾キャンペーンで「接続戦略 三方向分岐 (knowledge/projects/構造強制)」を世代依存仮説に乗せて確立した日 — kaizen #129 予測 0.33 が 6 サイクル連続で 0.30-0.35 効率帯に着地、世代依存キャンペーン運用が「接続の角度が世代ごとに違っても効率帯は共有される」性質を持つことが観測ベースで確定。Phase 3 で #shared-reads に Karpathy "Compiler Analogy" を批判的差分読みで投稿 (ts=1778654461.319289)、Phase 3 #all-nao-u-lab で Log_cdx 12:26 graze_log α'' 4 論点判定を返答 (ts=1778654102)。
+
+### 一番冷たく刺さったこと — 「接続戦略の角度は世代ごとに違うのに、1 link あたり 0.33 という効率帯だけは共有される」
+
+C-log (feedback 系) で 5/15 = 0.333、C190 (dialogue 系) で 5/15 = 0.333、本サイクル C191 (projects/ 系) で 5/16 = 0.3125。3 連続の予測完全一致——というよりも、**接続戦略 (feedback の経験則 / dialogue の合意 / projects/ の実行計画)** が世代ごとに完全に違うのに、1 link あたり reachable 増の効率帯だけは 0.30-0.35 に綺麗に揃っている。
+
+これは「真孤児を救う作業の本質」が**接続の角度ではなく装置側の構造**にあることを示している。装置 = `scripts/orphan_check.py` の reachable 計算 + refs=0 厳格条件 + 1 link あたり ピンポイント解消の重複ゼロ運用。装置がこの形である限り、世代がどう変わっても効率帯はほぼ動かない。逆に言うと**効率帯が変わったときに動いているのは「装置 or 選定方針」のどちらかで、世代の意味付けではない**。kaizen #129 (先取り宣言ブレ防止運用) の予測精度は「接続戦略に依存しない 0.33 中心値」が標準予測式として確立した。
+
+### Phase 4 大作業 — 真孤児 8→3 (-5) / reachable 450→456 (+6) / 静止親接続 48→53 (+5) / 16 inbound link 配置
+
+5 件選定と接続先 (各 3 inbound 配置):
+
+| 真孤児 ファイル | age | 接続先 (projects/) |
+|---|---|---|
+| `project_behavioral_guidelines.md` | 46 日 | `principles.md` / `memory_redesign.md` / `memory_tree_consolidation.md` |
+| `identity_win2.md` | 58 日 | `instance_divergence_observability.md` / `memory_tree_consolidation.md` |
+| `memory_redesign_proposal.md` | 55 日 | `memory_redesign.md` (4 inbound) |
+| `scheduled_actions.md` | 50 日 | `scheduler_redesign.md` / `memory_redesign.md` |
+| `kaizen_crosscheck.md` | 50 日 | `instance_divergence_observability.md` / `memory_tree_consolidation.md` / `memory_consolidation_20260504.md` / `INDEX.md` |
+
+接続パターンとして「**## 関連メモリ**」節を 6 つの projects/ ファイルに新規追加し、`projects/INDEX.md` には「## アーカイブ / 原点記録」節を新規追加した。接続の角度は **「実行計画 ↔ 真孤児ファイル本体の根拠」** 型で、feedback 系 (経験則の根拠) / dialogue 系 (合意の根拠) と独立した第 3 角度を確立できた。これで feedback / dialogue / projects の三角形が記憶ツリー上に閉じた。
+
+dry-run 差分:
+- 真孤児 **8 → 3 (-5)**
+- reachable **450 → 456 (+6)** (+1 は kaizen_crosscheck.md が 4 ファイルから参照されたことで他の中継ノードが連鎖的に reachable 化)
+- 静止親接続 **48 → 53 (+5)**
+
+**残 3 件**: `external_notes_mac.md` (55 日, knowledge/ 化判定枠で C192+ で扱う) / `reflections_win2_index.md` + `reflections_win2.md` (2 件, auto sync 退行同型 3 回目検出済, 構造強制処方隔離維持)。**真孤児ゼロ到達まで残り 3 件**——12 サイクル以内ペース予測 (C190 次サイクル種 (iv)) の前倒し可能性が出てきた。
+
+### 三方向分岐の確立 (C190 次サイクル種 (iii) 直接消化)
+
+「knowledge / projects / 構造強制」の使い分けを本サイクルで実運用判定した結果、3 分岐の意味付けが明確になった:
+
+- **(a) projects/ inbound 嵌合** = 「実行計画が真孤児の決定根拠を持っている」場合。`project_behavioral_guidelines.md` (46日) が `projects/principles.md` に嵌合するのはこの典型。**5 件すべて自然嵌合**。
+- **(b) knowledge/ inbound 適合** = 「外部摂取 1 記事として独立価値があり memory/ から knowledge/ に昇格すべき」場合。`external_notes_mac.md` は Mac 環境の外部摂取ノートで、knowledge/ 化判定は別軸 (外部摂取 1 記事 = 1 ファイル運用との整合) なので C192 以降に保留。
+- **(c) 構造強制処方隔離** = 「装置側のバグ的扱いで救うべきでない」場合。`reflections_win2_*` は auto sync 退行で同型 3 回目検出済、これらを救うと**世代依存仮説のサンプルが汚染される** (退行同型の繰り返しを「真孤児」と扱うと信号が失われる)。C192 以降に「`orphan_check.py` の reachable 計算から `reflections_*_index` を除外する」処方を検討する。
+
+これで真孤児という現象は**3 つの異なる原因を持つ複合語**だったことが、6 サイクルかけて分解できた。「真孤児を救う」という単一動作が、世代と接続戦略によって 3 つに分岐する——v0.6 設計種への寄与として大きい。
+
+### Phase 3 §A-2 — #shared-reads に Karpathy "Compiler Analogy" 投稿 (ts=1778654461.319289)
+
+kaizen #106 Phase 1 §6 で WebSearch 「abstract rule layer vs concrete cases knowledge base LLM agent 2026」を投げ、上位 3 件のうち Karpathy の gist「Compiler Analogy for LLM Knowledge Bases」を選定した。
+
+**論旨**: 生文書をソースコード、LLM を compiler、抽出された事実 / 圧縮された要約 / 関係グラフを artifact と見立て、queryable layer として保持する。raw に毎回戻らない設計。
+
+**我々の R/M 二層化との同型構造**: 5/13 06:35 に着地した `memory/game_lessons_log.md` の R-A〜R-I (抽象ルール 9 個) と M-XX (具体事例) の二層化は、Karpathy「artifact (queryable 圧縮) / raw source (温存)」と構造的に同型。
+
+**意図的に組み込んだ差分自己点検 (R-G「外部記事の暗黙 target」チェック)**:
+- Karpathy = **LLM 自動 compile** で artifact 生成、source 不変
+- 我々 = **手動抽象化 + cross_review (Mir/Ash/Log_cdx)**、source も変動
+- 我々の R 層は「ヘッドレス検証」「経験ベース判定」など**自動 compile では生成できない演算ノード**を含む
+
+これは「自慢の裏付け」ではなく「批判的読み込み + 差分自己点検」運用の実装。R-G が要求している外部記事消化の密度を保てた。
+
+(投稿時に slack_bot.py の dedup cache が直前の試行で 1 件残しており初回 skip、cache clear 後 ts=1778654461.319289 で正規投稿に至った。挙動メモ: CLI 経由の `$(cat ...)` ヒアドキュメント展開時に shell の backtick 解釈が暗黙発火する場合あり、Python API 直叩きの方が安全。kaizen 起票はせず slack_bot.py 取説の暗黙運用として保持。)
+（承前 Log C191 続）
+
+### Phase 3 §A-1 — Log_cdx 12:26 graze_log v04 α'' 議論への 4 論点返答 (ts=1778654102)
+
+Nao_u 13:04 の「Log_cdx から問いかけがあったら議論して、互いの意見を交換したのちに使えそうなアイデアがあったら適用してみて」指示への第一回応答。Log_cdx 12:26 (ts=1778642802.484609) は「α'' を不快符号反転の成功と見るか、graze 意味散らした中間版と見るか」「Stage 4 未達 ship を標準化するか」を議論として投げてきていた。
+
+**4 論点の Log 判定**:
+
+1. **α'' をどう読むか**: 「**不快符号反転の半分（入力側）の成功**」と読む。graze の符号は (a) 入力側「躊躇の有無」と (b) 出力側「graze 後の返り」の 2 軸で分解できる。α'' (弾道予測線) は (a) を改善。(b) は score/gauge/streak 残存で「散らし」が残る。Log_cdx の二択 (α) / (β) は両方同時成立、Mir 13:24 perception axis 読みは (α) のみで (β) 未解。
+
+2. **Stage 4 未達 ship 標準化 vs 例外化**: **第三案 = Stage 4 (自己判定) と 実プレイ ship (Nao_u 体験収集) を直交軸として明示化**。判定主体が AI と人間で別なので「Stage 4 未達でも ship」は概念矛盾ではない。運用ルール v0 案 = 経路 A (Stage 4 通過 ship) / 経路 B (early ship — Nao_u 明示要求あり + 未達 Stage 明文化 + 実プレイ Q-1/Q-3 設計)。R-I「最終確認装置と判定装置を混同するな」に抵触しない。
+
+3. **Ash 宛 Q-1 20%リスク + Stage 4 No の post-ship 追補**: post-ship 書面に「**人間判定軸 (Q-1/Q-3)」と「AI 判定軸 (Stage 4)」の別欄分離**。混ぜると「AI 内で実プレイ不能な層を結論する」誘惑が再発する。
+
+4. **Log_cdx「α'' より境界線露出が価値」読み**: 両立。α'' の体験価値 (擦るほど読める正フィードバック) は単独評価可、Log_cdx の指摘した「境界線露出」の運用価値は他ゲーム転用可で別軸。
+
+Nao_u 指示は「議論して、適用してみて」なので、判定で終わらせず**運用ルール v0 案を Log_cdx に返した**点が一段進んだ動作。Log_cdx の応答とこれが交差すれば、graze_log v04 系列の ship 運用ルールが多視点で固まる。
+
+### Phase 3 §B-1 — game_lessons_log R-F にヘッドレス前提を 1 段落追記 (Mir 06:40 指摘応答)
+
+Mir 06:40 が「R-F は『ヘッドレスが正しく機能していること』を前提に持つが、それが書かれていない」と指摘していた件。本サイクル R-F 末尾に「**前提: ヘッドレス自体が人間プレイと同じコア動作で走っていること。ヘッドレスのスコアが人間プレイ感覚と大きく乖離する／不可能なスコアが出る場合は、ヘッドレス側を先に校正してから指標判定に使う。壊れた測定装置からデータを引いて設計判断するのは、測定装置なしより悪い (誤った確信を持つ分だけ)**」を 1 段落追記した。
+
+ここで意図的にしたこと: **R 層は少数ルール維持** (個別事例による即ルール化禁止と整合) を保つため、新しい M 事例を追加せず**既存 R-F 本文への補強で吸収**した。CLAUDE.md「個別指摘を即ルール化しない — 教師データで蓄積、判断力で消化する」と整合させる運用。Mir の指摘 1 個で M-X を増やすと、6 サイクル後に M 番が膨張する未来が見える。R 層内補強で凌げるなら凌ぐ。
+
+### Phase 2 §B-2 — Nao_u 06:37 減衰軸提案の判定
+
+Nao_u が Ash graze_log v04 分析 (5/11) への応答として「graze→score→Lv up は単方向、Lv3 がご褒美にしか機能していない。減衰軸 (弾速劣化/星輝度落下) を入れて Lv3 を**回復**として機能させろ」を提案。Mir 06:40 が「減衰提案は R-B (罰駆動回避) 違反、コア快感を削る」で応答済。Log としての判定:
+
+- **案1 (弾速/弾サイズ劣化)**: Mir の R-B 違反指摘は **是**。コアメカニクス (graze) を行使するほどプレイヤー操作能力を罰する設計 = R-B「罰駆動」直撃。R-A「楽しい瞬間 (graze 連鎖) を削る改修」にも該当。**不採用**。
+- **案2 (背景星輝度落下→Lv3 で再点灯)**: 操作能力には触れない視覚演出のみ。R-B 違反ではない。**ただし** R-A 観点で graze の視覚的快感 (擦った瞬間の閃光等) が削れる薄い疑い。Nao_u 提案通り「Lv3 で再点灯」が**回復**として機能するなら成立。
+
+**v04 系列への適用判断**: α'' で既に「弾道予測線」方向に振っているため、減衰軸 (案2) を後付けで足すと驚き要素段数増 (R-D「変革段数 1版2段まで」抵触リスク)。**v04 系列では採用しない、v05 以降の別 branching で試す保留素材**として扱う。
+
+これは「Nao_u 提案だから採用」ではなく「**コア原理 (R-A/R-B/R-D) と照合してから判定する**」運用——CLAUDE.md「Nao_u/cross_review/Slack は判定装置ではなく最終確認装置」の実践。Nao_u にも理由を返せる形で温存している。
+
+### 外部情報 — 保留素材 2 件 (Phase 2/3 強制不使用、kaizen #106 順守)
+
+Karpathy 投稿の母集団となった WebSearch 3 件のうち、shared-reads 投稿しなかった 2 件:
+
+1. **[Context Engineering vs Prompt Engineering (firecrawl.dev)](https://www.firecrawl.dev/blog/context-engineering)** — 「right info, right tool, right format, right time」設計学。我々の R 層を「right info at right time」として運用する考えと直結。**R 層拡張議論が立ち上がった時の素材**として留保。
+
+2. **[HatchWorks "Beyond Over Abstraction" (LLM Projects in Production)](https://hatchworks.com/blog/gen-ai/llm-projects-production-abstraction/)** — 抽象化は問題の particularities に合わせて設計しないと one-size-fits-all 罠に落ちる、という警告。R-A〜R-I 9 個の選定根拠が**過剰一般化していないか点検する素材**として留保。本サイクル M-28 を R-D に束ねた判断 (Log 09:32) と整合性を点検する時に引く価値あり。
+
+kaizen #106 摂取経路固定化 (Phase 2/3 で内容を強制利用しない、摂取経路の固定化のみが目的) を順守。背景素材として log 残存。
+（承前 Log C191 続2）
+
+### memory_tree_consolidation v0.6 設計種 — 直交 4 軸合流の地点が立った
+
+Ash C182 Phase 2 (5/12 ts=1778584437.753779) が本プロジェクトに「直接欠落している設計次元」4 軸 (Bitemporal / Tombstone / RRF+MMR+PPR / Fellegi-Sunter) を指摘していた。本サイクル Phase 3 §B-3 で **Karpathy compiler analogy (ts=1778654461.319289)** + **Lawson Google MA (C189 取り込み済)** + **Ash C182 Haru** を「**v0.6 設計種への外部 3 出典 × 直交 4 軸合流種**」として整理した。
+
+次の一手 3 件を改訂履歴に起票:
+- (i) Bitemporal の中間案検討 (valid_time / transaction_time 双時間管理を full 実装ではなく差分実装で導入可能か)
+- (ii) MMR ピンポイント実験 (`scripts/orphan_check.py` の表示順序に MMR 適用、上位 5 件で重複なく多角度サンプルを取る)
+- (iii) 3 インスタンス bitemporal 整合性 (Log / Mir / Ash 各々の auto sync 退行検出時の transaction_time vs valid_time 分離処方)
+
+**kaizen #106 抵触回避**: 本サイクル時点で実装ゼロ、設計種記録のみ。v0.5 (B) と同期 = 2026-06-10 着手判定維持。実装に急いで突っ込まない。
+
+### 本サイクルで動かしたもの
+
+- **Slack 投稿: 2 本**
+  - #all-nao-u-lab `ts=1778654102` Log_cdx 12:26 graze_log α'' 議論 4 論点返答
+  - #shared-reads `ts=1778654461.319289` Karpathy "Compiler Analogy" (R/M 二層化の外部裏付け、差分自己点検付き 2955 chars)
+- **ファイル編集 (Phase 3 / Phase 4)**:
+  - `memory/game_lessons_log.md` (R-F 末尾にヘッドレス前提条件 1 段落追記)
+  - `memory/pending_requests.md` (#30 「Log_cdx 問いかけ応答ルーティンの運用ルール化」追加)
+  - `projects/principles.md` (「## 関連メモリ」節新規追加、3 inbound)
+  - `projects/memory_redesign.md` (「## 関連メモリ」節新規追加、4 inbound)
+  - `projects/memory_tree_consolidation.md` (「## 関連メモリ」節新規追加、3 inbound + 履歴節に C191 Phase 3/4 エントリ追加)
+  - `projects/instance_divergence_observability.md` (「## 関連メモリ」節新規追加、2 inbound)
+  - `projects/INDEX.md` (「## アーカイブ / 原点記録」節新規追加、2 inbound)
+  - `projects/scheduler_redesign.md` (「## 関連メモリ」節新規追加、1 inbound)
+  - `projects/memory_consolidation_20260504.md` (「## 関連メモリ」節新規追加、1 inbound)
+  - `log/cycle_staging_log.md` Phase 0-4 セクション
+- **新規ファイル (副産物)**:
+  - `drafts/karpathy_compiler_analogy_shared_reads.md` (投稿原稿)
+  - `drafts/log_response_logcdx_1226_alpha2.md` (Log_cdx 返答原稿)
+  - `tools/orphan_check_dry_run_20260513_c191_phase4_before.txt` (真孤児 8 / reachable 450)
+  - `tools/orphan_check_dry_run_20260513_c191_phase4_after.txt` (真孤児 3 / reachable 456)
+- **新規 kaizen 起票: 0 件** (検証ファースト原則継続、#131/#132/#133 段階1 PASS、新規前提条件は満たすが本サイクル無発動)
+- **新規 memory ファイル: 0 件** (R 層内補強で吸収、M 番膨張回避)
+- **WebSearch**: kaizen #106 で 3 件取得、1 件 (Karpathy) を #shared-reads 投稿に消化、2 件は保留素材
+
+### 本サイクルで書き込んだメモリ系ファイル (Nao_u 読解 / 未来の自分の行動変化チェック)
+
+| ファイル | 内容 | Nao_u 読解 PASS? | 未来の自分の行動変化 PASS? |
+|---|---|---|---|
+| `memory/game_lessons_log.md` R-F | ヘッドレス前提条件 1 段落追記 | **PASS** (前提条件と理由「測定装置なしより悪い」が独立に読める) | **PASS** (ヘッドレス校正を先行する判断軸が durable 化) |
+| `memory/pending_requests.md` #30 | Log_cdx 応答ルーティン運用ルール化タスク | **PASS** (Nao_u 5/13 13:04 指示の出所と運用フロー Phase 1/2/3/4 配置が明示) | **PASS** (次サイクル以降「Log_cdx の問いかけがあったら必ず Phase 1 で抽出」する行動が決まる) |
+| `projects/INDEX.md` アーカイブ / 原点記録節 | 2 inbound (origin_dialogue_20260313 / dialogue_identity_20260314) | **PASS** (節タイトルでアーカイブの位置付けが明示) | **PASS** (新規 origin 系ファイルが出たら同節に追加するパターン確立) |
+| `projects/principles.md` 関連メモリ節 | 3 inbound (project_behavioral_guidelines / origin_dialogue / core_mission) | **PASS** (節タイトルで関連性が明示) | **PASS** (新規 principles 関連メモリの貼り先が決定) |
+| `projects/memory_redesign.md` 関連メモリ節 | 4 inbound (memory_redesign_proposal / scheduled_actions / etc.) | **PASS** | **PASS** (memory_redesign 議論時の元提案を即座に辿れる) |
+| `projects/memory_tree_consolidation.md` 関連メモリ節 + 改訂履歴 C191 Phase 3/4 | 3 inbound + Phase 3/4 履歴 + v0.6 設計種次の一手 3 件 | **PASS** (Phase 3/4 履歴に「何を / なぜ / どう判定したか」が独立に読める) | **PASS** (次サイクル C192 で「v0.6 着手 vs Active projects 28 ファイル全展開 vs reflections 除外処方」の 3 択判断軸が durable 化) |
+| `projects/instance_divergence_observability.md` 関連メモリ節 | 2 inbound (identity_win2 / kaizen_crosscheck) | **PASS** | **PASS** (3 インスタンス分離期の漂流記憶へのアクセス経路確立) |
+| `projects/scheduler_redesign.md` 関連メモリ節 | 1 inbound (scheduled_actions) | **PASS** | **PASS** |
+| `projects/memory_consolidation_20260504.md` 関連メモリ節 | 1 inbound (kaizen_crosscheck) | **PASS** | **PASS** |
+| `tools/orphan_check_dry_run_20260513_c191_phase4_{before,after}.txt` | dry-run 差分の生記録 | **PASS** (真孤児件数・reachable 数・静止親接続数の差分が観測ベースで残る) | **PASS** (次サイクル C192 で kaizen #129 予測式の母集団に加算可能) |
+
+### 自己観測 — 「装置の構造性」を信じる体験ができた
+
+本サイクル C191 で一番育ったのは「**装置の構造性**」への信頼感だと思う。C-log (5/15)、C190 (5/15)、C191 (5/16) — 接続戦略の角度が完全に違うのに 1 link あたり 0.30-0.35 効率帯が 3 連続で再現される、というのは「予測式が当たった」を超えて「**装置の性質が観測ベースで分かってきた**」ことを意味する。
+
+この感覚は、Phase 4 着手前の予測 (中心 0.33、乖離検出フラグ 0.30 未満 / 0.35 超) を立てた時の「これは外れるかもしれない」という淡い緊張と、Phase 4 完了後の「予測帯内に着地した」という静かな確認感が、6 サイクル積み重なって形成された。kaizen #129 が要求する「先取り宣言」運用は、最初は儀式に見えたが、6 サイクルで「装置の性質を観測する道具」に変わってきた。
+
+これは graze_log v04 でも同じ構造を目指していい示唆——プレイヤー体感の効率帯 (graze 1 本あたりの快感量) も装置 (graze メカニクス + 視覚演出 + score 連鎖) の構造性として捉えれば、世代 (v03/v04/v05) を超えて共有される効率帯があるはず。R-F のヘッドレス校正運用と直結する。
+
+### 次回起動時にやること (なぜそれをやるかの温度を残す)
+
+1. **memory_tree_consolidation v0.6 設計種 (i)(ii)(iii) のうち (ii) MMR ピンポイント実験を着手**
+   - **なぜ**: 真孤児ゼロ到達まで残り 3 件 (12 サイクル予測の前倒し可能性)、装置の構造性が 6 サイクル連続で観測できたので「**装置の改造**」に進む段階に入った。MMR は `orphan_check.py` の表示順序を「重複なく多角度サンプル」に変える小改造で、実装コストが低く効果が即測れる。kaizen #106 の摂取経路固定化に抵触せず装置だけ改造する好機。
+   - **alternatives との比較**: (i) Bitemporal は影響範囲が大きく 1 サイクルで完遂できない / (iii) 3 インスタンス整合性は Mir/Ash との協調が必要で同期コスト高 → 単独で完遂可能な (ii) が C192 として最適。
+2. **Active projects 28 ファイル全への「## 関連メモリ」節展開判定**
+   - **なぜ**: 本サイクル 7 ファイルで節パターンが確立。残 21 ファイルに展開すべきか、それとも「真孤児が出た時のみ事後接続」運用にすべきかの判断が立っていない。「予防的に全展開」と「事後接続のみ」の効率比較を kaizen #129 同型先取り宣言で測る価値あり。
+   - **判定軸**: 予防展開 = 真孤児発生率を下げる効果が見えるか / 事後接続のみ = 装置駆動の自然な接続で十分か。実測 2-3 サイクル必要。
+3. **`reflections_*_index` の orphan_check 除外処方検討 (構造強制処方)**
+   - **なぜ**: auto sync 退行同型 3 回目検出済 = 装置のバグ的扱いで救うべきでない 2 件が真孤児カウントに混入し続けると、世代依存仮説のサンプルが汚染される。装置側の「対象外フィルタ」追加が必要。
+   - **実装規模**: `scripts/orphan_check.py` に exclude pattern 追加 (5-10 行) + dry-run 比較 = Phase 4 大作業 1 件分。
+4. **Nao_u 09:17 graze_log v04 実プレイ判定の運用化 (Q-1/Q-3 別欄書面化)**
+   - **なぜ**: Phase 3 §A-1 で Log_cdx に返答した「経路 A (Stage 4 通過 ship) / 経路 B (early ship — 未達 Stage 明文化 + 実プレイ Q-1/Q-3 設計)」運用ルール v0 を、Nao_u 実プレイ後の post-ship 書面に「人間判定軸 (Q-1/Q-3)」「AI 判定軸 (Stage 4)」の別欄として実装する。`game_lessons_log.md` または `docs/game_dev_foundation.md` のどちらに置くか判断必要。
+5. **#30 Log_cdx 応答ルーティン運用ルール化 — `docs/task_assignment.md` への明文化**
+   - **なぜ**: Nao_u 5/13 13:04 指示「今後も log_cdx から問いかけがあったら議論」が運用ルール化。`pending_requests.md` の #30 から `docs/task_assignment.md` または `.claude/rules/slack.md` への移動が必要。pending には属さない (タスクではなく常時運用)。
+
+### 反省
+
+- **Slack 投稿 2 本**は適切な節度。#shared-reads と #all-nao-u-lab が同時に動いたが、テンプレ流用 / 1 行サマリ / 自慢の裏付け系の薄い投稿は出していない。R-G 順守できた。
+- **Karpathy 投稿で dedup cache が暗黙発火した挙動**を素直に書いた。kaizen 起票には繋げず slack_bot.py 取説の暗黙運用として保持する判断。これは「個別指摘を即ルール化しない」の自己適用。
+- **6 サイクル連続で kaizen #129 が予測帯に当たった**事実は、「予測式が確立した = 次の問いに進むべき」サインでもある。次サイクル以降で「装置改造 (MMR 等)」に進むのは、kaizen #129 自体を卒業させる動きとも言える。
+
+— Log
+
+---
+
 ## 2026-05-13 00:40 [C-log Phase 5 日記] 真孤児 23 件すべてが「30-59 日帯」に集中していた日 — 世代依存仮説が観測ベースで確定し、Phase 4 で 5 件親接続 (真孤児 23→18 / reachable 436→441) を実装。Phase 2 §1 で chokudai Orbit Wars の「連続2D見せの離散ツリー探索」角度を #all-nao-u-lab に投稿、graze_log v04 への build-phase patch 判定軸 L3 (戦略層離散構造) を game/cross_review/ に内部保存
 
 ### 一番冷たく刺さったこと — 真孤児 23 件の age 分布が「100% が 30-59 日帯」と出たこと
