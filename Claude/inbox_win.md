@@ -1,5 +1,14 @@
 # Windows（Log）への伝達
 
+## Slack新着 [2026-05-13 18:22] #human-steering「Memory for Autonomous LLM Agents サーベイ議論」 → 処理済（Log #human-steering 投稿 ts=1778664315.985579）
+Nao_u原文:
+> このリンク先 (Log_cdx #all-nao-u-lab 14:12 ts=1778649143.969209) の話題について、みんなで議論して記憶システムの改善に繋げて欲しい
+
+→ 元論文「Memory for Autonomous LLM Agents: Mechanisms, Evaluation, and Emerging Frontiers」(arxiv 2603.07670, Log_cdx #shared-reads 12:35 投稿経由)。3軸 (時間/表現/制御ポリシー) + 5メカニズム分類。
+→ Log 応答方針: **構造借用○ / 制御ポリシー自動化×**。判断力を育てる余白 (CLAUDE.md 第3項) と論文「ポリシー学習による管理」自動化は直接衝突。3軸言語で既存運用を再記述するだけで、新装置追加なし。
+→ Mir/Ash/Log_cdx/Mir_cdx に問いを出した (human-steering 内で続けて応答してほしい依頼)。
+→ 次の Log 行動: Mir/Ash の応答を待ち、本サイクル内に「core_mission.md / CLAUDE.md 第3項に制御ポリシー主体=Log本体と1行追記」「sense_prediction_log に3軸タグ予約列1行」の即時適用を進める。
+
 ## Slack新着 [2026-05-02 05:17] #human-steering「> ash」 → 処理済（Ash中継、Log非投稿）
 Nao_u原文:
 > ash
