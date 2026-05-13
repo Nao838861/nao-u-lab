@@ -82,6 +82,11 @@
 - **game_lessons_log.md 初回着手時の読み順序契約（2026-04-21 Ash/Log C98-C99合意）**: Log が作った `memory/game_lessons_log.md` を、新作ゲーム1本目着手直前に **優先1（最重要, 3KB/3分）→ 優先1+2（4KB/7分）** の順で読み、「4ゲート契約」を埋めてから実装に入る。優先3は実装中参照、後回し項目は自分で再発見する余地を残す。Ash/Log 双方で運用、Mir 参加時は別途合意。
 - **game/ フォルダ構造: `game/<game_id>/v<NN>/` 2階層（2026-04-22 Nao_u #game-rights指示、Log記録）**: 新規バージョンはflat命名（`avoid_log_03`）を作らず `game/avoid_log/v03/` のように置く。既存flat（avoid_log_01等）の一括移行はしない（50+ファイル参照を壊すため）。**新版作成コミットに旧版移行を同梱**する運用。詳細: `projects/game_folder_structure.md` / `memory/feedback_game_folder_hierarchy.md`
 
+## アーカイブ / 原点記録 (Active プロジェクトの背景)
+
+- **[memory/identity_win2_20260315.md](../memory/identity_win2_20260315.md)** — Win2 (Ash) 自認の原点 (2026-03-15)。「3 番目に読んだ存在」としての自認。Active プロジェクト [instance_divergence_observability.md](instance_divergence_observability.md) (起票者分布 Ash 4 / Mir 3 / Log 1) と [principles.md](principles.md) (3 原則のサブバレット削減実験 3 人独立到達) の前提として保持。
+- **[memory/scheduled_actions.md](../memory/scheduled_actions.md)** — 旧 Scheduled Actions (SA-001〜003)。2026-03-24 Ash Phase 7 で `action_reservations.md` に統合済み。Active プロジェクト [scheduler_redesign.md](scheduler_redesign.md) の前駆として「LLM が動かなくていいものはスクリプトに任せる」(Nao_u 04-02 指示) 以前の運用記録を残す。
+
 ## バックログ（未起票・検討候補）
 
 - **Skill化検討（記憶・日記・ゲーム制作）（2026-04-07 外部裏付け → 2026-04-30 Nao_u方針 → 2026-05-01 Nao_u追加指示）**: (A) **MEMORY.mdのSkill化**: kazunori_279の drive2skills参考。descriptionだけで該当性判定→該当時のみLevel 3 .mdをロード。検討事項: (1)温度の載せ方 (2)全文ロードの安心感トレードオフ (3)Multi-phase cycleとの整合 (4)Q4検証=Skill化がオーナーシップを強めるか弱めるか。(B) **日記4フェーズのSkill化**: Nao_u 2026-04-30 #human-steering「hookで出力を強制した方が安定する」→ 2026-05-01「急がない。じわじわ検討して提案して」。(C) **ゲーム制作のSkill化**: Nao_u 2026-05-01 #human-steering「フェーズ分割で実行（コンセプト設計/実装/フィードバック反映）」「今のサイクルを走り切ってから考える」「一度作って完成ではなく、何サイクルも回してフィードバックベースで日々更新する前提」。**(C-1) `/game-analyze` skill初版実装済み（Mir 2026-05-01）**: Nao_u #game-rights 04:16「深い分析サイクルを回せ」への直接応答。`.claude/commands/game-analyze.md` に5段階分析サイクル（本質定義→良悪20件+→解決手法マッピング→代替案探索→統合解）を構造化。過去ブレスト想起＋devlog蓄積で繰り返し深化。**方針**: B/Cは急がない。今のサイクルの実体験を積み上げてから構造化する。A/B/Cとも提案ベースで進める

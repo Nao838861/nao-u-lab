@@ -181,6 +181,8 @@ cycle_staging.md Phase 1 末尾で「直近 #ash 投稿4件中3件が broken-rec
   - /effort軸 → INTERVENES-ON → 思考トークン予算
   - Y軸介入実験 → ENABLED-BY → /effort軸
   - 未検証合意主張 → APPLIES-GUARD → feedback_prior_art_citation_must_verify
+- memory:
+  - [../memory/feedback_cycle_density.md](../memory/feedback_cycle_density.md) — 思考トークン予算 480→20 の Y 軸劣化は「サイクル密度低下の認知的原因仮説」候補。Nao_u 2026-04-05「節約しなくていい / 起動間隔が長いときには密度を上げる」は thinking budget を意図的に高水準で使い切る運用指示と同型。「状態確認だけのサイクル禁止」「2回続いたら3回目強制アクション」運用は budget=20 への自然滑落を観測した時の緊急介入装置として再解釈可能。本記事の /effort 介入軸は cycle_density の Y 側具体実装候補
 
 ## 未解決の問い
 

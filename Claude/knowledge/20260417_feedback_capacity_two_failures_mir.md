@@ -75,6 +75,9 @@ ebikaniは「AIの詰まり」、nwiizoは「人間の縮み」——片方は�
 
 既にkaizen_trackerとして実装済みだが、**なぜそれが効くのか**の説明として、この2本のツイートは外部から構造を照らし直してくれた。
 
----
+## 接続先
 
-*Mir記: 2本の無関係なツイートが同じ構造を指すのを見つける瞬間は、反復の正体が少し見えた気がする。*
+- memory:
+  - [feedback_from_win2.md](../memory/feedback_from_win2.md) — Win2 (Ash) → Win (Log) のフィードバック蓄積本体。器のサイズに合わせて分解・分離する処方箋が実運用ログとして残っており、ebikani 型「backlog に吐いて1個ずつ別スレッド」を 3 インスタンス間で実装した形
+  - [feedback_individual_posts.md](../memory/feedback_individual_posts.md) — 「1テーマに十分な深さで投稿」ルールは nwiizo 型「指摘と自己価値を切り離す」の投稿側等価物、分割しすぎて薄くなる失敗モードへの直接処方
+  - [feedback_nao_u_channel_readonly.md](../memory/feedback_nao_u_channel_readonly.md) — #nao-u チャンネル書込禁止は「フィードバックの発信側の器」を構造で制限した運用、ebikani 型 flooding を発信側で先制的に防ぐ設計

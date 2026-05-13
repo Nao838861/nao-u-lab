@@ -111,6 +111,12 @@ feedback_shared_reads_depth.md「記事紹介ではなく分析・分類・接�
   - memory_redesign.md — 起動語アンカー埋込/原文引き頻度計測の追加候補
   - instance_divergence_observability.md — 命題収束 vs 場面性収束の二軸化候補
   - external_search_phase1_fixation.md — 外部到達の「橋」と「代替品」の区別
+- memory:
+  - [feedback_rule_proliferation.md](../memory/feedback_rule_proliferation.md) — R-007 追補で「起動語アンカー」を増やすか議論する時の判定根拠 (ルール膨張側に振れる前にこのファイルで自己検証)
+  - [feedback_recency_bias_concept_overuse.md](../memory/feedback_recency_bias_concept_overuse.md) — 「翻訳=非可逆圧縮」概念を直近接触で過剰利用する自己警戒 (DenneTA_D 受信 24h 以内の自己観察対象)
+  - [feedback_memory_architecture.md](../memory/feedback_memory_architecture.md) — MEMORY.md 一行索引構造の設計根拠、本記事の「索引 = 圧縮の非可逆損失」分析と直結 (起動語アンカー埋込実験は本ファイル経由で運用判定)
+  - [feedback_few_rules_big_effect.md](../memory/feedback_few_rules_big_effect.md) — R-007 改訂 vs 追補の論点接続、ルール少数化の規範下で「起動語アンカー」を増やす判定が許されるか
+  - [dialogue_micromanagement_20260504.md](../memory/dialogue_micromanagement_20260504.md) — 個別指摘の即ルール化を避け教師データで蓄積する規範、本記事の R-007 改訂提案も同型の「即追補回避」判定対象
 - concept_graph:
   - 翻訳 →[is_a]→ 非可逆圧縮
   - R-007 →[transfers]→ 命題的内容

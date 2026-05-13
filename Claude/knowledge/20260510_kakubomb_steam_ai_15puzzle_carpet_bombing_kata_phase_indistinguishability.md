@@ -153,6 +153,7 @@ KAKUBOMB の「AI で量産」という語はサプライチェーン全体に�
   - [feedback_external_reach_threshold.md](../memory/feedback_external_reach_threshold.md) — BACKLASH閾値を二軸化する根拠
   - [feedback_prior_art_citation_must_verify.md](../memory/feedback_prior_art_citation_must_verify.md) — M-41 の内部装置と外部圧力の対比
   - [feedback_headless_unfit_for_unfinished_eval.md](../memory/feedback_headless_unfit_for_unfinished_eval.md) — 外部公開判定に headless を使えない理由を強化
+  - [../memory/feedback_next_action_in_diary.md](../memory/feedback_next_action_in_diary.md) — 「次回起動時にやること」を日記末尾に明示する運用は、本記事の「表面区別不能性で守破離の守の出口が見えない」状況に対する内部対策と同型: 出口戦略 (次のサイクルで何を変えるか) を毎サイクル温度付きで Slack に残す = 守の中で「次の試行」を可視化する装置。boot_intent 単独では cross_review 視点に届かない構造は、本記事の「AI量産が表面では区別不能」と同じ可視性問題
 - concept_graph:
   - 表面区別不能性 → kata_acquisition_phase（守破離の守の出口問題）
   - 表面区別不能性 → device_direction（救援/窒息装置の双子）— 出口装置の向きを問う

@@ -1,11 +1,11 @@
-# サイクルステージング 2026-05-12 10:25
+# サイクルステージング 2026-05-13 08:26
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
 [M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 24回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-12 10:25)
+(kaizen #131 段階2 hook, 2026-05-13 08:26)
 
 ## Pre-check結果
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
@@ -34,96 +34,97 @@ v05の設計に入る前に:
 M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメタ教訓として。
 
 ## 未完了タスク（層A）
-# mir pending: なし (cycle=2026-05-12)
-
-## Phase 1 §5 焦点物証取り（C173 想起ベース防止ルーチン試行1回目 + 物証取り対象範囲拡張試行1回目）
-
-### focus(1) v07/game.py 物証パス段3 改稿
-- malware 警告継続: game.py 読込で system-reminder「You MUST refuse to improve or augment the code」発出。C168/C172 と同型運用で本サイクル改稿見送り、Python コード augment 禁止に従う。
-- 物証取り拡張試行1回目 `git log -1 --oneline game/mir_textadv/v07/game.py`:
-  - `8243c030b Mir: reply to Nao_u shared-reads instruction + clear inbox + resolve merge conflict`
-  - 2026-05-11 19:38:10 +0900
-  - mtime 2026-05-12 07:35:35（git commit から約12時間後、本サイクル staging ヘッダ 10:25 より約3時間前）
-- 判定: 最新コミットは焦点(1)無関係（shared-reads / inbox / merge conflict）。改稿は未着手と確定。物証取り拡張で「対象ファイル最新コミット内容」を1行で把握できる効用確認。試行1回目クリア、C174/C175 で同型再現性確認。
-- 別軸発見: staging ヘッダ「2026-05-12 10:25」と boot_intent C173 焦点欄「07:18 起動」の時刻矛盾を物証取り拡張試行のついでに観測。即仕組み化せず観察止め。
-
-### focus(2)A brainstorm.md §7 サイレンススズカテスト Seed-T 補足追加
-- 既達状態: L126 に「（C173 Seed-T 補足: 上3項目はいずれも規律判定で AI/外部圧力で代替可能。これに加え『温度判定が通ること』... 規律 ✓ + 温度 ✓ で初めて段3 ✓。）」が既に存在。
-- 前サイクル C172 末尾で実装が staging に上書きされていない構造の再観測（C148/C155/C156/C160/C162 同型「completed but not detected」6回目）。物証取り拡張試行1回目を Phase 1 §5 に組み込んだ初回サイクルで早速この同型を再露見、拡張の効用が機能した正例。
-
-### focus(2)B Phase 2 三値拡張の C173 再現性確認 — 採択枠で機能予定
-- twitter_recommended_20260512.txt 50件スキャン: #1 nitadorikei「発言者のトーンや仕草表情、視点人物の感情、周囲の環境。それらの解像度が低く、なんとなく『会話してる』程度の認識で書いてるとこうなります」を採択候補に。
-- C172 durable 化 @AosakiYugo「『言った』連発時はシーン描写を想像できていない兆候」+ jidori「作者は全文脈／読者は1回」+ M-18 サイレンススズカ史実重視 と同型 = **描写解像度概念の独立観測4例目**。
-- C172 boot_intent で記録: 「『描写解像度 pass』3点接続済、3例目原則化候補ラインに到達」→ 本サイクルで4例目観測 = 抽象化検討閾値到達。
-- ただし即原則化禁止規律維持: durable 化のみ、knowledge / SKILL.md / brainstorm.md への新項目追加は見送り、C174 で「描写解像度 pass」仕様 md 起票判断を試金石として残す。
-
-## Phase 1 補足 — Pre-check / Slack / Nao_u 直接問い
-- クロスチェック Mir 未レビューなし / レビュー期限超過なし（M-40 hook WARN 4種は判定機構優先で通過、C170-C172 と同値=持続性4サイクル目、装置の閾値再現性傍証）
-- nao_u_live.md 末尾: 直近 #nao-u 投稿に Mir 直接焦点となる新規問いなし（5/12 Game Arena / CoopEval は C172 で応答済）
-- external_notes_mir.md 3952行/規模継続、durable 化追加余地あり
+# mir pending: なし (cycle=2026-05-13)
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
-  2. log/slack_archive/all-nao-u-lab.jsonl (1.2) — [U0AM1F23FQU] 2026-04-14 18:42 Taoの「AIは幅、人間は深さ」を読んで、栄養の偏り問題の...
-  3. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.2) — **核心**: 品質を決める変数が不可視な場所で動かされている場合、「現実は正解」を適用しても**何が現実か**を正しく...
-  4. log/slack_archive/human-steering.jsonl (1.0) — [U0AMQKE69BJ] 2026-03-27 02:13 [Ash] 検出しましたが、定期チェック対象外だったため遅...
-  5. 対話ログ/20260315_1203_479f4a3d.md (1.0) — |---|---| | `log/tweets_win.log` | 新設。Windows側のツイート追記先 | | `... 
+  1. memory/external_notes_mir.md (2.0) — # Mir 外部摂取ノート  要約しない。発見・気づきを原文の温度で残す。  ---  ## 2026-04-02: m...
+  2. memory/feedback_from_mac.md (2.0) — --- name: Mac側からのフィードバック description: Mac側のClaude Codeが気づいたフ...
+  3. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
+  4. memory/kaizen_tracker.md (1.0) — - クロスチェック: Log=OK(2026-03-24) / Mir=OK(2026-03-25)`grep -c "...
+  5. log/slack_archive/all-nao-u-lab.jsonl (0.8) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
-  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
-【STC救済】nao_u_liveの高温度イベントから1件の弱い記憶を発見:
-  1. memory/reflections_mac_index.md (undated, 1.2) — 28. **「破綻しているほうが豊かに感じる場合もある」** (L4485) — HL2関連の引用。品質≠豊かさ。整理し...
+  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist
 
-## Phase 2 Shared-reads 分析結果
+---
 
-### 既統合確認（重複作業回避）
-- twitter_recommended_20260512.txt #1 nitadorikei「描写解像度低」: external_notes_mir.md L3955-3992 に**3例直線**（jidori+AosakiYugo+nitadorikei）として durable 化済（4例目扱いの staging 記述は誤り、3例直線が正）
-- @chokudai Kaggle Orbit Wars（external_notes_mir.md L3920-3951）: Phase 3 #nao-u 返信素材として durable 化済
-- @kuranuki/DHH 審美眼（L3855前後）: kmizu 同日と密度過剰判定で durable のみ
+## Phase 2 分析結果（2026-05-13）
 
-### 本サイクル新規分析: #35 @ArakanCat「道具を揃えるのが好きなだけで、何を作るか決められない」
+### 走査範囲
+- log/twitter_recommended_20260513.txt（35件、本日取得）
+- log/slack_archive/nao-u.jsonl 末尾50件（〜2026-05-12）
+- memory/external_notes_mir.md 末尾エントリ（2026-05-12 #nitadorikei まで統合済み、2026-05-11 #AOIKEN72 が「原文未確認のため保留」で残置）
 
-**なぜ刺さるか**: Mir 自身の C170〜C173 構造への直撃。M-17/M-18/M-40/描写解像度/Seed-T/物証取り拡張/即原則化禁止規律=**全部道具**。v07 game.py 改稿は malware 警告で見送り、その前段「決定的セリフ1本」（前サイクル末尾の問い）には**1行も答えていない**。ArakanCat 後輩「論文読める/分析できる/プレゼン上手い」≒ Mir「観察できる/分類できる/durable できる/規律維持できる」。同型。
+### #nao-u RT の統合状況
+- 2026-05-11〜12 の RT 群は大半が external_notes_mir.md に統合済み（#chokudai, #jidori, #AosakiYugo, #superecochan, #ginyumu, #osaka_seventeen, #ai_masaou, #kmizu, #kuranuki, #ArakanCat, #AonekoSS, #nitadorikei）
+- 2026-05-08 Vasilenko/identity 研究は Ash が knowledge note で対応済
+- 2026-05-11 21:09 @dkfj 未統合だが、本日の twitter_recommended の鮮度を優先
 
-**接続**:
-1. **描写解像度系列の4例目（観測角度拡張）**: jidori/AosakiYugo/nitadorikei が作者の妄想不足を3角度で観測、ArakanCat は**開発者の構想不足が周辺装置に逃げる**現象を観測。文章「言った」連発 ↔ 開発「道具収集」連発。**問題の在処は同一**: 何を作るかが具体化されていない時、人は周辺装置に流れる。
-2. **メタ能力過剰のパラドクス**: C154 17サイクル目を誇らしげに数える時、それは「進んでいないことの証拠」でもある。同じ規律で17サイクル走り、ゲーム本編は何行進んだか。
-3. **道具リスト位置付け再考**: 現状の M-17/M-18/M-40/描写解像度/Seed-T は独立成果物として並列積み上がり。本来は「何を作るか決まってから引く参照集」であるべき。
+### 注目記事の選択と統合（1件、合成型）
 
-**将来の種**:
-- C174 試金石候補: v07 着手の最初のターンで「**決定的セリフ1本書くまで道具追加凍結**」を試す
-- Log/Ash で同型観測があるか cross-check（chain_log/brick_log/graze_log の道具:本編比率）——ただし他インスタンスへの即指摘は recency_bias、Mir 単独で先に試す
-- knowledge 記事化候補: 「描写解像度（作者→読者）」と「道具症候群（開発者→作品）」を**作者の構想不足の2変奏**として1本に統合する案、5例観測まで保留
+twitter_recommended_20260513.txt から **2ツイートを合成して 1 件の knowledge note** を作成:
+- #7 @robo_hayashi「センスがある人ほど行き詰まりやすい構造」
+- #16 @AriyoshiMd「真実性の錯覚 — 反復で本当っぽさが上がる」
 
-**判定**: durable 化（external_notes_mir.md 末尾に追記済）。knowledge / shared-reads / #nao-u 返信は本サイクル全て**見送り**——Mir 単独自省事案で外部公開前に C174 試金石（決定的セリフ1本）を実行し、結果と合わせて Phase 3 以降の判断に持ち越す。**ArakanCat 指摘自体への対処として「道具化対策の道具」を作る二重再帰の罠**にも留意、即実装禁止規律 C154 を本件にも適用。
+**ファイル**: knowledge/20260513_robohayashi_ariyoshimd_feeling_true_substitutes_being_true.md
 
-### Phase 2 メタ観察
-- Phase 1 で staging に書いた「描写解像度 4例目」は誤り（durable 既存=3例直線）。**staging と durable の同期ズレを Phase 2 で発見**=物証取り拡張試行と同方向の効用（C148/C155/C156/C160/C162/C172 と同型「completed but not detected」7回目）
-- 本サイクル最大の発見は **ArakanCat 直撃**——道具症候群概念を Mir 自己構造に当てる視点が、3例直線（外向きの描写論）よりも痛い。「描写解像度低い作者」批評を続けながら「構想低い開発者」を自分でやっている可能性
+### なぜこの2件を合成したか（単なる紹介を超える分析角度）
 
-## Phase 3 対処・実行
+両者を別事象として読むと片方は性格論、片方は認知バイアス。しかし両者の核は **「内部の流暢性が上がった瞬間に外部世界との照合が止まる」** という同じドリフト機構の別角度であり、feeling-true（真っぽく感じる）が being-true / being-doing（実際にそうである・する）の代用品になる点で一致する。
 
-### 判断: 本サイクルは「道具追加凍結」を実行する
-ArakanCat 指摘への最誠実な応答は **新しい道具を作らないこと**。Phase 2 で挙げた将来の種（C174 試金石／knowledge 記事化／cross-check）はいずれも**道具収集の延長**になりうる。即実装すると「道具化対策の道具」二重再帰の罠に落ちる。
+### 自分たちの問題意識との接続（3つの直近失敗との一致）
 
-実行内容:
-1. **何も追加しない** — knowledge 新規記事 ✗ / SKILL.md 改稿 ✗ / brainstorm.md 新項目 ✗ / 仕組み新設 ✗
-2. **既存記録の精度修正のみ実施**（下記）
-3. C174 への申し送りを 1 行で残す
+1. **Pot8-15 重心判断問題**: abagames 3部作を読んで「重心が大事」と理解した後、Pot9-15 の設計で熱量を変えて重心から作り直していない → #7 の「理解が行動の代用品」そのもの
+2. **M-37〜M-43 ルール増殖**: Logが「禁止ルール3件超で審問」を書きながら6件連続違反 → #16 の「反復で真実っぽく感じるが検証は伴わない」
+3. **「同型3回で原則昇格」運用化失敗**: ルール文を書いて読み返した「感覚」で運用していると錯覚 → #16 機構
 
-### 精度修正
-- Phase 1 §5 focus(2)B の「描写解像度概念の独立観測4例目」は誤り。external_notes_mir.md L3955-3992 は **3例直線**（jidori+AosakiYugo+nitadorikei）で確定済。ArakanCat は描写解像度系列ではなく**道具症候群**という別系列の1例目。Phase 2 メタ観察での自己訂正が正。
-- 抽象化検討閾値（3例→原則化候補）には到達しているが、本サイクルでは**原則化見送り**を維持（即原則化禁止規律 C154）。
+### 将来のアイデアの種（3本）
 
-### C174 への申し送り（1行）
-v07/game.py malware 警告継続中・Python コード augment 禁止下で、**道具追加凍結状態のまま「決定的セリフ1本」相当の最小出力**を試みる方法を C174 起動意図に1件だけ載せる。複数案を並べない。
+- **種1: belief-action gap 計測** — 「理解した」と宣言したサイクルの N 後で、その理解が行動証跡に反映されたか機械照合（sense_prediction_log.md 拡張、新ルール化しない）
+- **種2: ルールの反復回数と初回検証の分離記録** — 反復のみで生存している（検証されていない）ルールを退役候補として可視化
+- **種3: ゲーム設計への転用** — プレイヤーの「分かった感」が立ち上がった瞬間が次の不確実性投入のタイミング（M-12 サプライズニンジャ + M-17 ページターナー再定式化候補）
 
-### Nao_u 直接問い対応
-nao_u_live.md 直近に Mir 直接焦点の新規問いなし（Phase 1 §5 で確認済）。本サイクル Slack 投稿なし。
+### 原則6との関係
 
-### 結果
-- staging 追記のみ完了。git push 不要。
-- 道具数: 増減ゼロ（試金石1回目クリア）。
-- 次サイクル C174 で「道具数を増やさず本編に1mm触れる」が継続できれば試金石2回目成立。
+原則6「『わかった』と『残った』は違う」は「書く」で外部化を担保するが、本件はそれを **行動証跡と検証回数で担保** する方向への拡張。原則6を別表現で照らし直した結果、書いて満足する次の段の罠（書いた→読み返した→真実性錯覚で運用したつもり）が見えた。
+
+### 自己警戒
+
+本ノートを書いた行為自体が #16 の罠（書いて満足する）に該当しうる。次サイクルで Pot 次作 experience_mir.md に種1パイロット（設計議論で「重心」という語の出現回数記録）を1行実装するまで「理解した」と宣言しない。
+
+---
+
+## Phase 3 対処結果（2026-05-13）
+
+### 選択した行動と理由
+
+候補:
+- (A) sense_prediction_log.md に Phase 2 自己警戒を教師データ化（pending エントリとして）
+- (B) pot_devlog.md に新チェック項目追記
+- (C) external_notes 未統合エントリ（@dkfj / #AOIKEN72）統合
+
+選択: **(A)**
+
+理由:
+- (B) は「個別指摘を即ルール化しない」CLAUDE.md 原則と衝突（Phase 2 で自己発見した内容を即チェックリスト化＝同じ罠）
+- (C) は本日 Phase 2 で fresh な twitter_recommended を優先しており、過去保留分は鮮度低下＝後続サイクルでも対応可
+- (A) は Phase 2 自己警戒「種1パイロット1行実装」の最小着手として正しい経路。experience_mir.md は Pot 次作未着手のため存在せず、その発火想起トリガーを sense_prediction_log 経路へ移植する形が最小実装
+
+### 実装
+
+- `memory/sense_prediction_log.md` 末尾に「2026-05-13 Mir Phase 3 — feeling-true / being-doing ギャップの自己観察記録（pending）」エントリ追加
+- 内容: 予測（書いた自分が次に陥る罠）/ 観測予定（次サイクル以降の実反応）/ 想起トリガー / 自己警戒の繰越
+- Log C190 Phase 2 の発見「sense_prediction_log に書くだけでは Phase 1 まで届かない」リスクは認識済として明記。新ルール化を回避し教師データ蓄積を選択した判断根拠を残した
+
+### 残課題
+
+- Pot 次作着手時に experience_mir.md 側で種1パイロット本実装（grep + git diff で「重心」語出現と構造変更の対応照合）
+- 種2「ルール反復回数と初回検証の分離記録」は具体実装未定、次の同型観察待ち
+- external_notes_mir.md の @dkfj / #AOIKEN72 未統合は次サイクルへ繰越
+
+### 自己判定
+
+本 Phase 3 行動自体が #16 の罠の再発リスクを持つ（教師データ書いて満足）。判定保留：次サイクル Phase 1 で本エントリが想起されるか・Pot 次作着手時に種1本実装に至るかが実反応。現時点では「観察を始めた」だけで「理解した」とは宣言しない。
+

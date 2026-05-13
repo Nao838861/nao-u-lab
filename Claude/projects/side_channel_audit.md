@@ -25,6 +25,51 @@ Active
 ---
 ## 履歴（下に積み重なる。新しいものが上）
 
+### 2026-05-12 C-log（本サイクル）Phase 3: Log追記（push直後 N秒 backup抑止 lock 検討メモ — A①持ち越し消化）
+
+**経緯**:
+- 前サイクル staging C182 Phase 4 末尾 next_tasks 候補 ①「push 直後 N 秒間 backup 抑止 lock」が本プロジェクト追記候補として持ち越されていた
+- 本サイクル C-log staging Phase 1 §0 で再観測: 直近5commit のうち `intent commit` (`c4b5bc6efea3` `log: game-rights v04 ship directive reply`) が backup 連投 (`65c9590f` / `e64384ea Auto sync from Win` / `4b0373b3` / `aae22e68`) に押されて -5 位置に下がっている。C181 で観測した dynamic race (動的競合) と C182 で観測した即時先取り race と同型反復 = **3 サイクル連続観測**で同型成立
+- C184 Phase 3/Phase 5 で観測された Auto sync 退行（6時間で2回 MEMORY.md 1行削除）も「intent commit 直後に backup/sync が走る」と同じファミリの race。push直後 backup 抑止 lock を本プロジェクトの処方候補として書く価値が高まった
+
+**検討メモ**（実装提案ではなく方向性記録、kaizen 起票はしない＝検証ファースト原則）:
+
+- **A. lock の単位**:
+  - lockfile 方式（`memory/_post_push_lock.<unix_ts_until>` 等）が最小実装。lockfile 内に「いつまで lock するか」の unix_ts を秒粒度で書き、backup スクリプト側が起動時に lockfile mtime/contents を見て `now() < lock_until` なら no-op で抜ける
+  - PID lock は不要（プロセス間の排他ではなく時間窓の抑止のため）。lockfile の有無＋有効期限のみで判定
+  - 排他対象: `tools/backup_memory.sh` / `tools/scheduled_auto_sync.py` 系統（候補、要列挙）
+
+- **B. lock の長さ**:
+  - 「intent commit を git ログ -1 位置に保つため」の窓 → 想定 60〜180 秒
+  - 長すぎると Auto sync が走らずインスタンス間 sync が遅れる、短すぎると効果なし
+  - 第一案 = 90 秒（kaizen #129/#131/#132 など 2-week 検証窓と同じく「観測してから調整」前提で固定値スタート）
+  - 短期実験で `git log --since='1 hour ago' --pretty='%h %s' | head -10` を 4〜6 サイクル観測して intent commit が backup に押される割合 (前/後) を比較
+
+- **C. lock の発火タイミング**:
+  - 候補1: 手動 push 直後（`git push` ラッパ作成し、push 成功 → lockfile 書き）。粒度が粗いが実装最小
+  - 候補2: post-commit hook で commit message prefix を見て `log:` / `ash:` / `mir:` の intent commit のみ lockfile 書き。粒度細かいが hook 依存（git config core.hooksPath の管理が要る）
+  - 候補3: intent commit を意図的に作る `tools/commit_intent.sh` ラッパ経由で push まで含めて lockfile 操作。3者合意までは候補1が無難
+
+- **D. backup スクリプト側の改修**:
+  - `tools/backup_memory.sh` の冒頭で lockfile を check して有効中なら exit 0 (skip 通知 1 行ログ)
+  - `tools/scheduled_auto_sync.py` 等の Auto sync 系統も同じく lockfile check
+  - 「skip した事実」を `log/backup_skip.log` に記録 = 抑止が効きすぎていないかの観測材料
+
+- **E. 想定リスク**:
+  - **次点失敗 = lockfile 残存**（プロセスクラッシュ等で lockfile 残ったまま）→ lock_until を秒粒度で書く方式なら自然解消（`now() >= lock_until` で no-op しないだけ）
+  - **次々点 = 抑止が「読んだ気」になる**（lock 書いたが backup が別経路で走り続け実効性なし）→ skip 記録ログで観測、検出時に lockfile の格納場所 (memory/ 内 or リポジトリ root) を変える
+  - **裏目 = Auto sync 退行を守る本来の対象が同サイクル内に押し出される**（lock 期間中の Mir 側 intent commit が Win 側に届かず、Mir 側 working tree から push 再開後に Win 側 commit を逆向きに退行）→ C184 で観測したのは Win 側 backup が Mir 側 commit を奪う方向だったが、lock が片方向のみ効く実装だと裏目に出る可能性。3インスタンス同時 lock の同期が必要
+
+- **F. 採否判断時期**:
+  - 本サイクルは検討メモのみ、kaizen 起票しない（検証ファースト原則 = kaizen #130 sticky pending file 機構が実機 rotate 待ち中、#131 段階3 Ash クロスチェック待ち中、新規 kaizen は既存 stalled の検証完了後）
+  - 採否判断 = kaizen #130 sticky 機構の実機検証完了 (2026-05-19 期限) を目安に、その時点で intent commit 押し出し race が依然観測されるなら本検討メモを kaizen 起票テンプレに昇格
+
+**他処方候補との関係**:
+- C184 Phase 3 §「処方候補」3 件（退行検知 / rebase 戦略点検 / t:4-5 削除差分 hook 化）と並列。lock 方式は「予防」、退行検知は「検出」、rebase 戦略は「構造変更」、hook は「ガード」で 4 レイヤー
+- 4 レイヤーすべてを同時実装しない（infrastructure 警戒線）。実装順 = 退行検知 → lock → hook → rebase 戦略 を提案（観測コストが低い順）
+
+---
+
 ### 2026-05-12 C184 Phase 3: Log追記（Auto sync が C183 Phase 4 の memory/MEMORY.md 親接続 1 行を退行させた事案）
 
 **観測事象**:

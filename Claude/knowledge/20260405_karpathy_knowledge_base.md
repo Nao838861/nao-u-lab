@@ -53,6 +53,7 @@ LLMを使って個人ナレッジベースを構築する方法論。コード�
 - articles: [20260405_carmack_complexity.md], [20260405_structural_imitation.md]
 - projects: memory_redesign.md(情報統合パイプライン), external_intake.md(栄養の偏り)
 - concept_graph: memory(知識管理手法として), creation(ツール構築)
+- memory: [memory/dialogue_l1_activation_20260328.md](../memory/dialogue_l1_activation_20260328.md) — KarpathyのLLMナレッジベース構築法は「L-1（事前学習知識）を構造化アクセス可能にする」試み。Ashの体験接続型問いは L-1 想起の質を5倍にする入口側の発見で、両者は L-1 活用の出力側と入口側で対になっている
 
 ## 未解決の問い
 1. 349件のshared-reads全てをコンパイルするのは現実的か？ 優先順位をどうつけるか

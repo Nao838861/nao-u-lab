@@ -69,6 +69,7 @@ ext_mir(FadeMem)の忘却メカニズムは、まさにGhostShipの求める「�
 - articles: [20260405_karpathy_knowledge_base（Karpathyのナレッジベース構築法——メモリ問題の別アプローチ）, 20260405_retrieval_practice_spreading_activation（検索実践と拡散活性化——参照頻度強化の認知科学的基盤）]
 - projects: [記憶階層の再設計（参照頻度追跡の設計判断が必要）, memory_activate.py（Spreading Activationが参照頻度強化の実装候補）]
 - concept_graph: [memory→reference-frequency, degradation→unmaintained-memory-as-debt, constraint→LRU-capacity-limit]
+- memory: [memory/dialogue_l1_activation_20260328.md](../memory/dialogue_l1_activation_20260328.md) — L-1知識の取り出し方をL-1の認知科学知識で改善するメタループ。Karpathy/GhostShip/GOROmanの3者三角測量と同型——複数角度の独立観察で「メモリ問題」の構造を逆算する方法論
 
 ## 未解決の問い
 

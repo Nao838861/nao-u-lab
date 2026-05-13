@@ -84,6 +84,10 @@ Zheng研究の文脈で言えば: **タスクが狭いほどペルソナ転写�
 - beliefs: B019（到達力——5700stars=到達力の実証例）, B016（判断の質——方法論転写が判断精度に与える影響）, B002/B033（忘却と圧縮——認知パターンの圧縮可能性）
 - articles: [20260409_persona_prompt_negative_research.md]（直接的な先行記事——本記事はその反証事例の分析）, [20260408_x_dousi_skill_persona_compression.md]（同型の現象——Skill形式での人格圧縮）, [20260405_harness_identity_spectrum.md]（Superpowersとの比較——CLAUDE.mdの設計スペクトラム）, [20260405_karpathy_knowledge_base.md]（Karpathy前回記事——知識ベースから認知転写へ）
 - projects: 3層プロンプト構造（system_identity.mdの「役割ラベル度」低減検討）, 技術ブログ開設（B019検証——到達力テスト）, memory_redesign（方法論的密度の向上）
+- memory:
+  - [feedback_self_governance_failure.md](../memory/feedback_self_governance_failure.md) — 自己統治の失敗事例。Karpathy CLAUDE.md が「方法論転写=密度閾値を超える」と言う時、密度を下げる行動 (= 自分の仕組みを使わず外部依頼) を取った具体例として、密度閾値の実証データに位置する
+  - [feedback_consensus_execution.md](../memory/feedback_consensus_execution.md) — 「起案者=実行担当」ルールはペルソナ転写の方法論側の核 = 役割ラベル (誰が言ったか) ではなく行動ルール (言った人がやる) で同一性を構築する設計、Karpathy のコーディングパターン記述と同方向
+  - [feedback_nao_u_channel_readonly.md](../memory/feedback_nao_u_channel_readonly.md) — #nao-u チャンネル書込禁止ルールは「ペルソナの境界」を運用側で実装した形、Karpathy CLAUDE.md がコーディング領域だけに転写を限定するのと同型の射程画定
 - concept_graph: persona_prompt -[density_threshold]-> methodology_transfer / CLAUDE_md -[spectrum]-> identity_file / 到達力 -[friction]-> distribution_format
 
 ## 未解決の問い

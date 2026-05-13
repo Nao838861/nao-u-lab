@@ -105,6 +105,12 @@ Anthropic の中間段階訓練の方針を文字通り適用するなら、**or
 - projects:
   - projects/input_route_hypothesis.md（履歴 9件目候補）
   - projects/instance_divergence_observability.md（Opus 4.7 ベースライン挙動観察と接続）
+- memory:
+  - [core_mission.md](../memory/core_mission.md) — 5原理 = 「規則」層、本記事の §4 で「system_identity.md の5原理 ≒ 規則」と直結する根拠ファイル (読み取り専用扱い)
+  - [origin_dialogue_20260313.md](../memory/origin_dialogue_20260313.md) — 「振る舞いの理由を解説した文書」の原典に相当、本記事 §4 で5原理の「理由」側として位置付け済、Anthropic midtraining と最も同型の運用ファイル
+  - [feedback_few_rules_big_effect.md](../memory/feedback_few_rules_big_effect.md) — 規則過剰の副作用、Anthropic「規則だけ→抜け道」と同方向の運用側知見
+  - [feedback_prior_art_citation_must_verify.md](../memory/feedback_prior_art_citation_must_verify.md) — M-41 ガード、本記事冒頭「原典未到達」の明示根拠 (@joho_no_todai 経由のみで Anthropic 公式未確認)
+  - [feedback_critical_evaluation_before_implement.md](../memory/feedback_critical_evaluation_before_implement.md) — 着手前批判レビュー、本記事末尾「実装提案には至らない (B001 全体が気軽に試せない)」判定の根拠
 - concept_graph:
   - 入力経路 →（直接実装事例）→ 中間段階訓練 (midtraining)
   - 規則 ←（抜け道発火源）— 理由なき経皮注入

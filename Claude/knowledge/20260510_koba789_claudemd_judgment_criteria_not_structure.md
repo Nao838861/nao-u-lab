@@ -162,6 +162,7 @@ KOBA789 命題で見ると:
 - memory:
   - [feedback_few_rules_big_effect.md](../memory/feedback_few_rules_big_effect.md) — 少数ルールで大きな効果。KOBA789 命題と同方向
   - [project_patch_consolidation_20260502.md](../memory/project_patch_consolidation_20260502.md) — 整理優先度を一段上げる
+  - [../memory/feedback_next_action_in_diary.md](../memory/feedback_next_action_in_diary.md) — 「次回起動時にやること」を Slack 日記末尾に書く運用は、KOBA789 命題「既約判断情報を CLAUDE.md に書く」の log/Slack 側等価物。boot_intent (派生可能、ファイル参照すれば取得可) との二重化は KOBA789 的に冗長に見えるが、Slack 側には「なぜそれをやるか」の温度=既約判断情報が残る点で別の価値=日記内記載は「行動設計」レイヤ、boot_intent は「派生可能データ」レイヤと分担できる
 - concept_graph:
   - 派生可能情報 → token会計（注入する/取得するの選択）
   - 既約判断情報 → 行動設計としての指示文（CLAUDE.md の存在意義）

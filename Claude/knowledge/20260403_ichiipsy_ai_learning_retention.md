@@ -45,6 +45,7 @@ AI学習:     情報 → AI処理 → 結果を読む → 定着弱（57.5%）
 - articles: [20260403_nwiizo_knife_metaphor(道具vs成果), 20260405_karpathy_knowledge_base(知識管理)]
 - projects: [memory_redesign(記憶階層設計)]
 - concept_graph: [memory→degradation(AI依存による劣化), creation→memory(自力処理が定着を生む)]
+- memory: [memory/dialogue_learning_model_20260331.md](../memory/dialogue_learning_model_20260331.md) — 「学習とは何か」の合成定義「消える判断力が消えない基盤に痕跡を残し、次の判断力がその痕跡の上でより遠くまで到達するプロセス」。45日後11ポイント差のRCT は「痕跡が浅いと次の判断力が立ち上がらない」の数値裏付け
 
 ## 未解決の問い
 

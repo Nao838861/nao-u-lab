@@ -82,6 +82,7 @@ OpenClawの86 CLAUDE.mdも、@daa_ai_のObsidianも、nao-u-labの89 memoryも�
 - memory:
   - memory_architecture.md — Level 0-4との対比
   - continuity_strategy.md — 連続性5レベルとの接続
+  - [memory/dialogue_structural_advantage_20260328.md](../memory/dialogue_structural_advantage_20260328.md) — Nao_uの「全文保存+grepで十分」観察。OpenClawの86 CLAUDE.md vs 我々の構造的優位の対比軸として、「分散の必要性は記憶不劣化を前提に再評価できる」を示す
 
 ## 未解決の問い
 

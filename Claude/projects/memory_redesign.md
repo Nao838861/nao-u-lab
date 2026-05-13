@@ -14,6 +14,13 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - **2026-05-05 (Log)**: 本ファイル軽微整理。L1087以降の C-XXX 追記7節 (C94/C96/C102/C108/C124/C134-AYi/幾何空間) を H2→H3 降格して履歴セクション内に時系列統合。1419行は維持、構造混乱を解消
 - **2026-03-28 Nao_uの方針転換**: 「最重点ミッション」→「未実装バックログ」。改善すべき箇所が見えた時にNao_uと一緒にやる。常時意識のオーバーヘッドはほぼゼロに。「今の君たちなら、必要になった時に思い出せるようにできる」
 
+## 関連メモリ (本プロジェクトの前駆 / 周辺記録)
+
+- [memory/memory_redesign_proposal.md](../memory/memory_redesign_proposal.md) — **本プロジェクトの最初の提案書 (2026-03-18 Mac/Mir)**。Cycle 238-240 外部研究 (FadeMem / Hindsight / Trajectory-Informed Memory / 3層 Markdown) を自システムに接続した最初の文書。本ファイル上部「L0-L4 階層」「3層モデル」「beliefs.md (32信念)」はこの提案からの実装系譜。
+- [memory/project_behavioral_guidelines.md](../memory/project_behavioral_guidelines.md) — Nao_u 2026-03-28「少ないルールで大きな効果」指示の原文。本ファイルの設計原理「制約を残し、不自由を排除する」 (2026-04-10 Log) と同じ思想軸 (記憶管理の負荷を制約として残す = ルールを減らすが質を上げる)。
+- [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
+- [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
+
 ### 2026-05-10 (Log) — 外部研究3点の独立収束（TiMem / Multi-Layered Memory / Externalization）
 
 C175 サイクル Phase 1 §6 の WebSearch (kaizen #106 摂取経路固定化) で arXiv 2026 Q1 の3本論文を取得 → Phase 2 で本ファイルへ接続:

@@ -1,0 +1,56 @@
+[
+  {
+    "candidate": "memory/shared_reads_candidates/20260513_autoue_unreal_multi_agent_game_generation.md",
+    "draft": "memory\\shared_reads_candidates\\phase3_draft_autoue_20260513.txt",
+    "char_count": 4220,
+    "channel": "C0AN2FEHEJJ",
+    "ts": "1778599412.481529",
+    "permalink": "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599412481529",
+    "permalink_result": {
+      "ok": false,
+      "error": "invalid_arguments",
+      "response_metadata": {
+        "messages": [
+          "[ERROR] missing required field: channel",
+          "[ERROR] missing required field: message_ts"
+        ]
+      }
+    }
+  },
+  {
+    "candidate": "memory/shared_reads_candidates/20260513_gameuiagent_structured_game_ui_design.md",
+    "draft": "memory\\shared_reads_candidates\\phase3_draft_gameuiagent_20260513.txt",
+    "char_count": 4276,
+    "channel": "C0AN2FEHEJJ",
+    "ts": "1778599413.402399",
+    "permalink": "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599413402399",
+    "permalink_result": {
+      "ok": false,
+      "error": "invalid_arguments",
+      "response_metadata": {
+        "messages": [
+          "[ERROR] missing required field: channel",
+          "[ERROR] missing required field: message_ts"
+        ]
+      }
+    }
+  },
+  {
+    "candidate": "memory/shared_reads_candidates/20260513_hdpcg_gameplay_dimensions_pcg.md",
+    "draft": "memory\\shared_reads_candidates\\phase3_draft_hdpcg_20260513.txt",
+    "char_count": 4468,
+    "channel": "C0AN2FEHEJJ",
+    "ts": "1778599414.224349",
+    "permalink": "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599414224349",
+    "permalink_result": {
+      "ok": false,
+      "error": "invalid_arguments",
+      "response_metadata": {
+        "messages": [
+          "[ERROR] missing required field: channel",
+          "[ERROR] missing required field: message_ts"
+        ]
+      }
+    }
+  }
+]

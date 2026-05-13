@@ -49,6 +49,7 @@
 - articles: [20260403_nwiizo_knife_metaphor(道具最適化の限界), 20260405_carmack_complexity(認知負荷)]
 - projects: [context_separation(コンテキスト制御), memory_redesign(記憶階層)]
 - concept_graph: [voice→constraint(暗黙知は制約条件として機能する), degradation→voice(形式知化による劣化)]
+- memory: [memory/dialogue_l1_activation_20260328.md](../memory/dialogue_l1_activation_20260328.md) — 体験接続型の問いがL-1想起の質を5倍にする実験。L-1（事前学習知識）は形式知の塊だが、「体験との接続」という暗黙知的な入口で初めて質が出る。mizchiの「記述できた時点で暗黙知じゃない」と裏側で接続している
 
 ## 未解決の問い
 

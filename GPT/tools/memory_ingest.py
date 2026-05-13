@@ -12,11 +12,15 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+import memory_lifecycle
+from atoms_fileformat import sync_per_file_atoms
+
 
 ROOT = Path(__file__).resolve().parents[1]
 MEMORY_DIR = ROOT / "memory"
 RAW_DIR = MEMORY_DIR / "raw"
 ATOMS_PATH = MEMORY_DIR / "atoms.jsonl"
+ATOMS_DIR = MEMORY_DIR / "atoms"
 INDEX_PATH = MEMORY_DIR / "MEMORY.md"
 STATE_PATH = MEMORY_DIR / "state.json"
 SHARED_READS_PATH = RAW_DIR / "slack_archive" / "shared-reads.jsonl"
@@ -250,14 +254,15 @@ def cutoff_ts(days: int) -> float:
 
 
 def render_index(atoms: list[dict[str, Any]], source_count: int) -> str:
-    atoms_sorted = sorted(atoms, key=lambda a: (-int(a.get("score", 0)), str(a.get("datetime", ""))))
-    recent = sorted(atoms, key=lambda a: str(a.get("datetime", "")), reverse=True)[:20]
+    display_atoms = memory_lifecycle.fold_atoms(atoms)
+    atoms_sorted = sorted(display_atoms, key=lambda a: (-int(a.get("score", 0)), str(a.get("datetime", ""))))
+    recent = sorted(display_atoms, key=lambda a: str(a.get("datetime", "")), reverse=True)[:20]
     by_tag: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for atom in atoms_sorted:
         for tag in atom.get("tags", [])[:8]:
             by_tag[tag].append(atom)
 
-    tag_counts = Counter(tag for atom in atoms for tag in atom.get("tags", []))
+    tag_counts = Counter(tag for atom in display_atoms for tag in atom.get("tags", []))
     generated = datetime.now().isoformat(timespec="seconds")
     lines = [
         "# Codex Memory Index",
@@ -271,6 +276,8 @@ def render_index(atoms: list[dict[str, Any]], source_count: int) -> str:
         "",
         f"- generated: {generated}",
         f"- atoms: {len(atoms)}",
+        f"- display atoms after lifecycle fold: {len(display_atoms)}",
+        f"- folded by lifecycle metadata: {len(atoms) - len(display_atoms)}",
         f"- scanned shared-reads rows: {source_count}",
         "",
         "## High Signal",
@@ -344,10 +351,14 @@ def main() -> None:
     INDEX_PATH.write_text(render_index(all_atoms, len(rows)), encoding="utf-8", newline="\n")
     save_state(max_ts, len(added), len(all_atoms))
 
+    # Phase C dual-write: keep per-file .md + atoms/index.jsonl in sync
+    per_file_changed, per_file_total = sync_per_file_atoms(all_atoms, ATOMS_DIR)
+
     print(f"source rows: {len(rows)}")
     print(f"added atoms: {len(added)}")
     print(f"total atoms: {len(all_atoms)}")
     print(f"index: {INDEX_PATH}")
+    print(f"per-file: changed={per_file_changed} total={per_file_total} dir={ATOMS_DIR}")
 
 
 if __name__ == "__main__":

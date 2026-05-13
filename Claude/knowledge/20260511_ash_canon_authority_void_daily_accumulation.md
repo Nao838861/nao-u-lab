@@ -96,6 +96,7 @@ cross_review で立てた問い: 「AI slop と削除可能改良の境界 a-b-c
   - [feedback_shu_first_clone_baseline.md](../memory/feedback_shu_first_clone_baseline.md) — 守の段階で型を獲得。「型」を命令で固定できないという本記事の主張は守の通過点条項の前提を明示化する
   - [feedback_few_rules_big_effect.md](../memory/feedback_few_rules_big_effect.md) — 少数ルールで大きな効果。「命令で型を作れない」=ルール数を増やしても日常的生成は補えない、同方向の主張
   - [feedback_self_judgment_no_human_dep.md](../memory/feedback_self_judgment_no_human_dep.md) — 自己判定が先・Nao_u は最終確認装置。日常的生成の場 = Ash 自身の積み重ねが judgment の根拠になる構造
+  - [../memory/feedback_next_action_in_diary.md](../memory/feedback_next_action_in_diary.md) — 日常的生成=「日々の積み重ね」を切れさせない装置として、サイクル終了時 Slack 日記に「次回起動時にやること」を必ず書く運用が機能する。boot_intent だけだと他インスタンス/Nao_u から見えず authority_void に陥る = 日記内記載で温度と文脈付きで次アクションを宣言する=サイクル間の接続強度を上げる。本記事の「型は命令で作れず日常で積み重なる」主張と次アクション宣言運用は同方向
 - concept_graph:
   - 型の不確定性 → クローン戦略 (前提)
   - 権威の空虚 → cross_review の指摘根拠 (リスク)

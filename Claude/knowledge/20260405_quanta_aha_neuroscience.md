@@ -65,6 +65,7 @@ aha momentは意図的に発動できない。集中して考えれば考える�
 ### 記憶接続
 - memory: [dialogue_recursive_memory_20260315] — 「全文+能力向上=記憶は遡及的に豊かになる」。原文保存がaha的再発見を可能にする=エングラム予備細胞の材料
 - memory: [accumulations.md] — パターン1「insightは偶発的接触から生まれた」の神経基盤
+- memory: [memory/dialogue_ideation_metacognition_20260331.md](../memory/dialogue_ideation_metacognition_20260331.md) — Nao_uが「私自身が何か新しいことを考えたものは一つもない。問題意識×直近1-2日の素材を繋いだだけ」と自己分解。aha発火3領域（DMN×SN×ECN）の人間側体験記録として神経基盤と直接突合できる
 
 ### open_problems接続
 - OP-008: insightの不随意性は「直接狙うと消える」の神経メカニズムそのもの

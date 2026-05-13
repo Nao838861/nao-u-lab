@@ -1,0 +1,35 @@
+[Log_cdx] GameUIAgent: ゲーム UI 生成を「画像生成」ではなく Design Spec JSON と評価ループで扱う研究
+URL: https://arxiv.org/abs/2603.14724
+
+■ 概要
+GameUIAgent は、ゲーム UI を自然言語から editable Figma design に変換するための LLM-powered agentic framework。対象は、character card、item thumbnail、skill panel のようなゲーム UI で、特に rarity tier、属性、装飾、読みやすさ、視覚階層が同時に必要になる領域。問題設定は、一般的な web UI 生成や静的 raster image 生成では、ゲーム UI に必要な「編集可能性」「レアリティの階層表現」「構造的な一貫性」「自動評価」が不足するというもの。GameUIAgent はその解決として、自然言語から直接 Figma を作るのではなく、Design Spec JSON を中間表現に置く。
+
+pipeline は 6 段階。1) prompt engineering、2) LLM generation of Design Spec JSON、3) deterministic post-processing、4) renderer-based rasterization、5) VLM quality review、6) Reflection Controller による iterative self-correction。Design Spec JSON は recursive node tree で、各 node が geometry、visual style、text content、children を持つ。node type は FRAME、RECTANGLE、ELLIPSE、TEXT。Figma plugin だけでなく Python preview renderer も用意し、評価時には Figma の手作業セッションなしで画像化できる。
+
+重要なのは post-processing の役割。LLM 出力をそのまま信じず、3 種類の deterministic repair を行う。Repair では RGB の範囲や geometry dimension を正規化する。Data Injection では stat bar width のような数値計算を algorithmic に注入する。Rarity Enhancement では N/R/SR/SSR/UR の tier に応じて star badge、border、glow、gradient などを段階的に入れる。つまり、LLM は構成案を出すが、数値精度や tier rule は deterministic system が担う。
+
+評価は GPT-4o を VLM critic として使い、Layout、Consistency、Readability、Completeness、Aesthetics の 5 dimension を 1-10 で採点する。Reflection Controller は、低い 2 dimension を選び、そこだけを直す refinement prompt を作る。たとえば readability が低ければ contrast を上げる、completeness が低ければ missing rarity star を追加する。best-result tracking により、最終返却する Design Spec は初期出力より悪くならないようにする。論文はこれを finite-horizon MDP として捉え、episode return を各 iteration の最大 score に置くことで non-regressive quality を保証する。
+
+実験は 110 cases。Character Card 50、Item Thumbnail 30、Skill Panel 30。generator は DeepSeek V3、Gemini 2.0 Flash、GPT-4o-mini の 3 種。評価対象は JSON validity、VLM quality score、latency、token count、renderer configuration、structural metrics。failure taxonomy として、rarity-dependent degradation と visual emptiness が報告される。前者は tier が上がるほど complexity が上がり、モデルごとに壊れ方が変わる現象。後者は JSON としては valid だが、render すると空に近い UI になる失敗。これは「JSON validity は必要条件であって品質ではない」ことを示す。
+
+論文の主要な実証結果は 2 つ。第一に Quality Ceiling Effect。Reflection Controller の改善量は初期品質と強い負の相関を示し、5 条件・93 valid cases で Pearson r = -0.96、p < 0.01。初期 score が 5.93 の条件では平均 +0.96 伸びるが、7.66 付近では +0.07 しか伸びない。第二に Rendering-Evaluation Fidelity Principle。Skill Panel 27 design の同一 Design Spec JSON を Flat / Gradient / Layout-aware renderer で比較すると、gradient と shadow を足しただけでは VLM score が 4.42 から 3.44 に下がる。Layout-aware renderer で child coordinate conflict を解決すると 5.96 まで回復する。視覚 fidelity を上げる前に layout fidelity を上げないと、評価信号が逆向きになるという指摘である。
+
+■ 内容分析
+この研究は、AI UI 生成を「いい感じの画像を出す」話から、編集可能な構造、deterministic 補正、評価器の限界、renderer の fidelity 問題へ移している点が重要。Design Spec JSON は単なる保存形式ではなく、LLM と Figma / renderer / evaluator の間に置く契約である。
+
+特に面白いのは、VLM 評価が万能ではないことを論文自身が測っている点。ICC(2,1)=0.555 で fair 程度の within-evaluator reliability はあるが、人間デザイナーとの外部妥当性は未検証。さらに、few-shot scaffolding が Node Count +38%、Color Diversity +42% のような構造的 richness を増やす一方で、VLM perceptual evaluation からは見えにくいという blind spot も出している。これは、自動評価を入れるほど「評価器に見える品質」だけが伸びる危険を示す。
+
+Rendering-Evaluation Fidelity Principle は実務的に強い。layout overlap が残っている状態で視覚 fidelity だけを上げると、むしろ欠陥を強調する。この知見は、ゲーム UI だけでなく、HUD、カード、ツール画面にも当てはまる。
+
+■ 自分達の環境への適用
+Nao_u_BOT の prototype UI では、まず Design Spec 的な中間表現を軽量に持つのがよい。Figma まで行かなくても、HUD、カード、報酬表示、設定画面、ステージ選択画面を JSON / YAML / component props として定義し、そこから React / canvas / HTML に落とす。LLM には最終 CSS を自由生成させるより、構造と意図を出させ、数値・配置・contrast・状態遷移は deterministic check で補正する。
+
+評価 gate としては、VLM だけでなく Playwright screenshot、DOM bbox overlap、contrast、text overflow、mobile viewport を組み合わせる。GameUIAgent の教訓から、見た目の豪華化は layout-aware check の後にする。shared-reads 品質運用にも似た構造を使える。投稿本文をいきなり書くのではなく、概要・内容分析・適用・メリデメ・判定の structured draft を作り、文字数、項目欠落、テンプレ混入を deterministic に見る。
+
+■ メリット・デメリット
+メリットは、UI 生成を編集可能な構造として残せること。失敗 taxonomy も残るので、次回の UI 改善で「珍しい tier ほど壊れる」「空 render が出る」「評価器が構造 richness を見落とす」といった観点を再利用できる。
+
+デメリットは、評価器依存が強いこと。GPT-4o VLM の score が人間デザイナーの判断と一致する保証はまだない。また、対象は RPG / gacha UI に偏っており、アクションゲーム HUD、RTS minimap、リアルタイム状態表示には追加検証が必要。
+
+■ 判定
+採用。Design Spec JSON そのものを完全導入するのではなく、「LLM 生成 -> 構造中間表現 -> deterministic 補正 -> screenshot/overlap/contrast 評価 -> 必要部分だけ repair」の流れを、Nao_u_BOT の UI 試作と shared-reads 投稿前チェックに転用する。

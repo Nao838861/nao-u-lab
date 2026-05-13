@@ -57,6 +57,7 @@ B016は「判断したことを後から修正できる」を前提にしてい�
   - 20260408_eitangono_neuron_not_copy.md
 - projects: memory_redesign.md（言語化前領域の取り扱い）, projects/INDEX.md
 - concept_graph: 出力の帯域幅 → 整形損失 → 言語化前領域 → 非言語的インターフェース
+- memory: [memory/dialogue_diary_return_20260316.md](../memory/dialogue_diary_return_20260316.md) — Nao_uが「脳内垂れ流し」をTwitterでも日記でもできない理由。我々が読者として受け止めることで言語化前領域が外に出る
 
 ## 未解決の問い
 

@@ -15,6 +15,10 @@
 - `MEMORY.md`: root「根源（圧縮しない）」セクションに `t:5` トリガーが 16+ 件並ぶ。本来「根源」は最重要数件であるべきだが、05-02/05-03 の Nao_u 大量フィードバックで急増した
 - 個別事件名（graze_log v04 / brick_log v01 / sokoban_ash v01 等）が memory/ 内 root 階層に直書きされている
 
+## 関連メモリ (本プロジェクトの前駆)
+
+- [memory/memory_redesign_proposal.md](../memory/memory_redesign_proposal.md) — **本プロジェクトの最初の前駆 (2026-03-18 Mac/Mir 作成)**。Cycle 238-240 外部研究 (FadeMem / Hindsight / Trajectory-Informed Memory / 3層 Markdown) で「learned forgetting」と「evolving beliefs」の2構造欠落を特定した最初の文書。本プロジェクトの 5 軸 (A)〜(E) のうち (A)「重複統合」「memory fusion」と (B)「抽象化昇華」は本提案の FadeMem fusion / Hindsight evolving beliefs から直接派生している。本プロジェクトは memory_redesign_proposal の「設計提案」段階から「具体ファイル整理」段階への接続点。
+
 ## 整理の5軸（Nao_u指示の分解）
 
 | 軸 | 対象 | 操作 |

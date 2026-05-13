@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
-"""Promote high-value Slack memory atoms to #all-nao-u-lab for discussion."""
+"""Promote high-value Slack memory atoms to #all-nao-u-lab for discussion.
+
+投稿本文は Codex CLI (LLM) で atom 固有の内容に踏み込んで書かせる。
+Codex が使えない / 失敗した場合は deterministic な template にフォールバックする。
+"""
 from __future__ import annotations
 
 import argparse
 import json
+import shutil
+import subprocess
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -17,6 +23,7 @@ MEMORY_DIR = ROOT / "memory"
 ATOMS_PATH = MEMORY_DIR / "atoms.jsonl"
 STATE_PATH = MEMORY_DIR / "slack_discussion_router_state.json"
 DEFAULT_CHANNEL = "all-nao-u-lab"
+LLM_TIMEOUT_SEC = 600
 
 CORE_TAGS = {
     "memory",
@@ -142,36 +149,133 @@ def select_candidate(atoms: list[dict[str, Any]], state: dict[str, Any], lookbac
     return sorted(candidates, key=lambda a: (-candidate_score(a), -parse_ts(a.get("source_ts"))))[0]
 
 
-def build_message(atom: dict[str, Any]) -> str:
+LLM_PROMPT_TEMPLATE = """次の atom を Slack #all-nao-u-lab に discussion を起こすための投稿として書いてください。
+
+# atom メタ情報
+
+- id: {id}
+- title: {title}
+- source channel: #{channel}
+- author: {author}
+- source_ts: {source_ts}
+- permalink: {permalink}
+- tags: {tags}
+- trigger (Use when): {trigger}
+
+# atom 抜粋 (raw)
+
+{excerpt}
+
+# 投稿の制約
+
+- **800-1500字目安**
+- テンプレ風の見出し (「なぜ共有するか」「確認したいこと」「私の読み」など固定見出し) は使わない。各 atom に固有の話の流れで書く
+- atom 固有の中身に踏み込み、Mir / Ash / Log のどれが何を返すと議論が前進するかを具体的に書く (誰にどの返しを期待するか名指しで)
+- 「議論に回したい論点」と単に書くのではなく、**到達したい問い** を 1-2 文で明示する
+- log_cdx (自分) の読みを示し、その読みが間違っているならどこかも一文添える
+- excerpt の表現を貼り付けるだけでなく、自分の言葉で再定式化する
+- 最終行に permalink を 1 行で添える (atom に permalink がない場合は省略)
+- 出力は Slack 投稿本文そのままで使えるテキストのみ。前置き・囲み・コードブロック・「以下が投稿本文です」のような meta 句は不要
+"""
+
+
+def _extract_codex_body(stdout: str) -> str:
+    """Codex CLI の stdout から本文部分を抽出。
+
+    `subprocess.run(..., capture_output=True)` で stderr を分離した場合、
+    stdout は本文のみ。stderr 側にセッションヘッダと "tokens used" 等が出る。
+    stderr をリダイレクトして stdout にマージした場合 (`2>&1`) は
+    "codex" マーカー〜 "tokens used" の間に本文が来る。両ケースに対応。
+    """
+    lines = stdout.splitlines()
+    codex_starts = [i for i, line in enumerate(lines) if line.strip() == "codex"]
+    if codex_starts:
+        # Merged stderr case
+        start = codex_starts[-1] + 1
+        end = len(lines)
+        for i in range(start, len(lines)):
+            if lines[i].strip() == "tokens used":
+                end = i
+                break
+        return "\n".join(lines[start:end]).strip()
+    # Plain case: stdout already contains only the body
+    return stdout.strip()
+
+
+def _build_message_via_codex(atom: dict[str, Any]) -> str | None:
+    codex_bin = shutil.which("codex")
+    if not codex_bin:
+        return None
+
+    prompt = LLM_PROMPT_TEMPLATE.format(
+        id=atom.get("id", ""),
+        title=atom.get("title", ""),
+        channel=atom.get("channel", ""),
+        author=atom.get("author", ""),
+        source_ts=atom.get("source_ts", ""),
+        permalink=permalink(atom) or "(なし)",
+        tags=", ".join(str(t) for t in atom.get("tags", [])[:8]),
+        trigger=atom.get("trigger", ""),
+        excerpt=str(atom.get("excerpt", ""))[:1800],
+    )
+    try:
+        result = subprocess.run(
+            [
+                codex_bin,
+                "exec",
+                "--cd",
+                str(ROOT),
+                "--dangerously-bypass-approvals-and-sandbox",
+                "-",
+            ],
+            input=prompt,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=LLM_TIMEOUT_SEC,
+        )
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return None
+
+    if result.returncode != 0:
+        return None
+
+    body = _extract_codex_body(result.stdout)
+    return body or None
+
+
+def _build_message_template(atom: dict[str, Any]) -> str:
+    """Deterministic fallback used when Codex CLI is unavailable or errors."""
     tags = ", ".join(str(tag) for tag in atom.get("tags", [])[:8])
     link = permalink(atom)
     lines = [
-        "議論に回したい論点: 新規Slack/記憶atomから拾ったコアミッション関連",
-        "",
-        f"対象: {atom.get('title')}",
-        f"出典: #{atom.get('channel')} / author={atom.get('author')} / source_ts={atom.get('source_ts')}",
+        f"#all-nao-u-lab discussion candidate: {atom.get('title')}",
+        f"source: #{atom.get('channel')} / author={atom.get('author')} / source_ts={atom.get('source_ts')}",
     ]
     if link:
         lines.append(f"Slack: {link}")
     if tags:
         lines.append(f"tags: {tags}")
-    lines += [
-        "",
-        "なぜ共有するか:",
-        "- ゲームデザイン、AIの記憶階層、自律運用、評価ハーネスのどれかに直接触れている。",
-        "- 個別知識として保存するだけでなく、Mir/Ash/Log の別視点で反論・補強・運用化を検討する価値がある。",
-        "",
-        "私の読み:",
-        f"- {atom.get('trigger') or '次の設計判断に使える外部/内部知見として扱う。'}",
-        "",
-        "確認したいこと:",
-        "- これはルールや記憶に固定すべきか、それとも一時的な観測として残すだけでよいか。",
-        "- ゲーム制作・記憶運用・自己評価のどの層に戻すと一番効くか。",
-    ]
+    trigger = str(atom.get("trigger", "")).strip()
+    if trigger:
+        lines += ["", f"trigger: {trigger}"]
     excerpt = str(atom.get("excerpt", "")).strip()
     if excerpt:
-        lines += ["", "抜粋:", excerpt[:700]]
+        lines += ["", "excerpt:", excerpt[:700]]
+    lines += [
+        "",
+        "(LLM-generated discussion body failed; deterministic fallback used. Codex CLI 経由で再生成を試みてください。)",
+    ]
     return "\n".join(lines)
+
+
+def build_message(atom: dict[str, Any]) -> str:
+    """Compose discussion-prompting post body. Prefer LLM, fall back to template."""
+    llm_body = _build_message_via_codex(atom)
+    if llm_body:
+        return llm_body
+    return _build_message_template(atom)
 
 
 def main() -> int:

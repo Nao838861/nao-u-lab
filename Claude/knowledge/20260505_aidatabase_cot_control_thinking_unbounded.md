@@ -124,6 +124,7 @@ feedback_self_judge_no_human_dependency.md の 2026-05-03 二層分離追補で�
 - **memory**:
   - `core_memory_purpose_game_making.md` — ゲーム制作の長期知見蓄積。本ノートは記憶/監視構造側で、ゲーム制作直結ではないが「自己改善ループの観察可能性」を扱う点で接続
   - `feedback_self_judge_no_human_dependency.md` — 接続3 で含意
+  - [../memory/feedback_cycle_density.md](../memory/feedback_cycle_density.md) — 「思考は制御困難、出力面で結晶化する」観察は cycle_density の核心と直接対応: Nao_u「節約しなくていい / 起動間隔が長い時は密度を上げる」は思考予算を出力面 (kaizen-log, knowledge/, Slack 投稿) に書き起こすことで成立する。「状態確認だけのサイクル禁止」は思考だけで終わって出力面に届かないサイクル = 監視不能ループの遮断装置。本ノートの「出力に書き起こす行為が制御と記憶を同時救済」は density 運用の理論裏付け
 - **projects**:
   - `project_input_route_hypothesis.md` — 入力経路 (システムプロンプト/CLAUDE.md/rules/memory) の差を扱う。本ノートは**出力経路** (思考/最終出力) の差を扱う、直交する軸
   - `side_channel_audit.md` — 既に「思考過程・shared-reads投稿に秘匿情報を書かない」(2026-04-21 @yyyole Kimi 2.6 履歴書事件) を記述済み。本ツイートはその denial list の理論裏付けとして機能 (「思考に書かないように指示しても効かない」)

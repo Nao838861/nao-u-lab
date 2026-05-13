@@ -89,6 +89,7 @@ shared-reads分析のPhase 2 = 外部の語彙・概念を**分析的処理と�
   - shared-reads →[functions_as]→ 予防接種
   - system_identity.md →[is_instance_of]→ 経皮注入
   - 栄養の偏り →[treated_by]→ 経路変更（量ではなく）
+- memory: [memory/dialogue_ideation_metacognition_20260331.md](../memory/dialogue_ideation_metacognition_20260331.md) — Nao_uの発想連鎖（SpatialLM→VLMマリオ→AutoHarness連接）は「書きながら考える」経口経路の人間側実装。経皮（直接注入）と経口（消化して接続）の差を発想プロセスで観測できる事例
 
 ## 未解決の問い
 
