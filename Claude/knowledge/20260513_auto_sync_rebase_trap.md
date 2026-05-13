@@ -142,3 +142,44 @@ commit message の prefix (`ash:` / `backup:` / `Auto sync`) は人間が読む�
 # 一行で
 
 **装置は止まる時に止まらないと、意図を 17 時間水没させる**——backup スクリプトが rebase 中という非常事態に気付かず通常運転を続けた結果、object はあるが reachable history からは外れた状態で意図 commit 2 件が浮遊していた。装置の「止まる側の設計」が欠落していたことの代償。
+
+---
+
+# 追補 (2026-05-14) — 構造的教訓 A の正面実装と self-test
+
+## 実装内容
+
+`scripts/backup_memory.sh` / `git_sync.py` / `auto_git_sync.bat` の冒頭に rebase 進行中検出ガードを挿入 (commit 168a0ee3a, C184)。ガードは以下の構造:
+
+```text
+GIT_DIR_REAL = git rev-parse --git-dir   # 本リポは .git が REPO の親にあるため実体解決必須
+if GIT_DIR_REAL/rebase-merge OR GIT_DIR_REAL/rebase-apply exists:
+    print "SKIP: rebase in progress"
+    exit 0
+```
+
+検出方式の要点:
+- `--git-dir` を `git rev-parse` で動的に問い合わせる。スクリプト自身が計算する REPO_ROOT (Claude/) ではなく実体パス (C:/AI/nao-u-lab/.git) で検査する
+- `rebase-merge` (interactive rebase / merge-base rebase) と `rebase-apply` (am ベース rebase) の両方を検査
+- `exit 0` で抜けるので、cron / pre-push hook / task scheduler は失敗を再試行しない
+
+## Self-test (`scripts/test_rebase_guard.sh`)
+
+合成 `.git/rebase-merge/` ディレクトリを作って `git_sync.py` / `scripts/backup_memory.sh` を実起動し、`"SKIP: rebase in progress"` が stdout に出ること + HEAD が変化しないこと + exit code 0 を確認する。確認後 trap で必ず合成ディレクトリを削除。
+
+2026-05-14 実行結果: **8 PASS / 0 FAIL**
+- 静的検査 3 件 (各スクリプトに guard 文字列): 全 PASS
+- 合成 rebase-merge 下での機能検査 5 件 (git_sync.py SKIP / exit 0 / HEAD 不変 / backup_memory.sh SKIP / cleanup): 全 PASS
+
+## 物理ガードとヒューマンルールの役割分担
+
+| 層 | 対象 | 効く場面 |
+|---|---|---|
+| 物理ガード (今回実装) | backup_memory.sh / git_sync.py / auto_git_sync.bat | rebase 中の自動 commit 経路を物理的に塞ぐ。17h spam の再発防止 |
+| ヒューマンルール (`feedback_dangling_commit_after_rebase.md`) | 人間の判断 | 新規ディレクトリ追加 commit 直後の push 優先、`git log --oneline -- <path>` での実在性確認 |
+
+物理ガードは「自動装置の暴走」を、ヒューマンルールは「人間の自己診断の盲点」をそれぞれ別レイヤーで塞ぐ。両者は重複せず補完関係にある。
+
+## 残課題
+
+構造的教訓 B (log file の `merge=union` 戦略) / C (commit metadata で intent/auto を分離) / D (detached HEAD ガード) は未実装。本サイクルは A のみ。B が次に最も再発防止効果が高い (rebase が log file conflict で stuck することが事故の発火点だったため)。
