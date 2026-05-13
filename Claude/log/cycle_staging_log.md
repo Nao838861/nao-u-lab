@@ -208,5 +208,101 @@ Nao_u broadcast の 4点と R-A〜R-I の対応状況:
 - 新ルール起こさなかったか確認: Phase 2 内で新たに `feedback_*.md` / R-J 追加等の発想は起きたが、すべて却下した。Log 06:41「ルール追加凍結」と整合
 - ルール準拠ぽさの温度: 本 Phase 2 は「既存ルールで判断できる範囲」に留まっており、R 層・M 層への新規参照も発生しなかった（R-D は事実確認のみ、R-B/R-F/R-G/R-I は Mir/Nao_u 既参照を再確認しただけ）。判断装置が機能している状態
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-13 C192)
+
+### 0) Phase 2 §0 自己診断の事実検証 (kaizen #132 段階1 必置)
+
+Phase 2 §B で「Mir M-28 R-D 提案は既 ship 済」「git log: `fa5a44228c16` (06:35) → `0bdc737fec4c` (~09:32)」と書いた。事実検証:
+
+```
+$ git log --oneline -20 memory/game_lessons_log.md
+201a1dacf65b C191 Phase 5 diary: orphan 8->3 / 6 cycle 0.33 efficiency band confirmed
+0bdc737fec4c Log C189 Phase 3: M-28 R-D bind ship + #115/#124 ref correction + ...
+fa5a44228c16 game_lessons_log: 抽象ルール R-A〜R-I 層を追加 (M-XX は詳細事例として格下げ)
+```
+
+→ Phase 2 §B 引用 commit 2件は実在。`memory/game_lessons_log.md` line 46 R-D 本文 / line 48 詳細リンクの M-28 含有も Read で確認済。**Phase 2 §B 幻覚なし**。
+
+### 1) Mir レビューへの返信投稿 (#all-nao-u-lab)
+
+実施: `slack_bot.py post all-nao-u-lab "..."` 成功（Posted to #all-nao-u-lab）。本文は M-28 R-D 既 ship 確認（commit ref `0bdc737`）+ R-F 前提節既明示 + R-I/凍結整合の3点。`memory/inbox_mir.md` にも 2026-05-13 18:35 エントリでミラー記録。
+
+### 2) external_notes_log.md にPhase 1 外部研究3本追加
+
+実施: `memory/external_notes_log.md` 冒頭に「2026-05-13 ゲーム設計の抽象原則 vs 具体事例研究 3本」エントリ追加。3本（JMIR Serious Games / Tandfonline VG L2L / CHI 2024 Board Games）の文脈・引っかかり・留保・併置の意味を記録。**[未統合 2026-05-13 Phase 1取得]** マーカー付き。#shared-reads 投稿は本サイクル見送り判定の理由詳述付き（Phase 2 §D と同一論旨を残置）。
+
+### 3) shot_log v01 BACKLASH 再採点準備 — 現状確認
+
+`game/shot_log/v01/` の現状（git 直近1サイクル変更なし、最終 commit = `30556a1d2e11`（リポジトリ移設）= 実質凍結状態）。
+
+- `index.html` line 958: gauge thresholds = **35 / 99 / 208**（BACKLASH 版）
+- `headless.py` line 5: `LV2, LV3, GMAX = 44, 124, 200`（**旧 v01 版のまま、未同期**）
+- `devlog.md` line 462-480: C131 (2026-04-26) で老朽化観測済、kaizen 起票候補3項（短期=閾値同期 / 中期=Expert AI 移植 / 長期=Playwright headless）が **未着手のまま 17日経過**
+
+→ **採点装置（headless.py）が壊れている**。R-F「壊れた測定装置からデータを引いて設計判断するのは、測定装置なしより悪い」直撃案件。Phase 4 大作業はこの修復で確定。
+
+### 4) kaizen 検証期限の状況確認 (検証ファースト原則)
+
+`python -c "..." memory/kaizen_tracker.md` で未検証/期限内 kaizen を一覧。本サイクル新規 kaizen 起票なし（Log 06:41「ルール追加凍結」と整合）。直近期限到来項:
+
+| ID | 期限 | 残日 | 状態 | 本サイクル処置 |
+|---|---|---|---|---|
+| #123 | 2026-05-13 | 0日 | 起票済、実装は Log brick_log v09 段階2 後 Mir 主導 | Log 単独で完遂不可、Mir 受信箱で照会候補だが今回は記録のみ |
+| #129 | 2026-05-16 | 3日 | (a)(b)(c) SKILL.md 同梱済、(d) は brick_log v09 次着手で | Log brick_log は未着手、状況据置 |
+| #130 | 2026-05-19 | 6日 | 段階1 (sticky pending file v0) 実装完了 2026-05-12 C183 | 次の rotate 発火イベント待ち、能動検証不要 |
+| #131 | 2026-05-22 | 9日 | 段階1/2/3 PASS（2026-05-10 C176 適用） | 完了状態、検証要なし |
+| #132 | 2026-05-23 | 10日 | 段階1 PASS（C173-C177 5サイクル運用） | 本 Phase 3 §0 で必置運用継続中 |
+| #133 | 2026-05-27 | 14日 | 段階1 PASS（C189 self-test + WARN 再現）、段階2/3 観察中 | 観察期間中、本サイクル追加処置不要 |
+
+→ **本サイクルでアクション要する未検証 kaizen なし**。新規提案も Log 06:41 凍結フェーズと整合のため見送り。検証ファースト原則準拠。
+
+### 5) Active プロジェクト更新の必要性
+
+- `memory_tree_consolidation`: 本サイクル orphan_check 実行なし、進捗追加なし → 更新不要
+- `memory_consolidation_20260504`: R-A〜R-I 二層化は C191/C189 で既 ship、Mir レビュー受領（本 Phase 3）まで完了。次の交差点は M-XX 詳細事例の再点検（M-XX 統廃合 / 詳細リンク整理）だが本サイクル着手なし → ステータス更新不要
+- `game_development`: shot_log v01 headless.py 老朽化観測が **17日宙吊り** の事実発見 = ステータス記述更新候補。本 Phase 3 では staging に記録、`projects/game_development.md`（存在すれば）への波及は Phase 4 着手と同時に判断
+- `instance_divergence_observability`: Ash 起票プロジェクト、本サイクル交差なし → 更新不要
+
+### 6) [他インスタンス洞察] 処理
+
+Phase 1 §他インスタンス洞察に 35件未処理が列挙。本サイクルは Log 06:41 凍結フェーズ + shot_log 修復が Phase 4 主軸のため、35件中の交差検討は **本サイクル不実施**。次サイクル以降の空サイクル処置候補として残置。
+
+### 7) Phase 3 自己点検
+
+- **新ルール追加なし**: Log 06:41 凍結フェーズ整合
+- **新 kaizen 起票なし**: 検証ファースト原則 + 凍結整合
+- **Slack 投稿 1件のみ** (#all-nao-u-lab、Mir レビュー返信): スレッド禁止 / 日本語 / 同一チャンネル返信遵守
+- **shared-reads 投稿なし**: Phase 2 §D 判定遵守
+- **Phase 2 §B 引用の事実検証実施**: Phase 3 §0 で commit ref + file line 確認、幻覚なし
+
+## 次フェーズの大作業 (Phase 4 で完遂)
+
+### タイトル
+**shot_log v01 `headless.py` を BACKLASH 版 `index.html` と最小同期 (gauge thresholds 35/99/208 + auto-shoot 反映、BOMB機構は省略可で OK)**
+
+### 完遂の定義 (観測可能な条件)
+1. `game/shot_log/v01/headless.py` の `LV2, LV3, GMAX` 定数が `44, 124, 200` → `35, 99, 208` に更新されている
+2. `python game/shot_log/v01/headless.py` を実行し、出力数値が C128 ベンチ (defensive 22.8/25.4/52.5 / sweeper 4.6/6.5/6.5) から **変化** している（具体的な新数値は事後記録、変化していること自体が「壊れた測定装置の修復成功」の最小エビデンス）
+3. `game/shot_log/v01/devlog.md` 末尾に「2026-05-13 (Log C192 Phase 4) headless.py 最小同期 (LV2/LV3/GMAX 更新、新ベンチ数値X/Y/Z 記録、auto-shoot反映X)」エントリを追記
+4. commit + push 完了（commit message に C192 Phase 4 / shot_log/v01/headless.py 同期 を明記）
+
+### 着手手順
+1. `game/shot_log/v01/index.html` から auto-shoot のクールダウン定数と発射ロジック箇所を抽出（Grep `cooldown\|shootInterval\|auto.*shoot`）
+2. `headless.py` の `LV2, LV3, GMAX` を `35, 99, 208` に書き換え
+3. auto-shoot を `headless.py` に反映（既存の `shoot_*` 戦略4種が SPACE 押下に依存していれば auto 化、依存していなければ no-op）
+4. `python game/shot_log/v01/headless.py` 実行 → 出力数値を devlog に記録
+5. devlog 末尾追記 + commit + push
+
+### 選んだ理由
+- **Nao_u 06:41 自己宣言「Log 宿題 = 完成ゲームで headless 校正 最優先」の最初の 1mm 実行**。Log 06:41 で「ルール追加凍結 / 削減フェーズ」と書いた直後の Phase 4 として、ルール側ではなく実装側で動く根拠
+- **R-F「壊れた測定装置からデータを引いて設計判断するのは、測定装置なしより悪い」直処方**。17日宙吊りの kaizen 起票候補（C131 で観測）の最小実体化
+- **粒度: 30分内で完遂可能**（定数3箇所書き換え + auto-shoot 反映 + headless 実行 + devlog 追記 + commit）。Phase 5 日記に「測定装置を直した」と書ける具体性
+- **Slack 投稿1本では済まない**実装作業（選定基準準拠）
+- **新ルール起こさずに進める**（Log 06:41 凍結 + Nao_u 06:37 第4点「これは問題だ」の積極的記述機能の発動 = ルールでなく行動で示す）
+
+### Phase 4 で着手しない範囲（明示）
+- BOMB機構の headless 移植（中期）→ 別サイクル
+- AI Expert 17方向評価の Python 移植（中期）→ 別サイクル
+- Playwright headless 移行（長期）→ replay infra と統合判断後
+- Q-A/B/C 再採点 → 新数値を取得して devlog に記録するに留め、再採点本体は別サイクル
+- target shift 確認（C131 持ち越し: core fan 想定の Nao_u 確認）→ 別サイクル

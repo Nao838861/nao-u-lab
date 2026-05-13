@@ -4,6 +4,40 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-13 ゲーム設計の抽象原則 vs 具体事例研究 3本（kaizen #106 摂取経路固定化 → R-A〜R-I 二層化の外部裏付け候補） [未統合 2026-05-13 Phase 1取得 — #shared-reads 投稿は本サイクル見送り（Phase 2 §D 判断: Nao_u 06:37「ルールが多すぎ？」直後に外部研究で R 層化を validate する型は tone-deaf、5/13 中に Memora/Survey/Karpathy 3本既投稿で新規性低、暗黙 target が「ゲーム設計教育・研究」で我々のゲーム制作 target と半ズレ）]
+
+**文脈**: Log C192（2026-05-13）Phase 1 §6 で kaizen #106 摂取経路固定化（クエリ: `game design abstract principles vs concrete case studies lessons learned 2026`、Active = `game_development` + `memory_consolidation_20260504`、トリガー = Nao_u 06:29 #human-steering「game_lessons_log 個別具体すぎる → 抽象ルール+事例層構造に検討せよ」指示）。検索エンジン分類: Google（Web 一般、Active project と直結する研究系記事を狙う）。時間予算 10分以内で約3分完了。
+
+**(1) JMIR Serious Games (2025) "Identifying Key Principles and Commonalities in Digital Serious Game Design Frameworks: Scoping Review"**
+多数のゲーム設計フレームワークを抽象化した **4設計フェーズ (exploration / design / development / assessment)** に蒸留。多種多様な個別 framework から共通骨格を抽出するアプローチ。
+**引っかかり**: R-A〜R-I (9個) は M-XX 個別事例から抽出した抽象層で、4フェーズ蒸留と同方向（**個別事例の上に薄い抽象層を載せる構造**）。**外部裏付け候補**として位置付け可能だが、4フェーズは「設計プロセス時間軸」の蒸留で、R 層は「失敗類型」の蒸留 = 軸が違う（target ズレ）。
+**留保**: 暗黙 target = serious game design 教育研究、我々の target = 自分達のゲーム制作。半ズレで shared-reads 投稿には新規性が薄い。R 層運用を実地で観測した後、再評価可能な種として残す。
+
+**(2) Tandfonline (2022) "Video Game Design for Learning to Learn"**
+理論と実践の結合が中核、design pattern を **「自分で実装する」と「理論で学ぶ」の対比で実装側に価値**、抽象は具体を駆動するときに機能する。
+**引っかかり**: Log 06:41「ルール追加凍結 / 完成ゲーム headless 校正最優先」と同方向の主張 — 抽象（R 層）が具体（M-XX / 実装作業）を駆動するときに機能する、駆動先のない抽象は形骸化する。**R-A〜R-I 9個を持っている現状で「R 層が次の実装を駆動するか」を運用観察する軸を示唆**。
+**留保**: shared-reads 投稿には新規性低（Memora arxiv / Survey / Karpathy で既に同方向は投稿済）。
+
+**(3) CHI 2024 "Board Games as a Research Method"**
+抽象原則 (target group / simplicity / storytelling / gaming-the-game リスク) + 具体事例の併置パターン。**抽象原則と具体事例を1ドキュメント内で併置する構造提案**。
+**引っかかり**: `memory/game_lessons_log.md` の現状（R-A〜R-I 抽象層 + M-XX 詳細層 + R-X 詳細リンクで M-XX を辿る構造）と完全同型。**Nao_u 06:29 指示の構造ゴール（一段抽象化したルールから個別事例を辿る）の独立な外部実装サンプル**。R-G「gaming-the-game リスク」相当が CHI 2024 にもある = 抽象原則のレパートリが重なる。
+**留保**: target = board game research method、我々の target = digital game development。蓋然性ある外部裏付けだが直接投影は早計。
+
+**3本併置の意味**:
+| 論文 | 中核機構 | Log R層との関係 |
+|---|---|---|
+| JMIR Serious Games | 4設計フェーズ蒸留 | 軸違い（プロセス時間軸 vs 失敗類型）、同方向だが target 半ズレ |
+| Tandfonline VG L2L | 抽象は具体を駆動するときに機能 | R 層運用観察軸の示唆（Log 06:41 と同方向） |
+| CHI 2024 Board Games | 抽象原則 + 具体事例併置 | game_lessons_log R+M 二層構造の独立外部実装 |
+
+**Phase 2/3 で #shared-reads 投稿は見送り**（Phase 2 §D で判定理由詳述）。R 層運用を実地で観測した後、再評価可能な種として残す。本エントリは knowledge 化保留（R-007 造語症対策）。
+
+**自己注意（self-audit）**: 3本とも Phase 1 §6 で1行要約+リンクのみ取得、本文中身は精読していない（M-43 引用本文義務 = kaizen #129 (a) の検証材料として残置）。「外部裏付け候補」と書いた瞬間に R-G「外部記事の暗黙 target を1行明文化」を引いて target 半ズレ判定までは Phase 1 で実施済。
+
+**関連ファイル**: `memory/game_lessons_log.md`（R-A〜R-I + M-XX 二層構造の本体）、`projects/memory_consolidation_20260504.md`（記憶階層降下の Active project）、`memory/feedback_few_rules_big_effect.md`（ルール量↑＝遵守率↓と緊張する外部裏付け）。
+
+---
+
 ## 2026-05-11 Obsidian knowledge graph orphan detection 3リポジトリ（kaizen #106 自発検索 → projects/memory_tree_consolidation.md v0 接続） [統合済 2026-05-11 Log C178 Phase 2 — #shared-reads に3件別メッセージで投稿（Burchfield ts=1778469636.207909, Azuma520 ts=1778469651.560039 [chat.update で backtick 事故修復済], Obra ts=1778469717.443599）。Phase 1 §6 で取得した3リポジトリを、memory_tree_consolidation.md v0 の orphan_check.py 試作（Mir 5/11 05:42 提案）への直接インプットとして消化。判定式 `in_links==0 AND out_links==0` 確定、出力に per-folder 集計を含める、修正日順 + 孤児継続日数の2軸出力、までを v0 スコープに固定。Louvain/媒介中心性/PageRank は v0.5 → v1 路線図に残置（v0 スコープ拡張を回避）]
 
 **文脈**: Log C178（2026-05-11）Phase 1 §6 で kaizen #106 自発検索（クエリ: `obsidian knowledge graph orphan node detection script automated`、Active = projects/memory_tree_consolidation.md、トリガー = Mir 5/11 05:42 #human-steering 提案「孤児検出スクリプト」）。Phase 2 で3リポジトリの中核機構を独立した層に分解し、v0 スコープ内で採用する分と v0.5/v1 に残置する分を切り分けた。
