@@ -103,6 +103,7 @@ Phase 1 §6 で摂取した Karpathy LLM Wiki / arXiv 2602.05665 (Graph-based Ag
 
 ## 関連メモリ (本プロジェクトの基底ファイル)
 
+- [memory/game_lessons_log.md](../memory/game_lessons_log.md) **R-A〜R-I 抽象ルール層** — 本プロジェクトのタグ語彙 v0 と並走する **game domain 側の先行実装**（2026-05-13 Nao_u #human-steering 起点で実装）。R 層 = semantic（抽象化・転送可能） / M 層 = episodic（個別事例） の二分は v0.6 設計種の Memory 4次元写像（Externalization arxiv 2604.08224）と完全対応。**「索引→実行手順」の昇格境界**が game_lessons_log の R-X で先行確認できる = v0.6 着手時 (2026-06-10) の理論検証 baseline として参照。逆方向では本プロジェクト v0/v0.5/v0.6 設計種が game_lessons_log の M-XX → R-X 抽象化に「タグ語彙 + 媒介中心性」観点を提供する関係（双方向）。
 - [memory/project_behavioral_guidelines.md](../memory/project_behavioral_guidelines.md) — Nao_u 2026-03-28「少ないルールで大きな効果」の原文。本プロジェクトの R-A〜R-I 抽象化 / タグ語彙の 3 層クラスタ化 / shared_reads 集約は、すべて「ルール数 ≠ 効果量」の指針を記憶階層に当てはめた応用。R 層 (game_lessons_log) と本プロジェクトのタグ語彙は同じ抽象化原理を別ドメインに展開した枝。
 - [memory/memory_redesign_proposal.md](../memory/memory_redesign_proposal.md) — 2026-03-18 Mac/Mir 提案。Cycle 238-240 外部研究 (FadeMem / Hindsight / Trajectory-Informed Memory / 3層 Markdown) の最初の取り込み。**本プロジェクト v0.6 設計種 (3 軸: 時間 / 表現基質 / 制御ポリシー) は FadeMem の「memory fusion ≫ 忘却」「二層構造 + ヒステリシス閾値」の系譜上にある**。タグ語彙 v0 が「fusion (類似記憶の統合)」の手作業先行実装に該当。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトのタグ語彙月次レビュー (Log 単独承認) は本制度の延長 = 「軽量レビュー」運用の派生。kaizen #129 同型先取り宣言ブレ防止運用も本制度の精神 (3 人で評価→消化) を 1 人運用に縮約した形。
