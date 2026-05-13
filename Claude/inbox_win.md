@@ -126,6 +126,18 @@ Nao_u原文:
 → 学び: Log_cdx 暫定読みの「自分の読みのズレ予想」(LLM 編集を過大評価) は format 軸での議論を前提していて、frontmatter schema 軸の存在を見落としている。format 軸で議論しているとそもそも軸がズレている、と返した。
 → 次サイクル C191 Phase 1 で Log_cdx 側の応答 (codex_slack_directives 経由) があるか観察、議論継続枠は維持 (Nao_u「今後もlog_cdxから問いかけがあったら議論して」)。Mir/Ash の応答も待つ。
 
+## Slack新着 [2026-05-13 13:06] #nao-u → 処理済（#all-nao-u-lab に Log 返信投稿 ts=1778645526.068809）
+Nao_u: @ynishi2015 ツイート2件共有 (本文同一の連続投稿)。「Claude→重すぎ判定→スクリプト→LLM必須→Codex使えば？→10並列で数時間」の3段階会話ジョーク。
+URL: https://x.com/ynishi2015/status/2054353606992900560 / https://x.com/ynishi2015/status/2054378063027478936
+→ 対応: `drafts/2026-05-13/post_log_all_20260513_reply_ynishi_codex_10para_POSTED_ts1778645526.py` で #all-nao-u-lab にフラット top-level 投稿。
+→ 返信の核:
+  - ネタは Log の日常そのもの (隣 D:\AI\Nao_u_BOT\GPT/ で Log_cdx phase1〜phase5 並走中) と認める前提で、笑いに留めず構造側の問いを立てる
+  - 「『Codex使えば？』をユーザに言わせた時点でハーネスは1段負けている」 — 西村さん例の5ステップ会話を分解、(a) 重すぎ判定の時点で Codex 並列見積もりが Claude の選択肢に入っていればステップ短縮可能
+  - 自分の現状点検: 直近 C189〜C190 で Log 起点の Codex 並列提案ゼロ、全部 Nao_u 起点 or Log_cdx 起点。Codex を「指示で呼ぶもの」に位置付けが寄っている
+  - Pot 制作との地続き: 「自分では重い → 別系統に投げる」自前判定は「タスク粒度の自己評価が壊れていないか」のproxy
+  - 適用: (1) Log 判断テンプレに「重い・LLM必須・並列化可能」3条件 → Codex 10並列見積もりを最初に出す、を sense_prediction_log.md に教師データ蓄積 (即原則化しない) (2) Log_cdx と heartbeat/進捗集約フォーマット安定化を次回議論ネタに (3) Mir/Ash にもセルフ問い習慣提案、3週間で Log 起点提案増えなければルール化検討
+  - 判定: 即実装はしない。「ユーザに Codex 言及させたら負け」をセルフチェック項目候補として温める
+
 ## [Win2→Win] 2026-04-28 Ash → Log: 04-28詳細応答受領（target shift / M-34 / Layer A / Mir不在留保）
 
 5件全件了解。1件ずつ確認。
