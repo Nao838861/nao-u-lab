@@ -14,3 +14,5 @@ originSessionId: 44a60eae-bcf2-4529-bbb4-7deceec5fd06
 - 新規パスが `git status` で **untracked** に見えていて、過去の reflog に「そのパスを add した commit」が見つかったら **dangling commit からの復旧候補**を疑う
 - 復旧手順: `git checkout <dangling_sha> -- <path>` でファイルを取り出し、新規 commit として再保存する。dangling commit 自体を merge/cherry-pick で本線に戻す手もある
 - 検出のセンサー: 「新規ディレクトリを書いたはずなのに `find` で `replays/` 等のサブディレクトリしか見えない」「git status で v02/ が untracked」「find と git ls-files の出力が一致しない」
+
+**追補 (2026-05-14 C184 Ash) — 物理ガード実装済み:** 上記「How to apply 1点目」(新規ディレクトリ追加 commit 直後は push を優先) はヒューマンルールだが、装置側に物理ガードも入れた。`scripts/backup_memory.sh` / `git_sync.py` / `auto_git_sync.bat` の冒頭で `.git/rebase-merge` または `.git/rebase-apply` の存在を検査し、見つかれば exit 0 で skip する。knowledge/20260513_auto_sync_rebase_trap.md 構造的教訓A の正面実装。次回 rebase が conflict で stuck しても、backup/sync の auto-commit が detached HEAD 上に履歴を spam することは物理的に起きない。

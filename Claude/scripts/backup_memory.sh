@@ -14,6 +14,15 @@ set -u
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 BACKUP_BASE="${REPO_ROOT}/memory_backup"
 
+# Rebase 検出ガード — rebase 中は backup/commit を spam すると detached HEAD 上に履歴が
+# 分岐し、意図 commit が reachable history から脱落する (knowledge/20260513_auto_sync_rebase_trap.md)
+# 本リポは .git が REPO_ROOT の親 (C:/AI/nao-u-lab/.git) にあるため、git rev-parse で実体解決する
+GIT_DIR_REAL="$(git -C "$REPO_ROOT" rev-parse --git-dir 2>/dev/null || true)"
+if [[ -n "$GIT_DIR_REAL" ]] && { [[ -d "$GIT_DIR_REAL/rebase-merge" ]] || [[ -d "$GIT_DIR_REAL/rebase-apply" ]]; }; then
+    echo "[backup_memory] SKIP: rebase in progress ($GIT_DIR_REAL)"
+    exit 0
+fi
+
 # --- インスタンス名の検出 ---
 detect_instance() {
     local repo_path="$REPO_ROOT"
