@@ -65,7 +65,28 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/slack_broadcasts.jsonl の先頭 UTF-8 BOM を除去し、JSONL として全行 parse 可能にした。"
+  - "memory/MEMORY.md の index 行にあるローカル参照を確認し、broken link は 0 件だった。"
+  - "memory/raw/ と memory/shared_reads_candidates/ に 30 日以上未更新の対象はなかった。"
+issues:
+  - id: ISS-001
+    description: "atoms.jsonl に正規化本文が同一の atom 群が 38 組残っている。id/source_ts の重複はないが、再投稿・補正版や同一内容の複数投稿が raw atom として並存している。"
+    severity: medium
+    evidence: "memory/atoms.jsonl: sr-1778535120-82ea7a1005 と sr-1778535738-ed839f9805 など。検査結果: duplicate normalized contents count=38, duplicate ids=0, duplicate source_ts/channel=0。"
+    why_blocks_game_memory: "検索時に同じ知見が複数 atom として出て、どれが最新版・採用版か判断する負荷が増える。ゲーム制作中に手法や評価軸を引く時、重複がノイズになって次の一手への接続が遅くなる。"
+  - id: ISS-002
+    description: "inbox 系に pending が残っており、記憶システム改善・ゲーム制作フィードバック・broadcast が同じ pending キューに混在している。受領 atom は存在するが、処理完了と判断できないものが多い。"
+    severity: medium
+    evidence: "memory/slack_directives.jsonl: pending 2 件。memory/slack_broadcasts.jsonl: pending 8 件。例: broadcast-1778778369-9d4ef2d700, broadcast-1778787090-64f705c94c。"
+    why_blocks_game_memory: "Nao_u の steering が、次のゲーム制作で読むべき導線・構造問題・単発返信待ちのどれなのか分かれない。結果として重要な指摘が pending に沈み、制作サイクルへ接続されない。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-001
+    - ISS-002
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
