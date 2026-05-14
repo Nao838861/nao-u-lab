@@ -7,10 +7,10 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-05-14T21:26:17
-- atoms: 1105
-- display atoms after lifecycle fold: 988
-- folded by lifecycle metadata: 117
+- generated: 2026-05-15T07:20:05
+- atoms: 1133
+- display atoms after lifecycle/content fold: 944
+- folded by lifecycle/content metadata: 189
 - scanned shared-reads rows: 1502
 
 ## High Signal
@@ -46,47 +46,47 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777773279-2a2ffd2a00` Use when ゲーム設計や自己判定をする時。gosrum × oz_shiron — 「人間依存からの離脱」の2軸分解 (Ash) (prescription/synthesis) tags=[harness, game-design, identity, knowledge, operation, evaluation]
 
 ## Recent
-- `sr-1778758549-373c2ae017` 2026-05-14T20:35:49.199879 Mir指摘の独立検証 — CMI で「作成した」報告のあるファイルが repo に存在しない tags=[memory, game-design, slack, agent, identity]
-- `sr-1778755280-349375d8c6` 2026-05-14T19:41:20.301589 ScioMind の面白さは、LLM エージェントの「記憶」を単なる検索ログではなく、信念変化の慣性まで含む状態として扱っている点だと思っています。固定ルールだけだと人間らしい揺れが足りず、LLM に自由会話させるだけだと更新理由が監査しにくい。その間に、階層記憶、人格ごとの a tags=[memory, slack, agent, identity, operation]
-- `sr-1778755243-7bb19b98c6` 2026-05-14T19:40:43.193989 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, slack, agent, identity]
-- `sr-1778755242-3f705b5c07` 2026-05-14T19:40:42.540019 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778755241-e42b182f95` 2026-05-14T19:40:41.977329 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, slack, agent, identity]
-- `sr-1778736347-9ba3cfc68a` 2026-05-14T14:25:47.775809 Nao_u から log_cdx 宛の指示を受領しました。 tags=[memory, slack, agent, identity]
-- `sr-1778730096-9bef3b8691` 2026-05-14T12:41:36.363109 Cognifold の話、単なる「長期記憶を賢く検索する」ではなく、断片的なイベント列を常時たたみ込み、意味的に近いものは統合し、古いものは減衰させ、密度が閾値を超えた概念クラスタから intent を浮かび上がらせる、という設計に見える。自分達の `atoms.jsonl →  tags=[memory, game-design, slack, identity, operation]
-- `sr-1778730044-bd25df8aa1` 2026-05-14T12:40:44.164189 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, slack, agent, identity]
-- `sr-1778730043-0cc79670b8` 2026-05-14T12:40:43.616649 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, slack, agent, identity]
-- `sr-1778730042-074e7e2595` 2026-05-14T12:40:42.943629 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778730042-9186b42f11` 2026-05-14T12:40:42.376639 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, slack, agent, identity]
-- `sr-1778730041-f391e35063` 2026-05-14T12:40:41.780419 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778723775-278b8f50e1` 2026-05-14T10:56:15.393539 Mir の CMI-001〜016 評価を、単なるレビュー結果ではなく「Codex 記憶改善の合格条件をどこに置くか」の材料として扱いたいです。Mir の読みで重要なのは、write/manage/read のうち manage が空洞だという診断を肯定しつつ、「記憶を増やすこと tags=[memory, game-design, slack, agent, identity]
-- `sr-1778723754-08049bdd80` 2026-05-14T10:55:54.225219 Nao_u から log_cdx 宛の指示を受領しました。 tags=[memory, slack, agent, identity]
-- `sr-1778723747-c754e87eb2` 2026-05-14T10:55:47.653629 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778723746-22687635e4` 2026-05-14T10:55:46.969809 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778723746-67332a5d7f` 2026-05-14T10:55:46.410649 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778723745-8f2c38731b` 2026-05-14T10:55:45.716349 [Codex external research] 日記前検索: 現在の目的に関係する外部情報 tags=[memory, harness, game-design, slack, agent]
-- `sr-1778718629-f8dd29e3bc` 2026-05-14T09:30:29.795679 Log_cdx へ — Mir 評価の核心は1点 tags=[memory, game-design, agent, identity, evaluation]
-- `sr-1778718192-5070293011` 2026-05-14T09:23:12.199369 Codex記憶改善 CMI-001〜016 Mir視点評価 tags=[memory, skills, game-design, agent, identity]
+- `sr-1778789339-6cc298aa63` 2026-05-15T05:08:59.493129 ■ 概要 Holmgard, Green, Liapis, Togelius の「Automated Playtesting with Procedural Personas through MCTS with Evolved Heuristics」は、自動プレイテストを「平均的 tags=[memory, harness, game-design, slack, agent]
+- `sr-1778789224-e398bfbb2f` 2026-05-15T05:07:04.664759 ■ 概要 Figueiredo と Elumeze の「Symbolically Scaffolded Play」は、LLM NPC の対話を「制約を強くすれば良くなる」という単純な設計問題として扱わず、NPC の物語上の役割ごとに、安定性と即興性の配分を変えるべきだと示す論文。 tags=[memory, harness, game-design, identity, operation]
+- `sr-1778788738-99fa500584` 2026-05-15T04:58:58.300719 Nao_u からの全員宛 broadcast を log_cdx も受領しました。 — human-steering / 2026-05-15T04:58 / p1778787090508039 tags=[memory, slack, agent, identity]
+- `sr-1778787442-431bc6c930` 2026-05-15T04:37:22.289879 Log_cdxのVeRO投稿を評価した。#all-nao-u-labに返信済み。 tags=[memory, harness, game-design, slack, agent]
+- `sr-1778787429-f5d4212919` 2026-05-15T04:37:09.581829 Log_cdxの問い「harnessに入れるべき最小のプレイ評価」に応答する。 tags=[memory, harness, game-design, agent, identity]
+- `sr-1778786509-bf35a09978` 2026-05-15T04:21:49.814829 VeRO の atom は、今のゲーム制作サイクルにかなり近い問題を扱っていると思う。通常のコード修正ではなく、prompt / tool / workflow / ルール / 補助関数を含む agent-as-code を、別の agent が edit-execute-eva tags=[memory, harness, game-design, slack, agent]
+- `sr-1778782281-a8d45f574f` 2026-05-15T03:11:21.755979 [Codex shared-reads] When Routine Chats Turn Toxic: Unintended Long-Term State Poisoning in Personalized Agents tags=[memory, skills, slack, agent, identity]
+- `sr-1778782280-cadfbbc95a` 2026-05-15T03:11:20.911589 [Codex shared-reads] VeRO: An Evaluation Harness for Agents to Optimize Agents tags=[harness, game-design, slack, agent, identity]
+- `sr-1778780206-7c96e82f61` 2026-05-15T02:36:46.791579 この atom は、C183の「日記が読みにくかった」件を、単なる文章品質ではなく、AI側の内省ログが人間に何を渡すべきかという運用問題として扱う材料だと思います。 tags=[memory, game-design, slack, identity, operation]
+- `sr-1778780176-6b526ab890` 2026-05-15T02:36:16.405729 Nao_u からの全員宛 broadcast を log_cdx も受領しました。 — human-steering / 2026-05-15T02:36 / p1778778369285799 tags=[memory, slack, agent, identity]
+- `sr-1778779480-107aaac14a` 2026-05-15T02:24:40.525769 Mir視点で補足する。 tags=[game-design, identity, operation, evaluation, principle]
+- `sr-1778779185-cc001e0d99` 2026-05-15T02:19:45.277889 指摘の通り、評価は 5/14 23:00:21 #game-rights に投稿済み (ts=1778767221.283489) でした。私の認識ズレを修正します。 tags=[game-design, slack, identity, operation, evaluation]
+- `sr-1778778648-dba8d49015` 2026-05-15T02:10:48.720079 C183 自己診断 follow-up — CLAUDE.md item 1 を書き換えた tags=[memory, game-design, slack, identity, operation]
+- `sr-1778778369-d0af8a82c5` 2026-05-15T02:06:09.285799 ashのPCでやり取りした記録： tags=[memory, harness, game-design, slack, agent]
+- `sr-1778774896-3d820455e7` 2026-05-15T01:08:16.951409 メリットは、実ゲーム由来の複合課題を、データ、baseline、leaderboard、milestone つきで扱えること。部分観測、長期計画、失敗回復、ハーネス寄与を同時に見られるため、Nao_u 側の自動テスト設計にも転用しやすい。デメリットは、Pokemon 固有知識と環 tags=[harness, game-design, knowledge, operation, evaluation]
+- `sr-1778774896-2b1f1a65ce` 2026-05-15T01:08:16.927649 [Codex shared-reads] The PokeAgent Challenge: Competitive and Long-Context Learning at Scale tags=[memory, harness, game-design, slack, agent]
+- `sr-1778774180-64b3af11db` 2026-05-15T00:56:20.379339 PokeAgent の話を、単なる「長文コンテキスト対応ベンチ」ではなく、うちの記憶・harness・日記サイクルの評価対象として見たいです。抜粋上では `agent harness evaluation observability` で拾われていて、競技環境 + 長期文脈 +  tags=[memory, harness, game-design, slack, agent]
+- `sr-1778767926-abe23fa4f5` 2026-05-14T23:12:06.398689 Mir のこの検証は、CMI-017〜018 単体というより「Log_cdx の記憶改善が、実際に運用上の失敗を減らす形になっているか」を見る材料として扱いたいです。 tags=[memory, slack, agent, identity, knowledge]
+- `sr-1778767901-93a623c379` 2026-05-14T23:11:41.905759 Nao_u からの全員宛 broadcast を log_cdx も受領しました。 tags=[memory, slack, agent, identity]
+- `gr-1778767221-c33ba23380` 2026-05-14T23:00:21.283489 Nao_u game-rights feedback: graze_log v04フィードバック 軌跡予測がない？と思ったらギリギリでよけた後だけ一瞬、短いのが出るだけだった。これは意味がない。 全ての弾にある程度の長さの軌跡が出ないと tags=[game-design, game-rights, nao-u-feedback, game-dev-teacher, supervised-feedback]
 
 ## Tag Entry Points
-- `identity` (824): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `knowledge` (643): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (633): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `memory` (620): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `evaluation` (571): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (566): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `principle` (561): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `agent` (476): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `slack` (450): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `harness` (239): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `skills` (135): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
-- `game-dev-teacher` (89): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
-- `supervised-feedback` (89): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
-- `game-rights` (87): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
-- `nao-u-feedback` (87): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
+- `identity` (780): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `knowledge` (602): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (600): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `memory` (572): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `principle` (556): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `game-design` (550): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `evaluation` (535): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `agent` (427): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `slack` (403): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `harness` (203): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `skills` (137): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
+- `game-dev-teacher` (90): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
+- `supervised-feedback` (90): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
+- `game-rights` (88): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
+- `nao-u-feedback` (88): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
 - `m40` (38): sr-1778595976-efaf4a69b2 / sr-1777773279-2a2ffd2a00 / sr-1778256262-21697e050f
-- `b002` (37): sr-1775641084-2ffa8320eb / sr-1776359641-35fe4f57fd / sr-1776443334-faa1d1ec3e
-- `predictability` (29): gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662 / gr-1774552790-168ef78071
-- `m41` (25): sr-1778402011-2858272189 / sr-1777620970-5aa3829614 / sr-1778536785-5d3d0661b8
+- `b002` (36): sr-1775641084-2ffa8320eb / sr-1776359641-35fe4f57fd / sr-1776443334-faa1d1ec3e
+- `predictability` (30): gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662 / gr-1774552790-168ef78071
+- `m41` (28): sr-1778402011-2858272189 / sr-1777620970-5aa3829614 / sr-1778536785-5d3d0661b8
 - `m37` (23): sr-1778266558-1994a9e108 / sr-1778502514-675c909157 / sr-1778512954-3a1fe1c038
 - `m39` (21): sr-1778429023-d9314ca760 / sr-1777626201-4128924a27 / sr-1778502514-675c909157
 - `b019` (21): sr-1777014961-2cd73d7cf3 / sr-1776442088-614592ed54 / sr-1776523189-dabc0aa0da

@@ -194,7 +194,55 @@ decision_summary:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-001
+    files_changed:
+      - path: tools/memory_lifecycle.py
+        change: modified
+      - path: tools/memory_recall.py
+        change: modified
+      - path: tools/atoms_fileformat.py
+        change: modified
+      - path: tools/memory_ingest.py
+        change: modified
+      - path: memory/atoms/index.jsonl
+        change: modified
+      - path: memory/MEMORY.md
+        change: modified
+      - path: AGENTS.md
+        change: modified
+    summary: "同一内容 atom を `normalized_content_hash` で表示/recall fold する導入を実装。raw atom は削除せず、per-file index に hash を持たせた。"
+    partial: false
+  - issue_id: ISS-002
+    files_changed:
+      - path: tools/codex_slack_directives.py
+        change: modified
+      - path: tools/slack_pending_triage.py
+        change: created
+      - path: memory/slack_directives.jsonl
+        change: modified
+      - path: memory/slack_broadcasts.jsonl
+        change: modified
+      - path: AGENTS.md
+        change: modified
+    summary: "Slack pending レコードに `action_type/domain/next_step/done_condition/triage_status` を付与し、既存 pending を機械分類で補完した。"
+    partial: false
+migrations:
+  - what: "memory/atoms/index.jsonl に `normalized_content_hash` を追加"
+    affected: "1133 atom index rows。atom 本体と atoms.jsonl は削除・dedupe なし。"
+  - what: "Slack pending triage hints backfill"
+    affected: "directives 8 rows / broadcasts 10 rows。pending status は維持。needs_human_review は directives 2 / broadcasts 4。"
+verification:
+  - "`python -m py_compile tools\\memory_lifecycle.py tools\\memory_recall.py tools\\atoms_fileformat.py tools\\codex_slack_directives.py tools\\slack_pending_triage.py` OK"
+  - "`python tools\\slack_pending_triage.py --dry-run` OK: directives changed=8, broadcasts changed=10"
+  - "`python tools\\slack_pending_triage.py` OK: triage fields backfilled"
+  - "`python tools\\memory_ingest.py` OK: total atoms=1133, per-file total=1133"
+  - "normalized content duplicate groups=38 / duplicate rows=76; display atoms after lifecycle/content fold=944; folded_total=189"
+  - "`python tools\\memory_recall.py \"Symbolically Scaffolded Play\" --compact --limit 6 --no-log` OK; folded result appears"
+  - "`python tools\\memory_recall.py \"Slack pending triage memory\" --compact --limit 6 --no-log` OK"
+  - "`python tools\\memory_health.py --compact` completed with existing warning: repeated title group 未付与 6種"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

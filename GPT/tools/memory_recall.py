@@ -116,21 +116,7 @@ def fold_scored(
     scored: list[tuple[float, dict[str, Any]]],
     atoms_by_id: dict[str, dict[str, Any]],
 ) -> list[tuple[float, dict[str, Any]]]:
-    by_group: dict[str, list[tuple[float, dict[str, Any]]]] = {}
-    for score, atom in scored:
-        by_group.setdefault(memory_lifecycle.group_id(atom), []).append((score, atom))
-
-    folded: list[tuple[float, dict[str, Any]]] = []
-    for group_rows in by_group.values():
-        best_score = max(score for score, _atom in group_rows)
-        group_atoms = [atom for _score, atom in group_rows]
-        cid = memory_lifecycle.canonical_id(group_atoms[0])
-        representative = atoms_by_id.get(cid) or memory_lifecycle.preferred_atom(group_atoms)
-        if memory_lifecycle.is_hidden(representative):
-            continue
-        folded.append((best_score, representative))
-    folded.sort(key=lambda item: (-item[0], str(item[1].get("datetime", ""))))
-    return folded
+    return memory_lifecycle.fold_scored(scored, atoms_by_id)
 
 
 def search(query: str, limit: int) -> list[tuple[float, dict[str, Any]]]:

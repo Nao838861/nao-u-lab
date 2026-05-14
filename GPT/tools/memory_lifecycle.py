@@ -6,11 +6,38 @@ active, so tools can adopt dedup metadata incrementally.
 """
 from __future__ import annotations
 
+import hashlib
+import re
 from collections import defaultdict
 from typing import Any, Iterable
 
 
 HIDDEN_STATUSES = {"superseded", "archived"}
+
+
+def normalized_content(atom: dict[str, Any]) -> str:
+    """Return a stable display-dedupe body for one atom.
+
+    This intentionally uses only fields that are already available in both
+    atoms.jsonl and per-file atom reads. It is a display/index fold key, not a
+    destructive data migration.
+    """
+    parts = [
+        str(atom.get("title") or ""),
+        str(atom.get("trigger") or ""),
+        str(atom.get("excerpt") or ""),
+        " ".join(str(link) for link in atom.get("links", []) if link),
+    ]
+    text = "\n".join(part for part in parts if part.strip()).lower()
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
+
+
+def normalized_content_hash(atom: dict[str, Any]) -> str:
+    content = normalized_content(atom)
+    if not content:
+        return ""
+    return hashlib.sha1(content.encode("utf-8")).hexdigest()[:16]
 
 
 def atom_status(atom: dict[str, Any]) -> str:
@@ -51,13 +78,117 @@ def preferred_atom(atoms: list[dict[str, Any]]) -> dict[str, Any]:
     return sorted(atoms, key=lambda a: (int(a.get("score", 0)), str(a.get("datetime", ""))), reverse=True)[0]
 
 
+def preferred_content_atom(atoms: list[dict[str, Any]]) -> dict[str, Any]:
+    """Pick a representative for same-content atoms.
+
+    Lifecycle metadata still wins first; among otherwise equal duplicate bodies,
+    the newest source_ts is the safest representative because reposts and
+    corrected versions tend to arrive later.
+    """
+    explicit = [
+        atom
+        for atom in atoms
+        if atom.get("group_id") or atom.get("canonical_id") or atom_status(atom) != "active"
+    ]
+    candidates = explicit or atoms
+    visible = [atom for atom in candidates if not is_hidden(atom)] or candidates
+
+    def key(atom: dict[str, Any]) -> tuple[int, float, int, str]:
+        try:
+            source_ts = float(atom.get("source_ts") or 0)
+        except (TypeError, ValueError):
+            source_ts = 0.0
+        lifecycle_rank = 1 if atom.get("canonical_id") or atom.get("group_id") else 0
+        return (
+            lifecycle_rank,
+            source_ts,
+            int(atom.get("score", 0)),
+            str(atom.get("datetime", "")),
+        )
+
+    return sorted(visible, key=key, reverse=True)[0]
+
+
+def annotate_fold(atom: dict[str, Any], group: list[dict[str, Any]], content_hash: str = "") -> dict[str, Any]:
+    row = dict(atom)
+    folded_count = len(group) - 1
+    if folded_count > 0:
+        row["folded_count"] = folded_count
+        row["folded_ids"] = [atom_id(a) for a in group if atom_id(a) and atom_id(a) != atom_id(atom)]
+    if content_hash:
+        row["normalized_content_hash"] = content_hash
+    return row
+
+
 def fold_atoms(atoms: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Return one display atom per lifecycle group, preferring canonical atoms."""
-    groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for atom in atoms:
-        groups[group_id(atom)].append(atom)
-    folded = [preferred_atom(group) for group in groups.values()]
+    """Return one display atom per lifecycle/content group."""
+    rows = list(atoms)
+    lifecycle_groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    plain_rows: list[dict[str, Any]] = []
+    for atom in rows:
+        has_lifecycle_group = bool(atom.get("group_id") or atom.get("canonical_id") or atom_status(atom) != "active")
+        if has_lifecycle_group:
+            lifecycle_groups[group_id(atom)].append(atom)
+        else:
+            plain_rows.append(atom)
+
+    folded: list[dict[str, Any]] = []
+    for group in lifecycle_groups.values():
+        representative = preferred_atom(group)
+        if not is_hidden(representative):
+            folded.append(annotate_fold(representative, group, normalized_content_hash(representative)))
+
+    content_groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for atom in plain_rows:
+        content_hash = str(atom.get("normalized_content_hash") or normalized_content_hash(atom) or atom_id(atom))
+        content_groups[content_hash].append(atom)
+
+    for content_hash, group in content_groups.items():
+        representative = preferred_content_atom(group)
+        if not is_hidden(representative):
+            folded.append(annotate_fold(representative, group, content_hash))
+
     folded.sort(key=lambda a: (-int(a.get("score", 0)), str(a.get("datetime", ""))))
+    return folded
+
+
+def fold_scored(
+    scored: Iterable[tuple[float, dict[str, Any]]],
+    atoms_by_id: dict[str, dict[str, Any]],
+) -> list[tuple[float, dict[str, Any]]]:
+    """Fold scored recall rows by lifecycle group, then normalized content."""
+    scored_rows = list(scored)
+    lifecycle_groups: dict[str, list[tuple[float, dict[str, Any]]]] = defaultdict(list)
+    plain_rows: list[tuple[float, dict[str, Any]]] = []
+    for score, atom in scored_rows:
+        has_lifecycle_group = bool(atom.get("group_id") or atom.get("canonical_id") or atom_status(atom) != "active")
+        if has_lifecycle_group:
+            lifecycle_groups[group_id(atom)].append((score, atom))
+        else:
+            plain_rows.append((score, atom))
+
+    folded: list[tuple[float, dict[str, Any]]] = []
+    for group_rows in lifecycle_groups.values():
+        best_score = max(score for score, _atom in group_rows)
+        group_atoms = [atom for _score, atom in group_rows]
+        cid = canonical_id(group_atoms[0])
+        representative = atoms_by_id.get(cid) or preferred_atom(group_atoms)
+        if not is_hidden(representative):
+            folded.append((best_score, annotate_fold(representative, group_atoms, normalized_content_hash(representative))))
+
+    content_groups: dict[str, list[tuple[float, dict[str, Any]]]] = defaultdict(list)
+    for score, atom in plain_rows:
+        content_hash = str(atom.get("normalized_content_hash") or normalized_content_hash(atom) or atom_id(atom))
+        content_groups[content_hash].append((score, atom))
+
+    for content_hash, group_rows in content_groups.items():
+        best_score = max(score for score, _atom in group_rows)
+        group_atoms = [atom for _score, atom in group_rows]
+        representative = preferred_content_atom(group_atoms)
+        if not is_hidden(representative):
+            folded.append((best_score, annotate_fold(representative, group_atoms, content_hash)))
+
+    folded.sort(key=lambda item: (-item[0], str(item[1].get("datetime", ""))))
     return folded
 
 

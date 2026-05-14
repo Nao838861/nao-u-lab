@@ -47,6 +47,8 @@ python tools\codex_slack_directives.py
 
 定時サイクル内では、検出時に同じチャンネルへ `[Log_cdx]` 付きで受領反応する。危険操作や曖昧な操作は Slack の一文だけで無人実行せず、Codex 作業時に内容を確認してから進める。
 
+pending レコードには `action_type` / `domain` / `next_step` / `done_condition` / `triage_status` の triage hints を付ける。既存行の補完は `python tools\slack_pending_triage.py` で行う。`status` は完了判定の正本として維持し、triage は phase 割り振りの補助に留める。
+
 ## Slack 経由の broadcast (みんな/全員/AIたち)
 
 同じ定時サイクル (`tools\codex_slack_directives.py`) は、Nao_u が **複数 AI に宛てた broadcast** も並列で検出する。検出キーワード: 「みんな」「皆さん」「全員」「AIたち」「AI達」「エージェントたち」「エージェント達」「諸君」「君たち」「君ら」。
@@ -108,7 +110,7 @@ Codex/GPT 側の記憶は `memory/` と `tools/memory_*.py` で管理する。
 
 **Phase C 完了時の運用**:
 - `memory_ingest.py` 起動時は **atoms.jsonl と per-file .md + index.jsonl の両方を更新** (dual-write、idempotent)
-- `memory_recall.py` は atoms.jsonl が存在すればそこから、なければ per-file から読む (Phase D 移行が trivial に)
+- `memory_recall.py` は atoms.jsonl が存在すればそこから、なければ per-file から読む (Phase D 移行が trivial に)。表示・recall では `normalized_content_hash` による同一内容 fold を行い、raw atom は削除しない。
 - 共有モジュール `tools/atoms_fileformat.py` に format helpers / parser / sync logic を集約
 - 他の `atoms.jsonl` 直読スクリプトは未対応 — atoms.jsonl を retire する前にそれらも dual-read 対応が必要
 

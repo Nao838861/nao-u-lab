@@ -16,6 +16,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+import memory_lifecycle
+
 
 FRONTMATTER_KEYS = [
     "id",
@@ -143,6 +145,7 @@ def build_index_entry(atom: dict[str, Any], rel_path: str) -> dict[str, Any]:
         "source_ts": atom.get("source_ts"),
         "status": atom.get("status", "active"),
         "canonical_id": atom.get("canonical_id"),
+        "normalized_content_hash": atom.get("normalized_content_hash") or memory_lifecycle.normalized_content_hash(atom),
         "score": atom.get("score", 0),
     }
 
