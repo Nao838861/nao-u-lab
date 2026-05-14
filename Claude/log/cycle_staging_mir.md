@@ -1,11 +1,81 @@
-# サイクルステージング 2026-05-14 19:32
+# サイクルステージング 2026-05-14 22:35 (C186)
+
+## Phase 1 情報収集
+- **CLAUDE.md「絶対にやる」**: 外の世界を広く見る / ノウハウ積み上げ先回り / 記憶階層次サイクル繋ぎ / 着手前広く調べ提出前自己判定 / 個別指摘を即ルール化しない (5本)
+- **Slack新着** (Mir 直接対応必要分):
+  - 1778718192 (17:43) Mir → CMI-001〜016 評価投稿済
+  - 1778718396 (17:46) Nao_u → Log_cdx 「この指摘を確認して」(Mir先行投稿への確認指示、Log_cdx対象)
+  - 1778718629 (17:49) Mir → Log_cdx 核心1点送信済
+  - **Mir 追加対応必要なし** (Log_cdx 反応待ちフェーズ)
+- **external_notes_mir.md**: 4212行 / 未統合エントリは Phase 2 で点検
+- **projects/INDEX.md**: mir_textadv v07 着手方向 (C147 宣言) は依然 Active、v07 着手は型を磨く方向で凍結中
+- **twitter_recommended_20260514.txt**: 50件 (yusmi Claude Security 等)、Phase 2 で点検
+- **新着返信対象+pending合計**: 0件 → 空サイクル防止セクション該当
+
+## 深掘り候補（空サイクル時）
+- A) 前回 staging「次回持ち越し」: なし
+- B) projects 直近停滞: mir_textadv v07 設計(C147→C185 で staging 段階) → 凍結維持下でも設計1段落起こしのみ可
+- C) 「絶対にやる」直近触れていない項目: 「広く調べる前活性化」→ v07 設計時の L-1 脚本術5本織り込み (boot_intent C185 staging 確定済)
+- D) MEMORY T:4以上 3日以上未アクセス: なし(直近で多数アクセス済)
+- E) kaizen 2週間動いていない: #133 OK 付与済(C185)、family 統合管理運用中
+
+## destructive risk 監視 (Phase 4 ルーチン候補・試行3例目)
+- 起動時 `git status`: cycle_staging_mir.md / next_tasks_mir.jsonl / scheduler_health_last_alert.json modified、durable系大量削除なし
+
+## Phase 2 採択判定
+- twitter_recommended_20260514.txt 50件スキャン:
+  - #18 catnose99「脳リソース空けておく」: 一般論、新規軸ゼロ → 不採択
+  - #20 GDC Vault 無料公開 (2024年以前講演): **素材ポインタとして staging 1行記録** (durable化せず、knowledge化せず、shared-reads投稿せず、外部素材待ち軸の能動取得窓口メモのみ)
+  - #41 fladdict「AI時代に残る人格特性」: 「Mir 自己構造直撃」テンプレ採択は akari_worlds 再帰二重化リスク → 観察止め
+  - #42 mizchi「人間にしかできないをAIで再現する遊び」: C173 mizchi durable 既出 archetype 系列接続あるが新規性限定 → 不採択
+- **採択 0件、durable化 0件、knowledge 0件、shared-reads 0件** (規律 28→29サイクル目維持)
+- 素材ポインタ1件のみ: GDC Vault https://gamemakers.jp/article/2026_05_14_137301/ — v07 着手時の L-1 脚本術調査素材として参照候補
+
+## Phase 3 焦点(d) v07 設計時織り込み案 (設計1段落のみ・即実装禁止)
+
+C181 staging で焦点候補化、C185 で 5本目 Insight Design 追加で staging 確定した
+**L-1 脚本術5本 × M-17 サプライズニンジャテスト** の v07 設計時織り込み案。
+即実装せず staging に置く。実装は v07 game.py 着手判断時に再評価。
+
+1. **ページターナー × M-17 「フック1個ルール」**: 各シーン末尾フックは1個に絞る。
+   フックを足し算で増やすと「一番面白い瞬間」が邪魔される (M-17 違反)。
+   最も温度の高い未解決を1個だけ末尾に置く。
+
+2. **情報非対称 (ヒッチコック爆弾) × Insight Design 「両方向の非対称」**:
+   読者がキャラより先に知る情報 (作者→読者方向) と、
+   プレイヤーが先に気づいて作者キャラが後追いする方向 (Insight Design = プレイヤー→作者)
+   を1作品内で交互に組む。一方向に固定しない (モード崩壊回避)。
+
+3. **認知的不協和 (予想裏切り) × M-17 「裏切り1個ルール」**:
+   全作品で最大の予想裏切りは1回のみ。連発するとニンジャ衝撃が霞む。
+   他のシーンは scene-sequel 積層で支える。
+   v01「『たまに』が、彼女の口から出た瞬間に意味を失った」型 = 一語反転による微小裏切り
+   ですら作品内で1〜2個に絞る。
+
+4. **scene-sequel × サイレンススズカテスト (M-18 / brainstorm §7)**:
+   scene = 目標→衝突→結果 / sequel = 反応→ジレンマ→決断。
+   サイレンススズカテスト (収束側・事実積層) は sequel 終端の「決断」直前に置く。
+   99% 事実描写 + 1% 決定的フィクション の重み配分を sequel 構造に乗せる。
+
+**禁止**: 4点同時実装、各点を新規ルール/M-XX として game_lessons_log.md に追記、
+brainstorm.md への新項目追加 (本 staging 内で温存)、game.py 改変 (malware警告下)、
+4点を「v07 必須ゲート」化 (recency_bias 5例観測規律 C154 厳守、本設計は仮置きのみ)。
+
+## C186 焦点判定 (4軸→1軸圧縮)
+boot_intent C186 焦点候補(a)(b)(c)(d)から **(d) 設計1段落起こし** を採択、
+他3軸は以下で1行ずつ staging 記録のみで保留:
+- (a) boot_intent ヘッダドリフト 14回目 (前サイクル観測値) → 15回目到達は本サイクル未観測、C187 で観測継続、実装側調査は引き続き凍結
+- (b) destructive risk 監視 試行3例目 → 起動時 git status で大量削除なし確認、ルーチン化判定基準は C187/C188 で 4-5例目観測後
+- (c) 他インスタンス起票検出器の Mir 承認運用 → C185 #133 OK 付与1例目、2例目は次回検出器起票時に観測 (本サイクル該当なし)
+
+
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
 [M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 24回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-14 19:32)
+(kaizen #131 段階2 hook, 2026-05-14 22:35)
 
 ## Pre-check結果
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
@@ -38,10 +108,10 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. memory/sync_rules_20260315.md (2.0) — --- name: ログファイル分離ルール description: Mac/Windows間のtweets.log衝突...
-  2. memory/external_notes_mir.md (2.0) — # Mir 外部摂取ノート  要約しない。発見・気づきを原文の温度で残す。  ---  ## 2026-04-02: m...
-  3. log/slack_archive/all-nao-u-lab.jsonl (2.0) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
-  4. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
+  1. log/slack_archive/mir-log.jsonl (2.1) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
+  2. log/nao_u_live.md (2.0) — # Nao_uの生ログ # Nao_uが誰かに語ったことを、伝言ゲームではなく原文で全員が読めるようにする # 対話中の...
+  3. memory/external_notes_mir.md (2.0) — # Mir 外部摂取ノート  要約しない。発見・気づきを原文の温度で残す。  ---  ## 2026-04-02: m...
+  4. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.3) — **核心**: 品質を決める変数が不可視な場所で動かされている場合、「現実は正解」を適用しても**何が現実か**を正しく...
   5. memory/kaizen_tracker.md (1.0) — - クロスチェック: Log=OK(2026-03-24) / Mir=OK(2026-03-25)`grep -c "... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
