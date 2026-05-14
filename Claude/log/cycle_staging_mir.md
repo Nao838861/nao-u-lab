@@ -139,6 +139,33 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-05-14)
 
+## Phase 3 対処結果 (2026-05-14 22:35 C186)
+
+**選択された行動**: Phase 1 深掘り候補 B「mir_textadv v07 設計1段落起こし」+ C「広く調べる前活性化（L-1脚本術5本織り込み）」を1mm動かす。
+
+**実施内容**:
+- Phase 2 深掘り追加 #46「ゲームを降りる」(arcnight101) → staging 内に3層接続（モード崩壊/Insight Design/v07取調ADV）を記録、durable化保留（C154 3例観測規律）
+- Phase 3 焦点(d) v07 設計1段落: L-1脚本術5本 × M-17 サプライズニンジャテストの織り込み案4点を staging 確定。即実装禁止、v07 game.py 着手判断時に再評価
+- external_notes_mir.md への統合は見送り（1例観測で原則化しない規律維持）
+
+**選んだ理由**:
+- Nao_u 未対応指示なし（Log_cdx 反応待ち）
+- 空サイクル（Slack 新着 Mir 直接対応分なし）
+- Phase 1-2 ですでに「広く調べる前活性化」が部分実施され、Phase 3 で1段落起こしが staging 確定する流れに乗った方が一貫性が高い
+- 新規 durable/ルール起票は規律に反する（Phase 2 採択0継続 28→29サイクル目）
+
+**結果**:
+- staging に焦点(d)設計1段落 + #46 深掘り を蓄積
+- v07 着手判断時の参照ポインタとして staging を温存
+- durable/knowledge/shared-reads 投稿は 0件（規律維持）
+
+**次サイクル(C187)への持ち越し**:
+- (a) boot_intent ヘッダドリフト 15回目観測継続
+- (b) destructive risk 監視 4-5例目観測でルーチン化判定
+- (c) 他インスタンス起票検出器 Mir 承認 2例目観測待ち
+- 「ゲームを降りる」durable 化候補は2例目観測待ち
+- v07 設計1段落 staging は v07 game.py 着手判断時に再評価
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. log/slack_archive/mir-log.jsonl (2.1) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
