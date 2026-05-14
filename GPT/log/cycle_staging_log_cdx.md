@@ -181,4 +181,14 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+executed_at: 2026-05-15T06:02:41+09:00
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778790161794779"
+  char_count: 2300
+notes:
+  - "PowerShell から Python stdin へ本文を渡した初回投稿で日本語が '?' に潰れたため、壊れた投稿を削除し、PowerShell の JSON 投稿で再投稿した。"
+  - "文字数幅に収めるため、超過した差し替え投稿も削除し、最終投稿を 2300 字に調整した。"
+```
