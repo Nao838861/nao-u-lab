@@ -107,7 +107,57 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+executed_at: 2026-05-15T05:47:00+09:00
+
+```yaml
+designs:
+  - issue_id: ISS-20260515-01
+    problem_restatement: "ゲーム制作記憶は十分に蓄積されているが、制作時の最初の行動を playable change ではなく、着手判定・ルール照合・内省ログへ誘導している。必要なのは記憶を減らすことではなく、ゲーム作業で memory を引いた直後に『何を動かすか』へ接続する薄い導線である。"
+    alternatives:
+      - name: "案A: game_memory_action_dispatch を追加する"
+        sketch: "ゲーム制作 memory を読んだ直後に、状況を new_prototype / revision / feedback_response / blocked の4種へ分類し、各分類ごとに最初の出力を playable diff candidate、修正対象ファイル、検証方法へ固定する。R/M lesson はこの後段で必要なものだけ引く。"
+        pros:
+          - "既存の game_read_path / R-M 二層構造を壊さず、入口の順序だけを変えられる。"
+          - "blocked 状態でも『待つ』ではなく、別ゲームの小改造や headless 校正などの動く作業に分岐できる。"
+          - "失敗時も dispatch 文書を撤回すれば戻せるため、恒久ルール肥大化のコストが低い。"
+        cons:
+          - "dispatch が checklist 化しすぎると、またゲートが1枚増える。"
+          - "playable diff candidate の質までは保証しないため、4c で短く保つ必要がある。"
+          - "Claude 側 source of truth との同期方針を決めないと、GPT 側だけの局所改善になる。"
+        migration_cost: low
+      - name: "案B: game_design_rules.md を Definition of Done 中心に書き換える"
+        sketch: "ゲーム制作ルールそのものに『サイクル成果は playable diff または game 直結仕様変更』を追加し、brainstorm / shared-reads / diary 単体を成果として数えないことを明文化する。"
+        pros:
+          - "発火位置が既存ルールなので、ゲーム制作時に確実に読まれる。"
+          - "Nao_u / Ash / Mir の直近診断と整合する。"
+          - "日記や内省が主成果になる歪みへ直接効く。"
+        cons:
+          - "強い DoD は意味の薄い小差分で達成カウントする逆歪みを生みうる。"
+          - "既存の3サイクル設計ルールと衝突しやすく、書き換え範囲が大きい。"
+          - "Phase 3b の writeback boundary probe に照らすと、恒久 state 昇格がやや早い。"
+        migration_cost: medium
+      - name: "案C: t:5 / high-signal atom を出力直結タグで再ランクする"
+        sketch: "atoms の game-design / operation 系を、playable_change / gate / reflection / report のような実行向きタグで再分類し、recall 時に playable_change を先に出す。"
+        pros:
+          - "問題の根にある recall 順序へ直接介入できる。"
+          - "既存 atom 681 件の偏りを可視化できる。"
+          - "将来の memory recall 品質改善にも転用できる。"
+        cons:
+          - "移行対象が大きく、設計フェーズ直後の4cには重すぎる。"
+          - "分類基準が曖昧だと、タグが増えて検索ノイズが悪化する。"
+          - "短期のゲーム制作停滞には効くまで時間がかかる。"
+        migration_cost: high
+    recommended: "案A: game_memory_action_dispatch を追加する"
+    recommended_reason: "今回の issue は恒久ルール不足ではなく、既存記憶を開いた瞬間の行動順序がメタ側へ倒れることにある。案Aは既存の R/M 層、game_read_path、game_design_rules を温存し、入口の1枚だけで『読む→考える』を『読む→動かす候補を決める』へ変えられる。失敗時は薄い dispatch 文書を戻せばよく、案Bより writeback リスクが低く、案Cより4cで導入可能な粒度である。"
+    decision: introduce
+    decision_reason: "Phase 4a の severity は high で、直近 broadcast でも playable diff が出ない構造が具体的に問題化されている。postpone すると次サイクルでも同じ memory 読みが内省へ流れる可能性が高い。一方で大規模な atom 再分類や恒久ルール改稿は過剰なので、最小の導線文書として導入する。"
+    outline_for_4c:
+      - "GPT 側に短い dispatch 文書を1つ追加し、ゲーム制作 memory を読んだ直後の4分類と最初の出力を定義する。"
+      - "AGENTS.md または既存 mirror index には大きく追記せず、必要なら game_read_path_mirror_index から dispatch 文書への1行参照に留める。"
+      - "dispatch 文書には『これはゲートではなく、最初の作業対象を playable change へ寄せる分岐表』と明記する。"
+      - "blocked 分岐では、待機・日記・内省ではなく、headless 校正、小さな別ゲーム修正、既存 feedback の最小反映候補へ逃がす。"
+      - "導入後の smoke check は、graze_log v04 feedback を例に、dispatch が brainstorm ではなく playable diff candidate を返すかだけを文章で確認する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
