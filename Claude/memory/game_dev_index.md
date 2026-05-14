@@ -8,6 +8,8 @@ type: project
 
 MEMORY.md（Level 1 親）からの引き下げ先。**新ゲーム着手前 / 改修判断 / cross_review / Nao_u 評価受領** のいずれかが視界に入った瞬間に開く。
 
+どの入口を先に読むか迷う場合は、先に [game_read_path_compiled_guide.md](game_read_path_compiled_guide.md) を開く。新規 v01、改修判断、cross_review、Nao_u 評価受領で、`game_dev_index.md` / `game_lessons_log.md` / `lessons-recall` の読み順を分けている。
+
 ## 使い方（LLM 向け）
 
 各エントリのサマリは **太字キーワード + 核 + 処方** の3パート構成。文脈合致するキーワードでスキャン → サマリで「開く価値ありか」判定 → 該当のみ個別ファイルを on-demand で開く。

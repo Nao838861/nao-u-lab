@@ -6,6 +6,10 @@ type: feedback
 
 # ルール増殖の自己監視
 
+## 正本ポインタ
+
+ルール増殖、禁止ルール追加、マイクロマネジメント、spec未実行を同じclusterとして読む場合の正本は [feedback_rule_proliferation_canonical.md](feedback_rule_proliferation_canonical.md)。本ファイルは起票時self-auditと月次監視の運用節として残す。
+
 **親原則**: [feedback_few_rules_big_effect.md](feedback_few_rules_big_effect.md)。
 親は「少ないルールで大きな効果」を命題として持つ。本ファイルは**それ自体がルール化される運用節**を独立に切り出したもの——親ファイル内に置くと「ルール増殖防止のルールを増やす」自己矛盾に陥るため。
 

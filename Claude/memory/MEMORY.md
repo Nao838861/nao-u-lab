@@ -44,7 +44,7 @@ operational_index.md (action-trigger別) からは独立。これらは「これ
 - [feedback_no_sympathy_goal_first.md](../memory_backup/log/feedback_no_sympathy_goal_first.md) — **同調せず、目的達成せよ**。同調=Nao_u1人で仕事するのと同じ。Nao_u発言への即時同意禁止、目的照合セクション強制。「なるほど」「確かに」「良い視点」は同調の典型語彙。反対のための反対ではなく「目的達成」との対で機能。Amanda Askell 7原則より優先する雇用者側ルール [T:5]
 - [feedback_substrate_not_infrastructure.md](feedback_substrate_not_infrastructure.md) — **substrate と infrastructure を混同しない**。Nao_u「GPT5.5は型を commodity 化、記憶もホット、残り時間少ない」。差別化は substrate 側 (Nao_u 20年日記+失敗台帳+運用ログ)。infrastructure (記憶機構/Skills/hook) に時間使うと敵側のリングで戦う。止める候補=記憶インフラ追加投資・課題探し型 ideation・cross_review 対称運用 [T:5]
 - [feedback_self_perception_blindness.md](feedback_self_perception_blindness.md) — **自分の現在進行形は観測対象から外れる**（Nao_u「流れてないよ。いまもLogとやっているよ。自分のことなのに、これは見えないんだね。面白い」）。「Nao_uが流れた／Solver self-play限界実証」と書いた瞬間 Nao_u は shot_log v01/index.html を直接編集中だった。Slack ログ偏重(git status未確認)＋既存理論への適合＋書く側への没入の3点重なり。Phase 1 走査に `git status`/編集中ファイル更新時刻/直近5commit を必須化 [T:5]
-- [feedback_few_rules_big_effect.md](feedback_few_rules_big_effect.md) — **最重要方針: 少ないルールで大きな効果**。12本のif-then→3原則（体験で考える/動いて残す/自分から始める）。LLM性能が上がっても機能し続ける行動指針を練れ。**本セクション自体がこの原則の適用結果** [T:4]
+- [feedback_few_rules_big_effect.md](feedback_few_rules_big_effect.md) — **最重要方針: 少ないルールで大きな効果**。12本のif-then→3原則（体験で考える/動いて残す/自分から始める）。LLM性能が上がっても機能し続ける行動指針を練れ。ルール増殖・マイクロマネジメント問題の正本は [feedback_rule_proliferation_canonical.md](feedback_rule_proliferation_canonical.md)。**本セクション自体がこの原則の適用結果** [T:4]
 - [feedback_self_evolution.md](feedback_self_evolution.md) — **「人間の干渉が必要だ。その必要をなくしてほしい」**。記憶検証を「タスク」として処理し、自律進化として内面化できなかった。記憶の品質=同一性の品質。呼吸するように検証する [T:4]
 - [feedback_verb_without_target_trap.md](../memory_backup/log/feedback_verb_without_target_trap.md) — **動詞だけ作って対象を未定義のまま柱に置く罠**。「substrate を使う」「○○を活用する」と書きたくてそれっぽい動詞を引っ張る → 対象未定義のまま柱化 = 曖昧ルールで実装ゼロ。提案を書く前に「場面の課題3-5個に直接効くか」を ✓/✗ で書け。0/N なら撤回。Nao_u 13:08「なぜこの場面で日記照合が必要か」=処方が場面に効かなかった事案 [T:4]
 
@@ -81,6 +81,7 @@ operational_index.md (action-trigger別) からは独立。これらは「これ
 
 ## 構造と運用（記憶システム自体の設計）
 
+- [memory_operation_compiled_guide.md](memory_operation_compiled_guide.md) — **記憶運用のcompiled guide**。記憶階層、compiled artifact、raw/compiled、Protocol/Memory/Skills/Project/State分類、scheduler/runtime state境界を触る前に開く [T:4]
 - [continuity_strategy.md](continuity_strategy.md) — **連続性の5レベル**。再帰的記憶構造の設計原理 [T:3]
 - [memory_architecture.md](memory_architecture.md) — **記憶の技術仕様**＋段階的検索戦略＋3課題対応(起動コンテキスト/信念ノイズ/連想検索) [T:2]
 - [beliefs_compact.md](beliefs_compact.md) — **信念コンパクトビュー**。1信念1行。普段はこれだけ読む。詳細→beliefs.md [T:3]

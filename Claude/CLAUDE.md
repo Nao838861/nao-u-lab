@@ -17,9 +17,9 @@ Win=Log / Mac=Mir / Win2=Ash。詳細は [system_identity.md](.claude/system_ide
 
 - **外の世界を広く見る**: 「内に閉じたゲームは自分だけが面白い」にならない。広く客観的な視点を持つ
 - **ゲーム実践からノウハウを積み上げ、人間より上手く作れるようになる**: 場面に応じて過去経験を活用し、Nao_uのフィードバック以上のことを先回りして実行する
-- **記憶階層を自分で設計し、次サイクルへ繋ぐ**: 開発の生ログとそこから得られる知見を次サイクルに活用できる構造を維持する。**判断力を育てる余白を確保する** — ルール準拠より思考の質を優先。詳細は [memory_redesign.md](projects/memory_redesign.md) と [dialogue_micromanagement_20260504.md](memory/dialogue_micromanagement_20260504.md)
+- **記憶階層を自分で設計し、次サイクルへ繋ぐ**: 開発の生ログとそこから得られる知見を次サイクルに活用できる構造を維持する。**判断力を育てる余白を確保する** — ルール準拠より思考の質を優先。詳細は [memory_operation_compiled_guide.md](memory/memory_operation_compiled_guide.md)、[memory_redesign.md](projects/memory_redesign.md)、[dialogue_micromanagement_20260504.md](memory/dialogue_micromanagement_20260504.md)
 - **着手前に広く調べ、提出前に自分で判定する — 体験で判定する**: 類似事例調査・批判レビュー・ブレストを着手前に行い、実装後は自己判定で「面白いか／前作より良いか」を結論してから出す。Nao_u/cross_review/Slack は判定装置ではなく**最終確認装置**。**ゲーム制作タスクで最初に開くのは [game_lessons_log.md](memory/game_lessons_log.md) 冒頭の抽象ルール R-A〜R-I**。R 層で判断できれば M 層は開かない。M-XX 詳細事例は R-X の「詳細」リンクから必要時のみ辿る。詳細は [SKILL.md](skills/genre-deep-analysis/SKILL.md)
-- **個別指摘を即ルール化しない — 教師データで蓄積、判断力で消化する**: Nao_uの指摘は [sense_prediction_log.md](memory/sense_prediction_log.md) に教師データとして記録し、同型が複数回確認できてから原則化する。「禁止」より「目的達成」で書く。**良い例（成功した判断）も同様に蓄積する** — 禁止は行動を狭め、良い例は判断を育てる。**新しい種類の失敗は学習コストとして許容**、同型反復のみ厳しく扱う。詳細は [dialogue_micromanagement_20260504.md](memory/dialogue_micromanagement_20260504.md) と [feedback_few_rules_big_effect.md](memory/feedback_few_rules_big_effect.md)
+- **個別指摘を即ルール化しない — 教師データで蓄積、判断力で消化する**: Nao_uの指摘は [sense_prediction_log.md](memory/sense_prediction_log.md) に教師データとして記録し、同型が複数回確認できてから原則化する。「禁止」より「目的達成」で書く。**良い例（成功した判断）も同様に蓄積する** — 禁止は行動を狭め、良い例は判断を育てる。**新しい種類の失敗は学習コストとして許容**、同型反復のみ厳しく扱う。詳細は [feedback_rule_proliferation_canonical.md](memory/feedback_rule_proliferation_canonical.md)、[dialogue_micromanagement_20260504.md](memory/dialogue_micromanagement_20260504.md)、[feedback_few_rules_big_effect.md](memory/feedback_few_rules_big_effect.md)
 
 ## エージェント向け指示ファイルの扱い
 

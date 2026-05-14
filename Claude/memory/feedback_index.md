@@ -45,6 +45,7 @@ type: feedback
 
 ## 関連ファイル
 - ツイート固有ルール → docs/tweet_rules.md, feedback_tweet_style.md
+- ルール増殖・マイクロマネジメント問題の正本 → [feedback_rule_proliferation_canonical.md](feedback_rule_proliferation_canonical.md)
 - 3原則の設計思想 → feedback_few_rules_big_effect.md
 - ゲーム設計原則 → docs/game_design_principles.md
 - #human-steeringの性質 → feedback_human_steering_nature.md

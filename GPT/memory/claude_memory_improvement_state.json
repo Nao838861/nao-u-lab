@@ -1,0 +1,221 @@
+{
+  "created": "2026-05-14",
+  "owner": "GPT/Codex",
+  "status": "recurring_ready",
+  "current_phase": "Recurring manage cycle",
+  "instruction": "今後の定時サイクルでは GPT/memory/claude_memory_manage_cycle_routine_20260514.md に従い、Claude記憶システムへの限定的改善を1つ進め、このstate fileを更新する。",
+  "boundaries": [
+    "Claude側の記憶システム改善はGPT/Codexが直接進めてよい。",
+    "Claude/memory/core_mission.md はNao_uの明示指示なしに編集しない。",
+    "scheduler挙動は Claude/docs/scheduler_architecture.md に従わずに変更しない。",
+    "raw evidenceを保持し、まずindex、compiled artifact、metadata、可逆的変更を優先する。"
+  ],
+  "task_queue": [
+    {
+      "id": "CMI-001",
+      "phase": "Phase 0",
+      "title": "Baseline Claude memory map and risk list",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "artifact": "GPT/memory/claude_memory_baseline_20260514.md"
+    },
+    {
+      "id": "CMI-002",
+      "phase": "Phase 0",
+      "title": "Inventory startup-read and scheduler-written memory files",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "artifact": "GPT/memory/claude_memory_io_inventory_20260514.md"
+    },
+    {
+      "id": "CMI-003",
+      "phase": "Phase 2",
+      "title": "Draft Protocol / Memory / Skills / Project decision matrix",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "artifact": "GPT/memory/claude_memory_boundary_matrix_20260514.md"
+    },
+    {
+      "id": "CMI-004",
+      "phase": "Phase 3",
+      "title": "Choose first compiled artifact candidate",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "artifact": "GPT/memory/claude_memory_compiled_artifact_candidate_20260514.md",
+      "decision": "CMI-005では Claude/memory/memory_operation_compiled_guide.md をMemory compiled artifactとして作成する。"
+    },
+    {
+      "id": "CMI-005",
+      "phase": "Phase 3",
+      "title": "Implement first compiled artifact and index routing",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "artifact": "Claude/memory/memory_operation_compiled_guide.md",
+      "decision": "artifact単体として作成した。CLAUDE.md、MEMORY.md、session_primer.mdへの接続はまだ行わない。"
+    },
+    {
+      "id": "CMI-006",
+      "phase": "Phase 3",
+      "title": "Add lightweight validation for the first compiled artifact",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "artifact": "GPT/memory/claude_memory_compiled_artifact_validation_20260514.md",
+      "validator": "GPT/tools/validate_claude_memory_artifact.py",
+      "result": "errors=0, warnings=0"
+    },
+    {
+      "id": "CMI-007",
+      "phase": "Phase 4",
+      "title": "Fold one duplicated feedback cluster into canonical form",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "artifact": "Claude/memory/feedback_rule_proliferation_canonical.md",
+      "report": "GPT/memory/claude_memory_feedback_cluster_canonical_20260514.md",
+      "decision": "ルール増殖・マイクロマネジメント・spec未実行clusterをcanonical化した。raw本文は削除せず、関連ファイルへ正本ポインタを追加した。"
+    },
+    {
+      "id": "CMI-008",
+      "phase": "Phase 5",
+      "title": "Add read-path scenario checks",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "artifact": "GPT/memory/claude_memory_read_path_scenarios_20260514.md",
+      "validator": "GPT/tools/validate_claude_read_paths.py",
+      "result": "scenarios=4, errors=0, warnings=0"
+    },
+    {
+      "id": "CMI-009",
+      "phase": "Phase 5",
+      "title": "Review minimal pointer changes for CLAUDE.md, memory/MEMORY.md, and session_primer.md",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "artifact": "GPT/memory/claude_memory_pointer_review_20260514.md",
+      "decision": "CLAUDE.mdとMEMORY.mdに最小ポインタを追加した。session_primer.mdは起動時負荷を増やさないため変更しない。"
+    },
+    {
+      "id": "CMI-010",
+      "phase": "Phase 6",
+      "title": "Document repeatable manage-cycle routine",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "artifact": "GPT/memory/claude_memory_manage_cycle_routine_20260514.md",
+      "decision": "今後の定時サイクルで、state確認、タスク選定、リスク判定、限定改善、検証、report、state更新を繰り返すroutineを文書化した。"
+    }
+  ],
+  "recurring_backlog": [
+    {
+      "id": "CMI-011",
+      "title": "external_notes統合audit",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "type": "audit",
+      "goal": "external_notes系がrawとして滞留し、reference/shared_reads/beliefs/projectへ昇格されない問題を観測する。最初は編集せずaudit reportを作る。",
+      "artifact": "GPT/memory/claude_memory_external_notes_audit_20260514.md",
+      "decision": "Claude側external_notes本文は編集しない。見出し単位の状態可視化が先。"
+    },
+    {
+      "id": "CMI-012",
+      "title": "次のfeedback canonical候補選定",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "type": "audit",
+      "goal": "次にcanonical化すべきfeedback clusterを1つ選び、候補比較を残す。",
+      "artifact": "GPT/memory/claude_memory_feedback_canonical_candidate_20260514.md",
+      "decision": "次のcanonical候補は「情報収集が報酬化する / 分析で止まる / 外部情報が行動に戻らない」クラスタ。候補ファイル名はClaude/memory/feedback_analysis_to_action_canonical.md。"
+    },
+    {
+      "id": "CMI-013",
+      "title": "lifecycle/frontmatter audit",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "type": "audit",
+      "goal": "compiled/canonical/active/rawのfrontmatterやlifecycle markerが揃っているか小さく調べる。",
+      "artifact": "GPT/memory/claude_memory_lifecycle_frontmatter_audit_20260514.md",
+      "decision": "compiled/canonical artifactだけlifecycle markerを明示する運用で十分。通常feedbackやexternal_notesへlifecycleを一括付与しない。external_notesはfrontmatterより見出し単位inventoryを優先する。"
+    },
+    {
+      "id": "CMI-014",
+      "title": "game read-path refinement",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "type": "read-path",
+      "goal": "新ゲーム制作時にgame_dev_index、game_lessons_log、lessons-recallのどれを先に読むべきかをscenarioでより明確にする。",
+      "artifact": "GPT/memory/claude_memory_game_read_path_refinement_20260514.md",
+      "decision": "Claude/memory/game_read_path_compiled_guide.mdを追加し、game_dev_index.mdへ最小ポインタを置いた。read-path validatorはnew_game_v01、game_revision_decision、game_cross_review、nao_u_game_feedbackに分割し、scenario数を7へ増やした。"
+    },
+    {
+      "id": "CMI-015",
+      "title": "oversized raw index plan",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "type": "manage",
+      "goal": "巨大raw fileに対して、削除ではなくindex/抽出計画を作る。",
+      "artifact": "GPT/memory/claude_memory_oversized_raw_index_plan_20260514.md",
+      "decision": "巨大raw本文は編集しない。external_notesはCMI-017のheading inventory、reflections_mac.mdは見出し/date inventory、kaizen_tracker.mdは状態別inventory、mir_boot_intent.mdはread-only heading index planの候補に分けた。"
+    },
+    {
+      "id": "CMI-016",
+      "title": "validation coverage expansion",
+      "status": "completed",
+      "completed_at": "2026-05-14",
+      "type": "validation",
+      "goal": "validate_claude_read_paths.pyとvalidate_claude_memory_artifact.pyの対象拡張または統合を検討する。",
+      "artifact": "GPT/memory/claude_memory_validation_coverage_expansion_20260514.md",
+      "validator": "GPT/tools/validate_claude_memory_artifact.py",
+      "result": "artifacts=3, errors=0, warnings=0",
+      "decision": "read-path validatorとartifact validatorは統合しない。artifact validatorをmemory_operation_compiled_guide、feedback_rule_proliferation_canonical、game_read_path_compiled_guideの3 artifact対応へ拡張した。"
+    },
+    {
+      "id": "CMI-017",
+      "title": "external_notes heading inventory",
+      "status": "pending",
+      "type": "audit",
+      "goal": "external_notes_*.mdを見出し単位で一覧化し、統合済マーカー、接続先、URL数、推奨routeを可視化する。最初の精密対象はexternal_notes_mac.md。"
+    },
+    {
+      "id": "CMI-018",
+      "title": "analysis-to-action canonical作成",
+      "status": "pending",
+      "type": "canonicalization",
+      "goal": "feedback_analysis_action_gap.mdとfeedback_info_integration.mdを中心に、情報収集・分析・Slack投稿が実行を代替する問題のcanonicalを作る。"
+    },
+    {
+      "id": "CMI-019",
+      "title": "feedback_sprint_not_plan broken reference audit",
+      "status": "pending",
+      "type": "audit",
+      "goal": "feedback_sprint_not_plan.mdが複数indexから参照されているが実体が見つからないため、削除・改名・統合済みのどれかを確認し、読み道の壊れを修正する計画を作る。"
+    },
+    {
+      "id": "CMI-020",
+      "title": "reflections_mac heading/date inventory",
+      "status": "pending",
+      "type": "audit",
+      "goal": "6.5MBのreflections_mac.mdを本文編集せず、見出し・日付・関連語単位で読み取り専用inventory化する。"
+    },
+    {
+      "id": "CMI-021",
+      "title": "kaizen_tracker state inventory",
+      "status": "pending",
+      "type": "audit",
+      "goal": "kaizen_tracker.mdをopen / integrated / stale / verification-neededなどの状態別に可視化する計画を作る。"
+    },
+    {
+      "id": "CMI-022",
+      "title": "mir_boot_intent read-only heading index plan",
+      "status": "pending",
+      "type": "audit",
+      "goal": "mir_boot_intent.mdを直接整理せず、見出し単位のread-only index計画を作る。"
+    }
+  ],
+  "last_update": {
+    "date": "2026-05-14",
+    "summary": "CMI-016としてvalidation coverageを拡張した。read-path validatorとartifact validatorは目的が違うため統合せず、validate_claude_memory_artifact.pyを単一artifact検証から3 artifact検証へ拡張した。対象はmemory_operation_compiled_guide、feedback_rule_proliferation_canonical、game_read_path_compiled_guide。frontmatter、本文要件、出典path、期待/禁止pointerを検証し、artifacts=3/errors=0/warnings=0を確認した。read-path validatorも7scenario/errors=0/warnings=0を維持した。",
+    "files_touched": [
+      "GPT/tools/validate_claude_memory_artifact.py",
+      "GPT/memory/claude_memory_validation_coverage_expansion_20260514.md",
+      "GPT/memory/claude_memory_improvement_state.json"
+    ],
+    "next_task": "CMI-017"
+  }
+}

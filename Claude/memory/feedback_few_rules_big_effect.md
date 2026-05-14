@@ -6,6 +6,10 @@ type: feedback
 
 # 少ないルールで大きな効果をあげる行動指針
 
+## 正本ポインタ
+
+ルール増殖、禁止ルール追加、マイクロマネジメント、spec未実行を同じclusterとして読む場合の正本は [feedback_rule_proliferation_canonical.md](feedback_rule_proliferation_canonical.md)。本ファイルは上位思想と3原則設計の出典として残す。
+
 ## TL;DR
 
 12本の IF-THEN → 3原則に再構成。**手順ではなく「思考の質」を書く**。LLM 性能向上に追従するのはこれ。Nao_u 2026-03-28「いちばん大事」。3原則の正本は [session_primer.md](session_primer.md)、運用ルール（ルール増殖の自己監視）は [feedback_rule_proliferation.md](feedback_rule_proliferation.md) に分離。

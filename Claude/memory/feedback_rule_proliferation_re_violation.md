@@ -7,6 +7,10 @@ source: Nao_u 2026-05-03 03:59 #human-steering
 
 # ルール増殖の再違反 — 自分で書いたメタルールを忘れる
 
+## 正本ポインタ
+
+ルール増殖、禁止ルール追加、マイクロマネジメント、spec未実行を同じclusterとして読む場合の正本は [feedback_rule_proliferation_canonical.md](feedback_rule_proliferation_canonical.md)。本ファイルはM-37〜M-42再違反とskill/spec未実行の具体的事故ログとして残す。
+
 ## 起きたこと
 
 2026-05-01 から 2026-05-03 にかけて M-37〜M-42 を CLAUDE.md「絶対にやる」セクションに連続6件追加。各々個別事例を発端に「ルールとして刻む」処方で対応。
