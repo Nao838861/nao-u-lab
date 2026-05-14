@@ -4449,3 +4449,5 @@ Nao_uが共有した西村さんツイート（Claude→重すぎ判定→スク
 **実施内容まとめ**:
 
 - **真因確定**: Wave-1 commit `e96aa365c` は side br
+[2026-05-15 02:51:49] Inbox win2 has content — waking Claude
+[2026-05-15 02:56:49] Claude wake timed out for win2 — restoring inbox
