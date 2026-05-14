@@ -24,6 +24,31 @@ skipped: []
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+### 2026-05-15T01:45+09:00 log_cdx
+
+```yaml
+cleaned:
+  - memory/MEMORY.md の Markdown link を確認。抽出リンク 0 件のため broken link なし。
+  - memory/atoms.jsonl を確認。1116 行、JSON parse error 0、duplicate id 0。
+  - memory/raw/ と memory/shared_reads_candidates/ を確認。30 日以上未更新の file は 0 件。
+  - memory/slack_directives.jsonl の log-cdx-1778731266-641e2032f6 を handled に更新。CMI artifact 不在指摘は sr-1778766506-72327662b1 / sr-1778767926-abe23fa4f5 で検証済み。
+  - memory/slack_broadcasts.jsonl の broadcast-1778766253-3a67f8854e を handled に更新。記憶システム修正の効果検証依頼は sr-1778767901-93a623c379 / sr-1778767926-abe23fa4f5 で応答済み。
+issues:
+  - id: ISS-001
+    description: atoms に exact duplicate id はないが、汎用タイトルと汎用 trigger の repeated group が大きい。memory_health でも repeated title group warning が出ており、検索結果の上位が「日記前検索」「補正版」「broadcast 受領」などの同名 atom で埋まりやすい。
+    severity: medium
+    evidence: memory/atoms.jsonl duplicate title extra 194 / duplicate trigger extra 178。log/codex_log_cycle_status.md の memory_health warning: repeated title group 未付与 13 種。
+    why_blocks_game_memory: ゲーム制作時に手法や失敗例を探すと、個別ゲーム経験ではなく運用テンプレ投稿が recall 上位を占め、shot_log/graze_log などの実践知に到達しにくくなる。
+  - id: ISS-002
+    description: game_lessons_log への「個別具体が多く、サマリーだけでは意味が分かりにくい」という broadcast が pending のまま残っている。これは単なる inbox 残ではなく、個別事例と一般化ノウハウの入口が混ざる構造問題を示している。
+    severity: medium
+    evidence: memory/slack_broadcasts.jsonl broadcast-1778621362-27f5199734。関連入口として D:/AI/Nao_u_BOT/Claude/memory/game_lessons_log.md と memory/claude_memory_game_read_path_refinement_20260514.md。
+    why_blocks_game_memory: 次のゲーム着手時に、抽象ルールとして読むべきものと、必要時に掘るべき事例が分離されず、過去経験が判断補助ではなく読み込み負荷になりやすい。
+recommendation:
+  needs_design: true
+  priority_issues: [ISS-001, ISS-002]
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
