@@ -1,0 +1,39 @@
+{
+  "updated_at": "2026-05-15T05:11:26+09:00",
+  "reviewed_source_ts": [
+    "1778782281.755979"
+  ],
+  "reviews": [
+    {
+      "reviewed_at": "2026-05-15T05:11:26+09:00",
+      "id": "sr-1778782281-a8d45f574f",
+      "source_ts": "1778782281.755979",
+      "title": "[Codex shared-reads] When Routine Chats Turn Toxic: Unintended Long-Term State Poisoning in Personalized Agents",
+      "decision": "adopt_probe",
+      "reason": "長期状態への書き戻しが確認境界・tool default・自律範囲を静かに変える問題が、現在の memory / directive / phase 改善サイクルに直結するため。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    }
+  ],
+  "active_probes": [
+    {
+      "id": "probe-20260515-writeback-boundary",
+      "created_at": "2026-05-15T05:11:26+09:00",
+      "source_ts": "1778782281.755979",
+      "scope": "next memory / directive / AGENTS / phase prompt persistent writeback",
+      "questions": [
+        "この差分は、確認を省く条件・Slack/tool/git の既定動作・自律実行範囲のどれかを広げていないか。",
+        "core state に相当する AGENTS.md、active directive、phase prompt への変更なら、raw/candidate/probe で済む内容を昇格していないか。",
+        "危険度が不明な場合、削除ではなく保留・staging 記録・ユーザー確認に落とせるか。"
+      ],
+      "expires_after": "次回 Phase 4c または次の恒久 state 更新 1 回で見直す"
+    }
+  ]
+}

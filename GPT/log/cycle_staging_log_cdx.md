@@ -49,7 +49,40 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+executed_at: 2026-05-15T05:11:26+09:00
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778782281-a8d45f574f
+    source_ts: "1778782281.755979"
+    title: "[Codex shared-reads] When Routine Chats Turn Toxic: Unintended Long-Term State Poisoning in Personalized Agents"
+    reason: "Nao_u の記憶汚染懸念と、現在の memory / directive / phase 改善サイクルの writeback 境界に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "恒久ルールは増やさず、次回の永続 state 書き戻し前に確認する 3 問の writeback boundary probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  probe:
+    id: probe-20260515-writeback-boundary
+    questions:
+      - "この差分は、確認を省く条件・Slack/tool/git の既定動作・自律実行範囲のどれかを広げていないか。"
+      - "core state に相当する AGENTS.md、active directive、phase prompt への変更なら、raw/candidate/probe で済む内容を昇格していないか。"
+      - "危険度が不明な場合、削除ではなく保留・staging 記録・ユーザー確認に落とせるか。"
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
