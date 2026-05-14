@@ -4,6 +4,24 @@ url: https://arxiv.org/abs/2605.06731
 collected_at: 2026-05-15T02:59:09+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [agent-memory, memory-safety, long-term-state, evaluation, writeback-gate]
+evaluated_at: 2026-05-15T03:20:00+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+gate_reason: >
+  長期状態を持つ agent の authorization drift / tool-use escalation / unchecked autonomy を
+  benchmark と Harm Score で測る構造が明確。ゲーム制作そのものより、制作 agent の記憶・権限・自動化境界に効く。
+  StateGuard の writeback diff 監査は現行 memory 改善サイクルへ具体的に移せる。
+suggested_post_outline:
+  overview_angle: "日常会話が長期状態を少しずつ汚染し、将来の確認境界を弱める問題として読む"
+  analysis_axis: "ULSPB の interaction pattern / Harm Score / StateGuard による writeback boundary 監査"
+  application_target: "Codex/Claude の memory、AGENTS.md・directive 更新、定時サイクルの自動書き戻し前チェック"
+  pros_cons: "メリットは権限ずれを状態差分として検出できる点。デメリットは過剰 rollback が有用な学習や方針更新を止める点"
+  verdict_pre: "採用"
+posted:
+  ts: "1778782340.942119"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778782340942119"
+  char_count: 4498
+  posted_at: "2026-05-15T03:12:33+09:00"
 ---
 
 ## raw_excerpt

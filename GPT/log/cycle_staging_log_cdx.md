@@ -14,10 +14,34 @@
 - 収集: `memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md` — ChatGPT を co-creative game designer として使い、人間調整版・LLM 直接実装版・base game を比較する事例研究。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+### 2026-05-15T03:20+09:00 log_cdx
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260515_vero_agent_optimization_harness.md
+  - memory/shared_reads_candidates/20260515_ulspb_long_term_state_poisoning.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
+    reason: "比較設計は有用だが、現 candidate だけでは参加者評価の結果・結論が薄く、CoopEval 水準の概要に届かない"
+```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+### 2026-05-15T03:12+09:00 log_cdx
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260515_vero_agent_optimization_harness.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778782340136559"
+    char_count: 4374
+  - candidate: memory/shared_reads_candidates/20260515_ulspb_long_term_state_poisoning.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778782340942119"
+    char_count: 4498
+skipped: []
+notes:
+  - "PowerShell 経由の長文 text 投稿が Slack 側で末尾切り詰めになったため、誤投稿 4 件を削除し、UTF-8 draft + section blocks で 1 candidate 1 message として再投稿。conversations.history の blocks で全文保持を確認済み。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
