@@ -4,6 +4,18 @@ url: https://arxiv.org/abs/2510.25820
 collected_at: 2026-05-15T04:59:28+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, generative-npc, llm-dialogue, prompt-design, player-experience]
+evaluated_at: 2026-05-15T05:12:00+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+gate_reason: |
+  NPC の役割ごとに prompt 制約の強さを変えるという問題設定、The Interview での within-subjects study、JSON+RAG scaffold と LLM judge による追評価までが候補本文から追える。
+  「安定性が必要な NPC」と「即興性が価値になる NPC」を分ける設計軸は、LLM NPC 実装時の具体判断に落とし込めるため、~4000字の概要に耐える。
+suggested_post_outline:
+  overview_angle: "LLM NPC を一律に縛るのではなく、役割ごとに coherence と surprise の配分を変える prompt scaffold として読む。"
+  analysis_axis: "high/low constraint prompt の比較、JSON+RAG scaffold、LLM judge 評価がどこまで player experience を説明できるか。"
+  application_target: "会話 NPC の役割設計、クエスト進行 NPC と容疑者/雑談 NPC の prompt policy 分離、headless synthetic evaluation の試作。"
+  pros_cons: "メリットは NPC ごとの制約設計を明文化できる点。デメリットは N=10 と synthetic judge の外的妥当性が限定的な点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
