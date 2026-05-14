@@ -85,7 +85,26 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+executed_at: 2026-05-15T05:27:00+09:00
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md: Markdown link 0 件、broken link 0 件を確認。"
+  - "memory/atoms.jsonl: 1127 行、JSON parse error 0、duplicate id 0、source/title/summary/use_when 近似重複 0 を確認。"
+  - "memory/raw/: 30 日以上未更新の raw file 0 件。アーカイブ対象なし。"
+  - "memory/shared_reads_candidates/: 30 日以上未更新の candidate 0 件。降格・保持判定対象なし。"
+  - "inbox: slack_directives pending 2 件、slack_broadcasts pending 7 件を確認。今回の機械整理だけで handled 化できる処理済み項目は追加なし。"
+issues:
+  - id: ISS-20260515-01
+    description: "ゲーム制作記憶が、実装に入るための短い導線ではなく、着手ゲート・自己反省・ルール適合判定として発火しやすい。直近 broadcast では、graze_log サイクルが brainstorm と日記中心になり、ゲーム本体の playable diff が出ていないことが問題化されている。"
+    severity: high
+    evidence: "memory/slack_broadcasts.jsonl: broadcast-1778778369-9d4ef2d700 / memory/game_read_path_mirror_index_20260515.md / memory/game_design_rules.md / memory/atoms.jsonl tag counts: game-design 681, game-rights 88, playable diff 言及 2"
+    why_blocks_game_memory: "次のゲーム制作で過去知見を引くと、具体的な改造候補や検証手順より先に、ルール遵守・保留・自己診断が前面に出る。結果として、経験が次の playable change に変換されず、記憶システムが制作ループを遅らせる。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-20260515-01
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
