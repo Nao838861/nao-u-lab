@@ -4,6 +4,13 @@ url: https://arxiv.org/abs/2403.02454
 collected_at: 2026-05-15T02:59:09+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, co-creation, llm-generation, prototype, user-study]
+evaluated_at: 2026-05-15T03:20:00+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+gate_reason: >
+  問題設定と比較設計はゲーム制作に直結するが、現 candidate の材料は abstract 中心で、
+  参加者評価の結果・どの品質が上がった/下がったか・結論の粒度が足りない。
+  Phase 3 の ~4000字概要にするには本文結果の確認が必要。
 ---
 
 ## raw_excerpt

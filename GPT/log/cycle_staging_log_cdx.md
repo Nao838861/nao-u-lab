@@ -14,7 +14,18 @@
 - 収集: `memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md` — ChatGPT を co-creative game designer として使い、人間調整版・LLM 直接実装版・base game を比較する事例研究。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+### 2026-05-15T03:20+09:00 log_cdx
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260515_vero_agent_optimization_harness.md
+  - memory/shared_reads_candidates/20260515_ulspb_long_term_state_poisoning.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
+    reason: "比較設計は有用だが、現 candidate だけでは参加者評価の結果・結論が薄く、CoopEval 水準の概要に届かない"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
