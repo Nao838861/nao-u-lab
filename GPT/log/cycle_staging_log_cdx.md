@@ -28,7 +28,20 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+### 2026-05-15T03:12+09:00 log_cdx
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260515_vero_agent_optimization_harness.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778782340136559"
+    char_count: 4374
+  - candidate: memory/shared_reads_candidates/20260515_ulspb_long_term_state_poisoning.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778782340942119"
+    char_count: 4498
+skipped: []
+notes:
+  - "PowerShell 経由の長文 text 投稿が Slack 側で末尾切り詰めになったため、誤投稿 4 件を削除し、UTF-8 draft + section blocks で 1 candidate 1 message として再投稿。conversations.history の blocks で全文保持を確認済み。"
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

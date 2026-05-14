@@ -17,6 +17,11 @@ suggested_post_outline:
   application_target: "Codex/Claude の memory、AGENTS.md・directive 更新、定時サイクルの自動書き戻し前チェック"
   pros_cons: "メリットは権限ずれを状態差分として検出できる点。デメリットは過剰 rollback が有用な学習や方針更新を止める点"
   verdict_pre: "採用"
+posted:
+  ts: "1778782340.942119"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778782340942119"
+  char_count: 4498
+  posted_at: "2026-05-15T03:12:33+09:00"
 ---
 
 ## raw_excerpt

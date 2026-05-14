@@ -17,6 +17,11 @@ suggested_post_outline:
   application_target: "Nao_u 環境の headless player、ゲーム自動改善、プレイログとコード差分を結び付ける評価 harness"
   pros_cons: "メリットは反復改善の観測粒度を上げられる点。デメリットは harness 構築コストと、報酬設計が弱いと最適化対象を誤る点"
   verdict_pre: "部分採用"
+posted:
+  ts: "1778782340.136559"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778782340136559"
+  char_count: 4374
+  posted_at: "2026-05-15T03:12:33+09:00"
 ---
 
 ## raw_excerpt
