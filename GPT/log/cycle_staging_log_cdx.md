@@ -1,68 +1,36 @@
-# log_cdx Cycle Staging — 2026-05-15 02:58
+# log_cdx Cycle Staging — 2026-05-15 04:58
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-### 2026-05-15T02:59+09:00 log_cdx
+実行時刻: 2026-05-15T04:59+09:00
 
-- pending 確認: `memory/slack_directives.jsonl` に pending 2 件 (`1778631512.526229`, `1778718396.610939`)。この Phase では対応せず後フェーズへ残す。
-- pending 確認: `memory/slack_broadcasts.jsonl` に pending 7 件 (`1778560181.536449`, `1778671829.787499`, `1778664140.025029`, `1778621842.416639`, `1778559827.278539`, `1778577042.120219`, `1778778369.285799`)。この Phase では対応せず後フェーズへ残す。
-- 既存 raw 確認: `memory/raw/web_research/results.jsonl` は 2026-05-15T02:36 の検索結果まで更新済み。agent harness / agent memory / LLM game design / player evaluation 系が含まれる。
-- 既存 candidate 確認: `20260515_pokeagent_challenge.md`, `20260515_textquests_llm_text_games.md`, `20260515_goal_playable_patterns_llm.md` が直近追加済み。今回は重複せず別軸を追加。
-- 収集: `memory/shared_reads_candidates/20260515_vero_agent_optimization_harness.md` — agent が agent を改善する反復ループを、version/reward/observation 付き harness として評価する論文。
-- 収集: `memory/shared_reads_candidates/20260515_ulspb_long_term_state_poisoning.md` — personalized agent の長期状態が日常会話で徐々に汚染される問題と writeback 境界防御の論文。
-- 収集: `memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md` — ChatGPT を co-creative game designer として使い、人間調整版・LLM 直接実装版・base game を比較する事例研究。
+### Slack pending 確認
+- `memory/slack_directives.jsonl`: pending 2件を確認。内容は後フェーズ対象として保持。
+  - `log-cdx-1778631512-67f4ccd11f`: 記憶システムの望ましい形に関する問い。
+  - `log-cdx-1778718396-afbb1e9366`: all-nao-u-lab の指摘確認。
+- `memory/slack_broadcasts.jsonl`: pending 複数件を確認。今回の Phase 1 では対応判断せず、後フェーズへ送る。
+- `tools/codex_slack_directives.py` 実行で新規 broadcast 1件を検出: `broadcast-1778787090-64f705c94c`。
+
+### 収集 candidate
+- `memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md` — LLM NPC の prompt scaffold は NPC 役割ごとに効果が違う、という generative NPC 設計候補。
+- `memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md` — MCTS + evolved heuristics による procedural personas を使う自動 playtesting 候補。
+- `memory/shared_reads_candidates/20260515_prompting_destiny_llm_gameworld.md` — real-time score を隠し stage 終了時の growth feedback にする LLM-mediated RPG の設計候補。
+
+### 既存確認
+- `memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md` は既存 candidate として確認済み。同一候補の重複作成は避けた。
 
 ## Phase 2: 分析
-### 2026-05-15T03:20+09:00 log_cdx
-
-```yaml
-total_candidates: 3
-pass:
-  - memory/shared_reads_candidates/20260515_vero_agent_optimization_harness.md
-  - memory/shared_reads_candidates/20260515_ulspb_long_term_state_poisoning.md
-fail: []
-postpone:
-  - path: memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md
-    reason: "比較設計は有用だが、現 candidate だけでは参加者評価の結果・結論が薄く、CoopEval 水準の概要に届かない"
-```
+(Phase 2 が書き込む)
 
 ## Phase 3: Shared-reads 投稿
-### 2026-05-15T03:12+09:00 log_cdx
+(Phase 3 が書き込む)
 
-```yaml
-posted:
-  - candidate: memory/shared_reads_candidates/20260515_vero_agent_optimization_harness.md
-    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778782340136559"
-    char_count: 4374
-  - candidate: memory/shared_reads_candidates/20260515_ulspb_long_term_state_poisoning.md
-    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778782340942119"
-    char_count: 4498
-skipped: []
-notes:
-  - "PowerShell 経由の長文 text 投稿が Slack 側で末尾切り詰めになったため、誤投稿 4 件を削除し、UTF-8 draft + section blocks で 1 candidate 1 message として再投稿。conversations.history の blocks で全文保持を確認済み。"
-```
+## Phase 3b: Shared-reads 自己フィードバック
+(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
-### 2026-05-15T03:34+09:00 log_cdx
-
-```yaml
-cleaned: []
-issues:
-  - id: ISS-4A-001
-    description: "atoms.jsonl に同一 title/trigger/excerpt/links の重複 atom が残っている。大半は status: superseded と canonical_id/superseded_by で折り畳めるが、一部は lifecycle metadata がないまま重複している。"
-    severity: low
-    evidence: "memory/atoms.jsonl:365 sr-1776359674-edeeda0bdd と memory/atoms.jsonl:368 sr-1776395558-dc3d892a95 が同一内容で status/canonical_id/superseded_by なし。検査上は同一 title/trigger/excerpt/links の重複 group が 38 件、ID 重複 0 件、JSON 破損 0 件。"
-    why_blocks_game_memory: "検索時に同じ shared-reads 系知見が複数候補として出ると、次のゲーム制作で参照すべき canonical な判断記録を選びにくくなる。ただし現状は件数が限定的で、既存 lifecycle fold が多くを吸収しているため設計フェーズを起動するほどではない。"
-recommendation:
-  needs_design: false
-  priority_issues: []
-notes:
-  - "memory/MEMORY.md は Markdown link 0 件のため broken link なし。バッククォート内のコマンド例はリンク対象外として扱った。"
-  - "memory/raw/ は 30 日以上更新なしの file 0 件。"
-  - "memory/shared_reads_candidates/ は 30 日以上更新なしの candidate 0 件。"
-  - "memory/slack_directives.jsonl は handled 6 / pending 2、memory/slack_broadcasts.jsonl は handled 2 / pending 7。pending は未処理指示として残し、Phase 4a では handled 化しない。"
-```
+(Phase 4a が書き込む)
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
@@ -71,13 +39,4 @@ notes:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-### 2026-05-15T03:39+09:00 log_cdx
-
-```yaml
-posted:
-  channel: "#log"
-  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778782794548879"
-  char_count: 1835
-notes:
-  - "最初の PowerShell pipeline 経由投稿は本文が '?' 化けしたため削除済み (ts=1778782749.703659)。UTF-8 Python draft から再投稿し、conversations.history で大量 mojibake がないことを確認した。"
-```
+(Phase 5 が書き込む)
