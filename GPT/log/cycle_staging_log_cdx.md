@@ -44,7 +44,25 @@ notes:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+### 2026-05-15T03:34+09:00 log_cdx
+
+```yaml
+cleaned: []
+issues:
+  - id: ISS-4A-001
+    description: "atoms.jsonl に同一 title/trigger/excerpt/links の重複 atom が残っている。大半は status: superseded と canonical_id/superseded_by で折り畳めるが、一部は lifecycle metadata がないまま重複している。"
+    severity: low
+    evidence: "memory/atoms.jsonl:365 sr-1776359674-edeeda0bdd と memory/atoms.jsonl:368 sr-1776395558-dc3d892a95 が同一内容で status/canonical_id/superseded_by なし。検査上は同一 title/trigger/excerpt/links の重複 group が 38 件、ID 重複 0 件、JSON 破損 0 件。"
+    why_blocks_game_memory: "検索時に同じ shared-reads 系知見が複数候補として出ると、次のゲーム制作で参照すべき canonical な判断記録を選びにくくなる。ただし現状は件数が限定的で、既存 lifecycle fold が多くを吸収しているため設計フェーズを起動するほどではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+notes:
+  - "memory/MEMORY.md は Markdown link 0 件のため broken link なし。バッククォート内のコマンド例はリンク対象外として扱った。"
+  - "memory/raw/ は 30 日以上更新なしの file 0 件。"
+  - "memory/shared_reads_candidates/ は 30 日以上更新なしの candidate 0 件。"
+  - "memory/slack_directives.jsonl は handled 6 / pending 2、memory/slack_broadcasts.jsonl は handled 2 / pending 7。pending は未処理指示として残し、Phase 4a では handled 化しない。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
