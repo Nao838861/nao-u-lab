@@ -4,6 +4,12 @@ url: https://arxiv.org/abs/2507.23701
 collected_at: 2026-05-15T01:18:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-ai, text-adventure, agent-evaluation, long-context, benchmark]
+evaluated_at: 2026-05-15T01:02:01+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+gate_reason: >-
+  interactive fiction を使った探索・文脈保持・目標推定の評価という方向は有用だが、現 candidate の材料は abstract レベルに留まり、
+  評価手法・結果・失敗分析の中身が 4000 字級の概要に足りない。Phase 3 に回す前に原文精読か既投稿との差分確認が必要。
 ---
 
 ## raw_excerpt

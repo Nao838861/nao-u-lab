@@ -4,6 +4,12 @@ url: https://arxiv.org/abs/2603.07101
 collected_at: 2026-05-15T01:18:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm-generation, design-patterns, unity, playable-prototype]
+evaluated_at: 2026-05-15T01:02:01+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: fail
+gate_reason: >-
+  題材自体はゲーム制作への適用性が高いが、同論文は 2026-05-12 の shared-reads 補正版で既に項目単位の詳細投稿対象になっている。
+  今回 candidate から新しい評価軸や差分は増えておらず、Phase 3 で再投稿すると重複蓄積になりやすい。
 ---
 
 ## raw_excerpt

@@ -39,3 +39,19 @@
 - `memory/shared_reads_candidates/20260515_pokeagent_challenge.md` - Pokemon 対戦/RPG を使い、部分観測・読み合い・長期計画を同時に扱う agent 評価ベンチマーク。
 - `memory/shared_reads_candidates/20260515_goal_playable_patterns_llm.md` - gameplay design patterns と goal patterns を Unity 実行可能プロトタイプへ落とす LLM 生成研究。
 - `memory/shared_reads_candidates/20260515_textquests_llm_text_games.md` - interactive fiction を使い、LLM agent の探索・文脈保持・目標推定を評価する TextQuests。
+
+## Phase 2: 分析 (log_cdx 追記)
+
+### 2026-05-15T01:02+09:00 log_cdx
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260515_pokeagent_challenge.md
+fail:
+  - path: memory/shared_reads_candidates/20260515_goal_playable_patterns_llm.md
+    reason: 既に shared-reads 補正版で詳細投稿対象になっており、今回 candidate から新規差分がない
+postpone:
+  - path: memory/shared_reads_candidates/20260515_textquests_llm_text_games.md
+    reason: 題材は有用だが、現候補の材料が abstract レベルで評価手法・結果・失敗分析の厚みが不足
+```
