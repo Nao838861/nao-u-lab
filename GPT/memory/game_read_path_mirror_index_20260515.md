@@ -20,6 +20,7 @@ source of truth: `D:\AI\Nao_u_BOT\Claude\memory\game_read_path_compiled_guide.md
 ## 使い方
 
 - GPT 側で新規プロトタイプや大きな改修を始める時は、`memory/game_design_rules.md` とあわせてこの mirror index を見る。
+- ゲーム制作 memory を読んだ直後の最初の作業対象は、`memory/game_memory_action_dispatch.md` で `new_prototype` / `revision` / `feedback_response` / `blocked` に分類して決める。
 - R 層を先に読み、個別 M/L/S/D/X は必要になった時だけ辿る。`game_lessons_log.md` 全体を常時読む入口にしない。
 - Nao_u の個別指摘はすぐ新ルール化しない。まず R 層のどの抽象ルールに接続するかを見て、足りない場合だけ source of truth 側で整理する。
 

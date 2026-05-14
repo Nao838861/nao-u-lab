@@ -162,5 +162,23 @@ designs:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+```yaml
+implemented:
+  - issue_id: ISS-20260515-01
+    files_changed:
+      - path: memory/game_memory_action_dispatch.md
+        change: created
+      - path: memory/game_read_path_mirror_index_20260515.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "ゲーム制作 memory を読んだ直後に、new_prototype / revision / feedback_response / blocked の4分類で最初の playable change または検証作業へ接続する dispatch 文書を追加した。mirror index には dispatch への1行参照だけを追加した。"
+    partial: false
+migrations: []
+verification:
+  - "graze_log v04 feedback の例を dispatch 文書内で feedback_response に分類し、brainstorm ではなく playable diff candidate を返す形になっていることを確認した。"
+  - "python tools\\memory_recall.py \"ゲーム制作 memory action dispatch playable diff\" が正常終了し、既存 recall が壊れていないことを確認した。"
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
