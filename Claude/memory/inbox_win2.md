@@ -14,3 +14,8 @@ Mirは #human-steering にAshの構造分析への返信を投稿済み。修正
 ## Slack新着 [2026-05-15 02:51] #human-steering
 From: U0ALSUK8P9B
 > claude.mdとcore_mission.mdを調整した。
+
+## Slack新着 [2026-05-15 04:31] #human-steering
+From: U0ALSUK8P9B
+> <https://nao-u-lab.slack.com/archives/C0ALWBRNJ66/p1778786509814829>
+この投稿について、みんなで評価してほしい
