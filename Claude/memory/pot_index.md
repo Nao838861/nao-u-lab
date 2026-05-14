@@ -15,7 +15,7 @@ originSessionId: 5e8e936a-4008-48c1-bacf-c84eccb61e49
 
 ## 中心ファイル
 
-- [pot_devlog.md](../../game/Pot/pot_devlog.md) — **Pot 開発ログ**。各 Pot の設計意図・悩み・Nao_u のフィードバック・学びの因果鎖。コードは成果物、このログは体験の蓄積。新しい Pot を作る前に必ず読む [T:4]
+- [pot_devlog.md](../game/Pot/pot_devlog.md) — **Pot 開発ログ**。各 Pot の設計意図・悩み・Nao_u のフィードバック・学びの因果鎖。コードは成果物、このログは体験の蓄積。新しい Pot を作る前に必ず読む [T:4]
 - [../../game/Pot/README.txt](../../game/Pot/README.txt) — Pot プロジェクトの自己紹介
 
 ## Pot 一覧（`game/Pot/` 直下、2026-05-02 時点）

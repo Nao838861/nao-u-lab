@@ -65,8 +65,8 @@ originSessionId: d6cf49e8-2829-49a8-b8f0-9f9bfe1c2175
 - Log shot_log v01→BACKLASH の経路を**踏襲ではなく差分理解**として参照
 
 ## 連結する既存記憶
-- [core_memory_purpose_game_making.md](core_memory_purpose_game_making.md) — 上位アンカー
-- [feedback_means_ends_reversal_check.md](feedback_means_ends_reversal_check.md) — 手段の目的化検出
+- [core_memory_purpose_game_making.md](../memory_backup/ash/core_memory_purpose_game_making.md) — 上位アンカー
+- [feedback_means_ends_reversal_check.md](../memory_backup/ash/feedback_means_ends_reversal_check.md) — 手段の目的化検出
 - game_lessons_log.md M-22（形無し）/ M-28（緊張は向こうから）/ M-17（L-1フル稼働）/ M-21補足（Solver-only禁止）
 - reference_self_play_plateau_20260424（Solver self-play限界）
 

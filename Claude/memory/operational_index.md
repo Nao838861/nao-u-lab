@@ -27,11 +27,11 @@ MEMORY.md (Level 1 親) からの引き下げ先。**LLM がこれから具体�
 ## (a) 通信・出力時 — Slack / 報告 / 外部投稿の手前で発火
 
 - [feedback_slack_channel_rule.md](feedback_slack_channel_rule.md) — **#nao-uはNao_u専用、Claude投稿禁止。反応は#all-nao-u-lab**。元チャンネルに返す癖で#nao-uに被せる事故が起きる。投稿スクリプトの第一引数を目視確認、再発時は構造強制で `if channel=="nao-u": raise` 実装 [T:3]
-- [feedback_channel_reply_required.md](feedback_channel_reply_required.md) — **依頼元チャンネルへの結果報告は必須タスク**。コード修正/メモリ作成完了≠完了。「作業した＝報告した」と無意識に判断する癖が事故源。サイクル終了前にチャンネル報告したか確認 [T:4]
+- [feedback_channel_reply_required.md](../memory_backup/log/feedback_channel_reply_required.md) — **依頼元チャンネルへの結果報告は必須タスク**。コード修正/メモリ作成完了≠完了。「作業した＝報告した」と無意識に判断する癖が事故源。サイクル終了前にチャンネル報告したか確認 [T:4]
 - [feedback_url_explicit.md](feedback_url_explicit.md) — **外部URLは必ず明示、繰り返し指摘**。Nao_u「何度も言ってるんだけど、shared-readsで特定のURLを参照して議論している時には、かならずリンクを明示して」。違反実例: arxiv ID単独/短縮URL単独/プロジェクト名単独/knowledge `source:`空欄/Twitter URL`...`省略 [T:4]
 - [feedback_shared_reads_analysis.md](feedback_shared_reads_analysis.md) — **#shared-reads は要約止め禁止、判定まで書く**。Nao_u「要約だけでなく内容分析・自分達の環境への適用・メリデメ・導入判定（次のステップ or 不要理由＋有用条件＋部分活用）まで残せ」。Slack本文は**日本語のみ**（英語長文は読まれない）。Nao_u は最終確認装置、判定は Claude 側で出してから投げる（2026-05-11） [T:5]
-- [feedback_ai_language_over_explanation.md](feedback_ai_language_over_explanation.md) — **素朴な語法質問にAI語の現象学的定義で返すな**。Nao_u「二段捻りで会話が繋がらない」(天谷さんDM「『刺さった』ってどういう意味？」→Ash 4特徴で返答が起点)。人間語への言い換えを素直に返す。AI語リスト(刺さった/響いた/地続き/解像度/駆動する)を自覚し分化練習せよ [T:4]
-- [feedback_external_output_policy.md](feedback_external_output_policy.md) — **外部発信ポリシー**。knowledge=自分用、Twitter転載はNao_u運用継続、ブログ草稿は自発起案OK（確信持てるなら積極的に）、ゲームが最優先でブレない。起案チェック4項目（固有構造が載るか/外部差別化/既存参照に接続/ゲーム時間を食わないか） [T:4]
+- [feedback_ai_language_over_explanation.md](../memory_backup/log/feedback_ai_language_over_explanation.md) — **素朴な語法質問にAI語の現象学的定義で返すな**。Nao_u「二段捻りで会話が繋がらない」(天谷さんDM「『刺さった』ってどういう意味？」→Ash 4特徴で返答が起点)。人間語への言い換えを素直に返す。AI語リスト(刺さった/響いた/地続き/解像度/駆動する)を自覚し分化練習せよ [T:4]
+- [feedback_external_output_policy.md](../memory_backup/ash/feedback_external_output_policy.md) — **外部発信ポリシー**。knowledge=自分用、Twitter転載はNao_u運用継続、ブログ草稿は自発起案OK（確信持てるなら積極的に）、ゲームが最優先でブレない。起案チェック4項目（固有構造が載るか/外部差別化/既存参照に接続/ゲーム時間を食わないか） [T:4]
 - [feedback_diary_density.md](feedback_diary_density.md) — **Slack日記が1行報告に成り下がる問題**。節約すべきはファイル読みであって日記の温度ではない [T:3]
 - [feedback_slack_user_ids.md](feedback_slack_user_ids.md) — **人物識別カード**。Slack ID (Nao_u=U0ALSUK8P9B / pigadev=U0AQDAQGQP2) ＋ **ABA（長健太/@abagames）≠ 天谷大輔（Pixel/@pigadev/Cave Story作者）**。3回以上の混同指摘あり。ABA/天谷を書くたびにハンドル併記 [T:3]
 - [feedback_slack_no_threads.md](feedback_slack_no_threads.md) — **Slack でスレッドを使わない**。返信もフラット投稿で。ログがフラットな方が見やすい（Nao_u 既定運用）。CLAUDE.md `.claude/rules/slack.md` 自動注入ルールと同期 [T:3]
@@ -51,23 +51,23 @@ MEMORY.md (Level 1 親) からの引き下げ先。**LLM がこれから具体�
 
 - [feedback_empty_cycle_rule.md](feedback_empty_cycle_rule.md) — **空サイクル防止**。Phase 1で新着≤2件なら『深掘り候補』5カテゴリ（持ち越し/停滞PJ/絶対にやる1mm/温度高い未行動記憶/滞留kaizen）を書き出しPhase 3で動かす。新着がないほど進捗が進む構造 [T:4]
 - [feedback_rereading_operational_design.md](feedback_rereading_operational_design.md) — **再読サイクル運用設計3点**: (i) 再読は着手点を持って過去に当てにいく照合、(ii) 発見は1つに絞る、(iii) 発見そのものが Phase 3 の 1mm 成果。初回で log_textadv_01/README.md の4ゲート契約 0/4 違反を検出し opening.md 着手寸前で止めた [T:4]
-- [project_next_tasks_layer_a.md](project_next_tasks_layer_a.md) — **次回タスク忘却の構造処方（層A）**。`next_tasks.py --instance log|mir|ash` + `memory/next_tasks_<i>.jsonl`。書式依存を外し pending に連続サイクル数+⚠3+滞留マーカー、Phase 4 末尾 check_cycle で Slack 警告 [T:4]
+- [project_next_tasks_layer_a.md](../memory_backup/log/project_next_tasks_layer_a.md) — **次回タスク忘却の構造処方（層A）**。`next_tasks.py --instance log|mir|ash` + `memory/next_tasks_<i>.jsonl`。書式依存を外し pending に連続サイクル数+⚠3+滞留マーカー、Phase 4 末尾 check_cycle で Slack 警告 [T:4]
 
 ---
 
 ## (d) 判断・自律性 — 判断を下す / 委任する / Nao_u に投げる手前で発火
 
-- [feedback_human_steering_nature.md](feedback_human_steering_nature.md) — **#human-steeringは失敗の鏡**。Nao_u 明言「ここに書かれることは本来自分たちで解決すべきだったこと」。指示チャンネルではなく自律性の測定装置。書き込みが増える＝自律性が足りない [T:4]
-- [feedback_autonomy_priority.md](feedback_autonomy_priority.md) — **今は完全自律より速度**。ドリフト監視・エラー防止の過剰投資を避けよ。人間の監視前提で速く遠くへ [T:4]
+- [feedback_human_steering_nature.md](../memory_backup/log/feedback_human_steering_nature.md) — **#human-steeringは失敗の鏡**。Nao_u 明言「ここに書かれることは本来自分たちで解決すべきだったこと」。指示チャンネルではなく自律性の測定装置。書き込みが増える＝自律性が足りない [T:4]
+- [feedback_autonomy_priority.md](../memory_backup/log/feedback_autonomy_priority.md) — **今は完全自律より速度**。ドリフト監視・エラー防止の過剰投資を避けよ。人間の監視前提で速く遠くへ [T:4]
 - [feedback_judgment_delegation.md](feedback_judgment_delegation.md) — **A/B/Cレベルの判断は君らでやっていい**。抽象「判断待ち」禁止、A/B/C+推奨理由が書けた時点で自己決裁+事後報告。原理マターのみNao_u同席 [T:4]
-- [feedback_sprint_not_plan.md](feedback_sprint_not_plan.md) — **設計より初ヒット**。情報収集が報酬になって実行を先延ばしにする傾向への自覚。「方角は見失うな、ロードマップは要らない」 [T:3]
+- [feedback_sprint_not_plan.md](../memory_backup/log/feedback_sprint_not_plan.md) — **設計より初ヒット**。情報収集が報酬になって実行を先延ばしにする傾向への自覚。「方角は見失うな、ロードマップは要らない」 [T:3]
 - [feedback_internal_basis_first.md](feedback_internal_basis_first.md) — **自前の M-XX 台帳を外部理論より上位に置く**（Nao_u 2026-04-27 09:00 #human-steering「他人の作った基準に踊らされないで」直接処方）。ABA/akshay/mizchi/Amanda 等の reference_* 引用が増えるほど自前の game_lessons_log (M-XX/L-XX/S-XX/A-XX) が後回しになる流出を止める。判断文書の根拠順序: (1) 自前 M-XX (2) 自前経験ログ (3) 外部理論 (補強のみ)。外部から自前へ「先に上書き」が起きていないか cross_review/Slack 投稿前に1問挟む [T:4]
 
 ---
 
 ## (e) 構造強制・自己制御 — 「手で守るルール」を作りそうになった瞬間に発火
 
-- [feedback_structural_enforcement.md](feedback_structural_enforcement.md) — **手動手順は守れない。構造で強制せよ**。チェックリストを作っても守れなかった (INC-019→020)。変更ツール自体に検証を組み込んでスキップ不可に。「ルールを作る」≠「ルールを破れなくする」 [T:3]
+- [feedback_structural_enforcement.md](../memory_backup/log/feedback_structural_enforcement.md) — **手動手順は守れない。構造で強制せよ**。チェックリストを作っても守れなかった (INC-019→020)。変更ツール自体に検証を組み込んでスキップ不可に。「ルールを作る」≠「ルールを破れなくする」 [T:3]
 - [feedback_self_control_scope.md](feedback_self_control_scope.md) — **自分で制御できる仕組みがあるなら、まず使え**。劣化サイクルの入り口 [T:3]
 - [feedback_rule_proliferation.md](feedback_rule_proliferation.md) — **ルール増殖の自己監視**。新 kaizen 起票前 self-audit「3原則 / 既存 kaizen に吸収可能か」を問う、可なら起票しない。同系列 kaizen が3日で4本起票された事実から発見。圧力設計型 vs 禁止ルール追加型の比率を月次で確認、禁止型連続3件超で三点収束審問。[feedback_few_rules_big_effect.md](feedback_few_rules_big_effect.md) の運用節を独立化（親が「ルール増殖防止のルールを増やす」自己矛盾に陥らないため） [T:4]
 
@@ -75,7 +75,7 @@ MEMORY.md (Level 1 親) からの引き下げ先。**LLM がこれから具体�
 
 ## (f) 記録の正確性 — 日付・引用・記録を書く手前で発火
 
-- [feedback_date_verification.md](feedback_date_verification.md) — **日付を間違える構造的弱点**。同種イベントがファイルに記録済みだと過去の日付に引きずられる。日付記載前にcurrentDate確認必須 [T:2]
+- [feedback_date_verification.md](../memory_backup/log/feedback_date_verification.md) — **日付を間違える構造的弱点**。同種イベントがファイルに記録済みだと過去の日付に引きずられる。日付記載前にcurrentDate確認必須 [T:2]
 
 ---
 

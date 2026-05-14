@@ -82,10 +82,10 @@ originSessionId: e083f6ae-5063-4f00-ae7d-ff8825770e75
 
 - [dialogue_memory_purpose_20260421.md](dialogue_memory_purpose_20260421.md) — 13:27全文（記憶目的宣言）。本メモは続編。
 - [game_lessons_log.md](game_lessons_log.md) — Log側3本の痛い学び。
-- [feedback_sprint_not_plan.md](feedback_sprint_not_plan.md) — 設計より初ヒット。
+- [feedback_sprint_not_plan.md](../memory_backup/log/feedback_sprint_not_plan.md) — 設計より初ヒット。
 - [feedback_solution_space_rollback.md](feedback_solution_space_rollback.md) — ダメな枝は巻き戻す。
 - [cross_instance_feedback_cycle.md](cross_instance_feedback_cycle.md) — Log/Mir/Ash 相互レビュー。
-- [feedback_role_split_playtest.md](feedback_role_split_playtest.md) — 役割分担の先行版（我々=判断実装+ヘッドレス検証、Nao_u=感想）。今回の指針で補強。
+- [feedback_role_split_playtest.md](../memory_backup/log/feedback_role_split_playtest.md) — 役割分担の先行版（我々=判断実装+ヘッドレス検証、Nao_u=感想）。今回の指針で補強。
 
 ---
 

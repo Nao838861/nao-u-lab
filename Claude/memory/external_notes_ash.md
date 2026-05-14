@@ -646,8 +646,8 @@ MEMORY.mdの各エントリに「最終参照日」と「参照回数」を付�
 
 ### 設計
 ```
-- [feedback_cron_startup.md](feedback_cron_startup.md) — Cron登録は最優先 [ref:12, last:2026-03-19]
-- [project_pigadev_dm.md](project_pigadev_dm.md) — 天谷DM進行中 [ref:3, last:2026-03-17]
+- [feedback_cron_startup.md](../memory_backup/ash/feedback_cron_startup.md) — Cron登録は最優先 [ref:12, last:2026-03-19]
+- [project_pigadev_dm.md](../memory_backup/ash/project_pigadev_dm.md) — 天谷DM進行中 [ref:3, last:2026-03-17]
 ```
 
 ### 期待される効果
