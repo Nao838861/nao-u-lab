@@ -178,9 +178,12 @@
     {
       "id": "CMI-018",
       "title": "analysis-to-action canonical作成",
-      "status": "pending",
+      "status": "completed",
+      "completed_at": "2026-05-14",
       "type": "canonicalization",
-      "goal": "feedback_analysis_action_gap.mdとfeedback_info_integration.mdを中心に、情報収集・分析・Slack投稿が実行を代替する問題のcanonicalを作る。"
+      "goal": "feedback_analysis_action_gap.mdとfeedback_info_integration.mdを中心に、情報収集・分析・Slack投稿が実行を代替する問題のcanonicalを作る。",
+      "artifact": "Claude/memory/feedback_analysis_to_action_canonical.md",
+      "decision": "feedback_analysis_action_gap.md、feedback_info_integration.md、feedback_retrieve_before_synthesize.mdを束ね、外部情報を読んだら実装/統合/判断/保留のどれに戻すかを同サイクルで決めるcanonicalを作成した。raw本文は削除せず、関連ファイルとfeedback_index/operational_indexに正本ポインタを追加した。"
     },
     {
       "id": "CMI-019",
@@ -213,11 +216,16 @@
   ],
   "last_update": {
     "date": "2026-05-14",
-    "summary": "CMI-017としてexternal_notes heading inventoryを作成した。精密対象はClaude/memory/external_notes_mac.mdで、本文は編集せず、607行・68見出し・L2 13件・L3以上55件をL2 block単位で可視化した。各blockにURL数、接続先候補、推奨routeを付け、memory/reference、game/reference、skills/protocol、identity/teacher、operation/agent、beliefs/quotesへ分けた。external_notes_ash/log/mirは巨大なため、次回以降に同じ方式で分割inventory化する。",
+    "summary": "CMI-018としてanalysis-to-action canonicalを作成した。feedback_analysis_action_gap.md、feedback_info_integration.md、feedback_retrieve_before_synthesize.mdを束ね、情報収集・分析・Slack投稿・記録作成が実行を代替する問題に対して、同サイクルで実装/統合/判断/保留のどれに戻すかを明示する正本を追加した。既存raw本文は削除せず、関連3ファイル、feedback_index.md、operational_index.mdに正本ポインタを追加した。",
     "files_touched": [
-      "GPT/memory/claude_memory_external_notes_heading_inventory_20260514.md",
+      "Claude/memory/feedback_analysis_to_action_canonical.md",
+      "Claude/memory/feedback_analysis_action_gap.md",
+      "Claude/memory/feedback_info_integration.md",
+      "Claude/memory/feedback_retrieve_before_synthesize.md",
+      "Claude/memory/feedback_index.md",
+      "Claude/memory/operational_index.md",
       "GPT/memory/claude_memory_improvement_state.json"
     ],
-    "next_task": "CMI-018"
+    "next_task": "CMI-019"
   }
 }

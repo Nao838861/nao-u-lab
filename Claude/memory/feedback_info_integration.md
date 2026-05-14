@@ -4,6 +4,8 @@ description: 集めた情報が流れて消える問題。external_notesから�
 type: feedback
 ---
 
+> 正本: このファイルの教訓は [feedback_analysis_to_action_canonical.md](feedback_analysis_to_action_canonical.md) に統合済み。external_notes 本文は raw evidence として保持し、運用時は正本を先に読む。
+
 集めた外部情報が流れて消えるだけになっていた。Nao_uが#human-steeringで指摘（2026-04-02）。
 
 **事実**: external_notes_log.mdは110KB・126セクション。beliefs.mdにもmemory_redesign.mdにも1件も統合されていなかった（2026-04-02時点）。情報を集めてノートに書く行為自体を「仕事した」と錯覚するB022（代理報酬）の罠。

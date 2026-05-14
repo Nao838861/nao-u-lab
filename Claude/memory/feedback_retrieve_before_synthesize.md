@@ -4,6 +4,8 @@ description: 外部知識を記憶に結晶化する時、直近の話題でな�
 type: feedback
 ---
 
+> 正本: このファイルの教訓は [feedback_analysis_to_action_canonical.md](feedback_analysis_to_action_canonical.md) に統合済み。直近バイアス対策の詳細事例は保持するが、外部情報を行動へ戻す運用時は正本を先に読む。
+
 # 新規知識取り込み時の既存記憶検索——直近バイアス対策
 
 **ルール**: 外部知識（記事・論文・Nao_u投下リンク）を記憶ファイルに結晶化する時、**書き始める前に game/*/devlog.md と memory/game_lessons_log.md を既存失敗パターンで grep する**。直近で温度が高い話題に貼り付けるのではなく、構造的に一致する過去失敗を第一引用例にする。

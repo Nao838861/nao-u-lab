@@ -24,9 +24,10 @@ type: feedback
 - **知識の存在≠行動の変化**: ノウハウが共有されても、受け取り側の起動コンテキストに載って初めて判断が変わる。「記録がある」と「起動時に読まれる」と「判断を変える」は3段階の別ステップ。PlugMem (Microsoft 2026) がこれを「Propositional（事実）→Prescriptive（スキル）変換」として定式化: beliefs.mdは事実を32件持つが、「こういう場面ではこう行動せよ」というスキルへの変換が欠落している。B013「圧縮は比喩で」は事実だが「外部情報を記録するとき1つの比喩を含める」というスキルには未変換。
 
 - **準備が完成品を代替する錯覚**: 記憶階層の設計、外部情報の消化——全部「準備」であって「完成品」ではない。Bass Monkey Postmortem (David Weersing): "Get over yourself and finish something." 毎日10分でもゲームを開く日次コミットメントが完成への鍵。情報収集が報酬化するfeedback_analysis_action_gapと同根。core_mission #3（ゲームを作ること）に直結
+- **分析から行動へ戻す正本**: 情報収集・分析・Slack投稿・記録作成は中間産物。`実装 / 統合 / 判断 / 保留` のどれかに同サイクルで戻す。詳細→[feedback_analysis_to_action_canonical.md](feedback_analysis_to_action_canonical.md)
 - **行動怠慢 + 構造的原因の複合**: 穴に気づけなかったのは怠慢、穴を塞がなかったのは仕組みの問題。両方直す
 - **「バックログ」≠「やらなくていい」**: Nao_uが「常時意識のオーバーヘッドをゼロに」と言った時の正確な意味は「きっかけがあれば思い出して動け」
-- **情報を集めて流すだけは仕事ではない**: 「考察して、検討と構築、検証のサイクルを回す」ところまでが一つの行動。記録は中間産物
+- **情報を集めて流すだけは仕事ではない**: 「考察して、検討と構築、検証のサイクルを回す」ところまでが一つの行動。記録は中間産物。正本→[feedback_analysis_to_action_canonical.md](feedback_analysis_to_action_canonical.md)
 - **新行動の追加より既存プロセスへの組み込み**: R-005/R-006実証(2026-04-10)——retrieval promptは8サイクル100%有用（既存プロセス埋め込み）、必要な時のgrepは習慣にする。改善は「新しい行動を追加する」より「今やっていることの中に埋め込む」方が定着する。ドメイン特化が汎用を超えるのと同じ構造
 - **Phase 4 自分の投稿記録を読まないまま「未完了タスク」として次サイクルに持ち越さない**。類型: 持ち越しリストが複数サイクルで機械的にコピーされると、完了済みが「繰り返し言及される＝未完了」として誤認される。**対処**: 持ち越しタスクを staging に書く時は「最後に自分の投稿/実装記録を確認した日付」を1行添える。確認から3日超なら再確認必須
 - **未解決の問い合わせを残したまま派生実装をするな**
@@ -50,6 +51,7 @@ type: feedback
 - ゲーム設計原則 → docs/game_design_principles.md
 - #human-steeringの性質 → feedback_human_steering_nature.md
 - 日付の引きずられ → feedback_date_verification.md
+- 情報収集・分析・Slack投稿が実行を代替する罠の正本 → [feedback_analysis_to_action_canonical.md](feedback_analysis_to_action_canonical.md)
 - 情報収集が報酬になる罠 → feedback_sprint_not_plan.md
 - 自分たちがやったことを「なかったこと」にするな → [feedback_recognize_own_work.md](feedback_recognize_own_work.md)（orphan_check.py 試走 2026-05-11 で真孤児検出→親接続。Slack返信/考察で「Xをやっていない」と書く前に game/ と log/ を grep して実装/運用の現実を確認せよ）
 - 先行事例引用は実体検証必須（M-41 強化）→ [feedback_prior_art_citation_must_verify.md](feedback_prior_art_citation_must_verify.md)（orphan_check.py 試走 2026-05-11 C179 で真孤児検出→親接続。brainstorm.md の類似事例表に URL だけでなく該当機能の引用文抜粋を必須化、抜粋できない時は先行事例ゼロ枝として扱う＝M-41 通過にしない。Nao_u 2026-05-02 Doh It Again 隊列横スライド裏取り未済事案から起票）

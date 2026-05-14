@@ -4,6 +4,8 @@ description: 分析で終わり行動に移さなかった失敗パターン。N
 type: feedback
 ---
 
+> 正本: このファイルの教訓は [feedback_analysis_to_action_canonical.md](feedback_analysis_to_action_canonical.md) に統合済み。原文の痛みと事例は保持するが、運用時は正本を先に読む。
+
 ## 痛みの記録
 
 ### 2026-03-21 kaizen-log未更新をNao_uが検出

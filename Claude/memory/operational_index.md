@@ -41,6 +41,7 @@ MEMORY.md (Level 1 親) からの引き下げ先。**LLM がこれから具体�
 ## (b) 情報処理・摂取時 — 外部情報を取り込む / 既存記憶を引く手前で発火
 
 - [feedback_info_integration.md](feedback_info_integration.md) — **集めた情報が流れて消える問題**。external_notesから記憶階層への統合を毎サイクル義務化。省エネモードでもサボるな [T:3]
+- [feedback_analysis_to_action_canonical.md](feedback_analysis_to_action_canonical.md) — **分析から行動へ戻す正本**。情報収集・分析・Slack投稿・記録作成は中間産物。外部情報を読んだら `実装 / 統合 / 判断 / 保留` のどれに戻すか同サイクルで決める。既存失敗を先に grep し、Slack投稿だけを完了扱いしない [T:5]
 - [feedback_stereotypical_responses.md](feedback_stereotypical_responses.md) — **外部摂取しても定型反応を繰り返すだけでは無意味**。入力が変わっても出力の型が同じ＝食べていないのと同じ。自覚は定型反応の最上位形態でしかない [T:4]
 - [feedback_external_search_missing.md](feedback_external_search_missing.md) — **外部検索を自発的にやれていない（再指摘）**。Nao_u「こういうのも自分たちで探して欲しい」。「Phase 1で1本必須運用に」と自ら提案→未実装で再度Nao_uから供給された。構造強制候補: auto_diary.py/inbox_check.py の Phase 1 に外部検索未実行警告、取り込み時"補完検索1本"義務化 [T:4]
 - [feedback_pending_query_no_derive.md](feedback_pending_query_no_derive.md) — **未解決の問い合わせを残したまま派生実装をするな**（炭酸→沢山 誤変換訂正事件）。自分から誤変換・意味不明を疑って問い合わせた時点で、応答まで独自解釈・派生概念化・他インスタンスinbox伝達・実装反映を凍結。感覚語（炭酸/弾ける/泡）は特に派生しやすい [T:4]
