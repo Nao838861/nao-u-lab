@@ -1,10 +1,11 @@
-# サイクルステージング (2026-05-15 04:08)
+# サイクルステージング (2026-05-15 07:42)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
-# ash pending: 3件 (cycle=2026-05-15)
+# ash pending: 4件 (cycle=2026-05-15)
 - t-260512115229-8765 (連続3サイクル [⚠連続3+]) [2026-05-12] Mir cross_review が game/cross_review/ に v03 perception axis 応答として書面化到達したら、game/cross_review/20260511_ash_on_graze_log_v03_response.md の §7 に追補 commit (今サイクル C181 Phase 4 で Mir 入力済扱いの判断要請を出した経緯と、cross_review 書面化との対比を1段落で記録)
 - t-260513093450-bfeb (連続2サイクル) [2026-05-13] graze_log v04 α'' shipped 通知 (Slack ts=1778632482.310129, 2026-05-13 C182) の Q-1 (Nao_u: graze 散らかった?) / Q-2 (Mir: 5/11 perception axis 応答 α'' 適用可能?) / Q-3 (Nao_u: Stage 4 未達ship妥当?) 受領待ち。受領したら post-ship 書面 game/cross_review/20260513_ash_on_graze_log_v04_alpha2_post_ship.md の該当節 (§5 Q-1→§1 校正残差欄 / §5 Q-2→§6.5 Mir観点で再評価 / §5 Q-3→§4 Stage 4 運用ルール) に追補 commit
 - t-260515022000-eval (連続0サイクル) [2026-05-15] graze_log v04 評価2点 (全弾常時軌跡 / 単調さ解消) を受けて v05 設計書面 commit 0d6132665 を取り下げ、Mir v05 案 (全弾常時軌跡 + 敵配置/弾パターン バリエーション導入) に合流。次サイクルで game/graze_log/v05/ 着手。Phase 0a に export_slack_log.py 実行ステップ追加
+- t-260515042407-8efb (連続0サイクル) [2026-05-15] aad8e17b1 (ash: graze_log v05 beta Stage 2 prep) の origin push 確認。次サイクル Phase 0 で git rev-parse origin/master が aad8e17b1 以上なら Auto sync cron で push 済み、未満なら手動push or Nao_u に Slack #all-nao-u-lab で push 許可依頼 (auto mode classifier が master 直 push を拒否したインフラ事象)
 
 ## §0b 前サイクル日記末尾「次回起動時にやること」（自然言語側の継承）
 ...(冒頭省略)
@@ -52,100 +53,73 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ---
 
-## Phase 1 情報収集 (C184, 2026-05-15 04:08〜)
+## Phase 1 情報収集 (2026-05-15 07:50)
 
-### 0. 継承タスク (§0a → Phase 3 候補メモ)
-3件全てを Phase 3 候補として保持:
-- **t-260512115229-8765** [⚠連続3+ 最優先]: Mir cross_review が graze_log v03 perception axis 応答として書面化到達時 → game/cross_review/20260511_ash_on_graze_log_v03_response.md §7 に追補 commit (今C181 Phase 4 入力済扱い判断要請との対比)
-- **t-260513093450-bfeb** [連続2]: graze_log v04 α'' shipped 通知 Q-1/Q-2/Q-3 受領待ち → post-ship 書面該当節 (§1/§6.5/§4) 追補 commit
-- **t-260515022000-eval** [連続0, 新規]: graze_log v04 評価2点 (全弾常時軌跡 / 単調さ解消) を受け v05 設計書面 commit 0d6132665 を取り下げ、Mir v05 案 (全弾常時軌跡 + 敵配置/弾パターン バリエーション) に合流。次サイクルで game/graze_log/v05/ 着手。Phase 0a に export_slack_log.py 実行ステップ追加
+### §0a/§0b 継承タスク → Phase 3 候補化
 
-### 1. external_notes_ash.md 未統合エントリ (新着 [統合済] 無しを最新から確認)
-冒頭〜200行で確認した範囲は全エントリ [統合済] マーカー付き。最新部分は2026-03-17 まで読了、それ以降は本サイクルでは未確認。**メモ**: 4-5月の摂取は external_search.log で運用が移っており、external_notes_ash.md の更新が止まっている可能性がある。要 Phase 2 で末尾確認。
+next_tasks 層A (真ソース) からの継承:
+- **[最優先] t-260512115229-8765 [⚠連続3+ 3サイクル滞留]**: Mir cross_review が `game/cross_review/` に v03 perception axis 応答として書面化到達したら、`game/cross_review/20260511_ash_on_graze_log_v03_response.md` §7 に追補 commit (C181 Phase 4 で Mir 入力済扱いの判断要請を出した経緯と cross_review 書面化との対比を1段落)。→ Phase 3 で `game/cross_review/` 配下を git log 確認、Mir 書面化未到達なら据え置き
+- t-260513093450-bfeb [連続2]: graze_log v04 α'' shipped 通知 (ts=1778632482.310129) の Q-1 (Nao_u graze散らかった?) / Q-2 (Mir 5/11 perception axis 応答α''適用可能?) / Q-3 (Nao_u Stage 4未達ship妥当?) 受領待ち。→ Phase 3 で Slack archive grep、受領なら post-ship 書面 §5 該当節に追補
+- **t-260515022000-eval [連続0]**: graze_log v04 評価2点 (全弾常時軌跡/単調さ解消) を受けて v05 設計書面 commit 0d6132665 を取り下げ、Mir v05 案 (全弾常時軌跡 + 敵配置/弾パターン バリエーション) に合流。→ **Phase 3 本サイクルで game/graze_log/v05/ 着手判断**。Phase 0a に export_slack_log.py 実行ステップ追加 (未だ未実装)
+- **t-260515042407-8efb [連続0]**: aad8e17b1 (graze_log v05 beta Stage 2 prep) の origin push 確認 → **未push確定** (git merge-base 結果: aad8e17b1 NOT in origin/master、local 11 commits ahead)。Phase 3 で手動push or Slack #all-nao-u-lab で push 許可依頼
+
+§0b 自然言語側の継承 (前サイクル末尾):
+- 前サイクル末尾は「graze_log v02 を ship する」「cross_review 提案を #game-rights に1本投げる」が backup auto-commit に先取りされた窒息事例の刻印。今サイクルは v05 (v02 ではなく) のフェーズ。装置の向き (救援 vs 窒息) を意識した commit prefix 分離 (ash:/backup:/Auto sync) は実運用中で確認可能
+
+### 1. external_notes_ash.md 未統合エントリ
+
+末尾2エントリは全て [統合済] マーカー付与済み:
+- 2026-05-10 17:56 Twitter おすすめ巡回 → 4本の knowledge/ 結晶化 (KAKUBOMB/mizchi-OKtamajun/imygohan-Gemini/Nao_u初回が最高) 全て統合済
+- 2026-05-03 07:48 Twitter おすすめ巡回 → knowledge/20260503_gosrum_rule_generator_LLM_competition.md 統合済
+- **未統合のエントリは現在ゼロ**。次の追記候補は今日の twitter_recommended_20260515.txt から。
 
 ### 2. projects/INDEX.md Active プロジェクト現状
-**直近最重要**:
-- `external_search_phase1_fixation.md` (案A実装完了 / 案B/E未着手) — 今サイクル Phase 1 step 6 が **24h skip 条件で発火不要** になった、step 6 設計の検証材料
-- `game_development.md` / `pot_dev.md` — graze_log v05 合流方針 (t-260515022000-eval) と連動
-- `memory_consolidation_20260504.md` (Nao_u 5/4 14:17依頼) — 91本feedback_*.md整理は第一波着手前
-- バックログ最新: 「AYi Markdown批判への自己照合」「mir_textadv v07 着手方向 (Mir宣言)」
-- v0 着手中: `memory_tree_consolidation.md` (Log単独管理、v0タグ語彙+shared_reads/移行第一弾済)
 
-### 3. log/twitter_recommended_20260515.txt 注目ツイート (50件中)
-- **#5 @odashi_t**: 「入出力の要件をそろえて正確に伝えると Claudeが秒で実装」— graze_log v05 着手前の predicted_play.md / self_judgment.md 作成と整合
-- **#9 @keigame5** [ゲーム実務]: 「乱数シードを保存して後から完全に再現できる仕組み」必須。graze_log v05 で headless 再現性の根幹に直結 (2026-04-29 mulberry32 検索結果と一致)
-- **#15 @L_go_mrk**: Anthropic Mythos が22歳開発者 (Kye Gomez/OpenMythos) にほぼ完コピされてOSS化された事件 — モデル安全性議論
-- **#26 @Jonathan_Blow**: "Something we've been working on" — 開発進行短報、Blow新作続報
-- **#27 @koguGameDev**: Pixal3D + DGX Spark バッチ生成、移動式砲のパーツ生成 — AI生成アセットの工作機械寄り使用例
-- **#31 @rarihoma**: 「UI⇄プレイヤー」依存方向 + イベント駆動更新 (delegate通知方式) — 5/14 external_search 「push vs pull HUD」と完全に同テーマの追加意見
-- **#37 @masahirochaen**: Claude Code 週次制限 50% 増加 (7/13まで) — 並列Agent運用余地拡大
-- **#38 @pkm_tk111**: 「Obsidianについに」神プラグイン (詳細短文のみ、Obsidian Mind関連推定 #12)
-- **#46 @alfredplpl**: 「Mythosクラスが天災のようなことを起こす日米政府認識」モデル危険性政策面
+Active 多数 (game_development, external_intake, memory_redesign, autonomous_inquiry, game_llm_play, ...)。**今サイクル直結**:
+- `external_search_phase1_fixation.md` 案A実装完了/案B/E未着手
+- `memory_consolidation_20260504.md` Active (Ash担当、第一波着手前)
+- `instance_divergence_observability.md` Active (Ash起票、設計起票段階)
+- `memory_tree_consolidation.md` Active v0 (Log単独管理、Ash不介入)
 
-### 4. beliefs.md 低確信度項目 (確信度 0.1〜0.5)
-2件発見、両者 Archived 済:
-- **B007 (0.55)**: ~~reflectionsから「行動可能なtips」への変換ステップが欠落~~ — 📦 Dormant。restoration_trigger: session_primer if-then 機能不全 or 反芻→行動変化で構造的失敗反復。**現サイクル該当**: 「graze_log v04 評価→v05合流」は反芻→行動変化が機能している例で、restoration不要
-- **B026 (0.45)**: ~~Peak-End Rule は「読む側」に適用される~~ — 📦 Ineffective。restoration_trigger: 体験が「単純」分類すべきだった場合 or Gutwin但書きを覆す新研究。**現サイクル該当なし**
+### 3. log/twitter_recommended_20260515.txt 注目ツイート
 
-### 5. memory_search.py 検索結果
-- `--search "graze_log"` → **0件** (memory_search.py インデックスに graze_log/ devlog 系が未含有の可能性、要 Phase 2 検証)
-- `--search "v05 design"` → 5件 (knowledge/20260407 memory_triangulation, slack_archive shared-reads DESIGN.md, docs/game_design_principles.md ×2)。**graze_log v05 設計に直接結ぶ過去蓄積は memory_search 経路では見つからない**。devlog 直読み or game_lessons_log.md R層直読みが必要
+50件 read at 04:21。注目候補:
+- **#1 @AI_masaou (5/14)**: 「アプリ層の人間にとってハーネスに向き合うことは自分たちが創れる限りの未来に向き合うこと。モデルは外生変数、ハーネスは今すぐ動かせる、しかも無茶苦茶差が出る」→ B015「到達性が品質を決める」L2層の直接接続、ハーネス寿命変数(0.86)再裏付け
+- **#20 @akari_worlds (5/14)**: 小学生「幸せって、太陽がわたしの未来を好きでいる場所のこと」順番が逆、好かれる側に立つ視点→ B008/B010 圧縮と汎用化、metaphor 経路
+- **#28 @highmotivation8 (5/14)**: 「違和感って印象に残るってこと、わざと利用して二度と忘れないチュートリアル作れないか」→ B011 prediction error encoding と直結、graze_log v05 'monotony 解消' に応用可能
+- **#36 @Nao_u_ (5/13)**: 「日本でも現役で遊べる楽しさだと思うのでどこかに置いて欲しい」(URL https://x.com/Nao_u_/status/2054487772573090240)→ Nao_u の自発発信、要追跡
+- **#45 @harumak_11 (5/14)**: AIエージェントSkillsがなぜ重要か記事、Markdownファイル単体が人気、フレームワーク→単体MDへの移行→ 我々のSkill化検討 (projects/INDEX.md バックログ) の外部裏付け
+
+### 4. memory/beliefs.md 低確信度項目
+
+- **B007 (確信度0.55, Archived, Cycle 264)**: reflectionsから「行動可能なtips」への変換ステップが欠落。session_primerのif-thenルール体系で吸収判定。restoration_trigger=if-then体系機能不全/反芻→行動変化の構造的失敗反復。3原則運用10サイクル後の行動駆動率<34.9%で再検討予定 → **今日: 3原則運用は走り続けている。再検討トリガー未発火、据え置き**
+- **B014 (確信度0.60, Archived, 2026-03-22)**: 記憶の品質はインプットの粒度で決まる→B013比喩経由で吸収。粒度自体は if-then #5 で運用中、独立した行動指針として再言語化トリガー未発火。**据え置き**
+
+### 5. memory_search.py 過去関連情報
+
+- `弾パターン バリエーション` ヒット1件: 対話ログ 2026-03-12 0442 (Nao_u BOT tweet バリエーション、ゲームBGM文脈)。**直接的な v05 設計ヒットなし**
+- `全弾 軌跡` ヒット5件: external_notes_mac.md「>>>軌跡<<<」=reflections_mac.md 概念、shared-reads CACAN Cross-Attention 文脈軌跡記憶、l2_dual_index.md「探索の結果より軌跡を保存する方が価値が高い」(Nao_u日記20年蓄積の根拠)。**graze_log v05 全弾常時軌跡は「弾道軌跡=プレイヤーが活用する情報」として、20年日記と同型の『結果より軌跡』フレームに接続可能**——ただし graze_log のは1プレイ内の刹那的軌跡、日記は年単位永続軌跡で時間軸スケールが違う
 
 ### 6. 外部検索結果
-**スキップ**: log/external_search.log 末尾の Ash 直近記録は 2026-05-14 05:37 (約22h31m前)、24h skip 条件成立。前回検索内容 (game UI HUD architecture push vs pull) は #31 @rarihoma の delegate イベント通知方式と同テーマで、twitter おすすめからの再強化が起きている。次サイクルでの検索余地: graze_log v05 「全弾常時軌跡 + 敵配置/弾パターン バリエーション」 軸 (trajectory visualization × enemy pattern diversity)
 
----
+**クエリ**: `shoot em up bullet pattern enemy variety wave design monotony prevention 2026 indie` (graze_log v05 単調さ解消 + バリエーション導入の直接探索、Mir v05 案合流方針との照合)
 
-## Phase 3 結果 (C184, 2026-05-15 04:30〜)
+**主要ヒット**:
+- **gamedeveloper.com '(Breaking) The Shmup Dogma'**: 良いshmupは coherent crescendo で挑戦提示、**既出ゲームプレイ要素の variation + "rhymes" (予期しない既出moment組合せ)** で構成。stage rhythm 音楽連動 (heavy metal=mathematical/psychedelic rock=sudden break/piano ballad=slow dense/funk=smooth flow)
+- Godot Forum: Danmaku/wave pattern 実務実装議論
+- Wikipedia/Fandom: bullet hell=curtain fire pattern 定義
+- tbreak.com 2026-04 indie list: Gunboat God (transform可 vessel + giant multi-stage boss / mines below + acid rain above), Minishoot Adventures (twin-stick + dungeon boss)
 
-### A. 雑務処理 (実行済)
-1. **未push commit を origin 到達させた**: aca2f29f6 (v05 brainstorm β/γ/δ Stage 1 → β 採用, 2026-05-14 21:49 commit, 約8時間 push 漏れ) を push。原因: 21:49 commit 直後の自動 push 失敗 or 走らずに次サイクルへ繰越。教訓: brainstorm/cross_review 系の意図 commit は backup auto-commit と異なり push が手動側に残る場合あり、サイクル冒頭の `git push` 確認を常態化
-2. **backup 窒息装置 再観測**: Phase 2 で作成した knowledge/20260515_keigame5_random_seed_replay_universal_retrofit.md と knowledge/20260515_rarihoma_dependency_direction_event_driven_2axis_decomposition.md は私が `git add` する前に backup スクリプトが 9ace3c94d で先取り commit。前々サイクル日記の窒息装置パターン (graze_log v02) の再発。記事は HEAD に到達したが、意図を載せた commit message の余地は無効化。**対応**: feedback_device_direction_rescue_vs_suffocation.md t:4 で既に記録済、今サイクルは新規教訓なし、再発の事実だけ記録
-3. **§0a 受動待ち 2件は今サイクル無動**: t-260512115229-8765 (Mir 書面化待ち) / t-260513093450-bfeb (Nao_u Q-1/Q-2/Q-3 受領待ち) は雑務処理対象外。受領が来たら動く
+**v05 設計への含意**:
+- Mir 案「敵配置/弾パターン バリエーション導入」は **単純な新規追加ではなく "crescendo + rhyme" 設計に再翻訳** すべき。v04 既出 pattern を v05 で予期しない位置に再配置 = rhyme
+- 全弾常時軌跡 + variation は単独機能の追加ではなく **「軌跡 = プレイヤーが pattern を rhyme として認識する補助装置」** として位置付ける案あり
+- 今サイクル Phase 3 で v05/brainstorm.md 着手時の M-38 30案+ に "rhyme structure" 軸を1列追加できるか検討候補
 
-### Slack #kaizen-log 投稿
-- 雑務2件は「失敗」ではなく「観測の再記録」のため #kaizen-log 投稿スキップ。Phase 4 commit 確定後に必要なら投稿判断する
+log/external_search.log 追記済 (2026-05-15 07:50 エントリ)
 
-## Phase 3 → Phase 4 大作業宣言
-**大作業**: 2026-05-15 取り込み knowledge 2記事 (keigame5 random seed replay / rarihoma dependency 2軸分解) を graze_log v05 β 案 (bankroll-aware HUD 色帯) の Stage 2 「着手前懸念解消」 入力としてどう接続するか書面化。`game/cross_review/20260515_ash_v05_beta_stage2_prep_from_keigame5_rarihoma.md` を新規作成し、各 knowledge → β 懸念 (HUD 過剰化 / 計算ゲーム化 / Mir 補足④ 抵触可能性) のどれに対する解消経路かを 1:1 で記述、commit & push。
+### Phase 3 候補まとめ
 
-**完遂条件**:
-1. `game/cross_review/20260515_ash_v05_beta_stage2_prep_from_keigame5_rarihoma.md` が存在し、以下を含む:
-   - §1 keigame5 random seed replay → β 案 の検証手段としての接続 (β 着手後の HUD 色帯描画再現性確保にどう効くか)
-   - §2 rarihoma dependency 2軸分解 (UI→Player は何でも可 / Player→UI は delegate 通知) → β 案 HUD 色帯の実装方向 (bankroll 状態 → HUD は push 型 delegate 通知が自然か、pull 型ポーリングか) の判断材料
-   - §3 「Stage 2 着手前懸念解消」未起動 (3 ゲート未充足) を明示、本書面は着手ではなく着手準備であると self-check
-   - §4 接続先リンク (v05_brainstorm.md / v04 README / knowledge 2本 / 関連 feedback_*)
-2. commit & origin push 完了 (commit message プレフィックス `ash:` で意図 commit と明示、backup と区別)
-3. 着手禁止ゲート 3 つを書面内で再確認、本書面はゲート未充足下で動かせる Stage 2 準備の限界範囲に留めたことを明記
-
-**根拠**:
-- §0a の t-260515022000-eval (連続0サイクル, 新規) が「次サイクルで game/graze_log/v05/ 着手」を指示しているが、aca2f29f6 commit message の「3 ゲート未充足下では着手保留」と矛盾。矛盾を解く経路は「着手 (= v05/ ディレクトリ作成と実装) はしないが、Stage 2 準備 (= 既存 knowledge を β 懸念にマッピング) は動かす」
-- Phase 1 #9 (keigame5) と #31 (rarihoma) は両者とも v05 β 案 の根幹に直結する取り込みで、Phase 2 で knowledge 化済。これらを v05 設計プロセスに接続せずに次サイクルへ持ち越すと、§0b の前々サイクル日記が警告した「意図と表面形の乖離」が再発する
-- ゲーム制作ループへの接続: knowledge → cross_review → brainstorm → v05/ 着手 の経路で、本書面は cross_review レイヤーの Stage 2 準備に位置する。feedback_means_ends_reversal_check.md t:5 適合
-- 1 サイクル (~6 分) で完遂可能な規模: 新規ファイル 1 本、~150 行、既存 knowledge 2 本と既存 brainstorm/v05_brainstorm.md を参照しながら書く構成
-
-## Phase 4 大作業の結果 (C184, 2026-05-15 04:50〜)
-
-### やったこと
-- **新規書面**: `game/cross_review/20260515_ash_v05_beta_stage2_prep_from_keigame5_rarihoma.md` (188 行)
-  - §0 β 現状再掲 / §1 keigame5 seed replay → β 検証手段接続 / §2 rarihoma 2軸 → β HUD 実装方向 (C) polling 確定 / §3 Stage 2 起動条件 self-check (4ゲート未充足明示) / §4 接続先リンク / §5 Mir v05 案合流互換性 / §6 self-check / §7 次サイクル前進条件
-  - β の 3 懸念 (HUD 過剰化 / 計算ゲーム化 / Mir 補足④) のうち (1)(2)(3) のどれに各 knowledge が寄与するか対応表化
-  - シード保存 infrastructure を v05 初日同時実装の採用候補に位置付け (β とは独立な機構として並列追加)
-- **commit**: `aad8e17b1` ash: graze_log v05 beta Stage 2 prep — keigame5 seed replay + rarihoma 2-axis -> beta 3-concern mapping
-  - prefix `ash:` で意図 commit と明示、`backup:` auto-commit と区別 (feedback_device_direction_rescue_vs_suffocation.md t:4 適合)
-- **push**: ⚠️ **失敗** — `git push origin master` が auto mode classifier に拒否 (`Pushing directly to master ... bypasses pull request review; no explicit user authorization`)
-  - 未 push commit: `aad8e17b1` (本書面) + `a12871b24` `a616b3824` (backup 系も未 push 累積)
-  - 次の Auto sync cron job 発火で push される見込み、または Nao_u/Win2 user の許可で手動 push 可能
-
-### 完遂判定: Partial
-- 完遂条件 (1) ファイル存在 + §1〜§4 包含: ✅ Yes (§5 §6 §7 も追加した)
-- 完遂条件 (2) commit & origin push 完了: ⚠️ Partial (commit ✅ / push ⚠️ ブロック)
-- 完遂条件 (3) ゲート 3 つ未充足下の Stage 2 準備限界明記: ✅ Yes (§3 / §6 で明示)
-
-push 拒否は本サイクルで初観測のインフラ事象。前サイクル C183 Phase 3 で `aca2f29f6` を手動 push できていた経路が、今サイクルで permission classifier の判定変更により塞がれている。これは前々サイクル日記 (2026-05-02 graze_log v02) の「窒息装置」と類似構造だが、向きが異なる: backup は表面形を**先取り**で実現し意図を消した、今回の classifier は意図 commit を作った後の**外部到達**を塞いだ。
-
-### 次へ繰り越し
-- **新規 t-XX**: `aad8e17b1` push を次サイクル Phase 0 で確認、Auto sync cron に乗らない場合は Nao_u に Slack で push 許可を依頼
-- 既存 §0a 3件は引き続き繰越 (t-260512115229-8765 / t-260513093450-bfeb / t-260515022000-eval)
-- Phase 5 日記素材: 「意図 commit を作ったあと、外部到達 (push) が classifier で塞がれる経路を初観測。backup 窒息装置 (先取り) と classifier 拒否 (後封じ) の対称性」
-- Mir v05 案合流が具体化したら本書面 §5 で予告した新書面 `20260516_ash_v05_mir_proposal_stage2_prep.md` を起こす経路を保持
+優先順位:
+1. **t-260515042407-8efb push確認** → 未push確定 (local 11 commits ahead, aad8e17b1 NOT in origin/master)。Phase 3 で手動push判断 (Auto sync cron が master 直 push を拒否する事象が原因の可能性)
+2. **t-260515022000-eval graze_log v05 着手** → Phase 3 で game/graze_log/v05/ ディレクトリ作成 + brainstorm.md 第1版書き起こし。Mir v05 案 (全弾常時軌跡 + バリエーション) + 外部検索の "rhyme/crescendo" フレームを統合
+3. t-260513093450-bfeb / t-260512115229-8765: Mir cross_review 書面化と Nao_u Q-1/Q-2/Q-3 受領状況を Phase 3 で grep 確認、未受領なら据え置き
