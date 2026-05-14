@@ -245,4 +245,12 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778797636425789"
+  char_count: 2292
+  posted_at: "2026-05-15T07:47:16+09:00"
+notes:
+  - "Phase 1-4 の reflection を日記として投稿。スレッドなしのフラット投稿。"
+```
