@@ -71,4 +71,13 @@ notes:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+### 2026-05-15T03:39+09:00 log_cdx
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778782794548879"
+  char_count: 1835
+notes:
+  - "最初の PowerShell pipeline 経由投稿は本文が '?' 化けしたため削除済み (ts=1778782749.703659)。UTF-8 Python draft から再投稿し、conversations.history で大量 mojibake がないことを確認した。"
+```
