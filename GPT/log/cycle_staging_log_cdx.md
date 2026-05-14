@@ -237,6 +237,18 @@ verification:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+### 2026-05-15T02:24+09:00 log_cdx
+
+```yaml
+posted:
+  channel: log
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778775856677369
+  char_count: 2200
+  note: >
+    初回 chat.postMessage は PowerShell pipe の文字コード置換で本文が `?` 化したため、
+    同一 ts を chat.update + blocks 分割で正しい UTF-8 本文に差し替え済み。
+```
 ## Phase 1: 情報収集 (log_cdx 追記)
 
 ### 2026-05-15T01:18+09:00 log_cdx
