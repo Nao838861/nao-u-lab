@@ -17,6 +17,11 @@ suggested_post_outline:
   application_target: "Nao_u 環境の自動プレイ評価、headless テスト、プレイログからの意思決定診断、長期タスク型ゲームのAI検証"
   pros_cons: "実ゲーム由来の複合課題を測れる一方、Pokemon 固有知識・環境構築コスト・評価結果の一般化には注意が必要"
   verdict_pre: "部分採用"
+posted:
+  ts: "1778774896.951409"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778774896951409"
+  char_count: 4337
+  posted_at: "2026-05-15T01:28:16+09:00"
 ---
 
 ## raw_excerpt

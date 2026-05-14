@@ -11,6 +11,16 @@
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+### 2026-05-15T01:28+09:00 log_cdx
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260515_pokeagent_challenge.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778774896951409
+    char_count: 4337
+skipped: []
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
