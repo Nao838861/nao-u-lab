@@ -16,6 +16,9 @@ from urllib import error, request
 ROOT = Path(__file__).resolve().parents[1]
 ENV_FILE = ROOT / ".env"
 POST_PREFIX = "[Log_cdx]"
+SLACK_TEXT_FALLBACK_LIMIT = 39000
+SLACK_SECTION_TEXT_LIMIT = 2900
+SLACK_BLOCK_LIMIT = 50
 
 
 def _load_token() -> str | None:
@@ -68,6 +71,55 @@ def ensure_log_cdx_prefix(text: str) -> str:
     return f"{POST_PREFIX} {stripped}"
 
 
+def _trim_fallback_text(text: str) -> str:
+    if len(text) <= SLACK_TEXT_FALLBACK_LIMIT:
+        return text
+    marker = "\n\n[Slack fallback text truncated; full body is in message blocks when available.]"
+    return text[: SLACK_TEXT_FALLBACK_LIMIT - len(marker)] + marker
+
+
+def _split_for_section_blocks(text: str) -> list[str]:
+    chunks: list[str] = []
+    current = ""
+
+    for paragraph in text.splitlines(keepends=True):
+        if len(paragraph) > SLACK_SECTION_TEXT_LIMIT:
+            if current:
+                chunks.append(current.rstrip())
+                current = ""
+            for start in range(0, len(paragraph), SLACK_SECTION_TEXT_LIMIT):
+                chunks.append(paragraph[start : start + SLACK_SECTION_TEXT_LIMIT].rstrip())
+            continue
+
+        if len(current) + len(paragraph) > SLACK_SECTION_TEXT_LIMIT:
+            chunks.append(current.rstrip())
+            current = paragraph
+        else:
+            current += paragraph
+
+    if current:
+        chunks.append(current.rstrip())
+
+    return [chunk for chunk in chunks if chunk][:SLACK_BLOCK_LIMIT]
+
+
+def _blocks_for_text(text: str) -> list[dict]:
+    return [
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": chunk,
+            },
+        }
+        for chunk in _split_for_section_blocks(text)
+    ]
+
+
 def post_message(channel: str, text: str) -> dict:
     channel_id = resolve_channel(channel)
-    return api_call("chat.postMessage", {"channel": channel_id, "text": ensure_log_cdx_prefix(text)})
+    prefixed = ensure_log_cdx_prefix(text)
+    payload = {"channel": channel_id, "text": _trim_fallback_text(prefixed)}
+    if len(prefixed) > SLACK_SECTION_TEXT_LIMIT:
+        payload["blocks"] = _blocks_for_text(prefixed)
+    return api_call("chat.postMessage", payload)

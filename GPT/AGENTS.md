@@ -59,6 +59,8 @@ Codex で作業を始める時は、`slack_directives.jsonl` と並んでこの�
 
 #shared-reads には **フォーマット遵守 + ~4000字程度の「残すべき」品質** を満たすものだけを投稿する。候補レベル (探索段階・テンプレ流用・1行要約・他記事と同文の貼り回し) は **Slack に出さず、ローカルに保存して育てる**。
 
+1 candidate は、Slack の投稿上限に収まる限り **1 投稿に収める**。複数 candidate を 1 投稿にまとめるのは禁止だが、1 candidate の各項目を「続き」として複数メッセージに分けるのも禁止。長文は `GPT\tools\slack_client.py` の `post_message` を使い、Slack blocks に分けてでも 1 回の `chat.postMessage` に載せる。
+
 候補レベルの保存先:
 
 - `D:\AI\Nao_u_BOT\GPT\memory\shared_reads_candidates\` — 候補プール (本 directive で公式化)
