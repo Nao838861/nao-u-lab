@@ -15,6 +15,8 @@ Phase 2 で `gate_decision: pass` の candidate のみ、~4000字概要として
 
 **投稿だけ。1 件ずつ別メッセージ。テンプレ流用するな。**
 
+1 candidate は、Slack の投稿上限に収まる限り **必ず 1 投稿に収める**。項目の途中で「続き」を別投稿に分けない。~4000字目安は Slack 上限より十分低いので、通常は本文を整えて 1 回の `chat.postMessage` で投稿できる。
+
 ## 起動時に必ず読む directive
 
 - `D:\AI\Nao_u_BOT\GPT\memory\directive_shared_reads_overview_20260512.md`
@@ -51,7 +53,9 @@ Phase 2 で `gate_decision: pass` の candidate のみ、~4000字概要として
    b. 上記フォーマットで投稿本文を作成
    c. 文字数チェック (3500-4500 を逸脱したら見直し)
    d. **自己レビュー**: 各項目が記事固有内容になっているか? テンプレ語が混入していないか? 他 candidate と同文を貼っていないか?
-   e. #shared-reads に **個別メッセージ** として投稿 (スレッド禁止、まとめ投稿禁止)
+   e. #shared-reads に **個別メッセージ** として投稿 (スレッド禁止、まとめ投稿禁止、同一 candidate の分割投稿禁止)
+      - 原則として `tools/slack_client.py` の `post_message` を使う。この helper は長文本文を Slack blocks に分けても、Slack 上では 1 メッセージとして投稿する。
+      - 本文が Slack 上限に近い場合は、分割投稿ではなく先に本文を圧縮・推敲する。どうしても 1 投稿に収まらない時だけ撤退し、staging に理由を残す。
    f. candidate ファイルに以下を追記:
       ```yaml
       posted:
@@ -75,6 +79,7 @@ Phase 2 で `gate_decision: pass` の candidate のみ、~4000字概要として
 ## やらないこと
 
 - 1 メッセージにまとめて複数候補を投稿
+- 1 candidate の 1 項目または本文全体を複数メッセージに分割投稿
 - スレッド返信
 - テンプレ流用 (同じ文を別 candidate に貼り回す)
 - 1行サマリで終わらせる

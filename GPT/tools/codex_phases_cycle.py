@@ -41,6 +41,7 @@ FIXED_PHASES = [
     "phase1_collect",
     "phase2_analyze",
     "phase3_post_shared_reads",
+    "phase3b_self_feedback",
     "phase4a_cleanup",
 ]
 CONDITIONAL_4B = "phase4b_design"
@@ -109,6 +110,9 @@ def init_staging(cycle_id: str) -> None:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+## Phase 3b: Shared-reads 自己フィードバック
+(Phase 3b が書き込む)
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
@@ -156,6 +160,7 @@ PHASE_TIMEOUTS = {
     "phase1_collect": 1800,           # 30 min
     "phase2_analyze": 1800,           # 30 min
     "phase3_post_shared_reads": 3600, # 60 min (per pass candidate)
+    "phase3b_self_feedback": 1800,    # 30 min
     "phase4a_cleanup": 1200,          # 20 min
     "phase4b_design": 2400,           # 40 min
     "phase4c_introduce": 3600,        # 60 min
