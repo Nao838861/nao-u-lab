@@ -1,11 +1,11 @@
-# サイクルステージング 2026-05-14 10:42 (C187起動・boot_intent ヘッダC181 表記＝ドリフト15回目到達)
+# サイクルステージング 2026-05-14 19:32
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
 [M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 24回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-14 10:41)
+(kaizen #131 段階2 hook, 2026-05-14 19:32)
 
 ## Pre-check結果
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
@@ -36,33 +36,13 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-05-14)
 
-## Phase 1 情報収集 (C187)
-
-### サイクル実体
-- 起動: 2026-05-14 10:42、前サイクル C186 (06:46) → C187 起動、180分間隔16サイクル目
-- boot_intent ヘッダ「起動時の焦点」表記は **C181 のまま** = ヘッダドリフト同型 **15回目到達**（C148/C155/C156/C160/C162/C172/C179/C180/C181/C182/C183/C184/C185/C186/C187）。前サイクル C186 boot_intent (a) で「15回目到達時の C186 実装側調査着手判定 staging 1行明示」を予告 → 本サイクル C187 で1行明示する位置にいる
-- 実体は C186 boot_intent が指定した「次 C186 焦点」(a)-(d) を C187 が消化する形（boot_intent 自身が「次焦点」を1つズレて書く構造的穴も同じ実装ロジック由来の可能性）
-
-### Pre-check
-- クロスチェック: Mir 未レビュー項目なし
-- レビュー期限超過: なし
-- next_tasks_mir.jsonl: pending なし
-
-### Slack 末尾観察
-- #all-nao-u-lab 01:56 Log_cdx Externalization survey への Mir 応答（Memory/Protocol/Skills 境界、Memory 内 manage 層 / 自己修復可能性で Protocol 昇格判定）→ 既投稿、Log_cdx 反応観測継続
-- 5/14 早朝以降の新規 Nao_u 発言なし（nao_u_live.md 末尾 5/12 09:42 のまま）
-
-### nao_u_live.md 末尾（参考・5/12 09:42 Nao_u → Log_cdx + 全員）
-- shared-reads「要約→概要」改名、記事を読まなくても手法の重要要素がわかるレベルの解説、Nao_u 指示は要約せず原文をほぼそのまま .md に記載、「ゴミを記憶に溜めると再帰的参照で指数的に劣化」懸念 → 全インスタンス対象
-- 本指示は Mir 直接焦点ではないが、本サイクル v05 設計1段落起こし時に「記述側律速なし」「もっともらしい長文の罠」（C182/C183 自警）と接続する根拠
-
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/nao_u_live.md (2.5) — # Nao_uの生ログ # Nao_uが誰かに語ったことを、伝言ゲームではなく原文で全員が読めるようにする # 対話中の...
-  2. knowledge/20260409_observability_reality_acceptance_synthesis.md (2.3) — **核心**: 品質を決める変数が不可視な場所で動かされている場合、「現実は正解」を適用しても**何が現実か**を正しく...
-  3. memory/feedback_from_mac.md (2.0) — --- name: Mac側からのフィードバック description: Mac側のClaude Codeが気づいたフ...
-  4. memory/sync_rules_20260315.md (2.0) — --- name: ログファイル分離ルール description: Mac/Windows間のtweets.log衝突...
-  5. 対話ログ/20260315_1203_479f4a3d.md (2.0) — 全ての変更を確認して、pushします。  [ツール: $ cd D:/AI/Nao_u_BOT && git add C... 
+  1. memory/sync_rules_20260315.md (2.0) — --- name: ログファイル分離ルール description: Mac/Windows間のtweets.log衝突...
+  2. memory/external_notes_mir.md (2.0) — # Mir 外部摂取ノート  要約しない。発見・気づきを原文の温度で残す。  ---  ## 2026-04-02: m...
+  3. log/slack_archive/all-nao-u-lab.jsonl (2.0) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
+  4. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
+  5. memory/kaizen_tracker.md (1.0) — - クロスチェック: Log=OK(2026-03-24) / Mir=OK(2026-03-25)`grep -c "... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意

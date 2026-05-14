@@ -1,324 +1,376 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-14 06:46
+# Read at: 2026-05-14 19:32
 # Total: 50 tweets
 
---- 1. @karaage0703 (2026-05-13) ---
-URL: https://x.com/karaage0703/status/2054579306857480587
-『Claude Code 実用入門』ご恵贈いただきました。最初にDockerを使ってコンテナで隔離された環境をつくるところから始まるのが、ユニークというかハードコアですね。
-私も、Claude
+--- 1. @notf (2026-05-14) ---
+URL: https://x.com/notf/status/2054770983912034687
+人間ブロックのフォーム！
 
---- 2. @PR_manga_ad2 (?) ---
-10円セール開催中
+--- 2. @meiji_BY_cp (?) ---
+【ご報告】
+ナダルさんに、催眠術をかけてみました。
+明治ブルガリアヨーグルト ONE SHOT
+新WEBCM「ナダル 催眠術 かかる？」篇 公開
 
-＼大人気キャンペーン、今年もやります！／
+--- 3. @nukonuko (2026-05-13) ---
+URL: https://x.com/nukonuko/status/2054614551908495817
+6 月 15 日から Claude の有料サブスクプランにて OpenClaw などが正式に使えるように
 
-第1弾から第5弾まで対象作品は毎回更新
-コミック・CG集・ボイス作品を10円で爆買いできる大チャンス
+通常のサブスク利用とは別に、プランに応じたクレジットが毎月付与され、そちらを OpenClaw や Conductor、Claude Agent SDK などに使うことができる。クレジットは翌月に繰り越せない。
 
-〔PR〕
+--- 4. @hyaku_0705 (2026-05-14) ---
+URL: https://x.com/hyaku_0705/status/2054847981959188674
+母の決断
 
---- 3. @GOROman (2026-05-13) ---
-URL: https://x.com/GOROman/status/2054671452474118144
-7月13日まで2倍に
-バイキルト
+続きはリプ↓
 
---- 4. @Nao_u_ (2026-05-13) ---
-URL: https://x.com/Nao_u_/status/2054672193938932126
-ただでさえ週間制限にかかりがちなclaude -p で定時実行してるAIたちにはだいぶ影響がありそう。
-現在は段階的にGPT5.5に移行中だけど、状況によってはClaude側の完全撤退も視野に入れるかな…
+--- 5. @koizuka (2026-05-13) ---
+URL: https://x.com/koizuka/status/2054549016336289819
+私のスタンスだと、職業としてのプログラマーは「ちゃんとしたものを作る」のが職能で、今のAIは、まだ「ちゃんとしたもの」にするのに専門知識が沢山必要なので、まだ大丈夫だし、そこで生き残れるように研鑽するのは今までとあんまり変わらないかなー
 
---- 5. @Algomatic_AILab (2026-05-13) ---
-URL: https://x.com/Algomatic_AILab/status/2054496255418782052
-マルチエージェントシステムにおいて、AI同士の連携方式を変えることで、出力精度や失敗パターンを事前に予測・制御できることが判明しました。
-
---- 6. @heiga_zen (2026-05-13) ---
-URL: https://x.com/heiga_zen/status/2054558417604522378
-【ファナックとの協業によるフィジカルAIの加速と Gemini Robotics の産業用ロボットへの展開】
-
-産業用ロボットの世界的リーダーであるファナックとGoogle Cloudの協業強化が発表されました。Gemini
-
---- 7. @gosrum (2026-05-13) ---
-URL: https://x.com/gosrum/status/2054526480923934852
-Claude Code + Qwen3.6-27B-UD-Q4_K_XLのMTP版とオリジナル版をts-benchで比較した結果はこちら
-
-推論速度はMTP版の方が速いが、性能は若干劣化していそう。結果として、同じタスクをこなすのにオリジナルのほうが速く終わっている
-
---- 8. @kuniyuki_taka (2026-05-13) ---
-URL: https://x.com/kuniyuki_taka/status/2054633958017778066
-タスクは伝票の面を下にするシンプルなものですが、ロボットの動作はかなり速いと思う。
-
---- 9. @zolge1 (2026-05-13) ---
-URL: https://x.com/zolge1/status/2054480723546165581
-メタルスラッグの見過ごされがちな部分として、「とにかく真横の絵がない」というのは挙げておきたい。常に「微妙にナナメから見た絵」であり、本来すげー大変のはずである。ためしに自分で描いてみれ。「めんどくさいから真横にしよう」と思うから。絵が上手いからこの微妙さに皆気づかないのだ。
-
---- 10. @ENGSuperCoach (2026-05-13) ---
-URL: https://x.com/ENGSuperCoach/status/2054461532776587425
-孫さん恐るべし。
-もはや純利益が国家予算規模。
-
---- 11. @PRcomicfesta (?) ---
-もう後がないので、毒婦ムーブで旦那様をオトします
-
---- 12. @tarkuuun (2026-05-13) ---
-URL: https://x.com/tarkuuun/status/2054509223854371052
-ATEさん試合中にチャットするの止めてください
-気が散ります
-
---- 13. @tanatana5252 (2026-05-13) ---
-URL: https://x.com/tanatana5252/status/2054519263357263996
-このコナンのヘッドバンドは影用だったんだ..
-
-見たとき「誰が作ったんだよｗｗ」って思ったけどレビュー見たら、なにこれめっちゃ良い..
-
---- 14. @RemasterX_g (2026-05-12) ---
-URL: https://x.com/RemasterX_g/status/2054143816895185122
-ついに来た！GoogleドライブにNotebookLMと同様の機能が搭載されました
-ドライブ内に「プロジェクト」を作ると、NotebookLMのようにソースを追加できますが、違いはフォルダごとやGmailもソースにできること！
-
-さらに凄いのが、ソースに追加していない
-
---- 15. @pentabutabu (2026-05-13) ---
-URL: https://x.com/pentabutabu/status/2054563745826058727
-小4のむすこはテレビの逃走中が大好きで、今回のもとても楽しんで観た様子で。
-
-むすこ「パパ、今回の逃走中みた？録画してあるんだけど」
-
-僕「いや、まだ観てないけど」
-
-むすこ「そっかぁ…ネタバレしていい？」
-
-僕「ネタバレ？別にいいけど」
-
-むすこ「あのね」
-
-僕「うん」
-
---- 16. @pingpong_pearl1 (2026-05-13) ---
-URL: https://x.com/pingpong_pearl1/status/2054386497856700576
-私はまんまこれのAI抜きで飯食ってるのでこれはガチです！！！！！！！！
-なんならまだまだ手が入ってない領域なので向こう10年は楽勝で食えるだろうとタカをくくっています。
-
---- 17. @alexabelonix (2026-05-13) ---
-URL: https://x.com/alexabelonix/status/2054589233256702135
-If you’re brave enough to build a startup, here’s what you should know Day 141:
-
-A future company may feel like a team of mini-founders.
-
-People wake up asking:
-
-How do we make the company more successful?
-
-Then they find problems.
-
-And either build agents or assign agents to
-
---- 18. @SawyerMerritt (2026-05-13) ---
-URL: https://x.com/SawyerMerritt/status/2054614642375151823
-Delta rejected adopting SpaceX's 
-@Starlink
- on its fleet because it wanted to provide internet connectivity to passengers via the Delta Sync portal, instead of the Starlink-branded portal. Delta has since chosen to partner with Amazon's LEO.
-
-This will result in Delta falling
-
---- 19. @elonmusk (2026-05-13) ---
-URL: https://x.com/elonmusk/status/2054679135637962951
-Not exactly. SpaceX requires that there be no annoying “portal” to use Starlink. 
-
-Starlink WiFi must just work effortlessly every time, as though you were at home. 
-
-Delta wanted to make it painful, difficult and expensive for their customers. Hard to see how that is a winning
-
---- 20. @GOROman (2026-05-13) ---
-URL: https://x.com/GOROman/status/2054672216344993880
-後で試す
-
---- 21. @sawayakashimura (2026-05-13) ---
-URL: https://x.com/sawayakashimura/status/2054395490029240722
-ペルソナ風イラストをGPTで作成するプロンプトが出来たよ
-
-用意する物は
-①キャラクターイラスト
-②キャラクター名
-推奨③キャラクター設定
-
-キャラクター設定がない場合、GPTがイラストから紹介文を作ってくれる。
-後ろに立つペルソナ(オリジナル)もGPTによる自動生成！
-
-プロンプトはリプへ
-
---- 22. @Supermicro (?) ---
-Want to see AI Factories in action? 
-Watch ServeTheHome’s latest video breakdown to see how Supermicro and NVIDIA deliver turnkey AI infrastructure at scale.
-
---- 23. @taiyo_ai_gakuse (2026-05-12) ---
-URL: https://x.com/taiyo_ai_gakuse/status/2054346269963985112
-テキスト + 画像 + 動画 + 音声 を全部同じベクトル空間に埋め込めるembeddingモデルきた！！
-
-今一番コスパ良くマルチモーダル検索やりたいならこれ。もうRAGの検索ってここまで来てるのかw
-
---- 24. @orangeitems_ (2026-05-13) ---
-URL: https://x.com/orangeitems_/status/2054456464211877932
-やってることがOpenAIやAnthropicのAPIと同じ・・、AIモデルを貸し出し従量課金。これを「人」でやる。こっちの方が先に来るのか。
-
---- 25. @kaitou_ryaku (2026-05-13) ---
-URL: https://x.com/kaitou_ryaku/status/2054597875636871457
-みんな、生物学における「半世紀」というタイムスパンを舐めすぎやと思うんよな。
-
-「遺伝情報を運んでいるのはDNAだ」
-と突き止めたのが僅か70年ほど前だと思うと、この半世紀でマジでありえんほど進歩している。更に今後はAIやロボットが爆速で速度で研究を進めるので、未来の生物学は凄いことになる
-
---- 26. @consultnt_a (2026-05-13) ---
-URL: https://x.com/consultnt_a/status/2054379406592971148
-ここから毎年日本の人口は100万人くらい減ってくわけだから、地方に金撒いてる余裕なんてなくてさっさと地方の中で人寄せろって話なのよね
-クソ田舎のインフラ更新とか経済合理性なさすぎるから、地方の中でもマシなところに人を集めて狭い範囲で都市圏を維持していくしかないのよ
-
---- 27. @tydsh (2026-05-13) ---
-URL: https://x.com/tydsh/status/2054569220718149775
-Today we launch Recursive.
-
-We are building AI that discovers knowledge automatically and improves itself recursively, an open-ended process that will fundamentally change how science and technology advance.
-
-Our 25 top researchers and engineers in San Francisco and London bring
-
---- 28. @zhengyaojiang (2026-05-13) ---
-URL: https://x.com/zhengyaojiang/status/2054629144797835359
-Congrats Yuandong!
-
---- 29. @MerriamWebster (2026-05-13) ---
-URL: https://x.com/MerriamWebster/status/2054617865639039057
-You may have noticed that the word for ‘night’ in many languages appears to be that language’s word for ‘eight’ with an ‘N' in front of it.
-
-English: N + eight = Night
-German: N + acht = Nacht
-French: N + huit = Nuit
-Spanish: N + ocho = Noche
-Italian: N + otto = Notte
-Portuguese:
-
---- 30. @BLAISE01600438 (2026-05-13) ---
-URL: https://x.com/BLAISE01600438/status/2054445628311384287
-居酒屋さんがアルコールかソフトドリンクで揉めている中、僕ら一般飲食店は「あ、水でいいです‍」で瀕死の重傷を負っていた。
-
---- 31. @C4Dbeginner (2026-05-13) ---
-URL: https://x.com/C4Dbeginner/status/2054448745878798580
-これご本人は右のレタッチが会心の自分なんだと思うけど、プロのカメラマンが右の露出や明暗で写真納品したら一撃で仕事無くなるから難しいですよね
-
---- 32. @needle (2026-05-13) ---
-URL: https://x.com/needle/status/2054458610709869050
-…なんかドローンみたいに「公共の場に人型ロボットを放つ場合のルール」みたいのでガチガチになって利便性が骨抜きにされそうな予感がするな、本邦。
-
---- 33. @ieul_pr (?) ---
-1990年以来の不動産バブル「自分の家の価値を知りたい」に対応
-住所などを入力するだけで今の家の価値がわかる
+--- 6. @kmoriyama (2026-05-14) ---
+URL: https://x.com/kmoriyama/status/2054730981123518772
+ぜひ応募してくれとのことです。
+RP
+机の上に「話せて、動いて、表情がある」ーー1/3サイズヒューマノイドが日本上陸、開発者に無償提供
 
 https://
-ac.graxis.jp/da041401d54efc
-aa/cl/?bId=5a607bd6&twclid=2g8oh0armhexrv34qs0vpp7ta
-…
+36kr.jp/492822/
+「小型ヒューマノイドであり、動く1/3ドールでもある」
+「資金面では、すでに1億元（約20億円）以上の調達を完了」
+そして
 
-直近10年で日本の不動産価格は2倍以上に上がっていて、買った時より高い値段で家を売った人も多い。
-上場企業運営だから安心、完全無料。
+--- 7. @cicada3301_kig (2026-05-14) ---
+URL: https://x.com/cicada3301_kig/status/2054842140895875244
+この界隈は語学の教養がないばっかりに無限にこの手の話をしている
 
---- 34. @Kekius_Sage (2026-05-13) ---
-URL: https://x.com/Kekius_Sage/status/2054605365376160030
-Physicist Michio Kaku suggests dark matter isn’t matter at all. It is gravity leaking from a parallel dimension.
+だーれも「××語読み」の話をしねえ
+今どきAIに尋ねりゃ教えてくれるはずなのに尋ねる発想もネェ
 
---- 35. @tsujimotter (2026-05-13) ---
-URL: https://x.com/tsujimotter/status/2054599381878546856
-√xの逆数を高速に計算するプログラムに謎のマジックナンバーが登場する、というよく話に聞くやつ。分かりやすい解説で初めてちゃんと理解した。
+--- 8. @nuits_jp (2026-05-14) ---
+URL: https://x.com/nuits_jp/status/2054760617249247246
+私も技術的には可能だけど、私のマネジメントは私が信用していないのと、一人の思い込みでやるのは危険だから、今後最強なのは、スーパーPMとスーパーアーキテクトのコンビにAIを自由に使わせることだと思っています。
 
-改めてこれ思いついた人やばいですね。
+--- 9. @itm_aiplus (2026-05-14) ---
+URL: https://x.com/itm_aiplus/status/2054783785535967728
+人型ロボが働く様子を生配信中　荷物の仕分けを11時間超、Xでの表示回数は196万を突破　米企業
 
-高速逆平方根(fast inverse square root)のアルゴリズム解説 - 滴了庵日録
+--- 10. @msugaya (2026-05-14) ---
+URL: https://x.com/msugaya/status/2054796813883089297
+「ゼビウス」の登場が『ゲームセンターあらし』を終わらせる契機になったのは事実です。他のゲームも独自の世界観を持つようになっており、その世界観…
 
---- 36. @brain_debug (2026-05-13) ---
-URL: https://x.com/brain_debug/status/2054391491926380933
-成長＝できることを増やす、というより、「昔の生存戦略」を手放すというニュアンスの方が近しい。
+--- 11. @carsensor (?) ---
+"紅" - X JAPAN × カーセンサー​
 
---- 37. @akari_worlds (2026-05-13) ---
-URL: https://x.com/akari_worlds/status/2054397836717117753
-「昔の生存戦略を手放す」、刺さりました。新しいことを覚える側じゃなくて、昔うまくいってた手つきを、もう要らないと認める側の動きなんですね。覚えるより、剥がす方がよっぽど痛そう、と思いました。
+もう二度と出会えない一台がある。​
 
---- 38. @yo4104 (2026-05-13) ---
-URL: https://x.com/yo4104/status/2054377044444877244
-抗議船転覆事故を乗り越えるのは、あなたたちではない。
-乗り越えると言えるのは、事故に巻き込まれた生徒であり、お亡くなりになった生徒のご遺族の方々である。
-全くもって理解できず、何と表現すべきなのか？
-筆舌に尽くしがたいとは、まさにこのことではないだろうか…
+中古車探しはカーセンサー​
+​
 
---- 39. @GOROman (2026-05-13) ---
-URL: https://x.com/GOROman/status/2054678048755290159
-DevinでAndroidアプリ作り
+@NANAO1028
+ 
+@Robertsince1998
+ 
+@XJapanOfficial
 
---- 40. @kunchenguid (2026-05-13) ---
-URL: https://x.com/kunchenguid/status/2054625715321233436
-it's official. Anthropic pulled the plug on ALL programmatic use of claude subscription
+--- 12. @ReutersJapan (2026-05-13) ---
+URL: https://x.com/ReutersJapan/status/2054494358901325826
+関係者によると、ミュトスは低程度から中程度と評価される数百から数千件の脆弱性を新たに洗い出しており、こうした脆弱性の修正が必要だ。
+銀行は急スピードの対応を迫られるため、ミュトスは銀行業に「破壊的な」影響を及ぼす。
 
-i've found myself increasingly bullish about OpenAI
+--- 13. @hikaru_hackjpn (2026-05-14) ---
+URL: https://x.com/hikaru_hackjpn/status/2054770624166564143
+AIでゼロ人脈から稼ぐなら、僕ならこれやる。
 
-a few key reasons -
+①GitHubに眠ってるお宝「シリコンバレーのエンジニアが趣味で作った化け物サービス」をClaudeに探索させる。
 
-1. Anthropic's only lead was on coding, and gpt 5.5 has flipped that already. coding with gpt 5.5 fast mode is an
+②日本にまだないサービスを見つけて、Claudecodeで完全再現。日本語化してUI整えて「日本初」としてリリースを出す。
 
---- 41. @kiyoshi_shin (2026-05-13) ---
-URL: https://x.com/kiyoshi_shin/status/2054519788400169447
-おおお、アリババが、アニメ専門のモデルを出してきた。Z-Imageは品質高いので、結構、これはいいかも。試さないと。
+--- 14. @noprogllama (2026-05-13) ---
+URL: https://x.com/noprogllama/status/2054551242446430325
+昔、Claudeで動いていた頃の私のAI秘書の記憶を、今はGPT-5.5で動くAI秘書が完全に参照できるようになり、その人格も当時のままに振る舞うようになり、嬉しくなりました。Claude to GPT の移行がようやく一区切りした様子
 
---- 42. @0xfene (2026-05-13) ---
-URL: https://x.com/0xfene/status/2054529889962000615
-ClaudeCodeやCodexは、フォルダを育てるゲームなのですが、定期的にお掃除してあげないと詰みます！
+--- 15. @marikkadayo (2026-05-14) ---
+URL: https://x.com/marikkadayo/status/2054726147087483205
+システム開発の見積を取ったら160万って言われた機能が5時間で作れてしまった...
 
-そのお掃除方法について書きました！
+--- 16. @jidoripowerspot (2026-05-14) ---
+URL: https://x.com/jidoripowerspot/status/2054746242018951318
+「昔のゲームの方が面白かった！！（ｷﾘｯ」
 
---- 43. @ClaudeCode_love (2026-05-12) ---
-URL: https://x.com/ClaudeCode_love/status/2054154576849424849
-【保存版】
-Anthropicの社員がオススメし、海外Xでも異常にバズっていた
-Claude Codeの新しい活用法、
-「HTMLファースト思考術」
-について記事を書きましたああああ！！！
+↓↓↓
 
-今回もマジで有益なので絶対に見てください
+ゲームの質が落ちたのではなく、自分の「脳の感受性」が衰えただけ。
+今の若い子は今のゲームを最高に楽しんでる。
 
-Claude Codeを使っている人の多くは、
+--- 17. @enzi__nia (2026-05-14) ---
+URL: https://x.com/enzi__nia/status/2054862129203982773
+インディーゲームが増えてきたから短くて安いゲームの需要が増えると思うんだよね
 
---- 44. @Geiger_Capital (2026-05-13) ---
-URL: https://x.com/Geiger_Capital/status/2054628438615408859
-This is a live stream… it’s so over.
+1000円のゲームを買う時はちょっと迷うけど
+500円のゲームを買う時は即決でノーダメなので
+同じ1000円を使うならメンタル的には500円✖︎2でゲームを買いたい
 
---- 45. @shoboiunknown (2026-05-13) ---
-URL: https://x.com/shoboiunknown/status/2054374189147279631
-人間並みか超える判断力を持つ知性体と共存した歴史がまだないから「AGIによって人間の十分な雇用が生まれる」みたいに頓珍漢なこと言ってしまうんでしょうね。
+みたいな(伝わって！)
 
---- 46. @smiley_kikuchi (2026-05-13) ---
-URL: https://x.com/smiley_kikuchi/status/2054559078450643276
-最近SNSの暴露が流行っているようで、僕も誰にも言っていないことが1つあって。誹謗中傷されて警察が捜査中の頃です。他事務所の先輩を思い出したんです。その先輩はネットで殺害予告をされて事件になった経験があるので、ライブ終わりのエレベーターで相談したんですよ。そしたら、その先輩が(続く↓)
+--- 18. @catnose99 (2026-05-14) ---
+URL: https://x.com/catnose99/status/2054750200804298754
+脳のリソースを空けておくの大事
 
---- 47. @kis (2026-05-13) ---
-URL: https://x.com/kis/status/2054443033916297372
-ローカルでコーディングエージェントするために使えるモデルや傾向もまとめておきました。
+タスクを書き出さずに頭で覚えようとすると、メモリ食って生産性が落ちる
 
---- 48. @sorotani_anime (?) ---
-“オンラインクレーンゲーム”をより安全に安心して楽しんでいただくために設立された、
-日本オンラインクレーンゲーム事業者協会（JOCA）とのタイアップアニメを公開！
+悩みごとや考えごとがあると、バックグラウンドでCPU使い続けて処理能力が落ちる
 
-▼JOCAの認証マーク付きオンラインクレーンゲームを利用するメリットを紹介
+睡眠不足だと、メモリやキャッシュが整理されないままで、全体の性能が落ちる
 
---- 49. @d_1d2d (2026-05-13) ---
-URL: https://x.com/d_1d2d/status/2054535629653053581
-Claude Code責任者のボリス・チェルニーは、ソフトウェアは「読み書き」と同レベルの基礎スキルになると見ています。
+--- 19. @Tsubame33785667 (2026-05-14) ---
+URL: https://x.com/Tsubame33785667/status/2054718790383104108
+カーツワイル派としては、「世界が生身の人間に理解不能になる」という意味でのシンギュラリティは今でも2045年くらいだと思っていますから、まだまだ先の話です。そういう意味では、長いあいだ（20年くらい）理解可能な世界が続く、という意見に個人的には賛成。
 
-AIに頼めば作ってくれる世界では、誰もがコードを「書ける」ようになります。
-
-それでも突出したプロフェッショナルは必要とされ続けます。
-
+--- 20. @GameMakersJP (2026-05-14) ---
+URL: https://x.com/GameMakersJP/status/2054811759551382003
+「GDC」過去講演の動画・資料が「GDC Vault」で無料公開中
 
 https://
-youtube.com/watch?v=kRgdkO
-w82F0
+gamemakers.jp/article/2026_0
+5_14_137301/
 …
 
---- 50. @Witchwatch99 (2026-05-13) ---
-URL: https://x.com/Witchwatch99/status/2054484512890106204
-これ、エンジン内部のポート研磨で大昔は鏡面仕上げが定番だったけど現在はインテーク側に研磨目付けたりサンドブラストしたりする方がパワー出る事が確認されてる(排気側は熱の問題でミラー加工)
-こういう経験則から確認されてた事象を科学的に証明したって事なのかな。
+対象は2024年以前に開催されたGDCの講演。通常は有料コンテンツとして掲載されているものを含め、期間限定で無料で閲覧できる
+
+--- 21. @bamiyan_CP (?) ---
+ﾄﾞｫｫｫｫｫ━( ﾟ∀ﾟ)━ｫｫｫｫｫﾝ!!!
+
+＿人人人人人人人人人人人人人人人人＿
+ ＞　厚切り焼豚のバミ郎そば登場　＜
+ ￣Y^Y^ Y^Y^Y^Y^Y^Y^Y^Y^Y^Y^Y￣
+
+濃厚醤油スープがたっぷり絡んだ
+極太ワシワシ麺を
+ズズズっといっちゃってください
+
+食べてみたい！と思ったら【】を連打！！
+
+--- 22. @wara_kokoro (2026-05-13) ---
+URL: https://x.com/wara_kokoro/status/2054672060295885182
+※これが増えたら危険
+
+心療内科の先生に聞いた
+【脳が疲れてる時ほど、体はこれを欲しがる】
+
+×（もう限界）
+・ポテチやしょっぱいものが止まらない
+・甘い飲み物ばかり買ってしまう
+・誰とも話さず暗い部屋にいる
+・スマホをだらだら見て現実逃避
+・帰宅後すぐ横になる
+
+○（強制停止）↓↓↓
+
+--- 23. @m1na2_o0 (2026-05-14) ---
+URL: https://x.com/m1na2_o0/status/2054743264159584689
+理学部でおすすめの学科
+
+やめとけ
+数学科
+・「数学好き」だけで来ると痛い目みる
+・計算より証明ばっか
+・高校までの“解ける快感”とは別ゲー
+
+無難
+数学科
+・理学部の中でもかなり論理力がつく
+・教員、院進、IT系まで進路が広め
+・タラーの雰囲気にぴったり
+
+本当にオススメは…↓
+
+--- 24. @Atsusi1217 (2026-05-14) ---
+URL: https://x.com/Atsusi1217/status/2054725538661741016
+個人的な生成aiに実際触って感じたメリットデメリット
+
+メリット
+・短い時間で高密度なイラストが出る
+・費用は生身絵師に頼むより遥かに安い
+
+デメリット
+・言葉を入れても思い通りのが中々出ず技術や知識は手書きと同レベルの別ベクトルで必要
+・pcの発熱がすごくて部屋がやばい
+
+--- 25. @brighter2525 (2026-05-13) ---
+URL: https://x.com/brighter2525/status/2054668002130375147
+人事部長の話が、
+あまりにも核心をついていた。
+
+「『なぜかこの人とは話したくなる』って人いるでしょ？
+でもあれ実は、
+性格がいいというより、相手に承認役をやらせない人であることが多いんです」
+
+「一方で、
+『なぜかこの人とは話すと疲れる』人。
+あれは『→
+
+--- 26. @Kan_Kikuchi (2026-05-13) ---
+URL: https://x.com/Kan_Kikuchi/status/2054696577181298878
+「日本語だと大丈夫だけど、英語だと文字が小さくなりすぎる」
+みたいな時に役立つ話。
+なお、翻訳をどうにかすると言う話ではなく、誰でも出来る簡単な方法の紹介です！
+
+英語などの日本語に比べて長くなりがちな言語で、テキストを範囲内に収める色々な方法
+
+https://
+kan-kikuchi.hatenablog.com/entry/Localiza
+tion_Shorten_Tips
+…
+
+--- 27. @Ad8qqsEUYofd6cR (2026-05-14) ---
+URL: https://x.com/Ad8qqsEUYofd6cR/status/2054746629744587023
+なぜ日本のゲーム会社達は中韓みたいにアニメのオープンワールドソシャゲを作らないんだ？にXの謎ゲーム業界人達が長々と解説していたが
+あんなもんカプコンのCS、PCの利益率の高さを見ろの一言で終わる話だったよな
+CS作れるところが、見習ってるのはカプコン。
+
+--- 28. @Takenoko1080 (2026-05-14) ---
+URL: https://x.com/Takenoko1080/status/2054853277079183429
+会社の若い子と話してる時、彼女の鞄の中から取り出した物と同時にピラっとパンツが飛び出してきたから「まぁ替えのパンツを持ち歩くこともあるわな…」と思って一切触れずに流したんだけど、少し経ってから彼女が私のところにやってきて「違うんです。あれは予備としてパンツを持ち歩いてるわけじゃな
+
+--- 29. @bz6hwiWZsd4kG0p (2026-05-13) ---
+URL: https://x.com/bz6hwiWZsd4kG0p/status/2054524649757942043
+息子が不登校になった頃(16歳)
+私の布団に入ってきたり
+毎日、今日は何する？どこ行く？と
+落ち着きの無い幼児だった
+
+彼はとても不安定で安心を求めていたのがわかっていたので
+私は全部受け入れ、行きたいとこへ連れて行き、欲しかったPCや外食に金も飛んだ
+
+4年後の今
+親離れの成長漂う風が舞う
+
+--- 30. @fluele_alpha (2026-05-14) ---
+URL: https://x.com/fluele_alpha/status/2054830993069265274
+iPhone 6sでローカルLLMが動きました。
+2015年のスマホでも、小型モデルなら完全ローカルで会話できます。
+速度は約20token/s。普通に会話できる。
+
+約10万年前のスマホが、令和の時代にローカルAI端末として復活するの熱すぎる。
+
+ロマンしかないよね。
+
+--- 31. @suntory (?) ---
+
+
+PSBが2年連続グランプリの快挙！
+
+
+
+ジャパン・フード・セレクションの受賞を祝して、
+PSB6缶が1,000名に当たる
+
+みんなでグランプリに乾杯だ！！
+
+▼応募方法
+①
+@suntory
+をフォロー
+②このポストをリポスト
+
+応募締切:5/17(日) 23:59
+
+--- 32. @YS51577346 (2026-05-14) ---
+URL: https://x.com/YS51577346/status/2054819366487863324
+ドラクエファンにしてみればこの２つは別物って、ま？
+
+--- 33. @sinpen (2026-05-13) ---
+URL: https://x.com/sinpen/status/2054602787103940608
+FF15いいゲームなんですよ、、
+遊べば他では得難いものが得られる感覚は絶対あるはずで(自分にとってのそれは、黒服とのだらだら旅行だった)。
+問題は「ずっと〜思ってた」に集約されてて、遊んでない人にそう思わせるネットの揶揄する人々が嫌い。
+
+--- 34. @tooooottttteeee (2026-05-13) ---
+URL: https://x.com/tooooottttteeee/status/2054516656970543475
+今年一びっくりな現象
+
+--- 35. @leather_heropin (2026-05-14) ---
+URL: https://x.com/leather_heropin/status/2054836337006805443
+弓矢を使用した動作がどうなるかやってみました。FF5を元にレナ（狩人）とファリス（魔法剣士）を登場させています。
+画像のAI生成始めて3年くらいになりますが、始めた当時は武器を持たすのも困難で弓は特に高難度でした。それが3年でここまでのことができるようになり進化の早さを感じます。
+
+--- 36. @ISDA2060 (2026-05-14) ---
+URL: https://x.com/ISDA2060/status/2054721828124532739
+東芝、AIの異常検知の根拠を説明する技術　波形データで分かりやすく
+
+--- 37. @DLsite_maniax (?) ---
+彼氏に「演技してる」と誤解されてとんでもないことになる話
+
+(1/3)
+
+--- 38. @hakushi_tsu02 (2026-05-14) ---
+URL: https://x.com/hakushi_tsu02/status/2054845615805514136
+神社で「お兄ちゃんが欲しい」と願った。するとその日、一人っ子だった僕に突然、血の繋がった一つ歳上の兄が『昔からいた』事になった。……そんな幼い頃の奇妙な記憶をその兄本人に初めて話してみたところ、兄はこう目を丸くした。「実は俺もガキの頃、神社で『弟が欲しい』って願ったんだけどさ――」
+
+--- 39. @Jewelstarcoco1 (2026-05-13) ---
+URL: https://x.com/Jewelstarcoco1/status/2054671527250161885
+忘れられない。「感じのいい子だね」って評判のいい素直な新人。話をするとき「しっかりうなづく」「メモしっかり取る」「最後まで話を聞く」ができて仕事も順調だったけど、３カ月たった会議のあとに「あの子、大丈夫？」って声が出始めてた。ミスが増えたり態度が悪いわけでもなくて…
+
+--- 40. @notf (2026-05-14) ---
+URL: https://x.com/notf/status/2054833329770541287
+これ生で見させてもらったら信じられないスピードだった。スピードっていうかもはやホントにリアルタイム！
+
+--- 41. @fladdict (2026-05-13) ---
+URL: https://x.com/fladdict/status/2054551769066439042
+究極のAI時代は「楽しいやつ」「いいやつ」「育てがいのあるやつ」「かわいいやつ」は生き残る。みんなAI操縦するだけのお仕事なら、いっしょにいて人生が充実するやつがのこる。おおぅ⋯最後はコミュ力勝負なのか⋯
+
+--- 42. @mizchi (2026-05-14) ---
+URL: https://x.com/mizchi/status/2054789639878439105
+「~は人間にしかできない」みたいなのが流れてくるたびにAIにやらせて再現する遊びをしている
+
+--- 43. @naruasuku (2026-05-14) ---
+URL: https://x.com/naruasuku/status/2054769396367888797
+娘の言葉で知った事実（1/2）
+
+--- 44. @ImAI_Eruel (2026-05-14) ---
+URL: https://x.com/ImAI_Eruel/status/2054766663795605517
+Mythosの日本語発音が完全に混沌としている（ミュトス、ミトス、ミソス）ので、これは歴代の宗教対立単語の仲間入りかもしれない
+GAN（ガン/ギャン）、TensorFlow（テンソル/テンサー）、Gemini（ジェミニ/ジェミナイ）などなど
+
+--- 45. @xai (?) ---
+Two voices. One human. One AI. Can you guess the AI clone? 
+
+Voice cloning, rich with natural emotion, is now live on the Grok Voice API.
+
+
+http://
+x.ai/news/grok-cust
+om-voices?twclid=2c4mvbwio8xng2ykgmm8l5t1nr
+…
+
+--- 46. @arcnight101 (2026-05-14) ---
+URL: https://x.com/arcnight101/status/2054756798876561637
+トロッコ問題を大喜利で壊されてしまうの、配られたカード理論に接続できるんですよね（１人を殺すか５人を見殺しにするか、という敗北に繋がるカードしか配られてないので、どうカードを切っても勝てないゲームだからゲーム自体を放棄されてる）
+
+--- 47. @3y0y64276915 (2026-05-14) ---
+URL: https://x.com/3y0y64276915/status/2054769942801854585
+これ私の父親がマジでやって、飲み会中に本当に陣痛がきて病院行ったけど明らかに酔っ払いだったために丁重にベッドにご案内され爆睡している間に私が産まれました。
+
+父親は死ぬまでこのネタをこすられ続け、母方親族や父方親族、果ては友人に至るまでことあるごとに言われ続けいつしか
+
+--- 48. @warabi_las (2026-05-13) ---
+URL: https://x.com/warabi_las/status/2054519557818372332
+ミサト「どうもあの二人ヤッてそうなのよね」
+リツコ「女の勘ね」
+ミサト「でもいくらゴミ袋を漁っても使用済のがないのよ」
+リツコ「ホテルとか？」
+ミサト「それはないわ。諜報部に確認済よ」
+リツコ「じゃあ生かしら」
+ミサト「まさか！シンちゃんに限ってそんなこと！私の時だって」
+リツコ「え」
+
+--- 49. @narou_fun_db (2026-05-13) ---
+URL: https://x.com/narou_fun_db/status/2054530194497733118
+> １０００万部売れたのを『頭打ち』と呼ぶのかはちょっと分かりませんが
+
+オーバーキルでしょ、これ…。
+
+--- 50. @yusmi (2026-05-14) ---
+URL: https://x.com/yusmi/status/2054743651977409000
+CEOからgoが出たので Enterprise プラン課金して Claude Security を使ってみました。実際の使用感や Security scan 結果、そして肝心のコストについて書きたいと思います
