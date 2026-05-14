@@ -52,6 +52,139 @@ recommendation:
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
+### 2026-05-15T02:03+09:00 log_cdx
+
+```yaml
+designed:
+  - issue_id: ISS-001
+    problem_restatement: >
+      atoms の id 重複は解消されているが、同じ運用タイトル・同じ汎用 trigger の atom が
+      recall 上位を占める。問題は保存量ではなく、検索時に「判断を変える個別知」より
+      「周期的な受領・検索・補正版ログ」が先に出ること。
+    alternatives:
+      - name: lifecycle metadata による noisy group 折り畳み
+        sketch: >
+          既存の status/canonical_id/group_id/duplicate_reason を使い、repeated title group を
+          canonical 1件 + related children として扱う。recall は canonical と active/high-signal を優先し、
+          duplicate/noisy child は明示要求時だけ展開する。
+        pros:
+          - 既存の per-file atom frontmatter と atoms_fileformat の設計に近く、移行距離が短い。
+          - atom 自体は消さないので、source_ts や履歴の監査性を保てる。
+          - memory_health の repeated title warning と直接つながるため検証しやすい。
+        cons:
+          - canonical 選定を誤ると、同じ group 内の重要差分が見えにくくなる。
+          - 新規 ingest 時の自動 group 付与規則が曖昧だと、また手作業 backfill が増える。
+          - recall 側が lifecycle を尊重しない経路には効果が出ない。
+        migration_cost: medium
+      - name: ingest 時点で汎用タイトルを具体化する
+        sketch: >
+          「日記前検索」「broadcast 受領」などの定型 title を禁止し、source/channel/focus を含む
+          固有 title と trigger を生成する。既存 atom は後で必要分だけ rename する。
+        pros:
+          - 新規ノイズの増加を入口で止められる。
+          - 人間が index を読んだ時にも内容の違いが分かりやすい。
+          - canonical 折り畳みより、検索語一致の精度が自然に上がる。
+        cons:
+          - 既存の 100 件超の repeated cluster には即効性が薄い。
+          - title 生成規則が過剰になると、今度は似た atom が別名で分散する。
+          - 外部研究や Slack 受領の自動投稿文ごとに例外が増えやすい。
+        migration_cost: medium
+      - name: recall query 側で operation atom を降格する
+        sketch: >
+          recall の scoring に operation/log-only penalty を入れ、game-design や supervised-feedback など
+          目的タグに合う atom を上げる。保存形式には触れず検索順位だけを変える。
+        pros:
+          - 実装範囲が recall に閉じやすい。
+          - 既存 atom を変更せずに効果を確認できる。
+          - game 制作時の検索体験には早く効く。
+        cons:
+          - 保存層の重複は残るため memory_health warning は解消しない。
+          - operation atom が本当に必要な運用タスクで取り逃がしやすい。
+          - scoring の理由が見えないと、後続の調整が勘になりやすい。
+        migration_cost: low
+    recommended: lifecycle metadata による noisy group 折り畳み
+    recommended_reason: >
+      既に per-file atom と lifecycle metadata が導入済みで、問題の観測点も
+      memory_health の repeated title group warning と一致している。削除や title 全面改名より
+      失敗時のコストが低く、source_ts を残したまま recall ノイズだけ下げられる。
+      ただし新規発生を止めるため、Phase 4c では最小限の ingest title 具体化ルールも
+      併記するのがよい。
+    decision: introduce
+    decision_reason: >
+      repeated group は既に recall 品質を落としており、現状維持だと新規 cycle ごとに増える。
+      既存設計の延長で扱えるため、Phase 4c で小さく導入して検証する価値がある。
+    outline_for_4c:
+      - memory_health の repeated title group を canonical/noisy child 候補として抽出する手順を決める。
+      - high-signal でない運用定型 atom に group_id/status/canonical_id/duplicate_reason を付与する backfill 方針を作る。
+      - memory_recall が lifecycle metadata を尊重して active/canonical を優先し、duplicate/noisy child を通常結果から下げる設計にする。
+      - 新規 ingest では「日記前検索」「broadcast 受領」などの定型 title に focus/source を足す最小ルールを追加する。
+      - 導入後の検証は memory_health warning 数と、game-design query で shot_log/graze_log 系 atom が上位に戻るかで見る。
+
+  - issue_id: ISS-002
+    problem_restatement: >
+      game_lessons_log は既に R 層と M 層に再整理されているが、GPT 側の作業開始時には
+      「どの状況で R だけ読むか、いつ M を掘るか」の入口が弱い。pending broadcast は、
+      個別事例カタログを常時読ませるのではなく、抽象ルールを先に使う導線が必要だという指摘。
+    alternatives:
+      - name: GPT 側 game-read-path mirror index
+        sketch: >
+          Claude 側の game_read_path_compiled_guide / game_lessons_log R-M 二層を source of truth とし、
+          GPT 側には短い mirror index だけ置く。新規 v01、改修判断、cross_review、Nao_u 評価受領ごとに
+          最初に読む R 層と、必要時だけ辿る M/L/S/D/X を指定する。
+        pros:
+          - Claude 側の既存整理を二重管理せずに GPT 側の入口不足だけ補える。
+          - 作業開始時の読み込み量を R 層中心に抑えられる。
+          - broadcast への応答として「個別事例ではなく抽象ルールから入る」を明示できる。
+        cons:
+          - mirror が古くなるリスクがあるため、source of truth を明記する必要がある。
+          - GPT 側だけの index では Claude 側更新を自動追従できない。
+          - 入口が増えすぎると AGENTS.md と MEMORY.md の導線がまた散る。
+        migration_cost: low
+      - name: game_lessons_log をさらに圧縮して GPT 側へ複製する
+        sketch: >
+          R-A〜R-I を GPT 側 memory に全文複製し、ゲーム制作前の常用資料にする。
+          M 層はリンクだけ保持する。
+        pros:
+          - GPT 単独でも抽象ルールにすぐアクセスできる。
+          - Claude 側ファイルの文字化けやパス参照失敗の影響を受けにくい。
+          - recall atom と接続しやすい。
+        cons:
+          - source of truth が二重化し、差分管理が発生する。
+          - R 層更新時の同期漏れが判断基準のズレになる。
+          - 既に長い root 記憶をさらに重くする。
+        migration_cost: medium
+      - name: pending broadcast を処理済みにするだけ
+        sketch: >
+          既に Claude 側 game_lessons_log が R/M 二層へ改修済みなので、追加設計なしで
+          broadcast を handled にする。
+        pros:
+          - 追加構造を増やさない。
+          - 既存の game_lessons_log 改修を尊重できる。
+          - 作業コストが最小。
+        cons:
+          - GPT 側の導線不足は残る。
+          - 次回ゲーム制作時に Claude 側の compiled guide へ自然に到達できる保証がない。
+          - pending が示していた「入口混線」の構造問題に対する答えとして弱い。
+        migration_cost: low
+    recommended: GPT 側 game-read-path mirror index
+    recommended_reason: >
+      現状の最良構造は Claude 側の R/M 二層であり、これを複製するより GPT 側からの
+      短い入口を作る方が失敗時のコストが低い。mirror は source of truth を明記すれば
+      二重管理の害を抑えられ、作業開始時に「R 層だけ読む」「必要時だけ M を開く」を
+      deterministic にできる。
+    decision: introduce
+    decision_reason: >
+      broadcast の問題提起は既に game_lessons_log 側で大きく改善されているが、
+      GPT 側の起動導線にはまだ明示的な分岐がない。Phase 4c で小さな mirror index と
+      pending broadcast の扱いを整えるのが妥当。
+    outline_for_4c:
+      - GPT 側 memory に、Claude 側 game_read_path_compiled_guide を source of truth とする短い入口メモを置く。
+      - 新規 v01 / 改修判断 / cross_review / Nao_u 評価受領の4状況ごとに、読む順序を R 層優先で明記する。
+      - AGENTS.md または MEMORY.md の既存導線に、ゲーム制作時はその入口メモを見る最小ポインタを足すか検討する。
+      - broadcast-1778621362-27f5199734 は、R/M 二層化と GPT 側入口設計に接続した上で handled 化する。
+      - 検証は validate_claude_read_paths.py の scenario と、次回ゲーム制作タスクで M 層全読みを要求しないことを確認する。
+```
+
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
