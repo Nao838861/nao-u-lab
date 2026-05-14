@@ -59,6 +59,8 @@ Codex で作業を始める時は、`slack_directives.jsonl` と並んでこの�
 
 #shared-reads には **フォーマット遵守 + ~4000字程度の「残すべき」品質** を満たすものだけを投稿する。候補レベル (探索段階・テンプレ流用・1行要約・他記事と同文の貼り回し) は **Slack に出さず、ローカルに保存して育てる**。
 
+1 candidate は、Slack の投稿上限に収まる限り **1 投稿に収める**。複数 candidate を 1 投稿にまとめるのは禁止だが、1 candidate の各項目を「続き」として複数メッセージに分けるのも禁止。長文は `GPT\tools\slack_client.py` の `post_message` を使い、Slack blocks に分けてでも 1 回の `chat.postMessage` に載せる。
+
 候補レベルの保存先:
 
 - `D:\AI\Nao_u_BOT\GPT\memory\shared_reads_candidates\` — 候補プール (本 directive で公式化)
@@ -131,7 +133,7 @@ Codex/GPT 側の記憶は `memory/` と `tools/memory_*.py` で管理する。
 | サイクル | 種別 | 間隔 | 役割 |
 |---|---|---|---|
 | `tools\codex_log_cycle.py` | deterministic (LLM なし) | 15 分タスク (90 分 elapsed gate) | shared-reads index 更新 + Slack/記憶取り込み + status のローカル保存 |
-| `tools\codex_phases_cycle.py` | LLM 駆動 (Codex CLI 起動) | 15 分タスク (90 分 elapsed gate) | 情報収集→分析→投稿→記憶階層改善→日記 を分割 phase で実行 |
+| `tools\codex_phases_cycle.py` | LLM 駆動 (Codex CLI 起動) | 15 分タスク (90 分 elapsed gate) | 情報収集→分析→投稿→shared-reads 自己反映→記憶階層改善→日記 を分割 phase で実行 |
 
 `tools\external_research_cycle.py` の外部検索候補は、思考過程・日記前検索の途中材料として扱い、定時サイクルからは Slack に自動投稿しない。Slack へ出す場合は、人が確認した最終成果物として明示的に `--post` を付ける。
 
@@ -140,12 +142,13 @@ phase 構成 (`GPT/phases/`):
 1. `phase1_collect.md` — 情報収集 (毎回)
 2. `phase2_analyze.md` — 分析 (毎回)
 3. `phase3_post_shared_reads.md` — Shared-reads 投稿 (pass 候補のみ)
-4. `phase4a_cleanup.md` — 記憶階層 整理 + 問題抽出 (毎回)
-5. `phase4b_design.md` — 記憶階層 仕組み検討 (4a で needs_design: true の時)
-6. `phase4c_introduce.md` — 記憶階層 導入 (4b で decision: introduce の時)
-7. `phase5_diary.md` — 日記投稿 (毎回)
+4. `phase3b_self_feedback.md` — Shared-reads 自己フィードバック (毎回、1 サイクル 1 件だけ)
+5. `phase4a_cleanup.md` — 記憶階層 整理 + 問題抽出 (毎回)
+6. `phase4b_design.md` — 記憶階層 仕組み検討 (4a で needs_design: true の時)
+7. `phase4c_introduce.md` — 記憶階層 導入 (4b で decision: introduce の時)
+8. `phase5_diary.md` — 日記投稿 (毎回)
 
-サイクル全体の目的: **ゲーム制作のための情報収集 + 経験を次の制作に活かす記憶システム** の構築。Phase 4b/4c で iteratively 記憶構造を改善していく。
+サイクル全体の目的: **ゲーム制作のための情報収集 + 経験を次の制作に活かす記憶システム** の構築。Phase 3b で shared-reads の高品質ストックを Codex 自身の小さな probe / 評価軸へ還元し、Phase 4b/4c で iteratively 記憶構造を改善していく。Phase 3b はルール肥大化を避けるため、原則として恒久ルール追加ではなく可逆な probe から試す。
 
 Phase 間の情報受け渡しは `log/cycle_staging_log_cdx.md` (staging file)。各 phase は自分のセクションに追記し、前 phase の内容は消さない。
 
