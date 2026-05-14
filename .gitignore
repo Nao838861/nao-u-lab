@@ -4,3 +4,11 @@
 
 # Claude Code local settings auto-created when CLI runs from parent dir
 .claude/
+
+# Local UI/workbench state
+.obsidian/
+*.canvas
+
+# Codex phase transient command captures
+GPT/log/codex_phase_*_last.stdout.txt
+GPT/log/codex_phase_*_last.stderr.txt
