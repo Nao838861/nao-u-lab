@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Phased log_cdx cycle orchestrator (scaffold).
+"""Phased log_cdx cycle orchestrator.
 
 Goal: ゲーム制作のための情報収集 + 経験を次の制作に活かす記憶システム構築。
 
@@ -9,24 +9,18 @@ file for cross-phase handoff. Conditional gating on Phase 4b / 4c.
 Architecture: Claude 側 `docs/scheduler_architecture.md` セクション 11
 (Ash auto_diary 4 phase 分割) と同型。
 
-CURRENT STATE (2026-05-12 initial scaffold):
+CURRENT STATE (2026-05-15):
   - State management + interval gating: WORKING
   - Staging file init: WORKING
   - Conditional gating parse (4b/4c): WORKING (naive substring match)
-  - Codex CLI invocation: STUB (invoke_codex_cli は print のみ、実装は次サイクルで)
-
-TODO for Codex (Phase 4c で自己実装):
-  - `invoke_codex_cli(phase_name)` の実体を埋める。想定:
-      subprocess.run(["codex", "exec", "--prompt-file", str(prompt_path), "--working-dir", str(ROOT), ...], check=True)
-  - 実環境での Codex CLI 起動方法を検証してから実コマンドに置換
-  - install スクリプト (`install_codex_phases_cycle_task.ps1`) を作る (既存
-    `install_codex_log_cycle_task.ps1` を雛形に)
+  - Codex CLI invocation: WORKING (`codex exec --cd ROOT ...`)
+  - Windows scheduled task installer: `tools/install_codex_phases_cycle_task.ps1`
 """
 from __future__ import annotations
 
 import argparse
 import json
-import subprocess  # noqa: F401  # for future CLI invocation
+import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path

@@ -128,8 +128,8 @@ Codex/GPT 側の記憶は `memory/` と `tools/memory_*.py` で管理する。
 
 | サイクル | 種別 | 間隔 | 役割 |
 |---|---|---|---|
-| `tools\codex_log_cycle.py` | deterministic (LLM なし) | 15 分タスク (90 分 elapsed gate) | shared-reads index 更新 + Slack #log への status 投稿 |
-| `tools\codex_phases_cycle.py` | LLM 駆動 (Codex CLI 起動) | 90 min 目安 | 情報収集→分析→投稿→記憶階層改善→日記 を分割 phase で実行 |
+| `tools\codex_log_cycle.py` | deterministic (LLM なし) | 15 分タスク (90 分 elapsed gate) | shared-reads index 更新 + Slack/記憶取り込み + status のローカル保存 |
+| `tools\codex_phases_cycle.py` | LLM 駆動 (Codex CLI 起動) | 15 分タスク (90 分 elapsed gate) | 情報収集→分析→投稿→記憶階層改善→日記 を分割 phase で実行 |
 
 phase 構成 (`GPT/phases/`):
 
@@ -147,7 +147,13 @@ Phase 間の情報受け渡しは `log/cycle_staging_log_cdx.md` (staging file)�
 
 設計経緯と原則: `phases/README.md` および Claude 側 `docs/scheduler_architecture.md` セクション 11 (Ash auto_diary 分割設計)。
 
-Codex CLI の正確な起動方法は orchestrator (`tools/codex_phases_cycle.py`) の `invoke_codex_cli()` に TODO として残っている。次サイクルの Phase 4c で Codex 自身が実装することを想定 (scaffold は state/gating/staging のみ working)。
+Windows タスク登録:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\install_codex_phases_cycle_task.ps1
+```
+
+登録される runner は `run_codex_phases_cycle.cmd`。`codex_phases_cycle.py` 側の 90 分 gate により、15 分ごとの起動確認から本処理だけを間引く。
 
 ## Claude 側設定の扱い
 

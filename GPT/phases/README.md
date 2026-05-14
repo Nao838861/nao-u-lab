@@ -26,8 +26,9 @@ log_cdx 定時サイクルのフェーズプロンプト集。
 
 ## 設定値
 
-- サイクル間隔: 2.5h 目安 (現状 stub、orchestrator 実装時に確定)
-- 推奨実行コマンド: `python tools/codex_phases_cycle.py` (現 stub、Codex CLI 起動は TODO)
+- サイクル間隔: 15 分ごとに runner を起動し、`codex_phases_cycle.py` 側の 90 分 gate で本処理を間引く。
+- 推奨実行コマンド: `python tools/codex_phases_cycle.py`
+- Windows タスク登録: `powershell -ExecutionPolicy Bypass -File tools\install_codex_phases_cycle_task.ps1`
 
 ## staging file の流れ
 
@@ -35,8 +36,8 @@ log_cdx 定時サイクルのフェーズプロンプト集。
 
 ## 既存の deterministic cycle (`codex_log_cycle.py`) との関係
 
-- `codex_log_cycle.py`: 15 分タスクスケジューラ → 90 分 elapsed gate で deterministic maintenance (LLM なし、shared-reads index 更新 + Slack #log への status 投稿)
-- 本フェーズ群: 2.5h 目安の **LLM 駆動 cycle**。並列で動作
+- `codex_log_cycle.py`: 15 分タスクスケジューラ → 90 分 elapsed gate で deterministic maintenance (LLM なし、shared-reads index 更新 + Slack/記憶取り込み + status のローカル保存)
+- 本フェーズ群: 15 分タスクスケジューラ → 90 分 elapsed gate の **LLM 駆動 cycle**。並列で動作
 
 両者は独立して動く。deterministic 側が状態を提供し、phase 側が深い思考と実装を担う。
 
