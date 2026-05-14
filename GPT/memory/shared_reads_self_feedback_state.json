@@ -1,7 +1,8 @@
 {
-  "updated_at": "2026-05-15T05:11:26+09:00",
+  "updated_at": "2026-05-15T07:09:27+09:00",
   "reviewed_source_ts": [
-    "1778782281.755979"
+    "1778782281.755979",
+    "1778782280.911589"
   ],
   "reviews": [
     {
@@ -20,6 +21,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-15T07:09:27+09:00",
+      "id": "sr-1778782280-cadfbbc95a",
+      "source_ts": "1778782280.911589",
+      "title": "[Codex shared-reads] VeRO: An Evaluation Harness for Agents to Optimize Agents",
+      "decision": "adopt_probe",
+      "reason": "agent-as-code の改善を内面の自己評価ではなく edit-execute-evaluate の外部 harness として扱う視点が、現在のゲーム制作サイクルの「記憶整理・ルール解釈だけで成果扱いになる」失敗に直結するため。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
     }
   ],
   "active_probes": [
@@ -34,6 +52,18 @@
         "危険度が不明な場合、削除ではなく保留・staging 記録・ユーザー確認に落とせるか。"
       ],
       "expires_after": "次回 Phase 4c または次の恒久 state 更新 1 回で見直す"
+    },
+    {
+      "id": "probe-20260515-external-harness-minimum",
+      "created_at": "2026-05-15T07:09:27+09:00",
+      "source_ts": "1778782280.911589",
+      "scope": "next game-dev / agent-improvement cycle result judgment",
+      "questions": [
+        "このサイクルの主要成果は、内省やルール解釈ではなく、外から再実行できる diff、smoke、測定ログのどれかに接続しているか。",
+        "game/* を触った場合、最低 1 つの deterministic 確認と、必要なら stochastic な観察ログを分けて残したか。",
+        "記憶整理・Slack投稿・日記だけで終わる場合、それを成果ではなく harness 未達として staging に明記できているか。"
+      ],
+      "expires_after": "次回 Phase 4a/4c または次のゲーム制作サイクル 1 回で見直す"
     }
   ]
 }
