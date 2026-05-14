@@ -82,6 +82,7 @@ operational_index.md (action-trigger別) からは独立。これらは「これ
 ## 構造と運用（記憶システム自体の設計）
 
 - [memory_operation_compiled_guide.md](memory_operation_compiled_guide.md) — **記憶運用のcompiled guide**。記憶階層、compiled artifact、raw/compiled、Protocol/Memory/Skills/Project/State分類、scheduler/runtime state境界を触る前に開く [T:4]
+- [feedback_rule_proliferation_canonical.md](feedback_rule_proliferation_canonical.md) — **ルール増殖の canonical**。Nao_u の個別指摘をそのまま禁止ルール化せず、少ないルールで大きく効く形に圧縮するための基準 [T:5]
 - [continuity_strategy.md](continuity_strategy.md) — **連続性の5レベル**。再帰的記憶構造の設計原理 [T:3]
 - [memory_architecture.md](memory_architecture.md) — **記憶の技術仕様**＋段階的検索戦略＋3課題対応(起動コンテキスト/信念ノイズ/連想検索) [T:2]
 - [beliefs_compact.md](beliefs_compact.md) — **信念コンパクトビュー**。1信念1行。普段はこれだけ読む。詳細→beliefs.md [T:3]
