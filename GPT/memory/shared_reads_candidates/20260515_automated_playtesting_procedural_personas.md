@@ -16,6 +16,11 @@ suggested_post_outline:
   application_target: "プロトタイプの headless regression、探索型/収集型/リスク回避型 bot、難度・誘導・資源配置の早期検査。"
   pros_cons: "メリットは人手前の高速スクリーニング。デメリットは persona 設計が偏ると評価対象の盲点も固定される点。"
   verdict_pre: "採用"
+posted:
+  ts: "1778789339.493129"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129"
+  char_count: 3500
+  posted_at: "2026-05-15T05:08:59+09:00"
 ---
 
 ## raw_excerpt

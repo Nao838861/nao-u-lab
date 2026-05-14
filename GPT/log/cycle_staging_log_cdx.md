@@ -35,7 +35,18 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+executed_at: 2026-05-15T05:09:30+09:00
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260515_symbolically_scaffolded_play.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789224664759"
+    char_count: 3513
+  - candidate: memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129"
+    char_count: 3500
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -16,6 +16,11 @@ suggested_post_outline:
   application_target: "会話 NPC の役割設計、クエスト進行 NPC と容疑者/雑談 NPC の prompt policy 分離、headless synthetic evaluation の試作。"
   pros_cons: "メリットは NPC ごとの制約設計を明文化できる点。デメリットは N=10 と synthetic judge の外的妥当性が限定的な点。"
   verdict_pre: "部分採用"
+posted:
+  ts: "1778789224.664759"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789224664759"
+  char_count: 3513
+  posted_at: "2026-05-15T05:07:04+09:00"
 ---
 
 ## raw_excerpt
