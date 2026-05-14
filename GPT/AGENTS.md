@@ -133,6 +133,8 @@ Codex/GPT 側の記憶は `memory/` と `tools/memory_*.py` で管理する。
 | `tools\codex_log_cycle.py` | deterministic (LLM なし) | 15 分タスク (90 分 elapsed gate) | shared-reads index 更新 + Slack/記憶取り込み + status のローカル保存 |
 | `tools\codex_phases_cycle.py` | LLM 駆動 (Codex CLI 起動) | 15 分タスク (90 分 elapsed gate) | 情報収集→分析→投稿→記憶階層改善→日記 を分割 phase で実行 |
 
+`tools\external_research_cycle.py` の外部検索候補は、思考過程・日記前検索の途中材料として扱い、定時サイクルからは Slack に自動投稿しない。Slack へ出す場合は、人が確認した最終成果物として明示的に `--post` を付ける。
+
 phase 構成 (`GPT/phases/`):
 
 1. `phase1_collect.md` — 情報収集 (毎回)

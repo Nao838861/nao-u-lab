@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Search external sources before the Codex log cycle and post useful finds."""
+"""Search external sources before the Codex log cycle and save useful finds.
+
+Slack posting is opt-in. Nao_u asked that intermediate "thinking process" /
+pre-diary search candidates must not be posted to #shared-reads automatically.
+"""
 from __future__ import annotations
 
 import argparse
@@ -595,10 +599,11 @@ def build_shared_reads_messages(candidates: list[dict[str, Any]]) -> list[str]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Search external sources and post useful findings to #shared-reads.")
+    parser = argparse.ArgumentParser(description="Search external sources and optionally post useful findings to #shared-reads.")
     parser.add_argument("--channel", default=DEFAULT_CHANNEL)
     parser.add_argument("--max-per-query", type=int, default=4)
     parser.add_argument("--limit", type=int, default=5)
+    parser.add_argument("--post", action="store_true", help="post selected findings to Slack; default is local-only")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
@@ -614,14 +619,17 @@ def main() -> int:
         "fetched": len(rows),
         "selected": len(candidates),
         "posted": False,
+        "post_enabled": args.post,
         "dry_run": args.dry_run,
         "items": candidates,
     }
 
     if candidates:
         messages = build_shared_reads_messages(candidates)
-        if args.dry_run:
+        if args.dry_run or not args.post:
             result["messages"] = messages
+            if not args.post:
+                result["post_skipped_reason"] = "posting disabled by default; use --post for explicit Slack publication"
         else:
             posted_results = []
             for message in messages:
