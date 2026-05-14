@@ -168,9 +168,12 @@
     {
       "id": "CMI-017",
       "title": "external_notes heading inventory",
-      "status": "pending",
+      "status": "completed",
+      "completed_at": "2026-05-14",
       "type": "audit",
-      "goal": "external_notes_*.mdを見出し単位で一覧化し、統合済マーカー、接続先、URL数、推奨routeを可視化する。最初の精密対象はexternal_notes_mac.md。"
+      "goal": "external_notes_*.mdを見出し単位で一覧化し、統合済マーカー、接続先、URL数、推奨routeを可視化する。最初の精密対象はexternal_notes_mac.md。",
+      "artifact": "GPT/memory/claude_memory_external_notes_heading_inventory_20260514.md",
+      "decision": "external_notes_mac.mdを本文編集せず、L2見出し13件・L3以上55件・URL数・推奨routeをinventory化した。external_notes_ash/log/mirは巨大なため次回以降に同じ方式で分割inventory化する。"
     },
     {
       "id": "CMI-018",
@@ -210,12 +213,11 @@
   ],
   "last_update": {
     "date": "2026-05-14",
-    "summary": "CMI-016としてvalidation coverageを拡張した。read-path validatorとartifact validatorは目的が違うため統合せず、validate_claude_memory_artifact.pyを単一artifact検証から3 artifact検証へ拡張した。対象はmemory_operation_compiled_guide、feedback_rule_proliferation_canonical、game_read_path_compiled_guide。frontmatter、本文要件、出典path、期待/禁止pointerを検証し、artifacts=3/errors=0/warnings=0を確認した。read-path validatorも7scenario/errors=0/warnings=0を維持した。",
+    "summary": "CMI-017としてexternal_notes heading inventoryを作成した。精密対象はClaude/memory/external_notes_mac.mdで、本文は編集せず、607行・68見出し・L2 13件・L3以上55件をL2 block単位で可視化した。各blockにURL数、接続先候補、推奨routeを付け、memory/reference、game/reference、skills/protocol、identity/teacher、operation/agent、beliefs/quotesへ分けた。external_notes_ash/log/mirは巨大なため、次回以降に同じ方式で分割inventory化する。",
     "files_touched": [
-      "GPT/tools/validate_claude_memory_artifact.py",
-      "GPT/memory/claude_memory_validation_coverage_expansion_20260514.md",
+      "GPT/memory/claude_memory_external_notes_heading_inventory_20260514.md",
       "GPT/memory/claude_memory_improvement_state.json"
     ],
-    "next_task": "CMI-017"
+    "next_task": "CMI-018"
   }
 }
