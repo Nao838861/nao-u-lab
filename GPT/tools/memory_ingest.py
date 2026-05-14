@@ -54,6 +54,15 @@ NOISE_PATTERNS = [
     r"^\s*[-*]\s*`[^`]+`",
 ]
 
+GENERIC_TITLE_PATTERNS = [
+    re.compile(r"^\[Codex external research\] 日記前検索:"),
+    re.compile(r"^日記前検索:"),
+    re.compile(r"^\[Codex shared-reads再投稿"),
+    re.compile(r"^Nao_u から(?:の全員宛 broadcast| log_cdx 宛の指示)を受領しました。?$"),
+    re.compile(r"^Nao_u からの全員宛 broadcast を log_cdx も受領しました。?$"),
+    re.compile(r"^投稿者:\s*"),
+]
+
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
@@ -127,6 +136,24 @@ def first_title(text: str) -> str:
         if line:
             return line[:140]
     return "(untitled shared-read)"
+
+
+def concrete_title(title: str, row: dict[str, Any], text: str) -> str:
+    """Make recurring operational titles specific enough for future recall."""
+    if not any(pattern.search(title) for pattern in GENERIC_TITLE_PATTERNS):
+        return title
+
+    dt = str(row.get("datetime") or row.get("ts") or "")[:16]
+    channel = str(row.get("channel") or "shared-reads")
+    links = extract_links(text)
+    if links:
+        tail = links[0].rstrip("/").split("/")[-1][:32]
+    else:
+        digest = hashlib.sha1(text[:500].encode("utf-8")).hexdigest()[:8]
+        tail = digest
+    suffix_parts = [part for part in (channel, dt, tail) if part]
+    suffix = " / ".join(suffix_parts)
+    return f"{title} — {suffix}"[:180]
 
 
 def extract_links(text: str) -> list[str]:
@@ -229,7 +256,7 @@ def row_to_atom(row: dict[str, Any]) -> dict[str, Any] | None:
     if not should_keep(text, score):
         return None
     ts = str(row.get("ts", "0"))
-    title = first_title(text)
+    title = concrete_title(first_title(text), row, text)
     return {
         "id": stable_id(ts, text),
         "source": "slack_archive/shared-reads.jsonl",

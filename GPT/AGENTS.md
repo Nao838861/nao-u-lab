@@ -122,6 +122,8 @@ Codex/GPT 側の記憶は `memory/` と `tools/memory_*.py` で管理する。
 
 ユーザーが明示的に上書きしない限り、そこに記録された設計サイクル、フィードバック原文保存、自己評価手順を実行する。
 
+ゲーム制作時の Claude 側 lesson 読み順が必要な場合は、GPT 側入口として `D:\AI\Nao_u_BOT\GPT\memory\game_read_path_mirror_index_20260515.md` を読む。正本は `D:\AI\Nao_u_BOT\Claude\memory\game_read_path_compiled_guide.md`。
+
 ## 定時サイクル (7 phase 分割、LLM 駆動)
 
 並列で 2 種類のサイクルが動く:

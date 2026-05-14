@@ -188,6 +188,53 @@ designed:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+### 2026-05-15T01:20+09:00 log_cdx
+
+```yaml
+implemented:
+  - issue_id: ISS-001
+    files_changed:
+      - path: tools/backfill_atom_lifecycle.py
+        change: modified
+      - path: tools/memory_ingest.py
+        change: modified
+      - path: memory/atoms.jsonl
+        change: modified
+      - path: memory/atoms/index.jsonl
+        change: modified
+      - path: memory/atoms/<YYYY-MM>/*.md
+        change: modified
+    summary: >
+      repeated title のうち、定型運用タイトルを lifecycle group として canonical/noisy child に backfill し、
+      新規 ingest では定型タイトルに channel/date/source tail を足す最小具体化を追加した。
+    partial: false
+  - issue_id: ISS-002
+    files_changed:
+      - path: memory/game_read_path_mirror_index_20260515.md
+        change: created
+      - path: AGENTS.md
+        change: modified
+      - path: memory/slack_broadcasts.jsonl
+        change: modified
+      - path: D:/AI/Nao_u_BOT/Claude/memory/MEMORY.md
+        change: modified
+    summary: >
+      Claude 側 game_read_path_compiled_guide を正本とする GPT 側 mirror index を作り、
+      ゲーム制作時の入口と broadcast-1778621362-27f5199734 の handled 化を接続した。
+    partial: false
+migrations:
+  - what: noisy repeated title atoms lifecycle backfill
+    affected: >
+      8 title clusters、atoms 1116 件中 display atoms が 999 から 928 に減少。
+      atoms.jsonl と per-file atom/index を同期。
+verification:
+  - python tools/backfill_atom_lifecycle.py: changed_atoms 12 (最終追加分), per_file_total 1116
+  - python tools/memory_health.py --json: errors 0、display_atoms_after_lifecycle_fold 928、未付与 repeated title は低頻度 6 種のみ
+  - python tools/memory_recall.py "ゲーム 自己判定 ハーネス shot_log graze_log" --limit 5 --compact --no-log: M-40 / v04 post-ship / graze_log feedback が上位に出ることを確認
+  - python tools/validate_claude_read_paths.py: scenarios 7、errors 0、warnings 0
+  - python -m py_compile tools/backfill_atom_lifecycle.py tools/memory_ingest.py tools/memory_recall.py tools/memory_health.py: OK
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
 ## Phase 1: 情報収集 (log_cdx 追記)
