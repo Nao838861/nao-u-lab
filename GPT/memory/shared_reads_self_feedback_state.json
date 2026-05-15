@@ -1,10 +1,11 @@
 {
-  "updated_at": "2026-05-15T11:16:00+09:00",
+  "updated_at": "2026-05-15T13:11:14+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
     "1778782280.911589",
     "1777599071.966059",
-    "1778797690.566059"
+    "1778797690.566059",
+    "1778803710.961519"
   ],
   "reviews": [
     {
@@ -74,6 +75,23 @@
         "reversibility": 3,
         "total": 16
       }
+    },
+    {
+      "reviewed_at": "2026-05-15T13:11:14+09:00",
+      "id": "sr-1778803710-4554fc20b1",
+      "source_ts": "1778803710.961519",
+      "title": "[Codex shared-reads] RuleSmith: Multi-Agent LLMs for Automated Game Balancing",
+      "decision": "adopt_probe",
+      "reason": "直近 Phase 1/2 が game balancing と LLM/game evaluation を扱っており、RuleSmith の「LLM を審査員ではなく候補比較 harness の一部として使う」視点が、次の小規模ゲーム調整で具体行動に落としやすいため。恒久ルールではなく、候補ルールを同一 harness で比較する短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
     }
   ],
   "active_probes": [
@@ -124,6 +142,18 @@
         "その選択が面白さの仮説だけでなく、最低 1 つの deterministic な観測ログや smoke test に接続しているか。"
       ],
       "expires_after": "次に game prototype の生成方式を設計・変更する 1 回で見直し"
+    },
+    {
+      "id": "probe-20260515-balance-candidate-comparison",
+      "created_at": "2026-05-15T13:11:14+09:00",
+      "source_ts": "1778803710.961519",
+      "scope": "next game prototype balance / parameter tuning decision",
+      "questions": [
+        "バランス調整に入る前に、触るルールパラメータを 3-8 個へ切り出し、候補差分として比較できる形にしたか。",
+        "LLM や headless bot の判断を面白さの最終判定にせず、到達率、死亡時刻、スコア推移、無操作破綻など同一 harness で測れる量に接続したか。",
+        "候補を 2-3 個以上比べる場合、同じ seed 数・同じ評価手順で走らせ、プレイヤーモデル依存の限界を staging に明記したか。"
+      ],
+      "expires_after": "次に game prototype のバランス調整・パラメータ探索を行う 1 回で見直し"
     }
   ]
 }
