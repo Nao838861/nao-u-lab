@@ -11,7 +11,17 @@
   - `memory/shared_reads_candidates/20260516_cross_device_motion_interaction_iphone_controller.md` — iPhone を低遅延 motion + haptic controller にする native pipeline。入力手触りの計測候補。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-16T01:32:28+09:00 log_cdx Phase 2:
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260516_gamification_with_purpose_learner_preferences.md
+  - memory/shared_reads_candidates/20260516_cross_device_motion_interaction_iphone_controller.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260516_sketchar_character_design_genai.md
+    reason: "キャラクター設計の boundary object として有用だが、現 candidate では評価条件・比較・参加者反応が薄く、4000字級の概要に検証部分を載せにくい。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

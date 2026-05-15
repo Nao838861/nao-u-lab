@@ -4,6 +4,18 @@ url: https://arxiv.org/abs/2508.01110
 collected_at: 2026-05-16T01:29:12+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [mobile-game, haptics, motion-control, prototyping, embodied-interaction]
+evaluated_at: "2026-05-16T01:32:28+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+gate_reason: >-
+  CoreMotion / MultipeerConnectivity / CoreHaptics の具体 pipeline と、latency、packet loss、電力、demonstrator game、参加者数まで candidate 内で把握できる。
+  スマホ連携そのものだけでなく、入力手触りをログと再現性込みで評価する姿勢がゲーム制作の prototype 検証に具体的に適用できる。
+suggested_post_outline:
+  overview_angle: "iPhone を motion controller にする話を、低遅延入力・触覚応答・再現可能な計測基盤の設計として読む。"
+  analysis_axis: "native Apple frameworks の構成、offline/P2P pipeline、KeepCalm demonstrator、latency・packet loss・電力・コード量の測定が設計判断にどう効くか。"
+  application_target: "物理入力、スマホ連携、触覚 feedback、または通常の PC/browser prototype でも入力ログを設計に戻すための検証テンプレート。"
+  pros_cons: "メリットは consumer device で低コストに再現性のある入力実験を作れる点。デメリットは Apple ecosystem 依存と 10 Hz/単一 demonstrator から一般ゲーム全体へは広げすぎられない点。"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
