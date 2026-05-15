@@ -4,6 +4,18 @@ url: "https://arxiv.org/abs/2512.00560"
 collected_at: "2026-05-15T23:29:36+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [playtesting, regression-testing, llm, reinforcement-learning, game-qa]
+evaluated_at: "2026-05-15T23:33:39+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+gate_reason: |
+  update log の semantic analysis から relevant test を優先する、という中核が Nao_u の差分駆動テストに直結する。
+  LLM-guided RL、multi-objective optimization、Overcooked Plus / Minecraft 評価があり、手法・評価・適用の要素が揃っている。
+suggested_post_outline:
+  overview_angle: "ゲーム更新時に何を再テストすべきかを、差分ログとセマンティックなテスト選択で扱う regression testing 論文として書く。"
+  analysis_axis: "goal-oriented exploration、cost/coverage/rarity の test suite 最適化、update log による prioritization の三層で整理する。"
+  application_target: "小型プロトタイプの更新履歴から再確認すべきプレイ経路・失敗条件・既存テストを選ぶ Phase 4/実装後チェックへ接続する。"
+  pros_cons: "メリットは更新差分とテスト選択を結びつける点。デメリットは RL/大規模環境前提が重く、小規模運用では簡略版に落とす必要がある点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

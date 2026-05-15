@@ -4,6 +4,12 @@ url: "https://ojs.aaai.org/index.php/AIIDE/article/view/36859"
 collected_at: "2026-05-15T23:29:36+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, educational-games, llm, co-creation, human-ai-interaction]
+evaluated_at: "2026-05-15T23:33:39+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+gate_reason: |
+  教育目標と game design language を共構築する問題設定は有用だが、Doctoral Consortium 論文として枠組み提案の色が強く、評価の中身が薄い。
+  Nao_u 環境への適用も「設計会話を残す」以上に具体化しにくく、CoopEval 水準の概要に必要な手法・評価・結論の密度が不足している。
 ---
 
 ## raw_excerpt

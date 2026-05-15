@@ -4,6 +4,18 @@ url: "https://ojs.aaai.org/index.php/AIIDE/article/view/36804"
 collected_at: "2026-05-15T23:29:36+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, rules, llm, evaluation, fine-tuning]
+evaluated_at: "2026-05-15T23:33:39+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+gate_reason: |
+  ゲームルール理解を Solitaire variants / GDL / game progression questions / textual explanation で測る構成が明確で、問題設定から評価まで追える。
+  Nao_u 作品の mechanics review や仕様理解テストに直接接続でき、~4000字の概要で「LLM はルールを読めるのか」を具体的に説明できる。
+suggested_post_outline:
+  overview_angle: "LLM のゲームルール理解を、既知ゲームの知識ではなく未知ルールへの OOD 一般化として測る論文として紹介する。"
+  analysis_axis: "Solitaire variants と GDL によるデータ生成、game progression questions、fine-tuning の in/out-of-distribution 評価を軸にする。"
+  application_target: "Nao_u 作品の仕様書・ルール変更案を LLM に読ませる前に、理解確認用の progression question / explanation harness を作る発想へ接続する。"
+  pros_cons: "メリットはルール理解をデータセット化して測れる点。デメリットはカードゲーム testbed からアクション/物理/曖昧な体験設計へ拡張する際に追加設計が要る点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
