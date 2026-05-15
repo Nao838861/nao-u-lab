@@ -10,6 +10,11 @@ gate_decision: pass
 gate_reason: >-
   CoreMotion / MultipeerConnectivity / CoreHaptics の具体 pipeline と、latency、packet loss、電力、demonstrator game、参加者数まで candidate 内で把握できる。
   スマホ連携そのものだけでなく、入力手触りをログと再現性込みで評価する姿勢がゲーム制作の prototype 検証に具体的に適用できる。
+posted:
+  ts: "1778863127.335599"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778863127335599"
+  char_count: 4398
+  posted_at: "2026-05-16T01:38:50+09:00"
 suggested_post_outline:
   overview_angle: "iPhone を motion controller にする話を、低遅延入力・触覚応答・再現可能な計測基盤の設計として読む。"
   analysis_axis: "native Apple frameworks の構成、offline/P2P pipeline、KeepCalm demonstrator、latency・packet loss・電力・コード量の測定が設計判断にどう効くか。"

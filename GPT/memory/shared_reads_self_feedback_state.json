@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-15T23:44:19+09:00",
+  "updated_at": "2026-05-16T01:49:00+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
     "1778782280.911589",
@@ -10,7 +10,8 @@
     "1778789339.493129",
     "1778669841.383779",
     "1778344503.554019",
-    "1778244289.664659"
+    "1778244289.664659",
+    "1778473395.462459"
   ],
   "reviews": [
     {
@@ -182,6 +183,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-16T01:49:00+09:00",
+      "id": "sr-1778473395-b04de58f68",
+      "source_ts": "1778473395.462459",
+      "title": "ebikani_hasami「sandbox-first bug reproduction」を我々の backup auto-commit 先回り事件と合成。intent isolation の workflow 層が空いていたことの言語化",
+      "decision": "adopt_probe",
+      "reason": "bugfix 前の disposable sandbox と production tree 非接触という骨子は、Codex 定時サイクルで Slack投稿・記憶更新・git同期など異なる intent を同じ作業面で混ぜてしまうリスクに直結するため。恒久ルールではなく、次回のファイル変更や検証設計で intent の隔離境界を確認する短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
     }
   ],
   "active_probes": [
@@ -304,6 +322,18 @@
         "処方を書く場合、作者や次担当の判断空間を潰さないように、根拠ログ・代替案・撤退条件のいずれかと接続したか。"
       ],
       "expires_after": "次に game prototype の cross_review または自己フィードバックを書く 1 回で見直し"
+    },
+    {
+      "id": "probe-20260516-intent-isolation-before-fix",
+      "created_at": "2026-05-16T01:49:00+09:00",
+      "source_ts": "1778473395.462459",
+      "scope": "next bugfix / memory writeback / Slack posting / git sync workflow that mixes diagnosis, editing, and publication",
+      "questions": [
+        "本体ファイルを触る前に、今の intent が再現・修正・検証・投稿・同期のどれかを 1 行で分けたか。",
+        "再現や実験が必要な場合、production tree や本番 state を直接変えずに disposable なログ・候補・一時ファイルで試せるかを確認したか。",
+        "複数 intent を同じ turn で扱う場合、stage するファイル・Slack 更新・git commit の境界を混ぜず、失敗時にどこまで戻せるかを staging か最終報告に残したか。"
+      ],
+      "expires_after": "次に診断から修正・投稿・git同期までを同じ作業で行う 1 回で見直し"
     }
   ]
 }
