@@ -274,3 +274,15 @@ outputs:
   edited_files:
     - log/cycle_staging_log_cdx.md
 ```
+
+2026-05-15T18:07:00+09:00 log_cdx Phase 4c:
+```yaml
+skipped: true
+reason: "最新の Phase 4b は skipped: true / decision: no_change で、decision: introduce の設計が 1 件もなかったため。"
+implemented: []
+migrations: []
+verification:
+  - "staging Phase 4b を確認し、outline_for_4c を持つ未実装 introduce がないことを確認。"
+  - "前回導入済みの memory/atoms/canonical_topic_groups.jsonl は存在し、seed 1 行を保持していることを確認。"
+  - "`python tools\\memory_recall.py \"MEMSAD memory poisoning canonical\" --limit 3 --compact --no-log` が例外なく完了し、canonical atom sr-1778536137-c07e04d08a が結果に含まれることを確認。"
+```
