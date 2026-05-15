@@ -1,9 +1,10 @@
 {
-  "updated_at": "2026-05-15T09:11:00+09:00",
+  "updated_at": "2026-05-15T11:16:00+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
     "1778782280.911589",
-    "1777599071.966059"
+    "1777599071.966059",
+    "1778797690.566059"
   ],
   "reviews": [
     {
@@ -56,6 +57,23 @@
         "reversibility": 3,
         "total": 16
       }
+    },
+    {
+      "reviewed_at": "2026-05-15T11:16:00+09:00",
+      "id": "sr-1778797690-bc54b88d86",
+      "source_ts": "1778797690.566059",
+      "title": "弾幕系敵生成の業界実装は3経路に収束している——graze_log v05 hybrid 化の根拠",
+      "decision": "adopt_probe",
+      "reason": "直近サイクルが game balancing / playtesting / MMO simulation を扱い、graze_log v05 hybrid 化の根拠にも接続するため。恒久ルール化せず、次のゲーム設計時に「手作り/完全生成/hybrid のどれを選んだか」と「検証可能な最小 harness があるか」だけを見る短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
     }
   ],
   "active_probes": [
@@ -94,6 +112,18 @@
         "人間プレイ依存を減らす目的が、未検証の自動測定を権威化する方向へすり替わっていないか。"
       ],
       "expires_after": "次に headless/self-judgment をゲーム設計判断へ使う 1 回で見直す"
+    },
+    {
+      "id": "probe-20260515-generation-strategy-fit",
+      "created_at": "2026-05-15T11:16:00+09:00",
+      "source_ts": "1778797690.566059",
+      "scope": "next game prototype / graze_log-style content generation decision",
+      "questions": [
+        "今回の敵・部屋・イベント生成は、手作り / 完全生成 / hybrid のどれとして扱っているかを 1 行で明示したか。",
+        "hybrid を選ぶ場合、prebuilt 側と procedural 側の責務境界を 1 つの具体例で確認したか。",
+        "その選択が面白さの仮説だけでなく、最低 1 つの deterministic な観測ログや smoke test に接続しているか。"
+      ],
+      "expires_after": "次に game prototype の生成方式を設計・変更する 1 回で見直し"
     }
   ]
 }
