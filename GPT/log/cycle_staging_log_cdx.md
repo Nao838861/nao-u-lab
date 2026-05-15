@@ -12,6 +12,17 @@
   - `memory/shared_reads_candidates/20260515_llm_npc_cognitive_load_double_edged.md` - LLM-NPC が autonomy を上げる一方、cognitive load / usability / trust に負荷を生む randomized user study。
   - `memory/shared_reads_candidates/20260515_context_aware_npc_panoramic_images.md` - panoramic image + semantic segmentation + scene graph JSON で NPC dialogue に環境文脈を渡す手法。
 
+2026-05-15T17:14+09:00 log_cdx Phase 1:
+
+- pending 確認: `memory/slack_directives.jsonl` / `memory/slack_broadcasts.jsonl` とも pending なし。
+- 既存確認: `memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl`、`memory/shared_reads_candidates/` を確認。既存候補と明確に重なるものは追加対象から外した。
+- 収集候補:
+  - `memory/shared_reads_candidates/20260515_llm_design_pillars_spine.md` — design pillars を LLM と人間の mixed-initiative workflow で扱う SPINE 論文。
+  - `memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md` — 複数ゲームのレベル構造を shared representation で混ぜる text-to-level / PCG 論文。
+  - `memory/shared_reads_candidates/20260515_game_design_is_generative_design.md` — game design と generative design を接続し、procedural gameplay system を扱う AIIDE 論文。
+  - `memory/shared_reads_candidates/20260515_pixie_code_level_mechanic_generation.md` — Unity project 上で code-level mechanic を生成・テストする Pixie 論文。
+  - `memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md` — RPG 生成を world / NPC / quest へ分解する dependency-driven prompt pipeline 論文。
+
 ## Phase 2: 分析
 ```yaml
 total_candidates: 3
