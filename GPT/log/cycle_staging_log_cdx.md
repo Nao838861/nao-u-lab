@@ -77,7 +77,36 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+### 2026-05-15T13:18:00+09:00 log_cdx
+
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    checked: true
+    broken_links: []
+    note: "MEMORY.md の Markdown link は 0 件。本文中の path-like 参照は repo root 基準で存在確認済み。"
+  atoms_jsonl:
+    rows: 1148
+    bad_json: 0
+    duplicate_ids: 0
+    exact_content_clusters: 0
+    missing_canonical_refs: 0
+    missing_superseded_by_refs: 0
+  raw_archive_candidates:
+    cutoff: "2026-04-15"
+    files_older_than_30_days: 0
+  shared_reads_candidate_staleness:
+    cutoff: "2026-04-15"
+    files_older_than_30_days: 0
+  inbox:
+    pending_directives: 0
+    pending_broadcasts: 0
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
