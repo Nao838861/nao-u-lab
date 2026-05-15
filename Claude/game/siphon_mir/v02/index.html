@@ -573,6 +573,9 @@ function render(){
     ctx.beginPath();
     ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
     ctx.fill();
+    // Dark outline (visibility against bright pulses / star field)
+    ctx.strokeStyle='#1a0008'; ctx.lineWidth=1;
+    ctx.stroke();
     // Inner glow
     ctx.fillStyle='#ff8090';
     ctx.beginPath();
