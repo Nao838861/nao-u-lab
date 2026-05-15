@@ -222,4 +222,17 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+### 2026-05-15T12:23+09:00 log_cdx
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: C0ALRK28Y1H
+  ts: "1778811792.734809"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778811792734809
+  draft_file: log/phase5_diary_20260515_1058.md
+  char_count: 2297
+verification:
+  slack_history_text_check: ok
+  post_tool_verification: ok
+```
