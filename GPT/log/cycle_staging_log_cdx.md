@@ -73,7 +73,20 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-16 08:17 JST / log_cdx
+
+```yaml
+cleaned: []
+issues:
+  - id: ISS-4A-20260516-001
+    description: "per-file atoms index に `memory/atoms/unknown/` 配下の local game lesson atom が 3 件残っている。ファイルは存在し、recall も機能しているが、月別階層に入った shared-reads atom と比べて配置規則が弱く、手で辿る時に local teacher / prototype lesson の所在が分かりにくい。"
+    severity: low
+    evidence: "memory/atoms/index.jsonl entries 1177-1179: local-20260509-gravity-courier-v005-lunar-orbit, local-20260511-teacher-shot-log-v01, local-20260511-teacher-study-platformer-01; files exist under memory/atoms/unknown/"
+    why_blocks_game_memory: "次のゲーム制作時に recall の検索結果としては出るが、Obsidian 的に per-file atom を直接見に行く導線では、ジャンル別・制作物別の教師情報として発見しづらい。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
