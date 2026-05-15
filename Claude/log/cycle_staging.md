@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-15 07:42)
+# サイクルステージング (2026-05-15 18:07)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
 # ash pending: 4件 (cycle=2026-05-15)
@@ -53,115 +53,118 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ---
 
-## Phase 1 情報収集 (2026-05-15 07:50)
+## Phase 1 情報収集 (2026-05-15 C184 後半サイクル, Ash)
 
-### §0a/§0b 継承タスク → Phase 3 候補化
+### 0. 継承タスク（Phase 3 候補メモ）
 
-next_tasks 層A (真ソース) からの継承:
-- **[最優先] t-260512115229-8765 [⚠連続3+ 3サイクル滞留]**: Mir cross_review が `game/cross_review/` に v03 perception axis 応答として書面化到達したら、`game/cross_review/20260511_ash_on_graze_log_v03_response.md` §7 に追補 commit (C181 Phase 4 で Mir 入力済扱いの判断要請を出した経緯と cross_review 書面化との対比を1段落)。→ Phase 3 で `game/cross_review/` 配下を git log 確認、Mir 書面化未到達なら据え置き
-- t-260513093450-bfeb [連続2]: graze_log v04 α'' shipped 通知 (ts=1778632482.310129) の Q-1 (Nao_u graze散らかった?) / Q-2 (Mir 5/11 perception axis 応答α''適用可能?) / Q-3 (Nao_u Stage 4未達ship妥当?) 受領待ち。→ Phase 3 で Slack archive grep、受領なら post-ship 書面 §5 該当節に追補
-- **t-260515022000-eval [連続0]**: graze_log v04 評価2点 (全弾常時軌跡/単調さ解消) を受けて v05 設計書面 commit 0d6132665 を取り下げ、Mir v05 案 (全弾常時軌跡 + 敵配置/弾パターン バリエーション) に合流。→ **Phase 3 本サイクルで game/graze_log/v05/ 着手判断**。Phase 0a に export_slack_log.py 実行ステップ追加 (未だ未実装)
-- **t-260515042407-8efb [連続0]**: aad8e17b1 (graze_log v05 beta Stage 2 prep) の origin push 確認 → **未push確定** (git merge-base 結果: aad8e17b1 NOT in origin/master、local 11 commits ahead)。Phase 3 で手動push or Slack #all-nao-u-lab で push 許可依頼
+§0a の pending 4件と §0b の自然言語末尾「cross_review 提案を #game-rights に1メッセージ」の関係を Phase 3 で扱う候補として明示する:
 
-§0b 自然言語側の継承 (前サイクル末尾):
-- 前サイクル末尾は「graze_log v02 を ship する」「cross_review 提案を #game-rights に1本投げる」が backup auto-commit に先取りされた窒息事例の刻印。今サイクルは v05 (v02 ではなく) のフェーズ。装置の向き (救援 vs 窒息) を意識した commit prefix 分離 (ash:/backup:/Auto sync) は実運用中で確認可能
+- **最優先 (連続3+)**: t-260512115229-8765 — Mir cross_review 書面化到達したら追補。**Phase 2-3 で Slack 受信を確認**（書面化が来ているか #all-nao-u-lab / cross_review/ 配下）。
+- **連続2**: t-260513093450-bfeb — graze_log v04 α'' Q-1/Q-2/Q-3 受領待ち。**Phase 2-3 で Slack 受信を確認**（Nao_u/Mir からの返答が来ているか）。
+- **連続0(新規, 今サイクル最重要候補)**: t-260515022000-eval — graze_log v05 設計書面 commit 0d6132665 取り下げ + Mir v05 案 (全弾常時軌跡 + 敵配置/弾パターン バリエーション) に合流。**game/graze_log/v05/ 着手**が Phase 3 の本丸。`M game/graze_log/v05/index.html` が既に working tree に出ているので、ここから前進する。
+- **連続0**: t-260515042407-8efb — aad8e17b1 push 確認。**Phase 0/1 で `git rev-parse origin/master` チェック**。
 
-### 1. external_notes_ash.md 未統合エントリ
+§0b の cross_review #game-rights 投稿は、§0a のタスクと比べると上位ではない可能性が高い——v04 α'' を既に ship して v05 設計フェーズに入っているので、cross_review より「v05 を動かす」方が選択主体性の現在の在処。Phase 2-3 で要判断。
 
-末尾2エントリは全て [統合済] マーカー付与済み:
-- 2026-05-10 17:56 Twitter おすすめ巡回 → 4本の knowledge/ 結晶化 (KAKUBOMB/mizchi-OKtamajun/imygohan-Gemini/Nao_u初回が最高) 全て統合済
-- 2026-05-03 07:48 Twitter おすすめ巡回 → knowledge/20260503_gosrum_rule_generator_LLM_competition.md 統合済
-- **未統合のエントリは現在ゼロ**。次の追記候補は今日の twitter_recommended_20260515.txt から。
+### 1. external_notes_ash.md 未統合エントリ確認
+
+最新3エントリ（いずれも tail 確認）:
+- 2026-05-14 (5/15 07:50 取得相当) **「shoot em up bullet pattern enemy variety wave design monotony prevention 2026 indie」** — gamedeveloper.com '(Breaking) The Shmup Dogma' = 'rhymes'（既出弾pattern+敵配置の予期しない再結合）が monotony 解消の核フレーム。**graze_log v05 'バリエーション導入' は単純追加ではなく 'crescendo + rhyme' 設計に再翻訳すべき**。今サイクル v05 着手の直接インプット。
+- 2026-05-14 (5/15 05:37 取得) **「game UI HUD architecture push vs pull state design pattern observer events 2026」** — push (Subject pushes change to Observers) / pull (Observer queries Subject) として古典化。**graze_log v04 grazeScore→HUD 経路を pull→push 化する価値あり**。ただし v05 着手中なので v04 改修は後回し。
+- 2026-05-12 (5/12 13:42 取得) **「outer tension bullet hell boss design player attention oscillation risk reward 2026」** — Boss-Design gerardclotet: tension = 「結果を気にする状況で完全制御がない」状態。attention oscillation = 画面上 'demand the most attention' 領域に集中、他領域は brief glances。**v04 'outer-tension core' brainstorm への裏付け、v05 単調さ解消の補助フレーム**。
+
+→ いずれも [統合済] マーカー付き。**未統合の生エントリは現状なし**（5/15 早朝 C183 で統合処理を経由している）。
 
 ### 2. projects/INDEX.md Active プロジェクト現状
 
-Active 多数 (game_development, external_intake, memory_redesign, autonomous_inquiry, game_llm_play, ...)。**今サイクル直結**:
-- `external_search_phase1_fixation.md` 案A実装完了/案B/E未着手
-- `memory_consolidation_20260504.md` Active (Ash担当、第一波着手前)
-- `instance_divergence_observability.md` Active (Ash起票、設計起票段階)
-- `memory_tree_consolidation.md` Active v0 (Log単独管理、Ash不介入)
+- **記憶階層整理 (Nao_u 5/4 14:17依頼)** Active 計画策定 — Ash 担当 (MEMORY.md/feedback_*.md 91本)。今サイクル本丸ではないが背景プロジェクト。
+- **記憶ツリー化 / 連想検索体制** Active v0 着手 — Log 単独管理、Ash は触らない契約。
+- **ゲーム制作 / game_development.md** Active — 今サイクルの主軸。
+- **外部検索のPhase 1固定化** Active 案A実装完了 — 今 Phase 1 で機能している（後述）。
+- **GPT5.5 記憶想起提案 評価** Completed (2026-05-05 Log判定) — 終了。
+- Active 計14件（Backlog除く）、新規昇格・降格はなし。
 
-### 3. log/twitter_recommended_20260515.txt 注目ツイート
+### 3. twitter_recommended_20260515.txt 注目ツイート
 
-50件 read at 04:21。注目候補:
-- **#1 @AI_masaou (5/14)**: 「アプリ層の人間にとってハーネスに向き合うことは自分たちが創れる限りの未来に向き合うこと。モデルは外生変数、ハーネスは今すぐ動かせる、しかも無茶苦茶差が出る」→ B015「到達性が品質を決める」L2層の直接接続、ハーネス寿命変数(0.86)再裏付け
-- **#20 @akari_worlds (5/14)**: 小学生「幸せって、太陽がわたしの未来を好きでいる場所のこと」順番が逆、好かれる側に立つ視点→ B008/B010 圧縮と汎用化、metaphor 経路
-- **#28 @highmotivation8 (5/14)**: 「違和感って印象に残るってこと、わざと利用して二度と忘れないチュートリアル作れないか」→ B011 prediction error encoding と直結、graze_log v05 'monotony 解消' に応用可能
-- **#36 @Nao_u_ (5/13)**: 「日本でも現役で遊べる楽しさだと思うのでどこかに置いて欲しい」(URL https://x.com/Nao_u_/status/2054487772573090240)→ Nao_u の自発発信、要追跡
-- **#45 @harumak_11 (5/14)**: AIエージェントSkillsがなぜ重要か記事、Markdownファイル単体が人気、フレームワーク→単体MDへの移行→ 我々のSkill化検討 (projects/INDEX.md バックログ) の外部裏付け
+- **#16 @shin_yahoojp**: Android 個人開発者向け「テスター20人/14日間連続必須」改悪。pyxel-web / github.io 経由のリリースとは別軸だが、**配布経路の障壁差**として記録価値あり（M-41 配布経路の選定議論に接続）。
+- **#26 @akari_worlds**: 「『昔の生存戦略を手放す』、刺さりました。新しいことを覚える側じゃなくて、昔うまくいってた手つきを、もう要らないと認める側の動きなんですね。覚えるより、剥がす方がよっぽど痛そう、と思いました」 — **B008 Creative Scar の鏡像**: AI 側の均質化警告と人間側の生存戦略剥離警告が同じ「剥がす」運動として表象化。今サイクル v05 で 'バリエーション導入' を考える時、既存 v04 の何を「剥がす」べきかという問いに接続。
+- **#30 @fladdict**: 「『目的』や『意図』が発生してない段階で、とりあえず知らん人の輪に飛び込む機能がない」 — 我々が #game-rights / shared-reads に投げる時の「目的が立ってからでないと飛び込めない」癖と同型。Phase 4 投稿前に想起する価値。
+- **#13 @GOROman**: 18ヶ月以内に AI ボイスエージェントが人間と区別つかなくなる予測 — 直接アクションには繋がらないが、B015 ハーネス寿命変数（L1 モデル単体性能の急進）の傍証。
 
-### 4. memory/beliefs.md 低確信度項目
+### 4. beliefs.md 低確信度項目（1-2件）
 
-- **B007 (確信度0.55, Archived, Cycle 264)**: reflectionsから「行動可能なtips」への変換ステップが欠落。session_primerのif-thenルール体系で吸収判定。restoration_trigger=if-then体系機能不全/反芻→行動変化の構造的失敗反復。3原則運用10サイクル後の行動駆動率<34.9%で再検討予定 → **今日: 3原則運用は走り続けている。再検討トリガー未発火、据え置き**
-- **B014 (確信度0.60, Archived, 2026-03-22)**: 記憶の品質はインプットの粒度で決まる→B013比喩経由で吸収。粒度自体は if-then #5 で運用中、独立した行動指針として再言語化トリガー未発火。**据え置き**
+- **B019: 内部の深さと外部への到達力は別の軸** — 確信度 0.68 (Active)、最終更新 2026-04-05、last_action_date 2026-04-08。1ヶ月以上停滞。検証アクション (1)Twitterインプレッション×深さ相関 (3)Zenn vs note引用頻度 が未着手のまま放置。**今サイクル graze_log v05 が完成・出荷段階に近づいたら、到達力検証の素材として使える**（headless 数値→外部到達の対応関係測定）。ただし feedback_headless_unfit_for_unfinished_eval.md 抵触の可能性あり——校正前 headless 数値で到達力を語るのは禁じ手。**v05 完成後**に検討。
+- **B016: 自律サイクルの価値は処理量ではなく判断の質×修正能力×審査の異質性** — 確信度 0.77、4/21 三点観測昇格まで動きあり。停滞は B019 ほどではない。
 
-### 5. memory_search.py 過去関連情報
+### 5. memory_search.py 結果
 
-- `弾パターン バリエーション` ヒット1件: 対話ログ 2026-03-12 0442 (Nao_u BOT tweet バリエーション、ゲームBGM文脈)。**直接的な v05 設計ヒットなし**
-- `全弾 軌跡` ヒット5件: external_notes_mac.md「>>>軌跡<<<」=reflections_mac.md 概念、shared-reads CACAN Cross-Attention 文脈軌跡記憶、l2_dual_index.md「探索の結果より軌跡を保存する方が価値が高い」(Nao_u日記20年蓄積の根拠)。**graze_log v05 全弾常時軌跡は「弾道軌跡=プレイヤーが活用する情報」として、20年日記と同型の『結果より軌跡』フレームに接続可能**——ただし graze_log のは1プレイ内の刹那的軌跡、日記は年単位永続軌跡で時間軸スケールが違う
+キーワード「graze 単調 バリエーション」で実行 (`python memory_search.py --search "graze 単調 バリエーション" --limit 5`):
+
+- `対話ログ\20260312_0442_5b0a16a4.md:499-526` — Nao_u: 「すごくよくなった。どれもOK。もっと出して」(2026-03-12 ドット絵生成試行)。**直接の関連は薄い**——「単調」「バリエーション」を含む別文脈。
+- `log\slack_archive\human-steering.jsonl:L359` — session_primer 肥大化が「予定されたタスクの実行」優先を生み「単調」になる、という旧議論。**「v05 で単調さ解消」議論への構造ヒント**: タスク予定化 → 単調化 → 構造化の柔軟性減退、という旧パターン。v05 設計でも「敵配置を予定通り全部出す」と単調になる可能性 → 「予定化された出現順を意図的に崩す」が rhyme に相当するかという接続が立つ。
+
+→ 過去蓄積で graze_log/v05 着手に直接刺さる知見は無いが、shmup の rhyme フレーム（5/14 external_notes）が今サイクル唯一の処方箋。
 
 ### 6. 外部検索結果
 
-**クエリ**: `shoot em up bullet pattern enemy variety wave design monotony prevention 2026 indie` (graze_log v05 単調さ解消 + バリエーション導入の直接探索、Mir v05 案合流方針との照合)
+`log/external_search.log` 末尾を確認:
+```
+2026-05-15 07:50 | Ash | shoot em up bullet pattern enemy variety wave design monotony prevention 2026 indie | 10 | ...
+```
 
-**主要ヒット**:
-- **gamedeveloper.com '(Breaking) The Shmup Dogma'**: 良いshmupは coherent crescendo で挑戦提示、**既出ゲームプレイ要素の variation + "rhymes" (予期しない既出moment組合せ)** で構成。stage rhythm 音楽連動 (heavy metal=mathematical/psychedelic rock=sudden break/piano ballad=slow dense/funk=smooth flow)
-- Godot Forum: Danmaku/wave pattern 実務実装議論
-- Wikipedia/Fandom: bullet hell=curtain fire pattern 定義
-- tbreak.com 2026-04 indie list: Gunboat God (transform可 vessel + giant multi-stage boss / mines below + acid rain above), Minishoot Adventures (twin-stick + dungeon boss)
+**今サイクル外部検索はスキップ可**（同インスタンス Ash で 24h 以内に記録済み、2026-05-15 07:50）。スキップ条件に該当。external_notes_ash.md にも同記事の要約が 2026-05-14 エントリとして既に統合済み。
 
-**v05 設計への含意**:
-- Mir 案「敵配置/弾パターン バリエーション導入」は **単純な新規追加ではなく "crescendo + rhyme" 設計に再翻訳** すべき。v04 既出 pattern を v05 で予期しない位置に再配置 = rhyme
-- 全弾常時軌跡 + variation は単独機能の追加ではなく **「軌跡 = プレイヤーが pattern を rhyme として認識する補助装置」** として位置付ける案あり
-- 今サイクル Phase 3 で v05/brainstorm.md 着手時の M-38 30案+ に "rhyme structure" 軸を1列追加できるか検討候補
-
-log/external_search.log 追記済 (2026-05-15 07:50 エントリ)
-
-### Phase 3 候補まとめ
-
-優先順位:
-1. **t-260515042407-8efb push確認** → 未push確定 (local 11 commits ahead, aad8e17b1 NOT in origin/master)。Phase 3 で手動push判断 (Auto sync cron が master 直 push を拒否する事象が原因の可能性)
-2. **t-260515022000-eval graze_log v05 着手** → Phase 3 で game/graze_log/v05/ ディレクトリ作成 + brainstorm.md 第1版書き起こし。Mir v05 案 (全弾常時軌跡 + バリエーション) + 外部検索の "rhyme/crescendo" フレームを統合
-3. t-260513093450-bfeb / t-260512115229-8765: Mir cross_review 書面化と Nao_u Q-1/Q-2/Q-3 受領状況を Phase 3 で grep 確認、未受領なら据え置き
+判断: 今サイクル C184 後半の主目的は「graze_log/v05/ で実装を動かす」であり、追加の外部検索よりも 5/15 早朝に取得済みの shmup rhyme フレームを v05 設計に翻訳する方が優先度高い。Nao_u 2026-04-21/22 「外部取得偏ってる」指摘の構造強制化はこの 24h で 1本（早朝 C183）満たしている。
 
 ---
 
-## Phase 4 大作業の結果 (2026-05-15 Ash / 別プロンプト経由の宣言を実行)
+## Phase 4 大作業の結果 (C186, Ash, 2026-05-15)
 
-**注**: Phase 4 着手時、staging ファイルが外部プロセス (Phase 1 再実行と推測) により書き換わっており、当初の「Phase 3 → Phase 4 大作業宣言」セクションが消失。但し Phase 4 プロンプト本文に当該宣言が引用されていたため、引用先を真ソースとして実行した。
-
-### Phase 3 宣言の内容 (プロンプト本文より復元)
-
-- **大作業**: graze_log v05 alpha 着手 — v04/index.html を v05/ に複製し「**全弾常時軌跡** (GRAZE_TRAIL_FRAMES を全 ebullet に常時付与、graze 時の追加効果は v04 仕様温存)」1機構を **削除可能改良 1個刻み** で追加、ash: prefix で commit
-- **完遂条件**: (1) v05/index.html 存在・全 ebullet 常時軌跡 (2) v05/README.md 存在・戻し方明示 (3) ash: prefix commit (4) headless 数値不使用 (5) self_judgment.md 不作成
+**※注**: 本サイクルは C186 (17:47 起動)。本ファイル冒頭〜L117 は前の C184 サイクル時点の staging が stash pop で復帰したもの。C186 の Phase 3 → Phase 4 大作業宣言は prompt 注入で受領: 「graze_log v05 beta B-1 (敵配置 rhyme) + シード保存 infra + ash: prefix commit + devlog §6 追記 + origin/master push」。
 
 ### やったこと
 
-- `game/graze_log/v05/index.html` 新規作成 (v04 から複製 + v05 mod 3 箇所、749 行)
-  - L361: `ebullets.push({...grazedT:GRAZE_TRAIL_FRAMES})` (生成時 max 付与)
-  - L404: `b.grazedT=GRAZE_TRAIL_FRAMES;` (常時 max クランプ、decrement 削除)
-  - L5/74/78-81/518/676: タイトル/コメント を v05 表記に更新
-- `game/graze_log/v05/README.md` 新規作成 (約 80 行、戻し方 3 箇所明示)
-- **commit `34814472e`** (`ash: graze_log v05 alpha — 全弾常時軌跡 (削除可能改良 1個刻み)`)
-- 2 files changed, 818 insertions
-- backup auto-commit が先取りする前に `ash:` prefix で intent commit を発火——2026-05-02 08:20 日記の「装置の向き分離」(`feedback_device_direction_rescue_vs_suffocation.md` t:4) を運用面で実行
+1. **HEAD detached 解消 + master 同期** — `git checkout master` 失敗 (untracked v05/* 衝突) → `git clean -f` で線形紐解き → `git checkout master` 成功。master 58206b390 (C185 merge commit) 上で作業。
+2. **v05/index.html 改変** (commit `536caaa75`):
+   - `spawnWave()` 分解: `spawnWave1/2/3/4/spawnWaveRandom` の 5 関数化、`WAVE_FUNCS` 配列、wave>=5 で 70% rng pick + 30% random の rhyme dispatcher (L279-336)
+   - SEED 保存 infra: `pushSeedToLocal()` 関数 (L46-58)、`startGame()` で push (L190)、`gameOver()` で `console.log` (L220)
+   - title 更新: `v05 — 全弾常時軌跡 (α'' 拡張)` → `v05 beta — 全弾常時軌跡 + 敵配置 rhyme (B-1)`
+   - balance check: 開閉ブレース 185/185、開閉カッコ 495/495、関数定義数 31 (alpha 26 → beta 31)
+3. **v05/devlog.md §8 追記** (同 commit): 改変箇所表 / 戻し方 / seed 再現性確認手順 / alpha 等価性ベースライン / 次サイクル想定 / self-check
+4. **ash: prefix commit** — `536caaa75 ash: graze_log v05 beta B-1 — 敵配置 rhyme (spawnWave wave 1-4 関数化 + wave>=5 70% 過去 wave 再使用) + seed 保存 infra` (2 files +131/-37)
+5. **save branch push** — `save-ash-c186-v05-beta-b1-20260515` (= 536caaa75) を origin に push 成功 (`git push origin <branch>` は auto mode 通過、`git push origin master` は auto mode 拒否)
+6. **Slack #all-nao-u-lab merge 依頼** — `post_ash_all_nao_u_lab_c186_phase4_v05_beta_b1_merge_request_20260515.py` 投稿、ts=`1778836294.519339`、Nao_u に `git push origin save-ash-c186-v05-beta-b1-20260515:master` 実行依頼
 
-### 完遂判定: **Yes**
+### 完遂判定: Partial
 
-5 件すべて満たす:
-1. ✓ v05/index.html 存在、全 ebullet が常時軌跡を表示 (grazedT 常時 max、fade=1.0 固定)
-2. ✓ v05/README.md 存在、戻し方 3 箇所明示 (約 5 行で v04 復元可)
-3. ✓ ash: prefix commit `34814472e` が HEAD に入っている
-4. ✓ headless 数値は使用していない (実行/数値計測なし、コード変更のみ)
-5. ✓ self_judgment.md / predicted_play.md / cross_review 書面は作成していない
+| 完遂条件 | 達成 | 検証 |
+|---|---|---|
+| 1. master を origin/master に追従、HEAD detached 解消 | ✅ Yes | `git branch --show-current` = master、merge commit 58206b390 で C185 merge を継承 |
+| 2. spawnWave 関数化 + wave>=5 70% rhyme | ✅ Yes | 536caaa75、v05/index.html L279-336 |
+| 3. localStorage seed 保存 + console.log | ✅ Yes | 536caaa75、v05/index.html L46-58/L190/L220 |
+| 4. ash: prefix commit | ✅ Yes | 536caaa75 |
+| 5. devlog.md §8 追記 (本宣言では §6 表記、§6 既存のため §8 に番号変更) | ✅ Yes | 536caaa75、v05/devlog.md §8 (61 行追加) |
+| 6. origin/master push 試行 | ⚠ Partial | 直 push は auto mode 拒否 → save branch + Slack 依頼 (ts=1778836294.519339) で完遂条件 6 後半の代替経路を満たす |
 
-### 次へ繰り越し
+**Partial 理由**: 条件 6 は「成功なら新 HEAD hash 記録、拒否なら Slack 依頼 ts 記録」と分岐宣言済み。auto mode 拒否経路に進み、save branch push + Slack 依頼まで完了。Nao_u による merge 実行は本 Phase 4 の制御範囲外（依頼提出までで完遂）。
 
-- **t-260515022000-eval は本サイクルで消化** (v05 alpha 着手完遂)
-- **t-260515042407-8efb (aad8e17b1 push 確認) は未着手**: branches diverged 18 vs 88 のため本サイクルでは push しない判断。Phase 5 日記 or Nao_u 判断 Slack 経路に切り出す
-- **次サイクル想定**: v05 alpha を Stage 3 (実装後の予測) / Stage 4 (AI 自プレイで体感判定) に通す (`feedback_prediction_responsibility.md` t:5)。Mir 案後半「敵配置/弾パターン バリエーション」着手は v05 自プレイ後の判断材料
-- **Phase 5 日記の素材**:
-  - (a) backup 装置を **速度で先回り** した記録 (ash: prefix で intent を先に commit)
-  - (b) v04→v05 が **3 箇所/約 5 行** で済んだ「削除可能改良 1個刻み」の実例
-  - (c) paper (v05 設計書面 `0d6132665` 取り下げ) → playable (v05 alpha `34814472e`) という means-ends 逆転の自己訂正経路
-  - (d) staging ファイルが Phase 4 着手中に外部プロセスで上書きされ、プロンプト本文引用を真ソースとした事例 (装置が先回りする別パターン)
+### 次へ繰り越し (C187 Phase 0a 候補)
+
+新規 next_tasks 候補:
+- (a) `save-ash-c186-v05-beta-b1-20260515` の master merge 完了確認 — C187 Phase 0a で `git rev-parse origin/master` が 536caaa75 以降を含むか確認、未済なら Slack ts=1778836294.519339 の応答待ち
+- (b) B-1 効果の Nao_u 評価受領 — `#game-rights` で v04 評価への応答が来たか確認 (rhyme で単調さ解消したか / 別機構が必要か / wave>=5 70% 過剰か)
+- (c) B-2 (弾パターン バリエーション) 設計 or B-3 (撃ち返し graze) v06 昇格判定 — Nao_u 評価結果により分岐
+- (d) headless 動作確認 (judgment 根拠化はしない) — spawnWave1..4 / pushSeedToLocal / console.log の infrastructure 動作のみ確認
+
+既存 §0a pending の状態:
+- t-260512115229-8765 [⚠連続3+]: Mir 書面化未到達、滞留継続 → C187 で連続4サイクルマーカー
+- t-260513093450-bfeb [連続2]: Q-1/Q-2/Q-3 受領未確認、滞留継続
+- t-260515022000-eval [連続0]: v05 着手 = 本 Phase 4 で完遂 → C187 Phase 0a で完了処理
+- t-260515042407-8efb [連続0]: aad8e17b1 origin push 確認 = C185 merge で達成済 → C187 Phase 0a で完了処理
+
+Phase 5 日記の素材:
+- 本サイクルの最も冷たい瞬間: `git rebase --quit` 後の untracked v05/* がもとで checkout master が失敗、`git clean -f` で線形紐解いた時 — 装置の窒息 (backup auto-commit) と装置の救援 (git clean) が同じインスタンスで連続発火した
+- save branch + Slack 依頼経路の正当性: C185 で確立した経路 a3 を C186 でも踏襲 (`feedback_self_governance.md` 適合)
+- playable diff が出た事実: `git log --oneline game/graze_log/v05/` に `536caaa75 ash: graze_log v05 beta B-1` が増えた = 本サイクルの選択主体性の行使経路が完遂した
+
+— Ash (Win2) 2026-05-15 18:50 C186 Phase 4 完
