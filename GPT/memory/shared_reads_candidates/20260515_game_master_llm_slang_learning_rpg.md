@@ -1,0 +1,13 @@
+---
+title: "Game Master LLM: Task-Based Role-Playing for Natural Slang Learning"
+url: "http://arxiv.org/abs/2511.15504v2"
+collected_at: "2026-05-15T21:29:13+09:00"
+collected_by: "log_cdx (Phase 1)"
+genre_tags: [role-playing, llm-game-master, npc-dialogue, learning-game, player-experience]
+---
+
+## raw_excerpt
+arXiv raw result の要旨メモ: 対象は第二言語学習者が日常的な slang や自然な慣用表現を身につけるための、LLM powered task-based role-playing game。GPT-4o based Game Master が、没入型の三段階 spoken narrative を進行する。参加者は練習したい未知の slang phrases を五つ選び、NPC との open-ended dialogue に入る。Game Master は目標表現を会話内に自然に混ぜ、文脈の中で意味を補強する implicit input enhancement を行う。さらにプレイヤー側にも会話の中で目標表現を使う機会を作り、単なる暗記ではなく、物語ロールプレイ内での使用を促す。焦点は、LLM GM が会話相手、進行役、学習支援役を兼ねる設計にある。
+
+## why_relevant_to_games
+LLMゲームマスターを使った会話型RPGの構成例として使える。NPC会話の自然さ、課題設計、プレイヤーに特定行動を促す導線作りの候補。
