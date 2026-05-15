@@ -39,7 +39,32 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778675653-a5059880b1
+    source_ts: "1778675653.815939"
+    title: "Externalization in LLM Agents: A Unified Review"
+    reason: "Memory / Skills / Protocols / Harness Engineering の境界整理が、Phase 3b の主目的であるルール肥大化の抑制と直結するため。特に Memory→Skill 昇格境界を、恒久ルール追加ではなく次回の昇格判断前 probe に落とせる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "memory/directive/skill/protocol を恒久化・昇格する前に、episodic/semantic/skill/protocol のどの段階か、反復実行証拠があるか、既存ルールと重複しない小 probe で済むかを確認する active probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

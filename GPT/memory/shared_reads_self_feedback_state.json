@@ -1,11 +1,12 @@
 {
-  "updated_at": "2026-05-15T13:11:14+09:00",
+  "updated_at": "2026-05-15T15:30:04+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
     "1778782280.911589",
     "1777599071.966059",
     "1778797690.566059",
-    "1778803710.961519"
+    "1778803710.961519",
+    "1778675653.815939"
   ],
   "reviews": [
     {
@@ -92,6 +93,23 @@
         "reversibility": 3,
         "total": 16
       }
+    },
+    {
+      "reviewed_at": "2026-05-15T15:30:04+09:00",
+      "id": "sr-1778675653-a5059880b1",
+      "source_ts": "1778675653.815939",
+      "title": "Externalization in LLM Agents: A Unified Review",
+      "decision": "adopt_probe",
+      "reason": "Memory / Skills / Protocols / Harness Engineering の境界整理は、Phase 3b が避けたい恒久ルール肥大化を直接抑える。既存の記憶・directive・skill更新判断に、昇格前の短い確認として差し込めるため、恒久ルールではなく可逆な probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
     }
   ],
   "active_probes": [
@@ -154,6 +172,18 @@
         "候補を 2-3 個以上比べる場合、同じ seed 数・同じ評価手順で走らせ、プレイヤーモデル依存の限界を staging に明記したか。"
       ],
       "expires_after": "次に game prototype のバランス調整・パラメータ探索を行う 1 回で見直し"
+    },
+    {
+      "id": "probe-20260515-promotion-boundary",
+      "created_at": "2026-05-15T15:30:04+09:00",
+      "source_ts": "1778675653.815939",
+      "scope": "next memory / directive / skill / protocol promotion decision",
+      "questions": [
+        "この知見は、まだ episodic memory として残す段階か、複数事例を貫く semantic memory として整理する段階か、それとも reusable procedure として skill/protocol に昇格する段階か。",
+        "昇格させる場合、根拠は「反復して失敗した/反復して成功した実行証拠」か、それとも読後感だけか。読後感だけなら raw/candidate/probe に留める。",
+        "skill/protocol 化する前に、既存の AGENTS.md / active directive / phase prompt と重複せず、1回で戻せる小さな probe で検証できないか。"
+      ],
+      "expires_after": "次に memory/directive/skill/protocol のいずれかを昇格・恒久化しようとする 1 回で見直す"
     }
   ]
 }
