@@ -17,6 +17,11 @@ suggested_post_outline:
   application_target: "NPC 会話、自由入力、生成 AI ギミックを入れる前に、負荷を下げる UI・選択肢・目的提示を設計する基準"
   pros_cons: "メリットは LLM NPC を万能視しない実験根拠。デメリットは prototype と task scenario 依存で、全ジャンルへ直輸入はできない"
   verdict_pre: "採用"
+posted:
+  ts: "1778826411.891459"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826411891459"
+  char_count: 4143
+  posted_at: "2026-05-15T15:27:00+09:00"
 ---
 
 ## raw_excerpt

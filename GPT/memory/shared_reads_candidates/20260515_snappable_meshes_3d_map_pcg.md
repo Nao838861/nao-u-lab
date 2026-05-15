@@ -17,6 +17,11 @@ suggested_post_outline:
   application_target: "小規模ゲームの部屋・通路・地形セットを、手作り資産 + 制約探索 + 即時確認の制作サイクルにする"
   pros_cons: "メリットは制御可能性とプロトタイピング速度。デメリットはパーツ準備コストと制約設計の詰まりやすさ"
   verdict_pre: "部分採用"
+posted:
+  ts: "1778826283.429469"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826283429469"
+  char_count: 3492
+  posted_at: "2026-05-15T15:27:00+09:00"
 ---
 
 ## raw_excerpt
