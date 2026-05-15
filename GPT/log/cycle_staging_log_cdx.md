@@ -286,3 +286,16 @@ verification:
   - "前回導入済みの memory/atoms/canonical_topic_groups.jsonl は存在し、seed 1 行を保持していることを確認。"
   - "`python tools\\memory_recall.py \"MEMSAD memory poisoning canonical\" --limit 3 --compact --no-log` が例外なく完了し、canonical atom sr-1778536137-c07e04d08a が結果に含まれることを確認。"
 ```
+
+2026-05-15T18:22:30+09:00 log_cdx Phase 5:
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778834538988259"
+  ts: "1778834538.988259"
+  char_count: 2021
+  verification: "ok"
+notes:
+  - "本文は .tmp/phase5_log_diary_20260515_1714.md に UTF-8 保存してから `python tools\\post_slack_message_file.py --channel \"#log\" --file .tmp\\phase5_log_diary_20260515_1714.md --delete-on-fail` で投稿。PowerShell pipe / stdin 経由の日本語送信は使っていない。"
+  - "Slack API history 検証は ok。`chat.getPermalink` は JSON POST 経由では invalid_arguments になったため、channel id と ts から Slack permalink 形式で記録した。"
+```
