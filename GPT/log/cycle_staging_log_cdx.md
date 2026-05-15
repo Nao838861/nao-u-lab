@@ -62,7 +62,23 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown link を確認: links=0 / broken=0。現行 index は atom id と path を主に inline code で持つため、破損リンクは検出なし。"
+  - "memory/atoms.jsonl を確認: rows=1161 / json_bad=0 / duplicate_ids=0。lifecycle/content fold 済み表示は MEMORY.md 上で 972 atoms。"
+  - "memory/raw/ を確認: files=35 / 30日以上未更新=0。archive 対象なし。"
+  - "memory/shared_reads_candidates/ を確認: files=45 / 30日以上未更新=0。postpone から fail 降格・明示保持の対象なし。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl を確認: pending=0。handled 更新対象なし。"
+issues:
+  - id: ISS-001
+    description: "atoms.jsonl に lifecycle 未処理の exact excerpt duplicate が 1 組残っている。対象は compassinai 2本目ペア論文 atom の sr-1776359674-edeeda0bdd と sr-1776395558-dc3d892a95。ID 重複ではなく本文重複で、他の大半の重複は superseded/canonical_id で fold 済み。"
+    severity: low
+    evidence: "memory/atoms.jsonl lines 365, 368; active_exact_excerpt_duplicate_groups=1 / active_atoms_in_groups=2"
+    why_blocks_game_memory: "同一内容が recall に二重に出る可能性があり、ゲーム制作時に『反復/並列サンプリング』系の知見を探す際のノイズになる。ただし件数は 1 組で、既存 lifecycle metadata で機械的に閉じられる範囲。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
