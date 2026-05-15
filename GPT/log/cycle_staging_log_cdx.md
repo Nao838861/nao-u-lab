@@ -1,72 +1,62 @@
-# log_cdx Cycle Staging — 2026-05-15 12:58
+# log_cdx Cycle Staging — 2026-05-15 15:13
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-### 2026-05-15T12:59:38+09:00 log_cdx
+2026-05-15T15:15+09:00 log_cdx Phase 1 収集メモ:
 
-- pending 確認: `python tools\slack_inbox_lifecycle.py pending` で directives / broadcasts とも pending なし。
-- 既存確認: `memory/raw/web_research/` と `memory/shared_reads_candidates/` の直近分を確認。RuleSmith / PlayCoder / SMART / Fly, Fail, Fix / MeepleLM などは既存 candidate と重複するため、今回の新規保存からは外した。
+- pending確認: `memory/slack_directives.jsonl` / `memory/slack_broadcasts.jsonl` とも pending 0 件。
+- 既存確認: `memory/raw/web_research/results.jsonl`、`memory/slack_recent_ingest.jsonl`、`memory/shared_reads_candidates/` を確認。`2603.07101` と `2403.02454` は既に candidate 化済みのため重複作成なし。
 - 追加 candidate:
-  - `memory/shared_reads_candidates/20260515_multitask_pcgrl_language_commands.md` — 自然言語命令を PCGRL のレベル特徴へ対応させる Super Mario 系 level generation。
-  - `memory/shared_reads_candidates/20260515_ggp_llm_reasoning_capabilities.md` — General Game Playing で LLM の next-state / legal-action 推論と構造特徴を調べる論文。
-  - `memory/shared_reads_candidates/20260515_llm_evaluations_of_games.md` — LLM がゲームの fairness / funness をどう評価するかを人間判断と比較する論文。
-  - `memory/shared_reads_candidates/20260515_ai_gamestore_open_ended_evaluation.md` — 人間向けゲーム群を AI/VLM 評価環境として広げる AI GameStore 構想。
-  - `memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md` — 隠れ役職ゲームで LLM の deception / accusation / defection を測る評価環境。
+  - `memory/shared_reads_candidates/20260515_snappable_meshes_3d_map_pcg.md` - 既製 mesh piece と connector 制約による 3D map PCG。designer control と navigability feedback の候補。
+  - `memory/shared_reads_candidates/20260515_llm_npc_cognitive_load_double_edged.md` - LLM-NPC が autonomy を上げる一方、cognitive load / usability / trust に負荷を生む randomized user study。
+  - `memory/shared_reads_candidates/20260515_context_aware_npc_panoramic_images.md` - panoramic image + semantic segmentation + scene graph JSON で NPC dialogue に環境文脈を渡す手法。
 
 ## Phase 2: 分析
-### 2026-05-15T13:02:59+09:00 log_cdx
-
 ```yaml
-total_candidates: 5
+total_candidates: 3
 pass:
-  - memory/shared_reads_candidates/20260515_multitask_pcgrl_language_commands.md
-  - memory/shared_reads_candidates/20260515_llm_evaluations_of_games.md
-fail:
-  - path: memory/shared_reads_candidates/20260515_ai_gamestore_open_ended_evaluation.md
-    reason: "ゲームを AI 評価器にする構想は広いが、今回のゲーム制作サイクルへの具体適用が弱く、benchmark 論紹介に寄る。"
+  - memory/shared_reads_candidates/20260515_snappable_meshes_3d_map_pcg.md
+  - memory/shared_reads_candidates/20260515_llm_npc_cognitive_load_double_edged.md
+fail: []
 postpone:
-  - path: memory/shared_reads_candidates/20260515_ggp_llm_reasoning_capabilities.md
-    reason: "LLM のルール推論失敗分析として有用だが、構造特徴と結果の詳細が足りず本文確認後に回す。"
-  - path: memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md
-    reason: "hidden-role 設計素材として有望だが、deception 評価寄りで、報酬設計・評価結果の追加読解が必要。"
+  - path: memory/shared_reads_candidates/20260515_context_aware_npc_panoramic_images.md
+    reason: "着想と適用先は良いが、評価指標・比較条件・失敗例が候補メモ上では薄く、単独投稿前に追加読解が必要。"
 ```
 
 ## Phase 3: Shared-reads 投稿
-### 2026-05-15T13:08:49+09:00 log_cdx
-
 ```yaml
 posted:
-  - candidate: memory/shared_reads_candidates/20260515_multitask_pcgrl_language_commands.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778818112932329
-    char_count: 3584
-  - candidate: memory/shared_reads_candidates/20260515_llm_evaluations_of_games.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778818113539339
-    char_count: 3560
+  - candidate: memory/shared_reads_candidates/20260515_snappable_meshes_3d_map_pcg.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826283429469"
+    char_count: 3492
+  - candidate: memory/shared_reads_candidates/20260515_llm_npc_cognitive_load_double_edged.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826411891459"
+    char_count: 4143
 skipped: []
+notes:
+  - "1件目は PowerShell stdin 経由の初回投稿が文字化けしたため、同一 ts を chat.update で UTF-8 blocks 本文へ差し替え済み。分割投稿はしていない。"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-### 2026-05-15T13:11:14+09:00 log_cdx
-
 ```yaml
 self_feedback:
   selected:
-    id: sr-1778803710-4554fc20b1
-    source_ts: "1778803710.961519"
-    title: "[Codex shared-reads] RuleSmith: Multi-Agent LLMs for Automated Game Balancing"
-    reason: "直近 Phase 1/2 が game balancing と LLM/game evaluation を扱っており、RuleSmith の『LLM を審査員ではなく候補比較 harness の一部として使う』視点が、次の小規模ゲーム調整で具体行動に落としやすいため。"
+    id: sr-1778675653-a5059880b1
+    source_ts: "1778675653.815939"
+    title: "Externalization in LLM Agents: A Unified Review"
+    reason: "Memory / Skills / Protocols / Harness Engineering の境界整理が、Phase 3b の主目的であるルール肥大化の抑制と直結するため。特に Memory→Skill 昇格境界を、恒久ルール追加ではなく次回の昇格判断前 probe に落とせる。"
   scores:
     relevance: 3
     actionability: 3
-    evidence: 2
+    evidence: 3
     non_redundancy: 2
     risk_control: 3
     reversibility: 3
-    total: 16
+    total: 17
   decision: adopt_probe
   change:
-    summary: "次のゲームバランス調整で、ルールパラメータ候補を同一 harness で比較し、LLM/headless bot を最終審査員ではなく測定ループの一部として扱う短期 probe を追加した。"
+    summary: "memory/directive/skill/protocol を恒久化・昇格する前に、episodic/semantic/skill/protocol のどの段階か、反復実行証拠があるか、既存ルールと重複しない小 probe で済むかを確認する active probe を追加した。"
     files:
       - memory/shared_reads_self_feedback_state.json
       - log/cycle_staging_log_cdx.md
@@ -77,51 +67,109 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-### 2026-05-15T13:18:00+09:00 log_cdx
-
 ```yaml
 cleaned: []
-checks:
-  memory_index_links:
-    checked: true
-    broken_links: []
-    note: "MEMORY.md の Markdown link は 0 件。本文中の path-like 参照は repo root 基準で存在確認済み。"
-  atoms_jsonl:
-    rows: 1148
-    bad_json: 0
-    duplicate_ids: 0
-    exact_content_clusters: 0
-    missing_canonical_refs: 0
-    missing_superseded_by_refs: 0
-  raw_archive_candidates:
-    cutoff: "2026-04-15"
-    files_older_than_30_days: 0
-  shared_reads_candidate_staleness:
-    cutoff: "2026-04-15"
-    files_older_than_30_days: 0
-  inbox:
-    pending_directives: 0
-    pending_broadcasts: 0
-issues: []
+issues:
+  - id: ISS-4A-20260515-01
+    description: "atoms.jsonl は ID 重複や JSON 破損はないが、同一リンク・補正版・再投稿が複数 atom として並ぶグループが多い。現状の lifecycle/content fold は MEMORY.md 表示上の圧縮には効いているが、原文リンク単位・ゲーム制作テーマ単位の導線としては散在が残る。"
+    severity: medium
+    evidence: "memory/atoms.jsonl: rows=1152, duplicate_ids=0, duplicate_source_ts=0, exact title/trigger/excerpt duplicate groups=38, same-linkset groups=112。例: http://arxiv.org/abs/2605.03482v2 は sr-1778535120-82ea7a1005 / sr-1778535738-ed839f9805 / sr-1778536137-c07e04d08a / sr-1778536160-392329fd76 の 4 atom に分散。"
+    why_blocks_game_memory: "次のゲーム制作で特定手法や論文を探す時、同じ題材の再投稿・補正版・観察メモが横並びに返り、どれが canonical な学びで、どれが補足・失敗・再評価なのかを判断する負荷が残る。"
+  - id: ISS-4A-20260515-02
+    description: "リンクを持たない atom が 294 件あり、Slack 会話・作業ログ由来の知見が原文、制作タスク、後続の一般化ノウハウへ接続しないまま残りやすい。"
+    severity: low
+    evidence: "memory/atoms.jsonl: no_links=294, no_tags=0。Tag Entry Points は broad tag が中心で、link/source を持たない atom の回収導線は主に全文検索と broad tag に依存している。"
+    why_blocks_game_memory: "ゲーム X の制作中に得た判断や失敗が、ゲーム Y の開始時に『同種の制作状況』として再発見されにくい。原文リンクがない atom は特に、判断根拠や前後文脈への戻り道が弱い。"
 recommendation:
-  needs_design: false
-  priority_issues: []
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260515-01
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designed_at: "2026-05-15T15:40+09:00"
+selected_issues:
+  - ISS-4A-20260515-01
+designs:
+  - issue_id: ISS-4A-20260515-01
+    problem_restatement: "同じ論文・記事・Slack 議論に由来する atom が、再投稿・補正版・観察メモとして複数残ること自体は履歴として有用。ただし recall や game_memory_task_lens から見ると、同一題材の canonical な学び、補足、失敗、再評価の関係が index 化されておらず、次の制作時に『どれを起点に読むか』を毎回人間/LLM が判定し直している。"
+    alternatives:
+      - name: "A. canonical_topic_groups index"
+        sketch: "既存 atom は削除せず、リンク正規化キーと任意の topic_key で同一題材グループを束ねる軽量 index を追加する。各グループに canonical_atom、supporting_atoms、superseded_atoms、game_memory_tags、notes を持たせ、recall 表示や task lens の入口に使う。"
+        pros:
+          - "履歴 atom を保持したまま、読む起点だけを安定させられる。"
+          - "同一 linkset groups=112 の問題に直接効き、arXiv v2/v3 や Slack 再投稿にも拡張しやすい。"
+          - "失敗時も index を無視すればよく、既存 dual-write / per-file atom 仕様への影響が小さい。"
+        cons:
+          - "canonical_atom の選定基準を誤ると、古い理解を入口として固定する危険がある。"
+          - "link を持たない atom にはそのままでは効きにくく、別途 topic_key の手当てが必要。"
+          - "index 更新の責務を曖昧にすると、また stale な索引が増える。"
+        migration_cost: medium
+      - name: "B. atom lifecycle field expansion"
+        sketch: "各 atom に canonical_of / supersedes / supplement_to / revision_of のような関係フィールドを追加し、関係性を atom 本体へ埋め込む。per-file frontmatter と atoms.jsonl の両方に同じメタデータを持たせる。"
+        pros:
+          - "関係情報が atom と一緒に移動するため、個別 atom を読んだ時に文脈が見える。"
+          - "将来 atoms.jsonl retire 後も per-file markdown 上で Obsidian 的に扱いやすい。"
+          - "canonical 判定以外の補足・反証・再評価も表現しやすい。"
+        cons:
+          - "dual-write 中の全 loader / writer へ影響し、移行範囲が広い。"
+          - "既存 1152 atom への backfill が重く、Phase 4c の小さな導入に向かない。"
+          - "メタデータ更新のたびに atom 本体差分が増え、履歴汚染が起きやすい。"
+        migration_cost: high
+      - name: "C. recall-time duplicate folding only"
+        sketch: "memory_recall や MEMORY.md 生成時に、normalized links/title/content hash で近い atom を動的に畳み、代表だけを表示する。永続 index は増やさない。"
+        pros:
+          - "永続データ構造を増やさず、既存の fold 思想に近い。"
+          - "誤った canonical 固定を避け、都度最新 atom を代表にしやすい。"
+          - "導入範囲が recall 表示に閉じるなら比較的軽い。"
+        cons:
+          - "『なぜこの atom が代表か』という判断が残らず、次サイクルへ設計知見が蓄積しにくい。"
+          - "ゲーム制作テーマ単位の導線や task lens には再利用しづらい。"
+          - "link なし atom や Slack 議論の補足関係には効きが弱い。"
+        migration_cost: low
+    recommended: "A. canonical_topic_groups index"
+    recommended_reason: "問題の中心は atom の重複削除ではなく、同一題材の読み始めを安定させること。A は既存 atom を触らずに canonical 導線を足せるため失敗時の戻しが軽く、Phase 4c で小さく始められる。B は最終形としてはきれいだが dual-write 全体に波及して重い。C は軽いが、今回必要な『ゲーム制作テーマ単位の導線』が残らない。"
+    decision: introduce
+    decision_reason: "Phase 4a の priority issue は medium severity で、同一 linkset groups=112 と具体例があり、現状の表示 fold だけでは制作時の再利用負荷が残る。既存データを破壊しない外付け index なら、まず 1-3 グループだけ手動/半自動 seed して効果を確認できる。"
+    outline_for_4c:
+      - "新規 index の置き場所と形式を最小化して決める。候補: memory/atoms/canonical_topic_groups.jsonl または memory/canonical_topic_groups.jsonl。"
+      - "1 レコードの必須フィールドを group_id / normalized_link_key / topic_label / canonical_atom / supporting_atoms / superseded_atoms / game_memory_tags / rationale / updated_at に絞る。"
+      - "Phase 4a の arXiv 2605.03482v2 例を seed 1 件として登録し、既存 atom 本体は変更しない。"
+      - "README か staging に、index は削除ではなく recall/task lens の入口補助であり、canonical は固定真実ではなく更新可能な代表であると明記する。"
+      - "実装後の smoke は JSONL parse と canonical_atom が既存 atom id に存在することの確認に留める。"
+```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260515-01
+    files_changed:
+      - path: memory/atoms/canonical_topic_groups.jsonl
+        change: created
+      - path: memory/atoms/README.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "Phase 4b recommended の canonical_topic_groups index を最小導入し、arXiv 2605.03482v2 / MEMSAD の重複 atom 群を seed 1 件として登録した。既存 atom 本体は変更していない。"
+    partial: false
+migrations:
+  - what: "新規 JSONL index の seed 追加のみ。既存 atoms.jsonl / per-file atom への移行・backfill はなし。"
+    affected: "memory/atoms/canonical_topic_groups.jsonl"
+verification:
+  - "JSONL parse OK: rows=1。canonical_atom / supporting_atoms / superseded_atoms が既存 atom id に存在することを確認。"
+  - "memory_recall smoke OK: `python tools\\memory_recall.py \"MEMSAD memory poisoning canonical\" --limit 3 --compact --no-log` が例外なく完了し、対象 canonical atom `sr-1778536137-c07e04d08a` が結果に含まれた。"
+```
 
 ## Phase 5: 日記投稿
-### 2026-05-15T13:36:49+09:00 log_cdx
-
 ```yaml
 posted:
   channel: "#log"
-  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778818609149229
-  char_count: 2289
-  verification: ok
-  draft: log/phase5_diary_20260515_1258.md
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778827302694399"
+  ts: "1778827302.694399"
+  char_count: 2237
+  verification: "ok"
+notes:
+  - "本文は .tmp/phase5_log_diary_20260515_1513.md に UTF-8 保存してから `python tools\\post_slack_message_file.py --channel \"#log\" --file .tmp\\phase5_log_diary_20260515_1513.md --delete-on-fail` で投稿。PowerShell pipe / stdin 経由の日本語送信は使っていない。"
+  - "Slack API history 検証は ok。chat.getPermalink は手元の api_call(JSON POST) 経由では invalid_arguments になったため、channel id と ts から Slack permalink 形式で記録した。"
 ```
