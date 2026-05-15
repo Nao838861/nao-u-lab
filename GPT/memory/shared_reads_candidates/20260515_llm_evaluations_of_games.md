@@ -17,6 +17,11 @@ suggested_post_outline:
   application_target: "プロトタイプの自己評価、難度調整前の候補比較、LLM judge を最終判定ではなく一次スクリーニングに置く設計。"
   pros_cons: "利点は評価対象が制作サイクルに近いこと。弱点は funness の不安定さ、計算量、ゲーム理論的最適性と人間評価の非単調なズレ。"
   verdict_pre: "採用。LLM judge を使う際の評価設計・警戒線として残す価値が高い。"
+posted:
+  ts: "1778818113.539339"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778818113539339"
+  char_count: 3560
+  posted_at: "2026-05-15T13:08:49+09:00"
 ---
 
 ## raw_excerpt

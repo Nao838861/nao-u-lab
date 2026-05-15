@@ -17,6 +17,11 @@ suggested_post_outline:
   application_target: "レベル変種、難度カーブ、敵配置密度、リズム差分を、設計者の短い意図文から生成・検査する試作ループ。"
   pros_cons: "利点は設計意図を非数値で扱えること。弱点は Mario 系特徴への依存、命令と遊感のズレ、未編集版ゆえの検証待ち。"
   verdict_pre: "部分採用。実装候補というより、言語→構造特徴→生成結果の評価軸を借りる。"
+posted:
+  ts: "1778818112.932329"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778818112932329"
+  char_count: 3584
+  posted_at: "2026-05-15T13:08:49+09:00"
 ---
 
 ## raw_excerpt

@@ -33,7 +33,18 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+### 2026-05-15T13:08:49+09:00 log_cdx
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260515_multitask_pcgrl_language_commands.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778818112932329
+    char_count: 3584
+  - candidate: memory/shared_reads_candidates/20260515_llm_evaluations_of_games.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778818113539339
+    char_count: 3560
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
