@@ -1,9 +1,16 @@
 ---
-title: LieCraft: A Multi-Agent Framework for Evaluating Deceptive Capabilities in Language Models
+title: "LieCraft: A Multi-Agent Framework for Evaluating Deceptive Capabilities in Language Models"
 url: https://arxiv.org/abs/2603.06874
 collected_at: 2026-05-15T12:59:38+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [hidden-role-game, multi-agent, llm-evaluation, deception]
+evaluated_at: 2026-05-15T13:02:59+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+gate_reason: |-
+  隠れ役職、長期目標、疑念、協力/裏切り、degenerate strategy 排除はゲーム設計素材として具体性がある。
+  一方で主眼は deception 評価と ethical alignment で、ゲーム制作記事として投稿するにはシナリオ設計・報酬設計・評価結果の本文確認が不足している。
+  hidden-role 小型ゲームを作る時に再読し、適用先が明確になった段階で再評価する。
 ---
 
 ## raw_excerpt

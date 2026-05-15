@@ -4,6 +4,19 @@ url: https://www.nature.com/articles/s41598-026-48234-7
 collected_at: 2026-05-15T12:59:38+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [procedural-content-generation, reinforcement-learning, level-design, language-control]
+evaluated_at: 2026-05-15T13:02:59+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+gate_reason: |-
+  問題設定、自然言語命令をレベル特徴へ対応させる着想、DeBERTa encoder と regression / contrastive alignment / hybrid learning の中核、複数 generalization 評価が揃っている。
+  数値パラメータではなく「意図文」からレベル変種を作る導線として、Nao_u 作品の難度・構造バリエーション生成へ具体的に接続できる。
+  4000字程度では、言語制御 PCG の価値と、実制作での誤用リスクまで書ける。
+suggested_post_outline:
+  overview_angle: "自然言語の制作意図を、Super Mario 風レベルの構造特徴へ落とす PCGRL として読む。"
+  analysis_axis: "数値条件付き PCG から言語条件付き PCG へ移す時、semantic alignment と汎化評価がどこまで効くか。"
+  application_target: "レベル変種、難度カーブ、敵配置密度、リズム差分を、設計者の短い意図文から生成・検査する試作ループ。"
+  pros_cons: "利点は設計意図を非数値で扱えること。弱点は Mario 系特徴への依存、命令と遊感のズレ、未編集版ゆえの検証待ち。"
+  verdict_pre: "部分採用。実装候補というより、言語→構造特徴→生成結果の評価軸を借りる。"
 ---
 
 ## raw_excerpt
