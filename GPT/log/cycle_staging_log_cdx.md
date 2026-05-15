@@ -73,8 +73,26 @@ self_feedback:
     conflict_checked: true
 ```
 
-## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+## Phase 4a: 記憶階層 整理 + 問題抽出
+### 2026-05-16T03:48+09:00 log_cdx
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md: Markdown link 0 件、broken link 0 件を確認。バッククォート内コマンドはリンク扱いしない。"
+  - "memory/atoms.jsonl: 1175 rows / JSON parse error 0 / duplicate id 0 を確認。"
+  - "memory/raw/: 30 日以上 mtime が動いていない file 0 件を確認。"
+  - "memory/shared_reads_candidates/: 30 日以上 mtime が動いていない candidate 0 件を確認。"
+  - "inbox 系: slack_directives.jsonl pending 0 / slack_broadcasts.jsonl pending 0 を確認。handled 更新対象なし。"
+issues:
+  - id: ISS-4A-20260516-01
+    description: "memory/atoms.jsonl に、status が superseded/archived/failed ではない完全内容重複が 1 グループ残っている。"
+    severity: low
+    evidence: "sr-1776359674-edeeda0bdd と sr-1776395558-dc3d892a95。検査では duplicate content groups 38 のうち active duplicate groups 1。"
+    why_blocks_game_memory: "同じ shared-reads 由来の知見が recall で二重に出る可能性があり、ゲーム制作時の判断材料が水増しされる。ただし MEMORY.md 生成時の lifecycle/content fold では大半の重複が既に吸収されており、現時点では局所的な低リスク問題。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
