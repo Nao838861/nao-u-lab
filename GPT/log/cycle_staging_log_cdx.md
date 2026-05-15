@@ -111,6 +111,34 @@ self_feedback:
     conflict_checked: true
 ```
 
+2026-05-15T17:33:20+09:00 log_cdx Phase 3b:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778789339-6cc298aa63
+    source_ts: "1778789339.493129"
+    title: "Automated Playtesting with Procedural Personas through MCTS with Evolved Heuristics"
+    reason: "単一の上手い bot では見えない設計上の偏りを、複数 persona の行動差として測る知見が、次の game prototype / headless 評価に直接効くため。MCTS 完全実装ではなく、軽量 persona と同一ログ比較に絞れば小さく試せる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の game prototype / headless regression で、単一 bot だけでなく探索型・報酬追求型・危険回避型など 2-4 個の軽量 persona を同じ seed/build で走らせ、到達率・死亡地点・収集数・寄り道率・滞在時間のうち最小 2 指標を同一ログ形式で比較する probe を追加した。persona は人間代替ではなく、どの観点で壊れるかを見る検査レンズとして扱う。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 ```yaml
 cleaned: []
