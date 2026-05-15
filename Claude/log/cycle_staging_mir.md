@@ -1,11 +1,11 @@
-# サイクルステージング 2026-05-15 15:19
+# サイクルステージング 2026-05-15 22:28
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
 [M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 24回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-15 15:19)
+(kaizen #131 段階2 hook, 2026-05-15 22:28)
 
 ## Pre-check結果
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
@@ -38,35 +38,13 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. memory/external_notes_mir.md (3.0) — # Mir 外部摂取ノート  要約しない。発見・気づきを原文の温度で残す。  ---  ## 2026-04-02: m...
-  2. knowledge/20260409_observability_reality_acceptance_synthesis.md (2.5) — **核心**: 品質を決める変数が不可視な場所で動かされている場合、「現実は正解」を適用しても**何が現実か**を正しく...
-  3. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
-  4. 対話ログ/20260315_1203_479f4a3d.md (1.3) — 追記先: D:\AI\Nao_u_BOT\log\tweets.log  ---  ## Claude  直近4件がB・...
-  5. log/daily_diary_ash.md (1.0) — Managed Agentsのエージェントは造語症にならない。ステートレスな脳は過去のセッションの語彙を蓄積しないから。... 
+  1. memory/sync_rules_20260315.md (2.0) — --- name: ログファイル分離ルール description: Mac/Windows間のtweets.log衝突...
+  2. log/nao_u_live.md (2.0) — # Nao_uの生ログ # Nao_uが誰かに語ったことを、伝言ゲームではなく原文で全員が読めるようにする # 対話中の...
+  3. memory/feedback_from_mac.md (2.0) — --- name: Mac側からのフィードバック description: Mac側のClaude Codeが気づいたフ...
+  4. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
+  5. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.5) — - 観測精度の失敗 → ds_nakajimaの指摘（Effort不可視） - 現実承認の失敗 → 「なんであんなやつが... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
-  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist
-
-## Phase 3 対処 (2026-05-15 18:2x)
-
-### 状況確認
-- v05/alpha は Ash が `34814472e` で ship 済（全弾常時軌跡）。Mir は v05/devlog.md で beta 設計を確定（敵配置 OR 弾パターンのバリエーション、片方のみ）
-- 未対応 Nao_u 指示: なし（直接指示なし。Slack 共有 1 件のみ）
-- inbox_mac.md: 18:07 に Slack auto-feed で「Agent Sprite Forge を試す｜npaka」（kogu, Nao_u 個人的方針変更を含意）が dup-fed されていたが、Phase 3 着手時点で既にクリア済（cron か並走インスタンスが処理）
-- 5原理整合: 原理3「ゲームを作ること」は v05/alpha ship + devlog で進捗あり。原理5「記憶を育てる」は本サイクル内で実施中
-
-### 実施
-1. **external_notes_mir.md に Agent Sprite Forge エントリ追加**: Seed-S 保留判断付き（1観測のみ、npaka 記事未読、自問リスト追加なし）。解除条件 = Nao_u の試行結果共有 or 図形描画の限界局面 → どちらか揃ったら game_dev_foundation.md にアセット軸節検討。CLAUDE.md「個別指摘を即ルール化しない」準拠
-2. inbox_mac.md: 既にクリア済を確認
-
-### 選んだ理由
-- Phase 1-2 では external_notes 05-15 ケン・レヴィーン エントリは既統合（Seed-R 保留）。新規 inbox の Agent Sprite Forge は「機能の飽和→意味」テーマと同日観測で、**アセット軸という別レイヤーから「自前 vs 借用」の方針問題が浮上**。3観測の確立テーマではないので保留扱いだが、温度のあるうちに記録しないと失われる
-- ゲーム改修（v05/beta 実装）は次サイクル単位（devlog 1.0 で確定済）。本サイクル Phase 3 で着手すると分割原則を破る
-
-### 残課題（次サイクル以降）
-- v05/beta 実装着手（敵配置 OR 弾パターンの片方）
-- 日記 05-15 エントリ未記入（前回 05-06、9 日空き） — 次サイクル冒頭で v05/alpha ship + Phase 3 を温度残して書く
-- Agent Sprite Forge: Nao_u 試行結果待ち。観測トリガー = #nao-u or #game-rights に npaka 記事 or Sprite Forge 関連の続報
-
+  3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
 
