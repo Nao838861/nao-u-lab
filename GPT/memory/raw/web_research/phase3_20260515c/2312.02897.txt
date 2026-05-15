@@ -1,0 +1,666 @@
+
+
+===== page 1 =====
+Perspectives from Naive Participants and Social Scientists on
+Addressing Embodiment in a Virtual Cyberball Task
+Tao Long†
+tl468@cornell.edu
+Cornell University
+Ithaca, New York, USA
+Swati Pandita‡
+sp2333@cornell.edu
+Cornell University
+Ithaca, New York, USA
+Andrea Stevenson Won
+asw248@cornell.edu
+Cornell University
+Ithaca, New York, USA
+Figure 1: Scene 1: Welcome Message
+ Figure 2: Scene 2: Avatar Customization
+ Figure 3: Scene 3: Close-up of Final Avatar
+Figure 4: Scene 4: Exclusive Game
+(This shows the 3rd person POV version)
+Figure 5: Scene 5: Inclusive Game
+(This shows the 1st person POV version)
+Figure 6: Scene 6: Finish Message
+ABSTRACT
+We describe the design of an immersive virtual Cyberball task that
+included avatar customization, and user feedback on this design. We
+first created a prototype of an avatar customization template and
+added it to a Cyberball prototype built in the Unity3D game engine.
+Then, we conducted in-depth user testing and feedback sessions
+with 15 Cyberball stakeholders: five naive participants with no
+prior knowledge of Cyberball and ten experienced researchers with
+extensive experience using the Cyberball paradigm. We report the
+divergent perspectives of the two groups on the following design
+†Currently affiliated with Columbia University. This work was his undergrad research
+honors thesis at Cornell: Designing a Virtual Cyberball Task for Social Science Research .
+‡Currently affiliated with California Institute of Technology.
+Permission to make digital or hard copies of all or part of this work for personal or
+classroom use is granted without fee provided that copies are not made or distributed
+for profit or commercial advantage and that copies bear this notice and the full citation
+on the first page. Copyrights for components of this work owned by others than the
+author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or
+republish, to post on servers or to redistribute to lists, requires prior specific permission
+and/or a fee. Request permissions from permissions@acm.org.
+CSCW ’23 Companion, October 14–18, 2023, Minneapolis, MN, USA
+© 2023 Copyright held by the owner/author(s). Publication rights licensed to ACM.
+ACM ISBN 979-8-4007-0129-0/23/10. . . $15.00
+https://doi.org/10.1145/3584931.3607014
+insights; designing for intuitive use, inclusivity, and realistic experi-
+ences versus minimalism. Participant responses shed light on how
+system design problems may contribute to or perpetuate negative
+experiences when customizing avatars. They also demonstrate the
+value of considering multiple stakeholders’ feedback in the design
+process for virtual reality, presenting a more comprehensive view
+in designing future Cyberball prototypes and interactive systems
+for social science research.
+CCS CONCEPTS
+•Human-centered computing → Empirical studies in HCI ;
+Virtual reality.
+KEYWORDS
+virtual reality; cyberball task; social science paradigm; walkthrough;
+avatar customization; qualitative research; semi-structured inter-
+views; user experience; multi-stakeholders; inclusive design; games
+ACM Reference Format:
+Tao Long, Swati Pandita, and Andrea Stevenson Won. 2023. Perspectives
+from Naive Participants and Social Scientists on Addressing Embodiment
+in a Virtual Cyberball Task. In Computer Supported Cooperative Work and
+Social Computing (CSCW ’23 Companion), October 14–18, 2023, Minneapolis,
+MN, USA. 6 pages. https://doi.org/10.1145/3584931.3607014
+arXiv:2312.02897v1  [cs.HC]  5 Dec 2023
+
+
+===== page 2 =====
+CSCW ’23 Companion, October 14–18, 2023, Minneapolis, MN, USA Long et al.
+1 INTRODUCTION
+P lay er 1
+P lay er 0  
+(Study Participant)
+P lay er 3
+P lay er 2
+Figure 7: 2D Cyberball design, following [35]
+Cyberball is a popular social science paradigm for testing the
+effects of social inclusion and exclusion [30, 43]. As Figure 7 shows,
+participants can be either included (tossed the ball an equal amount
+of times) or excluded (ignored by others) during the game.
+Currently, the fifth version of the Cyberball paradigm [ 1] is
+widely used in research on mood, self-esteem, social pain, internet
+ostracism, and cyberbullying [4, 22, 25, 45, 46]. In efforts to improve
+task saliency, researchers have adapted and modified the original
+paradigm by creating online versions [42, 46], eliminating or adding
+rounds of the games [11], displaying on different devices [20], and
+integrating measures such as fMRI [37].
+In 2012, a virtual reality (VR) version of Cyberball [21] was de-
+veloped to give better systematic control, similar to other methods,
+while also allowing for richer in-game social experiences [21, 23, 44].
+While the authors successfully replicated the Cyberball paradigm
+into a more immersive experience, the environment intentionally
+lacked a critical feature: avatar customization (AC). The rationale for
+excluding AC was to isolate the effects of social ostracism through
+play like the original paradigm [21]. Therefore, limiting other dri-
+vers of ostracism such as social identity [13], which can be manip-
+ulated through player avatar customization [34], was imperative.
+However, as previous AC and embodiment research [19, 40] have
+shown, AC can increase player identification, thus bolstering the ef-
+fects of the paradigm. Furthermore, it can increase user engagement
+and Cyberball’s ecological validity [8, 29].
+To update this tool by making it more engaging for game ex-
+perience and more useful for scientific research, we developed
+an immersive Cyberball prototype 1 that included the ability to
+customize avatars. We anticipated that two groups of stakeholders
+would be critical in understanding how the VR Cyberball experience
+could be improved. One key group wasresearchers who actively use
+the paradigm to gather data to answer their research questions. The
+second group consisted of naive participants to represent potential
+study participants: they have no prior knowledge of or experience
+with the Cyberball paradigm. We conducted a user study with 15
+participants and collected user feedback from both groups.
+Our research questions were as follows:
+RQ1: What design considerations or needs are shared or differ
+between experienced researchers and naive participants?
+RQ2: What recommendations can we make for future VR Cyber-
+ball and social science paradigm design?
+1GitHub repository link: https://github.com/iamtaolong/virtual-cyberball
+2 PROTOTYPE DESIGN AND DEVELOPMENT
+The virtual environment was built with the Unity 3D game engine.
+It was first deployed as a WebGL environment that studied the
+effects of avatar customization on mood [33] with the Cyberball
+paradigm described in [ 21]. It was then modified for immersive
+VR for the current study. A key difference between the version
+Kassner and colleagues developed and ours was the addition of an
+avatar customization feature, using a representative off-the-shelf
+customization menu [14]. We added this in order to examine how
+different participant groups experienced avatar representation.
+Scene 1 welcomed participants. In Scene 2, users were presented
+with the default template avatar (a Caucasian female) and cus-
+tomized their avatar through buttons and sliders. Editable features
+included body and facial features, body and head size, hair style
+and color, and clothing. After clicking the Save & Continue button,
+each user’s customization history was automatically downloaded
+as a .csv file to the desktop. For Scene 3, users were presented with
+a close-up view of their finished avatar. For Scene 4 and Scene 5,
+the users entered the exclusion and inclusion games. Finally, Scene
+6 ended with a message of thanks for participation. To deploy the
+virtual environment to a Quest 2 headset, we replaced the keyboard
+input with a device-based and action-based locomotion system.
+3 USER TESTING
+3.1 Methods and Participants
+A total of ten researchers (R1-R10) and five naive participants (P1-
+P5) were recruited for the study from March to July 2022. We
+conducted user evaluation sessions using either a VR headset in
+a physical lab or a screen-shared walkthrough demo via Zoom.
+Lastly, participants were interviewed about their experience and
+insights on the environment and game design. This research was
+determined to be exempt after consultation with the university
+IRB board. We used purposeful sampling to recruit ten experienced
+researchers across the Americas and Europe who had conducted
+Cyberball-based research from the perspectives of psychology, hu-
+man development, nutritional science, and sociology. After finding
+publications related to Cyberball on Google Scholar, we recruited
+the authors through inquiry emails. We recruited from personal
+sampling five naive participants from a U. S. university (two men,
+three women), undergraduate students with no prior experience
+with Cyberball, ages 20-23. Four identified as Asian and one as
+white. Three had prior experience with VR, and all were familiar
+with customizing avatars from mobile or video game experiences.
+3.2 Study Flow
+Researchers (R1-R10) were first asked about their challenges and
+concerns in adapting Cyberball to their research field. As all ten
+researchers were remote, we utilized the walkthrough method [26]
+via Zoom. The first author demonstrated the environment in Unity
+for them. During the demo, the researchers could also share where
+they wanted to go and which buttons they wanted to click. Then, re-
+searchers were asked to share their thoughts on the system design
+and whether it fits their needs. Each testing and interview ses-
+sion with researchers took around thirty minutes, and participants
+verbally consented prior to the interview and audio recording.
+
+
+===== page 3 =====
+Perspectives from Naive Participants and Social Scientists on
+Addressing Embodiment in a Virtual Cyberball Task CSCW ’23 Companion, October 14–18, 2023, Minneapolis, MN, USA
+Naive participants (P1-P5) tried out the system and played with
+the environment inside the Oculus Quest 2 head-mounted display
+and Unity during in-person evaluation sessions. Then, they reported
+their experiences in each scene, emphasizing what was enjoyable
+and what needed improvements. We asked open-ended questions
+to understand their detailed experiences with the design of avatars,
+agents, background environment, and ball-tossing game. Lastly,
+participants were asked about potential system improvements and
+demographics. Each interview took approximately 20 minutes, and
+the first author conducted interviews and note-taking.
+We analyzed the data from the interview sessions with both
+researchers and naive participants using thematic analysis with an
+inductive approach [5, 32]. After reading through the notes and the
+recording transcripts, we established three significant themes based
+on their experiences with Cyberball. They are 1) design for intuitive
+use, 2) design for inclusivity, and 3) design for realistic experiences.
+Then, we analyzed our interview data for the ten researchers and
+coded all the related responses into the themes, thus establishing
+a comparison between the two groups of stakeholders: the third
+theme became 3) design for realistic experiences or minimalism.
+4 EV ALUATION AND FEEDBACK
+In fifteen user interviews, all stakeholders expressed favorable com-
+ments about the virtual environment design. Among them, all five
+naive participants noted "the importance of moving [research para-
+digm] into an immersed environment" (P1) and commented on the
+detailed customization available. One naive participant mentioned
+that "the options could make people feel included and excited" (P4).
+The ten researchers agreed on the relevance and applicability of the
+virtual Cyberball paradigm to social science research. Eight found
+it especially applicable to their specific research topics. Both R1, R3,
+and R6 mentioned that this customization scene looks "awesome"
+and "powerful, " and "[showing] real human features that you could
+identify groups [and] group belonging" (R6). R6 expressed that the
+possibilities of research questions could be largely expanded by
+adding complexities to a simple system. Also, some researchers
+recommended bringing the design to a broader audience and open-
+sourcing it: "I would highly recommend that you submit this to
+[Conference Name Redacted]... " (R3). Below, we describe how par-
+ticipants agreed or differed on each theme.
+4.1 Design for Intuitive Use
+Enhancing Embodiment Experiences Through Design. Both naive
+participants and researchers mentioned the importance of adopting
+more visual cues to improve users’ experiences of avatar embodi-
+ment. For example, regarding the avatar’s height: "It’s a little hard
+to tell how tall the avatar is since there isn’t any reference object
+next to it. I am just moving the slider bar, but I cannot see any
+noticeable change. " (P1) Also, P2 commented that it was hard to
+see the avatar’s whole body or specific body parts, limiting their
+understanding of the avatar. Interestingly, P2 modified the height
+of their avatar by moving the slider towards the far right. Thus,
+after entering the inclusive game scene and comparing it with the
+other two agents inside the game, they were shocked: "Wow, why is
+[my avatar] this tall? Or these two [agents] are just too short?" (P2)
+Similarly, researchers R1 and R4, who have experience developing
+Cyberball, mentioned that it would be interesting for users to name
+and give a short description of their avatar: "would be nice [to give]
+the person’s name and their age [to the avatar... so] that way you
+can create in-groups and out-groups things" (R1).
+Leveraging Previous Experience with Technology. Two naive partici-
+pants mentioned their experiences with the avatar customization
+interface in other game designs. Many avatar customization scenes
+in mobile games allow users to drag the images of the clothing or
+hairstyles onto the avatar to see what the options look like. P1 said:
+"It’s hard to click on each option and then look at the changes one
+by one" (P1). Also, P5 mentioned: "[with all the clothing options
+laying over the avatar] the users could just scroll the options from
+left to right over the avatars" (P5). Leveraging users’ experiences
+with other games can aid their interactions with the interface. How-
+ever, many researchers discussed how technology unfamiliarity
+might affect the experiences of senior users. For example, R2 men-
+tioned that the instruction and user flow need be more intuitive
+and straightforward so all age groups know how to play it easily.
+4.2 Design for Inclusivity
+Race. We intentionally used the most common commercially avail-
+able customization menu to understand how different user groups
+experienced bias present in the avatar preset packages. As previous
+works indicate, though users can modify skin colors and detailed
+facial features, customization was challenging [18, 27, 31]. As R1
+stated, after shifting the skin color, the avatar’s facial details and
+appearances still looked Caucasian. Thus, a successful virtual para-
+digm needs "to make sure... [for] people’s racial and ethnic identity
+and appearance... everybody feels like they can represent them-
+selves" (R4). Plus, for a social science paradigm that examines social
+exclusion, researchers may need to represent a range of different
+age groups or racial/ethnic groups (R3).
+Age. Five researchers mentioned this sub-theme as they had pre-
+vious experiences applying the Cyberball paradigm to different
+age groups, similar to [6, 28, 36]. They foresaw problems for users
+embodying avatars that are significantly older or younger than the
+participants themselves. R2 stated, "you should be able to choose
+young, middle-aged, and old: 20s, 30s, 40s, 50s, 60s, " and R5 also
+mentioned the importance of including various body types. Since
+their previous research with Cyberball focused on how different age
+groups handle social rejections, R1 and R2 mentioned the potential
+risks of using a young avatar for seniors: "we know that there are
+age differences in decision making. [For this scenario,] they’re like
+deciding for a younger person, not themselves, so that they may
+change their mindsets" (R2).
+Gender. Similar to racial biases, researchers like R7 and R8 men-
+tioned stereotypes associated with the female avatar presets. As
+earlier literature [2, 36] shared, R7 shared that "[the] first thing I
+noticed was that the female-body avatars were wearing much less
+clothing" (R7), bringing "a potential risk of stereotype or threat,
+especially if you’re trying to use this with underage participants
+like vulnerable populations" (R7). Also, R8 pointed out that many
+other gender-related threats are still embedded inside the VR preset
+packages. For example, purchasing clothing sets for female avatars
+costs more than for male avatars while modifying the presets.
+
+
+===== page 4 =====
+CSCW ’23 Companion, October 14–18, 2023, Minneapolis, MN, USA Long et al.
+Neurodiversity or Diverse Physical Abilities. Similar to [ 47], one
+researcher mentioned that participants with physical difficulties
+might struggle to access the virtual paradigm, especially with hand
+controllers. Thus, besides an immersive version inside VR headsets,
+the researcher suggested including a more "user-friendly" way to
+interact with the system (R3). Also, regarding the risks of motion
+sickness, R2 and P1 mentioned, "[the agents] are swaying back and
+forth, thus making me dizzy... VR headsets always make me a bit
+nauseous, and just seeing the screen makes me crazy" (R2). Thus,
+for future application in social science research, this immersed
+Cyberball paradigm should still offer multiple versions via WebGL,
+customer headsets, and other accessibility-oriented designs to meet
+the needs of special user groups.
+4.3 Design for Realistic Experiences or
+Minimalism
+A vatar Customization Design. The two groups each held different
+opinions on the desirable level of detail for the virtual environment.
+Most naive participants wanted the environment to be more "fun, "
+especially regarding avatar customization. For example, P1 wanted
+a more exaggerated and random avatar design for the agents since it
+can be more interesting and exciting to play with "monsters. " How-
+ever, researchers wanted avatar customization to be straightforward
+and "minimal" (R1) for users to understand quickly. R4 mentioned
+that there should be fewer choices for avatar customization since
+"users may easily skip over" many options that are stored too deep
+in the menus. R3 and R4 shared that they did not want to give the
+participant too much power to customize the game by customizing
+anything other than their embodied avatars. They mention that
+"there is too many options for now... [which is] overwhelming and
+people might skip over it" (R4).
+Agent-A vatar Design.Some naive participants were not interested
+in the agent-avatars (the other "players" that were controlled by
+the computer). P4 and P5 stated they did not want to spend time or
+attention on agents’ customization. Instead, following their prior
+experience with avatar customization, they wanted more focus on
+their avatar. However, some researchers discussed the need to cus-
+tomize agents. For R9 and R10, two researchers who are conducting
+Cyberball-related research in Eastern Europe mentioned it is es-
+sential to make the agent design realistic and background-specific.
+They shared that applying the same race diversity in different coun-
+try settings will be confusing: "playing [this Cyberball] with other
+people from Serbia, for example... the majority of people, 99%, are
+white people... thus, other groups like African Americans or Asian
+or whatever would be really unrealistic" (R9).
+Ball-Tossing Game and Background Environment Design. Many naive
+participants expected the overall game and background design to
+be more realistic and detailed: "[the current design is] not that
+engaging and exciting since we could just see what the avatars
+are doing, and it is hard to understand the point of the process"
+(P2). For future iterations, P3 proposed that the throwing force can
+determine whether the ball reaches the other avatar, and the avatar
+could also miss the ball while catching. Plus, P1, P3, and P5 shared
+that they want a more detailed background, like adding visuals
+of grass, trees, and forest sounds (P3). P1 and P5 also envisioned
+having a "cloudy sky, " "the sounds of wind-breezing and birds, "
+and "people talking and cheers, " etc. From their perspectives, a
+realistic background environment with audio help people feel more
+present. However, most researchers (R3, R4, R5, R6, R8, R9, and R10)
+strongly disagreed with this, mentioning the importance of keeping
+the design minimal for research. R3, R5, R9, and R10 expressed that
+any minor design differences make it more difficult to validate the
+findings. R8, R9, and R10 also reported concerns that additional
+visuals in the background may "distract people from the game. "
+5 DISCUSSION: MULTI-STAKEHOLDER
+PERSPECTIVES FOR VR DESIGN
+1)     D esign for Intuitiv e Use
+ Naiv e Particip ants (5)
+Exp erience d Rese ar cher s (10)
+D esign Fe e dback:
+2)     D esign for Inclusivity
+3.1)  D esign for Re alistic Exp eriences 
+3.2)  D esign for Minimalism
+Go al 1
+ Go al 2
+Go al 1
+Go al 1
+Go al 2
+Go al 2
+Stak eholder Gr oups:
+Stak eholder Gr oup #Fe e dback # Go al #
+Go al 1: Sy stem Eng ag ement
+Go al 2: Sy stem Usefulness 
+Go als:
+Metho d:
+Figure 8: The (mis-)alignments of feedback and goals between
+the two stakeholder groups
+This paper describes the design of a virtual version of the Cy-
+berball paradigm and the testing process with two groups of stake-
+holders: naive participants and researchers. At first, the two groups
+agreed on the importance of designing a virtual Cyberball and
+shared satisfaction with it. They shared expectations for the system
+design to be more intuitive (4.1) and inclusive (4.2), recognizing that
+these enhancements can greatly enhance their interaction with the
+tool by making it more engaging and fulfill their research needs
+by making the tool more useful in the context of scientific study.
+Therefore, the agreed-upon feedback from the stakeholder groups
+will be incorporated into the next iteration of the system.
+However, regarding the detailed game experience (4.3), they held
+different opinions. In general, naive participants, seeing this as a
+one-time experience, focused on the engaging side: whether their
+interaction with the system was intriguing and fun. They mainly
+relied on their previous VR game experiences as a baseline without
+considering the bigger picture of "control" in the research setting.
+In comparison, researchers focus more on the useful side and
+scientific objectivity: they envision a simple system that rules out
+the confounding elements while providing an immersive, embodied
+experience to test social exclusion. Though we cannot directly
+incorporate these diverging perspectives, these insights still offer
+designers two ways to consider how to design an interactive system
+for distinct stakeholder groups regarding interactivity, aesthetics,
+inclusivity, and experience design.
+
+
+===== page 5 =====
+Perspectives from Naive Participants and Social Scientists on
+Addressing Embodiment in a Virtual Cyberball Task CSCW ’23 Companion, October 14–18, 2023, Minneapolis, MN, USA
+Previous multi-stakeholder perspectives (MSP) works in design-
+ing civic technology [7], urban planning [41], medical intervention
+[15], and digital tools for sensitive user groups [3] all demonstrate
+the usefulness of contextualizing design guidelines from various
+stakeholder groups due to their distinct backgrounds and needs.
+However, there are only a few MSP design studies for VR, and
+most are for teaching and medical usages [9, 17, 39]. Thus, applying
+this method to designing future virtual Cyberballs and other virtual
+reality paradigms used for social science research is essential. Such
+implementations will need to take into account the engagement and
+attention of the naive participants, who will judge an environment
+based on their previous experience with games and other virtual
+environments. However, they will also need to accommodate the
+needs of social science researchers for experimental control and
+precision. In conclusion, we strongly recommend that future re-
+searchers and designers should integrate the MSP approach into
+their VR design and study processes.
+Despite the potential, there still exist gaps in our study, which
+also open many future opportunities:
+1) Broader Sampling: Our interviews highlighted the importance
+of providing equitable representation across several avatar char-
+acteristics, including age, gender, body type, and clothing options.
+This aligns with considerable other work finding disparities in
+avatar representation [2, 12, 31, 36]. Our small sample size indi-
+cated these categories as most salient, while future work should use
+wider sampling to determine challenges in avatar representation.
+2) Embodiment Effects: Embodiment is becoming a more com-
+monly experienced aspect of interactions in virtual worlds [10, 24,
+38]. Understanding how representations of the user’s own body in
+the social science experimental platform becomes increasingly nec-
+essary: how do people perceive and interact with representations
+of their own bodies inside VR Cyberball and other social science
+paradigms? We hope our findings contribute toward this area.
+3) Limitations of the MSP Approach: Though dual- and multi-
+stakeholder perspectives are valuable, identifying and connecting
+with the stakeholder groups could be challenging [16]. Also, since
+every stakeholder has different personal background and technol-
+ogy experiences, intergroup disagreements are expected to occur
+frequently. Thus, we should address these concerns in future VR
+design using the MSP approach.
+6 ACKNOWLEDGEMENTS
+We express our sincere gratitude to all the researchers and partic-
+ipants who dedicated their time to participate in this study and
+provide valuable feedback. This work, being the first author’s un-
+dergraduate research honors project, received generous support
+from the Jane E. Brody Undergraduate Research Award and the
+Fredric N. Gabler ’93 Memorial Research Endowment. Furthermore,
+the preliminary project of this work was recognized with research
+distinction at Cornell University in May 2022.
+REFERENCES
+[1] 2019. Cyberball 5 Applications and Manual. https://www.empirisoft.com/
+cyberball.aspx
+[2] Kevin Beltran, Cody Rowland, Nicki Hashemi, Anh Nguyen, Lane Harrison, So-
+phie Engle, and Beste F Yuksel. 2021. Reducing Implicit Gender Bias Using a
+Virtual Workplace Environment. In Extended Abstracts of the 2021 CHI Confer-
+ence on Human Factors in Computing Systems (Yokohama, Japan) (CHI EA ’21).
+Association for Computing Machinery, New York, NY, USA, Article 277, 7 pages.
+https://doi.org/10.1145/3411763.3451739
+[3] Aparajita Bhandari, Diana Freed, Tara Pilato, Faten Taki, Gunisha Kaur, Stephen
+Yale-Loehr, Jane Powers, Tao Long, and Natalya N. Bazarova. 2022. Multi-
+Stakeholder Perspectives on Digital Tools for U.S. Asylum Applicants Seeking
+Healthcare and Legal Information. Proc. ACM Hum.-Comput. Interact. 6, CSCW2,
+Article 529 (nov 2022), 21 pages. https://doi.org/10.1145/3555642
+[4] Mark E. Boyes and Davina J. French. 2009. Having a Cyberball: Using a ball-
+throwing game as an experimental social stressor to examine the relationship
+between neuroticism and coping. Personality and Individual Differences 47, 5 (Jan.
+2009), 396–401. https://doi.org/10.1016/j.paid.2009.04.005 Publisher: Elsevier
+Ltd.
+[5] Virginia Braun and Victoria Clarke. 2012. Thematic Analysis. APA handbook of
+research methods in psychology, Vol 2: Research designs: Quantitative, qualitative,
+neuropsychological, and biological. (2012), 57–71. https://doi.org/10.1037/13620-
+004
+[6] Romina Carrasco, Steven Baker, Jenny Waycott, and Frank Vetere. 2017. Nego-
+tiating Stereotypes of Older Adults through Avatars. In Proceedings of the 29th
+Australian Conference on Computer-Human Interaction (Brisbane, Queensland,
+Australia) (OZCHI ’17). Association for Computing Machinery, New York, NY,
+USA, 218–227. https://doi.org/10.1145/3152771.3152795
+[7] Jorgos Coenen, Paul Biedermann, Sandy Claes, and Andrew Vande Moere. 2021.
+The Stakeholder Perspective on Using Public Polling Displays for Civic Engage-
+ment. In C&T ’21: Proceedings of the 10th International Conference on Commu-
+nities & Technologies - Wicked Problems in the Age of Tech (Seattle, WA, USA)
+(C&T ’21). Association for Computing Machinery, New York, NY, USA, 61–74.
+https://doi.org/10.1145/3461564.3461585
+[8] Martin Johannes Dechant, Max V. Birk, Youssef Shiban, Knut Schnell, and Regan L.
+Mandryk. 2021. How Avatar Customization Affects Fear in a Game-Based Digital
+Exposure Task for Social Anxiety. Proc. ACM Hum.-Comput. Interact. 5, CHI
+PLAY, Article 248 (oct 2021), 27 pages. https://doi.org/10.1145/3474675
+[9] Mathilde R. Desselle, Andrea McKittrick, Jason Brown, Marianella Ivonne
+Chamorro-Koc, and Glenda Amayo Caldwell. 2023. Open Innovation Voices
+and Choices: Case Studies of Designing Interactive Virtual Reality Experiences
+in Australian Public Hospitals. In Proceedings of the 34th Australian Confer-
+ence on Human-Computer Interaction (Canberra, ACT, Australia) (OzCHI ’22).
+Association for Computing Machinery, New York, NY, USA, 117–125. https:
+//doi.org/10.1145/3572921.3572928
+[10] Nina Döllinger, Erik Wolf, Mario Botsch, Marc Erich Latoschik, and Carolin
+Wienrich. 2023. Are Embodied Avatars Harmful to Our Self-Experience? The
+Impact of Virtual Embodiment on Body Awareness. In Proceedings of the 2023
+CHI Conference on Human Factors in Computing Systems (Hamburg, Germany)
+(CHI ’23). Association for Computing Machinery, New York, NY, USA, Article
+492, 14 pages. https://doi.org/10.1145/3544548.3580918
+[11] Karl Dorn, Joshua N. Hook, Don E. Davis, Daryl R. Van Tongeren, and
+Everett L. Worthington. 2014. Behavioral methods of assessing for-
+giveness. The Journal of Positive Psychology 9, 1 (Jan. 2014), 75–80.
+https://doi.org/10.1080/17439760.2013.844267 Publisher: Routledge _eprint:
+https://doi.org/10.1080/17439760.2013.844267.
+[12] Shitao Fang and Koji Yatani. 2023. Towards Understanding Sense of Inclusion in
+Social VR Onboarding. InExtended Abstracts of the 2023 CHI Conference on Human
+Factors in Computing Systems (Hamburg, Germany) (CHI EA ’23). Association
+for Computing Machinery, New York, NY, USA, Article 291, 8 pages. https:
+//doi.org/10.1145/3544549.3585751
+[13] Stephanie A Goodwin, Kipling D Williams, and Adrienne R Carter-Sowell. 2010.
+The psychological sting of stigma: The costs of attributing ostracism to racism.
+Journal of Experimental Social Psychology 46, 4 (2010), 612–618.
+[14] UMA Steering Group. 2021. Unity Multipurpose Avatar. https://assetstore.unity.
+com/packages/3d/characters/uma-2-unity-multipurpose-avatar-35611
+[15] Maarten Houben, Rens Brankaert, and Eveline Wouters. 2020. Stakeholder Per-
+spectives on Design Interventions in Dementia Care. InCompanion Publication of
+the 2020 ACM Designing Interactive Systems Conference (Eindhoven, Netherlands)
+(DIS’ 20 Companion). Association for Computing Machinery, New York, NY, USA,
+43–47. https://doi.org/10.1145/3393914.3395868
+[16] Tony Huzzard. 2021. Achieving impact: exploring the challenge of stake-
+holder engagement. European Journal of Work and Organizational Psychol-
+ogy 30, 3 (2021), 379–389. https://doi.org/10.1080/1359432X.2020.1761875
+arXiv:https://doi.org/10.1080/1359432X.2020.1761875
+[17] Qiao Jin, Yu Liu, Svetlana Yarosh, Bo Han, and Feng Qian. 2022. How Will
+VR Enter University Classrooms? Multi-Stakeholders Investigation of VR in
+Higher Education. In Proceedings of the 2022 CHI Conference on Human Factors in
+Computing Systems (New Orleans, LA, USA)(CHI ’22). Association for Computing
+Machinery, New York, NY, USA, Article 563, 17 pages. https://doi.org/10.1145/
+3491102.3517542
+[18] Yasmin B Kafai, Deborah A Fields, and Melissa S Cook. 2010. Your second selves:
+Player-designed avatars. Games and culture 5, 1 (2010), 23–42.
+[19] Hyunjin Kang and Hye Kyung Kim. 2020. My avatar and the affirmed self:
+Psychological and persuasive implications of avatar customization. Computers in
+
+
+===== page 6 =====
+CSCW ’23 Companion, October 14–18, 2023, Minneapolis, MN, USA Long et al.
+Human Behavior 112 (2020), 106446.
+[20] Yuna Kano and Junya Morita. 2019. Factors Influencing Empathic Behaviors for
+Virtual Agents: -Examining about the Effect of Embodiment-. InProceedings of the
+7th International Conference on Human-Agent Interaction (HAI ’19). Association
+for Computing Machinery, New York, NY, USA, 236–238. https://doi.org/10.
+1145/3349537.3352777
+[21] Matthew P. Kassner, Eric D. Wesselmann, Alvin Ty Law, and Kipling D. Williams.
+2012. Virtually Ostracized: Studying Ostracism in Immersive Virtual Environ-
+ments. Cyberpsychology, Behavior, and Social Networking 15, 8 (Aug. 2012), 399–
+403. https://doi.org/10.1089/cyber.2012.0113
+[22] Taishi Kawamoto, Hiroshi Nittono, and Mitsuhiro Ura. 2013. Cognitive, Affective,
+and Motivational Changes during Ostracism: An ERP, EMG, and EEG Study
+Using a Computerized Cyberball Task. Neuroscience Journal 2013 (Nov. 2013).
+https://doi.org/10.1155/2013/304674 Publisher: Hindawi.
+[23] Oswald D. Kothgassner and Anna Felnhofer. 2020. Does virtual reality help
+to cut the Gordian knot between ecological validity and experimental control?
+Annals of the International Communication Association 44, 3 (July 2020), 210–
+218. https://doi.org/10.1080/23808985.2020.1792790 Publisher: Routledge _eprint:
+https://doi.org/10.1080/23808985.2020.1792790.
+[24] Marc Erich Latoschik, Florian Kern, Jan-Philipp Stauffert, Andrea Bartl, Mario
+Botsch, and Jean-Luc Lugrin. 2019. Not alone here?! scalability and user expe-
+rience of embodied ambient crowds in distributed social virtual reality. IEEE
+transactions on visualization and computer graphics 25, 5 (2019), 2134–2144.
+[25] Thang M. Le, Simon Zhornitsky, Wuyi Wang, and Chiang-Shan R. Li. 2020.
+Perceived burdensomeness and neural responses to ostracism in the Cyberball
+task. Journal of Psychiatric Research 130 (Nov. 2020), 1–8. https://doi.org/10.
+1016/j.jpsychires.2020.06.015 Publisher: Elsevier Ltd.
+[26] Ben Light, Jean Burgess, and Stefanie Duguay. 2018. The walkthrough method:
+An approach to the study of apps. New Media & Society 20, 3 (Mar 2018), 881–900.
+https://doi.org/10.1177/1461444816675438
+[27] Divine Maloney. 2018. Mitigating Negative Effects of Immersive Virtual Avatars
+on Racial Bias. In Proceedings of the 2018 Annual Symposium on Computer-Human
+Interaction in Play Companion Extended Abstracts (Melbourne, VIC, Australia)
+(CHI PLAY ’18 Extended Abstracts). Association for Computing Machinery, New
+York, NY, USA, 39–43. https://doi.org/10.1145/3270316.3270599
+[28] Victoria McArthur and Jennifer Jenson. 2014. E is for Everyone? Best Practices
+for the Socially Inclusive Design of Avatar Creation Interfaces. In Proceedings
+of the 2014 Conference on Interactive Entertainment (Newcastle, NSW, Australia)
+(IE2014). Association for Computing Machinery, New York, NY, USA, 1–8. https:
+//doi.org/10.1145/2677758.2677783
+[29] Raymond Ng and Robb Lindgren. 2013. Examining the effects of avatar customiza-
+tion and narrative on engagement and learning in video games. In Proceedings of
+CGAMES’2013 USA. 87–90. https://doi.org/10.1109/CGames.2013.6632611
+[30] Michael Niedeggen, Natia Sarauli, Santi Cacciola, and Sarah Weschke. 2014. Are
+there benefits of social overinclusion? Behavioral and ERP effects in the Cyberball
+paradigm. Frontiers in Human Neuroscience 8 (2014). https://doi.org/10.3389/
+fnhum.2014.00935
+[31] Tyler Pace, Aaron Houssian, and Victoria McArthur. 2009. Are socially exclusive
+values embedded in the avatar creation interfaces of MMORPGs? Journal of
+Information, Communication and Ethics in Society (2009).
+[32] Xueni Pan and Antonia F de C Hamilton. 2018. Why and how to use virtual
+reality to study human social interaction: The challenges of exploring a new
+research landscape. British Journal of Psychology 109, 3 (2018), 395–417.
+[33] Swati Pandita. 2022. Affective A vatars: Effects of A vatar Customization on Positive
+and Negative Emotions. Ph. D. Dissertation. Cornell University.
+[34] Swati Pandita, Lee H Humphreys, and Andrea S Won. 2023. The Paradox of Cus-
+tomization: Negotiating racial identity with "multiple choice" in avatar creation.
+psyarxiv.com/4xnup
+[35] John Pryor, Glenn Reeder, Eric Wesselmann, Kipling Williams, and James Wirth.
+2013. The Influence of Social Norms upon Behavioral Expressions of Implicit
+and Explicit Weight-Related Stigma in an Interactive Game. The Yale journal of
+biology and medicine 86 (June 2013), 189–201.
+[36] Valentin Schwind and Niels Henze. 2018. Gender- and Age-Related Differences
+in Designing the Characteristics of Stereotypical Virtual Faces. In Proceedings of
+the 2018 Annual Symposium on Computer-Human Interaction in Play (Melbourne,
+VIC, Australia) (CHI PLAY ’18). Association for Computing Machinery, New York,
+NY, USA, 463–475. https://doi.org/10.1145/3242671.3242692
+[37] Catherine L. Sebastian, Geoffrey C. Y. Tan, Jonathan P. Roiser, Essi Viding, Iroise
+Dumontheil, and Sarah-Jayne Blakemore. 2011. Developmental influences on the
+neural bases of responses to social rejection: Implications of social neuroscience
+for education. NeuroImage 57, 3 (Aug. 2011), 686–694. https://doi.org/10.1016/j.
+neuroimage.2010.09.063
+[38] Harrison Jesse Smith and Michael Neff. 2018. Communication behavior in em-
+bodied virtual reality. In Proceedings of the 2018 CHI conference on human factors
+in computing systems. 1–12.
+[39] Xinyi Su and Shuo Yan. 2023. NoPhobiar: Designing A VR Game to Prevent
+Childhood Dark Phobia with Children and Stakeholders. In Extended Abstracts
+of the 2023 CHI Conference on Human Factors in Computing Systems (Hamburg,
+Germany) (CHI EA ’23). Association for Computing Machinery, New York, NY,
+USA, Article 217, 6 pages. https://doi.org/10.1145/3544549.3585733
+[40] Selen Turkay and Charles Kinzer. 2016. The Effects of Avatar-Based Customiza-
+tion on Player Identification. International Journal of Gaming and Computer-
+Mediated Simulations 6 (07 2016), 1–25. https://doi.org/10.4018/ijgcms.2014010101
+[41] Sam van der Horst and Jeroen Peeters. 2021. What’s Going Ön? An Experiential
+Approach to Perspective Taking in Urban Planning through Virtual Reality. In
+Proceedings of the Fifteenth International Conference on Tangible, Embedded, and
+Embodied Interaction (Salzburg, Austria) (TEI ’21). Association for Computing
+Machinery, New York, NY, USA, Article 92, 14 pages. https://doi.org/10.1145/
+3430524.3446068
+[42] Kipling D Williams, Christopher K. T Cheung, and Wilma Choi. 2000.
+Cyberostracism: Effects of being ignored over the Internet. Jour-
+nal of personality and social psychology 79, 5 (Jan. 2000), 748–762.
+https://proxy.library.cornell.edu/login?url=https://search.ebscohost.com/login.
+aspx?direct=true&db=edsfra&AN=edsfra.807123&site=eds-live&scope=site
+Place: Washington, DC Publisher: American Psychological Association.
+[43] Kipling D. Williams and Blair Jarvis. 2006. Cyberball: A program for use in
+research on interpersonal ostracism and acceptance. Behavior Research Methods
+38, 1 (Feb. 2006), 174–180. https://doi.org/10.3758/BF03192765
+[44] James H. Wirth. 2016. Methods for Investigating Social Exclusion. In Social
+Exclusion: Psychological Approaches to Understanding and Reducing Its Impact ,
+Paolo Riva and Jennifer Eck (Eds.). Springer International Publishing, Cham,
+25–47. https://doi.org/10.1007/978-3-319-33033-4_2
+[45] Olga A. Wudarczyk, Nils Kohn, Rene Bergs, Raquel E. Gur, Bruce Turetsky,
+Frank Schneider, and Ute Habel. 2015. Chemosensory anxiety cues moderate the
+experience of social exclusion – an fMRI investigation with Cyberball. Frontiers
+in Psychology 6 (2015). https://www.frontiersin.org/article/10.3389/fpsyg.2015.
+01475
+[46] Lisa Zadro, Kipling D Williams, and Rick Richardson. 2004. How low can you go?
+Ostracism by a computer is sufficient to lower self-reported levels of belonging,
+control, self-esteem, and meaningful existence. Journal of experimental social
+psychology (Print) 40, 4 (Jan. 2004), 560–567. Place: San Diego, CA Publisher:
+Elsevier.
+[47] Kexin Zhang, Elmira Deldari, Zhicong Lu, Yaxing Yao, and Yuhang Zhao. 2022.
+“It’s Just Part of Me:” Understanding Avatar Diversity and Self-Presentation
+of People with Disabilities in Social Virtual Reality. In Proceedings of the 24th
+International ACM SIGACCESS Conference on Computers and Accessibility (Athens,
+Greece) (ASSETS ’22). Association for Computing Machinery, New York, NY, USA,
+Article 4, 16 pages. https://doi.org/10.1145/3517428.3544829

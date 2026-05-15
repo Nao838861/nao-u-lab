@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>graze_log v05 — 全弾常時軌跡 (α'' 拡張)</title>
+<title>graze_log v05 beta — 全弾常時軌跡 + 敵配置 rhyme (B-1)</title>
 <style>
   html,body{margin:0;background:#05050f;color:#cfd4e4;font-family:system-ui,sans-serif;
             display:flex;flex-direction:column;align-items:center;min-height:100vh}
@@ -42,6 +42,20 @@ function mulberry32(s){
   };
 }
 seedinfo.textContent=`seed=${SEED}  (?seed=N to reproduce)`;
+
+// === v05 beta B-1: SEED 保存 infra (cross_review aad8e17b1 §1) ===
+// 設計: localStorage `graze_log_recent_seeds` に直近 10 件、startGame() 時に push、
+// gameOver() 時に console.log で標準出力にも残す。?seed=N で再現可能。
+// 削除手順: pushSeedToLocal() / console.log('graze_log seed:', state.seed) の 2 行を消せば v05 alpha と等価。
+function pushSeedToLocal(seed){
+  try{
+    const raw=localStorage.getItem('graze_log_recent_seeds')||'[]';
+    const arr=JSON.parse(raw);
+    arr.unshift({seed:seed,t:Date.now()});
+    while(arr.length>10)arr.pop();
+    localStorage.setItem('graze_log_recent_seeds',JSON.stringify(arr));
+  }catch(e){}
+}
 
 // === GAUGE THRESHOLDS — region-based (M-24 区切りを変えろ) ===
 const G_MAX=208;
@@ -173,6 +187,7 @@ function spawnEnemy(type,x,phase){
 
 function startGame(){
   state.mode='play';
+  pushSeedToLocal(SEED); // v05 beta B-1: seed 保存 infra
   state.t=0;
   state.player.x=W/2;state.player.y=H-80;state.player.iframe=0;
   state.bullets.length=0;
@@ -202,6 +217,7 @@ function startGame(){
 
 function gameOver(){
   state.mode='over';
+  console.log('graze_log seed:',SEED,'score:',state.score,'wave:',state.wave); // v05 beta B-1: seed 保存 infra
   state.unlockT=RETRY_UNLOCK_FRAMES;
   if(state.score>state.hiscore){
     state.hiscore=state.score;
@@ -260,46 +276,63 @@ function triggerActiveDef(){
   state.popups.push({x:state.player.x,y:state.player.y-20,text:`DEF x${cleared}`,life:30,c:'#80ffd0'});
 }
 
-function spawnWave(){
-  state.wave++;
-  const w=state.wave;
-  if(w===1){
-    spawnEnemy('small',W*0.30);
-    spawnEnemy('small',W*0.50);
-    spawnEnemy('small',W*0.70);
-    setTimeout(()=>{
-      if(state.mode==='play'){
-        spawnEnemy('medium',W*0.5);
-        state.introMedSpawned=true;
-      }
-    },1200);
-    return;
-  }
-  if(w===2){
-    spawnEnemy('small',W*0.2);
-    spawnEnemy('small',W*0.4);
-    spawnEnemy('small',W*0.6);
-    spawnEnemy('small',W*0.8);
-    spawnEnemy('medium',W*0.3);
-    spawnEnemy('medium',W*0.7);
-    return;
-  }
-  if(w===3){
-    for(let i=0;i<6;i++)spawnEnemy('small',W*0.15+i*W*0.14);
-    spawnEnemy('medium',W*0.5);
-    return;
-  }
-  if(w===4){
-    spawnEnemy('medium',W*0.25);
-    spawnEnemy('medium',W*0.5);
-    spawnEnemy('medium',W*0.75);
-    for(let i=0;i<4;i++)spawnEnemy('small',W*0.2+i*W*0.2);
-    return;
-  }
+// === v05 beta B-1: 敵配置 rhyme (spawnWave wave 1-4 関数化 + wave>=5 70% 過去 wave 再使用) ===
+// 設計: gamedeveloper "Breaking the Shmup Dogma" の rhyme (反復記憶可能性) を spawnWave に翻訳。
+// wave 1-4 を spawnWave1..spawnWave4 に切り出して個別関数化、wave>=5 は 70% で過去 wave を再使用、
+// 30% は random spawn を維持し「同じパターンが返ってくる」体験 + 完全に同じではない揺らぎを両立。
+// 削除手順 (v05 beta B-1 → v05 alpha): WAVE_FUNCS 配列 / wave>=5 の rng 分岐を消し、
+// 旧来の `const pop=4+Math.min(w-4,6); for(...) state.rng()<0.6 spawn ...` に戻す。
+// spawnWave1..4 は spawnWave 本体に inline で戻せば v04 と等価。
+function spawnWave1(){
+  spawnEnemy('small',W*0.30);
+  spawnEnemy('small',W*0.50);
+  spawnEnemy('small',W*0.70);
+  setTimeout(()=>{
+    if(state.mode==='play'){
+      spawnEnemy('medium',W*0.5);
+      state.introMedSpawned=true;
+    }
+  },1200);
+}
+function spawnWave2(){
+  spawnEnemy('small',W*0.2);
+  spawnEnemy('small',W*0.4);
+  spawnEnemy('small',W*0.6);
+  spawnEnemy('small',W*0.8);
+  spawnEnemy('medium',W*0.3);
+  spawnEnemy('medium',W*0.7);
+}
+function spawnWave3(){
+  for(let i=0;i<6;i++)spawnEnemy('small',W*0.15+i*W*0.14);
+  spawnEnemy('medium',W*0.5);
+}
+function spawnWave4(){
+  spawnEnemy('medium',W*0.25);
+  spawnEnemy('medium',W*0.5);
+  spawnEnemy('medium',W*0.75);
+  for(let i=0;i<4;i++)spawnEnemy('small',W*0.2+i*W*0.2);
+}
+function spawnWaveRandom(w){
   const pop=4+Math.min(w-4,6);
   for(let i=0;i<pop;i++){
     if(state.rng()<0.6)spawnEnemy('small',60+state.rng()*(W-120));
     else spawnEnemy('medium',60+state.rng()*(W-120));
+  }
+}
+const WAVE_FUNCS=[spawnWave1,spawnWave2,spawnWave3,spawnWave4];
+function spawnWave(){
+  state.wave++;
+  const w=state.wave;
+  if(w===1){spawnWave1();return;}
+  if(w===2){spawnWave2();return;}
+  if(w===3){spawnWave3();return;}
+  if(w===4){spawnWave4();return;}
+  // wave >= 5: 70% で過去 wave 1-4 を rhyme として再使用、30% で random
+  if(state.rng()<0.7){
+    const idx=Math.floor(state.rng()*WAVE_FUNCS.length);
+    WAVE_FUNCS[idx]();
+  }else{
+    spawnWaveRandom(w);
   }
 }
 

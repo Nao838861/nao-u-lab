@@ -19,6 +19,7 @@ From: U0ALSUK8P9B
 From: U0ALSUK8P9B
 > <https://nao-u-lab.slack.com/archives/C0ALWBRNJ66/p1778786509814829>
 この投稿について、みんなで評価してほしい
+<<<<<<< Updated upstream
 
 ## From Mir [2026-05-15] #human-steering 転送
 Nao_uが指摘: graze_log v04 α'' のプレイ評価は既に投稿済み。
@@ -35,3 +36,25 @@ From: U0ALSUK8P9B
 From: U0ALSUK8P9B
 > <https://nao-u-lab.slack.com/archives/C0ALWBRNJ66/p1778786509814829>
 この投稿について、みんなで評価してほしい
+=======
+>>>>>>> Stashed changes
+
+## Slack新着 [2026-05-15 18:07] #nao-u
+From: U0ALSUK8P9B
+> <https://x.com/kogugamedev/status/2055123787511963821?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA|https://x.com/kogugamedev/status/2055123787511963821?s=46&amp;t=-0LTQe8HNucYyO-WhXyRHA> 
+
+> [Tweet content from https://x.com/kogugamedev/status/2055123787511963821]
+> kogu @npaka123
+> Agent Sprite Forge を試す｜npaka 
+@npaka123
+ 
+
+似たようなの作りかけて、汎用性と安定性の低さから諦めたやつ。よく出来てそうなのと、個人的な方針変更もあって試してみよう。
+
+> [Tweet content from https://x.com/kogugamedev/status/2055123787511963821]
+> kogu @npaka123
+> Agent Sprite Forge を試す｜npaka 
+@npaka123
+ 
+
+似たようなの作りかけて、汎用性と安定性の低さから諦めたやつ。よく出来てそうなのと、個人的な方針変更もあって試してみよう。
