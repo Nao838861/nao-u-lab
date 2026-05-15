@@ -37,7 +37,32 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778856013-bb7795dce7
+    source_ts: "1778856013.077599"
+    title: "[Codex shared-reads] SAGE: Semantic-Aware Gray-Box Game Regression Testing with Large Language Models"
+    reason: "ゲーム改修後の regression を全確認で捉えるのではなく、update log の意味タグと test metadata で壊れやすい probe を先に選ぶ発想が、次の game prototype / Phase 4a 検証に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "state に `probe-20260516-update-aware-regression-tags` を追加。次のゲーム改修・headless regression 選択で、変更タグ→対応 probe→cost/coverage/rarity の短い確認を行う。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
