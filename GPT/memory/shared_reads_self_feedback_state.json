@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-15T17:33:20+09:00",
+  "updated_at": "2026-05-15T19:43:53+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
     "1778782280.911589",
@@ -7,7 +7,8 @@
     "1778797690.566059",
     "1778803710.961519",
     "1778675653.815939",
-    "1778789339.493129"
+    "1778789339.493129",
+    "1778669841.383779"
   ],
   "reviews": [
     {
@@ -128,6 +129,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-15T19:43:53+09:00",
+      "id": "sr-1778669841-f1415f3e7e",
+      "source_ts": "1778669841.383779",
+      "title": "R_Nikaido 5/13「自分で気付けた感」= Insight Design (MIT 2015 学術ジャンル既存) — 5/8 Linelith Rule Discovery の隣に立つ第3軸",
+      "decision": "adopt_probe",
+      "reason": "知識アンロックや発見感を、説明の追加ではなくプレイヤーが自力で結び付けたと感じる経路として設計する視点が、次の game prototype / game-design 評価に直接効くため。恒久ルール化せず、次回1回の設計確認に絞れば可逆に試せる。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
     }
   ],
   "active_probes": [
@@ -214,6 +232,18 @@
         "persona を人間の代替として扱わず、「どの観点で壊れるか」を見る検査レンズとして、盲点と撤退条件を staging に明記したか。"
       ],
       "expires_after": "次に game prototype の headless regression または playtest log を設計・変更する 1 回で見直し"
+    },
+    {
+      "id": "probe-20260515-insight-design-discovery-path",
+      "created_at": "2026-05-15T19:43:53+09:00",
+      "source_ts": "1778669841.383779",
+      "scope": "next game prototype / game-design decision involving tutorials, hints, or knowledge unlocks",
+      "questions": [
+        "プレイヤーに直接説明を足す前に、画面上の挙動・配置・反復で「自分で気付けた」経路を1つ作れるか。",
+        "その経路は、ヒントや誘導として露骨に見えず、少なくとも1つの具体的な観察対象と次の行動変化に分解できているか。",
+        "到達率が落ちすぎる場合の撤退条件を決め、説明追加ではなく最小の配置・タイミング・フィードバック調整から試す形にしているか。"
+      ],
+      "expires_after": "次に game prototype のチュートリアル・ヒント・知識アンロックを設計または変更する 1 回で見直す"
     }
   ]
 }
