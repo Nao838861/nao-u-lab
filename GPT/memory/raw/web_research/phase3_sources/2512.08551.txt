@@ -1,0 +1,1299 @@
+
+
+--- page 1 ---
+Gamification with Purpose: What Learners Prefer
+to Motivate Their Learning
+Kai Marquardt 1,2*†, Mona Schulz *†, Anne Koziolek 1*
+and Lucia Happe 1,2,3*†
+1*Department of Informatics, Karlsruhe Institute of Technology,
+Karlsruhe, Germany .
+2*Department for Interdisciplinary Didactics, Karlsruhe Institute of
+Technology, Kalsruhe, Germany .
+3*Faculty of Business Management, University of Economics,
+Bratislava, Slovakia .
+*Corresponding author(s). E-mail(s): kai.marquardt@kit.edu;
+ugrwh@student.kit.edu; koziolek@kit.edu; lucia.happe@kit.edu;
+†These authors contributed equally to this work.
+Abstract
+This study investigates learners’ preferences for game design elements (GDEs)
+in educational contexts to inform the development of purpose-driven gamifica-
+tion strategies. It emphasizes a learner-centered approach that aligns gamification
+design with pedagogical goals, while mitigating risks such as the erosion of
+intrinsic motivation. A systematic literature review was conducted to identify
+ten widely discussed GDEs. Visual prototypes representing each element were
+developed, and a best-worst scaling (BWS) survey with 125 participants was
+administered to elicit preference rankings. Qualitative feedback was also col-
+lected to uncover motivational drivers. Learners consistently preferred GDEs that
+support learning processes directly—most notably progress bars, concept maps,
+immediate feedback, and achievements. Qualitative analysis revealed six recurring
+motivational themes, including visible progress, content relevance, and construc-
+tive feedback. The findings suggest that learners value gamification elements that
+are meaningfully integrated with educational content and support intrinsic moti-
+vation. Purpose-aligned gamification should prioritize tools that visualize learning
+progress and provide actionable feedback, rather than relying solely on extrinsic
+incentives.
+1
+arXiv:2512.08551v1  [cs.SE]  9 Dec 2025
+
+
+--- page 2 ---
+Keywords:Educational gamification, game design elements, learning motivation,
+learner preferences, best-worst scaling, digital learning environments
+1 Introduction
+Gamification, the integration of game design elements (GDEs) into non-game con-
+texts, has emerged as a widely adopted strategy in educational settings to enhance
+student motivation, engagement, and learning outcomes (Deterding et al, 2011; Kalo-
+giannakis et al, 2021; Dehghanzadeh et al, 2023). By infusing educational experiences
+with elements such as points, feedback, or levels, gamification aims to transform often
+passive learning environments into interactive and motivating ones. This transforma-
+tion is particularly valuable in digital and hybrid learning contexts, where sustaining
+learner attention can be challenging.
+The interest in gamification is especially pronounced in fields such as STEM and
+computer science education, which continue to grapple with issues of learner disen-
+gagement and underrepresentation of diverse student populations (Albusays et al,
+2021; Happe and Buhnova, 2022; Wang and Hejazi Moghadam, 2017). In such areas,
+gamification holds promise as a tool to bridge engagement gaps and promote inclusive
+learning. However, the design of gamified learning environments is not straightforward.
+Decisions about which GDEs to implement—and how to implement them—are often
+made without a clear understanding of learners’ actual preferences or the motivational
+mechanisms these elements support.
+Much of the existing research has focused on a narrow subset of gamification ele-
+ments, particularly the widely known PBL triad: points, badges, and leaderboards
+(Dehghanzadeh et al, 2023; Klock et al, 2020). While these elements have proven useful
+in various domains, the field lacks comprehensive empirical studies exploring a broader
+set of GDEs, especially in educational contexts. Moreover, studies that include user
+preferences typically evaluate elements in isolation rather than in combination, over-
+looking potential synergies between GDEs. The optimal number, combination, and
+context-sensitive application of these elements remain open questions (Khaldi et al,
+2023; Manzano-Le´ on et al, 2021; Nadi-Ravandi and Batooli, 2022).
+Furthermore, the indiscriminate use of gamification can backfire. Overemphasis on
+extrinsic rewards, such as points or virtual currency, may undermine intrinsic motiva-
+tion and lead to superficial engagement (Almeida et al, 2023). A more sustainable and
+pedagogically grounded approach requires understanding which GDEs learners them-
+selves perceive as motivating and why. This calls for a shift toward purpose-driven
+gamification—design strategies that align GDEs with educational goals and learners’
+motivational needs.
+This study responds to that call by investigating learner preferences for ten game
+design elements in educational contexts. We conducted a systematic literature review
+to identify both widely used (e.g., points, badges, leaderboards) and less-explored
+elements (e.g., storytelling, concept maps). While concept maps are typically used
+as instructional scaffolds rather than game elements, we explore their potential as
+motivational tools for visualizing progress within gamified learning contexts—a novel
+2
+
+
+--- page 3 ---
+interpretation that reflects learners’ desire for content-aligned feedback. The latter,
+particularly concept maps, are rarely considered gamification elements but may offer
+pedagogically valuable means of visualizing progress and structuring learning. To eval-
+uate preferences, we developed visual prototypes of each GDE and conducted a survey
+using the best-worst scaling (BWS) method, a technique that forces participants to
+make meaningful trade-offs and rank elements more reliably. We also analyzed open-
+ended responses to understand the motivational drivers behind learners’ choices. We
+hypothesize that game design elements which visualize progress—such as progress
+bars, achievements, and concept maps—may be perceived as more motivating, par-
+ticularly because they connect learners’ actions with visible growth. This assumption
+guides our inclusion of both conventional and less-explored GDEs that serve this
+function.
+In addition to identifying preferred GDEs, we examined whether preferences vary
+according to learner traits such as age, gender, and enjoyment of video games. This
+analysis helps determine whether gamification strategies should be tailored to specific
+user groups. We also explored the reasons learners found certain GDEs more effective
+for motivating their learning, aiming to extract underlying themes or motivational cat-
+egories that can guide future design. Notably, the results not only highlight individual
+GDE preferences but also indicate that learners evaluate gamified learning experi-
+ences in terms of meaningful progress, feedback, and alignment with their personal
+goals—supporting the need for more targeted and learner-centered gamification.
+Our study is guided by the following research questions:
+• RQ1:What are the most preferred GDEs by learners for enhancing their learning
+motivation, and do these preferences vary based on user traits (e.g., age, video game
+enjoyment, and gender)?
+• RQ2:What combinations of GDEs do learners most prefer?
+• RQ3:Why do learners perceive specific GDEs as effective for motivating learning?
+By answering these questions, this study contributes empirical evidence for learner-
+centered, purpose-driven gamification in education. The results offer practical guidance
+for educators, instructional designers, and developers seeking to create more engaging
+and effective learning environments. In particular, the findings highlight the poten-
+tial of lesser-studied elements like concept maps and the importance of designing
+GDE combinations that reflect learner preferences. This moves the field beyond the
+traditional PBL triad and opens up new avenues for personalized and pedagogically
+meaningful gamification. These insights stimulate discussions on innovative approaches
+to incorporating gamification that enhance learner satisfaction, cater to individual
+needs, and ultimately contribute to the creation of more effective technology-supported
+learning environments within the educational system.
+2 Background
+Gamification stems from the concept of leveraging the motivational aspects of games in
+various real-world scenarios. Given its multifaceted nature, a comprehensive and uni-
+versally accepted definition of gamification remains elusive. The most widely accepted
+3
+
+
+--- page 4 ---
+definition, proposed by Deterding et al., characterizes gamification as the integration
+of game design elements (GDEs) into non-game contexts (Deterding et al, 2011). The
+term game design elements (GDEs) itself is maybe even less rigidly defined and is
+generally described as“elements that are characteristic to games”(Deterding et al,
+2011, p.12). Over time, various taxonomies have been proposed in an effort to provide
+clearer guidelines and reduce the ambiguity associated with gamification’s definition
+(Toda et al, 2019; Azouz and Lefdaoui, 2018).
+The aim of gamification is to increase motivation and cause behavioral changes
+through a more playful environment (Sailer et al, 2017). Gamification finds application
+across a broad spectrum, including areas like fitness and finance. Notably, in recent
+years, it has gained increased attention within the are of education due to its poten-
+tial to make educational environments more engaging (Dicheva et al, 2020; Venter
+and Swart, 2019; Dicheva et al, 2021), improve motivation (Venter and Swart, 2019;
+Dicheva et al, 2021), and enhance learning outcomes (Dicheva et al, 2020). Game-
+based learning and serious games are closely related fields of study, but it’s essential
+to differentiate them from gamification. Contrary to gamification, these approaches
+entail the integration of non-game elements into a gaming context to deliver educa-
+tional content through interactive gameplay (Krath et al, 2021). Gamification involves
+the integration of playful elements into tasks or activities. These tasks are designed
+to be entertaining (Sailer et al, 2017) and typically feature a combination of GDEs,
+for example those from the common triad of points, badges, and leaderboards (PBL).
+Research suggests that using isolated GDEs may be less effective or even yield neg-
+ative outcomes (Manzano-Le´ on et al, 2021). However, the specific combinations of
+GDEs that are most effective in educational gamification contexts remain unclear
+(Nadi-Ravandi and Batooli, 2022; Khaldi et al, 2023).
+In addition to the documented benefits of gamification, its potential negative
+impacts have been a subject of debate within the literature (Almeida et al, 2023).
+These adverse effects arise when the utilization of these systems is predominantly
+driven by extrinsic motivation, potentially compromising the overall learning expe-
+rience and impeding learning outcomes (Almeida et al, 2023; Hakulinen et al, 2015;
+Reid et al, 2015; Venter and Swart, 2019; Sailer et al, 2017). In educational settings,
+the effectiveness of gamification hinges on its ability to tap into intrinsic motivation
+(Buckley and Doyle, 2016). Recently, a new dimension in gamification research, known
+as tailored gamification, has garnered attention. This approach acknowledges that
+individuals learn differently and are motivated by distinct factors, emphasizing the
+importance of customized gamification strategies (Klock et al, 2020; Rodrigues et al,
+2021; El Gammal et al, 2020).
+In the design of educational systems, the primary goal of gamification should be
+to enrich the learning process by amplifying learning motivation. This is primarily
+achieved by nurturing learners’ intrinsic motivation to actively engage with the content
+(Deci et al, 2001). So we understand learning motivation as any intrinsic drive, that
+can be technology-supported by gamification, that encourages learners to engage with
+the educational material. While the field of gamification in education has reached
+growing attention in research, numerous questions remain unanswered concerning the
+optimal utilization of gamification to intrinsically enhance learning motivation (Khaldi
+4
+
+
+--- page 5 ---
+et al, 2023; Nadi-Ravandi and Batooli, 2022). This study aims to provide insights into
+learners’ attitudes toward newly defined gamification elements closely aligned with
+the learning content, shedding light on this ongoing inquiry.
+3 Research Method
+To understand what game design elements (GDEs) and combination of GDEs show
+the highest potential to increase learning motivation of learners, we conducted a three-
+stage study. In the first stage, we conducted a systematic literature review to identify
+relevant GDEs. Based on results from the literature review, we selected ten GDEs and
+created visual prototypes for each GDE. In the third stage, we conducted a survey
+study with a best-worst scaling (BWS) approach to assess the relative importance of
+the ten GDEs.
+3.1 Selection of Game Design Elements
+In this section, we provide a short overview of our selection process. Depending on
+the source there are more than 100 different GDEs, and these elements may not
+consistently adhere to the same categorization standards (Thomas et al, 2020; Toda
+et al, 2019). To get an overview of potentially effective GDEs we performed a sys-
+tematic literature review. We searched various literature databases like ACM Digital
+Library, ERIC, IEEE Xplore, JSTOR and SpringerLink with combinations of the key-
+wordsgamif*,intrinsic,motivation,engagement,element,design, andeducat*.
+Following the initial search, we identified a total of 348 potentially relevant papers.
+Subsequent to removing duplicates and conducting a thorough examination based on
+our predefined inclusion and exclusion criteria, we narrowed down our selection to
+18 papers. Through a snowballing procedure, by still following interesting references,
+three additional papers were included, leading to a final data set of 21 papers. Within
+this subset, we identified 28 different GDEs that exhibited potential effectiveness in
+enhancing learning motivation.
+Based on the findings from our literature review, we identified nine GDEs that
+matched our interest in studying their potential to enhance learning motivation:
+achievements, badges, progress bars, feedback, storytelling, leaderboards, points, vir-
+tual currency, and avatars. s the tenth GDE we included the concept map in our
+study. We made this selection based on our interest and vision for this element. Con-
+cept maps can be categorized as a type of progression GDE (Toda et al, 2019) and
+are related to other recognized terms such as knowledge maps or progression graphs.
+However, there is a very limited number of studies available that examine this type of
+GDE (Klock et al, 2020; Borges et al, 2016).
+For the survey, we created visual prototypes for all ten selected GDEs to provide
+participants with illustrative examples for reference. During the design process of these
+elements, our aim was to achieve a balance between providing visualizations that are
+as general as possible, yet including all the necessary and characteristic details unique
+to each element and aligned with our vision of their real-world implementation. All
+visual prototypes as well as their descriptions can be found in the appendix A.1.
+5
+
+
+--- page 6 ---
+Element Count Source
+Badges (BA) 13 (Dicheva et al, 2021; Rodrigues et al, 2021; de Jesus et al,
+2018; Thamrongrat and Lai-Chong Law, 2020; Dicheva et al,
+2020; Roubi, 2019; Venter and Swart, 2019; Karra et al, 2019;
+de Jesus et al, 2019; Schwarzmann et al, 2021; Hakulinen et al,
+2015; Reid et al, 2015; Hallifax et al, 2019)
+Points (PO) 9 (Dicheva et al, 2021; Rodrigues et al, 2021; de Jesus et al, 2018;
+Thamrongrat and Lai-Chong Law, 2020; C ¸ ubuk¸ cu et al, 2017;
+Roubi, 2019; de Jesus et al, 2019; Sailer et al, 2017; Hallifax
+et al, 2019)
+Avatar (AV) 7 (Dicheva et al, 2021; de Jesus et al, 2018; Qiu et al, 2021;
+Venter and Swart, 2019; Karra et al, 2019; de Jesus et al, 2019;
+Schwarzmann et al, 2021)
+Leaderboards (LB) 6 (Dicheva et al, 2021; Rodrigues et al, 2021; de Jesus et al,
+2018; C ¸ ubuk¸ cu et al, 2017; Schwarzmann et al, 2021; Hallifax
+et al, 2019)
+Achievements (AC) 5 (Hallifax et al, 2019; Karra et al, 2019; C ¸ ubuk¸ cu et al, 2017;
+de Jesus et al, 2018; Botte et al, 2020)
+Progress Bar (PB) 4 (Karra et al, 2019; Rodrigues et al, 2021; Schwarzmann et al,
+2021; Venter and Swart, 2019)
+Virtual Currency (VC) 4 (Dicheva et al, 2021; de Jesus et al, 2018; Dicheva et al, 2022;
+de Jesus et al, 2019)
+Feedback (FB) 2 (Rodrigues et al, 2021; Karra et al, 2019)
+Storytelling (ST) 1 (Schwarzmann et al, 2021)
+T able 1Frequencies and sources of GDEs from the literature review
+3.2 Best-Worst Scaling (BWS)
+To identify GDEs that motivate learners in a digital learning context the most, we
+use a best-worst scaling (BWS) approach (Louviere et al, 2013), which requires our
+participants to choose the most preferred and least preferred options from a set of
+GDEs, which we will refer as a choice set. Following the guidelines by Orme (Orme,
+2005) we used a total of 15 choice sets each consisting of four different GDEs (see
+appendix A.2). Each element is shown exactly six times in total. Participants then
+iteratively choose the most and least preferred GDE out of the set of four presented
+GDEs.
+Best-Worst Scaling (BWS) has been effectively employed in various educational
+contexts (Huybers, 2014; Sch¨ obel et al, 2016; Melo et al, 2022) and offers several
+advantages. It presents an easy-to-follow task for participants, provides clear ranking
+information, operates within a scale-free framework, thereby reducing the impact of
+response styles on mean values and variances (Sch¨ obel et al, 2016; Flynn et al, 2007),
+and it helps minimize various response biases (Lee et al, 2007). BWS was selected
+over Likert scales to minimize central tendency bias and force more nuanced trade-offs
+between elements.
+3.3 Survey Study
+The goal of the survey study was to identify the most preferred GDEs and com-
+binations of GDEs participants would choose as being most effective in increasing
+6
+
+
+--- page 7 ---
+20 30 40 50 600
+5
+10
+15
+Age
+Fig. 1Age distribution of participants
+their learning motivation. At the beginning of the survey, a short introduction to the
+research project was given, where the participants were instructed to envision these
+GDEs within a setting, where they use digital learning environments (such as online
+courses) to learn new content. Then all ten GDEs with their prototypes and descrip-
+tions were presented to the participants. After this section, the main part of the survey
+began with the BWS approach comprising 15 rounds of choice sets. Each choice set
+consisted of four GDEs and participants were required to select one GDE as their
+most preferred and one as their least preferred choice from the set of four elements.
+Throughout these rounds, participants had continuous access to the prototypes and
+their descriptions. After the BWS part, participants were asked to freely choose their
+preferred combination of GDEs (out of the 10) and to explain which of the chosen
+GDEs would motivate them the most and why. Subsequent questions covered demo-
+graphic information such as gender (female, male, non-binary, self-described) and age
+as well as inquiries regarding their enjoyment of playing video games and preferred
+game genres. The survey was conducted with Google Forms and shared via personal
+contacts (snowballing) and social media.
+3.4 Participants
+In total, we had 125 participants responding to our survey, comprising 65 (53%) males,
+56 (44%) females, one (1%) non-binary, and three (2%) participants who did not
+indicate their gender. Participant ages ranged from 15 to 64 years, with the majority
+falling between 20 and 30 years old (mean 27.02, median 23, see Figure 1).
+3.5 Analysis
+For the BWS analysis, we employed a counting approach to determine the ranking posi-
+tions of the GDEs. Following the established procedure in related literature (Sch¨ obel
+et al, 2016; Orme, 2005; Berger and Jung, 2021; Schmidt-Kraepelin et al, 2019), we
+tallied the frequency with which each GDE was chosen as the best and worst, and
+based on these results, we calculated standardized means and standard deviations for
+each element. To further validate the results obtained from the counting analysis, we
+employed a logic regression model, which provides a more detailed explanation of the
+7
+
+
+--- page 8 ---
+Element Counting Analysis Regression Analysis
+Choiceprob-ability
+Rank
+Counts Proportions Std. MeanSD Coeff. SD 95%-CI
+Total Best Worst Bestin totalWorstin totalDiff Lower Upper
+Progress Bar 600 363 49 0.605 0.082 0.523 0.419 0.403 1.162 0.068 1.029 1.295 0.254 1
+Achievements 600 241 59 0.402 0.098 0.303 0.243 0.369 0.626 0.061 0.508 0.745 0.148 2
+Feedback 600 263 103 0.438 0.172 0.267 0.213 0.500 0.547 0.060 0.429 0.664 0.137 3
+Concept Map 600 248 131 0.413 0.218 0.195 0.156 0.555 0.395 0.059 0.280 0.510 0.118 4
+Points 600 185 107 0.308 0.178 0.130 0.104 0.380 0.261 0.058 0.147 0.376 0.103 5
+Badges 600 154 147 0.257 0.245 0.012 0.009 0.449 0.023 0.058 -0.090 0.137 0.081 6
+Leaderboards 600 137 240 0.228 0.400 -0.172 -0.137 0.525 -0.347 0.059 -0.462 -0.232 0.056 7
+Storytelling 600 138 248 0.230 0.413 -0.183 -0.147 0.546 -0.371 0.059 -0.486 -0.256 0.055 8
+Virtual Currency 600 96 371 0.160 0.618 -0.458 -0.367 0.560 -0.990 0.065 -1.118 -0.863 0.029 9
+Avatar 600 50 420 0.083 0.700 -0.617 -0.493 0.451 -1.439 0.073 -1.583 -1.295 0.019 10
+T able 2Results of the counting and regression analysis for the BWS ranking
+relative ranking of the GDEs (Flynn et al, 2007; Lipovetsky and Conklin, 2014) For the
+combination analysis, we calculated frequencies to identify the most preferred combi-
+nations of GDEs and also examined correlations to gain insights into the relationships
+between pairs of elements.
+In our qualitative analysis of participants’ responses to the open-ended survey
+question about why they selected specific GDEs as the most effective for enhancing
+their learning motivation, we employed an iterative coding approach to establish cate-
+gories of motivation drivers (Salda˜ na, 2013). Initially, we formalized keywords for each
+response, and then we iteratively refined and merged these keywords to create cat-
+egories related to learning motivation. To ensure consistency and comparability, we
+translated all German responses into English, correcting any grammar and spelling
+errors in the process.
+For our statistical analyses, we used the software tools Excel, SPSS, and the
+packagebwsToolsin R for the regression analysis.
+4 Findings
+In this section, we present our findings organized according to the three research
+questions. We will begin with the results of the BWS analysis, followed by the results of
+the combination analysis, and conclude with the findings from the qualitative analysis,
+highlighting the various categories of motivational drivers associated with the different
+GDEs.
+4.1 Results of the Best-Worst-Scaling
+Table 2 shows the results of the counting analysis. The standardized mean (Std.Mean)
+was calculated by the difference between the number of times the respective GDE
+was preferred the most and the least, and then divided by the product of the number
+each GDE appeared in a choice set (6) and the number of participants (125). For
+the element progress bar, the calculation would be for example: (363-49)/(6*125)=
+0,4187. The resulting scale ranges from -1 to 1, with values closer to 1 indicating higher
+preferences and values closer to -1 indicating lower preferences.
+8
+
+
+--- page 9 ---
+Rank Overall Gender Video Game Enjoyment Age
+Female Male Less Enjoyment Enjoyment<20 20−26>26
+1 PB PB PB PB PB PB PB PB
+2 AC FB AC FB AC PO AC CM
+3 FB AC CM AC FB AC FB AC
+4 CM CM FB PO CM BA CM FB
+5 PO PO PO CM PO CM PO PO
+6 BA ST BA BA BA FB BA BA
+7 LB BA LB ST LB LB ST ST
+8 ST LB ST LB ST VC LB LB
+9 VC VC VC AV VC ST VC VC
+10 AV AV AV VC AV AV AV AV
+n 125 56 65 44 80 26 61 26
+T able 3Comparison of BWS ranking results by different user traits
+The results according to standardized means show that the progress bar emerged
+as the most preferred GDE, exhibiting a significant lead over the next most pre-
+ferred elements, which include achievements, feedback as the top 3 ranked GDES, and
+concept map, and points as the top 5 ranked GDEs. These are followed by badges,
+leaderboards, and storytelling. The least preferred GDEs was the avatar, followed by
+virtual currency. Examining the raw data, as indicated by the columns for frequen-
+cies of best and worst selections of a GDE, further highlights these findings. The
+progress bar was chosen as the most preferred alternative much more frequently than
+any other GDE. In total, it was chosen as the best alternative in more than 60% of
+its occurrences (n=363), which corresponds to a 70% higher frequency than the next
+most often chosen GDE, which is feedback (n=263). Following feedback, concept map
+(n=248) and achievements (n=241) were the next most frequently chosen GDEs. The
+other GDEs had a more substantial gap between them. Avatar and virtual currency
+were also consistently the most often chosen as the least preferable alternatives, once
+again with a significant margin. The regression analysis verifies the results from the
+counting analysis as it shows the same ranking.
+To investigate whether there are preference differences based on user traits, we
+performed also a counting analysis differentiated by gender, video game enjoyment,
+and age. Regarding the analysis of video game enjoyment, we categorized our sample
+based on their responses to the survey question,“Do you enjoy playing video games?”.
+Responses“Not at all”,“Not really”,“Neutral”were grouped asLess Enjoyment
+and responses“Somewhat”and“Very much”were grouped asEnjoyment. We
+acknowledge that grouping“Neutral”responses withLess Enjoymentmay oversim-
+plify participants’ actual preferences. Future analyses could benefit from a three-group
+categorization (low, neutral, high) to capture more nuanced trends. In this version,
+we chose the two-group split to enable clearer statistical comparisons. Due to the
+limited diversity in our sample regarding age, we decided to generalize the age cate-
+gories by learning stages. Specifically, we categorized participants as follows: age 15-20
+9
+
+
+--- page 10 ---
+Element Frequency Rank BWS
+Progress Bar 89 (70.63%) 1
+Achievements 81 (64.29%) 2
+Concept Map 74 (58.73%) 4
+Feedback 73 (57.94%) 3
+Points 64 (50.79%) 5
+Badges 43 (34.13%) 6
+Leaderboard 43 (34.13%) 7
+Storytelling 42 (33.33%) 8
+Avatar 27 (21.43%) 10
+Virtual Currency 20 (15.87%) 9
+None of Them 2 (1.59%) -
+T able 4Frequency of GDEs in bundles
+as secondary school to early tertiary education, age 20-26 as tertiary education (e.g.
+university, vocational training), and age ¿26 as employed individuals.
+Table 3 presents the results of the GDEs ranking based on the counting analy-
+sis differentiated by user traits. The findings indicate only minor differences among
+different user traits. For most user traits, the top four ranked GDEs consisted of
+different combinations of the overall ranking, with the progress bar consistently
+being the highest-ranked element. There were no significant gender differences,
+with male participants showing a slightly higher preference for achievements and
+leaderboards, while female participants showed a slightly higher preference for feed-
+back and storytelling, compared to each other. Regarding video game enjoyment,
+no major differences were observed, except for minor rearrangements. Standard-
+ized means for participants indicating high video game enjoyment suggested that
+they have clearer preferences (ranging from 0.18 to 0.45 among the top 4 ele-
+ments) compared to those less interested in video games (ranging from 0.11 to
+0.37 among the top 4 elements). The age-related analysis indicated that younger
+learners (age 15-19) had a higher preference for the GDE points (mean=0.16), com-
+pared to the age groups 20 to 26 (mean=0.06) and older than 26 (mean=0.05).
+On the other hand, the GDEs concept map and feedback seemed to be less
+important for the younger group (mean CM,<20=0.00, mean F B,<20=-0.03) compared
+to older participants (mean CM,20−26=0.12, mean CM,>26=0.28, mean F B,20−26=0.15,
+meanF B,>26=0.22). Overall, while there were some differences based on user traits,
+the general pattern of GDE preferences remained relatively consistent across different
+groups.
+4.2 Results of the Combination Analysis
+On average, participants selected 4.45 GDEs in bundles at the survey question“If
+you were free to choose between the previous game design elements, which would you
+use together in online courses to increase your learning motivation?”. Table 4 displays
+the frequency of each GDE being chosen as part of a bundle, and Table 5 provides a
+more detailed breakdown for different bundle sizes.
+10
+
+
+--- page 11 ---
+Number of Elements in Bundle 1 2 3 4 5 6 7 8 9 10 P
+Number of Responses (total) 6 7 28 20 28 18 8 6 0 2 123 (100.0%)
+Progress Bar 0 216 13 2616 8 6 0 2 89 (72.4%)
+Achievements 2 2 12 9 25185 6 0 2 81 (65.9%)
+Concept Map 2 2 121320 11 7 5 0 2 74 (60.2%)
+Feedback 0 1 9 12 20 15 8 6 0 2 73 (59.3%)
+At least one of the best four elements 4 5 25 19 28 18 8 6 0 2 115 (93.5%)
+At least two of the best four elements - 2 18 17 28 18 8 6 0 2 99 (80.5%)
+At least three of the best four elements - - 6 9 23 14 8 6 0 2 68 (59.1%)
+All four elements - - - 2 12 10 4 5 0 2 35 (28.5%)
+T able 5Combination and frequency of best-ranked GDEs in bundles
+The order of the most frequently chosen elements closely aligns with the ranking
+from the counting analysis, with the only exceptions being that concept map switched
+positions with feedback, and avatar switched positions with virtual currency. The
+progress bar element remains the most commonly chosen element, included in the
+bundles of over 70% of participants. Achievements are the second most frequently
+chosen element in GDE bundles, followed by concept map and feedback. For bundles
+of size three and five, the progress bar was the most frequently chosen element (see
+Table 5). For bundles of size three, the top choices were the progress bar and concept
+map. For bundles of size six, achievements were most often chosen.
+Overall, more than 90% of participants included at least one of these top four
+preferred GDEs in their bundles, with over 80% including more than two of them in
+their selections. Even about 60% of participants included at least three of the top four
+elements in their bundles. Approximately 30% included all four of the top elements
+in their bundle selection, rising to 42% when considering only participants who chose
+bundle sizes of 4 and higher.
+We also conducted a correlation analysis to identify elements that were more likely
+to be chosen together. There were only moderate correlations found between achieve-
+ments and progress bar (r=.382, p < .01), achievements and badges (r=.322, p <
+.01), feedback and progress bar (r=.323, p < .01), and virtual currency and avatar
+(r=.345, p < .01).
+A differentiated analysis for different user traits did not reveal any major differ-
+ences, except for the younger age groups, where points were chosen significantly more
+frequently compared to the other age groups. For participants aged 19 and younger,
+points were the most often chosen element in bundles, while for the other age groups,
+the GDE points ranked fifth.
+4.3 Results from the Qualitative Analysis of Motivational
+Drivers
+In this section, we present the results of the qualitative analysis based on responses
+to the survey question,“Which game design elements in the given scenario would
+motivate you the most and why?”. We received a total of 88 responses to this question.
+Table 6 reveals that the GDEs progress bar (n=24) and concept map (n=20) were
+11
+
+
+--- page 12 ---
+CATEGORY
+Learning motivation through. . .
+Progress Bar
+Concept Map
+Achievements
+Feedback
+Badges
+Storytelling
+Leaderboard
+Points
+Virtual Currency
+AvatarP
+cat
+VISUAL PROGRESSION
+. . . making learning progress and success distinctly visible
+1556-8- - 2 - -23
+EFFECTIVE LEARNING
+. . . providing strategies that make learning more effective
+1 3 11224- 1 1 -20
+GOALS
+. . . clear reachable goals that keep the learner engaged
+6 28-7- - - 1 -19
+STRUCTURE
+. . . providing a clear structure and making connections visible
+4131 - 1 1 - - - -18
+SHOWCASE
+. . . social comparison and competition
+- - 1 - 1 -101 2 -13
+RELEVANCE
+. . . meaningful and relatable learning contexts
+- 1 2 - -5- - 1 18
+P
+gde 24 20 16 15 14 13 12 10 6 2 88P′gde 16 17 10 11 9 7 7 3 4 1 66
+P
+gderesponses related to the respective GDEP′gderesponses related to the respective GDE including only those that could be assigned to a categoryP
+cattotal responses associated with the respective category
+T able 6Results from the qualitative analysis of the survey question“Which game design
+elements in the given scenario would motivate you the most and why?”
+each mentioned by approximately a quarter of all responses as the most motivating
+GDEs. Following closely, the GDEs achievements (n=16) and feedback (n=15) were
+also frequently cited. In contrast, virtual currency (n=6) and avatar (n=2) were the
+least favored GDEs in terms of their perceived value for enhancing learning motivation.
+These findings align with the results obtained from the combination analysis. While
+the frequency analysis of mentioned GDEs offers valuable insights into their relative
+importance, the participants’ provided reasons for selecting specific GDEs allow for a
+deeper understanding of their motivational drivers.
+Through our systematic coding approach, we identified six categories of learn-
+ing motivation that summarize the reasons participants provided for selecting specific
+GDEs as the most effective for motivating them:VISUAL PROGRESSION,EFFECTIVE
+LEARNING,GOALS,STRUCTURE,SHOWCASE, andRELEVANCE. Two researchers conducted
+open, inductive coding of the responses. Disagreements were resolved through dis-
+cussion, and codes were refined iteratively. While we did not compute inter-rater
+reliability, the coding process was guided by grounded theory practices. Table 6
+displays these categories in ascending order by frequency. Except for the last two cat-
+egories (SHOWCASEandRELEVANCE), each category appeared in more than one-fifth of
+the responses as a reason for learning motivation, with theVISUAL PROGRESSIONand
+EFFECTIVE LEARNINGcategories peaking at 26% and 23%, respectively. It’s important
+to note that our coding approach allows for the same response to contribute to differ-
+ent categories simultaneously, even within the same GDE. Next, we will present the
+advantages of the various GDEs for the different motivation categories based on the
+participants’ responses.
+12
+
+
+--- page 13 ---
+Progress baris the most frequently mentioned GDE among those chosen by par-
+ticipants as the most important for increasing their learning motivation. This GDE was
+primarily associated with theVISUAL PROGRESSIONcategory (n=15). Participants
+highlighted the progress bar’s ability to visually represent their learning progress in
+an intuitive and immediate manner, which they found highly motivating. There were
+also mentions related to theGOALS(n=6) andOVERVIEW(n=4) categories. Partici-
+pants indicated that the progress bar helped them organize their studies by allowing
+them to estimate the overall content extent, which, in turn, enabled them to set spe-
+cific learning goals. Here are two responses that illustrate the motivational benefits of
+progress bars:
+... From a subjective point of view, there is something satisfying about looking at
+the bar filling up at each step of the way. From a practical point of view, it gives
+you a visual representation of how much you have done and how much you still
+need to do. Great to know when you want to organize your study sessions and
+set goals. [P5]
+For me, progress bars are an essential tool when learning to keep track of how far
+I have come in a certain topic and overall in a course, which is a motivation in
+itself ... [P50]
+Concept Mapwas the second most often mentioned GDE for making learning as
+engaging as possible, mainly through its contribution to the category ofSTRUCTURE
+(n=13). Participants frequently mentioned the benefit of concept maps to provide
+a comprehensive, clearly structured overview of the learning content. An important
+motivational potential of concept maps is given by its strength of making connections
+from the learning content within the big picture visible as for example illustrated by
+the following responses:
+Probably Concept Map, so I can see how everything is connected from what I’ve
+learned ... [P30]
+Concept Maps or Storytelling, as they put the topic into perspective (by giving
+motivation and context) and break it down into digestible pieces [P66]
+Another participant highlighted the motivational potential of concept maps
+through their use for discovering new topics of interest:
+It is especially important for me to see my progress while learning and to discover
+the different topic areas. That’s why concept maps and progress bars are the most
+important elements for me. [P35]
+Achievementsandbadgesappear to serve similar motivational purposes for
+learners. Although badges and achievements were conceptually distinct in our design
+(e.g., badges as individual task rewards, achievements as milestones), we recognize
+the overlap may not have been fully clear to participants. To mitigate confusion, each
+13
+
+
+--- page 14 ---
+prototype was accompanied by brief contextual examples and presented in randomized
+order. They are distributed relatively evenly across theVISUAL PROGRESSIONand
+GOALScategories and are frequently mentioned together (n=6). One prominent effect
+highlighted by participants is the sense of collecting, which contributes to both making
+achievements visible and establishing worthwhile goals, ultimately resulting in longer
+and more engaging learning sessions:
+[With badges or achievements] I can easily retrospectively recognize what I’ve
+earned, see something I want to work towards ... [P77] ... and have the various
+levels of learning neatly organized in one place. [P77]
+... During learning I’m glad to have some badges and achievements to collect -
+they make my learning sessions longer. ... [P62]
+However, participants also emphasized the importance of providing a relevant
+context for the earned achievements:
+Achievements, if related to specific lessons, set out specific goals to work towards
+and give you bragging rights once you reach them. It also enables a sort of wish
+to collect them all. [P83]
+Feedbackemerged as the most prominent GDE for the EFFECTIVE LEARN-
+ING category (n=12). Qualitative analysis highlights the importance of feedback in
+enhancing learners’ motivation by providing effective support throughout the learn-
+ing process. Participants emphasized that feedback can reduce frustration, maintain
+learners’ focus, and deepen their understanding of the learning context:
+The feedback element, since it helps the most in improving, which in turn hope-
+fully lowers the frustration that might stem from making the same mistakes over
+and over again. [P7]
+Feedback would help me to stay focused and to better understand certain things.
+[P61]
+Feedback is regarded as essential for learners to acquire the necessary knowledge
+to contextualize their learning progress:
+... Feedback, so I can test my knowledge and see if I actually learned something
+... [P30]
+One participant underscored the distinct significance of feedback compared to other
+GDEs:
+... However, without any feedback or correction I wouldn’t use the app. [P62]
+Storytellingappears to be particularly effective in providing meaningful con-
+text for learning content, falling under theRELEVANCEcategory. This GDE captures
+learners’ attention and keeps them engaged throughout the learning process:
+14
+
+
+--- page 15 ---
+With good storytelling, I can embed everything I’ve learned into a context. The
+other elements are important, but they essentially come afterward. With a story,
+I get engaged initially and the other elements keep me involved then [P34]
+Several participants also highlighted storytelling’s advantage in supporting learning
+strategies that enhance knowledge retention, aligning with theEFFECTIVE LEARNING
+category:
+Storytelling. I believe it will give me a deeper understanding of the subject and it
+will make it easier for me to remember the knowledge because the story gives me
+”pictures” of context that are connected and relevant to the knowledge I need to
+remember. [P13]
+Leaderboardswere selected as significant Game Design Elements (GDEs) for
+enhancing learning motivation by participants who generally consider themselves com-
+petitive and enjoy comparing their performance with peers, striving to perform as well
+as or better than others. One participant emphasized the importance of leaderboards
+accurately reflecting learning performance:
+I like a competitive aspect and therefore Leaderboards based on performance
+would motivate me most [P48]
+Another participant emphasized the controversial nature of leaderboards, noting
+that they can be both motivating and demotivating:
+Leaderboards can be both motivating and demotivating depending on how com-
+petitive one is. It might be cool to have a feature where users can enable or disable
+this function in the settings. [P47]
+Pointsare mentioned in a total of ten responses, but rarely the reason for choos-
+ing the element was further specified. Most participants simply acknowledged the
+motivational potential of points without providing specific details:
+The points would be a motivational boost [P61]
+Two participants, however, associated points with a sense of progression, empha-
+sizing the motivational aspect of collecting them:
+Collecting badges and points - a good feeling of having achieved something. [P76]
+Points. I find it thrilling to try to reach 100 percent [P31]
+In summary, the qualitative analysis revealed six distinct categories of learning
+motivation, shedding light on how various GDEs serve distinct purposes in enhancing
+learning motivation (Table 6).Progress barshows to be highly effective in enhanc-
+ing learning motivation by making learning progress distinctly visible.Concept map
+15
+
+
+--- page 16 ---
+excels in providing a structural framework for learning content and revealing connec-
+tions. Bothachievementsandbadgesare instrumental in bolstering motivation by
+providing clear objectives as well as making success tangible.Feedbackcontributes
+to improved learning motivation by enhancing the efficiency of learning.Storytelling
+offers contextualization to the learning content.Leaderboardsstand out for their
+capacity to furnish a tool for peer comparison and competition.
+5 Discussion and Future Research
+These findings support the need for purpose-driven gamification, that is, gamifica-
+tion strategies that integrate closely with instructional objectives rather than offering
+extrinsic rewards alone. The motivational themes align well with Self-Determination
+Theory, particularly the emphasis on competence (via feedback and progress) and
+autonomy (via personalization). Our study reveals that among the presented ten
+GDEs, the progress bar stands out as themost effective in enhancing learning
+motivation. It is followed by achievements, feedback, concept maps, and points. In
+contrast, virtual currency and avatars are less favored. In a similar study by Sch¨ obel
+et al. (Sch¨ obel et al, 2016) about user preferences on a different set of ten GDEs in
+learning management systems the top four preferred GDEs were level, points, goals,
+and status, which at first may seem different from our results. However, since the
+meaning of level is closely related to our concept of progress bar and status is closely
+related to the concept of feedback, the relevance of these two elements seems to be
+evident, also supported by results from a study by Jia et al. (Jia et al, 2016) about
+the motivational affordances of GDEs.
+The relevance offeedbackis further highlighted by the fact, that feedback is con-
+sidered one of the most powerful tools for influencing learning (Hattie and Timperley,
+2007). This is reflected in our findings of the qualitative analysis, where respondents
+clearly indicated that tools that provide strategies to make learning more effective are
+essential for their learning motivation. Feedback was mentioned as the most important
+element to achieve this goal, followed by the GDEs storytelling and concept map.
+Our study results indicateprogress barsas one of the most central GDEs in
+increasing learning motivation. Previous research could also demonstrate the motiva-
+tional potential of progress bars (Manzano-Le´ on et al, 2021; Ding et al, 2017; Jent
+and Janneck, 2018), but still, there is very little research available related to this GDE
+(Mazarakis and Br¨ auer, 2023), and almost no attention is given to it in the context
+of educational gamification (Antonaci et al, 2019). This might be due to its nature of
+appearing very simplistic, but considering the large set of conditional variables such
+as shape (Li et al, 2021; Ohtsubo and Yoshida, 2014), color (Hamada et al, 2011), or
+general behavior (Harrison et al, 2007; Conrad et al, 2010; Gronier and Baudet, 2019)
+that can have an influence on the effectiveness of progress bars, the need for further
+research about the requirements for progress bars in the design of educational systems
+is highlighted.
+Our findings are consistent with previous research related toachievementsand
+badgesand their potential to increase learning motivation (Botte et al, 2020; Hallifax
+et al, 2019; Reid et al, 2015). But it is important to note that the effect strongly
+16
+
+
+--- page 17 ---
+depends on how these systems are designed (Abramovich et al, 2013; Almeida et al,
+2023; Botte et al, 2020). As the results of our qualitative analysis indicate, the main
+purposes of these elements are on the one hand to contribute to the visualization of
+progress making learning success tangible, and on the other hand to provide clear
+goals in the learning process. If achievements and badges are not dosed well enough
+or become too detached from the contextual purpose (i.e. the learning content), they
+become more and more extrinsically motivated, which might even have a negative
+impact on learning motivation (Abramovich et al, 2013; C ¸ ubuk¸ cu et al, 2017). This
+demonstrates the necessity of carefully considering the intersection between the design
+of these elements and the learning content (Abramovich et al, 2013; Almeida et al,
+2023; Botte et al, 2020).
+Whileconcept mapwas one of the most preferred GDEs by our respondents,
+studies in this area of gamification research are scarce (Klock et al, 2020; Dehghan-
+zadeh et al, 2023). Our vision of the GDE concept map is any approach to visualizing
+domain content, its connections, and the learners’ progression among different con-
+tent. Related terms in the literature are for example progression graphs, knowledge
+maps, semantic maps, domain maps, graph organizers, or advance organizers (Gha-
+nizadeh et al, 2020; Hall and Strangman, 2002; Klock et al, 2020; Toda et al, 2019).
+Our results show that the potential of concept maps to increase learning motivation is
+especially because of their ability to provide a clear structured overview of the learn-
+ing topics and their connections. It is also helpful for the learner to orient in the
+learning context, which has shown to be relevant for enhancing learning attitude and
+achievement (Wahl, 2011; Hwang et al, 2011, 2013). Another benefit of the concept
+map mentioned by participants was the possibility of exploring new areas where to
+continue learning. This strategy of activating new content as the learner progresses
+and showing the next steps proved to be effective in increasing intrinsic motivation
+(Jent and Janneck, 2018; Roubi, 2019). This effect could be even enhanced by uti-
+lizing the concept map as a tool to make interdisciplinary connections and everyday
+life connections visible (Tytler et al, 2019; Ng and Fergusson, 2020; Marquardt and
+Happe, 2023). We suggest that the concept map could be integrated into educational
+gamification by incorporating existing GDEs like progress bars, feedback, points, or
+achievements. This integration can take various forms: these elements could be embed-
+ded within different sections of the concept map, or progression through the concept
+map could be rewarded with achievements for example. This approach would ensure a
+strong connection between the learning content and the gamification system. In con-
+clusion, we see significant potential in leveraging the benefits of concept maps within
+the domain of educational gamification. However, it’s important to note that further
+research and evidence are necessary to fully explore these possibilities. We propose
+the concept map as a could be implemented in a way that it incorporates existing
+GDEs such as progress bars, feedback, points, or achievements. On the one hand,
+those elements could be embedded into different areas of the concept map, and on
+the other hand, progressing through the concept map could for example be rewarded
+with achievements. This would ensure the connection between learning content and
+the gamification system. Overall we believe there are huge possibilities in integrating
+the advantages of concept maps to the domain of educational gamification, but more
+research and evidence is essential.
+17
+
+
+--- page 18 ---
+Contrary to our initial expectations, our analysis considering differentuser traits
+like gender, video game enjoyment, and age, did not reveal significant differences
+in preferences for GDEs. These findings align with observations made by Jent and
+Janneck regarding gender and age preferences in gamified contexts (Jent and Janneck,
+2018) and also with results of a study by Oliveira et al. that indicated no significant
+differences between tailored and non-tailored gamification environments (Oliveira et al,
+2020, 2022).
+However, regardingage, our analysis revealed an interesting anomaly among
+younger participants (age: 15-19). In this age group, the GDE points was significantly
+more preferred compared to other age groups. Additionally, our results indicated a
+positive correlation between age and the preference for the GDE concept map, with
+older participants tending to show a higher preference for this particular GDE com-
+pared to younger participants. However, it’s important to note that our sample size
+for the specific age groups, especially the younger ones, was relatively small. Addi-
+tionally, the study by Jent and Janneck (Jent and Janneck, 2018) did not include this
+age group, limiting direct comparisons. These results underscore the necessity for fur-
+ther research dedicated to learners in primary and secondary education. Such studies
+should offer more detailed differentiation, considering that expectations, needs, and
+requirements may vary and change (Bruckman et al, 2012).
+Regardinggenderdifferences, our analysis indicates that females exhibit a slightly
+higher preference for storytelling. This aligns with prior research highlighting gender-
+related preferences (Bentz and Standl, 2022). However, our study did not find
+significant differences in GDE preferences based on gender overall. It’s worth not-
+ing that this topic is extensively debated in the literature, with substantial evidence
+suggesting that gender could indeed influence GDE preferences (Manzano-Le´ on et al,
+2021; Klock et al, 2020; Pedro et al, 2015). These findings might imply that the
+GDEs selected for our study are relatively gender-independent. Alternatively, gender-
+related differences could manifest during the actual implementation and usage of these
+elements. In light of these results, the chosen selection of GDEs can serve as a founda-
+tional starting point for further investigations. In our future work, we plan to explore
+additional dimensions of user traits, including age brackets, as well as player types,
+which show to play a significant role in tailoring gamification effectively (Klock et al,
+2020; Santos et al, 2021).
+Rather than isolated elements, learners appear to value combinations that reinforce
+progress and feedback. This has practical implications for educational platforms that
+allow instructors to bundle or sequence elements. Most participants chose to combine
+several GDEs in their learning experiences, with an average of four to five GDEs per
+bundle. Ourcombination analysisrevealed that the most preferred GDEs (progress
+bar, achievements, concept maps, and feedback) are at the same time most often
+chosen inbundles of GDEs. On average four to five GDEs were chosen for a bundle
+of GDEs, which is consistent with earlier findings by Sch¨ obel et al. (Sch¨ obel et al,
+2016). Interestingly, while the points-badges-leaderboards (PBL) triad is the most
+commonly studied combination of GDEs (Khaldi et al, 2023; Dehghanzadeh et al, 2023;
+Nadi-Ravandi and Batooli, 2022; Manzano-Le´ on et al, 2021; Subhash and Cudney,
+2018), none of the elements from this triad emerged as the top four most preferred
+18
+
+
+--- page 19 ---
+GDEs in our study. The PBL combination was chosen a total of 13 times, with the
+first occurrence observed in bundles comprising seven or more elements. In contrast,
+the combination of progress bar, concept map, and feedback was selected 23 times,
+indicating a greater demand for such combinations.
+The preceding observations collectively suggest a correlation between learning sat-
+isfaction and learning motivation. This connection becomes evident as the primary
+rationale of participants for favoring particular GDEs with the aim of enhancing learn-
+ing motivation lies in their capacity to deliver visual progression, employ effective
+learning strategies, establish clear objectives, and provide structural support. This
+underscores the importance of expanding research beyond the PBL triad and explor-
+ing“deeper gamification integrating different dynamics, mechanics, and aesthetics
+that can act as reinforcers of intrinsic motivation of the students”(Manzano-Le´ on
+et al, 2021, p. 10). Based on our findings, we recommend initiating an educational
+gamification design under the consideration of the GDEs progress bar, concept map,
+achievements, and feedback. Subsequently, other elements like badges, storytelling,
+points, or leaderboards can be incorporated. In the design and implementation process,
+careful consideration should be given to the purpose of each element in fulfilling spe-
+cific learning motivation requirements, as indicated in our qualitative analysis (Table
+6). We propose a novel approach to educational gamification that strongly emphasizes
+a purpose-driven methodology, where GDEs are selected based on their relevance to
+the learning content and their potential to enhance learning motivation. By establish-
+ing this strong connection between design and purpose, it becomes possible to mitigate
+potential negative effects of gamification in educational contexts such as extrinsic
+motivation overshadowing learners’ intrinsic drive (Almeida et al, 2023).
+Our study highlights the significance of including progress bar, concept map,
+achievements, feedback, badges, and storytelling in educational gamification. We
+strongly recommend promoting the interoperability of these elements within edu-
+cational systems, creating opportunities for innovative gamification approaches that
+simultaneously engage and effectively support learning processes.
+6 Conclusion
+This study examined learners’ preferences for ten game design elements (GDEs) in
+educational contexts through a best-worst scaling (BWS) survey and qualitative anal-
+ysis. Progress bars, achievements, immediate feedback, and concept maps emerged as
+the most motivating elements—both individually and when combined. These elements
+were consistently favored for their ability to visualize progress, structure learning, and
+provide meaningful feedback, demonstrating a clear preference for learning-aligned
+over reward-centric gamification.
+Interestingly, while overall preferences were consistent across demographic groups,
+younger learners (ages 15–19) showed a stronger preference for points, while affinity
+for concept maps increased with age. These differences suggest opportunities for age-
+sensitive or personalized gamification strategies.
+Our qualitative analysis identified six motivational drivers that underpin learn-
+ers’ choices, including visible progress, clarity of goals, and relevance to the learning
+19
+
+
+--- page 20 ---
+content. These findings align with Self-Determination Theory and reinforce the impor-
+tance of supporting intrinsic motivation through the careful integration of GDEs
+into learning design. It became evident that the most motivating GDEs were those
+that seamlessly extended the learning experience, making learning progress visible,
+providing clear goals, facilitating connections, and offering guidance for knowledge
+expansion.
+Rather than isolated elements, learners appear to value combinations that rein-
+force progress and feedback. This has practical implications for educational platforms
+and learning management systems (LMSs) that allow instructors to bundle or
+sequence GDEs. Purpose-aligned gamification strategies should emphasize elements
+that directly support learning trajectories, rather than relying solely on extrinsic incen-
+tives. This underscores the importance of future research in exploring novel GDE
+compositions, including innovative GDEs such as concept maps, which can effectively
+establish intrinsic connections with the learning content rather than solely relying on
+extrinsically motivated arbitrary goals.
+We consider this work a step toward a paradigm shift in educational gamifi-
+cation, one that is purpose-driven, learner-centered, and grounded in motivational
+theory. Future research should investigate how these preferences affect actual learning
+behaviors and outcomes in real-world classroom and digital environments.
+Declarations
+Funding
+This research did not receive any specific grant from funding agencies in the public,
+commercial, or not-for-profit sectors.
+Conflict of Interest
+The authors declare that they have no conflicts of interest or competing interests.
+Ethics Approval and Consent to Participate
+Participation in the study was voluntary, anonymous, and complied with applicable
+institutional and national research ethics standards. As the study involved no personal
+or sensitive data and presented no foreseeable risks, formal ethics approval was not
+required under the guidelines of the corresponding institution.
+Consent for Publication
+Not applicable. No identifiable data from participants are published.
+Data Availability
+An anonymized version of the dataset supporting the findings of this study is available
+from the corresponding author upon reasonable request.
+20
+
+
+--- page 21 ---
+Materials Availability
+The visual prototypes and survey materials used in the study are available upon
+request from the corresponding author.
+Code Availability
+No custom software code was developed for this study.
+Author Contributions
+Editorial Policies for:
+Springer journals and proceedings: https://www.springer.com/gp/editorial-policies
+Nature Portfolio journals: https://www.nature.com/nature-research/editorial-policies
+Scientific Reports: https://www.nature.com/srep/journal-policies/editorial-policies
+BMC journals: https://www.biomedcentral.com/getpublished/editorial-policies
+References
+Abramovich S, Schunn C, Higashi RM (2013) Are badges useful in education?: It
+depends upon the type of badge and expertise of learner. Educational Technology
+Research and Development 61:217–232
+Albusays K, Bjorn P, Dabbish L, et al (2021) The diversity crisis in software develop-
+ment. IEEE Software 38(2):19–25. https://doi.org/10.1109/MS.2020.3045817
+Almeida C, Kalinowski M, Uchˆ oa A, et al (2023) Negative effects of gamification
+in education software: Systematic mapping and practitioner perceptions. Infor-
+mation and Software Technology 156:107142. https://doi.org/https://doi.org/10.
+1016/j.infsof.2022.107142, URL https://www.sciencedirect.com/science/article/pii/
+S0950584922002518
+Antonaci A, Klemke R, Specht M (2019) The effects of gamification in online learn-
+ing environments: A systematic literature review. Informatics 6. https://doi.org/10.
+3390/informatics6030032, cit 93 (20.5.22)
+Azouz O, Lefdaoui Y (2018) Gamification design frameworks: a systematic mapping
+study. In: 2018 6th International Conference on Multimedia Computing and Systems
+(ICMCS), IEEE, pp 1–9
+Bentz A, Standl B (2022) Identification of pupils’ preferences of patterners and
+dramatists in secondary school computer science education. Discover Education
+1(1):11
+21
+
+
+--- page 22 ---
+Berger M, Jung C (2021) Gamification in nutrition apps : Users’ gamification element
+preferences : A best-worst-scaling approach. In: Proceedings of the 54th Hawaii
+International Conference on System Sciences (HICSS). Honolulu, USA, p 1335–1344,
+URL https://scholarspace.manoa.hawaii.edu/bitstream/10125/70774/0132.pdf
+Borges SS, Mizoguchi R, Durelli VHS, et al (2016) A link between worlds: Towards a
+conceptual framework for bridging player and learner roles in gamified collaborative
+learning contexts. In: Koch F, Koster A, Primo T, et al (eds) Advances in Social
+Computing and Digital Education. Springer International Publishing, Cham, pp
+19–34
+Botte B, Bakkes S, Veltkamp R (2020) Motivation in gamification: constructing a
+correlation between gamification achievements and self-determination theory. In:
+Games and Learning Alliance: 9th International Conference, GALA 2020, Laval,
+France, December 9–10, 2020, Proceedings 9, Springer, pp 157–166
+Bruckman A, Bandlow A, Dimond J, et al (2012) Human–computer interaction for
+kids. In: Human Computer Interaction Handbook. CRC Press, p 841–861
+Buckley P, Doyle E (2016) Gamification and student motivation. Interactive learning
+environments 24(6):1162–1175
+Conrad FG, Couper MP, Tourangeau R, et al (2010) The impact of progress indicators
+on task completion. Interacting with computers 22(5):417–427
+C ¸ ubuk¸ cu C ¸ , Wang B, Goodman L, et al (2017) Gamification for teaching java.
+In: Proceedings of the 10th EAI international conference on simulation tools and
+techniques, pp 120–130
+Deci EL, Koestner R, Ryan RM (2001) Extrinsic rewards and intrinsic motivation in
+education: Reconsidered once again. Review of educational research 71(1):1–27
+Dehghanzadeh H, Farrokhnia M, Dehghanzadeh H, et al (2023) Using gamification to
+support learning in k-12 education: A systematic literature review. British Journal
+of Educational Technology https://doi.org/10.1111/bjet.13335
+Deterding S, Dixon D, Khaled R, et al (2011) From game design elements to gameful-
+ness: Defining ”gamification”. In: Proceedings of the 15th International Academic
+MindTrek Conference: Envisioning Future Media Environments. Association for
+Computing Machinery, New York, NY, USA, MindTrek ’11, p 9–15, https://doi.
+org/10.1145/2181037.2181040, URL https://doi.org/10.1145/2181037.2181040
+Dicheva D, Caldwell R, Guy B (2020) Do badges increase student engagement
+and motivation? In: Proceedings of the 21st Annual Conference on Information
+Technology Education, pp 81–86
+22
+
+
+--- page 23 ---
+Dicheva D, Dichev C, Cassel L, et al (2021) Exploring the impact of non-conventional
+gamification elements on student motivation and engagement. In: 2021 IEEE Fron-
+tiers in Education Conference (FIE), pp 1–9, https://doi.org/10.1109/FIE49875.
+2021.9637199
+Dicheva D, Cassel L, Styer R, et al (2022) An empirical study of the effects of vir-
+tual currency on learners in out of class practicing. In: European Conference on
+Technology Enhanced Learning, Springer, pp 74–87
+Ding L, Kim C, Orey M (2017) Studies of student engagement in gamified online dis-
+cussions. Computers & Education 115:126–142. https://doi.org/https://doi.org/10.
+1016/j.compedu.2017.06.016, URL https://www.sciencedirect.com/science/article/
+pii/S0360131517301525
+El Gammal W, Sherief N, Abdelmoez W (2020) User-based adaptive software develop-
+ment for gamified systems. In: Proceedings of the 2020 3rd International Conference
+on Geoinformatics and Data Analysis, pp 115–122
+Flynn TN, Louviere JJ, Peters TJ, et al (2007) Best–worst scaling: What it can do for
+health care research and how to do it. Journal of Health Economics 26(1):171–189.
+https://doi.org/https://doi.org/10.1016/j.jhealeco.2006.04.002, URL https://www.
+sciencedirect.com/science/article/pii/S016762960600049X
+Ghanizadeh A, Al-Hoorie AH, Jahedizadeh S (2020) Graphic Organizers,
+Springer International Publishing, Cham, pp 53–100. https://doi.org/10.1007/
+978-3-030-56711-8 2, URL https://doi.org/10.1007/978-3-030-56711-8 2
+Gronier G, Baudet A (2019) Does progress bars’ behavior influence the user experience
+in human-computer interaction. Psychol Cogn Sci Open Journal 5:6–13
+Hakulinen L, Auvinen T, Korhonen A (2015) The effect of achievement badges on
+students’ behavior: An empirical study in a university-level computer science course.
+International Journal of Emerging Technologies in Learning 10(1)
+Hall T, Strangman N (2002) Graphic organizers
+Hallifax S, Serna A, Marty JC, et al (2019) Factors to consider for tailored gamifica-
+tion. In: Proceedings of the annual symposium on computer-human interaction in
+play, pp 559–572
+Hamada K, Yoshida K, Ohnishi K, et al (2011) Color effect on subjective percep-
+tion of progress bar speed. In: 2011 Third International Conference on Intelligent
+Networking and Collaborative Systems, IEEE, pp 863–866
+Happe L, Buhnova B (2022) Frustrations steering women away from software
+engineering. IEEE Software 39(4):63–69. https://doi.org/10.1109/MS.2021.3099077
+23
+
+
+--- page 24 ---
+Harrison C, Amento B, Kuznetsov S, et al (2007) Rethinking the progress bar. In:
+Proceedings of the 20th annual ACM symposium on User interface software and
+technology, pp 115–118
+Hattie J, Timperley H (2007) The power of feedback. https://doi.org/10.3102/
+003465430298487
+Huybers T (2014) Student evaluation of teaching: the use of best–worst scaling.
+Assessment & Evaluation in Higher Education 39(4):496–513. https://doi.org/10.
+1080/02602938.2013.851782, URL https://doi.org/10.1080/02602938.2013.851782,
+https://doi.org/10.1080/02602938.2013.851782
+Hwang GJ, Wu PH, Ke HR (2011) An interactive concept map approach to sup-
+porting mobile learning activities for natural science courses. Computers & Educa-
+tion 57(4):2272–2280. https://doi.org/https://doi.org/10.1016/j.compedu.2011.06.
+011, URL https://www.sciencedirect.com/science/article/pii/S0360131511001400
+Hwang GJ, Yang LH, Wang SY (2013) A concept map-embedded educational
+computer game for improving students’ learning performance in natural science
+courses. Computers & Education 69:121–130. https://doi.org/https://doi.org/10.
+1016/j.compedu.2013.07.008, URL https://www.sciencedirect.com/science/article/
+pii/S0360131513001759
+Jent S, Janneck M (2018) Using gamification to enhance user motivation: The influ-
+ence of gender and age. vol 601. Springer Verlag, pp 3–10, https://doi.org/10.1007/
+978-3-319-60486-2 1
+de Jesus GM, Ferrari FC, de Paula Porto D, et al (2018) Gamification in software
+testing: A characterization study. In: Proceedings of the III Brazilian Symposium
+on Systematic and Automated Software Testing, pp 39–48
+de Jesus GM, Paschoal LN, Ferrari FC, et al (2019) Is it worth using gamification
+on software testing education? an experience report. In: Proceedings of the XVIII
+Brazilian Symposium on Software Quality, pp 178–187
+Jia Y, Xu B, Karanam Y, et al (2016) Personality-targeted gamification: A survey
+study on personality traits and motivational affordances. In: Proceedings of the
+2016 CHI Conference on Human Factors in Computing Systems. Association for
+Computing Machinery, New York, NY, USA, CHI ’16, p 2001–2013, https://doi.
+org/10.1145/2858036.2858515, URL https://doi.org/10.1145/2858036.2858515
+Kalogiannakis M, Papadakis S, Zourmpakis AI (2021) Gamification in science educa-
+tion. a systematic review of the literature. Education Sciences 11(1). https://doi.
+org/10.3390/educsci11010022, URL https://www.mdpi.com/2227-7102/11/1/22
+Karra S, Karampa V, Paraskeva F (2019) Gamification design framework based on self
+determination theory for adult motivation. In: International Workshop on Learning
+24
+
+
+--- page 25 ---
+Technology for Education in Cloud, Springer, pp 67–78
+Khaldi A, Bouzidi R, Nader F (2023) Gamification of e-learning in higher education:
+a systematic literature review. Smart Learning Environments 10. https://doi.org/
+10.1186/s40561-023-00227-z
+Klock ACT, Gasparini I, Pimenta MS, et al (2020) Tailored gamification: A
+review of literature. International Journal of Human-Computer Studies 144:102495.
+https://doi.org/https://doi.org/10.1016/j.ijhcs.2020.102495, URL https://www.
+sciencedirect.com/science/article/pii/S1071581920300975
+Krath J, Sch¨ urmann L, von Korflesch HF (2021) Revealing the theoretical basis of
+gamification: A systematic review and analysis of theory in research on gamifi-
+cation, serious games and game-based learning. Computers in Human Behavior
+125:106963. https://doi.org/https://doi.org/10.1016/j.chb.2021.106963, URL https:
+//www.sciencedirect.com/science/article/pii/S0747563221002867
+Lee JA, Soutar GN, Louviere J (2007) Measuring values using best-worst scaling: The
+lov example. Psychology & Marketing 24(12):1043–1058
+Li Y, Liu C, Ji M, et al (2021) Shape of progress bar effect on subjective evaluation,
+duration perception and physiological reaction. International Journal of Industrial
+Ergonomics 81:103031
+Lipovetsky S, Conklin M (2014) Best-worst scaling in analytical closed-form solu-
+tion. Journal of Choice Modelling 10:60–68. https://doi.org/https://doi.org/10.
+1016/j.jocm.2014.02.001, URL https://www.sciencedirect.com/science/article/pii/
+S1755534514000128
+Louviere J, Lings I, Islam T, et al (2013) An introduction to the application of (case 1)
+best–worst scaling in marketing research. International Journal of Research in Mar-
+keting 30(3):292–303. https://doi.org/https://doi.org/10.1016/j.ijresmar.2012.10.
+002, URL https://www.sciencedirect.com/science/article/pii/S0167811613000359
+Manzano-Le´ on A, Camacho-Lazarraga P, Guerrero MA, et al (2021) Between level up
+and game over: A systematic literature review of gamification in education. Sus-
+tainability (Switzerland) 13:1–14. https://doi.org/10.3390/su13042247, URL https:
+//doi.org/10.3390/su13042247, cit 54 (20.5.22)
+Marquardt K, Happe L (2023) Saving bees with computer science: A way to spark
+enthusiasm and interest through interdisciplinary online courses. In: Proceedings of
+the 2023 Conference on Innovation and Technology in Computer Science Education
+V. 1. Association for Computing Machinery, New York, NY, USA, ITiCSE 2023, p
+145–151, https://doi.org/10.1145/3587102.3588835, URL https://doi.org/10.1145/
+3587102.3588835
+25
+
+
+--- page 26 ---
+Mazarakis A, Br¨ auer P (2023) Gamification is working, but which one
+exactly? results from an experiment with four game design elements. Inter-
+national Journal of Human–Computer Interaction 39(3):612–627. https://doi.
+org/10.1080/10447318.2022.2041909, URL https://doi.org/10.1080/10447318.2022.
+2041909, https://doi.org/10.1080/10447318.2022.2041909
+Melo G, Monteza D, Colson G, et al (2022) How to assess? student preferences for
+methods to assess experiential learning: A best-worst scaling approach. PLOS ONE
+17(10):1–20. https://doi.org/10.1371/journal.pone.0276745, URL https://doi.org/
+10.1371/journal.pone.0276745
+Nadi-Ravandi S, Batooli Z (2022) Gamification in education: A scientometric, con-
+tent and co-occurrence analysis of systematic review and meta-analysis articles.
+Education and Information Technologies 27:10207–10238. https://doi.org/10.1007/
+s10639-022-11048-x
+Ng W, Fergusson J (2020) Engaging high school girls in interdisciplinary steam. Science
+Education International 31(3):283–294
+Ohtsubo M, Yoshida K (2014) How does shape of progress bar effect on time evalua-
+tion. In: 2014 International Conference on Intelligent Networking and Collaborative
+Systems, IEEE, pp 316–319
+Oliveira W, Toda AM, Palomino PT, et al (2020) Does tailoring gamified educational
+systems matter? the impact on students’ flow experience. In: HICSS, pp 1–10
+Oliveira W, Hamari J, Joaquim S, et al (2022) The effects of personalized gamifi-
+cation on students’ flow experience, motivation, and enjoyment. Smart Learning
+Environments 9(1):16
+Orme B (2005) Accuracy of hb estimation in maxdiff experiments. Tech. rep., Sawtooth
+Research Paper Series
+Pedro LZ, Lopes AM, Prates BG, et al (2015) Does gamification work for boys and
+girls? an exploratory study with a virtual learning environment. In: Proceedings of
+the 30th annual ACM symposium on applied computing, pp 214–219
+Qiu S, Bozzon A, Birk MV, et al (2021) Using worker avatars to improve micro-
+task crowdsourcing. Proceedings of the ACM on Human-Computer Interaction
+5(CSCW2):1–28
+Reid AJ, Paster D, Abramovich S (2015) Digital badges in undergraduate composition
+courses: Effects on intrinsic motivation. Journal of Computers in Education 2:377–
+398
+Rodrigues L, Palomino PT, Toda AM, et al (2021) Personalization improves gamifi-
+cation: Evidence from a mixed-methods study. Proc ACM Hum-Comput Interact
+26
+
+
+--- page 27 ---
+5(CHI PLAY). https://doi.org/10.1145/3474714, URL https://doi.org/10.1145/
+3474714
+Roubi S (2019) Towards including software tools for e-motivation in the learning
+process. Association for Computing Machinery, pp 26–29, https://doi.org/10.1145/
+3366750.3366764
+Sailer M, Hense JU, Mayr SK, et al (2017) How gamification motivates: An experi-
+mental study of the effects of specific game design elements on psychological need
+satisfaction. Computers in human behavior 69:371–380
+Salda˜ na J (2013) The Coding Manual for Qualitative Researchers, 2nd edn. SAGE
+Publicatios, URL www.sagepublications.com, p. 20 preliminary codes
+Santos ACG, Oliveira W, Hamari J, et al (2021) The relationship between user types
+and gamification designs. User modeling and user-adapted interaction 31(5):907–940
+Schmidt-Kraepelin M, Thiebes S, Sch¨ obel S, et al (2019) Users’ game design ele-
+ment preferences in health behavior change support systems for physical activity:
+A best-worst-scaling approach. In: Proceedings of the 40th International Confer-
+ence on Information Systems, ICIS 2019, Munich, Germany, December 15-18, 2019.
+Association for Information Systems (AIS), p Paper 2576
+Schwarzmann A, Landes D, Sedelmaier Y (2021) About the effectiveness of different
+game design elements for an introductory programming course. In: International
+Conference on Interactive Collaborative Learning, Springer, pp 499–509
+Sch¨ obel S, S¨ ollner M, Leimeister JM (2016) The agony of choice-analyzing user pref-
+erences regarding gamification elements in learning management systems. pp 1–21,
+https://doi.org/http://dx.doi.org/10.2139/ssrn.3159163, URL https://papers.ssrn.
+com/sol3/papers.cfm?abstract id=3159163
+Subhash S, Cudney EA (2018) Gamified learning in higher education: A systematic
+review of the literature. Computers in Human Behavior 87:192–206. https://doi.org/
+https://doi.org/10.1016/j.chb.2018.05.028, URL https://www.sciencedirect.com/
+science/article/pii/S0747563218302541
+Thamrongrat P, Lai-Chong Law E (2020) Analysis of the motivational effect of gam-
+ified augmented reality apps for learning geometry. In: 32nd Australian Conference
+on Human-Computer Interaction, pp 65–77
+Thomas V, Alexander S, Mathias K (2020) Towards an empirically based gamification
+pattern language using machine learning techniques. In: 2020 IEEE 32nd Conference
+on Software Engineering Education and Training (CSEE&T), IEEE, pp 1–4
+Toda AM, Klock ACT, Oliveira W, et al (2019) Analysing gamification elements in
+educational environments using an existing gamification taxonomy. Smart Learning
+27
+
+
+--- page 28 ---
+Environments 6. https://doi.org/10.1186/s40561-019-0106-1
+Tytler R, Williams G, Hobbs L, et al (2019) Challenges and opportunities for a stem
+interdisciplinary agenda. In: Interdisciplinary mathematics education. Springer,
+Cham, p 51–81
+Venter M, Swart AJ (2019) Continuance use intention of a gamified programming
+learning system. In: Kabanda S, Suleman H, Gruner S (eds) ICT Education.
+Springer International Publishing, Cham, pp 17–31
+Wahl D (2011) Der Advance Organizer: Einstieg in eine Lernumgebung, vol Band 2,
+perspektive 1 edn.
+Wang J, Hejazi Moghadam S (2017) Diversity barriers in k-12 computer science edu-
+cation: Structural and social. In: Proceedings of the 2017 ACM SIGCSE Technical
+Symposium on Computer Science Education. Association for Computing Machin-
+ery, New York, NY, USA, SIGCSE ’17, p 615–620, https://doi.org/10.1145/3017680.
+3017734, URL https://doi.org/10.1145/3017680.3017734
+28
+
+
+--- page 29 ---
+Appendix A Appendices
+A.1 Prototypes of Game Design Elements
+Avatar
+An avatar represents you and is
+displayed to other app users. You
+can customize it e.g. appearance,
+clothes and accessories.
+Achievements
+In the app you can see an overview
+with the achievements you can
+reach. Every achievement can be
+rewarded by e.g. a badge.
+Leaderboard
+The leaderboard allows you to
+compare your learning progress
+with your friends or other app
+users.
+Badges
+After finishing a few tasks or
+challenges like learning for 7
+days straight, you can gain badges.
+You can see all badges in the
+achievement overview.
+Storytelling
+In the app you are guided through
+a story, a kind of mission, in
+which you can do tasks to solve a
+certain problem and thus deepen
+learning content in a playful way.
+F eedback
+After each completed task, you can
+toggle feedback by clicking on the
+work assistant button. The feedback
+can help you to understand the
+solutions and give hints.
+29
+
+
+--- page 30 ---
+Virtual Currency
+Through various completed tasks, you
+can get virtual currency, which will
+be added to your wallet. With this
+currency you can buy different things,
+for example clothes and accessoires
+for your avatar for different layouts
+for the app.
+Concept Map
+Each subject area is displayed in their
+respective sub-areas in a concept map.
+Here you can see all the topics
+included in the app and their
+connections to each other. Furthermore,
+the progress you have made in
+each area is shown there.
+Progress bar
+Progress bars show the relative
+progression of your own learning
+process. You can see an overall
+progress while you are working
+on a task and if you click on it, you
+can see detailed information broken
+down by different topics.
+Points
+You can earn knowledge-points by
+activities in the app. You have a
+total points system that expands after
+each point you gain. Additionally, by
+clicking on the information button next
+to the point notification, you can view
+detailed information how the total points
+are put together.
+T able A1Table with description and visual prototypes for each of the ten selected GDEs. Each
+prototype is presented on a smartphone layout.
+30
+
+
+--- page 31 ---
+A.2 Choice Sets
+Game Design Element Choice Set ID Total Appearances1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+Progress Bar✓ ✓ ✓ ✓ ✓ ✓6
+Feedback✓ ✓ ✓ ✓ ✓ ✓6
+Achievements✓ ✓ ✓ ✓ ✓ ✓6
+Virtual Currency✓ ✓ ✓ ✓ ✓ ✓6
+Leaderboard✓ ✓ ✓ ✓ ✓ ✓6
+Avatar✓ ✓ ✓ ✓ ✓ ✓6
+Points✓ ✓ ✓ ✓ ✓ ✓6
+Storytelling✓ ✓ ✓ ✓ ✓ ✓6
+Conceot Map✓ ✓ ✓ ✓ ✓ ✓6
+Badges✓ ✓ ✓ ✓ ✓ ✓6
+31

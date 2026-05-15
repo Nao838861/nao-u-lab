@@ -10,6 +10,11 @@ gate_decision: pass
 gate_reason: >-
   systematic review から GDE を10種に整理し、visual prototype と 125 participants の best-worst scaling、qualitative feedback で選好理由を見る構成が明確。
   progress / content relevance / constructive feedback を、単なる報酬追加ではなく上達と次行動の可視化としてゲーム UI に落とせるため、4000字級の概要に耐える。
+posted:
+  ts: "1778863000.063569"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778863000063569"
+  char_count: 3586
+  posted_at: "2026-05-16T01:38:50+09:00"
 suggested_post_outline:
   overview_angle: "教育 gamification を points/badges ではなく、学習進捗・内容関連性・行動可能な feedback の設計問題として読む。"
   analysis_axis: "GDE の整理、visual prototype による比較、best-worst scaling と qualitative feedback がどう選好理由を分解しているか。"

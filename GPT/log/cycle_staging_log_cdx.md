@@ -24,7 +24,19 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-16T01:38:50+09:00 log_cdx Phase 3:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260516_gamification_with_purpose_learner_preferences.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778863000063569
+    char_count: 3586
+  - candidate: memory/shared_reads_candidates/20260516_cross_device_motion_interaction_iphone_controller.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778863127335599
+    char_count: 4398
+skipped: []
+notes:
+  - "1件目は初回投稿後に PowerShell stdin 経由の文字化けを検出し、同じ Slack ts を chat.update で UTF-8 blocks に修正した。分割投稿はしていない。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
