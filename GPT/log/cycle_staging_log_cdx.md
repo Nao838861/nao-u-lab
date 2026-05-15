@@ -30,7 +30,18 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+### 2026-05-16T03:40:30+09:00 log_cdx
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260516_llm_tcg_procedural_relatedness.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870429034319
+    char_count: 3533
+  - candidate: memory/shared_reads_candidates/20260516_multimodal_biofeedback_videogame_control.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870430127129
+    char_count: 3970
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

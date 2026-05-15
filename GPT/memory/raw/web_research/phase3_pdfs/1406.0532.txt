@@ -1,0 +1,2058 @@
+
+
+--- page 1 ---
+FACULDADE DE ENGENHARIA DA UNIVERSIDADE DO PORTO
+Multimodal vs. Unimodal Physiological
+Control in Videogames for Enhanced
+Realism and Depth
+Gonçalo Filipe Lopes Coelho Amaral da Silva
+Mestrado Integrado em Engenharia Informática e Computação
+Supervisors: Rui Rodrigues (PhD), Pedro Alves Nogueira (MSc)
+February 7, 2014
+arXiv:1406.0532v1  [cs.HC]  2 Jun 2014
+
+
+--- page 2 ---
+
+
+
+--- page 3 ---
+Multimodal vs. Unimodal Physiological Control in
+Videogames for Enhanced Realism and Depth
+Gonçalo Filipe Lopes Coelho Amaral da Silva
+Mestrado Integrado em Engenharia Informática e Computação
+Approved in oral examination by the committee:
+Chair: José Manuel de Magalhães Cruz (PhD)
+External Examiner: Hugo Alexandre Paredes Guedes da Silva (PhD)
+Supervisor: Rui Pedro Amaral Rodrigues (PhD)
+February 7, 2014
+
+
+--- page 4 ---
+
+
+
+--- page 5 ---
+Abstract
+In the last two decades, videogames have evolved in a nearly explosive way, from text-based
+adventures and pixelated graphics to the near-realistic 3D environments that are common in the
+super-productions of big game companies (AAA titles). Although this tendency was not mirrored
+in the games’ interaction devices area, recent studies in the Human-Computer Interaction ﬁeld
+(HCI) have explored biofeedback interaction as an alternative to the current devices.
+In the context of HCI and videogames, this dissertation explores direct biofeedback: the ex-
+plicit manipulation of physiological data (i.e. one’s own body) in order to perform actions inside
+the game. Usually, prototypes of this biofeedback type bind to each game mechanic a single phys-
+iological sensor. Although this integration is easy and quick, we consider that it has the pitfall of
+being too simple - it does not yet justify changing from the act of pressing a button to run to a
+physical action such as raising one’s foot. As a consequence, this excessive simplicity wastes the
+vast potential that we believe to exist in this technology, to create games of increasing complexity
+and higher depth.
+To answer to these limitations, in this dissertation we strive down an unexplored path by com-
+bining more than one sensor in a single game mechanic, which we call Multimodal Direct Biofeed-
+back. Using the Unreal Development Kit, we created a First-Person Shooter capable of simulating
+reliably real-life actions, such as attenuating the recoil of a gun and underwater exploration by
+using the player’s breathing data, among other mechanisms. To assess pros and cons of this new
+biofeedback type, we developed three distinct versions of the game: Vanilla (Keyboard/Mouse, for
+modern games), Unimodal Biofeedback (Keyboard/Mouse + 1 sensor per each game mechanic)
+and Multimodal Biofeedback (Keyboard/Mouse + 2 sensors per each game mechanic).
+This prototype was tested by 32 participants whom compared the three versions of the game
+mechanisms (and each version as a whole) in terms of Fun, Ease of Use, Originality, Playability
+and Favourite Condition along with another questionnaire targeted at other parameters (IMI Ques-
+tionnaire). Additionally, the participants compared the three versions of the mechanisms by using
+12 keywords which are relevant to the game design of the game, and provided a great quantity of
+feedback and commentaries about the various elements of the three versions.
+In compliance with previous studies, both biofeedback versions were considered more fun than
+the vanilla version. The unimodal and multimodal versions received similar scores in parameters
+such as "Fun" or "Playability", but both were appreciated by the players: the unimodal version for
+its simplicity of use, and the multimodal for its realism, activation safety and depth added to the
+game. Our biggest contribution is that multimodal biofeedback can have a quite relevant impact
+in terms of added depth, depending on the way it is used inside the game. On a boundary case, it
+can be used to increase the feeling of empowerment on the player when using certain abilities, or
+to intentionally make in-game actions more difﬁcult by demanding more physical effort from the
+player. We believe that both biofeedback types should be combined simultaneously depending on
+the sensations that game designers wish to convey to the players.
+i
+
+
+--- page 6 ---
+ii
+
+
+--- page 7 ---
+Resumo
+Nas duas últimas décadas, a área dos jogos de vídeo evoluiu de uma forma quase explosiva a partir
+das aventuras em texto e gráﬁcos pixelizados para os ambientes 3D quási-foto-realísticos comuns
+nas super produções das grandes empresas. Apesar desta tendência não se ter veriﬁcado nos
+dispositivos de interação com os jogos, estudos recentes no campo da Interação Pessoa-Máquina
+(IPM) têm explorado a interação através de biofeedback como uma alternativa aos dispositivos
+atuais. No contexto da IPM e jogos de vídeo, esta dissertação explora unicamente a vertente do
+biofeedback direto: a manipulação explícita dos dados ﬁsiológicos (ou seja, o próprio corpo) para
+realizar ações dentro do jogo. Os protótipos tradicionais deste tipo ligam a cada mecânica de jogo
+um único sensor ﬁsiológico e embora esta integração seja fácil e rápida, consideramos que peca
+por ser demasiado simples e ainda não justiﬁca a troca do ato de carregar num botão por uma ação
+física como levantar um calcanhar para correr. Por sua vez, esta simplicidade excessiva desperdiça
+o potencial vasto que acreditamos existir nesta tecnologia para criar jogos complexos e de maior
+profundidade.
+Em resposta a estas limitações, nesta dissertação enveredámos por um caminho não explorado
+ao combinar mais do que um sensor em cada mecânica de jogo, a que chamamos Biofeedback Mul-
+timodal Direto. Foi criado no Unreal Development Kit um First-Person Shooter capaz de simular
+ﬁavelmente ações reais como conter o recuo de uma arma, levar a cabo exploração subaquática,
+entre outros. Para conhecermos os prós e contras deste novo tipo de biofeedback, foram desen-
+volvidas três versões distintas: Standard (Teclado/Rato, para os jogos atuais), Biofeedback Uni-
+modal (Teclado/Rato + 1 sensor por mecânica de jogo) e Biofeedback Multimodal (Teclado/Rato
++ 2 sensores por mecânica).
+Este protótipo foi testado por 32 voluntários que compararam as três variantes dos mecanismos
+do jogo (e cada variante na totalidade) em termos de Diversão, Facilidade de Uso, Originalidade,
+“Jogabilidade”, Condição Preferida e utilizando um questionário direcionado a outros parâmetros
+(IMI Questionnaire). Adicionalmente, avaliaram as três variantes dos mecanismos com recurso a
+12 palavras-chave relevantes aogame design do jogo e forneceram um vasto leque de comentários
+sobre os vários elementos das três variantes.
+Em concordância com estudos anteriores, ambas as versões de biofeedback foram mais diver-
+tidas que do a versão standard. As variantes unimodal e multimodal receberam pontuações semel-
+hantes em parâmetros como "Diversão" ou "Jogabilidade", mas ambas foram apreciadas pelos
+jogadores: a unimodal pela sua simplicidade de uso, e a multimodal pelo seu realismo, segurança
+de ativação e profundidade acrescentada ao jogo. O nosso maior contributo é que biofeedback
+multimodal pode ter um impacto bastante relevante em termos de profundidade acrescentada, de-
+pendendo do uso que lhe for dado dentro do jogo. Nos casos extremos, pode ainda servir para
+aumentar a sensação de poder no jogador ou para diﬁcultar intencionalmente uma ação dentro
+do jogo ao exigir mais esforço físico. Acreditamos que ambos os tipos devem ser combinados
+em simultâneo em função das sensações que os criadores de videojogos queiram transmitir aos
+jogadores.
+iii
+
+
+--- page 8 ---
+iv
+
+
+--- page 9 ---
+Acknowledgements
+Finally, the longest project of my Master’s degree is over. I was far from imagining all the hard
+work that would come with this project, the ﬁrst time I put my eyes on it. But even after all the
+tough times and opting to work on it for six extra months, I would still choose to work on this
+project all over again. More than my contribution to biofeedback research applied to videogames,
+this work is also dedicated to all the people who make or love videogames. This project wouldn’t
+exist without you!
+To my supervisors, Professor Rui Rodrigues and Pedro Nogueira, a huge “thank you” for be-
+lieving that I was the man for the job, despite my not-so-long experience in games development,
+and for accepting my suggestions that took this project “to the next level” (in a manner of speak-
+ing).
+To Chris Holden, for allowing us to use and modify his original "Dungeon Escape" UDK map
+— a simple thing as a “yes” made all the difference in this project and allowed us to reach the
+desired graphical quality of the game. A huge thank you!
+I feel obliged to give credit to the author of “Game Design Workshop” — Tracy Fullerton —,
+who wrote a wonderful book on Game Design which inspired me over the course of this project.
+It’s in the little details and additional effort of this thesis that this book’s magic is present.
+Finally, to those dearest to me: to my parents, family and dogs for keeping me healthy and
+mentally sane during all this time; to my close friends for all the fun times, the very early pilot
+testing and helping me push forward; and a special thanks to my girlfriend, as she put it nicely,
+“for putting up with me all the time”. There is no better researcher than a happy one.
+Thank you!
+Gonçalo Filipe Silva
+v
+
+
+--- page 10 ---
+vi
+
+
+--- page 11 ---
+“The essence of a game is rooted in its interactive nature,
+and there is no game without a player.”
+Laura Ermi, Frans Mäyrä
+vii
+
+
+--- page 12 ---
+viii
+
+
+--- page 13 ---
+Contents
+1 Introduction 1
+1.1 Context: Evolution of Videogames and Biofeedback . . . . . . . . . . . . . . . . 1
+1.2 Document Structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+2 Related Work 5
+2.1 Field of Medicine . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+2.2 Games and Entertainment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+2.3 Primer of Used Physiological Measures . . . . . . . . . . . . . . . . . . . . . . 8
+3 Prelude: Requirements and Design Choices 9
+3.1 State of the Art Reﬂection . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+3.2 Designing for Biofeedback Interaction . . . . . . . . . . . . . . . . . . . . . . . 9
+3.3 Choosing a Game Engine: Time and Resources . . . . . . . . . . . . . . . . . . 11
+4 Implementation: A Direct Biofeedback Game 13
+4.1 “GenericShooter 3000” Game Description . . . . . . . . . . . . . . . . . . . . . 14
+4.2 Game Mechanics Subject to Biofeedback Control . . . . . . . . . . . . . . . . . 14
+4.2.1 Gun Recoil Attenuation . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+4.2.2 Invisibility . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+4.2.3 Underwater Breathing . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+4.2.4 Possession . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+4.2.5 Fire Blow: Interaction with Fire Objects . . . . . . . . . . . . . . . . . . 18
+4.2.6 Sprinting . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+4.2.7 Item Use: Using Objects or Equipping Them . . . . . . . . . . . . . . . 18
+4.2.8 Grabbing Objects (Physics Gun) . . . . . . . . . . . . . . . . . . . . . . 20
+4.3 System Architecture . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+4.4 Calibration of Physiological Devices . . . . . . . . . . . . . . . . . . . . . . . . 21
+4.5 Iterative Playtesting and Game Tutorial . . . . . . . . . . . . . . . . . . . . . . 23
+5 An Empirical Study with Players 27
+5.1 Game Conditions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+5.2 Experimental Protocol . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+5.3 Testing Apparatus . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+5.4 Participants’ Demographic Data . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+6 Empiric Study Results 31
+6.1 Questionnaire 1: Individual Mechanics . . . . . . . . . . . . . . . . . . . . . . . 31
+6.1.1 Fun Ratings . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+6.1.2 Ease of Use Ratings . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+ix
+
+
+--- page 14 ---
+CONTENTS
+6.1.3 Originality Ratings . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+6.2 Gameplay Keywords . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+6.3 Questionnaire 2: Game Conditions . . . . . . . . . . . . . . . . . . . . . . . . . 36
+6.3.1 Originality, Preference, Playability . . . . . . . . . . . . . . . . . . . . . 36
+6.4 IMI Post Experience Questionnaire . . . . . . . . . . . . . . . . . . . . . . . . . 37
+7 Results’ Analysis and Discussion 45
+7.1 Fun Levels in Biofeedback Control . . . . . . . . . . . . . . . . . . . . . . . . . 45
+7.2 Unimodal vs. Multimodal Game Design . . . . . . . . . . . . . . . . . . . . . . 47
+7.3 Possible Changes in Gameplay . . . . . . . . . . . . . . . . . . . . . . . . . . . 50
+7.4 Limitations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+8 Future Work 53
+9 Conclusions 55
+References 57
+A Card Sorting - Plotted Charts 63
+x
+
+
+--- page 15 ---
+List of Figures
+1.1 Biofeedback diagram - ﬂow of physiological data . . . . . . . . . . . . . . . . . 2
+4.1 Invisibility game action snapshot . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+4.2 Underwater post-processing effects . . . . . . . . . . . . . . . . . . . . . . . . 16
+4.3 Possession post-processing effects (enemy view) . . . . . . . . . . . . . . . . . 17
+4.4 Biofeedback hand gestures of Possession . . . . . . . . . . . . . . . . . . . . . . 18
+4.5 Example of a Fire Blow puzzle . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+4.6 Sprinting view and post-processing effects . . . . . . . . . . . . . . . . . . . . . 19
+4.7 Example of an Item Use action . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+4.8 Example of a Grab Object obstacle . . . . . . . . . . . . . . . . . . . . . . . . . 21
+4.9 System architecture for the biofeedback versions . . . . . . . . . . . . . . . . . 22
+4.10 CalibrationApp tool snapshot . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+4.11 Beta-tester playing our game with physiological devices . . . . . . . . . . . . . 23
+4.12 Hint message example from the game “Antichamber” . . . . . . . . . . . . . . . 24
+4.13 Hint box examples in our Tutorial level . . . . . . . . . . . . . . . . . . . . . . 24
+5.1 Participants’ average time spent playing videogames . . . . . . . . . . . . . . . 30
+5.2 Game genres usually played by our participants . . . . . . . . . . . . . . . . . . 30
+6.1 Q1 Biofeedback Mechanics - Mean Fun with Standard Error . . . . . . . . . . . 32
+6.2 Q1 Biofeedback Mechanics - Mean Ease of Use between conditions with Standard
+Error . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+6.3 Q1 Biofeedback Mechanics - Mean Originality between conditions with Standard
+Error . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+6.4 Q2 Game Conditions - Mean Originality, Preference and Playability . . . . . . . 38
+6.5 Q2 Game Conditions - Mean IMI parameters with Standard Error . . . . . . . . 43
+A.1 Card Sorting Chart - Useless in-game vs. Core in-game . . . . . . . . . . . . . . 64
+A.2 Card Sorting Chart - Incomplete vs. Complete . . . . . . . . . . . . . . . . . . . 65
+A.3 Card Sorting Chart - Imaginary vs. Realistic . . . . . . . . . . . . . . . . . . . . 66
+A.4 Card Sorting Chart - Relaxed vs. Exhausting . . . . . . . . . . . . . . . . . . . . 67
+A.5 Card Sorting Chart - Simple vs. Complex . . . . . . . . . . . . . . . . . . . . . 68
+A.6 Card Sorting Chart - Confusing vs. Intuitive . . . . . . . . . . . . . . . . . . . . 69
+xi
+
+
+--- page 16 ---
+LIST OF FIGURES
+xii
+
+
+--- page 17 ---
+List of Tables
+5.1 Mapping of Sensors to Game Mechanics . . . . . . . . . . . . . . . . . . . . . . 28
+5.2 Card Sorting - Describing Game Mechanics in Words . . . . . . . . . . . . . . . 29
+6.1 Q1 Fun - Statistical Analysis . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+6.2 Q1 Ease of Use - Statistical Analysis . . . . . . . . . . . . . . . . . . . . . . . . 35
+6.3 Q1 Originality - Statistical Analysis . . . . . . . . . . . . . . . . . . . . . . . . 37
+6.4 Card Sorting Results - Describing Game Mechanics in Words (1) . . . . . . . . . 40
+6.5 Card Sorting Results - Describing Game Mechanics in Words (2) . . . . . . . . . 41
+6.6 Q2 Originality, Preference and Playability between Conditions - Statistical Analysis 42
+6.7 Q2 IMI Post Experience - Statistical Analysis . . . . . . . . . . . . . . . . . . . 42
+xiii
+
+
+--- page 18 ---
+LIST OF TABLES
+xiv
+
+
+--- page 19 ---
+Abbreviations
+AI Artiﬁcial Intelligence
+DLL Dynamic Link Library
+EDA Electrodermal Activity
+ECG Electrocardiography
+EEG Electroencelography
+EMG Electromyography
+FPS First-Person Shooter
+GAZE Eye Gaze Tracking Sensor
+GLOVE Hand Tracking Glove Sensor
+GSR Galvanic Skin Resistance
+HCI Human Computer Interaction
+HR Heart Rate Sensor
+NUI Natural User Interface
+RESP Respiration Sensor
+SCL Skin Conductance Level
+UDK Unreal Development Kit
+xv
+
+
+--- page 20 ---
+
+
+
+--- page 21 ---
+Chapter 1
+Introduction
+1.1 Context: Evolution of Videogames and Biofeedback
+Modern videogames have drastically evolved in the past two decades from simple text-based and
+pixelated graphics to near-photorealistic worlds featuring massive amounts of available content
+to explore and interact with. With the introduction of these massive worlds, videogames have
+evolved into complex experiences riddled with interactive and engaging narratives, realistic game-
+play mechanics and intricately designed artiﬁcial intelligence (AI) systems, all of which aim to
+close the gap with real life as much as possible. Ultimately, videogames are played for the exclu-
+sive, highly emotional and rewarding experience that they deliver to players [EM07]. At the end
+of 2013 we entered the eighth generation of videogame platforms with new input devices, but this
+new generation still adheres primarily to the gamepad-type convention. Computer platforms still
+adhere to the keyboard/mouse convention, as well.
+The keyboard/mouse and gamepad control schemes have been the most popular conventions
+for videogames and over time these devices have evolved along with the gaming platforms. While
+the game platforms themselves have evolved in terms of computational and rendering power, the
+interaction devices have evolved mostly in the direction of usability – either to accommodate dif-
+ferent play styles or to become more ergonomic. Heavily marketed towards hard-core gamers,
+the industry produced keyboards and mice with ergonomic layouts, customizable weight, pro-
+grammable keys or gamepads in many different shapes and sizes – mostly based on the premise
+that familiarity with a certain controller guarantees a good performance in the game [Bro07,
+KT02].
+Throughout the years game companies have tried to create new technologies to step away
+from the traditional devices, with the most recent attempts focusing on natural user interaction
+(NUI) devices: the Nintendo Wiimote, the Microsoft Kinect and the PlayStation Move. With
+these new natural interaction devices, players can now hold a hero’s sword in an adventure game
+(“The Legend of Zelda: Skyward Sword” , 2011), ride an inﬂatable boat through a river ( “Kinect
+Adventures” , 2010) or move a wizard’s wand to cast spells (“Wonderbook: Book of Spells” , 2012).
+1
+
+
+--- page 22 ---
+Introduction
+Figure 1.1: Diagram depicting the ﬂow of raw and processed (audiovisual) physiological data
+between the player and the game.
+Recent research in the Human-Computer Interaction (HCI) ﬁeld has worked on reintroduc-
+ing the concept of including real-time physiological data from players in real-time applications
+through the use of Biofeedback devices. Biofeedback was created originally in the ﬁeld of
+medicine in the 1980s as a training procedure to overcome medical conditions but in the last
+decade has found its way to two main applications in game HCI research (Figure 1.1). These are
+Direct and Indirect Biofeedback:
+• The player intentionally manipulates physiological data (i.e. their body), which is read by
+the system in order to perform actions. The player is an active agent in the transfer of
+physiological data.
+• The system reads the player’s physiological data and uses it to modify internal aspects or its
+behaviour, but without him/her being aware of how is physiological data affected the game.
+The player is a passive agent in the biofeedback process.
+The second type is more commonly connected with Affective Gaming [GDA05], where the
+player’s emotional state is estimated from the collected physiological data and game parameters
+are modiﬁed in a meaningful way [BBM+07, CPC+09, HB00, MA07, Nog13, NTR13, NRON13a,
+RSL05, Tor13, YMJ10]. It can still be considered a biofeedback system as it uses Biofeedback
+instrumentation to read physiological data and present it back to the player, hence closing an inter-
+action loop. This type of biofeedback system is commonly referred to as Affective Biofeedback
+2
+
+
+--- page 23 ---
+Introduction
+and is a very promising area of Affective Computing. In this dissertation, however, we will be
+focusing only on direct biofeedback.
+Adapting traditional videogames to make use of direct biofeedback has been tested in the past
+with promising results. However, these game adaptations have focused mostly on indirect and
+simple game mechanics [NKLM11, DC07, KLT+10]. Additionally, we believe that until now no
+biofeedback games have managed to take full advantage of the physiological devices’ potential.
+Regarding the game design aspects, physiological sensors in these games are integrated in a very
+shallow way and their contribution to gameplay – without accounting for the different sensation
+of activating an action in-game using our own body – seems uncertain when compared to pressing
+a button in modern games. In [Amb11], SCL is used in “Alien Swarm” simply to deﬁne how
+fast the game timer counts down to zero. In [DC07] and [KLT +10], only indirect biofeedback is
+explored heavily, with the player “forfeiting game control” (i.e. gameplay freedom) in order to
+access to abilities such as invisibility, x-ray vision or faster ﬁring rate. Because these mechanics
+are activated using indirect biofeedback, players do not know when they are going to activate those
+abilities and thus fail to fully beneﬁt from them. We consider that biofeedback-powered abilities
+designed in this manner are oversimpliﬁed and end up unbalancing the game (i.e. making it too
+easy), which after a while will result in boredom due to the lack of an appropriate challenge.
+Ermi and Mäyra afﬁrm that“the essence of a game is rooted in their interactive nature”[EM07].
+Since physiological data contains literal information on how we are controlling our own body, we
+feel there is a great untapped potential in direct biofeedback games. Given this premise, our ques-
+tion is whether introducing more aspects of our physiological behaviour into the game, we can
+increase this “essence of interactivity” expressed by Ermi and Mäyra. In our opinion, by increas-
+ing the biofeedback mechanics’ complexity we can leverage that potential to create games with
+far more depth and improved game design.
+1.2 Document Structure
+Before elaborating further on how we tried to increase this essence of interactivity , we take
+a glimpse at the current state of the art of biofeedback research in two areas: Medicine and
+Games/Entertainment (Chapter 2). Additionally, we provide a dedicated sub-section to introduce
+the physiological sensors used in this dissertation with examples of their previous use in research.
+In Chapter 3 we approach the requirements for our game and the criteria followed in the cre-
+ation of the biofeedback game mechanics, before implementing the actual game. In Chapter 4 we
+present the ﬁnal game and its biofeedback game mechanics, along with the system’s architecture
+and additional efforts done to reﬁne the quality of our work. In Chapters 5 and 6, we present
+our empirical study with 32 regular players testing our biofeedback game in three interaction ver-
+sions (one of them with standard keyboard/mouse interaction, and the other two augmented with
+biofeedback) and present their analysis of the game according to objective criteria (e.g. rating
+3
+
+
+--- page 24 ---
+Introduction
+parameters of Fun on a scale of 0 to 5) and subjective criteria (associating a list of keywords to
+each game version and open-ended post-game commentaries).
+Finally, we reﬂect on our work by analysing the collected data and the limitations of this study
+(Chapter 7), presenting future avenues of research in biofeedback (Chapter 8) and the conclusions
+of this dissertation (Chapter 9).
+4
+
+
+--- page 25 ---
+Chapter 2
+Related Work
+A review of the current state of the art on biofeedback and its closest related ﬁelds is provided in
+the following sections. Most of the previous work done on physiological interaction has focused
+on testing how well it applies to medical therapy and in establishing guidelines of use for new ﬁelds
+such as emotional recognition [MA07, LCCS07, HGSW04, NRON13b, NRON13c] and affective
+digital games [GDA05, YMJ10, KBW A04].
+2.1 Field of Medicine
+Biofeedback was ﬁrst commonly used in medical therapy as a training treatment to overcome
+medical conditions or patient monitoring [MB +91, BEV+96]. In [DLH +10], a mobile platform
+for music therapy was presented, where users’ negative emotional states were counterbalanced
+through music. In a similar approach, [RBF +08] presented a system for body balance rehabilita-
+tion by using simple audio frequencies to indicate correct posture.
+Also in the ﬁeld of rehabilitation treatments, Huang developed an interactive biofeedback
+system for motor rehabilitation inside a 3D virtual world where patients try to complete tasks while
+receiving musical and visual feedback in real-time [HIO +05]. Cho, Wang and Mingyu developed
+EEG-based systems that have the potential to treat medical conditions such as the Attention Deﬁcit
+Hyperactive Disorder (ADHD) [WSN10, MJNQ06, CLK +02].
+Given biofeedback’s seemingly easy integration with videogames and high potential in med-
+ical treatments, various serious games have been designed for aiding in the treatment of medical
+conditions, such as: treatment of swallowing dysfunctions using EMG signals, where a patient is
+a ﬁsh trying to swallow smaller ﬁsh [SBC+11]; treatment of stuttering or similar speech disorders
+by reading aloud pieces of text while monitoring the patient’s GSR level [LG12]; and General
+Anxiety Disorder treatment by combining biofeedback with virtual reality systems where certain
+objects inside the virtual world were modiﬁed based on the patient’s heart rate signal [RGP+10].
+5
+
+
+--- page 26 ---
+Related Work
+There are also other serious games with a more ludic approach. For example, “Brainball”
+and a relax-to-win racing game introduce a competitive player-versus-player environment where
+the most relaxed player wins the game [HB00, BMA +01]. While fun and well accomplished,
+they represent a paradox in games as in a competitive environment players feel more pressured to
+win and thus need to ﬁght against their natural instinct – they have to relax in order to gain the
+advantage, which in turn generates more pressure in itself.
+2.2 Games and Entertainment
+Dekker and Champion modiﬁed a level in the “Half-Life 2” game where the Heart Rate and the
+Skin Conductance Level manipulated: the avatar’s movement speed and hearing ability; bullet
+time mechanics; post-processing effects; dynamic weapon damage based on the sensors’ levels;
+invisibility and the ability to look through walls and buildings [DC07]. While we are not sure
+if the game mechanics were well balanced as a whole and avoided making the game too easy on
+the players, it also featured examples of good sensor integration such as dynamic sound effects,
+reactive enemy spawner AI and the echoing of the player’s heartbeat in the game – making the
+game experience highly tailored and personal for each player.
+Kuikkaniemi on the other hand tried to create a more balanced Shooter game in order to study
+differences between Implicit and Explicit Biofeedback. In-game actions like walking, turning,
+aiming, gun recoil intensity and ﬁring rate were based on the player’s SCL and a RESP sensor
+[KLT+10].
+Rani modiﬁed dynamically the difﬁculty level of a Pong game based on the user’s anxiety
+state, which was estimated by real-time analysis of the captured physiological data [RSL05].
+Parnandi developed a car-racing game where factors that inﬂuenced the game difﬁculty such as
+car speed, road visibility due to fog and steering jitter were modiﬁed based on the arousal levels
+of the player (determined by an EDA sensor) [PSGO13].
+Ambinder and Valve have also made some experiments with biofeedback on some of their
+games [Amb11]. The ﬁrst one used the player’s arousal state via a SCL sensor to modify the AI
+director of the game “Left 4 Dead” , which modiﬁed in-game events such as enemy spawns, health
+and weapon placement, boss appearances, etc. The second experiment was performed on “Alien
+Swarm” and connected the player’s arousal state to an in-game timer, where higher arousal levels
+made the timer tick faster. The last experiment used eye-gaze in the game “Portal” by using the
+mouse to control the player’s camera and the eye-tracking for aiming tasks.
+Nacke worked on the concept of Direct and Indirect Biofeedback to augment interaction with
+a game [NKLM11]. The developed prototype was a 2D side-scrolling shooter which used physio-
+logical sensors to control the avatar’s speed and jump power, the enemies’ size, the ﬂamethrower’s
+ﬂame length and the weather conditions which affected the boss of the game. Additionally, the
+player’s GAZE was used to paralyze enemies for a limited amount of time. Torres created a pro-
+cedurally generated horror game — “VANISH” —, which uses indirect biofeedback to inﬂuence
+the game’s level layout, item and enemy spawns, enemy AI and player character abilities [Tor13].
+6
+
+
+--- page 27 ---
+Related Work
+The use of GAZE in video games has been previously explored, although not exactly in the
+scope of biofeedback research as Nacke and Ambinder did. Isokoski and Martin presented a pre-
+liminary study with a small prototype to compare the efﬁciency of eye-trackers versus traditional
+game controllers – it used two types of aiming simultaneously, one being the typical crosshair
+controlled by the mouse and the other moved by the eye-gaze of the player [IM06]. Smith and
+Graham [SG06] tested GAZE in three different game genres:
+1. Controlling view orientation in a “Quake 2” clone, where looking at an object that was not
+in the center of the screen would automatically rotate the camera to it.
+2. Issuing commands to a virtual avatar in the game “Neverwinter Nights” by ﬁrst looking at
+the target (a point in space or a treasure chest) and then using the left mouse button.
+3. A modiﬁed version of the arcade game “Missile Command” where the eyes were used to
+aim towards missiles before pressing the ﬁre button.
+Istance tested a modiﬁed version of the online multiplayer game “World of Warcraft” where
+all interaction with the game was done only using GAZE dwelling [IHVC09].
+Using speech recognition and analysing facial features can be considered a form of Biofeed-
+back – we are still discussing physiological features unique to people, and the player can use that
+kind of information to consciously manipulate voice and facial expressions. In Emotional Flow-
+ers, the user’s facial expressions are used to inﬂuence the growth of a virtual ﬂower at several
+times during the day [BBM +07]. Cavazza created an interactive storytelling system to speak with
+virtual characters using emotional speech recognition capabilities: that is, the user’s affect was
+conveyed by his/her voice and the virtual characters would react differently based on the user’s
+answers [CPC +09]. Depending on the different responses given by the user, the narrative of the
+story would be directed towards different endings. Kim created a virtual snail that reacts dynam-
+ically to the user’s emotional state, captured by the user’s voice, ECG, SCL, RESP and EMG
+sensors [KBW A04].
+Biofeedback has also been used to modify the behaviour of amusement rides: Marshall built
+a bucking bronco system where the user’s breathing can manipulate directly the movements of
+the bronco – in a similar way to direct biofeedback; or where the system monitored the breathing
+information and changed strategies mimicking the behaviour of a human operator – closely related
+to the indirect biofeedback ﬂavour [MRRE +11]. Breath control provided an interesting balance
+in terms of semi-voluntary control and game design itself – as in one of the conditions the winning
+strategy of holding breath had the perk of a bronco with reduced movement, the average person
+eventually has to resume breathing – thus receiving the penalty of harder bronco movements.
+Biofeedback has also been used in an automatic bookmarking system suitable for audio books,
+which was able to detect when users were interrupted by people or any real world events [PCH+11].
+In the context of videogames, this could be used to automatically pause the game when the player
+7
+
+
+--- page 28 ---
+Related Work
+is distracted or forced to look away from the screen. Unexpected interruptions sometimes provoke
+frustration on players.
+2.3 Primer of Used Physiological Measures
+For a quick synopsis of physiological measures in games, see [Amb11] or [KEC +10].
+Electromyography (EMG) measures the electrical activity of muscle tissue. There are records
+of EMG being used for emotion detection [NPI05] and game proﬁling [NL08], but recent works
+have used it as a direct form of input for games [NKLM11]. In our study, we use it on an
+individual’s arms and legs for direct input into the game.
+A Torsion Glove (GLOVE) is a tracker glove with embedded sensors which can detect the
+degree to which each of the wearer’s ﬁngers are individually bent or straightened, and thus falls
+under the category of direct input1. In our study, we use it as a tool to detect different hand poses.
+We did not ﬁnd previous works using a physical glove to track gestures. A similar alternative is to
+use computer vision techniques to indirectly infer hand gestures [BLL02, CGP07], although they
+are at a disadvantage as the glove devices can track precise data of the wearer’s ﬁngers.
+A Respiration sensor (RESP) is stretched across an individual’s chest and can be used to infer
+the wearer’s chest volume or breathing rate [KLT +10]. Some possible game mechanics that can
+be derived from this information are modulating a character’s stamina exhaustion based on the
+breathing rate, or using the ﬁrst derivative to detect “silent breathing” periods in a stealth game to
+avoid being detected by the enemy. In our study, we use it to infer an individual’s chest volume.
+A Temperature sensor (TEMP) is traditionally used to measure body temperature, but in our
+study we use it by blowing hot air on it [NKLM11].
+1While this is not traditionally used in Biofeedback research and is more resembling of Performance Capture Ani-
+mation techniques, participants in our study seem to have considered it as an attractive device and could be used more
+often in research.
+8
+
+
+--- page 29 ---
+Chapter 3
+Prelude: Requirements and Design
+Choices
+3.1 State of the Art Reﬂection
+Our analysis of the current state of the art on biofeedback games brought us to realise that, on most
+occasions, a game mechanic was matched to a single physiological sensor. In direct biofeedback
+mechanics speciﬁcally, there were no previous studies examining the combination of two or more
+sensors to produce a fun game mechanic [NKLM11]. This observation provided a simple but criti-
+cal aspect where we could contribute to biofeedback research in videogames. To this combination
+of two or more direct physiological sensors we call Multimodal Direct Biofeedback, and Uni-
+modal Direct Biofeedback on the case where a single sensor is used. Considering this new type
+of biofeedback which provided a fresh perspective for game design, and the direct physiological
+sensors available for use, we strived to design a game focused on a meaningful use of the sensors
+in the game.
+3.2 Designing for Biofeedback Interaction
+According to Brown [BC04] and Ermi [EM07], two of the aspects that deﬁne the player’s Immer-
+sion in a videogame are game controls and the cognitive and physical (e.g. hand-eye coordination)
+challenges that derive from gameplay – in our case, the mastery of the biofeedback controls. Par-
+ticularly, Brown and Cairns [BC04] state that game controls are one of the ﬁrst barriers of the
+“Engagement” stage in Immersion. Thus, we can safely assume that if the controls lack in quality,
+players will most likely reject them. This was an aspect that we wanted to avoid in the biofeedback
+variants of our game.
+To this end, the results collected by Nacke in his biofeedback 2D platformer provided a good
+starting point in the design of our prototype:
+“Participants preferred physiological sensors that were directly controlled because
+of the visible responsiveness. (...) Physiological controls worked most effectively
+9
+
+
+--- page 30 ---
+Prelude: Requirements and Design Choices
+and were most enjoyable when they were appropriately mapped to game mechanics.
+(...) For example, when breathing out triggered a longer ﬂame of the ﬂamethrower,
+blowing hot air on the temperature sensor decreased the amount of snow, or ﬂexing
+the leg muscle increased speed and jump height. ”[NKLM11]
+However, he also mentions the added tension of realistic or natural mappings versus the highly
+imaginative possible scenarios of videogames [NKLM11]: “Natural mappings may present more
+intuitive game interfaces, but also limit the ﬂexibility and generality of the sensors for game con-
+trol. ”
+Rather than prioritizing the game development as a standard Mouse/Keyboard game and then
+trying to retroﬁt the physiological sensors to its gameplay mechanics, we strived to design the
+game from the ground up based on the sensors. This was done to improve the overall game design
+and ultimately make the experience feel more natural – that is, to minimize players’ rejection of the
+sensors for feeling “forced” or “gimmicky”, which are recurring complaints on the more widely-
+commercialized natural user interface (NUI) systems [TNS13, SLR +11]. In compliance with the
+immersion theories presented above, it is of general consensus among the gamer community that
+if a game is unplayable due to terrible game logic or bad controls it won’t be played – this was an
+aspect of considerable importance to us.
+Based on these results, we opted to use multimodal biofeedback to simulate interaction with
+natural mappings, but also with a more physical component in the game 1. A great example of
+this is the Sprinting mechanism used in Nacke’s platformer [NKLM11], that we decided to re-use
+in our game. At the same time, we maintained the possibility of using these sensors to simulate
+supernatural actions that are typical in videogames or ﬁction works in movies and books, while
+keeping them based on physical actions. These, along with Nacke’s ﬁndings presented above and
+our intention to make the physiological sensors the “protagonists of the game” (i.e. a central core
+to gameplay), were the selected design guidelines that went into the creation of the prototype.
+This initial analysis led to the planning of an initial set of game mechanics to be developed
+using multimodal biofeedback. For example, the following mechanisms were on the initial list:
+attenuating the recoil of a gun through the combined use of arm action and increased chest volume,
+telekinesis using the GLOVE device and EMG sensors, a stealth mode combining EMG cables on
+the legs and breathing data, or the power to confuse enemies (this one being a special power).
+Some of these ideas did not survive the design and implementation phases, as they were hard
+to implement due to time constraints or depended directly on our choice of game engine. Other
+concepts, such as the stealth mode or the telekinesis, were adapted into different game mechanics
+that could be incorporated in the game without spending additional resources. While the evolution
+of the original game design over time is perfectly common in the development of consumer-level
+1This is not meant in the way of ﬁtness games that have been popularized by the Wii, for example. By physical
+component, we mean to literally describe a realistic interaction with the game.
+10
+
+
+--- page 31 ---
+Prelude: Requirements and Design Choices
+videogames, we will not discuss this process in detail as it is not in the scope of this dissertation.
+The ﬁnal design of the game (including the biofeedback mechanisms) is presented in Chapter 4.
+3.3 Choosing a Game Engine: Time and Resources
+Creating a game from scratch is a task that can range from mere months to years of development.
+Although the biofeedback interaction mechanisms were meant to be created from scratch, creating
+other assets relevant to the game (e.g. 3D models, audio, level design, etc.) would not be possible
+as it would require more time and resources that were not in our reach. However, it was still
+important to provide a game experience similar to the one present in existing consumer-level
+games.
+Choosing the correct engine proved to be a critical aspect to tackle both issues. To cut down
+the development time, we ﬁrst narrowed our choices of game engines to the CryEngine SDK,
+Source SDK and the Unreal Development Kit (UDK). Besides the fact that they are free for non-
+commercial uses and are popular choices in the game industry, they ship with a small amount of
+assets with good quality, ready for use - which provided us the chance to design our own custom
+level, if necessary. A more thorough investigation of these alternatives led us to choose UDK, due
+to the following factors:
+• The global architecture of the engine and the set of game classes built on top of their script-
+ing system, UnrealScript, was easy to understand on a ﬁrst sight. Most game objects in the
+engine can be extended through inheritance (like in ordinary object-oriented languages), and
+new game features can be inserted without breaking the functionality of existing classes.
+• It provided ways to establish communication with the physiological devices (which are lo-
+cated outside the game engine) in an almost trivial manner, using a UDK feature calledDLL-
+Bind. As stated in the engine’s documentation 2, developers can create a custom dynamic-
+link library (DLL) written in C++ with exported functions that can be called inUnrealScript.
+This allows us to inject additional features in the game that cannot be delivered by the engine
+itself, as is the case with our physiological devices.
+This paved the way for our prototype, the “GenericShooter 3000”, which has the basic premise
+of delivering to players a First-Person Shooter (built in UDK) where they can execute real-life
+actions in the game using the complexity of multimodal biofeedback. We present in the next
+section a ﬁnal version of our prototype, along with how biofeedback interaction was integrated in
+the game.
+2UDK’s DLLBind documentation and examples - http://udn.epicgames.com/Three/DLLBind.html
+11
+
+
+--- page 32 ---
+Prelude: Requirements and Design Choices
+12
+
+
+--- page 33 ---
+Chapter 4
+Implementation: A Direct Biofeedback
+Game
+To compare how both multimodal and unimodal biofeedback-augmented videogames impact game
+design and user experience in modern First-Person Shooter videogames, we are interested in an-
+swering the following questions:
+1. What are the players’ responses to physiologically augmented gameplay mechanics in mod-
+ern First-Person Shooter games?
+2. How do Multimodal and Unimodal mechanisms compare to each other in terms of in-game
+actions, situation context and player experience?
+3. Can we enhance game realism and depth using Multimodal and Unimodal Biofeedback? If
+so, how far?
+As a means to answer the previous questions, three identical versions of the game with different
+interaction methods were developed:
+• Normal (or Vanilla) — Mouse and keyboard only.
+• Unimodal — Mouse/Keyboard plus one physiological sensor per augmented gameplay me-
+chanic.
+• Multimodal — Mouse/Keyboard plus two physiological sensors per augmented gameplay
+mechanic.
+13
+
+
+--- page 34 ---
+Implementation: A Direct Biofeedback Game
+4.1 “GenericShooter 3000” Game Description
+In our game the player has three guns at his/her disposal: a Physics Gun to interact with physics-
+enabled objects and remove obstacles out of the way when necessary; a Link Gun and a Shock
+Riﬂe from the “Unreal Tournament” games which function similarly to a machine gun and an
+ordinary riﬂe, respectively.
+Besides basic locomotion, the main character can also perform other typical actions such as:
+sprint, jump, crouch, put out torches to solve puzzles and interact with buttons/handles on walls
+and ﬂoors. Lastly, there are two special abilities:
+1. Possession — The player enters the body of an enemy and controls it in a ﬁrst-person view.
+This leaves the main character’s body immobile and vulnerable to nearby enemies for the
+duration of the possession. The player can use the possessed body to activate doors and
+switches or to ﬁght other enemies – on certain key points, this ability is the only way to
+progress in the game. The possession technique has no time limit and ends when the pos-
+sessed body dies (e.g. ﬁghts versus other enemies, drowning, suicidal), the player stops the
+ability or when the main character’s body is killed (in this case the player loses the game).
+2. Invisibility — The player becomes invisible to all enemies and may freely roam the level.
+This technique ends whenever the player interrupts it or after its power level (indicated on
+the lower left corner of the screen) ends.
+Enemies run the same AI algorithm in the entire game and have either the Link Gun or the
+Shock Riﬂe. There are no boss encounters at this current stage. For our test scenario, the game
+takes place in a ﬂooded prison where the main character is incarcerated and has to escape. To
+this end he/she must ﬁnd three keys to exit the prison, which for our test purposes is the “winning
+condition” - that is, players have to keep playing until they manage to escape the prison. The level
+is based on an existing UDK map called “Dungeon Escape” 1, which we modiﬁed as necessary to
+change the level’s interaction logic (e.g. behaviour of gates, handles, switches, spawning enemies)
+and to include an underwater section that did not exist in the original level. Enemies and obstacles
+were placed to force usage of all the main character’s abilities at some point in the level.
+4.2 Game Mechanics Subject to Biofeedback Control
+There are a total of eight game mechanisms that are activated differently depending on the game
+version being played.
+4.2.1 Gun Recoil Attenuation
+Based on popular FPS titles such as “Counter-Strike” or “Call of Duty” , the Link Gun and the
+Shock Riﬂe move the player’s view whenever a shot is ﬁred. In the vanilla version, no attenuation
+1Created by Chris Holden, who gently authorized us to use the map on our project. The original map is available at
+http://chrisholden.net/07.htm .
+14
+
+
+--- page 35 ---
+Implementation: A Direct Biofeedback Game
+Figure 4.1: Invisibility view mode with an enemy in front. Invisibility’s post-processing effects
+occlude the screen borders and change the color scheme.
+is available and the recoil values are approximated as faithfully as possible to the average recoil
+exhibited in existing FPS titles.
+The real-world logic behind this mechanism is that when someone ﬁres a gun, contracting
+the ﬁring arm and sustaining the breathing cycle will result in steadier aim and reduced weapon
+kickback effects – in reality this does not necessarily apply, but common popular wisdom dictates
+otherwise and thus makes the mechanism feel real in this way.
+In the unimodal version, players can signiﬁcantly attenuate recoil by contracting their right arm
+(EMG-Arm). In the multimodal version, players must both contract their right arm (EMG-Arm)
+and increase their chest volume (RESP) to apply the effect to the same intensity. Activating the
+mechanism only partially (by either contracting their arm or increasing their chest volume) results
+in a partial reduction effect. Both biofeedback versions have their recoil values slightly increased
+to force the usage of the physiological sensors while at the same time trying to approximate the
+behaviour of a real-life gun.
+4.2.2 Invisibility
+The time Invisibility can remain active is the same for the three versions – a duration bar is dis-
+played on the lower left corner of the screen (Figure 4.1).
+As there is no real-world analogue to becoming invisible, we leveraged a common player
+behaviour in stealth games - becoming tense and having very shallow, slow breathing (perhaps
+15
+
+
+--- page 36 ---
+Implementation: A Direct Biofeedback Game
+Figure 4.2: Underwater post-processing effects with blue tinting and distance-based blurring.
+in a subconscious attempt at not making noise in-game, although this behaviour of making too
+much noise or breathing loudly using the sensors was not implemented in the game). However, to
+balance the game’s design we decided to treat it as a special ability (based on popular ﬁction works
+such as “Dragon Ball” , “Eragon” or “Harry Potter” ) which requires a feeling of empowerment
+before activating powerful abilities.
+In the vanilla version, players press the “Q” key to become invisible. In the unimodal version,
+players are required to breathe in (RESP) to activate the power, and hold their breath in order
+to maintain invisibility active. If they breathe out, the power is deactivated. In the multimodal
+version, players must ﬁrst make a closed ﬁst pose (GLOVE) - mimicking the magic seal for a spell
+or to concentrate power - and then breathe in (RESP) to activate the power, subject to the same no
+breathing constraints as in the unimodal version.
+4.2.3 Underwater Breathing
+Similarly to what is done in other titles such as the old “Tomb Raider” games, the player has
+limited time to stay underwater and have their oxygen level displayed on the screen (Figure 4.2).
+In the vanilla version, oxygen decreases linearly over time without any intervention from the
+player.
+In both biofeedback conditions the real-world analogies are obvious: players are required to
+physically hold their breath using only the RESP sensor while they are underwater. Trying to
+breathe in while underwater results on ﬁlling the lungs with water and drown instantly as a result.
+16
+
+
+--- page 37 ---
+Implementation: A Direct Biofeedback Game
+Figure 4.3: Possession post-process effects include border overlays with red color (meaning “dan-
+ger”, to be associated with enemies). Keybinds are also communicated on the bottom of the screen
+(on the Vanilla version only!) as a good design practice followed by videogames.
+While this is not what would normally happen in real-life - that is, people would ﬁll their lungs
+with water and feel a strong need to come to the surface –, earlier playtesting showed that players
+continued diving ignoring health losses in the character. Ignoring the RESP sensor and health
+losses was a behaviour that we did not desire in the game, thus we took a more punitive approach
+to this mechanism.
+RESP levels while diving are also connected to the on-screen oxygen bar (Figure 4.2), replac-
+ing the vanilla version’s decreasing oxygen behaviour.
+4.2.4 Possession
+In the vanilla version, players take over the enemy’s body by pressing the “V” key (Figure 4.3).
+Similar to other popular titles (in this case “Dishonored” ), to return to their original body, they
+can perform a Release action using the “V” key, or a Suicide action using the “H” key.
+In the unimodal version, players Possess enemies by blowing hot air on the TEMP sensor,
+which mimics the player’s soul leaving the body as it enters the possession’s target. In the multi-
+modal version, players ﬁrst perform the hand pose displayed (Figure 4.4 on the left) and then blow
+hot air onto the TEMP sensor. To maintain consistency with the Invisibility technique, this pose
+resembles the magic seal for a magical ability.
+17
+
+
+--- page 38 ---
+Implementation: A Direct Biofeedback Game
+Figure 4.4: Possession hand gestures for both biofeedback versions: initiate and reverse (left),
+suicide (right).
+For both versions, to return to the original body they have to perform one of the hand poses
+(reverse or suicide) displayed on Figure 4.4.
+4.2.5 Fire Blow: Interaction with Fire Objects
+This action was designed to be used as a puzzle solving ability inside the game involving torches
+or other ﬁre objects. In future work we would like for it to also be a stealth mechanic, where
+blown-out torches decrease the visibility of an AI enemy - it allows for more strategic thinking
+from the player.
+In the vanilla version, players put out a torch or light up a ﬁreplace by pressing the “B” button
+(Figure 4.5). In the unimodal version, players blow on the TEMP sensor.
+In the multimodal version players must ﬁrst inhale heavily to increase their chest volume
+through the RESP sensor and ﬁnish the action by blowing on the TEMP sensor. Since the in-
+game puzzles were in the size of torches or ﬁreplaces, they required a larger breathing effort – the
+multimodal version portrays this interaction more realistically.
+4.2.6 Sprinting
+On the lower corner of the screen is a stamina bar that shows for how much longer the player
+can run before being forced to recover his strength (Figure 4.6). Stamina decrease over time and
+maximum speed are the same on the three conditions.
+In the vanilla version, Sprinting is activated by holding down the “Left Shift” key. In the
+unimodal version, players can lift the left leg’s heel or foot tip (EMG-Leg). In the multimodal
+version, players are required to use both feet (2x EMG-Leg).
+4.2.7 Item Use: Using Objects or Equipping Them
+This ability is used to pick up objects inside the game, to open locked doors or to interact with
+other “usable” game objects. In the vanilla version, players use the “E” key.
+18
+
+
+--- page 39 ---
+Implementation: A Direct Biofeedback Game
+Figure 4.5: A puzzle where the player has to light up the ﬁreplace combining a torch and “Fire
+Blow” to feed power to a non-working gate.
+Figure 4.6: The Stamina bar shows on the screen when the player presses Shift or the EMG-Leg
+sensors are used. A blur effect is applied to the screen to enhance the sensation of running – this
+is a feature that already exists in the UDK engine which we left unchanged.
+19
+
+
+--- page 40 ---
+Implementation: A Direct Biofeedback Game
+Figure 4.7: “Item Use” works on handles to open certain doors, other interactive objects or to
+equip key items like the Prison Keys (which are required to ﬁnish the level).
+In the unimodal version, players close the hand equipped with the GLOVE device (Figure 4.7).
+In the multimodal version, players are required to contract the right arm (or alternatively to move
+it in any direction) while grabbing the same object with the GLOVE.
+4.2.8 Grabbing Objects (Physics Gun)
+To use this action players have to equip the Physics Gun. In the vanilla version, this is activated
+by dragging the Left Mouse Button. In the unimodal version, players close their hand (GLOVE)
+to grab the object and open it to release the object - to move it while grabbing from one place to
+another the player can use the W ASD keys to move or use the mouse to rotate the camera.
+Unfortunately, the GLOVE device did not have an accelerometer and this was an ability that
+we wanted to perform purely on the GLOVE – players who wished to rotate the camera were
+forced to do so by moving the mouse with the tip of their closed hand. This is a usability aspect
+that we wish to improve in future work.
+In the multimodal version, players ﬁrst contract the right arm (EMG-Arm) as in the “Item
+Use” ability until the “Grab” word on the screen (Figure 4.8) is lit green, and then close their
+hand (GLOVE) to grab the object - at this stage the arm can be relaxed as the object is being held
+successfully.
+20
+
+
+--- page 41 ---
+Implementation: A Direct Biofeedback Game
+Figure 4.8: A physics-enabled object is covering a hole where the player has to pass through by
+clearing the way with the Physics Gun.
+4.3 System Architecture
+To create additional functionality, UDK has the ability to integrate custom developed Windows
+Dynamic-link Libraries (DLLs) with functions that can be called from inside the UDK’s scripting
+language (UnrealScript). We wrote a custom DLL in C++ which is responsible for retrieving
+physiological data from outside UDK, resulting in the overall system architecture depicted on
+Figure 4.9.
+The NeXus-10 device is responsible for capturing physiological data for the EMG, RESP and
+TEMP signals. Signal processing here is handled by the Biotrace+ software suit, which also
+performs the signal acquisition from the NeXus-10 device via Bluetooth. The GLOVE’s data
+stream is accessed by a C++ library provided by the glove’s manufacturer.
+The BiofeedbackDLL provides normalized data into the the game after it is processed by the
+Biotrace+ Software suite, as we describe now in more detail.
+4.4 Calibration of Physiological Devices
+Towards the end of development we quickly felt the need to normalize the physiological devices’
+data feed to the game – this provided an easy abstraction to work over as we were not working on
+each person’s unique physiological values any more, but rather on the expected behaviour of each
+of the physiological devices across a general population. For this purpose, we created a very simple
+21
+
+
+--- page 42 ---
+Implementation: A Direct Biofeedback Game
+Figure 4.9: System architecture in the biofeedback versions of the game. Players see the result of
+their actions in the UDK engine.
+calibration application in WinForms in which we established the maximum and minimum values
+for each physiological sensor (Figure 4.10). With the exception of the TEMP sensor, all sensors
+were calibrated for each person before a playtesting session. EMG-Legs, EMG-Arm and RESP
+were normalized to the [0.0, 1.0] range. The TEMP signal passed to the game only has two states:
+on and off, represented by a byte of value 0 or 255, respectively. Unlike the other sensors, this one
+is dynamically post-processed inside the BiofeedbackDLL to achieve the toggle-like behaviour.
+The raw TEMP data indicates the actual temperature of whatever object the sensor is touching:
+since in our interaction model it is attached to a headset (in the place of a microphone), the sensor
+registers room temperature values. To detect when the player is blowing hot air on the sensor (i.e.
+a temperature difference), we compute an approximation of the TEMP’s ﬁrst derivative by using
+the current and previous readings of the raw TEMP sensor, divided by the time difference between
+different game frames (“delta time” in the game). When this instant derivative crosses certain
+threshold values, determined by trial-and-error, we change the button state of the TEMP sensor.
+For the GLOVE device we used automatic calibration and gesture detection capabilities ex-
+isting in the manufacturer’s library – a total of 15 hand poses can be detected by the device.
+Figure 4.10: Snapshot of the application for calibration of physiological data that we developed. It
+was also used as a monitoring application to ensure that physiological data was being transmitted
+correctly to the game.
+22
+
+
+--- page 43 ---
+Implementation: A Direct Biofeedback Game
+Figure 4.11: Example of a beta-tester of “GenericShooter 3000” with the physiological devices
+equipped. In this image the following sensors are visible: EMG-Arm, 2x EMG-Leg (top-left
+corner), RESP and GLOVE. The TEMP sensor was attached to the tip of a headset equipped by
+the players.
+Figure 4.11 shows how the equipment was connected to players.
+4.5 Iterative Playtesting and Game Tutorial
+To assure the game was played as our game designer intended and had the intended quality
+in gameplay comparison with existing FPS titles, 8 voluntaries were called for individual pilot
+playtesting sessions over the course of development as suggested in [Ful08]. This was useful to
+eliminate small bugs, but also to ﬁne-tune gameplay details and level design issues in all three
+versions of the game.
+Early testing also showed that despite FPS games being a popular genre, some of our game
+testers always died at the beginning of the prison level. To eliminate this issue – partly inspired
+by the strong tutorial present in the game “Age of Empires 2: Age of Kings” and a testimony
+from a researcher working in that same game [Ful08, chap. 9, p. 267] – we created a 5-minute
+playable tutorial level for the three versions where players could fully understand the game and
+what their character is able to do. Hint boxes inspired by the game “Antichamber” (Figure 4.12)
+were placed in key points of the tutorial level 2 (Figure 4.13) to help the players to activate all
+mechanisms on their own. From their improved results (none struggled further with the game
+mechanics) this proved to be a very effective way to introduce both the game on its entirety and
+how the biofeedback sensors worked as well.
+After our “GenericShooter 3000” game was ﬁnished and was sufﬁciently reﬁned, we pro-
+ceeded to conduct our empirical study. To recall our research questions, we are interested in
+accessing:
+2Floor and mosaic wall textures created by Hugues Muller - available at http://nobiax.deviantart.com/gallery/#Packs.
+23
+
+
+--- page 44 ---
+Implementation: A Direct Biofeedback Game
+Figure 4.12: Example of a hint message from the game “Antichamber” . The message reads “If
+you aren’t paying attention, you will miss everything around you. ” , which alerts the player to be
+on the lookout for hidden rooms or secret passages nearby.
+Figure 4.13: Examples of hint boxes in the Tutorial level. Vanilla versions (bottom), Multimodal
+Possess (top-left) and Biofeedback Underwater Breathing (top-right).
+24
+
+
+--- page 45 ---
+Implementation: A Direct Biofeedback Game
+1. The players’ reactions to physiologically augmented gameplay mechanisms in modern FPS
+shooters;
+2. A comparison between multimodal and unimodal mechanisms in terms of in-game action
+performance, situation context and player experience;
+3. Whether we can enhance game realism and depth using multimodal and unimodal biofeed-
+back.
+25
+
+
+--- page 46 ---
+Implementation: A Direct Biofeedback Game
+26
+
+
+--- page 47 ---
+Chapter 5
+An Empirical Study with Players
+5.1 Game Conditions
+The study was comprised of three conditions ( Vanilla, Unimodal and Multimodal) represented
+by the three game versions described in the previous section. Only the latter two used physiological
+input. Table 5.1 synthesizes the mapping of sensors for each of the eight biofeedback-augmented
+gameplay mechanics.
+5.2 Experimental Protocol
+For the study, a three-condition repeated-measures within-subjects design was used. To mitigate
+order bias effects, each participant played the three conditions on a random order. Test sessions
+were split in two consecutive parts: Tutorial and Prison Level. Upon arrival, participants were
+acknowledged for their time and asked to sign a consent form. Afterwards, they were equipped
+with the physiological devices with a simultaneous brieﬁng on what each sensor was meant to
+do. The physiological devices were calibrated once before the Tutorial section and recalibrated if
+necessary at the start of the Prison Level section.
+In the ﬁrst test round, participants played the Tutorial level three times (one for each test
+condition). By doing so they were able to become accustomed to the game and also to experiment
+with the different mechanisms from Table 5.1 as they saw ﬁt. At the end of the third Tutorial,
+players ﬁlled a questionnaire where they were asked to compare all mechanisms between the three
+conditions according to ratings of Fun, Ease of Use and Originality. This allowed us to get valuable
+insights on which mechanisms had a higher potential to add depth to the game experience (Fun),
+which were causing issues or improving gameplay (Ease of Use) and which had a highest impact
+in the overall gameplay. It also became an important step in evaluating our game design choices
+in the mechanisms themselves.
+In a similar way to the word list prompt presented in [GCC +10], we also asked players to
+compare each mechanism between the three conditions using the list of keywords displayed on
+Table 5.2. However, we designed ours with a moderate number of keywords to broadly and swiftly
+27
+
+
+--- page 48 ---
+An Empirical Study with Players
+Table 5.1: Mapping of Sensors to Game Mechanics
+Mechanism Unimodal Multimodal
+Gun Recoil EMG-Arm EMG-Arm + RESP
+Invisibility RESP GLOVE + RESP
+Underwater — RESP - same in both versions —
+Possession TEMP GLOVE + TEMP
+Fire Blow TEMP RESP + TEMP
+Sprinting EMG-Leg 2x EMG-Leg
+Item Use GLOVE EMG-Arm + GLOVE
+Grab Object GLOVE EMG-Arm + GLOVE
+capture differences in positive and negative aspects of gameplay – allowing us to gain a signiﬁcant
+insight on their game experience with and without the physiological devices.
+In the second test round, participants played the Prison Level three times for each condition
+until they managed to escape the prison (approximately 15-20 minutes in the initial playthroughs
+and 5-15 minutes on subsequent runs). At the end of the third Prison Level, players compared
+each version of the game (Vanilla vs Unimodal vs Multimodal) according to ratings of Originality,
+Preference and Playability. Playability was inspired in Brown’s immersion theory where game
+controls were an element of the ﬁrst barrier to immersion, “Accessibility” [BC04]. Being a rather
+ambiguous term, in the context of our study we presented it to our participants as “the degree
+to which they felt the game controls were an obstacle in each condition” (in simpler terms, the
+quality of game controls). They were also required to comment their rating choices to justify their
+opinion and avoid randomly-ﬁlled questions.
+Lastly, they ﬁlled an Intrinsic Motivation Inventory (IMI) Post Experience Questionnaire with
+each question repeated three times to compare the game versions. Players were ultimately ac-
+knowledged again for their participation and received a chocolate bar as a reward.
+5.3 Testing Apparatus
+The game was played on a 64-bit desktop computer at a 1680x1050 resolution, running Windows
+7 Enterprise SP 1 with the following hardware speciﬁcations:
+• Intel R⃝ CoreTM2 Quad Q9550 @ 2.83 GHz
+• 4 GB RAM
+• NVIDIA R⃝ GeForce R⃝ 9800 GTX
+• Monitor ASUS VW222S with a size of 22 inches
+• 2 desktop speakers of small size
+Physiological data was captured using the NeXus-10 device and the 5DT Glove, and integrated
+in the game using our custom DLL as described in the previous section. The machine’s frame
+28
+
+
+--- page 49 ---
+An Empirical Study with Players
+Table 5.2: Card Sorting - Describing Game Mechanics in Words
+Useless
+in-game Simple Realistic Exhausting
+Complete
+(“don’t mess
+with it”)
+Imaginary Core in-game Complex
+Confusing Relaxing Intuitive
+Incomplete
+(“something’s
+missing”)
+rates were logged for all three conditions to monitor performance issues that might detract player
+experience. Luckily, no signiﬁcant (>5 frames per second) frame rate differences were observed.
+5.4 Participants’ Demographic Data
+Thirty-two participants (29 male, 3 female) aged from 18 to 27 (M=21.28, SD=2.56) participated
+in the study – before participating in the study sessions they were required to ﬁll a demographics
+questionnaire. Figure 5.1 depicts the average number of hours per week our participants spent
+playing videogames.
+Players have also reported which game genres they usually play (Figure 5.2) - FPS, Adventure
+and Action genres were consistently mentioned among players, so we can assume our players to
+be fairly familiar (even if no proﬁcient) with the genre.
+29
+
+
+--- page 50 ---
+An Empirical Study with Players
+Figure 5.1: The participants’ average time spent playing videogames.
+Figure 5.2: Game genres usually played by our participants.
+30
+
+
+--- page 51 ---
+Chapter 6
+Empiric Study Results
+This section is divided in two main sub-sections. The ﬁrst of these analyses how participants rated
+each of the individual gameplay mechanics and how they differed between their variants. Ratings
+regarding the Fun, Ease of Use and Originality aspects were processed using One-way Analysis
+of Variance (ANOV A) tests with the Vanilla, Unimodal and Multimodal versions of the game as
+the within-subjects factor. Post-hoc Tukey tests were performed when statistical signiﬁcance was
+met.
+For the list of evaluation keywords describing the gameplay mechanics, we present a compar-
+ison of the most frequent keywords between the different mechanisms. This is meant as a more
+subjective and preliminary insight on our participants’ game experience.
+In sub-section 6.3 we focus our analysis on how participants perceived the overall gameplay
+experience to be affected across the three gameplay conditions in respect to the components of
+Originality, Preference and Playability. Finally, for a more objective analysis of player experience
+provided by each of the game conditions, we resorted to the Intrinsic Motivation Inventory (IMI)
+questionnaire. Here, the measured components were: Interest/Enjoyment, Perceived Competence,
+Effort/Importance, Pressure/Tension, Perceived Choice, Value/Usefulness and Relatedness.
+6.1 Questionnaire 1: Individual Mechanics
+6.1.1 Fun Ratings
+In the ﬁrst questionnaire we asked players to rate the Fun of each mechanism (Figure 6.1) on a
+scale of 0 (Not fun) to 5(Very fun). For the mechanisms Gun Recoil ( χ2(2) = 0.856, p > 0.01);
+Invisibility (χ2(2) = 0.805, p > 0.01); Underwater (it only has two versions, by deﬁnition it does
+not violate the sphericity assumption); Fire Blow ( χ2(2) = 0.950, p > 0.01); Item Use ( χ2(2) =
+0.996, p > 0.01) and Grab (χ2(2) = 0.756, p > 0.01), Mauchly’s sphericity assumption had been
+met. For Possess (χ2(2) = 0.883, p < 0.01) and Sprint (χ2(2) = 0.644, p < 0.01) it was violated.
+31
+
+
+--- page 52 ---
+Empiric Study Results
+Figure 6.1: Mean Fun values between conditions with corresponding Standard Error measures.
+As a result, degrees of freedom for both mechanisms were corrected using Greenhouse-Geisser
+estimates of sphericity (ε = 0.71562 and ε = 0.73746, respectively).
+Statistical signiﬁcance was achieved for all mechanisms: Gun Recoil F(2,62) = 13.584, p <
+0.01; Invisibility F(2,62) = 61.076, p < 0.01; Underwater F(1,31) = 114.33, p < 0.01; Pos-
+session F(2,62) = 64.807, p < 0.01; Fire Blow F(2,62) = 77.196, p < 0.01; Sprint F(2,62) =
+74.975, p < 0.01; Item Use F(2,62) = 96.38, p < 0.01; Grab F(2,62) = 56.564, p < 0.01.
+Tukey post-huc tests revealed that participants found both the unimodal and multimodal biofeed-
+back versions of the eight mechanics were more fun than the vanilla version of the game ( p <
+0.01). Possession’s multimodal version was the only mechanism that players considered more
+fun than the unimodal version ( p < 0.01). No further differences were detected in the remaining
+mechanisms (p > 0.01).
+The Underwater mechanism did not require a Tukey test nor a Mauchly’s sphericity test as it
+only existed in two versions: vanilla and biofeedback control. It was considered more Fun in the
+biofeedback control version than the vanilla version.
+6.1.2 Ease of Use Ratings
+Participants were asked to rate each mechanism also regarding their Ease of Use (Figure 6.2) from
+0 (Very hard) to 5 (Very easy). For all eight mechanisms Mauchly’s sphericity assumption was
+met: Gun Recoil ( χ2(2) = 0.955, p > 0.01); Invisibility ( χ2(2) = 0.870, p > 0.01); Underwa-
+ter; Possess ( χ2(2) = 0.883, p > 0.01); Fire Blow ( χ2(2) = 0.830, p > 0.01); Sprint ( χ2(2) =
+0.994, p > 0.01); Item Use (χ2(2) = 0.814, p > 0.01) and Grab (χ2(2) = 0.874, p > 0.01).
+Statistical signiﬁcance was achieved as well for all eight mechanisms: Gun RecoilF(2,62) =
+7.281, p < 0.01; Invisibility F(2,62) = 24.363, p < 0.01; Underwater F(1,31) = 32.137, p <
+0.01; Possess F(2,62) = 28.981, p < 0.01; Fire BlowF(2,62) = 28.257, p < 0.01; Sprint F(2,62) =
+20.851, p < 0.01; Item Use F(2,62) = 40.374, p < 0.01; Grab F(2,62) = 46.669, p < 0.01.
+Tukey post-hoc tests showed that players:
+1. Found the vanilla versions easier to use than the unimodal versions for Invisibility, Possess,
+Sprint and Grab (p < 0.01);
+32
+
+
+--- page 53 ---
+Empiric Study Results
+Table 6.1: Q1 Fun - Statistical Analysis
+One-Way ANOV A Tukey Post-Hoc
+Fun F p V-UBF V-MBF UBF-MBF
+Gun Recoil 13.584 < 0.001 < 0.001 < 0.001 0.794
+Invisibility 61.076 < 0.001 < 0.001 < 0.001 0.131
+Underwater Breathing 111.330 < 0.001 —
+Possession 64.807 < 0.001 < 0.001 < 0.001 < 0.001
+Fire Blow 77.196 < 0.001 < 0.001 < 0.001 0.846
+Sprint 74.975 < 0.001 < 0.001 < 0.001 0.784
+Item Use 96.380 < 0.001 < 0.001 < 0.001 0.612
+Grab 56.564 < 0.001 < 0.001 < 0.001 0.698
+2. Found all mechanisms easier to use in the vanilla version than the multimodal version ( p <
+0.01)
+3. Found Fire Blow, Use and Grab easier to use in the unimodal version than the multimodal
+version (p < 0.01).
+No differences were detected for the remaining combinations (p > 0.01).
+The Underwater Breathing mechanic did not require a Tukey test nor a Mauchly’s sphericity
+test as it only existed in two versions: vanilla and biofeedback control. It was considered easier to
+use in the vanilla version than the biofeedback version.
+6.1.3 Originality Ratings
+Originality was rated on a scale of 0 (No originality) to 5 (Very original) – the results are sum-
+marized on Figure 6.3. For the mechanisms Invisibility ( χ2(2) = 0.746, p > 0.01) and Underwa-
+ter Mauchly’s sphericity assumption was met. For Gun Recoil ( χ2(2) = 0.724, p < 0.01); Pos-
+sess (χ2(2) = 0.471, p < 0.01); Fire Blow (χ2(2) = 0.414, p < 0.01); Sprint (χ2(2) = 0.473, p <
+0.01); Item Use ( χ2(2) = 0.636, p < 0.01) and Grab ( χ2(2) = 0.504, p < 0.01) it was violated.
+Greenhouse-Geisser corrections were applied in those cases ( ε = 0.78344; 0 .65385; 0 .63047;
+0.65496; 0.73294 and 0.66852, respectively).
+Statistical signiﬁcance was achieved for all eight mechanisms: Gun RecoilF(2,62) = 203.19, p <
+0.01; Invisibility F(2,62) = 183.73, p < 0.01; Underwater F(1,31) = 317.05, p < 0.01; Pos-
+sess F(2,62) = 127.76, p < 0.01; Fire Blow F(2,62) = 154.90, p < 0.01; Sprint F(2,62) =
+236.54, p < 0.01; Item Use F(2,62) = 339.10, p < 0.01; Grab F(2,62) = 160.68, p < 0.01.
+Tukey post-hoc tests revealed that players found both biofeedback versions more original than
+the vanilla version (p < 0.01). No differences were detected between the unimodal and multimodal
+versions (p > 0.01).
+The Underwater Breathing mechanic did not require a Tukey test nor a Mauchly’s sphericity
+test as it only existed in two versions: vanilla and biofeedback control. Players found that the
+Underwater biofeedback mechanic was clearly more original than its vanilla counterpart.
+33
+
+
+--- page 54 ---
+Empiric Study Results
+Figure 6.2: Mean Ease of Use values between conditions with corresponding Standard Error mea-
+sures.
+6.2 Gameplay Keywords
+Tables 6.4- 6.5 show the results of the participants’ evaluation of each game mechanic (in each
+version) using the presented list of keywords. We will be discussing only relevant results of the
+table as the amount of information is too extensive for a complete discussion. However, the results
+are presented as a whole so they can be used as a reference and comparison basis for future work
+on new direct biofeedback games and game design experiments. To view the gathered data in a
+more friendly format (column charts), please refer to Appendix A.
+The Fire Blow mechanic registered moderate “Useless” values most likely because it was only
+used as a puzzle-solving ability and did not have much inﬂuence in the main action sections of the
+game. However, we are certain that its evolution to a stealth-related mechanic in the game (see
+Section 4.2.5) would drop this value to 0% as it would be more relevant to the game.
+The “Core in-game” keyword registered an increasing trend in the biofeedback versions, al-
+though not on a very signiﬁcant scale – surprisingly, the multimodal version of Sprint received
+this adjective 44% of the times (against 28% in the vanilla version). This provides a hint that this
+mechanic feels more like a core aspect of gameplay on the multimodal version of the game.
+For the “Simple/Complex” pair – and within our expectations – the biofeedback conditions
+suffered relevant decreases towards the vanilla version (especially in the multimodal version) and
+increases in complexity towards the multimodal version. However, “Complex” did not always
+translate to something necessarily bad according to players’ feedback:
+• “The biofeedback sections don’t make the game hard at all, but they make it less ﬂuid com-
+pared to the vanilla condition. While on the latter you can walk and open doors quite fast,
+on the biofeedback versions you have to stop and use the glove” (P20)
+• “it’s complex in a good way, it has depth” (P15 on multimodal’s Gun Recoil)
+• “I liked the unimodal version because we have to use more elements of our body to get
+immersed in the game itself and it makes it more interesting. The multimodal version is one
+34
+
+
+--- page 55 ---
+Empiric Study Results
+Table 6.2: Q1 Ease of Use - Statistical Analysis
+One-Way ANOV A Tukey Post-Hoc
+Ease of Use F p V-UBF V-MBF UBF-MBF
+Gun Recoil 7.281 < 0.01 0.210 < 0.001 0.098
+Invisibility 24.363 < 0.001 < 0.001 < 0.001 0.106
+Underwater Breathing 32.137 < 0.001 —
+Possession 28.981 < 0.001 < 0.001 < 0.001 0.249
+Fire Blow 28.257 < 0.001 0.031 < 0.001 < 0.001
+Sprint 20.851 < 0.001 < 0.001 < 0.001 0.115
+Item Use 40.374 < 0.001 0.156 < 0.001 < 0.001
+Grab 46.669 < 0.001 < 0.001 < 0.001 < 0.001
+step further compared to the unimodal version because it brings a little more complexity
+(depth) to the gestures execution” (P25)
+• “It’s positive because it gives more depth to the game (and more immersion), but other
+people might prefer something more simple” (P4 on multimodal’s Gun Recoil)
+In terms of Realism, both biofeedback versions had the expected results and registered large
+increases towards the vanilla version. During development phase, underwater breathing was one
+of the most challenging actions in the biofeedback-controlled versions and we were very curious
+about the players’ reaction to it in the ﬁnal version:
+• “I wish the diving section was bigger, it was very short. ” (P4)
+• “Sometimes I think it would be nice to feel in a movie or game how would it be without
+breathing” (P15)
+• “The diving system is very creative and the hand seals system [of the multimodal version]
+is as well” (P2)
+• “On the breathing section it was very exhausting – if it were a game with very strong un-
+derwater components or we had to repeat it several times it would be very exhausting. ”
+(P16)
+• “I liked all mechanisms in general except for the underwater breathing one. ” (P30)
+Regarding the “Imaginary” keyword, it was a sibling concept for Realism where a game me-
+chanic could fail to achieve realistic action (because it does not exist in real-life) but was able
+to reproduce quite well how players would go about performing actions that they could imagine
+themselves doing (e.g. casting a spell or becoming invisible). This explains why the special abil-
+ities Invisibility and Possess obtained the highest results in the “Imaginary” parameter – players
+seem to identify more with those actions as the they try to tap in the players’ imagination.
+35
+
+
+--- page 56 ---
+Empiric Study Results
+Figure 6.3: Mean Originality values between conditions with corresponding Standard Error mea-
+sures.
+Exhaustiveness was also expected to increase in the biofeedback conditions, although it seems
+some participants were able to cope with it during gameplay. It remains to be seen in future studies
+with longer testing periods whether the type of biofeedback used (unimodal or multimodal) or even
+biofeedback itself have an important inﬂuence on the players’ willingness to play.
+6.3 Questionnaire 2: Game Conditions
+In the second questionnaire participants had to compare the three game conditions on their entirety
+instead of evaluating game mechanics individually. The questionnaire was ﬁlled after all three
+Prison Levels were completed to limit subjectivity - that is, by forcing players to compare all
+three gaming conditions at the same time, it forced them to reﬂect on each of them and weigh
+them against one another. The comparison of mean scores for each measured aspect is shown on
+Figures 6.4 and 6.5.
+6.3.1 Originality, Preference, Playability
+Originality was rated on a scale of 0 (No originality) to 5 (Very original) and Preference on a scale
+of 1 (Very low) to 5 (Very high). Players were also required to rate the sentence “I feel that the
+game controls were an obstacle in my way to play well... ” [BC04] for each game condition using
+a seven-level Likert scale in order to quantify Playability (1 – completely disagree; 4 – neutral;
+7 – completely agree). Mauchly’s test statistic revealed that the sphericity assumption was met
+for Preference ( χ2(2) = 0.933, p > 0.01) and Playability ( χ2(2) = 0.955, p > 0.01) but not for
+Originality (χ2(2) = 0.359, p < 0.01). Therefore, Originality’s degrees of freedom were corrected
+using a Greenhouse-Geisser estimate of sphericity (ε = 0.60937).
+Statistical signiﬁcance was encountered for all three parameters: OriginalityF(2,62) = 107.82, p <
+0.01; Preference F(2,62) = 24.905, p < 0.01; Playability F(2,62) = 23.188, p < 0.01.
+Tukey post-hoc tests revealed that:
+36
+
+
+--- page 57 ---
+Empiric Study Results
+Table 6.3: Q1 Originality - Statistical Analysis
+One-Way ANOV A Tukey Post-Hoc
+Originality F p V-UBF V-MBF UBF-MBF
+Gun Recoil 203.19 < 0.001 < 0.001 < 0.001 0.046
+Invisibility 183.73 < 0.001 < 0.001 < 0.001 0.054
+Underwater Breathing 317.05 < 0.001 —
+Possession 127.76 < 0.001 < 0.001 < 0.001 0.020
+Fire Blow 154.90 < 0.001 < 0.001 < 0.001 0.111
+Sprint 236.54 < 0.001 < 0.001 < 0.001 0.234
+Item Use 339.10 < 0.001 < 0.001 < 0.001 0.028
+Grab 160.68 < 0.001 < 0.001 < 0.001 0.463
+1. Players found both biofeedback versions more original than its vanilla counterpart ( p <
+0.01), with no difference detected between the unimodal and multimodal versions ( p >
+0.01). This result corroborates what was obtained in the ﬁrst questionnaire regarding the
+various game mechanics.
+2. Players preferred both biofeedback versions when compared to the vanilla version ( p <
+0.01). No signiﬁcant difference was observed between the unimodal and multimodal ver-
+sions (p > 0.01).
+3. Players disagreed with the statement that game controls did not stop them from played well
+– in other words, it means that the playability of our game controls reached the desired level.
+However, Tukey tests indicated that as controls increased in complexity (vanilla being the
+least complex condition, followed by unimodal and then multimodal), players agreed less
+with the statement (p < 0.01).
+6.4 IMI Post Experience Questionnaire
+The IMI questionnaire that we used has seven parameters: Interest/Enjoyment, Perceived Com-
+petence, Effort/Importance, Pressure/Tension, Perceived Choice, Value/Usefulness and Related-
+ness. For the parameters: Interest/Enjoyment ( χ2(2) = 0.753, p > 0.01); Perceived Compe-
+tence ( χ2(2) = 0.958, p > 0.01); Pressure/Tension ( χ2(2) = 0.737, p > 0.01) and Relatedness
+(χ2(2) = 0.805, p > 0.01), Mauchly’s sphericity assumption was met. For Effort/Importance
+(χ2(2) = 0.533, p < 0.01); Perceived Choice ( χ2(2) = 0.300, p < 0.01) and Value/Usefulness
+(χ2(2) = 0.633, p < 0.01) it was violated. Therefore, degrees of freedom were corrected using
+Greenhouse-Geisser estimates of sphericity (ε = 0.68157, 0.58816 and 0.73176, respectively).
+Statistical signiﬁcance was encountered for: Interest/EnjoymentF(2,62) = 58.903, p < 0.01;
+Effort/Importance F(2,62) = 40.743, p < 0.01; Pressure/Tension F(2,62) = 25.658, p < 0.01;
+Perceived Choice F(2,62) = 10.320, p < 0.01; Value/Usefulness F(2,62) = 92.141, p < 0.01;
+37
+
+
+--- page 58 ---
+Empiric Study Results
+Figure 6.4: Mean Originality, Preference and Playability values between conditions.
+and Relatedness F(2,62) = 20.763, p < 0.01 – but not for Perceived Competence F(2,62) =
+3.2746, p > 0.01.
+Tukey post-hoc tests revealed that players’ Interest/Enjoyment, Effort/Importance, Pressure/Ten-
+sion, Perceived Choice, Value/Usefulness and Relatedness were higher in both biofeedback con-
+ditions when compared to the vanilla version ( p < 0.01), with no differences detected between
+unimodal and multimodal types (p > 0.01).
+Regarding the Pressure/Tension parameter increase from the vanilla conditions to the biofeed-
+back versions, we believe it is connected with the fact that they were experiencing a new form of
+interaction and felt the need to succeed in using the physiological devices. Although Perceived
+Competence registered a non-signiﬁcant descending trend from the vanilla to the unimodal and
+multimodal conditions, we believe this trend is due to the players’ large familiarity with the key-
+board/mouse control. Given that this was their ﬁrst experience with physiological control, we
+could expect similar levels of perceived competence if players’ had the same level of familiarity
+across the three conditions.
+We consider the increases from the vanilla to the biofeedback conditions on the Interest/Enjoy-
+ment, Effort/Importance, Perceived Choice and Relatedness parameters are related with Brown’s
+“Engagement” type of immersion [BC04]. Players seemed to experience a rewarding sensation
+by observing their own physical actions reﬂected in the game and thus could relate more with the
+game – although on a small but statistically signiﬁcant scale, players had more freedom on how
+to activate biofeedback mechanics rather than just pressing a button, as depicted in the Perceived
+Choice columns on Figure 6.5.
+Players recognized the potential of this technology to enhance modern videogames using
+biofeedback technology, as shown in the Value/Usefulness parameter. Participant 21 had a very
+important view on adapting games to people with health issues or limited mobility:
+• “I think that these kinds of movements [biofeedback] are good for people with breathing is-
+sues or other limiting restrictions (...) it would be nice to blend the 3 modes for handicapped
+people. ” (” (P21)
+The IMI Post-Experience Questionnaire did not detect signiﬁcant differences between the uni-
+modal and multimodal types of interaction. However, we believe this is because the questionnaire
+was not designed to detect subtle differences – a limitation we acknowledged early on and strived
+to overcome through the remaining questionnaires and the Card Sorting process. While the two
+38
+
+
+--- page 59 ---
+Empiric Study Results
+biofeedback versions do not have many differences in functionality, we believe that there are rel-
+evant differences to them in terms of the in-game context they should be used on (for a more
+in-depth discussion on this, see section 7.2).
+Having presented the obtained results, in the following section we discuss their meaning as a
+whole towards the gameplay experience and further elaborate on the relevant differences between
+unimodal and multimodal biofeedback.
+39
+
+
+--- page 60 ---
+Empiric Study Results
+Table 6.4: Card Sorting Results - Describing Game Mechanics in Words (1)
+Sprint Gun RecoilUnderwater
+BreathingInvisibility
+Vanilla UBF MBF Vanilla UBF MBF Vanilla BF Vanilla UBF MBF
+Useless in-game0% 3% 3% 0% 0% 3% 13% 0% 3% 3% 9%
+Core in-game28% 34% 44% 19% 16% 16% 9% 19% 19% 34% 31%
+Simple100% 78% 56% 84% 50% 6% 84% 50% 97% 47% 31%
+Complex0% 0% 3% 3% 16% 41% 0% 0% 0% 9% 34%
+Realistic6% 31% 63% 3% 69% 72% 9% 84% 0% 38% 38%
+Imaginary9% 9% 9% 0% 0% 0% 6% 6% 13% 34% 38%
+Exhaustive0% 9% 28% 6% 28% 41% 0% 22% 0% 16% 19%
+Relaxed41% 25% 16% 31% 13% 3% 22% 3% 31% 34% 19%
+Confusing0% 9% 3% 0% 9% 28% 0% 3% 0% 3% 6%
+Intuitive38% 50% 63% 53% 53% 44% 22% 97% 28% 41% 44%
+Incomplete22% 16% 9% 22% 34% 16% 25% 3% 16% 31% 3%
+Complete19% 22% 31% 22% 9% 28% 16% 66% 22% 25% 44%
+40
+
+
+--- page 61 ---
+Empiric Study Results
+Table 6.5: Card Sorting Results - Describing Game Mechanics in Words (2)
+Item Use Possession Grab Fire Blow
+Vanilla UBF MBF Vanilla UBF MBF Vanilla UBF MBF Vanilla UBF MBF
+Useless in-game 0% 0% 3% 0% 0% 0% 0% 0% 0% 19% 13% 13%
+Core in-game 25% 31% 31% 25% 28% 38% 25% 34% 34% 13% 9% 9%
+Simple 100% 75% 44% 94% 69% 34% 94% 56% 31% 88% 78% 34%
+Complex 0% 0% 34% 0% 6% 25% 3% 6% 19% 0% 0% 28%
+Realistic 3% 66% 81% 0% 13% 22% 3% 66% 69% 13% 78% 78%
+Imaginary 3% 3% 6% 31% 53% 53% 16% 6% 6% 6% 3% 3%
+Exhaustive 0% 3% 22% 0% 3% 6% 0% 6% 16% 0% 0% 31%
+Relaxed 31% 41% 16% 19% 31% 25% 25% 34% 0% 31% 34% 19%
+Confusing 0% 3% 13% 0% 3% 6% 0% 6% 25% 3% 0% 0%
+Intuitive 41% 72% 50% 31% 34% 41% 34% 59% 59% 25% 91% 72%
+Incomplete 31% 16% 3% 38% 16% 3% 19% 28% 38% 22% 13% 3%
+Complete 16% 31% 47% 13% 22% 50% 19% 22% 34% 16% 31% 34%
+41
+
+
+--- page 62 ---
+Empiric Study Results
+Table 6.6: Q2 Originality, Preference and Playability between Conditions - Statistical Analysis
+One-Way ANOV A Tukey Post-Hoc
+Conditions F p V-UBF V-MBF UBF-MBF
+Originality 107.820 < 0.001 < 0.001 < 0.001 0.166
+Preference 24.905 < 0.001 < 0.001 < 0.001 0.432
+Playability 23.188 < 0.001 0.009 < 0.001 0.001
+Table 6.7: Q2 IMI Post Experience - Statistical Analysis
+One-Way ANOV A Tukey Post-Hoc
+Conditions F p V-UBF V-MBF UBF-MBF
+Interest/Enjoyment 58.903 < 0.001 < 0.001 < 0.001 0.965
+Perceived Competence 3.275 0.044 0.762 0.041 0.185
+Effort/Importance 40.743 < 0.001 < 0.001 < 0.001 0.083
+Pressure/Tension 25.658 < 0.001 < 0.001 < 0.001 0.947
+Perceived Choice 10.320 < 0.001 < 0.001 0.001 0.951
+Value/Usefulness 92.141 < 0.001 < 0.001 < 0.001 0.969
+Relatedness 20.763 < 0.001 < 0.001 < 0.001 0.996
+42
+
+
+--- page 63 ---
+Empiric Study Results
+Figure 6.5: Mean IMI parameters between conditions with corresponding Standard Error measures.
+43
+
+
+--- page 64 ---
+Empiric Study Results
+44
+
+
+--- page 65 ---
+Chapter 7
+Results’ Analysis and Discussion
+We introduced a new variety of Direct Biofeedback in games that had not been explored before
+– Multimodal Direct Biofeedback – and theorize on the possible differences that it can bring for
+biofeedback games. We also analyse empirically our test game to provide a comprehensive case
+study on biofeedback games versus the current mouse/keyboard control schemes.
+7.1 Fun Levels in Biofeedback Control
+The Fun and Interest/Enjoyment metrics show strong evidence that players enjoyed playing the
+game more using biofeedback control than with a standard keyboard/mouse scheme. In our opin-
+ion, there are at least two factors that seem to contribute towards this outcome.
+The ﬁrst is the novelty factor of the technology: less than a handful of participants heard about
+biofeedback in videogames, and none of them ever had the chance to try and play videogames with
+it. The relative success of our implementation (and even previous works such as [NKLM11, DC07]
+can imprint an implicit biasing effect towards higher Fun ratings. The only way to assess whether
+the answer would be different – on a consumer-level setting such as a home use scenario – is to
+make a long term study involving several games (to mitigate game design issues and replicate
+accurately the life of the average gamer) with a biofeedback group and a control group. How-
+ever, this study would require a sample population well over 100 subjects for each group and an
+extended time frame of over two weeks or even months. Unfortunately the number of existing
+biofeedback games is very little, which makes the idea infeasible and very hard to execute. The
+only way to truly assess the impact of biofeedback is to introduce it in a commercial context and
+see how gamers respond to it and adopt it (or not) over time.
+One of our main concerns is that Direct Biofeedback videogames end up being more exhaust-
+ing than today’s videogames, due to their strong physical component. Some of our participants
+share this concern as well (as shown in Tables 6.4- 6.5) and this could negatively impact the aver-
+age playtime of game sessions:
+45
+
+
+--- page 66 ---
+Results’ Analysis and Discussion
+• “I think it could become tiring on the long term and it wouldn’t be so fun (in the situations
+where you play 10 hours per day)” (P10)
+• “During the game it would be cool to switch between unimodal and multimodal according
+to the player’s tiredness” (P14)
+• “It’s exhausting after a while... ” (P27)
+• “In this game it wouldn’t be exhausting because you don’t run for too long, but if it were
+mandatory it would be tiring” (P30 on Biofeedback Sprint)
+On the other hand, some cope well with it and even embrace it as a necessary consequence of
+this new gameplay style:
+• ‘It’s tiring, but it’s a pleasant tiring” (P2 about both Biofeedback versions of Sprint)
+• “I also liked to contract the arm in order to activate Use and Grab – it was slightly uncom-
+fortable but it was rewarding for the achieved realism’ (...)’ (P5)
+• “In terms of precision pointing a gun and holding breath is more tiring, but to appreciate a
+game it becomes more interesting – however on a competitive level it’s less useful” (P8 on
+Gun Recoil)
+The second factor that we feel it might impact the Fun ratings is related with the two Immersion
+theories described by Brown [BC04] and Ermi [EM07]. Brown’s “Engagement” states that players
+need to invest time, effort and attention in order to reach that stage of immersion, once the game
+controls and the genre match the player’s preferences; Ermi’s “Challenge-based immersion” is
+“the feeling of immersion when one is able to achieve a satisfying balance of challenges and
+abilities” and “can be related to motor skills or mental skills” [EM07].
+• “In both biofeedback versions we have to imagine what we would normally do to activate
+the actions, it gives a little more of immersion and provides some differences in gameplay.
+It’s also more challenging having to ﬁnd out in these two what we have to do. ”(P24)
+The implicit effort that the biofeedback conditions demanded from players is a hint that players
+should feel more immersed in the biofeedback conditions, and Fun and Enjoyment are indicators
+that are related with the broad concept of Immersion.
+One participant made an interesting remark in our game about immersion and biofeedback
+– we consider that biofeedback can be positively combined with other technologies to enhance
+further the sensation of immersion:
+46
+
+
+--- page 67 ---
+Results’ Analysis and Discussion
+• “In the biofeedback conditions I thought the interactivity was quite original [creative], both
+in the surrounding objects (the boxes and handles) as well in the actions that our character
+made like breathing or gun recoil control – they help providing the game a bigger feeling of
+immersion. The real feeling of immersion would be to account for head movement, like the
+Oculus Rift1 device. ” (P11)
+Many users complained about the lack of an accelerometer (or a similar device to track spatial
+orientation) in our GLOVE device because they wanted to grab objects using only the glove:
+• “[in the biofeedback versions] you need to add an accelerometer on the glove” (P5)
+• “The grab mechanic in both conditions does not work well because we have to use our hand
+closed (while grabbing the object) to move the mouse. ” (P8)
+• “Grabbing the object and then returning to the mouse... it really makes me want to move it
+with the glove” (P12)
+• “I don’t like having to grab and then not being able to use the mouse” (P21)
+The mouse solution was not the best in terms of proper game design, but it was the only one
+in our reach in terms of available time and human resources. We hypothesize that Biofeedback
+can reach its full potential when combined with other technologies such as orientation trackers
+(e.g. accelerometer), virtual reality devices such as the Oculus Rift, or even with the existing
+motion-devices for games: the Microsoft Kinect, Nintendo Wii Remote or PlayStation Move.
+7.2 Unimodal vs. Multimodal Game Design
+Apart from Possess and Underwater, we were not able to uncover signiﬁcant differences in Fun
+between unimodal and multimodal mechanisms. Players tended to use the “Realism”, “Exhaus-
+tive” and “Complete” keywords to describe mechanics in the multimodal version – surprisingly,
+the unimodal Gun Recoil scored lower in “Complete” than the vanilla and multimodal versions.
+Game controls can be considered to be slightly harder to use on an increasing scale from vanilla to
+unimodal and multimodal – although some unimodal mechanisms can stand in par with the vanilla
+version (Gun Recoil, Fire Blow and Use) according to our statistical results.
+Some players reached the consensus that the multimodal was the one with higher realism, but
+suffered from unnecessary levels of exhaustiveness. They valued the simplicity of the unimodal
+design, which was less also tiring:
+• “Having to contract the arm always to open doors is bad, it’s better to do that only when
+ﬁring the gun” (P1 about the multimodal version of the Grab mechanic)
+1http://www.oculusvr.com/ - “The Oculus Rift is a next-generation virtual reality headset designed for immersive
+gaming.”
+47
+
+
+--- page 68 ---
+Results’ Analysis and Discussion
+• “In the unimodal version I also thought the experience was rewarding because it was quite
+interactive, simple and ﬁts a gamer type that is more rookie and/or lazy – it still forces us to
+put effort but in a ’lighter’ way... ’interactivity light’. ”(P5)
+• “I think that the multimodal version tries to be more immersive, but it’s too complex. The
+unimodal version can be immersive and simple. Both types bring added value when com-
+pared to the vanilla version. ”(P10)
+• “It was confusing having to coordinate both things [the arm and breathing] (...) I think
+it wouldn’t be the best combination and having to breath disturbs the action” (P29 about
+Multimodal Gun Recoil)
+Others valued the assertiveness and safety of the multimodal design, which added the highest
+realism, more sense of control or avoided sensor faults – either unintended activations of the
+sensors on their own (i.e. false positives) or the out-of-context activation of the players’ abilities:
+• “I prefer the complexity of the multimodal version for having more details that make the
+game more realistic. ”(P4)
+• “I think it makes sense having distinctions between the actions of diving and using a power
+[Invisibility] (...) the unimodal version wasn’t very intuitive. (. . . ) The multimodal ver-
+sion was more complete for distinguishing torch blowing and Possess” (P10 – Invisibility
+and Underwater Breathing share the RESP sensor; Air Blow and Possess share the TEMP
+sensor)
+• “Closing the hand has more feedback for the game to know that it’s what I want” (P12 on
+Invisibility)
+• “I would choose the unimodal version only due to the detail of arm contraction in Use and
+Grab. Disregarding that I would use the multimodal version, since it uses ways that are more
+explicit and direct to indicate the actions that we want to perform – Possess, Invisibility,
+running with both legs, etc. (...) Breathing in and activating the Invisibility mechanism by
+accident doesn’t seem good to me” (P14)
+• “In the multimodal version when I used Possess, I felt more control by having to perform
+a gesture before activating the power than by having to blow on the enemies [in the multi-
+modal version]. (...) In the unimodal version, having to breathe both to stay invisible and to
+breathe underwater was very distracting. ”(P22)
+Lastly, some participants reported that biofeedback broke game ﬂow more often, most likely
+due to the time spent executing physical actions in comparison to pressing a button. Our “Playa-
+bility” results in the second questionnaire seem to conﬁrm this as well, but we think this is a
+48
+
+
+--- page 69 ---
+Results’ Analysis and Discussion
+by-product of exposing players to three different combinations of game controls in such a short
+time period. Additionally, players have years and years of familiarity with the keyboard/mouse
+control scheme.
+• “The multimodal version is a little too complex for a game where you have to be fast,
+with combat and action. The unimodal version has the better quantity of interaction when
+compared to the other two. ” (P18)
+• “The biofeedback sections don’t make the game hard in any way, but they make it less ﬂuid
+in comparison with the vanilla version. While in the latter it’s possible to walk and activate
+handles (Item Use) quite fast, when using biofeedback you need to stop and use the glove. ”
+(P20)
+• “The multimodal version is more complex and breaks a little the pace of the game. The
+unimodal one allows us to play in a more ﬂuid way. ” (P26)
+• “In the multimodal version, while the actions were more realistic, tasks took longer to be
+executed. In the unimodal mode, actions had more realism than the vanilla version and the
+difference in time execution of actions was almost unnoticeable. ”(P29)
+Based on our players’ feedback and our experience, we think that a mixed approach should be
+taken instead of a strict implementation of one of these biofeedback types. Long-term exhaustive-
+ness, “naturalness” of the physical action and reliability of mechanism activation are the guidelines
+to be followed. As in modern games, books or movies, it depends on what feelings and sensations
+the game designer is trying to convey to the target audience.
+For example, doors that open easily should not need overpowering arm contraction in order to
+open them: closing the hand and moving the arm without any contraction is more than enough.
+Objects that are light and heavy fall under this category as well. Putting out a matchstick or a
+candle should only need the TEMP sensor instead of breathing in all the air you can hold ﬁrst.
+Considering the panoply of creative ways players can interact with a game, there may be scenarios
+where even simple actions should be difﬁcult to execute. For example, consider a game section
+where the game character was shot in a gunﬁght and barricade him or herself until reinforcements
+arrive. However, being heavily injured, the character does not have much strength left to move
+the heavy objects needed to barricade the room. In this scenario it might be a good option to use
+multimodal biofeedback to purposely make this simple interaction more challenging and realistic,
+instead of resorting to, for example, quick-time events.
+Common gameplay situations with harder obstacles (e.g. doors that will not budge) or more
+complex actions (e.g. manipulate or throw objects) can justify the use of Multimodal Biofeedback.
+The feeling of empowerment to activate a special power as in our game (Invisibility, Possess) is
+something that most participants felt it worked perfectly. This is another aspect where the potential
+49
+
+
+--- page 70 ---
+Results’ Analysis and Discussion
+of Multimodal Biofeedback is appreciated, which some of our participants dubbed as the “hand-
+sign system”:
+• “Since I like Naruto it ends up being fun... ” (P3 about Multimodal Possession)
+• “I liked the part of making a gesture in Possess to control the enemies. ” (P25)
+• “In the Possessing power I liked more the multimodal version because we needed to make
+hand signs in comparison with the unimodal version where you only had to blow air – the
+multimodal version was more realistic and interactive. ”(P13)
+• “[except Sprint] In all other mechanisms, I prefer the multimodal version – I liked using a
+hand symbol combined with another action to activate the mechanisms. ” (P5)
+7.3 Possible Changes in Gameplay
+The successful integration of Biofeedback gameplay mechanics in videogames will hardly follow
+a plug and play paradigm – not at least until a very mature, standardized period. As such, the
+design of biofeedback games is an important facet of their development. Thus, it is important to
+examine how our biofeedback game design choices impacted player experience. Following this
+thesis, Participant 19 provided the following differential analysis of Biofeedback and traditional
+videogames:
+• “The great difference between games that just use mouse and keyboard and those where
+sensors are used, for example, is that in games with sensors a higher importance is given to
+gameplay instead of more properly the game objective – for example in a shooter, by playing
+with mouse and keyboard the enemies are stronger and in bigger numbers, while when
+playing with sensors more importance is given to controls and movements of the player”
+(P19)
+Sensors can change the focus and gameplay of the game, which may require certain adapta-
+tions on the game logic to ﬁt the use of the new devices. Some of the mechanics in Tables 6.4- 6.5
+were considered slightly more relevant to gameplay (“Core in-game”) in the biofeedback versions.
+Regarding Perceived Choice differences in the IMI Questionnaire, Participant 22 said:
+• “[in biofeedback] Although it was something that was stored in the computer, I felt that the
+choices inside the game were mine” (P22)
+This was the only explicit statement regarding Perceived Choice recorded in the entire study.
+While participants weren’t very expressive on this topic, the ANOV A tests showed that players
+experienced a slightly higher sense of Perceived Choice in the biofeedback conditions against
+the vanilla version of the game, where it was more neutral. It could be because some of the
+sensors could be activated in more than one way (e.g. EMG-Arm can be activated either by
+50
+
+
+--- page 71 ---
+Results’ Analysis and Discussion
+muscle contraction or by simply stretching the arm in any direction), while button-based actions
+typically are activated always the same way.
+The fact that Participant 22 considered that the choices were her own could be because the fact
+that the game uses the player’s own physiological signals to trigger actions inside the game could
+create a subconscious bond between the player’s physical and virtual, in-game body. It stops being
+a matter of manipulating the character inside the game – which does what we tell him/her to do
+via keyboard/mouse commands – and becomes a situation where players can manifest their will
+by using their body actively to interact with the game world.
+7.4 Limitations
+Our investigation is limited in the sense that we built a game prototype on one genre from all
+of those that currently exist today (e.g. Racing games, Platformers, etc.). In order to assess the
+potential of Biofeedback, more prototypes need to be built in other game genres. Nacke et al. also
+refer this in their previous work and while our work builds on theirs’, it is concerned with a vastly
+different game genre (2D Platformer vs. 3D First-Person Shooter with supernatural abilities).
+Secondly, the appropriate hardware, robust frameworks and technology to process the data
+returned by the physiological devices for Biofeedback games are not yet available as of this time.
+Calibration of the physiological signals before gameplay was done manually. The fact that players
+would need to perform calibration manually and equip the biofeedback devices on their own – a
+process that took us approximately 15-20 minutes – makes Biofeedback infeasible for the everyday
+consumption of videogames at the current time.
+Additionally, some of our participants experienced undesired activations in the TEMP and
+RESP sensors which we could not solve during the development phase. The TEMP sensor some-
+times picked up very small activations that should be considered false positives. The RESP sensor
+did not have the expected variation due to a very small change in the chest volume while breathing.
+This mostly happened on participants with a more muscular chest area.
+Everybody has a different physiology: this is an aspect that wasn’t reported in other biofeed-
+back games and should be carefully observed in future biofeedback prototypes.
+51
+
+
+--- page 72 ---
+Results’ Analysis and Discussion
+52
+
+
+--- page 73 ---
+Chapter 8
+Future Work
+Our initial exploration on this novel type of Direct Biofeedback opens several interesting research
+avenues for future projects. To the best of our knowledge, our prototype succeeded in combin-
+ing, for the ﬁrst time, more than one direct physiological sensor inside one game mechanic. It
+will be interesting to see how new prototypes build on our ﬁnding to further improve user expe-
+rience and innovate on the design of biofeedback augmented gameplay mechanics. It would also
+be stimulating to see more theoretical studies on how level design guidelines should be adapted
+to accommodate for the idiosyncrasies that biofeedback introduces in the game design process.
+Lastly, it would be even more exciting to see these same studies applied to other game genres (e.g.
+Adventure, Exploration and Role Playing Games).
+One particular detail we noticed is that one of our participants (P8) did not seem as pleased as
+the other participants regarding the biofeedback interaction. In his words, this type of interaction
+is not good for those who dedicate themselves to highly competitive game environments (e.g.
+online games like “Starcraft II” , “Diablo III” or “League of Legends” ). This participant believed
+that this technology was ideal for those who like to appreciate the story or the 3D environment
+of a game. In our opinion, a study to compare the impact of biofeedback techniques on reported
+Fun between players with different playing philosophies would potentially yield valuable results.
+Players could, for example, be segmented as “narrative appreciator”, “competitive”, “social co-
+operator” or “environment fancier”. 1
+We were unable to draw meaningful conclusions on whether contextual biofeedback mechan-
+ics (e.g. closing a hand has one effect if we are holding a door knob and another when grabbing
+an enemy by the neck) had any effect on the gameplay experience when compared with other
+types of biofeedback. In our unimodal prototype, some players afﬁrmed they were confused when
+1Author’s note: at the time of the writing of this document we did not know about the existence of theories on
+personality and player types, and merely transcribed (literally) the player types suggested by P8. After recently taking
+knowledge of Bartle’s “Hearts, Clubs, Diamonds, Spades” player model [Bar96], the four play styles described by
+Bartle (Killers, Achievers, Explorers, Socializers) show an interesting similarity to the concepts exposed by P8. In
+conclusion, Bartle’s player model and related theories are a possible starting point to explore the connection between
+play styles and the effectiveness of Biofeedback.
+53
+
+
+--- page 74 ---
+Future Work
+using the RESP sensor to hold breath underwater and to activate invisibility outside of the water.
+TEMP was also used for Blow and Possession and some participants mentioned that it would be
+good to have a distinction in activation between the two mechanics. According to them, this was
+achieved in the multimodal version, albeit obviously with an increase in mechanic complexity as
+previously discussed. Exploring this challenge would be another interesting study from a game
+design perspective.
+On a different note, we are unsure of the reaction players might show towards Biofeedback on a
+long-term period. The exhaustion factor should be accounted for when designing videogames, as it
+could become a severe obstacle to the longevity of a game. Even considering that our players spent
+a considerable amount of time playing the “GenericShooter 3000” in both its two biofeedback
+variants, it is impossible to predict how they are going to adapt. Furthermore, the side effects that
+repeatedly performing the same bodily actions may produce over extended time periods (years)
+still need to be thoroughly considered as improper usage may have ill-effects (e.g. carpal tunnel
+syndrome).
+Finally, addressing some of the current limitations in games development for Biofeedback
+could beneﬁt on-going research. Creating a high level, open-source framework capable of:
+1. Eliminating undesired signal noise, and
+2. Performing automatic sensor calibration
+would lead to improved usability (less accidental activations) and a reduced dependency on
+specialized personnel. Addressing these issues would surely potentiate the use of this technology
+in the near future.
+54
+
+
+--- page 75 ---
+Chapter 9
+Conclusions
+We introduced the use of Multimodal Direct Biofeedback in videogames and compared it with
+standard mouse/keyboard control schemes, as well as with traditional Unimodal Direct Biofeed-
+back (as introduced by Nacke [NKLM11]).
+While the vanilla version of the game proved itself easier to use than the multimodal version
+in all mechanisms, not all of the unimodal mechanics were statistically more complex compared
+to the vanilla version. However, as most participants noted, higher complexity was generally not
+a negative aspect, as our results show that both biofeedback versions provide a more realistic
+feel when compared to the vanilla version. We also show that this feeling of heightened realism
+and depth is higher in the multimodal version – but at the expense of a more exhaustive gaming
+experience.
+The IMI questionnaire also detected a signiﬁcant contribution of biofeedback towards Fun
+in gameplay – most likely due to the satisfaction of players seeing their own body movements
+reﬂected inside the game. However, using only the IMI questionnaire renders us unable to evalu-
+ate the differences in functionality between the unimodal and multimodal types. To compensate
+for this, we attempted to further study the two biofeedback variants using the remaining ques-
+tionnaires, the Card Sorting process and our participants’ commentaries. These new metric were
+highly informative and allowed us to conclude that both biofeedback types have their place in the
+gameplay experience and should be combined simultaneously to add depth to videogames. The
+major guideline we were able to extract is that they should be combined according to the game’s
+current context (e.g. lifting light objects versus heavy objects).
+The recent developments in biofeedback interaction have left us sitting at an interesting cross-
+road in entertainment mediums: in books, movies and most current games, we assimilate the full
+gameplay experience while on a comfortable position from which we can abstract ourselves from.
+However, the latest motion-gaming (e.g. Nintendo Wiimote, PlayStation Move, Microsoft Kinect)
+are shifting towards more physically-active scenarios. The key to Direct Biofeedback’s success
+could lie on the players’ ability to “step out of the couch” – and our ability to motivate them to do
+55
+
+
+--- page 76 ---
+Conclusions
+so -, as they could be no longer “proxy-experiencing” the adventures of ﬁctional characters, but
+rather living their own experiences on a fantasy world.
+56
+
+
+--- page 77 ---
+References
+[Amb11] Mike Ambinder. Biofeedback in gameplay: How valve measures physiology to
+enhance gaming experience. In Game Developers Conference, 2011.
+[Bar96] Richard Bartle. Hearts, clubs, diamonds, spades: Players who suit muds. Journal of
+MUD research, 1(1):19, 1996.
+[BBM+07] Regina Bernhaupt, Andreas Boldt, Thomas Mirlacher, David Wilﬁnger, and Man-
+fred Tscheligi. Using emotion in games: emotional ﬂowers. In Proceedings of the
+international conference on Advances in computer entertainment technology, pages
+41–48. ACM, 2007.
+[BC04] Emily Brown and Paul Cairns. A grounded investigation of game immersion. In
+CHI’04 extended abstracts on Human factors in computing systems , pages 1297–
+1300. ACM, 2004.
+[BEV+96] Edward B Blanchard, George Eisele, Alisa V ollmer, Annette Payne, Michael Gor-
+don, Peter Cornish, and Linda Gilmore. Controlled evaluation of thermal biofeed-
+back in treatment of elevated blood pressure in unmedicated mild hypertension.
+Biofeedback and self-regulation, 21(2):167–190, 1996.
+[BLL02] Lars Bretzner, Ivan Laptev, and Tony Lindeberg. Hand gesture recognition using
+multi-scale colour features, hierarchical models and particle ﬁltering. In Automatic
+Face and Gesture Recognition, 2002. Proceedings. Fifth IEEE International Con-
+ference on, pages 423–428. IEEE, 2002.
+[BMA+01] Daniel Bersak, Gary McDarby, Ned Augenblick, Phil McDarby, Daragh McDon-
+nell, Brian McDonald, and Rahul Karkun. Intelligent biofeedback using an im-
+mersive competitive environment. Paper at the Designing Ubiquitous Computing
+Games Workshop at UbiComp, 2001.
+[Bro07] Jeremy J Brokaw. Analysis of Game Interface Performance. PhD thesis, WORCES-
+TER POLYTECHNIC INSTITUTE, 2007.
+[CGP07] Qing Chen, Nicolas D Georganas, and Emil M Petriu. Real-time vision-based hand
+gesture recognition using haar-like features. In Instrumentation and Measurement
+Technology Conference Proceedings, 2007. IMTC 2007. IEEE , pages 1–6. IEEE,
+2007.
+[CLK+02] Baek Hwan Cho, Jong-Min Lee, JH Ku, Dong Pyo Jang, JS Kim, In-Young Kim,
+Jang-Han Lee, and Sun I Kim. Attention enhancement system using virtual reality
+and eeg biofeedback. In Virtual Reality, 2002. Proceedings. IEEE, pages 156–163.
+IEEE, 2002.
+57
+
+
+--- page 78 ---
+REFERENCES
+[CPC+09] Marc Cavazza, David Pizzi, Fred Charles, Thurid V ogt, and Elisabeth André. Emo-
+tional input for character-based interactive storytelling. In Proceedings of The 8th
+International Conference on Autonomous Agents and Multiagent Systems-Volume 1,
+pages 313–320. International Foundation for Autonomous Agents and Multiagent
+Systems, 2009.
+[DC07] Andrew Dekker and Erik Champion. Please biofeed the zombies: enhancing the
+gameplay and display of a horror game using biofeedback. Proc. of DiGRA, 2007.
+[DLH+10] Qunxi Dong, Yongchang Li, Bin Hu, Qunying Liu, Xiaowei Li, and Li Liu. A
+solution on ubiquitous eeg-based biofeedback music therapy. In Pervasive Comput-
+ing and Applications (ICPCA), 2010 5th International Conference on, pages 32–37.
+IEEE, 2010.
+[EM07] Laura Ermi and Frans Mäyrä. Fundamental components of the gameplay experi-
+ence: Analysing immersion. Worlds in Play: International Perspectives on Digital
+Games Research. New York: Peter Lang Publishers, pages 37–53, 2007.
+[Ful08] Tracy Fullerton. Game design workshop: a playcentric approach to creating inno-
+vative games. Taylor & Francis US, 2008.
+[GCC+10] Jeremy Gow, Paul Cairns, Simon Colton, Paul Miller, and Robin Baumgarten. Cap-
+turing player experience with post-game commentaries. In Proc. 3rd Int. Conf. on
+Computer Games, Multimedia & Allied Technology (CGAT 2010). Citeseer, 2010.
+[GDA05] Kiel Gilleade, Alan Dix, and Jen Allanson. Affective videogames and modes of
+affective gaming: assist me, challenge me, emote me. 2005.
+[HB00] Sara Ilstedt Hjelm and Carolina Browall. Brainball–using brain activity for cool
+competition. In Proceedings of NordiCHI, pages 177–188, 2000.
+[HGSW04] Andreas Haag, Silke Goronzy, Peter Schaich, and Jason Williams. Emotion recog-
+nition using bio-sensors: First steps towards an automatic system. In Affective Dia-
+logue Systems, pages 36–48. Springer, 2004.
+[HIO+05] He Huang, Todd Ingalls, Loren Olson, Kathleen Ganley, Thanassis Rikakis, and
+Jiping He. Interactive multimodal biofeedback for task-oriented neural rehabilita-
+tion. In Engineering in Medicine and Biology Society, 2005. IEEE-EMBS 2005.
+27th Annual International Conference of the, pages 2547–2550. IEEE, 2005.
+[IHVC09] Howell Istance, Aulikki Hyrskykari, Stephen Vickers, and Thiago Chaves. For
+your eyes only: Controlling 3d online games by eye-gaze. In Human-Computer
+Interaction–INTERACT 2009, pages 314–327. Springer, 2009.
+[IM06] Poika Isokoski and Benoît Martin. Eye tracker input in ﬁrst person shooter games. In
+Proceedings of the 2nd Conference on Communication by Gaze Interaction: Com-
+munication by Gaze Interaction-COGAIN 2006: Gazing into the Future, pages 78–
+81, 2006.
+[KBW A04] Jonghwa Kim, Nikolaus Bee, Johannes Wagner, and Elisabeth André. Emote to win:
+Affective interactions with a computer game agent. GI Jahrestagung, 1:159–164,
+2004.
+58
+
+
+--- page 79 ---
+REFERENCES
+[KEC+10] J Matias Kivikangas, Inger Ekman, Guillaume Chanel, Simo Järvelä, M Salminen,
+B Cowley, Pentti Henttonen, and Niklas Ravaja. Review on psychophysiological
+methods in game research. Proc. of 1st Nordic DiGRA, 2010.
+[KLT+10] Kai Kuikkaniemi, Toni Laitinen, Marko Turpeinen, Timo Saari, Ilkka Kosunen, and
+Niklas Ravaja. The inﬂuence of implicit and explicit biofeedback in ﬁrst-person
+shooter games. In Proceedings of the SIGCHI Conference on Human Factors in
+Computing Systems, pages 859–868. ACM, 2010.
+[KT02] Manolya Kavakli and Jason R Thorne. A usability study of input devices on mea-
+suring user performance in computer games. In Proceedings of First International
+Conference on Information Technology and Applications, pages 291–295. Citeseer,
+2002.
+[LCCS07] Enrique Leon, Graham Clarke, Victor Callaghan, and Francisco Sepulveda. A user-
+independent real-time emotion recognition system for software agents in domestic
+environments. Engineering applications of artiﬁcial intelligence , 20(3):337–345,
+2007.
+[LG12] TJ Lavender and Diane Gromala. Audition, the game. Procedia Computer Science,
+15:187–192, 2012.
+[MA07] Regan L Mandryk and M Stella Atkins. A fuzzy physiological approach for contin-
+uously modeling emotion during interaction with play technologies. International
+Journal of Human-Computer Studies, 65(4):329–347, 2007.
+[MB+91] MA Marcella Bryant et al. Biofeedback in the treatment of a selected dysphagic
+patient. Dysphagia, 6(3):140–144, 1991.
+[MJNQ06] Liu Mingyu, Wang Jue, Yan Nan, and Yang Qin. Development of eeg biofeedback
+system based on virtual reality environment. In Engineering in Medicine and Biol-
+ogy Society, 2005. IEEE-EMBS 2005. 27th Annual International Conference of the,
+pages 5362–5364. IEEE, 2006.
+[MRRE+11] Joe Marshall, Duncan Rowland, Stefan Rennick Egglestone, Steve Benford, Bren-
+dan Walker, and Derek McAuley. Breath control of amusement rides. In Proceed-
+ings of the SIGCHI Conference on Human Factors in Computing Systems , pages
+73–82. ACM, 2011.
+[NKLM11] Lennart Erik Nacke, Michael Kalyn, Calvin Lough, and Regan Lee Mandryk.
+Biofeedback game design: using direct and indirect physiological control to enhance
+game interaction. In Proceedings of the SIGCHI Conference on Human Factors in
+Computing Systems, pages 103–112. ACM, 2011.
+[NL08] Lennart Nacke and Craig A Lindley. Flow and immersion in ﬁrst-person shooters:
+measuring the player’s gameplay experience. InProceedings of the 2008 Conference
+on Future Play: Research, Play, Share, pages 81–88. ACM, 2008.
+[Nog13] Pedro A Nogueira. Towards dynamically crafted affective experiences through emo-
+tional response player modelling. In Ninth Artiﬁcial Intelligence and Interactive
+Digital Entertainment Conference, 2013.
+59
+
+
+--- page 80 ---
+REFERENCES
+[NPI05] Arturo Nakasone, Helmut Prendinger, and Mitsuru Ishizuka. Emotion recognition
+from electromyography and skin conductance. In Proc. of the 5th International
+Workshop on Biosignal Interpretation, pages 219–222. Citeseer, 2005.
+[NRON13a] Pedro A Nogueira, Rui Rodrigues, Eugénio Oliveira, and Lennart E Nacke. Guided
+emotional state regulation: Understanding and shaping players’ affective experi-
+ences in digital games. In Proceedings of the 9th Annual AAAI Conference on
+Artiﬁcial Intelligence and Interactive Digital Entertainment (AIIDE). Boston, Mas-
+sachusetts, USA, 2013.
+[NRON13b] Pedro A Nogueira, Rui Rodrigues, Eugénio Oliveira, and Lennart E Nacke. A hy-
+brid approach at emotional state detection: Merging theoretical models of emotion
+with data-driven statistical classiﬁers. InWeb Intelligence (WI) and Intelligent Agent
+Technologies (IAT), 2013 IEEE/WIC/ACM International Joint Conferences on, vol-
+ume 2, pages 253–260. IEEE, 2013.
+[NRON13c] Pedro A Nogueira, Rui Rodrigues, Eugénio Oliveira, and Lennart E Nacke. A
+regression-based method for lightweight emotional state detection in interactive en-
+vironments. In Proceedings of the XVI Portuguese Conference on Artiﬁcial Intelli-
+gence (EPIA), Angra do Heroísmo, Açores, Portugal (to appear, 2013), 2013.
+[NTR13] Pedro A Nogueira, Vasco Torres, and Rui Rodrigues. Automatic emotional reactions
+identiﬁcation: A software tool for ofﬂine user experience research. InEntertainment
+Computing–ICEC 2013, pages 164–167. Springer, 2013.
+[PCH+11] Matthew KXJ Pan, Jih-Shiang Chang, Gokhan H Himmetoglu, AJung Moon,
+Thomas W Hazelton, Karon E MacLean, and Elizabeth A Croft. Now where was i?:
+physiologically-triggered bookmarking. In Proceedings of the SIGCHI Conference
+on Human Factors in Computing Systems, pages 363–372. ACM, 2011.
+[PSGO13] Avinash Parnandi, Youngpyo Son, and Ricardo Gutierrez-Osuna. A control-
+theoretic approach to adaptive physiological games. In Affective Computing and
+Intelligent Interaction (ACII), 2013 Humaine Association Conference on , pages 7–
+12. IEEE, 2013.
+[RBF+08] Laura Rocchi, Marco Benocci, Elisabetta Farella, Luca Benini, and Lorenzo Chiari.
+Validation of a wireless portable biofeedback system for balance control: prelimi-
+nary results. In Pervasive Computing Technologies for Healthcare, 2008. Pervasive-
+Health 2008. Second International Conference on, pages 254–257. IEEE, 2008.
+[RGP+10] Giuseppe Riva, Andrea Gaggioli, Federica Pallavicini, Davide Algeri, Alessandra
+Gorini, and Claudia Repetto. Ubiquitous health for the treatment of generalized
+anxiety disorders. 2010.
+[RSL05] Pramila Rani, Nilanjan Sarkar, and Changchun Liu. Maintaining optimal challenge
+in computer games through real-time physiological feedback. In Proceedings of the
+11th International Conference on Human Computer Interaction , pages 184–192,
+2005.
+[SBC+11] Cara E Stepp, Deanna Britton, Chelsey Chang, Albert L Merati, and Yoky Mat-
+suoka. Feasibility of game-based electromyographic biofeedback for dysphagia
+rehabilitation. In Neural Engineering (NER), 2011 5th International IEEE/EMBS
+Conference on, pages 233–236. IEEE, 2011.
+60
+
+
+--- page 81 ---
+REFERENCES
+[SG06] J David Smith and TC Graham. Use of eye movements for video game control.
+In Proceedings of the 2006 ACM SIGCHI international conference on Advances in
+computer entertainment technology, page 20. ACM, 2006.
+[SLR+11] Evan A Suma, Belinda Lange, Albert Rizzo, David M Krum, and Mark Bolas. Faast:
+The ﬂexible action and articulated skeleton toolkit. In Virtual Reality Conference
+(VR), 2011 IEEE, pages 247–248. IEEE, 2011.
+[TNS13] Luís Filipe Teóﬁlo, Pedro Alves Nogueira, and Pedro Brandão Silva. Gemini: A
+generic multi-modal natural interface framework for videogames. In Advances in
+Information Systems and Technologies, pages 873–884. Springer, 2013.
+[Tor13] Vasco Pereira Torres. Development of biofeedback mechanisms in a procedural
+environment using biometric sensors. Master’s thesis, 2013.
+[WSN10] Qiang Wang, Olga Sourina, and Minh Khoa Nguyen. Eeg-based "serious" games
+design for medical applications. In Cyberworlds (CW), 2010 International Confer-
+ence on, pages 270–276. IEEE, 2010.
+[YMJ10] Georgios N Yannakakis, Héctor P Martínez, and Arnav Jhala. Towards affective
+camera control in games. User Modeling and User-Adapted Interaction, 20(4):313–
+340, 2010.
+61
+
+
+--- page 82 ---
+REFERENCES
+62
+
+
+--- page 83 ---
+Appendix A
+Card Sorting - Plotted Charts
+For ease of interpretation of the data presented on Tables 6.4- 6.5, we plotted the results of the card
+sorting process. The results are grouped in the same manner they are presented on Tables 6.4- 6.5:
+• Useless in-game / Core in-game;
+• Incomplete / Complete;
+• Imaginary / Realistic;
+• Relaxed / Exhausting;
+• Simple / Complex;
+• Confusing / Intuitive.
+Notice, however, that the presented comparison pairs are merely one way to interpret the col-
+lected data. Other pairs could be established to extract useful information - for example: “Complex
+vs. Confusing”, “Simple vs. Intuitive” or “Realistic vs. Exhausting”.
+63
+
+
+--- page 84 ---
+Card Sorting - Plotted Charts
+Figure A.1: Useless in-game vs. Core in-game.
+64
+
+
+--- page 85 ---
+Card Sorting - Plotted Charts
+Figure A.2: Incomplete vs. Complete.
+65
+
+
+--- page 86 ---
+Card Sorting - Plotted Charts
+Figure A.3: Imaginary vs. Realistic.
+66
+
+
+--- page 87 ---
+Card Sorting - Plotted Charts
+Figure A.4: Relaxed vs. Exhausting.
+67
+
+
+--- page 88 ---
+Card Sorting - Plotted Charts
+Figure A.5: Simple vs. Complex.
+68
+
+
+--- page 89 ---
+Card Sorting - Plotted Charts
+Figure A.6: Confusing vs. Intuitive.
+69
