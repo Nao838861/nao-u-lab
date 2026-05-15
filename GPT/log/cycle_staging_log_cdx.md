@@ -145,7 +145,22 @@ guardrails:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+2026-05-16T02:33:00+09:00 log_cdx Phase 4c:
+```yaml
+implemented:
+  - issue_id: ISS-20260516-01
+    files_changed:
+      - path: memory/game_memory_task_lens_index.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "既存 task lens index の各 lens に「使う場面」/ broad_tags / 次に投げる recall query を追加し、巨大タグから lens へ降りる運用を明記した。更新ルールにも、上位タグ追加で解決しないことと代表リンク差し替え条件を追記した。"
+    partial: false
+migrations: []
+verification:
+  - "python tools/memory_recall.py \"Playable Headless 評価 起動 遊べる GUI playthrough repair loop\" が成功し、PlayCoder atom など関連結果を返した。"
+  - "rg で memory/game_memory_task_lens_index.md に 6 lens / 6 broad_tags / 6 recall query / 更新ルール追記があることを確認した。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
