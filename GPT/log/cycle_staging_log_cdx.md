@@ -27,7 +27,20 @@ notes:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-16 08:01 JST / log_cdx
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260516_runtime_pcg_autonomous_agents.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778884869679689
+    char_count: 3609
+  - candidate: memory/shared_reads_candidates/20260516_bounded_autonomy_llm_characters.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778884870965799
+    char_count: 3720
+skipped: []
+notes:
+  - "2 candidates posted as separate #shared-reads messages. chat.getPermalink returned invalid_arguments, so permalinks were derived from channel id and ts."
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
