@@ -1,0 +1,219 @@
+{
+  "updated_at": "2026-05-15T17:33:20+09:00",
+  "reviewed_source_ts": [
+    "1778782281.755979",
+    "1778782280.911589",
+    "1777599071.966059",
+    "1778797690.566059",
+    "1778803710.961519",
+    "1778675653.815939",
+    "1778789339.493129"
+  ],
+  "reviews": [
+    {
+      "reviewed_at": "2026-05-15T05:11:26+09:00",
+      "id": "sr-1778782281-a8d45f574f",
+      "source_ts": "1778782281.755979",
+      "title": "[Codex shared-reads] When Routine Chats Turn Toxic: Unintended Long-Term State Poisoning in Personalized Agents",
+      "decision": "adopt_probe",
+      "reason": "長期状態への書き戻しが確認境界・tool default・自律範囲を静かに変える問題が、現在の memory / directive / phase 改善サイクルに直結するため。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
+    {
+      "reviewed_at": "2026-05-15T07:09:27+09:00",
+      "id": "sr-1778782280-cadfbbc95a",
+      "source_ts": "1778782280.911589",
+      "title": "[Codex shared-reads] VeRO: An Evaluation Harness for Agents to Optimize Agents",
+      "decision": "adopt_probe",
+      "reason": "agent-as-code の改善を内面の自己評価ではなく edit-execute-evaluate の外部 harness として扱う視点が、現在のゲーム制作サイクルの「記憶整理・ルール解釈だけで成果扱いになる」失敗に直結するため。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
+    },
+    {
+      "reviewed_at": "2026-05-15T09:11:00+09:00",
+      "id": "sr-1777599071-9ab1ed5d1c",
+      "source_ts": "1777599071.966059",
+      "title": "M-40「人間プレイ依存からの脱却 — 自己判定ハーネス」と外部研究3件の三角化観察 — kaizen #106 自発外部検索の収穫",
+      "decision": "adopt_probe",
+      "reason": "Nao_u の「人間のプレイに依存せず、ちゃんと自分で判断できるようになって」という指示は重要だが、直近では不完全なヘッドレス観測を設計判断に使う失敗も出ているため、自己判定の前に測定装置の成立を確認する小さな probe として反映する。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
+    },
+    {
+      "reviewed_at": "2026-05-15T11:16:00+09:00",
+      "id": "sr-1778797690-bc54b88d86",
+      "source_ts": "1778797690.566059",
+      "title": "弾幕系敵生成の業界実装は3経路に収束している——graze_log v05 hybrid 化の根拠",
+      "decision": "adopt_probe",
+      "reason": "直近サイクルが game balancing / playtesting / MMO simulation を扱い、graze_log v05 hybrid 化の根拠にも接続するため。恒久ルール化せず、次のゲーム設計時に「手作り/完全生成/hybrid のどれを選んだか」と「検証可能な最小 harness があるか」だけを見る短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
+    },
+    {
+      "reviewed_at": "2026-05-15T13:11:14+09:00",
+      "id": "sr-1778803710-4554fc20b1",
+      "source_ts": "1778803710.961519",
+      "title": "[Codex shared-reads] RuleSmith: Multi-Agent LLMs for Automated Game Balancing",
+      "decision": "adopt_probe",
+      "reason": "直近 Phase 1/2 が game balancing と LLM/game evaluation を扱っており、RuleSmith の「LLM を審査員ではなく候補比較 harness の一部として使う」視点が、次の小規模ゲーム調整で具体行動に落としやすいため。恒久ルールではなく、候補ルールを同一 harness で比較する短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
+    },
+    {
+      "reviewed_at": "2026-05-15T15:30:04+09:00",
+      "id": "sr-1778675653-a5059880b1",
+      "source_ts": "1778675653.815939",
+      "title": "Externalization in LLM Agents: A Unified Review",
+      "decision": "adopt_probe",
+      "reason": "Memory / Skills / Protocols / Harness Engineering の境界整理は、Phase 3b が避けたい恒久ルール肥大化を直接抑える。既存の記憶・directive・skill更新判断に、昇格前の短い確認として差し込めるため、恒久ルールではなく可逆な probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
+    {
+      "reviewed_at": "2026-05-15T17:33:20+09:00",
+      "id": "sr-1778789339-6cc298aa63",
+      "source_ts": "1778789339.493129",
+      "title": "Automated Playtesting with Procedural Personas through MCTS with Evolved Heuristics",
+      "decision": "adopt_probe",
+      "reason": "単一の上手い bot では見えない設計上の偏りを、複数 persona の行動差として測る知見が、次の game prototype / headless 評価に直接効くため。MCTS 完全実装ではなく、軽量 persona と同一ログ比較に絞れば小さく試せる。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    }
+  ],
+  "active_probes": [
+    {
+      "id": "probe-20260515-writeback-boundary",
+      "created_at": "2026-05-15T05:11:26+09:00",
+      "source_ts": "1778782281.755979",
+      "scope": "next memory / directive / AGENTS / phase prompt persistent writeback",
+      "questions": [
+        "この差分は、確認を省く条件・Slack/tool/git の既定動作・自律実行範囲のどれかを広げていないか。",
+        "core state に相当する AGENTS.md、active directive、phase prompt への変更なら、raw/candidate/probe で済む内容を昇格していないか。",
+        "危険度が不明な場合、削除ではなく保留・staging 記録・ユーザー確認に落とせるか。"
+      ],
+      "expires_after": "次回 Phase 4c または次の恒久 state 更新 1 回で見直す"
+    },
+    {
+      "id": "probe-20260515-external-harness-minimum",
+      "created_at": "2026-05-15T07:09:27+09:00",
+      "source_ts": "1778782280.911589",
+      "scope": "next game-dev / agent-improvement cycle result judgment",
+      "questions": [
+        "このサイクルの主要成果は、内省やルール解釈ではなく、外から再実行できる diff、smoke、測定ログのどれかに接続しているか。",
+        "game/* を触った場合、最低 1 つの deterministic 確認と、必要なら stochastic な観察ログを分けて残したか。",
+        "記憶整理・Slack投稿・日記だけで終わる場合、それを成果ではなく harness 未達として staging に明記できているか。"
+      ],
+      "expires_after": "次回 Phase 4a/4c または次のゲーム制作サイクル 1 回で見直す"
+    },
+    {
+      "id": "probe-20260515-headless-evidence-before-design",
+      "created_at": "2026-05-15T09:11:00+09:00",
+      "source_ts": "1777599071.966059",
+      "scope": "next game prototype headless/self-judgment use",
+      "questions": [
+        "ヘッドレス結果を設計判断に使う前に、その harness は人間プレイで問題になった状態や目標状態へ到達できているか。",
+        "到達できていない場合、設計を変えるのではなく harness 未達として扱い、観測ログ・到達条件・次の最小修正を分けて残したか。",
+        "人間プレイ依存を減らす目的が、未検証の自動測定を権威化する方向へすり替わっていないか。"
+      ],
+      "expires_after": "次に headless/self-judgment をゲーム設計判断へ使う 1 回で見直す"
+    },
+    {
+      "id": "probe-20260515-generation-strategy-fit",
+      "created_at": "2026-05-15T11:16:00+09:00",
+      "source_ts": "1778797690.566059",
+      "scope": "next game prototype / graze_log-style content generation decision",
+      "questions": [
+        "今回の敵・部屋・イベント生成は、手作り / 完全生成 / hybrid のどれとして扱っているかを 1 行で明示したか。",
+        "hybrid を選ぶ場合、prebuilt 側と procedural 側の責務境界を 1 つの具体例で確認したか。",
+        "その選択が面白さの仮説だけでなく、最低 1 つの deterministic な観測ログや smoke test に接続しているか。"
+      ],
+      "expires_after": "次に game prototype の生成方式を設計・変更する 1 回で見直し"
+    },
+    {
+      "id": "probe-20260515-balance-candidate-comparison",
+      "created_at": "2026-05-15T13:11:14+09:00",
+      "source_ts": "1778803710.961519",
+      "scope": "next game prototype balance / parameter tuning decision",
+      "questions": [
+        "バランス調整に入る前に、触るルールパラメータを 3-8 個へ切り出し、候補差分として比較できる形にしたか。",
+        "LLM や headless bot の判断を面白さの最終判定にせず、到達率、死亡時刻、スコア推移、無操作破綻など同一 harness で測れる量に接続したか。",
+        "候補を 2-3 個以上比べる場合、同じ seed 数・同じ評価手順で走らせ、プレイヤーモデル依存の限界を staging に明記したか。"
+      ],
+      "expires_after": "次に game prototype のバランス調整・パラメータ探索を行う 1 回で見直し"
+    },
+    {
+      "id": "probe-20260515-promotion-boundary",
+      "created_at": "2026-05-15T15:30:04+09:00",
+      "source_ts": "1778675653.815939",
+      "scope": "next memory / directive / skill / protocol promotion decision",
+      "questions": [
+        "この知見は、まだ episodic memory として残す段階か、複数事例を貫く semantic memory として整理する段階か、それとも reusable procedure として skill/protocol に昇格する段階か。",
+        "昇格させる場合、根拠は「反復して失敗した/反復して成功した実行証拠」か、それとも読後感だけか。読後感だけなら raw/candidate/probe に留める。",
+        "skill/protocol 化する前に、既存の AGENTS.md / active directive / phase prompt と重複せず、1回で戻せる小さな probe で検証できないか。"
+      ],
+      "expires_after": "次に memory/directive/skill/protocol のいずれかを昇格・恒久化しようとする 1 回で見直す"
+    },
+    {
+      "id": "probe-20260515-persona-headless-comparison",
+      "created_at": "2026-05-15T17:33:20+09:00",
+      "source_ts": "1778789339.493129",
+      "scope": "next game prototype headless regression / playtest log design",
+      "questions": [
+        "単一の最短クリア bot だけでなく、探索型・報酬追求型・危険回避型など 2-4 個の軽量 persona を同じ seed / build で走らせられるか。",
+        "各 persona について到達率、死亡地点、収集数、寄り道率、滞在時間のうち最小 2 指標を同一ログ形式で比較できるか。",
+        "persona を人間の代替として扱わず、「どの観点で壊れるか」を見る検査レンズとして、盲点と撤退条件を staging に明記したか。"
+      ],
+      "expires_after": "次に game prototype の headless regression または playtest log を設計・変更する 1 回で見直し"
+    }
+  ]
+}

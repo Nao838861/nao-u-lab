@@ -131,12 +131,64 @@ def permalink(channel_id: str, ts: str) -> str:
     return f"https://nao-u-lab.slack.com/archives/{channel_id}/p{ts.replace('.', '')}"
 
 
+def triage_fields(row: dict[str, Any], queue_kind: str) -> dict[str, Any]:
+    """Classify a pending Slack queue row for later phase routing.
+
+    The fields are hints, not completion markers. `status` remains the source of
+    truth for whether a row has been handled.
+    """
+    text = str(row.get("text", ""))
+    channel = str(row.get("channel", ""))
+    lower = text.lower()
+
+    if "game-rights" in channel or re.search(r"ゲーム|game|graze_log|brick_log|playable|ヘッドレス", text, re.I):
+        domain = "game"
+    elif re.search(r"記憶|memory|atoms|claude\.md|agents\.md|ルール|directive", text, re.I):
+        domain = "memory"
+    elif "slack" in lower or "投稿" in text:
+        domain = "slack"
+    else:
+        domain = "operations"
+
+    if re.search(r"確認して|対応して|進めて|適用して|評価して", text):
+        action_type = "direct_action" if queue_kind == "direct" else "review_request"
+    elif re.search(r"議論|検討|どう思う|価値はある", text):
+        action_type = "discussion_request"
+    else:
+        action_type = "intake"
+
+    if domain == "game":
+        next_step = "ゲーム制作サイクルの着手前に内容を読み、必要なら実装/評価タスクへ接続する。"
+        done_condition = "stagingまたは該当ゲーム文書に判断と次アクションを記録し、必要ならSlackへ返信する。"
+    elif domain == "memory":
+        next_step = "Phase 4a/4b/4cで記憶構造への影響を分類し、実装対象か保留かを決める。"
+        done_condition = "stagingに判断を記録し、実装した場合は変更ファイルと検証結果を残す。"
+    elif domain == "slack":
+        next_step = "Slack運用ルールを確認し、投稿/返信が必要か判定する。"
+        done_condition = "返信・投稿・保留理由のいずれかをstagingまたはhandling_noteへ記録する。"
+    else:
+        next_step = "作業開始時に内容を確認し、該当phaseまたは手動対応へ割り振る。"
+        done_condition = "対応先と完了条件をstagingまたはhandling_noteへ記録する。"
+
+    triage_status = "auto_triaged"
+    if "?" in text or "？" in text or "大丈夫" in text or "危険" in text:
+        triage_status = "needs_human_review"
+
+    return {
+        "action_type": action_type,
+        "domain": domain,
+        "next_step": next_step,
+        "done_condition": done_condition,
+        "triage_status": triage_status,
+    }
+
+
 def normalize_directive(channel: dict[str, Any], msg: dict[str, Any]) -> dict[str, Any]:
     channel_id = str(channel.get("id", ""))
     channel_name = str(channel.get("name") or channel_id)
     ts = str(msg.get("ts", "0"))
     text = str(msg.get("text", "")).strip()
-    return {
+    row = {
         "id": directive_id(channel_id, ts, text),
         "channel": channel_name,
         "channel_id": channel_id,
@@ -148,6 +200,8 @@ def normalize_directive(channel: dict[str, Any], msg: dict[str, Any]) -> dict[st
         "user": msg.get("user"),
         "detected_at": now_iso(),
     }
+    row.update(triage_fields(row, "direct"))
+    return row
 
 
 def ack_text(row: dict[str, Any]) -> str:
@@ -169,7 +223,7 @@ def normalize_broadcast(channel: dict[str, Any], msg: dict[str, Any]) -> dict[st
     channel_name = str(channel.get("name") or channel_id)
     ts = str(msg.get("ts", "0"))
     text = str(msg.get("text", "")).strip()
-    return {
+    row = {
         "id": broadcast_id(channel_id, ts, text),
         "channel": channel_name,
         "channel_id": channel_id,
@@ -182,6 +236,8 @@ def normalize_broadcast(channel: dict[str, Any], msg: dict[str, Any]) -> dict[st
         "detected_at": now_iso(),
         "kind": "broadcast",
     }
+    row.update(triage_fields(row, "broadcast"))
+    return row
 
 
 def broadcast_ack_text(row: dict[str, Any]) -> str:

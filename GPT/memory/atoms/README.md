@@ -75,6 +75,16 @@ excerpt 全文 (atoms.jsonl では切り詰めていた部分も含めて自由�
 {"id": "sr-1778621157-d0033ec3a9", "path": "2026-05/sr-1778621157-d0033ec3a9.md", "title": "...", "tags": [...], "source_ts": "1778621157.789119", "status": "active", "canonical_id": null, "score": 14}
 ```
 
+## canonical_topic_groups.jsonl 仕様
+
+`canonical_topic_groups.jsonl` は、同一論文・同一記事・同一 Slack 議論に由来する atom 群を読む時の入口補助 index。atom の削除や正本固定ではなく、recall / task lens で「まずどれを読むか」を安定させるために使う。`canonical_atom` は更新可能な代表であり、後続の補足・訂正・再評価で差し替えてよい。
+
+1 レコードは 1 topic group。必須フィールドは次の通り。
+
+```json
+{"group_id":"ctg-20260515-memsad-memory-poisoning","normalized_link_key":"arxiv:2605.03482v2","topic_label":"MEMSAD: RAG/長期記憶エージェントの記憶汚染防御","canonical_atom":"sr-1778536137-c07e04d08a","supporting_atoms":["sr-1778536160-392329fd76"],"superseded_atoms":["sr-1778535120-82ea7a1005","sr-1778535738-ed839f9805"],"game_memory_tags":["memory","agent","harness","evaluation","operation"],"rationale":"代表選定の理由","updated_at":"2026-05-15T15:38+09:00"}
+```
+
 ## Obsidian Graph view を使う
 
 このディレクトリを Obsidian の vault または vault サブフォルダとして開けば、
