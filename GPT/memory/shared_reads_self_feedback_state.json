@@ -1,8 +1,9 @@
 {
-  "updated_at": "2026-05-15T07:09:27+09:00",
+  "updated_at": "2026-05-15T09:11:00+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
-    "1778782280.911589"
+    "1778782280.911589",
+    "1777599071.966059"
   ],
   "reviews": [
     {
@@ -38,6 +39,23 @@
         "reversibility": 3,
         "total": 16
       }
+    },
+    {
+      "reviewed_at": "2026-05-15T09:11:00+09:00",
+      "id": "sr-1777599071-9ab1ed5d1c",
+      "source_ts": "1777599071.966059",
+      "title": "M-40「人間プレイ依存からの脱却 — 自己判定ハーネス」と外部研究3件の三角化観察 — kaizen #106 自発外部検索の収穫",
+      "decision": "adopt_probe",
+      "reason": "Nao_u の「人間のプレイに依存せず、ちゃんと自分で判断できるようになって」という指示は重要だが、直近では不完全なヘッドレス観測を設計判断に使う失敗も出ているため、自己判定の前に測定装置の成立を確認する小さな probe として反映する。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
     }
   ],
   "active_probes": [
@@ -64,6 +82,18 @@
         "記憶整理・Slack投稿・日記だけで終わる場合、それを成果ではなく harness 未達として staging に明記できているか。"
       ],
       "expires_after": "次回 Phase 4a/4c または次のゲーム制作サイクル 1 回で見直す"
+    },
+    {
+      "id": "probe-20260515-headless-evidence-before-design",
+      "created_at": "2026-05-15T09:11:00+09:00",
+      "source_ts": "1777599071.966059",
+      "scope": "next game prototype headless/self-judgment use",
+      "questions": [
+        "ヘッドレス結果を設計判断に使う前に、その harness は人間プレイで問題になった状態や目標状態へ到達できているか。",
+        "到達できていない場合、設計を変えるのではなく harness 未達として扱い、観測ログ・到達条件・次の最小修正を分けて残したか。",
+        "人間プレイ依存を減らす目的が、未検証の自動測定を権威化する方向へすり替わっていないか。"
+      ],
+      "expires_after": "次に headless/self-judgment をゲーム設計判断へ使う 1 回で見直す"
     }
   ]
 }

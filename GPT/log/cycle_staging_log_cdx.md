@@ -42,6 +42,35 @@ skipped: []
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+## Phase 3b: Shared-reads 自己フィードバック / 2026-05-15 09:11 JST / log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1777599071-9ab1ed5d1c
+    source_ts: "1777599071.966059"
+    title: "M-40「人間プレイ依存からの脱却 — 自己判定ハーネス」と外部研究3件の三角化観察 — kaizen #106 自発外部検索の収穫"
+    reason: "Nao_u の「人間のプレイに依存せず、ちゃんと自分で判断できるようになって」は現在のゲーム制作サイクルに直結する。一方で直近の失敗は、ヘッドレスが目標状態へ到達できていないのに設計判断へ使ったことなので、自己判定を強める前に測定装置の成立を確認する必要がある。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次に headless/self-judgment をゲーム設計判断へ使う前に、harness が人間プレイで問題になった状態や目標状態へ到達できているかを確認する probe を state に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
