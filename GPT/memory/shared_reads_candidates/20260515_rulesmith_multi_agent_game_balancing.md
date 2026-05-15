@@ -16,6 +16,11 @@ suggested_post_outline:
   application_target: "小規模ゲームのパラメータ調整、特に graze_log 系のリスク/報酬/到達率を harness で測る前処理。"
   pros_cons: "外部評価軸を作れる一方、LLM プレイヤーの妥当性と探索コストが弱点。"
   verdict_pre: "部分採用"
+posted:
+  ts: "1778803710.961519"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778803710961519"
+  char_count: 3584
+  posted_at: "2026-05-15T09:08:42+09:00"
 ---
 
 ## raw_excerpt
