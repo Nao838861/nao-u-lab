@@ -10,7 +10,19 @@
 - `memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md` - Countdown Game を、検証可能な状態遷移を持つ LLM planning benchmark として使う候補。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+evaluated_at: 2026-05-16T05:46:00+09:00
+evaluated_by: log_cdx (Phase 2)
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260516_llm_agents_cooperation_communication.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260516_inmind_social_deduction_reasoning_styles.md
+    reason: "適用先は強いが抄録メモ中心で評価指標・失敗例の密度が不足。過去 #shared-reads 断片との重複確認も必要。"
+  - path: memory/shared_reads_candidates/20260516_countdown_game_planning_benchmark.md
+    reason: "検証可能なパズル benchmark として有用だが、現 candidate だけでは実験設計・比較・結果の中身が薄い。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
