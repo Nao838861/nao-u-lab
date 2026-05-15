@@ -16,6 +16,11 @@ suggested_post_outline:
   application_target: "小型プロトタイプの更新履歴から再確認すべきプレイ経路・失敗条件・既存テストを選ぶ Phase 4/実装後チェックへ接続する。"
   pros_cons: "メリットは更新差分とテスト選択を結びつける点。デメリットは RL/大規模環境前提が重く、小規模運用では簡略版に落とす必要がある点。"
   verdict_pre: "部分採用"
+posted:
+  ts: "1778856013.077599"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856013077599"
+  char_count: 3970
+  posted_at: "2026-05-15T23:40:20+09:00"
 ---
 
 ## raw_excerpt

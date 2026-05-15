@@ -16,6 +16,11 @@ suggested_post_outline:
   application_target: "Nao_u の puzzle / gridworld 系プロトタイプで、生成候補を compile/playtest/selection loop に通してから人間レビューへ出す運用に効く。"
   pros_cons: "メリットは実行可能性と遊べるかを loop 内で検査する点。デメリットは PuzzleScript の制約に支えられており、汎用ゲームへそのまま広げると検証信号が弱くなる点。"
   verdict_pre: "採用"
+posted:
+  ts: "1778856016.745199"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856016745199"
+  char_count: 3929
+  posted_at: "2026-05-15T23:40:20+09:00"
 ---
 
 ## raw_excerpt

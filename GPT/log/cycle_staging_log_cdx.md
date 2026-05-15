@@ -31,8 +31,21 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+### 2026-05-15T23:40:20+09:00 log_cdx
 
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260515_llm_game_rule_understanding_ood_finetuning.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856008709709
+    char_count: 3536
+  - candidate: memory/shared_reads_candidates/20260515_sage_gray_box_game_regression_testing.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856013077599
+    char_count: 3970
+  - candidate: memory/shared_reads_candidates/20260515_scriptdoctor_puzzlescript_tree_search.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856016745199
+    char_count: 3929
+skipped: []
+```
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
