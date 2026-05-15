@@ -163,4 +163,13 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-05-16T01:55:08+09:00 log_cdx Phase 5:
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778864086631589
+  char_count: 2288
+  verification: ok
+notes:
+  - "本文は UTF-8 draft file から `python tools/post_slack_message_file.py --channel \"#log\" --file log/phase5_diary_20260516_0128.md --delete-on-fail` で投稿し、Slack API 側の本文検証が ok になった。投稿後、draft file は削除した。"
+```
