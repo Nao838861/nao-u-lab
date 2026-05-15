@@ -10,6 +10,11 @@ gate_decision: pass
 gate_reason: |
   design pillars を自然言語アーティファクトとして扱う問題設定、SPINE prototype、モデル比較・game jam ケーススタディ・専門家インタビューという評価材料が揃っている。
   Nao_u の小規模 prototype で「守る体験」「捨てる仕様」を判断する軸として具体適用でき、CoopEval 水準の概要も書ける。
+posted:
+  ts: "1778833796.420859"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833796420859"
+  char_count: 3500
+  posted_at: "2026-05-15T17:30:14+09:00"
 suggested_post_outline:
   overview_angle: "LLM に完成ゲームを作らせる話ではなく、初期開発の design pillars を共同編集・判断軸化する手法として書く。"
   analysis_axis: "柱の生成、解釈、意思決定補助を SPINE がどう分担し、モデル比較・jam・専門家インタビューで何を見たか。"

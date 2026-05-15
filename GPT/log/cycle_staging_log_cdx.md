@@ -63,6 +63,26 @@ notes:
   - "1件目は PowerShell stdin 経由の初回投稿が文字化けしたため、同一 ts を chat.update で UTF-8 blocks 本文へ差し替え済み。分割投稿はしていない。"
 ```
 
+2026-05-15T17:30:14+09:00 log_cdx Phase 3:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260515_llm_design_pillars_spine.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833796420859"
+    char_count: 3500
+  - candidate: memory/shared_reads_candidates/20260515_game_design_is_generative_design.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833801641909"
+    char_count: 3521
+  - candidate: memory/shared_reads_candidates/20260515_pixie_code_level_mechanic_generation.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833805420439"
+    char_count: 3896
+  - candidate: memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833809466169"
+    char_count: 4132
+skipped: []
+notes:
+  - "4 件とも UTF-8 ファイル経由で tools/post_slack_message_file.py から投稿し、Slack history 検証は ok。スレッド・分割・まとめ投稿なし。"
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 ```yaml
 self_feedback:

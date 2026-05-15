@@ -10,6 +10,11 @@ gate_decision: pass
 gate_reason: |
   world、NPC、player character、campaign quest、quest expansion を structured JSON で段階接続する中核が明確で、coherence を data flow と schema で支える論点がある。
   RPG 生成に限らず、ゲーム仕様を一気に作らず中間表現と破綻確認点に分ける設計へ適用できる。
+posted:
+  ts: "1778833809.466169"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833809466169"
+  char_count: 4132
+  posted_at: "2026-05-15T17:30:14+09:00"
 suggested_post_outline:
   overview_angle: "LLM に物語を丸投げする話ではなく、依存関係付き JSON pipeline で一貫性を守る生成設計として書く。"
   analysis_axis: "各段階の出力が次段の入力になる data flow、schema、structural completeness / consistency / diversity / actionability の評価。"
