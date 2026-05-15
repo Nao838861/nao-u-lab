@@ -16,6 +16,11 @@ suggested_post_outline:
   application_target: "Nao_u_BOT 側の小型ゲームや社会的相互作用プロトタイプで、プレイヤー評価と専門家評価を混ぜずに読むためのテスト設計に効く。"
   pros_cons: "メリットは少人数でも観点差を抽出できること。デメリットは Cyberball 固有の研究課題に寄るため、一般ゲームへ移すには評価項目の翻訳が必要なこと。"
   verdict_pre: "部分採用"
+posted:
+  ts: "1778848709.160389"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778848709160389"
+  char_count: 3720
+  posted_at: "2026-05-15T21:38:33+09:00"
 ---
 
 ## raw_excerpt

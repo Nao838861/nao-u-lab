@@ -16,6 +16,11 @@ suggested_post_outline:
   application_target: "ゲーム制作で、専門領域や複雑なシステムをプレイヤーに学ばせる時の cue 設計、早期試作、専門家レビュー導線に効く。"
   pros_cons: "メリットは制作前半で専門知をゲーム内行動へ翻訳できること。デメリットは対象領域依存が強く、面白さ評価とは別の検証が必要なこと。"
   verdict_pre: "部分採用"
+posted:
+  ts: "1778848709.778919"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778848709778919"
+  char_count: 4490
+  posted_at: "2026-05-15T21:38:33+09:00"
 ---
 
 ## raw_excerpt
