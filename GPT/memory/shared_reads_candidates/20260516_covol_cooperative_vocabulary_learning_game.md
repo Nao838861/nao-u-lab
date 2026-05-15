@@ -4,6 +4,12 @@ url: https://arxiv.org/abs/2505.08515
 collected_at: 2026-05-16T03:29:17+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [serious-game, cooperative-game, accessibility, learning-game, hci]
+evaluated_at: 2026-05-16T03:31:58+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+gate_reason: >-
+  cooperative turn-taking と学習対象をゲームルールに埋め込む観点は有用だが、first prototype と therapist 10 名の interview feedback、
+  planned features / evaluation plan が中心で、効果評価や設計原理の抽出がまだ薄い。教育・アクセシビリティ題材としては保持し、投稿は追加読解後に回す。
 ---
 
 ## raw_excerpt

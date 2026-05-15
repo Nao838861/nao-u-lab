@@ -14,7 +14,20 @@
   - `memory/shared_reads_candidates/20260516_multimodal_biofeedback_videogame_control.md` — unimodal/multimodal biofeedback 入力を FPS mechanics に割り当てた HCI 評価。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+### 2026-05-16T03:31:58+09:00 log_cdx
+
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260516_llm_tcg_procedural_relatedness.md
+  - memory/shared_reads_candidates/20260516_multimodal_biofeedback_videogame_control.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260516_vr_sports_physical_interaction_controller.md
+    reason: "問題設定と tangible mapping は有用だが、現時点では計画・prototype・評価指標中心で結果の厚みが足りない。"
+  - path: memory/shared_reads_candidates/20260516_covol_cooperative_vocabulary_learning_game.md
+    reason: "turn-taking 型 cooperative learning の題材は有用だが、first prototype と interview / evaluation plan 中心で投稿水準には追加読解が必要。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

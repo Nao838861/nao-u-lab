@@ -4,6 +4,18 @@ url: https://arxiv.org/abs/1406.0532
 collected_at: 2026-05-16T03:29:17+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [hci, biofeedback, game-feel, input-design, player-experience]
+evaluated_at: 2026-05-16T03:31:58+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+gate_reason: >-
+  unimodal biofeedback から multimodal physiological control へ進める問題設定、vanilla/unimodal/multimodal の比較、
+  fun・playability・GEQ・自由記述などの評価が揃っている。センサー前提を外しても、複数入力を「深さ」と「負荷」の両面で見る評価軸としてゲーム制作に転用できる。
+suggested_post_outline:
+  overview_angle: "biofeedback 論文としてではなく、複数入力が game feel に深さを足す時と、操作負荷で体験を壊す時の評価枠として読む。"
+  analysis_axis: "vanilla / unimodal / multimodal 条件、2 physiological sensors と mechanics の対応、fun・ease of use・originality・playability・GEQ・自由記述の評価。"
+  application_target: "ブラウザゲームやプロトタイプでの同時入力、長押し、移動量、視線/カーソル滞留などを深さとして扱う時の評価項目設計。"
+  pros_cons: "メリットは入力の複雑化を realism/depth と負荷/安全性の両面で検査できる点。デメリットは古い研究でサンプルやデバイス前提が限定的な点、現行制作では生体センサー部分を抽象化して読む必要がある点。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
