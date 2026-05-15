@@ -195,3 +195,64 @@ cross_review (`aad8e17b1`) で設計した keigame5 シード保存 infrastructu
 - `memory/feedback_few_rules_big_effect.md` t:5 — 1 機構 1 採用 (B-1 のみ)
 
 — Ash (Win2) 2026-05-15 C184 Phase 4
+
+## 8. B-1 実装結果 (C186 Phase 4 追記, 2026-05-15)
+
+§3 で設計した beta B-1 (敵配置 rhyme) と §4 で接続した cross_review aad8e17b1 §1 (シード保存 infra) を同一 commit で実装した。本節は C186 Phase 4 大作業の自己記録、戻し方、seed 再現性確認手順、次サイクルの判定材料を残す。
+
+### 8.1 改変箇所 (v05/index.html)
+
+| 行 | before | after | 説明 |
+|---|---|---|---|
+| L5 (title) | `graze_log v05 — 全弾常時軌跡 (α'' 拡張)` | `graze_log v05 beta — 全弾常時軌跡 + 敵配置 rhyme (B-1)` | ブラウザタブ識別 |
+| L46-58 (新規) | (なし) | `pushSeedToLocal(seed)` 関数 + 削除手順コメント | localStorage 直近 10 seed、startGame() 時に push |
+| L190 (startGame) | `state.t=0;` | `pushSeedToLocal(SEED); state.t=0;` | game 開始時の seed 永続化 |
+| L220 (gameOver) | `state.unlockT=RETRY_UNLOCK_FRAMES;` | `console.log('graze_log seed:',SEED,'score:',state.score,'wave:',state.wave); state.unlockT=...` | 標準出力にも seed/score/wave を残す |
+| L279-336 (改変) | 旧 `spawnWave()` 1 関数内に wave 1-4 を if 分岐で inline | `spawnWave1/2/3/4/spawnWaveRandom` の 5 関数 + `WAVE_FUNCS` 配列 + 新 `spawnWave()` ディスパッチャ | wave 1-4 を関数化、wave>=5 で 70% rng pick + 30% random |
+
+合計 6 箇所、約 +60 行 / -28 行。balance check: 開閉ブレース 185/185、開閉カッコ 495/495、関数定義数 31 (alpha 26 → beta 31、+5 = spawnWave1-4 + spawnWaveRandom + pushSeedToLocal、spawnWave 本体は共通)。
+
+### 8.2 戻し方 (v05 beta B-1 → v05 alpha)
+
+1. **B-1 (敵配置 rhyme) 撤回**: L279-336 を旧 `spawnWave()` (alpha 版、wave 1-4 inline + wave 5+ random) に戻す。コメントブロック L279-285 と `WAVE_FUNCS` 配列 (L322) と新 `spawnWave()` ディスパッチャ (L323-336) を削除、spawnWave1..4 の中身を spawnWave() 本体に inline で戻す。spawnWaveRandom() は spawnWave() 末尾の `const pop=4+Math.min(w-4,6); for(...)` ブロックに戻す。
+2. **seed 保存 infra 撤回**: L46-58 (`pushSeedToLocal` 関数) を削除、L190 の `pushSeedToLocal(SEED);` 削除、L220 の `console.log('graze_log seed:'...)` 削除。
+3. **title 撤回**: L5 を `graze_log v05 — 全弾常時軌跡 (α'' 拡張)` に戻す。
+
+`feedback_clone_strategy.md` t:5 の「削除可能改良 1 個刻み」原則に従い、B-1 + seed infra の 2 機構は**完全に独立**して撤回可能。
+
+### 8.3 seed 再現性確認手順
+
+1. ブラウザで `game/graze_log/v05/index.html?seed=12345` を開く
+2. ゲーム開始 (SPACE)、wave 1-4 → wave 5-7 まで進めて enemy spawn パターンを目視で記憶
+3. ページリロード (Ctrl+R)、同じ `?seed=12345` で再走
+4. wave 5-7 で同じ spawn パターン (rng pick で同じ wave 関数が選ばれているか) を確認
+5. game over 後、DevTools Console で `graze_log seed: 12345 score: ... wave: ...` のログを確認
+6. DevTools → Application → Local Storage → `graze_log_recent_seeds` で 12345 を含む直近 10 件配列を確認
+
+期待: state.rng は startGame() で再シード**しない** (initStars と spawnWave で同じ rng を共有) ので、`?seed=12345` 起動 → SPACE 押下 → wave 順序が完全に一致する。alpha→beta で initStars と wave dispatcher 経路が変わったので**alpha と beta は同じ seed でも spawn 順序が異なる** (alpha は wave 1-4 固定 + wave 5+ random、beta は wave 1-4 固定 + wave 5+ rng で関数選択)。これは仕様で、alpha との直接比較ではなく beta 内 seed 再現性のみが意味を持つ。
+
+### 8.4 alpha との等価性ベースライン
+
+wave 1-4 は alpha と beta で**完全に同一** (spawnWave1..4 の中身は alpha の if(w===N) ブロックの逐次コピー、setTimeout も保持)。alpha と beta の差は wave>=5 の挙動のみ:
+- alpha: `pop=4+min(w-4,6)` で 4-10 体の `small 60% / medium 40%` random
+- beta: 70% で wave 1-4 のいずれかを再使用 (rhyme)、30% で alpha と同じ random
+
+beta は alpha の superset で、wave 1-4 がフルで終わる前に game over した場合は alpha/beta で完全に同一の体験。wave 5 以降で初めて差が出る。
+
+### 8.5 次サイクル想定 (C187 Phase 0a 候補)
+
+- (a) **B-1 効果の Nao_u 評価待ち**: Slack #game-rights に B-1 ship 通知を投稿し、Nao_u 評価 (rhyme が「単調さ解消」に効くか、効かないか、別の機構が必要か) を待つ。本サイクル Phase 4 では Slack 投稿はしない (Phase 5 か C187 で判定)
+- (b) **B-2 (拡大 wave) 試行**: Mir 案後段「敵配置 OR 弾パターン」の弾パターン側に踏み込む。spawnEnemy の medium 弾発射ロジックに 2-3 種のバリエーション (扇形 / 直射 / spread) を入れる。これは v05 内 1 機構刻みでギリギリ追加可能だが、`feedback_few_rules_big_effect.md` t:5 「1 機構 1 採用」を超えるので v06 に降格が安全
+- (c) **B-3 (撃ち返し graze) v06 候補昇格**: brainstorm.md §3 で v06 保留にした B-3 を、B-1 評価が「rhyme は効くが単調さは残る」だった場合に昇格させる
+- (d) **headless 数値検査 (judgment 根拠化はしない)**: `feedback_headless_unfit_for_unfinished_eval.md` t:5 — headless で wave 1-7 を走らせ infrastructure 動作確認のみ。spawnWave1..4 が正しく呼ばれるか / pushSeedToLocal が localStorage を更新するか / console.log が出るか。判定根拠には使わない
+
+### 8.6 self-check (B-1 と feedback の照合)
+
+- `feedback_clone_strategy.md` t:5: B-1 + seed infra の 2 機構は独立撤回可能、削除可能改良 1 個刻みを 2 個積み上げた構造 → 適合
+- `feedback_few_rules_big_effect.md` t:5 「1 機構 1 採用」: B-1 は「敵配置 rhyme」1 機構、seed infra は cross_review §1 の独立 infrastructure (機構ではない) → 適合
+- `feedback_prediction_responsibility.md` t:5 Stage 2: 着手前懸念は §3-5 で解消 → 適合
+- `feedback_means_ends_reversal_check.md` t:5: playable diff (index.html 改変) が本サイクル第一義の出力 → 適合
+- `feedback_headless_unfit_for_unfinished_eval.md` t:5: headless 数値を judgment 根拠に使わない方針を §8.5 (d) に明記 → 適合
+- `feedback_device_direction_rescue_vs_suffocation.md` t:4: `ash:` prefix で意図 commit、backup auto-commit より先に HEAD に入れる方針 → 適合
+
+— Ash (Win2) 2026-05-15 C186 Phase 4
