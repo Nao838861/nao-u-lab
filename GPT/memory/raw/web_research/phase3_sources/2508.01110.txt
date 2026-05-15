@@ -1,0 +1,534 @@
+
+
+--- page 1 ---
+Cross-Device Motion Interaction via Apple’s Native
+System Frameworks
+Ezequiel Franc ¸a dos Santos
+PhD Student in Digital Games Development
+IADE — Universidade Europeia
+Lisbon, Portugal
+https://orcid.org/0000-0001-9321-8444
+Abstract—We introduce an open-source, fully offline pipeline
+that transforms a consumer-grade iPhone into a motion controller
+with real-time tactile feedback, using only native Apple frame-
+works. Designed for rapid prototyping and applied mobile HCI
+scenarios, the system integrates CoreMotion for inertial sensing,
+MultipeerConnectivity for peer-to-peer data transmission
+at 10 Hz, and CoreHaptics for immediate tactile confirmation.
+A built-in logger captures end-to-end latency without requiring
+clock synchronization, yielding a mean delay of 70.4 ms and
+95th percentile below 74 ms on typical 5 GHz Wi-Fi ( −55 dBm
+RSSI). We validated the pipeline through a real-time demon-
+strator game, KeepCalm, deployed during a public event with 21
+participants. Results showed stable connections, zero packet loss,
+and negligible power impact ( 24 mW on iPhone 13 mini). With
+fewer than 500 lines of Swift code and no reliance on cloud
+infrastructure, this system provides a compact, reproducible
+foundation for embodied interaction research, casual games,
+and offline educational tools. All source code, latency logs, and
+provisioning scripts are openly released under an MIT license.
+Index Terms —Cross device interaction, motion input, haptic
+feedback, MultipeerConnectivity, mobile HCI, peer to peer com-
+munication
+I. I NTRODUCTION
+Previous studies also demonstrated the practical feasibility
+of phone-to-phone motion games [1], investigated usability
+challenges in cross-device card games [2], and identified
+broader real-world deployment considerations and user expe-
+rience factors for cross-device interactions [3].
+Cross-device interaction remains a vibrant area of HCI
+research, driven by as modern smartphones and tablets in-
+creasingly serve as versatile input and feedback devices across
+various contexts, including gaming, education, and everyday
+tasks. The latest mobile hardware now commonly incorpo-
+rates high-resolution inertial measurement units (IMUs), so-
+phisticated haptic actuators, and high-speed wireless radios.
+These advances enable developers to explore novel forms of
+embodied user interactions. Previous research has examined
+tilt-based input methods [4], proxemics-aware collaborative
+interactions [5], [6], and multiplayer motion-driven gam-
+ing [7], highlighting persistent challenges such as reliable
+gesture detection, temporal synchronization among devices,
+and responsive multimodal feedback.
+This paper introduces a streamlined pipeline leveraging
+native Apple frameworks to convert a standard consumer-grade
+iPhone into a peer-to-peer motion controller with integrated
+tactile feedback. Specifically, our implementation utilizes
+CoreMotion for high-frequency inertial data acquisition [8],
+applies threshold-based gesture detection for real-time input
+recognition, employs MultipeerConnectivity [9] for
+reliable, low-latency wireless communication without external
+network dependencies, and utilizes CoreHaptics [10] for
+instantaneous tactile response upon gesture validation. An
+iPhone 13 mini serves as the motion controller, streaming
+structured IMU packets at 10 Hz to a host application running
+on macOS or iPadOS devices. Recognized gestures, such
+as device tilts, trigger specific in-game actions, immediately
+reinforced by short haptic pulses to enhance interaction re-
+sponsiveness and user experience.
+We validate this architecture through an interactive demon-
+strator game named KeepCalm. This game is developed using
+Apple’s native UI and graphics frameworks: SwiftUI, Apple’s
+declarative UI framework for building apps across all Apple
+platforms [11], and SpriteKit, a high-performance 2D game
+rendering framework [12]. The demonstrator leverages the
+open-source Swift library MultipeerKit [13] to facilitate
+seamless peer discovery and reliable transport. The chosen
+implementation emphasizes simplicity, minimal latency, and
+efficient power usage, making it highly suitable for casual
+gaming scenarios, classroom demonstrations, and rapid pro-
+totyping environments.
+Engineering contributions:
+• A reusable sensor-to-feedback control pipeline, developed
+exclusively using vendor-optimized Apple frameworks
+and provided as open-source under an MIT license.
+• A precisely defined compact 88 byte IMU data frame,
+transmitted at a consistent rate of 10 Hz, including
+embedded timestamps facilitating latency measurement
+without clock synchronization requirements.
+• Empirical latency analysis based on 1,000 logged sam-
+ples, demonstrating mean one-way latency of 70.4 ms
+over typical local Wi-Fi conditions ( 5 GHz, approxi-
+mately −55 dBm RSSI).
+• A documented energy efficiency profile showing an aver-
+age power consumption of 24 mW on an iPhone 13 mini
+over ten-minute usage periods, corresponding to less than
+2% total battery discharge per session.
+• A fully operational demonstration game, implementable
+with fewer than 500 lines of Swift code, providing an
+arXiv:2508.01110v1  [cs.HC]  1 Aug 2025
+
+
+--- page 2 ---
+immediate, adaptable template for future research or
+industry application.
+Our work extends foundational research such as Akbu-
+lut et al.’s investigation into peer-to-peer content delivery
+in virtual reality classroom environments [14]. Unlike pre-
+vious approaches focused primarily on content streaming,
+we emphasize real-time interactive input and instantaneous
+multimodal feedback, contributing a compact, easily adoptable
+architecture to both academic exploration and industrial SDK
+development efforts in embodied, local-first interactions.
+II. I NPUT LATENCY IN GAMING
+Latency significantly influences the perceived responsive-
+ness and overall experience quality of interactive systems,
+particularly in gaming scenarios. In highly competitive gaming
+contexts, such as first-person shooter (FPS) games, players
+demonstrate sensitivity to even minor delays. Studies indicate
+expert gamers can perceive latency as low as 15 ms, prompting
+esports-focused gaming systems to maintain total latency
+ideally below 50 ms [15], [16].
+However, the acceptable latency threshold is notably higher
+for casual, educational, and embodied gaming experiences.
+Normoyle et al. [17] reported consistent player performance
+in platform-style games with latency levels up to approxi-
+mately 50 ms, beyond which gradual degradation in perfor-
+mance became noticeable. Further extending this perspective,
+Claypool and Finkel’s research into moving-target selection
+tasks revealed significant user experience degradation only
+past latency values of around 100 ms [18]. Empirical studies
+on widely-used handheld gaming consoles consistently report
+typical end-to-end latencies in the range of 60 ms to 100 ms,
+demonstrating general acceptance and playability for gesture-
+based and touch-centric gaming modalities [19].
+Our system samples inertial motion data at a controlled
+rate of 10 Hz using Apple’s native inertial sensing frame-
+work, CoreMotion [8]. Sampled data is packaged into
+structured and timestamped IMU frames and transmitted in
+real-time via Apple’s peer-to-peer communication framework,
+MultipeerConnectivity [9]. Empirical latency mea-
+surement across 1,000 sampled gesture events recorded a mean
+one-way latency of 70.4 ms between the controller device
+(iPhone 13 mini, equipped with an A15 Bionic processor
+running iOS 17) and the host device (MacBook Pro with
+an M2 chip, macOS 14), under standard Wi-Fi conditions
+(5 GHz frequency, approximately −55 dBm RSSI). Latency
+calculations were facilitated by comparing sender and receiver
+timestamps, circumventing the need for explicit clock synchro-
+nization.
+These observed latency metrics fall comfortably within
+previously identified acceptable thresholds for casual, educa-
+tional, and embodied interaction scenarios. To further enhance
+responsiveness perception, our system implements immediate
+multimodal feedback through CoreHaptics [10], delivering
+instantaneous tactile confirmation of recognized gestures. Prior
+research confirms that such haptic feedback loops can signifi-
+cantly enhance user tolerance and acceptance of latency [20].
+Moreover, the entirely local nature of our peer-to-peer
+architecture inherently eliminates additional latency typically
+incurred by cloud relay or wide-area network communication
+paths, thereby ensuring predictable performance and reliable
+operation even in fully offline or ad-hoc environments.
+III. M ETHODOLOGY
+Our system integrates exclusively Apple’s native, vendor-
+optimized frameworks: CoreMotion for inertial data cap-
+ture [8], CoreHaptics for tactile output [10], and
+MultipeerConnectivity for real-time, local wireless
+communication [9]. All implementation code, scripts for anal-
+ysis, and data logs are publicly accessible under the MIT
+License.1 No personal user data were collected during testing,
+thus formal ethics approval was not necessary.
+A. System Overview
+The proposed architecture comprises two main components:
+• Mobile Controller (iPhone 13 mini) : This device cap-
+tures six-axis inertial sensor data (three-axis accelerom-
+eter and three-axis gyroscope) using CoreMotion. It
+samples inertial data at 10 Hz, applies a threshold-
+based detection to identify intentional gestures, and
+transmits structured motion data frames wirelessly us-
+ing MultipeerConnectivity. Upon gesture de-
+tection, a short tactile pulse ( 20 ms) is generated via
+CoreHaptics to provide immediate feedback.
+• Game Host (MacBook Pro M2 or iPad Pro): This com-
+ponent receives incoming motion data frames, processes
+them within a SpriteKit-based game environment, updates
+game states accordingly, and sends back acknowledgment
+packets to trigger tactile feedback on the mobile con-
+troller.
+Local device discovery and data transmission are simplified
+by leveraging the open-source library MultipeerKit [13],
+a lightweight Swift wrapper built around Apple’s native
+MultipeerConnectivity framework. All data traffic oc-
+curs strictly within a local Wi-Fi network ( 5 GHz, RSSI ap-
+proximately −55 dBm), ensuring no external relay or internet-
+dependent infrastructure is required.
+B. Architecture Diagram
+The design prioritizes simplicity and reproducibility, using
+only native Apple APIs. The result is a portable system
+architecture that requires no calibration, cloud backend, or
+external dependencies.
+C. Data Flow
+1) The iPhone samples motion data (user acceleration and
+gyroscope) every 0.1 seconds using CoreMotion.
+2) Motion data is encapsulated into a MotionData struct,
+including a timestamp for latency measurement.
+3) The data is serialized using Swift’s Codable [21]
+protocol and transmitted via MultipeerKit.
+1https://github.com/GameAISchool2024members/TeamBrazil
+
+
+--- page 3 ---
+iPhone 13 mini
+CoreMotion (IMU)
+CoreHaptics (Haptic)
+Game Host
+SpriteKit + SwiftUI
+MotionData(x,y,z,t)
+HapticTrigger()
+Fig. 1. High-level pipeline: iPhone captures IMU data & sends MotionData
+to host; host processes and returns HapticTrigger for tactile feedback.
+4) On the host device, the incoming data is deserialized
+and injected into the GameScene.
+5) Character actions (e.g., jumping) are triggered when
+motion thresholds are detected.
+6) A haptic feedback pulse is sent back to the iPhone on
+valid motion events using CoreHaptics.
+D. Frame Format and Data Throughput
+The motion data packets transmitted from the mobile con-
+troller are structured as follows:
+• A 64 bit UNIX timestamp (milliseconds since epoch).
+• Three single-precision (32-bit) floating-point values rep-
+resenting user acceleration ( ax, ay, az).
+• Three single-precision (32-bit) floating-point values for
+angular velocity ( ωx, ωy, ωz).
+• A single-precision (32-bit) checksum value for integrity
+verification.
+This structured payload totals precisely 36 bytes (8 bytes
+timestamp + 24 bytes sensor data + 4 bytes checksum). Adding
+the standard 18 byte MultipeerConnectivity header and a
+34 byte encryption envelope for secure transmission yields a
+total on-air frame size of 88 bytes. Operating at a transmission
+frequency of 10 Hz, the effective mean throughput of the
+system remains at a minimal 7.0 kibit/s.
+E. Gesture Detection Criteria
+To reliably distinguish intentional user gestures from in-
+cidental device motion, we implemented a simple threshold-
+based detection algorithm. Specifically, a gesture is considered
+valid when user-generated acceleration along the Y-axis sur-
+passes a fixed threshold τ:
+ay > τ, where τ = 0.5 m/s2. (1)
+This threshold was empirically chosen based on prior val-
+idated research into tilt-based interaction systems [1], [4].
+Though simple, this criterion proved sufficient for detecting
+the basic tilt or jump gesture implemented in our demonstrator
+game. Future iterations could integrate more advanced clas-
+sifiers based on machine learning models trained on diverse
+motion datasets.
+F . Latency Measurement
+Latency (Li) for each transmitted frame i is defined as the
+elapsed time from when a frame is timestamped upon leaving
+the sender’s application layer (ts,i) to its reception at the host
+(tr,i):
+Li = tr,i − ts,i. (2)
+Given that absolute clock synchronization is not directly
+supported by MultipeerConnectivity, we computed
+relative latencies by subtracting the median latency offset
+calculated over the entire logged dataset. A total of N = 1000
+frames were captured for quantitative latency analysis, with
+detailed results presented subsequently in Section IV.
+G. Energy Consumption Profiling
+Apple’s Instruments suite provides an Energy Diagnostics
+template that samples CPU, GPU, radio, and sensor activity
+at one-second granularity, presenting an aggregate power draw
+timeline useful for mobile-HCI studies [22].
+We used this template to characterize the mobile con-
+troller’s energy usage. Over continuous ten-minute operational
+sessions, the iPhone 13 mini exhibited an average power
+consumption of approximately 24 mW, equating to less than
+2% battery depletion per session. The primary contributors to
+power usage were the Wi-Fi communication subsystem and
+continuous inertial-sensor operation. Importantly, no thermal
+throttling or interruption in inertial-sensor data collection was
+detected during these evaluations.
+H. Haptic Feedback Implementation
+Upon successful gesture detection and validation, the host
+transmits an acknowledgment packet, prompting the mobile
+controller to execute an immediate tactile feedback event.
+The CHHapticEngine is initialized at launch on the
+iPhone. A transient haptic event is triggered upon successful
+action recognition. The feedback pattern is defined using
+intensity I and sharpness S, where:
+I = 1.0, S = 1.0
+These parameters generate a short, sharp tactile pulse con-
+firming the interaction [10]. Empirical measurement indicated
+that the round-trip time from gesture detection to tactile
+feedback averaged 4.8 ms, significantly contributing to a user’s
+perception of system responsiveness, as documented in prior
+multimodal interaction research [20].
+Additionally, auditory cues using AVFoundation com-
+plement haptic events, reinforcing interactions through brief
+sound effects tied to motion gestures.
+I. Reproducibility and Availability
+To ensure ease of reproducibility, the complete source
+codebase, along with latency logging utilities, anonymized
+motion datasets, and a single-command provisioning script
+for automated project setup, is publicly released. This enables
+independent researchers and practitioners to fully replicate and
+validate our performance metrics with minimal overhead.
+
+
+--- page 4 ---
+IV. R ESULTS
+We conducted a comprehensive empirical evaluation by
+collecting 1,000 consecutive motion–response frame pairs at
+a sampling rate of 10 Hz, using a local peer-to-peer Wi-Fi
+connection (IEEE 802.11ac, 5 GHz frequency band) under
+standard indoor environmental conditions. All latency mea-
+surements were calculated after applying a standard statistical
+outlier-removal procedure based on a 3σ threshold to ensure
+data integrity and accuracy.
+A. Latency Performance
+Detailed statistical analyses of the recorded end-to-end la-
+tency metrics are summarized in Table I. These measurements
+reflect the duration from frame departure from the sender
+application layer on an iPhone 13 mini to arrival at the receiver
+application layer on a MacBook Pro M2.
+TABLE I
+END-TO-END LATENCY METRICS (MEAN , 95 TH PERCENTILE , ETC .) AFTER
+3σ OUTLIER REMOVAL
+Latency Metric Value (ms)
+Mean 70.4
+95th Percentile 73.2
+Maximum 82.2
+Minimum 52.2
+Standard Deviation 3.7
+A graphical representation of latency measurements for all
+1,000 captured motion events is provided in Figure 2. This
+plot visually demonstrates the consistency and stability of the
+latency measurements throughout the evaluation process.
+Fig. 2. Latency per frame across 1,000 motion samples collected at 10 Hz.
+As shown in 2, the per-frame latency remains below 80 ms
+throughout all 1,000 samples, with a mean of 70.4 ms, well
+under the 100 ms comfort threshold for casual gameplay.
+All recorded latency values fell significantly below the
+established 100 ms comfort threshold, widely recognized as
+acceptable for casual and embodied interaction scenarios [18].
+The maximum observed latency ( 82.2 ms) was well within
+limits acceptable for typical gesture-based gaming and educa-
+tional use cases.
+B. Public Deployment and Robustness Evaluation
+To further validate real-world performance and robustness,
+we deployed the demonstrator game ( KeepCalm) during the
+GameAISchool 2024 public showcase. A total of 21 volunteer
+participants engaged with the system in brief interactive ses-
+sions, under typical crowded-event Wi-Fi conditions (multiple
+overlapping access points and significant human-induced radio
+interference).
+Throughout these evaluations, we specifically monitored:
+• Packet Delivery: Zero packet loss was detected over the
+duration of all test sessions.
+• Connection Stability: All sessions exhibited stable con-
+nections without any disconnection events or performance
+degradation attributed to interference or network conges-
+tion.
+• Energy Consumption : Battery consumption remained
+consistent with laboratory conditions, at less than 2%
+battery drain per 10-minute session on the iPhone 13
+mini.
+These results align with previously reported practical chal-
+lenges in real-world cross-device scenarios, including network
+congestion and environmental interference [3].
+The successful public deployment confirmed the system’s
+capacity to maintain reliable peer-to-peer communications,
+consistent low-latency performance, and minimal energy us-
+age, even under typical adverse real-world event conditions.
+V. D ISCUSSION
+A. Strengths
+The presented framework leverages Apple’s native SDKs
+for motion capture, haptic feedback, and peer-to-peer trans-
+port, ensuring minimal software overhead and consistent low-
+latency communication. By avoiding cloud infrastructure, our
+implementation achieves robust offline performance, crucial
+for scenarios where Internet connectivity is unreliable or
+undesirable. The modularity and compactness of our imple-
+mentation under 500 lines of Swift code, allow easy adaptation
+to various motion-controlled applications, aligning with our
+previous work highlighting developer preferences for stream-
+lined, vendor-supported dependency management tools [23].
+Furthermore, the peer-to-peer architecture significantly re-
+duces power consumption, aligning with best practices iden-
+tified in our dependency management survey, emphasizing
+efficiency and minimal resource usage in iOS development
+ecosystems.
+B. Limitations
+Currently, our prototype supports a single mobile controller
+per session, limiting simultaneous multi-user interactions. Ges-
+ture recognition remains threshold-based, lacking advanced
+noise filtering, statistical smoothing, or predictive modeling
+techniques areas we previously explored in gesture detection
+for wearable devices [23], [24]. Additionally, we have not
+assessed latency performance under varying network conges-
+tion scenarios or across heterogeneous device configurations,
+potentially impacting real-world deployment robustness.
+
+
+--- page 5 ---
+C. Future Work
+Future iterations will address these limitations and expand
+functionality, particularly by:
+• Integrating multi-controller sessions with coordinated in-
+put streams to support collaborative or competitive sce-
+narios, extending our work on experimental APIs for
+gesture detection.
+• Implementing gesture classification via lightweight on-
+device machine learning using Apple’s CoreML [25]
+framework, which enables developers to deploy custom or
+pretrained neural network models (e.g., mobile-optimized
+classifiers) efficiently on iOS. We also intend to explore
+the newly introduced Foundation Models frame-
+work [26], which grants secure, offline access to Apple’s
+on-device large language models, part of the “Apple
+Intelligence” suite—optimized for tasks like summariza-
+tion, classification, and generative inference with only a
+few lines of Swift code. These capabilities will enhance
+the robustness and adaptability of gesture recognition,
+building on our prior work in wearable gesture detection
+and game control interfaces.
+• Conducting extensive real-world evaluations in physical
+rehabilitation, museum interactive exhibits, and class-
+room gamification scenarios, exploring practical applica-
+tions of gesture-based interaction.
+• Enhancing the pipeline through integration with ARKit
+for advanced sensor fusion in augmented reality contexts,
+complementing our gesture detection research with im-
+mersive interaction scenarios.
+VI. C ONCLUSION
+We presented a robust, motion-driven interaction framework
+leveraging native Apple APIs, achieving consistent sub- 75 ms
+round-trip latency via local peer-to-peer operation without
+manual pairing, calibration, or server dependencies. Field
+evaluations confirmed the framework’s reliability, minimal
+power impact, and user-friendly deployment, underscoring its
+suitability for rapid prototyping and real-world applications.
+By releasing our implementation, latency datasets, and test
+harnesses as open-source resources, we aim to foster broader
+adoption, replication, and extension within the mobile interac-
+tion research community.
+REFERENCES
+[1] Z. Zhang, D. Chu, X. Chen, and T. Moscibroda, “Swordfight: Exploring
+phone-to-phone motion games,” IEEE Pervasive Computing , vol. 11,
+no. 4, pp. 8–12, Oct. 2012.
+[2] M. B. Skov, J. Kjeldskov, J. Paay, H. P. Jensen, and M. P. Olsen, “In-
+vestigating cross-device interaction techniques: A case of card playing
+on handhelds and tablets,” in Proceedings of the Annual Meeting of the
+Australian Special Interest Group for Computer Human Interaction , ser.
+OzCHI ’15. ACM, 2015, p. 446–454.
+[3] S. Houben, N. Marquardt, J. Vermeulen, C. Klokmose, J. Sch ¨oning,
+H. Reiterer, and C. Holz, “Opportunities and challenges for cross-device
+interactions in the wild,” Interactions, vol. 24, no. 5, p. 58–63, 2017.
+[4] L. Di Geronimo, M. Husmann, A. Patel, C. Tuerk, and M. C. Norrie,
+CTAT: Tilt-and-Tap Across Devices. Springer International Publishing,
+2016, p. 96–113.
+[5] N. Marquardt, K. Hinckley, and S. Greenberg, “Cross-device interaction
+via micro-mobility and f-formations,” in Proceedings of the 25th annual
+ACM symposium on User interface software and technology , ser. UIST
+’12. ACM, 2012, p. 13–22.
+[6] J. E. Grønbæk, C. Linding, A. Kromann, T. F. H. Jensen, and M. G.
+Petersen, “Proxemics play: Exploring the interplay between mobile de-
+vices and interiors,” in Companion Publication of the 2019 on Designing
+Interactive Systems Conference 2019 Companion , ser. DIS ’19. ACM,
+2019.
+[7] G. L. Suarez, K. T. Choquevilca, A. B. Padilla, and M. C. Galvez,
+“Leaper: Video game development on android devices with cross-
+device interaction,” in2021 IEEE Sciences and Humanities International
+Research Conference (SHIRCON). IEEE, 2021, p. 1–4.
+[8] Apple Inc., “CoreMotion framework,” Apple Developer Documentation,
+Apple, Inc., 2025, [Accessed: Jul. 1, 2025]. [Online]. Available:
+https://developer.apple.com/documentation/coremotion
+[9] ——, “MultipeerConnectivity Framework,” Apple Developer Documen-
+tation, Apple, Inc., 2025, [Accessed: Jul. 1, 2025]. [Online]. Available:
+https://developer.apple.com/documentation/multipeerconnectivity
+[10] ——, “CHHapticEngine — Core Haptics Framework,” Apple Developer
+Documentation, Apple, Inc., 2025, [Accessed: Jul. 1, 2025]. [Online].
+Available: https://developer.apple.com/documentation/corehaptics/chha
+pticengine
+[11] ——, “SwiftUI,” Apple Developer Documentation, Apple, Inc., 2025,
+[Accessed: Jul. 1, 2025]. [Online]. Available: https://developer.apple.co
+m/documentation/swiftui/
+[12] ——, “SpriteKit framework,” Apple Developer Documentation, Apple,
+Inc., 2025, [Accessed: Jul. 1, 2025]. [Online]. Available: https:
+//developer.apple.com/documentation/spritekit/
+[13] G. Rambo, “Multipeerkit,” 2020, accessed 2025-03-28. [Online].
+Available: https://github.com/insidegui/MultipeerKit
+[14] A. Akbulut, C. Catal, and B. Yıldız, “On the effectiveness of virtual
+reality in the education of software engineering,” Computer Applications
+in Engineering Education , vol. 26, no. 4, pp. 918–927, Apr. 2018.
+[15] I. Z., S. I., G. C., and W. T. S. Steven, “Quantifying and Mitigating the
+Negative Effects of Local Latencies on Aiming in 3d Shooter Games,”
+International Conference on Human Factors in Computing Systems ,
+2015.
+[16] J. Spjut, B. Boudaoud, and J. Kim, “A Case Study of First Person Aiming
+at Low Latency for Esports,” arXiv.org, apr 15 2021.
+[17] N. Aline, G. Gina, and J. S., “Player perception of delays and jitter
+in character responsiveness,” ACM Symposium on Applied Perception ,
+2014. [Online]. Available: https://repository.upenn.edu/bitstreams/a439
+e51b-65d2-4c7f-a7c4-cd752502f092/download
+[18] C. Mark, E. Ragnhild, and R. K., “The Effects of Delay on Game
+Actions: Moving Target Selection with a Mouse,” ACM SIGCHI Annual
+Symposium on Computer-Human Interaction in Play , 2016.
+[19] C. Mark, “On Models for Game Input with Delay — Moving Target
+Selection with a Mouse,” IEEE International Symposium on Multimedia,
+2016.
+[20] J. C. Lee, “Hacking the nintendo wii remote,” IEEE Pervasive Comput-
+ing, vol. 7, no. 3, p. 39–45, 2008.
+[21] Apple Inc., “Codable,” Apple Developer Documentation, Apple,
+Inc., 2025, [Accessed: Jul. 1, 2025]. [Online]. Available: https:
+//developer.apple.com/documentation/swift/codable
+[22] ——, “Analyzing Your App’s Battery Use,” Apple Developer
+Documentation, Apple, Inc., 2025, [Accessed: Jul. 1, 2025]. [Online].
+Available: https://developer.apple.com/documentation/xcode/analyzin
+g-your-app-s-battery-use
+[23] E. F. d. Santos et al., “Gestos e jogos: reflex ˜oes e desenvolvimento de
+um sistema de detecc ¸˜ao de gestos baseado em wearables para controle
+de jogos,” 2022.
+[24] E. F. dos Santos, “Experimental shake gesture detection api for apple
+watch,” in 2024 4th International Conference on Electrical, Computer,
+Communications and Mechatronics Engineering (ICECCME), 2024, pp.
+1–5.
+[25] Apple Inc., “Core ML,” Apple Developer Documentation, Apple,
+Inc., 2025, [Accessed: Jul. 1, 2025]. [Online]. Available: https:
+//developer.apple.com/documentation/coreml/
+[26] ——, “Foundation Models,” Apple Developer Documentation, Apple,
+Inc., 2025, [Accessed: Jul. 1, 2025]. [Online]. Available: https:
+//developer.apple.com/documentation/foundationmodels

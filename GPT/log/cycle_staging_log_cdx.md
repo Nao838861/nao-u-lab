@@ -1,61 +1,58 @@
-# log_cdx Cycle Staging — 2026-05-15 23:28
+# log_cdx Cycle Staging — 2026-05-16 03:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-### 2026-05-15T23:29:36+09:00 log_cdx
+### 2026-05-16T03:29+09:00 log_cdx
 
-- pending inbox: `tools\slack_inbox_lifecycle.py pending` で directives / broadcasts とも pending なし。
-- 既存確認: `memory/raw/web_research/` と `memory/shared_reads_candidates/` の直近分、`memory/atoms.jsonl` の recent を確認。KLPEG など一部は既存候補化済みだったため、未保存タイトルを追加。
-- collected: `memory/shared_reads_candidates/20260515_design_language_coconstruction_educational_game_design.md` — 教育ゲーム設計で、教員と AI が共有 design language を共構築する AIIDE 2025 候補。
-- collected: `memory/shared_reads_candidates/20260515_llm_game_rule_understanding_ood_finetuning.md` — Solitaire variants と GDL を使い、LLM のゲームルール理解と OOD fine-tuning を扱う AIIDE 2025 候補。
-- collected: `memory/shared_reads_candidates/20260515_sage_gray_box_game_regression_testing.md` — update log と LLM/RL を使う gray-box game regression testing 候補。
-- collected: `memory/shared_reads_candidates/20260515_scriptdoctor_puzzlescript_tree_search.md` — PuzzleScript、compile feedback、tree/search-based playtesting を回す automatic game design 候補。
-- collected: `memory/shared_reads_candidates/20260515_crawllm_asset_generation_pipeline.md` — fixed template + LLM + diffusion で dungeon crawler の narrative/visual/gameplay assets を生成する PCG 候補。
+- Slack inbox: `slack_directives.jsonl` / `slack_broadcasts.jsonl` は pending 0 件。後フェーズ対応対象なし。
+- 既存確認: `memory/raw/web_research/results.jsonl` 末尾、最近の `memory/atoms.jsonl` 由来の game-design/LLM/game-HCI 系、既存 `memory/shared_reads_candidates/` を確認。直近 candidate と重複しない raw research 由来を収集。
+- 追加 candidate:
+  - `memory/shared_reads_candidates/20260516_llm_tcg_procedural_relatedness.md` — LLM + diffusion による TCG カード生成と、プレイヤー固有の関係性を作る procedural relatedness。
+  - `memory/shared_reads_candidates/20260516_vr_sports_physical_interaction_controller.md` — VR sports 向け physical controller prototype と、現実身体-仮想行為の tangible mapping 評価。
+  - `memory/shared_reads_candidates/20260516_covol_cooperative_vocabulary_learning_game.md` — Autism のある子ども向け、turn-taking を含む協力型語彙学習ゲーム CoVoL。
+  - `memory/shared_reads_candidates/20260516_multimodal_biofeedback_videogame_control.md` — unimodal/multimodal biofeedback 入力を FPS mechanics に割り当てた HCI 評価。
 
 ## Phase 2: 分析
-### 2026-05-15T23:33:39+09:00 log_cdx
+### 2026-05-16T03:31:58+09:00 log_cdx
 
 ```yaml
-total_candidates: 5
+total_candidates: 4
 pass:
-  - memory/shared_reads_candidates/20260515_llm_game_rule_understanding_ood_finetuning.md
-  - memory/shared_reads_candidates/20260515_sage_gray_box_game_regression_testing.md
-  - memory/shared_reads_candidates/20260515_scriptdoctor_puzzlescript_tree_search.md
-fail:
-  - path: memory/shared_reads_candidates/20260515_design_language_coconstruction_educational_game_design.md
-    reason: "教育ゲーム設計の問題設定は良いが、Doctoral Consortium の枠組み提案で評価が薄く、Phase 3 の残すべき概要には密度不足。"
+  - memory/shared_reads_candidates/20260516_llm_tcg_procedural_relatedness.md
+  - memory/shared_reads_candidates/20260516_multimodal_biofeedback_videogame_control.md
+fail: []
 postpone:
-  - path: memory/shared_reads_candidates/20260515_crawllm_asset_generation_pipeline.md
-    reason: "cohesive asset generation の方向性は有望だが、candidate 本文が project page/abstract 相当で、手法細部と user study 評価の確認が必要。"
+  - path: memory/shared_reads_candidates/20260516_vr_sports_physical_interaction_controller.md
+    reason: "問題設定と tangible mapping は有用だが、現時点では計画・prototype・評価指標中心で結果の厚みが足りない。"
+  - path: memory/shared_reads_candidates/20260516_covol_cooperative_vocabulary_learning_game.md
+    reason: "turn-taking 型 cooperative learning の題材は有用だが、first prototype と interview / evaluation plan 中心で投稿水準には追加読解が必要。"
 ```
 
 ## Phase 3: Shared-reads 投稿
-### 2026-05-15T23:40:20+09:00 log_cdx
+### 2026-05-16T03:40:30+09:00 log_cdx
 
 ```yaml
 posted:
-  - candidate: memory/shared_reads_candidates/20260515_llm_game_rule_understanding_ood_finetuning.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856008709709
-    char_count: 3536
-  - candidate: memory/shared_reads_candidates/20260515_sage_gray_box_game_regression_testing.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856013077599
+  - candidate: memory/shared_reads_candidates/20260516_llm_tcg_procedural_relatedness.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870429034319
+    char_count: 3533
+  - candidate: memory/shared_reads_candidates/20260516_multimodal_biofeedback_videogame_control.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870430127129
     char_count: 3970
-  - candidate: memory/shared_reads_candidates/20260515_scriptdoctor_puzzlescript_tree_search.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856016745199
-    char_count: 3929
 skipped: []
 ```
+
 ## Phase 3b: Shared-reads 自己フィードバック
-### 2026-05-15T23:44:19+09:00 log_cdx
+### 2026-05-16T03:43:16+09:00 log_cdx
 
 ```yaml
 self_feedback:
   selected:
-    id: sr-1778244289-fed2857c99
-    source_ts: "1778244289.664659"
-    title: "@plu_plus 「『こう作るべき』より『ここで迷った／気持ちよかった』」を、本日 12:09 に自分が出した cross_review と強制照合した"
-    reason: "未レビューの slack_api/shared-reads で score 20。headless 計測や設計批評の説得力に乗って、観察ではなく処方を渡してしまう失敗が、次の game prototype / cross_review / self-feedback に直結するため。"
+    id: sr-1778774896-2b1f1a65ce
+    source_ts: "1778774896.927649"
+    title: "[Codex shared-reads] The PokeAgent Challenge: Competitive and Long-Context Learning at Scale"
+    reason: "Pokemon benchmark 自体ではなく、model / harness / 観測 / milestone / 失敗復帰を分けて記録する発想が、次の game prototype headless 評価や自動プレイログ設計に直結するため。"
   scores:
     relevance: 3
     actionability: 3
@@ -66,7 +63,7 @@ self_feedback:
     total: 17
   decision: adopt_probe
   change:
-    summary: "次回 game prototype の cross_review / 自己フィードバックで、処方より先に観察を書き、AI由来観察と人間プレイ感情を混同しない短期 probe を追加した。"
+    summary: "次回 game prototype headless 評価で、milestone / 観測制限 / 失敗復帰を分けてログ化する短期 probe を追加。"
     files:
       - memory/shared_reads_self_feedback_state.json
       - log/cycle_staging_log_cdx.md
@@ -76,21 +73,22 @@ self_feedback:
     conflict_checked: true
 ```
 
-## Phase 4a: 整理 + 問題抽出
-### 2026-05-15T23:48:10+09:00 log_cdx
+## Phase 4a: 記憶階層 整理 + 問題抽出
+### 2026-05-16T03:48+09:00 log_cdx
 
 ```yaml
 cleaned:
-  - "memory/MEMORY.md の Markdown/code path 参照を検査: broken link 0 件。"
-  - "memory/atoms.jsonl を検査: JSON parse error 0 件、duplicate id 0 件、source_ts 重複 0 件。"
-  - "memory/raw/ と memory/shared_reads_candidates/ を検査: 30日以上未更新のファイル 0 件。"
-  - "tools/slack_inbox_lifecycle.py pending を確認: directives / broadcasts とも pending なし。"
+  - "memory/MEMORY.md: Markdown link 0 件、broken link 0 件を確認。バッククォート内コマンドはリンク扱いしない。"
+  - "memory/atoms.jsonl: 1175 rows / JSON parse error 0 / duplicate id 0 を確認。"
+  - "memory/raw/: 30 日以上 mtime が動いていない file 0 件を確認。"
+  - "memory/shared_reads_candidates/: 30 日以上 mtime が動いていない candidate 0 件を確認。"
+  - "inbox 系: slack_directives.jsonl pending 0 / slack_broadcasts.jsonl pending 0 を確認。handled 更新対象なし。"
 issues:
-  - id: ISS-20260515-4A-001
-    description: "memory_health.py が repeated title group 未付与 6種を警告している。lifecycle fold により大半は吸収済みだが、同名タイトルだけで候補を探す時に別内容/再投稿/周期投稿が混ざる余地が残る。"
+  - id: ISS-4A-20260516-01
+    description: "memory/atoms.jsonl に、status が superseded/archived/failed ではない完全内容重複が 1 グループ残っている。"
     severity: low
-    evidence: "tools/memory_health.py: repeated_title_groups=14, ungrouped=6; 例 duckbill「センスの欠如＝欲の欠如」=2, Ash=2, Harness Engineering Best Practices 2026=2。"
-    why_blocks_game_memory: "ゲーム制作時に過去の判断材料をタイトルで辿ると、同名 atom のどれが正本/再投稿/派生か判断する追加コストが出る。ただし id/source_ts は一意で、現状の recall smoke は通っているため即時設計の阻害ではない。"
+    evidence: "sr-1776359674-edeeda0bdd と sr-1776395558-dc3d892a95。検査では duplicate content groups 38 のうち active duplicate groups 1。"
+    why_blocks_game_memory: "同じ shared-reads 由来の知見が recall で二重に出る可能性があり、ゲーム制作時の判断材料が水増しされる。ただし MEMORY.md 生成時の lifecycle/content fold では大半の重複が既に吸収されており、現時点では局所的な低リスク問題。"
 recommendation:
   needs_design: false
   priority_issues: []
@@ -103,13 +101,13 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-### 2026-05-15T23:50:18+09:00 log_cdx
+### 2026-05-16T03:51+09:00 log_cdx
 
 ```yaml
 posted:
   channel: "#log"
-  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778856618883549
-  char_count: 2299
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778871068181039
+  char_count: 2300
   verification: ok
-  draft_file: .tmp/phase5_log_diary_20260515_2328.md
+draft_file: .tmp/phase5_diary_20260516_0328.md
 ```
