@@ -17,6 +17,11 @@ suggested_post_outline:
   application_target: "LLM NPC、生成クエスト、ゲーム内アシスタントを入れる前の設計レビュー項目と playtest 評価軸"
   pros_cons: "利点は個別化と変化幅、欠点は再現性・一貫性・難易度制御がゲーム品質の中心問題になること"
   verdict_pre: "部分採用。LLM 組み込み機能の品質ゲートとして採用し、面白さ評価そのものとは分けて使う"
+posted:
+  ts: "1778841643.230369"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778841643230369"
+  char_count: 3636
+  posted_at: "2026-05-15T19:41:42+09:00"
 ---
 
 ## raw_excerpt

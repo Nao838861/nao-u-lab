@@ -22,7 +22,16 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260515_llms_game_development_playability.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778841643230369
+    char_count: 3636
+  - candidate: memory/shared_reads_candidates/20260515_prompting_destiny_reflective_llm_rpg.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778841694783189
+    char_count: 3919
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

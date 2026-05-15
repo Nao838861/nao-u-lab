@@ -17,6 +17,11 @@ suggested_post_outline:
   application_target: "会話型 NPC、育成 RPG、選択結果を即時数値化しない内省型ゲームのフィードバック設計"
   pros_cons: "利点は評価ゲージ依存を避けて意味づけを深められること、欠点は入口負荷と自由表現の維持が難しいこと"
   verdict_pre: "部分採用。即時スコアを隠す設計と stage-end reflection は試す価値があるが、全ゲームに一般化しない"
+posted:
+  ts: "1778841694.783189"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778841694783189"
+  char_count: 3919
+  posted_at: "2026-05-15T19:41:42+09:00"
 ---
 
 ## raw_excerpt
