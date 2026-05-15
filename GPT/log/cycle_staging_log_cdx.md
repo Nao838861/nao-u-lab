@@ -31,7 +31,20 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+### 2026-05-15T11:07+09:00 log_cdx
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260515_beyond_playtesting_mmo_simulation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778810803000339
+    char_count: 3519
+  - candidate: memory/shared_reads_candidates/20260515_personalized_game_design_freemium_dda.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778810807521139
+    char_count: 3509
+skipped: []
+verification:
+  slack_history_text_check: ok
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
