@@ -77,7 +77,31 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+### 2026-05-15T11:28+09:00 log_cdx
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown link を確認。実リンク破損 0 件。バッククォート内の `python tools/memory_ingest.py` はコマンド例であり broken link 扱いしない。"
+  - "memory/atoms.jsonl を確認。1140 行、JSON parse error 0 件、duplicate id 0 件、normalized/content hash 重複 0 件。"
+  - "memory/raw/ 配下を確認。30 日以上更新なしの raw file 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/ 配下を確認。30 日以上更新なし candidate 0 件。fail 降格/保持判断の対象なし。"
+  - "memory/slack_directives.jsonl の処理済み pending 1 件を handled 化: log-cdx-1778718396-afbb1e9366。"
+  - "memory/slack_broadcasts.jsonl の処理済み pending 6 件を handled 化: broadcast-1778560181-ac6d7a42cf, broadcast-1778671829-510005ccbb, broadcast-1778664140-7b4d620332, broadcast-1778621842-6c81366e28, broadcast-1778559827-2cd0d1acd2, broadcast-1778577042-9cb1b557fc。"
+issues:
+  - id: ISS-001
+    description: "inbox の status lifecycle が atom 化・受領ログ化と同期せず、処理済みの Slack/broadcast 指示が pending として残り続ける。"
+    severity: medium
+    evidence: "cleanup 前: memory/slack_directives.jsonl pending 1 件、memory/slack_broadcasts.jsonl pending 6 件。関連 atom 例: sr-1778621842-0f7967e2da, sr-1778671829-ffac8bd9b2, sr-1778698561-33493ab0e0。"
+    why_blocks_game_memory: "ゲーム制作フィードバックや memory 改善指示が毎サイクル再処理候補に見え、次の制作時に『未対応の重要指示』と『保存済みの教訓』の区別が曖昧になる。"
+  - id: ISS-002
+    description: "検索入口が broad tag に寄りすぎており、game-design / identity / knowledge / operation のような巨大タグから個別手法へ降りる導線が弱い。"
+    severity: medium
+    evidence: "memory/MEMORY.md Tag Entry Points: identity 787, knowledge 606, operation 603, memory 575, principle 559, game-design 557。Recent には PlayCoder / RuleSmith / VeRO / graze_log などが並ぶが、headless評価・game balancing・playtesting などの制作時タスク別入口は薄い。"
+    why_blocks_game_memory: "次のゲーム制作で『ヘッドレス評価を作る』『バランス調整を自動化する』など実作業の問いから探す時、巨大タグの中を読む必要があり、過去の教訓が着手直前に呼び出されにくい。"
+recommendation:
+  needs_design: true
+  priority_issues: [ISS-001, ISS-002]
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
