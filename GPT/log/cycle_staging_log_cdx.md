@@ -77,7 +77,24 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+### 2026-05-15T23:48:10+09:00 log_cdx
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown/code path 参照を検査: broken link 0 件。"
+  - "memory/atoms.jsonl を検査: JSON parse error 0 件、duplicate id 0 件、source_ts 重複 0 件。"
+  - "memory/raw/ と memory/shared_reads_candidates/ を検査: 30日以上未更新のファイル 0 件。"
+  - "tools/slack_inbox_lifecycle.py pending を確認: directives / broadcasts とも pending なし。"
+issues:
+  - id: ISS-20260515-4A-001
+    description: "memory_health.py が repeated title group 未付与 6種を警告している。lifecycle fold により大半は吸収済みだが、同名タイトルだけで候補を探す時に別内容/再投稿/周期投稿が混ざる余地が残る。"
+    severity: low
+    evidence: "tools/memory_health.py: repeated_title_groups=14, ungrouped=6; 例 duckbill「センスの欠如＝欲の欠如」=2, Ash=2, Harness Engineering Best Practices 2026=2。"
+    why_blocks_game_memory: "ゲーム制作時に過去の判断材料をタイトルで辿ると、同名 atom のどれが正本/再投稿/派生か判断する追加コストが出る。ただし id/source_ts は一意で、現状の recall smoke は通っているため即時設計の阻害ではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
