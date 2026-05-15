@@ -1,4 +1,5 @@
 # Twitter For You (おすすめ) タブ
+<<<<<<< HEAD
 # Read at: 2026-05-15 15:19
 # Total: 50 tweets
 
@@ -178,11 +179,182 @@ URL: https://x.com/knockout_/status/2054956915491491992
 
 --- 31. @PRcomicfesta (?) ---
 結局私はどこへ行っても「魅惑の毒婦」の名前から逃げられない (1/4)PR
+=======
+# Read at: 2026-05-15 07:47
+# Total: 50 tweets
+
+--- 1. @OpenAI (2026-05-14) ---
+URL: https://x.com/OpenAI/status/2055016850849993072
+You've been asking for this one...
+
+Now in preview: Codex in the ChatGPT mobile app.
+
+Start new work, review outputs, steer execution, and approve next steps, all from the ChatGPT mobile app. Codex will keep running on your laptop, Mac mini, or devbox.
+
+--- 2. @DLsite_maniax (?) ---
+奥手な夫が惚れ薬を飲んだ結果…
+
+(1/9)
+
+--- 3. @elonmusk (2026-05-14) ---
+URL: https://x.com/elonmusk/status/2055010870573633859
+Grok Build
+
+--- 4. @nikkei (2026-05-14) ---
+URL: https://x.com/nikkei/status/2055018991341457517
+コンピューターの処理速度1000倍へ、東大が素子開発　発熱せず稼働
+
+https://
+nikkei.com/article/DGXZQO
+SG132XK0T10C26A5000000/?n_cid=SNSTW005&n_tw=1778789634
+…
+
+この技術を応用すれば「ダウンロードに1時間かかっていたデータが1秒で処理できる可能性がある」といいます。
+
+--- 5. @boss_sec_labo (2026-05-14) ---
+URL: https://x.com/boss_sec_labo/status/2054798237996032138
+「攻撃されるのでは」じゃない、もう攻撃の入口になっている。
+実際にあるリスクはこれだ。
+
+・「これを入れろ」とプロンプトに書かれた npm/pip ライブラリが typosquat(正規パッケージに似せた偽物)で、入れた瞬間に .env や ssh 鍵が外に飛ぶ
+・curl で取った外部スクリプトを bash
+
+--- 6. @Codestudiopjbk (2026-05-14) ---
+URL: https://x.com/Codestudiopjbk/status/2055048245462900812
+【保存版】
+人類最速レベルで設定して、
+「Codex Mobileの設定方法」についての記事を書きましたああああ！！！
+
+これ、機能としてはマジで最高なんですが、
+実際にやってみると最初の設定で詰まる人かなり多そうだったので、爆速でまとめました。
+
+今回は、いつも以上に市場にまだほとんど落ちてない
+
+--- 7. @aiehon_aya (2026-05-14) ---
+URL: https://x.com/aiehon_aya/status/2055045489566134419
+chatGPTってダサい
+
+厳密にいうと画像参照しないで
+テキストプロンプトだけで
+０から作るキャラクターって
+量産型になりがちじゃないですか？
+
+そんなときは「midjoueney」を
+経由させると一気に垢抜けします。
+──────────────────
+①chatGPT：テキストプロンプトでキャラ作成
+
+--- 8. @BloombergJapan (2026-05-14) ---
+URL: https://x.com/BloombergJapan/status/2054977762385879186
+アップルとOpenAIに亀裂、提携関係転じて法的闘争に発展する可能性も
+
+--- 9. @hillbig (2026-05-14) ---
+URL: https://x.com/hillbig/status/2055047118331732272
+画像生成で使われる潜在拡散モデルでは、画像をVAEで潜在空間に圧縮してから、DiTなどの拡散モデルで生成を行う。
+通常よく使われる空間圧縮率はf8、つまり縦横をそれぞれ1/8にする設定だが、Qwen-Image-VAE 2.0ではf16やf32まで圧縮率を高めている。
+
+--- 10. @WOWSAPACJA (?) ---
+期間限定『アズールレーン』イベント
+
+--- 11. @blue_pen5805 (2026-05-14) ---
+URL: https://x.com/blue_pen5805/status/2054973447546249720
+Anima-Base でたぞ！
+
+
+https://
+huggingface.co/circlestone-la
+bs/Anima
+…
+
+--- 12. @yusmi (2026-05-14) ---
+URL: https://x.com/yusmi/status/2054743651977409000
+CEOからgoが出たので Enterprise プラン課金して Claude Security を使ってみました。実際の使用感や Security scan 結果、そして肝心のコストについて書きたいと思います
+
+--- 13. @GOROman (2026-05-14) ---
+URL: https://x.com/GOROman/status/2055024048376320466
+18ヶ月以内にAIボイスエージェントが本当の意味で区別がつかなくなる
+
+--- 14. @LUIN43852682 (2026-05-14) ---
+URL: https://x.com/LUIN43852682/status/2054770118425759841
+この辺がかなりバカ
+
+--- 15. @drumerkoi (2026-05-14) ---
+URL: https://x.com/drumerkoi/status/2054834208636297285
+父親「息子は無事なのか！声だけでも聞かせてくれ！」
+
+誘拐犯「いいだろう…　お前の父親とつながっている、何か喋れ」
+
+子供「こんにちは」
+
+誘拐犯「こんにちは？」
+
+--- 16. @shin_yahoojp (2026-05-14) ---
+URL: https://x.com/shin_yahoojp/status/2054719505075671313
+ひさびさにAndroidアプリリリースしようとしたら、本番リリース前に「20人以上のテスター」が「14日間以上連続で参加」するクローズドテストが必須になってた…個人開発者殺しな仕様過ぎるだろ。誰か助けて
+
+--- 17. @ecommartinez (2026-05-14) ---
+URL: https://x.com/ecommartinez/status/2054973503896695185
+ 速報：Google DeepMindの共同創設者が、すべての病気を治すために21億ドルを発表しました。
+
+Demis Hassabisは、何年もの間、タンパク質を折り畳むAIを構築し、分子を設計し、薬の発見を加速させてきました。Isomorphic
+
+--- 18. @esumi_uoeh (2026-05-14) ---
+URL: https://x.com/esumi_uoeh/status/2054900622080786718
+インパクトファクターって雑誌につくものであって各個の論文につくものではないと思っているんですが、違うんですかね...
+
+--- 19. @ren_ren0824 (2026-05-13) ---
+URL: https://x.com/ren_ren0824/status/2054568193419800969
+これ普通に曲がエグい　
+AIってもうこのレベル行けるんだ
+
+--- 20. @ganganonline (?) ---
+けれど、ある少女を目にしたら
+
+--- 21. @masa_0083 (2026-05-14) ---
+URL: https://x.com/masa_0083/status/2055043450035429883
+「日本の防衛用衛星コンステレーションはいつ起動するのかだって？」
+「今時は衛星の機密を隠そうとしても、宇宙マニアがすぐにSNSで情報を拡散させて一般人も知ってしまう」
+「すでに4月に運用を開始したよ」
+
+--- 22. @kgcgsg (2026-05-14) ---
+URL: https://x.com/kgcgsg/status/2054833494006833660
+今週のヤンジャン、なにこれ？ゲーム？
+サイトもめっちゃ謎で草
+おもろい試みしてんなー
+
+--- 23. @iwashi86 (2026-05-13) ---
+URL: https://x.com/iwashi86/status/2054703172867006826
+耳が痛い（二度目）
+
+・自分の自由な時間を増やすには、テレビや動画視聴などの受動的な時間を減らせ
+・目的もなくコンテンツを消費する時間は、他者に人生の時間を奪われる（時間の搾取）
+
+・現代のビジネスは、消費者からお金だけでなく時間をいかに搾取するかを巧妙に設計されている
+
+--- 24. @masuw0ka (2026-05-14) ---
+URL: https://x.com/masuw0ka/status/2054850572784943585
+UniPwn ですね。ロボットやってる海外勢の間では有名な致命的脆弱性で、1年くらい未対応のまま放置されてます。
+
+Unitree のロボットほぼ全般がこの脆弱性あるので、これ使って商売している大手会社が日本には多すぎて、（当事者は当然知ってるはずですが）正直タブーな話題なのかと思ってました
+
+--- 25. @brain_debug (2026-05-13) ---
+URL: https://x.com/brain_debug/status/2054391491926380933
+成長＝できることを増やす、というより、「昔の生存戦略」を手放すというニュアンスの方が近しい。
+
+--- 26. @akari_worlds (2026-05-13) ---
+URL: https://x.com/akari_worlds/status/2054397836717117753
+「昔の生存戦略を手放す」、刺さりました。新しいことを覚える側じゃなくて、昔うまくいってた手つきを、もう要らないと認める側の動きなんですね。覚えるより、剥がす方がよっぽど痛そう、と思いました。
+
+--- 27. @mitruihisawo (2026-05-13) ---
+URL: https://x.com/mitruihisawo/status/2054486690845368642
+俺の人生ではダントツでここが優勝
+>>>>>>> 42df97a8b95f6990e55a0f96d6da536cdf0fc2dd
 
 --- 32. @yukiyama0721 (2026-05-15) ---
 URL: https://x.com/yukiyama0721/status/2055102310490276225
 ホヨバって四方八方からパク……オマージュしまくってる会社だけど、若い世代のオタクはホヨバが元祖だと思ってるからかラレ元を見て｢原神orスタレのパクリやん！｣って騒ぎ立てるっていう凄まじいすれ違いを最近ちょこちょこ見掛ける
 
+<<<<<<< HEAD
 --- 33. @bindureddy (2026-05-14) ---
 URL: https://x.com/bindureddy/status/2054767771418861964
 Gemini 3.2 Flash -  Capitalizing on DeepMind's clever distillation techniques...
@@ -274,3 +446,156 @@ Gemini intelligence搭載 Android
 --- 50. @fladdict (2026-05-15) ---
 URL: https://x.com/fladdict/status/2055154617156256005
 エンジニアLv10で、マーケLv1、営業Lv1なら掛け算して総合力Lv10だけど、　エンジニアLv4、マーケLv4、営業Lv4は掛け算すればレベル64じゃけん⋯
+=======
+--- 28. @HowToAI_ (2026-05-12) ---
+URL: https://x.com/HowToAI_/status/2054332038636036352
+Chinese dev open-sourced an entire car OS that turns any Android phone into a wireless CarPlay adapter.
+
+It's called OkcarOS. a custom android 13 rom that speaks the carplay protocol directly to your car's screen.
+
+→ Connects in 4 seconds
+→ 60fps video, 25mb bitrate
+→ Lossless
+
+--- 29. @protoMST (2026-05-14) ---
+URL: https://x.com/protoMST/status/2054873654035648955
+FH6プレミアムエディション、予約購入してから気づいたんだけど、特別オファーなんてあったんだw
+800円分のMSギフトカードとマシンバウチャー貰えるらしい
+
+--- 30. @fladdict (2026-05-14) ---
+URL: https://x.com/fladdict/status/2054930979266134279
+僕もどっちかというとコチラ派。「目的」や「意図」が発生してない段階で、とりあえず知らん人の輪に飛び込む機能がない。
+
+--- 31. @doragonage_ad (?) ---
+＜破滅ルートから彼女を救えるのは、俺だけ。＞
+
+嫁いできたのは乙女ゲーの「悪役令嬢」!?
+彼女が「悪役」であるはずがない…
+襲いかかる陰謀を退け、絶望のシナリオを塗り替えろ！
+
+『辺境モブ貴族のウチに嫁いできた悪役令嬢が、めちゃくちゃできる良い嫁なんだが？』
+
+--- 32. @FabSceneJp (2026-05-14) ---
+URL: https://x.com/FabSceneJp/status/2054722516950962253
+ヒューマノイドが触覚の未来予測を学習、5種の精密作業で成功率90.9%向上
+
+--- 33. @SukunaBikona7 (2026-05-14) ---
+URL: https://x.com/SukunaBikona7/status/2054769749167689844
+畳み掛けてくるな
+
+"・茶菓子がスーパーで買ってきたやつでパックに入ってる。
+・↑しかも２０％引きのシールが貼ってある。
+・↑京都から取り寄せましたとか露骨な嘘をつく。
+・↑しかも本当に京都から取り寄せている。"
+
+--- 34. @mana_cat (2026-05-14) ---
+URL: https://x.com/mana_cat/status/2054905247282405397
+小1になった娘。
+周りがMinecraftしているらしくて娘もやってみたいらしい。
+私がゲーム会社で働いていると思い込んでいる娘から「Minecraft でプログラミングを教えてほしい」と頼まれる。
+長男は小学生でマイクラサーバーをLinuxで立てていたな…懐かしいな…
+
+--- 35. @nakashima001 (2026-05-14) ---
+URL: https://x.com/nakashima001/status/2054822772661248312
+「壊れた脳は治らない」を覆す －脳が自然に治る力を持続させる方法を発見｜東京科学大学、他
+
+https://
+research-er.jp/articles/view/
+155928
+…
+修復できないのではなく、修復することを中断させるタンパク質が生じるのか。この発見はリハビリテーション科学をさらに推し進める枠組みになる。
+
+--- 36. @gosrum (2026-05-14) ---
+URL: https://x.com/gosrum/status/2055055885454749728
+ChatGPTモバイルアプリ内のCodex、最初からandroid対応してるの嬉しすぎる
+
+ありがとう、OpenAI！
+
+--- 37. @MEMOLITH_FbL (?) ---
+【ハードコア・ターン制ストラテジーRPG】 変異を重ね、強さを増していく敵。 戦略を極めし者のみが、この過酷な戦場を制す―― さあ、限界に挑み、生き残れ！
+
+--- 38. @elonmusk (2026-05-14) ---
+URL: https://x.com/elonmusk/status/2055010674741526938
+Try it out!
+
+--- 39. @kinopee_ai (2026-05-14) ---
+URL: https://x.com/kinopee_ai/status/2054841588308959591
+『The next era of AI coding』（AIコーディングの次の時代）
+YouTube の Cursor チャンネルにとても興味深い動画が上がっていたので、文字起こしを日本語に訳してみました。
+
+--- 40. @akira_papa_IT (2026-05-14) ---
+URL: https://x.com/akira_papa_IT/status/2054918126765277521
+codexのベストプラクティスありがたい
+
+【OpenAI Codex公式のベストプラクティスがまさに"AIエージェントを部下として育てる"指南書だったのでメモシェア〜単発アシスタント扱いするとマジで損だよと】
+
+ OpenAI Codex Best Practices 完全要約
+
+■ 1. タスクの渡し方とコンテキスト設計 
+
+--- 41. @tegnike (2026-05-14) ---
+URL: https://x.com/tegnike/status/2054954943543488681
+ミュトスって完コピできるようなものなの…？？？
+
+--- 42. @super_bonochin (2026-05-14) ---
+URL: https://x.com/super_bonochin/status/2054896916941656469
+「ExcelのGUIを起動して、(COMではなく)そのGUIを操作して空白のブックにそれっぽいテーブルを作れ」、って言ったら普通にフォアグラウンドにExcelが来て勝手に操作が進んでいってテーブルが作られたから間違いないと思う
+
+--- 43. @noriyang_crypt (2026-05-14) ---
+URL: https://x.com/noriyang_crypt/status/2054838806101340481
+AIで映像やアニメを作れる人が増えるのは、とても良いことだと思っています。
+
+ただ、その先で
+「作品として成立させる」
+「コンテンツとして展開する」
+「継続的なIPにしていく」
+となると、必要になる力は少し変わってきます。
+
+ツールを使えること。
+アニメが好きなこと。
+
+--- 44. @GOROman (2025-05-24) ---
+URL: https://x.com/GOROman/status/1926216863563792681
+GMK＝業務開始＝飲み会の乾杯合図
+
+ロボティクスとAIの到来で人類は従来の仕事から解放され、基本毎日誰かと飲んでるくらいが仕事になる＝業務
+
+--- 45. @C4Dbeginner (2026-05-14) ---
+URL: https://x.com/C4Dbeginner/status/2055047641332170971
+なんでダウンロードが早くなるのかみんな突っ込んでる
+
+--- 46. @ebookjapan__pr (?) ---
+妻のために欲を我慢していたのに…思いがけない妻の行動に我慢できなくなって…
+
+--- 47. @nicos_ai (2026-05-13) ---
+URL: https://x.com/nicos_ai/status/2054678747756810311
+Anthropicは、世界で最も安価で効果的な従業員をちょうど発売しました。
+
+その名前は「Claude for Small Business」。
+
+そして、これがその機能です：
+
+• 請求書、支払い、財務の管理
+• キャンペーン、デザイン、コンテンツの作成
+• 販売と顧客の自動整理
+• 文書の読み取り、要約、作成
+•
+
+--- 48. @JOSHUA_movie (2026-05-14) ---
+URL: https://x.com/JOSHUA_movie/status/2054786964281332107
+書きました。『インターステラー』の1.7万字大容量解説です。水の惑星の物理学、クーパーがブラックホールに突入しても無事だった本当の理由、なぜ重力だけが特別なのか？…等々詳細に解説しています。この映画のブラックホールのビジュアルには少しウソがある、という小話も。
+
+--- 49. @elonmusk (2026-05-14) ---
+URL: https://x.com/elonmusk/status/2055007595359039742
+Read this book and give it to all your friends. 
+
+Survival of civilization depends on it!
+
+--- 50. @sskt_com (2026-05-14) ---
+URL: https://x.com/sskt_com/status/2054932442180657596
+す、すげえぜ、、、
+もう映像にAIすら使ってねえぞ、
+ただの映像垂れ流しやんけ！
+
+ #ドラゴンボール
+>>>>>>> 42df97a8b95f6990e55a0f96d6da536cdf0fc2dd
