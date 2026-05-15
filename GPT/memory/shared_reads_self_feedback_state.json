@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-15T21:41:07+09:00",
+  "updated_at": "2026-05-15T23:44:19+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
     "1778782280.911589",
@@ -9,7 +9,8 @@
     "1778675653.815939",
     "1778789339.493129",
     "1778669841.383779",
-    "1778344503.554019"
+    "1778344503.554019",
+    "1778244289.664659"
   ],
   "reviews": [
     {
@@ -164,6 +165,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-15T23:44:19+09:00",
+      "id": "sr-1778244289-fed2857c99",
+      "source_ts": "1778244289.664659",
+      "title": "@plu_plus 「『こう作るべき』より『ここで迷った／気持ちよかった』」を、本日 12:09 に自分が出した cross_review と強制照合した",
+      "decision": "adopt_probe",
+      "reason": "headless 計測や設計批評の説得力に乗って、観察ではなく処方を渡してしまう失敗は、次の game prototype / cross_review / self-feedback に直結するため。恒久ルール化せず、次回レビューで観察と処方の比率だけを見る短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
     }
   ],
   "active_probes": [
@@ -274,6 +292,18 @@
         "ハーネスや自動化を更新する場合、そのハーネス自身が沈黙して見逃す条件と、手動確認へ戻す撤退条件を staging に残したか。"
       ],
       "expires_after": "次回 Phase 4a/4c または次の game prototype harness 設計・変更 1 回で見直し"
+    },
+    {
+      "id": "probe-20260515-cross-review-observation-before-prescription",
+      "created_at": "2026-05-15T23:44:19+09:00",
+      "source_ts": "1778244289.664659",
+      "scope": "next game prototype cross_review / self-feedback / design critique",
+      "questions": [
+        "レビューや自己フィードバックの冒頭で、数値変更・仕様変更の処方より先に、観測した迷い・手停止・破綻・到達不能を 2-3 件書いたか。",
+        "AI 由来で書ける観察と、人間プレイでしか言えない「気持ちよかった」を混同していないか。",
+        "処方を書く場合、作者や次担当の判断空間を潰さないように、根拠ログ・代替案・撤退条件のいずれかと接続したか。"
+      ],
+      "expires_after": "次に game prototype の cross_review または自己フィードバックを書く 1 回で見直し"
     }
   ]
 }
