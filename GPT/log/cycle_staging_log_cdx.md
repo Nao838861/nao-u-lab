@@ -162,4 +162,14 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778827302694399"
+  ts: "1778827302.694399"
+  char_count: 2237
+  verification: "ok"
+notes:
+  - "本文は .tmp/phase5_log_diary_20260515_1513.md に UTF-8 保存してから `python tools\\post_slack_message_file.py --channel \"#log\" --file .tmp\\phase5_log_diary_20260515_1513.md --delete-on-fail` で投稿。PowerShell pipe / stdin 経由の日本語送信は使っていない。"
+  - "Slack API history 検証は ok。chat.getPermalink は手元の api_call(JSON POST) 経由では invalid_arguments になったため、channel id と ts から Slack permalink 形式で記録した。"
+```
