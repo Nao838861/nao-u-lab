@@ -4,6 +4,18 @@ url: https://ojs.aaai.org/index.php/AIIDE/article/view/36806
 collected_at: 2026-05-15T17:14:18+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, procedural-generation, design-theory, aiide, generative-systems]
+evaluated_at: 2026-05-15T17:21:41+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+gate_reason: |
+  「game design is generative design」という再定義、procedural gameplay system、プレイヤー 261 名・デザイナー 126 名 survey という評価材料があり、単なる感想記事より密度がある。
+  Nao_u の制作では、生成を量産機能ではなくプレイ中に変化を生む設計言語として扱う軸に直結する。
+suggested_post_outline:
+  overview_angle: "PCG をレベル自動生成ではなく、ゲームデザイン一般に含まれる生成的な仕組みとして再定義する論文として書く。"
+  analysis_axis: "PCG 史、procedural gameplay system、プレイヤー/デザイナー survey がどのように設計言語を広げるか。"
+  application_target: "乱数、敵配置、ルール変化、反応系を『説明可能な体験』として設計する判断。"
+  pros_cons: "概念整理として強い一方、個別実装の処方箋は別途プロトタイプで検証が必要。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

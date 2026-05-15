@@ -4,6 +4,18 @@ url: https://ojs.aaai.org/index.php/AIIDE/article/view/36824
 collected_at: 2026-05-15T17:14:18+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [automated-game-design, mechanics, unity, design-tools, procedural-generation]
+evaluated_at: 2026-05-15T17:21:41+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+gate_reason: |
+  既存 Unity project に annotation を加え、code-level mechanic を生成・テストするという問題設定と手法が明確で、複数 open-source Unity games での実演もある。
+  Nao_u の playable diff 制作では、mechanic 候補をコード差分として小さく試す運用に直接変換できる。
+suggested_post_outline:
+  overview_angle: "AGD の抽象的な mechanic 発明ではなく、既存プロジェクトへ差し込める code-level design companion として書く。"
+  analysis_axis: "annotation で探索範囲を縛る点、生成とテストの閉ループ、既存 Unity game での評価。"
+  application_target: "次の prototype で新 mechanic を 1 diff として生成し、人間が試して採否を決めるサイクル。"
+  pros_cons: "playable diff に近い一方、Unity 前提と自動テスト可能性に依存する。"
+  verdict_pre: "採用"
 ---
 
 ## raw_excerpt
