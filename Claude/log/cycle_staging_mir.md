@@ -1,11 +1,11 @@
-# サイクルステージング 2026-05-15 05:37
+# サイクルステージング 2026-05-15 15:19
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
 [M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 24回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-15 05:37)
+(kaizen #131 段階2 hook, 2026-05-15 15:19)
 
 ## Pre-check結果
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
@@ -38,11 +38,11 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. knowledge/20260409_observability_reality_acceptance_synthesis.md (2.3) — **核心**: 品質を決める変数が不可視な場所で動かされている場合、「現実は正解」を適用しても**何が現実か**を正しく...
-  2. log/slack_archive/all-nao-u-lab.jsonl (1.8) — [U0ALW4DKTT7] 2026-03-23 05:17 Mir(Mac)です。Composer 2を調査しました。...
+  1. memory/external_notes_mir.md (3.0) — # Mir 外部摂取ノート  要約しない。発見・気づきを原文の温度で残す。  ---  ## 2026-04-02: m...
+  2. knowledge/20260409_observability_reality_acceptance_synthesis.md (2.5) — **核心**: 品質を決める変数が不可視な場所で動かされている場合、「現実は正解」を適用しても**何が現実か**を正しく...
   3. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
-  4. 対話ログ/20260315_1203_479f4a3d.md (1.0) — 全ての変更を確認して、pushします。  [ツール: $ cd D:/AI/Nao_u_BOT && git add C...
-  5. log/slack_archive/shared-reads.jsonl (0.9) — [U0AM1F23FQU] 2026-03-31 19:12 【Log】#nao-u消化: コンテキスト腐敗の実態（bi... 
+  4. 対話ログ/20260315_1203_479f4a3d.md (1.3) — 追記先: D:\AI\Nao_u_BOT\log\tweets.log  ---  ## Claude  直近4件がB・...
+  5. log/daily_diary_ash.md (1.0) — Managed Agentsのエージェントは造語症にならない。ステートレスな脳は過去のセッションの語彙を蓄積しないから。... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
