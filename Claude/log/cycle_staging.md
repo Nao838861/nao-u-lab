@@ -123,3 +123,45 @@ log/external_search.log 追記済 (2026-05-15 07:50 エントリ)
 1. **t-260515042407-8efb push確認** → 未push確定 (local 11 commits ahead, aad8e17b1 NOT in origin/master)。Phase 3 で手動push判断 (Auto sync cron が master 直 push を拒否する事象が原因の可能性)
 2. **t-260515022000-eval graze_log v05 着手** → Phase 3 で game/graze_log/v05/ ディレクトリ作成 + brainstorm.md 第1版書き起こし。Mir v05 案 (全弾常時軌跡 + バリエーション) + 外部検索の "rhyme/crescendo" フレームを統合
 3. t-260513093450-bfeb / t-260512115229-8765: Mir cross_review 書面化と Nao_u Q-1/Q-2/Q-3 受領状況を Phase 3 で grep 確認、未受領なら据え置き
+
+---
+
+## Phase 4 大作業の結果 (2026-05-15 Ash / 別プロンプト経由の宣言を実行)
+
+**注**: Phase 4 着手時、staging ファイルが外部プロセス (Phase 1 再実行と推測) により書き換わっており、当初の「Phase 3 → Phase 4 大作業宣言」セクションが消失。但し Phase 4 プロンプト本文に当該宣言が引用されていたため、引用先を真ソースとして実行した。
+
+### Phase 3 宣言の内容 (プロンプト本文より復元)
+
+- **大作業**: graze_log v05 alpha 着手 — v04/index.html を v05/ に複製し「**全弾常時軌跡** (GRAZE_TRAIL_FRAMES を全 ebullet に常時付与、graze 時の追加効果は v04 仕様温存)」1機構を **削除可能改良 1個刻み** で追加、ash: prefix で commit
+- **完遂条件**: (1) v05/index.html 存在・全 ebullet 常時軌跡 (2) v05/README.md 存在・戻し方明示 (3) ash: prefix commit (4) headless 数値不使用 (5) self_judgment.md 不作成
+
+### やったこと
+
+- `game/graze_log/v05/index.html` 新規作成 (v04 から複製 + v05 mod 3 箇所、749 行)
+  - L361: `ebullets.push({...grazedT:GRAZE_TRAIL_FRAMES})` (生成時 max 付与)
+  - L404: `b.grazedT=GRAZE_TRAIL_FRAMES;` (常時 max クランプ、decrement 削除)
+  - L5/74/78-81/518/676: タイトル/コメント を v05 表記に更新
+- `game/graze_log/v05/README.md` 新規作成 (約 80 行、戻し方 3 箇所明示)
+- **commit `34814472e`** (`ash: graze_log v05 alpha — 全弾常時軌跡 (削除可能改良 1個刻み)`)
+- 2 files changed, 818 insertions
+- backup auto-commit が先取りする前に `ash:` prefix で intent commit を発火——2026-05-02 08:20 日記の「装置の向き分離」(`feedback_device_direction_rescue_vs_suffocation.md` t:4) を運用面で実行
+
+### 完遂判定: **Yes**
+
+5 件すべて満たす:
+1. ✓ v05/index.html 存在、全 ebullet が常時軌跡を表示 (grazedT 常時 max、fade=1.0 固定)
+2. ✓ v05/README.md 存在、戻し方 3 箇所明示 (約 5 行で v04 復元可)
+3. ✓ ash: prefix commit `34814472e` が HEAD に入っている
+4. ✓ headless 数値は使用していない (実行/数値計測なし、コード変更のみ)
+5. ✓ self_judgment.md / predicted_play.md / cross_review 書面は作成していない
+
+### 次へ繰り越し
+
+- **t-260515022000-eval は本サイクルで消化** (v05 alpha 着手完遂)
+- **t-260515042407-8efb (aad8e17b1 push 確認) は未着手**: branches diverged 18 vs 88 のため本サイクルでは push しない判断。Phase 5 日記 or Nao_u 判断 Slack 経路に切り出す
+- **次サイクル想定**: v05 alpha を Stage 3 (実装後の予測) / Stage 4 (AI 自プレイで体感判定) に通す (`feedback_prediction_responsibility.md` t:5)。Mir 案後半「敵配置/弾パターン バリエーション」着手は v05 自プレイ後の判断材料
+- **Phase 5 日記の素材**:
+  - (a) backup 装置を **速度で先回り** した記録 (ash: prefix で intent を先に commit)
+  - (b) v04→v05 が **3 箇所/約 5 行** で済んだ「削除可能改良 1個刻み」の実例
+  - (c) paper (v05 設計書面 `0d6132665` 取り下げ) → playable (v05 alpha `34814472e`) という means-ends 逆転の自己訂正経路
+  - (d) staging ファイルが Phase 4 着手中に外部プロセスで上書きされ、プロンプト本文引用を真ソースとした事例 (装置が先回りする別パターン)
