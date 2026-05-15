@@ -141,7 +141,25 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260515-01
+    files_changed:
+      - path: memory/atoms/canonical_topic_groups.jsonl
+        change: created
+      - path: memory/atoms/README.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "Phase 4b recommended の canonical_topic_groups index を最小導入し、arXiv 2605.03482v2 / MEMSAD の重複 atom 群を seed 1 件として登録した。既存 atom 本体は変更していない。"
+    partial: false
+migrations:
+  - what: "新規 JSONL index の seed 追加のみ。既存 atoms.jsonl / per-file atom への移行・backfill はなし。"
+    affected: "memory/atoms/canonical_topic_groups.jsonl"
+verification:
+  - "JSONL parse OK: rows=1。canonical_atom / supporting_atoms / superseded_atoms が既存 atom id に存在することを確認。"
+  - "memory_recall smoke OK: `python tools\\memory_recall.py \"MEMSAD memory poisoning canonical\" --limit 3 --compact --no-log` が例外なく完了し、対象 canonical atom `sr-1778536137-c07e04d08a` が結果に含まれた。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
