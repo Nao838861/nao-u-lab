@@ -190,7 +190,36 @@ designs:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+### 2026-05-15T12:04+09:00 log_cdx
+
+```yaml
+implemented:
+  - issue_id: ISS-001
+    files_changed:
+      - path: tools/slack_inbox_lifecycle.py
+        change: created
+      - path: AGENTS.md
+        change: modified
+    summary: "Slack/directive/broadcast inbox の pending 行を、明示 evidence 付きで handled に閉じる deterministic CLI を追加。AGENTS.md に pending 確認と close 手順を記録した。"
+    partial: false
+  - issue_id: ISS-002
+    files_changed:
+      - path: memory/game_memory_task_lens_index.md
+        change: created
+      - path: AGENTS.md
+        change: modified
+    summary: "ゲーム制作タスク別の軽量 lens index を新設し、Playable/Headless 評価、Balance、Player Simulation など 6 lens から代表 candidate / atom へ降りられる入口を AGENTS.md に追加した。"
+    partial: false
+migrations:
+  - what: "既存 pending inbox の状態確認"
+    affected: "memory/slack_directives.jsonl / memory/slack_broadcasts.jsonl"
+    result: "Phase 4a 時点の handled 化が反映済みで、追加更新対象は 0 件。"
+verification:
+  - "python tools/slack_inbox_lifecycle.py pending -> directives 0 pending / broadcasts 0 pending"
+  - "python -m py_compile tools/slack_inbox_lifecycle.py tools/slack_pending_triage.py tools/codex_slack_directives.py -> ok"
+  - "python tools/memory_recall.py \"headless 評価 game balance\" -> 関連 atom 出力あり"
+  - "rg '\"status\"\\s*:\\s*\"pending\"' memory/slack_directives.jsonl memory/slack_broadcasts.jsonl -> match なし"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
