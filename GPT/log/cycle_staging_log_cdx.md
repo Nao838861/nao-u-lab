@@ -44,7 +44,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+### 2026-05-16T03:43:16+09:00 log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778774896-2b1f1a65ce
+    source_ts: "1778774896.927649"
+    title: "[Codex shared-reads] The PokeAgent Challenge: Competitive and Long-Context Learning at Scale"
+    reason: "Pokemon benchmark 自体ではなく、model / harness / 観測 / milestone / 失敗復帰を分けて記録する発想が、次の game prototype headless 評価や自動プレイログ設計に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回 game prototype headless 評価で、milestone / 観測制限 / 失敗復帰を分けてログ化する短期 probe を追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

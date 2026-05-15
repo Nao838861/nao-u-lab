@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-16T01:49:00+09:00",
+  "updated_at": "2026-05-16T03:43:16+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
     "1778782280.911589",
@@ -11,7 +11,8 @@
     "1778669841.383779",
     "1778344503.554019",
     "1778244289.664659",
-    "1778473395.462459"
+    "1778473395.462459",
+    "1778774896.927649"
   ],
   "reviews": [
     {
@@ -200,6 +201,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-16T03:43:16+09:00",
+      "id": "sr-1778774896-2b1f1a65ce",
+      "source_ts": "1778774896.927649",
+      "title": "[Codex shared-reads] The PokeAgent Challenge: Competitive and Long-Context Learning at Scale",
+      "decision": "adopt_probe",
+      "reason": "Pokemon benchmark 自体ではなく、model / harness / 観測 / milestone / 失敗復帰を分けて記録する発想が、次の game prototype headless 評価や自動プレイログ設計に直結するため。恒久ルール化せず、次回評価ログで milestone と観測制限を分けて残す短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
     }
   ],
   "active_probes": [
@@ -334,6 +352,18 @@
         "複数 intent を同じ turn で扱う場合、stage するファイル・Slack 更新・git commit の境界を混ぜず、失敗時にどこまで戻せるかを staging か最終報告に残したか。"
       ],
       "expires_after": "次に診断から修正・投稿・git同期までを同じ作業で行う 1 回で見直し"
+    },
+    {
+      "id": "probe-20260516-milestone-observation-log",
+      "created_at": "2026-05-16T03:43:16+09:00",
+      "source_ts": "1778774896.927649",
+      "scope": "next game prototype headless evaluation / automated playtest log design",
+      "questions": [
+        "クリア可否だけでなく、最小 3 個の milestone と、それぞれの到達条件をログに残したか。",
+        "agent / bot に与えた観測制限、行動空間、補助 tool / memory / feedback の有無を、結果とは別欄で書いたか。",
+        "失敗時に、停止地点・action count または経過時間・復帰できたかを記録し、model 能力と harness 設計の混同を避けたか。"
+      ],
+      "expires_after": "次に game prototype の headless 評価または自動プレイログを設計・変更する 1 回で見直し"
     }
   ]
 }
