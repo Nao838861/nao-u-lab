@@ -256,3 +256,66 @@ beta は alpha の superset で、wave 1-4 がフルで終わる前に game over
 - `feedback_device_direction_rescue_vs_suffocation.md` t:4: `ash:` prefix で意図 commit、backup auto-commit より先に HEAD に入れる方針 → 適合
 
 — Ash (Win2) 2026-05-15 C186 Phase 4
+
+## 9. B-2 弾パターン rhyme 第一手 実装結果 (C188 Phase 4 追記, 2026-05-16)
+
+§8.5 (b) で次サイクル想定として保留した「弾パターン側 (medium 弾発射) のバリエーション」を、`knowledge/20260516_shmup_dogma_crescendo_rhyme_vs_random_variation.md`（今サイクル Phase 2 で結晶化済）の `base × modifier × layout` 型に翻訳して第一手を実装した。B-1 (敵配置 rhyme) と機構独立で並列追加、`feedback_clone_strategy.md` t:5 の「削除可能改良 1 個刻み」を継続。
+
+### 9.1 改変箇所 (v05/index.html)
+
+| 行 | before | after | 説明 |
+|---|---|---|---|
+| L5 (title) | `... + 敵配置 rhyme (B-1)` | `... + 敵配置 rhyme (B-1) + 弾パターン rhyme (B-2)` | ブラウザタブ識別 |
+| L180-187 (改変 + コメント追加) | `function spawnEnemy(type,x,phase){...}` の medium 分岐に bulletPattern なし | `function spawnEnemy(type,x,phase,bulletPattern)` に第 4 引数追加、medium に `bulletPattern:bulletPattern\|\|'aimed'` 代入。直前に B-2 設計コメント 7 行 | 弾パターンを敵生成時に注入可能化 |
+| L294-326 (改変) | `spawnWave1..4` の medium spawn 呼び出しに bulletPattern 引数なし | wave 1=aimed / wave 2=fan3 / wave 3=aimed / wave 4=fan3 で第 4 引数を渡す。各 wave 関数に 1 行コメント | ABAB rhyme を wave 1-4 に埋め込む |
+| L405-415 (新規) | medium 発射: `state.ebullets.push({...直線弾...})` 1 行のみ | `const pat=e.bulletPattern\|\|'aimed';` + `if(pat==='fan3'){ /* 3-way fan ±0.26 rad */ } else { /* aimed 既存 */ }` | base pattern 切替分岐 |
+
+合計 4 箇所、約 +30 行 / -5 行。balance check: open/close ブレース 0、open/close 丸カッコ 0、関数定義数 31（B-1 と同じ、関数追加なし）。
+
+### 9.2 戻し方 (v05 beta B-2 → v05 beta B-1)
+
+1. **弾パターン rhyme (B-2) 撤回**:
+   - L405-415 の `const pat=e.bulletPattern||'aimed';` 行と `if(pat==='fan3'){...}else{...}` ブロックを削除、旧 `state.ebullets.push({x:e.x,y:e.y,vx:dx/d*sp,vy:dy/d*sp,grazed:false,grazedT:GRAZE_TRAIL_FRAMES});` 1 行に戻す。
+   - L294-326 の `spawnEnemy('medium',W*...,0,'aimed'|'fan3')` 第 4 引数 (および直前のコメント行) を削除、3 引数呼び出しに戻す。
+   - L180-187 の `spawnEnemy` の第 4 引数 `bulletPattern` を削除、medium push 内の `,bulletPattern:bulletPattern||'aimed'` を削除、コメントブロックを削除。
+2. **title 撤回**: L5 を `graze_log v05 beta — 全弾常時軌跡 + 敵配置 rhyme (B-1)` に戻す。
+
+`feedback_clone_strategy.md` t:5 の「削除可能改良 1 個刻み」原則に従い、B-2 は B-1 と独立して撤回可能（B-2 撤回後の状態は B-1 のみと完全一致）。
+
+### 9.3 ABAB rhyme 構造と wave 5+ への接続
+
+| wave | bulletPattern | 説明 |
+|---|---|---|
+| 1 | aimed | base pattern intro (single shot 自機狙い、v04 まで唯一の弾) |
+| 2 | fan3 | new pattern intro (±15° 3-way fan、modifier on aimed) |
+| 3 | aimed | return to base — プレイヤーは「基本に戻った」と感じる |
+| 4 | fan3 | rhyme — fan3 の再来。ABAB の 4 番目で「fan3 は単発ではなく構造要素」と認知 |
+| 5+ | (B-1 が決める) | B-1 が 70% で wave 1-4 から rng pick するので、fan3 wave (2 or 4) が予期せず再出現 |
+
+これは knowledge §「base × modifier × layout」の最小実装で、wave layout は B-1 が既に rhyme 化済み、B-2 で base + modifier (1 軸) を追加した形。base pattern 種数は守破離の守として業界中央値 5 種未満（現状 2 種）からスタート、Nao_u 評価次第で wave 6+ に新 base または新 modifier を 1 個ずつ追加する v06 候補。
+
+### 9.4 seed 再現性とアルファ等価性
+
+state.rng はゲーム開始で再シードしないので、同じ `?seed=N` で起動すれば wave 順序が完全一致する。B-2 改変は spawn パターン（敵の bulletPattern 属性）のみで rng 経路を増やしていないため、B-1 単独時と同じ seed で同じ wave 順、同じ敵配置、同じ fireT が得られる。**唯一の差は medium 敵の弾発射ロジック**（fan3 wave で 3 倍の弾数）。
+
+B-2 を撤回すれば B-1 と完全等価。B-1 を撤回すれば alpha と wave 5+ 挙動が差を出す（既知）。
+
+### 9.5 本サイクルで実行できなかった検証 (honest reporting)
+
+- **ブラウザ playtest 未実施**: 本環境 (Win2 PowerShell) では GUI ブラウザ起動経路を持たない。Nao_u/Mir/Ash 自プレイは index.html を手動で開く必要があり、本 Phase 4 内では実施できなかった。
+- **headless 実行未実施**: v05 ディレクトリに headless.py が存在しない（v01 のみ持つ）。`feedback_headless_unfit_for_unfinished_eval.md` t:5 によれば headless 数値は judgment 根拠に使えないが、infrastructure 動作確認 (spawnWave2/4 が fan3 を渡すか、fire branch が pat==='fan3' を実行するか) のための使用は (d) で認められている。本サイクルでは headless.py 新設を見送り、static verification (構文 balance / 関数数 / `bulletPattern:'fan3'` の grep / `pat==='fan3'` の grep) のみで配線確認した。
+- **alpha→beta 体感比較未実施**: 同じ seed で v05 beta B-2 と B-1 を並べてプレイし「fan3 wave (2/4) で弾密度の体感差があるか」を Ash 自身で校正する作業は次サイクル送り。
+- **次サイクル想定**: (a) Nao_u/Mir の playtest 評価待ち、(b) headless.py v05 新設 (infrastructure 動作確認のみ、judgment 根拠化はしない)、(c) Mir cross_review への B-2 機構記述追補。
+
+### 9.6 self-check (B-2 と feedback の照合)
+
+- `feedback_clone_strategy.md` t:5: B-2 は B-1 と独立、撤回可能、「削除可能 1 個刻み」3 個 (alpha 全弾常時軌跡 / B-1 敵配置 rhyme / B-2 弾パターン rhyme) を積み上げた構造 → 適合
+- `feedback_few_rules_big_effect.md` t:5 「1 機構 1 採用」: B-2 は弾パターン 1 機構 (base × modifier の 1 軸のみ)、wave layout は B-1 で済 → 適合
+- `feedback_prediction_responsibility.md` t:5 Stage 2: 着手前懸念は §3-4 (旧) / §9.3-9.4 (新) で機構・等価性・rhyme 構造を明示 → 適合
+- `feedback_means_ends_reversal_check.md` t:5: 本 Phase 4 出力は playable diff (index.html 改変 commit) → 適合
+- `feedback_prior_art_citation_must_verify.md` t:5: B-2 採用根拠は knowledge/20260516_shmup_dogma_crescendo_rhyme_vs_random_variation.md (gamedeveloper.com '(Breaking) The Shmup Dogma' に rhyme 概念引用文付き) → 適合
+- `feedback_headless_unfit_for_unfinished_eval.md` t:5: §9.5 で headless 数値を judgment 根拠化しない方針を明記 → 適合
+- `feedback_device_direction_rescue_vs_suffocation.md` t:4: `ash:` prefix で意図 commit → 適合
+- `feedback_recognize_own_work.md` t:5: 「fan 弾の実装は v05 にまだない」と書く前に game/graze_log/*/index.html を grep 済（v05 alpha/beta B-1 では未実装、B-2 で初実装） → 適合
+
+— Ash (Win2) 2026-05-16 C188 Phase 4

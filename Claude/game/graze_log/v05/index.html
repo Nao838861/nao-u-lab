@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>graze_log v05 beta — 全弾常時軌跡 + 敵配置 rhyme (B-1)</title>
+<title>graze_log v05 beta — 全弾常時軌跡 + 敵配置 rhyme (B-1) + 弾パターン rhyme (B-2)</title>
 <style>
   html,body{margin:0;background:#05050f;color:#cfd4e4;font-family:system-ui,sans-serif;
             display:flex;flex-direction:column;align-items:center;min-height:100vh}
@@ -177,11 +177,18 @@ function spawnPlayerBullets(){
   }
 }
 
-function spawnEnemy(type,x,phase){
+// === v05 beta B-2: 弾パターン rhyme — 第一手 (3-way fan を modifier として導入) ===
+// 設計: knowledge/20260516_shmup_dogma_crescendo_rhyme_vs_random_variation.md の
+// 「base × modifier × layout」型実装の最小開始。base='aimed' (既存) + modifier='fan3' (±15° 3-way) の 1 軸のみ。
+// wave 1=aimed / wave 2=fan3 / wave 3=aimed / wave 4=fan3 で ABAB rhyme を構成、
+// wave 5+ は B-1 が wave 1-4 から rng pick するため fan3 が予期しない再出現する。
+// 削除手順 (v05 beta B-2 → v05 beta B-1): spawnEnemy の bulletPattern 引数とフィールド代入、
+// update() 内 medium 発射の `if(pat==='fan3')` 分岐、spawnWave2/4 の 'fan3' 渡しを削除。
+function spawnEnemy(type,x,phase,bulletPattern){
   if(type==='small'){
     state.enemies.push({type,x,y:-12,vx:0,vy:1.6,r:9,hp:1,t:0,fireT:9999,phase:phase||0});
   }else{ // medium
-    state.enemies.push({type,x,y:-16,vx:0,vy:0.9,r:13,hp:3,t:0,fireT:60+Math.floor(state.rng()*40),phase:phase||0});
+    state.enemies.push({type,x,y:-16,vx:0,vy:0.9,r:13,hp:3,t:0,fireT:60+Math.floor(state.rng()*40),phase:phase||0,bulletPattern:bulletPattern||'aimed'});
   }
 }
 
@@ -284,32 +291,36 @@ function triggerActiveDef(){
 // 旧来の `const pop=4+Math.min(w-4,6); for(...) state.rng()<0.6 spawn ...` に戻す。
 // spawnWave1..4 は spawnWave 本体に inline で戻せば v04 と等価。
 function spawnWave1(){
+  // wave 1: aimed (intro of single shot — B-2 default pattern)
   spawnEnemy('small',W*0.30);
   spawnEnemy('small',W*0.50);
   spawnEnemy('small',W*0.70);
   setTimeout(()=>{
     if(state.mode==='play'){
-      spawnEnemy('medium',W*0.5);
+      spawnEnemy('medium',W*0.5,0,'aimed');
       state.introMedSpawned=true;
     }
   },1200);
 }
 function spawnWave2(){
+  // wave 2: fan3 (B-2 new pattern intro)
   spawnEnemy('small',W*0.2);
   spawnEnemy('small',W*0.4);
   spawnEnemy('small',W*0.6);
   spawnEnemy('small',W*0.8);
-  spawnEnemy('medium',W*0.3);
-  spawnEnemy('medium',W*0.7);
+  spawnEnemy('medium',W*0.3,0,'fan3');
+  spawnEnemy('medium',W*0.7,0,'fan3');
 }
 function spawnWave3(){
+  // wave 3: aimed (B-2 return to base — ABAB の 2nd A)
   for(let i=0;i<6;i++)spawnEnemy('small',W*0.15+i*W*0.14);
-  spawnEnemy('medium',W*0.5);
+  spawnEnemy('medium',W*0.5,0,'aimed');
 }
 function spawnWave4(){
-  spawnEnemy('medium',W*0.25);
-  spawnEnemy('medium',W*0.5);
-  spawnEnemy('medium',W*0.75);
+  // wave 4: fan3 (B-2 rhyme — fan3 returns, ABAB の 2nd B)
+  spawnEnemy('medium',W*0.25,0,'fan3');
+  spawnEnemy('medium',W*0.5,0,'fan3');
+  spawnEnemy('medium',W*0.75,0,'fan3');
   for(let i=0;i<4;i++)spawnEnemy('small',W*0.2+i*W*0.2);
 }
 function spawnWaveRandom(w){
@@ -391,7 +402,19 @@ function update(){
         const dx=state.player.x-e.x,dy=state.player.y-e.y;
         const d=Math.hypot(dx,dy)||1;
         const sp=2.4;
-        state.ebullets.push({x:e.x,y:e.y,vx:dx/d*sp,vy:dy/d*sp,grazed:false,grazedT:GRAZE_TRAIL_FRAMES});
+        // v05 beta B-2: bulletPattern で base pattern 切替 (default 'aimed')
+        const pat=e.bulletPattern||'aimed';
+        if(pat==='fan3'){
+          // 3-way fan: aimed ± 15° (~0.26 rad)
+          const baseAng=Math.atan2(dy,dx);
+          const spread=0.26;
+          for(let k=-1;k<=1;k++){
+            const a=baseAng+spread*k;
+            state.ebullets.push({x:e.x,y:e.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,grazed:false,grazedT:GRAZE_TRAIL_FRAMES});
+          }
+        }else{
+          state.ebullets.push({x:e.x,y:e.y,vx:dx/d*sp,vy:dy/d*sp,grazed:false,grazedT:GRAZE_TRAIL_FRAMES});
+        }
         e.fireT=70+Math.floor(state.rng()*40);
       }
     }
