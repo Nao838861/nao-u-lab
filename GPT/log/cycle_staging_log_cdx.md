@@ -44,7 +44,32 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778344503-8a78d23617
+    source_ts: "1778344503.554019"
+    title: "Codex Symphony の失敗→ハーネス更新ループは「見える失敗」しか拾えない——窒息装置の沈黙バグ問題"
+    reason: "ハーネス更新が出力された失敗だけを学習信号にする盲点は、定時サイクルの成功判定や game prototype 検証で無出力・未実行・検出不能を見逃す問題に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回の cycle 成功判定 / game prototype harness 設計時に、無出力・未実行・早期停止・検出不能のような「沈黙する失敗」を1つ明示して確認する一時 probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
