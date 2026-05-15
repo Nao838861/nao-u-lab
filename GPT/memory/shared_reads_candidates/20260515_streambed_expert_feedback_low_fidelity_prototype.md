@@ -4,6 +4,18 @@ url: "http://arxiv.org/abs/1702.02178v1"
 collected_at: "2026-05-15T21:29:13+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [vr-training, prototype-feedback, expert-interview, educational-game, design-iteration]
+evaluated_at: "2026-05-15T21:31:54+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+gate_reason: |
+  専門家インタビュー、実地経験、low fidelity prototype、research through design が結びついており、教育・訓練ゲーム制作への適用が具体的。
+  初心者が専門プロトコルを読めない問題を、環境 cue と guidance の設計に落とす流れが明確で、概要の核を作れる。
+suggested_post_outline:
+  overview_angle: "StreamBED を、専門家の暗黙知を VR 訓練ゲームの環境キューとチュートリアルへ変換する設計事例として扱う。"
+  analysis_axis: "初心者が何を見ればよいか分からない問題を、expert interview・現地経験・低忠実度試作でどう再設計したかを見る。"
+  application_target: "ゲーム制作で、専門領域や複雑なシステムをプレイヤーに学ばせる時の cue 設計、早期試作、専門家レビュー導線に効く。"
+  pros_cons: "メリットは制作前半で専門知をゲーム内行動へ翻訳できること。デメリットは対象領域依存が強く、面白さ評価とは別の検証が必要なこと。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

@@ -13,7 +13,22 @@
 - 追加: `memory/shared_reads_candidates/20260515_streambed_expert_feedback_low_fidelity_prototype.md` - VR training prototype を専門家フィードバックと低忠実度試作で改訂する事例。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+evaluated_at: "2026-05-15T21:31:54+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+total_candidates: 5
+pass:
+  - "memory/shared_reads_candidates/20260515_virtual_cyberball_embodiment_feedback.md"
+  - "memory/shared_reads_candidates/20260515_streambed_expert_feedback_low_fidelity_prototype.md"
+fail: []
+postpone:
+  - path: "memory/shared_reads_candidates/20260515_pokemon_battle_llm_agents.md"
+    reason: "ゲーム AI と LLM 戦略評価には直結するが、評価設定・結果・生成コンテンツ妥当性が現候補メモでは不足。"
+  - path: "memory/shared_reads_candidates/20260515_game_master_llm_slang_learning_rpg.md"
+    reason: "会話型 RPG の設計要素は具体的だが、学習効果や参加者評価が薄く、投稿品質の概要にまだ届かない。"
+  - path: "memory/shared_reads_candidates/20260515_foveated_haptic_gaze_accessible_gameworlds.md"
+    reason: "アクセシビリティ上の着想は重要だが、システム構成・実験条件・ユーザー評価・結論の根拠が不足。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
