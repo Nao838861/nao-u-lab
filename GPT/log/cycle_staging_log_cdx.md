@@ -87,4 +87,14 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778842372778559
+  ts: "1778842372.778559"
+  char_count: 2299
+  verification: ok
+  draft: .tmp/phase5_log_diary_20260515_1928.md
+notes:
+  - "UTF-8 file post via tools/post_slack_message_file.py --delete-on-fail。Slack API conversations.history 検証 ok。"
+```
