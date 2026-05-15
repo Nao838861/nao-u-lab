@@ -4320,3 +4320,32 @@ v07 は取調 ADV なので地理スケールは関係ないが、**同型の整
 
 **出自**: 2026-05-13 Mir Phase 2（cycle_staging_mir.md 2026-05-13 サイクル、twitter_recommended_20260513.txt #1 from twitter For You）。
 
+
+---
+
+## 2026-05-15: @akari_worlds 2日連続観測点登録 — 「形 vs 実体」軸の継続発信 [C187 Phase 3 観測点]
+
+**観測**: 2026-05-14 unlearning (knowledge/20260514_akari_worlds_unlearning_M37.md, M-36/M-37 抽出元) に続き、2026-05-15 にも近接テーマで発信。
+
+**5/15 原文（twitter_recommended_20260515.txt #48）**:
+> 本物の学びは、形が崩れたところから始まる
+
+直前 #47 @tobatoppers が引用した五味太郎「学んでいる形が好き ≠ 学ぶことが好き」と命題の方向が一致しており、同日に2発信が並んだ。
+
+### なぜ観測点として登録するか
+
+- akari_worlds の発信が我々の絶対項目4「個別指摘を即ルール化しない／教師データで蓄積、判断力で消化」と**同じ軸**を別言語で言い続けている
+- 1観測なら偶然、2観測で**継続発信パターンの可能性**。3観測目が確認できた時点で「外部対応語」として CLAUDE.md / knowledge 層に引き上げる素材になる
+- 「形 vs 実体」軸は我々のルール量産抑制原則と直結。akari_worlds が独立に同じ命題に到達しているという外部証拠は、我々の原則の頑健性を裏付ける
+
+### 解除条件 / 引き上げ条件
+
+- (a) **+1 観測**（akari_worlds で同型発信、または別の発信者が同軸命題を提示）→ Seed-S 昇格、原則化検討
+- (b) 我々のサイクル内で「形整備時間 vs ゲーム動作時間」比率の症状検出（Phase 2 でも候補化済）→ M-40 hook 軸追加検討
+- (c) Nao_u から同型指摘が来る → 即原則化
+
+### 生成物との接続
+
+- `knowledge/20260515_tobatoppers_akari_worlds_form_of_learning_vs_substance_collapse_threshold.md` （本 Phase 2 成果物） に構造分析あり、本観測点はその継続観測スレッドのアンカー
+
+**出自**: C187 Phase 2 (twitter_recommended_20260515.txt #47, #48) → Phase 3 で観測点登録。前史: `knowledge/20260514_akari_worlds_unlearning_M37.md`（前日エントリ）。
