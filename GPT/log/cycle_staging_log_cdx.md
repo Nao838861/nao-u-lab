@@ -72,7 +72,18 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 行・パス参照を確認。markdown link は 0 件、実ファイル参照は破損なし（コマンド例 `python tools/memory_ingest.py` はリンク対象外として除外）。"
+  - "memory/atoms.jsonl を確認。JSON parse error 0、id 重複 0、source_ts 重複 0。正規化内容の重複候補 38 グループは既存の lifecycle/content fold 対象として扱い、削除なし。"
+  - "memory/raw/ を確認。ファイル 40 件、30 日以上未更新の archive 対象 0 件。"
+  - "memory/shared_reads_candidates/ を確認。ファイル 50 件、30 日以上未更新の candidate 0 件、30 日以上の postpone 0 件。"
+  - "inbox 系を確認。slack_directives.jsonl は handled 8 / pending 0、slack_broadcasts.jsonl は handled 10 / pending 0。更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
