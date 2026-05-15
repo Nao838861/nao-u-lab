@@ -4,6 +4,18 @@ url: "https://www.hbs.edu/ris/Publication%20Files/Personalized%20Game%20Design_6
 collected_at: "2026-05-15T10:59:25+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, dynamic-difficulty, retention, monetization, field-experiment, mobile-games]
+evaluated_at: "2026-05-15T11:01:51+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+gate_reason: |
+  離脱リスクに応じた DDA、完全ランダム holdout、大規模 field experiment、retention/engagement/monetization の評価という重要要素が揃っている。
+  monetization は Nao_u 環境では主目的ではないが、初回継続・到達保証・再挑戦導線の設計に具体的に置換でき、CoopEval 水準の概要が書ける。
+suggested_post_outline:
+  overview_angle: "難易度を下げることを甘やかしではなく、離脱リスクを下げて進行経験を保証する設計介入として書く。"
+  analysis_axis: "対象者選別、介入設計、holdout 比較、短期購買低下と長期継続改善のトレードオフを軸に分析する。"
+  application_target: "初回プレイの Lv3 到達、被弾後の復帰、再挑戦導線、序盤 wave 調整の評価指標。"
+  pros_cons: "長所は大規模実験と retention 指標の明確さ。短所は F2P 商用文脈、収益指標の価値観差、難易度低下の体験劣化リスク。"
+  verdict_pre: "部分採用。課金最適化ではなく、序盤離脱を防ぐ到達保証の評価設計として採用する。"
 ---
 
 ## raw_excerpt

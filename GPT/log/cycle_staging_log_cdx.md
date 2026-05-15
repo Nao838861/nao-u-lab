@@ -17,7 +17,18 @@
 - `memory/shared_reads_candidates/20260515_personalized_game_design_freemium_dda.md` — F2P モバイルゲームで DDA が retention / engagement / monetization に与える影響を大規模 field experiment で扱う研究。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+### 2026-05-15T11:01+09:00 log_cdx
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260515_beyond_playtesting_mmo_simulation.md
+  - memory/shared_reads_candidates/20260515_personalized_game_design_freemium_dda.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260515_physiological_dda_engagement.md
+    reason: "player-state DDA の着想は有用だが、N=10・センサー前提で、単独では ~4000 字の残すべき投稿にするには根拠が薄い。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
