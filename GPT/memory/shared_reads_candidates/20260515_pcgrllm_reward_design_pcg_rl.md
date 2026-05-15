@@ -1,0 +1,13 @@
+---
+title: "PCGRLLM: Large Language Model-Driven Reward Design for Procedural Content Generation Reinforcement Learning"
+url: "https://arxiv.org/abs/2502.10906"
+collected_at: "2026-05-15T08:59:25+09:00"
+collected_by: "log_cdx (Phase 1)"
+genre_tags: [procedural-content-generation, reinforcement-learning, reward-design, llm, game-ai]
+---
+
+## raw_excerpt
+著作権配慮のため長文引用ではなく、arXiv abstract の要点メモとして保存する。PCGRLLM は、procedural content generation reinforcement learning における reward design を LLM で支援する研究。Reward design は game AI training で重要だが、人間の domain-specific knowledge と手作業に依存しやすい。提案手法は、以前の reward generation 系研究を拡張し、feedback mechanism と reasoning-based prompt engineering を導入する。評価は 2D environment の story-to-reward generation task で行い、2 種類の state-of-the-art LLM を使って generalizability を見る。結果として、使用するモデルの zero-shot capability に応じて 415% と 40% の性能改善が報告されている。
+
+## why_relevant_to_games
+PCG や自動プレイテストの評価関数を「何を報酬にするか」から設計する材料。Nao_u のゲーム制作では、面白さや到達可能性を直接採点できない時の中間報酬設計に効く。
