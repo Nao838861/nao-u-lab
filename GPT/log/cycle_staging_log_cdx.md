@@ -74,6 +74,33 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+## Phase 4a: 記憶階層 整理 + 問題抽出 / 2026-05-15 09:26 JST / log_cdx
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の markdown link を確認: link_count=0 / broken_count=0。現行 index は atom id とパス文字列中心で、破損リンクは検出されなかった。"
+  - "memory/atoms.jsonl を確認: rows=1137 / parse_error=0 / duplicate_ids=0 / duplicate_content_hashes=0 / status_conflicts_by_hash=0。"
+  - "memory/raw/ と memory/shared_reads_candidates/ を確認: 30日以上更新なしの file は 0 件。archive/fail 降格なし。"
+  - "inbox cleanup: memory/slack_directives.jsonl の log-cdx-1778631512-67f4ccd11f を handled に更新。今回の Phase 4a staging で記憶システムの構造問題として処理したため。"
+  - "inbox cleanup: memory/slack_broadcasts.jsonl の broadcast-1778778369-9d4ef2d700 / broadcast-1778787090-64f705c94c を handled に更新。対応 atom と follow-up が確認できたため。"
+issues:
+  - id: ISS-4A-001
+    description: "Slack inbox の pending と atom/Slack follow-up の対応が自動で閉じない。受領 atom や実質応答 atom が存在しても slack_directives.jsonl / slack_broadcasts.jsonl 側に pending が残り、次サイクルで同じ依頼を再確認する。"
+    severity: medium
+    evidence: "memory/slack_broadcasts.jsonl に残っていた broadcast-1778778369-9d4ef2d700 は sr-1778778369-d0af8a82c5 / sr-1778780206-7c96e82f61 に実質内容があり、broadcast-1778787090-64f705c94c は sr-1778786509-bf35a09978 / sr-1778787429-f5d4212919 / sr-1778792800-ebba68ec66 に follow-up がある。status は Phase 4a まで pending のままだった。"
+    why_blocks_game_memory: "ゲーム制作上の判断材料が atom 化されても inbox では未処理に見えるため、次サイクルが新規のゲーム制作ではなく古い確認作業へ戻りやすい。経験を次の制作へ送る導線が status 管理で詰まる。"
+  - id: ISS-4A-002
+    description: "MEMORY.md の index は実ファイルリンクではなく atom id / text entry point が中心で、broken link check は通るが、個別 atom や per-file memory へのクリック可能な導線を検査できない。"
+    severity: low
+    evidence: "memory/MEMORY.md link_count=0。per-file atom は memory/atoms/2026-05/*.md と index.jsonl に存在するが、MEMORY.md の High Signal / Recent は clickable markdown link ではない。"
+    why_blocks_game_memory: "重要な game-design atom を見つけた後、該当 per-file へ移動するには id 検索が必要になる。ゲーム制作中の短い判断時間では、参照コストが上がり recall 結果が実作業に接続されにくい。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-001
+    - ISS-4A-002
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
