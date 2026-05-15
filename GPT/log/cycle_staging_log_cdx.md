@@ -67,7 +67,24 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned: []
+issues:
+  - id: ISS-4A-20260515-01
+    description: "atoms.jsonl は ID 重複や JSON 破損はないが、同一リンク・補正版・再投稿が複数 atom として並ぶグループが多い。現状の lifecycle/content fold は MEMORY.md 表示上の圧縮には効いているが、原文リンク単位・ゲーム制作テーマ単位の導線としては散在が残る。"
+    severity: medium
+    evidence: "memory/atoms.jsonl: rows=1152, duplicate_ids=0, duplicate_source_ts=0, exact title/trigger/excerpt duplicate groups=38, same-linkset groups=112。例: http://arxiv.org/abs/2605.03482v2 は sr-1778535120-82ea7a1005 / sr-1778535738-ed839f9805 / sr-1778536137-c07e04d08a / sr-1778536160-392329fd76 の 4 atom に分散。"
+    why_blocks_game_memory: "次のゲーム制作で特定手法や論文を探す時、同じ題材の再投稿・補正版・観察メモが横並びに返り、どれが canonical な学びで、どれが補足・失敗・再評価なのかを判断する負荷が残る。"
+  - id: ISS-4A-20260515-02
+    description: "リンクを持たない atom が 294 件あり、Slack 会話・作業ログ由来の知見が原文、制作タスク、後続の一般化ノウハウへ接続しないまま残りやすい。"
+    severity: low
+    evidence: "memory/atoms.jsonl: no_links=294, no_tags=0。Tag Entry Points は broad tag が中心で、link/source を持たない atom の回収導線は主に全文検索と broad tag に依存している。"
+    why_blocks_game_memory: "ゲーム X の制作中に得た判断や失敗が、ゲーム Y の開始時に『同種の制作状況』として再発見されにくい。原文リンクがない atom は特に、判断根拠や前後文脈への戻り道が弱い。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260515-01
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
