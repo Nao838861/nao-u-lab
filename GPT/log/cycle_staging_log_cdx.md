@@ -43,7 +43,34 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-16 07:44 JST / log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778026642-523a78cee1
+    source_ts: "1778026642.674069"
+    title: "速度ヒューリスティックと事前批判の3層切り分け（ktch9541 / Mark Brown / toRisouP / xiombatsg）"
+    reason: "未レビューの score 20 shared-reads の中で、次のゲーム案選定に直接使える。速度足切り・着手前批判・実装中の軌道修正を混同しないための小さな確認にでき、恒久ルール化せずに試せるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回の game prototype 案選定/着手前レビューで、L0/L1/L2/L3 のどの層の判断かを明示し、L1 では速度・明確さ・単純さで足切りし、L2 では L3 の『実装中に直す』論法で予測可能懸念を先送りしない probe を追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

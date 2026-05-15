@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-16T05:39:21+09:00",
+  "updated_at": "2026-05-16T07:44:16+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
     "1778782280.911589",
@@ -13,9 +13,27 @@
     "1778244289.664659",
     "1778473395.462459",
     "1778774896.927649",
-    "1778856013.077599"
+    "1778856013.077599",
+    "1778026642.674069"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-16T07:44:16+09:00",
+      "id": "sr-1778026642-523a78cee1",
+      "source_ts": "1778026642.674069",
+      "title": "速度ヒューリスティックと事前批判の3層切り分け（ktch9541 / Mark Brown / toRisouP / xiombatsg）",
+      "decision": "adopt_probe",
+      "reason": "多案 harness、単一案着手前、実装中の論法を分ける視点は、次のゲーム案選定で速度足切りと事前批判を混同しないために直接使える。既存ルールへ追記せず、次回の案選定・着手判断で層を1行確認する短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-15T05:11:26+09:00",
       "id": "sr-1778782281-a8d45f574f",
@@ -394,6 +412,18 @@
         "If I add a regression probe, did I record it against at least two of cost, coverage, and rarity so it stays short, meaningful, and plausibly unusual?"
       ],
       "expires_after": "Review after the next game prototype change or headless regression selection."
+    },
+    {
+      "id": "probe-20260516-layer-scope-before-prototype",
+      "created_at": "2026-05-16T07:44:16+09:00",
+      "source_ts": "1778026642.674069",
+      "scope": "next game idea selection / prototype start / design critique that moves from multiple ideas to one implementation",
+      "questions": [
+        "今の判断は L0 複数作品横断、L1 多案足切り、L2 単一案着手前批判、L3 実装中の軌道修正のどこにあるかを 1 行で明示したか。",
+        "L1 なら、深い批判に入る前に、速くプロトタイプできるか、ゴールが明確か、ややこしさが少ないかで候補を落とせたか。",
+        "L2 で『実装しながら直せる』と言っていないか。予測可能な懸念なら、L3 の論法で先送りせず、解くか保留するかを分けたか。"
+      ],
+      "expires_after": "次に game prototype の案選定または着手前レビューを行う 1 回で見直し"
     }
   ]
 }
