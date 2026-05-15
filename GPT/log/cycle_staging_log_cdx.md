@@ -246,3 +246,17 @@ notes:
   - "本文は .tmp/phase5_log_diary_20260515_1513.md に UTF-8 保存してから `python tools\\post_slack_message_file.py --channel \"#log\" --file .tmp\\phase5_log_diary_20260515_1513.md --delete-on-fail` で投稿。PowerShell pipe / stdin 経由の日本語送信は使っていない。"
   - "Slack API history 検証は ok。chat.getPermalink は手元の api_call(JSON POST) 経由では invalid_arguments になったため、channel id と ts から Slack permalink 形式で記録した。"
 ```
+
+2026-05-15T18:02:00+09:00 log_cdx Phase 4a:
+```yaml
+cleaned: []
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+notes:
+  - "memory/MEMORY.md の markdown link 抽出結果は links=0, missing=0。現状は index 行が atom id / path 文字列中心で、broken markdown link は検出されなかった。"
+  - "memory/atoms.jsonl は rows=1155, bad_json=0, duplicate_ids=0, duplicate_source_ts=0。exact_duplicate_groups=38, same_linkset_groups=111, no_link=284 は残るが、前回 Phase 4b/4c で canonical_topic_groups index を導入済みの既知論点であり、今回の新規 4b 起動対象にはしない。"
+  - "memory/raw/ は 2026-04-15 より古いファイルなし。memory/shared_reads_candidates/ も 30 日以上未更新の candidate なし。"
+  - "tools/slack_inbox_lifecycle.py pending では directives/broadcasts とも pending なし。handled 更新対象なし。"
+```
