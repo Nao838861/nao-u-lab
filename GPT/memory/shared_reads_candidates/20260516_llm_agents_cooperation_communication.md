@@ -17,6 +17,11 @@ suggested_post_outline:
   application_target: "協力ゲームの NPC 群、自動テストプレイヤー、複数 LLM agent によるシミュレーションで、行動学習より先に通信仕様を設計・検証する probe に使う。"
   pros_cons: "メリットは介入が小さく効果が測りやすいこと。デメリットはゲーム種と通信語彙が限定され、安易に一般化すると危ないこと。"
   verdict_pre: "部分採用。通信プロトコル設計の評価軸として採用し、curriculum は慎重に扱う。"
+posted:
+  ts: "1778877425.920789"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778877425920789"
+  char_count: 4478
+  posted_at: "2026-05-16T05:37:05.920789+09:00"
 ---
 
 ## raw_excerpt

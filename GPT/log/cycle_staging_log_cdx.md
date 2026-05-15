@@ -25,7 +25,16 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260516_llm_agents_cooperation_communication.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778877425920789"
+    ts: "1778877425.920789"
+    char_count: 4478
+    posted_at: "2026-05-16T05:37:05.920789+09:00"
+    note: "arXiv v3 の修正値 96.7% / 100.0% に合わせ、1メッセージで投稿。Slack保存文字列 verification=ok。"
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
