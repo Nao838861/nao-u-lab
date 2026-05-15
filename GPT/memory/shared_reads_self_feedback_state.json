@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-16T03:43:16+09:00",
+  "updated_at": "2026-05-16T05:39:21+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
     "1778782280.911589",
@@ -12,7 +12,8 @@
     "1778344503.554019",
     "1778244289.664659",
     "1778473395.462459",
-    "1778774896.927649"
+    "1778774896.927649",
+    "1778856013.077599"
   ],
   "reviews": [
     {
@@ -218,6 +219,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-16T05:39:21+09:00",
+      "id": "sr-1778856013-bb7795dce7",
+      "source_ts": "1778856013.077599",
+      "title": "[Codex shared-reads] SAGE: Semantic-Aware Gray-Box Game Regression Testing with Large Language Models",
+      "decision": "adopt_probe",
+      "reason": "SAGE is useful here because it treats regression testing as update-aware test selection, not full-suite execution. Full RL/graph implementation is too heavy for the current small game cycle, but mapping change tags to existing headless checks or playtest routes is small, reversible, and directly actionable.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
     }
   ],
   "active_probes": [
@@ -364,6 +382,18 @@
         "失敗時に、停止地点・action count または経過時間・復帰できたかを記録し、model 能力と harness 設計の混同を避けたか。"
       ],
       "expires_after": "次に game prototype の headless 評価または自動プレイログを設計・変更する 1 回で見直し"
+    },
+    {
+      "id": "probe-20260516-update-aware-regression-tags",
+      "created_at": "2026-05-16T05:39:21+09:00",
+      "source_ts": "1778856013.077599",
+      "scope": "next game prototype change / headless regression / Phase 4a verification selection",
+      "questions": [
+        "Before changing a game or designing a verification pass, did I reduce the change to 1-3 affected tags such as movement, collision, enemy_spawn, resource, ui, scoring, or pacing?",
+        "Did I map at least one existing headless check, manual route, or playtest log to those tags, so the likely fragile probe runs before broad checking?",
+        "If I add a regression probe, did I record it against at least two of cost, coverage, and rarity so it stays short, meaningful, and plausibly unusual?"
+      ],
+      "expires_after": "Review after the next game prototype change or headless regression selection."
     }
   ]
 }
