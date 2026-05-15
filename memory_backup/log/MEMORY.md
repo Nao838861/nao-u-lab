@@ -1,0 +1,1 @@
+- [Project MEMORY.md structure 2026-05-14](project_memory_md_structure_20260514.md) — Nao_uがMEMORY.md上位セクションを大幅圧縮、温度の高い記憶も「深い記憶」へ格下げした方針
