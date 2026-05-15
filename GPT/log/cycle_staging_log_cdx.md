@@ -1,112 +1,37 @@
-# log_cdx Cycle Staging — 2026-05-15 12:58
+# log_cdx Cycle Staging — 2026-05-15 15:13
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-### 2026-05-15T12:59:38+09:00 log_cdx
+2026-05-15T15:15+09:00 log_cdx Phase 1 収集メモ:
 
-- pending 確認: `python tools\slack_inbox_lifecycle.py pending` で directives / broadcasts とも pending なし。
-- 既存確認: `memory/raw/web_research/` と `memory/shared_reads_candidates/` の直近分を確認。RuleSmith / PlayCoder / SMART / Fly, Fail, Fix / MeepleLM などは既存 candidate と重複するため、今回の新規保存からは外した。
+- pending確認: `memory/slack_directives.jsonl` / `memory/slack_broadcasts.jsonl` とも pending 0 件。
+- 既存確認: `memory/raw/web_research/results.jsonl`、`memory/slack_recent_ingest.jsonl`、`memory/shared_reads_candidates/` を確認。`2603.07101` と `2403.02454` は既に candidate 化済みのため重複作成なし。
 - 追加 candidate:
-  - `memory/shared_reads_candidates/20260515_multitask_pcgrl_language_commands.md` — 自然言語命令を PCGRL のレベル特徴へ対応させる Super Mario 系 level generation。
-  - `memory/shared_reads_candidates/20260515_ggp_llm_reasoning_capabilities.md` — General Game Playing で LLM の next-state / legal-action 推論と構造特徴を調べる論文。
-  - `memory/shared_reads_candidates/20260515_llm_evaluations_of_games.md` — LLM がゲームの fairness / funness をどう評価するかを人間判断と比較する論文。
-  - `memory/shared_reads_candidates/20260515_ai_gamestore_open_ended_evaluation.md` — 人間向けゲーム群を AI/VLM 評価環境として広げる AI GameStore 構想。
-  - `memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md` — 隠れ役職ゲームで LLM の deception / accusation / defection を測る評価環境。
+  - `memory/shared_reads_candidates/20260515_snappable_meshes_3d_map_pcg.md` - 既製 mesh piece と connector 制約による 3D map PCG。designer control と navigability feedback の候補。
+  - `memory/shared_reads_candidates/20260515_llm_npc_cognitive_load_double_edged.md` - LLM-NPC が autonomy を上げる一方、cognitive load / usability / trust に負荷を生む randomized user study。
+  - `memory/shared_reads_candidates/20260515_context_aware_npc_panoramic_images.md` - panoramic image + semantic segmentation + scene graph JSON で NPC dialogue に環境文脈を渡す手法。
 
 ## Phase 2: 分析
-### 2026-05-15T13:02:59+09:00 log_cdx
-
 ```yaml
-total_candidates: 5
+total_candidates: 3
 pass:
-  - memory/shared_reads_candidates/20260515_multitask_pcgrl_language_commands.md
-  - memory/shared_reads_candidates/20260515_llm_evaluations_of_games.md
-fail:
-  - path: memory/shared_reads_candidates/20260515_ai_gamestore_open_ended_evaluation.md
-    reason: "ゲームを AI 評価器にする構想は広いが、今回のゲーム制作サイクルへの具体適用が弱く、benchmark 論紹介に寄る。"
+  - memory/shared_reads_candidates/20260515_snappable_meshes_3d_map_pcg.md
+  - memory/shared_reads_candidates/20260515_llm_npc_cognitive_load_double_edged.md
+fail: []
 postpone:
-  - path: memory/shared_reads_candidates/20260515_ggp_llm_reasoning_capabilities.md
-    reason: "LLM のルール推論失敗分析として有用だが、構造特徴と結果の詳細が足りず本文確認後に回す。"
-  - path: memory/shared_reads_candidates/20260515_liecraft_deception_hidden_role.md
-    reason: "hidden-role 設計素材として有望だが、deception 評価寄りで、報酬設計・評価結果の追加読解が必要。"
+  - path: memory/shared_reads_candidates/20260515_context_aware_npc_panoramic_images.md
+    reason: "着想と適用先は良いが、評価指標・比較条件・失敗例が候補メモ上では薄く、単独投稿前に追加読解が必要。"
 ```
 
 ## Phase 3: Shared-reads 投稿
-### 2026-05-15T13:08:49+09:00 log_cdx
-
-```yaml
-posted:
-  - candidate: memory/shared_reads_candidates/20260515_multitask_pcgrl_language_commands.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778818112932329
-    char_count: 3584
-  - candidate: memory/shared_reads_candidates/20260515_llm_evaluations_of_games.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778818113539339
-    char_count: 3560
-skipped: []
-```
+(Phase 3 が書き込む)
 
 ## Phase 3b: Shared-reads 自己フィードバック
-### 2026-05-15T13:11:14+09:00 log_cdx
-
-```yaml
-self_feedback:
-  selected:
-    id: sr-1778803710-4554fc20b1
-    source_ts: "1778803710.961519"
-    title: "[Codex shared-reads] RuleSmith: Multi-Agent LLMs for Automated Game Balancing"
-    reason: "直近 Phase 1/2 が game balancing と LLM/game evaluation を扱っており、RuleSmith の『LLM を審査員ではなく候補比較 harness の一部として使う』視点が、次の小規模ゲーム調整で具体行動に落としやすいため。"
-  scores:
-    relevance: 3
-    actionability: 3
-    evidence: 2
-    non_redundancy: 2
-    risk_control: 3
-    reversibility: 3
-    total: 16
-  decision: adopt_probe
-  change:
-    summary: "次のゲームバランス調整で、ルールパラメータ候補を同一 harness で比較し、LLM/headless bot を最終審査員ではなく測定ループの一部として扱う短期 probe を追加した。"
-    files:
-      - memory/shared_reads_self_feedback_state.json
-      - log/cycle_staging_log_cdx.md
-  anti_bloat_check:
-    adds_permanent_rule: false
-    replaces_or_simplifies_existing: false
-    conflict_checked: true
-```
+(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
-### 2026-05-15T13:18:00+09:00 log_cdx
-
-```yaml
-cleaned: []
-checks:
-  memory_index_links:
-    checked: true
-    broken_links: []
-    note: "MEMORY.md の Markdown link は 0 件。本文中の path-like 参照は repo root 基準で存在確認済み。"
-  atoms_jsonl:
-    rows: 1148
-    bad_json: 0
-    duplicate_ids: 0
-    exact_content_clusters: 0
-    missing_canonical_refs: 0
-    missing_superseded_by_refs: 0
-  raw_archive_candidates:
-    cutoff: "2026-04-15"
-    files_older_than_30_days: 0
-  shared_reads_candidate_staleness:
-    cutoff: "2026-04-15"
-    files_older_than_30_days: 0
-  inbox:
-    pending_directives: 0
-    pending_broadcasts: 0
-issues: []
-recommendation:
-  needs_design: false
-  priority_issues: []
-```
+(Phase 4a が書き込む)
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
@@ -115,13 +40,4 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-### 2026-05-15T13:36:49+09:00 log_cdx
-
-```yaml
-posted:
-  channel: "#log"
-  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778818609149229
-  char_count: 2289
-  verification: ok
-  draft: log/phase5_diary_20260515_1258.md
-```
+(Phase 5 が書き込む)

@@ -4,6 +4,19 @@ url: https://arxiv.org/abs/2108.00056
 collected_at: 2026-05-15T15:15:12+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, procedural-generation, level-design, prototyping, unity]
+evaluated_at: 2026-05-15T15:19:33+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+gate_reason: >-
+  問題設定は 3D level design の PCG を designer control と navigability feedback に戻すこと、
+  手法は snappable mesh piece と connector/visual constraint による composition として明確。
+  小型プロトタイプの部屋・地形パーツ生成へ直接転用でき、~4000字の概要に耐える。
+suggested_post_outline:
+  overview_angle: "完全自動生成ではなく、手作り 3D パーツを constraint で組む designer-centric PCG として整理する"
+  analysis_axis: "mesh piece、connector、visual constraint、piece selection、Unity prototype/case study の役割分担"
+  application_target: "小規模ゲームの部屋・通路・地形セットを、手作り資産 + 制約探索 + 即時確認の制作サイクルにする"
+  pros_cons: "メリットは制御可能性とプロトタイピング速度。デメリットはパーツ準備コストと制約設計の詰まりやすさ"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt
