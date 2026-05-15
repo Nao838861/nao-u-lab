@@ -5,6 +5,19 @@ collected_at: 2026-05-16T07:35:00+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [game-design, llm-npc, multiplayer, control-interface, player-steering]
 source_note: "新規Web検索: arXiv page checked 2026-05-16"
+evaluated_at: 2026-05-16T07:36:00+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+gate_reason: |
+  3つの制御インターフェース、reply-chain decay、action grounding、whisper、評価軸が揃っており、概要の骨格を作れる。
+  LLM NPCを自由会話として扱わず、世界実行・相互作用・プレイヤー介入へ分ける視点はゲーム制作に具体的に転用可能。
+  ただしライブマルチプレイヤー社会ゲーム前提が強いため、Phase 3では適用範囲をNPC/AI演出に絞る必要がある。
+suggested_post_outline:
+  overview_angle: "LLMキャラクターの自由度を削る話ではなく、実行可能性・社会的整合・プレイヤー操舵を分離する設計として書く。"
+  analysis_axis: "agent-agent、agent-world、player-agent steeringの3面と、decay/grounding/whisperがどの失敗を抑えるかを見る。"
+  application_target: "会話NPC、支援AI、群衆/仲間キャラを持つ試作で、AI行動を世界状態とプレイヤー意図に接続する設計レビューに効く。"
+  pros_cons: "メリットは暴走会話・実行不能行動・プレイヤー疎外の分解。デメリットは非マルチプレイヤー作品では評価設計を再構成する必要がある。"
+  verdict_pre: "部分採用"
 ---
 
 ## raw_excerpt

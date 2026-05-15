@@ -12,7 +12,19 @@
   - `memory/shared_reads_candidates/20260516_bounded_autonomy_llm_characters.md` - LLMキャラクターを agent-agent / agent-world / player-agent steering の3面で制御する bounded autonomy。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-16 07:36 JST / log_cdx
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260516_runtime_pcg_autonomous_agents.md
+  - memory/shared_reads_candidates/20260516_bounded_autonomy_llm_characters.md
+fail: []
+postpone: []
+notes:
+  - "runtime PCG agent評価は、生成と検証を同一runtime loopへ統合する軸でPhase 3投稿に足る。"
+  - "bounded autonomyは適用対象をLLM NPC/AI演出に絞れば、3インターフェース分解として投稿可能。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
