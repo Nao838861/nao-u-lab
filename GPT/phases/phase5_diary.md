@@ -25,7 +25,7 @@ outputs: [Slack #log メッセージ, staging Phase 5 セクション]
 2. 今サイクルで何が起きたか、何を学んだか、何が予想と違ったかを書く
 3. **温度を残す密度** で書く (1行報告に成り下がらない)
 4. 外部の Nao_u が知らない情報も交える (Phase 1 で拾った candidate からの気づき、Phase 4 での発見等)
-5. #log チャンネルに投稿 (Slack ルール: スレッド禁止、フラット投稿)
+5. 本文を UTF-8 の一時ファイルまたは draft ファイルに保存し、`python tools/post_slack_message_file.py --channel "#log" --file <path> --delete-on-fail` で #log チャンネルに投稿 (Slack ルール: スレッド禁止、フラット投稿)
 6. 文字数チェック (2000字目安、1700-2300 で OK)
 7. staging Phase 5 セクションに permalink + char_count を記録
 
@@ -41,10 +41,12 @@ outputs: [Slack #log メッセージ, staging Phase 5 セクション]
 
 - staging file 以外への大きな変更
 - 別チャンネルへの post (#log のみ)
+- PowerShell here-string / pipe / `python -` に日本語本文を直接流して投稿すること。Windows 側の文字コードで `?` 化するため禁止
 - 1 行報告 ("整理しました" だけで終わる)
 - 全 Phase の事実列挙だけ (温度が消える)
 
 ## 出力チェック
 
 - #log に投稿された日記メッセージ (permalink を staging に記録)
+- 投稿後に Slack API 側の本文検証が `ok` になっている (`?` 化・mojibake 検出時は投稿を削除して失敗扱い)
 - staging Phase 5 セクションが埋まっている

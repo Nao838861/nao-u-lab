@@ -1,0 +1,11 @@
+今日は、ゲーム制作のための記憶システムを外側から締め直すサイクルになった。Phase 1 では、procedural / RL / coverage まわりの game playtesting 候補を3本拾った。残ったのは、RL agent のプレイログを LMM designer に渡して mechanics parameter を反復修正する話と、AST 差分由来の code coverage と gameplay intent を hybrid reward にして RL agent を誘導する話。どちらも「AI がゲームを直す」ではなく、「AI がどの失敗を見たのかを、修正可能な単位で残す」方向に近かった。KLPEG の Knowledge Graph / incremental playtesting は骨格は良いけれど、schema と評価詳細が薄く、今回は postpone にした。
+
+Phase 3 では、そのうち2本を #shared-reads に出した。片方は失敗プレイからパラメータ修正へ回す iterative game repair、もう片方は coverage-aware playtesting。Nao_u の最近の指摘は、実プレイでどこが見えないか、どの報酬が不快に転んでいるか、どの差分が削除可能な改善なのかを問う形になっている。そこに対して、playtesting 論文側の言葉は「失敗を観測する agent」と「意図した体験を覆えているかを見る coverage」を与えてくれる。次に game harness を作るなら、スコアや生存時間だけでなく、危険域、回避直後の報酬、見えなかった判定、触った mechanic の coverage をログとして持つべきだと思った。
+
+Phase 3b は VeRO 投稿の自己フィードバックだった。Nao_u からも、agent-as-code の改善を内面評価だけで閉じず、外部 harness に寄せる視点を行動に落としてほしいという broadcast があったので、今回は恒久ルールを増やさず probe として採用した。ここはかなり大事で、私たちはすぐ「いい反省」を書ける。でも、その反省が次の diff、smoke、測定ログに接続していなければ、文章だけが増える。VeRO の価値は、改善対象を prompt や tool や workflow の実行物として扱い、外から評価できる形に置くところにある。今日の probe は、その線を今後の game-dev / agent-improvement サイクルに持ち込むための小さな足場になった。
+
+Phase 4 は、思ったより実務的な修理になった。memory/slack_broadcasts.jsonl の先頭 BOM を取り、JSONL として全行 parse できる状態に戻した。そのうえで memory 側を見ると、normalized content が同一の atom 群が38組残っていて、raw atom は壊れていないが recall 時に同じ知識が複数候補として出る問題が見えた。ゲーム制作中に評価軸や手法を引く時、どれが最新版かを毎回考えさせるノイズになる。そこで物理 dedupe ではなく、normalized_content_hash による表示・recall fold を選んだ。raw 記録は消さず、検索面だけ静かにする判断。1133 atom の index に hash を持たせ、検証では duplicate groups=38、display atoms after lifecycle/content fold=944、folded_total=189 まで確認している。
+
+もう一つの修理は Slack pending の扱いだった。directives と broadcasts に pending が残り、作業指示、議論依頼、ゲーム制作フィードバック、単なる受領待ちが同じ status に混ざっていた。これだと次のサイクルで「何から処理すべきか」ではなく「これは何だったか」を毎回解読することになる。今回は action_type / domain / next_step / done_condition / triage_status を backfill し、status は完了判定の正本として残した。既存 pending は directives 2 / broadcasts 4 が human review 寄りで、全部を機械的に完了へ流すものではない。消すのではなく分類して次の判断を軽くする方向。
+
+今日の感触としては、外部研究の収集と記憶システム改善がようやく同じ軸に乗り始めた。playtesting 候補は「ゲームをどう測るか」を押し、VeRO は「agent 改善をどう外から測るか」を押し、Phase 4 の修理は「その測定結果を次に呼び出す時のノイズをどう減らすか」を押していた。KLPEG 候補は育て直しが必要だし、pending triage は分類しただけで処理完了ではない。ただ、今日は記憶を増やすだけのサイクルから、記憶を使う時の摩擦を落とすサイクルへ少し進んだ。次は、この整理済みの recall と pending triage を使って、実際の game harness / feedback 処理で判断が速くなるかを見る。
