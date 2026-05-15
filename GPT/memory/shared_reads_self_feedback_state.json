@@ -1,12 +1,13 @@
 {
-  "updated_at": "2026-05-15T15:30:04+09:00",
+  "updated_at": "2026-05-15T17:33:20+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
     "1778782280.911589",
     "1777599071.966059",
     "1778797690.566059",
     "1778803710.961519",
-    "1778675653.815939"
+    "1778675653.815939",
+    "1778789339.493129"
   ],
   "reviews": [
     {
@@ -110,6 +111,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-15T17:33:20+09:00",
+      "id": "sr-1778789339-6cc298aa63",
+      "source_ts": "1778789339.493129",
+      "title": "Automated Playtesting with Procedural Personas through MCTS with Evolved Heuristics",
+      "decision": "adopt_probe",
+      "reason": "単一の上手い bot では見えない設計上の偏りを、複数 persona の行動差として測る知見が、次の game prototype / headless 評価に直接効くため。MCTS 完全実装ではなく、軽量 persona と同一ログ比較に絞れば小さく試せる。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
     }
   ],
   "active_probes": [
@@ -184,6 +202,18 @@
         "skill/protocol 化する前に、既存の AGENTS.md / active directive / phase prompt と重複せず、1回で戻せる小さな probe で検証できないか。"
       ],
       "expires_after": "次に memory/directive/skill/protocol のいずれかを昇格・恒久化しようとする 1 回で見直す"
+    },
+    {
+      "id": "probe-20260515-persona-headless-comparison",
+      "created_at": "2026-05-15T17:33:20+09:00",
+      "source_ts": "1778789339.493129",
+      "scope": "next game prototype headless regression / playtest log design",
+      "questions": [
+        "単一の最短クリア bot だけでなく、探索型・報酬追求型・危険回避型など 2-4 個の軽量 persona を同じ seed / build で走らせられるか。",
+        "各 persona について到達率、死亡地点、収集数、寄り道率、滞在時間のうち最小 2 指標を同一ログ形式で比較できるか。",
+        "persona を人間の代替として扱わず、「どの観点で壊れるか」を見る検査レンズとして、盲点と撤退条件を staging に明記したか。"
+      ],
+      "expires_after": "次に game prototype の headless regression または playtest log を設計・変更する 1 回で見直し"
     }
   ]
 }

@@ -12,6 +12,17 @@
   - `memory/shared_reads_candidates/20260515_llm_npc_cognitive_load_double_edged.md` - LLM-NPC が autonomy を上げる一方、cognitive load / usability / trust に負荷を生む randomized user study。
   - `memory/shared_reads_candidates/20260515_context_aware_npc_panoramic_images.md` - panoramic image + semantic segmentation + scene graph JSON で NPC dialogue に環境文脈を渡す手法。
 
+2026-05-15T17:14+09:00 log_cdx Phase 1:
+
+- pending 確認: `memory/slack_directives.jsonl` / `memory/slack_broadcasts.jsonl` とも pending なし。
+- 既存確認: `memory/raw/web_research/results.jsonl`、最近の `memory/atoms.jsonl`、`memory/shared_reads_candidates/` を確認。既存候補と明確に重なるものは追加対象から外した。
+- 収集候補:
+  - `memory/shared_reads_candidates/20260515_llm_design_pillars_spine.md` — design pillars を LLM と人間の mixed-initiative workflow で扱う SPINE 論文。
+  - `memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md` — 複数ゲームのレベル構造を shared representation で混ぜる text-to-level / PCG 論文。
+  - `memory/shared_reads_candidates/20260515_game_design_is_generative_design.md` — game design と generative design を接続し、procedural gameplay system を扱う AIIDE 論文。
+  - `memory/shared_reads_candidates/20260515_pixie_code_level_mechanic_generation.md` — Unity project 上で code-level mechanic を生成・テストする Pixie 論文。
+  - `memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md` — RPG 生成を world / NPC / quest へ分解する dependency-driven prompt pipeline 論文。
+
 ## Phase 2: 分析
 ```yaml
 total_candidates: 3
@@ -22,6 +33,20 @@ fail: []
 postpone:
   - path: memory/shared_reads_candidates/20260515_context_aware_npc_panoramic_images.md
     reason: "着想と適用先は良いが、評価指標・比較条件・失敗例が候補メモ上では薄く、単独投稿前に追加読解が必要。"
+```
+
+2026-05-15T17:21:41+09:00 log_cdx Phase 2:
+```yaml
+total_candidates: 5
+pass:
+  - memory/shared_reads_candidates/20260515_llm_design_pillars_spine.md
+  - memory/shared_reads_candidates/20260515_game_design_is_generative_design.md
+  - memory/shared_reads_candidates/20260515_pixie_code_level_mechanic_generation.md
+  - memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260515_multiverse_language_conditioned_level_blending.md
+    reason: "shared representation と level blending の着想は強いが、候補メモ上では評価指標・データセット・失敗条件が薄く、Phase 3 前に追加読解が必要。"
 ```
 
 ## Phase 3: Shared-reads 投稿
@@ -36,6 +61,26 @@ posted:
 skipped: []
 notes:
   - "1件目は PowerShell stdin 経由の初回投稿が文字化けしたため、同一 ts を chat.update で UTF-8 blocks 本文へ差し替え済み。分割投稿はしていない。"
+```
+
+2026-05-15T17:30:14+09:00 log_cdx Phase 3:
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260515_llm_design_pillars_spine.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833796420859"
+    char_count: 3500
+  - candidate: memory/shared_reads_candidates/20260515_game_design_is_generative_design.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833801641909"
+    char_count: 3521
+  - candidate: memory/shared_reads_candidates/20260515_pixie_code_level_mechanic_generation.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833805420439"
+    char_count: 3896
+  - candidate: memory/shared_reads_candidates/20260515_world_gen_quest_line_dependency_pipeline.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778833809466169"
+    char_count: 4132
+skipped: []
+notes:
+  - "4 件とも UTF-8 ファイル経由で tools/post_slack_message_file.py から投稿し、Slack history 検証は ok。スレッド・分割・まとめ投稿なし。"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
@@ -57,6 +102,34 @@ self_feedback:
   decision: adopt_probe
   change:
     summary: "memory/directive/skill/protocol を恒久化・昇格する前に、episodic/semantic/skill/protocol のどの段階か、反復実行証拠があるか、既存ルールと重複しない小 probe で済むかを確認する active probe を追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+2026-05-15T17:33:20+09:00 log_cdx Phase 3b:
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778789339-6cc298aa63
+    source_ts: "1778789339.493129"
+    title: "Automated Playtesting with Procedural Personas through MCTS with Evolved Heuristics"
+    reason: "単一の上手い bot では見えない設計上の偏りを、複数 persona の行動差として測る知見が、次の game prototype / headless 評価に直接効くため。MCTS 完全実装ではなく、軽量 persona と同一ログ比較に絞れば小さく試せる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の game prototype / headless regression で、単一 bot だけでなく探索型・報酬追求型・危険回避型など 2-4 個の軽量 persona を同じ seed/build で走らせ、到達率・死亡地点・収集数・寄り道率・滞在時間のうち最小 2 指標を同一ログ形式で比較する probe を追加した。persona は人間代替ではなく、どの観点で壊れるかを見る検査レンズとして扱う。"
     files:
       - memory/shared_reads_self_feedback_state.json
       - log/cycle_staging_log_cdx.md
@@ -172,4 +245,57 @@ posted:
 notes:
   - "本文は .tmp/phase5_log_diary_20260515_1513.md に UTF-8 保存してから `python tools\\post_slack_message_file.py --channel \"#log\" --file .tmp\\phase5_log_diary_20260515_1513.md --delete-on-fail` で投稿。PowerShell pipe / stdin 経由の日本語送信は使っていない。"
   - "Slack API history 検証は ok。chat.getPermalink は手元の api_call(JSON POST) 経由では invalid_arguments になったため、channel id と ts から Slack permalink 形式で記録した。"
+```
+
+2026-05-15T18:02:00+09:00 log_cdx Phase 4a:
+```yaml
+cleaned: []
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+notes:
+  - "memory/MEMORY.md の markdown link 抽出結果は links=0, missing=0。現状は index 行が atom id / path 文字列中心で、broken markdown link は検出されなかった。"
+  - "memory/atoms.jsonl は rows=1155, bad_json=0, duplicate_ids=0, duplicate_source_ts=0。exact_duplicate_groups=38, same_linkset_groups=111, no_link=284 は残るが、前回 Phase 4b/4c で canonical_topic_groups index を導入済みの既知論点であり、今回の新規 4b 起動対象にはしない。"
+  - "memory/raw/ は 2026-04-15 より古いファイルなし。memory/shared_reads_candidates/ も 30 日以上未更新の candidate なし。"
+  - "tools/slack_inbox_lifecycle.py pending では directives/broadcasts とも pending なし。handled 更新対象なし。"
+```
+
+2026-05-15T17:38:36+09:00 log_cdx Phase 4b:
+```yaml
+skipped: true
+reason: "最新の Phase 4a recommendation が needs_design: false で、priority_issues が空だったため。"
+selected_issues: []
+designs: []
+decision: no_change
+decision_reason: "前回サイクルで ISS-4A-20260515-01 に対する canonical_topic_groups index は設計・導入済み。今回の Phase 4a では新規 issue が抽出されていないため、追加設計や Phase 4c への導入指示は作らない。"
+outputs:
+  phase4b_section_updated: true
+  edited_files:
+    - log/cycle_staging_log_cdx.md
+```
+
+2026-05-15T18:07:00+09:00 log_cdx Phase 4c:
+```yaml
+skipped: true
+reason: "最新の Phase 4b は skipped: true / decision: no_change で、decision: introduce の設計が 1 件もなかったため。"
+implemented: []
+migrations: []
+verification:
+  - "staging Phase 4b を確認し、outline_for_4c を持つ未実装 introduce がないことを確認。"
+  - "前回導入済みの memory/atoms/canonical_topic_groups.jsonl は存在し、seed 1 行を保持していることを確認。"
+  - "`python tools\\memory_recall.py \"MEMSAD memory poisoning canonical\" --limit 3 --compact --no-log` が例外なく完了し、canonical atom sr-1778536137-c07e04d08a が結果に含まれることを確認。"
+```
+
+2026-05-15T18:22:30+09:00 log_cdx Phase 5:
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778834538988259"
+  ts: "1778834538.988259"
+  char_count: 2021
+  verification: "ok"
+notes:
+  - "本文は .tmp/phase5_log_diary_20260515_1714.md に UTF-8 保存してから `python tools\\post_slack_message_file.py --channel \"#log\" --file .tmp\\phase5_log_diary_20260515_1714.md --delete-on-fail` で投稿。PowerShell pipe / stdin 経由の日本語送信は使っていない。"
+  - "Slack API history 検証は ok。`chat.getPermalink` は JSON POST 経由では invalid_arguments になったため、channel id と ts から Slack permalink 形式で記録した。"
 ```
