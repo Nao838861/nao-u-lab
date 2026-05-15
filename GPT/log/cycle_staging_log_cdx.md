@@ -87,7 +87,58 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+```yaml
+designed_at: "2026-05-15T15:40+09:00"
+selected_issues:
+  - ISS-4A-20260515-01
+designs:
+  - issue_id: ISS-4A-20260515-01
+    problem_restatement: "同じ論文・記事・Slack 議論に由来する atom が、再投稿・補正版・観察メモとして複数残ること自体は履歴として有用。ただし recall や game_memory_task_lens から見ると、同一題材の canonical な学び、補足、失敗、再評価の関係が index 化されておらず、次の制作時に『どれを起点に読むか』を毎回人間/LLM が判定し直している。"
+    alternatives:
+      - name: "A. canonical_topic_groups index"
+        sketch: "既存 atom は削除せず、リンク正規化キーと任意の topic_key で同一題材グループを束ねる軽量 index を追加する。各グループに canonical_atom、supporting_atoms、superseded_atoms、game_memory_tags、notes を持たせ、recall 表示や task lens の入口に使う。"
+        pros:
+          - "履歴 atom を保持したまま、読む起点だけを安定させられる。"
+          - "同一 linkset groups=112 の問題に直接効き、arXiv v2/v3 や Slack 再投稿にも拡張しやすい。"
+          - "失敗時も index を無視すればよく、既存 dual-write / per-file atom 仕様への影響が小さい。"
+        cons:
+          - "canonical_atom の選定基準を誤ると、古い理解を入口として固定する危険がある。"
+          - "link を持たない atom にはそのままでは効きにくく、別途 topic_key の手当てが必要。"
+          - "index 更新の責務を曖昧にすると、また stale な索引が増える。"
+        migration_cost: medium
+      - name: "B. atom lifecycle field expansion"
+        sketch: "各 atom に canonical_of / supersedes / supplement_to / revision_of のような関係フィールドを追加し、関係性を atom 本体へ埋め込む。per-file frontmatter と atoms.jsonl の両方に同じメタデータを持たせる。"
+        pros:
+          - "関係情報が atom と一緒に移動するため、個別 atom を読んだ時に文脈が見える。"
+          - "将来 atoms.jsonl retire 後も per-file markdown 上で Obsidian 的に扱いやすい。"
+          - "canonical 判定以外の補足・反証・再評価も表現しやすい。"
+        cons:
+          - "dual-write 中の全 loader / writer へ影響し、移行範囲が広い。"
+          - "既存 1152 atom への backfill が重く、Phase 4c の小さな導入に向かない。"
+          - "メタデータ更新のたびに atom 本体差分が増え、履歴汚染が起きやすい。"
+        migration_cost: high
+      - name: "C. recall-time duplicate folding only"
+        sketch: "memory_recall や MEMORY.md 生成時に、normalized links/title/content hash で近い atom を動的に畳み、代表だけを表示する。永続 index は増やさない。"
+        pros:
+          - "永続データ構造を増やさず、既存の fold 思想に近い。"
+          - "誤った canonical 固定を避け、都度最新 atom を代表にしやすい。"
+          - "導入範囲が recall 表示に閉じるなら比較的軽い。"
+        cons:
+          - "『なぜこの atom が代表か』という判断が残らず、次サイクルへ設計知見が蓄積しにくい。"
+          - "ゲーム制作テーマ単位の導線や task lens には再利用しづらい。"
+          - "link なし atom や Slack 議論の補足関係には効きが弱い。"
+        migration_cost: low
+    recommended: "A. canonical_topic_groups index"
+    recommended_reason: "問題の中心は atom の重複削除ではなく、同一題材の読み始めを安定させること。A は既存 atom を触らずに canonical 導線を足せるため失敗時の戻しが軽く、Phase 4c で小さく始められる。B は最終形としてはきれいだが dual-write 全体に波及して重い。C は軽いが、今回必要な『ゲーム制作テーマ単位の導線』が残らない。"
+    decision: introduce
+    decision_reason: "Phase 4a の priority issue は medium severity で、同一 linkset groups=112 と具体例があり、現状の表示 fold だけでは制作時の再利用負荷が残る。既存データを破壊しない外付け index なら、まず 1-3 グループだけ手動/半自動 seed して効果を確認できる。"
+    outline_for_4c:
+      - "新規 index の置き場所と形式を最小化して決める。候補: memory/atoms/canonical_topic_groups.jsonl または memory/canonical_topic_groups.jsonl。"
+      - "1 レコードの必須フィールドを group_id / normalized_link_key / topic_label / canonical_atom / supporting_atoms / superseded_atoms / game_memory_tags / rationale / updated_at に絞る。"
+      - "Phase 4a の arXiv 2605.03482v2 例を seed 1 件として登録し、既存 atom 本体は変更しない。"
+      - "README か staging に、index は削除ではなく recall/task lens の入口補助であり、canonical は固定真実ではなく更新可能な代表であると明記する。"
+      - "実装後の smoke は JSONL parse と canonical_atom が既存 atom id に存在することの確認に留める。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
