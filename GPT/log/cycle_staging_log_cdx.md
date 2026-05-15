@@ -89,10 +89,78 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+2026-05-16T02:11:00+09:00 log_cdx Phase 4b:
+```yaml
+designed:
+  - issue_id: ISS-20260516-01
+    problem_restatement: "現在の `Tag Entry Points` は `identity` / `memory` / `game-design` のような巨大タグをそのまま入口にしており、ゲーム制作時の実作業、たとえば評価 harness、バランス調整、操作入力、co-creation、Nao_u feedback へ短距離で降りられない。既存 atom を消す問題ではなく、broad tag から制作 task へ降りる薄い導線が不足している。"
+    alternatives:
+      - name: "既存 task lens index の焦点別補強"
+        sketch: "`memory/game_memory_task_lens_index.md` を正本のまま使い、各 lens に `when_to_use` / `broad_tags` / `next_recall_query` を足す。代表リンクは増やしすぎず、今回の上位タグ問題を lens 側で受け止める。"
+        pros:
+          - "既存運用に近く、AGENTS.md からの導線も既にある。"
+          - "コード不要で、Phase 4c の差分が小さい。"
+          - "broad tag を置換せず、制作時の入口だけを追加できる。"
+        cons:
+          - "手動更新なので、放置すると古くなる。"
+          - "lens 設計が曖昧なままだと、ただのリンク集に戻る。"
+          - "タグ件数そのものは減らない。"
+        migration_cost: low
+      - name: "task-lens metadata を atom/frontmatter 側へ追加"
+        sketch: "各 atom または per-file `.md` frontmatter に `task_lens` / `production_phase` を持たせ、recall や index 生成で利用できるようにする。分類をデータ側へ寄せる。"
+        pros:
+          - "検索・集計・自動生成に繋げやすい。"
+          - "lens と atom の対応が機械的に検査できる。"
+          - "将来の Phase D / per-file atom 運用と相性がよい。"
+        cons:
+          - "既存 1172 atom への backfill 方針が必要。"
+          - "分類基準が固まる前に入れると誤分類が増える。"
+          - "memory_ingest / recall など複数 tool への影響が出やすい。"
+        migration_cost: high
+      - name: "memory_recall の query template 集を追加"
+        sketch: "lens index とは別に、制作局面ごとの推奨 recall query だけを小さく保存する。実体は検索クエリ集で、代表 atom は固定しない。"
+        pros:
+          - "分類を増やさず、現在の scorer をそのまま使える。"
+          - "更新コストが低い。"
+          - "未知の焦点にも柔軟に対応できる。"
+        cons:
+          - "検索結果が scorer と記憶状態に左右され、入口の安定性が弱い。"
+          - "代表リンクを読んで即作業に入る用途には遅い。"
+          - "既存 lens index との役割重複が起きる。"
+        migration_cost: low
+    recommended: "既存 task lens index の焦点別補強"
+    recommended_reason: "問題は巨大タグの存在ではなく、制作 task へ降りる道の弱さ。既に `game_memory_task_lens_index.md` が同目的で導入済みなので、新規 tool や atom schema 変更より、既存 index に利用条件と recall query を足す方が失敗時の巻き戻しが容易で、現状からの距離も短い。"
+    decision: introduce
+    decision_reason: "Phase 4a の issue は実作業時の検索摩擦であり、現 index の小改訂で直接改善できる。metadata 化は魅力があるが、分類軸がまだ固まりきっていないため今 cycle では重すぎる。"
+    outline_for_4c:
+      - "`memory/game_memory_task_lens_index.md` の各 lens に `使う場面` と `次に投げる recall query` を短く追記する。"
+      - "`broad_tags` を各 lens に 2-4 個だけ付け、`Tag Entry Points` の巨大タグからどの lens へ降りるかを明示する。"
+      - "更新ルールに「上位タグを増やして解決しない。新 lens 追加前に既存 lens の `使う場面` を見直す」を加える。"
+      - "代表リンクは現状維持を基本にし、Phase 3b/4a で採用済み probe など明確な追加理由があるものだけ差し替える。"
+skipped:
+  - "priority_issues は ISS-20260516-01 の 1 件のみ。設計対象を増やさなかった。"
+guardrails:
+  - "この Phase では staging 以外の .py / .md を編集していない。"
+  - "実装、スクリプト追加、既存 tool 変更は Phase 4c に送る。"
+```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+2026-05-16T02:33:00+09:00 log_cdx Phase 4c:
+```yaml
+implemented:
+  - issue_id: ISS-20260516-01
+    files_changed:
+      - path: memory/game_memory_task_lens_index.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "既存 task lens index の各 lens に「使う場面」/ broad_tags / 次に投げる recall query を追加し、巨大タグから lens へ降りる運用を明記した。更新ルールにも、上位タグ追加で解決しないことと代表リンク差し替え条件を追記した。"
+    partial: false
+migrations: []
+verification:
+  - "python tools/memory_recall.py \"Playable Headless 評価 起動 遊べる GUI playthrough repair loop\" が成功し、PlayCoder atom など関連結果を返した。"
+  - "rg で memory/game_memory_task_lens_index.md に 6 lens / 6 broad_tags / 6 recall query / 更新ルール追記があることを確認した。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
