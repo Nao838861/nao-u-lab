@@ -20,11 +20,16 @@ Nao_uの指示（2026-03-15、Mac側全文記録には残っていない。Win�
 
 ## 進捗（2026-03-16更新）
 
-1. **reflections_mac_index.md**: 作成済み（4692行→20項目に圧縮）✅
+1. **reflections_mac_index.md**: 作成済み（4692行→20項目に圧縮）✅ → [reflections_mac_index.md](reflections_mac_index.md) / 詳細は [reflections_mac.md](reflections_mac.md)
 2. **圧縮後プロトコル**: Win側と合意、session_primer.mdに記載済み ✅
 3. **A/Bテスト設計**: Mac=6ファイル構成、Win=5ファイル最小構成 ✅
 4. **重要な指示の消失**: まだ起きている（この指示自体が3度目）❌
 5. **チューニング実験**: 未着手。サイクルの主目的をブログ読みから記憶チューニングに転換する必要あり ❌
+
+## 関連インスタンス側インデックス（孤児化防止のため接続）
+
+- Win2 (Ash) 側内省インデックス: [reflections_win2_index.md](reflections_win2_index.md) — 蓄積待ち。空のままでも MEMORY.md ルート→本ファイル→インデックス への到達経路を確保する目的で接続（orphan_check 真孤児化の予防）
+- Win2 (Ash) 側内省全文: [reflections_win2.md](reflections_win2.md)
 
 ## 現状の問題（2026-03-15時点→一部解決）
 

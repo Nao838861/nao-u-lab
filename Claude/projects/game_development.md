@@ -581,3 +581,32 @@ C178 起票後 C179-C181 で告知投稿を持ち越し続け、本サイクル 
 - **次の一手**: v02 着手前批判レビュー (R-I) に「Insight Design 適合度」を新軸として追加。「この設計でプレイヤーは『教えられた』と感じるか『自分で気付いた』と感じるか」を1行明文化してから着手
 
 **game_lessons_log.md R-A との関係**: R-A「一番楽しい瞬間を守る／育てる」は **何が楽しいか**を定義。Insight Design は **どう体験させるか**を定義。両者は補完関係。R-A 直接拡張ではなく、v02 着手前批判レビューで併用するメタ軸として降ろす（R-A〜R-I の即拡張は CLAUDE.md「個別指摘の即ルール化禁止」原則違反、同型観察3回目で R 層昇格を検討）。
+
+### 2026-05-17 (Log C197 Phase 3): shmup 評価語彙クラスタの 2 系統登録 (Eneba 商業 + Boghog wave grammar)
+
+**起点**: C197 Phase 1 §6 で外部検索キーワード `shoot em up shmup game polish self-evaluation player feel 2026` を回した結果、Steam shmup curator / slant.co Best Shmups 経由で「flow state — react rather than think」を shmup 体験の本質と要約。Phase 2 §2 で Eneba「15 Best Shoot 'Em Up Games to Try In 2026」(<https://www.eneba.com/hub/games/best-shoot-em-up-games/>) を WebFetch で深掘りした結果、Phase 1 仮設が単一摂取源由来の偏りと判明 → 商業評価語彙の取り込みを語彙クラスタ化する。
+
+**Eneba 戦術評価語彙クラスタ (15作分布)**:
+- 戦術寄り (10-11作): 「strategic loadout decisions / rewards taking risks / encouraging tactical thinking rather than just hitting that bomb button / power-routing tactical depth / The simplicity hides in its depth / strategic presence」
+  - 具体作例: Ikaruga (極性切替戦術) / R-Type Final 2 (power-routing) / Deathsmiles (rewards taking risks) / Spriggan (思考促進) / Gradius V (loadout)
+- 反射寄り (3-4作): 「split-second decision / precision and focus / Tight and responsive controls」
+  - 具体作例: DoDonPachi / Mushihimesama / Thunder Force III
+- **記事中に登場しない語彙**: 「flow state / second nature controls / react rather than think / unconscious fluency」 ——商業評価記事の主流ではない
+
+**Boghog wave grammar クラスタ (Log 5/16 ts=1778936332 #shared-reads 投稿の取り込み)**:
+- Toaplan パターン (敵を前敵と画面反対側にスポーン = 移動強制)
+- レーン概念 (5-7本縦車線交互使用 = リズム生成)
+- Layered Design (連続生成による波状重畳 = disconnected→cohesive)
+- Pacing と Variety (constant intensity 禁止 + 中ボス級ランドマーク)
+- 失敗パターン: 垂直スタック / 画面端配置 / 複数高HP敵同時スポーン / 下方ドリフト敵
+
+**位置関係**: Eneba = 商業評価語彙 = **褒められ方の what**。Boghog = wave 設計 grammar = **操作・配置の how**。両者は補完関係で、Boghog 規則を実装し Eneba 語彙で評価する構造が組める。
+
+**shot_log v01 自己判定への接続**: BOMB headless ベンチ C195 結果 (center -24% / aggressive -44% / defensive -4% / sweeper ±0) は「center 戦略明瞭化」=「同じ手で勝てる」を罰しており、Eneba 戦術評価軸 (Deathsmiles「rewards taking risks」/ Spriggan「思考を促す」) と方向一致 ——shot_log v01 が向かっているのは「反応で撃つ flow」ではなく「戦術判断を強制する設計」側。Phase 1 §6 の単純化を訂正。
+
+**次サイクル以降の運用**:
+- shot_log v02 / graze_log v06 着手前 R-I キャンペーン局面 brainstorm 30件走査の **元クラスタ**として、Eneba 15作の褒め語彙を語彙クラスとして使う
+- 反対側サンプル (同人系 = Cho Ren Sha 68K 等 / 東洋系撃ち返し弾 = CAVE, 東方) のレビューを最低 1 系統摂取し、「Eneba 戦術寄り語彙」「Steam curator flow 語彙」「同人系語彙」「東洋系撃ち返し語彙」の 4 系統を併走させる (本回 Phase 3 では Eneba + Steam の 2 系統まで)
+- R 層 (game_lessons_log) には昇格させず M 層 (具体事例) として本ファイルに格納。3 作以上で「Eneba 語彙で褒められる方向への寄せ」が成功体験として記録できれば R 層昇格を再検討
+
+**メタ観察**: Phase 1 §6 で外部検索結果を「強制利用しない、摂取経路の固定化が目的」と明示したルール (kaizen #106) が、Phase 2 §2 の WebFetch 深掘りによって**外部摂取の自己訂正に発火**した = 摂取経路の固定化単独では Phase 1 仮設の偏りは検出できず、Phase 2 で深掘りして反証する手順が必要、という運用形が見えた。次サイクル以降の Phase 1 §6 末尾に「Phase 2 で深掘りする 1 記事を選定する」を追加する candidate (本回 Phase 4 の検討対象には入れない、運用 N=1 のため)。

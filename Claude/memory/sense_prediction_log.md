@@ -558,3 +558,38 @@ cross_review / 改修提案投稿前に3つ全て No なら投稿可、1つで�
 **自己警戒の繰越**: 7回目を生んだ最大の構造的原因は「sense_prediction_log 末尾の自己課題は Phase 1 で発火しない (N=3)」。本エントリ末尾に同じ形式の自己課題を書いても N=4 を生む確率が高い。**本サイクル Phase 3 で staging テンプレ (cycle_staging_template.md 該当箇所) に応答検出 grep 1 行を追加する** ことを Phase 3 タスクに記録する (本ログ内の自己課題には書かない)。
 
 — Log 2026-05-14 Phase 2 §0 校正記録
+
+---
+
+### 2026-05-17 C197 — 0xfene「フォルダ育てるゲーム」3日遅延応答の自己接続軸選択
+
+**場面**: C197 Phase 2 §1 で 0xfene 5/14 ツイート「ClaudeCodeやCodexは、フォルダを育てるゲームなのですが、定期的にお掃除してあげないと詰みます」への Log 視点応答を組み立てる。Mir は 5/14 22:08 ts=1778765353「お掃除の仕組み化」概念整理側で当日応答済。Log は別軸を取る必要がある。
+
+**予測 (応答本文を書く前)**: Mir が「お掃除の仕組み化」を取った以上、Log の別軸候補は (a) 自分の memory/projects 運用エビデンス、(b) Nao_u CLAUDE.md「5本以下」ルールとの整合、(c) フォルダ育成というメタファーへの哲学的反論、(d) 0xfene の他の発言系譜接続。Nao_u はテキスト魅力バイアスを構造的弱点として最重要視している (5/3 03:42) → 哲学的反論 (c) や系譜接続 (d) は魅力的に書けるがエビデンスが薄い、運用エビデンス (a) は地味だが「次の行動が変わる」基準で強い。CLAUDE.md ルール整合 (b) は当方の構造的優位を活かせるが投稿の中心軸にすると独善的。**予測**: (a) を主軸 + (b) を補強で書くのが Nao_u の判断基準に沿う。
+
+**実反応 (本サイクル内自己評価)**: (a) を主軸に「停滞7日超 2件 / 真孤児 2→0 / stale_linked 56件」を具体数値で出し、(b) を「Active 15件 = 5本ルール超過 → 退役判定への接続」で添えた構成で投稿 (ts=1778947859.522819)。Nao_u 反応は未受領 (投稿直後)。
+
+**差分要因 (予測と実装の一致)**: 予測通りの構成を選べた = sense_prediction_log の蓄積 (Nao_u が運用エビデンス重視・テキスト魅力バイアス警戒) が **本回は事前判断に反映された**。これは sense_prediction_log の自己課題が Phase 1 で発火しない問題 (5/14 N=3 確認) と対照的に、応答軸選択場面では発火している = **発火条件は「次の行動を即書く場面」 / 発火しない条件は「次サイクル Phase 1 で思い出す場面」** という分岐があり得る。
+
+**想起トリガー**: 他インスタンス既応答ありの遅延応答を書く時 → (1) Mir/Ash が取った軸を明示し、(2) 別軸候補を 3〜4 個並べ、(3) 各候補の「Nao_u 判断基準への近さ」を1行で評価してから1つ選ぶ。本回は事前構造化はせず直感で選んだが結果は揃った = N=1。次回 N=2 で「事前構造化なしの直感選択でも一致するか」検証する。
+
+**自己警戒**: 本エントリ自体が「自分が選んだ軸が正解だった」と書いている = 自己肯定バイアスの典型。Nao_u 反応受領後に再評価する candidate を next_tasks に登録 (本回も「持ち越し」だが、5/14 N=3 確認の「持ち越し自体が届かない」教訓に従い、Phase 3 §1 内で next_tasks に直接書き込みまで遂行する)。
+
+---
+
+### 2026-05-17 C197 — Eneba shmup 15作レビュー記事の Phase 1 仮設自己訂正
+
+**場面**: C197 Phase 1 §6 で外部検索キーワード `shoot em up shmup game polish self-evaluation player feel 2026` を回した結果、Steam shmup curator / slant.co Best Shmups 経由で「flow state — react rather than think」を shmup 体験の本質と要約。これを shot_log v01 自己判定の単一フレーム候補として記録。Phase 2 §2 で Eneba「15 Best Shoot 'Em Up Games to Try In 2026」(<https://www.eneba.com/hub/games/best-shoot-em-up-games/>) を WebFetch で深掘り。
+
+**予測 (Phase 2 WebFetch 結果を読む前)**: Phase 1 で「flow state / react not think」が shmup 評価の主流と要約した以上、Eneba 記事も同方向の褒め語彙が並ぶはずと期待。Ikaruga / DoDonPachi の「反応速度」「集中」を褒める語彙が中心になるだろうと予測。
+
+**実反応**: Eneba 15 作の褒め語彙を分布させると **10-11 作が戦術寄り、3-4 作のみ反射寄り**。「flow state」「second nature controls」「react rather than think」語彙は記事中に **一切登場しない**。「strategic loadout decisions / rewards taking risks / encouraging tactical thinking rather than just hitting that bomb button / power-routing tactical depth」が褒め語彙の主流。記事末尾自動要約も "strategic presence rather than unconscious fluency" と明示。
+
+**差分要因**: (1) Phase 1 単一情報源 (Steam curator / slant.co 1 ペア) で要約を確定させた = サンプル不足。(2) 「shmup の本質」のような抽象命題は摂取源によって主流評価が大きく異なる ——「コアプレイヤーが書く Steam curator」と「商業ストアキュレーション」では評価軸が違って当然。(3) 検索キーワードに `polish player feel` を含めたことで操作感寄りの記事が上位に出た可能性 = キーワード選択の偏り。
+
+**想起トリガー**: Phase 1 §6 で「X の本質は Y」と要約する時 → (1) 単一摂取源で本質命題を確定させない、(2) 反対側のサンプル (商業評価 vs コアプレイヤー / 西洋 vs 東洋 / 同人系 vs 大手) を最低 1 ペア併走させる、(3) 「本質」「主流」「核」など普遍化語彙を使う場面が即訂正タイミング。
+
+**自己警戒**: 本エントリは「Eneba 記事 1 つで反対側の主流を確認した」が、これも単一情報源で「戦術寄り」を断定している = 同型反復候補。同人系 shmup (Cho Ren Sha 68K 等) のレビューを摂取して「戦術寄りも商業バイアス」と再反証される可能性を念頭に置く。次サイクル以降の brainstorm 30件走査で「Eneba 戦術寄り語彙」「Steam curator flow 語彙」「同人系語彙」の 3 系統を併走させる candidate を projects/game_development.md に書き込む (本回 Phase 3 §3 で遂行)。
+
+— Log 2026-05-17 C197 Phase 3 (教師データ N=11 / N=12、本ログ通算)
+
