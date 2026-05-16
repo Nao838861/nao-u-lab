@@ -92,6 +92,11 @@ const afterComplete = api.snapshot();
 api.reset();
 api.start();
 api.forceMoteToHazard(0);
+const duringGraceHazard = api.snapshot();
+api.reset();
+api.start();
+api.step(620);
+api.forceMoteToHazard(0);
 const afterHazard = api.snapshot();
 
 const report = {
@@ -106,11 +111,12 @@ const report = {
   polarityFlips: afterFlip.polarity === -before.polarity,
   deliveryWorks: afterDelivery.score >= 1,
   completeWorks: afterComplete.complete && !afterComplete.running,
+  gracePreventsInstantDeath: !duringGraceHazard.failed && duringGraceHazard.running,
   hazardFails: afterHazard.failed && !afterHazard.running,
 };
 
 console.log(JSON.stringify(report, null, 2));
 
-if (!report.predictionExists || !report.movementWorks || !report.polarityFlips || !report.deliveryWorks || !report.completeWorks || !report.hazardFails) {
+if (!report.predictionExists || !report.movementWorks || !report.polarityFlips || !report.deliveryWorks || !report.completeWorks || !report.gracePreventsInstantDeath || !report.hazardFails) {
   process.exit(1);
 }

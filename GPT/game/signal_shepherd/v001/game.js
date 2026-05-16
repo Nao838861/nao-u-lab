@@ -21,6 +21,7 @@
     beaconRadius: 16,
     gateRadius: 34,
     hazardRadius: 36,
+    safeTime: 5,
     predictionSteps: 120,
     predictionStride: 6,
   };
@@ -34,13 +35,13 @@
   const hazards = [
     { x: 300, y: 302 },
     { x: 660, y: 360 },
-    { x: 480, y: 218 },
+    { x: 480, y: 260 },
   ];
 
   const initialMotes = [
-    { x: 278, y: 534, vx: 52, vy: -34, gate: 0 },
-    { x: 688, y: 528, vx: -44, vy: -28, gate: 1 },
-    { x: 480, y: 126, vx: 32, vy: 58, gate: 2 },
+    { x: 278, y: 534, vx: 18, vy: -12, gate: 0 },
+    { x: 688, y: 528, vx: -16, vy: -10, gate: 1 },
+    { x: 480, y: 126, vx: 10, vy: 18, gate: 2 },
   ];
 
   const state = {
@@ -54,6 +55,7 @@
     score: 0,
     message: "",
     messageTimer: 0,
+    unlocked: 1,
     beacon: { x: W / 2, y: H / 2 },
     motes: [],
     delivered: new Set(),
@@ -73,11 +75,12 @@
     state.score = 0;
     state.message = "";
     state.messageTimer = 0;
+    state.unlocked = 1;
     state.beacon.x = W / 2;
     state.beacon.y = H / 2;
     state.motes = initialMotes.map(cloneMote);
     state.delivered = new Set();
-    showOverlay("ビーコンを動かし、極性を切り替えて信号粒を同じ色のゲートへ導く。", "開始");
+    showOverlay("黄色い大きな丸があなたです。WASD/矢印で動かし、小さい色の丸を同じ色の輪へ入れます。赤い輪は危険地帯です。Spaceで「引く」と「押す」を切り替えます。", "開始");
     draw();
   }
 
@@ -143,22 +146,39 @@
     }
   }
 
+  function pushOutOfHazard(mote, hazard) {
+    const dx = mote.x - hazard.x;
+    const dy = mote.y - hazard.y;
+    const dist = Math.max(1, Math.hypot(dx, dy));
+    const target = config.hazardRadius + config.moteRadius + 6;
+    mote.x = hazard.x + (dx / dist) * target;
+    mote.y = hazard.y + (dy / dist) * target;
+    mote.vx *= -0.35;
+    mote.vy *= -0.35;
+  }
+
   function update(dt) {
     if (!state.running || state.complete || state.failed) return;
     state.time += dt;
     state.messageTimer = Math.max(0, state.messageTimer - dt);
     moveBeacon(dt);
 
-    for (let i = 0; i < state.motes.length; i += 1) {
+    for (let i = 0; i < state.unlocked; i += 1) {
       if (state.delivered.has(i)) continue;
       const mote = state.motes[i];
       stepMote(mote, dt);
 
       for (const hazard of hazards) {
         if (Math.hypot(mote.x - hazard.x, mote.y - hazard.y) < config.hazardRadius + config.moteRadius) {
+          if (state.time < config.safeTime) {
+            pushOutOfHazard(mote, hazard);
+            state.message = "練習中: 赤い輪は危険地帯です";
+            state.messageTimer = 1.0;
+            continue;
+          }
           state.failed = true;
           state.running = false;
-          showOverlay("信号粒がノイズに落ちた。ビーコン位置と極性の切り替えを見直す。", "再挑戦");
+          showOverlay("小さい色の丸が赤い輪に入りました。赤い輪に入ると失敗です。Spaceで押し返すか、黄色い丸を別の場所へ動かしてください。", "再挑戦");
           return;
         }
       }
@@ -167,7 +187,8 @@
       if (Math.hypot(mote.x - gate.x, mote.y - gate.y) < config.gateRadius) {
         state.delivered.add(i);
         state.score += 1;
-        state.message = `配送 ${state.score}/${state.motes.length}`;
+        state.unlocked = Math.min(state.motes.length, state.unlocked + 1);
+        state.message = `成功 ${state.score}/${state.motes.length}: 次の色の丸が動きます`;
         state.messageTimer = 1.2;
       }
     }
@@ -224,6 +245,10 @@
     for (const hazard of hazards) {
       drawCircle(hazard.x, hazard.y, config.hazardRadius, "#3a2430");
       drawCircle(hazard.x, hazard.y, config.hazardRadius + 7, "#ff4f76", true);
+      ctx.fillStyle = "#ff9ab0";
+      ctx.textAlign = "center";
+      ctx.font = "15px Segoe UI, sans-serif";
+      ctx.fillText("入ると失敗", hazard.x, hazard.y + 5);
     }
 
     ctx.font = "18px Segoe UI, sans-serif";
@@ -232,10 +257,10 @@
       ctx.lineWidth = 4;
       drawCircle(gate.x, gate.y, config.gateRadius, gate.color, true);
       ctx.fillStyle = gate.color;
-      ctx.fillText(gate.label, gate.x, gate.y + 6);
+      ctx.fillText(`${gate.label}: 同じ色を入れる`, gate.x, gate.y + 6);
     }
 
-    for (let i = 0; i < state.motes.length; i += 1) {
+    for (let i = 0; i < state.unlocked; i += 1) {
       if (state.delivered.has(i)) continue;
       const mote = state.motes[i];
       const gate = gates[mote.gate];
@@ -252,17 +277,25 @@
       ctx.stroke();
       ctx.globalAlpha = 1;
       drawCircle(mote.x, mote.y, config.moteRadius, gate.color);
+      ctx.fillStyle = gate.color;
+      ctx.textAlign = "center";
+      ctx.font = "15px Segoe UI, sans-serif";
+      ctx.fillText("これを運ぶ", mote.x, mote.y - 18);
     }
 
     ctx.lineWidth = 3;
     drawCircle(state.beacon.x, state.beacon.y, config.beaconRadius, state.polarity > 0 ? "#f2e07a" : "#9fe0ff");
     drawCircle(state.beacon.x, state.beacon.y, 82, state.polarity > 0 ? "#f2e07a" : "#9fe0ff", true);
+    ctx.fillStyle = "#f3f0e8";
+    ctx.textAlign = "center";
+    ctx.font = "15px Segoe UI, sans-serif";
+    ctx.fillText("あなたが動かす丸", state.beacon.x, state.beacon.y - 28);
 
     ctx.textAlign = "left";
     ctx.font = "18px Segoe UI, sans-serif";
     ctx.fillStyle = "#f3f0e8";
-    ctx.fillText(`WASD/矢印: 移動  Space: 極性 ${state.polarity > 0 ? "引く" : "押す"}  R: リセット`, 28, 34);
-    ctx.fillText(`配送 ${state.score}/${state.motes.length}  時間 ${state.time.toFixed(1)}`, 28, 64);
+    ctx.fillText(`WASD/矢印: 黄色い丸を移動  Space: ${state.polarity > 0 ? "小さい丸を引く" : "小さい丸を押す"}  R: リセット`, 28, 34);
+    ctx.fillText(`成功 ${state.score}/${state.motes.length}  時間 ${state.time.toFixed(1)}  ${state.time < config.safeTime ? `練習あと ${(config.safeTime - state.time).toFixed(1)} 秒` : "赤い輪に注意"}`, 28, 64);
     if (state.messageTimer > 0) ctx.fillText(state.message, 28, 94);
   }
 
@@ -304,8 +337,9 @@
         polarity: state.polarity,
         score: state.score,
         beacon: { x: Math.round(state.beacon.x), y: Math.round(state.beacon.y) },
-        activeMotes: state.motes.length - state.delivered.size,
+        activeMotes: state.unlocked - state.delivered.size,
         predictionCount: predictionFor(state.motes.find((_, i) => !state.delivered.has(i)) || state.motes[0]).length,
+        safe: state.time < config.safeTime,
       };
     },
     setKey(key, down) {
@@ -320,6 +354,7 @@
       for (let i = 0; i < frames; i += 1) update(config.fixedDt);
     },
     forceDeliverAll() {
+      state.unlocked = state.motes.length;
       for (let i = 0; i < state.motes.length; i += 1) state.delivered.add(i);
       state.score = state.motes.length;
       update(config.fixedDt);
