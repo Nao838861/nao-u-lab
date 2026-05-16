@@ -16,6 +16,11 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の LLM NPC、AI 生成補助、AI game master 的要素で、プレイヤー層ごとに露出する AI 機能・隠す AI 機能・説明すべき価値を分ける設計に使う。"
   pros_cons: "長所は AI 機能単位ではなくプレイヤー態度の束として設計できる点。短所は探索的 profile であり、個別作品にそのまま当てはめるには小規模な観察やテストが必要な点。"
   verdict_pre: "採用。AI 要素を入れる前の player model と feature exposure の評価軸として使う。"
+posted:
+  ts: "1778906173.600739"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778906173600739"
+  char_count: 4120
+  posted_at: "2026-05-16T13:36:23+09:00"
 ---
 
 ## raw_excerpt
