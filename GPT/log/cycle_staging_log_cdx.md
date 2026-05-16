@@ -65,7 +65,24 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md: markdown link は 0 件で、broken link も 0 件。"
+  - "memory/atoms.jsonl: 1215 rows / bad_json 0 / duplicate id 0 を確認。content duplicate は 14 groups / 208 rows あるが、MEMORY.md の表示 fold 対象として既に扱われている。"
+  - "memory/raw/: 30 日以上更新のない file は 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: 30 日以上更新のない file は 0 件。postpone -> fail 降格対象なし。"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl: pending 0 件。handled 更新対象なし。"
+issues:
+  - id: ISS-4A-20260517-001
+    description: "shared_reads_candidates の候補 90 件が frontmatter/status を持たず、pass/postpone/fail/posted/skipped の lifecycle が staging とファイル更新時刻に分散している。現時点では 30 日超の stale はないが、候補が増えると mechanical cleanup で『保持すべき候補』と『fail に降格すべき候補』を deterministic に判定しにくい。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/*.md 90 件; status 行検出 0 件。古い例: memory/shared_reads_candidates/20260513_autoue_unreal_multi_agent_game_generation.md, memory/shared_reads_candidates/20260513_gameuiagent_structured_game_ui_design.md。Phase 2/3 の判定は log/cycle_staging_log_cdx.md 側にのみ残る。"
+    why_blocks_game_memory: "ゲーム制作向けの shared-reads 候補が、投稿済み・延期・失敗・保留のどれかを候補ファイル単体から辿れないため、次回のゲーム制作時に有効な未投稿知見を探す導線が弱くなる。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260517-001
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
