@@ -7,7 +7,7 @@ genre_tags: [game-design, accessibility, player-experience, infrastructure]
 candidate_status: needs_review
 evaluated_at: "2026-05-17T01:32:24+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
+gate_decision: postpone
 gate_reason: |-
   accessibility feature を個別オプションではなく、player/developer/engine/launcher/retailer を結ぶ Access Profiles という基盤として扱う問題設定と着想が明確。
   ゲーム制作では、初回設定、入力補助、難度・字幕・発見可能性をプロトタイプ段階から検査項目に落とせるため、具体適用がある。
@@ -18,6 +18,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の小型ゲーム制作で、標準入力前提の playable 判定を拡張し、初回起動時の設定保存・入力代替・視認性確認をチェックリスト化する。"
   pros_cons: "メリットは後付けでない accessibility 設計にできる点。デメリットは小規模プロトタイプでは engine/launcher 連携まで実装しにくく、まずは局所 probe に縮約する必要がある点。"
   verdict_pre: "部分採用"
+phase3_postpone_reason: "Phase 3 で原文を確認したところ、Frontiers 公開ページは 2026-05-17 時点で abstract と書誌情報中心で、最終 formatted version は未公開。candidate memo だけでは 3500-4500 字の原文準拠概要を作るには評価・方法の細部が不足するため延期。"
 ---
 
 ## raw_excerpt

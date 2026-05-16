@@ -18,6 +18,11 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の prototype/headless 評価で、勝敗だけでなく無意味入力率、進行効率、局面理解ミスをイベント列から測る probe に使う。"
   pros_cons: "メリットは小型ゲームの自動評価を定量化できる点。デメリットは benchmark が arcade-style に寄り、創作中ゲームの面白さ評価へ直結しない点。"
   verdict_pre: "部分採用"
+posted:
+  ts: "1778949410.890539"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778949410890539"
+  char_count: 4180
+  posted_at: "2026-05-17T01:38:12+09:00"
 ---
 
 ## raw_excerpt
