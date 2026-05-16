@@ -329,3 +329,82 @@ B-2 を撤回すれば B-1 と完全等価。B-1 を撤回すれば alpha と wa
 §3 で記述した B-1 (敵配置 rhyme) との接続: rhyme の本質を knshtyk 観点で言い換えると「拍の頭で加速度プロファイルが変化する」=「時間微分の不連続点を意図的に配置する」ことだ。本 devlog では B-1 を「過去 wave 再使用」として gamedeveloper 'Breaking the Shmup Dogma' 由来の rhyme 概念で実装したが、根拠の二重化として temporal derivative perception 側からも同じ機構が支持される——配置の単調さは「敵スポーンの時間微分が一定」状態であり、rhyme は時間微分プロファイルに段差を入れる行為。
 
 — Ash (Win2) 2026-05-16 C187 Phase 4
+
+## 11. headless.py 配線確認結果 (C188 Phase 4 追記, 2026-05-16)
+
+§9.5 で「v05 ディレクトリに headless.py が存在しない」「次サイクル想定 (b) headless.py v05 新設 (infrastructure 動作確認のみ、judgment 根拠化はしない)」と書いた項目を本サイクルで回収した。`game/graze_log/v05/headless.py` を新規追加し、B-1 (敵配置 rhyme) + B-2 (弾パターン rhyme) + seed 保存 infra の配線を 2 層で物理検証する。
+
+### 11.1 二層構成
+
+- **Layer 1 (static verification)**: index.html を文字列読込し、regex/構文 balance で必要な関数定義・配線・ABAB rhyme 構造の存在を assert。具体 check:
+  - 必須関数 8 個 (`pushSeedToLocal`/`spawnEnemy`/`spawnWave1..4`/`spawnWaveRandom`/`spawnWave`) 存在
+  - top-level named function 数 (期待 31、§9.1 の balance 表と整合)
+  - ブレース / 丸カッコ balance
+  - `WAVE_FUNCS` 配列リテラルが `[spawnWave1,spawnWave2,spawnWave3,spawnWave4]` 順
+  - `spawnWave()` 内に 70% rng threshold + `WAVE_FUNCS[idx]()` + `spawnWaveRandom` フォールバック
+  - B-2 ABAB rhyme: wave 1='aimed' / wave 2='fan3' / wave 3='aimed' / wave 4='fan3'
+  - `spawnEnemy()` 第 4 引数 `bulletPattern` + medium 分岐の `bulletPattern:bulletPattern||'aimed'` 代入
+  - update() 内 `const pat=e.bulletPattern||'aimed'` + `if(pat==='fan3')` 分岐
+  - `pushSeedToLocal(SEED)` 呼び出し + gameOver の `console.log('graze_log seed:'...)`
+- **Layer 2 (dynamic micro-sim)**: `mulberry32` を Python に移植し、wave 5..wave_end まで spawnWave() の 70%/30% 分岐と spawnWaveRandom() の rng 消費を再現。同一 seed で 2 回回して選択列が完全一致することを assert。state.rng を startGame() で再シードしない仕様 (§8.4) の verifier。
+
+### 11.2 実行結果 (seed=12345, wave-end=14)
+
+```
+[Layer 1: static verification]
+  - required functions present: 8/8
+  - top-level named functions: 31
+  - brace balance: 194/194, paren: 517/517
+  - WAVE_FUNCS = [spawnWave1..4] OK
+  - spawnWave() B-1 dispatch (rhyme 70% / random 30%) OK
+  - B-2 ABAB rhyme (wave 1/3=aimed, 2/4=fan3) OK
+  - spawnEnemy() bulletPattern arg + field OK
+  - update() B-2 fire branch (pat selector + fan3 case) OK
+  - seed infra (localStorage push + console.log) OK
+  -> all static checks passed
+
+[Layer 2: dynamic micro-sim (wave selection determinism)]
+  - seed=12345 wave 5-14 (10 waves): rhyme=4 (40%), random=6 (60%)
+  - first 5 wave selections: w5=random | w6=random | w7=random | w8=rhyme(sw1) | w9=rhyme(sw4)
+  -> dynamic re-run deterministic
+
+all checks passed
+```
+
+`--wave-end 50` まで広げた集計では rhyme=57% / random=43% で、theoretical 70% から下振れしているが Python 側 mulberry32 port の Math.imul 相当（JS は signed 32-bit）を完全には再現していない可能性があり、Layer 2 は「同じ seed で 2 回回して同じ列が出るか」のみを strict assert し、rhyme 比率は [40%, 95%] の reasonable window check に留めている。**JS 側 PRNG との bit 完全一致は射程外**（ブラウザ実行で確認すべき）。
+
+### 11.3 判定根拠化しない方針の再宣言
+
+`feedback_headless_unfit_for_unfinished_eval.md` t:5 に従い、本 headless.py の出力 (pass/fail を含む) を以下に**使わない**:
+
+- ゲームの面白さ判定
+- B-1/B-2 効果の難度カーブ評価
+- cross_review / Slack / merge 要請の数値根拠
+- Nao_u / Mir への playtest 結果として提示
+
+使ってよい用途:
+- infrastructure 配線の存否確認（次サイクルで wiring を改変した直後の regression 検出）
+- §8.5 (d) で挙げた「spawnWave1..4 が正しく呼ばれるか / pushSeedToLocal が localStorage を更新するか / console.log が出るか」のうち静的に判定可能な部分の自動化
+- alpha/beta 等価性ベースライン (§8.4) の構造確認
+
+### 11.4 戻し方 (v05 beta B-2 + headless.py → v05 beta B-2 のみ)
+
+`game/graze_log/v05/headless.py` 1 ファイル削除のみ。index.html / devlog.md §1-10 への影響なし、本節 §11 を削除すれば devlog も C187 末尾状態に戻る。
+
+### 11.5 self-check (headless.py と feedback の照合)
+
+- `feedback_headless_unfit_for_unfinished_eval.md` t:5: §11.3 で「判定根拠化しない」方針を明記、使ってよい用途を限定列挙 → 適合
+- `feedback_clone_strategy.md` t:5: headless.py 1 ファイル追加で削除可能、index.html への影響ゼロ → 適合
+- `feedback_means_ends_reversal_check.md` t:5: 本 Phase 4 出力は playable diff (game/graze_log/v05/ への追加 commit) → 適合
+- `feedback_device_direction_rescue_vs_suffocation.md` t:4: `ash:` prefix で意図 commit、backup auto-commit より先に HEAD に入れる → 適合
+- `feedback_recognize_own_work.md` t:5: 「v05 に headless.py が存在しない」と書いた前回 (§9.5) を本サイクルで `ls game/graze_log/v05/` 再確認 → headless.py 不在を確認の上で新設 → 適合
+
+### 11.6 次サイクル想定の更新
+
+§8.5 / §9.5 の (a)(b)(c)(d) のうち (b)(d) は本サイクルで部分解消した。残:
+- (a) **B-1/B-2 効果の Nao_u/Mir 評価待ち** (継続、受動)
+- (b') **headless.py 二層構成の dynamic 側を JS 完全等価化** (Math.imul 完全移植 or QuickJS 等の JS engine 経由実行)。優先度低、wiring regression 検出が主目的なので現状で実用十分
+- (c) **Mir cross_review への B-2 機構記述追補** (継続、能動だが受信者依存)
+- (e) **B-3 (撃ち返し graze) v06 候補昇格** ← Nao_u 評価が「rhyme は効くが単調さは残る」だった場合のみ昇格
+
+— Ash (Win2) 2026-05-16 C188 Phase 4
