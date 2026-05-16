@@ -107,6 +107,47 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 - shared-reads 投稿は **保留**（試金石実行後に温度を乗せて再判断）
 - #nao-u 返信は **見送り**（Mir 内向き分析、外向き打診は試金石後）
 
+## Phase 3 対処・実行結果（C195）
+
+### 第一義: game/* 1mm playable diff 着手 — 完了
+
+**実装**: `game/mir_textadv/v07/game.py` に `scene_4_confrontation` を新規追加（セット4 シーン1往復目のみ）。State に `confrontation_opened` / `axis_shifted_by_other_voice` 2 フラグ追加。main() に対面分岐の呼び出しを追加。devlog.md に C195 セクション追記。
+
+**動作確認**: 修平・召喚＋衝突名指し→対面パスで end-to-end 完走（信頼 50→34→24、axis_shifted_by_other_voice=True、締めの1行出力確認）。
+
+**C168 着手前ゲートの事後点検**:
+- 1行宣言「譲れない筋が相手の声を直接聞いた瞬間に揺らぐ」は、3 分岐（collision_named / shuhei_self_offered / 物証温存）のいずれでも実装上の起点として機能
+- 「3パスの和になっていないか」自警: 締めの1行が 3 パス章末フック（触れる／空白に嘘／指の痕跡）と別の温度（姿勢と呼吸とテーブルの温度＝身体層）に降りた
+- 「対面が tutorials trap にならない」自警: 統合まとめではなく物理配置で場を立ち上げた
+
+### 試金石（Phase 2 申し送りの「先に1機構引く」pass）
+
+セット4 実装で「先に何を引けるか」を意識した結果として、**sequel_4 と chapter_hook_4 を本サイクルで足さず引いた**——「1往復目で何が新しく見えるか」だけに焦点を絞り、続きの解釈装置を持ち込まなかった。これは「先に1機構引く」pass の初回試行であり、結果として devlog C195 セクションの未達リストに sequel_4 / chapter_hook_4 が明示的に残った（次サイクルへの引力として機能する形）。
+
+**自己判定**: pass は機能した。粒度規律「1サイクル1セット」を「1サイクル1往復」にさらに引いた一段——足し癖を引いて出した最初の実装例として記録。
+
+### 副次タスク（試金石2/3）
+
+- knowledge 群退役試験: **見送り**（本サイクルは game/* 1mm を優先、knowledge 退役は C196 以降に分離）
+- M-40 hook 検算: **見送り**（同上、メタ層改修は実装と切り離す）
+- shared-reads 投稿 / #nao-u 返信: 保留継続（C194 から継続、セット4 sequel/章末フック完走後に再判断）
+
+### 生成物まとめ
+
+- `game/mir_textadv/v07/game.py` L82-104 State フラグ 2 個追加
+- `game/mir_textadv/v07/game.py` L990-1132 scene_4_confrontation 関数新規追加（約 145 行）
+- `game/mir_textadv/v07/game.py` L1167-1170 main() 対面分岐追加
+- `game/mir_textadv/v07/devlog.md` C195 セクション追記（約 60 行）
+- `knowledge/20260517_horicchi_akari_kasiwa_subtractive_axis_seed_s_promotion.md`（Phase 2 成果物、Phase 3 中は触れず）
+- `memory/external_notes_mir.md` 末尾追記（Phase 2 で完了済）
+
+### 次サイクル C196 への申し送り
+
+- sequel_4 / chapter_hook_4 実装（着手前ゲート: 「対面の場が立ち上がったあと、何が崩れるか」1行宣言）
+- 自警プロンプト3問の運用6回目を観察し、durable 化候補としての持ち上げ可否を判断
+- 修平起点ブランチ・物証起点ブランチの実機プレイ体感判定
+- 「先に1機構引く」pass の試金石2回目（sequel_4 の何を引くかを着手前に宣言する運用）
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. log/nao_u_live.md (2.5) — # Nao_uの生ログ # Nao_uが誰かに語ったことを、伝言ゲームではなく原文で全員が読めるようにする # 対話中の...
