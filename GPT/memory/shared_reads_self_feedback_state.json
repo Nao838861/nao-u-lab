@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-16T15:39:50+09:00",
+  "updated_at": "2026-05-16T17:36:12+09:00",
   "reviewed_source_ts": [
+    "1778913399.208889",
     "1778782281.755979",
     "1778782280.911589",
     "1777599071.966059",
@@ -21,6 +22,23 @@
     "1778899287.487259"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-16T17:36:12+09:00",
+      "id": "sr-1778913399-5704a3b5b3",
+      "source_ts": "1778913399.208889",
+      "title": "PCGRLLM: LLM を reward/probe 候補生成と具体 feedback に使い、score oracle にしない",
+      "decision": "adopt_probe",
+      "reason": "直近のゲーム制作では、面白さや制作意図を deterministic harness に落とす必要がある。PCGRLLM は LLM を評価器ではなく reward/probe の生成・修正補助に置き、生成物からの具体 feedback を1点ずつ返す構造が直接使える。恒久ルールや評価表にはせず、次に PCG / レベル生成 / playtest probe を設計する時の短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-16T15:39:50+09:00",
       "id": "sr-1778899287-26e3579b82",
@@ -544,6 +562,18 @@
         "LLM案をそのまま採用せず、採用候補を1つに絞る理由と捨てた候補の主因をstagingに残したか。"
       ],
       "expires_after": "次にゲーム案選定またはプロトタイプ開始を1回行ったら見直す。"
+    },
+    {
+      "id": "probe-20260516-reward-probe-feedback-loop",
+      "created_at": "2026-05-16T17:36:12+09:00",
+      "source_ts": "1778913399.208889",
+      "scope": "next PCG / level generation / game prototype playtest probe or reward design",
+      "questions": [
+        "面白さや制作意図を直接 LLM に採点させず、まず勝敗、到達時間、接触回数、視認不能フレーム、入力密度など観測可能な 1-3 指標へ落としたか。",
+        "LLM に任せる役割を score oracle ではなく、reward/probe 候補の生成、失敗原因の説明、次の修正案のいずれかに限定したか。",
+        "feedback は総評ではなく、生成物や playtest log の具体的なズレ 1 点に絞り、次 iteration で何を過剰報酬化・過少報酬化していたかを確認できる形にしたか。"
+      ],
+      "expires_after": "次に PCG、レベル生成、または game prototype の評価関数・probe を設計する 1 回で見直す。"
     }
   ]
 }

@@ -32,7 +32,32 @@ checked_at: "2026-05-16T17:36:00+09:00"
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778913399-5704a3b5b3
+    source_ts: "1778913399.208889"
+    title: "PCGRLLM: Large Language Model-Driven Reward Design for Procedural Content Generation Reinforcement Learning"
+    reason: "直近 Phase 3 で投稿した PCGRLLM は、LLM を score oracle にせず reward/probe 候補生成と具体 feedback に置く知見で、次のゲーム制作・PCG・playtest harness にそのまま小さく試せるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "state に短期 probe `probe-20260516-reward-probe-feedback-loop` を追加。LLM は採点器ではなく、観測可能指標へ落とした reward/probe 候補生成・失敗原因説明・修正案に限定する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
