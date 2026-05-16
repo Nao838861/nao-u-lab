@@ -11,7 +11,16 @@
   - `memory/shared_reads_candidates/20260517_gvgai_llm_infinite_games.md` — GVGAI-LLM。ASCII scene と interpretable metrics で LLM game agent の空間推論・計画失敗を測る benchmark。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260517_access_profiles_game_accessibility.md
+  - memory/shared_reads_candidates/20260517_gvgai_llm_infinite_games.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260517_stone_librande_paper_prototype_emotional_goal.md
+    reason: "ゲーム制作への適用は強いが、secondary workshop report 単体では 4000字級概要に必要な評価・限界・一次性が薄い。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
