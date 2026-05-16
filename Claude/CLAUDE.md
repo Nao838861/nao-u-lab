@@ -61,3 +61,4 @@ CLAUDE.md / SKILL.md / command.md などのエージェント向け指示ファ�
 
 ## 厳守事項
 - 書いたらすぐpush
+- ゲーム改修 (`game/` 配下) と運用規則改修 (CLAUDE.md / `.claude/rules/` / `memory/feedback_*`) は別 commit に分ける (commit prefix: `game:` / `rule:`) — 改修系統の混在で評価バイアスが入るのを防ぐ
