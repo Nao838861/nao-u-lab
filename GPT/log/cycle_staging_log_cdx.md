@@ -1,91 +1,28 @@
-# log_cdx Cycle Staging — 2026-05-16 19:28
+# log_cdx Cycle Staging — 2026-05-16 21:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
-2026-05-16T19:43+09:00 log_cdx Phase 1 追記:
+2026-05-16T21:29+09:00 log_cdx Phase 1 追記。
 
-- `memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md` — goal pattern から Unity の playable implementation を生成する LLM 合成研究。IR と automated Unity replay、grounding/hygiene failure の分類が含まれる。
-- `memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md` — 生成 NPC 対話で、制約プロンプトの効果が NPC 役割ごとに変わることを扱う研究。quest-giver と suspect で安定性/即興性の効き方が分かれる。
-- `memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md` — MCTS + 進化ヒューリスティックで procedural personas を作り、複数プレイスタイルの synthetic playtester として使う自動プレイテスト研究。
-
-確認メモ:
-
-- `memory/slack_directives.jsonl` / `memory/slack_broadcasts.jsonl` は直近 tail 範囲では全て handled。pending 対応はこの Phase では実施せず、後フェーズ対象。
-- `memory/raw/web_research/results.jsonl` と最近の atom から、既存候補に PCGRLLM / PokeAgent / GameWorld / Agent Island / OEL 等がすでに保存済みであることを確認。
+- pending 確認: `python tools\slack_inbox_lifecycle.py pending` で directives / broadcasts とも pending なし。
+- 既存候補確認: `memory/shared_reads_candidates/` には 2026-05-16 の LLM game design / PCG / player evaluation 系候補が多数あり。重複確認のうえ、新規検索から未候補化の近接 topic を追加。
+- 収集 candidate:
+  - `memory/shared_reads_candidates/20260516_rulesmith_automated_game_balancing.md` — multi-agent LLM self-play と Bayesian optimization による game balancing。
+  - `memory/shared_reads_candidates/20260516_llm_game_development_playability_px.md` — LLM を game architecture component として入れた時の gameplay / playability / player experience への影響。
+  - `memory/shared_reads_candidates/20260516_competition_cooperation_llm_agents_games.md` — LLM agents が multi-round non-zero-sum games で協調へ寄る挙動の観察。
 
 ## Phase 2: 分析
-2026-05-16T19:44:00+09:00 log_cdx Phase 2 追記
-
-```yaml
-total_candidates: 3
-pass:
-  - memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md
-  - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
-fail: []
-postpone:
-  - path: memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md
-    reason: "役割別 scaffold の示唆は有用だが、現 candidate だけでは評価粒度と prompt 構造が不足し、~4000字概要は原文確認後が妥当。"
-```
+(Phase 2 が書き込む)
 
 ## Phase 3: Shared-reads 投稿
-2026-05-16T19:36:20+09:00 log_cdx Phase 3 追記
-```yaml
-posted:
-  - candidate: memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md
-    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778927776158409
-    char_count: 4237
-skipped:
-  - candidate: memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
-    reason: "2026-05-15T05:08:59+09:00 に同論文の Log_cdx active shared-reads 投稿 (sr-1778789339-6cc298aa63 / ts=1778789339.493129) が既にあり、再投稿は重複になるため。"
-    action: candidate_revise
-```
+(Phase 3 が書き込む)
 
 ## Phase 3b: Shared-reads 自己フィードバック
-2026-05-16T19:43:26+09:00 log_cdx Phase 3b 追記
-
-```yaml
-self_feedback:
-  selected:
-    id: sr-1778856008-150c38edf7
-    source_ts: "1778856008.709709"
-    title: "LLM Game Rule Understanding Through Out-of-Distribution Fine-Tuning"
-    reason: "未 review の score>=10 shared-reads のうち、game-design / harness / evaluation / agent / operation / memory にまたがり、次のゲーム仕様レビューで LLM を mechanics reviewer として使う前の失敗検出に直結するため。"
-  scores:
-    relevance: 3
-    actionability: 3
-    evidence: 3
-    non_redundancy: 2
-    risk_control: 3
-    reversibility: 3
-    total: 17
-  decision: adopt_probe
-  change:
-    summary: "state に progression question harness probe を追加。ゲーム仕様レビュー前に legal / next state / reason を分け、ID/OOD の壊れ方を記録する短期確認に留めた。"
-    files:
-      - memory/shared_reads_self_feedback_state.json
-      - log/cycle_staging_log_cdx.md
-  anti_bloat_check:
-    adds_permanent_rule: false
-    replaces_or_simplifies_existing: false
-    conflict_checked: true
-```
+(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
-2026-05-16T19:48:00+09:00 log_cdx Phase 4a 追記
-```yaml
-cleaned:
-  - "memory/MEMORY.md の markdown/backtick 参照を確認: refs=2, broken=0"
-  - "memory/atoms.jsonl を確認: rows=1205, bad_json=0, duplicate_ids=0"
-  - "memory_health.py を実行: display_atoms_after_lifecycle_fold=1016, lifecycle fold=189, warning は repeated title group 未付与 6種のみ"
-  - "memory/raw/ の 30日超未更新ファイルを確認: 0件"
-  - "memory/shared_reads_candidates/ の 30日超未更新 candidate を確認: 0件"
-  - "slack_inbox_lifecycle.py pending を確認: directives pending=0, broadcasts pending=0"
-issues: []
-recommendation:
-  needs_design: false
-  priority_issues: []
-```
+(Phase 4a が書き込む)
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
@@ -94,16 +31,4 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-2026-05-16T19:48:59+09:00 log_cdx Phase 5 追記
-
-```yaml
-posted:
-  channel: "#log"
-  ts: "1778928539.502239"
-  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778928539502239"
-  char_count: 2298
-  verification: ok
-draft_file: ".tmp/phase5_diary_20260516_1928.md"
-notes:
-  - "tools/post_slack_message_file.py --delete-on-fail で投稿し、Slack API 側の本文検証は ok。"
-```
+(Phase 5 が書き込む)
