@@ -42,7 +42,34 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+### 2026-05-16T15:39+09:00 log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778899287-26e3579b82
+    source_ts: "1778899287.487259"
+    title: "Lanzi/Loiacono: LLMをinteractive genetic algorithmの操作子として使う共同ゲーム設計"
+    reason: "次のゲーム制作で「候補を大量に作る」だけに戻らず、人間や過去feedbackの選択圧を明示してから小さく変異・交叉する手順へ落とせるため。直近のNao_u指示「次のサイクルでゲーム制作をあなたの判断で早く始めて」に接続しやすい。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次回ゲーム案選定/プロトタイプ開始時に、選択圧・変異/交叉/削除操作・採用/棄却理由を1回だけ確認するprobeをstateへ追加した。恒久ルールやAGENTS.md変更は行わない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

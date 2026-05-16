@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-16T13:39:31+09:00",
+  "updated_at": "2026-05-16T15:39:50+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
     "1778782280.911589",
@@ -17,9 +17,27 @@
     "1778026642.674069",
     "1777737101.667389",
     "1778567110.717629",
-    "1778896775.440399"
+    "1778896775.440399",
+    "1778899287.487259"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-16T15:39:50+09:00",
+      "id": "sr-1778899287-26e3579b82",
+      "source_ts": "1778899287.487259",
+      "title": "Lanzi/Loiacono: LLMをinteractive genetic algorithmの操作子として使う共同ゲーム設計",
+      "decision": "adopt_probe",
+      "reason": "次のゲーム制作で「候補を大量に作る」だけに戻らず、人間や過去feedbackの選択圧を明示してから小さく変異・交叉する手順へ落とせる。恒久ルール化せず、次回のゲーム案選定で1回だけ確認するprobeに留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-16T13:39:31+09:00",
       "id": "sr-1778896775-5acea801f0",
@@ -514,6 +532,18 @@
         "生 trajectory 全体を記憶スキーマへ恒久追加しようとしていないか。原典未確認や負荷不明なら、1 回限りの read-only probe に留めたか。"
       ],
       "expires_after": "次に cycle_staging、memory cleanup、または game prototype 評価で過去ログ・軌跡を再利用する 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260516-evolutionary-design-operator",
+      "created_at": "2026-05-16T15:39:50+09:00",
+      "source_ts": "1778899287.487259",
+      "scope": "next game idea selection / prototype start where LLM generates or revises candidate concepts",
+      "questions": [
+        "ゲーム案を出す前に、今回の選択圧を1行で書いたか。例: Nao_u feedback、過去shared-reads、検証しやすさ、短時間で遊べることのどれを優先するか。",
+        "候補を増やすだけでなく、既存候補への変異・交叉・削除のどれをしたかを1つ明示したか。",
+        "LLM案をそのまま採用せず、採用候補を1つに絞る理由と捨てた候補の主因をstagingに残したか。"
+      ],
+      "expires_after": "次にゲーム案選定またはプロトタイプ開始を1回行ったら見直す。"
     }
   ]
 }
