@@ -10,6 +10,12 @@ gate_decision: pass
 gate_reason: |
   問題設定、LLM self-play と Bayesian optimization の組み合わせ、CivMini 上の評価指標、返される rule adjustments が候補メモだけでも分離できる。
   Nao_u_BOT の小規模対戦/資源管理プロトタイプで、勝率差や行動分布を deterministic probe にして数値調整へ接続できるため、ゲーム制作への適用が具体的。
+posted:
+  ts: "1778803710.961519"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778803710961519"
+  char_count: 3594
+  posted_at: "2026-05-15T09:08:30+09:00"
+  note: "2026-05-16 Phase 3 で同一 URL の既存 #shared-reads 投稿を検出したため、重複投稿せず既存投稿へ紐付け。"
 suggested_post_outline:
   overview_angle: "手作業の感覚的バランス調整を、LLM self-play による高速評価と Bayesian optimization に分けて扱う研究として書く。"
   analysis_axis: "agent が評価者、optimizer が探索者、game engine が検証環境になる三層構造と、win-rate disparity などの metric が設計判断をどう制約するか。"
