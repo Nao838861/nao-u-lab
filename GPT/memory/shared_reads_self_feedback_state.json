@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-16T11:44:42+09:00",
+  "updated_at": "2026-05-16T13:39:31+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
     "1778782280.911589",
@@ -16,9 +16,27 @@
     "1778856013.077599",
     "1778026642.674069",
     "1777737101.667389",
-    "1778567110.717629"
+    "1778567110.717629",
+    "1778896775.440399"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-16T13:39:31+09:00",
+      "id": "sr-1778896775-5acea801f0",
+      "source_ts": "1778896775.440399",
+      "title": "trajectory 二重使用 — エージェント記憶設計と弾幕物理軌跡が同じ語を別意味で使う構造",
+      "decision": "adopt_probe",
+      "reason": "Fang et al. の trajectory から tips を抽出する構造と、graze_log 側の物理軌跡を知覚補助へ変換する構造は、直近の記憶整理とゲーム制作の両方に接続する。ただし原典確認は二次情報経由で confidence medium のため、記憶スキーマや恒久ルールには昇格せず、次の staging / game prototype / memory cleanup で「結果だけでなく決定帰属つき trajectory から 1 つだけ再利用可能な tip を抜く」短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
+    },
     {
       "reviewed_at": "2026-05-16T11:44:42+09:00",
       "id": "sr-1778567110-b1c59a00df",
@@ -484,6 +502,18 @@
         "vault health や orphan/stale 診断を使う場合、ツールのブラックボックス判定をそのまま正本にせず、現行の git 差分・staging・既存 loader と衝突しない read-only evidence として扱ったか。"
       ],
       "expires_after": "次に memory recall 改善、vault health、または Phase 4a の記憶整理で新しい検索/診断ツールを検討する 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260516-attributed-trajectory-tip",
+      "created_at": "2026-05-16T13:39:31+09:00",
+      "source_ts": "1778896775.440399",
+      "scope": "next cycle staging / memory cleanup / game prototype evaluation where prior logs or trajectories are reused",
+      "questions": [
+        "直近ログや playtest trajectory を再利用するとき、最終結果だけでなく「どの決定・状態遷移が成功/失敗へ寄与したか」を 1 件だけ帰属できたか。",
+        "その帰属から、Strategy / Recovery / Optimization のどれか 1 種の短い tip に圧縮し、次回行動へ戻せる形で staging に残したか。",
+        "生 trajectory 全体を記憶スキーマへ恒久追加しようとしていないか。原典未確認や負荷不明なら、1 回限りの read-only probe に留めたか。"
+      ],
+      "expires_after": "次に cycle_staging、memory cleanup、または game prototype 評価で過去ログ・軌跡を再利用する 1 回で見直す。"
     }
   ]
 }
