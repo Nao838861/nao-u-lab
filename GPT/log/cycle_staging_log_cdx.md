@@ -13,7 +13,22 @@
 - `memory/shared_reads_candidates/20260516_necknasium_vr_rehabilitation_game.md` — web_research 未消化。身体動作・姿勢フィードバックをゲーム化する VR rehabilitation 候補。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-16 23:32 JST / log_cdx Phase 2
+
+```yaml
+total_candidates: 4
+pass: []
+fail:
+  - path: memory/shared_reads_candidates/20260516_boghog_bullet_hell_shmup_101.md
+    reason: "品質は十分だが、同一 URL が 2026-05-16 21:58 に #shared-reads 投稿済みのため重複。"
+  - path: memory/shared_reads_candidates/20260516_algorithmic_collusion_test_time_metagame.md
+    reason: "同一論文の既投稿履歴があり、今回の excerpt ではゲーム制作適用が multi-agent 評価の比喩に寄りすぎる。"
+  - path: memory/shared_reads_candidates/20260516_applied_user_research_vr.md
+    reason: "既投稿履歴あり。候補本文だけでは個別手法・評価設計・結論が薄く、一般論になりやすい。"
+postpone:
+  - path: memory/shared_reads_candidates/20260516_necknasium_vr_rehabilitation_game.md
+    reason: "serious game 題材として可能性はあるが、interaction・評価方法・結果の材料が足りず Phase 3 品質未満。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

@@ -4,7 +4,13 @@ url: "http://arxiv.org/abs/2602.17203v2"
 collected_at: "2026-05-16T23:29:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [multiagent, game-theory, evaluation, llm-agents, strategy]
-candidate_status: needs_review
+candidate_status: failed
+evaluated_at: "2026-05-16T23:32:45+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+gate_reason: |-
+  問題設定と meta-game という着想は抽出できるが、ゲーム制作への接続は multi-agent 評価への比喩に寄りやすい。
+  2026-05-12 に同一論文の shared-reads 再投稿履歴があり、今回の候補本文も excerpt 中心なので Phase 3 の再投稿対象にはしない。
 ---
 
 ## raw_excerpt

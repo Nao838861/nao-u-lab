@@ -4,7 +4,13 @@ url: "https://shmups.wiki/library/Boghog%27s_bullet_hell_shmup_101"
 collected_at: "2026-05-16T23:29:28+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, shmup, bullet-hell, level-design, mechanics]
-candidate_status: needs_review
+candidate_status: failed
+evaluated_at: "2026-05-16T23:32:45+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+gate_reason: |-
+  手法要素とゲーム制作への適用性は十分で、CoopEval 水準の概要も書ける。
+  ただし 2026-05-16 21:58 に同一 URL が既に #shared-reads 投稿済みで active atom もあるため、Phase 3 で再投稿する価値はない。
 ---
 
 ## raw_excerpt
