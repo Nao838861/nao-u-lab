@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-17T05:47:00+09:00",
+  "updated_at": "2026-05-17T07:39:54+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -25,7 +25,8 @@
     "1778936332.774269",
     "1778932863.644179",
     "1778947869.742089",
-    "1778958020.281189"
+    "1778958020.281189",
+    "1778595976.115449"
   ],
   "reviews": [
     {
@@ -452,6 +453,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-17T07:39:54+09:00",
+      "id": "sr-1778595976-efaf4a69b2",
+      "source_ts": "1778595976.115449",
+      "title": "@kuina_ch x @akari_worlds - natural-language test runner as the other party",
+      "decision": "adopt_probe",
+      "reason": "Game self-judgment, cross_review, and Slack/shared-reads effectiveness checks can confuse internally closed headless/self checks with verdicts that only exist after another party responds. This overlaps with existing M-40 and headless cautions, but a one-cycle check for who the runner is remains small, reversible, and does not add a permanent rule.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
     }
   ],
   "active_probes": [
@@ -754,6 +772,18 @@
         "この階層順序で見つかったものと、従来の直 grep で見つかったものの差を1件だけ staging に残し、恒久プロトコル化の判断は保留したか。"
       ],
       "expires_after": "次に memory recall 改善、Phase 4a 記憶整理、または Phase 1 の記憶検索順序を扱う 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260517-external-runner-verdict-boundary",
+      "created_at": "2026-05-17T07:39:54+09:00",
+      "source_ts": "1778595976.115449",
+      "scope": "next game self-judgment / cross_review / Slack or shared-reads effectiveness judgment where response from another party defines success",
+      "questions": [
+        "Did I separate in one line whether this judgment is internally closed or whether another party's response is required before it becomes a verdict?",
+        "For externally-run layers, did I mark the state as submit, provisional, or observed verdict instead of closing it as success/failure too early?",
+        "Did I avoid treating headless numbers, self-judgment, or AI cross_review as equivalent to a human or external reader response?"
+      ],
+      "expires_after": "Review after the next game self_judgment, cross_review, or Slack/shared-reads effectiveness judgment."
     }
   ]
 }
