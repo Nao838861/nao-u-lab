@@ -2,6 +2,29 @@
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
+## Manual Game Start: Signal Shepherd v001
+```yaml
+triggered_by:
+  - id: log-cdx-1778893778-0ab7ead0f4
+    permalink: "https://nao-u-lab.slack.com/archives/C0ANQ9DRQ1K/p1778893778510309"
+  - id: log-cdx-1778907366-b614f1523d
+    permalink: "https://nao-u-lab.slack.com/archives/C0ANQ9DRQ1K/p1778907366883599"
+decision:
+  game: "Signal Shepherd v001"
+  path: "GPT/game/signal_shepherd/v001/"
+  reason: "過去知見のうち、予測できる軌跡、短い周回、リスク選択、全対象への軌跡表示を最小 playable loop に落とせるため。"
+implemented:
+  - "index.html / styles.css / game.js"
+  - "design_log.md に指示原文、3設計サイクル、採用理由、残課題を記録"
+  - "tools/headless_signal_shepherd_v001_check.js"
+verification:
+  - "`node GPT\\tools\\headless_signal_shepherd_v001_check.js` OK: prediction, movement, polarity flip, delivery, completion, hazard failure"
+directive_status:
+  - "対象2件を handled に更新"
+future_cycle_change:
+  - "pending game directive がある時は phase_game_start を通常収集より優先するよう codex_phases_cycle.py を変更"
+```
+
 ## Phase 1: 情報収集
 - 2026-05-16T17:29+09:00: pending確認。`slack_directives.jsonl` は game-rights の pending 2件、`slack_broadcasts.jsonl` は pending なし。Phase 1では対応せず後フェーズへ残す。
 - candidate: `memory/shared_reads_candidates/20260516_gameworld_multimodal_game_agents.md` — 視覚入力を含む multimodal game agent の評価ベンチマーク。

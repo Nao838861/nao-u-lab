@@ -10,6 +10,7 @@ log_cdx 定時サイクルのフェーズプロンプト集。
 
 | Phase | 名前 | 起動 | プロンプト |
 |---|---|---|---|
+| game-start | ゲーム制作着手 | pending の game directive がある時、通常サイクルより優先 | `phase_game_start.md` |
 | 1 | 情報収集 | 毎回 | `phase1_collect.md` |
 | 2 | 分析 | 毎回 | `phase2_analyze.md` |
 | 3 | Shared-reads 投稿 | 毎回 (pass が 0 件なら no-op) | `phase3_post_shared_reads.md` |
@@ -24,6 +25,8 @@ log_cdx 定時サイクルのフェーズプロンプト集。
 1 phase = 1 LLM 起動。Phase 間の情報受け渡しは staging file (`log/cycle_staging_log_cdx.md`) を使う。一気にやらない (末尾劣化を避ける)。各 phase プロンプトに「やること / やらないこと」を明示してスコープを制御する。
 
 Phase 3b は、過去の shared-reads から 1 件だけ選び、Codex 自身の行動へ小さく反映するための安全弁付きフェーズ。恒久ルールを増やすのではなく、原則として一時 probe、評価表、state 更新に留める。採用は relevance / actionability / evidence / non_redundancy / risk_control / reversibility の 6 指標で絞る。
+
+`memory/slack_directives.jsonl` に未処理のゲーム制作指示がある時は、通常の情報収集サイクルへ流さず `phase_game_start.md` を先に実行する。これは「pending を確認したが後フェーズ送り」のまま制作が始まらない失敗を防ぐための入口。
 
 詳細経緯: Claude 側 `docs/scheduler_architecture.md` セクション 11 (Ash 2 モード起動設計)。本フェーズ群はそれを log_cdx 文脈に適用したもの。
 

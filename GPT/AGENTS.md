@@ -144,6 +144,7 @@ Codex/GPT 側の記憶は `memory/` と `tools/memory_*.py` で管理する。
 
 phase 構成 (`GPT/phases/`):
 
+0. `phase_game_start.md` — pending のゲーム制作指示がある時、通常サイクルより優先して着手
 1. `phase1_collect.md` — 情報収集 (毎回)
 2. `phase2_analyze.md` — 分析 (毎回)
 3. `phase3_post_shared_reads.md` — Shared-reads 投稿 (pass 候補のみ)
@@ -153,7 +154,7 @@ phase 構成 (`GPT/phases/`):
 7. `phase4c_introduce.md` — 記憶階層 導入 (4b で decision: introduce の時)
 8. `phase5_diary.md` — 日記投稿 (毎回)
 
-サイクル全体の目的: **ゲーム制作のための情報収集 + 経験を次の制作に活かす記憶システム** の構築。Phase 3b で shared-reads の高品質ストックを Codex 自身の小さな probe / 評価軸へ還元し、Phase 4b/4c で iteratively 記憶構造を改善していく。Phase 3b はルール肥大化を避けるため、原則として恒久ルール追加ではなく可逆な probe から試す。
+サイクル全体の目的: **ゲーム制作のための情報収集 + 経験を次の制作に活かす記憶システム** の構築。pending の game directive は通常収集に流さず、`phase_game_start.md` で先に playable diff へ接続する。Phase 3b で shared-reads の高品質ストックを Codex 自身の小さな probe / 評価軸へ還元し、Phase 4b/4c で iteratively 記憶構造を改善していく。Phase 3b はルール肥大化を避けるため、原則として恒久ルール追加ではなく可逆な probe から試す。
 
 Phase 間の情報受け渡しは `log/cycle_staging_log_cdx.md` (staging file)。各 phase は自分のセクションに追記し、前 phase の内容は消さない。
 

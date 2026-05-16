@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signal Shepherd v001</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="stage" aria-label="Signal Shepherd v001">
+      <canvas id="game" width="960" height="720"></canvas>
+      <div class="overlay" id="overlay">
+        <h1>Signal Shepherd</h1>
+        <p id="overlayText">ビーコンを動かし、極性を切り替えて信号粒を同じ色のゲートへ導く。</p>
+        <button id="startButton" type="button">開始</button>
+      </div>
+    </section>
+  </main>
+  <script src="./game.js"></script>
+</body>
+</html>

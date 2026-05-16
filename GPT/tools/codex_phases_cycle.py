@@ -44,6 +44,7 @@ FIXED_PHASES = [
     "phase3b_self_feedback",
     "phase4a_cleanup",
 ]
+GAME_START_PHASE = "phase_game_start"
 CONDITIONAL_4B = "phase4b_design"
 CONDITIONAL_4C = "phase4c_introduce"
 FINAL_PHASE = "phase5_diary"
@@ -135,6 +136,35 @@ def read_staging() -> str:
     return STAGING_PATH.read_text(encoding="utf-8")
 
 
+def read_jsonl(path: Path) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    rows: list[dict[str, Any]] = []
+    with path.open("r", encoding="utf-8-sig") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rows.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+    return rows
+
+
+def has_pending_game_directive() -> bool:
+    directives = read_jsonl(MEMORY_DIR / "slack_directives.jsonl")
+    for row in directives:
+        if row.get("status") != "pending":
+            continue
+        if row.get("domain") == "game":
+            return True
+        text = str(row.get("text", ""))
+        if "ゲーム" in text and ("作" in text or "始め" in text):
+            return True
+    return False
+
+
 def _section_text(staging: str, header_prefix: str) -> str:
     if header_prefix not in staging:
         return ""
@@ -161,6 +191,7 @@ PHASE_TIMEOUTS = {
     "phase2_analyze": 1800,           # 30 min
     "phase3_post_shared_reads": 3600, # 60 min (per pass candidate)
     "phase3b_self_feedback": 1800,    # 30 min
+    "phase_game_start": 7200,         # 120 min (direct game-making directive)
     "phase4a_cleanup": 1200,          # 20 min
     "phase4b_design": 2400,           # 40 min
     "phase4c_introduce": 3600,        # 60 min
@@ -259,13 +290,42 @@ def main() -> int:
     cycle_id = datetime.now().strftime("%Y-%m-%d %H:%M")
     log(f"cycle start: {cycle_id} ({reason})")
     if args.dry_run:
-        plan = FIXED_PHASES + ["(maybe " + CONDITIONAL_4B + ")", "(maybe " + CONDITIONAL_4C + ")", FINAL_PHASE]
+        if has_pending_game_directive():
+            plan = [GAME_START_PHASE, FINAL_PHASE]
+        else:
+            plan = FIXED_PHASES + ["(maybe " + CONDITIONAL_4B + ")", "(maybe " + CONDITIONAL_4C + ")", FINAL_PHASE]
         print("dry-run plan:")
         for p in plan:
             print(f"  - {p}")
         return 0
 
     init_staging(cycle_id)
+
+    if has_pending_game_directive():
+        log("pending game directive found -> running game start phase before regular research cycle")
+        rc = run_phase(GAME_START_PHASE)
+        if rc != 0:
+            log(f"cycle aborted at {GAME_START_PHASE} (rc={rc})")
+            state["last_attempt"] = now_iso()
+            state["last_error"] = f"{GAME_START_PHASE} failed rc={rc}"
+            save_state(state)
+            return rc
+        rc = run_phase(FINAL_PHASE)
+        if rc != 0:
+            log(f"cycle aborted at {FINAL_PHASE} (rc={rc})")
+            state["last_attempt"] = now_iso()
+            state["last_error"] = f"{FINAL_PHASE} failed rc={rc}"
+            save_state(state)
+            return rc
+        state.update({
+            "last_success": now_iso(),
+            "last_cycle_id": cycle_id,
+            "last_reason": "pending game directive",
+            "last_error": None,
+        })
+        save_state(state)
+        log(f"cycle success: {cycle_id} (game directive)")
+        return 0
 
     for phase in FIXED_PHASES:
         rc = run_phase(phase)
