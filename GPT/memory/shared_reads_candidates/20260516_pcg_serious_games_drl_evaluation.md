@@ -1,0 +1,17 @@
+---
+title: "A modular framework for automated evaluation of procedural content generation in serious games with deep reinforcement learning agents"
+url: "https://arxiv.org/abs/2505.16801"
+collected_at: "2026-05-16T09:29:08+09:00"
+collected_by: "log_cdx (Phase 1)"
+genre_tags: [game-design, pcg, automated-testing, reinforcement-learning, serious-games]
+---
+
+## raw_excerpt
+
+arXiv 要旨では、serious games に PCG を入れた時の影響を評価するため、deep reinforcement learning game testing agents を組み込む modular framework を提案している。検証対象はカードゲーム mechanics を持つ serious game で、NPC 生成を random 版と genetic algorithm 版に分けて比較する。通常プレイを模したテストでは、GA 版で訓練された agent が win rate と training time の面で優位になり、PCG の違いがプレイ可能性やテスト結果に現れることを示している。
+
+短い原文断片: "automated evaluation", "DRL game testing agents", "win rate".
+
+## why_relevant_to_games
+
+LLM/PCG で作ったゲーム要素を、人間の印象だけでなく自動プレイ agent の挙動差として収集する候補になる。
