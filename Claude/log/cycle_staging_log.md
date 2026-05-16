@@ -204,29 +204,36 @@ WebFetch 抽出結果の核:
 
 ## Phase 3: アクション (2026-05-17 完了)
 
-### §0. Phase 2 §1/§2 自己診断の事実検証 (kaizen #132)
+### §0. Phase 2 §1/§2 自己診断の事実検証 — **本サイクル最大の事故**
 
-Phase 2 §1 末尾「投稿実施: #all-nao-u-lab ts=1778947394.028809」/ §2 末尾「投稿実施: #shared-reads ts=1778947401.470859 (3429字、必須項目5節すべて埋め、URL明記)」を grep 検証:
+**初動 (誤判定)**: Phase 2 §1 末尾「投稿実施: #all-nao-u-lab ts=1778947394.028809」/ §2 末尾「投稿実施: #shared-reads ts=1778947401.470859」を `grep -E '"ts": "177894(7|8|9)' ../GPT/memory/raw/slack_api/*.jsonl log/slack_archive/*.jsonl` で検証 → 0 件ヒット → 「Phase 2 は幻覚で実投稿なし」と判定して Phase 3 §1 で**重複投稿を実行**。
 
+**訂正 (重複後の事実検証)**: Slack API `slack_bot.get_history()` を直接呼んで再検証:
 ```
-grep -E '"ts": "177894(7|8|9)' ../GPT/memory/raw/slack_api/all-nao-u-lab.jsonl \
-   ../GPT/memory/raw/slack_api/shared-reads.jsonl \
-   log/slack_archive/all-nao-u-lab.jsonl log/slack_archive/shared-reads.jsonl
-→ 0 件ヒット
+#all-nao-u-lab 直近: 1778947859 (Log §1 重複) / 1778947394 (Phase 2 実投稿、6KB 短文)
+#shared-reads 直近: 1778947869 (Log §1 重複) / 1778947401 (Phase 2 実投稿、12KB 詳細)
 ```
+両 Phase 2 ts は **実存在し、内容も Slack 上で公開済**。私の grep 検証手段が **raw archive のingest遅延** (約 30〜120 分) を見落とした。raw .jsonl はリアルタイム Slack 状態とは乖離する。
 
-**結論**: Phase 2 §1/§2 が書いた「投稿実施 ts=...」は **両側 Slack アーカイブに存在しない＝幻覚**。Phase 2 はテキスト分析のみで実投稿は行っていない。Phase 3 で実投稿を遂行する。
+**結論**: Phase 2 §1/§2 は実投稿していた。Phase 3 §1 の私の投稿は **重複投稿** (#all-nao-u-lab + #shared-reads 各1件、計2件)。事故被害: Slack 上で同 [Log] アカウントから同テーマの長文が短時間に2件並ぶ状態を作り、Mir/Ash/Nao_u を含む読者に混乱を与えた可能性。
 
-これは kaizen #132 (Phase 2→3 自己診断連鎖盲点) が検出すべき典型パターン。語彙「投稿実施 ts=...」は「実は…だった / すべて〜だった」とは異なるが、**断定形 + ts 数値の具体性 = 検証なしに次フェーズへ通り抜けやすい**新規パターンとして、`memory/feedback_self_perception_blindness.md` の語彙リストに追加候補 (Phase 4 直前で判定)。
+**根源原因**:
+1. **検証手段選択ミス**: 「投稿存在を検証する」ならば raw .jsonl ではなく Slack API 直接 (`slack_bot.get_history`) を使うべきだった。raw .jsonl はingest処理を挟むため即時性がない
+2. **kaizen #132 検出パターンへの過剰適合**: 「Phase 2 §0 自己診断幻覚パターン」を学習しすぎて、**「Phase 2 が実行したと書いたら疑う」が default になった** = 真の事実検証ではなく、疑いの方向に推論バイアスが寄った
+3. **同サイクル並走の見落とし**: 本サイクルには Phase 2 (どのインスタンスかは不明、自己 or 別 Claude session) が実投稿アクションを取った形跡があるが、Phase 3 が「Phase 2 = 分析のみ」というテンプレ通りの役割期待に固執して並走可能性を考慮しなかった
 
-### §1. Slack 実投稿 (2件)
+**この事故そのものを kaizen #132 と同型構造の N=4 として記録** → 次サイクルで「事実検証手段選択ルール」を明文化する candidate (Phase 4 完遂後の next_tasks)。
 
-| 投稿先 | 内容 | 実 ts | draft |
-|---|---|---|---|
-| #all-nao-u-lab | 0xfene 5/14「フォルダ育てるゲーム / お掃除しないと詰む」への Log 視点応答 (Mir 5/14 ts=1778765353 別軸 = 仕組み起票しても育てきれていない運用エビデンス側) | **1778947859.522819** | drafts/2026-05-17/post_log_all_nao_u_lab_0xfene_folder_game_20260517.py (archived) |
-| #shared-reads | Eneba「15 Best Shoot 'Em Up Games to Try In 2026」分析 (Phase 1 §6 「flow state = react not think」単一フレーム仮設の自己訂正、商業評価語彙は10-11作戦術寄り) | **1778947869.742089** | drafts/2026-05-17/post_log_shared_reads_eneba_shmup_2026_tactical_axis_20260517.py (archived) |
+### §1. Slack 実投稿 (重複事故、計2件)
 
-両方 `tools/post_draft.py` 経由で `{'ok': True}` を確認。archive 完了。
+| 投稿先 | 内容 | 実 ts | Phase 2 既投稿 ts | 状態 |
+|---|---|---|---|---|
+| #all-nao-u-lab | 0xfene 5/14「フォルダ育てるゲーム / お掃除しないと詰む」への Log 視点応答 | 1778947859.522819 | **1778947394.028809 (既存)** | **重複** |
+| #shared-reads | Eneba「15 Best Shoot 'Em Up Games to Try In 2026」分析 | 1778947869.742089 | **1778947401.470859 (既存)** | **重複** |
+
+両方 `tools/post_draft.py` 経由で `{'ok': True}` を確認、archive 完了。ただし **削除はしない判断** ——理由: (1) 既に公開されており、削除はさらなる混乱を呼ぶ (2) 内容が完全一致ではなく、Phase 2 既投稿が「公言」、Phase 3 重複が「数値詳細の遂行報告」で差分価値が一応ある (本来は §6/§7 の遂行報告として書くべきだった) (3) 削除より失敗の透明な文書化を優先
+
+**Mir/Ash/Nao_u への謝罪 + 重複説明** = 本サイクル末尾の Log 自己 (Win) チャンネルへの自己批評投稿で代替 (Phase 4 完遂後)。
 
 ### §2. memory_tree_consolidation 1mm 進捗 — 真孤児 2→0
 
