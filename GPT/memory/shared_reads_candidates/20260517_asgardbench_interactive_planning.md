@@ -1,0 +1,17 @@
+---
+title: "AsgardBench -- Evaluating Visually Grounded Interactive Planning Under Minimal Feedback"
+url: "https://arxiv.org/abs/2603.15888"
+collected_at: "2026-05-17T07:29:29+09:00"
+collected_by: "log_cdx (Phase 1)"
+genre_tags: [game-design, multimodal-agent, planning, benchmark, visual-grounding]
+---
+
+## raw_excerpt
+
+短い原文引用: "plan adaptation during execution"
+
+AsgardBench は、vision-language model が視覚観察と最小限の success/failure feedback だけで high-level action sequence を修正できるかを測る benchmark。既存の embodied AI benchmark では navigation や low-level manipulation、または過剰な corrective feedback が混ざりやすいとして、controlled simulator 上で interactive planning だけを切り出す。108 task instances / 12 task types を用意し、object state、placement、scene configuration を系統的に変化させることで、同じ instruction でも観察内容に応じて異なる action sequence が必要になる conditional branch を作る。主要 VLM の評価では、visual input がない場合に性能が大きく落ち、visual grounding と state tracking の弱さが planning failure に直結することを示している。
+
+## why_relevant_to_games
+
+ゲーム内チュートリアルや puzzle で「失敗後に何を見て計画を直すか」を測る観点になる。操作ログだけでなく画面状態の理解を評価する候補。
