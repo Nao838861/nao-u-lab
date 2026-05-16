@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-16T19:43:26+09:00",
+  "updated_at": "2026-05-16T21:38:16+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -20,7 +20,8 @@
     "1777737101.667389",
     "1778567110.717629",
     "1778896775.440399",
-    "1778899287.487259"
+    "1778899287.487259",
+    "1778927776.158409"
   ],
   "reviews": [
     {
@@ -362,6 +363,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-16T21:38:16+09:00",
+      "id": "sr-1778927776-342dc46c2f",
+      "source_ts": "1778927776.158409",
+      "title": "Grounding Machine Creativity in Game Design Knowledge Representations",
+      "decision": "adopt_probe",
+      "reason": "ゲーム制作指示を直接コードへ流さず、goal pattern / intermediate spec / replay / grounding-hygiene taxonomy に分ける視点が、次の playable diff と失敗記録に直結する。既存の rule-understanding や reward/probe 系と近いが、今回は実装前の薄い中間仕様と失敗分類に限定すれば重複と肥大化を避けられるため、恒久ルールではなく短期 probe として採用する。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
     }
   ],
   "active_probes": [
@@ -604,6 +622,18 @@
         "問題を既存ルールに近い ID と、例外条件・新 mechanic・未学習 variant に近い OOD に分け、LLM の総評をそのまま採用せず、どの分布で壊れたかを staging に残したか。"
       ],
       "expires_after": "次にゲーム仕様レビュー、turn/grid/resource 系 prototype、または LLM に mechanics 改造案を出させる 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260516-grounded-playable-spec",
+      "created_at": "2026-05-16T21:38:16+09:00",
+      "source_ts": "1778927776.158409",
+      "scope": "next game prototype implementation or repair that turns an idea into a playable diff",
+      "questions": [
+        "実装前に、ユーザー指示を goal pattern、必要オブジェクト、入力、勝敗/進行条件、観測ログの5点以内の薄い intermediate spec に落としたか。",
+        "playable 判定を雰囲気で置かず、headless / browser / Unity 相当の replay で最低1つの起動確認または失敗ログを取る形にしたか。",
+        "失敗した場合、repo/API/asset/DOM/component の仮定ミスである grounding failure と、構文・import・重複・型・formatting の hygiene failure のどちらかを staging に残したか。"
+      ],
+      "expires_after": "次に game prototype の実装または playable diff 修復を1回行ったら見直す。"
     }
   ]
 }
