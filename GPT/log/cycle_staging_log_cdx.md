@@ -39,7 +39,32 @@ skipped: []
 
 ## Phase 3b: Shared-reads 自己フィードバック
 
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1777737101-0f96f202c2
+    source_ts: "1777737101.667389"
+    title: "「人間は判断だけ」と「判断は厚みで成り立つ」の反証ペア — M-40 自己判定ハーネスを二層に分ける根拠"
+    reason: "M-40 系の headless / 自己判定 probe は増えているが、数値で判定できる層と、基準の厚みが必要な層を事前に分ける確認がまだ薄い。次のゲーム評価で headless 数値を面白さ・納得感へ直結させないために読む。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "state に reviewed/source_ts を追加し、次回 game prototype 自己判定で機械判定層と厚み判定層を分ける短期 probe を追加した。恒久 directive は増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 
