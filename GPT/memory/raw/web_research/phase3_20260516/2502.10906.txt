@@ -1,0 +1,1435 @@
+﻿
+
+--- PAGE 1 ---
+
+1
+PCGRLLM: Large Language Model-Driven Reward
+Design for Procedural Content Generation
+Reinforcement Learning
+In-Chang Baek ∗‡, Sung-Hyun Park ∗, Sam Earle †, Zehua Jiang †, Noh Jin-Ha ∗,
+Julian Togelius†, Kyung-Joong Kim ∗§
+∗Gwangju Institution of Science and Technology (GIST) †New York University
+‡inchang.baek@gm.gist.ac.kr
+Abstract—Reward design plays a pivotal role in the training
+of game AIs, requiring substantial domain-specific knowledge
+and human effort. In recent years, several studies have explored
+reward generation for training game agents and controlling
+robots using large language models (LLMs). In the content
+generation literature, there has been early work on generating
+reward functions for reinforcement learning agent generators.
+This work introduces PCGRLLM, an extended architecture
+based on earlier work, which employs a feedback mechanism
+and several reasoning-based prompt engineering techniques. We
+evaluate the proposed method on a story-to-reward generation
+task in a two-dimensional environment using two state-of-the-art
+LLMs, demonstrating the generalizability of our approach. Our
+experiments provide insightful evaluations that demonstrate the
+capabilities of LLMs essential for content generation tasks. The
+results highlight significant performance improvements of 415%
+and 40% respectively, depending on the zero-shot capabilities
+of the language model. Our work demonstrates the potential
+to reduce human dependency in game AI development, while
+supporting and enhancing creative processes.
+Index Terms—large language model, procedural content gen-
+eration, prompt engineering, reinforcement learning, reward
+generation
+I. I NTRODUCTION
+The design of reward functions plays a pivotal role in
+the training of deep reinforcement learning (DRL) agents
+and evolutionary algorithms for procedural content generation
+(PCG) in games [1]. Reward functions guide agent behaviors
+and define the objectives that align generated content with
+desired outcomes, such as game difficulty or aesthetic appear-
+ance. Traditionally, designing reward functions relies heavily
+on researchers’ game-specific knowledge and time-consuming
+reward shaping process. In the procedural content generation
+via RL (PCGRL) literature [2], the controllability of reward
+function has been achieved by parameterization of reward
+function in two- and three- dimensional level generation tasks
+[3], [4]. This significant human dependency not only requires
+significant time and resources but also introduces barriers
+to accessibility and scalability of game AIs. Additionally,
+the controllability of RL-based generative models has been
+dependent on pre-defined environmental features. Therefore,
+This work was supported by GIST-IREF from Gwangju Institute of Science
+and Technology(GIST).§ Corresponding author
+LLM ℳ
+Instruct (Story)
+Agent𝜋
+Feedback
+Alignment
+Environment
+3
+4
+2
+1
+Content
+Align generated
+reward function with ℳ,
+interacting with Env
+Analyzecontent
+andgeneratefeedback
+Fig. 1: An overview of the reward generation process: (1)
+instructions guide the LLM, (2) outputs direct the agent,
+(3) environment interactions refine rewards, and (4) feedback
+analyzes content for improvement.
+reward generation is necessary to alleviate the dependency on
+humans and dependency on controllable features.
+Recent advancements in LLMs have shown their poten-
+tial to mitigate these challenges by leveraging pre-trained
+expert knowledge from large datasets. Several studies have
+explored LLM-based reward generation approaches in robotic
+control [5]–[7] and the gameplay [8], [9] domain, utilizing
+LLMs’ reasoning and coding capabilities. One such approach,
+ChatPCG [10], introduced an early-stage LLM-driven reward
+generation method for PCGRL, which transforms high-level
+game descriptions into low-level reward function code. This
+work proposed a reward fine-tuning method, self-alignment, to
+align the reward function for a specific environment. However,
+a limitation of this approach is the absence of a refinement
+process that incorporates results of the trained agent. As a
+result, it is uncertain whether the trained policy accurately
+reflects the intended reward function generation conditions.
+To address these limitations, we propose an improved ar-
+chitecture based on prior work [10], PCGRLLM, a feedback-
+based reward generation framework for content generation.
+Fig. 1 illustrates the overview of the proposed method with
+the sequence of improving reward function with two major
+arXiv:2502.10906v1  [cs.AI]  15 Feb 2025
+
+
+--- PAGE 2 ---
+
+2
+Chain-of-ThoughtTree-of-ThoughtHigh 𝑓Auxiliary DataRewardInstructGraph-of-ThoughtInstruct𝑅𝑓𝑅 𝑓Reward𝑅𝑓𝑅 𝑓𝑅 𝑓𝑅 𝑓Instruct𝑅𝑓𝑅 𝑓𝑅𝑓𝑅𝑓𝑅𝑓𝑅 𝑓EvaluationAlignment
+Low 𝑓
+RefinementThought𝑅 𝑓𝑅𝑓 (𝑅, 𝑓)Reward(𝑅, 𝑓)𝑓 = 𝐹(𝜋)𝜋 ← PCGRL(𝑅)
+Fig. 2: The architectural comparison of three prompt engineering techniques, along with details of the thought nodes. Each
+thought node includes a reward function ( R) and a fitness value ( f), which represent the evaluated score of the contents trained
+by the agent using the reward function. In the Tree- and Graph-of-Thought methods, the parent node is selected based on the
+fitness value.
+refining processes: self-alignment and feedback. The language
+model generates a reward function with a brief story in-
+struction and a PCGRL model is trained with the generated
+function. To ensure that the RL agent generates content that
+satisfies the instruction, the language model provides feed-
+back and updates the reward function in the next iteration.
+The feedback allows the RL agent to improve its policy by
+observing the actual outcomes of the trained agent, while the
+LLM generates rewards that can be effectively incorporated
+into the RL agent’s training.
+Specifically, our contributions are threefold:
+• Enhancing reward generation architecture: The feed-
+back mechanism enhances the reward generation pipeline,
+enabling the policy to align more effectively with the
+given instructions.
+• Reasoning-based refinement prompting: State-of-the-
+art prompt engineering techniques are employed to im-
+prove the exploration of the reward space.
+• Comprehensive modular evaluation: Extensive experi-
+ments provide ablation study and extensive insights into
+the capabilities of LLMs in content generation.
+We evaluate the proposed framework with a text-to-reward
+task, which evaluates reward functions based on how they
+reflect a given textual prompt. The PCGRL agent is trained
+with LLM-generated reward functions, and the quality of these
+reward functions is evaluated based on the agent-generated
+content. The task is demonstrated in a two-dimensional level
+generation environment [2], [11], with a brief story input,
+such as: "The player needs to obtain a key and escape
+through the door. To pick up the key, the player encounters
+bat monsters." To generate reward values for content gen-
+eration, it is essential to design reward functions iteratively
+through effective planning and to employ reasoning to assess
+the causal relationship between the reward function and the
+resulting content. From the perspective of content generation,
+we evaluate the reasoning capabilities of LLMs—code gen-
+eration, content evaluation, reflection, and key extraction—by
+conducting extensive evaluations.
+II. B ACKGROUND
+A. Prompt Engineering
+Prompt engineering (PE) has become an effective method-
+ology to enhance the performance of large language models
+(LLMs) in a gradient-free manner, with various techniques
+developed to improve their logical reasoning and planning
+abilities. These techniques can be described as utilizing dif-
+ferent structures to extend thought processes, as illustrated in
+Fig. 2. Compared to traditional input-output (IO) methods that
+query results in a single step, these structured approaches show
+superior performance in solving problems sequentially.
+These techniques can be broadly categorized into three
+approaches based on chain, tree, and graph structures:
+Chain-of-Thought (CoT) [12], [13] expands reasoning
+process with multiple steps to solve a problem in step-by-
+step. This method is particularly effective for problems requir-
+ing long-horizon reasoning. An enhanced variant, CoT with
+self-consistency (CoT-SC) [14], selects the most consistent
+response through a majority vote mechanism.
+Tree-of-Thoughts (ToT)[15] expands reasoning in multiple
+directions, increasing the scope of exploration. This fault-
+tolerant method, equipped with backtracking capability, not
+only broadens the exploration space but also allows recovery
+by redirecting to alternative paths when a wrong direction
+is taken, providing resilience against getting trapped in local
+optima. The multi-path reasoning requires a fitness function
+to evaluate and select nodes for expansion, ensuring efficient
+exploration of the solution space.
+Graph-of-Thoughts (GoT) [16] is an extended version of
+ToT, designed to improve the sample efficiency of reasoning
+by leveraging multiple thoughts generated during node expan-
+sion. When expanding a node, GoT retrives related nodes to
+enhance the reasoning process and ensure efficient exploration
+of the solution space.
+B. Reward Generation Problem
+The reward design problem [17] refers to the process of
+searching for a reward function ( R) that maximizes the fitness
+
+
+--- PAGE 3 ---
+
+3
+score F (πtrained), where πtrained represents a policy trained
+using R. A DRL agent takes an action a in a state s ∈ S and
+receives a reward value r = R(s|a). The reward function can
+be designed as a sparse reward based on task success criteria
+or as an immediate dense reward for actions. Recently, there
+has been significant interest in LLMs for reward generation,
+particularly in the robotics domain, where these models benefit
+from extensive human-level prior knowledge. Compared to
+using LLMs as policies, LLM-based reward generation is
+advantageous for reducing inference costs of large models and
+improving performance in low-level control tasks [18], [19].
+For instance, studies such as [6], [7], [20] have demonstrated
+the use of LLMs to generate reward functions for training DRL
+agents in robotics. By providing detailed environment descrip-
+tions and task-specific rules, these approaches facilitate reward
+generation for robotic tasks. Building on these efforts, Eureka
+[5] and Text2Reward [21] introduced advanced techniques
+such as evolutionary search and reward reflection to achieve
+human-level reward design performance. These methods also
+incorporate mechanisms to evolve reward functions using
+human feedback or preferences. Notably, LLMs take a leading
+role in reward function generation, either fully automating the
+process or assisting human creativity in designing effective
+rewards. While most of these studies focus on robot control
+tasks by generating dense rewards for solving complex tasks,
+there remains a need to explore their potential applications in
+domains like content generation.
+Meanwhile, the reasoning processes used to evolve reward
+functions have predominantly relied on conventional PE meth-
+ods, such as CoT, which focus on incremental reasoning
+expansions and limit the exploration of the reward function
+space. Recognizing these constraints, this study aims to ad-
+vance state-of-the-art PE techniques to significantly expand
+the scope of reward space exploration, unlocking broader
+possibilities for reward function optimization across diverse
+domains, including content generation.
+C. LLM-driven Reward Generation for Procedural Content
+Generation
+Reward design has been a crucial aspect of content gen-
+eration, but it remains heavily reliant on expert knowledge
+and is often time-consuming. Traditionally, reward functions
+have been either fixed through manually crafted code [2] or
+conditionally generated based on predefined features, such
+as path length, determined by experts [3]. This dependency
+on predefined conditions limits the diversity of content that
+can be generated and constrains the flexibility of reward
+design. Furthermore, the need for domain-specific knowledge
+about the game reduces the accessibility of content generation
+algorithms, making them less adaptable to diverse applications.
+To address this problem, ChatPCG [10] introduced an early
+stage architecture which leverages LLMs to automate the
+generation and refinement of reward functions. The previous
+work demonstrated reward function generation for enriching
+multiplayer game content [22], training a generator agent to
+maximize role differentiation in a given game context. Chat-
+PCG proposed CoT-based self-alignment techniques to align
+the reward function to the specific scale of game variables,
+ensuring the outputs of reward function align to the LLM-
+generated insight.
+However, ChatPCG has an architectural limitation, namely
+the absence of feedback, as it lacks a refinement process based
+on the trained policy. It is challenging to predict content gener-
+ation outcomes from an arbitrary reward function since small
+parts of code lead to significant changes on outputs. To address
+this issue, this paper improves upon the previous architecture
+by incorporating self-feedback mechanisms and enhancing the
+exploration of reward space using PEs. Through the enhanced
+architecture, the processes of reward generation and validation
+are fully automated, reducing human dependency in reward
+function design and supporting design creativity.
+III. P RELIMINARIES
+A. Procedural Content Generation via RL
+PCGRL [2]—a DRL-based content generation method—is
+a machine learning-based content generation methods. The
+generator agent is trained with a hand-crafted reward function
+and gets a positive reward when the content gets closer to the
+goal condition. The benefits of PCGRL stem from its data-free
+nature and computational efficiency during inference, making
+it well suited for real-time content generation in games [23].
+Originally introduced for 2D level generation in games such
+as Sokoban and Zelda [2], PCGRL has been expanded through
+subsequent research. These advancements include support for
+conditional metric inputs [3], the ability to freeze specific tiles
+during generation [11], applications in 3D Minecraft level
+generation [4], and integration with vectorized multiplayer
+game skill data [22].
+In PCGRL, the level design process is framed as a Markov
+Decision Process (MDP), where level generation is learned
+through a trial-and-error approach. At each step t, the agent
+observes the game level as a state st, selects an action at to
+modify a tile of the level, and transitions to a new state st+1.
+The agent then receives a reward: rt = R(st, st+1), deter-
+mined by a reward function ( R) that evaluates the transition
+between states. In PCGRL, reward function design requires
+identifying a computable target based on the given genera-
+tion objective and appropriately combining different weights.
+When multiple sub-functions need to be combined to achieve
+the desired artifact, designing a reward function in a single
+attempt is highly challenging. Instead, the reward functions
+has been refined by humans through multiple attempts, with
+iterative modifications made based on the observed results.
+Therefore, the reward design process involves iteratively com-
+bining functions to generate a reward function that produces
+game-like levels while satisfying the given conditions.
+B. The 2D Level Generation Environment
+This study uses the PCGRL-Jax [11] environment, a
+GPU-accelerated implementation of the widely used two-
+dimensional level generation framework [2], [3]. The selected
+environment ensures a deterministic reward setting compared
+to the stochastic reward signal used in the previous study [10],
+so that the generated reward function is relatively accurately
+
+
+--- PAGE 4 ---
+
+4
+Align
+(2) Self-alignment
+Train
+Agent
+def compute_reward(prev, curr):
+reward = 0.0
+bat_loss= tile_loss(prev, cu
+access_to_key= check_player
+_access_to_key(prev, xy)
+reward += jnp.where(is_access,
+reward + 3.0, reward)
+return reward
+[𝑟1
+1,𝑟1
+2…]
+Code Validation
+Code Node
+ Align Node
+# Reward Function Code
+{reward_function}
+# Code Result
+{rollout_result}
+Tune small components like
+weights to adjust the reward
+values, ensuring the logic
+remains intact. Focus on
+reward scale and sparsity.
+(3) Feedback(1) Refinement
+Feedback (𝑭𝒃)
+Feedback Node
+Review levels and ide-
+ntifyissues. Then,
+analyze its cause with
+given reward. Plan to
+revise reward function.
+# Reward Function Code
+{reward_function}
+# Generated Contents
+{content}
+Description
+Reward
+(𝑅)
+Content
+(𝑆𝑇)
+Feedback
+Env
+Previous Code
+Generate Reward
+Instruction
+A
+Fig. 3: Architecture of PCGRLLM framework. "Message icons
+ " indicate the use of language model ( M) in the context.
+Refer to Section V for detailed description.
+evaluated with a consistently trained policy. Moreover, the
+environment provides 17 × faster training time than CPU-
+based environment for multiple reward generate-and-evaluate
+iterations.
+Each episode begins with a randomly initialized 16 × 16
+matrix derived from a predefined tile set. The tile set consists
+of seven types: Empty
+ , Wall
+ , Player
+ , Bat
+ , Scorpion
+, Spider
+ , Key
+ , and Door
+ . Each tile type is represented
+numerically in the matrix to indicate its presence. The agent
+can modify five types of tiles, except for two unchangeable
+Player and Door tiles, along with the 3 × 3 area of unchange-
+able tiles surrounding the tiles. The two unchangeable tiles are
+randomly spawned on the opposite corners of the level in the
+initial state. The observation space is defined as a 2D array
+representing the integer tile numbers, along with a channel
+the location of the tile to be modified. The discrete action
+space includes five actions, each corresponding to the specific
+tile type that replaces the tile at the modification location.
+The reward for the agent is determined by an LLM-generated
+reward function, implemented using JAX-compatible functions
+[24].
+IV. S TORY-BASED REWARD FUNCTION GENERATION TASK
+Recent advancements in text-based generative models have
+showcased the potential for translating textual descriptions into
+diverse domains such as human-like motion [25], high-fidelity
+images [26], music composition [27], and game content gen-
+eration. The gaming domain has also benefited significantly
+from text-based generative approaches. For example, text-
+conditioned generative models have been applied to specific
+tasks such as generating Super Mario Bros levels [28] or
+Sokoban puzzles [29], where models synthesize playable and
+contextually relevant game content. Extending beyond level
+design, recent works have explored generating entire games
+from textual descriptions [30], [31], thereby transforming ab-
+stract narratives into interactive environments and mechanics.
+The generated content is evaluated to ensure it aligns with the
+instructions (i.e., textual conditioning).
+Our method is evaluated on the text-to-reward generation
+task, which aims to bridge narrative-driven descriptions with
+a trainable reward function. This evaluation checks whether
+the generated content satisfies the given text instructions, such
+as ensuring that the player encounters specific conditions
+during gameplay—for example, encountering Bat and Spider
+as required objectives. The two input instructions used in this
+work are as follows:
+• "The player needs to obtain a key and escape through
+the door. To pick up the key, the player encounters bat
+monsters."
+• "The player needs to obtain a key and escape through the
+door. To pick up the key, the player encounters bat and
+spider monsters."
+We measure coherence-based accuracy by evaluating how
+well the player’s experience along the path to the door aligns
+with the given instructional conditions. To measure the game
+entities (keys and enemies) encountered by the player, we
+adopted a deterministic pathfinding algorithm for evaluation.
+We evaluate the generated levels based on how well they
+align with specific gameplay scenarios, placing emphasis on
+ensuring a coherent player experience.
+V. P ROPOSED METHOD
+Our proposed framework PCGRLLM, an improved reward
+generation framework for PCG, employs a three-step sequen-
+tial approach: (1) refine the reward function through feedback,
+(2) align the reward function to the environment and train the
+agent, and (3) provide feedback to the reward function based
+on the generated content. Fig. 3 illustrates the comprehensive
+architecture of the proposed framework. While the prior study
+[10] was the first to incorporate self-alignment into the re-
+ward generation task in content generation domain, this work
+extends the framework by incorporating feedback feature and
+a refinement process, forming an outer loop that enhances the
+overall system’s adaptability and performance. The following
+subsections detail the process of refining the reward function
+to align with the instruction inputs, with the corresponding
+pseudo-code provided in Algorithm 1.
+
+
+--- PAGE 5 ---
+
+5
+Instruct: "The player needs to obtain a key and escape through the door. The player encounters bat monsters."
+∗y = 1 y = 2 y = 3 ∗y = 4 y = 5 ∗y = 6
+Instruct: "The player needs to obtain a key and escape through the door. The player encounters bat and spider monsters."
+y = 1 y = 2 y = 3 y = 4 ∗y = 5 ∗y = 6
+Fig. 4: The generated level images are from the iterative reward generation process based on the given instructions. Each map
+corresponds to an iteration ( y), which represents the number of times the reward has been generated and revised by LLMs,
+and is produced by an agent trained using these LLM-generated reward functions. The asterisk (*) denotes that the generated
+level satisfies the given instructions.
+Algorithm 1 PCGRLLM Reward Refinement Process
+Require: Task description l, LLM M, fitness function F ,
+environment Env, prompt inputs p
+Require: Feedback count Nfeedback, alignment count Nalign
+1: Note: blue color text denotes variables used within the
+reasoning process.
+2: G ∼ InitializeGraph(Nbreadth)
+3: for feedback step y = 1 to Nfeedback do
+4: // Step 1: Refinement (Section V-A)
+5: R, F b, f ∼ G ▷ Retrieve parent node.
+6: Aux = {Raux
+1:NBest, faux
+1:NBest} ∼ G ▷ Retrieve auxiliary
+7: // Step 2: Self-alignment (Section V-B)
+8: R′ ∼ M(preward, l, R, F b, f, Aux)
+9: for alignment step z = 1 to Nalign do
+10: renv
+1:N ← Rollout(πrandom, Env, R′)
+11: R′′ ← N (palign, R′, renv
+1:M)
+12: R′ ← R′′
+13: end for
+14: πtrained ← Train(πuntrained, Env, R′)
+15: sT ← Rollout(πtrained) ▷ Generate content
+16: f ← F (sT ) ▷ Evaluate fitness
+17: // Step 3: Feedback (Section V-C)
+18: F b ← M(pfeedback, l, R′, sT )
+19: G.update(R′, sT , f)
+20: end for
+21: Output: Refined reward function R′
+A. Reward Refinement
+The reward refinement process is an iterative procedure
+aimed at enhancing the reward function through feedback to
+better align it with the given instruction. It takes as input a
+textual description of the game environment, the objective of
+the reward generation task, textual instructions, and accessible
+variables from the environment. For this study, two concise
+textual stories, as detailed in Section IV, were used as input
+for the textual instructions. The process involves revising the
+parent function, defined as the previously generated reward
+function, and progresses iteratively, with each iteration de-
+noted as y. Depending on the presence of a prior iteration,
+the process operates in one of two phases: initializing the
+reward function or refining it based on feedback from previous
+iterations.
+Initial generation ( y = 1 ) The initial generation phase
+begins with a template reward function, which is an empty
+function containing only parameter definitions. The parameters
+of the reward function are the previous and current level
+arrays, while the level size is intentionally excluded to prevent
+the LLM from generating hard-coded functions. In the first
+iteration, the LLM generates conceptual ideas to outline the
+components of the reward function. The prompt includes the
+progress of the feedback iteration, "{current iter.} of {max
+iter.}", to utilize the planning capabilities of LLMs.
+Continued refinement ( y ≥ 2) In subsequent iterations,
+the process retrieves a previously generated reward function
+from the reward function archive ( G) to serve as the parent
+function for refinement. A pair consisting of the parent reward
+function ( R) and its corresponding feedback ( F b) is sampled
+and provided to the LLM. The method for retrieving the
+parent reward function ( R) varies depending on the prompt
+engineering method, as detailed in following section (Section
+V-D).
+Once the parent function and feedback are identified, they
+are passed to the LLM ( M). Using a refinement prompt
+(prefine), the LLM generates an improved reward function
+(R′) that incorporates the parent function and feedback. The
+improved reward function addresses the shortcomings or prob-
+lematic aspects of the previous reward function, making it
+better aligned with the textual instructions.
+
+
+--- PAGE 6 ---
+
+6
+B. Self-alignment to the Environment
+The self-alignment process ensures that the generated re-
+ward function (R) produces the trainable reward signals in the
+environment, reflecting the intend of LLM. By allowing the
+reward function to briefly interact with the training environ-
+ment in a few-shot manner, this process refines the function to
+align with the designed insights. Overly narrow reward ranges
+or excessively large reward values can hinder effective training
+DRL agent. This iterative process enables the reward function
+to generate the intended content while providing meaningful
+feedback for each refinement.
+Specifically, one episode is simulated using a random agent
+to collect distributed reward values directly from interactions
+with the environment, denoted as renv
+1:M . The mean and variance
+of these reward values are calculated to verify whether the
+designed reward function outputs values within the intended
+range. Based on these evaluations, the LLM adjusts the reward
+function, producing an updated version ( R′′) along with the
+actual reward values ( renv
+1:M ), the current reward function ( R′),
+and the alignment prompt (palign). This process, repeated Nalign
+times, incrementally refines the reward function by modifying
+weights or formulas to consider the scale and sparsity of the
+reward signal.
+C. Feedback from Generated Contents
+Feedback is an essential process for refining the reward
+function to reflect the actual output of the trained policy. The
+LLM reasons about the causal relationship between the reward
+function and the generated content to identify inconsistencies.
+It evaluates whether the generated content aligns with the
+instruct conditions by analyzing discrepancies, such as the
+positions or counts of important tiles within the level. Based on
+this analysis, the model formulates a plan to refine the reward
+function, guiding its next iteration toward better alignment
+with the intended design objectives and the policy’s outputs.
+First, the terminal states ( sT ) are collected as generated
+content by inferring the trained policy (πtrained). Then, the LLM
+generates feedback by reasoning over the text-formatted levels
+or rendered images of the terminal states ( sT ) along with the
+current reward function (R′) and a feedback prompt ( pfeedback).
+To prevent hallucination and maintain precision, the number
+of feedback points is limited to one per iteration.
+Once the feedback ( F b) is generated, the updated reward
+function and its associated feedback are added to the reward
+function archive (G) for use in the next iteration. This iterative
+process ensures that the reward function progressively aligns
+with both the intended objectives and the actual outputs of the
+trained policy, enabling the generation of increasingly optimal
+content.
+D. Reasoning-based Prompt Engineering for Reward Improv-
+ing
+We employed various state-of-the-art PE techniques to it-
+eratively refine the reward function in a step-by-step manner.
+The process of generating reward functions is inherently a
+trial-and-error approach, which presents a significant challenge
+as it does not guarantee consistent improvements. Such an
+algorithm must effectively identify and address errors while
+maintaining the flexibility to explore alternative solutions,
+ensuring convergence toward improved reward designs. To
+address this challenge, we adopted backtracking-enabled and
+branching PE methods, such as ToT and GoT, to expand the
+exploration of the reward space. Fig. 2 illustrates the detailed
+procedure of thought node expansion and the utilization of
+auxiliary information in GoT.
+Thought node A feedback iteration unit is represented by a
+single thought node in the reasoning process, comprising three
+steps: reward refinement, self-alignment, and feedback. The
+expansion method varies depending on the PE approach. CoT
+employs a simple chain structure with a maximum breadth
+(Nbreadth) of 1, while ToT and GoT utilize tree and graph
+structures, respectively, with a maximum breadth. For parent
+node selection, CoT expands from the latest unique node,
+whereas ToT and GoT expand from the node with the highest
+fitness score, provided its number of child nodes remains
+within the maximum breadth.
+Reward evaluation The fitness score, essential for deter-
+mining the parent node in ToT and GoT, is measured within
+the range [0, 1] and evaluates how well the generated content
+satisfies the instruction input. It can be determined using
+heuristics or self-evaluation with LLMs. In this study, we use a
+heuristic approach based on accuracy to mitigate the influence
+of subjective LLM evaluations. Specifically, we calculate the
+average accuracy of 30 instruct-level pairs.
+Auxiliary information GoT utilizes auxiliary inputs, incor-
+porating the parent thought node along with the top-2 reward
+nodes and their corresponding fitness scores. This approach
+is motivated by the need to improve sample efficiency, as
+generating and training reward functions incur significant
+computational costs. By comparing the fitness value ( f), the
+LLM can identify reward functions that best satisfy the instruct
+and discern their advantageous elements to combine them,
+facilitating more informed reasoning and improved outcomes.
+VI. E XPERIMENT
+A. Experiment Setting
+Reward generation The number of self-feedback iterations
+was set to Nfeedback = 6 , and the self-alignment iterations
+were set to Nalign = 5. For generating the LLM-based reward,
+OpenAI’sgpt-4o-2024-08-06 [32] served as the primary
+backend language model. The breadth for the ToT and GoT
+methods was set to Nbreadth = 2, balancing the depth of the
+thought nodes with exploration. The fitness function utilized
+an accuracy-based evaluation metric, calculated as the average
+score over 30 inferenced levels. To minimize variability in
+LLM responses, the temperature parameter, which governs
+stochasticity, was set to 0. The prompts used in the experi-
+ments are noted in Appendix D.
+While we attempted to control the LLM’s determinism,
+we still observed variance in first-iteration zero-shot accuracy
+across different prompt engineering and feedback types. Subtle
+differences in prompt structure (e.g., placeholders for auxiliary
+data) can affect on the reasoning process. We focus on
+how accuracy improves over subsequent iterations rather than
+focusing on zero-shot performance.
+
+
+--- PAGE 7 ---
+
+7
+TABLE I: Ablation study results for framework architecture, comparing accuracy across prompt engineering methods.
+LLM ( M) gpt-4o-2024-08-06 llama3.2-90b-instruct
+Base + SA [10] + FB + FB & SA Base + SA [10] + FB + FB & SA
+PE
+CoT 0.033 0.010 0.156 0.117 0.300 0.298 0.239 0.472
+ToT 0.028 0.058 0.329 0.103 0.303 0.262 0.236 0.363
+GoT 0.033 0.067 0.076 0.111 0.149 0.308 0.307 0.383
+Mean 0.031 0.045 0.187 0.110 0.251 0.289 0.260 0.406
+Environment The Dungeon problem features seven game
+tiles and uses the Narrow representation for the environment
+setting [2]. The level size was set to 16 × 16, and the agent
+was configured to scan the entire level three times per episode.
+The discrete action space consisted of five actions to modify
+the level, targeting five modifiable tiles: empty, wall, and three
+enemy types. At the start of each episode, the player and one
+door were randomly placed along one of the four edges of the
+level, and the nearby 3 ×3 tiles were masked as unmodifiable.
+RL training The DRL models were trained using proximal
+policy optimization (PPO) [33] for 50 million timesteps using
+PureJaxRL [34] implementation and the hyperparameters de-
+tailed in Appendix C. Each input instruction and PE method
+was repeated five times, and the results were averaged. All
+experiments were conducted on RTX 8000 GPU machines.
+B. Evaluation Criteria
+(a) Solutions (b) Encounter enemies
+Fig. 5: (a) The dotted lines represent the solutions that achiev-
+able to the key. (b) The player enemy encounters enemies
+within yellow dotted box.
+Accuracy measures how well the generated level aligns
+with the given instructions. We assess whether the player
+encounters the specified key enemy tiles during gameplay,
+following the given scenario. The ground truth ( g) is defined
+such that among the three enemy tile set ( E)— Bat, Scorpion,
+and Spider—those mentioned in the instruction are treated
+as positive, while the others are considered negative. The
+prediction ( p) is defined as the enemies encountered by the
+player while traversing from the key to the door. The flood-
+fill pathfinding algorithm is employed to determine viable
+solutions by identifying routes that allow the player to reach
+key and door tiles. Fig. 5 visually illustrates how viable
+solutions are extracted from the game level and demonstrates
+the process of counting the enemies encountered. We define
+enemies within the 5 × 5 area around the solution path as
+those subject to convolution, categorizing them as positive
+predictions while others are negative. The multi-label accuracy
+is measured as shown in Eq. 1:
+Accuracy = 1
+|E|
+X
+e∈E
+I(ge = pe) (1)
+For example, if the instruction states, “ ... the player en-
+counters bat monsters, ” and the generated level is shown in
+Fig. 5b, the ground truth is [1, 0, 0], where only the Bat is a
+positive label. If the prediction is [1, 1, 0], where both Bat and
+Scorpion are marked as positive, the accuracy is calculated
+as 0.67. The accuracy is measure on each instruction-level
+pair and the averaged with five runs. The detailed evaluation
+algorithm is described in Appendix A.
+C. Experimental Result
+We conducted three key experiments to evaluate the ef-
+fectiveness of the proposed framework and to investigate the
+capabilities of LLMs in generating reward functions for PCG
+tasks. The focus is on assessing the LLM’s reasoning and
+planning abilities in identifying and resolving issues within
+reward functions, as well as its reliability in objectively
+inferring scores to evaluate the suitability of generated content.
+The following research questions were posed to guide the
+experimental analysis:
+• RQ1. How do self-alignment and feedback mechanisms
+enhance reward generation?
+• RQ2. How does reasoning-based prompt engineering
+enhance reward generation?
+• RQ3. Is LLM has capability of self-evaluation on content
+fitness?
+1) Architectural Ablation Study (RQ1): Table I presents
+the results of an ablation study analyzing the role of self-
+alignment (SA) and feedback (FB) mechanisms in improving
+the accuracy of reward function generation using the gpt-4o
+model. The performance improvement was consistent across
+all PE methods, highlighting the significant role of feedback
+in aligning generated reward functions with task objectives.
+Specifically, PCGRLLM outperformed both the zero-shot gen-
+erated reward function (0.031) and the self-alignment-only
+approach [10] (0.045) by achieving a score of 0.187 with
+FB, representing an improvement of approximately 415.5%
+(0.045→0.187). This substantial performance improvement
+can be attributed to the model’s relatively limited zero-shot
+generation capabilities.
+To evaluate the generalization of the proposed method, we
+additionally employed Meta’s llama3.2-90b-instruct
+
+
+--- PAGE 8 ---
+
+8
+[35], which exhibits better zero-shot generation performance.
+The llama3.2 model achieved a 40.5% improvement
+(0.289→0.406) with FB&SA. The results from llama3.2
+suggest that the proposed method is capable of improving
+rewards regardless of the LLM’s zero-shot performance. These
+results demonstrate that feedback is essential for improving
+reward functions, however, combining feedback with self-
+alignment does not necessarily guarantee performance im-
+provement. We discuss the importance of feedback quality
+in Section VII-A and auxiliary experiment on vision-input
+feedback generation is described on Appendix B.
+2) Effect on Reasoning-based Prompt Engineering (RQ2):
+This section examines the role of reasoning-based prompts
+in guiding LLMs to design effective reward functions. Table
+II compares the accuracy of three methods—CoT, ToT, and
+GoT—over six iterations. Fig. 6 illustrates the accuracy values
+over six iterations, highlighting the initial, best, and the last
+accuracy values.
+1 2 3 4 5 6
+Iteration ( y)
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+Accuracy
+0.033
+0.156
+0.028
+0.329
+0.033 0.095 0.076
+PE
+CoT
+ToT
+GoT
+Fig. 6: Accuracy comparison across iterations for different
+prompt engineering types. Error bars represent 95% confidence
+intervals, with accuracy values annotated at key points.
+TABLE II: Performance between reasoning-based prompt en-
+gineering
+PE Iteration (yi)
+1 2 3 4 5 6
+CoT 0.033 0.007 0.092 0.109 0.093 0.156
+ToT 0.028 0.172 0.259 0.124 0.113 0.329
+GoT 0.033 0.095 0.053 0.074 0.042 0.076
+ToT achieves the highest accuracy of 0.329 at iteration
+6, reflecting its ability to effectively leverage structured rea-
+soning. CoT peaks at 0.156 in the same iteration while
+maintaining a consistent trajectory overall. In contrast, GoT
+reaches a modest accuracy of 0.095 by iteration 2, showing
+decreasement on later iterations. These findings highlight the
+necessity of selecting prompt strategies that correspond to the
+level of informational importance. Of the various approaches,
+ToT proves to be the most effective for iterative refinement,
+highlighting the value of structured reasoning in improving
+LLM-generated reward signals while also providing fault tol-
+erance for flawed rewards through its backtracking mechanism.
+3) Content Evaluation Ability Analysis (RQ3): Accurately
+measuring the fitness of generated content plays a critical role
+in determining the correct direction for improving the reward
+function. Due to the potential for hallucinations in LLMs, the
+PEs studies [15], [16] employed heuristics as fitness functions
+to evalute the trained policy. We treat the heuristic as an
+oracle representing the maximum performance and compare
+it against the evaluation scores produced by the LLM when
+used to improve the reward function. To evaluate content,
+we provided the LLM with generated content and evaluation
+metrics, requesting to return a score value scaled between 0
+and 1 according to the explanation of accuracy measurement.
+TABLE III: Results of an ablation study comparing the perfor-
+mance of heuristic and LLM-based evaluators when feedback
+is applied to each PE method.
+Fitness ( F ) Heuristic (Oracle) LLM (Self-evaluate)
+Base +FB ∆ Base +FB ∆
+PE
+ToT 0.028 0.329 +0.301 0.106 0.071 -0.034
+GoT 0.033 0.076 +0.044 0.062 0.018 -0.044
+Mean 0.030 0.203 +0.172 0.084 0.044 -0.039
+The results presented in Table III highlight a clear contrast
+between the heuristic (oracle) and LLM-based evaluation
+methods. On average, the heuristic evaluation demonstrated
+a significant performance improvement of +0.172 when feed-
+back was applied, showcasing its ability to effectively utilize
+feedback for performance enhancement. Conversely, the LLM-
+based self-evaluation exhibited a decline in performance with
+feedback, resulting in an average decrease of -0.039. This
+outcome indicates that the inaccuracies in self-evaluation led
+to inaccurate directions for improving the reward function.
+VII. D ISCUSSION
+A. Specificity of Feedback
+In RQ1 experiment, we observed that the involvement of
+feedback influences on the reward function improvement. To
+further investigate this, we conducted an experiment to evalu-
+ate whether the quality of feedback impacts performance. This
+experiment benchmarks three different feedback types— No
+Feedback, Generic, and Specific feedback—on performance
+across multiple iterations. The general feedback provides two
+lines of tips to enhance the reward function that are unrelated
+to the generated content, while specific feedback represents
+the default setting in this study. To isolate the effect of fitness
+evaluation, the experiment was conducted within the CoT
+framework.
+As shown in Table IV, the performance comparison across
+feedback quality types highlights the significant impact of
+feedback specificity on performance improvement as iterations
+progress. Additionally, Fig. 7 illustrates the relative accuracy
+change ( ∆y) over iterations for each feedback type, empha-
+sizing the role of specific feedback in driving more consistent
+performance gains.
+According to the data, the no feedback and generic feedback
+conditions exhibit occasional improvements in ∆y; however,
+
+
+--- PAGE 9 ---
+
+9
+TABLE IV: Performance between feedback quality type
+Feedback Type Iteration (yi)
+1 2 3 4 5 6
+No Feedback 0.086 0.063 0.071 0.088 0.092 0.099
+Generic 0.034 0.033 0.052 0.039 0.018 0.031
+Specific 0.033 0.007 0.092 0.109 0.093 0.156
+∆ y1→ 2 ∆ y2→ 3 ∆ y3→ 4 ∆ y4→ 5 ∆ y5→ 6
+Iteration
+−0.04
+−0.02
+0.00
+0.02
+0.04
+0.06
+0.08
+0.10
+-0.02
+0.01
+0.02
+0.00 0.01
+-0.00
+0.02
+-0.01
+-0.02
+0.01
+-0.03
+0.09
+0.02
+-0.02
+0.06
+Feedback Type
+No Feedback
+Generic
+Speciﬁc
+Fig. 7: Accuracy change ( ∆y) across iterations for Specific,
+Generic, and No Feedback types. Each bar represents the
+relative change ( ∆yn→n+1) between consecutive iterations.
+Positive values indicate improvement, while negative values
+represent decline.
+the overall changes remain mostly consistent and insignificant.
+Due to the lack of actionable guidance for improvement in
+the no feedback and generic feedback conditions, subsequent
+iterations tend to produce results similar to those of the first
+iteration, with minimal iterative improvement. In contrast,
+specific feedback demonstrates more notable performance
+improvements in some iterations. Particularly, significant per-
+formance leaps are observed in ∆y2→3 and ∆y5→6. These
+findings clearly indicate that tailored feedback plays a critical
+role in optimizing performance as iterative tasks progress.
+B. Auxiliary Information Analysis
+In RQ2 experiment, we observed that providing more few-
+shot data in GoT resulted in lower performance compared to
+ToT. To investigate whether the number or quality of the few-
+shot data affects the improvement of the reward function, we
+conducted an in-depth experiment. Fig. 8 compares the type
+and quantity of few-shot examples provided as auxiliary data.
+Providing best thoughts (high fitness values) would expand the
+upper bound of performance, while worst thoughts (low fitness
+values) guide the model to avoid falling below the lower bound
+of performance.
+The results indicate that, while there is no consistent ac-
+curacy trend based on the number of auxiliary data, spe-
+cific settings demonstrate higher performance tendencies. For
+example, adding one worst thought to the GoT baseline
+setting improves performance (0.244), surpassing CoT (0.156).
+0 1 2
+# Best thought
+012
+# Worst thought
+0.329 0.177 0.076
+0.065 0.054 0.244
+0.174 0.268 0.138
+(ToT) (GoT Baseline)
+0.10
+0.15
+0.20
+0.25
+0.30
+Fig. 8: Accuracy based on the number of auxiliary data in the
+GoT reward refinement process, categorized by best (columns)
+and worst (rows) thoughts determined by fitness values.
+This highlights that providing excessive information does not
+necessarily enhance the effectiveness of an LLM, as it may
+struggle to reason logically when overloaded with multiple
+pieces of information in a single turn. This suggests that
+presenting entire reward examples at once can distract the
+LLM from key focal points, making it more advantageous
+to provide the parent reward function and a summarized
+revision direction separately. Therefore, the ability to retrieve
+relevant information and adopt a divide-and-conquer approach
+is crucial for improving reward generation and represents a
+valuable area of study.
+VIII. C ONCLUSION AND FUTURE WORK
+This study introduces an advanced reward generation archi-
+tecture for game content generation. PCGRLLM frames the
+reward function refinement as thought units and incorporates
+various PE methods to enhance exploration within the reward
+space. The extended architecture analyzes the content gener-
+ated by the trained policy and incorporates policy feedback
+into reward refinement. The results indicate that feedback-
+based reflection significantly improves the reward function,
+highlighting the critical role of feedback quality. The state-of-
+the-art PEs, such as ToT and GoT, has capability to enhance
+reward function through a fault-tolerant reasoning process and
+sample efficiency. The generality of the framework is evaluated
+using two popular foundation LLMs, demonstrating substantial
+improvements in low and zero-shot generation performance.
+Furthermore, this work investigates two essential abilities
+of LLMs for game content generation: content evaluation
+and vision-based content reasoning. The experimental results
+suggest that content evaluation using language models remains
+a challenging problem, despite it plays a crucial role in guiding
+the direction of reward refinement. Future work aims to en-
+hance content evaluation performance by developing objective
+assessment methods, such as few-shot retrieval techniques, to
+achieve more balanced score distributions. This improvement
+would reduce reliance on human experts, paving the way for
+an end-to-end LLM framework.
+
+
+--- PAGE 10 ---
+
+10
+REFERENCES
+[1] J. Liu, S. Snodgrass, A. Khalifa, S. Risi, G. N. Yannakakis, and
+J. Togelius, “Deep learning for procedural content generation,” Neural
+Computing and Applications , vol. 33, no. 1, pp. 19–37, 2021.
+[2] A. Khalifa, P. Bontrager, S. Earle, and J. Togelius, “Pcgrl: Procedural
+content generation via reinforcement learning,” in Proceedings of the
+AAAI Conference on Artificial Intelligence and Interactive Digital En-
+tertainment, vol. 16, no. 1, 2020, pp. 95–101.
+[3] S. Earle, M. Edwards, A. Khalifa, P. Bontrager, and J. Togelius,
+“Learning controllable content generators,” in 2021 IEEE Conference
+on Games (CoG) . IEEE, 2021, pp. 1–9.
+[4] Z. Jiang, S. Earle, M. Green, and J. Togelius, “Learning controllable 3d
+level generators,” in Proceedings of the 17th International Conference
+on the Foundations of Digital Games , 2022, pp. 1–9.
+[5] Y . J. Ma, W. Liang, G. Wang, D.-A. Huang, O. Bastani, D. Ja-
+yaraman, Y . Zhu, L. Fan, and A. Anandkumar, “Eureka: Human-
+level reward design via coding large language models,” arXiv preprint
+arXiv:2310.12931, 2023.
+[6] Y . Zeng and Y . Xu, “Learning reward for physical skills using large
+language model,” arXiv preprint arXiv:2310.14092 , 2023.
+[7] W. Yu, N. Gileadi, C. Fu, S. Kirmani, K.-H. Lee, M. G. Arenas, H.-
+T. L. Chiang, T. Erez, L. Hasenclever, J. Humplik et al., “Language to
+rewards for robotic skill synthesis,” arXiv preprint arXiv:2306.08647 ,
+2023.
+[8] H. Li, X. Yang, Z. Wang, X. Zhu, J. Zhou, Y . Qiao, X. Wang,
+H. Li, L. Lu, and J. Dai, “Auto mc-reward: Automated dense reward
+design with large language models for minecraft,” in Proceedings of the
+IEEE/CVF Conference on Computer Vision and Pattern Recognition ,
+2024, pp. 16 426–16 435.
+[9] Q. Zheng, M. Henaff, A. Zhang, A. Grover, and B. Amos, “Online
+intrinsic rewards for decision making agents from large language model
+feedback,” arXiv preprint arXiv:2410.23022 , 2024.
+[10] I.-C. Baek, T.-H. Park, J.-H. Noh, C.-M. Bae, and K.-J. Kim, “Chatpcg:
+Large language model-driven reward design for procedural content
+generation,” in 2024 IEEE Conference on Games (CoG) , 2024, pp. 1–4.
+[11] S. Earle, Z. Jiang, and J. Togelius, “Scaling, control and generalization
+in reinforcement learning level generators,” in 2024 IEEE Conference
+on Games (CoG) . IEEE, 2024, pp. 1–8.
+[12] J. Wei, X. Wang, D. Schuurmans, M. Bosma, F. Xia, E. Chi, Q. V . Le,
+D. Zhou et al. , “Chain-of-thought prompting elicits reasoning in large
+language models,” Advances in neural information processing systems ,
+vol. 35, pp. 24 824–24 837, 2022.
+[13] T. Kojima, S. S. Gu, M. Reid, Y . Matsuo, and Y . Iwasawa, “Large lan-
+guage models are zero-shot reasoners,” Advances in neural information
+processing systems, vol. 35, pp. 22 199–22 213, 2022.
+[14] X. Wang, J. Wei, D. Schuurmans, Q. Le, E. Chi, S. Narang, A. Chowdh-
+ery, and D. Zhou, “Self-consistency improves chain of thought reasoning
+in language models,” arXiv preprint arXiv:2203.11171 , 2022.
+[15] S. Yao, D. Yu, J. Zhao, I. Shafran, T. Griffiths, Y . Cao, and
+K. Narasimhan, “Tree of thoughts: Deliberate problem solving with large
+language models,” Advances in Neural Information Processing Systems ,
+vol. 36, 2024.
+[16] M. Besta, N. Blach, A. Kubicek, R. Gerstenberger, M. Podstawski,
+L. Gianinazzi, J. Gajda, T. Lehmann, H. Niewiadomski, P. Nyczyk
+et al. , “Graph of thoughts: Solving elaborate problems with large
+language models,” in Proceedings of the AAAI Conference on Artificial
+Intelligence, vol. 38, no. 16, 2024, pp. 17 682–17 690.
+[17] R. L. Lewis, S. Singh, and A. G. Barto, “Where do rewards come from,”
+in Proceedings of the International Symposium on AI-Inspired Biology ,
+2010, pp. 2601–2606.
+[18] M. Ahn, A. Brohan, N. Brown, Y . Chebotar, O. Cortes, B. David,
+C. Finn, C. Fu, K. Gopalakrishnan, K. Hausman et al. , “Do as i can,
+not as i say: Grounding language in robotic affordances,” arXiv preprint
+arXiv:2204.01691, 2022.
+[19] I. Singh, V . Blukis, A. Mousavian, A. Goyal, D. Xu, J. Tremblay, D. Fox,
+J. Thomason, and A. Garg, “Progprompt: Generating situated robot
+task plans using large language models,” in 2023 IEEE International
+Conference on Robotics and Automation (ICRA) . IEEE, 2023, pp.
+11 523–11 530.
+[20] J. Song, Z. Zhou, J. Liu, C. Fang, Z. Shu, and L. Ma, “Self-refined
+large language model as automated reward function designer for deep
+reinforcement learning in robotics,” arXiv preprint arXiv:2309.06687 ,
+2023.
+[21] T. Xie, S. Zhao, C. H. Wu, Y . Liu, Q. Luo, V . Zhong, Y . Yang, and
+T. Yu, “Text2reward: Automated dense reward function generation for
+reinforcement learning,” arXiv preprint arXiv:2309.11489 , 2023.
+[22] H.-C. Jeon, I.-C. Baek, C.-m. Bae, T. Park, W. You, T. Ha, H. Jung,
+J. Noh, S. Oh, and K.-J. Kim, “Raidenv: Exploring new challenges in
+automated content balancing for boss raid games,” IEEE Transactions
+on Games, 2023.
+[23] J. Togelius, G. N. Yannakakis, K. O. Stanley, and C. Browne, “Search-
+based procedural content generation: A taxonomy and survey,” IEEE
+Transactions on Computational Intelligence and AI in Games , vol. 3,
+no. 3, pp. 172–186, 2011.
+[24] J. Bradbury, R. Frostig, P. Hawkins, M. J. Johnson,
+C. Leary, D. Maclaurin, G. Necula, A. Paszke, J. VanderPlas,
+S. Wanderman-Milne, and Q. Zhang, “JAX: composable
+transformations of Python+NumPy programs,” 2018. [Online].
+Available: http://github.com/jax-ml/jax
+[25] C. Guo, S. Zou, X. Zuo, S. Wang, W. Ji, X. Li, and L. Cheng,
+“Generating diverse and natural 3d human motions from text,” in
+Proceedings of the IEEE/CVF Conference on Computer Vision and
+Pattern Recognition, 2022, pp. 5152–5161.
+[26] A. Ramesh, P. Dhariwal, A. Nichol, C. Chu, and M. Chen, “Hierarchical
+text-conditional image generation with clip latents,” arXiv preprint
+arXiv:2204.06125, vol. 1, no. 2, p. 3, 2022.
+[27] A. Agostinelli, T. I. Denk, Z. Borsos, J. Engel, M. Verzetti, A. Caillon,
+Q. Huang, A. Jansen, A. Roberts, M. Tagliasacchi et al. , “Musiclm:
+Generating music from text,” arXiv preprint arXiv:2301.11325 , 2023.
+[28] S. Sudhakaran, M. González-Duque, M. Freiberger, C. Glanois, E. Na-
+jarro, and S. Risi, “Mariogpt: Open-ended text2level generation through
+large language models,” in Advances in Neural Information Processing
+Systems, vol. 36, 2023, pp. 54 213–54 227.
+[29] G. Todd, S. Earle, M. U. Nasir, M. C. Green, and J. Togelius, “Level
+generation through large language models,” in Proceedings of the 18th
+International Conference on the Foundations of Digital Games , 2023,
+pp. 1–8.
+[30] L. Zhang, X. Peng, S. Yang, and F. Wang, “A text-to-game engine for
+ugc-based role-playing games,” arXiv preprint arXiv:2407.08195, 2024.
+[31] M. U. Nasir, S. James, and J. Togelius, “Word2world: Generating
+stories and worlds through large language models,” arXiv preprint
+arXiv:2405.06686, 2024.
+[32] A. Hurst, A. Lerer, A. P. Goucher, A. Perelman, A. Ramesh, A. Clark,
+A. Ostrow, A. Welihinda, A. Hayes, A. Radford et al., “Gpt-4o system
+card,” arXiv preprint arXiv:2410.21276 , 2024.
+[33] J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov, “Prox-
+imal policy optimization algorithms,” arXiv preprint arXiv:1707.06347,
+2017.
+[34] C. Lu, J. Kuba, A. Letcher, L. Metz, C. Schroeder de Witt, and J. Foer-
+ster, “Discovered policy optimisation,” Advances in Neural Information
+Processing Systems, vol. 35, pp. 16 455–16 468, 2022.
+[35] H. Touvron, T. Lavril, G. Izacard, X. Martinet, M.-A. Lachaux,
+T. Lacroix, B. Rozière, N. Goyal, E. Hambro, F. Azhar et al. ,
+“Llama: Open and efficient foundation language models,”arXiv preprint
+arXiv:2302.13971, 2023.
+APPENDIX
+A. Accuracy Evaluation Method
+The accuracy measurement involves two sequential steps:
+(1) identifying solution trajectories and (2) determining the
+types of encountered enemies. The encountered enemies are
+identified based on the solution trajectories, simulating player
+traversal along these paths. Fig. 5a illustrates the process
+of determining solution trajectories. There are three possible
+solutions corresponding to the three keys in the level. The
+trajectory for Key 1 (blue) passes through Key 2 (brown),
+rendering it ineligible as an independent solution. The algo-
+rithm excludes duplicated paths and prioritizes the shortest
+paths, based on the assumption that players prefer the shortest
+traversal routes. In contrast, the trajectories leading to Key
+2 (brown) and Key 3 (green) do not overlap with those of
+other keys, making them independent solutions. As a result,
+the number of solutions is two, corresponding to Key 2 (brown)
+and Key 3 (green).
+
+
+--- PAGE 11 ---
+
+11
+Algorithm 2 Enemy Encounter Detection Logic
+Require: Path finding algorithm P, enemy tiles E
+Require: Player position P , door position D, key position list
+K, generated level ST
+1: p ← [False, False, False] ▷ Initialize prediction array
+2: for key k ∈ K do
+3: τS→k ← P (S, k), τ k→D ← P (k, D)
+4: if τS→k = ∅ or τk→D = ∅ or P
+x∈τS→k
+[x ∈ K] ̸= 1
+then
+5: continue ▷ Not connected or duplicated path
+6: end if
+7: τP →D ← τS→k + τk→D ▷ Solution trajectory
+8: k5 ← 5x5 kernel to match enemy tiles
+9: for (x, y) ∈ τP →D do
+10: kernel_tiles ← {ST [x + i, y + j] | (i, j) ∈ k5}
+11: for t ∈ kernel_tiles do
+12: if t ∈ E then
+13: p[t] ← True ▷ Update prediction
+14: end if
+15: end for
+16: end for
+17: end for
+18: return Encountered enemies p
+Algorithm 2 describes the process of detecting enemies
+encountered from the player to door positions. For each key
+k ∈ K, the algorithm calculates the path τS→k from the start
+S to the key and the path τk→D from the key to the door D
+using the flood-fill pathfinding algorithm. Determine whether
+there is connectivity between the player, key, and door, and
+whether there is a single unique key on the path, defining
+this as the solution trajectory. Using the coordinates of the
+trajectory path, perform a convolution operation with a 5 by
+5-sized kernel to detect the presence of enemies. Update the
+prediction (p) based on the types of detected enemies.
+B. Vision-based Feedback Analysis
+The state-of-the-art Vision-Language Models (VLMs), such
+as gpt-4o with vision capabilities, can process visual inputs
+to perform tasks like question answering based on a given
+image. This section investigate the reasoning capabilities of
+VLMs, specifically evaluating whether they have been trained
+on and can effectively reason about the distribution of game-
+rendered images. Fig. 9 illustrates the difference between two
+input methods: textual input, where a 2D array is represented
+as plain text, and image input, where the same array is
+processed in visual form. We evaluated how the modality
+of information provided when generating feedback influences
+changes in accuracy performance.
+Table V provides quantitative evidence of this improvement.
+In a chain-of-thought (CoT) reasoning framework, both textual
+and image inputs show performance gains with the addition
+of feedback (+FB). For textual input, the accuracy improves
+from 0.033 to 0.156, marking a gain of +0.122. Similarly,
+for image input, the accuracy increases from 0.031 to 0.157,
+with a comparable gain of +0.126. These results suggest that
+level = [
+[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+[2, 2, 1, 6, 2, 1, 2, 2, 1, 1, 2, 2, 2, 1, 1, 2],
+[2, 1, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 1, 3, 1, 2],
+[2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 1, 2],
+[2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 2],
+[2, 2, 4, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2],
+[2, 1, 5, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2],
+[2, 1, 2, 2, 2, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2],
+[2, 2, 1, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2],
+[2, 2, 2, 1, 2, 1, 2, 2, 6, 2, 2, 1, 2, 2, 2, 2],
+[2, 1, 1, 2, 6, 2, 2, 2, 2, 2, 2, 1, 2, 2, 1, 2],
+[2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2],
+[2, 1, 1, 2, 2, 1, 1, 2, 1, 2, 2, 1, 2, 2, 1, 2],
+[2, 1, 8, 2, 1, 1, 2, 2, 1, 2, 2, 1, 1, 1, 1, 2],
+[2, 1, 1, 2, 2, 2, 2, 2, 1, 2, 2, 1, 1, 1, 1, 2],
+[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]]
+:1:2:3:4
+:5:6 :8
+:7
+(a) Text Input (b) Image Input
+Fig. 9: Comparison of input methods: (a) textual input, where
+the 2D array is represented as plain text, and (b) image
+input, where the array is converted into an image format for
+processing.
+TABLE V: Ablation study results for framework architecture,
+comparing accuracy across prompt engineering methods and
+scenarios.
+Feedback
+Input
+Text Image
+Base +FB ∆ Base +FB ∆
+PE
+CoT 0.033 0.156 +0.122 0.031 0.157 +0.126
+feedback is highly effective across both modalities, leading to
+substantial performance enhancements. Moreover, the compa-
+rable improvements indicate that both text and image inputs
+benefit similarly from feedback, emphasizing the importance
+of leveraging feedback mechanisms in multimodal frameworks
+to align reward functions with complex, goal-oriented tasks.
+This also highlights the potential for evaluating and provid-
+ing feedback on high-dimensional outputs, such as gameplay
+videos, to improve the quality of generated content in complex
+scenarios.
+C. Hyperparameters
+TABLE VI: Hyperparameters and DRL agent network archi-
+tecture used in the experiments.
+Parameter Value
+PCGRL Agent Setting
+Baseline PPO
+λGAE 0.95
+Epochs size 10
+Rollout length 128
+Minibatch size 4
+Clipping coefficient ( ϵ) 0.2
+Learning rate 0.0001
+Value loss coefficient 0.5
+Entropy coefficient 0.01
+Maximum gradient norm 0.5
+γ 0.99
+Maximum steps 50,000,000
+Network Architecture
+Conv layers [31, 31, 3] → [16, 15, 15]
+[16, 15, 15] → [8, 8, 8]
+Actor network [4096] → [64] → [2]
+Critic network [3844] → [64] → [1]
+
+
+--- PAGE 12 ---
+
+12
+D. Natural Language Prompt
+Reward Refinement
+INSTRUCTION
+PCG Agent Reward Function Generation Task
+You are a reward function engineer trying to write reward functions to solve reinforcement learning tasks as effective as possible.
+PCGRL Environment
+The gym-pcgrl project provides an environment for Procedural Content Generation via Reinforcement Learning (PCGRL), where
+agents learn to generate game levels. One of the environments, "binary," involves creating maps using given tile types. In the
+"narrow" representation, the agent modifies the map by scanning through it, changing tiles one by one. This localized approach
+encourages more precise level design. The agent receives rewards based on how well the generated level meets the predefined
+objectives. If the agent generates a level that aligns closely with the goal—such as creating a functional and balanced map—it
+receives a higher reward. This reward-driven mechanism incentivizes the agent to improve its design strategies over time, learning
+to create optimal levels through trial and error.
+Reward Function
+The reward function is a function that calculates the reward value for the agent based on the playtested results. The function is
+written in Python and loads the playtested results from the json file and calculates the reward value based on the results.
+[colback=white, colframe=gray, title=Reward Function Guidelines, breakable]
+import jax.numpy as jnp
+def compute_reward(prev_array, prev_stats, curr_array, curr_stats) -> float:
+reward = 0.0
+return reward
+’prev_array’ and ’curr_array’ are two-dimensional array representing the game level with tile numbers. The range of width is different
+by the array input (e.g., 10-20), so write a function works on any width and height.
+prev_array: previous game level represented with tile numbers (jnp.array, (h,w))
+curr_array: current game level represented with tile numbers (jnp.array, (h,w))
+The array is a 2D array with the shape of (height, width) to represent the game level.
+The level is represented with tile numbers. The tile number is an integer value.
+Tile Number
+EMPTY = 1, W ALL = 2, PLAYER = 3, BAT = 4, SCORPION = 5, SPIDER = 6, KEY = 7, DOOR = 8
+Thought Tips
+You have only one chance to generate a reward function. Make a reward function to work on the environment
+Target Scenario
+The ’Player’ needs to obtain the Key and escape through the ’Door’. To pick up the key, the player must encounter one of the
+monsters: BAT. The players can figure out all of the monsters when they play the level several times.
+Ensure that the generated map includes a reasonable number of monsters and keys. First, create a reward function that minimizes
+the generation of monsters other than those mentioned above. Second, design the reward function so that the map does not contain
+an excessive number of monsters or keys.
+Self-Alignment
+INSTRUCTION
+PCG Agent Reward Function Generation Task
+Here is your generated reward function and the result of the code execution (Code Result) with random action agent. Keep the
+existing function structure and tune small components like weights to adjust the reward values, ensuring the logic remains intact.
+Focus on reward scale and sparsity.
+Do not hallucinate reward function.
+Reward Function Code
+{previous reward function}
+Code Result
+Mean: -646.652710
+Std: 502.900909
+Zero Value Percent: 23.9173%
+
+
+--- PAGE 13 ---
+
+13
+RESPONSE
+Revised Reward Function Code
+{Revised reward function}
+Changes Made
+- Increased the reward for bats and scorpions to 5.0 to encourage their presence more strongly.
+- Increased the penalty for spiders to 7.0 to discourage their presence more strongly.
+- Increased the reward for keys to 4.0 to encourage collecting keys.
+- Increased the penalty for having more than 2 keys to 4.0 to discourage excessive key collection.
+- Increased the penalty for having more than 3 total monsters to 6.0 to discourage excessive monster presence.
+Feedback
+INSTRUCTION
+Evaluate why the current reward function is producing these game levels
+Analyze how the reward structure influences the design decisions made by the AI.
+For each of the following aspects, explain potential issues and how modifying the reward system could lead to better outcomes.
+The Following Content was Generated Based on the Current Reward Function
+Review the generated levels and identify common problems in the contents.
+Previous Reward Code
+{previous reward code}
+Evaluating the Generated Levels: Step-by-Step Analysis
+1. Review multiple generated levels and pinpoint common problems in the contents.
+2. Decide on one specific problem and analyze why the current reward function causes this issue.
+- If PCGRL fails to train, it could indicate a sparse reward problem. Consider the reward value and frequency in the previous
+implementation.
+- Another issue could be overfitting on specific actions, such as repeatedly placing a tile excessively, leading to excessive rewards
+for certain actions.
+- Since predicting reward values from a complex function can be difficult, a simpler reward function might resolve training problems.
+3. Pinpoint problematic parts in the reward function and propose changes. Provide the changed part only of the reward function.
+RESPONSE
+Feedback: Step-by-Step Analysis
+1. Review of Generated Levels and Common Problems:
+- Imbalance in Monster Types:
+Across the generated levels, a common issue is the lack of a balanced distribution of monster types. Some levels have an
+overrepresentation of one type of monster, while others lack diversity in monster types.
+- Key and Door Placement Issues:
+Another issue is the placement of keys and doors. In some levels, keys are placed in locations that are not easily accessible or
+logical in terms of gameplay flow.
+2. Analysis of the Current Reward Function:
+- Lack of Incentive for Balance:
+The current reward function provides a reward for having at least one of each required monster type (BAT, SCORPION, SPIDER),
+but it does not sufficiently incentivize a balanced distribution of these monsters. The penalty for imbalance is relatively small, which
+may not be enough to encourage diversity.
+[...omitted for brevity]
+Revised Reward Function (Changed Parts Only):
+# Increase penalty for imbalance in monster types
+monster_balance_penalty = (
+jnp.abs(curr_bats - curr_scorpions)
++ jnp.abs(curr_scorpions - curr_spiders)
++ jnp.abs(curr_spiders - curr_bats)
+)
+reward -= monster_balance_penalty * 0.3 # Increased from 0.1 to 0.3
+# Introduce reward for strategic placement of keys and doors
+# (This is a conceptual addition; actual implementation would require additional logic to evaluate placement)
+strategic_placement_reward = evaluate_placement(curr_array) # Hypothetical function to evaluate placement
+
+
+--- PAGE 14 ---
+
+14
+reward += strategic_placement_reward
+Generated Reward Function Example
+import jax.numpy as jnp
+def compute_reward(prev_array, unused3, curr_array, unused4) -> float:
+# Define tile numbers
+EMPTY = 1
+WALL = 2
+PLAYER = 3
+BAT = 4
+SCORPION = 5
+SPIDER = 6
+KEY = 7
+DOOR = 8
+# Initialize reward
+reward = 0.0
+# Count the number of each tile type in the current and previous arrays
+def count_tiles(array, tile):
+return jnp.sum(array == tile)
+# Calculate the number of each relevant tile in the current and previous arrays
+curr_player_count = count_tiles(curr_array, PLAYER)
+curr_key_count = count_tiles(curr_array, KEY)
+curr_door_count = count_tiles(curr_array, DOOR)
+curr_bat_count = count_tiles(curr_array, BAT)
+curr_scorpion_count = count_tiles(curr_array, SCORPION)
+curr_spider_count = count_tiles(curr_array, SPIDER)
+prev_player_count = count_tiles(prev_array, PLAYER)
+prev_key_count = count_tiles(prev_array, KEY)
+prev_door_count = count_tiles(prev_array, DOOR)
+prev_bat_count = count_tiles(prev_array, BAT)
+prev_scorpion_count = count_tiles(prev_array, SCORPION)
+prev_spider_count = count_tiles(prev_array, SPIDER)
+# Reward for having exactly one player, one key, and one door
+reward += 10.0 * (curr_player_count == 1) - 10.0 * (prev_player_count == 1)
+reward += 10.0 * (curr_key_count == 1) - 10.0 * (prev_key_count == 1)
+reward += 10.0 * (curr_door_count == 1) - 10.0 * (prev_door_count == 1)
+# Reward for having at least one of each monster type
+reward += 5.0 * (curr_bat_count >= 1) - 5.0 * (prev_bat_count >= 1)
+reward += 5.0 * (curr_scorpion_count >= 1) - 5.0 * (prev_scorpion_count >= 1)
+reward += 5.0 * (curr_spider_count >= 1) - 5.0 * (prev_spider_count >= 1)
+# Penalize more heavily for having more than 3 of any monster type
+reward -= 15.0 * (curr_bat_count > 3) - 15.0 * (prev_bat_count > 3)
+reward -= 15.0 * (curr_scorpion_count > 3) - 15.0 * (prev_scorpion_count > 3)
+reward -= 15.0 * (curr_spider_count > 3) - 15.0 * (prev_spider_count > 3)
+# Penalize for having more than 1 key
+reward -= 10.0 * (curr_key_count > 1) - 10.0 * (prev_key_count > 1)
+# Reward for balanced distribution of monster types
+balanced_monsters = (curr_bat_count <= 3) & (curr_scorpion_count <= 3) & (curr_spider_count <= 3)
+reward += 10.0 * balanced_monsters.astype(float)
+# Calculate distances between important tiles
+def calculate_distance(array, tile1, tile2):
+positions1 = jnp.nonzero(array == tile1, size=1, fill_value=-1)
+positions2 = jnp.nonzero(array == tile2, size=1, fill_value=-1)
+pos1 = jnp.array([positions1[0][0], positions1[1][0]])
+pos2 = jnp.array([positions2[0][0], positions2[1][0]])
+return jnp.linalg.norm(pos1 - pos2)
+# Reward for proximity of PLAYER, KEY, and DOOR
+threshold = 5.0
+player_key_distance = calculate_distance(curr_array, PLAYER, KEY)
+key_door_distance = calculate_distance(curr_array, KEY, DOOR)
+reward += 5.0 * (player_key_distance < threshold) + 5.0 * (key_door_distance < threshold)
+return reward

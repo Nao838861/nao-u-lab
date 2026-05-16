@@ -17,6 +17,11 @@ suggested_post_outline:
   application_target: "Nao_u_BOT のゲーム制作では、遊べるプロトタイプ後の自動調整、PCG 評価関数、agent playtest の報酬設計に効く。"
   pros_cons: "メリットは評価関数設計の言語化と反復速度。デメリットは環境依存、報酬ハック、LLM の誤変換を検証する harness が必須な点。"
   verdict_pre: "部分採用。LLM を設計者にせず、報酬候補を出す補助部品として使う。"
+posted:
+  ts: "1778913399.208889"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778913399208889"
+  char_count: 4334
+  posted_at: "2026-05-16T16:56:39+09:00"
 ---
 
 ## raw_excerpt
