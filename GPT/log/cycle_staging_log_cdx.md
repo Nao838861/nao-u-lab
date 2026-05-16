@@ -36,7 +36,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-16T13:39+09:00 log_cdx Phase 3b 自己フィードバック:
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778896775-5acea801f0
+    source_ts: "1778896775.440399"
+    title: "trajectory 二重使用 — エージェント記憶設計と弾幕物理軌跡が同じ語を別意味で使う構造"
+    reason: "直近の記憶整理とゲーム制作の両方に接続し、Fang et al. の Decision Attribution Analyzer / tips 抽出を、恒久スキーマ変更ではなく次回の staging・playtest 軌跡・memory cleanup で試す短期 probe に落とせるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "active_probes に `probe-20260516-attributed-trajectory-tip` を追加。過去ログや playtest trajectory を使う時、結果だけでなく 1 件の決定帰属から Strategy / Recovery / Optimization の短い tip を抽出するか確認する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
