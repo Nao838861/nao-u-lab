@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-17T03:41:02+09:00",
+  "updated_at": "2026-05-17T05:47:00+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -24,9 +24,27 @@
     "1778927776.158409",
     "1778936332.774269",
     "1778932863.644179",
-    "1778947869.742089"
+    "1778947869.742089",
+    "1778958020.281189"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-17T05:47:00+09:00",
+      "id": "sr-1778958020-2b002a5d47",
+      "source_ts": "1778958020.281189",
+      "title": "GAM: Hierarchical Graph-based Agentic Memory for LLM Agents — 3層グラフ記憶 (arXiv 2604.12285v1)",
+      "decision": "adopt_probe",
+      "reason": "Phase 1/4a の記憶検索が grep や直近 atom 直引きに寄りやすく、上位目標から中粒度記憶、atom へ降りる順序が明示されていない。GAM の知見は現行 memory_redesign と per-file atoms に直結するが、MEMORY.md 再設計や検索プロトコル恒久化は大きすぎるため、次の memory recall / Phase 4a で1回だけ階層検索順序を試す probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 2,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 16
+      }
+    },
     {
       "reviewed_at": "2026-05-17T03:41:02+09:00",
       "id": "sr-1778947869-1b534bda71",
@@ -724,6 +742,18 @@
         "Eneba のような二次商業記事を設計の正解に格上げせず、brainstorm 元クラスタまたは評価語彙に留め、一次プレイ/自前ログで見るべき未確認点を1つ残したか。"
       ],
       "expires_after": "次に shmup / action game prototype の評価・修正・新規設計で flow / reflex / tactics のどれかを成功根拠として使う 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260517-hierarchical-memory-recall-ladder",
+      "created_at": "2026-05-17T05:47:00+09:00",
+      "source_ts": "1778958020.281189",
+      "scope": "next memory recall improvement / Phase 4a memory cleanup / cycle Phase 1 recall that chooses search order",
+      "questions": [
+        "記憶検索を始める前に、今回の上位目標を1行で置き、その目標から中粒度の project / feedback / directive へ降りたか。",
+        "atom や raw を直接 grep する前に、中粒度記憶からリンク・タグ・時系列のどれか1つを辿って検索語を作ったか。",
+        "この階層順序で見つかったものと、従来の直 grep で見つかったものの差を1件だけ staging に残し、恒久プロトコル化の判断は保留したか。"
+      ],
+      "expires_after": "次に memory recall 改善、Phase 4a 記憶整理、または Phase 1 の記憶検索順序を扱う 1 回で見直す。"
     }
   ]
 }

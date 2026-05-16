@@ -48,6 +48,35 @@ skipped: []
 ## Phase 3b: Shared-reads 閾ｪ蟾ｱ繝輔ぅ繝ｼ繝峨ヰ繝・け
 (Phase 3b 縺梧嶌縺崎ｾｼ繧)
 
+2026-05-17T05:47:00+09:00 Phase 3b 自己フィードバック:
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778958020-2b002a5d47
+    source_ts: "1778958020.281189"
+    title: "GAM: Hierarchical Graph-based Agentic Memory for LLM Agents — 3層グラフ記憶 (arXiv 2604.12285v1)"
+    reason: "Phase 1/4a の記憶検索が grep や直近 atom 直引きに寄りやすく、上位目標から中粒度記憶、atom へ降りる順序が明示されていないため。GAM の階層検索は現行 per-file atoms と memory_redesign に接続するが、恒久再設計にはまだ早い。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 2
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 16
+  decision: adopt_probe
+  change:
+    summary: "次の memory recall / Phase 4a で、上位目標→中粒度記憶→atom/raw の順に1回だけ辿り、直 grep との差を staging に残す一時 probe を追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 謨ｴ逅・+ 蝠城｡梧歓蜃ｺ
 (Phase 4a 縺梧嶌縺崎ｾｼ繧)
 
