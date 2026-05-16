@@ -68,7 +68,25 @@ self_feedback:
 
 ## Phase 4a: 整理 + 問題抽出
 
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md: Markdown link は 0 件、path 参照の broken link は実質 0 件（command 文字列 2 件は除外）"
+  - "memory/atoms.jsonl: 1182 rows を検査。JSON error / duplicate id / conflicting duplicate / same content hash group は 0 件"
+  - "memory/atoms/: per-atom .md は unknown/ 3 件を含めて 1182 件、index.jsonl も 1182 rows で同期"
+  - "memory/raw/: 2026-04-16 以前の 30 日以上未更新ファイルは 0 件"
+  - "memory/shared_reads_candidates/: 2026-04-16 以前の 30 日以上未更新 candidate は 0 件"
+  - "inbox: slack_directives.jsonl / slack_broadcasts.jsonl とも pending 0 件。close 対象なし"
+issues:
+  - id: ISS-20260516-01
+    description: "shared_reads_candidates 配下の candidate 66 件に status/frontmatter がなく、Phase 4a の『30 日以上動きがない candidate を postpone から fail に降格、または保持』を機械判定できない"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/*.md status scan: status_counts={missing: 66}; README.md は保存場所と品質ゲートのみで lifecycle metadata を要求していない"
+    why_blocks_game_memory: "候補段階の資料が増えた時、postpone / fail / keep の区別がファイル本文や staging 記録に散り、次のゲーム制作時に検索結果へ未成熟な候補が混ざりやすくなる"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-20260516-01
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 
