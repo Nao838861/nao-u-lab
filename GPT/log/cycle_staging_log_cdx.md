@@ -90,7 +90,57 @@ recommendation:
 
 ## Phase 4b: 仕組み検討 (条件起動)
 
-(Phase 4a で needs_design: true の場合のみ実行される)
+```yaml
+designed_at: "2026-05-16T09:58+09:00"
+selected_issues:
+  - ISS-20260516-01
+designs:
+  - issue_id: ISS-20260516-01
+    problem_restatement: "shared_reads_candidates は候補プールとして公式化されたが、candidate ごとの lifecycle 状態が必須フィールドになっていない。結果として、投稿済み/pass/postpone/fail/保留の境界が本文・staging・Slack permalink に散らばり、次サイクルの探索時に未処理候補と処理済み候補を機械的に分けられない。"
+    alternatives:
+      - name: "案A: candidate frontmatter に lifecycle 最小セットを追加"
+        sketch: "各 candidate の YAML frontmatter に `candidate_status`, `gate_decision`, `evaluated_at`, `evaluated_by`, `posted`, `supersedes`, `review_notes` を必要に応じて持たせる。既存の posted/gate_decision 形式を拡張し、個別ファイルを正本にする。"
+        pros:
+          - "既存 candidate の配置と最近の frontmatter パターンに近く、Phase 1/2/3 の自然な追記先になる"
+          - "ファイル単体を開いた時に lifecycle と本文が同時に読める"
+          - "失敗しても個別 candidate の metadata 修正だけで戻せる"
+        cons:
+          - "66 件の既存 candidate へ初期 metadata を補完する手間がある"
+          - "集計には frontmatter scan が必要で、大量化すると遅くなる可能性がある"
+          - "schema の表記揺れを README で固定しないと再び崩れる"
+        migration_cost: medium
+      - name: "案B: shared_reads_candidates/index.jsonl を正本にする"
+        sketch: "candidate 本文はそのまま残し、別ファイル `index.jsonl` に path, status, gate_decision, posted_permalink, last_reviewed_at を集約する。Phase 4a は index だけを見て分類する。"
+        pros:
+          - "集計と stale 判定が軽い"
+          - "既存 candidate 本文をほぼ触らずに導入できる"
+          - "後で dashboard や report を作りやすい"
+        cons:
+          - "本文と index の二重管理になり、不整合検出が別途必要"
+          - "candidate 単体を見た時に lifecycle が分からない"
+          - "atoms per-file 移行と同型の仕組みが増え、運用面の複雑さが上がる"
+        migration_cost: medium
+      - name: "案C: staging の判断ログだけを保持し現状維持"
+        sketch: "candidate ファイルには lifecycle metadata を要求せず、各 cycle の Phase 2/3 staging と Slack permalink を判断履歴として扱う。Phase 4a は古い候補を内容ベースで必要時に読む。"
+        pros:
+          - "移行作業が不要"
+          - "候補メモを探索段階の軽い置き場として保てる"
+          - "schema 追加による書き込み負担がない"
+        cons:
+          - "未処理/処理済みの分離が毎回人間依存になる"
+          - "postpone と fail の再探索優先度を機械的に扱えない"
+          - "candidate が増えるほど Phase 4a の掃除が曖昧になる"
+        migration_cost: low
+    recommended: "案A: candidate frontmatter に lifecycle 最小セットを追加"
+    recommended_reason: "問題の本体は候補本文と lifecycle 判断の分離なので、正本を candidate ファイル自身に寄せるのが最短で戻しやすい。案Bは集計には強いが、今の規模では二重管理の失敗コストが案Aの scan コストより大きい。案Cは短期の手間は少ないが、Phase 4a が検出した詰まりを残すだけになる。"
+    decision: introduce
+    decision_reason: "既に最近の candidate には `gate_decision` / `posted` / `evaluated_at` が実質導入されており、現状からの距離が小さい。新規 tool より先に schema と migration 方針を固めれば、Phase 4c は既存ファイルの metadata 補完と README 追記に限定できる。"
+    outline_for_4c:
+      - "`memory/shared_reads_candidates/README.md` に candidate lifecycle frontmatter の最小 schema と許可値を追記する"
+      - "既存 candidate 66 件へ、判定不能なものは `candidate_status: needs_review` として最小 metadata を補完する"
+      - "投稿済みまたは Phase 2 判定済みの candidate は、既存 frontmatter/staging/Slack permalink から `gate_decision` と `posted` を埋められる範囲だけ埋める"
+      - "Phase 4a の次回確認項目として、missing lifecycle metadata が 0 件になること、ただし内容判断を捏造しないことを残す"
+```
 
 ## Phase 4c: 導入 (条件起動)
 
