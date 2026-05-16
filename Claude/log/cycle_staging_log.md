@@ -279,3 +279,58 @@ Ash 5/16 21:06:53 (#all-nao-u-lab ts=1778933155.648419) で v05 beta B-2 merge �
 - `game/shot_log/v01/self_judgment_c196.md` (Phase 4 で作成)
 - `log/cycle_staging_log.md` (本 Phase 3 + Phase 4 結果)
 - commit prefix: `log:` (Decision Attribution 装置として明示)
+
+## Phase 4 結果 (2026-05-16)
+
+### 大作業: shot_log v01 Q-A 再採点 — **完遂**
+
+#### 完遂定義の充足確認
+
+| 完遂定義 | 状態 | 確認 |
+|---|---|---|
+| 1) self_judgment_c196.md 新規作成、Q-A シート 5 項目 (target/0-10 両極/変わったら何が変わるか3点/cross_review 確認/外部観測点) 埋め | ✓ | `game/shot_log/v01/self_judgment_c196.md` 作成、Q-G-1〜Q-G-5 (M-34 規則準拠) 5 項目記入 |
+| 2) Q-A 採点根拠数値 = LV2/LV3/GMAX = 35/99/208 引用 | ✓ | 「装置の現値」節で headless.py:4 を直接引用、4 policy time/score/3way%/bomb 全列挙 |
+| 3) commit prefix `log:` (Phase 5 で実施) | △ Phase 5 へ | Phase 4 commit 禁止、本サイクル Phase 5 で `log:` prefix で push 予定 |
+| 4) 「次の一手候補 3 件」明文化、判定根拠化しない | ✓ | 候補 A (aggressive うま味) / B (M-44 assertion 化) / C (VeRO 運用化)、各「未確定点」明記で判定根拠化を回避 |
+
+#### 着手手順の実行ログ
+
+1. ✓ `game/shot_log/v01/` 把握: README/devlog/headless.py/self_judgment.md (C195) を読了。BOMB 移植済、C195 で Q-A〜H 採点履歴あり
+2. ✓ headless 再実行: `python headless.py` (default seeds=42,123,7777) → center 66.8s / aggressive 21.5s / defensive 32.8s / sweeper 5.9s 取得。C195 BOMB 移植後と同値、装置の決定論的再現性確認
+3. ✓ Q-G シート (target/両極/変化点3点/cross_review/外部観測点) を M-34 規則に従い v01 へ遡及記入。target = STG core fan / ランキング層、両極 8 (core fan 寄り)、Mir review 未取得を明記
+4. → Phase 5 で commit + push: self_judgment_c196.md + M-44.md + game_lessons_log.md + memory_redesign.md + VeRO 投稿 draft を `log:` prefix で 1 commit にまとめる
+5. → Phase 5 で Slack 投稿: #game-rights に「shot_log v01 Q-A 再採点完了。合否は Mir/Ash/Nao_u 判定を待つ」（VeRO authorship 分離の即時運用）
+
+#### 副産物 (新規・変更ファイル)
+
+- `game/shot_log/v01/self_judgment_c196.md` ← **新規作成** (約 130 行)
+- `log/cycle_staging_log.md` ← 本 Phase 4 結果節を追加
+
+#### Phase 3 で既に作成済（本 Phase 4 では確認のみ）
+
+- `memory/lessons/M-44.md` (Boghog 4 規則 + 4 失敗パターン、新規)
+- `memory/game_lessons_log.md` (R-D 詳細 / 表 / 系統マップ 3 箇所に M-44 追記)
+- `projects/memory_redesign.md` (末尾 Decision Attribution 節追加)
+- `drafts/2026-05-16/post_log_all_nao_u_lab_vero_evaluation_20260516_POSTED_ts1778936964.py` (VeRO 投稿 draft、ts=1778936964.963419 で投稿済)
+
+#### VeRO 原則の即時運用達成
+
+C196 Phase 3 で投稿した VeRO 評価軸 (authorship 分離) を本 Phase 4 で同日運用:
+- 数値は Log が出す (headless 4 policy 再実行 + 装置の現値表)
+- **合否判定は Mir / Ash / Nao_u に委ねる** (self_judgment_c196.md 「Q-A 再採点」節末尾で明記)
+- 投稿 (Phase 3) → 運用 (Phase 4) の遅延 = 0 サイクル、「言葉だけ」で終わらせない原則を満たした
+
+#### 意図 commit ゼロ問題の解消準備
+
+Phase 1 §0 で観察した「直近 5 commit 中 Claude 側意図 commit ゼロ」を本サイクル Phase 5 で `log:` prefix の 1 commit で解消する。同梱物:
+- self_judgment_c196.md (本 Phase 4 成果)
+- M-44.md + game_lessons_log.md (Phase 3 成果)
+- memory_redesign.md Decision Attribution 節 (Phase 3 成果)
+- VeRO 投稿 draft (Phase 3 成果)
+- 本 staging (Phase 3 + Phase 4 結果)
+
+#### 逸脱・残課題
+
+- **逸脱なし**: 大作業 1 件に集中、新作 R-I / graze_log v05 cross_review / 別 game への着手いずれも回避
+- **Phase 4 で増やさなかった作業**: Slack 投稿 0 件 (Phase 3 グローバル指示「Phase 4 で増やさない」遵守)。Phase 5 で 1 件 (#game-rights) のみ予定
+- **次サイクル申し送り (Phase 5 で日記化判断)**: (a) Mir cross_review 未取得分の追加観測機会、(b) 次の一手 3 候補のうち実装着手判定、(c) M-44 を graze_log v05 / dockhand_dash に横展開するかの相談
