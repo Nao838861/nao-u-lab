@@ -22,6 +22,7 @@
     gateRadius: 34,
     hazardRadius: 36,
     safeTime: 5,
+    hintTime: 9,
     predictionSteps: 120,
     predictionStride: 6,
   };
@@ -80,7 +81,7 @@
     state.beacon.y = H / 2;
     state.motes = initialMotes.map(cloneMote);
     state.delivered = new Set();
-    showOverlay("黄色い大きな丸があなたです。WASD/矢印で動かし、小さい色の丸を同じ色の輪へ入れます。赤い輪は危険地帯です。Spaceで「引く」と「押す」を切り替えます。", "開始");
+    showOverlay("黄色い丸を動かして、小さい色の丸を同じ色の輪へ。赤い輪は避ける。Spaceで引く/押すを切替。", "開始");
     draw();
   }
 
@@ -187,9 +188,15 @@
       if (Math.hypot(mote.x - gate.x, mote.y - gate.y) < config.gateRadius) {
         state.delivered.add(i);
         state.score += 1;
-        state.unlocked = Math.min(state.motes.length, state.unlocked + 1);
-        state.message = `成功 ${state.score}/${state.motes.length}: 次の色の丸が動きます`;
-        state.messageTimer = 1.2;
+        if (state.score === 1) {
+          state.unlocked = state.motes.length;
+          state.message = "成功: 残り2つが同時に動きます。押す操作が重要です。";
+          state.messageTimer = 2.2;
+        } else {
+          state.unlocked = Math.min(state.motes.length, state.unlocked + 1);
+          state.message = `成功 ${state.score}/${state.motes.length}`;
+          state.messageTimer = 1.2;
+        }
       }
     }
 
@@ -223,6 +230,7 @@
   }
 
   function draw() {
+    const showHints = !state.running || state.time < config.hintTime || state.score === 0;
     ctx.clearRect(0, 0, W, H);
     ctx.fillStyle = "#151820";
     ctx.fillRect(0, 0, W, H);
@@ -245,10 +253,12 @@
     for (const hazard of hazards) {
       drawCircle(hazard.x, hazard.y, config.hazardRadius, "#3a2430");
       drawCircle(hazard.x, hazard.y, config.hazardRadius + 7, "#ff4f76", true);
-      ctx.fillStyle = "#ff9ab0";
-      ctx.textAlign = "center";
-      ctx.font = "15px Segoe UI, sans-serif";
-      ctx.fillText("入ると失敗", hazard.x, hazard.y + 5);
+      if (showHints) {
+        ctx.fillStyle = "#ff9ab0";
+        ctx.textAlign = "center";
+        ctx.font = "15px Segoe UI, sans-serif";
+        ctx.fillText("危険", hazard.x, hazard.y + 5);
+      }
     }
 
     ctx.font = "18px Segoe UI, sans-serif";
@@ -257,7 +267,7 @@
       ctx.lineWidth = 4;
       drawCircle(gate.x, gate.y, config.gateRadius, gate.color, true);
       ctx.fillStyle = gate.color;
-      ctx.fillText(`${gate.label}: 同じ色を入れる`, gate.x, gate.y + 6);
+      ctx.fillText(showHints ? "同じ色へ" : gate.label, gate.x, gate.y + 6);
     }
 
     for (let i = 0; i < state.unlocked; i += 1) {
@@ -280,22 +290,22 @@
       ctx.fillStyle = gate.color;
       ctx.textAlign = "center";
       ctx.font = "15px Segoe UI, sans-serif";
-      ctx.fillText("これを運ぶ", mote.x, mote.y - 18);
+      if (showHints) ctx.fillText("運ぶ", mote.x, mote.y - 18);
     }
 
     ctx.lineWidth = 3;
     drawCircle(state.beacon.x, state.beacon.y, config.beaconRadius, state.polarity > 0 ? "#f2e07a" : "#9fe0ff");
-    drawCircle(state.beacon.x, state.beacon.y, 82, state.polarity > 0 ? "#f2e07a" : "#9fe0ff", true);
+    drawCircle(state.beacon.x, state.beacon.y, state.polarity > 0 ? 82 : 104, state.polarity > 0 ? "#f2e07a" : "#9fe0ff", true);
     ctx.fillStyle = "#f3f0e8";
     ctx.textAlign = "center";
     ctx.font = "15px Segoe UI, sans-serif";
-    ctx.fillText("あなたが動かす丸", state.beacon.x, state.beacon.y - 28);
+    if (showHints) ctx.fillText("あなた", state.beacon.x, state.beacon.y - 28);
 
     ctx.textAlign = "left";
     ctx.font = "18px Segoe UI, sans-serif";
     ctx.fillStyle = "#f3f0e8";
-    ctx.fillText(`WASD/矢印: 黄色い丸を移動  Space: ${state.polarity > 0 ? "小さい丸を引く" : "小さい丸を押す"}  R: リセット`, 28, 34);
-    ctx.fillText(`成功 ${state.score}/${state.motes.length}  時間 ${state.time.toFixed(1)}  ${state.time < config.safeTime ? `練習あと ${(config.safeTime - state.time).toFixed(1)} 秒` : "赤い輪に注意"}`, 28, 64);
+    ctx.fillText(`移動: WASD/矢印  Space: ${state.polarity > 0 ? "引く" : "押す"}  R: リセット`, 28, 34);
+    ctx.fillText(`成功 ${state.score}/${state.motes.length}  動作中 ${state.unlocked - state.delivered.size}  ${state.time < config.safeTime ? `練習 ${Math.ceil(config.safeTime - state.time)}` : "赤に注意"}`, 28, 64);
     if (state.messageTimer > 0) ctx.fillText(state.message, 28, 94);
   }
 
@@ -340,6 +350,7 @@
         activeMotes: state.unlocked - state.delivered.size,
         predictionCount: predictionFor(state.motes.find((_, i) => !state.delivered.has(i)) || state.motes[0]).length,
         safe: state.time < config.safeTime,
+        hints: !state.running || state.time < config.hintTime || state.score === 0,
       };
     },
     setKey(key, down) {

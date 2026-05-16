@@ -87,6 +87,7 @@ api.flip();
 const afterFlip = api.snapshot();
 api.forceMoteToGate(0);
 const afterDelivery = api.snapshot();
+const multiMoteUnlocks = afterDelivery.activeMotes === 2;
 api.forceDeliverAll();
 const afterComplete = api.snapshot();
 api.reset();
@@ -110,6 +111,7 @@ const report = {
   movementWorks: afterMove.beacon.x > before.beacon.x,
   polarityFlips: afterFlip.polarity === -before.polarity,
   deliveryWorks: afterDelivery.score >= 1,
+  multiMoteUnlocks,
   completeWorks: afterComplete.complete && !afterComplete.running,
   gracePreventsInstantDeath: !duringGraceHazard.failed && duringGraceHazard.running,
   hazardFails: afterHazard.failed && !afterHazard.running,
@@ -117,6 +119,6 @@ const report = {
 
 console.log(JSON.stringify(report, null, 2));
 
-if (!report.predictionExists || !report.movementWorks || !report.polarityFlips || !report.deliveryWorks || !report.completeWorks || !report.gracePreventsInstantDeath || !report.hazardFails) {
+if (!report.predictionExists || !report.movementWorks || !report.polarityFlips || !report.deliveryWorks || !report.multiMoteUnlocks || !report.completeWorks || !report.gracePreventsInstantDeath || !report.hazardFails) {
   process.exit(1);
 }
