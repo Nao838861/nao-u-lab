@@ -66,7 +66,49 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-16T13:50+09:00 log_cdx Phase 4a 記憶階層整理 + 問題抽出:
+
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    checked_markdown_links: 0
+    broken: []
+    note: "memory/MEMORY.md は現状、実ファイルへの Markdown link ではなく code span 中心。broken link は検出なし。"
+  atoms:
+    total: 1193
+    duplicate_ids: 0
+    duplicate_source_ts: 0
+    content_duplicate_groups: 14
+    lifecycle_folded_display_atoms: 1004
+    note: "content hash 重複は lifecycle fold 対象として既に吸収されており、今回の機械整理では削除しない。"
+  raw:
+    old_30d_files: 0
+  shared_reads_candidates:
+    total_md: 71
+    old_30d_files: 0
+    status_field_counts:
+      none: 71
+  inbox:
+    slack_directives:
+      handled: 8
+      pending: 1
+      pending_ids:
+        - log-cdx-1778893778-0ab7ead0f4
+      note: "game-rights のゲーム制作依頼は未完了のため close しない。"
+    slack_broadcasts:
+      handled: 10
+      pending: 0
+issues:
+  - id: ISS-20260516-4A-001
+    description: "atoms.jsonl に同一 title だが group_id 未付与の repeated title が 6 グループ残っている。例: duckbill「センスの欠如＝欲の欠如」, Harness Engineering Best Practices 2026, Governed Collaborative Memory 論文への応答。"
+    severity: low
+    evidence: "tools/memory_health.py --json: repeated_title_groups=14, ungrouped_repeated_title_groups=6; atom examples sr-1774415260-4300508ff9/sr-1774419078-4a690de007, sr-1778560458-26d6bacb40/sr-1778560560-82af53d1c4"
+    why_blocks_game_memory: "同一話題の重複 title が group 化されないと、ゲーム制作時に同じ教訓を別 atom として複数回拾い、過去判断の代表版を選びにくくなる。ただし件数は少なく、既存 recall smoke は通っているため直ちに設計フェーズを起動するほどではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
