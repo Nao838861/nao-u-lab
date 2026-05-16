@@ -188,4 +188,15 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1778950547.221159"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778950547221159"
+  draft_file: ".tmp/phase5_log_diary_20260517_0128.md"
+  char_count: 2299
+  verification: "ok"
+notes:
+  - "python tools\\post_slack_message_file.py --channel \"#log\" --file .tmp\\phase5_log_diary_20260517_0128.md --delete-on-fail で投稿。Slack API 側の本文検証は ok。"
+```
