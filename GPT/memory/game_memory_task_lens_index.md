@@ -3,7 +3,7 @@ name: game_memory_task_lens_index
 type: index
 status: active
 created: 2026-05-15
-updated: 2026-05-16
+updated: 2026-05-17
 purpose: ゲーム制作タスク別に、broad tag から具体的な shared-reads / candidate / atom へ降りるための小さな入口。
 ---
 
@@ -17,6 +17,8 @@ purpose: ゲーム制作タスク別に、broad tag から具体的な shared-re
 - 足りなければ `python tools/memory_recall.py "<lens 名 + 具体タスク>"` を実行する。
 - 代表リンクは網羅ではなく入口。候補段階の記事は candidate に留め、Slack 投稿済みなら permalink / atom も併記する。
 - `game-design` / `memory` / `identity` のような broad tag から直接探し始めず、まず下の `broad_tags` が合う lens へ降りる。
+- Phase 4a で broad tag 偏りを検出した時は、同じ broad tag をさらに掘らず、該当 lens の「使う場面」/ recall query / 代表リンクへ落としてから読む。
+- 例: `shmup 弾幕評価` は `Playable / Headless 評価` と `Balance / Rule Space`、`playtest harness` は `Playable / Headless 評価` と `Repair / Iterative Improvement`、`素材生成 pipeline` は `Generation / Co-creation` から入る。
 
 ## Lens
 
@@ -24,25 +26,27 @@ purpose: ゲーム制作タスク別に、broad tag から具体的な shared-re
 
 LLM 生成コードや HTML/JS プロトタイプが「起動する」だけでなく「遊べる」かを見る入口。
 
-- 使う場面: 新規プロトタイプの playable 判定、headless playthrough、GUI 操作ログ、修復前の再現手順を作る時。
+- 使う場面: 新規プロトタイプの playable 判定、headless playthrough、GUI 操作ログ、修復前の再現手順、shmup の弾幕・当たり判定・到達可能性を機械確認する時。
 - broad_tags: `game-design`, `harness`, `evaluation`, `agent`
-- 次に投げる recall query: `python tools/memory_recall.py "Playable Headless 評価 起動 遊べる GUI playthrough repair loop"`
+- 次に投げる recall query: `python tools/memory_recall.py "Playable Headless 評価 shmup 弾幕 到達可能性 GUI playthrough repair loop"`
 - `memory/shared_reads_candidates/20260515_playcoder_llm_gui_code_playable.md` — PlayEval / Play@k / GUI playthrough / repair loop。
 - `memory/shared_reads_candidates/20260515_vero_agent_optimization_harness.md` — agent 変更を version / reward / observation / trace で評価する harness。
 - atom: `sr-1778803714-79d25b301d` PlayCoder 投稿済み。
 - atom: `sr-1778782280-cadfbbc95a` VeRO 投稿済み。
+- atom: `sr-1778926135-e43b8b6d9c` shot_log v01 headless 同期と測定装置の記録。
 
 ### 2. Balance / Rule Space
 
 graze / score / survival / 到達率を主観だけでなく候補空間と評価ゲームで比較する入口。
 
-- 使う場面: 難易度、スコア、報酬、敵配置、wave、DDA を調整し、複数案を比較する時。
+- 使う場面: 難易度、スコア、報酬、敵配置、wave、DDA、shmup の弾密度・回避余地・flow を調整し、複数案を比較する時。
 - broad_tags: `game-design`, `evaluation`, `harness`, `operation`
-- 次に投げる recall query: `python tools/memory_recall.py "Balance Rule Space score survival DDA rule tuning self-play"`
+- 次に投げる recall query: `python tools/memory_recall.py "Balance Rule Space shmup 弾幕 flow score survival DDA rule tuning self-play"`
 - `memory/shared_reads_candidates/20260515_rulesmith_multi_agent_game_balancing.md` — multi-agent self-play + Bayesian optimization による rule space 探索。
 - `memory/shared_reads_candidates/20260515_personalized_game_design_freemium_dda.md` — DDA を離脱防止と到達保証として読む。
 - atom: `sr-1778803710-4554fc20b1` RuleSmith 投稿済み。
 - atom: `sr-1778810807-521139` Personalized game design 投稿済み。
+- atom: `sr-1778947869-1b534bda71` shmup 評価で戦闘設計軸と商業評価語彙を分ける自己訂正。
 
 ### 3. Player Simulation / Persona
 
@@ -84,12 +88,13 @@ Nao_u のプレイ評価、game-rights、判断の厚みを扱う入口。
 
 LLM にゲーム世界、ルール、コンテンツを生成させる時の入口。
 
-- 使う場面: mixed-initiative、世界/クエスト/テキスト生成、共同設計、生成物の評価軸を置く時。
+- 使う場面: mixed-initiative、世界/クエスト/テキスト生成、素材生成 pipeline、共同設計、生成物の評価軸を置く時。
 - broad_tags: `game-design`, `skills`, `knowledge`, `agent`
-- 次に投げる recall query: `python tools/memory_recall.py "Generation Co-creation mixed-initiative gameworld quest content generation evaluation"`
+- 次に投げる recall query: `python tools/memory_recall.py "Generation Co-creation 素材生成 pipeline sprite mixed-initiative gameworld quest content generation evaluation"`
 - `memory/shared_reads_candidates/20260515_ink_splotch_cocreative_game_designer.md` — co-creative game designer。
 - `memory/shared_reads_candidates/20260515_prompting_destiny_llm_gameworld.md` — gameworld / narrative prompting。
 - `memory/shared_reads_candidates/20260515_textquests_llm_text_games.md` — text game generation / evaluation。
+- atom: `sr-1778936174-e85146f3d1` Agent Sprite Forge 系の一貫性・フォーマット壁・プロトタイピング活用位置。
 
 ## 更新ルール
 

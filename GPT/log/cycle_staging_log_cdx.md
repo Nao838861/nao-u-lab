@@ -144,7 +144,22 @@ designed:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+2026-05-17T05:24+09:00 log_cdx Phase 4c 導入。
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260517-01
+    files_changed:
+      - path: memory/game_memory_task_lens_index.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "broad tag 偏りを検出した時に task lens へ降りる使い方を明記し、shmup 弾幕評価 / playtest harness / 素材生成 pipeline を既存 lens に割り当てた。新 lens は追加せず、代表 atom を最小限追記した。"
+    partial: false
+migrations: []
+verification:
+  - "`python tools\\memory_recall.py \"Playable Headless 評価 shmup 弾幕 到達可能性 GUI playthrough repair loop\" --limit 5 --compact --no-log` で PlayCoder / shot_log 系 atom に到達できることを確認。"
+  - "`python tools\\memory_recall.py \"Generation Co-creation 素材生成 pipeline sprite mixed-initiative gameworld quest content generation evaluation\" --limit 5 --compact --no-log` で生成 pipeline / PCG 系 atom に到達できることを確認。"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
