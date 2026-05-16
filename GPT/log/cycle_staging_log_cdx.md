@@ -72,7 +72,44 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-16T11:54:30+09:00 Phase 4a 整理 + 問題抽出:
+
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    file: memory/MEMORY.md
+    markdown_links_detected: 0
+    broken_links: 0
+    note: "現行 MEMORY.md は生成 index 中心で、Markdown link 行は検出されなかった。"
+  atoms_jsonl:
+    file: memory/atoms.jsonl
+    atoms: 1189
+    bad_json: 0
+    duplicate_ids: 0
+    exact_duplicate_content_groups: 0
+    lifecycle_status_conflict_groups: 0
+    note: "index 生成時の lifecycle/content fold は 189 件あるが、raw atom 削除や統合は行わず、今回の機械確認では矛盾扱いにしない。"
+  raw_archive_candidates:
+    root: memory/raw/
+    files_total: 50
+    older_than_30d: 0
+  shared_reads_candidates:
+    root: memory/shared_reads_candidates/
+    files_total: 73
+    older_than_30d: 0
+  inbox:
+    directives_pending:
+      - id: log-cdx-1778893778-0ab7ead0f4
+        channel: game-rights
+        permalink: https://nao-u-lab.slack.com/archives/C0ANQ9DRQ1K/p1778893778510309
+        reason_not_closed: "「これまでの知見を活かしてゲームを一本作って」という未実行の制作依頼であり、Phase 4a の整理だけでは done_condition を満たさないため。"
+    broadcasts_pending: []
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
