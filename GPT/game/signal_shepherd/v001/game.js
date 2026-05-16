@@ -19,7 +19,7 @@
     damping: 0.992,
     moteRadius: 11,
     beaconRadius: 16,
-    gateRadius: 34,
+    gateRadius: 44,
     hazardRadius: 36,
     safeTime: 5,
     hintTime: 9,
@@ -28,21 +28,21 @@
   };
 
   const gates = [
-    { x: 118, y: 108, color: "#69c8ff", label: "A" },
-    { x: 842, y: 108, color: "#ffcf5a", label: "B" },
+    { x: 118, y: 534, color: "#69c8ff", label: "A" },
+    { x: 842, y: 534, color: "#ffcf5a", label: "B" },
     { x: 480, y: 616, color: "#ff7a90", label: "C" },
   ];
 
   const hazards = [
-    { x: 300, y: 302 },
-    { x: 660, y: 360 },
-    { x: 480, y: 260 },
+    { x: 380, y: 330 },
+    { x: 580, y: 330 },
+    { x: 480, y: 460 },
   ];
 
   const initialMotes = [
     { x: 278, y: 534, vx: 18, vy: -12, gate: 0 },
     { x: 688, y: 528, vx: -16, vy: -10, gate: 1 },
-    { x: 480, y: 126, vx: 10, vy: 18, gate: 2 },
+    { x: 480, y: 356, vx: 10, vy: 18, gate: 2 },
   ];
 
   const state = {
@@ -76,10 +76,10 @@
     state.score = 0;
     state.message = "";
     state.messageTimer = 0;
-    state.unlocked = 1;
     state.beacon.x = W / 2;
     state.beacon.y = H / 2;
     state.motes = initialMotes.map(cloneMote);
+    state.unlocked = state.motes.length;
     state.delivered = new Set();
     showOverlay("黄色い丸を動かして、小さい色の丸を同じ色の輪へ。赤い輪は避ける。Spaceで引く/押すを切替。", "開始");
     draw();
@@ -188,15 +188,8 @@
       if (Math.hypot(mote.x - gate.x, mote.y - gate.y) < config.gateRadius) {
         state.delivered.add(i);
         state.score += 1;
-        if (state.score === 1) {
-          state.unlocked = state.motes.length;
-          state.message = "成功: 残り2つが同時に動きます。押す操作が重要です。";
-          state.messageTimer = 2.2;
-        } else {
-          state.unlocked = Math.min(state.motes.length, state.unlocked + 1);
-          state.message = `成功 ${state.score}/${state.motes.length}`;
-          state.messageTimer = 1.2;
-        }
+        state.message = `成功 ${state.score}/${state.motes.length}`;
+        state.messageTimer = 1.2;
       }
     }
 
@@ -351,6 +344,17 @@
         predictionCount: predictionFor(state.motes.find((_, i) => !state.delivered.has(i)) || state.motes[0]).length,
         safe: state.time < config.safeTime,
         hints: !state.running || state.time < config.hintTime || state.score === 0,
+        motes: state.motes.map((mote, index) => ({
+          index,
+          x: Math.round(mote.x * 10) / 10,
+          y: Math.round(mote.y * 10) / 10,
+          vx: Math.round(mote.vx * 10) / 10,
+          vy: Math.round(mote.vy * 10) / 10,
+          gate: mote.gate,
+          delivered: state.delivered.has(index),
+        })),
+        gates: gates.map((gate, index) => ({ index, x: gate.x, y: gate.y })),
+        hazards: hazards.map((hazard) => ({ x: hazard.x, y: hazard.y })),
       };
     },
     setKey(key, down) {
