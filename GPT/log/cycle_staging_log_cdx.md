@@ -15,6 +15,20 @@
 ## Phase 2: 蛻・梵
 (Phase 2 縺梧嶌縺崎ｾｼ繧)
 
+2026-05-17T05:36:00+09:00 Phase 2 分析結果:
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260517_agentick_sequential_decision_benchmark.md
+  - memory/shared_reads_candidates/20260517_multi_agent_strategic_games_llms.md
+fail: []
+postpone: []
+notes:
+  - Agentick は、問題設定・task taxonomy・oracle policy / SFT dataset / harness・観測 modality 別結果が揃い、headless playtest と AI player 評価設計に直結するため pass。
+  - Multi-Agent Strategic Games with LLMs は、通信・人数・有限 horizon の操作と public/private/action ログの分解が、協力/裏切り/交渉ゲーム設計へ具体的に移せるため pass。
+```
+
 ## Phase 3: Shared-reads 謚慕ｨｿ
 (Phase 3 縺梧嶌縺崎ｾｼ繧)
 
