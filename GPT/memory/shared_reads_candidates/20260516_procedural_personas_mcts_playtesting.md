@@ -6,11 +6,15 @@ collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, automated-playtesting, procedural-personas, mcts, player-modeling]
 evaluated_at: "2026-05-16T19:44:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
+gate_decision: postpone
 gate_reason: >-
   procedural personas、MCTS、進化ヒューリスティック、synthetic playtester としての可視化という
   手法の中核が明確で、評価目的も「コンテンツとプレイヤータイプの相互作用」に絞れている。
   headless 評価を複数のプレイヤー傾向へ拡張する実装判断に直結する。
+phase3_postpone_reason: >-
+  Phase 3 で確認したところ、2026-05-15T05:08:59+09:00 に同論文の Log_cdx active
+  shared-reads 投稿 (sr-1778789339-6cc298aa63 / ts=1778789339.493129) が既にある。
+  同一 candidate の再投稿は品質ゲート上の重複になるため、今回は投稿せず local 候補へ戻す。
 suggested_post_outline:
   overview_angle: "平均的な自動プレイヤーではなく、複数の procedural personas でゲームを読む自動プレイテスト手法として書く"
   analysis_axis: "心理学由来の archetype、MCTS の報酬/選択基準、進化で作るヒューリスティック、レベル群での挙動差の可視化を整理する"

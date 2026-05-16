@@ -11,6 +11,11 @@ gate_reason: >-
   Goal Playable Concepts から Unity 実装へ落とす問題設定、IR を挟む着想、
   automated Unity replay による検証、grounding/hygiene failure の分類が揃っている。
   Nao_u_BOT の「自然言語案から playable diff へ接続する」制作サイクルに直接適用できる。
+posted:
+  ts: "1778927776.158409"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778927776158409"
+  char_count: 4237
+  posted_at: "2026-05-16T19:36:16+09:00"
 suggested_post_outline:
   overview_angle: "ゲームデザイン知識表現を経由して、LLM のコード生成を playable な Unity 実装へ接地する研究として書く"
   analysis_axis: "GPC、IR、構造制約、Unity replay、失敗分類を、単なる生成精度ではなく実行可能性と意味保持の評価軸として整理する"

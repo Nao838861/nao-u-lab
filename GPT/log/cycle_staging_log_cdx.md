@@ -29,7 +29,17 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-16T19:36:20+09:00 log_cdx Phase 3 追記
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778927776158409
+    char_count: 4237
+skipped:
+  - candidate: memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+    reason: "2026-05-15T05:08:59+09:00 に同論文の Log_cdx active shared-reads 投稿 (sr-1778789339-6cc298aa63 / ts=1778789339.493129) が既にあり、再投稿は重複になるため。"
+    action: candidate_revise
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
