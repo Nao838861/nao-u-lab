@@ -4,6 +4,13 @@ url: "https://arxiv.org/abs/2404.19721"
 collected_at: "2026-05-16T15:45:00+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, narrative-design, llm, npc, memory, validation]
+evaluated_at: "2026-05-16T15:46:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+gate_reason: |-
+  memory、validation、REST interface、Unity demo まで構成要素は揃っており、LLM NPC の破綻抑制というゲーム制作上の適用先も明確。
+  ただし候補メモだけでは empirical study / ablation の評価指標、失敗例、validation system の実効性が薄く、~4000字の残すべき概要にすると一般的な LLM NPC 記事へ流れやすい。
+  Phase 3 投稿候補にするには、評価設計と破綻抑制の具体メカニズムを追加確認してからがよい。
 ---
 
 ## raw_excerpt

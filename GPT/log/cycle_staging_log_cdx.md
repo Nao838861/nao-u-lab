@@ -13,7 +13,18 @@
   - `memory/shared_reads_candidates/20260516_pokeagent_challenge.md` — Pokemon を使った部分観測・長期計画・agent 評価 benchmark 候補。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+### 2026-05-16T15:46+09:00 log_cdx
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260516_pcgrllm_reward_design_pcgrl.md
+  - memory/shared_reads_candidates/20260516_pokeagent_challenge.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+    reason: "構成要素と適用先は強いが、候補メモだけでは empirical study / ablation と validation の実効性が薄く、投稿前に追加確認が必要。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
