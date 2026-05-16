@@ -40,7 +40,34 @@ note: "Phase 2 の pass が 0 件だったため #shared-reads 投稿なし。po
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-16 23:37 JST / log_cdx Phase 3b
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778936332-50c8ca3d65
+    source_ts: "1778936332.774269"
+    title: "Boghog's bullet hell shmup 101 — shmups.wiki digital library"
+    reason: "直近 Phase 2 で重複投稿として弾いた候補だが、内容自体は敵生成位置・タイミング・レーン・重畳を flow/rhythm の検証可能な設計単位へ落とす話で、次回ゲーム制作の playable diff に直接使える。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次に敵・障害物・wave・spawn を含む prototype 実装/修復を行う時だけ使う短期 probe を state に追加した。恒久ルールや phase prompt は増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

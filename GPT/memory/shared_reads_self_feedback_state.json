@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-16T21:38:16+09:00",
+  "updated_at": "2026-05-16T23:37:33+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -21,7 +21,8 @@
     "1778567110.717629",
     "1778896775.440399",
     "1778899287.487259",
-    "1778927776.158409"
+    "1778927776.158409",
+    "1778936332.774269"
   ],
   "reviews": [
     {
@@ -380,6 +381,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-16T23:37:33+09:00",
+      "id": "sr-1778936332-50c8ca3d65",
+      "source_ts": "1778936332.774269",
+      "title": "Boghog's bullet hell shmup 101 — shmups.wiki digital library",
+      "decision": "adopt_probe",
+      "reason": "弾幕 wave design を、敵生成位置・タイミング・レーン・重畳のような検証可能な規則へ落とす知見。次回ゲーム制作で「動くが単調」になりやすい敵/障害物配置を、抽象ルールではなく小さな spawn-pattern probe として確認できる。既存の恒久ルールとは重複させず、次の playable diff で1回だけ使う短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
     }
   ],
   "active_probes": [
@@ -634,6 +652,18 @@
         "失敗した場合、repo/API/asset/DOM/component の仮定ミスである grounding failure と、構文・import・重複・型・formatting の hygiene failure のどちらかを staging に残したか。"
       ],
       "expires_after": "次に game prototype の実装または playable diff 修復を1回行ったら見直す。"
+    },
+    {
+      "id": "probe-20260516-bullet-hell-wave-rhythm",
+      "created_at": "2026-05-16T23:37:33+09:00",
+      "source_ts": "1778936332.774269",
+      "scope": "next game prototype or repair involving enemies, hazards, waves, spawns, or movement pressure",
+      "questions": [
+        "敵・障害物・報酬を置く時、各 spawn を個別イベントではなく、少なくとも1つの空間規則（反対側出現、レーン交互、中心/端の切替など）として書いたか。",
+        "その規則がプレイヤーに移動・待機・回避・回収のどれを促すのかを1行で説明し、単なる密度上げやランダム化に逃げていないか。",
+        "headless log または手動確認で、最小2波について spawn 時刻/位置/到達可否/停滞の有無を見て、flow/rhythm の失敗原因を1つ記録できる形にしたか。"
+      ],
+      "expires_after": "次に敵・障害物・wave・spawn を含む game prototype 実装または修復を1回行ったら見直す。"
     }
   ]
 }
