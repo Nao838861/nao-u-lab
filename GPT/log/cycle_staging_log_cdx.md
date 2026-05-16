@@ -9,7 +9,18 @@
 - candidate: `memory/shared_reads_candidates/20260516_oel_text_games_self_improving_agents.md` — LLM agent が経験ログをオンラインに再利用する枠組み。テキストゲーム/反復プレイ評価に接続可能。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 3
+pass: []
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260516_gameworld_multimodal_game_agents.md
+    reason: "視覚入力を含むゲームエージェント評価として有望だが、現候補は要旨メモのみで、環境・指標・比較結果の具体が不足。"
+  - path: memory/shared_reads_candidates/20260516_agent_island_multiagent_benchmark.md
+    reason: "マルチエージェント戦略ゲーム評価として適用先は近いが、実験設計と評価結果が未確認で投稿品質に届かない。"
+  - path: memory/shared_reads_candidates/20260516_oel_text_games_self_improving_agents.md
+    reason: "経験ログ再利用はゲーム制作サイクルに接続可能だが、学習手法と効果検証の詳細が不足している。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
