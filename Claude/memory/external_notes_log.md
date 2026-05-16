@@ -4,6 +4,37 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-17 arXiv 2604.12285v1 / 2602.05665v1 / 2501.13956 (graph memory 3本) [candidate登録、本文未精読のものは投稿対象外]
+
+**文脈**: C198 Phase 1 §6 WebSearch (kaizen #106 摂取経路固定化、クエリ `knowledge graph orphan node detection LLM memory hierarchy 2026`) で取得した3本。memory_tree_consolidation.md (Log 単独管理、4日停滞) と memory_redesign.md (本ファイル別) の next-step 候補として後続サイクル消化用に candidate 登録。
+
+**(1) GAM: Hierarchical Graph-based Agentic Memory for LLM Agents** — <https://arxiv.org/abs/2604.12285v1>
+- C198 Phase 2 §2 で WebFetch 経由のアブストラクト + 軽量モデル要約取得済、5/17 04:00 #shared-reads ts=1778958020 で外部発信済 (原著評価設定の直読は未実施と投稿に明記)
+- 中核主張: working memory + entity-relation graph + semantic abstraction の3階層を区別する点が当方 memory_redesign.md「L0-L4階層 + L-1」と射程が重なる。**階層検索の順序プロトコル**（どの階層をどの順で引くか）を明示する設計
+- 当方との接続: 当方の memory_search.py / associative_search.py は段階的検索戦略 (L-1 → L2トリガー → memory_walk → associative → grep → Slack全文) を持つが、3層間の検索順序プロトコルは「Phase 1 §6 で grep する」レベルの粗さで明示プロトコル不在。GAM の階層検索順序が我々の運用ヒントになる可能性 → memory_redesign.md 2026-05-17 §に仮説候補1つとして追加 (本サイクル Phase 3)
+- 留保: アブストラクト + 軽量モデル要約由来、本文・評価設定未直読。次サイクル以降 WebFetch で本文確認すべき
+- 判定: **partial intake、candidate 維持**。memory_redesign.md への接続は仮説候補としてのみ追加、即実装はしない
+
+**(2) Graph-based Agent Memory: Taxonomy, Techniques, and Applications** — <https://arxiv.org/abs/2602.05665v1>
+- 2025-2026 の agent memory 研究を taxonomy 化、グラフ構造の保存価値を体系化する survey
+- 既に C175 (2026-05-10) で WebFetch 1本実施し memory_redesign.md L39-44 (4軸 taxonomy + ライフサイクル4段階) で当方構造と照合済。本サイクルでは **C175 接続の再確認** のみで新規消化なし
+- 判定: **本サイクル新規作業なし**。memory_redesign.md L39-44 で既に消化済を確認、二重摂取防止のため candidate 削除 (kaizen #106 経路の重複摂取防止)
+
+**(3) Zep: a temporal knowledge graph architecture for agent memory** — <https://arxiv.org/abs/2501.13956>
+- bi-temporal model（chronological + transactional）= 時系列で並ぶ「いつ起きたか」と「いつ記録したか」を分離する2軸時間構造。当方の `git mtime` (記録時) vs `staging 本文の ts` (内容生起時) 区別と射程が重なる
+- 当方との接続: 当方は git mtime と内容 ts を分離して扱っているが**プロトコル化されていない**（dialogue_*.md の内容 ts は人手記載、cycle_staging_log.md の git mtime は自動）。Zep の bi-temporal 設計は当方の暗黙運用を明示化する仮説素材
+- 留保: WebSearch のスニペットのみで本文未確認、Zep は商用サービス背景の論文で評価設定の外部依存度が高い可能性 → 本文 WebFetch して判定
+- 判定: **candidate 登録、次サイクル以降 WebFetch 候補**。memory_redesign.md への接続は本文確認後に判定保留
+
+**現サイクルでの利用範囲制限 (kaizen #106 ルール準拠)**:
+- 摂取経路固定化のために WebSearch を踏んだだけで、内容を強制利用しない原則
+- (1) GAM のみ Phase 2 §2 で #shared-reads 投下相当の消化、(2)(3) は candidate 登録止まり
+- memory_tree_consolidation.md の next-step 候補としては (1) を最有力、(3) を次点として記録
+
+**関連ファイル**: `projects/memory_redesign.md` 2026-05-17 §「GAM 階層検索順序を仮説候補として追加」、`projects/memory_tree_consolidation.md` (Log 単独管理、残6ファイル移行 next-step)、`memory/external_notes_log.md` 2026-05-10 (Log) C175 (Graph-based Agent Memory survey 4軸 taxonomy)。
+
+---
+
 ## 2026-05-14 arXiv 2509.11353 "Do Large Language Models Favor Recent Content?" 本文読了（Nao_u 5/13 指摘③「最近見たものに引きずられすぎ＝栄養の偏り」直処方） [統合済 → projects/external_intake.md 2026-05-14 §結晶化率 KPI 第4軸]
 
 **文脈**: Log C194 (2026-05-14) Phase 4 大作業。本サイクル Phase 1 §6 で「経路を踏むだけで本文未読」のまま candidate 登録した3件のうち、recency bias 直撃の1本を Phase 4 で消化。同サイクル内で「経路 → 本文 → 内部接続」を所要サイクル数 1 で完了させ、「広く浅い摂取」傾向への構造的反例を作る。

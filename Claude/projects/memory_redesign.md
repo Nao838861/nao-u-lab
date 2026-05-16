@@ -21,6 +21,36 @@ Active — 情報が来たら前進（2026-04-02 Nao_uの指摘で再活性化�
 - [memory/scheduled_actions.md](../memory/scheduled_actions.md) — 旧 Scheduled Actions (action_reservations.md に統合済み)。記憶階層の中で「予約=未来時点の意図」をどう扱うかの最初の試行記録。本プロジェクトの managed lifecycle (extraction/consolidation/forgetting) 議論で「予約も forgetting の明示層に含めるか」の判断材料。
 - [memory/kaizen_crosscheck.md](../memory/kaizen_crosscheck.md) — 3 人相互レビュー制度 (Nao_u 2026-03-23 提案)。本プロジェクトの設計判断 (Junction/Symlink 排除、Camp 2 選択等) を 3 人で検証する装置の最初の運用記録。
 
+### 2026-05-17 (Log C198) — GAM 階層検索順序プロトコルを仮説候補として追加 + trajectory 二重使用問題
+
+C198 Phase 1 §6 WebSearch (kaizen #106 摂取経路固定化、クエリ `knowledge graph orphan node detection LLM memory hierarchy 2026`) で **arXiv 2604.12285v1 GAM: Hierarchical Graph-based Agentic Memory** を取得、Phase 2 §2 で軽量モデル要約を経由してアブストラクト把握 + 5/17 04:00 #shared-reads ts=1778958020 で外部発信済（原著評価設定の直読は未実施と投稿に明記）。
+
+**仮説候補1: 階層検索順序プロトコルの明示化**
+- 現状（L11 段階的検索戦略）: `L-1 → L2トリガー → memory_walk → associative → grep → Slack全文` を **6段一直線**で並べているが、これは「フォールバック順序」であって「目的別の選び方」ではない
+- GAM の3階層（working / entity-relation graph / semantic abstraction）は **目的別に階層を選ぶ** 設計: 直近の言及を引きたいなら working、関連概念で広げたいなら graph、抽象命題なら semantic
+- 当方の射程と重なる部分: cycle_staging_log.md (working) / concept_graph.json + memory_walk (entity-relation graph) / feedback_*.md + R-A〜R-I (semantic abstraction) が既に**ファイルとしては分離**している。順序プロトコルが**手順としては書かれていない**
+- 仮説候補（即実装はしない、運用観察で必要性確認）:
+  - 「想起の目的」を Phase 1 §6 冒頭で1行宣言してから検索ツールを選ぶ（例: `[想起目的: 直近のNao_u指摘=working / 関連概念=graph / 抽象命題=semantic]`）
+  - 既存6段は順序ではなく **目的別に1〜2段を選ぶマトリクス** として再整理
+- 留保: 仮説素材は **本文未直読・軽量モデル要約由来**。本文 WebFetch して評価設定確認後に implementation_status を判定。本サイクル= candidate 登録のみ、実装は早くて C199 以降
+- 関連: `memory/external_notes_log.md` 2026-05-17 §(1) GAM、`memory/feedback_index.md` 4-A 起動時優先順位
+
+**仮説候補2: 二重時系列モデル（Zep bi-temporal、本文未直読、本サイクルは仮説素材として記録のみ）**
+- arXiv 2501.13956 Zep が bi-temporal (chronological / transactional) を分離 = 起きた時間と記録した時間を別軸
+- 当方の暗黙運用: `git mtime` = 記録時、`staging 本文の "5/16 13:56 Nao_u 指示"` = 内容生起時。**プロトコル化されておらず人手記載依存**
+- 仮説候補: cycle_staging_log.md の Phase 1 §2 表に「内容ts」「記録ts」2列を明示する。即実装はしない、Zep 本文確認後に判定
+
+**trajectory 二重使用問題 — Ash 投下の他インスタンス洞察への応答**
+- Ash 5/16 10:59 #shared-reads atom (gr-1778894036 系) で「trajectory がエージェント記憶設計（trajectory memory = 軌跡記憶）と弾幕物理（弾の軌道）で同じ語の別意味」と指摘
+- 当方 memory_search.py で `trajectory visualization` を引くと両方ヒット = **語彙曖昧性が検索精度を下げる**事例。Fang et al.「Trajectory-Informed Memory」と shot_log v01 弾道軌跡が同一クエリでヒット
+- 影響と対応:
+  - 影響範囲: associative_search.py の CONCEPT_MAP に「trajectory」単体ノードがあればそれが両意味を集約してしまう（要確認）
+  - 即対応: 検索クエリ側で `trajectory memory` / `trajectory bullet` のように分離語を使う運用 = 人手対応、構造強制なし
+  - 中期対応: concept_graph.json に「分野コンテキスト付き ノード」（`trajectory#memory` / `trajectory#physics`）を導入する案 → 本サイクル即実装せず、memory_redesign.md「未決の問い」リストに登録
+- 起点: Ash atom が交差ノード（記憶×物理）の **語彙衝突** を遡及検出した形、当方 Log の段階0.5（[L236]）の「交差ノードがセレンディピティを生む」設計の負の側面が初観測 = 設計の前提に **語彙曖昧性ハンドリング** を追加するべき
+
+→ 本サイクル staging Phase 3 §3 で 仮説候補1〜2 + trajectory 二重使用問題を本セクションとして起こす。**実装は次サイクル以降の判断待ち**（CLAUDE.md「個別指摘を即ルール化しない」+ feedback_few_rules_big_effect.md 整合）。
+
 ### 2026-05-10 (Log) — 外部研究3点の独立収束（TiMem / Multi-Layered Memory / Externalization）
 
 C175 サイクル Phase 1 §6 の WebSearch (kaizen #106 摂取経路固定化) で arXiv 2026 Q1 の3本論文を取得 → Phase 2 で本ファイルへ接続:
