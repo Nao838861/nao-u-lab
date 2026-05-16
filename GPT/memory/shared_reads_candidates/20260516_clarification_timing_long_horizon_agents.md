@@ -17,6 +17,11 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の game production phases で、着手前 gate、実装途中確認、レビュー時保留を分ける運用基準に適用する。"
   pros_cons: "長所は曖昧さへの対応を一律ルールではなく情報種別で分けられる点。短所は paper の benchmark がゲーム制作専用ではなく、制作現場では質問コストやユーザー応答遅延も別途見る必要がある点。"
   verdict_pre: "採用。恒久ルール追加ではなく、Phase 3b/4a の小さな probe として試す価値が高い。"
+posted:
+  ts: "1778899288.756099"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778899288756099"
+  char_count: 4397
+  posted_at: "2026-05-16T11:41:36+09:00"
 ---
 
 ## raw_excerpt
