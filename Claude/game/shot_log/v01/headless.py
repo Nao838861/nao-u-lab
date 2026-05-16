@@ -4,6 +4,19 @@ import math, json, sys, ctypes
 W, H = 420, 620
 LV2, LV3, GMAX = 35, 99, 208  # 2026-05-13 C192 Phase 4: BACKLASH 版 index.html と同期
 
+# === BOMB (C195 Phase 4 移植) ===
+# 移植対象: 範囲 ebullet 消去 / 範囲 enemy ダメージ (small/medium 即死、large/boss ceil(maxHp/2))
+#          / gauge=LV2 リセット / bomb-kill revenge の mercy diversion (±60°)
+# 省略対象: 視覚 (rings/particles/popups/shake/hitstop) / SE / bombReady 通知 / bombFlash 内部 cooldown
+# スコア: C192 ベンチとの比較を保つため既存簡略スケール (+1/+10) を維持。
+#         BOMB ボーナスは同スケールで上乗せし bomb_score_bonus に個別記録
+BOMB_R = W * 0.7 * 1.3
+BOMB_R_SQ = BOMB_R * BOMB_R
+BOMB_MERCY_RANGE_SQ = 250 * 250
+MERCY_SMALL_SAFE = math.pi / 3
+BOMB_MULTI_SM = 10  # small/medium bomb kill multiplier (JS と一致)
+BOMB_MULTI_LB = 2   # large/boss bomb kill multiplier
+
 # === mulberry32 PRNG (matches JS) ===
 def mulberry32(seed):
     a = [seed & 0xFFFFFFFF]
@@ -117,6 +130,10 @@ class Game:
         self.hits = 0  # times hit by ebullet
         self.items_collected = 0
         self.lvl_time = {1:0, 2:0, 3:0}
+        self.bomb_used_count = 0
+        self.bomb_kills = 0
+        self.bomb_bullets_cleared = 0
+        self.bomb_score_bonus = 0  # score from BOMB (cleared bullets + kill multiplier)
 
     def lvl(self):
         return 3 if self.gauge>=LV3 else 2 if self.gauge>=LV2 else 1
@@ -143,17 +160,33 @@ class Game:
                     nRad=cfg['nRad'], nAim=cfg['nAim'], dropRate=cfg['dropRate'],
                     flash=0, shotCd=0, dead=False, done=False)
 
-    def spawn_revenge(self, x, y, nRad, nAim):
+    def spawn_revenge(self, x, y, nRad, nAim, bomb_kill=False):
+        dx_p = self.px - x
+        dy_p = self.py - y
+        distSq = dx_p*dx_p + dy_p*dy_p
+        playerAng = math.atan2(dy_p, dx_p)
+        bomb_mercy = bomb_kill and distSq < BOMB_MERCY_RANGE_SQ
+        divert_cone = bomb_mercy
+        mute_aim = bomb_mercy
         base = self.rng() * math.pi * 2
         for i in range(nRad):
             a = base + i * (math.pi*2/nRad)
+            if divert_cone:
+                diff = math.atan2(math.sin(a-playerAng), math.cos(a-playerAng))
+                if abs(diff) < MERCY_SMALL_SAFE:
+                    a = playerAng + (MERCY_SMALL_SAFE if diff >= 0 else -MERCY_SMALL_SAFE)
             self.ebullets.append({'x':x,'y':y,'vx':math.cos(a)*3.5,'vy':math.sin(a)*3.5,'r':3,'dead':False})
-        for i in range(nAim):
-            dx, dy = self.px - x, self.py - y
-            d = math.sqrt(dx*dx+dy*dy) or 1
-            spread = (i - ((nAim-1)/2)) * 0.25
-            a = math.atan2(dy, dx) + spread
-            self.ebullets.append({'x':x,'y':y,'vx':math.cos(a)*3.0,'vy':math.sin(a)*3.0,'r':3,'dead':False})
+        if mute_aim:
+            perp = playerAng + math.pi/2
+            for i in range(nAim):
+                a = perp + (i - ((nAim-1)/2)) * 0.30
+                self.ebullets.append({'x':x,'y':y,'vx':math.cos(a)*3.0,'vy':math.sin(a)*3.0,'r':3,'dead':False})
+        else:
+            for i in range(nAim):
+                dx, dy = self.px - x, self.py - y
+                spread = (i - ((nAim-1)/2)) * 0.25
+                a = math.atan2(dy, dx) + spread
+                self.ebullets.append({'x':x,'y':y,'vx':math.cos(a)*3.0,'vy':math.sin(a)*3.0,'r':3,'dead':False})
 
     def move_enemy(self, e):
         if e['pathIdx'] >= len(e['path'])-1:
@@ -189,8 +222,59 @@ class Game:
                     self.ebullets.append({'x':e['x'],'y':e['y'],'vx':math.cos(a+i*0.18)*2.5,'vy':math.sin(a+i*0.18)*2.5,'r':4,'dead':False})
                 e['shotCd'] = 40
 
-    def step(self, dx, dy):
-        """dx,dy in [-1,1]. Returns True if game continues."""
+    def fire_bomb(self):
+        if self.gauge < GMAX: return
+        self.bomb_used_count += 1
+        self.gauge = LV2  # JS: state.gauge=35 (drop to 2way start)
+        px, py = self.px, self.py
+        # 1) clear ebullets in range
+        cleared = 0
+        surviving = []
+        for b in self.ebullets:
+            if b.get('dead'):
+                continue
+            ddx, ddy = b['x']-px, b['y']-py
+            if ddx*ddx + ddy*ddy <= BOMB_R_SQ:
+                cleared += 1
+            else:
+                surviving.append(b)
+        self.ebullets = surviving
+        self.bomb_bullets_cleared += cleared
+        bullet_pts = cleared * 1  # JS は +30、headless 簡略スケールでは +1/弾
+        self.score += bullet_pts
+        self.bomb_score_bonus += bullet_pts
+        # 2) damage enemies in range
+        killed = []
+        for e in self.enemies:
+            if e['dead']:
+                continue
+            ddx, ddy = e['x']-px, e['y']-py
+            if ddx*ddx + ddy*ddy > BOMB_R_SQ:
+                continue
+            if e['type'] in ('large', 'boss'):
+                dmg = (e['maxHp'] + 1) // 2  # ceil(maxHp/2)
+            else:
+                dmg = e['maxHp']
+            e['hp'] -= dmg
+            if e['hp'] <= 0:
+                e['dead'] = True
+                self.bomb_kills += 1
+                base_pts = 10 if e['type'] == 'boss' else 1
+                mul = BOMB_MULTI_SM if e['type'] in ('small', 'medium') else BOMB_MULTI_LB
+                kill_pts = base_pts * mul
+                self.score += kill_pts
+                self.bomb_score_bonus += kill_pts
+                killed.append(e)
+        # 3) spawn revenge for bomb-killed (with mercy diversion) + drop items
+        for e in killed:
+            self.spawn_revenge(e['x'], e['y'], e['nRad'], e['nAim'], bomb_kill=True)
+            if self.rng() < e['dropRate']:
+                n = 5 if e['type'] == 'boss' else 3 if e['type'] == 'large' else 1
+                for ii in range(n):
+                    self.items.append({'x':e['x']+(ii-(n-1)/2)*15,'y':e['y'],'vy':1.2,'dead':False})
+
+    def step(self, dx, dy, bomb=False):
+        """dx,dy in [-1,1]. bomb=True に gauge>=GMAX なら BOMB 発火。"""
         if self.over: return False
         self.t += 1; self.waveT += 1
         self.lvl_time[self.lvl()] += 1
@@ -202,6 +286,9 @@ class Game:
         # auto-shoot
         if self.cooldown > 0: self.cooldown -= 1
         if self.cooldown <= 0: self.shoot()
+        # BOMB (JS line 669: auto-shoot 後に判定)
+        if bomb and self.gauge >= GMAX:
+            self.fire_bomb()
         # bullets
         for b in self.bullets: b['x']+=b['vx']; b['y']+=b['vy']; b['life']-=1
         self.bullets = [b for b in self.bullets if b['life']>0 and -10<b['x']<W+10]
@@ -305,7 +392,7 @@ def find_nearest_item(g):
     return best_d, best
 
 def policy_center(g):
-    """Stay near center, dodge threats."""
+    """Stay near center, dodge threats. BOMB: 100% immediate on full gauge."""
     dx, dy = 0, 0
     td, threat = find_nearest_threat(g)
     if threat and td < 60:
@@ -316,10 +403,11 @@ def policy_center(g):
         elif g.px > W/2 + 20: dx = -1
         if g.py < H - 80: dy = 1
         elif g.py > H - 50: dy = -1
-    return dx, dy
+    bomb = g.gauge >= GMAX  # 100%
+    return dx, dy, bomb
 
 def policy_aggressive(g):
-    """Move toward items, dodge only close threats."""
+    """Move toward items, dodge only close threats. BOMB: 80% per-frame on full gauge."""
     dx, dy = 0, 0
     td, threat = find_nearest_threat(g)
     if threat and td < 40:
@@ -334,20 +422,22 @@ def policy_aggressive(g):
             if g.py > H - 100: dy = -1
             if g.px < W/2 - 30: dx = 1
             elif g.px > W/2 + 30: dx = -1
-    return dx, dy
+    bomb = g.gauge >= GMAX and g.rng() < 0.8
+    return dx, dy, bomb
 
 def policy_defensive(g):
-    """Stay at bottom, prioritize dodging."""
+    """Stay at bottom, prioritize dodging. BOMB: only when threatened (within 80px), 50% chance."""
     dx, dy = 0, 0
     td, threat = find_nearest_threat(g)
     if threat and td < 80:
         dx = -1 if threat['x'] > g.px else 1
         dy = -1 if threat['y'] > g.py else 1
     if g.py < H - 60: dy = 1
-    return dx, dy
+    bomb = g.gauge >= GMAX and threat is not None and td < 80 and g.rng() < 0.5
+    return dx, dy, bomb
 
 def policy_sweeper(g):
-    """Sweep left-right to cover width, dodge vertically."""
+    """Sweep left-right to cover width, dodge vertically. BOMB: never (control baseline)."""
     dx, dy = 0, 0
     td, threat = find_nearest_threat(g)
     if threat and td < 50:
@@ -358,7 +448,7 @@ def policy_sweeper(g):
     if g.px < target_x - 10: dx = 1
     elif g.px > target_x + 10: dx = -1
     if g.py < H - 80: dy = 1
-    return dx, dy
+    return dx, dy, False
 
 POLICIES = {
     'center': policy_center,
@@ -373,8 +463,8 @@ def run(policy_name, seed=42, max_frames=60*120):
     policy = POLICIES[policy_name]
     gauge_log = []
     while g.t < max_frames:
-        dx, dy = policy(g)
-        if not g.step(dx, dy): break
+        dx, dy, bomb = policy(g)
+        if not g.step(dx, dy, bomb): break
         if g.t % 60 == 0:
             gauge_log.append(g.gauge)
     return {
@@ -385,33 +475,61 @@ def run(policy_name, seed=42, max_frames=60*120):
         'hits': g.hits,
         'items': g.items_collected,
         'gauge_final': g.gauge,
+        'bomb_used': g.bomb_used_count,
+        'bomb_kills': g.bomb_kills,
+        'bomb_bullets': g.bomb_bullets_cleared,
+        'bomb_bonus': g.bomb_score_bonus,
         'lvl_pct': {k: round(v/max(g.t,1)*100,1) for k,v in g.lvl_time.items()},
         'gauge_per_sec': gauge_log,
     }
 
-def main():
+def parse_args(argv):
+    """Minimal arg parsing: --seeds 42,123,7777  --policies center,aggressive,..."""
     seeds = [42, 123, 7777]
+    policies = list(POLICIES.keys())
+    i = 1
+    while i < len(argv):
+        a = argv[i]
+        if a == '--seeds' and i+1 < len(argv):
+            seeds = [int(x) for x in argv[i+1].split(',')]
+            i += 2
+        elif a == '--policies' and i+1 < len(argv):
+            policies = [x for x in argv[i+1].split(',') if x in POLICIES]
+            i += 2
+        else:
+            i += 1
+    return seeds, policies
+
+def main():
+    seeds, policies = parse_args(sys.argv)
     print("="*70)
-    print("shot_log v01 headless evaluation")
+    print("shot_log v01 headless evaluation (C195 Phase 4: BOMB enabled)")
+    print(f"seeds={seeds}  policies={policies}")
     print("="*70)
-    for name in POLICIES:
+    for name in policies:
         for seed in seeds:
             r = run(name, seed)
-            print(f"\n[{r['policy']:12s}] seed={r['seed']:5d}  time={r['time_s']:5.1f}s  score={r['score']:3d}  "
-                  f"hits={r['hits']}  items={r['items']}  gauge={r['gauge_final']}")
+            print(f"\n[{r['policy']:12s}] seed={r['seed']:5d}  time={r['time_s']:5.1f}s  score={r['score']:5d}  "
+                  f"hits={r['hits']}  items={r['items']}  gauge={r['gauge_final']}  "
+                  f"bomb={r['bomb_used']} (kills={r['bomb_kills']} clr={r['bomb_bullets']} +{r['bomb_bonus']})")
             print(f"  lvl%%: 1way={r['lvl_pct'][1]:.0f}%  2way={r['lvl_pct'][2]:.0f}%  3way={r['lvl_pct'][3]:.0f}%")
     # summary
     print("\n" + "="*70)
     print("SUMMARY (avg over seeds)")
     print("="*70)
-    for name in POLICIES:
+    for name in policies:
         results = [run(name, s) for s in seeds]
         avg_time = sum(r['time_s'] for r in results)/len(results)
         avg_score = sum(r['score'] for r in results)/len(results)
         avg_hits = sum(r['hits'] for r in results)/len(results)
         avg_items = sum(r['items'] for r in results)/len(results)
         avg_lv3 = sum(r['lvl_pct'][3] for r in results)/len(results)
-        print(f"  {name:12s}: time={avg_time:5.1f}s  score={avg_score:5.1f}  hits={avg_hits:.1f}  items={avg_items:.1f}  3way={avg_lv3:.0f}%")
+        avg_bomb = sum(r['bomb_used'] for r in results)/len(results)
+        avg_bkills = sum(r['bomb_kills'] for r in results)/len(results)
+        avg_bbul = sum(r['bomb_bullets'] for r in results)/len(results)
+        avg_bbonus = sum(r['bomb_bonus'] for r in results)/len(results)
+        print(f"  {name:12s}: time={avg_time:5.1f}s  score={avg_score:6.1f}  hits={avg_hits:4.1f}  items={avg_items:5.1f}  3way={avg_lv3:.0f}%  "
+              f"bomb={avg_bomb:.1f} (kills={avg_bkills:.1f} clr={avg_bbul:.1f} +{avg_bbonus:.1f})")
 
 if __name__ == '__main__':
     main()

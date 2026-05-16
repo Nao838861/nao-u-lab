@@ -339,3 +339,43 @@ Phase 2 §4 で確定した **B 案** (shot_log v01 で self_judgment.md 作成�
 - 30分で「進んだ」と言える粒度: headless.py への +30行程度の追加 + 4 policy × 3 seed 再計測 + devlog 追記 = 想定 20-40分
 - 並列候補（input_route_hypothesis.md 1段落追記 / kaizen #120 起票伺い）はいずれも Slack 投稿 1本で済む粒度で「大作業」基準に届かない
 - Nao_u 5/16 #game-rights directive「ゲーム制作」への Log 並走判断と整合（v02 着手前の最後の判定根拠固め = v02 自体を急がず、v01 完遂を先に終わらせる）
+
+## Phase 4 副産物（2026-05-16 C195 Phase 4 完遂記録）
+
+### 完遂状況
+完遂の定義 5項目のうち 1〜4 は本フェーズで充足。5（1 commit + push）はユーザー指示「Phase 4 では commit しない、Phase 5 で日記とまとめて push」に従い Phase 5 へ持ち越し。
+
+### 変更/新規ファイル
+- **`game/shot_log/v01/headless.py`** (変更): BOMB 機構を移植
+  - 定数追加: `BOMB_R / BOMB_R_SQ / BOMB_MERCY_RANGE_SQ / MERCY_SMALL_SAFE / BOMB_MULTI_SM=10 / BOMB_MULTI_LB=2`
+  - `Game.__init__`: `bomb_used_count / bomb_kills / bomb_bullets_cleared / bomb_score_bonus` 追加
+  - `Game.spawn_revenge(bomb_kill=False)`: bomb_kill=True で mercy diversion (±60° cone) + perpendicular aim spray
+  - `Game.fire_bomb()`: 範囲 ebullet 消去 + enemy ダメージ (small/medium 即死、large/boss ceil(maxHp/2)) + gauge=LV2 リセット + bomb-kill revenge
+  - `Game.step(dx, dy, bomb=False)`: auto-shoot 後に BOMB 判定
+  - 4 policy 全てを `(dx, dy, bomb)` 返却に書き換え (center 100% / aggressive 80% / defensive 緊急時+50% / sweeper 0%)
+  - `main()`: `--seeds / --policies` 引数対応、bomb 計測を SUMMARY に追加
+- **`game/shot_log/v01/devlog.md`** (変更): C195 Phase 4 節を追記。新ベンチ + C192 比較表 + 「BOMB はハイリスクハイリターン、center 戦略短命化」観察
+- **`game/shot_log/v01/self_judgment.md`** (変更): 「次のアクション 2.」を完了マークに更新、実測結果反映、新規残課題 3項目追記
+
+### ベンチ取得結果 (4 policy × 3 seed, SUMMARY = avg)
+| policy | C192 time | C195 time | Δ | bomb 平均 |
+|---|---|---|---|---|
+| center | 88.1s | 66.8s | -24% | 2.7 |
+| aggressive | 38.1s | 21.5s | -44% | 0.7 |
+| defensive | 34.1s | 32.8s | -4% | 0.3 |
+| sweeper | 5.9s | 5.9s | ±0 | 0.0 (制御群) |
+
+sweeper 不変 = BOMB 未発動 policy では seed 決定論が C192 と完全一致を実証。
+
+### Slack 投稿
+- Phase 4 中の Slack 投稿は 0件（ユーザー指示「Slack 返信や小さな改善は Phase 3 で処理済み。Phase 4 で増やさない」遵守）。
+- 着手手順 §7（#game-rights へ告知）は Phase 5 の日記公開時にまとめて触れる方が文脈と一緒に伝わるため、本フェーズでは投稿せず Phase 5 判断へ譲る。
+
+### kaizen エントリ
+- 本フェーズで新規 kaizen 起票なし（Log 5/13 06:41 「ルール追加凍結フェーズ」継続）。
+- devlog 末尾に kaizen 候補 3項目を残置（Playwright 移行 / AI Expert への教師シグナル / policy BOMB 判定を state ベース化）。次サイクル以降に起票判断。
+
+### Phase 5 への持ち越し
+- 上記 3ファイル変更を 1 commit にまとめて push
+- 日記書き起こし時に C195 Phase 4 = 「v02 着手前の最後の根拠固めが完了 / BOMB はハイリスクハイリターンと判明」を中心に据える
+- （任意判断）#game-rights へ「shot_log v01 BOMB headless 移植完了、center -24% / aggressive -44%」を告知

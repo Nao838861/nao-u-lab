@@ -708,3 +708,62 @@ index.html line 432 (`gauge>=99?3:gauge>=35?2:1`) と line 818 (`Math.min(208,..
 - 「壊れた測定装置を 17日放置していた」事実は kaizen 起票しない代わりに、`sense_prediction_log.md` への教師データ蓄積で消化（Nao_u 06:37 第4点「これは問題だ記述機能不全」の正対応事例として）
 
 — Log (2026-05-13 C192 Phase 4)
+
+## 2026-05-16 (Log C195 Phase 4) headless.py に BOMB 機構移植 — v02 着手前の最後の根拠固め
+
+### 動機
+
+C192 Phase 4 で「BOMB 省略可で OK」として skip した結果、shot_log v01 self_judgment.md (C195 Phase 3) の Q-G / Q-H と「次のアクション 2.」で **BOMB 込みの自己判定がまだ取れていない**ことが残課題化。v02 着手判断の前に「v01 を本当の意味で完遂したか」を測定装置で通すには BOMB が要る。R-I「実装後は self_judgment.md で『面白いか／前作より良いか』を自分で結論してから人間に出す」の遡及補強。
+
+C195 Phase 3 並走判断 (#game-rights 1778924733) で「Codex 側別線、Log は v01 完遂を優先」と宣言した直後の Phase 4 で、その「完遂」の輪郭を測定可能にする 1mm。
+
+### 変更
+
+`game/shot_log/v01/headless.py` に以下追加:
+
+- 定数: `BOMB_R = W*0.7*1.3`, `BOMB_R_SQ`, `BOMB_MERCY_RANGE_SQ=250²`, `MERCY_SMALL_SAFE=π/3`, `BOMB_MULTI_SM=10`, `BOMB_MULTI_LB=2`（JS 値と一致）
+- `Game.__init__`: `bomb_used_count / bomb_kills / bomb_bullets_cleared / bomb_score_bonus` を追加
+- `Game.fire_bomb()`: 範囲内 ebullet 消去 + 範囲内 enemy ダメージ (small/medium 即死、large/boss ceil(maxHp/2)) + gauge=LV2 リセット + bomb-kill revenge は spawn_revenge(bomb_kill=True)
+- `Game.spawn_revenge`: `bomb_kill=False` 引数追加、bomb_kill=True かつ player との距離 < BOMB_MERCY_RANGE で **mercy diversion** (±60° の安全 cone へ弾を逃がす) + aim 弾は perpendicular spray
+- `Game.step(dx, dy, bomb=False)`: auto-shoot 後に `bomb and gauge>=GMAX` で `fire_bomb()` 発火
+- 4 policy を `(dx, dy, bomb)` 返却に書き換え:
+  - center: 100% 即発（gauge>=GMAX 毎フレーム）
+  - aggressive: 80% 即発
+  - defensive: 緊急時 (threat<80px) かつ 50%
+  - sweeper: 0% (BOMB 不使用 / 制御群)
+- `main()`: `--seeds 42,123,7777 --policies center,aggressive,defensive,sweeper` 引数対応
+
+**省略対象**（明示）: 視覚 (rings/particles/popups/shake/hitstop) / SE / `bombReady` 通知 / `bombFlash` 内部 cooldown。スコアは C192 ベンチとの比較を保つため簡略スケール (+1/small medium large, +10/boss) を維持し、BOMB ボーナスは同スケール上乗せ + `bomb_score_bonus` で個別追跡。
+
+### 新ベンチ数値（seed 42 / 123 / 7777、SUMMARY = avg）
+
+| policy | time(s) seed別 | SUMMARY time / score / hits / items / 3way% / bomb / bomb_kills / bomb_clr / bomb_bonus |
+|---|---|---|
+| center | 56.1 / 24.4 / 120.0 | 66.8 / 663.3 / 1.7 / 86.0 / 44% / **2.7 / 28.7 / 53.7 / +340.3** |
+| aggressive | 31.9 / 9.6 / 22.9 | 21.5 / 246.3 / 1.0 / 27.7 / 31% / 0.7 / 14.3 / 16.0 / +159.3 |
+| defensive | 22.8 / 24.4 / 51.1 | 32.8 / 115.7 / 1.0 / 14.0 / 2% / 0.3 / 0.7 / 5.7 / +12.3 |
+| sweeper | **4.6 / 6.5 / 6.5** | 5.9 / 5.3 / 0.0 / 0.3 / 0% / **0.0** / 0.0 / 0.0 / +0.0 |
+
+### C192 ベンチとの差分
+
+| policy | C192 time | C195 time | Δ | C192 score | C195 score | Δ |
+|---|---|---|---|---|---|---|
+| center | 88.1 | 66.8 | **-21.3s (-24%)** | 473.3 | 663.3 | **+190 (BOMB bonus +340)** |
+| aggressive | 38.1 | 21.5 | **-16.6s (-44%)** | 191.0 | 246.3 | +55 (BOMB bonus +159) |
+| defensive | 34.1 | 32.8 | -1.3s (-4%) | 121.3 | 115.7 | -5 (BOMB ほぼ未発動) |
+| sweeper | 5.9 | 5.9 | **±0s** | 5.3 | 5.3 | ±0 (BOMB 0回 = 決定論保持 ✓) |
+
+**重要な観測**: sweeper の time/score が C192 と完全一致 = BOMB 未発動 policy では乱数列が C192 と同一であることを実証。これは「BOMB 経由で spawn_revenge の rng 消費が増えると seed の決定論挙動が乱れる」副作用に対する **基準線** になる。center / aggressive は BOMB 発動するため C192 と直接比較不可、新基準として記録。
+
+### この差分の意味するもの（小さく書く）
+
+- **BOMB は中性ではなくハイリスクハイリターン**: center -24% / aggressive -44% で生存時間 **短縮**、defensive ほぼ不変、sweeper 不変。BOMB が「弾幕脱出」と「revenge 発射元」を同時に持つ二刀流であり、center のような「常時センターに留まる」policy では BOMB 直後の revenge 弾幕に body collision されやすい。
+- **設計意図との整合**: BOMB は緊急脱出ツールであり、雑に毎 MAX 即発する center は悪手という設計の正当性が headless で観測された。aggressive は item 集めの動線上で BOMB を浴びるパターン。defensive は下端に留まるため revenge 弾幕の影響が小さい。
+- **Q-G/Q-H 遡及採点への影響**: self_judgment.md (C195 Phase 3) で Q-G「core fan」評価のうち「BOMB 機構未測定」と注記した部分は、本ベンチで「BOMB は確かに gauge 経済と難易度カーブの中核」を観測 → core fan 評価維持を補強。Q-H の独自要素「BOMB バックラッシュ」も実装存在を裏取り。
+- **v02 着手前ゲート**: R-I「類似30本 + brainstorm 30件 + 着手前批判レビュー + self_judgment」の self_judgment 側は本ベンチで埋まった。残る R-I 要件 (類似30本 / brainstorm) は次サイクル以降。
+- **kaizen 起票候補（本サイクルでは新規凍結中のため次サイクル以降）**:
+  1. `headless.py` を Playwright で実 index.html に置き換える長期構想を kaizen 化
+  2. center policy が悪手と判明 → AI Expert (17方向評価) 移植時に「BOMB 発動 = -時間」教師シグナルを与える
+  3. `bomb=g.rng()<0.8` のような確率判定が headless 全体の seed 決定論を破る問題 → policy の BOMB 判定を「同じ seed で常に同じ結果」になるよう state ベースに直す（次回 v02 着手前）
+
+— Log (2026-05-16 C195 Phase 4)

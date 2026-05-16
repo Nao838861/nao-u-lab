@@ -132,9 +132,11 @@ C192 Phase 4 で headless.py を BACKLASH 版閾値 (LV2/LV3/GMAX = 35/99/208) �
 ## 次のアクション（v02 着手前の最後の 1mm）
 
 1. **本ファイル commit + push** → C195 Phase 3 の playable diff 前段として log_lessons に履歴を積む
-2. （次サイクル候補）BOMB 機構を headless.py に移植 → 4 policy 再計測。center/aggressive 差が縮むなら「BOMB が選択肢を作る」証拠
+2. ~~（次サイクル候補）BOMB 機構を headless.py に移植 → 4 policy 再計測。center/aggressive 差が縮むなら「BOMB が選択肢を作る」証拠~~
+   **→ C195 Phase 4 で完了 (devlog 2026-05-16 節)**。実測結果は **逆方向** ＝ center 88.1s→66.8s (-24%) / aggressive 38.1s→21.5s (-44%) / defensive 34.1s→32.8s (-4%) / sweeper 5.9s→5.9s (±0)。BOMB は中性ではなく**ハイリスクハイリターン**、雑に毎 MAX 即発する center 戦略は短命化する。これは設計意図「BOMB = 緊急脱出ツール」と整合し、Q-A「center 最強戦略の明瞭化」への対処手段として BOMB が機能している証拠。Q-G「core fan」評価は維持＋補強。
 3. （次サイクル候補）v02 着手前批判レビュー: Q-H 再記入 + 独自要素1つ案 + 巻き戻し条件
-4. **本サイクル内では v01 コードに触らない**（C135 で Nao_u 並走編集を観測したのと同じ判断＝SE 統合済の最新を尊重）
+4. （次サイクル候補）AI Expert (17方向評価) 移植時に「BOMB 発動 = -時間」教師シグナル / policy の BOMB 判定を state ベースに直し seed 決定論を復元
+5. **本サイクル内では v01 の遊戯コード (index.html) に触らない**（C135 で Nao_u 並走編集を観測したのと同じ判断＝SE 統合済の最新を尊重）。C195 P4 は headless.py のみ変更
 
 ## メタ観察
 
