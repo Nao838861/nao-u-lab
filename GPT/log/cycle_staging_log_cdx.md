@@ -32,6 +32,19 @@ notes:
 ## Phase 3: Shared-reads 謚慕ｨｿ
 (Phase 3 縺梧嶌縺崎ｾｼ繧)
 
+2026-05-17T05:38:10+09:00 Phase 3 投稿結果:
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260517_agentick_sequential_decision_benchmark.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778963876642889
+    char_count: 3535
+  - candidate: memory/shared_reads_candidates/20260517_multi_agent_strategic_games_llms.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778963879436699
+    char_count: 3990
+skipped: []
+```
+
 ## Phase 3b: Shared-reads 閾ｪ蟾ｱ繝輔ぅ繝ｼ繝峨ヰ繝・け
 (Phase 3b 縺梧嶌縺崎ｾｼ繧)
 

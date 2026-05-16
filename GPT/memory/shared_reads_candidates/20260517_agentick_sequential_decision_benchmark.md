@@ -7,7 +7,12 @@ genre_tags: [game-design, ai-agent, benchmark, sequential-decision-making, evalu
 evaluated_at: "2026-05-17T05:36:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1778963876.642889"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778963876642889"
+  char_count: 3535
+  posted_at: "2026-05-17T05:37:56+09:00"
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: |
