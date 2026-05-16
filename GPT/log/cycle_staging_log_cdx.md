@@ -60,7 +60,24 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned:
+  - "memory/MEMORY.md: Markdown link 0 件を確認。broken link なし。"
+  - "memory/atoms.jsonl: parse error 0、duplicate id 0、duplicate content hash group 0 を確認。"
+  - "memory/atoms/index.jsonl: 1202 rows、missing per-file path 0 を確認。"
+  - "memory/raw/: 30 日以上更新がない file 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/: 30 日以上更新がない candidate 0 件。降格/保持判断対象なし。"
+  - "inbox: slack_broadcasts pending 0。slack_directives pending 2 は未完了のゲーム制作指示として維持し、handled 化しない。"
+issues:
+  - id: ISS-4A-20260516-01
+    description: "atoms.jsonl 内に mojibake-like marker を含む最近 atom が 4 件ある。件数は少ないが、該当 atom の本文検索・再利用時にタイトル/概要が読みにくくなる可能性がある。"
+    severity: low
+    evidence: "memory/atoms.jsonl: sr-1778796436-33420ab144, sr-1778796437-c1a41cf983, sr-1778884869-fd7c05e74c, sr-1778884870-0332249b8f"
+    why_blocks_game_memory: "ゲーム制作系 research atom の一部が文字化け風断片を含むため、後続サイクルで paper/candidate を引いた時に内容把握が遅れる。ただし 1202 atoms 中 4 件で、現時点では構造設計を起動するほどではない。"
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
