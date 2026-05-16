@@ -68,7 +68,25 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-16T22:05+09:00 log_cdx Phase 4a 追記。
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の markdown link を確認: 対象 link 0 / broken 0。index 行の atom id 参照はリンクではないため破損なし。"
+  - "memory/atoms.jsonl を確認: rows 1207 / bad_json 0 / empty_id 0 / duplicate_ids 0 / duplicate_hashes 0。"
+  - "memory/raw/ と memory/shared_reads_candidates/ の 30 日以上未更新ファイルを確認: どちらも 0 件。"
+  - "slack_inbox_lifecycle.py pending を確認: directives / broadcasts とも pending 0 件。status 更新対象なし。"
+issues:
+  - id: ISS-4A-20260516-001
+    description: "shared_reads_candidates 配下の候補 87 件のうち、少なくとも md 候補 83 件に status frontmatter がなく、pass/postpone/fail/posted の状態が staging やファイル名・mtime に分散している。30 日経過時の postpone -> fail 降格や明示保持を、候補ファイル単体から機械的に判断しにくい。"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/*.md status 集計: statuses={} / no_status=83。例: memory/shared_reads_candidates/20260513_autoue_unreal_multi_agent_game_generation.md。"
+    why_blocks_game_memory: "ゲーム制作向けの良い候補を後で拾う時、未評価・延期・投稿済み・失敗の区別が候補プール単体で検索できず、次サイクルの Phase 2/3 が同じ候補を再評価したり、古い候補を保持すべきか判断するコストが増える。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260516-001
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
