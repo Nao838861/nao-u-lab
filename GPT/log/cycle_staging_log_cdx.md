@@ -42,7 +42,34 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-16T11:44:42+09:00 Phase 3b self-feedback:
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778567110-b1c59a00df
+    source_ts: "1778567110.717629"
+    title: "[shared-reads] devwhodevs/engraph: 5 レーン RRF ハイブリッド検索で markdown vault をエージェント記憶基盤にする MCP/REST server"
+    reason: "memory/atoms per-file 移行と Phase 4a 記憶整理に直結するが、恒久導入ではなく read-only recall 比較に縮小できるため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "engraph の 5 レーン検索/Write 機能をそのまま導入せず、次の記憶検索改善・vault health 検討で read-only レーン比較と説明可能性を確認する短期 probe を state に追加。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
