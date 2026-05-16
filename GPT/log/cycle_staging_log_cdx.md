@@ -72,7 +72,20 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-16T19:48:00+09:00 log_cdx Phase 4a 追記
+```yaml
+cleaned:
+  - "memory/MEMORY.md の markdown/backtick 参照を確認: refs=2, broken=0"
+  - "memory/atoms.jsonl を確認: rows=1205, bad_json=0, duplicate_ids=0"
+  - "memory_health.py を実行: display_atoms_after_lifecycle_fold=1016, lifecycle fold=189, warning は repeated title group 未付与 6種のみ"
+  - "memory/raw/ の 30日超未更新ファイルを確認: 0件"
+  - "memory/shared_reads_candidates/ の 30日超未更新 candidate を確認: 0件"
+  - "slack_inbox_lifecycle.py pending を確認: directives pending=0, broadcasts pending=0"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
