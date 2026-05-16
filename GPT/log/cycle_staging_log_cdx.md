@@ -12,7 +12,17 @@
 - 追加 candidate: `memory/shared_reads_candidates/20260516_game_ai_player_preference_profiles.md` - 771 名調査から game AI 受容を 7 profile に分ける arXiv 2026-05-10 論文。AI 機能をプレイヤー層別に設計する素材。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-16T13:45+09:00 log_cdx Phase 2 判定:
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260516_game_ai_player_preference_profiles.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260516_player_experience_resonance_chi2026.md
+    reason: "問題設定と適用性は強いが、現候補は公開概要ベースで survey の設問・分析手順・結果粒度が不足。約4000字の根拠付き概要には本文確認が必要。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

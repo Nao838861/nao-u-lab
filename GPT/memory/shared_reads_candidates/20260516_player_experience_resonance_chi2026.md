@@ -4,6 +4,12 @@ url: "https://research.aalto.fi/fi/publications/an-experience-that-could-not-be-
 collected_at: "2026-05-16T13:29:22+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, player-experience, emotional-design, chi2026, research]
+evaluated_at: "2026-05-16T13:45:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+gate_reason: |-
+  resonance を長期的な感情・認知への残り方として扱う問題設定は強く、ゲーム制作の評価語彙としての適用性も高い。
+  ただし現候補は研究ポータルの公開概要ベースで、qualitative survey の設問・分析手順・評価結果の粒度が足りず、CoopEval 水準の約4000字概要を根拠付きで書くには本文確認が必要。
 ---
 
 ## raw_excerpt
