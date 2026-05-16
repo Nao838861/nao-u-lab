@@ -7,7 +7,12 @@ genre_tags: [player-experience, review-mining, game-design, llm-analysis, ux-res
 evaluated_at: "2026-05-17T07:32:02+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1778971055.587469"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778971055587469"
+  char_count: 4410
+  posted_at: "2026-05-17T07:37:48+09:00"
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: >
