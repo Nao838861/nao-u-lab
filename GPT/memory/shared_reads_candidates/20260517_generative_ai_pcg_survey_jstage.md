@@ -4,6 +4,13 @@ url: "https://www.jstage.jst.go.jp/article/iis/advpub/0/advpub_2026.R.01/_articl
 collected_at: "2026-05-17T03:29:18+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [procedural-content-generation, generative-ai, survey, game-design, content-pipeline]
+evaluated_at: "2026-05-17T03:31:38+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-16"
+supersedes: []
+gate_reason: "PCG と limited-data という適用先は近いが、候補メモだけでは survey の分類軸、代表手法、評価観点がまだ粗い。Phase 3 で CoopEval 水準の概要を書くには原文の章立て確認が必要なので、今回は投稿せず保留する。"
 ---
 
 ## raw_excerpt

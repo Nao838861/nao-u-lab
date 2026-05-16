@@ -12,7 +12,18 @@
 Slack inbox 確認: `python tools\slack_inbox_lifecycle.py pending` では directives / broadcasts とも pending なし。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-17T03:31+09:00 log_cdx Phase 2 評価。
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260517_gamedevbench_agentic_game_development.md
+  - memory/shared_reads_candidates/20260517_perceived_generated_content_player_experience.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260517_generative_ai_pcg_survey_jstage.md
+    reason: "PCG limited-data の適用先は近いが、候補メモだけでは survey の分類軸・代表手法・評価観点が粗く、Phase 3 投稿前に原文章立て確認が必要。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
