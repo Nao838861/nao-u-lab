@@ -7,6 +7,7 @@ genre_tags: [game-design, generative-npc, llm-dialogue, prompt-design, player-ex
 evaluated_at: 2026-05-15T05:12:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+candidate_status: posted
 gate_reason: |
   NPC の役割ごとに prompt 制約の強さを変えるという問題設定、The Interview での within-subjects study、JSON+RAG scaffold と LLM judge による追評価までが候補本文から追える。
   「安定性が必要な NPC」と「即興性が価値になる NPC」を分ける設計軸は、LLM NPC 実装時の具体判断に落とし込めるため、~4000字の概要に耐える。

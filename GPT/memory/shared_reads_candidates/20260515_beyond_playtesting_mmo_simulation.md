@@ -7,6 +7,7 @@ genre_tags: [game-design, playtesting, simulation, llm-agents, balancing, mmo]
 evaluated_at: "2026-05-15T11:01:51+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: posted
 posted:
   ts: "1778810803.000339"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778810803000339"

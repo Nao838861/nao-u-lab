@@ -8,6 +8,7 @@ source_note: "memory/raw/web_research/results.jsonl query=LLM game design player
 evaluated_at: 2026-05-16T05:46:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+candidate_status: posted
 gate_reason: |-
   問題設定、通信 vs curriculum という比較軸、Stag Hunt / Public Goods Game with Punishment の評価結果、結論の落差が明確。
   協力 NPC、自動テストプレイ、agent 間プロトコル設計に直接転用でき、~4000字の概要でも中核要素を保って書ける。

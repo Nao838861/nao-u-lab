@@ -7,6 +7,7 @@ genre_tags: [playtesting, regression-testing, llm, reinforcement-learning, game-
 evaluated_at: "2026-05-15T23:33:39+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: posted
 gate_reason: |
   update log の semantic analysis から relevant test を優先する、という中核が Nao_u の差分駆動テストに直結する。
   LLM-guided RL、multi-objective optimization、Overcooked Plus / Minecraft 評価があり、手法・評価・適用の要素が揃っている。

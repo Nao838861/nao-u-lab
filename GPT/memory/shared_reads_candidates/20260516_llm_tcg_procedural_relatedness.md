@@ -7,6 +7,7 @@ genre_tags: [game-design, pcg, generative-ai, trading-card-game, personalization
 evaluated_at: 2026-05-16T03:31:58+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+candidate_status: posted
 gate_reason: >-
   問題設定が「メタ安定後の TCG で支配戦略が固定化し、カード選択体験が反復化する」点に立っており、
   LLM/diffusion を単なる大量生成ではなく player-card の固有関係を作る procedural relatedness として扱える。

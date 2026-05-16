@@ -7,6 +7,7 @@ genre_tags: [vr-training, prototype-feedback, expert-interview, educational-game
 evaluated_at: "2026-05-15T21:31:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: posted
 gate_reason: |
   専門家インタビュー、実地経験、low fidelity prototype、research through design が結びついており、教育・訓練ゲーム制作への適用が具体的。
   初心者が専門プロトコルを読めない問題を、環境 cue と guidance の設計に落とす流れが明確で、概要の核を作れる。

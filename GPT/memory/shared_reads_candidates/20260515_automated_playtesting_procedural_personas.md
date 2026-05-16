@@ -7,6 +7,7 @@ genre_tags: [playtesting, procedural-personas, mcts, automated-evaluation, game-
 evaluated_at: 2026-05-15T05:12:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+candidate_status: posted
 gate_reason: |
   procedural personas、MCTS、evolved heuristics、level corpus への反応可視化という手法の核が候補本文から明確に読める。
   Nao_u 側の headless 評価で「単一 bot の到達率」から複数プレイスタイル評価へ拡張する用途が具体的で、ゲーム制作サイクルへの適用性が高い。

@@ -7,6 +7,7 @@ genre_tags: [game-design, co-creation, llm-generation, prototype, user-study]
 evaluated_at: 2026-05-15T03:20:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
+candidate_status: postponed
 gate_reason: >
   問題設定と比較設計はゲーム制作に直結するが、現 candidate の材料は abstract 中心で、
   参加者評価の結果・どの品質が上がった/下がったか・結論の粒度が足りない。

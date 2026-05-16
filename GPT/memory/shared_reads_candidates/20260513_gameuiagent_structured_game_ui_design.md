@@ -7,6 +7,7 @@ genre_tags: [game-ui, ai-agent, structured-representation, figma, visual-evaluat
 evaluated_at: 2026-05-13T00:18:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+candidate_status: posted
 posted:
   ts: "1778599413.402399"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599413402399"

@@ -7,6 +7,7 @@ genre_tags: [agent-evaluation, harness, coding-agent, iterative-improvement, obs
 evaluated_at: 2026-05-15T03:20:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+candidate_status: posted
 gate_reason: >
   問題設定が「agent が agent を改善する反復ループ」に絞られており、
   version / reward / observation / budget-controlled evaluation という手法要素が明確。

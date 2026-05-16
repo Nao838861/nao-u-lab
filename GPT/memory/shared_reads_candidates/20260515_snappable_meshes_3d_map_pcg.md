@@ -7,6 +7,7 @@ genre_tags: [game-design, procedural-generation, level-design, prototyping, unit
 evaluated_at: 2026-05-15T15:19:33+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+candidate_status: posted
 gate_reason: >-
   問題設定は 3D level design の PCG を designer control と navigability feedback に戻すこと、
   手法は snappable mesh piece と connector/visual constraint による composition として明確。

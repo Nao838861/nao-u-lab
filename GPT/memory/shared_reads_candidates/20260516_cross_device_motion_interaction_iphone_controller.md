@@ -7,6 +7,7 @@ genre_tags: [mobile-game, haptics, motion-control, prototyping, embodied-interac
 evaluated_at: "2026-05-16T01:32:28+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: posted
 gate_reason: >-
   CoreMotion / MultipeerConnectivity / CoreHaptics の具体 pipeline と、latency、packet loss、電力、demonstrator game、参加者数まで candidate 内で把握できる。
   スマホ連携そのものだけでなく、入力手触りをログと再現性込みで評価する姿勢がゲーム制作の prototype 検証に具体的に適用できる。

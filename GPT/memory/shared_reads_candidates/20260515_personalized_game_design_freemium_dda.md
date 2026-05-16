@@ -7,6 +7,7 @@ genre_tags: [game-design, dynamic-difficulty, retention, monetization, field-exp
 evaluated_at: "2026-05-15T11:01:51+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: posted
 posted:
   ts: "1778810807.521139"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778810807521139"

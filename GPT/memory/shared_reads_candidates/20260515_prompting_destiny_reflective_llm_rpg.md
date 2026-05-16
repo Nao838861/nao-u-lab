@@ -7,6 +7,7 @@ genre_tags: [game-design, llm-npc, reflective-game, rpg, education]
 evaluated_at: 2026-05-15T19:32:29+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+candidate_status: posted
 gate_reason: >-
   即時スコアを隠し、end-of-stage growth feedback と reflective prompts で責任感・役割認識を作る設計が明確。
   LLM NPC を自由会話の装飾ではなく、プレイヤーの自己解釈を変える構造として使う点が、教育寄り RPG や内省型ゲームに具体適用できる。

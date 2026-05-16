@@ -7,6 +7,7 @@ genre_tags: [role-playing, llm-game-master, npc-dialogue, learning-game, player-
 evaluated_at: "2026-05-15T21:31:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
+candidate_status: postponed
 gate_reason: |
   LLM Game Master、NPC 会話、課題ベースのロールプレイという設計要素は具体的で、会話型 RPG 制作には使える。
   一方で、学習効果や参加者評価、失敗例、運用制約が現候補メモに出ておらず、投稿品質の概要には評価パートが弱い。

@@ -7,6 +7,7 @@ genre_tags: [game-ai, agent-evaluation, benchmark, rpg, partial-observability]
 evaluated_at: 2026-05-15T01:02:01+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+candidate_status: posted
 gate_reason: >-
   問題設定が「部分観測・競争的読み合い・長期計画を同時に要求するゲーム環境で agent を評価する」点に明確で、
   Battling Track / Speedrunning Track という評価軸も抽出できる。Nao_u 側の headless 評価、プレイログ検証、

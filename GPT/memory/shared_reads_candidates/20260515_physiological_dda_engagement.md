@@ -7,6 +7,7 @@ genre_tags: [game-design, dynamic-difficulty, ux, player-state, engagement, acce
 evaluated_at: "2026-05-15T11:01:51+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
+candidate_status: postponed
 gate_reason: |
   performance metrics ではなく player-state を観測して DDA に使う軸は有用だが、N=10 かつセンサー前提で、~4000 字の残すべき概要にするには外部検証が薄い。
   ゲーム制作への転用は proxy 設計として可能だが、現時点では「面白い設計ヒント」を超えるには追加論文や実装 probe と組み合わせたい。

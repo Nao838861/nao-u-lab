@@ -7,6 +7,7 @@ genre_tags: [agent-memory, memory-safety, long-term-state, evaluation, writeback
 evaluated_at: 2026-05-15T03:20:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+candidate_status: posted
 gate_reason: >
   長期状態を持つ agent の authorization drift / tool-use escalation / unchecked autonomy を
   benchmark と Harm Score で測る構造が明確。ゲーム制作そのものより、制作 agent の記憶・権限・自動化境界に効く。

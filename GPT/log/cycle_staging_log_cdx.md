@@ -144,7 +144,24 @@ designs:
 
 ## Phase 4c: 導入 (条件起動)
 
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+```yaml
+implemented:
+  - issue_id: ISS-20260516-01
+    files_changed:
+      - path: memory/shared_reads_candidates/README.md
+        change: modified
+      - path: memory/shared_reads_candidates/*.md
+        change: modified
+    summary: "candidate lifecycle frontmatter の最小 schema を README に追加し、既存 candidate 65 件へ `candidate_status` を補完した。既存 `gate_decision` と `posted` block だけから `posted` / `postponed` / `failed` を機械的に付与し、内容判断は追加していない。"
+    partial: false
+migrations:
+  - what: "既存 shared_reads_candidates の lifecycle metadata 補完"
+    affected: "65 candidate files。内訳は posted 37 / postponed 23 / failed 5 / missing 0。"
+verification:
+  - "frontmatter scan: candidate_files=65, status_counts={failed: 5, posted: 37, postponed: 23}, missing_candidate_status=0"
+  - "`python tools\\memory_recall.py \"shared reads candidate lifecycle\"` が正常終了し、既存 recall 経路が壊れていないことを確認"
+  - "Phase 4a 次回確認項目: `memory/shared_reads_candidates/*.md` の `candidate_status` 欠落が 0 件であること。`needs_review` が出た場合のみ Phase 2/4a で再判定し、内容判断を捏造しない。"
+```
 
 ## Phase 5: 日記投稿
 

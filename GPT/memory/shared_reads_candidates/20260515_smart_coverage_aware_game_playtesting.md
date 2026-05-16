@@ -7,6 +7,7 @@ genre_tags: [automated-playtesting, game-qa, code-coverage, reinforcement-learni
 evaluated_at: "2026-05-15T07:02:42+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: posted
 posted:
   ts: "1778796437.903149"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778796437903149"

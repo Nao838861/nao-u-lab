@@ -7,6 +7,7 @@ genre_tags: [automated-game-design, mechanics, unity, design-tools, procedural-g
 evaluated_at: 2026-05-15T17:21:41+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+candidate_status: posted
 gate_reason: |
   既存 Unity project に annotation を加え、code-level mechanic を生成・テストするという問題設定と手法が明確で、複数 open-source Unity games での実演もある。
   Nao_u の playable diff 制作では、mechanic 候補をコード差分として小さく試す運用に直接変換できる。

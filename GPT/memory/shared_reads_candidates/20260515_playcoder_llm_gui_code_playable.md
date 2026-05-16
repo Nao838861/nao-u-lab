@@ -7,6 +7,7 @@ genre_tags: [llm-code-generation, gui-games, playability, automated-repair, eval
 evaluated_at: "2026-05-15T09:03:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: posted
 gate_reason: >-
   「コンパイルできる」と「遊べる」を分離し、PlayEval / Play@k / PlayTester / repair loop まで候補内で重要要素が揃っている。
   Nao_u 環境の playable diff、ヘッドレス評価、logic violation 検出に直接適用でき、4000字級の概要に展開しやすい。

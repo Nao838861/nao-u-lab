@@ -7,6 +7,7 @@ genre_tags: [game-design, game-balancing, llm-agents, simulation, playtesting]
 evaluated_at: "2026-05-15T09:03:27+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: posted
 gate_reason: >-
   問題設定、multi-agent self-play + Bayesian optimization の中核、CivMini での評価対象、balance metrics が候補段階でも読める。
   Nao_u 環境の graze / score / survival 調整を rule space 化して、主観ではなく評価ゲームで比較する用途に接続できる。

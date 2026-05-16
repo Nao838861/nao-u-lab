@@ -7,6 +7,7 @@ genre_tags: [game-design, gamification, education, feedback, motivation]
 evaluated_at: "2026-05-16T01:32:28+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: posted
 gate_reason: >-
   systematic review から GDE を10種に整理し、visual prototype と 125 participants の best-worst scaling、qualitative feedback で選好理由を見る構成が明確。
   progress / content relevance / constructive feedback を、単なる報酬追加ではなく上達と次行動の可視化としてゲーム UI に落とせるため、4000字級の概要に耐える。

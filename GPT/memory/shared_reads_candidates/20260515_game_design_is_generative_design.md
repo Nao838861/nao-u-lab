@@ -7,6 +7,7 @@ genre_tags: [game-design, procedural-generation, design-theory, aiide, generativ
 evaluated_at: 2026-05-15T17:21:41+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+candidate_status: posted
 gate_reason: |
   「game design is generative design」という再定義、procedural gameplay system、プレイヤー 261 名・デザイナー 126 名 survey という評価材料があり、単なる感想記事より密度がある。
   Nao_u の制作では、生成を量産機能ではなくプレイ中に変化を生む設計言語として扱う軸に直結する。

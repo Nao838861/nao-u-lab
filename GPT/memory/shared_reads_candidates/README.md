@@ -14,6 +14,36 @@ YYYYMMDD_<topic-slug>.md
 
 例: `20260512_coopeval_replication_attempt.md`
 
+## lifecycle frontmatter
+
+各 candidate は先頭に YAML frontmatter を置き、少なくとも次の lifecycle metadata を持つ。
+
+```yaml
+---
+title: "<記事・論文タイトル>"
+url: "<URL>"
+collected_at: "YYYY-MM-DDTHH:MM:SS+09:00"
+collected_by: "log_cdx (Phase 1)"
+genre_tags: [game-design]
+evaluated_at: "YYYY-MM-DDTHH:MM:SS+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass | postpone | fail
+candidate_status: posted | ready_to_post | postponed | failed | needs_review
+gate_reason: "<判断理由>"
+posted:
+  ts: "<Slack ts>"
+  permalink: "<Slack permalink>"
+  char_count: 4000
+  posted_at: "YYYY-MM-DDTHH:MM:SS+09:00"
+---
+```
+
+- `candidate_status: posted` は #shared-reads 投稿済み。`posted` block を付ける。
+- `candidate_status: ready_to_post` は `gate_decision: pass` だが未投稿。
+- `candidate_status: postponed` は追加調査や密度不足で保留。
+- `candidate_status: failed` は現時点では投稿品質または適用性が足りない。
+- `candidate_status: needs_review` は旧ファイルや未判定ファイルの暫定値。次の Phase 2/4a で再判定する。
+
 ## 育てる流れ
 
 1. 探索段階で見つけた記事/論文をここに candidate として保存

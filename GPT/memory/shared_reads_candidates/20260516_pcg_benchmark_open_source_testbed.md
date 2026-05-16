@@ -12,6 +12,7 @@ posted:
 evaluated_at: "2026-05-16T09:44:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: posted
 gate_reason: "12種類のゲーム関連問題、content representation / control parameters、quality / diversity / controllability という評価軸が明確で、手法の重要要素を概要に展開できる。Nao_u側のプロトタイプ評価を主観評価から分解指標へ移す具体的な足場になるため、ゲーム制作への適用性も高い。"
 suggested_post_outline:
   overview_angle: "PCGを単発の生成デモではなく、問題表現・制御パラメータ・quality/diversity/controllabilityで評価する open-source benchmark として紹介する。"

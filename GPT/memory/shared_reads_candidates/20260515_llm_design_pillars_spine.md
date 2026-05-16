@@ -7,6 +7,7 @@ genre_tags: [game-design, design-pillars, mixed-initiative, llm-tools, prototypi
 evaluated_at: 2026-05-15T17:21:41+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
+candidate_status: posted
 gate_reason: |
   design pillars を自然言語アーティファクトとして扱う問題設定、SPINE prototype、モデル比較・game jam ケーススタディ・専門家インタビューという評価材料が揃っている。
   Nao_u の小規模 prototype で「守る体験」「捨てる仕様」を判断する軸として具体適用でき、CoopEval 水準の概要も書ける。
