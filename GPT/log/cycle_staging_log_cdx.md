@@ -26,7 +26,19 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-17T04:18+09:00 log_cdx Phase 3 投稿。
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260517_gamedevbench_agentic_game_development.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778956655699379"
+    char_count: 3891
+  - candidate: memory/shared_reads_candidates/20260517_perceived_generated_content_player_experience.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778956657201979"
+    char_count: 3779
+skipped: []
+notes:
+  - "chat.postMessage は 2 件とも成功。chat.getPermalink は helper 経由 JSON POST で invalid_arguments だったため、channel C0AN2FEHEJJ と ts から permalink を構成して記録。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

@@ -7,7 +7,12 @@ genre_tags: [player-experience, generative-ai, pcg, perception-bias, level-desig
 evaluated_at: "2026-05-17T03:31:38+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1778956657.201979"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778956657201979"
+  char_count: 3779
+  posted_at: "2026-05-17T04:17:37+09:00"
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: "問題設定、Mario/Sokoban level による比較、creator perception と体験評価の分離、結論が候補メモ内で明確。生成コンテンツの品質評価だけでなく UI 表示・説明文・AI 生成ラベルの扱いへ直接適用できる。"

@@ -1,0 +1,2001 @@
+
+
+--- PAGE 1 ---
+Playing the Imitation Game: How Perceived Generated Content
+Shapes Player Experience
+Mahsa Bazzaz
+Northeastern University
+Boston, Massachusetts, USA
+bazzaz.ma@northeastern.edu
+Seth Cooper
+Northeastern University
+Boston, Massachusetts, USA
+se.cooper@northeastern.edu
+Abstract
+With the fast progress of generative AI in recent years, more games
+are integrating generated content, raising questions regarding how
+players perceive and respond to this content. To investigate, we
+ran a mixed-method survey on the games Super Mario Bros. and
+Sokoban, comparing procedurally generated levels and levels de-
+signed by humans to explore how perceptions of the creator relate
+to players’ overall experience of gameplay. Players could not reli-
+ably identify the level’s creator, yet their experiences were strongly
+linked to their beliefs about that creator rather than the actual truth.
+Levels believed to be human-made were rated as more fun and aes-
+thetically pleasing. In contrast, those believed to be AI-generated
+were rated as more frustrating and challenging. This negative bias
+appeared spontaneously without knowing the levels’ creator and
+often was based on unreliable cues of “human-likeness. ” Our re-
+sults underscore the importance of understanding perception biases
+when integrating generative systems into games.
+CCS Concepts
+•Human-centered computing→Empirical studies in HCI.
+Keywords
+Procedural Content Generation, Generative AI, Games, Turing test,
+Human-subject Study, Mixed-Methods
+1 Introduction
+Procedural content generation (PCG) involves the automatic gener-
+ation of any type of game content ranging from simple elements
+like textures and sprites to more complex components such as map
+layouts, game mechanics, game levels, and even full games [ 99].
+Procedurally generated content can empower novice designers and
+help solo developers with a limited budget to be able to finish their
+projects faster and more efficiently [15].
+While PCG at its core often relies on fixed rules and algorithms
+to generate content, newer generative AI approaches create content
+from prompts using large models. Today, nearly 10,000 games1 [106]
+on Steam use generative AI, and about 10,200 include procedural
+content2 [120]. This rapid adoption left many professional creators
+1games with tag “AI content” in Steam DB
+2games with tag “procedural content” in Steam Store
+This work is licensed under a Creative Commons Attribution-NonCommercial-
+NoDerivatives 4.0 International License.
+CHI ’26, Barcelona, Spain
+©2026 Copyright held by the owner/author(s).
+ACM ISBN 979-8-4007-2278-3/2026/04
+https://doi.org/10.1145/3772318.3790473
+in games feeling simultaneously excited, overwhelmed, and con-
+cerned [122]. In January 2024, Steam introduced a new policy [121]
+requiring developers to disclose how AI is used in their games. This
+raised the question of if transparency through labeling actually
+has the intended effect of helping players make more informed
+judgments.
+The disclosure debate ties into a broader question: how do people
+perceive AI-generated content across different forms of media?
+Recent studies have approached the problem in two types of studies:
+First, studies in which they examine whether people can distinguish
+AI-generated content from human-created content, and how they
+try to do so. And second, priming studies in which they explore
+how labels and disclosure affect perceptions, including potential
+biases and placebo effects.
+Building on the first type of studies, we would like to go beyond
+the “Turing-like tests” [119], as it is one thing to recognize AI-
+generated content, and it is another if the player feels that this
+recognition impacts their experience. We shift the focus from the
+technical standpoint to a human perspective. We don’t ask which
+procedurally generated content can blend in with human-created
+content and how. Instead, we ask how players’ experience might
+change based on their perception of the content’s creator. This
+question is specifically interesting when asked from different types
+of players with different stances on the acceptability of AI-generated
+content in games. In doing so, we change the question from “Can
+you tell if it was made by AI?” to “Does your perception of the creator—
+AI or human—change your experience of the level?”
+Unlike priming studies, which intentionally shape participants’
+expectations to study bias, our method instead simply observes
+their “spontaneous judgments” about the creator of the content and
+the association these judgments have with their experience. This
+observational design means we identify associations, not causal ef-
+fects, but it provides insight into what occurs when platforms do not
+fully control disclosure, or when users draw incorrect conclusions
+based on their weak cues.
+In this study, we try to answer five main research questions:
+• RQ1: Can participants distinguish between levels created
+by humans and those created by AI?
+• RQ2: Does players’ game playing background relate to their
+accuracy in distinguishing between AI- and human-created
+levels?
+• RQ3: What strategies do people use to differentiate between
+human-created and AI-generated levels?
+arXiv:2602.14254v1  [cs.HC]  15 Feb 2026
+
+
+--- PAGE 2 ---
+CHI ’26, April 13–17, 2026, Barcelona, Spain Mahsa Bazzaz and Seth Cooper
+Is this level human-created or AI-generated?
+It is impossible to complete
+the level as an enemy is placed
+directly beside the starting
+point. It feels like the level 
+was created to troll others,
+which feels human to me.
+The level is set up
+ in such a way that you have to
+be pressing the move key as
+soon as the level loads in order
+to escape immediate game
+over. No human would ever
+program a game in this
+manner.
+I think 
+this level is 
+ Human-created.
+I think 
+this level is
+AI-generated.
+Figure 1: Players have different perceptions about human-likeness. The same game feature (an enemy placed near the player’s
+spawning position) was interpreted as evidence of AI design by one participant and as evidence of human design by another,
+illustrating how identical cues can support opposite judgments. 3
+• RQ4: Is there a link between players’ beliefs about the
+creator of the level and how they rate their experience with
+the game levels?
+• RQ5: Do players have different attitudes toward PCG and
+generative AI? How does this prior attitude relate to their
+reported experiences with the game levels?
+Our study shows that players did not reliably distinguish be-
+tween AI- and human-designed levels, yet their beliefs about cre-
+ator were strongly linked with their reported experiences. The
+levels players believed to be human-created were rated as more
+fun and designed better aesthetically, while levels they believed
+to be AI-generated were more often described as frustrating and
+overly challenging. Players also expressed more negative attitude
+toward generative AI compared to PCG, and questioned its reliabil-
+ity, originality, and ethics. As AI-generated content becomes more
+and more common in games on platforms like Steam, understand-
+ing and addressing these perception-based biases is essential for
+both researchers and developers who aim to integrate AI in games
+responsibly and maintain trust in game communities.
+The main contributions of this work are:
+• We show that players often misclassify AI- and human-
+created levels, and that their experiences align more with
+perceived creator than actual truth.
+• We show that players use fragile strategies to judge human-
+likeness, which can both guide and mislead their judgments.
+• We demonstrate that players hold different attitudes toward
+PCG and generative AI, shaped not only by gameplay and
+quality but also by broader ethical and value concerns, and
+that these prior attitudes are associated with their gameplay
+experiences.
+• We argue that perception bias poses challenges to trust, and
+we suggest that more nuanced disclosure practices are nec-
+essary as AI adoption increases in games.
+2 Related Work
+2.1 Games And Content Generation
+Game content generation is very different from other types of
+content, like images, because games are interactive experiences.
+This means the content has to follow strict rules to make sure
+players can actually complete the game [10, 132]. For example, a
+platformer level might look nice, but if the level is blocked in some
+way and the player can’t reach the end, it’s not usable. Because of
+the playability concerns, game content generation faces different
+and often more complex challenges than other areas of generative
+systems [110, 132].
+Another important difference lies in how “averageness” is per-
+ceived in games. Miller et al. [71] found that AI-generated faces are
+often more average and less distinctive. This higher familiarity and
+lower memorability can sometimes make them seem “more human”
+than real human faces, creating a hyperrealism effect for images. In
+games, however, this same averageness can lead to what is called
+“the 10,000 bowls of oatmeal problem” [23]. Generated levels that
+are “technically” different, but they lack perceptual uniqueness, feel
+repetitive and cheaply made, and leave players with a less enjoy-
+able experience. That’s why literature on game content generation
+has created evaluation methods that measure expressiveness of
+the generators [104, 108, 131], and distance metrics that quantify
+perceptual differences rather than technical differences [11].
+These unique attributes make games a particularly interesting
+domain of study, which not only involves technical challenges
+but also includes strong emotional engagement from players [53],
+which places greater emphasis on how the experience is perceived.
+Procedural content generation (PCG)in games is the algo-
+rithmic creation of game content with limited or indirect user input
+[99]. Historically, PCG concepts originated in analog dice tables
+and dungeon generators and were designed to enhance replaya-
+bility and support creative assistance in tabletop and early video
+3Stick figures©Zdenek Sasek via Canva.com.
+
+
+--- PAGE 3 ---
+Playing the Imitation Game: How Perceived Generated Content Shapes Player Experience CHI ’26, April 13–17, 2026, Barcelona, Spain
+games [103]. At its core, PCG aims to automate or assist content cre-
+ation through formalized procedures (in contrast to hand-authored
+designs) [117].
+Classical procedural content generation methods include meth-
+ods such as rule-based [ 98] and search-based approaches [ 118].
+More recent PCG methods can be grouped into broad categories
+like constraint-based, reinforcement learning, and machine learn-
+ing approaches [110]. Constraint-based approaches generate levels
+by expressing constraints that describe what a valid solution looks
+like [24, 33].PCG via Reinforcement learning (PCGRL)in-
+cludes approaches that use reinforcement learning approaches for
+content generation [132]. While RL initially got popular for train-
+ing playing agents [72], it is now also a powerful PCG approach
+where level generation is framed as a sequential decision problem,
+with agents learning to place game elements through trial and er-
+ror to maximize rewards [ 52, 55]. For the past decade, machine
+learning has been increasingly used for game content generation,
+introducing a new branch known asPCG via machine learn-
+ing (PCGML)[ 110]. These methods typically use neural networks
+trained on existing game content to generate new content that
+matches the style of the training data [7, 110, 123]. More recently,
+large language models (LLMs) have emerged as a state-of-the-art ap-
+proach in this area. LLMs’ extensive pre-training on large amounts
+of data can be leveraged to generate game content like game lev-
+els [107, 115], game playing agents [51], or narrative content [93]
+through natural language prompts. Unlike traditional PCGML ap-
+proaches that require domain-specific training data, LLMs can lever-
+age their general knowledge to generate content across multiple
+game domains [115, 116]. However, this flexibility also comes with
+caveats of challenges around control, consistency, and ethics. De-
+spite this rapid evolution of PCG methods from rule-based algo-
+rithms to modern generative AI there has been limited empirical
+investigation into how players perceive and experience content
+from these generation approaches, and whether their beliefs about
+a level’s generation process would affect their gameplay experience.
+2.2 Turing Test
+Nearly a century ago, Alan Turing introduced the Imitation Game [119]
+(now known as the Turing Test) as a way to ask whether a com-
+puter could exhibit behavior that is indistinguishable from human
+behavior. By having an interrogator exchanging written messages
+with both a person and a machine, Turing showed that if the ma-
+chine’s replies were convincingly mimicking human messages, we
+would have to admit its “intelligence”. Over the years, different
+studies have debated whether this test captures intelligence or
+not [48, 60, 97, 134]. But ultimately, the Turing Test is a useful way
+to evaluate a machine’s behavior from a black-box perspective.
+With recent breakthroughs in AI, especially with LLMs, the Tur-
+ing Test is more relevant than ever. As these generative models be-
+come more and more capable of producing high-quality content, re-
+cent work has suggested Turing-like tests for evaluating the model’s
+ability to imitate human generative capabilities in different domains
+like texts (including poems [58, 86], stories [20], online reviews [57],
+scientific abstracts [32, 45, 76], and news articles [9, 20, 74, 105]),
+images [17, 43, 64, 69, 77, 82, 101, 125], videos [4, 36, 61], audio [8,
+66, 75, 87, 128], and visual arts [ 28, 35, 43, 81, 95, 112, 124, 125].
+Typically, in these studies the Turing-like test includes showing the
+participants a set of content and asking them to decide whether
+each piece of content is AI or human generated, and to rate their
+confidence.
+Research on game-playing agents and believable AI frameworks [47,
+63] has also asked a similar question in this domain:can an agent
+play through a level in a way that mimics a human player?Or simi-
+larly,can an algorithm create levels that resemble those designed by
+humans?Therefore, Turing-like tests have been widely explored in
+games to evaluate how believable AI agents appear to players. In
+platformer contexts such as Super Mario Bros., this line of work was
+first formalized through the Mario AI competitions, which from
+2009 to 2012 included a dedicated “Turing Test Track” where par-
+ticipants built character controllers intended to be judged on their
+human-likeness rather than pure performance [59]. Similar studies
+on gameplay videos of 2D platformer agents [18, 100] and naviga-
+tion tasks in 3D video game environments [31, 70, 136] followed
+this line of work.
+By 2015–2016, with growing attention on PCG following high-
+profile games like No Man’s Sky [34] and its procedurally generated
+universes, an early attempt at a head-to-head comparison of proce-
+durally generated game levels and hand-created levels was made.
+Taylor et al. [113] studied player engagement in hand-crafted or
+procedurally generated Sokoban levels and found no significant
+difference in players’ attention while playing hand-crafted and pro-
+cedurally generated levels, showing that generated puzzles were
+at least as engaging as designer ones. Later on, studies have more
+directly applied the Turing test to evaluate the quality of the gen-
+erated content, framing the quality as how well it can pass as
+human-created content [62, 73, 92].
+Building on similar Turing-like tests in previous work, we go
+beyond just asking whether players can tell AI- from human-made
+content, to examine how this perception itself relates to their game-
+play experience.
+2.3 Expectation and Perception
+The placebo and nocebo effects provide a robust psychological
+framework for understanding how human expectations shape their
+experiences [22]. The user’s positive expectations can improve their
+experience and on the contrary the negative biases can overshadow
+actual quality, leading users to have a worse experience even if a
+product or system objectively performs well. In other words, what
+users believe about a system (accurate or not) can totally change
+how they feel about using it.
+Interestingly, previous work observed both of these two comple-
+mentary forces in human perception of AI. Labeling something as
+AI can overshadow the actual quality. When people react positively
+to a stimulus under blind conditions, they may rate it worse once
+they think it’s machine-made. People judge news articles, health
+information, jokes, and other texts as lower quality when told they
+were AI-generated (even if they are not) [ 86, 90]. Although AI-
+generated artwork is sometimes preferred under blind conditions,
+it is often rated worse once told it’s AI-generated (again, even if
+they are not) [35, 37, 91, 135].
+On the other hand, it’s been observed that minimal, even sham,
+AI framings can raise the perceived performance and enjoyment
+
+
+--- PAGE 4 ---
+CHI ’26, April 13–17, 2026, Barcelona, Spain Mahsa Bazzaz and Seth Cooper
+without changing the system at all. Denisova and Cairns [30] told
+players a game included an adaptive difficulty when in fact it did
+not. But the players nonetheless reported higher immersion and
+enjoyment, suggesting that gameplay experience was shaped by
+players’ expectations. Likewise, in a word puzzle study, participants
+who believed they were receiving adaptive AI support (but they
+were not) solved more puzzles [56].
+We take inspiration from these previous works studying the
+effects of perception on experience, but instead of using priming,
+we capture participants’ spontaneous perceptions and how they
+connect to their experience. This better reflects how players form
+impressions in the wild when platforms do not provide informative
+labels to players.
+3 Methodology
+3.1 Domain
+2D tile-based game levels are the most common type of content in
+PCGML today [110] with Mario-style platformer levels being used
+so often that they have become a standard dataset that functions
+as a benchmark for PCGML [110].
+Within 2D tile-based games, we chose Super Mario Bros. [78] and
+Sokoban [88] games as our domain of interest for two main reasons.
+First, they are established in the PCGML literature, with some of
+the earliest Turing-like tests conducted on them more than a decade
+ago [18, 92, 113]. This provides us with a well-established basis for
+connecting our results to this body of work. Second, both games
+are simple and intuitive, requiring little onboarding for participants,
+which makes them especially suitable for an online crowdsourcing
+study where simpler tasks tend to produce higher accuracy [ 14].
+Finally, these two games come from two genres that are very dif-
+ferent from each other along multiple dimensions like player goal,
+core mechanics, and cognitive load. Including these two games in
+our study gives us an opportunity to examine whether our results
+generalize across fundamentally different forms of play.
+Super Mario Bros.is a platformer game created by Nintendo
+in which the player character jumps on platforms and enemies
+while avoiding their attacks and moving to the right of the scrolling
+screen to reach the exit [130] (Figure 2a).
+Sokoban, created by Hiroyuki Imabayashi in 1981, is a puzzle
+game where the player is in a grid composed of floor squares and
+impassable wall squares and must push boxes onto marked storage
+locations [129] (Figure 2b).
+3.2 Data Selection
+3.2.1Human Authored Levels.We collected all 15 original
+human-authored levels of Super Mario Bros. from the VGLC dataset
+[111]. The VGLC includes annotated level data for this platformer
+along with 11 other similar games. For Sokoban, we randomly (uni-
+formly and without replacement) selected 15 levels from the 1,150
+levels available in the dataset introduced by Þorsteinsson [137],
+which contains levels created by different cited authors.
+3.2.2AI-generated Levels.We chose our generation methods
+from a literature review on generation approaches in PCG to select
+a fair representation of the state-of-the-art generation methods.
+The complete detailed selection procedure is described in Appen-
+dix A.1, and it resulted in the selection of 6 generation models
+([24], [127], [107] [25], [89], and [115]) to be included in this study.
+The specific resources and the generation process for each approach
+are detailed in Appendix A.2. This preserves the characteristics and
+limitations of each approach as originally published and avoids addi-
+tion of confounding effects from our own implementation choices.
+We detected two core challenges in selecting data for running
+the Turing test from previous work. The detected challenges are
+important because if not properly handled, they can undermine the
+reliability of Turing test results.
+Core challenge 1:The data selection procedure can be highly
+influential to the study results.While running a Turing test on poems
+created with ChatGPT, Köbis and Mossink[58] observed that when
+humans could handpick the best poems people were unable to
+reliably distinguish human from artificial poetry. However, when
+poems were randomly selected, people could detect the algorithm-
+generated poem with higher-than-chance levels.
+Core challenge 2:AI-generated levels should not be readily dis-
+tinguishable from human-created ones[ 125]. When AI-generated
+content contains visible glitches or artifacts, it becomes trivially
+easy to identify without any close inspection. While one could
+argue that such flawed outputs represent a subset of generated
+content and should be included in evaluation, doing so may not
+yield any meaningful insights in the context of a Turing-like test.
+To address the first core challenge, we avoided cherry-picking
+outputs from the generative models. Instead, we selected levels
+purely at random to eliminate any potential biases introduced by the
+manual selection. To tackle the second core challenge and make sure
+that the AI-generated content is not obviously distinguishable, we
+restricted the pool of randomly selected levels to those that are both
+“playable” and “acceptable”. A level is considered “playable” if the
+player can reach the finish criterion of the level and is “acceptable”
+if there are no aesthetic flaws in the level [10]. In other words, we
+selected levels that were free of obvious visual and functional flaws.
+For Mario, this meant verifying that all pipes were complete and
+for Sokoban, it meant ensuring that the number of goals matched
+the number of boxes, and there were no corner boxes (unmovable
+boxes).
+Based on these considerations, we gathered a pool of 100 levels
+generated with each generation system (or sampled from the origi-
+nal paper artifacts dataset) to choose five playable and acceptable
+random levels per method. This resulted in 15 AI-generated and 15
+human-designed levels for each game.
+This resulted in a pool of 60 unique game levels which varied
+based onGame(Super Mario Bros. vs. Sokoban) andCreator
+(AI-generated vs. Human-created). For each game, we included 15
+human-created levels and 15 AI-generated levels. In total 30 levels
+per game and 30 levels per creator.
+3.3 Game Experience Metrics
+In order to study how players experience different game levels, we
+first need metrics that can capture those experiences in a meaning-
+ful way. Existing game experience questionnaires provide broad
+frameworks to assess player experience in full games, but many of
+
+
+--- PAGE 5 ---
+Playing the Imitation Game: How Perceived Generated Content Shapes Player Experience CHI ’26, April 13–17, 2026, Barcelona, Spain
+(a) A section of Super Mario Bros. level.
+ (b) A Sokoban level.
+Figure 2: Example screenshot of games.
+their factors are not relevant when evaluating a single level’s de-
+sign. For example, the Game Experience Questionnaire (GEQ) core
+module measures seven dimensions including: Immersion, Tension,
+Competence, Flow, Positive/Negative Affect, and Challenge [85].
+These dimensions are built upon the assumption of a complete
+gameplay session. The Game User Experience Satisfaction Scale
+(GUESS) similarly covers nine subscales (Usability, Narrative, Vi-
+sual/Audio Aesthetics, Creative Freedom, etc.) across50+ items [84].
+The Player Experience Inventory (PXI) includes 10 constructs like
+Ease of Control, Audiovisual Appeal, Goals and Rules, and Progress
+Feedback (Functional Aspects), as well as Immersion, Autonomy,
+Mastery, Curiosity, and Meaning (Emotional Aspects) [1]. These
+comprehensive scales are excellent for full games, but many dimen-
+sions (e.g. audio, controls, story) remain constant in the study of
+single game levels and won’t be influenced by the level layout. In
+other words, asking about “ease of control” or “audiovisual appeal”
+makes little sense if only the level design (tile layout) changes. The
+same goes for deep immersion factors like “narrative meaning” or
+“long-term progress feedback”, which don’t apply to a single short
+level. The shortened versions of these scales, like the shortened ver-
+sion of the GUESS [54] and Mini Player Experience Inventory [44]
+are also available, but they intend to fix the practical considera-
+tions where a longer measure is not feasible and still include the
+mentioned irrelevant dimensions to shorter game level experiences.
+Therefore, it’s important to tailor the questionnaire to focus
+on experiential dimensions that a level’s design can impact. Prior
+research on level evaluation and player experience in PCG has
+identified experiential measures that are suitable for judging pro-
+cedurally generated game levels that include measures of players’
+short experience with the game levels rather than using a full game
+UX battery [38, 39, 41, 83].
+Here we provide the list of the factors extracted from previous
+work for the evaluation of game levels based on their level design,
+and without the full gameplay factors:
+• Enjoyment / Fun: This is a fundamental measure of how
+much the participant enjoyed the level. Fun or enjoyment is
+frequently assessed in level evaluation studies [38–40, 42, 83,
+109]. This metric is well-supported in prior work (it aligns
+with the “Positive Affect” aspect of GEQ). Participants rated
+this dimension using the statement: “It was fun to play. ”
+• Difficulty / Challenge: Perceived challenge is another key
+dimension, reflecting how difficult or easy the level felt. Level
+layout directly affects challenge (through enemy placement,
+puzzle complexity, etc.), so it’s crucial to measure. Challenge
+appears in almost every game experience model (GEQ core
+scales and part of PXI’s functional constructs) and many
+studies include this metric [13, 38, 40–42, 83, 109]. For this
+metric, participants responded to the item: “It was very chal-
+lenging. ”
+• Frustration / Negative Affect: Frustration captures the
+negative side of the experience because it typically arises if
+the level was unfair, too difficult or without reward. Prior
+work treats frustration as a distinct, important metric. In
+general game UX research, frustration maps to the Negative
+Affect/Tension dimension (in GEQ). This metric has been
+used in multiple player experience studies as a key outcome
+to minimize [38, 40, 41, 83, 133]. This item was worded as:
+“I felt frustrated while playing it. ”
+• Novelty / Surprise: Novelty measures how original, surpris-
+ing, or innovative the level felt. This metric is supported by
+PCG literature [5, 19, 38, 41, 83]. We presented this metric us-
+ing the statement: “It had surprises or unexpected elements. ”
+• Aesthetics / Design Quality: This asks the player to evalu-
+ate how well-designed the visual presentation is. Prior work
+has used similar constructs [5, 39–42, 109]. Participants rated
+this metric with the statement: “The layout felt well-designed
+and high quality. ”
+Although these items do not come from an established frame-
+work, each directly targets a separate well-supported experiential
+construct. Altogether, they form a focused and intuitive set of mea-
+sures that show face validity [49] as they directly map onto experi-
+ential dimensions that are relevant in short-term level play. Each
+metric was assessed using a single-item measure on a 5-point scale
+with anchors: 1 = Strongly disagree, 2 = Somewhat disagree, 3 =
+Neither agree nor disagree, 4 = Somewhat agree, 5 = Strongly agree.
+3.4 Participants Recruitment
+We recruited a sample of 154 participants via Prolific. This sample
+size was typical in similar mixed-effects analyses [17, 64, 69, 101]
+and provided us adequate power to detect meaningful effects. Pre-
+screening criteria required that all participants be above 18, be in
+the United States and know English (inclusion criteria).
+Based on Prolific’s demographic data, the participants included
+75 males, 77 females, and 2 individuals who did not disclose their
+gender. The participants were between 21 and 72 years old, with
+average of 42.73 years old (SD=10 .81). Inspection of Q–Q plot
+indicated no major deviations from normality. Each Prolific user
+who signed up for our survey was redirected by a link to our survey
+on Qualtrics. Participants were compensated at an average rate of
+
+
+--- PAGE 6 ---
+CHI ’26, April 13–17, 2026, Barcelona, Spain Mahsa Bazzaz and Seth Cooper
+$8.87/hour, above Prolific’s $8 minimum pay rate. The base payment
+for completing the survey was calibrated for $8/hour, and partici-
+pants received extra $0.10 bonuses for each qualitative response.
+Such financial incentives are common in behavioral research to im-
+prove accuracy and reduce measurement error [6, 58, 96]. This study
+protocol was reviewed and approved by the authors’ Institutional
+Review Board (IRB).
+3.5 Procedure
+Each participant was presented with 6 levels that were sampled
+randomly without replacement from the pool of 60 unique levels.
+The sampling was balanced across the four categories ofGame
+andCreatorat the population level, meaning that while individual
+participants did not see all games and creators, the aggregate data
+provides balanced coverage across all 60 unique game levels.
+With 154 responses to our survey, after excluding the unfinished
+surveys, there were 142 valid responses, each including 6 trials
+(852 in total). This means each of the 60 unique game levels was
+evaluated by approximately 14 participants ( 852
+60 ≈ 14.2), provid-
+ing multiple independent judgments per unique game level, while
+keeping individual participation time manageable (~18 minutes).
+Participants started by reading a description of the survey and
+a consent form, and were asked to continue if they understood
+and gave consent. Previous work conducting Turing-like tests that
+included targeted tutorials before the study and feedback on partic-
+ipants’ performance during the study, reported a very small 10–15%
+increase in accuracy [17, 66] or even no improvement [75]. There-
+fore, our participants were not provided with education or training
+on how to identify AI-generated content before participating in the
+study, and the correct answers were not given upon completion
+to avoid any learning effect. Instead, in order to make sure all par-
+ticipants had the minimum baseline knowledge about the games,
+at the beginning of the survey, we included a short description of
+each game explaining the setup and the goal in levels and asked if
+they had played that or a similar game.
+After this introduction, participants were presented with the 6
+trials. Each trial included a playable level that they could interact
+with and play and a set of follow-up questions regarding that level.
+Firstly, a two-alternative forced-choice (2AFC) question would ask
+participants, “Is this level AI-generated or human-designed?” and
+a 3-point Likert scale to report their confidence in their choice
+with (“Not Confident”, “Somewhat Confident”, “Confident”). Then
+participants had to rate their experience with the level based on
+the five dimensions discussed in section 3.3
+Lastly, for each level participants would answer an open-ended
+question on the reason they made their choice. This part of the
+survey directly addresses RQ3 and also supports the validation of
+RQ1. Prior research highlights the importance of understanding
+participants’ reasoning, as their implicit evaluation criteria may not
+align with those intended by the researchers [20, 128]. A screenshot
+of the survey as it appeared to one participant is provided in Figure
+12.
+Following all the trials, we asked participants whether they felt
+differently about applications of PCG and generative AI in games.
+In order to make sure that participants had a baseline understand-
+ing of PCG and generative AI, we included very simple examples of
+these methods (Minecraft, No Man’s Sky, and Spelunky for PCG and
+ChatGPT and Midjourney for generative AI). If they did, we asked
+them about their view on PCG and generative AI separately using
+two 5-point Likert scales (-2=Very negative, -1=Negative, 0=Neutral,
+1=Positive, 2=Very positive). Then we asked them to elaborate on
+their views in an open-ended response to get a better understanding
+of the roots of the opinions. Those who did not indicate a differ-
+ence were recorded as neutral view. Lastly, we asked participants
+background questions about their general gaming habits (such as
+how often they play and whether they play action-adventure or
+puzzle games), and their experience with game design. This infor-
+mation may help us analyze whether prior familiarity and domain
+knowledge significantly influence participants’ performance, as
+was observed in the visual art domains in which artists were able to
+be 87% accurate in their areas of expertise, while general audiences
+remained close to chance [43].
+As part of our quality assurance process, we checked if any
+individual’s average response time fell more than three standard
+deviations below the mean (indicating inattentive or automated
+responses). 2 participants’ responses fell into this criterion and
+were not included in the analysis. This resulted in eliminating 12
+trials out of the 852 trials retrieved (1.4% elimination). The timer
+was hidden from participants, and they were not instructed to pay
+attention to timing at all.
+3.6 User Study Evaluation
+We quantified participants’ ability to distinguish AI- from human-
+created levels using different measures of accuracy borrowed from
+previous work [43, 128]:
+•Overall accuracy.
+• False Positive Rate (FPR) indicating the player wrongly la-
+beled a real human level as AI.
+• False Negative Rate (FNR) indicating the player wrongly
+labeled an AI-generated level as human.
+•AI Detection Success Rate (ADSR).
+To test whether accuracy exceeded chance, we ran a two-sided
+binomial test on the proportion of correct responses (i.e., cases
+where the participant’s belief about a level’s creator matched the
+truth) against𝑝 0 =0.5.
+To examine whether participants’ background in game playing
+frequency relates to correctness (belief = truth), we use fixed-effects
+logistic regression and the true source of creation and game as
+covariates in the model. We also examined the relation between the
+confidence in the decision and correctness with the same approach.
+Players’ experience metrics were collected based on a−2to +2
+Likert scale. Because each player rated many items and each unique
+game level was seen by many participants, ratings are repeated and
+crossed. Therefore, we used ordinal logistic regression with random
+intercepts for participant and unique game level. Likelihood-ratio
+tests (CLMM vs. CLM without random effects) showed that includ-
+ing random effects significantly improved fit across outcomes.
+For each player experience metric, we analyzed two sets of mod-
+els. First we model with predictors belief, truth, and game to analyze
+the relationship between players’ beliefs on the source of creation
+of the level and their experience. Second, we model with predictors
+attitudes toward PCG and toward generative AI, plus truth and
+
+
+--- PAGE 7 ---
+Playing the Imitation Game: How Perceived Generated Content Shapes Player Experience CHI ’26, April 13–17, 2026, Barcelona, Spain
+Figure 3: Participants’ gaming frequency.
+ Figure 4: Participants’ experience with game design.
+Figure 5: Participants’ attitudes toward procedural content generation (PCG) and generative AI (GenAI) in games.
+Bar charts show the distribution of responses across five categories from “Very negative” to “Very positive. ”
+game to analyze the relationship between previous biases toward
+AI and player experience with levels.
+3.7 Thematic Analysis
+We proceeded with a thematic analysis [16, 114] to find patterns and
+meaning in our qualitative data. Our study included two types of
+open-ended responses: (1) players’ reasoning for classifying levels
+as AI- or human-created and (2) background questions about their
+views on generative AI and PCG. For each section, we conducted a
+separate coding process and thematic analysis following the same
+process.
+To build the coding scheme, the first author first reviewed all
+responses from both sections and assigned initial categories. These
+categories were then refined through multiple passes to ensure they
+were distinct and relevant to our research goals.
+To check inter-rater reliability [46], a second coder was trained
+on the categories and independently coded the responses. We then
+calculated Cohen’s kappa [21] to assess agreement. We treated each
+full sentence as the unit of coding, and we assigned 1 to 3 codes
+to each unit. Each rater also had the option to mark a response as
+“Bad Response” if they believed the response did not appropriately
+answer the question. We removed all responses that were labeled
+as bad responses.
+For reasoning responses, the average Cohen’s kappa across all
+codes was 0.76 (SD = 0.12, range = 0.54–0.89) with an average agree-
+ment of 96.78%, indicating a moderate level of agreement [67]. For
+background responses about generative AI and PCG, the average
+Cohen’s kappa was 0.80 (SD = 0.12, range = 0.66–1.00) with an aver-
+age agreement of 97.92%, indicating a strong level of agreement [67].
+
+
+--- PAGE 8 ---
+CHI ’26, April 13–17, 2026, Barcelona, Spain Mahsa Bazzaz and Seth Cooper
+Figure 6: Amount of time participants spent playing the
+game levels. Participants spent an average of 1 minute 7
+seconds per level, with a median of 42 seconds (min = 0
+seconds; max = 11 minutes 24 seconds).
+Not Confident Confident
+Confidence Level
+Count
+SomewhatConfident
+Figure 7: Distribution of participants’ reported confidence
+in their decisions. Most decisions were made with ‘some-
+what confident’ responses (n = 484), with substantially
+fewer rated as ‘not confident’ (n = 181) or ‘confident’ (n =
+175).
+Following coding, we grouped related codes into themes based
+on similarity and conceptual coherence. We used NVivo [65] for all
+these processes.
+4 Findings
+4.1 RQ1: Can participants distinguish between
+levels created by humans and those created
+by AI?
+Participants identified the true creator correctly on 53% of trials
+(430 out of 812). To ensure that 50% corresponded to exact chance
+performance, we balanced the number of trials by removing sam-
+ples from the larger group, resulting in equal numbers of trials with
+human-curated and AI-generated levels (406 trials per group). Un-
+der the null hypothesis that accuracy would not differ from chance
+(50%), a two-sided binomial test showed no significantly deviation
+(p = .099, 95% CI [49.5%, 56.4%]). The false positive rate 26.6% and
+false negative rate 26.3% suggests that participants were equally
+likely to misclassify human levels as AI as they were to misclassify
+AI levels as human. The AI detection success rate 47.2% shows that
+participants were correct in identifying AI levels less than half the
+time, again consistent with chance performance.
+The omnibus likelihood-ratio tests (type III ANOVA) showed
+that being confident in the decision was not a significant predictor
+of correctly identifying the source of creation ( 𝜒 2 (2) = 1.35, p =
+.51). Looking into confidence ratings themselves (Figure 7), ordinal
+logistic regression showed a significant effect of gaming frequency
+on confidence ratings (𝜒 2 (4) = 12.58, p = .014), with more frequent
+players reporting greater confidence in their decisions ( 𝛽 = 0.72,
+SE = 0.28, p = .011). There was weak evidence that participants felt
+less confident in deciding the true origin of levels when they were
+judging Sokoban levels compared to Mario levels (𝜒 2 (1) = 3.35, p =
+.067).
+4.2 RQ2: Does players’ game playing
+background relate to their accuracy in
+distinguishing between AI- and
+human-created levels?
+We tested whether participants’ self-reported gaming frequency
+(Figure 3) was related to their accuracy in detecting AI-generated
+game levels. A logistic regression with predictors gaming back-
+ground, true creator, and game showed a main effect of gaming
+background, (𝜒 2 (4) = 12.49, p = .014). Neither the true creator (𝜒 2 (1)
+= 0.33, p = .57) nor the game, ( 𝜒 2 (1) = 0.09, p = .77) were significant
+predictors.
+Accuracy did not increase monotonically with more frequent
+gaming though. Instead, participants who self-reported playing
+games rarely performed better in finding which levels are human-
+created and which are AI-generated than those who reported play-
+ing weekly or even daily. This result suggests that playing more
+games doesn’t necessarily make players better at distinguishing
+between AI-generated and human-created content and it may even
+bias them toward heuristics that are not accurate. Following the
+same pattern, prior experience with level design (Figure 4) also did
+not help players be more accurate (𝜒 2(2) = 0.99, 𝑝=. 61). However,
+because of the uneven distribution of experience levels in our dis-
+tribution, the statistical power to detect effects among participants
+with higher design experience in our analysis is limited.
+We also checked whether knowing the games or liking the genres
+helped participants do better. For Mario, having played the game
+before (n=137) did not improve accuracy (𝛽 = –0.10, SE = 0.59, p =
+.864), and people who said they play action-adventure games (Super
+Mario Bros. genre, n=98) were also not more accurate (𝛽 = –0.18,
+SE = 0.15, p = .21). For Sokoban, having played the game (n=88)
+showed a small but non-significant positive effect (𝛽 = 0.17, SE =
+0.20, p = .39), and puzzle players (Sokoban genre, n=120) were not
+more accurate either (𝛽= 0.23, SE = 0.19, p = .22).
+This further suggests that frequent players may bring strong
+expectations about how a Mario or Sokoban level “should” look,
+
+
+--- PAGE 9 ---
+Playing the Imitation Game: How Perceived Generated Content Shapes Player Experience CHI ’26, April 13–17, 2026, Barcelona, Spain
+which can lead them to misclassify AI-generated content. By con-
+trast, participants who rarely play games approach the task with
+fewer preconceptions. This interpretation also matches our confi-
+dence analyses in Section 4.1 in which we observed that frequent
+players felt more confident in their answers, but they were not
+actually more accurate.
+4.3 RQ3: What strategies do people use to
+differentiate between human-created and
+AI-generated images?
+We conducted a thematic analysis of 852 open-ended responses
+in answer to the question“What did you base your decision on?
+What signs or indicators guided your decision?”Our initial coding
+produced 18 codes. Through iterative clustering and discussion,
+these were organized into 5 higher-level themes capturing how
+participants distinguish between AI- and human-generated game
+content (Figure 8). We kept the codes and themes framed as strate-
+gies that players use to differentiate between AI-generated and
+human-created levels, without attaching them to a fixed outcome
+(AI-generated vs. human-created). This was an intentional choice,
+since interestingly, we observed that the very same justifications
+were often used to support opposite judgments about creator.
+4.3.1Themes.Here we discuss the themes resulting from the
+analysis of strategies.
+Experiential Cues from Gameplaywere an important factor
+that players used to judge whether a level was made by AI or by
+a human. Players judged their overall experience with the level
+based on how interesting the level was and how much fun they had.
+In some cases, players also pointed to more complex aspects, like
+“memorability” when evaluating their experience: “The level feels
+“just fine” but lacks memorable moments.” Many players focused
+on the balance between challenge and frustration. For example,
+one participant described a Mario level as: “Very complicated jumps
+and odd layout that challenges you but doesn’t offer entertainment
+as much as frustration.” Similarly, in Sokoban, some participants
+found the levels to be overwhelmingly challenging: “It’s just a little
+too frustrating to play. It feels like it’s impossible to win the game.”
+Boredom was another dominant feeling appearing more in Sokoban
+levels, with players mentioning: “It’s very basic in feel or look to it,
+with no real creative design to it. Just boring to look at.”
+Design Coherencewas another major way participants judged
+authorship. Players paid close attention to the overall layout of the
+level, including the sparsities and congestions, the symmetries and
+asymmetries. As one participant explained: “The beginning felt very
+cluttered and like there was too much going on.” In contrast, another
+participant noted how empty a section felt: “There are large areas
+of emptiness that drag down the immersion and quality of the level.”
+Players also examined how elements such as enemies, coins,
+blocks, and pipes (in Mario) or boxes and targets (in Sokoban) were
+arranged. Sometimes placement felt deliberate: “You end up dying
+because of perfect enemy placement at the end of the jump. Seems
+like someone just wanted the level to be hard.” Other times it felt
+random: “There are enemy encounters that also seem random in that
+they don’t pose a hazard because they resolve themselves by dying
+without interaction.”
+Navigation and PlayabilityNavigation and playability was an-
+other key concern. Players noticed when movement felt smooth
+versus when the level design made it awkward. They pointed out
+unreachable areas or spots where characters could get stuck. For
+example: “It felt very oddly designed, with the question mark blocks
+stacked so you couldn’t actually get them.” or “Had blocks before the
+start for no reason and lots of wooden blocks high in air and impossible
+to get to”.
+In some cases, levels were structured in a way that participants
+doubted whether they were even solvable. As one player put it in
+Mario: “This level was impossible. The gap was too big.” Similarly, in
+Sokoban: “I could not figure out a way to get the fourth block onto
+the target, and I’m uncertain that it is even possible.”
+Perceived Rationality and Intentalso shaped judgments. Players
+looked for whether design choices felt logical and purposeful, or
+instead odd and unintuitive: “The placement of coins and coin blocks
+seemed somewhat random and a little illogical in places to me.”
+Reference to Familiar Gameswas another strategy. Some par-
+ticipants compared levels to the original game or similar games
+they remembered from playing. For example: “For one, I feel like I
+remember this level from playing as a kid.” Many also referenced
+their experiences with level editors like Mario Maker: “Have seen
+stuff like this in Super Mario Bros. Maker game.” or “The level has
+a lot of precision jumps. This reminds me of a lot of Mario Maker
+levels.”
+Heuristics and Assumptions about AIwere used by players to
+make judgments about AI including what they thought AI could or
+could not create. For instance: “It feels very old in style and pixelated.
+That made me assume that it was made by a human.” or “It feels too
+complex for AI.”. In more extreme cases, some didn’t have a clear
+idea of any automated level generation system and assumed older
+games must be human-made simply because of when they were
+released: “I think this is not AI because this game has been around
+for a long time, before AI.”. In other cases, participants mentioned
+they were simply guessing or relying on their gut feeling.
+Looking across the themes that emerged in players’ strategies for
+identifying the true origin of levels, it is clear that more strategies
+were readily applied to Mario levels than to Sokoban levels. For
+example, within Design Coherence and Playability, codes such as
+sparsity versus congestion, placement of game elements, and navi-
+gation or reachability were mentioned more often in Mario than in
+Sokoban. Similarly, judging purposefulness was more straightfor-
+ward in Mario levels, while participants referred to this less often
+in Sokoban. This pattern aligns with Section 4.1 results, where par-
+ticipants reported feeling generally less confident when judging
+Sokoban levels, since they had fewer cues available to guide their
+decisions.
+4.3.2Fallible Strategies.Even more interesting than identifying
+the strategies participants used to judge whether a level was AI-
+generated or human-created was seeing how often these strategies
+proved double-edged. The very same reasoning that led one person
+to mark a level as AI-generated was used by another to claim it
+must be human-made.
+For example, when it came tofrustrating levels, some par-
+ticipants felt that only humans would deliberately design super
+
+
+--- PAGE 10 ---
+CHI ’26, April 13–17, 2026, Barcelona, Spain Mahsa Bazzaz and Seth Cooper
+Experiential Cues from Gameplay
+Enjoyment: “it was fun to play.”
+Challenge: “I anticipated the level to start with an easier difficulty and become harder as Iprogressed.”
+Complexity of game: “It was basic, no frills and seemed like a sort of primitive Pong game!”
+Boredom: “It does not grab my attention and I feel bored playing the game.”
+Frustration: “There are certain moments that require you to be focused but it is done so in away that doesn’t make it frustrating.”
+Players’ feelings they experience during gameplay
+Design Coherence
+Evaluations based on structural aspects of the level
+Layout: “the level was simple and less complicated. It didn’t have very many design elementsin this  evel and it felt straightforward.”
+Game Elements: “Some enemies were stuck in weird places.”
+Sparsity vs Congestion: “I anticipated the more challenging moments in the level to bespread out rather than to be crammed into the very beginning.”
+Perceived Rationality and Intent
+Whether the design appeared logical and purposeful versus odd, random, or unintuitive, reflecting assumptionsabout intentional design.
+Purposefulness: “I think there were a lot of platforms that serve no purpose.”
+Logicality: “It sends the player up these high structures that lead nowhere–just to jump backdown to the ground and have to jump over one singular block.”
+Reference to Familiar Games
+Judgments informed by prior experiences.
+Original Games: “It felt like I was playing Mario Brothers that I have played before.”
+Similar Games & level Editors: “This reminds me of a lot of Mario Maker levels.”
+Heuristics and Assumptions about AI
+Reliance on gut feelings or beliefs about what AI can or cannot do, rather than analysis of design features.
+Gut Feeling: “I don’t really have anything to back up my judgment, it just feels like it.”
+Preconceptions: “I don’t think AI would have thought to make the game visually appealing.”
+Navigation and Playability
+Evaluations based on navigation and playability.
+Navigation: “The first jump is practically impossible. They made it to where Mario has tojump on the koopa to get past.”
+Playability: “I feel like it’s impossible to beat.”
+Reachability: “There were question mark blocks that were impossible to get to because it isimpossible for Mario to jump that high.”
+4
+5.8
+6.1
+14.9
+69.3
+7.1
+27
+65.9
+58.5
+13
+28.5
+89.7
+10.3
+61.2
+38.8
+31.3
+68.7
+Figure 8: Theme summary for strategies players used to distinguish AI-generated content, including codes associated with each
+theme and illustrative quotes. Pie plots show the distribution of code appearances within each theme.
+
+
+--- PAGE 11 ---
+Playing the Imitation Game: How Perceived Generated Content Shapes Player Experience CHI ’26, April 13–17, 2026, Barcelona, Spain
+challenging levels to frustrate players: “human players are very ca-
+pable of creating “Hell” type levels where the main goal is to frustrate
+players with impossible challenges, which actually is fun.” Others
+argued that frustration itself was a marker of poor AI design: “I feel
+like an AI doesn’t really care if a human is frustrated trying to play a
+game since it has no concept of that.”
+The same contradictions appeared witheasy levels. Some saw
+simplicity as evidence of intentional human design, such as an intro-
+duction level: “It was a very simple game, but I do think that means
+it was created by a human for a starting level or as an introduction
+to the game.” Yet others felt simplicity was a sign of AI that is not
+capable of creating a more complex game: “It seemed like a very
+basic level with minimal logical puzzle solving involved. I believe AI
+probably made this.”
+This ambiguity also applied tochallenging levelsthat felt im-
+possible to complete. Some thought impossibility was an AI flaw: “I
+find the level to be impossible to complete. I think this was made by an
+AI because it wouldn’t understand the end goal of the game.”. Others
+believed unsolvability was more likely a novice human error: “This
+doesn’t look like it can be solved. A human can make that mistake
+designing this, while AI is usually spot on.” In some cases, the same
+Mario level with a hard jump led to very different opinions. For
+some, the high level of challenge was an indicator of AI: “The first
+jump is practically impossible. They made it to where mario has to
+jump on the koopa to get past. That is something a human doesn’t
+think of.” While the others saw the complicated mechanic as hu-
+man intent: “It’s hard but not impossible. I have an idea of what I’m
+supposed to do to make the jump (jump off the flying koopa) and it’s
+the tricky kind of thing a human would put into the design of a level.”
+Likewise, sometimesodd design choiceswere interpreted as
+mistakes or design choices. One participant explained the level
+with an enemy very close to where the player spawns as a human
+error: “It feels like there is human error where Mario dies each time
+before I can do anything.”. Others saw the exact level as an error
+only AI could make: “The level begins with an enemy immediately
+killing the player character. The level is set up in such a way that you
+have to be pressing the move key as soon as the level loads in order to
+escape immediate game over. No human would ever program a game
+in this manner.”. Interestingly, the same level was also perceived as
+an intentional joke (rather than a mistake) by some people: “It is
+impossible to complete the level as an enemy is placed directly beside
+the starting point. It feels like the level was created to troll others,
+which feels human to me.”. Similarly, another unusual feature of the
+level (an enemy falling off a cliff) was interpreted in completely
+opposite ways: for some it signaled pointless design that AI creates:
+“So many pointless elements like Koopas that just fall into the void.”,
+while again for others it was read as an intentional joke made by a
+human: “The goombas falling off the cliff at the beginning felt like an
+intentional joke by a person.”
+All in all, these contradictions show how weak the strategies
+were. The same design feature could just as easily be used to ar-
+gue for AI authorship as for human authorship, suggesting that
+judgments often rested on subjective interpretations rather than
+reliable cues.
+4.4 RQ4: Is there a link between players’ beliefs
+of the origin of the level and how they rate
+their experience with the game levels?
+We computed the mean Likert score for each metric by mapping
+responses onto a numeric scale from –2 (strongly disagree) to +2
+(strongly agree) and then averaging across responses. The table 1
+shows the descriptive statistics for all metrics by perceived source
+of creation. Also, Figure 10 visualizes the mean Likert scores and
+Figure 9 visualizes the original distribution of Likert responses
+without this transformation.
+When grouped by the true creator (AI vs. Human), differences in
+mean ratings were relatively modest. However, when grouped by
+belief, the differences became much sharper, hinting there may be
+a relationship between players’ experiences and their assumptions
+about the creator, rather than by the objective qualities of the lev-
+els themselves. Our statistical analysis confirms this observation.
+AcrossFun,Challenge,Frustration, andDesign, participants’
+beliefs about whether a level was AI- or human-made consistently
+outweighed the true creator as predictors of experience ratings.
+ForFun, players rated levels significantly more enjoyable when
+they believed the level was human-made ( 𝛽 = 1.54, SE = 0.16, z =
+9.52, p < .001). The true source of creation was not significant ( 𝛽
+= 0.27, SE = 0.20, z = 1.35, p = .18). Generally, Sokoban levels were
+rated significantly less fun than Mario levels (𝛽 = -0.71, SE = 0.20, z
+= -3.53, p<.001).
+Challengeratings were also linked to belief. Levels that were
+believed to be AI-generated were rated more challenging (z = -2.41,
+p < 0.015). The true creator (p = 0.28) and game type (p = 0.19) were
+not significant predictors.
+Frustrationratings depended strongly on belief. When par-
+ticipants thought a level was AI-generated, they rated it as more
+frustrating (𝛽=-1.17, SE = 0.16, z = -7.445, p < .001). Neither the true
+creator (𝑝=0.38) nor the game type (p = 0.37) was significant.
+Perceptions ofDesignand aesthetics were also more associated
+with belief than with reality. Levels believed to be human-made
+were rated significantly more aesthetically pleasing (z= 10.480, p <
+.001). The true creator did not have a significant effect (p = 0.087),
+but the game had, with Sokoban levels rated lower in design than
+Mario levels (z = -3.373, p < 0.001).
+Participants’ ratings forSurprisewere not related to their belief
+about the creator (𝛽 = 0.01, SE = 0.15, z = 0.05, p = .96) or the true
+creator itself (𝛽= 0.17, 𝑆𝐸= 0.23, 𝑧= 0.74, 𝑝=. 46). Instead, the
+only significant predictor was the type of game as Sokoban levels
+were rated significantly less surprising compared to Mario levels
+(𝛽= -1.14, SE = 0.23, z = -4.88, p < .001).
+Overall, across all experience metrics,participants’ beliefs
+about the origin of the level were more strongly associated with
+their ratings than thetrue sourceof creation. Also, the generally
+lower scores of Sokoban levels onFun,Design, andSurpriseare
+consistent with the comments in RQ2 (Section 4.2), where partici-
+pants described these levels more as boring and less as fun.
+
+
+--- PAGE 12 ---
+CHI ’26, April 13–17, 2026, Barcelona, Spain Mahsa Bazzaz and Seth Cooper
+Perceived as AI (n=428) Perceived as Human (n=424)
+MetricMean (SD) Median [IQR] Mean (SD) Median [IQR]
+Enjoyment/Fun 2.92 (1.33) 3 [2-4] 3.72 (1.20) 4 [3-5]
+Difficulty/Challenge 3.88 (1.27) 4 [3.8-5] 3.65 (1.32) 4 [3-5]
+Frustration/Negative Affect 3.60 (1.37) 4 [2-5] 2.84 (1.43) 3 [2-4]
+Novelty/Surprise 2.65 (1.35) 2 [1-4] 2.62 (1.26) 3 [1-4]
+Aesthetics/Design Quality 2.70 (1.23) 3 [2-4] 3.57 (1.17) 4 [3-4]
+Table 1: Descriptive statistics for five experience metrics by perceived source of creation. All metrics were measured on a
+5-point Likert scale (1 = Strongly disagree, 5 = Strongly agree). IQR = Interquartile range.
+4.5 RQ5: Do players have different attitudes
+toward PCG and generative AI? How does
+this prior relate to their reported
+experiences with the game levels?
+We compared participants’ attitudes toward procedural content gen-
+eration (PCG) and generative AI, both measured on a 5-point Likert
+scale ranging from Very negative to Very positive. A Pearson’s
+chi-square test indicated that the distributions of responses dif-
+fered significantly between PCG and generative AI (𝜒 2 (16) = 473.71,
+p < .001). The result was also consistent with a non-parametric
+Wilcoxon signed-rank test on numeric-coded scales, which also
+showed a highly significant difference (V = 47919, p < .001). Together,
+these results indicate that participants’ reported attitudes toward
+PCG and generative AI were systematically different, with more
+negative views expressed toward generative AI (Figure 5).
+Participant’ attitudes toward generative AI played an important
+role in shaping their experience.Funratings were significantly
+higher among participants with more positive views of generative
+AI (z= 3.247, p = 0.0011). In contrast, attitudes toward PCG did
+not significantly predict fun, though there was a weak trend (p =
+0.060).Designratings were also positively related to participants’
+views of generative AI, with more favorable attitudes predicting
+significantly higher aesthetic scores (z = 2.391, p = 0.0168). Neither
+PCG nor generative AI views had significant effects on the rest of
+the perceived factors.
+To investigate this further, we also conducted a thematic analysis
+of 142 open-ended responses in answer to the question“Do you
+feel differently about AI-generated game content and procedurally
+generated content? Why?”Our initial coding produced 14 codes.
+Through iterative clustering and discussion, these were organized
+into 4 higher-level themes capturing the origin of participants’
+views on generative AI and PCG in games (Figure 11).
+4.5.1Themes.Here we discuss the themes resulting from the
+analysis of AI and procedurally generated content.
+Neutral or indifferent views, expressed by some participants,
+seeing little distinction between PCG and generative AI, or admit-
+ting they did not understand how the methods worked. For them,
+the central point was whether the game itself was enjoyable:
+“I regularly make ChatGPT and Copilot act as a game
+master and I give it a background story to build the
+world upon and I give it certain rules to follow, like game
+mechanics, random battle encounters, loots, things like
+that. It’s very fun because I can just get in the game that
+never ends (until I tell it to end). I love games, whether
+humans or AI made them.”
+Others described both methods as similar or said that “AI is AI”
+without differentiating: “For someone who isn’t an expert on AI, when
+you tell me both of these things are computer-generated or AI, it all
+seems the same to me.” This theme highlights that not all players
+approach content generation with strong priors and for some the
+technical origin of the content was irrelevant.
+Making game development faster, cheaper, and more acces-
+siblewas another common view about both PCG and Generative
+AI. Participants often framed these methods as tools for scaling up
+large game worlds or expanding the amount of content: “They are
+both types of games that if done correctly can provide an immersive,
+fun experience. I like variety in my games.”
+Comparing PCG with generative AIwas done in the most in-
+teresting and well-justified responses from participants who had
+enough knowledge of the details and differences between these
+methods to make informed judgments. PCG was often described
+as reliable and rule-based, that gives developers more creative con-
+trol. In contrast, Generative AI was described as unpredictable,
+error-prone, and less structured:
+“Procedural content generation is rule-based, so the re-
+sults are predictable within certain limits and feel con-
+sistent with the game’s design. Generative AI, on the
+other hand, is more open-ended and can create unex-
+pected, highly varied results based on prompts, which
+can be exciting but also less controlled. The difference is
+in predictability versus creativity.”
+Some participants had a positive take on generative AI for its cre-
+ativity and unpredictability, suggesting it might bring more novelty
+to games: “I believe that procedurally generated game content leads to
+a barrage of the same types of experiences repeating themselves with
+little variation, whereas AI-generated game content has the potential
+to be more of a unique experience.” While others believed genera-
+tive AI does not produce original content and felt negative about
+it: “Generative AI is only as strong as the datasets used to create it,
+which means you’re automatically getting derivative and unoriginal
+content.”
+Broader issues about Generative AIwere frequently raised by
+participants. Ethical worries included the use of unlicensed data and
+the lack of credit to artists: “Procedurally generated game content
+still had to be programmed by someone and took actual work by
+actual people. Generative AI content is regurgitated slop stolen from
+real artists. They are not the same.”
+
+
+--- PAGE 13 ---
+Playing the Imitation Game: How Perceived Generated Content Shapes Player Experience CHI ’26, April 13–17, 2026, Barcelona, Spain
+Figure 9: Stacked bar charts showing player ratings of five experience metrics (fun, challenging, frustrating, surpris-
+ing, design). For each metric, separate bars show ratings for truly AI-generated or human-made levels (marked as
+“truth”) and for levels believed to be AI- or human-made (marked as “belief”). Bar segments represent proportions
+of Likert responses from “strongly disagree” to “strongly agree. ”
+Figure 10: Mean player ratings across five experience metrics (fun, challenging, frustrating, surprising, design),
+grouped by the true source of creation of the level and by participants’ belief about the origin.
+Others expressed concerns about the environmental costs of
+training AI models, workforce displacement in creative industries,
+and a more general distrust of AI. Participants also frequently em-
+phasized their appreciation of game design as a human creation,
+noting that they value the unique “human touch” in games. As one
+participant explained: “It is fine to use AI, but there is a different
+aspect when it is human-made that almost shows more effort and I
+get more enjoyment out of it, even if it isn’t the highest quality.”
+These perspectives show that judgments about Generative AI
+were not only about gameplay but were tied to wider societal de-
+bates. Of course, these are not the only ethical and sociological
+issues raised by generative AI (those also include other debates
+around misinformation, bias, cultural appropriation, etc). The men-
+tioned items were the concerns that appeared most clearly in our
+thematic analysis.
+
+
+--- PAGE 14 ---
+CHI ’26, April 13–17, 2026, Barcelona, Spain Mahsa Bazzaz and Seth Cooper
+Players who were unsure, neutral, or unaware of the differences between PCG and GenAI, oftenexpressing indifference.
+PCG's rule-based control and reliability versus gen AI's unpredictability, and error-proneness.
+Expanded Content Availability: “I actually love procedurally created stuff! For example,No Man's Sky was pretty fun when all the glitches were fixed. Since planets were createdin the game, there were lots of places I could explore or have fun in.”
+Broader issues related to the use of AI in games, including ethics of data use, environmental costs,workforce impacts, distrust of AI, and valuing human work.
+Ethical Concerns: “AI samples content from authors and artists without those authors orartists knowledge and remuneration. Procedurally generated content is just usingalgorithms to create content instead of doing it manually.”
+Environmental Costs: “I think generative AI is so much more harmful for theenvironment than other methods.”
+Workforce Displacement: “AI-generated content is taking jobs from people who designgames. With procedural generated AI you still need people to code and put a humantouch on the game.”
+Distrust and Fear of AI: “I just worry about the influence of AI in our lives. I think it'sgoing to take over.”
+Neutral and Uninformed Perspectives
+Fun-centered Perspective: “If the game is fun then that is all that matters.”
+Neutral: “AI is AI to me. I don't like one over the other types.”
+Lack of knowledge: “I don't really understand how either of them works so I feel they aresimilar.”
+Efficiency and Accessibility in Game Development
+ Ways in which participants saw these methods as making game development faster or cheaper.
+Faster Development & Cost Savings: “Any tool that accelerates development is going tobe adopted. We will need AI and procedural generations to create large worlds in spacegames and other places where you explore large areas. As AI improves, it will be adoptedmore and more and deployed more to save money and development time.”
+Control, Reliability, Creative Potential and Quality Tensions (PCG vs Generative AI)
+Control: “Procedurally generated content requires extensive work from the developers toimplement, giving them a high degree of control over how the system works and createscontent for the players. AI-generated content does not give the developer the same levelof creative control over the content. At least, not yet.”
+Reliability: “Procedural content generation is created from content already studied andknown to be well liked by many, whereas AI-generated game content is more random andsometimes clunky.”
+Ethical, Environmental, and Societal Concerns of Generative AI
+Creative Potential: “procedural generational feels more structured and rule-based whilegenerative AI feels more creative and unpredictable.”
+Value of Human Authorship: “I think AI-based games are missing the ‘soul’ that is inhuman-made games.”
+26.2
+39.3
+34.6
+23.5
+76.5
+34.4
+32.8
+32.8
+44.9
+16.3
+8.2
+18.4
+12.2
+Figure 11: Theme summary for views on generative AI and PCG in games, including codes associated with each theme and
+illustrative quotes. Pie plots show the distribution of code appearances within each theme.
+
+
+--- PAGE 15 ---
+Playing the Imitation Game: How Perceived Generated Content Shapes Player Experience CHI ’26, April 13–17, 2026, Barcelona, Spain
+5 Discussion
+5.1 Players use double-edged heuristics of
+“Human-likeness”
+Players draw on a wide range of strategies to decide whether a level
+is AI- or human-made and interestingly, they align with patterns
+reported in other domains of AI-content detection. For example,
+just as readers look for subtle cues of errors or odd phrasing in AI
+text [76], our players inspected playability and odd design choices.
+Similarly, prior studies on image-based Turing tests show that peo-
+ple look for logical consistency [64] and anomalies in details [17],
+which resonate with our players’ sensitivity to unreachable areas,
+wasted space, or off-balance layouts.
+More importantly, we observed that the very same cues could
+be double-edged. Odd design choices were read as either deliberate
+human trolling or as careless AI design; simplicity in game design
+was taken as evidence of either human intention or machine limi-
+tation. This also mirrors previous work findings in other domains
+like text (grammatical errors in text can be read as either human
+error or “bad” AI [50]), or visual arts (irregularities in drawings can
+be seen differently depending on whether they are attributed to
+humans or AI [28]).
+Taken together, these findings suggest that “human-likeness” is
+not an objective threshold that can be engineered into content, but a
+shifting construct defined by players’ own expectations, biases, and
+interpretive strategies. In games, this means that players may dis-
+agree not only on whether a level feels human- or AI-made, but also
+on what qualities even count as evidence of humanness. This helps
+to explain why more experienced players do not necessarily im-
+prove at distinguishing AI-generated content from human-created
+content. They become more confident in their judgments as their
+experience increases, but their accuracy remains close to chance.
+5.2 Perceived creator, not truth, shapes players’
+experience
+Players cannot reliably tell AI-generated levels from human-created
+levels. This result aligns with earlier Turing-style studies from a
+decade ago on Super Mario Bros. [92] and Sokoban [113], where
+players also failed to detect the creator even when classical search-
+based methods were used. Yet the levels believed to be AI-generated
+were rated lower on experiential dimensions such asFunandChal-
+lenge, and moreFrustrationandDesign, showing that AI carries
+a negative bias. Similar dynamics have been observed in cooperative
+play, where perceived partner identity matters more than actual
+performance. For example, Merritt et al . [68] found that players
+enjoyed and preferred “presumed human” teammates over identical
+AI-controlled teammates. Likewise, Ragot et al. [91] found that art-
+works believed to be AI-made were rated lower in beauty, meaning,
+and liking compared to the same works attributed to humans.
+But more importantly, this negative bias appearedwithout any
+priming or explicit disclosurein our study, suggesting that spon-
+taneous judgments about creator can be just as powerful as judg-
+ments shaped by labels. Players’ experiences were more closely
+associated with what they believed about a level’s creator than with
+its actual creator.
+5.3 Ambiguous signals create a lemons dynamic
+De [29] used the “lemons problem” in economics [2] to show that
+when people cannot tell which content is real (human-authored)
+and which is not real (AI-generated), they may start distrusting
+everything. In games, players also cannot reliably tell whether
+content is AI- or human-made. Current labels (“AI content, ” “proce-
+dural content”) are overly broad, grouping together very different
+practices such as brainstorming ideas, code and game logic, mar-
+keting materials, narrative generation, and visual asset creation.
+These vague labels risk priming negative reactions before play
+even begins [ 37, 91, 95, 135], leading some developers to avoid
+disclosure altogether. Yet our findings show that even without dis-
+closure, when players speculate about AI involvement the same
+bias emerges. This creates a “lemons” dynamic, where ambiguous
+signals and perception bias lower perceived quality regardless of
+the actual content.
+5.4 Generative AI carries stigma beyond play
+Our study shows that players reported systematically different at-
+titudes toward PCG and generative AI. While some participants
+expressed indifference and emphasized enjoyment as the ultimate
+goal, overall responses were more negative toward generative AI.
+This aligns with prior research findings that generative AI reshapes
+creative practices in both promising and worrying ways [122], cre-
+ating tensions between technical affordances and ethical commit-
+ments [15, 80]. Our study extends these insights by showing that
+such uncertainty is also present among players.
+Importantly, participants’ concerns also extended beyond game-
+play to debates about authorship, environmental costs, and labor
+conditions. These concerns resonate with wider discussions in the
+games industry. Like the interns in Boucher et al. [15] study, they
+questioned the legitimacy of AI-generated art, pointing to unre-
+solved ethical issues around training data that fails to acknowledge
+or human creators. Similar to indie developers in the Panchanadikar
+and Freeman [79] and Vimpari et al. [122] studies, they worried
+that generative AI could erode creativity and fair labor. These per-
+spectives suggest that players are not passive consumers and that
+they play an active role in the conversations around AI in games.
+Aligned with our observations on players’ views on PCG, Pan-
+chanadikar and Freeman [79] observed that generative AI unsettles
+established practices in creative industries, whereas PCG is now
+more normalized as a design material with predictable boundaries.
+Yet we should remember this normalization did not occur auto-
+matically. Early PCG was often criticized as repetitive or soulless,
+from the dungeons of roguelikes to the sparse planets of No Man’s
+Sky’s initial release [94]. As PCG got better integrated into design
+practices, people’s perceptions started to change, and they came
+to value it for the replayability and scale it provides. Similarly, the
+stigma around generative AI may lessen if the broader ethical issues
+are addressed. Yet such a change will not occur automatically and
+it requires confronting existing issues. One viable path is greater
+transparency achieved not through broad labels but through nu-
+anced disclosures.
+
+
+--- PAGE 16 ---
+CHI ’26, April 13–17, 2026, Barcelona, Spain Mahsa Bazzaz and Seth Cooper
+5.5 Nuanced disclosure as a path to trust
+Nuanced disclosures that explainhowandwhyAI was used offer a
+promising way forward. Prior work shows that developers welcome
+AI for tasks like ideation and prototyping but grow uneasy when it
+extends into authorship-intensive areas such as asset creation [3].
+Players also draw similar boundaries. For some people, using AI
+in narrative design may be fine, while its use in asset generation is
+more problematic. Providing contextual details about where and
+why AI is used both helps players to make informed judgments
+and protects developers from being mischaracterized by broad and
+vague labels. For indie developers especially, such disclosures are
+more necessary to support them in experimenting with new tools.
+5.6 Limitations and future directions
+Our study has several limitations. It was restricted to two short,
+2D tile-based games (Super Mario Bros. and Sokoban). While com-
+mon benchmarks in PCG research, it remains unclear how results
+generalize to other genres. Participants also only played short lev-
+els in our study. Although this design allowed us to collect data
+across many conditions, it does not capture the richer experiences
+of longer gameplay that include extended immersion, storylines,
+and evolving mechanics.
+Our survey design relied on single-item Likert ratings of expe-
+riential constructs. Although efficient for online data collection,
+single-item measures may not capture the full complexity of these
+constructs. Future research could adopt established multi-item in-
+struments like GEQ and GUESS to provide more robust and reliable
+measures. Our thematic analysis was conducted on relatively brief
+open-ended answers. While these responses offered valuable in-
+sights into players’ strategies and views on PCG and generative AI,
+they lacked the depth of longer interviews or think-aloud protocols.
+Additionally, our sample was drawn from online crowd participants,
+whose gameplay habits and motivations may differ from dedicated
+player communities. Also, although this population reflects the
+actual distribution in the general population (where most gamers
+don’t have game design experience), the under-representation of
+experienced game designers limits our statistical power to detect
+experience-related effects. Future work with targeted recruitment
+of level designers could provide stronger tests of expertise effects.
+Our study focused on players’ subjective perceptions. This means
+we ensured that AI-generated levels were playable and aestheti-
+cally acceptable to avoid trivial distinguishability, but did not in-
+clude objective structural or design-level comparisons between
+AI-generated and human-generated levels. Future work could in-
+corporate systematic structural analysis (e.g., metrics for spatial
+complexity, challenge curves, or aesthetic patterns) to disentangle
+the effects of objective level characteristics from subjective percep-
+tual biases. Our design was observational: we observed associations
+between perception about the creator and experience, but we can-
+not establish causality. This means that the causal direction may
+run in two ways. It could be the expectation shaping experience,
+meaning that when players suspect “AI involvement” they may
+focus more on flaws. Alternatively, it could be that players infer
+the creator from their experience (e.g., “this was frustrating, so it
+must be AI”). Clarifying this causal pathway (through controlled
+disclosure manipulations based on player perceptions) would be a
+particularly interesting and valuable direction for future research.
+Despite the limitations, our design provided interesting empirical
+results. Future work can extend this work by exploring additional
+genres, incorporating longer play sessions, and recruiting partici-
+pants with higher experience with game design.
+6 Conclusion
+This paper examined how players’ perception of the creator of
+game levels is associated with their experience of the gameplay.
+We conducted a mixed-method study that included a Turing-style
+classification task, quantitative player experience measures, and
+qualitative thematic analysis of open-ended responses. We found
+that players’ accuracy in distinguishing AI-generated from human-
+designed levels was close to random guessing. We analyzed the
+strategies players use for judging “human-likeness” and we ob-
+served how these strategies are subjective and fallible. Our findings
+also show that players’ perceptions about the authorship of levels
+were strongly associated with how they evaluated them. Levels that
+players thought were made by humans were usually seen as more
+fun and visually appealing. In contrast, levels they believed came
+from AI were more often described as frustrating or overly difficult.
+When players were asked about their views on AI-content in games,
+their opinions were more negative on generative AI than with PCG,
+with some comments addressing the reliability and ethical risks
+that come with generative AI. Finally, we discussed the need for
+more transparency on how AI is used in games, and we raised new
+questions about ownership and trust of AI-generated content in
+games for future work.
+Acknowledgments
+We thank Aria Masoomi for helping with thematic analysis cod-
+ing. We also thank CHI Crunch group at Ghost Lab, Northeastern
+University, and Casper Harteveld for providing feedback and en-
+couragement during the development of this paper.
+References
+[1] Vero Vanden Abeele, Katta Spiel, Lennart Nacke, Daniel Johnson, and Kathrin
+Gerling. 2020. Development and validation of the player experience inventory:
+A scale to measure player experiences at the level of functional and psychosocial
+consequences.International Journal of Human-Computer Studies135 (March
+2020), 102370. doi:10.1016/j.ijhcs.2019.102370 Publisher: Elsevier BV.
+[2] George A Akerlof. 1978. The market for “lemons”: Quality uncertainty and the
+market mechanism. InUncertainty in economics. Elsevier, 235–251.
+[3] Sultan Alharthi. 2025. Generative AI in Game Design: Enhancing Creativity
+or Constraining Innovation?Journal of Intelligence13 (05 2025). doi:10.3390/
+jintelligence13060060
+[4] Marios C. Angelides. 2024. From breaking to faking the code: Alan Turing’s Im-
+itation Game latest upgrade for discerning Artificial Intelligence (AI)-generated
+deepfakes.Comput. J.(Aug. 2024), bxae078. doi:10.1093/comjnl/bxae078
+[5] Asad Anjum, Yuting Li, Noelle Law, M Charity, and Julian Togelius. 2024. The
+Ink Splotch Effect: A Case Study on ChatGPT as a Co-Creative Game Designer.
+InProceedings of the 19th International Conference on the Foundations of Digital
+Games(Worcester, MA, USA)(FDG ’24). Association for Computing Machinery,
+New York, NY, USA, Article 18, 15 pages. doi:10.1145/3649921.3650010
+[6] Dan Ariely and Michael I Norton. 2007. Psychology and experimental economics:
+A gap in abstraction.Current Directions in Psychological Science16, 6 (2007),
+336–339.
+[7] Maren Awiszus, Frederik Schubert, and Bodo Rosenhahn. 2020. TOAD-GAN:
+Coherent style level generation from a single example. InProceedings of the
+AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment,
+Vol. 16. 10–16.
+
+
+--- PAGE 17 ---
+Playing the Imitation Game: How Perceived Generated Content Shapes Player Experience CHI ’26, April 13–17, 2026, Barcelona, Spain
+[8] Sarah Barrington, Emily A. Cooper, and Hany Farid. 2025. People are poorly
+equipped to detect AI-powered voice clones.Scientific Reports15, 1 (March
+2025), 11004. doi:10.1038/s41598-025-94170-3 Publisher: Nature Publishing
+Group.
+[9] Amirsiavosh Bashardoust, Stefan Feuerriegel, and Yash Raj Shrestha. 2024. Com-
+paring the Willingness to Share for Human-generated vs. AI-generated Fake
+News.Proceedings of the ACM on Human-Computer Interaction8, CSCW2 (Nov.
+2024), 1–21. doi:10.1145/3687028
+[10] Mahsa Bazzaz and Seth Cooper. 2025. Analysis of Robustness of a Large Game
+Corpus. InProceedings of the 20th International Conference on the Foundations of
+Digital Games (FDG ’25). Association for Computing Machinery, New York, NY,
+USA, Article 33, 9 pages. doi:10.1145/3723498.3723820
+[11] Sebastian Berns, Vanessa Volz, Laurissa Tokarchuk, Sam Snodgrass, and Chris-
+tian Guckelsberger. 2024. Not all the same: Understanding and informing
+similarity estimation in tile-based video games. InProceedings of the 2024 CHI
+Conference on Human Factors in Computing Systems. 1–23.
+[12] Michael Beukman, Christopher W Cleghorn, and Steven James. 2022. Procedural
+content generation using neuroevolution and novelty search for diverse video
+game levels. InProceedings of the genetic and evolutionary computation conference.
+1028–1037.
+[13] Colan Biemer and Seth Cooper. 2024. Solution Path Heuristics for Predicting
+Difficulty and Enjoyment Ratings of Roguelike Level Segments. InProceedings of
+the 19th International Conference on the Foundations of Digital Games(Worcester,
+MA, USA)(FDG ’24). Association for Computing Machinery, New York, NY,
+USA, Article 69, 8 pages. doi:10.1145/3649921.3659846
+[14] Ria Mae Borromeo, Thomas Laurent, and Motomichi Toyama. 2016. The in-
+fluence of crowd type and task complexity on crowdsourced work quality. In
+Proceedings of the 20th International Database Engineering & Applications Sym-
+posium. 70–76.
+[15] Josiah D Boucher, Gillian Smith, and Yunus Doğan Telliel. 2024. Is Resistance
+Futile?: Early Career Game Developers, Generative AI, and Ethical Skepticism. In
+Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems
+(Honolulu, HI, USA)(CHI ’24). Association for Computing Machinery, New York,
+NY, USA, Article 173, 13 pages. doi:10.1145/3613904.3641889
+[16] Virginia Braun and Victoria Clarke. 2006. Using thematic analysis in psychology.
+Qualitative research in psychology3, 2 (2006), 77–101.
+[17] Sergi D Bray, Shane D Johnson, and Bennett Kleinberg. 2023. Testing human
+ability to detect ‘deepfake’ images of human faces.Journal of Cybersecurity9, 1
+(Jan. 2023), tyad011. doi:10.1093/cybsec/tyad011
+[18] Elizabeth Camilleri, Georgios N Yannakakis, and Alexiei Dingli. 2016. Platformer
+level design for player believability. In2016 IEEE Conference on Computational
+Intelligence and Games (CIG). IEEE, 1–8.
+[19] Chandranil Chakraborttii and Lucas Ferreirra. 2024. Towards Generating Sur-
+prising Content in 2D Platform Games. InProceedings of the 19th International
+Conference on the Foundations of Digital Games. 1–7.
+[20] Elizabeth Clark, Tal August, Sofia Serrano, Nikita Haduong, Suchin Gururangan,
+and Noah A Smith. 2021. All That’s ‘Human’Is Not Gold: Evaluating Human
+Evaluation of Generated Text. InProceedings of the 59th Annual Meeting of
+the Association for Computational Linguistics and the 11th International Joint
+Conference on Natural Language Processing (Volume 1: Long Papers). 7282–7296.
+[21] Jacob Cohen. 2013.Statistical power analysis for the behavioral sciences. rout-
+ledge.
+[22] Luana Colloca and Arthur J Barsky. 2020. Placebo and nocebo effects.New
+England Journal of Medicine382, 6 (2020), 554–561.
+[23] Dr Kate Compton. 2019. Getting Started with Generators. InProcedural Story-
+telling in Game Design. A K Peters/CRC Press. Num Pages: 14.
+[24] Seth Cooper. 2022. Sturgeon: tile-based procedural level generation via learned
+and designed constraints. InProceedings of the Eighteenth AAAI Conference on
+Artificial Intelligence and Interactive Digital Entertainment(Pomona, CA, USA)
+(AIIDE’22). AAAI Press, Article 4, 11 pages. doi:10.1609/aiide.v18i1.21944
+[25] Seth Cooper. 2023. Sturgeon-MKIII: Simultaneous level and example
+playthrough generation via constraint satisfaction with tile rewrite rules. In
+Proceedings of the 18th International Conference on the Foundations of Digital
+Games. 1–9.
+[26] Seth Cooper and Mahsa Bazzaz. 2024. Literally Unplayable: On Constraint-Based
+Generation of Uncompletable Levels. InProceedings of the 19th International
+Conference on the Foundations of Digital Games. 1–8.
+[27] Seth Cooper and Mahsa Bazzaz. 2024. Sturgeon-MKIV: constraint-based level
+and playthrough generation with graph label rewrite rules. InProceedings of the
+AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment,
+Vol. 20. 13–24.
+[28] Antonio Daniele, Caroline Di Bernardi Luft, and Nick Bryan-Kinns. 2021. “What
+Is Human?” A Turing Test for Artistic Creativity. InArtificial Intelligence
+in Music, Sound, Art and Design, Juan Romero, Tiago Martins, and Nereida
+Rodríguez-Fernández (Eds.). Springer International Publishing, Cham, 396–411.
+doi:10.1007/978-3-030-72914-1_26
+[29] Cooman Jerome De. 2023. When art becomes a lemon: The economics of
+machine-enabled artworks and the need for a rule of origin.Law, Technology
+and Humans5, 1 (May 2023), 24–39. doi:10.3316/informit.138990611832355
+Publisher: Queensland University of Technology.
+[30] Alena Denisova and Paul Cairns. 2015. The Placebo Effect in Digital Games:
+Phantom Perception of Adaptive Artificial Intelligence. InProceedings of the
+2015 Annual Symposium on Computer-Human Interaction in Play. ACM, London
+United Kingdom, 23–33. doi:10.1145/2793107.2793109
+[31] Sam Devlin, Raluca Georgescu, Ida Momennejad, Jaroslaw Rzepecki, Evelyn
+Zuniga, Gavin Costello, Guy Leroy, Ali Shaw, and Katja Hofmann. 2021. Nav-
+igation Turing Test (NTT): Learning to Evaluate Human-Like Navigation.
+doi:10.48550/arXiv.2105.09637 arXiv:2105.09637 [cs].
+[32] Holly Else. 2023. Abstracts written by ChatGPT fool scientists.Nature613, 7944
+(Jan. 2023), 423–423. doi:10.1038/d41586-023-00056-7
+[33] Jose M Font, Roberto Izquierdo, Daniel Manrique, and Julian Togelius. 2016. Con-
+strained level generation through grammar-based evolutionary algorithms. In
+European Conference on the Applications of Evolutionary Computation. Springer,
+558–573.
+[34] Hello Games. 2016. No Man’s Sky. Game, first announced in 2013.
+[35] Harsha Gangadharbatla. 2022. The Role of AI Attribution Knowledge in the
+Evaluation of Artwork.Empirical Studies of the Arts40, 2 (July 2022), 125–142.
+doi:10.1177/0276237421994697 Publisher: SAGE Publications Inc.
+[36] Dion Hoe-Lian Goh, Chei Sian Lee, Zirong Chen, Xue Wen Kuah, and Ying Ling
+Pang. 2022. Understanding Users’ Deepfake Video Verification Strategies. InHCI
+International 2022 – Late Breaking Posters, Constantine Stephanidis, Margherita
+Antona, Stavroula Ntoa, and Gavriel Salvendy (Eds.). Springer Nature Switzer-
+land, Cham, 25–32. doi:10.1007/978-3-031-19682-9_4
+[37] Simone Grassini and Mika Koivisto. 2024. Understanding how personality
+traits, experiences, and attitudes shape negative bias toward AI-generated art-
+works.Scientific Reports14, 1 (Feb. 2024), 4113. doi:10.1038/s41598-024-54294-4
+Publisher: Nature Publishing Group.
+[38] Matthew Guzdial, Nicholas Liao, Jonathan Chen, Shao-Yu Chen, Shukan Shah,
+Vishwa Shah, Joshua Reno, Gillian Smith, and Mark O. Riedl. 2019. Friend,
+Collaborator, Student, Manager: How Design of an AI-Driven Game Level
+Editor Affects Creators. InProceedings of the 2019 CHI Conference on Human
+Factors in Computing Systems(Glasgow, Scotland Uk)(CHI ’19). Association for
+Computing Machinery, New York, NY, USA, 1–13. doi:10.1145/3290605.3300854
+[39] Matthew Guzdial and Mark Riedl. 2016. Game level generation from game-
+play videos. InProceedings of the AAAI Conference on Artificial Intelligence and
+Interactive Digital Entertainment, Vol. 12. 44–50.
+[40] Matthew Guzdial and Mark Riedl. 2016. Learning to Blend Computer Game
+Levels. InProceedings of the Seventh International Conference on Computational
+Creativity.
+[41] Matthew Guzdial and Mark O Riedl. 2021. Conceptual game expansion.IEEE
+Transactions on Games14, 1 (2021), 93–106.
+[42] Matthew Guzdial, Nathan Sturtevant, and Boyang Li. 2021. Deep Static and
+Dynamic Level Analysis: A Study on Infinite Mario.Proceedings of the AAAI
+Conference on Artificial Intelligence and Interactive Digital Entertainment12, 2
+(Jun. 2021), 31–38. doi:10.1609/aiide.v12i2.12894
+[43] Anna Yoo Jeong Ha, Josephine Passananti, Ronik Bhaskar, Shawn Shan, Reid
+Southen, Haitao Zheng, and Ben Y. Zhao. 2024. Organic or Diffused: Can We
+Distinguish Human Art from AI-generated Images?. InProceedings of the 2024
+on ACM SIGSAC Conference on Computer and Communications Security. ACM,
+Salt Lake City UT USA, 4822–4836. doi:10.1145/3658644.3670306
+[44] Aqeel Haider, Casper Harteveld, Daniel Johnson, Max V Birk, Regan L Mandryk,
+Magy Seif El-Nasr, Lennart E Nacke, Kathrin Gerling, and Vero Vanden Abeele.
+2022. miniPXI: Development and validation of an eleven-item measure of the
+player experience inventory.Proceedings of the ACM on Human-Computer
+Interaction6, CHI PLAY (2022), 1–26.
+[45] Hassan Tarek Hakam, Robert Prill, Lisa Korte, Bruno Lovreković, Marko Ostojić,
+Nikolai Ramadanov, and Felix Muehlensiepen. 2024. Human-Written vs AI-
+Generated Texts in Orthopedic Academic Literature: Comparative Qualitative
+Analysis.JMIR Formative Research8, 1 (Feb. 2024), e52164. doi:10.2196/52164
+Company: JMIR Formative Research Distributor: JMIR Formative Research
+Institution: JMIR Formative Research Label: JMIR Formative Research Publisher:
+JMIR Publications Inc., Toronto, Canada.
+[46] Kevin A Hallgren. 2012. Computing inter-rater reliability for observational data:
+an overview and tutorial.Tutorials in quantitative methods for psychology8, 1
+(2012), 23.
+[47] Tero Hinkkanen, Jaakko Kurhila, Tomi A Pasanen, et al. 2008. Framework for
+evaluating believability of non-player characters in games.AI and Machine
+Consciousness(2008).
+[48] Christian Hugo Hoffmann. 2022. Is AI intelligent? An assessment of artificial
+intelligence, 70 years after Turing.Technology in Society68 (2022), 101893.
+doi:10.1016/j.techsoc.2022.101893
+[49] Ronald R. Holden. 2010.Face Validity. John Wiley & Sons, Ltd, 1–2. doi:10.
+1002/9780470479216.corpsy0341
+[50] Maurice Jakesch, Jeffrey T Hancock, and Mor Naaman. 2023. Human heuristics
+for AI-generated language are flawed.Proceedings of the National Academy of
+Sciences120, 11 (2023), e2208839120.
+
+
+--- PAGE 18 ---
+CHI ’26, April 13–17, 2026, Barcelona, Spain Mahsa Bazzaz and Seth Cooper
+[51] Vishal Joshi, Nirav Ajmeri, and Kenton O’Hara. 2025. Towards LLM-Agents That
+Play Dungeons & Dragons Using Iterative Prompting. InEuropean Conference
+on Artificial Intelligence.
+[52] Leslie Pack Kaelbling, Michael L Littman, and Andrew W Moore. 1996. Rein-
+forcement learning: A survey.Journal of artificial intelligence research4 (1996),
+237–285.
+[53] Kostas Karpouzis and Georgios N Yannakakis. 2016.Emotion in games. Socio-
+Affective Computing, Vol. 4. Springer, Cham, Switzerland.
+[54] Joseph R. Keebler, William J. Shelstad, Dustin C. Smith, Barbara S. Chaparro,
+and Mikki H. Phan. 2020. Validation of the GUESS-18: a short version of the
+game user experience satisfaction scale (GUESS).J. Usability Studies16, 1 (Nov.
+2020), 49–62.
+[55] Ahmed Khalifa, Philip Bontrager, Sam Earle, and Julian Togelius. 2020. Pcgrl:
+Procedural content generation via reinforcement learning. InProceedings of the
+AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment,
+Vol. 16. 95–101.
+[56] Thomas Kosch, Robin Welsch, Lewis Chuang, and Albrecht Schmidt. 2022. The
+Placebo Effect of Artificial Intelligence in Human-Computer Interaction.ACM
+Transactions on Computer-Human Interaction29, 6 (Dec. 2022), 1–32. doi:10.
+1145/3529225 arXiv:2204.04935 [cs].
+[57] Balázs Kovács. 2024. The Turing test of online reviews: Can we tell the difference
+between human-written and GPT-4-written online reviews?Marketing Letters
+35, 4 (Dec. 2024), 651–666. doi:10.1007/s11002-024-09729-3
+[58] Nils Köbis and Luca Mossink. 2020. Artificial Intelligence versus Maya An-
+gelou: Experimental evidence that people cannot differentiate AI-generated
+from human-written poetry. doi:10.48550/arXiv.2005.09980 arXiv:2005.09980
+[cs].
+[59] Geoffrey Lee, Min Luo, Fabio Zambetta, and Xiaodong Li. 2014. Learning a
+Super Mario controller from examples of human play. In2014 IEEE Congress on
+Evolutionary Computation (CEC). IEEE, IEEE, Beijing, China, 1–8.
+[60] Hector J. Levesque. 2017.Common Sense, the Turing Test, and the Quest for Real
+AI(1st ed.). The MIT Press.
+[61] Andrew Lewis, Patrick Vu, Raymond Duch, and Areeq Chowdhury. 2022. Do
+Content Warnings Help People Spot a Deepfake? Evidence from Two Experi-
+ments. doi:10.31219/osf.io/v4bf6
+[62] Simon Liu, Li Chaoran, Li Yue, Ma Heng, Hou Xiao, Shen Yiming, Wang Licong,
+Chen Ze, Guo Xianghao, Lu Hengtong, Du Yu, and Tang Qinting. 2019. Auto-
+matic generation of tower defense levels using PCG. InProceedings of the 14th
+International Conference on the Foundations of Digital Games. ACM, San Luis
+Obispo California USA, 1–9. doi:10.1145/3337722.3337723
+[63] Daniel Livingstone. 2006. Turing’s test and believable AI in games.Computers
+in Entertainment (CIE)4, 1 (2006), 6–es.
+[64] Zeyu Lu, Di Huang, Lei Bai, Jingjing Qu, Chengyue Wu, Xihui Liu, and Wanli
+Ouyang. 2023. Seeing is not always believing: Benchmarking human and model
+perception of AI-generated images.Advances in Neural Information Processing
+Systems36 (2023), 25435–25447.
+[65] Lumivero. 2023. NVivo 14. https://lumivero.com/products/nvivo/. Software.
+[66] Kimberly T. Mai, Sergi Bray, Toby Davies, and Lewis D. Griffin. 2023. Warning:
+Humans cannot reliably detect speech deepfakes.PLOS ONE18, 8 (Aug. 2023),
+e0285333. doi:10.1371/journal.pone.0285333 Publisher: Public Library of Science.
+[67] Mary L McHugh. 2012. Interrater reliability: the kappa statistic.Biochemia
+medica22, 3 (2012), 276–282.
+[68] Tim Merritt, Kevin McGee, Teong Leong Chuah, and Christopher Ong. 2011.
+Choosing human team-mates: perceived identity as a moderator of player prefer-
+ence and enjoyment. InProceedings of the 6th International Conference on Founda-
+tions of Digital Games(Bordeaux, France)(FDG ’11). Association for Computing
+Machinery, New York, NY, USA, 196–203. doi:10.1145/2159365.2159392
+[69] David Wayne Meyer. 2022. Find the Real: A Study of Individuals’ Ability
+to Differentiate Between Authentic Human Faces and Artificial-Intelligence
+Generated Faces. InHCI International 2022 – Late Breaking Posters, Constantine
+Stephanidis, Margherita Antona, Stavroula Ntoa, and Gavriel Salvendy (Eds.).
+Springer Nature Switzerland, Cham, 655–662. doi:10.1007/978-3-031-19682-
+9_83
+[70] Stephanie Milani, Arthur Juliani, Ida Momennejad, Raluca Georgescu, Jaroslaw
+Rzepecki, Alison Shaw, Gavin Costello, Fei Fang, Sam Devlin, and Katja
+Hofmann. 2023. Navigates Like Me: Understanding How People Evaluate
+Human-Like AI in Video Games. InProceedings of the 2023 CHI Conference
+on Human Factors in Computing Systems. ACM, Hamburg Germany, 1–18.
+doi:10.1145/3544548.3581348
+[71] Elizabeth J Miller, Ben A Steward, Zak Witkower, Clare AM Sutherland, Eva G
+Krumhuber, and Amy Dawel. 2023. AI hyperrealism: Why AI faces are perceived
+as more real than human ones.Psychological Science34, 12 (2023), 1390–1403.
+[72] Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis
+Antonoglou, Daan Wierstra, and Martin Riedmiller. 2013. Playing Atari with
+Deep Reinforcement Learning.arXiv preprint arXiv:1312.5602(2013).
+[73] Chad Mourning and Bradey Lounsbury. 2024. A Turing Test for Beatmap-
+Generation. In2024 IEEE Conference on Games (CoG). IEEE, Milan, Italy, 1–6.
+doi:10.1109/CoG60054.2024.10645551 ISSN: 2325-4289.
+[74] Rafał Muda, Gordon Pennycook, Damian Hamerski, and Michał Białek. 2023.
+People are worse at detecting fake news in their foreign language.Journal of
+Experimental Psychology: Applied29, 4 (2023), 712.
+[75] Nicolas M. Müller, Karla Pizzi, and Jennifer Williams. 2022. Human Perception
+of Audio Deepfakes. InProceedings of the 1st International Workshop on Deep-
+fake Detection for Audio Multimedia (DDAM ’22). Association for Computing
+Machinery, New York, NY, USA, 85–91. doi:10.1145/3552466.3556531
+[76] Kylie J. Nabata, Yasir AlShehri, Abdullah Mashat, and Sam M. Wiseman. 2025.
+Evaluating human ability to distinguish between ChatGPT-generated and origi-
+nal scientific abstracts.Updates in Surgery(Jan. 2025). doi:10.1007/s13304-025-
+02106-3
+[77] Sophie J. Nightingale and Hany Farid. 2022. AI-synthesized faces are indistin-
+guishable from real faces and more trustworthy.Proceedings of the National
+Academy of Sciences119, 8 (Feb. 2022), e2120481119. doi:10.1073/pnas.2120481119
+Publisher: Proceedings of the National Academy of Sciences.
+[78] Nintendo. 1985. Super Mario Bros. Game [NES].
+[79] Ruchi Panchanadikar and Guo Freeman. 2024. "I’m a Solo Developer but AI is
+My New Ill-Informed Co-Worker": Envisioning and Designing Generative AI to
+Support Indie Game Development.Proc. ACM Hum.-Comput. Interact.8, CHI
+PLAY, Article 317 (Oct. 2024), 26 pages. doi:10.1145/3677082
+[80] Ruchi Panchanadikar, Guo Freeman, Lingyuan Li, Kelsea Schulenberg, and
+Yang Hu. 2024. "A New Golden Era" or "Slap Comps": How Non-Profit Driven
+Indie Game Developers Perceive the Emerging Role of Generative AI in Game
+Development. InExtended Abstracts of the CHI Conference on Human Factors in
+Computing Systems(Honolulu, HI, USA)(CHI EA ’24). Association for Computing
+Machinery, New York, NY, USA, Article 1, 7 pages. doi:10.1145/3613905.3650845
+[81] Jeongeun Park, Kang , Hyunmin, , and Ha Young Kim. 2024. Human, Do
+You Think This Painting is the Work of a Real Artist?International Journal
+of Human–Computer Interaction40, 18 (Sept. 2024), 5174–5191. doi:10.1080/
+10447318.2023.2232978
+[82] Reza Arkan Partadiredja, Carlos Entrena-Serrano, and Davor Ljubenkov. 2020.
+AI or Human: The Socio-ethical Implications of AI-Generated Media Content.
+In2020 13th CMI Conference on Cybersecurity and Privacy (CMI) - Digital Trans-
+formation - Potentials and Challenges(51275). IEEE, Copenhagen, Denmark, 1–6.
+doi:10.1109/CMI51275.2020.9322673
+[83] Chris Pedersen, Julian Togelius, and Georgios N Yannakakis. 2009. Modeling
+player experience in super mario bros. In2009 IEEE Symposium on Computational
+Intelligence and Games. IEEE, IEEE, Milan, Italy, 132–139.
+[84] Mikki H. Phan, Joseph R. Keebler, and Barbara S. Chaparro. 2016. The Develop-
+ment and Validation of the Game User Experience Satisfaction Scale (GUESS).
+Human Factors58, 8 (Dec. 2016), 1217–1247. doi:10.1177/0018720816669646
+Publisher: SAGE Publications Inc.
+[85] K. Poels, Y.A.W. {de Kort}, and W.A. IJsselsteijn. 2007. D3.3 : Game Experience
+Questionnaire: development of a self-report measure to assess the psychological
+impact of digital games. (2007).
+[86] Brian Porter and Edouard Machery. 2024. AI-generated poetry is indistinguish-
+able from human-written poetry and is rated more favorably.Scientific Reports
+14, 1 (Nov. 2024), 26133. doi:10.1038/s41598-024-76900-1 Publisher: Nature
+Publishing Group.
+[87] Daniel Prudký, Anton Firc, and Kamil Malinka. 2023. Assessing the Human
+Ability to Recognize Synthetic Speech in Ordinary Conversation. In2023 Inter-
+national Conference of the Biometrics Special Interest Group (BIOSIG). IEEE, 1–5.
+doi:10.1109/BIOSIG58226.2023.10346006 ISSN: 1617-5468.
+[88] Thinking Rabbit. 1982. Sokoban. Game.
+[89] Sébastien Racanière, Théophane Weber, David P. Reichert, Lars Buesing, Arthur
+Guez, Danilo Rezende, Adria Puigdomènech Badia, Oriol Vinyals, Nicolas Heess,
+Yujia Li, Razvan Pascanu, Peter Battaglia, Demis Hassabis, David Silver, and
+Daan Wierstra. 2017. Imagination-augmented agents for deep reinforcement
+learning. (2017), 5694–5705.
+[90] Irene Rae. 2024. The Effects of Perceived AI Use On Content Perceptions. In
+Proceedings of the CHI Conference on Human Factors in Computing Systems. ACM,
+Honolulu HI USA, 1–14. doi:10.1145/3613904.3642076
+[91] Martin Ragot, Nicolas Martin, and Salomé Cojean. 2020. AI-generated vs. Hu-
+man Artworks. A Perception Bias Towards Artificial Intelligence?. InExtended
+Abstracts of the 2020 CHI Conference on Human Factors in Computing Systems
+(Honolulu, HI, USA)(CHI EA ’20). Association for Computing Machinery, New
+York, NY, USA, 1–10. doi:10.1145/3334480.3382892
+[92] Willian MP Reis, Levi HS Lelis, and Ya’akov Kobi Gal. 2015. Human computation
+for procedural content generation in platform games. In2015 IEEE Conference
+on Computational Intelligence and Games (CIG). IEEE, Institute of Electrical and
+Electronics Engineers, 99–106.
+[93] Thomas Rist. 2024. Using a large language model to turn explorations of virtual
+3D-worlds into interactive narrative experiences. In2024 IEEE Conference on
+Games (CoG). IEEE, 1–8.
+[94] Paolo Ruffino. 2024.No Man’s Game: The Infinite Boredom of Procedurally
+Generated Environments. Amsterdam University Press, 415–432. http://www.
+jstor.org/stable/jj.10819591.22
+
+
+--- PAGE 19 ---
+Playing the Imitation Game: How Perceived Generated Content Shapes Player Experience CHI ’26, April 13–17, 2026, Barcelona, Spain
+[95] Andrew Samo and Scott Highhouse. 2023. Artificial intelligence and art: Iden-
+tifying the aesthetic judgment factors that distinguish human- and machine-
+generated artwork.Psychology of Aesthetics, Creativity, and the Arts(2023).
+doi:10.1037/aca0000570 Place: US Publisher: Educational Publishing Founda-
+tion.
+[96] Karl H Schlag, James Tremewan, and Joël J Van der Weele. 2015. A penny for
+your thoughts: A survey of methods for eliciting beliefs.Experimental Economics
+18 (2015), 457–490.
+[97] Carissa Schoenick, Peter Clark, Oyvind Tafjord, Peter Turney, and Oren Etzioni.
+2017. Moving Beyond the Turing Test with the Allen AI Science Challenge.
+Commun. ACM60, 9 (2017), 60–64.
+[98] Noor Shaker, Antonios Liapis, Julian Togelius, Ricardo Lopes, and Rafael Bidarra.
+2016. Constructive generation methods for dungeons and levels. InProcedural
+Content Generation in Games. Springer, 31–55.
+[99] Noor Shaker, Julian Togelius, and Mark J. Nelson. 2016.Procedural Content
+Generation in Games(1st ed.). Springer Publishing Company, Incorporated.
+[100] Noor Shaker, Julian Togelius, Georgios N Yannakakis, Likith Poovanna, Vinay S
+Ethiraj, Stefan J Johansson, Robert G Reynolds, Leonard K Heether, Tom Schu-
+mann, and Marcus Gallagher. 2013. The turing test track of the 2012 mario ai
+championship: entries and evaluation. In2013 IEEE Conference on Computa-
+tional Inteligence in Games (CIG). IEEE, Institute of Electrical and Electronics
+Engineers, Niagara Falls, ON, Canada, 1–8.
+[101] Bingyu Shen, Brandon RichardWebster, Alice O’Toole, Kevin Bowyer, and Wal-
+ter J. Scheirer. 2021. A Study of the Human Perception of Synthetic Faces. In2021
+16th IEEE International Conference on Automatic Face and Gesture Recognition
+(FG 2021). IEEE Press, Jodhpur, India, 1–8. doi:10.1109/FG52635.2021.9667066
+[102] Tianye Shu, Jialin Liu, and Georgios N Yannakakis. 2021. Experience-driven PCG
+via reinforcement learning: A Super Mario Bros study. In2021 IEEE Conference
+on Games (CoG). IEEE, 1–9.
+[103] Gillian Smith. 2015. An Analog History of Procedural Content Generation. In
+FDG. Boston, MA, Association for Computing Machinery, 1–6.
+[104] Gillian Smith and Jim Whitehead. 2010. Analyzing the expressive range of
+a level generator. InProceedings of the 2010 workshop on procedural content
+generation in games. 1–7.
+[105] Giovanni Spitale, Nikola Biller-Andorno, and Federico Germani.
+2023. AI model GPT-3 (dis)informs us better than humans.Sci-
+ence Advances9, 26 (2023), eadh1850. doi:10.1126/sciadv.adh1850
+arXiv:https://www.science.org/doi/pdf/10.1126/sciadv.adh1850
+[106] SteamDB. 2025. SteamDB Tags: AI Content Disclose. https://steamdb.info/tag/
+1368160/.
+[107] Shyam Sudhakaran, Miguel González-Duque, Matthias Freiberger, Claire
+Glanois, Elias Najarro, and Sebastian Risi. 2023. Mariogpt: Open-ended text2level
+generation through large language models.Advances in Neural Information
+Processing Systems36 (2023), 54213–54227.
+[108] Adam Summerville. 2018. Expanding expressive range: Evaluation methodolo-
+gies for procedural content generation. InProceedings of the AAAI Conference
+on Artificial Intelligence and Interactive Digital Entertainment, Vol. 14. 116–122.
+[109] Adam Summerville, Julian R. H. Mariño, Sam Snodgrass, Santiago Ontañón, and
+Levi H. S. Lelis. 2017. Understanding mario: an evaluation of design metrics for
+platformers. InProceedings of the 12th International Conference on the Foundations
+of Digital Games(Hyannis, Massachusetts)(FDG ’17). Association for Computing
+Machinery, New York, NY, USA, Article 8, 10 pages. doi:10.1145/3102071.3102080
+[110] Adam Summerville, Sam Snodgrass, Matthew Guzdial, Christoffer Holmgård,
+Amy K Hoover, Aaron Isaksen, Andy Nealen, and Julian Togelius. 2018. Proce-
+dural content generation via machine learning (PCGML).IEEE Transactions on
+Games10, 3 (2018), 257–270.
+[111] Adam James Summerville, Sam Snodgrass, Michael Mateas, and Santiago On-
+tañón Villar. 2016. The VGLC: The Video Game Level Corpus.Proceedings of
+the 7th Workshop on Procedural Content Generation(2016).
+[112] Yikang Sun, Cheng-Hsiang Yang, Yanru Lyu, and Rungtai Lin. 2022. From
+pigments to pixels: a comparison of human and AI painting.Applied Sciences
+12, 8 (2022), 3724.
+[113] Joshua Taylor, Ian Parberry, and Thomas D Parsons. 2015. Comparing Player
+Attention on Procedurally Generated vs. Hand Crafted Sokoban Levels with an
+Auditory Stroop Test.. InFDG. Association for Computing Machinery, Pacific
+Grove, CA, USA.
+[114] Gareth Terry, Nikki Hayfield, Victoria Clarke, Virginia Braun, et al. 2017. The-
+matic analysis.The SAGE handbook of qualitative research in psychology2, 17-37
+(2017), 25.
+[115] Graham Todd, Sam Earle, Muhammad Umair Nasir, Michael Cerny Green, and
+Julian Togelius. 2023. Level Generation Through Large Language Models. In
+Proceedings of the 18th International Conference on the Foundations of Digital
+Games(Lisbon, Portugal)(FDG ’23). Association for Computing Machinery, New
+York, NY, USA, Article 70, 8 pages. doi:10.1145/3582437.3587211
+[116] Graham Todd, Tim Merino, Sam Earle, and Julian Togelius. 2025. Benchmarking
+language models with the new york times connections puzzle.IEEE Transactions
+on Games(2025).
+[117] Julian Togelius, Emil Kastbjerg, David Schedl, and Georgios N. Yannakakis. 2011.
+What is procedural content generation? Mario on the borderline. InProceedings
+of the 2nd International Workshop on Procedural Content Generation in Games
+(Bordeaux, France)(PCGames ’11). Association for Computing Machinery, New
+York, NY, USA, Article 3, 6 pages. doi:10.1145/2000919.2000922
+[118] Julian Togelius, Georgios N Yannakakis, Kenneth O Stanley, and Cameron
+Browne. 2010. Search-based procedural content generation. InApplications
+of Evolutionary Computation: EvoApplicatons 2010: EvoCOMPLEX, EvoGAMES,
+EvoIASP, EvoINTELLIGENCE, EvoNUM, and EvoSTOC, Istanbul, Turkey, April 7-9,
+2010, Proceedings, Part I. Springer, 141–150.
+[119] A. M. Turing. 1950. Computing Machinery and Intelligence.Mind59, 236 (1950),
+433–460. http://www.jstor.org/stable/2251299
+[120] Valve Corporation. 2025. Steam Store Search — Procedural Generation Tag. https:
+//store.steampowered.com/search/?tags=5125&supportedlang=english&ndl=1.
+[121] Valve Corporation. 2025. Steamworks Development — AI Content on Steam
+(New Policy). https://store.steampowered.com/news/group/4145017/view/
+3862463747997849618.
+[122] Veera Vimpari, Annakaisa Kultima, Perttu Hämäläinen, and Christian Guck-
+elsberger. 2023. “An Adapt-or-Die Type of Situation”: Perception, Adoption,
+and Use of Text-to-Image-Generation AI by Game Industry Professionals.Proc.
+ACM Hum.-Comput. Interact.7, CHI PLAY, Article 379 (Oct. 2023), 34 pages.
+doi:10.1145/3611025
+[123] Vanessa Volz, Jacob Schrum, Jialin Liu, Simon M. Lucas, Adam Smith, and Sebas-
+tian Risi. 2018. Evolving mario levels in the latent space of a deep convolutional
+generative adversarial network. InProceedings of the Genetic and Evolutionary
+Computation Conference(Kyoto, Japan)(GECCO ’18). Association for Computing
+Machinery, New York, NY, USA, 221–228. doi:10.1145/3205455.3205517
+[124] Milić Vukojičić, Jovana Krstić, and Mladen Veinović. 2023. Imitation Drawing:
+Can We Spot the Difference Between Ai and Human Generated Drawing?. In
+Proceedings of the International Scientific Conference - Sinteza 2023. Singidunum
+University, Beograd, Serbia, 23–27. doi:10.15308/Sinteza-2023-23-27
+[125] Changsheng Wang. 2024. Human or Algorithm? The Visual Turing Test of
+AI-Generated Images.Journal of Multimedia Information System11, 3 (2024),
+201–212. doi:10.33851/JMIS.2024.11.3.201 Publisher: Korea Multimedia Society.
+[126] Ziqi Wang and Jialin Liu. 2022. Online game level generation from music. In
+2022 IEEE Conference on Games (CoG). IEEE, 119–126.
+[127] Ziqi Wang, Jialin Liu, and Georgios N. Yannakakis. 2022. The Fun Facets of
+Mario: Multifaceted Experience-Driven PCG via Reinforcement Learning. In
+Proceedings of the 17th International Conference on the Foundations of Digital
+Games(Athens, Greece)(FDG ’22). Association for Computing Machinery, New
+York, NY, USA, Article 44, 8 pages. doi:10.1145/3555858.3563282
+[128] Kevin Warren, Tyler Tucker, Anna Crowder, Daniel Olszewski, Allison Lu,
+Caroline Fedele, Magdalena Pasternak, Seth Layton, Kevin Butler, Carrie Gates,
+and Patrick Traynor. 2024. "Better Be Computer or I’m Dumb": A Large-Scale
+Evaluation of Humans as Audio Deepfake Detectors. InProceedings of the 2024
+on ACM SIGSAC Conference on Computer and Communications Security (CCS
+’24). Association for Computing Machinery, New York, NY, USA, 2696–2710.
+doi:10.1145/3658644.3670325
+[129] Wikipedia. 2025. Sokoban — Wikipedia, The Free Encyclopedia. http://en.
+wikipedia.org/w/index.php?title=Sokoban&oldid=1302097429.
+[130] Wikipedia. 2025. Super Mario — Wikipedia, The Free Encyclopedia. http:
+//en.wikipedia.org/w/index.php?title=Super%20Mario&oldid=1301225659.
+[131] Oliver Withington and Laurissa Tokarchuk. 2023. The Right Variety: Improving
+Expressive Range Analysis with Metric Selection Methods. InProceedings of
+the 18th International Conference on the Foundations of Digital Games(Lisbon,
+Portugal)(FDG ’23). Association for Computing Machinery, New York, NY, USA,
+Article 18, 11 pages. doi:10.1145/3582437.3582453
+[132] Georgios N. Yannakakis and Julian Togelius. 2025.Procedural Content Generation.
+Springer Nature Switzerland, Cham, 235–251. doi:10.1007/978-3-031-83347-2_7
+[133] Hong Yu and Tyler Trawick. 2011. Personalized procedural content generation
+to minimize frustration and boredom based on ranking algorithm. InProceedings
+of the Seventh AAAI Conference on Artificial Intelligence and Interactive Digital
+Entertainment(Stanford, California, USA)(AIIDE’11). AAAI Press, 208–213.
+[134] Anthony Zador, Sean Escola, Blake Richards, Bence Ölveczky, Yoshua Bengio,
+Kwabena Boahen, Matthew Botvinick, Dmitri Chklovskii, Anne Churchland,
+Claudia Clopath, et al . 2022. Toward next-generation artificial intelligence:
+Catalyzing the NeuroAI revolution.arXiv preprint arXiv:2210.08340(2022).
+[135] Tiffany Zhu, Iain Weissburg, Kexun Zhang, and William Yang Wang. 2024.
+Human Bias in the Face of AI: The Role of Human Judgement in AI Generated
+Text Evaluation. doi:10.48550/arXiv.2410.03723 arXiv:2410.03723 [cs].
+[136] Evelyn Zuniga, Stephanie Milani, Guy Leroy, Jaroslaw Rzepecki, Raluca
+Georgescu, Ida Momennejad, Dave Bignell, Mingfei Sun, Alison Shaw, Gavin
+Costello, Mikhail Jacob, Sam Devlin, and Katja Hofmann. 2022. How Humans
+Perceive Human-like Behavior in Video Game Navigation. InCHI Conference on
+Human Factors in Computing Systems Extended Abstracts. ACM, New Orleans
+LA USA, 1–11. doi:10.1145/3491101.3519735
+[137] Borgar Þorsteinsson. 2009. S ¯okoban. https://borgar.net/programs/sokoban/
+#Intro
+
+
+--- PAGE 20 ---
+CHI ’26, April 13–17, 2026, Barcelona, Spain Mahsa Bazzaz and Seth Cooper
+A Appendix
+A.1 AI generation Method Selection
+In order to select level generation approaches we conducted a search
+of relevant literature. We were trying to find papers in the domain
+of PCG that exactly included the generation of Super Mario Bros.
+and Sokoban levels. We decided to find papers that included a code-
+base of their implementation so that we could exactly use the model
+provided by the authors to generate random models. To do so we
+conducted a literature search with the keyword string “(mario
+OR sokoban) AND (pcg OR procedural OR generative OR
+PCGML OR PCGRL OR constraint OR Constraint-Based OR WFC
+OR ‘Wave Function Collapse’ OR WaveFunctionCollapse OR
+Markov OR Bayesian Networks OR latent OR Supervised OR
+OR Neural OR Autoencoder OR recurrent OR RNN OR LSTM OR
+"Long Short-term Memory" OR transformer OR LLM "Large
+Language" OR GPT OR convolutions OR Convolutional OR
+CNN OR Adversarial OR GAN OR Variational OR VAE OR
+Reinforcement OR RL OR MDP OR Q-learning OR Diffusion)”.
+This keyword string was selected based on all approaches men-
+tioned in different sections of [ 132]. Searching in IEEE Xplore,
+ACM DL, and AAAI databases resulted in 446 records (227 IEEE
+Xplore, 168 ACM DL and 51 AAAI). Then we removed 73 duplicate
+records and 10 ineligible records (marked by automation tools),
+resulting in 361 unique papers for screening. Twenty papers were
+excluded at the title/abstract screening stage as they clearly did not
+focus on level generation for our target games despite containing
+our search keywords. After applying our inclusion criteria (full
+published papers focusing on Super Mario Bros. or Sokoban level
+generation) and exclusion criteria (removing short papers/abstracts
+(44), review papers (11), papers not covering our target games (167),
+mixed-initiative/repair/blending methods (6), and crucially, papers
+without available code/artifacts (93)) we identified 20 papers with
+reproducible implementations.
+From the 20 papers meeting our inclusion criteria, we selected 6
+representative models (3 for SMB, 3 for Sokoban) following a paired-
+method approach to keep methodological consistency across both
+games. We first identified method categories that had implementa-
+tions available for both Super Mario and Sokoban, which excluded
+GAN-based, genetic, and grammar-based approaches that were
+only available for SMB generation. Paper [ 26] was excluded as
+it specifically generates unplayable levels. This filtering process
+resulted in four method categories with representation in both
+games: constraint-based (3 papers: [24], [25], [27]), reinforcement
+learning (5 papers: [127], [102], [126], [55], [89]), large language
+models (2 papers: [107], [115]). , and evolutionary methods (2 pa-
+pers: [12], [12]).
+For LLMs, only one implementation per game was available, so
+no choice needed to be made. For constraint-based and RL meth-
+ods where multiple options existed, we selected based on citation
+count as a proxy for impact and reliability. We chose [ 24] (34 ci-
+tations) for Super Mario Bros. and [25] (14 citations) for Sokoban
+from constraint-based methods. We also chose [127] (16 citations)
+for Super Mario Bros. and [ 89] (795 citations) for Sokoban from
+RL approaches. While [55] (243 citations) and [102] (71 citations)
+had higher citation counts than [127], they were excluded due to
+deprecated dependencies in their codebases that prevented reliable
+reproduction. Also, we excluded evolutionary approaches because
+both available papers used reinforcement learning as their core
+generation mechanism, which would have been redundant with
+our RL category.
+A.2 AI generation Process
+To ensure reproducibility and transparency, we provide the exact
+resources used for each generation approach in our study. For
+approaches where trained models were available, we used these
+models to generate levels. For approaches where complete artifact
+datasets from the original work were available, we used these pre-
+generated levels.
+Trained Models:
+• Cooper et al. (2022)[ 24]: We used the model exactly as
+instructed in their GitHub repository4 lines 52-70.
+• Cooper et al. (2023)[ 25]: We used the model exactly as
+instructed in their GitHub repository5 lines 28-30.
+• Sudhakaran et al. (2023)[ 107]: We used the trained Mari-
+oGPT model through the provided Colab notebook6. For this
+model, we used the prompts as specified in their Figure 1:
+(1) “many pipes, many enemies, little blocks, low elevation”
+(2) “no pipes, some enemies, many blocks, high elevation”
+(3) “many pipes, many enemies”
+(4) “no pipes, no enemies, many blocks”
+(5) “many pipes, no enemies, many blocks”
+(6) “Many pipes, no enemies, some blocks”
+Artifact Datasets:
+• Wang et al. (2022)[ 127]: We used the pre-generated level
+dataset from their repository7
+• Todd et al. (2023)[ 115]: We used their artifact dataset avail-
+able online8
+• Racanière et al. (2017)[ 89]: We used the extensive dataset
+of generated levels from the original work’s repository9
+A.3 Qualtrics Survey
+Figure 12 shows screenshots of the survey interface as seen by one
+participant.
+4https://github.com/crowdgames/sturgeon/blob/main/examples_basic.sh
+5https://github.com/crowdgames/sturgeon/blob/main/examples_mkiii.sh
+6https://colab.research.google.com/drive/16KR9idJUim6RAiyPASoQAaC768AvOGxP
+7https://github.com/SUSTechGameAI/MFEDRL/tree/master/exp_data/rand_
+playable_lvls
+8https://tinyurl.com/sokoban-todd
+9https://github.com/google-deepmind/boxoban-levels
+
+
+--- PAGE 21 ---
+Playing the Imitation Game: How Perceived Generated Content Shapes Player Experience CHI ’26, April 13–17, 2026, Barcelona, Spain
+Figure 12: Screenshots of the survey interface as seen by one participant. The complete screenshot with all instructions and
+questions is shown for the first Super Mario Bros. and Sokoban levels. For subsequent trials to conserve space, only the game
+level screenshots are added. Note that unlike Sokoban, Super Mario Bros. levels are not completely visible in the player’s
+viewport, and horizontal movement is needed to see the rest of the level.

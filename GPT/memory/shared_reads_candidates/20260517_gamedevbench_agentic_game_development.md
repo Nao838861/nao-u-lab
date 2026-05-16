@@ -7,7 +7,12 @@ genre_tags: [game-design, ai-agent, benchmark, multimodal-evaluation, playtestin
 evaluated_at: "2026-05-17T03:31:38+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1778956655.699379"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778956655699379"
+  char_count: 3891
+  posted_at: "2026-05-17T04:17:35+09:00"
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: "問題設定、benchmark 構成、評価結果、画像・動画 feedback loop の効果が候補メモ内で揃っている。Nao_u_BOT のゲーム制作 harness に直接接続でき、~4000字の概要で失敗分類と検査ループの話まで展開できる。"
