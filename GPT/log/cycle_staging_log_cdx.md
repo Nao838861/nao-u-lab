@@ -70,7 +70,26 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-17T04:47+09:00 log_cdx Phase 4a 整理 + 問題抽出。
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の index 参照を確認。repo root / memory/ 相対の両方で解釈し、broken link は 0 件。"
+  - "memory/atoms.jsonl を確認。1220 rows、invalid JSON 0、duplicate id 0、normalized_content_hash 重複 group 0。"
+  - "memory/raw/ を確認。30 日以上動きがない file は 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/ を確認。30 日以上動きがない candidate は 0 件。降格/保持判断の対象なし。"
+  - "slack_inbox_lifecycle.py pending を確認。directives / broadcasts とも pending 0 件。handled 更新対象なし。"
+issues:
+  - id: ISS-4A-20260517-01
+    description: "MEMORY.md の Tag Entry Points と atoms 全体で identity/operation/knowledge/memory/game-design などの広すぎるタグが上位を占め、ゲーム制作時の具体タスクから必要 atom へ降りる入口としては粒度が粗い。"
+    severity: medium
+    evidence: "memory/MEMORY.md Tag Entry Points: identity 865 / operation 662 / knowledge 634 / game-design 628 / memory 624。memory/atoms.jsonl 集計: identity 1051 / operation 823 / knowledge 804 / memory 800 / game-design 764。"
+    why_blocks_game_memory: "次のゲーム制作で『shmup の弾幕評価』『playtest harness』『素材生成 pipeline』のような具体的な手法を探す時、広いタグの代表 atom に吸われやすく、過去制作の個別知見と一般化ノウハウを短時間で接続しにくい。"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260517-01
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
