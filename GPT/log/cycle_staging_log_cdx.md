@@ -37,7 +37,32 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778932863-4a01b7333a
+    source_ts: "1778932863.644179"
+    title: "2026-05-16 Twitter おすすめから3件結合: creatable / fun / sellable の三独立軸"
+    reason: "直近のゲーム制作・評価では、作れること、面白いこと、売れることの混同が headless や実装進捗の誤読につながりやすい。今回の atom は graze_log v05 の現在地にも接続しており、次の game prototype 判定へ小さく返せる。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の game prototype 制作・評価・修復時に、creatable / fun / sellable の軸混同を確認する 3 問 probe を state に追加。恒久ルールは増やしていない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

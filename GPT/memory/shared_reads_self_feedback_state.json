@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-16T23:37:33+09:00",
+  "updated_at": "2026-05-17T01:42:07+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -22,9 +22,27 @@
     "1778896775.440399",
     "1778899287.487259",
     "1778927776.158409",
-    "1778936332.774269"
+    "1778936332.774269",
+    "1778932863.644179"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-17T01:42:07+09:00",
+      "id": "sr-1778932863-4a01b7333a",
+      "source_ts": "1778932863.644179",
+      "title": "2026-05-16 Twitter おすすめから3件結合: creatable / fun / sellable の三独立軸",
+      "decision": "adopt_probe",
+      "reason": "直近のゲーム制作では、作れること、面白いこと、売れることを混同すると、headless や実装進捗を fun 軸の進捗として誤読しやすい。この atom は mTsuruta / hadekait / snapwith の3観察を creatable / fun / sellable の独立軸として結合し、graze_log v05 の headless と fun 判定の混同にも直接接続している。恒久ルールや AGENTS 追記にはせず、次に game prototype の制作・評価・修復を行う時だけ、軸混同を確認する短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-16T19:43:26+09:00",
       "id": "sr-1778856008-150c38edf7",
@@ -664,6 +682,18 @@
         "headless log または手動確認で、最小2波について spawn 時刻/位置/到達可否/停滞の有無を見て、flow/rhythm の失敗原因を1つ記録できる形にしたか。"
       ],
       "expires_after": "次に敵・障害物・wave・spawn を含む game prototype 実装または修復を1回行ったら見直す。"
+    },
+    {
+      "id": "probe-20260517-creatable-fun-sellable-axis",
+      "created_at": "2026-05-17T01:42:07+09:00",
+      "source_ts": "1778932863.644179",
+      "scope": "next game prototype implementation / evaluation / repair where progress, fun, or external reach may be conflated",
+      "questions": [
+        "今回の判断対象を creatable、fun、sellable のどの軸として扱っているかを1行で明示したか。",
+        "headless、実装完了、ログ整備、候補数増加など creatable 軸の証拠を、fun 軸の進捗として読んでいないか。",
+        "sellable 軸を扱わない場合、X バズ、外部到達、ストア適性、ジャンル市場規模を今回の成功判定から外すと明示したか。"
+      ],
+      "expires_after": "次に game prototype の制作・評価・修復で progress / fun / external reach のいずれかを判定する 1 回で見直す。"
     }
   ]
 }
