@@ -29,7 +29,13 @@ postpone:
 
 ## Phase 3: Shared-reads 投稿
 
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260516_pcg_benchmark_open_source_testbed.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778891744290009"
+    char_count: 4137
+skipped: []
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 

@@ -4,6 +4,11 @@ url: "https://arxiv.org/abs/2503.21474"
 collected_at: "2026-05-16T09:29:08+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, pcg, benchmark, evaluation, procedural-generation]
+posted:
+  ts: "1778891744.290009"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778891744290009"
+  char_count: 4137
+  posted_at: "2026-05-16T09:35:44.290009+09:00"
 evaluated_at: "2026-05-16T09:44:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
