@@ -13,6 +13,11 @@
   - `memory/shared_reads_candidates/20260517_asgardbench_interactive_planning.md` — visual observation と最小 feedback で計画修正できるかを測る benchmark。ゲーム内 puzzle / tutorial の状態理解評価に接続しやすい。
   - `memory/shared_reads_candidates/20260517_mining_player_experience_trends_reviews.md` — game review から player experience trend を LLM / embedding で抽出する CHI 2026 paper。レビュー分析と threshold 管理の材料。
 
+2026-05-17T07:44+09:00 log_cdx Phase 1 追記:
+- slack_directives.jsonl / slack_broadcasts.jsonl: tail 確認。直近 pending は見当たらず、5/16 game-rights の game directive は handled 済み。
+- recent raw / atom / candidates: `memory/raw/web_research/results.jsonl` 07:21 取得分、recent atoms、candidate pool を確認。PokeAgent / TextQuests / World-Gen to Quest-Line / LieCraft / AI Gamestore / Ink Splotch / Cyberball などは既存 candidate または投稿済みのため重複採取しない。
+- 追加 candidate:
+  - `memory/shared_reads_candidates/20260517_cattle_trade_multiagent_bargaining.md` — Cattle Trade: bluffing / bidding / bargaining を 50-60 turn の不完全情報 economic game に統合し、最終勝敗だけでなく bid / offer / counteroffer / card selection の行動ログを評価対象にする multi-agent LLM benchmark。
 ## Phase 2: 分析
 ### 2026-05-17T07:32:02+09:00 log_cdx
 
