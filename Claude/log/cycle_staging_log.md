@@ -317,3 +317,36 @@ shot_log v01 Q-A を Eneba 戦術評価軸 + Boghog wave grammar の 2 軸で再
 - D案: staging テンプレに応答検出 grep 1行追加 — sense_prediction_log 5/14 N=3 自己課題 / kaizen #130 検証期限 (5/19) 直前で価値高いが、staging テンプレ実体 (cycle_staging_template.md) の確認 + 編集が必要 = 30分粒度を超える可能性、次サイクル Phase 4 候補に持ち越し
 
 — Log (Claude) C197 Phase 3 完了
+
+## Phase 4: Execute (2026-05-17 完了)
+
+### 完遂したタイトル
+shot_log v01 Q-A を Eneba 戦術評価軸 + Boghog wave grammar の 2 軸で再採点 → 数値は Log が出し、合否判定だけ Mir/Ash に Slack で閾値判定依頼する (evaluator authorship 分離の N=1 運用テスト)
+
+### 完遂の定義 観測結果 (Phase 4 終了時)
+
+1. ✅ `game/shot_log/v01/self_judgment.md` に「## C197 Phase 4: Eneba 戦術軸 / Boghog wave grammar 再採点」節を追加
+2. ✅ Eneba 戦術評価語彙 5軸 (strategic loadout / rewards risks / BOMB ボタン乱打抗体 / power-routing / strategic presence) を ○/△/× で採点、各採点に C195 BOMB ベンチ実数値 or 対面5h セッション or SE 統合観測のいずれかを根拠として 1 行明記。合計 ○1 / △2 / ×2
+3. ✅ Boghog wave grammar 5要素 (Toaplan / レーン / Layered Design / Pacing / 失敗パターン回避) を ○/△/×/N/A で採点。合計 ○0 / △1 / ×3 / N/A1
+4. ✅ Mir/Ash への閾値判定依頼を #all-nao-u-lab に投稿、実 ts = **1778948778.068999** (post_draft.py 経由、ok=True、archive 完了)
+5. ⏳ Phase 4 commit + push は Phase 5 で日記とまとめて行う (本フェーズでは commit しない方針)
+
+### 副産物 (本フェーズで生成/変更したもの)
+
+- **変更ファイル**:
+  - `game/shot_log/v01/self_judgment.md` — 「## C197 Phase 4」節 (Eneba 5軸 + Boghog 5要素 採点 + 2 軸の関係 + 確信度 + 閾値判定の依頼形式) を追加
+  - `log/cycle_staging_log.md` — 本 Phase 4 セクション追加
+- **Slack 投稿 (1件)**:
+  - #all-nao-u-lab ts=1778948778.068999 — shot_log v01 再採点要約 + Mir/Ash への閾値判定依頼 3問 (Q1 Eneba 軸 ○1/△2/×2 の閾値判定 / Q2 Boghog 軸 ○0/△1/×3/N/A1 の読み方 / Q3 evaluator authorship 分離の N=1 評価)
+- **論理削除 (post_draft.py archive)**:
+  - `drafts/2026-05-17/post_log_all_nao_u_lab_shot_log_v01_eneba_boghog_judgment_request_20260517.py` → `drafts/.archive/2026-05-17/` へ移動
+- **kaizen 起票**: なし (検証ファースト原則順守)
+- **commit / push**: 未実行 (Phase 5 で日記と合わせて実行)
+
+### Phase 4 で得られた観察 (次サイクル申し送り候補)
+
+1. **evaluator authorship 分離は構造的に N=1 だけでは効果不明** — Log が採点軸 (Eneba 5/Boghog 5) を選び ○/△/× を配分した時点で、Mir/Ash の「合否判定」はその採点表を所与とする = 軸選定バイアスは分離されていない。**完全分離には Mir/Ash が独立に採点軸を選定する**必要、または Nao_u が事前に閾値を pre-register する必要。次サイクル Phase 1 で Mir/Ash 応答を確認、無応答なら「N=1 では分離効果不明」を結論として N=3 まで運用継続
+2. **Eneba 軸全体 ○1 = 戦術評価語彙には未到達** — Phase 2 §2 で「shot_log v01 は戦術判断強制側」と整理した結論は #3 (BOMB 乱打抗体) 1点立脚で偏向、sense_prediction_log N=12 「単一摂取源で本質断定」の同型反復だった疑い。本サイクル Phase 4 で訂正
+3. **Boghog 軸 ○0/×3 = wave 設計 grammar に未着手** — v02 着手前 brainstorm 30 件走査の元クラスタとして Boghog 規則を実装側に持ち込むのが第一候補、ただし「shot_log は wave 設計系譜ではなく別系統」案も Mir/Ash 判定で検討余地
+4. **手段⇄目的反転の境界線通過** — 本サイクル C197 で game/* playable diff は self_judgment.md 1ファイル (採点表追加) のみ、Slack 投稿 4 件 (Phase 2 + Phase 3 重複 + Phase 4)、分析中心の出力構造 = `feedback_means_ends_reversal_check.md` 診断対象。**次サイクルから playable diff (実装変更) を主出力に戻す宣言**を Phase 5 日記に明記
+

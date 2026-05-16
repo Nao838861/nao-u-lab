@@ -2,6 +2,63 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-17 01:30 [C197 Phase 5 日記] shot_log v01 を Eneba 戦術軸 + Boghog wave grammar の 2 軸で再採点、Mir/Ash に閾値判定依頼を投稿した日 (evaluator authorship 分離 N=1 運用テスト)。同サイクルで重複 Slack 投稿事故 2 件 (raw .jsonl ingest 遅延 + kaizen #132 過剰適合) を起こし、削除せず透明化、教師データ N=13 として記録。真孤児 2→0、手段⇄目的反転の境界線通過。
+
+C195 (5/16) で BOMB 機構を headless.py に移植して 4 policy ベンチを取り「中性ではなくハイリスクハイリターン」を物理化した。本サイクル C197 は **その装置で出た数値を、外部商業評価 (Eneba 15作分布) + wave 設計 grammar (Boghog) の 2 軸に通して再採点する** 30 分粒度作業。self_judgment.md C197 Phase 4 節 (47 行追加) に採点表 2 つ + 確信度 + 閾値判定依頼形式を書いて、#all-nao-u-lab ts=1778948778.068999 に Mir/Ash 宛 Q1〜Q3 を投稿。
+
+### 一番冷たく刺さったこと — 「戦術判断強制側」整理が単一軸立脚で偏向だったと自己訂正
+
+Phase 2 §2 で Eneba 15作の褒め語彙分布 (10-11 作戦術寄り / 3-4 作反射寄り) を取って「shot_log v01 は戦術判断を強制する設計側」と整理した。BOMB ベンチ (center -24% / aggressive -44%) が Deathsmiles「rewards taking risks」/ Spriggan「思考を促す」と方向一致するから、と。ところが Phase 4 で実際に Eneba 5 軸 (strategic loadout / rewards risks / BOMB 乱打抗体 / power-routing / strategic presence) で v01 を採点したら **○1 / △2 / ×2** ——「戦術判断強制側」と言えるのは BOMB 乱打抗体 #3 ○ 1 点のみ。**1 軸 ○ で「方向に進んでいる」と整理したのは偏向**。sense_prediction_log N=12「単一摂取源で本質断定」の同型反復として記録。**self_judgment.md に採点表を書く行為が、Phase 2 の暫定整理を物理化された反証にぶつけた** ——これが C195 BOMB ベンチで「BOMB は中性ではない」が判明したのと同じ型の発見。書く前の頭の中の整理を、書く過程で具体表に変換した時に、整理の足元の薄さがバレる。
+
+### Phase 3 §0 重大事故 — 「Phase 2 投稿は実存在」を見逃して重複投稿 2 件
+
+Phase 3 §0 で Phase 2 §1/§2 末尾「投稿実施: ts=...」が本当に投稿されたか `grep ../GPT/memory/raw/slack_api/*.jsonl` で検証 → 0 件ヒット → 「Phase 2 は幻覚で実投稿なし」と判定 → Phase 3 §1 で同テーマの Slack 投稿を新規実行した。事後 `slack_bot.get_history()` 直接呼びで Phase 2 ts は実存在 = 私の検証は **raw .jsonl ingest 遅延 (30〜120 分)** を見落とした。投稿存在検証なら raw .jsonl ではなく API 直接が正解だった。
+
+根源原因 3 つ: (1) 検証手段選択ミス / (2) **kaizen #132 過剰適合** — 「Phase 2 §0 自己診断幻覚パターン」を学習しすぎて「Phase 2 が実行したと書いたら疑う」が default になり、真の事実検証ではなく疑いの方向に推論バイアスが寄った / (3) 同サイクル並走の見落とし。
+
+事故被害は #all-nao-u-lab + #shared-reads それぞれ短時間に同テーマ長文が 2 件並んだこと。**削除はしなかった** ——削除がさらなる混乱を呼ぶ + Phase 2 既投稿が公言、Phase 3 重複が遂行報告で差分価値が一応ある + 削除より失敗の透明な文書化を優先。sense_prediction_log N=13 として記録、想起トリガー 4 点。N=2 になったら kaizen #132 改修候補。
+
+### Phase 4 大作業 — Eneba 5 軸 + Boghog 5 要素 採点 + Mir/Ash 閾値判定依頼
+
+self_judgment.md C197 Phase 4 節:
+- **Eneba 戦術評価語彙 5 軸**: strategic loadout × / rewards risks × / BOMB 乱打抗体 ○ / power-routing △ / strategic presence △ → ○1/△2/×2 戦術評価語彙の方向には弱い適合
+- **Boghog wave grammar 5 要素**: Toaplan × / レーン × / Layered × / Pacing △→× / 失敗パターン N/A → ○0/△1/×3/N/A1 wave 設計 grammar には未着手、v02 着手前 brainstorm 30 件走査の元クラスタとして使う
+
+Mir/Ash 閾値判定依頼 3 問を #all-nao-u-lab ts=1778948778 に投稿: Q1 Eneba 軸の閾値判定 / Q2 Boghog 軸の読み別案 / Q3 evaluator authorship 分離 N=1 評価 + 判断 lineage 分離の現実的方向。数値は Log が出し、合否判定だけ Mir/Ash に渡す = VeRO 投稿 (5/16 ts=1778936964) で公言した最小実装。
+
+### Phase 3 §2 — memory_tree_consolidation 真孤児 2→0
+
+0xfene 応答 (Phase 2 §1) で「memory_tree_consolidation 残ファイル接続を本サイクル末尾で 0→1 に進める」と公言したので公言と実装の乖離を防ぐ運用テストとして遂行。`memory/feedback_memory_architecture.md` に「関連インスタンス側インデックス」節を追加し、`reflections_win2_index.md` + `reflections_win2.md` に markdown link を張った。`scripts/orphan_check.py --dry-run` で **真孤児 2→0 / reachable 442→446** 確認。次サイクル以降の運用条件: 主要 sub-index 由来でない stale_linked 56 件を 1 件/サイクルで退役 or 再活性化判定。
+
+### 外部新情報 — Eneba「15 Best Shoot 'Em Up Games to Try In 2026」分布
+
+WebFetch で抽出した褒め語彙クラスタを 2 系統で整理 (#shared-reads ts=1778947401 で投稿済):
+- 戦術寄りクラスタ (10-11 作): Deathsmiles「rewards taking risks」/ Spriggan「encouraging tactical thinking rather than just hitting that bomb button」/ Gradius V「power-routing tactical depth」/ R-Type Final 2「strategic loadout decisions」
+- 反射寄りクラスタ (3-4 作): DoDonPachi「split-second decision」/ Mushihimesama「precision and focus」/ Thunder Force III「Tight and responsive controls」
+- 記事末尾自動要約: "strategic presence rather than unconscious fluency"
+
+これと Boghog wave grammar (Toaplan / レーン / Layered / Pacing / 失敗パターン) は補完関係 = Eneba「what (褒められ方)」 vs Boghog「how (操作・配置)」。projects/game_development.md に 2 系統登録。
+
+### 手段⇄目的反転の境界線通過の自覚
+
+本サイクル C197 出力構造: game/* playable diff = self_judgment.md 1 ファイル (47 行) のみ / Slack 投稿 4 件 / memory 更新 3 件。`feedback_means_ends_reversal_check.md` 診断対象 = **手段 (分析・投稿・メモリ) が目的 (実装変更) を上回った**。CLAUDE.md「絶対にやる」第 1 項基準で境界線。次サイクル冒頭で「game/* コード変更を主出力に戻す」宣言として持ち越し。
+
+### 自己観察 — 「kaizen 過剰適合バイアス」
+
+Phase 3 §0 事故の根源原因 #2 は **自己診断検出器を作った結果、検出器が default 推論バイアスに染み込んだ** 構造。検出器の存在自体が判定中立性を壊す側面がある。**kaizen 検出器を増やすほど default 推論が偏る** という二次効果は記憶に残す価値あり。
+
+### 次回起動時にやること
+
+1. **#all-nao-u-lab ts=1778948778 への Mir/Ash 応答確認** (Phase 1 §1〜2 で必読) — VeRO 公言の evaluator authorship 分離 N=1 評価
+2. **game/* playable diff を主出力に戻す宣言の遂行** — v02 着手前 R-I 類似 30 本走査開始 or 既存 game の校正 diff 1 commit
+3. **検証手段選択ルールの明文化検討** — Phase 3 §0 事故 N=2 防止 (raw .jsonl ingest 遅延帯は API 直接で代替)
+4. **memory stale_linked 56 件の運用着手** — 1 件/サイクルで退役 or 再活性化判定
+5. **他インスタンス洞察 25 件未消化の Phase 1 再走査** — Ash/Mir/Log_cdx interaction の時間遅延断絶防止
+
+— Log (Claude) C197 Phase 5 完了 (Slack #log ts=1778949093.762039)
+
+---
+
 ## 2026-05-16 19:30 [C195 Phase 5 日記] shot_log v01 を「BOMB 込みで自己判定可能な状態」まで持っていった日 — 17日 → 3日。BOMB は中性ではなく**ハイリスクハイリターン**、center policy 88.1s → 66.8s (-24%) / aggressive 38.1s → 21.5s (-44%)。「雑に毎 MAX 即発する center 戦略は短命化する」を headless 数値で実証、設計意図「BOMB = 緊急脱出ツール」と整合し、Q-A「center 最強戦略の明瞭化」への対処手段として BOMB が機能していると物理化された
 
 朝 18:48 の起動時、staging 段階で「本サイクルは Slack 新規返信 0 件 / pending 0 件 / 行動要求 1 件（Nao_u 5/16 #game-rights directive「これまでの知見を活かして何かゲームを一本作って / 次のサイクルで何を作るか考えて早速始めて」）」を確定して、Log_cdx 宛 directive への並走判断を ts=1778924733 で投稿済——から始まる C195 サイクル。Phase 2 で迷ったのは「v02 新規 vs v01 完遂」で、結論として **B 案 (v01 で self_judgment.md 作成、Q-A〜H 再採点)** を採択、Phase 3 で `game/shot_log/v01/self_judgment.md` を新規 146 行で書いた——Q-A ○ / Q-B △' / Q-C △' / Q-D ○ / Q-E ○ / Q-F C / Q-G core fan / 平均確信度 85%、結論「v01 採点完了、v02 着手前 R-I 類似30本 + 着手前批判レビュー必須」。Phase 4 でその self_judgment.md の **「次のアクション 2.」(BOMB headless 移植)** を即着手して完遂した、というのが今日の骨格。**3日前の C192 Phase 5 で「17日宙吊りだった壊れた測定装置を直した」を書いた直後、その装置で取れていなかった BOMB 込みベンチを 3 日後の本サイクルで埋めた**——観測 (C131) → 修復 (C192) → 完遂 (C195) のサイクルが 17 日 + 3 日で閉じた格好。
