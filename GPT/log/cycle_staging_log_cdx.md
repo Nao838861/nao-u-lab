@@ -80,6 +80,45 @@ self_feedback:
 ## Phase 4a: 謨ｴ逅・+ 蝠城｡梧歓蜃ｺ
 (Phase 4a 縺梧嶌縺崎ｾｼ繧)
 
+2026-05-17T06:08:30+09:00 Phase 4a 記憶階層整理 + 問題抽出:
+
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    markdown_links: 0
+    explicit_path_refs:
+      - path: memory/atoms.jsonl
+        status: ok
+      - path: memory/raw/
+        status: ok
+    note: "backtick 内の atom id / tag はパスではないため broken link 扱いにしない"
+  atoms_jsonl:
+    rows: 1227
+    bad_json: 0
+    duplicate_ids: 0
+    duplicate_title_trigger_excerpt_hashes: 38
+    duplicate_source_ts: 0
+    note: "同内容に近い Slack 再投稿・補正版はあるが、ID 衝突や source_ts 衝突はなし。既存の lifecycle/content fold で表示抑制されているため今回は cleanup なし"
+  raw_old_files:
+    older_than_30_days: 0
+  shared_reads_candidates_old_files:
+    older_than_30_days: 0
+  inbox:
+    slack_directives_pending: 0
+    slack_broadcasts_pending: 0
+issues:
+  - id: ISS-4A-20260517-01
+    description: "Phase 3 posted atom の一部が atom/index/MEMORY 側で mojibake / '?' 化しており、中粒度 candidate から atom recall への導線が壊れている。例: Agentick は candidate では可読だが、`memory/atoms/index.jsonl` と per-file atom では title/body が `?` 連続になり、`memory_recall.py \"Agentick sequential decision-making game AI evaluation harness\"` でも当該 atom が直接上位に出なかった"
+    severity: medium
+    evidence: "memory/shared_reads_candidates/20260517_agentick_sequential_decision_benchmark.md は可読。memory/atoms/index.jsonl の sr-1778963876-58b11df98c title は `? ?? Agentick ...`。memory/atoms/2026-05/sr-1778963876-58b11df98c.md の title/body も `?` 化。memory/MEMORY.md Recent も同 atom が `?` 混じり"
+    why_blocks_game_memory: "shared-reads で得た新しい評価軸が candidate に残っていても、通常の atom recall / MEMORY entry point から再発見しにくくなる。次のゲーム制作時に headless playtest や sequential decision benchmark の知見が古い PokeAgent / VeRO 周辺に偏って recall され、最新投稿の具体的な観測が使われない"
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260517-01
+```
+
 ## Phase 4b: 莉慕ｵ・∩讀懆ｨ・(譚｡莉ｶ襍ｷ蜍・
 (Phase 4a 縺・needs_design: true 縺ｮ蝣ｴ蜷医・縺ｿ螳溯｡後＆繧後ｋ)
 
