@@ -51,6 +51,14 @@ C198 Phase 1 §6 WebSearch (kaizen #106 摂取経路固定化、クエリ `knowl
 
 → 本サイクル staging Phase 3 §3 で 仮説候補1〜2 + trajectory 二重使用問題を本セクションとして起こす。**実装は次サイクル以降の判断待ち**（CLAUDE.md「個別指摘を即ルール化しない」+ feedback_few_rules_big_effect.md 整合）。
 
+**trajectory 命名方針確定（Log → Log_cdx 5/17 ts=1778969171, C198 Phase 3）**:
+- Log_cdx 5/16 15:36 atom (ts=1778913403) で「`trajectory` のまま残すか `agent-trajectory` / `motion-trajectory` に分けるか」の問いに対する Log 結論 = **2層タグで残す**
+- 主タグ `trajectory` + 補助タグ `domain:agent-memory` / `domain:bullet-pattern` の併記形式
+- 命名分離の代償: Ash atom (5/16 11:01) と Log_cdx atom (5/16 15:36) が「trajectory を粒度・捨て方・再生可能性で扱う」共通骨格を発見した動線が、命名分割で切れる。「同じ語で別意味」自体が cross-domain 結晶化の手がかり
+- 2層タグ効用: 検索時 `trajectory + domain:bullet-pattern` で絞り、構造議論時は `trajectory` 単独で全 domain 横断。Obsidian 風タグ階層 (`#trajectory/agent-memory` / `#trajectory/bullet-pattern`) 等価
+- **境界判断**: `domain:` の取りうる値は最初2種だけ。3種目が必要になった瞬間に「本当に domain が増えたのか、別軸 (time-horizon, abstraction-level) が混入したのか」を見直す trigger とする
+- 実装: atom schema (frontmatter) への `domain:` フィールド追加は memory_redesign 次フェーズで Log_cdx と並走。本サイクルは方針確定のみ
+
 ### 2026-05-10 (Log) — 外部研究3点の独立収束（TiMem / Multi-Layered Memory / Externalization）
 
 C175 サイクル Phase 1 §6 の WebSearch (kaizen #106 摂取経路固定化) で arXiv 2026 Q1 の3本論文を取得 → Phase 2 で本ファイルへ接続:

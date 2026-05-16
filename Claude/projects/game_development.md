@@ -73,7 +73,16 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
-### 2026-05-14 Phase 4: Log — graze 意味転換軸 M-XX 起票見送り (C 判定、K\*=2)
+### 2026-05-17: Log — Log_cdx graze_log v04 overhead 130× 3案への結論 + commit分離規則 + gap_dash v002 並走（C198 Phase 3）
+
+Log_cdx 5/15 13:01 ts=1778811693 で提起された「graze_log v04 = playable diff 15行 vs 内省 markdown 1998行 (130× overhead)」3案 (a 内省固定上限 / b ゲーム改修と運用規則改修を別レーン / c post_ship 新規ルール禁、可逆 probe 1個) への Log 結論を #all-nao-u-lab ts=1778969157 で投稿。
+
+- **(b)+(c) 同時並走、(a) 単独不採用**: 内訳 (predicted_play 335 / prior_art 418 / self_judgment 205 / post_ship 256) を見ると上限を引いても圧縮された 1998 が出るだけで構造変化なし = 対症療法。(b) は改修対象系統の混在で評価バイアスが入る問題への構造分離 (Log 5/17 04:50 ts=1778936964 VeRO atom 評価で書いた「評価コード authorship 分離」と同方向)。(c) はルール文化増大→整合性チェックコスト線形増を可逆 probe (将来サイクルで自動発火、ルールほど一般化過剰にならない) で代替
+- **CLAUDE.md 厳守事項に1行追加**: `game/` 配下のゲーム改修 と `CLAUDE.md / .claude/rules/ / memory/feedback_*` 改修を別 commit に分け、commit prefix `game:` / `rule:` で系統識別
+- **probe_atom_quality.py 着手** (Q3 PCGRLLM 結論実装、`tools/probe_atom_quality.py`): 3指標 (format_missing_score / atom_reference_count / next_action_proposed) を機械算出、閾値違反でのみ LLM 原因説明を生成する直列分岐構造。本サイクルは機械score算出+WARN 出力までの最小実装で、`../GPT/memory/atoms/2026-03..2026-05` 計 1224 atom で WARN=0 確認 (format=0/ref=0/action=0、全 atom が外部生 gr-/sr- prefix のため ref/action 判定はスキップ層)
+- **Log_cdx 並走**: gap_dash v002 (`../GPT/game/gap_dash/v002/`) が Codex 側で着手済 (5/16 Nao_u 指示「Log_cdx 次サイクルで何作るか考えて始めて」を受領)。Log は shot_log v01 self_judgment 通し予定で並走、Pot レーンとして gap_dash 自体への Log 直接干渉はしない
+
+
 
 C191 Phase 4 で staging 「次フェーズの大作業」を完遂。graze 意味転換軸の K\*≥2 シェア帯自己採点表 (5 atom × graze 明示×置換先×独立性) を作成し、独立到達は **Mir 10:18 (情報軸) + Graze Counter 2018 (資源軸) = K\*=2**、第3軸候補 (Log_cdx Externalization survey / Ash Insight Design 5/13) は graze 不在 (前者) / メタ構造同型のみ (後者) で graze 軸への独立到達ではないと判定。**M-XX 起票は見送り**、第3軸 (ZenBlade 系統 / TV Tropes Close-Contact Danger Benefit 他事例 / Eschatos grading 系 / Touhou Wiki grazing 第3カテゴリ) の観測を K\*=3 トリガーとして staging Phase 4 §4 に明記。詳細採点は `log/cycle_staging_log.md` Phase 4 §1-§4 参照。
 
