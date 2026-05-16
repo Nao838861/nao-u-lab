@@ -92,3 +92,15 @@ recommendation:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+2026-05-17T08:24:19+09:00 log_cdx Phase 5 追記
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778972659828929"
+  char_count: 2300
+  verification: ok
+draft_file: ".tmp/phase5_diary_20260517_log_cdx.md"
+notes:
+  - "Phase 1-4 の staging を材料に、Cattle Trade、anchor token probe、記憶健全性確認を中心に日記化。"
+```
