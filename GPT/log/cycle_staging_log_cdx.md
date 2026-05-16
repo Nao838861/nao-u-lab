@@ -87,6 +87,80 @@ recommendation:
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
+```yaml
+designed_at: "2026-05-17T01:52:00+09:00"
+scope_note: "Phase 4b は設計のみ。staging 以外のファイル編集・コード実装は行わない。"
+items:
+  - issue_id: ISS-4A-20260517-001
+    problem_restatement: >-
+      shared_reads_candidates は候補プールとして公式化されているが、候補ファイル自体に
+      pass/postpone/fail/posted/skipped の lifecycle が十分に残っていない。
+      そのため、次サイクルで「再評価すべき候補」「投稿済みで触らない候補」
+      「品質不足で寝かせる候補」を deterministic に切り分けにくい。
+    alternatives:
+      - name: "A. 候補ファイル frontmatter 正本化"
+        sketch: >-
+          各 candidate .md の YAML frontmatter に candidate_status / gate_decision /
+          gate_reason / evaluated_at / posted.ts / stale_after などの最小 lifecycle を持たせる。
+          staging は作業ログ、candidate file は候補状態の正本として役割を分ける。
+        pros:
+          - "ファイル単体を読めば現在状態と根拠がわかる。"
+          - "既存の candidate 形式に近く、今日の GVGAI 候補のような frontmatter 拡張と整合する。"
+          - "Slack 投稿ゲートの品質基準を候補ごとに残せる。"
+        cons:
+          - "既存 90 件への backfill が必要。"
+          - "frontmatter の語彙が増えすぎると候補メモが重くなる。"
+          - "staging と candidate の二重記録が一時的に発生する。"
+        migration_cost: medium
+      - name: "B. shared_reads_candidates/index.jsonl を正本化"
+        sketch: >-
+          候補ファイルは本文だけに近いまま残し、別途 index.jsonl に path, status,
+          gate_decision, posted permalink, last_reviewed_at を集約する。
+          cleanup や Phase 2/3 は index を読む。
+        pros:
+          - "一覧処理が軽く、機械的な stale 判定に向く。"
+          - "候補本文を大きく触らずに lifecycle を追加できる。"
+          - "将来の dashboard / health check に接続しやすい。"
+        cons:
+          - "候補ファイル単体では状態がわからない問題が残る。"
+          - "index と実ファイルの同期ずれが新しい failure mode になる。"
+          - "既存の memory atoms per-file 移行と似た管理面が増える。"
+        migration_cost: medium
+      - name: "C. append-only lifecycle log 方式"
+        sketch: >-
+          memory/shared_reads_candidates_lifecycle.jsonl のような追記ログへ
+          evaluated / posted / postponed / failed のイベントを残す。
+          現在状態は最新イベントから復元する。
+        pros:
+          - "判断履歴を失わず、誤判定の巻き戻しがしやすい。"
+          - "候補ファイルの改変量が少ない。"
+          - "複数エージェントの判断差分をイベントとして残せる。"
+        cons:
+          - "現在状態を見るだけでも復元処理が必要。"
+          - "Phase 4a の mechanical cleanup 目的には過剰。"
+          - "候補が少ない現段階では運用負荷が効果に勝ちやすい。"
+        migration_cost: high
+    recommended: "A. 候補ファイル frontmatter 正本化"
+    recommended_reason: >-
+      問題の中心は「候補ファイル単体から lifecycle が追えない」ことであり、
+      index/log 方式は一覧性や履歴には強いが、その中心問題を直接は解消しない。
+      A は既存の candidate frontmatter 拡張と距離が近く、失敗しても個別ファイルの
+      metadata を削るだけで戻せる。backfill は必要だが、90 件規模なら一度の
+      Phase 4c で最小語彙に限定して導入できる。
+    decision: introduce
+    decision_reason: >-
+      Phase 4a の evidence では candidate 90 件に status 行がなく、今後 candidate が増えるほど
+      stale 判定と投稿済み判定が staging 依存になる。候補ゲートは active directive で公式化済みなので、
+      lifecycle の正本を候補ファイル側へ寄せる変更は現状維持より期待効果が大きい。
+      ただし恒久ルール追加ではなく、まず最小 frontmatter schema と既存候補への backfill に留める。
+    outline_for_4c:
+      - "shared_reads_candidates 用の最小 frontmatter 語彙を決める: candidate_status, gate_decision, gate_reason, evaluated_at, posted, stale_after, supersedes。"
+      - "既存候補 90 件へ、本文を変えずに lifecycle metadata を backfill する。判定不能なものは candidate_status: needs_review に寄せる。"
+      - "Phase 2/3 で判定した候補は、staging だけでなく該当 candidate frontmatter も更新する運用にする。"
+      - "Phase 4a cleanup は candidate_status / gate_decision / stale_after を見て stale, posted, needs_review を数える。"
+      - "index.jsonl や append-only log は導入しない。候補数や同期ずれが問題化した時だけ再検討する。"
+```
+
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
