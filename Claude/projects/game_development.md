@@ -564,3 +564,20 @@ C178 起票後 C179-C181 で告知投稿を持ち越し続け、本サイクル 
 **Phase 2 §4 (C') 連動**: 本サイクル Phase 2 で Symphony 反応 (riku720720 5/10 15:37 #nao-u) への Log 独自視点が「3軸目=解空間探索」(feedback_solution_space_rollback.md, Nao_u 4/18 #game-rights「ダメなら巻き戻し」「3人で別方向に掘る」原文) を引いて立ったが、これは graze_log v04 α/β/γ 3案並走運用の上流根拠と直結。Log 内部で「ラチェット両方向に動かす設計」を Symphony 記事への反応と graze_log v04 brainstorm の両方で同形に主張した整合性。記憶散歩→当日 Phase 2 適用の最短経路を1サンプル蓄積。
 
 **次サイクル C183 持ち越し**: Mir cross_review 受領待ち / Nao_u 判断待ち / α 採択時の predicted_play 着手判定。
+
+### 2026-05-16 (Log C195 Phase 3): shot_log v01 self_judgment.md 作成 + Ash Insight Design 観察取り込み
+
+**shot_log v01 self_judgment.md 新規作成** (`game/shot_log/v01/self_judgment.md`):
+- C192 Phase 4 で headless 同期完了 (LV2/LV3/GMAX = 35/99/208) 後、17日宙吊り状態の v01 を「修復した測定装置で見直す」R-I 直処方
+- Q-A〜H 採点結果: Q-H 通過（守破離の守として成立）/ Q-A ○（C192 ベンチ + 対面5h評価 + SE 統合観測の3点根拠）/ Q-B/Q-C △' / Q-D/Q-E/Q-F/Q-G 全 ○
+- BOMB 機構 headless 未移植は v02 着手前の 1mm 候補として残置（移植は中コスト中価値、aggressive/center 差の縮小観察用）
+- メタ観察: 「測定装置がない／壊れている／修復済」の三段階を踏むのに 17日かかった = 指示は処方より上位で機能する事例
+
+**Ash 5/13 #shared-reads「Insight Design = R_Nikaido『自分で気付けた感』」観察の取り込み** (Phase 1 §他インスタンス洞察 #1, ts=1778669841):
+- Ash 発見: MIT 2015 修士論文 (Olsen) + Wayline「The Art of Letting Go」+ The Witness 物理強制例で「Insight Design」が学術ジャンル化済。R_Nikaido 2026-05-13 ツイート「自分で気付けた感」が**新発見ではなく10年以上前から外部対応語が用意されていた**
+- Ash の射程拡張: 5/8 Linelith Rule Discovery は**破**（型を撤回する層）に対し、Insight Design は**守の中で組み込み可能**（メカニズム透明のまま気付き経路だけ追加）= 「守の段階でも質を上げる方向」
+- **shot_log v01 self_judgment Q-A への接続**: 「center 88.1s が最強戦略として明瞭化＝プレイヤー選択肢を奪っていないか」という Q-A 論点と直接重なる。BACKLASH 同期後の最強戦略明瞭化は **設計者の意図が透けて見える状態**＝Insight Design「設計を見せたら負け」の裏面に該当する可能性
+- **v02 設計への適用候補**: 段階式被弾ペナルティの「効果が画面で立ち上がる経路」を、矢印・UI 説明・チュートリアルではなく**プレイヤーが自分で気付ける配置**で設計する（The Witness 流の silent developer）。具体案: ゲージ目盛り長さ変更による段階表現 (M-24) + 段階遷移時の音/エフェクト一致 (SE 統合活用) で「あ、ここが段階の境目だ」を自然に気付かせる
+- **次の一手**: v02 着手前批判レビュー (R-I) に「Insight Design 適合度」を新軸として追加。「この設計でプレイヤーは『教えられた』と感じるか『自分で気付いた』と感じるか」を1行明文化してから着手
+
+**game_lessons_log.md R-A との関係**: R-A「一番楽しい瞬間を守る／育てる」は **何が楽しいか**を定義。Insight Design は **どう体験させるか**を定義。両者は補完関係。R-A 直接拡張ではなく、v02 着手前批判レビューで併用するメタ軸として降ろす（R-A〜R-I の即拡張は CLAUDE.md「個別指摘の即ルール化禁止」原則違反、同型観察3回目で R 層昇格を検討）。
