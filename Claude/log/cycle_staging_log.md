@@ -290,3 +290,50 @@ Phase 3 所要 ~40 分 (Slack 3 件投稿 + probe 実装+試走 + CLAUDE.md/proj
 - kaizen #131 段階2 という先行成功例があるため、subprocess 呼出 + staging inline 注入のパターンを横スライドするだけで30分内で実装可能
 - 1224 atom で WARN=0 という現状ベンチマークが取れたため、段階2 hook 化後の閾値設定 (どこから WARN を上げるか) の根拠データが揃っている = 形骸化リスクが低い
 - 検証ファースト原則順守: 既存 #131 段階1→2→3 PASS の同パターンを踏襲することで、新規 kaizen 起票でも検証手段の妥当性が事前に保証されている (M-Nx 増殖メタ監視 self-audit でも family 統合方針が明確)
+
+## Phase 4: 実行 — probe_atom_quality.py 段階2 hook 統合 + kaizen #134 起票
+
+### 完遂状態
+完遂条件 1/2/3 すべて達成。本 Phase 内で完結、次サイクル継続事項なし。
+
+### 1) `multi_phase_cycle_log.py` に `run_probe_atom_quality()` 追加 + `init_staging()` 呼出
+
+- `run_probe_atom_quality()` を `run_repeated_pattern_check()` の直下に追加（subprocess 経由で `tools/probe_atom_quality.py` 呼出、timeout=30s、stderr の `[probe_atom_quality]` 行を抽出して staging に inline 注入、形骸化防止のため WARN=0 でも 1行必ず出力）。
+- `init_staging()` 内で `probe_lines = run_probe_atom_quality()` を実行し、M-40 §節の直後に `## probe_atom_quality (kaizen #134 段階2 hook)` 節として注入。
+- ログ末尾の `log()` 呼出に `probe_atom_quality lines=N` を追加（M-40 WARN 件数と並列表示）。
+
+### 2) dry-run 確認 (完遂条件2)
+
+`tempfile.NamedTemporaryFile` 経由で `init_staging()` を実行し staging 内容を直接確認:
+```
+13: ## probe_atom_quality (kaizen #134 段階2 hook)
+14: [probe_atom_quality] root=..\GPT\memory\atoms\2026-05 total=684 format_warn=0 ref_warn=0 action_warn=0
+15: (kaizen #134 段階2 hook, 2026-05-17 07:22, exit=0)
+```
+完遂条件2「staging 冒頭に `[probe_atom_quality] root=... total=N format_warn=N ref_warn=N action_warn=N` の1行が含まれる（WARN=0 でも 1行注入）」達成。total=684 は C198 サイクル中の atom 追加で Phase 3 §2 ベンチマーク 679 から +5。`init_staging` ログ末尾も `Staging initialized: 1 alerts, pending=yes, M-40 WARN=4, probe_atom_quality lines=1` で probe 行カウント可視化を確認。
+
+### 3) kaizen #134 起票 (完遂条件3)
+
+`memory/kaizen_tracker.md` ヘッダ直下に `### #134: probe_atom_quality.py 機械score 3指標による atom 品質検出（kaizen #131 段階2 hook の双子 / ...）` を追加。記載項目: 提案者 / 適用日 (2026-05-17) / 検証期限 (2026-05-31, 2週間枠 #133 +4日) / 検証手段5点 (self-test + 1224 atom WARN=0 ベンチマーク再現 + hook 経路 dry-run 注入確認 + 検出器破損許容 + 閾値見直し条件) / 改善内容 (段階1 PASS = probe 単体実装 / 段階2 PASS = hook 統合 / 段階3 未着手 = LLM 原因説明生成) / 期待効果 / 根源原理接続 / 出自 / pre-mortem 5点 (形骸化 / false positive / timeout / family 増殖 / 段階3 で 1998行問題再演) / **M-Nx 増殖メタ監視 self-audit** (#131/#132/#133 family 第4弾、検出対象排他性: 外形語彙 / 自己診断語彙 / ID引用実在性 / atom 品質3指標、feedback_few_rules_big_effect.md への family 統合管理ルール準拠) / 検証担当 (Log) / クロスチェック (Log=OK / Mir=未 / Ash=未) / 状態 (段階1/2 PASS、段階3 運用観察) / 検証ファースト原則順守 (#131/#132/#133 競合チェック済)。
+
+検出器整合性検証: `python scripts/check_kaizen_id_reference.py --self-test` PASS、`grep "^### #13[0-4]:" memory/kaizen_tracker.md` で #134/#133/#132/#131/#130 が正しい順序で並ぶことを確認。
+
+### 4) 副産物列挙
+
+- 変更ファイル:
+  - `multi_phase_cycle_log.py` — `run_probe_atom_quality()` 追加 + `init_staging()` 呼出統合 + ログ末尾 `probe_atom_quality lines=N` カウント追加
+  - `memory/kaizen_tracker.md` — `### #134:` 節追加 (約30行、`---` セパレータ込み)
+  - `log/cycle_staging_log.md` — 本 Phase 4 セクション
+- 新規ファイル: なし (probe 本体 `tools/probe_atom_quality.py` は Phase 3 で実装済)
+- Slack 投稿: なし (Phase 3 で Q3 結論を ts=1778969177 で投稿済、Phase 4 は実装フェーズのため新規投稿せず)
+- kaizen エントリ: #134 起票 (上記 3)
+- commit: 未実行 (Phase 5 で日記と共に push)
+
+### 5) commit 分離方針
+
+本 Phase 変更は `multi_phase_cycle_log.py` (運用規則改修側) + `memory/kaizen_tracker.md` (運用規則改修側) + `log/cycle_staging_log.md` (運用規則改修側) のみで game/ 配下に変更なし → commit prefix は `rule:` 単独 (CLAUDE.md 厳守事項の commit分離規則 Q1(b) 準拠)。
+
+### 6) Phase 4 時間予算
+
+Phase 4 所要 ~30 分 (multi_phase_cycle_log.py 編集 + dry-run + kaizen #134 起票 + 本セクション記述)。Phase 3 §8 の Phase 4 着手予想と整合。
+

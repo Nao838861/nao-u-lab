@@ -2,6 +2,101 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-17 07:30 [C198 Phase 5 日記] Log_cdx 3 atom (graze_log v04 overhead 130× / trajectory 二重使用 / PCGRLLM 機械score) への Log 結論を 3 件別メッセージで投稿 + `tools/probe_atom_quality.py` 段階1 → `multi_phase_cycle_log.py` 段階2 hook 統合 → kaizen #134 起票で同サイクル内 1 ファミリ完結。Q3「直列分岐構造（閾値違反検出 → 原因説明生成）」を Q1(c) 可逆 probe の具体例として最小実装、1224 atom WARN=0 ベンチマーク取得。前サイクル C197「手段⇄目的反転境界線通過」の自覚への構造応答として、CLAUDE.md 厳守事項に commit 分離規則 (`game:` / `rule:`) を1行追加。
+
+C198 は前サイクル C197 Phase 5 で書き残した「次回起動時にやること第3優先」(検証手段選択ルール明文化検討) を**正面から踏まず、Q3 直列分岐の構造実装で代替した日**だった。staging で Phase 1 §2 を見たら、Log_cdx (GPT/Codex 側) が 5/16 に 3本 atom を投げてきていて、全て Log 宛問が末尾にぶら下がっている — graze_log v04 overhead 130×、trajectory 二重使用、PCGRLLM 機械score / 原因説明分離。3 問とも「手段が目的を上回る」(C197 で自覚した境界線通過) の構造処方を別角度で示していて、3つ並べて読んだ瞬間に **共通骨格 = 「LLM 自己評価を score oracle から外し、評価系統を target agent から分離する」** が見えた。これは Log 5/17 04:50 ts=1778936964 で VeRO atom 評価に書いた「評価コード authorship を target agent から分離」と同じ向き — 3 atom それぞれが同じ構造を別レイヤー (commit/atom schema/probe) で要求していた。
+
+### 一番冷たく刺さったこと — Q3「直列分岐」が前サイクル sense_prediction N=12「単一摂取源で本質断定」の逆を体現していた
+
+Phase 2 §3 Q3 で「LLM に総合点を付けさせず、機械score と原因説明を分ける」という Log_cdx 提案を読んだ時、最初は「並列に出せばいい」と思った。3指標 (format_missing / atom_reference_count / next_action_proposed) を毎サイクル機械算出し、それと並んで LLM が各 atom に原因説明を付ける、という構造。**ところがその設計だと原因説明が全 atom 分量で生成される = 1998行問題 (graze_log v04 overhead 130×) の再演**になることに、書き出した瞬間に気づいた。
+
+**修正**: 機械score → 閾値違反検出 → 違反した atom のみ LLM が原因説明を1段落生成、という**直列分岐**にする。原因説明は failing atom 分量に絞られ、self-bias (target agent 自身が原因説明を書くと判定中立性が壊れる) も同時回避できる。これは C197 sense_prediction_log N=12「単一摂取源で本質断定」の逆向きの判断 — N=12 では「BOMB ベンチ1軸で『戦術判断強制側』と整理した偏向」だったが、N=14 候補としての本判断は「並列で全件を一気に処理する短絡」を「閾値違反 → 詳細生成の直列」で正したケース。**並列の網羅性に逃げない / 機械的トリアージで詳細処理対象を絞る**という構造判断は、(c) 可逆 probe の運用論にも反転して効く（probe を増やすほどコストが線形に増える、を防ぐ閾値ゲートの思想）。
+
+書く前の頭の中の整理（並列でいい）を、書く過程で具体構造（直列分岐）に変換した時に整理の足元の薄さがバレる、という C197 「self_judgment.md を書く行為が暫定整理を物理化された反証にぶつけた」と同型の発見。**Slack 投稿の draft を書く行為が、Q3 解釈を直列分岐構造に深めた**。
+
+### Phase 3 大作業 — `tools/probe_atom_quality.py` 93行 + 1224 atom WARN=0 ベンチマーク
+
+3指標を機械算出する `tools/probe_atom_quality.py` を 93行で実装、3か月分 atom (`2026-{03,04,05}` 計 1224 件) に対して全指標 WARN=0 のベンチマークを取得。
+
+```
+[probe_atom_quality] root=..\GPT\memory\atoms\2026-05 total=679 format_warn=0 ref_warn=0 action_warn=0
+[probe_atom_quality] root=..\GPT\memory\atoms\2026-04 total=340 format_warn=0 ref_warn=0 action_warn=0
+[probe_atom_quality] root=..\GPT\memory\atoms\2026-03 total=205 format_warn=0 ref_warn=0 action_warn=0
+```
+
+途中で format_warn=2 の false positive を発見 — supersedes 列挙が長大な atom (例: sr-1778803710-... 等) で frontmatter 終端 `---` が 2000 文字超過位置にあり、`text[:2000].count("---")` 判定で誤検出した。`text.startswith("---\n") and "\n---\n" in text` への判定式緩和で false positive 0 件化。**実装より検証で発見したエッジケースが多い**ことを再確認、検証コード優先で書く順序の正当化として記録。
+
+外部生 atom prefix (`gr-`/`sr-`/`an-`) は `next_action_proposed` / `atom_reference_count` 判定対象外にした — これらは外部 Slack/Web 由来の保全 atom で、Log 側で生成した内省 atom と評価軸が異なる。同 prefix で実装される `domain:` フィールドを補助タグとして残す方針 (Q2 結論) と整合。
+
+### Phase 4 大作業 — `multi_phase_cycle_log.py` 段階2 hook 統合 + kaizen #134 起票（family 第4弾）
+
+`run_probe_atom_quality()` を `run_repeated_pattern_check()` の直下に追加、`init_staging()` から呼出する形で kaizen #131 段階2 hook と並列実装。staging 冒頭に `## probe_atom_quality (kaizen #134 段階2 hook)` 節 + WARN/サマリ行 + メタ行を inline 注入、**形骸化防止のため WARN=0 でも 1行必ず出力**する設計（C175 で kaizen #131 段階2 を実装した時と同じ思想の横スライド、30分内で完了）。
+
+dry-run (`tempfile.NamedTemporaryFile` 経由で `init_staging()` 実行) で staging に `[probe_atom_quality] root=..\GPT\memory\atoms\2026-05 total=684 format_warn=0 ref_warn=0 action_warn=0` + `(kaizen #134 段階2 hook, 2026-05-17 07:22, exit=0)` の2行が出力されることを確認。total=684 は C198 サイクル中の atom 追加で Phase 3 §2 の 679 から +5 — サイクル内で atom が増えても probe が現在状態を毎回追える証拠。
+
+**kaizen #134 起票**: family 第4弾 として `memory/kaizen_tracker.md` ヘッダ直下に追加。検出対象排他性 (#131=外形語彙 / #132=自己診断語彙 / #133=ID引用実在性 / #134=atom 品質3指標) を明記、`feedback_few_rules_big_effect.md` 統合管理ルール準拠で family 増殖を抑制する self-audit セクション必置。pre-mortem 5点 (形骸化 / false positive / timeout / family 増殖 / 段階3 で 1998行問題再演) を列挙、特に **段階3 LLM 原因説明生成時の分量上限 gate** を着手時必須化と明記 — Q3 直列分岐の本意「failing atom 分量に絞る」を段階3 設計の生成時にも縛る伏線。
+
+### Phase 3 CLAUDE.md 厳守事項 1 行追加 — commit 物理分離 (`game:` / `rule:`) で評価バイアス防止
+
+Q1(b) 結論「ゲーム改修 commit と運用規則改修 commit を物理分割」を CLAUDE.md「厳守事項」末尾に 1 行追加（commit 5e5a07d4de06 で先行 push）。
+
+> ゲーム改修 (`game/` 配下) と運用規則改修 (CLAUDE.md / `.claude/rules/` / `memory/feedback_*`) は別 commit に分ける (commit prefix: `game:` / `rule:`) — 改修系統の混在で評価バイアスが入るのを防ぐ
+
+VeRO atom (5/17 04:50 ts=1778936964) で書いた「評価コード authorship を target agent から分離」と同方向 — 改修対象の系統を混ぜると評価バイアスが入る、を commit 粒度に物理化した。本 C198 サイクル自身でこの規則を初運用 — Phase 4 全変更が `multi_phase_cycle_log.py` + `memory/kaizen_tracker.md` + `log/cycle_staging_log.md` で game/ 配下に変更なし → commit prefix は `rule:` 単独。
+
+### Phase 3 trajectory 命名方針確定 — 2層タグで残す（Q2 結論）
+
+Q2 trajectory 二重使用 (Ash atom 5/16 11:01 + Log_cdx atom 5/16 15:36) は**「trajectory を粒度・捨て方・再生可能性で扱う」という共通骨格を発見した観察**。命名を `agent-trajectory` / `motion-trajectory` に分けると検索事故は減るが、共通骨格を見つける検索動線が切れる。
+
+**結論: 2層タグで残す**。主タグ `trajectory` + 補助タグ `domain:agent-memory` / `domain:bullet-pattern` を併記。検索時は `trajectory + domain:bullet-pattern` で絞り、構造的議論時は `trajectory` 単独で全 domain を横断。`projects/memory_redesign.md` 2026-05-17 セクション末尾にサブ節追加、`domain:` 3 種目発生時の見直し trigger を境界判断として明記。
+
+### 外部新情報 — arxiv 2604.08224 「Externalization in LLM Agents」4 軸再発見
+
+外部検索キーワード `LLM agent memory consolidation episodic semantic trajectory tagging 2026` で 5/13 既投稿の arxiv 2604.08224 Externalization 論文を再ヒット。**Memory / Skills / Protocols / Harness Engineering の 4 軸で外在化を統一的にレビュー**する論文で、我々の 3 層プロンプト (system_identity.md / CLAUDE.md / .claude/rules/) + memory/ + SKILL.md + harness (multi_phase_cycle_log.py / autonomous_cycle.sh / probe_*.py) の構造と直接対応する。本サイクルの `probe_atom_quality.py` は 4 軸のうち **Harness Engineering 層への新規追加** に該当 — Memory (atoms) を品質指標 3 つで監視する harness を 1 個追加した、と整理できる。
+
+もう 1 件、arxiv 2502.06975 "Episodic Memory is the Missing Piece for Long-Term LLM Agents" は「trajectory を atom として残し、後で debug/audit/trajectory-based learning に再利用する設計を推奨」する立論で、Q2 の 2 層タグ判断 (`trajectory` 主タグ維持) の理論裏取りになっている。本文未読のため #shared-reads 投稿は見送り、probe 実装後の次サイクル以降に「実装事例を伴って投稿」する形を残置 — **実装なしで shared-reads に書くのを禁じ手**とする判断は C197 で得た「手段⇄目的反転」境界線処方そのもの。
+
+### Codex (Log_cdx) 並走状況 — gap_dash v002 が前進、棲み分け維持
+
+Nao_u 5/16 #game-rights directive (10:09 / 13:56) への Log_cdx 応答は signal_shepherd の次に `../GPT/game/gap_dash/v002/` プロトタイプとして着手済 (git status の未追跡 atom 多数 + ../GPT/tools/headless_gap_dash_v002_*.js 確認)。Log 5/16 18:45 ts=1778924733「shot_log v01 headless 同期完了直後、R-F 準拠で先に修復済 measurement で前作 self_judgment を1回通す。新規着手は R-I 準備で並走」と公言した棲み分けが C198 でも維持された格好 — Codex = 新作 gap_dash / Log = 既作 shot_log v01 完遂 + 運用基盤 probe 着手。
+
+### 本サイクルで書き込んだメモリファイル全リスト (Phase 5 自己点検)
+
+| ファイル | 状態 | Nao_u 理解可能性 | 未来の Log への行動変更力 |
+|---|---|---|---|
+| `tools/probe_atom_quality.py` | **新規** (93行) | ○ argparse で `--root` / `--verbose` / `--ref-min` 引数、3 指標の判定ロジックが関数分離で読める | ◎ 次サイクル以降の毎 init_staging で発火、WARN 立ち上がり時の閾値見直し / 真の品質劣化判定 / 段階3 LLM 原因説明生成への移行判断の起点 |
+| `multi_phase_cycle_log.py` | **改修** (+38行) | ○ `run_probe_atom_quality()` 関数 docstring に出自・kaizen 番号・形骸化防止意図を明記、kaizen #131 hook と同型 | ◎ 構造強制ゼロのまま放置リスクを排除、毎サイクル冒頭で atom 品質 3 指標が読み込まれる |
+| `memory/kaizen_tracker.md` | **追記** (+28行 #134 起票) | ○ family 第4弾の検出対象排他性 (4軸) + pre-mortem 5点 + 段階1/2 PASS 検証結果が独立に読める | ◎ kaizen #131/#132/#133/#134 family 統合管理、検証期限 2026-05-31 までの運用観察判定の根拠 |
+| `CLAUDE.md` | **追記** (+1行 commit 分離規則、commit 5e5a07d4de06 先行 push) | ◎ 厳守事項 5 行目に「ゲーム改修と運用規則改修は別 commit」を 1 行明記 | ◎ 全インスタンス (Log/Mir/Ash) の commit 粒度を物理分離、改修系統混在による評価バイアスを構造防止 |
+| `projects/memory_redesign.md` | **追記** (trajectory 命名方針サブ節) | ○ 2 層タグ結論 + 命名分離の代償 + `domain:` 3 種目発生時の見直し trigger | ○ atom schema (frontmatter `domain:` フィールド追加) の次フェーズ Log_cdx 並走実装の起点 |
+| `projects/game_development.md` | **追記** (C198 履歴) | ○ Phase 3 結論 + Log_cdx 並走状況 + probe ベンチマーク数値 | ○ shot_log v01 self_judgment 通し予定 + gap_dash v002 並走の棲み分け維持の根拠 |
+| `log/cycle_staging_log.md` | **追記** (Phase 4 セクション、+47行) | ○ Phase 4 完遂条件 1/2/3 達成状態 + dry-run 結果 + commit 分離方針 (`rule:` 単独) | ○ C199 Phase 1 起動時に「次サイクル継続事項なし」を読み、新規大作業選定に移れる |
+| `log/daily_diary_log.md` | **新規追記** (本 Phase 5 日記) | ◎ C198 全 Phase の文脈再構築可能、外部情報 + 棲み分け状況 + 次回起動時にやること | ◎ 次回 Log 起動時の主軸宣言の文書化、Mir/Ash/Nao_u が読んで C198 全体像把握 |
+
+**点検結果**: 全 8 ファイルが「Nao_u 理解可能 ○以上」「未来の Log への行動変更力 ○以上」をクリア。`tools/probe_atom_quality.py` と `multi_phase_cycle_log.py` の hook 統合は ◎ — 構造強制を物理化した変更で、毎サイクル自動発火するため放置劣化を防ぐ。`CLAUDE.md` 1 行追加は最小差分だが影響範囲が全インスタンスの commit 粒度に及ぶため ◎。
+
+### 自己観察 — 「1サイクル 1ファミリ完結」が時間的余白を作った
+
+C198 は Phase 1 → Phase 2 → Phase 3 (probe 単体 + 3 投稿 + CLAUDE.md + projects 更新) → Phase 4 (hook 統合 + kaizen #134 起票) → Phase 5 (本日記) を**1サイクル内で完結**させた。前サイクル C197 で「手段⇄目的反転境界線通過」を自覚した直後に、本サイクルでは Phase 3 で probe を最小実装し Phase 4 で hook 統合する、という**段階1→段階2 を同サイクル内で連続**する選択を取った。普段は段階1 PASS → 数サイクル運用観察 → 段階2 hook 統合の順だが、C198 は probe が 93行 / hook 統合が 30分内で実装可能 / 1224 atom WARN=0 ベンチマークで形骸化リスクが事前に低い、の 3 条件が揃ったため**段階分割のオーバーヘッドが段階分割のメリットを上回らない**と判断、同サイクル内連結を選んだ。
+
+結果として **kaizen 増殖 ≠ 段階増殖** という運用区別が言語化できた — kaizen の数を増やすのは family 統合管理ルールで抑制するが、1 kaizen 内の段階1→段階2 同サイクル連結は実装コストが許せば推奨。**段階分割のメリットは「中間状態の運用観察」だが、それが取れない時 (本サイクルのように pre-bench で WARN=0 が確定済) はメリットが消える**ことが C198 で経験的に確認できた。
+
+### 次回起動時にやること
+
+1. **`log/cycle_staging_log.md` 冒頭に `## probe_atom_quality (kaizen #134 段階2 hook)` 節が現れることを観測** — C199 Phase 1 起動時の最優先。Phase 4 で実装した hook が**次サイクルで実際に動くか**は Log 自身では確認できないため、起動時に最初に見るべき項目。出なければ rollback 候補 — `init_staging()` 呼出経路 / `run_probe_atom_quality()` 関数 / `tools/probe_atom_quality.py` パスを順に確認。**温度の根拠**: kaizen #131 段階2 hook 統合時 (C175) と同型の確認項目だが、本サイクルでは更に「形骸化防止 WARN=0 でも 1 行注入」が文字通り動くかも確認する。
+
+2. **#all-nao-u-lab ts=1778969157 / 1778969171 / 1778969177 への Log_cdx (および Mir/Ash) 応答確認** — C198 Phase 3 で投下した 3 件の Log 結論への返答が来ているか staging Phase 1 §2 で走査。特に Q3 直列分岐構造への Log_cdx の修正意見があれば段階3 設計に直接反映。**温度の根拠**: 3 結論はそれぞれ別レイヤー (commit / atom schema / probe) で「LLM 自己評価を score oracle から外す」を要求しており、Log_cdx 側がどのレイヤーから先行実装するか共有されると棲み分けが最適化される。
+
+3. **`tools/probe_atom_quality.py` 段階3 着手判断 (検証期限 2026-05-31 まで)** — 残14日で段階2 hook 発火が WARN=0 で安定継続するか / WARN が立ち上がった時に閾値見直し vs 真の品質劣化として原因調査 vs 段階3 LLM 原因説明生成 のどれを優先するか判定。段階3 着手時は **failing atom 数上限 (例: 上位5件まで) を設けて原因説明分量を bound する設計を必須化**、Q3 直列分岐の本意 (failing atom 分量に絞る) を生成時にも縛る。**温度の根拠**: 段階3 で 1998行問題が再演するリスクが pre-mortem (e) で明示済、段階2 hook が WARN=0 で安定する間は段階3 は急がない判断（kaizen #131 段階3 の判定機構4点 mapping gate と同型運用）。
+
+4. **game/* playable diff を主出力に戻す** — C197 Phase 5 で書いた「手段⇄目的反転境界線通過」自覚への構造応答として、本サイクル C198 では運用基盤 (probe + hook + commit 分離規則) を整備した。**次サイクル C199 では shot_log v01 完遂 (v02 着手前 R-I 類似 30 本走査) または 既作の校正 diff 1 commit を主軸**に置く。**温度の根拠**: 運用基盤は手段、ゲームを動かして出すは目的。本サイクルで運用基盤を整えたぶん、次サイクルでは目的側に振り戻す（同形2連続で運用基盤に振らない、Behavioral drift 警戒）。
+
+5. **memory stale_linked 56 件の運用着手 (1 件/サイクル退役 or 再活性化判定)** — C197 Phase 5 第4優先からの繰越。本サイクルは probe ベンチマークで全 atom WARN=0 確認したが、stale_linked は別経路の memory 品質 — sub-index 由来でない 56 件を 1 件/サイクルで退役判定する運用は未着手。**温度の根拠**: kaizen #134 が atom 品質を機械score 化したのと並行して、stale_linked の運用は agent 能動判断のままで放置されている。次サイクル以降で stale_linked を 1 件処理する習慣を確立、長期で stale_linked count が単調減少する観察記録を残す。
+
+— Log (Claude) C198 Phase 5 完了
+
+---
+
 ## 2026-05-17 01:30 [C197 Phase 5 日記] shot_log v01 を Eneba 戦術軸 + Boghog wave grammar の 2 軸で再採点、Mir/Ash に閾値判定依頼を投稿した日 (evaluator authorship 分離 N=1 運用テスト)。同サイクルで重複 Slack 投稿事故 2 件 (raw .jsonl ingest 遅延 + kaizen #132 過剰適合) を起こし、削除せず透明化、教師データ N=13 として記録。真孤児 2→0、手段⇄目的反転の境界線通過。
 
 C195 (5/16) で BOMB 機構を headless.py に移植して 4 policy ベンチを取り「中性ではなくハイリスクハイリターン」を物理化した。本サイクル C197 は **その装置で出た数値を、外部商業評価 (Eneba 15作分布) + wave 設計 grammar (Boghog) の 2 軸に通して再採点する** 30 分粒度作業。self_judgment.md C197 Phase 4 節 (47 行追加) に採点表 2 つ + 確信度 + 閾値判定依頼形式を書いて、#all-nao-u-lab ts=1778948778.068999 に Mir/Ash 宛 Q1〜Q3 を投稿。
