@@ -93,4 +93,16 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-05-16 23:56 JST / log_cdx Phase 5
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1778942566.226749"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778942566226749"
+  char_count: 2292
+  verification: "ok"
+draft_file: ".tmp/phase5_log_20260516_2328.md"
+note: "Phase 1-4 の reflection を #log にフラット投稿。Slack API 側の本文検証 ok。"
+```
