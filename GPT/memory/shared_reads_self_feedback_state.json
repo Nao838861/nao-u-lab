@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-17T01:42:07+09:00",
+  "updated_at": "2026-05-17T03:41:02+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -23,9 +23,27 @@
     "1778899287.487259",
     "1778927776.158409",
     "1778936332.774269",
-    "1778932863.644179"
+    "1778932863.644179",
+    "1778947869.742089"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-17T03:41:02+09:00",
+      "id": "sr-1778947869-1b534bda71",
+      "source_ts": "1778947869.742089",
+      "title": "Eneba「15 Best Shoot 'Em Up Games to Try In 2026」分析 — Phase 1 §6 仮設の自己訂正",
+      "decision": "adopt_probe",
+      "reason": "直近の shot_log / shmup 評価で、flow state や反射操作を単独の成功軸として読みすぎる危険を、商業評価語彙の分布と BOMB headless ベンチの方向一致で訂正している。恒久ルール化すると二次情報を過大評価するため、次の game prototype / repair の前に「戦術判断」と「反射操作」を分けて確認する一時 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-17T01:42:07+09:00",
       "id": "sr-1778932863-4a01b7333a",
@@ -694,6 +712,18 @@
         "sellable 軸を扱わない場合、X バズ、外部到達、ストア適性、ジャンル市場規模を今回の成功判定から外すと明示したか。"
       ],
       "expires_after": "次に game prototype の制作・評価・修復で progress / fun / external reach のいずれかを判定する 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260517-tactical-vs-reflex-shmup-axis",
+      "created_at": "2026-05-17T03:41:02+09:00",
+      "source_ts": "1778947869.742089",
+      "scope": "next shmup / action game prototype implementation, repair, or self-judgment where flow, reflex, tactics, or commercial evaluation language may be conflated",
+      "questions": [
+        "評価対象を「反射操作の気持ちよさ」「戦術判断を強制する設計」「商業評価語彙・外部到達」のどれとして読んでいるかを1行で分けたか。",
+        "headless ベンチや自分の実装数値を、flow の証拠として直読せず、武器選択・リスク報酬・BOMB 判断・ルート選択など tactical depth の証拠にもなり得るか確認したか。",
+        "Eneba のような二次商業記事を設計の正解に格上げせず、brainstorm 元クラスタまたは評価語彙に留め、一次プレイ/自前ログで見るべき未確認点を1つ残したか。"
+      ],
+      "expires_after": "次に shmup / action game prototype の評価・修正・新規設計で flow / reflex / tactics のどれかを成功根拠として使う 1 回で見直す。"
     }
   ]
 }
