@@ -69,6 +69,21 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+2026-05-17T08:21:00+09:00 log_cdx Phase 4a 追記
+```yaml
+cleaned:
+  - "memory/MEMORY.md の path-like index/link を機械確認: checked=2, broken=0"
+  - "memory/atoms.jsonl を機械確認: rows=1232, json_errors=0, duplicate_ids=0, duplicate_content_hashes=0"
+  - "memory/raw/ の 30日超ファイル確認: old_raw_files_30d=0"
+  - "memory/shared_reads_candidates/ の 30日超 candidate 確認: old_candidates_30d=0"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending 確認: pending=0, status 更新不要"
+  - "memory/atoms/index.jsonl と game_memory_task_lens_index.md の入口を確認: broad tag は多いが task lens への導線は現存"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
