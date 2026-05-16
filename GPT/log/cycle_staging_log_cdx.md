@@ -72,7 +72,20 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+### 2026-05-16T17:18+09:00 log_cdx
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown/backtick path を検査: broken link 0 件"
+  - "memory/atoms.jsonl を検査: JSON parse error 0 件、id/source_ts/permalink/content_hash 重複 0 件"
+  - "memory/atoms/ per-file index と atoms.jsonl の同期を検査: atoms_jsonl 1200 / index_jsonl 1200 / md_files 1200、差分 0 件"
+  - "memory/raw/ と memory/shared_reads_candidates/ の 30 日超過ファイルを検査: 対象 0 件"
+  - "slack inbox を確認: broadcasts pending 0 件、directives pending 2 件。2 件は game-rights のゲーム制作着手指示で、現時点では未完了のため handled 化せず維持"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
