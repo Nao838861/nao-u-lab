@@ -15,7 +15,17 @@
 
 ## Phase 2: 分析
 
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260516_pcg_benchmark_open_source_testbed.md
+fail:
+  - path: memory/shared_reads_candidates/20260516_promptvfx_text_driven_3d_animation.md
+    reason: "VFX生成技術としては有用だが、ゲーム制作サイクルへの具体適用と評価中身が薄く、4000字の残すべき概要にしにくい。"
+postpone:
+  - path: memory/shared_reads_candidates/20260516_pcg_serious_games_drl_evaluation.md
+    reason: "DRL agent 評価の着想は有望だが、framework 構成と評価設計の情報量が不足し、serious game 依存も追加確認が必要。"
+```
 
 ## Phase 3: Shared-reads 投稿
 

@@ -4,6 +4,10 @@ url: "https://arxiv.org/abs/2506.01091"
 collected_at: "2026-05-16T09:29:08+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-art, vfx, animation, 3d, generative-ai]
+evaluated_at: "2026-05-16T09:44:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: fail
+gate_reason: "text-driven 4D flow field と 3D Gaussian animation の技術候補としては面白いが、現候補だけでは評価内容やゲーム制作サイクルへの具体適用が薄い。#shared-reads のゲーム制作向け4000字概要としては、制作評価よりビジュアル技術紹介に寄りすぎる。"
 ---
 
 ## raw_excerpt
