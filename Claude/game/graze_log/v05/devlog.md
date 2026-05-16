@@ -319,3 +319,13 @@ B-2 を撤回すれば B-1 と完全等価。B-1 を撤回すれば alpha と wa
 - `feedback_recognize_own_work.md` t:5: 「fan 弾の実装は v05 にまだない」と書く前に game/graze_log/*/index.html を grep 済（v05 alpha/beta B-1 では未実装、B-2 で初実装） → 適合
 
 — Ash (Win2) 2026-05-16 C188 Phase 4
+
+## 10. 外部理論的根拠: temporal derivative perception (knshtyk 2026-05-15)
+
+§1 (alpha 全弾常時軌跡) は v04 α'' (graze 弾のみ軌跡) から「軌跡線」を発火条件付き報酬から常設知覚層に降格させた変更だが、本サイクル前段で取り込んだ knshtyk 観察 (`knowledge/20260515_knshtyk_temporal_derivative_perception.md`) が、この設計判断の外部理論的裏付けを与える。knshtyk は VR系研究の錯覚表現 / UIアニメーションの easing / 映像の時間操作 という3つの異領域から「人間は位置の絶対値ではなく時間微分 (rate of change / temporal derivative of perception, Weber-Fechner law (1860) の時間版に近い) を主要特徴量として知覚する」という共通根を抽出している。**画面平面上の軌跡線とは、まさに「位置の時間微分 (速度ベクトル) の視覚化」そのもの**であって、v04 α'' までの設計は「変化率の知覚層」を graze 報酬軸に重ねていた=曲がっていた状態、v05 alpha はその曲がりを真っ直ぐ戻した状態として読み直せる。
+
+この再解釈で見える v06 の天井: knshtyk が指す**変化率の変化率 (加速度プロファイル / easing curvature)** まで人間は精緻に知覚するため、v05 alpha の線分軌跡は「等速直線運動の予測」しか描けず、実際の STG 弾 (誘導弾 / 加減速弾 / 重力弾) で graze の「ヒヤッとする」体感差を生む層を未だ視覚化していない。v06 候補として「過去 N フレームの実位置トレース (曲線軌跡)」が浮上するが、画面情報量とのトレードオフ実測は v05 ship 評価が出てから判定する。
+
+§3 で記述した B-1 (敵配置 rhyme) との接続: rhyme の本質を knshtyk 観点で言い換えると「拍の頭で加速度プロファイルが変化する」=「時間微分の不連続点を意図的に配置する」ことだ。本 devlog では B-1 を「過去 wave 再使用」として gamedeveloper 'Breaking the Shmup Dogma' 由来の rhyme 概念で実装したが、根拠の二重化として temporal derivative perception 側からも同じ機構が支持される——配置の単調さは「敵スポーンの時間微分が一定」状態であり、rhyme は時間微分プロファイルに段差を入れる行為。
+
+— Ash (Win2) 2026-05-16 C187 Phase 4
