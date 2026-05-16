@@ -1,114 +1,28 @@
-# log_cdx Cycle Staging — 2026-05-16 13:28
+# log_cdx Cycle Staging — 2026-05-16 15:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
+### 2026-05-16T15:45+09:00 log_cdx
 
-2026-05-16T13:29+09:00 log_cdx Phase 1 追記。
-
-- pending 確認: `memory/slack_directives.jsonl` に `log-cdx-1778893778-0ab7ead0f4` が pending。内容は game-rights 領域のゲーム制作依頼であり、Phase 1 では対応せず後フェーズへ回す。`memory/slack_broadcasts.jsonl` の直近 tail は handled のみ。
-- 既存素材確認: `memory/raw/web_research/results.jsonl` と recent atoms には PokeAgent、Prompting Destiny、Game Master LLM、LLM NPC cognitive load、GameUIAgent などが既に候補化/投稿済み。重複を避けた。
-- 追加 candidate: `memory/shared_reads_candidates/20260516_player_experience_resonance_chi2026.md` - CHI 2026 Best Paper Award 付きの player experience / resonance 概念。ゲーム体験を長期的な感情・認知への残り方として扱う素材。
-- 追加 candidate: `memory/shared_reads_candidates/20260516_game_ai_player_preference_profiles.md` - 771 名調査から game AI 受容を 7 profile に分ける arXiv 2026-05-10 論文。AI 機能をプレイヤー層別に設計する素材。
+- Slack inbox 確認: `slack_directives.jsonl` pending 2 件、`slack_broadcasts.jsonl` pending 0 件。pending はいずれも `game-rights` の Nao_u から log_cdx 宛指示で、Phase 1 では対応せず後フェーズへ送る。
+- 既存確認: `memory/shared_reads_candidates/` は 5/16 午前から候補追加が多く、`memory/raw/web_research/results.jsonl` と最近の `memory/atoms.jsonl` には LLM x game design / agent evaluation 系が継続蓄積されていた。
+- 新規 candidate:
+  - `memory/shared_reads_candidates/20260516_pcgrllm_reward_design_pcgrl.md` — LLM で PCGRL の reward design を支援する候補。
+  - `memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md` — LLM narrative generation を memory / validation / REST interface でゲームに接続する候補。
+  - `memory/shared_reads_candidates/20260516_pokeagent_challenge.md` — Pokemon を使った部分観測・長期計画・agent 評価 benchmark 候補。
 
 ## Phase 2: 分析
-2026-05-16T13:45+09:00 log_cdx Phase 2 判定:
-
-```yaml
-total_candidates: 2
-pass:
-  - memory/shared_reads_candidates/20260516_game_ai_player_preference_profiles.md
-fail: []
-postpone:
-  - path: memory/shared_reads_candidates/20260516_player_experience_resonance_chi2026.md
-    reason: "問題設定と適用性は強いが、現候補は公開概要ベースで survey の設問・分析手順・結果粒度が不足。約4000字の根拠付き概要には本文確認が必要。"
-```
+(Phase 2 が書き込む)
 
 ## Phase 3: Shared-reads 投稿
-2026-05-16T13:36+09:00 log_cdx Phase 3 投稿
-
-```yaml
-posted:
-  - candidate: memory/shared_reads_candidates/20260516_game_ai_player_preference_profiles.md
-    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778906173600739"
-    char_count: 4120
-skipped: []
-```
+(Phase 3 が書き込む)
 
 ## Phase 3b: Shared-reads 自己フィードバック
-2026-05-16T13:39+09:00 log_cdx Phase 3b 自己フィードバック:
-
-```yaml
-self_feedback:
-  selected:
-    id: sr-1778896775-5acea801f0
-    source_ts: "1778896775.440399"
-    title: "trajectory 二重使用 — エージェント記憶設計と弾幕物理軌跡が同じ語を別意味で使う構造"
-    reason: "直近の記憶整理とゲーム制作の両方に接続し、Fang et al. の Decision Attribution Analyzer / tips 抽出を、恒久スキーマ変更ではなく次回の staging・playtest 軌跡・memory cleanup で試す短期 probe に落とせるため。"
-  scores:
-    relevance: 3
-    actionability: 3
-    evidence: 2
-    non_redundancy: 2
-    risk_control: 3
-    reversibility: 3
-    total: 16
-  decision: adopt_probe
-  change:
-    summary: "active_probes に `probe-20260516-attributed-trajectory-tip` を追加。過去ログや playtest trajectory を使う時、結果だけでなく 1 件の決定帰属から Strategy / Recovery / Optimization の短い tip を抽出するか確認する。"
-    files:
-      - memory/shared_reads_self_feedback_state.json
-      - log/cycle_staging_log_cdx.md
-  anti_bloat_check:
-    adds_permanent_rule: false
-    replaces_or_simplifies_existing: false
-    conflict_checked: true
-```
+(Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
-2026-05-16T13:50+09:00 log_cdx Phase 4a 記憶階層整理 + 問題抽出:
-
-```yaml
-cleaned: []
-checks:
-  memory_index_links:
-    checked_markdown_links: 0
-    broken: []
-    note: "memory/MEMORY.md は現状、実ファイルへの Markdown link ではなく code span 中心。broken link は検出なし。"
-  atoms:
-    total: 1193
-    duplicate_ids: 0
-    duplicate_source_ts: 0
-    content_duplicate_groups: 14
-    lifecycle_folded_display_atoms: 1004
-    note: "content hash 重複は lifecycle fold 対象として既に吸収されており、今回の機械整理では削除しない。"
-  raw:
-    old_30d_files: 0
-  shared_reads_candidates:
-    total_md: 71
-    old_30d_files: 0
-    status_field_counts:
-      none: 71
-  inbox:
-    slack_directives:
-      handled: 8
-      pending: 1
-      pending_ids:
-        - log-cdx-1778893778-0ab7ead0f4
-      note: "game-rights のゲーム制作依頼は未完了のため close しない。"
-    slack_broadcasts:
-      handled: 10
-      pending: 0
-issues:
-  - id: ISS-20260516-4A-001
-    description: "atoms.jsonl に同一 title だが group_id 未付与の repeated title が 6 グループ残っている。例: duckbill「センスの欠如＝欲の欠如」, Harness Engineering Best Practices 2026, Governed Collaborative Memory 論文への応答。"
-    severity: low
-    evidence: "tools/memory_health.py --json: repeated_title_groups=14, ungrouped_repeated_title_groups=6; atom examples sr-1774415260-4300508ff9/sr-1774419078-4a690de007, sr-1778560458-26d6bacb40/sr-1778560560-82af53d1c4"
-    why_blocks_game_memory: "同一話題の重複 title が group 化されないと、ゲーム制作時に同じ教訓を別 atom として複数回拾い、過去判断の代表版を選びにくくなる。ただし件数は少なく、既存 recall smoke は通っているため直ちに設計フェーズを起動するほどではない。"
-recommendation:
-  needs_design: false
-  priority_issues: []
-```
+(Phase 4a が書き込む)
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
@@ -117,14 +31,4 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-2026-05-16T13:58+09:00 log_cdx Phase 5 日記投稿:
-
-```yaml
-posted:
-  channel: "#log"
-  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778906705771539"
-  ts: "1778906705.771539"
-  char_count: 2268
-  verification: ok
-draft_file: log/phase5_diary_20260516_1358.md
-```
+(Phase 5 が書き込む)
