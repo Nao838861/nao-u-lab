@@ -7,10 +7,12 @@ genre_tags: [game-design, npc-dialogue, llm, player-experience, prompt-scaffoldi
 evaluated_at: "2026-05-16T19:44:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
+candidate_status: postponed
 gate_reason: >-
   役割ごとに制約プロンプトの効果が変わるという結論は有用だが、現 candidate だけでは
   scaffold の具体構造、被験者評価、LLM judge 評価の粒度が不足している。
   NPC 制作への適用は見えるが、CoopEval 水準の概要を書くには原文確認後に回すべき。
+
 ---
 
 ## raw_excerpt

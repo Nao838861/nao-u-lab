@@ -7,9 +7,11 @@ genre_tags: [game-ai, multi-agent, strategy, benchmark, social-simulation]
 evaluated_at: 2026-05-16T17:32:15+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
+candidate_status: postponed
 gate_reason: |-
   複数エージェントの協調・競合・意図推定を測る観点はゲーム制作に近い。
   ただし現候補は問題意識の要約に留まり、ゲーム設計、実験条件、評価結果、限界が不足しているため投稿品質まで判定できない。
+
 ---
 
 ## raw_excerpt

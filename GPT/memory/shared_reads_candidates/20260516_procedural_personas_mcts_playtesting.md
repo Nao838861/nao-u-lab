@@ -7,6 +7,7 @@ genre_tags: [game-design, automated-playtesting, procedural-personas, mcts, play
 evaluated_at: "2026-05-16T19:44:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
+candidate_status: postponed
 gate_reason: >-
   procedural personas、MCTS、進化ヒューリスティック、synthetic playtester としての可視化という
   手法の中核が明確で、評価目的も「コンテンツとプレイヤータイプの相互作用」に絞れている。
@@ -21,6 +22,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の headless probe を、勝敗・到達だけでなく探索型/効率型/リスク回避型などのペルソナ別評価へ広げる入口"
   pros_cons: "人手なしで多面的な挙動確認ができる一方、ペルソナ設計と報酬関数が制作意図を歪めるリスクがある"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

@@ -7,6 +7,7 @@ genre_tags: [game-ai, benchmark, agent-evaluation, rpg, partial-observability, l
 evaluated_at: "2026-05-16T15:46:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: ready_to_post
 phase3_status: skipped_duplicate
 phase3_reason: "2026-05-15 に同一タイトルの #shared-reads 投稿済み (ts=1778774896.927649) のため Phase 3 では重複投稿しない。"
 gate_reason: |-
@@ -19,6 +20,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT のゲーム制作では、agent playtest 用 harness、長期タスク評価、部分観測ゲームの検証設計に使う。"
   pros_cons: "メリットは実ゲームに近い複雑性と評価基盤。デメリットは Pokemon 固有知識への依存、制作中の小規模ゲームへそのまま移植しにくい点。"
   verdict_pre: "部分採用。benchmark の構造を借り、題材固有の大規模さは圧縮して使う。"
+
 ---
 
 ## raw_excerpt

@@ -163,7 +163,62 @@ designed_issues:
 ```
 
 ## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+2026-05-16T22:47+09:00 log_cdx Phase 4c 追記。
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260516-001
+    files_changed:
+      - path: tools/backfill_shared_reads_candidate_status.py
+        change: created
+      - path: memory/shared_reads_candidates/README.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_agent_island_multiagent_benchmark.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_clarification_timing_long_horizon_agents.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_competition_cooperation_llm_agents_games.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_game_ai_player_preference_profiles.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_games_to_learn_llms.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_gameworld_multimodal_game_agents.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_llm_evolutionary_collaborative_game_design.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_llm_game_development_playability_px.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_oel_text_games_self_improving_agents.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_pangea_procedural_artificial_narrative.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_pcgrllm_reward_design_pcgrl.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_player_experience_resonance_chi2026.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_pokeagent_challenge.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_rulesmith_automated_game_balancing.md
+        change: modified
+      - path: memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "既存 lifecycle frontmatter を正本として維持し、candidate_status 欠落 17 件を posted/pass/postpone/fail から補完した。再監査用の backfill script と README の短い運用メモを追加した。"
+    partial: false
+migrations:
+  - what: "memory/shared_reads_candidates/*.md の candidate_status backfill"
+    affected: "候補 82 件を監査し、17 件を補完。補完後の内訳は posted 43 / postponed 31 / failed 7 / ready_to_post 1。anomalies 0。"
+verification:
+  - "python tools\\backfill_shared_reads_candidate_status.py -> changed 0 / no_frontmatter 0 / anomalies 0"
+  - "candidate_status 集計 -> missing 0、posted 43、postponed 31、failed 7、ready_to_post 1"
+  - "python tools\\memory_recall.py \"shared reads candidate_status\" -> 正常終了"
+```
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

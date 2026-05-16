@@ -7,6 +7,7 @@ genre_tags: [game-design, procedural-content-generation, reinforcement-learning,
 evaluated_at: "2026-05-16T15:46:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: posted
 gate_reason: |-
   PCG/RL で曖昧になりやすい「何を良いコンテンツとみなすか」を reward design に落とす問題が明確で、LLM の役割も story-to-reward 生成に限定されている。
   feedback mechanism、reasoning prompt、2D 環境での比較評価、改善率まで候補メモ内に揃っており、CoopEval 水準の概要に必要な骨格を作れる。
@@ -22,6 +23,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778913399208889"
   char_count: 4334
   posted_at: "2026-05-16T16:56:39+09:00"
+
 ---
 
 ## raw_excerpt

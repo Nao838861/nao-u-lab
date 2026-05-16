@@ -7,6 +7,7 @@ genre_tags: [game-design, llm-game-generation, executable-synthesis, unity, desi
 evaluated_at: "2026-05-16T19:44:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: posted
 gate_reason: >-
   Goal Playable Concepts から Unity 実装へ落とす問題設定、IR を挟む着想、
   automated Unity replay による検証、grounding/hygiene failure の分類が揃っている。
@@ -22,6 +23,7 @@ suggested_post_outline:
   application_target: "ゲーム制作指示を goal pattern / intermediate spec / headless replay / failure taxonomy に分ける Nao_u_BOT の実装導線"
   pros_cons: "中間表現と自動リプレイは強いが、Unity 前提と pattern 化できる目標への依存がある"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

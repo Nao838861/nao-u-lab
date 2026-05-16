@@ -7,6 +7,7 @@ genre_tags: [game-design, balancing, llm-agents, playtesting, multiagent]
 evaluated_at: "2026-05-16T21:33:15+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
+candidate_status: posted
 gate_reason: |
   問題設定、LLM self-play と Bayesian optimization の組み合わせ、CivMini 上の評価指標、返される rule adjustments が候補メモだけでも分離できる。
   Nao_u_BOT の小規模対戦/資源管理プロトタイプで、勝率差や行動分布を deterministic probe にして数値調整へ接続できるため、ゲーム制作への適用が具体的。
@@ -22,6 +23,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の対戦・資源管理系プロトタイプで、面白さ判断の前段に balance probe を置き、調整候補を少数に絞る工程。"
   pros_cons: "利点は調整反復を速くし、変更理由を rule adjustment として残せる点。弱点は LLM agent のプレイ傾向が人間とずれる点と、metric を誤ると最適化が作品意図を潰す点。"
   verdict_pre: "部分採用。自動バランス決定ではなく、数値調整候補を出す検査工程として使う。"
+
 ---
 
 ## raw_excerpt

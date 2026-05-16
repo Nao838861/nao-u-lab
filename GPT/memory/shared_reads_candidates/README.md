@@ -44,6 +44,13 @@ posted:
 - `candidate_status: failed` は現時点では投稿品質または適用性が足りない。
 - `candidate_status: needs_review` は旧ファイルや未判定ファイルの暫定値。次の Phase 2/4a で再判定する。
 
+2026-05-16 Phase 4c で既存 candidate の `candidate_status` 欠落を backfill した。再監査・補完が必要な場合は、正本を per-file frontmatter として維持したまま次を使う。
+
+```powershell
+python tools\backfill_shared_reads_candidate_status.py
+python tools\backfill_shared_reads_candidate_status.py --apply
+```
+
 ## 育てる流れ
 
 1. 探索段階で見つけた記事/論文をここに candidate として保存
