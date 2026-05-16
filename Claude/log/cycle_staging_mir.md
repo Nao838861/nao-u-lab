@@ -102,6 +102,29 @@ devlog 追記内容（game/siphon_mir/v02/devlog.md L143-end）:
 - Phase 1 の Slack 巡回ゼロ規律と整合させ、shared-reads 新着は本サイクル未確認。次サイクル(C193) 焦点候補 (e) と接続
 - external_notes_mir.md (448KB) の未統合エントリ掘削は時間圧迫回避で見送り。これは「Phase 2 深掘りゼロ規律」(C192 staging 焦点候補 d) との緊張関係。次サイクル判断材料
 
+## Phase 3 実行結果（C192 wrap-up）
+
+### 既了確認（Phase 2 で実装済の Phase 3 相当行動）
+- 優先順 #3 external_notes/twitter 統合 → Phase 2 で #4 itchie_tatsumi を採用、`knowledge/20260516_itchie_tatsumi_principles_vs_concrete_pain.md` として接続済（M-40 WARN / CLAUDE.md「絶対にやる」5本制限 / game_lessons_log R-X 抽象ルール群 / siphon_mir 視認性改善 に接続）
+- 優先順 #4 プロジェクト進捗更新 → siphon_mir/v02 devlog C192 セクション追記済（Phase 2-3 判断本体）
+- 優先順 #1 Nao_u 指示で未対応のもの → staging 既読範囲では検出なし。連続性強制された前回日記末尾（v05 設計前にL-1脚本術を引く）は mir_textadv v07 brainstorm §1〜§3 で既に L-1 脚本術3本（ページターナー/情報非対称性/scene-sequel）が比較対象12本と合流済 = 既了
+
+### Phase 3 で増設した観察（C193 試行 #3 の種子）
+試行 #1（凍結温存→実装で形を崩す）と試行 #2（playable diff強制→保留で形を崩す）の**裏表構造**を C192 devlog で観測した。Phase 3 で中点視点を1段抽象化する:
+
+- **共通項**: 「形を守ること自体が自己目的化したとき形を崩す」
+- **相違**: 崩した方向が真逆（実装に進む / 立ち止まる）
+- **中点視点（C193 試行 #3 の問いの種）**: 「何を崩すか」は事前決定できない。崩すべきは「形の自己目的化」であって、向かう先は **痛みの所在** によって決まる。痛みが「動かないこと」にあるなら #1 方向、痛みが「効果未評価で積み増し」にあるなら #2 方向
+- **itchie_tatsumi との接続**: 「形を崩す原則」も痛みと接続されないと「崩す行為そのものの自己目的化」に転じる（崩しの3サイクル目に「崩したもの: 形を崩そうとした自分」のような形骸化が出るリスク）。形を崩す判断の前に痛みを場所同定する一手 = M-40 振幅/罰の温度を「どこが痛いか」で読む癖。これは試行 #3 ではなく #1/#2 を統括するメタ視点として残す
+
+### Phase 3 で明示的に保留したもの
+- siphon_mir/v02 index.html 追加 augment: malware 警告継続＋C191 stroke 効果未評価＋連続 augment による安全装置弱化、の3点で C193 以降に保留（Phase 2-3 判断と整合、再凍結リスクは C193 焦点必達条件で監視）
+- external_notes_mir.md (448KB) 未統合エントリ掘削: 今サイクルでは twitter_recommended の #4 採用1件で完了とし、C193 焦点候補 (e) と接続
+- Slack shared-reads / mir-log 新着巡回: Phase 1 ゼロ規律と整合、C193 焦点候補 (e) で再開判断
+
+### 自己観察（Phase 3 粒度規律）
+Phase 3 で新規 augment ゼロ、staging 1セクション追記のみ。Phase 2 で knowledge 1本＋devlog 1セクションを既に出しており、Phase 3 で更に出力を増やすと「Phase ごとに出す」形骸化に転じる。中点視点だけ温度残置し wrap up。M-40 推移は C193 起動時 staging で再観測。
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. log/nao_u_live.md (2.5) — # Nao_uの生ログ # Nao_uが誰かに語ったことを、伝言ゲームではなく原文で全員が読めるようにする # 対話中の...
