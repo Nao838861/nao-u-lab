@@ -8,10 +8,13 @@ evaluated_at: 2026-05-15T15:19:33+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: >-
   panoramic image、semantic segmentation、scene graph JSON による環境文脈注入という着想は明確で、
   小型ゲームの状態構造化にも転用できる。ただし候補メモだけでは評価指標・比較条件・失敗例の密度が薄く、
   Phase 3 の単独投稿にするには追加読解が必要。
+
 ---
 
 ## raw_excerpt

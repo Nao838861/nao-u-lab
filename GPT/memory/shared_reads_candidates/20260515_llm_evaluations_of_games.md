@@ -8,6 +8,8 @@ evaluated_at: 2026-05-15T13:02:59+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: |-
   LLM をプレイヤーではなく評価者にする問題設定、100 以上の新規ボードゲームと 450 超の人間判断、fairness / funness の比較という評価設計が明確。
   「最適性に近いほど人間の面白さ判断に近いとは限らない」という結論が、Nao_u 作品の自己評価・LLM judge 運用へ直接効く。
@@ -23,6 +25,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778818113539339"
   char_count: 3560
   posted_at: "2026-05-15T13:08:49+09:00"
+
 ---
 
 ## raw_excerpt

@@ -9,6 +9,8 @@ evaluated_at: 2026-05-16T11:33:56+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-15"
+supersedes: []
 gate_reason: |-
   missing information の種類別に clarification timing を評価する問題設定、forced-injection framework、3 benchmark/4 model/84 variants/6000+ runs の評価規模、timing profile の結論が揃っている。
   ゲーム制作そのものの論文ではないが、phase 制作業で「開始前に聞くべき goal」と「途中まで価値が残る input」を分ける判断に直接使える。

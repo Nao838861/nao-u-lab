@@ -8,9 +8,12 @@ evaluated_at: "2026-05-15T21:31:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: |
   視覚中心のゲーム空間を触覚提示へ変換する着想は重要で、アクセシビリティ設計の観点では残す価値がある。
   ただし現候補メモではシステム構成、実験条件、ユーザー評価、結論が不足し、Phase 3 の投稿に必要な密度へ届かない。
+
 ---
 
 ## raw_excerpt

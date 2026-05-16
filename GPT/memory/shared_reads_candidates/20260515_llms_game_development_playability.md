@@ -8,6 +8,8 @@ evaluated_at: 2026-05-15T19:32:29+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: >-
   LLM を制作補助ではなくゲーム内 architectural component として扱う問題設定が明確で、gameplay / playability /
   player experience の 3 軸に対して correctness、難易度調整、構造一貫性という設計負債まで抽出できる。
@@ -23,6 +25,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778841643230369"
   char_count: 3636
   posted_at: "2026-05-15T19:41:42+09:00"
+
 ---
 
 ## raw_excerpt

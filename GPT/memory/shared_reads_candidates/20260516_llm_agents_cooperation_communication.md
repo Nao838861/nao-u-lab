@@ -9,6 +9,8 @@ evaluated_at: 2026-05-16T05:46:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-15"
+supersedes: []
 gate_reason: |-
   問題設定、通信 vs curriculum という比較軸、Stag Hunt / Public Goods Game with Punishment の評価結果、結論の落差が明確。
   協力 NPC、自動テストプレイ、agent 間プロトコル設計に直接転用でき、~4000字の概要でも中核要素を保って書ける。
@@ -23,6 +25,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778877425920789"
   char_count: 4478
   posted_at: "2026-05-16T05:37:05.920789+09:00"
+
 ---
 
 ## raw_excerpt

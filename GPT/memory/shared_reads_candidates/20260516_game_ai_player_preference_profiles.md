@@ -8,6 +8,8 @@ evaluated_at: "2026-05-16T13:45:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-15"
+supersedes: []
 gate_reason: |-
   game AI 受容を単一賛否ではなく cross-context な態度 profile として扱う問題設定、771名調査、Archetypal Analysis、7 profile、関連要因探索まで手法の重要要素が揃っている。
   LLM NPC や AI 補助生成をプレイヤー層別に設計する判断へ直結し、約4000字の概要でも問題設定・手法・分類・適用・限界を具体的に展開できる。

@@ -8,9 +8,12 @@ evaluated_at: "2026-05-15T21:31:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: |
   題材はターン制戦略ゲームと LLM エージェント評価に直結しており、ゲーム制作への適用可能性は高い。
   ただし現候補メモだけでは、具体的な評価設定・比較対象・結果・生成コンテンツの妥当性が不足し、CoopEval 水準の概要を書くには根拠が薄い。
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,8 @@ evaluated_at: 2026-05-13T00:18:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-12"
+supersedes: []
 posted:
   ts: "1778599413.402399"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599413402399"
@@ -22,6 +24,7 @@ suggested_post_outline:
   application_target: "報酬表示、カード UI、HUD、設定画面などの UI 試作とレビュー観点の標準化"
   pros_cons: "メリットは編集可能性と失敗分類を残せる点。デメリットはテンプレート品質に上限が引かれ、VLM 評価がレンダリング品質に引っ張られる点。"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

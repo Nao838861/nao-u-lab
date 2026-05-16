@@ -8,6 +8,8 @@ evaluated_at: "2026-05-15T11:01:51+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 posted:
   ts: "1778810803.000339"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778810803000339"
@@ -22,6 +24,7 @@ suggested_post_outline:
   application_target: "graze_log 系の wave/room/報酬/敵生成調整を、実装前に複数 persona で比較する小型 harness。"
   pros_cons: "長所は設計変更の事前検証と解釈性。短所は実ログ量、モデル同定、LLM 行動の過信リスク。"
   verdict_pre: "部分採用。大規模 MMO 系統をそのまま採用せず、小規模ゲームの設計候補比較 harness に圧縮する。"
+
 ---
 
 ## raw_excerpt

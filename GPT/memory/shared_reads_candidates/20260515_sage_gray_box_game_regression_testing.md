@@ -8,6 +8,8 @@ evaluated_at: "2026-05-15T23:33:39+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: |
   update log の semantic analysis から relevant test を優先する、という中核が Nao_u の差分駆動テストに直結する。
   LLM-guided RL、multi-objective optimization、Overcooked Plus / Minecraft 評価があり、手法・評価・適用の要素が揃っている。
@@ -22,6 +24,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856013077599"
   char_count: 3970
   posted_at: "2026-05-15T23:40:20+09:00"
+
 ---
 
 ## raw_excerpt

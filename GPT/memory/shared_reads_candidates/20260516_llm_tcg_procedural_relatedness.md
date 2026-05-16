@@ -8,6 +8,8 @@ evaluated_at: 2026-05-16T03:31:58+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-15"
+supersedes: []
 gate_reason: >-
   問題設定が「メタ安定後の TCG で支配戦略が固定化し、カード選択体験が反復化する」点に立っており、
   LLM/diffusion を単なる大量生成ではなく player-card の固有関係を作る procedural relatedness として扱える。
@@ -23,6 +25,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870429034319"
   char_count: 3533
   posted_at: "2026-05-16T03:40:28+09:00"
+
 ---
 
 ## raw_excerpt

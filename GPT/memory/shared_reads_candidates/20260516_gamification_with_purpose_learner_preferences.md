@@ -8,6 +8,8 @@ evaluated_at: "2026-05-16T01:32:28+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-15"
+supersedes: []
 gate_reason: >-
   systematic review から GDE を10種に整理し、visual prototype と 125 participants の best-worst scaling、qualitative feedback で選好理由を見る構成が明確。
   progress / content relevance / constructive feedback を、単なる報酬追加ではなく上達と次行動の可視化としてゲーム UI に落とせるため、4000字級の概要に耐える。
@@ -22,6 +24,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT の小型ゲームで、レベルアップ、ゲージ、実績、ヒント、失敗後 feedback をプレイヤーの理解と次行動へ接続する判断軸。"
   pros_cons: "メリットは UI 報酬の意味づけを検証可能にする点。デメリットは教育文脈の選好であり、娯楽ゲームの長期継続や緊張感には直接外挿しにくい点。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

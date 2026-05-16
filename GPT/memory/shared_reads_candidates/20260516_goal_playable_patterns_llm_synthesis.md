@@ -8,6 +8,8 @@ evaluated_at: "2026-05-16T19:44:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-15"
+supersedes: []
 gate_reason: >-
   Goal Playable Concepts から Unity 実装へ落とす問題設定、IR を挟む着想、
   automated Unity replay による検証、grounding/hygiene failure の分類が揃っている。

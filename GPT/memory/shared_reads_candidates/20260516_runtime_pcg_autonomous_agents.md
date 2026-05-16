@@ -9,6 +9,8 @@ evaluated_at: 2026-05-16T07:36:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-15"
+supersedes: []
 posted:
   ts: "1778884869.679689"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778884869679689"
@@ -24,6 +26,7 @@ suggested_post_outline:
   application_target: "Nao_u_BOT側のゲーム試作で、ランダム生成・難度変化・レベル断片を人間確認前にagent probeへ通す仕組みに効く。"
   pros_cons: "メリットは詰みや単調化の早期検出。デメリットはrunner前提が強く、探索agent設計を作品ごとに作り直す必要がある。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

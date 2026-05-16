@@ -13,6 +13,8 @@ evaluated_at: "2026-05-16T09:44:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-15"
+supersedes: []
 gate_reason: "12種類のゲーム関連問題、content representation / control parameters、quality / diversity / controllability という評価軸が明確で、手法の重要要素を概要に展開できる。Nao_u側のプロトタイプ評価を主観評価から分解指標へ移す具体的な足場になるため、ゲーム制作への適用性も高い。"
 suggested_post_outline:
   overview_angle: "PCGを単発の生成デモではなく、問題表現・制御パラメータ・quality/diversity/controllabilityで評価する open-source benchmark として紹介する。"
@@ -20,6 +22,7 @@ suggested_post_outline:
   application_target: "自作プロトタイプの生成要素を、面白そう/使えそうではなく品質・多様性・制御性の観測項目へ分解する評価テンプレートとして使う。"
   pros_cons: "メリットは評価語彙と比較基準を借りられること。デメリットは benchmark 指標がそのまま体験の面白さを保証せず、作品固有の評価項目を追加する必要があること。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

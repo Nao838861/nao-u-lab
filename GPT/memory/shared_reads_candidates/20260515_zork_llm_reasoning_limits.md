@@ -8,10 +8,13 @@ evaluated_at: 2026-05-15T19:32:29+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: postpone
 candidate_status: postponed
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: >-
   Zork を使った LLM の探索・計画限界という問題設定と、headless playtest への注意点は具体的で有用。
   ただし candidate 情報だけでは position paper の評価条件、失敗分類、モデル比較の厚みを 4000字級の概要にするには薄く、
   Phase 3 投稿には本文確認後の再評価が必要。
+
 ---
 
 ## raw_excerpt

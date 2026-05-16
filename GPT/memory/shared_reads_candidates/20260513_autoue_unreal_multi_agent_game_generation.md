@@ -8,6 +8,8 @@ evaluated_at: 2026-05-13T00:18:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-12"
+supersedes: []
 posted:
   ts: "1778599412.481529"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599412481529"
@@ -22,6 +24,7 @@ suggested_post_outline:
   application_target: "小規模ゲーム prototype の asset-code-test 分割、生成後の動的検証、playtest phase の設計"
   pros_cons: "メリットは制作工程を検証可能な部品に分けられる点。デメリットは Unreal 前提の重さ、dataset と engine API 依存、論文レベルの再現コスト。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

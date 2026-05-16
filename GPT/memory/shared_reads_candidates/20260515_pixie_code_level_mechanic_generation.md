@@ -8,6 +8,8 @@ evaluated_at: 2026-05-15T17:21:41+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: |
   既存 Unity project に annotation を加え、code-level mechanic を生成・テストするという問題設定と手法が明確で、複数 open-source Unity games での実演もある。
   Nao_u の playable diff 制作では、mechanic 候補をコード差分として小さく試す運用に直接変換できる。
@@ -22,6 +24,7 @@ suggested_post_outline:
   application_target: "次の prototype で新 mechanic を 1 diff として生成し、人間が試して採否を決めるサイクル。"
   pros_cons: "playable diff に近い一方、Unity 前提と自動テスト可能性に依存する。"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

@@ -9,6 +9,8 @@ evaluated_at: 2026-05-16T07:36:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-15"
+supersedes: []
 posted:
   ts: "1778884870.965799"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778884870965799"
@@ -24,6 +26,7 @@ suggested_post_outline:
   application_target: "会話NPC、支援AI、群衆/仲間キャラを持つ試作で、AI行動を世界状態とプレイヤー意図に接続する設計レビューに効く。"
   pros_cons: "メリットは暴走会話・実行不能行動・プレイヤー疎外の分解。デメリットは非マルチプレイヤー作品では評価設計を再構成する必要がある。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

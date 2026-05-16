@@ -9,6 +9,8 @@ evaluated_at: 2026-05-16T11:33:56+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: fail
 candidate_status: failed
+stale_after: "2026-06-15"
+supersedes: []
 gate_reason: |-
   LLM の学習・生成原理をゲームルール化する着想はゲーム制作に近いが、候補本文からは early stage の提案以上の評価設計・結果・限界が十分に取れない。
   #shared-reads の「概要」水準まで伸ばすと、具体的な手法要素よりも AI literacy 一般論で埋まりやすく、CoopEval ポスト水準には届きにくい。

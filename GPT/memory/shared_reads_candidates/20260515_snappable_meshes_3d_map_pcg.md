@@ -8,6 +8,8 @@ evaluated_at: 2026-05-15T15:19:33+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: >-
   問題設定は 3D level design の PCG を designer control と navigability feedback に戻すこと、
   手法は snappable mesh piece と connector/visual constraint による composition として明確。
@@ -23,6 +25,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826283429469"
   char_count: 3492
   posted_at: "2026-05-15T15:27:00+09:00"
+
 ---
 
 ## raw_excerpt

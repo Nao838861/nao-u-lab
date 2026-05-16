@@ -30,6 +30,8 @@ evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass | postpone | fail
 candidate_status: posted | ready_to_post | postponed | failed | needs_review
 gate_reason: "<判断理由>"
+stale_after: "YYYY-MM-DD"
+supersedes: []
 posted:
   ts: "<Slack ts>"
   permalink: "<Slack permalink>"
@@ -48,8 +50,10 @@ posted:
 
 ```powershell
 python tools\backfill_shared_reads_candidate_status.py
-python tools\backfill_shared_reads_candidate_status.py --apply
+python tools\backfill_shared_reads_candidate_status.py --apply --fix-conflicts
 ```
+
+2026-05-17 Phase 4c で lifecycle frontmatter の正本化を拡張した。各 candidate は `candidate_status` / `gate_decision` / `gate_reason` / `evaluated_at` に加え、機械的な棚卸し用の `stale_after` と、再投稿・差し替え関係を明示する `supersedes` を持つ。Phase 2/3 で判定や投稿状態を変えた場合は、staging だけでなく該当 candidate の frontmatter も更新する。
 
 ## 育てる流れ
 

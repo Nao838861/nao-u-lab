@@ -8,6 +8,8 @@ evaluated_at: "2026-05-15T11:01:51+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 posted:
   ts: "1778810807.521139"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778810807521139"
@@ -22,6 +24,7 @@ suggested_post_outline:
   application_target: "初回プレイの Lv3 到達、被弾後の復帰、再挑戦導線、序盤 wave 調整の評価指標。"
   pros_cons: "長所は大規模実験と retention 指標の明確さ。短所は F2P 商用文脈、収益指標の価値観差、難易度低下の体験劣化リスク。"
   verdict_pre: "部分採用。課金最適化ではなく、序盤離脱を防ぐ到達保証の評価設計として採用する。"
+
 ---
 
 ## raw_excerpt

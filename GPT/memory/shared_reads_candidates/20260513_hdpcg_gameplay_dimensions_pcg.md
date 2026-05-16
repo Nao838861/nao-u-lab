@@ -8,6 +8,8 @@ evaluated_at: 2026-05-13T00:18:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-12"
+supersedes: []
 posted:
   ts: "1778599414.224349"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778599414224349"
@@ -22,6 +24,7 @@ suggested_post_outline:
   application_target: "重力反転、時間変化、並行世界切替などを含むレベル生成と、面白い仕掛けの自動検証"
   pros_cons: "メリットはメカニクス込みの到達可能性を扱える点。デメリットは問題定式化が重く、即席プロトタイプには検証コストが高い点。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

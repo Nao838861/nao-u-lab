@@ -8,10 +8,13 @@ evaluated_at: 2026-05-15T13:02:59+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: fail
 candidate_status: failed
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: |-
   人間向けゲームを AI 評価器にする構想は面白いが、今回の目的であるゲーム制作への具体適用は「テスト環境として見られる」程度に留まる。
   構想規模が大きく、Nao_u の小型プロトタイプ制作サイクルへ落とすには抽象度が高い。
   Phase 3 の 4000字投稿としては、現時点では benchmark 論の紹介に寄りすぎる。
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,8 @@ evaluated_at: 2026-05-15T03:20:00+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: >
   長期状態を持つ agent の authorization drift / tool-use escalation / unchecked autonomy を
   benchmark と Harm Score で測る構造が明確。ゲーム制作そのものより、制作 agent の記憶・権限・自動化境界に効く。
@@ -23,6 +25,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778782340942119"
   char_count: 4498
   posted_at: "2026-05-15T03:12:33+09:00"
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,8 @@ evaluated_at: 2026-05-15T15:19:33+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: >-
   LLM NPC と scripted NPC の randomized between-subject experiment として、問題設定・比較条件・
   N=130 の評価・主要結果が揃っている。ゲーム制作では自由入力 NPC 導入時の負荷、信頼、UI 設計の
@@ -23,6 +25,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778826411891459"
   char_count: 4143
   posted_at: "2026-05-15T15:27:00+09:00"
+
 ---
 
 ## raw_excerpt

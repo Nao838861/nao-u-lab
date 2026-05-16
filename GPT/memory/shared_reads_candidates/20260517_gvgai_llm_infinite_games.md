@@ -4,8 +4,10 @@ url: "https://arxiv.org/abs/2508.08501"
 collected_at: "2026-05-17T01:29:32+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-ai, benchmark, evaluation, agent, game-design]
-candidate_status: needs_review
+candidate_status: posted
 evaluated_at: "2026-05-17T01:32:24+09:00"
+stale_after: "2026-06-16"
+supersedes: []
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 gate_reason: |-
@@ -23,6 +25,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778949410890539"
   char_count: 4180
   posted_at: "2026-05-17T01:38:12+09:00"
+
 ---
 
 ## raw_excerpt

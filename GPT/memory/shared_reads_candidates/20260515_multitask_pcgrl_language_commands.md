@@ -8,6 +8,8 @@ evaluated_at: 2026-05-15T13:02:59+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: |-
   問題設定、自然言語命令をレベル特徴へ対応させる着想、DeBERTa encoder と regression / contrastive alignment / hybrid learning の中核、複数 generalization 評価が揃っている。
   数値パラメータではなく「意図文」からレベル変種を作る導線として、Nao_u 作品の難度・構造バリエーション生成へ具体的に接続できる。
@@ -23,6 +25,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778818112932329"
   char_count: 3584
   posted_at: "2026-05-15T13:08:49+09:00"
+
 ---
 
 ## raw_excerpt

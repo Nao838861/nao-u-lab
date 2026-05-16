@@ -8,6 +8,8 @@ evaluated_at: "2026-05-15T07:02:42+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 posted:
   ts: "1778796437.903149"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778796437903149"
@@ -22,6 +24,7 @@ suggested_post_outline:
   application_target: "小改造ごとの headless 評価で、スコアや生存時間に加えて変更分岐・イベント発火・衝突条件を踏んだかを測る仕組み"
   pros_cons: "diff 起点でテスト対象を絞れる利点がある一方、RL 環境整備と reward 設計の重さ、コードと体験意図の対応付けが弱点"
   verdict_pre: "採用"
+
 ---
 
 ## raw_excerpt

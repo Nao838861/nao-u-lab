@@ -8,6 +8,8 @@ evaluated_at: "2026-05-15T07:02:42+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 posted:
   ts: "1778796436.646579"
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778796436646579"
@@ -22,6 +24,7 @@ suggested_post_outline:
   application_target: "headless 評価で検出したスコア・生存時間・画面状態から、敵密度や移動量など小さな mechanics parameter を調整する probe"
   pros_cons: "測定から修正へ進める利点が大きい一方、単一 agent 依存と RL の脆さ、人間プレイヤー多様性の欠落が弱点"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

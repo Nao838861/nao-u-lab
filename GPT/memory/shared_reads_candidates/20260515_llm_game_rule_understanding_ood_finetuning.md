@@ -8,6 +8,8 @@ evaluated_at: "2026-05-15T23:33:39+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: |
   ゲームルール理解を Solitaire variants / GDL / game progression questions / textual explanation で測る構成が明確で、問題設定から評価まで追える。
   Nao_u 作品の mechanics review や仕様理解テストに直接接続でき、~4000字の概要で「LLM はルールを読めるのか」を具体的に説明できる。
@@ -22,6 +24,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856008709709"
   char_count: 3536
   posted_at: "2026-05-15T23:40:20+09:00"
+
 ---
 
 ## raw_excerpt

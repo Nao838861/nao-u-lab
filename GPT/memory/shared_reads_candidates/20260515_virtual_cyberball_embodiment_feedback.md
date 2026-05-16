@@ -8,6 +8,8 @@ evaluated_at: "2026-05-15T21:31:54+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: |
   問題設定、Unity3D prototype、avatar customization、naive participants と experienced researchers の比較評価まで揃っている。
   ゲーム制作では「初見プレイヤー」と「熟練評価者」を分ける検証設計に直接使え、4000字級の概要にも構成しやすい。
@@ -22,6 +24,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778848709160389"
   char_count: 3720
   posted_at: "2026-05-15T21:38:33+09:00"
+
 ---
 
 ## raw_excerpt

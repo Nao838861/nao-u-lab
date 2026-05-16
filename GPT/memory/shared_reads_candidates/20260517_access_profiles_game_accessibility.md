@@ -4,8 +4,10 @@ url: "https://www.frontiersin.org/journals/computer-science/articles/10.3389/fco
 collected_at: "2026-05-17T01:29:32+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, accessibility, player-experience, infrastructure]
-candidate_status: needs_review
+candidate_status: postponed
 evaluated_at: "2026-05-17T01:32:24+09:00"
+stale_after: "2026-06-16"
+supersedes: []
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 gate_reason: |-
@@ -19,6 +21,7 @@ suggested_post_outline:
   pros_cons: "メリットは後付けでない accessibility 設計にできる点。デメリットは小規模プロトタイプでは engine/launcher 連携まで実装しにくく、まずは局所 probe に縮約する必要がある点。"
   verdict_pre: "部分採用"
 phase3_postpone_reason: "Phase 3 で原文を確認したところ、Frontiers 公開ページは 2026-05-17 時点で abstract と書誌情報中心で、最終 formatted version は未公開。candidate memo だけでは 3500-4500 字の原文準拠概要を作るには評価・方法の細部が不足するため延期。"
+
 ---
 
 ## raw_excerpt

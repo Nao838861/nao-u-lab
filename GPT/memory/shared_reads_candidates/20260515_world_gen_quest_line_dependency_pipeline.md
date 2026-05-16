@@ -8,6 +8,8 @@ evaluated_at: 2026-05-15T17:21:41+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: |
   world、NPC、player character、campaign quest、quest expansion を structured JSON で段階接続する中核が明確で、coherence を data flow と schema で支える論点がある。
   RPG 生成に限らず、ゲーム仕様を一気に作らず中間表現と破綻確認点に分ける設計へ適用できる。
@@ -22,6 +24,7 @@ suggested_post_outline:
   application_target: "NPC、目的、ステージ条件、報酬、イベント条件を分割生成し、途中で検査する制作フロー。"
   pros_cons: "破綻箇所を見つけやすい一方、schema 設計が浅いと形式だけ整った凡庸な生成になる。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

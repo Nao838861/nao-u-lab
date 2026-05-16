@@ -164,5 +164,28 @@ items:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260517-001
+    files_changed:
+      - path: tools/backfill_shared_reads_candidate_status.py
+        change: modified
+      - path: memory/shared_reads_candidates/*.md
+        change: modified
+      - path: memory/shared_reads_candidates/README.md
+        change: modified
+      - path: phases/phase2_analyze.md
+        change: modified
+      - path: phases/phase3_post_shared_reads.md
+        change: modified
+    summary: "shared_reads_candidates の per-file frontmatter を lifecycle 正本として拡張し、stale_after / supersedes と candidate_status 矛盾補正を backfill した。Phase 2/3 の運用メモも staging だけでなく candidate frontmatter を更新する形に寄せた。"
+    partial: false
+migrations:
+  - what: "既存 89 candidate へ stale_after / supersedes を追加し、2026-05-17 の 3 件の candidate_status を gate_decision/posted と整合させた。"
+    affected: "memory/shared_reads_candidates/*.md"
+verification:
+  - "python tools\\backfill_shared_reads_candidate_status.py -> changed 0 / no_frontmatter 0 / anomalies 0"
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

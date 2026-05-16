@@ -8,6 +8,8 @@ evaluated_at: 2026-05-15T01:02:01+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: >-
   問題設定が「部分観測・競争的読み合い・長期計画を同時に要求するゲーム環境で agent を評価する」点に明確で、
   Battling Track / Speedrunning Track という評価軸も抽出できる。Nao_u 側の headless 評価、プレイログ検証、
@@ -23,6 +25,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778774896951409"
   char_count: 4337
   posted_at: "2026-05-15T01:28:16+09:00"
+
 ---
 
 ## raw_excerpt

@@ -8,6 +8,8 @@ evaluated_at: 2026-05-16T03:31:58+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-15"
+supersedes: []
 gate_reason: >-
   unimodal biofeedback から multimodal physiological control へ進める問題設定、vanilla/unimodal/multimodal の比較、
   fun・playability・GEQ・自由記述などの評価が揃っている。センサー前提を外しても、複数入力を「深さ」と「負荷」の両面で見る評価軸としてゲーム制作に転用できる。
@@ -22,6 +24,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778870430127129"
   char_count: 3970
   posted_at: "2026-05-16T03:40:29+09:00"
+
 ---
 
 ## raw_excerpt

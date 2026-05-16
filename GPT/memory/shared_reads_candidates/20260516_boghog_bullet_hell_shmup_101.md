@@ -6,11 +6,14 @@ collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, shmup, bullet-hell, level-design, mechanics]
 candidate_status: failed
 evaluated_at: "2026-05-16T23:32:45+09:00"
+stale_after: "2026-06-15"
+supersedes: []
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: fail
 gate_reason: |-
   手法要素とゲーム制作への適用性は十分で、CoopEval 水準の概要も書ける。
   ただし 2026-05-16 21:58 に同一 URL が既に #shared-reads 投稿済みで active atom もあるため、Phase 3 で再投稿する価値はない。
+
 ---
 
 ## raw_excerpt

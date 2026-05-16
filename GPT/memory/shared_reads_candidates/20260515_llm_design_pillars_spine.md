@@ -8,6 +8,8 @@ evaluated_at: 2026-05-15T17:21:41+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: |
   design pillars を自然言語アーティファクトとして扱う問題設定、SPINE prototype、モデル比較・game jam ケーススタディ・専門家インタビューという評価材料が揃っている。
   Nao_u の小規模 prototype で「守る体験」「捨てる仕様」を判断する軸として具体適用でき、CoopEval 水準の概要も書ける。
@@ -22,6 +24,7 @@ suggested_post_outline:
   application_target: "prototype 開始時の核の言語化、試作中の仕様肥大化防止、レビュー時の判断基準。"
   pros_cons: "曖昧な初期案を外化できる一方、柱がスローガン化すると実装判断に効かない。"
   verdict_pre: "部分採用"
+
 ---
 
 ## raw_excerpt

@@ -4,14 +4,17 @@ url: "https://playerdriven.io/articles/gdc-2026-riot-games-stone-librande-on-gam
 collected_at: "2026-05-17T01:29:32+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, prototyping, player-experience, mechanics]
-candidate_status: needs_review
+candidate_status: postponed
 evaluated_at: "2026-05-17T01:32:24+09:00"
+stale_after: "2026-06-16"
+supersedes: []
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 gate_reason: |-
   emotional north star から action verbs、systems、紙プロトタイプへ戻す流れはゲーム制作に使いやすいが、候補は workshop 記録であり一次資料としての密度がやや薄い。
   playtest で advance action の見落としが露出した点は有用だが、4000字級の概要に必要な評価手順・比較・限界の材料が不足している。
   Phase 3 投稿に回すなら、Librande の原資料や GFF/MDA との関係を補強した別 candidate として再評価したい。
+
 ---
 
 ## raw_excerpt

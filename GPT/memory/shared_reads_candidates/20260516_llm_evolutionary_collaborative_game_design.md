@@ -9,6 +9,8 @@ evaluated_at: 2026-05-16T11:33:56+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-15"
+supersedes: []
 gate_reason: |-
   interactive evolution と LLM を組み合わせ、候補生成・選好・交叉/変異・再評価のループとして手法の中核を説明できる。
   Nao_u_BOT の brainstorm -> playable diff -> review 循環へ、候補を増やすだけでなく「選ぶ/混ぜる/捨てる」を制度化する材料として具体的に適用できる。

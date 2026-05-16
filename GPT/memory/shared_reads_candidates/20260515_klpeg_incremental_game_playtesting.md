@@ -8,9 +8,12 @@ evaluated_at: "2026-05-15T07:02:42+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: postpone
 candidate_status: postponed
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: >-
   update log、Knowledge Graph、multi-hop reasoning、test case 生成という骨格は有用だが、
   候補内の情報だけでは KG スキーマや評価結果の具体性が薄く、4000字の概要が概念説明に寄りやすい。
+
 ---
 
 ## raw_excerpt

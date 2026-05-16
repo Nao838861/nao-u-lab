@@ -8,6 +8,8 @@ evaluated_at: "2026-05-15T23:33:39+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
 candidate_status: posted
+stale_after: "2026-06-14"
+supersedes: []
 gate_reason: |
   LLM 生成を compilation feedback と search-based playtesting の loop に接続しており、「作って終わり」ではない自動ゲーム設計の手法として重要要素が明確。
   PuzzleScript という制約の強い対象に限定されるが、Nao_u の小型プロトタイプ生成・mechanic 探索へかなり具体的に適用できる。
@@ -22,6 +24,7 @@ posted:
   permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778856016745199"
   char_count: 3929
   posted_at: "2026-05-15T23:40:20+09:00"
+
 ---
 
 ## raw_excerpt
