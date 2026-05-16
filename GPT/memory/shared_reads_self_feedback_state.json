@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-16T09:44:44+09:00",
+  "updated_at": "2026-05-16T11:44:42+09:00",
   "reviewed_source_ts": [
     "1778782281.755979",
     "1778782280.911589",
@@ -15,9 +15,27 @@
     "1778774896.927649",
     "1778856013.077599",
     "1778026642.674069",
-    "1777737101.667389"
+    "1777737101.667389",
+    "1778567110.717629"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-16T11:44:42+09:00",
+      "id": "sr-1778567110-b1c59a00df",
+      "source_ts": "1778567110.717629",
+      "title": "[shared-reads] devwhodevs/engraph: 5 レーン RRF ハイブリッド検索で markdown vault をエージェント記憶基盤にする MCP/REST server",
+      "decision": "adopt_probe",
+      "reason": "現行の memory_recall / grep / per-file atom 運用に対し、engraph の要点は多機能導入ではなく「semantic / full-text / graph / rerank / time の複数レーンを read-only で比べ、どのレーンが効いたかを説明可能にしてから Write を開ける」こと。記憶基盤を恒久変更せず、次の recall 設計や Phase 4a 整理で 1 回だけ確認する probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-16T09:44:44+09:00",
       "id": "sr-1777737101-0f96f202c2",
@@ -454,6 +472,18 @@
         "厚み層が未校正なら、断定せずに人間確認・保留・次の観察項目のいずれかへ落としたか。"
       ],
       "expires_after": "次に game prototype の自己判定または headless 結果を設計判断へ使う 1 回で見直し"
+    },
+    {
+      "id": "probe-20260516-read-lanes-before-memory-write",
+      "created_at": "2026-05-16T11:44:42+09:00",
+      "source_ts": "1778567110.717629",
+      "scope": "next memory recall improvement / vault health / Phase 4a memory cleanup that considers new search or write tooling",
+      "questions": [
+        "記憶検索を改善するとき、最初から Write 機能を開けず、read-only の semantic / full-text / graph / time のどれが現行 grep・memory_recall より効いたかを 1 件の比較ログで示したか。",
+        "検索結果を採用する場合、なぜその候補が出たかをレーン・タグ・時系列・リンクの少なくとも 1 つで説明できる形に残したか。",
+        "vault health や orphan/stale 診断を使う場合、ツールのブラックボックス判定をそのまま正本にせず、現行の git 差分・staging・既存 loader と衝突しない read-only evidence として扱ったか。"
+      ],
+      "expires_after": "次に memory recall 改善、vault health、または Phase 4a の記憶整理で新しい検索/診断ツールを検討する 1 回で見直す。"
     }
   ]
 }
