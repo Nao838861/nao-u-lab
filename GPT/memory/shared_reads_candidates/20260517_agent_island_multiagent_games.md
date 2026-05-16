@@ -4,6 +4,21 @@ url: "https://arxiv.org/abs/2605.04312"
 collected_at: "2026-05-17T07:29:29+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, multi-agent, benchmark, evaluation, social-dynamics]
+evaluated_at: "2026-05-17T07:32:02+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-16"
+supersedes: []
+gate_reason: >
+  saturation / contamination resistant benchmark という問題設定、multiagent game 化、Bayesian Plackett-Luce による skill 推定、
+  99 games / 49 models と provider bias 分析まで candidate 内で抽出できる。ゲームを agent 評価装置として使う設計にも直接つながる。
+suggested_post_outline:
+  overview_angle: "固定タスク正答率ではなく、協力・対立・説得・投票を含む multiagent game のログから agent skill と bias を推定する benchmark として書く。"
+  analysis_axis: "saturation / contamination 問題、winner-take-all multiplayer simulation、Bayesian Plackett-Luce skill 推定、game logs 公開、same-provider preference の順に見る。"
+  application_target: "Nao_u 側の agent / game harness で、単体解答では見えない交渉、同盟、投票、provider bias を読む評価設計に効く。"
+  pros_cons: "長所は相互作用ログと不確実性つき rank が残る点。短所は game 固有の戦略適性や provider 分布が評価結果に混ざる点。"
+  verdict_pre: "部分採用。benchmark 全体ではなく、対戦・投票ログを評価 artifact として残す発想を取り込む。"
 ---
 
 ## raw_excerpt

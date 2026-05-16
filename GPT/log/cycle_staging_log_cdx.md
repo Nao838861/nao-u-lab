@@ -14,7 +14,20 @@
   - `memory/shared_reads_candidates/20260517_mining_player_experience_trends_reviews.md` — game review から player experience trend を LLM / embedding で抽出する CHI 2026 paper。レビュー分析と threshold 管理の材料。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+### 2026-05-17T07:32:02+09:00 log_cdx
+
+```yaml
+total_candidates: 4
+pass:
+  - memory/shared_reads_candidates/20260517_agent_island_multiagent_games.md
+  - memory/shared_reads_candidates/20260517_mining_player_experience_trends_reviews.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260517_agent_odyssey_text_game_generation.md
+    reason: "枠組みと適用先は強いが、比較対象・実験結果・失敗分類が candidate 内では薄く、4000字級概要には本文確認が必要。"
+  - path: memory/shared_reads_candidates/20260517_asgardbench_interactive_planning.md
+    reason: "visual grounding / planning 評価の接続は強いが、主要結果と失敗型の密度が足りず、Phase 3 品質にはまだ届かない。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

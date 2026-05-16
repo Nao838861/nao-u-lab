@@ -4,6 +4,15 @@ url: "https://arxiv.org/abs/2603.15888"
 collected_at: "2026-05-17T07:29:29+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, multimodal-agent, planning, benchmark, visual-grounding]
+evaluated_at: "2026-05-17T07:32:02+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-16"
+supersedes: []
+gate_reason: >
+  visual grounding と最小 feedback 下の plan adaptation は、tutorial / puzzle の状態理解評価にかなり近い。
+  ただし candidate から読める評価結果は「visual input なしで性能低下」程度に留まり、主要 VLM 比較や失敗型の説明が不足するため保留。
 ---
 
 ## raw_excerpt

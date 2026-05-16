@@ -4,6 +4,15 @@ url: "https://agentodyssey.github.io/paper.pdf"
 collected_at: "2026-05-17T07:29:29+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, text-game, agent-evaluation, procedural-generation, memory]
+evaluated_at: "2026-05-17T07:32:02+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-16"
+supersedes: []
+gate_reason: >
+  long-horizon text game で探索・記憶・world knowledge・skill learning・planning を測る接続は強い。
+  ただし現 candidate は枠組みと例示中心で、比較対象、実験結果、失敗分類の密度が足りず、CoopEval 水準の概要には本文確認が必要。
 ---
 
 ## raw_excerpt

@@ -4,6 +4,21 @@ url: "https://users.aalto.fi/~hamalap5/publications/CHI2026_player_experience.pd
 collected_at: "2026-05-17T07:29:29+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [player-experience, review-mining, game-design, llm-analysis, ux-research]
+evaluated_at: "2026-05-17T07:32:02+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-16"
+supersedes: []
+gate_reason: >
+  大量 review から player experience trend を抽出する問題設定、LLM-assisted content analysis と embedding similarity、
+  threshold 調整による false positive / noisy curve 管理まで candidate 内で具体化できる。ゲーム制作のレビュー分析にも直結する。
+suggested_post_outline:
+  overview_angle: "単純な sentiment 集計ではなく、player experience 要素の時系列 trend をレビューから抽出し、threshold の副作用まで扱う方法として書く。"
+  analysis_axis: "LLM-assisted content analysis、embedding-based similarity、neutral similarity と threshold 選択、low noise / high sensitivity の妥協を中心に見る。"
+  application_target: "Nao_u 作品や類似ジャンルのレビュー調査で、好評・不評の単語ではなく体験要素の増減を読む pipeline に効く。"
+  pros_cons: "長所は体験要素を時系列で比較できる点。短所は threshold の手動性と、レビュー母集団・年ごとの件数差で trend が歪む点。"
+  verdict_pre: "採用寄りの部分採用。投稿後はレビュー分析 probe の評価軸として使える。"
 ---
 
 ## raw_excerpt
