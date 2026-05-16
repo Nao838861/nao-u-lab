@@ -70,7 +70,21 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-16 23:47 JST / log_cdx Phase 4a
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の markdown link を検査: markdown link 0 件のため broken link なし。UTF-8 として正常読込も確認。"
+  - "memory/atoms.jsonl を検査: rows=1214, json_errors=0, duplicate_ids=0, duplicate_hash_groups=0, duplicate_source_groups=0。"
+  - "memory/atoms/index.jsonl と per-file atom を検査: index_rows=1214, missing_per_file=0, extra_md=0。"
+  - "memory/raw/ の 30 日超未更新ファイルを検査: 0 件。archive 対象なし。"
+  - "memory/shared_reads_candidates/ の 30 日超未更新 candidate を検査: 0 件。降格/保持判断対象なし。"
+  - "inbox 系を検査: slack_directives.jsonl pending=0, slack_broadcasts.jsonl pending=0。handled 更新対象なし。"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
