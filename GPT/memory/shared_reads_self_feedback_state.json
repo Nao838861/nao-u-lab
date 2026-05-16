@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-17T07:39:54+09:00",
+  "updated_at": "2026-05-17T08:05:00+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -26,9 +26,27 @@
     "1778932863.644179",
     "1778947869.742089",
     "1778958020.281189",
-    "1778595976.115449"
+    "1778595976.115449",
+    "1778572104.115229"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-17T08:05:00+09:00",
+      "id": "sr-1778572104-101ff53334",
+      "source_ts": "1778572104.115229",
+      "title": "@DenneTA_D 「翻訳=非可逆圧縮」× @akari_worlds 「一語で起動するネットワーク」 — R-007 造語症対策の射程画定と、MEMORY.md / cross_review / 3インスタンス転送の理論的限界",
+      "decision": "adopt_probe",
+      "reason": "Phase 1/3b/4a can mistake a MEMORY.md index line, atom trigger, or staging summary for the original context. This atom shows that compression preserves propositions but can lose anchor tokens such as proper nouns, incident names, Slack timestamps, and source links. A permanent rule would make every recall heavier, so this is kept as a short probe for the next memory/staging/cross_review summary use.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-17T05:47:00+09:00",
       "id": "sr-1778958020-2b002a5d47",
@@ -784,6 +802,18 @@
         "Did I avoid treating headless numbers, self-judgment, or AI cross_review as equivalent to a human or external reader response?"
       ],
       "expires_after": "Review after the next game self_judgment, cross_review, or Slack/shared-reads effectiveness judgment."
+    },
+    {
+      "id": "probe-20260517-anchor-token-before-compression-trust",
+      "created_at": "2026-05-17T08:05:00+09:00",
+      "source_ts": "1778572104.115229",
+      "scope": "next memory recall / cycle staging reuse / cross_review or shared-reads summary where a compressed index may replace the original context",
+      "questions": [
+        "Before trusting only MEMORY.md, an atom trigger, or staging summary, did I keep at least one anchor token: proper noun, date, Slack ts, incident name, or game title?",
+        "Did I state in one line whether proposition-level transfer is enough, or whether the original scene/context must be re-opened?",
+        "If scene/context is needed, did I leave a path back to the Slack permalink, raw log, or knowledge source instead of treating the summary as authoritative?"
+      ],
+      "expires_after": "Review after the next memory recall, cycle staging reuse, or cross_review/shared-reads summary judgment."
     }
   ]
 }

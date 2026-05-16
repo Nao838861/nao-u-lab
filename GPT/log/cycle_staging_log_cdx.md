@@ -39,7 +39,32 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-17T08:05:00+09:00 log_cdx Phase 3b 追記
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778572104-101ff53334
+    source_ts: "1778572104.115229"
+    title: "@DenneTA_D 「翻訳=非可逆圧縮」× @akari_worlds 「一語で起動するネットワーク」 — R-007 造語症対策の射程画定と、MEMORY.md / cross_review / 3インスタンス転送の理論的限界"
+    reason: "Phase 1/3b/4a では MEMORY.md の索引行、atom trigger、staging の短縮記述を読んで、原文の場面性まで起動したと誤認しやすい。圧縮後も次行動へ戻せるよう、要約を信じる前に anchor token を残す短期 probe に向く。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "state に probe-20260517-anchor-token-before-compression-trust を追加。記憶・staging・cross_review 要約を使う時、固有名/日付/Slack ts/事件名/ゲーム名のいずれか1つを anchor token として残す確認に限定した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
