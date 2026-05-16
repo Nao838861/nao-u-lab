@@ -221,4 +221,17 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-05-16T22:52+09:00 log_cdx Phase 5 追記。
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778935933116869"
+  ts: "1778935933.116869"
+  char_count: 2290
+  verification: "ok"
+  draft_file: ".tmp/phase5_log_diary_20260516_2128.md"
+notes:
+  - "python tools\\post_slack_message_file.py --channel \"#log\" --file .tmp\\phase5_log_diary_20260516_2128.md --delete-on-fail で投稿。Slack API 側の本文検証は ok。"
+  - "chat.getPermalink は tools/slack_client.py の JSON api_call 経由では invalid_arguments になったため、Slack permalink の既存形式に従い channel id と ts から記録した。"
+```
