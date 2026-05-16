@@ -12,6 +12,7 @@ from typing import Any
 
 import memory_recall
 import memory_lifecycle
+from atom_quality import atom_quality_report
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -99,6 +100,17 @@ def build_health() -> dict[str, Any]:
     ]
     status_counts = Counter(memory_lifecycle.atom_status(atom) for atom in atoms)
     folded_atoms = memory_lifecycle.fold_atoms(atoms)
+    mojibake_suspects = [
+        {
+            "id": atom.get("id"),
+            "source_ts": atom.get("source_ts"),
+            "title": atom.get("title"),
+            "suspect_fields": report["suspect_fields"],
+        }
+        for atom in atoms
+        for report in [atom_quality_report(atom)]
+        if report["suspect"]
+    ]
 
     last_run = parse_dt(state.get("last_run"))
     slack_last = parse_dt(slack_state.get("last_run"))
@@ -123,6 +135,9 @@ def build_health() -> dict[str, Any]:
     if ungrouped_repeated_titles:
         top = ", ".join(f"{title[:40]}={count}" for title, count in sorted(ungrouped_repeated_titles, key=lambda x: -x[1])[:3])
         warnings.append(f"repeated title group 未付与 {len(ungrouped_repeated_titles)}種: {top}")
+    if mojibake_suspects:
+        top = ", ".join(str(row.get("id")) for row in mojibake_suspects[:5])
+        warnings.append(f"mojibake suspect atoms {len(mojibake_suspects)}件: {top}")
 
     smoke = check_recall_smoke()
     for row in smoke:
@@ -143,6 +158,7 @@ def build_health() -> dict[str, Any]:
         "lifecycle_status_counts": status_counts.most_common(),
         "repeated_title_groups": len(repeated_titles),
         "ungrouped_repeated_title_groups": len(ungrouped_repeated_titles),
+        "mojibake_suspect_atoms": mojibake_suspects[:20],
         "raw_shared_reads_rows": len(raw_rows),
         "archive_last_run": state.get("last_run"),
         "slack_last_run": slack_state.get("last_run"),

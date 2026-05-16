@@ -11,6 +11,8 @@ from pathlib import Path
 from typing import Any
 
 import memory_ingest
+from atom_quality import append_quarantine, is_mojibake_suspect
+from atoms_fileformat import sync_per_file_atoms
 from slack_client import api_call, resolve_channel
 
 
@@ -19,6 +21,7 @@ MEMORY_DIR = ROOT / "memory"
 STATE_PATH = MEMORY_DIR / "slack_ingest_state.json"
 RECENT_PATH = MEMORY_DIR / "slack_recent_ingest.jsonl"
 RAW_SLACK_DIR = MEMORY_DIR / "raw" / "slack_api"
+QUARANTINE_PATH = MEMORY_DIR / "atom_quality_quarantine.jsonl"
 
 DEFAULT_CHANNELS = ["shared-reads", "all-nao-u-lab", "game-rights", "human-steering"]
 
@@ -120,6 +123,9 @@ def ingest_slack_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             continue
         atom["source"] = f"slack_api/{row.get('channel')}"
         atom["ingested_via"] = "slack_memory_ingest.py"
+        if is_mojibake_suspect(atom):
+            append_quarantine(QUARANTINE_PATH, atom, row, "mojibake_guard")
+            continue
         added.append(atom)
         seen_ts.add(ts)
 
@@ -133,6 +139,7 @@ def ingest_slack_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             encoding="utf-8",
             newline="\n",
         )
+        sync_per_file_atoms(all_atoms, memory_ingest.ATOMS_DIR)
         numeric_ts = []
         for atom in all_atoms:
             try:

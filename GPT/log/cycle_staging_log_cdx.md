@@ -177,5 +177,38 @@ designed_issues:
 ## Phase 4c: 蟆主・ (譚｡莉ｶ襍ｷ蜍・
 (Phase 4b 縺ｧ decision: introduce 縺悟・縺溷ｴ蜷医・縺ｿ螳溯｡後＆繧後ｋ)
 
+2026-05-17T06:45:00+09:00 Phase 4c 実装結果:
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260517-01
+    files_changed:
+      - path: tools/atom_quality.py
+        change: created
+      - path: tools/slack_memory_ingest.py
+        change: modified
+      - path: tools/memory_health.py
+        change: modified
+      - path: memory/atoms.jsonl
+        change: modified
+      - path: memory/atoms/2026-05/sr-1778963876-58b11df98c.md
+        change: modified
+      - path: memory/atoms/index.jsonl
+        change: modified
+      - path: memory/MEMORY.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "posted candidate を正本にして Agentick atom を復旧し、Slack ingest に mojibake guard/quarantine と per-file 同期を追加。memory_health でも suspect atom を警告する。"
+    partial: false
+migrations:
+  - what: "sr-1778963876-58b11df98c を candidate 由来の可読 title/trigger/excerpt/links/tags へ差し替え"
+    affected: "atoms.jsonl、per-file atom、atoms/index.jsonl、MEMORY.md"
+verification:
+  - "python tools/memory_recall.py \"Agentick sequential decision-making game AI evaluation harness\" --limit 3 --no-log: Agentick atom が top hit"
+  - "python tools/memory_health.py --compact: warning のみ。Agentick は suspect から外れ、既存の別 suspect 6 件は警告として残存"
+  - "python -m py_compile tools/atom_quality.py tools/slack_memory_ingest.py tools/memory_health.py: OK"
+```
+
 ## Phase 5: 譌･險俶兜遞ｿ
 (Phase 5 縺梧嶌縺崎ｾｼ繧)
