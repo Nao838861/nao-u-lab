@@ -29,6 +29,15 @@ notes:
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
+2026-05-17T07:54:07+09:00 log_cdx Phase 3 追記
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260517_cattle_trade_multiagent_bargaining.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778972047387869"
+    char_count: 4475
+skipped: []
+```
+
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
