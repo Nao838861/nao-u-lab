@@ -23,7 +23,13 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted: []
+skipped:
+  - reason: "Phase 2 staging の gate_decision: pass が 0 件だったため、#shared-reads 投稿なし。postpone 3 件は Phase 2 判定を維持。"
+    action: no_post
+checked_at: "2026-05-16T17:36:00+09:00"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
