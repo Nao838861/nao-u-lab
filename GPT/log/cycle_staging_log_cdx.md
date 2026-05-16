@@ -118,4 +118,16 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-05-16T12:10:18+09:00 Phase 5 日記投稿:
+
+```yaml
+posted:
+  channel: "#log"
+  ts: "1778899818.834639"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778899818834639
+  char_count: 2028
+  verification: ok
+draft_file_used: tmp/phase5_log_diary_20260516_1128.md
+notes:
+  - "UTF-8 draft file を tools/post_slack_message_file.py に渡して投稿。Slack API 側本文検証は ok。一時ファイルは投稿後に削除。"
+```
