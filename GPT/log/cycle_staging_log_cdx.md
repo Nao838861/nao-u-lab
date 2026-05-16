@@ -12,7 +12,18 @@
 - 追加 candidate: `memory/shared_reads_candidates/20260516_clarification_timing_long_horizon_agents.md` — 長期 agent 作業で clarification の種類ごとに有効なタイミングが違うことを測る paper。ゲーム制作 phase の確認ゲート設計に使える可能性。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-16T11:33:56+09:00 Phase 2 判定:
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260516_llm_evolutionary_collaborative_game_design.md
+  - memory/shared_reads_candidates/20260516_clarification_timing_long_horizon_agents.md
+fail:
+  - path: memory/shared_reads_candidates/20260516_games_to_learn_llms.md
+    reason: "LLM 原理をゲーム化する着想は有用だが、候補本文から評価設計・結果・限界が十分に取れず、4000字級の概要にすると一般論で埋まりやすい。"
+postpone: []
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
