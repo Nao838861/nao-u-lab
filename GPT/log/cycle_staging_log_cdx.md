@@ -122,6 +122,58 @@ recommendation:
 ## Phase 4b: 莉慕ｵ・∩讀懆ｨ・(譚｡莉ｶ襍ｷ蜍・
 (Phase 4a 縺・needs_design: true 縺ｮ蝣ｴ蜷医・縺ｿ螳溯｡後＆繧後ｋ)
 
+2026-05-17T06:22:00+09:00 Phase 4b 記憶階層 仕組み検討:
+
+```yaml
+designed_issues:
+  - issue_id: ISS-4A-20260517-01
+    problem_restatement: "shared-reads の最終投稿は Slack から atom 化されるが、現状は一部の日本語本文が `?` 化して per-file atom / index / MEMORY に入る。candidate には可読な中粒度メモが残っているため情報は失われていないが、通常の recall 経路では最新の評価軸へ到達しにくい。問題は単なる表示乱れではなく、candidate -> posted Slack -> atom -> recall の導線品質の劣化。"
+    alternatives:
+      - name: "案A: posted candidate を正本にした atom 復旧パス"
+        sketch: "shared_reads_candidates の frontmatter にある posted.ts と permalink を使い、対応する Slack atom を見つける。atom の title/excerpt/body が mojibake または `?` 過多なら、candidate の title/raw_excerpt/why_relevant_to_games から per-file atom と index を再生成する。"
+        pros:
+          - "今回の破損 atom を deterministic に直せる"
+          - "Slack API の文字化け原因をすぐ特定できなくても recall 導線を回復できる"
+          - "candidate を既存の中粒度正本として活かすため、手戻りが小さい"
+        cons:
+          - "Slack 投稿本文そのものの完全復元ではなく、candidate 由来の要約復元になる"
+          - "posted candidate が存在しない古い atom には効かない"
+          - "復旧基準を緩くしすぎると、人手で意図した atom を上書きする危険がある"
+        migration_cost: medium
+      - name: "案B: ingest 時の mojibake guard + quarantine"
+        sketch: "slack_memory_ingest の atom 書き込み直前に、タイトル・本文の `?` 密度、U+FFFD、典型的 mojibake 断片を検査する。閾値を超えた場合は通常 atom へ昇格せず quarantine 記録に回し、candidate/permalink を evidence として残す。"
+        pros:
+          - "再発防止として強い"
+          - "破損した atom が recall index に入る前に止められる"
+          - "原因調査と復旧対象の一覧化を分離できる"
+        cons:
+          - "今回すでに壊れた atom の復旧には別手段が必要"
+          - "英数字・記号中心の記事で誤検知しない閾値設計が必要"
+          - "quarantine 運用を増やすため、定時サイクルの確認項目が少し増える"
+        migration_cost: medium
+      - name: "案C: recall 側で candidate fallback を常時混ぜる"
+        sketch: "memory_recall の検索対象に posted candidate を常時追加し、atom が壊れていても candidate 本文から検索できるようにする。atom の復旧は後回しにして、検索結果だけを厚くする。"
+        pros:
+          - "検索体験の回復が早い"
+          - "candidate の中粒度情報を直接使える"
+          - "既存 atom を触らないため破壊的変更が少ない"
+        cons:
+          - "壊れた atom/index/MEMORY は残り続ける"
+          - "candidate と atom の重複結果が増え、recall のノイズが上がる"
+          - "ingest 品質の問題を検索側で隠す形になり、原因が見えにくくなる"
+        migration_cost: low
+    recommended: "案A + 案B"
+    recommended_reason: "今回の目的はゲーム制作へ使う記憶導線の回復なので、まず posted candidate を正本にした復旧で最新 shared-reads の atom を直す必要がある。ただし復旧だけだと次回も同じ破損が入り得るため、ingest 時の guard/quarantine を同時に最小導入するのが失敗時コストを抑えやすい。案Cは即効性はあるが、壊れた正本を温存して recall ノイズを増やすため今回は主案にしない。"
+    decision: introduce
+    decision_reason: "Phase 4a の issue は再現例・影響範囲・復元元が揃っており、postpone する理由は薄い。変更対象は shared-reads posted candidate と Slack atom の接続部に限定でき、既存の per-file atom 移行方針とも矛盾しない。Phase 4c では小さく復旧 + guard を入れ、原因調査の深掘りは quarantine evidence に委ねる。"
+    outline_for_4c:
+      - "posted.ts / permalink から shared_reads_candidates と sr-* atom を対応付ける復旧対象リストを作る"
+      - "title/body の `?` 密度や mojibake 断片を検査する軽量判定を既存 ingest/health 系のどこに置くか決める"
+      - "ISS-4A-20260517-01 の Agentick atom を candidate 由来の可読 title/excerpt で復旧し、per-file atom と index の整合を取る"
+      - "guard に引っかかった投稿は通常 atom に混ぜず、復旧元 candidate/permalink/source_ts を staging または quarantine 記録へ残す"
+      - "memory_recall で Agentick sequential decision benchmark が上位に出ることを smoke test する"
+```
+
 ## Phase 4c: 蟆主・ (譚｡莉ｶ襍ｷ蜍・
 (Phase 4b 縺ｧ decision: introduce 縺悟・縺溷ｴ蜷医・縺ｿ螳溯｡後＆繧後ｋ)
 
