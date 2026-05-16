@@ -92,7 +92,56 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+2026-05-17T05:03+09:00 log_cdx Phase 4b 仕組み検討。
+
+```yaml
+designed:
+  - issue_id: ISS-4A-20260517-01
+    problem_restatement: "MEMORY.md の Tag Entry Points と atoms 全体で `identity` / `operation` / `knowledge` / `memory` / `game-design` のような broad tag が強すぎる。ゲーム制作時に `shmup の弾幕評価`、`playtest harness`、`素材生成 pipeline` のような具体タスクから入ると、代表 atom が広域タグ側に吸われ、次の制作へ使える判断材料へ短時間で降りにくい。"
+    alternatives:
+      - name: "既存 task lens index の入口強化"
+        sketch: "既存の `memory/game_memory_task_lens_index.md` を正本にし、broad tag から直接探す前に lens へ降りるルールを少し明確化する。今回の issue は新 lens 追加ではなく、既存 lens の `使う場面` / recall query / 代表リンクの不足として扱う。"
+        pros:
+          - "既存資産と目的が一致しており、新しい構造を増やさずに済む。"
+          - "Phase 4c で小さく導入でき、失敗時は index の数行を戻すだけで済む。"
+          - "ゲーム制作タスクから atom へ降りる導線を人間可読な形で残せる。"
+        cons:
+          - "手動更新なので、代表リンクが古くなる可能性がある。"
+          - "atoms 全体の検索ランキングそのものは変わらない。"
+          - "lens に入らない新規タスクでは再び broad tag に戻る。"
+        migration_cost: low
+      - name: "atom tag vocabulary の細分化"
+        sketch: "`game-design` や `memory` の下に `shmup-evaluation` / `asset-pipeline` / `playtest-harness` などの細タグを足し、ingest / recall のタグ粒度を上げる。"
+        pros:
+          - "検索 ranking に直接効く可能性がある。"
+          - "長期的には機械処理しやすい分類になる。"
+          - "タグ統計の偏りを数値で追いやすい。"
+        cons:
+          - "タグ増殖と命名揺れのリスクが高い。"
+          - "既存 1200 件級 atom の backfill が必要になりやすい。"
+          - "今回の Phase 4b/4c の小改善としては距離が大きい。"
+        migration_cost: high
+      - name: "derived task-lens index の自動生成"
+        sketch: "`memory/atoms/index.jsonl` と candidate metadata から、lens 別の代表 atom を自動抽出する view を作る。Phase 4a は broad tag 偏りを検出したら生成 view を参照する。"
+        pros:
+          - "手動 index の陳腐化を減らせる。"
+          - "atoms per-file 移行後の index.jsonl を活かせる。"
+          - "代表 atom の更新頻度を上げられる。"
+        cons:
+          - "抽出基準の設計が必要で、今は broad tag 偏りを再生産しやすい。"
+          - "生成物が増えるため Phase 4a/4c の保守面が重くなる。"
+          - "実装前に、人間が読む lens の粒度をもう少し安定させる必要がある。"
+        migration_cost: medium
+    recommended: "既存 task lens index の入口強化"
+    recommended_reason: "今回の問題は atom 形式や検索エンジンの欠陥というより、広域タグから具体タスクへ降りる入口の運用不足。既に `game_memory_task_lens_index.md` が同じ目的で存在するため、そこを Phase 4a/3b の issue から少し育てるのが最短で、失敗時の戻しコストも低い。細タグ化や自動生成は効果があり得るが、現時点ではタグ増殖・backfill・基準未確定のコストが大きい。"
+    decision: introduce
+    decision_reason: "既存 index の軽量更新なら、Phase 4c でコードを書かずに導入でき、次回以降のゲーム制作タスクで `broad tag -> lens -> representative atom/candidate -> recall query` の経路を明示できる。現状維持だと Phase 4a が同じ broad tag 偏りを繰り返し検出する可能性が高い。"
+    outline_for_4c:
+      - "`memory/game_memory_task_lens_index.md` の使い方に、Phase 4a で broad tag 偏りを検出した時は既存 lens の `使う場面` / recall query / 代表リンクへ落とす、という短い運用行を追記する。"
+      - "今回の issue を受け、既存 lens のうち `Playable / Headless 評価`、`Balance / Rule Space`、`Generation / Co-creation` のどこで `shmup 弾幕評価`、`playtest harness`、`素材生成 pipeline` を受けるかだけ点検する。新 lens は原則追加しない。"
+      - "必要な場合のみ、代表リンクを 1-2 件差し替えまたは追記する。網羅リスト化しない。"
+      - "Phase 4c の検証は `game_memory_task_lens_index.md` を読んだ後に該当 recall query を 1 回だけ実行し、broad tag 直行より具体 atom に降りられるかを staging に記録する。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
