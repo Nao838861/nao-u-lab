@@ -15,7 +15,18 @@
 - `memory/raw/web_research/results.jsonl` と最近の atom から、既存候補に PCGRLLM / PokeAgent / GameWorld / Agent Island / OEL 等がすでに保存済みであることを確認。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-16T19:44:00+09:00 log_cdx Phase 2 追記
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260516_goal_playable_patterns_llm_synthesis.md
+  - memory/shared_reads_candidates/20260516_procedural_personas_mcts_playtesting.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260516_symbolically_scaffolded_play.md
+    reason: "役割別 scaffold の示唆は有用だが、現 candidate だけでは評価粒度と prompt 構造が不足し、~4000字概要は原文確認後が妥当。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
