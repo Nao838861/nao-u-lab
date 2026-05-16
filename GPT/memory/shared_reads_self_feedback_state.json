@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-05-16T17:36:12+09:00",
+  "updated_at": "2026-05-16T19:43:26+09:00",
   "reviewed_source_ts": [
+    "1778856008.709709",
     "1778913399.208889",
     "1778782281.755979",
     "1778782280.911589",
@@ -22,6 +23,23 @@
     "1778899287.487259"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-16T19:43:26+09:00",
+      "id": "sr-1778856008-150c38edf7",
+      "source_ts": "1778856008.709709",
+      "title": "LLM Game Rule Understanding Through Out-of-Distribution Fine-Tuning",
+      "decision": "adopt_probe",
+      "reason": "ゲームプロトタイプを LLM に読ませる前に、感想や改造案へ飛ばず、明示ルールを状態遷移へ適用できているかを測る必要がある。この atom は legal 判定と next state 判定を分け、ID/OOD split と回答理由で失敗原因を分類する設計が、次の rule-understanding harness に直接使える。恒久ルールや評価表にはせず、次に仕様レビュー・turn/grid/resource 系 prototype を扱う時の短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-16T17:36:12+09:00",
       "id": "sr-1778913399-5704a3b5b3",
@@ -574,6 +592,18 @@
         "feedback は総評ではなく、生成物や playtest log の具体的なズレ 1 点に絞り、次 iteration で何を過剰報酬化・過少報酬化していたかを確認できる形にしたか。"
       ],
       "expires_after": "次に PCG、レベル生成、または game prototype の評価関数・probe を設計する 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260516-progression-question-harness",
+      "created_at": "2026-05-16T19:43:26+09:00",
+      "source_ts": "1778856008.709709",
+      "scope": "next game prototype specification review / turn-based, grid, card, or resource rule-understanding check",
+      "questions": [
+        "LLM にゲーム仕様のレビューや改造案を出させる前に、状態・行動・期待される合法性・期待される次状態を持つ progression question を最小 3-10 問作ったか。",
+        "評価を legal 判定、next state 判定、reason の3つに分け、合法性だけ当たって状態遷移を壊す失敗を見える形にしたか。",
+        "問題を既存ルールに近い ID と、例外条件・新 mechanic・未学習 variant に近い OOD に分け、LLM の総評をそのまま採用せず、どの分布で壊れたかを staging に残したか。"
+      ],
+      "expires_after": "次にゲーム仕様レビュー、turn/grid/resource 系 prototype、または LLM に mechanics 改造案を出させる 1 回で見直す。"
     }
   ]
 }

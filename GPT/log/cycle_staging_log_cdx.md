@@ -42,7 +42,34 @@ skipped:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-16T19:43:26+09:00 log_cdx Phase 3b 追記
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778856008-150c38edf7
+    source_ts: "1778856008.709709"
+    title: "LLM Game Rule Understanding Through Out-of-Distribution Fine-Tuning"
+    reason: "未 review の score>=10 shared-reads のうち、game-design / harness / evaluation / agent / operation / memory にまたがり、次のゲーム仕様レビューで LLM を mechanics reviewer として使う前の失敗検出に直結するため。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "state に progression question harness probe を追加。ゲーム仕様レビュー前に legal / next state / reason を分け、ID/OOD の壊れ方を記録する短期確認に留めた。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
