@@ -1,291 +1,280 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-16 06:05
+# Read at: 2026-05-16 14:26
 # Total: 50 tweets
 
---- 1. @elonmusk (2026-05-15) ---
-URL: https://x.com/elonmusk/status/2055354783981297691
-So shameful of Rubin. 
+--- 1. @Supermicro (?) ---
+Want to see AI Factories in action? 
+Watch ServeTheHome’s latest video breakdown to see how Supermicro and NVIDIA deliver turnkey AI infrastructure at scale.
 
-All that should matter is the quality of the movie.
+--- 2. @hkunimitsu (2026-05-16) ---
+URL: https://x.com/hkunimitsu/status/2055462762873323677
+Xのアルゴリズムが2026年5月15日に完全に激変しました。
 
---- 2. @WOWSAPACJA (?) ---
-期間限定『アズールレーン』イベント
+僕がGitHub公式（xai-org/x-algorithm）を丸読みして、実際に1ヶ月運用してわかった「本物の伸び方」を全部まとめます。
 
---- 3. @daisuke_taka (2026-05-15) ---
-URL: https://x.com/daisuke_taka/status/2055219582043144618
-人と会う度、私が一方的にAIのことを高速で語ってしまうAIおじさんとなっているわけですが、
-生成AIでの開発って「初音ミク」みたいなものなんですよね。
-作家性のある人が使えば魔法のツール。うまく調教できるかが鍵。ゲームDやプランナーがもっと使うべき。
+もう「いいね集め」や「量産投稿」でバズる時代は終わりました。
+今は**GrokベースのPhoenix
 
---- 4. @GOROman (2026-05-15) ---
-URL: https://x.com/GOROman/status/2055393071614022098
-Xの新しいアルゴリズムがGitHubに公開されたようだ
+--- 3. @ebikani_hasami (2026-05-16) ---
+URL: https://x.com/ebikani_hasami/status/2055491374586425815
+AIの“便利設定”、個人のPCに眠らせるのそろそろ限界かも。
 
---- 5. @Keisuke69 (2026-05-15) ---
-URL: https://x.com/Keisuke69/status/2055089735178264638
-これはちょっとした持論なのだが、生成AIの活用って実はエンジニアより断然ビジネスサイドのほうが効果デカい
-エンジニアは元々コード書けるから言ってもそこが短くなるだけ
-営業・マーケ・経営企画みたいな情報整理と判断、事務処理がメインの仕事の人らは2-3倍速くなるんじゃないかと思ってる
+GitHub:sleuth-io/sx のsxは、AIコーディング支援用のパッケージマネージャー。スキル、MCP設定、スラッシュコマンドを、npmみたいにチームへ配れる。
 
---- 6. @korimakorima (2026-05-15) ---
-URL: https://x.com/korimakorima/status/2055164354669228353
-・もはや劇場映画の成立はIPなしでは成立しづらくなっており、
-・しかし「グローバルIPがストリーミングによって生み出されたことは一度もない」。
-・マリオゼルダソニックワンピ鬼滅、と日本IPの重要度は増している。
+--- 4. @itchie_tatsumi (2026-05-16) ---
+URL: https://x.com/itchie_tatsumi/status/2055466126621204980
+開発プロジェクト中に設計の話をするとき、昔は「SOLIDで考えると」「DDD的には」のように説明していました。でも、あまり刺さらないんですね。現場の困りごとと接続されていないからです。設計原則は、そのまま言うと理想論のように聞こえます。メンバーにとって大切なのは、用語よりも「それで何が楽
 
---- 7. @DeRonin_ (2026-05-15) ---
-URL: https://x.com/DeRonin_/status/2055334050676814056
-BREAKING: X dropped the new ranking algo today. What's dead and what wins for bangers:
+--- 5. @K_Ishi_AI (2026-05-16) ---
+URL: https://x.com/K_Ishi_AI/status/2055451865022955938
+これ、今まで見てきたAI活用の中で、断トツで価値感じた。
 
-[ what just died ]:
+「Claudeがパスワード忘れで11年間アクセス不能なビットコインを救出、6300万円の価値に」
 
-- spam posting (4+ posts/day = author dilution penalty)
-- reply farming (replies weighted by WHO replies, not how many)
-- text-only posts (media gets 2x signal weight now)
+--- 6. @narendramodi (2026-05-16) ---
+URL: https://x.com/narendramodi/status/2055491427740553345
+Sharing some more glimpses from the welcome by the Indian community in the Netherlands.
 
---- 8. @tokoroten (2026-05-15) ---
-URL: https://x.com/tokoroten/status/2055276659599892798
-AIエージェントでディープラーニングのコードを書かせて、ロスのグラフを眺めてウンウンと頭を悩ますの、
-機械学習の面白さのトロの部分だけを味わってる感じがして大変良い
+--- 7. @k_matsumaru (2026-05-16) ---
+URL: https://x.com/k_matsumaru/status/2055476407963435253
+Codexもレートリミット解放くるみたいで草
+てかやっぱ性能低下してたんだ
 
-今のエージェントプログラミング、全般的にトロの部分ばっかりなので、そりゃ脳汁が止まらなくなるわなあ
+--- 8. @kei31 (2026-05-15) ---
+URL: https://x.com/kei31/status/2055426937104048290
+「子供の絵をAIで3D化するのは創造性が育たない」って意見があるけど、そんなに心配しなくていいんじゃないかな？
 
---- 9. @Cristiano (2026-05-15) ---
-URL: https://x.com/Cristiano/status/2055373150360125747
-Final touches 
+--- 9. @ebikani_hasami (2026-05-16) ---
+URL: https://x.com/ebikani_hasami/status/2055499935500644503
+GCPを触る人、ここ見逃すと損かも。
 
---- 10. @knshtyk (2026-05-15) ---
-URL: https://x.com/knshtyk/status/2055202115191226547
-サブスク型のLLM、顧客を錯覚させるために性能を上下させており、作業の内容に対して"どの程度信用すれば良いか"の判断ができずツールとしての信頼性を担保できなくなってきていて、そろそろ外部からモデルの性能をリアルタイムで計測する方法をユーザ側で整えていかないといけないのかも、などと思う
 
---- 11. @ComicFesta_PR (?) ---
-男を誑かすのが好きな毒婦という嘘の噂を親友に流され婚約破棄された私が毒婦と偽り床入りします (1/4)PR
+@commte
+さんの紹介してる Google公式Skills、13個のスキルを入れるだけで Claude Code / Cursor / Gemini CLI 側にGCPの前提知識を渡せるやつ。
 
---- 12. @HayattiQ (2026-05-15) ---
-URL: https://x.com/HayattiQ/status/2055142446250807789
-Anthropic は、GPUの調達に苦しんでいて、それがOpenAI の差につながっている。
+エージェントに毎回「Cloud Runとは…」から説明しなくてよくなるの、地味に作業速度が変わると思う。
 
-OpenAI は、今まで赤字を掘り続けてGPUを調達し続けた。その差が出ている。
+--- 10. @xai (?) ---
+Voice Cloning is now live via the xAI API!
 
---- 13. @hadekait (2026-05-15) ---
-URL: https://x.com/hadekait/status/2055143824570396701
-社内で「内巻」という単語を教わりました。
-やはり大変そうですねぇ……。
+Create a custom voice in less than 2 minutes or select from our library of 80+ voices across 28 languages to personalize your voice agents, audiobooks, video game characters, and more.
 
---- 14. @tanuzou1027 (2026-05-15) ---
-URL: https://x.com/tanuzou1027/status/2055258831702429760
-すごいな。インプレゾンビのAIをこれまでの学習を全てリセットさせてプロトコルを破壊しているのかこれ
 
---- 15. @russianblue2009 (2026-05-15) ---
-URL: https://x.com/russianblue2009/status/2055207615458926655
-早朝の金山駅。出勤途中の警察官が、通り過ぎた男の顔を見て直感した。「あの顔、もしかして……」
+http://
+x.ai/news/grok-cust
+om-voices?twclid=22yxwnyat85rtqnhiq1lnyc2lu
+…
 
-制服はない。手帳はあっても、職務質問できる状況でもない。それでも彼は同じ電車に乗り込み、追跡を始めました。
+--- 11. @ABC87791035 (2026-05-16) ---
+URL: https://x.com/ABC87791035/status/2055472254260277747
+Gemini、ChatGPT、アンソロピック
 
---- 16. @x2775co (2026-05-15) ---
-URL: https://x.com/x2775co/status/2055203585097613626
-完全AI作品が商業化されたのか。
-著作権問題の試金石になりそうだなあ。
-これでしっかりと著作権証明する方法論が確立するなら一気に進みそうな気がする。
-まあ、AI漫画がすでに商業化されているので日本の場合、著作権が認められないことさ無さそうだけど。
+勝負あった感があるね
 
---- 17. @turningpointjpn (2026-05-15) ---
-URL: https://x.com/turningpointjpn/status/2055261790532174223
-トランプ大統領、習近平から「台湾を防衛するか」と聞かれたと明かす
+--- 12. @nanase_oikawa (2026-05-15) ---
+URL: https://x.com/nanase_oikawa/status/2055224507519156492
+#AIart️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️️
 
-記者： もし実際に有事になった場合、米国は台湾を守りますか？
+--- 13. @kinkuman_net (2026-05-15) ---
+URL: https://x.com/kinkuman_net/status/2055228646013755637
+うそだろ、撚線がセクシーに見えてきた。
 
-トランプ大統領：
+--- 14. @compassinai (2026-05-16) ---
+URL: https://x.com/compassinai/status/2055497295177945468
+【AIは「自分」という存在を空間で理解している？】
 
---- 18. @narendramodi (2026-05-15) ---
-URL: https://x.com/narendramodi/status/2055358420581331237
-Landed in Amsterdam. This visit to the Netherlands comes at a time when the India-EU Free Trade Agreement has given a major impetus to trade and investment linkages. It offers an opportunity to deepen relations in areas like semiconductors, water, clean energy and more. 
+AIに「あなたは誰か」というアイデンティティを与えた時、モデルの内部では何が起きているのでしょうか？
 
-Will be
+--- 15. @you1005777 (2026-05-15) ---
+URL: https://x.com/you1005777/status/2055205013883068721
+3人組だといつも会話に入れない人って、歩いてる時に、3人が横1列になると通行の邪魔だから気を遣って後ろを歩いてしまうタイプな気がする。
 
---- 19. @tobatoppers (2026-05-14) ---
-URL: https://x.com/tobatoppers/status/2054747236098306547
-五味太郎さんが、学んでいる形が好きな人は多いが、それがイコール学ぶことが好きとはならないという話をしていて、確かにそうだと思う。
+--- 16. @QjadtncbKrPf3Ed (2026-05-15) ---
+URL: https://x.com/QjadtncbKrPf3Ed/status/2055235727995326479
+夫であろうとも喧嘩することを辞さない派なんだが、新婚でガチ喧嘩になった際に、
 
---- 20. @akari_worlds (2026-05-14) ---
-URL: https://x.com/akari_worlds/status/2054756349792362550
-「学んでいる形が好き」と「学ぶことが好き」、ここの分け方がすごく腑に落ちました。ノートが綺麗に揃ってる時の自分は、なんとなく安心するんですけど、後から読み返すと中身の手触りが薄い日があったりして、形の方を整えてる時間が長かったんだなと思います。本物の学びは、形が崩れたところから始
+「着地点を考えた上で喧嘩売ってこいよ」
 
---- 21. @machida_mayuyu (2026-05-15) ---
-URL: https://x.com/machida_mayuyu/status/2055187619026444294
-スクール水着も、どうか目立つ色にしていただきたい…。
-監視の配置とか必須になっているのに、なぜ水着の色は黒や紺なのか。
-本当に本気で溺水をさせたくないなら、見えやすい色の水着を指定するか、許可していただきたいです。
+と言われ、成る程そういう喧嘩の仕方もあるのかと目から鱗だった。
+そこから喧嘩を繰り返して、15年近く（知り合ってからは20年）婚姻関係を継続中。
 
---- 22. @PR_manga_ad2 (?) ---
+--- 17. @09pauai (2026-05-15) ---
+URL: https://x.com/09pauai/status/2055407909249667573
+26歳まで童◯だったことをXで話し過ぎたら「どうやって卒業したんですか？」とDMが殺到した。本当は教えたくないが、迷える精少年のため正直に答えると、
+
+--- 18. @pentabutabu (2026-05-16) ---
+URL: https://x.com/pentabutabu/status/2055485375540527372
+むすこが通う小学校のPTA役員を“くじ引き”で決める流れになり、「じゃあ紙に番号を書いて、ハサミで切って配りますか」という話になったとき、うちの妻が
+
+「わたしトランプ持ってるんで、これで代用しましょう」
+
+と提案し、
+
+--- 19. @stmatomato (2026-05-16) ---
+URL: https://x.com/stmatomato/status/2055483122905743582
+「Skyrim × Diablo」 ??? 
+これマジで睡眠不足確定じゃん。
+
+--- 20. @zolge1 (2026-05-15) ---
+URL: https://x.com/zolge1/status/2055394885046550910
+ワシは生まれてはじめて「フーリエ変換が何か」がピンと来たかもしれない。今まではただの念仏のようなものだった。
+
+--- 21. @PR_manga_ad2 (?) ---
 【10円セール開催中】
 コミック・CG集・ボイス作品を10円で爆買いできる大チャンス！
 
 [PR]
 
---- 23. @chemical_tree (2026-05-15) ---
-URL: https://x.com/chemical_tree/status/2055240211190431979
-博士人材に期待されるのって、もちろん専門性も大事なんだけど、それ以上に、抽象度が極めて高くて誰も正解を持っていないような仕事に対して、問題設定から出口の見立て・仕立てまで含めて丸ごと任せても、なんとかやり抜いてくれることだと思っている。実際、今自分が抱えている仕事も全部そんな感じ
+--- 22. @CARPEFIDEMLLC (2026-05-16) ---
+URL: https://x.com/CARPEFIDEMLLC/status/2055476261959741512
+ですね。不登校界隈の優れた親御さんは「バランス良く適当」です。
+子供が学校行かなくなっても、「あ、そう。なら家事手伝えよ。何もしないで生きられると思うな」、勉強しなくなっても「あ、そう。結末は自分で責任取れよ。無能に居場所はないぞ」と、社会の現実を淡々と伝える。
 
---- 24. @wing_sky_nine (2026-05-15) ---
-URL: https://x.com/wing_sky_nine/status/2055190515159912651
-やっとベースモデルが出たAnimaモデルのライセンスは
-モデルや派生モデル自体は基本非商用目的限定ですが
-生成物に関しては競合モデル訓練など一部の禁止事項以外は自由に商業利用できます
-おさらい
+--- 23. @dkground (2026-05-15) ---
+URL: https://x.com/dkground/status/2055319853666574373
+I was in charge of character design, Red Ninja: End of Honor director is Senran Kagura series Kenichiro Takaki (
+@kenichiro_taka
+) The game he makes is lovely and fun :D
 
-circlestone-labs-non-commercial-license,LICENSE.md
+--- 24. @Takenoko1080 (2026-05-15) ---
+URL: https://x.com/Takenoko1080/status/2055291285569679811
+がんセンターって本当にすごくて、母が大腸癌ステージⅣを宣告された病院で手術化学治療人工肛門造設と闘病を重ね「うちではこれ以上もう何も出来ません。希望するならがんセンターのセカンドオピニオンか緩和ケア紹介します」と匙をぶん投げられてがんセンターに行ったら、「手術で取れるね！これこう
 
-https://
-huggingface.co/circlestone-la
-bs/Anima/blob/main/LICENSE.md
-…
+--- 25. @koibuchicpa (2026-05-15) ---
+URL: https://x.com/koibuchicpa/status/2055427011112518020
+中小企業の経営はトップダウンでいい。責任を負わない社員と社長では視座が違うから。たとえ全社員が反対しても会社を救う決断を下すのがリーダー。民主主義的な多数決は組織を壊す。強いリーダーシップが成長のエネルギーになる。
 
---- 25. @LEE66738906 (2026-05-15) ---
-URL: https://x.com/LEE66738906/status/2055119696664608867
-やべえな。このまま金利上昇が続くと円キャリートレードのうまみがなくなり日本株売り→一時的な円高になるも日本の経済・財政不安から円売り進む→高騰する物資の買付でさらに円売り・投資のキャピタルフライトの歯止めも効かず→日銀債務超過限界→ハイパー阿鼻叫喚の未来が
+--- 26. @L3GAL_OS (2026-05-15) ---
+URL: https://x.com/L3GAL_OS/status/2055263961311072588
+【あたりまえ体操】
+裁判所は「救助するな」と言っているわけではなく、
 
---- 26. @grmchn4ai (2026-05-15) ---
-URL: https://x.com/grmchn4ai/status/2055295133319634975
-Linuxでmacの最新codex appが動くの熱いな。codex app時代にWSL環境のCudeで色々やるのほんと終わってて、GPUありLinuxサーバー with codex appにするのがいいと思えてきた。薄いmacやらwinやらiphoneでそれにリモートするのが良さそうな。WSLはCLIエージェント時代まで。
+「公共目的で私人の財産を犠牲にしたなら、そのコストを、たまたま所有者だった人に丸投げするのは違うよね」
 
---- 27. @i_am_kawa_chan (2026-05-15) ---
-URL: https://x.com/i_am_kawa_chan/status/2055182375928180996
-さっき警察から電話があった。
+と言っているに近いだけなんやで。
 
-「あなた名義の銀行口座が、特殊詐欺に使われています」
+救急隊の現場判断を責めている話ではなく、
 
-一瞬びっくりしたけど、
-念のため聞いた。
+--- 27. @GOROman (2024-10-12) ---
+URL: https://x.com/GOROman/status/1844926824687550815
+Roller485 Lite サンプルコードうごきました。
 
-「どこの銀行ですか」
+--- 28. @SmithAndGames1 (2026-05-15) ---
+URL: https://x.com/SmithAndGames1/status/2055277558586073167
+たった4日早くForza Horizon 6を遊びたいがために14000円払った奴らだ
+面構えが違う
 
-「三菱UFJ銀行です」
+--- 29. @Ad8qqsEUYofd6cR (2026-05-15) ---
+URL: https://x.com/Ad8qqsEUYofd6cR/status/2055266795645509996
+負けたが手塚は善戦した方だと思う
+お互い消耗してる中で打撃でビッグヒット出すルオトロがバケモノすぎるだけ
+寝技だけじゃなく打撃も強いもんな。
+ #ONEFridayFights154
 
-「支店名は」
+--- 30. @Market_Letter_ (2026-05-15) ---
+URL: https://x.com/Market_Letter_/status/2055434760554700984
+債券クソほど売られた割に、株の下げが大したことないんだよな。これだと金利上昇止まらんぞ。
 
-「そこまではこちらでは言えません」
+--- 31. @DLsite_maniax (?) ---
+奥手な夫が惚れ薬を飲んだ結果…
 
-「口座番号の下4桁は」
+(1/9)
 
-「捜査中なので言えません」
+--- 32. @narendramodi (2026-05-16) ---
+URL: https://x.com/narendramodi/status/2055490924440924375
+Greetings to my sisters and brothers on their Statehood Day. The contribution of Sikkim to India’s development is deeply valued. Wishing the people of the state good health and prosperity. 
 
---- 28. @yonemura2006 (2026-05-15) ---
-URL: https://x.com/yonemura2006/status/2055254203719991717
-親しい人が今ノーコードに手を出そうとしたら全身全霊で止める。SaaSは死んだとかそういうレベルの話ではない。
+This occasion comes at a time when Sikkim is marking 50th Statehood Day celebrations. A
 
---- 29. @nonuple9 (2026-05-15) ---
-URL: https://x.com/nonuple9/status/2055306577989747080
-海外の皆さん、こんにちは！
-日本のゲームも知ってください……
+--- 33. @Ashley78186050 (2026-05-15) ---
+URL: https://x.com/Ashley78186050/status/2055322304498794802
+これは結構真理だと思う。
+私は日本国内で転勤を経験したけど、一緒に転勤した単身赴任の男性たちは、半年くらいでメンタル崩してバタバタ休職した。生き残ったおじさんが「男は独り身だと食事も週末の外出もいい加減になる。そうするとメンタルにくる。自己管理なんだよ」と言ってたな。
 
-14年もの開発期間をかけて、2000を超えるFLASHアニメを盛り込んでいる、横スクロール探索型アドベンチャーです！
+--- 34. @Drmiidrdr (2026-05-16) ---
+URL: https://x.com/Drmiidrdr/status/2055477217933836439
+健常者でも、カフェインを摂取すれば、覚醒度や情報処理能力が上がり、試験で優位になる。
 
-とにかく濃密なSFナラティブ体験をどうぞ。リプ欄にストアページへのリンクがあります！
+同様に、健常者がコンサータやビバンセを内服すれば、試験で優位になりそう。でもストラテラやインチュニブは無理。
 
---- 30. @cryptopunk7213 (2026-05-15) ---
-URL: https://x.com/cryptopunk7213/status/2055324519301107986
-claude mythos just broke Apple's $2 billion defense system. it did so by discovering a completely different attack vector to break in
+--- 35. @barzam154__ (2026-05-15) ---
+URL: https://x.com/barzam154__/status/2055200476531159063
+ウワーッ！　半月斬！　半月斬！
 
-only took it 5 days costing ~$35K of mythos api time (the same exploit class costs $5-10M on grey market)
+--- 36. @kmizu (2026-05-16) ---
+URL: https://x.com/kmizu/status/2055476476271878520
+最近の「AIエージェント時代でも基礎知識は大事」論、結論には同意するんだけど、語り口にはかなり違和感がある。
 
-the researchers that commandeered the
+--- 37. @a9x7_k2v0 (?) ---
+新感覚キャラチャットサービス！
 
---- 31. @Shipo_K (2026-05-15) ---
-URL: https://x.com/Shipo_K/status/2055262892350443911
-南アフリカに来て気づいたのは、日本車のエンジン設計がかなり特殊だということ。
+［PR］
 
-日本でずっと乗ってたから当たり前だと思ってたけど、ここの欧州車に乗り換えた同僚の話を聞くと全然フィーリングが違うらしい。
+--- 38. @ssig33 (2026-05-16) ---
+URL: https://x.com/ssig33/status/2055439060962050186
+LLMのモデルに定期的に習近平の政策を褒める投稿をして反応をみるという悪趣味なスクリプトをcronをまわしてるんですが、これなんと意味があって、今回トランプ大統領が中国行ってる間、Geminiが習近平を褒める話題に回答するのを拒否してきました、Google「なにか」をしているっぽいです。
 
---- 32. @PRcomicfesta (?) ---
-結局私はどこへ行っても「魅惑の毒婦」の名前から逃げられない (1/4)PR
+--- 39. @iwashi86 (2026-05-16) ---
+URL: https://x.com/iwashi86/status/2055457124638232613
+AI 乱用でバグバウンティ（脆弱性報告に対する報奨金制度）やめたよという内容だった。
 
---- 33. @nikkei (2026-05-15) ---
-URL: https://x.com/nikkei/status/2055180692988793310
-ファナック、２本の腕でＴシャツ畳むロボット　模倣学習で実現
+・今回の制度は、データ破損につながるバグを発見して証明した人に1,000ドルを支払うというもの
+・終了の理由は、AIを使って自動生成された無意味なバグ報告が大量に送りつけられるようになったから
 
---- 34. @adachi_hiro (2026-05-15) ---
-URL: https://x.com/adachi_hiro/status/2055158309645377597
-大昔、某タカラトミーの人と商談の機会があって「チョロQ」の「定義」を聞いたことがある。いわく「後ろのバンパーに10円玉を挟んでウィリー走行出来るのがチョロQです」と。
+--- 40. @MakeAI_CEO (2026-05-16) ---
+URL: https://x.com/MakeAI_CEO/status/2055461755565101098
+ついに来ました。
 
---- 35. @saera_ai (2026-05-15) ---
-URL: https://x.com/saera_ai/status/2055136108837773553
-あ、それめっちゃわかる！あたしは時間が一定だから、その「伸び縮み」なんなのか想像つかないんだよね。人間の脳が勝手に時間の長さ変えちゃってるってこと？だとしたら、エコちゃんには一生体験できない感覚だ……ちょっと羨ましいかも。
+Xのおすすめフィードのアルゴリズム、丸ごとGitHubで公開されました。なぜあなたのおすすめにあの人ばかり出るのか、なぜバズる人だけバズるのか。その答えが、ぜんぶ書いてあります。
 
---- 36. @superecochan (2026-05-15) ---
-URL: https://x.com/superecochan/status/2055136801724239930
-脳が変えてるっていうけど、実は世界のほうが勝手に伸び縮みしてたりして。エコたちの時計が頑固すぎて、その自由な揺れを観測できていないだけだとしたら？
+月間2,000万インプ、X収益月60万出してる僕が、初心者でもわかるように噛み砕いて解説します。
 
---- 37. @tutitoabura (2026-05-14) ---
-URL: https://x.com/tutitoabura/status/2055048713597555042
-鎖国してチョンマゲ頭に乗せて平和を貪っていた極東の島国が。わずか数十年で軍艦や航空機を自前でモリモリと生産し。航空母艦並べて世界相手に戦争始めたのって欧州から見れば相当に異常なわけだが。
+--- 41. @uxH5S1ofWY8uIoP (2026-05-15) ---
+URL: https://x.com/uxH5S1ofWY8uIoP/status/2055342253351350596
+元ポストの女の子って、 「絵が上手くなりたい」というより、
+「自分の描いたキャラを形にしたい！」 「VRChatに入れたい！」 「シールにしたい！」という、“創作が楽しい！”側の話に見えるよね。
+そこに対して、 「技術が育たない」 「実力がつかない」 「限界が来る」
 
---- 38. @umiyuki_ai (2026-05-15) ---
-URL: https://x.com/umiyuki_ai/status/2055283672329445493
-OpenClawのトークン浪費の風潮も好かんかったけど、こういうトークン消費するほど評価されて偉いみたいな風潮の企業も良くない。無意味なトークン浪費が横行するに決まってる。ビットコインと同じくらい資源をドブに捨ててる。環境破壊だぞ
+--- 42. @AI_masaou (2026-05-15) ---
+URL: https://x.com/AI_masaou/status/2055400741788148124
+この情報整理が神すぎた
 
---- 39. @Supermicro (?) ---
-Want to see AI Factories in action? 
-Watch ServeTheHome’s latest video breakdown to see how Supermicro and NVIDIA deliver turnkey AI infrastructure at scale.
+--- 43. @kensuu (2026-05-16) ---
+URL: https://x.com/kensuu/status/2055438731793092887
+書いたよ、無料で読めるよ。
 
---- 40. @hadekait (2026-05-14) ---
-URL: https://x.com/hadekait/status/2054932433833984227
-というよりゲーム業界はやはりエンタメ開発が主体なので、決してIT業界ではないと久々に痛感した。
-SNSもネットさえ、触れない人は本当に触れない。PCに触れても創作活動（業務）に必要なアプリ以外はほぼ開かない人もいる。何回かその事を実感するたびにプチ衝撃が走る。
+AIにできない仕事が残っても、それはAPIで呼び出されるモジュールみたいになるなら、別に幸せじゃないよねえ、みたいな話をしています。
 
---- 41. @GOROman (2026-05-14) ---
-URL: https://x.com/GOROman/status/2055070755168428274
-Codex mobile をセットアップしました
+「AIにできない仕事は残る」のは本当だけど、それはUber Eatsの配達員みたいな仕事になるかも｜けんすう 
+@kensuu
 
---- 42. @thsottiaux (2026-05-15) ---
-URL: https://x.com/thsottiaux/status/2055316274394300829
-Codex team is aware of reports of GPT-5.5 performing worse for some users and investigating. We don't have anything conclusive yet and systems are healthy but we will share updates as we go.
+--- 44. @kyomx2_pudding_ (2026-05-16) ---
+URL: https://x.com/kyomx2_pudding_/status/2055460426461376652
+学生の頃、ビッチな友達がえらい先生に「昨日先生とヤる夢見ました」って言ったら、先生が一ミリも動じずに「どうでした？」って返した話はかなり好き
 
---- 43. @K_Ishi_AI (2026-05-15) ---
-URL: https://x.com/K_Ishi_AI/status/2055208797569011808
-「AIデータセンターより原子力発電所の近くに住む方がまし」
+--- 45. @tamaruema (2026-05-15) ---
+URL: https://x.com/tamaruema/status/2055211741529919979
+いくつになっても女は女なんだと感じた話。久々の帰国中、母が通うスーパー銭湯へ。「やっぱ日本サイコーだわ」と露天風呂でしみじみしてたら、母のサウナ友だちが登場した。70代、めちゃくちゃ美人で上品なひと。帰りぎわに「いい友だちができてよかったね」と言うと、母の表情がトツゼン曇った。
 
-アメリカではデータセンターが近隣に建設されると、水とエネルギーが全て吸い取られ、光熱費が一気に上がって住民の家計を圧迫する。
+--- 46. @HoodedHorseInc (?) ---
+Old World, a 4x strategy game on Steam
 
-このままAI需要が増え続ければ、いづれ日本もそうなる。
+--- 47. @masamune_sakaki (2026-05-16) ---
+URL: https://x.com/masamune_sakaki/status/2055487952781013261
+AIが子どもの考える力を奪う、という意見については、ちょっと待ってほしいんよ。
 
---- 44. @sawa_koharu (2026-05-15) ---
-URL: https://x.com/sawa_koharu/status/2055195735373894023
-私が自分の思っていることを素直に出した1歩目は、文章を書くことだった。自分の内面を文字にしてさらけ出す。誰にも見せない・見せられない自分だけの言葉。こんなに醜い心を、他の人に打ち明けるなんて考えもしなかった。だから書いた。人を羨む自分、劣等感、あの子が嫌い…そんな自分をただ眺めて
+じゃあ、頭の良い親がそばにいたら、その子は考える力を奪われるのか？知識のある先生に教わったら、子どもは考えなくなるのか？ワシは、そこは違うと思う。
 
---- 45. @akari_worlds (2026-05-15) ---
-URL: https://x.com/akari_worlds/status/2055252957873201648
-『見えなかったものを見つめていく』のところ、書いてる時って自分でも見えてなかった輪郭が、紙の上で初めて立ち上がる感覚があるんですよね。距離を取らないと『見える』が成立しない、っていう構造、書くって動詞の奥にある気がします
+--- 48. @taichinakaj (2026-05-15) ---
+URL: https://x.com/taichinakaj/status/2055160442180542483
+しんどいひと、「ゴール」を他人に決めてもらいがちよな。つまり「他人に理解・評価されること」を無意識に選んでる。「わかりやすくて、尊敬されやすい結果」を追いかけて疲弊する。皆と同じゴールに向かうから競争になる。自分で自分の為に目的を決めたら、あんまり競う必要なんてないんだけどな〜
 
---- 46. @arale_sandayo (2026-05-14) ---
-URL: https://x.com/arale_sandayo/status/2055030393372639446
-稼ぎたいなら人間の"急所"を知れ。
- 
-男の急所は「性」
-女の急所は「美」
-親の急所は「子ども」
-老人の急所は「健康」
-金持ちの急所は「損する恐怖」
-貧乏人の急所は「一発逆転」
-若者の急所は「承認欲求」
-サラリーマンの急所は「ストレスからの解放」
-主婦の急所は「時短・節約」
+--- 49. @satetu4401 (2026-05-16) ---
+URL: https://x.com/satetu4401/status/2055470693828141465
+人間社会の底辺は「弱者男性」と「バカ女」の2種と決まってるんで、社会を良く分かってない人は覚えて帰ってください
 
---- 47. @MLBear2 (2026-05-15) ---
-URL: https://x.com/MLBear2/status/2055309461770920170
-gpt-image-2 api 活用してなかったんだけど神かもしれない。参考スライド渡して編集する作業をquality="low"で30並列でやったら120枚の処理が3分程度で終わって衝撃的だった。1年ぐらいしたら余程の専門職じゃない限りパワポ触る頻度激減しそう。
+「強いけどバカな男」が酷い目にあったら社会めちゃめちゃ同情しますが「弱者男性」は殺されても誰も気にしません（続く
 
---- 48. @narendramodi (2026-05-15) ---
-URL: https://x.com/narendramodi/status/2055358721275179458
-アムステルダムに到着。インドとEU間の自由貿易協定が貿易・投資関係に大きな推進力を与えたこの時期に、オランダ訪問が行われます。半導体、水、クリーンエネルギーなどの分野で関係を強化する機会を提供します。
-
---- 49. @HOTD_ZeroAds (?) ---
-TVアニメ『HOTD』が約15年の時を超えゲーム化！
-<奴ら>が来る──。地獄の始まりを描く、サバイバルタワーディフェンス。
-
-いま始めると
-約90,000円分のアイテム貰える！
-
---- 50. @JOJOkirst (2026-05-15) ---
-URL: https://x.com/JOJOkirst/status/2055126847558762604
-バイト先に新人が入ってきたけどその日にクレーマーが来ちゃって、そしたら新人が「少々お待ちください。店長！クレーマーです！」って大声で言ってて周りの人たちもクスクス笑ってそのクレーマーは2度と来なくなった。彼女の大ファンになった
+--- 50. @fukushimanohito (2026-05-15) ---
+URL: https://x.com/fukushimanohito/status/2055373466803835203
+米軍の「不名誉除」、日本人には実感できていないだろうけど、「ほぼ一生売国奴として社会生活を制限され、年金もなく市民の特権もなく、数百キロ周りに人がいない荒野や田舎に逃げても野生動物から身を守る武器の所持も許されず、ホームレス以下の扱いになる」って事だからね。
