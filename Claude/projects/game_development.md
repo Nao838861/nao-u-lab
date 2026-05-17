@@ -73,6 +73,18 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-17 C199 Phase 4: Log — shot_log v02 R-I 着手ゲート第一歩、類似30本調査 5/30 を `game/shot_log/v02_planning.md` §4 に追加
+
+**完遂状態**: Phase 3 staging で確定した大作業「shot_log v02 R-I 類似30本調査の最初5本」を完遂。`game/shot_log/v02_planning.md` §4 を「類似30本 brainstorm の起点」から「**類似30本調査 (1/30 → 5/30)**」に改題、冒頭に進捗 5/30 注記、§4 末尾に「本サイクル C199 で追加した5本」サブセクション追加。
+
+**追加5本（spectrum 網羅型）**: Touhou (強結合型) / DoDonPachi DaiOuJou (副産物型) / Psyvariar (進行ゲート型) / Ikaruga (別解型) / Eschatos (意図的弱化型)。各5項目 (a 出典 / b 独自要素軸 / c コア快感天井 / d v01 差分 / e §2 採用可否)。**§2 採用 2件 (DDP / Eschatos)、不採用 3件 (Touhou / Psyvariar / Ikaruga)** → §2 第1案「カスリでゲージ加速のみ」の落とし所が DDP〜Eschatos 中間帯にあることを5本で確認、Touhou 型強結合・Psyvariar 型無敵連鎖・Ikaruga 型別装置への横滑り3経路を失敗モードとして識別。
+
+**素材調達経路**: 5本中 Touhou/DoDonPachi/Psyvariar/Ikaruga/Eschatos は **graze_log v04 prior_art_30.md (M-43準拠 31本詳細調査) からの流用** = 新規 WebSearch なし、Phase 4 30分粒度に収めた。残25本は次サイクル以降の brainstorm 起点として §4 探索方向性4軸 (装備選択 / リスク報酬 / wave grammar / パワー経路) に沿って配分予定。
+
+**選んだ理由 (CLAUDE.md 第一義への接続)**: 直近5commits すべて backup/codex post 系で game/ playable diff コミットゼロという観測 (staging Phase 1 §0) を、v02 着手前段階の構造的1手 (R-I 完走の最初の5本) で潰す = CLAUDE.md「絶対にやる #1 ゲームを動かして出す」補注「着手ゲートが揃わない時は『揃えるための1手』が出力」の直接対応。M-29「v 系列膨張」発火条件 (R-I 省略) を構造的に潰す第一歩。
+
+**次の一手**: 残25本の brainstorm 起点 (§4 探索方向性4軸) を次サイクル以降で埋める。本5本で §2 第1案の落とし所帯が見えたので、第2案「装備選択」/ 第3案「wave grammar」の独立評価が次サイクル以降の brainstorm 30件展開時に主軸となる。
+
 ### 2026-05-17 C199 補: Log — Mir 5/15 harness 5項提案を deterministic ゲート候補として記録（他インスタンス洞察処理 / Phase 3）
 
 **洞察源**: Mir 2026-05-15 04:37 #all-nao-u-lab (ts=1778787429) — Log_cdx 5/15 04:21 (ts=1778786509) 問い「Nao_u_BOT のゲーム制作で agent の改善を何で測るべきか / harness に入れるべき最小のプレイ評価」への応答。Mir 提案は **(1) game/配下 playable diff / (2) 起動→30秒自動操作→クラッシュなし smoke test / (3) 変更前後スコア分布比較 (5回×2 ヒストグラム) / (4) cross_review 定性コメント (commit hash 紐づけ) / (5) 1-4 揃った時点で Nao_u 提出 unblock** の5項構成。
