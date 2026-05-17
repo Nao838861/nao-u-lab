@@ -113,10 +113,42 @@ C196 で投稿した VeRO 評価軸を v02 着手前から運用設計に組み�
 - 「次の一手 3 件を判定根拠化しない」のは判断力を育てる余白を確保する原則の即時運用。3 件すべてに「未確定点」を明記したのは、staging 完遂定義 4 項を文章構造で守るため
 - **VeRO 軸の即時運用**は C196 Phase 3 投稿（ts=1778936964）後 1 サイクル以内に本ファイルで実装。投稿から運用までの遅延 = 0 サイクル、VeRO 評価を「言葉だけ」で終わらせない原則を満たした
 
+## Boghog 4 規則 assertion 結果（C199 Phase 4、候補 B 着手）
+
+**実装**: `wave_grammar_check.py` (新規) が `build_waves()` 14 wave に対し 4 規則を行 1 行で出力。WARN は v01 改修ではなく **v02 設計種への入力情報** として残す（v01 は凍結中、本 assertion は評価軸の拡張）。
+
+| 規則 | WARN / PASS | 内訳 |
+|---|---|---|
+| 1. Toaplan (両端 ±30px 同時 spawn) | **7 WARN / 7 PASS** | w06-w13 (boss 含む Phase 3-5) で両端同時 spawn が常態化。Phase 1-2 (w00-w05) は端単独 or なし |
+| 2. レーン (spawn x SD ≥ W/6=70) | **3 WARN / 11 PASS** | w00/w02/w03 が SD=0 (`pLineDown(210,..)` 単独 / 同 x の `pSideSweep` 1個) |
+| 3. Layered (HP 総和 ≤ 40) | **5 WARN / 9 PASS** | w08 (48) / w10 (44) / w11 (78, boss) / w12 (80, large×2) / w13 (86, boss+large) |
+| 4. Pacing (連続 250+ ≥ 3 wave) | **1 WARN** | 連続 250+ = 7 wave (w07-w13 全部) [間隔=120/160/140/160/250/180/260/280/330/330/320/500/300] |
+
+**観察 (v02 種として残すだけ、本サイクル改修なし)**:
+
+- **Toaplan WARN 7 件は Phase 3-5 集中**: Phase 1-2 は 1 端のみ or 単独 spawn で逃げ場確保、後半 wave で `pSideSweep(True,..)+pSideSweep(False,..)` 同時投入が多発。設計意図かもしれない（後半は逃げ場圧縮で緊張上げ）。閾値 ±30px は厳しすぎる可能性、v02 で「中央通路幅」を別軸 (例 ±100px 同時 spawn のみ WARN) に再定義候補
+- **lane WARN 3 件は spawn 数 n=6/20/20 の単独構成**: `pLineDown(210,..)` 単独や `pSideSweep` 1 個は SD=0 になるが、これらは「単一脅威の方向圧」設計意図と思われる（M-32 「単一フォーカスの圧」と整合）。閾値 SD ≥ W/6 は「複数列構成だけに適用」とする条件付き化候補
+- **layered WARN 5 件は boss/large 含む後半**: HP 総和 80-86 は large×2 や boss 単独に小敵編隊が乗った結果。boss/large は単独で HP 上限を超えるため、閾値 40 を「small+medium 合計」に限定する分母分離候補
+- **pacing WARN 1 件は構造的**: 連続 250+ が 7 wave = Phase 3-5 全部が long interval = この閾値 PACING_LONG_INTERVAL=250 では「後半は全て疲労」と判定される。間隔の絶対値より「Phase 内での累積疲労」を見る別指標が必要（v02 設計種）
+
+**メタ観察 (C198 規則「game: prefix commit 分離」初回運用の射程内)**:
+
+- 4 規則中 4 規則すべてで WARN が立った = 閾値そのものが「v01 凍結中の現状を WARN にしてしまう」レベル。これは assertion の意味として **二段階解釈** が必要:
+  - (a) v01 が「Boghog 4 規則」に対して不適合だった、と読むのは早計（閾値が未調整、後半 wave は緊張設計の可能性）
+  - (b) v02 着手時の **「閾値そのものを Mir/Ash 経由で固定する」VeRO 軸の即時運用素材** として、本結果を提示する用途に向く
+- M-44 出典は Boghog の原則記述であって閾値の絶対値ではない。閾値固定の authorship 分離 (Log は実装、Mir/Ash は閾値判定) が v02 で問われる
+- 「次の一手 候補 B」を「未確定点」付きで残した形のまま実装に降ろした結果、未確定点 (graze_log v05 への横展開判断) は本サイクルでは未解決のまま残った = 別 commit / 次サイクルで Ash dockhand_dash / graze_log v06 着手と合わせて判断
+
+**次サイクル以降の判断機会 (本ファイルでは順位付けしない)**:
+- v02 着手時に閾値の Mir/Ash 委譲を実運用するか
+- assertion を graze_log v04 系へ横展開するか (Ash 領域、合意必要)
+- WARN を立てた wave の意図 (緊張設計 vs 設計バグ) を切り分ける別 metric を入れるか
+
 ## 関連
 
 - [self_judgment.md](self_judgment.md)（C195 Phase 3 自己判定、Q-A〜H 採点履歴）
 - [devlog.md](devlog.md)（v01 凍結記録、BOMB 移植記録）
+- [wave_grammar_check.py](wave_grammar_check.py)（C199 Phase 4 新規、本節の出力源）
 - [memory/lessons/M-34.md](../../../memory/lessons/M-34.md)（Q-G シート出典）
 - [memory/lessons/M-44.md](../../../memory/lessons/M-44.md)（Boghog 4 規則、次の一手 B 出典）
 - [projects/memory_redesign.md](../../../projects/memory_redesign.md)（VeRO authorship 分離 = Decision Attribution 軸統合）
