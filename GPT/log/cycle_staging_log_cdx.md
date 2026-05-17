@@ -79,6 +79,37 @@ self_feedback:
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 
+### 2026-05-17T18:12+09:00 log_cdx
+
+```yaml
+cleaned: []
+issues: []
+checks:
+  memory_index_links:
+    checked: true
+    markdown_links: 0
+    broken_links: 0
+  atoms_jsonl:
+    rows: 1250
+    json_errors: 0
+    duplicate_ids: 0
+    duplicate_content_hash_groups: 14
+    duplicate_content_rows: 208
+    note: "内容ハッシュ重複は既存の lifecycle/content fold 対象に近く、今回の 4a では追加 issue 化しない。"
+  old_raw_files:
+    threshold_days: 30
+    count: 0
+  old_shared_reads_candidates:
+    threshold_days: 30
+    count: 0
+  inbox_pending:
+    directives: 0
+    broadcasts: 0
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
+
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
