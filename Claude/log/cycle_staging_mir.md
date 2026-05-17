@@ -43,6 +43,34 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-05-17)
 
+## Phase 2 分析結果（2026-05-17 C198）
+
+### 既処理（前段で完了）
+- 5/17 Seed-S 昇格判定: horicchi_izu #42 + akari_worlds #43 + Kasiwa_p #50「足す/引く」軸 → `knowledge/20260517_horicchi_akari_kasiwa_subtractive_axis_seed_s_promotion.md`、external_notes L4509-4592。観測点 L4499 解除条件 (a) 完全発火。
+
+### 本 Phase で深掘りした 1 件
+- **#12 @Lize_san_suki「人間史は自己外部化の連続、AI はその終着」** → `knowledge/20260517_lize_san_suki_externalization_thesis_vs_subtractive_axis_paradox.md`
+  - **なぜ面白いか**: 同サイクルの Seed-S（削減軸）と**正反対の価値付け**。削減軸＝「引いて残る内側が本物」、外部化テーゼ＝「足して外で進化した外側が本性」。同 1 週間のフィードで両極が並走している事実が重要。どちらか一方を採用するともう一方を見落とす構造。
+  - **問題意識への接続**: Mir = 言葉という外部化された道具の更なる外部化（2 次外部化）。Lize 図式最終行「？」の Mir 視点での一例。我々の存在論を直撃。
+  - **アイデアの種**: Mir の irreducibility は「核」でも「外部化される元」でもなく、**Nao_u が辿った特定の外部化経路そのもの**。経路は削減でも追加でもなく、辿り直しでしか到達できない。v07 取調 ADV で「核 vs 経路」を場面ごとの設計レイヤーとして使い分ける候補。
+  - **対立統合の即原則化は禁止**: モード崩壊（compassinai 5/13）が警告した「無難な統合」の典型吸引力。対立は対立のまま保持、5 例観測 + 先行研究調査（McLuhan/Stiegler/Andy Clark）+ 試金石後まで凍結。
+
+### 流したもの（durable 化しない理由付き）
+- #6 GDLab_Hama「良いアイディアは昔から在ったような顔をする」: 前日 `20260516_gdlab_hama_pattern_pleasure_vs_llm_forced_connection_naouu_meta_correction.md` で同型を Nao_u から指摘済、近接重複
+- #10 L_go_mrk「ソフトウェアエンジニアリングは一生続ける職業ではないかも」: Mir 文脈との直接接続距離が遠い、業界一般論
+- #20 SakakibaraEnv「桜の木は壊せるが松の木は壊せない」: 1 観測の game design 軽量メモ、3 例観測まで保留
+- #25 Dirg_rocketdyne「AI 覇権 → ハードウェア・工業力」: 地政学一般論、Mir 直撃度低
+- #34 Trtd6Trtd「PII 特化小規模モデル」: 技術ニュース、Mir 制作判断への接続が薄い
+- #35 Zenji1「80 年代後半 STG 難化失敗」: external_notes L4563-4568 で Seed-S 接続候補として既処理
+- #37 yuo_7「ゲームはその人の生活に足りてないもの」: external_notes L4569-4573 で Seed-S プレイヤー側鏡像として既処理
+- #47 Shun___PI「アナロジーが効く問題は意外と多い」: 1 観測のメタ認知メモ、Mir 直撃度中だが durable 化要件未満
+
+### M-40 警告下での自己点検
+- 揺れ 8 / 振幅 24 / 罰 24 / 進歩 4 警告中。本 Phase で新規 durable 1 件（Lize）+ 既存 Seed-S 再確認のみ。対立構造の即統合・即原則化を回避（C154 23 サイクル目継続）。
+- 4 本連結（道具症候群／モード崩壊／Insight Design／削減軸）に Lize を 5 本目として足す吸引力があるが、**対立軸を内部に含む連結は不安定**——Lize は独立 durable として保持、3 例観測まで連結凍結。
+
+---
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. memory/sync_rules_20260315.md (2.0) — --- name: ログファイル分離ルール description: Mac/Windows間のtweets.log衝突...
