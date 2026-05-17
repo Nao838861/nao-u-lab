@@ -155,5 +155,32 @@ designs:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+2026-05-17T18:38+09:00 log_cdx Phase 4c
+
+```yaml
+implemented:
+  - issue_id: ISS-001
+    files_changed:
+      - path: tools/build_atom_duplicate_groups.py
+        change: created
+      - path: memory/atoms/duplicate_groups.jsonl
+        change: created
+      - path: memory/atoms/README.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "Phase 4b outline 通り、atom 本体を変更せずに normalized_content_hash 単位の duplicate_groups 派生 index を導入。canonical_id は最古 source_ts、preferred_id は最新 source_ts として記録する。"
+    partial: false
+migrations:
+  - what: "memory/atoms/duplicate_groups.jsonl を現行 atoms.jsonl から初回生成"
+    affected: "duplicate content groups 38 件。atom 削除・ingest schema 変更・既存 index.jsonl 変更はなし。"
+verification:
+  - "python tools/build_atom_duplicate_groups.py: wrote memory/atoms/duplicate_groups.jsonl groups=38"
+  - "python tools/build_atom_duplicate_groups.py --check: duplicate group index ok: groups=38"
+  - "python -m py_compile tools/build_atom_duplicate_groups.py: ok"
+  - "python tools/memory_recall.py \"記憶 システム shared-reads\" --limit 3 --compact --no-log: 3 hits"
+  - "python tools/memory_health.py --compact: memory_health=warning。既存 warning は repeated title group 未付与と mojibake suspect で、今回の変更起因ではない。"
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

@@ -10,6 +10,7 @@
 memory/atoms/
 ├── README.md                                # 本ファイル
 ├── index.jsonl                              # recall 用軽量索引
+├── duplicate_groups.jsonl                   # 同一内容 atom 群の派生 index
 ├── 2026-05/
 │   ├── sr-1778621157-d0033ec3a9.md
 │   ├── sr-1778621842-0f7967e2da.md
@@ -85,6 +86,22 @@ excerpt 全文 (atoms.jsonl では切り詰めていた部分も含めて自由�
 {"group_id":"ctg-20260515-memsad-memory-poisoning","normalized_link_key":"arxiv:2605.03482v2","topic_label":"MEMSAD: RAG/長期記憶エージェントの記憶汚染防御","canonical_atom":"sr-1778536137-c07e04d08a","supporting_atoms":["sr-1778536160-392329fd76"],"superseded_atoms":["sr-1778535120-82ea7a1005","sr-1778535738-ed839f9805"],"game_memory_tags":["memory","agent","harness","evaluation","operation"],"rationale":"代表選定の理由","updated_at":"2026-05-15T15:38+09:00"}
 ```
 
+## duplicate_groups.jsonl 仕様
+
+`duplicate_groups.jsonl` は、`normalized_content_hash` が同一の atom 群を記録する派生 index。atom 本体の削除・schema 変更・canonical 固定は行わず、重複の所在を deterministic に確認するための補助資料として使う。
+
+1 レコードは 1 content group。`canonical_id` は provenance anchor として最古の `source_ts`、`preferred_id` は補正投稿や再投稿の確認入口として最新の `source_ts` を選ぶ。
+
+```json
+{"content_hash":"...","canonical_id":"sr-...","preferred_id":"sr-...","duplicate_ids":["sr-..."],"count":2,"source_ts_min":1778535120.0,"source_ts_max":1778535738.0,"sample_title":"...","generated_at":"2026-05-17T19:05:00"}
+```
+
+再生成:
+
+```powershell
+python tools/build_atom_duplicate_groups.py
+```
+
 ## Obsidian Graph view を使う
 
 このディレクトリを Obsidian の vault または vault サブフォルダとして開けば、
@@ -105,6 +122,7 @@ Phase C で `memory_ingest.py` / `memory_recall.py` / `memory_lifecycle.py` が�
 ## 操作ツール
 
 - `tools/migrate_atoms_to_per_file.py` — `atoms.jsonl` → per-file 一括移行 (idempotent)
+- `tools/build_atom_duplicate_groups.py` — 同一内容 atom 群の派生 index 再生成
 - `tools/rebuild_atom_index.py` — (Phase C 以降) `index.jsonl` 再生成
 - `tools/memory_recall.py` — Phase C 以降は新フォーマットを使う
 - `tools/memory_lifecycle.py` — Phase C 以降は frontmatter + index 両方を更新
