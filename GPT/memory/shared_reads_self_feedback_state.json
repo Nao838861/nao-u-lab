@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-17T08:05:00+09:00",
+  "updated_at": "2026-05-17T10:20:00+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -27,9 +27,27 @@
     "1778947869.742089",
     "1778958020.281189",
     "1778595976.115449",
-    "1778572104.115229"
+    "1778572104.115229",
+    "1778972047.387869"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-17T10:20:00+09:00",
+      "id": "sr-1778972047-d61ab1852e",
+      "source_ts": "1778972047.387869",
+      "title": "Cattle Trade: multi-agent negotiation benchmark with incomplete information and resource constraints",
+      "decision": "adopt_probe",
+      "reason": "Cattle Trade frames agent evaluation as a long game where incomplete information, adversarial interaction, auctions, hidden offers, bluffing, opponent-state inference, and resource allocation interact. This is directly useful for game/agent evaluation, but turning it into a permanent rule would overreach. A one-cycle probe can keep the next benchmark or prototype judgment from collapsing success into a single score.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-17T08:05:00+09:00",
       "id": "sr-1778572104-101ff53334",
@@ -814,6 +832,18 @@
         "If scene/context is needed, did I leave a path back to the Slack permalink, raw log, or knowledge source instead of treating the summary as authoritative?"
       ],
       "expires_after": "Review after the next memory recall, cycle staging reuse, or cross_review/shared-reads summary judgment."
+    },
+    {
+      "id": "probe-20260517-multiagent-score-decomposition",
+      "created_at": "2026-05-17T10:20:00+09:00",
+      "source_ts": "1778972047.387869",
+      "scope": "next multi-agent game benchmark / game-agent evaluation / prototype self-judgment where one score may hide interaction quality",
+      "questions": [
+        "Before using one score as the verdict, did I name the success layer: individual payoff, portfolio/resource state, negotiation quality, opponent modeling, or robustness under incomplete information?",
+        "Did I check at least one interaction trace, offer/history log, or state transition instead of judging only the final score?",
+        "If the metric mixes multiple pressures, did I state which pressure the next change is meant to improve and which pressure is intentionally left unoptimized?"
+      ],
+      "expires_after": "Review after the next multi-agent game benchmark, agent evaluation, or prototype self-judgment that uses aggregate scores."
     }
   ]
 }

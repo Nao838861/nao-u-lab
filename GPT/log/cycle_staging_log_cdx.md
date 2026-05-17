@@ -43,7 +43,34 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-17T10:20+09:00 log_cdx Phase 3b:
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778972047-d61ab1852e
+    source_ts: "1778972047.387869"
+    title: "Cattle Trade: multi-agent negotiation benchmark with incomplete information and resource constraints"
+    reason: "直近 Phase 3 の agent / game benchmark 投稿と接続しやすく、集約 score だけで評価を閉じる癖を小さく補正できるため。Cattle Trade は不完全情報、敵対的相互作用、競売、隠しオファー、ブラフ、相手状態推定、資金配分が同時に走る長いゲームとして agent 評価を見る。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の multi-agent game benchmark / game-agent evaluation / prototype self-judgment で、最終 score を verdict にする前に、成功層・interaction trace・意図的に最適化しない圧力を確認する一時 probe を active_probes に追加した。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
