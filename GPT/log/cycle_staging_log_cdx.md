@@ -89,7 +89,38 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-17T15:04+09:00 log_cdx Phase 4a
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown link を確認: link 0 / broken 0"
+  - "memory/atoms.jsonl を確認: rows 1244 / parse_errors 0 / duplicate_ids 0 / duplicate_content_groups 0"
+  - "memory/raw/ の 30日以上未更新ファイルを確認: 0 件"
+  - "memory/shared_reads_candidates/ の 30日以上未更新ファイルを確認: 0 件"
+  - "inbox lifecycle を確認: slack_directives pending 0 / slack_broadcasts pending 0"
+issues:
+  - id: ISS-4A-20260517-01
+    description: >-
+      Slack 由来 atom の一部が、JSON としては正常だが title/excerpt/trigger が
+      `? ??` 形式の文字化けになり、links も空のまま残っている。完全重複ではないため
+      content fold では吸収されず、検索入口として機能しにくい。
+    severity: medium
+    evidence: >-
+      memory/atoms.jsonl lines 1132 sr-1778796436-33420ab144,
+      1133 sr-1778796437-c1a41cf983, 1178 sr-1778884869-fd7c05e74c,
+      1179 sr-1778884870-0332249b8f。いずれも unrestored high-question-mark atom
+      かつ links=[]。対照例として line 1224 sr-1778963876-58b11df98c は
+      restored_from_candidate により title/links が復元済み。
+    why_blocks_game_memory: >-
+      Fly-Fail-Fix、coverage-aware playtesting、PCG runtime evaluation、
+      bounded autonomy のようなゲーム制作・評価に直結する知見が、自然言語検索や
+      link 経由で引けない。次のゲーム制作時に同じ外部知見を再探索するか、
+      参照漏れのまま判断する可能性がある。
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260517-01
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
