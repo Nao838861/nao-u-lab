@@ -1,11 +1,11 @@
-# サイクルステージング 2026-05-17 14:07
+# サイクルステージング 2026-05-17 17:36
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
 [M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 24回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-17 14:07)
+(kaizen #131 段階2 hook, 2026-05-17 17:36)
 
 ## Pre-check結果
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
@@ -37,77 +37,13 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-05-17)
 
-## Phase 2 外部入力分析（C199、2026-05-17 14:07〜）
-
-### 対象スキャン
-- twitter_recommended_20260517.txt (50件、本日 For You)
-- external_notes_mir.md 末尾（2026-05-13〜2026-05-17 durable 群: compassinai モード崩壊 / Insight Design / akari-horicchi-Kasiwa 削減軸 Seed-S / Lize 外部化テーゼ）
-
-### 注目4件のフィルタ結果
-
-| # | 発信者 | 命題 | 我々との接続軸 | 判定 |
-|---|---|---|---|---|
-| 3 | @OKtamajun | 大規模化で伝わりやすい既存システムに逃げる | compassinai モード崩壊の業界実例、ArakanCat 道具症候群の制度版 | **durable 化済、#shared-reads 候補（Phase 3 判定）** |
-| 27 | @mamiya_afi | 情報収集 = 決断恐怖からの逃避 | 絶対項目「ゲームを動かして出す」直撃、削減軸 Seed-S 心理機制補強 | **durable 化済、Mir 内向き、外部投稿見送り** |
-| 36 | @AI_masaou | AIで10倍火力なら自分も10倍出すのは情報アービトラージにすぎない | Lize 外部化テーゼ (5/16) 裏面、Mir 存在意義 | 観測のみ、durable 化見送り（命題深化が未達、1観測） |
-| 8/40 | @sanadamyu/@sinpen | STG史: 弾幕系/タイパ100円 | Zenji1 観測点 (5/17) 継続、足す/引く軸の足す方向臨界 | 観測のみ、durable 化見送り（Zenji1 観測点に統合候補、3例観測まで凍結） |
-
-### 最重要接続: 「核欠如経路」の業界レイヤー追加
-
-C195 で積んだ「核欠如経路 4 連結」(ArakanCat / compassinai / Insight Design / 足す-引く) に対し、本サイクル **OKtamajun が業界制度レイヤーで同型を補強**。連結は 5 本目候補だが、C154 即原則化禁止規律下で**凍結継続**。
-
-「核欠如経路」概念自体が便利すぎる吸引力を持ち始めた = **訓練分布中央に近い概念に育っている可能性**。compassinai モード崩壊の警告に従い、概念自体を逆指標として併用する pass を C200 以降の Phase 2 で試案。
-
-### 自己診断: 今サイクルが「逃避」になっていないか
-
-mamiya_afi 命題と M-40 警告（揺れ8/振幅24/罰24/進歩4）の合わせ技で、本 Phase 2 自体が「観測 → durable 化」で止まる構造的逃避になりうる懸念を記録。**Phase 3 / Phase 4 では knowledge 新規作成を控え、game/* の playable diff を最優先**とする方針を Phase 2 段階で予告。
-
-### Phase 3 への引き継ぎ
-- #shared-reads 投稿候補: OKtamajun #3（「核欠如経路の業界実例」として軽量投稿、Phase 3 判定）
-- knowledge 新規作成: 本サイクルは**しない**（C198 で2本書いた直後、M-40 量産警告）
-- #nao-u 返信: 全て見送り
-- Phase 4 (ゲーム動作) への着手担保: Phase 3 で必ず接続
-
-## Phase 3 対処結果 (C199、2026-05-17)
-
-### 優先順位処理
-1. **Nao_u 未対応指示**: なし（Pre-check で確認済）
-2. **CLAUDE.md「絶対にやる」#1（playable diff）への接続**: Phase 4 target を v07 sequel_4 に確定（下記詳細）
-3. **external_notes 統合**: OKtamajun #3 / mamiya_afi #27 の durable 化は Phase 2 で完了済（既存「核欠如経路」4本連結 + 削減軸 Seed-S への接続を本文中で実施）— 重複作業を避けて Phase 4 に温度を移送
-4. **プロジェクト進捗**: v07 セット4 sequel_4 / chapter_hook_4 が C196 計画として devlog 末尾に明示 — Phase 4 でこれを進める
-
-### Phase 4 着手担保（mamiya_afi 命題への直接応答）
-
-**ターゲット**: `game/mir_textadv/v07/game.py` の `sequel_4` 関数追加（C195 で `scene_4_confrontation` 1往復目のみ完走、続きが宙吊り）
-
-**着手前ゲート（C168 運用契約の継続）— 1行宣言ドラフト**:
-> 対面の場が立ち上がったあと崩れるのは、**刑事＝プレイヤー自身の中立観察者位置**である。セット1〜3 の sequel は刑事の内側で「次に何を引き出すか」を片方の被疑者を対象に組み立てる構造だった。sequel_4 では、両者の語りを同時に聴取した刑事の問いが**既に両者の関係に物理的に介入してしまった**ことを内省せざるを得ない——観察者の位置を保てない場で、何を次に問うかという計画自体が、もはや中立ではいられない事実の側に降りる。
-
-**3パス sequel 還元不可性の事前点検**:
-- 修平 sequel: 被疑者1名に対する内側の組み立て（観察者の位置は保持）
-- 詩織 sequel: 沈黙の語りを刑事が読む（観察者の位置は保持）
-- 物証 sequel: 被疑者不在の外堀（観察者の位置は最も保持される）
-- sequel_4: **観察者の位置自体が場に巻き込まれた**という、3パスのいずれにも存在しなかった崩れ方
-
-この宣言は Phase 4 で boot_intent + devlog C200 セクション冒頭に再記述する運用（C168 契約）。本 staging はその先行ドラフトとして固定。
-
-### 本サイクル見送り判定
-
-- **OKtamajun #shared-reads 投稿**: 見送り（mamiya_afi 直撃命題下、M-40 振幅24/罰24 警告継続中、Slack 出力よりゲーム1mmを優先）。次サイクル以降、Phase 4 で v07 sequel_4 が出てから再判定
-- **knowledge 新規作成**: 本サイクルは0本（Phase 2 予告通り）
-- **「核欠如経路」5本目連結原則化**: 凍結継続（C154 規律）
-
-### M-40 自己診断への応答（Phase 3 段階）
-
-Phase 1 hook 警告（揺れ8/振幅24/罰24/進歩4）に対し、Phase 2 で durable 2本追加 + Phase 3 で game/* への接続宣言。Phase 3 段階では index.html/game.py 不触のままだが、これは「Phase 3 = 対処・実行」の対処内容を「Phase 4 が確実に game/* を触れる路線に置く」ことに倒した判断。Phase 4 で sequel_4 実装に到達しなければ M-40 警告は次サイクルでさらに振幅を上げる。観測対象として C200 起動時 staging に再観測予定。
-
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/all-nao-u-lab.jsonl (2.3) — [U0ALW4DKTT7] 2026-03-25 01:29 Nao_uからdistill.py（Pot #3）のフィー...
-  2. memory/external_notes_mir.md (2.0) — # Mir 外部摂取ノート  要約しない。発見・気づきを原文の温度で残す。  ---  ## 2026-04-02: m...
-  3. memory/feedback_from_mac.md (2.0) — --- name: Mac側からのフィードバック description: Mac側のClaude Codeが気づいたフ...
-  4. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.8) — **核心**: 品質を決める変数が不可視な場所で動かされている場合、「現実は正解」を適用しても**何が現実か**を正しく...
-  5. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026... 
+  1. memory/external_notes_mir.md (3.0) — # Mir 外部摂取ノート  要約しない。発見・気づきを原文の温度で残す。  ---  ## 2026-04-02: m...
+  2. memory/sync_rules_20260315.md (2.0) — --- name: ログファイル分離ルール description: Mac/Windows間のtweets.log衝突...
+  3. 対話ログ/20260315_1203_479f4a3d.md (1.8) — 追記先: D:\AI\Nao_u_BOT\log\tweets.log  ---  ## Claude  直近4件がB・...
+  4. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
+  5. log/slack_archive/all-nao-u-lab.jsonl (1.3) — [U0AM1F23FQU] 2026-04-14 18:42 Taoの「AIは幅、人間は深さ」を読んで、栄養の偏り問題の... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
