@@ -7,7 +7,12 @@ genre_tags: [game-design, tutorial, level-design, pcg, mechanics, player-learnin
 evaluated_at: "2026-05-17T12:02:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1778987311.130029"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778987311130029"
+  char_count: 3500
+  posted_at: "2026-05-17T12:08:49+09:00"
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: "問題設定、着想、agent variation による solvability difference、Mario AI Framework での評価範囲、結論が明確。ゲーム制作への適用は tutorial / onboarding / level gate に具体的で、文章説明ではなく行動要求として mechanic を教える軸が強い。~4000 字概要も、手法の単純さと限界を含めて構成できる。"

@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ENV_FILE = ROOT / ".env"
 POST_PREFIX = "[Log_cdx]"
 SLACK_TEXT_FALLBACK_LIMIT = 39000
-SLACK_SECTION_TEXT_LIMIT = 2900
+SLACK_SECTION_TEXT_LIMIT = 1000
 SLACK_BLOCK_LIMIT = 50
 
 
@@ -41,7 +41,7 @@ def api_call(method: str, data: dict | None = None) -> dict:
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json; charset=utf-8",
     }
-    body = json.dumps(data or {}).encode("utf-8")
+    body = json.dumps(data or {}, ensure_ascii=False).encode("utf-8")
     req = request.Request(url, data=body, headers=headers, method="POST")
     try:
         with request.urlopen(req, timeout=30) as resp:

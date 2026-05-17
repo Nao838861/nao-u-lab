@@ -21,7 +21,18 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260517_mage_multi_axis_game_scene_eval.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778987180373269
+    char_count: 3551
+  - candidate: memory/shared_reads_candidates/20260517_generating_levels_that_teach_mechanics.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778987311130029
+    char_count: 3500
+skipped: []
+notes:
+  - "初回 Mage 投稿で PowerShell stdin 経由の文字化けが発生したため、同一 ts を chat.update で UTF-8 本文に修正済み。以後 tools/slack_client.py は ensure_ascii=False + 1000字 block split に更新。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)

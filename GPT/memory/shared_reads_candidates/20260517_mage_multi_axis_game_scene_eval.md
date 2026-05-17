@@ -7,7 +7,12 @@ genre_tags: [game-design, evaluation, llm-code-generation, unity, playable-scene
 evaluated_at: "2026-05-17T12:02:16+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1778987180.373269"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778987180373269"
+  char_count: 3551
+  posted_at: "2026-05-17T12:08:49+09:00"
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: "問題設定、手法の中核、4 軸評価、858 attempts の評価結果、結論が候補本文だけで抽出できる。Nao_u_BOT の LLM 生成 playable prototype 判定に直結し、compile pass 偏重を避ける具体軸として使える。CoopEval 水準の概要は、compile/runtime/structure/mechanism の分離を軸に十分書ける。"
