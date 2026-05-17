@@ -4,6 +4,16 @@ url: https://link.springer.com/article/10.1007/s10439-026-04035-7
 collected_at: 2026-05-17T16:59:44+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [accessibility, controller-design, haptics, rehabilitation-game, input-design]
+evaluated_at: 2026-05-17T17:02:23+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-16"
+supersedes: []
+gate_reason: |-
+  入力分類・ノイズ平滑化・ゲームアクションとの意味対応という設計要素は抽出できる。
+  ただし臨床寄りの予備評価で、ゲーム制作一般への適用は「身体入力プロトタイプ」に限定される。
+  Phase 3 の ~4000 字投稿にするには、accessibility input design の比較文脈を追加してから扱う方がよい。
 ---
 
 ## raw_excerpt

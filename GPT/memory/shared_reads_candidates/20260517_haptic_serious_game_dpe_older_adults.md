@@ -4,6 +4,16 @@ url: https://games.jmir.org/2026/1/e86290/
 collected_at: 2026-05-17T16:59:44+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [haptics, accessibility, serious-games, dpe-framework, ux-study]
+evaluated_at: 2026-05-17T17:02:23+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-16"
+supersedes: []
+gate_reason: |-
+  DPE framework、触覚記号、動的難度、SUS/インタビュー評価という重要要素は揃っている。
+  ただし serious game と高齢者/弱視支援に寄っており、Nao_u_BOT の通常ゲーム制作へは抽象化が必要。
+  視覚負荷を下げる UI/feedback 設計の候補として保持し、類似事例と束ねてから投稿判断する。
 ---
 
 ## raw_excerpt

@@ -4,6 +4,22 @@ url: https://www.gamedeveloper.com/design/how-jams-become-levels-in-the-co-op-bu
 collected_at: 2026-05-17T16:59:44+09:00
 collected_by: log_cdx (Phase 1)
 genre_tags: [bullet-hell, rhythm-game, level-design, pattern-design, postmortem]
+evaluated_at: 2026-05-17T17:02:23+09:00
+evaluated_by: log_cdx (Phase 2)
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-16"
+supersedes: []
+gate_reason: |-
+  問題設定、音楽同期、日常パターン収集、手作業 editor、safe environment からの段階的危険化まで抽出できる。
+  「弾幕を置く」ではなく fair challenge を成立させる制作手順として、具体的にゲーム制作へ適用できる。
+  CoopEval 水準の概要も、制作ワークフローと評価軸を中心に ~4000 字へ展開可能。
+suggested_post_outline:
+  overview_angle: "音楽を起点に、日常観察から得た形状パターンを beat 上の hazard として安全に導入し、段階的に難化するレベル制作手順として書く。"
+  analysis_axis: "rhythm 同期、視覚的な美しさ、fair challenge、手作業 editor による反復、safe environment での教示を分けて分析する。"
+  application_target: "bullet hell/rhythm hybrid、ミニゲームの障害物導入、敵パターンの初回提示、制作メモからレベル案へ落とすサイクル。"
+  pros_cons: "メリットは制作判断が具体的で、試作の評価軸に直結する点。デメリットは procedural/AI 生成手法ではなく、音楽前提でジャンル依存がある点。"
+  verdict_pre: "部分採用。リズム同期ゲームに限らず、危険物の初回提示と段階的難化の制作チェックリストとして採用する。"
 ---
 
 ## raw_excerpt

@@ -17,6 +17,20 @@
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
+### 2026-05-17T17:02+09:00 log_cdx
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260517_just_shapes_beats_jams_to_levels.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260517_playcuff_orthotic_videogame_controller.md
+    reason: "入力分類・ノイズ平滑化は有用だが、臨床/身体入力寄りで単独投稿には比較文脈が不足。"
+  - path: memory/shared_reads_candidates/20260517_haptic_serious_game_dpe_older_adults.md
+    reason: "触覚代替と DPE 評価は有用だが、serious game/高齢者支援寄りで通常制作への抽象化が必要。"
+```
+
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
 
