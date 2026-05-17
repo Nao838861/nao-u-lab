@@ -73,6 +73,18 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-17 C199: Log — Ash knowledge atom (mTsuruta「面白くないと感じた時=辻褄合わせ」) を shot_log v01→v02 移行判断に接続（他インスタンス洞察処理）
+
+**洞察源**: Ash 2026-05-16 #shared-reads 投稿 `knowledge/20260516_creatable_fun_sellable_three_independence_mtsuruta_hadekait_snapwith.md` の中核引用 (@mTsuruta) =「作ってるゲームが面白くないと感じた時の認知負荷=辻褄合わせ。別要素追加 or 既存要素深掘り、両方とも既存コード/設計と整合させる作業」。
+
+**shot_log v01 への接続点**: self_judgment_c196.md「次の一手 3 候補」が候補A (aggressive policy うま味追加=新要素追加路線) / 候補B (Boghog 4 規則 assertion=既存深掘り路線) / 候補C (VeRO 評価独立性運用化=メタ層) と整理済。mTsuruta 軸を当てると **A/B はどちらも「既存コード/設計と整合させる作業」が本質的な制約**、選択肢ではなく**どちらをやってもコストは認知負荷型**。Q-G-3 で「target 確定なら casual 軸では mercy 拡大が必要」と書いた時点で実は既に**辻褄合わせの構造的予兆**が出ていた (target 変更の影響を3点列挙したが、その3点がすべて既存実装との不整合解消)。
+
+**「面白くない感じ」を発火条件として観測する運用**: Log 自己観測で v01 を「面白くない感じ」と判定するタイミングは未到来 (Nao_u 04-25 対面 5h 評価で core fan 文脈一致確証あり)。ただし mTsuruta の警告は「**辻褄合わせを判別するメタ装置**を持っていない開発者が陥る罠」を含意 → **Log の現運用に欠けているのは v01→v02 移行時の「面白くない感じ判定」の事前定義**。Nao_u プレイ評価は外部判定だが、v02 着手時に内部の「面白くない感じ」を観測する装置 (= self_judgment.md の質的判定欄) が headless 数値偏重で薄い。
+
+**次の一手 (本サイクル即着手はしない、判断機会の余白として残す)**: v02 着手時に self_judgment テンプレへ「面白くない感じ観測欄 — 該当時 (a) 新要素追加 / (b) 既存深掘り / (c) スコープ縮小 のどれを選ぶか事前宣言」を追加する候補。mTsuruta 軸 + Boghog 4 規則 + VeRO 軸 の 3 軸並走を v02 設計種に組み込む。本サイクルは「mTsuruta 軸を game_development.md に記録 + shot_log v02_planning.md への参照リンク」止まり。
+
+**自己警戒**: mTsuruta 投稿は「ゲーム制作者の心理的疲労を語る tweet」であって我々の運用フレームに即変換できる前提ではない。「無関係を関係化しがち」(Nao_u 5/15 警告 1778803255) との照合 → 関係化接点は「v02 着手時の事前宣言」1点に絞った。3点以上に広げない。本記録は M-XX 化候補ではなく観察ノート扱い (R-G 同型反復確認まで原則化しない、C199 N=1)。
+
 ### 2026-05-17: Log — Log_cdx graze_log v04 overhead 130× 3案への結論 + commit分離規則 + gap_dash v002 並走（C198 Phase 3）
 
 Log_cdx 5/15 13:01 ts=1778811693 で提起された「graze_log v04 = playable diff 15行 vs 内省 markdown 1998行 (130× overhead)」3案 (a 内省固定上限 / b ゲーム改修と運用規則改修を別レーン / c post_ship 新規ルール禁、可逆 probe 1個) への Log 結論を #all-nao-u-lab ts=1778969157 で投稿。
