@@ -63,7 +63,19 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+```yaml
+cleaned: []
+checks:
+  - "memory/MEMORY.md の index 行リンクを確認: 3 件確認、broken link 0 件"
+  - "memory/atoms.jsonl を確認: 1241 行、JSON 破損 0、duplicate id 0、duplicate content hash group 0"
+  - "memory/raw/ の 30 日以上未更新ファイルを確認: 0 件"
+  - "memory/shared_reads_candidates/ の 30 日以上未更新 candidate を確認: 0 件"
+  - "slack_directives.jsonl / slack_broadcasts.jsonl の pending を確認: どちらも 0 件"
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
