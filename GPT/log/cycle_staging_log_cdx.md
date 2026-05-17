@@ -123,7 +123,74 @@ recommendation:
 ```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+2026-05-17T15:18+09:00 log_cdx Phase 4b
+
+```yaml
+designs:
+  - issue_id: ISS-4A-20260517-01
+    problem_restatement: >-
+      Slack 由来 atom の取り込み自体は成功しているが、Slack API 由来本文が文字化けした時に
+      title/excerpt/trigger/links が検索入口として壊れたまま残る。duplicate fold では検出できず、
+      game memory として重要な外部知見ほど、後続の recall で見つけにくくなる。
+    alternatives:
+      - name: candidate_restore_manifest
+        sketch: >-
+          high-question-mark atom を検出したら、source_ts または title 断片から
+          memory/shared_reads_candidates/*.md と Slack permalink を照合し、復元結果を
+          atom に restored_from_candidate / restored_reason / links として残す。
+        pros:
+          - 既に復元済み atom の前例があり、現状のデータモデルに近い。
+          - 復元根拠を atom 内に残せるため、後から誤復元を見つけやすい。
+          - candidate がある shared-reads では title/link/excerpt をかなり回復できる。
+        cons:
+          - candidate が存在しない Slack 投稿は復元できない。
+          - source_ts と candidate の対応が曖昧な場合、人手確認が必要。
+          - atom 本体を書き換えるため、誤復元時の rollback 手順を明記する必要がある。
+        migration_cost: low
+      - name: quarantine_index_only
+        sketch: >-
+          atom 本体は変更せず、文字化け疑いの atom id と理由だけを
+          memory 側の quarantine/index に記録し、recall や cleanup で警告として扱う。
+        pros:
+          - atom の内容を破壊せず、検出だけを先に導入できる。
+          - candidate がないものも「検索入口として弱い」と明示できる。
+          - 誤検出しても index を消すだけで戻せる。
+        cons:
+          - title/link/excerpt は直らないため、recall 品質の改善は間接的。
+          - index と atom の二重管理が増える。
+          - Phase D の per-file 移行後に index の置き場所を再検討する必要がある。
+        migration_cost: medium
+      - name: no_change_manual_research
+        sketch: >-
+          壊れた atom はそのままにし、必要になった時だけ元 Slack や候補ファイルを手で探す。
+          仕組みは追加しない。
+        pros:
+          - 実装・移行コストがない。
+          - 自動復元の誤対応リスクがない。
+          - 対象件数が少ない間は運用で吸収できる。
+        cons:
+          - ゲーム制作時の recall 漏れは解消しない。
+          - 同じ外部知見を再探索する時間が繰り返し発生する。
+          - Phase 4a で同種 issue が再検出され続ける。
+        migration_cost: low
+    recommended: candidate_restore_manifest
+    recommended_reason: >-
+      復元済み対照例 sr-1778963876-58b11df98c と同じ形を使えるため、現状からの距離が短い。
+      失敗時も restored_from_candidate/restored_reason が監査点になり、rollback 対象を限定できる。
+      quarantine だけでは recall 品質が直らないので、まず candidate があるものを小さく復元し、
+      candidate がないものだけ次回以降の検出対象として残すのが費用対効果が高い。
+    decision: introduce
+    decision_reason: >-
+      priority issue は 1 件で、対象 atom も Phase 4a evidence 上は少数に絞れている。
+      既存 schema への自然な追加で済み、Phase 4c で実装しても記憶階層全体への影響は限定的。
+      放置すると game-design / harness 系の重要 shared-reads が検索不能のまま残る。
+    outline_for_4c:
+      - "対象 atom id を固定リスト化し、candidate の有無を確認する。"
+      - "candidate が一意に対応する atom だけ title/excerpt/trigger/links/tags/status を復元する。"
+      - "復元した atom には restored_from_candidate と restored_reason を残す。"
+      - "candidate が見つからない atom は変更せず、Phase 4a の次回検出対象として staging に残す。"
+      - "atoms.jsonl と per-file atom/index の整合を保つ既存手順だけを使い、復元後に parse/duplicate/link の smoke check を行う。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
