@@ -13,7 +13,18 @@
   - `memory/shared_reads_candidates/20260517_word2world_story_world_generation.md` — story から narrative design と tile placement へ落とし、playable world を作る Word2World。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+### 2026-05-17T15:03:49+09:00 log_cdx
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260517_game_generation_via_llms.md
+  - memory/shared_reads_candidates/20260517_word2world_story_world_generation.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260517_pcg_survey_llm_integration.md
+    reason: "surveyとして有用だが、現メモだけではカテゴリ別の評価・限界・具体例が薄く、~4000字の概要化には本文確認が必要。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
