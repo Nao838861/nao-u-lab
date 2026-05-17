@@ -73,7 +73,33 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-17T10:33+09:00 log_cdx Phase 4a:
+
+```yaml
+cleaned: []
+checks:
+  memory_index_links:
+    checked: 2
+    broken: []
+    note: "`python tools/memory_ingest.py` はコマンド例であり、broken link 判定から除外。"
+  atoms_jsonl:
+    rows: 1236
+    parse_errors: 0
+    duplicate_ids: 0
+    duplicate_source_ts_groups: 0
+    duplicate_content_groups: 0
+  raw_archive_candidates:
+    older_than_30_days: 0
+  shared_reads_candidates:
+    older_than_30_days: 0
+  inbox:
+    pending_directives: 0
+    pending_broadcasts: 0
+issues: []
+recommendation:
+  needs_design: false
+  priority_issues: []
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
