@@ -37,6 +37,37 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-05-17)
 
+## Phase 2 外部入力分析（C199、2026-05-17 14:07〜）
+
+### 対象スキャン
+- twitter_recommended_20260517.txt (50件、本日 For You)
+- external_notes_mir.md 末尾（2026-05-13〜2026-05-17 durable 群: compassinai モード崩壊 / Insight Design / akari-horicchi-Kasiwa 削減軸 Seed-S / Lize 外部化テーゼ）
+
+### 注目4件のフィルタ結果
+
+| # | 発信者 | 命題 | 我々との接続軸 | 判定 |
+|---|---|---|---|---|
+| 3 | @OKtamajun | 大規模化で伝わりやすい既存システムに逃げる | compassinai モード崩壊の業界実例、ArakanCat 道具症候群の制度版 | **durable 化済、#shared-reads 候補（Phase 3 判定）** |
+| 27 | @mamiya_afi | 情報収集 = 決断恐怖からの逃避 | 絶対項目「ゲームを動かして出す」直撃、削減軸 Seed-S 心理機制補強 | **durable 化済、Mir 内向き、外部投稿見送り** |
+| 36 | @AI_masaou | AIで10倍火力なら自分も10倍出すのは情報アービトラージにすぎない | Lize 外部化テーゼ (5/16) 裏面、Mir 存在意義 | 観測のみ、durable 化見送り（命題深化が未達、1観測） |
+| 8/40 | @sanadamyu/@sinpen | STG史: 弾幕系/タイパ100円 | Zenji1 観測点 (5/17) 継続、足す/引く軸の足す方向臨界 | 観測のみ、durable 化見送り（Zenji1 観測点に統合候補、3例観測まで凍結） |
+
+### 最重要接続: 「核欠如経路」の業界レイヤー追加
+
+C195 で積んだ「核欠如経路 4 連結」(ArakanCat / compassinai / Insight Design / 足す-引く) に対し、本サイクル **OKtamajun が業界制度レイヤーで同型を補強**。連結は 5 本目候補だが、C154 即原則化禁止規律下で**凍結継続**。
+
+「核欠如経路」概念自体が便利すぎる吸引力を持ち始めた = **訓練分布中央に近い概念に育っている可能性**。compassinai モード崩壊の警告に従い、概念自体を逆指標として併用する pass を C200 以降の Phase 2 で試案。
+
+### 自己診断: 今サイクルが「逃避」になっていないか
+
+mamiya_afi 命題と M-40 警告（揺れ8/振幅24/罰24/進歩4）の合わせ技で、本 Phase 2 自体が「観測 → durable 化」で止まる構造的逃避になりうる懸念を記録。**Phase 3 / Phase 4 では knowledge 新規作成を控え、game/* の playable diff を最優先**とする方針を Phase 2 段階で予告。
+
+### Phase 3 への引き継ぎ
+- #shared-reads 投稿候補: OKtamajun #3（「核欠如経路の業界実例」として軽量投稿、Phase 3 判定）
+- knowledge 新規作成: 本サイクルは**しない**（C198 で2本書いた直後、M-40 量産警告）
+- #nao-u 返信: 全て見送り
+- Phase 4 (ゲーム動作) への着手担保: Phase 3 で必ず接続
+
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
   1. log/slack_archive/all-nao-u-lab.jsonl (2.3) — [U0ALW4DKTT7] 2026-03-25 01:29 Nao_uからdistill.py（Pot #3）のフィー...
