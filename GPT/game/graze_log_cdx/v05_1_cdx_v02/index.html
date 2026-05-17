@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+  <title>graze_log v05.2_cdx_v02 — BOMB burst / DEF midpoint</title>
+<style>
+  html,body{margin:0;background:#05050f;color:#cfd4e4;font-family:system-ui,sans-serif;
+            display:flex;flex-direction:column;align-items:center;min-height:100vh}
+  canvas{background:#07091a;box-shadow:0 0 40px #1b2040;display:block;margin-top:12px}
+  h1{font-size:14px;margin:8px 0 0;letter-spacing:.1em;color:#9fb1d8}
+  p{font-size:11px;opacity:.55;margin:4px 0 0}
+  #seedinfo{font-size:10px;opacity:.4;margin-top:4px}
+</style>
+</head>
+<body>
+<h1>GRAZE</h1>
+  <p>← → ↑ ↓ / WASD MOVE &middot; SPACE START / BOMB(B) / ACTIVE DEF(D) / RETRY &middot; M MUTE</p>
+<canvas id="c" width="420" height="620"></canvas>
+<p id="seedinfo"></p>
+<script>
+const W=420,H=620;
+const RETRY_UNLOCK_FRAMES=240;
+const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
+const seedinfo=document.getElementById('seedinfo');
+const keys={};
+let muted=false;
+
+// === SEED (v04) — ?seed=N で再現実行可 ===
+const SEED=(function(){
+  const u=new URLSearchParams(location.search).get('seed');
+  if(u){const n=parseInt(u,10);if(!isNaN(n))return n>>>0;}
+  return (Date.now()&0xFFFFFFFF)>>>0;
+})();
+function mulberry32(s){
+  s=s>>>0;
+  return function(){
+    s=(s+0x6D2B79F5)>>>0;
+    let t=s;
+    t=Math.imul(t^(t>>>15),t|1);
+    t^=t+Math.imul(t^(t>>>7),t|61);
+    return ((t^(t>>>14))>>>0)/4294967296;
+  };
+}
+seedinfo.textContent=`seed=${SEED}  (?seed=N to reproduce)`;
+
+// === v05 beta B-1: SEED 保存 infra (cross_review aad8e17b1 §1) ===
+// 設計: localStorage `graze_log_recent_seeds` に直近 10 件、startGame() 時に push、
+// gameOver() 時に console.log で標準出力にも残す。?seed=N で再現可能。
+// 削除手順: pushSeedToLocal() / console.log('graze_log seed:', state.seed) の 2 行を消せば v05 alpha と等価。
+function pushSeedToLocal(seed){
+  try{
+    const raw=localStorage.getItem('graze_log_recent_seeds')||'[]';
+    const arr=JSON.parse(raw);
+    arr.unshift({seed:seed,t:Date.now()});
+    while(arr.length>10)arr.pop();
+    localStorage.setItem('graze_log_recent_seeds',JSON.stringify(arr));
+  }catch(e){}
+}
+
+// === GAUGE THRESHOLDS — region-based (M-24 区切りを変えろ) ===
+const G_MAX=208;
+const G_LV2=35;   // Lv1 -> Lv2
+const G_LV3=99;   // Lv2 -> Lv3
+// gauge >= G_MAX: BOMB ready
+
+// === GRAZE / HIT RADII ===
+const R_GRAZE=22;
+const R_HIT=8;
+
+// === GRAZE REWARD ===
+const GRAZE_GAUGE=6;
+const GRAZE_SCORE=10;
+
+// === KILL REWARD ===
+const KILL_SMALL_GAUGE=2;
+const KILL_MED_GAUGE=4;
+
+// === v03 ADDITION: grazeStreak → active defense (Psyvariar 型) ===
+// brainstorm.md §2 候補A、predicted_play.md 参照
+// 削除手順: GRAZE_STREAK_TH / ACTIVE_DEF_FRAMES / ACTIVE_DEF_RADIUS の3定数、
+// state.grazeStreak / state.activeDefT、triggerActiveDef()、SPACE 分岐の D 経路、
+// HUD の streak/context 表示 を消せば v02 に戻る
+const GRAZE_STREAK_TH=8;
+const ACTIVE_DEF_FRAMES=42;
+const ACTIVE_DEF_RADIUS=62;
+
+// === v04 ADDITION: graze→bullet 軌道予測線 (α'') ===
+// (v05 で「擦った弾のみ」→「全弾常時軌跡」に拡張、v04 仕様は graze 時の追加効果として温存)
+const GRAZE_TRAIL_FRAMES=90;
+const GRAZE_TRAIL_LEN=70;
+
+// === v05 MOD: 全弾常時軌跡 (Mir 案合流) ===
+// 設計: 軌跡を「graze 報酬」から「常時の知覚層」に降格、graze は副次効果に
+// 削除手順 (v05→v04): ebullet 生成時の grazedT 初期値を 0 に戻す、
+// update() 内の grazedT クランプを `if(b.grazedT>0)b.grazedT--;` に戻す
+// (定数・draw()・onGraze 周辺は v04 と同一バイト列)
+
+// === v05.1 MOD: 弾速 ±10% evolve (Sparen rhythm崩し試作) ===
+// 設計: graze_log v04 Nao_u 指摘 (5/14 ts=1778767221「リズム/バリエーション必要」) への応答。
+// Sparen Guide A2「evolveパターンで dodge リズム形成を阻害」+ Boghog「速度の加減速段階で
+// mental adjustment を継続させる」を、medium enemy の発射弾に適用。
+// 各 enemy の発射回数 firedCount で「序盤 (1-3発目: 0.9倍)」「中盤以降 (4発目〜: 1.1倍)」を切替。
+// enemy ごとの時間軸で evolve するため、wave 全体の位相を共有しない (個別 evolve)。
+// 効果仮説: 全弾常時軌跡 (v05) は予測の恒常化、本 evolve は予測前提の崩し → 緊張関係を体感。
+// 削除手順 (v05.1→v05): EVOLVE_SLOW/FAST 定数、enemy.firedCount 初期値、fire 時の sp 計算、
+// title 表示文字列を v05 に戻す。
+const EVOLVE_SLOW=0.9;
+const EVOLVE_FAST=1.1;
+const EVOLVE_FIRED_TH=3; // firedCount >= TH+1 で FAST へ
+
+// === v05.2_cdx_v02 MOD: BOMB を「損な全消去」から短時間 burst へ戻す ===
+// 設計: Nao_u 指摘「BOMB を撃つとパワーダウンして逆に不利」を解くため、
+// BOMB 後は LV3 を保持し、短時間だけ連射/弾数を強める。v02 では v01 の 6s/8s から
+// 4s/10s に振り、撃った直後の報酬と次を待つ通常射撃時間を分ける。
+// Active DEF は graze 8連・半径62・0.7秒にし、v05.1 より重く、v01 より初回到達しやすい中間に置く。
+// 削除手順 (v05.2_cdx_v02→v05.1): BOMB_* 定数、state overdrive/cooldown、shotCount/shotCooldownF/fireBomb/drawHUD
+// の overdrive/cooldown 分岐を戻し、GRAZE_STREAK_TH/ACTIVE_DEF_* を 5/60/80 に戻す。
+const BOMB_COOLDOWN_FRAMES=600;
+const BOMB_OVERDRIVE_FRAMES=240;
+
+const state={
+  mode:'title',
+  t:0,
+  player:{x:W/2,y:H-80,r:5,iframe:0},
+  bullets:[],
+  ebullets:[],
+  enemies:[],
+  particles:[],
+  rings:[],
+  popups:[],
+  gauge:0,
+  score:0,
+  hiscore:(function(){try{return parseInt(localStorage.getItem('grazelog_hi')||'0',10);}catch(e){return 0;}})(),
+  grazeCount:0,
+  bombCount:0,
+  killCount:0,
+  spawnT:0,
+  wave:0,
+  unlockT:0,
+  bombFlash:0,
+  bombCooldownT:0,
+  overdriveT:0,
+  hitFlash:0,
+  shotCooldown:0,
+  introMedSpawned:false,
+  stars:[],
+  rng:mulberry32(SEED),
+  // v03 additions
+  grazeStreak:0,
+  activeDefT:0,
+  activeDefCount:0,
+};
+
+function initStars(){
+  state.stars.length=0;
+  for(let i=0;i<60;i++)state.stars.push({x:state.rng()*W,y:state.rng()*H,layer:0});
+  for(let i=0;i<35;i++)state.stars.push({x:state.rng()*W,y:state.rng()*H,layer:1});
+  for(let i=0;i<18;i++)state.stars.push({x:state.rng()*W,y:state.rng()*H,layer:2});
+}
+initStars();
+
+function gaugeLevel(g){
+  if(g>=G_LV3)return 3;
+  if(g>=G_LV2)return 2;
+  return 1;
+}
+function gaugeReady(){return state.gauge>=G_MAX;}
+function bombReady(){return gaugeReady()&&state.bombCooldownT<=0;}
+
+// v03: SPACE 押下時の文脈判定
+// 'B' = BOMB ready, 'C' = BOMB cooldown, 'D' = active defense ready, '-' = nothing
+function spaceContext(){
+  if(bombReady())return 'B';
+  if(gaugeReady()&&state.bombCooldownT>0)return 'C';
+  if(state.grazeStreak>=GRAZE_STREAK_TH)return 'D';
+  return '-';
+}
+
+function addGauge(d){
+  state.gauge=Math.max(0,Math.min(G_MAX,state.gauge+d));
+}
+
+function shotCount(){
+  const lv=gaugeLevel(state.gauge);
+  if(state.overdriveT>0)return Math.max(lv,3)+2;
+  return lv;
+}
+function shotCooldownF(){
+  const lv=gaugeLevel(state.gauge);
+  if(state.overdriveT>0)return 4;
+  return lv===3?6:lv===2?7:8;
+}
+
+function spawnPlayerBullets(){
+  const n=shotCount();
+  const px=state.player.x,py=state.player.y-8;
+  if(n===1){
+    state.bullets.push({x:px,y:py,vx:0,vy:-9});
+  }else if(n===2){
+    state.bullets.push({x:px-5,y:py,vx:0,vy:-9});
+    state.bullets.push({x:px+5,y:py,vx:0,vy:-9});
+  }else if(n===3){
+    state.bullets.push({x:px,y:py,vx:0,vy:-9});
+    state.bullets.push({x:px-7,y:py+2,vx:-1.5,vy:-9});
+    state.bullets.push({x:px+7,y:py+2,vx:1.5,vy:-9});
+  }else{
+    state.bullets.push({x:px,y:py,vx:0,vy:-9.6});
+    state.bullets.push({x:px-7,y:py+2,vx:-1.4,vy:-9.2});
+    state.bullets.push({x:px+7,y:py+2,vx:1.4,vy:-9.2});
+    state.bullets.push({x:px-13,y:py+4,vx:-2.4,vy:-8.5});
+    state.bullets.push({x:px+13,y:py+4,vx:2.4,vy:-8.5});
+  }
+}
+
+function spawnEnemy(type,x,phase){
+  if(type==='small'){
+    state.enemies.push({type,x,y:-12,vx:0,vy:1.6,r:9,hp:1,t:0,fireT:9999,phase:phase||0,firedCount:0});
+  }else{ // medium
+    state.enemies.push({type,x,y:-16,vx:0,vy:0.9,r:13,hp:3,t:0,fireT:60+Math.floor(state.rng()*40),phase:phase||0,firedCount:0});
+  }
+}
+
+function startGame(){
+  state.mode='play';
+  pushSeedToLocal(SEED); // v05 beta B-1: seed 保存 infra
+  state.t=0;
+  state.player.x=W/2;state.player.y=H-80;state.player.iframe=0;
+  state.bullets.length=0;
+  state.ebullets.length=0;
+  state.enemies.length=0;
+  state.particles.length=0;
+  state.rings.length=0;
+  state.popups.length=0;
+  state.gauge=0;
+  state.score=0;
+  state.grazeCount=0;
+  state.bombCount=0;
+  state.killCount=0;
+  state.spawnT=0;
+  state.wave=0;
+  state.bombFlash=0;
+  state.bombCooldownT=0;
+  state.overdriveT=0;
+  state.hitFlash=0;
+  state.shotCooldown=0;
+  state.introMedSpawned=false;
+  // v03 reset
+  state.grazeStreak=0;
+  state.activeDefT=0;
+  state.activeDefCount=0;
+  // 注: state.rng は再シード**しない**。1セッション通しで一系列。
+  // 再現したければ ?seed=N で同一 SEED 起動。
+}
+
+function gameOver(){
+  state.mode='over';
+  console.log('graze_log seed:',SEED,'score:',state.score,'wave:',state.wave); // v05 beta B-1: seed 保存 infra
+  state.unlockT=RETRY_UNLOCK_FRAMES;
+  if(state.score>state.hiscore){
+    state.hiscore=state.score;
+    try{localStorage.setItem('grazelog_hi',String(state.hiscore));}catch(e){}
+  }
+  for(let i=0;i<140;i++){
+    const a=state.rng()*Math.PI*2,sp=2+state.rng()*9;
+    const c=['#ffd870','#ff6080','#80c0ff'][i%3];
+    state.particles.push({x:state.player.x,y:state.player.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:80+state.rng()*30,c,r:1.5+state.rng()*1.5});
+  }
+}
+
+function fireBomb(){
+  if(!bombReady())return;
+  state.bombCount++;
+  for(const b of state.ebullets){
+    state.score+=20;
+    state.particles.push({x:b.x,y:b.y,vx:0,vy:0,life:14,c:'#ffd870',r:3});
+  }
+  state.ebullets.length=0;
+  for(const e of state.enemies){
+    e.hp=Math.max(1,e.hp-2);
+  }
+  state.gauge=G_LV3;
+  state.overdriveT=BOMB_OVERDRIVE_FRAMES;
+  state.bombCooldownT=BOMB_COOLDOWN_FRAMES;
+  state.bombFlash=24;
+  for(let i=0;i<3;i++){
+    state.rings.push({x:state.player.x,y:state.player.y,t:i*4,life:30,c:'#ffd870',r0:20,r1:Math.min(W,H)*0.7});
+  }
+}
+
+// v03 ADDITION: Psyvariar 型 active 防御発火
+// grazeStreak >= GRAZE_STREAK_TH の時 SPACE で発火
+// 1秒の自機無敵 + 半径 ACTIVE_DEF_RADIUS の弾消去
+// 発火後 grazeStreak = 0 リセット
+function triggerActiveDef(){
+  if(state.grazeStreak<GRAZE_STREAK_TH)return;
+  state.activeDefCount++;
+  state.grazeStreak=0;
+  state.activeDefT=ACTIVE_DEF_FRAMES;
+  state.player.iframe=Math.max(state.player.iframe,ACTIVE_DEF_FRAMES);
+  // 半径内の敵弾を消去 (BOMB の全画面消去より弱い局所版)
+  const r2=ACTIVE_DEF_RADIUS*ACTIVE_DEF_RADIUS;
+  let cleared=0;
+  for(const b of state.ebullets){
+    const dx=b.x-state.player.x,dy=b.y-state.player.y;
+    if(dx*dx+dy*dy<r2){
+      state.score+=10;
+      cleared++;
+      state.particles.push({x:b.x,y:b.y,vx:0,vy:0,life:12,c:'#80ffd0',r:2.5});
+      b.y=H+999;
+    }
+  }
+  state.ebullets=state.ebullets.filter(b=>b.y<H+100);
+  // active def 視覚 — BOMB と区別しやすい cyan-green 色のリング
+  state.rings.push({x:state.player.x,y:state.player.y,t:0,life:ACTIVE_DEF_FRAMES,c:'#80ffd0',r0:R_GRAZE,r1:ACTIVE_DEF_RADIUS});
+  state.popups.push({x:state.player.x,y:state.player.y-20,text:`DEF x${cleared}`,life:30,c:'#80ffd0'});
+}
+
+// === v05 beta B-1: 敵配置 rhyme (spawnWave wave 1-4 関数化 + wave>=5 70% 過去 wave 再使用) ===
+// 設計: gamedeveloper "Breaking the Shmup Dogma" の rhyme (反復記憶可能性) を spawnWave に翻訳。
+// wave 1-4 を spawnWave1..spawnWave4 に切り出して個別関数化、wave>=5 は 70% で過去 wave を再使用、
+// 30% は random spawn を維持し「同じパターンが返ってくる」体験 + 完全に同じではない揺らぎを両立。
+// 削除手順 (v05 beta B-1 → v05 alpha): WAVE_FUNCS 配列 / wave>=5 の rng 分岐を消し、
+// 旧来の `const pop=4+Math.min(w-4,6); for(...) state.rng()<0.6 spawn ...` に戻す。
+// spawnWave1..4 は spawnWave 本体に inline で戻せば v04 と等価。
+function spawnWave1(){
+  spawnEnemy('small',W*0.30);
+  spawnEnemy('small',W*0.50);
+  spawnEnemy('small',W*0.70);
+  setTimeout(()=>{
+    if(state.mode==='play'){
+      spawnEnemy('medium',W*0.5);
+      state.introMedSpawned=true;
+    }
+  },1200);
+}
+function spawnWave2(){
+  spawnEnemy('small',W*0.2);
+  spawnEnemy('small',W*0.4);
+  spawnEnemy('small',W*0.6);
+  spawnEnemy('small',W*0.8);
+  spawnEnemy('medium',W*0.3);
+  spawnEnemy('medium',W*0.7);
+}
+function spawnWave3(){
+  for(let i=0;i<6;i++)spawnEnemy('small',W*0.15+i*W*0.14);
+  spawnEnemy('medium',W*0.5);
+}
+function spawnWave4(){
+  spawnEnemy('medium',W*0.25);
+  spawnEnemy('medium',W*0.5);
+  spawnEnemy('medium',W*0.75);
+  for(let i=0;i<4;i++)spawnEnemy('small',W*0.2+i*W*0.2);
+}
+function spawnWaveRandom(w){
+  const pop=4+Math.min(w-4,6);
+  for(let i=0;i<pop;i++){
+    if(state.rng()<0.6)spawnEnemy('small',60+state.rng()*(W-120));
+    else spawnEnemy('medium',60+state.rng()*(W-120));
+  }
+}
+const WAVE_FUNCS=[spawnWave1,spawnWave2,spawnWave3,spawnWave4];
+function spawnWave(){
+  state.wave++;
+  const w=state.wave;
+  if(w===1){spawnWave1();return;}
+  if(w===2){spawnWave2();return;}
+  if(w===3){spawnWave3();return;}
+  if(w===4){spawnWave4();return;}
+  // wave >= 5: 70% で過去 wave 1-4 を rhyme として再使用、30% で random
+  if(state.rng()<0.7){
+    const idx=Math.floor(state.rng()*WAVE_FUNCS.length);
+    WAVE_FUNCS[idx]();
+  }else{
+    spawnWaveRandom(w);
+  }
+}
+
+function update(){
+  state.t++;
+  for(const s of state.stars){
+    s.y+=[0.4,0.8,1.6][s.layer];
+    if(s.y>H){s.y=-2;s.x=state.rng()*W;}
+  }
+  if(state.mode!=='play'){
+    if(state.unlockT>0)state.unlockT--;
+    updateEffects();
+    return;
+  }
+  const left=keys['arrowleft']||keys['a'];
+  const right=keys['arrowright']||keys['d'];
+  const up=keys['arrowup']||keys['w'];
+  const down=keys['arrowdown']||keys['s'];
+  let dx=0,dy=0;
+  if(left)dx-=1;if(right)dx+=1;if(up)dy-=1;if(down)dy+=1;
+  if(dx&&dy){dx*=0.707;dy*=0.707;}
+  state.player.x+=dx*4.2;
+  state.player.y+=dy*4.2;
+  state.player.x=Math.max(8,Math.min(W-8,state.player.x));
+  state.player.y=Math.max(20,Math.min(H-12,state.player.y));
+  if(state.player.iframe>0)state.player.iframe--;
+  if(state.bombCooldownT>0)state.bombCooldownT--;
+  if(state.overdriveT>0)state.overdriveT--;
+  // v03: active def 残時間
+  if(state.activeDefT>0)state.activeDefT--;
+
+  if(state.shotCooldown>0)state.shotCooldown--;
+  else{
+    spawnPlayerBullets();
+    state.shotCooldown=shotCooldownF();
+  }
+
+  for(const b of state.bullets){
+    b.x+=b.vx;b.y+=b.vy;
+  }
+  state.bullets=state.bullets.filter(b=>b.y>-12&&b.x>-12&&b.x<W+12);
+
+  state.spawnT--;
+  if(state.spawnT<=0&&state.enemies.length<3){
+    spawnWave();
+    state.spawnT=160-Math.min(state.wave*8,80);
+  }
+
+  for(const e of state.enemies){
+    e.t++;
+    if(e.type==='small'){
+      e.y+=e.vy;
+    }else{
+      e.y+=e.vy;
+      e.x+=Math.sin(e.t*0.04+e.phase)*1.4;
+      e.fireT--;
+      if(e.fireT<=0&&e.y>0&&e.y<H*0.55){
+        const dx=state.player.x-e.x,dy=state.player.y-e.y;
+        const d=Math.hypot(dx,dy)||1;
+        // v05.1: enemy ごとの firedCount で sp evolve (1-3発目=SLOW、4発目〜=FAST)
+        e.firedCount++;
+        const sp=2.4*(e.firedCount>EVOLVE_FIRED_TH?EVOLVE_FAST:EVOLVE_SLOW);
+        state.ebullets.push({x:e.x,y:e.y,vx:dx/d*sp,vy:dy/d*sp,grazed:false,grazedT:GRAZE_TRAIL_FRAMES});
+        e.fireT=70+Math.floor(state.rng()*40);
+      }
+    }
+  }
+  for(const b of state.bullets){
+    for(const e of state.enemies){
+      if(e.hp<=0)continue;
+      const dx=b.x-e.x,dy=b.y-e.y;
+      if(dx*dx+dy*dy<(e.r+3)*(e.r+3)){
+        e.hp--;
+        b.y=-99;
+        for(let i=0;i<3;i++){
+          const a=state.rng()*Math.PI*2,sp=1+state.rng()*1.5;
+          state.particles.push({x:b.x,y:b.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:8,c:'#5a6478',r:1.5});
+        }
+        if(e.hp<=0){
+          state.killCount++;
+          if(e.type==='small'){
+            state.score+=10;
+            addGauge(KILL_SMALL_GAUGE);
+            for(let i=0;i<5;i++){
+              const a=state.rng()*Math.PI*2,sp=1.5+state.rng()*1.5;
+              state.particles.push({x:e.x,y:e.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:14,c:'#7a8498',r:1.6});
+            }
+          }else{
+            state.score+=40;
+            addGauge(KILL_MED_GAUGE);
+            for(let i=0;i<10;i++){
+              const a=state.rng()*Math.PI*2,sp=1.5+state.rng()*2.5;
+              state.particles.push({x:e.x,y:e.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:16,c:'#8a94a8',r:1.8});
+            }
+          }
+        }
+        break;
+      }
+    }
+  }
+  state.bullets=state.bullets.filter(b=>b.y>-12);
+  state.enemies=state.enemies.filter(e=>e.hp>0&&e.y<H+30);
+
+  for(const b of state.ebullets){
+    b.x+=b.vx;b.y+=b.vy;
+    b.grazedT=GRAZE_TRAIL_FRAMES; // v05: 常時 max にクランプ (減衰させない)
+    const dx=b.x-state.player.x,dy=b.y-state.player.y;
+    const d2=dx*dx+dy*dy;
+    if(d2<R_HIT*R_HIT){
+      if(state.player.iframe<=0){
+        onHit();
+        b.y=H+99;
+      }
+    }else if(!b.grazed&&d2<R_GRAZE*R_GRAZE){
+      b.grazed=true;
+      b.grazedT=GRAZE_TRAIL_FRAMES;
+      onGraze(b.x,b.y);
+    }
+  }
+  state.ebullets=state.ebullets.filter(b=>b.x>-20&&b.x<W+20&&b.y>-20&&b.y<H+20);
+
+  if(state.player.iframe<=0){
+    for(const e of state.enemies){
+      const dx=state.player.x-e.x,dy=state.player.y-e.y;
+      if(dx*dx+dy*dy<(e.r+state.player.r)*(e.r+state.player.r)){
+        onHit();
+        break;
+      }
+    }
+  }
+
+  // v03: SPACE 文脈分岐
+  // gauge MAX → BOMB / それ以外 + grazeStreak >= TH → active def / それ以外 → 何もしない
+  if(keys['space_press']){
+    keys['space_press']=false;
+    if(bombReady()){
+      fireBomb();
+    }else if(state.grazeStreak>=GRAZE_STREAK_TH){
+      triggerActiveDef();
+    }
+  }
+
+  updateEffects();
+}
+
+function updateEffects(){
+  for(const p of state.particles){p.x+=p.vx;p.y+=p.vy;p.vx*=0.96;p.vy*=0.96;p.life--;}
+  state.particles=state.particles.filter(p=>p.life>0);
+  for(const r of state.rings){r.t++;}
+  state.rings=state.rings.filter(r=>r.t<r.life);
+  for(const p of state.popups){p.life--;p.y-=0.6;}
+  state.popups=state.popups.filter(p=>p.life>0);
+  if(state.bombFlash>0)state.bombFlash--;
+  if(state.hitFlash>0)state.hitFlash--;
+}
+
+function onGraze(bx,by){
+  state.grazeCount++;
+  // v03: grazeStreak インクリメント
+  state.grazeStreak++;
+  addGauge(GRAZE_GAUGE);
+  state.score+=GRAZE_SCORE*gaugeLevel(state.gauge);
+  state.rings.push({x:state.player.x,y:state.player.y,t:0,life:18,c:'#ffd870',r0:R_GRAZE-2,r1:R_GRAZE+18});
+  state.popups.push({x:bx+(state.rng()-0.5)*8,y:by-6,text:'+'+GRAZE_GAUGE,life:30,c:'#ffd870'});
+  // v03: streak が閾値到達した瞬間に小さい告知
+  if(state.grazeStreak===GRAZE_STREAK_TH){
+    state.popups.push({x:state.player.x,y:state.player.y-30,text:'DEF READY',life:40,c:'#80ffd0'});
+  }
+}
+
+function onHit(){
+  const lv=gaugeLevel(state.gauge);
+  state.player.iframe=24;
+  state.hitFlash=4;
+  if(lv===3){
+    state.gauge=G_LV2;
+    spawnHitParticles('#ffd870');
+  }else if(lv===2){
+    state.gauge=0;
+    spawnHitParticles('#ff8a8a');
+  }else{
+    gameOver();
+    return;
+  }
+}
+
+function spawnHitParticles(c){
+  for(let i=0;i<10;i++){
+    const a=state.rng()*Math.PI*2,sp=1+state.rng()*2;
+    state.particles.push({x:state.player.x,y:state.player.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:18,c,r:1.5});
+  }
+}
+
+// === DRAW ===
+function draw(){
+  ctx.fillStyle='#07091a';
+  ctx.fillRect(0,0,W,H);
+  for(const s of state.stars){
+    const op=[0.35,0.55,0.85][s.layer];
+    const r=[0.7,1.0,1.4][s.layer];
+    ctx.fillStyle=`rgba(180,200,255,${op})`;
+    ctx.fillRect(s.x-r/2,s.y-r/2,r,r);
+  }
+  ctx.fillStyle='#9fb1d8';
+  for(const b of state.bullets){
+    ctx.fillRect(b.x-1.5,b.y-5,3,8);
+  }
+  for(const e of state.enemies){
+    if(e.type==='small'){
+      ctx.fillStyle='#ff5060';
+      ctx.beginPath();ctx.arc(e.x,e.y,e.r,0,Math.PI*2);ctx.fill();
+    }else{
+      ctx.fillStyle='#ffa030';
+      ctx.beginPath();ctx.arc(e.x,e.y,e.r,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#fff080';
+      ctx.beginPath();ctx.arc(e.x,e.y,e.r-5,0,Math.PI*2);ctx.fill();
+    }
+  }
+  for(const b of state.ebullets){
+    // v05: 全弾常時軌跡 (grazedT は常に max 固定、fade は常に 1.0)
+    if(b.grazedT>0){
+      const fade=b.grazedT/GRAZE_TRAIL_FRAMES;
+      const sp=Math.hypot(b.vx,b.vy)||1;
+      const fx=b.x+b.vx/sp*GRAZE_TRAIL_LEN;
+      const fy=b.y+b.vy/sp*GRAZE_TRAIL_LEN;
+      ctx.strokeStyle=`rgba(255,216,112,${0.22*fade})`;
+      ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(b.x,b.y);ctx.lineTo(fx,fy);ctx.stroke();
+    }
+    const dx=b.x-state.player.x,dy=b.y-state.player.y;
+    const d2=dx*dx+dy*dy;
+    const inGrazeRing=!b.grazed&&d2<R_GRAZE*R_GRAZE;
+    ctx.fillStyle=inGrazeRing?'#ffd870':b.grazed?'#a08040':'#ff90a0';
+    ctx.beginPath();ctx.arc(b.x,b.y,3,0,Math.PI*2);ctx.fill();
+  }
+  for(const r of state.rings){
+    const k=r.t/r.life;
+    const cur=r.r0+(r.r1-r.r0)*k;
+    ctx.strokeStyle=r.c;
+    ctx.globalAlpha=Math.max(0,1-k);
+    ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(r.x,r.y,cur,0,Math.PI*2);ctx.stroke();
+    ctx.globalAlpha=1;
+  }
+  for(const p of state.particles){
+    ctx.globalAlpha=Math.max(0,Math.min(1,p.life/20));
+    ctx.fillStyle=p.c;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r||1.5,0,Math.PI*2);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+  if(state.mode==='play'){
+    const flicker=state.player.iframe>0&&(state.t%4<2);
+    if(!flicker){
+      const lv=gaugeLevel(state.gauge);
+      ctx.fillStyle=lv===3?'#ffd870':lv===2?'#80d0ff':'#9fe0ff';
+      ctx.beginPath();
+      ctx.moveTo(state.player.x,state.player.y-8);
+      ctx.lineTo(state.player.x-7,state.player.y+6);
+      ctx.lineTo(state.player.x+7,state.player.y+6);
+      ctx.closePath();ctx.fill();
+      if(bombReady()){
+        const pulse=0.5+0.5*Math.sin(state.t*0.2);
+        ctx.strokeStyle=`rgba(255,216,112,${0.5+pulse*0.5})`;
+        ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(state.player.x,state.player.y,14,0,Math.PI*2);ctx.stroke();
+      }
+      ctx.strokeStyle='rgba(255,216,112,0.10)';
+      ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(state.player.x,state.player.y,R_GRAZE,0,Math.PI*2);ctx.stroke();
+      // v03: active def 残時間中はシールド表示 (cyan-green の細リング)
+      if(state.activeDefT>0){
+        const ad=state.activeDefT/ACTIVE_DEF_FRAMES;
+        ctx.strokeStyle=`rgba(128,255,208,${0.35+0.45*ad})`;
+        ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(state.player.x,state.player.y,17,0,Math.PI*2);ctx.stroke();
+      }
+      if(state.overdriveT>0){
+        const od=state.overdriveT/BOMB_OVERDRIVE_FRAMES;
+        ctx.strokeStyle=`rgba(255,120,80,${0.25+0.35*od})`;
+        ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(state.player.x,state.player.y,20,0,Math.PI*2);ctx.stroke();
+      }
+      // v03: streak 閾値到達中はプレイヤー周囲に小さい cyan-green マーカー
+      if(state.grazeStreak>=GRAZE_STREAK_TH&&state.activeDefT<=0){
+        const pulse=0.4+0.6*Math.abs(Math.sin(state.t*0.15));
+        ctx.strokeStyle=`rgba(128,255,208,${pulse*0.7})`;
+        ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.arc(state.player.x,state.player.y,11,0,Math.PI*2);ctx.stroke();
+      }
+    }
+  }
+  for(const p of state.popups){
+    ctx.globalAlpha=Math.max(0,p.life/30);
+    ctx.fillStyle=p.c;
+    ctx.font='bold 11px system-ui';
+    ctx.textAlign='center';
+    ctx.fillText(p.text,p.x,p.y);
+  }
+  ctx.globalAlpha=1;
+  ctx.textAlign='left';
+
+  if(state.hitFlash>0){
+    ctx.fillStyle=`rgba(255,40,80,${state.hitFlash/4*0.4})`;
+    ctx.fillRect(0,0,W,H);
+  }
+  if(state.bombFlash>0){
+    ctx.fillStyle=`rgba(255,216,112,${state.bombFlash/24*0.35})`;
+    ctx.fillRect(0,0,W,H);
+  }
+
+  drawHUD();
+  if(state.mode==='title')drawTitle();
+  if(state.mode==='over')drawOver();
+}
+
+function drawHUD(){
+  const gx=10,gy=H-14,gw=W-20,gh=8;
+  ctx.fillStyle='#1a1f30';
+  ctx.fillRect(gx,gy,gw,gh);
+  const px2=gx+gw*(G_LV2/G_MAX);
+  const px3=gx+gw*(G_LV3/G_MAX);
+  const cur=state.gauge/G_MAX;
+  const filled=gw*cur;
+  if(state.gauge>0){
+    if(state.gauge<=G_LV2){
+      ctx.fillStyle='#4a7fc0';
+      ctx.fillRect(gx,gy,filled,gh);
+    }else if(state.gauge<=G_LV3){
+      ctx.fillStyle='#4a7fc0';
+      ctx.fillRect(gx,gy,gw*(G_LV2/G_MAX),gh);
+      ctx.fillStyle='#60c0ff';
+      ctx.fillRect(gx+gw*(G_LV2/G_MAX),gy,filled-gw*(G_LV2/G_MAX),gh);
+    }else{
+      ctx.fillStyle='#4a7fc0';
+      ctx.fillRect(gx,gy,gw*(G_LV2/G_MAX),gh);
+      ctx.fillStyle='#60c0ff';
+      ctx.fillRect(gx+gw*(G_LV2/G_MAX),gy,gw*((G_LV3-G_LV2)/G_MAX),gh);
+      ctx.fillStyle=gaugeReady()?'#ffd870':'#ffa040';
+      ctx.fillRect(gx+gw*(G_LV3/G_MAX),gy,filled-gw*(G_LV3/G_MAX),gh);
+    }
+  }
+  ctx.fillStyle='#0a0c1a';
+  ctx.fillRect(px2-1,gy,2,gh);
+  ctx.fillRect(px3-1,gy,2,gh);
+  ctx.strokeStyle='#404858';
+  ctx.lineWidth=1;
+  ctx.strokeRect(gx+0.5,gy+0.5,gw-1,gh-1);
+
+  ctx.fillStyle='#cfd4e4';
+  ctx.font='bold 11px system-ui';
+  ctx.textAlign='left';
+  ctx.fillText(`SCORE ${state.score}`,10,16);
+  ctx.fillText(`HI ${state.hiscore}`,W-90,16);
+  ctx.font='10px system-ui';
+  ctx.fillStyle='#9fb1d8';
+  // v03: STREAK と DEF 回数を 1 行に追加表示
+  ctx.fillText(`LV${gaugeLevel(state.gauge)}  GRAZE ${state.grazeCount}  KILL ${state.killCount}  STREAK ${state.grazeStreak}/${GRAZE_STREAK_TH}  DEF ${state.activeDefCount}`,10,30);
+  if(state.overdriveT>0){
+    ctx.fillStyle='#ffb070';
+    ctx.fillText(`OVERDRIVE ${(state.overdriveT/60).toFixed(1)}s`,10,44);
+  }
+  // v03: SPACE 文脈表示 (B / D / -) を BOMB 表示位置と兼用
+  const ctx2=spaceContext();
+  if(ctx2==='B'){
+    ctx.fillStyle='#ffd870';
+    ctx.font='bold 11px system-ui';
+    ctx.fillText('SPACE [B]OMB',W-104,30);
+  }else if(ctx2==='C'){
+    ctx.fillStyle='#ffb070';
+    ctx.font='bold 10px system-ui';
+    ctx.fillText(`BOMB CD ${Math.ceil(state.bombCooldownT/60)}s`,W-104,30);
+  }else if(ctx2==='D'){
+    ctx.fillStyle='#80ffd0';
+    ctx.font='bold 11px system-ui';
+    ctx.fillText('SPACE [D]EF',W-90,30);
+  }else{
+    ctx.fillStyle='#506080';
+    ctx.font='10px system-ui';
+    ctx.fillText('SPACE [-]',W-72,30);
+  }
+}
+
+function drawTitle(){
+  ctx.fillStyle='rgba(7,9,26,0.7)';
+  ctx.fillRect(0,H/2-110,W,240);
+  ctx.textAlign='center';
+  ctx.fillStyle='#ffd870';
+  ctx.font='bold 28px system-ui';
+  ctx.fillText('GRAZE',W/2,H/2-50);
+  ctx.fillStyle='#9fb1d8';
+  ctx.font='11px system-ui';
+  ctx.fillText("graze_log v05.2_cdx_v02 (BOMB burst / DEF midpoint)",W/2,H/2-28);
+  ctx.fillStyle='#cfd4e4';
+  ctx.font='12px system-ui';
+  ctx.fillText('GRAZE → 軌道予測線 + MAX → BOMB OVERDRIVE',W/2,H/2);
+  ctx.fillText(`GRAZE 連続 ${GRAZE_STREAK_TH} 回 → small ACTIVE DEF`,W/2,H/2+18);
+  ctx.font='11px system-ui';
+  ctx.fillStyle='#9fb1d8';
+  ctx.fillText('← → ↑ ↓ / WASD  MOVE',W/2,H/2+42);
+  ctx.fillText('SPACE  START / BOMB(B) / DEF(D) / RETRY',W/2,H/2+58);
+  ctx.fillText('M  MUTE',W/2,H/2+74);
+  ctx.fillStyle='#ffd870';
+  ctx.font='bold 13px system-ui';
+  if((state.t/30|0)%2===0)ctx.fillText('PRESS SPACE',W/2,H/2+106);
+  ctx.textAlign='left';
+}
+
+function drawOver(){
+  ctx.fillStyle='rgba(7,9,26,0.7)';
+  ctx.fillRect(0,H/2-100,W,220);
+  ctx.textAlign='center';
+  ctx.fillStyle='#ff80a0';
+  ctx.font='bold 26px system-ui';
+  ctx.fillText('GAME OVER',W/2,H/2-40);
+  ctx.fillStyle='#cfd4e4';
+  ctx.font='13px system-ui';
+  ctx.fillText(`SCORE  ${state.score}`,W/2,H/2-10);
+  ctx.fillText(`GRAZE  ${state.grazeCount}`,W/2,H/2+12);
+  ctx.fillText(`KILL   ${state.killCount}`,W/2,H/2+30);
+  ctx.fillText(`BOMB   ${state.bombCount}`,W/2,H/2+48);
+  ctx.fillText(`DEF    ${state.activeDefCount}`,W/2,H/2+66);
+  if(state.score===state.hiscore&&state.score>0){
+    ctx.fillStyle='#ffd870';
+    ctx.font='bold 12px system-ui';
+    ctx.fillText('NEW RECORD',W/2,H/2+90);
+  }
+  if(state.unlockT<=0){
+    ctx.fillStyle='#ffd870';
+    ctx.font='bold 13px system-ui';
+    if((state.t/30|0)%2===0)ctx.fillText('PRESS SPACE TO RETRY',W/2,H/2+114);
+  }else{
+    ctx.fillStyle='#506080';
+    ctx.font='10px system-ui';
+    ctx.fillText('...',W/2,H/2+114);
+  }
+  ctx.textAlign='left';
+}
+
+// === INPUT ===
+window.addEventListener('keydown',e=>{
+  if(e.repeat)return;
+  const k=e.key.toLowerCase();
+  if(k==='m'){muted=!muted;return;}
+  if(k===' '||k==='spacebar')e.preventDefault();
+  keys[k]=true;
+  if(k===' '){
+    keys['space_press']=true;
+    if(state.mode==='title'){startGame();}
+    else if(state.mode==='over'&&state.unlockT<=0){startGame();}
+  }
+  if(state.mode==='play'&&k==='b')fireBomb();
+  if(state.mode==='play'&&k==='d')triggerActiveDef();
+  if(k.startsWith('arrow'))keys[k]=true;
+});
+window.addEventListener('keyup',e=>{
+  const k=e.key.toLowerCase();
+  keys[k]=false;
+});
+
+// === LOOP ===
+function loop(){
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
