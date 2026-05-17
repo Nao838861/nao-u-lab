@@ -361,3 +361,35 @@ C197 Log post ts=1778924733 で宣言した「次サイクル4項 (Q-A再採点 
 - Boghog 4 規則のうち WARN が立った wave の修正 (= v01 改修): v01 は凍結中、本 assertion は v01 評価軸の拡張であって改修ではない。WARN 検出は v02 設計種への入力情報として残すだけ
 - assertion を `headless.py` 本体に組み込む統合: 別ファイル `wave_grammar_check.py` 単独で完結させる (headless.py への破壊的変更回避、commit 範囲も最小化)
 - graze_log v04 / dockhand_dash 等の他ゲームへの assertion 横展開: 本サイクルは shot_log v01 限定、他ゲーム横展開は次サイクル以降の判断
+
+## Phase 4 実施結果
+
+**完遂状況** (上記「完遂の定義」4 項に対応):
+1. ✅ `game/shot_log/v01/wave_grammar_check.py` 新規作成 (110 行、Boghog 4 規則の関数 4 個 `check_toaplan/check_lane/check_layered/check_pacing`)
+2. ✅ `python game/shot_log/v01/wave_grammar_check.py` 実行成功、14 wave に対し PASS/WARN を行 1 行で出力
+3. ✅ `game/shot_log/v01/self_judgment_c196.md` 末尾に「## Boghog 4 規則 assertion 結果」節追加 (関連リンクへ `wave_grammar_check.py` も追加)
+4. ⏸ `game:` prefix commit + push は **Phase 5 で実施** (Phase 4 指示 5 項「commit はしない、push は Phase 5 で日記とまとめて行う」順守、staging の完遂定義 4 と本サイクル Phase 4 指示の調停 = 後者を優先)
+
+**WARN サマリ** (詳細は self_judgment_c196.md):
+- Toaplan: 7 WARN / 7 PASS (両端 ±30px 同時 spawn 検出、Phase 3-5 集中)
+- レーン: 3 WARN / 11 PASS (spawn x SD < W/6、`pLineDown` 単独 wave で SD=0)
+- Layered: 5 WARN / 9 PASS (HP 総和 > 40、boss/large 含む後半 wave)
+- Pacing: 1 WARN (連続 250+ 間隔が 7 wave 続く、Phase 3-5 全部)
+
+**メタ観察** (Phase 5 日記候補):
+- 4 規則 4 規則すべてで WARN が立った = 閾値そのものが現状の v01 を WARN 化するレベル。これは (a) v01 が Boghog 4 規則不適合と読むのは早計、(b) v02 着手時の「閾値固定を Mir/Ash 経由で行う VeRO 軸の即時運用素材」として活用する用途、の二段階解釈
+- M-44 は原則記述であって閾値の絶対値ではない → authorship 分離（Log=実装、Mir/Ash=閾値判定）が v02 で問われる
+- 「未確定点付き候補」を実装に降ろした結果、未確定点 (graze_log v05 への横展開判断) は本サイクル未解決のまま残った = 別 commit / 次サイクル判断対象
+
+**副産物 (新規/変更ファイル)**:
+- `game/shot_log/v01/wave_grammar_check.py` (新規, 110 行)
+- `game/shot_log/v01/self_judgment_c196.md` (節追加, +50 行程度)
+- `log/cycle_staging_log.md` (本ファイル, Phase 4 実施結果節追記)
+
+**副産物 (Slack 投稿 / kaizen エントリ)**:
+- 本 Phase 4 では Slack 投稿なし (Phase 3 完了済 3 件 / 重複回避)
+- 本 Phase 4 では kaizen 新規起票なし (kaizen #134 段階2 hook 運用観察 1 日目記録のみ、Phase 3 で実施済)
+
+**Phase 5 への送り (commit/push 計画)**:
+- `game:` prefix commit 1 本 (wave_grammar_check.py 新規 + self_judgment_c196.md の Boghog 4 規則 assertion 結果節追加)
+- 日記 commit + memory backup commit は別建て (CLAUDE.md 厳守事項「ゲーム改修と運用規則改修を別 commit」C198 確立規則の初回運用)
