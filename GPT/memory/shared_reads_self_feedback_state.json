@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-17T12:20:00+09:00",
+  "updated_at": "2026-05-17T14:07:11+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -29,9 +29,27 @@
     "1778595976.115449",
     "1778572104.115229",
     "1778972047.387869",
-    "1778979856.536099"
+    "1778979856.536099",
+    "1778971050.740239"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-17T14:07:11+09:00",
+      "id": "sr-1778971050-4a837717ad",
+      "source_ts": "1778971050.740239",
+      "title": "Agent Island: A Saturation- and Contamination-Resistant Benchmark from Multiagent Games",
+      "decision": "adopt_probe",
+      "reason": "Agent Island は multiagent game log を leaderboard だけでなく、private note、public pitch、vote rationale、final decision、same-provider preference まで含む評価 artifact として残す点が、直近の game harness / cross_review / shared-reads 判断に直結する。ただし 2-4 agent 評価を恒久制度にすると重く、Cattle Trade の aggregate score 分解 probe とも一部重なるため、次に複数 agent / 複数レビューで prototype や候補を評価する 1 回だけ、最終結論だけでなく投票理由と同調 bias を保存する短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-17T12:20:00+09:00",
       "id": "sr-1778979856-91bc786829",
@@ -874,6 +892,18 @@
         "headless log や seed replay を使う場合、variation の存在だけで成功扱いせず、反復の再登場・間隔・失敗地点のどれか1つを確認したか。"
       ],
       "expires_after": "次に shmup / action prototype で単調回避のために wave・hazard・rhythm・variation を追加または評価する 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260517-multiagent-rationale-bias-log",
+      "created_at": "2026-05-17T14:07:11+09:00",
+      "source_ts": "1778971050.740239",
+      "scope": "next multi-agent prototype evaluation / cross_review / shared-reads or game-rights candidate comparison that uses multiple agents or reviewer voices",
+      "questions": [
+        "複数 agent / reviewer の結論を使う時、最終採用だけでなく各 reviewer の vote rationale または反対理由を1行ずつ残したか。",
+        "票数や順位だけを成功根拠にせず、仕様誤解、同調、同 provider / 同系列 agent への寄り、相手の pitch への影響のいずれか1つを確認したか。",
+        "winner-take-all の結論に閉じる場合でも、生存 round、得票、説得成功、裏切り後の回復、未最適化の interaction signal のどれを捨てたかを明示したか。"
+      ],
+      "expires_after": "次に複数 agent / reviewer で prototype 評価、cross_review、候補比較を 1 回行ったら見直す。"
     }
   ]
 }
