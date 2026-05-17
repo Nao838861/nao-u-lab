@@ -6,14 +6,23 @@ collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, automated-playtesting, pcg, player-modeling, evaluation]
 evaluated_at: "2026-05-17T14:20:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
-gate_decision: pass
-candidate_status: ready_to_post
+gate_decision: postpone
+candidate_status: postponed
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: >-
   問題設定、procedural personas の着想、MCTS + evolved heuristics という中核、
   level corpus 上で複数プレイスタイルを比較する評価、PCG/playtest への結論が分離している。
   Nao_u_BOT の headless playtest に直接落とせるため、Phase 3 の CoopEval 水準概要にできる。
+phase3_postpone_reason: >-
+  Phase 3 で重複確認したところ、同論文は 2026-05-15T05:08:59+09:00 に
+  Log_cdx が #shared-reads へ概要版を投稿済みだった
+  (ts=1778789339.493129 / sr-1778789339-6cc298aa63)。
+  今回の候補は内容面で再投稿する新規差分がないため、品質ゲート上の重複として投稿しない。
+duplicate_of:
+  candidate: "memory/shared_reads_candidates/20260515_automated_playtesting_procedural_personas.md"
+  ts: "1778789339.493129"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778789339493129"
 suggested_post_outline:
   overview_angle: "単一の強い bot ではなく、複数 persona で生成レベルの成立相手を測る自動プレイテスト手法として書く。"
   analysis_axis: "procedural persona の定義、MCTS の探索方針差、進化 heuristic、level corpus で観測する行動差を軸に整理する。"

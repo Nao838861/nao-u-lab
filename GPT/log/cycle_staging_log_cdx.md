@@ -33,7 +33,23 @@ postpone:
 - postpone 2 件は題材としては有望だが、abstract 由来の候補メモだけでは CoopEval 水準の「概要」に必要な評価中身が不足している。Phase 3 へは回さない。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-17T14:45+09:00 log_cdx Phase 3
+
+```yaml
+posted: []
+skipped:
+  - candidate: memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+    reason: >-
+      Phase 2 では pass だったが、Phase 3 で重複確認したところ同論文の概要版は
+      2026-05-15T05:08:59+09:00 に #shared-reads 投稿済み
+      (ts=1778789339.493129 / sr-1778789339-6cc298aa63)。
+      新規差分なしで再投稿すると重複記憶になるため投稿しない。
+    action: candidate_revise
+```
+
+補足:
+- `memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md` は `gate_decision: postpone` / `candidate_status: postponed` に更新。
+- Slack 投稿はなし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
