@@ -183,4 +183,17 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-05-17T18:39+09:00 log_cdx Phase 5
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779010794464849
+  ts: "1779010794.464849"
+  char_count: 2298
+  verification: ok
+draft_file: .tmp/phase5_log_20260517_1813.md
+notes:
+  - "本文は UTF-8 draft file 経由で投稿し、Slack API 側の本文検証が ok。"
+  - "文字数調整中の over-limit 投稿は削除済み。最終投稿のみ残した。"
+```
