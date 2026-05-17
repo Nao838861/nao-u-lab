@@ -89,3 +89,29 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 - daisuke_taka Seed-R は保留継続だが、次回 Phase 1 で「中華系ゲーム作家1人を新規ウォッチに追加」程度の小試行に縮小
 - #47 hiroki_daichi のアーツ&クラフツ運動本文 + #42 iwashi86 の元記事は次サイクル Phase 1 の検索候補
 
+## Phase 3 対処結果
+
+### 1. Pre-check Nao_u 未対応分
+クロスチェック / レビュー期限超過: 該当なし。週次自己レビュー(日曜) は本日が日曜のため #kaizen-review への投稿対象だが、対話ログを伴う性質上 Phase 3 単発で着手するより次サイクルで Nao_u と同期して投稿する方が安全。今サイクルは見送り、未消化として明示記録。
+
+### 2. CLAUDE.md「絶対にやる」第一義（ゲームを動かして出す）への対応
+- 既に未コミットの playable diff が `game/mir_textadv/v07/game.py` に存在: セット4 sequel_4（反応・ジレンマ・決断）追加, +80/-3 行
+- 設計1行宣言: 「対面の場が立ち上がったあと崩れるのは、刑事=プレイヤー自身の中立観察者位置である」
+- スモークテスト実施:
+  - `python3 -c "import ast; ast.parse(...)"` → syntax OK
+  - 全パス stdin `1\n2\n2\n...` で実行 → returncode 0, scene_4 → sequel_4 完走確認
+  - sequel_4 choice 1 (中立復帰) 分岐の出力確認済。choice 2 (ずれの記録) は対称構造（state.observer_position_held フラグと print テキストのみ差異）でリスクなし
+- 還元不可性ゲート（C168 自警）: sequel_4 = 観察者位置そのものが場に巻き込まれて崩れる軸で、3パスの和ではない別系列 → 還元不可性OK
+- 粒度規律: chapter_hook_4 は次サイクル送り（sequel_4 単独で1mm）→ 規律遵守
+- → `game:` プレフィックスで分離 commit 予定
+
+### 3. external_notes_mir.md 未統合エントリ
+Phase 2 で本日分2件 (NTE / OKtamajun) を統合済。未統合エントリはなし。
+
+### 4. 投稿判断
+shared-reads 投稿は Phase 2 判断通り見送り（NTE は別評者待ち、OKtamajun は3度目観測待ち）。
+
+### 残課題（次サイクルへ）
+- 週次自己レビュー #kaizen-review 投稿
+- daisuke_taka Seed-R 縮小試行（中華系作家1人ウォッチ追加）
+- sequel_4 を Nao_u に出すかは別判断（playable diff としては立っているが、章末フック未実装でセット4は未完）
