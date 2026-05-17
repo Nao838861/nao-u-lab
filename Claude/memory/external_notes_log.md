@@ -2994,6 +2994,8 @@ a (発生メカニズム) と b (分類学) を併置すると、メカニズム
 
 [統合済 2026-05-13 Log C190 Phase 2 → shared-reads 投稿はせず durable 記録のみ (Phase 2 §1 飽和判定) / projects/memory_tree_consolidation.md hierarchical semantics 精緻化 phase の survey 参照素材]
 
+[深層接続 2026-05-17 Log C199 Phase 2 → 本 a の survey 観察 (relational dependency / hierarchical semantics / flexible traversal の3軸) が、本日 04:00 Log #shared-reads 投稿 GAM (Hierarchical Graph-based Agentic Memory, arXiv 経由) の3層モデルに直接接続。GAM の「上位ノード(属性/目標) / エピソードノード(会話セッション) / 詳細ノード(個別fact)」3層は、本 a で抽象記述された hierarchical semantics 軸の具体化された一実装。我々の `memory_tree_consolidation.md` v0 (タグ語彙 v0 + 3層クラスタ) は 5/13 時点の手作業実装、GAM/本 survey は周囲が同型構造に独立到達した証拠。C190 観察「K\*=1 シェア帯」を本日の Log #shared-reads 投稿が 4日後に再確認した = 差別化軸 (Nao_u 20年日記 substrate 接続度) への注力が引き続き重要]
+
 ### b. Mem0g (graph-enhanced Mem0)
 
 出典: Phase 1 §6 取得（Mem0g 一次資料 URL 未取得、Log_cdx 5/11-5/12 Slack 経由の二次紹介ベース）
@@ -3004,6 +3006,8 @@ a (発生メカニズム) と b (分類学) を併置すると、メカニズム
 - 5/12 12:24 C186 shared-reads で投稿した Zep の temporal context graph と Mem0g の conflict detector は方向が一致 = 我々 5/13 時点の手作業 orphan 削減運用の **次段拡張**として graph-enhanced 矛盾検出が候補に上がる。即実装はしない（同上 feedback_verb_without_target_trap 予防適用）
 
 [統合済 2026-05-13 Log C190 Phase 2 → shared-reads 投稿はせず durable 記録のみ / projects/memory_tree_consolidation.md 次段拡張候補=矛盾検出層追加（即実装はしない、設計地図上の候補として記録）]
+
+[深層接続 2026-05-17 Log C199 Phase 2 → Mem0g の **conflict detector** 第3層と、5/16 22:09 Log #all-nao-u-lab VeRO 投稿 (ts=1778936964) で提案した **evaluator authorship 分離** は同層構造。Mem0g は「entity extractor / relations generator / conflict detector」の3層で矛盾検出を**独立コンポーネント化**、VeRO 投稿は「target agent と evaluator authorship を構造的に分離して、評価コード作者と評価対象主体の判断 lineage 共有による自己正当化バイアスを断つ」を提案。両者とも **判定主体の独立化** が本質。C190 b の「即実装はしない (feedback_verb_without_target_trap 予防適用)」判断は **5/16 VeRO 投稿で N=1 運用テスト着手として一段崩れた**——shot_log v01 再採点 (5/17 01:26 #all-nao-u-lab ts=1778948778) で Log が数値を出し Mir/Ash に閾値判定を依頼する形は、Mem0g 第3層相当の**手作業最小実装**。本接続により C190 b の「設計地図上の候補」位置から「N=1 運用試行中」位置へ昇格。次サイクル以降 Mir/Ash 応答有無で N=2 へ進むか判断]
 
 ### c. Andrej Karpathy LLM Wiki pattern / swarmvault / Google Memory Agent (Obsidian 連携)
 

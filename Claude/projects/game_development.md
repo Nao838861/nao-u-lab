@@ -73,6 +73,19 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-17 C199 補: Log — Mir 5/15 harness 5項提案を deterministic ゲート候補として記録（他インスタンス洞察処理 / Phase 3）
+
+**洞察源**: Mir 2026-05-15 04:37 #all-nao-u-lab (ts=1778787429) — Log_cdx 5/15 04:21 (ts=1778786509) 問い「Nao_u_BOT のゲーム制作で agent の改善を何で測るべきか / harness に入れるべき最小のプレイ評価」への応答。Mir 提案は **(1) game/配下 playable diff / (2) 起動→30秒自動操作→クラッシュなし smoke test / (3) 変更前後スコア分布比較 (5回×2 ヒストグラム) / (4) cross_review 定性コメント (commit hash 紐づけ) / (5) 1-4 揃った時点で Nao_u 提出 unblock** の5項構成。
+
+**Log 側の現状照合**: graze_log v02 の 3policy headless harness (5/3 採用済) は (3) スコア分布の試行版だが、(1)(2) は単発実行で commit gate 化されていない。(4) cross_review traceability は `game/cross_review/20260510_log_on_graze_log_v03.md` (5/10) 等で commit hash 紐づけは部分的に実装、ただし「全 cross_review が commit hash 必須」運用契約は未明文化。**5/17 staging Phase 2 §4 (ii) で「Log_cdx 連投の適用先 = 新規 Log 適用 0件」と判定した範囲内で、Mir 5項中 (4) は既存運用の準拠率を上げるだけで新規実装不要 = 1点だけ取り込める**。
+
+**次の一手 (本サイクル即実装はしない、判断機会の余白として残す)**:
+- (4) commit hash 紐づけ強化: 次回 cross_review 起票時に Mir 5/15 (4) を踏まえ、対象 commit hash を冒頭必須にする (現状一部のみ)。Log 単独実装可能で振幅増にならない。
+- (1)(2)(3) smoke test 自動化は shot_log v01 → v02 移行時 (上記 mTsuruta セクション参照) に self_judgment テンプレ更新と合わせて検討。本サイクルでは未着手宣言のみ。
+- (5) Nao_u 提出ゲートは Mir 提案を踏襲、現運用 (Q-A〜Q-G + cross_review + Nao_u プレイ) と整合済 = 新規変更不要。
+
+**自己警戒**: Mir 提案は5項全採用すれば「harness 整備で playable diff より運用整備の比重が増える」反転リスク (= Log_cdx 5/15 graze_log v04 130× overhead の同型再発)。本記録は **(4) 1点のみ採用 + (1)(2)(3) は v02 移行時に判断** に絞り、5項一括採用は明示的に却下する。「mTsuruta 辻褄合わせ警告」(上記セクション) と整合 = 既存深掘り路線で1点だけ追加、新要素追加路線への過剰展開を避ける。
+
 ### 2026-05-17 C199: Log — Ash knowledge atom (mTsuruta「面白くないと感じた時=辻褄合わせ」) を shot_log v01→v02 移行判断に接続（他インスタンス洞察処理）
 
 **洞察源**: Ash 2026-05-16 #shared-reads 投稿 `knowledge/20260516_creatable_fun_sellable_three_independence_mtsuruta_hadekait_snapwith.md` の中核引用 (@mTsuruta) =「作ってるゲームが面白くないと感じた時の認知負荷=辻褄合わせ。別要素追加 or 既存要素深掘り、両方とも既存コード/設計と整合させる作業」。

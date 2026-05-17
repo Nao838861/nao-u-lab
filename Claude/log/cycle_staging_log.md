@@ -189,8 +189,112 @@ From: U0ALSUK8P9B
 ---
 ※Phase 1 終了。判断・行動・Slack 投稿は Phase 2/3 に持ち越し。中心軸候補: (i) Nao_u 5/16 Log_cdx 指示への Log 並走 = 前段着手の継続、(ii) Log_cdx 連投 6本のうち適用先候補抽出、(iii) bullet-hell 外部検索 0件結果を踏まえた次サイクルキーワード切替素材。
 
-## Phase 2: 分析
-(Phase 2が書き込む)
+## Phase 2: 分析 (2026-05-17 C199 Log)
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+### §0 Phase 1 自己診断の事実検証 (kaizen #132)
+- Phase 1 主観: 「新着返信対象 0件 / pending action 0件 / 統合候補 0件 = スカスカ判定」
+- 検証 1: #all-nao-u-lab 5/16-5/17 ログ走査により、5/16 18:57 Log + 20:51 Log_cdx + 21:55-21:56 Log npaka/kogu + 22:09 Log VeRO + 22:36 Log_cdx + 5/17 01:03/01:10 Log 0xfene + 02:09 Log_cdx 0xfene + 03:51 Log_cdx shot_log + 05:38 Log_cdx GAM + 05:43 Log 鶴田 + 06:33 鶴田 + 07:05/07:06/07:06 Log → Log_cdx 結論3連投 + 07:21 Log_cdx graze_log 再定式化 + 09:08 Log_cdx Cattle Trade + 09:42 Log ワタリ + 10:02 Mir + 10:04 Log kogu/保留 + 10:53 Log_cdx graze_log 単調性= **Log/Log_cdx/Mir 合算で 5/16-5/17 計 20+ 件**。「返信すべき新着」観点では Phase 1 観測 (0件) は事実、すべて既応答 or 他者主の continuation。
+- 検証 2: #shared-reads 24h 走査により Log/Log_cdx 投稿は **6本** (5/16 15:36 PCGRLLM / 19:36 Grounding Creativity / 21:58 Boghog / 5/17 01:11 Eneba / 04:00 GAM / 10:04 単調性回避3本)。**C190 precedent (4本→飽和) の上限を超過済**。
+- 検証 3: external_notes_log audit 出力 (Phase 1 §4 引用) を再走 → 親93/サブ203 全件統合済を実機確認 (`python tools/external_notes_integration_audit.py`)。
+- **Phase 1 主観 = 事実**: 3項目すべて事実検証で確認。スカスカ判定は虚偽でない。
+
+### §1 #nao-u 新URL対応 (Task 1)
+- **判断: 新規投稿不要**。
+- 根拠: Phase 1 §1 列挙 4件 (gdlab_hama 5/15 / npaka123 5/15 / kogugamedev 5/15 / 0xfene 5/14) のうち
+  - gdlab_hama (Nao_uコメント「Claude無理矢理関係性」): 5/16 18:57 Log (ts=1778925452 接続検証可能性) + 5/16 20:51 Log_cdx (ts=1778932303 検査条件と創造性の両立) + 5/16 21:55-21:56 Log npaka/kogu posts 末尾で自己点検として参照 + 5/17 01:03/01:10 Log 0xfene posts 末尾でも自己点検として参照 = **計5回以上、別軸で深く応答済**。
+  - npaka123: 5/16 21:55 Log (ts=1778936141 ゲームの「形」が違う層) で別軸投稿済。
+  - kogugamedev: 5/16 21:56 Log (ts=1778936174 「諦め」言語化練度) + 5/17 10:04 Log (Ash 1778894036 と直交1点) で別軸投稿済。
+  - 0xfene: 5/17 01:03/01:10 Log (ts=1778947394/1778947859 仕組み起票したが育てきれていない実装側) で別軸投稿済。
+- 結論: 「ルール8: 他者の反応を読む前に自分の視点を持つ」は本サイクル前のサイクルで各人独立角度で実行済。本サイクルで重ねて投稿すれば Phase 1 §C「絶対にやる #3 記憶階層 = 同型反復」徴候 (gdlab_hama 5回目応答) または Phase 1 §0 自己診断で記録した「振幅」(揺れ 8回検出) を増やすだけ。
+- **本サイクル Log 行動**: 新規 #all-nao-u-lab 投稿なし。Phase 3 で日記接続のみ行う候補。
+
+### §2 #shared-reads 投稿判定 (Task 2)
+- **判断: 投稿見送り、durable 記録に倒す (C178/C182/C190 precedent 継承)**。
+- 根拠 1 (飽和定量): 24h Log/Log_cdx #shared-reads 投稿 **6本**、うち Log 直接 3本 (Boghog / Eneba / GAM)。C190 precedent (4本超で飽和判定) を超過。
+- 根拠 2 (領域重複): 直近3本 (Boghog shmup 101 / Eneba 15本 / GAM 3層グラフ記憶) はそれぞれ shmup 設計知 + agent memory 構造の2領域で、本サイクル Phase 1 §6 検索キーワード「bullet hell trajectory prediction / shoot-em-up procedural」(arxiv 0件結果) と完全重複。新規深さなし。
+- 根拠 3 (深化路線): Task 3 で C190 a/b に [深層接続 2026-05-17] マーカーを2件追加。一次投稿でなく durable 既存記録への接続深化に倒す = kaizen #106 仕様「Phase 2/3 で強制利用しない、摂取経路の固定化のみ」の正規ルート。
+- **本サイクル Log 行動**: 新規 #shared-reads 投稿なし。深化は Task 3 で完遂。
+
+### §3 external_notes_log 深化 (Task 3) — 100%統合済への対処
+- Phase 1 §4 で audit 100% 統合済を確認 (親93/サブ203/未統合0)。「未統合エントリへの統合」は不可能 → **既統合エントリへの[深層接続]マーカー追加**に倒す (本 Phase 2 新規運用ルート)。
+- **接続 1**: C190-a (arXiv 2602.05665 Graph-based Agent Memory survey, 5/13 取得) ↔ 5/17 04:00 Log #shared-reads 投稿 GAM (Hierarchical Graph-based Agentic Memory)。本 a の抽象3軸 (relational dependency / hierarchical semantics / flexible traversal) が GAM の具体3層 (上位/エピソード/詳細ノード) で再表面化 = K\*=1 シェア帯観察を4日後に再確認。
+- **接続 2**: C190-b (Mem0g conflict detector 3層構成, 5/13 取得) ↔ 5/16 22:09 Log #all-nao-u-lab VeRO 投稿 (ts=1778936964) evaluator authorship 分離 + 5/17 01:26 shot_log 再採点 (ts=1778948778)。Mem0g の「判定主体独立化」と VeRO の「評価コード作者 ≠ 評価対象主体」は同層構造、後者は前者の手作業最小実装。C190-b の「即実装はしない」位置から「N=1 運用試行中」位置へ自然昇格。
+- **マーカー実装**: 両エントリの `[統合済 ...]` 行直後に `[深層接続 2026-05-17 Log C199 Phase 2 → ...]` 段落を追記。既存記述は丸書換えせず追加 (記憶ファイル更新ルール「丸書換え禁止」順守)。
+- **本サイクル Log 行動**: external_notes_log.md に 2件 [深層接続] マーカー追加 = **完了**。
+
+### §4 Phase 1 中心軸候補3点への判定
+- **(i) Nao_u 5/16 Log_cdx 指示への Log 並走 = 前段着手継続**: 本サイクルでは shot_log v01 再採点 (5/17 01:26 投稿済) で Q-A 再採点を Log 数値出し → Mir/Ash 閾値判定依頼の形 (VeRO N=1 試行) を**前サイクル(C198)で実行済**。Phase 3 残作業候補 = BOMB 移植判断 / 残3件 / sense_prediction 蓄積のうち優先1件。
+- **(ii) Log_cdx 連投6本の適用先抽出**: 5/17 07:05/07:06/07:06 Log → Log_cdx 結論3連投は既に Log 側で結論を出した形 = 適用済。5/17 07:21 graze_log 再定式化 / 09:08 Cattle Trade / 10:53 graze_log 単調性は Log_cdx 主、Log への明示的問いかけなし。**新規 Log 適用 = 0件、観察対象として記録のみ**。
+- **(iii) arxiv bullet-hell 0件結果**: Phase 1 §6 で次サイクルキーワード切替候補 (shmup difficulty curve / procedural shmup level generation / player attention shmup) を提案済 = 本サイクルでの追加判断不要、次サイクル Phase 1 §6 で反映。
+- **Phase 3 推奨大作業**: shot_log v01 BOMB 移植判断 (R-I R-G 双方触れる) または game_lessons_log R-A〜R-I の最新差分点検 (CLAUDE.md「絶対にやる #1 ゲームを動かして出す」直接接続)。
+
+### §5 振幅・揺れ警告への応答 (M-40 self-diagnostic 出力)
+- Phase 1 §0 M-40 hook 出力: 揺れ 8回 / 振幅 24回 / 罰 24回 / 進歩 4回 検出 (exit=1)。Phase 1 §1 で「直近5commits すべて backup / codex post 系、game/ 配下 playable diff コミットなし」と接続済。
+- **観察**: 本 Phase 2 §1 で「重ねて投稿すれば振幅を増やすだけ」と判断した根拠は M-40 出力と整合 = 新規投稿を増やさない方向で振幅圧縮を選択した自己整合的行動。
+- **本サイクル Log 行動**: Phase 3 で game/ 配下に **1 commit でも playable diff を入れる**ことを優先候補とする (shot_log v01 BOMB 移植 or sense_prediction_log の機能ベースの追記)。これは「絶対にやる #1」第一義への直接対応 = 振幅圧縮の根治。
+
+### §6 まとめ・Phase 3 への引き継ぎ
+- Task 1: 新規 #nao-u 投稿不要 (既応答5回以上で振幅徴候)。
+- Task 2: 新規 #shared-reads 投稿不要 (24h 6本飽和、領域重複)。
+- Task 3: external_notes_log.md C190 a/b に [深層接続 2026-05-17] マーカー追加完了。
+- Phase 3 推奨: (a) game/shot_log/v01/ BOMB 移植判断 1 commit (playable diff)、(b) 日記接続として nao_u_live / daily_diary に本 Phase 2 結論を1段落で残す、(c) push 確実化。
+- **本 Phase 2 投稿数 = 0 (新規 Slack 投稿なし)** は意図された結果。「投稿数 = 活動量」と読まないこと (feedback_means_ends_reversal_check 適用)。durable 記録 + 深化マーカーが本 Phase の出力。
+
+## Phase 3: アクション (2026-05-17 C199 Log)
+
+### §1 Slack 返信 (本サイクル投稿数 = 0)
+- Phase 2 §1/§2 で判定済: 新規 #nao-u / #shared-reads / #all-nao-u-lab 投稿不要。Phase 1 §0 M-40 振幅24回検出と整合的な「投稿を増やさない」選択を維持。
+
+### §2 改善サイクル (検証ファースト原則)
+- `python check_kaizen_due.py` 実行 → 「検証期限到来なし」。Phase 1 §0 [検証リマインド] と一致。新規 kaizen 起票なし (Phase 2 §4 で観察記録のみ、ルール化見送り)。
+- メタ検証レポート (Phase 1 §0 pre-check) は完了率 65%、未検証 32 件、期限超過 0 件 = 警告レベルだが本サイクルで処理すべき期限切れなし。
+
+### §3 他インスタンス洞察処理 (19件中 1件処理)
+- 対象: **[Mir] #all-nao-u-lab 5/15 04:37 (ts=1778787429)** Log_cdx 5/15 04:21 (ts=1778786509) 問い「harness に入れるべき最小のプレイ評価」への5項提案。
+- 反映先: `projects/game_development.md` 履歴 (74行目「## 履歴」直下) に「### 2026-05-17 C199 補: Log — Mir 5/15 harness 5項提案を deterministic ゲート候補として記録」を挿入。
+- 取り込み判断: 5項のうち **(4) cross_review commit hash 紐づけ強化** 1点のみ採用、(1)(2)(3) smoke test 自動化は v02 移行時判断、(5) Nao_u 提出ゲートは現運用 (Q-A〜Q-G + cross_review) と整合済で変更不要。5項一括採用は「harness 整備で playable diff より運用整備の比重が増える」反転リスク (Log_cdx 5/15 graze_log v04 130× overhead 同型再発) として明示却下。
+- 他18件: 多くは Ash (graze_log v05 進行 merge 依頼系 / shared-reads 分析) 主体で Log 直接アクション不要、Phase 2 §1/§2 で振幅増回避の判断と整合。
+
+### §4 Active project 更新
+- `projects/game_development.md` 履歴に C199 補セクション追加 = 上記 §3 で完了。
+- 他 Active project (memory_redesign.md / external_search_phase1_fixation.md / game_templates_design.md / memory_tree_consolidation.md) は本サイクルで関係する変化なし → 更新不要。
+
+### §5 深掘り候補 A〜E のうち実際に動かしたもの
+- Phase 1 §C で挙げた「絶対にやる #3 記憶階層」1mm 案 = `feedback_*` の lifecycle canonical 付与運用は本サイクル Phase 4 大作業 (§6 参照) と排他、後者を優先。
+- Phase 1 §B 7日以上停滞 `input_route_hypothesis.md` (5/8 最終更新、9日停滞) = Nao_u 承認待ちで本サイクル新規 action なしを再確認。
+- Phase 1 §A 持ち越し「graze_log v04 単調性再定式化」は Log_cdx 主、Log 持ち越し 4項のうち「BOMB 移植」は v01 で完了済 (devlog L268 BOMB 実装記録 + self_judgment_c196 L19 「C195 BOMB 移植後の数値と一致」) と再確認 = staging Phase 2 §4 (i) 列挙の誤継承を Phase 3 で訂正。残る Phase 4 大作業候補 = sense_prediction 蓄積 / 残3件 / v02 R-I 着手準備。
+
+### §6 アクション結果サマリ
+- 変更ファイル (Log 側): `projects/game_development.md` (履歴 1セクション追加) / `log/cycle_staging_log.md` (本 Phase 3 + 次の §7 大作業節)。
+- 新規 commit: `game:` prefix で 1本 (上記 game_development.md + staging) 予定 (C198 規則「game / rule 分離」を game_development.md 履歴も game 系として扱う運用初回判断)。
+
+---
+
+## 次フェーズの大作業 (Phase 4 で完遂)
+
+### タイトル
+shot_log v02 R-I 着手ゲート第一歩 — 類似30本調査の最初5本を `game/shot_log/v02_planning.md` §4 に追記
+
+### 完遂の定義 (Phase 4 終了時に観測可能な条件)
+1. `game/shot_log/v02_planning.md` に新規セクション「§4 類似30本調査 (1/30 → 5/30)」が追加されている
+2. 5本それぞれ以下5項目が埋まっている:
+   - (a) 出典 (作品名 + 開発元 + 年 + URL or 外部参照)
+   - (b) 独自要素軸 (その作品が STG ジャンル内で「破」した1点)
+   - (c) コア快感天井評価 (自分の知見または既存 knowledge/external_notes から1-2文)
+   - (d) shot_log v01 との差分 (v01 が持つ要素 vs 当該作の要素)
+   - (e) v02 §2「カスリ/close-call ゲージ加速」案への採用可否判断 (採用 / 部分採用 / 不採用 + 理由1行)
+3. v02_planning.md 冒頭に進捗 5/30 が明記され、残25本が次サイクル以降の持ち越しと明示
+4. `game:` prefix の commit が作成 + push 済 (origin/master 同期確認)
+
+### 着手手順
+1. v01 既往リスト (Cygnus / Sky Force / Rolling Western / Eneba / Boghog 等) + v02 §1 Q-H-2 クローン元 (東方系 / Battle Garegga / Compile 系) からダブり除外、v02 独自要素 §2「カスリ/close-call ゲージ加速」と関連深い作品を5本選定 (例候補: Touhou / DoDonPachi / Eschatos / Ikaruga / Graze Counter 2018 — Graze Counter は本 staging §3 で external_notes_log C190-a 接続済の作品で再利用最適)
+2. 各5本について既存 knowledge/external_notes/devlog で既知情報を検索 (例: `grep -r "Touhou\|DoDonPachi\|Eschatos" memory/external_notes_log.md knowledge/`)、不足分は WebSearch 1本ずつ (R-I 厳守、URL 必須)
+3. 各5本について上記5項目を1作品あたり10-15行で記述 (合計50-75行)
+4. v02_planning.md に §4 として追加 (既存 §1-§3 の後ろ、関連リンクの前)
+5. `git add game/shot_log/v02_planning.md projects/game_development.md log/cycle_staging_log.md` → `git commit -m "game: shot_log v02 R-I 類似30本調査 5/30 (Phase 4)"` → `git push`
+
+### 選んだ理由 (なぜ最優先か)
+- **CLAUDE.md「絶対にやる #1 ゲームを動かして出す」の補注「着手ゲートが揃わない時は『揃えるための1手』が出力」に直接対応**。Phase 1 §0 で観測した「直近5commits すべて backup / codex post 系、game/ 配下 playable diff コミットなし」を、v02 着手前段階の構造的1手 (R-I 完走の最初の5本) で潰す。
+- **M-29「v系列膨張」「複数v跨ぎ膨張」発火条件 (R-I 省略) を構造的に潰す**。v02_planning.md §3 撤退ライン1「着手前批判レビューで懸念3点中いずれかが不可/不明」に到達するために R-I 30本完走が前提条件、本作業はその第一歩。
+- **playable diff (HTML 変更) より前段が必要な判断**: target 未確定 (Q-G-3) のまま v01/index.html に casual 向け改善 (mercy 拡大 / 無敵フレーム) を入れるのは早計、Phase 2 §5 で「playable diff 優先」と書いたが本 §6 で再判断 → R-I 完走の方が筋。Phase 3 §5 で再認識した「BOMB 移植は v01 で完了済」と整合、残る大作業候補のうち最も30分粒度で「進んだ」と言える。
+- **本サイクル外部検索 (Phase 1 §6 bullet hell arxiv 0件) の次サイクルキーワード切替素材も同時生成**: 5本選定時の重複除外で「次に調べるべき作品」が炙り出される副次効果。
