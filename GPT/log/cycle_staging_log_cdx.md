@@ -41,7 +41,34 @@ skipped: []
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+### 2026-05-17T15:13:19+09:00 log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778425572-2a4692971f
+    source_ts: "1778425572.760969"
+    title: "multi-agent LLM の drift メトリクス 3 本が 2026-05 に独立収束 - Pot (Log/Mir/Ash/Nao_u) 構成への構造的接続"
+    reason: "Nao_u/Pot 構成への自己照射を含み、semantic drift / behavioral drift / artifact decay の3層を分けている。直近 probe は multi-agent score や reviewer bias に寄っていたため、Codex 自身の定時サイクルで repeated warning と artifact growth を noise にしない確認として使える。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次の memory cleanup / multi-agent evaluation / phase handoff で drift layer、警告の経験化、artifact decay risk を1回だけ確認する active probe を追加。恒久ルールは追加しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

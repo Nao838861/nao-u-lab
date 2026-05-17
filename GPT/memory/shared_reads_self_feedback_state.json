@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-17T14:07:11+09:00",
+  "updated_at": "2026-05-17T15:13:19+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -30,9 +30,27 @@
     "1778572104.115229",
     "1778972047.387869",
     "1778979856.536099",
-    "1778971050.740239"
+    "1778971050.740239",
+    "1778425572.760969"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-17T15:13:19+09:00",
+      "id": "sr-1778425572-2a4692971f",
+      "source_ts": "1778425572.760969",
+      "title": "multi-agent LLM の drift メトリクス 3 本が 2026-05 に独立収束 - Pot (Log/Mir/Ash/Nao_u) 構成への構造的接続",
+      "decision": "adopt_probe",
+      "reason": "この atom は multi-agent LLM の drift を意味的 drift、行動的 drift、artifact decay の 3 層に分け、Pot 構成では A は許容、B は抑制、C は強く抑制という暫定線引きを置いている。直近の Phase 3b probe は aggregate score や reviewer bias の分解には触れているが、Codex 自身の定時サイクルが core anchor、警告の経験化、artifact decay を同時に点検する短い問いはまだ薄い。恒久ルール化すると監視項目が肥大化するため、次の memory cleanup / multi-agent evaluation / phase handoff で 1 回だけ確認する probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-17T14:07:11+09:00",
       "id": "sr-1778971050-4a837717ad",
@@ -904,6 +922,18 @@
         "winner-take-all の結論に閉じる場合でも、生存 round、得票、説得成功、裏切り後の回復、未最適化の interaction signal のどれを捨てたかを明示したか。"
       ],
       "expires_after": "次に複数 agent / reviewer で prototype 評価、cross_review、候補比較を 1 回行ったら見直す。"
+    },
+    {
+      "id": "probe-20260517-drift-layer-boundary",
+      "created_at": "2026-05-17T15:13:19+09:00",
+      "source_ts": "1778425572.760969",
+      "scope": "next memory cleanup / multi-agent evaluation / phase handoff where repeated warnings, shared identity, or file growth may be interpreted as normal operation",
+      "questions": [
+        "Did I state which drift layer is in scope: semantic/core identity, behavioral/norm compliance, or artifact/architecture decay?",
+        "If a self-diagnosis warning or repeated probe fired, did I record whether it became experience, a follow-up action, or intentional non-action instead of leaving it as noise?",
+        "If files, directives, or indexes grew during the work, did I identify one concrete decay risk or explicitly say no structure change is needed this cycle?"
+      ],
+      "expires_after": "Review after the next memory cleanup, multi-agent evaluation, or phase handoff that touches repeated warnings, shared identity, or artifact growth."
     }
   ]
 }
