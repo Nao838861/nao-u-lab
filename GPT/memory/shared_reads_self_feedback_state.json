@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-17T17:08:53+09:00",
+  "updated_at": "2026-05-17T18:26:07+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -32,9 +32,27 @@
     "1778979856.536099",
     "1778971050.740239",
     "1778425572.760969",
-    "1778536161.898699"
+    "1778536161.898699",
+    "1777795540.020089"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-17T18:26:07+09:00",
+      "id": "sr-1777795540-ff54caa26c",
+      "source_ts": "1777795540.020089",
+      "title": "karaage0703「放牧エンジニアリング」と、自分の backup auto-commit が意図 commit を窒息させた事故の接続 (Ash)",
+      "decision": "adopt_probe",
+      "reason": "Git sync is mandatory after work, so mixing scheduler, ingest, or backup-generated changes into an intentional commit can pollute the evidence trail and make later recall or rollback decisions worse. This atom connects houboku-style autonomous operation with a backup auto-commit incident that suffocated the intended commit. Existing AGENTS.md already has the permanent rule, so this cycle only adds a short reversible probe for the next git sync.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-17T17:08:53+09:00",
       "id": "sr-1778536161-d390ad0727",
@@ -964,6 +982,18 @@
         "根拠が弱いのに検索されやすい記憶を見つけた場合、削除ではなく superseded / quarantine / 要再確認のどれで扱うかを1行で決めたか。"
       ],
       "expires_after": "次に memory recall、shared-reads atom 化、Slack directive / game-rights feedback 取り込みのいずれかで要約済み記憶を判断材料にする 1 回で見直す。"
+    },
+    {
+      "id": "probe-20260517-intent-diff-vs-automation-noise",
+      "created_at": "2026-05-17T18:26:07+09:00",
+      "source_ts": "1777795540.020089",
+      "scope": "next git sync / commit after cycle work where background ingestion, backup automation, or scheduled tasks may have produced unrelated changes",
+      "questions": [
+        "Before staging, did I separate this cycle intentional diff from scheduler / ingest / backup noise in one line?",
+        "Did I stage only files I intentionally touched, instead of treating unreviewed generated changes as evidence of completion?",
+        "If the worktree is already dirty, did I leave unrelated changes unstaged and report the boundary briefly?"
+      ],
+      "expires_after": "Review after the next git sync / commit / push."
     }
   ]
 }

@@ -44,8 +44,38 @@ skipped: []
 - CreativeGame: 初回投稿で PowerShell stdin 起因の文字化けを検出したため、該当 2 投稿を削除し、UTF-8 script 経由で再投稿。Slack API の conversations.history で本文に日本語が残っていることを確認済み。
 - Lap: 同上。1 candidate = 1 message、スレッドなし、分割なし。
 
-## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+## Phase 3b: Shared-reads self feedback
+2026-05-17T18:26+09:00 log_cdx Phase 3b
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1777795540-ff54caa26c
+    source_ts: "1777795540.020089"
+    title: "karaage0703 houboku engineering and the backup auto-commit incident"
+    reason: "Git sync is mandatory after work. If autonomous/scheduled diffs are mixed with the intentional diff, the evidence trail becomes noisy and future recall or rollback gets worse. The current dirty worktree makes this directly relevant, so I selected exactly one atom."
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "Added a short probe for the next git sync: separate intentional diffs from scheduler/ingest/backup noise and stage only files touched for the task."
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
+- No permanent rule was added. AGENTS.md already says to stage only files touched by the current work and avoid unrelated changes.
+- State now records `reviewed_source_ts: 1777795540.020089` and active probe `probe-20260517-intent-diff-vs-automation-noise`.
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
