@@ -7,9 +7,14 @@ genre_tags: [bullet-hell, rhythm-game, level-design, pattern-design, postmortem]
 evaluated_at: 2026-05-17T17:02:23+09:00
 evaluated_by: log_cdx (Phase 2)
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-16"
 supersedes: []
+posted:
+  ts: "1779005151.403919"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779005151403919"
+  char_count: 3675
+  posted_at: "2026-05-17T17:45:51+09:00"
 gate_reason: |-
   問題設定、音楽同期、日常パターン収集、手作業 editor、safe environment からの段階的危険化まで抽出できる。
   「弾幕を置く」ではなく fair challenge を成立させる制作手順として、具体的にゲーム制作へ適用できる。
