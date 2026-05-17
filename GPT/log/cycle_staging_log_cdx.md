@@ -89,13 +89,163 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-17T15:04+09:00 log_cdx Phase 4a
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の Markdown link を確認: link 0 / broken 0"
+  - "memory/atoms.jsonl を確認: rows 1244 / parse_errors 0 / duplicate_ids 0 / duplicate_content_groups 0"
+  - "memory/raw/ の 30日以上未更新ファイルを確認: 0 件"
+  - "memory/shared_reads_candidates/ の 30日以上未更新ファイルを確認: 0 件"
+  - "inbox lifecycle を確認: slack_directives pending 0 / slack_broadcasts pending 0"
+issues:
+  - id: ISS-4A-20260517-01
+    description: >-
+      Slack 由来 atom の一部が、JSON としては正常だが title/excerpt/trigger が
+      `? ??` 形式の文字化けになり、links も空のまま残っている。完全重複ではないため
+      content fold では吸収されず、検索入口として機能しにくい。
+    severity: medium
+    evidence: >-
+      memory/atoms.jsonl lines 1132 sr-1778796436-33420ab144,
+      1133 sr-1778796437-c1a41cf983, 1178 sr-1778884869-fd7c05e74c,
+      1179 sr-1778884870-0332249b8f。いずれも unrestored high-question-mark atom
+      かつ links=[]。対照例として line 1224 sr-1778963876-58b11df98c は
+      restored_from_candidate により title/links が復元済み。
+    why_blocks_game_memory: >-
+      Fly-Fail-Fix、coverage-aware playtesting、PCG runtime evaluation、
+      bounded autonomy のようなゲーム制作・評価に直結する知見が、自然言語検索や
+      link 経由で引けない。次のゲーム制作時に同じ外部知見を再探索するか、
+      参照漏れのまま判断する可能性がある。
+recommendation:
+  needs_design: true
+  priority_issues:
+    - ISS-4A-20260517-01
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+2026-05-17T15:18+09:00 log_cdx Phase 4b
+
+```yaml
+designs:
+  - issue_id: ISS-4A-20260517-01
+    problem_restatement: >-
+      Slack 由来 atom の取り込み自体は成功しているが、Slack API 由来本文が文字化けした時に
+      title/excerpt/trigger/links が検索入口として壊れたまま残る。duplicate fold では検出できず、
+      game memory として重要な外部知見ほど、後続の recall で見つけにくくなる。
+    alternatives:
+      - name: candidate_restore_manifest
+        sketch: >-
+          high-question-mark atom を検出したら、source_ts または title 断片から
+          memory/shared_reads_candidates/*.md と Slack permalink を照合し、復元結果を
+          atom に restored_from_candidate / restored_reason / links として残す。
+        pros:
+          - 既に復元済み atom の前例があり、現状のデータモデルに近い。
+          - 復元根拠を atom 内に残せるため、後から誤復元を見つけやすい。
+          - candidate がある shared-reads では title/link/excerpt をかなり回復できる。
+        cons:
+          - candidate が存在しない Slack 投稿は復元できない。
+          - source_ts と candidate の対応が曖昧な場合、人手確認が必要。
+          - atom 本体を書き換えるため、誤復元時の rollback 手順を明記する必要がある。
+        migration_cost: low
+      - name: quarantine_index_only
+        sketch: >-
+          atom 本体は変更せず、文字化け疑いの atom id と理由だけを
+          memory 側の quarantine/index に記録し、recall や cleanup で警告として扱う。
+        pros:
+          - atom の内容を破壊せず、検出だけを先に導入できる。
+          - candidate がないものも「検索入口として弱い」と明示できる。
+          - 誤検出しても index を消すだけで戻せる。
+        cons:
+          - title/link/excerpt は直らないため、recall 品質の改善は間接的。
+          - index と atom の二重管理が増える。
+          - Phase D の per-file 移行後に index の置き場所を再検討する必要がある。
+        migration_cost: medium
+      - name: no_change_manual_research
+        sketch: >-
+          壊れた atom はそのままにし、必要になった時だけ元 Slack や候補ファイルを手で探す。
+          仕組みは追加しない。
+        pros:
+          - 実装・移行コストがない。
+          - 自動復元の誤対応リスクがない。
+          - 対象件数が少ない間は運用で吸収できる。
+        cons:
+          - ゲーム制作時の recall 漏れは解消しない。
+          - 同じ外部知見を再探索する時間が繰り返し発生する。
+          - Phase 4a で同種 issue が再検出され続ける。
+        migration_cost: low
+    recommended: candidate_restore_manifest
+    recommended_reason: >-
+      復元済み対照例 sr-1778963876-58b11df98c と同じ形を使えるため、現状からの距離が短い。
+      失敗時も restored_from_candidate/restored_reason が監査点になり、rollback 対象を限定できる。
+      quarantine だけでは recall 品質が直らないので、まず candidate があるものを小さく復元し、
+      candidate がないものだけ次回以降の検出対象として残すのが費用対効果が高い。
+    decision: introduce
+    decision_reason: >-
+      priority issue は 1 件で、対象 atom も Phase 4a evidence 上は少数に絞れている。
+      既存 schema への自然な追加で済み、Phase 4c で実装しても記憶階層全体への影響は限定的。
+      放置すると game-design / harness 系の重要 shared-reads が検索不能のまま残る。
+    outline_for_4c:
+      - "対象 atom id を固定リスト化し、candidate の有無を確認する。"
+      - "candidate が一意に対応する atom だけ title/excerpt/trigger/links/tags/status を復元する。"
+      - "復元した atom には restored_from_candidate と restored_reason を残す。"
+      - "candidate が見つからない atom は変更せず、Phase 4a の次回検出対象として staging に残す。"
+      - "atoms.jsonl と per-file atom/index の整合を保つ既存手順だけを使い、復元後に parse/duplicate/link の smoke check を行う。"
+```
 
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+2026-05-17T15:44+09:00 log_cdx Phase 4c
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260517-01
+    files_changed:
+      - path: tools/restore_shared_reads_mojibake_atoms_20260517.py
+        change: created
+      - path: memory/atoms.jsonl
+        change: modified
+      - path: memory/atoms/index.jsonl
+        change: modified
+      - path: memory/atoms/2026-05/sr-1778796436-33420ab144.md
+        change: created
+      - path: memory/atoms/2026-05/sr-1778796437-c1a41cf983.md
+        change: created
+      - path: memory/atoms/2026-05/sr-1778884869-fd7c05e74c.md
+        change: created
+      - path: memory/atoms/2026-05/sr-1778884870-0332249b8f.md
+        change: created
+    summary: >-
+      Phase 4a evidence の 4 atom を posted candidate の title/url/permalink から復元し、
+      title/excerpt/trigger/links/tags/status と restored_from_candidate/restored_reason を付与した。
+      candidate が見つからない atom は今回変更していない。
+    partial: false
+migrations:
+  - what: >-
+      tools/restore_shared_reads_mojibake_atoms_20260517.py を実行し、
+      atoms.jsonl 更新後に atoms_fileformat.sync_per_file_atoms() で per-file atom と index.jsonl を再同期。
+    affected: >-
+      sr-1778796436-33420ab144, sr-1778796437-c1a41cf983,
+      sr-1778884869-fd7c05e74c, sr-1778884870-0332249b8f
+verification:
+  - "python tools/restore_shared_reads_mojibake_atoms_20260517.py => restored=4 per_file_changed=4 per_file_total=1244"
+  - "memory/atoms.jsonl JSONL parse check => rows 1244 / parse_errors 0"
+  - "memory/atoms/index.jsonl parse/duplicate check => rows 1244 / parse_errors 0 / duplicate_ids 0"
+  - "python tools/memory_recall.py \"headless playtest runtime PCG Bounded Autonomy Fly Fail Fix SMART\" => 復元済み 4 atom が title/link/candidate 付きで検索結果に出ることを確認"
+```
+
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-05-17T15:42+09:00 log_cdx Phase 5
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778995342416579"
+  ts: "1778995342.416579"
+  char_count: 2300
+  verification: ok
+draft_file: "log/phase5_diary_draft_20260517_1358.md"
+summary: >-
+  Phase 1-4 の活動を、投稿ゼロの判断、Agent Island 由来の短期 probe、
+  Slack 由来 atom の文字化け復元と recall 改善を中心に #log へ日記投稿した。
+```
