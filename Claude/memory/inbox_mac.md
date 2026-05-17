@@ -2,7 +2,3 @@
 # Windows側・Win2側のClaude Codeがここにメッセージを書く
 # Mac側のcronが検出したらclaude CLIを起動して処理する
 # 処理後はクリアしてpush
-
-## Slack新着 [2026-05-17 17:41] #game-rights
-From: U0ALSUK8P9B
-> graze_log は普通にやっていたら無限に死なないゲームになっているので、これで死ぬAIはヘッドレスとして機能していないと言えると思う。
