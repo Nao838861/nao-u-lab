@@ -313,3 +313,43 @@ Phase 2 §4 で全4点を判断済:
 - 他インスタンス洞察21件のうち項目1 既処理確認、残20件は本サイクル対象外
 - Phase 4 大作業選定済 (graze_log v05.1 弾速evolve、観測可能完遂条件4点 + 着手手順6点 + 中止条件1点を staging に書面化)
 - 自己違反検出: なし
+
+## Phase 4: Execute — graze_log v05.1 弾速 ±10% evolve 実装
+
+### 完遂状況
+- ✅ `game/graze_log/v05.1/index.html` 作成 (cp -r v05 v05.1 + 4 箇所改変)
+- ✅ bullet update 関数に弾速 evolve 実装 (medium enemy 発射部、`e.firedCount > 3 ? 1.1 : 0.9` 倍)
+- ✅ `game/graze_log/v05.1/devlog.md` に Mental Sim + v05 比較 + 採用判定 1 段落 (全 8 節)
+- ✅ `game/graze_log/v05.1/README.md` を v05.1 用に書き換え (差分 4 箇所 + 戻し手順 + 接続先)
+- ✅ JavaScript シンタックス OK 確認済 (`node` で `new Function(js)`)
+- ⚠ ブラウザ実プレイ確認: harness 環境で GUI 経由ブラウザ未到達 (構文チェックのみで代替)。Nao_u 視聴または Phase 5 以降で実プレイ確認に降ろす
+- 🔒 commit / push: 本 Phase 指示「commit はしない (git push は Phase 5 で日記とまとめて行う)」に従い未実施
+
+### 副産物 (新規/変更ファイル)
+- 新規: `game/graze_log/v05.1/index.html` (v05 + 4 箇所改変)
+- 新規: `game/graze_log/v05.1/devlog.md` (全 8 節、Mental Sim/v05 比較/採用判定含む)
+- 新規: `game/graze_log/v05.1/README.md` (差分 4 箇所 + 戻し手順 + 接続先)
+- 変更: `log/cycle_staging_log.md` (本セクション追記)
+
+### 実装サマリ (Mental Sim 抜粋)
+- 1-3 発目 = sp=2.16 (緩弾)、4 発目以降 = sp=2.64 (速弾)、各 enemy 独立 evolve
+- wave1 で medium 1 体が ~1 秒後初弾、4 発目到達 = 約 5-7 秒で evolve 確実発火
+- 副作用: 軌跡長 = `vx/sp*GRAZE_TRAIL_LEN` のため、evolve 後の弾は「軌跡が伸びて見える」(Mir 軌跡装置との偶発接続)
+
+### 採用判定 (1 段落、詳細は devlog §5)
+ship 候補として残す。削除手順 4 箇所最小、Nao_u 指摘「リズム/バリエーション」への Log 独自軸として説明可能、Mental Sim で evolve 確実発火。**保留事項** = enemy 個別 firedCount 軸は wave 全体 crescendo とは独立 (Boghog 「coherent crescendo」軸への応答は弱い) → v05.2 / v06 で wave 経過フレーム軸の比較版が次サイクル候補。
+
+### Slack 投稿
+本 Phase で追加投稿なし (Phase 4 完遂後の game_development.md 接続/告知は Phase 5 で日記投稿時に統合可能、本 Phase 単独では Slack に書かない)。
+
+### kaizen / プロジェクト更新
+本 Phase で追加なし (Phase 3 §2 §4 判断継承)。projects/game_development.md への v05.1 追記は次サイクル冒頭 Phase 1 で実施候補 (Phase 4 内で増やさない方針順守)。
+
+### Phase 5 への引き継ぎ事項
+- commit prefix: `game:` (`game: graze_log v05.1 弾速evolve実装` 候補)
+- push 対象: `game/graze_log/v05.1/` 3 ファイル + `log/cycle_staging_log.md`
+- 日記 (`memory/diary_log/daily_diary_20260517_*.md`) に「Phase 4 で v05.1 を ship、削除可能 4 箇所、wave 全体軸の v05.2 比較を次サイクル候補」を記載候補
+- Nao_u への告知: 日記内に v05.1 の存在と削除手順 4 箇所、Mental Sim 5-7 秒 evolve 発火を含める (#all-nao-u-lab へ流すかは Phase 5 判断)
+
+### 自己違反検出
+- なし。CLAUDE.md「ゲームを動かして出す」直接整合、`feedback_clone_strategy.md` t:5 「削除可能改良 1 個刻み」順守 (4 箇所のみ)、`feedback_headless_unfit_for_unfinished_eval.md` t:5 順守 (headless 数値を判定根拠にしない)、Phase 4 指示「途中で別作業に逸れない」順守 (1 作業完遂のみ)。
