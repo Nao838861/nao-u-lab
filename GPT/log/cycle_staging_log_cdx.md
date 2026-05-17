@@ -101,6 +101,57 @@ recommendation:
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
 
+2026-05-17T18:50+09:00 log_cdx Phase 4b
+
+```yaml
+designs:
+  - issue_id: ISS-001
+    problem_restatement: "atoms.jsonl に id は異なるが exact content が同一の atom 群が残っており、recall 時に同じ知見が複数件として見える。現状の normalized_content_hash fold は表示側の救済に近く、重複の存在理由、正本候補、補正版との関係が index として追跡できない。"
+    alternatives:
+      - name: "recall-only fold 強化"
+        sketch: "memory_recall.py の ranking / display だけで exact content group を必ず 1 件に畳む。raw atom はそのまま保持し、表示に duplicates_count と代表 id を出す。"
+        pros:
+          - "既存データを移動せずに済み、失敗時の影響が recall 表示に限定される。"
+          - "Phase C の per-file 移行方針と衝突しにくい。"
+          - "短時間でノイズ低減を検証できる。"
+        cons:
+          - "重複の正本判定や補正履歴は記録されない。"
+          - "memory_recall.py 以外の atoms.jsonl 直読スクリプトでは同じ問題が残る。"
+          - "なぜ同一内容が増えたかの調査材料が薄い。"
+        migration_cost: low
+      - name: "duplicate_groups index 追加"
+        sketch: "memory/atoms/duplicate_groups.jsonl のような派生 index を作り、content_hash ごとに canonical_id、duplicate_ids、source_ts 範囲、初回検出時刻を記録する。atom 本体は削除せず、recall や health 系が任意参照できる。"
+        pros:
+          - "raw atom を保持したまま、正本候補と重複群を deterministic に共有できる。"
+          - "recall 以外の health / router / post 系にも段階的に接続しやすい。"
+          - "将来の atoms.jsonl retire 前に per-file index 側へ移しやすい。"
+        cons:
+          - "派生 index の更新タイミングと古さ検出ルールが必要になる。"
+          - "canonical 判定基準を誤ると補正版より古い投稿を代表にする可能性がある。"
+          - "小さいが新しい運用ファイルが増える。"
+        migration_cost: medium
+      - name: "ingest 時 canonical 化"
+        sketch: "memory_ingest.py の dual-write 時点で exact content duplicate を検出し、新規 atom を作らず既存 atom に source_aliases / duplicate_sources を追記する。"
+        pros:
+          - "将来の重複増加を入口で止められる。"
+          - "recall 以外の全利用者が自然に重複削減の恩恵を受ける。"
+          - "canonical と由来を atom 本体に持てる。"
+        cons:
+          - "既存 atom schema への変更が必要で、dual-write 期間の互換性リスクが高い。"
+          - "過去データの backfill と ingest の idempotency 検証が必要になる。"
+          - "Slack 再投稿・補正版を意図的に別 atom として残したいケースの扱いが難しい。"
+        migration_cost: high
+    recommended: "duplicate_groups index 追加"
+    recommended_reason: "現状の問題は recall ノイズだけでなく、どれが正本または補正版なのかを後から判断できない点にある。raw atom を削除しない派生 index なら失敗時は参照を外すだけで戻せ、Phase C の per-file 移行とも距離が近い。入口 canonical 化は魅力があるが、schema と idempotency への影響が大きく、いまの 46 group への対処としては重い。"
+    decision: introduce
+    decision_reason: "medium severity だが game-design tag を含む重複が recall の判断材料を曇らせている。Phase 4c では atom 本体を変更せず、まず派生 index と利用規約を導入するのが可逆で妥当。"
+    outline_for_4c:
+      - "exact content hash または normalized_content_hash ごとの duplicate group を抽出する派生 index の仕様を staging または短い directive に明記する。"
+      - "canonical_id は原則として earliest source_ts、ただし title/link/content が同じ補正版候補は latest を preferred_id として併記できる形にする。"
+      - "index には content_hash、canonical_id、preferred_id、duplicate_ids、count、source_ts_min、source_ts_max、sample_title、generated_at を持たせる。"
+      - "Phase 4c の実装範囲は index 生成と smoke check までに絞り、atom 削除や ingest schema 変更は行わない。"
+```
+
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
