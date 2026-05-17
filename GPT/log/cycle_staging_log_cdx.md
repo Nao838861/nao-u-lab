@@ -13,7 +13,18 @@
   - `memory/shared_reads_candidates/20260517_agentic_pcg_tool_using_llms.md` — LLM を level 一発生成ではなく、tool と environment feedback で反復編集する PCG framework として収集。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-17T10:05+09:00 log_cdx Phase 2:
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260517_towermind_tower_defence_llm_agents.md
+  - memory/shared_reads_candidates/20260517_agentic_pcg_tool_using_llms.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260517_orak_diverse_video_game_agents.md
+    reason: "benchmark 構成は有望だが、candidate 内では評価結果・失敗様式・結論が薄く、4000字品質には本文確認が必要。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

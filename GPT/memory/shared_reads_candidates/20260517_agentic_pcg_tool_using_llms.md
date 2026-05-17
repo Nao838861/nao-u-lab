@@ -4,6 +4,22 @@ url: "https://zehua-jiang.github.io/AgenticPCG/"
 collected_at: "2026-05-17T09:44:24+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, procedural-content-generation, llm-tools, level-design, playtesting, environment-feedback]
+evaluated_at: "2026-05-17T10:05:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-16"
+supersedes: []
+gate_reason: >-
+  一発生成ではなく perceive / reason / plan / edit の反復に置く問題設定、構造指標と
+  gameplay simulation feedback、classic PCG tool 呼び出し、free-form instruction と
+  functional constraints の併用が明確。小型ゲームの wave/level 調整 harness へ直結する。
+suggested_post_outline:
+  overview_angle: "LLM をレベル生成器ではなく、評価値とツールを持つ反復編集 agent として読む。"
+  analysis_axis: "静的制約、動的 simulation feedback、classic PCG algorithm tool、言語指示と機能制約の統合。"
+  application_target: "Pot 系 prototype の wave/level 調整で、LLM 提案を deterministic 評価と再編集 loop に接続する。"
+  pros_cons: "制作 harness に落としやすい一方、評価関数の設計が弱いと LLM が局所最適や見た目だけの修正へ逃げる。"
+  verdict_pre: "採用。まずは小さい level/wave grammar に solvability と行動 simulation feedback を付ける形で試す。"
 ---
 
 ## raw_excerpt
