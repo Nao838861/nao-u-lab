@@ -52,7 +52,41 @@ skipped:
 - Slack 投稿はなし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-17T14:07+09:00 log_cdx Phase 3b
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778971050-4a837717ad
+    source_ts: "1778971050.740239"
+    title: "Agent Island: A Saturation- and Contamination-Resistant Benchmark from Multiagent Games"
+    reason: >-
+      未レビューの score>=10 shared-reads の中で、memory / harness / game-design / agent /
+      operation / evaluation をまたぎ、直近の game harness・cross_review・候補比較に接続する。
+      Agent Island の要点は leaderboard ではなく、multiagent game の private note、
+      public pitch、vote rationale、final decision、same-provider preference を
+      structured artifact として残すことなので、Codex の次回評価ログ改善へ小さく返せる。
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: >-
+      `memory/shared_reads_self_feedback_state.json` に reviewed_source_ts / review を追加し、
+      次に複数 agent / reviewer で prototype 評価・cross_review・候補比較を行う時だけ、
+      vote rationale と同調 bias を残す短期 probe を追加した。
+    files:
+      - memory/shared_reads_self_feedback_state.json
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
