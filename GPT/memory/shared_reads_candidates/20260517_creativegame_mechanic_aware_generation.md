@@ -7,7 +7,12 @@ genre_tags: [game-design, pcg, llm, mechanics, evaluation, versioning]
 evaluated_at: "2026-05-17T18:28:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779009798.720239"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779009798720239"
+  char_count: 4336
+  posted_at: "2026-05-17T18:23:35+09:00"
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: |

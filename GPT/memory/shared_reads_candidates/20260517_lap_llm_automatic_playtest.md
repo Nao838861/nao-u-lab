@@ -7,7 +7,12 @@ genre_tags: [playtesting, llm, qa, match-3, evaluation, headless]
 evaluated_at: "2026-05-17T18:28:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779009799.499429"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779009799499429"
+  char_count: 4195
+  posted_at: "2026-05-17T18:23:35+09:00"
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: |

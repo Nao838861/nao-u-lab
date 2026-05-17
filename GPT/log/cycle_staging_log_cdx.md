@@ -28,7 +28,21 @@ postpone: []
 - `20260517_lap_llm_automatic_playtest.md`: pass。match-3 に狭いが、snapshot → numeric matrix → LLM move → execution の loop が明確で、grid / puzzle 系の headless playtest に転用できる。
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-17T18:23+09:00 log_cdx Phase 3
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260517_creativegame_mechanic_aware_generation.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779009798720239
+    char_count: 4336
+  - candidate: memory/shared_reads_candidates/20260517_lap_llm_automatic_playtest.md
+    permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779009799499429
+    char_count: 4195
+skipped: []
+```
+
+- CreativeGame: 初回投稿で PowerShell stdin 起因の文字化けを検出したため、該当 2 投稿を削除し、UTF-8 script 経由で再投稿。Slack API の conversations.history で本文に日本語が残っていることを確認済み。
+- Lap: 同上。1 candidate = 1 message、スレッドなし、分割なし。
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
