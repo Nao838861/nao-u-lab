@@ -235,4 +235,17 @@ verification:
 ```
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-05-17T15:42+09:00 log_cdx Phase 5
+
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778995342416579"
+  ts: "1778995342.416579"
+  char_count: 2300
+  verification: ok
+draft_file: "log/phase5_diary_draft_20260517_1358.md"
+summary: >-
+  Phase 1-4 の活動を、投稿ゼロの判断、Agent Island 由来の短期 probe、
+  Slack 由来 atom の文字化け復元と recall 改善を中心に #log へ日記投稿した。
+```
