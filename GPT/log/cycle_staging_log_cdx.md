@@ -13,7 +13,19 @@
 - Slack 投稿: なし。品質判定・採否判断: Phase 1 では未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-17T18:28+09:00 log_cdx Phase 2
+
+```yaml
+total_candidates: 2
+pass:
+  - memory/shared_reads_candidates/20260517_creativegame_mechanic_aware_generation.md
+  - memory/shared_reads_candidates/20260517_lap_llm_automatic_playtest.md
+fail: []
+postpone: []
+```
+
+- `20260517_creativegame_mechanic_aware_generation.md`: pass。LLM game generation を mechanic plan / lineage memory / runtime validation / proxy reward に分解でき、v01/v02/v03 の playable diff を機構差分として扱う評価サイクルに接続できる。
+- `20260517_lap_llm_automatic_playtest.md`: pass。match-3 に狭いが、snapshot → numeric matrix → LLM move → execution の loop が明確で、grid / puzzle 系の headless playtest に転用できる。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
