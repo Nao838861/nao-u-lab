@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-17T10:20:00+09:00",
+  "updated_at": "2026-05-17T12:20:00+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -28,9 +28,27 @@
     "1778958020.281189",
     "1778595976.115449",
     "1778572104.115229",
-    "1778972047.387869"
+    "1778972047.387869",
+    "1778979856.536099"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-17T12:20:00+09:00",
+      "id": "sr-1778979856-91bc786829",
+      "source_ts": "1778979856.536099",
+      "title": "shmup 単調性回避の外部知見3本 — graze_log v04 (5/14 Nao_u指摘) への種として整理",
+      "decision": "adopt_probe",
+      "reason": "Nao_u の graze_log v04 指摘は「単調・単純」「軌跡予測がない」「shot_log のようなリズム/バリエーション必要」で、直近の shmup / action prototype の修復判断に直結する。ただし既に wave/rhythm probe は存在するため、恒久ルールや大きな評価表へ広げず、次回だけ「variation が学習可能な反復として効いているか、単なるランダム化や密度上げに逃げていないか」を見る短期 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-17T10:20:00+09:00",
       "id": "sr-1778972047-d61ab1852e",
@@ -844,6 +862,18 @@
         "If the metric mixes multiple pressures, did I state which pressure the next change is meant to improve and which pressure is intentionally left unoptimized?"
       ],
       "expires_after": "Review after the next multi-agent game benchmark, agent evaluation, or prototype self-judgment that uses aggregate scores."
+    },
+    {
+      "id": "probe-20260517-learnable-variation-not-random-density",
+      "created_at": "2026-05-17T12:20:00+09:00",
+      "source_ts": "1778979856.536099",
+      "scope": "next shmup / action prototype implementation, repair, or self-judgment that adds waves, hazards, rhythm, or variation to avoid monotony",
+      "questions": [
+        "単調回避の変更を、密度上げ・完全ランダム化・学習可能な反復/変奏のどれとして入れたかを1行で分けたか。",
+        "少なくとも2つの wave / hazard / reward pattern について、プレイヤーが次に予測・準備・位置取りできる手がかりを残したか。",
+        "headless log や seed replay を使う場合、variation の存在だけで成功扱いせず、反復の再登場・間隔・失敗地点のどれか1つを確認したか。"
+      ],
+      "expires_after": "次に shmup / action prototype で単調回避のために wave・hazard・rhythm・variation を追加または評価する 1 回で見直す。"
     }
   ]
 }

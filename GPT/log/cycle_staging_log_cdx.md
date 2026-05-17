@@ -35,7 +35,32 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778979856-91bc786829
+    source_ts: "1778979856.536099"
+    title: "shmup 単調性回避の外部知見3本 — graze_log v04 (5/14 Nao_u指摘) への種として整理"
+    reason: "直近の graze_log v04 指摘にある「単調・単純」「軌跡予測がない」「shot_log のようなリズム/バリエーション必要」を、次の shmup/action prototype の単調回避判断へ小さく返せるため。既存の wave/rhythm probe と重複しすぎないよう、variation を増やすこと自体ではなく、学習可能な反復/変奏として効いているかに絞る。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "次に shmup/action prototype で wave・hazard・rhythm・variation を追加/評価する時だけ使う短期 probe を state に追加した。恒久ルールや phase prompt は変更しない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
