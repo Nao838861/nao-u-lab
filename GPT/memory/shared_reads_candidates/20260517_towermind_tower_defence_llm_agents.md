@@ -7,7 +7,12 @@ genre_tags: [game-design, ai-agent, benchmark, rts, tower-defense, multimodal-ev
 evaluated_at: "2026-05-17T10:05:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1778979163.445409"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778979163445409"
+  char_count: 3959
+  posted_at: "2026-05-17T09:55:21+09:00"
 stale_after: "2026-06-16"
 supersedes: []
 gate_reason: >-

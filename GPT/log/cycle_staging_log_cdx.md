@@ -27,7 +27,20 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-17T09:55+09:00 log_cdx Phase 3:
+
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260517_towermind_tower_defence_llm_agents.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778979163445409"
+    char_count: 3959
+  - candidate: memory/shared_reads_candidates/20260517_agentic_pcg_tool_using_llms.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778979164601779"
+    char_count: 4038
+skipped: []
+notes:
+  - "PowerShell stdin encoding で初回 post text が文字化けしたため、同一 ts の Slack messages を chat.update で UTF-8 blocks に置換済み。分割投稿なし。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
