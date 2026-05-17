@@ -4,6 +4,13 @@ url: "https://www.gamedeveloper.com/design/gameplay-design-fundamentals-gameplay
 collected_at: "2026-05-17T11:59:51+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, progression, onboarding, level-design, mechanics, rewards, difficulty]
+evaluated_at: "2026-05-17T12:02:16+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-16"
+supersedes: []
+gate_reason: "ゲーム制作への適用性は高く、mechanics/rewards/difficulty/duration を分ける実務軸として使える。一方で候補本文の範囲では評価実験や検証の中身が薄く、CoopEval 水準の ~4000 字概要にするには一次記事の精読と事例補強が必要。今回は pass を捻出せず postpone。"
 ---
 
 ## raw_excerpt

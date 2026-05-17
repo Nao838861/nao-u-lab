@@ -9,7 +9,16 @@
 - 追加 candidate: `memory/shared_reads_candidates/20260517_gameplay_progression_fundamentals.md` — mechanics / duration / rewards / difficulty を progression として段階配分する実務記事。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260517_mage_multi_axis_game_scene_eval.md
+  - memory/shared_reads_candidates/20260517_generating_levels_that_teach_mechanics.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260517_gameplay_progression_fundamentals.md
+    reason: "適用性は高いが、候補本文だけでは検証内容が薄く、~4000 字投稿には追加精読と事例補強が必要。"
+```
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)

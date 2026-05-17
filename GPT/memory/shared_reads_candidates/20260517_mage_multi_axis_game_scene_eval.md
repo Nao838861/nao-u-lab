@@ -4,6 +4,19 @@ url: "https://arxiv.org/abs/2605.07342"
 collected_at: "2026-05-17T11:59:51+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, evaluation, llm-code-generation, unity, playable-scenes, benchmark]
+evaluated_at: "2026-05-17T12:02:16+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: pass
+candidate_status: ready_to_post
+stale_after: "2026-06-16"
+supersedes: []
+gate_reason: "問題設定、手法の中核、4 軸評価、858 attempts の評価結果、結論が候補本文だけで抽出できる。Nao_u_BOT の LLM 生成 playable prototype 判定に直結し、compile pass 偏重を避ける具体軸として使える。CoopEval 水準の概要は、compile/runtime/structure/mechanism の分離を軸に十分書ける。"
+suggested_post_outline:
+  overview_angle: "LLM 生成ゲーム scene を compile 成功率だけで評価すると何を見落とすか、Mage の 4 軸で説明する。"
+  analysis_axis: "compile success と runtime/structural fidelity/mechanism adherence のズレ、特に compile と機能正しさが逆相関し得る点。"
+  application_target: "headless/self_judgment、playable diff の合否判定、Unity/ゲームプロトタイプ生成時のレビュー checklist。"
+  pros_cons: "メリットは評価軸が具体的で再現用データもある点。デメリットは Unity scene 対象で、体験品質や面白さの評価までは直接扱わない点。"
+  verdict_pre: "部分採用。compile gate の上位に runtime/structure/mechanism gate を置く評価設計として採用。"
 ---
 
 ## raw_excerpt
