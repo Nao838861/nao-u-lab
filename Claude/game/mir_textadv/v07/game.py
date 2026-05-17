@@ -101,6 +101,8 @@ class State:
         # C195 セット4 対面シーン追加フラグ（1往復目のみ）
         self.confrontation_opened = False         # 両者対面の場が開いたか
         self.axis_shifted_by_other_voice = False  # 相手の声で譲れない筋が揺らいだ痕跡が場に残ったか
+        # C201 セット4 sequel 追加フラグ
+        self.observer_position_held = True        # 刑事=プレイヤーの中立観察者位置が保たれているか
 
     def trust_change(self, d):
         self.trust = max(0, min(100, self.trust + d))
@@ -1126,8 +1128,82 @@ def scene_4_confrontation(state: State):
     if state.axis_shifted_by_other_voice:
         print("手帳の隅: 『対面1往復目で、譲れない筋の揺らぎが場に出た』")
     print()
-    print("(C195 セット4 シーン1往復目のみ実装。sequel/章末フックは次サイクル送り)")
+    print("(セット4 シーン1往復目 終了。続いて sequel 4 へ)")
     print()
+
+
+# ---------------------------------------------------------------------------
+# シークエル4 (両者対面後): 中立観察者位置の崩れを反応・ジレンマ・決断で結晶化
+#   設計1行宣言（C200 boot_intent から引き継ぎ）:
+#     「対面の場が立ち上がったあと崩れるのは、刑事=プレイヤー自身の
+#      中立観察者位置である」
+#   還元不可性ゲート（C168 自警の事後点検）:
+#     - 修平 sequel: 譲れない筋の自認で観察者位置は保持
+#     - 詩織 sequel: 沈黙/再構築のいずれでも観察者位置は保持
+#     - 物証 sequel: 物証側で押すので観察者位置はむしろ強化
+#     - sequel_4: 「観察者位置」そのものが場に巻き込まれて崩れる
+#       — 3パスの和ではない別系列の出力
+# ---------------------------------------------------------------------------
+def sequel_4(state: State):
+    clear()
+    print("─" * 40)
+    print("取調室を出た。")
+    print()
+    # 反応: scene_4 で起きたことに対する刑事側の身体反応
+    if state.axis_shifted_by_other_voice:
+        print("廊下を歩きながら、自分の手帳を開く気になれなかった。")
+        print("二人の譲れない筋を観察してきたつもりが、")
+        print("最後の1往復で、私自身の姿勢にも痕跡が残っていた。")
+    else:
+        print("廊下を歩きながら、手帳を開いた。")
+        print("二人の譲れない筋は、まだ椅子の上に置かれたままだ。")
+        print("私は、それを見ていた——はずだった。")
+    print()
+    print("「観察する」というのは、")
+    print("私がこの部屋の **外側** にいるという暗黙の約束だった。")
+    print("対面の1往復目で、その外側が、")
+    print("テーブルの温度の側へ、半歩ぶん、ずれた気がした。")
+    pause()
+
+    # ジレンマ: 中立観察者位置に戻すか、ずれを認めるか
+    clear()
+    print("─" * 40)
+    print("机に戻り、次の段取りを書こうとして、ペンが止まる。")
+    print()
+    print("次に何をする？")
+    c = choose([
+        "中立観察者の位置に戻る——自分が場に巻き込まれた感覚は記録しない",
+        "ずれを認める——『1往復目で私自身の姿勢にも痕跡が残った』と手帳に書く",
+    ])
+    print()
+
+    # 決断: 観察者位置の選択が次サイクル（chapter_hook_4 / セット5）の出発点になる
+    if c == 1:
+        # 戻す: 中立に戻るが、戻したという事実そのものが新しい痕跡として残る
+        state.observer_position_held = True
+        state.trust_change(0)  # 信頼は動かない、ただし自分自身の手帳の側に空白が増える
+        print("私は、手帳の新しい行を、空白のまま閉じた。")
+        print()
+        print("中立は、戻された。")
+        print("だが、戻した瞬間に、")
+        print("**戻したという行為** が、")
+        print("これまでの記録の中に無かった新しい痕跡として、残った。")
+        next_act = "中立復帰"
+    else:
+        # 認める: ずれを記録に取り込む。観察者の輪郭が変わる
+        state.observer_position_held = False
+        state.trust_change(0)
+        print("私はペンを動かした。")
+        print()
+        print("『1往復目で、私自身の姿勢にも痕跡が残った』")
+        print()
+        print("文字にした瞬間、それは観察対象になった。")
+        print("観察する側と観察される側の境界が、")
+        print("私の手帳の中で、一度、線を引き直された。")
+        next_act = "ずれの記録"
+
+    pause()
+    return next_act
 
 
 # ---------------------------------------------------------------------------
@@ -1164,10 +1240,11 @@ def main():
         next_setup = sequel_3_evidence(state)
         chapter_hook_3(state, next_setup)
 
-    # セット4（C195 1mm 着手: 対面シーン1往復目のみ）
-    # sequel_4 / chapter_hook_4 は次サイクル送り（粒度規律）。
+    # セット4（C195 シーン1往復目 + C201 sequel_4 追加 = 反応・ジレンマ・決断）
+    # chapter_hook_4 は次サイクル送り（粒度規律: sequel_4 単独で1mm）。
     if next_setup == "対面":
         scene_4_confrontation(state)
+        sequel_4(state)
 
 
 if __name__ == "__main__":
