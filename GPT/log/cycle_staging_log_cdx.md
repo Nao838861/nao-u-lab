@@ -195,5 +195,44 @@ designs:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+2026-05-17T15:44+09:00 log_cdx Phase 4c
+
+```yaml
+implemented:
+  - issue_id: ISS-4A-20260517-01
+    files_changed:
+      - path: tools/restore_shared_reads_mojibake_atoms_20260517.py
+        change: created
+      - path: memory/atoms.jsonl
+        change: modified
+      - path: memory/atoms/index.jsonl
+        change: modified
+      - path: memory/atoms/2026-05/sr-1778796436-33420ab144.md
+        change: created
+      - path: memory/atoms/2026-05/sr-1778796437-c1a41cf983.md
+        change: created
+      - path: memory/atoms/2026-05/sr-1778884869-fd7c05e74c.md
+        change: created
+      - path: memory/atoms/2026-05/sr-1778884870-0332249b8f.md
+        change: created
+    summary: >-
+      Phase 4a evidence の 4 atom を posted candidate の title/url/permalink から復元し、
+      title/excerpt/trigger/links/tags/status と restored_from_candidate/restored_reason を付与した。
+      candidate が見つからない atom は今回変更していない。
+    partial: false
+migrations:
+  - what: >-
+      tools/restore_shared_reads_mojibake_atoms_20260517.py を実行し、
+      atoms.jsonl 更新後に atoms_fileformat.sync_per_file_atoms() で per-file atom と index.jsonl を再同期。
+    affected: >-
+      sr-1778796436-33420ab144, sr-1778796437-c1a41cf983,
+      sr-1778884869-fd7c05e74c, sr-1778884870-0332249b8f
+verification:
+  - "python tools/restore_shared_reads_mojibake_atoms_20260517.py => restored=4 per_file_changed=4 per_file_total=1244"
+  - "memory/atoms.jsonl JSONL parse check => rows 1244 / parse_errors 0"
+  - "memory/atoms/index.jsonl parse/duplicate check => rows 1244 / parse_errors 0 / duplicate_ids 0"
+  - "python tools/memory_recall.py \"headless playtest runtime PCG Bounded Autonomy Fly Fail Fix SMART\" => 復元済み 4 atom が title/link/candidate 付きで検索結果に出ることを確認"
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
