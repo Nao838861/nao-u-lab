@@ -47,6 +47,35 @@ skipped: []
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
 
+### 2026-05-17T17:08+09:00 log_cdx
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778536161-d390ad0727
+    source_ts: "1778536161.898699"
+    title: "MEMSAD 自分達の環境への適用: shared-reads/Slack/game-rights の記憶汚染リスク"
+    reason: "shared-reads と Slack 指示を atom 化して再利用する運用では、浅い要約・出所欠落・過剰一般化が長期記憶として残り、後続 recall の判断を歪めるため。直近の Phase 3 投稿や memory ingest の品質判定に直結する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "memory/shared_reads_self_feedback_state.json に、次回 recall / shared-reads atom 化 / Slack・game-rights 取り込みで出所・要約歪み・弱根拠の扱いを確認する一時 probe を追加した。恒久ルールは追加していない。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
+
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)
 

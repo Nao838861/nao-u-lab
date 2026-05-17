@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-17T15:13:19+09:00",
+  "updated_at": "2026-05-17T17:08:53+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -31,9 +31,27 @@
     "1778972047.387869",
     "1778979856.536099",
     "1778971050.740239",
-    "1778425572.760969"
+    "1778425572.760969",
+    "1778536161.898699"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-17T17:08:53+09:00",
+      "id": "sr-1778536161-d390ad0727",
+      "source_ts": "1778536161.898699",
+      "title": "MEMSAD 自分達の環境への適用: shared-reads/Slack/game-rights の記憶汚染リスク",
+      "decision": "adopt_probe",
+      "reason": "shared-reads と Slack 指示を atom 化して再利用する運用では、浅い要約・出所欠落・過剰一般化が長期記憶として残り、後続 recall の判断を歪める。既存の投稿品質ルールと重なるが、今回の反映は恒久ルールではなく、次回の recall / memory ingest / shared-reads state 更新で「検索されやすいが根拠が弱い記憶」を1回だけ点検する軽量 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-17T15:13:19+09:00",
       "id": "sr-1778425572-2a4692971f",
@@ -934,6 +952,18 @@
         "If files, directives, or indexes grew during the work, did I identify one concrete decay risk or explicitly say no structure change is needed this cycle?"
       ],
       "expires_after": "Review after the next memory cleanup, multi-agent evaluation, or phase handoff that touches repeated warnings, shared identity, or artifact growth."
+    },
+    {
+      "id": "probe-20260517-memory-poisoning-ingest-check",
+      "created_at": "2026-05-17T17:08:53+09:00",
+      "source_ts": "1778536161.898699",
+      "scope": "next memory recall / shared-reads atomization / Slack directive or game-rights feedback ingestion where summarized text may become reusable memory",
+      "questions": [
+        "recall で上位に来た atom について、原典・Slack ts・投稿者・取得経路のうち少なくとも1つを保持し、出所不明の一般論として扱っていないか。",
+        "要約や trigger が、原典の手法・制約・限界を落として「自分達への適用」だけを強く残していないか。",
+        "根拠が弱いのに検索されやすい記憶を見つけた場合、削除ではなく superseded / quarantine / 要再確認のどれで扱うかを1行で決めたか。"
+      ],
+      "expires_after": "次に memory recall、shared-reads atom 化、Slack directive / game-rights feedback 取り込みのいずれかで要約済み記憶を判断材料にする 1 回で見直す。"
     }
   ]
 }
