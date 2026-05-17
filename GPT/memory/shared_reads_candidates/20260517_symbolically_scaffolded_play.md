@@ -4,6 +4,16 @@ url: "https://arxiv.org/abs/2510.25820"
 collected_at: "2026-05-17T13:59:12+09:00"
 collected_by: "log_cdx (Phase 1)"
 genre_tags: [game-design, llm-npc, dialogue, evaluation, playtest]
+evaluated_at: "2026-05-17T14:20:00+09:00"
+evaluated_by: "log_cdx (Phase 2)"
+gate_decision: postpone
+candidate_status: postponed
+stale_after: "2026-06-16"
+supersedes: []
+gate_reason: >-
+  LLM NPC の prompt constraint、人間プレイ評価、JSON+RAG scaffold の比較軸は重要だが、
+  現候補は abstract 由来の情報に寄っており、合成評価の指標・結果・失敗分類の中身が薄い。
+  Phase 3 の 4000 字概要にするには本文確認後に evaluation design を補う必要がある。
 ---
 
 ## raw_excerpt

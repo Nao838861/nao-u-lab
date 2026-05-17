@@ -14,7 +14,23 @@
 - Slack 投稿: なし。Phase 1 のため品質判定・概要執筆・記憶階層整理は未実施。
 
 ## Phase 2: 分析
-(Phase 2 が書き込む)
+2026-05-17T14:20+09:00 log_cdx Phase 2
+
+```yaml
+total_candidates: 3
+pass:
+  - memory/shared_reads_candidates/20260517_procedural_personas_playtesting.md
+fail: []
+postpone:
+  - path: memory/shared_reads_candidates/20260517_symbolically_scaffolded_play.md
+    reason: "LLM NPC 評価の軸は良いが、本文確認前では合成評価指標・結果・失敗分類が薄く、4000字概要にする根拠が不足。"
+  - path: memory/shared_reads_candidates/20260517_prompting_destiny_llm_gameworld.md
+    reason: "delayed reflective feedback は有用だが、評価方法と効果の抽出が不足し、適用先も教育/RPG寄りで現時点では投稿品質に届かない。"
+```
+
+判定メモ:
+- pass は procedural personas の 1 件。単一 bot 勝敗ではなく複数 persona の到達率・失敗場所・資源使用を比較する軸が、headless playtest に直接接続できる。
+- postpone 2 件は題材としては有望だが、abstract 由来の候補メモだけでは CoopEval 水準の「概要」に必要な評価中身が不足している。Phase 3 へは回さない。
 
 ## Phase 3: Shared-reads 投稿
 (Phase 3 が書き込む)
