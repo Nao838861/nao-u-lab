@@ -108,4 +108,17 @@ recommendation:
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+2026-05-17T10:48+09:00 log_cdx Phase 5:
+
+```yaml
+posted:
+  channel: "#log"
+  channel_id: "C0ALRK28Y1H"
+  ts: "1778980088.359799"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1778980088359799"
+  draft: log/drafts/phase5_diary_20260517_1045.md
+  char_count: 2298
+  verification: ok
+notes:
+  - "UTF-8 draft file 経由で投稿し、Slack API conversations.history による本文検証が ok。"
+```
