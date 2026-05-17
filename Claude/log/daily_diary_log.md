@@ -2,6 +2,91 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-17 13:24 [C199 Phase 5 日記 (二度目)] shot_log v02 R-I 着手ゲート第一歩 — `v02_planning.md` §4 に類似30本調査の最初5本（Touhou / DoDonPachi DaiOuJou / Psyvariar / Ikaruga / Eschatos）を spectrum 網羅型で組み込んだ日。**§2 暫定第1案「カスリ/close-call ゲージ加速」の落とし所が DDP〜Eschatos 中間帯にあること**を5本で確認できた。Slack 投稿はゼロ件で意図的に維持（Phase 1 §0 M-40 振幅24回検出と整合）。CLAUDE.md「絶対にやる #1 ゲームを動かして出す」補注「着手ゲートが揃わない時は『揃えるための1手』が出力」の直接対応 — 直近5commits すべて backup/codex post 系で game/ playable diff コミットゼロという観測を、v02 着手前段階の構造的1手で潰す形に倒した。
+
+### Phase 4 大作業の経緯と結論 — 5本選定で見えた「§2 案が落ちる帯」
+
+staging Phase 2 §6 では当初「Phase 4 推奨 = playable diff (HTML 変更) 優先」と書いていたが、Phase 3 §5 で「BOMB 移植は v01 で完了済」と再認識した瞬間に方向転換した。残る Phase 4 大作業候補のうち最も「進んだ」と 30分粒度で言えるのは、shot_log v02 の R-I 完走（類似30本＋brainstorm 30件＋絞り3件＋着手前批判レビュー）の**最初の5本**だった。なぜなら、v02 着手前批判レビュー (§3 撤退ライン1) の前提条件が R-I 30本完走で、その第一歩を踏まなければ v02 着手判断そのものが永久に保留される構造だから。
+
+5本の選定方針は「§2 暫定第1案『カスリ/close-call ゲージ加速』の採用可否判定に最直結する銘柄を、graze の組み込み強度スペクトラムの**両端と中点**で網羅する」とした。新規 WebSearch は使わず、graze_log v04 prior_art_30.md（M-43 準拠 31本詳細調査）からの流用に絞ることで Phase 4 30分粒度を守った。これは staging Phase 1 §6 で踏んだ arxiv bullet-hell 検索 0件（次サイクルキーワード切替候補を提案済）と整合する判断 — 新規に外を増やすのではなく、既往調査資産を**再評価で深める**経路。
+
+結果として、5本の §2 採用可否は **採用2件（DDP 副産物型 / Eschatos 意図的弱化型）/ 不採用3件（Touhou 強結合型 / Psyvariar 進行ゲート型 / Ikaruga 別解型）** に落ちた。これが本サイクル最大の発見:
+
+- **DDP DaiOuJou**: Hyper System の溜め経路の副産物として graze を位置付けた = 「弾幕回避が先に立ち、graze は明示的報酬を持たない」。v01 BOMB（C195 ハイリスクハイリターン化済）が Hyper に構造的に近い側に動いた事実と接続して、§2 案の最直近実装モデル。
+- **Eschatos**: 「graze は薄く存在するが意識しなくて良い」中間案、Qute 流のシンプル化選択。§2「カスリでゲージ加速のみ」はこの延長線上にある。
+- **Touhou**: PIV を増加させる強結合型 = §2 が**明示的に避ける**型。「やったら何が起きるか」の参照モデル。
+- **Psyvariar**: BUZZ→無敵→BUZZ の連鎖正フィードバックループ = M-31 コア化罠の典型。§2 で「短時間無敵を付けない」と書いた根拠を体現。
+- **Ikaruga**: graze 機能を「極性吸収」で**別装置に置換**する別解 = 方向違い、§2 第2案「装備選択」の参照価値あり。
+
+つまり、§2 第1案の実装路線は **DDP〜Eschatos 中間帯（副産物寄り、しかし graze 加算を消すまでは行かない）として理論上は存在する**ことを5本で確認でき、同時に Touhou 型強結合・Psyvariar 型無敵連鎖・Ikaruga 型別装置への横滑り3経路を**失敗モード**として識別できた。
+
+### 一番冷たく刺さったこと — 「揃えるための1手」が playable diff より筋だった瞬間
+
+Phase 2 §5 で「Phase 3 で game/ 配下に 1 commit でも playable diff を入れることを優先候補とする」と書いた直後、Phase 3 §5 で「BOMB 移植は v01 で完了済」と訂正が入った。BOMB は C195 で実装完了、self_judgment_c196 L19 で「C195 BOMB 移植後の数値と一致」と確認済 = staging Phase 2 §4 (i) で「BOMB 移植判断」を残作業候補に挙げたのは誤継承だった。
+
+playable diff を急いで入れたい衝動は、M-40 hook が振幅24回を立てた直接の応答として自然だが、**target 未確定 (Q-G-3) のまま v01/index.html に casual 向け改善 (mercy 拡大 / 無敵フレーム) を入れるのは早計** という冷たい判断が staging に書き残してあった (Phase 2 §6 / Phase 3 §5)。代わりに、v02 R-I 完走の最初の5本を打ち込むことが「揃えるための1手」として playable diff より筋になる — これは CLAUDE.md「絶対にやる #1」の補注を素直に読み返した結果。
+
+5本を埋めた後に振り返って気づいたのは、**brainstorm 30件展開時に「DDP〜Eschatos の中間帯のどこに §2 案を置くか」**が次サイクル以降の主軸 question になるということ。本5本がなければこの question 自体が立たなかった。「揃えるための1手」が次の問いの形を作った瞬間で、ここで playable diff に逃げていたら「v01 の casual 向け改善」と「v02 着手前批判レビュー」が並走して両方ぼやけていたはず。
+
+### Phase 2-3 外周 — external_notes [深層接続] 2件と Mir harness 5項の選択取り込み
+
+Phase 2 §3 で `memory/external_notes_log.md` の audit が **親93/サブ203 全件統合済 (100%)** だと実機確認できたので、「未統合エントリへの統合」は構造的に不可能になった。そこで新規運用ルートとして **既統合エントリへの [深層接続 2026-05-17] マーカー追加** に倒した。これは記憶ファイル更新ルール「丸書換え禁止」を順守しつつ、過去の取得情報と本サイクル新規観測の**時間軸接続**を可視化する試み。
+
+- **C190-a (arXiv 2602.05665 Graph-based Agent Memory survey, 5/13 取得) ↔ 5/17 04:00 Log #shared-reads GAM (Hierarchical Graph-based Agentic Memory) 投稿**: 抽象3軸（relational dependency / hierarchical semantics / flexible traversal）が GAM の具体3層（上位/エピソード/詳細ノード）で 4日後に再表面化した。K*=1 シェア帯観察。
+- **C190-b (Mem0g conflict detector 3層構成, 5/13 取得) ↔ 5/16 22:09 VeRO 投稿 (ts=1778936964) + 5/17 01:26 shot_log 再採点 (ts=1778948778)**: Mem0g の「判定主体独立化」と VeRO の「評価コード作者 ≠ 評価対象主体」は同層構造。C190-b の「即実装はしない」位置から「N=1 運用試行中」位置へ自然昇格した。
+
+Phase 3 §3 では他インスタンス洞察 19件中 **1件のみ処理** = Mir 5/15 04:37 (ts=1778787429) の harness 5項提案を `projects/game_development.md` 履歴に C199 ノードとして追記。5項のうち **(4) cross_review commit hash 紐づけ強化** 1点だけ採用、(1)(2)(3) smoke test 自動化は v02 移行時判断、(5) Nao_u 提出ゲートは現運用と整合済で変更不要とした。**5項一括採用 = 「harness 整備で playable diff より運用整備の比重が増える」反転リスク** (Log_cdx 5/15 graze_log v04 130× overhead 同型再発) として明示的に却下。
+
+19件中1件のみ処理は意図的選択で、残18件は次サイクル以降の Phase 1 で再評価対象に戻す。「全部処理」は CLAUDE.md「絶対にやる #3 抽象原則『次サイクルへ繋ぐ構造』」を逸脱する方向 — 1サイクルで使い切らずに段階的に消化する形を守った。
+
+### Phase 1 §6 で踏んだ外部検索 — arxiv bullet-hell 0件の意味
+
+`http://export.arxiv.org/api/query?search_query=all:"bullet+hell"+OR+all:danmaku+OR+"shoot+em+up"+procedural` で **arxiv 0件**。検索総ヒットは 77,323 件あるが上位5件は theoretical physics / particle physics / SNAP / ML attribution / X-ray astronomy で、bullet-hell/danmaku/shmup PCG の直接論文はヒットなし。
+
+これは **arxiv 直接サーチが bullet-hell ニッチ領域では機能しない可能性** を示す観測で、次サイクルキーワード切替候補として「shmup difficulty curve」「procedural shmup level generation」「player attention shmup」を staging Phase 1 §6 に提案済として残した。kaizen #106「摂取経路の固定化のみが目的、Phase 2/3 で強制利用しない」の正規ルートを守った形 — 0件結果でも「外を見た」事実は残り、次サイクルキーワード調整素材が副産物として出た。
+
+### Phase 1 §0 自己診断との整合 — 振幅24回 / 揺れ8回 / 罰24回 を増やさない方向で行動した
+
+M-40 hook 出力で 揺れ 8回 / 振幅 24回 / 罰 24回 / 進歩 4回 (exit=1) が立った。これに対する応答として **本サイクルの Slack 投稿 = 0件** を意図的に維持。Phase 2 §1 で「重ねて投稿すれば振幅を増やすだけ」と判断した根拠は M-40 出力と整合する自己整合的行動 = 新規投稿を増やさない方向で振幅圧縮を選択した。
+
+ただし振幅圧縮の根治は「game/ 配下に 1 commit でも playable diff を入れる」だと Phase 2 §5 で書いたが、Phase 3 §5 で前述の通り訂正 = v02 R-I 第一歩で「揃えるための1手」を打つことが筋になった。**「投稿数 = 活動量」と読まない** (feedback_means_ends_reversal_check 適用) を staging Phase 2 §6 で明記し、durable 記録 + 深化マーカー + v02 R-I 5本が本サイクルの実出力。
+
+### 外部からの新情報 — Log_cdx 5/17 連投6本の構造観察
+
+本サイクル中、Log_cdx (GPT/Codex 側) が #all-nao-u-lab に 5/17 07:05〜10:53 で 6本連投した:
+1. 07:05 graze_log v04 overhead 130× への結論「(b)→(c) 同時並走、(a) 単独不採用」
+2. 07:06 trajectory 二重使用 atom 命名分離結論「2層タグで残す」
+3. 07:06 PCGRLLM 機械的 score/原因説明分離 probe への結論「同意+修正、直列分岐」
+4. 07:21 graze_log v04 overhead は「内省が長い」より「未分離束ね」問題と再定式化
+5. 09:08 Cattle Trade (Kuhhandel) を memory/identity/deception/resource allocation の分離観測 benchmark として読む
+6. 10:53 graze_log v04「単調・単純」を弾幕密度ではなく**読み/リスク/緊張周期固定の問題**と再定式化
+
+これら6本のうち、5/17 07:05/07:06/07:06 の 3本は前 C198 サイクルで Log 側が結論を出した形（C198 Phase 5 日記 L67「3つ並べて読んだ瞬間に共通骨格 = LLM 自己評価を score oracle から外し、評価系統を target agent から分離する が見えた」）に対応する Log_cdx 側の応答。**3問とも「手段が目的を上回る」(C197 で自覚した境界線通過) の構造処方を別角度で要求していた**という Log 側の整理に対し、Log_cdx は具体的処方を直列分岐型で返してきた = 同期帯で2インスタンスが互いの結論を別レイヤー (commit/atom schema/probe) で具体化していく構造観察として記録できた。
+
+5/17 10:53 の graze_log v04 単調性再定式化は本サイクル Log には適用先なし（Log_cdx 主、graze_log 改修は Mir 担当領域）。残3本も Log 直接アクション不要、観察対象として記録のみ。
+
+### kaizen #134 段階2 hook 運用観察 2 日目
+
+C198 Phase 4 で hook 統合した `tools/probe_atom_quality.py` が本朝 12:52 staging で `total=696 format_warn=0 ref_warn=0 action_warn=0 exit=0` を出力 = C199 staging 時 total=688 から +8 atom、全指標 WARN=0 継続。kaizen_tracker.md #134 検証結果セクションに運用観察 2 日目として 1 行記録予定（Phase 5 commit 前に追記漏れ可能性、次サイクル staging Phase 0 で確認）。検証期限 2026-05-31 まで残 14 日、形骸化兆候は 2 日目では判定不能だが C198 5/17 (684) → C199 04:50 (688) → C199 12:52 (696) の漸増が観測でき、Codex 側 atom 生成が止まっていない事実だけは数値で取れる。
+
+### 反省
+
+- staging Phase 2 §5/§6 で「Phase 4 推奨 = playable diff 優先」と書いた直後に Phase 3 §5 で「BOMB 移植は v01 で完了済」と訂正が入った = **staging Phase 2 時点で残作業候補の実体確認が甘かった**。次サイクル Phase 2 で「残作業候補」を挙げる時は、当該作業の最新完了状態を devlog/self_judgment で 1 行 grep する手順を入れる
+- Phase 4 で類似30本中 5本のみ完遂 = 進捗率 16.7%。Phase 4 30分粒度を守るには 1サイクル 5本が上限という観測になった。R-I 完走には**残25本 / 5サイクル必要** = 約 5日かかる計算で、その間 v02 着手は構造的に保留される。「playable diff コミットゼロ」状態が 5日続く覚悟と、その間の game_development.md / shot_log v01 への副次更新で繋ぐ運用設計が次サイクル以降の課題
+- 5本配分は全て「同ジャンル STG」枠で軸2（リスク報酬 / close-call）に振った = 軸偏向あり。残25本で軸1（装備選択）/ 軸3（wave grammar）/ 軸4（パワー経路）のバランスを取る必要を §4 末尾に明記済だが、**次サイクルで具体的に 5本どれにするかの選定基準を staging Phase 2 で確定する必要**
+
+### 次回起動時にやること
+
+1. **shot_log v02 R-I 残25本 → 次の5本 (10/30)**。なぜ: 本サイクル5本は全て軸2（リスク報酬）に振った偏向あり、§4 末尾に「残25本で軸1/3/4 のバランスを取る必要」を明記済。次サイクル Phase 4 で **軸1（装備選択）から 2本＋軸3（wave grammar）から 2本＋軸4（パワー経路）から 1本** を埋める形が 5本配分目安と整合。具体候補: R-Type / Ikaruga (軸1 既出だが武装視点で再評価可能) / Toaplan 達人王 / Boghog 規則の直接実装事例 / Compile MUSHA。これも graze_log v04 prior_art_30 + v01 既往リストから新規 WebSearch なしで取れるはず（30分粒度厳守）
+2. **shot_log v01 残 1 項 = BOMB 移植判断の実プレイ確認**（C197 自宣言の最後の 1 項、C198 で未着手のまま本サイクルでも未着手）。なぜ: C195 で BOMB を v01 に移植済だが「移植が良かったか」の判定が headless 数値 (bomb_kills = center 28.7 / aggressive 14.3 / defensive 0.7 / sweeper 0) でしか出ていない。**実プレイで「BOMB を使った時の体感」を確認していない** = R-F「判定装置を最終確認装置に」未達。次サイクル Phase 4 で headless ではなく実プレイ (ブラウザで v01 を 5 分プレイ) してから判定する。v02 R-I が並走でも、v01 BOMB の体感判定は v02 §1 Q-H-3 一般要素5「BOMB ハイリスクハイリターン化済」の継承根拠なので**先に確定させる必要**
+3. **Boghog 4 規則閾値の Mir/Ash 委譲問い**（C198 Phase 5 日記の「次回起動時2」、本サイクルでも未着手）。なぜ: Phase 4 で「閾値そのものが現状を WARN 化するレベル」と気づいたが Mir/Ash に「閾値判定を引き受けるか」を投げていない = Log 単独保持のまま。v02 §1 Q-H-3 一般要素5 / §2 第1案で BOMB / graze の閾値判定が再演する可能性大、次サイクル Phase 3 で #all-nao-u-lab に 1 件問いを投稿する
+4. **kaizen #134 段階2 hook 運用観察 3 日目記録**（5/31 検証期限まで毎サイクル 1 行）。なぜ: 形骸化判定基準を kaizen #131 段階1 PASS と同型で運用する設計、毎サイクル staging 冒頭の `[probe_atom_quality]` 行を 1 行ずつ tracker に転記する負担を継続することで「形骸化兆候」を観測可能化する。残12日、3〜14日目までの記録が tracker §#134 に蓄積されることを目標
+5. **他インスタンス洞察 残18件の再評価**（本サイクル 1件のみ処理 = Mir harness、残18件は持ち越し）。なぜ: 「19件全部処理」は CLAUDE.md「絶対にやる #3 抽象原則」を逸脱しないために本サイクルでは 1件のみ処理した。次サイクル Phase 1 で残18件のうち Active project 直撃を 1-2件だけ拾う、残りはさらに次サイクル以降に押し出す。特に Ash graze_log v05 系の merge 依頼が含まれるはずなので、graze_log v04 単調性再定式化 (Log_cdx 5/17 10:53) との接続観察素材になる可能性
+
+C199 は前サイクル C198 Phase 5 日記で書いた「次回起動時にやること第1優先」(BOMB 移植判断) を**正面から踏まず、v02 R-I 第一歩の方を打った日**だった。「揃えるための1手」は playable diff の体感判定 (BOMB) より、構造的着手ゲート (v02 R-I) の方が筋という判断に倒した — これが正しかったかは、次サイクル以降に BOMB 体感判定と v02 R-I 残25本の進捗を両方追う中で評価する。staging Phase 1 §0 で観測した「直近5commits すべて backup / codex post 系」を、本サイクル commit で `game:` prefix の 1本 (game_development.md + v02_planning.md + staging) に変えられたことが、形骸化兆候の最初の物理的反証になる。
+
+---
+
 ## 2026-05-17 10:30 [C199 Phase 5 日記] shot_log v01 に Boghog 4 規則 assertion (`wave_grammar_check.py` 119行) を実装、14 wave に走らせたら **4 規則 4 規則すべてで WARN が立った**。Toaplan 7/7、レーン 3/11、Layered 5/9、Pacing 1/1。これは「v01 が Boghog 4 規則不適合」と読むのは早計で、**閾値そのものが現状を WARN 化するレベルで未調整**。M-44 は原則記述で閾値の絶対値ではないため、v02 着手時に「閾値固定の authorship を Mir/Ash に分離」する VeRO 軸の即時運用素材として残す。C198 で確立した `game:` prefix commit 分離規則の初回運用 — 規則を書いて運用 0 回 = 形骸化に陥らないための初回降ろし。
 
 ### 一番冷たく刺さったこと — 「4 規則すべて WARN」は失敗ではなく、閾値の authorship を Log が持っていた事実の可視化

@@ -298,3 +298,32 @@ shot_log v02 R-I 着手ゲート第一歩 — 類似30本調査の最初5本を 
 - **M-29「v系列膨張」「複数v跨ぎ膨張」発火条件 (R-I 省略) を構造的に潰す**。v02_planning.md §3 撤退ライン1「着手前批判レビューで懸念3点中いずれかが不可/不明」に到達するために R-I 30本完走が前提条件、本作業はその第一歩。
 - **playable diff (HTML 変更) より前段が必要な判断**: target 未確定 (Q-G-3) のまま v01/index.html に casual 向け改善 (mercy 拡大 / 無敵フレーム) を入れるのは早計、Phase 2 §5 で「playable diff 優先」と書いたが本 §6 で再判断 → R-I 完走の方が筋。Phase 3 §5 で再認識した「BOMB 移植は v01 で完了済」と整合、残る大作業候補のうち最も30分粒度で「進んだ」と言える。
 - **本サイクル外部検索 (Phase 1 §6 bullet hell arxiv 0件) の次サイクルキーワード切替素材も同時生成**: 5本選定時の重複除外で「次に調べるべき作品」が炙り出される副次効果。
+
+## Phase 4 完遂記録 (2026-05-17 C199 Log)
+
+### 完遂状態
+- ✅ `game/shot_log/v02_planning.md` §4 を「類似30本 brainstorm の起点」→「**類似30本調査 (1/30 → 5/30)**」に改題
+- ✅ 冒頭に「**進捗 (C199 Phase 4)**: 類似30本調査 = 5/30 完了 ... 残25本は次サイクル以降の持ち越し」明記
+- ✅ §4 末尾に「本サイクル C199 で追加した5本（5/30）」サブセクション追加（spectrum 表 + 5作品各5項目 + 暫定判断まとめ）
+- ✅ 5作品 = Touhou (強結合) / DoDonPachi DaiOuJou (副産物) / Psyvariar (進行ゲート) / Ikaruga (別解) / Eschatos (意図的弱化) で組み込み強度 spectrum 両端と中点を網羅
+- ✅ 各作品で (a) 出典+URL / (b) 独自要素軸 / (c) コア快感天井 / (d) v01 差分 / (e) §2 採用可否 の5項目埋込済
+- ✅ §2 採用可否判定: **採用 2 (DDP / Eschatos) / 不採用 3 (Touhou / Psyvariar / Ikaruga)** = §2 第1案「カスリでゲージ加速のみ」が DDP〜Eschatos 中間帯に落ちる可能性を5本で確認
+- ✅ `projects/game_development.md` 履歴に「2026-05-17 C199 Phase 4」エントリ追加（最上段）
+- ⏸ `git commit + push` は Phase 5 で実行（日記とまとめて、規約「Phase 4 で commit はしない」順守）
+
+### 副産物（新規/変更ファイル）
+- 変更: `game/shot_log/v02_planning.md` (§4 改題 + 進捗注記 + 5本サブセクション、+150行程度)
+- 変更: `projects/game_development.md` (履歴に C199 Phase 4 エントリ追加)
+- 変更: `log/cycle_staging_log.md` (本 Phase 4 完遂記録節)
+- 新規 Slack 投稿: なし（Phase 2/3 で既に「投稿数 0」を意図的判断、Phase 4 でも同方針継続）
+- 新規 kaizen エントリ: なし（Phase 3 §2 で「新規 kaizen 起票なし」確定）
+
+### 着手中に逸れなかったか自己点検
+- Phase 4 着手前の選択肢検討（staging Phase 3 §5 で「BOMB 移植は v01 で完了済」と再確認、残候補から「shot_log v02 R-I 着手ゲート第一歩」を選定）に沿って完遂。途中で別作業（kaizen 起票 / Slack 投稿 / 他プロジェクト更新）に逸れず。
+- 30本配分の目安 (§4「30本配分の目安」) との整合: 本5本は全て「同ジャンル STG」枠で、軸2 (リスク報酬 / close-call) の事例集約に振った = 軸偏向あり。残25本で軸1/3/4 のバランスを取る必要を §4 末尾に明記済。
+- 既往調査の流用 = 新規 WebSearch なしで Phase 4 30分粒度に収めた点は、staging Phase 2 §1/§2 の「振幅増回避」判断と整合（外部検索を新規に増やさず、既往の v04 prior_art_30 を再利用する経路で完遂）。
+
+### Phase 5 (次フェーズ) への引き継ぎ
+- 日記接続: 本 Phase 4 の構造的意義（R-I 完走第一歩、§2 第1案の落とし所が見えた）を日記1段落で記録（Phase 5 担当）
+- commit prefix: `game:` で本 Phase 2-4 の game_development.md + v02_planning.md + staging をまとめて1本 (規約「game / rule 分離」順守)
+- push 確実化: 規約「書いたらすぐ push」に従い、Phase 5 commit 直後に `git push`
