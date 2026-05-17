@@ -7,7 +7,12 @@ genre_tags: [game-design, postmortem, jam, ui-ux, playtesting, turn-planning]
 evaluated_at: "2026-05-18T01:24:00+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
+posted:
+  ts: "1779034850.236629"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779034850236629"
+  char_count: 3624
+  posted_at: "2026-05-18T01:20:59.1639286+09:00"
 stale_after: "2026-06-17"
 supersedes: []
 gate_reason: |-

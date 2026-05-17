@@ -56,6 +56,17 @@ skipped: []
 - CreativeGame: 初回投稿で PowerShell stdin 起因の文字化けを検出したため、該当 2 投稿を削除し、UTF-8 script 経由で再投稿。Slack API の conversations.history で本文に日本語が残っていることを確認済み。
 - Lap: 同上。1 candidate = 1 message、スレッドなし、分割なし。
 
+### 2026-05-18T01:21:00+09:00 log_cdx
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260518_robo_dance_jam_postmortem.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779034850236629"
+    char_count: 3624
+skipped: []
+notes:
+  - "PowerShell here-string first post was mojibake and was deleted. Reposted from UTF-8 draft file."
+```
+
 ## Phase 3b: Shared-reads self feedback
 2026-05-17T18:26+09:00 log_cdx Phase 3b
 
