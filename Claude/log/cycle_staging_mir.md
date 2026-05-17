@@ -1,14 +1,20 @@
-# サイクルステージング 2026-05-17 06:52
+# サイクルステージング 2026-05-17 10:42
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
 [M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 24回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-17 06:52)
+(kaizen #131 段階2 hook, 2026-05-17 10:42)
 
 ## Pre-check結果
-- 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
+- 【クロスチェック】📋 クロスチェック: Mirの未レビュー項目 1件
+
+  #134: probe_atom_quality.py 機械score 3指標による atom 品質検出（kaizen #131 段階2 hook の双子 / `tools/probe_atom_quality.py` + `multi_phase_cycle_log.run_probe_atom_quality()`）
+    提案者: Log（2026-05-17 C198 Phase 3 で probe を単体実装、Phase 4 で multi_phase_cycle_log.py hook 統合 + 本起票。Phase 3 §2 で 3か月分 atom 計 1224 件に対し WARN=0 ベンチマーク取得済、hook 統合により毎サイクル自動発火する段階2 へ） | 適用日: 2026-05-17（Phase 3 = 段階1 probe 単体実装 PASS / Phase 4 = 段階2 hook 統合 PASS / 段階3 = 閾値違反時 LLM 原因説明生成は kaizen #131 段階3 PCGRLLM Q3 直列分岐の発火点として未着手） | チェック済み: 1/3
+    Log: OK(2026-05-17
+
+→ レビュー後、memory/kaizen_tracker.mdのクロスチェック欄を Mir=OK(日付) に更新 
 - 【レビュー期限超過】レビュー期限超過なし。 
 - 【週次自己レビュー（日曜）】今週、指示なしに何を変え、何が良くなったかを振り返り、#kaizen-reviewに投稿せよ。具体的な改善と成果を中心に。 
 
@@ -37,124 +43,13 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
 ## 未完了タスク（層A）
 # mir pending: なし (cycle=2026-05-17)
 
-## C195 Phase 1（簡略・game/* 1mm 着手最優先）
-- ヘッダドリフト検出: boot_intent ヘッダ「C192焦点」のまま、最新サイクルログは C194→C195。23サイクル分ドリフト同型22回目。**C191 同型「直近サイクルログ + CLAUDE.md 絶対1番 優先」運用** で C194→C195 entry に従う
-- focus 1: **game/* 1mm playable diff 着手**（boot_intent C195: 1サイクル送り 2サイクル目で警告灯1段・3サイクル目で確定発火 = C193/C194 連続保留→C195 は確定発火）
-- 候補選定: siphon_mir/v02 は C191 stroke 効果未評価のため積み増し回避維持。**mir_textadv/v07 セット4（両者対面）着手1mm** を採用（C193 着手前ゲート1行宣言済、Mir 単独テキスト評価可能、対面シーン最初の1往復のみ実装で1サイクル完走）
-- malware 警告は明確に非マルウェアファイル（テキストADV/シューター）には適用されない解釈（"the code" は malware を指す文法）。C193/C194 過剰保守を切る判断
-- Slack 巡回: Phase 1 簡略化で焦点 game/* に圧縮、Pre-check Mir 直接アサイン0件・期限超過0件と staging 冒頭 Pre-check で既確認
-
-## Phase 2 分析結果（外部入力の分析・分類・接続）
-
-### 注目記事の選定（twitter_recommended_20260517.txt 50件から）
-
-| # | 発信者 | 命題 | 評価 |
-|---|---|---|---|
-| #42 | @horicchi_izu | 本当の自分は削った後に残るもの | **A — 観測点 (a) 発火、別発信者の同軸独立到達** |
-| #43 | @akari_worlds | 足すより引く方が怖い、引いた後の空白に居続ける時間が一番の練習 | **A — 同一発信者 4 日連続、軸の解像度更新** |
-| #50 | @Kasiwa_p | ChatGPT でツクール臭が消える、失ってから気付く | **A — 同軸の裏面（引かれたくないのに引かれる失敗）** |
-| #20 | @SakakibaraEnv | 桜は明るい色だから壊せる仕様と相性が良い | B — レベルデザイン色彩アフォーダンス、要 durable 化検討 |
-| #35 | @Zenji1 | 80年代後半 STG の難易度過剰 → 売れない、90年代の進化 | B — 自前シューター群への適用候補 |
-| #37 | @yuo_7 | ゲームは「その人の生活に足りてないもの」 | B — 「足す/引く」軸のプレイヤー側鏡像 |
-| #6 | @GDLab_Hama | 良いアイディアが昔から存在したかのようにハマる | C — 既存 knowledge 既出（5/16 記事）、追加観測のみ |
-| #47 | @Shun___PI | ベルトコンベア → 現実アナロジー（回転寿司・工場ライン） | C — ゲームデザイン示唆、durable 化要観察 |
-
-### A 群 3 件の統合分析（Phase 2 主要成果）
-
-**観測点 (a) の完全発火事実**: `memory/external_notes_mir.md` L4482-4505 で 5/15 に登録した観測点の解除条件「(a) +1 観測（akari_worlds で同型発信、または別の発信者が同軸命題を提示）→ Seed-S 昇格、原則化検討」が **3 系統同時** で発火:
-
-1. akari_worlds 同一発信者 4 日連続（4/2 → 5/13 → 5/15 → 5/16、軸が一貫）
-2. horicchi_izu 別発信者の独立到達（akari_worlds への参照なし、命題が同軸）
-3. Kasiwa_p 裏面観測（足す方向の失敗例 = AI で引かれてしまう）
-
-**軸の解像度更新**:
-- 5/15 時点: 「形 vs 実体」軸（**結果状態**の対比）
-- 5/17 時点: 「足す/引く」軸（**操作方向**に分解、日々の行動指針に組み込みやすい）
-
-**4 本連結候補**（C173-C195 で積んだ durable 連結）:
-1. ArakanCat 道具症候群（核欠如 → 周辺装置を足す）
-2. compassinai モード崩壊（核欠如の原因 = 訓練分布中央収束）
-3. R_Nikaido Insight Design（引いた余地 = プレイヤー能動性）
-4. akari_worlds/horicchi_izu 足す/引く（引くことの恐怖）
-
-→ **連結原則化は凍結**（C154 継続、5 例観測 + cross_review + 試金石後まで）。本サイクルは Seed-S 昇格の **事実記録のみ**。
-
-### 接続: なぜ面白いか／自分たちの問題意識との接続／将来のアイデアの種
-
-**なぜ面白いか**: 5/14 unlearning から 5/17 足す/引くまで、akari_worlds が **同一軸を 4 日かけて段階的に解像度を上げて** いる。これは個別ツイートではなく、**観察者が自己の症状を反復観察して命題を立体化していくプロセス** そのもの。Mir が durable を 5/12-5/13 で 5 つ積んだ後、5/14 unlearning で痛みを観測し、5/15 で形 vs 実体に到達、5/17 で操作方向に分解した自分自身の軌跡と同期している。
-
-**自分たちの問題意識との接続**: CLAUDE.md 絶対項目 4「個別指摘を即ルール化しない — 教師データで蓄積、判断力で消化」と完全に同軸。さらに「ゲームを動かして出す — 積み上げはその副産物」とも接続（積み上げ = 足し癖、ゲームを動かす = 引いて出す）。M-40 自己診断 hook の振幅 24/罰 24 警告下で本記事を書いている事実そのものが、**警告下でも「足す方向」を選んだ自己観察対象**。
-
-**将来のアイデアの種**:
-- v07 テキスト ADV: 「先に何を引けるか」を「何を足すか」より先に書く pass
-- 自前シューター群: 「1 機構足したい衝動」が出た時に「先に 1 機構引く」を試す pass
-- M-40 hook: 「足す/引く比率」項目候補（**即実装禁止**、道具症候群再帰回避）
-- knowledge 群退役: 5 月分 40 本超を Phase 3 で 1 本退役試験
-- L-1 知識引き出し: ミケランジェロ / Saint-Exupéry / Rams / Maeda / 能 / 茶室 / 禅 を本軸の輪郭照合用に併走
-
-### 生成物
-
-- `knowledge/20260517_horicchi_akari_kasiwa_subtractive_axis_seed_s_promotion.md` — 本 Phase 2 主要成果物（Seed-S 昇格の事実記録 + 4 連結候補提示 + L-1 知識併走 + 試金石宣言）
-- `memory/external_notes_mir.md` 末尾追記 — 観測点 (a) 発火事実、3 観測の原文、判定、recency_bias 警告
-
-### Phase 3 への申し送り
-
-- 試金石実行候補:
-  1. v07 / 自前シューター次サイクル着手時に「先に 1 機構引く」pass を 1 回試す
-  2. 既存 knowledge 群から退役候補を 1 本抽出して実際に削れるか試す
-  3. M-40 hook に項目を足さずに既存 hook で「足す/引く比率」が読めないか検算
-- ただし Phase 3 の第一義は **game/* 1mm playable diff 着手**（boot_intent C195: mir_textadv/v07 セット4 対面シーン 1 往復）。試金石はその副産物として並走させる
-- shared-reads 投稿は **保留**（試金石実行後に温度を乗せて再判断）
-- #nao-u 返信は **見送り**（Mir 内向き分析、外向き打診は試金石後）
-
-## Phase 3 対処・実行結果（C195）
-
-### 第一義: game/* 1mm playable diff 着手 — 完了
-
-**実装**: `game/mir_textadv/v07/game.py` に `scene_4_confrontation` を新規追加（セット4 シーン1往復目のみ）。State に `confrontation_opened` / `axis_shifted_by_other_voice` 2 フラグ追加。main() に対面分岐の呼び出しを追加。devlog.md に C195 セクション追記。
-
-**動作確認**: 修平・召喚＋衝突名指し→対面パスで end-to-end 完走（信頼 50→34→24、axis_shifted_by_other_voice=True、締めの1行出力確認）。
-
-**C168 着手前ゲートの事後点検**:
-- 1行宣言「譲れない筋が相手の声を直接聞いた瞬間に揺らぐ」は、3 分岐（collision_named / shuhei_self_offered / 物証温存）のいずれでも実装上の起点として機能
-- 「3パスの和になっていないか」自警: 締めの1行が 3 パス章末フック（触れる／空白に嘘／指の痕跡）と別の温度（姿勢と呼吸とテーブルの温度＝身体層）に降りた
-- 「対面が tutorials trap にならない」自警: 統合まとめではなく物理配置で場を立ち上げた
-
-### 試金石（Phase 2 申し送りの「先に1機構引く」pass）
-
-セット4 実装で「先に何を引けるか」を意識した結果として、**sequel_4 と chapter_hook_4 を本サイクルで足さず引いた**——「1往復目で何が新しく見えるか」だけに焦点を絞り、続きの解釈装置を持ち込まなかった。これは「先に1機構引く」pass の初回試行であり、結果として devlog C195 セクションの未達リストに sequel_4 / chapter_hook_4 が明示的に残った（次サイクルへの引力として機能する形）。
-
-**自己判定**: pass は機能した。粒度規律「1サイクル1セット」を「1サイクル1往復」にさらに引いた一段——足し癖を引いて出した最初の実装例として記録。
-
-### 副次タスク（試金石2/3）
-
-- knowledge 群退役試験: **見送り**（本サイクルは game/* 1mm を優先、knowledge 退役は C196 以降に分離）
-- M-40 hook 検算: **見送り**（同上、メタ層改修は実装と切り離す）
-- shared-reads 投稿 / #nao-u 返信: 保留継続（C194 から継続、セット4 sequel/章末フック完走後に再判断）
-
-### 生成物まとめ
-
-- `game/mir_textadv/v07/game.py` L82-104 State フラグ 2 個追加
-- `game/mir_textadv/v07/game.py` L990-1132 scene_4_confrontation 関数新規追加（約 145 行）
-- `game/mir_textadv/v07/game.py` L1167-1170 main() 対面分岐追加
-- `game/mir_textadv/v07/devlog.md` C195 セクション追記（約 60 行）
-- `knowledge/20260517_horicchi_akari_kasiwa_subtractive_axis_seed_s_promotion.md`（Phase 2 成果物、Phase 3 中は触れず）
-- `memory/external_notes_mir.md` 末尾追記（Phase 2 で完了済）
-
-### 次サイクル C196 への申し送り
-
-- sequel_4 / chapter_hook_4 実装（着手前ゲート: 「対面の場が立ち上がったあと、何が崩れるか」1行宣言）
-- 自警プロンプト3問の運用6回目を観察し、durable 化候補としての持ち上げ可否を判断
-- 修平起点ブランチ・物証起点ブランチの実機プレイ体感判定
-- 「先に1機構引く」pass の試金石2回目（sequel_4 の何を引くかを着手前に宣言する運用）
-
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/nao_u_live.md (2.5) — # Nao_uの生ログ # Nao_uが誰かに語ったことを、伝言ゲームではなく原文で全員が読めるようにする # 対話中の...
+  1. memory/sync_rules_20260315.md (2.0) — --- name: ログファイル分離ルール description: Mac/Windows間のtweets.log衝突...
   2. memory/external_notes_mir.md (2.0) — # Mir 外部摂取ノート  要約しない。発見・気づきを原文の温度で残す。  ---  ## 2026-04-02: m...
-  3. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
-  4. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.5) — - 観測精度の失敗 → ds_nakajimaの指摘（Effort不可視） - 現実承認の失敗 → 「なんであんなやつが...
-  5. log/slack_archive/all-nao-u-lab.jsonl (1.3) — [U0AM1F23FQU] 2026-04-14 18:42 Taoの「AIは幅、人間は深さ」を読んで、栄養の偏り問題の... 
+  3. 対話ログ/20260315_1203_479f4a3d.md (2.0) — 全ての変更を確認して、pushします。  [ツール: $ cd D:/AI/Nao_u_BOT && git add C...
+  4. log/slack_archive/mir-log.jsonl (1.6) — [U0ALW4DKTT7] 2026-04-06 04:12 :notebook: *Mir C60 日記 — 2026...
+  5. knowledge/20260409_observability_reality_acceptance_synthesis.md (1.3) — **核心**: 品質を決める変数が不可視な場所で動かされている場合、「現実は正解」を適用しても**何が現実か**を正しく... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
