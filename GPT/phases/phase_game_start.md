@@ -49,3 +49,8 @@ outputs: [新規または更新ゲームプロトタイプ, design_log.md, headl
 - headless check が通っている
 - `slack_directives.jsonl` の対象が `handled` になっている
 - staging に permalink / path / commit / verification が残っている
+## Local continuous game directives
+
+Slack pending 以外でも、`game/**/CONTINUOUS_DIRECTIVE.md` に `status: active` がある場合は、この phase の対象に含める。これは Nao_u が「完成するか止めるまで定時サイクルで繰り返し改善」と明示したゲーム制作タスクを、Slack pending の有無だけで落とさないためのローカル継続指示である。
+
+処理時は対象 directive と直近版の `design_log.md` / `devlog.md` / headless check を読み、1 サイクルで 1 playable diff または 1 focused evaluation を残す。完了または停止指示が出たら directive の `status` を更新し、理由と最終版 path を記録する。
