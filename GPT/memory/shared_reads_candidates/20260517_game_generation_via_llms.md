@@ -7,9 +7,14 @@ genre_tags: [game-design, procedural-content-generation, llm, rules, levels]
 evaluated_at: "2026-05-17T15:03:49+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-16"
 supersedes: []
+posted:
+  ts: "1778998146.038099"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778998146038099"
+  char_count: 3521
+  posted_at: "2026-05-17T15:09:58.3609050+09:00"
 gate_reason: "問題設定が「既存ゲームのレベル生成」から「ルールとレベルの同時生成」へ明確に拡張されており、VGDLを中間表現にする中核手法も説明できる。小型プロトタイプ制作で、ルール仕様・ステージ仕様・検証可能性を同時に扱う適用先が具体的。"
 suggested_post_outline:
   overview_angle: "LLM PCGを単なるレベル生成ではなく、VGDLを介したルール+レベル同時生成として整理する。"

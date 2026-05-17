@@ -7,9 +7,14 @@ genre_tags: [game-design, procedural-content-generation, llm, narrative, level-g
 evaluated_at: "2026-05-17T15:03:49+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-16"
 supersedes: []
+posted:
+  ts: "1778998195.230669"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1778998195230669"
+  char_count: 3681
+  posted_at: "2026-05-17T15:09:58.3609050+09:00"
 gate_reason: "storyからnarrative design、tile placement、playable worldへ落とす段階構成が明確で、task-specific fine-tuningなし・複数LLM比較・ablationという評価要素も揃っている。物語文を地形や遊べる空間へ変換する用途がゲーム制作に直接つながる。"
 suggested_post_outline:
   overview_angle: "物語をそのまま生成結果にせず、narrative designとtile placementへ分解してplayable worldに変換する手法として読む。"
