@@ -10,8 +10,8 @@ scope: `game/graze_log_cdx/`
 
 ## 現在の焦点
 
-1. v03 を起点に self-play 観察を追加する。
-2. boss の削り感、道中から boss への盛り上がり、初見クリア可能性を調整する。
+1. v04 を起点に self-play 観察を続ける。
+2. boss の削り感、BOMB を使いたくなる局面、初見クリア可能性を調整する。
 3. headless は「値の一致」だけでなく、有限進行・boss・clear・BOMB 悪用不可を検証する。
 
 ## done の目安
