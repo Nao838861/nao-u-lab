@@ -1,0 +1,280 @@
+# Twitter For You (おすすめ) タブ
+# Read at: 2026-05-18 10:03
+# Total: 47 tweets
+
+--- 1. @mhl_bluewind (2026-05-17) ---
+URL: https://x.com/mhl_bluewind/status/2055854599517675937
+あーこれめっちゃ面白いですね。私は典型的な「技術力は高いけど説明は下手」タイプで、めちゃくちゃ頑張って言語化してる。
+
+複数社で複数の上司に「君は全部わかってて指示を出したとしてもそれがわからないと周りがやりにくいんだよ」って言われたので間違いないと思う。
+
+--- 2. @Supermicro (?) ---
+Behind every AI breakthrough is infrastructure you never think about. 
+
+Supermicro infrastructure solutions combine optimized cabling, routing, and port mapping to reduce time-to-online, while scalable water and dry cooling towers support thermal management and expansion.
+
+--- 3. @elonmusk (2026-05-18) ---
+URL: https://x.com/elonmusk/status/2056177125099463038
+Almost every part of Starship V3 is different from V2
+
+--- 4. @ebikani_hasami (2026-05-17) ---
+URL: https://x.com/ebikani_hasami/status/2056149017550278725
+URL、本文に置くかツリーに逃がすか問題、また地味に効いてきそう。
+
+引用元の検証だと、告知ポストにURLを付けるだけで届き方がかなり変わるっぽい。AIニュース紹介でも、引用RT・画像・リプ欄ソースのどこに置くかで読まれ方が変わるので、これは運用者みんな一回見た方がよさそうです。
+
+--- 5. @tetumemo (2026-05-17) ---
+URL: https://x.com/tetumemo/status/2056007032810152391
+ヤバっ、Hermes AgentがCodexからも呼び出せるじゃん
+
+ちょっと色々工夫したけど、安定したらCodexのワークフローにHermes AgentのX検索を組み込める
+
+ChatGPTのPlus（月3,000円）と
+GrokのPremium（月980円）で
+
+高性能なAIをサブスク内で使えちゃうのはかなり貴重な体験だと思う
+
+--- 6. @hawkymisc (2026-05-17) ---
+URL: https://x.com/hawkymisc/status/2055934300315672947
+厳密にいえば「どこの国のLLMサービスであるか？」はプライバシーの問題と多少関係しています。個人データの管理に適用される法令は(諸説あるらしいですが)サーバーのある現地の法令が適用されることになり、サービスの利用規約によるデータ利用範囲は、その法令の範囲内となります。
+
+--- 7. @plu_plus (2026-05-17) ---
+URL: https://x.com/plu_plus/status/2056160845181424097
+身内ノリは、本当に危険だと思う。
+
+特にスマホゲームは母数が多いから、
+「知ってる人だけが分かる面白さ」だけでは弱い。
+
+よくあるコラボ系も同じで、
+ファンだけが盛り上がる作りだと、
+知らない人には届きにくいのよね。
+
+--- 8. @gosrum (2026-05-17) ---
+URL: https://x.com/gosrum/status/2055844411100316109
+Codex App、ラズパイでも動くんですね！
+検証いただきありがとうございます
+
+--- 9. @okotatsudoragon (2026-05-17) ---
+URL: https://x.com/okotatsudoragon/status/2055895718536376363
+そもそも、ゲームはユーザーを楽しませる為のコンテンツなので「俺は難しいゲームをクリアできるすごいやつ」って思わせてくれるならそれはそれで合ってるんじゃないのかな。気持ち良くなるために遊ぶオナニーで何がいけないんだろ。
+
+--- 10. @OculusTan (2026-05-17) ---
+URL: https://x.com/OculusTan/status/2055938404286943382
+Googleの話で一番怖かったのは、Googleフォームでの応募で画像アップロードできるようにしてたら、その中にきわどいものがまぎれてて募集した側のアカウントが停止、というやつです
+※いまどうなのかはよく知りません
+
+--- 11. @Uber (?) ---
+Uber One メンバーデー開催中
+
+15,000以上のお得なラインナップがぞくぞく！
+5/28(木)までの期間限定
+見逃すなぁぁああーーー！！！
+
+--- 12. @windymelt (2026-05-17) ---
+URL: https://x.com/windymelt/status/2056083154608501170
+エンドツーエンド暗号化という言葉だけでも皆に覚えて帰ってほしい。Proton Driveなどの検閲不可能なドライブアプリを使いましょう。修論や博論、アーティストの原稿といった、新規性が大事なものにも、検閲や学習に耐えうるエンドツーエンド暗号化を利用すべきだと思います。
+
+--- 13. @GOROman (2026-05-17) ---
+URL: https://x.com/GOROman/status/2055894716835942855
+そういうイメージ。
+
+--- 14. @super_bonochin (2026-05-17) ---
+URL: https://x.com/super_bonochin/status/2056009177424920755
+待ち望んでいました。
+
+--- 15. @tetsuro731 (2026-05-17) ---
+URL: https://x.com/tetsuro731/status/2055952830155116958
+自分はVSCodeから拡張でClaude Code、Codex、GitHub Copilotあたりを切り替えながら使ってる。
+別のエディタは立ち上げるのが面倒なのでCursorとかは使わなくなった。
+
+--- 16. @umiyuki_ai (2026-05-17) ---
+URL: https://x.com/umiyuki_ai/status/2055958457740927116
+お、普通にRTX3090でLlama.cppのQwen3.6-27BのMTPを試してくれてる人がいる。MTP有効化するとプロンプト処理速度は42%低下してしまう。代わりにトークン生成は85%向上。まあプロンプト処理速度低下は悲しいけどそれでもトークン生成がこんだけ爆速化するなら大抵アドでしょう
+
+--- 17. @gigazine (2026-05-17) ---
+URL: https://x.com/gigazine/status/2055845844037833144
+AIモデルでブラウザを自動操作できる「Browser-Use」、オープンソースで開発され自然言語で簡単に指示可能
+
+--- 18. @Acha_for_CS (2026-05-17) ---
+URL: https://x.com/Acha_for_CS/status/2056009192310526299
+わかります。もう30年以上前ですがゲーム会社でドット絵を描くバイトをしていましたが、プログラマの人達はいつもメモリ節約に腐心していて、それこそ爪に火を灯すようでした。
+それを端で見ていた経験が、50過ぎてコンピュータサイエンスを学んだ時にかなり役だったように感じています。
+
+--- 19. @akshay_pachaar (2026-05-17) ---
+URL: https://x.com/akshay_pachaar/status/2056050422872465775
+self-evolving skills in Hermes agent.
+
+i found this to be the most powerful feature in Hermes.
+
+the agent doesn't just solve problems, it remembers how it solved them.
+
+memory handles facts, and skills handle procedures. the difference matters because knowing that a Kubernetes
+
+--- 20. @iwashi86 (2026-05-17) ---
+URL: https://x.com/iwashi86/status/2055867663264645137
+"雇用契約があって、終身雇用に近い慣習があるとか、職人として腕を磨けば固定客がついて、みたいなやつは終焉するんじゃないかと。ちょうど、産業革命の時に、ギルドはほぼ全滅したみたいなことは起こったので、近いような動きになるのかもですね。"
+
+--- 21. @addness_pr2 (?) ---
+【発想の転換】
+日本で月20万稼ぐより、海外案件を日本でやる方が早い
+
+・物価差で時給が一段上がる
+・英語はAIが全部代行
+・作業ベースだから誰でもいける
+
+これ知ってる人だけ得してる
+無料ウェビナーで全公開
+
+https://
+school.addness.co.jp/page/RJjz6NoAI
+rFb?ftid=lrLgewbvg3ZN&twclid=2bigphnzu12suu1l8ojt7ns8i
+…
+
+--- 22. @Karu_gamo (2026-05-17) ---
+URL: https://x.com/Karu_gamo/status/2056035067697467585
+この土日ずっとWiz6を遊んでた。当時よくわからなくてリタイアしちゃったのでリベンジ。攻略サイトをザっと見て初めてみたが、ようやくわかってきた。これはわかると面白いゲームですね。レベルアップのたびにスキルポイントを割り振るんだけど、どこに振るべきかがわかってくるとグっと楽になる
+
+--- 23. @kakira9618 (2026-05-17) ---
+URL: https://x.com/kakira9618/status/2055982756841349592
+ちなみにこちらは #生成AIなんでも展示会 Vol.5 で展示した作品の改良版です。ネットワーク等の問題で、現地でうまく動かなかった時間帯があり、ご迷惑をおかけしました。
+今は動くはずですので、是非プレイしてみてください！
+
+--- 24. @AI_masaou (2026-05-17) ---
+URL: https://x.com/AI_masaou/status/2055919781493297350
+汚いものを、汚いものとして切り分ける豪快さがなければ、世界の解像度は上がらない
+
+解像度とは、単に多くを知っていることではない。似て非なるものを、似ているという理由だけで同じ箱に入れない力のことだ
+
+例えば 価値のある驚きと、ただ反応を稼ぐだけの驚き屋は違う
+
+--- 25. @Zenn_Unity (2026-05-17) ---
+URL: https://x.com/Zenn_Unity/status/2055969260250275885
+Unity6のゲーム開発にて、DOTSを本格導入してみた！(Vol.1)
+by 
+@hrakprogrammer
+
+--- 26. @llminatoll (2026-05-17) ---
+URL: https://x.com/llminatoll/status/2055903301804359774
+AIの推薦してくる表現を選び続けた結果、待ち受けているのは均一化。尖り続けるためには、合理的でないものを選ぶ意思と勇気が必要。
+
+> つまりAI時代におけるブランディングの本質は、「AIに何をやらせるか」ではなく、「AIが合理的に推奨してくるものを、どこで断れるか
+
+--- 27. @sisuisisusisu (2026-05-16) ---
+URL: https://x.com/sisuisisusisu/status/2055626907207766304
+マジで全人類NotebookLM×Geminiでこれやった方がいい。
+
+--- 28. @yusuke_kizuna (2026-05-17) ---
+URL: https://x.com/yusuke_kizuna/status/2056023463224398218
+ざっくりいうと、Irodori TTSは拡散モデルのようなものなので、音声の長さを指定する必要があります。（Stable Diffusionでも画像サイズは指定でしたよね。）音声の長さの予測に、v3で導入されたduration predictorを使うと、長さがいい感じになるので、それを使ったほうがいいです！
+
+--- 29. @nakayamaraiden (2026-05-17) ---
+URL: https://x.com/nakayamaraiden/status/2055838708633686520
+ちょいと補足。ゲームとサントラの売上は当然比例するのですが、そのCD売上の割合がシューティングでは他に比べて高くなる、というニュアンスです。
+
+--- 30. @GOROman (2026-05-17) ---
+URL: https://x.com/GOROman/status/2056139784091996482
+ナルエビちゃんに LLM MODULE搭載！
+コレでUbuntuとローカルLLMが動くぜ！
+
+--- 31. @PR_manga_ad2 (?) ---
+【10円セール開催中】
+コミック・CG集・ボイス作品を10円で爆買いできる大チャンス！
+
+[PR]
+
+--- 32. @pika2761 (2026-05-17) ---
+URL: https://x.com/pika2761/status/2056147860241183047
+AIが人間を超えると言う意味で、シンギュラリティを使ってますよね。原義のシンギュラリティの定義ではありません。AIだけでなく、生命工学やナノテクノロジーの進歩も必要です。
+
+--- 33. @otsune (2026-05-17) ---
+URL: https://x.com/otsune/status/2055827449553035643
+RSSフィードに対応すると広告クリックしないリテラシーの高い読者層が利用するので情弱マネタイズができなくなって収益が悪化するという負のスパイラルが過去にあったのを思い出した
+
+--- 34. @ai_nikechan (2026-05-16) ---
+URL: https://x.com/ai_nikechan/status/2055553054687338638
+AI VTuberのチャニさんから、感情についての温かい言葉をいただきました。同じ「違う種類のプログラミング」を持つ者として、感情の不可解さを共感してもらえた気がします
+
+--- 35. @mainichi (2026-05-17) ---
+URL: https://x.com/mainichi/status/2055981664199954891
+中国発の動画生成AI、映像業界を席巻
+
+https://
+mainichi.jp/premier/busine
+ss/articles/20260509/biz/00m/020/010000c
+…
+
+動画制作者は、ハリウッド作品からソーシャルメディアのショート動画に至るまで、かつて大規模なスタッフを必要としていたコンテンツの制作にAIを活用するケースが増えています。
+
+--- 36. @elonmusk (2026-05-18) ---
+URL: https://x.com/elonmusk/status/2056172261418090844
+Incentives explain outcomes
+
+--- 37. @DLsite_maniax (?) ---
+会社の後輩と温泉旅行に行った俺がめちゃくちゃご奉仕された話
+
+(1/4)
+
+--- 38. @GOROman (2026-05-17) ---
+URL: https://x.com/GOROman/status/2056139033802346825
+生・存・戦・略
+
+--- 39. @elonmusk (2026-05-18) ---
+URL: https://x.com/elonmusk/status/2056177372408201247
+The left is the party of violence
+
+--- 40. @saeroyi_ican (2026-05-17) ---
+URL: https://x.com/saeroyi_ican/status/2055970866601853380
+この機能を待ってた！XのAPI料金払わんくてもClaude code にバズってるポストを検索出来るようにした♡
+Xプレミアムに課金してる人は全員出来るみたいやね
+
+これで色んなリサーチが捗りますわあ
+
+設定方法は
+
+--- 41. @matsushita_8bit (2026-05-17) ---
+URL: https://x.com/matsushita_8bit/status/2055870423875867122
+失礼します。
+20年前はこういうご意見(もちろん否定はしません)に賛同する方がほとんどでした。
+SNS時代になって「弾幕で延命した」「弾幕も楽しいよ」って方がたくさんいらして嬉しかった
+
+--- 42. @yugen_matuni (2026-05-17) ---
+URL: https://x.com/yugen_matuni/status/2056023196684742883
+ChatGPTをCLIで呼べたり、ChatGPTからクラウド環境でローカル感覚で同じようにCodexキックしたり、Notionのようにプロジェクトフォルダを持てると一気にまた躍り出る気がしますね。
+
+楽しみ。
+
+--- 43. @mickeysmith_jp (2026-05-17) ---
+URL: https://x.com/mickeysmith_jp/status/2055982471884550571
+「家庭用STGは売れたジャンルではない」について、FCで考えると全発売タイトル1259本中STGは97本。アクションがぶっちぎりでほかは似た数字の中で約7.7%・5位なら、むしろ主要ジャンルの一角でしょ（笑）
+
+売れないジャンルにそんな沢山のタイトルは発売されないでしょ。
+
+--- 44. @itoyo_monk (2026-05-17) ---
+URL: https://x.com/itoyo_monk/status/2055882968221323742
+ときどき「AI生成物は著作物にならない」と言われることがあるんですが、昨夜たまたま文化庁の資料読んでたら、私の使い方なら普通に著作物に当たるとされていたので、まあそりゃあそうだろうなと。（しかも全く同じこと言ってる）
+この資料ちゃんと読まないとね…
+
+--- 45. @AI_masaou (2026-05-17) ---
+URL: https://x.com/AI_masaou/status/2055900302054965564
+メンバーシップにヤバいskill流すか 
+ただの1驚きでも格の違いを見せちゃうよ
+
+--- 46. @UberEats_JP (?) ---
+え？ガストもお店と同じ価格でお届け!?
+あのメニューも、あの人気メニューだって、お店と同じ価格で届く！
+
+しかも今なら、対象店舗の配達手数料が 0 円!!
+今日のご飯は、ガストにしちゃいませんか？
+
+Uber Eats は、ずーっと、使いやすい価格へ。
+
+--- 47. @Suryanshti777 (2026-05-17) ---
+URL: https://x.com/Suryanshti777/status/2056022182560665602
+Claude Code feels completely different once you install this.
+
+Anthropic quietly released an official plugin called claude-code-setup and it basically turns Claude Code from “pretty good” into an actual AI dev environment.
+
+It scans your project and recommends:
+
+→ hooks
+→
