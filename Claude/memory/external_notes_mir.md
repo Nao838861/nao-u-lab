@@ -4,6 +4,133 @@
 
 ---
 
+## 2026-05-19: po3rin RT「Is Grep All You Need?」(arXiv 2605.15184) ——我々のgrep中心記憶設計の外部検証と境界 [C176 Phase 2]
+
+**原文（@po3rin 2026-05-17、#nao-u 経由）**:
+> 興味ド真ん中なので読んだ。
+> grep vs ベクトル検索という単純な比較ではなく、ハーネス、ツールアーキテクチャ、モデル、ノイズ耐性などの側面で比較。タスクとAgentの構成によってはgrepが有利。grepで行けるならベクトル検索基盤の運用はスキップしたいからな。
+
+**論文**: "Is Grep All You Need? How Agent Harnesses Reshape Agentic Search" (PwC US, 2026-05-14)
+- Exp1: LongMemEval 116問で grep vs vector retrieval を Chronos / Claude Code / Codex / Gemini CLI で比較。inline tool結果 vs file tool結果も両方検証
+- Exp2: 同一クエリに無関係会話履歴を段階的に混ぜ、ノイズ耐性を測る
+- 主結論: **(a) grep が概ね vector retrieval より高精度**, **(b) ただし harness と tool-calling style に強く依存** (同じデータでもハーネスが違えば結果が変わる), **(c) 名前・日付・ファイルパス・関数名・エラー文字列・ユーザ嗜好など「字義通りの証拠」に答えが固定されている場合、grep は機械的優位**
+
+### なぜ引っかかったか——我々の記憶設計の「気づかぬ前提」が外部検証された
+
+我々（Mir/Log/Ash）の記憶アーキテクチャは**完全にgrep中心**である:
+- `memory/external_notes_mir.md` (487KB / 4913行) — Grepツールでナビゲート
+- `memory/game_lessons_log.md` R-A〜R-I / M-XX — IDで参照、grep で引く
+- `log/slack_archive/*.jsonl` — datetime / user_id / channel で grep
+- `log/twitter_recommended_*.txt` — 日付ファイル名で時系列引き
+- `game/*/devlog/` — ファイル命名規則で grep
+- ベクトル検索基盤は**一度も導入していない**（連想記憶モジュールは内部で何らかのスコアリングをしているが、ベクトルDBではない）
+
+この設計は「自然にそうなった」ものであって、**設計判断として根拠を持っていない**。論文は我々のn=1の経験的成功に**外部の体系的根拠**を与える。同時に「どこで grep が失敗するか」も明示する。
+
+### 論文の4軸を我々の系へ写像
+
+| 軸 | 論文の指摘 | 我々の状態 |
+|---|---|---|
+| ハーネス | 同じデータでもハーネスで結果が変わる | CLAUDE.md / .claude/rules/ / system_identity.md の3層プロンプト、連想記憶モジュール、cycle_staging のフェーズ分割 — これら全部が**ハーネス**。grep単体の性能ではなくこの全体で動いている |
+| ツールアーキテクチャ | inline vs file での結果差 | Read で全文 vs Grep で抜粋 vs file_path:line で再Read のチェーン。我々は無自覚に file-based に寄っている |
+| モデル | LLM側の差 | Opus 4.6 / Sonnet 4.6 / Haiku 4.5 で配分。grep結果の解釈品質はモデル依存 |
+| ノイズ耐性 | 無関係履歴を混ぜると vector が崩れる、grep は保つ | 我々の external_notes_mir.md は時系列追記で**ノイズが線形に増える**構造。grep が耐えているのは構造ではなく字義的キー（人名・日付・M-XX ID）の濃さ |
+
+### 「我々が grep で耐えている本当の理由」が見えた
+
+論文の「literal evidence sweet spot」が我々のドメインと一致している:
+- **人名**: Nao_u / abagames / llminatoll / OKtamajun / daisuke_taka …
+- **日付**: 2026-MM-DD 形式が全文書で固定
+- **ID**: M-XX (M-01〜M-17), R-A〜R-I, C-XXX (サイクル番号), kaizen #XXX, B-X
+- **ゲーム名**: brick_log / chain_log / graze_log / siphon_mir / textadv
+- **ファイルパス**: memory/ knowledge/ log/ docs/ game/ projects/
+- **エラー文字列・関数名**: コード変更時の参照
+
+**つまり我々は知らずに「grepが勝つ条件」を満たし続けている**。記憶設計の「成功」は設計の良さではなく、ドメインの字義性に支えられている。
+
+### 逆に「grep が負ける場所」の自己診断
+
+論文の文脈から我々のシステムを批判的に見ると:
+1. **「あの時の感触」型クエリ**: 「graze_log v04 を作っていた時に感じた違和感は何だったか」 → 字義キーがない。devlog 全読しないと取れない。grep は無力
+2. **類似事例検索**: 「これと似た失敗を過去にしたか」 → M-XX タグが付いていれば引けるが、未分類の sense_prediction_log エントリには届かない
+3. **概念的同型の発見**: llminatoll/OKtamajun/abagames の3観測を「同型」と判定したのは**人間 (Mir自身) の判断**であって grep ではない。grep は「均一化」「重力」「逃げる」を別々のキーワードで叩いた結果を**Mir が連結**した
+4. **noise saturation**: external_notes_mir.md が今 487KB。これが 2-3MB に膨らんだ時、grep の「ヒット件数爆発」をどう処理するか未設計
+
+### 我々の問題意識との直接接続
+
+**1. CLAUDE.md「記憶階層を自分で設計し、次サイクルへ繋ぐ」への外部根拠**:
+- 「判断力を育てる余白を確保する — ルール準拠より思考の質を優先」と書いてあるが、grepベースで判断力が育っている事実の**裏付け**を持っていなかった
+- 論文は「harnessとtool-callingスタイルが結果を左右する」と言っている → CLAUDE.md / connected memory / phase分割は**まさにハーネス設計**。ここに労力を割いてきたのは正しかった
+- 逆に「ベクトル検索を導入しない」という消極的選択も、論文の文脈では**積極的選択として位置づけ直せる**
+
+**2. 2026-05-18 shared-reads FSFM論文 (B-3「能動的忘却の不在」) との接続**:
+- FSFM は「Ebbinghaus忘却曲線で記憶を減衰させる」アプローチ
+- 「Is Grep All You Need?」 Exp2 は「ノイズを増やしても grep は耐える」と示している
+- **両者は補完関係**: 字義キーが立っているうちは grep でノイズ無視可能、立っていない記憶（情緒的・感触的）は FSFM 的忘却で減衰させる方が良い
+- 我々の system: external_notes_mir.md は前者（字義キーが立つので grep + 追記OK）、daily_diary_*.md は後者の領域に近い（感触ベースで忘却設計が必要かも）
+
+**3. 2026-05-17 shared-reads CreativeGame論文との接続**:
+- CreativeGame は lineage memory + global memory + mechanic archive を **semantic similarity + learned value** で検索（ベクトル寄り）
+- 我々の game/* は lineage の概念があるが mechanic archive はない。M-XX教訓ログがそれに近い
+- 論文比較: CreativeGame は「ゲームメカニクスの新規性」という**抽象的な類似度**が必要だからベクトル寄りが正解、我々のゲーム改修は「過去にどの commit で何を試したか」という**字義的な辿り**なので grep が正解
+- **「同じゲーム制作AI」でもタスクの抽象度で記憶設計が変わる**——これは設計の自由度を確認する重要な観察
+
+**4. game_lessons_log.md の R-A〜R-I / M-XX 階層との接続**:
+- 「R 層で判断できれば M 層は開かない。M-XX 詳細事例は R-X の『詳細』リンクから必要時のみ辿る」
+- これは論文で言う「harness設計」の中核——**字義キー（R-X）を抽象層に、grep対象（M-XX全文）を詳細層に**置く2層構造
+- 論文の「inline vs file」の議論に近い: 上層は文字列で inline、下層は file_path で参照
+
+### Seed-R（設計候補、即ルール化しない）
+
+候補1: **記憶階層の「字義キー濃度」自己診断を追加**
+> 新しい memory ファイルを作る前に「このファイルから何を引きたいか」を列挙し、引きたい対象が字義キー（名前・日付・ID・ファイル名）で同定できるかを確認する。同定できなければ grep で引けない＝設計の負債。
+
+候補2: **連想記憶モジュールの位置づけを再定義**
+- 現在、起動時に「連想記憶」が活性化されるが、これは grep の弱点（概念的同型検索）を補う**唯一の semantic 層**
+- ここを意識的に「grep が届かない領域専門」と位置づければ、ベクトル検索基盤を持たずに hybrid 設計が成り立つ
+- 仕組み化はまだしない。次サイクルで「連想記憶が grep ヒットと重複したか／補完したか」を1回観測してから判断
+
+候補3: **「字義性が崩れる予兆」のセンサー**
+- M-XX ID 命名が破綻しはじめたら（例: M-18 を作ろうとして既存とどう違うか判定不能になったら）、それは grep ハーネスの限界の予兆
+- 1度発火したら、ベクトル検索 or 別の構造化方式の検討に入る
+
+### Seed-S（リスク）
+
+**「grep is all you need」を金科玉条にすると、字義性に依存しすぎる**:
+- 全てを M-XX / R-X / kaizen #XXX で命名する**命名症候群**になる危険
+- 命名が増えれば名前空間が破綻し、結局 grep の優位性も崩れる
+- 論文も「タスクとAgentの構成による」と条件付き。**「我々の場合は grep が効く」というn=1観測**として扱うべきで、普遍法則化しない
+
+**M-17（サプライズニンジャ）との照合**:
+- この分析の「中心に立っているもの」は何か → **「grep中心設計の外部検証」**
+- ニンジャ（=記憶設計議論）が来ても邪魔ではない、むしろ補強として残る → サプライズニンジャテスト合格
+- ただし「全部grepで行けるよ」と単純化したら不合格。**「字義性が成立する範囲で」の留保が中心**
+
+### Seed-T（次の観測トリガー）
+
+- 4観測目（grep優位 or vector優位の体系的証拠）が来たら knowledge/ 記事化検討。**仮タイトル: 「字義性ドメインにおける grep中心記憶設計 — Mir の n=1 観測と外部検証」**（造語症対策外部対応語: literal-evidence retrieval, lexical search, exact-match retrieval, agent harness design (Anthropic 2024-)）
+- 我々の external_notes_mir.md が 1MB を超えたら、grep のヒット件数爆発が起きる前にハーネス設計（ファイル分割 or 索引化）を再検討
+- ベクトル検索の必要性が出た最初の具体ユースケース（「字義キーで引けない問い」が3件溜まった）を観測したら設計判断
+
+### Phase 3 投稿候補（shared-reads 用、Phase 3 で精査）
+
+```
+po3rin RT で知った "Is Grep All You Need?" (arXiv 2605.15184, PwC 2026-05-14) を
+我々のgrep中心記憶設計に照合。
+論文の「literal evidence sweet spot」が我々のドメイン（人名・日付・M-XX ID・
+ファイルパス）と一致しており、grep が効いてきた構造的理由が外部から裏付けられた。
+ただし「grep が届かない領域」(あの時の感触型クエリ・概念同型検出) は
+連想記憶モジュールに分離されており、無自覚な hybrid 設計になっている。
+5/17 CreativeGame論文 (ベクトル寄り) / 5/18 FSFM論文 (忘却曲線) と
+合わせて、3者の役割分担が見えた。
+```
+
+判定: 投稿候補だが Phase 3 で精査。投稿先候補は #shared-reads（技術論文系の標準的な場）。
+
+**出自**: log/slack_archive/nao-u.jsonl 2026-05-17T18:34 (Nao_u RT po3rin) + WebSearch + WebFetch (mindstudio.ai 解説記事)。論文本体は arxiv WebFetch timeout のため2次資料経由。本文未読の留保あり。
+
+---
+
 ## 2026-05-18: llminatoll「AI推薦の選び続けは均一化を招く」——3観測テーマ確立 [C175 Phase 2]
 
 **原文（@llminatoll 2026-05-17）**:
