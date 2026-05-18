@@ -95,6 +95,16 @@ const GRAZE_TRAIL_LEN=70;
 // update() 内の grazedT クランプを `if(b.grazedT>0)b.grazedT--;` に戻す
 // (定数・draw()・onGraze 周辺は v04 と同一バイト列)
 
+// === v05 beta B-2' (C189): 弾発射 windup telegraph (予兆) ===
+// 設計: medium が `e.fireT <= WINDUP_FRAMES` の間、発射方向に短い予告線 + 集光マーカーを描く。
+// 強度は (1 - fireT/WINDUP_FRAMES) で 0→1 に上昇（escalation telegraph）。
+// 予告は描画のみ — bullet の実 aim は発射瞬間の player 位置で再計算するので、
+// player は予告中に動けば回避できる (= readability 上昇しつつ agency を保つ)。
+// 根拠: @itchie_tatsumi 2026-05-18「予兆・隙・一貫性」 / 業界標準 readability (devlog §12)。
+// 削除手順 (B-2' → B-2): WINDUP_FRAMES 定数と draw() 内 `// B-2' windup telegraph` ブロックを削除。
+// fire branch・spawnEnemy・spawnWave1..4 は無改変なので B-2 に bit 完全等価で戻る。
+const WINDUP_FRAMES=10;
+
 const state={
   mode:'title',
   t:0,
@@ -569,6 +579,39 @@ function draw(){
       ctx.fillStyle='#fff080';
       ctx.beginPath();ctx.arc(e.x,e.y,e.r-5,0,Math.PI*2);ctx.fill();
     }
+  }
+  // === v05 beta B-2' (C189): windup telegraph 描画 ===
+  // medium が fireT <= WINDUP_FRAMES に入った瞬間から、発射方向に予告線を描く。
+  // 強度・線長は (1 - fireT/WINDUP_FRAMES) で 0→1。fan3 は 3 本、aimed は 1 本。
+  // 弾の実 aim は発射瞬間の player 位置を再取得するため、予告中の dodge は有効。
+  for(const e of state.enemies){
+    if(e.type!=='medium')continue;
+    if(e.fireT<=0||e.fireT>WINDUP_FRAMES)continue;
+    if(e.y<=0||e.y>=H*0.55)continue;
+    const t=1-e.fireT/WINDUP_FRAMES;
+    const alpha=0.18+0.42*t;
+    const len=22+18*t;
+    const pat=e.bulletPattern||'aimed';
+    const dx=state.player.x-e.x,dy=state.player.y-e.y;
+    const baseAng=Math.atan2(dy,dx);
+    ctx.strokeStyle=`rgba(255,200,80,${alpha})`;
+    ctx.lineWidth=1;
+    if(pat==='fan3'){
+      for(let k=-1;k<=1;k++){
+        const a=baseAng+0.26*k;
+        ctx.beginPath();
+        ctx.moveTo(e.x,e.y);
+        ctx.lineTo(e.x+Math.cos(a)*len,e.y+Math.sin(a)*len);
+        ctx.stroke();
+      }
+    }else{
+      ctx.beginPath();
+      ctx.moveTo(e.x,e.y);
+      ctx.lineTo(e.x+Math.cos(baseAng)*len,e.y+Math.sin(baseAng)*len);
+      ctx.stroke();
+    }
+    ctx.fillStyle=`rgba(255,180,60,${alpha})`;
+    ctx.beginPath();ctx.arc(e.x,e.y,2+2*t,0,Math.PI*2);ctx.fill();
   }
   for(const b of state.ebullets){
     // v05: 全弾常時軌跡 (grazedT は常に max 固定、fade は常に 1.0)

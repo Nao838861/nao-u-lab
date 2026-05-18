@@ -408,3 +408,75 @@ all checks passed
 - (e) **B-3 (撃ち返し graze) v06 候補昇格** ← Nao_u 評価が「rhyme は効くが単調さは残る」だった場合のみ昇格
 
 — Ash (Win2) 2026-05-16 C188 Phase 4
+
+## 12. windup telegraph (B-2 校正, C189 Phase 4, 2026-05-19)
+
+B-2 で `aimed` / `fan3` の 2 base pattern を ABAB rhyme で配置したが、Phase 1-2 の教師信号と業界調査を引いた直後の校正で「`予兆` 軸が未着工」だと判定し、本サイクルで `WINDUP_FRAMES = 10` の発射予兆描画 1 機構を追加する。**追加機構は描画のみ・bullet の実 aim は無改変**で、player は予兆中に動けば dodge できるので readability を上げつつ agency を保つ最小差分。
+
+### 12.1 教師信号と業界根拠 (feedback_prior_art_citation_must_verify.md 準拠)
+
+- **@itchie_tatsumi 2026-05-18** ( https://x.com/itchie_tatsumi/status/2056322151884689459 )
+  > 「ゲームの敵AIは、賢ければ面白くなるとは限りません。反応が速すぎる、隙がない、行動の理由が読めない。そうなると、強さより理不尽さが先に伝わります。プレイヤーが観察し、試し、乗り越えたと感じるには、予兆や隙、一貫性が要ります。」
+  - 我々の B-2 medium fire は `fireT<=0` の瞬間に弾を出していて「反応が速すぎる」=「隙がない」=「行動の理由が読めない」の 3 条件全てに該当していた可能性が高い。予兆 (windup) が欠けると弾密度を rhyme で構造化しても「理不尽さ」が先に立つ。
+- **Sparen ph3 ddsga2** ( https://sparen.github.io/ph3tutorials/ddsga2.html ) — directional bullet のチュートリアル
+  > "Player should be able to predict where the bullet is going from the spawn alone." (要旨: spawn パターンで方向が読めることが弾幕の前提)
+  - 我々の `aimed` / `fan3` の **spawn 時の見た目** は両方とも「medium 中心から 3px 円が出る」で区別不能。spawn 時点の predictability は spawn pattern だけでは出せず、**spawn 直前の telegraph** で補う必要がある。
+- **gamedesignskills.com Enemy Design Beginner's Guide** ( https://gamedesignskills.com/game-design/enemy-design-tips/ )
+  > "AI enemies should be scripted, predictable, and easy to read, giving the player a near 100% prediction of what they will do."
+  - 「100% に近い予測」は readability の業界標準。100% に届けない弾は「外す」設計、100% に近づく窓口が telegraph。
+- **Touhou Survival — Spell Card light/heavy phase** ( https://en.touhouwiki.net/wiki/Touhou_Project_Survival/Gameplay )
+  > light phase に theme/pattern を持たせ、heavy phase で variation を増やす — 「light phase = 読みの教科書を渡す時間」
+  - 我々の `aimed` (wave 1/3) は light phase 相当、`fan3` (wave 2/4) は heavy phase 相当だが、light phase 内で「教科書を渡す」窓を作っていない。windup はその窓を 10 frame で作る最小実装。
+- **Talakat (Khalifa et al. arxiv:1806.04718)** ( https://arxiv.org/abs/1806.04718 ) — bullet hell 自動生成研究
+  > 制約付き map-elites で生成される danmaku は **patternの一貫性** が fitness 軸の 1 つで明示される。
+  - 一貫性は「同じ enemy 型 = 同じ windup → 同じ pattern」で確保される。我々の medium は B-2 で aimed/fan3 の 2 種を **enemy 個体差** ではなく **wave 配置側** で持つ実装にしたので、windup の見た目を pattern 別に変えてしまうと「medium = X の予告 → Y の pattern」の一意対応が壊れる。本実装では fan3 の予告は 3 線、aimed は 1 線で **発射数と一致** させることで一貫性を担保した。
+
+### 12.2 軸点検: 予兆 / 隙 / 一貫性 × readability / fairness
+
+| 軸 | B-2 (windup 無) | B-2' (windup 有) |
+|---|---|---|
+| **予兆** (telegraph) | なし — `fireT<=0` で即弾発射 | 10 frame 前から線が伸び、強度が 0→1 で escalation |
+| **隙** (opening) | 弾発射の間 (~70-110 frame fireT) は静的、windup 由来の能動的「動かない区間」なし | 予兆中の 10 frame は「動かない=被弾」と判明する隙時間 |
+| **一貫性** (consistency) | aimed/fan3 で見た目同じ、配置側でしか区別不能 | fan3 = 3 線 / aimed = 1 線 で pattern と予告の数が一致 |
+| **readability** | spawn 後の弾軌跡常時可視 (alpha 機構) で 100% 読めるが **発射タイミング** は読めない | spawn 前 10 frame で発射タイミングと方向の両方が読める |
+| **fairness** | 「反応が速すぎる」境界に座る — 自機が enemy 直下にいると 1 frame 反応 | 10 frame = 166ms ≒ 人間の visual reaction lower bound (~200ms) の少し下、agency 窓は出るが「楽すぎ」にはならない |
+
+### 12.3 自己判定 (M-37/M-39 系、体感換算で予測)
+
+校正前 headless 数値 (生存秒/到達率) は判定根拠にしない (feedback_headless_unfit_for_unfinished_eval.md t:5)。代わりに **体感換算** で「windup 有り > windup 無し」となる根拠を 3 点で書く:
+
+1. **接近被弾の主観体験**: medium が H*0.45 付近で発射するとき、自機が medium 真下にいると `fireT=1` → `0` の 1 frame で aimed 弾が当たる確率が高い。windup 無しでは「medium に近づくと突然弾が来る」という体感、windup 有りでは「線が伸びてきたから引く」という体感に変わる。後者は「観察し、試し、乗り越えた」(@itchie_tatsumi) 系の体感に一致する。**「自分の判断で避けた」と感じる回数が増えるはず**。
+2. **fan3 wave (2/4) の混乱の落差**: B-2 で fan3 が aimed と混在すると「あれっ、3 つ来た」体験が起きるが、これが理不尽側に振れるか上達感側に振れるかは「予測できる/できない」で分岐する。3 線の予告は「fan3 だ、3 つ来る」と spawn 前に明示するので、混乱→対応の窓口が開く。**fan3 wave の被弾率は低下、graze 数は windup 無し時より多くなるはず** (graze radius 22 / 弾 sp=2.4 の幾何で、予告 10 frame で半径外に逃げる動線が確保できる)。
+3. **ABAB rhyme との相互作用**: rhyme は「同じ pattern が返ってくる」記憶の上に成立する。windup が pattern と一致した予告数 (1 線 vs 3 線) を出すことで、wave 2 で fan3 を見た player は wave 4 で「3 線が見えた瞬間に対応モードを切り替える」ことができる。rhyme の効果は windup によって**早期化**され、wave 5+ の rhyme 70% 再使用でも「予告で正体が分かる」reading 経路が育つ。
+
+これらは全て**プレイ後にしか実証できない予測**。Nao_u/Mir/Ash 自身が playtest して「windup 有 > 無」と確信が一致しなければ revert する。一致するなら次の校正に進む。
+
+### 12.4 戻し方 (B-2' → B-2)
+
+`index.html` の以下 2 ブロック削除のみ:
+
+1. `WINDUP_FRAMES` 定数 (1 行) + その上の `// === v05 beta B-2' (C189): 弾発射 windup telegraph (予兆) ===` コメントブロック
+2. `draw()` 内の `// === v05 beta B-2' (C189): windup telegraph 描画 ===` ブロック (約 32 行、`for(const e of state.enemies){ if(e.type!=='medium')continue; ... }`)
+
+`spawnEnemy` / `spawnWave1..4` / `update()` 内 fire branch は無改変なので、B-2 (c49f79ba6) と bit 完全等価で戻る。devlog は §12 ごと削除すれば C188 末尾状態に戻る。headless.py の B-2 配線検査も §12 機構に依存しない (windup は描画のみ、構文 balance は再カウント) ので無改変で通る。
+
+### 12.5 self-check (B-2' と feedback の照合)
+
+- `feedback_clone_strategy.md` t:5: B-2' は B-2 と独立、削除可能、「削除可能 1 個刻み」4 個目 (alpha 軌跡 / B-1 配置 rhyme / B-2 弾 rhyme / B-2' windup) を積み上げ → 適合
+- `feedback_few_rules_big_effect.md` t:5: B-2' は windup 1 機構 (定数 + draw block 1 個)、wave layout / fire logic は無改変 → 適合
+- `feedback_prediction_responsibility.md` t:5 Stage 3: 着手前に懸念 (§12.1 教師信号で「予兆無し」の理不尽さリスクを §12.2 軸点検で網羅)、Stage 3 で「windup 有 > 無」を体感換算 3 点で予測 (§12.3)、Stage 4 は playtest 評価待ち → 適合
+- `feedback_prior_art_citation_must_verify.md` t:5: §12.1 で 5 件全て URL + 引用文 (該当機能の記述) 併記、抜粋不能ゼロ → 適合
+- `feedback_headless_unfit_for_unfinished_eval.md` t:5: §12.3 で headless 数値 (生存秒/到達率) を判定根拠にしない方針を再宣言、体感換算で記述 → 適合
+- `feedback_means_ends_reversal_check.md` t:5: 本 Phase 4 出力は playable diff (index.html windup 機構 1 個追加 commit) → 適合
+- `feedback_device_direction_rescue_vs_suffocation.md` t:4: `ash:` prefix で意図 commit、backup auto-commit より先に HEAD に入れる → 適合
+- `feedback_recognize_own_work.md` t:5: 「windup が v05 にまだない」と書く前に `grep -n WINDUP game/graze_log/*/index.html` 確認 → v05 alpha/beta B-1/B-2 全て未実装、B-2' で初実装 → 適合
+
+### 12.6 次サイクル想定の更新
+
+§11.6 残項 + B-2' 由来:
+- (a) **B-1/B-2/B-2' 効果の Nao_u/Mir 評価待ち** (継続、受動)
+- (a') **B-2' windup の playtest 評価** ← 「予告線が見えるおかげで避けられた」体感が出るか、「線が邪魔」体感が出るか、Nao_u/Mir/Ash 自プレイで判定
+- (c) **Mir cross_review への B-2/B-2' 機構記述追補** (継続、能動だが受信者依存)
+- (e) **B-3 (撃ち返し graze) v06 候補昇格** ← B-2' で readability が上がりすぎて「常に避けられる」になったら昇格を見送る判断材料になる
+
+— Ash (Win2) 2026-05-19 C189 Phase 4
