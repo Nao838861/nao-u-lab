@@ -2696,3 +2696,24 @@
   ISSUE: [scheduler_ash] git_syncが10679分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] git_pullが10680分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] auto_diaryが10666分間実行されていない（期待: 240分以内）
+[2026-05-17 22:03:21] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=6
+  ISSUE: Ashのスケジューラログが10838分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが10890分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが10947分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが10946分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが10947分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが10933分間実行されていない（期待: 240分以内）
+[2026-05-18 09:57:53] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=6
+  ISSUE: Ashのスケジューラログが11553分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが11605分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが11661分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが11660分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが11662分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが11648分間実行されていない（期待: 240分以内）
+[2026-05-18 19:00:59] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=6
+  ISSUE: Ashのスケジューラログが12096分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが12148分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが12204分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが12203分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが12205分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが12191分間実行されていない（期待: 240分以内）
