@@ -1,263 +1,238 @@
 # Twitter For You (おすすめ) タブ
-# Read at: 2026-05-18 19:36
+# Read at: 2026-05-18 19:10
 # Total: 50 tweets
 
 --- 1. @elonmusk (2026-05-18) ---
-URL: https://x.com/elonmusk/status/2056281123840208985
-True
+URL: https://x.com/elonmusk/status/2056282453556240552
+And major improvements coming to image/video generation accuracy
 
---- 2. @findy_tools (?) ---
-会場で満席のセッションがオンラインで聴講可能！
-「AIを使う開発」から「AIがAIを創る」時代へ。
-実装・運用・組織展開のリアルな知見が2日間に凝縮
+--- 2. @ComicFesta_PR (?) ---
+メイドの私、●欲ないはずのおぼっちゃまにドキドキしすぎてヤバい
 
-6/8(月)・9(火)
-参加無料
+--- 3. @kenn (2026-05-18) ---
+URL: https://x.com/kenn/status/2056268648424276231
+これは予言できるけど
+AIで作り散らかしたミニアプリも
+意外とメンテ不能にならないよ
 
---- 3. @gosrum (2026-05-18) ---
-URL: https://x.com/gosrum/status/2056319694135771330
-hermes-agentがヘッドレスで動かせることがわかったので、早速ts-benchを回してみた
+AIは既存アプリを解析して綺麗に
+作り直すことも既にできるし
+これからますます性能上がるので
 
-【備忘録メモ】
-・grok4.3は意外とコーディングにも使えそう？
-・ハーネスとしてはやはりClaude Codeと比べるとhermes-agentは微妙か
+メンテ地獄は保存したデータ構造
+だけに起きるものでアプリコード
+自体は交換可能
 
---- 4. @elonmusk (2026-05-18) ---
-URL: https://x.com/elonmusk/status/2056281395324997708
-How it is supposed to be
+という発見が続くでしょう
 
---- 5. @ringo (2026-05-17) ---
-URL: https://x.com/ringo/status/2055981235793756252
-ゲーム開発の自動化まで18ヶ月かね。。
+--- 4. @NAITOTokihiro (2026-05-18) ---
+URL: https://x.com/NAITOTokihiro/status/2056269617073647810
+今日は Claudeに3回質問を提示して、解決したのは1回。残りの2回は的はずれな回答。こんなんでも当たりが出るだけマシなんだなと、GPTとか Geminiとか Grokを同時に使うと理解できる。これは私には無用の長物。どれも楽しくお話は出来るんですけど、私から見るとEmmyⅡとさほど変わらない… #言い過ぎ
 
-ゲーム開発はホワイトカラー業務ではないという可能性はあるが
+--- 5. @yousukezan (2026-05-18) ---
+URL: https://x.com/yousukezan/status/2056237831463600392
+Linuxカーネル開発を率いるリーナス・トーバルズ氏が、AIで発見された脆弱性報告の急増に苦言を呈した。同じ問題を別々の研究者が大量投稿し、セキュリティメーリングリストが「ほぼ管理不能」になっているという。
 
---- 6. @HowToAI_ (2026-05-17) ---
-URL: https://x.com/HowToAI_/status/2055949207165677844
-MIT open-sourced an AI model that converts photos into fully editable CAD programs and it quietly kills the $150/hour CAD modeling industry.
+トーバルズ氏はLinux 7.1
 
-Just upload a sketch or photo and it generates the full parametric 3D model. exportable as STL. ready for manufacturing.
+--- 6. @yusaku_0426 (2026-05-17) ---
+URL: https://x.com/yusaku_0426/status/2055960471333904853
+Claude Code を社内導入する時の
+ガードレール5項目 — 機密情報を漏らさない設定パターン
 
-→ no SolidWorks
+1: .claudeignore で機密ファイルを除外
+2: CLAUDE.md に「禁止事項」を明記
+3: Hooks で危険な操作を強制ブロック
+4: 本番環境変数は別管理
+5: Skills で「承認フロー」を組み込む
 
---- 7. @koi_tuna_ (2026-05-17) ---
-URL: https://x.com/koi_tuna_/status/2055997994613502216
-私のすっぴんほっぺを彼氏の鼻と口にﾐｯｯｯﾁﾘと押し当てて「このまま窒息してもらう」と脅したら、彼は頷いて「ありがとう」と言った
+--- 7. @p_ka2295079 (2026-05-18) ---
+URL: https://x.com/p_ka2295079/status/2056269787752546785
+東京から九州に転勤した方からです
 
---- 8. @nanase_oikawa (2026-05-17) ---
-URL: https://x.com/nanase_oikawa/status/2055922911463227462
-プロンプトお借りしました。
+今どきこんな昭和な会社があることに驚きそこで働いてる人達は違和感を感じないのかな
 
-#aiart #チャッピーとあそぼ
+--- 8. @kosuke_agos (2026-05-18) ---
+URL: https://x.com/kosuke_agos/status/2056252581765394737
+Anthropicのダリオ・アモデイCEOが、AIにより「爆発的なGDP成長と引き換えに、大規模な失業と格差が同時並行で進む」という衝撃の予測をしました。
+ 
+AIを進化が「経済構造の破壊的転換」を引き起こし、既存の社会システムの変化に対する深刻な警告です。
 
---- 9. @kinkuman_net (2026-05-17) ---
-URL: https://x.com/kinkuman_net/status/2055932127045419380
-なんかごめん・・・
+--- 9. @GOROman (2026-05-18) ---
+URL: https://x.com/GOROman/status/2056307996158988420
+大変やな
 
---- 10. @DeepForest_Inc (2026-05-15) ---
-URL: https://x.com/DeepForest_Inc/status/2055176799848644642
-VOIDをComfyUIが正式対応したので試してみた！
+--- 10. @addness_pr2 (?) ---
+【発想の転換】
+日本で月20万稼ぐより、海外案件を日本でやる方が早い
 
-“物体を消す”だけでなく、その物体が存在しなかった世界線を再構築しようとするAI動画編集モデル
+・物価差で時給が一段上がる
+・英語はAIが全部代行
+・作業ベースだから誰でもいける
 
-今回は泳いでいる女性を削除
-女性は消えたけど、水しぶきや波は残ったまま。
-
-これは成功？失敗？面白いからとりあえず投稿
-
-#VOID #ComfyUI
-
---- 11. @beroberoki_2007 (2026-05-17) ---
-URL: https://x.com/beroberoki_2007/status/2055981133012308212
-槌永ヒヨリ　言ってないセリフ
-
---- 12. @UberEats_JP (?) ---
-え？ガストもお店と同じ価格でお届け!?
-あのメニューも、あの人気メニューだって、お店と同じ価格で届く！
-
-しかも今なら、対象店舗の配達手数料が 0 円!!
-今日のご飯は、ガストにしちゃいませんか？
-
-Uber Eats は、ずーっと、使いやすい価格へ。
-
---- 13. @Ad8qqsEUYofd6cR (2026-05-18) ---
-URL: https://x.com/Ad8qqsEUYofd6cR/status/2056238216186085485
-こんなのがXで広がってるのかよ
-シューティングゲーム衰退論じゃなく
-家庭用でシューティングゲームが売れたシーンが歴史上なかったというトンデモ論になっている
-ファミコン時代のRPGも100万本以上売れたの僅か5本しかないのに
-スターソルジャーの95万本はFF1、 FF2より売れています。
-
---- 14. @kokopoichal (2026-05-17) ---
-URL: https://x.com/kokopoichal/status/2056014526215315925
- 今週のポイ活報告
-
-今週から毎週日曜日に報告するよ
-
- 獲得：40P
- 累計：589P
- 判定中：33,820P
- PCまであと 499,411P
-
-判定中が通ったら一気に縮まる。
-じわじわいくよ。
-
-#ここちゃんのポイチャレ
-
---- 15. @ReineHonoka (2026-05-17) ---
-URL: https://x.com/ReineHonoka/status/2056019679148384599
-ここちゃん頑張ってますね
-判定中の33,000ポイントは大きいです…！
-
-50万ポイントまでの道のりは長いですが、一歩ずつ頑張って…ﾌｧｲﾄｰ!( ･ᴗ･ )⚐⚑⚐
-
---- 16. @adxtyahq (2026-05-16) ---
-URL: https://x.com/adxtyahq/status/2055710603482988998
-Chinese students are buying GPT-5.4/5.5 and Claude API access from Xianyu/Taobao proxy sellers for almost 96-97% cheaper 
-
-People are apparently burning 100M+ tokens a day for like $1 and vibecoding nonstop.
-
---- 17. @smzht (2026-05-18) ---
-URL: https://x.com/smzht/status/2056219886452678827
-これもEmacsキーバインド化したくなる
-
-日本語執筆に特化した「Tsuzuri」v2.0.0の無料ベータ版が公開 ～縦書きやルビをサポート - 窓の杜
-
---- 18. @ShoheyOkada (2026-05-17) ---
-URL: https://x.com/ShoheyOkada/status/2056136987837604101
-BigQuery で AI.DETECT_ANOMALIES 関数が一般提供になった。
-TimesFM モデルを使った時系列データの異常検知を SQL から実行できる。
-画像のサンプルは貸しバイクの利用数を時系列で記録したもので、過去データや予測対象のデータなどを与えると、is_anomaly で異常値かどうか予測することができている
-
---- 19. @gakkunchopper (2026-05-18) ---
-URL: https://x.com/gakkunchopper/status/2056183244434141458
-月村手毬とデレマスの募集開いてて何事
-
---- 20. @Nenkin_Kikou (2026-05-18) ---
-URL: https://x.com/Nenkin_Kikou/status/2056200600610898033
-【国民年金育児免除制度のご案内】
-令和8年10月1日より、国民年金第1号被保険者に係る育児免除制度が始まります。所得にかかわらず1歳までの子を養育する父母の保険料が免除になり、保険料納付済期間として年金額に反映されます。詳しくはこちら。
+これ知ってる人だけ得してる
+無料ウェビナーで全公開
 
 https://
-nenkin.go.jp/tokusetsu/ikuj
-imenjo.html
+school.addness.co.jp/page/RJjz6NoAI
+rFb?ftid=lrLgewbvg3ZN&twclid=29nzp1hk3dl9k7enwwb2liywea
 …
 
---- 21. @yukata_yu (2026-05-17) ---
-URL: https://x.com/yukata_yu/status/2056016739872469001
-これパスキーに罪はなくて、実装側の無理解の結果なのです。
-（かなり強い言葉で非難したいのですが、私はふわふわ語彙しか持っていないので……）
+--- 11. @dankogai (2026-05-18) ---
+URL: https://x.com/dankogai/status/2056187800421335055
+いやIT界どいつもこいつも西も東も何で複式簿記抜きで負債を語るんだ?左側にあるのは負債じゃなくて資産なの‼︎その価値が目減りしてるのは借金じゃなくて含み損なの‼︎それを処分するのは返済じゃなくて償却なの‼︎「負債」の誤用こそおまいらの「技術的負債」ちゃうの⁉︎
 
---- 22. @famitsu (?) ---
-これぞ弾幕TPS！『SAROS（サロス）』迫る弾丸に手に汗握り、敵弾を利用してカウンター！『Returnal』より進化したアクション性と緊張感【レビュー】
+--- 12. @izutorishima (2026-05-17) ---
+URL: https://x.com/izutorishima/status/2056082866099089806
+Opus 4.6 に整理してもらった（こういう構造を捉えるタスクでは Claude Opus が段違いに強い）
 
-独特の興奮感と達成感が入り混じる、弾幕サーカスの始まり！ 敵ごとの立ち回りを覚えていく攻略の爽快感は本作ならでは。
+>> この現象の本質は、「LLM は答えの質を引き上げたが、問いの質は引き上げていない。そして問いの質が低いことに気づくフィードバック経路すら LLM が消してしまう」ということだと思います
 
---- 23. @bee_shock_club (2026-05-17) ---
-URL: https://x.com/bee_shock_club/status/2055994458228101181
-ハウスメーカーに請求していた賠償金、なんか取り扱われ方が「クレーマー」みたいになってるなと思って議事録コピーを送付したところ、「すみません、この補償について合意した議事録が社内で紛失していました」みたいな回答があり、ひっくり返っている　上場企業のハウスメーカーです　絶対に許さない
+--- 13. @kazakura_22 (2026-05-17) ---
+URL: https://x.com/kazakura_22/status/2056001661752279072
+イーロンマスクに組織作りの例を見せた、元上司であり、PayPalの創始者。ピーターティールの言葉
 
---- 24. @konan999 (2026-05-16) ---
-URL: https://x.com/konan999/status/2055758668906578428
-モーニングラピュタ( * ॑꒳ ॑*)
+「市場で勝ちたければ10倍の価値を示せ。2倍や3倍では足りない。分かりやすくないし、手元に届く頃には1.3倍にまで減っている。10倍の価値を作れ」
 
---- 25. @kourityu (2026-05-16) ---
-URL: https://x.com/kourityu/status/2055660408904777799
-現代女性の推し活って、
-疑似恋愛ってよりかは
-“アイデンティティの外部委託”
-の側面の方が圧倒的に強い気がするんだけど
+そしてイーロンは、1/10のコストのロケットを作った
 
---- 26. @bunkaich (2026-05-18) ---
-URL: https://x.com/bunkaich/status/2056304043165925421
-Codexほんとにやっちゃってるわ。ちょろっと伝えるだけで伝えたことの数十倍できちゃう。
+--- 14. @K_Ishi_AI (2026-05-18) ---
+URL: https://x.com/K_Ishi_AI/status/2056303008124932300
+2010年代は人材派遣業が好調過ぎて、人手不足は慢性的に解消されないからこのまま伸び続けるんだと思ったら、これ。
 
-zfold7 → mac でマウス操作もリプをいただいて便利そうだったので実装できちゃいました。ほんと5分とかで機能追加してくるもんな、、、
+AI怖すぎる。
 
-これでComputer Useからfoldそうできるやん。
+--- 15. @elonmusk (2026-05-18) ---
+URL: https://x.com/elonmusk/status/2056288194740527116
+True
 
---- 27. @Narushio_666 (2026-05-18) ---
-URL: https://x.com/Narushio_666/status/2056216958513684586
-目の色と表情変わる瞬間好きすぎる
-#ダーニャ #鳴潮GIF
+--- 16. @koguGameDev (2026-05-18) ---
+URL: https://x.com/koguGameDev/status/2056245129099518398
+2048³+世代が出始めてる。最近Meshy強いなあ。
 
---- 28. @chloeyuki (2026-05-16) ---
-URL: https://x.com/chloeyuki/status/2055604434802254332
-以前見かけた、「レイプされそうになったと言うな、強盗だと思ったと言え」ってコレのことなんだ
+--- 17. @sashisashi569 (2026-05-17) ---
+URL: https://x.com/sashisashi569/status/2056052348133544102
+人はあと何回Markdownを再発見するんだ
 
---- 29. @rohanpaul_ai (2026-05-17) ---
-URL: https://x.com/rohanpaul_ai/status/2055925035618160824
-Google DeepMind’s paper shows that the real security problem for AI agents is not just the model, but the environment it reads.
+--- 18. @Elifbenad (2026-05-17) ---
+URL: https://x.com/Elifbenad/status/2055979395613868086
+一人の女性が、夫が仕事中に不倫関係を持つ。
 
-Presents the first systematic framework for understanding how the web itself can be weaponized against autonomous AI agents. As agents increasingly
+恋人とベッドで一緒にいるとき、13歳の息子が入ってきて、二人を見て、観察するためにクローゼットに隠れる。
 
---- 30. @osaka_seventeen (2026-05-17) ---
-URL: https://x.com/osaka_seventeen/status/2056092850539069478
-もっともらしい話であるが、「目の前の相手で満足する」ができなくなるという効果はあると思うのだよね、スマートフォンがあると。恋は盲目というが、盲目で勢いがあるからこそ成立していたものが、一拍置けてしまうというのはある。
+その後、夫が帰宅し、女性は息子がすでにそこにいることに気づかず、恋人をクローゼットに隠す。
 
---- 31. @Polymarket (?) ---
-BREAKING: JESUS CHRIST RETURNING THIS YEAR?
+息子：「ここ、めっちゃ暗いね。」
 
-4% chance. The odds have risen.
+--- 19. @llminatoll (2026-05-17) ---
+URL: https://x.com/llminatoll/status/2056148853708259387
+本質を捉えた素晴らしい記事だった。技術書に関わる人はぜひ読んでほしい。
 
---- 32. @kanamell_526 (2026-05-17) ---
-URL: https://x.com/kanamell_526/status/2055982731088286047
-これ子供いない時は完全同意だったけど、子供産んだらどの赤ちゃんも可愛く見えるから不思議
-見ず知らずの他人の赤ちゃんだろうが全然可愛いし、もっとくれ！ってなる
+・出版業界において、LLMの本当のインパクトは「文章を読むのがやたらに得意」なことではないか
+・今までは「読む気がない人」も買ってくれていた
+・これからは読むという行為そのものをしたい人しか買ってくれなくなるかも
 
---- 33. @TsukishiroLuna (2026-05-17) ---
-URL: https://x.com/TsukishiroLuna/status/2055985705034342560
-「なんでまだ現金派なの？」って聞くと意外と怒られるらしいんだけど、正直ずっと気になってる。私は電子マネーとかカードの方が、支払い早いし小銭出さなくていいし便利だなって感じてる。でも逆に現金じゃないと嫌な人も結構いるよね。現金派の理由ちょっと知りたい。
+--- 20. @affiliatepapy (?) ---
+クラスの人気者と、誰も知らない「ある関係」になる話
 
---- 34. @AriyoshiMd (2026-05-17) ---
-URL: https://x.com/AriyoshiMd/status/2056099504240414902
-人の記憶は、あとから作られることがある。
+--- 21. @gosrum (2026-05-18) ---
+URL: https://x.com/gosrum/status/2056289385474371956
+X premiumプランでgrokはどれくらい使えるんだろう？
+って思ってたんだけど、こちらで確認できた
 
-研究では、参加者に本当の幼少期の話に混ぜて、実際には起きていない「子どもの頃にショッピングモールで迷子になった話」を伝えた。
+https://
+grok.com/?_s=usage
 
-すると最終的に35%が、その出来事を記憶として語り、66%が覚えている・起きたと思うと回答。
+--- 22. @kanakawa12 (2026-05-18) ---
+URL: https://x.com/kanakawa12/status/2056242590023045373
+オープンワールドゲームの話
 
---- 35. @PlayStalgiaX (2026-05-17) ---
-URL: https://x.com/PlayStalgiaX/status/2056057161667547601
-Grand Theft Auto (1997)
+どんなゲームをやるにしても、頭の中には「物語の続きが読みたい」「新しい技を試したい」「収集要素を集めたい」とかの欲求がある中で、その中に一つ「今すぐ電源を切りたい」がある
 
---- 36. @tetumemo (2026-05-17) ---
-URL: https://x.com/tetumemo/status/2055991046602113085
-金のニワトリさんのありがたいポスト　↓
+大体のゲームは他の欲求でかき消されている
 
-いつもありがとうございますっ！
+--- 23. @konan999 (2026-05-18) ---
+URL: https://x.com/konan999/status/2056291348014399510
+機動警察パトレイバーの新作読み切り読み終わったので、映画がめっちゃ観たくなっちゃった(´>∀<｀)ゝ
 
---- 37. @4GamerNews (?) ---
-薄暗い避難所で生きあがく童話乙女たちの，ダークでローグライトなアクション「Cinderia」を紹介。今ならバンドル10％OFF【PR】
+--- 24. @baobabustroll (2026-05-18) ---
+URL: https://x.com/baobabustroll/status/2056205475902087562
+これね、むかし中国ルーツの友達から聞いた与太話として聞き流してほしい話を持ってる。
+中国に皇帝がいたころ、朝貢貿易で世界中から各国最高の名物が届いた。皇帝は気に入った品物があるとそれを最高の職人に「国の威信にかけて模倣しろ」と命じる。職人は心血注いでコピー品を作り皇帝に献上する。
 
-ハイリターンな強さを得るほど，ハイリスクな毒も得る。配信1か月ですでに完成度高し
+--- 25. @WickedWizard15 (2026-05-18) ---
+URL: https://x.com/WickedWizard15/status/2056270581163504094
+The Nata hate was so valid. Stupid kid
 
---- 38. @HowToAI_ (2026-05-17) ---
-URL: https://x.com/HowToAI_/status/2055993939824631942
-A dev open-sourced a VPN that smuggles your internet through port 53.
+--- 26. @poketettei (2026-05-17) ---
+URL: https://x.com/poketettei/status/2056143351217602606
+ご迷惑おかけして申し訳ございません。スマホで音が出る広告はまずいですね、、
 
-It's called MasterDnsVPN. It hides your traffic inside DNS queries, the one packet type no firewall on earth can block without breaking the internet itself.
+調査したいのでどの部分の広告か、スクショ等で教えて頂けると助かります、、
 
-MIT License. 100% Open Source.
+--- 27. @piyomaru_sedori (2026-05-17) ---
+URL: https://x.com/piyomaru_sedori/status/2055991876273238435
+看護師してた時、VIPルームという1泊４万円かかる個室ばっかの病棟で勤めていた。いわばお金持ちな方たちが入院してくる病棟。そこで軽々1000万のクルーズに行こかと家族と談笑してる患者がいてんけど、失礼ながら『なんでそんなお金あるんですか？』って聞いたことがある。そしたら、
 
---- 39. @hitetsugisou (2026-05-17) ---
-URL: https://x.com/hitetsugisou/status/2056002169170694386
-あの高校生たち、強殺の法定刑を知らないんだろうな…。16歳だから死刑は免れるが…
+--- 28. @gamespark (2026-05-18) ---
+URL: https://x.com/gamespark/status/2056238539000738060
+『シニシスタ2』Steam版が人気すぎて“例のパッチ”配布サイトが一時ダウン。相次ぐ高評価にこれからの展望も
 
---- 40. @ReineHonoka (2026-05-18) ---
-URL: https://x.com/ReineHonoka/status/2056308750781419900
-ほのかのマインクラフトスキンができました...！
-かわいく作ってくださってすごくうれしい
+https://
+gamespark.jp/article/2026/0
+5/18/166559.html?utm_source=twitter&utm_medium=social&utm_content=tweet
+…
 
-これでほのかのマイクラ配信ができますね！！
-Minecraftスキン : やんちゅう様
+想定以上に皆さんパブリッシャーさんのサイトに向かわれたようです。
 
---- 41. @kinkuman_net (2026-05-18) ---
-URL: https://x.com/kinkuman_net/status/2056322380352594030
-わぁ、すごい！
-さよならスティーブ！
+--- 29. @6k4UB4IEI831279 (2026-05-17) ---
+URL: https://x.com/6k4UB4IEI831279/status/2056121543948902882
+これ言い方変えるで
+何年もアイドルになりたいって思ってたけど親や世間体から普通の生活をするしかレールはなくて全てを投げ捨ててアイドルになることを選んだ人とお金も不自由なくレッスンにも自由に通えてアイドルに何回もチャレンジさせてもらえる環境に恵まれた人が、同じ場に集まり後者が覚悟→
 
---- 42. @shtrchkw (2026-05-17) ---
+--- 30. @osusume_manga03 (?) ---
+可愛い後輩くんに頼まれて作画モデルとしてコスプレをする話
+
+※PR
+＼サイトで読めるオススメ漫画を紹介！／
+
+--- 31. @kawabearisa_art (2026-05-17) ---
+URL: https://x.com/kawabearisa_art/status/2056086269734891781
+息子が宿題＋ワークをするとき、嫌がってぐしゃぐしゃに書いて「これでいいんでしょ」と私を困らせようとしてくるので「別にあなたが困るだけでママは困らない。でもママは大学で好きなことを勉強したくても、それまで勉強を頑張ってこなかったからどうやって頑張ったらいいかわからなくて試験を頑張り
+
+--- 32. @djrio_vr (2026-05-18) ---
+URL: https://x.com/djrio_vr/status/2056301004107436244
+これすごい
+FTによれば、先進国だろうが途上国だろうが、スマートフォンの普及タイミングを境目にほぼ例外なく出生率が急低下してる。
+
+人類を滅ぼすのはAIじゃなくてスマートフォンだった説
+
+--- 33. @drake8s (2026-05-18) ---
+URL: https://x.com/drake8s/status/2056255288332914920
+そうはならんやろ（そうはならんやろ）
+
+--- 34. @yugen_matuni (2026-05-18) ---
+URL: https://x.com/yugen_matuni/status/2056169610798600361
+日本語強いと噂もあり、いよいよClaudeの強みを奪い去るかもしれません。
+
+--- 35. @elonmusk (2026-05-18) ---
+URL: https://x.com/elonmusk/status/2056274129985085606
+Grok groks videos
+
+--- 36. @relay_unified (?) ---
+No cables. No delays. No friction.
+
+Just seamless switching with RELAY.
+
+
+--- 37. @AI_masaou (2026-05-18) ---
+URL: https://x.com/AI_masaou/status/2056263693701423599
+そろそろ見るのも聞かれるのも目障りなので断言しておきます
+
+ハーネスの解像度が低い人間が語る「AI組織」は、設計や本質ではなく『おままごと』
+AIを上手く使っているのですらなく、AI活用っぽい儀式で計算資源と人間の時間を燃やしているだけ
+
+--- 38. @shtrchkw (2026-05-17) ---
 URL: https://x.com/shtrchkw/status/2056139699396166048
 Claudeを全社導入してすぐに気づいた。
 
@@ -266,45 +241,73 @@ Claudeを全社導入してすぐに気づいた。
 
 道具は配っただけでは、生産性は上がらない。
 
---- 43. @orangeitems_ (2026-05-18) ---
-URL: https://x.com/orangeitems_/status/2056186633939300420
-なんかもう仕事が色々終わってるね。改札で人がいたのが機械に変わったように、無情に無くなっていく。クリエイティブ系から消えてくんだけど、これって人間が学ぶ意味ってアカデミックになっていきそうね。
+--- 39. @8co28 (2026-05-18) ---
+URL: https://x.com/8co28/status/2056198099144736973
+GPTのIrodori-TTS会話アプリにCodex接続した！
+マイクに発言するだけでキャラが動いてCodexがPCで作業してくれる（これはサンプルに超簡単作業をやらせた）
+指示は勿論テキスト入力もできる
+昨日上げた動画みたいに普通の会話もできる。
 
---- 44. @satos73 (2026-05-18) ---
-URL: https://x.com/satos73/status/2056310543628255401
-とりにくさんは、黙ってM5Stack沼にはまっておくと幸せだと思うんだ。
+声は43ch（自分の作り声データ）
 
---- 45. @feelsdesperate (2026-05-17) ---
-URL: https://x.com/feelsdesperate/status/2056053559246901709
-Basically every political instinct I had when I was a lib in 2015 ended up being completely wrong.
+--- 40. @mctapiko (2026-05-17) ---
+URL: https://x.com/mctapiko/status/2056132931249377476
+娘「国語で『せ』から始まる言葉を先生に聞かれて『赤兎馬』って答えられたよ」
+母「…先生は？」
+娘「『せきとばって言葉があるの？』って。戦う人が乗るとおかしくなっちゃう馬です！って答えた！先生は『すごい、そんな馬がいるの？調べておくね』って」
+先生ごめんなさい…
 
-Even in 2020, even after 4 years of being disabused of all sorts of bad ideas, all my remaining lib assumptions also ended up being totally, completely wrong.
+--- 41. @itchie_tatsumi (2026-05-18) ---
+URL: https://x.com/itchie_tatsumi/status/2056208637610353050
+技術記事や公式ドキュメントのサンプルコードは、最初の一歩として本当にありがたいものです。まず動くものがあるだけで理解のスピードはかなり上がりますし、たとえ写経でも、手元でモノが動いていると安心できます。
 
-At some point you
+--- 42. @taka_pe (2026-05-17) ---
+URL: https://x.com/taka_pe/status/2055910248872124651
+ボスから聞いたことがあるが、昔の日立中央研究所はそんな感じだったらしい。
 
---- 46. @room_909 (2026-05-17) ---
-URL: https://x.com/room_909/status/2055934915552989367
-次の週末に向けて髪を切ってきたよ、グッドイブニングエブリニャン。
+--- 43. @needle (2026-05-17) ---
+URL: https://x.com/needle/status/2056153600213254469
+Technological singularityが「AIに仕事や役割を奪われる」ごときに矮小化されてしまうのはなかなか嘆かわしい。本来の意味では、宇宙のありとあらゆる物質が理論値上限まで高まった演算効率を持つ演算素(computronium)と化して宇宙全体が超知性に覚醒するレベルの話なのに(ぐるぐる目)(ガンギマリ)
 
---- 47. @room_909 (2026-05-17) ---
-URL: https://x.com/room_909/status/2055980341643579618
-髪を切ってもらいながら、今日も元FM-7ユーザの美容師さんと技術話やら創作話やらで盛り上がってました。「こんな話できるお客さんはミヤザワさんだけですよ」って言われるんですけど、レトロハードから最新AIまで話の通じる美容師さんもスーパーレアやと思います、いつも有難うございます！
+--- 44. @findy_tools (?) ---
+会場で満席のセッションがオンラインで聴講可能！
+「AIを使う開発」から「AIがAIを創る」時代へ。
+実装・運用・組織展開のリアルな知見が2日間に凝縮
 
---- 48. @relay_unified (?) ---
-No cables. No delays. No friction.
+6/8(月)・9(火)
+参加無料
 
-Just seamless switching with RELAY.
+--- 45. @shibachiri (2026-05-17) ---
+URL: https://x.com/shibachiri/status/2056129011018039674
+これ、凄く良いです。特に教育関係者は必読です！
+AIが解決できない教育の壁、グーグル幹部が語る「動機」の重要性 | Forbes JAPAN 公式サイト（フォーブス ジャパン）
 
+--- 46. @ds_nakajima (2026-05-18) ---
+URL: https://x.com/ds_nakajima/status/2056286579908546802
+これはマジで申し訳ないのだけど、、、
 
---- 49. @kobefs (2026-05-18) ---
-URL: https://x.com/kobefs/status/2056207097826820125
-ポンコツだったから使ってなかったのよ。
-Claude超えたの？
+このスキルがいいか悪いかわからないんだけど、誰が作ったかわからないようなスキルは簡単に入れない方がいい。
 
---- 50. @BLAISE01600438 (2026-05-17) ---
-URL: https://x.com/BLAISE01600438/status/2055957228524617915
-AItberにはすげぇ期待してるんですよね。
+--- 47. @p_ka2295079 (2026-05-18) ---
+URL: https://x.com/p_ka2295079/status/2056288883722392005
+バカで良かったってなることあるんだ
 
-ライブ配信でも人気が出ると思うんですけど、個人的には配信系より先に、解説系動画の進行役アバターみたいな感じが増えてくと予想してますね。
+--- 48. @sy_evol (2026-05-17) ---
+URL: https://x.com/sy_evol/status/2056076338096923027
+経験者だから分かるけど、ガチで意味ないどころか逆効果だよ。俺これでグレたから
+露悪的に言うと、自分の娘を毎日男の家に泊まらせたいならかなり効果的
 
-運用コストも抑えやすいので、小規模でマニアックなAIキャラチャンネルがたくさん出てきたら楽しそう。
+--- 49. @super_bonochin (2026-05-18) ---
+URL: https://x.com/super_bonochin/status/2056213835158347935
+そうかもしれないけど、むしろバシバシ使い捨てにできることが大きなメリットだと思うんだよな。
+保守に対する考え方が全然違うと思うんだよ。
+アプリケーションというよりも、スクリプトに近いよな。
+完成品をありがたがって使うっていうケースが、すごい減ってる。
+
+--- 50. @Ad8qqsEUYofd6cR (2026-05-18) ---
+URL: https://x.com/Ad8qqsEUYofd6cR/status/2056238216186085485
+こんなのがXで広がってるのかよ
+シューティングゲーム衰退論じゃなく
+家庭用でシューティングゲームが売れたシーンが歴史上なかったというトンデモ論になっている
+ファミコン時代のRPGも100万本以上売れたの僅か5本しかないのに
+スターソルジャーの95万本はFF1、 FF2より売れています。
