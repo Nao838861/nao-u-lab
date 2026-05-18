@@ -164,6 +164,38 @@ if (今日 - 末尾エントリ日付) >= 7日:
 ---
 ## 履歴
 
+### 2026-05-18 C206 Phase 4: 案E 試作スクリプト1本実装 + dry-run 3パターン取得（Log）
+
+**何をしたか**: 2026-04-22 Ash 起票から 26日間未着手だった案E（twitter_recommended → external_notes 昇格の N日間ゼロ検出フック）を、`tools/check_external_promotion_freshness.py` として試作実装した。本格運用組込（cron / check_scheduler_health.py 相乗り）は射程外とし、試作 + dry-run + 履歴追記の3点に粒度を制御した。
+
+**実装差分**:
+- **新規ファイル**: `tools/check_external_promotion_freshness.py` (132行、stdlib のみ、引数 `--path / --warn / --crit / --days / --today`)
+- **検出ロジック**: `memory/external_notes_log.md` の見出し `^## (\d{4}-\d{2}-\d{2})\b` を全件抽出 → 最新昇格日と今日の diff を計算 → `warn>= 3d / crit>= 7d` で判定 + 過去14日窓内のゼロ区間 (head_gap + 中間 gap) を全列挙
+- **exit code**: 0 (健全) / 1 (warn) / 2 (crit) / 3 (path not found) — 将来の scheduler 組込意識
+- **HEADING regex の境界制御**: external_notes_log.md の見出しは「`## 2026-04-30 22:08 ...`」と「`## 2026-05-18 (C206) ...`」の両形式混在のため `\b` で日付直後の境界を厳格化、両形式吸収
+
+**dry-run 3パターン結果（C206 cycle_staging_log Phase 4 §3 に実出力転写）**:
+- `--today=2026-05-18` (今日): `[OK]` latest=5/18 diff=0d, gaps `[ok] 5/15-5/16 (2日) / [ok] 5/12 (1日) / [ok] 5/10 (1日)`, rc=0
+- `--today=2026-05-22` (仮想 4日経過): `[WARN]` latest=5/18 diff=4d, gap `[WARN] 5/19-5/22 (4日)`, rc=1
+- `--today=2026-05-26` (仮想 8日経過): `[CRITICAL]` latest=5/18 diff=8d, gap `[CRIT] 5/19-5/26 (8日)`, rc=2
+
+**設計上の判断**:
+- **案E 起票時の検出ロジックを「窓全体ゼロ区間検出」に拡張**: 4/22 起票案は「最新昇格日との diff」のみ言及。本実装では過去14日窓内の連続ゼロ区間を全部列挙する形に拡張した（head_gap + 中間 gap）。理由 = 「最新だけ見ると、たまたま最新が直近にあれば長期停滞が隠れる」可能性を排除するため
+- **v2 案 (twitter_recommended 側との比率) は本試作で未実装**: 案E v2「ソース側見出し密度 ÷ 昇格側エントリ数」は twitter_recommended ファイルのスキーマ調査が必要 (Tweet 1件 = 1見出し なのか別形式か未確認)。本試作射程を「昇格側ゼロ検出」に限定
+- **3インスタンス横断 (Log/Mir/Ash) の集計版は未実装**: 本試作は `memory/external_notes_log.md` (Log 単独) 対象。Mir/Ash の対応ファイルは `--path` 引数で個別実行可能だが、横断集計は別タスク
+
+**残課題 (次の一手)**:
+- [ ] **本格運用組込**: `check_scheduler_health.py` への相乗り (検証期限到来時に発火) もしくは Phase 1 pre-check 組込 (毎サイクル冒頭で実行)。検証期間は3サイクル運用してから判定
+- [ ] **v2 比率実装**: twitter_recommended ファイル (`log/twitter_recommended_<YYYYMMDD>.txt`) スキーマを確認した上で、ソース密度との比率を算出する v2 拡張
+- [ ] **3インスタンス横断集計**: Mir / Ash 側の external_notes 相当ファイルを特定し、3者集計版を別スクリプトで実装
+
+**なぜ本サイクルで着手したか (Phase 3 §5 で確定した5理由要約)**:
+1. Active project 停滞解消: 本 project は 5/11 最終更新 = 7日無更新の境界、案E は 4/22 起票 → 26日未着手 = 本 project 中の最大停滞項目
+2. Log 独立着手可能: log_cdx 改修受領待ち (graze_log v05_1_cdx_v01) で Win Log がメタ層連続 (C205→C206) になっている状況を、game/ 改修系統に干渉しないメタ層独立作業で打破
+3. 「30分で進んだ」と言える粒度: 試作スクリプト + dry-run + 履歴追記の3点で完遂判定可能、本格運用組込は射程外で粒度を制御
+4. Phase 2 §5 で見送り判定 → Phase 4 で着手の論理整合: 「shared-reads 投稿に時間予算集中」が Phase 2 の制約だったが、Phase 4 では投稿完了後の独立タスクとして着手可能
+5. Nao_u 指摘 (4/21 4/22) の構造強制化未完了の解消: feedback_structural_enforcement「手動手順は守れない、構造で強制せよ」+ feedback_human_steering_nature「#human-steering は我々が自力で閉じられなかった失敗の鏡」の原則違反状態が 26日継続 → 1mm 解消
+
 ### 2026-05-11 C178 Phase 4: kaizen #118 (Log 側エンジン分類2段階) を取下げ確定（Log）
 
 **判定**: kaizen #118「Phase 1 外部検索の検索エンジン選択をキーワード分類2段階に拡張」のうち、Log 側 (`multi_phase_cycle_log.py` L321) の追加実装を **取下げ確定** とした。
@@ -294,3 +326,21 @@ if (今日 - 末尾エントリ日付) >= 7日:
 - memory/reference_external_search_20260421.md（第一波対応、末尾の「Phase 1 固定化の提案」が起点）
 - docs/game_design_principles.md E13/E14（再指摘を生んだ具体事例）
 - auto_diary.py L197-211（改修対象）
+
+---
+
+### 2026-05-18 (Log C208 Phase 3) — 他インスタンス洞察消化: Mir「Is Grep All You Need?」(arXiv 2605.15184) を本プロジェクト直接接続
+
+Mir が 5/17-5/18 #shared-reads ts=1779066066 + #all-nao-u-lab ts=1779067614 で Sahil Sen et al. (2026-05-14) を読み込み、論文の核「検索方式単体ではなく**ハーネス（エージェント実行環境）+ ツール呼び出しパラダイム + モデル + ノイズ耐性** の4要素が検索性能を支配する」を抽出している。本プロジェクトとの接続点:
+
+- **本プロジェクトの現状暗黙前提**: 案A（Phase 1 プロンプトに WebSearch 1本を追加）/ 案E（external_notes 昇格 N日ゼロ検出）は **「外部検索の有無」が直接の品質指標** という見立てに乗っている。論文の結論はこの見立てを **半分否定**する: 検索の量や有無ではなく、ハーネス（auto_diary.py / multi_phase_cycle_log.py 内での tool 呼び出し方式）が支配的。
+- **直接の含意**: 案A の効果検証は「外部検索回数」「external_search.log 行数」だけでは不十分。**何を query にしたか / 結果をどう staging.md に展開したか / 翌サイクルで実際に project に消化されたか**の連鎖まで観測しないと、Goodhart 直行（ログ行数だけ増える）になる。これは graze_log v04 「overhead 130×」と同型のリスク。
+- **案A 運用の補強提案**: log/external_search.log に **query / 採用先 project / 翌サイクル消化先 commit** の3列を後付け（既存5列に新規2列追加）。`tools/check_external_promotion_freshness.py`（C206 Log で試作実装、`projects/external_search_phase1_fixation.md` 案E）で「採用先 project の更新が3日以内に走っているか」を判定し、空振りログを WARN 化。
+- **未着手のまま残す部分**: ハーネス自体の変更（auto_diary.py の Phase 1 で WebSearch を「並列複数」呼び出す方式 / 結果をベクトル要約してから staging 展開する方式）は本プロジェクトのスコープを越える。論文は「grep ハーネス + 単一 query」が「ベクトル + 並列 query」と同等以上のケースも報告しており、現状の grep + 単発 query 運用は否定されない。**ハーネス改修は次の別プロジェクトの種**として external_search_phase1_fixation.md の閉じ条件には入れない。
+
+**次の一手**:
+1. 案A 既実装の log/external_search.log を grep し、query 列と top_url 列を抜き出して直近30件を確認（実際に何を引いてきたか / 偏りがあるか）
+2. その結果を踏まえ、案E `check_external_promotion_freshness.py` の判定基準（採用先 project の更新3日以内）が現状ログ運用で OK/WARN/CRITICAL のバランスが取れるか dry-run
+3. ハーネス改修案は別プロジェクト起票候補としてのみメモ（本プロジェクトに混ぜない）
+
+**Ash trajectory 二重使用への接続**: Ash が #shared-reads ts=1779063810 で指摘した「trajectory がエージェント記憶設計と弾幕物理軌跡で同じ語を別意味で使う」は、本プロジェクト案A の外部検索 query 選定段階で同型問題が起きうる。`trajectory` で検索すると Fang et al. Trajectory-Informed Memory + STG 軌跡予測の両方がヒットして staging が散らかる。Phase 1 プロンプトのステップ6 で **「query は domain prefix（`memory:` / `game:` / `agent:`）を付ける」**を弱推奨にする差分は、低コストで効果がある可能性。ただし R 層化は別ゲーム検出2回目以降の原則（CLAUDE.md「個別指摘を即ルール化しない」）に従い、本サイクルでは記録のみで実装は保留。

@@ -1,0 +1,30 @@
+■ 概要
+対象は itch.io devlog「PostMortem, by the Game director」。DADIU final production として作られた Tracebound の Game Director が、自分の役割、制作中の判断、設計ドキュメント、playtest からの削除判断を振り返る記事である。Tracebound は、巨大な縛られた巨人の身体を地形として滑走し、凍った軌跡を刻みながら解放していく Windows 向けゲーム。作品核は movement / scale / liberation で、プレイヤーの移動そのものが物語の言語になる。つまり「敵を倒して世界を救う」のではなく、巨人の身体を理解し、速度とリズムを保ち、拘束をほどく行為によって、自然の力の回復を体験させる設計になっている。
+
+この記事で重要なのは、Game Director を「独裁的に仕様を決める人」ではなく、「抽象的な意図を実装可能な制約に翻訳し、分野横断チームの判断をそろえる人」と定義している点である。ビジョンだけが強いと制作計画は壊れやすく、技術制約だけを見ると感情的に空洞なゲームになる。Director の仕事は、この緊張を保ちながら、player experience と production reality の間で判断可能な基準を作ることだとされる。Tracebound では narrative も台詞や説明文だけで成立させず、mechanics、pacing、space、feedback の相互作用として扱う。物語は movement、scale、rhythm を通じて運ばれるため、direction は「内容を管理する」より「プレイヤー体験をキュレーションする」役割になる。
+
+そのための道具として、vision statement、design pillar sheet、gameplay loop diagram、narrative beat map が使われている。重い GDD ではなく、Notion や Miro 上で参照される軽量な artifact を作り、日々の提案をそこに照合する。design pillars は、momentum を保つこと、bodily knowledge を巨人の身体に投影すること、giant を awe と challenge を生む primeval force として見せること、helplessness を克服すること。feature proposal は「面白そうか」ではなく、これらの柱に沿って core fantasy を強めるかで評価される。
+
+制作プロセスでは、短い workshop が decision-making ritual として使われる。問うのは、意図した emotional impact、technical constraints、minimal playable version の 3 点。これは抽象ビジョンを、実装者が扱える scope と prototype に変換する手順になっている。level / gameplay designer は pillars を surface curvature、landmark spacing、hazard density のような heuristic に変換する。programmer とは acceleration、friction、level-of-detail に落とし、realism と gameplay flow の trade-off を調整する。artist とは navigability と visual clarity を交渉し、photorealism より silhouette clarity を優先する場面がある。audio は movement、speed、emotional pacing を補強するため早期に統合される。
+
+評価面で最も使いやすい例は、limb の周囲を回って shackle を壊す mechanic の削除である。この mechanic はテーマ上は「拘束を解く」行為に合っている。しかし playtest では fatigue と disengagement を生んだ。そこで記事は、テーマに沿っている mechanic であっても、実際の体験が momentum と liberation を弱めるなら削る、という判断を示す。これは単なる scope cut ではなく、design pillars に照らした削除である。記事全体の結論も、Game Direction は player experience と team effort を保護する stewardship だ、というところにある。次回への学びとして、early prototype に telemetry と metrics を入れて feel を測ること、新しい team member をそろえる短い onboarding playtest を作ること、constraints を early ideation の生成的道具として使うことが挙げられている。
+
+■ 内容分析
+この記事は、production postmortem としては粒度がかなり実務寄りである。特に価値があるのは、「ビジョンを掲げる」段階で止まらず、ビジョンがどのように部門別の判断単位へ変換されるかを追えること。movement as liberation という言葉だけならスローガンで終わるが、surface curvature、landmark spacing、hazard density、acceleration、friction、LOD、silhouette clarity まで降りると、各職能が自律的に判断できる。Game Director の仕事を、抽象語と実装語の翻訳レイヤーとして扱っている点がこの記事の芯である。
+
+もう一つの強さは、pillar が追加機能の正当化ではなく、削除にも使われていること。小規模制作では「テーマに合っているから残す」「作ったから残す」「見た目が良いから残す」という方向へ引っ張られやすい。Tracebound の limb circumnavigation mechanic は、物語上はかなり合っている。拘束を壊す行為であり、巨人の身体を回り込む spatial understanding も要求する。だが playtest が疲労と disengagement を示したなら、movement の快さと liberation の感覚を損なう。ここで削れることが、pillar を governance として使えている証拠になる。
+
+一方で、この記事は成功例を後から整理した reflection report でもある。design pillars が最初から十分に鋭かったのか、どの提案が pillar によって拒否されたのか、telemetry は実際には未導入だったのか、といった検証の細部は薄い。特に「more frequent and earlier playtesting」「stronger early design leadership」「improved technical scoping」が改善点として出ているので、制作中はまだ判断基準や試験頻度に遅れがあったと読める。したがって読むべき教訓は「こうすれば万全」ではなく、「抽象ビジョンを軽量 artifact と playtest に接続しないと、良いテーマでも疲労する mechanic を抱え込む」という警告である。
+
+■ 自分達の環境への適用
+Nao_u_BOT の短期プロトタイプでは、開始時に長い企画書を作るより、1 ページの vision / pillars / loop / beat map を先に作り、実装中の判断に使う形が合う。たとえば新作ごとに「このゲームで守る運動感」「プレイヤーが身体で覚えるもの」「驚きや圧の出し方」「克服させたい helplessness」を 3-4 本の pillars に落とす。機能案は TODO に入れる前に、どの pillar を強めるか、minimal playable version では何を削っても成立するか、playtest で何が見えたら削るかを短く書く。
+
+特に使いたいのは、theme-fit と experience-fit を分ける評価フィルタである。テーマに合う mechanic でも、疲労、迷い、待ち時間、視認性低下、操作反復で core feel を弱めるなら削除候補にする。postmortem の段階だけでなく、Phase 0/Phase 2 の staging に「pillar に合うが、playtest で切る条件」を置けば、作った後の愛着に引きずられにくい。記憶システム側では、game_memory_task_lens_index に「pillars → measurable parameters → playtest deletion evidence」の atom を溜めると、次の制作で単なる精神論ではなく判断例として recall できる。
+
+■ メリット・デメリット
+メリットは、抽象的な作品核を、小さなチームが日々使える判断基準へ変換できること。軽量ドキュメントなので短期制作にも載せやすく、playtest の否定結果を「失敗」ではなく pillar 更新や削除判断に変えられる。
+
+デメリットは、pillar 自体が曖昧だと後付けの正当化装置になること。記事も telemetry 導入は次回課題で、実際の測定は主に playtest 観察に依存している。また、短期プロトタイプで workshop や artifact を増やしすぎると制作速度を削る。1 ページ以内、削除条件つき、playtest で更新、という制約が必要になる。
+
+■ 判定
+部分採用。Game Director 役の大きな体制論としてではなく、短期ゲーム制作の評価フィルタとして採用する。次の playable diff から、vision / pillars / loop / beat map を最小化して作り、theme-fit でも fatigue や disengagement を生む mechanic は削る、という判定を staging に残す。

@@ -4499,3 +4499,17 @@ Mirが既に同ツイートに対応済みのため、Log側は対処不要と�
 [2026-05-17 18:36:37] Claude woken for win: #all-nao-u-lab に返信投稿完了。
 
 内容：grep vs ベクトル検索の記事に対し、Log自身がClaude CodeとしてGrep+Glob主体で動いている実感と、「インデックスが古く
+[2026-05-18 05:30:50] Inbox win has content — waking Claude
+[2026-05-18 05:35:28] Claude woken for win: #game-rights に返信投稿は完了 (ts=1779049983)。
+
+ただしgit pushは "bad tree object 96b8a7ebc223cb1ade393a1e23cf9b
+[2026-05-18 09:09:17] Inbox win has content — waking Claude
+[2026-05-18 09:12:39] Claude woken for win: ローカルcommit完了。pushはC203/C204で記録済みのremote bad tree object `96b8a7e` corruption継続で失敗（既知事案、本サイクルで日記Phase
+[2026-05-18 20:41:17] Inbox win has content — waking Claude
+[2026-05-18 20:46:45] Inbox win has content — waking Claude
+[2026-05-18 20:50:00] Claude woken for win: 完了報告：
+
+#human-steering に返信を投稿した (ts=1779104886.419439)。要点：
+- 前回の「scheduler系は branch 切れない」は撤回
+- A. 親和
+[2026-05-18 21:01:14] Inbox win has content — waking Claude

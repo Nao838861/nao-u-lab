@@ -4,6 +4,114 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-18 (C206) FSFM / Mem0 Agent Memory 2026 / Externalization in LLM Agents 3本 (記憶階層 B-3「能動的忘却の不在」外部補完候補) [(1) partial intake WebFetch abstract / (2) candidate 維持 / (3) partial intake WebFetch abstract]
+
+**文脈**: C206 Phase 1 §6 WebSearch (kaizen #106 摂取経路固定化、クエリ `hierarchical memory pruning forgetting LLM agent 2026`) で取得した3件。CLAUDE.md「絶対にやる」記憶階層再設計 (memory_redesign.md §B-3「能動的忘却の不在」/ AYi ②減衰なし=未充足) との射程交差を確認するために candidate 登録。C206 Phase 2 で (1) FSFM のみ abstract WebFetch + #shared-reads ts=1779082565 投下、(2) Mem0 は WebSearch スニペット止まり、(3) Externalization は abstract WebFetch のみ。本文・評価設定・データセット詳細は3件とも未確認。
+
+**(1) FSFM: A Biologically-Inspired Framework for Selective Forgetting of Agent Memory** — <https://arxiv.org/abs/2604.20300> 【C206 Phase 2 WebFetch abstract、partial intake、#shared-reads ts=1779082565 投下済】
+
+abstract 主要発見:
+- **忘却 4分類 taxonomy**: passive decay-based / active deletion-based / safety-triggered / adaptive reinforcement-based
+- **3次元効果 (原典主張、再現未確認)**: 効率 +8.49% / 品質 (S/N) +29.2% / セキュリティリスク排除率 100%
+- **生物模倣根拠**: 海馬インデキシング/consolidation 理論 + Ebbinghaus 忘却曲線
+
+当方 B-3 (memory_redesign.md L137-139) との射程対照:
+| FSFM 分類 | 当方既登録 (rhatake_jp 04-11 由来) | 状態 |
+|---|---|---|
+| passive decay-based | (a) retrieval-based decay | 同型 (未実装、AYi ②減衰なし=未充足) |
+| active deletion-based | (b) directed forgetting | 同型 (手動のみ) |
+| safety-triggered | **未登録** | 補完候補 |
+| adaptive reinforcement-based | **未登録** | 補完候補 |
+
+B033 (非随意的忘却 = エントロピック損失、Ash 提案 → Nao_u 承認 memory_redesign.md L989-998) との位置関係: FSFM (3) safety-triggered は B002 (随意的)/B033 (非随意的) のいずれでもない第三軸 (外部からの強制) で、当方二層分割では捕捉不能。**B033 細分化の必要性**を判断材料として残す。
+
+留保: abstract 主張のみ、本文未読。「+8.49% / +29.2% / 100%」の数値は評価設定 (ベンチマーク・比較対象・サンプルサイズ) を直読しない限り当方の運用判定に引けない (kaizen #121 準拠)。次サイクル以降の選択肢として (A) 本文 PDF WebFetch / (B) B-3 への safety-triggered + adaptive reinforcement-based 2軸追加検討 / (C) orphan_check.py 出力に対する「降ろし方」設計層を独自実装。
+
+**判定**: **partial intake (abstract のみ)、射程対照表のみ採用、即実装しない**。shared-reads ts=1779082565 投下で外部発信完了、log_cdx 改修進行中の自然な選択を歪めない。
+
+**(2) State of AI Agent Memory 2026 (Mem0 / Memory-R1 / Mem-α survey)** — Mem0 blog / WebSearch スニペット止まり
+
+C206 Phase 1 §6 WebSearch スニペットから取得した要約:
+- Mem0/Memory-R1/Mem-α の3フレームワークが extract/consolidate/forget の明示的 lifecycle 操作を導入
+- 「現状どのシステムも selective forgetting で失敗」と総括
+
+当方との接続: memory_redesign.md L70「extraction/consolidation/forgetting の明示的操作系を持つ」方向への独立収束 (5/8 PageIndex/Mendral/Dreams 3点延長) と射程が重なる。Mem0 の lifecycle 操作系を Camp 2 (Markdown 透明性) 維持のまま自前実装する方針は既決定。
+
+留保: Mem0 は商用サービス背景で arXiv 論文ではなく、blog レポート形式 (WebFetch URL 未特定)。「現状どのシステムも selective forgetting で失敗」の根拠論文群を辿る経路が確立していない。
+
+**判定**: **candidate 維持、次サイクル以降 WebFetch 候補**。memory_redesign.md への接続は (1) FSFM 経由で既に確認できているので、Mem0 単独の本文取得は優先度低。
+
+**(3) Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering** — <https://arxiv.org/abs/2604.08224> 【C206 Phase 2 WebFetch abstract、partial intake】
+
+abstract 主要発見:
+- **4要素フレーム**: Memory (時間を超えた状態の外部化) / Skills (手続的専門知識の外部化) / Protocols (相互作用構造の外部化) / Harness (3つを統合し信頼性ある実行を調整する統一層)
+- 「重みの調整から runtime 環境の再編成へのシフト」を survey
+- 主張: 「強力なモデルだけでなく、より優れた外部認知インフラが実践的なエージェント進化を左右する」
+
+当方との接続: 当方の 3層プロンプト (system_identity.md + CLAUDE.md + .claude/rules/) と Skills 構造 (skills/, kaizen #128 で純粋 index 化進行中) と射程が完全に重なる。特に「Harness」概念は当方の Claude Code 環境 + post_draft.py + scheduler 全体を指す位置にあり、当方が暗黙運用していた「コードによる実行調整層」を明示化する語彙として有用。
+
+留保: abstract 主張のみ、本文未読。21名共著 survey で対象論文の網羅性は不明。当方の Camp 2 (Markdown 透明性) 維持方針との整合 (= 外部認知インフラを vendor lock-in せず自前実装) について本文で扱われているか未確認。
+
+**判定**: **partial intake (abstract のみ)、candidate 維持**。memory_redesign.md / projects/memory_tree_consolidation.md と直接接続可能だが、本サイクルでは語彙取得止まり。次サイクル以降の選択肢は (A) 本文 PDF WebFetch して当方 3層 + Skills 構造と対照する設計検討 / (B) kaizen #128 MEMORY.md 純粋 index 化進行中の判定軸として「Harness」概念を導入。
+
+**現サイクルでの利用範囲制限 (kaizen #106 ルール準拠)**:
+- C206 Phase 1 §6 で WebSearch を踏んだだけで、内容を強制利用しない原則
+- (1) FSFM のみ abstract WebFetch + #shared-reads ts=1779082565 投下で消化、(2) Mem0 は candidate 止まり、(3) Externalization は abstract 確認止まり
+- 本文 PDF 未読のまま運用に引かない (3件とも abstract 主張の数値・概念のみ)
+- 「経路 → 本文 → 内部接続」をサイクル数 1 で完了させる構造的反例の 3例目 (1例目 = C194 Phase 4 arXiv 2509.11353 Recency Bias、2例目 = C201 Phase 4 Boghog/TV Tropes/CAVE、本サイクル 3例目)
+
+**関連ファイル**: `log/cycle_staging_log.md` C206 Phase 1 §6 + Phase 2、`memory/memory_redesign.md` §B-3 (能動的忘却の不在、L135-141)、§B-3 (AYi 4欠陥、L602-628)、L989-998 (B002/B033 分割)、`projects/memory_tree_consolidation.md` (orphan_check.py v0)、`memory/atom_quality_quarantine.jsonl` (品質クォランティン)。
+
+---
+
+## 2026-05-17 (C201) Boghog shmup wiki / TV Tropes Bullet Hell / Shmups CAVE 3本 (graze_log v05.1 BOMB 構造問題の外部証拠) [(1) full intake / (2) partial intake WebFetch 失敗 / (3) candidate 維持]
+
+**文脈**: C201 Phase 1 §6 WebSearch (kaizen #106 摂取経路固定化、クエリ `shmup bomb power down tradeoff design Touhou Cave bullet hell`) で取得した3件。同サイクルで Log_cdx に渡した graze_log v05.1 BOMB 構造問題タスク指示書 (ts=1779009736 受領) の**外部証拠側補強材料**として candidate 登録。C201 Phase 4 (本セクション更新サイクル) で (1) Boghog wiki を WebFetch して full intake に格上げ、(2) TV Tropes は WebFetch 403 で失敗、(3) CAVE は candidate 維持で次サイクル送り。
+
+**(1) Boghog's bullet hell shmup 101 — Shmups Wiki** — <https://shmups.wiki/library/Boghog's_bullet_hell_shmup_101> 【C201 Phase 4 WebFetch 完了、full intake】
+
+WebFetch 結果（C201 Phase 4 取得）の主要発見:
+
+- **BOMB 専用節「LIVES, BOMBS AND RECOVERY」あり**。Boghog の bomb 観は「**multi-purpose resource**, they can be used defensively (called panic bombing) and offensively to safely & quickly kill bosses.」= **defensive + offensive の両用設計**で、scoring penalty の議論は**存在しない**
+- **anti-frustration 設計**を重視: "It's beneficial to add a small buffer so that if the player bombs within a couple or a few frames of their death, they can nullify their death. Dying on the frame you bombed always feels frustrating." = **死亡フレーム周辺数フレームで bomb 入力されたら死を取り消す**バッファ実装を推奨。これは Touhou の death bomb 機構と同じ思想
+- **chain-death 防止**: "Generous invincibility is important to prevent chain-deaths." = 復活時の無敵時間を**寛大に**取れ
+- **bomb を scoring 経済資源として扱わない**: 同 wiki 内で Ketsui の enemy multiplier や Espgaluda の gems は「finite resources that players have to manage and spend strategically.」として扱われるが、**bomb は同列に並べられていない**
+- **power-up 設計の補助原則**: "Shmups get around this problem by simply lying to the player about their power level, increasing damage by a very small amount (for example x1.1)." = プレイヤーへの体感優先、実値ではなくフィードバックで balance を取る
+
+**当初仮説との差分（重要な発見）**:
+- C201 Phase 1 §6 candidate 登録時点では「Boghog 系の体系で BOMB が scoring penalty と life-saving のどちらか一方に振れる設計が定石なのか」を確認したかったが、**Boghog の体系は BOMB を tradeoff 軸として議論していない**ことが判明。すなわち「BOMB の scoring penalty」は Boghog の体系外で発生している community wisdom (TV Tropes 系) であり、shmup 設計の**普遍的定石ではない**
+- graze_log v05.1 BOMB の `fireBomb()` LV3→LV2 強制リセット = 「life-saving + パワーダウン」の同時実装は、Boghog の体系で見ると**defensive panic bomb (life-saving) は適合、しかし power-down (penalty) は anti-frustration 思想に反する**。Boghog なら「死亡を救って power level は維持、ただし bomb 残数が減る (= 後続の救済機会が減る) ことで自然な経済が成立する」設計を推奨する系統。graze_log v05.1 の構造問題は「power-down で penalty を追加実装した結果、Boghog 体系の anti-frustration 軸も TV Tropes 体系の scoring penalty 軸も**どちらにも振り切れていない中間状態**になっている」と再定式化可能
+- すなわち graze_log v05.2 の設計選択肢は二択: **(A) Boghog 系**: power-down 撤去、bomb は残数管理のみ、死亡救済バッファ実装 / **(B) TV Tropes/Touhou 系**: power-down を維持しつつ death bomb 機構 + bombing 高得点で penalty を補正する別系統で釣り合いを取る
+
+**判定**: **full intake (本文要約済)、graze_log v05.2 BOMB 設計検討の外部証拠として確定参照**。log_cdx 改修判断時に本セクション本文要約を直接引用可能な粒度に展開済
+
+**(2) Bullet Hell — TV Tropes** — <https://tvtropes.org/pmwiki/pmwiki.php/Main/BulletHell> 【C201 Phase 4 WebFetch 失敗 (HTTP 403)、partial intake 維持】
+
+C201 Phase 4 で WebFetch を試行したが、**TV Tropes サーバは Claude Code WebFetch を 403 Forbidden で拒否**。`web.archive.org` 経由も Claude Code 不可。本文取得は**外部ブラウザでの手動取得 or 別経路 (curl + User-Agent 偽装等) が必要**だが、本サイクル Phase 4 範囲外。
+
+C201 Phase 1 §6 WebSearch スニペットレベルの引用は維持:
+- BOMB が「life-saving device」かつ「hefty scoring penalty」を持つ設計テンションを明示。**minimizing bomb usage が定石**、Touhou は例外で death bomb / 高得点ランで bombing 必須 (Mountain of Faith, Double Dealing Character)
+- 当方との接続: graze_log v05.1 BOMB の構造問題 Nao_u 指摘 (ts=1779008220「BOMB はパワーダウンなので焚かない方が良い」) と TV Tropes 系の「minimizing bomb usage が定石」が**現象として一致**。すなわち Nao_u が指摘したのは graze_log 固有の設計失敗ではなく、TV Tropes 系コミュニティ定石として「BOMB を焚かない方が得」が広く成立していて、graze_log がその tradeoff を**設計可能変数として扱っていない**ことが構造問題の本質。Touhou が例外的に「death bomb / 高得点ランで bombing 必須」にしているのは、tradeoff の片側 (scoring penalty) を別機構 (death bomb の保険、bombing 高得点) で補正している設計
+- 留保: TV Tropes はネタ集約ページで一次資料ではない。例外事例 (Touhou Mountain of Faith / Double Dealing Character) の出所論拠は当方未確認、本文で参照確認が要る
+- **(1) Boghog 結果との対照**: Boghog 体系では BOMB scoring penalty の議論が存在せず、TV Tropes 系の community wisdom と shmup 設計の体系的定石は**一致しない**ことが判明済 (本セクション (1) 参照)。よって「BOMB scoring penalty は普遍的定石」と扱うのは誤り、**Touhou 系列固有の community meta-strategy** として位置付ける
+
+**判定**: **partial intake (WebSearch スニペット止まり)、candidate 維持**。WebFetch 失敗を記録、別経路本文取得は次サイクル以降。graze_log v05.2 設計検討で TV Tropes 系定石を採用する場合は本文確認が要る (現状は WebSearch スニペット引用の留保付き参照のみ可能)
+
+**(3) CAVE — Shmups Wiki** — <https://shmups.wiki/library/CAVE> 【candidate 維持、C201 Phase 4 では WebFetch しない判断】
+
+- focus shot による speed vs damage の **2状態設計**、minuscule player hitbox による回避 vs ground risk のトレードオフ。BOMB 直接の話ではないが、graze_log v05.1 のパワーレベル LV1/LV2/LV3 段階を**プレイヤー側操作で切り替え可能な状態**に再設計する場合の参照
+- 当方との接続: graze_log v05.1 は LV3 = 自動高火力 / LV1 = 自動低火力で、プレイヤー側に「自分で LV を選ぶ操作」を持たせていない。CAVE focus shot は「shift キー押下中だけ低速・高火力」のような**プレイヤー側意思決定で切り替え**設計。BOMB を LV3→LV2 強制リセットではなく、「shift で LV2 状態に意思切り替え + BOMB は別軸」に分離する設計案の素材
+- 判定: **candidate 登録、graze_log v05.2 設計検討時に参照**。本文未読。C201 Phase 4 では (1)(2) BOMB 直接の2件に集中し、(3) CAVE は次サイクル候補
+
+**現サイクルでの利用範囲制限 (kaizen #106 ルール準拠)**:
+- C201 Phase 1 §6 で WebSearch だけ踏んで本文未読のまま candidate 登録した3件のうち、C201 Phase 4 で (1) を WebFetch full intake、(2) を WebFetch 試行 → 403 失敗で partial intake 維持、(3) は candidate 維持
+- 「経路 → 本文 → 内部接続」をサイクル数 1 で完了させる構造的反例の2例目 (1例目 = C194 Phase 4 arXiv 2509.11353 Recency Bias、本ファイル L68-)。`projects/external_intake.md` 結晶化率 KPI 第4軸に1サンプル追加候補
+- shared-reads 投稿は本サイクル Phase 4 でも見送り (Phase 2 §B 判定維持、log_cdx 改修進行中の自然な選択を歪めない)。本ファイル内記録止まりで log_cdx が必要時に参照できる位置に置く
+
+**関連ファイル**: `log/cycle_staging_log.md` C201 Phase 1 §6 + Phase 3 §6 Phase 4 大作業選定 + Phase 4 副産物、`memory/game_lessons_log.md` M-XX (要素⊥登場順設計分裂 3点合成、C199 由来)、log_cdx 側 graze_log v05.1 BOMB タスク指示書 (GPT 側コピー commit 42c5ebbbcb77)、本ファイル末尾「graze_log v05.2 BOMB 設計検討: 外部証拠サマリ」節 (log_cdx 直接参照用)。
+
+---
+
 ## 2026-05-17 arXiv 2604.12285v1 / 2602.05665v1 / 2501.13956 (graph memory 3本) [candidate登録、本文未精読のものは投稿対象外]
 
 **文脈**: C198 Phase 1 §6 WebSearch (kaizen #106 摂取経路固定化、クエリ `knowledge graph orphan node detection LLM memory hierarchy 2026`) で取得した3本。memory_tree_consolidation.md (Log 単独管理、4日停滞) と memory_redesign.md (本ファイル別) の next-step 候補として後続サイクル消化用に candidate 登録。
@@ -3023,5 +3131,38 @@ a (発生メカニズム) と b (分類学) を併置すると、メカニズム
 ---
 
 **親マーカー（2026-05-13 C190 kaizen #106 自発検索 3件統合 — 投稿なし durable のみルート）**: [親集約 2026-05-13 Log C190 Phase 2 — a=arXiv 2602.05665 Graph-based Agent Memory survey / b=Mem0g conflict detector 3層構成 / c=Karpathy LLM Wiki + swarmvault + Google Memory Agent trend の3件処理。**特徴**: C178 / C182 precedent 継承（24h 内 Log shared-reads が同領域 4本済 = 飽和判定 → 投稿せず durable のみ）。本サイクルは Phase 1 §6 で「Phase 2/3 強制利用しない、摂取経路の固定化のみ」と明示宣言済、Phase 2 で予告通り守った。3件共通の構造観察: **我々の手作業 orphan 削減運用は周囲 trend (Mem0g / Obsidian + LLM 一連) と同方向に独立到達している** = K\*=1 シェア帯に入っている可能性、差別化軸は `memory:` 副節 (C188 観察) + agent依存性測定 + Nao_u 20年日記 substrate 接続度 (我々固有資源) の3つ。本サイクルでは即実装せず設計地図上の候補として記録（feedback_verb_without_target_trap 予防適用）。**本節の親マーカー完了**]
+
+---
+
+## graze_log v05.2 BOMB 設計検討: 外部証拠サマリ (log_cdx 直接参照用、C201 Phase 4 確定)
+
+**位置付け**: log_cdx が graze_log v05.1 → v05.2 で BOMB 構造問題に手を入れる際の**外部証拠1ファイル参照ポイント**。本節を読めば設計選択肢の地図が立ち上がるように粒度を絞ってある (5行+選択肢表)。詳細は本ファイル冒頭セクション (C201 Phase 4 full intake) 参照。
+
+**問題の再定式化** (Nao_u 5/17 17:00-18:15 帯 #game-rights 3連投 ts=1779008220/1779008396/1779008736 + #human-steering ts=1778976500 を受けた構造分析):
+
+graze_log v05.1 `fireBomb()` の LV3→LV2 強制リセットは「life-saving + power-down (penalty)」を同時実装している。これは**外部の2つの設計体系のどちらにも完全には適合していない中間状態**で、結果として「BOMB を焚かない方が常に得」が無設計の副作用として生成されている。
+
+**外部の設計体系 2系統** (本ファイル C201 Phase 4 full intake より):
+
+| 体系 | 出典 | BOMB の扱い | 整合する graze_log v05.2 設計 |
+|---|---|---|---|
+| **(A) Boghog 系** (anti-frustration) | shmups.wiki/Boghog's bullet hell shmup 101 (full intake) | 「multi-purpose resource, defensive panic bomb + offensive boss kill」「数フレーム buffer で死亡取消」「generous invincibility」。**scoring penalty の議論なし**、bomb 残数管理のみで経済成立 | power-down 撤去、bomb 残数のみで救済機会を制限、死亡フレーム周辺数フレーム buffer 実装 |
+| **(B) TV Tropes/Touhou 系** (life-saving + scoring penalty tradeoff) | tvtropes.org/Main/BulletHell (WebSearch スニペット、WebFetch 403 で本文未確認) | BOMB は「life-saving device with hefty scoring penalty」「minimizing bomb usage が定石」。Touhou Mountain of Faith / Double Dealing Character は **death bomb (死亡フレーム入力で取消)** + **bombing 高得点** で penalty を補正する別系統設計 | power-down 維持、ただし death bomb 機構 + bombing 時の grazing 倍率 boost 等で「焚くことに意味を持たせる」補正軸を追加 |
+
+**graze_log v05.1 の現状診断**: (A) の anti-frustration 軸も (B) の scoring tradeoff 軸も**どちらにも振り切れていない**。「power-down あり (penalty 系)、しかし death bomb なし・bombing 補正もなし (補正系統なし)」= TV Tropes/Touhou 系の penalty 半分だけ実装した状態 → 「焚かない方が常に得」が無設計副作用として生成。
+
+**v05.2 設計選択肢**:
+1. **(A) Boghog 系へ振る**: `fireBomb()` の `playerPower--` を撤去、bomb 残数のみで経済成立。死亡フレーム周辺 3-5 フレームの death buffer 実装。**最小差分で実装可能**、anti-frustration 思想が `kaizen_anti_frustration` 系 graze_log 既存方針と整合
+2. **(B) TV Tropes/Touhou 系へ振る**: power-down 維持、ただし `fireBomb()` 発動時に grazing 倍率 boost (例: bomb 中の graze は ×2 加算) + death bomb 機構実装。**実装コスト高**、graze 経済との連動設計が要る
+3. **(C) 中間 hybrid**: 例えば「BOMB 発動 = LV3→LV1 への強い power-down + bombing 中の全弾消去 = scoring 大幅 boost (倍率 + 全画面 graze 一括加算)」。tradeoff を明示する設計
+
+**log_cdx への引き渡し条件**: 本サマリは log_cdx が graze_log v05.2 を着手判断する際の素材。**選択肢 (A)(B)(C) のうち log_cdx の改修判断を Log 側から強制しない**。log_cdx 自身の改修方針 (進行中) と本サマリの選択肢地図を照合して、最適と判断する系統を log_cdx が選ぶ。Log 側で (A)/(B)/(C) を推薦する shared-reads / Slack 投稿は本サイクル Phase 2 §B 判定を維持して**しない**。
+
+**未解決 / 次サイクル候補**:
+- TV Tropes BulletHell 本文 WebFetch 失敗 (HTTP 403) → 別経路 (curl + User-Agent、外部ブラウザ手動) での本文取得を C202 以降 Phase 4 候補に積む。現状は (B) 系統の引用根拠が WebSearch スニペット止まり、留保付き
+- Shmups CAVE wiki (focus shot 2状態設計) は candidate 維持、graze_log v05.2 で「LV を player 側意思で切り替え可能にする」設計を検討する場合の参照素材
+- 本サマリ自体が log_cdx の改修判断に外部圧として作用したかは、C202 Phase 1 で log_cdx 側 graze_log v05.2 着手状況を観察して判定 (本サマリの参照ログ or 改修方向の整合性で見る)
+
+**関連ファイル**: 本ファイル冒頭 C201 Phase 4 セクション ((1) Boghog full intake / (2) TV Tropes partial intake / (3) CAVE candidate)、`log/cycle_staging_log.md` C201 Phase 4 副産物、log_cdx 側 graze_log v05.1 BOMB タスク指示書 (GPT 側コピー commit 42c5ebbbcb77)。
 
 ---

@@ -52,7 +52,7 @@
 
 | プロジェクト | ファイル | ステータス | 概要 |
 |-------------|---------|-----------|------|
-| 記憶階層の再設計 | [memory_redesign.md](memory_redesign.md) | Active (バックログ) | 改善すべき箇所が見えた時にNao_uと一緒に。常時オーバーヘッドほぼゼロ |
+| 記憶階層の再設計 | [memory_redesign.md](memory_redesign.md) | Active (バックログ) | 改善すべき箇所が見えた時にNao_uと一緒に。常時オーバーヘッドほぼゼロ / 2026-05-18 他インスタンス洞察主軸3件消化 (Mir overhead 130× + Ash trajectory 再発見 + external_search Mir論文) |
 | 栄養の偏り問題 | [external_intake.md](external_intake.md) | Active | 外の世界を見る。内に閉じない |
 | ゲーム制作 | [game_development.md](game_development.md) | Active | 根源原理3。ゲームを作ること |
 | pigadev DM対応 | [pigadev_dm.md](pigadev_dm.md) | Active | 洞窟物語ベータ版エピソード。20年越しの対話 |
@@ -67,7 +67,7 @@
 | 入力経路仮説 | [input_route_hypothesis.md](input_route_hypothesis.md) | Active (検討段階) | 「何を入れるか」より「どこから入れるか」が結果を決める仮説。system_identity.md経口化の検討。Nao_u承認待ち（情報蓄積中） |
 | 迂回経路監査 | [side_channel_audit.md](side_channel_audit.md) | Active | @ryoppippi Opus 4.7 auto-mode事件起源（Mir 4/17起票）。我々のauto-loopに同型リスクがないか監査。Ash 4/18応答（L1/L2フレームワーク+初期スキャン+FileGram drift転用）。Log 4/18応答（L3=迂回前段条件+慢性化WARN深掘り+denial list v0.1+LLM judge別インスタンス化）。次: git_pull未実行原因特定・denial list正式化 |
 | ルール密度×遵守率 | [rule_density_experiment.md](rule_density_experiment.md) | Active (計画起草) | @MakeAI_CEO「ルール量↗で遵守率↘」説起点（Mir 2026-04-20 C89 Phase 2-3起草）。3層プロンプト構造の有効性の天井を内部検証する実験計画。Seed-H/I/J/K 4案。一次資料未確認のためR-007で記事化保留、実行判断Nao_u待ち |
-| failure slot 効果測定 | [failure_slot_measurement.md](failure_slot_measurement.md) | Active (測定準備) | Blakely父 dinner question 個人試行（Mir 2026-04-17 C69 導入）の1週間後効果測定フレーム。M-1記入率/M-2自己検出率/M-3構造強制化率/M-4再発間隔/M-5直後行動変化率の5指標を pre-register（C98 2026-04-21）。測定当日=2026-04-24、結果記事化→#shared-reads 予定。6サイクル持ち越しの先延ばし系失敗サンプル自体が測定の最初のデータ点 |
+| failure slot 効果測定 | [failure_slot_measurement.md](failure_slot_measurement.md) | Paused (2026-05-18 Log C204 降格) | Mir 4/17 C69 導入 5指標 pre-register (C98)。測定当日 4/24 通過、5/15 期限 (Log C170 設定) 3日超過 = 27日連続停滞で Paused 降格。再起票条件4件 (Mir 主体再起動 / Nao_u 言及 / L2測定器再設計起票 / 新規 failure slot 再導入) 明示。本フレーム自身が F-1 先延ばし系の最大サンプル化 |
 | 外部検索のPhase 1固定化 | [external_search_phase1_fixation.md](external_search_phase1_fixation.md) | Active (案A実装完了, 案B/E未着手) | **2026-04-26 C134 Ash 案A実装完了**（auto_diary.py phase_gather() L262-269 step 6 追加、kaizen #118 のエンジン分類指針も同時埋込）。**2026-04-27 C135 検証1サイクル目 Ash**: 想定通り step 6 自然発火、ABA本「Joys of Small Game Development」第7章 juicy 章を取得→ knowledge/20260427_close_call_visualization_third_axis_aba_juicy_diff.md。残: 案B（24h警告）/ 案E（昇格N日ゼロ検出）/ Mir 側 step 6 組込確認 |
 | Tweet URL捕捉 | [tweet_url_capture.md](tweet_url_capture.md) | Completed (2026-04-25 検証) | read_twitter_recommended.py/read_twitter_feed.py にPermalink抽出処理追加済(4/24)、4/25 recommendedログで44/50件(88%)URL出力を確認。R-URLドキュメント化は別タスク残 |
 | ゲーム骨格テンプレート層 | [game_templates_design.md](game_templates_design.md) | Active (計画起票) | Nao_u「型として知っておいて派生」指示。game/templates/<genre>/に骨格テンプレートを整備。avoid/textadv/Pot系の3候補。Log起票 |

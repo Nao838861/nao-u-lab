@@ -1,0 +1,1065 @@
+Runtime Evaluation of Procedural Content Generation in an
+Endless Runner Game Using Autonomous Agents
+Rishabh Kar
+Department of Informatics
+King’s College London
+London, United Kingdom
+rishabh.kar@kcl.ac.uk
+Abstract
+Procedural Content Generation (PCG, the practice of creating game content such as terrain,
+levels, and objects through algorithmic rules rather than by hand) enables game content to be created
+algorithmically without direct manual level-design effort, but it introduces a serious evaluation
+problem: generated content may become unbalanced, blocked, repetitive, or technically unsolvable.
+This paper presentsMomentum, an endless-runner game that integrates runtime terrain generation,
+environment object spawning, and autonomous agent-based evaluation into a single gameplay loop.
+Ground tiles and environmental objects are generated dynamically as the player advances, object
+placement follows a constraint-driven mechanism inspired by Wave Function Collapse (WFC, an
+algorithm that fills a grid by repeatedly choosing a value for each cell while respecting compatibility
+rules with its neighbours), and the runtime navigation surface is rebuilt asynchronously to remain
+consistent with the streamed environment. Two autonomous evaluation agents move ahead of the
+player and inspect the generated path: an aerial scanner that examines the corridor geometrically, and a
+ground-traversal agent that validates the same region from a navigational perspective. The evaluation
+pipeline combines ray casting (firing a virtual line into the scene to detect what it hits), volumetric
+physics sweeps (testing whether a 3D box-shaped region overlaps any solid object), obstacle-layer
+filtering (restricting detection to objects tagged as obstacles), and structured crash reporting to
+identify problematic generated scenarios before they reach the player. The work demonstrates
+how generation and validation can be unified within the same runtime loop, rather than treating
+evaluation as a separate offline pass. Around this implementation, the paper formulates a measurable
+evaluation framework along the canonical PCG axes of playability, diversity, controllability, and
+runtime performance, derives a structural saturation bound on the spawner from its own placement
+constraints, and quantifies the per-segment scanning cost of the agents from first principles.
+Keywords:Procedural Content Generation, PCG, Runtime Evaluation, Autonomous Agents, Unity,
+Endless Runner, Wave Function Collapse, NavMesh, Ray Casting, Crash Reporting
+1 Introduction
+1.1 Motivation
+Procedural Content Generation offers a practical means of producing game content through algorithmic
+rules rather than complete manual construction. In game development, this reduces the effort required to
+author levels, terrain, objects, and environmental variation, particularly in genres where replayability and
+unpredictability are central to the experience. Endless-runner games present a particularly demanding
+case for this approach because their content requirement is continuous: the player advances indefinitely,
+and the system must continuously produce a playable path. A purely handcrafted level rapidly becomes
+repetitive, while a generated one introduces variation at the cost of admitting blocked paths, unsuitable
+object placements, and sections that cannot be completed.
+1
+arXiv:2605.01783v1  [cs.AI]  3 May 2026
+The motivation for this work is therefore not generation alone, but the integration of generation with
+evaluation. A procedurally generated section may appear visually acceptable while remaining technically
+invalid for the player.Momentumaddresses this through autonomous agents that inspect the generated
+path before the player reaches it, treating evaluation as a first-class component of the runtime rather than
+a post-hoc check.
+1.2 Problem Statement
+The central problem addressed in this work is the reliability of procedurally generated content in a runtime
+environment. Procedural generation does not, in itself, guarantee that the produced content is playable.
+A generation algorithm may place objects in a manner that obstructs the route, interrupts navigation,
+or yields a section that the player cannot reasonably traverse. This produces a technical gap between
+content creation and content validity: producing terrain and objects is not sufficient if the system cannot
+determine whether those generated sections remain safe for traversal.
+The problem becomes more acute in a runtime setting, where content is produced while the player is
+already moving through the world and no offline authoring pass is available. The problem can therefore be
+stated in two coupled parts. First, the system must generate terrain and environmental objects dynamically
+so that gameplay can continue beyond fixed level boundaries. Second, the same system must evaluate
+whether the generated path remains technically sound before the player encounters it. This paper studies
+that problem throughMomentum, in which autonomous aerial and ground agents inspect the generated
+path during gameplay.
+1.3 Contributions
+This paper makes the following contributions:
+1. It presentsMomentum, an endless-runner game in which the level is generated during runtime rather
+than being constructed through manual level design.
+2. It implements a procedural generation pipeline that streams ground tiles and environment objects
+dynamically as the player advances, with asynchronous rebuilding of the navigation surface to maintain
+consistency with the moving world.
+3. It applies a constraint-driven object placement method, inspired by Wave Function Collapse, that
+distributes objects across the generated ground while preserving an intended traversable lane.
+4. It integrates runtime gameplay controls for modifying player speed, lateral movement speed, and
+object spawn density, allowing the behaviour of the generator to be perturbed during execution.
+5. It introduces autonomous evaluation agents that move ahead of the player and inspect the generated
+path before the player reaches that section of the level.
+6. It combines ray casting, volumetric physics checks, and obstacle-layer filtering to identify blocked
+paths, unsafe object placements, and technically invalid generated sections.
+7. It implements a crash-reporting pipeline that records blockage details, player state, generation param-
+eters, and offending objects, and presents this information in a report for later analysis.
+1.4 Paper Organisation
+The remainder of this paper is organised as follows. Section 2 presents the background and related work
+on Procedural Content Generation, game content evaluation and the techniques relevant to this project.
+Section 3 defines the objectives and technical specification used to guide the development of the system.
+Section 4 describes the design, methodology and implementation ofMomentum, including the system
+architecture, player physics, terrain generation, object spawning, skybox variation and runtime interface.
+2
+Section 5 presents the analysis and evaluation mechanism, focusing on the autonomous aerial agent,
+ground agent, ray casting, volumetric checks, blockage detection and crash-reporting pipeline. Section 6
+discusses the legal, social and ethical considerations associated with procedural generation and automated
+evaluation in games. Section 7 concludes the paper.
+2 Background and Related Work
+2.1 Procedural Content Generation
+Procedural Content Generation (PCG) is a design approach that uses algorithmic processes to create
+game content. It was initially adopted in early titles such asRogueandMaze Craze, where limited
+system resources were the primary constraint. In that context, PCG offered an efficient solution by using
+seeds and rules to generate larger worlds dynamically while reducing memory and storage requirements.
+PCG has since moved beyond a workaround for hardware limitations. As computing power increased,
+developers adopted procedural methods to automate parts of the content creation workflow and to
+expand the variety of content produced. Procedural techniques are now used to generate textures, three-
+dimensional objects, level layouts, terrain, vegetation, weather patterns, and other environmental detail,
+with applications extending to simulation, film production, architectural visualisation, virtual reality,
+and extended reality. A compact rule set or seed can produce expansive worlds without requiring every
+asset to be stored or every level to be authored manually, which improves scalability and increases
+unpredictability. Titles such asMinecraft,No Man’s Sky[1], andCaves of Qud[2, 3] are widely cited
+examples of how PCG can produce large worlds in which the experience remains fresh across sessions.
+The drawbacks of PCG are equally well-known. Procedurally generated environments can become
+monotonous when framed by simple rules, and they often lack the handcrafted detail that human
+designers introduce during manual level design. More importantly, automatically generated content
+can become unsolvable, poorly balanced, or technically invalid. Debugging such systems is difficult
+because randomness obscures the conditions that produced a given failure, and reproducing a specific
+defect requires reproducing the exact seed and parameter set that caused it. PCG should therefore not
+be treated solely as a content-generation method; it requires evaluation and validation techniques to
+determine whether the generated content is technically sound. In this work, PCG is used to generate
+the game environment during runtime, while the evaluation mechanism examines whether the generated
+path remains playable before it affects the player.
+2.2 Procedural Terrain Generation Techniques
+There are several ways in which procedural terrain can be generated, and the choice usually depends on
+what the game is trying to create. One of the foundational approaches towards terrain generation is the
+use of noise functions to create fractal height maps. Earlier work used the diamond-square algorithm
+for midpoint displacement, and Perlin Noise and its successor forms are still widely used for creating
+synthetic terrains with multiple variations.
+Noise-based generation works well when the terrain needs rough surfaces, height variation and
+natural-looking topology. By combining different frequencies and amplitudes, the system can create
+rough height maps that imitate real-world terrain patterns. These techniques are also memory efficient
+and can be controlled through different parameters. However, a major disadvantage appears when
+uniform noise starts creating repeated patterns. Designers often need to combine noise signals with other
+effects to make the output look more natural. This project does not use noise-based terrain generation
+because the terrain is made of constant ground tiles, where height variation is minimal. Noise is more
+suitable for content that is topographically rich.
+Grammar-based generation is another approach used for procedural content. Generative grammars
+create content by applying rewriting rules, similar to the grammar mechanism used to construct sentences.
+This allows developers to focus on structural patterns rather than placing every object manually. A
+3
+common example is L-Systems, which use recursive rules to grow plants and branching structures. Graph
+grammars and shape grammars have also been explored for generating mission paths and spaces [4].
+The advantage of grammar-based generation is that it allows designers to encode structure and
+validity through rules. However, there is still a chance of repetitiveness if the same rules are applied
+repeatedly [5]. It is more suitable for environments that contain complex objects, vegetation or structured
+spaces. In this project, grammar-based generation was considered as part of the literature, but it was not
+required for the current lane-based endless-runner environment.
+Wave Function Collapse is comparatively newer than the other alternatives and has gained popularity
+because of its ability to generate new data from examples [6]. The technique works by keeping several
+possible states for each cell and then gradually reducing those possibilities while maintaining compati-
+bility with neighbouring cells. In this project, Wave Function Collapse is not used as a complete terrain
+generation system. Instead, it is used as an inspiration for placing environmental objects on the generated
+ground tiles, so that the placement is controlled but still not fully predictable.
+2.3 Wave Function Collapse
+Wave Function Collapse (WFC) is one of the procedural generation methods reviewed for this project.
+The method is notable for its ability to generate new content from a small set of examples while preserving
+local compatibility between neighbouring elements. It was first proposed by Merrell in 2007 and later
+popularised through Gumin’s implementation in 2016.
+At a conceptual level, WFC operates on a grid. Each cell begins with a set of possible states, and
+these possibilities are reduced as constraints from neighbouring cells are propagated. The final output
+is therefore not purely random: it retains variation, but each local choice must remain compatible with
+the surrounding structure. Karth and Smith [7] characterise WFC as a form of constraint solving in
+which local compatibility rules can produce coherent global patterns. This interpretation is relevant to
+the present work, since the aim is not unconstrained randomness but object placement that varies while
+still respecting simple spatial constraints.
+InMomentum, WFC is not used as a complete terrain-generation method, nor is it implemented
+through a neural network or trained machine learning model. The implementation is a simpler one-
+dimensional, WFC-inspired object placement mechanism. For each generated ground tile, the lateral
+axis is divided into grid cells. Cells are selected for object placement, neighbouring cells are marked
+as occupied to reduce clustering, and the traversable lane is preserved through a dedicated clearance
+parameter. A ray cast then confirms that valid ground exists before an object is instantiated. Object
+spawning is handled by a dedicated spawn manager that controls the lifecycle of obstacle prefabs already
+present in the project assets. These prefabs are grouped according to skybox variants, allowing the
+spawned objects to remain visually consistent with the active environment theme. WFC is therefore used
+as a controlled object-placement strategy rather than as a complete map-generation algorithm.
+2.4 Evaluation Mechanisms for Procedural Content
+Evaluation is required because procedural generation does not automatically guarantee that the generated
+content is valid or playable. In games, runtime validation is used to check whether generated content
+can actually be used by the player, often by simulating some form of player interaction [8]. The basic
+requirement in this type of scenario is reachability, because the generated section should not block the
+player from moving forward or continuing the game.
+There are different ways in which procedural content can be evaluated. Static analysis checks the
+validity of a level before runtime, while automated agents can perform walk-through mechanisms either
+before or during runtime to identify problematic areas [9]. Another approach is an adaptive feedback
+loop, where the system reacts to the generated content during gameplay and adjusts the generation process
+based on that feedback [10].
+For this project, the focus is on runtime evaluation using automated agents. The reason for this is
+that the game content is created dynamically while the player is moving, so the evaluation also needs to
+4
+happen during execution. The agents move ahead of the player and check whether the generated path
+remains technically playable. This makes the evaluation mechanism part of the game loop rather than a
+separate post-processing step.
+The evaluation also uses geometric scanning methods such as ray casting and volumetric checks.
+Ray casting is useful for checking gaps, obstacle distribution and ground availability by projecting rays
+into the scene. Volumetric checks are used along with ray casting to improve detection of objects that
+may block the path. Together, these methods help identify blocked sections, unwanted object placement
+and unsolvable generated scenarios before they become a direct problem for the player.
+3 Objectives and Technical Specification
+The primary objective of this work is to design and implement a content generation system that operates
+within the runtime of a game, together with a mechanism that evaluates the generated content before it
+reaches the player. The procedural generator is expected to produce levels, ground sections, and game
+objects automatically, without depending on manual level-design effort. The evaluation mechanism is
+expected to examine the generated path during runtime and report sections that are blocked, unsolvable,
+or otherwise technically invalid. The two objectives are coupled by design: a generator that emits invalid
+content is of limited value, and an evaluator that operates only on completed levels does not apply when
+content is produced incrementally during play.
+The system must satisfy six concrete requirements: (i) continuous streaming of terrain and objects
+ahead of the player; (ii) randomisation of object placement sufficient to preserve replayability while
+reserving a viable traversable lane; (iii) deployment of autonomous aerial and ground agents that inspects
+upcoming sections before the player reaches them; (iv) the option to rectify detected blockages so that
+an isolated invalid placement does not terminate the run; (v) live runtime controls for player speed,
+lateral speed, and spawn density; and (vi) structured recording of any detected failure together with
+the parameters that produced it. Stability of frame rate, modular code organisation, and adherence
+to engine-specific style conventions [11] are treated as engineering requirements rather than research
+contributions.
+Table 1: Technical specification of the project.
+Component Specification
+Game engine Unity 6000.2.0b6
+Programming language C#
+Game type 3D endless-runner game
+Generation system Runtime terrain and object generation
+Object placement Wave Function Collapse-inspired spawning
+Navigation system Unity NavMesh with asynchronous baking
+Evaluation mechanism Autonomous agents, ray casting, and volumetric checks
+Physics support Engine physics and collider-based detection
+User interface Runtime sliders and in-game feedback display
+Reporting system Crash-report display and PDF export
+3.1 Evaluation Questions, Hypotheses, and Metrics
+The objectives in Section 3 specify what the system should do; they do not specify how its behaviour
+should be measured. Following the taxonomy of Cook, Withington, and Tokarchuk [9], who organise
+PCG evaluation aroundquality/playability,diversity,controllability, andperformance, this work formu-
+lates four research questions and pairs each with an explicit hypothesis and a measurable quantity that is
+recoverable either directly from the code or from runtime instrumentation.
+5
+RQ1 (Playability).Does agent-based runtime evaluation reduce the rate at which unhandled blocked
+sections reach the player, relative to a generator running without evaluation?Hypothesis H1:the
+auto-removing aerial scanner is expected to reduce the number of player-encountered blockages,
+while diagnostic-only configurations leave the underlying blockage rate unchanged but make it
+visible.
+RQ2 (Controllability & Diversity).Does the spawn-density parameter𝑝 spawn produce monotonic, pre-
+dictable changes in placement count and observable changes in prefab diversity?Hypothesis H2:
+the realised spawn count saturates well below the value requested by Equation (25) once the
+lane-clearance and adjacency constraints bind, so the slider exhibits a controllability ceiling that
+is structural rather than parametric.
+RQ3 (Performance).Can both agents perform their per-tile inspection within the 16.66 ms frame budget
+associated with 60 FPS, or at least within the 33.33 ms budget associated with 30 FPS, as defined
+by Unity’s profiling guidance [12, 13]?Hypothesis H3:the per-segment cost is bounded by a
+small constant independent of run length, because the scanner is gated by an integer tile index and
+amortises the OverlapBox sweep across many ray probes.
+RQ4 (Coverage complementarity).Do the aerial and ground agents detect overlapping or complemen-
+tary failure sets?Hypothesis H4:the two agents inspect distinct properties of the same region
+(geometric clearance vs. NavMesh traversability) and therefore each detects failures the other does
+not, so the union of their reports is strictly larger than either taken alone.
+The metrics used to address these questions are the following. Let𝑆 total be the total number of
+corridor scan segments inspected during a run and𝑆 blocked those classified as blocked. The blockage and
+passability rates are
+𝑅block = 𝑆blocked
+𝑆total
+, 𝑅 pass =1−𝑅 block.(1)
+For runs with auto-removal enabled, with𝐵 detected the set of detected blockers and𝐵 removed ⊆𝐵 detected
+those destroyed by the scanner before the player arrived, the auto-removal rate is
+𝑅remove = |𝐵 removed|
+|𝐵 detected| .(2)
+Ground-agent recoveries are normalised by distance travelled,
+𝑅recover = 𝑁rec
+𝐷 [recoveries m−1].(3)
+The spawn realisation ratio compares actually-instantiated objects𝑂 spawned against the count requested
+by Equation (18),
+𝜌spawn = 𝑂spawned
+𝑂intended
+, 𝑂 intended =
+
+𝑁· 𝑝spawn
+100
+
+,(4)
+with𝑁the cell count from Section 4.5. The frame-budget violation rate [12] is
+𝑉(𝜏)= 1
+𝐹
+𝐹∑︁
+𝑖=1
+⊮[𝑓 𝑖 > 𝜏], 𝜏∈ {16.66,33.33}ms.(5)
+Prefab diversity within a run is captured by the Shannon entropy of the empirical prefab distribution and
+its normalised form [9],
+𝐻prefab =−
+𝐾∑︁
+𝑘=1
+𝑝𝑘 log2 𝑝𝑘, 𝐻 norm
+prefab = 𝐻prefab
+log2 𝐾 ∈ [0,1].(6)
+6
+Agent-set complementarity is measured by the Jaccard overlap of their reported blocker sets𝐴and𝐺,
+𝐽(𝐴, 𝐺)= |𝐴∩𝐺|
+|𝐴∪𝐺| , 𝐶 unique =1−𝐽(𝐴, 𝐺),(7)
+where smaller𝐽(equivalently, larger𝐶 unique) indicates greater complementarity between the two evalu-
+ators.
+Table 2 maps each research question to the metric and to the implementation source from which the
+measurement is obtained.
+Table 2: Mapping between research question, metric, and implementation source.
+RQ Metric Measurement Source in implementation
+RQ1𝑅 block,𝑅 remove, player-
+encountered blockage count
+Counters over scan segments and
+reported blockers per run
+FlyerCorridorScanner.ScanCorridor,
+BlockageReporter.ReportBlockage,
+auto-removal branch
+RQ2𝜌 spawn,𝐻 norm
+prefab,𝑅 block vs.𝑝 spawn Per-tile spawn counters; histogram
+over instantiated prefab IDs
+EnvironmentObjectSpawnManager.
+SpawnObjectsOnGround
+RQ3 Mean / p95 / p99 frame time,
+𝑉(16.66),𝑉(33.33)
+Per-frameΔ𝑡samples over a fixed-
+length run
+Unity frame loop / Profiler API
+RQ4𝐽(𝐴, 𝐺),𝐶 unique,𝑅 recover Comparison of reported blocker
+sets between the aerial and ground
+agents
+FlyerCorridorScannervs.
+GhostRunnerAgent.ScanCorridor
+4 Design, Methodology, and Implementation
+4.1 System Architecture
+The system architecture ofMomentumis modular, so that gameplay logic, procedural generation, and
+evaluation are not coupled within a single script. The project is decomposed according to behaviour:
+each component is responsible for a clearly defined part of the system, including player movement,
+camera handling, terrain generation, environment object spawning, skybox variation, runtime UI controls,
+autonomous agents, navigation-mesh management, blockage reporting, and crash-report export.
+The player controller manages forward motion, lateral movement, jumping, and interaction with the
+engine’s physics system. The terrain generation component spawns ground tiles ahead of the player,
+and the object spawning component places environmental objects on the generated ground. The skybox
+manager coordinates with the generation pipeline by varying the environment theme as the player
+progresses, and the object spawner consults the active theme when selecting prefabs.
+The evaluation side of the architecture is implemented through autonomous agents. The aerial
+agent moves ahead of the player and scans the generated corridor from above, while the ground agent
+validates the same region through the runtime navigation surface. Both agents are supported by ray
+casting, volumetric physics checks, and obstacle-layer filtering. When a blocked or unsolvable section is
+detected, the relevant data is forwarded to the blockage reporting subsystem.
+The reporting pipeline stores the detected information in a structured crash-report record and carries
+it across the scene transition into the exit-report scene. The report is rendered within the game and may
+also be exported as a PDF document. The architecture therefore not only generates content, but also
+provides a feedback mechanism for analysing where and why the procedural generation process produced
+an invalid section.
+4.2 Game Concept
+The game developed in this project is calledMomentum. It is implemented as an endless-runner in which
+the player advances continuously and the surrounding environment is generated during gameplay. The
+player is not presented with a fixed level to complete; instead, the run continues until the player fails or
+exits, and the score increases with forward progression.
+7
+Figure 1: High-level architecture of theMomentumsystem, organised into the UI layer, evaluation layer,
+character physics, agent system, and environment.
+The concept is intentionally minimal so that the focus of the work remains on procedural generation
+and runtime evaluation. The player can move laterally and jump, while the ground and objects are
+generated ahead of the player. This makes the game a suitable test bed for dynamic generation, since
+the system is not dependent on a pre-authored level. Endless-runner games are particularly well suited
+to this purpose because their content requirement is continuous: a repeated handcrafted level becomes
+predictable within minutes, whereas runtime generation can sustain variation indefinitely.
+The generated environment is also the substrate for evaluation. The system not only produces new
+terrain and objects, but also examines whether the generated path remains traversable for the player.
+Autonomous agents are positioned ahead of the player to inspect the generated sections and report
+blocked or unsolvable scenarios.
+4.3 Player Physics
+The player physics script controls character motion along the forward (Z) and lateral (X) axes. The script
+follows a direct execution flow: inspector-exposed constants, component initialisation, frame updates,
+input handling, ground detection, and finally the velocity update applied to the Rigidbody (Unity’s
+physics-driven motion component, which applies forces, gravity, and collisions to a game object). This
+structure is kept explicit because the player controller is the base movement layer on which the procedural
+generation and evaluation systems operate, and clarity at this layer simplifies reasoning about every system
+above it.
+8
+Figure 2:Momentumduring gameplay: the player advances along the procedurally streamed terrain
+while the aerial evaluation agent inspects the corridor ahead. The on-screen overlay exposes the runtime
+sliders for forward speed, side speed, and spawn density.
+4.3.1 Fields and Inspector Exposed Constants
+The[SerializeField]variables (script fields exposed to the Unity editor while remaining private to
+other code) are exposed to the Unity Inspector (the editor panel that displays and edits a game object’s
+properties at design time) and attached to the attached to the player runner prefab. These values allow
+the player movement behaviour to be tuned directly from the editor without changing the script every
+time. The main exposed fields are:
+•Kinematic constants:runSpeed,sideSpeed,jumpForce, andjumpForwardBoost.
+•Visual movement parameters:angleOfLeanandspeedOfLean, used for smooth side movement
+during the run.
+•Component references involving theRigidbodyandAnimator.
+4.3.2 Initialisation
+The scene script starts with theStart()function calling the component initialisation logic. At this point,
+the Rigidbody configuration is applied so that the player does not rotate incorrectly during movement.
+Rotation is locked across the X and Z directions, linear damping is applied with𝑐=2𝑓, and interpolation
+is enabled to give smoother motion. The safe spawn position is also stored for later re-spawn, so that the
+player can be teleported back after falling below the valid playable area. The initial boolean flags are
+then set asisGrounded = 1andisJumping = 0.
+4.3.3 Frame Loop
+The frame loop is separated according to Unity’s execution model. TheUpdate()function (called once
+per rendered frame) is used for input, animation and ground checks, whileFixedUpdate()(called at a
+fixed physics interval, independent of frame rate) is used for the physics update where the linear velocity
+is overwritten and the model tilt is corrected.
+9
+Table 3: Player movement frame loop.
+Callback Frequency of Calls Functionality
+Update()Every rendered frame Captures input, animations and ground checks
+FixedUpdate()Fixed physics interval Overwrites linear velocity and fixes model tilt
+4.3.4 Interpreting Keyboard Input Details
+HoldingWsets the player into the running state for the movement logic and animation controller. Holding
+AorDprovides a discrete horizontal value for side movement. TappingSpacewhile the player is
+grounded sets theisJumpingflag to true. This keeps the control scheme simple and matches the
+endless-runner structure of the game.
+4.3.5 Ground Detection Technique
+Ground detection is handled using ray casting (projecting an invisible line from a point in a chosen
+direction and reporting the first surface it intersects). A short ray of 0.3 metres is fired from the feet of
+the player. If this ray hits thegroundMasklayer, thenisGroundedbecomes true and the landing state is
+cleared. This check is required before applying the jump logic, because the player should not be allowed
+to repeatedly jump while already in the air.
+4.3.6 Dynamics Update
+Forward velocity is not applied as an instantaneous change. The script uses linear interpolation [14] so
+that the current forward velocity advances gradually towards the target, producing a smooth transition
+rather than a step:
+𝑣 𝑧 ←lerp(𝑣 𝑧, 𝑣 target,10Δ𝑡),(8)
+where
+𝑣 target =
+(
+runSpeed,running and grounded (direct assignment),
+0,grounded but not running (lerp target). (9)
+When the player is running and grounded,𝑣 𝑧 is assignedrunSpeeddirectly. The interpolation in
+equation (1) applies only when the player decelerates to zero.
+For smallΔ𝑡, the recurrence approximates exponential approach,
+𝑣 𝑧 (𝑡) ≈𝑣 𝑧 (0)𝑒 −10𝑡 ,(10)
+so the controller accelerates and decelerates with a time constant of approximately 0.1 s. Here,
+runSpeedis the configured running speed,𝑣 𝑧 the current forward velocity,Δ𝑡the physics timestep, and
+the factor 10 controls the rate at which the velocity approaches its target.
+Lateral motion is computed from the discrete horizontal input:
+𝑣 𝑥 =ℎ·sideSpeed,(11)
+whereℎ∈ {−1,0,+1}, withℎ=−1 for left,ℎ=+1 for right, andℎ=0 when no lateral key is
+pressed. The jump action overwrites the vertical component using the configured jump force,
+𝑣 𝑦 ←𝑗,(12)
+and, when the player is already running, an additional forward impulse is applied along the Z-axis,
+10
+𝑣 𝑧 ←𝑣 𝑧 +jumpForwardBoost·⊮ running,(13)
+where⊮ running equals 1 when the player is in the running state and 0 otherwise. After lift-off, the
+vertical position follows the standard kinematic equation,
+𝑦(𝑡)=𝑦 0 +𝑣 𝑦𝑡− 1
+2 𝑔 𝑡 2, 𝑔≈9.81 m/s 2,(14)
+with𝑦 0 the vertical position at the start of the jump,𝑦(𝑡)the position at time𝑡, and𝑣 𝑦 the vertical
+velocity immediately after lift-off. A linear damping coefficient of𝑐=2 s −1 is applied through the
+Rigidbody, so that any unforced velocity decays as𝑣(𝑡)=𝑣 0𝑒−2𝑡 . This prevents residual drift after input
+release without producing an abrupt stop. If the player falls below𝑦=−8 m, the controller triggers a
+respawn that teleports the character back to the configured spawn point and resets the velocity. Up to nine
+respawns are permitted per run before the game-over state is entered. This safeguard is required because
+the procedural ground occasionally contains transient gaps between tile boundaries during navigation
+rebakes.
+4.4 Procedural Terrain Generation
+The procedural terrain generation system inMomentumprovides the player with a continuous traversable
+surface, while managing object spawning, navigation-mesh updates, and tile lifecycle during runtime.
+The system is designed to be scalable and memory-efficient. The terrain is not produced through
+noise-based height maps, since the game uses uniform ground tiles where height variation is minimal.
+Emphasis is therefore placed on continuous tile streaming, controlled object placement, navigation
+surface management, and incremental cleanup, rather than on topographical synthesis.
+4.4.1 Core Script Parameters
+The terrain generation script is controlled through the following core parameters:
+•Ground Tile Length:𝐿 tile =96 m, where the tiles are spaced along the Z-axis one after another.
+•Navigational Mesh Coverage: Ahead:𝑑 𝑎ℎ𝑒𝑎𝑑 =600 m, Behind:𝑑 𝑏𝑒ℎ𝑖𝑛𝑑 =50 m.
+•Spawn Rate for Ground:Δ𝑡 min andΔ𝑡 max, which define the shortest and longest time interval allowed
+between two consecutive tile spawns.
+•Skybox Variants: Tile appearance is chosen based on the environment sky theme, using an index
+variable for trackingskyboxVariantIndex.
+4.4.2 Tile Spawning
+Tiles are spawned according to two conditions. The first is a temporal trigger: a new tile is generated
+when the elapsed time since the previous spawn exceeds the active interval,
+𝑡 > 𝑡 lastSpawn +Δ𝑡 spawn.(15)
+The interval itself contracts as the player’s speed increases,
+Δ𝑡spawn =clamp  Δ𝑡max −𝛾 𝑣 𝑝 (𝑡),Δ𝑡 min,Δ𝑡 max
+,(16)
+with the player’s instantaneous speed estimated from successive forward positions,
+𝑣 𝑝 (𝑡)= |𝑧 𝑝 (𝑡) −𝑧 𝑝 (𝑡−𝛿𝑡)|
+𝛿𝑡 .(17)
+11
+The scaling constant is𝛾=0.01, and the clamp [15] bounds the interval within[Δ𝑡 min,Δ𝑡 max]for
+any input.
+The second condition is a proximity check. When the most recently generated tile is sufficiently far
+ahead of the player, spawning is suspended,
+𝑧𝑔 > 𝑧 𝑝 +1000⇒spawning suspended, (18)
+so that the system does not extend the world beyond the range that any agent or the player will reach in
+the near term. The parameters above denote:𝑡the current time;𝑡 lastSpawn the time of the previous spawn;
+Δ𝑡spawn the active spawn interval;𝑣 𝑝 (𝑡)the player’s instantaneous speed;𝑧 𝑝 (𝑡)the player’s forward
+position;𝑧 𝑔 the forward position of the most recent tile;𝛾the speed-to-interval coupling constant; and
+𝛿𝑡the sampling step used to estimate𝑣 𝑝.
+4.4.3 Positioning of the Tiles
+When a new ground tile is spawned, its Z-axis position is calculated as:
+𝑧𝑔,new =𝑧 𝑔 +𝐿 tile.(19)
+where𝑧 𝑔 is the Z-axis position of the last tile which has been spawned. All the tiles spawned are
+instantiated as child objects of the game object calledGroundContainerto organise the hierarchy. After
+the instantiation, the environment objects are spawned via the object spawn manager.
+4.4.4 Navigational Mesh Management
+The navigation surface, also called the NavMesh (a simplified walkable map that Unity automatically
+generates from scene geometry so AI characters can pathfind across it), is the substrate on which the AI
+agents move [16]. It can be understood as a runtime traversability map that defines where an agent may
+walk, jump, or stop. Because the ground is generated dynamically, the navigation surface must also be
+updated during runtime; a single bake at scene load is not viable.
+Three triggers initiate a re-bake:
+•Time-based:every𝑇 navMesh =1 s.
+•Count-based:every𝑁=5 newly spawned tiles, controlled through the configured bake interval, or
+whenever the player advances by more than two tile lengths(2𝐿 tile).
+•Position-based:whenever the player moves more than 50 m since the last bake.
+The baked region is re-centered on the player at every rebuild,
+𝑧centre =𝑧 𝑝 + 𝑑ahead −𝑑 behind
+2 ,(20)
+so that its coverage is the interval[𝑧 𝑝 −𝑑 behind, 𝑧 𝑝 +𝑑 ahead], with𝑑 ahead =600 m and𝑑 behind =50 m.
+The navigation rebake (re-computing the walkable map from the current geometry) is performed
+asynchronously (off the main thread, so the game does not freeze while it runs) to avoid frame drops
+(single rendered frames that take noticeably longer than the budget and produce a visible stutter). An
+earlier synchronous implementation produced visible stalls [17] because the engine halted the main
+thread at every rebuild while it walked the colliders, surfaced the mesh, and uploaded it. The current
+implementation issues the rebuild as a non-blocking job, summarised in Algorithm 1, so that the
+navigation surface remains current without forcing the main loop to halt during a bake.
+12
+Algorithm 1Asynchronous navigation-mesh rebuild.
+1:Wait until any in-flight bake job has completed.
+2:Collect navigation-mesh sources from the active scene.
+3:Recompute the bake bounds around the current player position.
+4:Issue a non-blocking navigation update using the existing bake data, build settings, collected sources,
+and bounds.
+5:Yield until the bake job reports completion.
+4.4.5 Clean-up of Procedural Terrain
+For smooth performance and optimal use of memory, every generated ground tile checks the player’s
+current position and destroys itself after the player has safely moved ahead. This is required because
+the terrain is generated continuously, and keeping every old tile in the scene would slowly increase the
+number of active objects without adding anything useful to the current gameplay.
+Let𝑧 tile be the Z-axis position of the tile and𝑧 𝑝 be the coordinate of the player on the Z-axis. For
+every single tile, a threshold is set as:
+𝑧threshold =𝑧 tile +100.(21)
+The moment the player moves 400 units beyond this value, the tile is scheduled to delete itself:
+𝑧 𝑝 >(𝑧 tile +100) +400=𝑧 tile +500.(22)
+The implementation uses a delayed destruction call:
+Destroy(this.gameObject, 5.0f)
+The 5-second delay works as a small safety buffer for remaining references before Unity removes
+the object from the scene. This keeps the older procedural terrain from staying in memory once it is no
+longer part of active gameplay, without making the ground disappear too aggressively.
+4.5 Wave Function Collapse-Inspired Object Spawning
+Wave Function Collapse is used in this project as an object-spawning method rather than a complete map-
+generation technique. The implementation does not use neural networks or a trained machine learning
+model. Instead, a simple one-dimensional WFC-inspired process is used to spawn environmental objects
+on the generated ground tiles. The aim is to keep the spawning process random enough for variation,
+while still applying basic constraints so that objects do not appear in completely uncontrolled positions.
+TheEnvironmentObjectSpawnManagerscript controls the spawning, adaptation and lifecycle of
+obstacle prefabs (pre-configured Unity templates that can be instantiated repeatedly as identical copies
+at runtime) that are already stored as assets. The object prefabs are organised in variants based on the
+current skybox theme and are placed in the folder structure:
+PF <variant> <object>
+During initialisation, all prefabs are cached by the theme of the environment usingBuildPrefabCache().
+This means that when the skybox changes, the spawning system can select objects from the corresponding
+variant while still keeping fallback conditions in place.
+13
+4.5.1 Grid Construction
+Each generated ground tile is divided across the X-axis into a one-dimensional grid. This grid is used
+to decide the possible positions where environmental objects can be placed. The width of the available
+spawning region is first calculated as:
+𝑊=𝑥 max −𝑥 min.(23)
+The number of cells for the tile is then taken as the maximum between the rounded-up width and a
+minimum value of 12:
+𝑁=max  ⌈𝑊⌉,12 .(24)
+This same calculation is implemented in the script as:
+float width = xAxisRange.y - xAxisRange.x;
+int cells = Mathf.Max(Mathf.CeilToInt(width), 12);
+For every tile, the number of spawning attempts is calculated from the spawn-density percentage.
+This makes the amount of generated objects dependent on the configured spawn rate, while still keeping
+it bounded by the number of available grid cells:
+𝐾=clamp
+j
+𝑁· 𝑝spawn
+100
+k
+,0, 𝑁
+
+.(25)
+Here,𝑝 spawn represents the density percentage used for object spawning. The ground agent lane
+is also preserved usingclearHalfWidth, so that the grid does not place objects directly inside the
+main path required by the player. This makes the spawning process controlled enough to avoid obvious
+blockage, but still random enough to keep the generated environment unpredictable.
+4.5.2 Placement
+The placement stage starts after the grid cells and the number of spawning attempts have already been
+calculated. The cells are randomly chosen, but the selection is not completely left open. Once a cell is
+selected, its neighbouring cells(𝑖−1, 𝑖+1)are marked as occupied. This prevents objects from clustering
+too closely on the same ground tile and keeps the placement more distributed across the available width.
+The X-coordinate of the object is fixed from the selected grid cell. The Z-axis position is given a
+small jitter so that objects are not spawned in a perfectly straight line:
+𝑧=𝑧 ground,centre + U (−𝑧jitter, 𝑧 jitter).(26)
+After this position is calculated, a ray cast is performed towards the ground. The purpose of this
+ray cast is to confirm that valid ground exists at the selected position. If the ray cast does not find a
+valid ground hit, that object is skipped. This prevents objects from being instantiated in empty space or
+outside the playable ground area.
+The correct prefab is then selected from the current skybox variant. Every skybox variant has multiple
+prefabs associated with it, so the visual objects spawned in the environment remain connected with the
+active skybox theme. The prefab is selected randomly from the available objects of that variant.
+Once the ray cast returns a valid ground hit, the object is instantiated at that point. Snapping to
+ground is performed throughSnapToGround(), where the boundary of the object is used to align the
+base with the terrain. Some specific objects with complex geometry at their base are forced down into
+the Y-axis. These objects mainly involve variants of trees and a rock cliff. This workaround is necessary
+because these assets do not always have a stable lower base after spawning. Certain objects are also
+allowed to float above the ground where the visual effect is intentional.
+14
+4.5.3 Despawning Objects
+The generated objects are removed using a separate despawning rule from the ground tiles. This is
+required because the environmental objects do not need to remain in the scene once the player has
+already passed them. If they are kept for too long, they continue to occupy memory and physics
+resources without contributing to the current game state.
+For each spawned object, the system compares the Z-axis position of the player with the Z-axis
+position of the object. The object is removed when the player moves more than 50 units ahead of it:
+𝑧player −𝑧 object >50.(27)
+This threshold is deliberately smaller than the terrain clean-up threshold. Objects are therefore deleted
+before the ground tile itself is removed. This ordering is important because if the ground disappears first,
+the remaining objects may fall through the environment, accelerate due to gravity and remain active as
+unnecessary physics bodies.
+The despawning mechanism therefore keeps the generated scene bounded around the active play area.
+It allows the game to continue producing new objects ahead of the player while removing old objects
+behind the player before they become an avoidable runtime cost.
+4.6 Skybox and Environment Variation
+The skybox and environment-variation system provides visual change as the player progresses along the
+positive Z-axis. This is important in an endless-runner setting because the player is not moving towards
+a fixed endpoint. The surrounding environment therefore needs to change over time so that the generated
+world does not appear visually static.
+InMomentum, this behaviour is managed through theSkyboxChangersystem. The system updates
+the active skybox material and the associated 360-degree environment video during runtime. The
+transition is driven by player progression: the system monitors the player’s Z-axis position and initiates a
+change when the player crosses the next threshold, incremented byΔ𝑧=𝑑 interval, where𝑑 interval =2000
+is the configured distance interval
+The available skybox videos are stored as indexed assets. A stack mechanism tracks recently displayed
+variants so that the same visual state is not selected repeatedly. Once all variants have been displayed,
+the stack is reset and the selection cycle continues. This gives the environment a controlled form of
+variation without requiring a fully handcrafted sequence of visual states.
+The transition itself is handled through exposure control. The current skybox fades out until the
+exposure reaches zero. At that point, the new material and video clip are assigned while the scene is
+still dark. The new skybox then fades back in to the intended exposure value. This avoids abrupt frame
+changes and visible flashes during the swap. The functionDynamicGI.UpdateEnvironment()is also
+called during the transition so that the scene lighting remains consistent with the active skybox.
+The same variation is reflected in procedural object spawning. Environmental prefabs are grouped
+according to skybox variants, so the active skybox also influences which objects can appear on the
+generated ground. This links the background, lighting and spawned objects into the same environment
+theme while leaving the terrain-generation logic unchanged.
+4.7 Runtime User Interface
+The runtime user interface acts as a small experimental control layer inside the game. It is not only
+a display element, but also a way to tune important game parameters during execution. This is useful
+because the project depends on procedural generation and runtime evaluation, where speed and object
+density can change how difficult or stable the generated path becomes.
+The interface is implemented using Unity’s Canvas UI system [18] and TextMeshPro elements. Three
+main parameters are exposed through sliders: player forward speed, player side speed and environment
+object spawn rate. The forward-speed slider changes the running speed of the player. The side-speed
+15
+slider changes the lateral movement speed, but within a smaller boundary so that the player does not
+easily leave the valid ground area. The spawn-rate slider modifies the object spawn percentage and
+updates the corresponding on-screen label during gameplay.
+The score is treated as a progression measure rather than a separate reward system. Since the player
+advances along the Z-axis, the score is calculated from the player’s Z-axis position with an offset added
+for the initial spawn position:
+𝑆(𝑡)=max  0, 𝑧 𝑝 (𝑡) +Δ offset
+.(28)
+Here,𝑧 𝑝 (𝑡)is the player position on the Z-axis at time𝑡, andΔ offset =45. The offset is used because
+the player starts from−45 m on the Z-axis during initialisation. The score is updated every frame and
+displayed through the TextMeshPro UI element.
+5 Analysis and Evaluation
+5.1 Aerial Agent
+The aerial agent is used as the first runtime evaluator of the generated path. Since the terrain and obstacles
+are produced during play, the game cannot assume that the next section of the level will always remain
+traversable. The agent therefore moves ahead of the player and inspects the upcoming region before
+the player reaches it. In this sense, the aerial agent works as an early warning layer for the procedural
+generation system.
+Unlike the player, the aerial agent is not meant to interact with the terrain as a physical character.
+It observes the generated corridor from above and checks for problematic object placement, blocked
+sections, or situations where the generated space may become invalid. This is useful because the agent
+can evaluate the level without being slowed down by normal ground movement, collisions, or gravity.
+5.1.1 Agent Trajectory
+At each frame, the aerial agent calculates a target position ahead of the player. SinceΔ 𝑧 represents a
+fixed forward offset, the target Z-position is calculated by adding this offset to the player’s current Z-axis
+position and then clamping it to the farthest generated ground position:
+𝑧aerial,target =min(𝑧 𝑝 +Δ 𝑧, 𝑧 ground,last).(29)
+Here,𝑧 𝑝 is the player’s position on the Z-axis,Δ𝑧 is the fixed forward offset used by the aerial agent,
+and𝑧 ground,last is the position of the farthest recently spawned ground tile. The minimum operation
+prevents the aerial agent from moving into empty space beyond the generated terrain.
+The full target position is represented as:
+𝑝aerial,target =
+
+𝑥 𝑝 +Δ𝑥
+ℎ 𝑓
+𝑧aerial,target
+
+.(30)
+where𝑥 𝑝 is the player’s X-axis position,Δ𝑥is the lateral offset, andℎ𝑓 is the fixed altitude maintained
+by the aerial agent. The aerial agent is kept independent from the engine’s gravity and normal physics
+response because its role is to inspect the upcoming generated path, not to behave as another physically
+simulated character.
+5.1.2 Speed Control
+The position of the aerial agent is updated using a smoothed-velocity interpolation routine. Instead of
+placing the aerial agent directly at the target position, the method moves it towards the target through a
+smoothed velocity update:
+16
+𝑝 𝑓 (𝑡+Δ𝑡)=SmoothDamp(𝑝 𝑓 (𝑡), 𝑝 aerial,target, 𝑣 𝑓 , 𝑇 𝑠, 𝑣 max).(31)
+Here,𝑝 𝑓 (𝑡)is the current aerial agent position,𝑝 aerial,target is the target position calculated ahead of
+the player,𝑣 𝑓 is the current velocity reference used by the smoothing function,𝑇𝑠 is the smoothing time,
+and𝑣 max is the maximum speed allowed for the aerial agent.
+This keeps the agent responsive, but prevents sudden jumps in its movement. The aerial agent follows
+the generated path ahead of the player while remaining constrained by the smoothing and maximum-
+speed parameters. This is important because the agent is used for evaluation, so unstable or abrupt
+motion would make the scanning process less reliable.
+5.2 Ray Casting
+Ray casting is used by the aerial agent to evaluate whether the procedurally generated path remains safe
+and usable. Since the environment is created during runtime, the generated space must be checked before
+the player reaches it. The aerial agent performs this check by scanning the terrain ahead using downward
+rays and volumetric physics sweeps.
+The purpose of ray casting in this project is not only to detect whether ground exists. It is also used
+to identify blocked regions, unsafe object placement and cases where the player may not have enough
+continuous space to move forward. A single ray hit is therefore not enough to decide that a region is
+playable. The scan needs to consider the width of the path and the presence of blocking colliders across
+that width.
+5.2.1 Segmentation and Tile Probing
+The area ahead of the aerial agent is divided into tile-like segments along the Z-axis. Each segment is
+scanned using horizontal probe rows, with multiple ray origins distributed across the width of the ground.
+From each origin, a ray is fired downward towards the generated terrain:
+origin=(𝑥, 𝑦 scan, 𝑧 row).(32)
+Here,𝑥varies across the width of the ground,𝑦 scan is the height from which the ray is cast, and𝑧 row
+is the Z-axis position of the row currently being examined.
+A row is considered passable only when it contains a continuous clear interval of sufficient width for
+the player to move through:
+∃ [𝑎, 𝑏]such that(𝑏−𝑎) ≥𝑤 clear ∧𝐶(𝑥)=0∀𝑥∈ [𝑎, 𝑏].(33)
+In this condition,[𝑎, 𝑏]represents a continuous interval across the scanned row,𝑤clear is the minimum
+required clear width, and𝐶(𝑥)=0 indicates that no blocking collider is detected at the sampled position.
+If no such interval exists, the row is treated as unsafe.
+This formulation evaluates the path as a traversable corridor rather than as isolated ground hits. A
+generated section is therefore accepted only when there is enough uninterrupted space for the player
+to pass through. The volumetric checks described in the next subsection extend this test by detecting
+physical collider volume that may not be fully captured by individual rays.
+5.2.2 Volumetric Sweeps
+Ray casting provides a narrow, line-based view of the generated corridor. This is useful for sampling
+the ground and checking whether a clear passage exists, but it does not fully describe the physical
+volume occupied by irregular objects. For this reason, the scanner supplements the ray probes with
+Physics.OverlapBoxchecks (queries that ask the physics engine which colliders intersect a defined
+3D box, rather than only what a single line hits).
+17
+The overlap-box test is centred on the tile being inspected and covers the traversable corridor window.
+Any collider intersecting this volume is captured as part of the scan result. This makes the evaluation less
+dependent on whether a thin ray happens to strike the exact obstructing part of an object. It is particularly
+relevant for prefabs with uneven geometry, extended branches, wide bases, or collider shapes that do not
+align neatly with the visual mesh.
+In this form, the ray probes and volumetric sweeps serve different purposes. The rays estimate
+whether a continuous path exists across the scanned row, while the overlap-box check verifies whether
+the same corridor is physically occupied by colliders. The two checks together give a more reliable
+assessment of whether the generated region is actually usable by the player.
+5.2.3 Identification and Automatic Removal
+Objects detected through the ray probes or overlap-box checks are recorded using their collider infor-
+mation and the name of the corresponding root object. This keeps the blockage report tied to the actual
+generated prefab rather than only to an anonymous physics hit. The reported data therefore remains
+useful for later analysis, because the problematic object can be traced back to the spawned environment
+asset.
+When the automatic-removal option is enabled, the scanner can destroy objects that block the corridor
+before the player reaches that section. This behaviour is kept as part of the evaluation mechanism because
+the generated world is produced at runtime, and some invalid object placements may need to be handled
+immediately rather than only reported after failure.
+Even when an object is removed, the blockage is still recorded with its relevant details, including
+object identity, size and layer information. The removal step therefore does not hide the generation
+problem. It only prevents the detected blockage from becoming an immediate obstacle for the player,
+while preserving the evidence needed to study why that object placement was unsafe.
+5.3 Ground Agent
+The ground agent provides a second form of validation from the ground level. While the aerial agent
+examines the generated path from above, the ground agent tests whether the same terrain can be traversed
+through the runtime navigation surface. This distinction is important because a region may appear open
+from an overhead scan, but still be difficult for a ground-based agent to navigate because of NavMesh
+boundaries, collider placement or discontinuities between generated tiles.
+The ground agent operates ahead of the player and follows the generated path as a traversable agent.
+Its role is to identify real-time navigation issues that are closer to the player’s actual movement conditions.
+In this sense, it acts as a ground-level counterpart to the aerial agent. The aerial agent checks the corridor
+geometrically, while the ground agent checks whether the procedural terrain remains navigable through
+the same navigation structure used for agent movement.
+This gives the evaluation system two complementary views of the generated content: one based on
+spatial scanning and another based on practical path traversal. Together, they reduce the chance that a
+generated section is accepted only because it satisfies one form of inspection.
+5.3.1 Navigation and Behaviour
+The ground agent validates the generated terrain from a ground-navigation perspective. The aerial
+agent can inspect the corridor from above, but an overhead scan does not confirm that the same region
+is navigable through the baked NavMesh. The ground agent therefore acts as a second evaluator by
+attempting to move through the generated path using the runtime navigation system.
+The target position of the ground agent is calculated ahead of the player:
+𝑝ground,target =
+
+𝑥 𝑝
+𝑦navMesh
+𝑧 𝑝 +𝐷 lookAhead
+
+.(34)
+18
+Here,𝑥 𝑝 is the player’s X-axis position,𝑦 navMesh is the valid height sampled from the navigation
+mesh, and𝐷 lookAhead is the forward distance used to keep the ground agent ahead of the player. The
+target is therefore tied to the navigable surface rather than being an arbitrary point in world space.
+The ground agent speed is adjusted according to the player’s forward velocity:
+𝑣 runner =max(10,|𝑣 𝑝,𝑧 |) +𝑣 𝑏𝑜𝑜𝑠𝑡 .(35)
+The lower bound of 10 ensures that the ground agent continues moving even when the player’s
+forward velocity is low. The additional boost keeps the ground agent separated from the player, allowing
+navigation problems to be detected before they become immediate gameplay failures.
+5.3.2 Movement Stuck and Recovery
+A practical issue observed during runtime was that the ground agent could become stuck around over-
+lapping NavMesh regions between procedurally generated ground tiles. This failure is different from
+an ordinary obstacle blockage. The path may appear open in the scene, but small discontinuities or
+boundary artefacts in the baked navigation surface can prevent the agent from progressing.
+The stuck condition is evaluated using both movement progress and NavMesh velocity. The ground
+agent is treated as stuck when its Z-axis position changes by less than the configured threshold while
+its NavMesh velocity is nearly zero. Using both conditions reduces false positives, since the agent may
+briefly slow down or adjust its direction without actually being trapped.
+When this condition is detected, the recovery mechanism moves the ground agent forward by the
+configured step, places it on the nearest valid NavMesh position, resets the current path, and applies a
+cooldown before another recovery attempt can occur. The cooldown prevents repeated recovery actions
+during a short navigation disturbance.
+This recovery mechanism does not remove the underlying generation issue. Its purpose is to keep
+the evaluator active when the failure is caused by minor NavMesh overlap or tile-boundary artefacts, so
+that the system can continue inspecting the generated path ahead.
+5.3.3 Corridor Scanning
+The ground agent also performs corridor scanning and obstacle detection, but from a ground-navigation
+perspective. While the aerial agent scans the generated region from above, the ground agent checks
+whether the same region can be approached through the baked NavMesh surface.
+This gives the evaluation system a second form of evidence. A section may pass the overhead scan
+because there is visible ground and some clear space, but the ground agent may still fail if the navigable
+surface is broken, blocked, or not connected properly across generated tiles. The ground agent scan
+therefore focuses less on visual openness and more on practical traversability.
+Detected problems are treated as part of the runtime evaluation report. In this way, the ground agent
+acts as a ground-level validator for the procedural generation system, complementing the aerial agent
+rather than replacing it.
+5.3.4 Obstacle Layer, Volumetric Sweep, and Blockage Reporting
+The ground agent applies obstacle detection through a dedicated obstacle layer rather than treating every
+collider in the scene as a possible blockage. The agent’sobstacleMask(a bit mask telling the physics
+queries which Unity layers count as obstacles and which to ignore) is configured to theObstacleslayer
+in the Unity Inspector, and the obstacle prefabs used by the procedural generator are marked with this
+layer. This keeps the scan focused on objects that can actually interfere with traversal, instead of mixing
+terrain, decorative objects, agent colliders and unrelated scene elements into the same detection process.
+The ground agent uses the same general scanning idea as the aerial agent, but its interpretation is
+different. The aerial agent can remove blocking objects when automatic removal is enabled, whereas the
+ground agent does not modify the generated scene. Its role is diagnostic. It performs ray-based checks
+19
+Table 4: Crash-report data captured for procedural blockage analysis.
+Category Captured Data
+Game context Scene name, timestamp
+Player state Player position, speed
+Environment state Skybox variant, latest ground position, tile length
+Generation parameters Spawn percentage, X range, clear width, jitter, Y offset
+Scanner context Tile position, probe position, ray spacing, hit count
+Blocking objects Object name, position, size, layer
+and supplements them withPhysics.OverlapBoxsweeps for irregularly shaped objects, then records
+the detected obstacle colliders and the corresponding tile position.
+This distinction is useful for evaluation. If the ground agent reports a blockage, the result represents
+a ground-navigation failure rather than an automatically corrected generation issue. The blockage data
+is then passed to the reporting pipeline, where it can be preserved for later inspection instead of being
+lost during runtime.
+5.4 Crash Report
+The crash-report system is the persistent record of the evaluation process. Since procedural generation
+can fail because of a particular combination of player state, object density, tile position, skybox variant
+or scanner configuration, the report cannot only state that the path was blocked. It needs to preserve the
+surrounding conditions that produced the blockage.
+The system therefore captures, combines and exports detected corridor blockages during the game
+session. In this project, the report works both as immediate feedback inside the game and as a post-
+gameplay artefact for analysing why a generated section became unsafe.
+5.4.1 Blockage Detection and Data Capture
+When an impassable tile is detected, the blockage information is sent through theBlockageReporter
+class. Each report is stored as a serialisable data object (a plain data record that Unity can convert into
+bytes so it survives a scene change or can be written to disk), so that the failure state can be carried across
+scenes and later rendered in the exit-report view. The collected reports are stored in a static cache, which
+allows the detected blockage information to survive the transition from the running game scene to the
+report scene.
+The captured fields are summarised in Table 4.
+This structure keeps the report close to the actual generation process. The object name identifies
+the spawned prefab involved in the blockage, while the scanner and generation parameters show the
+procedural conditions under which the blockage was detected.
+5.4.2 Exit Scene Visualisation
+The exit-report scene renders the stored blockage data using TextMeshPro. TheBlockageReportDisplay
+component converts the cached blockage records into a readable report, with formatting and margins
+suitable for viewing inside the game. The scene therefore acts as a bridge between runtime detection and
+human inspection.
+If no blockage data is available, the scene does not remain blank. A fallback message is displayed
+instead, indicating that no reports are present and giving possible reasons such as no detected blockages,
+data loss or cache reset. This makes the report scene useful both when failures are detected and when
+the evaluation run completes without recorded blockage data.
+20
+5.4.3 PDF Export Functionality
+The PDF export mechanism provides a persistent version of the crash report outside the Unity scene. The
+PdfExporterscript collects the report text and writes it into a readable PDF document. The exporter
+handles line wrapping, pagination, margins and report formatting, which is necessary because blockage
+reports can vary in length depending on the number of detected objects and scanner entries.
+The implementation writes the PDF structure directly, including pages, font objects and text
+streams [19]. The resulting document can be saved locally in a stand-alone build. This makes the
+crash report usable beyond the immediate game session and allows the detected procedural failures to be
+reviewed after execution.
+5.5 Quantitative Evaluation
+The evaluation framework defined in Section 3.1 admits two classes of result.Structuralresults follow
+analytically from the parameters fixed in the spawner and scanner scripts and are reported below as derived
+numbers. The remaining metrics (𝑅 block,𝑅 remove,𝜌 spawn, frame-time distribution, prefab entropy, and
+Jaccard overlap) require runtime instrumentation; their empirical instantiation on the released build is
+left as future work and is described as a limitation in Section 5.5.2.
+5.5.1 Structural results derived from code
+Three structural properties of the system are determined entirely by the constants in the spawner and
+scanner scripts and require no runtime measurement.
+F1 — Spawner saturation bound (supports H2).With the X-range[−7.1,10.55]giving𝑊=17.65 m
+and𝑁=max( ⌈𝑊⌉,12)=18 cells, a clear half-width of 2 m excludes the four cells whose centres satisfy
+|𝑥𝑖 |<2, leaving 14 candidate cells. Because each successful placement marks both itself and its two
+neighbours as occupied (Section 4.5.2), the maximum number of objects that can ever coexist on a single
+tile is the size of a maximum independent set on the path of 14 available cells, which is 8. Solving
+⌊𝑁·𝑝 spawn/100⌋=8 gives a saturation threshold𝑝 ★
+spawn ≈44%. The spawn-density slider therefore
+exposes a controllability ceiling that is structural: requesting 50%, 75%, or 100% cannot place more
+objects than requesting≈44%, and any extra demand is dissipated as failed re-roll attempts under the
+safety counterattempts < cells * 5.
+F2 — Per-segment scan cost (supports H3).A single call toFlyerCorridorScanner.ScanCorridor
+performs⌈𝐿 seg/𝑔 𝑧⌉ +1=21 horizontal probe rows over a segment of length𝐿 seg =10 m with row
+gap𝑔 𝑧 =0.5 m. Each row sweeps the corridor with X-step 0.05 m across a width of 2.15 m, giv-
+ing up to⌊2.15/0.05⌋ +1=44 rays in the worst case (no early-exit on a sufficiently large clear
+gap). The per-segment ray budget is therefore bounded above by 21×44=924 rays, plus a single
+Physics.OverlapBoxcall. Because the scanner is gated bytileZ <= lastScannedTileZAxis,
+this work is performed at most once per𝐿 seg of forward travel, irrespective of frame rate. The ground
+tile length is 96 m, so each ground tile incurs⌈96/10⌉=10 scanner segments. Note that the scanner
+segment length (10 m) is not the same as the ground tile length (96 m); the two operate at different
+granularities, and conflating them overestimates per-tile work by an order of magnitude.
+F3 — NavMesh coverage relative to look-ahead (supports H4).The aerial agent maintains a forward
+offset ofΔ𝑧=200 m, while the ground agent uses a NavMesh look-ahead of𝐷 lookAhead =300 m, both
+within the baked region of[𝑧 𝑝 −50, 𝑧 𝑝 +600]m (Section 4.4.4). The ground agent therefore evaluates
+a larger forward window than the aerial agent under default settings, so the two agents do not in general
+cover the same set of tiles even when both are active.
+Together, F1 establishes that the spawn-density slider has a controllability ceiling at𝑝 ★
+spawn ≈44%,
+F2 establishes that scanner cost is constant per metre travelled rather than per frame and is bounded above
+21
+by 924 ray probes plus onePhysics.OverlapBoxcall, and F3 establishes that the two agents inspect
+non-coincident forward windows under default settings. These are the claims that follow directly from
+the implementation; the corresponding empirical quantities (𝜌 spawn, mean frame time and its violation
+rates,𝐽(𝐴, 𝐺)) require a runtime-measurement batch and are not reported here.
+5.5.2 Threats to validity and limitations
+The structural results F1–F3 follow from the code constants and therefore generalise only to the parameter
+set used in the released build; changing𝑊,𝑁, the clear half-width, the row gap, or the X-step changes
+both the saturation point and the ray budget. The remaining metrics defined in Section 3.1 require runtime
+instrumentation and are not reported in this paper; their empirical instantiation on the released build is
+left as future work, together with the player study that would be required to extend the analysis from
+technical playability to human enjoyment. Ground-truth labels for false positives and false negatives
+are not directly observable at runtime and would rely on manual review of logged replays, which would
+introduce an annotator dependency. Commercial titles such asNo Man’s Sky[1] andCaves of Qud[2, 3]
+are retained only as qualitative inspiration for automated probing of generated content, not as numerical
+baselines, because their scale, asset budget, and production goals differ substantially from a single-author
+research prototype and a side-by-side comparison would not be meaningful.
+5.5.3 Connection to the canonical PCG evaluation taxonomy
+The framework in Section 3.1 instantiates three of the four axes identified by Cook et al. [9] for
+procedural-level-generation systems:playabilityvia𝑅 block and𝑅 remove;controllabilityvia the spawn-
+density response in conjunction with the structural bound F1; andperformancevia the frame-time
+distribution against Unity’s documented budgets [12, 13].Diversityis approached by the prefab en-
+tropy𝐻 norm
+prefab. Of these, the present work delivers the structural component of controllability (F1) and
+the structural component of performance (F2) as derivable numbers; the remaining instantiations are
+framework-level and await runtime measurement.
+6 Legal, Social, and Ethical Considerations
+A runtime generator inherits the licensing terms of every asset on which it operates.Momentumdraws
+exclusively from a curated, in-project asset set, and the placement rules involve no example-driven model,
+no training corpus, and no external generative component. The legal exposure is therefore limited to the
+standard concerns of asset provenance and licence compatibility, which apply equally to any procedurally
+driven game built on third-party content. Any future variant that replaces the rule-based spawner with
+a learned model would be required to re-examine these conditions, particularly with respect to training
+data and reproductive output.
+Two player-experience concerns warrant attention. The first is that endless-runner games depend
+structurally on repetition and reward progression, which can encourage prolonged play sessions [20];
+this places a responsibility on the designer to ensure that engagement does not rely solely on compulsive
+repetition. The second is accessibility: a procedurally generated game should not assume uniform
+reaction time, visual capacity, or input preference across players. The runtime sliders for forward speed,
+lateral speed, and spawn density partially address this by giving the player a coarse means of adjusting
+difficulty without code-level changes.
+Automated evaluation introduces additional responsibility. False negatives, in which an unsafe
+section is accepted as playable, terminate the run; false positives, in which a safe section is rejected, waste
+generated content and may alter what the player sees when automatic removal is enabled. Transparency
+therefore matters. The crash-report pipeline records every detected blockage with sufficient context to
+be inspected after the run, and human review of those records remains the appropriate basis for judging
+whether the generator’s behaviour is acceptable. The agents reduce risk; they do not replace designer
+oversight.
+22
+7 Conclusion
+This work presentedMomentum, an endless-runner game developed to study procedural content genera-
+tion in conjunction with runtime evaluation. The project addressed two coupled concerns: the production
+of an unpredictable game environment during gameplay, and the verification that the generated content
+remains technically playable before it is encountered by the player.
+The implementation combined continuous terrain streaming, constraint-driven object placement
+inspired by Wave Function Collapse, asynchronous navigation-surface management, runtime gameplay
+controls, autonomous aerial and ground evaluation agents, ray casting, volumetric physics sweeps, and
+structured crash reporting. Together these components form a pipeline in which content is not only
+generated, but also inspected before it reaches the player.
+Two design decisions in the implementation merit emphasis. First, ray casting and volumetric physics
+sweeps perform complementary rather than overlapping functions: thin rays sample the corridor along
+its length, while volumetric checks capture the full collider footprint of objects whose geometry would
+otherwise slip between probe rows. Second, the aerial and ground agents inspect distinct properties of
+the same region. The aerial agent reasons about the corridor as geometric space, whereas the ground
+agent reasons about it as a navigable surface. A region may be open in one sense yet impassable in the
+other, and neither agent fully subsumes the role of the other.
+The project also surfaced engineering costs that are easily underestimated at the design stage.
+Discontinuities at navigation-surface boundaries between streamed tiles, prefab base geometry that does
+not snap cleanly to the ground, and the cost of synchronous mesh rebuilding under continuous generation
+each emerged as distinct sub-problems. These observations support the broader point that procedural
+generation with runtime validation is a system-level concern, not solely an algorithmic one.
+The work met its core objective of producing a playable, procedurally driven endless-runner game
+with an integrated evaluation mechanism. It contributes a self-contained example of how generated
+content can be examined during runtime rather than accepted unconditionally on production. Beyond
+the implementation, the paper identifies a structural saturation point in the spawner at𝑝 ★
+spawn ≈44%
+that follows directly from the placement constraints, and derives a per-segment scanning cost of at most
+924 ray probes plus one OverlapBox call independent of frame rate. These structural results turn the
+contribution from an engineering artefact into a measurable evaluation framework whose remaining
+metrics are testable on the released build.
+Data and Code Availability
+A Windows build ofMomentumand the supporting source code accompany this paper as part of the
+dissertation submission and are available from the author on request.
+Acknowledgements
+The author thanks Professor Michael Cook for his supervision, guidance, and continuous support through-
+out the MSc project at King’s College London; his suggestions and technical direction were valuable
+during the development of this work. The author is also grateful to Megha Quamara and Professor
+Luca Vigan`o for their encouragement and research guidance during the Master’s degree and thanks the
+faculty and staff of the Department of Informatics at King’s College London for their support during the
+academic program. Finally, the author expresses sincere thanks to his parents for their constant support,
+and to his friends for their encouragement throughout this period.
+23
+References
+[1] A. McAloon, “What the Code of No Man’s Sky Says About Procedural Generation.” [Online].
+Available: https://www.gamedeveloper.com/programming/what-the-code-of-i-no-man-s-sky-i-s
+ays-about-procedural-generation
+[2] B. Bucklew and J. Grinblat, “Subverting Historical Cause and Effect: Generation of
+Mythic Biographies in Caves of Qud,” inProceedings of the 12th International Conference
+on the Foundations of Digital Games, Hyannis, MA, USA, 2017. [Online]. Available:
+https://www.pcgworkshop.com/archive/grinblat2017subverting.pdf
+[3] ——, “End-to-End Procedural Generation in Caves of Qud.” [Online]. Available:
+https://gdcvault.com/play/1026313/Math-for-Game-Developers-End
+[4] J. Dormans, “Adventures in Level Design: Generating Missions and Spaces for Action
+Adventure Games,” inProceedings of the PCGames Workshop, 2010. [Online]. Available:
+https://pcgworkshop.com/archive/dormans2010adventures.pdf
+[5] G. Samaritaki, “Debugging Grammars for Level Generation.” [Online]. Available: https:
+//www.researchgate.net/publication/365644048 Debugging Grammars for Level Generation
+[6] O. B¨ uy¨ uks ¸ar, D. Yıldız, and S. Demirci, “Enhancing Wave Function Collapse
+Algorithm for Procedural Map Generation Problem.” [Online]. Available: https:
+//dergipark.org.tr/en/download/article-file/3412583
+[7] I. Karth and A. M. Smith, “WaveFunctionCollapse is constraint solving in the wild,” inProceedings
+of the 12th International Conference on the Foundations of Digital Games (FDG ’17), Hyannis,
+MA, USA, 2017.
+[8] J. Togelius and J. Schmidhuber, “An Experiment in Automatic Game Design.” [Online]. Available:
+http://julian.togelius.com/Togelius2008An.pdf
+[9] M. Cook, O. Withington, and L. Tokarchuk, “On the Evaluation of Procedural Level Generation
+Systems,” inProceedings of the 19th International Conference on the Foundations of Digital Games,
+Worcester, MA, USA, 2024. [Online]. Available: https://ar5iv.labs.arxiv.org/html/2404.18657v1
+[10] M. Cook, J. Gow, G. Smith, and S. Colton, “Danesh: Interactive Tools for Understanding
+Procedural Content Generators,”IEEE Transactions on Games, vol. 14, no. 3, 2022. [Online].
+Available: https://mkremins.github.io/refs/Danesh.pdf
+[11] Unity Technologies, “C# Style Guide for Unity 6.” [Online]. Available: https:
+//unity.com/resources/c-sharp-style-guide-unity-6
+[12] ——, “Best Practices for Profiling Game Performance.” [Online]. Available: https:
+//unity.com/how-to/best-practices-for-profiling-game-performance
+[13] ——, “Profiling in Unity 2021 LTS: What, When, and How,” 2022. [Online]. Available:
+https://blog.unity.com/engine-platform/profiling-in-unity-2021-lts-what-when-and-how
+[14] ——, “Mathf.Lerp.” [Online]. Available: https://docs.unity3d.com/ScriptReference/Mathf.Lerp.
+html
+[15] ——, “Mathf.Clamp.” [Online]. Available: https://docs.unity3d.com/ScriptReference/Mathf.Cla
+mp.html
+[16] ——, “NavMesh.” [Online]. Available: https://docs.unity3d.com/ScriptReference/AI.NavMesh.ht
+ml
+24
+[17] ——, “Profiler.” [Online]. Available: https://docs.unity3d.com/6000.1/Documentation/Manual/P
+rofiler.html
+[18] ——, “Unity Documentation.” [Online]. Available: https://docs.unity3d.com/Manual/index.html
+[19] Adobe Systems Incorporated, “Portable Document Format,” 2008. [Online]. Available: https:
+//opensource.adobe.com/dc-acrobat-sdk-docs/standards/pdfstandards/pdf/PDF32000 2008.pdf
+[20] M. J. Koepp, R. N. Gunn, A. D. Lawrence, V. J. Cunningham, A. Dagher, T. Jones,
+D. J. Brooks, C. J. Bench, and P. M. Grasby, “Evidence for Striatal Dopamine Release
+During a Video Game,”Nature, vol. 393, no. 6682, pp. 266–268, 1998. [Online]. Available:
+https://www.nature.com/articles/30498
+[21] R. Heaton, “The Wave Function Collapse Algorithm Explained Very Clearly.” [Online]. Available:
+https://robertheaton.com/2018/12/17/wavefunction-collapse-algorithm/
+[22] Boris, “Wave Function Collapse, Explained.” [Online]. Available: https://www.boristhebrave.co
+m/2020/04/13/wave-function-collapse-explained/
+[23] Unity Technologies, “Quaternion.Slerp.” [Online]. Available: https://docs.unity3d.com/ScriptRef
+erence/Quaternion.Slerp.html
+25

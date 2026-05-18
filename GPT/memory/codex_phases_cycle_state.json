@@ -1,6 +1,6 @@
 {
-  "last_success": "2026-05-12T23:58:12",
-  "last_cycle_id": "2026-05-12 23:58",
-  "last_reason": "forced",
+  "last_success": "2026-05-18T12:27:03",
+  "last_cycle_id": "2026-05-18 11:58",
+  "last_reason": "elapsed 7920min >= 90min",
   "last_error": null
 }

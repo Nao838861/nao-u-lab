@@ -12,3 +12,10 @@
 # Codex phase transient command captures
 GPT/log/codex_phase_*_last.stdout.txt
 GPT/log/codex_phase_*_last.stderr.txt
+
+# Git recovery / worktree scratch areas (do not commit)
+.tmp_cycle_fix_worktree/
+.tmp_git_corrupt_backup/
+.tmp_signal_lessons_push2/
+.tmp_signal_shepherd_push/
+.worktrees/

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-17T18:26:07+09:00",
+  "updated_at": "2026-05-18T12:14:28+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -33,9 +33,82 @@
     "1778971050.740239",
     "1778425572.760969",
     "1778536161.898699",
-    "1777795540.020089"
+    "1777795540.020089",
+    "1778378681.483349",
+    "1779018447.983779",
+    "1777981898.092829",
+    "1779012072.223609",
+    "1778599412.454279"
   ],
   "reviews": [
+    {
+      "reviewed_at": "2026-05-18T03:43:56+09:00",
+      "id": "sr-1779012072-6dfc94017c",
+      "source_ts": "1779012072.223609",
+      "title": "mTsuruta「要素設計と登場順設計を別工程で持つ」を、本日 game-rights で炎上した graze_log BOMB 構造問題と shot_log v01 17日放置と memory 静止葉 55件 に重ねる3点合成",
+      "decision": "adopt_probe",
+      "reason": "要素そのものの設計と、時間軸上でいつ出すか・いつ回すかの設計を分ける知見。graze_log BOMB、wave_grammar_check 放置、memory 静止葉の3例があり、ゲーム制作と memory/tooling 運用の両方に直結する。ただし既存の説明過多回避 probe やゲーム設計ルールと隣接するため、恒久ルールではなく次回の mechanic / tooling 変更でだけ確認する可逆 probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
+    {
+      "reviewed_at": "2026-05-18T01:29:56+09:00",
+      "id": "sr-1777981898-56bd23c5bf",
+      "source_ts": "1777981898.092829",
+      "title": "Three tweets on whether the ignition point is internal or external: ats suffering scalar / creativetomred no over-explaining / umiyuki_ai Saizeriya CLI",
+      "decision": "adopt_probe",
+      "reason": "This atom connects agent autonomy, game tutorial design, and CLI experience through one axis: do not push behavior only with explanation or external instruction; place the next-action trigger inside the user or agent experience. For Phase 3b this is too broad for a permanent rule, but useful as a reversible probe for the next shared-reads draft, game prototype, or memory UX decision.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
+    {
+      "reviewed_at": "2026-05-17T23:04:06+09:00",
+      "id": "sr-1779018447-d3fb3bca85",
+      "source_ts": "1779018447.983779",
+      "title": "Is Grep All You Need? How Agent Harnesses Reshape Agentic Search",
+      "decision": "adopt_probe",
+      "reason": "In Nao_u_BOT memory_recall, shared-reads, and game-rights search, the practical risk is not only grep versus vector. It is whether results are delivered inline or as file paths, and whether the agent closes the read-integrate-retry loop. This overlaps with existing memory-layer probes, so it should stay as a reversible one-cycle probe for the next recall improvement, Phase 4a, or dedupe search.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
+    {
+      "reviewed_at": "2026-05-17T21:18:00+09:00",
+      "id": "sr-1778378681-e8f1d05fba",
+      "source_ts": "1778378681.483349",
+      "title": "ebikani_hasami「Agents need control flow, not more prompts」(HN 433pts) — 我々の5/2事件と3層プロンプト構造を「制御フロー」として読み直す",
+      "decision": "adopt_probe",
+      "reason": "定時サイクルは既に長い指示群を持っており、次に改善すべきなのは文言追加ではなく、Phase間の順番・分岐・失敗時の扱いが実際に機能しているかの確認である。この atom は prompt 増量ではなく control flow として agent 運用を読むため、恒久ルール化せず、次回の phase handoff / tool failure / retry 判断で1回だけ確認する probe に留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
+    },
     {
       "reviewed_at": "2026-05-17T18:26:07+09:00",
       "id": "sr-1777795540-ff54caa26c",
@@ -596,6 +669,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-18T12:14:28+09:00",
+      "id": "sr-1778599412-4c87f1b442",
+      "source_ts": "1778599412.454279",
+      "title": "AutoUE: making 3D game generation an engine-verifiable production pipeline",
+      "decision": "adopt_probe",
+      "reason": "AutoUE is Unreal-specific, but its useful lesson is to split production into engine-grounded asset/layout, rule-module, interactive object, and runtime-test slices. Recent game work can conflate visuals, code completion, interaction, and headless runtime evidence, so this is adopted only as a reversible probe for the next playable diff.",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
     }
   ],
   "active_probes": [
@@ -994,6 +1084,66 @@
         "If the worktree is already dirty, did I leave unrelated changes unstaged and report the boundary briefly?"
       ],
       "expires_after": "Review after the next git sync / commit / push."
+    },
+    {
+      "id": "probe-20260517-control-flow-before-prompt-growth",
+      "created_at": "2026-05-17T21:18:00+09:00",
+      "source_ts": "1778378681.483349",
+      "scope": "next phase handoff / tool failure / retry decision where adding instructions may look easier than changing order, branch, or stop condition",
+      "questions": [
+        "Before adding or rephrasing instructions, did I identify whether the problem is ordering, branching, retry/abort condition, or missing verification?",
+        "If a phase or tool step failed, did I record the next control-flow action: retry, skip with evidence, defer, or escalate, instead of only adding a cautionary note?",
+        "Did I avoid making AGENTS.md, phase prompts, or directives heavier when a one-cycle checklist or state update is enough?"
+      ],
+      "expires_after": "Review after the next phase handoff, tool failure, or proposed instruction/directive change."
+    },
+    {
+      "id": "probe-20260517-retrieval-delivery-loop-check",
+      "created_at": "2026-05-17T23:04:06+09:00",
+      "source_ts": "1779018447.983779",
+      "scope": "next memory recall improvement / Phase 4a cleanup / shared-reads or game-rights duplicate and relevance search",
+      "questions": [
+        "Before using search results, did I state whether this recall can rely on inline excerpts or must open file paths / raw logs?",
+        "If the search felt weak, did I classify the likely failure as query mismatch, result volume, file-based reading, distractor contamination, or an unclosed read-integrate-retry loop?",
+        "Did I avoid treating grep / rg / vector / hybrid as the verdict, and instead connect the final judgment to an evidence file, Slack ts, or atom id?"
+      ],
+      "expires_after": "Review after the next memory recall improvement, Phase 4a cleanup, or shared-reads/game-rights duplicate/relevance search."
+    },
+    {
+      "id": "probe-20260518-internal-ignition-vs-explanation",
+      "created_at": "2026-05-18T01:29:56+09:00",
+      "source_ts": "1777981898.092829",
+      "scope": "next shared-reads draft, game prototype/tutorial change, or memory/CLI UX change where adding explanation may substitute for making the next action naturally happen",
+      "questions": [
+        "Did this change merely add explanation, warning text, or external instruction, or did it create internal pressure / affordance that makes the next action naturally happen?",
+        "If explanation is present, can the first action still be pressed, tried, chosen, or predicted without reading that explanation?",
+        "For shared-reads or memory writing, did the text convert interest into one usable next judgment, search term, or retreat condition?"
+      ],
+      "expires_after": "Review after the next shared-reads draft, game prototype/tutorial, or memory/CLI UX change where explanation and experience design compete."
+    },
+    {
+      "id": "probe-20260518-element-vs-sequence-design",
+      "created_at": "2026-05-18T03:43:56+09:00",
+      "source_ts": "1779012072.223609",
+      "scope": "next game mechanic implementation/repair, memory cleanup, or tooling/check addition where creating an element may be confused with placing it in an operational sequence",
+      "questions": [
+        "要素そのものの設計と、登場順・発火条件・運用列の設計を1行で分けて書いたか。",
+        "ゲーム mechanic なら、最初の1-3回の遭遇/使用だけで、その要素の価値や危険が説明文なしに立つかを確認したか。",
+        "memory/tooling/check なら、何を作ったかだけでなく、いつ走らせ、いつ見直し、いつ退役候補にするかを最低1つ決めたか。"
+      ],
+      "expires_after": "次に game mechanic の実装/修正、memory cleanup、または tooling/check 追加を1回行ったら見直す。"
+    },
+    {
+      "id": "probe-20260518-runtime-verifiable-production-slices",
+      "created_at": "2026-05-18T12:14:28+09:00",
+      "source_ts": "1778599412.454279",
+      "scope": "next game prototype implementation / repair / evaluation where visual scene, code completion, interaction behavior, and runtime verification may be conflated",
+      "questions": [
+        "For the next playable diff, did I state which slice changed: asset/layout, rule/module, interactive object, or runtime test?",
+        "Did I avoid treating visual completion or generated code as proof of gameplay, and verify at least one interaction behavior through runtime log, manual check, browser, or Playwright-equivalent action?",
+        "If verification failed, did I classify the failure as tool/spec gap, dependency/import problem, interaction-flow gap, or runtime-test gap instead of collapsing it into model weakness?"
+      ],
+      "expires_after": "Review after the next game prototype implementation, repair, or playable diff evaluation."
     }
   ]
 }

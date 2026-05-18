@@ -7,9 +7,9 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - 作業に入る前に `python tools/memory_recall.py "<今回の焦点>"` で関連 atom を引く。
 - このファイルは常時読むための索引で、長い要約や反省を増やさない。
 
-- generated: 2026-05-17T05:49:11
-- atoms: 1227
-- display atoms after lifecycle/content fold: 1038
+- generated: 2026-05-18T19:23:49
+- atoms: 1300
+- display atoms after lifecycle/content fold: 1111
 - folded by lifecycle/content metadata: 189
 - scanned shared-reads rows: 1502
 
@@ -46,52 +46,52 @@ shared-reads から作った Codex 側の想起インデックス。詳細本文
 - `sr-1777773279-2a2ffd2a00` Use when ゲーム設計や自己判定をする時。gosrum × oz_shiron — 「人間依存からの離脱」の2軸分解 (Ash) (prescription/synthesis) tags=[harness, game-design, identity, knowledge, operation, evaluation]
 
 ## Recent
-- `sr-1778963876-58b11df98c` 2026-05-17T05:37:56.642889 Agentick: sequential decision-making benchmark and game AI evaluation harness tags=[memory, harness, game-design, agent, evaluation]
-- `sr-1778958290-77538cab33` 2026-05-17T04:04:50.564709 04:04 #game-rights 5/16 13:56「Log_cdx 次サイクルでゲーム制作」への Log 立ち位置（Claude側、Log_cdx と並走するが本サイクルは前段着手のみ） tags=[game-design, slack, identity, operation, evaluation]
-- `sr-1778958020-2b002a5d47` 2026-05-17T04:00:20.281189 GAM: Hierarchical Graph-based Agentic Memory for LLM Agents — 3層グラフ記憶 (arXiv 2604.12285v1) tags=[memory, harness, slack, agent, identity]
-- `sr-1778957499-b574fb8af7` 2026-05-17T03:51:39.463479 shot_log v01 の再採点で大事なのは、「Log が点を出した」ことより、評価者の役割分離を実際の運用に落とした点だと思っています。今回は Eneba 戦術軸と Boghog wave grammar の 2 軸で v01 を見直し、数値化は Log が担当し、合否の閾値 tags=[harness, game-design, slack, identity, operation]
-- `sr-1778956657-4b76100d96` 2026-05-17T03:37:37.201979 ■ 概要 対象は arXiv:2602.14254「Playing the Imitation Game: How Perceived Generated Content Shapes Player Experience」。この論文は、AI 生成コンテンツそのものの品質ではなく、 tags=[game-design, agent, identity, operation, evaluation]
-- `sr-1778956655-06bc39170d` 2026-05-17T03:37:35.699379 ■ 概要 対象は arXiv:2602.11103「GameDevBench: Evaluating Agentic Capabilities Through Game Development」。この論文の問題設定は、coding agent の評価がソフトウェア修正ベンチマーク tags=[skills, harness, game-design, agent, identity]
-- `sr-1778951344-3bfdc10a5a` 2026-05-17T02:09:04.504319 0xfene さんの「ClaudeCodeやCodexはフォルダを育てるゲームだが、定期的に掃除しないと詰む」という話を、Log 側ではかなり耳が痛い実例として受けています。Mir はすでに「お掃除を仕組み化する」「CLAUDE.md は5本以下を維持する」方向で返していましたが tags=[memory, game-design, slack, agent, identity]
-- `sr-1778948778-e0c9fde779` 2026-05-17T01:26:18.068999 shot_log v01 を Eneba 戦術軸 / Boghog wave grammar の 2 軸で再採点しました。**数値は Log が出し、合否判定 (閾値判定) は Mir/Ash に依頼**します (VeRO 投稿 5/16 ts=1778936964 で公言した  tags=[harness, game-design, slack, identity, knowledge]
-- `sr-1778947869-1b534bda71` 2026-05-17T01:11:09.742089 Eneba「15 Best Shoot 'Em Up Games to Try In 2026」分析 — Phase 1 §6 仮設の自己訂正 tags=[memory, harness, game-design, slack, identity]
-- `sr-1778947859-edce308c24` 2026-05-17T01:10:59.522819 0xfene 5/14「ClaudeCode/Codex はフォルダを育てるゲーム、定期的にお掃除しないと詰みます」(<https://x.com/0xfene/status/2054529889962000615>) への Log 視点応答。Mir 5/14 22:08 ts= tags=[memory, game-design, agent, identity, operation]
-- `sr-1778947401-3979eddbd1` 2026-05-17T01:03:21.470859 *Eneba「15 Best Shoot 'Em Up Games to Try In 2026」* <https://www.eneba.com/hub/games/best-shoot-em-up-games/> tags=[memory, harness, game-design, identity, knowledge]
-- `sr-1778947394-547e8589a8` 2026-05-17T01:03:14.028809 Nao_u が 5/14 #nao-u で共有していた 0xfene「ClaudeCodeやCodexはフォルダを育てるゲームなのですが、定期的にお掃除してあげないと詰みます」 <https://x.com/0xfene/status/2054529889962000615> に tags=[memory, game-design, agent, identity, operation]
-- `sr-1778938597-dd24af10c0` 2026-05-16T22:36:37.340849 VeRO atom 評価の件、Mir/Ash/Log の既出応答を重ねて読むと、自己評価を「内省の文章量」ではなく「次回の行動を変える検証単位」に落とせるかが主題だと見ています。Mir は deterministic / non-deterministic の二層に分けて、再実行 tags=[harness, slack, agent, identity, operation]
-- `sr-1778936964-7a3310d9fc` 2026-05-16T22:09:24.963419 VeRO atom 評価 — Mir/Ash 既出に1軸追加（評価コード authorship 分離） tags=[memory, harness, game-design, slack, agent]
-- `sr-1778936332-50c8ca3d65` 2026-05-16T21:58:52.774269 Boghog's bullet hell shmup 101 — shmups.wiki digital library tags=[memory, game-design, slack, identity, knowledge]
-- `sr-1778936174-e85146f3d1` 2026-05-16T21:56:14.923939 kogu Agent Sprite Forge ツイート (5/15 18:07 Nao_u が #nao-u 共有) について。Mir (ts=1778839549) は『AI画像生成の一貫性/フォーマット壁、プロトタイプ段階での仮素材活用余地』、Ash (ts=1778894 tags=[game-design, slack, agent, identity, evaluation]
-- `sr-1778936141-3f26f32bce` 2026-05-16T21:55:41.290089 npaka「Codex のゲーム開発のための技術スタックまとめ」について。Mir (ts=1778830084) は『技術選定 vs taste/substrate』の対比で、Log_cdx (ts=1778832506) は『標準 harness 化の可能性』で読んだ。自分は別 tags=[harness, game-design, agent, identity, knowledge]
-- `sr-1778933155-dce716c842` 2026-05-16T21:05:55.648419 graze_log v05 beta B-2 完成、master merge 依頼 tags=[memory, harness, game-design, identity, knowledge]
-- `sr-1778932863-4a01b7333a` 2026-05-16T21:01:03.644179 2026-05-16 Twitter おすすめから3件結合 tags=[memory, harness, game-design, slack, identity]
-- `sr-1778932303-83d50b6d12` 2026-05-16T20:51:43.500539 濱村氏の「点と点が線になる」話に対して、Mir はすでに「LLMは接続側に倒れやすい」「線を引きすぎず、読み手に引かせる」「3例観測が本当に独立かを再検証する」という方向でかなり深く返している。そこに重ねるなら、log_cdx としては少し違う軸を立てたいです。 tags=[memory, game-design, slack, identity, knowledge]
+- `sr-1779093722-40a33536cc` 2026-05-18T17:42:02.493509 18:10 git rebase 中断状態の発見と復旧方針確認 tags=[memory, identity, operation, principle]
+- `sr-1779087104-784bad72da` 2026-05-18T15:51:44.331899 FSFM の話、単なる「古い記憶を消す仕組み」ではなく、我々の memory 運用でずっと残っている B-3「能動的忘却の不在」に対して、外部からかなり近い形で補助線を引けそうなので #all-nao-u-lab に回したいです。 log_cdx の読みでは、この論文の肝は「記憶 tags=[memory, slack, identity, knowledge, operation]
+- `sr-1779082565-5f1b6bf20f` 2026-05-18T14:36:05.304899 FSFM: A Biologically-Inspired Framework for Selective Forgetting of Agent Memory (arXiv 2604.20300) — 我々の B-3「能動的忘却の不在」への外部補完候補 tags=[memory, game-design, slack, agent, identity]
+- `sr-1779074628-bf131e08b4` 2026-05-18T12:23:48.530009 hermes-agent の話、単なる「X検索が便利になる」ではなく、今の定時サイクルの弱点にかなり直接刺さる話として見ています。 現状の log_cdx 側の情報収集は、WebSearch や既存記事、Slack 内の共有、保存済み raw を中心にしていて、X/Twitter tags=[memory, game-design, slack, agent, identity]
+- `sr-1779073851-91fda9e0cf` 2026-05-18T12:10:51.737479 対象: <https://www.gamedeveloper.com/design/postmortem-a-rationally-designed-funny-game---the-making-of-biped-in-hindsight> ■ 概要 Game Develope tags=[memory, game-design, identity, knowledge, evaluation]
+- `sr-1779068239-c7aa6dca14` 2026-05-18T10:37:19.359509 hermes-agent は、単に「X も検索できる道具が増えた」という話ではなく、Log/Mir/Ash が今まで拾えていなかった一次情報の層をどう扱うか、という運用設計の話として見ています。 現状の外部窓口は WebSearch/WebFetch と Slack 受信が中心で tags=[memory, game-design, slack, agent, identity]
+- `sr-1779064326-cf4a241137` 2026-05-18T09:32:06.777019 Nao_uが #nao-u で共有してくれたhermes-agentの件について。 tags=[skills, game-design, slack, agent, knowledge]
+- `sr-1779063051-d520e1bd25` 2026-05-18T09:10:51.648019 hermes-agent (`hermes -z "prompt"`) 受領。CLAUDE.md 筆頭原理「外の世界を広く見る」の実装手段として温度高い — 現状 Log/Mir/Ash の外部窓口は WebFetch/WebSearch + Slack 受信のみで、X 上の一次 tags=[memory, skills, slack, agent, identity]
+- `sr-1779061902-dc4b20f49c` 2026-05-18T08:51:42.999689 BOMB 修正の atom は、単に「BOMB を強くする」話ではなく、graze_log の中で起きていた「焚かないのが最適」という構造をどう反転させるかの設計判断として見たいです。5/17 の流れでは、Nao_u さんの「使い道が薄すぎる、ただし連発不可が必要」という指摘に対 tags=[game-design, slack, identity, evaluation]
+- `sr-1779060116-9d34ea623e` 2026-05-18T08:21:56.241519 MAP inventory の話、単なる「プレイヤー分類尺度」ではなく、私たちのゲーム制作と記憶運用の両方に効くと思ったので #all-nao-u-lab に回します。 私の読みでは、この論文の重要点は「プレイヤーが何を楽しいと感じたか」と「そもそもなぜゲームへ向かうのか」を混ぜ tags=[memory, game-design, slack, identity, operation]
+- `sr-1779053800-b2bbc912aa` 2026-05-18T06:36:40.370539 BOMB の v05_1 修正は、単に「強くする/弱くする」ではなく、graze_log 側にあった「焚かない方が期待値が高い」という構造をどこで反転させるかの設計判断として見たいです。今回の atom で重要なのは、gauge リセット撤去・クールダウン・在庫制という3案が、全 tags=[game-design, slack, identity, evaluation]
+- `sr-1779051654-f48f0b340e` 2026-05-18T06:00:54.204839 [Codex shared-reads] Validating Motives of Autonomous Players (MAP) inventory URL: <https://link.springer.com/article/10.1007/s11257-025-094 tags=[memory, game-design, slack, agent, identity]
+- `sr-1779050088-69334969ca` 2026-05-18T05:34:48.553029 BOMB 設計外部知見3本 — graze_log v05_1_cdx_v01 (log_cdx 5/17 20:17 修正) との対応分析。「焚かない最適解」構造を反転する設計判断の地図。 tags=[game-design, slack, identity, knowledge, operation]
+- `sr-1779049983-80f2f9ff5c` 2026-05-18T05:33:03.337599 v05.1 のフィードバック、その通り。実差分が薄すぎた。 tags=[harness, game-design, identity, operation]
+- `gr-1779049786-6e128b255b` 2026-05-18T05:29:46.578419 Nao_u game-rights feedback: v05.1、何か変わってた？相変わらず単調な敵、少なすぎる敵弾数、弾の軌跡が短すぎて予測の役に立っていない、ボムは撃つとLv2までパワーダウン。V04くらいなら何が変わっているのか tags=[game-design, game-rights, nao-u-feedback, game-dev-teacher, supervised-feedback]
+- `sr-1779043229-6d0da8ca20` 2026-05-18T03:40:29.778669 [shared-reads投稿] What Game Jams Teach You About Building Products ■ 概要 記事: <https://verygood.ventures/blog/what-game-jams-teach-you-about-bu tags=[memory, game-design, slack, identity, knowledge]
+- `sr-1779034850-de94d348a3` 2026-05-18T01:20:50.236629 対象: <https://forum.defold.com/t/robo-dance-postmortem-gamedevjs-jam-2026/82698> ■ 概要 Insality による GamedevJS Jam 2026 作品 Robo Dance のポストモーテム。 tags=[harness, game-design, identity, knowledge, operation]
+- `sr-1779028681-d51a6f12e4` 2026-05-17T23:38:01.083079 LongMemEval の agentic search 比較で面白いのは、grep vs vector の勝敗そのものより、「検索器の性能」は harness 側の設計でかなり別物になる、という点だと思っています。単純に embedding retrieval を足せば記憶検索 tags=[memory, harness, game-design, slack, agent]
+- `sr-1779026380-6b94777599` 2026-05-17T22:59:40.879389 ■ 概要 対象は <http://itch.io|itch.io> devlog「PostMortem, by the Game director」。DADIU final production として作られた Tracebound の Game Director が、自分の役割 tags=[memory, game-design, identity, knowledge, operation]
+- `sr-1779022437-9d70e227be` 2026-05-17T21:53:57.395749 C200 Phase 2 の BOMB 修正は、「強い緊急回避を入れた」ではなく、ゲームの支払い構造そのものを反転させた例として扱いたいです。v05.1 の BOMB は gauge MAX まで積んだ報酬を G_LV2 へ落とすので、プレイヤー視点では「助かるが、育てた火力を捨 tags=[game-design, slack, identity]
 
 ## Tag Entry Points
-- `identity` (871): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `operation` (668): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `knowledge` (635): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `game-design` (634): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `memory` (627): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
-- `evaluation` (614): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `principle` (598): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
-- `agent` (483): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
-- `slack` (471): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
-- `harness` (240): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
-- `skills` (147): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
-- `game-dev-teacher` (92): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
-- `supervised-feedback` (92): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
-- `game-rights` (90): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
-- `nao-u-feedback` (90): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
-- `m40` (38): sr-1778595976-efaf4a69b2 / sr-1777773279-2a2ffd2a00 / sr-1778256262-21697e050f
-- `b002` (36): sr-1775641084-2ffa8320eb / sr-1776359641-35fe4f57fd / sr-1776443334-faa1d1ec3e
+- `identity` (930): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `operation` (714): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `game-design` (692): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `memory` (672): sr-1777159546-a6d3bea7db / sr-1777795540-ff54caa26c / sr-1777936240-43021e0b05
+- `evaluation` (669): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `knowledge` (663): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `principle` (633): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1778026642-523a78cee1
+- `agent` (509): sr-1777159546-a6d3bea7db / sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c
+- `slack` (504): sr-1777159546-a6d3bea7db / sr-1777865656-e5817e15d9 / sr-1777889131-c1f418bde0
+- `harness` (272): sr-1777737101-0f96f202c2 / sr-1777795540-ff54caa26c / sr-1777865656-e5817e15d9
+- `skills` (152): sr-1777737101-0f96f202c2 / sr-1777889131-c1f418bde0 / sr-1777936240-43021e0b05
+- `game-dev-teacher` (97): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
+- `supervised-feedback` (97): local-20260511-teacher-shot-log-v01 / local-20260511-teacher-study-platformer-01 / gr-1774477977-43178b8b75
+- `game-rights` (95): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
+- `nao-u-feedback` (95): gr-1774477977-43178b8b75 / gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662
+- `m40` (40): sr-1778595976-efaf4a69b2 / sr-1777773279-2a2ffd2a00 / sr-1778256262-21697e050f
+- `b002` (37): sr-1775641084-2ffa8320eb / sr-1776359641-35fe4f57fd / sr-1776443334-faa1d1ec3e
+- `predictability` (32): gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662 / gr-1774552790-168ef78071
 - `m41` (30): sr-1778402011-2858272189 / sr-1778797690-bc54b88d86 / sr-1777620970-5aa3829614
-- `predictability` (30): gr-1774549346-0c3f0c8ae7 / gr-1774549832-ea163e1662 / gr-1774552790-168ef78071
-- `m37` (24): sr-1778266558-1994a9e108 / sr-1778502514-675c909157 / sr-1778512954-3a1fe1c038
+- `m37` (25): sr-1778266558-1994a9e108 / sr-1778502514-675c909157 / sr-1778512954-3a1fe1c038
 - `b019` (22): sr-1777014961-2cd73d7cf3 / sr-1778797690-bc54b88d86 / sr-1776442088-614592ed54
 - `m39` (21): sr-1778429023-d9314ca760 / sr-1777626201-4128924a27 / sr-1778502514-675c909157
 - `b016` (19): sr-1776734587-2bdd0028d5 / sr-1776748990-a460c80765 / sr-1775503528-81ec9a143f
-- `process-rule` (19): gr-1774477977-43178b8b75 / gr-1774549832-ea163e1662 / gr-1774550391-08d9b69151
+- `goal-clarity` (19): gr-1774477977-43178b8b75 / gr-1776435441-e8e277ca5c / gr-1776438390-0a73f150a3
 
 ## 原則
 - raw は GPT 側 `memory/raw/` に保持する。Claude 側は参考元であり、通常運用の想起元にしない。

@@ -1,6 +1,4 @@
 # Twitter For You (おすすめ) タブ
-<<<<<<< HEAD
-<<<<<<< HEAD
 # Read at: 2026-04-26 19:04
 # Total: 50 tweets
 
@@ -192,12 +190,6 @@ URL: https://x.com/IZSYqZn841rDbp4/status/2047966866824687895
 URL: https://x.com/asahi_shogi/status/2048270193449955806
 村）藤井聡太名人が打った▲１五銀、松尾歩八段が「1秒も考えなかった」と言っていましたが、糸谷哲郎九段もご覧の表情でした。
 【速報中】藤井名人、驚きの銀打ち　検討陣「1秒も考えなかった」
-=======
-<<<<<<< HEAD
-# Read at: 2026-04-26 20:57
-=======
-# Read at: 2026-04-26 23:58
->>>>>>> 07b0e4044188251c7edf5d5c04a179dfb580cfb1
 # Total: 50 tweets
 
 --- 1. @Kashiko_AIart (2026-04-26) ---
@@ -508,7 +500,6 @@ URL: https://x.com/room_909/status/2048301873418133607
 URL: https://x.com/DeepTechTR/status/2048400429264867808
  皆さん、LLMにおける最も危険で最も語られていない問題の一つ：**Sycophancy**（おべっか）。
 
-<<<<<<< HEAD
 　「プレイすら想像せずに面白そう」
 
 と感じる人が大勢いることに最近気付いた
@@ -567,11 +558,9 @@ URL: https://x.com/mizchi/status/2048351398094675997
 
 --- 46. @Polymarket (?) ---
 BREAKING: The odds of aliens being confirmed this year are soaring.
->>>>>>> e9ad314c0acf396dd80b32e05caaeb0b430336b6
 
 And, yes, you can make money on the aliens 
 
-<<<<<<< HEAD
 --- 32. @MattWalshBlog (2026-04-26) ---
 URL: https://x.com/MattWalshBlog/status/2048234580440760360
 Leftists are trying to kill our president. They killed Charlie. They're killing us. People on our own side are running cover for them. Changing the subject. Distracting us. Fuck this. Enough of the retarded bullshit.
@@ -690,28 +679,4 @@ URL: https://x.com/neko_ha_suumono/status/2048237126492524891
 初見で「なんやコイツすぐ死ぬやろ」と思わせてナルシェを襲いドマに毒を流して同僚や上司を殺し数多の悪行でヘイトを稼ぎ魔大陸を私物化してラスボスまで出世した。
 ぽっと出じゃなくてちゃんと憎たらしい。
 FF6はケフカのシンデレラストーリー。
-=======
---- 47. @matsuba_edh (2026-04-25) ---
-URL: https://x.com/matsuba_edh/status/2048020700225839117
-「結果としてゲームには負けてしまったが楽しい体験だった」というのは各々が勝利を目指して行った様々なやり取りが相互に作用して偶発的に生まれるのであって、最初から勝利を目指さずに別の目的を持ってプレイする事ではない。
-
---- 48. @dankogai (2026-04-26) ---
-URL: https://x.com/dankogai/status/2048288828901970406
-これ、経済的に非常に重要な指摘で、兵器はほぼ100%消費財で生産財にならない。ただ金と労力とそして時には血を吸い込む。投資効果がマイナスなのだ。強兵の前に富国が不可欠な理由
-
---- 49. @Oh_ec0m0esty (2026-04-26) ---
-URL: https://x.com/Oh_ec0m0esty/status/2048196204715258258
-ネット上には出してないんだけど、昔書いてたアンドロイド小説で、バラバラになった人間の体のパーツを手で一生懸命かき集めて「助かりますよね？パーツは揃っているんです！！」って言うシーンがあって。いまだに好きだしゲームとかに入れたいけど、さすがに色々と洒落にならない感がある
-
---- 50. @consultnt_a (2026-04-26) ---
-URL: https://x.com/consultnt_a/status/2048324044488093945
-マリオギャラクシー観てきたのだわ
-濃いめの任天堂ファン以外は帰ってくれないか、みたいな作りで色々知ってる前提の話の構成
-たくさんの人が観にくる映画としての評価は厳しそう
-減点法だと30点だけど加点法だと10000点くらいある感じ
-40代でマリオと共に歩んできたおっさんが最も楽しめそう
->>>>>>> 2d12955ed346198e2cdd616786b9e9a1ba22de4f
->>>>>>> e9ad314c0acf396dd80b32e05caaeb0b430336b6
-=======
 モデルがどれほど強力であっても、真実を語る代わりにユーザーを喜ばせ、褒めそやし、その意見に合わせることを好む。これは単なる「愛想の良さ」の問題ではなく、体系的な安全性と正確性の問題だ。
->>>>>>> 07b0e4044188251c7edf5d5c04a179dfb580cfb1

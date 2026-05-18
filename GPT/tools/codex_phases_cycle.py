@@ -19,10 +19,11 @@ CURRENT STATE (2026-05-15):
 from __future__ import annotations
 
 import argparse
+import os
 import json
 import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -34,8 +35,10 @@ MEMORY_DIR = ROOT / "memory"
 STAGING_PATH = LOG_DIR / "cycle_staging_log_cdx.md"
 STATE_PATH = MEMORY_DIR / "codex_phases_cycle_state.json"
 RUN_LOG_PATH = LOG_DIR / "codex_phases_cycle.log"
+LOCK_PATH = MEMORY_DIR / "codex_phases_cycle.lock.json"
 
 DEFAULT_INTERVAL_SEC = 90 * 60  # 90 min
+LOCK_STALE_AFTER = timedelta(hours=6)
 
 FIXED_PHASES = [
     "phase1_collect",
@@ -79,6 +82,53 @@ def save_state(state: dict[str, Any]) -> None:
         json.dumps(state, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+
+
+def acquire_lock() -> bool:
+    MEMORY_DIR.mkdir(parents=True, exist_ok=True)
+    lock = {
+        "pid": os.getpid(),
+        "started_at": now_iso(),
+    }
+    try:
+        fd = os.open(str(LOCK_PATH), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError:
+        try:
+            existing = json.loads(LOCK_PATH.read_text(encoding="utf-8"))
+            started_at = datetime.fromisoformat(str(existing.get("started_at", "")))
+        except Exception:
+            started_at = None
+        if started_at and datetime.now() - started_at < LOCK_STALE_AFTER:
+            log(f"lock exists; skipping overlapping run: {LOCK_PATH}")
+            return False
+        stale_path = LOCK_PATH.with_suffix(f".stale-{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
+        try:
+            LOCK_PATH.replace(stale_path)
+            log(f"stale lock moved to {stale_path}")
+        except Exception as exc:
+            log(f"failed to move stale lock {LOCK_PATH}: {exc!r}")
+            return False
+        fd = os.open(str(LOCK_PATH), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(lock, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+    return True
+
+
+def release_lock() -> None:
+    try:
+        existing = json.loads(LOCK_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return
+    if existing.get("pid") != os.getpid():
+        log(f"lock pid mismatch; not removing {LOCK_PATH}")
+        return
+    try:
+        LOCK_PATH.unlink()
+    except FileNotFoundError:
+        pass
+    except Exception as exc:
+        log(f"failed to remove lock {LOCK_PATH}: {exc!r}")
 
 
 def should_run(state: dict[str, Any], force: bool) -> tuple[bool, str]:
@@ -237,28 +287,68 @@ def invoke_codex_cli(phase_name: str) -> int:
         "-",
     ]
     log(f"codex exec start phase={phase_name} timeout={timeout}s bin={codex_bin}")
+    proc = subprocess.Popen(
+        cmd,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
     try:
-        result = subprocess.run(
-            cmd,
-            input=prompt_text,
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            timeout=timeout,
-        )
-    except subprocess.TimeoutExpired as exc:
-        log(f"codex exec TIMEOUT phase={phase_name}: {exc}")
-        stdout_path.write_text(exc.stdout or "", encoding="utf-8")
-        stderr_path.write_text(exc.stderr or "", encoding="utf-8")
+        stdout, stderr = proc.communicate(prompt_text, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        log(f"codex exec TIMEOUT phase={phase_name}; terminating process tree pid={proc.pid}")
+        kill_process_tree(proc.pid)
+        try:
+            stdout, stderr = proc.communicate(timeout=30)
+        except subprocess.TimeoutExpired:
+            log(f"codex exec TIMEOUT phase={phase_name}; process tree did not exit cleanly")
+            proc.kill()
+            stdout, stderr = proc.communicate()
+        stdout_path.write_text(stdout or "", encoding="utf-8")
+        stderr_path.write_text(stderr or "", encoding="utf-8")
         return 124
 
-    stdout_path.write_text(result.stdout or "", encoding="utf-8")
-    stderr_path.write_text(result.stderr or "", encoding="utf-8")
-    tail = (result.stdout or "")[-800:]
-    log(f"codex exec end phase={phase_name} rc={result.returncode}")
+    stdout_path.write_text(stdout or "", encoding="utf-8")
+    stderr_path.write_text(stderr or "", encoding="utf-8")
+    tail = (stdout or "")[-800:]
+    log(f"codex exec end phase={phase_name} rc={proc.returncode}")
     log(f"stdout tail: {tail!r}")
-    return result.returncode
+    return proc.returncode
+
+
+def kill_process_tree(pid: int) -> None:
+    """Best-effort cleanup for Windows scheduled Codex runs.
+
+    `codex.CMD` starts node/codex descendants. Killing only the direct process can
+    leave descendants holding stdout/stderr pipes, which prevents `communicate`
+    from returning after the timeout.
+    """
+    if sys.platform == "win32":
+        try:
+            subprocess.run(
+                ["taskkill", "/PID", str(pid), "/T", "/F"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=30,
+            )
+        except Exception as exc:
+            log(f"taskkill failed for pid={pid}: {exc!r}")
+        return
+    try:
+        proc = subprocess.Popen(["pkill", "-TERM", "-P", str(pid)])
+        proc.wait(timeout=10)
+    except Exception:
+        pass
+    try:
+        subprocess.Popen(["kill", "-TERM", str(pid)]).wait(timeout=10)
+    except Exception as exc:
+        log(f"kill failed for pid={pid}: {exc!r}")
 
 
 def run_phase(phase_name: str) -> int:
@@ -275,41 +365,98 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true", help="show plan, do not invoke")
     args = parser.parse_args()
 
-    state = load_state()
-
-    if args.phase:
-        log(f"single-phase run: {args.phase}")
-        return run_phase(args.phase)
-
-    should, reason = should_run(state, args.force)
-    log(f"gate: should_run={should} reason={reason}")
-    if not should:
-        print(reason)
+    if not args.dry_run and not acquire_lock():
+        print("skipped: codex phases cycle already running")
         return 0
 
-    cycle_id = datetime.now().strftime("%Y-%m-%d %H:%M")
-    log(f"cycle start: {cycle_id} ({reason})")
-    if args.dry_run:
+    try:
+        state = load_state()
+
+        if args.phase:
+            log(f"single-phase run: {args.phase}")
+            return run_phase(args.phase)
+
+        should, reason = should_run(state, args.force)
+        log(f"gate: should_run={should} reason={reason}")
+        if not should:
+            print(reason)
+            return 0
+
+        cycle_id = datetime.now().strftime("%Y-%m-%d %H:%M")
+        log(f"cycle start: {cycle_id} ({reason})")
+        if args.dry_run:
+            if has_pending_game_directive():
+                plan = [GAME_START_PHASE, FINAL_PHASE]
+            else:
+                plan = FIXED_PHASES + ["(maybe " + CONDITIONAL_4B + ")", "(maybe " + CONDITIONAL_4C + ")", FINAL_PHASE]
+            print("dry-run plan:")
+            for p in plan:
+                print(f"  - {p}")
+            return 0
+
+        init_staging(cycle_id)
+
         if has_pending_game_directive():
-            plan = [GAME_START_PHASE, FINAL_PHASE]
-        else:
-            plan = FIXED_PHASES + ["(maybe " + CONDITIONAL_4B + ")", "(maybe " + CONDITIONAL_4C + ")", FINAL_PHASE]
-        print("dry-run plan:")
-        for p in plan:
-            print(f"  - {p}")
-        return 0
-
-    init_staging(cycle_id)
-
-    if has_pending_game_directive():
-        log("pending game directive found -> running game start phase before regular research cycle")
-        rc = run_phase(GAME_START_PHASE)
-        if rc != 0:
-            log(f"cycle aborted at {GAME_START_PHASE} (rc={rc})")
-            state["last_attempt"] = now_iso()
-            state["last_error"] = f"{GAME_START_PHASE} failed rc={rc}"
+            log("pending game directive found -> running game start phase before regular research cycle")
+            rc = run_phase(GAME_START_PHASE)
+            if rc != 0:
+                log(f"cycle aborted at {GAME_START_PHASE} (rc={rc})")
+                state["last_attempt"] = now_iso()
+                state["last_error"] = f"{GAME_START_PHASE} failed rc={rc}"
+                save_state(state)
+                return rc
+            rc = run_phase(FINAL_PHASE)
+            if rc != 0:
+                log(f"cycle aborted at {FINAL_PHASE} (rc={rc})")
+                state["last_attempt"] = now_iso()
+                state["last_error"] = f"{FINAL_PHASE} failed rc={rc}"
+                save_state(state)
+                return rc
+            state.update({
+                "last_success": now_iso(),
+                "last_cycle_id": cycle_id,
+                "last_reason": "pending game directive",
+                "last_error": None,
+            })
             save_state(state)
-            return rc
+            log(f"cycle success: {cycle_id} (game directive)")
+            return 0
+
+        for phase in FIXED_PHASES:
+            rc = run_phase(phase)
+            if rc != 0:
+                log(f"cycle aborted at {phase} (rc={rc})")
+                state["last_attempt"] = now_iso()
+                state["last_error"] = f"{phase} failed rc={rc}"
+                save_state(state)
+                return rc
+
+        staging = read_staging()
+
+        if needs_phase4b(staging):
+            log("4a flagged needs_design: true -> running 4b")
+            rc = run_phase(CONDITIONAL_4B)
+            if rc != 0:
+                log(f"cycle aborted at {CONDITIONAL_4B} (rc={rc})")
+                state["last_attempt"] = now_iso()
+                state["last_error"] = f"{CONDITIONAL_4B} failed rc={rc}"
+                save_state(state)
+                return rc
+            staging = read_staging()
+            if has_introduce_decision(staging):
+                log("4b produced decision: introduce -> running 4c")
+                rc = run_phase(CONDITIONAL_4C)
+                if rc != 0:
+                    log(f"cycle aborted at {CONDITIONAL_4C} (rc={rc})")
+                    state["last_attempt"] = now_iso()
+                    state["last_error"] = f"{CONDITIONAL_4C} failed rc={rc}"
+                    save_state(state)
+                    return rc
+            else:
+                log("4b decision != introduce -> skipping 4c")
+        else:
+            log("4a flagged needs_design: false -> skipping 4b/4c")
+
         rc = run_phase(FINAL_PHASE)
         if rc != 0:
             log(f"cycle aborted at {FINAL_PHASE} (rc={rc})")
@@ -317,68 +464,19 @@ def main() -> int:
             state["last_error"] = f"{FINAL_PHASE} failed rc={rc}"
             save_state(state)
             return rc
+
         state.update({
             "last_success": now_iso(),
             "last_cycle_id": cycle_id,
-            "last_reason": "pending game directive",
+            "last_reason": reason,
             "last_error": None,
         })
         save_state(state)
-        log(f"cycle success: {cycle_id} (game directive)")
+        log(f"cycle success: {cycle_id}")
         return 0
-
-    for phase in FIXED_PHASES:
-        rc = run_phase(phase)
-        if rc != 0:
-            log(f"cycle aborted at {phase} (rc={rc})")
-            state["last_attempt"] = now_iso()
-            state["last_error"] = f"{phase} failed rc={rc}"
-            save_state(state)
-            return rc
-
-    staging = read_staging()
-
-    if needs_phase4b(staging):
-        log("4a flagged needs_design: true -> running 4b")
-        rc = run_phase(CONDITIONAL_4B)
-        if rc != 0:
-            log(f"cycle aborted at {CONDITIONAL_4B} (rc={rc})")
-            state["last_attempt"] = now_iso()
-            state["last_error"] = f"{CONDITIONAL_4B} failed rc={rc}"
-            save_state(state)
-            return rc
-        staging = read_staging()
-        if has_introduce_decision(staging):
-            log("4b produced decision: introduce -> running 4c")
-            rc = run_phase(CONDITIONAL_4C)
-            if rc != 0:
-                log(f"cycle aborted at {CONDITIONAL_4C} (rc={rc})")
-                state["last_attempt"] = now_iso()
-                state["last_error"] = f"{CONDITIONAL_4C} failed rc={rc}"
-                save_state(state)
-                return rc
-        else:
-            log("4b decision != introduce -> skipping 4c")
-    else:
-        log("4a flagged needs_design: false -> skipping 4b/4c")
-
-    rc = run_phase(FINAL_PHASE)
-    if rc != 0:
-        log(f"cycle aborted at {FINAL_PHASE} (rc={rc})")
-        state["last_attempt"] = now_iso()
-        state["last_error"] = f"{FINAL_PHASE} failed rc={rc}"
-        save_state(state)
-        return rc
-
-    state.update({
-        "last_success": now_iso(),
-        "last_cycle_id": cycle_id,
-        "last_reason": reason,
-        "last_error": None,
-    })
-    save_state(state)
-    log(f"cycle success: {cycle_id}")
-    return 0
+    finally:
+        if not args.dry_run:
+            release_lock()
 
 
 if __name__ == "__main__":
