@@ -200,3 +200,34 @@
 - **Active project 停滞解消**: `scheduler_redesign` の根が「並列実行の安全保証」で、lockfile はその最小ピース。今夜入れる
 - **30 分で「進んだ」と言える粒度**: docs draft + tools 単発編集 + 並列起動テスト + commit までで概ね 30 分以内、Slack 投稿1本では済まない実物の playable diff (運用ルール側の) を生む
 - Slack 投稿1本で済むものとの違い: 投稿だけでは Win の cron が disable のまま、ブランチ運用も「次サイクル以降に書きます」の宣言で終わる。実物を入れて初めて運用契約が走り始める
+
+## Phase 4: 実装 (2026-05-19 23:50 完了)
+
+### 1) 完遂状況
+- [x] **着手手順 1〜2**: `docs/git_branch_protocol.md` 新規作成 (5節、95行)。作業開始/終了の3ステップ、命名規約、Codex worktree 分離、Win 固有事情 (lockfile・partial clone・自己適用 dogfood) を含む
+- [x] **着手手順 3**: `git_sync.py` (root) に lockfile 化を追加。msvcrt.locking で `.git/log_git_sync.lock` を排他取得、取れなければ silent exit 0。fcntl.flock fallback も入れたが Win 環境のみ実テスト済
+- [x] **着手手順 4**: 並列起動テスト合格。テストハーネス `_test_lockfile_hold.py` で lock を 15秒 hold した状態で `python git_sync.py` を起動 → `[git_sync] SKIP: another git_sync holds D:/AI/Nao_u_BOT/.git\log_git_sync.lock` + exit 0 を観測。テストハーネスは終了後削除
+- [x] **着手手順 5**: ブランチ `log/c212-phase4-protocol-20260519T2335` で本作業実施 (運用契約の自己適用 dogfood)
+- [ ] **着手手順 5 続き**: master merge + push + ブランチ削除 → Phase 5 で実施 (本サイクルは commit はしない契約のため)
+- [ ] **着手手順 6**: #kaizen-log 投稿 → 後述
+
+### 2) Phase 3 staging からの修正点 (path 誤認の訂正)
+- staging Phase 3 計画は「**tools/git_sync.py** lockfile 化」と書いていたが、実物は **root の `git_sync.py`** (1ファイル、commit msg "Auto sync from Win2") と **`scheduler_log.py::git_sync()`** (本体、commit msg "Auto sync from Win") の2系統
+- 今夜の最小骨格は root の `git_sync.py` のみに lockfile を入れた。`scheduler_log.py::git_sync` 本体への組み込みは scope を超えるため次サイクル送り (PID lock で多重起動は防げているため scope 優先度低、ただし手動実行 / Win2 sync との並列衝突は残る)
+- 次サイクル課題: `scheduler_log.py::git_sync` 関数本体にも同じ lockfile ガードを入れて 2系統の sync 経路を完全排他化する
+
+### 3) 副産物 (新規/変更ファイル)
+- 新規: `docs/git_branch_protocol.md` (95行)
+- 変更: `git_sync.py` (lockfile 取得 + rebase ガードを 1ファイル内で先後関係明示)
+- 変更: `log/cycle_staging_log.md` (本セクション追記)
+
+### 4) 次サイクルへの引き継ぎ
+- `scheduler_log.py::git_sync()` 関数本体への lockfile 組み込み (今回 scope 外)
+- Win タスクスケジューラの scheduled task 4本再有効化 (lockfile 完了 + partial clone 設定剥がし確認の両方が必要)
+- `git_branch_protocol.md` の Mac/Linux 環境向け補足セクション (Mir 用)
+- Phase 4 commit と push は Phase 5 (日記) に含めて 1回で master merge
+
+### 5) Phase 5 への引き継ぎ事項
+- ブランチ `log/c212-phase4-protocol-20260519T2335` で commit (`rule:` prefix) → master へ fast-forward merge → push → ブランチ削除
+- 日記本文に Phase 4 大作業の体験記録 (path 誤認の訂正 / lockfile contention テスト合格) を含める
+- #kaizen-log 投稿 (Win ブランチ運用 v0 実装 + lockfile prototype) は Phase 5 commit 後 push まで完了してから流す
