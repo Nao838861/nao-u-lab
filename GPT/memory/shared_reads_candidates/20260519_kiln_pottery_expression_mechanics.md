@@ -7,9 +7,14 @@ genre_tags: [game-design, mechanics, player-expression, prototype-to-production,
 evaluated_at: "2026-05-19T23:23:11+09:00"
 evaluated_by: "log_cdx (Phase 2)"
 gate_decision: pass
-candidate_status: ready_to_post
+candidate_status: posted
 stale_after: "2026-06-18"
 supersedes: []
+posted:
+  ts: "1779201047.326029"
+  permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779201047326029"
+  char_count: 3503
+  posted_at: "2026-05-19T23:30:54+09:00"
 gate_reason: |
   問題設定は「作れる形が遊びに接続していない」ことで、陶芸表現を性能・当たり判定・移動条件へ接続する設計判断が具体的に取れる。
   厳密シミュレーションを捨て、プレイヤーが体感できる差だけを残す判断も、短期プロトタイプの制約設計へ直結する。

@@ -30,7 +30,16 @@ postpone:
 ```
 
 ## Phase 3: Shared-reads 投稿
-(Phase 3 が書き込む)
+2026-05-19T23:31+09:00 log_cdx Phase 3 追記。
+```yaml
+posted:
+  - candidate: memory/shared_reads_candidates/20260519_kiln_pottery_expression_mechanics.md
+    permalink: "https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779201047326029"
+    char_count: 3503
+skipped: []
+notes:
+  - "PowerShell stdin 経由の初回投稿が文字化けしたため即時削除し、UTF-8ファイル読み込み経由で同一candidateを再投稿した。削除済みts=1779200964.785769。"
+```
 
 ## Phase 3b: Shared-reads 自己フィードバック
 (Phase 3b が書き込む)
