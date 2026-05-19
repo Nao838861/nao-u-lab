@@ -13,7 +13,7 @@
 - 実行方法: `game/graze_log_cdx/v05_1_cdx_v08/index.html` をブラウザで開く。
 - 検証: `node tools\headless_graze_log_cdx_v05_2_v08_check.js` pass。self-play は `mode=clear`, `t=4307`, `bombCount=1`, `activeDefCount=1`, `killCount=30`。bossStats は `enteredFinal=true`, `chargeSeen=true`, `finalCueFired=true`, `bombedFinal=true`, `bombedBoss=true`。
 - 残課題: `BOMB NOW` が cue として自然か、直接指示が強すぎるかは browser/manual 観察が必要。
-- commit: `29bc7fef8754`（この行を追記して amend 後に最終 hash を確認する）。
+- commit: push 済み。最終 hash は `git log -1 --oneline` で確認する。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
