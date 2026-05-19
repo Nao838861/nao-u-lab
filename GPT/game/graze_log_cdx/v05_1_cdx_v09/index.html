@@ -23,9 +23,11 @@ const cvs=document.getElementById('c'),ctx=cvs.getContext('2d');
 const seedinfo=document.getElementById('seedinfo');
 const keys={};
 let muted=false;
+const QUERY=new URLSearchParams(location.search);
+const AUTO_VERIFY=QUERY.get('bot')==='1'||QUERY.get('auto')==='1';
 
 const SEED=(function(){
-  const u=new URLSearchParams(location.search).get('seed');
+  const u=QUERY.get('seed');
   if(u){const n=parseInt(u,10);if(!isNaN(n))return n>>>0;}
   return (Date.now()&0xFFFFFFFF)>>>0;
 })();
@@ -39,7 +41,7 @@ function mulberry32(s){
     return ((t^(t>>>14))>>>0)/4294967296;
   };
 }
-seedinfo.textContent=`seed=${SEED}  (?seed=N to reproduce)`;
+seedinfo.textContent=`seed=${SEED}  (?seed=N to reproduce)${AUTO_VERIFY?'  AUTO VERIFY':''}`;
 
 function pushSeedToLocal(seed){
   try{
@@ -905,6 +907,9 @@ function drawHUD(){
   else if(ctx2==='C'){ctx.fillStyle='#ffb070';ctx.font='bold 10px system-ui';ctx.fillText(`BOMB CD ${Math.ceil(state.bombCooldownT/60)}s`,W-104,30);}
   else if(ctx2==='D'){ctx.fillStyle='#80ffd0';ctx.font='bold 11px system-ui';ctx.fillText('SPACE [D]EF',W-90,30);}
   else{ctx.fillStyle='#506080';ctx.font='10px system-ui';ctx.fillText('SPACE [-]',W-72,30);}
+  if(AUTO_VERIFY){
+    ctx.fillStyle='#80ffd0';ctx.font='bold 10px system-ui';ctx.fillText('AUTO VERIFY',W-102,44);
+  }
 }
 function drawTitle(){
   ctx.fillStyle='rgba(7,9,26,0.72)';ctx.fillRect(0,H/2-112,W,242);ctx.textAlign='center';
@@ -914,10 +919,10 @@ function drawTitle(){
   ctx.fillText('Ikaruga columns -> Gradius hatches -> Touhou S-stream',W/2,H/2);
   ctx.fillText('DonPachi bunker + heavy tank -> part boss core',W/2,H/2+18);
   ctx.font='11px system-ui';ctx.fillStyle='#9fb1d8';
-  ctx.fillText('ARROWS / WASD MOVE',W/2,H/2+42);
-  ctx.fillText('SPACE START / BOMB(B) / DEF(D) / RETRY',W/2,H/2+58);
+  ctx.fillText(AUTO_VERIFY?'AUTO VERIFY PLAYER ENABLED':'ARROWS / WASD MOVE',W/2,H/2+42);
+  ctx.fillText(AUTO_VERIFY?'double-click launcher replay':'SPACE START / BOMB(B) / DEF(D) / RETRY',W/2,H/2+58);
   ctx.fillStyle='#ffd870';ctx.font='bold 13px system-ui';
-  if((state.t/30|0)%2===0)ctx.fillText('PRESS SPACE',W/2,H/2+104);
+  if((state.t/30|0)%2===0)ctx.fillText(AUTO_VERIFY?'AUTO START':'PRESS SPACE',W/2,H/2+104);
   ctx.textAlign='left';
 }
 function drawEnd(title,color){
@@ -951,7 +956,73 @@ window.addEventListener('keydown',e=>{
 });
 window.addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false;});
 
-function loop(){update();draw();requestAnimationFrame(loop);}
+function applyAutoVerifyInput(){
+  if(!AUTO_VERIFY)return;
+  keys.arrowleft=keys.arrowright=keys.arrowup=keys.arrowdown=false;
+  if(state.mode==='title'){
+    startGame();
+    return;
+  }
+  if(state.mode!=='play')return;
+  const p=state.player;
+  let targetX=210+Math.sin(state.t*0.012)*54;
+  let targetY=548;
+  const boss=state.enemies.find(e=>e.type==='boss');
+  const survivalPhase=state.phaseLabel==='gradius turret rock'||state.phaseLabel==='last chain wall';
+  const bossPressure=!!boss&&state.ebullets.length>=6;
+  if(survivalPhase||bossPressure){
+    targetY=588;
+    let bestX=targetX,bestRisk=Infinity;
+    for(let x=34;x<=386;x+=22){
+      let risk=0;
+      for(const b of state.ebullets){
+        const px=b.x+b.vx*14,py=b.y+b.vy*14,dx=x-px,dy=targetY-py;
+        risk+=28000/Math.max(220,dx*dx+dy*dy);
+      }
+      for(const e of state.enemies){
+        const dx=x-e.x,dy=targetY-e.y;
+        risk+=52000/Math.max(260,dx*dx+dy*dy);
+      }
+      if(risk<bestRisk){bestRisk=risk;bestX=x;}
+    }
+    targetX=bestX;
+  }
+  const shouldCommitToShot=!survivalPhase&&(state.phaseLabel==='boss warning'||state.t>=VOLCANO_START_FRAME+650||state.enemies.some(e=>['volcanoMid','heavyTankMid','boss','bossPart','bunker','hatch'].includes(e.type)));
+  if(shouldCommitToShot){
+    const rank={boss:0,heavyTankMid:1,volcanoMid:2,bossPart:3,bunker:4,hatch:5,elite:6,turret:7,sniper:8,weaver:9,sFairy:10,sinePair:11,scout:12};
+    const targets=state.enemies.filter(e=>e.y<p.y-46).sort((a,b)=>(rank[a.type]??99)-(rank[b.type]??99)||Math.abs(a.x-p.x)-Math.abs(b.x-p.x));
+    if(targets[0])targetX=targets[0].x;
+  }
+  for(const b of state.ebullets){
+    const dx=p.x-b.x,dy=p.y-b.y,d2=dx*dx+dy*dy;
+    if(d2<155*155){
+      const w=(155*155-d2)/(155*155);
+      targetX+=dx*w*5.0;targetY+=dy*w*3.6;
+    }
+  }
+  for(const e of state.enemies){
+    const dx=p.x-e.x,dy=p.y-e.y,d2=dx*dx+dy*dy;
+    if(d2<170*170){
+      const w=(170*170-d2)/(170*170);
+      targetX+=dx*w*3.2;targetY+=dy*w*2.8;
+    }
+  }
+  targetX=Math.max(30,Math.min(390,targetX));
+  targetY=Math.max(360,Math.min(590,targetY));
+  keys.arrowleft=targetX<p.x-8;
+  keys.arrowright=targetX>p.x+8;
+  keys.arrowup=targetY<p.y-8;
+  keys.arrowdown=targetY>p.y+8;
+  const nearBullets=state.ebullets.filter(b=>{
+    const dx=p.x-b.x,dy=p.y-b.y;
+    return dx*dx+dy*dy<74*74;
+  }).length;
+  if(boss&&boss.finalCueFired&&bombReady())fireBomb();
+  else if(!boss&&nearBullets>=7&&bombReady())fireBomb();
+  else if((nearBullets>=1||boss||state.phaseLabel==='donpachi heavy tank')&&state.grazeStreak>=GRAZE_STREAK_TH)triggerActiveDef();
+}
+
+function loop(){applyAutoVerifyInput();update();draw();requestAnimationFrame(loop);}
 loop();
 </script>
 </body>

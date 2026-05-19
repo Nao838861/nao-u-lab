@@ -15,6 +15,8 @@
 
 `index.html` をブラウザで開く。
 
+自動検証プレイを見る場合は、エクスプローラーで `auto_verify.html` をダブルクリックする。
+
 Focused headless check:
 
 ```powershell
