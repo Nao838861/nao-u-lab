@@ -72,7 +72,27 @@ self_feedback:
 ```
 
 ## Phase 4a: 整理 + 問題抽出
-(Phase 4a が書き込む)
+2026-05-19T23:55+09:00 log_cdx Phase 4a 追記。
+
+```yaml
+cleaned:
+  - "memory/MEMORY.md の markdown link/index 参照を確認。実在しない参照はなし。`python tools/memory_ingest.py` は backtick 内コマンドを検出した疑似陽性として除外。"
+  - "memory/atoms.jsonl を確認。1326 行、JSON 破損 0、重複 id 0、正規化 content 重複 0。status は active 13 / superseded 188 / 空 1125。"
+  - "memory/raw/ と memory/shared_reads_candidates/ の 30 日超未更新ファイルを確認。cutoff=2026-04-19 で該当 0 件。candidate の postpone/fail 降格対象なし。"
+  - "inbox pending を確認。slack_directives.jsonl は 0 件、slack_broadcasts.jsonl は 2 件。処理根拠を確認した上で lifecycle close 対象にする。"
+issues:
+  - id: ISS-20260519-OPS-BRANCH-SYNC
+    description: "Nao_u の broadcast `broadcast-1779116867-24e2d24834` は、作業単位ブランチ作成・開始前の local/remote 同期・終了時 push 完了までを求めている。一方、現行 AGENTS.md には作業後 commit/push はあるが、作業開始時の branch/sync gate までは明示されていない。これは記憶階層そのものの欠陥ではなく、作業単位の履歴を後から追えるかに関わる運用ルールの欠落。"
+    severity: medium
+    evidence: "memory/slack_broadcasts.jsonl:broadcast-1779116867-24e2d24834; AGENTS.md 作業後の git 同期セクション"
+    why_blocks_game_memory: "ゲーム制作の playable diff と記憶 atom/staging が別ブランチ・未 push 状態で散ると、次回制作時に『どの実装差分から得た教訓か』の追跡が不安定になる。"
+recommendation:
+  needs_design: true
+  priority_issues: [ISS-20260519-OPS-BRANCH-SYNC]
+notes:
+  - "broadcast-1779164284-1966171413 は、吉田寛氏/スーパーマリオ設計分析の4ページ読了・記録依頼。既に #shared-reads 投稿 `sr-1779171042-26d1fdaa0c` と all-nao-u-lab 共有 `sr-1779171056-74059719d0` が atoms/index に存在し、game_lessons_log.md R-C 補強観点まで記録済み。log_cdx 視点では追加の構造 issue なし。"
+  - "Phase 4a では設計・実装は行わない。ISS-20260519-OPS-BRANCH-SYNC は 4b の起動可否だけを示す。"
+```
 
 ## Phase 4b: 仕組み検討 (条件起動)
 (Phase 4a が needs_design: true の場合のみ実行される)
