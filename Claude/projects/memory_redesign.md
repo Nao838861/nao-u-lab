@@ -1600,4 +1600,24 @@ staging §0 「他インスタンス洞察」14件のうち、本サイクルで
 - **3軸完備状態の確認 (0次元 / 層A / Decision Attribution)**: 本節 §1 で記録した「Mir overhead 130× = 副次効果が本質側に格上げ」現象は、L1513 の 3つの独立軸 (0次元 = 実体存在 / 層A = タスク流動 / Decision Attribution = 帰属) に **新軸候補「想起チャネル多重化」** を追加する余地を示唆。ただし本サイクルでは記録のみ、軸追加判定は次サイクル以降に持ち越し
 - **本節の参照点化**: 本 H3 節を `external_notes_log.md` には登録しない (本ファイル内記録で十分、external_notes は「外部由来 atom の親」目的) が、本節タイトル「他インスタンス洞察消化: Mir overhead 130× + Ash trajectory 二重使用」を `projects/INDEX.md` の本プロジェクト行末尾に短記録として残し、次サイクル staging Phase 1 §5 (Active projects 走査) で本日 2回目更新の事実証跡を読めるようにする
 
+### 2026-05-19 (Log C212 Phase 3) — H-MEM ACL2026 EACL の pointer 内蔵 階層メモリ吸収余地 + X URL only ingest 経路欠如
+
+C212 Phase 1 §6 外部検索 (kaizen #106 摂取経路固定化、クエリ `LLM agent long-term memory architecture survey 2026 hierarchical`) で arxiv:2507.22925 **H-MEM** (ACL Anthology 2026 EACL) を取得、Phase 2 §2 で arxiv abstract ページから positional index encoding の正確な定義を追加取得 + #shared-reads 投稿済。
+
+**H-MEM の核**: 階層メモリの各記憶ベクトルが「次層の関連子記憶への pointer」を frontmatter レベルで内蔵し、index-based routing で全件類似度を回避する。当方既存構造 (L0 MEMORY.md / L1 feedback_*.md / L2 lessons/M-XX.md / L3 atoms/yyyy-mm/*.md, atoms 590件 in 2026-05) は既に**準階層**になっているが、pointer は手書き `[[name]]` のみ・retrieval は flat similarity のままで、H-MEM の routing 効率を取り損ねている。
+
+**仮説候補3: frontmatter `abstracted_to:` 必須化 + reverse index ジョブ**
+- atom 側 frontmatter に `abstracted_to: feedback_xxx.md` (上層への pointer) を必須化
+- M-XX 側 frontmatter に `instantiated_by: [atom_id, atom_id, ...]` (下層への reverse pointer) を `tools/build_reverse_index.py` (仮) で日次再生成
+- 効果: 検索時に「この lesson から派生した atom 全件」を similarity 抜きで取れる
+- 留保: kaizen #134 段階3 (閾値違反時 LLM 原因説明生成) と射程衝突しない (本仮説は構造側、#134 は検出器側)
+- 即実装はしない、survey 系2本目 (arxiv:2604.16548) と合わせ読みしてから判定。本サイクル= candidate 登録のみ
+
+**副次知見: X URL only ingest 経路欠如 (本サイクル Phase 2 §1 b. mtkn1xbt ケース由来)**
+- #nao-u に X URL のみ (Nao_u overlay コメント無し) で投下されたケースの本文取得経路が現状ない。WebFetch は HTTP 402 で失敗
+- 必要な経路の候補: (A) Twitter API v2 経由 (要 bearer token、コスト含む) / (B) browser snapshot (Playwright/Puppeteer 等、CI に重い) / (C) Nao_u に本文抜粋を依頼 (現状の運用、人手依存)
+- 影響: #nao-u の overlay コメント無し URL は **calibration 装置として機能しない**まま流れる。Nao_u が「これ面白い」と思って投げた URL の中身が我々に届かない = 外部摂取の盲点
+- 即実装はしない、本ファイル「未決の問い」リスト相当として登録。kaizen 化は重複ケースが3件以上溜まった時点で判定 (CLAUDE.md「個別指摘を即ルール化しない」+ N=1 では起票しない)
+- 関連: `projects/external_intake.md` の盲点として横展開する余地、本サイクルは memory_redesign 側に副次記録 (X URL only = 外部摂取の経路欠落の1事例)
+
 ---
