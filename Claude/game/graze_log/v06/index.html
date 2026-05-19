@@ -596,16 +596,22 @@ function draw(){
       ctx.beginPath();ctx.arc(e.x,e.y,e.r-5,0,Math.PI*2);ctx.fill();
     }
   }
-  // === v06 A-1: anticipation telegraph (敵 spawn 前 30F 予兆) ===
+  // === v06 A-1+ (shape polish): anticipation telegraph 円 + 下向き trajectory hint, type で shape 弁別 ===
   for(const p of state.pendingEnemies){
     const t=1-p.countdown/ANTICIPATION_FRAMES;
     const alpha=0.4*t;
     const baseR=p.type==='small'?9:13;
     const r=baseR*(0.4+0.8*t);
     const y=p.type==='small'?14:18;
+    const hintLen=8+10*t;
     ctx.strokeStyle=`rgba(255,200,80,${alpha})`;
     ctx.lineWidth=1.5;
     ctx.beginPath();ctx.arc(p.x,y,r,0,Math.PI*2);ctx.stroke();
+    if(p.type==='small'){
+      ctx.beginPath();ctx.moveTo(p.x,y+r);ctx.lineTo(p.x,y+r+hintLen);ctx.stroke();
+    }else{
+      ctx.beginPath();ctx.moveTo(p.x-4,y+r);ctx.lineTo(p.x+4,y+r);ctx.lineTo(p.x,y+r+hintLen);ctx.closePath();ctx.stroke();
+    }
   }
   // === v05 beta B-2' (C189): windup telegraph 描画 ===
   // medium が fireT <= WINDUP_FRAMES に入った瞬間から、発射方向に予告線を描く。

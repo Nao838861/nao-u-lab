@@ -45,6 +45,46 @@
 - **円半径膨張**: `r = baseR * (0.4 + 0.8 * t)`。t=1 で r=baseR*1.2 = 実 enemy 半径よりわずかに大。視覚的連続性。
 - **fan3 / aimed の保持**: `pendingEnemies` の中に `bulletPattern` を保持し、`emitEnemy()` で medium type に渡す。v05 beta B-2 の ABAB rhyme は v06 でも保持される。
 
+## §1.x. A-1+ shape polish (C191 Phase 4, 本サイクル追補)
+
+### 追加内容
+
+A-1 (円のみの anticipation) に **下向き trajectory hint** を 5 行追加。type で shape 弁別する:
+
+- **small** (`type==='small'`): 円の下端から短い垂直線 (length = 8 + 10*t px)
+- **medium** (`type==='medium'`): 円の下端を底辺とする下向き三角形 ▼ (height = 8 + 10*t px、幅 8 px)
+
+t の escalation は既存 alpha/r と同期。RNG 一切呼ばないので seed 再現性 (?seed=N) は無傷。
+
+### なぜ A-1+ を A-1 と同 v06 で出すか (= 完成度向上 1 機構刻みの再適用)
+
+A-1 ship (commit `463250eb6`) は readability 3 層を**構造的に**埋めたが、anticipation 層のみ「円が出る」だけで shape 弁別が立っていない。windup 層 (発射線、player 方向) と全弾軌跡層 (line trail) は方向性が出ているのに、anticipation 層だけ等方的な円で「敵がここに出る」しか告知できない。**下向き hint で「ここから降下する」**まで含めると、anticipation 層が他 2 層と同じ「方向性 telegraph」の語彙を獲得し、3 層が用語的にも揃う。
+
+A-1 を出した直後の磨きで v06 を確定させる経路。**新機構ではなく既存機構の shape 弁別性向上 = 削除可能改良の純度高**:
+
+- A-2 (brainstorm.md 18 案中の graze chain breaker UI) ではない。Phase 3 staging 内では「A-2」と便宜呼称したが、brainstorm 命名と衝突するため **A-1+** に変更。
+- v07 候補の B-2 / A-3 / C-2 は今サイクル選ばない。理由: A-1 自体 Nao_u 未通知段階で新機構を足すと「守の段階で 1 回手放す」(`feedback_clone_strategy.md` t:5) を飛ばす。
+
+### 根拠 (M-41 prior_art_citation_must_verify)
+
+Phase 1 §6 外部検索 (`log/external_search.log` 2026-05-20 05:25, 26 回目相当) で導出:
+
+- **Sparen ph3 Tutorial DDSGa2 ("Danmaku level design — uninterrupted flow + clear telegraphing で route 誘導")** — distinctive shape の telegraph 化を一般原則として記述、URL: https://sparen.github.io/ph3tutorials/ddsga2.html (verifiable, 抜粋済)
+- **Boghog's bullet hell shmup 101 ("trail/elongation/grouping で trajectory可読性向上")** — shape を引き伸ばして方向を示す手法、URL: https://shmups.wiki/library/Boghog%27s_bullet_hell_shmup_101 (verifiable)
+- **Luna Abyss windup ("windup timing を distinctive shape にする")** — windup 描画の shape 弁別性、Phase 1 §6 で参照 (引用文未抜粋、ゼロ枝防止のため**直接引用には依拠せず**、A-1 既存引用 Sparen/Boghog の射程内で立つ)
+
+A-1+ は Sparen + Boghog の 2 件 verifiable で M-41 が立つ。Luna Abyss は補助参照のみ (ゼロ枝防止)。
+
+### 守の段階整合性 (`feedback_clone_strategy.md` t:5)
+
+「クローン戦略=守の段階で型を獲得する一連のフロー、守は通過点であってゴールではない」「v03 着手の可否」「総合確信度 N%」「30 本調査」のような戦略レイヤー philosophizing は守を抜けている兆候。本 A-1+ は:
+
+- 差分 5 行刻みの shape 弁別向上 (戦略レイヤーなし、純実装)
+- 削除可能 (5 行の `if/else` ブロックを消すと A-1 形に戻る)
+- A-1 自体の prior_art (Touhou / gamedesignskills / Sparen) を継承
+
+→ 守の純度を保ったまま、anticipation 層の方向性 telegraph を獲得する刻み。
+
 ## §2. brainstorm 18 案から A-1 採択へ (思考経路)
 
 ### MPS 採点と「採点で 1 案に絞らない」の運用
