@@ -15,6 +15,14 @@
 - 残課題: `BOMB NOW` が cue として自然か、直接指示が強すぎるかは browser/manual 観察が必要。
 - commit: push 済み。最終 hash は `git log -1 --oneline` で確認する。
 
+## Phase Game Start: ゲーム制作着手 (v10)
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md`。Slack pending の新規 game directive はなし。継続指示として graze_log_cdx を処理。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v10/`
+- 変更内容: v09 の researched stage flow は維持し、boss warning を break/top-off wave に整理。warning scout を中央寄せ・低速化し、final cue 後 BOMB 使用までつながるようにした。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v10_check.js` pass。`simpleBotUsesFinalBomb=true`, `bombCount=1`, `bossStats.bombedFinal=true`, `bossStats.bombedBoss=true`, `stageScriptUsesResearchedGrammar=true`。
+- 残課題: browser/manual で warning wave が自然な boss 前 break に見えるか、`EARN BOMB` / `BOMB NOW` が直接的すぎないか確認する。
+- commit: this commit (`game: add graze log v10 bomb handoff`)
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 

@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-20T05:17:42+09:00
+last_handled_at: 2026-05-20T07:24:00+09:00
 last_handled_by: log_cdx_phase_game_start
-last_result: `game/graze_log_cdx/v05_1_cdx_v08/` で boss final phase に `FINAL PHASE - CHARGE` と `BOMB NOW` cue を追加し、cue 後 BOMB clear を headless で確認。
+last_result: `game/graze_log_cdx/v05_1_cdx_v10/` で boss warning を break/top-off wave に整理し、final cue 後に simpleBot が BOMB を使って clear する条件を headless で必須化。
 
 ## Nao_u 指示
 
