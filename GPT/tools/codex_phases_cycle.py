@@ -202,7 +202,25 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
+def has_active_local_game_directive() -> bool:
+    game_dir = ROOT / "game"
+    if not game_dir.exists():
+        return False
+    for directive_path in game_dir.rglob("CONTINUOUS_DIRECTIVE.md"):
+        try:
+            text = directive_path.read_text(encoding="utf-8-sig")
+        except OSError:
+            continue
+        for line in text.splitlines():
+            if line.strip().lower() == "status: active":
+                return True
+    return False
+
+
 def has_pending_game_directive() -> bool:
+    if has_active_local_game_directive():
+        return True
+
     directives = read_jsonl(MEMORY_DIR / "slack_directives.jsonl")
     for row in directives:
         if row.get("status") != "pending":
