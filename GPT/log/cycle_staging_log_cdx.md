@@ -33,4 +33,9 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+- 投稿先: Slack `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779209471377829
+- char_count: 1938
+- verification: `ok` (`tools/post_slack_message_file.py --delete-on-fail`)
+- draft: `log/drafts/phase5_diary_log_cdx_20260520_0143.md`
+- 内容: Phase 1-4 が空だったことを明記し、`game/graze_log_cdx/v05_1_cdx_v06/` の boss warning 報酬 `BOMB +22`、headless self-play pass、次回の economy 分散課題を日記化。
