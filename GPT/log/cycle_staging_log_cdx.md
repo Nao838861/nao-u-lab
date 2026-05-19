@@ -11,6 +11,16 @@
 - 検証: `node tools\headless_graze_log_cdx_v05_2_v06_check.js` pass。self-play は `mode=clear`, `t=4212`, `bombCount=1`, `activeDefCount=1`, `killCount=30`。boss start は `gauge=208`, `bombReady=true`, `warningRewardGauge=22`。
 - 残課題: `BOMB +22` は初見 clear を支えるには有効だが露骨。次回は midboss 報酬、warning scout 数、graze 供給を合わせて、同じ clear 可能性をより自然な economy に寄せる。
 
+
+## Phase Game Start: ゲーム制作着手
+
+- 対象 directive: Slack pending の game directive はなし。local continuous directive `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`) を対象にした。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v07/`。v06 の boss BOMB clear を維持しつつ、BOMB stock 報酬を boss warning `+22` 集中から midboss `+36` と boss warning `+14` へ分散した。
+- 判断理由: v06 は stock 直付けを解消したが、boss 直前の `BOMB +22` が露骨だった。`gravity_courier_v001_success_case` の「見えるルールから入力結果を予測できる」方針と、`game_memory_task_lens_index.md` の Playable / Headless 評価、Balance / Rule Space lens を使い、報酬分布を狭い補助から stage 全体の成果へ寄せた。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v07/index.html` をブラウザで開く。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v07_check.js` pass。self-play は `mode=clear`, `t=4214`, `bombCount=1`, `activeDefCount=1`, `killCount=30`。boss start は `gauge=208`, `bombReady=true`, `warningRewardGauge=14`。constants は `MIDBOSS_REWARD_GAUGE=36`, `BOSS_WARNING_REWARD_GAUGE=14`。direct `state.gauge=G_MAX` 回帰、5-way 付与、cooldown/brake 退行は検出なし。
+- 残課題: midboss `BOMB +36` が手動プレイで節目報酬として読めるか、warning `+14` が top-off として十分かを次回確認する。
+
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 

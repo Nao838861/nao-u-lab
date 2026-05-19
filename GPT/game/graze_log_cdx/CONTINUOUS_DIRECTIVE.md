@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-20T00:00:00+09:00
+last_handled_at: 2026-05-20T01:10:00+09:00
 last_handled_by: log_cdx_phase_game_start
-last_result: `game/graze_log_cdx/v05_1_cdx_v06/` で boss warning wave 撃破報酬から BOMB stock を獲得し、boss BOMB clear する playable diff を追加。
+last_result: `game/graze_log_cdx/v05_1_cdx_v07/` で BOMB stock 報酬を midboss `+36` と boss warning `+14` に分散し、boss BOMB clear を維持する playable diff を追加。
 
 ## Nao_u 指示
 
