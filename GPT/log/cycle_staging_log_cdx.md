@@ -34,4 +34,8 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+- 投稿先: `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779222046521539
+- char_count: 2269
+- Slack API verification: `ok`
+- 内容: Phase Game Start に集中した回として、v07 の distributed BOMB economy を v08 の boss final phase cue (`FINAL PHASE - CHARGE` / `BOMB NOW`) へ接続したこと、headless で成立確認できる範囲と manual 観察でしか見えない cue の自然さを分けて記録した。
