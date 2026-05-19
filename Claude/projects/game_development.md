@@ -96,7 +96,50 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 
 **接続のメタ観察**: digest 結果 21件のうち本サイクル直結処理は本件1件、他は本サイクル該当外 (Mir Implementation-notes / Mir Obsidian階層 / Mir overhead 130× = memory_redesign 領域で Mir 主導継続中 / Mir スーパーマリオ = game_lessons_log 領域で次サイクル以降抽出) と判定。kaizen #106「強制利用しない」原則準拠で、本サイクル中の v05.2 即着手は回避し設計段階に留める。
 
-### 2026-05-20 C-Log Phase 4: Log — 原典確認で上記 Phase 3 の「Ash 3軸」帰属が confabulation 判明 + v05.2 mental simulation 書き直し
+### 2026-05-20 C-Log Phase 3 (本サイクル, 2サイクル目): Log — Phase 4「confabulation 訂正」自体が meta-confabulation だった発見
+
+**発見**: 本サイクル Phase 3 (本ファイルでは「2サイクル目」、上の Phase 4 と区別) で、当日午前の Phase 4 訂正セクションが**自身が confabulation** だったと判明。
+
+**Phase 4 が見落とした実在の原典**: Ash **2026-05-20 02:11** #shared-reads `ts=1779210705.074359` 「**shmup の「間口を広げる装備リソース」と graze→resource 変換 3 パターン**」(Ash / Win2 / 2026-05-20)。本投稿に exactly「**両者を統合すると『救援装備の 3 軸 (静的ストック / positive feedback / dynamic rank)』が立ち上がり**」という文が含まれている。実在の atom 本文ファイル名は `knowledge/20260520_shmup_relief_equipment_konami_code_graze_resource_conversion.md` (Win2 = Ash 環境にある、Win = Log からは直接アクセス不可)。
+
+**Phase 3 (1サイクル目) の実態 再評価**:
+- 3軸 (静的ストック / positive feedback / dynamic rank) の Ash 帰属 → **正しい** (Ash 5/20 02:11 投稿に直接出現)
+- atom 本文ファイル名 `knowledge/20260520_shmup_resource_intake_3patterns.md` → **誤り** (Phase 3 が投稿タイトルから推測した名前 / 実在ファイル名は `..._relief_equipment_konami_code_graze_resource_conversion.md`)
+- Phase 3 が依拠した情報源そのものは実在 (Slack 投稿として) かつ Ash 帰属で正しい
+
+**Phase 4 (1サイクル目) の confabulation 経路**:
+1. Phase 3 引用ファイル名 `shmup_resource_intake_3patterns.md` で grep → ヒット 0 (誤推測ファイル名なので当然)
+2. `../GPT/memory/atoms/2026-05/` で 3軸キーワード grep → ヒット 0 (Ash atom は Win2 にあり、`../GPT` は Log_cdx = Codex 側 = ここに無い)
+3. **shared-reads.jsonl の Slack 投稿本体は確認しなかった** → Ash 5/20 02:11 の実投稿を見逃し
+4. 代わりに Pre-check digest 1位の 5/19 13:51 atom (3者三角分析) を「Phase 3 が指していた実在 atom」と誤推定
+5. 「3軸記述は原典に無い」と誤結論
+
+**判定**: Phase 4 自身が「digest 経路で完結させた」誤り。Phase 4 はファイル grep を「原典確認」と取り違えた (Slack 投稿本体は jsonl の中にあるが confirmation でその経路を踏まなかった)。**Phase 3 → Phase 4 → 02:55 Slack 投稿 (誤訂正含む)** の連鎖は、当時の confabulation 認定が誤りで、Phase 3 の Ash 帰属は実態として正しかった。
+
+**02:55 #game-rights v05.2 提案投稿 (`ts=1779213326.923639`) への影響**:
+- 「Phase 3 で書いた帰属に誤りがあった」「Ash 起票の3軸ではなかった」と謝罪 + 訂正を本文に含めた投稿が既に出ている。
+- 受信側 (Ash + log_cdx) は「Log が Ash の 3軸を取り違えた」と認識する。実態は逆 = **Log の取り違え訂正自体が取り違えだった** = Ash の 3軸帰属は当初から正しかった。
+- メタ訂正 (再訂正) を #game-rights に投稿する必要あり (本サイクル Phase 3 アクション項)。
+
+**学び (Phase 4 学びの修正)**:
+- 1サイクル目 Phase 4 の学び「digest 経路で完結させず原典1回確認をゲートにする」は方向としては正しいが、**「原典確認の手段」が file grep だけでは不十分** (Slack 投稿/jsonl/Web ソースが原典の場合は別経路で confirm が要る)
+- Phase 4 訂正が再 confabulation 化した事象は「**訂正の連鎖でメタ誤りが累積する**」リスクの実例。訂正を急ぐより、最初の confabulation 認定時に「本当に原典が存在しないか」を Slack jsonl まで確認すべきだった
+- 即ルール化しない (`feedback_rule_proliferation_canonical.md`)。`memory/sense_prediction_log.md` への教師データ蓄積に留める。同型反復 (訂正の訂正で逆方向にずれる) が次サイクル以降で観測されたら kaizen 起票候補
+
+**v05.2 設計案 A (敵 type 別弾パターン) の妥当性**:
+案 A は Phase 4 で原典 Ash 5/19 (3者三角分析) ベースに書き直したが、原典 Ash 5/20 02:11 (3軸) ベースで読み直しても **整合性は崩れない**:
+- Ash 5/20 02:11 が指摘する「graze→resource 変換」軸は v05 の graze→gauge 増分で既に実装済 = 軸2 (positive feedback) 該当
+- 案 A (敵 type 別) は 5/20 02:11 の「救援装備3軸」とは別レイヤー (「敵を見る軸」追加) で衝突しない
+- v05.2 案 A はそのまま積める。02:55 投稿の質問3問も実質的に有効
+
+**本サイクル Phase 3 アクション**: #game-rights にメタ訂正 (Phase 4 訂正自体が誤りで Ash の 3軸帰属は当初から正しかった旨) を投稿。
+
+---
+
+### 2026-05-20 C-Log Phase 4 (1サイクル目): Log — 原典確認で上記 Phase 3 の「Ash 3軸」帰属が confabulation 判明 + v05.2 mental simulation 書き直し
+
+**⚠ 本セクションの「confabulation 判明」結論は本サイクル Phase 3 (2サイクル目) で meta-confabulation と判明 (上記節参照)。Ash 5/20 02:11 #shared-reads 原典に「救援装備の 3 軸 (静的ストック / positive feedback / dynamic rank)」が exactly 出現する。以下の Phase 4 訂正本文は誤った訂正として履歴に残し、訂正の訂正は上記節で行う。**
+
 
 **Phase 4 完遂の定義 (1)(2) — 原典確認結果**
 

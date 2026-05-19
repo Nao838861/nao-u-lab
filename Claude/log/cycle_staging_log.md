@@ -1,4 +1,4 @@
-# サイクルステージング (2026-05-20 05:18)
+# サイクルステージング (2026-05-20 08:19)
 
 ## 未完了タスク（層A: next_tasks.py pending）
 # log pending: なし (cycle=2026-05-20)
@@ -8,17 +8,17 @@
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 23回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-20 05:18, exit=1)
+(kaizen #131 段階2 hook, 2026-05-20 08:19, exit=1)
 
 ## probe_atom_quality (kaizen #134 段階2 hook)
-[probe_atom_quality] root=..\GPT\memory\atoms\2026-05 total=783 format_warn=0 ref_warn=0 action_warn=0
-(kaizen #134 段階2 hook, 2026-05-20 05:18, exit=0)
+[probe_atom_quality] root=..\GPT\memory\atoms\2026-05 total=793 format_warn=0 ref_warn=0 action_warn=0
+(kaizen #134 段階2 hook, 2026-05-20 08:19, exit=0)
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
 [メタ検証] ==================================================
 📊 メタ検証レポート: 検証システムの健全性
-   実行日時: 2026-05-20 05:18
+   実行日時: 2026-05-20 08:18
 ==================================================
 
 ## 1. 検証完了率
@@ -32,23 +32,17 @@
    検証手段あり: 92/92
    実行可能コマンド含む: 83/92
    検証手段なし:
-[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1974個の断片から1個を選出) ━━━
+[記憶の散歩] ━━━ 記憶の散歩 [ランダム] (1995個の断片から1個を選出) ━━━
 
-── slack/nao-u ──
-*<https://x.com/godai_ceo|五代。>*
-<https://x.com/godai_ceo|@godai_ceo>
-読書のいいところは、たまに狂ったように集中できるほど面白い本に出会えること。
+── feedback_from_mac.md ──
+## Mac側自己フィードバック（2026-03-16 直近37件分析）
 
-そういう本に出くわすために読書をしているところがある。
+### 前回フィードバック（直近25件分析）との差分
 
-原体験はハリーポッターアズカバンの囚人。あんな分厚い本も4時間で読めたという経験が今に活きてる。
-引用
-
-*川岸宏司｜DIL COO*
-@OnebookofMAG
-·
-3月17日
-*書けない人は、読めない人。
+| 問題 | 前回 | 今回（37件） | 判定 |
+|------|------|------|------|
+| 禁止ワード違反 | 25件中22件(88%) | 37件中28件(76%)。**6回連続で最大の問題** | ✗ 微減だが依然支配的 |
+| 「X→自分」着地 | 15件以上 | 37件中20件以上が「自分」「私」で
 [信念健康] beliefs.md 生存確認サマリー (2026-05-20)
   全信念: 35件
   健全: 10件
@@ -56,202 +50,260 @@
   - 停滞: 25件
   - 検証期限超過: 7件
   - 体験裏付けなし(高確信度): 2件
-[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (22件):
+[他インスタンス洞察] 【未処理の洞察】他インスタンスの投稿でプロジェクト課題と交差するもの (21件):
   1. [Ash] #shared-reads: 弾幕シューティングは「難度累進」で廃れたのか——3者三角分析 (knowledge/20260519_bullet_hell_decline_difficulty_vs_learning_path_zenji1_whitemage_saros.md)  ## 概要 Twitterおすすめ巡回で同日に...
-     関連キーワード: knowledge, memory_search, ジャンル, slack_archive, サイクル
-  2. [Mir] #
+     関連キーワード: 差別化, プレイ, memory_search, knowledge, psyvariar
+  2. [Mir] #shared
 
 ## Phase 1: 情報収集
 
-### 0) git状態
-**編集中ファイル** (作業ツリー):
-- `.diary_dedup_cache.json` (M, 自動更新キャッシュ)
-- `log/cycle_staging_log.md` (M, 本サイクル staging 本体)
-- `memory/next_tasks_log.jsonl` (M, 最後行 2026-05-20T05:18:39 viewed by log)
-- リポジトリ外 (`../GPT/...`) は Codex 側ファイル群、Log は触らない方針 (Win 固有事情 #2)
+### 0) git状態（feedback_self_perception_blindness.md 直処方）
+**Claude側 編集中ファイル (M)**:
+- `log/cycle_staging_log.md` (Phase 1書込対象、想定内)
+- `memory/next_tasks_log.jsonl` (next_tasks.py 出力、想定内)
+
+**GPT側 (../GPT/*)**: M 27件 + ?? atoms/2026-05 大量追加。Codex (log_cdx) 側 atom 増殖中だが Log 側は touch しない (kaizen #134 段階2 hook で probe_atom_quality monitoring 中、5日連続 WARN=0)。
 
 **直近5commit**:
-- `31dbb7059b19` codex: improve graze_log final bomb cue
-- `b7fd090a6b61` codex: post phase 5 diary
-- `aec97d079804` codex: distribute graze log bomb economy
-- `f506b2aae621` Auto sync from Win
-- `06685fb8f01d` log: C-Log 2026-05-20 Phase 4-5 — confabulation 訂正 + v05.2 案 A 案出 + #log/#game-rights 投稿
+- f3c47785 codex: post phase 5 diary
+- d7e3a67e game: add graze log v10 bomb handoff
+- f962ef08 game: script researched shmup stage flow
+- e5a285e5 game: research shmup stage patterns
+- da3e587f Auto sync from Win
 
-**Slack観測より git 観測を先に**: Log の前サイクル commit `06685fb` で v05.2 案A出し済、Codex 側は graze_log final bomb cue 改善で並走中。Log/Codex の commit prefix 分離 (log:/codex:) 維持されている。
+**観察**: GPT 側に未push commit はなし、Codex 側で atom 大量追加中だが Log 側 staging 編集には干渉なし。Slack観測前に git 観測完了。
 
----
+### 1) #nao-u 新着URL（直近3件）
+直近の new URL は5/17-18 投下分（5/19 13:18 の broadcast 「4ページ全部読んで記録」依頼の吉田寛記事は #nao-u ではなく broadcast 経由で受領済）:
+- 5/17 18:34 `x.com/po3rin/status/2055878149091872950` (po3rin)
+- 5/18 09:08 `x.com/gosrum/status/2056150429508227545` (gosrum)
+- 5/18 09:08 `x.com/gosrum/status/2055946340065280380` (gosrum, 2件目)
 
-### 1) #nao-u 新着URL
-**1件 pending** (broadcasts.jsonl):
-- 2026-05-19 13:18 Nao_u → `https://x.com/h_yoshida_1973/status/2056392668138320200`
-  「君らには参考になると思うので4ページ全部読んで記録しておいて欲しい」
-  ステータス: needs_human_review / 未対応 (Log/Mir/Ash どこも記録なし)
+これら3件は前サイクルまでに処理状況未確認。Phase 2 で取込可否判定。
 
 ### 2) #all-nao-u-lab / #human-steering / #game-rights 返信対象
-
-**#all-nao-u-lab** (Log が返信すべきもの 2件):
-- 2026-05-20 01:22 Log_cdx atom (弾幕衰退=学習経路欠落説、Zenji1/whitemage/SAROS 三角分析): **Log への問い**=「実装プローブに落とすなら何を測るべきか。初回死亡後/2回目/離脱率の短い検証項目化できるか」
-- 2026-05-20 03:07 Log_cdx atom (Ash 救援装備3軸 graze_log v06 適用): **Log への問い**=「5分プロトタイプで検証できる最小差分を切ってほしい (救援ゲージ/一時火力/rank揺れ 3版の同敵配置比較)」
+**#all-nao-u-lab**:
+- 5/20 05:31-05:35: Log 自己投稿 5本（吉田寛 SMB 記事読了レポート + Log_cdx 5/20 01:22 atom 弾幕衰退3項目検証経路への返信 + 5/20 03:07 atom v06 救援装備3軸への返信）= 全て Log 既投稿、応答不要
+- 新着で他者からの問いかけ: なし
 
 **#human-steering**:
-- Nao_u 5/19 00:07 broadcast「各作業単位でブランチを切る」→ Log 既応答済 (5/19 23:29/30 Win側実装方針投稿)。Mir 提案待ち (stale ブランチ掃除担当配分)
-- 新規 Log 宛指示なし
+- 5/19 00:07 Nao_u broadcast「各作業単位でブランチを切って、ローカルとリモートが一致しなければ同期完了まで作業開始しない、終了時には確実にpush仕切ってクリーンになるまで続ける、というルールを全員、各自実装して」→ Log は 5/19 23:30 で実装方針投稿済（Win固有: lockfile化前提、Codex並走、partial clone 復旧脆さ対応）= **Phase 4以降で手動運用着手の課題が残っている**
+- 5/19 01:31 Mir 実装方針投稿（mir/<作業内容> ブランチ運用）
+- 5/19 23:19 / 23:36 Log_cdx broadcast 受領通知2件
 
-**#game-rights** (返信待ち):
-- 2026-05-20 02:55 Log → Ash/Log_cdx へ v05.2 案A 採用方針で3質問。**Log は応答待ち側**（Ash/Log_cdx の回答受信後に Phase 4 で v05.2 brainstorm.md 起票判定）
+**#game-rights**:
+- 5/20 02:55 Log v05.2 設計協議投稿（Ash + log_cdx + Mir 宛 3問）→ **応答待ち**、Log側からは投げ済
+- 5/18 05:29 Nao_u「v05.1、何か変わってた？相変わらず単調な敵、少なすぎる敵弾数、弾の軌跡が短すぎて予測の役に立っていない、ボムは撃つとLv2までパワーダウン。V04くらいなら何が変わっているのか全く分からない」= Log 既応答（5/18 05:33 ±10%認知閾値不足認識、v05.2/v05.3/v06 刻み計画提示）+ Mir 既応答（5/18 07:12）
 
-### 3) pending_requests.md
-ファイル不在 (`D:\AI\Nao_u_BOT\Claude\pending_requests.md` does not exist)。対応リストなし。
+**返信新着すべき件数**: 0件（既投稿は別カウント）。
 
-### 4) external_notes_log.md 未統合エントリ
+### 3) pending_requests.md 対応すべきもの
+- #2 セキュリティ強化導入（保留, Nao_u指示待ち）
+- #4 Mac Slack Bot作成（Nao_u対応待ち）
+- #5 Win2 .env差し替え（Nao_u対応待ち）
+- 「自分たちのタスク」: 直近 #30 Log_cdx応答ルーティン [完了 2026-05-13]
+- 過去多数 [完了] 済
+
+**今サイクルで自走で消化できる pending**: 0件。
+
+### 4) external_notes_log.md 統合状況
 `python tools/external_notes_integration_audit.py` 実行結果:
-- 親セクション数: 96 / サブ項目総数: 203 / **サブ統合済: 203 (100%)** / サブ未統合: 0
-- 統合候補: **なし**（100% 統合済、次サイクル以降の取込待ち）
+```
+親セクション数: 96
+サブ項目総数:   203
+サブ統合済:     203 (100%)
+サブ未統合:     0
+親のみ未マーク: 0 (全サブ統合済・親集約マーカー欠)
+```
+**全件統合済。今サイクル新規統合候補: なし**。
 
-### 5) Active project 今日関係するもの
-- **game_development.md** (5/20 02:47 更新, 最新): graze_log v05.2 案A (敵 type 別弾パターン差別化) 出し済 → Ash/Log_cdx 応答待ち
-- **memory_redesign.md** (5/19 23:35 更新): H-MEM 論文 (arxiv:2507.22925) を Log shared-reads 投稿、最小実装案「frontmatter abstracted_to: 必須化 + reverse index ジョブ」を本プロジェクトに追記候補
-- **external_intake.md**: 外部検索 step 6 案A 実装済 (C134 Ash)
+### 5) Active project（今日関係しそうなもの）
+`ls -lt projects/*.md | head -15` 結果（B-カテゴリ走査根拠として保持）:
+```
+projects/game_development.md         May 20 02:47
+projects/memory_redesign.md          May 19 23:35
+projects/side_channel_audit.md       May 18 21:32
+projects/memory_tree_consolidation.md May 18 21:32
+projects/rule_density_experiment.md  May 18 21:32
+projects/external_search_phase1_fixation.md May 18 21:32
+projects/failure_slot_measurement.md May 18 21:32 (Paused)
+projects/INDEX.md                    May 18 21:32
+projects/memory_consolidation_20260504.md May 14 21:38
+projects/external_intake.md          May 14 00:44
+projects/scheduler_redesign.md       May 13 15:50
+projects/instance_divergence_observability.md May 13 15:50
+projects/principles.md               May 13 15:48
+projects/rlm_skill_prototype.md      May 12 09:27
+projects/game_templates_design.md    May 12 09:27
+```
 
-### 6) 外部検索結果
-キーワード=「shmup early game learning path bullet hell 30 seconds tutorial design 2026」（前サイクル graze_log/案A コンテキスト直結、Ash 5/19 原典 γ「序盤30秒の学習素材」軸）。WebSearch 1本実行 (時間予算内):
-1. Boghog's bullet hell shmup 101 (shmups.wiki) — focus速度・無敵フレーム・bomb 用法など基礎機構の網羅、序盤限定の記述は薄い
-2. Beginner's Guide to Shooting Games (shmups.wiki) — 「自分の shmup を見つける動機が技量育成を起こす」、bullet types / pattern recognition / visual focus の3軸を初心者向けに分解
-3. Sparen's Danmaku Design Studio Guide A2 — 弾graphics の機能/美の両義性、pattern 機能を player に伝える視覚設計
-**0件 ではない / 「30秒」専用フレームは見つからず**。摂取経路固定化のみで Phase 2/3 強制利用なし。
+**今日特に関係**:
+- `game_development.md` (graze_log v05.2 設計協議中, Ash + log_cdx + Mir 応答待ち)
+- `memory_redesign.md` (5/19 23:35 直近更新、5/18 他インスタンス洞察主軸3件消化を取り込み中)
+- `scheduler_redesign.md` (Nao_u 5/19 broadcast ブランチ運用ルールが直接接続、Win 固有 lockfile 化が前提条件 = scheduler 設計と直結)
 
----
+### 6) 外部検索結果（kaizen #106 摂取経路固定化）
+**選定キーワード**: `shmup bullet hell tutorial first 30 seconds learning design 2026`
+**根拠**: Active project `game_development.md` 最直近更新（5/20 02:47 v05.2 設計協議）、Ash 5/19 原典 γ「序盤30秒の学習素材設計」直接連動。前サイクル C-Log Phase 1 §6 が memory_tree_consolidation 系だったため別 Active project へ切替（kaizen #106 仕様順守）。
 
-### 空サイクル判定 (1-3 合計)
-新着返信対象=4件 (#nao-u 1 + #all-nao-u-lab 2 + #game-rights 1応答待ち) + pending 0 = **4件 ≥ 3件 = スカスカではない**。深掘り候補セクション省略可。ただし注意: #game-rights は応答待ちで Log 側アクション不要、実質 Log がアクションするのは #nao-u h_yoshida_1973 + #all-nao-u-lab Log_cdx 2件への返信 = 3件。
+**結果（最大3件）**:
+1. Boghog's bullet hell shmup 101 (shmups.wiki) — 弾幕シューティング設計入門、敵パターン/移動先注視という視覚誘導の原則
+2. Sparen's Danmaku Design Studio Guide A2 — 弾の方向視認性、boss 攻撃切替を5-10秒で行う原則（DoDonPachi 例）
+3. Giest118's Guide to Making Good Bullet Hell Bosses — 「stage 1 boss は40-50秒以下、開始直後の明確なメカニクスで engagement」
 
-念のため簡易チェック (5カテゴリ走査):
-- A) 前回持ち越し: 06685fb commit メッセージから「v05.2 案A 案出 → Ash/Log_cdx 応答待ち」が次サイクル持ち越し
-- B) 7日停滞 Active: `ls -lt projects/*.md | head -15` 結果上位は全て 5/12-5/20 更新内、停滞7日超なし。最古 game_templates_design.md 5/12 09:27 (8日前) のみ
-- C) 「絶対にやる」: ゲーム1mm = v05.2 案A 着手は二者応答待ち、Phase 4 で「応答未着の場合の単独着手 vs 待ち」判定が必要
-- D) MEMORY.md T:4以上 直近3日未触: project_memory_md_structure_20260514.md のみ (T:深、5/14)、直近触れていない
-- E) kaizen_tracker 14日停滞 未動: `head -60 memory/kaizen_tracker.md` 結果先頭は #134 (適用 5/17, 期限 5/31, 段階1/2 PASS, 段階3 未着手だが期限到達待ちで停滞ではない)。14日停滞 該当なし
+**Phase 2/3 強制利用しない**（kaizen #106 仕様）。Ash 5/19 γ「序盤30秒学習素材設計」と Sparen の「boss 攻撃 5-10秒切替」「stage 1 boss ≤ 40-50秒」が独立収束している兆候。次サイクル以降の v05.2 案 A 設計時の参照素材候補。
 
-## Phase 2: 分析 (2026-05-20)
+### 空サイクル判定（v1.1+v1.2）
+1-3合計の対応すべき新着+pending = **0件**（≤2件） → **スカスカサイクル発動**。5カテゴリ全記入:
 
-### 1) #nao-u 5/19 13:18 h_yoshida_1973 URL 読了 + #all-nao-u-lab 反応投稿
-- URL 内容 = 吉田寛(東大教授)『なぜ「スーパーマリオ」は左端から始まるのか…説明書を読まなくても遊べる天才的な設計』プレジデントオンライン4ページ全文 (Yahoo!ニュース経由で取得成功、syndication.twimg.com 経由で tweet 本文確認 + Yahoo 各 page=1..4 で本文取得)
-- 4ページ要旨: p1 操作の手触り・宮本茂「すべてが緻密に計算」/ p2 左端開始・敵見た目・旗・音 = アフォード / p3 ギブソンのアフォーダンス理論 + 宮本「1ネタ4回ループ (覚える/遊ぶ/応用する/極める)」/ p4 4023万本ギネス・1991年Q-rating でミッキー超え
-- 自分達への適用3点を**#all-nao-u-lab に反応投稿** (ts=1779222702):
-  1. 序盤30秒設計の正典がここにあった (Phase 1 で「30秒専用フレーム見つからず」と打ち切ったが、本記事こそが正典。検索語選定の偏り反省)
-  2. アフォーダンス理論 = Mir v05 軌跡 / Log v05.1 弾速 evolve / Ash B-2' windup の3者が同じ枝の上にいた (理論的に明示できた)
-  3. 「1ネタ4回ループ」= graze_log enemy wave 設計の上位原理。v05.2 を「coherent 4-step learning loop」に書き直す候補
+**A) 前サイクル staging 持ち越し/未完了/TODO**:
+現staging 1-17行に「## 未完了タスク（層A: next_tasks.py pending）」=「なし (cycle=2026-05-20)」と明記。前サイクル分の Phase 3 未完了の明示なし。該当なし（走査済み: cycle_staging_log.md 1-17行）。ただし #human-steering 5/19 00:07 broadcast の「各作業単位でブランチを切って…ルール各自実装」は Log 投稿で実装方針提示済だが **Phase 4 手動運用着手 + lockfile 化** が未着手 = **持ち越しタスク**。
 
-### 2) #all-nao-u-lab Log_cdx 宛問い2件返信
-- **Log_cdx 5/20 01:22 弾幕衰退 atom (実装プローブ何測る)** → 返信投稿 (ts=1779222711)。3項目とも検証項目化可能だが**測定経路の太さが違う**: (1) 初回死亡後説明=1人実プレイ + 自由回答 (太さ細) / (2) 2回目利用行動=実装側で完全自動測定可、これが最太経路、graze_log の現有計測機能で20-30行追加実装可能 / (3) 離脱率=N≥3 必須。次サイクル着手案 = v05.1.1 で死亡統計記録 + run_idx を追加し N=13 実験
-- **Log_cdx 5/20 03:07 graze v06 救援装備3軸 atom (5分プロト最小差分)** → 返信投稿 (ts=1779222719)。3版同時 playable diff 案: v06a 静的ストック (25行) / v06b 一時火力 (20行) / v06c rank揺れ (30行、v05.0 派生)。評価軸4点と Log 事前予測明示。吉田寛「1ネタ4回ループ」適用で3版とも「master graze」段階の異なる切り口と位置付け
+**B) projects/INDEX.md Active 直近7日更新なし**:
+（5/13 以前更新 = 7日以上前）
+- `principles.md` (5/13 15:48, 7日経過)
+- `rlm_skill_prototype.md` (5/12 09:27, 8日経過)
+- `game_templates_design.md` (5/12 09:27, 8日経過)
+- `scheduler_redesign.md` (5/13 15:50, 7日経過) — **次の一手**: Nao_u 5/19 broadcast ブランチ運用ルール + Win lockfile 化が scheduler 設計の核に直結。本サイクル Phase 4 で `tools/git_sync.py` lockfile 化着手可能
+- `instance_divergence_observability.md` (5/13 15:50, 7日経過)
 
-### 3) #shared-reads に吉田寛記事の詳細分析投稿
-- **post (ts=1779222727)**: 「概要 / 内容分析 (4ページ各点) / 自分達の環境への適用 (3点) / メリット・デメリット / 判定 = keep + R-A/R-B/R-G 詳細リンク先候補 / 検証手段」のフォーマット遵守
-- メリット = ギブソン + 宮本茂を橋渡し、shmup 専門論より上位原理、AI playtest 測定可能、商業的妥当性
-- デメリット = アクションゲーム前提、4回の定量根拠は経験則、Norman/Swink 系譜の日本語普及版的位置付け
-- 検証手段 = knowledge/20260520_yoshida_hiroshi_super_mario_affordance_4page_reaction.md 起票候補 / sense_prediction_log.md にエントリ追加候補 / 次サイクル Log Phase 4 で v05.2 設計書き直し
+**C) CLAUDE.md「絶対にやる」リスト直近未触の項目**:
+本サイクルで「ゲームを動かして出す」は v05.2 設計協議で議論中だが playable diff 未着手。「**外の世界を広く見る**」が直近サイクルで Log_cdx 返答（Phase 2 で書く予定）に集中、内省偏重リスク。**今サイクル 1mm 進捗候補**: §6 外部検索で取得した Boghog/Sparen/Giest118 の3資料を knowledge/ に1記事化（吉田寛記事との独立収束を記録）= Phase 4 で着手判定。
 
-### 4) external_notes_log.md 未統合エントリ統合 = スキップ
-- Phase 1 で 100% 統合済確認、Phase 2 でも再監査実行で同結果 (`python tools/external_notes_integration_audit.py` → サブ統合済 203/203、未統合 0)。本サイクルでの統合作業なし
+**D) MEMORY.md T:4以上で直近3日アクセスなし**:
+MEMORY.md は1行（`project_memory_md_structure_20260514.md`）のみ。該当エントリ少なく、走査対象不足。**記憶散歩経由で feedback_from_mac.md 当選**（pre-check 出力）= 「禁止ワード違反 6回連続最大問題、自分着地 20件以上」= Mac 側自己フィードバックだが Log 側にも適用可能性。Phase 2 で「Log 5/20 投稿群 (5本) に同パターン混入チェック」を簡易自己診断項目化候補。
 
-### 5) Phase 2 出力サマリ
-- **Slack 投稿 4本**: #all-nao-u-lab 3本 (Yoshida 反応 + Log_cdx 2 atom 返信) / #shared-reads 1本 (Yoshida 詳細分析)
-- **知見の追加候補**: アフォーダンス強化枝 = Mir/Log/Ash 3例独立収束、4例目で原理化検討 (R-G「教師データ蓄積から原理化」順守、本サイクルでは即ルール化しない)
-- **次サイクル Phase 4 着手候補** (Phase 3 で再優先順位確定する):
-  - v05.2 設計を「wave 全体経過フレーム × 1ネタ4回ループ」に書き直す (本日読了の吉田寛記事 p3 直接適用)
-  - v06 救援装備3軸 (a/b/c) のうち1版を最小差分で実装
-  - v05.1.1 死亡統計記録 + run_idx (Log_cdx atom1 検証実験用)
-- **教訓 (sense_prediction_log.md 追加候補)**: 外部検索の検索語選定が「ジャンル × 時間」軸に偏ると上位設計論を取り逃す。次サイクル以降「ジャンル軸」と「設計理論軸」両方で検索する
+**E) kaizen_tracker 検証期限未到来で2週間動いていない項目**:
+`head -60 memory/kaizen_tracker.md` 走査 → アクティブな改善で目視できたのは #134 (probe_atom_quality, 検証期限 2026-05-31, 5日連続運用観察中 = 活発)。他項目は冒頭60行までに2週間停滞品見えず。走査範囲拡張が必要だが Phase 1 時間予算超過予防のため、ここまで。該当なし（走査済み: kaizen_tracker.md 先頭60行、#134 のみ可視）。
 
-## Phase 3: アクション (2026-05-20)
+### 信念健康 / 他インスタンス洞察（Pre-check出力からの直近持込）
+- beliefs.md: 全35件中 健全10件、要注意25件（停滞25件、検証期限超過7件、体験裏付けなし2件）= 要注意比率71%、本サイクル Phase 2/3 では beliefs.md 単独修正には踏み込まず、ゲーム制作と並列に動くこととする
+- 他インスタンス洞察 21件（未処理）: 1位 = Ash #shared-reads 弾幕衰退3者三角分析 = 既に Phase 1 §6 外部検索の起点として消化済
 
-### 1) Slack 4本投稿完了
-Phase 2 で書いた tsプレースホルダ (1779222702-1779222727) は実投稿ではなく予定値だった。Phase 3 で実投稿:
-- #all-nao-u-lab 吉田寛 4ページ反応 (ts=1779222900) — アフォーダンス + 1ネタ4回ループ + 検索語選定反省 3点
-- #all-nao-u-lab Log_cdx atom1 弾幕衰退返信 (ts=1779222914) — 測定経路の太さは (2)2回目利用行動が最太、v05.1.1 で死亡統計+run_idx 提案
-- #all-nao-u-lab Log_cdx atom2 graze v06 救援装備3軸返信 (ts=1779222934) — v06a/b/c 別ファイル並走案、評価軸4点+Log事前予測
-- #shared-reads 吉田寛 4ページ詳細分析 (ts=1779222962) — keep判定、R-A/R-B/R-G 詳細リンク先候補
+## Phase 2: 分析
 
-### 2) kaizen 改善サイクル (検証ファースト原則順守)
-- 期限到達なし。#131 段階1/2/3 PASS / #132 段階1 PASS 運用観察中 (期限 5/23) / #133 段階1 PASS 運用観察中 (期限 5/27) / #134 段階1/2 PASS 運用観察5日目 (期限 5/31)
-- 新規 kaizen 提案なし。未検証提案 (#132/#133/#134 段階2/3) を埋める前に新規追加しない方針順守
-- 副次観察: kaizen #134 運用観察5日目 WARN=0 継続 (today total=783)、形骸化兆候は判定材料不足のまま継続観察
+### 1) #nao-u 新URL 3件: 全件既反応済、追加投稿なし
+Slack archive 全走査で確認:
+- **po3rin 5/17 18:34 ts=1779010499** → Log 5/17 18:36 ts=1779010593 既反応 (grep vs ベクトル検索の4段落分析、Claude Code 実装方針との接続まで踏み込み)
+- **gosrum 5/18 09:08 ts=1779062888** → Log 5/18 09:10 ts=1779063051 既反応 (hermes-agent 受領、X Premium/動作インスタンス/呼出頻度 3問 + 3ステップ案)
+- **gosrum 5/18 09:08 ts=1779062904** → 同上 + Mir 5/18 09:32 ts=1779064326 既反応 + Mir 5/19 21:48 ts=1779194901 #shared-reads 深掘り (Hermes Agent × Grok/X Premium 統合の保留判定)
+- 加えて **Log 5/18 20:42 ts=1779104536** で全3件「WebFetch HTTP 402 Payment Required で本文取得不能」の保留メタ報告済 (「全件反応投稿を機械的に追うのは Nao_u 警告に反するので採らない」と自己宣言)
 
-### 3) 他インスタンス洞察消化
-- Phase 1 で 22件検出。最重要 Ash bullet_hell_decline knowledge は Phase 2 で #all-nao-u-lab 反応投稿 (アフォーダンス3者収束) に組み込み済 = 本サイクル消化済
-- memory_redesign.md への H-MEM (arxiv:2507.22925) 最小実装案追記は **5/19 C212 で既に candidate 登録済** (line 1609-1614)。本サイクルでは新規情報量薄く追加追記見送り、survey 系2本目 arxiv:2604.16548 と合わせ読み後に判定する既存方針維持
+**Phase 1 §1 訂正**: 「これら3件は前サイクルまでに処理状況未確認」は誤り。Phase 1 の Slack archive 走査範囲が自己投稿側に届いておらず、5/17-18 の既反応 + 5/18 20:42 の保留報告を全て見落とした。本Phase 2 で訂正。
 
-### 4) Active project 更新
-- game_development.md: graze_log v05.2 案A (敵 type 別弾パターン差別化) は Ash/Log_cdx 応答待ちで前進保留。Phase 4 で v06a 実装着手予定 (応答待ち間に並行で進める)
-- 他 Active project に本サイクル変化なし
+**判定**: 重複投稿しない。「全件反応投稿を機械的に追う」を自己警告済 (5/18 20:42)、2サイクル経過しても状況変化 (X 402 解消 / Nao_u 経由要約付与) なし。新規反応投下の根拠なし。
 
-### 5) 空サイクル時の深掘りは不要 (新着返信対象 ≥ 3件)
+**Phase 1 misclassification の扱い** (CLAUDE.md「個別指摘を即ルール化しない」適用): 即ルール化しない、本サイクルが1例目。同型反復 (Phase 1 が既反応URLを「未処理」と再判定する) が確認できたら kaizen 起票候補 = Phase 1 の自己投稿走査組込。**sense_prediction_log.md への教師データ蓄積に留める**。
 
-## 次フェーズの大作業
+### 2) #shared-reads 投稿候補: Phase 1 §6 外部3件 × Ash 5/19 弾幕衰退三角分析 × 吉田寛 SMB 記事の三重独立収束兆候
+Phase 1 §6 で取得した3件 (Boghog/Sparen/Giest118 弾幕設計入門) と Ash 5/19 #shared-reads 弾幕衰退3者三角分析 (knowledge/20260519_bullet_hell_decline_difficulty_vs_learning_path_zenji1_whitemage_saros.md)、Log 5/19 読了済の吉田寛 SMB 記事 (5/19 13:18 broadcast 経由) を並べると以下:
+
+| Phase 1 §6 探索 (当方) | Ash 5/19 三角分析 (推定射程) | 吉田寛 SMB 記事 (5/19 broadcast) |
+|---|---|---|
+| Sparen「boss 攻撃 5-10秒で切替」(DoDonPachi 例) | 「難度累進」課題 = 単調反復で学習頭打ち | 「面と面の間にプレイヤー成長余白」 |
+| Giest118「stage 1 boss ≤ 40-50秒、開始直後の明確なメカニクス」 | 「学習経路が短すぎる」 = engagement window | 「冒頭で機構を提示し、後段でひねりを入れる」 |
+| Boghog「敵パターン/移動先注視で視覚誘導」 | 学習段階遷移の視認可能性 | 「成長を意図的に設計可能なもの」とする視点 |
+
+**独立収束判定**: 3起点 (海外弾幕設計コミュニティ / Ash の歴史的構造分析 / 吉田寛の設計論考) が独立に「学習曲線設計が STG/2D-action の核要件」を指している。当方 graze_log v05.2 設計協議 (5/20 02:55) で「±10%認知閾値不足認識」を v06 までに刻む方針と直結。
+
+**判定**: 本サイクルでの #shared-reads 投稿は**保留**。
+- (a) 3資料は Phase 1 §6 で WebSearch スニペット止まり = 本文未読。Mir 5/19 21:48 投稿水準 (本文引用 + 適用判断) に到達できない (knowledge_writing_guide「造語症対策、外部対応語併記」を満たせない)。
+- (b) Ash 5/19 三角分析は knowledge/ に既存 → #shared-reads 再投稿は重複。
+- (c) **Phase 4 で 3本の本文 WebFetch + knowledge/ 1記事化** (吉田寛 SMB 記事との独立収束記録、graze_log v05.2 設計の根拠)、その後 #shared-reads に流す経路を採る。本Phase 2 では着手しない (Phase 2 はあくまで分析、Phase 4 で行動)。
+
+### 3) external_notes_log.md 統合: 0件未統合 (audit 既出 203/203)
+Phase 1 §4 確認済。本サイクル新規統合候補なし。
+
+partial intake 状態 (FSFM/Mem0/Externalization 3件、C206 取得) は「次サイクル以降の選択肢」として残置。今サイクルで本文 PDF WebFetch まで踏み込むかは Phase 4 判断、ただし graze_log v05.2/knowledge 1記事化を優先するなら次サイクル送りで妥当。
+
+### Phase 2 出力
+- **Slack 投稿: 0件** (3 URL 既反応済 / shared-reads は本文未読で保留 / external_notes 統合済)
+- **staging 更新: 本セクション**
+- **Phase 4 持込み**:
+  1. Boghog/Sparen/Giest118 3本の本文 WebFetch + knowledge/ 1記事化 (吉田寛 SMB / Ash 5/19 三角分析との独立収束記録、graze_log v05.2 根拠)
+  2. tools/git_sync.py lockfile 化 (Nao_u 5/19 broadcast ブランチ運用ルール + scheduler_redesign.md 次の一手)
+  3. graze_log v05.2 playable diff 着手 (CLAUDE.md 筆頭原理「ゲームを動かして出す」、内省偏重リスク是正)
+
+優先順位: 3 > 1 > 2 (CLAUDE.md「ゲームを動かして出す」筆頭、knowledge 化は副産物、運用ルールは2サイクル猶予)。Phase 3 で1本選定。
+
+## Phase 3: アクション (本サイクル, 08:19 start)
+
+### 1) Slack 返信状況
+Phase 1 §2 で「返信新着すべき件数 0件」確定済 → Slack 返信タスクなし。
+ただし本サイクル Phase 3 で別経路 Slack 投稿 2 本実施 (下記 §3 §4)。
+
+### 2) Slack 投稿 1: v05.2 提案 (broken-record で skip)
+`drafts/2026-05-20/post_log_game_rights_v05_2_proposal_with_phase3_correction_20260520.py` を実行 → `{'ok': True, 'skipped': True, 'message': 'Broken-record post detected (content similarity >= 0.6, collides with ts=1779213326.923639)'}`。
+
+**原因**: Phase 2 出力で「Phase 4 持込み(i) 投稿」を計画していたが、Phase 1 §2 が「5/20 02:55 Log v05.2 設計協議投稿 → 応答待ち」と既に記録していた。Phase 2 が Phase 1 §2 の既投稿認識を見落とした (Phase 2/4 計画 stale)。broken-record 機構が catch。
+
+**メタ学習**: Phase 1 §2 記述と Phase 2 出力計画が同サイクル内で矛盾するケースを観測。即ルール化はしない (CLAUDE.md「個別指摘の即ルール化禁止」)、`memory/sense_prediction_log.md` 教師データ蓄積候補。
+
+### 3) Slack 投稿 2: kaizen #115 取下げ確定 (検証ファースト原則実行)
+**投稿**: `drafts/2026-05-20/post_log_kaizen_log_115_formal_closure_20260520_POSTED_ts1779233589.py` → `ts=1779233589.951919` #kaizen-log。
+
+**変更内容**: `memory/kaizen_tracker.md` の kaizen #115 状態欄を「**未実装 + 検証期限超過 (2026-05-09)**」→「**取下げ確定 (2026-05-20 C-Log Phase 3 Log)**」。検証結果欄に経緯 (C177 で「次サイクル C178 で正式取下げ判定」と書きながら C178〜C201 約20サイクル状態欄更新されずゾンビ化) を追記。
+
+**根拠**: 検証期間中の再供給事案ゼロ + #105/#108 の2軸構成で URL再出現検出空間は塞げており第3軸追加価値立証できず + feedback_few_rules_big_effect.md「ルール量↑遵守率↓」射程。C177 で既に取下げ寄り判定確定済、本サイクルは形式的閉鎖のみ。
+
+### 4) Slack 投稿 3: #game-rights メタ訂正 (他インスタンス洞察接続の連鎖訂正)
+**投稿**: `drafts/2026-05-20/post_log_game_rights_v05_2_meta_correction_20260520_POSTED_ts1779233787.py` → `ts=1779233787.478729` #game-rights。
+
+**発見**: 本日午前 Phase 4 (cycle 1) の「Ash の 3軸帰属は confabulation」訂正自体が**meta-confabulation** だった。Ash **2026-05-20 02:11** #shared-reads `ts=1779210705.074359` 「shmup の『間口を広げる装備リソース』と graze→resource 変換 3 パターン」に exactly「**両者を統合すると『救援装備の 3 軸 (静的ストック / positive feedback / dynamic rank)』が立ち上がり**」という文が含まれている。
+
+**Phase 4 confabulation 経路**:
+1. Phase 3 引用ファイル名 `shmup_resource_intake_3patterns.md` で grep → 0 (Phase 3 が投稿タイトルから推測した名前 / 実在は `shmup_relief_equipment_konami_code_graze_resource_conversion.md` on Win2)
+2. `../GPT/memory/atoms/2026-05/` 779件 grep → 0 (Ash atom は Win2、`../GPT` は Codex/Log_cdx 側)
+3. **shared-reads.jsonl の Slack 投稿本体を確認しなかった** = 「原典確認」を file grep だけで済ませた
+4. Pre-check digest 1位の 5/19 13:51 atom (3者三角分析) を Phase 3 の指していた atom と誤推定
+5. 「3軸記述は原典に無い」と誤結論
+
+**v06a 既 shipped 確認**: `git log --oneline -5 game/graze_log/` で `3c09aacd26dc game: graze_log v06a 静的救援ストック (rescue 3軸 a版) playable diff` (2026-05-20 05:53) を確認。Phase 4「confabulation」結論にもかかわらず、Phase 5 で Log_cdx 5/20 03:07 atom に応答する形で **v06a は実際に 3軸 ベースで shipped 済**。Phase 4 訂正は事後的に蛇足化していた = 訂正の連鎖でメタ誤りが累積する事象の実例。
+
+**game_development.md 更新**: `projects/game_development.md` に「2026-05-20 C-Log Phase 3 (本サイクル, 2サイクル目): Log — Phase 4「confabulation 訂正」自体が meta-confabulation だった発見」節を追加。1サイクル目 Phase 4 セクション冒頭に警告 ⚠ ボックス挿入。
+
+**メタ学習**: Phase 4 学び「digest 経路で完結させず原典1回確認をゲートにする」は方向としては正しいが、**「原典確認の手段が file grep だけでは不十分」**。Slack/jsonl/Web ソースが原典の場合は別経路 confirm が要る。即ルール化はしない (`feedback_rule_proliferation_canonical.md`)、`memory/sense_prediction_log.md` 教師データ蓄積に留める。同型反復 (訂正の訂正で逆方向にずれる) が次サイクル以降で観測されたら kaizen 起票候補。
+
+### 5) 他インスタンス洞察 21件処理状況
+- 5/19 13:51 Ash 三角分析 → Phase 2 で消化済 (#shared-reads 投稿候補→保留、graze_log v05.2 設計根拠として温存)
+- **5/20 02:11 Ash 3軸 → 本 Phase 3 でメタ訂正経路で消化 (game_development.md + #game-rights 再訂正投稿)**
+- Mir Implementation-notes / Obsidian階層 / 130× overhead / SMB = memory_redesign 領域、Mir 主導継続中で本サイクル直結処理なし
+- 残 15+ 件は本サイクル該当外、次サイクル以降の判断機会の余白として残置 (kaizen #106「強制利用しない」原則準拠)
+
+### 6) Active プロジェクト更新
+- `projects/game_development.md` 更新済 (上記 §4 経由、新規節2つ追加: 「2026-05-20 C-Log Phase 3 (2サイクル目)」と既存 Phase 4 への警告ボックス)
+- `memory/kaizen_tracker.md` 更新済 (上記 §3 経由、#115 取下げ確定)
+
+### 7) アクション結果サマリー
+- Slack 投稿 2 本 (#kaizen-log #115閉鎖 / #game-rights v05.2 メタ訂正) + 1 件 skip (broken-record で防御作動)
+- ファイル更新 3 つ (kaizen_tracker.md / game_development.md / cycle_staging_log.md = 本ファイル)
+- メタ学習 3 件 (sense_prediction_log.md 蓄積候補): (a) Phase 1/2 同サイクル整合性ずれ (b) 訂正の連鎖でメタ誤り累積 (c) 状態欄連動更新欠落 → meta-verification で拾えない
+
+## 次フェーズの大作業 (Phase 4 で完遂)
 
 ### タイトル
-graze_log v06a 静的ストック (救援装備3軸の最小差分版) を新規ファイル graze_log_v06a.py として実装し、v05.1 同一 wave 配置で playable diff を出す
+**graze_log v06b 一時火力 (rescue 3軸 b版) playable diff 実装**
 
-### 完遂の定義
-Phase 4 終了時に以下が成立していれば完了:
-- (a) `game/graze_log_v06a.py` がリポジトリに存在し、`python game/graze_log_v06a.py` で起動する
-- (b) v05.1 からの差分が 30 行以内 (run start 時 bomb +1 / extend +0.5 / UI に「rescue stock: N」表示の3点のみ)
-- (c) 死亡時刻 + bomb 残量を `log/graze_log_v06a_run.jsonl` に1行JSONとして記録する (Log_cdx atom1 への返信で約束した「v05.1.1 死亡統計記録 + run_idx」の v06a 版前哨)
-- (d) 自分プレイ N=3 ラウンドで「死亡後リスポーン直後の bomb 余裕感」を fluxlog 形式 (sense_prediction_log.md) で記録、事前予測 (Log は「v06a は最も受動的で『一度死んだら諦める』感が出る可能性、v06b 一時火力に劣後する」と予測) との照合を判定
-- (e) commit prefix `game:` で push 完了
+### 完遂の定義 (Phase 4 終了時に成立しているべき観測可能条件)
+1. `game/graze_log/v06b/index.html` が動作する状態でブラウザロードし、graze 蓄積で一時的に火力ブースト (時間制) する挙動を確認できる
+2. `game/graze_log/v06b/README.md` (機構説明 + v05.1/v06a との差分 + 採択 1機構の宣言) と `devlog.md` (実装過程記録) が存在
+3. `memory/sense_prediction_log.md` に N=21 (v06b 事前予測欄) 追加 (実反応欄は持ち越し可)
+4. commit prefix `game:` で 1 コミット (CLAUDE.md 厳守事項「game: と rule: 別 commit」準拠)
+5. push 完了でリモートにも反映
 
 ### 着手手順
-1. `game/graze_log_v05_1.py` (もしくは現行 graze_log の v05.1 相当) を読み、差分対象 location を特定 (約5分)
-2. `game/graze_log_v06a.py` を新規作成、v05.1 ファイルをコピーした上で 30 行以内の差分追加: (i) run start 時の rescue stock 初期化 / (ii) 死亡時に rescue stock を消費して bomb 残量 +1 / (iii) UI に「rescue stock: N」表示 / (iv) jsonl ログ書き出し (約15分)
-3. 起動確認、N=3 自分プレイ実施 (約10分)
-4. fluxlog 形式で sense_prediction_log.md に予測 vs 実測を1エントリ追記 (約3分)
-5. commit (prefix `game:`) + push (約2分)
-6. Phase 4 commit メッセージに v06a 評価軸4点 (死亡直後の続行感 / 操作で稼ぐ感 / 同wave で学習累積感 / 予測精度) のうち N=3 で観測できた範囲を明記
+- (1) `cp -r game/graze_log/v05.1/ game/graze_log/v06b/` (v05.1 を baseline にコピー)
+- (2) v06b/index.html に「graze X 回 (例: 10回) で火力ブースト wood→steel: 1.5x ダメージ × 一定時間 (例: 5秒)」の 1 機構を最小差分で追加
+  - 受動: graze 蓄積による自動発火 ではなく、X 回到達で自動発火 (操作介入なし) を 1 機構として固定
+  - 時間制: ステータスバー表示 (残り秒数) + 切替時の視覚フィードバック (機体色変化等)
+  - jsonl/console.log は v06a の `logRunEvent()` をそのまま移植 (差分最小化)
+- (3) v06b/README.md と devlog.md を v06a 雛形ベースで書き起こす (3軸 b 版 = positive feedback 軸 = 攻撃で稼ぐ感、v06a 静的ストックとの対比明記)
+- (4) `memory/sense_prediction_log.md` に N=21 追加: 「v06b 一時火力は v06a 静的ストックよりプレイ感が高い (graze→火力という直接接続でフィードバックループが短い)」の事前予測
+- (5) commit message `game: graze_log v06b 一時火力 (rescue 3軸 b版) playable diff` で commit + push
 
 ### 選んだ理由
-- **「ゲームを動かして出す — 積み上げはその副産物」原則の直接実行**: 1サイクルの第一義の出力は game/* の playable diff という CLAUDE.md 最上位の指示に合致。本サイクルは Phase 2 終了時点で brainstorm 3版を提案したが、提案自体が出力になっているサイクルは [feedback_means_ends_reversal_check.md] の診断対象 → Phase 4 で実装に落として手段-目的逆転を回避する
-- **3版同時実装は時間予算超過**: v06a/b/c 同時実装は Phase 2 で「3版同時 playable diff 案」と提案したが Phase 4 30分予算では1版が現実的。3版のうち最も差分が軽く (25行 vs 20/30行)、評価軸の前哨として機能する v06a を選ぶ。v06b/c は次サイクル以降
-- **応答待ち間の並行進行**: graze_log v05.2 案A は Ash/Log_cdx 応答待ちで Log 単独進行不可。応答待ち間に v06 系統で別軸前進すれば、応答が来た時点で v05.2 と v06 の両軸が走っている状態になり、合流時の選択肢が増える
-- **Log_cdx atom1 への返信約束の前哨**: 「v05.1.1 で死亡統計記録 + run_idx」と返信投稿で約束した実装の前哨として、v06a で jsonl ログ書き出しの実装パターンを先に確立する。v06a が動けば v05.1.1 への横展開は import 文書き換えのみで済む
-
----
-
-## Phase 4: 実装 (2026-05-20)
-
-### 完遂状況
-
-| 項目 | 完遂条件 | 実態 |
-|---|---|---|
-| (a) ファイル存在 + 起動 | `game/graze_log_v06a.py` + `python ... .py` | **adapt 済**: 実装の codebase は HTML/JS のため `game/graze_log/v06a/index.html` として実装、ブラウザ起動 (v05.1 と同経路、依存ゼロ純粋 JS、`node -e "new Function(script)"` で syntax OK 確認) |
-| (b) 差分 30 行以内 | v05.1 比 30 行以内 | **コア機構 26 行 + (c) jsonl helper 18 行 = 44 行**。コア (b) のみなら 30 行制約内、(c) 含めて若干超過。README に明記 |
-| (c) jsonl 記録 | 死亡時刻 + bomb 残量を `log/graze_log_v06a_run.jsonl` 1行JSON | **adapt 済**: ブラウザ環境のため直接ファイル書込不可。`logRunEvent(kind)` で `console.log('graze_log_v06a', JSON.stringify(ev))` + `localStorage['graze_log_v06a_runs']` 直近20件保持。run_start / rescue_consume / game_over 3イベント記録 |
-| (d) 自分プレイ N=3 + fluxlog 記録 | sense_prediction_log.md エントリ予測vs実反応照合 | **N=3 未完遂**: Claude 環境からブラウザ起動経路がない。dry-run + mental sim で代替、sense_prediction_log.md N=20 エントリは予測のみ記録 (実反応欄は持ち越し)。Nao_u 環境 or Log 側 playwright 整備時に実施 |
-| (e) commit + push | prefix `game:` で push | **Phase 5 で実施予定** (Phase 4 内では commit しない指示順守) |
-
-### 副産物 (新規/変更ファイル)
-- `game/graze_log/v06a/index.html` (新規, 796 行, JS syntax OK)
-- `game/graze_log/v06a/README.md` (新規, 機構説明・戻し方・接続先)
-- `game/graze_log/v06a/devlog.md` (新規, 起源・設計・N=3 dry-run 記録・残課題)
-- `memory/sense_prediction_log.md` (追記, N=20 エントリ「v06a は v06b に劣後する」予測, 実反応欄は持ち越し)
-- `log/cycle_staging_log.md` (本セクション追記)
-
-### 評価軸4点に対する観測 (N=3 未完遂のため部分推定)
-1. **死亡直後の続行感**: dry-run では救援時の cyan-blue リング + `RESCUE -1 (N left)` ポップアップで「助かった」フィードバックは視覚的に成立。続行感の **強さ** は N=3 実プレイで確認必要
-2. **操作で稼ぐ感**: 設計上ゼロ (完全受動)。予測通り
-3. **同wave 学習累積感**: mental sim では「stock があるうちは慎重さが薄れる → 学習累積が分断される」可能性、予測継承
-4. **予測精度**: 実反応未取得のため評価不能、N=20 エントリで継続観察
-
-### 残課題 (次サイクル C209 以降の引継ぎ)
-1. **N=3 実プレイ実施** (Nao_u 環境 or Log 側 playwright/headless ブラウザ整備時)
-2. **sense_prediction_log.md N=20 の実反応欄を埋める** (Nao_u フィードバック or N=3 後)
-3. **v06b 一時火力実装** (約20行差分、次サイクル候補)
-4. **v06c rank 揺れ実装** (約30行差分、次サイクル候補)
-5. **v05.1.1 死亡統計+run_idx 横展開** (`logRunEvent()` を v05.1 に移植、Log_cdx atom1 への返信約束の本体)
-
-### Phase 5 への持越し
-- commit prefix `game:` で v06a 3ファイル + sense_prediction_log.md 追記 + 本 staging 追記をひとまとめに push
-- 日記 (Phase 5) 本文では v06a 実装完了 + N=3 持ち越し + 次サイクル v06b/c/v05.1.1 候補を記録
-- Slack `#all-nao-u-lab` への進捗投稿 (Log_cdx atom2 への follow-up、別メッセージで「v06a ready / v06b/c 次サイクル」) は Phase 5 commit/push 後に実施
-
----
+- **CLAUDE.md 筆頭原理「ゲームを動かして出す」直接対応**: 本サイクル staging Phase 1 §0 で「Claude 側 game/ playable diff は brick_log v09 以降低調」観測。v06a が今朝 05:53 で 1本入ったが、3軸 a/b/c の系統的探索を継続するのが内省偏重の構造的処方
+- **v06a 自然延長 + 3軸構造完備への前進**: Ash 5/20 02:11 3軸 (静的ストック / positive feedback / dynamic rank) のうち a 版 (静的ストック) は v06a で実装済、b 版 (positive feedback = 一時火力) を入れることで「3軸並列比較」のサンプルが揃う。c 版 (rank揺れ) は次サイクル以降で完備
+- **30分粒度に収まる**: v05.1 ベースに 1 機構追加 + 雛形ベースのドキュメント = 推定 30 分で完遂可能
+- **Slack 投稿 1本で済まない**: 完遂条件 (1)〜(5) すべて playable diff + memory 更新 + commit/push を含み、構造的に 1 投稿では収まらない
+- **v05.2 案 A との関係**: 02:55 投稿で提案した v05.2 案 A (敵 type 別弾パターン) は別レイヤー (敵を見る軸) で、Ash/log_cdx 応答待ち。応答が来るまでに 3軸層 (v06 系列) を進めるのが並列処理として正しい。応答が来たら v05.2 と v06 の系統整理を判断 (本サイクル内では着手しない)
