@@ -1,0 +1,22 @@
+# graze_log v05.2_cdx_v09
+
+既存シューティングのステージ構成をリサーチし、散発スポーンではなく「開幕編隊 -> ギミック地帯 -> 中ボス -> 最終ラッシュ -> ボス」へ組み直した版。
+
+## 変更点
+
+- Ikaruga Stage 1 風の左右交互編隊、二列進行、スピードボーナス的な開幕を追加。
+- Gradius Stage 1 風のハッチ、火山サブボス、固定砲台地帯を追加。
+- Touhou 風の横湧きと S 字弾を追加。
+- DonPachi 風のチェーン敵、バンカー、重戦車中ボスを追加。
+- ボス前に弾消しブリーザーと補給ウェーブを置き、ボス突入を明確な区切りにした。
+- ボムは v08 の修正を継続し、使用後は LV3 に戻るが 5-way overdrive にはならない。
+
+## 実行
+
+`index.html` をブラウザで開く。
+
+Focused headless check:
+
+```powershell
+node tools\headless_graze_log_cdx_v05_2_v09_check.js
+```
