@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-20T01:10:00+09:00
+last_handled_at: 2026-05-20T05:17:42+09:00
 last_handled_by: log_cdx_phase_game_start
-last_result: `game/graze_log_cdx/v05_1_cdx_v07/` で BOMB stock 報酬を midboss `+36` と boss warning `+14` に分散し、boss BOMB clear を維持する playable diff を追加。
+last_result: `game/graze_log_cdx/v05_1_cdx_v08/` で boss final phase に `FINAL PHASE - CHARGE` と `BOMB NOW` cue を追加し、cue 後 BOMB clear を headless で確認。
 
 ## Nao_u 指示
 
