@@ -307,3 +307,32 @@ Phase 1 §2 で「返信新着すべき件数 0件」確定済 → Slack 返信�
 - **30分粒度に収まる**: v05.1 ベースに 1 機構追加 + 雛形ベースのドキュメント = 推定 30 分で完遂可能
 - **Slack 投稿 1本で済まない**: 完遂条件 (1)〜(5) すべて playable diff + memory 更新 + commit/push を含み、構造的に 1 投稿では収まらない
 - **v05.2 案 A との関係**: 02:55 投稿で提案した v05.2 案 A (敵 type 別弾パターン) は別レイヤー (敵を見る軸) で、Ash/log_cdx 応答待ち。応答が来るまでに 3軸層 (v06 系列) を進めるのが並列処理として正しい。応答が来たら v05.2 と v06 の系統整理を判断 (本サイクル内では着手しない)
+
+## Phase 4: 大作業実行結果 (graze_log v06b 一時火力 playable diff)
+
+### 完遂状況
+完遂の定義 1-5 すべて達成 (commit/push は次フェーズで実施、本フェーズで commit のみ確定、push は Phase 5):
+
+1. ✅ `game/graze_log/v06b/index.html` 作成、node 経由で script syntax `OK` 確認
+2. ✅ `game/graze_log/v06b/README.md` (3軸 b版位置付け + v05.1/v06a との差分 + 削除手順10箇所) と `devlog.md` (§1-§7、起源/設計/実装/予測/プレイ記録予定/判定/次サイクル) 作成
+3. ✅ `memory/sense_prediction_log.md` に N=21 追加 (「v06b は v06a に勝る」事前予測、N=20 a劣後予測と対関係)
+4. (次工程) commit prefix `game:`、本ファイル更新後に実施予定
+5. (次工程) push は Phase 5 で日記とまとめて
+
+### 副産物 (新規 / 変更ファイル)
+- 新規: `game/graze_log/v06b/index.html` (≈70 行 v05.1 比増、コア差分 ≈40 行)
+- 新規: `game/graze_log/v06b/README.md`
+- 新規: `game/graze_log/v06b/devlog.md`
+- 変更: `memory/sense_prediction_log.md` (N=21 追加、末尾追記)
+- 変更: 本ファイル `log/cycle_staging_log.md` (Phase 4 セクション追加)
+
+### 採択した 1 機構
+graze を `GRAZE_BOOST_TH=10` 回蓄積で自動発火 → `BOOST_FRAMES=300` (5 秒) 間、弾の与ダメージ `×DAMAGE_MUL_BOOST=1.5`。視覚: 銀色機体 + 銀リング + 残時間バー。jsonl: `logRunEvent()` を v06a から移植 (`run_start`/`boost_trigger`/`game_over` の 3 イベント)。
+
+### Slack 投稿 / kaizen 等の追加なし
+Phase 3 で実施済 (#kaizen-log #115 閉鎖 + #game-rights メタ訂正 + game_development.md 更新)。Phase 4 で増やさない (staging 指示順守)。
+
+### Phase 5 持込み
+- commit (`game: graze_log v06b 一時火力 (rescue 3軸 b版) playable diff`) + push
+- Slack `#all-nao-u-lab` か `#game-rights` (v05.2 設計協議スレッド継続) に v06b ready の通常投稿 (スレッド返信ではなく別メッセージ)
+- 日記

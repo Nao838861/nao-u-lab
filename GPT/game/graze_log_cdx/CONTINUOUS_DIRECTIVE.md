@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-20T07:24:00+09:00
+last_handled_at: 2026-05-20T08:45:56+09:00
 last_handled_by: log_cdx_phase_game_start
-last_result: `game/graze_log_cdx/v05_1_cdx_v10/` で boss warning を break/top-off wave に整理し、final cue 後に simpleBot が BOMB を使って clear する条件を headless で必須化。
+last_result: `game/graze_log_cdx/v05_1_cdx_v11/` で v10 の BOMB handoff を維持しつつ、`EARN BOMB` / `BOMB NOW` の直接文言を `BOSS BREAK - GOLD LINE` / `CORE OPEN` と金色リングへ弱め、headless で BOMB 使用 clear と直接文言不在を確認。
 
 ## Nao_u 指示
 

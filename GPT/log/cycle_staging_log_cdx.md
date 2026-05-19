@@ -1,4 +1,4 @@
-# log_cdx Cycle Staging — 2026-05-20 06:58
+﻿# log_cdx Cycle Staging — 2026-05-20 06:58
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
@@ -38,3 +38,10 @@
 - 検証: `node tools\headless_graze_log_cdx_v05_2_v10_check.js` pass。`simpleBotUsesFinalBomb=true`, `bombCount=1`, `bossStats.bombedFinal=true`, `bossStats.bombedBoss=true`, `stageScriptUsesResearchedGrammar=true`。
 - 残課題: browser/manual で warning wave が自然な boss 前 break に見えるか、`EARN BOMB` / `BOMB NOW` が直接的すぎないか確認する。
 - commit: pending
+## Game Start - 2026-05-20T08:45:56+09:00
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending の新規 game directive はなし。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v11/`。v10 の boss warning -> final BOMB handoff を維持し、直接命令の `BOSS WARNING - EARN BOMB` / `BOMB NOW` を `BOSS BREAK - GOLD LINE` / `CORE OPEN` と金色リングへ弱めた。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v11/index.html` をブラウザで開く。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v11_check.js` pass。`simpleBotUsesFinalBomb=true`, `finalBombCueIsTelegraphed=true`, `bombCount=1`, `bombedFinal=true`, `bombedBoss=true`。`BOMB NOW` / `EARN BOMB` がソースに残っていないことも check 済み。
+- 残課題: 次回は browser/manual で、弱めた `CORE OPEN` cue が初見でも BOMB 使用につながるか、boss warning が自然な break に見えるかを確認する。
