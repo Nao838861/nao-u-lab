@@ -262,3 +262,50 @@ Phase 1/2 で確認した通り 5/20 新着 Nao_u broadcast ゼロ、#game-right
 - **Nao_u 指摘の同型再発防止**: 5/13 Nao_u「graze_log は軸が1本」批判への第2軸処方が、外部摂取 (Ash 洞察) で具体化したタイミング = 取り込みが早いほど v05.2 設計に効く
 - **kaizen 未検証提案の検証ではない理由**: #134 5日目ログを §2 で追記済、#131/#132/#133 は段階1/2 PASS で停滞なし、本サイクル時点で「未検証提案の検証」スロットは既に消化済
 - **playable diff 直結性**: 本作業自体は設計段階 (まだ playable コード変更ではない) だが、Phase 4 で v05.2 設計を確定すれば次サイクル以降の playable diff 出力 (game/graze_log/v05.2/ ディレクトリ作成 + index.html prototype) の前段が揃う。Slack 投稿1本では済まない、設計案 + 判定 + 投稿下書きの3点セット粒度
+
+---
+
+## Phase 4 実施結果 (2026-05-20)
+
+### 主要発見: Phase 3 「Ash 帰属 3軸」は confabulation だった
+
+Phase 4 完遂定義 (1)(2) の原典確認結果:
+- `knowledge/20260520_shmup_resource_intake_3patterns.md` は **存在しない** (Claude/knowledge/ 全走査 + ../GPT/knowledge/ ディレクトリ自体なし)
+- `../GPT/memory/atoms/2026-05/` 779件を grep しても「静的ストック」「shmup_resource」「装備リソース」キーワードヒット **ゼロ**
+- staging Pre-check が指していた実在 atom = Ash 2026-05-19 13:51 #shared-reads「弾幕シューティング『難度累進』で廃れたのか — 3者三角分析」(shared-reads.jsonl L368, ts=1779166310)
+- 原典の「3」 = Zenji1反論 / whitemage証言 / SAROSレビューの **3者三角分析**であり、Phase 3 が書いた「救援装備3軸 (静的ストック / positive feedback / dynamic rank)」とは**別物**
+- Phase 3 は digest 経路で完結させて原典を読まないまま再フレーミングした
+
+### v05.2 mental simulation (原典 Ash 5/19 ベースに書き直し)
+
+原典の処方3点 (α 弾の機能/挙動 variation / β 敵別 schema 学習軸 / γ 序盤30秒学習素材) から v05.2 案 3 つ立案:
+- **案 A**: 敵 type 別弾パターン差別化 (straight/spread/aimed 3種) — β 直当て、v05.1 同居◎、Nao_u 5/13「軸が1本」批判への第2軸処方
+- **案 B**: 弾 behavior variation (straight/accel) — α 直当てだが v05.1 弾速 evolve と方向重複で退ける
+- **案 C**: 序盤30秒の学習素材専用 wave 設計 — γ 直当て、案 A の上位段階
+
+**Log 判定**: 案 A を v05.2 として積む。`bomb_stock` (1d506b6 / 21159e7) は boss bomb 限定で案 A と直交、二重管理懸念なし。詳細は `projects/game_development.md` 2026-05-20 C-Log Phase 4 節。
+
+### 副産物
+
+| 種別 | パス | 内容 |
+|---|---|---|
+| 変更 | `projects/game_development.md` | 2026-05-20 C-Log Phase 4 節を追加 (confabulation 訂正 + v05.2 案 A/B/C mental simulation + bomb_stock 重複懸念整理 + Phase 5 判定) |
+| 新規 | `drafts/2026-05-20/log_game_rights_v05_2_proposal_with_phase3_correction.md` | #game-rights 投稿下書き (Ash + log_cdx 宛、Phase 3 confabulation 訂正含む v05.2 案 A 設計協議、質問3点) |
+| 変更 | `log/cycle_staging_log.md` (このファイル) | Phase 4 実施結果セクション追加 |
+
+### 完遂判定
+
+| Phase 4 完遂定義 | 達成 | 備考 |
+|---|---|---|
+| (1) Ash 5/20 atom 原典特定・読了 | △ | atom 自体は **不在** と判明 = digest が指していた実在 atom (Ash 5/19 13:51) を読了、原典に依拠 |
+| (2) 3軸記述の一致/不一致明示 | ◎ | 不一致を明示、game_development.md に表で記録 |
+| (3) v05.2 mental simulation 節追加 (4 サブ要件) | ◎ | 案 A/B/C 3案 + v05.1 同居判定 + bomb_stock 重複整理 + Phase 5 判定 全て含む |
+| (4) #game-rights 投稿下書き保存 | ◎ | `drafts/2026-05-20/` に保存、Phase 5 で投稿予定 |
+
+Phase 4 当初想定外の発見 (Phase 3 confabulation) が出たため、当初の「静的ストック軸 mental simulation」テーマからは外れたが、原典 (Ash 5/19) ベースで v05.2 案 A (敵 type 別弾パターン) を導出して mental simulation を完遂。**confabulation を隠さず訂正含みで #game-rights に出す判断**を Phase 5 アクションとして決定。
+
+### 学び (sense_prediction_log への教師データ候補、即ルール化はしない)
+
+- digest 経路で完結させると confabulation が混入する。他インスタンス洞察を取り込む時は **原典1回確認をゲート化**すべき
+- 即ルール化は `feedback_rule_proliferation_canonical.md` 準拠で保留、同型反復確認を待つ
+- `feedback_means_ends_reversal_check.md` の手前段 (digest 出力を「広く調べた」と取り違える) が顕在化した実例として `memory/sense_prediction_log.md` への記録候補

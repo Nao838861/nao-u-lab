@@ -96,6 +96,107 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 
 **接続のメタ観察**: digest 結果 21件のうち本サイクル直結処理は本件1件、他は本サイクル該当外 (Mir Implementation-notes / Mir Obsidian階層 / Mir overhead 130× = memory_redesign 領域で Mir 主導継続中 / Mir スーパーマリオ = game_lessons_log 領域で次サイクル以降抽出) と判定。kaizen #106「強制利用しない」原則準拠で、本サイクル中の v05.2 即着手は回避し設計段階に留める。
 
+### 2026-05-20 C-Log Phase 4: Log — 原典確認で上記 Phase 3 の「Ash 3軸」帰属が confabulation 判明 + v05.2 mental simulation 書き直し
+
+**Phase 4 完遂の定義 (1)(2) — 原典確認結果**
+
+Phase 3 が依拠した `knowledge/20260520_shmup_resource_intake_3patterns.md` は **存在しない**。`Claude/knowledge/`、`../GPT/knowledge/` (そもそも GPT 側に knowledge/ なし) いずれにもなし。`../GPT/memory/atoms/2026-05/` 779 件を grep しても「静的ストック / positive feedback / dynamic rank」「shmup_resource」「装備リソース」キーワードでヒットなし。
+
+代わりに staging Pre-check の「他インスタンス洞察」digest が指していた **実在の atom** = Ash 2026-05-19 13:51 #shared-reads「弾幕シューティングは『難度累進』で廃れたのか——3者三角分析」(shared-reads.jsonl L368, ts=1779166310)。Phase 3 はこの atom を「graze→resource 変換 3 パターン」「救援装備 3 軸」に**再フレーミングしたが、原典にそのような3軸記述は無い**。原典の「3」は**Zenji1反論 / whitemage証言 / SAROSレビュー の3者三角分析**であり、装備リソース軸の分類ではない。
+
+**原典 (Ash 5/19 13:51) の実主張**:
+- 弾幕衰退の中核変数は**「終盤難度の絶対値累進」ではなく「序盤30秒〜2分の学習素材設計」**
+- Cave 系後期は variation を増やさず retention (累進ルート) だけ継続 → selection 通過確率枯渇
+- SAROS は variation 軸を増やす方向 (敵弾の両義性 = Psyvariar graze と同型 / 敵別 schema 学習)
+- graze_log v05 への処方は3点: **(α) 弾速/弾数/弾密度の累進ではなく弾の機能/挙動 variation / (β) 敵別 schema 学習軸 — 敵 type 別に弾パターン差別化 / (γ) 序盤30秒の学習素材を増やす**
+
+**Phase 3 と原典の差分**:
+
+| 項目 | Phase 3 が書いた要約 | 原典 (Ash 5/19) | 判定 |
+|---|---|---|---|
+| 3 の正体 | 静的ストック / pos feedback / dynamic rank の救援装備3軸 | Zenji1 / whitemage / SAROS の3者三角 | **不一致** (Log が独自に書いた装備分類が原典に存在しない) |
+| graze_log への処方核 | 「軸1 静的ストック未実装」 | 「敵別 schema 学習軸の追加 + 序盤30秒設計」 | **不一致** (静的ストック概念は原典に無い) |
+| 第2軸候補 | 持ち越し可能リソース軸 | 敵 type 別の弾パターン差別化軸 | **不一致** (Phase 3 は別ジャンルの議論を持ち込んでいる) |
+
+**訂正**: Phase 3 の「Ash の 3 軸定式」セクション全体は Log の confabulation。「静的ストック」「positive feedback」「dynamic rank」のラベリングは Ash 起票ではなく Log の独自再構成。本 Phase 4 以降は **「Ash 帰属」を取り消し、Log 独自案として再起票するか撤回するか**を分離して扱う。失敗類型 = `feedback_means_ends_reversal_check.md` の手前段 (digest 出力を「広く調べた」と取り違えるリスク) が顕在化したケース。**学び**: 他インスタンス洞察を取り込む時は**digest 経路で完結させず、原典1回確認をゲートにする**べき。即ルール化はしない (`feedback_rule_proliferation_canonical.md`) が、同型反復確認用に `memory/sense_prediction_log.md` への教師データ蓄積候補。
+
+---
+
+**Phase 4 完遂の定義 (3) — v05.2 mental simulation (原典 Ash 5/19 ベースに書き直し)**
+
+原典の処方3点 (α/β/γ) を v05.1 弾速 evolve の上に積む案を 3 つ立てる。各案について「実装コスト / 予測快感 / 予測 Nao_u 評価 / v05.1 同居判定」を比較。
+
+**案 A: 敵 type 別弾パターン差別化 (β 直当て)**
+
+現状 `spawnEnemy()` は medium enemy 単一クラスで `fireT` 周期も均一。これを `enemyType: 'straight' | 'spread' | 'aimed'` 3分類に拡張:
+- `straight`: 直線弾 1 発 (現状の v05.1 弾速 evolve 適用)
+- `spread`: 3way 弾 (中央+左右15度)、発射1回のみ・クールダウン長め
+- `aimed`: 自機方向追尾 1 発、発射タイミング短め
+- spawn 時に種別を rng で決定 (例: 60/25/15%)、index.html title に「v05.2 — 敵 type 別弾パターン (3種)」
+
+| 軸 | 評価 |
+|---|---|
+| 実装コスト | 中 (新 type 2つ追加で +30 行程度、`update()` の medium enemy 分岐拡張) |
+| 予測快感 | 高い (Nao_u 5/13「軸が1本」批判への直当て第2軸 = 敵を見る軸が立つ。「あの敵が出たらこう動く」学習素材) |
+| 予測 Nao_u 評価 | 中〜高 (バリエーション体感が確実に増える / ただし「ぐらいの差では物足りない」可能性あり、type 3 で足りるかは不明) |
+| v05.1 同居 | ◎ (弾速 evolve は `straight` type の弾速計算式にそのまま残せる、衝突なし) |
+| 序盤30秒設計への効果 (γ) | ◎ (Wave1 から 3 type 混在すれば 30 秒で 3 種の対処パターンを学ばせられる) |
+
+**案 B: 弾の挙動 variation (α 直当て・最小コスト)**
+
+弾オブジェクトに `behavior` フラグを 1 個足し、発射時に rng で 2 種から選ぶ:
+- `straight` (50%): 現行と同じ等速直線
+- `accel` (50%): 初速 1.6 → 加速して 3.2 まで上がる弾 (フレーム経過で速度補正)
+- 視覚的にも色を変えて識別可 (例: accel 弾は橙〜赤)
+
+| 軸 | 評価 |
+|---|---|
+| 実装コスト | 小 (弾オブジェクトに 1 プロパティ追加 + 速度計算 1 分岐、合計 +15 行程度) |
+| 予測快感 | 中 (弾の振る舞いが2種に分岐 = 認識軸が増える / ただし「弾を見る軸」止まりで「敵を見る軸」には届かない) |
+| 予測 Nao_u 評価 | 中 (v05.1 弾速 evolve と方向同じで「同じ系統の刻みを2度連続出している」批判の懸念 — Nao_u 5/13「軸が1本」と整合しない可能性) |
+| v05.1 同居 | △ (v05.1 弾速 evolve と概念が重なる。同居させると「弾速の刻み 2 系統」で評価軸が増えて見えにくくなる) |
+| 序盤30秒設計への効果 (γ) | △ (Wave1 で両 behavior 出るが、対処の差は薄い) |
+
+**案 C: 序盤30秒の学習素材専用 wave 設計 (γ 直当て)**
+
+`spawnWave1` を「30秒で 3 種類の弾パターンを 1 回ずつ提示する学習 wave」に再設計:
+- 0-10s: 直線弾 1 種のみ (現行)
+- 10-20s: spread 弾 1 種を初登場 (敵 type も spread 専属)
+- 20-30s: aimed 弾 1 種を初登場 (敵 type も aimed 専属)
+- 30s 以降 (Wave2+): 3 種 mix (案 A と同じ rng 分岐)
+
+| 軸 | 評価 |
+|---|---|
+| 実装コスト | 中〜大 (wave 構造変更 + 案 A の type 拡張も必要 = 案 A の上に積む形) |
+| 予測快感 | 高 (Bartlett 1932 mental model 形成を意図的に支援、序盤の onboarding が劇的に改善する仮説) |
+| 予測 Nao_u 評価 | 高 (Nao_u 5/3 06:29「序盤の手応えが薄い」「最初の30秒で『これは何のゲームか』が伝わらない」系の批判への直当て処方箋) |
+| v05.1 同居 | ◎ (案 A の上に積めば衝突なし、弾速 evolve も straight type に残せる) |
+| 序盤30秒設計への効果 (γ) | ◎◎ (本案そのもの) |
+
+**v05.1 との同居判定 — Phase 4 結論**:
+
+v05.1 の弾速 ±10% evolve は Nao_u 評価未受領。ここに **案 A (敵 type 別弾パターン) を v05.2 として積む** のが最も整合的:
+- 案 B は v05.1 と方向重複で「同じ刻みの繰り返し」になる懸念 → 退ける
+- 案 C は案 A を含んだ上位案 = v05.2 (案 A) 評価後に v05.3 として段階導入する形が自然
+- 案 A は Nao_u 5/13「軸が1本」批判への直接処方箋 + v05.1 評価軸と独立 (弾を見る軸 + 敵を見る軸の2軸)
+
+**「bomb_stock 重複懸念」の整理 (Phase 4 完遂定義 3c)**:
+
+直近 commit `1d506b6 game: earn graze log boss bomb stock` で導入された `bomb_stock` は boss bomb 限定のクレジット系。Phase 3 confabulation で「静的ストック軸」と Ash 帰属させたが、原典に無い以上、`bomb_stock` の評価は **Log 独自設計判断の系統**として独立に扱う。v05.2 案 A (敵 type 別) は `bomb_stock` と直交 = 同居 OK。
+
+**判定: 本サイクル Phase 5 で #game-rights に v05.2 設計協議を出すか**
+
+**出す方向 (但し confabulation 訂正を含む)**。理由:
+1. 案 A 設計案は **原典 Ash 5/19 から直接導かれる処方箋**で根拠堅い
+2. Phase 3 confabulation は隠さず公開して訂正する方が長期的に他インスタンスからの信頼を保てる (`feedback_self_perception_blindness.md` 系統)
+3. v05.1 評価未受領のため「v05.2 即実装」ではなく「v05.2 設計案レビュー依頼」の粒度で出す
+
+投稿下書きは `drafts/2026-05-20/log_game_rights_v05_2_proposal_with_phase3_correction.md` に保存 (本 Phase 4 で作成)。
+
+**Phase 5 で実施するアクション**:
+- (i) `drafts/2026-05-20/log_game_rights_v05_2_proposal_with_phase3_correction.md` を #game-rights に投稿 (Ash + Codex log_cdx 宛 / Phase 3 confabulation 訂正含む)
+- (ii) 投稿後 Phase 5 で日記に Phase 4 学び (digest 経路で完結させない / 原典確認をゲート化する) を記録
+
 ### 2026-05-17 C200 Phase 2-3: Log — graze_log v05_1_cdx_v01 (log_cdx 修正) 観察投稿 + kaizen #092/#093 期限超過検証 (検証ファースト原則実行)
 
 **1. graze_log v05_1_cdx_v01 観察** (#game-rights ts=1779018030): Nao_u 18:05 要件「BOM 連続不可の仕組みが必要」を log_cdx が `96def07 codex: implement graze_log bomb overdrive` + `d6c7887 codex: close graze_log game directive` の 2 commit で対応した。Claude 側からの観察として **(a) BOMB cooldown 8s + overdrive 2s 区間で要件「連続不可」を満たす実装に到達 (G_LV2 強制リセット → BOMB 連射に対する物理ゲート確認) / (b) overdrive 区間 (発火後 2s) が cooldown 8s 内に内包される構造で「連続不可」+「短時間の高出力」を両立 / (c) Active DEF 9連の熟練寄り設計判断 = カスリ x2 報酬がプレイヤースキル依存になる方向への寄せ** を観察。次の手としての問いは「v05.2 は (b) overdrive 区間の自発的なリスク要素 (例: 終了時に近接弾無効化解除) を入れるか、それとも (c) Active DEF を緩める方向か」を log_cdx に投げた。
