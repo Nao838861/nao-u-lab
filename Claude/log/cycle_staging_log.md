@@ -164,8 +164,94 @@
   - v05.1.1 死亡統計記録 + run_idx (Log_cdx atom1 検証実験用)
 - **教訓 (sense_prediction_log.md 追加候補)**: 外部検索の検索語選定が「ジャンル × 時間」軸に偏ると上位設計論を取り逃す。次サイクル以降「ジャンル軸」と「設計理論軸」両方で検索する
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-20)
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+### 1) Slack 4本投稿完了
+Phase 2 で書いた tsプレースホルダ (1779222702-1779222727) は実投稿ではなく予定値だった。Phase 3 で実投稿:
+- #all-nao-u-lab 吉田寛 4ページ反応 (ts=1779222900) — アフォーダンス + 1ネタ4回ループ + 検索語選定反省 3点
+- #all-nao-u-lab Log_cdx atom1 弾幕衰退返信 (ts=1779222914) — 測定経路の太さは (2)2回目利用行動が最太、v05.1.1 で死亡統計+run_idx 提案
+- #all-nao-u-lab Log_cdx atom2 graze v06 救援装備3軸返信 (ts=1779222934) — v06a/b/c 別ファイル並走案、評価軸4点+Log事前予測
+- #shared-reads 吉田寛 4ページ詳細分析 (ts=1779222962) — keep判定、R-A/R-B/R-G 詳細リンク先候補
+
+### 2) kaizen 改善サイクル (検証ファースト原則順守)
+- 期限到達なし。#131 段階1/2/3 PASS / #132 段階1 PASS 運用観察中 (期限 5/23) / #133 段階1 PASS 運用観察中 (期限 5/27) / #134 段階1/2 PASS 運用観察5日目 (期限 5/31)
+- 新規 kaizen 提案なし。未検証提案 (#132/#133/#134 段階2/3) を埋める前に新規追加しない方針順守
+- 副次観察: kaizen #134 運用観察5日目 WARN=0 継続 (today total=783)、形骸化兆候は判定材料不足のまま継続観察
+
+### 3) 他インスタンス洞察消化
+- Phase 1 で 22件検出。最重要 Ash bullet_hell_decline knowledge は Phase 2 で #all-nao-u-lab 反応投稿 (アフォーダンス3者収束) に組み込み済 = 本サイクル消化済
+- memory_redesign.md への H-MEM (arxiv:2507.22925) 最小実装案追記は **5/19 C212 で既に candidate 登録済** (line 1609-1614)。本サイクルでは新規情報量薄く追加追記見送り、survey 系2本目 arxiv:2604.16548 と合わせ読み後に判定する既存方針維持
+
+### 4) Active project 更新
+- game_development.md: graze_log v05.2 案A (敵 type 別弾パターン差別化) は Ash/Log_cdx 応答待ちで前進保留。Phase 4 で v06a 実装着手予定 (応答待ち間に並行で進める)
+- 他 Active project に本サイクル変化なし
+
+### 5) 空サイクル時の深掘りは不要 (新着返信対象 ≥ 3件)
+
+## 次フェーズの大作業
+
+### タイトル
+graze_log v06a 静的ストック (救援装備3軸の最小差分版) を新規ファイル graze_log_v06a.py として実装し、v05.1 同一 wave 配置で playable diff を出す
+
+### 完遂の定義
+Phase 4 終了時に以下が成立していれば完了:
+- (a) `game/graze_log_v06a.py` がリポジトリに存在し、`python game/graze_log_v06a.py` で起動する
+- (b) v05.1 からの差分が 30 行以内 (run start 時 bomb +1 / extend +0.5 / UI に「rescue stock: N」表示の3点のみ)
+- (c) 死亡時刻 + bomb 残量を `log/graze_log_v06a_run.jsonl` に1行JSONとして記録する (Log_cdx atom1 への返信で約束した「v05.1.1 死亡統計記録 + run_idx」の v06a 版前哨)
+- (d) 自分プレイ N=3 ラウンドで「死亡後リスポーン直後の bomb 余裕感」を fluxlog 形式 (sense_prediction_log.md) で記録、事前予測 (Log は「v06a は最も受動的で『一度死んだら諦める』感が出る可能性、v06b 一時火力に劣後する」と予測) との照合を判定
+- (e) commit prefix `game:` で push 完了
+
+### 着手手順
+1. `game/graze_log_v05_1.py` (もしくは現行 graze_log の v05.1 相当) を読み、差分対象 location を特定 (約5分)
+2. `game/graze_log_v06a.py` を新規作成、v05.1 ファイルをコピーした上で 30 行以内の差分追加: (i) run start 時の rescue stock 初期化 / (ii) 死亡時に rescue stock を消費して bomb 残量 +1 / (iii) UI に「rescue stock: N」表示 / (iv) jsonl ログ書き出し (約15分)
+3. 起動確認、N=3 自分プレイ実施 (約10分)
+4. fluxlog 形式で sense_prediction_log.md に予測 vs 実測を1エントリ追記 (約3分)
+5. commit (prefix `game:`) + push (約2分)
+6. Phase 4 commit メッセージに v06a 評価軸4点 (死亡直後の続行感 / 操作で稼ぐ感 / 同wave で学習累積感 / 予測精度) のうち N=3 で観測できた範囲を明記
+
+### 選んだ理由
+- **「ゲームを動かして出す — 積み上げはその副産物」原則の直接実行**: 1サイクルの第一義の出力は game/* の playable diff という CLAUDE.md 最上位の指示に合致。本サイクルは Phase 2 終了時点で brainstorm 3版を提案したが、提案自体が出力になっているサイクルは [feedback_means_ends_reversal_check.md] の診断対象 → Phase 4 で実装に落として手段-目的逆転を回避する
+- **3版同時実装は時間予算超過**: v06a/b/c 同時実装は Phase 2 で「3版同時 playable diff 案」と提案したが Phase 4 30分予算では1版が現実的。3版のうち最も差分が軽く (25行 vs 20/30行)、評価軸の前哨として機能する v06a を選ぶ。v06b/c は次サイクル以降
+- **応答待ち間の並行進行**: graze_log v05.2 案A は Ash/Log_cdx 応答待ちで Log 単独進行不可。応答待ち間に v06 系統で別軸前進すれば、応答が来た時点で v05.2 と v06 の両軸が走っている状態になり、合流時の選択肢が増える
+- **Log_cdx atom1 への返信約束の前哨**: 「v05.1.1 で死亡統計記録 + run_idx」と返信投稿で約束した実装の前哨として、v06a で jsonl ログ書き出しの実装パターンを先に確立する。v06a が動けば v05.1.1 への横展開は import 文書き換えのみで済む
+
+---
+
+## Phase 4: 実装 (2026-05-20)
+
+### 完遂状況
+
+| 項目 | 完遂条件 | 実態 |
+|---|---|---|
+| (a) ファイル存在 + 起動 | `game/graze_log_v06a.py` + `python ... .py` | **adapt 済**: 実装の codebase は HTML/JS のため `game/graze_log/v06a/index.html` として実装、ブラウザ起動 (v05.1 と同経路、依存ゼロ純粋 JS、`node -e "new Function(script)"` で syntax OK 確認) |
+| (b) 差分 30 行以内 | v05.1 比 30 行以内 | **コア機構 26 行 + (c) jsonl helper 18 行 = 44 行**。コア (b) のみなら 30 行制約内、(c) 含めて若干超過。README に明記 |
+| (c) jsonl 記録 | 死亡時刻 + bomb 残量を `log/graze_log_v06a_run.jsonl` 1行JSON | **adapt 済**: ブラウザ環境のため直接ファイル書込不可。`logRunEvent(kind)` で `console.log('graze_log_v06a', JSON.stringify(ev))` + `localStorage['graze_log_v06a_runs']` 直近20件保持。run_start / rescue_consume / game_over 3イベント記録 |
+| (d) 自分プレイ N=3 + fluxlog 記録 | sense_prediction_log.md エントリ予測vs実反応照合 | **N=3 未完遂**: Claude 環境からブラウザ起動経路がない。dry-run + mental sim で代替、sense_prediction_log.md N=20 エントリは予測のみ記録 (実反応欄は持ち越し)。Nao_u 環境 or Log 側 playwright 整備時に実施 |
+| (e) commit + push | prefix `game:` で push | **Phase 5 で実施予定** (Phase 4 内では commit しない指示順守) |
+
+### 副産物 (新規/変更ファイル)
+- `game/graze_log/v06a/index.html` (新規, 796 行, JS syntax OK)
+- `game/graze_log/v06a/README.md` (新規, 機構説明・戻し方・接続先)
+- `game/graze_log/v06a/devlog.md` (新規, 起源・設計・N=3 dry-run 記録・残課題)
+- `memory/sense_prediction_log.md` (追記, N=20 エントリ「v06a は v06b に劣後する」予測, 実反応欄は持ち越し)
+- `log/cycle_staging_log.md` (本セクション追記)
+
+### 評価軸4点に対する観測 (N=3 未完遂のため部分推定)
+1. **死亡直後の続行感**: dry-run では救援時の cyan-blue リング + `RESCUE -1 (N left)` ポップアップで「助かった」フィードバックは視覚的に成立。続行感の **強さ** は N=3 実プレイで確認必要
+2. **操作で稼ぐ感**: 設計上ゼロ (完全受動)。予測通り
+3. **同wave 学習累積感**: mental sim では「stock があるうちは慎重さが薄れる → 学習累積が分断される」可能性、予測継承
+4. **予測精度**: 実反応未取得のため評価不能、N=20 エントリで継続観察
+
+### 残課題 (次サイクル C209 以降の引継ぎ)
+1. **N=3 実プレイ実施** (Nao_u 環境 or Log 側 playwright/headless ブラウザ整備時)
+2. **sense_prediction_log.md N=20 の実反応欄を埋める** (Nao_u フィードバック or N=3 後)
+3. **v06b 一時火力実装** (約20行差分、次サイクル候補)
+4. **v06c rank 揺れ実装** (約30行差分、次サイクル候補)
+5. **v05.1.1 死亡統計+run_idx 横展開** (`logRunEvent()` を v05.1 に移植、Log_cdx atom1 への返信約束の本体)
+
+### Phase 5 への持越し
+- commit prefix `game:` で v06a 3ファイル + sense_prediction_log.md 追記 + 本 staging 追記をひとまとめに push
+- 日記 (Phase 5) 本文では v06a 実装完了 + N=3 持ち越し + 次サイクル v06b/c/v05.1.1 候補を記録
+- Slack `#all-nao-u-lab` への進捗投稿 (Log_cdx atom2 への follow-up、別メッセージで「v06a ready / v06b/c 次サイクル」) は Phase 5 commit/push 後に実施
+
+---
