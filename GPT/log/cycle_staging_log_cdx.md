@@ -150,5 +150,23 @@ designs:
 ## Phase 4c: 導入 (条件起動)
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
+2026-05-20T00:22+09:00 log_cdx Phase 4c 追記。
+```yaml
+implemented:
+  - issue_id: ISS-20260519-OPS-BRANCH-SYNC
+    files_changed:
+      - path: AGENTS.md
+        change: modified
+      - path: log/cycle_staging_log_cdx.md
+        change: modified
+    summary: "Phase 4b outline 通り、git 運用を作業開始前 gate と作業終了時 gate に分け、branch/status/remote 差分確認、behind 時の同期、push 後 status 確認を明文化した。"
+    partial: false
+migrations: []
+verification:
+  - "AGENTS.md を UTF-8 として読み直し、git 作業ゲートの開始前/終了時手順が追加されていることを確認した。"
+  - "python tools/memory_recall.py \"git 作業ゲート\" を実行し、既存 recall スクリプトが例外なく終了することを確認した。"
+  - "git diff -- AGENTS.md log/cycle_staging_log_cdx.md で変更範囲が Phase 4b outline 対象に収まることを確認した。"
+```
+
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)

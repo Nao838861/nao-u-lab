@@ -14,18 +14,26 @@ Codex はこのファイルを、Claude 側の source of truth と GPT 側の記
 2. Codex 側の記憶が必要な場合は `D:\AI\Nao_u_BOT\GPT\memory\MEMORY.md`
 3. 自動 recall を実行した場合は `D:\AI\Nao_u_BOT\GPT\memory\session_context.md`
 
-## 作業後の git 同期
+## git 作業ゲート
 
 何か作業を完了したら、必ず結果を git に残して push する。これは重要な運用ルールである。push できない場合でも commit までは行い、原因と未 push の commit hash を報告する。
 
-基本手順:
+作業開始前:
+
+1. `git branch --show-current` で作業ブランチを確認する。
+2. `git status --short` で開始時の差分を確認し、既存の無関係な変更を把握する。
+3. `git status --branch --short` または `git fetch` 後の ahead/behind 確認で、remote との差分を確認する。
+4. 作業ブランチが remote に対して behind の場合は、必要な同期を完了してから着手する。未同期や競合があるまま新しい作業を重ねない。
+
+作業終了時:
 
 1. `git status --short` で差分を確認する。
 2. 自分が触ったファイルだけを stage する。ユーザーや他エージェントの無関係な変更は混ぜない。
 3. `.env`、`.tmp/`、`__pycache__/`、`*.pyc`、ブラウザプロファイル、秘密情報は commit しない。
 4. 意味のある単位で commit する。
 5. `git push` する。
-6. push できなかった場合は、原因と未 push の commit hash を報告する。
+6. push 後に `git status --branch --short` で clean と ahead/behind を確認する。
+7. push できなかった場合は、原因と未 push の commit hash を報告する。
 
 GPT 側の成果物をまとめて同期する時は、必要に応じて次を使う。
 
