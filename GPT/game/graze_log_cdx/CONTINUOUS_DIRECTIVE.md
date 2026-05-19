@@ -3,6 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
+last_handled_at: 2026-05-19T23:59:00+09:00
+last_handled_by: log_cdx_phase_game_start
+last_result: `game/graze_log_cdx/v05_1_cdx_v05/` で boss BOMB clear を確認する playable diff を追加。
 
 ## Nao_u 指示
 
