@@ -1,14 +1,15 @@
-# log_cdx Cycle Staging — 2026-05-19 23:59
+# log_cdx Cycle Staging — 2026-05-20 01:43
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase Game Start: ゲーム制作着手
 
-- 対象: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending の新規 game directive は今回なし。
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v05/`。v04 から分岐し、boss HP / BOMB damage / boss stock / phase popup を調整して、boss 中に BOMB を使って clear できる finite boss へ寄せた。
-- 実行方法: `game/graze_log_cdx/v05_1_cdx_v05/index.html` をブラウザで開く。
-- 検証: `node tools\headless_graze_log_cdx_v05_2_v05_check.js` pass。self-play は `mode=clear`, `t=4211`, `bombCount=1`, `activeDefCount=1`。BOMB cooldown / 5-way 非付与 / midboss / boss / clear / boss BOMB clear を確認。
-- 残課題: boss stock を直接付与ではなく、midboss 撃破報酬または boss warning wave の撃破報酬へ移すと stage economy として自然になる可能性がある。
+- 対象: Slack pending game directive は新規なし。local continuous directive `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`) を処理。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v06/`
+- 判断: v05 の boss BOMB clear は維持しつつ、boss spawn 時の gauge 直付けをやめ、boss warning wave 撃破報酬 `BOMB +22` から BOMB stock を獲得する形に寄せた。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v06/index.html` をブラウザで開く。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v06_check.js` pass。self-play は `mode=clear`, `t=4212`, `bombCount=1`, `activeDefCount=1`, `killCount=30`。boss start は `gauge=208`, `bombReady=true`, `warningRewardGauge=22`。
+- 残課題: `BOMB +22` は初見 clear を支えるには有効だが露骨。次回は midboss 報酬、warning scout 数、graze 供給を合わせて、同じ clear 可能性をより自然な economy に寄せる。
 
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
@@ -32,9 +33,4 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-- 投稿先: `#log`
-- ts: `1779203290.426669`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779203290426669
-- char_count: 1964
-- verification: `ok`
-- draft: `log/phase5_diary_20260520_0007.md`
+(Phase 5 が書き込む)
