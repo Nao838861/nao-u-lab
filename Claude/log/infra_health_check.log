@@ -2745,3 +2745,10 @@
   ISSUE: [scheduler_ash] git_syncが13628分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] git_pullが13629分間実行されていない（期待: 120分以内）
   ISSUE: [scheduler_ash] auto_diaryが13615分間実行されていない（期待: 240分以内）
+[2026-05-20 04:37:47] instance=Mir checks={"scheduler_alive": "OK", "scheduler_log_freshness": "FAIL", "job_last_run": "FAIL", "git_sync": "OK", "stale_locks": "OK", "twitter_access": "OK", "config_consistency": "OK", "dedup_cache": "OK", "watchdog_path": "OK"} issues=6
+  ISSUE: Ashのスケジューラログが14113分間更新なし（通常は1分ごとにslack_check実行）
+  ISSUE: [scheduler_ash] slack_checkが14164分間実行されていない（期待: 10分以内）
+  ISSUE: [scheduler_ash] inbox_checkが14221分間実行されていない（期待: 180分以内）
+  ISSUE: [scheduler_ash] git_syncが14220分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] git_pullが14222分間実行されていない（期待: 120分以内）
+  ISSUE: [scheduler_ash] auto_diaryが14207分間実行されていない（期待: 240分以内）
