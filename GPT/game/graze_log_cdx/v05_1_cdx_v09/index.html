@@ -81,11 +81,14 @@ const FINAL_BOMB_CUE_FRAMES=84;
 
 const STAGE_EVENTS=[
   {t:40,label:'ikaruga right group',fn:()=>spawnOpeningGroup('right')},
-  {t:220,label:'ikaruga left group',fn:()=>spawnOpeningGroup('left')},
-  {t:400,label:'ikaruga right group 2',fn:()=>spawnOpeningGroup('right')},
-  {t:580,label:'ikaruga left group 2',fn:()=>spawnOpeningGroup('left')},
-  {t:760,label:'ikaruga dual column',fn:()=>spawnDualColumn()},
-  {t:980,label:'ikaruga speed bonus',fn:()=>spawnSpeedBonus()},
+  {t:160,label:'pressure side sweep left',fn:()=>spawnSideSweepRush('left',190,10)},
+  {t:260,label:'ikaruga left group',fn:()=>spawnOpeningGroup('left')},
+  {t:420,label:'pressure side sweep right',fn:()=>spawnSideSweepRush('right',255,10)},
+  {t:520,label:'ikaruga right group 2',fn:()=>spawnOpeningGroup('right')},
+  {t:680,label:'ikaruga left group 2',fn:()=>spawnOpeningGroup('left')},
+  {t:820,label:'ikaruga dual column',fn:()=>spawnDualColumn()},
+  {t:980,label:'pressure dive curtain',fn:()=>spawnDiveCurtain()},
+  {t:1120,label:'ikaruga speed bonus',fn:()=>spawnSpeedBonus()},
   {t:1120,label:'gradius fan and garun',fn:()=>{spawnFan(['fanScout','fanScout','fanScout','fanScout','fanScout','fanScout'],0.12,0.76);spawnSinePair();}},
   {t:1320,label:'gradius hatch lane',fn:()=>spawnHatchLane()},
   {t:1580,label:'touhou side rise',fn:()=>spawnTouhouSideRise()},
@@ -184,6 +187,10 @@ function spawnEnemy(type,x,phase,extra){
     Object.assign(e,{vy:1.9,r:8,hp:1,maxHp:1,fireT:9999});
   }else if(type==='columnScout'){
     Object.assign(e,{vy:1.32,r:7,hp:1,maxHp:1,fireT:9999,vx:extra&&extra.dir==='left'?-0.35:0.35});
+  }else if(type==='sweepScout'){
+    Object.assign(e,{vy:0.0,r:8,hp:1,maxHp:1,fireT:9999,vx:extra&&extra.side==='left'?2.45:-2.45,y:extra&&extra.y?extra.y:220});
+  }else if(type==='diveScout'){
+    Object.assign(e,{vy:2.9,r:8,hp:1,maxHp:1,fireT:9999,vx:0,diveTarget:extra&&extra.targetY?extra.targetY:430,diveExit:extra&&extra.exitX?extra.exitX:x});
   }else if(type==='sinePair'){
     Object.assign(e,{vy:1.25,r:10,hp:2,maxHp:2,fireT:96});
   }else if(type==='rush'){
@@ -233,7 +240,7 @@ function markStageFlag(k){state.stageFlags[k]=true;}
 function spawnOpeningGroup(side){
   markStageFlag('ikarugaOpening');
   const right=side==='right';
-  for(let i=0;i<5;i++){
+  for(let i=0;i<7;i++){
     const x=right?W-44-i*18:44+i*18;
     const e=spawnEnemy('fanScout',x,0.45*i,{});
     e.vx=right?-0.38:0.38;
@@ -242,13 +249,29 @@ function spawnOpeningGroup(side){
 }
 function spawnDualColumn(){
   markStageFlag('dualColumn');
-  for(let row=0;row<6;row++){
+  for(let row=0;row<8;row++){
     for(let col=0;col<3;col++){
       const left=spawnEnemy('columnScout',W*(0.30+col*0.045),row*0.2,{dir:'left'});
       left.y=-16-row*20;
       const right=spawnEnemy('columnScout',W*(0.57+col*0.045),row*0.2,{dir:'right'});
       right.y=-16-row*20;
     }
+  }
+}
+function spawnSideSweepRush(side,y,n){
+  markStageFlag('pressureSideSweep');
+  const left=side==='left';
+  for(let i=0;i<n;i++){
+    const e=spawnEnemy('sweepScout',left?-18:W+18,0,{side,y:y+i*7});
+    e.fireT=9999;
+  }
+}
+function spawnDiveCurtain(){
+  markStageFlag('pressureDiveCurtain');
+  for(let i=0;i<8;i++){
+    const x=36+i*34;
+    const e=spawnEnemy('diveScout',x,0,{targetY:388+(i%3)*28,exitX:x+(x<W/2?-76:76)});
+    e.y=-18-i*8;
   }
 }
 function spawnSpeedBonus(){
@@ -630,6 +653,16 @@ function update(){
     }else if(e.type==='columnScout'){
       e.y+=e.vy;
       if(e.y>84)e.x+=e.vx;
+    }else if(e.type==='sweepScout'){
+      e.x+=e.vx;
+      e.y+=Math.sin(e.t*0.08+e.phase)*0.45;
+    }else if(e.type==='diveScout'){
+      if(e.y<e.diveTarget){
+        e.y+=e.vy;
+      }else{
+        e.y-=1.65;
+        e.x+=(e.diveExit-e.x)*0.024;
+      }
     }else if(e.type==='sinePair'){
       e.y+=e.vy;
       e.x+=Math.sin(e.t*0.075+e.phase)*2.45;
@@ -742,7 +775,7 @@ function update(){
 
 function killEnemy(e){
   state.killCount++;
-  if(e.type==='scout'||e.type==='small'||e.type==='fanScout'||e.type==='columnScout'||e.type==='rush'||e.type==='smallTank'){state.score+=10;addGauge(KILL_SMALL_GAUGE);}
+  if(e.type==='scout'||e.type==='small'||e.type==='fanScout'||e.type==='columnScout'||e.type==='sweepScout'||e.type==='diveScout'||e.type==='rush'||e.type==='smallTank'){state.score+=10;addGauge(KILL_SMALL_GAUGE);}
   else if(e.type==='weaver'||e.type==='sinePair'){state.score+=24;addGauge(3);}
   else if(e.type==='sniper'||e.type==='medium'||e.type==='sFairy'){state.score+=42;addGauge(KILL_MED_GAUGE);}
   else if(e.type==='turret'||e.type==='hatch'){state.score+=70;addGauge(6);}
@@ -836,7 +869,7 @@ function draw(){
   if(state.mode==='clear')drawEnd('STAGE CLEAR','#ffd870');
 }
 function drawEnemy(e){
-  if(e.type==='scout'||e.type==='small'||e.type==='fanScout'||e.type==='columnScout'||e.type==='rush'||e.type==='smallTank'){ctx.fillStyle=e.type==='columnScout'?'#f8f8ff':'#ff5060';ctx.beginPath();ctx.arc(e.x,e.y,e.r,0,Math.PI*2);ctx.fill();}
+  if(e.type==='scout'||e.type==='small'||e.type==='fanScout'||e.type==='columnScout'||e.type==='sweepScout'||e.type==='diveScout'||e.type==='rush'||e.type==='smallTank'){ctx.fillStyle=e.type==='columnScout'?'#f8f8ff':e.type==='sweepScout'?'#ff7a50':e.type==='diveScout'?'#ffd050':'#ff5060';ctx.beginPath();ctx.arc(e.x,e.y,e.r,0,Math.PI*2);ctx.fill();}
   else if(e.type==='weaver'||e.type==='sinePair'){ctx.fillStyle='#ff78b8';ctx.beginPath();ctx.arc(e.x,e.y,e.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#ffd0e8';ctx.fillRect(e.x-5,e.y-2,10,4);}
   else if(e.type==='sniper'||e.type==='medium'||e.type==='sFairy'){ctx.fillStyle=e.type==='sFairy'?'#80ffd0':'#ffa030';ctx.beginPath();ctx.arc(e.x,e.y,e.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff080';ctx.beginPath();ctx.arc(e.x,e.y,Math.max(3,e.r-5),0,Math.PI*2);ctx.fill();}
   else if(e.type==='turret'||e.type==='hatch'){ctx.fillStyle=e.type==='hatch'?(e.openT>0?'#90e8ff':'#306078'):'#60d0ff';ctx.beginPath();ctx.arc(e.x,e.y,e.r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#d8f8ff';ctx.fillRect(e.x-3,e.y-11,6,22);}
@@ -911,6 +944,7 @@ function drawHUD(){
     ctx.fillStyle='#80ffd0';ctx.font='bold 10px system-ui';ctx.fillText('AUTO VERIFY',W-102,44);
   }
 }
+
 function drawTitle(){
   ctx.fillStyle='rgba(7,9,26,0.72)';ctx.fillRect(0,H/2-112,W,242);ctx.textAlign='center';
   ctx.fillStyle='#ffd870';ctx.font='bold 28px system-ui';ctx.fillText('GRAZE',W/2,H/2-50);
@@ -968,7 +1002,7 @@ function applyAutoVerifyInput(){
   let targetX=210+Math.sin(state.t*0.012)*54;
   let targetY=548;
   const boss=state.enemies.find(e=>e.type==='boss');
-  const survivalPhase=state.phaseLabel==='gradius turret rock'||state.phaseLabel==='last chain wall';
+  const survivalPhase=state.phaseLabel==='gradius turret rock'||state.phaseLabel==='last chain wall'||state.phaseLabel.indexOf('pressure ')===0;
   const bossPressure=!!boss&&state.ebullets.length>=6;
   if(survivalPhase||bossPressure){
     targetY=588;

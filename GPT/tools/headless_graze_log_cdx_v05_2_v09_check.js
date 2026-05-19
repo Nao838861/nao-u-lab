@@ -100,6 +100,11 @@ const afterBomb = {
 };
 
 api.state.player.iframe = 999999;
+api.state.eventIndex = api.STAGE_EVENTS.length;
+api.state.wave = api.STAGE_EVENTS.length;
+api.state.enemies.length = 0;
+api.state.bullets.length = 0;
+api.state.ebullets.length = 0;
 for (let i = 0; i < 720; i++) api.update();
 const afterCooldownWithoutGain = {
   gauge: api.state.gauge,
@@ -172,7 +177,9 @@ function runSimpleBot() {
     let targetX = 210 + Math.sin(api.state.t * 0.012) * 54;
     let targetY = 548;
     const boss = api.state.enemies.find((e) => e.type === "boss");
-    const survivalPhase = ["gradius turret rock", "last chain wall"].includes(api.state.phaseLabel);
+    const survivalPhase =
+      ["gradius turret rock", "last chain wall"].includes(api.state.phaseLabel) ||
+      api.state.phaseLabel.startsWith("pressure ");
     const bossPressure = !!boss && api.state.ebullets.length >= 6;
     if (survivalPhase || bossPressure) {
       targetY = 588;
@@ -312,12 +319,16 @@ const report = {
   stageScriptUsesResearchedGrammar:
     api.STAGE_EVENTS.length >= 18 &&
     afterBossStart.scriptLabels.includes("ikaruga dual column") &&
+    afterBossStart.scriptLabels.includes("pressure side sweep left") &&
+    afterBossStart.scriptLabels.includes("pressure dive curtain") &&
     afterBossStart.scriptLabels.includes("gradius hatch lane") &&
     afterBossStart.scriptLabels.includes("touhou s-stream") &&
     afterBossStart.scriptLabels.includes("gradius volcano") &&
     afterBossStart.scriptLabels.includes("donpachi bunker") &&
     afterBossStart.scriptLabels.includes("donpachi heavy tank") &&
     afterBossStart.stageFlags.dualColumn &&
+    afterBossStart.stageFlags.pressureSideSweep &&
+    afterBossStart.stageFlags.pressureDiveCurtain &&
     afterBossStart.stageFlags.hatchLane &&
     afterBossStart.stageFlags.sStream &&
     afterBossStart.stageFlags.volcanoMidboss &&

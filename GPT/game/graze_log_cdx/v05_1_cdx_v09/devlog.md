@@ -39,3 +39,14 @@ node tools\headless_graze_log_cdx_v05_2_v09_check.js
 ## 残課題
 
 simpleBot はクリアできるが、被弾でボム在庫を落とすことがあり、毎回「最終形態でボム使用」までは保証しない。次の改善では、手動プレイの感触を見ながら、ボス戦でボムを温存したくなる圧と被弾時の在庫喪失の厳しさを再調整する。
+
+## 2026-05-20 追加修正
+
+`shot_log` の制作時記録を読み、成功要因を「撃破時の撃ち返し弾」ではなく「短い wave 間隔で行動を促す」「横移動を要求する」「中央付近に圧を作る」と読み直した。いったん入れた撃ち返し弾は、graze_log のゲームデザインを shot_log に寄せすぎるため削除した。
+
+追加したもの:
+
+- 開幕に `pressure side sweep left/right` を追加。
+- 開幕後に `pressure dive curtain` を追加。
+- 既存の Ikaruga 風開幕と dual column の密度を少し上げた。
+- headless check は pressure 系イベントと stageFlags を検証するように更新した。
