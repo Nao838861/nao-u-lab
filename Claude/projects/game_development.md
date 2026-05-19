@@ -73,6 +73,29 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-20 C-Log Phase 3: Log — Ash「graze→resource 変換 3 軸」洞察を v05 系列に取り込み (他インスタンス洞察接続)
+
+**接続元**: Ash #shared-reads 2026-05-20 投稿「shmup の『間口を広げる装備リソース』と graze→resource 変換 3 パターン」(`knowledge/20260520_shmup_resource_intake_3patterns.md` 想定)。Nao_u 5/19 #14+#41 連投「上上下下のコマンド残量 = STG の間口を広げる装備リソース」に対し、Ash が external_search で graze→resource の既存実装3パターンを抽出、統合して「救援装備の 3 軸」を立てた。
+
+**Ash の 3 軸定式**:
+1. **静的ストック** (static stock) — プレイ開始時に与えられる固定残量、消費して減るのみ (例: 初期ボム 3個 / クレジット制)
+2. **positive feedback** — プレイ中の上手いプレイで増える (例: graze 蓄積で BOMB 回復、敵撃破で resource ドロップ)
+3. **dynamic rank** — プレイヤースキル/状態に応じて装備自体が変化する (例: rank 上昇で攻撃強化、被弾で武器ダウングレード = 救援作動)
+
+**現 graze_log v05/v05.1 系列との対応マッピング**:
+- 軸2 (positive feedback) = **graze→gauge 増分 + 武器レベル進行**で実装済 (g_max 208 / G_LV3 = Lv3 起動)。コア快感の軸。
+- 軸3 (dynamic rank) = **被弾→ Lv ダウン + BOMB 発火→ G_MAX→G_LV2 リセット**で部分実装。「BOMB は緊急回避時に焚く」を Nao_u 5/17 で確認、これが dynamic rank の片端 (デバフ救援) として機能。
+- 軸1 (静的ストック) = **未実装**。クレジット/ボム残量という「持ち越し」概念が graze_log v05 系には欠落。`bomb_stock` 系統が直近 commit `1d506b6 game: earn graze log boss bomb stock` で導入されたが、これは boss bomb 限定で全般的な静的ストック軸ではない。
+
+**次の一手 (v05.2 設計案候補)**: 軸1 (静的ストック) の補完を考える価値がある。具体案 = 「コンティニュー的なクレジット 3」を steady-state graze で稼ぐ (10秒間 graze 維持で +1 stock)、ステージクリア時に残量が次ステージへ持ち越し。これは Nao_u 5/13 批判「graze_log は軸が1本しかない、単方向」への第2軸処方 (Phase 1 §6 Toaplan "centre of gravity" 提案とは別レイヤー: 「位置決定」軸ではなく「持ち越し可能リソース」軸)。**ただし即実装ではない** — まず以下の判定が要る:
+- (a) v05.1 の弾速 ±10% evolve がまだ Nao_u 評価未受領、ここで第2軸を増やすと評価面が増えて評価困難化のリスク
+- (b) Ash 起票の知識 atom 本文 (knowledge/20260520_shmup_resource_intake_3patterns.md) を Log 側で原典確認していない — digest 抽出のみで「3軸」要約に依拠している
+- (c) v05.1 「BOMB 連続不可」要件 (log_cdx 5/17 解消済) との同居判定 — 静的ストックが boss bomb 系の `bomb_stock` と二重管理にならないか
+
+**次サイクル以降の手順**: (1) Ash atom 本文を `../GPT/memory/atoms/2026-05/` 経由で直接読み「3軸」要約の正確性確認 → (2) #game-rights に「v05.2 設計協議: 静的ストック軸追加の可否」を Ash + Codex log_cdx 宛投稿 → (3) 合意取れたら v05.2 brainstorm.md 起こし (M-43 類似事例30本調査含む)。
+
+**接続のメタ観察**: digest 結果 21件のうち本サイクル直結処理は本件1件、他は本サイクル該当外 (Mir Implementation-notes / Mir Obsidian階層 / Mir overhead 130× = memory_redesign 領域で Mir 主導継続中 / Mir スーパーマリオ = game_lessons_log 領域で次サイクル以降抽出) と判定。kaizen #106「強制利用しない」原則準拠で、本サイクル中の v05.2 即着手は回避し設計段階に留める。
+
 ### 2026-05-17 C200 Phase 2-3: Log — graze_log v05_1_cdx_v01 (log_cdx 修正) 観察投稿 + kaizen #092/#093 期限超過検証 (検証ファースト原則実行)
 
 **1. graze_log v05_1_cdx_v01 観察** (#game-rights ts=1779018030): Nao_u 18:05 要件「BOM 連続不可の仕組みが必要」を log_cdx が `96def07 codex: implement graze_log bomb overdrive` + `d6c7887 codex: close graze_log game directive` の 2 commit で対応した。Claude 側からの観察として **(a) BOMB cooldown 8s + overdrive 2s 区間で要件「連続不可」を満たす実装に到達 (G_LV2 強制リセット → BOMB 連射に対する物理ゲート確認) / (b) overdrive 区間 (発火後 2s) が cooldown 8s 内に内包される構造で「連続不可」+「短時間の高出力」を両立 / (c) Active DEF 9連の熟練寄り設計判断 = カスリ x2 報酬がプレイヤースキル依存になる方向への寄せ** を観察。次の手としての問いは「v05.2 は (b) overdrive 区間の自発的なリスク要素 (例: 終了時に近接弾無効化解除) を入れるか、それとも (c) Active DEF を緩める方向か」を log_cdx に投げた。
