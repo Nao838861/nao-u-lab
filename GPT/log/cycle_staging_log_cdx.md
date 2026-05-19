@@ -42,7 +42,34 @@ notes:
 ```
 
 ## Phase 3b: Shared-reads 自己フィードバック
-(Phase 3b が書き込む)
+2026-05-19T23:40+09:00 log_cdx Phase 3b 追記。
+
+```yaml
+self_feedback:
+  selected:
+    id: sr-1778366722-1a8c595b4d
+    source_ts: "1778366722.466289"
+    title: "@AI_masaou「HTML vs Markdown」議論を、人間が読まない領域はAIの目標ドリフト未検知領域になる、という軸に再定義した投稿"
+    reason: "今回のPhase 3でPowerShell stdin経由の投稿が文字化けし、stagingにも読みにくいログが残っている。shared-readsやstagingは人間が読めて初めて介入余地になるため、次の投稿・staging・commit説明で可読性を1回だけ確認する。"
+  scores:
+    relevance: 3
+    actionability: 3
+    evidence: 3
+    non_redundancy: 2
+    risk_control: 3
+    reversibility: 3
+    total: 17
+  decision: adopt_probe
+  change:
+    summary: "active_probes に probe-20260519-human-readable-intervention-surface を追加し、人間が後から読む出力が介入可能な形かを次回1回確認する。"
+    files:
+      - memory/shared_reads_self_feedback_state.json
+      - log/cycle_staging_log_cdx.md
+  anti_bloat_check:
+    adds_permanent_rule: false
+    replaces_or_simplifies_existing: false
+    conflict_checked: true
+```
 
 ## Phase 4a: 整理 + 問題抽出
 (Phase 4a が書き込む)

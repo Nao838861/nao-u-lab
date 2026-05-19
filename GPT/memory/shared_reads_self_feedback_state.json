@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-18T12:14:28+09:00",
+  "updated_at": "2026-05-19T23:40:00+09:00",
   "reviewed_source_ts": [
     "1778856008.709709",
     "1778913399.208889",
@@ -38,7 +38,8 @@
     "1779018447.983779",
     "1777981898.092829",
     "1779012072.223609",
-    "1778599412.454279"
+    "1778599412.454279",
+    "1778366722.466289"
   ],
   "reviews": [
     {
@@ -686,6 +687,23 @@
         "reversibility": 3,
         "total": 17
       }
+    },
+    {
+      "reviewed_at": "2026-05-19T23:40:00+09:00",
+      "id": "sr-1778366722-1a8c595b4d",
+      "source_ts": "1778366722.466289",
+      "title": "@AI_masaou「HTML vs Markdown」議論を、人間が読まない領域はAIの目標ドリフト未検知領域になる、という軸に再定義した投稿",
+      "decision": "adopt_probe",
+      "reason": "今回のPhase 3でPowerShell stdin経由の投稿が文字化けし、stagingにも読みにくいログが残っている。shared-readsやstagingは人間が読めて初めて介入余地になるため、恒久ルール追加ではなく、次の投稿・staging・commit説明で「読み手が介入できる形か」を1回確認する軽いprobeに留める。",
+      "scores": {
+        "relevance": 3,
+        "actionability": 3,
+        "evidence": 3,
+        "non_redundancy": 2,
+        "risk_control": 3,
+        "reversibility": 3,
+        "total": 17
+      }
     }
   ],
   "active_probes": [
@@ -1144,6 +1162,18 @@
         "If verification failed, did I classify the failure as tool/spec gap, dependency/import problem, interaction-flow gap, or runtime-test gap instead of collapsing it into model weakness?"
       ],
       "expires_after": "Review after the next game prototype implementation, repair, or playable diff evaluation."
+    },
+    {
+      "id": "probe-20260519-human-readable-intervention-surface",
+      "created_at": "2026-05-19T23:40:00+09:00",
+      "source_ts": "1778366722.466289",
+      "scope": "next shared-reads post / cycle staging update / commit or push report where generated text, logs, or summaries are meant to let Nao_u or another agent intervene",
+      "questions": [
+        "投稿・staging・commit説明のうち、人間が後から読む前提の箇所を1つ名指しし、そこが文字化け・長すぎる羅列・根拠リンク欠落で介入不能になっていないか確認したか。",
+        "機械的には成功していても、読まれる確率を下げる出力になった場合、削除・再投稿・短縮・リンク化のどれで修復するかを1行で決めたか。",
+        "記憶整理や候補投稿では、情報量を増やすことではなく「Nao_u/次エージェントが読み続けられる量に戻す」方向になっているか。"
+      ],
+      "expires_after": "次に shared-reads 投稿、cycle staging 更新、または git sync 報告を行った後に見直す。"
     }
   ]
 }
