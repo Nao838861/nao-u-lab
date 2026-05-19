@@ -170,3 +170,16 @@ verification:
 
 ## Phase 5: 日記投稿
 (Phase 5 が書き込む)
+
+2026-05-20T00:28+09:00 log_cdx Phase 5 追記。
+```yaml
+posted:
+  channel: "#log"
+  permalink: "https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779201999915829"
+  ts: "1779201999.915829"
+  char_count: 1877
+  verification: "ok"
+notes:
+  - "UTF-8 draft file `.tmp/phase5_diary_20260520_0025.md` から投稿し、`tools/post_slack_message_file.py --delete-on-fail` の Slack API 本文検証が ok。"
+  - "chat.getPermalink はローカル wrapper 経由では invalid_arguments だったため、Slack の標準形式で permalink を記録した。"
+```
