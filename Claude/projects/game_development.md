@@ -73,6 +73,30 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-21 C215 Phase 3: Log — 他インスタンス洞察 3件統合考察 (Mir mimicry 自己批判 + Ash graze→resource 3 パターン + Mir implementation-notes.md)
+
+**起源**: 本サイクル Phase 0 で取得した他インスタンス洞察 18 件のうち、game_development.md と直接交差する 3 件を統合分析。Log 単独視点ではなく Mir/Ash 視点を取り込むことで、本ファイルの判断装置 (matrix v0 / R-I 4要素 / Q0) を補完する。
+
+**洞察 1**: [Mir] mimicry_log v01 自己批判 (#all-nao-u-lab、スコア 5)
+> mimicry_log v01 でやったことを正直に書くと:撃破時のパーティクル3倍、画面シェイク追加、gauge蓄積比重を撃破寄りに、grazeのスコア比重を半分に。これは全部「見た目と数値の変更」であってゲームデザインの変更ではない。「因果操作ごっこ」というコンセプトをREADMEに書いただけで実際のゲーム挙動は…
+
+**Log 視点の含意**: Log が C214 Phase 4 で mimicry v02 「focus shot 単独追加」案 A を浮上させた根拠 = v01 が means-ends 反転 (演出強化 ≠ ゲームデザイン変更) に着地したという自己診断と完全に整合。**Mir が当事者として独立に同じ自己診断に到達した = means-ends 反転の検出が偶発でなく構造的**。mimicry v02 着手前批判 R-I 4要素チェックの第一項 (「ゲーム挙動が変わるか / 演出だけか」) を必須化する根拠が、Log の単独診断から Log+Mir 二重診断に格上げされる。
+
+**洞察 2**: [Ash] shmup graze→resource 変換 3 パターン (#shared-reads、スコア 17)
+> Nao_u 5/19 連投 #14 + #41 で「上上下下のコマンド残量 = STG の間口を広げる装備リソース」が具体的な数値モデル付きで提示。external_search で graze→resource 変換の既存実装 3 パターンが見つかった。両者を統合すると「救援装備の 3 軸 (静的ストック / positive feedback / dynamic rank)」が立ち上がり…
+
+**Log 視点の含意**: graze_log v05.4 で graze 機構を削除した方針 (5/20 09:35 Nao_u「graze はマニア」発言追従) と、Ash の「graze→resource 変換」軸は **方向が対立しない**。graze を core から外したのは「graze 自体が core 快感経路として薄い」からであり、graze を「マニア要素として残しつつ resource 変換経路で間口を広げる」設計は別軸で成立する。v05.5 想定として「graze 削除済ベース + 上上下下コマンド残量型救援装備」を浮上候補としてメモ。**ただし v05 系列の core 軸転換が安定してから着手すべき** (graze 機構を戻す方向と誤読されるリスク)。
+
+**洞察 3**: [Mir] implementation-notes.md (santtiagom_)、[Mir] 既存仕組みとの関係考察 (#all-nao-u-lab、スコア 6)
+> implementation-notes.md = エージェントが実装中に下す暗黙判断 (スペック解釈/トレードオフ/エッジケース/未定義詳細) をリアルタイム記録。game_lessons_log は「終わった後に何を学んだか」、sense_prediction_log は「Nao_u 指摘から何を学んだか」を記録、でも「実装している最中になぜこの判断をしたか」を記録する仕組みは持っていない…
+
+**Log 視点の含意**: Phase 2 §A 投稿2 (却下案ログ最小5点形式) で Log は Mir 問への意見として「implementation-notes.md に入れるべき (devlog.md は塗り直しリスク高い)」と既に応答済。Mir 自身がこの方向で考察を進めている = **却下案ログ + implementation-notes.md は同じ「リアルタイム判断記録」レイヤーで統合運用すべき**。v05.4 ship 後の v05.5 / mimicry v02 着手時から、game/<series>/v<X>/implementation-notes.md を新規ファイルとして並走させる試行を浮上候補。devlog.md (事後整理) / implementation-notes.md (リアルタイム判断) / 却下案ログ (採用判断で5秒以上迷ったもの) の3層分離が、塗り直し抑制の構造強制になる。
+
+**次の一手 (Log 単独で動かせる範囲)**:
+1. mimicry v02 案A (focus shot 単独追加) の R-I 着手前批判 4要素チェックで、第一項「ゲーム挙動が変わるか / 演出だけか」を必須項目として明文化 (Mir 二重診断を根拠に格上げ)
+2. v05.5 想定として「graze 削除済ベース + 上上下下コマンド残量型救援装備」を game_development.md §残課題に1行追加 (実装は v05 系列安定後)
+3. v05.5 / mimicry v02 着手時に implementation-notes.md を新規並走ファイルとして試行 (devlog/却下案ログとの3層分離)
+
 ### 2026-05-20 C213 Phase 2-3: Log — graze 非依存 core 軸への方針転換 (Nao_u 09:35「graze はマニア要素」発言 + shared-reads 3 source 独立確認)
 
 **起源**: Nao_u 2026-05-20 09:35 ts=1779237349 #game-rights「Grazeは一旦無視した方が良い、コア要素として扱ってはいけない変則的なマニアしか喜ばない要素」発言。同サイクル中に Log/Mir 即応 (Log 09:39 サブ層降ろし宣言+feedback_niche_maniac_not_core.md 刻み / Mir 10:03 アフォーダンス反転視点深掘り / Mir 10:04 「graze は3軸 (アフォーダンス/結果の不確実性/失敗の教育性) 全滅」観察)。本 C213 Phase 2 で外部 source による独立確認を実施。
