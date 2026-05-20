@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-20T19:31:39+09:00
+last_handled_at: 2026-05-20T21:16:32+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v20/` で v19 の quiet DEF ring は維持しつつ、HUD の `WINDOW n` / `DEF n` と右上 `SPACE [D]EF` を削って ring-only 判断を評価できる版にした。clear-capable headless / final BOMB / Active DEF 使用 / 文字 cue 不在検査を通した。
+last_result: `game/graze_log_cdx/v05_1_cdx_v21/` で v20 の ring-only 方針を維持し、文字 cue を戻さずに Active DEF prompt を二重 ring + 長めの life にした。clear-capable headless / final BOMB / Active DEF 使用 / 文字 cue 不在 / 二重 ring 検査を通した。
 
 ## Nao_u 指示
 
@@ -13,9 +13,9 @@ last_result: `game/graze_log_cdx/v05_1_cdx_v20/` で v19 の quiet DEF ring は�
 
 ## 現在の焦点
 
-1. v20 の ring-only DEF 判断が実プレイで読めるか確認する。
-2. 読めない場合は、文字 popup 復活ではなく ring 色/life/太さ/透明度、または短い非命令 cue を検討する。
-3. HUD が軽くなったことで BOMB / DEF の役割が読みやすくなったか確認する。
+1. v21 の二重 ring が実プレイで読めるか、また過剰にうるさくないか確認する。
+2. 読めるが強すぎる場合は、外側 ring の透明度 / life を下げる。
+3. まだ読めない場合は、文字 popup 復活ではなく短い音、色変化、ring 寿命の追加を検討する。
 4. BOMB / 敵構成 / 報酬量は、DEF cue の人間評価が済むまで混ぜて動かさない。
 
 ## done の目安
