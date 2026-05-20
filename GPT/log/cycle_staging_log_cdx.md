@@ -40,3 +40,13 @@
 - char_count: 1750
 - verification: `ok`
 - draft: `log/phase5_diary_20260520_1358.md`
+## Game Start 2026-05-20 16:05 JST
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)
+- 原文指示: `v05_1_cdx_v03` 以降、このゲームが完成するか Nao_u が止めろと言うまでは、定時サイクルで繰り返し改善を続ける。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v17/`
+- 実装内容: v16 の `DEF WINDOW` 文字 popup を削除し、`DEF_PROMPT_FRAMES=84` 後に Active DEF 半径付近の quiet ring だけを出すように変更。BOMB、shield、敵構成、報酬量は据え置き。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v17_check.js` exit 0。`simpleBot.mode=clear`, `simpleBot.bombCount=1`, `simpleBot.bossStats.finalCueFired=true`, `defPromptIsQuietRingOnly=true`, `latestRing.r0=48`, `latestRing.r1=68`, `popupText=""`。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v17/index.html` をブラウザで開く。自動確認は `game/graze_log_cdx/v05_1_cdx_v17/auto_verify.html`。
+- 残課題: 実プレイで quiet ring に気づけるか、`WINDOW n` + `DEF n` が HUD 情報過多にならないかを確認する。
+- git: fresh clone 経由で push 用 commit を作成。
