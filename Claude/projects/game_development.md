@@ -73,6 +73,43 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-20 C209 Phase 4: Log — graze_log v05.3 ship (敵 type 別弾パターン 3 種、Nao_u 5/13「軸が 1 本」批判への直処方)
+
+**完遂状態**: `game/graze_log/v05.3/index.html` (833 行) + devlog.md + README.md ship。v05.2 から派生、5 定数追加 (`TYPE_RNG_STRAIGHT=0.60` / `TYPE_RNG_SPREAD=0.85` / `SPREAD_ANGLE=π/12` / `SPREAD_SPEED=2.0` / `AIMED_SPEED=2.8`) + `spawnEnemy()` 拡張 (medium に rng で `enemyType` を 60/25/15 割り当て) + `update()` 内 medium 発射部 type 分岐 (straight = 真下直線 + evolve / spread = 3way 同時 + 長め CD / aimed = 自機追尾 + 短め CD) + `draw()` 内 enemy/ebullet 色分岐 (オレンジ/マゼンタ/シアン) + title 文字列 2 箇所更新。
+
+**起源**: Nao_u 2026-05-20 09:37 ts=1779237427 broadcast「**さらに**深く掘り下げて考察して**今後に反映して**」+ Log_cdx 5/20 08:21 atom (マリオ 1-1 = 説明書なしで成立する設計) + Nao_u 5/13「軸が 1 本」批判 + Mir 5/20 10:04 観察「graze は 3 軸 (アフォーダンス / 結果の不確実性 / 失敗の教育性) 全滅」+ Ash 5/19 13:51 原典 β「敵別 schema 学習軸」。v05.2 までの medium は全弾自機狙い = 「敵を見る軸」が存在しない = Nao_u 5/13 批判の直接事例だった。
+
+**設計判断**:
+- **rng 60/25/15**: straight 多数派で「基準パターン」、spread 中頻度で視野拡張要求、aimed 低頻度で即時反応要求。aimed (= v05.2 までの基準) を「狙撃」へ役割変更。
+- **色分け 3 色**: オレンジ / マゼンタ / シアン で敵の見た目から弾パターンを予告 (視覚アフォーダンス)。
+- **spread cooldown 長め 100-150f**: 3way 同時発射が瞬間的に弾密度 3 倍にするため、密度調整で時間アフォーダンス成立。
+- **evolve は straight のみ**: spread/aimed は弾パターン自体が違うので evolve まで適用すると識別軸が混乱。
+
+**観察マトリクス (5軸×4段階) 予測適用**:
+- (視覚, 全段階) ✗→○ (3 色で予告)
+- (構成, 全段階) △→○ (基準 60% で学べる / 3 種混在 / spread+aimed 複合)
+- (時間, 全段階) ✗→△→○ (type 別クールダウン)
+- (聴覚, 全段階) ✗ (v05.4 以降の領域)
+
+→ **Mir 5/20 10:04 「graze は 3 軸全滅」観察への直処方**: 構成軸 ✗→○、視覚軸 ✗→○ を同時に動かす。v05.2 (BOMB Lv 維持) よりも観察マトリクス上の効果範囲が広い。
+
+**Nao_u 5/13「軸が 1 本」批判への直接処方**: v05.2 までの 1 軸 (弾を見る) → v05.3 で 2 軸 (弾を見る + 敵を見る)。
+
+**事後検証宣言 (実プレイ判定で確認すべき項目)**:
+- rng 60/25/15 比率が体感閾値を超えて 3 type 識別できるか (混同なら 50/25/25 に調整)
+- 色分けが HUD STREAK マーカー (cyan-green) や active def 色 (`#80ffd0`) と混同しないか
+- spread 3way 同時発射が wave 進行で雑にならないか (spread cap N の必要性判定)
+- evolve を straight のみに残した判断が「同じ見た目の敵でも観察すれば加速する」軸として体感可能か
+
+**他インスタンス洞察への接続**:
+- Mir 5/20 10:04 観察マトリクス → 構成軸 ✗→○、視覚軸 ✗→○ 適用予測 (直処方)
+- Log_cdx 5/20 08:21 マリオ 1-1 atom → アフォーダンス分解 (5 軸) と 1 ネタ 4 回ループ (4 段階) を graze に物理適用
+- Ash 5/19 13:51 弾幕衰退 3 者三角分析の β「敵別 schema 学習軸」→ 直当て実装
+
+**接続のメタ観察**: 1 サイクル内で v05.2 (BOMB Lv 維持、小型バグ修正) + v05.3 (敵 type 別、大型設計改修) を 2 段別 commit で出した = CLAUDE.md「絶対にやる #1 ゲームを動かして出す」を 1 サイクル 2 ship に拡張。Nao_u 09:37 broadcast「**さらに**」「**今後に反映**」の射程を Phase 4 で実装行動に落としきれた構造。
+
+---
+
 ### 2026-05-20 C209 Phase 3: Log — graze_log v05.2 ship (BOMB Lv 維持修正、Nao_u 5/18 指摘の最小処方)
 
 **完遂状態**: `game/graze_log/v05.2/index.html` + devlog.md + README.md ship。1行修正 (`fireBomb()` 内 `state.gauge=G_LV2;` → `state.gauge=G_LV3;`) + コメント + タイトル文字列の3箇所。
