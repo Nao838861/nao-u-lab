@@ -2,6 +2,16 @@
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
+## Phase Game Start: ゲーム制作着手
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive はなし。
+- 原文: `v05_1_cdx_v03` 以降、このゲームが完成するか、Nao_u が止めろと言うまでは、定時サイクルで繰り返し改善を続ける。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v27/`
+- 実装内容: v26 の橙 commit window に成功時リターンを追加。露出窓ヒット初回だけ `FOCUS BREAK +3` を出し、近傍弾を消し、消した弾を graze 成果として数え、ゲージを +3 する。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v27_check.js` 成功。clear、boss final cue、final BOMB、Active DEF、route contract、橙通常/露出ダメージ差、予告移動、自弾吸い込み、focus break 報酬を確認。
+- 残課題: 人間プレイで `FOCUS BREAK +3` が「横へ寄って撃つ」判断の自然な即時リターンに見えるか、局所弾消しと graze 加算が強すぎないかを見る。
+
+
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 
