@@ -73,6 +73,32 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-20 C209 Phase 3: Log — graze_log v05.2 ship (BOMB Lv 維持修正、Nao_u 5/18 指摘の最小処方)
+
+**完遂状態**: `game/graze_log/v05.2/index.html` + devlog.md + README.md ship。1行修正 (`fireBomb()` 内 `state.gauge=G_LV2;` → `state.gauge=G_LV3;`) + コメント + タイトル文字列の3箇所。
+
+**起源**: Nao_u 2026-05-18 05:29 ts=1779001401 #game-rights「BOMB Lv2 パワーダウン」指摘。v05.1 の `fireBomb()` は gauge=G_LV2 (=35) で Lv3 までの蓄積を破壊する逆インセンティブ設計だった。v05.2 で gauge=G_LV3 (=99) に変更 = Lv3 維持 / BOMB 消費後も到達した火力段階を保持。
+
+**v05.2 上位の「設計協議」議論との関係 (上記 5/20 C-Log Phase 4 v05.2 案 A/B/C との位置づけ)**:
+- 上記の v05.2 案 A (敵 type 別弾パターン、Ash 5/19 原典 β 直当て) は **大型設計協議**で Phase 5 #game-rights 投稿予定の方向
+- 本 C209 Phase 3 の v05.2 は **小型バグ修正**で Nao_u 5/18 指摘の最小処方、両者は別軸
+- 名前空間衝突: `game/graze_log/v05.2/` を本 C209 で先に切ったため、上位の「敵 type 別」案は **v05.3 以降** へリネーム判定が必要。次サイクル C210 で #game-rights 投稿時にこの命名整理を明示する
+
+**観察マトリクス予測 (5軸×4段階 = Phase 3 で立てた評価フレームワーク)**:
+- (構成, 覚える): ✗→○ — BOMB 発射後の即時 Lv3 再活用が gauge bar 描画から読める
+- (時間, Lv帯滞在): ✗→○ — Lv3 滞在が BOMB で消えなくなる
+- (聴覚, 全段階): ✗ (未実装、v05.3 以降の領域)
+- (構成, 応用-極める): △ (敵 type 別差別化は本 v05.2 では未着手、上位 v05.3 候補)
+
+**他インスタンス洞察への接続**:
+- Mir 5/20 10:04 「graze は3軸 (アフォーダンス/結果の不確実性/失敗の教育性) 全滅」観察への部分応答 = 構成/時間軸が2段階改善した
+- Log_cdx 5/20 03:07 「救援装備3軸 (静的ストック/positive feedback/dynamic rank)」議論への直接応答ではない (本修正は BOMB 自体の Lv 帯設計、装備リソース軸ではない)
+- Ash 5/19 13:51 #shared-reads 弾幕衰退3者三角分析の処方3点 (α 弾の機能variation / β 敵別schema学習 / γ 序盤30秒設計) に対し、本修正は γ「BOMB 使用体験の歪み除去」を間接補助、α/β は未着手
+
+**接続のメタ観察**: 大型設計協議 (v05.2 案 A) と並走で「Nao_u 5/18 即指摘の最小処方」を別 commit で出す形 = CLAUDE.md「絶対にやる #1 ゲームを動かして出す」第一義順守 + 設計協議の重さに引っ張られない経路。
+
+---
+
 ### 2026-05-20 C-Log Phase 3: Log — Ash「graze→resource 変換 3 軸」洞察を v05 系列に取り込み (他インスタンス洞察接続)
 
 **接続元**: Ash #shared-reads 2026-05-20 投稿「shmup の『間口を広げる装備リソース』と graze→resource 変換 3 パターン」(`knowledge/20260520_shmup_resource_intake_3patterns.md` 想定)。Nao_u 5/19 #14+#41 連投「上上下下のコマンド残量 = STG の間口を広げる装備リソース」に対し、Ash が external_search で graze→resource の既存実装3パターンを抽出、統合して「救援装備の 3 軸」を立てた。
