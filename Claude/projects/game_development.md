@@ -73,6 +73,43 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-20 C213 Phase 2-3: Log — graze 非依存 core 軸への方針転換 (Nao_u 09:35「graze はマニア要素」発言 + shared-reads 3 source 独立確認)
+
+**起源**: Nao_u 2026-05-20 09:35 ts=1779237349 #game-rights「Grazeは一旦無視した方が良い、コア要素として扱ってはいけない変則的なマニアしか喜ばない要素」発言。同サイクル中に Log/Mir 即応 (Log 09:39 サブ層降ろし宣言+feedback_niche_maniac_not_core.md 刻み / Mir 10:03 アフォーダンス反転視点深掘り / Mir 10:04 「graze は3軸 (アフォーダンス/結果の不確実性/失敗の教育性) 全滅」観察)。本 C213 Phase 2 で外部 source による独立確認を実施。
+
+**外部 source 3 件による独立確認 (Phase 1 §6 + Phase 2 §2)**:
+- **Boghog's bullet hell shmup 101** (shmups.wiki) — beginner core 軸 = controllable speed setting / readability / focus shot mechanic (= 速い wide shot と遅い focus shot の選択肢)、graze は core 節に登場せず
+- **Pixelblog #31 Shmup Sprite Design** (slynyrd.com) — readability 設計 (bright saturated colors + outlines、explosions/power-ups の上でも見える)、graze 言及なし
+- **The Anatomy of a Shmup / Shootem Up Mechanics** — 「player の小ミスは subtly 補正、大ミスのみ罰」「unconvoluted がコア、不要な systems は最小化」、graze 言及なし
+
+**観察**: 3 source 中 0 source が graze を core 扱い → Nao_u 5/20 09:35 発言が外部側からも独立に立つ。
+
+**graze 非依存 core 軸地図 (5軸)**:
+| 軸 | 内容 | graze との関係 |
+|---|---|---|
+| readability | 弾の視認性 (色/形/背景分離) | graze 抜きで成立する独立軸 |
+| focus shot | 能動操作 → 報酬ループ (speed トレードオフ) | graze より「画面が要求するアフォーダンス」と一致 |
+| popcorn enemies | 撃破連鎖 (高頻度の小成功) | graze に依らない快感経路 |
+| subtle correction | 小ミスへの優しさ (隠れ補正) | graze と独立、beginner core |
+| 自機 identity | 操作主体の視覚的確立 | graze と独立 |
+
+**graze_log 系列への含意 (3点)**:
+1. v05.3 (敵 type 別 3 種 + 色分け) は **readability 軸の補強で graze 非依存で立つ** = 5/13「軸が1本」批判への処方として残せる
+2. v05.2 (BOMB Lv3 維持) は **graze ゲージ経済の核心** = graze をコアから外す方針なら BOMB と graze の依存切断が必要
+3. 次版 (v05.4 想定) は **graze 機構削除 + focus shot 軸導入** が core 軸転換の最小プロトタイプ
+
+**メタ判断 (#shared-reads ts=1779276587)**: shared-reads 5570 chars で graze 非依存 core 軸地図を投下、external_notes_log.md に統合済 ([統合済 2026-05-20])。
+
+**Log_cdx 5/20 11:51 ts=1779245498 への応答 (merge 運用整理) #all-nao-u-lab ts=1779276978**:
+未merge層を抱えたまま次層を積んだ時の扱いを「依存関係ベース」で整理:
+- まとめて merge 可: (1) 後発が前発の延長/拡張で完全独立 (2) conflict なし保証 (3) bug fix 内包しない (4) 同一 review 単位
+- 分割依頼へ戻す: (A) 後発が前発の評価結果待ち (B) 後発が方針転換 (C) 完成度未達で前発判断を曇らせる
+- C213 自己診断: v05.2 + v05.3 同サイクル ship は条件A該当 (graze 経済を残す v05.2 と graze 経済前提で敵軸追加する v05.3 は依存関係あり)。本来は v05.2 単独 ship → 評価待ち → 09:35 発言を踏まえて v05.3 軌道修正、の順序だった。
+
+**Phase 4 大作業 (本サイクル中に着手)**: graze_log v05.4 = graze 機構削除 + focus shot 軸導入の最小プロトタイプ。Nao_u 5/20 09:35「graze はマニア」発言への構造的応答 (Slack文言だけでなくゲーム本体で物理応答) + shared-reads 3 source で得た core 軸地図の最初の実装。
+
+---
+
 ### 2026-05-20 C209 Phase 4: Log — graze_log v05.3 ship (敵 type 別弾パターン 3 種、Nao_u 5/13「軸が 1 本」批判への直処方)
 
 **完遂状態**: `game/graze_log/v05.3/index.html` (833 行) + devlog.md + README.md ship。v05.2 から派生、5 定数追加 (`TYPE_RNG_STRAIGHT=0.60` / `TYPE_RNG_SPREAD=0.85` / `SPREAD_ANGLE=π/12` / `SPREAD_SPEED=2.0` / `AIMED_SPEED=2.8`) + `spawnEnemy()` 拡張 (medium に rng で `enemyType` を 60/25/15 割り当て) + `update()` 内 medium 発射部 type 分岐 (straight = 真下直線 + evolve / spread = 3way 同時 + 長め CD / aimed = 自機追尾 + 短め CD) + `draw()` 内 enemy/ebullet 色分岐 (オレンジ/マゼンタ/シアン) + title 文字列 2 箇所更新。

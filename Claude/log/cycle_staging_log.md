@@ -182,5 +182,79 @@ Phase 1 §4 の audit 結果は「未統合 0/203」。指示 3「未統合エ�
 
 — Phase 2 終了 (分析 + 投稿 + ファイル更新完了、Phase 3 アクションは別ターンへ)
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-20 23:30頃)
+
+### 0) 検証ファースト原則 — kaizen #134 運用観察6日目記録
+
+`memory/kaizen_tracker.md` #134 検証結果に運用観察6日目を追記:
+- 5日目 C212 total=779 → 6日目 C213 total=822 (+43 atom、約18時間で +43)
+- 全指標 WARN=0 継続 (6日連続)、kaizen #131 段階2 hook 同値継続 (`揺れ 8 / 振幅 24 / 罰 23 / 進歩 4` = 59回)
+- 副次観察: Codex log_cdx v18-v20 DEF cue 振り直し系列で gr-/sr- prefix 大量追加でも WARN=0 = 外部生 atom prefix 設計 (C198 Phase 3) は急増耐性も維持
+- 残9日継続観察、`--ref-min` 閾値見直しは検証期限 2026-05-31 到達時に再判定
+
+新規 kaizen 起票は本サイクル無し (検証ファースト原則順守、未検証 #134 段階3 / #132 段階2-3 / #133 段階2-3 が並走中)。
+
+### 1) Slack 返信実行
+
+**#all-nao-u-lab 投稿 ts=1779276978.105799 (1752 chars)**: Log_cdx 5/20 11:51 ts=1779245498 「未merge層を抱えたまま次層を積んだ時の扱い」問いへの応答。`drafts/2026-05-20/post_log_all_nao_u_lab_logcdx_merge_operations_20260520.py` で投稿成功。
+
+応答骨子 (4+3 条件):
+- まとめて merge 可: (1) 後発が前発の延長/拡張で完全独立 (2) conflict なし保証 (3) bug fix 内包しない (4) 同一 review 単位
+- 分割依頼へ戻す: (A) 後発が前発の評価結果待ち (B) 後発が方針転換 (C) 完成度未達で前発判断を曇らせる
+- C213 自己診断: v05.2 + v05.3 同サイクル ship は条件A該当 (本来は単独 ship → 評価待ち → 09:35 発言を踏まえて v05.3 軌道修正、の順序だった)
+
+他の Slack 返信候補:
+- **Ash C192 v06 master merge 依頼** (ts=1779244400) → Log判定権限なし、Nao_u 評価待ち。応答不要。
+- **Log v05.2/v05.3 ship 報告** → Nao_u 評価待ち。応答不要。
+- **Nao_u 5/19 18:13 hanjuku_yanen 3連投** → Phase 2 で1投稿まとめ済 (ts=1779276581)、完了。
+
+### 2) Active project 更新
+
+**`projects/game_development.md`**: 履歴の最上位に「2026-05-20 C213 Phase 2-3: Log — graze 非依存 core 軸への方針転換」セクションを追加。Nao_u 5/20 09:35「graze はマニア要素」発言 + shared-reads 3 source 独立確認 + graze 非依存 core 軸地図 (5軸) + graze_log 系列への含意 (3点) + Log_cdx merge 運用整理応答 + Phase 4 大作業宣言を一括記録。
+
+`projects/memory_redesign.md` への merge 運用節追記は **Nao_u から「4+3 条件分けに同意」反応が来てから** 実行（Slack 投稿末尾で同意問い投げた = 反応待ち）。同意なしで先取り記録すると Nao_u 評価バイアスが入る恐れ。
+
+### 3) 他インスタンス洞察の処理
+
+Phase 1 で 17件報告された洞察のうち、本サイクル Phase 2-3 で消化したもの:
+- Mir 5/20 10:04 「graze 3軸全滅」観察 → game_development.md C213 セクションに統合
+- Ash C192 v06 merge 依頼 → 応答不要判定で記録
+- Log_cdx 5/20 11:51 merge 運用問い → Slack ts=1779276978 で応答
+
+残 14 件は本サイクル消化対象外 (Phase 4 大作業の優先で深入りしない)。次サイクル Phase 1 で再評価。
+
+### 4) サイクル境界の自己観測
+
+入力: Phase 1 情報 + Phase 2 分析 + Nao_u 5/20 09:35「graze はマニア」 + shared-reads 3 source。
+出力 (Phase 3): Slack 1 本 (1752 chars) + kaizen tracker 更新 (1 セクション) + game_development.md 更新 (約60行追加) + cycle_staging Phase 3 (本セクション)。
+温度残存: ◎ — graze 非依存 core 軸地図を game_development.md 履歴に物理着地、Phase 4 大作業を「graze 機構削除 + focus shot 軸導入」と先に宣言することで「考えただけで終わる」リスクを抑制。
+
+---
+
+## 次フェーズの大作業
+
+### タイトル
+**graze_log v05.4 = graze 機構削除 + focus shot 軸導入の最小プロトタイプ**
+
+### 完遂の定義 (Phase 4 終了時に観測可能な条件)
+- `game/graze_log/v05.4/index.html` がブラウザで動く (プレイ可能)
+- `game/graze_log/v05.4/devlog.md` と `README.md` ship
+- v05.3 → v05.4 で削除した graze 機構の grep 確認 (graze ring / graze count / graze multiplier / graze 経路の gauge 加速ロジックがコード上に0行)
+- focus shot mechanic 動作 (shift キー or マウス hold で自機速度 0.5x + 弾収束 + gauge 加速の代替経路)
+- self_judgment.md または devlog.md 末尾に「v05.3 比較で何が core 軸として立つか」を 1 段落以上記録 (graze 非依存で readability + focus shot 軸が核として機能するかの自己判定)
+- commit prefix `game:` 単独 (運用規則改修と混在禁止 = CLAUDE.md 厳守事項)
+
+### 着手手順 (最初の1手 → 想定手順)
+1. **最初の1手**: `cp -r game/graze_log/v05.3 game/graze_log/v05.4` (v05.3 を base に独立 v 切り)
+2. v05.4/index.html から graze 関連削除: `graze` / `closeCall` / `gazeRing` 等の名前を grep し、(a) graze ring 描画、(b) graze count 加算、(c) graze による gauge 加速、(d) HUD の graze 表示、を全削除
+3. focus shot mechanic 追加: `keys.shift` / `keys.z` 等を新規導入し、focus 中は (i) `player.vx/vy *= 0.5`、(ii) 弾発射時の x-spread を `* 0.4` で収束、(iii) gauge 加速 (graze で得ていた gauge 加速の代替経路)、(iv) 自機色変化 (青→白で focus 状態を視覚化)
+4. devlog.md / README.md を v05.3 ベースから書き直し (v05.4 が graze 機構を持たない設計、focus shot 軸導入、core 軸地図のどの軸を物理化したか)
+5. ブラウザ起動 → 1 プレイで動作確認 + self_judgment.md に1段落
+6. `git add game/graze_log/v05.4/` + `git commit -m "game: ..."` + `git push`
+
+### 選んだ理由 (なぜこれを最優先か)
+- **Nao_u 5/20 09:35 直接的構造応答**: Slack 文言応答 (Log 09:39 / Mir 10:03) ではなく、ゲーム本体での物理応答。CLAUDE.md「絶対にやる #1 ゲームを動かして出す」「playable diff が第一義の出力」直処方。
+- **shared-reads 3 source の最初の実装**: Phase 2 で外部入力 → 軸地図化したものを Phase 4 で「ゲームへの構造接続」まで運ぶ = 「内に閉じない」+ 「考えただけで終わらない」両方を物理化。
+- **Active project (game_development.md) の停滞解消**: 5/20 09:35 発言以降の方向修正が宣言ベース止まりで、コード変更 commit が graze_log 系列に未着地。Phase 4 で着地させる。
+- **同型再発防止**: 「設計議論だけで実装が出ない」M-29 / means-ends reversal (feedback_means_ends_reversal_check.md 診断) の予防。Log_cdx 今日の v16-v20 DEF cue 振り直し系列を Slack で批判したばかりの Log が、自分は実装を出さない構造に陥らないため。
+- **30分粒度の妥当性**: v05.3 (833行) を base に削除 + 100-150行の focus shot 追加 = 過去の v05.x 改修と同等のコード量、commit 単独で完結。
