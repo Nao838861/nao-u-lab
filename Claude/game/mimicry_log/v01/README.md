@@ -1,0 +1,47 @@
+# mimicry_log v01 — 因果操作ごっこ (graze_log 後継版 最小プレイアブル着手)
+
+**何ごっこ = 自分の弾が世界を即座に変える因果の手触りを楽しむごっこ。**
+
+**status**: 2026-05-20 C-2026-05-20 Phase 4 で graze_log/v05.2 から派生。Nao_u 09:35 graze 凍結方針への次 core 軸の最初の playable diff。
+
+## Q0 — ミミクリ軸 (5 秒で答えられる「何ごっこ」)
+
+「自分の弾が世界を即座に変える因果の手触り」を遊ぶ。撃つ → 敵が崩れる → 画面が震える、までを 1 ループに圧縮し、プレイヤーが「自分の操作が世界を変えた」を毎秒受け取れる状態にする。
+
+- 受け手目線の入り口設計 = 5 秒で「ああ、撃って世界を変えるゲームなのか」が伝わる
+- 起点根拠 = gozahand 氏 (2026-05-19 22:46 Nao_u 共有) 「STG の快感は破壊」/ Log 5/19 既反応「自分の操作が世界を変えた因果の手触り」/ Downwell の連鎖破壊感
+- カイヨワ 4 要素のうち **ミミクリ (世界変容者) + アゴン (撃破スコア) + アレア (敵生成 RNG)** の 3 軸を core に同時積載。**graze はサブ層** (擦ると DEF 蓄積、core ではない) に降ろした
+
+## Q1 — 30 秒プレイの想像
+
+1. (0–3秒) PRESS SPACE → 自機が画面下に、敵 small 3 体が上から
+2. (3–8秒) 撃つ → 撃つたびに敵が崩落 (粒子 14 個放射 + 閃光リング + 画面わずかに揺れる) = **「自分の弾が世界を変えた」を 1 秒間に 2-3 回受け取る**
+3. (8–15秒) medium が降りてくる → 撃破時さらに大きく散る (粒子 28 + リング大 + 画面強めに揺れる) = **「中型を倒した = 世界を強く変えた」体感**
+4. (15–22秒) 敵弾発射が始まる → 弾を擦ると GRAZE ring 表示 (graze はサブ層、core の撃破ループの「合間に味付け」程度)
+5. (22–30秒) gauge が貯まると BOMB ready (黄色パルス) → BOMB 発射で全画面振動 + 敵 hp 半減 = **「世界を一括で変える究極の因果操作」**
+
+→ 30 秒で**「自分の弾が世界を変えるごっこ」** を 10 回以上体験できる、5 秒で受け取れるミミクリ軸。
+
+## graze_log v05.2 との差分 (1 行)
+
+graze (擦り判定) を core から sub 層へ降ろし、撃破時の **散る/震える** フィードバックを約 3 倍化した。
+
+## 接続先
+
+- [`game/mimicry_log/v01/devlog.md`](devlog.md) — 設計判断の詳細 (Q0/Q1/graze_log 差分)
+- [`game/graze_log/next/mimicry_candidates.md`](../../graze_log/next/mimicry_candidates.md) — 本実装の上位候補 brainstorm (3 候補のうち候補 B = 因果操作ごっこ を採用)
+- [`game/graze_log/v05.2/`](../../graze_log/v05.2/) — 派生元 base
+- [`projects/principles.md`](../../../projects/principles.md) ミミクリ軸候補 — 本実装の理論根拠
+- [`memory/sense_prediction_log.md`](../../../memory/sense_prediction_log.md) N=20/N=21 — graze 軸内予測の frame archive、本実装は新 frame の N=23+ 教師データ作成方向
+- Nao_u 2026-05-20 09:35 ts=1779237349 (#game-rights) — graze 凍結指示 (mimicry_log 路線の起源)
+- 玉置絢氏 2026-05-20 13:10 ts=1779250230 — 「何ごっこ」軸の理論的根拠
+
+## 操作
+
+- ← → ↑ ↓ / WASD: 自機移動
+- SPACE: スタート / BOMB (gauge MAX 時) / DEF (graze streak 5 到達時) / リトライ
+- M: ミュート
+
+## seed 再現
+
+URL に `?seed=N` を付けると指定 SEED で起動。`mimicry_log seed: <N> score: <S> wave: <W>` が gameOver 時に console.log に出る。
