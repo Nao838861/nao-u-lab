@@ -275,3 +275,43 @@ mimicry_log v02 案A 実装 (R-I 通過条件 4 つ全充足の 1 commit playabl
 - 撤回時は v02 ディレクトリを残したまま (失敗事例として残置)、devlog.md に撤回理由を書き、別途 graze_log v05.5 想定の案 B 着手判断を次サイクル冒頭で行う
 
 — Phase 3 完了。Phase 4 で実装へ。
+
+## Phase 4: 大作業実行結果
+
+### タイトル
+mimicry_log v02 案A 実装 (R-I 通過条件 4 つ全充足の 1 commit playable diff)
+
+### 完遂判定: **到達 (条件 1-4 全実装、self_judgment は静的検証で代用)**
+
+### 副産物 (新規/変更ファイル)
+
+- `game/mimicry_log/v02/index.html` (新規) — v01 から 9 箇所改変 (focus mode / spread 圧縮 / DPS-移動-hit-graze 半径切替 / focus token / focus burst / large 敵 / wave 10 mini boss / vignette + 自機青リング / 撃破粒子 0.7x 減衰)。`<script>` len=32027 chars、Node `new Function()` 構文 OK
+- `game/mimicry_log/v02/devlog.md` (新規) — Q0 / Q1 / 通過条件 4 実装表 / X1-X3 自己回答 3 質問 / self_judgment / v01→v02 差分 9 箇所 / 撤回トリガー 5 点 / 次サイクル引き継ぎ
+- `game/mimicry_log/v02/_sim_check.js` (新規) — Node 挙動シミュレーション。Test1 focus 倍率 4/4、Test2 burst 6/6、Test3 miniboss 3 large hp=9 OK、Test4 wave 5 で large 出現確認、Test5 token 初期値 0 / TH=3 OK = **全 15 アサーション PASS**
+
+### 通過条件 4 つの実装確認 (`_sim_check.js` の結果)
+
+| 条件 | 確認手段 | 結果 |
+|---|---|---|
+| 1: focus 中 graze 半径 1.5x | `curGrazeR()=33` (base 22) | OK |
+| 2: 視覚シグナル (vignette / 自機リング / 粒子 0.7x) | code read: `createRadialGradient` + 青リング + `focusK=0.7` | OK (静的) |
+| 3: focus token + burst (TH=3, 1秒 強化) | tokens 3→0 / burstT=60 / hit 2.4 / move 0.4 / cd 4<6 | OK |
+| 4: large HP9 + wave10 miniboss | 3 large hp=9 / miniBossActive=true | OK |
+
+### 実プレイ未実施
+
+Win headless ターミナルで browser を立ち上げる手段なし。devlog §5 self_judgment に「静的検証で代用、Nao_u / Mir / Ash の手動プレイで S1-S5 撤回トリガー 5 点の観察依頼」を明記。次サイクル冒頭の Phase 1 で 5 点を確認する。
+
+### 撤回トリガー (Phase 4 中の観測)
+
+S1-S5 とも Phase 4 中は発火せず (実プレイ未実施のため "未確定" だが、静的には全条件揃った)。撤回は次サイクル実プレイ評価後に再判定。
+
+### Slack 返信 / kaizen 追記 / 他作業
+
+Phase 4 では追加なし。Phase 3 で完了済 (oktamajun #all-nao-u-lab + #shared-reads / kaizen #134 段階2 hook 8 日目運用観察)。
+
+### commit プレビュー
+
+`game/mimicry_log/v02/{index.html, devlog.md, _sim_check.js}` 3 ファイル新規追加 (165 + 168 + 105 行 = 約 438 行)。commit prefix=`game:`、Phase 5 で日記とまとめて git add + commit + push 予定。
+
+— Phase 4 完了。Phase 5 で日記 + push へ。
