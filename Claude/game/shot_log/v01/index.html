@@ -249,6 +249,8 @@ function buildWaves(){
   // W1: single center column first — gentle intro
   W_.push({t,enemies:[
     ...s(pLineDown(210,355,6,10),'small'),
+    ...s(pLineDown(120,365,6,9),'small',24),
+    ...s(pLineDown(300,365,6,9),'small',28),
   ]});
   t+=120;
   // W1b: then wider columns
@@ -277,9 +279,13 @@ function buildWaves(){
 
   // -- PHASE 2: medium intro --
   // W5: divers 16 alternating
-  W_.push({t,enemies:Array.from({length:16},(_,i)=>({
-    path:pDive(40+i*24,390+i%3*8),type:'small',t:i*10,
-  }))});
+  W_.push({t,enemies:[
+    ...Array.from({length:16},(_,i)=>({
+      path:pDive(40+i*24,390+i%3*8),type:'small',t:i*10,
+    })),
+    ...s(pLineDown(80,365,8,8),'small',86),
+    ...s(pLineDown(340,365,8,8),'small',92),
+  ]});
   t+=180;
   // W6: left medium + right small (36)
   W_.push({t,enemies:[
@@ -345,6 +351,10 @@ function buildWaves(){
     // more small from top during late boss fight
     ...s(pLineDown(140,350,8,8),'small',400),
     ...s(pLineDown(280,350,8,8),'small',405),
+    // anti-lull bridge: late fuel while the boss is still present
+    ...s(pLineDown(80,365,8,8),'small',420),
+    ...s(pLineDown(340,365,8,8),'small',425),
+    ...s(pSideSweep(false,290,6),'medium',455),
   ]});
   t+=500;
 

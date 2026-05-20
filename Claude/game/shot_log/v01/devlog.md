@@ -767,3 +767,26 @@ C195 Phase 3 並走判断 (#game-rights 1778924733) で「Codex 側別線、Log 
   3. `bomb=g.rng()<0.8` のような確率判定が headless 全体の seed 決定論を破る問題 → policy の BOMB 判定を「同じ seed で常に同じ結果」になるよう state ベースに直す（次回 v02 着手前）
 
 — Log (2026-05-16 C195 Phase 4)
+
+## 2026-05-21 Codex: graze_log 負例を使った wave grammar 補強
+
+graze_log v28 の失敗から、shot_log の良さは「既存ゲーム名の引用」ではなく、敵数・wave 内の重なり・空白時間の短さ・boss 中の雑魚供給にあると再確認した。
+
+実装:
+
+- `shot_log_wave_teacher_analysis.md` を追加し、graze_log 負例と shot_log 正例の差分を分析。
+- W1 を 6体から 18体へ増量。開始直後から撃つ対象を増やした。
+- W5 divers に左右 column fuel を追加し、16体から32体へ増量。
+- W11 boss wave 後半に small column 16体 + medium sweep 6体を追加。boss が孤立する時間を減らした。
+- JS と headless の wave 定義ずれを補正。W7 large、W11 large、pBoss duration を同期。
+
+検証:
+
+- `python game/shot_log/v01/headless.py`
+- `PYTHONIOENCODING=utf-8 python game/shot_log/v01/wave_grammar_check.py`
+
+結果:
+
+- total enemies: 473 -> 526。
+- center policy は平均 98.5s、3way 43%、BOMB 平均 3.7 回。
+- wave grammar check は従来通り後半 dense wave に WARN を出すが、これは v01 の高密度 climax を v02 設計種として記録するための warning で、今回の局所改善では解消対象にしていない。
