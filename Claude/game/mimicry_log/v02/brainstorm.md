@@ -238,9 +238,44 @@ focus shot 追加が「judgement の分岐を増やす」を装って実は「�
 
 ---
 
+## 次の評価軸候補 (Phase 1 §6 WebSearch 3 件、2026-05-21 C216 追記)
+
+C216 Phase 1 §6 外部検索 (`shmup beginner core mechanic schema learning enemy patterns 2026 game design`) で取得した 3 件を、案A 実装時の **L2 変奏 / L3 サブ敵 / L6 進行** の設計参照軸として追記。本サイクル Phase 3 で即実装はしない (摂取経路固定化のみ、kaizen #106)。
+
+### 軸 X1: 「core は ship 制御 + 弾回避 + 敵殲滅」 (Designing smart, meaningful SHMUPs / gamedeveloper.com)
+
+- 案A の Q0「弾の間合いを毎秒選び替えるごっこ」を **ship 制御 (focus on/off) × 弾回避 (focus 中 hit 半径 0.5x) × 敵殲滅 (focus 中 DPS 1.3x)** の 3 軸合成と読み替える参照軸
+- v01 の単軸 (敵殲滅のみ) → v02 案A の 3 軸 への構造的進化を評価する物差し。案A 採用判定通過後の自己批判で「3 軸全部に focus が因果接続しているか」を確認する尺度として保留
+- oktamajun 5/20 13:10「何ごっこか」軸との整合: 3 軸合成のごっこ ≒ 玉置氏「何のごっこ遊びなのか」の解像度を 1 軸から 3 軸に引き上げる試み
+
+### 軸 X2: 敵と弾の movement path 5 分類 (直線/ジグザグ/ループ/S字/螺旋) (Vertical Shmup framework Part 5 / minilopretro.com)
+
+- 案A §4 L2 変奏「focus 推奨ゾーン = 狭い縦長弾幕」「normal 推奨ゾーン = 広範囲拡散弾幕」の **設計語彙を 2 値から 5 分類に拡張**する参照軸
+- 想定: focus 推奨 = 直線 + S字 (精密追従が報酬になる path) / normal 推奨 = ジグザグ + 螺旋 (機動性が報酬になる path) / ループ = 中立 (どちらでも対応可)
+- 実装着手時の L2 仕様策定で本 5 分類を直接借りる (借りた事実を devlog に明示、Touhou 系定型機構の無反省借用との差別化)
+- Ash 5/19 原典「敵別 schema 学習軸」+ Log v05.2 案A (敵 type 別弾パターン rng 60/25/15) との接続点としても保留
+
+### 軸 X3: 「最初は易しめだが興味深い wave で theme 導入、mid-boss で習得を報酬化」 (Pixelblog 31 / slynyrd.com)
+
+- 案A §4 L6 進行「wave 1-3 = normal 推奨のみ → wave 4 = focus tutorial → wave 10 = ミニボス」の **theme 導入順序を外部理論で裏付け**る参照軸
+- Pixelblog の「最初の wave で theme 導入 (= focus 機構の存在を示す)」「mid-boss で習得を報酬化 (= wave 10 ミニボスで focus 切替判断密度の最大化)」は案A の wave 構造設計と直接整合
+- Log_cdx 5/20 21:21 focus shot 4 要素 atom (focus shot / 弾 readability / popcorn enemies / subtle correction) のうち **popcorn enemies (= 大量の小敵で focus tutorial に使える) / subtle correction (= 死亡せず player の wave 内学習を許す調整)** は本軸の具体実装語彙として保留 (projects/game_templates_design.md 既登録、再利用)
+
+### 評価軸の使い方 (次サイクル以降の自己批判テンプレ)
+
+実装着手前に以下 3 質問を devlog に書く:
+1. **軸 X1 通過確認**: 案 A の focus mode は ship 制御 / 弾回避 / 敵殲滅 の 3 軸全部に因果接続しているか (1 軸だけなら v01 同型)
+2. **軸 X2 通過確認**: L2 弾幕配置の path 5 分類を選んだ理由を devlog に書けるか (Touhou 系の無反省借用か、案A の Q0 軸に従属した選択か)
+3. **軸 X3 通過確認**: wave 1-10 の theme 導入順序が Pixelblog の「易しめ→興味深い→習得報酬」と整合するか、または整合しない理由が言語化できるか
+
+3 質問のいずれかが空欄になった時点で実装着手を保留、brainstorm.md に戻って §3 類似事例調査を追加。
+
+---
+
 ## メモ (Phase 5 / 次サイクル引き継ぎ)
 
 - 本 brainstorm は実装着手前の判定。Phase 4 で完遂、実装 (game/mimicry_log/v02/index.html / devlog.md) は次サイクル以降の Phase 4 候補
 - 通過条件 4 つを 1 commit で全部入れるか段階的に入れるかは次サイクル冒頭で決定 (1 commit playable diff 原則と R-I 通過条件「全部満たす」の整合性、要設計)
 - 案 A 不通過時の案 B (graze→resource 変換) は別系列 (graze_log v05.5 想定) として位置付けるため、mimicry_log v02 とは独立に検討可能。並行は避けて 1 系列ずつ消化
 - Nao_u 反応待ち (graze_log fork 議論 / mimicry_log v01 直接反応) があれば本 brainstorm の判定 (条件付き通過) を再評価。Nao_u が「focus shot は Touhou 借り物」と指摘した場合、案 A 撤回 + 案 B 転換が即時発火
+- C216 追記「次の評価軸候補」3 軸 (X1/X2/X3) は実装着手時の自己批判テンプレとして使用。実装後の self_judgment.md でも軸単位で達成判定する
