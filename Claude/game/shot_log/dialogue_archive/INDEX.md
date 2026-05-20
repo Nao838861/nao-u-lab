@@ -2,6 +2,13 @@
 
 Extracted from Claude Code transcripts (~/.claude/projects/) — sessions where `shot_log` appears, within v01 creation (2026-04-24 to 04-27) and v02 planning (2026-05-16 to 05-18) windows.
 
+## ★ Direct creation session (FULL, text-only)
+
+shot_log v01 を作った直接のセッション。**user 発言 175 件 + assistant 日本語テキスト返答 551 件 = 726 メッセージ**を漏らさず収録。
+tool_use・thinking ブロックは除外し、自然言語の発話だけを時系列で並べた純粋版。
+Nao_u の「『再現できる』の安易な発言への戒め」(2026-04-25 13:52-13:56 JST) を含む。
+
+- [2026-04-16 05:17 → 2026-04-26 21:13](v01_creation_FULL_SESSION_2545e542.md) — 726 messages (user 175 / assistant 551)
 
 ## v01_creation
 
