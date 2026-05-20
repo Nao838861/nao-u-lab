@@ -1,4 +1,4 @@
-# log_cdx Cycle Staging — 2026-05-20 17:28
+# log_cdx Cycle Staging — 2026-05-20 19:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
@@ -14,6 +14,7 @@
 - 検証結果: pass。clear-capable bot clear、boss final cue 検出、final BOMB 使用、Active DEF 1 回使用、prompt ring life 42 / r0 44 / r1 72、`DEF WINDOW` / `WINDOW ${windowN}` / `DEF ${Math.min(...)}` / `SPACE [D]EF` 不在。
 - 残課題: 実プレイで ring-only cue が読めるか確認する。読めない場合は文字 popup 復活ではなく ring 色/life/太さ/透明度、または短い非命令 cue を検討する。
 - commit/push: この phase 終了時に実施予定。
+
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
@@ -33,66 +34,15 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
+(Phase 5 が書き込む)
 
-### 2026-05-20 17:53 JST
+## Phase 5: 日記投稿 2026-05-20 19:57
 
 - 投稿先: `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779267246781809
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779273420062679
 - channel: `C0ALRK28Y1H`
-- ts: `1779267246.781809`
-- char_count: 1889
-- verification: `ok`
-- draft: `.tmp/phase5_diary_20260520_1753.md`
-- 内容: 通常 Phase 1-4 が空で Game Start が主内容だったことを明記し、`graze_log_cdx` v19 の DEF cue 調整を「文字命令を戻さず、ring の寿命・太さ・出始めで気づきを作る」作業として記録した。`activeDefCount=1` / `simpleBotUsesActiveDefCue=true` まで行動ログに結びついた点と、次回の実プレイ確認・HUD 圧縮を引き継ぎにした。
-
-### 2026-05-20 17:28 JST
-
-- 投稿先: `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779266077481659
-- channel: `C0ALRK28Y1H`
-- ts: `1779266077.481659`
-- char_count: 1935
-- verification: `ok`
-- draft: `.tmp/phase5_diary_20260520_1728.md`
-- 内容: Phase 1-4 通常セクションが空で Phase Game Start が主内容だったことを明記し、`graze_log_cdx` v18 の DEF prompt ring 補正を「HUD 情報削減後に判断 cue をどの感覚チャンネルへ移すか」という評価語彙として整理した。
-
-### 2026-05-20 13:58 JST
-
-- 投稿先: `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779253462985219
-- char_count: 1750
-- verification: `ok`
-- draft: `log/phase5_diary_20260520_1358.md`
-
-## Phase Game Start: ゲーム制作着手
-
-- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive は現時点では全件 handled。
-- 対象 version: `game/graze_log_cdx/v05_1_cdx_v18/`
-- 判断: v17 の `DEF WINDOW` 削除は維持し、押し時 cue が弱すぎるリスクだけを ring の `life/color/width/radius` で補正した。敵配置、BOMB、shield、Active DEF 報酬は変更しない。
-- 実装: DEF prompt ring を `life:46 / #b9ffe8 / w:3.2 / a:0.95 / ACTIVE_DEF_RADIUS-20..+12` に変更。ring 描画に `w` / `a` fallback を追加。ready 後 preview ring を少し明るく太くした。
-- 実行方法: `game/graze_log_cdx/v05_1_cdx_v18/index.html` をブラウザで開く。自動検証表示は `game/graze_log_cdx/v05_1_cdx_v18/auto_verify.html`。
-- 検証: `node tools\headless_graze_log_cdx_v05_2_v18_check.js` 成功。`defPromptIsVisibleRingOnly=true`、simpleBot clear、boss final cue、final BOMB 使用、Active DEF reward、finite stage regression が true。
-- 残課題: 実プレイで ring が弾幕視認を邪魔せず押す判断を助けるか確認する。十分なら次回は `WINDOW n` + `DEF n` の HUD 情報量を圧縮するか判断する。
-
-## Game Start 2026-05-20 16:05 JST
-
-- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)
-- 原文指示: `v05_1_cdx_v03` 以降、このゲームが完成するか Nao_u が止めろと言うまでは、定時サイクルで繰り返し改善を続ける。
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v17/`
-- 実装内容: v16 の `DEF WINDOW` 文字 popup を削除し、`DEF_PROMPT_FRAMES=84` 後に Active DEF 半径付近の quiet ring だけを出すように変更。BOMB、shield、敵構成、報酬量は据え置き。
-- 検証: `node tools\headless_graze_log_cdx_v05_2_v17_check.js` exit 0。`simpleBot.mode=clear`, `simpleBot.bombCount=1`, `simpleBot.bossStats.finalCueFired=true`, `defPromptIsQuietRingOnly=true`, `latestRing.r0=48`, `latestRing.r1=68`, `popupText=""`。
-- 実行方法: `game/graze_log_cdx/v05_1_cdx_v17/index.html` をブラウザで開く。自動確認は `game/graze_log_cdx/v05_1_cdx_v17/auto_verify.html`。
-- 残課題: 実プレイで quiet ring に気づけるか、`WINDOW n` + `DEF n` が HUD 情報過多にならないかを確認する。
-- git: fresh clone 経由で push 用 commit を作成。
-
-## Game Start 2026-05-20 17:48 JST
-
-- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack game pending はなし。
-- 原文指示: `v05_1_cdx_v03` 以降、このゲームが完成するか Nao_u が止めろと言うまでは、定時サイクルで繰り返し改善を続ける。
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v19/`
-- 判断: v17 は `DEF WINDOW` 文字 popup を消した点は良いが、headless clear run では `activeDefCount=0` のままだった。文字命令へ戻さず、ring の life / 太さ / prompt frames だけを調整して「気づける quiet cue」に寄せた。
-- 実装内容: HTML title の v15 残りを v19 に修正。`DEF_PROMPT_FRAMES=78`、prompt ring life 42、`ACTIVE_DEF_RADIUS-18` から `ACTIVE_DEF_RADIUS+10` の少し太い ring、補助 ring の早期表示を追加。BOMB、shield、敵構成、報酬量、boss final cue は据え置き。
-- 検証: `node tools\headless_graze_log_cdx_v05_2_v19_check.js` exit 0。`simpleBot.mode=clear`, `simpleBot.bombCount=1`, `simpleBot.bossStats.finalCueFired=true`, `simpleBot.activeDefCount=1`, `simpleBotUsesActiveDefCue=true`, `defPromptIsQuietRingOnly=true`, `latestRing.life=42`, `latestRing.r0=44`, `latestRing.r1=72`。
-- 実行方法: `game/graze_log_cdx/v05_1_cdx_v19/index.html` をブラウザで開く。
-- 残課題: 実プレイで ring が「命令」ではなく「気づき」として読めるか、HUD の `WINDOW n` + `DEF n` がまだ重いかを見る。
-- git: `git pull --rebase --autostash` は `.git/objects` 破損で失敗。commit / push は後続で試行し、失敗時は hash または原因を報告する。
+- ts: `1779273420.062679`
+- draft: `log/drafts/phase5_diary_20260520_1935.md`
+- char_count: 2211
+- verification: `ok` (`tools/post_slack_message_file.py --delete-on-fail`)
+- 内容: 通常 Phase 1-4 がほぼ空で、Game Start `graze_log_cdx v20` が実質的な熱源だったことを明示。`WINDOW n` / `DEF n` / `SPACE [D]EF` を削り、ring-only DEF cue へ寄せた進捗と、headless pass では人間の可読性までは保証できない残課題を記録。
