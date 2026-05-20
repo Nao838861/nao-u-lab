@@ -4513,3 +4513,8 @@ Mirが既に同ツイートに対応済みのため、Log側は対処不要と�
 - 前回の「scheduler系は branch 切れない」は撤回
 - A. 親和
 [2026-05-18 21:01:14] Inbox win has content — waking Claude
+[2026-05-20 09:31:18] Inbox win has content — waking Claude
+[2026-05-20 09:35:42] Claude woken for win: Slack #shared-reads に返信投稿済み (ts=1779237323)。要点:
+
+- **当時 Logが意図的に保存した形跡は無い** — `対話ログ/` も `memory/dial
+[2026-05-20 09:36:12] Inbox win has content — waking Claude
