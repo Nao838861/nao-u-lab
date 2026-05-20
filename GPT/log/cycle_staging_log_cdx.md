@@ -5,6 +5,15 @@
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 
+## Game Start: 2026-05-20 graze_log_cdx v20
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack の `domain: game` pending は今回なし。
+- 対象 path: `game/graze_log_cdx/v05_1_cdx_v20/`
+- 作ったもの: v19 の readable quiet DEF ring は維持し、HUD の `WINDOW n` / `DEF n` と右上 `SPACE [D]EF` を削った ring-only DEF 判断評価版。`design_log.md` / `devlog.md` / `README.md` を追加。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v20_check.js`
+- 検証結果: pass。clear-capable bot clear、boss final cue 検出、final BOMB 使用、Active DEF 1 回使用、prompt ring life 42 / r0 44 / r1 72、`DEF WINDOW` / `WINDOW ${windowN}` / `DEF ${Math.min(...)}` / `SPACE [D]EF` 不在。
+- 残課題: 実プレイで ring-only cue が読めるか確認する。読めない場合は文字 popup 復活ではなく ring 色/life/太さ/透明度、または短い非命令 cue を検討する。
+- commit/push: この phase 終了時に実施予定。
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
