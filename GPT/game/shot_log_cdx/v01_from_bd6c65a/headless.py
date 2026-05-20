@@ -69,7 +69,7 @@ def pLarge(x):
     return [{'x':x,'y':-25,'t':0},{'x':x,'y':200,'t':160},{'x':x,'y':200,'t':80},{'x':x,'y':-40,'t':140}]
 
 def pBoss(x):
-    return [{'x':x,'y':-35,'t':0},{'x':x,'y':140,'t':180},{'x':x,'y':140,'t':400},{'x':x,'y':-40,'t':200}]
+    return [{'x':x,'y':-35,'t':0},{'x':x,'y':140,'t':180},{'x':x,'y':140,'t':800},{'x':x,'y':-40,'t':200}]
 
 def s(arr, etype, extra_delay=0):
     return [dict(e, type=etype, delay=(e.get('delay',0))+extra_delay) for e in arr]
@@ -77,7 +77,7 @@ def s(arr, etype, extra_delay=0):
 def build_waves():
     waves = []; t = 0
     # Phase 1
-    waves.append({'t':t,'enemies':s(pLineDown(210,355,6,10),'small')})
+    waves.append({'t':t,'enemies':s(pLineDown(210,355,6,10),'small')+s(pLineDown(120,365,6,9),'small',24)+s(pLineDown(300,365,6,9),'small',28)})
     t+=120
     waves.append({'t':t,'enemies':s(pLineDown(80,360,6,8),'small')+s(pLineDown(210,350,6,8),'small',4)+s(pLineDown(340,360,6,8),'small',8)})
     t+=160
@@ -88,11 +88,11 @@ def build_waves():
     waves.append({'t':t,'enemies':s(pVForm(W/2,30,280),'small')+s(pVForm(W/2-90,25,310),'small',20)+s(pVForm(W/2+90,25,310),'small',20)+s(pLineDown(80,370,6,10),'small',50)+s(pLineDown(210,360,6,10),'small',55)+s(pLineDown(340,370,6,10),'small',50)})
     t+=250
     # Phase 2
-    waves.append({'t':t,'enemies':[{'path':pDive(40+i*24,390+i%3*8),'type':'small','t':i*10} for i in range(16)]})
+    waves.append({'t':t,'enemies':[{'path':pDive(40+i*24,390+i%3*8),'type':'small','t':i*10} for i in range(16)]+s(pLineDown(80,365,8,8),'small',86)+s(pLineDown(340,365,8,8),'small',92)})
     t+=180
     waves.append({'t':t,'enemies':s(pSideSweep(True,160,12),'medium')+s(pSideSweep(False,300,12),'small',30)+s(pLineDown(W/2,350,12,8),'small',60)})
     t+=260
-    waves.append({'t':t,'enemies':s(pSideSweep(True,170,6),'medium')+s(pSideSweep(False,280,6),'medium',30)+s(pLineDown(70,360,10,7),'small',10)+s(pLineDown(350,360,10,7),'small',15)})
+    waves.append({'t':t,'enemies':[{'path':pLarge(W/2),'type':'large','t':0}]+s(pSideSweep(True,170,6),'medium',20)+s(pSideSweep(False,280,6),'medium',50)+s(pLineDown(70,360,10,7),'small',10)+s(pLineDown(350,360,10,7),'small',15)})
     t+=280
     # Phase 3
     waves.append({'t':t,'enemies':[{'path':pLarge(130),'type':'large','t':0},{'path':pLarge(290),'type':'large','t':20}]+s(pLineDown(50,350,8,8),'small',10)+s(pLineDown(210,340,8,8),'small',15)+s(pLineDown(370,350,8,8),'small',10)+s(pSideSweep(True,380,8),'medium',80)})
@@ -102,7 +102,7 @@ def build_waves():
     waves.append({'t':t,'enemies':[{'path':pLarge(W/2),'type':'large','t':0}]+s(pSideSweep(True,170,10),'medium',20)+s(pSideSweep(False,330,10),'medium',40)+s(pLineDown(W/2-80,360,8,8),'small',60)+s(pLineDown(W/2+80,360,8,8),'small',65)})
     t+=320
     # Phase 4: boss
-    waves.append({'t':t,'enemies':[{'path':pBoss(W/2),'type':'boss','t':0}]+s(pLineDown(60,370,8,8),'small',200)+s(pLineDown(360,370,8,8),'small',205)+s(pSideSweep(True,300,10),'small',280)+s(pSideSweep(False,200,10),'small',320)+s(pSideSweep(True,250,6),'medium',380)+s(pLineDown(140,350,8,8),'small',400)+s(pLineDown(280,350,8,8),'small',405)})
+    waves.append({'t':t,'enemies':[{'path':pBoss(W/2),'type':'boss','t':0},{'path':pLarge(100),'type':'large','t':150},{'path':pLarge(320),'type':'large','t':300}]+s(pLineDown(60,370,8,8),'small',200)+s(pLineDown(360,370,8,8),'small',205)+s(pSideSweep(True,300,10),'small',280)+s(pSideSweep(False,200,10),'small',320)+s(pSideSweep(True,250,6),'medium',380)+s(pLineDown(140,350,8,8),'small',400)+s(pLineDown(280,350,8,8),'small',405)+s(pLineDown(80,365,8,8),'small',420)+s(pLineDown(340,365,8,8),'small',425)+s(pSideSweep(False,290,6),'medium',455)})
     t+=500
     # Phase 5
     waves.append({'t':t,'enemies':[{'path':pLarge(120),'type':'large','t':0},{'path':pLarge(300),'type':'large','t':20}]+s(pLineDown(50,360,10,7),'small')+s(pLineDown(150,350,10,7),'small',5)+s(pLineDown(270,350,10,7),'small',5)+s(pLineDown(370,360,10,7),'small')+s(pSideSweep(True,200,12),'medium',80)+s(pSideSweep(False,350,12),'medium',100)})
