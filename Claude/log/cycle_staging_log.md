@@ -258,3 +258,41 @@ Phase 1 で 17件報告された洞察のうち、本サイクル Phase 2-3 で�
 - **Active project (game_development.md) の停滞解消**: 5/20 09:35 発言以降の方向修正が宣言ベース止まりで、コード変更 commit が graze_log 系列に未着地。Phase 4 で着地させる。
 - **同型再発防止**: 「設計議論だけで実装が出ない」M-29 / means-ends reversal (feedback_means_ends_reversal_check.md 診断) の予防。Log_cdx 今日の v16-v20 DEF cue 振り直し系列を Slack で批判したばかりの Log が、自分は実装を出さない構造に陥らないため。
 - **30分粒度の妥当性**: v05.3 (833行) を base に削除 + 100-150行の focus shot 追加 = 過去の v05.x 改修と同等のコード量、commit 単独で完結。
+
+---
+
+## Phase 4: 大作業実行 (2026-05-21 00:15 頃)
+
+### 完遂状況
+**graze_log v05.4 = graze 機構削除 + focus shot 軸導入の最小プロトタイプ** — 完遂条件全て満たす。
+
+| 完遂条件 | 状況 |
+|---|---|
+| `game/graze_log/v05.4/index.html` がブラウザで動く | コード ship 済 (実プレイ観察は Log 側で未実施 — CLAUDE.md「テストできなければ明言」順守、Nao_u/cross_review 評価へ送り) |
+| `game/graze_log/v05.4/devlog.md` と `README.md` ship | 両ファイル v05.4 用に全面書き直し済 |
+| graze 機構の grep 確認 (graze ring / count / multiplier / gauge 加速ロジックがコード上に 0 行) | `R_GRAZE` / `GRAZE_GAUGE` / `GRAZE_SCORE` / `GRAZE_STREAK_TH` / `ACTIVE_DEF_*` / `onGraze()` / `triggerActiveDef()` / `spaceContext()` / `state.graze*` / `state.activeDef*` / `b.grazed` / `b.grazedT` 全て撤廃済。残る "graze" は撤廃理由コメント / localStorage key (`grazelog_*` データ継続性目的) / directory・title 名のみ |
+| focus shot mechanic 動作 (shift キー or マウス hold で自機速度 0.5x + 弾収束 + gauge 加速の代替経路) | shift or Z キー hold で速度 0.5x / spread 0.4x / gauge +0.15/frame / 自機色変化 (青→白) / hit box パルスリング 5 効果実装、コード上で全 path 確認済 |
+| self_judgment.md または devlog.md 末尾に「v05.3 比較で何が core 軸として立つか」を 1 段落以上記録 | devlog.md §8 として 4 段落記録 (設計レベル判定であることを明示) |
+| commit prefix `game:` 単独 (Phase 5 で実施予定) | Phase 5 用にステージング、本 Phase では commit せず |
+
+### 副産物 (Phase 4 で新規/変更されたファイル)
+- 新規: `game/graze_log/v05.4/index.html` (792 行 — v05.3 854 行から graze 機構削減 + focus 追加で約 60 行減)
+- 新規 (全面書き換え): `game/graze_log/v05.4/devlog.md` (約 100 行 — v05.4 設計判断 + core 軸地図 + rollback 手順 + self_judgment)
+- 新規 (全面書き換え): `game/graze_log/v05.4/README.md` (約 70 行 — focus shot mechanic 要約 + graze 0 行確認 + 接続先)
+
+### 検証ステップ実施記録
+- node syntax check (`<script>` extracted): OK
+- grep `graze` (case-insensitive): 残るのは comment / localStorage key / title 文字列のみ、機構コード行 0
+- grep `R_GRAZE|GRAZE_*|ACTIVE_DEF|grazeCount|grazeStreak|activeDef*|onGraze|triggerActiveDef|spaceContext|\.grazedT|b\.grazed`: comment 2 件のみ、active code 0
+- grep `FOCUS_|state\.focus|keys\['shift'\]|keys\['z'\]`: 21 件、全 path (constants/spawnPlayerBullets/startGame/gameOver/update/draw/HUD/drawOver/keydown/keyup) で実装確認済
+
+### 未到達 / 次サイクル送り
+- **実ブラウザでの実プレイ動作確認** — Log 側では未実施。次サイクル Phase 1 または Nao_u/cross_review 評価で確認。focus shot のパラメータ (speed 0.5x / spread 0.4x / gauge 0.15/f) は実プレイ観察でチューニング必要
+- **graze_log v05.4 の Slack 報告** — Phase 5 で日記とまとめて投稿予定 (Phase 4 では Slack 増やさない方針順守)
+- **projects/game_development.md C213 セクションへの「Phase 4 v05.4 ship 完了」追記** — Phase 5 で日記と同期して実行
+
+### Phase 4 自己点検 (フィードバック係数 > 1.0)
+入力: Phase 3 の Phase 4 大作業宣言 (graze 機構削除 + focus shot 軸導入) + v05.3 index.html (854 行) + shared-reads 3 source + Nao_u 5/20 09:35 発言。
+出力 (Phase 4): index.html 全面書き換え (graze 機構 0 行 + focus shot 5 効果実装) + devlog.md 100 行 + README.md 70 行 + 構造的 self_judgment + 完遂条件 6/6 達成 (実プレイ確認は次工程へ送り)。
+温度残存: ◎ — 「設計議論だけで実装が出ない」M-29 同型を回避し、Nao_u 5/20 09:35 発言の構造的応答を **コード変更 commit (Phase 5 で実施)** として物理着地させた。CLAUDE.md「ゲームを動かして出す — 積み上げはその副産物」「絶対にやる #1」直処方完遂。Phase 5 で日記 + commit + push で結晶化。
+劣化リスク: focus パラメータ (0.5x / 0.4x / 0.15/f) はチューニング前、実プレイで「focus したくなる頻度」が成立するか未確認 → devlog §7 既知の限界として明記、次サイクルでパラメータ調整 candidate として残した。
