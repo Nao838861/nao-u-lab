@@ -329,3 +329,47 @@ graze_log 後継版 `mimicry_log v01` (因果操作ごっこ) の最小プレイ
 3. **CLAUDE.md「ゲームを動かして出す — 積み上げはその副産物」直処方**: 1 サイクルの第一義の出力は game/* の playable diff (コード変更 commit)。本作業は brainstorm / 結晶化 / cross_review / 日記ではなく**コード変更 commit** を出力する
 4. **30 分粒度で「進んだ」と言える**: 既存 graze_log/v05.2 一式コピー + 差分 30〜80 行で完結する規模、Slack 投稿 1 本では済まない (commit + ファイル 3 種 + Slack 投稿 = 30 分粒度の前進)
 5. **Phase 1 深掘り候補 (B)(C) の合流点**: principles.md ミミクリ軸候補 + game/graze_log/next/mimicry_candidates.md の B (因果操作ごっこ) を Phase 4 で実装に降ろす = 候補 → 実装の 1 段降ろし
+
+## Phase 4: 実行結果 (2026-05-20 Log Phase 4)
+
+### 完遂状況
+- ✅ (1) `game/mimicry_log/v01/` ディレクトリ作成済
+- ✅ (2) `index.html` がブラウザで開ける構造 (canvas + 自機 + 敵 + 弾、graze_log/v05.2 ベース)
+- ✅ (3) 撃破時の即時破壊フィードバック強化 (`spawnKillBurst()` 新設: 小敵 14+6 粒子 / 中敵 28+14 粒子 + 閃光リング、`triggerShake()` 新設: 撃破/被弾/BOMB で screen shake 発火)
+- ✅ (4) `README.md` 冒頭に「何ごっこ = 自分の弾が世界を即座に変える因果の手触りを楽しむごっこ」明記
+- ✅ (5) `devlog.md` に Q0 (ミミクリ軸) / Q1 (30 秒プレイ想像 5 段階表) / graze_log v05.2 との差分 (5 箇所表) を記載
+- ⏸ (6) commit/push は本サイクル指示「commit はしない（git push は Phase 5 で日記とまとめて行う）」に従い Phase 5 へ送り
+
+### 副産物
+- **新規ディレクトリ**: `game/mimicry_log/v01/`
+- **新規ファイル 3 件**:
+  - `game/mimicry_log/v01/index.html` (~600 行、graze_log v05.2 比 +約 60 行差分: screen shake 機構 / spawnKillBurst 関数 / KILL_*_GAUGE 倍増 / GRAZE_SCORE 半減 / title/subtitle 文字列 / HUD 表示順 KILL→GRAZE 入れ替え)
+  - `game/mimicry_log/v01/README.md` (Q0「何ごっこ」1 行 + 30 秒想像 + graze_log 差分 1 行)
+  - `game/mimicry_log/v01/devlog.md` (起源 / Q0/Q1 / 差分 5 箇所表 / 設計判断 (graze 削除でなく降ろす理由) / 5軸×4段階観察マトリクス / rollback 手順 / v02 候補)
+- **Slack 投稿**: 0 件 (Phase 4 では Slack 増やさない指示に従う、Phase 5 で `#game-rights` 投稿予定)
+- **kaizen エントリ**: 0 件 (検証ファースト原則順守、本サイクル kaizen 新規ゼロ継続)
+
+### 実コード差分 brief (graze_log v05.2 → mimicry_log v01)
+| 差分種別 | 箇所 | 行数目安 |
+|---|---|---|
+| 定数追加 | `SHAKE_SMALL/MED/BOMB/HIT/DECAY` | +5 |
+| 定数変更 | `KILL_SMALL_GAUGE` 2→4 / `KILL_MED_GAUGE` 4→8 / `GRAZE_SCORE` 10→5 | 3 行書換 |
+| state 追加 | `shakeT/shakeMag` | +2 |
+| 関数追加 | `triggerShake()` / `spawnKillBurst()` | +約 25 |
+| 関数差替 | 撃破時 particle ループ (5/10) → `spawnKillBurst()` 呼出 + `triggerShake()` | -約 15 + 4 |
+| draw 変更 | `ctx.save()/translate(sx,sy)/restore()` 適用、`fillRect(-10,-10,W+20,H+20)` | +約 10 |
+| HUD 変更 | KILL/GRAZE 表示順入れ替え + LV 表記簡略化 | 2 行書換 |
+| title/subtitle | `MIMICRY` / `mimicry_log v01 — 因果操作ごっこ` / 「撃つ → 敵が散る / 画面が震える」 | 全面書換 |
+| localStorage key | `grazelog_hi` → `mimicrylog_hi` / `graze_log_recent_seeds` → `mimicry_log_recent_seeds` | 2 行書換 |
+
+**rollback 可能性**: README/devlog で「KILL_*_GAUGE と GRAZE_SCORE を v05.2 値に戻し、spawnKillBurst/triggerShake 呼び出しを消せば v05.2 と機能等価 (rollback ≈ 25 行)」明記。Nao_u 09:35「一旦無視」方針への過剰反応リスク (graze 機構自体の削除) は回避済。
+
+### 観測可能な条件 確認
+- `ls game/mimicry_log/v01/{index.html,README.md,devlog.md}` → 3 ファイル全て存在確認済
+- `grep "何ごっこ" game/mimicry_log/v01/README.md` → 3 件ヒット確認済 (冒頭 1 行 + Q0 セクション見出し + 接続先 玉置氏理論的根拠)
+- commit + `git log -1 --format=%s` の `game:` prefix 確認は Phase 5 で実施
+
+### Phase 5 への引き継ぎ
+- `git add game/mimicry_log/v01/` + `git commit -m "game: mimicry_log v01 着手 - 因果操作ごっこ最小プレイアブル (graze_log v05.2 派生)"`
+- `#game-rights` に投稿: 「mimicry_log v01 ship、graze 凍結を受けた次 core 軸 = 因果操作ごっこ、graze はサブ層に降ろした、Nao_u フィードバック歓迎」要旨
+- 日記 (Phase 5) に「graze_log → mimicry_log への path 切替」を 1 段で記録
