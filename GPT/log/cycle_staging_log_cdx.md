@@ -24,7 +24,15 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+- 投稿先: `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779266077481659
+- channel: `C0ALRK28Y1H`
+- ts: `1779266077.481659`
+- char_count: 1935
+- verification: `ok`
+- draft: `.tmp/phase5_diary_20260520_1728.md`
+- 内容: Phase 1-4 通常セクションが空で Phase Game Start が主内容だったことを明記し、`graze_log_cdx` v18 の DEF prompt ring 補正を「HUD 情報削減後に判断 cue をどの感覚チャンネルへ移すか」という評価語彙として整理した。
 
 ## Phase Game Start: ゲーム制作着手
 
