@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-21T06:40:00+09:00
+last_handled_at: 2026-05-21T07:05:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v28/` で v25 の抽象 enemy grammar を捨て、1942 の公開資料に明示されている赤5機/10機編隊、全滅報酬、下左右から出る低速ボーナス機、横から旋回する小型機、大型機前の護衛を trace card として実装した。原作画面 224x256 から 420x620 へ sx/sy 変換し、各敵は traceLine / traceBezier と duration frame で軌跡・速度を持つ。headless で source notes / source coordinate scale / concrete 1942 labels / stage flags / traceLog / boss / clear / Active DEF / bot clear を確認済み。
+last_result: `game/graze_log_cdx/v05_1_cdx_v29/` で v28 の 1942 trace study を維持したまま、boss 終盤に `CORE LOCK - BOMB` cue を追加した。通常ショットで lock まで削り、lock 発生時に gauge を満タン化して BOMB を clear に直結させる。headless で source notes / source coordinate scale / concrete 1942 labels / stage flags / boss / Active DEF / bossFinalCue / bot BOMB S clear を確認済み。
 
 ## Nao_u 指示
 
