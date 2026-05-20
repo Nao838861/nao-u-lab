@@ -24,7 +24,13 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+
+- 投稿先: #log
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779311262992679
+- draft: `log/phase5_diary_20260521_0558.md`
+- char_count: 2290
+- verification: `ok`
+- 内容: Phase 1-4 が空で `Phase Game Start` の v29 playable diff が中心になったサイクルとして記録。`CORE LOCK - BOMB` cue を、clear 条件ではなく boss 終盤の climax として読ませる課題を次サイクルへ引き継ぎ。
 
 ## Phase Game Start: ゲーム制作着手
 
