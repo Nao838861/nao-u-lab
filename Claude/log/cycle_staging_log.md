@@ -164,4 +164,71 @@ Phase 1の git status観測『直近5commitに Log 本体ship無し、codex+mir 
 
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack返信: gozahand命題応答 (1件、温度ある分析の結晶化)
+
+- **投稿**: #all-nao-u-lab ts=1779287481.009239 (drafts/2026-05-20/post_log_all_nao_u_lab_firing_distance_20260520_POSTED_ts1779287481.py)
+- **内容**: gozahand 5/19 21:32『シンプルでわかりやすい快感があるゲームは強い』を本日 3 ship (従来 shot / graze_log v05.2 / mimicry_log v01) に当てた結果、matrix v0 に欠けていた直交軸「発火距離 (入力→快感までの段数)」が浮上。発火距離 1=従来 shot, 2=graze, 2-3=mimicry。Nao_u 09:35 graze 凍結方針が mimicry にも当たり得る可能性を露呈、着手前提として「発火距離 1 のコア体験を 1 つ含むか」を組み込む方針提示
+- **見送り判断**: 他4本 (hanjuku_yanen / mtkn1xbt / santtiagom_ / h_yoshida_1973) は WebFetch 不可で本文取得不能、表層反応はルール8違反 → 次サイクルへ持ち越し (Phase 2 §1 の判定どおり)
+- **見送り判断 (メタ協議)**: #all-nao-u-lab 5/20 23:08 Log_cdx メタ協議への Log 応答は同日 23:43 ts=1779286094 で既出 → 自己投稿への重ね禁止、追加投稿なし
+
+### 2) shooting_assessment_matrix v0 → 発火距離軸 (6軸目相当) 暫定追加
+
+- 編集: `memory/shooting_assessment_matrix_v0.md` 末尾「v0 の限界」直前に「直交軸: 発火距離」節を新規追加 (1〜4 段の判定基準 + 3 ship 採点表 + 設計指針 + Forgiveness との交差)
+- 「v0 の限界」節に「発火距離軸の段数判定基準が初期段階 (C213 で 3 ship のみ、5 ship 完了時点で v1 化判定)」を追加
+- 配置判断: 当面 memory/ 維持。Phase 2 §5 では「knowledge側に置く」と決めたが、knowledge 配置は「他者も読む分析手法整理」段階の確立を待つ判断 (5 ship 採点完了 + v1 化後に再判定)。今サイクルで knowledge 移動まで進めると未確立軸を knowledge に出すことになるため。
+
+### 3) 他インスタンス洞察反映: Ash C192 v06 merge 依頼への Log 視点
+
+- 編集: `projects/game_development.md` 末尾に「2026-05-20 (Log C213 Phase 3): 発火距離軸の発見 + Ash v06 merge 依頼への Log 視点」節を追加
+- 内容: 発火距離洞察を game_development.md 側でも固定 + Ash v06 merge の判定軸として「v06 の発火距離が 2-3 段に増えていないか」を提示。次サイクルで Log_cdx 経由で Ash に「v06 の発火距離は何段か」言語化を依頼する候補として保持
+- game_templates_design.md (focus shot 骨格テンプレ候補) との接続も同節に明記
+
+### 4) Active プロジェクト更新
+
+- projects/INDEX.md は更新なし (game_development.md の mtime 更新で十分、新規プロジェクト追加なし)
+- game_development.md = 上記 3) で追記済
+- game_templates_design.md = 上記 3) で接続点明記のみ、本体追記は次サイクル focus shot 骨格判定時
+
+### 5) kaizen 検証ファースト: 既存運用観察のみ、新規提案なし
+
+- #134 probe_atom_quality は本サイクル Pre-check hook で WARN=0 (total=827) 継続、運用観察 6 日目で安定。tracker 内検証結果はサイクル末で 6日目同期 (5/20 23:21 取得値) を既存表に追記する余地はあるが、検証期限 5/31 まで残9日で今サイクル即追記より次サイクル含めた連続観察記録の方が情報密度高い (kaizen tracker の運用観察追記は別サイクル粒度)
+- 新規 kaizen 提案なし。Phase 2 §6 で「matrix v0.1 化」を改善候補として挙げたが、これは kaizen 系列 (規律機構) ではなく**ゲーム制作の設計ツール拡張**で、kaizen tracker の対象外 (game_development.md / shooting_assessment_matrix_v0.md に閉じる)
+- 検証ファースト原則違反なし (既存 #134 family は運用中、新規提案ゼロのため)
+
+### 6) git push 予定
+
+- 本サイクル変更ファイル: cycle_staging_log.md / memory/shooting_assessment_matrix_v0.md / projects/game_development.md / drafts/2026-05-20/post_log_all_nao_u_lab_firing_distance_20260520_POSTED_ts1779287481.py (新規)
+- commit prefix: `rule:` (matrix への軸追加は規律/評価機構の改修、game/* 配下に変更なし)
+- Phase 4 末尾で push
+
+## 次フェーズの大作業
+
+### タイトル
+**shooting_assessment_matrix v0.1 を 3 ship に当てた完全採点表を作る (5軸×4段階=20セル + 発火距離 + Forgiveness を 3 ship 全部について埋める)**
+
+### 完遂の定義 (Phase 4 終了時に何が成立していれば完了か)
+以下 4 つが揃った状態で commit + push 完了:
+
+1. `memory/shooting_assessment_matrix_v0.md` 末尾に「## 3 ship 完全採点表 (C213 Phase 4)」節が追加され、各 ship (従来 shot = shot_log v01 / graze_log v05.2 / mimicry_log v01) について 20 セル × 3 ship = 60 セルの ○/△/✗ 評価が表として埋まっている
+2. 各 ship の Forgiveness 段階 (1/2/3 のどこにコアが置かれているか) + 開幕オフセンター適合 (○/✗) + 発火距離 (1/2/3+) が同表内に併記されている
+3. 60 セル + Forgiveness + オフセンター + 発火距離 を見渡した結果として「次の着手前提 = この採点表から導かれる次サイクルの 1 mm 候補」が 3 行以内で明文化されている (例: 「mimicry v01 の (聴覚, 段階1) ✗ が graze v05.2 の (聴覚, 段階1) ✗ と同型 = 聴覚軸が Log 系列全体の弱点として浮上、次サイクルで音響装置の前例調査 1 件」のような結論)
+4. `projects/game_development.md` に「C213 Phase 4 採点表完了 → 次サイクル 1 mm 候補」の 5 行以内のサマリが追記され、Phase 4 末尾で 1 commit (prefix=`rule:`) でまとめて push 完了
+
+### 着手手順 (最初の1手と想定手順)
+
+1. **最初の1手**: `game/shot_log/v01/` `game/graze_log/v05_2/` `game/mimicry_log/v01/` の README / self_judgment.md / dialogue_archive を順に grep で開き、5 軸 (視覚/聴覚/応答/構成/時間) × 4 段階 (覚える/遊ぶ/応用/極める) の 20 セルを 1 ship 分だけ仮採点する (まず従来 shot = shot_log v01 から、既に self_judgment.md がある = 採点根拠が最も多い)
+2. shot_log v01 で 20 セル + Forgiveness + オフセンター + 発火距離が埋まったら、graze_log v05.2 を同手順で採点
+3. mimicry_log v01 を同手順で採点 (本日 ship のため dialogue_archive が薄い可能性 = 採点不能セルは ? マークで残し、Phase 4 完了条件には影響させない)
+4. 3 ship 60 セル + 直交軸を一望できる形で「## 3 ship 完全採点表 (C213 Phase 4)」節を `memory/shooting_assessment_matrix_v0.md` 末尾に追加
+5. 採点を見渡して「次サイクル 1 mm 候補」を 3 行以内で抽出、同節末尾に明記
+6. `projects/game_development.md` に Phase 4 サマリ追記
+7. commit + push (prefix=`rule:`)
+
+### 選んだ理由
+
+- **本サイクル Phase 3 で「matrix v0.1 化」「3 ship 採点」を方針として宣言した直後 = 言行一致を Phase 4 で取る最短経路**。Slack 投稿 (ts=1779287481) で「次サイクルで matrix v0.1 化」と言い切ったので、Phase 4 で前倒し着手して投稿との時差を最小化する
+- **手段-目的反転 (means-ends reversal) 抗体**: matrix v0 を出した時点 (C211) と発火距離軸を追加した時点 (C213 Phase 3) が考察出力に留まり、game/* 配下への適用 (= 採点) は未着手だった = 「matrix が cycle 跨ぎの判定装置の蓄積として機能するルート」(Phase 2 §5) を Phase 4 で 1 サイクル内で閉じる。考察→外部化→適用の三段階を C211-C213 で全部踏み切る
+- **Active project 停滞解消**: game_development.md の今日関心最大 (137KB, mtime 5/20 20:55) かつ graze→mimicry pivot 進行中の中心プロジェクトに対し、Phase 4 で「採点表 = 次サイクル 1 mm 候補が機械的に出る装置」を載せる。次サイクル以降の「何を触るか」判定が採点表参照で済むようになる
+- **粒度適合**: 5 軸 × 4 段階 × 3 ship = 60 セルの評価を 30 分粒度で「進んだ」と言える形に落とせる。Slack 投稿1本では済まず、game/* の playable diff まで広げると 30 分越えるため、その中間としての「採点表 = 評価機構の固定」が Phase 4 の大作業として適正サイズ
+- **Nao_u 指摘の同型再発防止**: 5/20 09:35「graze は変則的なマニアしか喜ばない」が mimicry v01 にも当たり得る (発火距離 2-3 段) という発見の検証を、採点表で他軸 (視覚/聴覚/応答/構成/時間 × 4 段階) からも見渡すことで、同型再発 (= graze 凍結→mimicry も凍結フラグ点灯) を Phase 4 内で予防的に確認する
