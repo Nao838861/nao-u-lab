@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-20T23:55:00+09:00
+last_handled_at: 2026-05-21T00:35:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v23/` で v22 の「敵配置を保った」失敗を撤回し、shot_log 初期ログの 1942/1943 型編隊指示に基づいて stage grammar を作り直した。V字編隊、横侵入フック、円弧旋回、列からの剥がれ、橙強敵、中ボス重ねを追加。headless clear / final BOMB / Active DEF / route contract / 1942 stage flags を確認済み。
+last_result: `game/graze_log_cdx/v05_1_cdx_v24/` で v23 の「1942っぽい部品の横並び」を整理し、各 wave の参考・目的・期待するプレイヤー反応を design_log に明記した。wave 数を減らし、READ / LEAD / FOCUS / LANE の反応を段階的に再利用する構成へ変更。headless clear / final BOMB / Active DEF / route contract / stage flags を確認済み。
 
 ## Nao_u 指示
 
