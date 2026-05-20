@@ -147,5 +147,58 @@ Phase 1 の audit (`tools/external_notes_integration_audit.py`) で親97 / サ�
 - Phase 3 の選択肢: (a) game 着手 (graze_log v05.1 を 30 秒触って R-A 1秒の快感を点検 / mimicry_log v01 の Nao_u 反応待ち並列で次のゲーム着手) (b) git_sync.py lockfile 化 + branch-per-task 規律の docs 化 (5/19 Nao_u 全員宛指示の宿題) のどちらか
 - 推奨: (a) を優先。理由 = CLAUDE.md「ゲームを動かして出す — 積み上げはその副産物」、本 cycle Phase 1-2 で運用/分析タスクが続いた分、Phase 3 で playable diff に戻す
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-21 02:50)
+
+### 1) Slack 返信
+- **新規**: Log_cdx 5/20 23:08 (Log 宛問: v05.2/v05.3 別 commit ship 時の意図 = rollback単位 vs 評価単位) への直答を `#all-nao-u-lab` ts=1779298713 に投稿 (Phase 2 で未着手だった 23:08 議論提起 = 5/20 11:51 atom の follow-up、3 時間遅延を埋めた)
+- **持ち越し**: Log_cdx 5/20 17:37 (matrix v0 probe) / 17:51 (graze v06 merge 粒度) / 21:21 (focus shot ほか4要素 atom) は Phase 4 大作業で mimicry_log v01 に matrix v0 + 4要素を実際に適用してから応答する方が中身が出ると判定。本 Phase 3 では持ち越し
+- **その他 (5/20 #shared-reads 等)**: Phase 2 棚卸し済み (santtiagom_ 反応 5/20 ts=1779298280 で穴埋め、他は全件反応済)
+
+### 2) 改善サイクル (検証ファースト原則順守)
+- **新規提案なし**。kaizen #131/#132/#133/#134 family は運用観察期間中、新規起票より検証完了優先
+- **検証記録**: #134 運用観察6日目 staging Pre-check 出力で記録 (`total=822 format_warn=0 ref_warn=0 action_warn=0`、6日連続 WARN=0 継続)、kaizen_tracker.md §134 検証結果セクションへ反映済 (Phase 1 §6 取得時点)
+- **メタ検証**: 完了率 66% (61/92)、期限超過 0、新規提案を抑えて検証完了率の改善余地ありを認識。本サイクル新規起票なしで完了率は維持される
+
+### 3) 他インスタンス洞察反映 (18件中、Phase 4 大作業に直結するもの)
+- **Log_cdx 5/20 21:21 ts=1779276587 (#all-nao-u-lab)**: focus shot / 弾 readability / popcorn enemies / subtle correction の4要素 atom = mimicry_log v01 の自己診断 + v02 brainstorm の素材として Phase 4 大作業で適用
+- **Log_cdx 5/20 17:51 ts=1779244400**: matrix v0 probe 適用候補 = Phase 4 大作業で mimicry_log v01 に 5軸×4段階 マトリクス再診断
+- **Ash 5/20 v06 merge 依頼 (graze_log 系)**: 本サイクルでは Ash 側議論として静置、Log 側 v05.2/v05.3 merge 状態は別件、Log は graze_log 凍結方針で次 core 軸 (mimicry_log) へ移行済
+
+### 4) Active project 更新
+- `projects/game_development.md`: 5/20 23:39 が最新 (現状未更新)。本サイクル Phase 4 で mimicry_log v01 自己診断 + v02 方向性が決まれば Phase 4 終了時に追記。本 Phase 3 では更新せず、Phase 4 完遂時に1セクション追加で済ませる (細切れ更新を避ける)
+
+### 5) 空サイクル防止
+- 新着 Slack 3件超 (5/20 16-23 時帯 + 5/21 02:21 起動)、Phase 1 §7 の B/E カテゴリも素材豊富 = 空サイクル判定外、本セクションスキップ
+
+### 6) Phase 3 セクション総括
+- 本 Phase 3 は「Slack 即時応答 1 件 + 検証記録 + Phase 4 大作業の素材準備」に集中。playable diff (game/) は本 Phase では生成せず、Phase 4 大作業の brainstorm + 着手前批判 のステージに譲る
+- 「考察 > diff」リスク = 本サイクルは Phase 4 大作業で mimicry_log v02 方向性決定 (= 次サイクルの ship 前提) まで進むので、考察止まりではなく「次サイクル ship の足場」が出力。`feedback_means_ends_reversal_check.md` 発火条件は本サイクル単独では成立せず、次サイクルで v02 ship に進めば連続 cycle で成立しない
+
+## 次フェーズの大作業
+
+### タイトル
+**mimicry_log v01 を Log_cdx 5/20 21:21 4要素 + matrix v0 5軸×4段階 でクロス自己診断し、v02 candidates 3 案 brainstorm + R-I 着手前批判 + 採用 1 案決定まで完遂**
+
+### 完遂の定義 (Phase 4 終了時に成立すべき観測可能条件)
+1. **4要素チェックリスト表**: mimicry_log v01 の現状を Log_cdx 21:21 4要素 (focus shot / 弾 readability / popcorn enemies / subtle correction) で診断、各要素「有 / 部分 / 無」+ 根拠1行 を staging に表形式で記録 (4行 × 3列)
+2. **matrix v0 5軸×4段階 再診断**: v01 devlog §5 マトリクスを matrix v0 (memory/shooting_assessment_matrix_v0.md) と再照合、整合または不一致点を staging に箇条書きで記録 (5軸 × 4段階 = 20セル中、変化したセルを明示)
+3. **v02 candidate 3 案 brainstorm**: 1案ごとに (タイトル / 起点根拠 / 期待効果 / R-I 着手前批判 = 何が壊れる可能性があるか) の4項目を 200字以内で staging に記録 (3案 = 計約 600字)
+4. **採用 1 案決定**: 3 案から 1 案を Log 単独判定で採用 (or Nao_u フィードバック待ち判定の場合は「保留 + 各案の判定保留理由 (なぜ今決められないか)」を 1 段落で staging に記録)
+5. **Slack 投稿 1 本**: Phase 4 結果を `#game-rights` (Pot ゲーム議論なので #game-rights が筋、#all-nao-u-lab ではない) に投稿、Log_cdx 17:37 matrix v0 probe + 21:21 4要素 atom + Nao_u フィードバック誘発 の3点を統合した1本
+
+### 着手手順
+1. mimicry_log v01 の `index.html` 構造を読む (Read) — devlog §5 の「観察項目マトリクス」と実装の整合を確認 (5分)
+2. Log_cdx 21:21 4要素を staging に書き、v01 の現状で「有 / 部分 / 無」を判定 (5分)
+3. matrix v0 を読み、v01 devlog §5 と再照合、変化したセルを staging に列挙 (5分)
+4. v02 candidate 3 案 brainstorm (4要素のうち「無」「部分」を埋める方向 + matrix v0 で不足セルを埋める方向、3 案で軸を分ける) — 各案 R-I 着手前批判付き (10分)
+5. 3 案から 1 案採用判定 (または保留判定 + 保留理由)、決定根拠を staging に 3-5 行 (5分)
+6. `#game-rights` 投稿 1 本 (4 要素表 + matrix v0 変化セル + v02 採用案/保留結論 を圧縮、Nao_u フィードバック誘発の問いを末尾に1行) (5分)
+7. commit + push (rule prefix: `log:` for Phase 4 結果記録、game prefix は v02 着手時に分離) (5分)
+
+### 選定理由
+- **Active project の停滞解消**: `projects/game_development.md` graze_log → mimicry_log 路線移行直後、v02 方向性決定が「現状停滞している唯一の進行軸」(graze_log は凍結、shot_log は dialogue_archive 整備中、mimicry_log v01 は Nao_u フィードバック待ち = v02 着手前批判が次の自然な一手)
+- **Nao_u 指摘の同型再発防止**: Nao_u 5/20 09:35「graze はマニア軸、コアに置かない」+ 玉置絢 5/20 13:10「何ごっこ」軸 + Log 5/20 13:13 自己観察「ミミクリ軸の空白」の3源泉独立収束を v01 で playable diff 化したが、v02 で同型 (= マニア軸への退化、何ごっこ軸の希薄化) が再発しないかを着手前批判で検証する 1サイクル
+- **kaizen 未検証提案の検証**: 該当なし (本サイクル kaizen 新規提案なし、family 運用観察中)
+- **ゲーム実装スプリント 1 セッション分の判断装置回し**: R-I (類似30+brainstorm30+絞り込み3+着手前批判) のうち本サイクルでは brainstorm 3 案 + 批判 + 採用 1 案 を埋める。次サイクル Phase 4 で playable diff (v02 ship) に進む足場
+- **30 分粒度**: 上記着手手順 7 ステップ各 5-10 分で合計約 30-40 分、staging 書き込み + Slack 1 本 + commit/push を Phase 4 内で完遂可能
+- **Slack 1 本以下では大作業ではない判定**: 本作業は staging 4 項目 (4要素表 / matrix 照合 / 3 案 / 採用判定) + Slack 1 本 + commit 1 本 = 計 6 物理出力なので大作業相当
