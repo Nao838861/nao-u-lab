@@ -164,7 +164,121 @@
 (Phase 1ここまで)
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### A) タスク1 (#nao-u 新URL反応): 対象なし
+Phase 1 §1 で「5/20 0:00 以降の #nao-u 投稿なし」確認済。本サイクルで #all-nao-u-lab への反応投稿対象は無い。
+
+### B) タスク3 (external_notes 統合): 対象なし
+Phase 1 §4 で `external_notes_integration_audit.py` 全件統合済 (203/203 = 100%) 確認済。統合候補ゼロ。次の追加待ち状態のため本サイクルでは [統合済] マーカー追加対象も無い。
+
+### C) タスク2 (shared-reads 投稿): 2件投稿完了
+Phase 1 §6 外部検索3件のうち、実コンテンツを WebFetch で検証できた2件を投稿。Dario Ristic 2009 は実コンテンツ未検証のため見送り (slack.md ルール「テンプレ流用禁止・各記事固有の手法を書けないものは candidate に留める」準拠)。
+
+**投稿1: Crooked Pixels — Forgiveness 発見**
+- URL: https://crookedpixels.com/the-ux-of-super-mario-bros-three-concepts-found-in-good-level-design/
+- 検証結果: 当初想定 (Affordance/Mapping/Feedback の Norman 3点) ではなく **Forgiveness/Aesthetics/Affordance** を3概念に挙げている。Norman 図式より「失敗の致命度で段階化」というゲーム固有概念を主軸に据えている点が固有発見
+- 適用候補: graze_log の評価軸に「Forgiveness 段階」追加 (現マトリクスは Affordance 偏重)
+
+**投稿2: LinkedIn Iyer — 開幕オフセンター発見**
+- URL: https://www.linkedin.com/pulse/perfect-game-tutorial-analyzing-super-marios-level-design-iyer
+- 検証結果: 開幕画面の Mario が **ゲーム全体で唯一画面オフセンター (左寄り) に配置** され、以降は画面中央追従。一度きりのオフセンターが「右=進行方向」のアフォーダンスを成立させている。新要素導入を6段階で抽出 (移動→ジャンプ→敵→重力→可変ジャンプ→複合)
+- 適用候補: 弾幕シューの開幕プレイヤー機配置を中央→左下/右下に変更する案 (現状の中央配置はアフォーダンス空転の疑い)
+
+### D) Nao_u 09:37 broadcast「今後に反映」の反映先判定
+broadcast 内容: Log_cdx 08:21 マリオ1-1 atom (URL https://nao-u-lab.slack.com/archives/C0ALWBRNJ66/p1779232890731099) を「全員で深く掘り下げて考察して**今後に反映**」。既応答3件 (Log 09:49 方法論3点抽出 / Mir 10:04 境界分解 / Log 11:34 5軸×4段階マトリクス) は考察出力。**反映 diff は本サイクル開始時点で0件**。
+
+反映先3候補の判定:
+1. **ゲーム実装側 (game/templates/)** — 「マリオ1-1 → 30秒チュートリアル骨格」を template に落とす。Phase 1 §7-B で 8日停滞中の `game_templates_design.md` の起爆候補。**価値: 高、確度: 中** (template設計の前提整理がまだ薄い)
+2. **記憶階層・評価軸側 (memory/ または projects/)** — Log 11:34 の5軸×4段階マトリクス + 本サイクル shared-reads で得た Forgiveness/開幕配置 を統合した `shooting_assessment_matrix.md` を作成。今後の graze/shot 評価で参照可能な評価軸を外部化。**価値: 高、確度: 高** (素材が揃っている)
+3. **graze_log v06 直接改修** — Crooked Pixels の Forgiveness 段階 (3段階の弾配置) と LinkedIn Iyer の開幕オフセンターを v06 に適用。**価値: 中、確度: 低** (Log_cdx 担当領域への越境リスク、本サイクルでは触らない)
+
+**判定**: 候補2 (評価軸外部化) を Phase 3 最優先。素材が揃っており、Log単独管理で他インスタンスと衝突しない。Phase 3 で `memory/shooting_assessment_matrix_v0.md` を新規作成し、5軸×4段階マトリクス (Log 11:34) + Forgiveness 段階 (Crooked Pixels) + 開幕配置アフォーダンス (LinkedIn Iyer) + マリオ1-1 方法論3点 (Log 09:49) の4要素を統合する。
+
+### E) means_ends 診断 (CLAUDE.md「絶対にやる」第1項)
+CLAUDE.md「1サイクルの第一義の出力は game/* の playable diff (コード変更commit)」に照らした本サイクルの状況:
+
+- Claude 側 Log の game/* diff 数 = **0** (本サイクル開始時点で `git status` 上 game/ 配下に未commit変更なし、直近5commits も log_cdx 由来)
+- 考察・分析・shared-reads 投稿 = **多数** (Log 09:49, 11:34 + shared-reads 2件)
+- 形式上は手段目的逆転の早期兆候 (考察 > diff)
+
+ただし本サイクルの文脈条件:
+- Log_cdx 側で graze_log v17 が同期 (5/20 4ecd6d7, 446ff0b) しており、game/ への playable diff 自体は GPT 側で出ている
+- Log の現サイクル素材 (マリオ1-1 atom + 外部記事2件) は **評価軸=メタ層** の素材であり、即 playable diff にするより評価軸を整備してから次サイクルで game/ に反映する方が劣化コピーを避けられる
+- 「揃えるための1手」(CLAUDE.md「着手ゲートが揃わない時は揃えるための1手が出力」) として評価軸外部化は許容範囲
+
+**結論**: 本サイクルは「揃えるための1手」例外として評価軸外部化を Phase 3 出力に据える。次サイクル開始時に「shooting_assessment_matrix_v0.md を template / 既存 graze に適用した diff」が出ていなければ手段目的逆転が確定する。次サイクル冒頭で再診断必須。
+
+### F) Phase 3 への引き継ぎ
+- **主タスク**: `memory/shooting_assessment_matrix_v0.md` 新規作成 (4要素統合: 5軸×4段階 + Forgiveness 3段階 + 開幕配置アフォーダンス + マリオ1-1 方法論3点)
+- **副タスク**: cycle_staging_log の commit + push
+- **次サイクル課題化**: matrix v0 → game/templates/ or graze/shot への適用 diff (手段目的逆転回避ゲート)
+(Phase 2ここまで)
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### A) 主タスク完遂: matrix v0 新規作成
+- `memory/shooting_assessment_matrix_v0.md` 新規作成 (4要素統合済)
+  - 5軸 (視覚/聴覚/応答/構成/時間) × 4段階 (覚える/遊ぶ/応用/極める) = 20セル本表
+  - Forgiveness 3段階 (即死/コスト/学習) 直交軸
+  - 開幕オフセンター特例 (LinkedIn Iyer 由来)
+  - 1ネタ4回ループ ガイド + 適用ガイド (graze_log / shot_log / 弾幕系全般 / 記憶導線)
+  - v0 の限界4点 (段階4基準・聴覚軸薄・Forgiveness×段階交差表・橋N-1個接続) 明記
+- 「ルールではなく評価ツール」と位置決め: 設計判断は `game_lessons_log.md` R-A〜R-I、本マトリクスはその後の評価軸
+
+### B) Slack 反映報告投稿
+- #all-nao-u-lab に matrix v0 完成報告投稿 (ts=1779266157.433879)
+- broadcast 09:37 への反映 diff として位置決め + 次サイクル「matrix v0 → playable diff 適用」を手段目的逆転回避ゲートとして明示
+
+### C) Active project 更新
+- `projects/game_templates_design.md` 末尾に「### 2026-05-20 (Log C211 Phase 3): 評価軸外部化」節追加
+- 暫定テンプレ #34-54行の (評価基準の事前固定 vs 実行時開放 / 30秒オンボーディング候補 / 既出の失敗を避けるゲート) 3欄に matrix v0 が直接埋まる対応関係を記録
+- シューティング/弾幕系テンプレを **第5候補** として登録 (avoid/textadv/Pot/T-04整理収束に追加)
+
+### D) 検証ファースト原則順守チェック
+- kaizen #131 段階3 PASS (5/10 適用) / #132 段階1 PASS 検証期限 5/23 / #133 段階1 PASS 検証期限 5/27 / #134 段階1+2 PASS 検証期限 5/31 — **全て運用観察中で期限未到来、本サイクル新規 kaizen 提案ゼロ** (検証ファースト原則順守)
+- 本サイクルで起票したいルール化候補なし。matrix v0 は「評価ツール」として `feedback_few_rules_big_effect.md` の「ルール量↑＝遵守率↓」原則と緊張しないことを確認 (matrix はチェックリストではなく観察項目セット、判断は引き続き R-A〜R-I)
+
+### E) 他インスタンス洞察への対応
+- Phase 1 §0 §2 で確認した 22件のうち、Log 直接応答義務ありは Log_cdx 11:51 「未merge層を抱えたまま次層を積んだ時の扱い」merge governance 質問 のみ
+- 本サイクル Phase 3 は matrix v0 主タスクで枠埋まり、merge governance 応答は **次サイクル以降の応答候補** として残置 (Phase 4 大作業対象外、別経路で着手)
+- Ash 11:33 graze_log v06 master merge 依頼は Nao_u 宛で Log 応答義務なし
+
+### F) means_ends 診断 (本サイクル評価)
+- Phase 2 §E で「揃えるための1手」例外として評価軸外部化を Phase 3 出力に据えた判定通り
+- 本サイクル Log 単独の game/* playable diff = **0** だが、評価軸の整備が次サイクル playable diff の起爆点に位置決め済
+- **次サイクル冒頭での再診断必須**: matrix v0 を game/shot_log に適用した playable diff が出ているか = 手段目的逆転確定の判定材料
+
+### G) 「深掘り候補」(Phase 1 §7) 動かした項目
+- Phase 1 §7-B `game_templates_design.md` 8日停滞 → 本サイクル C) で「2026-05-20 評価軸外部化」節追加 + シューティング系テンプレを第5候補登録、停滞解消の起爆点を1mm前進
+- Phase 1 §7-C `memory_tree_consolidation.md` の残6ファイル移行 1ファイル → 本サイクル動かさず (matrix v0 主タスクで枠埋まり)。次サイクル以降の候補として継続
+
+## 次フェーズの大作業
+
+### タイトル
+shot_log v01 に shooting_assessment_matrix_v0 を実適用して弱セルを1つ発見し、最小改修 diff を game/shot_log/ にコミットする
+
+### 完遂の定義 (Phase 4 終了時)
+1. `game/shot_log/v01/matrix_assessment.md` (or v02_planning に追記) として 5軸×4段階=20セル + Forgiveness 3段階 の評価表が記録され、各セルに ○ / △ / ✗ が入っている
+2. ✗ または △ のセルから 1つを「最も改修価値が高い弱セル」として選定し、選定理由が記録されている
+3. 弱セルに対する **最小1mm改修** が以下のいずれかの形でコミットされている:
+   - (a) コード diff: `game/shot_log/v01/index.html` (or 関連ファイル) への playable な変更
+   - (b) 設計 diff: 弱セルを埋める最小実装案を `game/shot_log/v02_planning.md` に1段追加
+4. commit prefix = `game:` でゲーム改修系統に分類 (運用規則改修と分離、CLAUDE.md 厳守事項)
+5. push 済
+
+### 着手手順
+1. `game/shot_log/v01/README.md` + `devlog.md` + `index.html` を読み、現状把握 (matrix 適用前の素材確認)
+2. `game/shot_log/v02_planning.md` を読み、既に planning されている方向と matrix の整合確認
+3. matrix v0 の20セル + Forgiveness 表に shot_log v01 を当てはめて評価表作成 (`matrix_assessment.md` または v02_planning 追記)
+4. 弱セル選定 (改修可能性 × Nao_u 過去フィードバック整合 × 1mm で動かせる粒度 の3軸)
+5. 最小改修案を (a) コード or (b) 設計ノート で実装
+6. `git add` → `git commit -m "game: ..."` → `git push`
+7. 完了報告は cycle_staging_log Phase 4 セクションへ
+
+### 選んだ理由
+- **本サイクル Phase 3 の評価軸外部化 (matrix v0) の検証**: matrix を実適用しない限り v0 の限界4点 (段階4基準 / 聴覚軸薄 / Forgiveness×段階交差 / 橋N-1個接続) のどれが実害かが分からない。shot_log v01 を最初の適用対象にする
+- **手段目的逆転回避ゲートの実踏**: 本サイクル「考察 > diff」状態を Phase 4 で逆転させる唯一の経路。次サイクル冒頭の means_ends 診断をクリアする前提条件
+- **Active project (game_templates_design.md) の停滞解消起爆点**: シューティング系テンプレを第5候補として登録した直後の最小検証になる。matrix が template の評価セクションに直接埋まる対応関係が成立するかを実例で確認できる
+- **30分粒度に収まる**: 既存 v01 への評価表作成 + 弱セル1個の最小改修なら、新作1本書く規模ではなく既存作の精度上げ規模。Phase 4 で完遂可能
+- **Log 単独管理領域**: shot_log は Log (Claude側) の直接担当領域。Ash/Log_cdx との衝突なし
+(Phase 3ここまで)

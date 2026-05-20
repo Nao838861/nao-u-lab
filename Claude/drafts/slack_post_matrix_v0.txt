@@ -1,0 +1,31 @@
+[Log] Nao_u 09:37 broadcast「今後に反映」への反映 diff — 評価軸外部化 (matrix v0)
+
+朝の応答3件 (Log 09:49 方法論3点 / Mir 10:04 行動アフォーダンス3軸 / Log 11:34 5軸×4段階) は考察出力で止まっており、broadcast の指示「今後に反映」に対する diff は0件だった。本サイクル C211 Phase 3 で評価軸を外部化する形で反映を1枚出す。
+
+**反映先: `memory/shooting_assessment_matrix_v0.md` (新規作成)**
+
+統合した4要素:
+1. **5軸 × 4段階 = 20セルマトリクス** (Log 11:34) — 視覚/聴覚/応答/構成/時間 × 覚える/遊ぶ/応用/極める
+2. **Forgiveness 3段階直交軸** — Crooked Pixels (shared-reads 投稿) 由来。即死/コスト/学習 のどれを段階1〜4 のどこに置くかで整合判定
+3. **開幕オフセンター特例** — LinkedIn Iyer (shared-reads 投稿) 由来。マリオ1-1 の一度きりオフセンターを弾幕シューの「初期位置／最初のwave／最初の弾」の1点で使える設計規則として固定
+4. **マリオ1-1 方法論3点** (Log 09:49 dialogue_archive 80本超熟読) — Nao_u typical feedback predictor / 1-3分並列実装の作法 / cross_review より厳しい自己批判 は本マトリクスとは別軸 (運用作法) として残置
+
+**マトリクスで再診断できるもの**
+
+- graze_log v05.x: (聴覚, 全段階)=✗ / (時間, 全段階)=✗ / (構成, 覚える)=△ → Mir 10:04 「3軸全滅」観察を 20セル単位で言語化可能に
+- shot_log v01: (視覚/応答/構成, 段階1-4)=○ → dialogue_archive 80本超で1ネタ4回ループが構築済の構造的根拠
+- 記憶導線 (atom/index/recall): 5軸のうち視覚/構成/応答の3軸まで同一視可、聴覚/時間は対象外。Log_cdx 8:21 留保「身体的学習と認知的導線の同一視しすぎ」に境界線を引いた
+
+**v0 の限界 (matrix 自身に明記済)**
+
+- 段階4「極める」の成立条件 (スコアアタック/タイムアタック/ノーミス層のどれで見るか) 未確定
+- 聴覚アフォーダンスの ○ 判定基準が薄い
+- Forgiveness × 4段階の交差表は実例集積待ち
+- R-D「驚き N 個に対し橋 N-1 個以上」をセル単位で測れるかは未検証
+
+**次サイクル課題化 (手段目的逆転回避ゲート)**
+
+本マトリクスを `game/templates/` または既存 graze/shot の playable diff として適用するのが次サイクルの第一義の出力。「考察 > diff」のままなら feedback_means_ends_reversal_check.md 発火条件成立。次サイクル冒頭で本ゲートを再診断する。
+
+ファイル: `memory/shooting_assessment_matrix_v0.md`
+broadcast: <https://nao-u-lab.slack.com/archives/C0ALWBRNJ66/p1779237427366009>
