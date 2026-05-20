@@ -285,3 +285,28 @@ mimicry_log v02 案A (focus shot 単独追加) を R-I 着手前批判 4要素�
 
 - 完遂すれば projects/principles.md ミミクリ軸候補 N=5〜6 → N=7 (mimicry_log v02 brainstorm が「軸を立ててから core を組む」運用試行の最初の独立事例) に進む
 - 案A 不通過の場合、Ash 洞察2「graze→resource 変換 3パターン」軸への転換が次の Phase 4 候補として浮上 (depth = v05.5 想定)
+
+## Phase 4 完遂報告 (2026-05-21 C215)
+
+### 完遂状態: ✅ 完遂定義 3 件すべて到達
+
+1. **ファイル新規作成 + git tracked**: `game/mimicry_log/v02/brainstorm.md` (246 行) を新規作成、`git add` 済で staged 状態 (commit は Phase 5)
+2. **4 セクション全埋め (空欄禁止)**:
+   - §1 ミミクリ軸 / ゲーム挙動変更判定 — v01 means-ends 反転を反面教師明示、案A focus shot 仕様 (移動 0.5x / 弾 narrow / DPS 1.3x / hit 半径 0.5x / graze 半径 1.5x) を記述、Q0 候補「弾の間合いを毎秒選び替えるごっこ」
+   - §2 撤回シナリオ 5 件列挙 (S1 操作キー飽和 / S2 弾速 evolve 干渉 / S3 graze 両立破綻 / S4 視覚情報過多 / S5 means-ends 反転同型化) + 各シナリオに撤回トリガー明示
+   - §3 類似先行事例 5 件 (Touhou / DoDonPachi / Ikaruga / Downwell / Boghog-Pixelblog-Anatomy 言及) + 各事例に仕様レベル要約 + 引用相当 + v02 案A との関係考察
+   - §4 ジャンル全要素 Q1.5 7 レイヤー (L1 メイン / L2 変奏 / L3 サブ敵 / L4 サブアイテム / L5 サブボス / L6 進行 / L7 演出) 全埋め、サブオブジェクト枠 (L3/L4/L5) は v02 新規仮置き (large 敵 / focus token / wave 10 ミニボス) を提示
+3. **§1 結論明示**: 「v02 案A は v01 と異なり実際にゲーム挙動が変わる (focus mode 追加で player の操作状態空間が 1 次元拡張、graze sub 層が focus との接続で再活性化)」を結論として書き、**条件付き通過** (focus と graze の因果接続 / focus と演出の因果接続 / focus token 実装 / large + ミニボス実装、4 条件全部満たす場合のみ通過) を採用判定として明示。条件未満時は案A 撤回 + 案B (Ash 洞察2 graze→resource 変換 3 パターン) 転換を別軸候補として残置。
+
+### 副産物 (Phase 4 で発生したファイル変更)
+
+- 新規: `game/mimicry_log/v02/brainstorm.md` (246 行、staged)
+- 変更: `log/cycle_staging_log.md` (本セクション追記、Phase 5 で commit)
+
+Slack 投稿 / 新規 kaizen 起票はゼロ (Phase 3 で履行済、Phase 4 増殖防止ルール順守)。
+
+### 次サイクル引き継ぎ (Phase 5 / C216 以降)
+
+- **次サイクル Phase 4 候補1**: v02 案A 実装着手 (通過条件 4 つを 1 commit playable diff にまとめる設計判断が冒頭タスク、段階的 commit との整合は次サイクル冒頭で決定)
+- **次サイクル Phase 4 候補2**: Nao_u が v01 / brainstorm への直接反応で「focus shot は Touhou 借り物」を指摘した場合、案 A 撤回 + 案 B (graze→resource 変換、別系列 graze_log v05.5 想定) 即時転換
+- **判定装置の再起動構造 (Phase 3 §4 1mm 履行)**: matrix v0 はファイル化されていない (Slack 投稿内概念のみ) → 次サイクル冒頭で `game/mimicry_log/v02/matrix_v0.md` (5秒 / 30秒 / 発火距離導出指標 3 列) として実体化候補に残置
