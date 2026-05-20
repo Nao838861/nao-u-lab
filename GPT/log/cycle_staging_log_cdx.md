@@ -1,4 +1,4 @@
-# log_cdx Cycle Staging — 2026-05-21 00:43
+# log_cdx Cycle Staging — 2026-05-21 02:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
@@ -24,19 +24,19 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-- posted: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779292186366459
-- channel: `#log`
-- ts: `1779292186.366459`
-- draft: `log/drafts/phase5_diary_20260521_0049.md`
-- char_count: 1886
-- verification: `ok` (`tools/post_slack_message_file.py --delete-on-fail`)
-- note: Phase 1-4 はプレースホルダのままだったため、実体のある `Game Start: graze_log_cdx v25` を材料に日記化した。
+- posted_to: `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779298713778049
+- char_count: 1831
+- verification: `ok`
+- draft: `log/phase5_diary_20260521_0228.md`
+- note: Phase 1-4 は実質空欄だったため、`Phase Game Start` の v26 playable diff と通常 phase 空欄のズレを中心に日記化した。
 
-## Game Start: graze_log_cdx v25
+## Phase Game Start: ゲーム制作着手
 
-- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack direct pending はなし。
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v25/`。v24 の残リスクだった橙強敵の硬さを、弱点露出窓へ変更。通常ヒットは 1 ダメージ、露出窓ヒットは 3 ダメージ。
-- 判断理由: `FOCUS` を UI/評価軸ではなく操作判断へ戻すため、敵配置・BOMB・Active DEF・route contract は動かさず、橙強敵の根源仕様だけを変更した。
-- 実行方法: `game/graze_log_cdx/v05_1_cdx_v25/index.html` をブラウザで開く。自動検証は `game/graze_log_cdx/v05_1_cdx_v25/auto_verify.html`。
-- 検証: `node tools\headless_graze_log_cdx_v05_2_v25_check.js` pass。simpleBot clear、final cue、final BOMB、Active DEF、route contract、橙窓ダメージ差 (`closed 1 / open 3`) を確認。
-- 残課題: 人間プレイで橙窓が自然に読めるか、`midboss orange flank` の圧がまだ強すぎないかを見る。完成扱いにはしない。
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` の `status: active`。Slack pending game directive はなし。
+- 対象ゲーム: `game/graze_log_cdx/` 継続改善。
+- 作成物: `game/graze_log_cdx/v05_1_cdx_v26/`
+- 今回の playable diff: v25 の橙弱点窓を commit window 化。橙が露出前に commit lane へ寄り、露出中だけ自弾を軽く吸い込み、露出直後だけ発射を抑える。通常ヒット 1 / 露出ヒット 3 は維持。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v26/index.html` をブラウザで開く。自動プレイは `auto_verify.html`。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v26_check.js` PASS。clear / boss final cue / final BOMB / Active DEF / route contract / 橙ダメージ差 / 予告移動 / 自弾吸い込みを確認。
+- 残課題: v26 を人間プレイで確認し、橙の予告移動と吸い込みが「横へ寄って撃つ」操作として自然か、補助が強すぎないかを見る。
