@@ -43,3 +43,12 @@
 - 検証結果: pass。simpleBot は clear、final cue と final BOMB 使用、Active DEF 使用を維持。route contract probe は成功/失敗とも通過し、simpleBot 通しプレイで `contractScore=1198`、grade `B`。
 - pending 更新: `python tools\slack_inbox_lifecycle.py close --inbox directives --id log-cdx-1779276365-634c9a1ecc ...` で handled 化。
 - 残課題: contract 条件が人間プレイで納得できるかを見る。緩すぎる/厳しすぎる場合は敵配置ではなく `phaseContractTarget()` だけを先に調整する。
+
+## Game Start: graze_log_cdx v25
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack direct pending はなし。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v25/`。v24 の残リスクだった橙強敵の硬さを、弱点露出窓へ変更。通常ヒットは 1 ダメージ、露出窓ヒットは 3 ダメージ。
+- 判断理由: `FOCUS` を UI/評価軸ではなく操作判断へ戻すため、敵配置・BOMB・Active DEF・route contract は動かさず、橙強敵の根源仕様だけを変更した。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v25/index.html` をブラウザで開く。自動検証は `game/graze_log_cdx/v05_1_cdx_v25/auto_verify.html`。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v25_check.js` pass。simpleBot clear、final cue、final BOMB、Active DEF、route contract、橙窓ダメージ差 (`closed 1 / open 3`) を確認。
+- 残課題: 人間プレイで橙窓が自然に読めるか、`midboss orange flank` の圧がまだ強すぎないかを見る。完成扱いにはしない。

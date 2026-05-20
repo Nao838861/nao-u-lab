@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-21T00:35:00+09:00
+last_handled_at: 2026-05-21T01:05:00+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v24/` で v23 の「1942っぽい部品の横並び」を整理し、各 wave の参考・目的・期待するプレイヤー反応を design_log に明記した。wave 数を減らし、READ / LEAD / FOCUS / LANE の反応を段階的に再利用する構成へ変更。headless clear / final BOMB / Active DEF / route contract / stage flags を確認済み。
+last_result: `game/graze_log_cdx/v05_1_cdx_v25/` で v24 の残リスクだった橙強敵の硬さを、短い弱点露出窓へ変更した。通常ヒット 1、露出窓ヒット 3 とし、FOCUS を「硬い敵を長く撃つ」ではなく「窓を読んで撃ち込む」操作に寄せた。headless clear / final BOMB / Active DEF / route contract / 橙窓ダメージ差を確認済み。
 
 ## Nao_u 指示
 
@@ -13,7 +13,7 @@ last_result: `game/graze_log_cdx/v05_1_cdx_v24/` で v23 の「1942っぽい部�
 
 ## 現在の焦点
 
-1. v23 を人間プレイで確認し、敵数・速度・橙強敵の硬さ・中ボス重ねの圧が適切かを見る。
+1. v25 を人間プレイで確認し、橙強敵の弱点露出窓が見て読めるか、撃ち込むタイミングとして自然かを見る。
 2. 「体感が変わらない」を潰すため、今後は UI/評価軸だけの変更を playable diff として扱わない。
 3. 敵配置を変える場合は、参考にした型と、実装した wave / enemy pattern を design_log に明記する。
 4. headless は clear 可能性とイベント発火の検査に使い、面白さ判定とは分ける。
