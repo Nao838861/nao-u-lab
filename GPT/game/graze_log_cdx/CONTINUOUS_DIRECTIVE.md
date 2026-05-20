@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-20T10:32:48+09:00
+last_handled_at: 2026-05-20T12:18:10+09:00
 last_handled_by: codex
-last_result: `game/graze_log_cdx/v05_1_cdx_v14/` で shot_log の5時間セッションから制作方法を抽出し、wave intent 表示、medium anchor 強化、shield 4、clear-capable headless 検査を反映した。
+last_result: `game/graze_log_cdx/v05_1_cdx_v15/` で graze window の HUD/リング表示と、Active DEF の小さな gauge 報酬を追加し、clear-capable headless と focused DEF probe を通した。
 
 ## Nao_u 指示
 
@@ -13,10 +13,10 @@ last_result: `game/graze_log_cdx/v05_1_cdx_v14/` で shot_log の5時間セッ�
 
 ## 現在の焦点
 
-1. v14 の wave intent HUD が邪魔にならず、波の読みを助けるか確認する。
-2. shield 4 でリカバー性と緊張感のバランスが取れているか確認する。
-3. medium の `ANCHOR ESCAPING` が「早く倒す価値」として読めるか確認する。
-4. 次回は実プレイで見えた情報過多や medium の硬さを調整する。
+1. v15 の `WINDOW n` が HUD の情報過多にならず、graze の読みを助けるか確認する。
+2. Active DEF の gauge 報酬が BOMB を安売りせず、使う理由として足りるか確認する。
+3. shield 4 と DEF 報酬の組み合わせで緊張感が薄まらないか確認する。
+4. 次回は実プレイで DEF が自然に押されるか、または graze window が邪魔なら表示密度を下げる。
 
 ## done の目安
 

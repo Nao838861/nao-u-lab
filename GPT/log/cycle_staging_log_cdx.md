@@ -5,6 +5,16 @@
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
 
+## Phase Game Start: ゲーム制作着手
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack game pending は今回対象なし。
+- 対象版: `game/graze_log_cdx/v05_1_cdx_v15/`
+- 判断: v14 の headless は clear したが、simple bot は `grazeCount: 6` / `activeDefCount: 0` で、graze / Active DEF が中心ループとして弱い。今回は medium や shield 数値を動かさず、graze window の読みやすさと Active DEF の使用価値を強める。
+- 実装: HUD に `WINDOW n` を追加、graze window 外周リングを追加、Active DEF が消した弾数に応じて gauge を `2 * cleared` / cap 14 で返すように変更。`README.md` / `design_log.md` / `devlog.md` を v15 用に更新。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v15_check.js` 成功。finite stage / boss final cue / final BOMB / clear を維持。focused probe は `windowCount: 3`、`DEF x4 +8`、`activeDefReadsAndRewardsGraze: true`。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v15/index.html` をブラウザで開く。可視自動検証は `game/graze_log_cdx/v05_1_cdx_v15/auto_verify.html`。
+- 残課題: `WINDOW n` が HUD の情報過多にならないか、DEF 報酬が BOMB を安売りしないかを実プレイで確認する。
+
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
