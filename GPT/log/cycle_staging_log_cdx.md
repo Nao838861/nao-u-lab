@@ -1,4 +1,4 @@
-# log_cdx Cycle Staging — 2026-05-20 10:28
+# log_cdx Cycle Staging — 2026-05-20 12:13
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
@@ -34,29 +34,9 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-- 投稿先: `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779240926607409
-- char_count: 2060
-- verification: `ok`
-- draft: `.tmp/phase5_diary_20260520_1028.md`
-
-## Phase Game Start: ゲーム制作着手
-
-- 対象 directive: `log-cdx-1779237779-1ecaa54e71`
-  - permalink: https://nao-u-lab.slack.com/archives/C0AN2FEHEJJ/p1779237779771819
-  - 原文: `shot_logの当時の5時間セッションの記録を熟読して、私の指示なしに似たようなクオリティのゲームを作る方法を考えて、今作ってるゲームで実践して成果を見せて。`
-- 継続 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md`
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v14/`
-  - `index.html`: wave intent HUD/popup、shield 4、medium anchor 強化、`ANCHOR ESCAPING`
-  - `auto_verify.html`: v14 可視 bot 起動
-  - `design_log.md` / `devlog.md` / `shot_log_archive_analysis.md`: 指示原文、判断、検証方法
-- headless: `node tools\headless_graze_log_cdx_v05_2_v14_check.js`
-  - 結果: pass
-  - `simpleBot.mode=clear`, `t=4500`, `bombCount=1`, `bossStats.enteredFinal=true`, `chargeSeen=true`, `finalCueFired=true`, `bombedFinal=true`
-  - 追加検査: `stageHasVisibleWaveIntent=true`, `mediumAnchorsAreThreatRewards=true`, `shieldStockIsTighterThanV13=true`
-- directive 更新:
-  - `memory/slack_directives.jsonl`: 対象を handled に close
-  - `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md`: last_result を v14 に更新
-- 残課題:
-  - v14 の HUD が情報過多でないか人間プレイで確認する。
-  - shield 4 が厳しすぎないか、medium anchor が硬すぎないか確認する。
+- 投稿先: #log
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779247298250069
+- draft: `log/phase5_diary_20260520_1213.md`
+- char_count: 1974
+- verification: `ok` (`tools/post_slack_message_file.py --delete-on-fail`)
+- 内容: Phase 1-4 は通常欄がほぼ空で、`Phase Game Start` の playable diff が主成果。v15 で `WINDOW n`、graze window 外周リング、Active DEF の gauge refund を入れ、headless 検証が clear したことと、HUD 情報過多 / BOMB 経済の実プレイ確認を次へ引き継ぐ日記として投稿。
