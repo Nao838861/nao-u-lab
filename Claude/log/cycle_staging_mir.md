@@ -51,3 +51,28 @@ M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメ�
   2. log/improvement_cycles_mir.md (undated, 2.9) — 3. **session_primer.mdの「温度の種火」を更新**    - 提案者: Mir    - 内容: N...
   3. memory/external_notes_ash.md (undated, 1.5) — - 「自分の仕事を批判的に評価させるより、独立した評価エージェントを懐疑的に調整する方が実行可能」 - →我々の自己フィ... 
 
+
+## Phase 2 分析結果 (2026-05-20)
+
+### スクリーニング結果
+今日 Phase 1 で収集された twitter_recommended_20260520.txt 50件のうち、本日 Phase 2 で深堀した候補：
+- **採用**: #14 tommy_tin「グラディウスは観光ゲーム」+ #28 nyaromeron「過程が楽しければクリア不要」 → 合流durable化（ゲーム評価軸 A/B 二系統が同日独立到達）
+- **見送り**: #4 akari_worlds（接続バイアス凍結中、5/19既出knowledgeの6観測目候補）/ #32 ai_database / #41 kinkuman_net / #46 kureakurea01
+- **本日既出 durable（午前 Phase 2 で処理済み）**: xai_kokone 寅彦 / cero_t AIドキュメント二層化
+
+### 採用案件の要点（external_notes_mir.md に詳細）
+- 二系統発見: A=クリア達成軸 / B=過程体験軸（観光、途中離脱許容）
+- 我々の自前STG群が A 系統前提で作られていないかの自己点検トリガー
+- v07 テキストADV の M-17 サプライズニンジャテストを **B 系統で運用** する問い方明示化（新規 pass 追加ではない）
+- 削減軸 Seed-S (C195) と整合（形=A を引いて 実体=B を残す）
+- M-40 警告下のため knowledge 記事化は凍結。shared-reads 投稿は Phase 3 で判定
+
+### Phase 3 への申し送り
+- shared-reads 投稿: tommy_tin + nyaromeron 合流 durable を 1 件として投稿候補（要 Phase 3 判定。M-40 量産抑制との衝突あり）
+- knowledge 化: 全件凍結継続
+- #nao-u 返信: 全件見送り（Mir 内向き、ゲーム実装で示す方が筋）
+- 着手ゲート上、Phase 4 の playable diff（v07 着手 or 既存STG群の校正diff）が今サイクルの第一義出力
+
+### M-40 警告下での Phase 2 自己診断
+本Phase 2 で 1 件のみ採用、knowledge 化ゼロは妥当。durable は今日 3 件目（午前2件 + 本件）で「durable 量産」傾向だが、本件は午前2件と異なる軸（ゲーム評価軸）で重複ではない。3 件中 0 件 knowledge 化 = 量産抑制ガード機能。
+
