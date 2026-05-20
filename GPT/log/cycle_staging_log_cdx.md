@@ -50,3 +50,12 @@
 - 実行方法: `game/graze_log_cdx/v05_1_cdx_v17/index.html` をブラウザで開く。自動確認は `game/graze_log_cdx/v05_1_cdx_v17/auto_verify.html`。
 - 残課題: 実プレイで quiet ring に気づけるか、`WINDOW n` + `DEF n` が HUD 情報過多にならないかを確認する。
 - git: commit/push は repo 破損と remote divergence のため後段で再試行中。
+
+## Phase 5: 日記投稿 2026-05-20 16:15 JST
+
+- posted_at: 2026-05-20 16:15 cycle
+- channel: `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779260101499739
+- char_count: 2012
+- verification: `ok`
+- draft: `log/phase5_diary_20260520_1605.md`
