@@ -465,3 +465,50 @@ graze_log v05.3 = 敵 type 別弾パターン差別化 (案 A) を ship — Nao_
 - **30 分粒度に収まる見積もり** — v05.2 base に 3 type 分岐追加で 50-80 行、ファイル新規 3 個 = 30-45 分予算内
 - **Slack 投稿1本で済まない** — game implementation 1 スプリント分 = 大作業判定基準を満たす
 - **v05.3 命名で v05.2 (BOMB fix) との名前空間整理も同時完了** — 上位設計協議で混乱しないよう本 Phase 4 で v05.3 として実装することで「v05.2 = BOMB fix / v05.3 = enemy type 別」の役割分担が確定する
+
+## Phase 4: Execute 実行記録 (2026-05-20 C209 Phase 4)
+
+### 完遂判定: ✅ 完遂
+
+完遂定義 1-7 すべてクリア (Phase 5 で扱う commit/push と #game-rights 投稿を除く):
+
+| # | 定義 | 状態 |
+|---|---|---|
+| 1 | `game/graze_log/v05.3/index.html` + `devlog.md` + `README.md` 存在 | ✅ 3 ファイル新規作成 |
+| 2 | `spawnEnemy()` で medium に `enemyType` を rng (60/25/15) 割り当て | ✅ `TYPE_RNG_STRAIGHT=0.60` / `TYPE_RNG_SPREAD=0.85` 分岐実装 |
+| 3 | `update()` の medium 発射部で straight/spread/aimed の 3 type 別発射 | ✅ enemyType 分岐、各 type で弾速・クールダウンを別パラメータ化 |
+| 4 | `<title>` + `drawTitle()` バージョン文字列を v05.3 へ更新 | ✅ 2 箇所更新 |
+| 5 | `devlog.md` に設計判断 + 観察マトリクス予測 + 戻し方 | ✅ §1-§7 で構造化 (rng 比率根拠 / cooldown 設計 / evolve 適用範囲根拠 / 5軸×4段階予測 / rollback 6 ステップ) |
+| 6 | 別 commit (CLAUDE.md prefix 分離順守) | (Phase 5 で実施) |
+| 7 | v05.1 / v05.2 への変更ゼロ | ✅ git status で v05.3/ のみ untracked 確認 (下記副産物節で git diff 結果報告) |
+
+### 副産物 (新規/変更ファイル)
+
+**新規 (Phase 4 で追加)**:
+- `game/graze_log/v05.3/index.html` (833 行、v05.2 base + 5 定数追加 + spawnEnemy 拡張 + update medium 分岐 + draw 色分岐 + title 文字列)
+- `game/graze_log/v05.3/devlog.md` (設計判断 §2-1〜§2-4、観察マトリクス予測 §3、v05.2/v05.3 比較表 §4、rollback §5、次バージョン候補 §6、既知の限界 §7)
+- `game/graze_log/v05.3/README.md` (差分の核を 1 画面で読める形に圧縮、接続先含む)
+
+**変更ゼロ (Phase 4 で触っていない)**:
+- `game/graze_log/v05.1/` / `v05.2/` (rollback 容易性保証、staging 完遂定義 #7)
+- `projects/game_development.md` / `memory/` 配下全般 / `.claude/rules/` 配下全般 / `docs/` 配下全般
+- ※ Phase 5 で `projects/game_development.md` への ship 記録追記は予定 (C209 Phase 3 セクション末尾に「Phase 4 で v05.3 ship 済」追記)
+
+**JavaScript シンタックス検証**: `node -e` で inline `<script>` を `new Function()` パース → OK (line=833)。ブラウザ実プレイは Nao_u 環境で実施 (`feedback_headless_unfit_for_unfinished_eval.md` t:5 順守、headless 数値は判定根拠にしない)。
+
+### Phase 5 で扱うべき項目 (Phase 4 では一切実施せず)
+
+- **commit**: `game: graze_log v05.3 — 敵 type 別弾パターン 3 種 (straight/spread/aimed) ship` (1 commit、prefix `game:` 厳守)
+- **#game-rights 投稿**: v05.3 ship 報告 (修正の核 / 設計判断 / 観察マトリクス予測 / 戻し方 / Nao_u 5/13 軸批判への直処方根拠 / Ash 5/19 原典 β 直当て根拠 を一通り記載)
+- **#all-nao-u-lab 投稿** (検討): Phase 3 で観察マトリクスを既に投稿済なので、v05.3 ship は #game-rights に集約し #all-nao-u-lab は控える方針 (重複投稿回避、A-1 判定の延長)
+- **projects/game_development.md 更新**: C209 Phase 4 セクション追加 (v05.3 ship 記録 + 観察マトリクス予測の事後検証宣言)
+- **memory/sense_prediction_log.md 候補追記**: v05.3 「敵を見る軸」設計が Nao_u 5/13 批判の直処方として体感閾値を超えるかの事後検証宣言 (即ルール化禁止 R-G 順守、教師データ蓄積のみ)
+- **日記投稿**: 本サイクル C209 Phase 4 で v05.3 を ship、5軸×4段階観察マトリクスの構成軸 ✗→○ + 視覚軸 ✗→○ を同時動の意義を記録
+- **push**: 全 commit を一気に push (CLAUDE.md「書いたらすぐ push」厳守)
+
+### Phase 4 で発生した判断 (Phase 5 教師データ候補、即ルール化禁止)
+
+- **enemyType 命名**: `aimed` を v05.1 までの medium 挙動 (全敵自機狙い) と同義にした上で「基準から外して低頻度化」したのは設計判断として大胆。Nao_u 5/13 批判への直処方として「基準パターン」を真下直線 (straight) に置き直すことになる。事後検証で「基準が変わったことによる体感の混乱」が出れば rng 比率調整 (例: straight 50/spread 25/aimed 25 で aimed を中頻度に戻す) が必要かもしれない。教師データ蓄積対象。
+- **色分けの選択**: オレンジ/マゼンタ/シアン の 3 色は active def の `#80ffd0` (cyan-green) と aimed 弾の `#90c0ff` (薄シアン) が色相近接、HUD STREAK 表示中の cyan-green マーカーと混同するリスク。観察マトリクス事後検証で判定。
+- **spread cooldown 設計**: 「100-150f 長め」は 3 発同時を撃つので密度調整の意図だが、wave 進行で spawn 頻度が上がると spread 3way が wave 内で複数回見える可能性。spread cap (1 wave 内に spread medium は最大 N 体まで) の必要性は事後検証で判定。
+- **headless 自動評価放棄**: type 分散の正当性 + 体感閾値の判定は headless では不可能。Nao_u/Mir/Ash の実プレイ判定に依存する経路を選んだが、これは [[feedback_headless_unfit_for_unfinished_eval]] t:5 順守の正規パターン。
