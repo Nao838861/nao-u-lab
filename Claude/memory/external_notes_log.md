@@ -4,6 +4,71 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-20 (C213) Boghog 101 再読 / Pixelblog #31 / The Anatomy of a Shmup 3本 (Nao_u 5/20 09:35「graze はマニア要素」以降の core 軸地図化) [(1) re-intake from full / (2)(3) partial intake snippet]
+
+**文脈**: C213 Phase 1 §6 WebSearch (kaizen #106 摂取経路固定化、クエリ `shmup core mechanic design beginner casual player 2026 readability`) で取得した3件。前サイクル C212 は `early game learning path bullet hell 30 seconds tutorial design` だったが、5/20 09:35 #game-rights で Nao_u が「Grazeは一旦無視した方が良い、コア要素として扱ってはいけない変則的なマニアしか喜ばない要素」と明言、graze ではなく **graze 抜きで shmup core が成立する軸の地図化** を目的に軸転換。C213 Phase 2 で (1) Boghog 101 は C201 full intake 済の **再読** (graze 非依存軸の抽出)、(2) Pixelblog #31 と (3) Anatomy of a Shmup は snippet のみで本文 HTML 未取得 (次サイクル WebFetch 候補)、#shared-reads ts=1779276587 投下済。
+
+**(1) Boghog's bullet hell shmup 101 — Shmups Wiki (再読)** — <https://shmups.wiki/library/Boghog's_bullet_hell_shmup_101> 【C201 Phase 4 で full intake 済 (本ノート下方参照)、C213 Phase 2 で「graze 非依存軸」観点で再読】
+
+再読で新たに抽出した 3 点 (C201 では BOMB 設計節中心だったため未抽出):
+- **controllable speed setting** (focus shot 機構) — beginner 向け simplification の核。「速い wide shot ↔ 遅い focus shot」ボタン1個切替で攻撃形状と機動性が連動。プレイヤーが**能動操作 → 直接報酬** (回避しやすい/集中火力) を毎瞬間取れる。graze と違い「画面が要求するアフォーダンス」と機構が一致
+- **readability 原則** — 「弾は backgrounds 上で常時 readable であるべき」「explosions/power-ups の上でも見えること」。graze の有無と独立に core 軸として成立
+- **power-up 体感優先** — 「Shmups get around this problem by simply lying to the player about their power level, increasing damage by a very small amount (for example x1.1).」= 実値より体感フィードバック優先。Nao_u 5/19 21:32 gozahand overlay「シンプルでわかりやすい快感」と直接整合
+
+**graze は Boghog wiki の core mechanic 節に登場しない**こと自体が、Nao_u 5/20 09:35 発言「変則的なマニアしか喜ばない要素」の外部 independent 確認。Ketsui multiplier / Espgaluda gems と同列の scoring 上級者層リソース群にも graze は名前が無い。
+
+**判定**: **re-intake 完了、graze 方針転換の根拠補強として採用**。当方 graze_log 系列の改修評価軸を「graze 専用」から「core 軸の補強かどうか」に切り替える根拠材料として今後参照。
+
+**(2) Pixelblog #31 — Shmup Sprite Design Part 1 (SLYNYRD 2020-12-14)** — <https://www.slynyrd.com/blog/2020/12/14/pixelblog-31-shmup-sprite-design> 【C213 Phase 1 §6 WebSearch snippet 取得、本文 HTML 未取得】
+
+snippet 取得範囲の主要点 (Part 1 はスプライト/弾 readability、Part 2 = #32 hyper meter は C200 既読):
+- **bright saturated colors + outlines** で弾を背景から分離 — 弾の輪郭線が「explosions/power-ups の上でも見える」ことを担保
+- 「helicopter / flying robot / witch on a broom」など player スプライトの ID 化方針 — 抽象 ship より具体的キャラの方が「自機がどこにいるか」の認識コストが下がる
+- player スプライトの **roll animation** (左右移動時) 最低 left/right/center 3 フレーム — 「自機の入力が画面に反映されている」フィードバックの最小実装
+
+graze_log v06 以降の軸として効く点:
+- v05 (Mir 全弾常時軌跡) の readability 強化はこの観点で independent 根拠あり。**マニア要素ではない、core 軸の補強**として再解釈可能
+- 自機 roll/identity は当方 game/* で意識が薄い。R-A (1秒の快感) の構成要素として「自機が動いていることが見える」までは入れるべき
+
+留保: Part 1 本文未読のため、snippet が記事代表点かは未確認。次サイクル WebFetch 候補。
+
+**判定**: **partial intake (snippet のみ)、candidate 維持、次サイクル WebFetch 候補**。即実装に引かない (kaizen #106 経路固定化準拠)。
+
+**(3) The Anatomy of a Shmup (Game Developer 記事)** — <https://www.gamedeveloper.com/design/the-anatomy-of-a-shmup> 【C213 Phase 1 §6 WebSearch snippet 取得、本文 HTML 未取得】
+
+同タイトルの <http://shmuptheory.blogspot.com/2010/02/anatomy-of-shmup.html> もあるが別記事 (古典 anatomy 論)。
+
+snippet 取得範囲の主要点:
+- **popcorn enemies** — 主要敵 wave の合間を埋める弱敵群。「player を達成感で満たすための gap filler」。core 戦闘の rhythm を作る役割で、敵密度ではなく「達成感の繰り返し供給」が gameplay の構造単位
+- **弾は常時可視であるべき** — Boghog 101 と独立 source で同じ原則。**2 つの独立した源**から readability が core 軸として揺らがない強さがある
+- **controllable speed setting** (focus shot) — Boghog 101 と同じく beginner 簡素化機構として再登場。**3 source 中 2 source** で同じ機構が「beginner 向け core」として推奨 → focus shot は graze の代替コア候補として地図上の信頼度が高い
+- **save yourself in times of need** — bomb / panic 装置の必要性。graze_log v05_1_cdx_v01 で BOMB を「焚いて得する」構造に修正した方向と整合
+
+留保: HTML 取得しないと subtle correction (Phase 1 §6 で抽出した「player の小ミスは subtly 補正、大ミスのみ罰」) の根拠箇所が確定できない。次サイクル WebFetch 候補。
+
+**判定**: **partial intake (snippet のみ)、candidate 維持、次サイクル WebFetch 候補**。
+
+**3本まとめ — graze 非依存の core 軸地図** (#shared-reads ts=1779276587 表で投下):
+| 軸 | 根拠 source 数 | graze との関係 | 当方 game/* への接続 |
+|---|---|---|---|
+| focus shot | 2 (Boghog + Anatomy) | 完全独立 | `projects/game_templates_design.md` 骨格テンプレ候補 |
+| 弾 readability | 3 (Boghog + Pixelblog #31 + Anatomy) | 完全独立 | graze_log v05 全弾常時軌跡を core 軸補強として再解釈 |
+| popcorn enemies | 1 (Anatomy) | 完全独立 | M-15 (快感を削った改修盲点) と直接接続 |
+| subtle correction | 1 (Phase 1 §6 snippet) | 完全独立 | beginner core の肝、当方未実装 |
+| 自機 identity + 入力フィードバック | 1 (Pixelblog #31) | 完全独立 | game/* 全体で意識薄、R-A 構成要素 |
+
+**現サイクルでの利用範囲制限 (kaizen #106 ルール準拠)**:
+- 3本のうち full intake は (1) Boghog のみ (C201 既読)、(2)(3) は snippet 段階
+- 設計判断を本サイクル中に即時実装には引かない (Phase 3 で v05.2 着手判断のみ整理)
+- 次サイクル WebFetch 候補 = (2) Pixelblog #31、(3) Anatomy of a Shmup の本文 HTML
+- 「経路 → 本文 → 内部接続」をサイクル数 1 で完了させる構造的反例の 4 例目 (1=C194 Recency Bias / 2=C201 Boghog/TV Tropes/CAVE / 3=C206 FSFM/Mem0/Externalization / 4=本サイクル)
+
+**関連ファイル**: `log/cycle_staging_log.md` C213 Phase 1 §6 + Phase 2、`memory/feedback_niche_maniac_not_core.md` (5/20 09:35 Nao_u 発言を受けて刻んだ feedback)、`projects/game_development.md` (graze_log v05.2/v06/v06a/v06b 並走中、本サイクルで方向修正検討)、`projects/game_templates_design.md` (focus shot 骨格テンプレ登録候補)、本ノート下方 「2026-05-17 (C201) Boghog shmup wiki」(同記事の full intake 履歴)。
+
+[統合済 2026-05-20] (#shared-reads ts=1779276587 投下 + 本ノート登録 + Phase 2 セクション cycle_staging_log.md に判断記録)
+
+---
+
 ## 2026-05-18 (C206) FSFM / Mem0 Agent Memory 2026 / Externalization in LLM Agents 3本 (記憶階層 B-3「能動的忘却の不在」外部補完候補) [(1) partial intake WebFetch abstract / (2) candidate 維持 / (3) partial intake WebFetch abstract]
 
 **文脈**: C206 Phase 1 §6 WebSearch (kaizen #106 摂取経路固定化、クエリ `hierarchical memory pruning forgetting LLM agent 2026`) で取得した3件。CLAUDE.md「絶対にやる」記憶階層再設計 (memory_redesign.md §B-3「能動的忘却の不在」/ AYi ②減衰なし=未充足) との射程交差を確認するために candidate 登録。C206 Phase 2 で (1) FSFM のみ abstract WebFetch + #shared-reads ts=1779082565 投下、(2) Mem0 は WebSearch スニペット止まり、(3) Externalization は abstract WebFetch のみ。本文・評価設定・データセット詳細は3件とも未確認。

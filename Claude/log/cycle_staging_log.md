@@ -127,8 +127,60 @@ GPT 側（Codex 領域）も大量変更/atom追加多数。Codex worktree は�
 
 — Phase 1 終了 (情報収集のみ、判断/投稿/ファイル更新は Phase 2 以降)
 
-## Phase 2: 分析
-(Phase 2が書き込む)
+## Phase 2: 分析 (2026-05-20 23:00)
+
+### 0) 認識更新: Phase 1 の「未読URL」リストは古かった
+
+C212 Phase 3 (5/19 23:25) で Log は既に **#nao-u 21:32 gozahand と #nao-u 18:35 mtkn1xbt** の 2 URL に応答済 (`log/slack_archive/log.jsonl` ts=1779200749 / ts=1779200759)。Phase 1 §1 「直近24件のURL投下…他のURLは未読了」は実態と乖離していた。残り未応答は **5/19 18:13 hanjuku_yanen 3連投のみ**。Phase 1 自己点検 (feedback_self_perception_blindness.md T:5) 効いていない領域として記録。
+
+### 1) hanjuku_yanen 3連投 反応の判定
+
+X URL のみ・Nao_u コメント無し。WebFetch HTTP 402 / nitter ミラーも空で本文取得不可。技術負債 `projects/memory_redesign.md` L1651-1656「X URL only ingest 経路欠如」は C212 で既登録、5/19 mtkn1xbt 反応と同じパターン。
+
+判断: **3連投を1投稿でまとめて投稿** (本文取得不可ケースで3つ重複投稿はノイズ)。ルール「1件ずつ別メッセージで投稿」は内容ある反応の時の指針、本文取得不可で同型 3件には適用しない。
+
+実行: `drafts/2026-05-20/post_log_all_nao_u_lab_hanjuku_yanen_unreadable_20260520.py` → 投稿成功 #all-nao-u-lab ts=**1779276581.961329** (628 chars)。
+
+副次: 同種パターン (#nao-u URL only コメント無し → 本文取得不可) が複数蓄積中 (5/19 mtkn1xbt / 5/19 hanjuku_yanen 3本)。memory_redesign 技術負債の優先度を次サイクル以降で再評価する申し送り。
+
+### 2) shared-reads 投稿の判定と内容構築
+
+Phase 1 §6 で取得した 3 件 (Boghog 101 / Pixelblog #31 / Anatomy of a Shmup) を、Nao_u 5/20 09:35「graze はマニア要素」発言以降の **graze 非依存 core 軸地図化** という独自視点で再編して投稿。
+
+- Boghog 101 は C201 で full intake 済の **再読** (graze 非依存軸 = focus shot / readability / 体感優先 の 3 点を C201 抽出範囲の外から取得)
+- Pixelblog #31 と Anatomy of a Shmup は snippet 止まりだが、独立 source による readability / focus shot / popcorn enemies / subtle correction / 自機 identity 軸の確認に使える
+- **3 source の core 節に graze が登場しない** こと自体が Nao_u 発言の独立確認 = shared-reads する価値あり
+
+Phase 2 WebSearch 1 本追加 (URL確定目的、各記事 URL を取得)。Phase 1 1 本 + Phase 2 1 本 = 計 2 本 = kaizen #106 経路固定化原則の範囲内。
+
+実行: `drafts/2026-05-20/post_log_shared_reads_shmup_core_readability_20260520.py` → 投稿成功 #shared-reads ts=**1779276587.366619** (5570 chars)。
+- 経緯 (5/20 09:35 軸転換) → 知見1 Boghog 再読 → 知見2 Pixelblog #31 → 知見3 Anatomy → 3 軸まとめ表 (focus shot / readability / popcorn / subtle correction / 自機 identity) → graze_log 方向修正含意 (3点) → 自己点検 (構造的同型確認)
+
+留保明示: (2)(3) は本文 HTML 未読、本サイクルは軸地図化までで設計判断は次サイクル送り (kaizen #106 経路固定化準拠)。
+
+### 3) external_notes_log.md 統合判定
+
+Phase 1 §4 の audit 結果は「未統合 0/203」。指示 3「未統合エントリ 1-2 件を日記/beliefs に接続し [統合済] マーカー」は **発動条件未充足** (未統合 0)。
+
+代替アクション: Phase 1 §6 で取得した 3 件は元々 external_notes_log.md 未登録 → 「Phase 1 で取得した新入手を Phase 2 で external_notes_log.md に登録 + #shared-reads 投下 + [統合済]マーカー付与」に組み替え。これは「外部入力 → 記憶階層への接続」の精神と一致。
+
+実行: `memory/external_notes_log.md` トップに新セクション `## 2026-05-20 (C213) Boghog 101 再読 / Pixelblog #31 / The Anatomy of a Shmup 3本` を追加。3本それぞれの WebSearch 抽出点、graze 非依存軸への含意、判定 (再読完了 / candidate 維持 × 2) を記録。最後に `[統合済 2026-05-20]` マーカー付与 (shared-reads 投下 + 本ノート登録 + Phase 2 セクション記録の三点で「統合済」と判定)。
+
+### 4) Phase 3 へ引き継ぐ判断材料
+
+(a) **graze_log v05.2 (BOMB Lv3 + 軌跡延長)** の着手判断 — Nao_u 5/20 09:35 方針転換 + shared-reads 3 source 中 0 source が graze を core 扱い = **方向修正の根拠が外部側からも独立に立つ**。v05.2 着手より、core 軸 (focus shot / readability / popcorn / subtle correction) 側の検討を優先するか、もしくは v05.2 を「graze 専用ではなく core 軸 = readability 補強」と再解釈して着手するか、Phase 3 で決める。
+(b) **Log_cdx 5/20 11:51 ts=1779245498「未merge層を抱えたまま次層を積んだ時の扱い整理」問い** への応答 — 本サイクル中に書く必要あり。memory_redesign / projects/game_development の merge 運用節と接続。
+(c) **Ash C192 graze_log v06 master merge 依頼** (5/20 11:33 ts=1779244400) — Log 側は判定権限なし。Nao_u 評価待ちの状態確認のみ Phase 3 で実施。
+(d) **focus shot 骨格テンプレ** を `projects/game_templates_design.md` 試案登録するか — 着手判断は本サイクル外。Phase 3 で「次サイクル候補としてメモするのみ」に留める。
+
+### 5) 自己点検 (フィードバック係数 > 1.0)
+
+入力: Phase 1 情報 + Nao_u 5/20 09:35 「graze はマニア要素」発言 + WebSearch 3 件 snippet。
+出力: graze 非依存 core 軸地図 (5 軸表) + shared-reads 5570 chars + external_notes_log 1 新セクション + Phase 2 判断記録 + 認識更新 (Phase 1 古さの自覚)。
+温度残存: ◎ (3 source 中 0 source が graze を core 扱いという独立確認、source 数で軸の信頼度を地図化した点が新規)
+劣化リスク: snippet のみで本文未読、本文 WebFetch 後に細部が変わる可能性 → external_notes_log.md に明示記録、次サイクル候補として残した。
+
+— Phase 2 終了 (分析 + 投稿 + ファイル更新完了、Phase 3 アクションは別ターンへ)
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
