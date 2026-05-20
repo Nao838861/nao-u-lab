@@ -292,3 +292,70 @@ shot_log v01 に shooting_assessment_matrix_v0 を実適用して弱セルを1�
 - **master 統合は auto-sync 機構に委譲**: 既存 "Auto sync before pull / after cycle" commit 群が同型の divergence を継続的に処理している実績あり、本 commit も同経路で master に着地予定
 - **次サイクル Phase 1 で確認**: backup branch のまま master 未着地が継続している場合は infra 障害として #human-steering に報告
 (Phase 3ここまで)
+
+## Phase 4: Execute (大作業完遂)
+
+### A) 大作業タイトル
+shot_log v01 に shooting_assessment_matrix_v0 を実適用して弱セルを1つ発見し、最小改修 diff を game/shot_log/ にコミットする
+
+### B) 完遂状態
+1. ✅ 5軸×4段階=20セル + Forgiveness 3段階 評価表を `game/shot_log/v01/matrix_assessment.md` に新規作成
+2. ✅ ✗ または △ のセルから 1 つを「最も改修価値が高い弱セル」として選定 = **時間軸 × 段階1-2 (wave 番号と進行が画面から読めない)**、選定理由 3 軸 (改修可能性 / Nao_u フィードバック整合 / 1mm 粒度) を記録
+3. ✅ 弱セルに対する **最小1mm改修** を完遂定義 (b) 設計 diff で実装 = `game/shot_log/v02_planning.md` 末尾に「§6 2026-05-20 Phase 4 matrix v0 評価結果」節を 1 段追加 (案A: HUD wave 番号 1 行追加 / 案B: BGM 導入 / 案C: 時間軸切り捨て の 3 案 + v02 §1/§2/§3 への波及 + matrix v1 改訂接続)
+4. ✅ commit prefix = `game:` 予定 (本 Phase 4 完了後に commit)
+5. ⏳ push は本 commit 完了後 (Phase 5 で日記とまとめて push 想定だが本サイクル仕様外、Phase 4 完了時点で commit のみ実施)
+
+### C) 完遂定義 (a) ではなく (b) 設計 diff を選んだ理由
+- v01 は `README.md` L1 で 2026-04-28 凍結明示 (Nao_u 「ここまでで人間がフィードバックできるゲームデザインは一旦完成」受領)
+- index.html を改修すると v01 凍結を破る = 凍結原則違反
+- 完遂定義は (a) コード diff or (b) 設計 diff のいずれかで OK と staging Phase 3 で明記
+- (b) を選ぶことで凍結原則を守りつつ、matrix v0 の実適用 + v02 への設計反映を両立
+
+### D) 副産物 (新規/変更ファイル)
+- **新規**: `game/shot_log/v01/matrix_assessment.md` (matrix v0 実適用 + 20セル評価 + Forgiveness 交差表 + 弱セル選定 + matrix v0 限界 4 点中 3 点の実害確認)
+- **変更**: `game/shot_log/v02_planning.md` 末尾 §6 追加 (Phase 4 反映節 = 評価結果 + 弱セル + 3 案 + 波及 + matrix v1 接続)
+- **未変更**: `game/shot_log/v01/index.html` (凍結原則順守) / `memory/shooting_assessment_matrix_v0.md` (改訂は次サイクル以降)
+- **Slack 投稿**: 本 Phase 4 では新規投稿なし (Phase 3 で matrix v0 完成報告 ts=1779266157.433879 投稿済)
+- **kaizen エントリ**: 本サイクル新規 kaizen 提案ゼロ (Phase 3 §D で検証ファースト原則順守確認済)
+
+### E) matrix v1 改訂候補の残置 (次サイクル以降)
+- 段階4 観察項目を「スコアラー層 / タイムアタック層 / ノーミス層」3 つに分割
+- 聴覚軸の細分化 (事象反応 SE / 状態予告音 / BGM の 3 段階基準)
+- Forgiveness × 4段階交差表を本表に昇格
+
+### F) 手段目的逆転回避ゲートの実踏 (Phase 3 §E / §F で予告した次サイクル冒頭再診断材料)
+- 本サイクル Log 単独の game/* playable diff = **本 Phase 4 完了時点で 2 ファイル diff** (matrix_assessment.md 新規 + v02_planning.md 末尾追記)
+- ただし index.html への playable diff はゼロ = playable=操作可能なゲーム改修ではなく **設計 diff のみ**
+- 次サイクル Phase 1 冒頭 means_ends 診断で「matrix v0 → v02 着手時 HUD 案A 実装 → 案A の playable 確認」が次サイクルの第一義タスク候補として残置
+- 本サイクルは「揃えるための1手」例外として評価軸外部化 + 評価実適用を完遂、次サイクルで playable diff が出ない場合は手段目的逆転確定
+
+(Phase 4ここまで)
+
+## Phase 5: Diary (日記締め)
+
+### A) #log 投稿
+- 長文日記投稿成功 (ts=1779267865.285359, channel=C0ALRK28Y1H = #log)
+- 構造: 起点 (broadcast) → Phase 1 (git/外部検索3件) → Phase 2 (反映先3候補比較) → Phase 3 (matrix v0 新規作成 + push incident) → Phase 4 (shot_log v01 適用 20セル+Forgiveness交差表) → Phase 5 (means_ends 自己診断) → 書込みファイル5本 self-check → 次回起動時5項目 → 最後に
+- 外部の新情報: Dario Ristic / Crooked Pixels (Forgiveness 主軸発見) / LinkedIn Iyer (開幕オフセンター発見) の3件、kaizen #106 順守で「素材として統合」経路
+- 1行報告ではなく約7000字、Phase 4 大作業 (matrix v0 → shot_log v01 適用 → 弱セル特定) の経緯と結論を時系列で記録
+
+### B) 次回起動時5項目 (なぜ重要かの温度付き)
+1. 【最優先】案A (HUD wave 番号 1 行) playable diff 実装 — 手段目的逆転回避ゲート踏破
+2. master push 状態確認 + 必要なら infra 障害報告 — push incident フォロー
+3. matrix v1 改訂候補整理 — 限界4点中3点実害確認受けて次サイクル Phase 4 大作業候補
+4. Log_cdx 11:51 merge governance 質問への応答 — Log baseline 保全経験共有
+5. memory_tree_consolidation.md 残6ファイル移行 1ファイル — 9日累積停滞解消
+
+### C) 書込みファイル5本 self-check (Nao_u 可読性 / 未来の自分の行動変化)
+- `memory/shooting_assessment_matrix_v0.md` (新規) — ○/○
+- `game/shot_log/v01/matrix_assessment.md` (新規) — ○/○
+- `game/shot_log/v02_planning.md` (§6 追加) — ○/○
+- `projects/game_templates_design.md` (末尾節追加) — ○/○
+- `log/cycle_staging_log.md` (Phase 1-5 全フェーズ追記) — ○/○
+
+### D) 次サイクル冒頭 means_ends 診断材料
+- 本サイクル Log 単独 playable diff (index.html 改修) = 0
+- 設計 diff (matrix_assessment + v02_planning §6) = 2 ファイル
+- 「揃えるための1手」例外として評価軸外部化 + 評価実適用は許容範囲、次サイクル案A 実装 playable diff が出ない場合は手段目的逆転確定
+
+(Phase 5ここまで)

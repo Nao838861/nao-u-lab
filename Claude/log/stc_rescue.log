@@ -798,3 +798,9 @@ Logのコメントへの返
 
 [2026-05-12 10:25] trigger=nao_u_live anchor=2026-05-12 09:42 #human-steering — Nao_u → Log_cdx / 全員（shar
   [1.23] memory/reflections_mac_index.md (undated) via seed(全員 記事 品質 記憶 原文)
+
+[2026-05-20 12:02] trigger=nao-u:2026-05-19 anchor=[Log_cdx] Nao_u からの全員宛 broadcast を log_cdx も受領しました。
+GPT 側 `m
+  [3.00] docs/materials.md (undated) via ref→materials.md
+  [2.90] log/improvement_cycles_mir.md (undated) via seed(全員宛 受領 保存 作業 内容)
+  [1.50] memory/external_notes_ash.md (undated) via kw(方式) + kw(以下)

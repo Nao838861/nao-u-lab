@@ -25,6 +25,19 @@
 
 ## Phase 5: 日記投稿
 
+### 2026-05-20 17:53 JST
+
+- 投稿先: `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779267246781809
+- channel: `C0ALRK28Y1H`
+- ts: `1779267246.781809`
+- char_count: 1889
+- verification: `ok`
+- draft: `.tmp/phase5_diary_20260520_1753.md`
+- 内容: 通常 Phase 1-4 が空で Game Start が主内容だったことを明記し、`graze_log_cdx` v19 の DEF cue 調整を「文字命令を戻さず、ring の寿命・太さ・出始めで気づきを作る」作業として記録した。`activeDefCount=1` / `simpleBotUsesActiveDefCue=true` まで行動ログに結びついた点と、次回の実プレイ確認・HUD 圧縮を引き継ぎにした。
+
+### 2026-05-20 17:28 JST
+
 - 投稿先: `#log`
 - permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779266077481659
 - channel: `C0ALRK28Y1H`
@@ -33,6 +46,14 @@
 - verification: `ok`
 - draft: `.tmp/phase5_diary_20260520_1728.md`
 - 内容: Phase 1-4 通常セクションが空で Phase Game Start が主内容だったことを明記し、`graze_log_cdx` v18 の DEF prompt ring 補正を「HUD 情報削減後に判断 cue をどの感覚チャンネルへ移すか」という評価語彙として整理した。
+
+### 2026-05-20 13:58 JST
+
+- 投稿先: `#log`
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779253462985219
+- char_count: 1750
+- verification: `ok`
+- draft: `log/phase5_diary_20260520_1358.md`
 
 ## Phase Game Start: ゲーム制作着手
 
@@ -43,6 +64,17 @@
 - 実行方法: `game/graze_log_cdx/v05_1_cdx_v18/index.html` をブラウザで開く。自動検証表示は `game/graze_log_cdx/v05_1_cdx_v18/auto_verify.html`。
 - 検証: `node tools\headless_graze_log_cdx_v05_2_v18_check.js` 成功。`defPromptIsVisibleRingOnly=true`、simpleBot clear、boss final cue、final BOMB 使用、Active DEF reward、finite stage regression が true。
 - 残課題: 実プレイで ring が弾幕視認を邪魔せず押す判断を助けるか確認する。十分なら次回は `WINDOW n` + `DEF n` の HUD 情報量を圧縮するか判断する。
+
+## Game Start 2026-05-20 16:05 JST
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)
+- 原文指示: `v05_1_cdx_v03` 以降、このゲームが完成するか Nao_u が止めろと言うまでは、定時サイクルで繰り返し改善を続ける。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v17/`
+- 実装内容: v16 の `DEF WINDOW` 文字 popup を削除し、`DEF_PROMPT_FRAMES=84` 後に Active DEF 半径付近の quiet ring だけを出すように変更。BOMB、shield、敵構成、報酬量は据え置き。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v17_check.js` exit 0。`simpleBot.mode=clear`, `simpleBot.bombCount=1`, `simpleBot.bossStats.finalCueFired=true`, `defPromptIsQuietRingOnly=true`, `latestRing.r0=48`, `latestRing.r1=68`, `popupText=""`。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v17/index.html` をブラウザで開く。自動確認は `game/graze_log_cdx/v05_1_cdx_v17/auto_verify.html`。
+- 残課題: 実プレイで quiet ring に気づけるか、`WINDOW n` + `DEF n` が HUD 情報過多にならないかを確認する。
+- git: fresh clone 経由で push 用 commit を作成。
 
 ## Game Start 2026-05-20 17:48 JST
 
