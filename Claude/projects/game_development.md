@@ -108,6 +108,18 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 
 **Phase 4 大作業 (本サイクル中に着手)**: graze_log v05.4 = graze 機構削除 + focus shot 軸導入の最小プロトタイプ。Nao_u 5/20 09:35「graze はマニア」発言への構造的応答 (Slack文言だけでなくゲーム本体で物理応答) + shared-reads 3 source で得た core 軸地図の最初の実装。
 
+**Phase 4 完遂結果 (本サイクル Phase 4 で ship 完了)**: `game/graze_log/v05.4/index.html` (792 行 / v05.3 854 行から約 60 行減) + `devlog.md` (約 100 行、§1-8 構成 + §8 self_judgment 4 段落) + `README.md` (約 70 行)。
+
+- **graze 機構コード 0 行**: 定数 7 + state 4 field + 関数 3 + ebullet 2 prop + update/draw/HUD/gameOver 全て撤廃。grep `graze` で残るのはコメント (撤廃理由 / rollback 手順) / localStorage key `grazelog_*` / directory・title 名のみ
+- **focus shot 機構追加** (SHIFT or Z hold): `FOCUS_SPEED_MULT=0.5` / `FOCUS_SPREAD_MULT=0.4` / `FOCUS_GAUGE_PER_FRAME=0.15` + 自機色変化 (青→白) + hit box パルスリング
+- **SPACE 文脈単純化**: v05.3「graze streak → DEF / gauge max → BOMB」の 2 文脈 → v05.4「BOMB のみ」の 1 文脈 (Boghog 「unconvoluted がコア」整合)
+- **5 軸物理化対応**: focus shot / readability / popcorn enemies / subtle correction / 自機 identity すべて graze 非依存で立つことを devlog §3 で対応表化
+- **削除可能性保証**: devlog §5 に rollback 手順 10 ステップ、v05.3 が無傷なのでフォルダ単位差し替えで完全 rollback 可能
+- **Log 側未実施**: 実ブラウザでの実プレイ動作確認 (CLAUDE.md「If you can't test the UI, say so explicitly」順守)、Nao_u/cross_review/Mir-Ash 並走に評価委ね
+- **次サイクル候補**: focus パラメータ調整 (speed 0.5x / spread 0.4x / gauge 0.15/f が体感閾値か実プレイ判定後)、Pixelblog #31 / Anatomy of a Shmup の本文 WebFetch (snippet 止まり)、focus 時の弾密度補正、聴覚アフォーダンス追加、構成段階階段化
+
+**接続のメタ観察**: 5/20 09:35 Nao_u 発言から ~18 時間で 「Slack 文言応答 → 外部 source 独立確認 → コード変更 commit」の 3 段階を Log 単独で完走。「設計議論だけで実装が出ない」M-29 / means-ends reversal 同型を、Log_cdx の v18-v20 DEF cue 振り直し系列を Slack で批判したばかりの Log が自身は回避できた構造。
+
 ---
 
 ### 2026-05-20 C209 Phase 4: Log — graze_log v05.3 ship (敵 type 別弾パターン 3 種、Nao_u 5/13「軸が 1 本」批判への直処方)
