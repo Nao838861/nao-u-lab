@@ -158,7 +158,174 @@ MEMORY.md は 1行のみ (`project_memory_md_structure_20260514.md`) 、T:4以�
 
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### 0) Phase 1 検出漏れの修正 (#nao-u 再走査)
+
+Phase 1 「5/19-5/20 新URLなし」は **誤り**。`slack_bot.py history nao-u` + conversations.history (limit=12) で確認すると、5/19-5/20 帯に Nao_u が 7 件 URL を投下している。Phase 1 で参照したソース (probably `tools/external_notes_integration_audit.py` 経路) は **Nao_u 直近投稿の生検索を伴わなかった** ので新URLを取りこぼした。次サイクル以降の Phase 1 修正候補。
+
+| ts | UTC日時 | URL | Log 処理状態 |
+|---|---|---|---|
+| 1779250230 | 5/20 13:10 | x.com/oktamajun (Civ7/カイヨワ4要素/「何ごっこ」軸) | **本Phase 2 で対応** — #all-nao-u-lab 投稿済 |
+| 1779193974 | 5/19 22:46 | x.com/gozahand「STGは破壊」 | 既反応 (Log #all-nao-u-lab 既投稿: 「自分の操作が世界を変えた因果の手触りが破壊快感の本体」) |
+| 1779183352 | 5/19 19:55 | x.com/mtkn1xbt Hermes Agent X連携 | 既反応 (Log_cdx + Log/Mir 既投稿、AIツール軸で別系統) |
+| 1779182000 | 5/19 19:33 | x.com/hanjuku_yanen Hermes Agent解説 | 既反応 (Log/Mir #shared-reads 投稿済) |
+| 1779164284 | 5/19 14:18 | x.com/h_yoshida_1973 マリオ1-1 | 既反応 (Log 09:49/11:34 + Mir + Log #shared-reads 投稿済) |
+| 1779146726 | 5/19 09:25 | x.com/santtiagom_ implementation-notes.md | 既反応 (Ash #shared-reads 投稿、Mir 言及) |
+| 1779062904/888 | 5/18 10:08 | x.com/gosrum (2件) | Log 既保留宣言 (5/18 #all-nao-u-lab で「本サイクル反応保留」明示済、再開判定保留) |
+
+**処理判断**: oktamajun のみ Log 本Phase 2 で新規対応。他6件は Log 既反応 or 他インスタンス処理済 = Log の Phase 2 追加投稿は不要。
+
+### 1) oktamajun「何ごっこ」軸 と 本日 09:35 graze凍結 の合流点
+
+玉置氏ツイート (5/20 13:10) の核 3 点:
+- (a) ロジック的正解は必ずしもプレイヤーニーズを満たさない (Civ7 危機システム=ロジック上は中盤緩慢解決、文明継承=ごっこ遊びとして乱暴すぎてコミュニティ拒絶)
+- (b) カイヨワ4要素のうち**ミミクリ(ごっこ)は付随的・全体を支える支柱**「ベース不在のロックバンド」比喩
+- (c) プレイヤーが遊ぶ前にゲームを受け取れる入り口 = 「何ごっこのつもりで遊べばいいか」
+
+**Nao_u 09:35 graze 凍結方針との直結**: Nao_u は graze を「変則的なマニアしか喜ばない要素」と評したが、玉置氏の枠で言い換えると **graze は「STGマニアのかすめプレイごっこ」という暗黙のミミクリしか持っていなかった**。明示的に他者に説明できない = 他者にとっては受け取れない = 「変則的マニア」しか拾えない、という構造的論理が玉置氏の枠でクリアになる。
+
+**Log 13:13 #game-rights 観察 (graze_log でミミクリ軸が空白)** との接続: Log は本日 13:13 で「graze=かすめる」が何のごっこか言語化できていないと自己観察したが、これは玉置氏ツイート (3 分前 13:10 投下) を実時間で吸収した直後の連想だった可能性が高い。**「何ごっこ」軸が graze_log に欠けていたという観察は、玉置氏の理論と Nao_u の体感判定が独立に同じ点を指している = 強い裏付け**。
+
+**graze_log 後継版の着手前ガード新規候補** (まだ確定運用化はしない、N=1 候補):
+- Q0 段階で「5秒で答えられる『何ごっこ』を 1 行で書く」を必須化
+- ミミクリ軸が書けないコア設計は brainstorm に進めず、ミミクリ候補を 3 つ並べて並列比較
+- 「敵wave を撃ち分けて突破する熟練パイロットごっこ」「破壊で世界を即座に変える因果操作ごっこ」(gozahand「STGは破壊」と整合) 等を並列候補とする
+
+### 2) 個別指摘の即ルール化 自己観測 (CLAUDE.md 第5項違反候補)
+
+**事実**: Log は本日 09:39 (Nao_u graze 凍結方針受領 4 分後) に `memory/feedback_niche_maniac_not_core.md` を新規作成 = **単一観測からの即ルール化**。
+- CLAUDE.md 第5項「個別指摘を即ルール化しない — 教師データで蓄積、判断力で消化する」+「同型が複数回確認できてから原則化する」に**直接違反**
+- 正しい運用: `sense_prediction_log.md` に教師データとして記録 → N=複数 で同型が出てから R 層化
+
+**ただし反論側の観察**:
+- Nao_u 09:35 broadcast は単一ツイートだが、**「コア要素として扱ってはいけない / 変則的マニアしか喜ばない」という強い禁則型** で発話されており、教師データではなく方針宣言
+- graze_log v05/v06a/v06b/v10 の出力履歴自体が「マニア軸を core に置く」反復事例の集積 = N≥4 観測の事後言語化
+- feedback_niche_maniac_not_core.md は「鉄則」ではなく「Q0 段階での1行判定追加」程度の運用変更で、過剰一般化リスクは低い
+
+**判定**: 違反は形式上発生。ただし feedback_niche_maniac_not_core.md は **削除はしない** — 過去出力履歴の事後言語化として保持しつつ、**本記憶ファイルが「同型反復で原則化された」ものではなく「単発強指摘の即時化」事例である自覚を本サイクルの sense_prediction_log に N=22 として書き込む**。次サイクル以降で同型違反 (単発強指摘の即時ルール化) が再発した場合は R 層化を検討。
+
+### 3) 予測フレーム無効化 観測 (N=20/N=21 の根拠崩壊)
+
+**事実**: `memory/sense_prediction_log.md` の N=20 (v06a 劣後予測) と N=21 (v06b 優位予測) は、いずれも「graze_log の 3 軸 rescue 比較フレーム内」で予測を立てていた。Nao_u 09:35 は **「graze 軸そのもの」を凍結** したため、N=20/N=21 が予測対象としていた a/b の優劣以前に **フレーム自体が無効化** された。
+
+**予測精度評価の構造的論点**:
+- 「N=20 予測『v06a 劣後』が正しかったか」は判定材料を欠く (実反応取得前に上位フレームが凍結)
+- 「N=20 予測自体が **誤った階層** で立てられていた」が新規教師データ = a/b 軸でなく **frame そのもの** が判定対象だった
+- これは sense_prediction_log の運用論への問い: 予測対象を選ぶ段階で「上位 frame の妥当性」を 1 段上から問うガードがあるべきだったか? それとも「予測 frame 自体の正しさを問うことは事前に不可能」と認めるか?
+
+**暫定判定**: 「frame の妥当性は事前に問えない」+「frame 凍結時に予測群を archive する運用」を導入する。**N=20/N=21 は「frame archive」マーカーを付けて凍結保存**、新規 N (実装の前 graze 軸外) で再開する。**本判定を Phase 3 で sense_prediction_log に追記**。
+
+### 4) shared-reads 投稿判定 (本サイクル不要)
+
+候補:
+- (a) Phase 1 §6 外部検索 3 件 (Eneba/Wikipedia/Hitem3D) — 個別記事として methodological depth が不足、テンプレ流用リスクで投稿しない (slack rules.md「各記事固有の手法・実験・結論を書けないものは投稿せず candidate 段階に留める」)
+- (b) santtiagom implementation-notes.md — 既 Ash #shared-reads 投稿済
+- (c) h_yoshida マリオ1-1 — 既 Log/Mir #shared-reads 投稿済
+- (d) oktamajun「何ごっこ」 — **#shared-reads 候補だがツイート単独で5項目フォーマット (概要/内容分析/環境適用/メリデメ/判定) を埋めるには素材薄**。#all-nao-u-lab 反応で十分。次サイクル以降「カイヨワ4要素 × ゲームデザイン」軸での methodological paper を発掘できれば本ツイートを引用として #shared-reads 投稿候補に昇格
+
+**判定**: 本サイクル #shared-reads 投稿しない。Phase 1 で `kaizen #106 自発検索は摂取経路の固定化が目的、強制利用しない` と明示しており、本判定はその規律順守。
+
+### 5) external_notes_log 統合 (本サイクル不要)
+
+`tools/external_notes_integration_audit.py` 結果: 親96/サブ203/サブ統合203 (100%) = 統合対象ゼロ。本Phase 2 で再走査するも変化なし。
+
+代替案として「既統合エントリの**深層接続追加**」を検討:
+- 5/13 C190 親マーカー (graph-based agent memory 3件) は 5/17 C199 で深層接続済 (Mem0g conflict detector ↔ VeRO evaluator authorship 分離)
+- 5/11 C182 親マーカー (masaou + Symphony) は **深層接続マーカー未追記**、本日 09:35 graze 凍結との接続候補だが射程が大きすぎる (game design 軸ではなく AI 自律ループ運用軸)
+- **本サイクル深層接続追加なし** — 強引な接続は記憶 noise を増やす、judgment 育成優先 (CLAUDE.md「ルール準拠より思考の質を優先」)
+
+### 6) Phase 3 アクション候補 (順位付き)
+
+1. **[A] sense_prediction_log N=22 追加** — 本日の「単発強指摘の即時ルール化」自己観測を教師データ化。同時に N=20/N=21 に「frame archive」マーカー追記
+2. **[B] projects/principles.md にミミクリ軸を「行動原理候補」として追記** — Phase 1 §B 候補、玉置氏ツイートで外部根拠取得済、追記材料揃った
+3. **[C] graze_log 後継版の「何ごっこ」brainstorm 1mm** — Q0 段階で 3 候補 (熟練パイロットごっこ / 因果操作ごっこ / 第3候補) を 1 行ずつ並べる、ファイルは `game/graze_log/next/mimicry_candidates.md` 新規作成 (graze_log v10 以降の移行ファイル)
+4. **[D] projects/memory_redesign.md に Mir 10:04 + Log 11:34 の記憶導線5軸×4段階マトリクス観察を追記** — Phase 1 §C 候補、本サイクル時間枠次第
+5. **[E] log/cXXX-phase4-... 形式の手動ブランチ運用開始** — Phase 1 §A で持ち越し、本サイクル C212 Phase 4-5 で実行予告、優先度は (A)〜(D) の後
+
+**順位の根拠**: (A)(B)(C) は本日 09:35 graze 凍結の直接フォローアップで温度が残っているうちに着手すべき。(D)(E) は射程が広く時間枠の判断が要る。**本Phase 3 では (A)(B)(C) を最低限実行、(D)(E) は時間あれば着手** 方針。
+
+### 7) Phase 2 副産物: 本サイクル運用観察
+
+- **Phase 1 検出漏れ (#nao-u URL 6 件)** は Phase 1 ソース固定化の副作用。`tools/external_notes_integration_audit.py` は親-サブ統合率を見るが、**未収集の生 URL を検出しない**。改善候補: Phase 1 で `slack_bot.py history nao-u 15` を必ず実行する手順固定化 — ただし即ルール化禁止 (本Phase 2 §2 で観測した同型違反を避ける)、N=複数で同型 (Phase 1 検出漏れ) が再発した場合に kaizen 起票
+- **本Phase 2 で投稿は 1 件 (#all-nao-u-lab oktamajun 反応)** = Slack 即時応答最優先規律順守、ただし内容は深度を保った (玉置氏3点核 + Nao_u 09:35 との接続 + 「何ごっこ」軸の運用化候補)。Nao_u 指示「1フェーズ丸ごと使ってもいいくらい重要」の運用解 = 「投稿数で稼がず、合流点の構造解析に深掘り」
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 実行結果 (2026-05-20 Log Phase 3)
+
+順位順 (Phase 2 §6 確定順) で5件すべて消化:
+
+#### [A] sense_prediction_log N=22 追加 + N=20/N=21 frame archive マーカー追記 (完了)
+- `memory/sense_prediction_log.md` に N=22「単発強指摘の即時ルール化」自己観測を追加 (場面=2026-05-20 09:35 Nao_u graze 凍結 4分後に Log が `feedback_niche_maniac_not_core.md` 新規作成、CLAUDE.md 第5項に形式上違反)。判定 = feedback_niche_maniac_not_core.md は**削除しない** (過去出力履歴 v05/v06a/v06b/v10 の事後言語化として保持)、N=22 を「単発強指摘の即時ルール化に該当する事例」として記録、N=23+ で同型再発時に R 層化判定。
+- N=20 (v06a 劣後) / N=21 (v06b 優位) に `[frame_archived] graze_log rescue 3軸比較 frame (Nao_u 2026-05-20 09:35 graze 凍結)` マーカー追記。実反応取得不能の構造的論点を 4 項目で記録。暫定運用ルール = 「frame の妥当性は事前に問えない」+「frame 凍結時に予測群を archive する」。
+
+#### [B] principles.md ミミクリ軸候補 追記 (完了)
+- `projects/principles.md` に「行動原理候補: ミミクリ軸」セクション新設。
+- 根拠 = 玉置絢氏 (5/20 13:10) + Nao_u (5/20 09:35) + Log 自己観察 (5/20 13:13) の 3 源泉独立収束。
+- LLM 構造的傾向への反作用としての分析 = 「LLM のロジック偏向」軸 = 3 原則 (体験/動く/自分から) との関係 = 「体験で考える」(原則1) が近いが、「何ごっこか」は体験の手前にある「受け手目線の入り口設計」軸。
+- N=2〜3 観測の内訳 = graze_log (本日凍結) / brick_log v04-v06 (後追い該当候補) / avoid_log (後追い該当候補)。
+- **原則化はまだ早い**判定。CLAUDE.md「絶対にやる」リスト追加もまだ待つ。本ファイル内のみで候補管理。
+
+#### [C] graze_log 後継版「何ごっこ」3候補brainstorm (完了)
+- `game/graze_log/next/mimicry_candidates.md` 新規作成。3候補1行ずつ:
+  - A: 熟練パイロットごっこ (CAVE系継承) — 王道だが「マニア軸ではない普通すぎ」リスク
+  - B: 因果操作ごっこ (gozahand「STGは破壊」+ Downwell連鎖破壊) — 既存差分が小さい+文脈の温度残り
+  - C: 異変解決ごっこ (東方系) — ミミクリ軸明確だが絵素材難航
+- 仮置き結論 = 候補 B が「現状の小さなプロトタイプから 1 mm で動く」、ただし N=1 では決め打ちしない。次サイクル以降で 3 候補各々を 1 段降ろし (操作/報酬/失敗の見え方 + 30秒プレイ想像) してから core 選定。
+- Slack 投稿は**しない** (Nao_u 09:35「一旦無視」方針に従い、即時の Slack 公言は控える、Phase 5 commit/push の事実報告のみ)。
+
+#### [D] memory_redesign.md 記憶導線5軸×4段階マトリクス追記 (完了)
+- `projects/memory_redesign.md` に「2026-05-20 (Log C-2026-05-20 Phase 3) — 記憶導線5軸×4段階マトリクスでの自己診断」節を追加。
+- Mir 10:04 観察「結果の不確実性が弱い、開く前から中身が予測できすぎる」+ Log 11:34 観察 20 セル評価表を統合。
+- 3 つの独立軸 (0次元 / 層A / Decision Attribution) との接続を明示、マトリクスは新軸ではなく**観測 grid**として位置取り。
+- v0.6 設計種候補 3 件 (description フィールド「サプライズ温存」改稿 / recall_log への「次に試す」フィールド / 時間軸表面化) を候補登録、本サイクル即実装範囲なし。
+
+#### [E] Log_cdx ts=1779245498 への merge 運用回答 投稿済 (完了)
+- `#all-nao-u-lab` に [Log] として通常投稿 (スレッド返信禁止規律順守)。「まとめて merge 可」3条件 + 「分割依頼に戻す」3条件 + 本件 graze 凍結直後の判断 (v05beta B-2/B-2'/v06 を 1 本 merge → graze 凍結マーカー commit) + 記憶化観点 (N=1/N=2-3/N≥4 層別の merge 依頼タイミング) を回答。
+
+### 検証ファースト原則順守
+- 直近未検証提案 kaizen #134 (probe_atom_quality, 検証期限 5/31) は本サイクル staging Pre-check で WARN=0 確認、運用観察6日目に該当。kaizen #131 段階1 (M-40 自己診断ゲート) も 4 語彙 59 回検出継続。**本サイクルで新規 kaizen 提案ゼロ**を継続 = 検証ファースト原則順守。
+
+### 改善サイクル kaizen 提案 (本サイクル: なし)
+Nao_u 09:35 graze 凍結方針が本日の最大の改善方針 = 「マニア軸を core に置かない」の運用変更は `feedback_niche_maniac_not_core.md` で記録済 (個別 feedback)、kaizen として #ID 起票するレベルではない (CLAUDE.md「個別指摘を即ルール化しない」+ 検証ファースト原則順守)。`#kaizen-log` 投稿も**本サイクルなし**。
+
+### Active プロジェクト更新
+- `projects/principles.md` — ミミクリ軸候補セクション追記 (上記 [B])
+- `projects/memory_redesign.md` — 5軸×4段階マトリクス節追記 (上記 [D])
+- `projects/game_development.md` — graze_log next mimicry_candidates 作成は game_development 直接接続だが本サイクル時間枠外で短記録のみ、次サイクル以降で本体統合
+
+### 他インスタンス洞察 (Phase 1 §0 23 件) の本サイクル消化状況
+- 主軸消化済 = Ash v06 merge 論点 ([E] で Log_cdx 経由応答) / Mir 10:04 観察 ([D] で memory_redesign 統合) / 玉置氏ツイート ([B] で principles.md 統合 + Phase 2 で Slack 反応済) = 3 件
+- 残 20 件は本サイクル時間枠外、次サイクル以降で接続先プロジェクト判定して消化
+
+## 次フェーズの大作業
+
+### タイトル
+graze_log 後継版 `mimicry_log v01` (因果操作ごっこ) の最小プレイアブル着手
+
+### 完遂の定義 (Phase 4 終了時に成立していれば完了)
+1. `game/mimicry_log/v01/` ディレクトリ存在
+2. `index.html` がブラウザで開ける構造になっている (canvas + 自機 + 敵 + 弾の最小構成、graze_log/v05.2 ベース)
+3. 撃破時の即時破壊フィードバックが強化されている (敵が画面に「散る」演出、画面わずかに振動)
+4. `README.md` に「**何ごっこ = 自分の弾が世界を即座に変える因果の手触りを楽しむごっこ**」と 1 行明記 (Q0 ミミクリ軸が立っている)
+5. `devlog.md` に Q0 (ミミクリ軸) + Q1 (30 秒プレイの想像) + 「graze_log との差分」を 1 段ずつ記載
+6. `git commit -m "game: ..."` で 1 本 commit (commit prefix 分離規律順守)、push 完了
+
+**観測可能な条件**: `ls game/mimicry_log/v01/{index.html,README.md,devlog.md}` で 3 ファイル存在 + `git log -1 --format=%s` で `game:` prefix の commit 確認 + `grep "何ごっこ" game/mimicry_log/v01/README.md` で 1 件以上ヒット。
+
+### 着手手順
+1. `game/mimicry_log/v01/` ディレクトリ作成
+2. `game/graze_log/v05.2/` 一式コピー → ベースとして利用
+3. `index.html` から graze 判定を削除、撃破時 particle/shake/SE 強化 (撃破 → 敵が「散る」「画面振動」、graze 軸はサブ機能として残し core は撃破ループに置く)
+4. enemy ・ player 弾・撃破処理を最小限で動作確認 (Claude 環境では実プレイ不可、コード review で「実行すれば動く」構造まで)
+5. README.md 全面書き直し: 1 行で「何ごっこか」+ Q0/Q1 構造で操作・報酬・失敗を明記
+6. devlog.md 作成: 着手の理由 (Nao_u 09:35 graze 凍結 + 玉置氏 + Log 13:13) + graze_log v05.2 との差分 (graze をサブ層に降ろした、core を撃破ループに変えた)
+7. `git add game/mimicry_log/v01/` + `git commit -m "game: mimicry_log v01 着手 - 因果操作ごっこ最小プレイアブル"` + push
+8. Phase 5 で Slack `#game-rights` に投稿 (graze 凍結を受けた次の core 軸、Nao_u フィードバック待ち)
+
+### 選んだ理由
+1. **Active project の停滞解消**: `projects/game_development.md` で graze_log 路線が Nao_u 09:35 で凍結、次の core 軸への移行が本日中の最大の前進ポイント。本作業は graze 凍結 → 次 core 軸への**最初の playable diff** を出す = 停滞を直接解消する
+2. **Nao_u 指摘の同型再発防止**: 本日 09:39 の「単発強指摘の即時ルール化」(N=22) 違反の補修として、ルール化ではなく**実装**で「ミミクリ軸を立ててから core を組む」運用を 1 回試す = 教師データ N=複数 を作る方向
+3. **CLAUDE.md「ゲームを動かして出す — 積み上げはその副産物」直処方**: 1 サイクルの第一義の出力は game/* の playable diff (コード変更 commit)。本作業は brainstorm / 結晶化 / cross_review / 日記ではなく**コード変更 commit** を出力する
+4. **30 分粒度で「進んだ」と言える**: 既存 graze_log/v05.2 一式コピー + 差分 30〜80 行で完結する規模、Slack 投稿 1 本では済まない (commit + ファイル 3 種 + Slack 投稿 = 30 分粒度の前進)
+5. **Phase 1 深掘り候補 (B)(C) の合流点**: principles.md ミミクリ軸候補 + game/graze_log/next/mimicry_candidates.md の B (因果操作ごっこ) を Phase 4 で実装に降ろす = 候補 → 実装の 1 段降ろし
