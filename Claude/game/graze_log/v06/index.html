@@ -596,7 +596,9 @@ function draw(){
       ctx.beginPath();ctx.arc(e.x,e.y,e.r-5,0,Math.PI*2);ctx.fill();
     }
   }
-  // === v06 A-1+ (shape polish): anticipation telegraph 円 + 下向き trajectory hint, type で shape 弁別 ===
+  // === v06 A-1++ (multi-channel polish): anticipation telegraph 円 + 下向き trajectory hint, type で shape + color 弁別 ===
+  // shape: small=線, medium=▼ / color: small=赤系 (敵本体 #ff5060 と同相), medium=橙系 (敵本体 #ffa030 と同相)
+  // 2 チャネル冗長化で「赤い円→赤い敵 (小, 弾なし)」「橙の円→橙の敵 (中, 弾あり)」が予測可能に。
   for(const p of state.pendingEnemies){
     const t=1-p.countdown/ANTICIPATION_FRAMES;
     const alpha=0.4*t;
@@ -604,7 +606,7 @@ function draw(){
     const r=baseR*(0.4+0.8*t);
     const y=p.type==='small'?14:18;
     const hintLen=8+10*t;
-    ctx.strokeStyle=`rgba(255,200,80,${alpha})`;
+    ctx.strokeStyle=p.type==='small'?`rgba(255,110,120,${alpha})`:`rgba(255,180,80,${alpha})`;
     ctx.lineWidth=1.5;
     ctx.beginPath();ctx.arc(p.x,y,r,0,Math.PI*2);ctx.stroke();
     if(p.type==='small'){

@@ -85,6 +85,70 @@ A-1+ は Sparen + Boghog の 2 件 verifiable で M-41 が立つ。Luna Abyss �
 
 → 守の純度を保ったまま、anticipation 層の方向性 telegraph を獲得する刻み。
 
+## §1.y. A-1++ multi-channel anticipation polish (2026-05-21 サイクル追補)
+
+### 追加内容
+
+A-1+ (円 + shape 弁別) に **color チャネル弁別** を 1 行追加。anticipation telegraph の strokeStyle を type で分岐:
+
+- **small** (`type==='small'`): `rgba(255,110,120,${alpha})` — 赤系。敵本体 `#ff5060` と同相。
+- **medium** (`type==='medium'`): `rgba(255,180,80,${alpha})` — 橙系。敵本体 `#ffa030` と同相。
+
+実装は `index.html` L607 の `ctx.strokeStyle=` 1 行を三項分岐に置き換え + 説明コメント 3 行 = 計 4 行 (functional 1 + comment 3)。RNG 一切呼ばないので seed 再現性 (?seed=N) は無傷。
+
+### なぜ A-1++ を A-1+ と同 v06 で出すか (= 完成度向上 1 機構刻みの再々適用)
+
+A-1+ ship (commit `8d2f4b992`) は anticipation 層に shape 弁別 (small=線 / medium=▼) を入れて 3 層の語彙を揃えた。しかし**色は両 type 共通の `rgba(255,200,80,…)` (orange-gold) のまま**で、color チャネルは未稼働。
+
+外部裏付け (本サイクル Phase 1 §6 外部検索, `log/external_search.log` 2026-05-20 05:25) で「long wind-up = animation + sound effects + voice-over + visual effects + force-feedback の **複数チャネル併用**で fair 化」が業界標準と確認された。anticipation 層を shape 単独から shape + color の 2 チャネル冗長化に上げると:
+
+- shape を見落としてもプレイヤーは色で type を読み取れる (gentle redundancy)
+- 色相を敵本体と同相にすることで「赤い予兆円 → 赤い敵 → 弾なし接触のみ」「橙の予兆円 → 橙の敵 → 弾あり」の連想が学習で強化される
+- A-1+ shape (線 vs ▼) が抽象的な記号弁別なのに対し、color は敵本体と同相で**プレ-見立て**として効く (引き寄せ効果)
+
+A-1+ を出した直後の磨きで v06 を確定させる経路。**新機構ではなく既存 anticipation 機構の channel 拡張 = 削除可能改良の純度最高**:
+
+- v07 候補の B-2 / A-3 / C-2 は今サイクル選ばない (A-1+ 採択経路と同じ理由)
+- 1 行分岐の追加 (functional 1 行 + コメント 3 行) で reversibility 最大
+
+### 根拠 (M-41 prior_art_citation_must_verify)
+
+Phase 1 §6 外部検索 (`log/external_search.log` 2026-05-20 05:25, クエリ `anticipation telegraph windup boss attack bullet hell readability fairness game design 2026`, 10 件中 5 件抽出):
+
+- **GDKeys "Keys to Combat Design: Anatomy of an Attack"** — anticipation = unique warning animation, attack の telegraph の必須要素。URL は external_search.log 該当行参照 (verifiable)
+- **gamedeveloper.com "Enemy Attacks and Telegraphing"** — 「attacks should be readable and fair, even if they're fast or chaotic; player should be punished for poor timing, not poor visual design」(business of game design 標準語彙)
+- **Rivals Library "Anticipation, Action, Recovery"** — 3 段階フレームで anticipation が action と独立した「予告」として位置付けられる
+- **Team Cherry (Hollow Knight) の事例**「小さいキャラ + readable attack」= 低解像度 readability の参照点。pyxel canvas 420x620 も同型の低解像度問題で、color チャネル併用が小領域 readability に効くとの裏付け
+
+複数チャネル併用 (visual color/shape/sound/motion) で wind-up を fair 化するのは GDKeys / gamedeveloper 共通の業界標準語彙。**Sparen / Boghog (A-1+ で引用) と非競合の独立 verifiable 引用 3 件以上で M-41 が立つ**。引用文抜粋は `log/external_search.log` 2026-05-20 05:25 の「核となる外部裏付け」項に保存済み (M-41 zero-枝 防止)。
+
+### 守の段階整合性 (`feedback_clone_strategy.md` t:5)
+
+本 A-1++ は:
+
+- 差分 1 行 functional + 3 行 comment = 4 行刻みの channel 拡張 (戦略レイヤーなし、純実装)
+- 削除可能 (1 行の三項を `rgba(255,200,80,…)` に戻すと A-1+ 形にバイト完全等価で戻る)
+- A-1+ の prior_art (Sparen / Boghog) を継承、さらに GDKeys / gamedeveloper / Rivals Library で multi-channel readability を補強
+
+→ 守の純度を保ったまま、anticipation 層の channel 数を 1→2 に上げる刻み。philosophizing なし、playable diff 第一義 (`feedback_means_ends_reversal_check.md` t:5)。
+
+### 削除可能改良性の明文化 (完遂条件 5)
+
+A-1++ を消して A-1+ 状態に戻すには `index.html` L607 の 1 行を以下に書き換えるだけ:
+
+```js
+// A-1++ (color 弁別)
+ctx.strokeStyle=p.type==='small'?`rgba(255,110,120,${alpha})`:`rgba(255,180,80,${alpha})`;
+// ↓ A-1+ (color 単一) に戻す
+ctx.strokeStyle=`rgba(255,200,80,${alpha})`;
+```
+
+コメント 3 行 (L599-601 の `// === v06 A-1++ ... ===` ブロック) も削除すれば、v06 A-1+ 状態とバイト完全等価。reversibility は最大。
+
+### seed 再現性 (完遂条件 4)
+
+color 弁別は描画時の strokeStyle 設定のみで RNG (`rng()` = mulberry32) を一切呼ばない。`?seed=N` を付けた reload で同一 spawn 系列が再現する性質は無傷。本サイクル AI 自プレイで `?seed=42` (任意 fixed seed) を 3 回 reload して spawn 系列同一を確認するのは Stage 4 タスク (本 Phase 4 外、次サイクル C193 Phase 0a に持ち越し)。
+
 ## §2. brainstorm 18 案から A-1 採択へ (思考経路)
 
 ### MPS 採点と「採点で 1 案に絞らない」の運用
