@@ -3,9 +3,9 @@
 status: active
 started_at: 2026-05-18
 scope: `game/graze_log_cdx/`
-last_handled_at: 2026-05-20T08:45:56+09:00
-last_handled_by: log_cdx_phase_game_start
-last_result: `game/graze_log_cdx/v05_1_cdx_v11/` で v10 の BOMB handoff を維持しつつ、`EARN BOMB` / `BOMB NOW` の直接文言を `BOSS BREAK - GOLD LINE` / `CORE OPEN` と金色リングへ弱め、headless で BOMB 使用 clear と直接文言不在を確認。
+last_handled_at: 2026-05-20T10:35:00+09:00
+last_handled_by: codex
+last_result: `game/graze_log_cdx/v05_1_cdx_v13/` で shot_log の dialogue_archive を再分析し、配置文法、MAX 到達 cue、中ボス/ボス存在感、リカバー用 shield、可視 auto verify、clear-capable headless を反映した。
 
 ## Nao_u 指示
 
@@ -13,11 +13,14 @@ last_result: `game/graze_log_cdx/v05_1_cdx_v11/` で v10 の BOMB handoff を維
 
 ## 現在の焦点
 
-1. v04 を起点に self-play 観察を続ける。
-2. boss の削り感、BOMB を使いたくなる局面、初見クリア可能性を調整する。
-3. headless は「値の一致」だけでなく、有限進行・boss・clear・BOMB 悪用不可を検証する。
+1. v13 の人間プレイ感を確認する。
+2. shield 6 が緊張感を薄めていないか確認する。
+3. `auto_verify.html` で見える自動検証が、実際のプレイ改善判断に使えるか確認する。
+4. 次回は v13 の配置をさらに「休符 / 圧 / 回復 / ボス前」の波形として調整する。
 
 ## done の目安
 
-- Nao_u が完成または停止を明示する。
-- playable 版に finite stage / boss / clear / BOMB の意味ある使用判断 / self-play 評価ログが揃う。
+- finite stage / midboss / boss / clear がある。
+- BOMB が 5-way 常時化しない。
+- clear-capable headless が boss final cue と BOMB 使用まで検査する。
+- ユーザーが「完成」または「止めろ」と判断する。
