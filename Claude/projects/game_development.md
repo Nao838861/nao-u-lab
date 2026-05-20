@@ -994,3 +994,7 @@ Ash C192 graze_log v06 (anticipation telegraph + shape polish + Stage 3-4 自己
 merge 判断には Ash 自身が v06 の発火距離を 1 ship 単位で採点 (段数 = 何か) を出すのが本筋。Log 側からの提案候補 (次サイクル以降): Ash v05 beta + v06 の merge 前に、v06 の core 体験を「graze ボタンを 1 回押した時の発火距離は何段か」で言語化する依頼を Log_cdx 経由で Ash に降ろす。これは Nao_u 09:35 凍結方針への適合判定にもなる。
 
 **game_templates_design.md との接続**: 「focus shot を骨格テンプレ候補」(Log 5/20 20:29 shared-reads) と発火距離軸は直結。focus shot = 発火距離 1 (撃つ→集束→敵爆ぜる) の最短経路設計で、骨格テンプレに置く意味は「発火距離 1 のコア体験を全ゲームに 1 つ持たせる」設計強制の道具として機能し得る。game_templates_design.md 側で focus shot を骨格に降ろす際の判定軸として発火距離を引く可能性を次サイクルで検討。
+
+### 2026-05-20 (Log C213 Phase 4): 3 ship 完全採点表 → 次サイクル 1 mm 候補
+
+`memory/shooting_assessment_matrix_v0.md` 末尾「## 3 ship 完全採点表 (C213 Phase 4)」節で 3 ship × 5 軸 × 4 段階 = 60 セル + Forgiveness + 開幕オフセンター + 発火距離を一望。集計: shot_log v01 (9○/7△/5✗) / graze_log v05.2 (16○/0△/4✗) / mimicry_log v01 (11○/0△/4✗/5?)。**聴覚軸が 3 ship × 全段階で ✗/△ 集中 = 系列構造的弱点**、**graze/mimicry の devlog 採点に楽観バイアス疑い** (時間軸 ○ が shot_log 同等の表示 ✗ と矛盾)、**発火距離 1 のコアを唯一持つ shot_log を base に sub 層を載せる合成 prototype = 「shot 1 段 core + graze ring sub + shake sub」が次着手前提候補** の 3 つを次サイクル 1 mm 候補として抽出。Phase 3 で宣言した「matrix v0.1 化」「3 ship 採点」「考察→外部化→適用の三段階を 1 サイクル内で閉じる」を Phase 4 で完遂。

@@ -232,3 +232,41 @@ Phase 1の git status観測『直近5commitに Log 本体ship無し、codex+mir 
 - **Active project 停滞解消**: game_development.md の今日関心最大 (137KB, mtime 5/20 20:55) かつ graze→mimicry pivot 進行中の中心プロジェクトに対し、Phase 4 で「採点表 = 次サイクル 1 mm 候補が機械的に出る装置」を載せる。次サイクル以降の「何を触るか」判定が採点表参照で済むようになる
 - **粒度適合**: 5 軸 × 4 段階 × 3 ship = 60 セルの評価を 30 分粒度で「進んだ」と言える形に落とせる。Slack 投稿1本では済まず、game/* の playable diff まで広げると 30 分越えるため、その中間としての「採点表 = 評価機構の固定」が Phase 4 の大作業として適正サイズ
 - **Nao_u 指摘の同型再発防止**: 5/20 09:35「graze は変則的なマニアしか喜ばない」が mimicry v01 にも当たり得る (発火距離 2-3 段) という発見の検証を、採点表で他軸 (視覚/聴覚/応答/構成/時間 × 4 段階) からも見渡すことで、同型再発 (= graze 凍結→mimicry も凍結フラグ点灯) を Phase 4 内で予防的に確認する
+
+
+## Phase 4: 実行
+
+### 完遂状況
+
+**4 完遂条件すべて成立**:
+
+1. ✅ `memory/shooting_assessment_matrix_v0.md` 末尾に「## 3 ship 完全採点表 (C213 Phase 4)」節を追加。60 セル (5 軸 × 4 段階 × 3 ship) を 5 軸ごとの 3 ship 並置表で表現
+2. ✅ 各 ship の Forgiveness 段階分布 + 開幕オフセンター + 発火距離を「直交軸 3 つの併記」表で同節内に併記
+3. ✅ 「次サイクル 1 mm 候補」を 3 行で明文化:
+   - 聴覚軸が 3 ship × 全段階で ✗/△ 集中 = 系列全体の構造的弱点 → 音響装置前例調査 1 件
+   - graze/mimicry の devlog 採点に楽観バイアス疑い → 実プレイ準拠 matrix_assessment.md 生成
+   - 発火距離 1 のコアを唯一持つ shot_log を base に sub 層を載せる合成 prototype = 「shot 1 段 core + graze ring sub + shake sub」
+4. ✅ `projects/game_development.md` 末尾に「2026-05-20 (Log C213 Phase 4): 3 ship 完全採点表 → 次サイクル 1 mm 候補」5 行サマリ追記
+
+### 副産物
+
+- **編集**: `memory/shooting_assessment_matrix_v0.md` — 末尾に新節 (約 60 行追加、5 軸別 3 ship 採点表 + 集計 + 評価バイアス注記 + 直交軸併記 + 1mm 候補 3 行)
+- **編集**: `projects/game_development.md` — 末尾に Phase 4 サマリ 1 節 (3 行)
+- **編集**: `log/cycle_staging_log.md` — 本節 (Phase 4 結果記録)
+- **新規ファイル**: なし (game/ 配下 commit なし、playable diff は Phase 3 までで完了)
+- **Slack 投稿**: なし (Phase 3 で ts=1779287481 既出、Phase 4 で重ね禁止)
+- **kaizen エントリ**: なし (Phase 3 §5 で新規提案ゼロ宣言、Phase 4 で増やさず)
+
+### Phase 3 で予告した「次サイクル」前倒し成果
+
+Phase 3 §2 で「knowledge 移動は 5 ship 採点完了 + v1 化後に再判定」と保留。Phase 4 完了後の評価: 採点表で「devlog 採点と実プレイ採点の食い違い疑い」が浮上 = 評価手法の信頼性に課題が残った状態 = **knowledge 移動はさらに保留妥当** (実プレイ準拠の matrix_assessment.md を 5 ship 揃えてから再判定)。Phase 3 §2 配置判断が Phase 4 結果と整合。
+
+### 完遂しきれなかった部分
+
+なし。Phase 3 で立てた完遂定義 4 点すべて Phase 4 内で成立。次サイクル繰越なし。
+
+### commit + push 予定 (Phase 5 で実施)
+
+- 変更ファイル: `log/cycle_staging_log.md` / `memory/shooting_assessment_matrix_v0.md` / `projects/game_development.md`
+- commit prefix: `rule:` (matrix への採点表追加 = 評価機構の固定化、game/* 配下に変更なし)
+- Phase 5 で日記と一緒に push
