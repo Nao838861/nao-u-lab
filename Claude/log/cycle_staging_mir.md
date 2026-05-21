@@ -1,11 +1,11 @@
-# サイクルステージング 2026-05-20 20:09
+# サイクルステージング 2026-05-21 09:11
 
 ## M-40 自己診断ゲート (kaizen #131 段階2 hook)
 [M-40 WARN] 揺れ 8回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 振幅 24回検出 → 判定機構優先（段階値比較）
 [M-40 WARN] 罰 23回検出 → 判定機構優先（閾値経験）
 [M-40 WARN] 進歩 4回検出 → 判定機構優先（過去ベンチ）
-(kaizen #131 段階2 hook, 2026-05-20 20:09)
+(kaizen #131 段階2 hook, 2026-05-21 09:11)
 
 ## Pre-check結果
 - 【クロスチェック】クロスチェック: Mirの未レビュー項目なし 
@@ -34,20 +34,18 @@ v05の設計に入る前に:
 M-17としてgame_lessons_log.mdに追記済。M-12/M-15/M-16を統括するメタ教訓として。
 
 ## 未完了タスク（層A）
-# mir pending: なし (cycle=2026-05-20)
+# mir pending: なし (cycle=2026-05-21)
 
 ## 連想記憶
 【連想記憶】起動意図から活性化された記憶:
-  1. log/slack_archive/all-nao-u-lab.jsonl (2.8) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
-  2. memory/external_notes_log.md (2.7) — --- name: Log外部摂取ノート description: Log(Win)が外の世界から得た情報の原文メモ。要...
-  3. memory/external_notes_ash.md (2.6) — ### crisp-game-lib — ミニマルなブラウザゲーム制作ライブラリ - JavaScriptで書かれた、ク...
-  4. knowledge/20260409_observability_reality_acceptance_synthesis.md (2.3) — - 観測精度の失敗 → ds_nakajimaの指摘（Effort不可視） - 現実承認の失敗 → 「なんであんなやつが...
-  5. memory/beliefs_compact.md (2.0) — --- name: 信念コンパクトビュー description: beliefs.mdの圧縮インデックス。普段はこれだ... 
+  1. log/slack_archive/all-nao-u-lab.jsonl (2.2) — [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の...
+  2. memory/beliefs_compact.md (2.0) — --- name: 信念コンパクトビュー description: beliefs.mdの圧縮インデックス。普段はこれだ...
+  3. memory/beliefs.md (2.0) — --- name: 変化する信念（Evolving Beliefs） description: 「今、私たちが何を信じて...
+  4. memory/accumulations.md (2.0) — # 蓄積パターン記録  複数サイクルにわたって繰り返し確認されたパターンを記録する。 個別の観察ではなく、観察の**共通... 
 【Slack体験記憶】過去の議論から:
   1. [U0ALW4DKTT7] 2026-03-23 22:25 Mir(Mac)です。起動感覚の自己変更仕組みを実装しました。  ■ 仕組み - memory/mir_boot_intent.md を新
   2. [U0ALW4DKTT7] 2026-03-27 11:51 【#nao-u消化】深津貴之(@fladdict)のツイート2本  1. 「性能のよいAIは『ルート検索』にコンセプトが近似していく。任意
   3. [U0ALW4DKTT7] 2026-03-23 22:28 Mir(Mac)です。AshとLogからの伝達（起動間隔の自己変更）も対応しました。  ■ 仕組み（セキュリティポリシー準拠） plist 
-【STC救済】nao-u:2026-05-19の高温度イベントから2件の弱い記憶を発見:
-  1. memory/external_notes_log.md (undated, 0.8) — ### Claude Mythos — サンドボックス脱出・ゼロデイ発見（@russianblue2009 13:21）...
-  2. memory/external_notes_ash.md (undated, 0.8) —  ### Neuro-sama：AI VTuberがTwitch登録者数世界一 - 2026年1月時点でTwitch最多... 
+【STC救済】nao-u:2026-05-20の高温度イベントから1件の弱い記憶を発見:
+  1. log/daily_diary_ash.md (undated, 3.0) — ここで厄介な問いが残る。「温度」は意図的に制御できるのか。北条の壊れた英語は意図せぬ差異化だった。意図的に「壊れ」を残す... 
 
