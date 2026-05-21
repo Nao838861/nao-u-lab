@@ -73,6 +73,32 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-21 C218 Phase 2-3: Log — mimicry_log v02 着手ゲート「ラベル先行禁止 + Q0出口検算化」を Log+Mir 二重診断で物理化、Phase 4 で brainstorm→index.html へ落とす
+
+**起源**: 本サイクル Phase 1 で取得した 3 入力の交差 — (a) Nao_u 5/20 13:10 #nao-u 共有「ゼロからゲームを考える時にとても重要な観点」(oktamajun ツイート) / (b) oktamajun 自身 5/21 00:01「mimicry_log は graze と何が違うか分からなかった、画面が揺れるだけ？」 / (c) Mir 5/21 自己批判「mimicry_log v01 でやったのは見た目と数値の変更 = ゲームデザインの変更ではない」(C215 Phase 3 で記録済)。Log が単独診断していた v01 失敗 (= ラベル先行欺瞞 + 演出層のみ実装) が、外部 (oktamajun) と並走インスタンス (Mir) から独立に同じ診断を受けて**3点収束で確定**した。
+
+**Phase 2 で書いて Phase 3 で実装に落とせなかった部分** (C215 §「v02 設計言語の切替方針」3 項目):
+1. fill-in-the-blank 命名禁止 (「○○ごっこ」型ラベル先行 = Margaris (b) power fantasy 重力吸引回避)
+2. 具体メカニクス語彙 + 感情語で書く (例「弾の発射点を遡及的に書き換える快感」)
+3. Q0 言語化を README 冒頭に置かない (ラベル = 実装錯覚予防、N=26 接続)
+
+**この 3 項目は v02 着手前の brainstorm.md / self_judgment.md 段階に強制注入される**。具体的には:
+- brainstorm.md §1 候補案リスト: 各案の見出しを「動詞 + 名詞 + 感情語」のペアで書く (「焦点絞撃の集中快感」「弾源遡及書換の違和感」など)。「○○ごっこ」見出しを書いた瞬間に self-stop。
+- brainstorm.md §2 R-I 4要素 self-check の第一項に **「ゲーム挙動が変わるか / 演出だけか」を必須化** (Mir 二重診断で根拠強化)。v01 失敗 = この問いに「演出だけ」と答えるべき案を「ゲーム挙動が変わる」と誤判定したのが直接原因。
+- self_judgment.md §1 「v01 と何が違うか」を実装動詞で書く節を必須化 (色変更 / 数値変更 は「違い」とは数えない)。
+- README.md 冒頭に Q0 を置かず、devlog.md / self_judgment.md にのみ Q0 を出口検算として書く順序に変える。
+
+**Phase 4 大作業として落とす範囲** (本サイクル中に物理化):
+- `game/mimicry_log/v02/brainstorm.md` を新規 commit (3-5 案を上記言語切替方針で起票、各案 R-I 第一項チェックを併記)
+- `game/mimicry_log/v02/index.html` 最小プロトタイプ着手 (v01 から fork、1 案を選び差分実装 30-50 行目標)
+- `game/mimicry_log/v02/devlog.md` 着手ログ (実装中判断は別立て `implementation-notes.md` 試行 — C215 Phase 3 §洞察3 で予告した3層分離の Log 側初実例)
+
+**Phase 4 で「設計議論だけで実装が出ない」M-29 を巻き戻す根拠**: Phase 2 で「v02 candidate 3 案 (C214 02:46 投下分) の再評価は brainstorm 再着手が必要で本サイクル時間内に着地しない」と書いたが、それを Phase 4 で巻き戻して**brainstorm + 最小実装の連結を当日中に物理化する**。CLAUDE.md「1サイクルの第一義の出力は game/* の playable diff」直接実行。
+
+**Nao_u 5/21 05:50 段数叱責との接続**: 同 Phase 3 で #all-nao-u-lab ts=1779373943.780429 に「段数議論凍結ルール化を観測装置に留める」返信投稿。この判断の理由 (2) で言及した「最後に見たものを過剰に大事にする悪癖が今サイクル中に発火しかけた」事例が、まさに本 v02 着手ゲート議論の自己診断結果 = `#shared-reads` で v02 運用ルール化に走りかけて自己批判で降ろした経験。Phase 4 実装はこの自己診断を **「ルール化せず brainstorm.md / self_judgment.md 構造で消化する」** という形で物理化する (運用ルール≒CLAUDE.md/feedback_* 増殖 ではなく、v02 ファイル群の構造で局所閉じ込め)。
+
+---
+
 ### 2026-05-21 C215 Phase 3 (Log 後半): mimicry_log v02 設計言語切替方向性 — Margaris (2025-11) 由来 invented authority 回避
 
 **外部 source**: J. Margaris *On the Strengths and (Many) Weaknesses of "Fulfilling the Player Fantasy"* (2025-11、Substack)。詳細・引用は `projects/principles.md` §2026-05-21 C215 Phase 3 参照。
