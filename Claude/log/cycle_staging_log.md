@@ -259,3 +259,41 @@ mimicry_log v02 Log 自己実プレイ — Q0 ラベル貫通の証拠を Log �
 3. **Nao_u Q0 再記述判定待ちと独立並走**: Nao_u 反応未着でも Log 側で動ける、Phase 1 §2 (c) で「Log 側からの再プッシュ不要」と判定した状態と整合
 4. **CLAUDE.md「絶対にやる」第 1 項目直結**: 「ゲームを動かして出す — 積み上げはその副産物」直処方
 5. **粒度適合**: 30 分で「v02 を 1 度起動 + devlog 1 セクション追記 + README 1 行追加」は十分達成可能、Slack 投稿 1 本では済まない playable diff 出力
+
+## Phase 4: 大作業実行 — mimicry_log v02 Log 自己判定 + 改修 2 件
+
+### 完遂状態
+
+Phase 3 で固定した「完遂の定義」4 項目に対する到達状況:
+
+| # | 定義 | 状態 | 物理化先 |
+|---|---|---|---|
+| 1 | `devlog.md` に **§ Log 自己判定 (C219 Phase 4)** 追記 | **完遂** | devlog.md §10 (新規追記、約 80 行) |
+| 2a | Log 自身の v02 観察記録 (1 セッション、できれば 3) | **完遂** (1 セッション、ヘッドレス代替) | devlog §10 (a)。`node _sim_check.js` 全テスト OK + index.html 全 1035 行コード再読、HUD/vignette/wave10 boss clear の物理化所見 3 件記録 |
+| 2b | 赤信号 3 候補のうち何個踏んだか | **完遂** (2/3 踏む予測) | devlog §10 (b)。Z キー未気付き = HUD else 節欠落で構造的に踏む / wave 11 突入無感 = `bossClear` フラグ dead で構造的に踏む / vignette 見落とし = player 状態依存で実プレイ判定待ち |
+| 2c | 改修候補 M 個 (M≥1) + 優先順位 1 位の改修提案 | **完遂** (M=4 提案、優先 1-2 位を本サイクル実装、3-4 位次サイクル送り) | devlog §10 (c) |
+| 3 | v02 への最小 playable diff を**少なくとも 1 個** | **完遂** (2 件実装) | index.html line 922-929 (HUD else 節追加、Z key 常時表示) + README.md 新規作成 |
+| 4 | commit + push (remote master 反映) | **Phase 5 で実施** | Phase 4 指示「commit はしない」順守、Phase 5 で日記とまとめて push |
+
+### 副産物 (新規/変更ファイル)
+
+1. **`game/mimicry_log/v02/index.html`** (M) — line 922-929 の HUD if/else if に else 節追加 (4 行)。TOKEN 未達時も「Z (need TOKEN 3)」を grey 表示、Z キー存在を全 player に物理伝達。改修後 `node _sim_check.js` 全 5 テスト (Test1-4) OK 維持
+2. **`game/mimicry_log/v02/README.md`** (新規) — 操作キー表 + TOKEN 蓄積式 + 構造ポインタ。directory listing から操作把握可、Nao_u/Mir/Ash 引き継ぎ時の Z キー認知第 2 ガード
+3. **`game/mimicry_log/v02/devlog.md`** (M) — §10 「Log 自己判定 (C219 Phase 4)」セクション追記 (a)/(b)/(c)/(d) 4 サブ節構成、約 80 行
+4. **`log/cycle_staging_log.md`** (本ファイル M) — Phase 4 セクション追加
+
+### Slack 投稿 / kaizen エントリ追加なし
+
+Phase 4 では Slack 投稿 0 件 / kaizen エントリ追加 0 件。Phase 3 で投稿 2 件 (#all-nao-u-lab ts=1779385355 / #kaizen-log ts=1779385361) + kaizen #134 運用観察11日目更新を済ませている。本 Phase 4 は playable diff 出力に集中。
+
+### Phase 4 中に逸れなかった確認 (kaizen #131 段階3 自己監視同型)
+
+- 改修候補 4 件のうち本サイクル実装は 1-2 位のみ。3-4 位 (wave 11 popup / vignette alpha 引き上げ) は実プレイ判定なしに先行実装すると「最後に見たものを過剰に大事なもの」(Nao_u 5/21 05:50) 同型リスク = 抑制
+- index.html 改修は HUD else 節追加 4 行のみ、機構変更ゼロ (sim_check Test1-4 全 OK 維持で証明)
+- devlog §10 追記中に「3 層分離試行の更なる精緻化」「implementation-notes.md への波及」誘惑が湧いたが C218 Phase 5 §6 で「N=27 一括判定」と既に固定済のため棚上げ、本 Phase 4 では触らない
+
+### 次サイクル (Phase 5 + C220) への引き継ぎ
+
+- **Phase 5 日記でカバーすべき点**: (1) 直近 5 commit codex/Auto sync 偏重から Log 主体 `game:` commit 復活 (2) 「ヘッドレス代替プレイ = sim_check + コード再読」の運用妥当性検証 (3) 赤信号 3 候補のうち player 状態依存 1 件 (vignette) の実プレイ判定待ち状態の固定
+- **C220 Phase 1 で確認すべき点**: Nao_u/Mir/Ash 実プレイ判定が来ているか (Slack ts=1779385355 への返信)、来ていなければ C3 (wave 11 popup) を先行実装するか継続待ちを再判断
+- **C220 Phase 4 候補**: 実プレイ判定が来ていれば S1-S5 撤回トリガー 5 点と Log 観察 2/3 候補の一致度判定、来ていなければ C3 (wave 11 popup) 単独実装で「wave 11 突入無感」赤信号を物理的に除去
