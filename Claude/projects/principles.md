@@ -100,6 +100,22 @@ IF-THEN 12本 → 3原則に再構成済み。Nao_u「良い方向性」「い�
 
 **次の一手**: mimicry_log v02 着手前批判 R-I 4要素チェックの第一項に「ミミクリ軸が立っているか / 演出だけか」を組み込む (game_development.md §2026-05-21 履歴と接続)。
 
+### 2026-05-21 C215 Phase 3: Margaris (J. Margaris 2025-11 Substack) による R-J 候補の **降格判定**
+
+**外部 source 引用**: *On the Strengths and (Many) Weaknesses of "Fulfilling the Player Fantasy"* (jmargaris.substack.com/p/on-the-strengths-and-many-weaknesses, 2025-11) — 「player fantasy = expectation の obscured 版。'I expect stealth in a ninja game' と書けば個人的判断と分かるが 'fulfilling the player fantasy' と言い換えると invented authority が立ち上がる」。
+
+**Margaris の 4 失敗モード** (a)expectation/theme/atmosphere と語が重なって曖昧 / (b)「○○ごっこ」fill-in-the-blank は **power fantasy へ重力的収束** / (c)invented authority の罠 / (d)pirate 型既存原型でしか実質機能しない (ninja でさえ stealth-focused vs action-oriented で分裂)。代替として "fantasy" 語を放棄し、**具体メカニクス・体験・感情語** (wistfulness / otherworldliness 等) で書く。The Witcher を「ウィッチャーごっこの fulfillment」ではなく「Geralt is compelling, well-written character / one-liners lend distinct personality」と評価する例。
+
+**R-J 候補「Q0 (何ごっこか) は 5 秒で受け手に伝わるか」原則化判定への影響**:
+
+Margaris (b)(c) は R-J 候補の核心と直接衝突する。R-J を最上位評価軸に据えると、Q0 を満たすために mimicry_log v02 を **pirate 型既存原型へ寄せる誘惑**が生まれる = (b)「power fantasy への重力吸引」そのもの。さらに「何ごっこ」というラベル先行は (c) invented authority の典型例で、oktamajun 5/21 00:01「mimicry_log は graze とゲームデザイン的に何が違うのか全く分からなかった。画面が揺れるだけ？」が突きつけた問題と構造同型 = **ラベル先行で実体不在**。
+
+**判定**: R-J を **原則化撤回 + 候補内降格**。Q0 = 必要条件ではなく **十分条件の一つ** に格下げし、評価軸 0 として最上位固定しない (5/21 11:31 Log 自己反省「Mir 8:27 警告の 5 分後に Q0 を評価軸 0 として固定提案 = 悪癖再演」への独立 source 由来ブレーキ)。Margaris が Destiny 2 Season of Plunder 例で示唆する「**チーム alignment の最速 shorthand**」用途 (= licensed IP / wish-fulfillment 系) としては残す = **コミュニケーション shorthand の一つ**として運用、設計判定軸としては使わない。
+
+**メタ観察**: 本ファイル §LLM 構造的傾向への反作用「Mir/Log/Ash + 玉置氏 + Nao_u の 6 源泉独立収束」で N=2〜3 → N=5〜6 に補強した直後に、**独立 source (Margaris) が原則化撤回方向を立証**した。これは [feedback_few_rules_big_effect.md] 「個別指摘を即ルール化しない」の構造的妥当性が、Nao_u からの指摘ではなく外部記事から立証された稀なケース。原則化は **同型反復が観察されてから** という鉄則を、本サイクル経由で再確認できた。降格判断は完全廃案ではなく「最上位固定撤回 + shorthand 用途維持」で扱う = `memory/game_lessons_log.md` R-B 詳細節への注釈追加 + `projects/game_development.md` mimicry_log v02 設計言語切替方向性メモ と連動。
+
+**次の一手**: mimicry_log v02 では「因果操作ごっこ」のような fill-in-the-blank 命名を捨て、**具体メカニクス + 感情語** (例: 「弾の発射点を遡及的に書き換える快感」「犯人当ての逆再生」「発射の主体が後から判明する違和感」) で v02 brainstorm を書く。Q0 言語化作業を README 冒頭に置かない (= 「ラベルを書いた = 実装が伴った」錯覚の予防、N=26 と接続)。
+
 ### 関連
 - [memory/feedback_niche_maniac_not_core.md](../memory/feedback_niche_maniac_not_core.md) — Nao_u 09:35 graze 凍結を受けた個別 feedback
 - [memory/sense_prediction_log.md](../memory/sense_prediction_log.md) N=22 — 本日 09:39 の「単発強指摘の即時ルール化」自己観測 (本ファイル候補化との緊張関係: 本候補も同型違反になる可能性、ただし玉置氏 (外部) + Nao_u (体感) + Log (自己観察) の 3 源泉独立収束で候補化条件を満たすと判定)

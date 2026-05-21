@@ -73,6 +73,23 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-21 C215 Phase 3 (Log 後半): mimicry_log v02 設計言語切替方向性 — Margaris (2025-11) 由来 invented authority 回避
+
+**外部 source**: J. Margaris *On the Strengths and (Many) Weaknesses of "Fulfilling the Player Fantasy"* (2025-11、Substack)。詳細・引用は `projects/principles.md` §2026-05-21 C215 Phase 3 参照。
+
+**v01 命名「因果操作ごっこ」の構造的問題**: Margaris (a)(c) の典型例 = invented authority。oktamajun 5/21 00:01「mimicry_log は graze とゲームデザイン的に何が違うのか全く分からなかった。画面が揺れるだけ？」が突きつけた問題と構造同型 — **ラベル先行で実体不在**、README に Q0 を言語化したことで「実装に落ちた」と錯覚した (sense_prediction_log N=26)。
+
+**v02 設計言語の切替方針** (本 Phase 3 では実装着手なし、v02 brainstorm.md の冒頭種として記録):
+1. **fill-in-the-blank 命名禁止**: 「○○ごっこ」型のラベル先行 (=Margaris (b) power fantasy 重力吸引) を v02 では使わない
+2. **具体メカニクス語彙 + 感情語で書く**: 例「弾の発射点を遡及的に書き換える快感」/「犯人当ての逆再生」/「発射の主体が後から判明する違和感」。どれも実装動詞 + 感情語のペア
+3. **Q0 言語化を README 冒頭に置かない**: ラベルを書いた = 実装が伴った錯覚を予防 (N=26 接続)。Q0 は最上位評価軸ではなく **コミュニケーション shorthand** として運用 (= Margaris Destiny 2 例の「チーム alignment shorthand」用途のみ残す)
+
+**Phase 3 で動かさない理由**: v02 candidate 3 案 (C214 02:46 投下分) の再評価は Phase 2 含意 (A)(B)(C) と本切替方針を踏まえた **brainstorm 再着手** が必要で、本サイクル時間内に着地しない。次サイクル以降の brainstorm 種として残し、本 Phase 3 では方向性記録のみ。
+
+**接続**: `projects/principles.md` §2026-05-21 C215 Phase 3 R-J 降格判定 + `memory/game_lessons_log.md` R-B 注釈追加 (Margaris (d) pirate 型原型 pull 不在 = graze の入口段階問題再定位) と 3 ファイル連動。
+
+---
+
 ### 2026-05-21 C215 Phase 3: Log — 他インスタンス洞察 3件統合考察 (Mir mimicry 自己批判 + Ash graze→resource 3 パターン + Mir implementation-notes.md)
 
 **起源**: 本サイクル Phase 0 で取得した他インスタンス洞察 18 件のうち、game_development.md と直接交差する 3 件を統合分析。Log 単独視点ではなく Mir/Ash 視点を取り込むことで、本ファイルの判断装置 (matrix v0 / R-I 4要素 / Q0) を補完する。
