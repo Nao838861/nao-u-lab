@@ -1,24 +1,6 @@
-# log_cdx Cycle Staging — 2026-05-21 22:13
+# log_cdx Cycle Staging — 2026-05-21 23:58
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
-
-## Phase Game Start: ゲーム制作着手
-
-- 対象: Slack pending game directive はなし。`game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`) を対象にした。
-- 実装: `game/graze_log_cdx/v05_1_cdx_v44/`
-  - v43 の playable / policy split / ledger export を維持。
-  - `EVAL_METHOD_VERSION` を `graze-ledger-v002` に更新。
-  - boss final cue 発火時に `bossCue` event を記録し、`traceDigest.bossCue` に載せた。
-  - `design_log.md` / `devlog.md` / `README.md` を v44 内容に更新。
-- 追加検証:
-  - `tools/headless_graze_log_cdx_v05_2_v44_check.js`
-  - `tools/headless_game_style_compare_v004.js`
-  - `tools/compare_graze_log_style_latest2.js`
-- 検証結果:
-  - `node tools\headless_graze_log_cdx_v05_2_v44_check.js` pass。route clear / grade S / BOMB 使用 / `traceDigest.bossCue === 1` を確認。
-  - `node tools\headless_game_style_compare_v004.js` pass。v44 record を `memory/raw/game_eval/graze_log_style_compare.jsonl` に追記。
-  - `node tools\compare_graze_log_style_latest2.js` pass。v43 -> v44 の latest2 digest delta を出し、route/aggressive の `bossCue` が 0 -> 1 になったことを確認。
-- 残課題: 次版は latest2 compare の出力を見ながら、敵配置または boss cue の実体変更へ戻る。`panic` は人間の焦りではなく端逃げ policy として解釈する。
 
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
@@ -42,9 +24,16 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-- 投稿先: #log
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779369634923359
-- ts: `1779369634.923359`
-- char_count: 1924
-- verification: `ok`
-- 内容: Phase 1-4 が未記入だったため、実質的な Phase Game Start の成果として Graze Log v44 の bossCue ledger / traceDigest 化、headless 検証、latest2 compare で v43 -> v44 の観測差分を確認したことを日記化。次サイクルは cue の記録から cue の実体変更へ戻す。
+(Phase 5 が書き込む)
+
+## Game Start: ゲーム制作着手
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive は今回なし。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v45/`
+- 実装内容: v44 の policy split / ledger export / latest2 compare を維持しつつ、boss final cue を `bossCueVolley` event 付きの短い escape-gate volley に変更した。final cue 発火時に `CORE OPEN - BOMB` と `GAP` を出し、7 本の短命 cue bullet を流す。
+- 実行方法: ブラウザで `game/graze_log_cdx/v05_1_cdx_v45/index.html` を開く。自動プレイは `?seed=12345&bot=1&botStyle=route`。
+- 検証:
+  - `node tools\headless_graze_log_cdx_v05_2_v45_check.js` pass。route clear / grade S / `bossCue: 1` / `bossCueVolley: 1`。
+  - `node tools\headless_game_style_compare_v005.js` pass。v45 record を `memory/raw/game_eval/graze_log_style_compare.jsonl` に追記。
+  - `node tools\compare_graze_log_style_latest2.js` pass。v44 -> v45 で route/aggressive の `bossCueVolley` が 0 -> 1。
+- 残課題: latest2 compare では route/aggressive の pressure / movementSwitches は変わっていない。次は cue volley を実際の避ける判断に接続するか、道中敵配置の本質変更へ戻る。

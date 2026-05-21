@@ -49,6 +49,11 @@ function digestDelta(before, after) {
       bombs: { before: b.bombs ?? null, after: a.bombs ?? null, delta: deltaNumber(a.bombs, b.bombs) },
       activeDef: { before: b.activeDef ?? null, after: a.activeDef ?? null, delta: deltaNumber(a.activeDef, b.activeDef) },
       bossCue: { before: b.bossCue ?? 0, after: a.bossCue ?? 0, delta: deltaNumber(a.bossCue ?? 0, b.bossCue ?? 0) },
+      bossCueVolley: {
+        before: b.bossCueVolley ?? 0,
+        after: a.bossCueVolley ?? 0,
+        delta: deltaNumber(a.bossCueVolley ?? 0, b.bossCueVolley ?? 0),
+      },
       pressure: { before: b.pressure ?? null, after: a.pressure ?? null, delta: deltaNumber(a.pressure, b.pressure) },
       movementSwitches: {
         before: b.movementSwitches ?? null,
@@ -75,7 +80,7 @@ const report = {
   styleDelta: digestDelta(before, after),
   notes: [
     "This is a headless comparison aid, not a fun verdict.",
-    "bossCue is absent in v43 records and treated as 0 so v44 can prove the final BOMB cue entered the trace.",
+    "Missing cue fields in older records are treated as 0 so newer versions can prove whether the prompt and its pressure event entered the trace.",
   ],
 };
 
@@ -83,4 +88,5 @@ console.log(JSON.stringify(report, null, 2));
 
 const hasRoute = report.styleDelta.route && report.styleDelta.route.result.after === "clear";
 const hasBossCueDelta = Object.values(report.styleDelta).some((row) => row.bossCue.after > row.bossCue.before);
-if (!hasRoute || !hasBossCueDelta) process.exit(1);
+const hasBossCueVolley = Object.values(report.styleDelta).some((row) => row.bossCueVolley.after > 0);
+if (!hasRoute || (!hasBossCueDelta && !hasBossCueVolley)) process.exit(1);
