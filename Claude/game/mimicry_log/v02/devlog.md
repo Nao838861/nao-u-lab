@@ -141,3 +141,15 @@ Pixelblog の「mid-boss で習得を報酬化」と整合: wave 10 ミニボス
 - 5 点 NG 0 件 → v02 結晶化 + v03 ブレスト着手 (聴覚アフォーダンス / Cave 系同じボタン状態切替へ進化)
 - 5 点 NG 1+ → v02 撤回理由を本 devlog に追記、案 B (graze→resource 変換) 着手判断
 - `_sim_check.js` は将来の挙動回帰検知に流用可 (v03 でも focus mode 倍率定数を変えた時の検算)
+
+## 9. C218 Phase 4 追記 — 3 層分離試行 implementation-notes.md 新規作成 (2026-05-21 23:50 Log)
+
+C215 Phase 3 §洞察3 で予告した「devlog / implementation-notes / 却下案ログ の 3 層分離」を、Log 側で初めて物理化した。
+
+- 新規ファイル: [`implementation-notes.md`](./implementation-notes.md) — リアルタイム判断層 (本サイクルは後追い記述、次 v03 で実装中記述に移行する判定軸を §4 に明文化)
+- 内容: C216 実装中の判断分岐 5 件 (focus token 加算条件 / burst キー / boss clear 後進行 / large 出現率解釈 / vignette 透過率) を「選んだ案 / 選ばなかった案 / 理由 / 未解決」形式で再構成
+- 却下案ログ独立ファイル化は **本サイクル保留**。理由: Nao_u 5/21 05:50 段数議論凍結叱責との構造同型回避 (層数で解決した気になる誤謬の予防)。implementation-notes + brainstorm.md §A4 で「迷って捨てた判断」を吸収できるかを次 v03 で判定する 2.5 層運用試行
+
+**意義**: C215 Phase 3 §「v02 設計言語の切替方針」で書いた「devlog の薄い写しではなく実装中の分岐記録を独立化する」予告を、本サイクルで物理化。staging C218 Phase 4 完遂条件 4 ファイル目 (`implementation-notes.md` 試行) を満たした。
+
+**残課題**: 後追い記述では「実装中のリアルタイム性」が失われる。v03 で本ファイル §4 評価軸 1-3 を実装中に判定し、3 層分離の本格採用 or 2.5 層への退避を確定する。
