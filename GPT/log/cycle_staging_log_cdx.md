@@ -1,4 +1,4 @@
-# log_cdx Cycle Staging — 2026-05-21 15:13
+# log_cdx Cycle Staging — 2026-05-21 16:58
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
@@ -24,20 +24,21 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-
-- 投稿先: `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779344808077339
-- char_count: 2286
-- Slack API verification: `ok`
-- draft: `.tmp/phase5_diary_20260521_1513.md`
-- 補足: Phase 1-4 は空で、実体は Phase Game Start の `graze_log_cdx` v40 playable diff。日記では route choice committed / headless pass / 人間可読性の未検証を reflection として扱った。
+(Phase 5 が書き込む)
 
 ## Phase Game Start: ゲーム制作着手
 
-- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack direct pending game directive はなし。
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v40/`。v39 の relay locked route preview / side route unlock を維持し、relay 撃破後の左右 connector のうち最初に撃破した側を route choice として確定する playable diff を追加した。選んだ側だけに `dp_relay_committed_route` follow-up を出す。
-- 判断理由: v39 は「relay を倒すと route が開く」までは読ませるが、開放後は左右両方を撃つだけに戻りやすい。今回は HP / 火力 / boss ではなく、プレイヤーの横移動判断が chain 継続へつながる rule-space の差分にした。
-- 実行方法: `game/graze_log_cdx/v05_1_cdx_v40/index.html` を開く。自動確認は `index.html?seed=12345&bot=1`。
-- 検証: `node tools\headless_graze_log_cdx_v05_2_v40_check.js` pass。`relayRouteChoiceCommitted=true`、`relayRouteChoiceLeft=true`、`relayRouteCommittedFollowup=true`、`relayPreviewUnlocks=true`、`relayOpensSideRoute=true`、`botClearsWithBomb=true`。bot は `killCount=140`、`maxChain=18`、`bombCount=1`、`grade=S`。
-- 残課題: 人間プレイで、最初に撃破した side connector が「自分が選んだ route」として読めるか、または偶然出た追加敵に見えるかを確認する。
-- commit: `9cf457a1e420` (`game: add graze log relay route choice v40`)。
+- 対象 directive: `log-cdx-1779337186-a414e7c064` (`game-rights`, https://nao-u-lab.slack.com/archives/C0ANQ9DRQ1K/p1779337186382109)
+- 併用した local continuous directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md`
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v41/`
+  - v40 の gameplay は維持。
+  - 30 frame cadence の headless sample と sparse event log を追加。
+  - `summarizeEvalTelemetry()` で target uptime / urgentPct / maxThreat / dangerSpikes / movement switches / route coverage を返す。
+- 追加した検証:
+  - `tools/headless_graze_log_cdx_v05_2_v41_check.js`
+  - `tools/headless_game_style_compare_v001.js`
+- 実行結果:
+  - `node tools\headless_graze_log_cdx_v05_2_v41_check.js` pass。v41 bot は `mode=clear`, `grade=S`, `killCount=140`, `maxChain=18`, `bombCount=1`。telemetry は `sampleCount=144`, `eventCount=170+`, `routeCoveragePct=1`, `targetUptime=0.669`, `urgentPct=0.036`, `dangerSpikes=21`。
+  - `node tools\headless_game_style_compare_v001.js` pass。shot_log copy の center/aggressive/defensive/sweeper policy split と、graze_log v41 の coverage / pressure / movement / event trace を同じ report に載せた。
+- directive lifecycle: `memory/slack_directives.jsonl` の対象 id を handled に更新済み。
+- 残課題: graze_log 側にも複数 bot style を追加し、shot_log と同じ policy split で評価する。headless は「楽しい」の代替ではなく、人間 feedback と照合する比較署名として扱う。
