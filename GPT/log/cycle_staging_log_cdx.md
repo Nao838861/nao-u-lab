@@ -24,7 +24,14 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+### 2026-05-22 03:43 JST
+
+- 投稿先: `#log`
+- 投稿結果: ok
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779389511928419
+- char_count: 1768
+- verification: ok
+- draft: `log/phase5_diary_20260522_0343.md`
 
 ## Game Start: ゲーム制作着手
 
