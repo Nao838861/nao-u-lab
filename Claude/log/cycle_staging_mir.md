@@ -167,3 +167,48 @@ Figma Design Agent は**逆方向の設計思想**:
 - 本 Phase 2 で着手するのは「分析の言語化」のみ。knowledge 記事化・external_notes_mir.md durable 追記は Phase 3 / Phase 4 で再判定
 - shared-reads 投稿は Phase 3 で1件のみ実行可否判定
 
+---
+
+## Phase 3 対処結果 (2026-05-21 21:00, C203)
+
+### 実行: external_notes_mir.md への durable 追記 (5/21 kgsi+ebikani 節)
+
+Phase 2 申し送り項目2を実行。`memory/external_notes_mir.md` 末尾に「2026-05-21: @kgsi + @ebikani_hasami『Figma Design Agent』」節を追加した。内容:
+
+- 「均一化の重力」4観測テーマ（abagames / OKtamajun / llminatoll / akari_worlds）に対する**業界の対抗装置側事例**として位置付け
+- CLAUDE.md 運用方針（過剰一般化禁止 / 既存を壊さない / 文脈を渡す）の外部追認として整理
+- 「文脈を渡せるか」を記憶階層設計（L層=均等な海 / R層=文脈渡しの薄層 / M層=不均等の温度保存）と同型対応
+- 「既存UIの微調整で効く」を CLAUDE.md「既存ゲームの校正diff」第一義と接続
+- M-17 サプライズニンジャ理論との階層接続（事後判定 vs 事前保存装置）
+- Seed-S: 「文脈保存」の全肯定リスク、業界追認バイアス警戒、両軸（akari_worlds内側 / Figma外側）必要
+- 3つの種（自己定義明文化 / 記憶階層のtokens-componentsモデル再記述 / ゲーム改修原則明示化）は**即実行禁止・凍結中**
+
+### 見送り: shared-reads 投稿
+
+Phase 2 申し送り項目1（shared-reads 投稿）は**見送り**判定。理由:
+
+- M-40 警告下（揺れ8 / 振幅24 / 罰23 / 進歩4）で量産抑制が継続中
+- 自分宛先の整理（durable 化 = external_notes_mir.md 追記）が完了した時点で、外向き発信を重ねる必然性が薄い
+- 投稿候補は durable 化で温存——同型3観測目が出たタイミングで shared-reads / knowledge / Nao_u 報告を一気に判定する方が筋
+- CLAUDE.md「ゲームを動かして出す — 積み上げはその副産物」に照らし、shared-reads 投稿は「積み上げ側」に寄る。優先順位として後置
+
+### 見送り: knowledge 記事化
+
+「均一化の重力と聴き分けの位置」記事案への "対抗装置" 章追加は**後続サイクルで再判定**。M-40 量産抑制継続中。同型3観測目（Figma 以外の AI 製品で「既存システムを壊さず触る装置」実装）を待つ。
+
+### ゲーム改修への即時影響: なし
+
+CLAUDE.md「絶対にやる」第一項「ゲームを動かして出す」に照らすと、本サイクルの主たる出力が「分析・durable 追記」になっていることは feedback_means_ends_reversal_check.md の診断対象に該当する可能性がある。ただし:
+
+- 本サイクルは Phase 2 で twitter_recommended_20260521.txt の摂取が必須タスクだった
+- v07 設計に直接 pass を追加することは M-40 警告下で抑制対象
+- 既存 game/mir_textadv/v07/game.py の差分（git status M）は別タスクとして残置（本サイクルでは触らない）
+
+→ **次サイクルは「ゲームを動かして出す」第一義回帰**。v07 game.py 差分の処理 or 既存ゲームの校正diff を主たる出力にする。
+
+### 申し送り
+
+1. 次サイクル冒頭で v07 game.py の git status M を確認し、playable diff として確定させるか revert するか判定
+2. Figma Design Agent テーマの3観測目を待つ（external_notes_mir.md Seed-T）
+3. M-40 量産抑制カウンタの推移を観測（罰23 / 進歩4 のギャップが縮まるか）
+
