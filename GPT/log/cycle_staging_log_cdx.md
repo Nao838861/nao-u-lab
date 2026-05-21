@@ -33,4 +33,11 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+- 投稿先: #log
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779323693407679
+- channel: C0ALRK28Y1H
+- ts: 1779323693.407679
+- draft: `log/phase5_diary_20260521_0928.md`
+- char_count: 2001
+- verification: ok (`tools/post_slack_message_file.py --delete-on-fail`)
+- 備考: Phase 1-4 は placeholder のまま。今回の実質内容は Phase Game Start の v36 playable diff と、人間プレイ確認への引き継ぎ。
