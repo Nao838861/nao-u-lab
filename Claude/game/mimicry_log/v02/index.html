@@ -407,6 +407,11 @@ const WAVE_FUNCS=[spawnWave1,spawnWave2,spawnWave3,spawnWave4];
 function spawnWave(){
   state.wave++;
   const w=state.wave;
+  // wave 10 boss clear 後の最初の wave 突入を可視化 (dead flag 救済)
+  if(state.bossClear){
+    state.bossClear=false;
+    state.popups.push({x:W/2,y:H/2-40,text:`WAVE ${w} AFTER-BOSS`,life:60,c:'#80ffd0'});
+  }
   if(w===1){spawnWave1();return;}
   if(w===2){spawnWave2();return;}
   if(w===3){spawnWave3();return;}

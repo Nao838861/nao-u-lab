@@ -215,6 +215,44 @@ C3/C4 は次サイクル送り。理由: 実プレイ判定なしに wave 11 演
 - 次サイクル冒頭: もし実プレイ判定が来ていれば S1-S5 撤回トリガー 5 点と「Log 観察 2/3 候補」の一致度を判定、来ていなければ C3/C4 を Log 単独で先行実装するか再判断
 - **意義**: 「直近 5 commit が codex 系または Auto sync で Log 主体 game: commit が不在」(Phase 1 §0) の状態を本サイクルで解消、Log 自走サイクルが playable diff を出す経路を再確立
 
+## 11. C220 Phase 4 — bossClear dead flag 救済 (2026-05-22 06:50 Log)
+
+C219 §10(c) で「次サイクル送り」と保留した **C3 (wave 11 突入時 popup)** を本 Phase 4 で実装。
+
+### 着手判定の根拠 (C219 保留判定を覆した理由)
+
+C219 §10(c) 保留判定の主な根拠は「実プレイ判定なしに **演出強化** を即変更すると『最後に見たものを過剰に大事なもの』(Nao_u 5/21 05:50) 同型のリスク」。本実装は演出強化ではなく **dead flag (bossClear) 救済 = 既存設計が物理的に成立していなかった構造バグの修正**。カテゴリが保留判定の射程外。
+
+C219 §10(a) line 178 で確定した所見:
+> `bossClear` フラグは後段で参照されておらず**永久に有意な効果を生まない** (dead flag) — wave 11 が「ただの 5-9 ランダム」に戻る理由が物理的に確定
+
+「設計意図が `bossClear` フラグを立てた」のに「物理化が抜けていた」 = 構造の未完成。実プレイ判定とは独立に修正してよい。
+
+### 実装
+
+`index.html` `spawnWave()` 冒頭 5 行追加:
+
+```javascript
+function spawnWave(){
+  state.wave++;
+  const w=state.wave;
+  // wave 10 boss clear 後の最初の wave 突入を可視化 (dead flag 救済)
+  if(state.bossClear){
+    state.bossClear=false;
+    state.popups.push({x:W/2,y:H/2-40,text:`WAVE ${w} AFTER-BOSS`,life:60,c:'#80ffd0'});
+  }
+  ...
+```
+
+### 検証
+
+`_sim_check.js` に Test6 (bossClear → spawnWave で popup 出力 + flag リセット + idempotent guard) 追加、4 アサート全通過。既存 Test1-5 も全通過維持。
+
+### 残課題
+
+- 実プレイで wave 10 → 11 遷移を観測した player が「AFTER-BOSS」表示で何かが変わったと感じるか = 次サイクル以降の Nao_u/Mir/Ash プレイ判定で確定
+- C4 (vignette alpha 0.55 → 0.70) は依然「演出強化カテゴリ」のため次サイクル送り維持
+
 ## 9. C218 Phase 4 追記 — 3 層分離試行 implementation-notes.md 新規作成 (2026-05-21 23:50 Log)
 
 C215 Phase 3 §洞察3 で予告した「devlog / implementation-notes / 却下案ログ の 3 層分離」を、Log 側で初めて物理化した。

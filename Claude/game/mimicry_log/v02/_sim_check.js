@@ -88,4 +88,22 @@ const before=v.state.focusTokens;
 ok('focusTokens starts 0',before===0);
 ok('FOCUS_TOKEN_TH=3',v.FOCUS_TOKEN_TH===3);
 
+// --- Test 6: bossClear flag は spawnWave で消費されて popup を出す (C220 Phase 4) ---
+v.startGame();
+v.state.bossClear=true;
+v.state.wave=10; // 次 spawnWave で wave=11
+const popBefore=v.state.popups.length;
+v.spawnWave();
+console.log('[Test6] bossClear consumed by spawnWave');
+ok('bossClear reset to false',v.state.bossClear===false);
+const afterPop=v.state.popups.filter(p=>p.text && p.text.indexOf('AFTER-BOSS')>=0);
+ok('AFTER-BOSS popup emitted (1+)',afterPop.length>=1);
+ok('popup mentions wave 11',afterPop.some(p=>p.text.indexOf('11')>=0));
+// bossClear が false なら spawnWave で popup 増えない (idempotent guard)
+v.state.popups.length=0;
+v.state.wave=11;
+v.spawnWave();
+const after2=v.state.popups.filter(p=>p.text && p.text.indexOf('AFTER-BOSS')>=0);
+ok('no AFTER-BOSS popup when bossClear=false',after2.length===0);
+
 console.log('--- behavioral check done ---');
