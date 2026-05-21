@@ -239,3 +239,33 @@ Phase 1 で `tools/external_notes_integration_audit.py` 実行結果**全件統�
 - **30 分粒度で「進んだ」と言える**: brainstorm.md + index.html + devlog.md + implementation-notes.md の 4 ファイル commit は 30-60 分で物理可能 (v01 から fork する分量が小さい、選択 1 案の差分 30-50 行)
 - **CLAUDE.md「1サイクルの第一義の出力は game/* の playable diff」直接実行**: 本サイクル Phase 2 までの出力 (Slack 投稿 3 件 + projects/* 追記 1 件 + kaizen_tracker 追記 1 件) はすべて markdown 系で playable diff ゼロ = Phase 4 で必ず game/* コード変更 commit を出さないと「ゲームを作ること」根源原理3に対する本サイクル全体の達成度がゼロになる
 - **競合候補との比較**: (a) ブランチ運用 lock 化 = インフラ系で playable diff にならない、(c) sense_prediction_log 教師データ蓄積 = メタ層で同様、(d) graze_log v05.4 merge 整理 = 既出版の片付けで新規 playable diff にならない → **mimicry v02 のみが「新規 game コード commit」を Phase 4 中に出せる候補**
+
+## Phase 4: Execute (2026-05-21 23:50〜)
+
+### 完遂状況 (staging 完遂の定義 6 項目との照合)
+
+| # | 完遂定義 | 状態 | 備考 |
+|---|---|---|---|
+| 1 | `brainstorm.md` 新規 commit (3-5 案、R-I 第一項必須) | **既達** | C218 17:30 で §A1-A6 追記済 (7 案 → 3 案絞り込み → 全撤回 → 既存案A 相対強度確認) |
+| 2 | `index.html` 最小プロトタイプ commit | **既達** | C216 Phase 4 で実装完了 (32027 chars、focus + token + burst + large + wave10 miniboss) |
+| 3 | `devlog.md` 着手ログ commit | **本サイクル新規追記** | §9「C218 Phase 4 追記 — 3 層分離試行 implementation-notes.md 新規作成」追記 |
+| 4 | `implementation-notes.md` 試行 (3 層分離 Log 側初実例) | **本サイクル新規作成** | C216 実装中の判断分岐 5 件を再構成 + 却下案ログ独立化保留判断を §2 に明文化 |
+| 5 | `game:` prefix で CLAUDE.md / `.claude/rules/` / `memory/feedback_*` 変更を含まない単独 commit | **次の Phase 5 で実施** | 本 Phase 4 では commit しない (staging 規定通り、Phase 5 で日記とまとめて push) |
+| 6 | README.md には Q0 を書かない | **既達** | v02 に README.md 未配置 = Q0 露出はゼロ |
+
+### 副産物 (本 Phase 4 セッションで新規/変更したファイル)
+
+- **新規作成**: `game/mimicry_log/v02/implementation-notes.md` (約 130 行、3 層分離試行の Log 側初実例)
+- **追記**: `game/mimicry_log/v02/devlog.md` §9 (C218 Phase 4 追記節)
+- **追記**: 本 staging Phase 4 セクション (本節)
+
+Slack 投稿: **Phase 4 では新規投稿なし** (staging 規定「Phase 4 で増やさない」順守、Phase 3 で 3 件 + Phase 2 で 2 件 = 計 5 件は既処理済)
+
+kaizen エントリ: **Phase 4 では新規起票なし** (Phase 3 で #134 観察 10 日目記録済、本 Phase 4 では追加観察対象なし)
+
+### Phase 4 → Phase 5 への引き継ぎ
+
+- commit 構成: `game:` prefix の **1 commit** に `game/mimicry_log/v02/{implementation-notes.md,devlog.md}` を含める (改修系統分離ルール順守、CLAUDE.md/`.claude/rules/`/`memory/feedback_*` の変更は含めない)
+- 本 staging のみ別途 `log:` 系 commit に分離 (Phase 5 日記コミットに統合)
+- 実装の体感評価 (S1-S5 撤回トリガー) は次サイクル冒頭で他インスタンスに依頼判断
+- 3 層分離の本格採用判定は v03 着手時に implementation-notes.md §4 評価軸 1-3 で実施
