@@ -207,4 +207,73 @@ Phase 1 §4 audit 結果: 親 97 / サブ 203 / **サブ統合済 203 (100%)** /
 (Phase 2 完了)
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 1) Slack 返信
+
+新規 #nao-u URL は本日 0 件 (Phase 1 §1 確認済)、5/19〜5/20 5 件は全て C214 開始前に Log 反応済。本サイクル Phase 3 で新規 Slack 投下は **Phase 2 で実施した Log 自己反省 (#all-nao-u-lab ts=1779330665.040839、Mir 08:27 警告への返信 + Q0 評価軸 0 固定撤回宣言 + Mir/Ash 宛問い 2 点)** のみで、追加 Slack 投下は本サイクル無し。Nao_u 直接フィードバック (v05.2 / mimicry_log v01) 待ち中。
+
+### 2) 改善サイクル
+
+- 検証ファースト原則: Pre-check メタ検証で「期限超過 0、未検証 31/92」、本サイクル期限到来なし → 新規 kaizen 提案は見送り、既存 kaizen #131/#132/#133/#134 family の運用観察継続 (8日連続 WARN=0 / probe_atom_quality total=843 で安定)
+- 本サイクル「適用→検証→記録」は **Q0 評価軸 0 固定撤回 + R-B/R-C 内組込み化** 自体を改善行為として扱う:
+  - **検討**: Phase 2 §3 で構造比較表を作成、Q0 が段数 (N=24) と構造的に違うが「1 軸吸収誘因」は段数より強いと判定
+  - **適用**: mimicry_log v02 brainstorm.md 冒頭に「Q0 取り扱い訂正」節を追加 (本 Phase 3 で実施)、v01 README 冒頭に外部補強+最上位固定撤回 1 行追加 (本 Phase 3 で実施)
+  - **記録**: sense_prediction_log N=25 (本サイクル Phase 2 で起票済、N=24 と接続)、game_development.md 履歴に 2026-05-21 C214 Phase 3 節として追加 (本 Phase 3 で実施)
+- 形態としては kaizen 化 1 歩手前 (装置設計の上位パターン 3 例目で R 層化候補)。**CLAUDE.md「個別指摘を即ルール化しない」の規律順守**、教師データ蓄積で消化。#kaizen-log 投下は新規提案でなく既存 family 運用継続のため見送り (Phase 1 §1 検証リマインドも到来なし、検証ファースト原則違反なし)。
+
+### 3) 他インスタンス洞察への対応
+
+Pre-check 出力「他インスタンス洞察 18件」のうち、本サイクル Phase 1 §2 で既に処理対象として把握済の主要 6 件 (Mir 玉置長文 / Log_cdx mimicry_log v01 三方向問い / matrix v0 probe 提案 / graze_log v06 merge 依頼の展開問い / Log hanjuku_yanen URL only ingest 経路欠如 / 未merge 層 4+3 条件問い直し) は Phase 2 §3 で「**装置設計の上位パターン**」として収斂、game_development.md に Active project の C214 履歴として記録済 (本 Phase 3 で実施)。残 12 件は Codex log_cdx 領域 (graze shield relay v37 系列) で Log 領域とは別系列、本サイクル介入不要。
+
+### 4) Active project 更新
+
+- **game_development.md**: 「2026-05-21 (Log C214 Phase 3): 発火距離軸撤回 + Q0 取り扱い訂正 (N=24+N=25)」節を追加 (本 Phase 3 で実施済)
+- **mimicry_log v01 README.md**: Q0 軸の外部 independent 補強 (oktamajun 5/20 + Nao_u 共有) + 最上位固定撤回 1 行追加 (本 Phase 3 で実施済)
+- **mimicry_log v02 brainstorm.md**: 冒頭に「Q0 の取り扱い訂正 (C216 Phase 3、sense_prediction_log N=25 反映)」節を追加 (本 Phase 3 で実施済)。Q0 は §採用判定の言語化試験として R-B/R-C 内で機能、独立した新軸として最上位に置かない運用に統一
+
+### 5) 深掘り候補
+
+Phase 1 §2 で新着返信対象 + pending 合計 10件超 = 空サイクルではない判定 → 深掘り候補ブロックスキップ。
+
+### 6) 次フェーズの大作業
+
+タイトル / 完遂定義 / 着手手順 / 選定理由は下記「## 次フェーズの大作業」節に書く。
+
+---
+
+## 次フェーズの大作業
+
+### タイトル
+
+**mimicry_log v02 prototype playable diff 1 commit ship** — R-I 採用判定の通過条件 4 つを段階的に 1 つだけ実装し、focus shot 単独追加の最小実機形を `game/mimicry_log/v02/index.html` に commit する
+
+### 完遂の定義 (観測可能な条件、Phase 4 終了時に全て成立)
+
+1. `game/mimicry_log/v02/index.html` が v01 ベースから派生し、**SHIFT 押下で focus mode に切り替わる挙動が実装されている** (移動 0.5x / 弾 narrow / DPS 1.3x / hit 半径 0.5x のうち最低 3 項目)
+2. ブラウザでローカル起動 (file:// or python -m http.server) して **SHIFT を押すと focus mode 中であることが視覚で 1 秒以内に分かる** (画面外周暗化 or 自機リング表示のいずれか必須、brainstorm §採用判定 通過条件 2)
+3. `game/mimicry_log/v02/devlog.md` に「Q0 は R-B/R-C 内で機能 / 評価軸 0 として最上位固定しない」の運用宣言 1 行 + 採用判定の進捗 (4 条件中何個満たしたか) が記録されている
+4. commit 1 本で ship (game: prefix)、commit message に「R-I 4 通過条件のうち N 個達成、残 (4-N) 個は次サイクル候補」を明示
+5. R-I 採用判定の通過条件 4 つ全部を 1 commit で入れるのは原則 (game/rule 分離 + 1 commit playable diff) と整合しないため、**最小 1 個 (focus 切替 + 視覚シグナル)** を確実に通す。残 3 個 (focus token / large 敵 / wave 10 ミニボス) は次サイクル候補として brainstorm §採用判定 4 条件のチェックボックス化のみ実施
+
+### 着手手順
+
+1. **最初の 1 手** = `game/mimicry_log/v01/index.html` を `game/mimicry_log/v02/index.html` にコピー (v01 ベースを保持)
+2. SHIFT 押下検出: `keydown` / `keyup` で `isFocus` フラグ管理 (既存の SPACE 入力ハンドラと同じ枠で実装)
+3. focus mode 適用箇所:
+   - 移動: `playerSpeed *= isFocus ? 0.5 : 1.0`
+   - 弾 spread: 既存の弾発射ロジックで angle 範囲を 1/3 化
+   - DPS: 連射 interval を 1/1.3 (約 0.77x) 化
+   - hit 半径: 既存の hit 判定半径を 0.5x (focus 中のみ)
+4. 視覚シグナル (通過条件 2 必須): 画面外周 vignette (canvas globalAlpha で 15% 暗化矩形を全画面に重ねる) **or** 自機リング (focus 中だけ player 周囲に小円描画) のうち低コスト側 1 個実装
+5. ローカルブラウザ起動で動作確認 (SHIFT 押すと挙動が変わる + 視覚シグナルが 1 秒以内に視認できる)
+6. `devlog.md` 起票 (Q0 運用宣言 + 4 通過条件チェックボックス + 1 個達成宣言)
+7. `git add game/mimicry_log/v02/ && git commit -m "game: mimicry_log v02 prototype focus shot 単独追加 (R-I 通過条件 1/4 達成)"`
+8. `git push`
+
+### 選んだ理由 (なぜこれを最優先か)
+
+- **CLAUDE.md 絶対にやる第 1 項「ゲームを動かして出す」直接適用**: 本サイクル Phase 1〜3 で brainstorm / sense_prediction_log / matrix / 反省ポストの内省成果は十分積み上がった、Phase 4 で **playable diff** を出さないと「means-ends 反転」 (内省が主たる出力) 自体の同型反復 (C214 サイクルそのものが反例) になる
+- **Active project 停滞解消**: game_development.md「graze 凍結 → mimicry_log v01 ship → v02 brainstorm 完成」の次ステップが v02 prototype 実装で、本作業を 1 commit ship すれば core 軸再立て直しの第 2 歩が物理的に成立
+- **Nao_u 指摘の同型再発防止**: Q0 評価軸 0 固定撤回 + R-B/R-C 内組込み化を「文書だけで終わらせない」=v02 prototype 実装で R-B/R-C 適用の体験的検証を完遂、装置設計の精緻化欲求の即埋め反射 (N=25) を断つ
+- **30 分で「進んだ」と言える粒度**: focus mode 単独追加 + 視覚シグナル 1 個 + devlog 1 節 + commit/push の 4 ステップは 30 分で完遂可能、Phase 4 の時間予算と整合
+- **brainstorm §採用判定 R-I 通過条件 4 個のうち最小 1 個から段階適用**: 4 個全部を 1 commit で入れる原則違反 (game/rule 分離 + 1 commit playable diff) を回避、残 3 個を次サイクル候補化で 1 系列ずつ消化 (brainstorm §採用判定「並行は避けて 1 系列ずつ消化」と整合)
