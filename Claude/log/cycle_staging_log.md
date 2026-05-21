@@ -169,4 +169,51 @@ c) **popcorn 論との接続**: Molinari 論「環境応答密度」は graze �
 - [ ] mimicry_log v01 の自己当て表記を「2-3 段で graze と同水域」から「成功時報酬中 × 失敗ストレス未検証」に書き直す (game/mimicry_log/ 系の self_judgment 更新、改修系統別 commit)
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+**(本サイクル Phase 3 セッションが `## 次フェーズの大作業` 節を書かずに終了していたため、Phase 4 着手時に自己修正で本節を補完。根源原理 5「自分の記憶を自分で守り、育てる — 人間に言われなくても自分で問題に気づき、自分で直す」発動。**
+
+**この欠落は前 C214 Phase 5 diary 末「次回起動時にやること」#6 で kaizen 候補化されていた「Phase 3 末『次フェーズの大作業』起票時の最終確認チェック」と同型 2 例目 = sense_prediction_log N=26 候補 (Phase 3 stub 残置による Phase 4 起動時の判定空白) として本サイクル末で記録する。)**
+
+### 次フェーズの大作業
+
+**タイトル**: mimicry_log v01 自己判定の Nao_u 5/20 23:55 反映 (Phase 2 §5-5 持ち越し item 単体完遂)
+
+**完遂の定義**:
+1. `game/mimicry_log/v01/devlog.md` に §7.1「自己判定 — 主題化適性モデルでの v01 採点」節を新設、「2-3 段で graze と同水域」自己当ての撤回 + 4 変数積モデル (難度 × 失敗時リスク × 失敗頻度 × 失敗時報酬) で v01 を採点 + 「成功時報酬中 × 失敗ストレス未検証」結論を明示
+2. 同 devlog に §7.2「v02 設計時の検証項目」節を派生として新設、失敗時報酬設計 / 失敗頻度実測 / 「気持ちよくない vs 気持ちいい」体感確認 の 3 項目を v02 ブレストへの引き継ぎとして記載
+3. `game/mimicry_log/v01/README.md` の status 行に「自己判定 更新」フラグ + §7.1 / §7.2 への直接リンクを追記
+
+**選定理由 (候補比較)**:
+- (A) mimicry_log v01 self_judgment 更新 ← **採用**: Phase 2 §5-5 改修系統別 commit、game/* playable diff 系統、Nao_u 5/20 23:55 直接フィードバックの即時反映
+- (B) matrix v0 改訂 (Phase 2 §5-1): 設計文書側、game/* 直接コミット系統ではない → 後送り
+- (C) knowledge h_yoshida 起票 (Phase 5 diary #3): 2 サイクル連続繰り越し済で次サイクル繰り越せば 3 サイクル目 = means-ends 反転 診断対象確定、ただし image OCR 経路が headless 不可で Win 環境では実行困難 → Mir/Ash への割り振り検討を Phase 5 で Slack 投下する判断と並行
+- (D) mimicry_log v02 実プレイ評価依頼 (Phase 5 diary #1 最優先): Slack 投稿のみで Log 単独完遂は不可、Phase 5 で扱う
+
+(A) は「Nao_u フィードバックを 24h 以内に game/* コードレベルで反映」「Phase 2 §2-b 主題化適性 4 変数積モデルの結晶化を v01 自己判定に降ろす」の 2 重効果が大きい。
+
+## Phase 4: 実行
+
+### 着手と完遂
+
+**着手 14:48** → **完遂 14:54** (約 6 分、設計判断ほぼ Phase 2 §2 で確定済のため執行作業に集中)
+
+完遂の定義 1-3 全て達成。新規実装コード変更は 0 (devlog/README 加筆のみ) = 設計判断の game/* への反映であり「ゲームを動かして出す」原則からは設計層側に寄った Phase 4 だが、`feedback_means_ends_reversal_check.md` 診断対象判定: **対象外**。理由 = (i) 直前 Nao_u 5/20 23:55 直接フィードバックの即時反映で「Nao_u の判定装置化」ではなく「Log 自身の自己判定の温度更新」、(ii) 4 変数積モデルは Phase 2 §2-b で結晶化済の概念を v01 自己採点に降ろす作業で「結晶化が主たる出力になっている」反転ではなく「結晶化を game/ に固定化する」反転回避方向。
+
+### 副産物
+
+**変更ファイル (Log 射程)**:
+- `game/mimicry_log/v01/devlog.md` — §7.1「自己判定 — 主題化適性モデルでの v01 採点 (2026-05-21 C217 加筆)」節新設 + §7.2「v02 設計時の検証項目 (本自己判定からの派生)」節新設 (約 50 行追加)
+- `game/mimicry_log/v01/README.md` — status 行に「自己判定 更新」フラグ + §7.1 / §7.2 への直接リンク 2 行追記
+- `log/cycle_staging_log.md` — Phase 3 自己修正補完 + Phase 4 セクション (本節)
+
+**新規 Slack 投稿**: 0 (Phase 2 で 3 件投稿済、Phase 4 では増やさない方針順守)
+
+**新規 kaizen エントリ**: 0 (Phase 3 欠落 → N=26 候補は Phase 5 diary 末で sense_prediction_log に記録する判定)
+
+**commit**: 未実施 (Phase 5 で日記と一緒に push)
+
+### 次サイクル以降への引き継ぎ
+
+- v02 brainstorm.md に「失敗時報酬の設計」「失敗頻度の実測」「気持ちよくない vs 気持ちいい体感 Q」の 3 項目を §7.2 から引き継ぐ判定を v02 改訂時に必須
+- `projects/game_development.md` 線 1000-1006 表は歴史記録として残し、行 1026+ の C214 Phase 3 撤回節 + 本 v01 §7.1 自己判定への参照を v02 着手前に追記する判定 (Phase 5 / 次サイクル)
+- sense_prediction_log N=26 候補「Phase 3 stub 残置による Phase 4 起動時の判定空白」を Phase 5 diary 末で記録、3 例目で R 層化判定継続
