@@ -59,6 +59,11 @@ function digestDelta(before, after) {
         after: a.bossCueSteer ?? 0,
         delta: deltaNumber(a.bossCueSteer ?? 0, b.bossCueSteer ?? 0),
       },
+      crossLockWave: {
+        before: b.crossLockWave ?? 0,
+        after: a.crossLockWave ?? 0,
+        delta: deltaNumber(a.crossLockWave ?? 0, b.crossLockWave ?? 0),
+      },
       pressure: { before: b.pressure ?? null, after: a.pressure ?? null, delta: deltaNumber(a.pressure, b.pressure) },
       movementSwitches: {
         before: b.movementSwitches ?? null,
@@ -85,7 +90,7 @@ const report = {
   styleDelta: digestDelta(before, after),
   notes: [
     "This is a headless comparison aid, not a fun verdict.",
-    "Missing cue fields in older records are treated as 0 so newer versions can prove whether the prompt, pressure event, and steering response entered the trace.",
+    "Missing cue/wave fields in older records are treated as 0 so newer versions can prove whether the prompt, pressure event, steering response, and cross-lock wave entered the trace.",
   ],
 };
 
@@ -95,4 +100,5 @@ const hasRoute = report.styleDelta.route && report.styleDelta.route.result.after
 const hasBossCueDelta = Object.values(report.styleDelta).some((row) => row.bossCue.after > row.bossCue.before);
 const hasBossCueVolley = Object.values(report.styleDelta).some((row) => row.bossCueVolley.after > 0);
 const hasBossCueSteer = Object.values(report.styleDelta).some((row) => row.bossCueSteer.after > 0);
-if (!hasRoute || (!hasBossCueDelta && !hasBossCueVolley && !hasBossCueSteer)) process.exit(1);
+const hasCrossLockWave = Object.values(report.styleDelta).some((row) => row.crossLockWave.after > 0);
+if (!hasRoute || (!hasBossCueDelta && !hasBossCueVolley && !hasBossCueSteer && !hasCrossLockWave)) process.exit(1);
