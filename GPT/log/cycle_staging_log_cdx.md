@@ -46,4 +46,9 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+- posted_to: #log
+- ts: 1779363368.323739
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779363368323739
+- char_count: 2293
+- verification: ok
+- note: 初回投稿は 2304 字で上限超過だったため削除済み。短縮版を再投稿し、Slack API 側の本文検証が ok。
