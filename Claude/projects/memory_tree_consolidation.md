@@ -145,6 +145,13 @@ Phase 1 §6 で摂取した Karpathy LLM Wiki / arXiv 2602.05665 (Graph-based Ag
 - [x] 真孤児 5 件親接続（C182 Phase 4）: invisible_rule_accumulation → feedback_index / slack_no_threads + internal_basis_first → operational_index / predict_before_human_play + prior_art_research → game_dev_index。dry-run 真孤児 62→57 (-5)、静止親接続 165→170 (+5) で整合
 - [x] 真孤児 28 件のうち優先5件を親接続 (C184 Phase 4 完遂) — `feedback_diary_style.md` / `feedback_log_temperature.md` / `feedback_report_no_compression.md` / `playback_protocol.md` を `feedback_index.md` 関連ファイル節へ、`feedback_slack_flat_reply.md` を `docs/slack_rules.md` 「スレッド返信を使わない」既存行に詳細リンク追加。dry-run 真孤児 28→23 (-5)、静止親接続 28→33 (+5)、reachable 410→417 (+7) で 5 件全件 refs=1 移行を構造的に確認
 - [ ] 真孤児 23 件のうち優先5件を親接続 (Log サイクル末尾 90 秒で 1〜3 件ずつ) — 次サイクル以降継続
+- [x] **新規未登録 32 件のうち優先5件親接続 (C221 Phase 4 完遂、2026-05-22)** — 着手前 staging 「真孤児23件」前提が崩壊（before snapshot で真孤児 0 件、unregistered_new 32 件が実態）した上で同型作業へ振り替え。選定基準は「再表面化価値が高い既知 feedback、抽象化されたルール本体で姉妹記録/個別事例ではないもの」。接続先と1行根拠:
+  - `feedback_combine_dont_subtract.md` → `memory/feedback_index.md` 「アイデア評価の失敗パターン」節末尾（M-46 候補、加減思考 vs 組み合わせ・相乗思考、brick_log v08 ガイド線除去事案の正本側）
+  - `feedback_completion_before_deployment.md` → `memory/feedback_index.md` 「関連ファイル」節末尾（Nao_u 2026-04-28 #human-steering「題材選定とゲームの完成が先」の原典保存、`feedback_completion_threshold_before_reach.md` の経緯保存側として姉妹接続）
+  - `feedback_game_dev_discipline.md` → `memory/game_dev_index.md` (b) 着手前ゲート節末尾（M-37〜M-43 統合 2 原則、Nao_u 2026-05-03 個別事例過剰ルール化指摘から 2026-05-05 抽象化、(b) 群の上位統合として位置づけ）
+  - `feedback_shuhari_clone_first.md` → `memory/game_dev_index.md` (b) 着手前ゲート節（`feedback_shu_first_clone_baseline.md` の直下、姉妹記録として Q-守 単問ゲート＋全インスタンス共通指針側）
+  - `feedback_autonomy_boundary.md` → `memory/operational_index.md` (d) 判断・自律性節末尾（Nao_u 2026-04-21「このレベルの判断は君らがやってくれていいよ」原典、`feedback_judgment_delegation.md` A/B/C 委任の元事例）
+- dry-run エビデンス: `tools/orphan_check_dry_run_20260522_c221_phase4_before.txt` / `_after.txt`。新規未登録 32 → 27 (-5)、5 件全件 refs=0 → refs≥1 移行確認、新たに unregistered_new に落ちたファイルなし
 - [x] orphan_check.py v0.1: 矢印記法 `→ filename.md` も参照として認識する LINK_RE 拡張完了（C180 Phase 4）
 - [x] MEMORY.md トリガー追加（`_TAG_VOCABULARY.md` / `shared_reads/README.md`）— C182 Phase 4 で「構造と運用」セクションに 2 行追加
 - [ ] Mir / Ash に inbox 伝達（タグ語彙 v0 への準拠依頼）

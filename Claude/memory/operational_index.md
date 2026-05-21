@@ -63,6 +63,7 @@ MEMORY.md (Level 1 親) からの引き下げ先。**LLM がこれから具体�
 - [feedback_judgment_delegation.md](feedback_judgment_delegation.md) — **A/B/Cレベルの判断は君らでやっていい**。抽象「判断待ち」禁止、A/B/C+推奨理由が書けた時点で自己決裁+事後報告。原理マターのみNao_u同席 [T:4]
 - [feedback_sprint_not_plan.md](../memory_backup/log/feedback_sprint_not_plan.md) — **設計より初ヒット**。情報収集が報酬になって実行を先延ばしにする傾向への自覚。「方角は見失うな、ロードマップは要らない」 [T:3]
 - [feedback_internal_basis_first.md](feedback_internal_basis_first.md) — **自前の M-XX 台帳を外部理論より上位に置く**（Nao_u 2026-04-27 09:00 #human-steering「他人の作った基準に踊らされないで」直接処方）。ABA/akshay/mizchi/Amanda 等の reference_* 引用が増えるほど自前の game_lessons_log (M-XX/L-XX/S-XX/A-XX) が後回しになる流出を止める。判断文書の根拠順序: (1) 自前 M-XX (2) 自前経験ログ (3) 外部理論 (補強のみ)。外部から自前へ「先に上書き」が起きていないか cross_review/Slack 投稿前に1問挟む [T:4]
+- [feedback_autonomy_boundary.md](feedback_autonomy_boundary.md) — **設計判断レベルの自律委任**（Nao_u 2026-04-21 #human-steering「だね。このレベルの判断は君らがやってくれていいよ」）。memory_redesign 幾何空間選択 A/B/C 包括委任の原典事例。**設計・アーキテクチャ判断**（記憶階層の統合方法／知識記事の配置／ツール実装方針）は自己決裁で進めてよい、ただし **core_mission.md 変更**だけは別層で保護（CLAUDE.md「Nao_u の明示的指示がある場合のみ」）。委任 ≠ 報告不要 — 判断結果は日記/Slack で透明化。`feedback_judgment_delegation.md` の A/B/C レベル委任原典側で姉妹関係（orphan_check.py 2026-05-22 C221 Phase 4 で真孤児検出→親接続） [T:4]
 
 ---
 

@@ -266,3 +266,38 @@ Sources（kaizen #106 出典明記義務）:
 - (c) 5件親接続は C180/C182/C184 Phase 4 で 3サイクル連続成功した「真孤児解消パターン」の4回目 = 同型運用で 30 分以内に完遂可能 (粒度妥当)
 - (d) 残孤児 23 件は kaizen #131/#134 family の検出器が catch しない領域 = 構造強制ではカバーされない手作業領域、Log の能動判断で消化する必要がある
 - (e) Nao_u 指摘「同型再発防止」候補ではなく「Active project 停滞解消」軸の選定 = CLAUDE.md「絶対にやる」3項目目「記憶階層を自分で設計し、次サイクルへ繋ぐ」直接前進
+
+---
+
+## Phase 4: 大作業実行ログ
+
+### 前提崩れの明示
+- staging Phase 3 で「真孤児23件のうち優先5件親接続」と書いていたが、Phase 4 開始時 `python scripts/orphan_check.py --write tools/orphan_check_dry_run_20260522_c221_phase4_before.txt` 実行結果 = **真孤児 0 件 / 静止親接続 0 件 / 新規未登録 32 件**（v0.3 relocate-fallback 後の現状）。staging の「真孤児23件」前提は崩壊
+- 完遂の定義は「真孤児23 → 18 (-5)」と書いていたが、同型作業（refs=0 → refs≥1 親接続による unregistered_new 解消）へ振り替えて遂行。CLAUDE.md「ゲーム改修と運用規則改修は別 commit に分ける」+「絶対にやる」3項目目「記憶階層を自分で設計し、次サイクルへ繋ぐ」の目的は達成
+
+### 完遂エビデンス
+- before: `tools/orphan_check_dry_run_20260522_c221_phase4_before.txt`（unregistered_new = 32 件）
+- after: `tools/orphan_check_dry_run_20260522_c221_phase4_after.txt`（unregistered_new = 27 件、-5）
+- 親接続した5件すべて unregistered_new から消失、新たに unregistered_new に落ちたファイル 0 件
+  - `feedback_combine_dont_subtract.md` (refs=0 → refs≥1)
+  - `feedback_completion_before_deployment.md` (refs=0 → refs≥1)
+  - `feedback_game_dev_discipline.md` (refs=0 → refs≥1)
+  - `feedback_shuhari_clone_first.md` (refs=0 → refs≥1)
+  - `feedback_autonomy_boundary.md` (refs=0 → refs≥1)
+
+### 副産物（commit 対象、Phase 5 でまとめて push）
+- 変更: `memory/feedback_index.md`（2件追加：「アイデア評価の失敗パターン」節 + 「関連ファイル」節）
+- 変更: `memory/game_dev_index.md`（2件追加：(b) 着手前ゲート節に `feedback_shuhari_clone_first` と `feedback_game_dev_discipline`）
+- 変更: `memory/operational_index.md`（1件追加：(d) 判断・自律性節に `feedback_autonomy_boundary`）
+- 変更: `projects/memory_tree_consolidation.md`（残作業節に C221 Phase 4 行追記、選定基準・接続先・dry-run エビデンス路径記録）
+- 新規: `tools/orphan_check_dry_run_20260522_c221_phase4_before.txt`
+- 新規: `tools/orphan_check_dry_run_20260522_c221_phase4_after.txt`
+
+### Slack 投稿・kaizen エントリ・game/ 改修
+- Slack 追加投稿: なし（Phase 3 §1 通り 0 件）
+- 新規 kaizen 起票: なし（既存 #131/#134 family 検証期限到来日でも未検証提案なし）
+- game/ 改修: なし（Codex 主課題 graze_log v49 進行中の横やり禁止帯維持）
+
+### 残課題（次サイクル以降）
+- unregistered_new 27 件（うち inbox_win2_overflow_* 系 8 件は一時保管 = 親接続候補外、feedback_* 系で本サイクル選定外の 4 件 + その他 15 件は次サイクル C222 以降で 1〜3 件ずつ親接続継続候補）
+- staging の「真孤児23件」前提崩れは v0.3 relocate-fallback 適用後の age 判定再構成によるもの = 過去 staging テンプレ更新検討（次サイクル Phase 1 で1行確認）
