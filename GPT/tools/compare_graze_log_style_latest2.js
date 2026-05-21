@@ -69,6 +69,21 @@ function digestDelta(before, after) {
         after: a.postMidCrossWave ?? 0,
         delta: deltaNumber(a.postMidCrossWave ?? 0, b.postMidCrossWave ?? 0),
       },
+      crossLockGuide: {
+        before: b.crossLockGuide ?? 0,
+        after: a.crossLockGuide ?? 0,
+        delta: deltaNumber(a.crossLockGuide ?? 0, b.crossLockGuide ?? 0),
+      },
+      postMidCrossGuide: {
+        before: b.postMidCrossGuide ?? 0,
+        after: a.postMidCrossGuide ?? 0,
+        delta: deltaNumber(a.postMidCrossGuide ?? 0, b.postMidCrossGuide ?? 0),
+      },
+      readabilityGuides: {
+        before: b.readabilityGuides ?? 0,
+        after: a.readabilityGuides ?? 0,
+        delta: deltaNumber(a.readabilityGuides ?? 0, b.readabilityGuides ?? 0),
+      },
       pressure: { before: b.pressure ?? null, after: a.pressure ?? null, delta: deltaNumber(a.pressure, b.pressure) },
       movementSwitches: {
         before: b.movementSwitches ?? null,
@@ -95,7 +110,7 @@ const report = {
   styleDelta: digestDelta(before, after),
   notes: [
     "This is a headless comparison aid, not a fun verdict.",
-    "Missing cue/wave fields in older records are treated as 0 so newer versions can prove whether the prompt, pressure event, steering response, cross-lock wave, and post-midboss cross wave entered the trace.",
+    "Missing cue/wave fields in older records are treated as 0 so newer versions can prove whether the prompt, pressure event, steering response, cross-lock wave, post-midboss cross wave, and readability guides entered the trace.",
   ],
 };
 
@@ -107,4 +122,5 @@ const hasBossCueVolley = Object.values(report.styleDelta).some((row) => row.boss
 const hasBossCueSteer = Object.values(report.styleDelta).some((row) => row.bossCueSteer.after > 0);
 const hasCrossLockWave = Object.values(report.styleDelta).some((row) => row.crossLockWave.after > 0);
 const hasPostMidCrossWave = Object.values(report.styleDelta).some((row) => row.postMidCrossWave.after > 0);
-if (!hasRoute || (!hasBossCueDelta && !hasBossCueVolley && !hasBossCueSteer && !hasCrossLockWave && !hasPostMidCrossWave)) process.exit(1);
+const hasReadabilityGuides = Object.values(report.styleDelta).some((row) => row.readabilityGuides.after > 0);
+if (!hasRoute || (!hasBossCueDelta && !hasBossCueVolley && !hasBossCueSteer && !hasCrossLockWave && !hasPostMidCrossWave && !hasReadabilityGuides)) process.exit(1);
