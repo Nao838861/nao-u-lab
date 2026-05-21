@@ -6,6 +6,26 @@
 
 ---
 
+## 0. Q0 取り扱い訂正 (C214 Phase 4、sense_prediction_log N=25 反映)
+
+**Q0 は R-B/R-C 内で機能させる言語化試験。評価軸 0 として最上位固定しない**。詳細は [`brainstorm.md`](./brainstorm.md) §「Q0 の取り扱い訂正」と同じ運用に統一。
+
+理由 (要約):
+- N=24 (発火段数撤回) 直後に別軸 Q0 を即座に最上位に置こうとした自己同型 (N=25)
+- R-B「核の快感が 1 語で言えるか」+ R-C「見ればわかる・やればわかる」と Q0 の射程は重複
+- v02 設計判断は R-A〜R-I で行う。Q0 単独で判定軸を構成しない
+
+### 採用判定進捗 (brainstorm §採用判定 通過条件 4 つ、C214 Phase 4 静的検証時点)
+
+- [x] 通過条件 1: focus 中 graze 半径 1.5x (実装: `FOCUS_GRAZE=1.5` / `curGrazeR()`、_sim_check Test1 OK)
+- [x] 通過条件 2: focus 切替視覚シグナル (vignette + 自機青リング + hit dot 可視化、撃破粒子 0.7x 減衰)
+- [x] 通過条件 3: focus token + 3 個で burst (small+1/med+3/large+9、burst 60f DPS2.0/move0.4/hit0.3、_sim_check Test2 OK)
+- [x] 通過条件 4: large 敵 (HP9、wave>=5: 5%/wave>=8: 15%) + wave 10 miniboss (large×3 + narrow/spread 2 秒毎切替、_sim_check Test3/Test4 OK)
+
+**4/4 静的検証通過**。ただし「体感で繋がっているか」の実プレイ評価は §5 の S1-S5 撤回トリガーで次サイクル冒頭に Nao_u/Mir/Ash プレイ依頼で確定する (静的全通過 ≠ 体感保証)。
+
+---
+
 ## 1. Q0 — ミミクリ軸 (何ごっこか)
 
 **「弾の間合いを毎秒選び替えるごっこ」**

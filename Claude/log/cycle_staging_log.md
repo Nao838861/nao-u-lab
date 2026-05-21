@@ -277,3 +277,42 @@ Phase 1 §2 で新着返信対象 + pending 合計 10件超 = 空サイクルで
 - **Nao_u 指摘の同型再発防止**: Q0 評価軸 0 固定撤回 + R-B/R-C 内組込み化を「文書だけで終わらせない」=v02 prototype 実装で R-B/R-C 適用の体験的検証を完遂、装置設計の精緻化欲求の即埋め反射 (N=25) を断つ
 - **30 分で「進んだ」と言える粒度**: focus mode 単独追加 + 視覚シグナル 1 個 + devlog 1 節 + commit/push の 4 ステップは 30 分で完遂可能、Phase 4 の時間予算と整合
 - **brainstorm §採用判定 R-I 通過条件 4 個のうち最小 1 個から段階適用**: 4 個全部を 1 commit で入れる原則違反 (game/rule 分離 + 1 commit playable diff) を回避、残 3 個を次サイクル候補化で 1 系列ずつ消化 (brainstorm §採用判定「並行は避けて 1 系列ずつ消化」と整合)
+
+---
+
+## Phase 4 結果
+
+### 0) 着手時点の状態認識 (再確認)
+
+Phase 4 着手で `game/mimicry_log/v02/` を確認したところ、**v02 案A の 4 通過条件は既に C215 で実装済 (commit f77401864404 `game: mimicry_log v02 案A 実装 (focus mode + token burst + large + miniboss)`)**。Phase 3 までの議論 (C214 Phase 3 で Q0 取り扱い訂正を brainstorm に反映、commit 1e1f2d861c70) を踏まえると、Phase 4「最小 1 個 (focus 切替 + 視覚シグナル) を新規 ship」は **既に超過達成済 (4/4)**。
+
+→ Phase 4 staging で書いた「v02 prototype を新規実装する」前提は、staging 起票時点で既に成立していた状態を見落としていた誤前提。「fait accompli」状態を Phase 4 で再実装せず、**完遂定義 #3 (devlog の Q0 運用宣言) に該当する実残作業のみ実施**に切り替える。
+
+### 1) 実施したこと (副産物)
+
+- **`game/mimicry_log/v02/devlog.md` §0 新設**: 「Q0 取り扱い訂正 (C214 Phase 4、sense_prediction_log N=25 反映)」+ 採用判定進捗チェックボックス (4/4 静的検証通過、ただし実プレイ評価未実施)。Phase 3 で brainstorm に書いた運用統一を devlog 側にも明示。
+- **`_sim_check.js` 再実行**: Test1 (focus 4 倍率) / Test2 (burst 6 効果) / Test3 (wave10 miniboss 3 large hp=9) / Test4 (wave>=5 large 出現 largeP=0.020、200 trial × 1002 enemies 中 20 large) 全 OK。Phase 3 brainstorm 編集後の挙動回帰なし確認。
+- **commit はしない (Phase 4 ルール)**: `M log/cycle_staging_log.md` + `M game/mimicry_log/v02/devlog.md` の 2 ファイルを Phase 5 で日記とまとめて 1 commit ship。
+
+### 2) 完遂定義 (Phase 3 で書いたもの) との照合
+
+- [x] #1: v02/index.html が v01 ベース派生、SHIFT で focus mode、効果 5 項目全部実装 (要求 3 項目以上)
+- [x] #2: focus 中の視覚シグナル (vignette + 自機青リング + hit dot 可視化) で 1 秒以内に判別可能 (静的にコード読み + シミュレーション確認)
+- [x] #3: devlog §0 で Q0 運用宣言 + 4 条件進捗チェックボックス追加
+- [-] #4: commit は Phase 5 で日記とまとめる方針なので Phase 4 単独 commit は出さない (commit message に「R-I 4 通過条件のうち N 個達成」を含めるのは Phase 5 で実施)
+- [x] #5: 最小 1 個 (focus + 視覚シグナル) は超過達成 (4/4)
+
+→ **完遂判定: 4/5 達成、#4 は Phase 5 で commit message に反映する次フェーズ宿題**
+
+### 3) 次サイクル引き継ぎ
+
+- **最優先**: v02 実プレイ評価 (Nao_u or Mir/Ash) — devlog §5 の S1-S5 撤回トリガー 5 点判定。30 秒以内 SHIFT 自然発火 / focus 中の判断利得 / graze 極端化なし / 視覚シグナル 1 秒以内認識 / Touhou 借り物感 vs Q0 軸接続感 の 5 軸
+- 静的全通過 ≠ 体感保証。次サイクル冒頭で実プレイ依頼を Slack に投下する判断 (Nao_u 反応待ちの間に Mir/Ash の独立プレイで先行確認可能)
+- 5 点 NG 0 件 → v02 結晶化 + v03 ブレスト着手 (聴覚アフォーダンス / Cave 系同じボタン状態切替 / brainstorm S5 means-ends 反転 再診断)
+- 5 点 NG 1+ → 案 B (graze→resource 変換) へ転換、撤回理由を devlog §6 直下に追記
+- Q0 取り扱い訂正 (N=25) の **3 観測後 R-J 昇格判定** は別件継続 (本サイクルで観測 1 件: 「警告 5 分後の新軸最上位固定」)
+
+### 4) Phase 4 自己点検
+
+- means-ends 反転 (内省が主たる出力) 診断: 本 Phase 4 で **新規コード変更 0 件 / devlog 1 節追記のみ / static sim 再実行のみ** → 表面上は内省寄りだが、「v02 が既に完成していたという事実」を正しく認識して再実装の二重作業を回避したので **時間予算の使い方は means 寄り** (新規 playable diff は Phase 5 以降 or 実プレイ評価後の v03 着手で出す)
+- Phase 3 で書いた「Phase 4 で v02 prototype を新規 ship」前提は、Phase 1〜3 中に C215 commit f77401864404 を見落とした取り違え。次サイクル Phase 1 では **git log を Phase 3 末で再確認** を kaizen 候補 (Phase 3 の「次フェーズの大作業」起票時の最終確認チェックとして)
