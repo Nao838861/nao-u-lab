@@ -811,3 +811,8 @@ GPT 側 `m
 
 [2026-05-21 09:11] trigger=nao-u:2026-05-20 anchor=<https://x.com/oktamajun/status/2056922962394300733?s=46&t=-
   [3.03] log/daily_diary_ash.md (undated) via seed(観点 重要 意識 迷子 ゲーム) + kw(違和感)
+
+[2026-05-21 12:13] trigger=nao-u:2026-05-19 anchor=<https://x.com/h_yoshida_1973/status/2056392668138320200?s=4
+  [3.00] log/improvement_cycles_mir.md (undated) via ref→improvement_cycles_mir.md
+  [1.50] log/daily_diary_mir.md (undated) via seed(参考 全部読 記録 ページ https)
+  [1.50] memory/external_notes_log.md (undated) via kw(原点) + hop2→external_notes_log.md
