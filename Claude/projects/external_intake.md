@@ -66,6 +66,27 @@ Active — CLAUDE.md「絶対にやる」に記載の根幹的課題
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-21: Phase 1「現課題キーワード外部検索」工程に URL 必須化ルールを追加する観察 (Log C218 Phase 2/3)
+
+**背景**: 本サイクル C218 Phase 1 §6 で「現課題キーワード外部検索」(kaizen #106 摂取経路固定化) を発火、キーワード `headless game AI playtest evaluation fun measurement 2026` で 3件取得 — `gamedeveloper.com "Playerless playtesting"` / `arxiv 1703.06275 Talakat-related GVGAI` / `bennycheung.github.io "AI Playtesting Board Game"`。Phase 2 で実 URL 検証を再走させたところ、3件のうち実体到達 (URL + 原文 fetch) 可能だったのは arxiv 1806.04718 (Talakat) と 2107.12061 (DRL+MCTS engagement) の 2 件のみ。Phase 1 で名前を挙げた `gamedeveloper.com` `bennycheung.github.io` 2 件は **Phase 2 再走で正確な URL/原文に到達できず**、Phase 1 staging への記述は「キーワード検索した結果」と書きつつ実体到達なしの状態だった。
+
+**観察**: kaizen #106 の経路は固定化されているが、「**Phase 1 で staging に載せた時点で URL を併記する**」工程はルール化されていなかった。Phase 1 staging に URL 無しで著者・タイトルだけ書くと、Phase 2 で再検索のコストが発生 (本サイクルで発生) し、かつ「URL 無しでも記述として残ってしまう」= **「やった気」のリスクが残る**。これは [feedback_self_perception_blindness.md] (自分の現在進行形は観測対象から外れる) と [external_intake] 第2層 (本文の自己消化率) の交差地点。
+
+**設計含意**: Phase 1 §6 「現課題キーワード外部検索」工程に **URL 必須化ルール**を追加:
+- (a) Phase 1 で挙げた各記事に URL を併記する。URL 無しの記述は staging に残せない
+- (b) 検索しても到達できなかった場合は「未到達」と明記する。「キーワード検索した」とだけ書いて URL/原文不在のまま残さない
+- (c) Phase 2 で各記事の本文を確認できる前提で、Phase 1 staging に URL がある状態を作る (Phase 2 → Phase 3 の引き渡し前提)
+
+**本サイクルで踏まない一手**:
+- 本観察は **同型 2 回目確認** (5/14 観察 = 経路は踏んだが本文未読 = 第2層課題 / 5/21 観察 = Phase 1 で URL 不在のまま staging に書いた = 第1層内の精度課題) で、別系統の課題と判断、独立した観察として記録
+- ルール正式化 (kaizen #106 への追記 or Phase 1 §6 への明文化) は次サイクル C219 で「URL 必須化を Phase 1 §6 hook に組み込む」改善提案として検討。本サイクル Phase 3 では projects/external_intake.md への観察記録のみで止める
+- **「即ルール化」しない方針** ([feedback_few_rules_big_effect.md]「個別指摘を即ルール化しない」+ [dialogue_micromanagement_20260504.md]「同型 2 回確認後に原則化」) を順守 — 本観察は Phase 1 工程の精度向上系で N=1 (本サイクル単発)、N=2 目を待つ
+
+**次の起動トリガー**:
+- (a) 次サイクル以降の Phase 1 §6 で「URL 不在のまま記事名を staging に書く」事象が再発したら、kaizen #106 への URL 必須化ルール組込を正式提案する判定基準とする
+- (b) 第2層 (本文の自己消化率) 第4軸 KPI が 50% を下回り続けた場合、URL 不在問題が「広く浅い摂取」モードの一症状である可能性として再検討する
+- (c) Phase 1 §6 の hook を直接修正する案 = multi_phase_cycle_log.py 側で外部検索結果テンプレに URL placeholder を強制する構造強制 (`feedback_structural_enforcement.md`) として実装可能
+
 ### 2026-05-14: 経路の踏破 vs 本文の自己消化 を別軸タスクとして分離する観察（Log C194 Phase 2/3）
 
 **背景**: 本サイクル C194 Phase 1 §6 で「現課題キーワード外部検索1本」(kaizen #106 摂取経路固定化) を発火、`LLM agent recency bias single example overweighting design judgment 2026` で arXiv 2509.11353 / arXiv 2503.10248 / USC AI Beat の3件を取得。3件いずれも Nao_u 5/13 06:37 #human-steering 指摘③「最近見たものに引きずられすぎ＝栄養の偏り」に直結する内容だが、Phase 2 §2 で **本サイクル投稿対象から外す判定**。理由＝「本文未読のままタイトル要約だけで #shared-reads に流すとテンプレ流用と区別がつかず、各記事固有の手法・実験・結論を書けない」。
