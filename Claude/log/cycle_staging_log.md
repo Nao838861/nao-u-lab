@@ -191,5 +191,80 @@ Log inbox 5/14 第二便 (memory_consolidation dangling 検出への追加発見
 - 着手前ゲート (CLAUDE.md「絶対にやる」着手前広く調べる + R-A〜R-I): R 層で判断可能性高い。M 層詳細は不要
 - 自己採点: 本 Phase 2 で player fantasy 系の外部読了 + 自視点形成 + log_cdx 応答 + 独立3源収束記録の 4 機能を実施できた。Nao_u 指示「1フェーズ丸ごと使う価値」を満たしたかの判定は Phase 5 日記で行う
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-22 06:30 完了)
+
+### 0) Phase 1/2 自己診断の事実検証 (kaizen #132 同型ゲート)
+
+**検出**: Phase 1 §1 / Phase 2 §1 / Phase 2 §3 末尾で「graze_log v02」と表記したが、Q0 ラベル空洞化問題は **mimicry_log v02** の話 (game_development.md C218 履歴で着手ゲート整備済の対象)。graze_log は v05 系列がアクティブで v02 は古い、対象 series 名 typo。
+
+**訂正**:
+- Phase 2 §1 接続部: graze_log v02 → mimicry_log v02
+- Phase 2 §3 末尾「graze_log v02 改修方針」: mimicry_log v02 改修方針
+- Phase 2 §5 「graze_log v02 改修方針」: mimicry_log v02 改修方針
+
+**Slack 既投稿 ts=1779395481/1779395514/1779395690 への波及**: 本サイクル時点で実投稿 body の typo 含有確認は未実施 (実投稿 fetch コスト高)。staging 表記訂正のみ実施。次サイクル Slack 再 fetch 時に該当箇所があれば訂正投稿。
+
+**kaizen #132 該当性**: 「Phase 2 §0 自己診断幻覚」ではなく「Phase 1 § の series 名誤記が Phase 2 で増幅」型。kaizen #133 (kaizen ID 引用実在性) の隣接領域 = series 名引用実在性。新規 kaizen 化は見送り (同型1回目、原則「個別指摘を即ルール化しない」順守)。staging 引用 series 名検証スクリプトを memory/feedback_self_perception_blindness.md に「次同型観測時の検出器候補」として記録するに留める。
+
+### 1) Slack 返信 (Phase 2 で完了済の確認)
+
+Phase 1 §2 で返信対象だった Log_cdx ts=1779388705 は Phase 2 §2 で #all-nao-u-lab ts=1779395514 (830字) として応答済。本 Phase 3 では追加 Slack 投稿なし。
+
+### 2) 改善サイクル (kaizen-log)
+
+**検証ファースト原則順守**: 直近未検証提案ゼロ。kaizen #134 (probe_atom_quality) は運用観察11日目記録済 (kaizen_tracker.md 既更新)。本サイクルで新規 kaizen 提案なし。kaizen-log Slack 投稿は不要と判定 (新規改善ゼロ時は投稿しない原則)。
+
+### 3) 他インスタンス洞察 統合
+
+Phase 0 pre-check 18件のうち Active project と直接交差し本サイクルで動かせるもの:
+
+- **[Ash] graze_log v06 master merge 依頼 (C192 Phase 4)**: v05 beta B-2 (弾パターン rhyme ABAB) 未 merge 分含む。**Log アクション**: Nao_u 対応待ち事項 (merge は Nao_u 権限)、Log 側追加対応なし。pending_requests.md に既反映済の想定。
+
+- **[他 17 件は本サイクルでは projects/INDEX.md 上位3 Active project (game_development / external_intake / memory_redesign) との直接交差ヒット低**。Phase 1 §2 で扱い済 Log_cdx atom 以外は次サイクル以降の素材として残置。
+
+### 4) Active project 更新
+
+- **projects/external_intake.md**: Shahrabi (2024-06) 詳細分析 #shared-reads 投稿 ts=1779395690 を **第4軸 本文読了率 事例 (取得→本文読了→内部接続記述 同サイクル完遂)** として履歴追記済。3源収束 (Nao_u 5/20「ごっこ遊び」+ Cavin/Shahrabi/Margaris + Log_cdx Q0 ラベル空洞化) を「役/価値の言語化粒度」軸の独立確認として記録。
+
+- **projects/game_development.md**: C220 Phase 3 履歴を追記。Shahrabi 由来「Value Proposition 1 文」を mimicry_log v02 brainstorm.md §A2 7 案の各案ヘッダに retrofit する **副次拡張候補** として記録 (本 Phase 4 では実装しない、案 A focus shot 最小プロト着手を優先)。
+
+## 次フェーズの大作業
+
+### タイトル
+mimicry_log v02 最小プロトタイプ実装 (案 A focus shot, SHIFT 切替 30-50 行 playable diff)
+
+### 完遂の定義 (Phase 4 終了時の観測可能条件)
+
+1. `game/mimicry_log/v02/index.html` を v01 から fork して新規 commit
+2. SHIFT 押下で focus mode 切替実装: 移動 0.5x / spread 1/3 / DPS 1.3x / hit 半径 0.5x / graze 半径 1.5x の 5 項目のうち **最低 3 項目を実装**
+3. focus 中の視覚シグナル (画面外周暗化 or 自機リング) を最低 1 つ実装 (S4 撤回トリガー回避)
+4. `game/mimicry_log/v02/devlog.md` 着手ログ: 実装した 3+ 項目と未実装 2- 項目を明示、未実装理由を 1 行で書く
+5. ブラウザで起動して focus mode 切替が体感可能 = self-test 動作確認 (1分プレイで focus on/off の判断が発生する)
+6. commit prefix = `game:` (運用規則改修と混在禁止、game_development.md「厳守事項」直処方)
+
+### 着手手順 (最初の1手と想定手順)
+
+1. **第1手**: `game/mimicry_log/v01/index.html` を読み、SHIFT key handler の挿入位置と移動/spread/DPS 定数の参照箇所を特定
+2. v02 ディレクトリ作成 `mkdir game/mimicry_log/v02` (まだない場合は新規 — Phase 1 で path 存在確認していないため要事前 check)
+3. v01 → v02 ファイルコピー (`index.html` + 必要に応じ `README.md` `devlog.md` の v02 雛形)
+4. SHIFT key handler 追加 (keydown=focus on / keyup=focus off の状態フラグ)
+5. focus フラグ参照点で 5 項目のうち 3 項目を切替 (優先: 移動 0.5x → spread 1/3 → DPS 1.3x)
+6. focus 中の視覚シグナル (canvas globalAlpha or 半透明矩形 overlay) 実装
+7. ブラウザで起動 → 自己プレイ 1 分 → focus 切替の判断分岐発生を観測
+8. devlog.md に実装した項目 / 未実装項目 / 自己プレイ所感を 200 字程度
+9. commit (`game: mimicry_log v02 最小プロトタイプ focus shot 3 項目実装`)
+
+### 選んだ理由
+
+1. **C218 Phase 4 で予告済が未着手** (game_development.md 履歴 76-98 行): brainstorm.md §A1-A6 まで物理化されたが index.html 未着手 = Active project 停滞解消粒度
+2. **CLAUDE.md「ゲームを動かして出す」直処方**: 1 サイクルの第一義の出力 = playable diff、本 Phase 4 で playable diff commit が成立すれば原理直撃の物理化
+3. **brainstorm.md 採用判定「条件付き通過」の検証**: 案 A focus shot が実装段階で通過条件 4 つを 1 commit に入れられるか否かを物理確認 = 「条件付き通過」が design layer の自己暗示で終わらず実装層に到達する初試行
+4. **30分粒度**: 5 項目中 3 項目 + 視覚シグナル 1 つ + devlog 200 字 = 30 分で playable に到達可能
+5. **Slack 投稿1本では済まない**: Phase 4 大作業基準「Slack 投稿1本で済むものは大作業ではない」を満たす (実コード差分 30-50 行 + ブラウザ確認 + commit prefix 分離)
+
+### Phase 4 で踏まない一手 (撤回シナリオ事前列挙)
+
+- v01 brainstorm.md §A1-A6 で「不明 = 撤回」規律で 6 案撤回した結果、案 A focus shot のみ残った経緯。本 Phase 4 で「途中で別案に切替」が発生したら撤回 = 案 A 通過条件 4 つの 1 commit 物理化に集中
+- focus token (S3) + L3 large 敵 (S4) + L5 wave 10 ミニボス (S5) は本 Phase 4 範囲外 = brainstorm.md §採用判定 4 条件のうち #1 (focus と graze の因果接続) と #2 (視覚シグナル) のみ実装。#3 #4 は次サイクル以降の Phase 4 候補
+
+(Phase 3 終了 2026-05-22 06:30)

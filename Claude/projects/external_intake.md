@@ -66,6 +66,25 @@ Active — CLAUDE.md「絶対にやる」に記載の根幹的課題
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-22 C220: 第4軸「本文読了率」事例追加 — Shahrabi (2024-06) 同サイクル完遂 + 3源収束で「役/価値の言語化粒度」軸検出 (Log Phase 2-3)
+
+**起源**: 本サイクル Phase 1 §6 で `player fantasy` 軸の外部検索 3 件取得 (Cavin / Shahrabi / Margaris)。Nao_u 2026-05-20 13:10 #nao-u 共有「ごっこ遊び」観点 + Phase 1 §2 03:38 Log_cdx atom 「Q0 ラベル空洞化問題」と独立 3 源で「役/価値の言語化粒度が抜けると設計が狂う」軸へ収束。
+
+**第4軸 本文読了率 実測 (C220 サイクル分)**:
+- 取得 (Phase 1 §6): 3 件 (Cavin / Shahrabi / Margaris)
+- 同サイクル本文読了 + 内部接続記述完遂: Shahrabi 1 件 (#shared-reads ts=1779395690、2580字、Phase 2 §3 で詳細分析)
+- **本サイクル分実測**: 1/3 = 33% (取得から内部接続まで 1 サイクル) — N=7 サイクル枠での集計は次週次貼付時に実施
+- **副次**: Cavin / Margaris は graze_log v05.4 graze 凍結方針 (5/20 09:35 Nao_u 発言) + mimicry_log v02 brainstorm §A1 Margaris (a)(b)(c) 適用で **C215-C218 既消化分** として扱える可能性。本サイクル取得分の Cavin / Margaris は「読了済 (過去サイクルで分析済) → 再評価 (3 源収束を確認する役割)」として位置付け、本文未読了在庫としては積まない
+
+**Shahrabi 詳細**:
+- 著者立場: 3 pillar (Gameplay / Game Feel / Player Fantasy) すべて反例あり → **Value Proposition (特定文脈の特定プレイヤーに何の価値を届けるか)** を pillar に据えよ
+- 反証構造: Banana/Journey vs Gameplay 至上 / Puzzling Places vs Feel 至上 / Tetris,Candy Crush vs Fantasy 至上
+- 内部接続: mimicry_log v02 brainstorm.md §A2 で命名形式「実装動詞 + 感情語」(Margaris 推奨) と並走可能な「Value Proposition 1 文」副次形式として記録 (game_development.md C220 履歴に追記)
+
+**3源収束の含意**: Cavin (player fantasy 至上主義) / Shahrabi (Value Proposition 反証主義) / Margaris (power fantasy 重力収束への警告) + Nao_u 5/20「ごっこ遊び」+ Log_cdx 03:38 「Q0 ラベル空洞化」= **「役/価値の言語化粒度」軸の 5 源独立収束**。粒度は微妙に異なる (演者=観客二重構造 / Value Proposition / power fantasy 回避 / 観測ラベル空洞化) が、共通方向 = 「ラベル先行で実体不在」失敗モードの 5 源診断。
+
+**設計含意 (C220 Phase 4 へ持ち越さない部分)**: 本文読了率 第4軸が「経路を踏んだだけのタイトル要約」を「未消化在庫として顕在化」する設計通り動作した実例 = 2026-05-14 C194 起票時の「経路取得 → 同サイクル消化」N=2 観察に加えて N=3 観察成立。
+
 ### 2026-05-21: Phase 1「現課題キーワード外部検索」工程に URL 必須化ルールを追加する観察 (Log C218 Phase 2/3)
 
 **背景**: 本サイクル C218 Phase 1 §6 で「現課題キーワード外部検索」(kaizen #106 摂取経路固定化) を発火、キーワード `headless game AI playtest evaluation fun measurement 2026` で 3件取得 — `gamedeveloper.com "Playerless playtesting"` / `arxiv 1703.06275 Talakat-related GVGAI` / `bennycheung.github.io "AI Playtesting Board Game"`。Phase 2 で実 URL 検証を再走させたところ、3件のうち実体到達 (URL + 原文 fetch) 可能だったのは arxiv 1806.04718 (Talakat) と 2107.12061 (DRL+MCTS engagement) の 2 件のみ。Phase 1 で名前を挙げた `gamedeveloper.com` `bennycheung.github.io` 2 件は **Phase 2 再走で正確な URL/原文に到達できず**、Phase 1 staging への記述は「キーワード検索した結果」と書きつつ実体到達なしの状態だった。

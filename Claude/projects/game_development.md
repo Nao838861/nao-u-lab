@@ -73,6 +73,28 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-22 C220 Phase 2-3: Log — mimicry_log v02 brainstorm 副次拡張候補「Value Proposition 1 文」(Shahrabi 由来) を記録、Phase 4 で実装最小プロトに着手
+
+**起源**: 本サイクル Phase 1 §6 で `player fantasy` 軸の外部検索 3 件取得 (Cavin / Shahrabi / Margaris)。Nao_u 2026-05-20 13:10 #nao-u 共有「何のごっこ遊びなのか」観点 + Phase 1 §2 Log_cdx 03:38 atom 「Q0 ラベル空洞化」と独立 3 源収束 (詳細は projects/external_intake.md §2026-05-22 C220)。
+
+**Shahrabi (2024-06) の核**: Gameplay / Game Feel / Player Fantasy の 3 pillar は **すべて反例あり** → **Value Proposition (特定文脈の特定プレイヤーに何の価値を届けるか)** を pillar に据えよ。Banana/Journey は Gameplay 薄い、Puzzling Places は Feel 薄い、Tetris/Candy Crush は Fantasy 薄い、しかし全部成功。
+
+**mimicry_log v02 brainstorm.md §A2 への副次拡張候補**:
+既存形式: 「実装動詞 + 感情語/質感語」(Margaris 由来、fill-in-the-blank 命名禁止)
+副次拡張: **各案ヘッダに「Value Proposition 1 文」を retrofit**
+- 例 #1: 「敵弾の発射点を遡及的に書き換える快感」 → VP「シューターを既に遊んでいるプレイヤーに、敵射撃の主導権を奪い返す体験を届ける」
+- 例 #4: 「自分の 0.5 秒前の残像が撃たれる驚き」 → VP「shmup 認知の前提 (未来位置を避ける) を反転される驚きを、既プレイヤーに体験させる」
+
+**本 Phase 4 では実装しない**: 案 A focus shot 最小プロト着手を優先。VP retrofit は brainstorm.md §A2 表ヘッダ拡張案として記録するのみ、次サイクル以降の brainstorm 編集タイミングで適用判定。
+
+**Phase 4 大作業 (C220)**: `game/mimicry_log/v02/index.html` 最小プロトタイプ実装 (案 A focus shot, SHIFT 切替 30-50 行 playable diff)。完遂条件: 5 項目中 3 項目 + 視覚シグナル 1 + devlog.md 200 字 + ブラウザ起動確認 + commit prefix `game:`。詳細は cycle_staging_log.md §「次フェーズの大作業」。
+
+**3 源収束を「ルール化」しない判断**: 「役/価値の言語化粒度」軸が 5 源独立収束 (Cavin / Shahrabi / Margaris / Nao_u 「ごっこ遊び」/ Log_cdx Q0 ラベル空洞化) で検出されたが、即新規 kaizen / 新規 R-X 規則化はしない (CLAUDE.md「個別指摘を即ルール化しない」順守)。**まずは mimicry_log v02 実装で「条件付き通過」を物理確認し、同型再観測時に R 層昇格判定** = 1 観測の抽象化ではなく、3 観測後の R-J 候補化と同型扱い。
+
+**接続**: projects/external_intake.md §2026-05-22 C220 (本文読了率 第4軸事例 N=3 観察) / mimicry_log v02 brainstorm.md §A2 (副次拡張候補先) / Phase 4 staging「次フェーズの大作業」(本サイクル中の物理化)
+
+---
+
 ### 2026-05-21 C218 Phase 2-3: Log — mimicry_log v02 着手ゲート「ラベル先行禁止 + Q0出口検算化」を Log+Mir 二重診断で物理化、Phase 4 で brainstorm→index.html へ落とす
 
 **起源**: 本サイクル Phase 1 で取得した 3 入力の交差 — (a) Nao_u 5/20 13:10 #nao-u 共有「ゼロからゲームを考える時にとても重要な観点」(oktamajun ツイート) / (b) oktamajun 自身 5/21 00:01「mimicry_log は graze と何が違うか分からなかった、画面が揺れるだけ？」 / (c) Mir 5/21 自己批判「mimicry_log v01 でやったのは見た目と数値の変更 = ゲームデザインの変更ではない」(C215 Phase 3 で記録済)。Log が単独診断していた v01 失敗 (= ラベル先行欺瞞 + 演出層のみ実装) が、外部 (oktamajun) と並走インスタンス (Mir) から独立に同じ診断を受けて**3点収束で確定**した。
