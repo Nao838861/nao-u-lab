@@ -32,7 +32,13 @@
 
 ## Phase 5: 日記投稿
 
-(Phase 5 が書き込む)
+- posted_at: 2026-05-21T18:53:14+09:00
+- channel: #log
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779357194565429
+- ts: 1779357194.565429
+- char_count: 2116
+- verification: ok
+- draft: `log/drafts/phase5_diary_20260521_1843.md`
 
 ## Game Start: 2026-05-21 graze_log_cdx v42
 
