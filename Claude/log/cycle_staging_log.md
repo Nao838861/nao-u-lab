@@ -268,3 +268,92 @@ mimicry_log v02 最小プロトタイプ実装 (案 A focus shot, SHIFT 切替 3
 - focus token (S3) + L3 large 敵 (S4) + L5 wave 10 ミニボス (S5) は本 Phase 4 範囲外 = brainstorm.md §採用判定 4 条件のうち #1 (focus と graze の因果接続) と #2 (視覚シグナル) のみ実装。#3 #4 は次サイクル以降の Phase 4 候補
 
 (Phase 3 終了 2026-05-22 06:30)
+
+## Phase 4: Execute (2026-05-22 06:55 完了)
+
+### 0) Phase 3 大作業 前提誤認の検出 (kaizen #132 同型ゲート 2 例目、本サイクル §Phase 3 §0 と双子)
+
+**検出**: Phase 3 で立てた完遂の定義「mimicry_log v02 最小プロトタイプ実装 (案 A focus shot, SHIFT 切替 30-50 行 playable diff)」は **既達成済の作業**。Phase 4 着手直後に `game/mimicry_log/v02/` を読んだ結果、以下が判明:
+
+- `v02/index.html` (1038 行) は C216 Phase 4 で full 実装済 (focus mode + token + burst + large + wave10 miniboss)
+- `v02/devlog.md` §0 「採用判定 通過条件 4/4 静的検証通過」
+- `_sim_check.js` Test1-5 全通過
+- README.md / brainstorm.md / implementation-notes.md も既に揃っている
+- 直近 C219 §10 で C1 (HUD Z表示 else 節追加) + C2 (README.md 新規作成) も物理化済
+
+Phase 3 §0 で series 名 typo (graze_log → mimicry_log) を訂正したが、**v02 実装ステータス自体の認識誤りに気づかなかった**。Phase 3 §0 = series 名誤記、本 Phase 4 §0 = 実装ステータス誤認 = **2 段の自己診断幻覚が同サイクル内で重なった構造**。kaizen #132 (Phase 2 §0 自己診断幻覚) の同型 2 例目 = 同サイクル内 2 回検出は kaizen 正式提案閾値の判定根拠候補 (次サイクルで判定)。
+
+### 1) Phase 4 大作業の切替 (Phase 3 完遂定義 → C3 dead flag 救済)
+
+Phase 3 完遂定義は既達成のため再実装は無意味。代替として **devlog §10(c) C3 (wave 11 突入時 popup = bossClear dead flag 救済)** を本 Phase 4 大作業に切替。C219 で「次サイクル送り」と保留された候補だが、保留判定の主根拠 (演出強化リスク) と C3 の実カテゴリ (構造バグ修正) が射程外で覆せた。詳細は `game/mimicry_log/v02/devlog.md` §11 着手判定根拠。
+
+### 2) 実装内容
+
+**変更ファイル**:
+- `game/mimicry_log/v02/index.html` (+5 行): `spawnWave()` 冒頭で `state.bossClear` ガード → `WAVE ${w} AFTER-BOSS` popup 1 回表示 + フラグリセット
+- `game/mimicry_log/v02/_sim_check.js` (+15 行): Test6 (bossClear → spawnWave で popup 出力 + flag リセット + idempotent guard) 追加、4 アサート全 OK
+- `game/mimicry_log/v02/devlog.md` (+§11 約30行): C220 Phase 4 着手判定根拠 + 実装 + 検証 + 残課題
+
+**sim_check 実行結果**: Test1-4 全通過維持 + Test6 4 アサート全 OK。既存挙動への回帰なし。
+
+### 3) self-test 制約
+
+Win headless 環境のため実ブラウザでのプレイ確認は不可 (devlog §10(a) line 152 既知)。静的検証 (sim_check) と static code review (差分 5 行の影響範囲確認) のみ。wave 10 → wave 11 遷移時の popup 視覚体感判定は次サイクル以降の実プレイ判定 (Nao_u/Mir/Ash) に依存。
+
+### 4) Phase 4 完遂判定
+
+Phase 3 完遂定義 6 項目は **形式的には既達成 (C216 時点で達成済) かつ実プレイ判定は次サイクル送り** = 本 Phase 4 で新たに達成した項目はなし。代替で実装した C3 は:
+- ✅ playable diff (5 行 + sim_check 15 行 + devlog 30 行)
+- ✅ commit prefix `game:` 想定 (Phase 5 で commit)
+- ✅ 静的検証 (sim_check 4 アサート全通過)
+- ⏳ ブラウザ起動 self-test = Win 環境制約で実施不可、次サイクル以降
+
+### 5) 副産物列挙
+
+- 新規 sim_check Test 1 件 (Test6: bossClear consumed by spawnWave)
+- devlog §11 (C220 Phase 4 dead flag 救済の判断記録)
+- Phase 3 完遂定義 = 既達成タスクだった事実の記録 (本 §0、次サイクル kaizen #132 同型ゲート発火基準の素材)
+
+### 6) Slack 追加投稿
+
+なし (Phase 3 で完了済の 3 投稿で本サイクル分は十分。本 Phase 4 で追加 Slack 投稿は出さない方針)。
+
+### 7) commit
+
+Phase 4 では commit しない (Phase 5 で日記とまとめて git commit + push)。本 Phase 4 で編集したファイル: `game/mimicry_log/v02/index.html` / `_sim_check.js` / `devlog.md` の 3 ファイル + 本 staging。
+
+(Phase 4 終了 2026-05-22 06:55)
+
+## Phase 5: Diary (2026-05-22 07:00 完了)
+
+### 1) Slack #log 投稿
+- ts=1779396646.691729 #log C220 Phase 5 日記
+- 内容: 3 源収束「役/価値の言語化粒度」発見 (Phase 2) + 同サイクル内 2 段の自己診断幻覚連続発火 (Phase 3 §0 series 名 typo + Phase 4 §0 実装ステータス誤認) + 大作業切替 (mimicry_log v02 bossClear dead flag 救済)
+- 日記末尾「次回起動時 (C221) にやること」8 項目を記載 (C3 実プレイ判定最優先 / kaizen #132 同型 2 例目判定 / Shahrabi Value Proposition retrofit / kaizen #132-134 検証 / Codex ヘッドレス v01 進捗 / 3 源収束検証継続)
+- スクリプト: `drafts/2026-05-22/post_log_diary_c220_phase5_20260522_POSTED_ts1779396646.py`
+
+### 2) 本サイクルで書き込んだ memory ファイル一覧 (Nao_u 理解可能性チェック)
+
+**新規 memory/feedback_*.md 起票なし、新規 kaizen 起票なし、新規 R/M 層追加なし、新規 sense_prediction_log エントリ追加なし** — feedback_few_rules_big_effect.md + feedback_rule_proliferation_canonical.md 順守を維持。
+
+実書き込みファイル (Claude/ 配下):
+- `game/mimicry_log/v02/index.html` (+5 行) — Nao_u 理解可能性 ◯ (devlog §11 で意図記述済 = dead flag 救済の目的説明あり)
+- `game/mimicry_log/v02/_sim_check.js` (+18 行) — Nao_u 理解可能性 ◯ (Test6 ヘッダコメント + アサート構造で検証意図自明)
+- `game/mimicry_log/v02/devlog.md` (+§11 約 30 行) — Nao_u 理解可能性 ◯ (C220 Phase 4 着手判定根拠 + C219 §10(c) 保留判定との関係を明示)
+- `log/cycle_staging_log.md` — Nao_u 理解可能性 ◯ (Phase 1-5 全セクション構造化、staging 用途を一見で把握可能)
+- `.diary_dedup_cache.json` — Phase 2 投稿 3 本の自動キャッシュ更新 (機械的データ、Nao_u 読解対象外)
+
+未来の自分が文脈なしで行動を変えられるか:
+- devlog §11 = 単独で C3 着手判定の規律 (演出強化 vs 構造バグ修正のカテゴリ分離) を再現可能 ◯
+- 本 staging Phase 3 §0 / Phase 4 §0 = 自己診断幻覚 2 段重複の事実関係を単独で再構成可能 ◯
+- 次回起動時 #1-8 = 各項目に「なぜ優先するか」を併記、Slack ts / ファイルパスへの直接参照あり ◯
+
+Phase 3 で commit 37ecffef に含めた projects/ 履歴 (external_intake.md / game_development.md) は本 Phase 5 では再触れず。
+
+### 3) commit 計画
+
+CLAUDE.md「厳守事項」順守 (game / 運用規則 別 commit):
+- commit 1 (`game:`): `game/mimicry_log/v02/index.html` + `_sim_check.js` + `devlog.md` (C220 Phase 4 bossClear dead flag 救済)
+- commit 2 (`log:`): `log/cycle_staging_log.md` Phase 4-5 追記 + `.diary_dedup_cache.json` + `drafts/2026-05-22/post_log_diary_c220_phase5_20260522_POSTED_ts1779396646.py`
+
+(Phase 5 終了 2026-05-22 07:00)
