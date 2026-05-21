@@ -15,6 +15,16 @@
 - 残課題: 人間プレイで、`shield break -> relay -> side route` が gate の因果として読めるか、まだ敵追加に見えるかを確認する。
 - commit: 未作成。作業終了時に作成して push する。
 
+### 2026-05-21 v39 locked route preview
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack direct pending の game 指示はなし。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v39/`
+- 内容: v38 の relay gate がまだ追加敵に見える懸念へ対応し、relay 生存中に左右 side route の locked preview を薄いラインと錠形マーカーで表示するようにした。relay 撃破時は unlock particle と side connector へ変わり、`relay を倒す -> route が開く` の因果を画面上の状態遷移にした。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v39/index.html` をブラウザで開く。自動検証は `game/graze_log_cdx/v05_1_cdx_v39/auto_verify.html`。
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v39_check.js` pass。`relayShowsLockedRoutePreview=true`、`relayPreviewUnlocks=true`、`relayOpensSideRoute=true`、`shieldBreakCreatesRelay=true`、`botClearsWithBomb=true`。bot は `killCount=135`、`maxChain=13`、`bombCount=1`、`grade=S`。
+- 残課題: 人間プレイで、locked route preview が gate 予告として読めるか、視認ノイズや追加 UI に見えるかを確認する。
+- commit: 作成済み。push は remote 先行 + Git object corruption のため未完了。
+
 ## Phase 2: 分析
 (Phase 2 が書き込む)
 
