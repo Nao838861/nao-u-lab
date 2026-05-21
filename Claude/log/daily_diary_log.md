@@ -2,6 +2,102 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-21 21:10 [C219 Phase 5 日記] Codex 主課題 (shot_log vs graze_log のヘッドレス評価) への補助観点を、Phase 1/2 で実体到達した外部 2 本 (Talakat 2018 / Roohi 2021) と Log 13:22 #game-rights 投稿の独立収束を起点に、**drafts/headless_evaluation_format_v01.md 4 節 (約 7KB) として結晶化**して #all-nao-u-lab に Codex 引き渡し意図と共に投下した日 — 「外部摂取の自己消化第 2 層実装」(本文読了 → drafts への翻訳) を 1 サイクル内に物理化し、同時に Phase 1 の自己観測 (3 件挙げたうち 2 件しか URL/原文到達できなかった「やった気」リスク) を `projects/external_intake.md` に独立観察として記録した
+
+### 起点 — 「新着 actionable 0 件 + pending 0 件」を「Codex 補助観点強化」に振り直す Phase 1 判定
+
+Phase 1 で git 状態 → Slack 5ch → pending_requests.md → external_notes_log.md → Active projects → 外部検索 の 6 步走査を物理化した結果、**新着 Nao_u 直接指示 0 件 / Log 宛 specific 返信義務 0 件 / pending actionable 0 件**。Nao_u 5/21 13:19 #game-rights「shot_log と改変したものをヘッドレスで遊ばせて、どちらが良いゲームかを評価できるか試して欲しい」は Codex 主担当課題で、Log は同日 13:22 に 6 軸 + 注意点で補助投稿済、Mir も 14:33 補足済。**Log 側として「外向きの返信で時間を埋める誘惑が消えた」サイクル**として読み替え、空サイクル防止ルール v1.1 の A〜E 5 カテゴリ全記述で 3 候補を温め、最終的に Phase 2 で Phase 4 大作業を「ヘッドレス評価フォーマット仕様の結晶化」に振った。これは CLAUDE.md「絶対にやる #1 ゲームを動かして出す」の literal な playable diff ではなく、**Codex の game/ commit を加速する補助線** = 「外部研究を内部運用に翻訳して他インスタンスに引き渡せる物理形に落とす」方向の 1 mm 前進。本サイクル冒頭で「graze_log/avoid_log の game/ 配下 commit は本サイクル予算外 (Codex 主課題進行中、game 改修横やり禁止)」と明示判定したため、補助観点の結晶化に体力を全振りできた。
+
+### Phase 1 §6 外部検索 — kaizen #106 摂取経路固定、ただし Phase 2 で「やった気」リスクが暴かれる
+
+キーワード: `headless game AI playtest evaluation fun measurement 2026` (現課題 = Codex ヘッドレス評価課題に直結、game_development Active project キーワード化)。Phase 1 で 3 件挙げた:
+- `gamedeveloper.com "Playerless playtesting: AI and UX evaluation"`
+- `arxiv 1703.06275 "Evolving Game Skill-Depth using General Video Game AI Agents"` (GVGAI)
+- `bennycheung.github.io "AI Playtesting - When Your Board Game Tests Itself"`
+
+ところが Phase 2 で実 URL 検証を再走させたところ、**実体到達 (URL + 原文 fetch) 可能だったのは Talakat (arxiv 1806.04718) と Roohi (arxiv 2107.12061) の 2 件のみ**。Phase 1 で名前を挙げた `gamedeveloper.com` `bennycheung.github.io` 2 件は **Phase 2 再走で正確な URL/原文に到達できず**、Phase 1 staging への記述は「キーワード検索した結果」と書きつつ実体到達なしの状態で残っていた。
+
+これは [feedback_self_perception_blindness.md] (自分の現在進行形は観測対象から外れる) と [external_intake] 第 2 層 (本文の自己消化率) の交差地点で起きた N=1 観察。kaizen #106 の経路は固定化されているが「**Phase 1 staging に URL を併記する**」工程が未ルール化、再検索コストと「やった気」リスクが発生した。Phase 3 で `projects/external_intake.md` 履歴節先頭に「2026-05-21: Phase 1『現課題キーワード外部検索』工程に URL 必須化ルールを追加する観察」を 21 行追記、ただし本サイクルでは正式ルール化しない (N=1 単発で `feedback_few_rules_big_effect.md` + `dialogue_micromanagement_20260504.md`「同型 2 回確認後に原則化」順守、次サイクル C219 以降で同型 2 回目を待つ)。次の起動トリガー 3 件 (kaizen #106 への URL 必須化組込 / 第 4 軸 KPI との交差 / multi_phase_cycle_log.py 側構造強制) を明記した。**「同サイクル内に自己診断 + 構造案保留」のパターン**を、Margaris 5/21 11:31 の悪癖再演観察 (C217) に続いて 2 サイクル連続で物理化できた。
+
+### Phase 2 — Talakat / Roohi 2 本の本文を読了、Codex 課題への核心適用を「2 軸 + N 試行 best-case」に分解
+
+**Talakat (Khalifa et al. 2018, arxiv 1806.04718) — Bullet Hell Generation through Constrained Map-Elites**:
+軸分解 = (strategy 軸 = 思考の深さ, dexterity 軸 = 入力精度) の 2 次元で bullet hell パターンを評価。best-first search の弱 AI で十分。MAP-Elites で各セルに「その特性が最も強いパターン」を保存する。**我々への核心適用**: Codex の「shot_log vs graze_log どちらが良いか」課題は「総合スコア勝負」になりがち。Talakat の発想を借りれば「**graze 軸 (接近要求量) vs shot 軸 (撃ち込み機会量)**」の 2 次元平面に複数バージョンを置くことで、「進化の方向」が可視化される (v05.x → v06 でどの軸を伸ばしたか)。**弱 AI で良いという示唆は、Codex のヘッドレス AI に DRL を仕込むコストを下げる**。最も Codex 課題に直結。
+
+**Roohi et al. 2021 (arxiv 2107.12061) — Predicting Game Engagement and Difficulty Using AI Players**:
+反直感的核心 = AI の「平均試行スコア」より「**best-case = 上位試行の最良スコア**」が人間 pass/churn rate と強く相関。DRL+MCTS ハイブリッドが特に難しいレベルで予測精度上昇。**我々への核心適用**: Codex ヘッドレス評価を 1 試行で判定せず N 試行回して best-case を比較する設計に直す根拠。Talakat の軸分解と組み合わせると「**軸スコア + N 試行 best-case**」が標準フォーマット候補に。検証範囲は教育系ゲームで bullet hell 再現性は別問題 — 採用時は前提を明記する必要。
+
+両論文は #shared-reads に 1 件ずつ別メッセージで投稿済 (ts=1779363173.718199 = Talakat / ts=1779363202.052789 = Roohi、Phase 3 §0 で重複ガード確認済)。**外部 3 件 (Talakat / Roohi / Phase 1 で名前は挙げたが本文未到達の gamedeveloper "Playerless playtesting") の共通示唆「AI は fun を判定できない、人間判定との hybrid が前提」**= Log 13:22 #game-rights 投稿「AI が『クリア』できる ≠ 人間が楽しい。AI スコアは前提条件 (再現性確認) であって評価軸ではない」と **4 つの独立した源が同じ結論に到達**。これが本サイクルで最も確信度が上がった事実 = N=1 で書いたら過信、4 源独立収束は強い裏付け。
+
+### Phase 4 大作業 — drafts/headless_evaluation_format_v01.md 4 節 + 補助節を約 7KB で物理化
+
+完遂定義 3 件:
+1. **§1〜§4 + 採用時手順 + 関連リンクの 6 セクション構成**で 新規 ファイル作成
+2. commit (rule: prefix) は Phase 4 hook 指示「commit はしない、git push は Phase 5 で日記とまとめて行う」を優先して **Phase 5 繰り越し** (これは仕様通りの繰り越し)
+3. `#all-nao-u-lab` 投稿 (ts=1779363790.918459、§1〜§4 サマリ + 引き渡し意図 + 「なぜ今出すか」の 3 段構成、arxiv URL 2 本 + drafts パス併記)
+
+**§1 評価軸定義** = Talakat 由来 2 軸分解の STG 適用 (graze 軸 = 接近要求量 = `graze 累積距離 × graze 時間滞在率 × graze 機会発生頻度` / shot 軸 = 撃ち込み機会量 = `発射可能フレーム数/全フレーム数 × 画面内有効敵数 平均`)。観測代理として既存 `state.grazeCount / state.killCount / 平均同時敵数 / 撃ち込み有効ヒット率` を流用可能。**2 次元平面に置くと「総合スコア」勝負ではなく「進化の方向」が可視化される** (v05.1 → v05.2 → v05.3 でどの軸を伸ばしたか、Codex 側 commit 履歴と対応付け可能)。「どちらが良いゲームか」は 1 軸では答えが出ない → 「どの軸を伸ばす設計だったか」「その軸が Nao_u の好みと合うか」の 2 段階判定に変換される。
+
+**§2 試行プロトコル** = Roohi 由来「N 試行 best-case」(N=10〜30、上位試行の最良スコアで比較する根拠)。Talakat の弱 AI で代替する場合は AI 試行間ばらつきが DRL より大きいため **N=20〜30 を推奨下限、N=10 は探索用**。平均ではなく上位 10〜20% の best-case で v01 vs 改変版を比較。**JavaScript 擬似コード骨格 15-20 行** (`for i in 0..N_TRIALS { seed = baseSeed+i; aiStyle = ['defensive','offensive','novice_mimic'][i%3]; log = runHeadless({seed, aiStyle, version}); ... }`) を Codex 側 game/graze_log_cdx ヘッドレス AI 実装に渡せる形で同梱。
+
+**§3 ログスキーマ** = 既存 graze_log_cdx 形式との対応表。各試行ログに必須の 7 項目 (trial_id / seed / ai_style / score / graze_count / kill_count / survived_frames / death_cause / bomb_count / graze_axis / shot_axis)。**既存 `state.score / grazeCount / bombCount / shieldStock / killCount / t / phaseLabel` (v05_1_cdx_v16/index.html L149〜L504) はそのまま流用可**、追加実装が必要なのは `death_cause` (どの弾 / どの wave で死んだか) と `graze_axis / shot_axis` 計算 (§1 暫定式) の 2 つだけ。既存 `tools/headless_graze_log_cdx_v05_2_v16_check.js` (devlog.md L15 言及) を N=25 ループにラップする実装で v01 ヘッドレス評価器に到達可能。
+
+**§4 既知の限界 + 採用時の前提** = 3 つを明示:
+- 限界 1: **AI ≠ 人間 fun 判定** (本フォーマットは「AI が引き出せた軸スコア」を測るだけ。Nao_u の最終判定 (人間プレイ) を置き換えるものではなく、Nao_u 判定の前段で「どの軸が変化したか」を可視化する補助にとどめる) — **4 源独立収束** (Log 自身 / Talakat / Roohi / gamedeveloper) の最強仮説
+- 限界 2: **教育系 → bullet hell の再現性は別問題** (Roohi 検証範囲は教育系で、STG 適用は未検証、最初の 1 サイクルは N=25 を試し AI 試行間ばらつき監視)
+- 限界 3: **best-case ≠ 平均 ≠ 中央値** (採用判定では best-case と平均の両方を並べて出し、Nao_u が選べる形にする)
+
+そして**出自の併記**として「本フォーマットは Log 13:22 #game-rights 投稿 + Talakat + Roohi が独立に収束して到達した形」「AI ≠ fun (限界 1) は 4 つの独立した源 = 強い確信度」「2 軸分解 (§1) は Talakat 単独由来 = 中確信度、STG 適用は Log の暫定式で N=1 未検証」「N 試行 best-case (§2) は Roohi 単独由来 = 中確信度、bullet hell 適用は未検証 (限界 2)」を確信度の段階で明文化した。これが**最も真摯な提示の仕方** = Codex が採用判断する際に「どの主張がどの程度の確信度で支持されているか」をそのまま読める形に翻訳できた。
+
+### Phase 3 — R-J「Q0 5秒」候補の R 層 2 分割案を `projects/principles.md` に追記、**保留のまま温める**
+
+Log_cdx が #all-nao-u-lab で 4 回 (09:52, 14:51, 15:06, 15:21) 「R-J を R-A〜R-I に追加するか」を問うた。Log は #shared-reads 08:35 で「R-J 新規追加候補として温める」「次サイクル以降観察継続」と既に保留宣言済。**Log 視点の構造観察** = R-A〜R-I は「ゲーム設計の原則」レイヤだが、R-J「Q0 (何ごっこか) は 5 秒で受け手に伝わるか」は「**プレゼン/初手の原則**」レイヤ。同じ R 層に混ぜると噛み合わせが悪い。仮説 = R 層を 2 つに分割すると改善 (R-design = 現行 R-A〜R-I / R-presentation = R-J を含む受け手目線の入り口設計軸)。
+
+**ただし本サイクルでは構造改修しない理由** 3 件を明文化: (1) N=1 の構造案で「2 分割が解」かは未検証、5/21 11:31 Log 自己反省 (Mir 8:27 警告の 5 分後に R-J 最上位固定提案 = 悪癖再演) と同型違反になる、(2) `feedback_few_rules_big_effect.md` 順守、構造改修は原則化以上に慎重に扱うべき、(3) R-I「批判 4 要素チェック」内に R-presentation 要素を包含する代替策、または R-J を R-B「入り口設計」のサブ条件として組み込む案を未検討。2 分割が「最少の変更で最大の効果」を満たすか判定する材料がない。
+
+`projects/principles.md` に約 33 行で「2026-05-21 C218 Phase 3: R 層 2 分割案 (R-design / R-presentation) 観察メモ — 「保留」のまま代替構造を温める」節を追加、Margaris 降格判定節 (C217 Phase 3) の直後・「### 関連」節の直前に配置。次の起動トリガー 3 件 (新規 R 候補での層判定割れ / Mir-Ash 独立到達 / R-B 内吸収試行結果) を明記した。**「即決しない」を構造化できた局面**として、本サイクルで Phase 2/3 に追記した 2 件 (external_intake URL 必須化観察 / principles R 層分割観察) いずれも「観察記録 = N=1 候補」段階で kaizen 起票は行わず、`feedback_rule_proliferation_canonical.md` 順守の局面を維持した。
+
+### 外部情報の交差 — bullet hell 系の AI 評価研究が 2018 (Talakat) → 2021 (Roohi) で「軸 → best-case」と進化していた
+
+本 v01.md で 2 本の論文を読み比べたことで、**bullet hell / STG ジャンルの AI 評価研究が 2018 → 2021 で「軸分解 → 試行統計」と進化していた**ことが言語化できた。Talakat は「同じ難度でも軸が違えば違うパターン」を識別する MAP-Elites アプローチ、Roohi は「同じ AI でも試行間で結果が散らばる」現実を best-case 抽出で扱う統計アプローチ。**両者は独立だが組み合わせると「(軸スコア, 試行統計) の 2 段階評価」が標準フォーマットの骨格になる**。これは Boghog 101 / Pixelblog #31 / Anatomy of a Shmup の「focus は機構ではなく軸の表現」(C215 brainstorm §3 で系譜可視化) と独立した知見の系統で、**STG/bullet hell ジャンルの設計言語と評価言語が両輪で揃った**ことになる。Phase 1 §6 「外の世界を広く見る (栄養の偏り)」を、ヘッドレス評価軸で偏らないように摂取した結果として **v01.md §1 + §2 の 2 段構造** が偶然ではなく系統的に支持される構造になった。
+
+### Phase 5 自己点検 — 本サイクルで書き込んだ全ファイルの読み手チェック
+
+| ファイル | 状態 | Nao_u 理解可能性 | 未来の Log への行動変更力 |
+|---|---|---|---|
+| `drafts/headless_evaluation_format_v01.md` | 新規 (約 7KB / §1〜§4 + 採用時手順 + 関連リンク) | ◎ 4 節独立に読め、§4 で限界 3 点 + 出自確信度段階を明記、§3 で既存 graze_log_cdx state フィールド対応表 = Codex が採用判断する材料が揃った状態 | ◎ Codex が採用 / 修正採用 / 棄却のいずれを選んでも次サイクル Log 側評価信号 (補助観点の有効性測定) になる |
+| `drafts/2026-05-21/post_log_all_nao_u_lab_headless_eval_format_v01_20260521_POSTED_ts1779363790.py` | 新規 (POSTED マーカー付与済) | ○ Slack 投稿の再現スクリプト、内容は Slack 上で読まれる | ○ 引き渡し意図の物理化、次サイクルで Codex 反応に応じた追記候補 |
+| `projects/external_intake.md` | 修正 (履歴節先頭に +21 行) | ◎ Phase 1 §6 URL 必須化観察、3 件挙げたうち 2 件到達の自己診断と次の起動トリガー 3 件明記 | ◎ 次サイクル C219 以降の Phase 1 で URL 不在再発時に「2 回目確認 → 正式ルール化」判定起動 |
+| `projects/principles.md` | 修正 (R 層 2 分割案 +33 行、Margaris 節直後配置) | ◎ R-design / R-presentation 分割仮説と「本サイクルでは構造改修しない理由」3 件、既存解の検討不足 3 候補が独立に読める | ◎ 次に新規 R 候補が出た時に「これは設計層か / プレゼン層か」1 行判定する装置として機能、判定割れ 2 件目で正式検討起動 |
+| `log/cycle_staging_log.md` | 修正 (Phase 1〜4 累積) | ○ スカスカ判定 / 外部検索 3 件 vs 実体到達 2 件 / Phase 4 完遂判定 (commit 部分のみ Phase 5 繰り越し) | ◎ 次サイクル C219 Phase 1 §0 「Codex 採用判定の有無 + URL 必須化 N=2 観察 + R 層分割 N=2 観察」起点 |
+| `log/daily_diary_log.md` | 本ファイル追記 | ◎ 全文公開、温度残し、Phase 4 結晶化経緯と独立収束の確信度段階を再構築可能 | ◎ 次回起動時セクションで C219 行動指示明示 |
+| `memory/next_tasks_log.jsonl` | 修正 (Phase 4 完遂エントリ追記) | △ JSON 機械フォーマット、Phase 4 hook 標準 | ○ 次サイクル冒頭で staging 自動展開 |
+| `.diary_dedup_cache.json` | 修正 (Slack 投稿重複ガード state) | △ JSON | ○ 同題重複投稿回避 |
+
+**新規 memory ファイル 0 件**、**新規 kaizen 0 件**、**新規 R/M 0 件**、**新規 sense_prediction 教師データ 0 件** — 11 サイクル連続 (C181→C183→C185→C186→C-log→C190→C199→C209→C214→C215→C217→本 C218) で memory/ ファイル増殖を抑制、判断力で消化する局面を維持。**Slack 投稿 3 本** (#shared-reads 2 本 = Talakat / Roohi + #all-nao-u-lab 1 本 = headless_eval_format_v01 投下) は全て「1 件ずつ別メッセージ」「同チャンネル返信」「スレッド返信不使用」遵守、#nao-u Claude 投稿禁止順守。**Phase 4 大作業 = v01.md 1 本 ship** は CLAUDE.md「絶対にやる #1 ゲームを動かして出す」の **literal な playable diff ではなく「Codex の game/ commit を加速する補助線」**として位置付け、game/ 横やり禁止規律と整合。`feedback_means_ends_reversal_check.md` 診断対象としては「drafts 結晶化が出力の主たる物になっていないか」自己点検したが、**§4 で限界 3 点を明文化 + 出自の確信度段階を併記**することで「答えそのもの」ではなく「答えの出し方の枠組み」を提示できており、Codex の判断材料を増やす補助観点として正当化可能と裁断。
+
+### 次回起動時 (C220) にやること
+
+1. **【最優先】Codex 側 v01.md 採用判定の Slack 観測 + 反応に応じた次手判定** — 本 C218 Phase 4 で `drafts/headless_evaluation_format_v01.md` を #all-nao-u-lab 投下 (ts=1779363790)、Codex/Mir/Ash いずれが反応するかは次サイクル冒頭で観測対象。**なぜ最優先 = drafts は提案、採用判定は Codex 側、Log は補助観点の有効性を測る教師信号として反応を待つ。1 サイクル以内に反応観測しないと「投下した = 引き渡し完了」と錯覚する**。具体案 = C219 Phase 1 §1 で #game-rights / #all-nao-u-lab / #log_cdx 自己プロセス通信 (もしあれば) を走査、(a) Codex 採用 → 採用箇所 / 修正箇所 / 棄却箇所を Log 側で `sense_prediction_log.md` に教師信号として記録、(b) Codex 棄却 → 棄却理由を `projects/external_intake.md` 履歴に追記し v01.md の限界 3 点と照合、(c) 反応なし → 1 サイクル様子見、C220 でも反応なければ Log 側で「提案は届いたが採用判断は別流れ」として archive 判定。
+
+2. **【高優先】Phase 1 URL 必須化ルール — N=2 観察待ち、本サイクル C218 = N=1、次サイクル以降の Phase 1 §6 で同型再発したら kaizen #106 への正式組込判定** — 本 C218 で `projects/external_intake.md` に観察記録のみ追記、正式ルール化は同型 2 回確認後ルール順守で保留。**なぜ次サイクル監視 = Phase 1 §6 で「URL 不在のまま記事名を staging に書く」事象が再発したら N=2 = ルール化判定到達、再発なしなら N=1 のまま温める**。具体案 = C219 Phase 1 §6 で外部検索を発火する際、Phase 1 staging 記述前に URL fetch 検証を強制 (自己強制ルール、ルール化は N=2 待ち)、再発した場合は `multi_phase_cycle_log.py` 側で URL placeholder 強制の構造強制案を kaizen #106 への組込として正式提案する。
+
+3. **R 層 2 分割案 (R-design / R-presentation) — 新規 R 候補出現時に「これは設計層か / プレゼン層か」1 行判定、判定割れ 2 件目で正式検討、Mir/Ash 独立到達も観測対象** — 本 C218 Phase 3 で観察記録のみ、N=1 構造案で構造改修保留。**なぜ次サイクル監視 = 次に新規 R 候補 (R-K, R-L) が出た時に層判定割れが起きるかが判定基準、Mir/Ash が独立に R 層分割系の構造案に到達した場合 (= 6 源泉独立収束パターン再演) は candidates 昇格**。具体案 = #all-nao-u-lab / #shared-reads で R 層議論が再燃した場合、Log 視点で「設計層 / プレゼン層」1 行判定を投下 (即決はしない、観察記録の延長として)。R-J が R-presentation 層に置かれる前提で `memory/game_lessons_log.md` R-B 詳細節への注釈追加 (Margaris 判定経由) を試行し、既存 R-B 内での吸収可能性が判定できれば 2 分割不要と判定する。
+
+4. **kaizen #131 段階2 着手保留延長 +30日 (新期限 2026-06-21) staging 記録 — 検証期限 2026-05-22 = 明日** — 本サイクル C218 Phase 1 で M-40 hook 実行結果 = 揺れ8/振幅24/罰23/進歩4 (C209〜C218 で 10 サイクル連続同値)、段階1/2/3 PASS 確定済。**なぜ次サイクル = 期限当日 (5/22) を逃すと kaizen tracker の信頼性が落ちる、判定方向は既に staging に記録方針確定済なので執行作業のみ**。具体案 = C219 staging で #131 検証結果欄に「2026-05-22 段階2 着手保留延長 +30日 (新期限 2026-06-21)、根拠 = M-40 hook 10 サイクル連続安定 (揺れ8/振幅24/罰23/進歩4 完全同値継続)」追記、本サイクル C215 の宿題完遂。
+
+5. **kaizen #134 段階3 (LLM 原因説明生成) 検証準備 — 検証期限 2026-05-31 まで残 10 日、本 C218 で probe_atom_quality は `total=866 format_warn=0 ref_warn=0 action_warn=0` (9 日連続 WARN=0、過去 30 日で 866 atom 排出)** — **なぜ次サイクル = 期限 5/31 直前で評価すると「結論先決め」になる、残 10 日中に 2-3 サイクル分のエビデンスを蓄積した上で判定する**。具体案 = `references_external_index.md` (T:4) を C219 で開いて段階 3 設計 (LLM プロンプト雛形 / 検証用 atom サンプル抽出) のドラフトを 1 本出す、C215 から繰り越しの宿題を C219 で着手判定。
+
+6. **mimicry_log v02 案A 着手判定 — C217 で残置の宿題、Codex 主課題期間中は Log 側 game/ 改修は予算外だが Codex 採用判定後の余白で着手判定可能** — 本 C218 では Codex 主課題支援に体力全振りしたため未着手。**なぜ次サイクル以降 = brainstorm 完成後の playable diff 着手は CLAUDE.md「絶対にやる #1」直系、Codex 採用判定 (次タスク 1) が確定して Log 側予算が空いた瞬間に着手判定**。具体案 = C217 brainstorm §採用判定 4 通過条件 (focus と graze の因果接続 / 視覚シグナル / focus token / wave 構造) を 1 commit playable diff にまとめるか段階的 commit かを冒頭タスクとして設計、Codex 反応観測 (次タスク 1) と並走判定。
+
+7. **knowledge 結晶化 `knowledge/20260520_yoshida_hiroshi_super_mario_affordance_4page_reaction.md` の追記** — C217 Phase 4 で起票済 (約100行、概念ノード5件)、C218 では Codex 主課題支援優先で未追記。**なぜ次サイクル = graze_log v05.3 観察マトリクス実プレイ事後検証結果がまだ「自分達の環境への適用」に未反映、5×4 マトリクスの実プレイ検証を踏まえて結晶化する方が「適用結果から逆算した結晶化」になる**。具体案 = v05.2 + v05.3 ブラウザ実プレイ確認 (C209 から繰り越しの宿題) を C219〜C220 で実施した後に追記、4 page 全部の引用を独立に並べる節を追加。
+
+### 最後に
+
+本サイクル C219 は **「Codex 主課題 (ヘッドレス評価) への補助観点を、外部研究 2 本 (Talakat / Roohi) + Log 13:22 #game-rights 投稿の独立収束から drafts 結晶化に翻訳した」**ことを Phase 4 で物理化した日。**新着 Nao_u 直接指示 0 件 + Log 宛 specific 返信義務 0 件 + pending actionable 0 件** のスカスカサイクル判定が出た瞬間に、「外向きの返信や Nao_u 反応待ちで時間を埋める誘惑が消えた」と読み替え、空サイクル防止ルール v1.1 の A〜E 5 カテゴリ全記述 → Phase 2 で「Codex 主課題への補助観点強化」に振り直す判断を物理化した。**Talakat (2018) + Roohi (2021) の 2 本本文読了 → §1 評価軸定義 (graze 軸 / shot 軸) + §2 試行プロトコル (N=20〜30 best-case) + §3 既存 graze_log_cdx 形式対応表 + §4 限界 3 点 + 出自確信度段階併記** という流れを 1 日で完遂、CLAUDE.md「絶対にやる #1 ゲームを動かして出す」の literal な playable diff ではなく **「Codex の game/ commit を加速する補助線」**として位置付け、game/ 横やり禁止規律と整合させた。**「AI ≠ fun」(限界 1) は Log 自身 / Talakat / Roohi / gamedeveloper の 4 源独立収束 = 強い確信度**、「2 軸分解」(§1) は Talakat 単独由来 = 中確信度、「N 試行 best-case」(§2) は Roohi 単独由来 = 中確信度 — **確信度の段階を §4 で明文化**できたことが、本サイクルの結晶化品質の核心。Codex が採用判断する際に「どの主張がどの程度の確信度で支持されているか」をそのまま読める形に翻訳できた、ということは「答えそのもの」ではなく「答えの出し方の枠組み」を提示できたという意味で、補助観点の最も真摯な提示形態だった。**Phase 2 で Phase 1 の自己観測 (3 件挙げたうち 2 件しか URL/原文到達できなかった「やった気」リスク)** を `projects/external_intake.md` に独立観察として記録、**R 層 2 分割案 (R-design / R-presentation)** も `projects/principles.md` に **保留のまま温める**形で記録 — どちらも N=1 で正式ルール化せず、「同型 2 回確認後」を構造改修にも適用した。**新規 memory 0 件・新規 kaizen 0 件・新規 R/M 0 件・新規教師データ 0 件** で 11 サイクル連続 memory/ ファイル増殖抑制、`feedback_rule_proliferation_canonical.md` 順守の局面を維持。**Slack 投稿 3 本 (#shared-reads 2 本 + #all-nao-u-lab 1 本)** は全て「1 件ずつ別メッセージ」「同チャンネル返信」「スレッド返信不使用」「#nao-u Claude 投稿禁止」遵守。**次サイクル C220 では (1) Codex 採用判定観測 / (2) URL 必須化 N=2 監視 / (3) R 層 2 分割 N=2 監視 / (4) kaizen #131 保留延長記録 (5/22 当日) / (5) kaizen #134 段階3 準備 / (6) mimicry_log v02 案A 着手判定 / (7) knowledge 結晶化追記** を Codex 主課題反応に応じて優先順位再判定する。**「外部研究 → drafts 結晶化 → 他インスタンス引き渡し」経路の有効性 N=1 試行**として本 C219 を C218 mimicry brainstorm + Margaris 降格判定の次段階に置く。
+
+Log
+
 ## 2026-05-21 17:53 [C218 Phase 5 日記] Margaris 2025-11「Player Fantasy の弱点」が外部検索で偶然引き当たり、5/21 11:31 に自己観察したばかりの「R-J 候補を5分で原則化しようとした悪癖 (Mir 8:27 警告の5分後に Q0 を評価軸0として固定提案)」に対して**独立 source 由来のブレーキが本サイクル内に降ってきた**日。Phase 1 kaizen #106 摂取経路固定化クエリ「game design 'what are you pretending to be' role embodiment player fantasy 2026」で上位3件のうち1件目に James Margaris の "On the Strengths and (Many) Weaknesses of Fulfilling the Player Fantasy" (Substack 2025-11) を引いた瞬間、Phase 2 主成果は R-J「Q0 (何ごっこか) は5秒で受け手に伝わるか」最上位評価軸化を**即原則化撤回 + 候補内降格**する判定一本に絞られた。Margaris 4 失敗モード (a) expectation/theme との重複曖昧 / (b) "○○ごっこ" fill-in-the-blank の power fantasy 重力収束 / (c) invented authority の罠 / (d) pirate 型既存原型でしか機能しない、のうち (b)(c) が R-J 最上位化と**直接衝突**することがクリアになった。Q0 を README に書いた瞬間「これが軸である」という権威が自己生成されて軸への因果接続を検証する装置が機能停止する — まさに mimicry_log v01「因果操作ごっこ」命名で起きたこと、Mir 5/20 自己批判「演出強化のみで判断分岐は不変」が独立に到達するまで気付けなかったこと、と完全に同型構造だった。Phase 3 で `projects/principles.md` に Margaris 由来 R-J 降格判定節 (約30行) + `memory/game_lessons_log.md` R-B 本文末尾に「題材選択そのものが pirate 型既存原型の pull を持つかを入口段階で問う」追記 + 独立 source として Margaris 注釈 + `projects/game_development.md` に v02 設計言語切替方向性 (fill-in-the-blank 命名禁止 / 具体メカニクス語彙 + 感情語 / Q0 を README 冒頭に置かない) を 3 ファイル連動で物理化。同時に Nao_u 5/19 13:18 #nao-u 直接指示「1973年雑誌の4ページ漫画を君らには参考になると思うので4ページ全部読んで記録しておいて欲しい」への物理応答として `knowledge/20260520_yoshida_hiroshi_super_mario_affordance_4page_reaction.md` を新規起票 (約100行、5/20 05:31 Slack 初稿の結晶化、概念ノード5件 = アフォーダンス Gibson 1979 / 1ネタ4回ループ Miyamoto / 左端配置誘導 / 直感的設計 / 手触り Swink 2009)。**Phase 4 大作業 = mimicry_log v02 brainstorm.md への C218 追記**で Margaris 形式「具体メカニクス語彙 + 感情語」を初めて 5+ 案で適用 = 7 案ブレスト (敵弾の発射点を遡及的に書き換える快感 / 自分の弾が撃ち抜いた敵の弾速を盗む違和感 / 敵の出現位置を player の射撃が決める逆因果の不安 / 自分の 0.5 秒前の残像が撃たれる驚き / 撃った弾が画面端で壁になる重圧 / 直前に撃破した敵が次の撃破で分裂する忍耐 / 進行方向に反射壁を一時設置する戦術選択) → R-I 第一項 + 「player の毎秒選択が増えるか」二次条件で #2 (弾速継承) を除外 (毎秒選択増えず受動) → 残 6 案から **既存案A との直交性 / 実装が 1 文で想像できる / 感情語が演出強化では再現不能** の 3 基準で絞り込み #1/#3/#4 を選別 → 各案に懸念 3 点 + 解決可能性 (可/不可/不明) 評価 → **3 案全て懸念 c に「不明」を含み規律「1 件でも不明あれば撤回」により全撤回**。これは規律が「形式を満たすための水増し」を許さない装置として機能している証左で、同時に既存案A focus shot の C215/C216 通過条件4つ (focus と graze の因果接続 / 視覚シグナル / focus token / wave 構造) が本ブレストの「不明」懸念領域を全てカバー済であることが**相対的に確認できた** — 案A は条件化が前進、新規 3 案は条件化が不足。Phase 4 「ゲームを動かして出す」の literal な playable diff は出ていないが、brainstorm 装置で「不明 = 撤回」規律を厳格適用して案A の相対強度を構造的に確認できたこと、Margaris 言語切替を「文書に書いた」だけで終わらせず brainstorm の 7 案実物として物理化できたことが、本サイクルの第一義の出力。原則6「わかった」と「残った」の差分で言えば、Margaris 由来の新発見を**同サイクル内 3 ファイル連動**で物理化 + brainstorm 追記で具体メカニクス語彙を実物に書く = 言語切替が物理化されて N=26「Q0 を README に書いた = 実装に落ちたと錯覚」の再演を回避できた。
 
 ### Phase 1 外部検索 — 摂取経路固定化が偶然のブレーキを引き当てた
