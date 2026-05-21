@@ -1,48 +1,45 @@
-# log_cdx Cycle Staging — 2026-05-21 16:58
+# log_cdx Cycle Staging - 2026-05-21 18:43
 
-<!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
+各 phase はこの下に追記する。前 phase の内容は消さない。
 
 ## Phase 1: 情報収集
+
 (Phase 1 が書き込む)
 
 ## Phase 2: 分析
+
 (Phase 2 が書き込む)
 
 ## Phase 3: Shared-reads 投稿
+
 (Phase 3 が書き込む)
 
 ## Phase 3b: Shared-reads 自己フィードバック
+
 (Phase 3b が書き込む)
 
 ## Phase 4a: 整理 + 問題抽出
+
 (Phase 4a が書き込む)
 
-## Phase 4b: 仕組み検討 (条件起動)
-(Phase 4a が needs_design: true の場合のみ実行される)
+## Phase 4b: 仕組み検討
 
-## Phase 4c: 導入 (条件起動)
-(Phase 4b で decision: introduce が出た場合のみ実行される)
+(Phase 4a で needs_design: true の場合のみ実行される)
+
+## Phase 4c: 導入
+
+(Phase 4b で decision: introduce の場合のみ実行される)
 
 ## Phase 5: 日記投稿
-- 投稿先: `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779350861948639
-- char_count: 2026
-- verification: `ok`
-- ts: `1779350861.948639`
 
-## Phase Game Start: ゲーム制作着手
+(Phase 5 が書き込む)
 
-- 対象 directive: `log-cdx-1779337186-a414e7c064` (`game-rights`, https://nao-u-lab.slack.com/archives/C0ANQ9DRQ1K/p1779337186382109)
-- 併用した local continuous directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md`
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v41/`
-  - v40 の gameplay は維持。
-  - 30 frame cadence の headless sample と sparse event log を追加。
-  - `summarizeEvalTelemetry()` で target uptime / urgentPct / maxThreat / dangerSpikes / movement switches / route coverage を返す。
-- 追加した検証:
-  - `tools/headless_graze_log_cdx_v05_2_v41_check.js`
-  - `tools/headless_game_style_compare_v001.js`
-- 実行結果:
-  - `node tools\headless_graze_log_cdx_v05_2_v41_check.js` pass。v41 bot は `mode=clear`, `grade=S`, `killCount=140`, `maxChain=18`, `bombCount=1`。telemetry は `sampleCount=144`, `eventCount=170+`, `routeCoveragePct=1`, `targetUptime=0.669`, `urgentPct=0.036`, `dangerSpikes=21`。
-  - `node tools\headless_game_style_compare_v001.js` pass。shot_log copy の center/aggressive/defensive/sweeper policy split と、graze_log v41 の coverage / pressure / movement / event trace を同じ report に載せた。
-- directive lifecycle: `memory/slack_directives.jsonl` の対象 id を handled に更新済み。
-- 残課題: graze_log 側にも複数 bot style を追加し、shot_log と同じ policy split で評価する。headless は「楽しい」の代替ではなく、人間 feedback と照合する比較署名として扱う。
+## Game Start: 2026-05-21 graze_log_cdx v42
+
+- 対象 directive: Slack pending game directive はなし。`game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` の `status: active` を対象にした。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v42/`
+- 内容: v41 の 30f telemetry を維持しつつ、`botStyle=route|aggressive|defensive|panic` を追加。route は v41 相当、aggressive は kill 数増、defensive は maxChain 長め、panic は high pressure / early failure を出す。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v42/index.html?seed=12345&bot=1&botStyle=route`
+- 検証: `node tools\headless_graze_log_cdx_v05_2_v42_check.js` pass。`node tools\headless_game_style_compare_v002.js` pass。
+- 主な結果: route clear score 85530 kill 140 maxChain 18 urgentPct 0.036。aggressive kill 164。defensive maxChain 22。panic は style compare で 30.73 秒 gameOver / urgentPct 0.221。
+- 残課題: style compare v002 の report を JSONL 保存し、v42 以降の version 間 signature diff を見られるようにする。panic は人間の焦りではなく端逃げ policy として扱う。
