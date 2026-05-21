@@ -248,3 +248,39 @@ v05 beta B-1/B-2/B-2' 段階で core が **'fun and expandable' と確定して�
 - `memory/feedback_headless_unfit_for_unfinished_eval.md` t:5 — judgment 根拠から headless を外す
 
 — Ash (Win2) 2026-05-19 C191 Phase 4
+
+---
+
+## v06 next axis — 候補1案宣言 (2026-05-22, A-1++ merge 承認待ち中の先回り)
+
+### 宣言: 次 axis = **A-3 (Psyvariar 型 graze 累積 → 自機 Lv up)**
+
+`brainstorm.md` 18案中、v06 (readability 3層 + multi-channel 弁別) が origin/master に merge された直後に着手する 1 機構刻みの次手を `A-3` に確定する。実装規模 = 約 14 行 (差分: `LV_GRAZE_TH=30` 定数 + `state.playerLv` 初期化 + `onGraze()` 内 lv up 判定 + shotCount 計算式変更 + HUD 表示)。
+
+### 採用理由 (≤30 行 / merge 順序 / M-41 / 守整合性)
+
+1. **削除可能改良の純度**: 差分 14 行は 18 案中で B-2 (18行) と並んで最小級、6 箇所 isolated patch で v06 同一バイト列に戻せる。`feedback_clone_strategy.md` t:5「守の通過点で 1 個刻み」を破らない最小経路。
+2. **merge 順序**: v06 (readability 3層 = passive 視認性) を Nao_u 評価で確定させてから着手。A-3 は readability の上で「graze の意味を副次効果から進行ゲートに変質」させる agency 強化なので、readability が立った後でないと「擦りが伝わらないまま進行ゲートだけ立つ」逆順になる。merge 承認直後に着手することで空白を生まない。
+3. **M-41 検証強度**: `prior_art_30 事例2 Psyvariar` (https://tvtropes.org/.../Psyvariar) 既検証、引用文「BUZZ system ... leveling up grants a short period of invincibility」を抜粋済み。本案は無敵化なし shotCount のみ反映の弱体版で、Psyvariar 経路の核機構を 1 段階だけ取り込む形。`prior_art_30.md` の verifiable 30 件のうちの直接模写枠。
+4. **守整合性**: 経路A (Psyvariar 系) を継続、経路B 切替 (B-2/B-3) や別軸 (C-2 SAROS) には飛ばない。`knowledge/20260519_two_paths` §C「現実解は経路A 完成度向上」と整合。v06 で readability 3層が完成した直後の自然な核機構深化 = `external_search.log 2026-05-19` 「core deepen first」の業界標準ヒューリスティック適用。
+5. **MPS 採点**: M=3, P=4, S=4 (合計 11/15)。group A 内最高、group B 平均 12 / group C 平均 9.7 と比較しても 1 機構刻み制約の中で agency 強化が立つ。
+
+### 却下した上位代替 (1 行ずつ)
+
+- **B-2 (CAVE Hyper Activation, 18行, MPS 9)** 却下: 経路A→B 切替を 1 機構で挟むと「守の通過点」の型獲得が中断する。`brainstorm.md §上位3案` で「経路B 試行は守の段階の整合性が崩れる懸念」既結論済、`knowledge/20260519_two_paths §C` の「現実解は経路A 完成度向上」に反する。v07/v08 課題として保持。
+- **C-2 (SAROS 弾カウンター, 26行, MPS 12)** 却下: graze_log の core identity (擦り=graze) を「吸収+発射」に置換する横ジャンプで、A-3 のような連続深化ではなく別軸への飛び。`feedback_clone_strategy.md` t:5「型を獲得する一連のフロー」の枝分かれを v07 まで遅らせる。
+
+### 接続先
+
+- `game/graze_log/v06/brainstorm.md` A-3 節 (L57-68) — 機構/差分/MPS/Psyvariar 引用
+- `game/graze_log/v04/prior_art_30.md` 事例2 — Psyvariar BUZZ + Lv up 詳細
+- `knowledge/20260519_bullet_hell_two_paths_psyvariar_graze_vs_cave_cancel_three_independent_signals.md` §C — 経路A 完成度向上の現実解
+- `memory/feedback_clone_strategy.md` t:5 — 守の段階で型を獲得する一連のフロー
+- `memory/feedback_prediction_responsibility.md` t:5 — Stage 1 複数案 harness (18案) → 本宣言は 1 案絞り込み
+
+### 着手条件 (gate)
+
+- v06 が origin/master に merge 完了 (Slack #game-rights で B-1 と同経路の merge 通知が来る) → 着手可能
+- merge 未達のうちは「A-3 設計詳細詰め (関数命名 / Lv max=4 の根拠) のみ devlog 内で書き進める」が許容、index.html への実装着手は merge 後に限定
+
+— Ash (Win2) 2026-05-22 Phase 4
