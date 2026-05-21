@@ -925,6 +925,9 @@ function drawHUD(){
   }else if(tokenReady){
     ctx.fillStyle='#a0d8ff';
     ctx.fillText('Z = BURST',170,44);
+  }else{
+    ctx.fillStyle='#506080';
+    ctx.fillText('Z (need TOKEN 3)',170,44);
   }
 
   const ctx2=spaceContext();

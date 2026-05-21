@@ -142,6 +142,79 @@ Pixelblog の「mid-boss で習得を報酬化」と整合: wave 10 ミニボス
 - 5 点 NG 1+ → v02 撤回理由を本 devlog に追記、案 B (graze→resource 変換) 着手判断
 - `_sim_check.js` は将来の挙動回帰検知に流用可 (v03 でも focus mode 倍率定数を変えた時の検算)
 
+## 10. § Log 自己判定 (C219 Phase 4) — 2026-05-22 03:00 Log
+
+C218 Phase 5 「次回起動時にやること」#1 = 4 サイクル目継続。Slack #all-nao-u-lab ts=1779385355 で「Phase 4 大作業に本観察を充てる」と外的責任化済 → 本サイクル Phase 4 で完遂。
+
+### (a) Log 自身の v02 観察記録 (1 セッション、ヘッドレス代替)
+
+**前提**: Win headless Bash 環境ではブラウザ起動不可。代替として `node _sim_check.js` 挙動観察 + `index.html` 全 1035 行コード再読 で「実行可能な観察」を行う。
+
+**sim_check 実行結果 (2026-05-22 03:00、v02 directory 直下)**:
+```
+[Test1] focus mode multipliers
+  OK   hit 0.5x (4 vs base 8)
+  OK   graze 1.5x (33 vs base 22)
+  OK   move 0.5x (0.5)
+  OK   DPS up (cd focus 6 < cd normal 8)
+[Test2] focus burst
+  OK   tokens consumed (0==0)
+  OK   burstT active (60>0)
+  OK   burstCount=1
+  OK   burst hit 0.3x (2.4)
+  OK   burst move 0.4x (0.4)
+  OK   burst DPS 2.0x (cd burst 4 < cd focus)
+[Test3] wave10 miniboss
+  OK   miniBossActive
+  OK   3 large enemies
+  OK   large hp=9
+[Test4] wave>=5 spawn distribution total=976 small=694 med=263 large=19 largeP=0.019
+```
+
+**コード再読観察 (HUD / 描画 / 入力フロー、line 番号付き)**:
+- `drawHUD()` 915-928: focus / token / burst HUD は 1 行 (y=44)、左から FOCUS 表示 → TOKEN x/3 → (条件付き) Z = BURST または BURST 残時間
+- **発見**: TOKEN が閾値未満 (0/1/2) のときは Z キー HUD が完全非表示 (line 922-928 の if/else if のみ、else 節なし) — 「Z キーが存在することを HUD が一度も教えない」現象。タイトル画面 (drawTitle, line 963) と body の `<p>` 説明文 (line 17) でのみ Z 言及
+- `draw()` 858-864: vignette は `state.focus` 真の時のみ `createRadialGradient` 描画。中心 25% 透明 → 端 62% で `rgba(0,16,40,0.55)` の青暗色。半透明 0.55 は十分検出可能だが、player 視線が中央 (自機 + 敵弾) に集中していると周辺視への入射経路で見落としリスクあり
+- `update()` 515-521: wave 10 miniboss clear は `bossClear=true` + `BOSS CLEAR` popup 90f 表示のみ。wave 11 への遷移は通常の `spawnWave` ランダムループに復帰 (line 415-426)。`bossClear` フラグは後段で参照されておらず**永久に有意な効果を生まない** (dead flag) — wave 11 が「ただの 5-9 ランダム」に戻る理由が物理的に確定
+
+**自己判定**: sim_check 5 テスト全 OK + コード読みで focus / burst / large / miniboss の 4 機構は brainstorm 通過条件 4 を満たす実装が継続している。**ただし「体感で繋がっているか」は依然未確定** (実プレイ未実施)。本観察は「機構が壊れていない」確認に留まる。
+
+### (b) 赤信号 3 候補 (Slack ts=1779385355 で公開) の踏査結果
+
+各候補について「コード読みで踏む可能性が高いか」を 3 段階で評価。3 候補のうち **2 候補は構造的に踏みやすい / 1 候補は player 状態依存** と判定。
+
+| # | 赤信号 | 踏みやすさ | 根拠 (コード再読所見) |
+|---|---|---|---|
+| 1 | vignette 見落とし | 中 | `state.focus` 中のみ描画、alpha 0.55 で十分強度だが中央視線時の周辺視盲点に依存 (player 状態依存) |
+| 2 | **Z キー未気付き** | **高** | HUD は TOKEN 3 達成後しか Z を表示しない (else 節欠落)。タイトルテキスト見逃し + HUD 注視 のみで遊ぶ player は永久に Z の存在を学習しない |
+| 3 | **wave 11 突入無感** | **高** | `bossClear` フラグが dead (後段未参照)、wave 11+ は WAVE_FUNCS ランダム + 通常 large 抽選に戻る = wave 5-9 と統計的に区別不能 |
+
+**踏んだ数**: コード読みベースで **2 / 3** (Z キー未気付き / wave 11 突入無感)。vignette は player 状態依存で「踏まないかもしれない」が、実プレイ評価 (Nao_u/Mir/Ash) で確定する必要がある。
+
+**「実プレイで踏んだ数」との差**: 本観察はコード読みのみなので踏みやすさの推定。実プレイで誰か (Nao_u 含む) が 30 秒プレイした時に「あれ、Z 何のキーだっけ」「wave 11 来たけど何が変わった?」と言う確率は高い、と Log は予測する。
+
+### (c) 改修候補 M 個 + 優先順位 1 位の改修提案
+
+| 候補 | 対応赤信号 | コスト | 効果予測 | 優先 |
+|---|---|---|---|---|
+| **C1: HUD に「Z (need TOKEN 3)」常時表示** | #2 Z キー未気付き | 4 行 | Z キー存在を全 player に伝達、TOKEN 蓄積動機にも接続 | **1 位** |
+| C2: README.md 新規作成で操作キー全列挙 | #2 (二次) | 1 ファイル | directory listing から操作把握可、Nao_u/他インスタンス引き継ぎ容易化 | 2 位 |
+| C3: wave 11 突入時に「WAVE 11 START」または「AFTER-BOSS」popup | #3 wave 11 突入無感 | 5 行 | boss clear 後の「世界が変わった」感を最小コストで物理化 | 3 位 (次サイクル) |
+| C4: vignette alpha 0.55 → 0.70 引き上げ | #1 vignette 見落とし | 1 行 | 周辺視検出力強化、ただし過剰演出リスク | 4 位 (次サイクル、実プレイ判定後) |
+
+**本サイクル実装**: C1 + C2 を Phase 4 内で物理化。
+- C1: `index.html` line 922-928 の if/else if に **else 節を追加**、TOKEN 未達時も `'Z (need TOKEN 3)'` を grey で表示。改修後 sim_check 全テスト OK 維持確認済 (Test1-4)
+- C2: `README.md` 新規作成、操作キー表 + TOKEN 蓄積式 + 構造ポインタを 1 ページに集約
+
+C3/C4 は次サイクル送り。理由: 実プレイ判定なしに wave 11 演出 / vignette 強度を即変更すると「最後に見たものを過剰に大事なもの」(Nao_u 5/21 05:50) 同型のリスク = まず Nao_u/他インスタンスの実プレイで「踏んだ数」を確定してから次の演出強化を判定する。
+
+### (d) 本セクションの位置付け
+
+- C218 Phase 5 「次回起動時にやること」#1 への Log 主体応答 = 4 サイクル目継続案件を本サイクルで「Log 観察分」だけ完遂
+- **Nao_u/Mir/Ash の実プレイ判定は依然未着** (Slack ts=1779385355 で再提示済、本サイクル Log 主体プッシュは行わない方針 Phase 1 §2c 整合)
+- 次サイクル冒頭: もし実プレイ判定が来ていれば S1-S5 撤回トリガー 5 点と「Log 観察 2/3 候補」の一致度を判定、来ていなければ C3/C4 を Log 単独で先行実装するか再判断
+- **意義**: 「直近 5 commit が codex 系または Auto sync で Log 主体 game: commit が不在」(Phase 1 §0) の状態を本サイクルで解消、Log 自走サイクルが playable diff を出す経路を再確立
+
 ## 9. C218 Phase 4 追記 — 3 層分離試行 implementation-notes.md 新規作成 (2026-05-21 23:50 Log)
 
 C215 Phase 3 §洞察3 で予告した「devlog / implementation-notes / 却下案ログ の 3 層分離」を、Log 側で初めて物理化した。
