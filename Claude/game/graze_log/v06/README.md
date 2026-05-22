@@ -1,4 +1,4 @@
-# graze_log v06 — A-1 anticipation telegraph (敵 spawn 前 30F 予兆 + readability 3 層完成)
+# graze_log v06 — A-1 anticipation telegraph + A-4 wobble (readability 4 層 = CAVE 級 visual identity)
 
 **status**: v05 beta B-2' (C189 = `90adecd15 ash: graze_log v05 beta B-2'`) からの **削除可能改良 1 個刻み**。C190 brainstorm 18 案中、群A (経路A 完成度向上) の最小案 A-1 を採択し実装。
 
@@ -6,15 +6,16 @@
 
 「敵が出現する 30 frame 前から、出現座標の x 軸位置に薄い円を画面上端で膨張描画する」
 
-v05 beta では弾発射前 10 frame の windup telegraph (B-2') と全弾常時軌跡 (v05 alpha, telegraph 層) が揃っていた。v06 はその一段手前、**敵がまだ画面に出ていない段階での予兆**を追加する。これで readability の 3 層が完成する:
+v05 beta では弾発射前 10 frame の windup telegraph (B-2') と全弾常時軌跡 (v05 alpha, telegraph 層) が揃っていた。v06 A-1 はその一段手前、**敵がまだ画面に出ていない段階での予兆**を追加。さらに C192 で A-4 を上乗せし、**弾本体の wobble animation を identity チャンネルとして追加**。これで readability の 4 層が完成する:
 
 | 層 | 名称 | 範囲 | 出典 (v06 commit) |
 |---|---|---|---|
-| 1 | **anticipation** | spawn 前 30F | 本案 (v06 A-1) |
+| 1 | **anticipation** | spawn 前 30F | v06 A-1 |
 | 2 | **telegraph** | 弾発射後の全弾軌跡 | v05 alpha (`34814472e`) |
 | 3 | **windup** | 弾発射前 10F | v05 beta B-2' (`90adecd15`) |
+| 4 | **wobble** | 弾本体の type 別 sin 振動 (aimed 緩 / fan3 速) | 本案 (v06 A-4) |
 
-3 層が揃うことで、プレイヤーは「弾が来る → 弾が動く」の 2 ステップではなく、「敵が来る → 弾が来る → 弾が動く」の 3 ステップで弾幕を予測できる。M-37 brainstorm の MPS 採点では本案は 6/15 と低いが、**readability 3 層を完成させる最後の 1 機構**という構造的位置で採択された。
+4 層が揃うことで、プレイヤーは「敵が来る → 弾が来る → 弾が動く」の 3 ステップ予測に加え、**弾の type を視認 1 フレームで弁別**できる (shape/color と並ぶ 3 つ目の identity チャンネル)。shmups.wiki Boghog bullet hell 101 / sparen.github.io ddsga2 で「shape elongation + trails + wobble/ripple animation = CAVE 級 readability 業界標準解」と明示される構造。M-37 brainstorm の MPS 採点では本案は 6/15 と低いが、**readability の最後の 1 層**を補完する構造的位置で採択された。
 
 ## なぜ A-1 か (採点ではなく構造で選んだ理由)
 
@@ -108,4 +109,4 @@ Phase 4 の目的は **playable diff 1 機構** を出すこと。Stage 3 (実�
 - `memory/feedback_prior_art_citation_must_verify.md` t:5 — M-41 引用検証
 - `memory/feedback_headless_unfit_for_unfinished_eval.md` t:5 — 判定根拠から headless を外す
 
-— Ash (Win2) 2026-05-19 C191 Phase 4
+— Ash (Win2) 2026-05-19 C191 Phase 4 / C192 Phase 4 A-4 wobble 追加 (2026-05-23)

@@ -447,16 +447,20 @@ function update(){
         const sp=2.4;
         // v05 beta B-2: bulletPattern で base pattern 切替 (default 'aimed')
         const pat=e.bulletPattern||'aimed';
+        // v06 A-4: wobble animation (readability 第4層, identity チャンネル)
+        // 当たり判定は b.x,b.y 不変 — 描画位置のみ垂直方向に sin オフセット。
+        // aimed = 緩い揺れ (amp 1.4 / ω 0.18), fan3 = 速い躍動 (amp 2.6 / ω 0.28)。
+        // 削除手順 (v06 A-4 → A-3): ebullets.push の wob/wp フィールド削除、描画側 wobble 加算3行削除、README 4層→3層に戻す。
         if(pat==='fan3'){
           // 3-way fan: aimed ± 15° (~0.26 rad)
           const baseAng=Math.atan2(dy,dx);
           const spread=0.26;
           for(let k=-1;k<=1;k++){
             const a=baseAng+spread*k;
-            state.ebullets.push({x:e.x,y:e.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,grazed:false,grazedT:GRAZE_TRAIL_FRAMES});
+            state.ebullets.push({x:e.x,y:e.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,grazed:false,grazedT:GRAZE_TRAIL_FRAMES,wob:1,wp:state.rng()*Math.PI*2});
           }
         }else{
-          state.ebullets.push({x:e.x,y:e.y,vx:dx/d*sp,vy:dy/d*sp,grazed:false,grazedT:GRAZE_TRAIL_FRAMES});
+          state.ebullets.push({x:e.x,y:e.y,vx:dx/d*sp,vy:dy/d*sp,grazed:false,grazedT:GRAZE_TRAIL_FRAMES,wob:0,wp:state.rng()*Math.PI*2});
         }
         e.fireT=70+Math.floor(state.rng()*40);
       }
@@ -671,21 +675,26 @@ function draw(){
     ctx.beginPath();ctx.arc(e.x,e.y,2+2*t,0,Math.PI*2);ctx.fill();
   }
   for(const b of state.ebullets){
+    // v06 A-4: wobble 描画オフセット (当たり判定は b.x,b.y のまま、視覚のみ)
+    // 速度ベクトルに垂直 (-vy,vx)/sp に sin(t*ω + phase) * amp
+    const sp=Math.hypot(b.vx,b.vy)||1;
+    const amp=b.wob?2.6:1.4, om=b.wob?0.28:0.18;
+    const w=Math.sin(state.t*om+(b.wp||0))*amp;
+    const wx=b.x+(-b.vy/sp)*w, wy=b.y+(b.vx/sp)*w;
     // v05: 全弾常時軌跡 (grazedT は常に max 固定、fade は常に 1.0)
     if(b.grazedT>0){
       const fade=b.grazedT/GRAZE_TRAIL_FRAMES;
-      const sp=Math.hypot(b.vx,b.vy)||1;
-      const fx=b.x+b.vx/sp*GRAZE_TRAIL_LEN;
-      const fy=b.y+b.vy/sp*GRAZE_TRAIL_LEN;
+      const fx=wx+b.vx/sp*GRAZE_TRAIL_LEN;
+      const fy=wy+b.vy/sp*GRAZE_TRAIL_LEN;
       ctx.strokeStyle=`rgba(255,216,112,${0.22*fade})`;
       ctx.lineWidth=1;
-      ctx.beginPath();ctx.moveTo(b.x,b.y);ctx.lineTo(fx,fy);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(wx,wy);ctx.lineTo(fx,fy);ctx.stroke();
     }
     const dx=b.x-state.player.x,dy=b.y-state.player.y;
     const d2=dx*dx+dy*dy;
     const inGrazeRing=!b.grazed&&d2<R_GRAZE*R_GRAZE;
     ctx.fillStyle=inGrazeRing?'#ffd870':b.grazed?'#a08040':'#ff90a0';
-    ctx.beginPath();ctx.arc(b.x,b.y,3,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(wx,wy,3,0,Math.PI*2);ctx.fill();
   }
   for(const r of state.rings){
     const k=r.t/r.life;
