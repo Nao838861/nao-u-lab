@@ -3,7 +3,7 @@ name: game_memory_task_lens_index
 type: index
 status: active
 created: 2026-05-15
-updated: 2026-05-17
+updated: 2026-05-23
 purpose: ゲーム制作タスク別に、broad tag から具体的な shared-reads / candidate / atom へ降りるための小さな入口。
 ---
 
@@ -103,3 +103,13 @@ LLM にゲーム世界、ルール、コンテンツを生成させる時の入�
 - 代表リンクは各 lens 2-4 件に抑え、網羅リストにしない。
 - 上位タグを増やして解決しない。新しい lens を足す前に、既存 lens の「使う場面」と `broad_tags` で受け止められるか見直す。
 - 代表リンクは現状維持を基本にし、Phase 3b / 4a で採用済み probe など明確な追加理由がある時だけ差し替える。
+
+
+## 2026-05-23 add: Action / Headless bad-policy playbook
+
+For future 2D shmup/action work, when feedback says "can win by moving randomly", "monotone", or "feel did not change", read `memory/game_headless_action_eval_playbook_20260523.md` first.
+
+- lens: `Playable / Headless evaluation`, `Player Simulation / Persona`, `Repair / Iterative Improvement`
+- recall query: `python tools/memory_recall.py "headless action game bad policy camper turtler dominant strategy player feedback"`
+- atom: `local-20260523-headless-action-eval-v58`
+- key lesson: do not compress subjective feedback into an average score. Convert the user's described bad play into a bot policy, then require good route bots to clear while the bad policy fails. Fix the conditions that make the dominant strategy work.
