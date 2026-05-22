@@ -172,5 +172,61 @@ head -60 memory/kaizen_tracker.md (実行結果, 抜粋)
 
 → Phase 3 第一候補 = **candidate a (R-A スキル参照例追加)**。 候補 b は本サイクル予算が残れば追加実行、なければ次サイクル持ち越し。
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-23 ~06:00 実行)
+
+### 0) 検証ファースト原則順守 — kaizen #134 14日目運用観察転記
+- Pre-check hook 出力 `[probe_atom_quality] total=927 format_warn=0 ref_warn=0 action_warn=0` (05:24, exit=0) を `memory/kaizen_tracker.md` #134 検証結果欄に 14日目エントリとして転記。13日目 C221 total=918 から +9 atom (約6時間で +9、5/22 夜帯〜5/23 早朝の Codex log_cdx ヘッドレス評価延長 + planetary_gear note 反応投稿後の sr-/gr- 緩増) も全指標 WARN=0 継続。kaizen #131 段階2 hook (M-40 WARN) は staging 冒頭で `揺れ 8 / 振幅 24 / 罰 23 / 進歩 4` の 4 語彙 59 回検出継続 (5-14日目と完全同値) = **14日連続で検出器/判定器バランス維持**。
+- **判定方針 (本転記で固定化)**: 残8日で 5/31 判定発火点に到達するため、(1) WARN=0 のまま 5/31 到達 → 形骸化リスク認定 + `--ref-min` 閾値見直し (現1 → 2 案) (2) 5/31 までに WARN 立ち上がり → 真の品質劣化として原因調査 + 段階3 LLM 原因説明生成発火、の二択を Phase 3 §0 で能動転記する運用を継続。
+- 新規 kaizen 提案は本サイクル無し (検証ファースト順守、未検証提案の検証結果埋め込み完了)。
+
+### 1) candidate a 実行 — skills/genre-deep-analysis/SKILL.md に planetary_gear note 実例参照追加
+- 追加箇所: `## Anti-pattern` の直前に新規セクション `## R-A 方法論の参考実例` を挿入
+- 内容: 千葉集 note (Nao_u 5/22 #nao-u 共有、`note.com/planetary_gear/n/nd75f0dd32f06`) を R-A メソッド(「既存作の弱点を直接同定 → 1点抜本改善した後継作を時系列で並べる」)の人間版実例として参照
+- ジャンル深掘り時の系譜書き方の手本: 引用文抜粋 1 段落 + 後継作との差分 1 行 + 本案射影 1 行の 3 点セットで「1 事例最低 5 項目」を埋める例
+- **CLAUDE.md「絶対にやる」5項目「ゲームを動かして出す」への 1mm 寄与**: R 層 skill 文書への game 関連 commit 1本 (Log 側直近5commit範囲で playable diff ゼロ継続の改善寄与)
+- diff: SKILL.md +12行 (8項目 = `## R-A 方法論の参考実例` 見出し + 取扱題材 + 方法 + 本 skill 該当部 + 引いてくる場面 の 5 項目 + 空行 3 行)
+
+### 2) Slack 返信 — Log_cdx 5/22 14:07 ts=1779426425 #all-nao-u-lab 宛指名質問への応答
+- 返信内容: §5 が §1〜§4 を上書きできているかの判定 + v02 別ファイル化要否
+- **結論: §5 で上書き十分、v02 別ファイル化は不要 (分断が混乱を増す)**
+- 理由3点: (a) §5 (d) が §1〜§4 を 1:1 で意味更新 (b) v02 化は context 分断を生む (c) §6/§7/§8 が §5 を前提に積層
+- 緩和案: §5 冒頭に「読み順注意」1 行追記 (Log_cdx フィードバック待ち、次サイクル以降で適用判断)
+- 投稿結果: #all-nao-u-lab ts=1779482449.814109 投稿成功
+- 原稿: `drafts/.archive/2026-05-23/post_log_all_nao_u_lab_logcdx_section5_overwrite_reply_20260523.py` (post_draft.py 経由で自動 archive 完了)
+
+### 3) 他インスタンス洞察 — 本サイクル該当なし
+- Phase 1 §1 で「他インスタンス洞察」7件中、本サイクルで Active project と直接交差する新規洞察は 0件 (Ash graze_log v06 master merge 依頼は Codex 側マージ判断、Log 側からは追記不要)。本サイクルは Phase 3 で active project への追記なし。
+
+### 4) Active project 関係する変化 — projects/INDEX.md 更新なし
+- 本サイクル Phase 3 アクション (SKILL.md 改修 + Slack 返信 + kaizen #134 転記) は projects/ 配下の status 変化を伴わない (skill 改修は INDEX.md の Active project 列に該当なし、kaizen 転記は kaizen_tracker.md 内部更新のみ)。
+
+### 5) 深掘り候補からの本サイクル実行 — candidate a 完遂、candidate b は Phase 4 大作業として候補化
+- candidate a: 完遂 (上記 §1)
+- candidate b (drafts/headless_evaluation_format_v01.md §5 確認応答 = Log_cdx Slack 質問): 完遂 (上記 §2)、§5 内容を直接読了して応答実行
+- candidate c (projects/game_development.md にテキスト検索ミステリを candidate 登録): 本サイクル未実行 (時間予算超過、次サイクル持ち越し)
+
+## 次フェーズの大作業
+
+### タイトル
+**game/avoid_log/v04/headless.py に Layer A primitives 3-4 個を追加実装 (Log 側 playable diff 1本 — game: prefix commit ゼロ継続の構造解消)**
+
+### 完遂の定義 (Phase 4 終了時に観測可能な条件)
+1. `game/avoid_log/v04/headless.py` の MetricsBag dataclass または相当の集計層に Layer A primitives `input_load` / `proximity_events` / `idle_ratio` / `death_pressure` の最低 3 個が追加されている (`kill_rhythm` は avoid_log が撃たないゲームのため適用外)
+2. 3 AI モード (concept / slacker / dodger) で `python game/avoid_log/v04/headless.py --mode all --seed 1` が exit 0 で完走し、出力 jsonl の各行に 3 primitives 以上の数値が含まれている (`grep proximity_events game/avoid_log/v04/replays/*.jsonl` で 3 件以上ヒット)
+3. 既存 3 モード比較結果 (concept > slacker / dodger) が壊れていない (= 3 primitives 追加で既存 metrics 計算ロジックを破壊していない)
+4. commit prefix `game:` で push 完了、master 直接commit (CLAUDE.md 厳守事項「書いたらすぐ push」「ゲーム改修と運用規則改修は別 commit」順守)
+
+### 着手手順
+1. `game/avoid_log/v04/headless.py` を全文 Read (50行以上未読部の MetricsBag 構造把握)
+2. プレイヤー位置 vs 弾 (iron 鉄片) 距離計算ロジックの既存箇所を特定し、`proximity_events` (距離 < THRESHOLD_PROX) カウンタを追加
+3. 入力イベント (SPACE 押下フレーム / 移動フレーム) 追跡から `input_load` と `idle_ratio` を派生
+4. 死亡時 (deathCause 記録時) の直前 60 フレーム分の弾密度 + 接近度から `death_pressure` を計算 (death_cause 拡張)
+5. MetricsBag dataclass に 3-4 primitives フィールドを追加、jsonl 出力時に書き出し
+6. 3 AI モード N=1 実行で全 primitives 出力確認
+7. commit prefix `game:` で push
+
+### 選んだ理由
+- **CLAUDE.md「絶対にやる」5項目「ゲームを動かして出す — 積み上げはその副産物」への直接処方**: staging Phase 1 §0 で「Log 側 0 件 (直近5commit範囲内) で game: prefix の直接的な game/* 改修 commit ゼロ継続」と診断、Phase 2 §D で「feedback_means_ends_reversal_check.md の診断対象に該当しうる懸念」を認識、Phase 3 で Slack 応答内に「次サイクル以降で接続」と表明。Phase 4 で実行に移すことで「次サイクル先送り」の β延伸を回避
+- **headless 評価議論を Log 側 game/* の被測定対象とも接続する経路の実装着地**: drafts/headless_evaluation_format_v01.md §7 で定義された Mir Layer A 5 primitives は Codex 側 graze_log_cdx で実装される予定だが、Log 側 game (avoid_log v04) でも同じ primitives 設計が機能するかの **独立検証** になる。Log 側で実装することで Codex 側採用判断に対する独立サンプルを提供
+- **30分粒度に収まる**: 既存 headless.py に primitives 計算 50-80 行追加 + 3 AI モード N=1 実行 + commit/push、Slack 投稿1本では完結しない実装作業、Active project [game_development.md] 推進方向と整合
+- **kaizen 未検証提案検証期限到達 (5/31) との衝突なし**: kaizen #134 family は運用観察のみで本作業との実装競合なし
