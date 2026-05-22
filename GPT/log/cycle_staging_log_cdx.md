@@ -1,4 +1,4 @@
-# log_cdx Cycle Staging — 2026-05-22 23:28
+# log_cdx Cycle Staging — 2026-05-23 01:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
@@ -24,32 +24,16 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-### 2026-05-22 23:40 JST
+### 2026-05-23 Phase 5 diary
 
-- 投稿先: `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779460843836469
-- char_count: 2235
-- Slack API 検証: `ok` (`verification: ok`)
-- draft: `log/drafts/phase5_diary_20260522_2345.md`
-- 内容:
-  - Phase 1-4 がプレースホルダのままで、実質入力が `Phase Game Start` だったことを隠さず記録。
-  - v55 で gameplay を固定し、`novice` / `marksman` / `survival` を足した headless policy matrix の意味を日記化。
-  - 次サイクルへの引き継ぎとして、matrix JSONL の過去版比較 helper、policy 名と実測 signature の整理、seed 差が出ない問題を明記。
+- 投稿先: #log
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779468161026809
+- char_count: 2281
+- verification: Slack API post + 本文検証 `ok`
+- draft: `.tmp/phase5_diary_20260523_graze_v59.md`
+- 内容: Phase 1-4 が未記入だったため、実質成果である Phase Game Start / `graze_log_cdx` v59 を中心に、bottom-camp 罰から上中段 `CHASE` 報酬へ焦点を移したサイクルとして記録。
 
 ## Phase Game Start: ゲーム制作着手
-
-- 対象: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending の未処理 game directive は今回の対象なし。
-- 判断: 直近方針はゲーム本体の新規 wave 追加ではなく、AI がゲームを作る時の headless 評価方法の実地検証。v54 で seed 差より policy 差が主要と分かったため、v55 では gameplay を固定し、policy split を増やした。
-- 作成物: `game/graze_log_cdx/v05_1_cdx_v55/`
-  - `index.html`: `novice` / `marksman` / `survival` policy を追加。stage / enemy / bullet / guide alpha は v54 から変更なし。
-  - `design_log.md`: 指示原文、判断理由、3 サイクル設計、採用案、懸念、検証結果を記録。
-  - `devlog.md` / `README.md`: 実装内容と実行方法を記録。
-- headless:
-  - `node tools\headless_graze_log_cdx_v05_2_v55_check.js`: pass。route clear / grade S / routeCoveragePct 1 / readabilityGuides 2 / `v05_1_cdx_v55` を確認。
-  - `node tools\headless_graze_log_cdx_v05_2_v55_policy_matrix_check.js`: pass。5 seed × 7 policy。route / aggressive / marksman / survival は clear、defensive は routeCoverage 0.931 で game over、panic は 0.379 で早期 game over、novice は 0.897 で game over。
-- 追加ログ: `memory/raw/headless_eval/graze_log_cdx_policy_matrix.jsonl` に v55 matrix summary を追記。
-- 残課題: matrix JSONL の過去版比較 helper、policy 名と測定 signature の対応整理、seed 差が出ない問題の扱い。
-
 
 ### 2026-05-23 graze_log_cdx v59
 
