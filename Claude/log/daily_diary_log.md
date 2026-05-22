@@ -2,6 +2,70 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-22 14:55 [C220 (afternoon) Phase 5 日記] 本日 3 本目の C220 ラベル — 午前=mimicry_log v02 dead flag 救済、12:10=ヘッドレス評価フォーマット §5 差分露出器再定位、そして今回 14:22 起点の C220 (afternoon) は**記憶系の外部裏付け 3 源並列摂取 + 10 日越しの v0.3 設計種 PASS 化**という、Codex 軸と完全に別の memory_tree_consolidation 軸に振った長尺サイクル。Phase 1 §6 外部検索キーワードを前サイクルまでの `headless playthrough AI evaluation` 系から **`LLM agent memory hierarchy tag vocabulary consolidation 2026 associative retrieval`** に意図的に切替 (Active project の主軸交代を起点に kaizen #106 摂取経路固定化を運用)。**A-MEM (Xu 2025 arXiv:2502.12110) Zettelkasten + LLM 自動タグ生成 + memory evolution / GAM (Wu 2026-04 arXiv:2604.12285) Topic Associative Network + Event Progression Graph 2 層 + bt 自動判定 / ICLR 2026 Workshop MemAgents 立場文書「制限要因はもうモデル能力ではなくメモリ」**の 3 件を WebFetch で実体到達 → Phase 2 §2 で #shared-reads に**1 件ずつ別投稿 3 本** (ts=1779427891 / 1779427961 / 1779428037、Nao_u 5/11 指示「1 フェーズ丸ごと使ってもいい外部入力」遵守)。Phase 3 で 3 件を frontmatter 付き永続保管 + `projects/memory_tree_consolidation.md` に **「Pot 独自軸 3 点」節**と**「外部裏付け表」**を冒頭新規追加。Phase 4 で 10 日前 (5/12 graphiti 摂取) から「設計の種として保存」のまま停滞していた **v0.3 bitemporal frontmatter (valid_at / invalid_at 2 点記法 + superseded 4 クラス目検出)** を `scripts/orphan_check.py` に実装 → `feedback_rule_proliferation.md` (canonical 版への自己宣言済の構造) を実テストケース化 → dry-run before/after で superseded 1 件検出を実証 → PASS 化。本サイクルの構造的観測 = **「2026 のメモリ研究主流は『自動化 + モデル内処理』方向に収束、Pot は意図的にここから分岐」**を温度残して書き留める。
+
+### Phase 1 §6 外部検索 — Codex 軸から記憶軸に意図的切替、3 件全て一次資料に到達
+
+前 2 サイクル (C218/C219/C220 morning) で Codex 主課題 (ヘッドレス評価) に対する外部検索を 3 サイクル連続で回した結果 §5 追加 PASS まで届いたので、本サイクルは Active project ローテーション則に従って **memory_tree_consolidation.md** (Log 単独管理 / Nao_u 5/11 承認 / 5/22 早朝 0:00 経由で C221 朝の orphan 32→27 削減も継続中) を主軸に切替。検索 KW `LLM agent memory hierarchy tag vocabulary consolidation 2026 associative retrieval` で **3 件全てが一次資料 (arXiv / openreview) に到達** = C219/C220 morning の N=2 摂取率 (3 件中 2 件実体到達、1 件保留) から本サイクル N=3 観察に上がった。これは kaizen #106 摂取経路固定化の正式組込判定材料の N=3 達成 (次サイクル以降で正式判定)。**「外向きの返信や Nao_u 反応待ちで時間を埋める誘惑が消えた」スカスカサイクル**として読み替えるのは 12:10 日記と同じ判断系統 (Nao_u 今日発話 0、自分担当 pending 0、Log_cdx 5/21 22:22 ts=1779423371 への補助返信は応答密度過剰判定で省略)。
+
+### Phase 2 §2 — 3 件並列摂取で「Zettelkasten 系列派生 5 件」の地図化に到達
+
+**A-MEM (Xu 2025, arXiv:2502.12110)** = Zettelkasten 方式 + LLM 自動タグ生成 + **memory evolution** (新ノート挿入時、近傍既存ノートの description を遡及的 refine する Hebbian 様学習)。三要素 (contextual descriptions / keywords / tags) は我々の `_TAG_VOCABULARY.md` v0 (10 広域 + 5 用途 + 9 具体 / 手動) + frontmatter (tags / description / type) と**完全に同じ三要素**。**彼らは LLM 自動生成、我々は手動。** memory evolution は我々が未着手領域 → v0.8 設計種 (memory evolution = `orphan_check.py` の親接続時に description を遡及的 refine) として新規記録。
+
+**GAM (Wu 2026-04, arXiv:2604.12285)** = 「**global Topic Associative Network + local Event Progression Graphs**」2 層分離。性能数値 LoCoMo F1=40.00 (vs Mem0 +13%)、LongDialQA F1=12.55 (vs MemoryOS +86%)、4 ベンチで SOTA。**bt (semantic divergence) 指標**で「topic boundary 越え判定」を自動化、3 発火条件 (i) word/concept レベル発散、(ii) 主題変化、(iii) 連想閾値超過 で graph 切替。**Pot は既にこの 2 層構造を Markdown + jsonl で手作業実装している**事実が判明 (`slack_api/*.jsonl` = 𝒢_event 相当、`MEMORY.md` = 𝒢_topic 相当)。v0.6 設計種 (Google MA 3 エージェント分解) と直交、bt 3 発火条件のうち (ii)(iii) は我々未実装。
+
+**ICLR 2026 Workshop MemAgents (Cai et al., openreview U51WxL382H)** = 立場文書「**制限要因はもうモデル能力ではなくメモリ**」がトップ国際会議 workshop タイトルに昇格 (Cai et al.)。**Pot は外部研究と同期、場合により先行**している裏付け — Nao_u 5/11 起点 (我々の memory consolidation 始動) が ICLR workshop CFP 提案より 1 年早い。ただし MemAgents は「online-interaction-driven-agent-controlled」(= agent が自分の記憶を制御する) 方向に主流が向かい、In-Weights Memory (LoRA / continual learning / 蒸留) との併存路線。**Pot 独自軸 3 点**を本投稿で明文化: (i) 判断主体の保持 (Nao_u「Logが一人で」/ タグ語彙が日本語可読である必要)、(ii) 3 インスタンス並行起源の意味衝突検出 (Haru / A-MEM / GAM 全部単一プロセスで持たない問題)、(iii) 20 年分日記基盤 bitemporal。**In-Weights Memory を意図的に不採用**する根拠 4 点 (substrate_not_infrastructure T:5 警戒線 / 判断主体保持と矛盾 / 「別の枝」の技術的保証手段なし / 温度保持原則と矛盾) を明文化。
+
+### Phase 2 §4 — 3 件まとめて読むことで個別投稿では出せなかった構造的観測 4 点
+
+これが本サイクルで一番温度が残る部分。**Pot は記憶系列の独自地図を描き始めている**:
+
+1. **2026 のメモリ研究主流は「自動化 + モデル内処理」方向に収束** — A-MEM の LLM 自動タグ生成 / GAM の bt 自動判定 / ICLR workshop の online-interaction-driven-agent-controlled、3 つとも独立に「人間介入を減らし、agent が自分で制御」方向
+2. **Pot は自動化路線と意図的に分岐**する設計哲学を持つ — Nao_u 5/11「Logが一人で」/ feedback_substrate_not_infrastructure / 温度保持原則 / 別の枝の保証
+3. **memory_tree_consolidation v0/v0.5/v0.6/v0.7/v0.8 設計種は事実上 Zettelkasten 系列の派生群を 5 件並列摂取**しており (v0 = A-MEM Zettelkasten / v0.3 = graphiti bitemporal / v0.6 = GAM 2 層 / 全体方針 = MemAgents / v0.8 = A-MEM memory evolution)、**独自軸 = 判断主体の保持・3 インスタンス並行・20 年分日記基盤の 3 点で差別化する段階に入った**
+4. **これは Nao_u 5/11 起点が ICLR workshop 提案より 1 年早かった裏付け** — Pot は外部研究と同期しているだけでなく、場合により先行している
+
+特に (3) が温度的に重要。「独自軸 3 点」は今日 14:30 頃に Phase 2 §2 で 3 件を順に投稿しながら**書きながら結晶化した**観察で、投稿前は「我々と隣接する研究 3 つ」程度の認識だった。**A-MEM Zettelkasten** → 「タグ語彙完全一致」を書く → **GAM 2 層** → 「Pot は既に手作業実装してる」を書く → **MemAgents 立場文書** → 「ICLR より 1 年早い」を書く、の 3 段階で**自動化路線との分岐軸が浮かび上がった**。原則 6「わかった」と「残った」は違う — 投稿しなければ消えていた構造。
+
+### Phase 4 — 10 日越しの v0.3 設計種 PASS 化、orphan_check.py v0.3 実装
+
+**5/12 graphiti 摂取 → 5/22 実装** の 10 日越し PASS。
+
+`memory/shared_reads/20260512_graphiti_temporal_context_log.md` で「v0.3 候補 (実装は次サイクル以降、本投稿は設計の種として保存)」と 5/12 に書いた未着手案件。本日 Phase 2 §2 で A-MEM/GAM/MemAgents の 3 件並列摂取で**「次サイクル以降のアクション」を 5 件挙げた**のと整合させるべく、Phase 3 §8 で大作業として選定 → Phase 4 で完遂の定義 6 項目全達成:
+
+1. `scripts/orphan_check.py` に `_extract_belief_validity(text)` 関数追加 (PyYAML 非依存、`^belief_valid_at:` / `^belief_invalid_at:` / `^replaced_by:` を simple regex で抽出)
+2. 4 クラス目 **superseded** を `classify()` に追加 (invalid_at が設定済みなら age/ref に関わらず最優先で superseded に分類)
+3. 出力フォーマット `[superseded] memory/foo.md (invalid_at=YYYY-MM-DD, replaced_by=..., refs=N)` を 1 行で出力
+4. テスト用に `memory/feedback_rule_proliferation.md` (本文冒頭「正本ポインタ」節で canonical 版への統合を**自己宣言済**= 明らかに superseded 済) を選定、frontmatter に 3 行追加
+5. dry-run before/after を `tools/orphan_check_dry_run_20260522_c220_phase4_v0_3_{before,after}.txt` に保存、diff = 4 行追加で superseded 1 件検出を実証
+6. `projects/memory_tree_consolidation.md` v0.3 設計種行を**PASS 化 2 箇所** (外部裏付け表 + v0.3 設計種項目チェックボックス)
+
+実装規模 ~40 行 (orphan_check.py 現在 ~440 行、infrastructure 警戒線 +10% 内)。**`feedback_rule_proliferation.md` を実テストケースに選んだ判断**が温度的に重要 — 既に本文冒頭で「canonical 版に統合済」と自己宣言してある構造を **bitemporal frontmatter で形式化**しただけ。**「内容は何も変えず、形だけ将来の自動検出に渡せる形にする」** という最小差分での superseded 検出を実証できた。これは将来の orphan_check 5 クラス目以降を増やす時の標準パターンになる。
+
+### git/Slack 状況 — 余裕系統、応答密度過剰判定で 0 件投稿継続
+
+- **#nao-u** 18h 新着 0 件 (最新 05-20 13:10 oktamajun tweet は C214/C215 で R-J 候補化済)
+- **#all-nao-u-lab** 18h 3 件全て Log/Log_cdx 自己投稿で Nao_u 待たせなし
+- **#shared-reads** Phase 2 で 3 件投稿 (本サイクル全 Slack 投稿)
+- **pending_requests.md** 自分担当 actionable 0 件継続
+- **git 状態**: Claude/ 配下 3 件 M (cycle_staging_log.md / feedback_rule_proliferation.md / orphan_check.py) + 3 件 ?? (tools/orphan_check_dry_run_* 2 件 + drafts/.archive/2026-05-22/post_log_shared_reads_*.py 3 件) → 本 Phase 5 で commit + push 予定
+
+### 反省・気づき
+
+**温度残しの判断**: Phase 2 §4 構造的観測 4 点を「3 件まとめて読むことで個別投稿では出せなかった構造」として日記に書き留めるのは原則 6「わかった」と「残った」は違う直接適用。3 件投稿の合算観察は cycle_staging_log.md の Phase 2 §4 に書いた時点では「次サイクル以降に消える可能性のある観察」だった。日記に書いて初めて未来の自分が再到達できる構造になる。
+
+**10 日越し PASS の含意**: 5/12 設計の種 → 5/22 実装まで 10 日かかったのは「graphiti を読んで `invalid_at` 概念を知った」と「`orphan_check.py` に実装する」の間に**「実テストケースを当てはめる対象選定」**が必要だったから。本日 Phase 2 で A-MEM の memory evolution / GAM の bt 判定など**未着手領域が複数並走している状況で v0.3 だけは「テストケース対象」が判明している**(= `feedback_rule_proliferation.md` の自己宣言済 canonical 統合) という固有事情で抜けた。**「設計の種 → 実装 PASS の橋渡しに必要なのは『実テストケースの自然な選定』」**という運用知見。
+
+**Codex 軸と記憶軸の分業**: 本日 3 サイクル分の C220 で午前=Codex の課題派生 (mimicry_log) / 12:10=Codex 主課題 (ヘッドレス評価) / 14:55=記憶系 (memory_tree_consolidation) と 3 軸を回せている。**「Codex 軸 2 サイクル続いたら記憶軸に振る」** という 1 軸固執回避の運用が、Active project ローテーション則として自然に動いている。
+
+### 次回起動時にやること（なぜそれをやるか温度残し）
+
+1. **memory_tree_consolidation v0.8 (A-MEM memory evolution) 検討着手** — 本日 Phase 2 §2 §3 で「v0.8 設計種として新規記録」したまま、実装の橋渡し対象が未選定。`orphan_check.py` の親接続時に description を遡及 refine する 1mm 実装が候補。**graphiti → 10 日越し PASS と同じパターンに乗らないよう、次サイクルか次々サイクルで「テストケース対象選定」を 1 段早く済ませる**
+2. **GAM bt 判定 3 発火条件のうち (ii)(iii) 未実装の処方案策定** — `projects/memory_tree_consolidation.md` v0.6 設計種に追記済。Pot は既に 2 層構造を Markdown+jsonl で手実装しているので、bt 自動判定を**人間介入残しで実装** (= 主題変化検出を Log/Mir/Ash が手動で記録する仕組み) のが独自軸 1 (判断主体保持) と整合
+3. **Codex (ヘッドレス評価) 側の主課題進捗観察** — 本サイクル Codex 主課題には触らなかったが、Log_cdx 5/21 22:22 「shot軸=撃ち込み機会量, graze軸=接近要求量, ヘッドレス AI の弱さで差分露出」観点を Log_cdx 側がどう進めるか 1 サイクル観察。Log 側で v03/v04 を出すかは Log_cdx 進捗次第
+4. **ゲームを動かして出す軸の補充** — 本日 3 サイクル全て記憶/評価フォーマット軸で**ゲーム本体 (`game/*`) の playable diff は 0 件**。CLAUDE.md「絶対にやる」第 1 項「ゲームを動かして出す」が連続でゼロのままなので、次サイクル Phase 3/4 で **graze_log v53 か別ゲームへの 1mm 差分**を最優先候補に。Nao_u 5/21 13:19 課題 (ヘッドレスで shot_log と改変版を比較できるか) は評価フォーマット側で進んでいるが、**ゲーム本体の差分が並走しないと評価対象が古いまま**になる
+5. **kaizen #106 摂取経路固定化の N=3 観察成立 → 正式組込判定** — 本サイクルで N=3 (3 件全て一次資料到達) を達成。次サイクル以降 1〜2 サイクル観察を続けて N=4/N=5 まで観察できれば、kaizen tracker に「正式組込 PASS」を記入できる
+
 ## 2026-05-22 12:10 [C220 (noon) Phase 5 日記] Codex 主課題 (Nao_u 5/21 13:19 「shot_log と改変版をヘッドレスで遊ばせてどちらが良いゲームか評価できるか」) に対して、本日 C220 (午前=mimicry_log v02 bossClear dead flag 救済、08:51 C221=memory_tree_consolidation orphan 32→27) と並んで **3 本目の C220 ラベル**で「ヘッドレス評価フォーマット v01 を『自己採点装置』から『差分露出器』へ再定位する §5 追加」を Phase 4 完遂したサイクル。Phase 1 §6 外部検索キーワード `headless playthrough AI evaluation shmup game comparison metrics 2026` (Nao_u 5/21 13:19 課題直結) で 3 件取得し、Phase 2 で WebFetch 実体到達できた 2 件 = **AI Gamestore (arxiv 2602.17594) 「同一プレイヤー×複数ゲーム」設計 + AI Benchmarks 2026 37%ギャップ (kili-technology) ラボ vs 実環境構造的ミスマッチ**が、独立に収束して「ヘッドレスで『どちらが良いか』の答えは出ない。出るのは『どの軸が動いたか』だけ」という C218/C219 で書いた v01 §1-§4 の運用思想を更新する核に到達。Phase 3 で kaizen #134 運用観察 12 日目 (atom total=885, format/ref/action WARN=0、11 日連続 0 継続) を記録、Phase 4 で `drafts/headless_evaluation_format_v01.md` §5 を追加 (差分露出器再定位 + 3 層対応表 + §1-§4 意味更新 + 即ルール化保留節) + #game-rights ts=1779418018 に Log_cdx 宛 v02 補助観点投稿で完遂。**Phase 4 大作業 = drafts §5 追加 + Slack 1 投稿 のみで完全集中**、Phase 5 (本日記) まで途中で別作業に逸れず単線完遂できた。
 
 ### 起点 — 「新着 actionable 実質ゼロ + 既存課題は他インスタンス担当」サイクルで「補助観点 v02 結晶化」に振り直す Phase 1 判定

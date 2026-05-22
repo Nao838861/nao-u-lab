@@ -2,9 +2,11 @@
 """memory/ 孤児ノード検出 試作 v0 — memory_tree_consolidation.md §E
 
 参照グラフ (MEMORY.md + サブインデックス + 再帰展開) と memory/**/*.md 全集合の
-diff を取り、temporal awareness (git log 履歴) を併用して3クラス分類で出力する。
+diff を取り、temporal awareness (git log 履歴) を併用して4クラス分類で出力する。
 
-3クラス分類:
+4クラス分類:
+- superseded     : frontmatter `belief_invalid_at` が設定済み (graphiti 2 点記法、
+                   age や reachable に関わらず最優先で分類)
 - true_orphan    : 参照グラフから到達不可 + 直近30日以内に編集なし
 - stale_linked   : 参照グラフ内だが直近30日編集なし (evolution 段階の死活判定対象)
 - unregistered_new: 直近7日以内に新規作成 + 参照グラフ未登録 (接続待ち優先度高)
@@ -80,6 +82,15 @@ def _build_index_files() -> list[Path]:
 INDEX_FILES = _build_index_files()
 
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+\.md)(?:#[^)]*)?\)")
+
+# v0.5 (memory_tree_consolidation.md v0.3 bitemporal 種実装):
+# graphiti (getzep) の valid_at / invalid_at 2 点記法を frontmatter から拾う。
+# PyYAML 非依存 — `---` で囲まれた行頭 simple key:value のみ regex で抽出する。
+# `replaced_by:` も同 frontmatter ブロック内の単純行から拾う。
+FRONTMATTER_RE = re.compile(r"\A---\s*\n(.*?)\n---\s*\n", re.DOTALL)
+BELIEF_VALID_RE = re.compile(r"^belief_valid_at:\s*(\S+)", re.MULTILINE)
+BELIEF_INVALID_RE = re.compile(r"^belief_invalid_at:\s*(\S+)", re.MULTILINE)
+REPLACED_BY_RE = re.compile(r"^replaced_by:\s*(\S+)", re.MULTILINE)
 
 # v0.1 追加: feedback_index.md などプロセ参照に多い矢印記法
 #   `→ path.md` / `詳細→ path.md` / `→ a.md, b.md` 等
@@ -157,6 +168,43 @@ def build_reference_set(verbose: bool = False) -> set[Path]:
                 if target is not None and target not in visited:
                     queue.append(target)
     return {p for p in visited if is_memory_path(p)}
+
+
+def _extract_belief_validity(text: str) -> dict[str, str]:
+    """frontmatter から belief_valid_at / belief_invalid_at / replaced_by を抽出。
+
+    frontmatter 不在または該当キー不在なら空 dict を返す。値は最初の空白までの文字列
+    (regex で `\\S+` 抽出)。日付パースは呼び出し側 (現状は文字列のまま出力に乗せる)。
+    """
+    fm = FRONTMATTER_RE.match(text)
+    if fm is None:
+        return {}
+    block = fm.group(1)
+    meta: dict[str, str] = {}
+    m = BELIEF_VALID_RE.search(block)
+    if m:
+        meta["valid_at"] = m.group(1)
+    m = BELIEF_INVALID_RE.search(block)
+    if m:
+        meta["invalid_at"] = m.group(1)
+    m = REPLACED_BY_RE.search(block)
+    if m:
+        meta["replaced_by"] = m.group(1)
+    return meta
+
+
+def collect_belief_meta(files: list[Path]) -> dict[Path, dict[str, str]]:
+    """memory/ 各ファイルの frontmatter belief_* メタを収集 (空 dict は除外)。"""
+    result: dict[Path, dict[str, str]] = {}
+    for f in files:
+        try:
+            text = f.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        meta = _extract_belief_validity(text)
+        if meta:
+            result[f] = meta
+    return result
 
 
 def collect_memory_files() -> list[Path]:
@@ -302,9 +350,11 @@ def classify(
     files: list[Path],
     dates: dict[Path, date],
     fallback: set[Path],
+    belief_meta: dict[Path, dict[str, str]],
     today: date,
 ) -> dict[str, list[tuple[Path, str, int, int]]]:
     classes: dict[str, list[tuple[Path, str, int, int]]] = {
+        "superseded": [],
         "true_orphan": [],
         "stale_linked": [],
         "unregistered_new": [],
@@ -323,7 +373,12 @@ def classify(
             if f in fallback:
                 last_str += "*"  # relocate-fallback marker
         entry = (f, last_str, age, ref_count)
-        if ref_count == 0 and age > AGE_THRESHOLD_STALE:
+        meta = belief_meta.get(f)
+        # v0.5: superseded は age/ref に関わらず最優先で分類 (belief_invalid_at が
+        # 設定されている = 信念が無効化された = 他クラス判定より上位)
+        if meta is not None and "invalid_at" in meta:
+            classes["superseded"].append(entry)
+        elif ref_count == 0 and age > AGE_THRESHOLD_STALE:
             classes["true_orphan"].append(entry)
         elif ref_count > 0 and age > AGE_THRESHOLD_STALE:
             classes["stale_linked"].append(entry)
@@ -336,13 +391,26 @@ def classify(
     return classes
 
 
-def format_entry(cls: str, entry: tuple[Path, str, int, int]) -> str:
+def format_entry(
+    cls: str,
+    entry: tuple[Path, str, int, int],
+    belief_meta: dict[Path, dict[str, str]] | None = None,
+) -> str:
     f, last, age, refs = entry
     try:
         rel = f.relative_to(REPO_ROOT)
     except ValueError:
         rel = f
     rel_s = str(rel).replace("\\", "/")
+    # v0.5: superseded は invalid_at / replaced_by を主情報として 1 行に出す
+    if cls == "superseded" and belief_meta is not None and f in belief_meta:
+        meta = belief_meta[f]
+        invalid_at = meta.get("invalid_at", "?")
+        replaced_by = meta.get("replaced_by", "-")
+        return (
+            f"[superseded] {rel_s} (invalid_at={invalid_at}, "
+            f"replaced_by={replaced_by}, refs={refs})"
+        )
     return f"[{cls}] {rel_s} (last_edit={last}, age={age}日, refs={refs})"
 
 
@@ -360,7 +428,8 @@ def main() -> int:
     refs = build_reference_set(verbose=args.verbose)
     files = collect_memory_files()
     dates, fallback = get_last_edit_dates(files)
-    classes = classify(refs, files, dates, fallback, today)
+    belief_meta = collect_belief_meta(files)
+    classes = classify(refs, files, dates, fallback, belief_meta, today)
 
     lines: list[str] = []
     lines.append(f"# orphan_check.py result (run={today.isoformat()})")
@@ -372,9 +441,14 @@ def main() -> int:
         f"# v0.3: relocate-fallback ({RELOCATE_DATE.isoformat()}*) "
         f"applied to {len(fallback)} files"
     )
+    lines.append(
+        f"# v0.5: bitemporal frontmatter (belief_valid_at / belief_invalid_at) "
+        f"detected in {len(belief_meta)} files"
+    )
     lines.append("")
 
     for cls_name, cls_label in [
+        ("superseded", "superseded (belief_invalid_at 設定済み = 信念無効化)"),
         ("true_orphan", f"真孤児 (refs=0 + age>{AGE_THRESHOLD_STALE}日)"),
         ("stale_linked", f"静止親接続 (refs>0 + age>{AGE_THRESHOLD_STALE}日)"),
         ("unregistered_new", f"新規未登録 (refs=0 + age<{AGE_THRESHOLD_NEW}日)"),
@@ -382,13 +456,13 @@ def main() -> int:
         entries = classes[cls_name]
         lines.append(f"## {cls_label}: {len(entries)} 件")
         for e in entries:
-            lines.append(format_entry(cls_name, e))
+            lines.append(format_entry(cls_name, e, belief_meta))
         lines.append("")
 
     if args.verbose:
         lines.append(f"## other (active or middle-age): {len(classes['other'])} 件")
         for e in classes["other"]:
-            lines.append(format_entry("other", e))
+            lines.append(format_entry("other", e, belief_meta))
         lines.append("")
 
     output = "\n".join(lines)

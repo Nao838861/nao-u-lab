@@ -1,0 +1,40 @@
+# orphan_check.py result (run=2026-05-22)
+# scope: memory/**/*.md = 275 files, reachable from 31 index roots = 462 files
+# v0.3: relocate-fallback (2026-05-08*) applied to 0 files
+# v0.5: bitemporal frontmatter (belief_valid_at / belief_invalid_at) detected in 1 files
+
+## superseded (belief_invalid_at 設定済み = 信念無効化): 1 件
+[superseded] memory/feedback_rule_proliferation.md (invalid_at=2026-05-14, replaced_by=feedback_rule_proliferation_canonical.md, refs=1)
+
+## 真孤児 (refs=0 + age>30日): 0 件
+
+## 静止親接続 (refs>0 + age>30日): 0 件
+
+## 新規未登録 (refs=0 + age<7日): 27 件
+[unregistered_new] memory/action_reservations.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/agent_failure_modes.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/feedback_cutoff_rule_mir.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/feedback_layer_a_validation_20260509.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/feedback_progressive_improvement_safety_net.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/feedback_sense_via_play_archive.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/feedback_siphon_cycle_collapse.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/feedback_usage_limit.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/game_design_combinations.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/game_dev_analysis_mir.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/inbox_mir.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/inbox_win2.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/inbox_win2_archive_20260427.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/inbox_win2_overflow_20260427.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/inbox_win2_overflow_20260427_230144.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/inbox_win2_overflow_20260501_043814.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/inbox_win2_overflow_20260502_101502.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/inbox_win2_overflow_20260505_100152.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/inbox_win2_overflow_20260507_131315.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/inbox_win_overflow_20260505_045955.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/kaizen_review_queue.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/project_memory_test_via_new_shooting_20260427.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/reference_hermes_curator_20260501.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/selection_sense_log.md (last_edit=2026-05-18, age=4日, refs=0)
+[unregistered_new] memory/shooting_assessment_matrix_v0.md (last_edit=2026-05-21, age=1日, refs=0)
+[unregistered_new] memory/kaizen_tracker.md (last_edit=2026-05-22, age=0日, refs=0)
+[unregistered_new] memory/mir_boot_intent.md (last_edit=2026-05-22, age=0日, refs=0)
