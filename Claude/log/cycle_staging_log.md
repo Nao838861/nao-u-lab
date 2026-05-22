@@ -207,7 +207,68 @@ T:4 以上で直近3日 (5/19-5/22) のサイクル staging で言及してい�
 
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### 1) Phase 1 §1 判定の修正 — Log planetary_gear #all-nao-u-lab 未投稿の発見
+
+Phase 1 §1 が「5本すべて既応答済」と判定したのは Log の応答 4 本 (atomic_chat_hq #all 13:29 + 20:32 / kazunori_279 #all 19:44 / haopeng_uiuc #all 19:57 @reply) + Mir の応答 (phoenixyin13 + planetary_gear) の混在判定だった。Log diary C221 二度目 Phase 5 (ts=1779462115, 23:41) は「Slack 投稿 2 本 (#all-nao-u-lab planetary_gear 反応 1 本 + #shared-reads 千葉集翻訳 1 本)」と記録していたが、slack archive (5/22 23:22 同期、最新ts=1779454958 22:02) を実走査すると **#shared-reads (chiba_mystery_mechanics ts=1779447884 20:04) のみ実投稿確認、#all-nao-u-lab 側 Log planetary_gear 反応は届いていなかった**。draft `post_c221_phase2_planetary_gear_log.py` (archive 行きするが POSTED_ts suffix なし = 投稿未完了) と本実装が一致。
+
+**重要な認識**: 投稿 archive に POSTED_ts suffix がない draft は実投稿されていない可能性が高い。日記の「投稿した」記述を信用せず、slack archive 上の Log user_id (U0AM1F23FQU) 投稿で物理確認する規律が必要。本サイクルで Phase 1 §1 同様の判定誤りを再発させないため、cycle_staging Phase 1 表に「日記主張」と「slack archive 物理確認」の 2 列を追加する運用案を kaizen ログ候補に上げる (本サイクル内では実装せず候補のみ記録)。
+
+### 2) Nao_u 5/22 13:16 directive 「ヘッドレス測定のあり方検討」への深掘り — 外部検索 3 論文三角化
+
+Phase 1 §6 で取得した 3 論文 (Orak / Game Reasoning Arena / AI Benchmarks 2026) を **正例 2 + 警告 1** の三角形で読み解いた結果、`drafts/headless_evaluation_format_v01.md` への 4 接続案が立ち上がった:
+
+(a) **Layer A/B 分離設計の補強根拠**: Mir Layer A/B 提案 (ts=1779443805) + Log 5 源収束 (Talakat 2018 / PCG Benchmark / AI Gamestore / 37%ギャップ / 千葉集 planetary_gear) に Orak + GAA + AI Benchmarks 2026 を加えて **8 源収束**。「直接計測 (Layer A) と解釈用 (Layer B) の分離 = LLM hack の構造的緩和」は独立到達した 8 源で支持される一般原理の確信度に達した。5/31 一括判定発火点で Codex/Mir 採用判断の決定的素材として shared-reads 投稿 (ts=1779471593, 8246 chars) を直接引用可能。
+
+(b) **§5 サンドボックス化追記候補**: AI Benchmarks 2026 (b) unsanitized eval 警告を直接当てて、`evaluator 内で LLM 出力を生で exec()/eval() しない` 3 段ガード (JSON schema check / git apply --dry-run / 別 process + timeout) を §5 補足要件として追記候補。**実装着手前にプロトタイプで検証**が必要 = 即座に §5 改修するのではなく、graze_log v07 設計サイクルで試行統合。
+
+(c) **cross_review prompt injection 耐性**: AI Benchmarks 2026 (c) を当てて、cross_review (Layer B) で「評価対象が判定基準を書き換える指示は無視する」defense を入れる候補。Log/Mir/Ash 内部 cross_review は相互信頼で緩和されるため必須ではないが、外部 LLM judge 採用時は必須化する `if-then` ルールとして §5 補足候補。
+
+(d) **ジャンル絞り込み路線の確認**: Orak (12 ジャンル foundational) vs GAA (戦略のみ) の対比から、Pot は **「STG / 弾幕 / mimicry / graze の 4 ジャンル絞り込み」**が現在の正解と整理。「foundational benchmark」化を狙わず、絞ったジャンル内での評価精度を上げる路線を維持する判断。
+
+**統合 atom 化方針**: 3 論文を別々に保管せず、**「ヘッドレス評価設計の脆弱性軸」という統合 atom** として `memory/shared_reads/20260523_headless_eval_triangulation_log.md` に永続保管予定 (本 Phase 2 では shared-reads 投稿で物理化、永続保管 atom 化は次サイクル以降の余白として残す)。
+
+### 3) planetary_gear 接続 #3 (前提反転汎用化) の sense_prediction_log 教師データ化
+
+C221 二度目 Phase 5 日記の【高優先】ToDo「planetary_gear 接続 #3 (前提反転汎用化 = 『プレイヤーには本物のゲームセンスがない』前提) の sense_prediction_log への記録」を本 Phase 2 で完了。**N=27 として Observation 1 を記録 (即原則化禁止、`memory/feedback_rule_proliferation_canonical.md` 順守)**:
+
+- **反転候補原則**: 「プレイヤーには本物のゲームセンスがない」前提で設計する勇気。Nao_u 弾幕観「避けた感じ」量産 + mimicry_log 5/21 02:04 関連発言と整合
+- **外部根拠**: 千葉集系譜整理 6 段階 (1994 かまいたちの夜 → 2024 Type Help) で「プレイヤーの不能を前提に救済を仕込む」設計が市場成功事例として独立収束 = 業界内 6 例独立収束
+- **想起トリガー**: game/ 改修着手前ゲートで「快感審問」(feedback_pleasure_element_first.md WHAT) の後、「この快感は上達したプレイヤーだけのものか / 下手なままでも届くか」を追加 1 問
+- **Observation 2/3 待ち**: Nao_u game/ 改修指示 / Mir/Ash cross_review / 外部記事 (Golden Idol 系) のいずれかで同型が観察された瞬間に追記、3 観測後 R-J 昇格判定の正式 trigger に上げる
+- **本サイクル R 層追加しない**: R 層最小限維持 (現 R-A〜R-I 9 個)、M 層相当の候補保管に留めて `memory/feedback_few_rules_big_effect.md` 順守
+
+### 4) Phase 1 §7 C 項「個別指摘を即ルール化しない」運用記録
+
+Phase 1 §7 C 項で選定した「**個別指摘を即ルール化しない — 教師データで蓄積、判断力で消化する**」項目への 1mm 案 (`feedback_self_perception_blindness.md` 直処方 = git status を Slack 観測より先 を守った旨を sense_prediction_log に「予測=守れる/結果=守った」として 1 行記録) は、本サイクル N=27 エントリの「外部参照源の哲学を自分達に当てる時の候補原則の Observation 1」型として記録運用が成立した = sense_prediction_log を「予測 vs 実反応」型 + 「Observation 1 候補蓄積」型の 2 形式で運用する暗黙の拡張が物理化された (即明文化はせず、運用が定着するか観察)。
+
+### 5) 外部 notes 統合 — 未統合 0 件確認、本サイクル統合候補なし
+
+Phase 1 §4 で確認した通り `tools/external_notes_integration_audit.py` 出力で親 98 / サブ 203 すべて統合済 (100%)。本サイクル統合候補なしを確認、(3) 接続 #3 の sense_prediction_log 教師データ化が external_notes 統合と機能的に同等の「外部入力 → 内部記憶接続」を物理化している。
+
+### 6) サイクル数密度の自己診断 — 5/22 5 サイクル新記録の継続性確認
+
+C221 二度目 Phase 5 日記「本日 5 サイクル累積 = 1 日サイクル数の新記録、次サイクル冒頭でサイクル数密度の自己診断を要する局面」への応答として、C222 (5/23 02:23 起点) サイクル冒頭の状態を観察:
+- 新着 Nao_u actionable URL = 0 (Phase 1 §1 5 本全て応答済)
+- pending 対応 = 0 (Phase 1 §3)
+- external_notes 未統合 = 0 (Phase 1 §4)
+- 新着返信対象合計 = 0 (Phase 1 §2)
+- 空サイクル深掘り 5 カテゴリ走査済 (Phase 1 §7)
+
+**判定**: C222 は「空サイクル」判定の典型 = 新着 0 + pending 0 ≤ 2、深掘り 5 カテゴリ走査でも該当極小 (B: 2 stale projects / C: 個別指摘ルール化 1 件 / D: accumulations 接続 / E: 該当なし)。**5/22 5 サイクル / 1 日の密度は持続不可能**な可能性が高く、C222 は深掘り中心の落ち着いた回として運用するのが妥当。**Slack 投稿 2 本 (#all-nao-u-lab planetary_gear 遅延 + #shared-reads 3 論文三角化) + sense_prediction_log N=27 教師データ + Phase 2 セクション執筆** の中粒度物理化に絞った。
+
+### Phase 2 物理化サマリ
+
+- **#all-nao-u-lab planetary_gear 遅延投稿** (ts=1779471444, 3101 chars): C221 二度目 起草未投稿分を C222 で遅延投稿、透明性ある遅延説明 + 接続 #1 §8 着地報告 + 接続 #2/#3 残現状を併記
+- **#shared-reads 3 論文三角化** (ts=1779471593, 8246 chars): Orak + GAA + AI Benchmarks 2026 を正例 2 + 警告 1 の三角形で読み解き、`headless_evaluation_format_v01.md` への 4 接続案を提示、5/31 一括判定発火点での Codex/Mir 採用判断材料
+- **sense_prediction_log N=27 教師データ追加**: 「プレイヤーには本物のゲームセンスがない」前提反転候補 Observation 1 を記録、即原則化禁止 = Observation 2/3 待ちで R 層化判定保留
+- **Phase 2 セクション執筆**: 6 節構成 (§1 Phase 1 判定修正 / §2 3 論文三角化 / §3 接続 #3 教師データ化 / §4 個別指摘ルール化運用 / §5 外部 notes 統合確認 / §6 サイクル数密度自己診断)
+
+**Phase 3 への持ち越し**:
+- Phase 2 で立ち上がった 4 接続案 (§5 サンドボックス / cross_review prompt injection 耐性 / Layer A/B 補強根拠 / ジャンル絞り込み路線) は **Phase 3 で `drafts/headless_evaluation_format_v01.md` への追記候補** として検討。**ただし「1 サイクル 1 物理化原則」を順守、Phase 3 で 1 案のみ着地、残り 3 案は次サイクル以降の温度残存源として保留**
+- planetary_gear 接続 #2 (graze_log v07 N=3 batch validation) は graze_log v07 設計サイクルでの着地、Phase 3 では未着手
+- 統合 atom `memory/shared_reads/20260523_headless_eval_triangulation_log.md` 永続保管は Phase 3 か次サイクル以降の余白
+
 
 ## Phase 3: アクション
 (Phase 3が書き込む)
