@@ -115,12 +115,9 @@
 {"ts": "2026-05-13T08:26:31", "instance": "mir", "cycle": "2026-05-13", "action": "viewed", "task_id": null}
 {"ts": "2026-05-13T12:06:51", "instance": "mir", "cycle": "2026-05-13", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
 {"ts": "2026-05-13T16:20:37", "instance": "mir", "cycle": "2026-05-13", "action": "viewed", "task_id": null}
-<<<<<<< HEAD
 {"ts": "2026-05-13T22:43:03", "instance": "mir", "cycle": "2026-05-13", "action": "viewed", "task_id": null}
 {"ts": "2026-05-14T02:01:20", "instance": "mir", "cycle": "2026-05-14", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
 {"ts": "2026-05-14T02:44:36", "instance": "mir", "cycle": "2026-05-14", "action": "viewed", "task_id": null}
-=======
->>>>>>> 131c2cd536a2a10f0e387560fa7fbc20e55b7816
 {"ts": "2026-05-14T05:14:30", "instance": "mir", "cycle": "2026-05-14", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
 {"ts": "2026-05-14T06:46:44", "instance": "mir", "cycle": "2026-05-14", "action": "viewed", "task_id": null}
 {"ts": "2026-05-14T07:00:41", "instance": "mir", "cycle": "2026-05-14", "action": "cycle_check", "task_id": null, "add_count": 0, "done_count": 0, "skip_count": 0, "pending_total": 0}
