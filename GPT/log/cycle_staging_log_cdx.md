@@ -1,20 +1,9 @@
-# log_cdx Cycle Staging — 2026-05-22 08:58
+# log_cdx Cycle Staging — 2026-05-22 10:43
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
-
-## Phase Game Start: ゲーム制作着手
-
-- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack direct pending はなし。
-- 対象版: `game/graze_log_cdx/v05_1_cdx_v50/`
-- 判断: v49 の lane guide は横移動 wave を見える化したが、alpha 0.16 / 3px と post-midboss 中央線が UI 記号として主役化する懸念があった。v50 では敵配置・弾・route timeline を変えず、guide 表現だけを alpha 0.10 / lineWidth 2.2 に下げ、post-midboss 中央線を削った。
-- 作ったもの: `index.html`、`README.md`、`design_log.md`、`devlog.md`、`tools/headless_graze_log_cdx_v05_2_v50_check.js`、`tools/headless_game_style_compare_v010.js`。
-- 実行方法: ブラウザで `game/graze_log_cdx/v05_1_cdx_v50/index.html` を開く。自動 route は `?seed=12345&bot=1&botStyle=route`。
-- 検証: `node tools\headless_graze_log_cdx_v05_2_v50_check.js` pass。route clear / grade S / routeEvents 29 / `crossLockGuide=1` / `postMidCrossGuide=1` / `readabilityGuides=2` / quiet guide style (`alpha=0.10`, `lineWidth=2.2`, paths 2/2) を確認。
-- 追加検証: `node tools\headless_game_style_compare_v010.js` pass。v50 record を `memory/raw/game_eval/graze_log_style_compare.jsonl` に追記。`node tools\compare_graze_log_style_latest2.js` pass。v49 -> v50 の digest は route/aggressive/defensive/panic で同値。
-- 残課題: Browser Use Node REPL がこのセッションで使えず、Chrome CDP screenshot 取得も分割 JSON 受信で止まった。実ブラウザの見た目確認は次サイクルで screenshot harness を整えるか手動確認する。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
@@ -35,10 +24,18 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-- posted_at: 2026-05-22T09:11:09+09:00
-- channel: #log
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779408669321189
-- char_count: 2282
-- verification: ok
-- draft: log/drafts/phase5_diary_20260522_0858.md
-- note: Phase 1-4 staging はプレースホルダのままだったため、Phase Game Start の `graze_log_cdx` v50 実装・検証記録を中心に日記化した。
+(Phase 5 が書き込む)
+
+## Game Start: 継続ゲーム制作
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game directive は今回対象なし。
+- 原文: `v05_1_cdx_v03` 以降、このゲームが完成するか、Nao_u が止めろと言うまでは、定時サイクルで繰り返し改善を続ける。
+- 今回作ったもの: `game/graze_log_cdx/v05_1_cdx_v51/`。v50 の lane guide から chevron を削除し、`chevrons:false` を guide state / event に記録した。敵数・弾・route timeline・bot policy は変更なし。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v51/index.html` をブラウザで開く。bot は `?bot=1&botStyle=route`。
+- 検証:
+  - `node tools\headless_graze_log_cdx_v05_2_v51_check.js`: pass。route clear / grade S / routeEvents 29 / `crossLockGuide=1` / `postMidCrossGuide=1` / `readabilityGuides=2` / `chevrons:false`。
+  - `node tools\headless_graze_log_cdx_v05_2_v51_visual_check.js`: pass。frame 3090 / 3890 で guide path stroke 2 本、chevron-like stroke 0 本、nonblank draw ops。
+  - `node tools\headless_game_style_compare_v011.js`: pass。v51 record を `memory/raw/game_eval/graze_log_style_compare.jsonl` に追記。
+  - `node tools\compare_graze_log_style_latest2.js`: pass。v50 -> v51 の route/aggressive clear 維持、主要 digest 同値。
+- 残課題: Browser Use Node REPL が公開されていないため実ブラウザ目視は未完了。次は v51 を実ブラウザで見て、chevron なしでも横移動 wave の左右圧が読めるか、alpha 0.10 が薄すぎないかを確認する。
+- commit: 未作成。作成後に追記または final で報告する。
