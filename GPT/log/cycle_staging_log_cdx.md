@@ -49,3 +49,15 @@
   - `node tools\headless_graze_log_cdx_v05_2_v55_policy_matrix_check.js`: pass。5 seed × 7 policy。route / aggressive / marksman / survival は clear、defensive は routeCoverage 0.931 で game over、panic は 0.379 で早期 game over、novice は 0.897 で game over。
 - 追加ログ: `memory/raw/headless_eval/graze_log_cdx_policy_matrix.jsonl` に v55 matrix summary を追記。
 - 残課題: matrix JSONL の過去版比較 helper、policy 名と測定 signature の対応整理、seed 差が出ない問題の扱い。
+
+
+### 2026-05-23 graze_log_cdx v59
+
+- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending game はなし。
+- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v59/`。v58 の bottom-camp 対策を維持しつつ、上中段で横切り `raider` / lateral target を倒す `CHASE` 報酬を追加。
+- 判断理由: v58 は「底にいると死ぬ」罰の設計として成立したが、次の焦点は「上へ出て迎撃したくなる」積極報酬。`game_headless_action_eval_playbook_20260523` に従い、route/aggressive/marksman と camper の差を `forwardAttackPct` / `forwardChaseKills` / `chaseBonus` で測る。
+- 実行方法: `game/graze_log_cdx/v05_1_cdx_v59/index.html` をブラウザで開く。bot は `?bot=1&botStyle=route|aggressive|marksman|camper`。
+- 検証:
+  - `node tools\headless_graze_log_cdx_v05_2_v59_check.js` pass。route bot clear、`chaseBonus 19157`、`forwardAttackPct 0.558`、`forwardChaseKills 66`。
+  - `node tools\headless_graze_log_cdx_v05_2_v59_policy_matrix_check.js` pass。route/aggressive/marksman は clear、camper は clear 0 / routeCoverage 0.313 / chaseBonus 0。
+- 残課題: headless は報酬分離まで。次は Browser Use または実機目視で、`CHASE` popup がうるさくないか、上中段迎撃が突撃一択ではなく読めるリスクになっているかを見る。
