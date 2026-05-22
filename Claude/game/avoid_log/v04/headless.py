@@ -91,6 +91,15 @@ def new_state(seed, use_mulberry=False):
         "bias_abs_sum": 0.0,   # 平均|dirBias|観測（v02対比メトリクス）
         "near_bias_sum": 0.0,  # 平均 nearBias（v04対比メトリクス）
         "spawn_count": 0,      # 総スポーン数（圧力効果の定量確認）
+        # Layer A primitives (drafts/headless_evaluation_format_v01.md §7 — Codex 採用判断への独立サンプル)
+        # kill_rhythm は avoid_log が撃たないゲームのため適用外。input_load/idle_ratio/proximity_events/death_pressure の4個を実装。
+        "input_load_frames": 0,    # move!=0 or space==1 のフレーム数（プレイヤー生存中のみ）
+        "idle_frames": 0,          # 入力なしのフレーム数
+        "proximity_events": 0,     # プレイヤーから prox_threshold 以内に iron弾が存在したフレーム×弾数の累計
+        "prox_threshold": 30.0,    # 接近判定閾値 (player.r=9 + bullet.r≈9 = 18、その2倍程度を「危険接近」とする)
+        "recent_prox": [],         # 直前60フレームの接近カウント履歴（death_pressure 計算用）
+        "recent_bullets": [],      # 直前60フレームの弾数履歴
+        "death_pressure": 0.0,     # プレイヤー死亡時の直前60f圧力スコア（接近×密度の合成、0=死亡前/非死亡）
     }
 
 
@@ -247,6 +256,11 @@ def step(state, move_input, space_input):
         if move_input != state["last_move"]:
             state["move_changes"] += 1
         state["last_move"] = move_input
+        # Layer A: input_load / idle_ratio (プレイヤー生存中のみ計測)
+        if move_input != 0 or space_input != 0:
+            state["input_load_frames"] += 1
+        else:
+            state["idle_frames"] += 1
         if space_input:
             state["space_inputs"] += 1
             state["arc_total"] += 1
@@ -309,6 +323,21 @@ def step(state, move_input, space_input):
         if not b["_consumed"] and -60 < b["y"] < H + 60 and -40 < b["x"] < W + 40
     ]
 
+    # Layer A: proximity_events 計測（プレイヤー生存中のみ、collisions の直前で実弾位置に対して計算）
+    if p["alive"]:
+        prox_count = 0
+        for b in state["bullets"]:
+            if b["mode"] != "iron":
+                continue
+            if math.hypot(p["x"] - b["x"], p["y"] - b["y"]) < state["prox_threshold"]:
+                prox_count += 1
+        state["proximity_events"] += prox_count
+        state["recent_prox"].append(prox_count)
+        state["recent_bullets"].append(sum(1 for b in state["bullets"] if b["mode"] == "iron"))
+        if len(state["recent_prox"]) > 60:
+            state["recent_prox"].pop(0)
+            state["recent_bullets"].pop(0)
+
     # collisions
     for b in state["bullets"]:
         if p["alive"] and math.hypot(p["x"] - b["x"], p["y"] - b["y"]) < p["r"] + b["r"]:
@@ -319,6 +348,12 @@ def step(state, move_input, space_input):
             p["alive"] = False
             state["pEndT"] = state["t"]
             p["deathBy"] = b["mode"]
+            # Layer A: death_pressure = 直前60フレームの接近カウント平均×2 + 弾数平均×0.1
+            # （接近 1 = 強圧力、弾 1 = 弱圧力として合成。死亡時に1回だけ計算）
+            if state["recent_prox"]:
+                prox_avg = sum(state["recent_prox"]) / len(state["recent_prox"])
+                bullet_avg = sum(state["recent_bullets"]) / len(state["recent_bullets"])
+                state["death_pressure"] = prox_avg * 2.0 + bullet_avg * 0.1
 
     if state["chainDecay"] > 0:
         state["chainDecay"] -= 1
@@ -606,6 +641,12 @@ def run_one(seed, policy_name):
         "near_bias_avg": state["near_bias_sum"] / max(1, pEnd),
         "spawn_count": state["spawn_count"],
         "spawns_per_sec": state["spawn_count"] / max(1, pEnd / FPS),
+        # Layer A primitives (drafts/headless_evaluation_format_v01.md §7)
+        "input_load": state["input_load_frames"] / max(1, pEnd),
+        "idle_ratio": state["idle_frames"] / max(1, pEnd),
+        "proximity_events": state["proximity_events"],
+        "proximity_per_sec": state["proximity_events"] / max(1, pEnd / FPS),
+        "death_pressure": state["death_pressure"],
     }
 
 
@@ -638,6 +679,11 @@ def aggregate(traces):
         # v04 指標
         "near_bias_avg": sum(t["near_bias_avg"] for t in traces) / n,
         "spawns_per_sec_avg": sum(t["spawns_per_sec"] for t in traces) / n,
+        # Layer A primitives 集計
+        "input_load_avg": sum(t["input_load"] for t in traces) / n,
+        "idle_ratio_avg": sum(t["idle_ratio"] for t in traces) / n,
+        "proximity_per_sec_avg": sum(t["proximity_per_sec"] for t in traces) / n,
+        "death_pressure_avg": sum(t["death_pressure"] for t in traces) / n,
     }
 
 
@@ -896,6 +942,13 @@ def main():
         json.dumps({k: v for k, v in all_traces.items()}, ensure_ascii=False),
         encoding="utf-8",
     )
+    # Layer A primitives 検証用: 各 trace を 1 行 jsonl で書き出す
+    # (drafts/headless_evaluation_format_v01.md §7 に沿った per-run 観測点として後段集計しやすい形)
+    traces_jsonl_path = base / f"traces_{stamp}.jsonl"
+    with traces_jsonl_path.open("w", encoding="utf-8") as f:
+        for pol_name, traces in all_traces.items():
+            for t in traces:
+                f.write(json.dumps(t, ensure_ascii=False) + "\n")
     metrics_path = base / f"metrics_{stamp}.json"
     metrics_path.write_text(json.dumps(aggs, ensure_ascii=False, indent=2), encoding="utf-8")
     report_path = base / f"report_{stamp}.md"
@@ -903,6 +956,7 @@ def main():
 
     print(f"runs per policy: {args.runs}")
     print(f"replay  : {replay_path}")
+    print(f"traces  : {traces_jsonl_path}")
     print(f"metrics : {metrics_path}")
     print(f"report  : {report_path}")
     for line in diagnoses:
