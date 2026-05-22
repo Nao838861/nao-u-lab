@@ -78,6 +78,9 @@ cross_review 出力が以下を満たすこと:
 - 試行は Log / Mir / Ash いずれが起票してもよい。本 draft の存在を 3 インスタンスに共有 (#game-rights or #human-steering 1 回投稿) して、各インスタンスのサイクル内で機会があれば実施を委ねる
 - 強制ではない (5 サイクル中に 5 試行揃わなくても判定可能、最低 3 試行で判定発火点に到達)
 
+### 試行ログ一覧
+- **N=1 試行** (2026-05-23 Log C222 Phase 4): [cross_review_trial_001_graze_log_cdx_v59.md](cross_review_trial_001_graze_log_cdx_v59.md) — graze_log_cdx v58→v59 を §2 (b) 層 1 数値なし版で批評、4 条件 ✓ 機能、6 番目候補語彙「ポリシー依存性」出現、§4 4 個目条件 (pass/near/far) は N=1 不在
+
 ---
 
 ## §4 5/31 検証期限到達時の判定発火点
