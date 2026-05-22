@@ -1,0 +1,73 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: #090b10;
+  color: #e8eef7;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+body {
+  display: grid;
+  place-items: center;
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: minmax(320px, 480px) 220px;
+  gap: 18px;
+  align-items: start;
+  padding: 18px;
+}
+
+canvas {
+  width: min(92vw, 480px);
+  aspect-ratio: 2 / 3;
+  background: #10131c;
+  border: 1px solid #2b3446;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
+}
+
+.panel {
+  border-left: 1px solid #2b3446;
+  padding-left: 16px;
+  min-width: 0;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 18px;
+  color: #9ad8ff;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid #202838;
+  font-size: 14px;
+}
+
+.row span {
+  color: #9faabc;
+}
+
+.row strong {
+  color: #ffffff;
+  text-align: right;
+}
+
+@media (max-width: 760px) {
+  .shell {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  .panel {
+    width: min(92vw, 480px);
+    border-left: 0;
+    padding-left: 0;
+  }
+}
