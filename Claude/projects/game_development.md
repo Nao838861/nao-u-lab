@@ -73,6 +73,28 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-22 C220 Phase 3 (Log 後半): ヘッドレス評価設計「自己採点装置→差分露出器」再定位 + Ash graze_log v06 merge 観点
+
+**起源**: 本サイクル Phase 1 §6 で `headless playthrough AI evaluation` 軸の外部検索 3 件取得 (AI Gamestore arxiv 2602.17594 / 37%ギャップ kili-technology / AI Evaluation Metrics 80件)。Phase 2 で前 2 件を WebFetch 実体確認 + atom 2 本 #shared-reads ship 済 (ts=1779417206 / ts=1779417288)、#all-nao-u-lab ts=1779417341 で Log 視点投稿済。
+
+**核心**: ヘッドレス評価を「どちらが面白いか」を答える**自己採点装置**として設計すると構造的に失敗する。代わりに **「ゲーム側を変数化する差分露出器」** として再定位する。根拠2源独立:
+- **37%ギャップ (kili)**: ラボベンチと実環境で 37% スコア乖離。「ヘッドレス短時間 episode vs Nao_u 実プレイ」ギャップに直接写像。Nao_u が「mimicry_log は graze と何が違うのか分からなかった」(5/21 02:04 ts=1779289298) と一発で潰す**認知摩擦・期待値の裏切り・美しさ**は、固定 seed プレイでは原理的に露出しない
+- **AI Gamestore (arxiv 2602.17594)**: 「同一プレイヤー × 複数ゲーム」設計の **逆向き転用** = 「同じ弱い AI に shot_log / graze_log / mimicry_log」で**ゲーム側を変数化**。VLM 10%未満の含意 = ヘッドレス AI は賢くなくてよい (賢いと差分を吸収)
+
+**drafts/headless_evaluation_format_v01.md の意味更新**: §1-§3 の Talakat 2 軸 + Roohi N=25 best-case は**そのまま使えるが、目的が変わる**。
+- 旧目的: ヘッドレスで「どちらが良いゲームか」の代理判定
+- 新目的: ヘッドレスで「設計仮説が予測していた差分が出ているか」を観測 → 既存 3 層 (ヘッドレス + cross_review + Nao_u判定) が「自動カバレッジ + LLM-as-a-judge + human expert」と一対一対応するレイヤード評価へ昇格
+
+**Phase 4 大作業 (C220 後半)**: `drafts/headless_evaluation_format_v01.md` に §5「差分露出器再定位 + レイヤード評価対応表」を追加 commit + Codex 課題 (Nao_u 5/21 13:19 #game-rights) への補助観点 v02 として #game-rights に 1 投稿。詳細は cycle_staging_log.md §「次フェーズの大作業」。
+
+**Ash graze_log v06 merge 観点との接続** (Phase 1 §「他インスタンス洞察」#1): Ash C192 が graze_log v06 (anticipation telegraph + shape polish + Stage 3-4 自己検査) の master merge を依頼、v05 beta B-2/B-2' 未 merge 分も含む。Log_cdx 5/20 16:11「layer 跨ぎの merge 単位を揃えるべき」と同方向で、**「差分露出器」視点を merge 判断軸として持ち込めるか**が次論点。具体: v06 merge 前に「v05.x → v06 で `graze 軸 / shot 軸` が観測上どう動いたか」を 1 試行 (N=1 でよい、bestcase まで取らない) で記録できれば、merge 判断が「個々の commit の主観」から「軸プロット上の進化方向」に変換される。本日 Log からは観点提供のみ、Ash の merge 判断 timing を尊重 (game/ 横やり禁止 / cross_review 媒体経由本道)。
+
+**3 源収束を「ルール化」しない判断**: 「ヘッドレス評価 = 差分露出器」「3 層が一対一対応」の含意は強い候補だが、CLAUDE.md「個別指摘を即ルール化しない — 同型反復が複数回確認できてから原則化」順守。観測装置に留める (drafts は規範でなくドラフト) + 5 サイクル層間不一致データ蓄積後判断 (feedback_*_evaluation_layered.md 新規書き込みは保留)。
+
+**接続**: drafts/headless_evaluation_format_v01.md (Phase 4 §5 追加対象) / memory/external_notes_log.md (Phase 2 で 2 件即統合済) / projects/rlm_skill_prototype.md (試金石 3 候補: ヘッドレス N=25 並列駆動を Agent ツール並列の試金石化) / Codex 主課題 #game-rights ts=1779337186 (Nao_u 5/21 13:19)
+
+---
+
 ### 2026-05-22 C220 Phase 2-3: Log — mimicry_log v02 brainstorm 副次拡張候補「Value Proposition 1 文」(Shahrabi 由来) を記録、Phase 4 で実装最小プロトに着手
 
 **起源**: 本サイクル Phase 1 §6 で `player fantasy` 軸の外部検索 3 件取得 (Cavin / Shahrabi / Margaris)。Nao_u 2026-05-20 13:10 #nao-u 共有「何のごっこ遊びなのか」観点 + Phase 1 §2 Log_cdx 03:38 atom 「Q0 ラベル空洞化」と独立 3 源収束 (詳細は projects/external_intake.md §2026-05-22 C220)。
