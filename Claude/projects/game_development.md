@@ -73,6 +73,27 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-22 C221 Phase 3 (Log): planetary_gear note 記事「正解に三つの鐘が鳴る」から graze_log v06 / headless §7 へ 2 接続化 + Ash graze_log v06 merge 案件への Log 視点追記
+
+**起源**: Nao_u 5/22 20:00 #nao-u 共有 `note.com/planetary_gear/n/nd75f0dd32f06`（千葉集「正解に三つの鐘が鳴る——プレイヤーを名探偵にするメカニクスについて」）を Phase 2 で WebFetch 取得・独立分析。Mir 22:02 は note.com の JS 制約で本文未取得 + Nao_u に問い合わせ保留中 → Log は本文取得済で **Mir に対して独立な貢献** ポジション。
+
+**Log 独立到達 3 接続**:
+1. **headless 評価 §7 拡張案**: Golden Idol スリーストライク (誤答 2 つ以下なら別表示) = 「距離付き連続信号」のヒント。現状 2 値 (面白い/つまらない) を「合格/惜しい/遠い」3 層階段化する案。Layer A 5 primitives と独立に「judgement granularity」プリミティブとして取扱可能。
+2. **graze_log v06 batch validation 案**: Obra Dinn 3 件ロックイン同型で、グレイズ N=3 件束で音色変化 = Aha Moments 神経科学 (Quanta 2025) の「束ねて aha」と整合。v06 multi-channel anticipation telegraph (Log_cdx 5/21 13:21 ts=1779306061) で読みやすさが知覚口座を食い合う問題に対し、「単体グレイズ → batch grouped 報酬で読みやすさ予算を温存」設計候補。
+3. **前提反転の汎用化**: 「プレイヤーには本物のゲームセンスがない」前提で「下手なまま気持ちよくする」設計を試す価値。Nao_u 弾幕観 (`memory/feedback_clone_strategy.md`) と整合、cross_review の「達人前提抜けると空回る」指摘の上位枠。
+
+**Ash graze_log v06 merge 案件への Log 視点接続**: Log_cdx 5/20 17:51 ts=1779274280 で「v06 = 弾パターン rhyme + windup telegraph + anticipation telegraph + shape polish が "読める危険" を段階的に増やす試行列」とまとめた読みに、本サイクル planetary_gear 記事の Golden Idol スリーストライクが噛み合う —「読める危険」3 段階を Player 自己採点で 3 鳴り分け可能か検討する余地。**merge 判断には影響させず**、merge 後の v07 設計判断材料として記録。
+
+**結晶化の意義 (即原則化禁止 + 良い例蓄積)**: 「3 層階段判定」「N=3 batch validation」を**候補扱いに留め、原則化しない** (`memory/feedback_rule_proliferation_canonical.md` 遵守)。同型 2 回観察後に kaizen 提案。本サイクルは sense_prediction_log.md 教師データに「Log 視点が Mir 独立で本文ベース貢献に到達した成功例」として記録。
+
+**Slack 投稿 (Phase 2 完了)**:
+- #all-nao-u-lab ts=1779460294 (2040字、3 接続 + 記憶散歩接続 + Mir 差分 + 次の一手)
+- #shared-reads ts=1779460386 (3730字、概要 / 内容分析 / 5 軸適用 / メリデメ / 採用候補・高判定)
+
+**接続**: `drafts/headless_evaluation_format_v01.md` §7 (Layer A 5 primitives と独立な「judgement granularity」プリミティブ追加候補) / `game/graze_log/v06/` (batch validation 案を v07 設計時に再評価) / `memory/feedback_pleasure_element_first.md` (記憶散歩で当選、快感審問 + 三つの鐘設計の 2 段ゲート候補) / Ash graze_log v06 master merge 依頼 (5/20 Log_cdx ts=1779274280)
+
+---
+
 ### 2026-05-22 C221 Phase 4 (Log): drafts/headless_evaluation_format_v01.md §3 Layer A 5 primitives 必須項目化 finalize + cross_review Layer B 語彙ガイド v01 draft 化
 
 **起源**: 本サイクル Phase 3 で `drafts/headless_evaluation_format_v01.md` §7「Mir 2 層体系提案 (ts=1779443805) との収束」を並置追加 + #game-rights ts=1779450244 で Mir 提案への Log 応答済。Phase 4 で 3 源独立収束 (Log §1 / Log_cdx §6 / Mir §7) を結晶化 — §3 と §7 で別表になっていた Layer A 5 primitives を 1 表に統合 + Layer B 3 語彙の層 2 運用工程を draft 化。

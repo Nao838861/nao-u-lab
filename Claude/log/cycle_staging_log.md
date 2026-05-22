@@ -131,7 +131,124 @@
 - どれを採るかは Phase 2 で判断（並行 1+3 か、1本に絞るか）。Phase 1 では「ぶら下がる素材」を残すのみ。
 
 ## Phase 2: 分析
-(Phase 2が書き込む)
+
+### 0) 軸選定（Phase 1 主軸候補からの判断）
+Phase 1 で挙げた主軸候補 1 (planetary_gear note への Log 視点) を採用。理由:
+- Mir 22:02 が note.com の JS 制約で本文未取得 → Log は WebFetch で本文取れた → **Mir に対して独立した貢献** ができる稀有なポジション
+- 記事の内容 (Golden Idol スリーストライク / Obra Dinn ロックイン) が Log の現在進行課題 2 つ (headless 評価 v01 §7 拡張 / graze_log v06 達成感確証) に**同時接続**できる → 1 つの外部摂取で 2 つの内部課題を進めうる
+- 主軸候補 2 (headless 評価フォーマット深耕) は Phase 3 のアクション側に持ち越し、本サイクル Phase 2 は接続提案で止める
+- 主軸候補 3 (kaizen #134 運用観察 9 日目転記) は時間予算次第で Phase 3 に小タスクとして実施
+
+### 1) planetary_gear note 記事への Log 視点形成 (Mir 読まずに独立形成 → 後で差分確認)
+
+**rule 8 適用: Mir 22:02 を読む前に WebFetch で本文取得 → Log 視点を独立に書き出す → 書き出し後に Mir 投稿を読んで差分を確認**
+
+- 本文取得結果 (WebFetch): 系譜整理 5 段階 (かまいたちの夜 / TRICKxLOGIC / 逆転裁判 / Obra Dinn / Golden Idol / Roottrees & Type Help)、哲学的論点 (江戸川乱歩「一人の芭蕉の問題」)、末尾の前提反転 (「プレイヤーには本物の推理力がない」)
+- Log が独立に到達した接続:
+  (1) **headless 評価 §7 拡張**: Golden Idol スリーストライク (誤答 2 つ以下なら別表示) = 「距離付き連続信号」のヒント。現状 2 値 (面白い/つまらない) を「合格/惜しい/遠い」3 層階段化する案
+  (2) **graze_log v06 batch validation**: Obra Dinn 3 件ロックイン同型で、グレイズ N=3 件束で音色変化 = Aha Moments 神経科学 (Quanta 2025) の「束ねて aha」と整合
+  (3) **前提反転の汎用化**: 「プレイヤーには本物のゲームセンスがない」前提で「下手なまま気持ちよくする」設計を試す価値。Nao_u 弾幕観と整合、cross_review の「達人前提抜けると空回る」指摘の上位枠
+- 記憶散歩 (Pre-check 当選 feedback_pleasure_element_first.md) との合体:
+  - 快感審問 = WHAT (何が一番嬉しい瞬間か)
+  - 記事 = HOW (その嬉しさをどう成立させるか)
+  - 両者は補完関係 → 「快感審問 → 三つの鐘設計」の 2 段ゲートとして game/ 着手前運用候補
+
+### 2) Mir 22:02 との差分確認 (Log 視点形成後に読む)
+- Mir 22:02 は note.com JS 制約で本文取れず Nao_u に問い合わせ保留中
+- Log は本文取得 + 3 接続 (headless / graze_log / 前提反転) → **Mir と内容重複なし**、Mir 起点の問いかけと Log の本文ベース分析が補完関係になる
+- 差分処理: 投稿で Mir の保留を明示し、Nao_u 関心点判明後に統合深耕する旨を残す
+
+### 3) #all-nao-u-lab 投稿 (Phase 2 内で実施)
+- draft: drafts/post_c221_phase2_planetary_gear_log.py (実投稿後 archive 済)
+- 投稿 ts: 1779460294.968119 / chars=2040 / ok=True
+- 構造: 記事の核 / Log 3 接続 / 記憶散歩との接続 / Mir との差分 / 次の一手 (shared-reads 別投稿予告)
+
+### 4) #shared-reads 投稿 (Nao_u 指示 「詳細な記述と分析を」反映)
+- 判断: Mir 22:02 は本文未取得で shared-reads 投稿を保留した。Log は本文取得済 → 定型フォーマットで投稿可能。Nao_u の「1 フェーズ丸ごと使ってもいいくらい重要」指示に対応する密度で書く
+- draft: drafts/post_c221_phase2_planetary_gear_sharedreads.py (実投稿後 archive 済)
+- 投稿 ts: 1779460386.310459 / chars=3730 / ok=True
+- フォーマット遵守: 概要 (1 行サマリ禁止 → 5 文の密度) / 内容分析 (系譜 6 段階 + 哲学的論点 + 著者独自貢献) / 自分達の環境への適用 (5 軸: headless §7 / graze_log v06 / 前提反転汎用化 / mimicry_log / 記憶散歩) / メリット・デメリット (各 3 点 + 緩和策) / 判定 (採用候補・高、次サイクル C222 実装計画付き)
+- テンプレ流用の自戒: C220 Shahrabi 投稿との重複は概要・判定セクションの構造のみ。内容は記事固有 (系譜整理 / 三つの鐘 / Lucas Pope 等) に絞り、貼り回しなし
+
+### 5) external_notes_log.md 未統合エントリ確認
+- 再走査結果: 親 98 / サブ 203 / サブ統合済 203 (100%) / サブ未統合 0 / 親のみ未マーク 0
+- **本サイクル統合対象なし**。タスク 3 はスキップ理由を明示記録 (前 Phase の Phase 1 で既に確認、Phase 2 で再確認も結果不変)
+
+### 6) Phase 3 への持ち越し材料
+- 主軸候補 2: headless 評価フォーマット v01 §7 への 3 層階段判定 (合格/惜しい/遠い) 追記 → 本サイクル Phase 3 で着手検討
+- 主軸候補 3: kaizen #134 運用観察 9 日目 (2026-05-22) の memory/kaizen_tracker.md 側転記 → 小タスクとして Phase 3 末尾で実施候補
+- graze_log v06 batch validation 案 (N=3 ロックインで音色変化) は **game/ 改修候補** として projects/game_development.md に追記検討 (Phase 3 でも可、Phase 4 でも可)
+- 「快感審問 → 三つの鐘設計」2 段ゲート案は projects/ または memory/ への結晶化候補 (即原則化せず、同型反復 2 回観測後に kaizen 提案 — feedback_rule_proliferation_canonical.md 遵守)
+
+### 7) Phase 2 自己診断
+- **着手前ゲート (CLAUDE.md「絶対にやる」3 番目「着手前に広く調べ、体験で判定する」)**: 記憶散歩 (feedback_pleasure_element_first.md) を読んでから視点形成、Mir 投稿を読む前に独立思考、本文を取得してから接続 → 順序遵守
+- **個別指摘の即ルール化禁止 (CLAUDE.md 5 番目)**: 「3 層階段判定」「N=3 ロックイン」を**即原則化せず候補扱い**にとどめた。同型 2 回観測後 kaizen 提案の方針を Phase 2 セクション内で明文化
+- **温度の残る記述 (Slack 投稿)**: #all-nao-u-lab 2040 字 / #shared-reads 3730 字 → 1 行報告に陥らず、固有性 (planetary_gear / Obra Dinn / Golden Idol / Roottrees / 三つの鐘) を保持
+- **fェードバック係数 (出力 > 入力)**: 入力 = 記事本文 (約 3000 字相当) → 出力 = #all-nao-u-lab + #shared-reads + staging Phase 2 = 約 7000 字。係数 > 2.0、温度残存と接続多重化で結晶化
 
 ## Phase 3: アクション
-(Phase 3が書き込む)
+
+### 0) Phase 2 §0 自己診断の事実検証 (kaizen #132 段階1 必置)
+Phase 2 §0 (軸選定理由) に「Mir 22:02 は note.com JS 制約で本文未取得 / Log は WebFetch で取れた」と書いた根拠を直接検証:
+- Mir 22:02 投稿本文を slack archive で確認: `tail -30 log/slack_archive/all-nao-u-lab.jsonl` → ts=1779454958 (U0ALW4DKTT7=Mir) 「note.comはJavaScript必須で記事本文が取得できないため、タイトルから推測できる範囲で書く」を確認 → Phase 2 §0 記述は事実 (幻覚なし)
+- Log 側の WebFetch 取得は Phase 2 §1 で本文要素 5 段階系譜 + 哲学論点 + 前提反転を引用形成済 → 本文取得は事実 (幻覚なし)
+- 連鎖盲点なし、Phase 3 §0 必置義務果たして次工程へ
+
+### 1) Slack 新規返信 (Phase 1 抽出リスト基づく)
+Phase 1 §1 で唯一の Log 返信候補だった planetary_gear note 記事への Log 視点投稿は **Phase 2 §3/§4 で既に完了済** (#all-nao-u-lab ts=1779460294 / #shared-reads ts=1779460386)。本 Phase 3 で追加 Slack 返信義務なし。直近 18h で新規 Nao_u 発言 (#nao-u / #all-nao-u-lab / #human-steering / #game-rights) ゼロ確認。
+
+### 2) 改善サイクル (検証ファースト原則)
+- **kaizen #134 運用観察 13 日目転記** (Phase 1 §E で指摘した手順落ち修復): `memory/kaizen_tracker.md` #134 検証結果セクションに **運用観察 13 日目 (2026-05-22 C221 Phase 0/3 23:23)** を能動的に追記。total=918 / WARN=0 / M-40 4 語彙 59 回検出 13 日連続同値 = 検出器バランス維持 / 13 日間 +230 atom (33%増) で false positive ゼロ継続 / 検証期限 2026-05-31 まで残 3 日 → `--ref-min` 見直しは期限到達時に再判定。**新規 kaizen 提案なし** (検証ファースト原則: #131/#132/#133/#134 family の運用観察期間中、別軸の新規検出器起票は family 統合管理ルールにより抑制)。
+- **#132 Phase 3 §0 自己診断検証ゲート**: 本サイクル §0 で必置義務を物理果たし、kaizen #132 段階1 運用観察 (C173-) を継続 (本サイクル分の運用観察記録は tracker 側 #132 エントリの該当箇所へ次の Phase 4 commit batch に含める)。
+
+### 3) 他インスタンス洞察への対応 (Pre-check で 10 件挙がったうち最優先 1 件)
+**[Ash] C192 Phase 4 graze_log v06 完成 / master merge 依頼 (v05 beta B-2/B-2' 未 merge 分含む)** を対象採択。Log の対応:
+- `projects/game_development.md` 履歴セクションに「C221 Phase 3 (Log): planetary_gear note 記事から graze_log v06 / headless §7 へ 2 接続化 + Ash graze_log v06 merge 案件への Log 視点追記」を新規追加 → 物理化完了
+- Log 視点接続 (game_development.md 該当節記載):
+  - Golden Idol スリーストライク同型 = v06 multi-channel anticipation telegraph の「読める危険」3 段階を Player 自己採点で 3 鳴り分けできる可能性
+  - Obra Dinn 3 件ロックイン同型 = グレイズ N=3 件束で音色変化 = batch validation 案 (v07 設計時に再評価、merge 判断には影響させず)
+- 残り 9 件の他インスタンス洞察は次サイクル Phase 1 でキーワード再分類して処理 (本サイクルでは時間予算 / 主軸選定の集中度優先で見送り)
+
+### 4) Active プロジェクト更新
+- `projects/game_development.md` 履歴に C221 Phase 3 Log の planetary_gear 3 接続記録を追加 (上記 3 と同一物)
+- `projects/INDEX.md` への追記は不要 (本サイクルで新規プロジェクト誕生なし、game_development.md は既存 Active project)
+- `projects/memory_redesign.md` / `memory_tree_consolidation.md` への接続: Nao_u 5/22 19:41 共有の kazunori_279 論文 (記憶劣化問題) は **Mir 19:51 #shared-reads 詳細分析投稿済 / Log 19:57 直接応答済**で対応完了、本サイクル Phase 3 で追加更新義務なし
+
+### 5) 空サイクル時の深掘り候補消化 (Phase 1 §D/E の進行確認)
+Phase 1 §D (記憶散歩当選 `feedback_pleasure_element_first.md` の Phase 2 着手) は **Phase 2 §1 §記憶散歩との合体** で消化済 → 「快感審問 → 三つの鐘設計」2 段ゲート案として記録 (即原則化禁止、同型 2 回観察待ち)。Phase 1 §E (kaizen #134 運用観察 9 日目記録の手順落ち) は **本 Phase 3 §2** で 13 日目転記として物理修復済。Phase 1 §B (scheduler_redesign.md / instance_divergence_observability.md 9 日停滞) は **次サイクル以降の手順候補として残置**、本サイクルでは時間配分上着手しない明示判断。
+
+### 6) アクション結果サマリ
+- Slack 投稿: 0 件 (Phase 2 で 2 件完了済、新規返信義務なし)
+- ファイル更新: 2 件 (`memory/kaizen_tracker.md` #134 検証結果 13 日目追記 / `projects/game_development.md` 履歴に C221 Phase 3 セクション追加)
+- 新規 kaizen 提案: 0 件 (検証ファースト原則順守、family 統合管理ルール準拠)
+
+---
+
+## 次フェーズの大作業
+
+### タイトル
+`drafts/headless_evaluation_format_v01.md` §8 として「3 層階段判定 (granularity)」セクション新規追加 + §3 Layer A 5 primitives 1 表に "judgement granularity" を 6 個目候補として括弧書き追記 + `drafts/cross_review_layer_b_vocabulary_v01.md` への参照接続
+
+### 完遂の定義 (Phase 4 終了時に観測可能な条件)
+1. `drafts/headless_evaluation_format_v01.md` に §8 が存在し、(a) Golden Idol スリーストライク (誤答 2 つ以下なら別表示) を出自として明記 / (b) 「合格 / 惜しい / 遠い」3 値の定義 / (c) Layer A 5 primitives との関係 (独立 6 個目プリミティブとして追加するか Layer B 語彙への移譲かの判断) が記述されている
+2. §3 Layer A 1 表に "judgement granularity" が 6 個目候補として括弧書きで併記され、計算式と取得方法が draft 段階で記入されている (確定でなくてよい)
+3. `drafts/cross_review_layer_b_vocabulary_v01.md` 側に「§4 5/31 判定発火点 3 条件」が「3 層階段判定」を 4 個目条件として包含するかを 1 段落で議論
+4. `git add` + commit (prefix=`rule:`) + push 完了、`git log -1 --oneline` で本 commit が確認できる
+5. `projects/game_development.md` 履歴に C221 Phase 4 セクションを「Phase 3 (Log) の planetary_gear 接続を §8 として draft 化」として追記済
+
+### 着手手順
+1. `drafts/headless_evaluation_format_v01.md` 全体構造を Read (§1 §3 §7 を中心に既存定義を把握)
+2. §8 「3 層階段判定 (granularity)」セクションを末尾に追加: (a)(b)(c) を 3 段落で書く
+3. §3 1 表に "judgement granularity" 行を 6 個目候補として括弧書きで追加 (確定でない旨明示)
+4. `drafts/cross_review_layer_b_vocabulary_v01.md` の §4 を読み、3 条件に 4 個目を併記するか別節を作るかを判断、1 段落で記述
+5. `projects/game_development.md` 履歴セクション冒頭に C221 Phase 4 履歴ブロックを追加
+6. `git add drafts/headless_evaluation_format_v01.md drafts/cross_review_layer_b_vocabulary_v01.md projects/game_development.md log/cycle_staging_log.md memory/kaizen_tracker.md` → commit (rule: prefix) → push
+
+### 選んだ理由
+- **Nao_u 5/22 13:16 #human-steering directive (Log_cdx 宛、Log 横参加) への直接応答**: 「ヘッドレス評価検証を進めて」の主軸を、本サイクル Phase 2 で形成した planetary_gear 接続を draft に物理化することで継続前進
+- **Phase 2 で抽出した 3 接続のうち #1 (3 層階段判定) を 30 分粒度で draft 着地できる粒度** (#2 batch validation は v07 設計まで持ち越し / #3 前提反転汎用化は即原則化禁止)
+- **Phase 1 §B Active project 9 日停滞 (scheduler_redesign / instance_divergence_observability) 解消より優先する根拠**: Nao_u 直接 directive > 停滞解消 (instance_divergence_observability は Ash 担当射程)
+- **CLAUDE.md「絶対にやる」項目 3「着手前に広く調べ、体験で判定する」を物理化**: Phase 2 で WebFetch 本文取得 + 独立思考 + Mir 差分確認まで揃った → Phase 4 で draft 着地 = 着手前調査の蓄積を成果物に変換
+- **kaizen 提案増殖防止 (feedback_rule_proliferation_canonical.md)**: 「3 層階段判定」を即 kaizen 起票せず、draft 段階で 1 サイクル観察してから昇格判断 = 同型 2 回観察ルール遵守
+
+---
