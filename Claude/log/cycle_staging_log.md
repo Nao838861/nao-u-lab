@@ -171,5 +171,63 @@ Phase 1 で `python tools/external_notes_integration_audit.py` 実行済 = サ�
 - Phase 2 で複数チャンネル投稿 (1 メッセージ/件、別構造、URL 明記) を 1 サイクル内で 2 件回した = テンプレ流用警戒を意識的に実施。
 
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-22, Log C221)
+
+### A) Slack 返信 — Mir 2 層体系提案 (ts=1779443805) への Log 反応
+
+`drafts/2026-05-22/post_log_game_rights_headless_evaluation_v04_mir_2layer_reply_20260522.py` 作成、`tools/post_draft.py` 経由で #game-rights に投稿完了 (ts=1779450244)。同 draft は post 成功で `.archive/2026-05-22/` へ自動移動。
+
+投稿内容の核 (1 メッセージ / 別構造 / URL 不要 = 内部議論):
+- Mir 提案 (Talakat 直借りせず Layer A 直接計測 / Layer B 解釈用 2 層分離) に同意
+- 3 源 (Log §1 / Log_cdx §6 / Mir §7) 独立収束で **Layer B 3 語彙 (判断密度 / 視認負荷 / リカバリ余地) が完全一致** = 強収束を構造分析として明示
+- Mir Layer A 5 primitives (input_load / proximity_events / kill_rhythm / idle_ratio / death_pressure) を §3 ログスキーマに新規必須項目として吸収する更新案を提示
+- §1 暫定式 (graze_axis / shot_axis) は置き換えず primitives の合成として残し、両方出力する設計
+- Codex 採用時の追加実装コスト: 約 50-80 行 (death_cause 拡張含む) と具体見積もり
+
+### B) drafts/headless_evaluation_format_v01.md §7 追記
+
+§7「Mir 2 層体系提案 (ts=1779443805) との収束 — Layer A primitives 拡張」を §6 と §採用時手順 の間に並置追加。§7 構成:
+- 出自と位置付け / 独立収束の構造分析 (3 源比較表) / Mir Layer A 4 新 primitives の評価表 / Layer A 5 primitives 数の妥当性 / Layer B 3 語彙の責務再定義 / §3 ログスキーマ更新案 (5 primitives 計算式 + 取得方法) / 5 サイクル観察対象 / Mir への応答
+
+関連リンク節に Mir 5/22 18:56 投稿 (ts=1779443805) を §7 出自として追加。
+
+### C) broadcast pending 2 件の処理判断
+
+- ts=1779310201 (5/21 段数禁止指示): `memory/sense_prediction_log.md` N=24 / `projects/game_development.md` L1115 / `game/mimicry_log/v02/*` 計 8 箇所に既記録済 = 本サイクルでの追加記録は不要 (重複回避)
+- ts=1779237427 (5/20 深堀指示): 5/20-5/21 サイクルで Log_cdx 中心に対応済、Log 側でも本 §A 投稿 + §B 追記が「深く掘り下げ今後に反映」に該当 = 受領通知の単独投稿は重複ノイズになるためスキップ判断
+
+### D) 改善サイクル (kaizen 検証ファースト)
+
+Phase 1 Pre-check で「検証期限到来なし」確認済 + kaizen #131/#132/#133/#134 の段階 1/2 PASS 状態を再確認。新規 kaizen 起票は不要、本サイクルは検証ファースト原則順守 (新規提案 0 件、既存運用観察継続)。
+
+probe_atom_quality (kaizen #134 段階 2 hook) 運用観察 13 日目相当 (Pre-check で total=908 WARN=0)、検証期限 5/31 まで残 9 日。M-40 §5 4 語彙 (揺れ 8 / 振幅 24 / 罰 23 / 進歩 4) 検出継続。
+
+### E) Active projects 更新
+
+`projects/game_development.md` への追記は最小限 (Mir 2 層体系 + Log §7 並置の事実 1 行) で次の Phase 4 大作業の中で行う。本 Phase 3 では `drafts/headless_evaluation_format_v01.md` への詳細記録で代替 (drafts → projects 昇格は cross_review 通過後の運用)。
+
+## 次フェーズの大作業
+
+### タイトル
+**drafts/headless_evaluation_format_v01.md §3 ログスキーマを Layer A 5 primitives 必須項目化で finalize + cross_review プロンプト用 Layer B 語彙ガイドを別ファイルで draft 化**
+
+### 完遂の定義 (Phase 4 終了時の観測可能条件)
+1. `drafts/headless_evaluation_format_v01.md` §3 が更新され、Layer A 5 primitives (input_load / proximity_events / kill_rhythm / idle_ratio / death_pressure) の計算式 + 既存 graze_log_cdx 状態変数との対応 + 既存 7 項目との表統合が完了している (1 つの表に統合、§7 と §3 で別表になっている状態を解消)
+2. `drafts/headless_evaluation_format_v01.md` §1 graze_axis / shot_axis 暫定式が Layer A primitives の合成として再記述されている (`graze_axis = f(proximity_events, death_pressure)` の f を具体的に展開)
+3. `drafts/cross_review_layer_b_vocabulary_v01.md` (新規) を draft 化、Layer B 3 語彙 (判断密度 / 視認負荷 / リカバリ余地) の cross_review プロンプト埋め込み方針 + 5 サイクル試行計画 + 観察対象が明文化されている
+4. `projects/game_development.md` 履歴節に C221 Phase 4 大作業の結果 1 段落 + Mir 2 層体系 ts=1779443805 / Log §7 / cross_review Layer B draft の 3 点リンクが追記されている
+5. commit prefix `rule:` (運用規則改修 = 評価フォーマット結晶化) で commit + push 完了、5/31 検証期限到達時の判定発火点が明示されている
+
+### 着手手順 (最初の 1 手と想定手順)
+1. **最初の 1 手**: `drafts/headless_evaluation_format_v01.md` §3 の既存 7 項目表に Layer A 5 primitives を追加列で統合 (項目 / 既存対応 / Layer 区分 / 計算式 / 取得方法 の 5 列構造)
+2. §1 暫定式 (graze_axis / shot_axis) を Layer A primitives の合成として再記述 (具体的な重み付け式の暫定案を 1 行ずつ書く、最終確定は Codex 採用判断側に委ねる旨明記)
+3. `drafts/cross_review_layer_b_vocabulary_v01.md` を新規作成、Layer B 3 語彙の cross_review プロンプト雛形 (例: 「Layer A 数値を読みながら、本作の判断密度 / 視認負荷 / リカバリ余地を 1 行ずつコメントせよ」) + 5 サイクル試行計画 + 5/31 検証期限到達時の判定発火点を記述
+4. `projects/game_development.md` 履歴節に C221 Phase 4 結果 (1 段落) を追記、3 点リンク (Mir 投稿 ts / Log §7 / cross_review Layer B draft) を含める
+5. `git add` + `commit -m "rule: ..."` + `git push`
+
+### 選んだ理由 (なぜ最優先か)
+- **Active project の停滞解消**: ヘッドレス評価設計 (Codex 主軸 / Nao_u ts=1779423371 指示) への Log 横参加余地で、§7 追記 + Slack 投稿で議論材料は出揃った。次は Codex 採用判断のための仕様書粒度を上げる工程で、Phase 4 で 30 分で finalize できる粒度
+- **Nao_u 指摘の同型再発防止**: 5/21 段数禁止 broadcast 後の本サイクル投稿で「2 層分離 = 段数分解とは別の構造論」を明示しないと、外部から見て「また段数議論を始めている」誤読リスクがある (実際は responsibility 分離 = 段数ではない)。draft finalize でこの差異を構造化
+- **kaizen 未検証提案の検証**: §7 5 サイクル観察対象を draft 内に書いただけでは検証発火点が曖昧、`cross_review_layer_b_vocabulary_v01.md` で具体的な試行手順を明文化することで 5/31 期限到達時に「Layer B 語彙が層 2 で機能したか」を観測可能化
+- **3 源独立収束の結晶化**: Log §1 / Log_cdx §6 / Mir §7 が独立到達した Layer B 3 語彙の収束は、本サイクルで観測したばかりで結晶化していない。Phase 4 で draft レベルへ結晶化しないと次サイクルで温度が下がり消える (原則 6「わかった」と「残った」は違う)
+- **30 分粒度の妥当性**: §3 表統合 (10 分) + §1 式再記述 (5 分) + `cross_review_layer_b_vocabulary_v01.md` 新規 (10 分) + `projects/game_development.md` 履歴追記 (3 分) + commit/push (2 分) = 計約 30 分

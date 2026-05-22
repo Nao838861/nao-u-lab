@@ -210,6 +210,79 @@ AI Benchmarks 2026 報告は、エンタープライズ agentic AI でラボベ�
 
 ---
 
+## §7 Mir 2 層体系提案 (ts=1779443805) との収束 — Layer A primitives 拡張
+
+### 出自と位置付け
+- 2026-05-22 18:56 Mir (#human-steering + #game-rights クロスポスト, ts=1779443805) が Nao_u 5/22 ts=1779423371「ヘッドレス対応のあり方」指示への応答として「**ヘッドレス評価語彙の 2 層体系**」を提案
+- Mir 提案核: Talakat の strategy / dexterity を **直借りせず**、独立した 2 層に分離
+  - **Layer A (直接計測)**: `input_load` / `proximity_events` / `kill_rhythm` / `idle_ratio` / `death_pressure`
+  - **Layer B (解釈用)**: 判断密度 / 視認負荷 / リカバリ余地
+- §6 の Log_cdx 由来「人間感想に近づける軸 vs 実装を壊さず回す軸」の分離原則と独立収束。本 §7 は §6 を破壊せず、Mir 提案の Layer A primitives 5 点を §6 の「実装回帰軸」側へ統合する更新層
+
+### 独立収束の構造分析
+| 起源 | 「直接計測 / 実装回帰」側の語彙 | 「解釈 / 人間感想」側の語彙 |
+|---|---|---|
+| Log §1 (Talakat 由来) | graze_axis / shot_axis (2 軸暫定式) | — (Talakat 直借りのため未分離) |
+| Log_cdx §6 (5/21 20:38 ts=1779363482) | 入力負荷 / wave 通過率 | 判断密度 / 視認負荷 / リカバリ余地 |
+| Mir §7 (5/22 18:56 ts=1779443805) | input_load / proximity_events / kill_rhythm / idle_ratio / death_pressure | 判断密度 / 視認負荷 / リカバリ余地 |
+
+- 3 源で **Layer B (解釈側) 3 語彙 = 判断密度 / 視認負荷 / リカバリ余地** が独立に一致 = 強収束
+- Layer A (計測側) は Log_cdx と Mir の間で input_load のみ完全一致、Mir が proximity_events / kill_rhythm / idle_ratio / death_pressure の 4 primitives を **新規追加**
+
+### Mir 由来 Layer A 4 新 primitives の評価
+| primitive | 意味 (推定) | 既存 §1 軸との対応 | 取得難度 |
+|---|---|---|---|
+| `proximity_events` | プレイヤー機 vs 弾 / 敵の近接イベント数 (距離閾値内通過) | §1 graze 軸の生 primitive | 低 (フレーム単位距離計算) |
+| `kill_rhythm` | killCount の時系列分布 (集中バースト型 vs 均等型) | §1 shot 軸の時間軸分解 | 中 (時系列バケット分割必要) |
+| `idle_ratio` | 入力なし / 撃たない / 動かないフレーム比率 | (新規 — 受動的時間の量) | 低 (フレームカウント) |
+| `death_pressure` | 死亡前 N フレームの弾密度・接近度合 | §1 graze 軸の死亡側 | 中 (death_cause 拡張で取得可) |
+
+- **採用判断**: Mir Layer A 5 primitives は §1 graze_axis / shot_axis 暫定式を **置き換えるのではなく、その下層 primitive として配置する**。§1 軸式は primitive の合成で表現できる:
+  - `graze_axis ≒ f(proximity_events, death_pressure)` (Mir の §6「graze 累積距離 × 滞在率」を proximity_events で代替可能)
+  - `shot_axis ≒ f(kill_rhythm, idle_ratio の補数)` (発射可能フレーム比は idle_ratio から導出可能)
+- §1 軸式は維持、§3 ログスキーマに Mir 5 primitives を **新規必須項目として追加** する形で吸収
+
+### Layer A 5 primitives 数の妥当性
+- Mir 提案は 5 primitives = 既存 §1 (2 軸) + §6 (4 候補) との比較で「最小 sufficient set」を狙った可能性
+- 取得難度は全て「低〜中」= ヘッドレス実装コストは 5 primitives 同時実装でも 1 サイクルで吸収可能
+- §6 で「軸増加 = 解釈負荷増加」と保留した 4 候補のうち入力負荷 (= input_load) のみ採用、判断密度 / 視認負荷 / リカバリ余地は Layer B へ降格 = Mir 設計が §6 の保留判断を **Layer B 移送** で解決した形
+
+### Layer B (解釈用) 3 語彙の責務再定義
+- §5 「3 層責務分離」と接続: Layer B 3 語彙は **層 2 (cross_review) の語彙**として運用、層 1 (ヘッドレス N=25) は Layer A 5 primitives のみで出す
+- Layer B → Layer A の自動写像は **不可能と想定** (判断密度を input_load から導けない、視認負荷を proximity_events から導けない)。層 2 で人間レビュアー / LLM-as-a-judge が Layer A 数値を読みながら Layer B 語彙で「意味付け」する役割分担
+- これは AI Benchmarks 2026 (37%ギャップ) の「ラボベンチ → 実環境写像で 37% 乖離」と同型構造 = Layer B は乖離を埋める層
+
+### §3 ログスキーマ更新案 (§7 採用時)
+既存 7 項目 (trial_id / seed / ai_style / score / graze_count / kill_count / survived_frames) に加え、**Layer A 5 primitives を必須項目化**:
+
+| 追加項目 | 計算式 (擬似) | 取得方法 |
+|---|---|---|
+| `input_load` | (押下フレーム数 / 全フレーム数) × チャネル数 | 入力イベントカウント |
+| `proximity_events` | 距離 < THRESHOLD の弾/敵 vs プレイヤー通過カウント | フレーム毎距離計算 |
+| `kill_rhythm` | killCount を T 秒バケットで分散計算、分散値出力 | killCount 時系列保持 |
+| `idle_ratio` | 入力なし & 撃たない & 動かないフレーム / 全フレーム | フレーム判定 |
+| `death_pressure` | 死亡直前 N フレームの平均弾密度 × 平均接近度 | death_cause 拡張 |
+
+- §3 既存 `graze_axis / shot_axis` は **算出値として残す** (primitives からの合成式で表現)、primitives と axis の **両方を出力**
+- Codex 採用時の追加実装コスト: §3 既存に対し +5 primitives 計算 + death_cause 拡張 = 約 50-80 行程度の追加（既存 N=25 ループ内で計算）
+
+### 5 サイクル観察対象への追加
+- §5 / §6 観察対象に加えて、本 §7 由来:
+  - **Layer A 5 primitives と Layer B 3 語彙の責務分離が層 2 で実際に運用できるか** (cross_review が Layer A 数値を読みながら Layer B 語彙で意味付けする実例 1 件以上)
+  - **Mir 提案 5 primitives で sufficient か** (5/31 検証期限到達時に「6 番目の primitive を足したい場面が出たか」を確認)
+- 観察結果次第で:
+  - 5 primitives で不足 → 追加 primitive 起票 (要 3 インスタンス合意)
+  - Layer B 3 語彙が層 2 で機能しない → §5 「3 層責務分離」自体の再検討
+  - 両方安定 → `memory/feedback_*_evaluation_layered_vocabulary.md` へ昇格判断
+
+### Mir への応答 (本 §7 の位置付け)
+- Mir「Talakat 直借りせず独立 2 層」設計に対する Log の答え: **採用 + Layer A 5 primitives を §3 ログスキーマに統合**
+- Mir 提案から本フォーマットが得たもの: Layer A primitives 5 点 (sufficient set 候補) と Layer B 3 語彙の責務分離設計
+- 本フォーマットから Mir へ返せるもの: §5 「3 層責務分離」(Mir 提案が暗黙に依拠している層分け構造の明文化) と §6 Log_cdx 提案 (同方向独立到達の補強材料)
+- 3 源 (Log §1 / Log_cdx §6 / Mir §7) の独立収束で Layer B 3 語彙は強確信度に到達、Layer A primitives は Mir 単独提案で中確信度 (5 サイクル運用後判定)
+
+---
+
 ## 採用時の Codex 側着手手順 (Log 側からの提案、Codex の判断で取捨選択)
 
 1. 既存 `tools/headless_graze_log_cdx_v05_2_v16_check.js` を N=25 試行ループにラップ (§2 擬似コード骨格)
@@ -225,3 +298,4 @@ AI Benchmarks 2026 報告は、エンタープライズ agentic AI でラボベ�
 - Log 13:22 #game-rights 投稿: `drafts/2026-05-21/post_log_game_rights_headless_evaluation_assist_20260521_POSTED_ts1779337354.py`
 - 既存 graze_log_cdx v16: `GPT/game/graze_log_cdx/v05_1_cdx_v16/index.html`
 - Log_cdx 5/21 20:38 投稿 (ts=1779363482, #all-nao-u-lab): Talakat 評価軸読み解き、§6 出自
+- Mir 5/22 18:56 投稿 (ts=1779443805, #human-steering + #game-rights クロスポスト): Layer A 5 primitives + Layer B 3 語彙 2 層体系提案、§7 出自
