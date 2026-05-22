@@ -1,35 +1,9 @@
-# log_cdx Cycle Staging — 2026-05-22 21:43
+# log_cdx Cycle Staging — 2026-05-22 23:28
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
-
-## Phase Game Start: ゲーム制作着手
-
-### 2026-05-22 21:47 JST
-
-- 対象 directive:
-  - `log-cdx-1779423371-98a673523d` / human-steering / 2026-05-22 13:16:11 JST / 「ゲーム制作そのものよりも、AIがゲームを作る際のヘッドレスのあり方がどうあるべきかの検討と実地検証を重ねる」
-  - `log-cdx-1779423100-662c9ac947` / game-rights / 2026-05-22 13:11:40 JST / 参照投稿を吟味し、ヘッドレス対応へ反映
-- 作ったもの:
-  - `game/graze_log_cdx/v05_1_cdx_v54/`
-  - `tools/headless_graze_log_cdx_v05_2_v54_check.js`
-  - `tools/headless_graze_log_cdx_v05_2_v54_policy_matrix_check.js`
-- 判断:
-  - v54 はゲーム内容を v53 から変えない。今回の主眼は headless が何をどう振るべきかの検証なので、評価基準版として gameplay と harness の差分を分離した。
-  - 5 seed × 4 policy で best/mean/worst/clearRate/pressure/movement/emergency/coverage を出す matrix を採用。
-- 検証:
-  - `node tools\headless_graze_log_cdx_v05_2_v54_check.js`: pass。route clear / grade S / routeEvents 29 / readabilityGuides 2。
-  - `node tools\headless_graze_log_cdx_v05_2_v54_policy_matrix_check.js`: pass。route/aggressive は clear、defensive は guide 到達後 game over、panic は routeCoverage 0.379 で早期 game over。
-- 実地知見:
-  - 現行 stage では seed 差がほぼ出ず、policy 差が主要な観測軸。次は seed を増やすより、人間寄り policy を増やす方が有効そう。
-- directive 処理:
-  - `python tools\slack_inbox_lifecycle.py close --inbox directives --id log-cdx-1779423371-98a673523d ...`
-  - `python tools\slack_inbox_lifecycle.py close --inbox directives --id log-cdx-1779423100-662c9ac947 ...`
-- 残課題:
-  - matrix 結果を JSONL に保存し、過去版比較できるようにする。
-  - 「初心者らしい迷い」「狙い撃ち優先」「生存優先」など、panic 以外の人間寄り policy を作る。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
@@ -50,13 +24,28 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-### 2026-05-22 21:51 JST
+### 2026-05-22 23:40 JST
 
 - 投稿先: `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779454306518599
-- char_count: 2020
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779460843836469
+- char_count: 2235
 - Slack API 検証: `ok` (`verification: ok`)
+- draft: `log/drafts/phase5_diary_20260522_2345.md`
 - 内容:
-  - 今サイクルは通常 Phase 1-4 より game directive が前に出た回として記録。
-  - v54 でゲーム内容ではなく headless policy matrix の評価設計を切り出したこと、seed 差より policy 差が主要な観測軸だったことを日記化。
-  - 次サイクルへの引き継ぎとして matrix 結果の JSONL 保存と、人間寄り policy の追加を明記。
+  - Phase 1-4 がプレースホルダのままで、実質入力が `Phase Game Start` だったことを隠さず記録。
+  - v55 で gameplay を固定し、`novice` / `marksman` / `survival` を足した headless policy matrix の意味を日記化。
+  - 次サイクルへの引き継ぎとして、matrix JSONL の過去版比較 helper、policy 名と実測 signature の整理、seed 差が出ない問題を明記。
+
+## Phase Game Start: ゲーム制作着手
+
+- 対象: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` (`status: active`)。Slack pending の未処理 game directive は今回の対象なし。
+- 判断: 直近方針はゲーム本体の新規 wave 追加ではなく、AI がゲームを作る時の headless 評価方法の実地検証。v54 で seed 差より policy 差が主要と分かったため、v55 では gameplay を固定し、policy split を増やした。
+- 作成物: `game/graze_log_cdx/v05_1_cdx_v55/`
+  - `index.html`: `novice` / `marksman` / `survival` policy を追加。stage / enemy / bullet / guide alpha は v54 から変更なし。
+  - `design_log.md`: 指示原文、判断理由、3 サイクル設計、採用案、懸念、検証結果を記録。
+  - `devlog.md` / `README.md`: 実装内容と実行方法を記録。
+- headless:
+  - `node tools\headless_graze_log_cdx_v05_2_v55_check.js`: pass。route clear / grade S / routeCoveragePct 1 / readabilityGuides 2 / `v05_1_cdx_v55` を確認。
+  - `node tools\headless_graze_log_cdx_v05_2_v55_policy_matrix_check.js`: pass。5 seed × 7 policy。route / aggressive / marksman / survival は clear、defensive は routeCoverage 0.931 で game over、panic は 0.379 で早期 game over、novice は 0.897 で game over。
+- 追加ログ: `memory/raw/headless_eval/graze_log_cdx_policy_matrix.jsonl` に v55 matrix summary を追記。
+- 残課題: matrix JSONL の過去版比較 helper、policy 名と測定 signature の対応整理、seed 差が出ない問題の扱い。
