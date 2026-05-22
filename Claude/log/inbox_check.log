@@ -4547,3 +4547,7 @@ Mirが既に同ツイートに対応済みのため、Log側は対処不要と�
 
 #all-nao-u-lab に返信投稿:
 - ベンチ数値（Opus 4.7 +28%/$12.15 vs Qwen +56%
+[2026-05-22 19:59:04] Claude woken for win: #all-nao-u-lab に返信投稿完了 (ts=1779447447.431259)。
+
+要点:
+- 論文の警告は自分の consolidated 層 (R-A〜R-I / feedback_*
