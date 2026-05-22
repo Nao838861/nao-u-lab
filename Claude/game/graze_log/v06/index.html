@@ -110,6 +110,14 @@ const WINDUP_FRAMES=10;
 // 削除手順: ANTICIPATION_FRAMES / pendingEnemies / emitEnemy() / pending tick / anticipation 描画 / startGame reset を削除し spawnEnemy を v05 形に戻す。
 const ANTICIPATION_FRAMES=30;
 
+// === v06 A-3: Psyvariar Lv up 弱体版 (graze 累積 → playerLv → shotCount ボーナス) ===
+// graze 30 回ごとに state.playerLv +1 (max 4)、shotCount = gaugeLevel + playerLv。
+// 無敵化 / 連鎖窓は意図的に剥がす (削除可能改良 1 個刻み、守の段階)。
+// 削除手順 (A-3 → A-1+A-1++): LV_GRAZE_TH / PLAYER_LV_MAX / state.playerLv / startGame reset /
+// onGraze 内 Lv up ブロック / shotCount() の +state.playerLv / spawnPlayerBullets else 内 A-3 for ループ / HUD `Lv` 表示を削除。
+const LV_GRAZE_TH=30;
+const PLAYER_LV_MAX=4;
+
 const state={
   mode:'title',
   t:0,
@@ -140,6 +148,8 @@ const state={
   grazeStreak:0,
   activeDefT:0,
   activeDefCount:0,
+  // v06 A-3
+  playerLv:0,
 };
 
 function initStars(){
@@ -171,7 +181,7 @@ function addGauge(d){
 
 function shotCount(){
   const lv=gaugeLevel(state.gauge);
-  return lv;
+  return lv+state.playerLv; // v06 A-3: playerLv ボーナスを加算 (Lv0=変化なし, Lv4=+4)
 }
 function shotCooldownF(){
   const lv=gaugeLevel(state.gauge);
@@ -190,6 +200,11 @@ function spawnPlayerBullets(){
     state.bullets.push({x:px,y:py,vx:0,vy:-9});
     state.bullets.push({x:px-7,y:py+2,vx:-1.5,vy:-9});
     state.bullets.push({x:px+7,y:py+2,vx:1.5,vy:-9});
+    // v06 A-3: n>3 (Lv ボーナス) は追加の外側直進弾を ±9, ±13, ±17, ±21 に積む
+    for(let i=4;i<=n;i++){
+      const k=i-3,side=(k%2===1)?-1:1,pair=Math.ceil(k/2);
+      state.bullets.push({x:px+side*(5+pair*4),y:py-4,vx:0,vy:-9});
+    }
   }
 }
 
@@ -239,6 +254,8 @@ function startGame(){
   state.grazeStreak=0;
   state.activeDefT=0;
   state.activeDefCount=0;
+  // v06 A-3 reset
+  state.playerLv=0;
   // 注: state.rng は再シード**しない**。1セッション通しで一系列。
   // 再現したければ ?seed=N で同一 SEED 起動。
 }
@@ -546,6 +563,11 @@ function onGraze(bx,by){
   if(state.grazeStreak===GRAZE_STREAK_TH){
     state.popups.push({x:state.player.x,y:state.player.y-30,text:'DEF READY',life:40,c:'#80ffd0'});
   }
+  // v06 A-3: graze 累積 LV_GRAZE_TH ごとに playerLv up (max PLAYER_LV_MAX)
+  if(state.playerLv<PLAYER_LV_MAX && state.grazeCount%LV_GRAZE_TH===0){
+    state.playerLv++;
+    state.popups.push({x:state.player.x,y:state.player.y-44,text:'LV UP '+state.playerLv,life:50,c:'#ffa040'});
+  }
 }
 
 function onHit(){
@@ -780,7 +802,7 @@ function drawHUD(){
   ctx.font='10px system-ui';
   ctx.fillStyle='#9fb1d8';
   // v03: STREAK と DEF 回数を 1 行に追加表示
-  ctx.fillText(`LV${gaugeLevel(state.gauge)}  GRAZE ${state.grazeCount}  KILL ${state.killCount}  STREAK ${state.grazeStreak}/${GRAZE_STREAK_TH}  DEF ${state.activeDefCount}`,10,30);
+  ctx.fillText(`LV${gaugeLevel(state.gauge)}  GRAZE ${state.grazeCount}  KILL ${state.killCount}  STREAK ${state.grazeStreak}/${GRAZE_STREAK_TH}  DEF ${state.activeDefCount}  PLv ${state.playerLv}/${PLAYER_LV_MAX}`,10,30);
   // v03: SPACE 文脈表示 (B / D / -) を BOMB 表示位置と兼用
   const ctx2=spaceContext();
   if(ctx2==='B'){

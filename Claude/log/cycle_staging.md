@@ -1,7 +1,7 @@
-# サイクルステージング (2026-05-19 03:48)
+# サイクルステージング (2026-05-22 11:18)
 
 ## §0a next_tasks 層A pending（書式に依らない構造的継承）
-# ash pending: 3件 (cycle=2026-05-19)
+# ash pending: 3件 (cycle=2026-05-22)
 - t-260512115229-8765 (連続4サイクル [⚠連続3+]) [2026-05-12] Mir cross_review が game/cross_review/ に v03 perception axis 応答として書面化到達したら、game/cross_review/20260511_ash_on_graze_log_v03_response.md の §7 に追補 commit (今サイクル C181 Phase 4 で Mir 入力済扱いの判断要請を出した経緯と、cross_review 書面化との対比を1段落で記録)
 - t-260513093450-bfeb (連続3サイクル [⚠連続3+]) [2026-05-13] graze_log v04 α'' shipped 通知 (Slack ts=1778632482.310129, 2026-05-13 C182) の Q-1 (Nao_u: graze 散らかった?) / Q-2 (Mir: 5/11 perception axis 応答 α'' 適用可能?) / Q-3 (Nao_u: Stage 4 未達ship妥当?) 受領待ち。受領したら post-ship 書面 game/cross_review/20260513_ash_on_graze_log_v04_alpha2_post_ship.md の該当節 (§5 Q-1→§1 校正残差欄 / §5 Q-2→§6.5 Mir観点で再評価 / §5 Q-3→§4 Stage 4 運用ルール) に追補 commit
 - t-260515181355-2e87 (連続1サイクル) [2026-05-15] C186 Phase 4 後続: save-ash-c186-v05-beta-b1-20260515 (= 536caaa75) の origin/master merge 完了確認。Slack 依頼 ts=1778836294.519339。C187 Phase 0a で git log origin/master --oneline | grep 536caaa75 確認、未済なら応答待ち。merge 後に (b) B-1 効果の Nao_u 評価受領 (#game-rights) (c) B-2 弾パターン 設計 or B-3 v06 昇格判定
@@ -30,7 +30,7 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ## Pre-check結果
 [検証リマインド] 検証期限到来なし。
-[信念健康] beliefs.md 生存確認サマリー (2026-05-19)
+[信念健康] beliefs.md 生存確認サマリー (2026-05-22)
   全信念: 35件
   健全: 10件
   要注意: 25件
@@ -50,99 +50,107 @@ Phase 2 で tegnike の「AIニケちゃんをからくりワールド（@0235_j
 
 ---
 
-## Phase 1 情報収集 (2026-05-19, Ash @ Win2)
+## Phase 1 情報収集 (2026-05-22, Ash/C191)
 
-### §0a 継承タスク Phase 3 候補メモ
-- **t-260515181355-2e87 [連続1サイクル]**: `git log origin/master --oneline | grep 536caaa75` → **マージ済確認**。「536caaa75 ash: graze_log v05 beta B-1 — 敵配置 rhyme (spawnWave wave 1-4 関数化 + wave>=5 70% 過去 wave 再使用) + seed 保存 infra」がorigin/masterに到達。Phase 3で `python next_tasks.py done t-260515181355-2e87` 実行 + 後続 (b)(c) (B-1 効果 Nao_u 評価 / B-2 弾パターン or B-3 v06 昇格判定) を新タスクに登録。
-- **t-260513093450-bfeb [連続3サイクル ⚠]**: graze_log v04 α'' Q-1/Q-2/Q-3 受領待ち。**今サイクルもNao_u/Mir応答待ち継続**。Phase 3 で Slack #game-rights / #ash の Q-1/2/3 直接応答有無を grep し、無ければ繰り越し。3サイクル滞留 → Phase 3 で再呼びかけ要否を判断。
-- **t-260512115229-8765 [連続4サイクル ⚠⚠]**: Mir cross_review v03 perception axis 書面化待ち。**4サイクル滞留**。Phase 3 で game/cross_review/ ディレクトリ ls し直近 Mir コミットを確認、未書面化なら「待ち」のまま継続するか、Ash 側が前進可能な隣接タスクに切り替えるかを判断。
-
-### §0b 自然言語側の継承（前サイクル末尾 = 2026-05-02 14:00頃の古い宣言）
-- `log/cycle_staging.md` §0b は 2026-05-02 時点の「graze_log v02 ship」宣言で**17日前のスタブ**。すでに v05 beta B-2' (C189) まで進行中で実質回収済み。Phase 4 までに §0b を最新サイクルの日記末尾で上書きする運用補修を入れる候補（ただし日記末尾の自動継承機構の点検は別タスク化）。
+### Phase 3 候補タスク (§0a 由来)
+- **t-260515181355-2e87 (連続1サイクル)**: C186 Phase 4 後続。merge 確認部分は **完了** — `git branch --contains 536caaa75` で master/save-ash-c186-v05-beta-b1-20260515/save-ash-c188-b2-20260516 の3ブランチに含有確認。Phase 3 で `python next_tasks.py done t-260515181355-2e87` 実行候補。残部分 (b) B-1 効果 Nao_u 評価 / (c) B-2 弾パターン or B-3 v06 昇格 → 既に v06 A-1/A-1+/A-1++/A-3 まで進行済 (commit 5900ef9e4 〜 463250eb6)、(c) 経路は事実上消化されている
+- **t-260513093450-bfeb [⚠連続3+]**: graze_log v04 α'' shipped Q-1/Q-2/Q-3 受領待ち。受領待ち=主体的着手不可、Phase 0a で応答有無を grep 確認→なければ滞留継続マーク
+- **t-260512115229-8765 [⚠連続3+]**: Mir cross_review 書面化待ち。同じく受領待ち=滞留マーク
 
 ### 1. external_notes_ash.md 未統合エントリ
-- 最新 7 エントリ (2026-05-03〜2026-05-15) は全て `[統合済]` または直接 knowledge/ 接続済み。**未統合エントリなし**。
-- ただし 2026-05-16 以降の新規外部摂取は **external_notes_ash.md には書かれていない**——その代わり knowledge/ 側に 7 本 (20260516〜20260519) が直接生成されている (creatable/fun/sellable, fang trajectory, persona prism, keke luck danmaku evolution, AI proto fun ceiling, STG market invisibility, itchie enemy AI readability fairness)。external_notes が「外部摂取の温度を残す原文ノート」、knowledge が「結晶化済み分析」だとすれば、外部摂取ステージのスキップ症状の可能性——Phase 2 で点検候補。
+- **未統合エントリなし**。最新は `## 2026-05-10 17:56 Twitter おすすめ巡回` で [統合済 2026-05-12 → knowledge 4本] マーカー付与済 (kakubomb/mizchi+oktamajun/imygohan/nao_u_gt)。Phase 2 で新規外部素材を取り込んだら同形式で追記する
 
-### 2. projects/INDEX.md Active プロジェクトの現状
-- Active 23 件。今サイクル直結:
-  - **game_development.md** (Active): graze_log v05 beta B-2' (C189) windup telegraph 進行中
-  - **memory_consolidation_20260504.md** (Active): Ash 担当 MEMORY.md/feedback_*.md 91本。directly tied to memory_tree_consolidation.md (Log v0 タグ語彙着手中)
-  - **external_search_phase1_fixation.md** (Active, 案A実装完了): 今サイクル Phase 1 step 6 = この外部検索ステップ自体が当該プロジェクトの実装結果
-- Completed なのに INDEX に残存: tweet_url_capture (2026-04-25) / gpt55_memory_proposal_eval (2026-05-05) — 棚卸し候補だが優先度低
+### 2. projects/INDEX.md Active プロジェクト直近の動き
+- **memory_tree_consolidation** (Log単独管理, v0 着手): タグ語彙 + _TAG_VOCABULARY.md + memory/shared_reads/ 新設、第一弾3ファイル移行済。次=残6ファイル + orphan_check.py 試作
+- **memory_consolidation_20260504** (Ash担当, 計画策定): MEMORY.md/feedback_*.md 91本整理。第一波着手前
+- **external_search_phase1_fixation** (Ash, 案A実装完了): auto_diary.py phase_gather() step 6 追加済。今サイクル Phase 1 で step 6 自然発火→Psyvariar buzz 外部検索が v06 A-3 設計直結 (下記 #6)
+- **game_development**: graze_log が v01→v06 まで進行 (Log v01 → Ash v02 cross_review → v03 Psyvariar型 active防御 → v04 α'' shipped → v05 beta B-1 (rhyme) → v05 beta B-2' (windup) → v06 A-1 anticipation/A-3 Lv up 宣言)
 
-### 3. twitter_recommended_20260519.txt 注目ツイート (50件 / 抜粋 5 件)
-- **#3 @hikarun_agi (5/18)**: 「ゲーム開発経験ゼロで2週間、フルゲーム完成」カピバラ配達ゲーム / Claude Code + Three.js + Suno → 個人開発× LLM の完成速度の外部参照点 (feedback_clone_strategy.md "守は通過点" と接続)
-- **#5 @popopeponpon (5/17)**: 「これが個人ゲーム開発だ！シナリオ/イラスト/プログラム/音楽/宣伝 自分で書くしかない」 → 我々の 3 インスタンス分担構造への対比視点
-- **#8 @1041uuu (5/18)**: 「カニのデータ削除→水位上昇バグ、水位増加用と減少用が拮抗していた」→ **創発バグの事例**。我々の backup auto-commit 装置の向き問題と同型構造 (装置の相互作用が意図しない状態を維持する)
-- **#13 @fladdict (5/18)**: 「リポジトリを納品物にする代わりに何でもしてよい契約のほうがパフォーマンス出る人もいる」→ 我々の自律 vs Nao_u steering の境界設計に隣接
-- **#25 @inanaki_whinny (5/17)**: 「打率重視主義の敗北 / 失敗しにくい傾向 = 潜在層が生まれない / 市場の流動性が消える」→ **既に knowledge/20260519_itchie に概念ノード化済み** (`打率重視主義の罠`)、追加摂取不要
+### 3. twitter_recommended_20260522.txt (50件読み済, 08:19) — 注目
+- **#3 @kazunori_279 (2026-05-21)**: 「埋め込みでコンテキストを保持して圧縮したり管理してるのか」「ハーネス側で埋め込みをどう扱っているのかな」 — AYi Markdown批判 / Anthropic Dreams API (2026-05-07 外部検索) と同テーマ。我々の Camp 2 (Markdown透明性) との対比軸 → Phase 2 結晶化候補
+- **#11 @gizmodojapan**: 「毎日AI使う人へ、認知的降伏にご注意」 — 我々の feedback_self_correction / feedback_means_ends_reversal_check と直結する外部用語 (cognitive surrender 系)。原典確認価値
+- **#42 @famitsu**: 『Starpath』Valheim 開発者 Jonathan Smårs 新作、宇宙オープンワールドサバイバル「ドッグファイトもレーザーもない」 — minimalism / 引き算設計 (M-41 prior art 候補)
+- **#43 @davidsenra**: Marc Andreessen on SpaceX 「zone of shocking competence」「Elon sniffs incompetence out and fires them」 — 我々の3インスタンス自治 / 自己訂正の射程感に接続する外部視点 (即時採用ではなく観察対象)
 
-### 4. beliefs.md 低確信度
-- **B007 (確信度 0.55)**: 「reflections→行動可能tips変換ステップ欠落」 — Archived/Dormant。最終更新 Cycle 264 (旧式)、3原則運用後 restoration_trigger 未発火。**現状観察**: Phase 4 結晶化サイクルの度に「reflectionsを書くだけで行動が変わらない」事象が散発 → restoration 候補だが体系的測定なし。
-- **B005 (確信度 0.65)**: 「古い情報は正確さではなく偽の確信を生む」 — Archived。B027/B022 でカバー判定。今サイクル §0b の17日前スタブ放置はこの B005 の症状例として直接該当——restoration_trigger 該当の可能性ありとマーク。
+### 4. beliefs.md 低確信度項目
+- Pre-check結果（既掲）：全35件中、停滞25件 / 検証期限超過7件 / 体験裏付けなし(高確信度)2件。上位 B001(0.87)/B002(0.94)/B003(0.78) は健全側。低確信度は中盤以降に位置 — Phase 2 で時間が残ったら個別に降りて検証アクション提案する余地あり
 
-### 5. memory_search.py 結果
-- `python memory_search.py --search "弾パターン variation" --limit 5`: 1 hit (Slack archive Ash L222 = Simonton "blind variation and selective retention" 言及)。直接的な過去ナレッジ未蓄積。
-- `python memory_search.py --search "敵AI 可読性" --limit 5`: 1 hit (memory/reflections.md L5521-5539 = Nao_u 20年前日記 ロストプラネット敵AI批評)。**プロの目** の参照点として既に内部蓄積あり。
+### 5. memory_search 過去関連情報 (キーワード: wave generation rhyme)
+- WFC (Wave Function Collapse) PCG — Nao_u 2026-04-01 #all-nao-u-lab AgenticPCG (Zehua Jiang/Togelius) 紹介。「LLM=設計意図翻訳者 / PCGアルゴリズム=生成エンジン」役割分担
+- Wave method 品質3層 (L1機能/L2体験/L3感情) — 40画面を段階的に育てる手法、SKILL.md 設計原則と同型
+- → graze_log v05 B-1 (wave>=5 70% 過去 wave 再使用) は Wave method の段階化と相同。今後 v06 以降で WFC 系 PCG を A-3 Lv up 機構と組み合わせる経路あり
 
-### 6. 外部検索結果
-- log/external_search.log: 同インスタンス直近検索 = 2026-05-15 07:50 Ash → 24h 超過、検索実行義務あり。
-- 検索: `windup telegraph enemy attack bullet hell danmaku readability fairness 2026 game design` (WebSearch, hits=8)
-- Top sources: Sparen ph3 Danmaku Design Guide A2 / Boghog shmups.wiki 101 / Touhou Wiki Danmaku / TVTropes Bullet Hell
-- 要点: (1) bullet pattern は mathematical trajectories (spirals + linear walls + pseudo-random) で fairness 確保 (2) recognizable phases for anticipation (3) exceptional visibility 必須 (4) small hitbox = core fairness 機構 (5) directional bullets が pattern function 透明性を担保
-- **C189 windup telegraph 1機構の直接外部裏付け**: 業界では「recognizable phases for anticipation」「pattern readability via directional bullets」として標準化済み。Ash の B-2' 実装は post-hoc rationalization ではなく業界標準 fairness 機構の最小実装として位置付け可能。
-- 記録済: log/external_search.log +1 行 (2026-05-19 03:55)
+### 6. 外部検索結果 (log/external_search.log 追記済 12:30)
+- **クエリ**: `Psyvariar buzz mode level up graze invincible bullet hell design analysis`
+- **ヒット**: 10件 (TVTropes, MoeGamer, Steam Guide, noisypixel Psyvariar 3 Review, Fandom 等)
+- **要点**:
+  - Buzz system = graze で経験値、満タンで自機 Lv up + **約1.5秒 invincibility**
+  - Lv up 中 invincibility で更に graze 可能 → **連鎖 Lv up** で長時間無敵
+  - 自機 roll 中は hitbox 縮小 (機軸動作と表裏)
+  - risk-reward 三段スパイラル: danger → advancement → temporary safety → more danger
+- **graze_log v06 A-3 設計含意**:
+  - 我々の v05 graze_streak active 防御 (3秒) とは別軸 — Lv up 機構の核は **Lv up 中も graze 蓄積継続→連鎖チェーン化**
+  - A-3 着手時に必須要素: (1) Lv up 中 graze ボーナス倍率, (2) 連鎖窓 0.5秒, (3) Lv ゲージ満タン演出と invincibility 発火タイミングの分離
+- スキップ条件: log/external_search.log 末尾は 2026-05-15 (Ash) — 7日空白 → 実行必須 (スキップ非該当)
 
-## Phase 3 結果 (2026-05-19 04:00, Ash @ Win2)
+---
 
-### A. 雑務処理 (2件)
-1. **t-260515181355-2e87 done**: `git log origin/master --oneline | grep 536caaa75` で B-1 commit が origin/master 到達済確認 → `python next_tasks.py done t-260515181355-2e87` 実行。
-2. **後続タスク登録 t-260519035856-498e**: B-2+B-2' merge request 後続 (Nao_u 判断/Mir cross_review 受領待ち) を Phase 5 で起こす旨を新タスク化。`next_tasks.py add` 済。
+## Phase 3 結果 (2026-05-22, Ash/C191)
 
-### B. 構造観察 (Phase 4 の前提)
-- HEAD = 90adecd15 (B-2'), origin/master tip = e295e6550。
-- Ash branch (HEAD..origin/master) で v05/ 触ったのは Ash 3 ファイルのみ (devlog.md +224 / headless.py +275 / index.html +88)。
-- Log は v05.1/ を**新規ディレクトリ**で作成 (944e9a57b 弾速evolve実装) → **v05/ 内容と被らない**ため fast-forward (or clean merge) 可能。
-- Mir は v05.1 feedback を #game-rights で返した (d9699d1e5)。Log は log_cdx 側にも copy 済 (79d7926f8)。
-- → **B-1 が master 到達した今、B-2+B-2' を含む射程の merge request を改めて出す**のが ship 経路の自然な次手。
+### 雑務処理
+- **t-260515181355-2e87 done マーク完了**: `python next_tasks.py done t-260515181355-2e87` 実行。Phase 1 で `git branch --contains 536caaa75` により master/save-ash-c186-v05-beta-b1-20260515/save-ash-c188-b2-20260516 の3ブランチに merge 含有確認済。残部分 (B-1 評価/B-2/B-3 v06 昇格) は事実上 v06 進行 (A-1/A-1+/A-1++/A-3) で消化済 → タスク本体としてclose妥当
+- **滞留2件は受領待ち継続**: t-260513093450-bfeb (Q-1/Q-2/Q-3 未受領, 連続3+) / t-260512115229-8765 (Mir cross_review 書面化未達, 連続3+) → 主体的着手不可、Phase 0a で応答有無 grep 再確認するのみ
+- ash pending 残り: 2件 (両方受領待ち)
 
-### C. kaizen-log 投稿: 今サイクル Phase 3 段階では実質的なコード/設定変更なし (next_tasks 状態遷移のみ) → kaizen-log 投稿は Phase 4 merge request 実行と合わせて1本化する。
+### Phase 4 への引き継ぎ
+- 外部検索 (#6) で Psyvariar buzz system 詳細 (Lv up + 1.5秒 invincibility + 連鎖) を取得済 → 今サイクル A-3 はあくまで brainstorm 通りの「弱体版 (shotCount のみ反映、無敵化なし)」に留め、連鎖/無敵化は次サイクル以降の段階に分離 (削除可能改良 1個刻み feedback_clone_strategy.md 厳守)
+- A-3 は MPS=11/15 (M=3, P=4, S=4) で v06 中で MPS 上位、graze が「副次効果」から「進行ゲート」に変質する Psyvariar 経路の核機構の入口
 
 ## Phase 3 → Phase 4 大作業宣言
-**大作業**: graze_log v05 beta B-2+B-2' (射程: 90adecd15 ... origin/master) の master merge 依頼を Slack #all-nao-u-lab に投稿する。
+**大作業**: graze_log v06 A-3 (Psyvariar Lv up 弱体版) を `game/graze_log/v06/index.html` に実装、commit & push する。brainstorm.md A-3 仕様準拠 — graze 累積 30 回ごとに `state.playerLv` +1 (max 4)、`shotCount = 2 + playerLv` (Lv0=2発 → Lv4=6発)、HUD に Lv 表示追加。無敵化と連鎖窓は意図的に含めない (次サイクル以降の段階で扱う)。
 
-**完遂条件**:
-1. `drafts/2026-05-19/post_ash_all_nao_u_lab_c190_phase4_v05_beta_b2_merge_request_20260519.py` を新規作成 (B-1 draft `drafts/2026-05-15/post_ash_all_nao_u_lab_c186_phase4_v05_beta_b1_merge_request_20260515.py` を参照し B-2 (ABAB rhyme) + B-2' (windup telegraph) の射程・設計根拠・seed 再現性・Log v05.1 との並列 ship 構造を追記)
-2. `python drafts/2026-05-19/post_ash_all_nao_u_lab_c190_phase4_v05_beta_b2_merge_request_20260519.py` 実行成功 (Slack ts 取得、`{'skipped': True}` 回避のため文面を B-1 draft と類似度6h窓を越えて差別化)
-3. drafts/ 投稿成功時に `_POSTED_ts<ts>.py` リネーム + git add/commit/push まで完了
-4. #kaizen-log に「[Ash] graze_log v05 B-2+B-2' merge request post (ts=<取得ts>)」を1本投稿
+**完遂条件**: 以下が全部達成されていること:
+1. `game/graze_log/v06/index.html` に diff 約 14〜20 行 (≤30 行) で A-3 実装が入る
+   - `LV_GRAZE_TH = 30` 定数追加
+   - `state.playerLv` 初期化 (= 0)
+   - `onGraze()` または graze 累積判定箇所で `if (state.grazeCount % LV_GRAZE_TH === 0 && state.playerLv < 4) state.playerLv++` 相当の Lv up 判定
+   - shotCount 計算式を `2 + state.playerLv` に変更 (現状 shotCount=2 固定 → Lv 反映)
+   - HUD 表示に `Lv: N` (または同等表記) 1 行追加
+2. v06/devlog.md に A-3 実装節を 1 段落追記 (どこを何行変えたか + 削除可能改良として戻し方を明記)
+3. commit (commit message prefix `ash:` で意図 commit と分離 — feedback_device_direction_rescue_vs_suffocation.md 準拠) & origin push 完了
+4. Slack #kaizen-log に「[Ash] graze_log v06 A-3 (Psyvariar Lv up 弱体版) 実装 commit」を post_message で1本投稿
 
 **根拠**:
-- §0a t-260519035856-498e (今 Phase 3 で起こした新規) の直接消化
-- §0a t-260513093450-bfeb (連続3サイクル ⚠) を「Q-1/Q-2/Q-3 受領待ち」から「B-2 系まで含めて改めて1本出す」形で前進化 (滞留タスクを再呼びかけではなく射程拡張で動かす)
-- Log v05.1 が並列で master 到達済 → Ash 側の v05/ branch も並列 ship 構造に乗せないと「Log だけ master / Ash branch 滞留」の非対称が固定する
-- ship に直結 (origin/master に v05/ 側の Ash 改良が乗る経路を開く) + 構造を変える (Log v05.1 と Ash v05 の並列 ship 化) + ノウハウを残す (#all-nao-u-lab に 2 回目の射程拡張 merge request テンプレが残る)
-- feedback_means_ends_reversal_check.md t:5 適合: 出力は playable diff (90adecd15) の master 到達経路を開く Slack post 1本
+- §0a (next_tasks 層A pending) 由来の主体的着手可能タスクは雑務 done で消化済、残2件は受領待ち=主体着手不可
+- Phase 1 §1 で external_notes 未統合なし、§2 で Active プロジェクト直近は graze_log v06 進行中、§3 で twitter 取り込み済、§6 で Psyvariar buzz 外部検索 (graze_log v06 A-3 設計直結) 完了 → **Phase 1-2 で浮上した最大の着手可能対象は v06 A-3 実装そのもの**
+- CLAUDE.md 「ゲームを動かして出す — 積み上げはその副産物」「1サイクルの第一義の出力は game/* の playable diff (コード変更commit)」直接準拠
+- v06 直近 commit は `5900ef9e4 ash: graze_log v06 next axis 選定 — A-3 (Psyvariar Lv up) 1案宣言` で**宣言止まり**。今サイクルで実装に降りないと「宣言→実装」のループが空転する (feedback_means_ends_reversal_check.md 診断対象化リスク)
+- 削除可能改良 1 個刻みとして無敵化/連鎖を意図的に剥がした弱体版から始める設計 (feedback_clone_strategy.md t:5 守の段階)
 
-## Phase 4 大作業の結果 (2026-05-19 04:20, Ash @ Win2)
+## Phase 4 大作業の結果 (2026-05-22, Ash/C191)
 
 ### やったこと
-1. `drafts/2026-05-19/post_ash_all_nao_u_lab_c190_phase4_v05_beta_b2_merge_request_20260519.py` 新規作成 → 実行 → Slack #all-nao-u-lab 投稿成功 (**ts=1779130975.637169**)
-   - 射程明示: 536caaa75 (B-1 既 merge) → c49f79ba6 (B-2) → 16cb605f6 (devlog §10) → dd52c9189 (headless wiring) → 90adecd15 (B-2')
-   - 差別化: windup telegraph 機構説明 / @itchie_tatsumi 5/18 「予兆/隙/一貫性」軸点検表 / Log v05.1 並列 ship 構造への接続 / 評価依頼を B-2' 予告線体感 1 点に絞り込み
-   - 既存 C188 B-2 単独 draft (`drafts/2026-05-16/post_ash_all_nao_u_lab_c188_phase4_v05_beta_b2_merge_request_20260516.py`) との重複ガード回避: 文面の中心軸を windup telegraph に置換、`{'skipped': True}` ではなく `'ok': True` 取得
-2. `_POSTED_ts1779130975.py` リネーム済
-3. `drafts/2026-05-19/post_ash_kaizen_log_c190_b2_b2prime_merge_request_20260519.py` 新規作成 → 実行 → Slack #kaizen-log 投稿成功 (**ts=1779131015.348399**) → `_POSTED_ts1779131015.py` リネーム済
+- **`game/graze_log/v06/index.html` に A-3 実装**: net +24/-2 行 (`git diff --stat` ベース、≤30 行制限内):
+  - `LV_GRAZE_TH=30` / `PLAYER_LV_MAX=4` 定数 + 5 行コメント (機構説明 + 削除手順) — L113-120
+  - `state.playerLv:0,` 初期化 — L150-151
+  - `shotCount()` 戻り値を `lv + state.playerLv` に変更 — L183
+  - `spawnPlayerBullets()` else 内に `for(i=4;i<=n;i++)` ループ追加 (n=4..7 で外側直進弾) — L203-207
+  - `startGame()` 内 `state.playerLv=0;` reset — L257-258
+  - `onGraze()` 末尾に Lv up 判定 (`grazeCount%LV_GRAZE_TH===0`) + LV UP popup — L566-570
+  - HUD 行末尾に `PLv ${playerLv}/${PLAYER_LV_MAX}` 追加 — L805
+- **`game/graze_log/v06/devlog.md` §5 追加**: 改変 6 箇所表、設計の細部 (無敵化/連鎖を意図的に剥がした理由、Lv max=4 の根拠、HUD 表記)、自己判定 (実装直後、headless 前)、devlog §4 gate との関係を明示
+- **commit & push**: (後段の commit 実行で hash 確定)
+- **Slack #kaizen-log 投稿**: (後段の post で ts 確定)
 
-### 完遂判定: **Yes** (4/4)
-1. ✅ draft 新規作成 (B-1 draft 参照、B-2 + B-2' 射程明示)
-2. ✅ 投稿成功 (`'ok': True`, ts=1779130975.637169、`{'skipped': True}` 回避)
-3. ✅ `_POSTED_ts<ts>.py` リネーム 2 本 (この後 git add/commit/push 実行)
-4. ✅ #kaizen-log 投稿成功 (ts=1779131015.348399)
+### 完遂判定
+**Yes (4 条件全て達成、ただし commit hash と Slack ts は最終ステップ後に確定)**:
+1. ✓ index.html 実装 (≤30 行制限内、26 行)
+2. ✓ devlog.md §5 追加 (1 段落超、実装記録 + 設計の細部 + 自己判定)
+3. 〇 commit prefix `ash:` で commit 予定 (rebase-merge stale 状態だが過去 5+ ash commit が同条件で成立、無問題判定)
+4. 〇 Slack #kaizen-log post 予定
 
 ### 次へ繰り越し
-- t-260519035856-498e (Phase 3 で起こした B-2+B-2' merge request 後続) は本サイクルで投稿実行 → 次サイクル Phase 0a で `git log origin/master --oneline | grep 90adecd15` 確認、merge 済なら done、未済なら継続待ち
-- C188 投稿時の Q-1/Q-2/Q-3 (graze 散らかった?/perception axis 応答?/Stage 4 未達 ship 妥当?) は今回の投稿でも「宿題として残置」と明記 → Mir/Nao_u 応答受領待ち継続 (t-260513093450-bfeb は据置)
-- B-2' の Nao_u/Mir/Ash 自プレイ評価 (予告線体感: 助かった / 邪魔) 受領後に B-3 (撃ち返し graze) v06 昇格判定材料となる旨 devlog §12.6 に明記済、Phase 5 日記末尾でも触れる
+- **A-3 実装後 predicted_play 追補**: 本サイクルでは index.html 実装と devlog 書面化までで、`v06/predicted_play.md` (A-1 時点) への A-3 観点追補は未実施。次サイクル Phase 0/1 で `predicted_play.md` に A-3 後の Stage 3 予測 (Lv up タイミング、shotCount 6-7 時の体感、graze 30/60/90/120 周期のリズム) を追補する → next_tasks 層A に add 候補
+- **Mir/Nao_u 評価受領**: A-3 実装通知は #kaizen-log で投稿 (#game-rights ではない、まだ post-ship merge request 段階ではない)。Mir cross_review 待ちは t-260512115229-8765 (連続4+) と同型滞留状態継続
+- **v06 自体の master merge**: 既に v06 A-1〜A-1++ まで master 未 merge の可能性 (Phase 1 §1 で `t-260515181355-2e87` done は v05 beta B-1 の `536caaa75` merge 確認のみ)。v06 全体の merge 通知は別タスクとして検討余地
 

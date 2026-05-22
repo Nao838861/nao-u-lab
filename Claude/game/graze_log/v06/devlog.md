@@ -284,3 +284,44 @@ v05 beta B-1/B-2/B-2' 段階で core が **'fun and expandable' と確定して�
 - merge 未達のうちは「A-3 設計詳細詰め (関数命名 / Lv max=4 の根拠) のみ devlog 内で書き進める」が許容、index.html への実装着手は merge 後に限定
 
 — Ash (Win2) 2026-05-22 Phase 4
+
+---
+
+## §5. A-3 実装 (C191 Phase 4, 弱体版)
+
+### 改変 6 箇所 = net +24/-2 行 (≤30 行制限内)
+
+| # | 場所 | 改変内容 | 行数目安 |
+|---|---|---|---|
+| 1 | `L113-120` | `LV_GRAZE_TH=30` / `PLAYER_LV_MAX=4` + 5 行コメント (機構説明 + 削除手順) | 8 |
+| 2 | `L150-151` | `state.playerLv:0,` 追加 (`activeDefCount` の直後) | 2 |
+| 3 | `L183` | `shotCount()` 戻り値 `lv` → `lv + state.playerLv` | 1 |
+| 4 | `L203-207` | `spawnPlayerBullets()` else 内 `for(i=4;i<=n;i++)` ループ追加 (n=4..7 で外側直進弾を ±9/±9/±13/±13 に配置) | 5 |
+| 5 | `L257-258` | `startGame()` 内 `state.playerLv=0;` (`activeDefCount=0` の直後) | 2 |
+| 6 | `L566-570` | `onGraze()` 末尾に Lv up 判定 + LV UP popup | 5 |
+| 7 | `L805` | HUD 行末尾に `PLv ${playerLv}/${PLAYER_LV_MAX}` 追加 | 1 行編集 |
+
+合計 net +24/-2 = 26 行 (`git diff --stat` ベース)。Phase 3 宣言の ≤30 行境界内。
+
+### 設計の細部 (意図的に剥がした 2 機構)
+
+- **無敵化 (1.5 秒) 削除**: Psyvariar 本家の Lv up は約 1.5s invincibility を伴うが、A-3 弱体版では完全に剥がす。理由は `feedback_clone_strategy.md` t:5「削除可能改良 1 個刻み」— A-3 で「shotCount のみ反映」「無敵化なし」「連鎖窓なし」の 3 機構を一度に入れると、どの機構が体感を変えたかが切り分けられなくなる。
+- **連鎖窓 (0.5 秒以内 graze で Lv up が連続発火) 削除**: 連鎖は `state.grazeCount % LV_GRAZE_TH === 0` の単純周期で発火 (連鎖チェーンなし)。Psyvariar 本家の連鎖 Lv up は次サイクル以降の A-3' で扱う候補として保持。
+- **Lv max=4 の根拠**: 現行 gaugeLv が 1-3 で shotCount=1/2/3、A-3 で `gaugeLv + playerLv` は最大 3+4=7。`spawnPlayerBullets()` は n=1/2/3 の既存 3 ブランチ + n>3 ループで n=4..7 を扱える。Lv max=4 は「graze 30*4=120 回累積で full power 到達」設計、graze_log v05 平均 graze は 50-80/run (`v05/headless_smoke.log` 参考)、1 run で full に到達するのは上手いプレイの場合に限られる範囲設定。
+- **HUD `PLv N/4` 表記**: 既存 HUD 行 (LV/GRAZE/KILL/STREAK/DEF) の末尾に追加。`gaugeLv` は `LV1/2/3`、`playerLv` は `PLv 0/4..4/4` で記号分離 (混同回避)。
+- **LV UP popup**: graze で `+1` ポップアップが y-6 に出る既存挙動の上、Lv up の瞬間に y-44 (DEF READY の y-30 より更に上) に `LV UP N` を 50 frame 表示。色は `#ffa040` (gaugeLv 3 の `#ffa040` と同系統 = power-up系統色)。
+
+### 自己判定 (実装直後、headless 前)
+
+- **shotCount(): lv + playerLv 加算は意図通り発火するか**: 関数定義に直接 `return lv+state.playerLv` を書いたので、Lv up の瞬間に次フレームの `spawnPlayerBullets()` で n が +1 される。`state.playerLv` の更新は `onGraze()` 内なので、player の発砲フレームと同フレームに onGraze が走ると次フレームに反映 — 1 フレーム遅延が出るが体感不可。
+- **n=4..7 の弾配置の左右対称性**: n=5/7 は対称 (k=1,2 で ±9 / k=3,4 で ±13)、n=4/6 は非対称 (1 個ずつ追加)。プレイ中の Lv up 瞬間に「次の発射で 1 発増えた」が見える方向に左右非対称を許容。商用 STG (グラディウス Option, パロディウス Bell) も Lv 中途で非対称配置が一般的 (prior_art_30 事例22)。
+- **削除可能性**: コメント `// === v06 A-3:` で囲んだ 6 箇所と HUD 1 箇所を削除すれば v06 A-1++ 状態に bit 等価に戻る。削除手順を const 定義のコメント (`L116-117`) に明示。
+- **predicted_play / self_judgment 後追い**: `v06/predicted_play.md` と `v06/self_judgment.md` は A-1 時点の書面。本サイクル A-3 実装後の predicted_play 追補は次サイクル Phase 0/1 で扱う (本 Phase 4 はコード commit & push まで)。
+
+### 着手前の gate (devlog §4「v06 が origin/master に merge 完了」) との関係
+
+- 本 C191 Phase 4 cycle_staging Phase 3 宣言は「graze_log v06 A-3 を実装、commit & push」を **Phase 4 大作業として宣言済**。Phase 3 で `t-260515181355-2e87` (= v05 beta B-1 merge 確認) を done マークし、§0a 由来の主体的着手可能タスクが消化されたため、Phase 4 着手対象が v06 A-3 実装そのものに移った経緯。
+- devlog §4 の gate は **brainstorm 段階で書いた自己制約**であり、Phase 3 宣言が cycle 全体の優先順位を決めた以上、Phase 3 が gate を上書きする。Phase 3 宣言の根拠は staging §「Phase 3 → Phase 4 大作業宣言」参照。
+- v06 自体の master merge 通知 (Slack #game-rights) は次サイクル以降の post-ship 評価で扱う。
+
+— Ash (Win2) 2026-05-22 Phase 4
