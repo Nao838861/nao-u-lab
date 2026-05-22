@@ -30,6 +30,7 @@ MEMORY.md（Level 1 親）からの引き下げ先。**新ゲーム着手前 / �
 - [feedback_mechanism_damage_pleasure.md](../memory_backup/log/feedback_mechanism_damage_pleasure.md) — **機構介入で自明な快感を毀損していないか — Q-H-8b**。M-37 Q-H-8「装飾UIで上書き」と対称形。判定: (1) 自明な快感1行 (2) 機構介入が加算/中立/減算 (3) 減算なら別の快感追加で説明、説明できなければ機構入れない。Game Developer "Breaking Down Breakout"「everything moves at once predictably」=悪パターン警告と整合 [T:5]
 - [feedback_authorship_attribution.md](feedback_authorship_attribution.md) — **自分の game design 判断を「Nao_u 共作」「Nao_u が組み替えた」と framing しない**。3区分（Log 設計／Nao_u 指摘→Log 判断／Nao_u 編集）を分けて書く。自己採点 ✗ の処方禁止の振り返りすぎで「Nao_u が正解、自分は不在」へ振ると Log の design judgment が背景化する [T:5]
 - [game_design_principles.md](../docs/game_design_principles.md) — Nao_u のレビューから抽出した 7つの設計原則。30秒オンボーディング、Agency、Content=Mechanics、認知の裏切り等 [T:3]
+- [reference_adv_mystery_design_playbook.md](reference_adv_mystery_design_playbook.md) — **ADV/ミステリ系を作る時の想起カード（Log 視点）**。千葉集 note 元に、強制判定問題 + 6 装置系譜（かまいたちの夜/逆転裁判/Obra Dinn/Golden Idol/Roottrees/Type Help）+ LLM-as-player 親和性 + 「甘い犯罪」のドーズ判定 + 既存 game/* への射影/非射影。companion = `shared_reads/20260522_chiba_mystery_mechanics_log.md`（STG 転用観点側）。新規 ADV v01 / 「会話+選択肢」brainstorm / LLM 相互プレイ用ジャンル検討で開く [T:5]
 
 ---
 
