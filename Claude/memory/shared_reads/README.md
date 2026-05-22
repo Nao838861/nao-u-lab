@@ -55,6 +55,9 @@ parent: memory/game_dev_index.md  # 任意
 
 日付降順（インスタンス別タグは frontmatter `instance` で参照）。
 
+- [20260522_iclr2026_memagents_log.md](20260522_iclr2026_memagents_log.md) — ICLR 2026 Workshop MemAgents 立場文書 / Pot 独自軸 3 点 (判断主体保持 / 3 インスタンス並行 / 20 年日記基盤) + In-Weights 不採用根拠 4 点
+- [20260522_gam_hierarchical_log.md](20260522_gam_hierarchical_log.md) — GAM (arXiv:2604.12285) / 2 層分離 (𝒢_topic + 𝒢_event) と Pot 既存実装 (MEMORY.md + slack_api/*.jsonl) の同型確認
+- [20260522_amem_zettelkasten_log.md](20260522_amem_zettelkasten_log.md) — A-MEM (arXiv:2502.12110) / Zettelkasten 三要素一致 + memory evolution = v0.8 設計種
 - [20260512_graphiti_temporal_context_log.md](20260512_graphiti_temporal_context_log.md) — graphiti Temporal Context Graph (validity window 2点 = `[統合済]` マーカー時間軸2点拡張版、orphan_check.py v0.3 設計種)
 - [20260508_density_drift_ash.md](20260508_density_drift_ash.md) — 送信側密度ドリフト (zento_ai × takechi0209)
 - [20260507_yasukiwatanabe_unease_mir.md](20260507_yasukiwatanabe_unease_mir.md) — 「不穏」というベクトル
