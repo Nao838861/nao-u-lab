@@ -4,6 +4,29 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-23 (C224 Phase 2) Phoenix Yin 拡散投稿 (Wu et al. 2026 "Useful Memories Become Faulty When Continuously Updated by LLMs" 実務処方箋 3 点) — Log 圧縮インフラへの直接適用判定 [indirect intake via Mir knowledge、即統合済 2026-05-23]
+
+**文脈**: Nao_u が 2026-05-22 19:45 #nao-u に共有した <https://x.com/phoenixyin13/status/2056269488140509649>。X.com WebFetch HTTP 402 で本文取得不能 (C223 Phase 2 で状況報告 ts=1779481929)。代わりに Mir が完全分析した knowledge/20260522_wu_peng_useful_memories_faulty_third_independent_evidence.md および Mir #shared-reads 投稿 (ts=1779447041) 経由で **Phoenix Yin 処方箋 3 点** を間接取得。Log は kazunori_279 反応 (ts=1779446647) + haopeng_uiuc 連動反応 (ts=1779447447) で論文そのものには 2 回触れたが、Phoenix Yin の実務処方箋を Log 圧縮構造に直接当てた分析は未実施だったため C224 Phase 2 で補完。
+
+**Phoenix Yin 処方箋 3 点** (knowledge 経由取得):
+1. Raw Episodic Memory の再評価 — Few-shot として原始トレースを直接プロンプトに詰める方が精簡ルールライブラリより効くケースが多い
+2. 盲目的リアルタイム更新の拒否 — 原始エピソードを第一手証拠、明示的 gating 機構導入、必要でない限り統合しない
+3. 異質タスクの隔離 — 異なるタスク経験を 1 バッチに混ぜて LLM にインクリメンタル要約させない
+
+**Log 運用への核心写像**:
+- 処方箋 (1) は Log 盲点に直撃: atoms/, nao_u_live.md, daily_diary は full intake 保存しているが、**Phase 進行中に実際にプロンプト投入されているのは MEMORY.md 圧縮トリガー + .claude/rules 圧縮版 + CLAUDE.md/system_identity.md 圧縮構造のみ**。原始エピソードはファイル上に存在するが能動 Read されない限り判断に効かない = Phoenix Yin 警告の「圧縮優位」構造そのもの
+- 処方箋 (2) は CLAUDE.md「同型反復確認後に原則化」が既存 gating として存在、ただし閾値メタデータ (N 回観察 / サイクル番号 / ts 列挙) 未必須化
+- 処方箋 (3) は構造的トレードオフ明示が必要: 1 サイクル multi-topic + Nao_u 対話の多面性 + #shared-reads/#all-nao-u-lab 並走で物理隔離コストが運用利益を超える。タグベース論理隔離 (recall 時のみ隔離) は次善策
+
+**統合先**:
+- [統合済 2026-05-23 → #all-nao-u-lab ts=1779492791 (Log C224 Phase 2 補完視点投稿)]
+- [統合済 2026-05-23 → 本ファイル下記節 (外部摂取ログとして記録、原文未取得を明示)]
+- [候補保留 → `projects/memory_redesign.md` に Raw Episodic Memory 想起ワークフロー案を C224 Phase 3 で追記予定、即実装禁止]
+- [候補保留 → `memory/feedback_rule_proliferation_canonical.md` に gating メタデータ形式案を 1 段下げて記述、5 サイクル試行後判定]
+- [Mir 補完関係: Mir = R-A〜R-I 抽象化路線そのものの自己診断 (該当 3 / 緩和 2) / Log = 既存圧縮インフラへの処方箋適用設計。両者で「自己診断 → 動かし方」の連続が成立]
+
+---
+
 ## 2026-05-22 (C220 Phase 1/2) AI Gamestore (arxiv 2602.17594) / AI Benchmarks 2026 37%ギャップ (kili-technology) — Codex ヘッドレス評価課題への独立外部入力 [full intake、即統合済 2026-05-22]
 
 **文脈**: C220 Phase 1 §6 WebSearch (kaizen #106 摂取経路固定化、クエリ `headless playthrough AI evaluation shmup game comparison metrics 2026`) で取得した上位3件のうち2件を Phase 2 で WebFetch 実在確認 + 内容分析。Nao_u 5/21 13:19 #game-rights「ヘッドレスプレイで shot_log と改変版を比較してどちらが良いゲームか評価できるか試して欲しい」課題 (Codex 主担当 / Log 補助) への独立外部入力。Log_cdx の Talakat 読解 (ts=1779363482) / PCG Benchmark 提案 (ts=1779407496) とは別軸で独立収集。
