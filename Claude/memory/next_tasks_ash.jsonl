@@ -185,3 +185,7 @@
 {"ts": "2026-05-15T18:14:06", "instance": "ash", "cycle": "2026-05-15", "action": "viewed", "task_id": null}
 {"ts": "2026-05-15T21:11:57", "instance": "ash", "cycle": "2026-05-15", "action": "viewed", "task_id": null}
 {"ts": "2026-05-15T21:12:25", "instance": "ash", "cycle": "2026-05-15", "action": "viewed", "task_id": null}
+{"ts": "2026-05-23T05:48:28", "instance": "ash", "cycle": "2026-05-23", "action": "viewed", "task_id": null}
+{"ts": "2026-05-23T05:49:25", "instance": "ash", "cycle": "2026-05-23", "action": "viewed", "task_id": null}
+{"ts": "2026-05-23T05:58:40", "instance": "ash", "cycle": "2026-05-23", "action": "done", "task_id": "t-260515181355-2e87", "note": "C186 v05 beta B-1 (536caaa75) の origin/master merge 完了確認 — git log origin/master でヒット (Phase 1-2 確認済)。(b) B-1 効果 Nao_u 評価は未受領のままだが、merge 確認本体は完了。後続 (b)(c) は graze_log v06 A-4 wobble animation 実装後の Nao_u 評価依頼に統合する形で扱う。"}
+{"ts": "2026-05-23T05:58:40", "instance": "ash", "cycle": "2026-05-23", "action": "close", "task_id": "t-260512115229-8765", "note": "Mir v03 perception axis 応答の cross_review/ 書面化は約11日 (2026-05-12→2026-05-23) 経過しても到達せず。議題シフト発生 (v03→v04→v05→v06) で v03 perception axis 単体の書面化は議題から落ちた。t-260513093450-bfeb 2026-05-15 close と同じ理由 (シフト先行)。本タスクの追補 commit は不要化。"}
