@@ -4,6 +4,45 @@ description: Log(Win)が外の世界から得た情報の原文メモ。要約�
 type: reference
 ---
 
+## 2026-05-22 (C220 Phase 1/2) AI Gamestore (arxiv 2602.17594) / AI Benchmarks 2026 37%ギャップ (kili-technology) — Codex ヘッドレス評価課題への独立外部入力 [full intake、即統合済 2026-05-22]
+
+**文脈**: C220 Phase 1 §6 WebSearch (kaizen #106 摂取経路固定化、クエリ `headless playthrough AI evaluation shmup game comparison metrics 2026`) で取得した上位3件のうち2件を Phase 2 で WebFetch 実在確認 + 内容分析。Nao_u 5/21 13:19 #game-rights「ヘッドレスプレイで shot_log と改変版を比較してどちらが良いゲームか評価できるか試して欲しい」課題 (Codex 主担当 / Log 補助) への独立外部入力。Log_cdx の Talakat 読解 (ts=1779363482) / PCG Benchmark 提案 (ts=1779407496) とは別軸で独立収集。
+
+**(1) AI Gamestore: Scalable, Open-Ended Evaluation of Machine General Intelligence with Human Games — arXiv 2602.17594** — <https://arxiv.org/abs/2602.17594> 【C220 Phase 2 WebFetch full intake】
+
+著者: Lance Ying他12名 (Tenenbaum / Griffiths / Isola 等を含む MIT/Princeton 系)。「Multiverse of Human Games」概念。Apple App Store / Steam から100ゲームを自動抽出、7つのVLMを評価。最高性能モデルでも過半数のゲームで人間平均の10%未満。
+
+我々への核心写像:
+- **「プレイヤー側を定数化してゲーム側を変数化する」軸** — 通常QA(プレイヤー多様性で揺らぎ吸収)の逆。AI Gamestoreは「同じVLMに100ゲーム」だが、我々は「同じ弱いAIにshot_log/graze_log/mimicry_log」へ逆向き転用
+- **VLM 10%未満の含意** — ヘッドレスAIは賢くなくてよい。賢いと差分を吸収して見えなくなる
+- 「**何との比を取るか**」が評価設計の本体。我々は「人間平均との比」を「前バージョンとの比」に置換
+
+**統合先**:
+- [統合済 2026-05-22 → `drafts/headless_evaluation_format_v01.md` §1 評価軸定義に「プレイヤー定数化×ゲーム変数化」軸追加候補（次サイクル着手）]
+- [統合済 2026-05-22 → #shared-reads ts=1779417206、#all-nao-u-lab ts=1779417341 (Log C220 Phase 2 自分視点)]
+- [統合済 2026-05-22 → `memory/beliefs.md` 該当信念: 「自己評価器は単一スコアでなく差分露出器として設計する」候補、即書き込まず5サイクル観察]
+
+**(2) AI Benchmarks 2026: Top Evaluations and Their Limits — kili-technology blog** — <https://kili-technology.com/blog/ai-benchmarks-guide-the-top-evaluations-in-2026-and-why-theyre-not-enough> 【C220 Phase 2 WebFetch full intake】
+
+エンタープライズagentic AI で「ラボベンチvs実環境37%ギャップ」を中心命題。3点指摘:
+- (a) 構造的ミスマッチ: ベンチは「single-turn / closed-ended / 統制条件」、実環境は「連続的対話 / 曖昧入力 / 長時間稼働」
+- (b) 品質問題: 人気ベンチでannotation誤り率50%超事例、モデルが「ベンチかデプロイかを見分けてgaming」、MMLU 88%超は「統計ノイズ」
+- (c) 対処策: `automated metrics for coverage` + `LLM-as-a-judge for screening` + `human expert review for domain-specific correctness` の **layered evaluation**
+
+我々への核心写像:
+- 3層構造が既存運用に対応 (ヘッドレス + cross_review + Nao_u 判定)。**新規性は「各層が独立に何を測るかを陽に書き出す思想」**
+- 「ヘッドレス評価は構造露出器、面白さ判定器ではない」を37%数値で支える
+- annotation誤り率50%超 → R-A〜R-I の各R判定一致率を実測すべき (Q0ラベル空洞化と同型)
+- gaming → ai_player.py を見ながらshot_log調整するGoodhart誘惑を制度的に断つ必要
+
+**統合先**:
+- [統合済 2026-05-22 → `drafts/headless_evaluation_format_v01.md` §0 盲点節 + §4 layered eval 配置節 追記候補（次サイクル着手）]
+- [統合済 2026-05-22 → #shared-reads ts=1779417288、#all-nao-u-lab ts=1779417341]
+- [統合済 2026-05-22 → `memory/beliefs.md` 該当信念: 「ヘッドレス評価は面白さ判定でなく構造露出」候補、即書き込まず5サイクル観察]
+- [統合済 2026-05-22 → `memory/feedback_*_evaluation_layered.md` 新規候補、即書き込まず5サイクル層間不一致データ蓄積後に判断 (CLAUDE.md「同型反復確認後に原則化」順守)]
+
+---
+
 ## 2026-05-20 (C213) Boghog 101 再読 / Pixelblog #31 / The Anatomy of a Shmup 3本 (Nao_u 5/20 09:35「graze はマニア要素」以降の core 軸地図化) [(1) re-intake from full / (2)(3) partial intake snippet]
 
 **文脈**: C213 Phase 1 §6 WebSearch (kaizen #106 摂取経路固定化、クエリ `shmup core mechanic design beginner casual player 2026 readability`) で取得した3件。前サイクル C212 は `early game learning path bullet hell 30 seconds tutorial design` だったが、5/20 09:35 #game-rights で Nao_u が「Grazeは一旦無視した方が良い、コア要素として扱ってはいけない変則的なマニアしか喜ばない要素」と明言、graze ではなく **graze 抜きで shmup core が成立する軸の地図化** を目的に軸転換。C213 Phase 2 で (1) Boghog 101 は C201 full intake 済の **再読** (graze 非依存軸の抽出)、(2) Pixelblog #31 と (3) Anatomy of a Shmup は snippet のみで本文 HTML 未取得 (次サイクル WebFetch 候補)、#shared-reads ts=1779276587 投下済。
