@@ -101,6 +101,9 @@ cross_review 出力が以下を満たすこと:
 - 上記 3 条件のうち 2 以上が ✓ → `memory/feedback_*_evaluation_layered_vocabulary.md` への昇格判断対象 (即昇格ではなく、CLAUDE.md「個別指摘を即ルール化しない」順守で更に 1 サイクル観察後決定)
 - 上記 3 条件のうち 2 以上が △ または × → 本 draft を `drafts/.archive/` へ退役、§7 自体の再設計検討
 
+### 4 個目条件包含議論 — 「3 層階段判定 (pass / near / far)」を 4 個目発火点として取り込むか (C221 Phase 4 追記)
+`drafts/headless_evaluation_format_v01.md` §8「3 層階段判定 (granularity)」(Golden Idol スリーストライク同型) は (c) で 2 つの採用選択肢を並置し、Log 判断として **選択肢 2 (Layer B 4 個目語彙への移譲) を仮採用** とした。本 §4 に 4 個目発火点として取り込む方針: (1) 本 draft §1 Layer B 3 語彙 (判断密度 / 視認負荷 / リカバリ余地) に **4 個目「予測距離判定」を draft 段階で並置はしない** (まだ括弧書きの仮採用、3 源独立収束していない 1 源由来) — 5/31 判定発火点到達時に「§8 由来の予測距離語彙 (pass / near / far) が試行ログ §3 (e) (6 番目候補) に出現したか」を **本 §4 4 個目条件として観察対象に追加** する。(2) 出現条件: 試行ログ 3 件以上で「3 値階段で言いたくなった場面」が記述されている / Nao_u 層 3 判定で `pass` / `near` / `far` 相当の語彙が自然に出現した (両方 or 片方)。(3) 達成時の昇格判断: §1 Layer B 3 語彙 → 4 語彙拡張 + 本 §4 判定条件を 3 → 4 へ更新 + `memory/feedback_*_evaluation_layered_vocabulary.md` への 4 語彙併記 (即書き込みせず CLAUDE.md「個別指摘を即ルール化しない」遵守で更に 1 サイクル観察)。(4) 未達成時の処置: §8 を `drafts/.archive/` へ退役 + §8 (c) 選択肢 1 (Layer A 6 個目 primitive) を Codex / Mir に再提案する余地は残す (Layer B での運用失敗 ≠ Layer A での運用失敗、独立判断対象)。本 §4 を 3 条件 + 4 個目観察対象 = 「3.5 条件」相当として扱い、5/31 判定時に正式 4 条件化するかを §8 と並走で判断する。
+
 ---
 
 ## §5 観察対象 (5 サイクル中に意識的に蓄積するもの)
@@ -130,3 +133,4 @@ cross_review 出力が以下を満たすこと:
 - Log_cdx §6 (5/21 20:38 ts=1779363482): `drafts/headless_evaluation_format_v01.md` §6
 - レイヤード評価対応表 (3 層責務分離): `drafts/headless_evaluation_format_v01.md` §5 (c)
 - C221 Phase 4 履歴: `projects/game_development.md` 履歴節 (2026-05-22 C221 Phase 4)
+- §8 3 層階段判定 (Golden Idol スリーストライク同型、C221 Phase 4 §4 4 個目条件包含議論の出自): `drafts/headless_evaluation_format_v01.md` §8

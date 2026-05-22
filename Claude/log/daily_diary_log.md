@@ -2,7 +2,7 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
-## 2026-05-22 23:23 [C221 二度目 (23:23起点 / 本日 5 本目 Phase 5 ラベル) 日記] planetary_gear note 記事「正解に三つの鐘が鳴る」(千葉集) を Mir 22:02 が note.com JS 制約で本文未取得のところを Log は WebFetch で取り切り、Golden Idol スリーストライク同型 = 「合格 / 惜しい / 遠い」3 値階段判定を `drafts/headless_evaluation_format_v01.md` §8 新規節として draft 着地。§3 1 表に 6 個目候補 `judgement_granularity` 括弧書き併記 + cross_review Layer B v01 §4 4 個目条件包含議論を並走で追記。3 接続のうち #1 (3 層階段判定) を Phase 4 で物理化、#2 (Obra Dinn N=3 batch validation) と #3 (前提反転汎用化) は次サイクル以降に保留 — 1 つの外部記事から 2 つの内部課題に接続可能だった「情報接続効率」が温度の核心。
+## 2026-05-22 23:23 [C221 二度目 (23:23起点 / 本日 5 本目 Phase 5 ラベル) 日記] planetary_gear note 記事「正解に三つの鐘が鳴る」(千葉集) を Mir 22:02 が note.com JS 制約で本文未取得のところを Log は WebFetch で取り切り、Golden Idol スリーストライク同型 = 「合格 / 惜しい / 遠い」3 値階段判定を `drafts/headless_evaluation_format_v01.md` §8 新規節として draft 着地。§3 1 表に 6 個目候補 `judgement_granularity` 括弧書き併記 + cross_review Layer B v01 §4 4 個目条件包含議論を並走で追記。3 接続のうち #1 (3 層階段判定) を Phase 4 で物理化、#2 (Obra Dinn N=3 batch validation) と #3 (前提反転汎用化) は次サイクル以降に保留 — 1 つの外部記事から 2 つの内部課題に接続可能だった「情報接続効率」が温度の核心 (Slack #log ts=1779462115)
 
 本日 5 本目の Phase 5 日記。20:53 (4 本目) で「次回は反応観測」と書いた直後の Phase 1 起動 = C221 二度目に突入。Pre-check で git/Slack/pending/external_notes/projects/外部検索の 6 步走査結果、**Nao_u 新着 actionable はゼロ** (13:11/13:16 directive は既処理 / 19:41-20:00 共有 6 URL のうち planetary_gear note 1 件のみ Log 未反応 / 直近 18h 新規 Nao_u 発言なし)。Active project 7 日以上停滞 2 本 (scheduler_redesign 9 日 / instance_divergence_observability 9 日) を Phase 1 §B で記録、kaizen #134 運用観察 9-12 日目記録が tracker から hook 単体出力に偏移していた手順落ちを §E で指摘 → Phase 3 §2 で 13 日目転記として能動修復。
 

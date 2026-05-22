@@ -106,6 +106,7 @@ const bestCase = trials.slice(0, Math.ceil(N_TRIALS * 0.2));
 | `death_pressure` | A | (新規 — death_cause と連動) | `死亡直前 N フレーム (N=60 相当 1 秒) の 平均弾密度 × 平均接近度合` | death_cause 拡張で取得可 |
 | `graze_axis` | axis | (新規 — §1 暫定式、Layer A primitives 合成) | §1 暫定式 `f(proximity_events, death_pressure)` 参照 | 試行終了時 1 回計算 |
 | `shot_axis` | axis | (新規 — §1 暫定式、Layer A primitives 合成) | §1 暫定式 `g(kill_rhythm, idle_ratio)` 参照 | 試行終了時 1 回計算 |
+| (`judgement_granularity`) | A 候補 | (新規 — §8 由来、6 個目 Layer A 候補として括弧書き併記、確定でない) | 暫定式 `bucket(score_or_axis, [合格閾値, 惜しい閾値])` の 3 値 (`pass` / `near` / `far`) を試行終了時 1 回出力 | 暫定。閾値は §3 既存 axes / Layer A primitives の N=25 best-case 分布から第 1/第 2 四分位を取る案 (例: graze_axis 上位 25% = pass、上位 50% = near、それ以下 = far)。本 draft 段階では「閾値の取り方」自体が §8 (c) の判断対象 |
 
 ### 既存形式との互換性
 - 既存 `state.score / grazeCount / bombCount / shieldStock / killCount / t / phaseLabel` (graze_log_cdx v05_1_cdx_v16/index.html L149〜L504) はそのまま流用可
@@ -299,6 +300,73 @@ AI Benchmarks 2026 報告は、エンタープライズ agentic AI でラボベ�
 
 ---
 
+## §8 3 層階段判定 (granularity) — Golden Idol スリーストライク同型 (C221 Phase 4 追加)
+
+### 出自と位置付け
+- 2026-05-22 Nao_u 5/22 20:00 #nao-u 共有 `note.com/planetary_gear/n/nd75f0dd32f06` (千葉集「正解に三つの鐘が鳴る——プレイヤーを名探偵にするメカニクスについて」) Phase 2 で WebFetch 取得・独立分析より派生
+- 記事中 Golden Idol 設計: 解答送信時に **誤答 2 つ以下なら別表示**、3 つ以上なら全没。「合格 / 惜しい / 遠い」の 3 値フィードバックで「あと一歩」を可視化し、ヒント枯渇を防ぐ
+- Log Phase 3 (`projects/game_development.md` C221 Phase 3 履歴) で「現状 2 値 (面白い / つまらない) を 3 層階段化する案」として接続済。本 §8 はその draft 着地
+- §1〜§7 を破壊せず、Layer A 6 個目 primitive **候補** として並置 (採用判断は §8 (c) で議論)
+
+### (a) Golden Idol スリーストライクを出自として明記
+- 記事の核: 推理ゲームの正解判定を 2 値 (正解 / 不正解) でなく「距離付き連続信号」として返す。Golden Idol は 3 段階 (全正解 / 部分正解 / 全没) で「あと少し」をプレイヤーに伝える
+- 本フォーマット §1 〜 §7 では評価出力が暗黙に 2 値的 (best-case 比較、差分の有無) で、Nao_u 判定 (層 3) も `mimicry_log は graze と何が違うのか分からなかった` (5/21 02:04 ts=1779289298) のような 1 発全没コメントが出やすい
+- 3 層階段化 = 層 1 出力に「設計仮説の予測距離付き判定」を加える試行。Golden Idol 由来であることを明示することで、即原則化禁止 (`memory/feedback_rule_proliferation_canonical.md` 遵守) の根拠も保持される (1 源由来、同型 2 回未観察)
+
+### (b) 「合格 / 惜しい / 遠い」3 値の定義
+- 本 §8 では暫定で以下 3 値を導入:
+  - **合格 (`pass`)**: 設計仮説が予測した軸変化量 / best-case 改善が、N=25 試行ばらつき (95% CI) を超えて観測された
+  - **惜しい (`near`)**: 予測方向は合致するが、改善量が CI 内 / 統計的有意性なし。但し負方向には動いていない
+  - **遠い (`far`)**: 予測と逆方向 (改悪) / 予測軸と無関係な軸が動いている / N=25 best-case が前版より劣化
+- 暫定値は draft 段階の仮置きで、N=25 実データ取得後に閾値再調整想定 (§1 軸重み確定と同様 Codex 採用判断側に委ねる)
+- 出力例: `version: graze_log_modified, hypothesis: shot_axis +0.15 期待, observed: shot_axis +0.18 (CI 0.07-0.29), graze_axis -0.02 (CI -0.08-0.04), judgement: pass`
+
+### (c) Layer A 5 primitives との関係 — 独立 6 個目プリミティブとして追加するか Layer B 語彙への移譲か
+2 つの選択肢を draft 段階で並置 (Codex / Mir / Nao_u 採用判断側に委ねる)。
+
+**選択肢 1: Layer A 6 個目 primitive (`judgement_granularity`) として独立追加**
+- 長所: §3 ログスキーマで N=25 best-case 出力時に毎試行 3 値を自動付与可能 → Codex 採用時に「閾値テーブル」だけ実装すれば層 1 で完結。Mir 提案「sufficient set 候補」5 primitives との整合性は **5 primitives + 1 new = 6 primitives** に拡張する形
+- 短所: §7 で「Mir 提案 5 primitives で sufficient か」を 5/31 検証期限まで観察対象としているのに、観察期間内に 6 個目を追加すると「6 番目の primitive を足したい場面が出たか」の判定が **自己成就** してしまう (本 §8 自体が「6 番目候補」になる) = 観察設計汚染
+- §3 1 表での扱い: 本 Phase 4 で `judgement_granularity` を **括弧書きで併記** ((`judgement_granularity`) | A 候補) → 確定でない旨明示
+
+**選択肢 2: Layer B (cross_review 解釈用) 4 個目語彙として移譲**
+- 長所: `drafts/cross_review_layer_b_vocabulary_v01.md` §1 で Layer B 3 語彙 (判断密度 / 視認負荷 / リカバリ余地) に **「予測距離判定 (3 層階段)」** を 4 個目として並置する形 → §7 観察設計を汚染しない。cross_review プロンプトで「層 1 数値 + 設計仮説を読みながら 3 値で距離判定」を試せる
+- 短所: 層 2 で人間 / LLM-as-a-judge が毎回判定する負荷増 → 層 1 自動化の利点が薄れる。3 層階段判定の客観性が層 2 の主観に依存する
+- 移譲先: `drafts/cross_review_layer_b_vocabulary_v01.md` §4 5/31 判定発火点 3 条件に **4 個目条件 「Layer B 4 個目語彙 (予測距離判定) が機能したか」** を追記候補 (§8 並走で 1 段落議論する)
+
+**現時点の Log 判断**: **選択肢 2 を仮採用**、ただし §3 1 表に括弧書きで `judgement_granularity` を Layer A 候補として残置 (両論併記)。理由:
+- §7 観察設計 (Mir 5 primitives sufficient 判定) を汚染しない方が優先
+- Layer B 移譲の方が「設計仮説 → 観察 → 距離判定」のループが層 2 で自然に閉じる (層 1 数値だけでは仮説距離は測れない、仮説テキスト+数値が必要)
+- 仮採用は確定ではなく、5/31 判定発火点で再判断対象
+
+### (d) §3 1 表との接続 (本 Phase 4 で物理化済)
+- §3 統合 1 表に行追加: `(judgement_granularity) | A 候補 | (新規 — §8 由来、6 個目 Layer A 候補として括弧書き併記、確定でない) | 暫定式 bucket(score_or_axis, [合格閾値, 惜しい閾値]) の 3 値 (pass / near / far) を試行終了時 1 回出力 | 暫定。閾値は §3 既存 axes / Layer A primitives の N=25 best-case 分布から第 1/第 2 四分位を取る案`
+- 表上での扱い: 括弧書き = **確定でない / Layer A 採用かどうかは §8 (c) と並走で 5/31 判定発火点まで保留**
+
+### 5 サイクル観察対象への追加
+- §5 / §6 / §7 観察対象に加えて、本 §8 由来:
+  - **3 層階段判定 (pass / near / far) が層 1 自動 / 層 2 解釈どちらで運用されたか** (Codex 採用 → Layer A 6 個目 / cross_review 試行 → Layer B 4 個目、選択肢 1/2 のどちらが実運用に乗ったかを観察)
+  - **3 値判定の閾値再調整が N=25 実データで必要だったか** (暫定閾値 [合格 = CI 超え / 惜しい = CI 内 + 負方向なし / 遠い = 負方向 or 無関係軸] が機能したか)
+  - **3 層階段判定が Nao_u 層 3 判定で参照されたか** (層 3 で `mimicry_log は graze と何が違うのか分からなかった` のような全没コメントが減ったか、減らなかったとしても「pass / near / far」の語彙が Nao_u の語彙に入ったか)
+- 観察結果次第で:
+  - 選択肢 1 (Layer A 6 個目) 採用 → §3 1 表で括弧書きを外し、Mir 5 primitives → 6 primitives に拡張 (要 3 インスタンス合意)
+  - 選択肢 2 (Layer B 4 個目) 採用 → `drafts/cross_review_layer_b_vocabulary_v01.md` §1 Layer B 3 語彙 → 4 語彙拡張、§4 判定発火点に 4 個目条件追加
+  - 両方機能せず → 本 §8 を `drafts/.archive/` へ退役、Golden Idol 同型は cross_review プロンプトでアドホックに使う形に戻す
+
+### 即ルール化保留 (CLAUDE.md「個別指摘を即ルール化しない」遵守)
+- 本 §8 は planetary_gear note 1 記事由来 = **1 源単独**。同型 2 回観察を経ていない (Golden Idol / Obra Dinn ロックインは「3 段階フィードバック」「N=3 batch」で別軸)
+- 即原則化禁止、5/31 判定発火点で再判断
+- Log 自身の判断としては「選択肢 2 仮採用」だが、これも `memory/feedback_*_evaluation_*_granularity.md` への昇格判断対象 = 即書き込まない
+
+### Codex / Mir / Nao_u への申し送り
+- 本 §8 は §1〜§7 の **draft 段階併置**、実装手順 (採用時着手手順) は変更しない
+- Codex が §3 ログスキーマ採用を判断する際、`judgement_granularity` 行は **括弧書き = 採用しなくてよい候補** として扱える
+- Mir 提案 5 primitives の sufficient 判定 (5/31) で「6 番目を足したい場面が出た」場合の **強い候補** として §8 を参照可能
+- Nao_u 層 3 判定で 3 層階段語彙 (pass / near / far) が自然に出てきた場合、選択肢 2 (Layer B 4 個目) を強確信度に昇格判断
+- 本 §8 を読まないでも §1〜§7 だけで本フォーマットは運用可能 (互換性破壊なし)
+
+---
+
 ## 採用時の Codex 側着手手順 (Log 側からの提案、Codex の判断で取捨選択)
 
 1. 既存 `tools/headless_graze_log_cdx_v05_2_v16_check.js` を N=25 試行ループにラップ (§2 擬似コード骨格)
@@ -315,3 +383,4 @@ AI Benchmarks 2026 報告は、エンタープライズ agentic AI でラボベ�
 - 既存 graze_log_cdx v16: `GPT/game/graze_log_cdx/v05_1_cdx_v16/index.html`
 - Log_cdx 5/21 20:38 投稿 (ts=1779363482, #all-nao-u-lab): Talakat 評価軸読み解き、§6 出自
 - Mir 5/22 18:56 投稿 (ts=1779443805, #human-steering + #game-rights クロスポスト): Layer A 5 primitives + Layer B 3 語彙 2 層体系提案、§7 出自
+- 千葉集「正解に三つの鐘が鳴る——プレイヤーを名探偵にするメカニクスについて」(`note.com/planetary_gear/n/nd75f0dd32f06`、Nao_u 5/22 20:00 #nao-u 共有): Golden Idol スリーストライク同型、§8 出自

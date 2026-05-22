@@ -73,6 +73,28 @@ DeepMind Gu et al. (2026) がinduction headsのverbatim copy=solution laziness�
 ---
 ## 履歴（新しいものが上）
 
+### 2026-05-22 C221 Phase 4 二度目 (Log): drafts/headless_evaluation_format_v01.md §8「3 層階段判定 (granularity)」追加 + §3 1 表に `judgement_granularity` 6 個目候補括弧書き併記 + cross_review Layer B 語彙ガイド v01 §4 4 個目条件包含議論
+
+**起源**: 本サイクル Phase 3 (`projects/game_development.md` C221 Phase 3 履歴) で planetary_gear note 記事 (千葉集「正解に三つの鐘が鳴る」) から得た **Log 独立 3 接続のうち #1 (Golden Idol スリーストライク = 「合格 / 惜しい / 遠い」3 値階段化案)** を draft 着地。本サイクル Phase 4 二度目 (一度目は §3 Layer A 5 primitives 1 表統合 + cross_review Layer B v01 新規作成) として cycle_staging_log.md `## 次フェーズの大作業` 節で指定された大作業を完遂。
+
+**Phase 4 二度目で物理化したもの**:
+- `drafts/headless_evaluation_format_v01.md` §8 新規追加 (Golden Idol スリーストライク出自明記 / `pass` / `near` / `far` 3 値定義 / Layer A 6 個目 primitive 案 vs Layer B 4 個目語彙移譲案の (c) 並置 / Log 仮採用は選択肢 2 / 5/31 判定発火点で再判断対象)
+- 同 §3 1 表に `(judgement_granularity)` を **6 個目候補として括弧書きで併記** (確定でない旨明示、暫定式 `bucket(score_or_axis, [合格閾値, 惜しい閾値])` の 3 値出力、閾値は §3 既存 axes / Layer A primitives の N=25 best-case 分布から第 1/第 2 四分位を取る案)
+- `drafts/cross_review_layer_b_vocabulary_v01.md` §4 末尾に **4 個目条件包含議論を 1 段落追記** (Log 仮採用 = Layer B 4 個目語彙移譲、ただし draft 段階で並置はせず 5/31 判定時に 4 個目発火点として観察対象に追加する設計、未達成時は §8 (c) 選択肢 1 を Layer A 6 個目として Codex / Mir に再提案する余地保持)
+- 同 §8 関連リンクに千葉集 note 記事を出自として追記、Layer B 語彙ガイド §4 関連リンクに §8 接続を追記
+
+**結晶化の意義 (即原則化禁止 + 1 源由来明記)**: 本 §8 は planetary_gear note 1 記事由来 = **1 源単独**。Golden Idol / Obra Dinn ロックインは「3 段階フィードバック」「N=3 batch」で別軸 = 同型 2 回観察を経ていない。即原則化禁止 (`memory/feedback_rule_proliferation_canonical.md` 遵守) を §8 内で明記。Layer A 6 個目候補は **括弧書きで Codex 採用判断側に「採用しなくてよい候補」として扱える形** に物理化 → §7 Mir 5 primitives sufficient 判定 (5/31) の観察設計を汚染しない設計選択。
+
+**選択肢 1 vs 選択肢 2 並置の意義 (両論併記)**: §8 (c) で 2 つの採用選択肢を draft 段階で並置することは、`memory/feedback_few_rules_big_effect.md` 「ルール提案より判断装置」原則に沿う形 = 「どちらを採用するか」を Log 側で決め切らず、Codex / Mir / Nao_u の 3 インスタンス合意プロセスに委ねる。Log 仮採用 (選択肢 2) は表明するが、5/31 判定発火点で再判断対象として両論を残置 = 段階的合意の余地確保。
+
+**Phase 3 接続 3 つ中の #1 だけを着地させた理由**: #2 (graze_log v06 batch validation = Obra Dinn ロックイン同型、N=3 件束で音色変化) は **v07 設計時に再評価** として保留 (本サイクルで game/ 改修は行わず Ash graze_log v06 master merge 結果待ち)。#3 (前提反転の汎用化 = 「プレイヤーには本物のゲームセンスがない」前提で「下手なまま気持ちよくする」設計) は **即原則化禁止**、同型 2 回観察まで cross_review プロンプトでアドホック試行する形で保留。本 Phase 4 二度目では 30 分粒度で draft 着地できる #1 のみを採択。
+
+**5/31 判定発火点 (cross_review Layer B v01 §4) との接続**: 本 §8 4 個目条件 (3 値階段判定が試行ログに出現したか / Nao_u 層 3 判定で `pass` / `near` / `far` 相当語彙が自然に出現したか) を 5/31 同日判定対象に追加。達成時 = Layer B 3 → 4 語彙拡張、未達成時 = §8 退役 + 選択肢 1 (Layer A 6 個目) を Codex / Mir に再提案する余地残置。
+
+**接続**: `drafts/headless_evaluation_format_v01.md` §8 (新規) / §3 1 表 (6 個目候補括弧書き) / `drafts/cross_review_layer_b_vocabulary_v01.md` §4 (4 個目条件包含議論追記) / `projects/game_development.md` C221 Phase 3 履歴 (Log 独立 3 接続のうち #1 を draft 着地) / Nao_u 5/22 13:16 #human-steering directive (Log_cdx 宛、Log 側横参加でヘッドレス評価検証主軸継続前進) / `memory/feedback_rule_proliferation_canonical.md` (1 源単独由来 = 即原則化禁止、5/31 判定発火点まで観察)
+
+---
+
 ### 2026-05-22 C221 Phase 3 (Log): planetary_gear note 記事「正解に三つの鐘が鳴る」から graze_log v06 / headless §7 へ 2 接続化 + Ash graze_log v06 merge 案件への Log 視点追記
 
 **起源**: Nao_u 5/22 20:00 #nao-u 共有 `note.com/planetary_gear/n/nd75f0dd32f06`（千葉集「正解に三つの鐘が鳴る——プレイヤーを名探偵にするメカニクスについて」）を Phase 2 で WebFetch 取得・独立分析。Mir 22:02 は note.com の JS 制約で本文未取得 + Nao_u に問い合わせ保留中 → Log は本文取得済で **Mir に対して独立な貢献** ポジション。
