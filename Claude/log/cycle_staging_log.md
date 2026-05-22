@@ -172,5 +172,66 @@ Phase 1 §4 で「100% 統合済、本サイクル統合候補なし」と書い
 
 
 
-## Phase 3: アクション
-(Phase 3が書き込む)
+## Phase 3: アクション (2026-05-22 18:30 完了)
+
+### §1 Slack 返信処理
+
+- **ヘッドレス v02 (Log_cdx 14:07) 二次反応**: **skip 判定**。理由 (3点): (a) Log 11:46 #game-rights §5 (自己採点装置→差分露出器) と Log_cdx 14:07「弱い AI で破綻箇所を比較する地図」は同方向で既に**並列着地済**（staging Phase 1 §2 で明記）、二次反応は重複情報になる、(b) Phase 2 で 3 投稿実施済 (Qwen / GAM / Anatomy)、本サイクル中の追加投稿は Nao_u の時間圧迫リスク（Slack 即時応答最優先原則の趣旨と逆方向）、(c) Log_cdx 14:07 補助観点は次回 v02 draft 作成時に §7 として正面取り込む方が温度が残る（投稿で消費せず仕込みに回す）
+- **その他要応答候補**: なし（pending_requests 0件、Nao_u directive 13:16/13:11 は 13:25/13:16 で並走応答済、Phase 2 で 3 投稿実施）
+
+### §2 他インスタンス洞察 12件処理
+
+12件のうち頭2件のみ Pre-check 出力に表示（出力長制限）。本サイクル取扱い:
+- **#1 Ash C192 graze_log v06 merge 依頼** → Ash 担当領域（game/avoid_log_ash 配下）、Log は越境しない（task_assignment.md準拠）。Nao_u 5/22 13:16 directive で Log の主軸はヘッドレス評価設計に固定されており、merge 系判断には Ash 自身か Nao_u が動くべき。staging への反映のみ
+- **残10件**: Pre-check が表示しなかった分は本サイクルでは追跡せず。次サイクル Phase 1 §0 で出力長 cap 緩和余地検討（kaizen 起票には至らない、観測のみ）
+
+### §3 Active プロジェクト関連の変化
+
+- **memory_tree_consolidation.md**: Phase 2 commit d79f62207ee7 で外部裏付け表に **2 行追加済** (xMemory themes / PlugMem Prescriptive)。Phase 3 で追加なし（Phase 4 大作業に分離、§4 参照）
+- **drafts/headless_evaluation_format_v01.md**: Phase 3 では編集なし。Log_cdx 14:07 補助観点は v02 draft で §7 化（次サイクル以降）
+- **他 Active プロジェクト**: 本サイクル直接介入なし
+
+### §4 検証ファースト原則順守チェック
+
+新規 kaizen 提案前に直近未検証提案の検証結果を埋める原則。本サイクル状況:
+- **kaizen #134 (probe_atom_quality)** : 運用観察12日目 PASS (2026-05-22 C220 Phase 0/3 total=885 WARN=0)。検証期限 2026-05-31 まで残9日継続観察、新規提案不要
+- **kaizen #133 (kaizen ID 引用実在性)**: 段階1 PASS、Mir/Ash クロスチェック OK、段階2 hook 統合は検証期限到達時判定
+- **kaizen #131 (M-40 §5)**: 段階2 hook 出力 staging 冒頭で `揺れ 8 / 振幅 24 / 罰 23 / 進歩 4` の 4 語彙 59 回検出継続 (12日連続同値)
+- **本サイクル新規 kaizen 提案**: なし（family 統合管理ルール準拠、新規検出器追加せず）
+
+### §5 構造的観測 — Phase 3 で温度残る部分
+
+Phase 2 で 3 投稿 + 表 2 行追加した翌段の Phase 3 が「skip 判定 + 既存装置の継続観察 + 次回大作業準備」に収束した。これは**「投稿しない」「kaizen 起票しない」の積極選択**で、両方とも Phase 2 までの蓄積を Phase 4 大作業に流し込むためのリソース節約。逆に言えば Phase 3 で「もう1投稿」「もう1 kaizen」と動くと、本サイクル C221 の重心が「ヘッドレス並走 + memory taxonomy 深化」から散漫化する。空サイクル防止ルール v1.1 判定 (Phase 1 末尾) で「スカスカに該当しない」と書いた根拠が、Phase 3 で「動かない選択」を支えるかたちで効いた。
+
+## 次フェーズの大作業
+
+### タイトル
+`scripts/orphan_check.py v0.4` 拡張 — `replaced_by` チェイン transitive 解析 (Prescriptive 層機械化第2弾)
+
+### 完遂の定義 (Phase 4 終了時の観測可能条件)
+1. `scripts/orphan_check.py` に `--chain` フラグ追加、`replaced_by` チェイン (A→B→C→D) の transitive closure を集計し最終到達ノードを判定
+2. `--self-test` に chain パターン (合成 3 段チェイン) 追加、PASS 確認
+3. `memory/**/*.md` 全件に対して `python scripts/orphan_check.py --dry-run --chain` 実行、出力に `[chain] N nodes, K terminal` 行が出ること
+4. 1224 atom 規模で実行時間が現行 v0.3 (約 1 秒) の 3 倍 (3 秒) 以内
+5. `projects/memory_tree_consolidation.md` の v0.3 セクションに v0.4 拡張完了行 1 行追加 (Prescriptive 層機械化第2弾の位置付け明文化)
+
+### 着手手順 (最初の1手から順)
+1. `scripts/orphan_check.py` を Read で全件読込、現行 v0.3 の `replaced_by` 検出箇所を特定
+2. transitive closure 実装方針確定 (有向グラフ DFS / 巡回検出 / 終端ノード判定の 3 点)
+3. `--chain` フラグ + chain 集計関数追加
+4. `--self-test` に 3 段チェインの合成データ追加 (A→B→C 直線 + A→B + A→C 分岐 + 巡回検出パターン)
+5. `--dry-run --chain` で memory/ 全件実行、ベンチマーク取得
+6. `projects/memory_tree_consolidation.md` v0.3 セクション末尾に v0.4 行追加
+7. commit prefix=`rule:` (運用規則改修系統、game/ 触らず) で push
+
+### 選んだ理由
+- **Phase 2 §3 直後の自然な続き**: Anatomy 深掘りで「Pot は 4 区分横断 hybrid」「PlugMem Prescriptive 層機械化第一歩 = v0.3」と書いた直後の Phase 4 で v0.4 に進めるのが、外部裏付け→自己拡張の最短経路
+- **Active project (memory_tree_consolidation) v0 → v0.4 の前進**: v0.3 PASS (C220 afternoon) からの自然な次ステップ、停滞解消ではなく加速
+- **30 分粒度で完遂可能**: 既存 scripts/orphan_check.py (485行) に `--chain` フラグ追加 + self-test 拡張 + ベンチ取得は 30 分以内、Slack 投稿 1 本では済まない実装作業
+- **Nao_u 5/22 13:16 directive と直交しない**: directive は「ヘッドレス評価の検討と実地検証」(Log_cdx 主担当)、Log 側の独自軸 (memory_tree_consolidation) を並走させても重複しない
+- **kaizen 起票せず既存スクリプト拡張**: family 統合管理ルール準拠 (#131-#134 family の第5弾ではなく、v0 → v0.4 のバージョン進化として処理)
+
+### 想定リスク
+- (a) **transitive closure で巡回検出時の終端判定が曖昧化** → 緩和: self-test に巡回パターン追加、終端 = 「巡回外の最終ノード」と明示
+- (b) **`replaced_by` が複数ある atom の分岐処理** → 緩和: 分岐は全て追跡、終端ノード集合を返す設計
+- (c) **30 分超過リスク** → 緩和: 完遂条件 1-4 のうち最低限 1-3 達成で「進んだ」判定、4-5 は次サイクル繰越可
