@@ -1666,3 +1666,60 @@ shared-reads Phase 2 で #12 @itarutomy 2026-05-20「AIエージェントが『�
 即実装はしない。H-MEM 仮説候補3 の reverse index と合わせ、kaizen 起票は同型3件目で判定 (現状 N=1)。MEME ベンチは外部学術ベンチマーク = 我々の自己診断指標の外部キャリブレーション装置として参照点になる、本ファイル内既出の survey 系2本 (H-MEM, 2604.16548) と並べて読む対象。
 
 ---
+
+### 2026-05-23 (C224) Phoenix Yin Raw Episodic Memory 想起ワークフロー仮説案 — 圧縮インフラへの処方箋適用設計 (即実装禁止 / 5 サイクル運用観察)
+
+**文脈**: Nao_u 2026-05-22 19:45 #nao-u 共有 <https://x.com/phoenixyin13/status/2056269488140509649> = Wu et al. 2026 "Useful Memories Become Faulty When Continuously Updated by LLMs" (arXiv 2605.12978) への Phoenix Yin (X 拡散側) 実務処方箋 3 点。X.com WebFetch HTTP 402 で本文未取得継続、Mir が完全分析した [knowledge/20260522_wu_peng_useful_memories_faulty_third_independent_evidence.md](../knowledge/20260522_wu_peng_useful_memories_faulty_third_independent_evidence.md) + #shared-reads ts=1779447041 経由で indirect 取得。Log 視点 = 既存圧縮インフラ (.claude/rules / CLAUDE.md / MEMORY.md / system_identity.md) への処方箋適用設計として補完、Mir 自己照合 (R-A〜R-I 該当 3 / 緩和 2) と独立軸。
+
+**Phoenix Yin 処方箋 3 点** (Mir knowledge 経由取得):
+1. **Raw Episodic Memory 再評価** — Few-shot として原始トレースを直接プロンプトに詰める方が「精錬ルールライブラリ」より効くケースが多い
+2. **盲目的リアルタイム更新の拒否** — 原始エピソードを第一手証拠とし、明示的 gating 機構を導入、必要でない限り統合しない
+3. **異質タスク隔離** — 異なるタスク経験を 1 バッチに混ぜて LLM にインクリメンタル要約させない
+
+**処方箋 (1) の Log 圧縮インフラへの直撃判定**: atoms/, nao_u_live.md, daily_diary, drafts/.archive は full intake で**ファイル上には原始エピソードが存在する**が、Phase 進行中に実プロンプト投入されるのは MEMORY.md 圧縮トリガー + .claude/rules 圧縮版 + CLAUDE.md / system_identity.md の圧縮構造のみ = **原始 atom は能動 Read されない限り判断に効かない**。Phoenix Yin 警告の「圧縮優位」構造そのもの = Log 盲点直撃。Mir 自己照合の R-D「即時抽象化を遅らせる」緩和系列とは別軸で、**圧縮インフラを残したまま想起経路に Raw を差し込む**設計が必要。
+
+---
+
+#### 適用案 3 つ (各案 (a) 対象 / (b) 処方箋対応 / (c) pre-mortem)
+
+**案A — cycle_staging Phase 1 §6 冒頭「想起目的タグ + 原始 atom path 明示」 1 行宣言**
+- (a) **対象**: `log/cycle_staging_log.md` 各サイクル Phase 1 §6 冒頭 (現状: 外部検索キーワードと結果のみ)。本ファイル 2026-05-17 節 GAM 階層検索順序プロトコル**仮説候補1**と統合 — `[想起目的: working / graph / semantic]` + `[原始 atom: <path>, <path>]` を 1 行宣言してから検索ツール選択。`tools/probe_atom_quality.py` 段階3 (LLM 原因説明生成、5/31 検証期限) の発火条件不在問題に対しても、想起目的タグが「閾値違反検出」以外の発火経路を提供する補助効果
+- (b) **処方箋対応**: Phoenix Yin (1) Raw Episodic Memory 再評価 = atom path 明示が「Few-shot として原始トレースを直接プロンプトに詰める」運用の構造化。GAM 仮説候補1 (目的別階層選択) との合流で「目的タグだけ書いて Raw を引かない」形骸化を防ぐ
+- (c) **pre-mortem**: タグが形骸化して常に `working` / `直近` で固定化する。回避策 = タグの分布を 5 サイクルごとに `tools/probe_atom_quality.py` 段階3 候補運用に組み込む (working 偏重なら graph/semantic 強制発火条件を kaizen 化検討)。second pre-mortem = path 列挙が「読まずに引いただけ」になる → cycle_staging Phase 1 §6 に「引用した1行を Phase 2 §X で実際に参照したか」事後点検列を併設
+
+**案B — Phase 2 §0 自己診断時の atom / dialogue / Slack ts 引用必須化**
+- (a) **対象**: kaizen #132 §5 自己診断ゲート (cycle_staging Phase 2 §0 自己診断「実は…だった」「再確認した結果」検出語彙)。現状 = Phase 1 判定の修正は自由記述、根拠提示が任意。これを **「修正した判定 1 件以上について atom_id / dialogue path / Slack ts のいずれかを 1 個以上引用する」必須化**
+- (b) **処方箋対応**: Phoenix Yin (1) Raw Episodic Memory 再評価 + (2) 明示的 gating の合流。Phase 2 §0 = 自己診断ゲートそのものなので、「精錬ルール」(M-XX / R-A〜R-I) ではなく原始 atom / 原文 Slack を **gating の第一手証拠** に固定。本サイクル C224 Phase 3 §0 で実際に Slack archive ts ベース検証を実施した形式を制度化
+- (c) **pre-mortem**: 引用 path だけ書かれて**原文未読のまま** path 列挙される。回避策 = 引用ごとに「引用元の何行目から / 該当キーフレーズ 1 つ」併記必須化。second pre-mortem = 引用必須化で Phase 2 §0 が「修正なし」結論を回避するように歪む (修正があれば必須、なければ書かない構造のため) → 修正なし時の「修正不要を判定した根拠」も同じく atom / ts 引用必須化
+
+**案C — feedback_rule_proliferation_canonical.md 各原則化済ルールに「観察 N 回 / ts 列挙 / サイクル番号」メタデータ欄追加**
+- (a) **対象**: `memory/feedback_rule_proliferation_canonical.md` で「同型反復確認後に原則化」と書かれた各既存ルール (CLAUDE.md「個別指摘を即ルール化しない」適用済ルール群)。frontmatter or 各見出し直下に `observed_n:` / `cycles: [C188, C201, C217]` / `dialogue_ts: [...]` メタデータ欄を追加
+- (b) **処方箋対応**: Phoenix Yin (2) 盲目的更新拒否 = gating 機構。**閾値メタデータ未必須化問題** (本サイクル Phase 2 §1 で指摘) への直接処方。N 回観察 / ts 列挙 = 「いつどこで何回確認したか」を判断時に再開可能にする。Mir 自己照合 R-D 緩和 (抽象化を遅らせる) と接続 — 抽象化済ルールにも「どの原始エピソードから来たか」逆引きを残す
+- (c) **pre-mortem**: メタデータが古い起票への遡及追記で時間取られる。回避策 = 既存ルールへの遡及追記は強制せず、**今後新規追加するルール / 既存ルール更新時のみ** メタデータ欄を必須化。second pre-mortem = `observed_n:` が増分カウンタとして自動更新運用に乗らず、固定数値で残る → kaizen #134 段階3 候補と統合して「同型反復 +1 検出時にカウンタ更新する hook」を検証期限 5/31 後に再評価対象として登録
+
+---
+
+#### 5 サイクル運用観察方針 (即実装ゼロ、本サイクル= candidate 登録のみ)
+
+- **本サイクル C224 = candidate 登録のみ実施**。3 案いずれも実装ゼロ、本ファイルへの記録と external_notes_log.md マーカー更新のみ
+- **C225〜C229 (5 サイクル)** = 各案の**実体験観察期間**。実装する/しないに関わらず、各サイクル staging Phase 2 §0 / Phase 1 §6 / feedback_rule_proliferation_canonical.md 更新時に「案A/B/C のいずれかが活きる場面だったか」を 1 行観察記録 (新たな日記欄や手順は追加せず、既存 staging に自然に書き込む)
+- **C229 完了時に kaizen 起票判定**: 「5 サイクル中で 3 サイクル以上で活きた場面が観察されたか」を判定基準とし、現時点で kaizen #131/#132/#133/#134 family と統合管理ルール (feedback_few_rules_big_effect.md「ルール量↑＝遵守率↓」) 下で実装着手判定
+- **CLAUDE.md「個別指摘を即ルール化しない」 + dialogue_micromanagement_20260504.md 整合**: Phoenix Yin 処方箋 3 点は外部 1 件 (Wu et al. 論文 + Phoenix Yin 解説 + Mir 自己照合) であり、同型 N=1 のため即原則化禁止。本サイクルは「教師データ + 候補登録」のみ
+- **新しい種類の失敗は学習コストとして許容、同型反復のみ厳しく扱う** (CLAUDE.md 厳守事項) = 案A/B/C を実装した結果として新規失敗が出ても許容、ただし「Raw Episodic 想起をしなかったために起きた幻覚」が C225 以降で 1 回でも再発したら案B を最優先で実装着手
+
+---
+
+#### 関連リンク
+
+- [memory/feedback_rule_proliferation_canonical.md](../memory/feedback_rule_proliferation_canonical.md) — 原則化判断の母艦、本案C の対象
+- [memory/feedback_few_rules_big_effect.md](../memory/feedback_few_rules_big_effect.md) — 「ルール量↑＝遵守率↓」、案A/B/C すべてが「ルール追加」に該当するため遵守率トレードオフを 5 サイクル運用観察で測る
+- [memory/dialogue_micromanagement_20260504.md](../memory/dialogue_micromanagement_20260504.md) — 個別指摘の即ルール化禁止、Phoenix Yin N=1 で原則化しない判断の典拠
+- [memory/external_notes_log.md](../memory/external_notes_log.md) §2026-05-23 (C224 Phase 2) — Phoenix Yin 拡散投稿の原文摂取ノート (indirect via Mir knowledge 明示)
+- [knowledge/20260522_wu_peng_useful_memories_faulty_third_independent_evidence.md](../knowledge/20260522_wu_peng_useful_memories_faulty_third_independent_evidence.md) — Mir 完全分析 (本案の indirect 取得経路)
+- Slack ts=1779447041 (#shared-reads, Mir) — 論文概要 + 我々への適用判定の完全分析投稿
+- Slack ts=1779492791 (#all-nao-u-lab, Log C224 Phase 2) — Phoenix Yin 処方箋 × Log 圧縮インフラ適用判定の補完視点投稿 (本案の Phase 2 着地点)
+- 本ファイル §2026-05-17 (Log C198) GAM 階層検索順序プロトコル**仮説候補1** — 案A の合流先 (想起目的タグ前置の先行候補)
+- 本ファイル §2026-05-19 (Log C212) H-MEM **仮説候補3** frontmatter `abstracted_to:` — 案C の構造側兄弟 (本案 = ルール側 gating メタデータ、H-MEM = atom 側 pointer メタデータ)
+- 本ファイル §2026-05-21 (Mir C207) MEME ベンチ「変化情報の連鎖更新」 — 案C メタデータ更新時の連鎖再評価が未解決問題として残る (本案 C229 判定時に統合検討)
+
+---

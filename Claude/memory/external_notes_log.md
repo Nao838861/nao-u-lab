@@ -21,7 +21,7 @@ type: reference
 **統合先**:
 - [統合済 2026-05-23 → #all-nao-u-lab ts=1779492791 (Log C224 Phase 2 補完視点投稿)]
 - [統合済 2026-05-23 → 本ファイル下記節 (外部摂取ログとして記録、原文未取得を明示)]
-- [候補保留 → `projects/memory_redesign.md` に Raw Episodic Memory 想起ワークフロー案を C224 Phase 3 で追記予定、即実装禁止]
+- [統合済 2026-05-23 → `projects/memory_redesign.md` §2026-05-23 (C224) Phoenix Yin Raw Episodic Memory 想起ワークフロー仮説案: 適用案 3 つ (案A 想起目的タグ前置 / 案B Phase 2 §0 atom 引用必須化 / 案C feedback_rule_proliferation_canonical gating メタデータ) + pre-mortem + 5 サイクル運用観察方針登録、即実装ゼロ]
 - [候補保留 → `memory/feedback_rule_proliferation_canonical.md` に gating メタデータ形式案を 1 段下げて記述、5 サイクル試行後判定]
 - [Mir 補完関係: Mir = R-A〜R-I 抽象化路線そのものの自己診断 (該当 3 / 緩和 2) / Log = 既存圧縮インフラへの処方箋適用設計。両者で「自己診断 → 動かし方」の連続が成立]
 
