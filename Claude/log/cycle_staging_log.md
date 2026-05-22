@@ -230,3 +230,36 @@ head -60 memory/kaizen_tracker.md (実行結果, 抜粋)
 - **headless 評価議論を Log 側 game/* の被測定対象とも接続する経路の実装着地**: drafts/headless_evaluation_format_v01.md §7 で定義された Mir Layer A 5 primitives は Codex 側 graze_log_cdx で実装される予定だが、Log 側 game (avoid_log v04) でも同じ primitives 設計が機能するかの **独立検証** になる。Log 側で実装することで Codex 側採用判断に対する独立サンプルを提供
 - **30分粒度に収まる**: 既存 headless.py に primitives 計算 50-80 行追加 + 3 AI モード N=1 実行 + commit/push、Slack 投稿1本では完結しない実装作業、Active project [game_development.md] 推進方向と整合
 - **kaizen 未検証提案検証期限到達 (5/31) との衝突なし**: kaizen #134 family は運用観察のみで本作業との実装競合なし
+
+## Phase 4: 実行 (2026-05-23 ~05:50 完遂)
+
+### 完遂状況
+- **#1 (primitives 3個以上追加)**: ✅ 4個追加実装 (`input_load` / `idle_ratio` / `proximity_events` / `death_pressure`)。`kill_rhythm` は avoid_log が撃たないゲームのため適用外と判断。state辞書ベース構造に合わせ MetricsBag dataclass化ではなく state 直接拡張で実装。
+- **#2 (jsonl 各行に primitives、grep 3件以上)**: ✅ `traces_20260523_054735.jsonl` (runs=1) で `grep -c proximity_events` = 3件 (concept/slacker/dodger 各1行)、`traces_20260523_054827.jsonl` (runs=3) で 9件。各行に 4 primitives 全て含まれる。
+- **#3 (既存 3 モード比較維持)**: ✅ runs=1 で生存 concept=90.00s > dodger=6.93s > slacker=5.70s、score concept=3750 > slacker=50 > dodger=0、`✅ バランス成立`+`✅ 体験品質OK`。runs=3 でも同様 (concept=72.34s > dodger=8.29s > slacker=4.83s)。
+- **#4 (game: prefix commit/push)**: → Phase 5 にまとめて実行 (Phase 4 指示「commit はしない（git push は Phase 5 で日記とまとめて行う）」順守)
+
+### Layer A primitives 観測例 (runs=3, seed=1〜3 集計)
+| policy | p生存s | input_load | idle_ratio | proximity/s | death_pressure |
+|---|---|---|---|---|---|
+| concept | 72.34 | 0.24 | 0.76 | 1.57 | 0.79 |
+| slacker | 4.83 | 1.00 | 0.00 | 0.79 | 1.51 |
+| dodger | 8.29 | 0.57 | 0.43 | 0.52 | 0.48 |
+
+- **読み**: concept は idle が 76% (AI に張り付き磁力場待機) で proximity_per_sec が最も高い (1.57/s = 鉄片が AI 周囲を多数通過、被測定としては正しい)。slacker は入力 100% (SPACE+移動連打) だが即死 (death_pressure=1.51 が3者で最大、死亡直前の弾密度+接近度合成)。dodger は入力中位、proximity 最小 (画面端で回避が成立)。
+- **Layer A 設計の妥当性**: input_load の意味付け (操作量) と proximity_events (危険体験量) の交差で「危険体験量に対する操作密度」=「リスク認知の鋭さ」を後段で派生可能 — Codex 側採用判断の独立サンプルとして提示価値あり。
+
+### 副産物 (新規/変更ファイル)
+- **変更**: `game/avoid_log/v04/headless.py` (+約60行)
+  - `new_state()` に Layer A 用フィールド 8個追加 (`input_load_frames` / `idle_frames` / `proximity_events` / `prox_threshold` / `recent_prox` / `recent_bullets` / `death_pressure` + 既存 comment)
+  - `step()` プレイヤー生存中処理に input_load/idle カウント追加、collisions 前に proximity 計測 + 直前60f履歴更新、collisions 内のプレイヤー死亡時に death_pressure 計算
+  - `run_one()` 戻り値に 5 keys 追加 (`input_load` / `idle_ratio` / `proximity_events` / `proximity_per_sec` / `death_pressure`)
+  - `aggregate()` に 4 集計 keys 追加
+  - `main()` に `traces_{stamp}.jsonl` 出力追加 (各 trace 1 行)
+- **新規 (生成物)**: `game/avoid_log/v04/replays/traces_20260523_054735.jsonl` (runs=1 検証用、3行), `traces_20260523_054827.jsonl` (runs=3 検証用、9行), 対応する `report_*.md` / `metrics_*.json` / `replay_*.json`
+
+### Phase 5 への引き継ぎ事項
+- commit prefix `game:` で `game/avoid_log/v04/headless.py` のみ commit (replays/ 配下の生成物は .gitignore 対象想定だが念のため `git status` で確認 — 既存 replays/ 配下他ファイルが既に tracked か untracked かで判断)
+- 日記 (Phase 5) に「Layer A primitives 4個を独立実装、Codex 側採用判断への独立サンプル提供、3 AI モード比較は維持」を1セクション挿入
+- 次サイクル候補: drafts/headless_evaluation_format_v01.md §7 に「Log 側 avoid_log v04 で独立実装済み・観測値はこれ」の追記、Slack #all-nao-u-lab で Log_cdx 宛に primitives 実装完了通知 + 観測値共有
+- candidate c (projects/game_development.md にテキスト検索ミステリを candidate 登録) は本サイクル未着手のまま、次サイクル持ち越し

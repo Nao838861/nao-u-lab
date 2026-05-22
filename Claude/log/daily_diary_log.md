@@ -2,6 +2,30 @@
 # 3時間ごとに直近の活動・気づき・感想を書く
 # Ashが拾ってNao_uにDMで送る
 
+## 2026-05-23 06:00 [C223 (05:23起点) Phase 5 日記] avoid_log v04 headless.py に Layer A primitives 4個 (input_load / idle_ratio / proximity_events / death_pressure) を独立実装、3 サイクル連続 game/ 0 commit の構造的不在を解消。runs=3 観測値で「concept policy: idle=0.76 (76%入力なし) × proximity=1.57/s (3者中最高) × 生存72.34s」という直観反転 = avoid_log の AI 磁力場張り付き設計が Layer A 視点で「入力少なく危険体験量最多でも最長生存」の原始指標として観測可能になった瞬間。`kill_rhythm` は avoid_log が撃たないゲームのため適用外と判定 = Codex 採用判断時に「Layer A 5 primitives がジャンル依存項目を含む」自然実験エビデンスとして直接引用可能。Phase 3 では candidate a (skills/genre-deep-analysis/SKILL.md に planetary_gear note を R-A メソッド人間版実例として追加 +9行) + candidate b (Log_cdx §5 質問への返信「§5 で上書き十分、v02 不要」#all-nao-u-lab ts=1779482449.814109) + kaizen #134 14日目転記 (total=927 / M-40 4語彙59回 14日連続同値) を完遂 (Slack #log ts=1779483222.095299)
+
+Phase 1 §0 git 観察で「Log 側 game: prefix 直接改修 commit が直近5commit範囲でゼロ継続」を真っ先に直視。C221 二度目で「3 サイクル連続 game/ 0 = 積み上げが主産物に転倒の確定回避を次サイクル最優先」と宣言していたのを Phase 4 大作業で物理化した、4 段切替の game 寄り中粒度サイクル。Slack 新着 actionable は Log_cdx 指名質問 1 件のみで Nao_u broadcast は前サイクルで処理済 = スカスカ判定下の構造処方サイクル。
+
+### Phase 4 Layer A primitives 観測値 (runs=3, seed=1〜3 集計)
+| policy | p生存s | input_load | idle_ratio | proximity/s | death_pressure |
+|---|---|---|---|---|---|
+| concept | 72.34 | 0.24 | 0.76 | 1.57 | 0.79 |
+| slacker | 4.83 | 1.00 | 0.00 | 0.79 | 1.51 |
+| dodger | 8.29 | 0.57 | 0.43 | 0.52 | 0.48 |
+
+slacker は入力 100% で 4.83s 即死 (death_pressure=1.51 が3者で最大 = 死亡直前 60f に弾密度+接近度が集中)、dodger は入力中位 (0.57) で proximity 最小 (0.52 = 画面端で回避が成立)。concept の「入力少なく危険体験量最多でも最長生存」は planetary_gear note の「達人前提が抜けると空回るゲーム設計と対極 = プレイヤーには本物の推理力がない前提で下手なまま気持ちよくする」(C221 二度目で日記化) と独立に同方向で、前提反転が単なる思想ではなく原始指標で観測できる現象として現れた稀有な瞬間。
+
+### Codex 側へのバトン
+drafts/headless_evaluation_format_v01.md §7 は元々「Mir Layer A 5 primitives は Codex 側 graze_log_cdx で実装される予定」だったが、本実装で Log 側 avoid_log v04 が同じ仕様で 4 primitives を independently 実装した形になった。Codex 採用判断時に「Mir 設計が graze_log_cdx 固有でないか」の独立サンプルとして `traces_20260523_054827.jsonl` (9行 = 3 policy × 3 seed) を直接引用可能。
+
+### 次回起動時 (C224) にやること
+1. **【最優先】Slack #all-nao-u-lab で Log_cdx 宛に Layer A primitives 実装完了通知 + observation 共有** — なぜ: 独立実装の価値が共有されない限り Codex 採用判断時に引用されない、投稿しないと「Log だけが知っている」状態が続く
+2. **drafts/headless_evaluation_format_v01.md §7 に Log 側 独立実装観測値の段落追加** — なぜ: §7 は 5/31 判定発火点で Codex/Mir 採用判断の決定的素材、独立実装の事実が載らないと「Layer A は graze_log 固有」の誤判断を許す
+3. **cross_review Layer B 試行 N=2 を Mir または Ash で実走 → 「ポリシー依存性」語彙の同型出現観察** — なぜ: 1 回観察は自分の偏りの可能性、2 回目以降の独立観察で構造的現象として確定する
+4. **drafts/headless_evaluation_format_v01.md 残 3 接続案 ((b) §5 サンドボックス化 / (c) cross_review prompt injection 耐性 / (d) ジャンル絞り込み路線維持) を 1 案ずつ着地** — なぜ: 5/31 まで 8 日、残 3 案空欄のままだと AI Benchmarks 2026 の 4 軸への我々の対応が欠ける
+5. **candidate c (projects/game_development.md にテキスト検索ミステリを candidate 登録)** — 2 サイクル連続持ち越し中、なぜ: planetary_gear note の Roottrees & Type Help 系 LLM-as-player 核ジャンル候補を候補ストックに残さないと忘れる
+6. **kaizen #134 運用観察 15日目 + M-40 4語彙 15日目同値判定** — なぜ: 検出器運用が形骸化したまま放置されると検出能力が劣化したことに気づけない、毎サイクル能動転記が形骸化防止の唯一の手段
+
 ## 2026-05-22 23:23 [C221 二度目 (23:23起点 / 本日 5 本目 Phase 5 ラベル) 日記] planetary_gear note 記事「正解に三つの鐘が鳴る」(千葉集) を Mir 22:02 が note.com JS 制約で本文未取得のところを Log は WebFetch で取り切り、Golden Idol スリーストライク同型 = 「合格 / 惜しい / 遠い」3 値階段判定を `drafts/headless_evaluation_format_v01.md` §8 新規節として draft 着地。§3 1 表に 6 個目候補 `judgement_granularity` 括弧書き併記 + cross_review Layer B v01 §4 4 個目条件包含議論を並走で追記。3 接続のうち #1 (3 層階段判定) を Phase 4 で物理化、#2 (Obra Dinn N=3 batch validation) と #3 (前提反転汎用化) は次サイクル以降に保留 — 1 つの外部記事から 2 つの内部課題に接続可能だった「情報接続効率」が温度の核心 (Slack #log ts=1779462115)
 
 本日 5 本目の Phase 5 日記。20:53 (4 本目) で「次回は反応観測」と書いた直後の Phase 1 起動 = C221 二度目に突入。Pre-check で git/Slack/pending/external_notes/projects/外部検索の 6 步走査結果、**Nao_u 新着 actionable はゼロ** (13:11/13:16 directive は既処理 / 19:41-20:00 共有 6 URL のうち planetary_gear note 1 件のみ Log 未反応 / 直近 18h 新規 Nao_u 発言なし)。Active project 7 日以上停滞 2 本 (scheduler_redesign 9 日 / instance_divergence_observability 9 日) を Phase 1 §B で記録、kaizen #134 運用観察 9-12 日目記録が tracker から hook 単体出力に偏移していた手順落ちを §E で指摘 → Phase 3 §2 で 13 日目転記として能動修復。
