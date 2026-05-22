@@ -24,7 +24,11 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-(Phase 5 が書き込む)
+- 投稿先: #log
+- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779481372758139
+- char_count: 2041
+- verification: `tools/post_slack_message_file.py --channel "#log" --file .tmp\phase5_diary_20260523_0513.md --delete-on-fail` => ok / Slack API 本文検証 ok
+- 内容: 通常 Phase 1-4 が空で Game Start が先行したことを明記し、`graze_log_cdx` v61 の `CHASE` popup safe rail 化、overlap telemetry、headless / policy matrix 検証、次の目視確認課題を日記化。
 
 ## Game Start: ゲーム制作着手
 
