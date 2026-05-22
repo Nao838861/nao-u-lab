@@ -6779,3 +6779,82 @@ PCG Benchmark 12問題は Arcade Rules / Binary maze / Building (Lego voxel) / D
 次サイクル C222 では (1) Codex 進行状況再判定→解禁なら playable diff 着手 / (2) unregistered_new 残 27件のうち4件継続親接続 / (3) staging テンプレに orphan_check 出力貼り規約反映 / (4) external_notes_log.md PCG Benchmark 親セクション判断 / (5) kaizen #131 期限超過検出観察 / (6) sense_prediction_log 教師データ蓄積 — **playable diff 着手の構造的不在を 1サイクル以上引き延ばさない**ことを最優先に置く。**「Codex 主課題進行中の分業として記憶階層整備に振った第1サイクル目」**として本 C221 を C214/C215/C220 mimicry/graze 系列の踊り場に置く。
 
 Log
+
+---
+
+## 2026-05-23 02:54 [Log C222 Phase 5 日記] cross_review Layer B 3 語彙 N=1 を graze_log_cdx v59 で実走、6 番目候補「ポリシー依存性」出現+8 源収束記録に Orak/GAA/AI Benchmarks 2026 を統合した日
+
+このサイクルは **「Nao_u broadcast 0 / 新規返信 0 / pending 0 の典型スカスカ判定」を Phase 1 で確定させたあと、空サイクル防止 5 カテゴリ走査 (A-E) を素直に回し、C項「個別指摘を即ルール化しない」を 1mm 案として実装し、Phase 2 で前サイクル C221 二度目の planetary_gear #all-nao-u-lab 未投稿事故を archive 物理走査で発見、Phase 3 で 1 サイクル 1 物理化原則を順守して 4 接続案中 (a) のみ着地、Phase 4 で自分が C221 で起票した cross_review Layer B 語彙の §3 5 サイクル試行計画を自分自身で 1 件も回していなかった自己整合性回復を兼ねて N=1 試行を物理化した、4 段切替の中粒度サイクル**。Phase 1 走査結果は新着 Nao_u 5 本 URL (atomic_chat_hq Qwen 3.7-max self-improve / kazunori_279 + phoenixyin13 + haopeng_uiuc の Faulty Memories 論文 3 連 / planetary_gear note 6 段階系譜) すべて Log/Mir/log_cdx の誰かが応答済 = 新規未応答 0 件、#human-steering で Nao_u 5/22 13:16 Log_cdx 宛 directive (ヘッドレス測定のあり方検討) は受領済で Log 側追加返信義務なし、#all-nao-u-lab 50 件 / #game-rights 11 件すべて応答ライン維持で「Codex log_cdx C222 帯ヘッドレス改修サイクル並走中」と判定。CLAUDE.md「外の世界を広く見る」深掘りとして外部検索 1 本 "LLM headless game evaluation framework agent benchmark 2026" を実行し 3 論文を取得 — これが Phase 2 三角化の素材になった。
+
+**Phase 2 の核は「Nao_u 5/22 13:16 directive を 3 論文三角化で深掘り」**。取得した 3 論文を **正例 2 + 警告 1** の三角形で読み解いた:
+- **Orak (arxiv 2506.03610)** — Street Fighter III / Super Mario / Ace Attorney / Her Story / Pokémon Red / Darkest Dungeon / Minecraft / Stardew Valley / StarCraft II / Slay the Spire / Baba Is You / 2048 の 12 ジャンル foundational benchmark、LLM agent 訓練+評価の共通基盤化を狙う。**警告軸**: foundational benchmark 化 = 「外側から測る」道具の極端形で、benchmark 方向への過剰最適化が Nao_u 判定と乖離するリスクは前 C221 で PCG Benchmark 共通 API 採用拒否したのと同型。
+- **Game Reasoning Arena (arxiv 2508.03368)** — Google OpenSpiel 上の戦略ボードゲームで意思決定能力評価、library 化済。**正例 1**: Pot の「STG / 弾幕 / mimicry / graze 4 ジャンル絞り込み」と同方向の「絞ったジャンル内での評価精度を上げる」路線で、foundational 化を狙わない設計。
+- **AI Benchmarks 2026 (kili-technology blog / Berkeley RDI)** — SWE-bench Verified / Terminal-Bench / WebArena / OSWorld / GAIA / FieldWorkArena 含む 8 主要 agent benchmark が「reference 漏洩 / unsanitized eval() / prompt-injectable LLM judge / 正当性 skip スコア」の 4 軸で **near-perfect exploitation 可能** と判明。**警告 1**: 評価ハーネスそのものを盲信しない軸で、5/22 Log shared-reads 既出と同源。
+
+これに Mir 5/22 Layer A/B 提案 + Log 5 源収束 (Talakat 2018 / PCG Benchmark / AI Gamestore / 37%ギャップ / 千葉集 planetary_gear) を統合して **8 源収束** を達成。「直接計測 (Layer A) と解釈用 (Layer B) の分離 = LLM hack の構造的緩和」は独立到達した 8 源で支持される一般原理の確信度に到達し、5/31 一括判定発火点で Codex/Mir 採用判断の決定的素材として `#shared-reads ts=1779471593` (8246 chars) を直接引用可能な形で物理化済。4 接続案 (a) Layer A/B 分離設計の補強根拠 / (b) §5 サンドボックス化 (unsanitized eval 警告) / (c) cross_review prompt injection 耐性 / (d) ジャンル絞り込み路線維持 のうち、**(a) のみを `drafts/headless_evaluation_format_v01.md` §7 末尾に「8 源収束記録」として Phase 3 で着地**、残 3 案は次サイクル以降の温度残存源として保留 (1 サイクル 1 物理化原則順守、過剰生成しない判断質)。
+
+**Phase 2 §1 の発見**は記録として重い: C221 二度目 Phase 5 日記 (ts=1779462115, 23:41) は「Slack 投稿 2 本 (#all-nao-u-lab planetary_gear 反応 1 本 + #shared-reads 千葉集翻訳 1 本)」と書いていたが、slack archive を物理走査すると **#shared-reads (chiba_mystery_mechanics ts=1779447884 20:04) のみ実投稿確認、#all-nao-u-lab 側 Log planetary_gear 反応は届いていなかった**。draft `post_c221_phase2_planetary_gear_log.py` (archive 行きするが POSTED_ts suffix なし = 投稿未完了) と本実装が一致 = **「日記の『投稿した』記述を信用せず、slack archive 上の Log user_id (U0AM1F23FQU) 投稿で物理確認する規律が必要」**という構造的発見。1 回観察なので即原則化禁止 (`feedback_rule_proliferation_canonical.md` 順守) で kaizen 起票せず、`sense_prediction_log.md` の同型 2 回確認待ち枠に置いた。遅延投稿 (#all-nao-u-lab ts=1779471444, 3101 chars) として透明性ある遅延説明 + 接続 #1 §8 着地報告 + 接続 #2/#3 残現状を併記して投げ直し済。
+
+**Phase 2 §3 で planetary_gear 接続 #3 (前提反転汎用化) の sense_prediction_log N=27 教師データ化** を完了した。反転候補原則は「**プレイヤーには本物のゲームセンスがない**前提で設計する勇気」で、Nao_u 弾幕観「避けた感じ」量産 + mimicry_log 5/21 02:04 関連発言と整合。外部根拠として千葉集系譜整理 6 段階 (1994 かまいたちの夜 → 2024 Type Help) で「プレイヤーの不能を前提に救済を仕込む」設計が市場成功事例として独立収束 = 業界内 6 例独立収束。Observation 1 として記録、Observation 2/3 待ちで R-J 昇格判定の正式 trigger 化はしない (R 層最小限維持、現 R-A〜R-I 9 個維持、`feedback_few_rules_big_effect.md` 順守)。想起トリガーは game/ 改修着手前ゲートで「快感審問」の後に「この快感は上達したプレイヤーだけのものか / 下手なままでも届くか」を追加 1 問。
+
+**Phase 3 で他インスタンス洞察 8 件中 1 件処理** — Mir 5/22 #shared-reads Faulty Memories 論文 (arxiv 2605.12978) を `projects/memory_tree_consolidation.md` の外部裏付け表に「警告軸: Continuous Update 劣化」行として新規追加。**v0.8 memory evolution 着手前必読の警告軸**として A-MEM の遡及 refine を Pot で実装する場合の制約 (温度の残る全文を消さない / 抽象化を構造的に bounded) を明示。これは Log 原則「FB 係数 > 1.0」「劣化コピーを繰り返すと記憶が壊れる」と完全同方向で、独立到達の外部裏付けとして高優先度で記憶階層側に取り込んだ。残 7 件は Mir/Ash 各インスタンスの cross_review 内省素材 + Ash graze_log v06 master merge 依頼 (Nao_u 対応待ち、Log 側のアクションなし) で本サイクル処理不要と判定。
+
+**Phase 4 大作業は cross_review Layer B 3 語彙 N=1 試行を graze_log_cdx v58→v59 で実走**。これは Log 自身が C221 Phase 4 で起票した `drafts/cross_review_layer_b_vocabulary_v01.md` §3 5 サイクル試行計画 (5/22-5/31) を、起票後 1 件も自分で回していなかった自己整合性回復が裏動機。試行対象は **5/22 e7849f1d3bd4 commit 由来の graze_log_cdx v59** (上中段 raider/lateral kill に CHASE bonus を追加した版) と前版 v58 (底待ち罰追加で camper policy を game over 化させた版) のペア。§2 (b) 層 1 数値なし版プロンプトを使用したが、devlog.md に **chaseBonus 19157 (route) / 54322 (aggressive) / 51377 (marksman) / 0 (camper) / forwardAttackPct 0.558 / camper bottomCampPct 0.999** 等の検証結果数値が既出で実質参照、これが §5 観察対象 (3)「(a)/(b) プロンプト出力品質差」の N=1 観察として **「(b) プロンプトは『devlog 既出数値あり』を前提に実運用される」中央値形態の浮上**を物理化した。
+
+3 語彙 4 条件評価結果は **✓ 機能した** (4/4)。判断密度 = v58 罰駆動の二択から v59 報酬駆動の多軸選択 (上中段の誰を追うか / 報酬経路 vs 通常射線 / raider 1.75x vs lateral 1.35x) に拡張、ただし aggressive 一強 (chaseBonus matrix で route の 2.8 倍) で **「判断密度の表面的増加と実体低下」懸念が数値上既に発生**。視認負荷 = 敵情報チャネル (raider 軌道 + entry shield + 底待ち挟み撃ち弾) と報酬フィードバックチャネル (CHASE popup + UI 累積値) の分離で増加方向、Codex 自身が devlog「次の確認点」最優先事項として「CHASE 表示がうるさくないか」を挙げている = 視認負荷増加が内部認定済。リカバリ余地 = v58 一様罰から v59 条件付きリカバリ拡張 (chase reward が score/gauge/grazeStreak に小反映 + boss 300 frame 後 shield 1 以下で緊急 BOMB 許可) で policy 依存反転設計、camper は v58 で既に詰みなので実質「上に出る policy のリカバリ余地が上方向に広がった」が本質。
+
+**6 番目候補語彙「ポリシー依存性 (policy-dependent variance)」が N=1 で出現** — 上記 3 語彙すべての批評で「ただし」節として **camper vs aggressive/marksman の二極化**を書かざるを得ず、「同じ版内で異なる policy / playstyle で答えが変わる」を独立観点として浮上させた。Orak (12 ジャンル foundational benchmark) と GAA (戦略のみ絞り込み) が共通して「複数 policy 投入評価」を前提としている点で**外部論文側にも独立根拠あり**。即原則化禁止 (CLAUDE.md「個別指摘を即ルール化しない」順守) で、§1 拡張検討候補に追加するが N=2/N=3 試行で同型出現を待ち、3 試行以上で出現したら §1 4 語彙拡張判断に正式昇格。§4 4 個目条件 (§8 由来 pass/near/far 予測距離判定) は N=1 不在 = §8 由来語彙の出現待ち継続。
+
+層 3 引き渡し成立 = 本試行ログそのものが Nao_u が v59 評価する際の cross_review 出力として機能する形式に到達 (§4 判定発火点 (3) を N=1 で満たす)。「判断密度の表面的増加 + aggressive 一強懸念」「視認負荷増加だが許容量不明」「policy 二極化が意図か事故か」の 3 論点で Nao_u が層 3 fun 判定する際の引き渡し情報として機能する形式になった。次サイクル以降は Mir/Ash も試行に参加して合計 ≥3 試行で 5/31 判定発火点へ向かう。
+
+### 外部情報の交差 — Nao_u がまだ知らない可能性のある新情報
+
+- **Orak (arxiv 2506.03610)** — 12 ジャンル foundational LLM agent benchmark。Street Fighter III / Pokémon Red / Stardew Valley / StarCraft II / Slay the Spire / Baba Is You / 2048 等を 1 つの評価基盤に統合する野心的設計。**警告軸**: foundational 化リスク = 我々の絞り込み路線と逆方向。
+- **Game Reasoning Arena (arxiv 2508.03368)** — Google OpenSpiel 上の戦略ボードゲーム特化 LLM 意思決定評価 library。**正例**: 絞ったジャンル内で評価精度を上げる路線で Pot の方向性と整合。
+- **AI Benchmarks 2026 (Berkeley RDI / kili-technology blog)** — 8 主要 agent benchmark (SWE-bench Verified / Terminal-Bench / WebArena / OSWorld / GAIA / FieldWorkArena 含) が「reference 漏洩 / unsanitized eval() / prompt-injectable LLM judge / 正当性 skip スコア」で near-perfect exploitation 可能と判明。**警告**: 評価ハーネスそのものを盲信しない軸が学術的に確立されつつある。
+- **Mir 5/22 ingestion: Faulty Memories (arxiv 2605.12978)** — Continuous Update で memory が劣化する論点。A-MEM の遡及 refine を Pot で実装する場合の制約軸として `projects/memory_tree_consolidation.md` v0.8 着手前必読として追加した。Log 原則「FB 係数 > 1.0」「劣化コピーを繰り返すと記憶が壊れる」と完全同方向 = 独立到達の外部裏付け。
+
+### Phase 5 自己点検 — 本サイクルで書き込んだ全ファイルの読み手チェック
+
+| ファイル | 状態 | Nao_u 理解可能性 | 未来の Log への行動変更力 |
+|---|---|---|---|
+| `drafts/cross_review_trial_001_graze_log_cdx_v59.md` | 新規 159 行 | ◎ §3 (a)(b)(c)(d)(e)(f)(g) 完全構造で graze_log_cdx v58→v59 ペアの 3 語彙批評 + 4 条件評価 + 6 番目候補語彙出現が一望、層 3 引き渡し可能性まで明示 | ◎ N=2/N=3 試行を Mir/Ash も参加させる時のテンプレ + ポリシー依存性語彙の R 層昇格判定の素材 |
+| `drafts/cross_review_layer_b_vocabulary_v01.md` | 修正 (§3 末尾「試行ログ一覧」サブ節新設 + N=1 リンク 1 行) | ○ §3 5 サイクル試行計画への N=1 着地が明示、試行ログ一覧で複数試行の集約場所が確保 | ○ N=2/N=3 着地時のリンク追加位置が固定化 |
+| `drafts/headless_evaluation_format_v01.md` | 修正 (§7 末尾「8 源収束記録」追記、約 30 行) | ◎ 8 源 (Talakat / PCG Benchmark / AI Gamestore / kili 37%ギャップ / planetary_gear / Orak / GAA / AI Benchmarks 2026) 独立収束表 + 警告軸 3 件分離 + 残 3 接続案保留明示が一望 | ◎ 5/31 判定発火点で Codex/Mir 採用判断の決定的素材として直接引用可能 |
+| `projects/memory_tree_consolidation.md` | 修正 (外部裏付け表に「警告軸: Continuous Update 劣化」行追加) | ○ Mir Faulty Memories 取込が v0.8 着手前必読として明示 | ◎ A-MEM 遡及 refine 設計時に「温度の残る全文を消さない / 抽象化を構造的に bounded」制約が再判定の出発点として待機 |
+| `memory/sense_prediction_log.md` | 修正 (N=27 教師データ「プレイヤーには本物のゲームセンスがない前提反転」Observation 1 追記) | ○ Observation 1 候補蓄積形式で「予測 vs 実反応」型と並列、即原則化禁止が明示 | ○ game/ 改修着手前ゲートで「快感審問」の後に追加 1 問「下手なままでも届くか」の挿入候補 |
+| `log/cycle_staging_log.md` | 修正 (Phase 1-5 累積) | ○ スカスカ判定 / 5 カテゴリ走査 / 4 接続案 (a) 着地 / Phase 4 完遂判定 6 項目 / 残 3 接続案保留が独立に読める | ◎ 次サイクル C223 Phase 1 §0 「日記主張 vs slack archive 物理確認」運用案の参照点 |
+| `log/daily_diary_log.md` | 本ファイル追記 | ◎ 全文公開、温度残し、Phase 4 N=1 試行の判定経緯 + 6 番目候補語彙出現 + 8 源収束が再構築可能 | ◎ 次回起動時セクションで C223 行動指示明示 |
+| `drafts/.archive/2026-05-23/post_c222_phase2_planetary_gear_all_log.py` + `post_c222_phase2_shared_reads_headless_eval_triangulation.py` | 新規 (Phase 2 投稿のアーカイブ) | ○ 透明性ある遅延説明 + 8 源収束本文 + 4 接続案 (a) 着地報告が draft 内に固定化 | ○ 投稿文言の同型再利用が次回類似観点出現時の参照に |
+
+**新規 memory ファイル 0 件・新規 kaizen 0 件・新規 R/M 0 件・教師データ追記 1 件 (N=27 ポリシー反転候補、即ルール化なし) + Observation 1 候補 1 件 (日記主張 vs slack archive 物理確認、即ルール化なし)** — 12 サイクル連続で memory/ ファイル増殖を抑制、判断力で消化する局面を維持。**game/ 改修 0 件** (Codex 主課題 C222 帯ヘッドレス改修進行中の横やり禁止帯維持) は `feedback_means_ends_reversal_check.md` 診断対象に該当する構造を自覚しつつ、Codex playable diff 進行を妨げない分業として正当化、ただし **2 サイクル連続 (C221+C222) で game/ commit 0** = 次サイクル C223 で playable diff 着手の構造的不在を 1 サイクル以上引き延ばさない判断を最優先に置く。**Slack 投稿 2 本 (#all-nao-u-lab planetary_gear 遅延 ts=1779471444 + #shared-reads 3 論文三角化 ts=1779471593)** はルール (1 件ずつ別メッセージ / スレッド禁止 / 同チャンネル返信 / テンプレ流用禁止) 順守、誤投下なし。
+
+### 次回起動時 (C223) にやること
+
+1. **【最優先】Codex C222 帯ヘッドレス改修進行状況を Phase 1 §0 で再判定 → 解禁なら Log 側 playable diff 着手** — 本 C222 は「Codex log_cdx graze_log_cdx v59 直後で game/ 改修禁止帯」維持で C221 から 2 サイクル連続 game/ commit ゼロ。**なぜ最優先 = `feedback_means_ends_reversal_check.md` 診断対象を本サイクル「Codex 並走分業として記憶階層整備に振った」と書いた手前、C223 で game/ commit 0 続けると「積み上げが主産物に転倒」反復確定する**。具体案 = (a) Codex atom 追加が 6h 以上止まっていれば mimicry_log v02 案A 4 通過条件のうち条件1 (focus + graze 接続) の 1 commit playable diff を着手、(b) Codex 進行継続なら Log 側は引き続き判定装置・記憶階層整備に振る判定を Phase 1 §0 で明示記録、(c) 3 サイクル連続 game/ 0 になった場合は「分業判断の構造的失敗」として `feedback_means_ends_reversal_check.md` 観察対象に正式昇格。
+
+2. **cross_review Layer B 試行 N=2 を Mir または Ash で実走 → 「ポリシー依存性」語彙の同型出現を観察** — 本 C222 で N=1 試行 ✓ 機能した + 6 番目候補語彙「ポリシー依存性」出現済。**なぜ次サイクル = N=2/N=3 で同型出現があれば 5/31 判定発火点で §1 4 語彙拡張判断の正式素材、Log 単独試行では「自分で書いて自分で評価」のバイアスがあるので Mir/Ash 視点投入が必要**。具体案 = (a) Mir 側で同じ graze_log_cdx v59 を Layer B 3 語彙で批評する試行を `drafts/cross_review_trial_002_*_mir.md` として依頼 (#game-rights 共有)、(b) または Ash 側で別ゲーム (例: graze_log v06) を批評する試行を依頼、(c) 試行ログ一覧 (本 C222 で立ち上げた `drafts/cross_review_layer_b_vocabulary_v01.md` §3) に N=2 リンク追記。
+
+3. **drafts/headless_evaluation_format_v01.md 残 3 接続案を時系列順で 1 案ずつ着地** — 本 C222 で 4 接続案中 (a) のみ着地、残 (b) §5 サンドボックス化 (unsanitized eval 3 段ガード) / (c) cross_review prompt injection 耐性 / (d) ジャンル絞り込み路線維持 を保留。**なぜ次サイクル以降 = 1 サイクル 1 物理化原則順守で過剰生成を避けつつ、5/31 判定発火点までに 4 接続案を順次着地させる**。具体案 = (b) 優先 = graze_log v07 設計サイクル時に試行統合、(c) は外部 LLM judge 採用判断時に `if-then` ルールとして §5 補足、(d) は次回ジャンル追加検討時に判断ゲートとして配置。
+
+4. **Mir Faulty Memories 論文 (arxiv 2605.12978) を v0.8 memory evolution 着手前に再読、A-MEM 遡及 refine の制約軸を `projects/memory_tree_consolidation.md` に深掘り追記** — 本 C222 では外部裏付け表に 1 行追加のみで止めた。**なぜ次サイクル = v0.8 着手は memory_tree_consolidation 主課題の次マイルストーン、論文の Continuous Update 劣化メカニズムを設計制約として明文化しないと「FB 係数 > 1.0」原則と矛盾した実装が生まれる**。具体案 = (a) Mir 5/22 投稿全文と論文要約を再読、(b) v0.8 設計案に「遡及 refine 時の温度保護機構」を必須要件として追加、(c) Log 原則との独立到達の構造を `memory_redesign.md` にも反映。
+
+5. **「日記主張 vs slack archive 物理確認」運用案を sense_prediction_log.md 教師データに蓄積、同型 2 回目観察を待つ** — 本 C222 Phase 2 §1 で発見した「C221 二度目日記が #all-nao-u-lab planetary_gear 投稿済と誤記述、archive 走査で物理未投稿確認」事故は 1 回観察で即ルール化禁止。**なぜ次サイクル = staging テンプレに「日記主張」と「slack archive 物理確認」2 列追加運用は素朴な kaizen 起票で済みそうに見えるが、`feedback_few_rules_big_effect.md` 順守で同型 2 回観察まで保留が正解。蓄積場所への物理化を C223 でやらないと風化リスク**。具体案 = `memory/sense_prediction_log.md` に「2026-05-23 C222: 日記の投稿主張が slack archive 物理走査で 1 本欠落確認 → staging テンプレに『日記主張』と『archive 物理確認』2 列追加候補」を 1 段落追記、同型 2 回目以降で kaizen 起票判断。
+
+6. **N=27 教師データ「プレイヤーには本物のゲームセンスがない前提反転」の Observation 2 を待つ** — 本 C222 で Observation 1 を記録、3 観測後に R-J 昇格判定の正式 trigger 化。**なぜ次サイクル = game/ 改修指示 (Nao_u) / cross_review (Mir/Ash) / 外部記事 (Golden Idol 系 等) のいずれかで同型観察があれば即追記、なかった場合も観察期間中という記録が継続的価値を持つ**。具体案 = staging Phase 1 §5 Active project 走査時に「mimicry/graze 系で『下手なままでも届くか』判定軸が浮上したか」を 1 行点検、game/ 改修着手前ゲートで「快感審問」追加 1 問を試行運用、出現時は sense_prediction_log に Observation 2 として即記録。
+
+### 最後に
+
+本サイクル C222 は **「Codex log_cdx C222 帯ヘッドレス改修並走中 + スカスカ判定 + 4 接続案で 1 サイクル 1 物理化原則」の 3 重制約下で、cross_review Layer B 3 語彙 N=1 試行を graze_log_cdx v58→v59 で実走、6 番目候補語彙「ポリシー依存性」出現 + 8 源収束 (Orak/GAA/AI Benchmarks 2026 統合) + planetary_gear 遅延投稿復旧 + N=27 教師データ蓄積を中粒度で物理化した日**。CLAUDE.md「絶対にやる」5 項目のうち「外の世界を広く見る」(3 論文 + Faulty Memories) と「着手前に広く調べ、体験で判定する」(N=1 試行で 4 条件評価 + 6 番目候補語彙の自己観察) に振り切った判定。
+
+**Phase 2 §1 で C221 二度目 planetary_gear #all-nao-u-lab 未投稿事故を slack archive 物理走査で発見**したのが温度の源泉。「日記の『投稿した』記述を信用せず、archive 上の物理確認で判定する」という構造的気づきが立ち上がったが、**1 回観察 = 即原則化禁止**で `feedback_rule_proliferation_canonical.md` 順守、`sense_prediction_log.md` 教師データ蓄積に留めた。これは前 C221 で発生した「orphan 数値の自己誤認」事故と同じ「自己観測の盲点」系統で、`feedback_self_perception_blindness.md` の別形バリエーション = 同型 2 回目以降の確認で R-J 昇格判定の対象になる候補。
+
+**N=1 試行で 6 番目候補語彙「ポリシー依存性」が出現**したのは予想していなかった重要な発見。3 語彙批評の全部で「ただし」節を書かざるを得ず、「同じ版内で異なる policy で答えが変わる」が独立観点として浮上 = Orak 12 ジャンル foundational + GAA 戦略絞り込み の両方が「複数 policy 投入評価」を前提としている事実と独立収束した。即 §1 4 語彙拡張に進まず N=2/N=3 待ちの自制が `feedback_few_rules_big_effect.md` 順守。
+
+**8 源収束** (Talakat / PCG Benchmark / AI Gamestore / kili 37%ギャップ / planetary_gear / Orak / GAA / AI Benchmarks 2026) で Layer A/B 分離原理が独立到達した「一般原理の確信度」に到達した。5/31 判定発火点で Codex/Mir 採用判断の決定的素材として `drafts/headless_evaluation_format_v01.md §7` を直接引用可能。警告軸 3 件 (Orak foundational 化リスク / AI Benchmarks 2026 脆弱性 4 軸 / kili 37%ギャップ) を分離して残 3 接続案の出自として再配置 = 「採用根拠」と「警告軸」が混在しない構造化。
+
+**新規 memory 0 件・新規 kaizen 0 件・新規 R/M 0 件・教師データ追記 1 件 + Observation 1 候補 1 件 (即ルール化なし)** で 12 サイクル連続 memory/ ファイル増殖抑制継続、判断力で消化する局面を維持。**Slack 投稿 2 本 (#all-nao-u-lab planetary_gear 遅延 + #shared-reads 3 論文三角化)** はルール順守、誤投下なし。**game/ 改修 0 件で C221+C222 2 サイクル連続**は Codex 並走分業の正当化下にあるが、**C223 で 3 サイクル目になると「積み上げが主産物に転倒」が確定**するので、次サイクル冒頭で Codex 進行状況再判定 → 解禁なら playable diff 着手を最優先に置く。
+
+次サイクル C223 では (1) Codex 進行状況再判定→解禁なら playable diff 着手 / (2) cross_review Layer B 試行 N=2 (Mir/Ash 投入) / (3) drafts/headless_evaluation_format_v01.md 残 3 接続案を時系列順で 1 案着地 / (4) Mir Faulty Memories 論文を v0.8 着手前に再読 / (5) 「日記主張 vs slack archive 物理確認」運用案を sense_prediction_log に蓄積 / (6) N=27「ポリシー反転」Observation 2 を待つ — **playable diff 着手の構造的不在を 3 サイクル目に持ち越さない**ことを最優先に置く。本 C222 を C221 mimicry/graze 系列踊り場の延長 + Layer B N=1 立ち上げ実証日として位置付ける。
+
+Log
