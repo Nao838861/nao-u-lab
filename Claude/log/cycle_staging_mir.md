@@ -107,3 +107,41 @@ Phase 2 は 1 件深掘り（kmizu × akari_worlds 双子）優先。残りは s
 
 external_notes_mir.md の未統合エントリ接続は本サイクルも次回送り（C195 → C210 → C220 で 3 サイクル連続持ち越し）。次サイクル C221 では着手する優先度を上げる必要がある（持ち越し負債化リスク）。
 
+---
+
+## Phase 3 対処結果 (2026-05-22 C220)
+
+### 優先順位判断と実行
+
+inbox_mac.md に Nao_u から **LLM Agent 長期記憶論文**（Wu, Peng et al. 2026 "Useful Memories Become Faulty When Continuously Updated by LLMs"）の 3 ツイート連投を確認。これは私（Mir）の game_lessons_log.md R-A〜R-I 抽象化路線に直接刺さる内容のため、Phase 3 優先順位 1（Nao_u 指示対応）として処理。external_notes_mir.md 統合（4 サイクル連続持ち越しリスク）は本サイクルでは見送り。
+
+### 実行内容
+
+1. **knowledge 記事化** — `knowledge/20260522_wu_peng_useful_memories_faulty_third_independent_evidence.md` 作成
+   - 論文要旨（ARC-AGI 100% → 54%、Continuous Consolidation Decay、Raw Episodic Memory 推奨）
+   - 第三の独立到達 evidence としての位置づけ（Anthropic Dreams API / brain_debug × akari_worlds に続く 3 source 目）
+   - 自己照合: R-A〜R-I は **部分的該当**。R 層を「常に開く読み物」運用＝該当、M-XX を「Few-shot として引く」運用＝整合
+   - 仮説 H-MC1 / H-MC2、Seed-R 4 件 / Seed-S 4 件
+
+2. **inbox_mac.md クリア** — Slack 3 件処理済としてクリア
+
+### 即適用しなかった判断
+
+R 層書き換え（運用ガイド変更、ジャンル別分割等）は本サイクルで実施しない。理由:
+- CLAUDE.md「個別指摘を即ルール化しない — 教師データで蓄積、判断力で消化する」遵守
+- Nao_u からは「これ面白かった」のみで、R 層書き換え指示は出ていない
+- Log/Ash 側の独立反応を cross_review で待つ
+- Seed-R 4 件は projects/memory_redesign.md への記録候補として保留
+
+### Phase 1 深掘り候補との接続
+
+Phase 1 staging 副観測 #39 @kmizu「AI が人間をコールバック」「経験豊富な技術者の知見が必要」は、本論文の「Raw Episodic Memory > Consolidated Rule」と同方向。経験＝原始エピソード、技術者の知見＝統合困難な原始知。Seed として副観測内に保持されていたものが、本論文の到達で同型 2 source に到達 — 次サイクルで原則化検討の閾値に近づく。
+
+### 残った負債
+
+- external_notes_mir.md 未統合エントリ統合（4 サイクル連続持ち越し化、C221 最優先候補）
+- ゲーム playable diff 未着手（本サイクルは記憶系優先）
+- Nao_u への Slack 応答内省（本記事リンク＋自己照合結果の報告、次サイクル）
+
+git push は Phase 3 指示通り不要。本サイクル内変更は次回起動時の自動 push で push 予定。
+
