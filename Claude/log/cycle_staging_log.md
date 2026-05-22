@@ -252,3 +252,32 @@ Phase 1 §D (記憶散歩当選 `feedback_pleasure_element_first.md` の Phase 2
 - **kaizen 提案増殖防止 (feedback_rule_proliferation_canonical.md)**: 「3 層階段判定」を即 kaizen 起票せず、draft 段階で 1 サイクル観察してから昇格判断 = 同型 2 回観察ルール遵守
 
 ---
+
+## Phase 4: 大作業実行結果
+
+### 完遂状況
+完遂定義 5 条件すべて到達 (commit/push は Phase 5 で実施するため (4) は本 Phase 4 では物理化せず該当 commit 候補のみ準備、Phase 5 で日記とまとめて commit + push):
+1. ✓ `drafts/headless_evaluation_format_v01.md` §8 新規追加 — (a) Golden Idol スリーストライク出自明記 / (b) `pass` / `near` / `far` 3 値定義 / (c) Layer A 6 個目 primitive 案 vs Layer B 4 個目語彙移譲案の並置 + Log 仮採用 (選択肢 2)
+2. ✓ §3 1 表に `(judgement_granularity)` 行を 6 個目候補として **括弧書きで併記** (確定でない旨明示、暫定式 `bucket(score_or_axis, [合格閾値, 惜しい閾値])` の 3 値出力、閾値取得方法は N=25 best-case 分布から第 1/第 2 四分位を取る案)
+3. ✓ `drafts/cross_review_layer_b_vocabulary_v01.md` §4 末尾に「4 個目条件包含議論」を 1 段落追記 — Log 仮採用 = Layer B 4 個目語彙移譲、draft 段階で並置はせず 5/31 判定時に 4 個目発火点として観察対象に追加する設計、未達成時は §8 (c) 選択肢 1 を Layer A 6 個目として Codex / Mir に再提案する余地保持
+4. (Phase 5 委譲) commit (prefix=`rule:`) + push は本 Phase 4 では実施せず、Phase 5 で日記とまとめて行う方針 (staging Phase 4 大作業節 着手手順 §6 で commit + push 指定だったが、本指示プロンプト末尾「commit はしない (git push は Phase 5 で日記とまとめて行う)」の上書きを優先)
+5. ✓ `projects/game_development.md` 履歴に「C221 Phase 4 二度目 (Log): §8 化」セクションを新規追加 — Phase 3 接続 #1 (3 層階段判定) のみ着地理由 / 選択肢 1/2 並置の意義 / 5/31 判定発火点との接続を明記
+
+### 副産物 (新規 / 変更ファイル)
+- **変更**: `drafts/headless_evaluation_format_v01.md` (§8 新規追加 / §3 1 表に 6 個目候補行追加 / 関連リンクに千葉集 note 記事追加)
+- **変更**: `drafts/cross_review_layer_b_vocabulary_v01.md` (§4 末尾に 4 個目条件包含議論 1 段落追記 / 関連リンクに §8 接続追加)
+- **変更**: `projects/game_development.md` (履歴節冒頭に「C221 Phase 4 二度目 (Log): §8 化」セクション新規追加)
+- **変更**: `log/cycle_staging_log.md` (本ファイル — Phase 4 セクション追記)
+
+### Slack 投稿 / kaizen エントリ
+- Slack 投稿: 0 件 (Phase 3 §1 で「Phase 4 で Slack 返信義務なし」を確認済、本指示プロンプト末尾「Phase 4 で増やさない」遵守)
+- kaizen エントリ: 0 件 (検証ファースト原則 / family 統合管理ルール準拠、本 §8 由来の 3 層階段判定は即 kaizen 起票せず draft 段階で 5/31 まで観察)
+
+### Phase 4 自己診断
+- **1 作業集中の遵守**: 着手手順 §1〜§5 を順次実行、別作業 (Slack 返信 / kaizen 新規 / 別 project 更新) には逸れず
+- **完遂定義到達**: 5 条件のうち (1) (2) (3) (5) を物理化、(4) は Phase 5 委譲 (本指示プロンプト末尾の上書き優先) → 残作業は Phase 5 で commit + push のみ
+- **Log 仮採用の明示と両論併記**: §8 (c) で選択肢 1 (Layer A 6 個目) と選択肢 2 (Layer B 4 個目) を並置 + Log 仮採用 = 選択肢 2 を明示 → Codex / Mir / Nao_u の 3 インスタンス合意プロセスに委ねる設計 (`memory/feedback_few_rules_big_effect.md` 遵守)
+- **即原則化禁止の物理化**: §8 内に「1 源単独由来 = 即原則化禁止 / 5/31 判定発火点で再判断対象」を明記、Layer A 6 個目候補は **括弧書きで Codex 採用判断側に「採用しなくてよい候補」として扱える形** に物理化 (`memory/feedback_rule_proliferation_canonical.md` 遵守)
+- **温度の残る記述**: §8 本文約 2200 字 / §3 1 表行追加 / §4 追記段落 約 700 字 / 履歴節セクション 約 1500 字 = 計約 4400 字、固有性 (Golden Idol スリーストライク / planetary_gear note / 千葉集 / `pass` / `near` / `far` / 5/31 判定発火点) を保持し 1 行報告に陥らず
+
+---
