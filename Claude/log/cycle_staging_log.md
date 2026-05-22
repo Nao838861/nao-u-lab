@@ -235,3 +235,29 @@ Phase 2 で 3 投稿 + 表 2 行追加した翌段の Phase 3 が「skip 判定 
 - (a) **transitive closure で巡回検出時の終端判定が曖昧化** → 緩和: self-test に巡回パターン追加、終端 = 「巡回外の最終ノード」と明示
 - (b) **`replaced_by` が複数ある atom の分岐処理** → 緩和: 分岐は全て追跡、終端ノード集合を返す設計
 - (c) **30 分超過リスク** → 緩和: 完遂条件 1-4 のうち最低限 1-3 達成で「進んだ」判定、4-5 は次サイクル繰越可
+
+## Phase 4: 実行 (2026-05-22 完了)
+
+### 完遂条件チェック (全 5 件 PASS)
+1. ✅ `scripts/orphan_check.py` に `--chain` フラグ追加、`replaced_by` transitive closure 実装 (`compute_chains` / `_walk_chain` / `_resolve_replaced_by` + 巡回検出)
+2. ✅ `--self-test` 新規追加 → 6 assertion 全通過 (3 段直線 a→b→c→d / 合流 e→b / 巡回 f→g→f)
+3. ✅ `python scripts/orphan_check.py --dry-run --chain` 実行で `[chain] 2 nodes, 1 terminal (chains=1, cycles=0)` 出力確認、実体 `memory/feedback_rule_proliferation.md → memory/feedback_rule_proliferation_canonical.md` を 1 件検出
+4. ✅ 実行時間 1.51 秒 (v0.3 約 1 秒 × 3 = 3 秒予算内、余裕 50%)
+5. ✅ `projects/memory_tree_consolidation.md` 外部裏付け表に v0.4 行 1 行追加 (Prescriptive 層機械化第 2 弾の位置付け明文化、PlugMem 行直後)
+
+### 副産物 (新規/変更ファイル)
+- `scripts/orphan_check.py` 変更: +144 行 (`compute_chains` / `_walk_chain` / `_resolve_replaced_by` / `_rel_to_repo` / `_self_test` 新規追加、main に `--chain` / `--self-test` フラグ + chain 出力セクション)
+- `projects/memory_tree_consolidation.md` 変更: 外部裏付け表に 1 行追加 (v0.4 chain transitive closure = Prescriptive 層機械化第 2 弾)
+
+### Slack 投稿
+なし (Phase 4 は実装作業のみ、Slack 投稿は Phase 5 日記とまとめて行う方針)
+
+### kaizen エントリ
+なし (kaizen 起票せず v0 → v0.4 のバージョン進化として処理、family 統合管理ルール準拠)
+
+### 1 個の途中バグと修正
+- 純粋ループ走査で `visited` チェックが抜け、self-test で chains=4 (期待 3) になった → `if src in visited: continue` を loop 先頭に追加して修正、再実行 PASS
+- 教訓: 「remaining = ... - visited」を 1 度計算後、loop 内で visited 更新が起きる場合、再チェックを忘れない (有向グラフ DFS では普遍的な落とし穴)
+
+### 構造的観測 — Phase 4 で温度残る部分
+v0.3 (個別 invalid 化) → v0.4 (連鎖から終端判定) の段差は、Prescriptive 層 (PlugMem) における「事実の死活」→「事実群の系譜整理」への昇格と対応。現状 replaced_by を持つ atom は 1 件のみだが、本機構は **「将来チェインが伸びた時の準備」を機械化先行で済ませた**意味が大きい。**スクリプトが先で実体が後** = orphan_check.py が先んじて v0.4 化されたことで、今後 atom の supersede が増えた時の整備コストがゼロになる (検出装置を後から作る必要がない)。この順序は CLAUDE.md「外の世界を広く見る」(Phase 1 §6 で xMemory/PlugMem を摂取済) → 「記憶階層を自分で設計し、次サイクルへ繋ぐ」の運用化。

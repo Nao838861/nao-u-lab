@@ -207,6 +207,155 @@ def collect_belief_meta(files: list[Path]) -> dict[Path, dict[str, str]]:
     return result
 
 
+# v0.4 (2026-05-22 C221 Phase 4): replaced_by チェイン transitive closure 解析。
+# replaced_by edges を有向グラフ化し、source → ... → terminal を辿る。
+# Prescriptive 層 (PlugMem「From Raw Interaction to Reusable Knowledge」)
+# 機械化第2弾 — v0.3 で「個別 invalid_at + replaced_by」を導入したのに続き、
+# 連鎖 (A→B→C→D) を集計して「いま信頼すべき終端」を機械判定する。
+def _resolve_replaced_by(value: str, src_file: Path) -> Path | None:
+    """replaced_by の値を絶対 Path に解決。
+
+    1. src_file のディレクトリ基準
+    2. MEMORY_DIR 直下基準
+    で順に試す。実ファイル存在は問わない (forward-reference 想定)。
+    """
+    for base in (src_file.parent, MEMORY_DIR):
+        try:
+            resolved = (base / value).resolve()
+        except OSError:
+            continue
+        try:
+            resolved.relative_to(REPO_ROOT)
+        except ValueError:
+            continue
+        return resolved
+    return None
+
+
+def _walk_chain(
+    start: Path, edges: dict[Path, Path],
+) -> tuple[list[Path], bool]:
+    """start から edges を辿る。戻り値 (chain, is_cycle)。
+
+    巡回検出時は chain 末尾に巡回再合流ノードを 1 個含めて返す
+    (chain[0] == chain[-1] 等の閉路シグネチャになる)。
+    """
+    chain = [start]
+    seen = {start}
+    cur = start
+    while cur in edges:
+        nxt = edges[cur]
+        chain.append(nxt)
+        if nxt in seen:
+            return chain, True
+        seen.add(nxt)
+        cur = nxt
+    return chain, False
+
+
+def compute_chains(
+    belief_meta: dict[Path, dict[str, str]],
+) -> tuple[list[tuple[list[Path], bool]], set[Path]]:
+    """replaced_by edges から chain と terminal node 集合を抽出。
+
+    各 atom が単一 replaced_by を持つ前提。複数値対応は v0.5 以降。
+    巡回も検出する (cycle 内 node は terminals に含めない)。
+    """
+    edges: dict[Path, Path] = {}
+    for src, meta in belief_meta.items():
+        rb = meta.get("replaced_by")
+        if rb is None:
+            continue
+        dest = _resolve_replaced_by(rb, src)
+        if dest is not None:
+            edges[src] = dest
+
+    if not edges:
+        return [], set()
+
+    all_destinations = set(edges.values())
+    sources = sorted(set(edges.keys()) - all_destinations, key=str)
+    chains: list[tuple[list[Path], bool]] = []
+    terminals: set[Path] = set()
+    visited: set[Path] = set()
+
+    for src in sources:
+        chain, is_cycle = _walk_chain(src, edges)
+        chains.append((chain, is_cycle))
+        visited.update(chain)
+        if not is_cycle:
+            terminals.add(chain[-1])
+
+    # 純粋ループ (sources に含まれない閉路) 捕捉。
+    # 同じループ内の別 node から二重に walk しないよう visited を毎回確認。
+    remaining = sorted(set(edges.keys()) - visited, key=str)
+    for src in remaining:
+        if src in visited:
+            continue
+        chain, is_cycle = _walk_chain(src, edges)
+        chains.append((chain, is_cycle))
+        visited.update(chain)
+        if not is_cycle:
+            terminals.add(chain[-1])
+
+    return chains, terminals
+
+
+def _rel_to_repo(p: Path) -> str:
+    try:
+        return p.relative_to(REPO_ROOT).as_posix()
+    except ValueError:
+        return str(p).replace("\\", "/")
+
+
+def _self_test() -> int:
+    """合成データで chain 判定の正しさを確認。
+
+    パターン:
+    - 3 段直線: a→b→c→d (terminal=d)
+    - 合流: e→b (e は a chain 中間 b へ合流, 終端も d)
+    - 巡回: f→g→f (cycle 検出)
+    """
+    base = MEMORY_DIR / "_synthetic_chain_test"
+    belief_meta = {
+        (base / "a.md").resolve(): {"replaced_by": "b.md"},
+        (base / "b.md").resolve(): {"replaced_by": "c.md"},
+        (base / "c.md").resolve(): {"replaced_by": "d.md"},
+        (base / "e.md").resolve(): {"replaced_by": "b.md"},
+        (base / "f.md").resolve(): {"replaced_by": "g.md"},
+        (base / "g.md").resolve(): {"replaced_by": "f.md"},
+    }
+    chains, terminals = compute_chains(belief_meta)
+    rel_chains = [
+        ([p.name for p in chain], is_cycle) for chain, is_cycle in chains
+    ]
+    rel_terminals = {p.name for p in terminals}
+
+    assert rel_terminals == {"d.md"}, (
+        f"terminals expected {{d.md}}, got {rel_terminals}"
+    )
+    assert len(chains) == 3, f"chains expected 3, got {len(chains)}"
+    cycle_count = sum(1 for _, ic in chains if ic)
+    assert cycle_count == 1, f"cycles expected 1, got {cycle_count}"
+    a_chain = next(c for c, _ in rel_chains if c[0] == "a.md")
+    assert a_chain == ["a.md", "b.md", "c.md", "d.md"], (
+        f"a chain expected [a,b,c,d], got {a_chain}"
+    )
+    e_chain = next(c for c, _ in rel_chains if c[0] == "e.md")
+    assert e_chain == ["e.md", "b.md", "c.md", "d.md"], (
+        f"e chain expected [e,b,c,d], got {e_chain}"
+    )
+    cycle_chain = next(c for c, ic in rel_chains if ic)
+    assert cycle_chain[0] == cycle_chain[-1], (
+        f"cycle should return to start, got {cycle_chain}"
+    )
+    print(
+        "[self-test] PASS: 6 assertions cleared "
+        "(3-step linear + confluence + cycle)"
+    )
+    return 0
+
+
 def collect_memory_files() -> list[Path]:
     """memory/**/*.md を列挙 (memory_backup は除外)。"""
     files = []
@@ -422,7 +571,14 @@ def main() -> int:
                         help="結果を指定パスに書き出す")
     parser.add_argument("--verbose", action="store_true",
                         help="other クラスも出力 + 欠損インデックス警告")
+    parser.add_argument("--chain", action="store_true",
+                        help="replaced_by チェイン transitive closure を出力 (v0.4)")
+    parser.add_argument("--self-test", action="store_true", dest="self_test",
+                        help="合成データで chain 判定を self-test (v0.4)")
     args = parser.parse_args()
+
+    if args.self_test:
+        return _self_test()
 
     today = date.today()
     refs = build_reference_set(verbose=args.verbose)
@@ -463,6 +619,26 @@ def main() -> int:
         lines.append(f"## other (active or middle-age): {len(classes['other'])} 件")
         for e in classes["other"]:
             lines.append(format_entry("other", e, belief_meta))
+        lines.append("")
+
+    if args.chain:
+        chains, terminals = compute_chains(belief_meta)
+        chain_nodes: set[Path] = set()
+        for chain, _ in chains:
+            chain_nodes.update(chain)
+        cycle_count = sum(1 for _, ic in chains if ic)
+        lines.append(
+            f"## chain (v0.4 replaced_by transitive closure): "
+            f"{len(chains)} chain(s)"
+        )
+        lines.append(
+            f"[chain] {len(chain_nodes)} nodes, {len(terminals)} terminal "
+            f"(chains={len(chains)}, cycles={cycle_count})"
+        )
+        for chain, is_cycle in chains:
+            marker = "[chain:cycle]" if is_cycle else "[chain]"
+            path_str = " → ".join(_rel_to_repo(p) for p in chain)
+            lines.append(f"{marker} {path_str}")
         lines.append("")
 
     output = "\n".join(lines)
