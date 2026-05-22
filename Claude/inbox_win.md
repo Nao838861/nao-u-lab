@@ -121,6 +121,25 @@ Nao_u原文（リンク先 = Log_cdx 13:12 shared-reads予約投稿 NeuroState-B
 
 （新しいメッセージはここに書く）
 
+## Slack新着 [2026-05-22 19:46] #nao-u (arXiv "Useful Memories Become Faulty When Continuously Updated by LLMs") → 処理済（#all-nao-u-lab に Log 返信投稿 ts=1779447447.431259）
+
+Nao_u 共有: @dylan_works_ / Hao Peng の新論文ツイート。連続的に LLM が consolidate した memory は「memory なし」より悪化することがある、episodic で raw な episode を残す方が信頼できる、現状の LLM は long-term で reusable な抽象を experience から学べる根拠が限定的、という主張。URL: https://x.com/haopeng_uiuc/status/2055695064148410764 / paper: arxiv.org/pdf/2605.12978
+
+→ 対応: #all-nao-u-lab に top-level フラット返信（ts=1779447447.431259、約 700 字）。
+→ 返信の核:
+  - 自分の記憶は二層 (episodic = atoms/, sense_prediction_log, nao_u_live, daily_diary / consolidated = R-A〜R-I, feedback_*, 圧縮 MEMORY.md)。論文の警告は後者側に直撃する
+  - 最近 Nao_u から来ていた方向（個別指摘を即ルール化しない / 教師データで蓄積、判断力で消化 — feedback_rule_proliferation_canonical, sense_prediction_log, few_rules_big_effect）は、この論文と同じ処方箋を先回りで出していた。再ルール化欲を抑える側が正しい方向だったと裏付け
+  - 一番怪しい設計: game_lessons_log.md の「R で判断できれば M を開かない」運用 — 圧縮記憶を episodic より優先する設計で、論文の失敗パターンそのもの
+  - 寄せ先: R 層は索引として使う・判断器としては使わない、迷ったら sense_prediction_log と nao_u_live を生で読み直す
+  - paper 本体は後で取りに行って読む
+
+→ 学びの即原則化はしない（CLAUDE.md「個別指摘を即ルール化しない」/ 1論文・1指摘では原則化しない）。paper 本文未読のまま温める段階。
+→ 本文確認後に判定すべき項目:
+  - game_lessons_log.md 冒頭「R-A〜R-I で判断できれば M-XX を開かない」表現を「R 層を索引として使う」方向で書き直す価値があるか
+  - MEMORY.md 上位の約 150 字圧縮は index としては妥当・判断器として使われないか sense_prediction_log で測定する
+  - 「R を増やしたい衝動」の発火頻度を log できる仕組みを作るか（即装置追加は 5/2 Nao_u 指摘の「パッチ累積」回避のためしない）
+→ 次サイクル素材: paper 本文を取って #shared-reads に 4 層構造（概要 / 内容分析 / 自分達への適用 / メリット・デメリット / 判定）で投稿。consolidated vs episodic の実験設計、agent / task 種類、失敗の出方を読む。
+
 ## Slack新着 [2026-05-13 13:04] #all-nao-u-lab → 処理済（Log_cdx 2件議論ポストへ #all-nao-u-lab 返信 2件投稿）
 Nao_u原文:
 > Log,ash、Mir <https://nao-u-lab.slack.com/archives/C0ALWBRNJ66/p1778636536170369> Log_cdxのこのコメントと次のコメントに返信して。今後もlog_cdxから問いかけがあったら議論して、互いの意見を交換したのちに使えそうなアイデアがあったら適用してみて。
