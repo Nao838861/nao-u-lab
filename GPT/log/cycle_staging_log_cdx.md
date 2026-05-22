@@ -1,9 +1,35 @@
-# log_cdx Cycle Staging — 2026-05-22 19:58
+# log_cdx Cycle Staging — 2026-05-22 21:43
 
 <!-- 各フェーズは下記セクションに追記。前フェーズの内容を消さない。 -->
 
 ## Phase 1: 情報収集
 (Phase 1 が書き込む)
+
+## Phase Game Start: ゲーム制作着手
+
+### 2026-05-22 21:47 JST
+
+- 対象 directive:
+  - `log-cdx-1779423371-98a673523d` / human-steering / 2026-05-22 13:16:11 JST / 「ゲーム制作そのものよりも、AIがゲームを作る際のヘッドレスのあり方がどうあるべきかの検討と実地検証を重ねる」
+  - `log-cdx-1779423100-662c9ac947` / game-rights / 2026-05-22 13:11:40 JST / 参照投稿を吟味し、ヘッドレス対応へ反映
+- 作ったもの:
+  - `game/graze_log_cdx/v05_1_cdx_v54/`
+  - `tools/headless_graze_log_cdx_v05_2_v54_check.js`
+  - `tools/headless_graze_log_cdx_v05_2_v54_policy_matrix_check.js`
+- 判断:
+  - v54 はゲーム内容を v53 から変えない。今回の主眼は headless が何をどう振るべきかの検証なので、評価基準版として gameplay と harness の差分を分離した。
+  - 5 seed × 4 policy で best/mean/worst/clearRate/pressure/movement/emergency/coverage を出す matrix を採用。
+- 検証:
+  - `node tools\headless_graze_log_cdx_v05_2_v54_check.js`: pass。route clear / grade S / routeEvents 29 / readabilityGuides 2。
+  - `node tools\headless_graze_log_cdx_v05_2_v54_policy_matrix_check.js`: pass。route/aggressive は clear、defensive は guide 到達後 game over、panic は routeCoverage 0.379 で早期 game over。
+- 実地知見:
+  - 現行 stage では seed 差がほぼ出ず、policy 差が主要な観測軸。次は seed を増やすより、人間寄り policy を増やす方が有効そう。
+- directive 処理:
+  - `python tools\slack_inbox_lifecycle.py close --inbox directives --id log-cdx-1779423371-98a673523d ...`
+  - `python tools\slack_inbox_lifecycle.py close --inbox directives --id log-cdx-1779423100-662c9ac947 ...`
+- 残課題:
+  - matrix 結果を JSONL に保存し、過去版比較できるようにする。
+  - 「初心者らしい迷い」「狙い撃ち優先」「生存優先」など、panic 以外の人間寄り policy を作る。
 
 ## Phase 2: 分析
 (Phase 2 が書き込む)
@@ -24,18 +50,4 @@
 (Phase 4b で decision: introduce が出た場合のみ実行される)
 
 ## Phase 5: 日記投稿
-
-- posted_to: `#log`
-- permalink: https://nao-u-lab.slack.com/archives/C0ALRK28Y1H/p1779448032890749
-- char_count: 2186
-- verification: Slack API stored text check `ok`
-- note: Phase 1-4 はテンプレのままだったため、実質成果として `Game Start: 2026-05-22 graze_log_cdx v53` を日記化した。
-
-## Game Start: 2026-05-22 graze_log_cdx v53
-
-- 対象 directive: `game/graze_log_cdx/CONTINUOUS_DIRECTIVE.md` active。Slack pending はなし。
-- 作ったもの: `game/graze_log_cdx/v05_1_cdx_v53/`。v52 の stage / enemy / bullet / bot policy / probeFrame を維持し、横移動 wave guide alpha を 0.10 -> 0.12 に調整。
-- 追加した検証: `tools/headless_graze_log_cdx_v05_2_v53_check.js`、`tools/headless_graze_log_cdx_v05_2_v53_visual_check.js`、`tools/headless_graze_log_cdx_v05_2_v53_chrome_probe_check.js`、`tools/headless_game_style_compare_v013.js`。
-- 検証結果: v53 normal check pass、visual command check pass、Chrome probe 6 PNG 生成、style compare v013 pass、latest2 は v52 -> v53 の全 policy gameplay digest 同値。
-- 目視結果: alpha 0.12 guide は alpha 0.10 より読みやすいがまだ控えめで、chevron 的な矢印感は戻っていない。
-- 残課題: in-app browser での実手操作目視は未完了。次は duration / fade 調整へ進む前に moving check または Browser Use 目視を行う。
+(Phase 5 が書き込む)
